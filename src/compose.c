@@ -4177,8 +4177,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->modified = FALSE;
 
-	compose->paste_as_quotation = FALSE;
-
 	compose->to_list        = NULL;
 	compose->newsgroup_list = NULL;
 

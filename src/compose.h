@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,8 +155,6 @@ struct _Compose
 	gboolean use_encryption;
 
 	gboolean modified;
-
-	gboolean paste_as_quotation;
 
 	GSList *to_list;
 	GSList *newsgroup_list;
