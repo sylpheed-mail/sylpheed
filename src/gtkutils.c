@@ -711,8 +711,7 @@ void gtkut_window_popup(GtkWidget *window)
 	if (new_x != x || new_y != y)
 		gdk_window_move(window->window, new_x, new_y);
 
-	gdk_window_raise(window->window);
-	gdk_window_show(window->window);
+	gtk_window_present(GTK_WINDOW(window));
 }
 
 void gtkut_widget_get_uposition(GtkWidget *widget, gint *px, gint *py)

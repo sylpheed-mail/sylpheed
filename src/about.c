@@ -57,10 +57,8 @@ void about_show(void)
 {
 	if (!window)
 		about_create();
-	else {
-		gtk_widget_hide(window);
-		gtk_widget_show(window);
-	}
+	else
+		gtk_window_present(GTK_WINDOW(window));
 }
 
 static void about_create(void)
