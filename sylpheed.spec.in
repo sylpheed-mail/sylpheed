@@ -9,12 +9,15 @@ Release: %{rel}
 Source: http://sylpheed.good-day.net/sylpheed/%{name}-%{ver}.tar.gz
 Copyright: GPL
 URL: http://sylpheed.good-day.net/
-Requires: gtk+ >= 1.2.6
+Requires: gtk+ >= 2.4.0
 Group: Applications/Internet
 Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 Buildroot: %{_tmppath}/%{name}-root
 
 %changelog
+* Thu Feb 3 2005 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- modified for the latest version
+
 * Fri Aug 1 2003 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 - omitted %changelog
 - modified %description
@@ -99,7 +102,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
-%doc COPYING ChangeLog ChangeLog.jp README README.jp INSTALL INSTALL.jp TODO.jp
+%doc AUTHORS COPYING ChangeLog ChangeLog.ja ChangeLog-1.0 ChangeLog-1.0.ja README README.ja INSTALL INSTALL.ja NEWS NEWS-1.0 TODO TODO.ja
 %{_bindir}/%{name}
 %{_datadir}/locale/*/LC_MESSAGES/%{name}.mo
 %{_datadir}/%{name}/faq/*/*
