@@ -309,20 +309,14 @@ gpointer my_memmem(gconstpointer haystack, size_t haystacklen,
 /* Copy no more than N characters of SRC to DEST, with NULL terminating.  */
 gchar *strncpy2(gchar *dest, const gchar *src, size_t n)
 {
-	register gchar c;
-	gchar *s = dest;
+	register const gchar *s = src;
+	register gchar *d = dest;
 
-	do {
-		if (--n == 0) {
-			*dest = '\0';
-			return s;
-		}
-		c = *src++;
-		*dest++ = c;
-	} while (c != '\0');
+	while (--n && *s)
+		*d++ = *s++;
+	*d = '\0';
 
-	/* don't do zero fill */
-	return s;
+	return dest;
 }
 
 #if !HAVE_ISWALNUM
