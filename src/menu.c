@@ -214,7 +214,7 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 	if (xpos + width > scr_width)
 		xpos -= (xpos + width) - scr_width;
 	if (ypos + height > scr_height)
-		ypos = button->requisition.height + height;
+		ypos -= button->requisition.height + height;
 	if (xpos < 0)
 		xpos = 0;
 	if (ypos < 0)
