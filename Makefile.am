@@ -1,10 +1,13 @@
 SUBDIRS = ac po intl src manual faq
 
 EXTRA_DIST = config.rpath  \
-	ChangeLog.jp \
-	INSTALL.jp \
-	README.jp \
-	TODO.jp \
+	ChangeLog.ja \
+	INSTALL.ja \
+	README.ja \
+	TODO.ja \
+	ChangeLog-1.0 \
+	ChangeLog-1.0-ja \
+	NEWS-1.0 \
 	sylpheed.desktop \
 	sylpheed.spec \
 	sylpheed.spec.in \
