@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,8 +156,10 @@ gint procmime_get_part_fp		(const gchar	*outfile,
 					 FILE		*infp,
 					 MimeInfo	*mimeinfo);
 FILE *procmime_get_text_content		(MimeInfo	*mimeinfo,
-					 FILE		*infp);
-FILE *procmime_get_first_text_content	(MsgInfo	*msginfo);
+					 FILE		*infp,
+					 const gchar	*encoding);
+FILE *procmime_get_first_text_content	(MsgInfo	*msginfo,
+					 const gchar	*encoding);
 
 gboolean procmime_find_string_part	(MimeInfo	*mimeinfo,
 					 const gchar	*filename,

@@ -895,7 +895,7 @@ void compose_redirect(MsgInfo *msginfo, FolderItem *item)
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 
-	if ((fp = procmime_get_first_text_content(msginfo)) == NULL)
+	if ((fp = procmime_get_first_text_content(msginfo, NULL)) == NULL)
 		g_warning(_("Can't get text part\n"));
 	else {
 		while (fgets(buf, sizeof(buf), fp) != NULL) {
@@ -950,7 +950,7 @@ void compose_reedit(MsgInfo *msginfo)
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 
-	if ((fp = procmime_get_first_text_content(msginfo)) == NULL)
+	if ((fp = procmime_get_first_text_content(msginfo, NULL)) == NULL)
 		g_warning(_("Can't get text part\n"));
 	else {
 		while (fgets(buf, sizeof(buf), fp) != NULL) {

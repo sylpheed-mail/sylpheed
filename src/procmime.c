@@ -678,10 +678,11 @@ gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
 	return 0;
 }
 
-FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp)
+FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
+				const gchar *encoding)
 {
 	FILE *tmpfp, *outfp;
-	gchar *src_codeset;
+	const gchar *src_encoding;
 	gboolean conv_fail = FALSE;
 	gchar buf[BUFFSIZE];
 	gchar *str;
@@ -709,12 +710,12 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp)
 		return NULL;
 	}
 
-	src_codeset = prefs_common.force_charset
+	src_encoding = prefs_common.force_charset
 		? prefs_common.force_charset : mimeinfo->charset;
 
 	if (mimeinfo->mime_type == MIME_TEXT) {
 		while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
-			str = conv_codeset_strdup(buf, src_codeset, NULL);
+			str = conv_codeset_strdup(buf, src_encoding, encoding);
 			if (str) {
 				fputs(str, outfp);
 				g_free(str);
@@ -727,7 +728,7 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp)
 		HTMLParser *parser;
 		CodeConverter *conv;
 
-		conv = conv_code_converter_new(src_codeset);
+		conv = conv_code_converter_new(src_encoding, encoding);
 		parser = html_parser_new(tmpfp, conv);
 		while ((str = html_parse(parser)) != NULL) {
 			fputs(str, outfp);
@@ -747,7 +748,7 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp)
 
 /* search the first text part of (multipart) MIME message,
    decode, convert it and output to outfp. */
-FILE *procmime_get_first_text_content(MsgInfo *msginfo)
+FILE *procmime_get_first_text_content(MsgInfo *msginfo, const gchar *encoding)
 {
 	FILE *infp, *outfp = NULL;
 	MimeInfo *mimeinfo, *partinfo;
@@ -772,7 +773,7 @@ FILE *procmime_get_first_text_content(MsgInfo *msginfo)
 	}
 
 	if (partinfo)
-		outfp = procmime_get_text_content(partinfo, infp);
+		outfp = procmime_get_text_content(partinfo, infp, encoding);
 
 	fclose(infp);
 	procmime_mimeinfo_free_all(mimeinfo);
@@ -798,7 +799,7 @@ gboolean procmime_find_string_part(MimeInfo *mimeinfo, const gchar *filename,
 		return FALSE;
 	}
 
-	outfp = procmime_get_text_content(mimeinfo, infp);
+	outfp = procmime_get_text_content(mimeinfo, infp, NULL);
 	fclose(infp);
 
 	if (!outfp)

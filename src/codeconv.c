@@ -825,21 +825,24 @@ static void conv_noconv(gchar *outbuf, gint outlen, const gchar *inbuf)
 	strncpy2(outbuf, inbuf, outlen);
 }
 
-CodeConverter *conv_code_converter_new(const gchar *src_charset)
+CodeConverter *conv_code_converter_new(const gchar *src_encoding,
+				       const gchar *dest_encoding)
 {
 	CodeConverter *conv;
 
 	conv = g_new0(CodeConverter, 1);
-	conv->code_conv_func = conv_get_code_conv_func(src_charset, NULL);
-	conv->charset_str = g_strdup(src_charset);
-	conv->charset = conv_get_charset_from_str(src_charset);
+	conv->code_conv_func =
+		conv_get_code_conv_func(src_encoding, dest_encoding);
+	conv->src_encoding = g_strdup(src_encoding);
+	conv->dest_encoding = g_strdup(dest_encoding);
 
 	return conv;
 }
 
 void conv_code_converter_destroy(CodeConverter *conv)
 {
-	g_free(conv->charset_str);
+	g_free(conv->src_encoding);
+	g_free(conv->dest_encoding);
 	g_free(conv);
 }
 
@@ -851,7 +854,8 @@ gint conv_convert(CodeConverter *conv, gchar *outbuf, gint outlen,
 	else {
 		gchar *str;
 
-		str = conv_iconv_strdup(inbuf, conv->charset_str, NULL);
+		str = conv_iconv_strdup
+			(inbuf, conv->src_encoding, conv->dest_encoding);
 		if (!str)
 			return -1;
 		else {
@@ -1791,7 +1795,7 @@ gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 		g_warning("can't change file mode\n");
 	}
 
-	conv = conv_code_converter_new(encoding);
+	conv = conv_code_converter_new(encoding, NULL);
 
 	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
 		if (conv_convert(conv, outbuf, sizeof(outbuf), buf) == 0)

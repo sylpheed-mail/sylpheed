@@ -1,6 +1,22 @@
 2005-02-25
 
 	* src/compose.c
+	  src/textview.c
+	  src/quote_fmt_parse.y: follow the API changes.
+	* src/procmsg.c: procmsg_print_message(): output text with locale
+	  encoding.
+	* src/procmime.[ch]:
+	  procmime_get_text_content()
+	  procmime_get_first_text_content(): added an argument for dest
+	  encoding.
+	* src/codeconv.[ch]: conv_code_converter_new(): added an argument for
+	  dest encoding.
+	* src/html.c: removed broken locale specific entity reference
+	  conversion.
+
+2005-02-25
+
+	* src/compose.c
 	  src/messageview.c
 	  src/mimeview.c
 	  src/export.c

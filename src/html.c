@@ -111,201 +111,7 @@ static HTMLSymbol ascii_symbol_list[] = {
 	{"&yacute;", "y'"},
 };
 
-static HTMLSymbol eucjp_symbol_list[] = {
-	{"&iexcl;" , "^!"},
-	{"&cent;"  , "\xa1\xf1"},
-	{"&pound;" , "\xa1\xf2"},
-	{"&yen;"   , "\xa1\xef"},
-	{"&brvbar;", "|"},
-	{"&sect;"  , "\xa1\xf8"},
-	{"&uml;"   , "\xa1\xaf"},
-	{"&copy;"  , "(C)"},
-	{"&laquo;" , "<<"},
-	{"&reg;"   , "(R)"},
-
-	{"&deg;"   , "\xa1\xeb"},
-	{"&plusmn;", "\xa1\xde"},
-	{"&sup2;"  , "^2"},
-	{"&sup3;"  , "^3"},
-	{"&acute;" , "'"},
-	{"&micro;" , "\xa6\xcc"},
-	{"&para;"  , "\xa2\xf9"},
-	{"&middot;", "\xa1\xa6"},
-	{"&cedil;" , ","},
-	{"&sup1;"  , "^1"},
-	{"&raquo;" , ">>"},
-	{"&frac14;", "1/4"},
-	{"&frac12;", "1/2"},
-	{"&frac34;", "3/4"},
-	{"&iquest;", "^?"},
-
-	{"&Agrave;", "A`"},
-	{"&Aacute;", "A'"},
-	{"&Acirc;" , "A^"},
-	{"&Atilde;", "A~"},
-	{"&Auml;"  , "A\xa1\xaf"},
-	{"&Aring;" , "A\xa1\xeb"},
-	{"&AElig;" , "AE"},
-	{"&Egrave;", "E`"},
-	{"&Eacute;", "E'"},
-	{"&Ecirc;" , "E^"},
-	{"&Euml;"  , "E\xa1\xaf"},
-	{"&Igrave;", "I`"},
-	{"&Iacute;", "I'"},
-	{"&Icirc;" , "I^"},
-	{"&Iuml;"  , "I\xa1\xaf"},
-
-	{"&Ntilde;", "N~"},
-	{"&Ograve;", "O`"},
-	{"&Oacute;", "O'"},
-	{"&Ocirc;" , "O^"},
-	{"&Otilde;", "O~"},
-	{"&Ouml;"  , "O\xa1\xaf"},
-	{"&times;" , "\xa1\xdf"},
-	{"&Ugrave;", "U`"},
-	{"&Uacute;", "U'"},
-	{"&Ucirc;" , "U^"},
-	{"&Uuml;"  , "U\xa1\xaf"},
-	{"&Yacute;", "Y'"},
-
-	{"&agrave;", "a`"},
-	{"&aacute;", "a'"},
-	{"&acirc;" , "a^"},
-	{"&atilde;", "a~"},
-	{"&auml;"  , "a\xa1\xaf"},
-	{"&aring;" , "a\xa1\xeb"},
-	{"&aelig;" , "ae"},
-	{"&egrave;", "e`"},
-	{"&eacute;", "e'"},
-	{"&ecirc;" , "e^"},
-	{"&euml;"  , "e\xa1\xaf"},
-	{"&igrave;", "i`"},
-	{"&iacute;", "i'"},
-	{"&icirc;" , "i^"},
-	{"&iuml;"  , "i\xa1\xaf"},
-
-	{"&eth;"   , "\xa2\xdf"},
-	{"&ntilde;", "n~"},
-	{"&ograve;", "o`"},
-	{"&oacute;", "o'"},
-	{"&ocirc;" , "o^"},
-	{"&otilde;", "o~"},
-	{"&ouml;"  , "o\xa1\xaf"},
-	{"&divide;", "\xa1\xe0"},
-	{"&ugrave;", "u`"},
-	{"&uacute;", "u'"},
-	{"&ucirc;" , "u^"},
-	{"&uuml;"  , "u\xa1\xaf"},
-	{"&yacute;", "y'"},
-	{"&yuml;"  , "y\xa1\xaf"},
-};
-
-static HTMLSymbol latin_symbol_list[] = {
-	{"&iexcl;" , "\xa1"},
-	{"&cent;"  , "\xa2"},
-	{"&pound;" , "\xa3"},
-	{"&curren;", "\xa4"},
-	{"&yen;"   , "\xa5"},
-	{"&brvbar;", "\xa6"},
-	{"&sect;"  , "\xa7"},
-	{"&uml;"   , "\xa8"},
-	{"&copy;"  , "\xa9"},
-	{"&ordf;"  , "\xaa"},
-	{"&laquo;" , "\xab"},
-	{"&not;"   , "\xac"},
-	{"&shy;"   , "\xad"},
-	{"&reg;"   , "\xae"},
-	{"&macr;"  , "\xaf"},
-
-	{"&deg;"   , "\xb0"},
-	{"&plusmn;", "\xb1"},
-	{"&sup2;"  , "\xb2"},
-	{"&sup3;"  , "\xb3"},
-	{"&acute;" , "\xb4"},
-	{"&micro;" , "\xb5"},
-	{"&para;"  , "\xb6"},
-	{"&middot;", "\xb7"},
-	{"&cedil;" , "\xb8"},
-	{"&sup1;"  , "\xb9"},
-	{"&ordm;"  , "\xba"},
-	{"&raquo;" , "\xbb"},
-	{"&frac14;", "\xbc"},
-	{"&frac12;", "\xbd"},
-	{"&frac34;", "\xbe"},
-	{"&iquest;", "\xbf"},
-
-	{"&Agrave;", "\xc0"},
-	{"&Aacute;", "\xc1"},
-	{"&Acirc;" , "\xc2"},
-	{"&Atilde;", "\xc3"},
-	{"&Auml;"  , "\xc4"},
-	{"&Aring;" , "\xc5"},
-	{"&AElig;" , "\xc6"},
-	{"&Ccedil;", "\xc7"},
-	{"&Egrave;", "\xc8"},
-	{"&Eacute;", "\xc9"},
-	{"&Ecirc;" , "\xca"},
-	{"&Euml;"  , "\xcb"},
-	{"&Igrave;", "\xcc"},
-	{"&Iacute;", "\xcd"},
-	{"&Icirc;" , "\xce"},
-	{"&Iuml;"  , "\xcf"},
-
-	{"&ETH;"   , "\xd0"},
-	{"&Ntilde;", "\xd1"},
-	{"&Ograve;", "\xd2"},
-	{"&Oacute;", "\xd3"},
-	{"&Ocirc;" , "\xd4"},
-	{"&Otilde;", "\xd5"},
-	{"&Ouml;"  , "\xd6"},
-	{"&times;" , "\xd7"},
-	{"&Oslash;", "\xd8"},
-	{"&Ugrave;", "\xd9"},
-	{"&Uacute;", "\xda"},
-	{"&Ucirc;" , "\xdb"},
-	{"&Uuml;"  , "\xdc"},
-	{"&Yacute;", "\xdd"},
-	{"&THORN;" , "\xde"},
-	{"&szlig;" , "\xdf"},
-
-	{"&agrave;", "\xe0"},
-	{"&aacute;", "\xe1"},
-	{"&acirc;" , "\xe2"},
-	{"&atilde;", "\xe3"},
-	{"&auml;"  , "\xe4"},
-	{"&aring;" , "\xe5"},
-	{"&aelig;" , "\xe6"},
-	{"&ccedil;", "\xe7"},
-	{"&egrave;", "\xe8"},
-	{"&eacute;", "\xe9"},
-	{"&ecirc;" , "\xea"},
-	{"&euml;"  , "\xeb"},
-	{"&igrave;", "\xec"},
-	{"&iacute;", "\xed"},
-	{"&icirc;" , "\xee"},
-	{"&iuml;"  , "\xef"},
-
-	{"&eth;"   , "\xf0"},
-	{"&ntilde;", "\xf1"},
-	{"&ograve;", "\xf2"},
-	{"&oacute;", "\xf3"},
-	{"&ocirc;" , "\xf4"},
-	{"&otilde;", "\xf5"},
-	{"&ouml;"  , "\xf6"},
-	{"&divide;", "\xf7"},
-	{"&oslash;", "\xf8"},
-	{"&ugrave;", "\xf9"},
-	{"&uacute;", "\xfa"},
-	{"&ucirc;" , "\xfb"},
-	{"&uuml;"  , "\xfc"},
-	{"&yacute;", "\xfd"},
-	{"&thorn;" , "\xfe"},
-	{"&yuml;"  , "\xff"},
-};
-
 static GHashTable *default_symbol_table;
-static GHashTable *eucjp_symbol_table;
-static GHashTable *latin_symbol_table;
 
 static HTMLState html_read_line		(HTMLParser	*parser);
 static void html_append_char		(HTMLParser	*parser,
@@ -354,31 +160,10 @@ HTMLParser *html_parser_new(FILE *fp, CodeConverter *conv)
 		SYMBOL_TABLE_ADD(default_symbol_table, symbol_list);
 		SYMBOL_TABLE_ADD(default_symbol_table, ascii_symbol_list);
 	}
-	if (!eucjp_symbol_table) {
-		eucjp_symbol_table =
-			g_hash_table_new(g_str_hash, g_str_equal);
-		SYMBOL_TABLE_ADD(eucjp_symbol_table, symbol_list);
-		SYMBOL_TABLE_ADD(eucjp_symbol_table, eucjp_symbol_list);
-	}
-	if (!latin_symbol_table) {
-		latin_symbol_table =
-			g_hash_table_new(g_str_hash, g_str_equal);
-		SYMBOL_TABLE_ADD(latin_symbol_table, symbol_list);
-		SYMBOL_TABLE_ADD(latin_symbol_table, latin_symbol_list);
-	}
 
 #undef SYMBOL_TABLE_ADD
 
-	if (conv->charset == C_ISO_8859_1)
-		parser->symbol_table = latin_symbol_table;
-	else if ((conv->charset == C_ISO_2022_JP   ||
-		  conv->charset == C_ISO_2022_JP_2 ||
-		  conv->charset == C_EUC_JP        ||
-		  conv->charset == C_SHIFT_JIS) &&
-		 conv_get_locale_charset() == C_EUC_JP)
-		parser->symbol_table = eucjp_symbol_table;
-	else
-		parser->symbol_table = default_symbol_table;
+	parser->symbol_table = default_symbol_table;
 
 	return parser;
 }
@@ -529,7 +314,7 @@ static HTMLTag *html_get_tag(const gchar *str)
 
 	tag = g_new0(HTMLTag, 1);
 
-	for (tmpp = tmp; *tmpp != '\0' && !isspace(*tmpp); tmpp++)
+	for (tmpp = tmp; *tmpp != '\0' && !g_ascii_isspace(*tmpp); tmpp++)
 		;
 
 	if (*tmpp == '\0') {
@@ -549,18 +334,20 @@ static HTMLTag *html_get_tag(const gchar *str)
 		gchar *p;
 		gchar quote;
 
-		while (isspace(*tmpp)) tmpp++;
+		while (g_ascii_isspace(*tmpp)) tmpp++;
 		attr_name = tmpp;
 
-		while (*tmpp != '\0' && !isspace(*tmpp) && *tmpp != '=') tmpp++;
+		while (*tmpp != '\0' && !g_ascii_isspace(*tmpp) &&
+		       *tmpp != '=')
+			tmpp++;
 		if (*tmpp != '\0' && *tmpp != '=') {
 			*tmpp++ = '\0';
-			while (isspace(*tmpp)) tmpp++;
+			while (g_ascii_isspace(*tmpp)) tmpp++;
 		}
 
 		if (*tmpp == '=') {
 			*tmpp++ = '\0';
-			while (isspace(*tmpp)) tmpp++;
+			while (g_ascii_isspace(*tmpp)) tmpp++;
 
 			if (*tmpp == '"' || *tmpp == '\'') {
 				/* name="value" */
@@ -573,11 +360,11 @@ static HTMLTag *html_get_tag(const gchar *str)
 				}
 				tmpp = p;
 				*tmpp++ = '\0';
-				while (isspace(*tmpp)) tmpp++;
+				while (g_ascii_isspace(*tmpp)) tmpp++;
 			} else {
 				/* name=value */
 				attr_value = tmpp;
-				while (*tmpp != '\0' && !isspace(*tmpp)) tmpp++;
+				while (*tmpp != '\0' && !g_ascii_isspace(*tmpp)) tmpp++;
 				if (*tmpp != '\0')
 					*tmpp++ = '\0';
 			}
@@ -664,7 +451,7 @@ static HTMLState html_parse_tag(HTMLParser *parser)
 		   !strcmp(tag->name, "li")     ||
 		   !strcmp(tag->name, "table")  ||
 		   !strcmp(tag->name, "tr")     ||
-		   (tag->name[0] == 'h' && isdigit((guchar)tag->name[1]))) {
+		   (tag->name[0] == 'h' && g_ascii_isdigit(tag->name[1]))) {
 		if (!parser->newline) {
 			parser->space = FALSE;
 			html_append_char(parser, '\n');
@@ -673,7 +460,7 @@ static HTMLState html_parse_tag(HTMLParser *parser)
 	} else if (!strcmp(tag->name, "/table") ||
 		   (tag->name[0] == '/' &&
 		    tag->name[1] == 'h' &&
-		    isdigit((guchar)tag->name[1]))) {
+		    g_ascii_isdigit(tag->name[1]))) {
 		if (!parser->empty_line) {
 			parser->space = FALSE;
 			if (!parser->newline) html_append_char(parser, '\n');
@@ -721,13 +508,12 @@ static void html_parse_special(HTMLParser *parser)
 		html_append_str(parser, val, -1);
 		parser->state = HTML_NORMAL;
 		return;
-	} else if (symbol_name[1] == '#' && isdigit((guchar)symbol_name[2])) {
+	} else if (symbol_name[1] == '#' && g_ascii_isdigit(symbol_name[2])) {
 		gint ch;
 
+		/* TODO: support other entity references */
 		ch = atoi(symbol_name + 2);
-		if ((ch > 0 && ch <= 127) ||
-		    (ch >= 128 && ch <= 255 &&
-		     parser->conv->charset == C_ISO_8859_1)) {
+		if (g_ascii_isprint(ch)) {
 			html_append_char(parser, ch);
 			parser->state = HTML_NORMAL;
 			return;

@@ -36,6 +36,7 @@
 #include "prefs_filter.h"
 #include "filter.h"
 #include "folder.h"
+#include "codeconv.h"
 #if USE_GPGME
 #  include "rfc2015.h"
 #endif
@@ -1297,7 +1298,8 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 
 	g_return_if_fail(msginfo);
 
-	if ((tmpfp = procmime_get_first_text_content(msginfo)) == NULL) {
+	if ((tmpfp = procmime_get_first_text_content
+		(msginfo, conv_get_locale_charset_str())) == NULL) {
 		g_warning(_("Can't get text part\n"));
 		return;
 	}
@@ -1312,13 +1314,23 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 		return;
 	}
 
-	if (msginfo->date) fprintf(prfp, "Date: %s\n", msginfo->date);
-	if (msginfo->from) fprintf(prfp, "From: %s\n", msginfo->from);
-	if (msginfo->to)   fprintf(prfp, "To: %s\n", msginfo->to);
-	if (msginfo->newsgroups)
-		fprintf(prfp, "Newsgroups: %s\n", msginfo->newsgroups);
-	if (msginfo->subject) fprintf(prfp, "Subject: %s\n", msginfo->subject);
+#define OUTPUT_HEADER(s, fmt)						 \
+	if (s) {							 \
+		gchar *locale_str;					 \
+		locale_str = conv_codeset_strdup			 \
+			(s, CS_INTERNAL, conv_get_locale_charset_str()); \
+		fprintf(prfp, fmt, locale_str ? locale_str : s);	 \
+		g_free(locale_str);					 \
+	}
+
+	OUTPUT_HEADER(msginfo->date, "Date: %s\n");
+	OUTPUT_HEADER(msginfo->from, "From: %s\n");
+	OUTPUT_HEADER(msginfo->to, "To: %s\n");
+	OUTPUT_HEADER(msginfo->newsgroups, "Newsgroups: %s\n");
+	OUTPUT_HEADER(msginfo->subject, "Subject: %s\n");
 	fputc('\n', prfp);
+
+#undef OUTPUT_HEADER
 
 	while (fgets(buf, sizeof(buf), tmpfp) != NULL)
 		fputs(buf, prfp);

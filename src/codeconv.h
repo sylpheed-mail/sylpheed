@@ -97,8 +97,8 @@ typedef void (*CodeConvFunc) (gchar *outbuf, gint outlen, const gchar *inbuf);
 struct _CodeConverter
 {
 	CodeConvFunc code_conv_func;
-	gchar *charset_str;
-	CharSet charset;
+	gchar *src_encoding;
+	gchar *dest_encoding;
 };
 
 #define CS_AUTO			"AUTO"
@@ -176,7 +176,8 @@ CharSet conv_guess_ja_encoding(const gchar *str);
 void conv_utf8todisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_localetodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 
-CodeConverter *conv_code_converter_new	(const gchar	*src_charset);
+CodeConverter *conv_code_converter_new	(const gchar	*src_encoding,
+					 const gchar	*dest_encoding);
 void conv_code_converter_destroy	(CodeConverter	*conv);
 gint conv_convert			(CodeConverter	*conv,
 					 gchar		*outbuf,

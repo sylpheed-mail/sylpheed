@@ -729,7 +729,7 @@ static void textview_write_body(TextView *textview, MimeInfo *mimeinfo,
 	gchar buf[BUFFSIZE];
 	CodeConverter *conv;
 
-	conv = conv_code_converter_new(charset);
+	conv = conv_code_converter_new(charset, NULL);
 
 	tmpfp = procmime_decode_content(NULL, fp, mimeinfo);
 	if (tmpfp) {

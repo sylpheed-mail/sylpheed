@@ -1,6 +1,21 @@
 2005-02-25
 
 	* src/compose.c
+	  src/textview.c
+	  src/quote_fmt_parse.y: API の変更に追従。
+	* src/procmsg.c: procmsg_print_message(): テキストをロケール
+	  エンコーディングで出力するようにした。
+	* src/procmime.[ch]:
+	  procmime_get_text_content()
+	  procmime_get_first_text_content(): 出力エンコーディングの引数を
+	  追加。
+	* src/codeconv.[ch]: conv_code_converter_new(): 出力エンコーディ
+	  ングの引数を追加。
+	* src/html.c: 正常に動作しないロケール固有の実体参照変換を削除。
+
+2005-02-25
+
+	* src/compose.c
 	  src/messageview.c
 	  src/mimeview.c
 	  src/export.c
