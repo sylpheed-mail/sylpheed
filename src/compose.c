@@ -2979,6 +2979,7 @@ static void compose_write_attach(Compose *compose, FILE *fp)
 	FILE *attach_fp;
 	gchar filename[BUFFSIZE];
 	gint len;
+	EncodingType encoding;
 
 	for (row = 0; (ainfo = gtk_clist_get_row_data(clist, row)) != NULL;
 	     row++) {
@@ -3002,10 +3003,22 @@ static void compose_write_attach(Compose *compose, FILE *fp)
 				    " filename=\"%s\"\n", filename);
 		}
 
-		fprintf(fp, "Content-Transfer-Encoding: %s\n\n",
-			procmime_get_encoding_str(ainfo->encoding));
+		encoding = ainfo->encoding;
 
-		if (ainfo->encoding == ENC_BASE64) {
+#if USE_GPGME
+		/* force encoding to protect trailing spaces */
+		if (compose->use_signing) {
+			if (encoding == ENC_7BIT)
+				encoding = ENC_QUOTED_PRINTABLE;
+			else if (encoding == ENC_8BIT)
+				encoding = ENC_BASE64;
+		}
+#endif
+
+		fprintf(fp, "Content-Transfer-Encoding: %s\n\n",
+			procmime_get_encoding_str(encoding));
+
+		if (encoding == ENC_BASE64) {
 			gchar inbuf[B64_LINE_SIZE], outbuf[B64_BUFFSIZE];
 			FILE *tmp_fp = attach_fp;
 			gchar *tmp_file = NULL;
@@ -3049,7 +3062,7 @@ static void compose_write_attach(Compose *compose, FILE *fp)
 				unlink(tmp_file);
 				g_free(tmp_file);
 			}
-		} else if (ainfo->encoding == ENC_QUOTED_PRINTABLE) {
+		} else if (encoding == ENC_QUOTED_PRINTABLE) {
 			gchar inbuf[BUFFSIZE], outbuf[BUFFSIZE * 4];
 
 			while (fgets(inbuf, sizeof(inbuf), attach_fp) != NULL) {
