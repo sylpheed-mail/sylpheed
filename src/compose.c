@@ -159,6 +159,7 @@ static void compose_toolbar_create		(Compose	*compose,
 						 GtkWidget	*container);
 static GtkWidget *compose_account_option_menu_create
 						(Compose	*compose);
+static void compose_set_out_encoding		(Compose	*compose);
 static void compose_set_template_menu		(Compose	*compose);
 static void compose_template_apply		(Compose	*compose,
 						 Template	*tmpl,
@@ -231,7 +232,8 @@ static gint compose_remove_reedit_target	(Compose	*compose);
 static gint compose_queue			(Compose	*compose,
 						 const gchar	*file);
 static void compose_write_attach		(Compose	*compose,
-						 FILE		*fp);
+						 FILE		*fp,
+						 const gchar	*charset);
 static gint compose_write_headers		(Compose	*compose,
 						 FILE		*fp,
 						 const gchar	*charset,
@@ -240,11 +242,13 @@ static gint compose_write_headers		(Compose	*compose,
 static gint compose_redirect_write_headers	(Compose	*compose,
 						 FILE		*fp);
 
-static void compose_convert_header		(gchar		*dest,
+static void compose_convert_header		(Compose	*compose,
+						 gchar		*dest,
 						 gint		 len,
 						 gchar		*src,
 						 gint		 header_len,
-						 gboolean	 addr_field);
+						 gboolean	 addr_field,
+						 const gchar	*encoding);
 static void compose_generate_msgid		(Compose	*compose,
 						 gchar		*buf,
 						 gint		 len);
@@ -345,6 +349,10 @@ static void compose_insert_sig_cb	(gpointer	 data,
 					 GtkWidget	*widget);
 
 static void compose_close_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void compose_set_encoding_cb	(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
 
@@ -581,6 +589,77 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_View/R_uler"),		NULL, compose_toggle_ruler_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/_Attachment"),	NULL, compose_toggle_attach_cb, 0, "<ToggleItem>"},
+	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
+
+#define ENC_ACTION(action) \
+	NULL, compose_set_encoding_cb, action, \
+	"/View/Character encoding/Automatic"
+
+	{N_("/_View/Character _encoding"), NULL, NULL, 0, "<Branch>"},
+	{N_("/_View/Character _encoding/_Automatic"),
+			NULL, compose_set_encoding_cb, C_AUTO, "<RadioItem>"},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/7bit ascii (US-ASC_II)"),
+	 ENC_ACTION(C_US_ASCII)},
+	{N_("/_View/Character _encoding/Unicode (_UTF-8)"),
+	 ENC_ACTION(C_UTF_8)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Western European (ISO-8859-_1)"),
+	 ENC_ACTION(C_ISO_8859_1)},
+	{N_("/_View/Character _encoding/Western European (ISO-8859-15)"),
+	 ENC_ACTION(C_ISO_8859_15)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Central European (ISO-8859-_2)"),
+	 ENC_ACTION(C_ISO_8859_2)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/_Baltic (ISO-8859-13)"),
+	 ENC_ACTION(C_ISO_8859_13)},
+	{N_("/_View/Character _encoding/Baltic (ISO-8859-_4)"),
+	 ENC_ACTION(C_ISO_8859_4)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Greek (ISO-8859-_7)"),
+	 ENC_ACTION(C_ISO_8859_7)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Turkish (ISO-8859-_9)"),
+	 ENC_ACTION(C_ISO_8859_9)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Cyrillic (ISO-8859-_5)"),
+	 ENC_ACTION(C_ISO_8859_5)},
+	{N_("/_View/Character _encoding/Cyrillic (KOI8-_R)"),
+	 ENC_ACTION(C_KOI8_R)},
+	{N_("/_View/Character _encoding/Cyrillic (KOI8-U)"),
+	 ENC_ACTION(C_KOI8_U)},
+	{N_("/_View/Character _encoding/Cyrillic (Windows-1251)"),
+	 ENC_ACTION(C_CP1251)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Japanese (ISO-2022-_JP)"),
+	 ENC_ACTION(C_ISO_2022_JP)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Simplified Chinese (_GB2312)"),
+	 ENC_ACTION(C_GB2312)},
+	{N_("/_View/Character _encoding/Traditional Chinese (_Big5)"),
+	 ENC_ACTION(C_BIG5)},
+	{N_("/_View/Character _encoding/Traditional Chinese (EUC-_TW)"),
+	 ENC_ACTION(C_EUC_TW)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Korean (EUC-_KR)"),
+	 ENC_ACTION(C_EUC_KR)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
+	{N_("/_View/Character _encoding/Thai (TIS-620)"),
+	 ENC_ACTION(C_TIS_620)},
+	{N_("/_View/Character _encoding/Thai (Windows-874)"),
+	 ENC_ACTION(C_WINDOWS_874)},
 
 	{N_("/_Tools"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_Tools/_Address book"),	"<shift><control>A", compose_address_cb , 0, NULL},
@@ -2531,8 +2610,10 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	} else {
 		gint error = 0;
 
-		out_codeset = conv_get_outgoing_charset_str();
-		if (!strcasecmp(out_codeset, CS_US_ASCII))
+		out_codeset = conv_get_charset_str(compose->out_encoding);
+		if (!out_codeset)
+			out_codeset = conv_get_outgoing_charset_str();
+		if (!g_strcasecmp(out_codeset, CS_US_ASCII))
 			out_codeset = CS_ISO_8859_1;
 
 		buf = conv_codeset_strdup_full(chars, src_codeset, out_codeset,
@@ -2675,7 +2756,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 	if (compose->use_attach &&
 	    GTK_CLIST(compose->attach_clist)->row_list)
-		compose_write_attach(compose, fp);
+		compose_write_attach(compose, fp, out_codeset);
 
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(file, "fclose");
@@ -2822,10 +2903,11 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 		if (g_strncasecmp(buf, "From:", strlen("From:")) == 0) {
 			fputs("\n (by way of ", fdest);
 			if (compose->account->name) {
-				compose_convert_header(buf, sizeof(buf),
+				compose_convert_header(compose,
+						       buf, sizeof(buf),
 						       compose->account->name,
 						       strlen(" (by way of "),
-						       FALSE);
+						       FALSE, NULL);
 				fprintf(fdest, "%s <%s>", buf,
 					compose->account->address);
 			} else
@@ -3006,7 +3088,8 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	return 0;
 }
 
-static void compose_write_attach(Compose *compose, FILE *fp)
+static void compose_write_attach(Compose *compose, FILE *fp,
+				 const gchar *charset)
 {
 	AttachInfo *ainfo;
 	GtkCList *clist = GTK_CLIST(compose->attach_clist);
@@ -3029,8 +3112,9 @@ static void compose_write_attach(Compose *compose, FILE *fp)
 			fprintf(fp, "Content-Type: %s\n", ainfo->content_type);
 			fprintf(fp, "Content-Disposition: inline\n");
 		} else {
-			compose_convert_header(filename, sizeof(filename),
-					       ainfo->name, 12, FALSE);
+			compose_convert_header(compose,
+					       filename, sizeof(filename),
+					       ainfo->name, 12, FALSE, charset);
 			fprintf(fp, "Content-Type: %s;\n"
 				    " name=\"%s\"\n",
 				ainfo->content_type, filename);
@@ -3145,8 +3229,8 @@ static void compose_write_attach(Compose *compose, FILE *fp)
 			compose->to_list = address_list_append		     \
 				(compose->to_list, dest);		     \
 			compose_convert_header				     \
-				(buf, sizeof(buf), dest, strlen(header) + 2, \
-				 TRUE);					     \
+				(compose, buf, sizeof(buf), dest,	     \
+				 strlen(header) + 2, TRUE, charset);	     \
 			fprintf(fp, "%s: %s\n", header, buf);		     \
 		}							     \
 	}								     \
@@ -3180,8 +3264,8 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	/* From */
 	if (compose->account->name && *compose->account->name) {
 		compose_convert_header
-			(buf, sizeof(buf), compose->account->name,
-			 strlen("From: "), TRUE);
+			(compose, buf, sizeof(buf), compose->account->name,
+			 strlen("From: "), TRUE, charset);
 		QUOTE_IF_REQUIRED(name, buf);
 		fprintf(fp, "From: %s <%s>\n",
 			name, compose->account->address);
@@ -3214,9 +3298,10 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 				compose->newsgroup_list =
 					newsgroup_list_append
 						(compose->newsgroup_list, str);
-				compose_convert_header(buf, sizeof(buf), str,
+				compose_convert_header(compose,
+						       buf, sizeof(buf), str,
 						       strlen("Newsgroups: "),
-						       TRUE);
+						       TRUE, charset);
 				fprintf(fp, "Newsgroups: %s\n", buf);
 			}
 		}
@@ -3243,8 +3328,9 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		Xstrdup_a(str, entry_str, return -1);
 		g_strstrip(str);
 		if (*str != '\0') {
-			compose_convert_header(buf, sizeof(buf), str,
-					       strlen("Subject: "), FALSE);
+			compose_convert_header(compose, buf, sizeof(buf), str,
+					       strlen("Subject: "), FALSE,
+					       charset);
 			fprintf(fp, "Subject: %s\n", buf);
 		}
 	}
@@ -3273,9 +3359,10 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 			g_strstrip(str);
 			remove_space(str);
 			if (*str != '\0') {
-				compose_convert_header(buf, sizeof(buf), str,
+				compose_convert_header(compose,
+						       buf, sizeof(buf), str,
 						       strlen("Followup-To: "),
-						       TRUE);
+						       TRUE, charset);
 				fprintf(fp, "Followup-To: %s\n", buf);
 			}
 		}
@@ -3288,9 +3375,10 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 			Xstrdup_a(str, entry_str, return -1);
 			g_strstrip(str);
 			if (*str != '\0') {
-				compose_convert_header(buf, sizeof(buf), str,
+				compose_convert_header(compose,
+						       buf, sizeof(buf), str,
 						       strlen("Reply-To: "),
-						       TRUE);
+						       TRUE, charset);
 				fprintf(fp, "Reply-To: %s\n", buf);
 			}
 		}
@@ -3299,9 +3387,10 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	/* Organization */
 	if (compose->account->organization &&
 	    !IS_IN_CUSTOM_HEADER("Organization")) {
-		compose_convert_header(buf, sizeof(buf),
+		compose_convert_header(compose, buf, sizeof(buf),
 				       compose->account->organization,
-				       strlen("Organization: "), FALSE);
+				       strlen("Organization: "), FALSE,
+				       charset);
 		fprintf(fp, "Organization: %s\n", buf);
 	}
 
@@ -3342,9 +3431,10 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 			    strcasecmp(chdr->name, "Content-Transfer-Encoding")
 			    != 0) {
 				compose_convert_header
-					(buf, sizeof(buf),
+					(compose, buf, sizeof(buf),
 					 chdr->value ? chdr->value : "",
-					 strlen(chdr->name) + 2, FALSE);
+					 strlen(chdr->name) + 2, FALSE,
+					 charset);
 				fprintf(fp, "%s: %s\n", chdr->name, buf);
 			}
 		}
@@ -3384,6 +3474,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 	gchar buf[BUFFSIZE];
 	const gchar *entry_str;
 	gchar *str;
+	const gchar *charset = NULL;
 
 	g_return_val_if_fail(fp != NULL, -1);
 	g_return_val_if_fail(compose->account != NULL, -1);
@@ -3396,8 +3487,8 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 	/* Resent-From */
 	if (compose->account->name) {
 		compose_convert_header
-			(buf, sizeof(buf), compose->account->name,
-			 strlen("Resent-From: "), TRUE);
+			(compose, buf, sizeof(buf), compose->account->name,
+			 strlen("Resent-From: "), TRUE, NULL);
 		fprintf(fp, "Resent-From: %s <%s>\n",
 			buf, compose->account->address);
 	} else
@@ -3437,9 +3528,10 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 				compose->newsgroup_list =
 					newsgroup_list_append
 						(compose->newsgroup_list, str);
-				compose_convert_header(buf, sizeof(buf), str,
+				compose_convert_header(compose,
+						       buf, sizeof(buf), str,
 						       strlen("Newsgroups: "),
-						       TRUE);
+						       TRUE, NULL);
 				fprintf(fp, "Newsgroups: %s\n", buf);
 			}
 		}
@@ -3454,8 +3546,9 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 		Xstrdup_a(str, entry_str, return -1);
 		g_strstrip(str);
 		if (*str != '\0') {
-			compose_convert_header(buf, sizeof(buf), str,
-					       strlen("Subject: "), FALSE);
+			compose_convert_header(compose, buf, sizeof(buf), str,
+					       strlen("Subject: "), FALSE,
+					       NULL);
 			fprintf(fp, "Subject: %s\n", buf);
 		}
 	}
@@ -3476,9 +3569,10 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 			g_strstrip(str);
 			remove_space(str);
 			if (*str != '\0') {
-				compose_convert_header(buf, sizeof(buf), str,
+				compose_convert_header(compose,
+						       buf, sizeof(buf), str,
 						       strlen("Followup-To: "),
-						       TRUE);
+						       TRUE, NULL);
 				fprintf(fp, "Followup-To: %s\n", buf);
 			}
 		}
@@ -3492,8 +3586,9 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 			g_strstrip(str);
 			if (*str != '\0') {
 				compose_convert_header
-					(buf, sizeof(buf), str,
-					 strlen("Resent-Reply-To: "), TRUE);
+					(compose, buf, sizeof(buf), str,
+					 strlen("Resent-Reply-To: "), TRUE,
+					 NULL);
 				fprintf(fp, "Resent-Reply-To: %s\n", buf);
 			}
 		}
@@ -3506,8 +3601,9 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 
 #undef IS_IN_CUSTOM_HEADER
 
-static void compose_convert_header(gchar *dest, gint len, gchar *src,
-				   gint header_len, gboolean addr_field)
+static void compose_convert_header(Compose *compose, gchar *dest, gint len,
+				   gchar *src, gint header_len,
+				   gboolean addr_field, const gchar *encoding)
 {
 	g_return_if_fail(src != NULL);
 	g_return_if_fail(dest != NULL);
@@ -3515,7 +3611,9 @@ static void compose_convert_header(gchar *dest, gint len, gchar *src,
 	if (len < 1) return;
 
 	g_strchomp(src);
-	conv_encode_header(dest, len, src, header_len, addr_field);
+	if (!encoding)
+		encoding = conv_get_charset_str(compose->out_encoding);
+	conv_encode_header(dest, len, src, header_len, addr_field, encoding);
 }
 
 static void compose_generate_msgid(Compose *compose, gchar *buf, gint len)
@@ -3995,6 +4093,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->use_followupto = FALSE;
 	compose->use_attach     = FALSE;
 
+	compose->out_encoding   = C_AUTO;
+
 #if USE_GPGME
 	compose->use_signing    = FALSE;
 	compose->use_encryption = FALSE;
@@ -4050,6 +4150,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 				       FALSE);
 	}
 
+	compose_set_out_encoding(compose);
 	addressbook_set_target_compose(compose);
 	action_update_compose_menu(ifactory, compose);
 	compose_set_template_menu(compose);
@@ -4250,6 +4351,41 @@ static GtkWidget *compose_account_option_menu_create(Compose *compose)
 	gtk_option_menu_set_history(GTK_OPTION_MENU(optmenu), def_menu);
 
 	return hbox;
+}
+
+static void compose_set_out_encoding(Compose *compose)
+{
+	GtkItemFactoryEntry *entry;
+	GtkItemFactory *ifactory;
+	CharSet out_encoding;
+	gchar *path, *p, *q;
+	GtkWidget *item;
+
+	out_encoding = conv_get_charset_from_str(prefs_common.outgoing_charset);
+	ifactory = gtk_item_factory_from_widget(compose->menubar);
+
+	for (entry = compose_entries; entry->callback != compose_address_cb;
+	     entry++) {
+		if (entry->callback == compose_set_encoding_cb &&
+		    (CharSet)entry->callback_action == out_encoding) {
+			p = q = path = g_strdup(entry->path);
+			while (*p) {
+				if (*p == '_') {
+					if (p[1] == '_') {
+						p++;
+						*q++ = '_';
+					}
+				} else
+					*q++ = *p;
+				p++;
+			}
+			*q = '\0';
+			item = gtk_item_factory_get_item(ifactory, path);
+			gtk_widget_activate(item);
+			g_free(path);
+			break;
+		}
+	}
 }
 
 static void compose_set_template_menu(Compose *compose)
@@ -5357,6 +5493,15 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	}
 
 	gtk_widget_destroy(compose->window);
+}
+
+static void compose_set_encoding_cb(gpointer data, guint action,
+				    GtkWidget *widget)
+{
+	Compose *compose = (Compose *)data;
+
+	if (GTK_CHECK_MENU_ITEM(widget)->active)
+		compose->out_encoding = (CharSet)action;
 }
 
 static void compose_address_cb(gpointer data, guint action, GtkWidget *widget)

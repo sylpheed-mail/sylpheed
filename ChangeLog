@@ -1,3 +1,15 @@
+2005-03-16
+
+	* src/compose.[ch]: added a menu to temporally change the outgoing
+	  encoding. Use UTF-8 also for headers if it is forced for body.
+	* src/codeconv.[ch]:
+	  conv_get_outgoing_charset_str(): don't use prefs_common setting.
+	  conv_encode_header(): added an argument for outgoing encoding.
+	* src/prefs_common.c: added separators to outgoing encoding menu.
+	* src/messageview.c
+	  src/mainwindow.c: changed 'Code set' (which is rather incorrect)
+	  in the menu to 'Character encoding'.
+
 2005-03-15
 
 	* version 1.9.6

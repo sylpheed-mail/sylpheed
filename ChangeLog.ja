@@ -1,3 +1,18 @@
+2005-03-16
+
+	* src/compose.[ch]: 送信エンコーディングを一時的に変更するための
+	  メニューを追加。 UTF-8 を本文に強制的に使用する場合、ヘッダにも
+	  使用するようにした。
+	* src/codeconv.[ch]:
+	  conv_get_outgoing_charset_str(): prefs_common の設定を使用しない
+	  ようにした。
+	  conv_encode_header(): 送信エンコーディングの引数を追加。
+	* src/prefs_common.c: 送信エンコーディングのメニューにセパレータを
+	  追加。
+	* src/messageview.c
+	  src/mainwindow.c: メニューの「文字コードセット」(やや間違い)を
+	  「文字エンコーディング」に変更。
+
 2005-03-15
 
 	* version 1.9.6

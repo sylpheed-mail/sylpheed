@@ -221,7 +221,8 @@ void conv_encode_header			(gchar		*dest,
 					 gint		 len,
 					 const gchar	*src,
 					 gint		 header_len,
-					 gboolean	 addr_field);
+					 gboolean	 addr_field,
+					 const gchar	*out_encoding);
 
 gint conv_copy_file			(const gchar	*src,
 					 const gchar	*dest,

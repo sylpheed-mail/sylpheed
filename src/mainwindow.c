@@ -511,7 +511,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, toggle_statusbar_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/Separate f_older tree"),	NULL, separate_widget_cb, SEPARATE_FOLDER, "<ToggleItem>"},
-	{N_("/_View/Separate m_essage view"),	NULL, separate_widget_cb, SEPARATE_MESSAGE, "<ToggleItem>"},
+	{N_("/_View/Separate _message view"),	NULL, separate_widget_cb, SEPARATE_MESSAGE, "<ToggleItem>"},
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/_Sort"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_View/_Sort/by _number"),		NULL, sort_summary_cb, SORT_BY_NUMBER, "<RadioItem>"},
@@ -564,76 +564,85 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_View/_Go to/Other _folder..."),	"G", goto_folder_cb, 0, NULL},
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
 
-#define CODESET_SEPARATOR \
-	{N_("/_View/_Code set/---"),		NULL, NULL, 0, "<Separator>"}
-#define CODESET_ACTION(action) \
-	 NULL, set_charset_cb, action, "/View/Code set/Auto detect"
+#define ENC_SEPARATOR \
+	{N_("/_View/Character _encoding/---"),		NULL, NULL, 0, "<Separator>"}
+#define ENC_ACTION(action) \
+	 NULL, set_charset_cb, action, "/View/Character encoding/Auto detect"
 
-	{N_("/_View/_Code set"),		NULL, NULL, 0, "<Branch>"},
-	{N_("/_View/_Code set/_Auto detect"),
+	{N_("/_View/Character _encoding"),		NULL, NULL, 0, "<Branch>"},
+	{N_("/_View/Character _encoding/_Auto detect"),
 	 NULL, set_charset_cb, C_AUTO, "<RadioItem>"},
-	{N_("/_View/_Code set/---"),		NULL, NULL, 0, "<Separator>"},
-	{N_("/_View/_Code set/7bit ascii (US-ASC_II)"),
-	 CODESET_ACTION(C_US_ASCII)},
+	{N_("/_View/Character _encoding/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_View/Character _encoding/7bit ascii (US-ASC_II)"),
+	 ENC_ACTION(C_US_ASCII)},
+	{N_("/_View/Character _encoding/Unicode (_UTF-8)"),
+	 ENC_ACTION(C_UTF_8)},
+	ENC_SEPARATOR,
 
-	{N_("/_View/_Code set/Unicode (_UTF-8)"),
-	 CODESET_ACTION(C_UTF_8)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Western European (ISO-8859-_1)"),
-	 CODESET_ACTION(C_ISO_8859_1)},
-	{N_("/_View/_Code set/Western European (ISO-8859-15)"),
-	 CODESET_ACTION(C_ISO_8859_15)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Central European (ISO-8859-_2)"),
-	 CODESET_ACTION(C_ISO_8859_2)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/_Baltic (ISO-8859-13)"),
-	 CODESET_ACTION(C_ISO_8859_13)},
-	{N_("/_View/_Code set/Baltic (ISO-8859-_4)"),
-	 CODESET_ACTION(C_ISO_8859_4)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Greek (ISO-8859-_7)"),
-	 CODESET_ACTION(C_ISO_8859_7)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Turkish (ISO-8859-_9)"),
-	 CODESET_ACTION(C_ISO_8859_9)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Cyrillic (ISO-8859-_5)"),
-	 CODESET_ACTION(C_ISO_8859_5)},
-	{N_("/_View/_Code set/Cyrillic (KOI8-_R)"),
-	 CODESET_ACTION(C_KOI8_R)},
-	{N_("/_View/_Code set/Cyrillic (KOI8-U)"),
-	 CODESET_ACTION(C_KOI8_U)},
-	{N_("/_View/_Code set/Cyrillic (Windows-1251)"),
-	 CODESET_ACTION(C_CP1251)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Japanese (ISO-2022-_JP)"),
-	 CODESET_ACTION(C_ISO_2022_JP)},
-	{N_("/_View/_Code set/Japanese (ISO-2022-JP-2)"),
-	 CODESET_ACTION(C_ISO_2022_JP_2)},
-	{N_("/_View/_Code set/Japanese (_EUC-JP)"),
-	 CODESET_ACTION(C_EUC_JP)},
-	{N_("/_View/_Code set/Japanese (_Shift__JIS)"),
-	 CODESET_ACTION(C_SHIFT_JIS)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Simplified Chinese (_GB2312)"),
-	 CODESET_ACTION(C_GB2312)},
-	{N_("/_View/_Code set/Traditional Chinese (_Big5)"),
-	 CODESET_ACTION(C_BIG5)},
-	{N_("/_View/_Code set/Traditional Chinese (EUC-_TW)"),
-	 CODESET_ACTION(C_EUC_TW)},
-	{N_("/_View/_Code set/Chinese (ISO-2022-_CN)"),
-	 CODESET_ACTION(C_ISO_2022_CN)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Korean (EUC-_KR)"),
-	 CODESET_ACTION(C_EUC_KR)},
-	{N_("/_View/_Code set/Korean (ISO-2022-KR)"),
-	 CODESET_ACTION(C_ISO_2022_KR)},
-	CODESET_SEPARATOR,
-	{N_("/_View/_Code set/Thai (TIS-620)"),
-	 CODESET_ACTION(C_TIS_620)},
-	{N_("/_View/_Code set/Thai (Windows-874)"),
-	 CODESET_ACTION(C_WINDOWS_874)},
+	{N_("/_View/Character _encoding/Western European (ISO-8859-_1)"),
+	 ENC_ACTION(C_ISO_8859_1)},
+	{N_("/_View/Character _encoding/Western European (ISO-8859-15)"),
+	 ENC_ACTION(C_ISO_8859_15)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Central European (ISO-8859-_2)"),
+	 ENC_ACTION(C_ISO_8859_2)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/_Baltic (ISO-8859-13)"),
+	 ENC_ACTION(C_ISO_8859_13)},
+	{N_("/_View/Character _encoding/Baltic (ISO-8859-_4)"),
+	 ENC_ACTION(C_ISO_8859_4)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Greek (ISO-8859-_7)"),
+	 ENC_ACTION(C_ISO_8859_7)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Turkish (ISO-8859-_9)"),
+	 ENC_ACTION(C_ISO_8859_9)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Cyrillic (ISO-8859-_5)"),
+	 ENC_ACTION(C_ISO_8859_5)},
+	{N_("/_View/Character _encoding/Cyrillic (KOI8-_R)"),
+	 ENC_ACTION(C_KOI8_R)},
+	{N_("/_View/Character _encoding/Cyrillic (KOI8-U)"),
+	 ENC_ACTION(C_KOI8_U)},
+	{N_("/_View/Character _encoding/Cyrillic (Windows-1251)"),
+	 ENC_ACTION(C_CP1251)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Japanese (ISO-2022-_JP)"),
+	 ENC_ACTION(C_ISO_2022_JP)},
+	{N_("/_View/Character _encoding/Japanese (ISO-2022-JP-2)"),
+	 ENC_ACTION(C_ISO_2022_JP_2)},
+	{N_("/_View/Character _encoding/Japanese (_EUC-JP)"),
+	 ENC_ACTION(C_EUC_JP)},
+	{N_("/_View/Character _encoding/Japanese (_Shift__JIS)"),
+	 ENC_ACTION(C_SHIFT_JIS)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Simplified Chinese (_GB2312)"),
+	 ENC_ACTION(C_GB2312)},
+	{N_("/_View/Character _encoding/Traditional Chinese (_Big5)"),
+	 ENC_ACTION(C_BIG5)},
+	{N_("/_View/Character _encoding/Traditional Chinese (EUC-_TW)"),
+	 ENC_ACTION(C_EUC_TW)},
+	{N_("/_View/Character _encoding/Chinese (ISO-2022-_CN)"),
+	 ENC_ACTION(C_ISO_2022_CN)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Korean (EUC-_KR)"),
+	 ENC_ACTION(C_EUC_KR)},
+	{N_("/_View/Character _encoding/Korean (ISO-2022-KR)"),
+	 ENC_ACTION(C_ISO_2022_KR)},
+	ENC_SEPARATOR,
+
+	{N_("/_View/Character _encoding/Thai (TIS-620)"),
+	 ENC_ACTION(C_TIS_620)},
+	{N_("/_View/Character _encoding/Thai (Windows-874)"),
+	 ENC_ACTION(C_WINDOWS_874)},
 
 #undef CODESET_SEPARATOR
 #undef CODESET_ACTION
@@ -952,7 +961,7 @@ MainWindow *main_window_create(SeparateType type)
 
 	/* set menu items */
 	menuitem = gtk_item_factory_get_item
-		(ifactory, "/View/Code set/Auto detect");
+		(ifactory, "/View/Character encoding/Auto detect");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
 
 	switch (prefs_common.toolbar_style) {

@@ -1509,14 +1509,6 @@ const gchar *conv_get_outgoing_charset_str(void)
 	CharSet out_charset;
 	const gchar *str;
 
-	if (prefs_common.outgoing_charset) {
-		if (!isalpha((guchar)prefs_common.outgoing_charset[0])) {
-			g_free(prefs_common.outgoing_charset);
-			prefs_common.outgoing_charset = g_strdup(CS_AUTO);
-		} else if (strcmp(prefs_common.outgoing_charset, CS_AUTO) != 0)
-			return prefs_common.outgoing_charset;
-	}
-
 	out_charset = conv_get_outgoing_charset();
 	str = conv_get_charset_str(out_charset);
 
@@ -1623,10 +1615,10 @@ gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 }
 
 void conv_encode_header(gchar *dest, gint len, const gchar *src,
-			gint header_len, gboolean addr_field)
+			gint header_len, gboolean addr_field,
+			const gchar *out_encoding)
 {
 	const gchar *cur_encoding;
-	const gchar *out_encoding;
 	gint mimestr_len;
 	gchar *mimesep_enc;
 	gint left;
@@ -1645,7 +1637,8 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 	}
 
 	cur_encoding = CS_INTERNAL;
-	out_encoding = conv_get_outgoing_charset_str();
+	if (!out_encoding)
+		out_encoding = conv_get_outgoing_charset_str();
 	if (!strcmp(out_encoding, CS_US_ASCII))
 		out_encoding = CS_ISO_8859_1;
 

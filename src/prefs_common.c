@@ -1110,7 +1110,7 @@ static void prefs_send_create(void)
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
-	label_outcharset = gtk_label_new (_("Outgoing codeset"));
+	label_outcharset = gtk_label_new (_("Outgoing encoding"));
 	gtk_widget_show (label_outcharset);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_outcharset, FALSE, FALSE, 0);
 
@@ -1126,31 +1126,43 @@ static void prefs_send_create(void)
 }
 
 	SET_MENUITEM(_("Automatic (Recommended)"),	 CS_AUTO);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("7bit ascii (US-ASCII)"),	 CS_US_ASCII);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Unicode (UTF-8)"),		 CS_UTF_8);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Western European (ISO-8859-1)"),  CS_ISO_8859_1);
 	SET_MENUITEM(_("Western European (ISO-8859-15)"), CS_ISO_8859_15);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Central European (ISO-8859-2)"),  CS_ISO_8859_2);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Baltic (ISO-8859-13)"),		  CS_ISO_8859_13);
 	SET_MENUITEM(_("Baltic (ISO-8859-4)"),		  CS_ISO_8859_4);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Greek (ISO-8859-7)"),		  CS_ISO_8859_7);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Turkish (ISO-8859-9)"),		  CS_ISO_8859_9);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Cyrillic (ISO-8859-5)"),	  CS_ISO_8859_5);
 	SET_MENUITEM(_("Cyrillic (KOI8-R)"),		 CS_KOI8_R);
-	SET_MENUITEM(_("Cyrillic (Windows-1251)"),	 CS_WINDOWS_1251);
 	SET_MENUITEM(_("Cyrillic (KOI8-U)"),		 CS_KOI8_U);
+	SET_MENUITEM(_("Cyrillic (Windows-1251)"),	 CS_WINDOWS_1251);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Japanese (ISO-2022-JP)"),	 CS_ISO_2022_JP);
 #if 0
 	SET_MENUITEM(_("Japanese (EUC-JP)"),		 CS_EUC_JP);
 	SET_MENUITEM(_("Japanese (Shift_JIS)"),		 CS_SHIFT_JIS);
 #endif /* 0 */
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Simplified Chinese (GB2312)"),	 CS_GB2312);
 	SET_MENUITEM(_("Traditional Chinese (Big5)"),	 CS_BIG5);
 #if 0
 	SET_MENUITEM(_("Traditional Chinese (EUC-TW)"),  CS_EUC_TW);
 	SET_MENUITEM(_("Chinese (ISO-2022-CN)"),	 CS_ISO_2022_CN);
 #endif /* 0 */
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Korean (EUC-KR)"),		 CS_EUC_KR);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Thai (TIS-620)"),		 CS_TIS_620);
 	SET_MENUITEM(_("Thai (Windows-874)"),		 CS_WINDOWS_874);
 
@@ -3452,7 +3464,7 @@ static void prefs_common_charset_set_optmenu(PrefParam *pparam)
 	g_return_if_fail(*((gchar **)pparam->data) != NULL);
 
 	index = menu_find_option_menu_index(optmenu, *((gchar **)pparam->data),
-					    (GCompareFunc)strcmp);
+					    (GCompareFunc)strcmp2);
 	if (index >= 0)
 		gtk_option_menu_set_history(optmenu, index);
 	else {

@@ -34,6 +34,7 @@ typedef struct _AttachInfo	AttachInfo;
 #include "addressbook.h"
 #include "prefs_account.h"
 #include "undo.h"
+#include "codeconv.h"
 
 typedef enum
 {
@@ -150,6 +151,8 @@ struct _Compose
 	gboolean use_newsgroups;
 	gboolean use_followupto;
 	gboolean use_attach;
+
+	CharSet out_encoding;
 
 	/* privacy settings */
 	gboolean use_signing;
