@@ -790,7 +790,7 @@ void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
 	else
 		strftime(tmp, len, default_format, lt);
 
-	buf = conv_localetodisp(tmp);
+	buf = conv_localetodisp(tmp, NULL);
 	strncpy2(dest, buf, len);
 	g_free(buf);
 }

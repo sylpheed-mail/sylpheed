@@ -149,11 +149,10 @@ void source_window_append(SourceWindow *sourcewin, const gchar *str)
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 	gchar *out;
-	gint len;
 
 	buffer = gtk_text_view_get_buffer(text);
 
-	out = conv_utf8todisp(str);
+	out = conv_utf8todisp(str, NULL);
 	gtk_text_buffer_get_iter_at_offset(buffer, &iter, -1);
 	gtk_text_buffer_insert(buffer, &iter, out, -1);
 	g_free(out);

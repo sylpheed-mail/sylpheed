@@ -170,7 +170,7 @@ sig_status_full (gpgme_ctx_t ctx, gpgme_verify_result_t result)
 			ctime_val = localtime (&created);
 			strftime (ctime_str, sizeof (ctime_str), "%c", 
 				  ctime_val);
-			ctime_str_utf8 = conv_localetodisp (ctime_str);
+			ctime_str_utf8 = conv_localetodisp (ctime_str, NULL);
 			g_string_sprintfa (str,
 					   _("Signature made at %s\n"),
 					   ctime_str_utf8);

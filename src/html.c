@@ -237,7 +237,7 @@ static HTMLState html_read_line(HTMLParser *parser)
 	if (!conv_str) {
 		index = parser->bufp - parser->buf->str;
 
-		conv_str = conv_utf8todisp(buf);
+		conv_str = conv_utf8todisp(buf, NULL);
 		g_string_append(parser->buf, conv_str);
 		g_free(conv_str);
 

@@ -117,7 +117,7 @@ gchar *unmime_header(const gchar *encoded_str)
 		/* convert to UTF-8 */
 		conv_str = conv_codeset_strdup(decoded_text, charset, NULL);
 		if (!conv_str)
-			conv_str = conv_utf8todisp(decoded_text);
+			conv_str = conv_utf8todisp(decoded_text, NULL);
 		g_string_append(outbuf, conv_str);
 		g_free(conv_str);
 

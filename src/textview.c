@@ -1023,7 +1023,7 @@ static void textview_write_line(TextView *textview, const gchar *str,
 	if (conv) {
 		buf = conv_convert(conv, str);
 		if (!buf)
-			buf = conv_utf8todisp(str);
+			buf = conv_utf8todisp(str, NULL);
 	} else
 		buf = g_strdup(str);
 
@@ -1080,7 +1080,7 @@ static void textview_write_link(TextView *textview, const gchar *str,
 	if (conv) {
 		buf = conv_convert(conv, str);
 		if (!buf)
-			buf = conv_utf8todisp(str);
+			buf = conv_utf8todisp(str, NULL);
 	} else
 		buf = g_strdup(str);
 
