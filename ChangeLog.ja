@@ -1,5 +1,17 @@
 2005-02-21
 
+	* src/compose.c:
+	  compose_join_next_line(): タブ幅を考慮。カーソル位置をできるだけ
+	  保持するようにした。
+	  compose_wrap_paragraph(): 折り返し時に行末の空白を削除。
+	  compose_insert_sig(): カーソルを配置するときにテキストを選択しない
+	  ようにした。
+	  compose_undo_cb()
+	  compose_redo_cb(): undo/redo の実行時は自動整形を無効にするように
+	  した。
+
+2005-02-21
+
 	* src/summaryview.c: summary_ctree_create(): インデントサイズを 12
 	  に変更。
 

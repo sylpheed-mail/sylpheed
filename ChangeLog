@@ -1,5 +1,16 @@
 2005-02-21
 
+	* src/compose.c:
+	  compose_join_next_line(): consider tab width. Keep cursor position
+	  as much as possible.
+	  compose_wrap_paragraph(): remove trailing spaces on wrapping.
+	  compose_insert_sig(): don't select text when placing cursor.
+	  compose_insert_file(): disable autowrap while inserting text.
+	  compose_undo_cb()
+	  compose_redo_cb(): disable autowrap while performing undo/redo.
+
+2005-02-21
+
 	* src/summaryview.c: summary_ctree_create(): changed indent size to
 	  12.
 

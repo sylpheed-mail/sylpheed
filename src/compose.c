@@ -1528,7 +1528,7 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 		cur_pos = gtk_text_buffer_get_char_count(buffer);
 
 	gtk_text_buffer_get_iter_at_offset(buffer, &iter, cur_pos);
-	gtk_text_buffer_move_mark(buffer, mark, &iter);
+	gtk_text_buffer_place_cursor(buffer, &iter);
 }
 
 static gchar *compose_get_signature_str(Compose *compose)
@@ -1588,6 +1588,7 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 	gchar buf[BUFFSIZE];
 	gint len;
 	FILE *fp;
+	gboolean prev_autowrap;
 
 	g_return_if_fail(file != NULL);
 
@@ -1601,6 +1602,9 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 
 	cur_encoding = conv_get_locale_charset_str();
+
+	prev_autowrap = compose->autowrap;
+	compose->autowrap = FALSE;
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
@@ -1620,6 +1624,10 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 		gtk_text_buffer_insert(buffer, &iter, str, -1);
 		g_free(str);
 	}
+
+	compose->autowrap = prev_autowrap;
+	if (compose->autowrap)
+		compose_wrap_all(compose);
 
 	fclose(fp);
 }
@@ -1885,7 +1893,12 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 		wc = g_utf8_get_char(p);
 		if (i >= quote_len && !g_unichar_isspace(wc))
 			break;
-		col += g_unichar_iswide(wc) ? 2 : 1;
+		if (g_unichar_iswide(wc))
+			col += 2;
+		else if (*p == '\t')
+			col += 8;
+		else
+			col++;
 		p = g_utf8_next_char(p);
 	}
 
@@ -1911,7 +1924,12 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 		}
 
 		wc = g_utf8_get_char(p);
-		col += g_unichar_iswide(wc) ? 2 : 1;
+		if (g_unichar_iswide(wc))
+			col += 2;
+		else if (*p == '\t')
+			col += 8;
+		else
+			col++;
 		if (pos > 0 && col > max_col) {
 			do_break = TRUE;
 			break;
@@ -1942,6 +1960,7 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 	gchar *next_quote_str;
 	gunichar wc1, wc2;
 	gint quote_len;
+	gboolean keep_cursor = FALSE;
 
 	if (!gtk_text_iter_forward_line(&iter_) ||
 	    gtk_text_iter_ends_line(&iter_))
@@ -1982,8 +2001,15 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 		gtk_text_iter_forward_char(&cur);
 		next = cur;
 	}
-	if (!gtk_text_iter_equal(&prev, &next))
+	if (!gtk_text_iter_equal(&prev, &next)) {
+		GtkTextMark *mark;
+
+		mark = gtk_text_buffer_get_insert(buffer);
+		gtk_text_buffer_get_iter_at_mark(buffer, &cur, mark);
+		if (gtk_text_iter_equal(&prev, &cur))
+			keep_cursor = TRUE;
 		gtk_text_buffer_delete(buffer, &prev, &next);
+	}
 	iter_ = prev;
 
 	/* insert space if required */
@@ -1994,8 +2020,13 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 	str = gtk_text_buffer_get_text(buffer, &prev, &next, FALSE);
 	pango_default_break(str, -1, NULL, attrs, 3);
 	if (!attrs[1].is_line_break ||
-	    (!g_unichar_iswide(wc1) || !g_unichar_iswide(wc2)))
+	    (!g_unichar_iswide(wc1) || !g_unichar_iswide(wc2))) {
 		gtk_text_buffer_insert(buffer, &iter_, " ", 1);
+		if (keep_cursor) {
+			gtk_text_iter_backward_char(&iter_);
+			gtk_text_buffer_place_cursor(buffer, &iter_);
+		}
+	}
 	g_free(str);
 
 	*iter = iter_;
@@ -2056,7 +2087,29 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 		if (compose_get_line_break_pos(buffer, &iter, &break_pos,
 					       prefs_common.linewrap_len,
 					       quote_len)) {
+			GtkTextIter prev, next, cur;
+
 			gtk_text_buffer_insert(buffer, &break_pos, "\n", 1);
+
+			/* remove trailing spaces */
+			cur = break_pos;
+			gtk_text_iter_backward_char(&cur);
+			prev = next = cur;
+			while (!gtk_text_iter_starts_line(&cur)) {
+				gunichar wc;
+
+				gtk_text_iter_backward_char(&cur);
+				wc = gtk_text_iter_get_char(&cur);
+				if (!g_unichar_isspace(wc))
+					break;
+				prev = cur;
+			}
+			if (!gtk_text_iter_equal(&prev, &next)) {
+				gtk_text_buffer_delete(buffer, &prev, &next);
+				break_pos = next;
+				gtk_text_iter_forward_char(&break_pos);
+			}
+
 			if (quote_str)
 				gtk_text_buffer_insert(buffer, &break_pos,
 						       quote_str, -1);
@@ -5292,12 +5345,20 @@ static void compose_destroy_cb(GtkWidget *widget, Compose *compose)
 
 static void compose_undo_cb(Compose *compose)
 {
+	gboolean prev_autowrap = compose->autowrap;
+
+	compose->autowrap = FALSE;
 	undo_undo(compose->undostruct);
+	compose->autowrap = prev_autowrap;
 }
 
 static void compose_redo_cb(Compose *compose)
 {
+	gboolean prev_autowrap = compose->autowrap;
+
+	compose->autowrap = FALSE;
 	undo_redo(compose->undostruct);
+	compose->autowrap = prev_autowrap;
 }
 
 static void compose_cut_cb(Compose *compose)
