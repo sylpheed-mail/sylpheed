@@ -688,6 +688,10 @@ static gint procheader_scan_date_string(const gchar *str,
 			weekday, day, month, year, hh, mm, ss);
 	if (result == 7) return 0;
 
+	result = sscanf(str, "%d %9s %d %2d:%2d:%2d",
+			day, month, year, hh, mm, ss);
+	if (result == 6) return 0;
+
 	*ss = 0;
 	result = sscanf(str, "%10s %d %9s %d %2d:%2d %5s",
 			weekday, day, month, year, hh, mm, zone);
@@ -696,6 +700,15 @@ static gint procheader_scan_date_string(const gchar *str,
 	result = sscanf(str, "%d %9s %d %2d:%2d %5s",
 			day, month, year, hh, mm, zone);
 	if (result == 6) return 0;
+
+	*zone = '\0';
+	result = sscanf(str, "%10s %d %9s %d %2d:%2d",
+			weekday, day, month, year, hh, mm);
+	if (result == 6) return 0;
+
+	result = sscanf(str, "%d %9s %d %2d:%2d",
+			day, month, year, hh, mm);
+	if (result == 5) return 0;
 
 	return -1;
 }

@@ -1543,13 +1543,14 @@ const gchar *conv_get_current_locale(void)
 
 gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 {
-	gchar *utf8_buf;
-	gint buflen;
+	gchar buf[BUFFSIZE];
 
 	if (is_ascii_str(str))
 		return unmime_header(str);
 
 	if (default_encoding) {
+		gchar *utf8_buf;
+
 		utf8_buf = conv_codeset_strdup
 			(str, default_encoding, CS_INTERNAL);
 		if (utf8_buf) {
@@ -1561,15 +1562,12 @@ gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 		}
 	}
 
-	buflen = MIN(strlen(str) * 6 + 1, BUFFSIZE);
-	Xalloca(utf8_buf, buflen, return NULL);
-
 	if (conv_get_locale_charset() == C_EUC_JP)
-		conv_anytodisp(utf8_buf, buflen, str);
+		conv_anytodisp(buf, sizeof(buf), str);
 	else
-		conv_localetodisp(utf8_buf, buflen, str);
+		conv_localetodisp(buf, sizeof(buf), str);
 
-	return unmime_header(utf8_buf);
+	return unmime_header(buf);
 }
 
 #define MAX_LINELEN		76
