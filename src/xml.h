@@ -56,6 +56,8 @@ struct _XMLFile
 	gchar *bufp;
 
 	gchar *dtd;
+	gchar *encoding;
+
 	GList *tag_stack;
 	guint level;
 

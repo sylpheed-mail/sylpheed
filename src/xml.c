@@ -84,6 +84,7 @@ XMLFile *xml_open_file(const gchar *path)
 	newfile->bufp = newfile->buf->str;
 
 	newfile->dtd = NULL;
+	newfile->encoding = NULL;
 	newfile->tag_stack = NULL;
 	newfile->level = 0;
 	newfile->is_empty_element = FALSE;
@@ -100,6 +101,7 @@ void xml_close_file(XMLFile *file)
 	g_string_free(file->buf, TRUE);
 
 	g_free(file->dtd);
+	g_free(file->encoding);
 
 	while (file->tag_stack != NULL)
 		xml_pop_tag(file);
@@ -168,9 +170,17 @@ gint xml_get_dtd(XMLFile *file)
 	if ((*bufp++ == '?') &&
 	    (bufp = strcasestr(bufp, "xml")) &&
 	    (bufp = strcasestr(bufp + 3, "version")) &&
-	    (bufp = strchr(bufp + 7, '?')))
+	    (bufp = strchr(bufp + 7, '?'))) {
 		file->dtd = g_strdup(buf);
-	else {
+		if ((bufp = strcasestr(buf, "encoding=\""))) {
+			bufp += 9;
+			extract_quote(bufp, '"');
+			file->encoding = g_strdup(bufp);
+			g_print("encoding = %s\n", bufp);
+		} else
+			file->encoding =
+				g_strdup(conv_get_internal_charset_str());
+	} else {
 		g_warning("Can't get xml dtd\n");
 		return -1;
 	}
@@ -182,6 +192,7 @@ gint xml_parse_next_tag(XMLFile *file)
 {
 	gchar buf[XMLBUFSIZE];
 	guchar *bufp = buf;
+	gchar *tag_str;
 	XMLTag *tag;
 	gint len;
 
@@ -222,11 +233,23 @@ gint xml_parse_next_tag(XMLFile *file)
 
 	while (*bufp != '\0' && !isspace(*bufp)) bufp++;
 	if (*bufp == '\0') {
-		tag->tag = XML_STRING_ADD(buf);
+		tag_str = conv_codeset_strdup(buf, file->encoding,
+					      conv_get_internal_charset_str());
+		if (tag_str) {
+			tag->tag = XML_STRING_ADD(tag_str);
+			g_free(tag_str);
+		} else
+			tag->tag = XML_STRING_ADD(buf);
 		return 0;
 	} else {
 		*bufp++ = '\0';
-		tag->tag = XML_STRING_ADD(buf);
+		tag_str = conv_codeset_strdup(buf, file->encoding,
+					      conv_get_internal_charset_str());
+		if (tag_str) {
+			tag->tag = XML_STRING_ADD(tag_str);
+			g_free(tag_str);
+		} else
+			tag->tag = XML_STRING_ADD(buf);
 	}
 
 	/* parse attributes ( name=value ) */
@@ -234,6 +257,8 @@ gint xml_parse_next_tag(XMLFile *file)
 		XMLAttr *attr;
 		gchar *attr_name;
 		gchar *attr_value;
+		gchar *utf8_attr_name;
+		gchar *utf8_attr_value;
 		gchar *p;
 		gchar quote;
 
@@ -263,9 +288,22 @@ gint xml_parse_next_tag(XMLFile *file)
 
 		g_strchomp(attr_name);
 		xml_unescape_str(attr_value);
+		utf8_attr_name = conv_codeset_strdup
+			(attr_name, file->encoding,
+			 conv_get_internal_charset_str());
+		utf8_attr_value = conv_codeset_strdup
+			(attr_value, file->encoding,
+			 conv_get_internal_charset_str());
+		if (!utf8_attr_name)
+			utf8_attr_name = g_strdup(attr_name);
+		if (!utf8_attr_value)
+			utf8_attr_value = g_strdup(attr_value);
 
-		attr = xml_attr_new(attr_name, attr_value);
+		attr = xml_attr_new(utf8_attr_name, utf8_attr_value);
 		xml_tag_add_attr(tag, attr);
+
+		g_free(utf8_attr_value);
+		g_free(utf8_attr_name);
 	}
 
 	return 0;
@@ -313,6 +351,7 @@ GList *xml_get_current_tag_attr(XMLFile *file)
 gchar *xml_get_element(XMLFile *file)
 {
 	gchar *str;
+	gchar *new_str;
 	gchar *end;
 
 	while ((end = strchr(file->bufp, '<')) == NULL)
@@ -334,7 +373,13 @@ gchar *xml_get_element(XMLFile *file)
 		return NULL;
 	}
 
-	return str;
+	new_str = conv_codeset_strdup(str, file->encoding,
+				      conv_get_internal_charset_str());
+	if (!new_str)
+		new_str = g_strdup(str);
+	g_free(str);
+
+	return new_str;
 }
 
 gint xml_read_line(XMLFile *file)

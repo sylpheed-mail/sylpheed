@@ -964,12 +964,12 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 	if (!dest_code)
 		dest_code = conv_get_internal_charset_str();
 
-	/* don't convert if current codeset is US-ASCII */
-	if (!strcasecmp(dest_code, CS_US_ASCII))
-		return g_strdup(inbuf);
-
 	/* don't convert if src and dest codeset are identical */
 	if (!strcasecmp(src_code, dest_code))
+		return g_strdup(inbuf);
+
+	/* don't convert if current codeset is US-ASCII */
+	if (!strcasecmp(dest_code, CS_US_ASCII))
 		return g_strdup(inbuf);
 
 	cd = iconv_open(dest_code, src_code);
