@@ -81,6 +81,21 @@ PangoFontDescription *gtkut_get_default_font_desc(void)
 	return pango_font_description_copy(font_desc);
 }
 
+void gtkut_widget_set_small_font_size(GtkWidget *widget)
+{
+	PangoFontDescription *font_desc;
+	gint size;
+
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(widget->style != NULL);
+
+	font_desc = gtkut_get_default_font_desc();
+	size = pango_font_description_get_size(font_desc);
+	pango_font_description_set_size(font_desc, size * PANGO_SCALE_SMALL);
+	gtk_widget_modify_font(widget, font_desc);
+	pango_font_description_free(font_desc);
+}
+
 void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)
 {
 	g_return_if_fail(color != NULL);

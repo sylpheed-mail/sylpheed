@@ -1155,13 +1155,15 @@ static void prefs_send_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
 	label_charset_desc = gtk_label_new
-		(_("If `Automatic' is selected, the optimal encoding\n"
+		(_("If `Automatic' is selected, the optimal encoding "
 		   "for the current locale will be used."));
 	gtk_widget_show (label_charset_desc);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_charset_desc,
 			    FALSE, FALSE, 0);
 	gtk_label_set_justify (GTK_LABEL (label_charset_desc),
 			       GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label_charset_desc), TRUE);
+	gtkut_widget_set_small_font_size (label_charset_desc);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
@@ -1190,13 +1192,15 @@ static void prefs_send_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
 	label_encoding_desc = gtk_label_new
-		(_("Specify Content-Transfer-Encoding used when\n"
+		(_("Specify Content-Transfer-Encoding used when "
 		   "message body contains non-ASCII characters."));
 	gtk_widget_show (label_encoding_desc);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding_desc,
 			    FALSE, FALSE, 0);
 	gtk_label_set_justify (GTK_LABEL (label_encoding_desc),
 			       GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label_encoding_desc), TRUE);
+	gtkut_widget_set_small_font_size (label_encoding_desc);
 
 	p_send.checkbtn_extsend = checkbtn_extsend;
 	p_send.entry_extsend    = entry_extsend;
@@ -1885,11 +1889,13 @@ static void prefs_privacy_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
 	gtk_widget_set_size_request (hbox_spc, 12, -1);
 
-	label = gtk_label_new (_("(Setting to '0' will store the passphrase\n"
-				 " for the whole session)"));
+	label = gtk_label_new (_("(Setting to '0' will store the passphrase "
+				 "for the whole session)"));
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtkut_widget_set_small_font_size (label);
 
 	SET_TOGGLE_SENSITIVITY (checkbtn_store_passphrase, vbox3);
 
@@ -1978,11 +1984,13 @@ static void prefs_interface_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox3), hbox1, FALSE, FALSE, 0);
 
 	label = gtk_label_new
-		(_("(Messages will be marked until execution\n"
-		   " if this is turned off)"));
+		(_("(Messages will be marked until execution "
+		   "if this is turned off)"));
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 8);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtkut_widget_set_small_font_size (label);
 
 	PACK_FRAME (vbox1, frame_recv, _("Receive dialog"));
 	vbox_recv = gtk_vbox_new (FALSE, 0);

@@ -84,6 +84,7 @@ gboolean gtkut_get_font_size		(GtkWidget	*widget,
 					 gint		*height);
 PangoFontDescription *gtkut_get_default_font_desc
 					(void);
+void gtkut_widget_set_small_font_size	(GtkWidget	*widget);
 
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);
