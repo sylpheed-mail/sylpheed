@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,6 +80,7 @@ struct _StockPixmapData
 	gchar **data;
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
+	GdkPixbuf *pixbuf;
 };
 
 static StockPixmapData pixmaps[] =
@@ -168,6 +169,30 @@ gint stock_pixmap_gdk(GtkWidget *window, StockPixmap icon,
 
 	if (pixmap) *pixmap = pix_d->pixmap;
 	if (mask)   *mask   = pix_d->mask;
+
+	return 0;
+}
+
+gint stock_pixbuf_gdk(GtkWidget *window, StockPixmap icon, GdkPixbuf **pixbuf)
+{
+	StockPixmapData *pix_d;
+
+	if (pixbuf)
+		*pixbuf = NULL;
+
+	g_return_val_if_fail(window != NULL, -1);
+	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, -1);
+
+	pix_d = &pixmaps[icon];
+
+	if (!pix_d->pixbuf)
+		pix_d->pixbuf = gdk_pixbuf_new_from_xpm_data
+			((const gchar **)pix_d->data);
+	if (!pix_d->pixbuf)
+		return -1;
+
+	if (pixbuf)
+		*pixbuf = pix_d->pixbuf;
 
 	return 0;
 }
