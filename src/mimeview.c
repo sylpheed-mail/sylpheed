@@ -837,8 +837,11 @@ static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		KEY_PRESS_EVENT_STOP();
 		mimeview_display_as_text(mimeview);
 		return TRUE;
-	case GDK_Left:
 	case GDK_Escape:
+		if (summaryview)
+			gtk_widget_grab_focus(summaryview->ctree);
+		break;
+	case GDK_Left:
 	case GDK_Delete:
 		if (summaryview)
 			summary_pass_key_press_event(summaryview, event);

@@ -1546,6 +1546,13 @@ static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		if (summaryview)
 			summary_pass_key_press_event(summaryview, event);
 		break;
+	case GDK_Escape:
+		if (summaryview && textview == messageview->textview)
+			gtk_widget_grab_focus(summaryview->ctree);
+		else if (messageview->type == MVIEW_MIME &&
+			 textview == messageview->mimeview->textview)
+			gtk_widget_grab_focus(messageview->mimeview->ctree);
+		break;
 	case GDK_n:
 	case GDK_N:
 	case GDK_p:

@@ -64,16 +64,22 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 					GtkFileChooserAction action,
 					gboolean multiple)
 {
-	static gchar *cwd = NULL;
+	static GHashTable *path_table = NULL;
+	gchar *cwd;
 	GtkWidget *dialog;
 	gchar *prev_dir;
 	GSList *list = NULL;
 
-	if (!cwd)
-		cwd = g_strdup(startup_dir);
+	if (!path_table)
+		path_table = g_hash_table_new_full(g_str_hash, g_str_equal,
+						   g_free, g_free);
 
 	prev_dir = g_get_current_dir();
-	change_dir(cwd);
+
+	if ((cwd = g_hash_table_lookup(path_table, title)) != NULL)
+		change_dir(cwd);
+	else
+		change_dir(startup_dir);
 
 	dialog = filesel_create(title, action);
 
@@ -94,9 +100,11 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
 		if (list) {
-			g_free(cwd);
 			cwd = gtk_file_chooser_get_current_folder
 				(GTK_FILE_CHOOSER(dialog));
+			if (cwd)
+				g_hash_table_replace
+					(path_table, g_strdup(title), cwd);
 		}
 	}
 
@@ -143,6 +151,8 @@ static GtkWidget *filesel_create(const gchar *title,
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	gtk_window_set_wmclass
 		(GTK_WINDOW(dialog), "file_selection", "Sylpheed");
+	gtk_dialog_set_default_response
+		(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
 	MANAGE_WINDOW_SIGNALS_CONNECT(dialog);
 
