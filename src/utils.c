@@ -1464,6 +1464,21 @@ gchar *get_uri_path(const gchar *uri)
 		return (gchar *)uri;
 }
 
+gint get_uri_len(const gchar *str)
+{
+	const gchar *p;
+
+	if (is_uri_string(str)) {
+		for (p = str; *p != '\0'; p++) {
+			if (!g_ascii_isgraph(*p) || strchr("()<>\"", *p))
+				break;
+		}
+		return p - str;
+	}
+
+	return 0;
+}
+
 /* Decodes URL-Encoded strings (i.e. strings in which spaces are replaced by
  * plusses, and escape characters are used)
  */

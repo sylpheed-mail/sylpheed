@@ -319,6 +319,7 @@ gchar *trim_string_before		(const gchar	*str,
 GList *uri_list_extract_filenames	(const gchar	*uri_list);
 gboolean is_uri_string			(const gchar	*str);
 gchar *get_uri_path			(const gchar	*uri);
+gint get_uri_len			(const gchar	*str);
 void decode_uri				(gchar		*decoded_uri,
 					 const gchar	*encoded_uri);
 gint scan_mailto_url			(const gchar	*mailto,

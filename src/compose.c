@@ -23,6 +23,10 @@
 
 #include "defs.h"
 
+#ifndef PANGO_ENABLE_ENGINE
+#  define PANGO_ENABLE_ENGINE
+#endif
+
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
@@ -51,6 +55,7 @@
 #include <gtk/gtktreeview.h>
 #include <gtk/gtkdnd.h>
 #include <gtk/gtkclipboard.h>
+#include <pango/pango-break.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -185,21 +190,26 @@ static void compose_reply_set_entry		(Compose	*compose,
 						 ComposeMode	 mode);
 static void compose_reedit_set_entry		(Compose	*compose,
 						 MsgInfo	*msginfo);
+
 static void compose_insert_sig			(Compose	*compose,
 						 gboolean	 replace);
 static gchar *compose_get_signature_str		(Compose	*compose);
 static void compose_insert_file			(Compose	*compose,
 						 const gchar	*file);
+
 static void compose_attach_append		(Compose	*compose,
 						 const gchar	*file,
 						 const gchar	*filename,
 						 const gchar	*content_type);
 static void compose_attach_parts		(Compose	*compose,
 						 MsgInfo	*msginfo);
-static void compose_wrap_line			(Compose	*compose);
-static void compose_wrap_line_all		(Compose	*compose);
-static void compose_wrap_line_all_full		(Compose	*compose,
+
+static void compose_wrap_paragraph		(Compose	*compose,
+						 GtkTextIter	*par_iter);
+static void compose_wrap_all			(Compose	*compose);
+static void compose_wrap_all_full		(Compose	*compose,
 						 gboolean	 autowrap);
+
 static void compose_set_title			(Compose	*compose);
 static void compose_select_account		(Compose	*compose,
 						 PrefsAccount	*account,
@@ -371,6 +381,9 @@ static void compose_grab_focus_cb	(GtkWidget	*widget,
 static void compose_changed_cb		(GtkTextBuffer	*textbuf,
 					 Compose	*compose);
 
+static void compose_wrap_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
 static void compose_toggle_autowrap_cb	(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -553,9 +566,9 @@ static GtkItemFactoryEntry compose_entries[] =
 					NULL},
 	{N_("/_Edit/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Edit/_Wrap current paragraph"),
-					"<control>L", compose_wrap_line, 0, NULL},
+					"<control>L", compose_wrap_cb, 0, NULL},
 	{N_("/_Edit/Wrap all long _lines"),
-					"<control><alt>L", compose_wrap_line_all, 0, NULL},
+					"<control><alt>L", compose_wrap_cb, 1, NULL},
 	{N_("/_Edit/Aut_o wrapping"),	"<shift><control>L", compose_toggle_autowrap_cb, 0, "<ToggleItem>"},
 	{N_("/_View"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_View/_To"),		NULL, compose_toggle_to_cb     , 0, "<ToggleItem>"},
@@ -717,7 +730,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		compose_insert_sig(compose, FALSE);
 
 	if (quote && prefs_common.linewrap_quote)
-		compose_wrap_line_all(compose);
+		compose_wrap_all(compose);
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(compose->text));
 	gtk_text_buffer_get_start_iter(buffer, &iter);
@@ -829,7 +842,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 		compose_insert_sig(compose, FALSE);
 
 	if (prefs_common.linewrap_quote)
-		compose_wrap_line_all(compose);
+		compose_wrap_all(compose);
 
 	gtk_text_buffer_get_start_iter(buffer, &iter);
 	gtk_text_buffer_place_cursor(buffer, &iter);
@@ -1759,615 +1772,310 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 
 #undef IS_FIRST_PART_TEXT
 
-#define CHAR_BUF_SIZE	8
-
-#define GET_CHAR(iter_p, buf, len)				\
-{								\
-	gunichar uc;						\
-								\
-	uc = gtk_text_iter_get_char(iter_p);			\
-	if (uc != 0)						\
-		len = g_unichar_to_utf8(uc, buf) > 1 ? 2 : 1;	\
-	else {							\
-		buf[0] = '\0';					\
-		len = 1;					\
-	}							\
-}
-
 #define INDENT_CHARS	">|#"
-#define SPACE_CHARS	" \t"
-
-#warning FIXME_GTK2
-static void compose_wrap_line(Compose *compose)
-{
-	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
-	GtkTextBuffer *textbuf;
-	GtkTextMark *mark;
-	GtkTextIter insert_iter, iter;
-	gint ch_len, last_ch_len;
-	gchar cbuf[CHAR_BUF_SIZE], last_ch;
-	guint text_len;
-	gint p_start, p_end;
-	gint line_pos, cur_pos;
-	gint line_len, cur_len;
-	gboolean line_end;
-	gboolean quoted;
-
-	textbuf = gtk_text_view_get_buffer(text);
-	text_len = gtk_text_buffer_get_char_count(textbuf);
-	mark = gtk_text_buffer_get_insert(textbuf);
-	gtk_text_buffer_get_iter_at_mark(textbuf, &insert_iter, mark);
-	cur_pos = gtk_text_iter_get_offset(&insert_iter);
-	GET_CHAR(&insert_iter, cbuf, ch_len);
-
-	if ((ch_len == 1 && *cbuf == '\n') || cur_pos == text_len) {
-		GtkTextIter prev_iter;
-
-		if (cur_pos == 0)
-			return; /* on the paragraph mark */
-		prev_iter = insert_iter;
-		gtk_text_iter_backward_char(&prev_iter);
-		GET_CHAR(&prev_iter, cbuf, ch_len);
-		if (ch_len == 1 && *cbuf == '\n')
-			return; /* on the paragraph mark */
-	}
-
-	/* find paragraph start. */
-	line_end = quoted = FALSE;
-	for (iter = insert_iter; gtk_text_iter_backward_char(&iter); ) {
-		GET_CHAR(&iter, cbuf, ch_len);
-		if (ch_len == 1 && *cbuf == '\n') {
-			if (quoted)
-				return; /* quoted part */
-			if (line_end) {
-				gtk_text_iter_forward_chars(&iter, 2);
-				break;
-			}
-			line_end = TRUE;
-		} else {
-			if (ch_len == 1 && strchr(INDENT_CHARS, *cbuf))
-				quoted = TRUE;
-			else if (ch_len != 1 || !isspace(*(guchar *)cbuf))
-				quoted = FALSE;
-
-			line_end = FALSE;
-		}
-	}
-	p_start = gtk_text_iter_get_offset(&iter);
-
-	/* find paragraph end. */
-	line_end = FALSE;
-	for (iter = insert_iter; gtk_text_iter_forward_char(&iter); ) {
-		GET_CHAR(&iter, cbuf, ch_len);
-		if (ch_len == 1 && *cbuf == '\n') {
-			if (line_end) {
-				gtk_text_iter_backward_char(&iter);
-				break;
-			}
-			line_end = TRUE;
-		} else {
-			if (line_end && ch_len == 1 &&
-			    strchr(INDENT_CHARS, *cbuf))
-				return; /* quoted part */
-
-			line_end = FALSE;
-		}
-	}
-	p_end = gtk_text_iter_get_offset(&iter);
-
-	if (p_end >= text_len)
-		p_end = text_len;
-
-	if (p_start >= p_end)
-		return;
-
-	line_len = cur_len = 0;
-	last_ch_len = 0;
-	last_ch = '\0';
-	line_pos = p_start;
-	for (cur_pos = p_start; cur_pos < p_end; cur_pos++) {
-		gboolean space = FALSE;
-
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter, cur_pos);
-		GET_CHAR(&iter, cbuf, ch_len);
-
-		if (ch_len < 0) {
-			cbuf[0] = '\0';
-			ch_len = 1;
-		}
-
-		if (ch_len == 1 && isspace(*(guchar *)cbuf))
-			space = TRUE;
-
-		if (ch_len == 1 && *cbuf == '\n') {
-			gboolean replace = FALSE;
-			GtkTextIter next_iter = iter;
-
-			gtk_text_iter_forward_char(&next_iter);
-
-			if (last_ch_len == 1 && !isspace((guchar)last_ch)) {
-				if (cur_pos + 1 < p_end) {
-					GET_CHAR(&next_iter, cbuf, ch_len);
-					if (ch_len == 1 &&
-					    !isspace(*(guchar *)cbuf))
-						replace = TRUE;
-				}
-			}
-			gtk_text_buffer_delete(textbuf, &iter, &next_iter);
-			if (replace) {
-				gtk_text_buffer_insert(textbuf, &iter, " ", 1);
-				space = TRUE;
-			} else {
-				p_end--;
-				cur_pos--;
-				gtk_text_buffer_get_iter_at_offset
-					(textbuf, &iter, cur_pos);
-				continue;
-			}
-		}
-
-		last_ch_len = ch_len;
-		last_ch = *cbuf;
-
-		if (space) {
-			line_pos = cur_pos + 1;
-			line_len = cur_len + ch_len;
-		}
-
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter, line_pos);
-
-		if (cur_len + ch_len > prefs_common.linewrap_len &&
-		    line_len > 0) {
-			gint tlen = ch_len;
-			GtkTextIter prev_iter = iter;
-
-			gtk_text_iter_backward_char(&prev_iter);
-
-			if (ch_len == 1 && isspace(*(guchar *)cbuf)) {
-				gtk_text_buffer_delete
-					(textbuf, &prev_iter, &iter);
-				iter = prev_iter;
-				p_end--;
-				cur_pos--;
-				line_pos--;
-				cur_len--;
-				line_len--;
-			}
-			ch_len = tlen;
-
-			gtk_text_buffer_insert(textbuf, &iter, "\n", 1);
-			p_end++;
-			cur_pos++;
-			line_pos++;
-			cur_len = cur_len - line_len + ch_len;
-			line_len = 0;
-			continue;
-		}
-
-		if (ch_len > 1) {
-			line_pos = cur_pos + 1;
-			line_len = cur_len + ch_len;
-		}
-		cur_len += ch_len;
-	}
-}
-
-#undef WRAP_DEBUG
-#ifdef WRAP_DEBUG
-/* Darko: used when I debug wrapping */
-void dump_text(GtkTextBuffer *textbuf, int pos, int tlen, int breakoncr)
-{
-	GtkTextIter iter, end_iter;
-	gint clen;
-	gchar cbuf[CHAR_BUF_SIZE];
-
-	printf("%d [", pos);
-	gtk_text_buffer_get_iter_at_offset(textbuf, &iter, pos);
-	gtk_text_buffer_get_iter_at_offset(textbuf, &end_iter, pos + tlen);
-	for (; gtk_text_iter_forward_char(&iter) &&
-	     gtk_text_iter_compare(&iter, &end_iter) < 0; ) {
-		GET_CHAR(&iter, cbuf, clen);
-		if (clen < 0) break;
-		if (breakoncr && clen == 1 && cbuf[0] == '\n')
-			break;
-		fwrite(cbuf, clen, 1, stdout);
-	}
-	printf("]\n");
-}
-#endif
 
 typedef enum {
-	WAIT_FOR_SPACE,
 	WAIT_FOR_INDENT_CHAR,
-	WAIT_FOR_INDENT_CHAR_OR_SPACE
+	WAIT_FOR_INDENT_CHAR_OR_SPACE,
 } IndentState;
 
 /* return indent length, we allow:
-   > followed by spaces/tabs
-   | followed by spaces/tabs
-   uppercase characters immediately followed by >,
-   and the repeating sequences of the above */
-/* return indent length */
-static guint get_indent_length(GtkTextBuffer *textbuf, guint start_pos,
-			       guint text_len)
+   indent characters followed by indent characters or spaces/tabs,
+   alphabets and numbers immediately followed by indent characters,
+   and the repeating sequences of the above
+   If quote ends with multiple spaces, only the first one is included. */
+static gchar *compose_get_quote_str(GtkTextBuffer *buffer,
+				    const GtkTextIter *start, gint *len)
 {
-	GtkTextIter iter;
-	guint i_len = 0;
-	guint ch_len, alnum_cnt = 0;
+	GtkTextIter iter = *start;
+	gunichar wc;
+	gchar ch[6];
+	gint clen;
 	IndentState state = WAIT_FOR_INDENT_CHAR;
-	gchar cbuf[CHAR_BUF_SIZE];
 	gboolean is_space;
 	gboolean is_indent;
-	gboolean iter_next = TRUE;
+	gint alnum_count = 0;
+	gint space_count = 0;
+	gint quote_len = 0;
 
-	gtk_text_buffer_get_iter_at_offset(textbuf, &iter, start_pos);
-
-	while (iter_next == TRUE) {
-		GET_CHAR(&iter, cbuf, ch_len);
-		if (ch_len > 1)
+	while (!gtk_text_iter_ends_line(&iter)) {
+		wc = gtk_text_iter_get_char(&iter);
+		if (g_unichar_iswide(wc))
+			break;
+		clen = g_unichar_to_utf8(wc, ch);
+		if (clen != 1)
 			break;
 
-		if (cbuf[0] == '\n')
-			break;
+		is_indent = strchr(INDENT_CHARS, ch[0]) ? TRUE : FALSE;
+		is_space = g_unichar_isspace(wc);
 
-		is_indent = strchr(INDENT_CHARS, cbuf[0]) ? TRUE : FALSE;
-		is_space = strchr(SPACE_CHARS, cbuf[0]) ? TRUE : FALSE;
-
-		switch (state) {
-		case WAIT_FOR_SPACE:
-			if (is_space == FALSE)
-				goto out;
-			state = WAIT_FOR_INDENT_CHAR_OR_SPACE;
-			break;
-		case WAIT_FOR_INDENT_CHAR_OR_SPACE:
-			if (is_indent == FALSE && is_space == FALSE &&
-			    !isupper((guchar)cbuf[0]))
-				goto out;
-			if (is_space == TRUE) {
-				alnum_cnt = 0;
+		if (state == WAIT_FOR_INDENT_CHAR) {
+			if (!is_indent && !g_unichar_isalnum(wc))
+				break;
+			if (is_indent) {
+				quote_len += alnum_count + space_count + 1;
+				alnum_count = space_count = 0;
 				state = WAIT_FOR_INDENT_CHAR_OR_SPACE;
-			} else if (is_indent == TRUE) {
-				alnum_cnt = 0;
-				state = WAIT_FOR_SPACE;
+			} else
+				alnum_count++;
+		} else if (state == WAIT_FOR_INDENT_CHAR_OR_SPACE) {
+			if (!is_indent && !is_space && !g_unichar_isalnum(wc))
+				break;
+			if (is_space)
+				space_count++;
+			else if (is_indent) {
+				quote_len += alnum_count + space_count + 1;
+				alnum_count = space_count = 0;
 			} else {
-				alnum_cnt++;
+				alnum_count++;
 				state = WAIT_FOR_INDENT_CHAR;
 			}
+		}
+
+		gtk_text_iter_forward_char(&iter);
+	}
+
+	if (quote_len > 0 && space_count > 0)
+		quote_len++;
+
+	if (len)
+		*len = quote_len;
+
+	if (quote_len > 0) {
+		iter = *start;
+		gtk_text_iter_forward_chars(&iter, quote_len);
+		return gtk_text_buffer_get_text(buffer, start, &iter, FALSE);
+	}
+
+	return NULL;
+}
+
+static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
+					   const GtkTextIter *start,
+					   GtkTextIter *break_pos,
+					   gint max_col,
+					   gint quote_len)
+{
+	GtkTextIter iter = *start, line_end = *start;
+	PangoLogAttr *attrs;
+	gchar *str;
+	gchar *p;
+	gint len;
+	gint i;
+	gint col = 0;
+	gint pos = 0;
+	gboolean can_break = FALSE;
+	gboolean do_break = FALSE;
+
+	gtk_text_iter_forward_to_line_end(&line_end);
+	str = gtk_text_buffer_get_text(buffer, &iter, &line_end, FALSE);
+	len = g_utf8_strlen(str, -1);
+	//g_print("breaking line: %d: %s (len = %d)\n",
+	//	gtk_text_iter_get_line(&iter), str, len);
+	attrs = g_new(PangoLogAttr, len + 1);
+
+	pango_default_break(str, -1, NULL, attrs, len + 1);
+
+	p = str;
+
+	/* skip quote and leading spaces */
+	for (i = 0; *p != '\0' && i < len; i++) {
+		gunichar wc;
+
+		wc = g_utf8_get_char(p);
+		if (i >= quote_len && !g_unichar_isspace(wc))
 			break;
-		case WAIT_FOR_INDENT_CHAR:
-			if (is_indent == FALSE && !isupper((guchar)cbuf[0]))
-				goto out;
-			if (is_indent == TRUE) {
-				alnum_cnt = 0;
-				state = WAIT_FOR_SPACE;
-			} else {
-				alnum_cnt++;
+		col += g_unichar_iswide(wc) ? 2 : 1;
+		p = g_utf8_next_char(p);
+	}
+
+	for (; *p != '\0' && i < len; i++) {
+		PangoLogAttr *attr = attrs + i;
+		gunichar wc;
+		gint uri_len;
+
+		if (attr->is_line_break && can_break)
+			pos = i;
+
+		/* don't wrap URI */
+		if ((uri_len = get_uri_len(p)) > 0) {
+			col += uri_len;
+			if (pos > 0 && col > max_col) {
+				do_break = TRUE;
+				break;
 			}
+			i += uri_len - 1;
+			p += uri_len;
+			can_break = TRUE;
+			continue;
+		}
+
+		wc = g_utf8_get_char(p);
+		col += g_unichar_iswide(wc) ? 2 : 1;
+		if (pos > 0 && col > max_col) {
+			do_break = TRUE;
 			break;
 		}
 
-		i_len++;
-		iter_next = gtk_text_iter_forward_char(&iter);
+		p = g_utf8_next_char(p);
+		can_break = TRUE;
 	}
 
-out:
-	if ((i_len > 0) && (state == WAIT_FOR_INDENT_CHAR))
-		i_len -= alnum_cnt;
+	debug_print("compose_get_line_break_pos(): do_break = %d, pos = %d, col = %d\n", do_break, pos, col);
 
-	return i_len;
+	g_free(attrs);
+	g_free(str);
+
+	*break_pos = *start;
+	gtk_text_iter_set_line_offset(break_pos, pos);
+
+	return do_break;
 }
 
-/* insert quotation string when line was wrapped */
-static guint ins_quote(GtkTextBuffer *textbuf, GtkTextIter *iter,
-		       guint indent_len,
-		       guint prev_line_pos, guint text_len,
-		       gchar *quote_fmt)
+static gboolean compose_join_next_line(GtkTextBuffer *buffer,
+				       GtkTextIter *iter,
+				       const gchar *quote_str)
 {
-	guint ins_len = 0;
+	GtkTextIter iter_ = *iter, prev, next;
+	PangoLogAttr attrs[3];
+	gchar *str;
+	gchar *next_quote_str;
+	gunichar wc1, wc2;
+	gint quote_len;
 
-	if (indent_len) {
-		GtkTextIter iter1, iter2;
-		gchar *text;
+	if (!gtk_text_iter_forward_line(&iter_) ||
+	    gtk_text_iter_ends_line(&iter_))
+		return FALSE;
 
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter1,
-						   prev_line_pos);
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter2,
-						   prev_line_pos + indent_len);
-		text = gtk_text_buffer_get_text(textbuf, &iter1, &iter2, FALSE);
-		if (!text) return 0;
+	next_quote_str = compose_get_quote_str(buffer, &iter_, &quote_len);
 
-		gtk_text_buffer_insert(textbuf, iter, text, -1);
-		ins_len = g_utf8_strlen(text, -1);
+	if ((quote_str || next_quote_str) &&
+	    strcmp2(quote_str, next_quote_str) != 0) {
+		g_free(next_quote_str);
+		return FALSE;
+	}
+	g_free(next_quote_str);
 
-		g_free(text);
+	/* delete quote str */
+	if (quote_len > 0) {
+		GtkTextIter end = iter_;
+
+		gtk_text_iter_forward_chars(&end, quote_len);
+		if (gtk_text_iter_ends_line(&end))
+			return FALSE;
+		gtk_text_buffer_delete(buffer, &iter_, &end);
 	}
 
-	return ins_len;
-}
+	/* delete linebreak */
+	gtk_text_buffer_backspace(buffer, &iter_, FALSE, TRUE);
 
-/* check if we should join the next line */
-static gboolean join_next_line_is_needed(GtkTextBuffer *textbuf,
-					 guint start_pos, guint tlen,
-					 guint prev_ilen, gboolean autowrap)
-{
-	guint indent_len, ch_len;
-	gboolean do_join = FALSE;
-	gchar cbuf[CHAR_BUF_SIZE];
-
-	indent_len = get_indent_length(textbuf, start_pos, tlen);
-
-	if ((autowrap || indent_len > 0) && indent_len == prev_ilen) {
-		GtkTextIter iter;
-
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter,
-						   start_pos + indent_len);
-		GET_CHAR(&iter, cbuf, ch_len);
-		if (ch_len > 0 && (cbuf[0] != '\n'))
-			do_join = TRUE;
+	/* insert space if required */
+	prev = next = iter_;
+	gtk_text_iter_backward_char(&prev);
+	wc1 = gtk_text_iter_get_char(&prev);
+	wc2 = gtk_text_iter_get_char(&next);
+	gtk_text_iter_forward_char(&next);
+	str = gtk_text_buffer_get_text(buffer, &prev, &next, FALSE);
+	pango_default_break(str, -1, NULL, attrs, 3);
+	if (!attrs[0].is_white && !attrs[1].is_white) {
+		if (!attrs[1].is_line_break ||
+		    (!g_unichar_iswide(wc1) || !g_unichar_iswide(wc2)))
+			gtk_text_buffer_insert(buffer, &iter_, " ", 1);
 	}
+	g_free(str);
 
-	return do_join;
+	*iter = iter_;
+	return TRUE;
 }
 
-static void compose_wrap_line_all(Compose *compose)
-{
-	compose_wrap_line_all_full(compose, FALSE);
-}
-
-static void compose_wrap_line_all_full(Compose *compose, gboolean autowrap)
+static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
-	GtkTextBuffer *textbuf;
-	GtkTextIter iter, end_iter;
-	guint tlen;
-	guint line_pos = 0, cur_pos = 0, p_pos = 0;
-	gint line_len = 0, cur_len = 0;
-	gint ch_len;
-	gboolean is_new_line = TRUE, do_delete = FALSE;
-	guint i_len = 0;
-	gboolean linewrap_quote = TRUE;
-	gboolean set_editable_pos = FALSE;
-	gint editable_pos = 0;
-	guint linewrap_len = prefs_common.linewrap_len;
-	gchar *qfmt = prefs_common.quotemark;
-	gchar cbuf[CHAR_BUF_SIZE];
+	GtkTextBuffer *buffer;
+	GtkTextIter iter, break_pos;
+	gchar *quote_str = NULL;
+	gint quote_len;
 
-	textbuf = gtk_text_view_get_buffer(text);
-	tlen = gtk_text_buffer_get_char_count(textbuf);
+	buffer = gtk_text_view_get_buffer(text);
 
-	for (; cur_pos < tlen; cur_pos++) {
-		/* mark position of new line - needed for quotation wrap */
-		if (is_new_line) {
-			if (linewrap_quote)
-				i_len = get_indent_length
-					(textbuf, cur_pos, tlen);
-
-			is_new_line = FALSE;
-			p_pos = cur_pos;
-		}
-
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter, cur_pos);
-		GET_CHAR(&iter, cbuf, ch_len);
-
-		/* fix line length for tabs */
-		if (ch_len == 1 && *cbuf == '\t') {
-			guint tab_width = 8;
-			guint tab_offset = line_len % tab_width;
-
-			if (tab_offset) {
-				line_len += tab_width - tab_offset - 1;
-				cur_len = line_len;
-			}
-		}
-
-		/* we have encountered line break */
-		if (ch_len == 1 && *cbuf == '\n') {
-			gint clen;
-			gchar cb[CHAR_BUF_SIZE];
-
-			/* should we join the next line */
-			if ((autowrap || i_len != cur_len) && do_delete &&
-			    join_next_line_is_needed
-				(textbuf, cur_pos + 1, tlen, i_len, autowrap))
-				do_delete = TRUE;
-			else
-				do_delete = FALSE;
-
-			/* skip delete if it is continuous URL */
-			if (do_delete && (line_pos - p_pos <= i_len) &&
-			    gtkut_text_buffer_is_uri_string(textbuf, line_pos,
-							    tlen))
-				do_delete = FALSE;
-
-			/* should we delete to perform smart wrapping */
-			if (line_len < linewrap_len && do_delete) {
-				/* get rid of newline */
-				gtk_text_buffer_get_iter_at_offset
-					(textbuf, &iter, cur_pos);
-				end_iter = iter;
-				gtk_text_iter_forward_char(&end_iter);
-				gtk_text_buffer_delete
-					(textbuf, &iter, &end_iter);
-				tlen--;
-
-				/* if text starts with quote fmt or with
-				   indent string, delete them */
-				if (i_len) {
-					guint ilen;
-					ilen =  gtkut_text_buffer_str_compare_n
-						(textbuf, cur_pos, p_pos, i_len,
-						 tlen);
-					if (ilen) {
-						end_iter = iter;
-						gtk_text_iter_forward_chars
-							(&end_iter, ilen);
-						gtk_text_buffer_delete
-							(textbuf,
-							 &iter, &end_iter);
-						tlen -= ilen;
-					}
-				}
-
-				gtk_text_buffer_get_iter_at_offset
-					(textbuf, &iter, cur_pos);
-				GET_CHAR(&iter, cb, clen);
-				/* insert space between the next line */
-				if (cur_pos > 0) {
-					gint clen_prev;
-					gchar cb_prev[MB_LEN_MAX];
-					GtkTextIter iter_prev = iter;
-
-					gtk_text_iter_backward_char(&iter_prev);
-					GET_CHAR(&iter_prev, cb_prev,
-						 clen_prev);
-					if ((clen_prev != clen && clen > 1) ||
-					    (clen == 1 &&
-					     !isspace((guchar)cb[0]))) {
-						gtk_text_buffer_insert
-							(textbuf, &iter,
-							 " ", 1);
-						tlen++;
-					}
-				}
-
-				/* and start over with current line */
-				cur_pos = p_pos - 1;
-				line_pos = cur_pos;
-				line_len = cur_len = 0;
-				do_delete = FALSE;
-				is_new_line = TRUE;
-				/* move beginning of line if we are on
-				   linebreak */
-#warning FIXME_GTK2
-				gtk_text_buffer_get_iter_at_offset
-					(textbuf, &iter, line_pos);
-				GET_CHAR(&iter, cb, clen);
-				if (clen == 1 && *cb == '\n')
-					line_pos++;
-				continue;
-			}
-
-			/* mark new line beginning */
-			line_pos = cur_pos + 1;
-			line_len = cur_len = 0;
-			do_delete = FALSE;
-			is_new_line = TRUE;
-			continue;
-		}
-
-		if (ch_len < 0) {
-			cbuf[0] = '\0';
-			ch_len = 1;
-		}
-
-		/* possible line break */
-		if (ch_len == 1 && isspace(*(guchar *)cbuf)) {
-			line_pos = cur_pos + 1;
-			line_len = cur_len + ch_len;
-		}
-
-		/* are we over wrapping length set in preferences ? */
-		if (cur_len + ch_len > linewrap_len) {
-			gint clen;
-
-			/* force wrapping if it is one long word but not URL */
-			if (line_pos - p_pos <= i_len)
-                        	if (!gtkut_text_buffer_is_uri_string
-				    (textbuf, line_pos, tlen))
-					line_pos = cur_pos - 1;
-
-			gtk_text_buffer_get_iter_at_offset
-				(textbuf, &iter, line_pos);
-			GET_CHAR(&iter, cbuf, clen);
-
-			/* if next character is space delete it */
-			if (clen == 1 && isspace(*(guchar *)cbuf)) {
-				if (p_pos + i_len != line_pos ||
-                            	    !gtkut_text_buffer_is_uri_string
-					(textbuf, line_pos, tlen)) {
-					/* workaround for correct cursor
-					   position */
-					if (set_editable_pos == FALSE) {
-						GtkTextMark *mark;
-
-						mark = gtk_text_buffer_get_insert(textbuf);
-						gtk_text_buffer_get_iter_at_mark(textbuf, &iter, mark);
-						editable_pos = gtk_text_iter_get_offset(&iter);
-						if (editable_pos == line_pos)
-							set_editable_pos = TRUE;
-					}
-					gtk_text_buffer_get_iter_at_offset
-						(textbuf, &iter, line_pos);
-					end_iter = iter;
-					gtk_text_iter_backward_char(&end_iter);
-					gtk_text_buffer_delete
-						(textbuf, &iter, &end_iter);
-					tlen--;
-					cur_pos--;
-					line_pos--;
-					cur_len--;
-					line_len--;
-				}
-			}
-
-			/* if it is URL at beginning of line don't wrap */
-			if (p_pos + i_len == line_pos &&
-			    gtkut_text_buffer_is_uri_string(textbuf,
-							    line_pos, tlen)) {
-				continue;
-			}
-
-			/* insert CR */
-			gtk_text_buffer_get_iter_at_offset
-				(textbuf, &iter, line_pos);
-			gtk_text_buffer_insert(textbuf, &iter, "\n", 1);
-			tlen++;
-			line_pos++;
-			/* for loop will increase it */
-			cur_pos = line_pos - 1;
-			/* start over with current line */
-			is_new_line = TRUE;
-			line_len = cur_len = 0;
-			if (autowrap || i_len > 0)
-				do_delete = TRUE;
-			else
-				do_delete = FALSE;
-
-			/* should we insert quotation ? */
-			if (linewrap_quote && i_len) {
-				/* only if line is not already quoted  */
-				if (!gtkut_text_buffer_str_compare
-					(textbuf, line_pos, tlen, qfmt)) {
-					guint ins_len;
-
-					if (line_pos - p_pos > i_len) {
-						ins_len = ins_quote
-							(textbuf, &iter, i_len,
-							 p_pos, tlen, qfmt);
-						tlen += ins_len;
-					}
-				}
-			}
-			continue;
-		}
-
-		if (ch_len > 1) {
-			line_pos = cur_pos + 1;
-			line_len = cur_len + ch_len;
-		}
-		/* advance to next character in buffer */
-		cur_len += ch_len;
+	if (par_iter) {
+		iter = *par_iter;
+	} else {
+		GtkTextMark *mark;
+		mark = gtk_text_buffer_get_insert(buffer);
+		gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 	}
 
-	if (set_editable_pos && editable_pos <= tlen) {
-		gtk_text_buffer_get_iter_at_offset
-			(textbuf, &iter, editable_pos);
-		gtk_text_buffer_place_cursor(textbuf, &iter);
+	/* move to paragraph start */
+	gtk_text_iter_set_line_offset(&iter, 0);
+	if (gtk_text_iter_ends_line(&iter)) {
+		while (gtk_text_iter_ends_line(&iter) &&
+		       gtk_text_iter_forward_line(&iter))
+			;
+	} else {
+		while (gtk_text_iter_backward_line(&iter)) {
+			if (gtk_text_iter_ends_line(&iter)) {
+				gtk_text_iter_forward_line(&iter);
+				break;
+			}
+		}
 	}
+
+	if (gtk_text_iter_is_end(&iter)) {
+		if (par_iter)
+			*par_iter = iter;
+		return;
+	}
+
+	do {
+		quote_str = compose_get_quote_str(buffer, &iter, &quote_len);
+		if (quote_str)
+			debug_print("compose_wrap_paragraph(): quote_str = '%s'\n", quote_str);
+
+		if (compose_get_line_break_pos(buffer, &iter, &break_pos,
+					       prefs_common.linewrap_len,
+					       quote_len)) {
+			gtk_text_buffer_insert(buffer, &break_pos, "\n", 1);
+			if (quote_str)
+				gtk_text_buffer_insert(buffer, &break_pos,
+						       quote_str, -1);
+
+			iter = break_pos;
+			compose_join_next_line(buffer, &iter, quote_str);
+
+			g_free(quote_str);
+
+			/* move iter to current line start */
+			gtk_text_iter_set_line_offset(&iter, 0);
+		} else {
+			/* move iter to next line start */
+			iter = break_pos;
+			gtk_text_iter_forward_line(&iter);
+		}
+	} while (!gtk_text_iter_ends_line(&iter));
+	/* stop if paragraph end (empty line) */
+
+	if (par_iter)
+		*par_iter = iter;
 }
 
-#undef GET_CHAR
-#undef CHAR_BUF_SIZE
+static void compose_wrap_all(Compose *compose)
+{
+	compose_wrap_all_full(compose, FALSE);
+}
+
+static void compose_wrap_all_full(Compose *compose, gboolean autowrap)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
+
+	buffer = gtk_text_view_get_buffer(text);
+
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+	while (!gtk_text_iter_is_end(&iter))
+		compose_wrap_paragraph(compose, &iter);
+}
 
 static void compose_set_title(Compose *compose)
 {
@@ -2541,7 +2249,7 @@ static gint compose_send(Compose *compose)
 		}
 	} else {
 		if (prefs_common.linewrap_at_send)
-			compose_wrap_line_all(compose);
+			compose_wrap_all(compose);
 
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
 			lock = FALSE;
@@ -5242,7 +4950,7 @@ static void toolbar_linewrap_cb(GtkWidget *widget, gpointer data)
 {
 	Compose *compose = (Compose *)data;
 
-	compose_wrap_line_all(compose);
+	compose_wrap_all(compose);
 }
 
 static void toolbar_address_cb(GtkWidget *widget, gpointer data)
@@ -5354,7 +5062,7 @@ static void compose_send_later_cb(gpointer data, guint action,
 		}
 	} else {
 		if (prefs_common.linewrap_at_send)
-			compose_wrap_line_all(compose);
+			compose_wrap_all(compose);
 
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
 			alertpanel_error(_("Can't queue the message."));
@@ -5785,6 +5493,16 @@ static void compose_changed_cb(GtkTextBuffer *textbuf, Compose *compose)
 	}
 }
 
+static void compose_wrap_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	Compose *compose = (Compose *)data;
+
+	if (action == 1)
+		compose_wrap_all(compose);
+	else
+		compose_wrap_paragraph(compose, NULL);
+}
+
 static void compose_toggle_autowrap_cb(gpointer data, guint action,
 				       GtkWidget *widget)
 {
@@ -5792,7 +5510,7 @@ static void compose_toggle_autowrap_cb(gpointer data, guint action,
 
 	compose->autowrap = GTK_CHECK_MENU_ITEM(widget)->active;
 	if (compose->autowrap)
-		compose_wrap_line_all_full(compose, TRUE);
+		compose_wrap_all_full(compose, TRUE);
 }
 
 static void compose_toggle_to_cb(gpointer data, guint action,
@@ -6103,7 +5821,7 @@ static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
 	gtk_text_buffer_insert(buffer, iter, text, len);
 
 	mark = gtk_text_buffer_create_mark(buffer, NULL, iter, FALSE);
-	compose_wrap_line_all_full(compose, TRUE);
+	compose_wrap_all_full(compose, TRUE);
 	gtk_text_buffer_get_iter_at_mark(buffer, iter, mark);
 	gtk_text_buffer_delete_mark(buffer, mark);
 
