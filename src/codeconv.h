@@ -240,5 +240,8 @@ void conv_encode_header			(gchar		*dest,
 gint conv_copy_file			(const gchar	*src,
 					 const gchar	*dest,
 					 const gchar	*src_encoding);
+gint conv_copy_dir			(const gchar	*src,
+					 const gchar	*dest,
+					 const gchar	*src_encoding);
 
 #endif /* __CODECONV_H__ */

@@ -1812,3 +1812,38 @@ gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 
 	return 0;
 }
+
+gint conv_copy_dir(const gchar *src, const gchar *dest, const gchar *encoding)
+{
+	DIR *dp;
+	struct dirent *d;
+	gchar *src_file;
+	gchar *dest_file;
+
+	if ((dp = opendir(src)) == NULL) {
+		FILE_OP_ERROR(src, "opendir");
+		return -1;
+	}
+
+	if (make_dir_hier(dest) < 0) {
+		closedir(dp);
+		return -1;
+	}
+
+	while ((d = readdir(dp)) != NULL) {
+		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+			continue;
+
+		src_file = g_strconcat(src, G_DIR_SEPARATOR_S, d->d_name, NULL);
+		dest_file = g_strconcat(dest, G_DIR_SEPARATOR_S, d->d_name,
+					NULL);
+		if (is_file_exist(src_file))
+			conv_copy_file(src_file, dest_file, encoding);
+		g_free(dest_file);
+		g_free(src_file);
+	}
+
+	closedir(dp);
+
+	return 0;
+}

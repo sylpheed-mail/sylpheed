@@ -722,6 +722,9 @@ static void migrate_old_config(void)
 	copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST,
 		  RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST, FALSE);
 
+	conv_copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
+		      RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
+		      conv_get_locale_charset_str());
 	copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S "uidl",
 		 RC_DIR G_DIR_SEPARATOR_S "uidl");
 
