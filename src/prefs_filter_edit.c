@@ -260,7 +260,13 @@ static void prefs_filter_action_add_cb		(GtkWidget	*widget,
 
 FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header)
 {
+	static gboolean lock = FALSE;
 	FilterRule *new_rule;
+
+	if (lock)
+		return NULL;
+
+	lock = TRUE;
 
 	if (!rule_edit_window.window)
 		prefs_filter_edit_create();
@@ -271,6 +277,7 @@ FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header)
 	prefs_filter_edit_rule_to_dialog(rule);
 	if (header)
 		prefs_filter_edit_activate_cond_header(header);
+	GTK_EVENTS_FLUSH();
 	gtk_widget_show(rule_edit_window.window);
 
 	rule_edit_window.new_rule = NULL;
@@ -278,15 +285,17 @@ FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header)
 	while (rule_edit_window.edit_finished == FALSE)
 		gtk_main_iteration();
 
+	gtk_widget_hide(rule_edit_window.window);
 	prefs_filter_edit_clear();
 	prefs_filter_set_msg_header_list(NULL);
-	gtk_widget_hide(rule_edit_window.window);
 
 	new_rule = rule_edit_window.new_rule;
 	rule_edit_window.new_rule = NULL;
 
 	if (new_rule)
 		debug_print("new rule created: %s\n", new_rule->name);
+
+	lock = FALSE;
 
 	return new_rule;
 }
@@ -367,6 +376,7 @@ static void prefs_filter_edit_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), bool_op_optmenu, FALSE, FALSE, 0);
 
 	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 	MENUITEM_ADD(menu, menuitem,
 		     _("If any of the following condition matches"), FLT_OR);
 	MENUITEM_ADD(menu, menuitem,
@@ -468,6 +478,11 @@ static void prefs_filter_edit_rule_to_dialog(FilterRule *rule)
 			 index);
 	}
 
+	gtkut_scrolled_window_reset_position
+		(GTK_SCROLLED_WINDOW(rule_edit_window.cond_scrolled_win));
+	gtkut_scrolled_window_reset_position
+		(GTK_SCROLLED_WINDOW(rule_edit_window.action_scrolled_win));
+
 	prefs_filter_edit_add_rule_cond(rule);
 	prefs_filter_edit_add_rule_action(rule);
 }
@@ -558,6 +573,7 @@ static CondHBox *prefs_filter_edit_cond_hbox_create(void)
 }
 
 	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 	MENUITEM_ADD(menu, menuitem, NULL,        PF_COND_SEPARATOR);
 	COND_MENUITEM_ADD(_("To or Cc"),          PF_COND_TO_OR_CC);
 	COND_MENUITEM_ADD(_("Any header"),        PF_COND_ANY_HEADER);
@@ -579,6 +595,7 @@ static CondHBox *prefs_filter_edit_cond_hbox_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), match_type_optmenu, FALSE, FALSE, 0);
 
 	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 	MENUITEM_ADD(menu, menuitem, _("contains"),
 		     PF_MATCH_CONTAIN);
 	MENUITEM_ADD(menu, menuitem, _("doesn't contain"),
@@ -594,17 +611,21 @@ static CondHBox *prefs_filter_edit_cond_hbox_create(void)
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(match_type_optmenu), menu);
 
 	size_match_optmenu = gtk_option_menu_new();
+	gtk_widget_show(size_match_optmenu);
 	gtk_box_pack_start(GTK_BOX(hbox), size_match_optmenu, FALSE, FALSE, 0);
 
 	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 	MENUITEM_ADD(menu, menuitem, _("is larger than"), PF_SIZE_LARGER);
 	MENUITEM_ADD(menu, menuitem, _("is smaller than"), PF_SIZE_SMALLER);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(size_match_optmenu), menu);
 
 	age_match_optmenu = gtk_option_menu_new();
+	gtk_widget_show(age_match_optmenu);
 	gtk_box_pack_start(GTK_BOX(hbox), age_match_optmenu, FALSE, FALSE, 0);
 
 	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 	MENUITEM_ADD(menu, menuitem, _("is longer than"), PF_AGE_LONGER);
 	MENUITEM_ADD(menu, menuitem, _("is shorter than"), PF_AGE_SHORTER);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(age_match_optmenu), menu);
@@ -704,6 +725,7 @@ static ActionHBox *prefs_filter_edit_action_hbox_create(void)
 }
 
 	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 	ACTION_MENUITEM_ADD(_("Move to"),               PF_ACTION_MOVE);
 	ACTION_MENUITEM_ADD(_("Copy to"),               PF_ACTION_COPY);
 	ACTION_MENUITEM_ADD(_("Don't receive"),         PF_ACTION_NOT_RECEIVE);

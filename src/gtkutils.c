@@ -441,6 +441,16 @@ void gtkut_container_remove(GtkContainer *container, GtkWidget *widget)
 	gtk_container_remove(container, widget);
 }
 
+void gtkut_scrolled_window_reset_position(GtkScrolledWindow *window)
+{
+	GtkAdjustment *adj;
+
+	adj = gtk_scrolled_window_get_hadjustment(GTK_SCROLLED_WINDOW(window));
+	gtk_adjustment_set_value(adj, adj->lower);
+	adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(window));
+	gtk_adjustment_set_value(adj, adj->lower);
+}
+
 gboolean gtkut_text_buffer_match_string(GtkTextBuffer *textbuf,
 					const GtkTextIter *iter,
 					gunichar *wcs, gint len,

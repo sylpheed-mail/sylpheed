@@ -32,6 +32,7 @@
 #include <gtk/gtkeditable.h>
 #include <gtk/gtkctree.h>
 #include <gtk/gtkcombo.h>
+#include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktextview.h>
 #include <gtk/gtkitemfactory.h>
 #include <stdlib.h>
@@ -133,6 +134,9 @@ void gtkut_editable_disable_im		(GtkEditable	*editable);
 
 void gtkut_container_remove		(GtkContainer	*container,
 					 GtkWidget	*widget);
+
+void gtkut_scrolled_window_reset_position
+					(GtkScrolledWindow	*window);
 
 gboolean gtkut_text_buffer_match_string	(GtkTextBuffer		*buffer,
 					 const GtkTextIter	*iter,
