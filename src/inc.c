@@ -344,6 +344,7 @@ static IncProgressDialog *inc_progress_dialog_create(gboolean autocheck)
 
 	progress_dialog_set_value(progress, 0.0);
 
+	gtk_widget_realize(progress->clist);
 	stock_pixmap_gdk(progress->clist, STOCK_PIXMAP_COMPLETE,
 			 &okxpm, &okxpmmask);
 	stock_pixmap_gdk(progress->clist, STOCK_PIXMAP_CONTINUE,
