@@ -256,7 +256,8 @@ PrefsAccount *account_find_from_message_file(const gchar *file)
 {
 	static HeaderEntry hentry[] = {{"From:",		  NULL, FALSE},
 				       {"X-Sylpheed-Account-Id:", NULL, FALSE},
-				       {"AID:",			  NULL, FALSE}};
+				       {"AID:",			  NULL, FALSE},
+				       {NULL,			  NULL, FALSE}};
 
 	enum
 	{
