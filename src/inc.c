@@ -168,7 +168,8 @@ static void inc_finished(MainWindow *mainwin, gboolean new_messages)
 		folderview_select(mainwin->folderview, item);
 	} else if (prefs_common.scan_all_after_inc) {
 		item = mainwin->summaryview->folder_item;
-		folderview_update_item(item, TRUE);
+		if (item)
+			folderview_update_item(item, TRUE);
 	}
 }
 
