@@ -88,7 +88,7 @@ static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data)
 
 	gtk_statusbar_push(GTK_STATUSBAR(mainwin->statusbar),
 			   mainwin->mainwin_cid, str);
-	gtkut_widget_wait_for_draw(mainwin->hbox_stat);
+	gtkut_widget_wait_for_draw(mainwin->statusbar);
 	gtk_statusbar_pop(GTK_STATUSBAR(mainwin->statusbar),
 			  mainwin->mainwin_cid);
 	g_free(str);

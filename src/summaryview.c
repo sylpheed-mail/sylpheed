@@ -77,7 +77,7 @@
 { \
 	gtk_statusbar_push(GTK_STATUSBAR(mainwin->statusbar), \
 			   mainwin->summaryview_cid, str); \
-	gtkut_widget_wait_for_draw(mainwin->hbox_stat); \
+	gtkut_widget_wait_for_draw(mainwin->statusbar); \
 }
 
 #define STATUSBAR_POP(mainwin) \

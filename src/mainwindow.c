@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@
 { \
 	gtk_statusbar_push(GTK_STATUSBAR(mainwin->statusbar), \
 			   mainwin->mainwin_cid, str); \
-	gtkut_widget_wait_for_draw(mainwin->hbox_stat); \
+	gtkut_widget_wait_for_draw(mainwin->statusbar); \
 }
 
 #define STATUSBAR_POP(mainwin) \
@@ -751,7 +751,6 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *menubar;
 	GtkWidget *handlebox;
 	GtkWidget *vbox_body;
-	GtkWidget *hbox_stat;
 	GtkWidget *statusbar;
 	GtkWidget *progressbar;
 	GtkWidget *statuslabel;
@@ -760,6 +759,7 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *online_pixmap;
 	GtkWidget *offline_pixmap;
 	GtkTooltips *online_tip;
+	GtkWidget *spacer_hbox;
 	GtkWidget *ac_button;
 	GtkWidget *ac_label;
 
@@ -773,6 +773,8 @@ MainWindow *main_window_create(SeparateType type)
 	GtkItemFactory *ifactory;
 	GtkWidget *ac_menu;
 	GtkWidget *menuitem;
+	gint w;
+	gint h;
 	gint i;
 
 	static GdkGeometry geometry;
@@ -826,23 +828,20 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_container_set_border_width(GTK_CONTAINER(vbox_body), BORDER_WIDTH);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox_body, TRUE, TRUE, 0);
 
-	hbox_stat = gtk_hbox_new(FALSE, 2);
-	gtk_box_pack_end(GTK_BOX(vbox_body), hbox_stat, FALSE, FALSE, 0);
-
 	statusbar = statusbar_create();
-	gtk_box_pack_start(GTK_BOX(hbox_stat), statusbar, TRUE, TRUE, 0);
+	gtk_box_pack_end(GTK_BOX(vbox_body), statusbar, FALSE, FALSE, 0);
 
 	progressbar = gtk_progress_bar_new();
 	gtk_widget_set_size_request(progressbar, 120, 1);
-	gtk_box_pack_start(GTK_BOX(hbox_stat), progressbar, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(statusbar), progressbar, FALSE, FALSE, 0);
 
 	statuslabel = gtk_label_new("");
-	gtk_box_pack_start(GTK_BOX(hbox_stat), statuslabel, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(statusbar), statuslabel, FALSE, FALSE, 0);
 
 	online_hbox = gtk_hbox_new(FALSE, 0);
 
-	online_pixmap = stock_pixmap_widget(hbox_stat, STOCK_PIXMAP_ONLINE);
-	offline_pixmap = stock_pixmap_widget(hbox_stat, STOCK_PIXMAP_OFFLINE);
+	online_pixmap = stock_pixmap_widget(statusbar, STOCK_PIXMAP_ONLINE);
+	offline_pixmap = stock_pixmap_widget(statusbar, STOCK_PIXMAP_OFFLINE);
 	gtk_box_pack_start(GTK_BOX(online_hbox), online_pixmap,
 			   FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(online_hbox), offline_pixmap,
@@ -854,22 +853,25 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_container_add(GTK_CONTAINER(online_switch), online_hbox);
 	g_signal_connect(G_OBJECT(online_switch), "clicked",
 			 G_CALLBACK(online_switch_clicked), mainwin);
-	gtk_box_pack_start(GTK_BOX(hbox_stat), online_switch, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(statusbar), online_switch, FALSE, FALSE, 0);
 
 	online_tip = gtk_tooltips_new();
+
+	spacer_hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(statusbar), spacer_hbox, FALSE, FALSE, 0);
 
 	ac_button = gtk_button_new();
 	gtk_button_set_relief(GTK_BUTTON(ac_button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS(ac_button, GTK_CAN_FOCUS);
 	gtk_widget_set_size_request(ac_button, -1, 1);
-	gtk_box_pack_end(GTK_BOX(hbox_stat), ac_button, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(statusbar), ac_button, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(ac_button), "button_press_event",
 			 G_CALLBACK(ac_label_button_pressed), mainwin);
 
 	ac_label = gtk_label_new("");
 	gtk_container_add(GTK_CONTAINER(ac_button), ac_label);
 
-	gtk_widget_show_all(hbox_stat);
+	gtk_widget_show_all(statusbar);
 
 	/* create views */
 	mainwin->folderview  = folderview  = folderview_create();
@@ -894,7 +896,6 @@ MainWindow *main_window_create(SeparateType type)
 	mainwin->menu_factory   = ifactory;
 	mainwin->handlebox      = handlebox;
 	mainwin->vbox_body      = vbox_body;
-	mainwin->hbox_stat      = hbox_stat;
 	mainwin->statusbar      = statusbar;
 	mainwin->progressbar    = progressbar;
 	mainwin->statuslabel    = statuslabel;
@@ -972,7 +973,7 @@ MainWindow *main_window_create(SeparateType type)
 	}
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
 
-	gtk_widget_hide(mainwin->hbox_stat);
+	gtk_widget_hide(mainwin->statusbar);
 	menuitem = gtk_item_factory_get_item
 		(ifactory, "/View/Show or hide/Status bar");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
@@ -996,6 +997,10 @@ MainWindow *main_window_create(SeparateType type)
 
 	/* show main window */
 	gtk_widget_show(mainwin->window);
+
+	gdk_drawable_get_size
+		(GDK_DRAWABLE(GTK_STATUSBAR(statusbar)->grip_window), &w, &h);
+	gtk_widget_set_size_request(spacer_hbox, w, -1);
 
 	/* initialize views */
 	folderview_init(folderview);
@@ -2696,10 +2701,10 @@ static void toggle_statusbar_cb(MainWindow *mainwin, guint action,
 				GtkWidget *widget)
 {
 	if (GTK_CHECK_MENU_ITEM(widget)->active) {
-		gtk_widget_show(mainwin->hbox_stat);
+		gtk_widget_show(mainwin->statusbar);
 		prefs_common.show_statusbar = TRUE;
 	} else {
-		gtk_widget_hide(mainwin->hbox_stat);
+		gtk_widget_hide(mainwin->statusbar);
 		prefs_common.show_statusbar = FALSE;
 	}
 }
