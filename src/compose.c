@@ -5246,28 +5246,34 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 static void compose_attach_cb(gpointer data, guint action, GtkWidget *widget)
 {
 	Compose *compose = (Compose *)data;
-	const gchar *file;
+	gchar *file;
 	gchar *utf8_filename;
 
-	file = filesel_select_file(_("Select file"), NULL);
+	file = filesel_select_file(_("Select file"), NULL,
+				   GTK_FILE_CHOOSER_ACTION_OPEN);
 
 	if (file && *file) {
 		utf8_filename = conv_filename_to_utf8(file);
 		compose_attach_append(compose, file, utf8_filename, NULL);
 		g_free(utf8_filename);
 	}
+
+	g_free(file);
 }
 
 static void compose_insert_file_cb(gpointer data, guint action,
 				   GtkWidget *widget)
 {
 	Compose *compose = (Compose *)data;
-	const gchar *file;
+	gchar *file;
 
-	file = filesel_select_file(_("Select file"), NULL);
+	file = filesel_select_file(_("Select file"), NULL,
+				   GTK_FILE_CHOOSER_ACTION_OPEN);
 
 	if (file && *file)
 		compose_insert_file(compose, file);
+
+	g_free(file);
 }
 
 static void compose_insert_sig_cb(gpointer data, guint action,

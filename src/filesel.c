@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,133 +18,98 @@
  */
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkwidget.h>
-#include <gtk/gtkfilesel.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtksignal.h>
+#include <gtk/gtkfilechooserdialog.h>
+#include <gtk/gtkstock.h>
 
 #include "main.h"
 #include "filesel.h"
 #include "manage_window.h"
-#include "gtkutils.h"
-#include "codeconv.h"
+#include "alertpanel.h"
+#include "utils.h"
 
-static GtkWidget *filesel;
-static gboolean filesel_ack;
-static gboolean filesel_fin;
+static GtkWidget *filesel_create(const gchar		*title,
+				 GtkFileChooserAction	 action);
 
-static void filesel_create(const gchar *title);
-static void filesel_ok_cb(GtkWidget *widget, gpointer data);
-static void filesel_cancel_cb(GtkWidget *widget, gpointer data);
-static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data);
-static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data);
-
-gchar *filesel_select_file(const gchar *title, const gchar *file)
+gchar *filesel_select_file(const gchar *title, const gchar *file,
+			   GtkFileChooserAction action)
 {
-	static gchar *filename = NULL;
 	static gchar *cwd = NULL;
+	GtkWidget *dialog;
+	gchar *filename = NULL;
 
-	filesel_create(title);
+	dialog = filesel_create(title, action);
 
-	manage_window_set_transient(GTK_WINDOW(filesel));
-
-	if (filename) {
-		g_free(filename);
-		filename = NULL;
-	}
+	manage_window_set_transient(GTK_WINDOW(dialog));
 
 	if (!cwd)
-		cwd = g_strconcat(startup_dir, G_DIR_SEPARATOR_S, NULL);
+		cwd = g_strdup(startup_dir);
 
-	gtk_file_selection_set_filename(GTK_FILE_SELECTION(filesel), cwd);
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cwd);
+	if (file)
+		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
+						  file);
 
-	if (file) {
-		gchar *fs_filename;
+	gtk_widget_show(dialog);
 
-		fs_filename = conv_filename_from_utf8(file);
-		gtk_file_selection_set_filename(GTK_FILE_SELECTION(filesel),
-						fs_filename);
-		gtk_editable_select_region
-			(GTK_EDITABLE(GTK_FILE_SELECTION(filesel)->selection_entry),
-			 0, -1);
-		g_free(fs_filename);
-	}
-
-	gtk_widget_show(filesel);
-
-	filesel_ack = filesel_fin = FALSE;
-
-	while (filesel_fin == FALSE)
-		gtk_main_iteration();
-
-	if (filesel_ack) {
-		const gchar *str;
-
-		str = gtk_file_selection_get_filename
-			(GTK_FILE_SELECTION(filesel));
-		if (str && str[0] != '\0') {
+	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
+		filename = gtk_file_chooser_get_filename
+			(GTK_FILE_CHOOSER(dialog));
+		if (filename) {
 			gchar *dir;
 
-			filename = g_strdup(str);
-			dir = g_dirname(str);
+			dir = g_dirname(filename);
 			g_free(cwd);
-			cwd = g_strconcat(dir, G_DIR_SEPARATOR_S, NULL);
-			g_free(dir);
+			cwd = dir;
 		}
 	}
 
-	manage_window_focus_out(filesel, NULL, NULL);
-	gtk_widget_destroy(filesel);
-	GTK_EVENTS_FLUSH();
+	manage_window_focus_out(dialog, NULL, NULL);
+	gtk_widget_destroy(dialog);
 
 	return filename;
 }
 
-static void filesel_create(const gchar *title)
+gchar *filesel_save_as(const gchar *file)
 {
-	filesel = gtk_file_selection_new(title);
-	gtk_window_set_position(GTK_WINDOW(filesel), GTK_WIN_POS_CENTER);
-	gtk_window_set_modal(GTK_WINDOW(filesel), TRUE);
-	gtk_window_set_wmclass
-		(GTK_WINDOW(filesel), "file_selection", "Sylpheed");
+	gchar *filename;
 
-	g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
-			 "clicked", G_CALLBACK(filesel_ok_cb),
-			 NULL);
-	g_signal_connect
-		(G_OBJECT(GTK_FILE_SELECTION(filesel)->cancel_button),
-		 "clicked", G_CALLBACK(filesel_cancel_cb),
+	filename = filesel_select_file(_("Save as"), file,
+				       GTK_FILE_CHOOSER_ACTION_SAVE);
+
+	if (filename && is_file_exist(filename)) {
+		AlertValue aval;
+
+		aval = alertpanel(_("Overwrite"),
+				  _("Overwrite existing file?"),
+				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
+		if (G_ALERTDEFAULT != aval) {
+			g_free(filename);
+			filename = NULL;
+		}
+	}
+
+	return filename;
+}
+
+static GtkWidget *filesel_create(const gchar *title,
+				 GtkFileChooserAction action)
+{
+	GtkWidget *dialog;
+
+	dialog = gtk_file_chooser_dialog_new
+		(title, NULL, action,
+		 action == GTK_FILE_CHOOSER_ACTION_SAVE ? GTK_STOCK_SAVE
+		 : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+		 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 		 NULL);
-	g_signal_connect(G_OBJECT(filesel), "delete_event",
-			 G_CALLBACK(delete_event), NULL);
-	g_signal_connect(G_OBJECT(filesel), "key_press_event",
-			 G_CALLBACK(key_pressed), NULL);
-	MANAGE_WINDOW_SIGNALS_CONNECT(filesel);
-}
+	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	gtk_window_set_wmclass
+		(GTK_WINDOW(dialog), "file_selection", "Sylpheed");
 
-static void filesel_ok_cb(GtkWidget *widget, gpointer data)
-{
-	filesel_ack = TRUE;
-	filesel_fin = TRUE;
-}
+	MANAGE_WINDOW_SIGNALS_CONNECT(dialog);
 
-static void filesel_cancel_cb(GtkWidget *widget, gpointer data)
-{
-	filesel_ack = FALSE;
-	filesel_fin = TRUE;
-}
-
-static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data)
-{
-	filesel_cancel_cb(NULL, NULL);
-	return TRUE;
-}
-
-static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data)
-{
-	if (event && event->keyval == GDK_Escape)
-		filesel_cancel_cb(NULL, NULL);
-	return FALSE;
+	return dialog;
 }

@@ -230,10 +230,11 @@ static void import_cancel_cb(GtkWidget *widget, gpointer data)
 
 static void import_filesel_cb(GtkWidget *widget, gpointer data)
 {
-	const gchar *filename;
+	gchar *filename;
 	gchar *utf8_filename;
 
-	filename = filesel_select_file(_("Select importing file"), NULL);
+	filename = filesel_select_file(_("Select importing file"), NULL,
+				       GTK_FILE_CHOOSER_ACTION_OPEN);
 	if (!filename) return;
 
 	utf8_filename = g_filename_to_utf8(filename, -1, NULL, NULL, NULL);
@@ -243,6 +244,8 @@ static void import_filesel_cb(GtkWidget *widget, gpointer data)
 	}
 	gtk_entry_set_text(GTK_ENTRY(file_entry), utf8_filename);
 	g_free(utf8_filename);
+
+	g_free(filename);
 }
 
 static void import_destsel_cb(GtkWidget *widget, gpointer data)

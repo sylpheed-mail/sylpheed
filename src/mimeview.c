@@ -801,20 +801,14 @@ static void mimeview_save_as(MimeView *mimeview)
 		subst_for_filename(defname);
 	}
 
-	filename = filesel_select_file(_("Save as"), defname);
+	filename = filesel_save_as(defname);
 	if (!filename) return;
-	if (is_file_exist(filename)) {
-		AlertValue aval;
-
-		aval = alertpanel(_("Overwrite"),
-				  _("Overwrite existing file?"),
-				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
-		if (G_ALERTDEFAULT != aval) return;
-	}
 
 	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
 		alertpanel_error
 			(_("Can't save the part of multipart message."));
+
+	g_free(filename);
 }
 
 static void mimeview_launch(MimeView *mimeview)

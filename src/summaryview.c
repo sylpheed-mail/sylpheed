@@ -2709,16 +2709,9 @@ void summary_save_as(SummaryView *summaryview)
 		Xstrdup_a(filename, msginfo->subject, return);
 		subst_for_filename(filename);
 	}
-	dest = filesel_select_file(_("Save as"), filename);
-	if (!dest) return;
-	if (is_file_exist(dest)) {
-		AlertValue aval;
 
-		aval = alertpanel(_("Overwrite"),
-				  _("Overwrite existing file?"),
-				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
-		if (G_ALERTDEFAULT != aval) return;
-	}
+	dest = filesel_save_as(filename);
+	if (!dest) return;
 
 	src = procmsg_get_message_file(msginfo);
 	if (copy_file(src, dest, TRUE) < 0) {
@@ -2730,6 +2723,8 @@ void summary_save_as(SummaryView *summaryview)
 		g_free(utf8_dest);
 	}
 	g_free(src);
+
+	g_free(dest);
 }
 
 void summary_print(SummaryView *summaryview)
