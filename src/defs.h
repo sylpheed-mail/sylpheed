@@ -61,9 +61,9 @@
 #define FAQ_HTML_INDEX		"sylpheed-faq.html"
 #define HOMEPAGE_URI		"http://sylpheed.good-day.net/"
 #define FOLDER_LIST		"folderlist.xml"
-#define CACHE_FILE		".sylpheed2_cache"
+#define CACHE_FILE		".sylpheed_cache"
 #define MARK_FILE		".sylpheed_mark"
-#define CACHE_VERSION		19
+#define CACHE_VERSION		0x20
 #define MARK_VERSION		2
 
 #define DEFAULT_SIGNATURE	".signature"
