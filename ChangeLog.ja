@@ -1,5 +1,12 @@
 2005-03-04
 
+	* src/unmime.[ch]: 効率を上げるために、ヘッダの MIME デコードの
+	  バッファとして GString を使用するようにした。
+	* src/codeconv.c: conv_unmime_header(): unmime_header() の戻り値を
+	  直接返すようにした。スタックに置くバッファサイズを制限。
+
+2005-03-04
+
 	* src/codeconv.[ch]: ヒープのバッファオーバーフローを起こしていた
 	  conv_unmime_header_overwrite() を削除。
 	  conv_unmime_header(): 新たに確保された文字列を返すように修正。

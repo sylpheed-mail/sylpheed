@@ -34,53 +34,56 @@
 
 /* Decodes headers based on RFC2045 and RFC2047. */
 
-void unmime_header(gchar *out, const gchar *str)
+gchar *unmime_header(const gchar *encoded_str)
 {
-	const gchar *p = str;
-	gchar *outp = out;
+	const gchar *p = encoded_str;
 	const gchar *eword_begin_p, *encoding_begin_p, *text_begin_p,
 		    *eword_end_p;
 	gchar charset[32];
 	gchar encoding;
 	gchar *conv_str;
-	gint len;
+	GString *outbuf;
+	gchar *out_str;
+	gsize out_len;
+
+	outbuf = g_string_sized_new(strlen(encoded_str) * 2);
 
 	while (*p != '\0') {
 		gchar *decoded_text = NULL;
+		gint len;
 
 		eword_begin_p = strstr(p, ENCODED_WORD_BEGIN);
 		if (!eword_begin_p) {
-			strcpy(outp, p);
-			return;
+			g_string_append(outbuf, p);
+			break;
 		}
 		encoding_begin_p = strchr(eword_begin_p + 2, '?');
 		if (!encoding_begin_p) {
-			strcpy(outp, p);
-			return;
+			g_string_append(outbuf, p);
+			break;
 		}
 		text_begin_p = strchr(encoding_begin_p + 1, '?');
 		if (!text_begin_p) {
-			strcpy(outp, p);
-			return;
+			g_string_append(outbuf, p);
+			break;
 		}
 		eword_end_p = strstr(text_begin_p + 1, ENCODED_WORD_END);
 		if (!eword_end_p) {
-			strcpy(outp, p);
-			return;
+			g_string_append(outbuf, p);
+			break;
 		}
 
-		if (p == str) {
-			memcpy(outp, p, eword_begin_p - p);
-			outp += eword_begin_p - p;
+		if (p == encoded_str) {
+			g_string_append_len(outbuf, p, eword_begin_p - p);
 			p = eword_begin_p;
 		} else {
 			/* ignore spaces between encoded words */
 			const gchar *sp;
 
 			for (sp = p; sp < eword_begin_p; sp++) {
-				if (!isspace(*(const guchar *)sp)) {
-					memcpy(outp, p, eword_begin_p - p);
-					outp += eword_begin_p - p;
+				if (!g_ascii_isspace(*sp)) {
+					g_string_append_len
+						(outbuf, p, eword_begin_p - p);
 					p = eword_begin_p;
 					break;
 				}
@@ -91,7 +94,7 @@ void unmime_header(gchar *out, const gchar *str)
 			  encoding_begin_p - (eword_begin_p + 2));
 		memcpy(charset, eword_begin_p + 2, len);
 		charset[len] = '\0';
-		encoding = toupper(*(encoding_begin_p + 1));
+		encoding = g_ascii_toupper(*(encoding_begin_p + 1));
 
 		if (encoding == 'B') {
 			decoded_text = g_malloc
@@ -106,28 +109,28 @@ void unmime_header(gchar *out, const gchar *str)
 				(decoded_text, text_begin_p + 1,
 				 eword_end_p - (text_begin_p + 1));
 		} else {
-			memcpy(outp, p, eword_end_p + 2 - p);
-			outp += eword_end_p + 2 - p;
+			g_string_append_len(outbuf, p, eword_end_p + 2 - p);
 			p = eword_end_p + 2;
 			continue;
 		}
 
 		/* convert to UTF-8 */
 		conv_str = conv_codeset_strdup(decoded_text, charset, NULL);
-		if (conv_str) {
-			len = strlen(conv_str);
-			memcpy(outp, conv_str, len);
-			g_free(conv_str);
-		} else {
-			len = strlen(decoded_text);
-			conv_utf8todisp(outp, len + 1, decoded_text);
+		if (!conv_str) {
+			conv_str = g_malloc(len + 1);
+			conv_utf8todisp(conv_str, len + 1, decoded_text);
 		}
-		outp += len;
+		g_string_append(outbuf, conv_str);
+		g_free(conv_str);
 
 		g_free(decoded_text);
 
 		p = eword_end_p + 2;
 	}
 
-	*outp = '\0';
+	out_str = outbuf->str;
+	out_len = outbuf->len;
+	g_string_free(outbuf, FALSE);
+
+	return g_realloc(out_str, out_len + 1);
 }

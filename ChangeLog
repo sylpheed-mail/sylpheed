@@ -1,5 +1,12 @@
 2005-03-04
 
+	* src/unmime.[ch]: use GString for a buffer for header MIME decoding
+	  to improve the efficiency.
+	* src/codeconv.c: conv_unmime_header(): directly return the return
+	  value of unmime_header(). Restrict the buffer size on the stack.
+
+2005-03-04
+
 	* src/codeconv.[ch]: removed conv_unmime_header_overwrite() because
 	  it had introduced heap buffer overflow.
 	  conv_unmime_header(): modified so that it returns newly-allocated

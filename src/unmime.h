@@ -22,7 +22,6 @@
 
 #include <glib.h>
 
-void unmime_header			(gchar		*out,
-					 const gchar	*str);
+gchar *unmime_header	(const gchar	*encoded_str);
 
 #endif /* __UNMIME_H__ */

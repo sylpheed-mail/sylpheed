@@ -1543,31 +1543,25 @@ const gchar *conv_get_current_locale(void)
 
 gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 {
-	gchar *buf;
-	gint buflen;
 	gchar *utf8_buf;
+	gint buflen;
 
-	if (is_ascii_str(str)) {
-		buflen = strlen(str) * 6 + 1;
-		Xalloca(buf, buflen, return NULL);
-		unmime_header(buf, str);
-		return g_strdup(buf);
-	}
+	if (is_ascii_str(str))
+		return unmime_header(str);
 
 	if (default_encoding) {
 		utf8_buf = conv_codeset_strdup
 			(str, default_encoding, CS_INTERNAL);
 		if (utf8_buf) {
-			buflen = strlen(utf8_buf) * 6 + 1;
-			Xalloca(buf, buflen,
-				{ g_free(utf8_buf); return NULL; });
-			unmime_header(buf, utf8_buf);
+			gchar *decoded_str;
+
+			decoded_str = unmime_header(utf8_buf);
 			g_free(utf8_buf);
-			return g_strdup(buf);
+			return decoded_str;
 		}
 	}
 
-	buflen = strlen(str) * 6 + 1;
+	buflen = MIN(strlen(str) * 6 + 1, BUFFSIZE);
 	Xalloca(utf8_buf, buflen, return NULL);
 
 	if (conv_get_locale_charset() == C_EUC_JP)
@@ -1575,12 +1569,7 @@ gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 	else
 		conv_localetodisp(utf8_buf, buflen, str);
 
-	buflen = strlen(utf8_buf) * 6 + 1;
-	Xalloca(buf, buflen, return NULL);
-
-	unmime_header(buf, utf8_buf);
-
-	return g_strdup(buf);
+	return unmime_header(utf8_buf);
 }
 
 #define MAX_LINELEN		76
