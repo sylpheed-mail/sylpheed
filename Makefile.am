@@ -6,7 +6,7 @@ EXTRA_DIST = config.rpath  \
 	README.ja \
 	TODO.ja \
 	ChangeLog-1.0 \
-	ChangeLog-1.0-ja \
+	ChangeLog-1.0.ja \
 	NEWS-1.0 \
 	sylpheed.desktop \
 	sylpheed.spec \
