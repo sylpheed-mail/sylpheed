@@ -136,7 +136,7 @@ static gchar *conv_jistoeuc(const gchar *inbuf, gint *error)
 	JISState state = JIS_ASCII;
 	gint error_ = 0;
 
-	outbuf = g_malloc(strlen(inbuf) + 1);
+	outbuf = g_malloc(strlen(inbuf) * 2 + 1);
 	out = outbuf;
 
 	while (*in != '\0') {
