@@ -113,6 +113,9 @@ static void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
 static void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
 static void conv_anytoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
 
+static void conv_utf8toeuc(gchar *outbuf, gint outlen, const gchar *inbuf);
+static void conv_utf8tojis(gchar *outbuf, gint outlen, const gchar *inbuf);
+
 static void conv_unreadable_eucjp(gchar *str);
 static void conv_unreadable_8bit(gchar *str);
 static void conv_unreadable_latin(gchar *str);
@@ -396,39 +399,12 @@ static void conv_sjistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 static void conv_jistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
-	static iconv_t cd = (iconv_t)-1;
-	static gboolean iconv_ok = TRUE;
-	gchar *tmpstr;
 	gchar *eucstr;
 
 	Xalloca(eucstr, outlen, return);
 
 	conv_jistoeuc(eucstr, outlen, inbuf);
-
-	if (cd == (iconv_t)-1) {
-		if (!iconv_ok) {
-			strncpy2(outbuf, inbuf, outlen);
-			return;
-		}
-		cd = iconv_open(CS_UTF_8, CS_EUC_JP_MS);
-		if (cd == (iconv_t)-1) {
-			cd = iconv_open(CS_UTF_8, CS_EUC_JP);
-			if (cd == (iconv_t)-1) {
-				g_warning("conv_jistoutf8(): %s\n",
-					  g_strerror(errno));
-				iconv_ok = FALSE;
-				strncpy2(outbuf, inbuf, outlen);
-				return;
-			}
-		}
-	}
-
-	tmpstr = conv_iconv_strdup_with_cd(eucstr, cd);
-	if (tmpstr) {
-		strncpy2(outbuf, tmpstr, outlen);
-		g_free(tmpstr);
-	} else
-		strncpy2(outbuf, inbuf, outlen);
+	conv_euctoutf8(outbuf, outlen, eucstr);
 }
 
 static void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
@@ -445,9 +421,29 @@ static void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 static void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
+	static iconv_t cd = (iconv_t)-1;
+	static gboolean iconv_ok = TRUE;
 	gchar *tmpstr;
 
-	tmpstr = conv_iconv_strdup(inbuf, CS_EUC_JP, CS_UTF_8);
+	if (cd == (iconv_t)-1) {
+		if (!iconv_ok) {
+			strncpy2(outbuf, inbuf, outlen);
+			return;
+		}
+		cd = iconv_open(CS_UTF_8, CS_EUC_JP_MS);
+		if (cd == (iconv_t)-1) {
+			cd = iconv_open(CS_UTF_8, CS_EUC_JP);
+			if (cd == (iconv_t)-1) {
+				g_warning("conv_euctoutf8(): %s\n",
+					  g_strerror(errno));
+				iconv_ok = FALSE;
+				strncpy2(outbuf, inbuf, outlen);
+				return;
+			}
+		}
+	}
+
+	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -471,6 +467,48 @@ static void conv_anytoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 		strncpy2(outbuf, inbuf, outlen);
 		break;
 	}
+}
+
+static void conv_utf8toeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
+{
+	static iconv_t cd = (iconv_t)-1;
+	static gboolean iconv_ok = TRUE;
+	gchar *tmpstr;
+
+	if (cd == (iconv_t)-1) {
+		if (!iconv_ok) {
+			strncpy2(outbuf, inbuf, outlen);
+			return;
+		}
+		cd = iconv_open(CS_EUC_JP_MS, CS_UTF_8);
+		if (cd == (iconv_t)-1) {
+			cd = iconv_open(CS_EUC_JP, CS_UTF_8);
+			if (cd == (iconv_t)-1) {
+				g_warning("conv_utf8toeuc(): %s\n",
+					  g_strerror(errno));
+				iconv_ok = FALSE;
+				strncpy2(outbuf, inbuf, outlen);
+				return;
+			}
+		}
+	}
+
+	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd);
+	if (tmpstr) {
+		strncpy2(outbuf, tmpstr, outlen);
+		g_free(tmpstr);
+	} else
+		strncpy2(outbuf, inbuf, outlen);
+}
+
+static void conv_utf8tojis(gchar *outbuf, gint outlen, const gchar *inbuf)
+{
+	gchar *eucstr;
+
+	Xalloca(eucstr, outlen, return);
+
+	conv_utf8toeuc(eucstr, outlen, inbuf);
+	conv_euctojis(outbuf, outlen, eucstr);
 }
 
 static gchar valid_eucjp_tbl[][96] = {
@@ -909,6 +947,14 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
 			code_conv = conv_euctojis;
 		else if (dest_charset == C_UTF_8)
 			code_conv = conv_euctoutf8;
+		break;
+	case C_UTF_8:
+		if (dest_charset == C_EUC_JP)
+			code_conv = conv_utf8toeuc;
+		else if (dest_charset == C_ISO_2022_JP   ||
+			 dest_charset == C_ISO_2022_JP_2 ||
+			 dest_charset == C_ISO_2022_JP_3)
+			code_conv = conv_utf8tojis;
 		break;
 	default:
 		break;
