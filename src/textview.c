@@ -1624,6 +1624,8 @@ static gboolean textview_get_link_tag_bounds(TextView *textview,
 			g_free(tag_name);
 			break;
 		}
+		if (tag_name)
+			g_free(tag_name);
 	}
 
 	if (tags)
