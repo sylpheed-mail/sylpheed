@@ -39,7 +39,8 @@ GtkWidget *statusbar_create(void)
 	GtkWidget *statusbar;
 
 	statusbar = gtk_statusbar_new();
-	gtk_widget_set_usize(statusbar, 1, -1);
+	gtk_widget_set_size_request(statusbar, 1, -1);
+	gtk_statusbar_set_has_resize_grip(GTK_STATUSBAR(statusbar), FALSE);
 	statusbar_list = g_list_append(statusbar_list, statusbar);
 
 	return statusbar;

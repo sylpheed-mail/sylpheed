@@ -172,7 +172,7 @@ static void prefs_filter_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
-	gtk_widget_set_usize(window, 540, 360);
+	gtk_widget_set_size_request(window, 540, 360);
 	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, FALSE);
@@ -205,7 +205,7 @@ static void prefs_filter_create(void)
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_show(scrolledwin);
-	gtk_widget_set_usize(scrolledwin, -1, 150);
+	gtk_widget_set_size_request(scrolledwin, -1, 150);
 	gtk_box_pack_start(GTK_BOX(hbox), scrolledwin, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC,
