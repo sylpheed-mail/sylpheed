@@ -71,10 +71,6 @@
 #include "pixmaps/vcard.xpm"
 #include "pixmaps/online.xpm"
 #include "pixmaps/offline.xpm"
-#include "pixmaps/stock_dialog_info_48.xpm"
-#include "pixmaps/stock_dialog_question_48.xpm"
-#include "pixmaps/stock_dialog_warning_48.xpm"
-#include "pixmaps/stock_dialog_error_48.xpm"
 #include "pixmaps/stock_add_16.xpm"
 #include "pixmaps/stock_remove_16.xpm"
 #include "pixmaps/mail.xpm"
@@ -137,10 +133,6 @@ static StockPixmapData pixmaps[] =
 	{vcard_xpm			, NULL, NULL},
 	{online_xpm			, NULL, NULL},
 	{offline_xpm			, NULL, NULL},
-	{stock_dialog_info_48_xpm	, NULL, NULL},
-	{stock_dialog_question_48_xpm	, NULL, NULL},
-	{stock_dialog_warning_48_xpm	, NULL, NULL},
-	{stock_dialog_error_48_xpm	, NULL, NULL},
 	{stock_add_16_xpm		, NULL, NULL},
 	{stock_remove_16_xpm		, NULL, NULL},
 	{mail_xpm			, NULL, NULL},

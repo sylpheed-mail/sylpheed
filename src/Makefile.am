@@ -145,10 +145,6 @@ EXTRA_DIST = \
 	pixmaps/continue.xpm \
 	pixmaps/complete.xpm \
 	pixmaps/error.xpm \
-	pixmaps/stock_dialog_error_48.xpm \
-	pixmaps/stock_dialog_info_48.xpm \
-	pixmaps/stock_dialog_question_48.xpm \
-	pixmaps/stock_dialog_warning_48.xpm \
 	pixmaps/stock_mail.xpm \
 	pixmaps/stock_mail_attach.xpm \
 	pixmaps/stock_mail_receive.xpm \
