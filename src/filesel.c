@@ -21,6 +21,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkfilechooserdialog.h>
+#include <gtk/gtkexpander.h>
 #include <gtk/gtkstock.h>
 
 #include "main.h"
@@ -37,6 +38,9 @@ static GSList *filesel_select_file_full	(const gchar		*title,
 static GtkWidget *filesel_create	(const gchar		*title,
 					 GtkFileChooserAction	 action);
 
+static void filesel_save_expander_set_expanded	   (GtkWidget	*dialog,
+						    gboolean	 expanded);
+static gboolean filesel_save_expander_get_expanded (GtkWidget	*dialog);
 
 gchar *filesel_select_file(const gchar *title, const gchar *file,
 			   GtkFileChooserAction action)
@@ -68,6 +72,7 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	gchar *cwd;
 	GtkWidget *dialog;
 	gchar *prev_dir;
+	static gboolean save_expander_expanded = FALSE;
 	GSList *list = NULL;
 
 	if (!path_table)
@@ -95,6 +100,11 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(dialog),
 					     multiple);
 
+	if (action == GTK_FILE_CHOOSER_ACTION_SAVE && save_expander_expanded) {
+		filesel_save_expander_set_expanded
+			(dialog, save_expander_expanded);
+	}
+
 	gtk_widget_show(dialog);
 
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
@@ -107,6 +117,10 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 					(path_table, g_strdup(title), cwd);
 		}
 	}
+
+	if (action == GTK_FILE_CHOOSER_ACTION_SAVE)
+		save_expander_expanded =
+			filesel_save_expander_get_expanded(dialog);
 
 	manage_window_focus_out(dialog, NULL, NULL);
 	gtk_widget_destroy(dialog);
@@ -157,4 +171,40 @@ static GtkWidget *filesel_create(const gchar *title,
 	MANAGE_WINDOW_SIGNALS_CONNECT(dialog);
 
 	return dialog;
+}
+
+static void container_foreach_cb(GtkWidget *widget, gpointer data)
+{
+	GtkWidget **expander = (GtkWidget **)data;
+
+	if (*expander == NULL) {
+		if (GTK_IS_EXPANDER(widget))
+			*expander = widget;
+		else if (GTK_IS_CONTAINER(widget))
+			gtk_container_foreach(GTK_CONTAINER(widget),
+					      container_foreach_cb, data);
+	}
+}
+
+static void filesel_save_expander_set_expanded(GtkWidget *dialog,
+					       gboolean expanded)
+{
+	GtkWidget *expander = NULL;
+
+	gtk_container_foreach(GTK_CONTAINER(dialog), container_foreach_cb,
+			      &expander);
+	if (expander)
+		gtk_expander_set_expanded(GTK_EXPANDER(expander), expanded);
+}
+
+static gboolean filesel_save_expander_get_expanded(GtkWidget *dialog)
+{
+	GtkWidget *expander = NULL;
+
+	gtk_container_foreach(GTK_CONTAINER(dialog), container_foreach_cb,
+			      &expander);
+	if (expander)
+		return gtk_expander_get_expanded(GTK_EXPANDER(expander));
+	else
+		return FALSE;
 }
