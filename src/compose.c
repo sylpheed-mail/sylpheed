@@ -3795,7 +3795,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	gchar *titles[N_ATTACH_COLS];
 	guint n_menu_entries;
-	GtkStyle  *style, *new_style;
 	GdkColormap *cmap;
 	GdkColor color[1];
 	gboolean success[1];
@@ -4013,29 +4012,23 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	gtk_widget_show_all(vbox);
 
-	style = gtk_widget_get_style(text);
-	new_style = gtk_style_copy(style);
-
-#warning FIXME_GTK2 use normal API for setting font
 	if (prefs_common.textfont) {
 		PangoFontDescription *font_desc;
 
 		font_desc = pango_font_description_from_string
 			(prefs_common.textfont);
 		if (font_desc) {
-			if (new_style->font_desc)
-				pango_font_description_free
-					(new_style->font_desc);
-			new_style->font_desc = font_desc;
+			gtk_widget_modify_font(text, font_desc);
+			pango_font_description_free(font_desc);
 		}
 	}
-
-	gtk_widget_set_style(text, new_style);
 
 	color[0] = quote_color;
 	cmap = gdk_window_get_colormap(window->window);
 	gdk_colormap_alloc_colors(cmap, color, 1, FALSE, TRUE, success);
 	if (success[0] == FALSE) {
+		GtkStyle *style;
+
 		g_warning("Compose: color allocation failed.\n");
 		style = gtk_widget_get_style(text);
 		quote_color = style->black;
