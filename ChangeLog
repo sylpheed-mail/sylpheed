@@ -1,3 +1,11 @@
+2005-04-05
+
+	* src/send_messages.c: send_message_smtp(): consider EOF right after
+	  QUIT successful (workaround for Gmail SMTP server).
+	* src/socket.c: ssl_read(), ssl_peek(): check EOF which violates the
+	  SSL protocol.
+	* src/procheader.c: removed an unused variable.
+
 2005-04-01
 
 	* configure.in: changed -traditional-cpp to -no-cpp-precomp for newer

@@ -412,6 +412,11 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 			ac_prefs->tmp_smtp_pass = NULL;
 		}
 		ret = -1;
+	} else if (session->state == SESSION_EOF &&
+		   SMTP_SESSION(session)->state == SMTP_QUIT) {
+		/* consider EOF right after QUIT successful */
+		log_warning("%s\n", _("Connection closed by the remote host."));
+		ret = 0;
 	} else if (session->state == SESSION_ERROR ||
 		   session->state == SESSION_EOF ||
 		   session->state == SESSION_TIMEOUT ||

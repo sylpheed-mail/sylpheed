@@ -1,3 +1,11 @@
+2005-04-05
+
+	* src/send_messages.c: send_message_smtp(): QUIT 直後の EOF を成功と
+	  みなすようにした(Gmail の SMTP サーバへの対処)。
+	* src/socket.c: ssl_read(), ssl_peek(): SSL プロトコル違反の EOF を
+	  チェック。
+	* src/procheader.c: 未使用の変数を削除。
+
 2005-04-01
 
 	* configure.in: 新しい Mac OS X に対応するために -traditional-cpp を

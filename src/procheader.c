@@ -503,7 +503,7 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 
 	MsgInfo *msginfo;
 	gchar buf[BUFFSIZE];
-	gchar *p, *q;
+	gchar *p;
 	gchar *hp;
 	HeaderEntry *hentry;
 	gint hnum;
