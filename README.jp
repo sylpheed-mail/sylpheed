@@ -1,0 +1,244 @@
+	Sylpheed - GTK+ ベースの軽量で高速な電子メールクライアント
+
+   Copyright(C) 1999-2004 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+   For more details see the file COPYING.
+
+(参考訳)
+   このプログラムはフリーソフトウェアです。あなたは、 Free Software
+   Foundation によって公表されている GNU 一般使用許諾 (バージョン2、
+   または(任意に)それ以降のバージョンのどちらか) の条件に従って、
+   これを再配布、そして(あるいは)修正することができます。
+
+   このプログラムは有用であることを期待して配布されていますが、
+   「何の保証もありません」。「商利用」あるいは「特定の目的への適合」への
+   暗黙の保証さえありません。さらなる詳細は、GNU 一般使用許諾を参照
+   してください。
+
+   あなたはこのプログラムと共に GNU 一般使用許諾のコピーを入手している
+   はずですが、もしそうでなければ、 the Free SoftwareFoundation, Inc.,
+   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. まで書き送って
+   ください。
+
+   さらなる詳細は、 COPYING というファイルを参照してください。
+
+
+What's Sylpheed
+===============
+
+SylpheedはGUIツールキットにGTK+を使用した、 X Window System上で動作する
+電子メールクライアント&ニュースリーダーです。
+
+Sylpheed は GNU GPL に従って配布されているフリーソフトウェアです。
+
+Sylpheedは以下のことを目標にして開発されています。
+
+  * CPU・メモリの消費を最小限に抑えて軽快に動作
+  * 1フォルダ中に大量にメッセージが存在する場合(10000通以上)でも高速に処理
+  * シンプルで美しく、洗練されたインタフェースにより直観的な操作が可能
+  * 他のメーラに近い操作が可能
+  * 簡単な設定ですぐに使用可能
+  * メーラに必要とされる機能を完備
+  * 日本語に完全対応し、国際化にも対応
+  * 外部コマンドとの柔軟な連携が可能
+  * 安定動作し、万一クラッシュした場合でも極力データを消失しない
+
+外観やインタフェースは Outlook Express 、 Becky! 、 Datula といった、
+Windows では定番のメーラを参考にしています。また、操作系は Mew や
+Wanderlust 等の Emacs 系メーラを参考にしており、キーボードのみによる操作
+が可能となっています。そのため、他のメーラに慣れている場合でもそれほど
+違和感なく移行できると思います。
+
+メッセージは MH 形式で管理しており、他の MH 形式を使用したメーラ(Mew 等)
+と併用することが可能です。1ファイル1メールの形式のため、障害が発生した際に
+メールを失う危険性が少なくなっています。 mbox形式のメッセージをインポート・
+エクスポートすることも可能です。また、 fetchmail や procmail を利用したり、
+受信に外部プログラム(inc, imget 等)を使用することも可能です。
+
+現在実装されている主な機能
+==========================
+
+対応プロトコル
+
+	o POP3 対応
+	o IMAP4rev1 対応
+	o SMTP
+	o NNTP
+	o SSL/TLSv1 (POP3, SMTP, IMAP4rev1, NNTP)
+	o IPv6
+
+機能
+
+	o 複数アカウント
+	o スレッド表示
+	o 強力なフィルタリング
+	o MIME (ファイルの添付)
+	o 統合 ニュースリーダー
+	o SMTP AUTH 対応
+	o CRAM-MD5 認証 (SMTP AUTH / IMAP4rev1)
+	o APOP 認証 (POP3)
+	o PGP 署名・暗号化(要 GPGME)
+	o 画像表示機能を内蔵
+	o X-Face 表示
+	o ユーザ定義ヘッダ
+	o カラーラベル
+	o Mew/Wanderlust 互換キーバインド
+	o 複数の MH フォルダ対応
+	o mbox ファイルのインポート / エクスポート
+	o 外部エディタ
+	o 送信待機
+	o 自動メールチェック
+	o 草稿
+	o テンプレート
+	o 自動改行
+	o クリッカブル URI
+	o XML ベースのアドレス帳
+	o 新着・未読管理
+	o 印刷
+	o オフラインモード
+	o コマンドラインによるリモート操作
+	o フォルダ毎の設定
+	o LDAP, vCard, JPilot 対応
+	o ドラッグ & ドロップ
+	o autoconf, automake 対応
+	o gettext によるメッセージの国際化対応
+	o UTF-8 (Unicode) を含む多数の文字コードに対応
+
+等です。
+
+インストール方法
+================
+
+インストールの説明は INSTALL を参照してください。
+
+使用方法
+========
+
+起動前の準備
+------------
+
+日本語を使用したい場合、 Sylpheed を実行する前にロカールに関連する
+環境変数を指定しなければなりません(日本語 Linux ディストリビューション
+の場合は大抵すでに設定されています)。例えば、
+
+% export LANG=ja_JP.eucJP	(sh, bash etc.)
+
+または
+
+% setenv LANG ja_JP.eucJP	(csh, tcsh etc.)
+
+(ja_JP.eucJP は適切なロカール名に置き換えてください。)
+
+翻訳されたメッセージが必要なければ、 LC_MESSAGES を "C" に指定して
+ください(LC_ALL が指定されていれば外してください)。
+
+起動方法
+--------
+
+コマンドラインから sylpheed と入力するか、またはファイルマネージャ
+からアイコンをダブルクリックするなりして起動してください。
+
+初回起動時の注意
+----------------
+
+初回の起動時に、 ~/.sylpheed/ 以下に設定ファイルが自動的に作成されます。
+また、メールボックスの位置を質問します。デフォルトは ~/Mail です。もしそ
+のディレクトリに MH フォーマットではないファイルがすでに存在する場合、別
+の場所を指定しなければなりません。
+
+必要な設定
+----------
+
+メールの送受信を行うには、最初に少なくとも一つアカウントを作成しておく必
+要があります(アカウントを作成しなくても、既存のメールを読むことは可能です)。
+メニューの「設定(C) -> 新規アカウントの作成(N)...」、またはツールバーの
+「アカウント」をクリックすると、設定ダイアログが表示されるので、必要な設
+定を行ってください。
+
+一般的な使用法に関してはこのプログラムに付属のマニュアルを参照してください。
+
+隠し設定
+--------
+
+Sylpheed のほとんどの機能は設定ダイアログから設定できますが、ユーザインタ
+フェースを持たない設定項目がいくつかあります(通常は変更する必要はありません)。
+Sylpheed が起動していないときに ~/.sylpheed/sylpheedrc をエディタで編集
+する必要があります。
+
+allow_jisx0201_kana		JIS X 0201 カナ(半角カナ)を送信時に許可します。
+				0: off  1: on   [デフォルト: 0]
+bold_font			フォルダ、サマリ、テキストビューで使用される
+				ボールドフォント
+small_font			サマリビュー等で使用される小フォント
+enable_hscrollbar		サマリビューで水平スクロールバーを有効にする
+				0: off  1: on   [デフォルト: 1]
+bold_unread			サマリビューで未読メッセージをボールド
+				フォントを使用して表示
+				0: off  1: on   [デフォルト: 1]
+folderview_vscrollbar_policy	フォルダビューの垂直スクロールバーのポリシー
+				を指定
+				0: 常に表示  1: 自動  2: 非表示 [デフォルト: 0]
+
+情報
+====
+
+最新バージョンや Sylpheed に関する情報は
+
+	http://sylpheed.good-day.net/
+
+でチェックできます。また、
+
+	http://y-imai.good-day.net/sylpheed/
+
+に 今井 陽一氏 <yoichi@silver-forest.com> 作の Sylpheed のマニュアルが
+あります。
+
+フィードバック
+==============
+
+意見、アイデア、バグレポート(これが一番重要)(と、特にパッチ)は
+大変歓迎します。
+
+Anonymous cvs
+=============
+
+anonymous cvs で最新のソースを取得することができます。
+
+まず環境変数 CVSROOT に
+
+	:pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed
+
+を指定します。その後、
+
+	cvs login
+
+でログインし、 CVS password: に対しては単に Enter キーを押して下さい。
+
+適当なディレクトリに移動し、以下のコマンド
+
+	cvs -z3 checkout sylpheed
+
+で カレントディレクトリ以下に sylpheed というソースツリーが作成されます。
+
+最新のソースツリーにアップデートするには、ソースツリーのトップディレクトリで、
+
+	cvs -z3 update
+
+を実行して下さい。
+
+-- 
+山本 博之 / Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
+ <TITLE>Sylpheed User's Manual: Sylpheedとは</TITLE>
+ <LINK HREF="sylpheed-3.html" REL=next>
+ <LINK HREF="sylpheed-1.html" REL=previous>
+ <LINK HREF="sylpheed.html#toc2" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-3.html">次のページ</A>
+<A HREF="sylpheed-1.html">前のページ</A>
+<A HREF="sylpheed.html#toc2">目次へ</A>
+<HR>
+<H2><A NAME="s2">2.</A> <A HREF="sylpheed.html#toc2">Sylpheedとは</A></H2>
+
+<H2><A NAME="ss2.1">2.1</A> <A HREF="sylpheed.html#toc2.1">Sylpheed とは</A>
+</H2>
+
+<P>SylpheedはGUIツールキットにGTK+を使用した、
+X Window System上で動作する電子メールクライアント&amp;ニュースリーダーです。</P>
+<P>Sylpheedは以下のことを目標にして開発されています。
+<UL>
+<LI>軽快な動作</LI>
+<LI>美しく、洗練されたインタフェース </LI>
+<LI>容易な設定・操作</LI>
+<LI>豊富な機能</LI>
+<LI>CPU・メモリの消費を最小限に抑えて軽快に動作</LI>
+<LI>1フォルダ中に大量にメッセージが存在する場合(10000通以上)でも高速に処理</LI>
+<LI>シンプルで美しく、洗練されたインタフェースにより直観的な操作が可能</LI>
+<LI>他のメーラに近い操作が可能</LI>
+<LI>簡単な設定ですぐに使用可能</LI>
+<LI>メーラに必要とされる機能を完備</LI>
+<LI>日本語に完全対応し、国際化にも対応</LI>
+<LI>外部コマンドとの柔軟な連携が可能</LI>
+<LI>安定動作し、万一クラッシュした場合でも極力データを消失しない</LI>
+</UL>
+</P>
+
+<H2><A NAME="ss2.2">2.2</A> <A HREF="sylpheed.html#toc2.2">インタフェース</A>
+</H2>
+
+<P>外観やインタフェースは
+<UL>
+<LI>Outlook Express</LI>
+<LI>Becky!</LI>
+<LI>Datula</LI>
+</UL>
+
+といった、 Windowsでは定番のメーラを参考にしています。</P>
+<P>また、操作系はMewやWanderlust等の Emacs系メーラを参考にしており、キーボードのみによる操作が可能となっています。
+そのため、他のメーラに慣れている場合でもそれほど違和感なく移行できると思います。</P>
+
+<H2><A NAME="ss2.3">2.3</A> <A HREF="sylpheed.html#toc2.3">主な機能</A>
+</H2>
+
+<P>プロトコルは以下のものに対応しています。
+<UL>
+<LI>メール受信(POP3 (APOP対応))</LI>
+<LI>メール送信(SMTP (SMTP AUTH対応))</LI>
+<LI>メール受信(IMAP4rev1)</LI>
+<LI>ニュース購読/投稿 (NNTP)</LI>
+</UL>
+
+主な機能としては、以下があげられます。
+<UL>
+<LI>無制限の複数アカウント管理 </LI>
+<LI>スレッド表示</LI>
+<LI>フィルタリング</LI>
+<LI>MIMEによる添付ファイルの閲覧/送信(Base64, quoted-printable)</LI>
+<LI>アドレス帳 </LI>
+<LI>新着・未読管理</LI>
+<LI>送信待機</LI>
+<LI>テンプレート</LI>
+<LI>SSL対応 (--enable-ssl時)</LI>
+</UL>
+
+他の便利な機能としては、以下があげられます。
+<UL>
+<LI>ML等でスレッドが切れているとき便利な「件名で寄せる」機能</LI>
+<LI>mbox ファイルのインポート</LI>
+<LI>クリッカブルURI</LI>
+<LI>外部エディタ対応</LI>
+<LI>X-Face対応 (compface使用時)</LI>
+<LI>IPv6 (--enable-ipv6時)</LI>
+<LI>UTF-8(Unicode)を含む多数の文字コードに対応</LI>
+<LI>画像表示機能を内蔵(gdk-pixbufあるいはimlib使用時)</LI>
+<LI>GnuPGによるメッセージ暗号化/署名(実験的)(gnupgおよびgpgme使用時)</LI>
+<LI>ユーザ定義ヘッダ</LI>
+<LI>自動改行 / ワードラップ</LI>
+<LI>HTMLのテキスト表示</LI>
+<LI>引用の深さの違いによる表示色の変更</LI>
+<LI>草稿</LI>
+<LI>印刷</LI>
+<LI>オフラインモード</LI>
+</UL>
+</P>
+
+<H2><A NAME="ss2.4">2.4</A> <A HREF="sylpheed.html#toc2.4">メッセージの管理方式</A>
+</H2>
+
+<P>メッセージはMH形式で管理しており、他のMH形式を使用したメーラ(Mew等)と併用することが可能です。
+1ファイル1メールの形式のため、障害が発生した際にメールを失う危険性が少なくなっています。</P>
+<P>受信に外部プログラム(inc, imget等)の使用も可能です。</P>
+
+<H2><A NAME="ss2.5">2.5</A> <A HREF="sylpheed.html#toc2.5">実現予定の機能</A>
+</H2>
+
+<P>sylpheedに含まれるTODO.jpを参照してください。</P>
+
+<HR>
+<A HREF="sylpheed-3.html">次のページ</A>
+<A HREF="sylpheed-1.html">前のページ</A>
+<A HREF="sylpheed.html#toc2">目次へ</A>
+</BODY>
+</HTML>

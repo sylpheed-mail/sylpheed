@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Sylpheed User's Manual: Filtering Messages</TITLE>
+ <LINK HREF="sylpheed-13.html" REL=next>
+ <LINK HREF="sylpheed-11.html" REL=previous>
+ <LINK HREF="sylpheed.html#toc12" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-13.html">Next</A>
+<A HREF="sylpheed-11.html">Previous</A>
+<A HREF="sylpheed.html#toc12">Contents</A>
+<HR>
+<H2><A NAME="s12">12. Filtering Messages</A></H2>
+
+<P>Written by Nick Selby (sylpheed@nickselby.com)
+<P>
+<P>
+<H2><A NAME="ss12.1">12.1 Filtering Messages</A>
+</H2>
+
+<P>Sylpheed provides powerful filters to allow users to automatically pre-sort incoming 
+mail based on a set of rules that the user defines. As a most simple example, let's 
+say you work at the Acme Grommet Company, and you want all e-mail from your co-workers 
+to be placed in one mailbox. To accomplish this, you would set up a filter that would 
+place all mail whose "From" header includes the phrase "acmegrommet.com" into a specific mailbox.
+<P>Sylpheed allows you much more control than just that simple setup; you may create 
+filters based on several variables, including an "If this AND that" or "If the message 
+contains this OR does NOT contain that" etc. It's very cool.
+<H3>Finding The Filter Setting Dialog</H3>
+
+<P>The filter settings dialog is located in the Configuration menu, under the title 
+"Filter Setting". You may also use establish a keyboard shortcut (see Keyboard Shortcuts). 
+<P>
+<P>
+<P>
+<P>
+<H3>Setting Up Filters</H3>
+
+<P>Operator(s) and Processing instructions combine to create a Filter Rule.
+<P>* Operators
+The dialog's first setting option establishes the Operator, the variable that will 
+tell the filter what specific text to look for to trigger a filter. Each Filter Rule may have up to two operator sets.
+<P>Each Operator variable contains three sections: Header, Keyword and Predicate.
+<P>Header is a drop-down box which defines in which message header Sylpheed's filter will search. Choices range from Subject to X-Mailer. 
+<P>Keyword is a a text box in which you may enter the text for which the filter will search. 
+<P>Predicate allows you to choose to filter based on whether the operator 
+contains, or does not contain, the text you enter in the Keyword field. 
+<P>Example: Create an Operator in which the X-Mailer field of an incoming message contains the word 'Eudora'.
+<UL>
+<LI>Step 1. Under the Header drop-down box, select X-Mailer.</LI>
+<LI>Step 2. In the Keyword text box, type 'eudora' (case insensitive)</LI>
+<LI>Step 3. Determine appropriate Predicate setting. Default is "Contains".</LI>
+</UL>
+
+The second Operator setting, which is set identically to the first, also allows the 
+user to select an AND/OR setting declaring the relationship between the two operators. 
+<P>Example: Create an Operator set which will process mail with a "From" header of 
+bob@acmegrommet.com AND a subject of "2001 Spring Grommet Collection"
+<UL>
+<LI>Step 1. Under the first Operator set's Header drop-down box, select "From".</LI>
+<LI>Step 2. In the "Keyword" text box, type 'bob@acmegrommet.com' (case insensitive)</LI>
+<LI>Step 3. Leave "Predicate" setting on default, "Contains"</LI>
+<LI>Step 4. Leave "AND/OR" box on default setting, "AND"</LI>
+<LI>Step 5.     Under the second Operator set's "Header" drop-down box, select "Subject".</LI>
+<LI>Step 6. In the "Keyword" text box, type '2001 spring grommet collection' (case insensitive)</LI>
+<LI>Step 7. Leave "Predicate" setting on default, "Contains"</LI>
+</UL>
+<H3>Message Processing</H3>
+
+<P>Once you've established the Operator(s) that will define which messages will be 
+processed, it's time to tell Sylpheed what to do with messages that match the 
+operator(s). You may choose between two radio button-selected settings: "Destination" and "Don't Receive".
+<P>Selecting "Destinations" will enable you to route the mail into   
+a mailbox which you specify.
+<P>Selecting "Don't Receive" will instruct Sylpheed to not download messages with that 
+operator. Note that with "Don't Receive", Sylpheed merely leaves the message on your mailserver - it does not delete it. 
+<P>To specify a mailbox to which you want the message transfered, click on the radio 
+button to the left of the word "Destination" in the dialog. (Currently, in order to 
+specify a mailbox you must have created that mailbox prior to activating the Filter 
+Setting dialog.) Clicking the "Select" button will open a pop-up window containing all 
+mail folders currently active in your copy of Sylpheed. Select the mailbox you wish by 
+either (a) double clicking on the mail folder name or (b) clicking the mail folder name and then clicking "OK".         
+<P>To specify that the message not be retrieved, and left on your mail server, click the 
+radio button to the left of the words "Don't Receive".
+<H3>Filter Registration</H3>
+
+<P>Now that you have set the Operator and the Processing Rule, all that's left to do is 
+tell Sylpheed to save the entire Filter Rule. If you skip this step, the filter won't work.
+<P>The "Register Rules" configuration has three options: "Register", "Substitute" and "Delete". 
+<UL>
+<LI>"Register" saves the Filter Rule.</LI>
+<LI>"Substitute" modifies an existing registered Filter Rule.</LI>
+<LI>"Delete" will remove a previously registered Filter Rule. </LI>
+</UL>
+
+Example of Registering A Filter Rule: Create a Filter Rule that moves all mail with 
+the subject of "Sylpheed Manual" into the (previously created) mail folder "Sylpheed Manual Mail".
+<UL>
+<LI>Step 1. Under the first Operator set's "Header" drop-down box, select "Subject".</LI>
+<LI>Step 2. In the "Keyword" text box, type 'sylpheed manual' (case insensitive)</LI>
+<LI>Step 3. Leave "Predicate" setting on default, "Contains". Leave second Operator set empty.</LI>
+<LI>Step 4. Click "Destinations" radio button; select "Sylpheed Manual Mail" folder</LI>
+<LI>Step 5. Click "Register"</LI>
+<LI>Step 6. Click OK</LI>
+</UL>
+ 
+Example of Substituting A Filter Rule: Modify a previously created Filter Rule that 
+moves all mail with the subject of "Sylpheed Manual" to sort mail not to the 
+mail folder "Sylpheed Manual Mail" but rather the mail folder "Sylpheed Questions"  
+<UL>
+<LI>Step 1. Under the first Operator set's Header drop-down box, select Subject.</LI>
+<LI>Step 2. In the Keyword text box, type 'sylpheed manual' (case insensitive)</LI>
+<LI>Step 3. Leave Predicate setting on default, "Contains". Leave second Operator set empty.</LI>
+<LI>Step 4. Click "Destinations" radio button; select "Sylpheed Questions" folder</LI>
+<LI>Step 5. Click "Substitute"</LI>
+<LI>Step 6. Click OK</LI>
+</UL>
+
+Example of Deleting a Filter Rule: Remove the previously created Filter Rule which refers to Subject:Sylpheed Questions.
+<UL>
+<LI>Step 1. In the "Registered Rules" select box, highlight the filter entitled "Subject:Sylpheed Manual: :::Sylpheed Questions:1:1:m"</LI>
+<LI>Step 2. Click the "Delete" Button</LI>
+<LI>Step 3. Confirm the deletion by clicking "Yes" in the confirmation pop-up that asks, "Do you really want to delete this rule?</LI>
+<LI>Step 4. Click "OK"</LI>
+</UL>
+<H3>Registered Rule Order</H3>
+
+<P>One caveat about all this: the order in which Filter Rules are created could adversely 
+affect your intended message sorting, and one needs to consider this when creating or updating Filter Rules. 
+<P>For example, a Filter Rule saying, "Move anything containing 'ABC' to Mailbox X" listed above another Filter Rule saying "Move anything containing 'ABCDEF' to Mailbox Y" will cause the latter of these filters not to process. 
+<P>Think about the way Sylpheed goes down its list: first, it would say.."Hmm, any messages with ABC? Ah, there's one! Move it." Then it would think, "Okay, any messages with ABCDEF?" To which the answer would be "no" - that ABCDEF was already filtered because it contained "ABC".
+<P>Bummer.
+<P>In order to avoid this, you must ensure that the more complex Filter Rule is processed first, by placing it higher than a similar, conflicting Filter Rule. 
+<P>To move a Registered Rule higher or lower within the Registered Rule box, select the rule you would like to move, and click on the "Up" or "Down" buttons. This will "move" the rule up or down, above or below a potentially conflicting Filter Rule.   
+<H2><A NAME="ss12.2">12.2 How to Filter Messages</A>
+</H2>
+
+<P>Filtering messages can be done in several ways:
+<UL>
+<LI>Sylpheed automatically filters incoming mail from POP servers.</LI>
+<LI>If you incorporate mail from a unix mailbox, then in the Common preferences (Configuration menu), you need to check the box called "Filter on incorporation". You find this box in the Receive tab in the space "Local spool".</LI>
+<LI>You can also select the option "Filter messages" from the Summary menu.</LI>
+</UL>
+
+Please note that, at time of writing, Sylpheed does -NOT YET- has filtering of IMAP messages enabled.
+<P>
+<H2><A NAME="ss12.3">12.3 Filtering mail with Procmail</A>
+</H2>
+
+<P>If you feel that Sylpheed has not enough options to perform filtering for you, then you can look at Sylpheed Claws which has more options for filtering. You can find the Claws version (the cutting edge, experimental version of Sylpheed) sylpheed-claws.sourceforge.net.
+<P>Another option, if you do not want to work with an experimental version of Sylpheed, is Procmail. Procmail is a powerful mail filtering program that is triggered from the Mail Transport Agent (i.e. Sendmail, Postfix, Qmail). Procmail is called by default from these programs after receiving e-mail.
+<P>The trick to procmail is to tell it that mail has to be filtered into MH mail folders. This is not difficult though.
+<P>Normally procmail moves mail into MBOX format, this is one large file containing all mails in a folder. MH uses separate files for each e-mail. All you need to do is point the destination of a procmail rule to &lt;destination folder&gt;/.  It is the "slash dot" that does the trick.
+<HR>
+<A HREF="sylpheed-13.html">Next</A>
+<A HREF="sylpheed-11.html">Previous</A>
+<A HREF="sylpheed.html#toc12">Contents</A>
+</BODY>
+</HTML>

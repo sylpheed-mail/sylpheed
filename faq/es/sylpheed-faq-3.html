@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Preguntas Más Frecuentes (FAQ) de Sylpheed: Interface</TITLE>
+ <LINK HREF="sylpheed-faq-2.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc3" REL=contents>
+</HEAD>
+<BODY>
+Página siguiente
+<A HREF="sylpheed-faq-2.html">Página anterior</A>
+<A HREF="sylpheed-faq.html#toc3">Índice general</A>
+<HR>
+<H2><A NAME="s3">3. Interface</A></H2>
+
+<H2><A NAME="ss3.1">3.1 ¿Cómo puedo hacer que Sylpheed muestre mi idioma?</A>
+</H2>
+
+<P>R.: Deberá establecer el valor de algunas variables de entorno como 
+<CODE>LANG</CODE>, <CODE>LC_CTYPE</CODE> o <CODE>LC_MESSAGES</CODE> al idioma deseado.
+Normalmente <CODE>LANG</CODE> (o <CODE>LC_ALL</CODE>) son suficientes.
+<H2><A NAME="ss3.2">3.2 No me gusta la fuente por defecto, ¿puedo cambiarla?</A>
+</H2>
+
+<P>R.: Si. En el menú ``Configuración&gt;Preferencias comunes`` bajo
+la pestaña ``Visualización``.
+<H2><A NAME="ss3.3">3.3 ¡Hay demasiadas columnas el la lista de mensajes!</A>
+</H2>
+
+<P>R.: En el menú ``Configuración&gt;Preferencias comunes`` bajo
+la pestaña ``Visualización`` puede pulsar el botón ``Cabeceras en 
+la vista resumen``. Aparecerá una ventana con todas las opciones
+que puede mostrar o quitar de la lista de mensajes.
+<H2><A NAME="ss3.4">3.4 ¿Puedo utilizar un editor diferente para escribir mis correos?</A>
+</H2>
+
+<P>R.: Puede. En el menú ``Configuración&gt;Preferencias comunes`` bajo
+la pestaña ``Otras`` se puede especificar el editor deseado. Recuerde que
+si quiere usar un editor en linea de comandos, como <CODE>vi</CODE> o <CODE>emacs</CODE>,
+deberá escribir el nombre del shell (<CODE>term</CODE>, <CODE>xterm</CODE>, <CODE>rxvt</CODE>) 
+con el parámetro <CODE>-e</CODE> delante del editor. Por ejemplo: <CODE>rxvt -e vi %s</CODE>
+<H2><A NAME="ss3.5">3.5 ¿Cómo puedo cambiar el tamaño de la fuente en el interfaz de Sylpheed?</A>
+</H2>
+
+<P>R.: Puede establecer la fuente GTK+ en <CODE>~/.gtkrc</CODE> o <CODE>~/.gtkrc.mine</CODE>
+(que es incluido por el primero). Por ejemplo:
+<P><CODE><P>  style "default"
+
+<P>  { 
+ <P>  font = "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1"
+
+<P>  } 
+
+<P>  widget_class "*"        style "default"
+</CODE>
+<H2><A NAME="ss3.6">3.6 Sylpheed guarda mi correo saliente (en Salida). ¿Puedo evitar que haga esto?</A>
+</H2>
+
+<P>R.: En ``Configuración&gt;Preferencias comunes`` hay una casilla denominada
+``Guardar mensajes salientes en Salida``. Déjela en blanco y estará solucionado.
+<H2><A NAME="ss3.7">3.7 ¿Cómo puedo cambiar las asociaciones de teclas (teclas calientes) en Sylpheed?</A>
+</H2>
+
+<P>R.: Esto es muy sencillo. Supongamos que quiere asignar una combinación
+de teclas a una función, por ejemplo enviar todo el correo cuando se pulse ``Ctrl+Y''.
+Pulse en el menú ``Mensajes`` y mueva el ratón sobre ``Enviar todo``. 
+Ahora pulse ``Ctrl+Y''. Inmediatamente verá que el texto del menú se actualiza para 
+reflejar la nueva combinación. Hay que hacer notar que la función a la que estaba asignada 
+previamente ``Ctrl+Y'' ya no tendrá ninguna combinación de teclas asociada. En caso de 
+que quiera eliminar la combinación asociada a alguna función el procedimiento es el mismo, 
+pero pulsando la tecla ``Supr'' sobre el elemento del menú.
+<H2><A NAME="ss3.8">3.8 ¿Puedo cerrar las ventanas sin utilizar el ratón?</A>
+</H2>
+
+<P>R.: ¡Por supuesto! No todas las ventanas, pero pulsando la tecla de escape ("Esc")
+puede cerrar la agenda, la ventana en la que se ve la fuente del correo 
+(``Mensaje&gt;Ver fuente``),
+la ventana de las cabeceras y varias más. Inténtelo y las encontrará todas.
+<H2><A NAME="ss3.9">3.9 ¿Puedo cambiar la manera en la que aparece mostrada la fecha en la lista resumen de mensajes?</A>
+</H2>
+
+<P>R.: Desde la versión 0.4.65 se puede. Las opciones son las siguientes:
+<P>
+<UL>
+<LI><CODE>%y</CODE> año en número</LI>
+<LI><CODE>%m</CODE> mes en número</LI>
+<LI><CODE>%d</CODE> día en número             </LI>
+<LI><CODE>%c</CODE> fecha/hora local</LI>
+<LI><CODE>%A</CODE> día de la semana completo</LI>
+<LI><CODE>%a</CODE> nombre del día corto</LI>
+<LI><CODE>%B</CODE> día del mes completo      </LI>
+<LI><CODE>%b</CODE> nombre del mes corto</LI>
+<LI><CODE>%H</CODE> hora (0-23)</LI>
+<LI><CODE>%I</CODE> hora (0-12)</LI>
+</UL>
+<P>Para más información vaya al menú de ``Configuración``, seleccione   
+``Preferencias comunes``, ``Visualizar``,
+y mueva el puntero del ratón sobre el recuadro de ``Formato de fecha``.
+<H2><A NAME="ss3.10">3.10 ¿Por qué no puedo ver las imágenes compface?</A>
+</H2>
+
+<P>R.: Necesita habilitar la visualización del panel de cabeceras en 
+las ``Preferencias generales``.
+<H2><A NAME="ss3.11">3.11 Todavía no puedo ver las imágenes. ¿Por qué?</A>
+</H2>
+
+<P>R.: Quizás no haya compilado el soporte para Compface. Vea la pregunta 
+relativa a faces en la sección de Instalación/Configuración.
+<H2><A NAME="ss3.12">3.12 ¿Por qué el lanzador de URLs no lanza mi navegador web?</A>
+</H2>
+
+<P>R.: Es necesario que haga doble-click con el ratón sobre la URL.
+<H2><A NAME="ss3.13">3.13 Los ficheros adjuntos con espacios en el nombre no se abren!</A>
+</H2>
+
+<P>R.: Cuándo intente lanzar una aplicación auxiliar, como un visor de imágenes, con un adjunto que tenga
+espacios en el nombre ponga comillas simples alrededor del parámetro <CODE>%s</CODE>. 
+Por ejemplo: <CODE>gedit '%s'</CODE>
+<HR>
+Página siguiente
+<A HREF="sylpheed-faq-2.html">Página anterior</A>
+<A HREF="sylpheed-faq.html#toc3">Índice general</A>
+</BODY>
+</HTML>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
+ <TITLE>Sylpheed User's Manual: FAQ</TITLE>
+ <LINK HREF="sylpheed-17.html" REL=next>
+ <LINK HREF="sylpheed-15.html" REL=previous>
+ <LINK HREF="sylpheed.html#toc16" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-17.html">次のページ</A>
+<A HREF="sylpheed-15.html">前のページ</A>
+<A HREF="sylpheed.html#toc16">目次へ</A>
+<HR>
+<H2><A NAME="s16">16.</A> <A HREF="sylpheed.html#toc16">FAQ</A></H2>
+
+
+<H2><A NAME="ss16.1">16.1</A> <A HREF="sylpheed.html#toc16.1">ニュースのメッセージ未読情報について</A>
+</H2>
+
+<P>Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょうか?</P>
+
+<P>A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
+ニュースグループごとに未読情報は変わって来てしまいます。</P>
+<H2><A NAME="ss16.2">16.2</A> <A HREF="sylpheed.html#toc16.2">メニューなどのフォント変更について</A>
+</H2>
+
+<P>Q. メッセージ本文のフォントは
+<A HREF="sylpheed-15.html#font-config">全般の設定から変更</A>
+できましたが、サマリやメニューなどのフォントは変更できないのでしょうか?</P>
+
+<P>A. できます。$HOME/.sylpheed/gtkrcファイルを置いてください。
+<PRE>
+style "Sylpheed-Widget-font" {
+       fontset = "-adobe-helvetica-medium-r-normal-*-12-*-*-*-*-*-iso8859-1,\
+                  -alias-fixed-medium-r-normal--12-*-*-*-*-*-jisx0208.1983-0"
+}
+class "GtkWidget" style "Sylpheed-Widget-font"
+</PRE>
+
+というようなファイルです。</P>
+<H2><A NAME="ss16.3">16.3</A> <A HREF="sylpheed.html#toc16.3">ショートカットキーのキーバインドの変更</A>
+</H2>
+
+<P>Q. ショートカットキーのキーバインドの変更は出来ますか?</P>
+
+<P>A. メニューに設定されている項目に関してはできます。
+メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、
+割り当てられます。Backspaceキーを押せば、消すことができます。
+変更は保存されます。</P>
+<H2><A NAME="ss16.4">16.4</A> <A HREF="sylpheed.html#toc16.4">返信マークについて</A>
+</H2>
+
+<P>Q. 返信をやめたのに返信マークが残ってしまいます。消えないのでしょうか。</P>
+<P>A. 現在の仕様では消えません。一度メッセージを未読にしてから読んだことにすることで消すことはできます。</P>
+<H2><A NAME="ss16.5">16.5</A> <A HREF="sylpheed.html#toc16.5">サマリビューの下に表示される画像について</A>
+</H2>
+
+<P>Q. ヘッダが表示されている部分に小さな画像が表示されていますが、これは何でしょうか。
+また、どのようにしたら挿入できるのでしょうか。</P>
+<P>A. これは、X-Faceといいます。
+<A HREF="sylpheed-8.html#Account-Config">アカウントの設定</A>のユーザ定義ヘッダで、
+X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。</P>
+<P>
+<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。</P>
+<HR>
+<A HREF="sylpheed-17.html">次のページ</A>
+<A HREF="sylpheed-15.html">前のページ</A>
+<A HREF="sylpheed.html#toc16">目次へ</A>
+</BODY>
+</HTML>

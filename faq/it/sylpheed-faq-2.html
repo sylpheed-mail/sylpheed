@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="CoffeeCup HTML Editor 9.2">
+ <TITLE>Sylpheed FAQ: Sylpheed FAQ - Installazione e Configurazione</TITLE>
+ <LINK HREF="sylpheed-faq-3.html" REL=next>
+ <LINK HREF="sylpheed-faq-1.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc2" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-faq-1.html">Precedente</A>
+<A HREF="sylpheed-faq.html#toc2">Contenuti</A>
+<A HREF="sylpheed-faq-3.html">Successivo</A>
+<HR>
+<H2><A NAME="s2">2. Sylpheed FAQ - Installazione e Configurazione</A></H2>
+
+<H2><A NAME="ss2.1">2.1 Q01  Cosa devo avere per compilare Sylpheed?</A>
+</H2>
+
+<P>A.   QUalsiasi UNIX POSIX compliant o sistema operativo simile tipo Linux,
+FreeBSD, Solaris
+GTK+ 1.2.6 o successivi
+Un compilatore ANSI C recente (gcc 2.7.2.3 dovrebbe funzionare ancora)
+ATTENZIONE: &egrave; documentato che il compilatore Sun C non compila Sylpheed.
+Opzioni:
+<UL>
+<LI>Imlib o gdk-pixbuf (per visualizzare le immagini dal client)</LI>
+<LI>libcompface (per X-Face)</LI>
+<LI>libjconv (per I18N)</LI>
+<LI>GPGME (per GnuPG)</LI>
+<LI>l'equivalente del GTK+-devel e Xfree86-devel.</LI>
+</UL>
+
+Senza tutto ci&ograve; ./configure fallir&agrave;.
+<H2><A NAME="ss2.2">2.2 Q02 Come posso configurare Sylpheed?</A>
+</H2>
+
+<P>A.   Quando esegui Sylpheed la prima volta, ti verr&agrave; chiesto dove vuoi
+memorizzare le tue mail. Il default &egrave; &lt;homedir&gt;/Mail. Puoi cambiarlo in
+qualsiasi cosa tu preferisci purch&eacute; sia un nome di directory valido.
+<P>ATTENZIONE: Quando esegui Sylpheed la prima volta, viene creato automaticamente 
+il file di configurazione sotto $HOME/.sylpheed/, e ti viene richiesto dove
+posizionare la tua mailbox. Il default &egrave; $HOME/Mail. Se ci sono file preesistenti
+che non sono in formato MH, dovrai specificare un'altra directory.
+<H2><A NAME="ss2.3">2.3 Q03  Come posso configurare un account?</A>
+</H2>
+
+<P>A.   Dopo aver eseguito la prima volta Sylpheed, puoi aggiungere un account
+selezionando il menu "Configuratione". Seleziona l'opzione "Crea nuovo account..."
+e riempi tutti i campi appropriati.
+<H2><A NAME="ss2.4">2.4 Q04  Quanti accout posso configurare?</A>
+</H2>
+
+<P>A.   Il numero &egrave; illimitato. Hai raggiunto il limite quando il tuo computer
+finisce di risponderti.
+<H2><A NAME="ss2.5">2.5 Q05 Perch&eacute; Sylpheed non cancella le mie mail quando premo "delete"? Configuro un filtro, e Sylpheed non filtra. Sposto una mail in una cartella differente e questa non si muove.</A>
+</H2>
+
+<P>A.   Devi premere il bottone "Esegui".
+Altra soluzione: nei settaggi della configurazione
+(Opzioni globali... &gt; tab "Interfaccia") devi selezionare l'opzione
+"Esegui immediatamente quando sposti o elimini dei messaggi".
+<H2><A NAME="ss2.6">2.6 Q06  Posso configurare indirizzi speciali/porte per i miei server di mail/news?</A>
+</H2>
+
+<P>A.   Certamente. Nella configurazione di ogni singolo account puoi
+specificare la porta/indirizzo che vuoi usare.
+<H2><A NAME="ss2.7">2.7 Q07  Sylpheed ha qualche opzione per le discussioni?</A>
+</H2>
+
+<P>A.   S&igrave;. Puoi abilitare o disabilitare dal menu Vista,
+selezionando l'opzione "Vista discussione" o premendo Ctrl+T.
+<H2><A NAME="ss2.8">2.8 Q08  Posso creare livelli multipli di sotto cartelle per memorizzare le mail?</A>
+</H2>
+
+<P>A.   Certamente. Senza nessun problema.
+<H2><A NAME="ss2.9">2.9 Q09  Perch&eacute; Sylpheed non spedisce le mail in uscita?</A>
+</H2>
+
+<P>A.   Devi creare almeno un account per poter spedire la posta.
+<H2><A NAME="ss2.10">2.10 Q10  Come posso applicare una patch dopo che l'ho scaricata?</A>
+</H2>
+
+<P>A.   Copia la patch nella directory dove risiedono i sorgenti di Sylpheed.
+Applica la patch:
+<P><CODE>% patch -p0 &lt; some.patch</CODE>
+<P>Oppure, se &egrave; gzipped:
+<P><CODE>% gzip -dc some.patch.gz | patch -p0</CODE>
+<P>Esegui <CODE>./autogen.sh</CODE>, rimuovi il file <CODE>/config.cache</CODE>
+(sempre che tu non voglia installarlo nel prefix
+<CODE>/usr/local</CODE>).
+Esegui <CODE>./configure</CODE> con le opzioni appropriate e
+poi <CODE>make</CODE>.
+(Queste istruzioni le trovi nella home page delle patch di Sylpheed.)
+<H2><A NAME="ss2.11">2.11 Q11  Come posso compilare il supporto per le immagini di tipo compface?</A>
+</H2>
+
+<P>A.   Devi avere installato sul tuo sistema un package di nome <CODE>libcompface</CODE>,
+cos&igrave; &egrave; disponibile per la compialzione di Sylpheed.
+<H2><A NAME="ss2.12">2.12 Q12  Come posso fare la mia immagine compface?</A>
+</H2>
+
+<P>A.   Il package libcompface contiene un programma chiamato xbm2ikon,
+che converte un'immagine xbm 48x48 al formato richiesto da compface. 
+Grazie a Jeff Dairiki, Puoi avere un corso completo online per questa caratteristica. 
+Visita http://www.dairiki.org/xface/ per i dettagli.
+<H2><A NAME="ss2.13">2.13 Q13 Come posso specificare al mio browser/client di news/altro programma di usare Sylpheed come programma per le mail?</A>
+</H2>
+
+<P>A.  Nella parte di configurazione del programma, scrivi
+<CODE>sylpheed --compose</CODE>
+<H2><A NAME="ss2.14">2.14 Q14 Come posso abilitare il supporto per GPG in Sylpheed?</A>
+</H2>
+
+<P>A.  Quando compili Sylpheed, assicurati di aggiungere <CODE>--enable-gpgme</CODE> al ./configure.
+Quando la procedura di compilazione termina, troverai una sezione "privacy" 
+nel menu Configurazione -&gt; Opzioni globali... .
+<H2><A NAME="ss2.15">2.15 Q15 Mutt non riconosce la struttura MH di Sylpheed</A>
+</H2>
+
+<P>A. Per farla riconoscere devi usare il comando "touch" in ogni cartella MH. 
+"touch" il file .xmhcache e Mutt funzioner&agrave;.
+<H2><A NAME="ss2.16">2.16 Q16 Se visualizzo una GIF all'interno di Sylpheed ottengo un segmentation fault.</A>
+</H2>
+
+<P>A. Nel caso succedesse, puoi rimediare facilmente aggiungendo la seguente
+riga nel file /etc/mime.types:
+<P><CODE>image/gif              gif</CODE>
+<H2><A NAME="ss2.17">2.17 Q17 Come posso fare che Sylpheed mi avverta quando arrivano nuove mail?</A>
+</H2>
+
+<P>A. Per questo hai diverse soluzioni:
+<P>* Verifica se nella Sylpheed patch page (http://www.teledix.net/sylpheed/) c'&egrave; una patch per le nuove mail.
+<P>* Scarica Gkrellm o un programma simile che pu&ograve; notificare l'arrivo di nuove
+mail. Gkrellm &egrave; disponibile su http://www.gkrellm.net
+<P>
+<HR>
+<A HREF="sylpheed-faq-1.html">Precedente</A>
+<A HREF="sylpheed-faq.html#toc2">Contenuti</A>
+<A HREF="sylpheed-faq-3.html">Successivo</A>
+</BODY>
+</HTML>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Sylpheed User's Manual: Going through the parts of Sylpheed</TITLE>
+ <LINK HREF="sylpheed-7.html" REL=next>
+ <LINK HREF="sylpheed-5.html" REL=previous>
+ <LINK HREF="sylpheed.html#toc6" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-7.html">Next</A>
+<A HREF="sylpheed-5.html">Previous</A>
+<A HREF="sylpheed.html#toc6">Contents</A>
+<HR>
+<H2><A NAME="s6">6. Going through the parts of Sylpheed</A></H2>
+
+<H2><A NAME="ss6.1">6.1 The menu options of Sylpheed.</A>
+</H2>
+
+<P>The menu in Sylpheed is the primary entry to all the things you can do with Sylpheed. The menu structure gives you following options:
+<H3>File menu</H3>
+
+<P>
+<UL>
+<LI>Add mailbox: this option lets you add a new MH mail-directory. It will generate IN, OUT, QUEUE, DRAFT and TRASH mailfolders inside the new mailbox.</LI>
+<LI>Update folder tree: rescans the entire tree of existing mailboxes to reflect the correct state (usually won't be necessary).</LI>
+<LI>Folder: lets you add, rename or delete a mailfolder.</LI>
+<LI>Import mbox file...: lets you import an mbox file (like created by Pine) into an MH mailbox.</LI>
+<LI>Export to mbox file: lets you export an MH mailbox to an mbox file.</LI>
+<LI>Empty trash: obviously, this will empty the trash folder.</LI>
+<LI>Save as: lets you save the selected e-mail to a plain textfile on disk.</LI>
+<LI>Print: lets you print the selected e-mail to a printer.</LI>
+<LI>Close: ends Sylpheed.</LI>
+<LI>Exit: also ends Sylpheed.</LI>
+</UL>
+<H3>Edit menu</H3>
+
+<P>
+<UL>
+<LI>copy: lets you copy the selected text to a buffer, from where you can paste it into a different place. Shortcut: Ctrl-C</LI>
+<LI>select all: selects all the text in the current window. Shortcut: Ctrl-A</LI>
+<LI>search: searches the current window for text you enter. Shortcut: Ctrl-S</LI>
+</UL>
+<H3>View menu</H3>
+
+<P>The view menu allows you to change the way that Sylpheed appears. You can set different windows separately (folder view, messages etc.), enable or disable the statusbar and so on.
+<P>
+<UL>
+<LI>Folder tree: not implemented yet</LI>
+<LI>Message view: not implemented yet</LI>
+<LI>Toolbar: sets how you want to see the toolbar. Icons and text, or one of these.</LI>
+<LI>Status bar: show it or hide it.</LI>
+<LI>Separate folder tree: selects between having the folder tree attached to the main window, or floating separately.</LI>
+<LI>Separate message view: selects between having the selected message in the summary pane attached to the main window, or floating separately.</LI>
+<LI>Code set: allows you to select what codeset you want to use for your e-mails.</LI>
+</UL>
+<H3>Message menu</H3>
+
+<P>Here you find the following options:
+<UL>
+<LI>Receive new mail: this will collect all new mail for your default mail-identity.</LI>
+<LI>Receive from all accounts: Sylpheed will poll all defined mail-identities for new mail.</LI>
+<LI>Send queued messages: all the messages that you put into the "Queue" folder will now be sent off.</LI>
+<LI>Compose new message: allows you to write a new e-mail message.</LI>
+<LI>Reply: an e-mail message will be created with the sender of the selected message in the summary pane as recipient. Depending on the settings, your signature will be added to the mail, and the original mail text will be quoted.</LI>
+<LI>Reply to all: as Reply, but the recipients will be all e-mail addresses in the original messages (including the ones in the cc: part).</LI>
+<LI>Forward: a message will be created with the original message in the summary pane as text. You can then enter a recipient e-mail address, edit the text if you want, and send it.</LI>
+<LI>Forward as attachment: as Forward, but the message text will sent along as a separate textfile.</LI>
+<LI>Move: lets you move the message to a different folder. You can select the destination folder from a browse-window.</LI>
+<LI>Copy: as Move, only that the message is copied to the new folder, instead of moved.</LI>
+<LI>Delete: lets you delete the message that is selected in the summary pane.</LI>
+<LI>Mark: Gives a submenu: Mark/Unmark/Mark as read/Unmark as read. When you mark messages, you can do a specific action (e.g. move, delete) on all of the marked messages. You can unmark messages that you mistakenly marked. The other options do as they say, they mark or unmark a message as read.</LI>
+<LI>Open in new window: This will open the message in the summary pane into a new window, allowing you to see more text at once.You can close this window by clicking the close button or pressing Escape.</LI>
+<LI>View source: opens a new window with the message in it, including all message headers. You can close this window by clicking the close button or pressing Escape.</LI>
+<LI>Show all header: opens a new window with only the message headers. You can close this window by clicking the close button or pressing Escape.</LI>
+<LI>Reedit: this option is only available when you select a message in the Draft folder. You can then edit the draft message.</LI>
+</UL>
+
+A note on functions like Move, Copy and Delete: if you did not specify to execute the commands immediately (in the configuration), you will have to select the "Execute" command. This is a button in the toolbar, and can also be found in the Summary menu.
+<H3>Summary menu</H3>
+
+<P>In the Summary menu you can perform all kinds of functions that are related to handling messages. The actions are done on the message summary pane.
+<UL>
+<LI>Delete duplicate messages: This will remove messages from the active folder that were sent twice to you. For example you received a message directly and through a mailing list at the same time.</LI>
+<LI>Filter messages: you can use this option if you want to filter existing messages through a new filter you set up.</LI>
+<LI>Execute: this option is needed if you did not set "execute immediately" in the preferences. "Execute" will then do the actions you want (e.g. Copy, Move, Filter etc.)</LI>
+<LI>Update: refreshes the message pane view to reflect any changes.</LI>
+<LI>Prev message: selects the previous message. Pine ex-users can also use "p".</LI>
+<LI>Next message: select the next message. Pine ex-users can also use "n".</LI>
+<LI>Next unread message: skips to the next unread message in the folder.</LI>
+<LI>Go to other folder: allows you to open a new mail folder. You can use a browse window for this.</LI>
+<LI>Sort: this option will allow you to sort the mail view in several ways. You can sort by date, by subject, by number (MH's internal message number is meant here) etc. Note that "Attract by subject" is different from sorting by subject. Attract by subject overlooks the "Re:" references in the subject. In that way messages are sorted in a more logical way.</LI>
+<LI>Thread view: messages are linked together in a tree view, on subject.</LI>
+<LI>Unthread view: undos the previous item.</LI>
+<LI>Set display item: shows a dialog box in which you can check and uncheck the items you want to see in the summary pane.
+As of version 0.6.4 you can also determine the order in which the columns of the summary menu are displayed.</LI>
+</UL>
+<H3>Tool menu</H3>
+
+<P>In the Tool menu you will find 2 options (upto version 0.6.4). It is the address book and the log window.
+<P>In the address book, as you may expect, you can store the e-mail addresses that you want to save. You can create folders within the address book, to keep addresses together.
+<P>In the log window, you can see what Sylpheed is doing. Keeping track of things in that way is very good when you suspect there is something wrong. You can paste the info of the log window into an e-mail and send it to the developer or the mailing list.
+<H3>Configuration menu</H3>
+
+<P>In the Configuration menu, clearly, you can set up Sylpheed the way you want it to work and react.
+<UL>
+<LI>Common preferences: in this option you will be presented a dialog in which you can select a number of tabs. Each tab represents a specific set of settings in Sylpheed. In the next chapter, these dialog options are explained in more detail.
+</LI>
+<LI>Filtering: this option shows you a dialog in which you can set up the filtering rules that you want Sylpheed to process on receiving new e-mails. You first specify on which part(s) of the e-mail Sylpheed has to check, and then you tell Sylpheed what to do. You can move the message to a different directory (including trash to get rid of spam mail). Selecting the destination folder is possible through a browser window that comes up when you press "Select..."<P>You can choose not to receive the e-mail. Note that this will leave the message on the mailserver of your provider, the message will not be removed!
+<P>When you press the "Register" button, the filter rule is added to the list of rules. Do you select "Substitute", then the selected rule is replaced by the information of the setting entered. "Delete" in the end will delete the selected filtering rule.
+<P>Please note that you can set up 2 selections for a rule, which can be "OR'd" or "AND'd". OR means that one of the 2 selections will have to match for the rule to be executed. AND means that both selections have to match before an action is performed.
+<P>To the right of the selection rules you see buttons called UP and DOWN. You can move rules up and down in the list. This will often trigger different behaviour in the selections, so consider the order in which you set the rules.
+</LI>
+<LI>Preferences per account: here you can set the specifics for the account you are currently using. Should mail be deleted after fetching, what is the server it comes from, etc. Basically it is the same dialog form as shown in setting up a new account.</LI>
+<LI>Create new account: here you name the account (each account has a recognizable name), you set up your name and e-mail address etc. You set up the type of server you access (POP4, IMAP4, local mailbox, newsserver) and where the downloaded messages have to go (default folder is the inbox). In the RECEIVE tab you select or unselect options, in SEND you can set up how to send your messages. In COMPOSE you can point to a specific signature file, and in ADVANCED you can set up alternate ports for the server, if these exist. (Do not mess with these unless you are sure you have to!!)</LI>
+<LI>Edit accounts: here you can select one of the accounts you created, from a list, and edit the information about them. Note that you cannot edit an account for which you are writing a message at the same time. This to ensure data integrity.</LI>
+<LI>Change current account: here you can select what account you want to use, to write a message.</LI>
+</UL>
+<H3>Help menu</H3>
+
+<P>This menu lets you look at the (japanese for now) manual, and you can also see the "about" info, who wrote Sylpheed.
+<H2><A NAME="ss6.2">6.2 Context menu</A>
+</H2>
+
+<P>You can pull up context menus (through clicking button2) for the folder tree and the summary pane. (windows users: button2 is the right mouse button.)
+<P>In the folder view you can add, rename and remove folders through the context menu.
+<P>In the message summary you can do a host of things from the context menu, like viewing message headers, opening a message in a separate window (also possible by double clicking on a message) etc.
+<HR>
+<A HREF="sylpheed-7.html">Next</A>
+<A HREF="sylpheed-5.html">Previous</A>
+<A HREF="sylpheed.html#toc6">Contents</A>
+</BODY>
+</HTML>

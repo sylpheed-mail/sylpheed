@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Sylpheed FAQ: Sylpheed FAQ - Oberfläche</TITLE>
+ <LINK HREF="sylpheed-faq-2.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc3" REL=contents>
+</HEAD>
+<BODY>
+Weiter
+<A HREF="sylpheed-faq-2.html">Zurück</A>
+<A HREF="sylpheed-faq.html#toc3">Inhalt</A>
+<HR>
+<H2><A NAME="s3">3. Sylpheed FAQ - Oberfläche</A></H2>
+
+<H2><A NAME="ss3.1">3.1 Frage 01: Wie kann ich Sylpheed in meiner Sprache anzeigen lassen?</A>
+</H2>
+
+<P>Antwort: Dafür muß man einige Umgebungsvariablen verändern, wie
+<CODE>LANG,LC_CTYPE, LC_MESSAGES</CODE> auf die gewünschte Sprache, z.B. de_AT.
+Normalerweise genügt es, <CODE>LANG</CODE> (oder <CODE>LC_ALL</CODE>) anzupassen.
+<H2><A NAME="ss3.2">3.2 Frage 02: Mir gefällt die voreingestellte Schriftart nicht. Kann ich sie ändern?</A>
+</H2>
+
+<P>Antwort: Ja. In &quot;Einstellungen -&gt; Allgemeine Einstellungen...&quot;, Reiter &quot;Anzeige&quot;.
+<H2><A NAME="ss3.3">3.3 Frage 03: Da sind zu viele Spalten in der Nachrichtenliste!</A>
+</H2>
+
+<P>Antwort: In &quot;Einstellungen -&gt; Allgemeine Einstellungen...&quot;, Reiter &quot;Anzeige&quot;,
+Setze Einträge der Ablageninhaltsansicht. In diesem Dialog kann man die
+anzuzeigenden Informationen auswählen.
+<H2><A NAME="ss3.4">3.4 Frage 04: Kann ich einen anderen Editor verwenden, um meine Nachrichten zu schreiben?</A>
+</H2>
+
+<P>Antwort: Ja. In  &quot;Einstellungen -&gt; Allgemeine Einstellungen...&quot;, Reiter &quot;Weiteres&quot;,
+kann man unter &quot;Editor&quot; einen externen Editor wählen. Für einen Kommandozeileneditor wie
+vi oder emacs muß man noch eine Shell (term, rxvt) angeben, z.B. <CODE>rxvt -e vi %s</CODE>
+<H2><A NAME="ss3.5">3.5 Frage 05: Wie kann ich die Schriftgröße für die Oberfläche Sylpheed's verändern?</A>
+</H2>
+
+<P>Antwort: Die GTK+ Schriftart kann man in <CODE>~/.gtkrc</CODE> ändern, oder in
+<CODE>~/.gtkrc.mine</CODE>, (in <CODE>~/.gtkrc</CODE> enthalten).
+Zum Beispiel:
+<P><CODE>style &quot;default&quot;</CODE>
+<P><CODE>{</CODE>
+<P><CODE>font =</CODE>
+<P><CODE>&quot;-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1</CODE>
+<P><CODE>&quot;</CODE>
+<P><CODE>}</CODE>
+<P><CODE>widget_class &quot;*&quot; style &quot;default&quot;</CODE>
+<H2><A NAME="ss3.6">3.6 Frage 06: Sylpheed speichert meine gesendeten Nachrichten (in der Ablage &quot;Outbox&quot;). Wie kann ich das verhindern?</A>
+</H2>
+
+<P>Antwort: In &quot;Einstellungen -&gt; Allgemeine Einstellungen...&quot;, Reiter &quot;Senden&quot;, &quot;Gesendete Nachrichten in Outbox speichern&quot; deaktivieren. Das war's.
+<H2><A NAME="ss3.7">3.7 Frage 07: Wie kann ich die Tastaturkürzel in Sylpheed verändern?</A>
+</H2>
+
+<P>Antwort: Einfach. Um z.B. das Tastaturkürzel für &quot;Ansicht -&gt; Zeige Quellen&quot;
+auf Strg+3 ändern, klickt man auf &quot;Ansicht&quot;, und fährt mit der Maus über
+&quot;Zeige Quellen&quot;, klickt aber nicht. Nun drückt man Strg+3, und sofort wird
+dies als neues Kürzel angezeigt.
+<P>Sollte das Kürzel für eine andere Funktion eingetragen gewesen sein, so
+ist diese nun unbesetzt. Um ein Kürzel zu löschen, drückt man statt einer
+Tastenkombination die &quot;Entf&quot;-Taste.
+<H2><A NAME="ss3.8">3.8 Frage 08:  Kann ich Fenster auch ohne Maus schließen?</A>
+</H2>
+
+<P>Antwort: Natürlich! Zwar nicht alle Fenster, aber die meisten lassen sich mit ESCape schließen.
+Dazu gehören das Adressbuch, das Fenster zum Anzeigen des Quelltextes, oder der Kopfzeilen,
+und verschiedene andere. Ausprobieren.
+<H2><A NAME="ss3.9">3.9 Frage 09: Wie kann ich die Datumsanzeige in der Ablageninhaltsansicht verändern?</A>
+</H2>
+
+<P>Antwort: Seit Version 0.4.65 kann man die Datumsanzeige mit folgenden Optionen konfigurieren:
+%y = Jahr als Zahl              %m = Monat als Zahl
+%d = Tag als Zahl               %c = Datum/Zeit der Locale
+%A = Wochentagsname             %a = Gekürzter Wochentagsname
+%B = Monatsname                 %b = Gekürzter Monatsname
+%H = Stunden (24h Anzeige)      %I = Stunden (12h Anzeige)
+Genauere Informationen findet man unter
+&quot;Einstellungen -&gt; Allgemeine Einstellungen&quot;, Reiter &quot;Anzeige&quot;, Datumsformat &quot;...&quot;
+<H2><A NAME="ss3.10">3.10 Frage 10: Warum sehe ich keine compface Bilder (X-Faces)?</A>
+</H2>
+
+<P>Antwort: Dafür muß die Ansicht der Kopfzeilenleiste über der Nachrichtenansicht aktiviert sein, &quot;Einstellungen -&gt; Allgemeine Einstellungen...&quot;, Reiter &quot;Nachricht&quot;, Zeige Kopfzeilenleiste über Nachrichtenansicht.
+<H2><A NAME="ss3.11">3.11 Frage 11: Warum sehe ich immer noch keine X-Faces?</A>
+</H2>
+
+<P>Antwort: Möglicherweise wurde Sylpheed ohne Compface-Unterstützung kompiliert.
+Das erkennt man in &quot;Hilfe -&gt; Über&quot;, compiled-in features: libcompface. Siehe
+Frage 11 im Abschnitt Installieren/Konfigurieren.
+<H2><A NAME="ss3.12">3.12 Frage 12: Wieso öffnet die URL in der Nachricht nicht meinen Webbrowser?</A>
+</H2>
+
+<P>Antwort: Man muß die URL doppelclicken.
+<H2><A NAME="ss3.13">3.13 Frage 13: Ich kann Anhänge mit Leerzeichen im Namen nicht öffnen!</A>
+</H2>
+
+<P>Antwort: Versucht man einen Anhang an eine Hilfsanwendung zu übergeben,
+z.B. einen Videoplayer, und der Name des Anhangs enthält Leerzeichen, dann muß man
+den %s Parameter mit ' schützen: noatun '%s'
+<HR>
+Weiter
+<A HREF="sylpheed-faq-2.html">Zurück</A>
+<A HREF="sylpheed-faq.html#toc3">Inhalt</A>
+</BODY>
+</HTML>

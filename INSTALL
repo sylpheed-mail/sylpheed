@@ -1,0 +1,141 @@
+Installation
+============
+
+This program requires GTK+ 1.2.6 or higher to be compiled.
+
+This program is developed on Debian GNU/Linux (woody/sid)
+(Linux 2.4.x + glibc 2.2), so it is possible not to work correctly
+on the other environment.
+
+It is confirmed to work on the following environments:
+
+Linux
+
+o Debian GNU/Linux (i386/sid) (glibc 2.3.2) (development environment)
+o Debian GNU/Linux (amd64/sid-based) (glibc 2.3.2) (development environment #2)
+o Debian GNU/Linux 3.0 (woody) (glibc 2.2.5)
+o Debian GNU/Linux 2.2 (potato) (glibc 2.1.3)
+o Fedora Core 2 / 3
+o RedHat Linux 5.2 (glibc 2.0.7)
+o RedHat Linux 6.0
+o RedHat Linux 6.1 + Helix GNOME (glibc 2.1.x)
+o RedHat Linux 6.2 / 6.2J (glibc 2.1.x)
+o RedHat Linux 7.0 / 7.0J / 7.1 / 7.2 / 7.3 / 8.0 / 9.0
+o Vine Linux 1.1 (glibc 2.0.x + libwcsmbs)
+o Vine Linux 2.0 (glibc 2.1.x) (Intel, PPC)
+o Vine Linux 2.1 / 2.1.5 / 2.5 / 2.6 / 3.0
+o TurboLinux 4.0 (glibc 2.0.7 + libwcsmbs)
+o TurboLinux 6.0 (glibc 2.1.2)
+o TurboLinux 7.0 (glibc 2.2.x)
+o Miracle Linux Standard Edition Version1.0
+o Miracle Linux for PostgreSQL Version1.0
+o Miracle Linux for Samba Version1.0
+o Laser5 Linux 6.0 / 6.2 / 6.4 (glibc 2.1.x)
+o Kondara MNU/Linux 1.0 (glibc 2.1.x) / 1.2 / 2.0
+o LinuxPPC2000 + Yukikaze(Japanization kit)
+o Linux2000G (Intel / PPC)
+o HOLON Linux 2.0 (Intel / PPC)
+o Linux for PPC Japanese Edition 2.0 (glibc 2.1.x)
+o Linux for PPC Japanese Edition 3.0 (glibc 2.1.x)
+o LinuxPPC Q4 2000 (glibc 2.1.x)
+o Linux MLD4/5
+o Plamo Linux 2.0 / 2.1 / 2.2.x / 3.0
+o Slackware 7.0 / 7.1 / 8.0 / 8.1 / 9.0 / 10.0
+o Mandrake Linux 7.0 / 7.1 / 7.2 / 8.0 / 8.1 / 9.0 / 9.1 / 10.0
+o SuSE Linux 6.3 (glibc 2.1.2) / 6.4
+o SuSE Linux 7.0 / 7.1 / 7.2 / 7.3 / 8.0 / 8.1 / 8.2
+o OpenLinux 2.3 (glibc 2.1.1 -> 2.1.3)
+o Caldera OpenDesktop 2.4
+o Caldera Workstation 3.1
+o Conectiva Linux 4.0 / 5.0 / 7.0 / 8.0
+o Vector Linux 1.5
+o Yellow Dog Linux 2.0 (glibc 2.2.1)
+o Yellow Dog Linux 2.1 (PowerPC)
+o ASP Linux 7.2 (glibc 2.2.4)
+o Redmond Linux (Lycoris)
+o Gentoo Linux 1.x / 2004.2 (i386 / amd64)
+
+BSD
+
+o FreeBSD 3.2/3.4-RELEASE
+o FreeBSD 4.0/4.1/4.2/4.3/4.4/4.5/4.6-RELEASE
+o FreeBSD 5.3-RELEASE
+o FreeBSD 5.0-CURRENT
+o NetBSD 1.4.2
+o NetBSD 1.5 + XPG4DL
+o NetBSD 1.5.1 / 1.5.2
+o OpenBSD 2.7 / 2.8 / 2.9 / 3.0 / 3.1 / 3.6
+o BSD/OS 4.0.1
+
+Other commercial Unix
+
+o Solaris 2.5 / 2.5.1 / 2.6
+o Solaris 7 / 8 / 9
+o AIX 4.3.3
+o IRIX 6.3 / 6.4 / 6.5 6.5.8m
+o HP-UX 10.20 / 11.0 / 11i
+o Tru64 Unix 5.0 (OSF1 V5.0)
+o Mac OS X 10.1.4 (Darwin 5.4) + XDarwin (without XLocale support) + libxpg4
+o Mac OS X 10.2.3 (Darwin 6.3) + Apple X11 PublicBeta 0.1 + XLocale fix patch
+o Mac OS X 10.3 + X11 for Mac OS X
+
+Others
+
+o Windows (MSVC + GTK+ for win32) (in progress)
+
+Build it
+========
+
+Please make sure that gtk-devel and glib-devel (or similar) packages are
+installed before the compilation (you may also require flex (lex) and bison
+(yacc)).
+
+To compile and install, just type:
+
+% ./configure
+% make
+% su
+Password: [Enter password]
+# make install
+
+Additional libraries
+====================
+
+It is recommend to install gdk-pixbuf or gdk_imlib library before installing
+Sylpheed for built-in image view support, and compface library for X-Face
+support.
+
+You can get compface utilities and library from the following location:
+
+  http://freshmeat.net/projects/compface/
+
+Sylpheed supports US-ASCII, ISO-8859-1, and EUC-JP by default.
+If your system supports iconv() API, other character set / encoding
+(such as UTF-8, KOI8-R, and GB2312) will be also supported.
+
+GnuPG (>= 1.2.0) and GPGME (>= 0.3.10) are required for GnuPG (PGP) support
+(GPGME 0.4.x is not supported yet).
+
+You can get GnuPG and GPGME from the following location:
+
+  ftp://ftp.gnupg.org/pub/gcrypt/alpha/gpgme/
+  ftp://ftp.gnupg.org/pub/gcrypt/gnupg/
+
+Options for configure script
+============================
+
+  --disable-compface  disable compface (X-Face) support
+  --disable-ipv6      disable IPv6 support
+  --enable-ssl        SSL support (requires OpenSSL)
+  --enable-gpgme      GnuPG support (requires GPGME and GnuPG)
+  --enable-ldap       LDAP support
+  --enable-jpilot     JPilot support
+
+For other options, refer to ./configure --help .
+
+
+If the installation of Sylpheed failed, check whether all the required
+libraries are correctly installed. If it still failed, please send bug
+report to:
+
+  Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>

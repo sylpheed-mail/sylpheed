@@ -1,0 +1,107 @@
+%define ver @VERSION@
+%define rel 1
+%define prefix /usr
+
+Summary: a GTK+ based, lightweight, and fast e-mail client
+Name: sylpheed
+Version: %{ver}
+Release: %{rel}
+Source: http://sylpheed.good-day.net/sylpheed/%{name}-%{ver}.tar.gz
+Copyright: GPL
+URL: http://sylpheed.good-day.net/
+Requires: gtk+ >= 1.2.6
+Group: Applications/Internet
+Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+Buildroot: %{_tmppath}/%{name}-root
+
+%changelog
+* Fri Aug 1 2003 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- omitted %changelog
+- modified %description
+
+* Thu Jul 31 2003 Andre Costa <acosta@ar.microlink.com.br>
+- used more extensively RPM's builtin vars
+
+* Tue Feb 4 2003 Andre Costa <acosta@ar.microlink.com.br>
+- implemented SYLPHEED_CONFIGURE_FLAGS in %build phase
+- BuildRoot: is now more portable
+- included sylpheed's pixmaps into the package
+
+* Tue Jan 9 2001 Yoichi Imai <yoichi@silver-forest.com>
+- edited for spec.in
+
+* Fri Dec 1 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.4.7, and updated %description
+
+* Thu Sep 28 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.4.1, and modified %files
+
+* Wed Sep 27 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.4.0, and modified %description
+
+* Tue Sep 26 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.3.99, and modified %files
+
+* Sat Aug 19 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.3.26, and modified URL
+
+* Sun Jul 4 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.3.21, and modified Summary
+
+* Sun Jun 11 2000 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- updated to 0.3.15 and modified description and doc
+
+* Sun Jun 4 2000 Yoichi Imai <yoichi@silver-forest.com>
+- some change
+
+* Sat Apr 29 2000 Yoichi Imai <yoichi@silver-forest.com>
+- gnome-menu and requires header change
+
+* Wed Feb 5 2000 Yoichi Imai <yoichi@silver-forest.com>
+- append "TODO.jp"
+
+* Sat Jan 1 2000 Yoichi Imai <yoichi@silver-forest.com>
+- first release for version 0.1.0
+
+%description
+Sylpheed is an e-mail client (and news reader) based on GTK+, running on
+X Window System, and aiming for
+ * Quick response
+ * Simple, graceful, and well-polished interface
+ * Easy configuration
+ * Intuitive operation
+ * Abundant features
+The appearance and interface are similar to some popular e-mail clients for
+Windows, such as Outlook Express, Becky!, and Datula. The interface is also
+designed to emulate the mailers on Emacsen, and almost all commands are
+accessible with the keyboard.
+
+The messages are managed by MH format, and you'll be able to use it together
+with another mailer based on MH format (like Mew). You can also utilize
+fetchmail or/and procmail, and external programs on receiving (like inc or
+imget).
+
+%prep
+rm -rf $RPM_BUILD_ROOT
+
+%setup
+%build
+CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{prefix} ${SYLPHEED_CONFIGURE_FLAGS}
+make
+
+%install
+make prefix=${RPM_BUILD_ROOT}%{prefix} install
+mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/pixmaps
+install -m 644 *.png ${RPM_BUILD_ROOT}%{_datadir}/pixmaps
+
+%clean
+rm -rf ${RPM_BUILD_ROOT}
+
+%files
+%defattr(-,root,root)
+%doc COPYING ChangeLog ChangeLog.jp README README.jp INSTALL INSTALL.jp TODO.jp
+%{_bindir}/%{name}
+%{_datadir}/locale/*/LC_MESSAGES/%{name}.mo
+%{_datadir}/%{name}/faq/*/*
+%{_datadir}/%{name}/manual/*/*
+%{_datadir}/pixmaps/*.png

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>FAQ Sylpheed: FAQ Sylpheed - Installation et configuration</TITLE>
+ <LINK HREF="sylpheed-faq-3.html" REL=next>
+ <LINK HREF="sylpheed-faq-1.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc2" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-faq-3.html">Page suivante</A>
+<A HREF="sylpheed-faq-1.html">Page précédente</A>
+<A HREF="sylpheed-faq.html#toc2">Table des matières</A>
+<HR>
+<H2><A NAME="s2">2. FAQ Sylpheed - Installation et configuration</A></H2>
+
+<H2><A NAME="ss2.1">2.1 Q01  Que faut-il pour compiler Sylpheed&nbsp;?</A>
+</H2>
+
+<P>A.   Un système d'exploitation UNIX, respectant la norme POSIX 
+ou similaire, par exemple Linux, FreeBSD ou Solaris.
+La bibliothèque GTK+ 1.2.6 ou plus récente.
+Un compilateur ANSI C récent (gcc 2.7.2.3 devrait aussi fonctionner)
+Note&nbsp;: le compilateur Sun C ne peut pas être utilisé pour compiler Sylpheed.
+De façon optionnelle&nbsp;:
+<UL>
+<LI>la bibliothèque Imlib ou gdk-pixbuf (pour la visualisation des images)</LI>
+<LI>la bibliothèque libcompface (pour les icônes X-Face)</LI>
+<LI>la bibliothèque libjconv (pour I18N)</LI>
+<LI>la bibliothèque GPGME (pour le cryptage et la signature avec GnuPG)</LI>
+<LI>les équivalents des paquetages GTK+-devel et Xfree86-devel.</LI>
+</UL>
+
+Sans cela la configuration avec <CODE>./configure</CODE> échouera.
+<H2><A NAME="ss2.2">2.2 Q02 Comment installer Sylpheed&nbsp;?</A>
+</H2>
+
+<P>A.  Lorsque vous démarrez Sylpheed pour la première fois, il vous sera
+demandé l'emplacement (répertoire) ou vous souhaitez stocker vos dossiers.
+Par défaut, il est défini comme &lt;homedir&gt;/Mail (homedir étant votre répertoire
+de connexion). Vous pouvez changer cette valeur comme bon vous semble,
+à condition qu'il s'agisse d'un répertoire valide (sur lequel vous avez
+les droits d'écriture, entre autres).
+<P>Lorsque Sylpheed est démarré pour la première fois, les fichiers
+de configuration sont automatiquement créés dans le répertoire
+<CODE>$HOME/.sylpheed/</CODE> et il est demandé a l'utilisateur
+de renseigner l'emplacement des boites aux lettres (la valeur
+par défaut est: <CODE>$HOME/Mail</CODE>. Si ce répertoire contient
+des fichiers qui ne sont pas au format MH, il vous faudra
+spécifier un autre répertoire. 
+<H2><A NAME="ss2.3">2.3 Q03  Comment définir un compte de messagerie&nbsp;?</A>
+</H2>
+
+<P>A.   Après avoir démarré Sylpheed pour la première fois, vous pouvez
+ajouter un compte de messagerie en utilisant le menu «&nbsp;Configuration&nbsp;».
+Sélectionnez l'option «&nbsp;Création d'un nouveau compte&nbsp;» et remplissez le
+formulaire qui est affiché.
+<H2><A NAME="ss2.4">2.4 Q04  Quel est le nombre maximum de comptes supportés par Sylpheed&nbsp;?</A>
+</H2>
+
+<P>A.   Le nombre n'est pas limité. La limite est atteinte lorsque votre
+ordinateur ne répond plus.
+<H2><A NAME="ss2.5">2.5 Q05 Pourquoi Sylpheed ne supprime-t-il pas mes messages lorsque je presse le bouton «&nbsp;Supprimer&nbsp;»&nbsp;? J'ai défini un filtre et Sylpheed ne filtre rien. J'ai déplacé un message vers un autre dossier, et rien ne se passe.</A>
+</H2>
+
+<P>A.   Vous devez cliquer sur le boutton «&nbsp;Exécuter&nbsp;». Une autre solution
+consiste à sélectionner l'option «&nbsp;Exécuter immédiatement...&nbsp;» dans la
+section «&nbsp;Interface&nbsp;» des préférences générales.
+<H2><A NAME="ss2.6">2.6 Q06  Comment définir une adresse ou un port pour le serveur de messagerie ou de news&nbsp;?</A>
+</H2>
+
+<P>A.   Dans la configuration du compte vous pouvez définir le port et l'adresse du
+serveur pour ce compte.
+<H2><A NAME="ss2.7">2.7 Q07  Sylpheed peut-il trier les messages par fil de discussion&nbsp;?</A>
+</H2>
+
+<P>A.   Oui. Vous pouvez le sélectionner par l'option «&nbsp;Vue par fil de conversation&nbsp;» du
+menu «&nbsp;Sommaire&nbsp;», ou en utilisant le raccourci Ctrl-T.
+<H2><A NAME="ss2.8">2.8 Q08  Puis-je créer plusieurs niveaux de dossiers pour ranger mes messages&nbsp;?</A>
+</H2>
+
+<P>A.   Sans problème.
+<H2><A NAME="ss2.9">2.9 Q09  Pourquoi Sylpheed n'envoie-t-il pas mes messages&nbsp;?</A>
+</H2>
+
+<P>A.   Vous devez créer au moins un compte pour pouvoir envoyer des messages.
+<H2><A NAME="ss2.10">2.10 Q10  Comment utiliser un patch après l'avoir téléchargé&nbsp;?</A>
+</H2>
+
+<P>A.   Copier le patch dans le répertoire Sylpheed,
+puis l'appliquer&nbsp;:
+<P><CODE>% patch -p0 &lt; some.patch</CODE>
+<P>ou, s'il est gzipé&nbsp;:
+<P><CODE>% gzip -dc some.patch.gz | patch -p0</CODE>
+<P>Lancer <CODE>./autogen.sh</CODE>, supprimer le fichier <CODE>./config.cache</CODE>.
+Lancer <CODE>./configure</CODE> avec les options appropriées, puis <CODE>make</CODE>.
+<H2><A NAME="ss2.11">2.11 Q11  Comment compiler avec le support des images 'compfaces'&nbsp;?</A>
+</H2>
+
+<P>A.   Vous devez obtenir le paquetage <CODE>libcompface</CODE> et l'installer pour
+qu'il soit utilisable par Sylpheed.
+<H2><A NAME="ss2.12">2.12 Q12  Comment créer ma propre image 'compface'&nbsp;?</A>
+</H2>
+
+<P>A.   Le paquetage <CODE>faces</CODE> contient un programme appelé xbm2ikon, qui
+convertit une image xbm 48x48 au format nécessaire pour compface.
+Grâce à Jeff Dairiki, vous pouvez avoir un cours complet sur cela à
+l'adresse&nbsp;: 
+<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A><P>
+<H2><A NAME="ss2.13">2.13 Q13 Comment faire en sorte que mon navigateur internet (ou autre programme) utilise Sylpheed comme programme de messagerie&nbsp;?</A>
+</H2>
+
+<P>A.  Dans les préférences de ce programme, définir comme outil de messagerie&nbsp;:
+<CODE>sylpheed --compose</CODE>
+<H2><A NAME="ss2.14">2.14 Q14 Comment valider le support de GPG dans Sylpheed&nbsp;?</A>
+</H2>
+
+<P>A.  Lors de la compilation, vérifiez que vous avez ajouté l'option
+<CODE>--enable-gpgme</CODE> lors de la configuration (avec <CODE>./configure</CODE>).
+<H2><A NAME="ss2.15">2.15 Q15 Mutt ne reconnaît pas la structure des dossiers de Sylpheed.</A>
+</H2>
+
+<P>A. Pour remédier à ce problème, vous devez créer un fichier <CODE>.xmhcache</CODE>
+vide dans chaque dossier. Pour cela, utilisez la commande <CODE>touch</CODE>.
+<H2><A NAME="ss2.16">2.16 Q17 Comment faire pour que Sylpheed signal l'arrivée de nouveaux messages?</A>
+</H2>
+
+<P>A. Pour cela vous pouvez faire:
+<P>* Consulter la page des correctifs pour Sylpheed a 
+<A HREF="http://www.teledix.net/sylpheed/">http://www.teledix.net/sylpheed/</A>
+pour y trouver le correctif nécessaire.
+<P>* Télécharger Gkrellm ou un programme similaire qui signalera l'arrivée
+de tout nouveau message. Gkrellm se trouve a 
+<A HREF="http://www.gkrellm.net">http://www.gkrellm.net</A><P>
+<HR>
+<A HREF="sylpheed-faq-3.html">Page suivante</A>
+<A HREF="sylpheed-faq-1.html">Page précédente</A>
+<A HREF="sylpheed-faq.html#toc2">Table des matières</A>
+</BODY>
+</HTML>

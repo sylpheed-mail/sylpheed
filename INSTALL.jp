@@ -1,0 +1,141 @@
+インストール方法
+================
+
+このプログラムをコンパイルするには GTK+ 1.2.6 以降が必要です。
+
+このプログラムは Debian GNU/Linux (woody/sid) (Linux 2.4.x + glibc 2.2.x)
+上で開発されているため、他の環境ではうまく動作しない可能性があります。
+
+以下の環境で動作が確認されています:
+
+Linux
+
+o Debian GNU/Linux (i386/sid) (glibc 2.3.2) (開発環境)
+o Debian GNU/Linux (amd64/sid-based) (glibc 2.3.2) (開発環境 #2)
+o Debian GNU/Linux 3.0 (woody) (glibc 2.2.5)
+o Debian GNU/Linux 2.2 (potato) (glibc 2.1.3)
+o Fedora Core 2 / 3
+o RedHat Linux 5.2 (glibc 2.0.7)
+o RedHat Linux 6.0
+o RedHat Linux 6.1 + Helix GNOME (glibc 2.1.x)
+o RedHat Linux 6.2 / 6.2J (glibc 2.1.x)
+o RedHat Linux 7.0 / 7.0J / 7.1 / 7.2 / 7.3 / 8.0 / 9.0
+o Vine Linux 1.1 (glibc 2.0.x + libwcsmbs)
+o Vine Linux 2.0 (glibc 2.1.x) (Intel, PPC)
+o Vine Linux 2.1 / 2.1.5 / 2.5 / 2.6 / 3.0
+o TurboLinux 4.0 (glibc 2.0.7 + libwcsmbs)
+o TurboLinux 6.0 (glibc 2.1.2)
+o TurboLinux 7.0 (glibc 2.2.x)
+o Miracle Linux Standard Edition Version1.0
+o Miracle Linux for PostgreSQL Version1.0
+o Miracle Linux for Samba Version1.0
+o Laser5 Linux 6.0 / 6.2 / 6.4 (glibc 2.1.x)
+o Kondara MNU/Linux 1.0 (glibc 2.1.x) / 1.2 / 2.0
+o LinuxPPC2000 + 雪風(日本語化 kit)
+o Linux2000G (Intel / PPC)
+o HOLON Linux 2.0 (Intel / PPC)
+o Linux for PPC Japanese Edition 2.0 (glibc 2.1.x)
+o Linux for PPC Japanese Edition 3.0 (glibc 2.1.x)
+o LinuxPPC Q4 2000 (glibc 2.1.x)
+o Linux MLD4/5
+o Plamo Linux 2.0 / 2.1 / 2.2.x / 3.0
+o Slackware 7.0 / 7.1 / 8.0 / 8.1 / 9.0 / 10.0
+o Mandrake Linux 7.0 / 7.1 / 7.2 / 8.0 / 8.1 / 9.0 / 9.1 / 10.0
+o SuSE Linux 6.3 (glibc 2.1.2) / 6.4
+o SuSE Linux 7.0 / 7.1 / 7.2 / 7.3 / 8.0 / 8.1 / 8.2
+o OpenLinux 2.3 (glibc 2.1.1 -> 2.1.3)
+o Caldera OpenDesktop 2.4
+o Caldera Workstation 3.1
+o Conectiva Linux 4.0 / 5.0 / 7.0 / 8.0
+o Vector Linux 1.5
+o Yellow Dog Linux 2.0 (glibc 2.2.1)
+o Yellow Dog Linux 2.1 (PowerPC)
+o ASP Linux 7.2 (glibc 2.2.4)
+o Redmond Linux (Lycoris)
+o Gentoo Linux 1.x / 2004.2 (i386 / amd64)
+
+BSD
+
+o FreeBSD 3.2/3.4-RELEASE
+o FreeBSD 4.0/4.1/4.2/4.3/4.4/4.5/4.6-RELEASE
+o FreeBSD 5.3-RELEASE
+o FreeBSD 5.0-CURRENT
+o NetBSD 1.4.2
+o NetBSD 1.5 + XPG4DL
+o NetBSD 1.5.1
+o NetBSD 1.5.2
+o OpenBSD 2.7 / 2.8 / 2.9 / 3.0 / 3.1 / 3.6
+o BSD/OS 4.0.1
+
+その他商用 Unix
+
+o Solaris 2.5 / 2.5.1 / 2.6
+o Solaris 7 / 8 / 9
+o AIX 4.3.3
+o IRIX 6.3 / 6.4 / 6.5 6.5.8m
+o HP-UX 10.20 / 11.0 / 11i
+o Tru64 Unix 5.0 (OSF1 V5.0)
+o Mac OS X 10.1.4 (Darwin 5.4) + XDarwin (XLocale 無し) + libxpg4
+o Mac OS X 10.2.3 (Darwin 6.3) + Apple X11 PublicBeta 0.1 + XLocale fix patch
+o Mac OS X 10.3 + X11 for Mac OS X
+
+その他
+
+o Windows (MSVC + GTK+ for win32) (開発中)
+
+ビルド
+======
+
+コンパイル前に gtk-devel と glib-devel (あるいは相当する)パッケージが
+インストールされていることを確認してください(flex (lex) と bison (yacc)
+も必要かもしれません)。
+
+コンパイルしてインストールするには、次のように入力してください:
+
+% ./configure
+% make
+% su
+Password: [パスワードを入力]
+# make install
+
+追加ライブラリ
+==============
+
+インストール前に、ビルトイン画像表示対応のために gdk-pixbuf または gdk_imlib
+ライブラリ、そして X-Face 対応のために compface ライブラリをインストールして
+おくことをお勧めします。
+
+compface ユーティリティとライブラリは以下の場所から取得できます:
+
+  http://freshmeat.net/projects/compface/
+
+Sylpheed は標準で US-ASCII, ISO-8859-1, EUC-JP に対応しています。
+システムが iconv() API に対応している場合は、その他の文字集合 /
+符号化方式(UTF-8, KOI8-R, GB2312 等)にも対応します。
+
+GnuPG (PGP)対応を有効にしたい場合は、 GPGME 0.3.10 以降と GnuPG 1.2.0 以降が
+必要です(GPGME 0.4.x はまだサポートされていません)。
+
+GnuPG と GPGME は以下の場所から取得できます:
+
+  ftp://ftp.gnupg.org/pub/gcrypt/alpha/gpgme/
+  ftp://ftp.gnupg.org/pub/gcrypt/gnupg/
+
+configure スクリプトのオプション
+================================
+
+  --disable-compface  compface (X-Face)対応を無効にする
+  --disable-ipv6      IPv6 対応を無効にする
+  --enable-ssl        SSL 対応 (要 OpenSSL)
+  --enable-gpgme      GnuPG 対応 (要 GPGME と GnuPG)
+  --enable-ldap       LDAP 対応
+  --enable-jpilot     JPilot 対応
+
+その他のオプションについては ./configure --help を参照してください。
+
+
+もし Sylpheed のインストールに失敗したら、必要なライブラリが正しく
+インストールされているかどうか確認してください。それでも駄目な場合、
+バグレポートを以下まで送ってください。
+
+  山本 博之 / Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>

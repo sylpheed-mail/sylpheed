@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="CoffeeCup HTML Editor 9.2">
+ <TITLE>Sylpheed FAQ: Sylpheed FAQ - Interfaccia</TITLE>
+ <LINK HREF="sylpheed-faq-2.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc3" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-faq-2.html">Precedenti</A>
+<A HREF="sylpheed-faq.html#toc3">Contenuti</A>
+Successivo
+<HR>
+<H2><A NAME="s3">3. Sylpheed FAQ - Interfaccia</A></H2>
+
+<H2><A NAME="ss3.1">3.1 Q01  Come posso settare la mia lingua su Sylpheed?</A>
+</H2>
+
+<P>A.   Devi settare alcuni parametri dell'environment come
+<CODE>LANG, LC_CTYPE, LC_MESSAGES</CODE> nella tua lingua locale.
+Di solito <CODE>LANG</CODE> (o <CODE>LC_ALL</CODE>) &egrave; sufficiente.
+<H2><A NAME="ss3.2">3.2 Q02  Non mi piace il font di default. Posso cambiarlo?</A>
+</H2>
+
+<P>A.   S&igrave;. In Configurazione &gt; Opzioni globali... sotto il tab "Visualizzazione".
+<H2><A NAME="ss3.3">3.3 Q03  Ci sono troppe colonne nella lista dei messaggi!!</A>
+</H2>
+
+<P>A.   In Configurazione &gt; Opzioni globali... sotto il tab "Visualizzazione"
+premi il bottone "Imposta le voci visibili nel sommario".
+Questo mostra una finestra con tutte le opzioni che puoi vedere o non vedere nella
+lista dei messaggi.
+<H2><A NAME="ss3.4">3.4 Q04  Posso utilizzare un editor differente per scrivere le mie mail?</A>
+</H2>
+
+<P>A.   Certamente. In Configurazione &gt; Opzioni globali... sotto il tab "Altro"
+puoi definire l'editor che preferisci.
+Ricorda, se vuoi usare un editor a linea di comando (non grafico) tipo vi o emacs,
+devi precedere il nome dell'editor con il terminale su cui eseguirlo 
+(term, term, rxvt) col parametro -e. Esempio: <CODE>rxvt -e vi %s</CODE>
+<H2><A NAME="ss3.5">3.5 Q05  Come posso cambiare la dimensione del font nell'interfaccia di Sylpheed?</A>
+</H2>
+
+<P>A.   Puoi settare il font del GTK+ con <CODE>~/.gtkrc</CODE>, o
+<CODE>~/.gtkrc.mine</CODE>,
+(che &egrave; incluso in <CODE>~/.gtkrc</CODE>).
+Per esempio:
+<CODE>style "default"
+{
+font =
+"-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1
+"
+}
+widget_class "*"        style "default"</CODE>
+<H2><A NAME="ss3.6">3.6 Q06  Sylpheed salva le mie mail in uscita (in Outbox). Posso fermare questa opzione?</A>
+</H2>
+
+<P>A.   In Configurazione &gt; Opzioni globali... sotto il tab "Invia" c'&egrave;
+l'opzione "Salva i messaggi inviati nella cartella 'In Uscita'".
+Deseleziona l'opzione e risolvi il tuo quesito.
+<H2><A NAME="ss3.7">3.7 Q07  Come posso cambiare la mappa dei tasti (tasti veloci) in Sylpheed?</A>
+</H2>
+
+<P>A.   E' molto semplice. Supponi che vuoi assegnare una sequenza di tasti ad 
+una funzione, esempio spedire tutte i messaggi accodati premendo Ctrl-Y.
+Seleziona il menu "Messaggio", posiziona il mouse sulla voce "Invia i messaggi
+accodati". Ora premi Ctrl-Y. Immediatamente il menu viene aggiornato con
+la modifica effettuata. ATTENZIONE: verifica che la sequenza di tasti non gi&agrave;
+assegnata prima di fare ci&ograve;. Se vuoi rimuovere il settaggio, fai la stessa cosa,
+ma premi il tasto "delete" sulla voce del menu. Questo rimuovera la sequenza di
+tasti veloce assegnata a quella voce.
+<H2><A NAME="ss3.8">3.8 Q08  Posso chiudere Sylpheed senza utilizzare il mouse?</A>
+</H2>
+
+<P>A.   Certamente!! Non tutte le finestre, ma premendo il tasto ESCape,
+puoi chiudere la rubrica, la finestra di visualizzazione del messaggio sorgente
+(Vista&gt;Vista sorgente), la finestra di visualizza delle intestazioni e molte
+altre. Fai una prova e troverai quali delle finestre di Sylpheed funzionano allo
+stesso modo.
+<H2><A NAME="ss3.9">3.9 Q09  Posso cambiare il modo di visualizzazione della data nel sommario dei messaggi?</A>
+</H2>
+
+<P>A.   Dalla versione 0.4.65 si pu&ograve;. Per avere una lista completa delle opzioni
+vai al menu Configurazione, seleziona Opzioni globali, tab Visualizzazione e 
+il tasto vicino al box "Formato della Data".
+<H2><A NAME="ss3.10">3.10 Q10  Perch&eacute; non posso vedere l'immagine compface?</A>
+</H2>
+
+<P>A.   Devi abilitare la visualizzzione del pannello intestazioni nelle opzioni
+globali.
+<H2><A NAME="ss3.11">3.11 Q11  Continuo a non vederla. Perch&eacute;?</A>
+</H2>
+
+<P>A.   Non hai compilato Sylpheed col support Compface. Leggi Q11
+nella sezione Installazione e Configurazione.
+<H2><A NAME="ss3.12">3.12 Q12  Perch&eacute; l'URL Launcher non apre il web browser che ho definito?</A>
+</H2>
+
+<P>A.   Devi fare un doppio click sull'URL.
+<H2><A NAME="ss3.13">3.13 Q13 Gli allegati con spazi nel nome non si aprono!</A>
+</H2>
+
+<P>A.   Quando provi ad eseguire un'applicazione di supporto, tipo un visualizzatore
+di immagini, con l'allegato che ha spazi nel nome del file, metti la virgoletta
+singola attorno al parametro %s. Esempio: xv '%s'
+<HR>
+<A HREF="sylpheed-faq-2.html">Precedente</A>
+<A HREF="sylpheed-faq.html#toc3">Contenuti</A>
+Successivo
+</BODY>
+</HTML>

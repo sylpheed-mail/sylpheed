@@ -1,0 +1,227 @@
+	Sylpheed - a GTK+ based, lightweight, and fast e-mail client
+
+   Copyright(C) 1999-2004 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+   For more details see the file COPYING.
+
+
+What's Sylpheed
+===============
+
+Sylpheed is an e-mail client and news reader based on GTK+ GUI toolkit,
+and runs on X Window System.
+
+Sylpheed is a free software distributed under the GNU GPL.
+
+The development of Sylpheed sets the following things as its goal:
+
+  * Quick response by keeping CPU and memory usage to a minimum
+  * Fast processing even though a folder contains large number of messages
+    (more than 10 thousand)
+  * Enables intuitive operation by simple, graceful, and well-polished
+    interface
+  * Similar operation methods to other mailers.
+  * Readily available with simple configuration
+  * Fully equipped with features required as a mailer
+  * Full support of Japanese, and support of i18n
+  * Enables flexible interaction with external commands
+  * Stable, and don't lose any data (to the utmost) in case of crash
+
+The appearance and interface are similar to some popular e-mail clients for
+Windows, such as Outlook Express, Becky!, and Datula. The interface is also
+designed to emulate the Emacs-based mailers, and almost all commands are
+accessible with the keyboard. So you will able to migrate to Sylpheed
+without much discomfort in the case where you are accustomed to other
+mailers.
+
+The messages are managed by MH format, and you'll be able to use it together
+with another mailer based on MH format (like Mew). It has less possibility
+of losing mails on failures since one file corresponds to one mail. You can
+import or export mbox format messages. You can also utilize fetchmail or/and
+procmail, and external programs on receiving (like inc or imget).
+
+Currently implemented major features
+====================================
+
+Supported protocols
+
+	o POP3
+	o IMAP4rev1
+	o SMTP
+	o NNTP
+	o SSL/TLSv1 (POP3, SMTP, IMAP4rev1, NNTP)
+	o IPv6
+
+Features
+
+	o multiple accounts
+	o thread display
+	o powerful filtering
+	o MIME (attachments)
+	o integrated News reader
+	o SMTP AUTH support
+	o CRAM-MD5 authentication (SMTP AUTH / IMAP4rev1)
+	o APOP authentication (POP3)
+	o PGP signature / encryption (requires GPGME)
+	o built-in image view
+	o X-Face display
+	o user-defined headers
+	o color label
+	o Mew/Wanderlust compatible key bind
+	o multiple MH folder support
+	o mbox importing / exporting
+	o external editor
+	o message queueing
+	o automatic mail checking
+	o draft message
+	o template
+	o line-wrapping
+	o clickable URI
+	o XML-based address book
+	o newly arrived and unread message management
+	o printing
+	o offline mode
+	o remote operation by command line
+	o per-folder configuration
+	o LDAP, vCard, and JPilot support
+	o Drag & Drop
+	o autoconf, automake support
+	o internationalization of messages by gettext
+	o support of many code sets, including UTF-8 (Unicode)
+
+and more.
+
+Installation
+============
+
+See INSTALL for installation instructions.
+
+Usage
+=====
+
+Preparation before running
+--------------------------
+
+If you want to use characters other than English (aka US-ASCII),
+you must specify some environmental variables related to locale.
+For example:
+
+% export LANG=de_DE	(sh, bash etc.)
+
+or
+
+% setenv LANG de_DE	(csh, tcsh etc.)
+
+(replace de_DE to appropriate locale name)
+
+If you don't want translated messages, set LC_MESSAGES to "C"
+(and unset LC_ALL if specified).
+
+How to run
+----------
+
+Input `sylpheed' on a command line, or double-click the icon on a file
+manager to execute.
+
+Initial startup
+---------------
+
+When Sylpheed is executed for the first time, it automatically creates the
+configuration files under ~/.sylpheed/, and asks you the location of
+mailbox. The default is ~/Mail. If some files which are non-MH format
+already exist on the directory, you will have to specify another location.
+
+Required settings
+-----------------
+
+Initially, you have to create at least one account to send or receive
+messages (you can read messages that already exist without creating
+accounts). The configuration dialog will be shown by clicking
+"Configuration -> Create new account..." on the menu, or "Account" on
+the toolbar. Then, fill the required settings.
+
+Refer to the manual supplied with this program for the general usage.
+
+Hidden settings
+---------------
+
+You can configure most of the features in Sylpheed through the preferences
+dialog, but there are a few parameters which don't have user interface
+(you don't have to modify them in normal use). You must edit
+~/.sylpheed/sylpheedrc by an editor when Sylpheed is not running.
+
+allow_jisx0201_kana		allow JIS X 0201 Kana (half-width kana) on
+				sending.
+				0: off  1: on   [default: 0]
+bold_font			bold font used in folder, summary and text view
+small_font			small font used in summary view etc.
+enable_hscrollbar		enable horizontal scroll bar in summary view
+				0: off  1: on	[default: 1]
+bold_unread			show unread messages using bold font in
+				summary view
+				0: off  1: on   [default: 1]
+folderview_vscrollbar_policy	specify the policy of vertical scroll bar
+				of folder view
+				0: always  1: automatic  2: never [default: 0]
+
+Information
+===========
+
+You can check the newest version and information about Sylpheed at:
+
+	http://sylpheed.good-day.net/
+
+There's also the manual of Sylpheed written by
+Yoichi Imai <yoichi@silver-forest.com> on:
+
+	http://y-imai.good-day.net/sylpheed/
+
+Feedback
+========
+
+Comments, ideas and (most of all) bug reports (and especially patches) are
+very welcome.
+
+Anonymous cvs
+=============
+
+You can get the newest source code with the anonymous cvs.
+
+First, set your CVSROOT environment variable to:
+
+	:pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed
+
+Next, login with:
+
+	cvs login
+
+and just press Enter key to `CVS password:'.
+
+Move to an appropriate directory, and with the command:
+
+	cvs -z3 checkout sylpheed
+
+a source tree named `sylpheed' is created under the current directory.
+
+To update to the newest source tree, run the command:
+
+	cvs -z3 update
+
+on the top directory of the source tree.
+
+-- 
+Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>

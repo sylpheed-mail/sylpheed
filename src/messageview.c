@@ -1,0 +1,877 @@
+/*
+ * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
+ * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "defs.h"
+
+#include <glib.h>
+#include <gdk/gdkkeysyms.h>
+#include <gtk/gtkvbox.h>
+#include <gtk/gtkcontainer.h>
+#include <gtk/gtkeditable.h>
+#include <gtk/gtkwindow.h>
+#include <gtk/gtktextview.h>
+#include <gtk/gtkmenu.h>
+#include <gtk/gtkmenuitem.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#include "intl.h"
+#include "main.h"
+#include "messageview.h"
+#include "message_search.h"
+#include "headerview.h"
+#include "textview.h"
+#include "imageview.h"
+#include "mimeview.h"
+#include "menu.h"
+#include "about.h"
+#include "filesel.h"
+#include "sourcewindow.h"
+#include "addressbook.h"
+#include "alertpanel.h"
+#include "inputdialog.h"
+#include "manage_window.h"
+#include "procmsg.h"
+#include "procheader.h"
+#include "procmime.h"
+#include "account.h"
+#include "action.h"
+#include "prefs_common.h"
+#include "prefs_account.h"
+#include "prefs_filter.h"
+#include "gtkutils.h"
+#include "utils.h"
+#include "rfc2015.h"
+
+static GList *messageview_list = NULL;
+
+static void messageview_change_view_type(MessageView	*messageview,
+					 MessageType	 type);
+static void messageview_destroy_cb	(GtkWidget	*widget,
+					 MessageView	*messageview);
+static void messageview_size_allocate_cb(GtkWidget	*widget,
+					 GtkAllocation	*allocation);
+static gboolean key_pressed		(GtkWidget	*widget,
+					 GdkEventKey	*event,
+					 MessageView	*messageview);
+
+static void save_as_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void print_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void close_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void copy_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void allsel_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void search_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void set_charset_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void view_source_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void show_all_header_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void compose_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void reply_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void reedit_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void addressbook_open_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void add_address_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void create_filter_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void about_cb			(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static GtkItemFactoryEntry msgview_entries[] =
+{
+	{N_("/_File"),			NULL, NULL, 0, "<Branch>"},
+	{N_("/_File/_Save as..."),	NULL, save_as_cb, 0, NULL},
+	{N_("/_File/_Print..."),	NULL, print_cb, 0, NULL},
+	{N_("/_File/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_File/_Close"),		NULL, close_cb, 0, NULL},
+
+	{N_("/_Edit"),			NULL, NULL, 0, "<Branch>"},
+	{N_("/_Edit/_Copy"),		NULL, copy_cb, 0, NULL},
+	{N_("/_Edit/Select _all"),	NULL, allsel_cb, 0, NULL},
+	{N_("/_Edit/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Edit/_Find in current message..."),
+					NULL, search_cb, 0, NULL},
+
+	{N_("/_View"),			NULL, NULL, 0, "<Branch>"},
+
+#define CODESET_SEPARATOR \
+	{N_("/_View/_Code set/---"),	NULL, NULL, 0, "<Separator>"}
+#define CODESET_ACTION(action) \
+	NULL, set_charset_cb, action, "/View/Code set/Auto detect"
+
+	{N_("/_View/_Code set"),	NULL, NULL, 0, "<Branch>"},
+	{N_("/_View/_Code set/_Auto detect"),
+					NULL, set_charset_cb, C_AUTO, "<RadioItem>"},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/7bit ascii (US-ASC_II)"),
+	 CODESET_ACTION(C_US_ASCII)},
+
+#if HAVE_ICONV
+	{N_("/_View/_Code set/Unicode (_UTF-8)"),
+	 CODESET_ACTION(C_UTF_8)},
+	CODESET_SEPARATOR,
+#endif
+	{N_("/_View/_Code set/Western European (ISO-8859-_1)"),
+	 CODESET_ACTION(C_ISO_8859_1)},
+	{N_("/_View/_Code set/Western European (ISO-8859-15)"),
+	 CODESET_ACTION(C_ISO_8859_15)},
+	CODESET_SEPARATOR,
+#if HAVE_ICONV
+	{N_("/_View/_Code set/Central European (ISO-8859-_2)"),
+	 CODESET_ACTION(C_ISO_8859_2)},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/_Baltic (ISO-8859-13)"),
+	 CODESET_ACTION(C_ISO_8859_13)},
+	{N_("/_View/_Code set/Baltic (ISO-8859-_4)"),
+	 CODESET_ACTION(C_ISO_8859_4)},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/Greek (ISO-8859-_7)"),
+	 CODESET_ACTION(C_ISO_8859_7)},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/Turkish (ISO-8859-_9)"),
+	 CODESET_ACTION(C_ISO_8859_9)},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/Cyrillic (ISO-8859-_5)"),
+	 CODESET_ACTION(C_ISO_8859_5)},
+	{N_("/_View/_Code set/Cyrillic (KOI8-_R)"),
+	 CODESET_ACTION(C_KOI8_R)},
+	{N_("/_View/_Code set/Cyrillic (KOI8-U)"),
+	 CODESET_ACTION(C_KOI8_U)},
+	{N_("/_View/_Code set/Cyrillic (Windows-1251)"),
+	 CODESET_ACTION(C_CP1251)},
+	CODESET_SEPARATOR,
+#endif
+	{N_("/_View/_Code set/Japanese (ISO-2022-_JP)"),
+	 CODESET_ACTION(C_ISO_2022_JP)},
+#if HAVE_ICONV
+	{N_("/_View/_Code set/Japanese (ISO-2022-JP-2)"),
+	 CODESET_ACTION(C_ISO_2022_JP_2)},
+#endif
+	{N_("/_View/_Code set/Japanese (_EUC-JP)"),
+	 CODESET_ACTION(C_EUC_JP)},
+	{N_("/_View/_Code set/Japanese (_Shift__JIS)"),
+	 CODESET_ACTION(C_SHIFT_JIS)},
+#if HAVE_ICONV
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/Simplified Chinese (_GB2312)"),
+	 CODESET_ACTION(C_GB2312)},
+	{N_("/_View/_Code set/Traditional Chinese (_Big5)"),
+	 CODESET_ACTION(C_BIG5)},
+	{N_("/_View/_Code set/Traditional Chinese (EUC-_TW)"),
+	 CODESET_ACTION(C_EUC_TW)},
+	{N_("/_View/_Code set/Chinese (ISO-2022-_CN)"),
+	 CODESET_ACTION(C_ISO_2022_CN)},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/Korean (EUC-_KR)"),
+	 CODESET_ACTION(C_EUC_KR)},
+	{N_("/_View/_Code set/Korean (ISO-2022-KR)"),
+	 CODESET_ACTION(C_ISO_2022_KR)},
+	CODESET_SEPARATOR,
+	{N_("/_View/_Code set/Thai (TIS-620)"),
+	 CODESET_ACTION(C_TIS_620)},
+	{N_("/_View/_Code set/Thai (Windows-874)"),
+	 CODESET_ACTION(C_WINDOWS_874)},
+#endif
+
+#undef CODESET_SEPARATOR
+#undef CODESET_ACTION
+
+	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_View/Mess_age source"),	NULL, view_source_cb, 0, NULL},
+	{N_("/_View/Show all _header"),	NULL, show_all_header_cb, 0, "<ToggleItem>"},
+
+	{N_("/_Message"),		NULL, NULL, 0, "<Branch>"},
+	{N_("/_Message/Compose _new message"),
+					NULL, compose_cb, 0, NULL},
+	{N_("/_Message/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Message/_Reply"),	NULL, reply_cb, COMPOSE_REPLY, NULL},
+	{N_("/_Message/Repl_y to/_all"),
+					NULL, reply_cb, COMPOSE_REPLY_TO_ALL, NULL},
+	{N_("/_Message/Repl_y to/_sender"),
+					NULL, reply_cb, COMPOSE_REPLY_TO_SENDER, NULL},
+	{N_("/_Message/Repl_y to/mailing _list"),
+					NULL, reply_cb, COMPOSE_REPLY_TO_LIST, NULL},
+	{N_("/_Message/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Message/_Forward"),	NULL, reply_cb, COMPOSE_FORWARD, NULL},
+	{N_("/_Message/For_ward as attachment"),
+					NULL, reply_cb, COMPOSE_FORWARD_AS_ATTACH, NULL},
+	{N_("/_Message/Redirec_t"),	NULL, reply_cb, COMPOSE_REDIRECT, NULL},
+	{N_("/_Message/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Message/Re-_edit"),	NULL, reedit_cb, 0, NULL},
+
+	{N_("/_Tools"),			NULL, NULL, 0, "<Branch>"},
+	{N_("/_Tools/_Address book"),	NULL, addressbook_open_cb, 0, NULL},
+	{N_("/_Tools/Add sender to address boo_k"),
+					NULL, add_address_cb, 0, NULL},
+	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Tools/_Create filter rule"),
+					NULL, NULL, 0, "<Branch>"},
+	{N_("/_Tools/_Create filter rule/_Automatically"),
+					NULL, create_filter_cb, FILTER_BY_AUTO, NULL},
+	{N_("/_Tools/_Create filter rule/by _From"),
+					NULL, create_filter_cb, FILTER_BY_FROM, NULL},
+	{N_("/_Tools/_Create filter rule/by _To"),
+					NULL, create_filter_cb, FILTER_BY_TO, NULL},
+	{N_("/_Tools/_Create filter rule/by _Subject"),
+					NULL, create_filter_cb, FILTER_BY_SUBJECT, NULL},
+	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Tools/Actio_ns"),	NULL, NULL, 0, "<Branch>"},
+
+	{N_("/_Help"),			NULL, NULL, 0, "<Branch>"},
+	{N_("/_Help/_About"),		NULL, about_cb, 0, NULL}
+};
+
+
+MessageView *messageview_create(void)
+{
+	MessageView *messageview;
+	GtkWidget *vbox;
+	HeaderView *headerview;
+	TextView *textview;
+	MimeView *mimeview;
+
+	debug_print(_("Creating message view...\n"));
+	messageview = g_new0(MessageView, 1);
+
+	messageview->type = MVIEW_TEXT;
+
+	headerview = headerview_create();
+
+	textview = textview_create();
+	textview->messageview = messageview;
+
+	mimeview = mimeview_create();
+	mimeview->textview = textview_create();
+	mimeview->textview->messageview = messageview;
+	mimeview->imageview = imageview_create();
+	mimeview->imageview->messageview = messageview;
+	mimeview->messageview = messageview;
+
+	vbox = gtk_vbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET_PTR(headerview),
+			   FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET_PTR(textview),
+			   TRUE, TRUE, 0);
+	gtk_widget_show(vbox);
+
+	/* to remove without destroyed */
+	gtk_widget_ref(GTK_WIDGET_PTR(textview));
+	gtk_widget_ref(GTK_WIDGET_PTR(mimeview));
+	gtk_widget_ref(GTK_WIDGET_PTR(mimeview->textview));
+	gtk_widget_ref(GTK_WIDGET_PTR(mimeview->imageview));
+
+	messageview->vbox        = vbox;
+	messageview->new_window  = FALSE;
+	messageview->window      = NULL;
+	messageview->window_vbox = NULL;
+	messageview->headerview  = headerview;
+	messageview->textview    = textview;
+	messageview->mimeview    = mimeview;
+
+	messageview->statusbar     = NULL;
+	messageview->statusbar_cid = 0;
+
+	return messageview;
+}
+
+MessageView *messageview_create_with_new_window(void)
+{
+	MessageView *msgview;
+	GtkWidget *window;
+	GtkWidget *window_vbox;
+	GtkWidget *body_vbox;
+	GtkWidget *menubar;
+	GtkItemFactory *ifactory;
+	GtkWidget *statusbar;
+	guint n_menu_entries;
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title(GTK_WINDOW(window), _("Sylpheed - Message View"));
+	gtk_window_set_wmclass(GTK_WINDOW(window), "message_view", "Sylpheed");
+	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
+	gtk_widget_set_size_request(window, prefs_common.msgwin_width,
+				    prefs_common.msgwin_height);
+
+	msgview = messageview_create();
+
+	window_vbox = gtk_vbox_new(FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(window), window_vbox);
+
+	g_signal_connect(G_OBJECT(window), "size_allocate",
+			 G_CALLBACK(messageview_size_allocate_cb),
+			 msgview);
+	g_signal_connect(G_OBJECT(window), "destroy",
+			 G_CALLBACK(messageview_destroy_cb), msgview);
+	g_signal_connect(G_OBJECT(window), "key_press_event",
+			 G_CALLBACK(key_pressed), msgview);
+	MANAGE_WINDOW_SIGNALS_CONNECT(window);
+
+	n_menu_entries = sizeof(msgview_entries) / sizeof (msgview_entries[0]);
+	menubar = menubar_create(window, msgview_entries, n_menu_entries,
+				 "<MessageView>", msgview);
+#warning FIXME_GTK2
+#if 0
+	menu_factory_copy_rc("<Main>", "<MessageView>");
+#endif
+	gtk_box_pack_start(GTK_BOX(window_vbox), menubar, FALSE, TRUE, 0);
+
+	body_vbox = gtk_vbox_new(FALSE, BORDER_WIDTH);
+	gtk_container_set_border_width(GTK_CONTAINER(body_vbox), BORDER_WIDTH);
+	gtk_box_pack_start(GTK_BOX(window_vbox), body_vbox, TRUE, TRUE, 0);
+
+	gtk_box_pack_start(GTK_BOX(body_vbox), GTK_WIDGET_PTR(msgview),
+			   TRUE, TRUE, 0);
+	gtk_widget_grab_focus(msgview->textview->text);
+
+	statusbar = gtk_statusbar_new();
+	gtk_box_pack_end(GTK_BOX(body_vbox), statusbar, FALSE, FALSE, 0);
+	msgview->statusbar = statusbar;
+	msgview->statusbar_cid = gtk_statusbar_get_context_id
+		(GTK_STATUSBAR(statusbar), "Message View");
+
+	gtk_widget_show_all(window);
+
+	msgview->new_window = TRUE;
+	msgview->window = window;
+	msgview->window_vbox = window_vbox;
+	msgview->body_vbox = body_vbox;
+	msgview->visible = TRUE;
+
+	messageview_init(msgview);
+
+	ifactory = gtk_item_factory_from_widget(menubar);
+	action_update_msgview_menu(ifactory, msgview);
+
+	messageview_list = g_list_append(messageview_list, msgview);
+
+	return msgview;
+}
+
+void messageview_init(MessageView *messageview)
+{
+	headerview_init(messageview->headerview);
+	textview_init(messageview->textview);
+	mimeview_init(messageview->mimeview);
+	/* messageview_set_font(messageview); */
+}
+
+GList *messageview_get_window_list(void)
+{
+	return messageview_list;
+}
+
+gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
+		      gboolean all_headers)
+{
+	gchar *file;
+	MimeInfo *mimeinfo;
+
+	g_return_val_if_fail(msginfo != NULL, -1);
+
+	mimeinfo = procmime_scan_message(msginfo);
+	if (!mimeinfo) {
+		messageview_change_view_type(messageview, MVIEW_TEXT);
+		textview_show_error(messageview->textview);
+		return -1;
+	}
+
+	file = procmsg_get_message_file_path(msginfo);
+	if (!file) {
+		g_warning("can't get message file path.\n");
+		procmime_mimeinfo_free_all(mimeinfo);
+		messageview_change_view_type(messageview, MVIEW_TEXT);
+		textview_show_error(messageview->textview);
+		return -1;
+	}
+
+	if (messageview->msginfo != msginfo) {
+		procmsg_msginfo_free(messageview->msginfo);
+		messageview->msginfo = procmsg_msginfo_get_full_info(msginfo);
+	}
+	headerview_show(messageview->headerview, messageview->msginfo);
+
+	textview_set_all_headers(messageview->textview, all_headers);
+	textview_set_all_headers(messageview->mimeview->textview, all_headers);
+
+	if (mimeinfo->mime_type != MIME_TEXT &&
+	    mimeinfo->mime_type != MIME_TEXT_HTML) {
+		messageview_change_view_type(messageview, MVIEW_MIME);
+		mimeview_show_message(messageview->mimeview, mimeinfo, file);
+	} else {
+		messageview_change_view_type(messageview, MVIEW_TEXT);
+		textview_show_message(messageview->textview, mimeinfo, file);
+		procmime_mimeinfo_free_all(mimeinfo);
+	}
+
+	g_free(file);
+
+	return 0;
+}
+
+static void messageview_change_view_type(MessageView *messageview,
+					 MessageType type)
+{
+	TextView *textview = messageview->textview;
+	MimeView *mimeview = messageview->mimeview;
+
+	if (messageview->type == type) return;
+
+	if (type == MVIEW_MIME) {
+		gtkut_container_remove
+			(GTK_CONTAINER(GTK_WIDGET_PTR(messageview)),
+			 GTK_WIDGET_PTR(textview));
+		gtk_box_pack_start(GTK_BOX(messageview->vbox),
+				   GTK_WIDGET_PTR(mimeview), TRUE, TRUE, 0);
+		gtk_container_add(GTK_CONTAINER(mimeview->vbox),
+				  GTK_WIDGET_PTR(textview));
+	} else if (type == MVIEW_TEXT) {
+		gtkut_container_remove
+			(GTK_CONTAINER(GTK_WIDGET_PTR(messageview)),
+			 GTK_WIDGET_PTR(mimeview));
+		mimeview_clear(mimeview);
+
+		if (mimeview->vbox == GTK_WIDGET_PTR(textview)->parent)
+			gtkut_container_remove(GTK_CONTAINER(mimeview->vbox),
+			 		       GTK_WIDGET_PTR(textview));
+
+		gtk_box_pack_start(GTK_BOX(messageview->vbox),
+				   GTK_WIDGET_PTR(textview), TRUE, TRUE, 0);
+	} else
+		return;
+
+	messageview->type = type;
+}
+
+void messageview_clear(MessageView *messageview)
+{
+	procmsg_msginfo_free(messageview->msginfo);
+	messageview->msginfo = NULL;
+	messageview_change_view_type(messageview, MVIEW_TEXT);
+	headerview_clear(messageview->headerview);
+	textview_clear(messageview->textview);
+	mimeview_clear(messageview->mimeview);
+}
+
+void messageview_destroy(MessageView *messageview)
+{
+	GtkWidget *textview  = GTK_WIDGET_PTR(messageview->textview);
+	GtkWidget *imageview = GTK_WIDGET_PTR(messageview->mimeview->imageview);
+	GtkWidget *mimeview  = GTK_WIDGET_PTR(messageview->mimeview);
+
+	messageview_list = g_list_remove(messageview_list, messageview);
+
+	headerview_destroy(messageview->headerview);
+	textview_destroy(messageview->textview);
+	mimeview_destroy(messageview->mimeview);
+
+	procmsg_msginfo_free(messageview->msginfo);
+
+	g_free(messageview);
+
+	gtk_widget_unref(textview);
+	gtk_widget_unref(imageview);
+	gtk_widget_unref(mimeview);
+}
+
+void messageview_quote_color_set(void)
+{
+}
+
+void messageview_set_font(MessageView *messageview)
+{
+	textview_set_font(messageview->textview, NULL);
+}
+
+TextView *messageview_get_current_textview(MessageView *messageview)
+{
+	TextView *text = NULL;
+
+	if (messageview->type == MVIEW_TEXT)
+		text = messageview->textview;
+	else if (messageview->type == MVIEW_MIME) {
+		if (gtk_notebook_get_current_page
+			(GTK_NOTEBOOK(messageview->mimeview->notebook)) == 0)
+			text = messageview->textview;
+		else if (messageview->mimeview->type == MIMEVIEW_TEXT)
+			text = messageview->mimeview->textview;
+	}
+
+	return text;
+}
+
+MimeInfo *messageview_get_selected_mime_part(MessageView *messageview)
+{
+	if (messageview->type == MVIEW_MIME)
+		return mimeview_get_selected_part(messageview->mimeview);
+
+	return NULL;
+}
+
+void messageview_copy_clipboard(MessageView *messageview)
+{
+	TextView *text;
+
+	text = messageview_get_current_textview(messageview);
+	if (text) {
+		GtkTextView *textview = GTK_TEXT_VIEW(text->text);
+		GtkTextBuffer *buffer;
+		GtkClipboard *clipboard;
+
+		buffer = gtk_text_view_get_buffer(textview);
+		clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+		gtk_text_buffer_copy_clipboard(buffer, clipboard);
+	}
+}
+
+void messageview_select_all(MessageView *messageview)
+{
+	TextView *text;
+
+	text = messageview_get_current_textview(messageview);
+	if (text)
+		gtk_editable_select_region(GTK_EDITABLE(text->text), 0, -1);
+}
+
+void messageview_set_position(MessageView *messageview, gint pos)
+{
+	textview_set_position(messageview->textview, pos);
+}
+
+gboolean messageview_search_string(MessageView *messageview, const gchar *str,
+				   gboolean case_sens)
+{
+	return textview_search_string(messageview->textview, str, case_sens);
+	return FALSE;
+}
+
+gboolean messageview_search_string_backward(MessageView *messageview,
+					    const gchar *str,
+					    gboolean case_sens)
+{
+	return textview_search_string_backward(messageview->textview,
+					       str, case_sens);
+	return FALSE;
+}
+
+gboolean messageview_is_visible(MessageView *messageview)
+{
+	return messageview->visible;
+}
+
+void messageview_save_as(MessageView *messageview)
+{
+	gchar *filename = NULL;
+	MsgInfo *msginfo;
+	gchar *src, *dest;
+
+	if (!messageview->msginfo) return;
+	msginfo = messageview->msginfo;
+
+	if (msginfo->subject) {
+		Xstrdup_a(filename, msginfo->subject, return);
+		subst_for_filename(filename);
+	}
+	dest = filesel_select_file(_("Save as"), filename);
+	if (!dest) return;
+	if (is_file_exist(dest)) {
+		AlertValue aval;
+
+		aval = alertpanel(_("Overwrite"),
+				  _("Overwrite existing file?"),
+				  _("OK"), _("Cancel"), NULL);
+		if (G_ALERTDEFAULT != aval) return;
+	}
+
+	src = procmsg_get_message_file(msginfo);
+	if (copy_file(src, dest, TRUE) < 0) {
+		alertpanel_error(_("Can't save the file `%s'."),
+				 g_basename(dest));
+	}
+	g_free(src);
+}
+
+static void messageview_destroy_cb(GtkWidget *widget, MessageView *messageview)
+{
+	messageview_destroy(messageview);
+}
+
+static void messageview_size_allocate_cb(GtkWidget *widget,
+					 GtkAllocation *allocation)
+{
+	g_return_if_fail(allocation != NULL);
+
+	prefs_common.msgwin_width  = allocation->width;
+	prefs_common.msgwin_height = allocation->height;
+}
+
+static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
+			    MessageView *messageview)
+{
+	if (event && event->keyval == GDK_Escape && messageview->window)
+		gtk_widget_destroy(messageview->window);
+	return FALSE;
+}
+
+static void save_as_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	messageview_save_as(messageview);
+}
+
+static void print_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	gchar *cmdline;
+	gchar *p;
+
+	if (!messageview->msginfo) return;
+
+	cmdline = input_dialog(_("Print"),
+			       _("Enter the print command line:\n"
+				 "(`%s' will be replaced with file name)"),
+			       prefs_common.print_cmd);
+	if (!cmdline) return;
+	if (!(p = strchr(cmdline, '%')) || *(p + 1) != 's' ||
+	    strchr(p + 2, '%')) {
+		alertpanel_error(_("Print command line is invalid:\n`%s'"),
+				 cmdline);
+		g_free(cmdline);
+		return;
+	}
+
+	procmsg_print_message(messageview->msginfo, cmdline);
+	g_free(cmdline);
+}
+
+static void close_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	gtk_widget_destroy(messageview->window);
+}
+
+static void copy_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	messageview_copy_clipboard(messageview);
+}
+
+static void allsel_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	messageview_select_all(messageview);
+}
+
+static void search_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	message_search(messageview);
+}
+
+static void set_charset_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	const gchar *charset;
+
+	if (GTK_CHECK_MENU_ITEM(widget)->active) {
+		charset = conv_get_charset_str((CharSet)action);
+		g_free(messageview->forced_charset);
+		messageview->forced_charset = g_strdup(charset);
+		messageview_show(messageview, messageview->msginfo, FALSE);
+	}
+}
+
+static void view_source_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	SourceWindow *srcwin;
+
+	if (!messageview->msginfo) return;
+
+	srcwin = source_window_create();
+	source_window_show_msg(srcwin, messageview->msginfo);
+	source_window_show(srcwin);
+}
+
+static void show_all_header_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	MsgInfo *msginfo = messageview->msginfo;
+
+	if (!msginfo) return;
+	messageview->msginfo = NULL;
+	messageview_show(messageview, msginfo,
+			 GTK_CHECK_MENU_ITEM(widget)->active);
+	procmsg_msginfo_free(msginfo);
+}
+
+static void compose_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	PrefsAccount *ac = NULL;
+	FolderItem *item = NULL;
+
+	if (messageview->msginfo)
+		item = messageview->msginfo->folder;
+
+	if (item) {
+		ac = account_find_from_item(item);
+		if (ac && ac->protocol == A_NNTP &&
+		    FOLDER_TYPE(item->folder) == F_NEWS) {
+			compose_new(ac, item, item->path, NULL);
+			return;
+		}
+	}
+
+	compose_new(ac, item, NULL, NULL);
+}
+
+static void reply_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	GSList *mlist = NULL;
+	MsgInfo *msginfo;
+	gchar *text = NULL;
+	ComposeMode mode = (ComposeMode)action;
+
+	msginfo = messageview->msginfo;
+	mlist = g_slist_append(NULL, msginfo);
+
+	text = gtkut_editable_get_selection
+		(GTK_EDITABLE(messageview->textview->text));
+	if (text && *text == '\0') {
+		g_free(text);
+		text = NULL;
+	}
+
+	if (!COMPOSE_QUOTE_MODE(mode))
+		mode |= prefs_common.reply_with_quote
+			? COMPOSE_WITH_QUOTE : COMPOSE_WITHOUT_QUOTE;
+
+	switch (COMPOSE_MODE(mode)) {
+	case COMPOSE_REPLY:
+	case COMPOSE_REPLY_TO_SENDER:
+	case COMPOSE_REPLY_TO_ALL:
+	case COMPOSE_REPLY_TO_LIST:
+		compose_reply(msginfo, msginfo->folder, mode, text);
+		break;
+	case COMPOSE_FORWARD:
+		compose_forward(mlist, msginfo->folder, FALSE, text);
+		break;
+	case COMPOSE_FORWARD_AS_ATTACH:
+		compose_forward(mlist, msginfo->folder, TRUE, NULL);
+		break;
+	case COMPOSE_REDIRECT:
+		compose_redirect(msginfo, msginfo->folder);
+		break;
+	default:
+		g_warning("messageview.c: reply_cb(): invalid mode: %d\n",
+			  mode);
+	}
+
+	/* summary_set_marks_selected(summaryview); */
+	g_free(text);
+	g_slist_free(mlist);
+}
+
+static void reedit_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	MsgInfo *msginfo;
+
+	if (!messageview->msginfo) return;
+	msginfo = messageview->msginfo;
+	if (!msginfo->folder) return;
+	if (msginfo->folder->stype != F_OUTBOX &&
+	    msginfo->folder->stype != F_DRAFT &&
+	    msginfo->folder->stype != F_QUEUE) return;
+
+	compose_reedit(msginfo);
+}
+
+static void addressbook_open_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	addressbook_open(NULL);
+}
+
+static void add_address_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	MsgInfo *msginfo;
+	gchar *from;
+
+	if (!messageview->msginfo) return;
+	msginfo = messageview->msginfo;
+	Xstrdup_a(from, msginfo->from, return);
+	eliminate_address_comment(from);
+	extract_address(from);
+	addressbook_add_contact(msginfo->fromname, from, NULL);
+}
+
+static void create_filter_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	MessageView *messageview = (MessageView *)data;
+	gchar *header = NULL;
+	gchar *key = NULL;
+
+	if (!messageview->msginfo) return;
+
+	procmsg_get_filter_keyword(messageview->msginfo, &header, &key,
+				   (PrefsFilterType)action);
+	prefs_filter_open(messageview->msginfo, header);
+
+	g_free(header);
+	g_free(key);
+}
+
+static void about_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	about_show();
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Sylpheed User's Manual: Handling MIME types</TITLE>
+ <LINK HREF="sylpheed-14.html" REL=next>
+ <LINK HREF="sylpheed-12.html" REL=previous>
+ <LINK HREF="sylpheed.html#toc13" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-14.html">Next</A>
+<A HREF="sylpheed-12.html">Previous</A>
+<A HREF="sylpheed.html#toc13">Contents</A>
+<HR>
+<H2><A NAME="s13">13. Handling MIME types</A></H2>
+
+<H2><A NAME="ss13.1">13.1 How Sylpheed checks for Mime types</A>
+</H2>
+
+<P>
+<P>(Thanks to Adriaan Penning for writing this!)
+<P>
+<P>Two files, mime.types and mailcap, are involved in determining the mime type of an attachment, and the application associated with that mime type. The mime.types file is used to determine the mimetype of attachments you add when composing a message. The mime.types file consists of lines like:
+<P>
+<P>application/pdf                    pdf
+<P>
+<P>Sylpheed looks for this file in SYSCONFDIR (determined at compile time), /etc/ and $HOME/.sylpheed/ 
+<P>If this file doesn't exist or has the wrong format, every attachment will have       `application/octet-stream' as it's mime type, so the recipients mail client may not know what application to use to view the attachment.
+<P>To change the default application that sylpheed uses to view an attachment that      somebody mailed you, look for a mailcap file like /etc/mailcap or $HOME/.mailcap
+<P>For example, you can add a line like this in $HOME/.mailcap if you want to view pdf  files with xpdf:
+<P>
+<P>application/pdf ; xpdf %s
+<P>
+<HR>
+<A HREF="sylpheed-14.html">Next</A>
+<A HREF="sylpheed-12.html">Previous</A>
+<A HREF="sylpheed.html#toc13">Contents</A>
+</BODY>
+</HTML>

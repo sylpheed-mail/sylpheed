@@ -1,0 +1,359 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_PREREQ(2.50)
+AC_INIT(src/main.c)
+PACKAGE=sylpheed
+
+dnl version number
+MAJOR_VERSION=1
+MINOR_VERSION=1
+MICRO_VERSION=0
+INTERFACE_AGE=0
+BINARY_AGE=0
+EXTRA_VERSION=alpha1
+VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
+
+dnl set $target
+AC_CANONICAL_SYSTEM
+
+dnl
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+dnl AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
+dnl AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+AC_SUBST(PACKAGE)
+AC_SUBST(VERSION)
+
+dnl libtool versioning
+LT_RELEASE=$MAJOR_VERSION.$MINOR_VERSION
+LT_CURRENT=`expr $MICRO_VERSION - $INTERFACE_AGE`
+LT_REVISION=$INTERFACE_AGE
+LT_AGE=`expr $BINARY_AGE - $INTERFACE_AGE`
+AC_SUBST(LT_RELEASE)
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+
+dnl Specify a header configuration file
+AM_CONFIG_HEADER(config.h)
+
+AM_MAINTAINER_MODE
+
+dnl Checks for programs.
+dnl AC_ARG_PROGRAM
+AC_PROG_CC
+AC_ISC_POSIX
+AM_PROG_CC_STDC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_CPP
+dnl AC_PROG_RANLIB
+AM_PROG_LEX
+AC_PROG_YACC
+AM_PROG_LIBTOOL
+
+SYLPHEED_ACLOCAL_INCLUDE(ac)
+
+case "$target" in
+*-darwin*)
+	CFLAGS="$CFLAGS -traditional-cpp -fno-common"
+	;;
+esac
+
+dnl checks for iconv
+AM_ICONV
+
+dnl
+dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
+dnl
+syl_save_LIBS=$LIBS
+LIBS="$LIBS $GTK_LIBS"
+AC_CHECK_FUNCS(bind_textdomain_codeset)
+LIBS=$syl_save_LIBS
+
+dnl for gettext
+ALL_LINGUAS="bg cs da de el es et fr gl hr hu it ja ko nl pl pt_BR ro ru sk sl sr sv tr uk zh_CN zh_TW.Big5"
+GETTEXT_PACKAGE=sylpheed
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Define text domain.])
+dnl AM_GLIB_GNU_GETTEXT
+AM_GNU_GETTEXT
+dnl AC_CHECK_FUNC(gettext, AC_CHECK_LIB(intl, gettext))
+localedir='${prefix}/${DATADIRNAME}/locale'
+AC_SUBST(localedir)
+
+manualdir='${prefix}/${DATADIRNAME}/${PACKAGE}/manual'
+AC_SUBST(manualdir)
+faqdir='${prefix}/${DATADIRNAME}/${PACKAGE}/faq'
+AC_SUBST(faqdir)
+
+dnl Checks for libraries.
+PKG_CHECK_MODULES(GTK, \
+	[ glib-2.0 gthread-2.0 gdk-pixbuf-2.0 gtk+-2.0 ], ,
+	[ AC_MSG_ERROR(Test for GTK+-2.0 failed. See the file 'INSTALL' for help.) ])
+AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+
+dnl --disable-deprecated switch for GTK2 purification
+AC_ARG_ENABLE(deprecated, [  --disable-deprecated  Disable deprecated GTK functions. ],
+			  [GTK_CFLAGS="$GTK_CFLAGS -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"], [])
+
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+
+dnl Check for built-in image view support
+AC_ARG_ENABLE(gdk-pixbuf,
+	[  --disable-gdk-pixbuf    Do not use gdk-pixbuf],
+	[ac_cv_enable_gdk_pixbuf=$enableval], [ac_cv_enable_gdk_pixbuf=yes])
+
+if test "$ac_cv_enable_gdk_pixbuf" = yes; then
+	AC_DEFINE(HAVE_GDK_PIXBUF, 1, Define if you use gdk-pixbuf to support image view)
+fi
+
+dnl GPGME is used to support OpenPGP 
+AC_ARG_ENABLE(gpgme,
+	[  --enable-gpgme          Enable GnuPG support using GPGME [default=no]],
+	[ac_cv_enable_gpgme=$enableval], [ac_cv_enable_gpgme=no])
+AC_MSG_CHECKING([whether to use GPGME])
+if test $ac_cv_enable_gpgme = yes; then
+	AC_MSG_RESULT(yes)
+	AM_PATH_GPGME(0.3.10, AC_DEFINE(USE_GPGME, 1, Define if you use GPGME to support OpenPGP.),
+		      [use_gpgme=no
+		       ac_cv_enable_gpgme=no])
+else
+	AC_MSG_RESULT(no)
+fi
+
+dnl for JPilot support in addressbook
+dnl no check for libraries; these are dynamically loaded
+AC_ARG_ENABLE(jpilot,
+	[  --enable-jpilot         Enable JPilot support [default=no]],
+	[ac_cv_enable_jpilot=$enableval], [ac_cv_enable_jpilot=no])
+AC_MSG_CHECKING([whether to use JPilot])
+if test "$ac_cv_enable_jpilot" = yes; then
+	AC_MSG_RESULT(yes)
+	AC_CHECK_HEADERS(pi-args.h pi-appinfo.h pi-address.h,
+			 [ AC_DEFINE(USE_JPILOT, 1, Define if you want JPilot support in addressbook.) ],
+			 [ ac_cv_enable_jpilot=no ])
+	if test "$ac_cv_enable_jpilot" = no; then
+		AC_CHECK_HEADERS(libpisock/pi-args.h libpisock/pi-appinfo.h libpisock/pi-address.h,
+				 [ ac_cv_enable_jpilot=yes
+				   AC_DEFINE(USE_JPILOT, 1, Define if you want JPilot support in addressbook.) ])
+	fi
+	AC_MSG_CHECKING([whether jpilot is available])
+	AC_MSG_RESULT($ac_cv_enable_jpilot)
+
+	if test "$ac_cv_enable_jpilot" = yes; then
+		LIBS="$LIBS -lpisock"
+	fi
+else
+	AC_MSG_RESULT(no)
+fi
+
+dnl for LDAP support in addressbook
+dnl no check for libraries; dynamically loaded
+AC_ARG_ENABLE(ldap,
+	[  --enable-ldap           Enable LDAP support [default=no]],
+	[ac_cv_enable_ldap=$enableval], [ac_cv_enable_ldap=no])
+AC_MSG_CHECKING([whether to use LDAP])
+if test "$ac_cv_enable_ldap" = yes; then
+	AC_MSG_RESULT(yes)
+
+	dnl check for available libraries, and pull them in
+	AC_CHECK_LIB(resolv, res_query, LDAP_LIBS="$LDAP_LIBS -lresolv")
+	AC_CHECK_LIB(socket, bind, LDAP_LIBS="$LDAP_LIBS -lsocket")
+	AC_CHECK_LIB(nsl, gethostbyaddr, LDAP_LIBS="$LDAP_LIBS -lnsl")
+	AC_CHECK_LIB(lber, ber_get_tag, LDAP_LIBS="$LDAP_LIBS -llber",,
+		     $LDAP_LIBS)
+
+	dnl we need libpthread for sylpheed ldap,  until we find
+	dnl a better way to handle ldap requests asynchronously...
+	AC_CHECK_LIB(pthread, pthread_create, LDAP_LIBS="$LDAP_LIBS -lpthread")
+
+	AC_CHECK_HEADERS(ldap.h lber.h pthread.h,
+			 [ ac_cv_enable_ldap=yes ],
+			 [ ac_cv_enable_ldap=no ])
+
+	if test "$ac_cv_enable_ldap" = yes; then
+		AC_CHECK_LIB(ldap, ldap_open,
+			     [ ac_cv_enable_ldap=yes ],
+			     [ ac_cv_enable_ldap=no ],
+			     $LDAP_LIBS)
+	fi
+
+	AC_MSG_CHECKING([whether ldap library is available])
+	AC_MSG_RESULT($ac_cv_enable_ldap)
+
+	if test "$ac_cv_enable_ldap" = yes; then
+		CFLAGS="$CFLAGS `$GLIB_CONFIG --cflags gthread`"
+		LDAP_LIBS="$LDAP_LIBS -lldap `$GLIB_CONFIG --libs gthread`"
+		AC_DEFINE(USE_LDAP, 1, Define if you want LDAP support in addressbook.)
+		AC_SUBST(LDAP_LIBS)
+	fi
+else
+	AC_MSG_RESULT(no)
+fi
+
+dnl Check for OpenSSL
+AC_ARG_ENABLE(ssl,
+	[  --enable-ssl            Enable SSL support using OpenSSL [default=no]],
+	[ac_cv_enable_ssl=$enableval], [ac_cv_enable_ssl=no])
+AC_MSG_CHECKING([whether to use OpenSSL])
+if test $ac_cv_enable_ssl = yes; then
+	AC_MSG_RESULT(yes)
+	AC_MSG_CHECKING([if openssl is available])
+	LIBS="$LIBS -lssl -lcrypto"
+	AC_TRY_LINK([
+#include <openssl/opensslv.h>
+],	[ return OPENSSL_VERSION_NUMBER; ],
+	[ AC_MSG_RESULT(yes)
+	  AC_DEFINE(USE_SSL, 1, Define if you use OpenSSL to support SSL.) ],
+	[ AC_MSG_RESULT(no)
+	  LIBS="$ac_save_LIBS"
+	  ac_cv_enable_ssl=no ])
+else
+	AC_MSG_RESULT(no)
+fi
+
+dnl Check for X-Face support
+AC_ARG_ENABLE(compface,
+	[  --disable-compface      Do not use compface (X-Face)],
+	[ac_cv_enable_compface=$enableval], [ac_cv_enable_compface=yes])
+if test "$ac_cv_enable_compface" = yes; then
+	AC_CHECK_LIB(compface, uncompface,,[ac_cv_enable_compface=no])
+fi
+
+AC_CHECK_LIB(xpg4, setlocale)
+
+dnl for GThread support (currently disabled)
+dnl AC_ARG_ENABLE(threads,
+dnl	[  --enable-threads        Enable multithread support [default=no]],
+dnl	[use_threads=$enableval], [use_threads=no])
+
+AC_MSG_CHECKING([whether to use threads])
+if test x"$use_threads" = xyes ; then
+	AC_MSG_RESULT(yes)
+	if test ! -z `$GLIB_CONFIG --help 2>&1 |grep 'gthread'` ; then
+		CFLAGS="$CFLAGS `$GLIB_CONFIG --cflags gthread`"
+		LIBS="$LIBS `$GLIB_CONFIG --libs gthread`"
+		AC_DEFINE(USE_THREADS, 1, Whether to use multithread or not)
+	else
+		AC_MSG_ERROR([Sylpheed requires GThread from GLib to use threading.])
+	fi
+else
+	AC_MSG_RESULT(no)
+fi
+
+dnl check for IPv6 option
+AC_ARG_ENABLE(ipv6,
+	[  --disable-ipv6          Disable IPv6 support],
+	[ac_cv_enable_ipv6=$enableval], [ac_cv_enable_ipv6=yes])
+
+dnl automated checks for IPv6 support.
+AC_MSG_CHECKING([whether to use IPv6])
+if test x"$ac_cv_enable_ipv6" = xyes; then
+	AC_MSG_RESULT(yes)
+	AC_MSG_CHECKING([for IPv6 support])
+	AC_CACHE_VAL(ac_cv_ipv6,[
+		AC_TRY_COMPILE([#define INET6
+				#include <sys/types.h>
+				#include <netinet/in.h>],
+			[int x = IPPROTO_IPV6; struct in6_addr a;],
+			ac_cv_ipv6=yes, ac_cv_ipv6=no)
+	])
+	AC_MSG_RESULT($ac_cv_ipv6)
+	if test $ac_cv_ipv6 = yes; then
+		AC_DEFINE(INET6, 1, Define if you want IPv6 support.)
+	else
+		AC_MSG_WARN(*** IPv6 will not be supported ***)
+		ac_cv_enable_ipv6=no
+	fi
+else
+	AC_MSG_RESULT(no)
+fi
+
+dnl Check for d_type member in struct dirent
+AC_MSG_CHECKING([whether struct dirent has d_type member])
+AC_CACHE_VAL(ac_cv_dirent_d_type,[
+	AC_TRY_COMPILE([#include <dirent.h>],
+		       [struct dirent d; d.d_type = DT_REG;],
+		       ac_cv_dirent_d_type=yes, ac_cv_dirent_d_type=no)
+])
+AC_MSG_RESULT($ac_cv_dirent_d_type)
+if test $ac_cv_dirent_d_type = yes; then
+	AC_DEFINE(HAVE_DIRENT_D_TYPE, 1,
+		  Define if `struct dirent' has `d_type' member.)
+fi
+
+
+dnl Checks for header files.
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS(fcntl.h sys/file.h unistd.h paths.h \
+		 sys/param.h sys/utsname.h sys/select.h \
+		 wchar.h wctype.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_OFF_T
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_STRUCT_TM
+
+dnl AC_CHECK_TYPE(wint_t, unsigned int) does not work because wint_t
+dnl may be defined only in wchar.h (this happens with gcc-2.96).
+dnl So we need to use this extended macro.
+SYLPHEED_CHECK_TYPE(wint_t, unsigned int,
+[
+#if HAVE_WCHAR_H
+#include <wchar.h>
+#endif
+], Define to `unsigned int' if <stddef.h> or <wchar.h> doesn't define.)
+
+GNUPG_CHECK_TYPEDEF(u32, HAVE_U32_TYPEDEF, Used to test for a u32 typedef)
+AC_CHECK_SIZEOF(unsigned short, 2)
+AC_CHECK_SIZEOF(unsigned int, 4)
+AC_CHECK_SIZEOF(unsigned long, 4)
+
+dnl Checks for library functions.
+AC_FUNC_ALLOCA
+AC_CHECK_FUNCS(gethostname mkdir mktime socket strstr strchr \
+	       wcsstr wcswcs iswalnum iswspace towlower \
+	       wcslen wcscpy wcsncpy \
+	       uname flock lockf inet_aton inet_addr \
+	       fchmod mkstemp)
+
+AC_OUTPUT([
+Makefile
+sylpheed.spec
+intl/Makefile
+ac/Makefile
+po/Makefile.in
+src/version.h
+src/Makefile
+faq/Makefile
+faq/de/Makefile
+faq/en/Makefile
+faq/es/Makefile
+faq/fr/Makefile
+faq/it/Makefile
+manual/Makefile
+manual/en/Makefile
+manual/ja/Makefile
+])
+
+dnl Output the configuration summary
+echo ""
+echo "$PACKAGE $VERSION"
+echo ""
+echo "image support : $ac_cv_enable_gdk_pixbuf"
+echo "GnuPG         : $ac_cv_enable_gpgme"
+echo "JPilot        : $ac_cv_enable_jpilot"
+echo "LDAP          : $ac_cv_enable_ldap"
+echo "OpenSSL       : $ac_cv_enable_ssl"
+echo "iconv         : $am_cv_func_iconv"
+echo "compface      : $ac_cv_enable_compface"
+echo "IPv6          : $ac_cv_enable_ipv6"
+echo ""
+echo "The binary will be installed in $prefix/bin"
+echo ""
+echo "Configure finished, type 'make' to build."

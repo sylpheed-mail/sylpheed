@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Preguntas Más Frecuentes (FAQ) de Sylpheed: Instalación y Configuración</TITLE>
+ <LINK HREF="sylpheed-faq-3.html" REL=next>
+ <LINK HREF="sylpheed-faq-1.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc2" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-faq-3.html">Página siguiente</A>
+<A HREF="sylpheed-faq-1.html">Página anterior</A>
+<A HREF="sylpheed-faq.html#toc2">Índice general</A>
+<HR>
+<H2><A NAME="s2">2. Instalación y Configuración</A></H2>
+
+<H2><A NAME="ss2.1">2.1 ¿Qué es necesario para compilar Sylpheed?</A>
+</H2>
+
+<P>R.: Cualquier UNIX que siga el estandar POSIX o similar,
+(por ejemplo: Linux, FreeBSD, Solaris),
+GTK+ 1.2.6 o posterior y un compilador ANSI C reciente 
+(gcc 2.7.2.3 debería servir)
+<P>     
+Nota: se sabe que Sun C no sirve para compilar Sylpheed.
+<P>Opcionalmente:
+<UL>
+<LI> Imlib o gdk-pixbuf (para el visor de imágenes interno)</LI>
+<LI> libcompface (para X-Face)</LI>
+<LI> libjconv (para I18N)</LI>
+<LI> GPGME (para GnuPG)</LI>
+<LI> el equivalente de GTK+-devel y Xfree86-devel si no <CODE>./configure</CODE> fallará.</LI>
+</UL>
+<H2><A NAME="ss2.2">2.2 ¿Cómo configuro Sylpheed?</A>
+</H2>
+
+<P>R.: Cuando ejecute Sylpheed por primera vez le preguntará donde quiere almacenar
+sus buzones de correo. El directorio por defecto es <CODE>~/Mail</CODE>, pero puede cambiarlo
+a cualquier otro que desee mientras sea un nombre de directorio válido.
+<H2><A NAME="ss2.3">2.3 ¿Cómo configuro una cuenta?</A>
+</H2>
+
+<P>R.: Después de cargar Sylpheed la primera vez se puede añadir una cuenta de correo
+pulsando en el menú de ``Configuración``, seleccionando la opción 
+``Crear nueva cuenta...``
+y rellenando los campos del cuadro de diálogo con los valores adecuados.
+<H2><A NAME="ss2.4">2.4 ¿Cuántas cuentas puedo configurar en Sylpheed?</A>
+</H2>
+
+<P>R.: El número es ilimitado. El límite se alcanza cuando su ordenador deje de responder.
+<H2><A NAME="ss2.5">2.5 ¿Por qué Sylpheed no borra mis correos cuando pulso ``Borrar``? ¿O cuando establezco</A>
+un filtro y Sylpheed no filtra? ¿O muevo correo a una carpeta diferente y no se mueve?</H2>
+
+<P>R.: Tienes que pulsar el botón ``Ejecutar``. Otra solución consiste en marcar la casilla
+``Ejecutar comandos inmediatamente`` en las preferencias de configuración 
+(``Preferencias comunes &gt; Interfaz``).
+<H2><A NAME="ss2.6">2.6 ¿Puedo establecer direcciones o puertos especiales para mi servidor de correo/noticias?</A>
+</H2>
+
+<P>R.: Si, puede. En la configuración de cada cuenta se pueden especificar los puertos concretos
+que desee utilizar.
+<H2><A NAME="ss2.7">2.7 ¿Tiene Sylpheed opciones para separar en hilos los mensajes?</A>
+</H2>
+
+<P>R.: Si. Se puede activar o desactivar en el menú ``Resumen`` seleccionando 
+``Vista jerárquica`` o pulsando "Ctrl+T".
+<H2><A NAME="ss2.8">2.8 ¿Puedo crear varios niveles de subcarpetas para almacenar el correo?</A>
+</H2>
+
+<P>R.: Si, no hay ningún problema.
+<H2><A NAME="ss2.9">2.9 ¿Por qué no esta Sylpheed enviando mis correos?</A>
+</H2>
+
+<P>R.: Necesita crear al menos una cuenta para poder enviar correo.
+<H2><A NAME="ss2.10">2.10 ¿Cómo aplico un parche después de haberlo descargado? </A>
+</H2>
+
+<P>R.: Copie el parche al directorio de Sylpheed. Aplíquelo con la orden:
+<P><CODE>% patch -p0 &lt; nombre-del-parche.patch</CODE>
+<P>O, si el parche esta comprimido con gzip:
+<P><CODE>%  gzip -dc nombre-del-parche.patch.gz | patch -p0</CODE>
+<P>Después de esto deberá ejecutar <CODE>./autogen.sh</CODE> y eliminar el fichero
+<CODE>./config.cache</CODE> generado (a menos que quiera instalar el programa bajo
+<CODE>/usr/local</CODE>). Ejecute <CODE>./configure</CODE> con las opciones deseadas y
+una vez finalizado, ejecute <CODE>make</CODE>. (Estas instrucciones son las que se
+encuentran en la Página de Parches de Sylpheed).
+<H2><A NAME="ss2.11">2.11 ¿Cómo puedo compilar el soporte para los dibujos compface?</A>
+</H2>
+
+<P>R.: Deberá tener instalado el paquete en el que esté incluido <CODE>libcompface</CODE>
+(normalmente denominado <CODE>faces</CODE>), de manera que esté disponible para compilar con Sylpheed.
+<H2><A NAME="ss2.12">2.12 ¿Cómo puedo crear mi propia imagen compface?</A>
+</H2>
+
+<P>R.: Dentro del paquete <CODE>faces</CODE> existe el programa <CODE>xmb2icon</CODE> (un guión de shell)
+que convierte un fichero xbm de 48x48 pixels al formato adecuado para compface. Para conseguir una
+imagen en formato xbm puede utilizar un programa gráfico como el Gimp.
+Gracias a Jeff Daikiri está disponible un curso completo en línea sobre esto, visite 
+<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A> para más detalles.
+<H2><A NAME="ss2.13">2.13 ¿Cómo le puedo indicar a mi navegador, cliente de noticias u otro programa que</A>
+utilize Sylpheed como cliente de correo?</H2>
+
+<P>R.: En la sección de configuración del programa correspondiente escriba:
+<CODE> sylpheed --compose</CODE>
+<H2><A NAME="ss2.14">2.14 ¿Cómo puedo habilitar el soporte de GPG en Sylpheed?</A>
+</H2>
+
+<P>R.: Cuando compile Sylpheed asegúrese de añadir la opción <CODE>--enable-gpgme</CODE> al
+comando <CODE>./configure<CODE>Cuando la compilación termine correctamente aparecerá en el diálogo de Preferencias comunes una sección de "Privacidad".</CODE></CODE>
+<H2><A NAME="ss2.15">2.15 Mutt no reconoce la estructura de carpetas MH de Sylpheed</A>
+</H2>
+
+<P>R.:  Deberá hacer <CODE>touch .xmhcache</CODE> en todas y cada una de las cada carpetas MH, y Mutt funcionará correctamente.
+<H2><A NAME="ss2.16">2.16 Sylpheed provoca una violación de segmento cuando veo un fichero GIF</A>
+</H2>
+
+<P>R.: Si sucede esto se puede solucionar fácilmente añadiendo lo siguiente al
+fichero /etc/mime.types :
+<CODE>image/gif         gif</CODE>
+<HR>
+<A HREF="sylpheed-faq-3.html">Página siguiente</A>
+<A HREF="sylpheed-faq-1.html">Página anterior</A>
+<A HREF="sylpheed-faq.html#toc2">Índice general</A>
+</BODY>
+</HTML>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>Sylpheed FAQ: Sylpheed FAQ - Installation and Configuration</TITLE>
+ <LINK HREF="sylpheed-faq-3.html" REL=next>
+ <LINK HREF="sylpheed-faq-1.html" REL=previous>
+ <LINK HREF="sylpheed-faq.html#toc2" REL=contents>
+</HEAD>
+<BODY>
+<A HREF="sylpheed-faq-3.html">Next</A>
+<A HREF="sylpheed-faq-1.html">Previous</A>
+<A HREF="sylpheed-faq.html#toc2">Contents</A>
+<HR>
+<H2><A NAME="s2">2. Sylpheed FAQ - Installation and Configuration</A></H2>
+
+<H2><A NAME="ss2.1">2.1 Q01  What does it take to compile Sylpheed?</A>
+</H2>
+
+<P>A.   Any POSIX compliant UNIX or similar OS eg. Linux,
+FreeBSD, Solaris
+GTK+ 1.2.6 or later
+A recent ANSI C compiler (gcc 2.7.2.3 should also
+work)
+Note: it is reported that Sun C will not compile
+Sylpheed.
+Optionally:
+<UL>
+<LI>Imlib or gdk-pixbuf (for built-in image view)</LI>
+<LI>libcompface (for X-Face)</LI>
+<LI>libjconv (for I18N)</LI>
+<LI>GPGME (for GnuPG)</LI>
+<LI>the equivalent of GTK+-devel and Xfree86-devel.</LI>
+</UL>
+
+Otherwise ./configure will fail.
+<H2><A NAME="ss2.2">2.2 Q02 How do I set up Sylpheed?</A>
+</H2>
+
+<P>A.   When you run Sylpheed for the first time, it will
+ask you where you want to store your mailboxes. The
+default is &lt;homedir&gt;/Mail. You can change this to
+anything you like as long as it is a valid directory
+name.
+<P>Please note: When Sylpheed is executed for the first time, it automatically creates the configuration files under $HOME/.sylpheed/, and asks you the location of mailbox. The default is $HOME/Mail. If some files which are non-MH format already exist on the directory, you will have to specify another location.
+<H2><A NAME="ss2.3">2.3 Q03  How do I set up an account?</A>
+</H2>
+
+<P>A.   After loading Sylpheed for the first time, you can
+add an e-mail account by clicking the
+"Configuration" menu. Select the option "Create new
+account" and fill in the appropriate fields.
+<H2><A NAME="ss2.4">2.4 Q04  How many accounts can I set up in Sylpheed?</A>
+</H2>
+
+<P>A.   The number is unlimited. The limit is reached when
+your computer stops responding.
+<H2><A NAME="ss2.5">2.5 Q05 Why does Sylpheed not delete my mails when I press "delete"? I set a filter, and Sylpheed does not filter. I moved a mail to a different mailbox and it did not move.</A>
+</H2>
+
+<P>A.   You have to click the "execute" button.
+The other solution: in the configuration settings
+(common preferences &gt; interface tab) you have to
+check the "execute commands immediately" box.
+<H2><A NAME="ss2.6">2.6 Q06  Can I set up special addresses/ports for my mailserver / newsserver?</A>
+</H2>
+
+<P>A.   Yes, you can. In the configuration per account you
+can specify the exact port addresses you want to use.
+<H2><A NAME="ss2.7">2.7 Q07  Does Sylpheed have options for threading messages?</A>
+</H2>
+
+<P>A.   Yes. You can switch it on and off in the Summary
+Menu, just select "Thread View" or press Ctrl+T.
+<H2><A NAME="ss2.8">2.8 Q08  Can I create multiple levels of subfolders to store mail?</A>
+</H2>
+
+<P>A.   Absolutely. This is no problem.
+<H2><A NAME="ss2.9">2.9 Q09  Why isn't Sylpheed sending my mail out?</A>
+</H2>
+
+<P>A.   You need to create at least one account in order to
+send. (This is a wonderful gotcha on LAN installs
+with only a local mailbox feed).
+<H2><A NAME="ss2.10">2.10 Q10  How do I apply a patch after downloading it?</A>
+</H2>
+
+<P>A.   Copy patch to sylpheed directory
+Apply the patch:
+<P><CODE>% patch -p0 &lt; some.patch</CODE>
+<P>Or, if it's gzipped:
+<P><CODE>% gzip -dc some.patch.gz | patch -p0</CODE>
+<P>Run <CODE>./autogen.sh</CODE>, remove the generated <CODE>/config.cache</CODE>
+file (unless you want to install in prefix
+<CODE>/usr/local</CODE>).
+Run <CODE>./configure</CODE> with the appropriate options and
+then <CODE>make</CODE>.
+(Text as found on the Sylpheed patches page.)
+<H2><A NAME="ss2.11">2.11 Q11  How do I compile in support for compface pictures?</A>
+</H2>
+
+<P>A.   You have to have a package called <CODE>libcompface</CODE>
+installed, so this is available for compiling into
+Sylpheed.
+<H2><A NAME="ss2.12">2.12 Q12  How do I make my own compface image?</A>
+</H2>
+
+<P>A.   The faces package contains a program called xbm2ikon script,
+which converts a 48x48 xbm to the format suitable for
+compface. Thanks to Jeff Dairiki, you can have a complete online course in this. Visit 
+<A HREF="http://www.dairiki.org/xface/">this page</A> for the details.
+<H2><A NAME="ss2.13">2.13 Q13 How can I tell my browser/newsclient/other program to use Sylpheed as e-mail program?</A>
+</H2>
+
+<P>A.  In the settings part of the program, write
+<CODE>sylpheed --compose</CODE>
+<H2><A NAME="ss2.14">2.14 Q14 How do I enable GPG support in Sylpheed?</A>
+</H2>
+
+<P>A.  When compiling Sylpheed, make sure you add <CODE>--enable-gpgme</CODE> in the ./configure command.
+When that completes successfully, there is a "privacy" section in the Common preferences.
+<H2><A NAME="ss2.15">2.15 Q15 Mutt does not recognize Sylpheed's MH structure</A>
+</H2>
+
+<P>A. For this to work you need to use the "touch" command in every MH folder. "touch" the file .xmhcache and Mutt should do just fine.
+<H2><A NAME="ss2.16">2.16 Q16 Viewing a GIF file within Sylpheed causes a segmentation fault.</A>
+</H2>
+
+<P>A. In case this happens, you can easily fix that by adding the following to /etc/mime.types:
+<P><CODE>image/gif              gif</CODE>
+<H2><A NAME="ss2.17">2.17 Q17 How can I make Sylpheed notify me when new mail arrives?</A>
+</H2>
+
+<P>A. For this you can do several things:
+<P>* Look at the Sylpheed patch page at 
+<A HREF="http://www.teledix.net/sylpheed/">Teledix.net</A> for a new mail patch.
+<P>* Download Gkrellm or a similar program that is able to notify you of new incoming mail. Gkrellm is available at 
+<A HREF="http://www.gkrellm.net">the Gkrellm page</A><P>
+<HR>
+<A HREF="sylpheed-faq-3.html">Next</A>
+<A HREF="sylpheed-faq-1.html">Previous</A>
+<A HREF="sylpheed-faq.html#toc2">Contents</A>
+</BODY>
+</HTML>
