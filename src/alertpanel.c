@@ -235,10 +235,13 @@ static void alertpanel_create(const gchar *title,
 	gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
 	if (!font_desc) {
-		gchar *fontstr = prefs_common.titlefont
-			? prefs_common.titlefont
-			: DEFAULT_TITLE_FONT;
-		font_desc = pango_font_description_from_string(fontstr);
+		gint size;
+
+		size = pango_font_description_get_size(label->style->font_desc);
+		font_desc = pango_font_description_new();
+		pango_font_description_set_weight(font_desc, PANGO_WEIGHT_BOLD);
+		pango_font_description_set_size
+			(font_desc, size * PANGO_SCALE_XX_LARGE);
 	}
 	if (font_desc)
 		gtk_widget_modify_font(label, font_desc);
