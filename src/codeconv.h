@@ -169,34 +169,11 @@ struct _CodeConverter
 #define C_INTERNAL		C_UTF_8
 #define CS_INTERNAL		CS_UTF_8
 
-void conv_jistoeuc	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_euctojis	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_sjistoeuc	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_anytoeuc	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_anytojis	(gchar *outbuf, gint outlen, const gchar *inbuf);
-
-void conv_jistoutf8	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_sjistoutf8	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_euctoutf8	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_anytoutf8	(gchar *outbuf, gint outlen, const gchar *inbuf);
-
-void conv_unreadable_eucjp	(gchar *str);
-void conv_unreadable_8bit	(gchar *str);
-void conv_unreadable_latin	(gchar *str);
-void conv_unreadable_locale	(gchar *str);
-
 //void conv_mb_alnum(gchar *str);
 
 CharSet conv_guess_ja_encoding(const gchar *str);
 
-void conv_jistodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_sjistodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_euctodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_utf8todisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_anytodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_ustodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_latintodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_noconv	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_localetodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 
 CodeConverter *conv_code_converter_new	(const gchar	*src_charset);
