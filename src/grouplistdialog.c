@@ -40,7 +40,6 @@
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkstock.h>
 #include <string.h>
-#include <fnmatch.h>
 
 #include "intl.h"
 #include "grouplistdialog.h"
@@ -317,7 +316,7 @@ static GtkCTreeNode *grouplist_create_parent(const gchar *name,
 	node = gtk_ctree_insert_node(GTK_CTREE(ctree), parent, node,
 				     cols, 0, NULL, NULL, NULL, NULL,
 				     FALSE, FALSE);
-	if (parent && fnmatch(pattern, parent_name, 0) != 0)
+	if (parent && g_pattern_match_simple(pattern, parent_name) == FALSE)
 		gtk_ctree_expand(GTK_CTREE(ctree), parent);
 	gtk_ctree_node_set_selectable(GTK_CTREE(ctree), node, FALSE);
 
@@ -369,7 +368,8 @@ static GtkCTreeNode *grouplist_create_branch(NewsGroupInfo *ginfo,
 		node = gtk_ctree_insert_node(GTK_CTREE(ctree), parent, node,
 					     cols, 0, NULL, NULL, NULL, NULL,
 					     TRUE, FALSE);
-		if (parent && fnmatch(pattern, parent_name, 0) != 0)
+		if (parent &&
+		    g_pattern_match_simple(pattern, parent_name) == FALSE)
 			gtk_ctree_expand(GTK_CTREE(ctree), parent);
 	}
 	gtk_ctree_node_set_selectable(GTK_CTREE(ctree), node, TRUE);
@@ -385,6 +385,7 @@ static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
 {
 	GSList *cur;
 	GtkCTreeNode *node;
+	GPatternSpec *pspec;
 
 	if (locked) return;
 	locked = TRUE;
@@ -422,10 +423,12 @@ static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
 	g_signal_handlers_block_by_func(G_OBJECT(ctree),
 					G_CALLBACK(ctree_selected), NULL);
 
+	pspec = g_pattern_spec_new(pattern);
+
 	for (cur = group_list; cur != NULL ; cur = cur->next) {
 		NewsGroupInfo *ginfo = (NewsGroupInfo *)cur->data;
 
-		if (fnmatch(pattern, ginfo->name, 0) == 0) {
+		if (g_pattern_match_string(pspec, ginfo->name)) {
 			node = grouplist_create_branch(ginfo, pattern);
 			if (g_slist_find_custom(subscribed, ginfo->name,
 						(GCompareFunc)g_strcasecmp)
@@ -433,6 +436,8 @@ static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
 				gtk_ctree_select(GTK_CTREE(ctree), node);
 		}
 	}
+
+	g_pattern_spec_free(pspec);
 
 	g_signal_handlers_unblock_by_func(G_OBJECT(ctree),
 					  G_CALLBACK(ctree_selected), NULL);
