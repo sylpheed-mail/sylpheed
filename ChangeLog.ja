@@ -1,3 +1,15 @@
+2005-02-22
+
+	* src/codeconv.c:
+	  conv_anytodisp(): 変換された文字列が有効な UTF-8 かどうかを
+	  チェック。
+	  conv_localetodisp(): conv_iconv_strdup() が失敗したら有効な UTF-8
+	  に変換するようにした。
+	  conv_unmime_header_overwrite()
+	  conv_unmime_header(): エンコードされていない文字列を locale
+	  エンコーディングを使用して変換を試みるようにした(Egor Yu. Shkerin
+	  さん、 Oliver Lehmann さん thanks)。
+
 2005-02-21
 
 	* version 1.9.3

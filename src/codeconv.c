@@ -797,6 +797,8 @@ void conv_utf8todisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 static void conv_anytodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
 	conv_anytoutf8(outbuf, outlen, inbuf);
+	if (g_utf8_validate(outbuf, -1, NULL) != TRUE)
+		conv_unreadable_8bit(outbuf);
 }
 
 static void conv_ustodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
@@ -815,7 +817,7 @@ void conv_localetodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
 	} else
-		strncpy2(outbuf, inbuf, outlen);
+		conv_utf8todisp(outbuf, outlen, inbuf);
 }
 
 static void conv_noconv(gchar *outbuf, gint outlen, const gchar *inbuf)
@@ -1545,40 +1547,33 @@ void conv_unmime_header_overwrite(gchar *str)
 {
 	gchar *buf;
 	gint buflen;
-	CharSet cur_charset;
 
-	cur_charset = conv_get_locale_charset();
+	buflen = strlen(str) * 2 + 1;
+	Xalloca(buf, buflen, return);
 
-	if (cur_charset == C_EUC_JP) {
-		buflen = strlen(str) * 2 + 1;
-		Xalloca(buf, buflen, return);
+	if (conv_get_locale_charset() == C_EUC_JP)
 		conv_anytodisp(buf, buflen, str);
-		unmime_header(str, buf);
-	} else {
-		buflen = strlen(str) + 1;
-		Xalloca(buf, buflen, return);
-		unmime_header(buf, str);
-		strncpy2(str, buf, buflen);
-	}
+	else
+		conv_localetodisp(buf, buflen, str);
+
+	unmime_header(str, buf);
 }
 
 void conv_unmime_header(gchar *outbuf, gint outlen, const gchar *str,
 			const gchar *charset)
 {
-	CharSet cur_charset;
+	gchar *buf;
+	gint buflen;
 
-	cur_charset = conv_get_locale_charset();
+	buflen = strlen(str) * 2 + 1;
+	Xalloca(buf, buflen, return);
 
-	if (cur_charset == C_EUC_JP) {
-		gchar *buf;
-		gint buflen;
-
-		buflen = strlen(str) * 2 + 1;
-		Xalloca(buf, buflen, return);
+	if (conv_get_locale_charset() == C_EUC_JP)
 		conv_anytodisp(buf, buflen, str);
-		unmime_header(outbuf, buf);
-	} else
-		unmime_header(outbuf, str);
+	else
+		conv_localetodisp(buf, buflen, str);
+
+	unmime_header(outbuf, buf);
 }
 
 #define MAX_LINELEN		76

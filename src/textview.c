@@ -1247,11 +1247,6 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 		    !g_strcasecmp(header->name, "Cc"))
 			unfold_line(header->body);
 
-#if 0
-		if (textview->text_is_mb == TRUE)
-			conv_unreadable_locale(header->body);
-#endif
-
 		if (prefs_common.enable_color &&
 		    (!strncmp(header->name, "X-Mailer", 8) ||
 		     !strncmp(header->name, "X-Newsreader", 12)) &&
