@@ -24,9 +24,11 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gdk/gdktypes.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkdisplay.h>
 #ifdef GDK_WINDOWING_X11
-#  include <gdk/gdkx.h>  /* GDK_DISPLAY() */
+#  include <gdk/gdkx.h>
 #endif /* GDK_WINDOWING_X11 */
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwidget.h>
@@ -48,7 +50,7 @@
 #include "manage_window.h"
 #include "utils.h"
 
-static int grab_all = 0;
+static gboolean grab_all = FALSE;
 
 static gboolean pass_ack;
 static gchar *last_pass = NULL;
@@ -123,37 +125,37 @@ passphrase_mbox(const gchar *uid_hint, const gchar *pass_hint, gint prev_bad)
     g_signal_connect(G_OBJECT(cancel_button), "clicked",
                      G_CALLBACK(passphrase_cancel_cb), NULL);
 
-    if (grab_all)
-        g_object_set (G_OBJECT(window), "type", GTK_WINDOW_POPUP, NULL);
     gtk_window_set_position (GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     if (grab_all)   
         gtk_window_set_policy (GTK_WINDOW(window), FALSE, FALSE, TRUE);
     
     gtk_widget_show_all(window);
 
-    /* don't use XIM on entering passphrase */
-    gtkut_editable_disable_im(GTK_EDITABLE(pass_entry));
-
     if (grab_all) {
+        /* make sure that window is viewable
+	 * FIXME: this is still not enough */
+        gtk_widget_show_now(window);
+	gdk_flush();
 #ifdef GDK_WINDOWING_X11
-        //XGrabServer(GDK_DISPLAY());
+	gdk_x11_display_grab(gdk_display_get_default());
 #endif /* GDK_WINDOWING_X11 */
-        if ( gdk_pointer_grab ( window->window, TRUE, 0,
-                                NULL, NULL, GDK_CURRENT_TIME)) {
+        if (gdk_pointer_grab(window->window, TRUE, 0,
+                             window->window, NULL, GDK_CURRENT_TIME)) {
 #ifdef GDK_WINDOWING_X11
-            //XUngrabServer ( GDK_DISPLAY() );
+            gdk_x11_display_ungrab(gdk_display_get_default());
 #endif /* GDK_WINDOWING_X11 */
-            g_warning ("OOPS: Could not grab mouse\n");
-            gtk_widget_destroy (window);
+            g_warning("OOPS: Could not grab mouse\n");
+            gtk_widget_destroy(window);
             return NULL;
         }
-        if ( gdk_keyboard_grab( window->window, FALSE, GDK_CURRENT_TIME )) {
-            gdk_pointer_ungrab (GDK_CURRENT_TIME);
+        if (gdk_keyboard_grab(window->window, FALSE, GDK_CURRENT_TIME)) {
+            gdk_display_pointer_ungrab(gdk_display_get_default(),
+			 	       GDK_CURRENT_TIME);
 #ifdef GDK_WINDOWING_X11
-            //XUngrabServer ( GDK_DISPLAY() );
+            gdk_x11_display_ungrab(gdk_display_get_default());
 #endif /* GDK_WINDOWING_X11 */
-            g_warning ("OOPS: Could not grab keyboard\n");
-            gtk_widget_destroy (window);
+            g_warning("OOPS: Could not grab keyboard\n");
+            gtk_widget_destroy(window);
             return NULL;
         }
     }
@@ -161,11 +163,12 @@ passphrase_mbox(const gchar *uid_hint, const gchar *pass_hint, gint prev_bad)
     gtk_main();
 
     if (grab_all) {
+        gdk_display_keyboard_ungrab(gdk_display_get_default(),
+				    GDK_CURRENT_TIME);
+        gdk_display_pointer_ungrab(gdk_display_get_default(), GDK_CURRENT_TIME);
 #ifdef GDK_WINDOWING_X11
-        //XUngrabServer (GDK_DISPLAY());
+        gdk_x11_display_ungrab(gdk_display_get_default());
 #endif /* GDK_WINDOWING_X11 */
-        gdk_pointer_ungrab (GDK_CURRENT_TIME);
-        gdk_keyboard_ungrab (GDK_CURRENT_TIME);
         gdk_flush();
     }
 
