@@ -1936,16 +1936,17 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		msgview = summaryview->messageview;
 
 		summaryview->displayed = row;
-		if (!messageview_is_visible(msgview))
+		if (!messageview_is_visible(msgview)) {
 			main_window_toggle_message_view(summaryview->mainwin);
+			GTK_EVENTS_FLUSH();
+		}
 		val = messageview_show(msgview, msginfo, all_headers);
 		if (msgview->type == MVIEW_TEXT ||
 		    (msgview->type == MVIEW_MIME &&
 		     (GTK_CLIST(msgview->mimeview->ctree)->row_list == NULL ||
 		      gtk_notebook_get_current_page
-			(GTK_NOTEBOOK(msgview->mimeview->notebook)) == 0)))
+			(GTK_NOTEBOOK(msgview->notebook)) == 0)))
 			gtk_widget_grab_focus(summaryview->ctree);
-		GTK_EVENTS_FLUSH();
 		gtkut_ctree_node_move_if_on_the_edge(ctree, row);
 	}
 
@@ -3819,7 +3820,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	messageview = summaryview->messageview;
 	if (messageview->type == MVIEW_MIME &&
 	    gtk_notebook_get_current_page
-		(GTK_NOTEBOOK(messageview->mimeview->notebook)) == 1)
+		(GTK_NOTEBOOK(messageview->notebook)) == 1)
 		textview = messageview->mimeview->textview;
 	else
 		textview = messageview->textview;

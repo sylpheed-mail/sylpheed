@@ -40,12 +40,11 @@ typedef enum
 
 struct _MimeView
 {
-	GtkWidget *notebook;
-	GtkWidget *vbox;
-
 	GtkWidget *paned;
+
 	GtkWidget *scrolledwin;
 	GtkWidget *ctree;
+
 	GtkWidget *mime_vbox;
 
 	MimeViewType type;

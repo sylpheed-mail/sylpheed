@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <gtk/gtknotebook.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkcontainer.h>
 #include <gtk/gtkwindow.h>
@@ -61,15 +62,19 @@
 
 static GList *messageview_list = NULL;
 
-static void messageview_change_view_type(MessageView	*messageview,
-					 MessageType	 type);
-static void messageview_destroy_cb	(GtkWidget	*widget,
-					 MessageView	*messageview);
-static void messageview_size_allocate_cb(GtkWidget	*widget,
-					 GtkAllocation	*allocation);
-static gboolean key_pressed		(GtkWidget	*widget,
-					 GdkEventKey	*event,
-					 MessageView	*messageview);
+static void messageview_change_view_type(MessageView		*messageview,
+					 MessageType		 type);
+static void messageview_destroy_cb	(GtkWidget		*widget,
+					 MessageView		*messageview);
+static void messageview_size_allocate_cb(GtkWidget		*widget,
+					 GtkAllocation		*allocation);
+static void messageview_switch_page_cb	(GtkNotebook		*notebook,
+					 GtkNotebookPage	*page,
+					 guint			 page_num,
+					 MessageView		*messageview);
+static gboolean key_pressed		(GtkWidget		*widget,
+					 GdkEventKey		*event,
+					 MessageView		*messageview);
 
 static void save_as_cb			(gpointer	 data,
 					 guint		 action,
@@ -265,6 +270,7 @@ MessageView *messageview_create(void)
 {
 	MessageView *messageview;
 	GtkWidget *vbox;
+	GtkWidget *notebook;
 	HeaderView *headerview;
 	TextView *textview;
 	MimeView *mimeview;
@@ -286,29 +292,53 @@ MessageView *messageview_create(void)
 	mimeview->imageview->messageview = messageview;
 	mimeview->messageview = messageview;
 
+	notebook = gtk_notebook_new();
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook), FALSE);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+	gtk_notebook_set_scrollable(GTK_NOTEBOOK(notebook), TRUE);
+	gtk_widget_show(notebook);
+
+	gtk_container_add(GTK_CONTAINER(notebook), GTK_WIDGET_PTR(textview));
+	gtk_notebook_set_tab_label_text
+		(GTK_NOTEBOOK(notebook), GTK_WIDGET_PTR(textview), _("Text"));
+
+	gtk_container_add(GTK_CONTAINER(notebook), GTK_WIDGET_PTR(mimeview));
+	gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(notebook),
+					GTK_WIDGET_PTR(mimeview),
+					_("Attachments"));
+
+	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+	gtk_widget_show_all(notebook);
+
 	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET_PTR(headerview),
 			   FALSE, FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET_PTR(textview),
-			   TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
 	gtk_widget_show(vbox);
 
 	/* to remove without destroyed */
-	gtk_widget_ref(GTK_WIDGET_PTR(textview));
-	gtk_widget_ref(GTK_WIDGET_PTR(mimeview));
 	gtk_widget_ref(GTK_WIDGET_PTR(mimeview->textview));
 	gtk_widget_ref(GTK_WIDGET_PTR(mimeview->imageview));
 
+	g_signal_connect(G_OBJECT(notebook), "switch_page",
+			 G_CALLBACK(messageview_switch_page_cb), messageview);
+
 	messageview->vbox        = vbox;
+	messageview->notebook    = notebook;
+
 	messageview->new_window  = FALSE;
 	messageview->window      = NULL;
 	messageview->window_vbox = NULL;
+	messageview->body_vbox   = NULL;
+
 	messageview->headerview  = headerview;
 	messageview->textview    = textview;
 	messageview->mimeview    = mimeview;
 
 	messageview->statusbar     = NULL;
 	messageview->statusbar_cid = 0;
+
+	messageview->current_page = 0;
 
 	return messageview;
 }
@@ -452,31 +482,21 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 static void messageview_change_view_type(MessageView *messageview,
 					 MessageType type)
 {
-	TextView *textview = messageview->textview;
-	MimeView *mimeview = messageview->mimeview;
+	GtkWidget *notebook = messageview->notebook;
 
 	if (messageview->type == type) return;
 
 	if (type == MVIEW_MIME) {
-		gtkut_container_remove
-			(GTK_CONTAINER(GTK_WIDGET_PTR(messageview)),
-			 GTK_WIDGET_PTR(textview));
-		gtk_box_pack_start(GTK_BOX(messageview->vbox),
-				   GTK_WIDGET_PTR(mimeview), TRUE, TRUE, 0);
-		gtk_container_add(GTK_CONTAINER(mimeview->vbox),
-				  GTK_WIDGET_PTR(textview));
+		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), TRUE);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook),
+					      messageview->current_page);
 	} else if (type == MVIEW_TEXT) {
-		gtkut_container_remove
-			(GTK_CONTAINER(GTK_WIDGET_PTR(messageview)),
-			 GTK_WIDGET_PTR(mimeview));
-		mimeview_clear(mimeview);
+		gint current_page = messageview->current_page;
 
-		if (mimeview->vbox == GTK_WIDGET_PTR(textview)->parent)
-			gtkut_container_remove(GTK_CONTAINER(mimeview->vbox),
-			 		       GTK_WIDGET_PTR(textview));
-
-		gtk_box_pack_start(GTK_BOX(messageview->vbox),
-				   GTK_WIDGET_PTR(textview), TRUE, TRUE, 0);
+		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+		messageview->current_page = current_page;
+		mimeview_clear(messageview->mimeview);
 	} else
 		return;
 
@@ -495,9 +515,8 @@ void messageview_clear(MessageView *messageview)
 
 void messageview_destroy(MessageView *messageview)
 {
-	GtkWidget *textview  = GTK_WIDGET_PTR(messageview->textview);
+	GtkWidget *textview  = GTK_WIDGET_PTR(messageview->mimeview->textview);
 	GtkWidget *imageview = GTK_WIDGET_PTR(messageview->mimeview->imageview);
-	GtkWidget *mimeview  = GTK_WIDGET_PTR(messageview->mimeview);
 
 	messageview_list = g_list_remove(messageview_list, messageview);
 
@@ -511,7 +530,6 @@ void messageview_destroy(MessageView *messageview)
 
 	gtk_widget_unref(textview);
 	gtk_widget_unref(imageview);
-	gtk_widget_unref(mimeview);
 }
 
 void messageview_quote_color_set(void)
@@ -531,7 +549,7 @@ TextView *messageview_get_current_textview(MessageView *messageview)
 		text = messageview->textview;
 	else if (messageview->type == MVIEW_MIME) {
 		if (gtk_notebook_get_current_page
-			(GTK_NOTEBOOK(messageview->mimeview->notebook)) == 0)
+			(GTK_NOTEBOOK(messageview->notebook)) == 0)
 			text = messageview->textview;
 		else if (messageview->mimeview->type == MIMEVIEW_TEXT)
 			text = messageview->mimeview->textview;
@@ -645,6 +663,13 @@ static void messageview_size_allocate_cb(GtkWidget *widget,
 
 	prefs_common.msgwin_width  = allocation->width;
 	prefs_common.msgwin_height = allocation->height;
+}
+
+static void messageview_switch_page_cb(GtkNotebook *notebook,
+				       GtkNotebookPage *page, guint page_num,
+				       MessageView *messageview)
+{
+	messageview->current_page = page_num;
 }
 
 static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,

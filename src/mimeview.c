@@ -26,7 +26,6 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtknotebook.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkctree.h>
 #include <gtk/gtkvbox.h>
@@ -134,8 +133,6 @@ MimeView *mimeview_create(void)
 {
 	MimeView *mimeview;
 
-	GtkWidget *notebook;
-	GtkWidget *vbox;
 	GtkWidget *paned;
 	GtkWidget *scrolledwin;
 	GtkWidget *ctree;
@@ -152,14 +149,6 @@ MimeView *mimeview_create(void)
 	titles[COL_MIMETYPE] = _("MIME Type");
 	titles[COL_SIZE]     = _("Size");
 	titles[COL_NAME]     = _("Name");
-
-	notebook = gtk_notebook_new();
-	gtk_notebook_set_scrollable(GTK_NOTEBOOK(notebook), TRUE);
-
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(notebook), vbox);
-	gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(notebook), vbox,
-					_("Text"));
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -196,21 +185,12 @@ MimeView *mimeview_create(void)
 	paned = gtk_vpaned_new();
 	gtk_paned_add1(GTK_PANED(paned), scrolledwin);
 	gtk_paned_add2(GTK_PANED(paned), mime_vbox);
-	gtk_container_add(GTK_CONTAINER(notebook), paned);
-	gtk_notebook_set_tab_label_text(GTK_NOTEBOOK(notebook), paned,
-					_("Attachments"));
-
-	gtk_widget_show_all(notebook);
-
-	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 
 	n_entries = sizeof(mimeview_popup_entries) /
 		sizeof(mimeview_popup_entries[0]);
 	popupmenu = menu_create_items(mimeview_popup_entries, n_entries,
 				      "<MimeView>", &popupfactory, mimeview);
 
-	mimeview->notebook     = notebook;
-	mimeview->vbox         = vbox;
 	mimeview->paned        = paned;
 	mimeview->scrolledwin  = scrolledwin;
 	mimeview->ctree        = ctree;
@@ -336,7 +316,8 @@ void mimeview_show_message(MimeView *mimeview, MimeInfo *mimeinfo,
 	if (node) {
 		gtk_ctree_select(ctree, node);
 		gtkut_ctree_set_focus_row(ctree, node);
-		gtk_widget_grab_focus(mimeview->ctree);
+		if (mimeview_get_selected_part(mimeview))
+			gtk_widget_grab_focus(mimeview->ctree);
 	}
 }
 
@@ -355,8 +336,6 @@ void mimeview_clear(MimeView *mimeview)
 
 	g_free(mimeview->file);
 	mimeview->file = NULL;
-
-	/* gtk_notebook_set_page(GTK_NOTEBOOK(mimeview->notebook), 0); */
 }
 
 void mimeview_destroy(MimeView *mimeview)
@@ -371,7 +350,7 @@ void mimeview_destroy(MimeView *mimeview)
 MimeInfo *mimeview_get_selected_part(MimeView *mimeview)
 {
 	if (gtk_notebook_get_current_page
-		(GTK_NOTEBOOK(mimeview->notebook)) == 0)
+		(GTK_NOTEBOOK(mimeview->messageview->notebook)) == 0)
 		return NULL;
 
 	return gtk_ctree_node_get_row_data

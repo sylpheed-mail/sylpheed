@@ -1070,7 +1070,6 @@ void textview_clear(TextView *textview)
 	textview->uri_list = NULL;
 
 	textview->body_pos = 0;
-	//textview->cur_pos  = 0;
 }
 
 void textview_destroy(TextView *textview)
