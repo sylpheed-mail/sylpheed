@@ -71,8 +71,6 @@
 #include "pixmaps/vcard.xpm"
 #include "pixmaps/online.xpm"
 #include "pixmaps/offline.xpm"
-#include "pixmaps/stock_add_16.xpm"
-#include "pixmaps/stock_remove_16.xpm"
 #include "pixmaps/mail.xpm"
 
 typedef struct _StockPixmapData	StockPixmapData;
@@ -133,8 +131,6 @@ static StockPixmapData pixmaps[] =
 	{vcard_xpm			, NULL, NULL},
 	{online_xpm			, NULL, NULL},
 	{offline_xpm			, NULL, NULL},
-	{stock_add_16_xpm		, NULL, NULL},
-	{stock_remove_16_xpm		, NULL, NULL},
 	{mail_xpm			, NULL, NULL},
 };
 

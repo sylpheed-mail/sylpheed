@@ -164,8 +164,6 @@ EXTRA_DIST = \
 	pixmaps/stock_up_arrow.xpm \
 	pixmaps/stock_down_arrow.xpm \
 	pixmaps/stock_paste.xpm \
-	pixmaps/stock_add_16.xpm \
-	pixmaps/stock_remove_16.xpm \
 	pixmaps/tb_address_book.xpm \
 	pixmaps/sylpheed-logo.xpm \
 	pixmaps/address.xpm \

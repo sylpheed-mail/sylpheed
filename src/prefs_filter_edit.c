@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -537,8 +537,8 @@ static CondHBox *prefs_filter_edit_cond_hbox_create(void)
 	GtkWidget *label;
 	GtkWidget *del_btn;
 	GtkWidget *add_btn;
-	GtkWidget *del_pixmap;
-	GtkWidget *add_pixmap;
+	GtkWidget *del_img;
+	GtkWidget *add_img;
 
 	cond_hbox = g_new0(CondHBox, 1);
 
@@ -622,21 +622,20 @@ static CondHBox *prefs_filter_edit_cond_hbox_create(void)
 	label = gtk_label_new(_("KB"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	del_pixmap = stock_pixmap_widget(rule_edit_window.window,
-					 STOCK_PIXMAP_REMOVE);
-	gtk_widget_show(del_pixmap);
+	del_img = gtk_image_new_from_stock
+		(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
+	gtk_widget_show(del_img);
 
 	del_btn = gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(del_btn), del_pixmap);
+	gtk_container_add(GTK_CONTAINER(del_btn), del_img);
 	gtk_widget_show(del_btn);
 	gtk_box_pack_end(GTK_BOX(hbox), del_btn, FALSE, FALSE, 0);
 
-	add_pixmap = stock_pixmap_widget(rule_edit_window.window,
-					 STOCK_PIXMAP_ADD);
-	gtk_widget_show(add_pixmap);
+	add_img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+	gtk_widget_show(add_img);
 
 	add_btn = gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(add_btn), add_pixmap);
+	gtk_container_add(GTK_CONTAINER(add_btn), add_img);
 	gtk_widget_show(add_btn);
 	gtk_box_pack_end(GTK_BOX(hbox), add_btn, FALSE, FALSE, 0);
 
@@ -675,13 +674,13 @@ static ActionHBox *prefs_filter_edit_action_hbox_create(void)
 	GtkWidget *folder_entry;
 	GtkWidget *cmd_entry;
 	GtkWidget *address_entry;
-	GtkWidget *folder_pixmap;
+	GtkWidget *folder_img;
 	GtkWidget *folder_sel_btn;
 	GtkWidget *clabel_optmenu;
 	GtkWidget *del_btn;
 	GtkWidget *add_btn;
-	GtkWidget *del_pixmap;
-	GtkWidget *add_pixmap;
+	GtkWidget *del_img;
+	GtkWidget *add_img;
 
 	action_hbox = g_new0(ActionHBox, 1);
 
@@ -740,12 +739,12 @@ static ActionHBox *prefs_filter_edit_action_hbox_create(void)
 	gtk_widget_show(folder_entry);
 	gtk_box_pack_start(GTK_BOX(hbox), folder_entry, TRUE, TRUE, 0);
 
-	folder_pixmap = stock_pixmap_widget(rule_edit_window.window,
-					    STOCK_PIXMAP_DIR_OPEN);
-	gtk_widget_show(folder_pixmap);
+	folder_img = stock_pixmap_widget(rule_edit_window.window,
+					 STOCK_PIXMAP_DIR_OPEN);
+	gtk_widget_show(folder_img);
 
 	folder_sel_btn = gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(folder_sel_btn), folder_pixmap);
+	gtk_container_add(GTK_CONTAINER(folder_sel_btn), folder_img);
 	gtk_widget_show(folder_sel_btn);
 	gtk_box_pack_start(GTK_BOX(hbox), folder_sel_btn, FALSE, FALSE, 0);
 
@@ -764,21 +763,20 @@ static ActionHBox *prefs_filter_edit_action_hbox_create(void)
 	menu = colorlabel_create_color_menu();
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(clabel_optmenu), menu);
 
-	del_pixmap = stock_pixmap_widget(rule_edit_window.window,
-					 STOCK_PIXMAP_REMOVE);
-	gtk_widget_show(del_pixmap);
+	del_img = gtk_image_new_from_stock
+		(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
+	gtk_widget_show(del_img);
 
 	del_btn = gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(del_btn), del_pixmap);
+	gtk_container_add(GTK_CONTAINER(del_btn), del_img);
 	gtk_widget_show(del_btn);
 	gtk_box_pack_end(GTK_BOX(hbox), del_btn, FALSE, FALSE, 0);
 
-	add_pixmap = stock_pixmap_widget(rule_edit_window.window,
-					 STOCK_PIXMAP_ADD);
-	gtk_widget_show(add_pixmap);
+	add_img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+	gtk_widget_show(add_img);
 
 	add_btn = gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(add_btn), add_pixmap);
+	gtk_container_add(GTK_CONTAINER(add_btn), add_img);
 	gtk_widget_show(add_btn);
 	gtk_box_pack_end(GTK_BOX(hbox), add_btn, FALSE, FALSE, 0);
 
