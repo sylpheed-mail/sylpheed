@@ -179,6 +179,7 @@ ComboButton *gtkut_combo_button_create(GtkWidget *button,
 
 	combo->arrow = gtk_button_new();
 	arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_OUT);
+	gtk_widget_set_size_request(arrow, 7, -1);
 	gtk_container_add(GTK_CONTAINER(combo->arrow), arrow);
 	GTK_WIDGET_UNSET_FLAGS(combo->arrow, GTK_CAN_FOCUS);
 	gtk_widget_show_all(combo->arrow);
