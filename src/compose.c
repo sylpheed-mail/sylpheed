@@ -436,15 +436,11 @@ static void followupto_activated	(GtkWidget	*widget,
 static void subject_activated		(GtkWidget	*widget,
 					 Compose	*compose);
 
-static void text_activated		(GtkWidget	*widget,
-					 Compose	*compose);
 static void text_inserted		(GtkTextBuffer	*buffer,
 					 GtkTextIter	*iter,
 					 const gchar	*text,
 					 gint		 len,
 					 Compose	*compose);
-
-static gboolean compose_send_control_enter	(Compose	*compose);
 
 static GtkItemFactoryEntry compose_popup_entries[] =
 {
@@ -4016,11 +4012,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	g_signal_connect(G_OBJECT(text), "grab_focus",
 			 G_CALLBACK(compose_grab_focus_cb), compose);
-#warning FIXME_GTK2
-#if 0
-	g_signal_connect(G_OBJECT(text), "activate",
-			 G_CALLBACK(text_activated), compose);
-#endif
 	g_signal_connect(G_OBJECT(buffer), "insert_text",
 			 G_CALLBACK(text_inserted), compose);
 	g_signal_connect_after(G_OBJECT(text), "size_allocate",
@@ -6038,8 +6029,6 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 
 static void to_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	if (GTK_WIDGET_VISIBLE(compose->newsgroups_entry))
 		gtk_widget_grab_focus(compose->newsgroups_entry);
 	else if (GTK_WIDGET_VISIBLE(compose->cc_entry))
@@ -6056,8 +6045,6 @@ static void to_activated(GtkWidget *widget, Compose *compose)
 
 static void newsgroups_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	if (GTK_WIDGET_VISIBLE(compose->cc_entry))
 		gtk_widget_grab_focus(compose->cc_entry);
 	else if (GTK_WIDGET_VISIBLE(compose->bcc_entry))
@@ -6072,8 +6059,6 @@ static void newsgroups_activated(GtkWidget *widget, Compose *compose)
 
 static void cc_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	if (GTK_WIDGET_VISIBLE(compose->bcc_entry))
 		gtk_widget_grab_focus(compose->bcc_entry);
 	else if (GTK_WIDGET_VISIBLE(compose->reply_entry))
@@ -6086,8 +6071,6 @@ static void cc_activated(GtkWidget *widget, Compose *compose)
 
 static void bcc_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	if (GTK_WIDGET_VISIBLE(compose->reply_entry))
 		gtk_widget_grab_focus(compose->reply_entry);
 	else if (GTK_WIDGET_VISIBLE(compose->followup_entry))
@@ -6098,8 +6081,6 @@ static void bcc_activated(GtkWidget *widget, Compose *compose)
 
 static void replyto_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	if (GTK_WIDGET_VISIBLE(compose->followup_entry))
 		gtk_widget_grab_focus(compose->followup_entry);
 	else
@@ -6108,21 +6089,12 @@ static void replyto_activated(GtkWidget *widget, Compose *compose)
 
 static void followupto_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	gtk_widget_grab_focus(compose->subject_entry);
 }
 
 static void subject_activated(GtkWidget *widget, Compose *compose)
 {
-	if (compose_send_control_enter(compose)) return;
-
 	gtk_widget_grab_focus(compose->text);
-}
-
-static void text_activated(GtkWidget *widget, Compose *compose)
-{
-	compose_send_control_enter(compose);
 }
 
 static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
@@ -6158,40 +6130,4 @@ static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
 					  G_CALLBACK(text_inserted),
 					  compose);
 	g_signal_stop_emission_by_name(G_OBJECT(buffer), "insert-text");
-}
-
-static gboolean compose_send_control_enter(Compose *compose)
-{
-	GdkEvent *ev;
-	GdkEventKey *kev;
-	GtkItemFactory *ifactory;
-	GtkAccelKey *accel;
-	GtkWidget *send_menu;
-	GSList *list;
-	GdkModifierType ignored_mods =
-		(GDK_LOCK_MASK | GDK_MOD2_MASK | GDK_MOD3_MASK |
-		 GDK_MOD4_MASK | GDK_MOD5_MASK);
-
-	ev = gtk_get_current_event();
-	if (ev->type != GDK_KEY_PRESS) return FALSE;
-
-	kev = (GdkEventKey *)ev;
-	if (!(kev->keyval == GDK_Return && (kev->state & GDK_CONTROL_MASK)))
-		return FALSE;
-
-	ifactory = gtk_item_factory_from_widget(compose->menubar);
-	send_menu = gtk_item_factory_get_widget(ifactory, "/File/Send");
-	list = gtk_accel_groups_from_object(G_OBJECT(send_menu));
-	if (!list)
-		return FALSE;
-
-	accel = (GtkAccelKey *)list->data;
-	if (accel && accel->accel_key == kev->keyval &&
-	    (accel->accel_mods & ~ignored_mods) ==
-	    (kev->state & ~ignored_mods)) {
-		compose_send_cb(compose, 0, NULL);
-		return TRUE;
-	}
-
-	return FALSE;
 }
