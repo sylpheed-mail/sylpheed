@@ -1936,7 +1936,7 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 				       GtkTextIter *iter,
 				       const gchar *quote_str)
 {
-	GtkTextIter iter_ = *iter, prev, next;
+	GtkTextIter iter_ = *iter, cur, prev, next;
 	PangoLogAttr attrs[3];
 	gchar *str;
 	gchar *next_quote_str;
@@ -1966,24 +1966,36 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 		gtk_text_buffer_delete(buffer, &iter_, &end);
 	}
 
-	/* delete linebreak */
-	prev = iter_;
-	gtk_text_iter_backward_char(&prev);
-	gtk_text_buffer_delete(buffer, &prev, &iter_);
+	/* delete linebreak and extra spaces */
+	prev = cur = iter_;
+	while (gtk_text_iter_backward_char(&cur)) {
+		wc1 = gtk_text_iter_get_char(&cur);
+		if (!g_unichar_isspace(wc1))
+			break;
+		prev = cur;
+	}
+	next = cur = iter_;
+	while (!gtk_text_iter_ends_line(&cur)) {
+		wc1 = gtk_text_iter_get_char(&cur);
+		if (!g_unichar_isspace(wc1))
+			break;
+		gtk_text_iter_forward_char(&cur);
+		next = cur;
+	}
+	if (!gtk_text_iter_equal(&prev, &next))
+		gtk_text_buffer_delete(buffer, &prev, &next);
+	iter_ = prev;
 
 	/* insert space if required */
-	next = iter_;
 	gtk_text_iter_backward_char(&prev);
 	wc1 = gtk_text_iter_get_char(&prev);
 	wc2 = gtk_text_iter_get_char(&next);
 	gtk_text_iter_forward_char(&next);
 	str = gtk_text_buffer_get_text(buffer, &prev, &next, FALSE);
 	pango_default_break(str, -1, NULL, attrs, 3);
-	if (!attrs[0].is_white && !attrs[1].is_white) {
-		if (!attrs[1].is_line_break ||
-		    (!g_unichar_iswide(wc1) || !g_unichar_iswide(wc2)))
-			gtk_text_buffer_insert(buffer, &iter_, " ", 1);
-	}
+	if (!attrs[1].is_line_break ||
+	    (!g_unichar_iswide(wc1) || !g_unichar_iswide(wc2)))
+		gtk_text_buffer_insert(buffer, &iter_, " ", 1);
 	g_free(str);
 
 	*iter = iter_;
