@@ -1,5 +1,19 @@
 2005-03-01
 
+	* src/mimeview.[ch]: display action buttons when attached files are
+	  selected.
+	  Fixed the handling of key press and popup menu.
+	  Fixed redraw problem of widget pane.
+	* src/summaryview.[ch]: minor code cleanup.
+	* src/mainwindow.c: prev_cb(), next_cb(): handle mimeview if it has
+	  focus.
+	* src/filesel.c: change current directory before creating dialog
+	  (fixed performance problem on folders with large number of
+	  message).
+	* src/textview.[ch]: removed unused functions.
+
+2005-03-01
+
 	* ac/check-type.m4
 	  ac/gnupg-check-typedef.m4: fixed a warning of the newer automake
 	  (thanks to Daichi Kawahata).

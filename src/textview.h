@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@ struct _TextView
 
 	GSList *uri_list;
 	gint body_pos;
-	//gint cur_pos;
 
 	gboolean show_all_headers;
 
@@ -59,20 +58,17 @@ void textview_show_part		(TextView	*textview,
 				 MimeInfo	*mimeinfo,
 				 FILE		*fp);
 void textview_show_error	(TextView	*textview);
-void textview_show_mime_part	(TextView	*textview,
-				 MimeInfo	*partinfo);
-#if USE_GPGME
-void textview_show_signature_part(TextView	*textview,
-				  MimeInfo 	*partinfo);
-#endif
+
 void textview_clear		(TextView	*textview);
 void textview_destroy		(TextView	*textview);
+
 void textview_set_all_headers	(TextView	*textview,
 				 gboolean	 all_headers);
 void textview_set_font		(TextView	*textview,
 				 const gchar	*codeset);
 void textview_set_position	(TextView	*textview,
 				 gint		 pos);
+
 void textview_scroll_one_line	(TextView	*textview,
 				 gboolean	 up);
 gboolean textview_scroll_page	(TextView	*textview,

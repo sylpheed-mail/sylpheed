@@ -654,9 +654,6 @@ static void textview_add_parts(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	}
 }
 
-#define TEXT_INSERT(str) \
-	gtk_text_buffer_insert(buffer, &iter, str, -1)
-
 void textview_show_error(TextView *textview)
 {
 	GtkTextBuffer *buffer;
@@ -667,60 +664,9 @@ void textview_show_error(TextView *textview)
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
 	gtk_text_buffer_get_start_iter(buffer, &iter);
-	TEXT_INSERT(_("This message can't be displayed.\n"));
+	gtk_text_buffer_insert(buffer, &iter,
+			       _("This message can't be displayed.\n"), -1);
 }
-
-void textview_show_mime_part(TextView *textview, MimeInfo *partinfo)
-{
-	GtkTextBuffer *buffer;
-	GtkTextIter iter;
-
-	if (!partinfo) return;
-
-	textview_set_font(textview, NULL);
-	textview_clear(textview);
-
-	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
-	gtk_text_buffer_get_start_iter(buffer, &iter);
-
-	TEXT_INSERT(_("To save this part, pop up the context menu with "));
-	TEXT_INSERT(_("right click and select `Save as...', "));
-	TEXT_INSERT(_("or press `y' key.\n\n"));
-
-	TEXT_INSERT(_("To display this part as a text message, select "));
-	TEXT_INSERT(_("`Display as text', or press `t' key.\n\n"));
-
-	TEXT_INSERT(_("To open this part with external program, select "));
-	TEXT_INSERT(_("`Open' or `Open with...', "));
-	TEXT_INSERT(_("or double-click, or click the center button, "));
-	TEXT_INSERT(_("or press `l' key."));
-}
-
-#if USE_GPGME
-void textview_show_signature_part(TextView *textview, MimeInfo *partinfo)
-{
-	GtkTextBuffer *buffer;
-	GtkTextIter iter;
-
-	if (!partinfo) return;
-
-	textview_set_font(textview, NULL);
-	textview_clear(textview);
-
-	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
-	gtk_text_buffer_get_start_iter(buffer, &iter);
-
-	if (partinfo->sigstatus_full == NULL) {
-		TEXT_INSERT(_("This signature has not been checked yet.\n"));
-		TEXT_INSERT(_("To check it, pop up the context menu with\n"));
-		TEXT_INSERT(_("right click and select `Check signature'.\n"));
-	} else {
-		TEXT_INSERT(partinfo->sigstatus_full);
-	}
-}
-#endif /* USE_GPGME */
-
-#undef TEXT_INSERT
 
 static void textview_write_body(TextView *textview, MimeInfo *mimeinfo,
 				FILE *fp, const gchar *charset)

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,12 @@ static void mimeview_show_message_part		(MimeView	*mimeview,
 						 MimeInfo	*partinfo);
 static void mimeview_show_image_part		(MimeView	*mimeview,
 						 MimeInfo	*partinfo);
+static void mimeview_show_mime_part		(MimeView	*mimeview,
+						 MimeInfo	*partinfo);
+#if USE_GPGME
+static void mimeview_show_signature_part	(MimeView	*mimeview,
+						 MimeInfo	*partinfo);
+#endif
 static void mimeview_change_view_type		(MimeView	*mimeview,
 						 MimeViewType	 type);
 
@@ -186,6 +192,7 @@ MimeView *mimeview_create(void)
 			 G_CALLBACK(mimeview_drag_data_get), mimeview);
     
 	mime_vbox = gtk_vbox_new(FALSE, 0);
+	gtk_container_set_reallocate_redraws(GTK_CONTAINER(mime_vbox), TRUE);
 
 	paned = gtk_vpaned_new();
 	gtk_paned_add1(GTK_PANED(paned), scrolledwin);
@@ -372,6 +379,30 @@ MimeInfo *mimeview_get_selected_part(MimeView *mimeview)
 		(GTK_CTREE(mimeview->ctree), mimeview->opened);
 }
 
+gboolean mimeview_step(MimeView *mimeview, GtkScrollType type)
+{
+	GtkCTree *ctree = GTK_CTREE(mimeview->ctree);
+	GtkCTreeNode *node;
+
+	if (type == GTK_SCROLL_STEP_FORWARD) {
+		node = gtkut_ctree_node_next(ctree, mimeview->opened);
+		if (node)
+			gtkut_ctree_expand_parent_all(ctree, node);
+		else
+			return FALSE;
+	} else {
+		if (mimeview->opened) {
+			node = GTK_CTREE_NODE_PREV(mimeview->opened);
+			if (!node) return FALSE;
+		} else
+			return FALSE;
+	}
+
+	g_signal_emit_by_name(G_OBJECT(ctree), "scroll_vertical", type, 0.0);
+
+	return TRUE;
+}
+
 static void mimeview_set_multipart_tree(MimeView *mimeview,
 					MimeInfo *mimeinfo,
 					GtkCTreeNode *parent)
@@ -490,6 +521,144 @@ static void mimeview_show_image_part(MimeView *mimeview, MimeInfo *partinfo)
 	g_free(filename);
 }
 
+static void save_as_button_clicked(GtkWidget *widget, gpointer data)
+{
+	MimeView *mimeview = (MimeView *)data;
+
+	mimeview_save_as(mimeview);
+}
+
+static void display_as_text_button_clicked(GtkWidget *widget, gpointer data)
+{
+	MimeView *mimeview = (MimeView *)data;
+
+	mimeview_display_as_text(mimeview);
+}
+
+static void open_button_clicked(GtkWidget *widget, gpointer data)
+{
+	MimeView *mimeview = (MimeView *)data;
+
+	mimeview_launch(mimeview);
+}
+
+static void open_with_button_clicked(GtkWidget *widget, gpointer data)
+{
+	MimeView *mimeview = (MimeView *)data;
+
+	mimeview_open_with(mimeview);
+}
+
+static void mimeview_show_mime_part(MimeView *mimeview, MimeInfo *partinfo)
+{
+	TextView *textview = mimeview->textview;
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
+	GtkTextChildAnchor *anchor;
+	GtkWidget *vbbox;
+	GtkWidget *button;
+	gchar buf[BUFFSIZE];
+
+	if (!partinfo) return;
+
+	textview_set_font(textview, NULL);
+	textview_clear(textview);
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+
+	gtk_text_buffer_insert(buffer, &iter,
+			       _("Select an action for the attached file:\n"),
+			       -1);
+	if (partinfo->filename || partinfo->name)
+		g_snprintf(buf, sizeof(buf), "[%s  %s (%d bytes)]\n\n",
+			   partinfo->filename ? partinfo->filename :
+			   partinfo->name,
+			   partinfo->content_type, partinfo->size);
+	else
+		g_snprintf(buf, sizeof(buf), "[%s (%d bytes)]\n\n",
+			   partinfo->content_type, partinfo->size);
+	gtk_text_buffer_insert(buffer, &iter, buf, -1);
+
+	vbbox = gtk_vbutton_box_new();
+	gtk_box_set_spacing(GTK_BOX(vbbox), 5);
+
+	button = gtk_button_new_from_stock(GTK_STOCK_OPEN);
+	gtk_container_add(GTK_CONTAINER(vbbox), button);
+	g_signal_connect(button, "clicked", G_CALLBACK(open_button_clicked),
+			 mimeview);
+	button = gtk_button_new_with_mnemonic(_("Open _with..."));
+	gtk_container_add(GTK_CONTAINER(vbbox), button);
+	g_signal_connect(button, "clicked",
+			 G_CALLBACK(open_with_button_clicked), mimeview);
+	button = gtk_button_new_with_mnemonic(_("_Display as text"));
+	gtk_container_add(GTK_CONTAINER(vbbox), button);
+	g_signal_connect(button, "clicked",
+			 G_CALLBACK(display_as_text_button_clicked), mimeview);
+	button = gtk_button_new_with_mnemonic(_("_Save as..."));
+	gtk_container_add(GTK_CONTAINER(vbbox), button);
+	g_signal_connect(button, "clicked", G_CALLBACK(save_as_button_clicked),
+			 mimeview);
+
+	gtk_widget_show_all(vbbox);
+
+	anchor = gtk_text_buffer_create_child_anchor(buffer, &iter);
+	gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview->text),
+					  vbbox, anchor);
+}
+
+#if USE_GPGME
+static void check_signature_button_clicked(GtkWidget *widget, gpointer data)
+{
+	MimeView *mimeview = (MimeView *)data;
+
+	mimeview_check_signature(mimeview);
+}
+
+static void mimeview_show_signature_part(MimeView *mimeview,
+					 MimeInfo *partinfo)
+{
+	TextView *textview = mimeview->textview;
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
+	GtkTextChildAnchor *anchor;
+	GtkWidget *vbbox;
+	GtkWidget *button;
+
+	if (!partinfo) return;
+
+	textview_set_font(textview, NULL);
+	textview_clear(textview);
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+
+	if (partinfo->sigstatus_full) {
+		gtk_text_buffer_insert
+			(buffer, &iter, partinfo->sigstatus_full, -1);
+		return;
+	}
+
+	gtk_text_buffer_insert
+		(buffer, &iter,
+		 _("This signature has not been checked yet.\n\n"), -1);
+
+	vbbox = gtk_vbutton_box_new();
+	gtk_box_set_spacing(GTK_BOX(vbbox), 5);
+
+	button = gtk_button_new_with_mnemonic(_("_Check signature"));
+	gtk_container_add(GTK_CONTAINER(vbbox), button);
+	g_signal_connect(button, "clicked",
+			 G_CALLBACK(check_signature_button_clicked), mimeview);
+
+	gtk_widget_show_all(vbbox);
+
+	anchor = gtk_text_buffer_create_child_anchor(buffer, &iter);
+	gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview->text),
+					  vbbox, anchor);
+}
+#endif /* USE_GPGME */
+
 static void mimeview_change_view_type(MimeView *mimeview, MimeViewType type)
 {
 	TextView  *textview  = mimeview->textview;
@@ -558,11 +727,10 @@ static void mimeview_selected(GtkCTree *ctree, GtkCTreeNode *node, gint column,
 #if USE_GPGME
 		if (g_strcasecmp(partinfo->content_type,
 				 "application/pgp-signature") == 0)
-			textview_show_signature_part(mimeview->textview,
-						     partinfo);
+			mimeview_show_signature_part(mimeview, partinfo);
 		else
 #endif
-			textview_show_mime_part(mimeview->textview, partinfo);
+			mimeview_show_mime_part(mimeview, partinfo);
 		break;
 	}
 }
@@ -635,9 +803,9 @@ static gint mimeview_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		gtk_menu_popup(GTK_MENU(mimeview->popupmenu),
 			       NULL, NULL, NULL, NULL,
 			       event->button, event->time);
+		return TRUE;
 	}
 
-#warning FIXME_GTK2 Is it correct?
 	return FALSE;
 }
 
@@ -649,32 +817,28 @@ void mimeview_pass_key_press_event(MimeView *mimeview, GdkEventKey *event)
 #define BREAK_ON_MODIFIER_KEY() \
 	if ((event->state & (GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0) break
 
-#warning FIXME_GTK2
-#if 0
-#define KEY_PRESS_EVENT_STOP() \
-	if (gtk_signal_n_emissions_by_name \
-		(G_OBJECT(ctree), "key_press_event") > 0) { \
-		gtk_signal_emit_stop_by_name(G_OBJECT(ctree), \
-					     "key_press_event"); \
-	}
-#else
 #define KEY_PRESS_EVENT_STOP() \
 	g_signal_stop_emission_by_name(G_OBJECT(ctree), "key_press_event");
-#endif
 
 static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 				 MimeView *mimeview)
 {
-	SummaryView *summaryview;
+	SummaryView *summaryview = NULL;
 	GtkCTree *ctree = GTK_CTREE(widget);
 	GtkCTreeNode *node;
+	gboolean mod_pressed;
 
 	if (!event) return FALSE;
 	if (!mimeview->opened) return FALSE;
 
+	if (mimeview->messageview->mainwin)
+		summaryview = mimeview->messageview->mainwin->summaryview;
+	mod_pressed =
+		((event->state & (GDK_SHIFT_MASK|GDK_MOD1_MASK)) != 0);
+
 	switch (event->keyval) {
 	case GDK_space:
-		if (textview_scroll_page(mimeview->textview, FALSE))
+		if (textview_scroll_page(mimeview->textview, mod_pressed))
 			return TRUE;
 
 		node = GTK_CTREE_NODE_NEXT(mimeview->opened);
@@ -683,55 +847,31 @@ static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			gtk_sctree_select(GTK_SCTREE(ctree), node);
 			return TRUE;
 		}
+		if (summaryview)
+			summary_pass_key_press_event(summaryview, event);
 		break;
 	case GDK_BackSpace:
 		textview_scroll_page(mimeview->textview, TRUE);
 		return TRUE;
 	case GDK_Return:
-		textview_scroll_one_line(mimeview->textview,
-					 (event->state & GDK_MOD1_MASK) != 0);
-		return TRUE;
-	case GDK_n:
-	case GDK_N:
-		BREAK_ON_MODIFIER_KEY();
-		if (!GTK_CTREE_NODE_NEXT(mimeview->opened)) break;
-		KEY_PRESS_EVENT_STOP();
-
-		g_signal_emit_by_name(G_OBJECT(ctree), "scroll_vertical",
-				      GTK_SCROLL_STEP_FORWARD, 0.0);
-		return TRUE;
-	case GDK_p:
-	case GDK_P:
-		BREAK_ON_MODIFIER_KEY();
-		if (!GTK_CTREE_NODE_PREV(mimeview->opened)) break;
-		KEY_PRESS_EVENT_STOP();
-
-		g_signal_emit_by_name(G_OBJECT(ctree), "scroll_vertical",
-				      GTK_SCROLL_STEP_BACKWARD, 0.0);
-		return TRUE;
-	case GDK_y:
-		BREAK_ON_MODIFIER_KEY();
-		KEY_PRESS_EVENT_STOP();
-		mimeview_save_as(mimeview);
+		textview_scroll_one_line(mimeview->textview, mod_pressed);
 		return TRUE;
 	case GDK_t:
 		BREAK_ON_MODIFIER_KEY();
 		KEY_PRESS_EVENT_STOP();
 		mimeview_display_as_text(mimeview);
 		return TRUE;
-	case GDK_l:
-		BREAK_ON_MODIFIER_KEY();
-		KEY_PRESS_EVENT_STOP();
-		mimeview_launch(mimeview);
-		return TRUE;
+	case GDK_Left:
+	case GDK_Escape:
+	case GDK_Delete:
+		if (summaryview)
+			summary_pass_key_press_event(summaryview, event);
+		break;
 	default:
 		break;
 	}
 
-	if (!mimeview->messageview->mainwin) return FALSE;
-	summaryview = mimeview->messageview->mainwin->summaryview;
-	summary_pass_key_press_event(summaryview, event);
-	return TRUE;
+	return FALSE;
 }
 
 static void mimeview_drag_data_get(GtkWidget	    *widget,
@@ -959,7 +1099,7 @@ static void mimeview_update_signature_info(MimeView *mimeview)
 	if (g_strcasecmp(partinfo->content_type,
 			 "application/pgp-signature") == 0) {
 		mimeview_change_view_type(mimeview, MIMEVIEW_TEXT);
-		textview_show_signature_part(mimeview->textview, partinfo);
+		mimeview_show_signature_part(mimeview, partinfo);
 	}
 }
 

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2034,23 +2034,23 @@ void summary_reedit(SummaryView *summaryview)
 	compose_reedit(msginfo);
 }
 
-void summary_step(SummaryView *summaryview, GtkScrollType type)
+gboolean summary_step(SummaryView *summaryview, GtkScrollType type)
 {
 	GtkCTree *ctree = GTK_CTREE(summaryview->ctree);
 	GtkCTreeNode *node;
 
-	if (summary_is_locked(summaryview)) return;
+	if (summary_is_locked(summaryview)) return FALSE;
 
 	if (type == GTK_SCROLL_STEP_FORWARD) {
 		node = gtkut_ctree_node_next(ctree, summaryview->selected);
 		if (node)
 			gtkut_ctree_expand_parent_all(ctree, node);
 		else
-			return;
+			return FALSE;
 	} else {
 		if (summaryview->selected) {
 			node = GTK_CTREE_NODE_PREV(summaryview->selected);
-			if (!node) return;
+			if (!node) return FALSE;
 		}
 	}
 
@@ -2063,6 +2063,8 @@ void summary_step(SummaryView *summaryview, GtkScrollType type)
 		gtk_sctree_set_anchor_row
 			(GTK_SCTREE(ctree),
 			 GTK_CTREE_NODE(GTK_CLIST(ctree)->selection->data));
+
+	return TRUE;
 }
 
 void summary_toggle_view(SummaryView *summaryview)
@@ -3822,6 +3824,9 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	else
 		textview = messageview->textview;
 
+	mod_pressed =
+		((event->state & (GDK_SHIFT_MASK|GDK_MOD1_MASK)) != 0);
+
 	switch (event->keyval) {
 	case GDK_space:		/* Page down or go to the next */
 		if (summaryview->displayed != summaryview->selected) {
@@ -3829,8 +3834,6 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 					    summaryview->selected);
 			break;
 		}
-		mod_pressed =
-			((event->state & (GDK_SHIFT_MASK|GDK_MOD1_MASK)) != 0);
 		if (mod_pressed) {
 			if (!textview_scroll_page(textview, TRUE))
 				summary_select_prev_unread(summaryview);
@@ -3848,9 +3851,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 					    summaryview->selected);
 			break;
 		}
-		textview_scroll_one_line
-			(textview, (event->state &
-				    (GDK_SHIFT_MASK|GDK_MOD1_MASK)) != 0);
+		textview_scroll_one_line(textview, mod_pressed);
 		break;
 	case GDK_Delete:
 		BREAK_ON_MODIFIER_KEY();

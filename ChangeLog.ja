@@ -1,5 +1,18 @@
 2005-03-01
 
+	* src/mimeview.[ch]: 添付ファイルを選択したときにアクションボタンを
+	  表示。
+	  キー押下とポップアップメニューの処理を修正。
+	  ウィジェットペインの再描画の問題を修正。
+	* src/summaryview.[ch]: 少しコードを整理。
+	* src/mainwindow.c: prev_cb(), next_cb(): MIME ビューがフォーカスを
+	  持っていればそれを処理するようにした。
+	* src/filesel.c: ダイアログを作成する前にカレントディレクトリを変更
+	  (メッセージ数の多いフォルダでの処理速度の問題を修正)。
+	* src/textview.[ch]: 未使用の関数を削除。
+
+2005-03-01
+
 	* ac/check-type.m4
 	  ac/gnupg-check-typedef.m4: 新しい automake による警告を除去
 	  (川畑さん thanks)。

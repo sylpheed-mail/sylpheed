@@ -2990,11 +2990,25 @@ static void update_summary_cb(MainWindow *mainwin, guint action,
 
 static void prev_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
+	MessageView *messageview = mainwin->messageview;
+
+	if (messageview_get_selected_mime_part(messageview) &&
+	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->ctree) &&
+	    mimeview_step(messageview->mimeview, GTK_SCROLL_STEP_BACKWARD))
+		return;
+
 	summary_step(mainwin->summaryview, GTK_SCROLL_STEP_BACKWARD);
 }
 
 static void next_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
+	MessageView *messageview = mainwin->messageview;
+
+	if (messageview_get_selected_mime_part(messageview) &&
+	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->ctree) &&
+	    mimeview_step(messageview->mimeview, GTK_SCROLL_STEP_FORWARD))
+		return;
+
 	summary_step(mainwin->summaryview, GTK_SCROLL_STEP_FORWARD);
 }
 

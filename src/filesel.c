@@ -38,15 +38,21 @@ gchar *filesel_select_file(const gchar *title, const gchar *file,
 	static gchar *cwd = NULL;
 	GtkWidget *dialog;
 	gchar *filename = NULL;
-
-	dialog = filesel_create(title, action);
-
-	manage_window_set_transient(GTK_WINDOW(dialog));
+	gchar *prev_dir;
 
 	if (!cwd)
 		cwd = g_strdup(startup_dir);
 
-	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cwd);
+	prev_dir = g_get_current_dir();
+	change_dir(cwd);
+
+	dialog = filesel_create(title, action);
+
+	change_dir(prev_dir);
+	g_free(prev_dir);
+
+	manage_window_set_transient(GTK_WINDOW(dialog));
+
 	if (file)
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
 						  file);
