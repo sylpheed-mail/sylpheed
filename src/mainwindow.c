@@ -1338,16 +1338,19 @@ void main_window_toggle_message_view(MainWindow *mainwin)
 		gtk_widget_ref(vpaned);
 		gtkut_container_remove(GTK_CONTAINER(container), vpaned);
 		gtk_widget_reparent(GTK_WIDGET_PTR(summaryview), container);
-		gtk_arrow_set(GTK_ARROW(summaryview->toggle_arrow),
-			      GTK_ARROW_UP, GTK_SHADOW_OUT);
 	} else {
 		mainwin->messageview->visible = TRUE;
 		gtk_widget_reparent(GTK_WIDGET_PTR(summaryview), vpaned);
 		gtk_container_add(GTK_CONTAINER(container), vpaned);
 		gtk_widget_unref(vpaned);
-		gtk_arrow_set(GTK_ARROW(summaryview->toggle_arrow),
-			      GTK_ARROW_DOWN, GTK_SHADOW_OUT);
 	}
+
+	if (messageview_is_visible(mainwin->messageview))
+		gtk_arrow_set(GTK_ARROW(mainwin->summaryview->toggle_arrow),
+			      GTK_ARROW_DOWN, GTK_SHADOW_OUT);
+	else
+		gtk_arrow_set(GTK_ARROW(mainwin->summaryview->toggle_arrow),
+			      GTK_ARROW_UP, GTK_SHADOW_OUT);
 
 	if (mainwin->messageview->visible == FALSE)
 		messageview_clear(mainwin->messageview);
@@ -2018,6 +2021,13 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 		break;
 	}
 
+	if (messageview_is_visible(mainwin->messageview))
+		gtk_arrow_set(GTK_ARROW(mainwin->summaryview->toggle_arrow),
+			      GTK_ARROW_DOWN, GTK_SHADOW_OUT);
+	else
+		gtk_arrow_set(GTK_ARROW(mainwin->summaryview->toggle_arrow),
+			      GTK_ARROW_UP, GTK_SHADOW_OUT);
+
 	gtk_widget_set_uposition(mainwin->window,
 				 prefs_common.mainwin_x,
 				 prefs_common.mainwin_y);
@@ -2037,9 +2047,9 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 	gtk_widget_set_sensitive(menuitem, ((type & SEPARATE_FOLDER) != 0));
 	menuitem = gtk_item_factory_get_item
 		(ifactory, "/View/Show or hide/Message view");
-	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
-				       (type & SEPARATE_MESSAGE) == 0 ? TRUE :
-				       prefs_common.msgview_visible);
+	gtk_check_menu_item_set_active
+		(GTK_CHECK_MENU_ITEM(menuitem),
+		 messageview_is_visible(mainwin->messageview));
 
 	menuitem = gtk_item_factory_get_item
 		(ifactory, "/View/Separate folder tree");
