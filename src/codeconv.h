@@ -226,4 +226,7 @@ gint conv_copy_dir			(const gchar	*src,
 					 const gchar	*dest,
 					 const gchar	*src_encoding);
 
+gchar *conv_filename_from_utf8		(const gchar	*utf8_file);
+gchar *conv_filename_to_utf8		(const gchar	*fs_file);
+
 #endif /* __CODECONV_H__ */

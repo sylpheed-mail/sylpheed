@@ -2722,8 +2722,12 @@ void summary_save_as(SummaryView *summaryview)
 
 	src = procmsg_get_message_file(msginfo);
 	if (copy_file(src, dest, TRUE) < 0) {
+		gchar *utf8_dest;
+
+		utf8_dest = conv_filename_to_utf8(dest);
 		alertpanel_error(_("Can't save the file `%s'."),
-				 g_basename(dest));
+				 g_basename(utf8_dest));
+		g_free(utf8_dest);
 	}
 	g_free(src);
 }

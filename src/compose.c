@@ -5450,11 +5450,15 @@ static void compose_attach_cb(gpointer data, guint action, GtkWidget *widget)
 {
 	Compose *compose = (Compose *)data;
 	const gchar *file;
+	gchar *utf8_filename;
 
 	file = filesel_select_file(_("Select file"), NULL);
 
-	if (file && *file)
-		compose_attach_append(compose, file, file, NULL);
+	if (file && *file) {
+		utf8_filename = conv_filename_to_utf8(file);
+		compose_attach_append(compose, file, utf8_filename, NULL);
+		g_free(utf8_filename);
+	}
 }
 
 static void compose_insert_file_cb(gpointer data, guint action,

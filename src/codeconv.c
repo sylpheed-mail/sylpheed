@@ -1858,3 +1858,37 @@ gint conv_copy_dir(const gchar *src, const gchar *dest, const gchar *encoding)
 
 	return 0;
 }
+
+gchar *conv_filename_from_utf8(const gchar *utf8_file)
+{
+	gchar *fs_file;
+	GError *error = NULL;
+
+	fs_file = g_filename_from_utf8(utf8_file, -1, NULL, NULL, &error);
+	if (error) {
+		g_warning("failed to convert encoding of file name: %s\n",
+			  error->message);
+		g_error_free(error);
+	}
+	if (!fs_file)
+		fs_file = g_strdup(utf8_file);
+
+	return fs_file;
+}
+
+gchar *conv_filename_to_utf8(const gchar *fs_file)
+{
+	gchar *utf8_file;
+	GError *error = NULL;
+
+	utf8_file = g_filename_to_utf8(fs_file, -1, NULL, NULL, &error);
+	if (error) {
+		g_warning("failed to convert encoding of file name: %s\n",
+			  error->message);
+		g_error_free(error);
+	}
+	if (!utf8_file)
+		utf8_file = g_strdup(fs_file);
+
+	return utf8_file;
+}

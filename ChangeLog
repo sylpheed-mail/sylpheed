@@ -1,5 +1,16 @@
 2005-02-08
 
+	* src/codeconv.[ch]
+	  conv_filename_from_utf8()
+	  conv_filename_to_utf8(): new. They always returns non-NULL strings.
+	* src/filesel.c
+	  src/summaryview.c: fixed non-UTF8 filename handling of the file
+	  selection dialog (thanks to Sergey Pinaev).
+	* src/compose.c: compose_attach_cb(): fixed attaching of files with
+	  non-UTF8 names (thanks to Sergey Pinaev).
+
+2005-02-08
+
 	* src/prefs_filter.c: use stock buttons.
 
 2005-02-08

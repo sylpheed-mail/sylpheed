@@ -29,6 +29,7 @@
 #include "filesel.h"
 #include "manage_window.h"
 #include "gtkutils.h"
+#include "codeconv.h"
 
 static GtkWidget *filesel;
 static gboolean filesel_ack;
@@ -60,11 +61,15 @@ gchar *filesel_select_file(const gchar *title, const gchar *file)
 	gtk_file_selection_set_filename(GTK_FILE_SELECTION(filesel), cwd);
 
 	if (file) {
+		gchar *fs_filename;
+
+		fs_filename = conv_filename_from_utf8(file);
 		gtk_file_selection_set_filename(GTK_FILE_SELECTION(filesel),
-						file);
+						fs_filename);
 		gtk_editable_select_region
 			(GTK_EDITABLE(GTK_FILE_SELECTION(filesel)->selection_entry),
 			 0, -1);
+		g_free(fs_filename);
 	}
 
 	gtk_widget_show(filesel);
