@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -202,6 +202,7 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 	MsgFlags default_flags;
 	gchar file_buf[BUFFSIZE];
 	guint32 num;
+	guint refnum;
 	FolderType type;
 
 	g_return_val_if_fail(item != NULL, NULL);
@@ -257,6 +258,18 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 		READ_CACHE_DATA(msginfo->subject, fp);
 		READ_CACHE_DATA(msginfo->msgid, fp);
 		READ_CACHE_DATA(msginfo->inreplyto, fp);
+
+		READ_CACHE_DATA_INT(refnum, fp);
+		for (; refnum != 0; refnum--) {
+			gchar *ref;
+
+			READ_CACHE_DATA(ref, fp);
+			msginfo->references =
+				g_slist_prepend(msginfo->references, ref);
+		}
+		if (msginfo->references)
+			msginfo->references =
+				g_slist_reverse(msginfo->references);
 
 		MSG_SET_PERM_FLAGS(msginfo->flags, default_flags.perm_flags);
 		MSG_SET_TMP_FLAGS(msginfo->flags, default_flags.tmp_flags);
@@ -444,6 +457,7 @@ void procmsg_msg_list_free(GSList *mlist)
 void procmsg_write_cache(MsgInfo *msginfo, FILE *fp)
 {
 	MsgTmpFlags flags = msginfo->flags.tmp_flags & MSG_CACHED_FLAG_MASK;
+	GSList *cur;
 
 	WRITE_CACHE_DATA_INT(msginfo->msgnum, fp);
 	WRITE_CACHE_DATA_INT(msginfo->size, fp);
@@ -460,6 +474,11 @@ void procmsg_write_cache(MsgInfo *msginfo, FILE *fp)
 	WRITE_CACHE_DATA(msginfo->subject, fp);
 	WRITE_CACHE_DATA(msginfo->msgid, fp);
 	WRITE_CACHE_DATA(msginfo->inreplyto, fp);
+
+	WRITE_CACHE_DATA_INT(g_slist_length(msginfo->references), fp);
+	for (cur = msginfo->references; cur != NULL; cur = cur->next) {
+		WRITE_CACHE_DATA((gchar *)cur->data, fp);
+	}
 }
 
 void procmsg_write_flags(MsgInfo *msginfo, FILE *fp)
@@ -682,8 +701,8 @@ static FILE *procmsg_open_data_file(const gchar *file, guint version,
 			setvbuf(fp, buf, _IOFBF, buf_size);
 		if (fread(&data_ver, sizeof(data_ver), 1, fp) != 1 ||
 		    version != data_ver) {
-			debug_print("Mark/Cache version is different (%u != %u). "
-				    "Discarding it.\n", data_ver, version);
+			g_message("Mark/Cache version is different (%u != %u). "
+				  "Discarding it.\n", data_ver, version);
 			fclose(fp);
 			fp = NULL;
 		}
@@ -753,19 +772,29 @@ GNode *procmsg_get_thread_tree(GSList *mlist)
 	GHashTable *table;
 	MsgInfo *msginfo;
 	const gchar *msgid;
+	GSList *reflist;
 
 	root = g_node_new(NULL);
 	table = g_hash_table_new(g_str_hash, g_str_equal);
 
 	for (; mlist != NULL; mlist = mlist->next) {
 		msginfo = (MsgInfo *)mlist->data;
-		parent = root;
+		parent = NULL;
 
-		if (msginfo->inreplyto) {
+		if (msginfo->inreplyto)
 			parent = g_hash_table_lookup(table, msginfo->inreplyto);
-			if (parent == NULL)
-				parent = root;
+
+		if (!parent && msginfo->references) {
+			for (reflist = msginfo->references;
+			     reflist != NULL; reflist = reflist->next)
+				if ((parent = g_hash_table_lookup
+					(table, reflist->data)) != NULL)
+					break;
 		}
+
+		if (parent == NULL)
+			parent = root;
+
 		node = g_node_insert_data_before
 			(parent, parent == root ? parent->children : NULL,
 			 msginfo);
@@ -778,16 +807,26 @@ GNode *procmsg_get_thread_tree(GSList *mlist)
 	for (node = root->children; node != NULL; ) {
 		next = node->next;
 		msginfo = (MsgInfo *)node->data;
-		if (msginfo->inreplyto) {
+		parent = NULL;
+
+		if (msginfo->inreplyto)
 			parent = g_hash_table_lookup(table, msginfo->inreplyto);
-			/* node should not be the parent, and node should not
-			   be an ancestor of parent (circular reference) */
-			if (parent && parent != node &&
-			    !g_node_is_ancestor(node, parent)) {
-				g_node_unlink(node);
-				g_node_insert_before
-					(parent, parent->children, node);
-			}
+
+		if (!parent && msginfo->references) {
+			for (reflist = msginfo->references;
+			     reflist != NULL; reflist = reflist->next)
+				if ((parent = g_hash_table_lookup
+					(table, reflist->data)) != NULL)
+					break;
+		}
+
+		/* node should not be the parent, and node should not
+		   be an ancestor of parent (circular reference) */
+		if (parent && parent != node &&
+		    !g_node_is_ancestor(node, parent)) {
+			g_node_unlink(node);
+			g_node_insert_before
+				(parent, parent->children, node);
 		}
 		node = next;
 	}
@@ -1447,6 +1486,9 @@ void procmsg_msginfo_free(MsgInfo *msginfo)
 	g_free(msginfo->subject);
 	g_free(msginfo->msgid);
 	g_free(msginfo->inreplyto);
+
+	slist_free_strings(msginfo->references);
+	g_slist_free(msginfo->references);
 
 	g_free(msginfo->file_path);
 

@@ -3031,6 +3031,7 @@ void summary_thread_build(SummaryView *summaryview)
 	GtkCTreeNode *next;
 	GtkCTreeNode *parent;
 	MsgInfo *msginfo;
+	GSList *reflist;
 
 	summary_lock(summaryview);
 
@@ -3051,6 +3052,15 @@ void summary_thread_build(SummaryView *summaryview)
 		if (msginfo && msginfo->inreplyto) {
 			parent = g_hash_table_lookup(summaryview->msgid_table,
 						     msginfo->inreplyto);
+			if (!parent && msginfo->references) {
+				for (reflist = msginfo->references;
+				     reflist != NULL; reflist = reflist->next)
+					if ((parent = g_hash_table_lookup
+						(summaryview->msgid_table,
+						 reflist->data)))
+						break;
+			}
+
 			if (parent && parent != node) {
 				gtk_ctree_move(ctree, node, parent, NULL);
 				gtk_ctree_expand(ctree, node);

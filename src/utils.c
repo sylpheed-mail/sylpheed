@@ -883,7 +883,7 @@ GSList *address_list_append(GSList *addr_list, const gchar *str)
 	return addr_list;
 }
 
-GSList *references_list_append(GSList *msgid_list, const gchar *str)
+GSList *references_list_prepend(GSList *msgid_list, const gchar *str)
 {
 	const gchar *strp;
 
@@ -903,12 +903,23 @@ GSList *references_list_append(GSList *msgid_list, const gchar *str)
 		msgid = g_strndup(start + 1, end - start - 1);
 		g_strstrip(msgid);
 		if (*msgid)
-			msgid_list = g_slist_append(msgid_list, msgid);
+			msgid_list = g_slist_prepend(msgid_list, msgid);
 		else
 			g_free(msgid);
 
 		strp = end + 1;
 	}
+
+	return msgid_list;
+}
+
+GSList *references_list_append(GSList *msgid_list, const gchar *str)
+{
+	GSList *list;
+
+	list = references_list_prepend(NULL, str);
+	list = g_slist_reverse(list);
+	msgid_list = g_slist_concat(msgid_list, list);
 
 	return msgid_list;
 }

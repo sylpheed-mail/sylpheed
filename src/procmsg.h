@@ -181,6 +181,8 @@ struct _MsgInfo
 	gchar *msgid;
 	gchar *inreplyto;
 
+	GSList *references;
+
 	FolderItem *folder;
 	FolderItem *to_folder;
 

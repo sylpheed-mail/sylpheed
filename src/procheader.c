@@ -504,7 +504,7 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 	MsgInfo *msginfo;
 	gchar buf[BUFFSIZE];
 	gchar *reference = NULL;
-	gchar *p;
+	gchar *p, *q;
 	gchar *hp;
 	HeaderEntry *hentry;
 	gint hnum;
@@ -520,6 +520,7 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 
 	msginfo = g_new0(MsgInfo, 1);
 	msginfo->flags = flags;
+	msginfo->references = NULL;
 	msginfo->inreplyto = NULL;
 
 	while ((hnum = procheader_get_one_field(buf, sizeof(buf), fp, hentry))
@@ -567,6 +568,12 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			msginfo->msgid = g_strdup(hp);
 			break;
 		case H_REFERENCES:
+			msginfo->references =
+				references_list_prepend(msginfo->references,
+							hp);
+			if (msginfo->references && !reference)
+				reference = g_strdup((gchar *)msginfo->references->data);
+			break;
 		case H_IN_REPLY_TO:
 			if (!reference) {
 				eliminate_parenthesis(hp, '(', ')');

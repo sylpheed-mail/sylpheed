@@ -1,5 +1,15 @@
 2005-03-28
 
+	* src/utils.[ch]: references_list_prepend(): new.
+	* src/procmsg.[ch]
+	  src/procheader.c
+	  src/summaryview.c: modified the thread creation so that it looks up
+	  every message-id in References header if the real parent message is
+	  not found (thanks to Alfons).
+	* src/defs.h: upped the cache version.
+
+2005-03-28
+
 	* src/foldersel.c: reimplemented folder selection dialog using
 	  GtkTreeView (thanks to Alfons).
 	* src/stock_pixmap.[ch]: stock_pixbuf_gdk(): new. It generates
