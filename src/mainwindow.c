@@ -2108,7 +2108,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_container_add(GTK_CONTAINER(container), toolbar);
-	gtk_container_set_border_width(GTK_CONTAINER(container), 2);
+	//gtk_container_set_border_width(GTK_CONTAINER(container), 2);
 	//gtk_toolbar_set_button_relief(GTK_TOOLBAR(toolbar), GTK_RELIEF_NONE);
 	//gtk_toolbar_set_space_style(GTK_TOOLBAR(toolbar),
 	//			    GTK_TOOLBAR_SPACE_LINE);

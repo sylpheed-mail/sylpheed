@@ -182,7 +182,6 @@ TextView *textview_create(void)
 	GtkWidget *text;
 	GtkTextBuffer *buffer;
 	GtkClipboard *clipboard;
-	//PangoFontDescription *font_desc = NULL;
 
 	debug_print(_("Creating text view...\n"));
 	textview = g_new0(TextView, 1);
@@ -190,6 +189,8 @@ TextView *textview_create(void)
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
+					    GTK_SHADOW_IN);
 	gtk_widget_set_size_request
 		(scrolledwin, prefs_common.mainview_width, -1);
 
@@ -223,7 +224,6 @@ TextView *textview_create(void)
 	textview->text             = text;
 	textview->uri_list         = NULL;
 	textview->body_pos         = 0;
-	//textview->cur_pos          = 0;
 	textview->show_all_headers = FALSE;
 
 	return textview;

@@ -4009,6 +4009,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
+					    GTK_SHADOW_IN);
 	gtk_box_pack_start(GTK_BOX(edit_vbox), scrolledwin, TRUE, TRUE, 0);
 	gtk_widget_set_size_request(scrolledwin, prefs_common.compose_width,
 				    -1);
@@ -4312,7 +4314,6 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_container_add(GTK_CONTAINER(container), toolbar);
-	gtk_container_set_border_width(GTK_CONTAINER(container), 2);
 
 	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_SEND);
 	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
