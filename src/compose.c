@@ -49,6 +49,7 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreeview.h>
 #include <gtk/gtkdnd.h>
+#include <gtk/gtkclipboard.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5651,27 +5652,32 @@ static void compose_paste_cb(Compose *compose)
 
 static void compose_paste_as_quote_cb(Compose *compose)
 {
-	compose->paste_as_quotation = TRUE;
+	gchar *str = NULL;
+	const gchar *qmark;
 
 	if (compose->focused_editable &&
 	    GTK_WIDGET_HAS_FOCUS(compose->focused_editable)) {
-		if (GTK_IS_EDITABLE(compose->focused_editable)) {
-			gtk_editable_paste_clipboard
-				(GTK_EDITABLE(compose->focused_editable));
-		} else if (GTK_IS_TEXT_VIEW(compose->focused_editable)) {
+		if (GTK_IS_TEXT_VIEW(compose->focused_editable)) {
 			GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 			GtkTextBuffer *buffer;
 			GtkClipboard *clipboard;
 
 			buffer = gtk_text_view_get_buffer(text);
 			clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-
-			gtk_text_buffer_paste_clipboard(buffer, clipboard,
-							NULL, TRUE);
+			str = gtk_clipboard_wait_for_text(clipboard);
 		}
 	}
 
-	compose->paste_as_quotation = FALSE;
+	if (!str)
+		return;
+
+	if (prefs_common.quotemark && *prefs_common.quotemark)
+		qmark = prefs_common.quotemark;
+	else
+		qmark = "> ";
+	compose_quote_fmt(compose, NULL, "%Q", qmark, str);
+
+	g_free(str);
 }
 
 static void compose_allsel_cb(Compose *compose)
@@ -6106,25 +6112,16 @@ static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
 					G_CALLBACK(text_inserted),
 					compose);
 
-	if (compose->paste_as_quotation) {
-		gchar *new_text;
-		gchar *qmark;
+	gtk_text_buffer_insert(buffer, iter, text, len);
 
-		if (len < 0)
-			len = strlen(text);
-		new_text = g_strndup(text, len);
-		if (prefs_common.quotemark && *prefs_common.quotemark)
-			qmark = prefs_common.quotemark;
-		else
-			qmark = "> ";
-		gtk_text_buffer_place_cursor(buffer, iter);
-		compose_quote_fmt(compose, NULL, "%Q", qmark, new_text);
-		g_free(new_text);
-	} else
-		gtk_text_buffer_insert(buffer, iter, text, len);
+	if (compose->autowrap) {
+		GtkTextMark *mark;
 
-	if (compose->autowrap)
+		mark = gtk_text_buffer_create_mark(buffer, NULL, iter, FALSE);
 		compose_wrap_line_all_full(compose, TRUE);
+		gtk_text_buffer_get_iter_at_mark(buffer, iter, mark);
+		gtk_text_buffer_delete_mark(buffer, mark);
+	}
 
 	g_signal_handlers_unblock_by_func(G_OBJECT(buffer),
 					  G_CALLBACK(text_inserted),

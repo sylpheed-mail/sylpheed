@@ -1,3 +1,12 @@
+2005-02-02
+
+	* src/compose.c:
+	  text_inserted(): 自動整形を有効にしているときに
+	  gtk_text_buffer_insert() の後 iterator を無効にしないように、
+	  iterator を再び有効にするようにした。
+	  compose_paste_as_quote_cb() 中で直接引用としてペーストを行う
+	  ようにした。
+
 2005-02-01
 
 	* version 1.9.0

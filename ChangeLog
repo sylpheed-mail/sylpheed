@@ -1,3 +1,10 @@
+2005-02-02
+
+	* src/compose.c:
+	  text_inserted(): revalidate iterator so as not to invalidate it
+	  after gtk_text_buffer_insert() while enabling auto wrapping.
+	  Do paste-as-quotation directly inside compose_paste_as_quote_cb().
+
 2005-02-01
 
 	* version 1.9.0
