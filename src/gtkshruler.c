@@ -1,6 +1,6 @@
 /* GtkSHRuler
  *
- *  Copyright (C) 2000-2004 Alfons Hoogervorst & The Sylpheed Claws Team
+ *  Copyright (C) 2000-2005 Alfons Hoogervorst & The Sylpheed Claws Team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -43,10 +43,6 @@
 
 static void gtk_shruler_class_init   	(GtkSHRulerClass *klass);
 static void gtk_shruler_init         	(GtkSHRuler      *hruler);
-#if 0
-static gint gtk_shruler_motion_notify	(GtkWidget       *widget,
-					 GdkEventMotion  *event);
-#endif
 static void gtk_shruler_draw_ticks 	(GtkRuler        *ruler);
 #if 0
 static void gtk_shruler_draw_pos      	(GtkRuler        *ruler);
@@ -73,7 +69,7 @@ gtk_shruler_get_type(void)
 			(GInstanceInitFunc) gtk_shruler_init,
 		};
 		/* inherit from GtkHRuler */
-		shruler_type = g_type_register_static ( GTK_TYPE_HRULER, "GtkSHRuler", &shruler_info, (GTypeFlags) 0 );
+		shruler_type = g_type_register_static (GTK_TYPE_HRULER, "GtkSHRuler", &shruler_info, (GTypeFlags)0);
 	}
 	return shruler_type;
 }
@@ -118,22 +114,11 @@ gtk_shruler_new(void)
 	return GTK_WIDGET( g_object_new( gtk_shruler_get_type(), NULL ) );
 }
 
-#if 0
-static gint
-gtk_shruler_motion_notify(GtkWidget      *widget,
-			  GdkEventMotion *event)
-{
-	/* I could have perhaps set this to NULL */
-	return FALSE;
-}
-#endif
-
 static void
 gtk_shruler_draw_ticks(GtkRuler *ruler)
 {
 	GtkWidget *widget;
 	GdkGC *gc, *bg_gc;
-	GdkFont *font;
 	gint i;
 	gint width, height;
 	gint xthickness;
@@ -150,7 +135,6 @@ gtk_shruler_draw_ticks(GtkRuler *ruler)
 	
 	gc = widget->style->fg_gc[GTK_STATE_NORMAL];
 	bg_gc = widget->style->bg_gc[GTK_STATE_NORMAL];
-	font = gtk_style_get_font(widget->style);
 
 	xthickness = widget->style->xthickness;
 	ythickness = widget->style->ythickness;
@@ -172,26 +156,34 @@ gtk_shruler_draw_ticks(GtkRuler *ruler)
 		       height + ythickness);
 #endif
 
-	/* assume ruler->max_size has the char width */    
-	/* i is increment of char_width,  pos is label number */
+	/* assume ruler->max_size has the char width */
+	/* i is increment of char_width,  pos is label number
+	 * y position is based on height of widget itself */
 	for ( i = 0, pos = 0; i < widget->allocation.width - xthickness; i += ruler->max_size, pos++ ) {	
-		int length = ythickness / 2;
+		gint length = height / 8;
 	
-		if ( pos % 10 == 0 ) length = ( 4 * ythickness );
-		else if (pos % 5 == 0 ) length = ( 2 * ythickness );
+		if ( pos % 10 == 0 ) length = ( 2 * height / 3 );
+		else if ( pos % 5 == 0 ) length = ( height / 3 );
 		
 		gdk_draw_line(ruler->backing_store, gc,
-			      i, height + ythickness, 
+			      i, height + ythickness,
 			      i, height - length);			
 		
 		if ( pos % 10 == 0 ) {
-			char buf[8];
+			gchar buf[8];
+			PangoLayout *layout;
+
 			/* draw label */
-			sprintf(buf, "%d", (int) pos);
-			gdk_draw_string(ruler->backing_store, font, gc,
-					i + 2, ythickness + font->ascent - 1,
-					buf);
-	    }
+			g_snprintf(buf, sizeof buf, "%d", pos);
+
+			layout = gtk_widget_create_pango_layout
+				(GTK_WIDGET(ruler), buf);
+
+			gdk_draw_layout(ruler->backing_store, gc, i + 2,
+					0, layout);
+
+			g_object_unref(layout);
+		}
 	}
 }
 
