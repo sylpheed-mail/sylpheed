@@ -3647,24 +3647,6 @@ static void imap_path_separator_subst(gchar *str, gchar separator)
 
 static gchar *imap_modified_utf7_to_locale(const gchar *mutf7_str)
 {
-#if !HAVE_ICONV
-	const gchar *from_p;
-	gchar *to, *to_p;
-
-	to = g_malloc(strlen(mutf7_str) + 1);
-	to_p = to;
-
-	for (from_p = mutf7_str; *from_p != '\0'; from_p++) {
-		if (*from_p == '&' && *(from_p + 1) == '-') {
-			*to_p++ = '&';
-			from_p++;
-		} else
-			*to_p++ = *from_p;
-	}
-	*to_p = '\0';
-
-	return to;
-#else
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
 	GString *norm_utf7;
@@ -3731,29 +3713,10 @@ static gchar *imap_modified_utf7_to_locale(const gchar *mutf7_str)
 	*to_p = '\0';
 
 	return to_str;
-#endif /* !HAVE_ICONV */
 }
 
 static gchar *imap_locale_to_modified_utf7(const gchar *from)
 {
-#if !HAVE_ICONV
-	const gchar *from_p;
-	gchar *to, *to_p;
-
-	to = g_malloc(strlen(from) * 2 + 1);
-	to_p = to;
-
-	for (from_p = from; *from_p != '\0'; from_p++) {
-		if (*from_p == '&') {
-			*to_p++ = '&';
-			*to_p++ = '-';
-		} else
-			*to_p++ = *from_p;
-	}
-	*to_p = '\0';
-
-	return to;
-#else
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
 	gchar *norm_utf7, *norm_utf7_p;
@@ -3863,7 +3826,6 @@ static gchar *imap_locale_to_modified_utf7(const gchar *from)
 	g_string_free(to_str, FALSE);
 
 	return to;
-#endif /* !HAVE_ICONV */
 }
 
 static GSList *imap_get_seq_set_from_msglist(GSList *msglist)

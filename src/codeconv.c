@@ -375,7 +375,6 @@ void conv_sjistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 void conv_jistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
-#if HAVE_ICONV
 	gchar *tmpstr;
 
 	tmpstr = conv_iconv_strdup(inbuf, CS_ISO_2022_JP, CS_UTF_8);
@@ -384,14 +383,10 @@ void conv_jistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 		g_free(tmpstr);
 	} else
 		strncpy2(outbuf, inbuf, outlen);
-#else
-	strncpy2(outbuf, inbuf, outlen);
-#endif /* HAVE_ICONV */
 }
 
 void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
-#if HAVE_ICONV
 	gchar *tmpstr;
 
 	tmpstr = conv_iconv_strdup(inbuf, CS_SHIFT_JIS, CS_UTF_8);
@@ -400,14 +395,10 @@ void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 		g_free(tmpstr);
 	} else
 		strncpy2(outbuf, inbuf, outlen);
-#else
-	strncpy2(outbuf, inbuf, outlen);
-#endif /* HAVE_ICONV */
 }
 
 void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
-#if HAVE_ICONV
 	gchar *tmpstr;
 
 	tmpstr = conv_iconv_strdup(inbuf, CS_EUC_JP, CS_UTF_8);
@@ -416,9 +407,6 @@ void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 		g_free(tmpstr);
 	} else
 		strncpy2(outbuf, inbuf, outlen);
-#else
-	strncpy2(outbuf, inbuf, outlen);
-#endif /* HAVE_ICONV */
 }
 
 void conv_anytoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
@@ -788,7 +776,6 @@ void conv_latintodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 void conv_localetodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
-#if HAVE_ICONV
 	gchar *tmpstr;
 
 	tmpstr = conv_iconv_strdup(inbuf, conv_get_locale_charset_str(),
@@ -798,9 +785,6 @@ void conv_localetodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 		g_free(tmpstr);
 	} else
 		strncpy2(outbuf, inbuf, outlen);
-#else
-	strncpy2(outbuf, inbuf, outlen);
-#endif /* HAVE_ICONV */
 }
 
 void conv_noconv(gchar *outbuf, gint outlen, const gchar *inbuf)
@@ -829,7 +813,6 @@ void conv_code_converter_destroy(CodeConverter *conv)
 gint conv_convert(CodeConverter *conv, gchar *outbuf, gint outlen,
 		  const gchar *inbuf)
 {
-#if HAVE_ICONV
 	if (conv->code_conv_func != conv_noconv)
 		conv->code_conv_func(outbuf, outlen, inbuf);
 	else {
@@ -843,9 +826,6 @@ gint conv_convert(CodeConverter *conv, gchar *outbuf, gint outlen,
 			g_free(str);
 		}
 	}
-#else /* !HAVE_ICONV */
-	conv->code_conv_func(outbuf, outlen, inbuf);
-#endif
 
 	return 0;
 }
@@ -867,11 +847,7 @@ gchar *conv_codeset_strdup(const gchar *inbuf,
 		return g_realloc(buf, strlen(buf) + 1);
 	}
 
-#if HAVE_ICONV
 	return conv_iconv_strdup(inbuf, src_code, dest_code);
-#else
-	return g_strdup(inbuf);
-#endif /* HAVE_ICONV */
 }
 
 CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
@@ -954,7 +930,6 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
 	return code_conv;
 }
 
-#if HAVE_ICONV
 gchar *conv_iconv_strdup(const gchar *inbuf,
 			 const gchar *src_code, const gchar *dest_code)
 {
@@ -1045,7 +1020,6 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 
 	return outbuf;
 }
-#endif /* HAVE_ICONV */
 
 static const struct {
 	CharSet charset;
@@ -1458,15 +1432,6 @@ CharSet conv_get_outgoing_charset(void)
 			}
 		}
 	}
-
-#if !HAVE_ICONV
-	/* encoding conversion without iconv() is only supported
-	   on Japanese locale for now */
-	if (out_charset == C_ISO_2022_JP)
-		return out_charset;
-	else
-		return conv_get_locale_charset();
-#endif
 
 	return out_charset;
 }

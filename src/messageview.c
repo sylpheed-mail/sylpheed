@@ -154,17 +154,14 @@ static GtkItemFactoryEntry msgview_entries[] =
 	{N_("/_View/_Code set/7bit ascii (US-ASC_II)"),
 	 CODESET_ACTION(C_US_ASCII)},
 
-#if HAVE_ICONV
 	{N_("/_View/_Code set/Unicode (_UTF-8)"),
 	 CODESET_ACTION(C_UTF_8)},
 	CODESET_SEPARATOR,
-#endif
 	{N_("/_View/_Code set/Western European (ISO-8859-_1)"),
 	 CODESET_ACTION(C_ISO_8859_1)},
 	{N_("/_View/_Code set/Western European (ISO-8859-15)"),
 	 CODESET_ACTION(C_ISO_8859_15)},
 	CODESET_SEPARATOR,
-#if HAVE_ICONV
 	{N_("/_View/_Code set/Central European (ISO-8859-_2)"),
 	 CODESET_ACTION(C_ISO_8859_2)},
 	CODESET_SEPARATOR,
@@ -188,18 +185,14 @@ static GtkItemFactoryEntry msgview_entries[] =
 	{N_("/_View/_Code set/Cyrillic (Windows-1251)"),
 	 CODESET_ACTION(C_CP1251)},
 	CODESET_SEPARATOR,
-#endif
 	{N_("/_View/_Code set/Japanese (ISO-2022-_JP)"),
 	 CODESET_ACTION(C_ISO_2022_JP)},
-#if HAVE_ICONV
 	{N_("/_View/_Code set/Japanese (ISO-2022-JP-2)"),
 	 CODESET_ACTION(C_ISO_2022_JP_2)},
-#endif
 	{N_("/_View/_Code set/Japanese (_EUC-JP)"),
 	 CODESET_ACTION(C_EUC_JP)},
 	{N_("/_View/_Code set/Japanese (_Shift__JIS)"),
 	 CODESET_ACTION(C_SHIFT_JIS)},
-#if HAVE_ICONV
 	CODESET_SEPARATOR,
 	{N_("/_View/_Code set/Simplified Chinese (_GB2312)"),
 	 CODESET_ACTION(C_GB2312)},
@@ -219,7 +212,6 @@ static GtkItemFactoryEntry msgview_entries[] =
 	 CODESET_ACTION(C_TIS_620)},
 	{N_("/_View/_Code set/Thai (Windows-874)"),
 	 CODESET_ACTION(C_WINDOWS_874)},
-#endif
 
 #undef CODESET_SEPARATOR
 #undef CODESET_ACTION

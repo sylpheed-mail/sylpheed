@@ -1127,9 +1127,7 @@ static void prefs_send_create(void)
 
 	SET_MENUITEM(_("Automatic (Recommended)"),	 CS_AUTO);
 	SET_MENUITEM(_("7bit ascii (US-ASCII)"),	 CS_US_ASCII);
-#if HAVE_ICONV
 	SET_MENUITEM(_("Unicode (UTF-8)"),		 CS_UTF_8);
-#endif
 	SET_MENUITEM(_("Western European (ISO-8859-1)"),  CS_ISO_8859_1);
 	SET_MENUITEM(_("Western European (ISO-8859-15)"), CS_ISO_8859_15);
 	SET_MENUITEM(_("Central European (ISO-8859-2)"),  CS_ISO_8859_2);
@@ -1137,14 +1135,10 @@ static void prefs_send_create(void)
 	SET_MENUITEM(_("Baltic (ISO-8859-4)"),		  CS_ISO_8859_4);
 	SET_MENUITEM(_("Greek (ISO-8859-7)"),		  CS_ISO_8859_7);
 	SET_MENUITEM(_("Turkish (ISO-8859-9)"),		  CS_ISO_8859_9);
-#if HAVE_ICONV
 	SET_MENUITEM(_("Cyrillic (ISO-8859-5)"),	  CS_ISO_8859_5);
-#endif
 	SET_MENUITEM(_("Cyrillic (KOI8-R)"),		 CS_KOI8_R);
-#if HAVE_ICONV
 	SET_MENUITEM(_("Cyrillic (Windows-1251)"),	 CS_WINDOWS_1251);
 	SET_MENUITEM(_("Cyrillic (KOI8-U)"),		 CS_KOI8_U);
-#endif
 	SET_MENUITEM(_("Japanese (ISO-2022-JP)"),	 CS_ISO_2022_JP);
 #if 0
 	SET_MENUITEM(_("Japanese (EUC-JP)"),		 CS_EUC_JP);
