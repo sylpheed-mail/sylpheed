@@ -24,7 +24,7 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtkdialog.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
@@ -54,16 +54,16 @@ struct gpgmegtk_sig_status_s {
 static void do_destroy(GpgmegtkSigStatus hd)
 {
 	if (!hd->running) {
-		if (hd->mainwindow) {
-			gtk_widget_destroy ( hd->mainwindow );
-			hd->mainwindow = NULL;
-		}
 		if (hd->timeout_id_valid) {
 			gtk_timeout_remove(hd->timeout_id);
 			hd->timeout_id_valid = 0;
 		}
+		if (hd->mainwindow) {
+			gtk_widget_destroy ( hd->mainwindow );
+			hd->mainwindow = NULL;
+		}
 		if (hd->destroy_pending) 
-		g_free(hd);
+			g_free(hd);
 	}
 }
 
@@ -75,7 +75,7 @@ static void okay_cb(GtkWidget *widget, gpointer data)
 	do_destroy(hd);
 }
 
-static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data)
+static gboolean delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data)
 {
 	GpgmegtkSigStatus hd = data;
 
@@ -92,6 +92,7 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data
 	if (event && event->keyval == GDK_Escape) {
 		hd->running = 0;
 		do_destroy(hd);
+		return TRUE;
 	}
 	return FALSE;
 }
@@ -109,34 +110,42 @@ GpgmegtkSigStatus gpgmegtk_sig_status_create(void)
 	hd = g_malloc0(sizeof *hd);
 	hd->running = 1;
 
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	window = gtk_dialog_new();
 	hd->mainwindow = window;
 	gtk_widget_set_size_request(window, 400, -1);
-	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
+	gtk_window_set_title(GTK_WINDOW(window), _("Signature check result"));
+	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, FALSE);
+	gtk_dialog_set_has_separator(GTK_DIALOG(window), FALSE);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(delete_event), hd);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), hd);
 
 	vbox = gtk_vbox_new(FALSE, 8);
-	gtk_container_add(GTK_CONTAINER(window), vbox);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox),
+			   vbox, TRUE, TRUE, 0);
 	gtk_widget_show(vbox);
 
 	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 8);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
 	gtk_widget_show(hbox);
 
 	label = gtk_label_new(_("Checking signature"));
 	hd->label = label;
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 8);
+	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_widget_show(label);
 
 	gtkut_stock_button_set_create(&okay_area, &okay_btn, GTK_STOCK_OK,
 				      NULL, NULL, NULL, NULL);
-	gtk_box_pack_end(GTK_BOX(vbox), okay_area, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(window)->action_area),
+			 okay_area, FALSE, FALSE, 0);
+	gtk_container_set_border_width(GTK_CONTAINER(okay_area), 5);
 	gtk_widget_grab_default(okay_btn);
+	gtk_widget_grab_focus(okay_btn);
 	g_signal_connect(G_OBJECT(okay_btn), "clicked",
 			 G_CALLBACK(okay_cb), hd);
 
@@ -192,11 +201,10 @@ void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, gpgme_ctx_t ctx)
 		} else {
 			userid = "[?]";
 		}
-		tmp = g_strdup_printf(_("%s%s%s from \"%s\""),
-				      text ? text : "",
-				      text ? "\n" : "",
-				gpgmegtk_sig_status_to_string(sig, FALSE),
-				      userid);
+		tmp = g_strdup_printf
+			(_("%s%s%s from \"%s\""),
+			 text ? text : "", text ? "\n" : "",
+			 gpgmegtk_sig_status_to_string(sig, FALSE), userid);
 		g_free (text);
 		text = tmp;
 		gpgme_key_unref (key);
@@ -210,49 +218,50 @@ void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, gpgme_ctx_t ctx)
 }
 
 const gchar *gpgmegtk_sig_status_to_string(gpgme_signature_t signature,
-        gboolean use_name)
+					   gboolean use_name)
 {
 	const gchar *result = "?";
-    switch (gpg_err_code(signature->status)) {
-      case GPG_ERR_NO_DATA:
+
+	switch (gpg_err_code(signature->status)) {
+	case GPG_ERR_NO_DATA:
 		result = _("No signature found");
 		break;
-      case GPG_ERR_NO_ERROR:
-        switch (signature->validity) {
-          case GPGME_VALIDITY_ULTIMATE:
-          case GPGME_VALIDITY_FULL:
-          case GPGME_VALIDITY_MARGINAL:
-            result = use_name ? _("Good signature from \"%s\"") :
-                _("Good signature");
-            break;
-          default:
-            result = use_name ?
-                _("Valid signature but the key for \"%s\" is not trusted") :
-                    _("Valid signature (untrusted key)");
-            break;
-        }
+	case GPG_ERR_NO_ERROR:
+		switch (signature->validity) {
+		case GPGME_VALIDITY_ULTIMATE:
+		case GPGME_VALIDITY_FULL:
+		case GPGME_VALIDITY_MARGINAL:
+			result = use_name ? _("Good signature from \"%s\"") :
+				_("Good signature");
+			break;
+		default:
+			result = use_name ?
+				_("Valid signature but the key for \"%s\" is not trusted") :
+				_("Valid signature (untrusted key)");
+			break;
+		}
 		break;
-      case GPG_ERR_SIG_EXPIRED:
-        result = use_name ? _("Signature valid but expired for \"%s\"") :
-            _("Signature valid but expired");
-        break;
-      case GPG_ERR_KEY_EXPIRED:
-        result = use_name ? _("Signature valid but the signing key for \"%s\" has expired") :
-            _("Signature valid but the signing key has expired");
-        break;
-      case GPG_ERR_CERT_REVOKED:
-        result = use_name ? _("Signature valid but the signing key for \"%s\" has been revoked") :
-            _("Signature valid but the signing key has been revoked");
-        break;
-      case GPG_ERR_BAD_SIGNATURE:
+	case GPG_ERR_SIG_EXPIRED:
+		result = use_name ? _("Signature valid but expired for \"%s\"") :
+			_("Signature valid but expired");
+		break;
+	case GPG_ERR_KEY_EXPIRED:
+		result = use_name ? _("Signature valid but the signing key for \"%s\" has expired") :
+			_("Signature valid but the signing key has expired");
+		break;
+	case GPG_ERR_CERT_REVOKED:
+		result = use_name ? _("Signature valid but the signing key for \"%s\" has been revoked") :
+			_("Signature valid but the signing key has been revoked");
+		break;
+	case GPG_ERR_BAD_SIGNATURE:
 		result = use_name ? _("BAD signature from \"%s\"") :
-            _("BAD signature");
+			_("BAD signature");
 		break;
-      case GPG_ERR_NO_PUBKEY:
+	case GPG_ERR_NO_PUBKEY:
 		result = _("No public key to verify the signature");
 		break;
 	default:
-        result = _("Error verifying the signature");
+		result = _("Error verifying the signature");
 		break;
 	}
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-01 23:57+0900\n"
+"POT-Creation-Date: 2005-03-02 14:58+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -5347,7 +5347,7 @@ msgstr "\t\tまたは \"%s\"\n"
 msgid "Signature made at %s\n"
 msgstr "署名の作成時刻 %s\n"
 
-#: src/rfc2015.c:277 src/sigstatus.c:255
+#: src/rfc2015.c:277 src/sigstatus.c:264
 msgid "Error verifying the signature"
 msgstr "署名検証エラー"
 
@@ -5484,74 +5484,78 @@ msgstr ""
 "それを使用することが出来ます。\n"
 "よく分からない場合は、そのままOKを選択してください。"
 
-#: src/sigstatus.c:131
+#: src/sigstatus.c:116
+msgid "Signature check result"
+msgstr "署名の検証結果"
+
+#: src/sigstatus.c:135
 msgid "Checking signature"
 msgstr "署名を検証中"
 
-#: src/sigstatus.c:195
+#: src/sigstatus.c:205
 #, c-format
 msgid "%s%s%s from \"%s\""
 msgstr "%s%s%s: 差出人 \"%s\""
 
-#: src/sigstatus.c:218
+#: src/sigstatus.c:227
 msgid "No signature found"
 msgstr "署名がありません"
 
-#: src/sigstatus.c:225
+#: src/sigstatus.c:234
 #, c-format
 msgid "Good signature from \"%s\""
 msgstr "差出人 \"%s\" の正当な署名"
 
-#: src/sigstatus.c:226 src/textview.c:574
+#: src/sigstatus.c:235 src/textview.c:574
 msgid "Good signature"
 msgstr "正当な署名"
 
-#: src/sigstatus.c:230
+#: src/sigstatus.c:239
 #, c-format
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "有効な署名ですが \"%s\" の鍵は信用されていません"
 
-#: src/sigstatus.c:231 src/textview.c:576
+#: src/sigstatus.c:240 src/textview.c:576
 msgid "Valid signature (untrusted key)"
 msgstr "有効な署名 (信用されていない鍵)"
 
-#: src/sigstatus.c:236
+#: src/sigstatus.c:245
 #, c-format
 msgid "Signature valid but expired for \"%s\""
 msgstr "署名は有効ですが \"%s\" に対する期限が切れています"
 
-#: src/sigstatus.c:237
+#: src/sigstatus.c:246
 msgid "Signature valid but expired"
 msgstr "署名は有効ですが期限が切れています"
 
-#: src/sigstatus.c:240
+#: src/sigstatus.c:249
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has expired"
 msgstr "署名は有効ですが \"%s\" の署名鍵の有効期限が切れています"
 
-#: src/sigstatus.c:241
+#: src/sigstatus.c:250
 msgid "Signature valid but the signing key has expired"
 msgstr "署名は有効ですが署名鍵の有効期限が切れています"
 
-#: src/sigstatus.c:244
+#: src/sigstatus.c:253
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has been revoked"
 msgstr "署名は有効ですが \"%s\" の署名鍵が失効しています"
 
-#: src/sigstatus.c:245
+#: src/sigstatus.c:254
 msgid "Signature valid but the signing key has been revoked"
 msgstr "署名は有効ですが署名鍵が失効しています"
 
-#: src/sigstatus.c:248
+#: src/sigstatus.c:257
 #, c-format
 msgid "BAD signature from \"%s\""
 msgstr "差出人 \"%s\" の不正な署名"
 
-#: src/sigstatus.c:249 src/textview.c:578
+#: src/sigstatus.c:258 src/textview.c:578
 msgid "BAD signature"
 msgstr "不正な署名"
 
-#: src/sigstatus.c:252
+#: src/sigstatus.c:261
 msgid "No public key to verify the signature"
 msgstr "署名を検証するための公開鍵がありません"
 
