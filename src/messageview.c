@@ -24,7 +24,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkcontainer.h>
-#include <gtk/gtkeditable.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtktextview.h>
 #include <gtk/gtkmenu.h>
@@ -570,8 +569,15 @@ void messageview_select_all(MessageView *messageview)
 	TextView *text;
 
 	text = messageview_get_current_textview(messageview);
-	if (text)
-		gtk_editable_select_region(GTK_EDITABLE(text->text), 0, -1);
+	if (text) {
+		GtkTextView *textview = GTK_TEXT_VIEW(text->text);
+		GtkTextBuffer *buffer;
+		GtkTextIter start, end;
+
+		buffer = gtk_text_view_get_buffer(textview);
+		gtk_text_buffer_get_bounds(buffer, &start, &end);
+		gtk_text_buffer_select_range(buffer, &start, &end);
+	}
 }
 
 void messageview_set_position(MessageView *messageview, gint pos)
@@ -773,8 +779,8 @@ static void reply_cb(gpointer data, guint action, GtkWidget *widget)
 	msginfo = messageview->msginfo;
 	mlist = g_slist_append(NULL, msginfo);
 
-	text = gtkut_editable_get_selection
-		(GTK_EDITABLE(messageview->textview->text));
+	text = gtkut_text_view_get_selection
+		(GTK_TEXT_VIEW(messageview->textview->text));
 	if (text && *text == '\0') {
 		g_free(text);
 		text = NULL;
