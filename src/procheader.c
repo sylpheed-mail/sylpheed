@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
 
 #define BUFFSIZE	8192
 
-gint procheader_get_one_field(gchar *buf, gint len, FILE *fp,
+gint procheader_get_one_field(gchar *buf, size_t len, FILE *fp,
 			      HeaderEntry hentry[])
 {
 	gint nexthead;
@@ -147,7 +147,7 @@ gint procheader_get_one_field(gchar *buf, gint len, FILE *fp,
 	return hnum;
 }
 
-gchar *procheader_get_unfolded_line(gchar *buf, gint len, FILE *fp)
+gchar *procheader_get_unfolded_line(gchar *buf, size_t len, FILE *fp)
 {
 	gboolean folded = FALSE;
 	gint nexthead;
