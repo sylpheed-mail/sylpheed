@@ -620,7 +620,7 @@ void messageview_save_as(MessageView *messageview)
 
 		aval = alertpanel(_("Overwrite"),
 				  _("Overwrite existing file?"),
-				  _("OK"), _("Cancel"), NULL);
+				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
 		if (G_ALERTDEFAULT != aval) return;
 	}
 

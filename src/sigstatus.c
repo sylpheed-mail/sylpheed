@@ -28,6 +28,7 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkstock.h>
 #include <gdk/gdkkeysyms.h>
 #include <gpgme.h>
 

@@ -2521,7 +2521,7 @@ static gboolean compose_check_entries(Compose *compose)
 
 		aval = alertpanel(_("Send"),
 				  _("Subject is empty. Send it anyway?"),
-				  _("Yes"), _("No"), NULL);
+				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (aval != G_ALERTDEFAULT)
 			return FALSE;
 	}
@@ -5533,7 +5533,7 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	if (compose->modified) {
 		val = alertpanel(_("Discard message"),
 				 _("This message has been modified. discard it?"),
-				 _("Discard"), _("to Draft"), _("Cancel"));
+				 _("Discard"), _("to Draft"), GTK_STOCK_CANCEL);
 
 		switch (val) {
 		case G_ALERTDEFAULT:
@@ -5569,7 +5569,7 @@ static void compose_template_activate_cb(GtkWidget *widget, gpointer data)
 	msg = g_strdup_printf(_("Do you want to apply the template `%s' ?"),
 			      tmpl->name);
 	val = alertpanel(_("Apply template"), msg,
-			 _("Replace"), _("Insert"), _("Cancel"));
+			 _("Replace"), _("Insert"), GTK_STOCK_CANCEL);
 	g_free(msg);
 
 	if (val == G_ALERTDEFAULT)

@@ -37,7 +37,7 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtksignal.h>
+#include <gtk/gtkstock.h>
 
 #include "intl.h"
 #include "select-keys.h"

@@ -837,7 +837,7 @@ static void addressbook_del_clicked(GtkButton *button, gpointer data)
 	/* Confirm deletion */
 	aval = alertpanel( _("Delete address(es)"),
 			_("Really delete the address(es)?"),
-			_("Yes"), _("No"), NULL );
+			GTK_STOCK_YES, GTK_STOCK_NO, NULL );
 	if( aval != G_ALERTDEFAULT ) return;
 
 	/* Process deletions */
@@ -1662,13 +1662,13 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 				"Do you want to delete the folder AND all addresses in `%s' ? \n" \
 				"If deleting the folder only, addresses will be moved into parent folder." ),
 				obj->name );
-		aval = alertpanel( _("Delete"), message, _("Folder only"), _("Folder and Addresses"), _("Cancel") );
+		aval = alertpanel( _("Delete"), message, _("Folder only"), _("Folder and Addresses"), GTK_STOCK_CANCEL );
 		g_free(message);
 		if( aval == G_ALERTOTHER ) return;
 	}
 	else {
 		message = g_strdup_printf(_("Really delete `%s' ?"), obj->name);
-		aval = alertpanel(_("Delete"), message, _("Yes"), _("No"), NULL);
+		aval = alertpanel(_("Delete"), message, GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		g_free(message);
 		if (aval != G_ALERTDEFAULT) return;
 	}
@@ -2397,11 +2397,11 @@ static gboolean addressbook_convert( AddressIndex *addrIndex ) {
 	}
 	if( errFlag ) {
 		debug_print( "Error\n%s\n", msg );
-		alertpanel( _( "Addressbook conversion error" ), msg, _( "Close" ), NULL, NULL );
+		alertpanel( _( "Addressbook conversion error" ), msg, GTK_STOCK_CLOSE, NULL, NULL );
 	}
 	else if( msg ) {
 		debug_print( "Warning\n%s\n", msg );
-		alertpanel( _( "Addressbook conversion" ), msg, _( "Close" ), NULL, NULL );
+		alertpanel( _( "Addressbook conversion" ), msg, GTK_STOCK_CLOSE, NULL, NULL );
 	}
 
 	return retVal;
@@ -2438,7 +2438,7 @@ void addressbook_read_file( void ) {
 		addrindex_print_index( addrIndex, stdout );
 		alertpanel( _( "Addressbook Error" ),
 			    _( "Could not read address index" ),
-			    _( "Close" ), NULL, NULL );
+			    GTK_STOCK_CLOSE, NULL, NULL );
 	}
 	debug_print( "done.\n" );
 }
@@ -2544,13 +2544,13 @@ void addressbook_read_file_old( void ) {
 	if( errFlag ) {
 		debug_print( "Error\n%s\n", msg );
 		alertpanel( _( "Addressbook Conversion Error" ), msg,
-			    _( "Close" ), NULL, NULL );
+			    GTK_STOCK_CLOSE, NULL, NULL );
 	}
 	else {
 		if( msg ) {
 			debug_print( "Warning\n%s\n", msg );
 			alertpanel( _( "Addressbook Conversion" ), msg,
-				    _( "Close" ), NULL, NULL );
+				    GTK_STOCK_CLOSE, NULL, NULL );
 		}
 	}
 	if( msg ) g_free( msg );

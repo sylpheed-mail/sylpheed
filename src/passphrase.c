@@ -75,8 +75,6 @@ passphrase_mbox (const gchar *desc)
 {
     gchar *the_passphrase = NULL;
     GtkWidget *vbox;
-    GtkWidget *table;
-    GtkWidget *pass_label;
     GtkWidget *confirm_box;
     GtkWidget *window;
     GtkWidget *pass_entry;
@@ -86,7 +84,6 @@ passphrase_mbox (const gchar *desc)
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), _("Passphrase"));
     gtk_widget_set_size_request(window, 450, -1);
-    gtk_container_set_border_width(GTK_CONTAINER(window), 4);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_modal(GTK_WINDOW(window), TRUE);
     gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
@@ -99,46 +96,24 @@ passphrase_mbox (const gchar *desc)
 
     vbox = gtk_vbox_new(FALSE, 8);
     gtk_container_add(GTK_CONTAINER(window), vbox);
+    gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
 
     if (desc) {
         GtkWidget *label;
         label = create_description (desc);
-        gtk_box_pack_start (GTK_BOX(vbox), label, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
     }
 
-    table = gtk_table_new(2, 2, FALSE);
-    gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(table), 8);
-    gtk_table_set_row_spacings(GTK_TABLE(table), 12);
-    gtk_table_set_col_spacings(GTK_TABLE(table), 8);
-
-
-    pass_label = gtk_label_new("");
-    gtk_table_attach (GTK_TABLE(table), pass_label, 0, 1, 0, 1,
-                      GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
-    gtk_misc_set_alignment (GTK_MISC (pass_label), 1, 0.5);
-
     pass_entry = gtk_entry_new();
-    gtk_table_attach (GTK_TABLE(table), pass_entry, 1, 2, 0, 1,
-                      GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
-    gtk_entry_set_visibility (GTK_ENTRY(pass_entry), FALSE);
-    gtk_widget_grab_focus (pass_entry);
+    gtk_box_pack_start(GTK_BOX(vbox), pass_entry, FALSE, FALSE, 0);
+    gtk_entry_set_visibility(GTK_ENTRY(pass_entry), FALSE);
+    gtk_widget_grab_focus(pass_entry);
 
-
-    confirm_box = gtk_hbutton_box_new ();
-    gtk_button_box_set_layout (GTK_BUTTON_BOX(confirm_box), GTK_BUTTONBOX_END);
-    gtk_box_set_spacing (GTK_BOX(confirm_box), 5);
-
-    ok_button = gtk_button_new_with_label (_("OK"));
-    GTK_WIDGET_SET_FLAGS (ok_button, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX(confirm_box), ok_button, TRUE, TRUE, 0);
-
-    cancel_button = gtk_button_new_with_label (_("Cancel"));
-    GTK_WIDGET_SET_FLAGS (cancel_button, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX(confirm_box), cancel_button, TRUE, TRUE, 0);
-
+    gtkut_stock_button_set_create(&confirm_box, &ok_button, GTK_STOCK_OK,
+				  &cancel_button, GTK_STOCK_CANCEL,
+				  NULL, NULL);
     gtk_box_pack_end(GTK_BOX(vbox), confirm_box, FALSE, FALSE, 0);
-    gtk_widget_grab_default (ok_button);
+    gtk_widget_grab_default(ok_button);
 
     g_signal_connect(G_OBJECT(ok_button), "clicked",
                      G_CALLBACK(passphrase_ok_cb), NULL);
@@ -277,6 +252,7 @@ create_description (const gchar *desc)
                            linelen (uid), uid, linelen (info), info);
 
     label = gtk_label_new (buf);
+    gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
     g_free (buf);
 
     return label;
