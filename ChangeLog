@@ -1,5 +1,13 @@
 2005-03-23
 
+	* src/compose.c:
+	  compose_write_to_file()
+	  compose_write_headers(): separate header charset and body charset.
+	  Fixed the issue that ISO-8859-1 was forced for headers when body
+	  is US-ASCII only.
+
+2005-03-23
+
 	* src/codeconv.c: conv_jistoeuc(): fixed buffer overflow when
 	  auxiliary Kanji appeared (only affects svn version after
 	  2005-03-17).

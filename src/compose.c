@@ -237,6 +237,7 @@ static void compose_write_attach		(Compose	*compose,
 static gint compose_write_headers		(Compose	*compose,
 						 FILE		*fp,
 						 const gchar	*charset,
+						 const gchar	*body_charset,
 						 EncodingType	 encoding,
 						 gboolean	 is_draft);
 static gint compose_redirect_write_headers	(Compose	*compose,
@@ -2582,8 +2583,9 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	gchar *chars;
 	gchar *buf;
 	gchar *canon_buf;
-	const gchar *out_codeset;
-	const gchar *src_codeset = CS_INTERNAL;
+	const gchar *out_charset;
+	const gchar *body_charset;
+	const gchar *src_charset = CS_INTERNAL;
 	EncodingType encoding;
 
 	if ((fp = fopen(file, "wb")) == NULL) {
@@ -2597,6 +2599,14 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		g_warning(_("can't change file mode\n"));
 	}
 
+	/* get outgoing charset */
+	out_charset = conv_get_charset_str(compose->out_encoding);
+	if (!out_charset)
+		out_charset = conv_get_outgoing_charset_str();
+	if (!g_strcasecmp(out_charset, CS_US_ASCII))
+		out_charset = CS_ISO_8859_1;
+	body_charset = out_charset;
+
 	/* get all composed text */
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(compose->text));
 	gtk_text_buffer_get_start_iter(buffer, &start);
@@ -2605,19 +2615,13 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	if (is_ascii_str(chars)) {
 		buf = chars;
 		chars = NULL;
-		out_codeset = CS_US_ASCII;
+		body_charset = CS_US_ASCII;
 		encoding = ENC_7BIT;
 	} else {
 		gint error = 0;
 
-		out_codeset = conv_get_charset_str(compose->out_encoding);
-		if (!out_codeset)
-			out_codeset = conv_get_outgoing_charset_str();
-		if (!g_strcasecmp(out_codeset, CS_US_ASCII))
-			out_codeset = CS_ISO_8859_1;
-
-		buf = conv_codeset_strdup_full(chars, src_codeset, out_codeset,
-					       &error);
+		buf = conv_codeset_strdup_full
+			(chars, src_charset, body_charset, &error);
 		if (!buf || error != 0) {
 			AlertValue aval;
 			gchar *msg;
@@ -2626,8 +2630,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 			msg = g_strdup_printf(_("Can't convert the character encoding of the message body from %s to %s.\n"
 						"Send it as %s anyway?"),
-					      src_codeset, out_codeset,
-					      src_codeset);
+					      src_charset, body_charset,
+					      src_charset);
 			aval = alertpanel
 				(_("Error"), msg, _("Yes"), _("+No"), NULL);
 			g_free(msg);
@@ -2639,7 +2643,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 				return -1;
 			} else {
 				buf = chars;
-				out_codeset = src_codeset;
+				out_charset = body_charset = src_charset;
 				chars = NULL;
 			}
 		}
@@ -2652,7 +2656,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			encoding = ENC_8BIT;
 		else
 			encoding = procmime_get_encoding_for_charset
-				(out_codeset);
+				(body_charset);
 	}
 	g_free(chars);
 
@@ -2681,13 +2685,13 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 #endif
 
 	debug_print("src encoding = %s, out encoding = %s, "
-		    "transfer encoding = %s\n",
-		    src_codeset, out_codeset,
+		    "body encoding = %s, transfer encoding = %s\n",
+		    src_charset, out_charset, body_charset,
 		    procmime_get_encoding_str(encoding));
 
 	/* write headers */
-	if (compose_write_headers
-		(compose, fp, out_codeset, encoding, is_draft) < 0) {
+	if (compose_write_headers(compose, fp, out_charset,
+				  body_charset, encoding, is_draft) < 0) {
 		g_warning(_("can't write headers\n"));
 		fclose(fp);
 		unlink(file);
@@ -2707,7 +2711,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 		fprintf(fp, "\n--%s\n", compose->boundary);
 		fprintf(fp, "Content-Type: text/plain; charset=%s\n",
-			out_codeset);
+			body_charset);
 #if USE_GPGME
 		if (compose->use_signing && !compose->account->clearsign)
 			fprintf(fp, "Content-Disposition: inline\n");
@@ -2756,7 +2760,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 	if (compose->use_attach &&
 	    GTK_CLIST(compose->attach_clist)->row_list)
-		compose_write_attach(compose, fp, out_codeset);
+		compose_write_attach(compose, fp, out_charset);
 
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(file, "fclose");
@@ -3241,8 +3245,9 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 	 custom_header_find(compose->account->customhdr_list, header) != NULL)
 
 static gint compose_write_headers(Compose *compose, FILE *fp,
-				  const gchar *charset, EncodingType encoding,
-				  gboolean is_draft)
+				  const gchar *charset,
+				  const gchar *body_charset,
+				  EncodingType encoding, gboolean is_draft)
 {
 	gchar buf[BUFFSIZE];
 	const gchar *entry_str;
@@ -3449,7 +3454,8 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 			"Content-Type: multipart/mixed;\n"
 			" boundary=\"%s\"\n", compose->boundary);
 	} else {
-		fprintf(fp, "Content-Type: text/plain; charset=%s\n", charset);
+		fprintf(fp, "Content-Type: text/plain; charset=%s\n",
+			body_charset);
 #if USE_GPGME
 		if (compose->use_signing && !compose->account->clearsign)
 			fprintf(fp, "Content-Disposition: inline\n");

@@ -1,5 +1,13 @@
 2005-03-23
 
+	* src/compose.c:
+	  compose_write_to_file()
+	  compose_write_headers(): ヘッダ文字コードと本文文字コードを分割。
+	  本文が US-ASCII のみの場合にヘッダに ISO-8859-1 が強制されてしまう
+	  問題を修正。
+
+2005-03-23
+
 	* src/codeconv.c: conv_jistoeuc(): 補助漢字が出現したときの
 	  バッファオーバーフローを修正(2005-03-17 以降の svn 版のみに影響)。
 
