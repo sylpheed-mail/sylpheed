@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,6 @@
 #include "base64.h"
 #include "quoted-printable.h"
 #include "uuencode.h"
-#include "unmime.h"
 #include "html.h"
 #include "codeconv.h"
 #include "utils.h"
@@ -346,22 +345,36 @@ void procmime_scan_encoding(MimeInfo *mimeinfo, const gchar *encoding)
 
 void procmime_scan_content_type(MimeInfo *mimeinfo, const gchar *content_type)
 {
-	gchar *delim, *p, *cnttype;
+	g_free(mimeinfo->content_type);
+	g_free(mimeinfo->charset);
+	g_free(mimeinfo->name);
+	g_free(mimeinfo->boundary);
+	mimeinfo->content_type = NULL;
+	mimeinfo->charset      = NULL;
+	mimeinfo->name         = NULL;
+	mimeinfo->boundary     = NULL;
+
+	procmime_scan_content_type_str(content_type, &mimeinfo->content_type,
+				       &mimeinfo->charset, &mimeinfo->name,
+				       &mimeinfo->boundary);
+
+	mimeinfo->mime_type = procmime_scan_mime_type(mimeinfo->content_type);
+	if (mimeinfo->mime_type == MIME_MULTIPART && !mimeinfo->boundary)
+		mimeinfo->mime_type = MIME_TEXT;
+}
+
+void procmime_scan_content_type_str(const gchar *content_type,
+				    gchar **mime_type, gchar **charset,
+				    gchar **name, gchar **boundary)
+{
+	gchar *delim, *p;
 	gchar *buf;
 
 	Xstrdup_a(buf, content_type, return);
 
-	g_free(mimeinfo->content_type);
-	g_free(mimeinfo->charset);
-	g_free(mimeinfo->name);
-	mimeinfo->content_type = NULL;
-	mimeinfo->charset      = NULL;
-	mimeinfo->name         = NULL;
-
 	if ((delim = strchr(buf, ';'))) *delim = '\0';
-	mimeinfo->content_type = cnttype = g_strdup(g_strstrip(buf));
-
-	mimeinfo->mime_type = procmime_scan_mime_type(cnttype);
+	if (mime_type)
+		*mime_type = g_strdup(g_strstrip(buf));
 
 	if (!delim) return;
 	p = delim + 1;
@@ -388,26 +401,23 @@ void procmime_scan_content_type(MimeInfo *mimeinfo, const gchar *content_type)
 		}
 
 		if (*value) {
-			if (!strcasecmp(attr, "charset"))
-				mimeinfo->charset = g_strdup(value);
-			else if (!strcasecmp(attr, "name")) {
+			if (charset && !g_strcasecmp(attr, "charset"))
+				*charset = g_strdup(value);
+			else if (name && !g_strcasecmp(attr, "name")) {
 				gchar *tmp;
 				size_t len;
 
 				len = strlen(value) + 1;
 				Xalloca(tmp, len, return);
 				conv_unmime_header(tmp, len, value, NULL);
-				mimeinfo->name = g_strdup(tmp);
-			} else if (!strcasecmp(attr, "boundary"))
-				mimeinfo->boundary = g_strdup(value);
+				*name = g_strdup(tmp);
+			} else if (boundary && !g_strcasecmp(attr, "boundary"))
+				*boundary = g_strdup(value);
 		}
 
 		if (!delim) break;
 		p = delim + 1;
 	}
-
-	if (mimeinfo->mime_type == MIME_MULTIPART && !mimeinfo->boundary)
-		mimeinfo->mime_type = MIME_TEXT;
 }
 
 void procmime_scan_content_disposition(MimeInfo *mimeinfo,

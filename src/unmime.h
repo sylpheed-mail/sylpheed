@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2002 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,5 @@
 
 void unmime_header			(gchar		*out,
 					 const gchar	*str);
-gint unmime_quoted_printable_line	(gchar		*str);
 
 #endif /* __UNMIME_H__ */

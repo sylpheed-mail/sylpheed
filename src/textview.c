@@ -158,7 +158,8 @@ static void textview_write_link		(TextView	*textview,
 					 CodeConverter	*conv);
 
 static GPtrArray *textview_scan_header	(TextView	*textview,
-					 FILE		*fp);
+					 FILE		*fp,
+					 const gchar	*encoding);
 static void textview_show_header	(TextView	*textview,
 					 GPtrArray	*headers);
 
@@ -391,7 +392,7 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 	textview_clear(textview);
 
 	if (fseek(fp, mimeinfo->fpos, SEEK_SET) < 0) perror("fseek");
-	headers = textview_scan_header(textview, fp);
+	headers = textview_scan_header(textview, fp, charset);
 	if (headers) {
 		GtkTextView *text = GTK_TEXT_VIEW(textview->text);
 		GtkTextBuffer *buffer;
@@ -435,10 +436,17 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		boundary_len = strlen(boundary);
 	}
 
+	if (textview->messageview->forced_charset)
+		charset = textview->messageview->forced_charset;
+	else if (prefs_common.force_charset)
+		charset = prefs_common.force_charset;
+	else if (mimeinfo->charset)
+		charset = mimeinfo->charset;
+
 	if (!boundary && mimeinfo->mime_type == MIME_TEXT) {
 		if (fseek(fp, mimeinfo->fpos, SEEK_SET) < 0)
 			perror("fseek");
-		headers = textview_scan_header(textview, fp);
+		headers = textview_scan_header(textview, fp, charset);
 	} else {
 		if (mimeinfo->mime_type == MIME_TEXT && mimeinfo->parent) {
 			glong fpos;
@@ -457,7 +465,8 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			else if (fseek(fp, parent->fpos, SEEK_SET) < 0)
 				perror("fseek");
 			else {
-				headers = textview_scan_header(textview, fp);
+				headers = textview_scan_header
+					(textview, fp, charset);
 				if (fseek(fp, fpos, SEEK_SET) < 0)
 					perror("fseek");
 			}
@@ -474,17 +483,10 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			textview_clear(textview);
 			return;
 		}
-		headers = textview_scan_header(textview, fp);
+		headers = textview_scan_header(textview, fp, charset);
 		mimeinfo = mimeinfo->sub;
 		is_rfc822_part = TRUE;
 	}
-
-	if (textview->messageview->forced_charset)
-		charset = textview->messageview->forced_charset;
-	else if (prefs_common.force_charset)
-		charset = prefs_common.force_charset;
-	else if (mimeinfo->charset)
-		charset = mimeinfo->charset;
 
 	textview_set_font(textview, charset);
 
@@ -543,8 +545,15 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	while (fgets(buf, sizeof(buf), fp) != NULL)
 		if (buf[0] == '\r' || buf[0] == '\n') break;
 
+	if (textview->messageview->forced_charset)
+		charset = textview->messageview->forced_charset;
+	else if (prefs_common.force_charset)
+		charset = prefs_common.force_charset;
+	else if (mimeinfo->charset)
+		charset = mimeinfo->charset;
+
 	if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
-		headers = textview_scan_header(textview, fp);
+		headers = textview_scan_header(textview, fp, charset);
 		if (headers) {
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 			textview_show_header(textview, headers);
@@ -622,12 +631,6 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			gtk_text_buffer_insert(buffer, &iter, buf, -1);
 		else
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
-		if (textview->messageview->forced_charset)
-			charset = textview->messageview->forced_charset;
-		else if (prefs_common.force_charset)
-			charset = prefs_common.force_charset;
-		else if (mimeinfo->charset)
-			charset = mimeinfo->charset;
 		textview_write_body(textview, mimeinfo, fp, charset);
 	}
 }
@@ -1107,7 +1110,8 @@ void textview_set_position(TextView *textview, gint pos)
 	gtk_text_buffer_place_cursor(buffer, &iter);
 }
 
-static GPtrArray *textview_scan_header(TextView *textview, FILE *fp)
+static GPtrArray *textview_scan_header(TextView *textview, FILE *fp,
+				       const gchar *encoding)
 {
 	gchar buf[BUFFSIZE];
 	GPtrArray *headers, *sorted_headers;
@@ -1118,7 +1122,7 @@ static GPtrArray *textview_scan_header(TextView *textview, FILE *fp)
 	g_return_val_if_fail(fp != NULL, NULL);
 
 	if (textview->show_all_headers)
-		return procheader_get_header_array_asis(fp);
+		return procheader_get_header_array_asis(fp, encoding);
 
 	if (!prefs_common.display_header) {
 		while (fgets(buf, sizeof(buf), fp) != NULL)
@@ -1126,7 +1130,7 @@ static GPtrArray *textview_scan_header(TextView *textview, FILE *fp)
 		return NULL;
 	}
 
-	headers = procheader_get_header_array_asis(fp);
+	headers = procheader_get_header_array_asis(fp, encoding);
 
 	sorted_headers = g_ptr_array_new();
 

@@ -142,6 +142,11 @@ void procmime_scan_encoding		(MimeInfo	*mimeinfo,
 					 const gchar	*encoding);
 void procmime_scan_content_type		(MimeInfo	*mimeinfo,
 					 const gchar	*content_type);
+void procmime_scan_content_type_str	(const gchar	*content_type,
+					 gchar	       **mime_type,
+					 gchar	       **charset,
+					 gchar	       **name,
+					 gchar	       **boundary);
 void procmime_scan_content_disposition	(MimeInfo	*mimeinfo,
 					 const gchar	*content_disposition);
 MimeInfo *procmime_scan_mime_header	(FILE		*fp);

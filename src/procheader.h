@@ -61,8 +61,10 @@ gint procheader_find_header_list		(GSList		*hlist,
 						 const gchar	*header_name);
 void procheader_header_list_destroy		(GSList		*hlist);
 
-GPtrArray *procheader_get_header_array		(FILE		*fp);
-GPtrArray *procheader_get_header_array_asis	(FILE		*fp);
+GPtrArray *procheader_get_header_array		(FILE		*fp,
+						 const gchar	*encoding);
+GPtrArray *procheader_get_header_array_asis	(FILE		*fp,
+						 const gchar	*encoding);
 void procheader_header_array_destroy		(GPtrArray	*harray);
 
 void procheader_header_free			(Header		*header);

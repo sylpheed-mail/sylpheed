@@ -979,17 +979,9 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 	gchar *outbuf;
 
 	if (!src_code)
-		src_code = conv_get_outgoing_charset_str();
+		src_code = conv_get_locale_charset_str();
 	if (!dest_code)
 		dest_code = CS_INTERNAL;
-
-	/* don't convert if src and dest codeset are identical */
-	if (!strcasecmp(src_code, dest_code))
-		return g_strdup(inbuf);
-
-	/* don't convert if current codeset is US-ASCII */
-	if (!strcasecmp(dest_code, CS_US_ASCII))
-		return g_strdup(inbuf);
 
 	cd = iconv_open(dest_code, src_code);
 	if (cd == (iconv_t)-1)
@@ -1534,15 +1526,17 @@ gboolean conv_is_multibyte_encoding(CharSet encoding)
 
 const gchar *conv_get_current_locale(void)
 {
-	const gchar *cur_locale;
+	static const gchar *cur_locale;
 
-	cur_locale = g_getenv("LC_ALL");
-	if (!cur_locale) cur_locale = g_getenv("LC_CTYPE");
-	if (!cur_locale) cur_locale = g_getenv("LANG");
-	if (!cur_locale) cur_locale = setlocale(LC_CTYPE, NULL);
+	if (!cur_locale) {
+		cur_locale = g_getenv("LC_ALL");
+		if (!cur_locale) cur_locale = g_getenv("LC_CTYPE");
+		if (!cur_locale) cur_locale = g_getenv("LANG");
+		if (!cur_locale) cur_locale = setlocale(LC_CTYPE, NULL);
 
-	debug_print("current locale: %s\n",
-		    cur_locale ? cur_locale : "(none)");
+		debug_print("current locale: %s\n",
+			    cur_locale ? cur_locale : "(none)");
+	}
 
 	return cur_locale;
 }
@@ -1564,10 +1558,27 @@ void conv_unmime_header_overwrite(gchar *str)
 }
 
 void conv_unmime_header(gchar *outbuf, gint outlen, const gchar *str,
-			const gchar *charset)
+			const gchar *default_encoding)
 {
 	gchar *buf;
 	gint buflen;
+
+	if (is_ascii_str(str)) {
+		unmime_header(outbuf, str);
+		return;
+	}
+
+	if (default_encoding) {
+		gchar *utf8_str;
+
+		utf8_str = conv_codeset_strdup
+			(str, default_encoding, CS_INTERNAL);
+		if (utf8_str) {
+			unmime_header(outbuf, utf8_str);
+			g_free(utf8_str);
+			return;
+		}
+	}
 
 	buflen = strlen(str) * 2 + 1;
 	Xalloca(buf, buflen, return);

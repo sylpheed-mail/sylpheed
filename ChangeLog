@@ -1,3 +1,22 @@
+2005-03-03
+
+	* use Content-Type's charset as a fallback encoding of broken header
+	  strings (thanks to Sergey Pinaev).
+	* src/textview.c: use Content-Type's charset information and
+	  force-charset setting when displaying headers.
+	* src/codeconv.c: conv_iconv_strdup(): convert even if src and dest
+	  are identical, or dest is US-ASCII.
+	  conv_unmime_header(): try to convert with default encoding if
+	  string is not ascii.
+	* src/procheader.[ch]:
+	  procheader_get_header_array()
+	  procheader_get_header_array_asis(): added an argument for default
+	  encoding.
+	  procheader_parse_stream(): use Content-Type's charset information.
+	* src/procmime.[ch]: added procmime_scan_content_type_str() which
+	  returns parameters of Content-Type header.
+	* src/unmime.[ch]: removed unused function prototype.
+
 2005-03-02
 
 	* version 1.9.4

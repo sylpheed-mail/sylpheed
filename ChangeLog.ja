@@ -1,3 +1,22 @@
+2005-03-03
+
+	* 不正なヘッダ文字列のフォールバックエンコーディングとして
+	  Content-Type の charset を使用(Sergey Pinaev さん thanks)。
+	* src/textview.c: ヘッダを表示するときに Content-Type の charset
+	  情報と force-charset の設定を使用するようにした。
+	* src/codeconv.c: conv_iconv_strdup(): src と dest が同一でも、
+	  また dest が US-ASCII でも変換するようにした。
+	  conv_unmime_header(): 文字列が ascii でない場合はデフォルト
+	  エンコーディングで変換を試みるようにした。
+	* src/procheader.[ch]:
+	  procheader_get_header_array()
+	  procheader_get_header_array_asis(): デフォルトエンコーディングの
+	  引数を追加。
+	  procheader_parse_stream(): Content-Type の charset 情報を使用。
+	* src/procmime.[ch]: Content-Type ヘッダのパラメータを返す
+	  procmime_scan_content_type_str() を追加。
+	* src/unmime.[ch]: 未使用の関数プロトタイプを削除。
+
 2005-03-02
 
 	* version 1.9.4

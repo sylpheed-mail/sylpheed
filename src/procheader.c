@@ -296,7 +296,7 @@ gint procheader_find_header_list(GSList *hlist, const gchar *header_name)
 	return -1;
 }
 
-GPtrArray *procheader_get_header_array(FILE *fp)
+GPtrArray *procheader_get_header_array(FILE *fp, const gchar *encoding)
 {
 	gchar buf[BUFFSIZE], tmp[BUFFSIZE];
 	gchar *p;
@@ -315,7 +315,8 @@ GPtrArray *procheader_get_header_array(FILE *fp)
 				header->name = g_strndup(buf, p - buf);
 				p++;
 				while (*p == ' ' || *p == '\t') p++;
-				conv_unmime_header(tmp, sizeof(tmp), p, NULL);
+				conv_unmime_header(tmp, sizeof(tmp), p,
+						   encoding);
 				header->body = g_strdup(tmp);
 
 				g_ptr_array_add(headers, header);
@@ -327,7 +328,7 @@ GPtrArray *procheader_get_header_array(FILE *fp)
 	return headers;
 }
 
-GPtrArray *procheader_get_header_array_asis(FILE *fp)
+GPtrArray *procheader_get_header_array_asis(FILE *fp, const gchar *encoding)
 {
 	gchar buf[BUFFSIZE], tmp[BUFFSIZE];
 	gchar *p;
@@ -345,7 +346,8 @@ GPtrArray *procheader_get_header_array_asis(FILE *fp)
 				header = g_new(Header, 1);
 				header->name = g_strndup(buf, p - buf);
 				p++;
-				conv_unmime_header(tmp, sizeof(tmp), p, NULL);
+				conv_unmime_header(tmp, sizeof(tmp), p,
+						   encoding);
 				header->body = g_strdup(tmp);
 
 				g_ptr_array_add(headers, header);
@@ -511,6 +513,8 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 	gchar *hp;
 	HeaderEntry *hentry;
 	gint hnum;
+	gchar *from = NULL, *to = NULL, *subject = NULL, *cc = NULL;
+	gchar *charset = NULL;
 
 	hentry = full ? hentry_full : hentry_short;
 
@@ -536,20 +540,16 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			msginfo->date = g_strdup(hp);
 			break;
 		case H_FROM:
-			if (msginfo->from) break;
-			conv_unmime_header(tmp, sizeof(tmp), hp, NULL);
-			msginfo->from = g_strdup(tmp);
-			msginfo->fromname = procheader_get_fromname(tmp);
+			if (from) break;
+			from = g_strdup(hp);
 			break;
 		case H_TO:
-			conv_unmime_header(tmp, sizeof(tmp), hp, NULL);
-			if (msginfo->to) {
-				p = msginfo->to;
-				msginfo->to =
-					g_strconcat(p, ", ", tmp, NULL);
+			if (to) {
+				p = to;
+				to = g_strconcat(p, ", ", hp, NULL);
 				g_free(p);
 			} else
-				msginfo->to = g_strdup(tmp);
+				to = g_strdup(hp);
 			break;
 		case H_NEWSGROUPS:
 			if (msginfo->newsgroups) {
@@ -562,8 +562,7 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			break;
 		case H_SUBJECT:
 			if (msginfo->subject) break;
-			conv_unmime_header(tmp, sizeof(tmp), hp, NULL);
-			msginfo->subject = g_strdup(tmp);
+			subject = g_strdup(hp);
 			break;
 		case H_MSG_ID:
 			if (msginfo->msgid) break;
@@ -586,22 +585,24 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			}
 			break;
 		case H_CONTENT_TYPE:
-			if (!strncasecmp(hp, "multipart", 9))
+			if (!g_strncasecmp(hp, "multipart", 9)) {
 				MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MIME);
+			} else if (!charset) {
+				procmime_scan_content_type_str
+					(hp, NULL, &charset, NULL, NULL);
+			}
 			break;
 		case H_SEEN:
 			/* mnews Seen header */
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW|MSG_UNREAD);
 			break;
 		case H_CC:
-			conv_unmime_header(tmp, sizeof(tmp), hp, NULL);
-			if (msginfo->cc) {
-				p = msginfo->cc;
-				msginfo->cc =
-					g_strconcat(p, ", ", tmp, NULL);
+			if (cc) {
+				p = cc;
+				cc = g_strconcat(p, ", ", hp, NULL);
 				g_free(p);
 			} else
-				msginfo->cc = g_strdup(tmp);
+				cc = g_strdup(hp);
 			break;
 		case H_X_FACE:
 			if (msginfo->xface) break;
@@ -611,7 +612,32 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			break;
 		}
 	}
+
+	if (from) {
+		conv_unmime_header(tmp, sizeof(tmp), from, charset);
+		msginfo->from = g_strdup(tmp);
+		msginfo->fromname = procheader_get_fromname(tmp);
+		g_free(from);
+	}
+	if (to) {
+		conv_unmime_header(tmp, sizeof(tmp), to, charset);
+		msginfo->to = g_strdup(tmp);
+		g_free(to);
+	}
+	if (subject) {
+		conv_unmime_header(tmp, sizeof(tmp), subject, charset);
+		msginfo->subject = g_strdup(tmp);
+		g_free(subject);
+	}
+	if (cc) {
+		conv_unmime_header(tmp, sizeof(tmp), cc, charset);
+		msginfo->cc = g_strdup(tmp);
+		g_free(cc);
+	}
+
 	msginfo->inreplyto = reference;
+
+	g_free(charset);
 
 	return msginfo;
 }
