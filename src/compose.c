@@ -1216,13 +1216,17 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		hentry[H_LIST_POST].body = NULL;
 	}
 
-	if (compose->mode == COMPOSE_REEDIT && msginfo->inreplyto)
-		compose->inreplyto = g_strdup(msginfo->inreplyto);
-	else if (compose->mode != COMPOSE_REEDIT &&
-		 msginfo->msgid && *msginfo->msgid) {
+	if (compose->mode == COMPOSE_REEDIT) {
+		if (msginfo->inreplyto && *msginfo->inreplyto)
+			compose->inreplyto = g_strdup(msginfo->inreplyto);
+		return 0;
+	}
+
+	if (msginfo->msgid && *msginfo->msgid)
 		compose->inreplyto = g_strdup(msginfo->msgid);
 
-		if (!compose->references) {
+	if (!compose->references) {
+		if (msginfo->msgid && *msginfo->msgid) {
 			if (msginfo->inreplyto && *msginfo->inreplyto)
 				compose->references =
 					g_strdup_printf("<%s>\n\t<%s>",
@@ -1232,6 +1236,10 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 				compose->references =
 					g_strconcat("<", msginfo->msgid, ">",
 						    NULL);
+		} else if (msginfo->inreplyto && *msginfo->inreplyto) {
+			compose->references =
+				g_strconcat("<", msginfo->inreplyto, ">",
+					    NULL);
 		}
 	}
 
