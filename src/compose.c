@@ -4361,7 +4361,9 @@ static void compose_destroy(Compose *compose)
 	prefs_common.compose_width = compose->scrolledwin->allocation.width;
 	prefs_common.compose_height = compose->window->allocation.height;
 
-	gtk_widget_destroy(compose->paned);
+	if (!gtk_widget_get_parent(compose->paned))
+		gtk_widget_destroy(compose->paned);
+	gtk_widget_destroy(compose->popupmenu);
 
 	g_free(compose);
 
