@@ -105,6 +105,7 @@ static void about_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox), pixmap, FALSE, FALSE, 0);
 
 	label = gtk_label_new("version "VERSION);
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 #if HAVE_SYS_UTSNAME_H
@@ -122,6 +123,8 @@ static void about_create(void)
 #endif
 
 	label = gtk_label_new(buf);
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 	g_snprintf(buf, sizeof(buf),
@@ -159,10 +162,12 @@ static void about_create(void)
 	"");
 
 	label = gtk_label_new(buf);
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 	label = gtk_label_new
 		("Copyright (C) 1999-2004 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>");
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new(FALSE, 0);
@@ -200,6 +205,8 @@ static void about_create(void)
 	text = gtk_text_view_new();
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text), GTK_WRAP_WORD);
+	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(text), 6);
+	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(text), 6);
 	gtk_container_add(GTK_CONTAINER(scrolledwin), text);
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text));
