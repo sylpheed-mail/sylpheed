@@ -898,10 +898,14 @@ void compose_redirect(MsgInfo *msginfo, FolderItem *item)
 	if ((fp = procmime_get_first_text_content(msginfo, NULL)) == NULL)
 		g_warning(_("Can't get text part\n"));
 	else {
+		gboolean prev_autowrap = compose->autowrap;
+
+		compose->autowrap = FALSE;
 		while (fgets(buf, sizeof(buf), fp) != NULL) {
 			strcrchomp(buf);
 			gtk_text_buffer_insert(buffer, &iter, buf, -1);
 		}
+		compose->autowrap = prev_autowrap;
 		fclose(fp);
 	}
 	compose_attach_parts(compose, msginfo);
@@ -953,10 +957,14 @@ void compose_reedit(MsgInfo *msginfo)
 	if ((fp = procmime_get_first_text_content(msginfo, NULL)) == NULL)
 		g_warning(_("Can't get text part\n"));
 	else {
+		gboolean prev_autowrap = compose->autowrap;
+
+		compose->autowrap = FALSE;
 		while (fgets(buf, sizeof(buf), fp) != NULL) {
 			strcrchomp(buf);
 			gtk_text_buffer_insert(buffer, &iter, buf, -1);
 		}
+		compose->autowrap = prev_autowrap;
 		fclose(fp);
 	}
 	compose_attach_parts(compose, msginfo);
@@ -1096,6 +1104,9 @@ static void compose_entries_set(Compose *compose, const gchar *mailto)
 		GtkTextBuffer *buffer;
 		GtkTextMark *mark;
 		GtkTextIter iter;
+		gboolean prev_autowrap = compose->autowrap;
+
+		compose->autowrap = FALSE;
 
 		buffer = gtk_text_view_get_buffer(text);
 		mark = gtk_text_buffer_get_insert(buffer);
@@ -1103,6 +1114,10 @@ static void compose_entries_set(Compose *compose, const gchar *mailto)
 
 		gtk_text_buffer_insert(buffer, &iter, body, -1);
 		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+
+		compose->autowrap = prev_autowrap;
+		if (compose->autowrap)
+			compose_wrap_all(compose);
 	}
 
 	g_free(to);
@@ -1310,6 +1325,7 @@ static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
 	gchar *buf;
 	gchar *p, *lastp;
 	gint len;
+	gboolean prev_autowrap;
 
 	if (!msginfo)
 		msginfo = &dummyinfo;
@@ -1339,6 +1355,9 @@ static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
 	} else
 		buf = "";
 
+	prev_autowrap = compose->autowrap;
+	compose->autowrap = FALSE;
+
 	buffer = gtk_text_view_get_buffer(text);
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
@@ -1352,6 +1371,10 @@ static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
 		else
 			break;
 	}
+
+	compose->autowrap = prev_autowrap;
+	if (compose->autowrap)
+		compose_wrap_all(compose);
 
 	return buf;
 }
@@ -1493,8 +1516,12 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 	GtkTextMark *mark;
 	GtkTextIter iter;
 	gint cur_pos;
+	gboolean prev_autowrap;
 
 	g_return_if_fail(compose->account != NULL);
+
+	prev_autowrap = compose->autowrap;
+	compose->autowrap = FALSE;
 
 	buffer = gtk_text_view_get_buffer(text);
 	mark = gtk_text_buffer_get_insert(buffer);
@@ -1538,6 +1565,10 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 
 	gtk_text_buffer_get_iter_at_offset(buffer, &iter, cur_pos);
 	gtk_text_buffer_place_cursor(buffer, &iter);
+
+	compose->autowrap = prev_autowrap;
+	if (compose->autowrap)
+		compose_wrap_all(compose);
 }
 
 static gchar *compose_get_signature_str(Compose *compose)
@@ -1606,14 +1637,14 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 		return;
 	}
 
+	prev_autowrap = compose->autowrap;
+	compose->autowrap = FALSE;
+
 	buffer = gtk_text_view_get_buffer(text);
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 
 	cur_encoding = conv_get_locale_charset_str();
-
-	prev_autowrap = compose->autowrap;
-	compose->autowrap = FALSE;
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
@@ -2050,6 +2081,9 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 	gchar *quote_str = NULL;
 	gint quote_len;
 	gboolean wrap_quote = prefs_common.linewrap_quote;
+	gboolean prev_autowrap = compose->autowrap;
+
+	compose->autowrap = FALSE;
 
 	buffer = gtk_text_view_get_buffer(text);
 
@@ -2076,13 +2110,8 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 		}
 	}
 
-	if (gtk_text_iter_is_end(&iter)) {
-		if (par_iter)
-			*par_iter = iter;
-		return;
-	}
-
-	do {
+	/* go until paragraph end (empty line) */
+	while (!gtk_text_iter_ends_line(&iter)) {
 		quote_str = compose_get_quote_str(buffer, &iter, &quote_len);
 		if (quote_str) {
 			if (!wrap_quote) {
@@ -2135,11 +2164,12 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 		}
 
 		g_free(quote_str);
-	} while (!gtk_text_iter_ends_line(&iter));
-	/* stop if paragraph end (empty line) */
+	}
 
 	if (par_iter)
 		*par_iter = iter;
+
+	compose->autowrap = prev_autowrap;
 }
 
 static void compose_wrap_all(Compose *compose)
