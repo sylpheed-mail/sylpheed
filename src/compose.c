@@ -1559,7 +1559,9 @@ static gchar *compose_get_signature_str(Compose *compose)
 
 	if (sig_str) {
 		utf8_sig_str = conv_codeset_strdup
-			(sig_str, conv_get_locale_charset_str(), CS_UTF_8);
+			(sig_str,
+			 conv_get_locale_charset_str(),
+			 conv_get_internal_charset_str());
 		g_free(sig_str);
 	}
 
@@ -1593,7 +1595,8 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
 
-		str = conv_codeset_strdup(buf, cur_encoding, CS_UTF_8);
+		str = conv_codeset_strdup
+			(buf, cur_encoding, conv_get_internal_charset_str());
 		if (!str) continue;
 
 		/* strip <CR> if DOS/Windows file,
@@ -2755,7 +2758,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			encoding = ENC_BASE64;
 #endif
 
-		src_codeset = CS_UTF_8;
+		src_codeset = conv_get_internal_charset_str();
 
 		debug_print("src encoding = %s, out encoding = %s, transfer encoding = %s\n",
 			    src_codeset, out_codeset, procmime_get_encoding_str(encoding));
@@ -2942,8 +2945,9 @@ static gint compose_write_body_to_file(Compose *compose, const gchar *file)
 	gtk_text_buffer_get_end_iter(buffer, &end);
 	tmp = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
 
-	chars = conv_codeset_strdup
-		(tmp, CS_UTF_8, conv_get_locale_charset_str());
+	chars = conv_codeset_strdup(tmp,
+				    conv_get_internal_charset_str(),
+				    conv_get_locale_charset_str());
 
 	g_free(tmp);
 
@@ -3694,24 +3698,13 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 static void compose_convert_header(gchar *dest, gint len, gchar *src,
 				   gint header_len, gboolean addr_field)
 {
-	gchar *str;
-	const gchar *cur_encoding;
-
 	g_return_if_fail(src != NULL);
 	g_return_if_fail(dest != NULL);
 
 	if (len < 1) return;
 
 	g_strchomp(src);
-
-#warning FIXME_GTK2 redundant code conversion
-	cur_encoding = conv_get_locale_charset_str();
-	if (!strcmp(cur_encoding, CS_US_ASCII))
-		cur_encoding = CS_ISO_8859_1;
-	str = conv_codeset_strdup(src, CS_UTF_8, cur_encoding);
-	if (str)
-		conv_encode_header(dest, len, str, header_len, addr_field);
-	g_free(str);
+	conv_encode_header(dest, len, src, header_len, addr_field);
 }
 
 static void compose_generate_msgid(Compose *compose, gchar *buf, gint len)

@@ -112,7 +112,7 @@ void unmime_header(gchar *out, const gchar *str)
 			continue;
 		}
 
-		/* convert to locale encoding */
+		/* convert to UTF-8 */
 		conv_str = conv_codeset_strdup(decoded_text, charset, NULL);
 		if (conv_str) {
 			len = strlen(conv_str);

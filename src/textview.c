@@ -1269,14 +1269,14 @@ void textview_scroll_one_line(TextView *textview, gboolean up)
 	if (!up) {
 		upper = vadj->upper - vadj->page_size;
 		if (vadj->value < upper) {
-			vadj->value += vadj->step_increment * 4;
+			vadj->value += vadj->step_increment;
 			vadj->value = MIN(vadj->value, upper);
 			g_signal_emit_by_name(G_OBJECT(vadj),
 					      "value_changed", 0);
 		}
 	} else {
 		if (vadj->value > 0.0) {
-			vadj->value -= vadj->step_increment * 4;
+			vadj->value -= vadj->step_increment;
 			vadj->value = MAX(vadj->value, 0.0);
 			g_signal_emit_by_name(G_OBJECT(vadj),
 					      "value_changed", 0);
@@ -1366,7 +1366,7 @@ static void textview_smooth_scroll_one_line(TextView *textview, gboolean up)
 		upper = vadj->upper - vadj->page_size;
 		if (vadj->value < upper) {
 			old_value = vadj->value;
-			last_value = vadj->value + vadj->step_increment * 4;
+			last_value = vadj->value + vadj->step_increment;
 			last_value = MIN(last_value, upper);
 
 			textview_smooth_scroll_do(textview, old_value,
@@ -1376,7 +1376,7 @@ static void textview_smooth_scroll_one_line(TextView *textview, gboolean up)
 	} else {
 		if (vadj->value > 0.0) {
 			old_value = vadj->value;
-			last_value = vadj->value - vadj->step_increment * 4;
+			last_value = vadj->value - vadj->step_increment;
 			last_value = MAX(last_value, 0.0);
 
 			textview_smooth_scroll_do(textview, old_value,

@@ -31,9 +31,7 @@
 #  include <locale.h>
 #endif
 
-#if HAVE_ICONV
-#  include <iconv.h>
-#endif
+#include <iconv.h>
 
 #include "intl.h"
 #include "codeconv.h"
@@ -375,9 +373,34 @@ void conv_sjistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 void conv_jistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
+	static iconv_t cd = (iconv_t)-1;
+	static gboolean iconv_ok = TRUE;
 	gchar *tmpstr;
+	gchar *eucstr;
 
-	tmpstr = conv_iconv_strdup(inbuf, CS_ISO_2022_JP, CS_UTF_8);
+	Xalloca(eucstr, outlen, return);
+
+	conv_jistoeuc(eucstr, outlen, inbuf);
+
+	if (cd == (iconv_t)-1) {
+		if (!iconv_ok) {
+			strncpy2(outbuf, inbuf, outlen);
+			return;
+		}
+		cd = iconv_open(CS_UTF_8, CS_EUC_JP_MS);
+		if (cd == (iconv_t)-1) {
+			cd = iconv_open(CS_UTF_8, CS_EUC_JP);
+			if (cd == (iconv_t)-1) {
+				g_warning("conv_jistoutf8(): %s\n",
+					  g_strerror(errno));
+				iconv_ok = FALSE;
+				strncpy2(outbuf, inbuf, outlen);
+				return;
+			}
+		}
+	}
+
+	tmpstr = conv_iconv_strdup_with_cd(eucstr, cd);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -864,9 +887,9 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
 
 	/* auto detection mode */
 	if (!src_charset_str && !dest_charset_str) {
-		//if (src_charset == C_EUC_JP || src_charset == C_SHIFT_JIS)
-		//	return conv_anytodisp;
-		//else
+		if (src_charset == C_EUC_JP || src_charset == C_SHIFT_JIS)
+			return conv_anytodisp;
+		else
 			return conv_noconv;
 	}
 
@@ -934,20 +957,12 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 			 const gchar *src_code, const gchar *dest_code)
 {
 	iconv_t cd;
-	const gchar *inbuf_p;
 	gchar *outbuf;
-	gchar *outbuf_p;
-	size_t in_size;
-	size_t in_left;
-	size_t out_size;
-	size_t out_left;
-	size_t n_conv;
-	size_t len;
 
 	if (!src_code)
 		src_code = conv_get_outgoing_charset_str();
 	if (!dest_code)
-		dest_code = conv_get_locale_charset_str();
+		dest_code = conv_get_internal_charset_str();
 
 	/* don't convert if current codeset is US-ASCII */
 	if (!strcasecmp(dest_code, CS_US_ASCII))
@@ -960,6 +975,25 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 	cd = iconv_open(dest_code, src_code);
 	if (cd == (iconv_t)-1)
 		return NULL;
+
+	outbuf = conv_iconv_strdup_with_cd(inbuf, cd);
+
+	iconv_close(cd);
+
+	return outbuf;
+}
+
+gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
+{
+	const gchar *inbuf_p;
+	gchar *outbuf;
+	gchar *outbuf_p;
+	size_t in_size;
+	size_t in_left;
+	size_t out_size;
+	size_t out_left;
+	size_t n_conv;
+	size_t len;
 
 	inbuf_p = inbuf;
 	in_size = strlen(inbuf);
@@ -981,6 +1015,7 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 	while ((n_conv = iconv(cd, (ICONV_CONST gchar **)&inbuf_p, &in_left,
 			       &outbuf_p, &out_left)) == (size_t)-1) {
 		if (EILSEQ == errno) {
+			g_print("iconv(): at %d: %s\n", in_size - in_left, g_strerror(errno));
 			inbuf_p++;
 			in_left--;
 			if (out_left == 0) {
@@ -1015,8 +1050,6 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 	len = outbuf_p - outbuf;
 	outbuf = g_realloc(outbuf, len + 1);
 	outbuf[len] = '\0';
-
-	iconv_close(cd);
 
 	return outbuf;
 }
@@ -1070,6 +1103,7 @@ static const struct {
 	{C_ISO_2022_JP_3,	CS_ISO_2022_JP_3},
 	{C_EUC_JP,		CS_EUC_JP},
 	{C_EUC_JP,		CS_EUCJP},
+	{C_EUC_JP_MS,		CS_EUC_JP_MS},
 	{C_SHIFT_JIS,		CS_SHIFT_JIS},
 	{C_SHIFT_JIS,		CS_SHIFT__JIS},
 	{C_SHIFT_JIS,		CS_SJIS},
@@ -1459,6 +1493,7 @@ gboolean conv_is_multibyte_encoding(CharSet encoding)
 {
 	switch (encoding) {
 	case C_EUC_JP:
+	case C_EUC_JP_MS:
 	case C_EUC_KR:
 	case C_EUC_TW:
 	case C_EUC_CN:
@@ -1574,6 +1609,8 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 	guchar *destp = dest;
 	gboolean use_base64;
 
+	g_return_if_fail(g_utf8_validate(src, -1, NULL) == TRUE);
+
 	if (MB_CUR_MAX > 1) {
 		use_base64 = TRUE;
 		mimesep_enc = "?B?";
@@ -1582,9 +1619,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 		mimesep_enc = "?Q?";
 	}
 
-	cur_encoding = conv_get_locale_charset_str();
-	if (!strcmp(cur_encoding, CS_US_ASCII))
-		cur_encoding = CS_ISO_8859_1;
+	cur_encoding = conv_get_internal_charset_str();
 	out_encoding = conv_get_outgoing_charset_str();
 	if (!strcmp(out_encoding, CS_US_ASCII))
 		out_encoding = CS_ISO_8859_1;
@@ -1646,14 +1681,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 				if (addr_field && (*p == '(' || *p == ')'))
 					break;
 
-				if (MB_CUR_MAX > 1) {
-					mb_len = mblen(p, MB_CUR_MAX);
-					if (mb_len < 0) {
-						g_warning("conv_encode_header(): invalid multibyte character encountered\n");
-						mb_len = 1;
-					}
-				} else
-					mb_len = 1;
+				mb_len = g_utf8_skip[*p];
 
 				Xstrndup_a(part_str, srcp, cur_len + mb_len, );
 				out_str = conv_codeset_strdup

@@ -518,11 +518,9 @@ gint get_mbs_len(const gchar *s)
 		return -1;
 
 	while (*p != '\0') {
-		mb_len = mblen(p, MB_LEN_MAX);
+		mb_len = g_utf8_skip[*(guchar *)p];
 		if (mb_len == 0)
 			break;
-		else if (mb_len < 0)
-			return -1;
 		else
 			len++;
 
@@ -1340,13 +1338,13 @@ gchar *trim_string(const gchar *str, gint len)
 	if (!str) return NULL;
 	if (strlen(str) <= len)
 		return g_strdup(str);
+	if (g_utf8_validate(str, -1, NULL) == FALSE)
+		return g_strdup(str);
 
 	while (*p != '\0') {
-		mb_len = mblen(p, MB_LEN_MAX);
+		mb_len = g_utf8_skip[*(guchar *)p];
 		if (mb_len == 0)
 			break;
-		else if (mb_len < 0)
-			return g_strdup(str);
 		else if (new_len + mb_len > len)
 			break;
 
@@ -1367,13 +1365,13 @@ gchar *trim_string_before(const gchar *str, gint len)
 	if (!str) return NULL;
 	if ((new_len = strlen(str)) <= len)
 		return g_strdup(str);
+	if (g_utf8_validate(str, -1, NULL) == FALSE)
+		return g_strdup(str);
 
 	while (*p != '\0') {
-		mb_len = mblen(p, MB_LEN_MAX);
+		mb_len = g_utf8_skip[*(guchar *)p];
 		if (mb_len == 0)
 			break;
-		else if (mb_len < 0)
-			return g_strdup(str);
 
 		new_len -= mb_len;
 		p += mb_len;

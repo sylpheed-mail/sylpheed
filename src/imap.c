@@ -350,8 +350,8 @@ static gchar *search_array_str			(GPtrArray	*array,
 static void imap_path_separator_subst		(gchar		*str,
 						 gchar		 separator);
 
-static gchar *imap_modified_utf7_to_locale	(const gchar	*mutf7_str);
-static gchar *imap_locale_to_modified_utf7	(const gchar	*from);
+static gchar *imap_modified_utf7_to_utf8	(const gchar	*mutf7_str);
+static gchar *imap_utf8_to_modified_utf7	(const gchar	*from);
 
 static GSList *imap_get_seq_set_from_msglist	(GSList		*msglist);
 static void imap_seq_set_free			(GSList		*seq_list);
@@ -1765,8 +1765,8 @@ static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
 		name = g_basename(buf);
 		if (name[0] == '.') continue;
 
-		loc_name = imap_modified_utf7_to_locale(name);
-		loc_path = imap_modified_utf7_to_locale(buf);
+		loc_name = imap_modified_utf7_to_utf8(name);
+		loc_path = imap_modified_utf7_to_utf8(buf);
 		new_item = folder_item_new(loc_name, loc_path);
 		if (strcasestr(flags, "\\Noinferiors") != NULL)
 			new_item->no_sub = TRUE;
@@ -1889,7 +1889,7 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 
 	/* keep trailing directory separator to create a folder that contains
 	   sub folder */
-	imap_path = imap_locale_to_modified_utf7(dirpath);
+	imap_path = imap_utf8_to_modified_utf7(dirpath);
 	strtailchomp(dirpath, '/');
 	Xstrdup_a(new_name, name, {g_free(dirpath); return NULL;});
 	strtailchomp(new_name, '/');
@@ -1989,7 +1989,7 @@ static gint imap_rename_folder(Folder *folder, FolderItem *item,
 	} else
 		newpath = g_strdup(name);
 
-	real_newpath = imap_locale_to_modified_utf7(newpath);
+	real_newpath = imap_utf8_to_modified_utf7(newpath);
 	imap_path_separator_subst(real_newpath, separator);
 
 	ok = imap_cmd_rename(session, real_oldpath, real_newpath);
@@ -2432,7 +2432,7 @@ static gchar *imap_get_real_path(IMAPFolder *folder, const gchar *path)
 	g_return_val_if_fail(folder != NULL, NULL);
 	g_return_val_if_fail(path != NULL, NULL);
 
-	real_path = imap_locale_to_modified_utf7(path);
+	real_path = imap_utf8_to_modified_utf7(path);
 	separator = imap_get_path_separator(folder, path);
 	imap_path_separator_subst(real_path, separator);
 
@@ -3645,7 +3645,7 @@ static void imap_path_separator_subst(gchar *str, gchar separator)
 	}
 }
 
-static gchar *imap_modified_utf7_to_locale(const gchar *mutf7_str)
+static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
@@ -3660,15 +3660,16 @@ static gchar *imap_modified_utf7_to_locale(const gchar *mutf7_str)
 	if (!iconv_ok) return g_strdup(mutf7_str);
 
 	if (cd == (iconv_t)-1) {
-		cd = iconv_open(conv_get_locale_charset_str(), "UTF-7");
+		cd = iconv_open(conv_get_internal_charset_str(), CS_UTF_7);
 		if (cd == (iconv_t)-1) {
 			g_warning("iconv cannot convert UTF-7 to %s\n",
-				  conv_get_locale_charset_str());
+				  conv_get_internal_charset_str());
 			iconv_ok = FALSE;
 			return g_strdup(mutf7_str);
 		}
 	}
 
+	/* modified UTF-7 to normal UTF-7 conversion */
 	norm_utf7 = g_string_new(NULL);
 
 	for (p = mutf7_str; *p != '\0'; p++) {
@@ -3715,7 +3716,7 @@ static gchar *imap_modified_utf7_to_locale(const gchar *mutf7_str)
 	return to_str;
 }
 
-static gchar *imap_locale_to_modified_utf7(const gchar *from)
+static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
@@ -3728,15 +3729,16 @@ static gchar *imap_locale_to_modified_utf7(const gchar *from)
 	if (!iconv_ok) return g_strdup(from);
 
 	if (cd == (iconv_t)-1) {
-		cd = iconv_open("UTF-7", conv_get_locale_charset_str());
+		cd = iconv_open(CS_UTF_7, conv_get_internal_charset_str());
 		if (cd == (iconv_t)-1) {
 			g_warning(_("iconv cannot convert %s to UTF-7\n"),
-				  conv_get_locale_charset_str());
+				  conv_get_internal_charset_str());
 			iconv_ok = FALSE;
 			return g_strdup(from);
 		}
 	}
 
+	/* UTF-8 to normal UTF-7 conversion */
 	Xstrdup_a(from_tmp, from, return g_strdup(from));
 	from_len = strlen(from);
 	norm_utf7_len = from_len * 5;
@@ -3760,18 +3762,13 @@ static gchar *imap_locale_to_modified_utf7(const gchar *from)
 			from_tmp++;
 			from_len--;
 		} else {
-			size_t mb_len = 0, conv_len = 0;
+			size_t conv_len = 0;
 
 			/* unprintable char: convert to UTF-7 */
 			p = from_tmp;
 			while (!IS_PRINT(*(guchar *)p) && conv_len < from_len) {
-				mb_len = mblen(p, MB_LEN_MAX);
-				if (mb_len <= 0) {
-					g_warning("wrong multibyte sequence\n");
-					return g_strdup(from);
-				}
-				conv_len += mb_len;
-				p += mb_len;
+				conv_len += g_utf8_skip[*(guchar *)p];
+				p += g_utf8_skip[*(guchar *)p];
 			}
 
 			from_len -= conv_len;

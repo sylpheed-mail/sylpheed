@@ -25,6 +25,7 @@
 #endif
 
 #include <glib.h>
+#include <iconv.h>
 
 typedef struct _CodeConverter	CodeConverter;
 
@@ -74,6 +75,7 @@ typedef enum
 	C_ISO_2022_JP_2,
 	C_ISO_2022_JP_3,
 	C_EUC_JP,
+	C_EUC_JP_MS,
 	C_SHIFT_JIS,
 	C_ISO_2022_KR,
 	C_EUC_KR,
@@ -145,6 +147,7 @@ struct _CodeConverter
 #define CS_ISO_2022_JP_3	"ISO-2022-JP-3"
 #define CS_EUC_JP		"EUC-JP"
 #define CS_EUCJP		"EUCJP"
+#define CS_EUC_JP_MS		"EUC-JP-MS"
 #define CS_SHIFT_JIS		"Shift_JIS"
 #define CS_SHIFT__JIS		"SHIFT-JIS"
 #define CS_SJIS			"SJIS"
@@ -208,6 +211,8 @@ CodeConvFunc conv_get_code_conv_func	(const gchar	*src_charset_str,
 gchar *conv_iconv_strdup		(const gchar	*inbuf,
 					 const gchar	*src_code,
 					 const gchar	*dest_code);
+gchar *conv_iconv_strdup_with_cd	(const gchar	*inbuf,
+					 iconv_t	 cd);
 
 const gchar *conv_get_charset_str		(CharSet	 charset);
 CharSet conv_get_charset_from_str		(const gchar	*charset);

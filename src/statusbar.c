@@ -49,26 +49,12 @@ void statusbar_puts(GtkStatusbar *statusbar, const gchar *str)
 {
 	gint cid;
 	gchar *buf;
+	gchar *tmp;
 
-	buf = g_strdup(str);
-	strretchomp(buf);
-	if (strlen(buf) > 76) {
-		wchar_t *wbuf;
-
-		wbuf = strdup_mbstowcs(buf);
-
-		if (wcslen(wbuf) > 60) {
-			gchar *tmp;
-
-			g_free(buf);
-			wbuf[60] = (wchar_t)0;
-			tmp = strdup_wcstombs(wbuf);
-			buf = g_strconcat(tmp, "...", NULL);
-			g_free(tmp);
-		}
-
-		g_free(wbuf);
-	}
+	tmp = g_strdup(str);
+	strretchomp(tmp);
+	buf = trim_string(tmp, 76);
+	g_free(tmp);
 
 	cid = gtk_statusbar_get_context_id(statusbar, "Standard Output");
 	gtk_statusbar_pop(statusbar, cid);
