@@ -234,7 +234,7 @@ static void prefs_filter_create(void)
 	gtk_widget_show(btn_vbox);
 	gtk_box_pack_start(GTK_BOX(hbox), btn_vbox, FALSE, FALSE, 0);
 
-	top_btn = gtk_button_new_with_label(_("Top"));
+	top_btn = gtk_button_new_from_stock(GTK_STOCK_GOTO_TOP);
 	gtk_widget_show(top_btn);
 	gtk_box_pack_start(GTK_BOX(btn_vbox), top_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(top_btn), "clicked",
@@ -242,13 +242,13 @@ static void prefs_filter_create(void)
 
 	PACK_VSPACER(btn_vbox, spc_vbox, VSPACING_NARROW_2);
 
-	up_btn = gtk_button_new_with_label(_("Up"));
+	up_btn = gtk_button_new_from_stock(GTK_STOCK_GO_UP);
 	gtk_widget_show(up_btn);
 	gtk_box_pack_start(GTK_BOX(btn_vbox), up_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(up_btn), "clicked",
 			 G_CALLBACK(prefs_filter_up), NULL);
 
-	down_btn = gtk_button_new_with_label(_("Down"));
+	down_btn = gtk_button_new_from_stock(GTK_STOCK_GO_DOWN);
 	gtk_widget_show(down_btn);
 	gtk_box_pack_start(GTK_BOX(btn_vbox), down_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(down_btn), "clicked",
@@ -256,7 +256,7 @@ static void prefs_filter_create(void)
 
 	PACK_VSPACER(btn_vbox, spc_vbox, VSPACING_NARROW_2);
 
-	bottom_btn = gtk_button_new_with_label(_("Bottom"));
+	bottom_btn = gtk_button_new_from_stock(GTK_STOCK_GOTO_BOTTOM);
 	gtk_widget_show(bottom_btn);
 	gtk_box_pack_start(GTK_BOX(btn_vbox), bottom_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(bottom_btn), "clicked",
@@ -272,7 +272,7 @@ static void prefs_filter_create(void)
 	gtk_widget_show(btn_hbox);
 	gtk_box_pack_start(GTK_BOX(hbox), btn_hbox, FALSE, FALSE, 0);
 
-	add_btn = gtk_button_new_with_label(_("Add"));
+	add_btn = gtk_button_new_from_stock(GTK_STOCK_ADD);
 	gtk_widget_show(add_btn);
 	gtk_box_pack_start(GTK_BOX(btn_hbox), add_btn, FALSE, TRUE, 0);
 	g_signal_connect(G_OBJECT(add_btn), "clicked",
@@ -284,13 +284,13 @@ static void prefs_filter_create(void)
 	g_signal_connect(G_OBJECT(edit_btn), "clicked",
 			 G_CALLBACK(prefs_filter_edit_cb), NULL);
 
-	copy_btn = gtk_button_new_with_label(_("Copy"));
+	copy_btn = gtk_button_new_from_stock(GTK_STOCK_COPY);
 	gtk_widget_show(copy_btn);
 	gtk_box_pack_start(GTK_BOX(btn_hbox), copy_btn, FALSE, TRUE, 0);
 	g_signal_connect(G_OBJECT(copy_btn), "clicked",
 			 G_CALLBACK(prefs_filter_copy_cb), NULL);
 
-	del_btn = gtk_button_new_with_label(_(" Delete "));
+	del_btn = gtk_button_new_from_stock(GTK_STOCK_DELETE);
 	gtk_widget_show(del_btn);
 	gtk_box_pack_start(GTK_BOX(btn_hbox), del_btn, FALSE, TRUE, 0);
 	g_signal_connect(G_OBJECT(del_btn), "clicked",
