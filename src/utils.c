@@ -3149,7 +3149,7 @@ void debug_print(const gchar *format, ...)
 	g_vsnprintf(buf, sizeof(buf), format, args);
 	va_end(args);
 
-	fputs(buf, stdout);
+	g_print("%s", buf);
 }
 
 #define TIME_LEN	11

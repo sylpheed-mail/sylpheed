@@ -1895,6 +1895,16 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 
 	debug_print("Setting widgets... ");
 
+	gtk_widget_set_size_request(GTK_WIDGET_PTR(mainwin->folderview),
+				    prefs_common.folderview_width,
+				    prefs_common.folderview_height);
+	gtk_widget_set_size_request(GTK_WIDGET_PTR(mainwin->summaryview),
+				    prefs_common.summaryview_width,
+				    prefs_common.summaryview_height);
+	gtk_widget_set_size_request(GTK_WIDGET_PTR(mainwin->messageview),
+				    prefs_common.msgview_width,
+				    prefs_common.msgview_height);
+
 	/* create separated window(s) if needed */
 	if (type & SEPARATE_FOLDER) {
 		folderwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -1936,16 +1946,6 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 		if (messageview_is_visible(mainwin->messageview))
 			gtk_widget_show(messagewin);
 	}
-
-	gtk_widget_set_size_request(GTK_WIDGET_PTR(mainwin->folderview),
-				    prefs_common.folderview_width,
-				    prefs_common.folderview_height);
-	gtk_widget_set_size_request(GTK_WIDGET_PTR(mainwin->summaryview),
-				    prefs_common.summaryview_width,
-				    prefs_common.summaryview_height);
-	gtk_widget_set_size_request(GTK_WIDGET_PTR(mainwin->messageview),
-				    prefs_common.msgview_width,
-				    prefs_common.msgview_height);
 
 	switch (type) {
 	case SEPARATE_NONE:

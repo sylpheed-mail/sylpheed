@@ -1,5 +1,12 @@
 2005-03-10
 
+	* src/mainwindow.c: main_window_set_widgets(): ウィンドウサイズが
+	  不正になるのを防ぐため、最初にサイズを要求するようにした。
+	* src/utils.c: debug_print(): locale エンコーディングで出力するために
+	  g_print() を使用。
+
+2005-03-10
+
 	* src/passphrase.c: パスフレーズダイアログの入力捕捉を部分的に修正。
 	  ポインタをウィンドウ内に制限するようにした。
 
