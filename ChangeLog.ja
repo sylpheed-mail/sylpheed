@@ -1,3 +1,8 @@
+2005-02-27
+
+	* src/socket.c: sock_add_watch(): SSL 接続の場合でも g_io_add_watch()
+	  が呼ばれていたバグを修正。ランダムなバグを引き起こしていた。
+
 2005-02-25
 
 	* src/messageview.c: messageview_select_all(), reply_cb(): selection
