@@ -2693,6 +2693,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	gchar *buf;
 	gchar *canon_buf;
 	const gchar *out_codeset;
+	const gchar *src_codeset = CS_INTERNAL;
 	EncodingType encoding;
 
 	if ((fp = fopen(file, "wb")) == NULL) {
@@ -2717,8 +2718,6 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		out_codeset = CS_US_ASCII;
 		encoding = ENC_7BIT;
 	} else {
-		const gchar *src_codeset;
-
 		out_codeset = conv_get_outgoing_charset_str();
 		if (!strcasecmp(out_codeset, CS_US_ASCII))
 			out_codeset = CS_ISO_8859_1;
@@ -2730,19 +2729,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		else if (prefs_common.encoding_method == CTE_8BIT)
 			encoding = ENC_8BIT;
 		else
-			encoding = procmime_get_encoding_for_charset(out_codeset);
-
-#if USE_GPGME
-		if (!is_draft &&
-		    compose->use_signing && !compose->account->clearsign &&
-		    encoding == ENC_8BIT)
-			encoding = ENC_BASE64;
-#endif
-
-		src_codeset = CS_INTERNAL;
-
-		debug_print("src encoding = %s, out encoding = %s, transfer encoding = %s\n",
-			    src_codeset, out_codeset, procmime_get_encoding_str(encoding));
+			encoding = procmime_get_encoding_for_charset
+				(out_codeset);
 
 		buf = conv_codeset_strdup(chars, src_codeset, out_codeset);
 		if (!buf) {
@@ -2775,6 +2763,14 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	buf = canon_buf;
 
 #if USE_GPGME
+	/* force encoding to protect trailing spaces */
+	if (!is_draft && compose->use_signing) {
+		if (encoding == ENC_7BIT)
+			encoding = ENC_QUOTED_PRINTABLE;
+		else if (encoding == ENC_8BIT)
+			encoding = ENC_BASE64;
+	}
+
 	if (!is_draft && compose->use_signing && compose->account->clearsign) {
 		if (compose_clearsign_text(compose, &buf) < 0) {
 			g_warning("clearsign failed\n");
@@ -2785,6 +2781,11 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	}
 #endif
+
+	debug_print("src encoding = %s, out encoding = %s, "
+		    "transfer encoding = %s\n",
+		    src_codeset, out_codeset,
+		    procmime_get_encoding_str(encoding));
 
 	/* write headers */
 	if (compose_write_headers
