@@ -1992,18 +1992,18 @@ typedef enum {
 static guint get_indent_length(GtkTextBuffer *textbuf, guint start_pos,
 			       guint text_len)
 {
+	GtkTextIter iter;
 	guint i_len = 0;
-	guint i, ch_len, alnum_cnt = 0;
+	guint ch_len, alnum_cnt = 0;
 	IndentState state = WAIT_FOR_INDENT_CHAR;
 	gchar cbuf[CHAR_BUF_SIZE];
 	gboolean is_space;
 	gboolean is_indent;
+	gboolean iter_next = TRUE;
 
-#warning FIXME_GTK2 use GtkTextIter
-	for (i = start_pos; i < text_len; i++) {
-		GtkTextIter iter;
+	gtk_text_buffer_get_iter_at_offset(textbuf, &iter, start_pos);
 
-		gtk_text_buffer_get_iter_at_offset(textbuf, &iter, i);
+	while (iter_next == TRUE) {
 		GET_CHAR(&iter, cbuf, ch_len);
 		if (ch_len > 1)
 			break;
@@ -2048,6 +2048,7 @@ static guint get_indent_length(GtkTextBuffer *textbuf, guint start_pos,
 		}
 
 		i_len++;
+		iter_next = gtk_text_iter_forward_char(&iter);
 	}
 
 out:
