@@ -1,5 +1,24 @@
 Changes of Sylpheed
 
+* 1.9.4 (development)
+
+    * The bug in SSL connection which brought on sporadic crashes and errors
+      were fixed.
+    * The user-interface of MIME view was improved, and its several bugs were
+      fixed.
+    * Miscellaneous dialogs were modified.
+      - The design of alert dialog was modified to fit other Gtk2
+        applications (not yet HIG compliant, though).
+      - The file selection dialog was replaced with GtkFileChooserDialog.
+    * The line number limit of the log window was re-enabled.
+    * Text for printing is now output with locale encoding.
+    * The incompatibility of PGP signature between gnupg-1.2 and 1.4 when
+      attached text has trailing spaces was fixed.
+    * Locale encoding is now assumed for unencoded header strings on display.
+    * The version of GLib and GTK is now checked on configure.
+    * Code cleanups were made.
+    * Some minor bugs have been fixed.
+
 * 1.9.3 (development)
 
     * The line-wrapping function has been reimplemented.
