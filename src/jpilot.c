@@ -1049,7 +1049,7 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 		if( convert_charcode ) {
 			gchar *nameConv;
 			nameConv = g_strdup( fullName );
-			conv_sjistoeuc( fullName, FULLNAME_BUFSIZE, nameConv );
+			conv_sjistodisp( fullName, FULLNAME_BUFSIZE, nameConv );
 			g_free( nameConv );
 		}
 
@@ -1115,7 +1115,7 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 					addritem_email_set_address( email, bufEMail );
 
 					if( convert_charcode ) {
-						conv_sjistoeuc( convertBuff, JPILOT_LEN_LABEL, ai->labels[ind] );
+						conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, ai->labels[ind] );
 						addritem_email_set_remarks( email, convertBuff );
 					}
 					else {
@@ -1283,7 +1283,7 @@ static gboolean jpilot_setup_labels( JPilotFile *pilotFile ) {
 				gchar convertBuff[ JPILOT_LEN_LABEL ];
 
 				if( convert_charcode ) {
-					conv_sjistoeuc( convertBuff, JPILOT_LEN_LABEL, labelName );
+					conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, labelName );
 					labelName = convertBuff;
 				}
 
@@ -1316,7 +1316,7 @@ GList *jpilot_load_label( JPilotFile *pilotFile, GList *labelList ) {
 
 			if( labelName ) {
 				if( convert_charcode ) {
-					conv_sjistoeuc( convertBuff, JPILOT_LEN_LABEL, labelName );
+					conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, labelName );
 					labelName = convertBuff;
 				}
 				labelList = g_list_append( labelList, g_strdup( labelName ) );
@@ -1394,7 +1394,7 @@ GList *jpilot_load_custom_label( JPilotFile *pilotFile, GList *labelList ) {
 				g_strchug( labelName );
 				if( *labelName != '\0' ) {
 					if( convert_charcode ) {
-						conv_sjistoeuc( convertBuff, JPILOT_LEN_LABEL, labelName );
+						conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, labelName );
 						labelName = convertBuff;
 					}
 					labelList = g_list_append( labelList, g_strdup( labelName ) );
@@ -1443,7 +1443,7 @@ static void jpilot_build_category_list( JPilotFile *pilotFile ) {
 
 		if( convert_charcode ) {
 			gchar catName[ JPILOT_LEN_CATEG ];
-			conv_sjistoeuc( catName, JPILOT_LEN_CATEG, cat->name[i] );
+			conv_sjistodisp( catName, JPILOT_LEN_CATEG, cat->name[i] );
 			addritem_folder_set_name( folder, catName );
 		}
 		else {
@@ -1620,7 +1620,7 @@ gboolean jpilot_validate( const JPilotFile *pilotFile ) {
 * no home. Filename should be g_free() when done.
 */
 gchar *jpilot_find_pilotdb( void ) {
-	gchar *homedir;
+	const gchar *homedir;
 	gchar str[ WORK_BUFLEN ];
 	gint len;
 	FILE *fp;
