@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ static gint smtp_from(SMTPSession *session);
 static gint smtp_auth(SMTPSession *session);
 static gint smtp_starttls(SMTPSession *session);
 static gint smtp_auth_cram_md5(SMTPSession *session);
+static gint smtp_auth_plain(SMTPSession *session);
 static gint smtp_auth_login(SMTPSession *session);
 
 static gint smtp_ehlo(SMTPSession *session);
@@ -143,6 +144,10 @@ static gint smtp_auth(SMTPSession *session)
 	    (session->forced_auth_type == 0 &&
 	     (session->avail_auth_type & SMTPAUTH_CRAM_MD5) != 0))
 		smtp_auth_cram_md5(session);
+	else if (session->forced_auth_type == SMTPAUTH_PLAIN ||
+		 (session->forced_auth_type == 0 &&
+		  (session->avail_auth_type & SMTPAUTH_PLAIN) != 0))
+		smtp_auth_plain(session);
 	else if (session->forced_auth_type == SMTPAUTH_LOGIN ||
 		 (session->forced_auth_type == 0 &&
 		  (session->avail_auth_type & SMTPAUTH_LOGIN) != 0))
@@ -266,8 +271,10 @@ static gint smtp_ehlo_recv(SMTPSession *session, const gchar *msg)
 		const gchar *p = msg;
 		p += 3;
 		if (*p == '-' || *p == ' ') p++;
-		if (g_strncasecmp(p, "AUTH", 4) == 0) {
+		if (g_strncasecmp(p, "AUTH", 4) == 0 && p[4] != '\0') {
 			p += 5;
+			if (strcasestr(p, "PLAIN"))
+				session->avail_auth_type |= SMTPAUTH_PLAIN;
 			if (strcasestr(p, "LOGIN"))
 				session->avail_auth_type |= SMTPAUTH_LOGIN;
 			if (strcasestr(p, "CRAM-MD5"))
@@ -303,6 +310,45 @@ static gint smtp_auth_cram_md5(SMTPSession *session)
 
 	session_send_msg(SESSION(session), SESSION_MSG_NORMAL, "AUTH CRAM-MD5");
 	log_print("ESMTP> AUTH CRAM-MD5\n");
+
+	return SM_OK;
+}
+
+static gint smtp_auth_plain(SMTPSession *session)
+{
+	gchar *authstr;
+	gint authlen;
+	gchar *outbuf;
+	gchar *p;
+
+	session->state = SMTP_AUTH_PLAIN;
+	session->auth_type = SMTPAUTH_PLAIN;
+
+	/*
+	 * construct the string: \0<user>\0<pass>\0
+	 */
+
+	authlen = 1 + strlen(session->user) + 1 + strlen(session->pass) + 1;
+	authstr = g_malloc(authlen);
+
+	p = authstr;
+
+	*p++ = '\0';
+	strcpy(p, session->user);
+	p += strlen(p) + 1;
+	strcpy(p, session->pass);
+
+	outbuf = g_malloc(sizeof("AUTH PLAIN ") + authlen * 2 + 1);
+
+	strcpy(outbuf, "AUTH PLAIN ");
+	p = outbuf + strlen(outbuf);
+	base64_encode(p, authstr, authlen);
+
+	session_send_msg(SESSION(session), SESSION_MSG_NORMAL, outbuf);
+	log_print("ESMTP> AUTH PLAIN ********\n");
+
+	g_free(outbuf);
+	g_free(authstr);
 
 	return SM_OK;
 }
@@ -421,6 +467,7 @@ static gint smtp_session_recv_msg(Session *session, const gchar *msg)
 	case SMTP_EHLO:
 	case SMTP_STARTTLS:
 	case SMTP_AUTH:
+	case SMTP_AUTH_PLAIN:
 	case SMTP_AUTH_LOGIN_USER:
 	case SMTP_AUTH_LOGIN_PASS:
 	case SMTP_AUTH_CRAM_MD5:
@@ -522,6 +569,7 @@ static gint smtp_session_recv_msg(Session *session, const gchar *msg)
 	case SMTP_AUTH_LOGIN_USER:
 		smtp_auth_login_user_recv(smtp_session, msg);
 		break;
+	case SMTP_AUTH_PLAIN:
 	case SMTP_AUTH_LOGIN_PASS:
 	case SMTP_AUTH_CRAM_MD5:
 		smtp_from(smtp_session);

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,8 @@ typedef enum
 {
 	SMTPAUTH_LOGIN      = 1 << 0,
 	SMTPAUTH_CRAM_MD5   = 1 << 1,
-	SMTPAUTH_DIGEST_MD5 = 1 << 2
+	SMTPAUTH_DIGEST_MD5 = 1 << 2,
+	SMTPAUTH_PLAIN      = 1 << 3
 } SMTPAuthType;
 
 typedef enum
@@ -65,6 +66,7 @@ typedef enum
 	SMTP_STARTTLS,
 	SMTP_FROM,
 	SMTP_AUTH,
+	SMTP_AUTH_PLAIN,
 	SMTP_AUTH_LOGIN_USER,
 	SMTP_AUTH_LOGIN_PASS,
 	SMTP_AUTH_CRAM_MD5,

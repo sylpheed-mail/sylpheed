@@ -1237,6 +1237,7 @@ static void prefs_account_send_create(void)
 	optmenu_menu = gtk_menu_new ();
 
 	MENUITEM_ADD (optmenu_menu, menuitem, _("Automatic"), 0);
+	MENUITEM_ADD (optmenu_menu, menuitem, "PLAIN", SMTPAUTH_PLAIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "LOGIN", SMTPAUTH_LOGIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "CRAM-MD5", SMTPAUTH_CRAM_MD5);
 	MENUITEM_ADD (optmenu_menu, menuitem, "DIGEST-MD5", SMTPAUTH_DIGEST_MD5);
@@ -2130,14 +2131,17 @@ static void prefs_account_smtp_auth_type_set_optmenu(PrefParam *pparam)
 	GtkWidget *menuitem;
 
 	switch (type) {
-	case SMTPAUTH_LOGIN:
+	case SMTPAUTH_PLAIN:
 		gtk_option_menu_set_history(optmenu, 1);
 		break;
-	case SMTPAUTH_CRAM_MD5:
+	case SMTPAUTH_LOGIN:
 		gtk_option_menu_set_history(optmenu, 2);
 		break;
-	case SMTPAUTH_DIGEST_MD5:
+	case SMTPAUTH_CRAM_MD5:
 		gtk_option_menu_set_history(optmenu, 3);
+		break;
+	case SMTPAUTH_DIGEST_MD5:
+		gtk_option_menu_set_history(optmenu, 4);
 		break;
 	case 0:
 	default:
