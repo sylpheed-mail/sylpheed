@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-29 14:21+0900\n"
+"POT-Creation-Date: 2005-03-31 13:11+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -97,10 +97,10 @@ msgstr ""
 "v stolpcu `G', da omogočite pobiranje sporočil z ukazom `Poberi vsa'."
 
 #: src/account.c:639 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3760 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3803 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
-#: src/mimeview.c:151 src/prefs_filter.c:214 src/prefs_folder_item.c:170
+#: src/mimeview.c:151 src/prefs_filter.c:258 src/prefs_folder_item.c:170
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Ime"
@@ -120,7 +120,7 @@ msgstr "Strežnik"
 msgid "Add"
 msgstr "Dodajanje"
 
-#: src/account.c:676 src/prefs_filter.c:281
+#: src/account.c:676 src/prefs_filter.c:319
 msgid "Edit"
 msgstr "Urejanje"
 
@@ -150,13 +150,13 @@ msgstr "Brisanje računa"
 msgid "Do you really want to delete this account?"
 msgstr "Ali resnično želite izbrisati ta račun?"
 
-#: src/account.c:759 src/compose.c:2642 src/compose.c:4955
+#: src/account.c:759 src/compose.c:2685 src/compose.c:4998
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "Yes"
 msgstr "Da"
 
-#: src/account.c:759 src/compose.c:2642 src/compose.c:4955
+#: src/account.c:759 src/compose.c:2685 src/compose.c:4998
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "+No"
@@ -259,7 +259,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Dodaj naslov v adresar"
 
-#: src/addressadd.c:196 src/compose.c:4304 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4347 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Naslov"
@@ -399,7 +399,7 @@ msgstr "/_Brisanje"
 msgid "E-Mail address"
 msgstr "Elektronski naslov"
 
-#: src/addressbook.c:493 src/compose.c:4305 src/prefs_common.c:2207
+#: src/addressbook.c:493 src/compose.c:4348 src/prefs_common.c:2207
 msgid "Address book"
 msgstr "Imenik naslovov"
 
@@ -602,7 +602,7 @@ msgstr "Skupni naslov"
 msgid "Personal address"
 msgstr "Osebni naslov"
 
-#: src/alertpanel.c:123 src/compose.c:4955 src/main.c:458
+#: src/alertpanel.c:123 src/compose.c:4998 src/main.c:458
 msgid "Notice"
 msgstr "Opomba"
 
@@ -610,7 +610,7 @@ msgstr "Opomba"
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: src/alertpanel.c:149 src/compose.c:2642 src/inc.c:558
+#: src/alertpanel.c:149 src/compose.c:2685 src/inc.c:558
 msgid "Error"
 msgstr "Napaka"
 
@@ -1046,38 +1046,38 @@ msgstr "Sporočilo: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Ne morem dobiti dela večdelnega sporočila."
 
-#: src/compose.c:2274
+#: src/compose.c:2317
 msgid " [Edited]"
 msgstr " [V urejanju]"
 
-#: src/compose.c:2276
+#: src/compose.c:2319
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - Sestavi sporočilo%s"
 
-#: src/compose.c:2279
+#: src/compose.c:2322
 #, c-format
 msgid "Compose message%s"
 msgstr "Sestavi sporočilo%s"
 
-#: src/compose.c:2390
+#: src/compose.c:2433
 msgid "Recipient is not specified."
 msgstr "Naslovnik ni določen."
 
-#: src/compose.c:2398 src/compose.c:4225 src/mainwindow.c:2153
+#: src/compose.c:2441 src/compose.c:4268 src/mainwindow.c:2153
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Pošlji"
 
-#: src/compose.c:2399
+#: src/compose.c:2442
 msgid "Subject is empty. Send it anyway?"
 msgstr "Zadeva sporočila je prazna. Naj kljub temu pošljem?"
 
-#: src/compose.c:2450
+#: src/compose.c:2493
 msgid "can't get recipient list."
 msgstr "ne morem dobiti seznama naslovnikov"
 
-#: src/compose.c:2470
+#: src/compose.c:2513
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1085,26 +1085,26 @@ msgstr ""
 "Račun za pošiljanje pošte ni določen.\n"
 "Prosim, pred pošiljanjem izberite poštni račun."
 
-#: src/compose.c:2484 src/send_message.c:261
+#: src/compose.c:2527 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Med pošiljanjem sporočila %s je prišlo do napake."
 
-#: src/compose.c:2507
+#: src/compose.c:2550
 msgid "Can't save the message to outbox."
 msgstr "Ne morem shraniti sporočila v imenik Outbox."
 
-#: src/compose.c:2543
+#: src/compose.c:2586
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Ne najdem tipke, ki bi bila povezana z identifikatorjem tipke `%s'."
 
-#: src/compose.c:2605 src/compose.c:2830 src/compose.c:2893 src/compose.c:3013
+#: src/compose.c:2648 src/compose.c:2873 src/compose.c:2936 src/compose.c:3056
 #: src/utils.c:2194
 msgid "can't change file mode\n"
 msgstr "Ne morem spremeniti pravic do dostopa do datoteke\n"
 
-#: src/compose.c:2637
+#: src/compose.c:2680
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1113,141 +1113,141 @@ msgstr ""
 "Ne morem pretvoriti nabora znakov sporočila.\n"
 "Naj ga kljub temu pošljem?"
 
-#: src/compose.c:2701
+#: src/compose.c:2744
 msgid "can't write headers\n"
 msgstr "Ne morem zapisati zaglavij\n"
 
-#: src/compose.c:2973
+#: src/compose.c:3016
 msgid "can't remove the old message\n"
 msgstr "ne morem odstraniti starega sporočila\n"
 
-#: src/compose.c:2991
+#: src/compose.c:3034
 msgid "queueing message...\n"
 msgstr "prestavljam sporočilo v mapo Čakajoče...\n"
 
-#: src/compose.c:3073
+#: src/compose.c:3116
 msgid "can't find queue folder\n"
 msgstr "ne najdem mape s čakajočimi sporočili\n"
 
-#: src/compose.c:3080
+#: src/compose.c:3123
 msgid "can't queue the message\n"
 msgstr "ne morem preložiti sporočila\n"
 
-#: src/compose.c:3657
+#: src/compose.c:3700
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generiran Message-ID: %s\n"
 
-#: src/compose.c:3755
+#: src/compose.c:3798
 msgid "Creating compose window...\n"
 msgstr "Odpiram okno za sestavljanje sporočila...\n"
 
-#: src/compose.c:3758 src/compose.c:4746
+#: src/compose.c:3801 src/compose.c:4789
 msgid "MIME type"
 msgstr "Tip MIME"
 
 #. S_COL_DATE
-#: src/compose.c:3759 src/mimeview.c:150 src/prefs_filter_edit.c:569
+#: src/compose.c:3802 src/mimeview.c:150 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "Velikost"
 
-#: src/compose.c:3810 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3853 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "Pošiljatelj:"
 
-#: src/compose.c:4226
+#: src/compose.c:4269
 msgid "Send message"
 msgstr "Pošlji sporočilo"
 
-#: src/compose.c:4234
+#: src/compose.c:4277
 msgid "Send later"
 msgstr "Pošlji kasneje"
 
-#: src/compose.c:4235
+#: src/compose.c:4278
 msgid "Put into queue folder and send later"
 msgstr "Postavi v mapo Čakajoče in pošlji kasneje"
 
-#: src/compose.c:4243
+#: src/compose.c:4286
 msgid "Draft"
 msgstr "Osnutek"
 
-#: src/compose.c:4244
+#: src/compose.c:4287
 msgid "Save to draft folder"
 msgstr "Shrani v imenik Draft"
 
-#: src/compose.c:4254 src/compose.c:5539
+#: src/compose.c:4297 src/compose.c:5582
 msgid "Insert"
 msgstr "Vstavi"
 
-#: src/compose.c:4255
+#: src/compose.c:4298
 msgid "Insert file"
 msgstr "Vstavi datoteko"
 
-#: src/compose.c:4263
+#: src/compose.c:4306
 msgid "Attach"
 msgstr "Pripni"
 
-#: src/compose.c:4264
+#: src/compose.c:4307
 msgid "Attach file"
 msgstr "Pripni datoteko"
 
 #. signature
-#: src/compose.c:4274 src/prefs_account.c:1339 src/prefs_common.c:1277
+#: src/compose.c:4317 src/prefs_account.c:1339 src/prefs_common.c:1277
 msgid "Signature"
 msgstr "Podpis"
 
-#: src/compose.c:4275
+#: src/compose.c:4318
 msgid "Insert signature"
 msgstr "Vstavi podpis"
 
-#: src/compose.c:4284 src/prefs_common.c:1299 src/prefs_common.c:2186
+#: src/compose.c:4327 src/prefs_common.c:1299 src/prefs_common.c:2186
 msgid "Editor"
 msgstr "Urejevalnik"
 
-#: src/compose.c:4285
+#: src/compose.c:4328
 msgid "Edit with external editor"
 msgstr "Urejanje z zunanjim urejevalnikom"
 
-#: src/compose.c:4293
+#: src/compose.c:4336
 msgid "Linewrap"
 msgstr "Prelom vrstic"
 
-#: src/compose.c:4294
+#: src/compose.c:4337
 msgid "Wrap all long lines"
 msgstr "Prelomi vse dolge vrstice"
 
-#: src/compose.c:4640
+#: src/compose.c:4683
 msgid "Invalid MIME type."
 msgstr "Napačen tip MIME"
 
-#: src/compose.c:4659
+#: src/compose.c:4702
 msgid "File doesn't exist or is empty."
 msgstr "Datoteka ne obstaja ali pa je prazna."
 
-#: src/compose.c:4728
+#: src/compose.c:4771
 #, fuzzy
 msgid "Properties"
 msgstr "Lastnost"
 
-#: src/compose.c:4748
+#: src/compose.c:4791
 msgid "Encoding"
 msgstr "Nabor znakov"
 
-#: src/compose.c:4771 src/prefs_folder_item.c:183
+#: src/compose.c:4814 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Pot"
 
-#: src/compose.c:4772
+#: src/compose.c:4815
 msgid "File name"
 msgstr "Ime datoteke"
 
-#: src/compose.c:4926
+#: src/compose.c:4969
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Ukazna vrstica za zunanji urejevalnik je neveljavna: '%s'\n"
 
-#: src/compose.c:4952
+#: src/compose.c:4995
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1258,72 +1258,72 @@ msgstr ""
 "Ali naj ga prisilim k prekinitvi?\n"
 "Št. skupine procesov: %d"
 
-#: src/compose.c:4965
+#: src/compose.c:5008
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Št. prekinjene skupine procesov: %d"
 
-#: src/compose.c:4966
+#: src/compose.c:5009
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Začasna datoteka: %s"
 
-#: src/compose.c:4990
+#: src/compose.c:5033
 msgid "Compose: input from monitoring process\n"
 msgstr "Sestavljanje: vhod iz opazovanega procesa\n"
 
 #. failed
-#: src/compose.c:5023
+#: src/compose.c:5066
 msgid "Couldn't exec external editor\n"
 msgstr "Ne morem pognati zunanjega urejevalnika\n"
 
-#: src/compose.c:5027
+#: src/compose.c:5070
 msgid "Couldn't write to file\n"
 msgstr "Ne morem pisati v datoteko\n"
 
-#: src/compose.c:5029
+#: src/compose.c:5072
 msgid "Pipe read failed\n"
 msgstr "Branje preko cevi ni uspelo\n"
 
-#: src/compose.c:5330 src/compose.c:5338 src/compose.c:5344
+#: src/compose.c:5373 src/compose.c:5381 src/compose.c:5387
 msgid "Can't queue the message."
 msgstr "Ne morem preložiti pošiljanja sporočila."
 
-#: src/compose.c:5435
+#: src/compose.c:5478
 #, fuzzy
 msgid "Select files"
 msgstr "Izberi datoteko"
 
-#: src/compose.c:5457
+#: src/compose.c:5500
 msgid "Select file"
 msgstr "Izberi datoteko"
 
-#: src/compose.c:5492
+#: src/compose.c:5535
 msgid "Discard message"
 msgstr "Zavrzi sporočilo"
 
-#: src/compose.c:5493
+#: src/compose.c:5536
 msgid "This message has been modified. discard it?"
 msgstr "To sporočilo je bilo spremenjeno. Naj ga zavržem?"
 
-#: src/compose.c:5494
+#: src/compose.c:5537
 msgid "Discard"
 msgstr "Zavrži"
 
-#: src/compose.c:5494
+#: src/compose.c:5537
 msgid "to Draft"
 msgstr "v Draft"
 
-#: src/compose.c:5536
+#: src/compose.c:5579
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Ali želite uporabiti predlogo `%s' ?"
 
-#: src/compose.c:5538
+#: src/compose.c:5581
 msgid "Apply template"
 msgstr "Uporabi predlogo"
 
-#: src/compose.c:5539
+#: src/compose.c:5582
 msgid "Replace"
 msgstr "Zamenjaj"
 
@@ -5062,21 +5062,27 @@ msgstr "Pišem nastavitve za prikaz zaglavij...\n"
 msgid "This header is already in the list."
 msgstr "To zaglavje je že na seznamu."
 
-#: src/prefs_filter.c:190
+#: src/prefs_filter.c:209
 msgid "Filter setting"
 msgstr "Nastavitev filtra"
 
-#: src/prefs_filter.c:213
+#: src/prefs_filter.c:253
 msgid "Enabled"
 msgstr ""
 
-#: src/prefs_filter.c:699
+#: src/prefs_filter.c:757
+#, fuzzy, c-format
+msgid "Do you really want to delete the rule '%s'?"
+msgstr "Ali res želite izbrisati to pravilo?"
+
+#: src/prefs_filter.c:758
+#, fuzzy
+msgid "(Untitled)"
+msgstr "Brez naslova"
+
+#: src/prefs_filter.c:759
 msgid "Delete rule"
 msgstr "Izbriši pravilo"
-
-#: src/prefs_filter.c:700
-msgid "Do you really want to delete this rule?"
-msgstr "Ali res želite izbrisati to pravilo?"
 
 #: src/prefs_filter_edit.c:338
 #, fuzzy

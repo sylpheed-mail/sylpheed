@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-29 14:21+0900\n"
+"POT-Creation-Date: 2005-03-31 13:11+0900\n"
 "PO-Revision-Date: 2000-08-28\n"
 "Last-Translator: Little Dragon <littledragon@altern.org>\n"
 "Language-Team: Little Dragon <littledragon@altern.org>\n"
@@ -101,10 +101,10 @@ msgstr ""
 "mesajelor de comanda `Ia tot'."
 
 #: src/account.c:639 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3760 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3803 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
-#: src/mimeview.c:151 src/prefs_filter.c:214 src/prefs_folder_item.c:170
+#: src/mimeview.c:151 src/prefs_filter.c:258 src/prefs_folder_item.c:170
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Nume"
@@ -124,7 +124,7 @@ msgstr "Server"
 msgid "Add"
 msgstr "Adăugare"
 
-#: src/account.c:676 src/prefs_filter.c:281
+#: src/account.c:676 src/prefs_filter.c:319
 msgid "Edit"
 msgstr "Editare"
 
@@ -155,13 +155,13 @@ msgstr "Ştergere cont"
 msgid "Do you really want to delete this account?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi acest cont ?"
 
-#: src/account.c:759 src/compose.c:2642 src/compose.c:4955
+#: src/account.c:759 src/compose.c:2685 src/compose.c:4998
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "Yes"
 msgstr "Da"
 
-#: src/account.c:759 src/compose.c:2642 src/compose.c:4955
+#: src/account.c:759 src/compose.c:2685 src/compose.c:4998
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "+No"
@@ -261,7 +261,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Adăugare în agendă"
 
-#: src/addressadd.c:196 src/compose.c:4304 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4347 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresă"
@@ -406,7 +406,7 @@ msgstr "/Ş_tergere"
 msgid "E-Mail address"
 msgstr "Adresă E-Mail"
 
-#: src/addressbook.c:493 src/compose.c:4305 src/prefs_common.c:2207
+#: src/addressbook.c:493 src/compose.c:4348 src/prefs_common.c:2207
 msgid "Address book"
 msgstr "Agendă"
 
@@ -611,7 +611,7 @@ msgstr "Adresse comună:"
 msgid "Personal address"
 msgstr "Adresse personală:"
 
-#: src/alertpanel.c:123 src/compose.c:4955 src/main.c:458
+#: src/alertpanel.c:123 src/compose.c:4998 src/main.c:458
 msgid "Notice"
 msgstr "Informaţie"
 
@@ -619,7 +619,7 @@ msgstr "Informaţie"
 msgid "Warning"
 msgstr "Avertisment"
 
-#: src/alertpanel.c:149 src/compose.c:2642 src/inc.c:558
+#: src/alertpanel.c:149 src/compose.c:2685 src/inc.c:558
 msgid "Error"
 msgstr "Eroare"
 
@@ -1063,38 +1063,38 @@ msgstr "Mesaj: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Citirea unei parţi din mesajul multipart este imposibilă."
 
-#: src/compose.c:2274
+#: src/compose.c:2317
 msgid " [Edited]"
 msgstr " [Editat] "
 
-#: src/compose.c:2276
+#: src/compose.c:2319
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - Compunere mesaj%s"
 
-#: src/compose.c:2279
+#: src/compose.c:2322
 #, c-format
 msgid "Compose message%s"
 msgstr "Compunere mesaj%s"
 
-#: src/compose.c:2390
+#: src/compose.c:2433
 msgid "Recipient is not specified."
 msgstr "Destinatarul nu a fost specificat."
 
-#: src/compose.c:2398 src/compose.c:4225 src/mainwindow.c:2153
+#: src/compose.c:2441 src/compose.c:4268 src/mainwindow.c:2153
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Trimitere"
 
-#: src/compose.c:2399
+#: src/compose.c:2442
 msgid "Subject is empty. Send it anyway?"
 msgstr ""
 
-#: src/compose.c:2450
+#: src/compose.c:2493
 msgid "can't get recipient list."
 msgstr "nu pot obţine lista destinatarilor."
 
-#: src/compose.c:2470
+#: src/compose.c:2513
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1102,168 +1102,168 @@ msgstr ""
 "Nu a fost specificat contul de pe care se doreşte trimiterea de mail.\n"
 "Vă rugăm să selectaţi un cont înainte de a trimite."
 
-#: src/compose.c:2484 src/send_message.c:261
+#: src/compose.c:2527 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "A avut loc o eroare la încercarea de a posta mesajul pe %s ."
 
-#: src/compose.c:2507
+#: src/compose.c:2550
 msgid "Can't save the message to outbox."
 msgstr "Salvarea mesajului în outbox este imposibilă."
 
-#: src/compose.c:2543
+#: src/compose.c:2586
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 
-#: src/compose.c:2605 src/compose.c:2830 src/compose.c:2893 src/compose.c:3013
+#: src/compose.c:2648 src/compose.c:2873 src/compose.c:2936 src/compose.c:3056
 #: src/utils.c:2194
 msgid "can't change file mode\n"
 msgstr "schimbarea permisiunilor fişierului este imposibilă\n"
 
-#: src/compose.c:2637
+#: src/compose.c:2680
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
 "Send it as %s anyway?"
 msgstr "Convertirea codificării mesajului este imposibilă."
 
-#: src/compose.c:2701
+#: src/compose.c:2744
 msgid "can't write headers\n"
 msgstr "scrierea antetelor este imposibilă\n"
 
-#: src/compose.c:2973
+#: src/compose.c:3016
 msgid "can't remove the old message\n"
 msgstr "ştergerea mesajului vechi a eşuat\n"
 
-#: src/compose.c:2991
+#: src/compose.c:3034
 msgid "queueing message...\n"
 msgstr "punere mesaj în lista de aşteptare...\n"
 
-#: src/compose.c:3073
+#: src/compose.c:3116
 #, fuzzy
 msgid "can't find queue folder\n"
 msgstr "directorul nu a putut fi selectat: %s\n"
 
-#: src/compose.c:3080
+#: src/compose.c:3123
 msgid "can't queue the message\n"
 msgstr "punerea mesajului în lista de aşteptare este imposibilă\n"
 
-#: src/compose.c:3657
+#: src/compose.c:3700
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "Message-ID creat: %s\n"
 
-#: src/compose.c:3755
+#: src/compose.c:3798
 msgid "Creating compose window...\n"
 msgstr "Creare fereastra de compunere...\n"
 
-#: src/compose.c:3758 src/compose.c:4746
+#: src/compose.c:3801 src/compose.c:4789
 msgid "MIME type"
 msgstr "Tip MIME"
 
 #. S_COL_DATE
-#: src/compose.c:3759 src/mimeview.c:150 src/prefs_filter_edit.c:569
+#: src/compose.c:3802 src/mimeview.c:150 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "Dimensiune"
 
-#: src/compose.c:3810 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3853 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "De la:"
 
-#: src/compose.c:4226
+#: src/compose.c:4269
 msgid "Send message"
 msgstr "Trimitere mesaj"
 
-#: src/compose.c:4234
+#: src/compose.c:4277
 msgid "Send later"
 msgstr "Mai târziu"
 
-#: src/compose.c:4235
+#: src/compose.c:4278
 msgid "Put into queue folder and send later"
 msgstr "Punere în lista de aşteptare şi trimitere mai târziu"
 
-#: src/compose.c:4243
+#: src/compose.c:4286
 msgid "Draft"
 msgstr "Salvare"
 
-#: src/compose.c:4244
+#: src/compose.c:4287
 msgid "Save to draft folder"
 msgstr "Salvare"
 
-#: src/compose.c:4254 src/compose.c:5539
+#: src/compose.c:4297 src/compose.c:5582
 msgid "Insert"
 msgstr "Inserare"
 
-#: src/compose.c:4255
+#: src/compose.c:4298
 msgid "Insert file"
 msgstr "Isertion fişier"
 
-#: src/compose.c:4263
+#: src/compose.c:4306
 msgid "Attach"
 msgstr "Ataşament"
 
-#: src/compose.c:4264
+#: src/compose.c:4307
 msgid "Attach file"
 msgstr "Ataşare fişier"
 
 #. signature
-#: src/compose.c:4274 src/prefs_account.c:1339 src/prefs_common.c:1277
+#: src/compose.c:4317 src/prefs_account.c:1339 src/prefs_common.c:1277
 msgid "Signature"
 msgstr "Semnătură"
 
-#: src/compose.c:4275
+#: src/compose.c:4318
 msgid "Insert signature"
 msgstr "Inserare semnătură"
 
-#: src/compose.c:4284 src/prefs_common.c:1299 src/prefs_common.c:2186
+#: src/compose.c:4327 src/prefs_common.c:1299 src/prefs_common.c:2186
 msgid "Editor"
 msgstr "Editor"
 
-#: src/compose.c:4285
+#: src/compose.c:4328
 msgid "Edit with external editor"
 msgstr "Editare cu editor extern"
 
-#: src/compose.c:4293
+#: src/compose.c:4336
 msgid "Linewrap"
 msgstr "Tăiere linii"
 
-#: src/compose.c:4294
+#: src/compose.c:4337
 msgid "Wrap all long lines"
 msgstr "Tăiere toate liniile lungi"
 
-#: src/compose.c:4640
+#: src/compose.c:4683
 msgid "Invalid MIME type."
 msgstr "Tip MIME invalid."
 
-#: src/compose.c:4659
+#: src/compose.c:4702
 msgid "File doesn't exist or is empty."
 msgstr "Fişierul nu există sau este gol."
 
-#: src/compose.c:4728
+#: src/compose.c:4771
 #, fuzzy
 msgid "Properties"
 msgstr "Proprietate"
 
-#: src/compose.c:4748
+#: src/compose.c:4791
 msgid "Encoding"
 msgstr "Codare"
 
-#: src/compose.c:4771 src/prefs_folder_item.c:183
+#: src/compose.c:4814 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Cale"
 
-#: src/compose.c:4772
+#: src/compose.c:4815
 msgid "File name"
 msgstr "Numele fişierului"
 
-#: src/compose.c:4926
+#: src/compose.c:4969
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Linia de comandă este invalidă: '%s'\n"
 
-#: src/compose.c:4952
+#: src/compose.c:4995
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1274,73 +1274,73 @@ msgstr ""
 "Doriţi terminarea forţată a procesului ?\n"
 "process group id: %d"
 
-#: src/compose.c:4965
+#: src/compose.c:5008
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Procesul a fost terminat: %d"
 
-#: src/compose.c:4966
+#: src/compose.c:5009
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Fişier temporar: %s"
 
-#: src/compose.c:4990
+#: src/compose.c:5033
 msgid "Compose: input from monitoring process\n"
 msgstr "Compunere: introducere din proces monitorizat\n"
 
 #. failed
-#: src/compose.c:5023
+#: src/compose.c:5066
 msgid "Couldn't exec external editor\n"
 msgstr "Editorul extern nu poate fi executat\n"
 
-#: src/compose.c:5027
+#: src/compose.c:5070
 msgid "Couldn't write to file\n"
 msgstr "Scrierea în fişier este imposibilă\n"
 
-#: src/compose.c:5029
+#: src/compose.c:5072
 msgid "Pipe read failed\n"
 msgstr "Citirea din pipe a eşuat\n"
 
-#: src/compose.c:5330 src/compose.c:5338 src/compose.c:5344
+#: src/compose.c:5373 src/compose.c:5381 src/compose.c:5387
 msgid "Can't queue the message."
 msgstr "Este imposibilă punerea mesajului în lista de aşteptare."
 
-#: src/compose.c:5435
+#: src/compose.c:5478
 #, fuzzy
 msgid "Select files"
 msgstr "Selectare fişier"
 
-#: src/compose.c:5457
+#: src/compose.c:5500
 msgid "Select file"
 msgstr "Selectare fişier"
 
-#: src/compose.c:5492
+#: src/compose.c:5535
 msgid "Discard message"
 msgstr "Anulare mesaj"
 
-#: src/compose.c:5493
+#: src/compose.c:5536
 msgid "This message has been modified. discard it?"
 msgstr "Acest mesaj a fost modificat. Doriţi sa anulaţi schimbările ?"
 
-#: src/compose.c:5494
+#: src/compose.c:5537
 msgid "Discard"
 msgstr "Anulare schimbări"
 
-#: src/compose.c:5494
+#: src/compose.c:5537
 msgid "to Draft"
 msgstr "Salvare"
 
-#: src/compose.c:5536
+#: src/compose.c:5579
 #, fuzzy, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această regulă ?"
 
-#: src/compose.c:5538
+#: src/compose.c:5581
 #, fuzzy
 msgid "Apply template"
 msgstr "Ştergere mesaj"
 
-#: src/compose.c:5539
+#: src/compose.c:5582
 #, fuzzy
 msgid "Replace"
 msgstr "/_Utilitare/_Modele"
@@ -5223,22 +5223,28 @@ msgstr "Scriere configuraţia filtrului...\n"
 msgid "This header is already in the list."
 msgstr "Directorul '%s' există deja."
 
-#: src/prefs_filter.c:190
+#: src/prefs_filter.c:209
 #, fuzzy
 msgid "Filter setting"
 msgstr "Filtrare"
 
-#: src/prefs_filter.c:213
+#: src/prefs_filter.c:253
 msgid "Enabled"
 msgstr ""
 
-#: src/prefs_filter.c:699
+#: src/prefs_filter.c:757
+#, fuzzy, c-format
+msgid "Do you really want to delete the rule '%s'?"
+msgstr "Sunteţi sigur că doriţi să ştergeţi această regulă ?"
+
+#: src/prefs_filter.c:758
+#, fuzzy
+msgid "(Untitled)"
+msgstr "Neintitulat"
+
+#: src/prefs_filter.c:759
 msgid "Delete rule"
 msgstr "Ştergere regulă"
-
-#: src/prefs_filter.c:700
-msgid "Do you really want to delete this rule?"
-msgstr "Sunteţi sigur că doriţi să ştergeţi această regulă ?"
 
 #: src/prefs_filter_edit.c:338
 #, fuzzy

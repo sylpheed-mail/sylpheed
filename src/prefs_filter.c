@@ -53,7 +53,9 @@
 static struct FilterRuleListWindow {
 	GtkWidget *window;
 
-	GtkWidget *clist;
+	GtkWidget *treeview;
+	GtkListStore *store;
+	GtkTreeSelection *selection;
 
 	GtkWidget *add_btn;
 	GtkWidget *edit_btn;
@@ -69,13 +71,17 @@ static struct FilterRuleListWindow {
 	GtkWidget *close_btn;
 } rule_list_window;
 
-static GdkPixmap *markxpm;
-static GdkBitmap *markxpmmask;
+enum {
+	COL_ENABLED,
+	COL_NAME,
+	COL_FILTER_RULE,
+	N_COLS
+};
 
 static void prefs_filter_create			(void);
 
 static void prefs_filter_set_dialog		(void);
-static void prefs_filter_set_list_row		(gint		 row,
+static void prefs_filter_set_list_row		(GtkTreeIter	*iter,
 						 FilterRule	*rule,
 						 gboolean	 move_view);
 
@@ -95,13 +101,24 @@ static void prefs_filter_up		(void);
 static void prefs_filter_down		(void);
 static void prefs_filter_bottom		(void);
 
-static void prefs_filter_select		(GtkCList	*clist,
-					 gint		 row,
-					 gint		 column,
-					 GdkEvent	*event);
-static void prefs_filter_row_move	(GtkCList	*clist,
-					 gint		 source_row,
-					 gint		 dest_row);
+static gboolean prefs_filter_select	(GtkTreeSelection	*selection,
+					 GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 gboolean		 cur_selected,
+					 gpointer		 data);
+static void prefs_filter_enable_toggled	(GtkCellRenderer	*cell,
+					 gchar			*path,
+					 gpointer		 data);
+
+static void prefs_filter_row_activated	(GtkTreeView		*treeview,
+					 GtkTreePath		*path,
+					 GtkTreeViewColumn	*column,
+					 gpointer		 data);
+static void prefs_filter_row_reordered	(GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 GtkTreeIter		*iter,
+					 gpointer		 data,
+					 gpointer		 user_data);
 
 static gint prefs_filter_deleted	(GtkWidget	*widget,
 					 GdkEventAny	*event,
@@ -134,7 +151,7 @@ void prefs_filter_open(MsgInfo *msginfo, const gchar *header)
 		rule = prefs_filter_edit_open(NULL, header);
 
 		if (rule) {
-			prefs_filter_set_list_row(-1, rule, TRUE);
+			prefs_filter_set_list_row(NULL, rule, TRUE);
 			prefs_filter_set_list();
 		}
 	}
@@ -149,7 +166,11 @@ static void prefs_filter_create(void)
 
 	GtkWidget *hbox;
 	GtkWidget *scrolledwin;
-	GtkWidget *clist;
+	GtkWidget *treeview;
+	GtkListStore *store;
+	GtkTreeSelection *selection;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
 
 	GtkWidget *btn_vbox;
 	GtkWidget *spc_vbox;
@@ -163,8 +184,6 @@ static void prefs_filter_create(void)
 	GtkWidget *edit_btn;
 	GtkWidget *copy_btn;
 	GtkWidget *del_btn;
-
-	gchar *title[2];
 
 	debug_print("Creating filter setting window...\n");
 
@@ -209,24 +228,43 @@ static void prefs_filter_create(void)
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
+					    GTK_SHADOW_IN);
 
-	title[0] = _("Enabled");
-	title[1] = _("Name");
-	clist = gtk_clist_new_with_titles(2, title);
-	gtk_widget_show(clist);
-	gtk_container_add (GTK_CONTAINER(scrolledwin), clist);
-	gtk_clist_set_column_width(GTK_CLIST(clist), 0, 64);
-	gtk_clist_set_column_justification(GTK_CLIST(clist), 0,
-					   GTK_JUSTIFY_CENTER);
-	gtk_clist_set_selection_mode(GTK_CLIST(clist), GTK_SELECTION_BROWSE);
-	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist)->column[0].button,
-			       GTK_CAN_FOCUS);
-	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist)->column[1].button,
-			       GTK_CAN_FOCUS);
-	g_signal_connect(G_OBJECT(clist), "select_row",
-			 G_CALLBACK(prefs_filter_select), NULL);
-	g_signal_connect_after(G_OBJECT(clist), "row_move",
-			       G_CALLBACK(prefs_filter_row_move), NULL);
+	store = gtk_list_store_new
+		(N_COLS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_POINTER);
+
+	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), COL_NAME);
+	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), TRUE);
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
+	gtk_tree_selection_set_select_function(selection, prefs_filter_select,
+					       NULL, NULL);
+
+	renderer = gtk_cell_renderer_toggle_new();
+	g_signal_connect(renderer, "toggled",
+			 G_CALLBACK(prefs_filter_enable_toggled), NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Enabled"), renderer, "active", COL_ENABLED, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Name"), renderer, "text", COL_NAME, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	gtk_widget_show(treeview);
+	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
+
+	g_signal_connect(G_OBJECT(treeview), "row-activated",
+			 G_CALLBACK(prefs_filter_row_activated), NULL);
+	g_signal_connect_after(G_OBJECT(store), "rows-reordered",
+			       G_CALLBACK(prefs_filter_row_reordered), NULL);
 
 	/* Up / Down */
 
@@ -298,16 +336,21 @@ static void prefs_filter_create(void)
 
 	gtk_widget_show_all(window);
 
-	stock_pixmap_gdk(clist, STOCK_PIXMAP_MARK, &markxpm, &markxpmmask);
-
 	rule_list_window.window = window;
 	rule_list_window.close_btn = close_btn;
 
-	rule_list_window.clist = clist;
+	rule_list_window.treeview = treeview;
+	rule_list_window.store = store;
+	rule_list_window.selection = selection;
 
-	rule_list_window.default_hdr_list  = NULL;
-	rule_list_window.user_hdr_list  = NULL;
-	rule_list_window.msg_hdr_list  = NULL;
+	rule_list_window.add_btn = add_btn;
+	rule_list_window.edit_btn = edit_btn;
+	rule_list_window.copy_btn = copy_btn;
+	rule_list_window.del_btn = del_btn;
+
+	rule_list_window.default_hdr_list = NULL;
+	rule_list_window.user_hdr_list = NULL;
+	rule_list_window.msg_hdr_list = NULL;
 	rule_list_window.msg_hdr_table = NULL;
 }
 
@@ -391,63 +434,67 @@ void prefs_filter_delete_path(const gchar *path)
 
 static void prefs_filter_set_dialog(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
 	GSList *cur;
 
-	gtk_clist_freeze(clist);
-	gtk_clist_clear(clist);
+	gtk_list_store_clear(rule_list_window.store);
 
 	for (cur = prefs_common.fltlist; cur != NULL; cur = cur->next) {
 		FilterRule *rule = (FilterRule *)cur->data;
-		prefs_filter_set_list_row(-1, rule, FALSE);
+		prefs_filter_set_list_row(NULL, rule, FALSE);
 	}
-
-	gtk_clist_thaw(clist);
 }
 
-static void prefs_filter_set_list_row(gint row, FilterRule *rule,
+static void prefs_filter_set_list_row(GtkTreeIter *iter, FilterRule *rule,
 				      gboolean move_view)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
-	gchar *cond_str[2] = {"", NULL};
-
-	if (!rule)
-		rule = gtk_clist_get_row_data(clist, row);
+	GtkListStore *store = rule_list_window.store;
+	gchar *rule_name;
+	GtkTreeIter iter_;
 
 	g_return_if_fail(rule != NULL);
 
 	if (rule->name && *rule->name)
-		cond_str[1] = g_strdup(rule->name);
-	else {
-		cond_str[1] = filter_get_str(rule);
-	}
-
-	if (row < 0)
-		row = gtk_clist_append(clist, cond_str);
-	else {
-		FilterRule *prev_rule;
-
-		prev_rule = gtk_clist_get_row_data(clist, row);
-		if (rule == prev_rule)
-			gtk_clist_set_text(clist, row, 1, cond_str[1]);
-		else if (prev_rule) {
-			gtk_clist_set_text(clist, row, 1, cond_str[1]);
-			filter_rule_free(prev_rule);
-		} else
-			row = gtk_clist_append(clist, cond_str);
-	}
-
-	if (rule->enabled)
-		gtk_clist_set_pixmap(clist, row, 0, markxpm, markxpmmask);
+		rule_name = g_strdup(rule->name);
 	else
-		gtk_clist_set_text(clist, row, 0, "");
+		rule_name = filter_get_str(rule);
 
-	gtk_clist_set_row_data(clist, row, rule);
-	g_free(cond_str[1]);
+	if (!iter) {
+		gtk_list_store_append(store, &iter_);
+		gtk_list_store_set(store, &iter_,
+				   COL_ENABLED, rule->enabled,
+				   COL_NAME, rule_name,
+				   COL_FILTER_RULE, rule, -1);
+	} else {
+		FilterRule *prev_rule = NULL;
 
-	if (move_view &&
-	    gtk_clist_row_is_visible(clist, row) != GTK_VISIBILITY_FULL)
-		gtk_clist_moveto(clist, row, -1, 0.5, 0.0);
+		iter_ = *iter;
+		gtk_tree_model_get(GTK_TREE_MODEL(store), &iter_,
+				   COL_FILTER_RULE, &prev_rule, -1);
+		if (!prev_rule) {
+			g_warning("rule at the row not found\n");
+			gtk_list_store_append(store, &iter_);
+		}
+
+		gtk_list_store_set(store, &iter_,
+				   COL_ENABLED, rule->enabled,
+				   COL_NAME, rule_name,
+				   COL_FILTER_RULE, rule, -1);
+
+		if (prev_rule && prev_rule != rule)
+			filter_rule_free(prev_rule);
+	}
+
+	g_free(rule_name);
+
+	if (move_view) {
+		GtkTreePath *path;
+
+		path = gtk_tree_model_get_path(GTK_TREE_MODEL(store), &iter_);
+		gtk_tree_view_scroll_to_cell
+			(GTK_TREE_VIEW(rule_list_window.treeview),
+			 path, NULL, TRUE, 0.5, 0.0);
+		gtk_tree_path_free(path);
+	}
 }
 
 #define APPEND_HDR_LIST(hdr_list)					  \
@@ -619,18 +666,22 @@ static void prefs_filter_write_user_header_list(void)
 
 static void prefs_filter_set_list(void)
 {
-	gint row = 0;
 	FilterRule *rule;
+	GtkTreeIter iter;
+	GtkTreeModel *model = GTK_TREE_MODEL(rule_list_window.store);
 
 	g_slist_free(prefs_common.fltlist);
 	prefs_common.fltlist = NULL;
 
-	while ((rule = gtk_clist_get_row_data
-		(GTK_CLIST(rule_list_window.clist), row)) != NULL) {
-		prefs_common.fltlist = g_slist_append(prefs_common.fltlist,
-						      rule);
-		row++;
-	}
+	if (!gtk_tree_model_get_iter_first(model, &iter))
+		return;
+
+	do {
+		gtk_tree_model_get(model, &iter, COL_FILTER_RULE, &rule, -1);
+		if (rule)
+			prefs_common.fltlist =
+				g_slist_append(prefs_common.fltlist, rule);
+	} while (gtk_tree_model_iter_next(model, &iter));
 }
 
 static void prefs_filter_add_cb(void)
@@ -640,145 +691,187 @@ static void prefs_filter_add_cb(void)
 	rule = prefs_filter_edit_open(NULL, NULL);
 
 	if (rule) {
-		prefs_filter_set_list_row(-1, rule, TRUE);
+		prefs_filter_set_list_row(NULL, rule, TRUE);
 		prefs_filter_set_list();
 	}
 }
 
 static void prefs_filter_edit_cb(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
+	GtkTreeIter iter;
 	FilterRule *rule, *new_rule;
-	gint row;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-
-	rule = gtk_clist_get_row_data(clist, row);
+	gtk_tree_model_get(GTK_TREE_MODEL(rule_list_window.store), &iter,
+			   COL_FILTER_RULE, &rule, -1);
 	g_return_if_fail(rule != NULL);
 
 	new_rule = prefs_filter_edit_open(rule, NULL);
 
 	if (new_rule) {
-		prefs_filter_set_list_row(row, new_rule, TRUE);
+		prefs_filter_set_list_row(&iter, new_rule, TRUE);
 		prefs_filter_set_list();
 	}
 }
 
 static void prefs_filter_copy_cb(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
+	GtkTreeIter iter;
 	FilterRule *rule, *new_rule;
-	gint row;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-
-	rule = gtk_clist_get_row_data(clist, row);
+	gtk_tree_model_get(GTK_TREE_MODEL(rule_list_window.store), &iter,
+			   COL_FILTER_RULE, &rule, -1);
 	g_return_if_fail(rule != NULL);
 
 	new_rule = prefs_filter_edit_open(rule, NULL);
 
 	if (new_rule) {
-		prefs_filter_set_list_row(-1, new_rule, TRUE);
+		prefs_filter_set_list_row(NULL, new_rule, TRUE);
 		prefs_filter_set_list();
 	}
 }
 
 static void prefs_filter_delete_cb(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
+	GtkTreeIter iter;
 	FilterRule *rule;
-	gint row;
+	gchar buf[BUFFSIZE];
+	gboolean valid;
 
-	if (!clist->selection) return;
-	row = GPOINTER_TO_INT(clist->selection->data);
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
+		return;
 
-	if (alertpanel(_("Delete rule"),
-		       _("Do you really want to delete this rule?"),
+	gtk_tree_model_get(GTK_TREE_MODEL(rule_list_window.store), &iter,
+			   COL_FILTER_RULE, &rule, -1);
+	g_return_if_fail(rule != NULL);
+
+	g_snprintf(buf, sizeof(buf),
+		   _("Do you really want to delete the rule '%s'?"),
+		   rule->name ? rule->name : _("(Untitled)"));
+	if (alertpanel(_("Delete rule"), buf,
 		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
 		return;
 
-	rule = gtk_clist_get_row_data(clist, row);
-	filter_rule_free(rule);
-	gtk_clist_remove(clist, row);
+	valid = gtk_list_store_remove(rule_list_window.store, &iter);
+	if (valid)
+		gtk_tree_selection_select_iter(rule_list_window.selection,
+					       &iter);
+
 	prefs_common.fltlist = g_slist_remove(prefs_common.fltlist, rule);
-	if (!clist->selection)
-		gtk_clist_select_row(clist, row - 1, -1);
+	filter_rule_free(rule);
 }
 
 static void prefs_filter_top(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
-	gint row;
+	GtkTreeIter iter;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	if (row > 0)
-		gtk_clist_row_move(clist, row, 0);
+	gtk_list_store_move_after(rule_list_window.store, &iter, NULL);
 }
 
 static void prefs_filter_up(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
-	gint row;
+	GtkTreeModel *model = GTK_TREE_MODEL(rule_list_window.store);
+	GtkTreeIter iter, prev;
+	GtkTreePath *path;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	if (row > 0)
-		gtk_clist_row_move(clist, row, row - 1);
+	path = gtk_tree_model_get_path(model, &iter);
+	if (gtk_tree_path_prev(path)) {
+		gtk_tree_model_get_iter(model, &prev, path);
+		gtk_list_store_swap(rule_list_window.store, &iter, &prev);
+	}
+	gtk_tree_path_free(path);
 }
 
 static void prefs_filter_down(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
-	gint row;
+	GtkTreeIter iter, next;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	if (row < clist->rows - 1)
-		gtk_clist_row_move(clist, row, row + 1);
+	next = iter;
+	if (gtk_tree_model_iter_next(GTK_TREE_MODEL(rule_list_window.store),
+				     &next))
+		gtk_list_store_swap(rule_list_window.store, &iter, &next);
 }
 
 static void prefs_filter_bottom(void)
 {
-	GtkCList *clist = GTK_CLIST(rule_list_window.clist);
-	gint row;
+	GtkTreeIter iter;
 
-	if (!clist->selection) return;
-
-	row = GPOINTER_TO_INT(clist->selection->data);
-	if (row < clist->rows - 1)
-		gtk_clist_row_move(clist, row, clist->rows - 1);
-}
-
-static void prefs_filter_select(GtkCList *clist, gint row, gint column,
-				GdkEvent *event)
-{
-	if (event && event->type == GDK_2BUTTON_PRESS) {
-		prefs_filter_edit_cb();
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter))
 		return;
-	}
 
-	if (column == 0) {
-		FilterRule *rule;
-		rule = gtk_clist_get_row_data(clist, row);
-		rule->enabled ^= TRUE;
-		prefs_filter_set_list_row(row, rule, FALSE);
-	}
+	gtk_list_store_move_before(rule_list_window.store, &iter, NULL);
 }
 
-static void prefs_filter_row_move(GtkCList *clist, gint source_row,
-				  gint dest_row)
+static gboolean prefs_filter_select(GtkTreeSelection *selection,
+				    GtkTreeModel *model, GtkTreePath *path,
+				    gboolean cur_selected, gpointer data)
 {
-	prefs_filter_set_list();
-	if (gtk_clist_row_is_visible(clist, dest_row) != GTK_VISIBILITY_FULL)
-		gtk_clist_moveto(clist, dest_row, -1, 0.5, 0.0);
+	return TRUE;
+}
+
+static void prefs_filter_enable_toggled(GtkCellRenderer *cell, gchar *path_str,
+					gpointer data)
+{
+	FilterRule *rule;
+	GtkTreeIter iter;
+	GtkTreePath *path;
+
+	path = gtk_tree_path_new_from_string(path_str);
+	gtk_tree_model_get_iter(GTK_TREE_MODEL(rule_list_window.store),
+				&iter, path);
+	gtk_tree_path_free(path);
+	gtk_tree_model_get(GTK_TREE_MODEL(rule_list_window.store), &iter,
+			   COL_FILTER_RULE, &rule, -1);
+
+	rule->enabled ^= TRUE;
+
+	gtk_list_store_set(rule_list_window.store, &iter,
+			   COL_ENABLED, rule->enabled, -1);
+}
+
+static void prefs_filter_row_activated(GtkTreeView *treeview, GtkTreePath *path,
+				       GtkTreeViewColumn *column,
+				       gpointer data)
+{
+	gtk_button_clicked(GTK_BUTTON(rule_list_window.edit_btn));
+}
+
+static void prefs_filter_row_reordered(GtkTreeModel *model,
+				       GtkTreePath *path, GtkTreeIter *iter,
+				       gpointer data, gpointer user_data)
+{
+	GtkTreeIter iter_;
+	GtkTreePath *path_;
+
+	if (!gtk_tree_selection_get_selected(rule_list_window.selection,
+					     NULL, &iter_))
+		return;
+	path_ = gtk_tree_model_get_path
+		(GTK_TREE_MODEL(rule_list_window.store), &iter_);
+	gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(rule_list_window.treeview),
+				     path_, NULL, FALSE, 0.0, 0.0);
+	gtk_tree_path_free(path_);
 }
 
 static gint prefs_filter_deleted(GtkWidget *widget, GdkEventAny *event,
@@ -800,8 +893,9 @@ static void prefs_filter_close(void)
 {
 	prefs_filter_set_msg_header_list(NULL);
 	prefs_filter_write_user_header_list();
+	prefs_filter_set_list();
 	filter_write_config(prefs_common.fltlist);
 	gtk_widget_hide(rule_list_window.window);
-	gtk_clist_clear(GTK_CLIST(rule_list_window.clist));
+	gtk_list_store_clear(rule_list_window.store);
 	inc_unlock();
 }
