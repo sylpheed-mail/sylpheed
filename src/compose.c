@@ -3995,8 +3995,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	ruler = gtk_shruler_new();
 	gtk_ruler_set_range(GTK_RULER(ruler), 0.0, 100.0, 1.0, 100.0);
 	gtk_box_pack_start(GTK_BOX(ruler_hbox), ruler, TRUE, TRUE,
-			   BORDER_WIDTH + 1);
-	gtk_widget_set_size_request(ruler_hbox, 1, -1);
+			   BORDER_WIDTH);
 
 	/* text widget */
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
@@ -4024,7 +4023,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	g_signal_connect(G_OBJECT(text), "activate",
 			 G_CALLBACK(text_activated), compose);
 #endif
-	g_signal_connect(G_OBJECT(text), "insert_text",
+	g_signal_connect(G_OBJECT(buffer), "insert_text",
 			 G_CALLBACK(text_inserted), compose);
 	g_signal_connect_after(G_OBJECT(text), "size_allocate",
 			       G_CALLBACK(compose_edit_size_alloc),
@@ -4307,6 +4306,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_container_add(GTK_CONTAINER(container), toolbar);
+	gtk_widget_set_size_request(toolbar, 1, -1);
 
 	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_SEND);
 	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),

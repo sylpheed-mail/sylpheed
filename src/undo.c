@@ -96,11 +96,11 @@ UndoMain *undo_init(GtkWidget *text)
 	undostruct->undo_state = FALSE;
 	undostruct->redo_state = FALSE;
 
-	g_signal_connect(G_OBJECT(text), "insert-text",
+	g_signal_connect(G_OBJECT(textbuf), "insert-text",
 			 G_CALLBACK(undo_insert_text_cb), undostruct);
-	g_signal_connect(G_OBJECT(text), "delete-text",
+	g_signal_connect(G_OBJECT(textbuf), "delete-range",
 			 G_CALLBACK(undo_delete_text_cb), undostruct);
-	g_signal_connect(G_OBJECT(text), "paste-clipboard",
+	g_signal_connect(G_OBJECT(textview), "paste-clipboard",
 			 G_CALLBACK(undo_paste_clipboard_cb), undostruct);
 
 	return undostruct;
