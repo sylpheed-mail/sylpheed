@@ -32,7 +32,6 @@
 #include "utils.h"
 #include "gtkutils.h"
 #include "inc.h"
-#include "stock_pixmap.h"
 #include "prefs_common.h"
 
 #define ALERT_PANEL_WIDTH	380
@@ -175,8 +174,7 @@ static void alertpanel_create(const gchar *title,
 			      AlertType    type)
 {
 	static PangoFontDescription *font_desc;
-	StockPixmap stock_pixmap;
-	GtkWidget *pixmapwid;
+	GtkWidget *image;
 	GtkWidget *label;
 	GtkWidget *hbox;
 	GtkWidget *vbox;
@@ -213,19 +211,25 @@ static void alertpanel_create(const gchar *title,
 
 	/* title icon and label */
 	switch (type) {
-	case ALERT_NOTICE:
-		stock_pixmap = STOCK_PIXMAP_DIALOG_INFO; break;
 	case ALERT_QUESTION:
-		stock_pixmap = STOCK_PIXMAP_DIALOG_QUESTION; break;
+		image = gtk_image_new_from_stock
+			(GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG);
+		break;
 	case ALERT_WARNING:
-		stock_pixmap = STOCK_PIXMAP_DIALOG_WARNING; break;
+		image = gtk_image_new_from_stock
+			(GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_DIALOG);
+		break;
 	case ALERT_ERROR:
-		stock_pixmap = STOCK_PIXMAP_DIALOG_ERROR; break;
+		image = gtk_image_new_from_stock
+			(GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
+		break;
+	case ALERT_NOTICE:
 	default:
-		stock_pixmap = STOCK_PIXMAP_DIALOG_QUESTION; break;
+		image = gtk_image_new_from_stock
+			(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+		break;
 	}
-	pixmapwid = stock_pixmap_widget(dialog, stock_pixmap);
-	gtk_box_pack_start(GTK_BOX(hbox), pixmapwid, FALSE, FALSE, 16);
+	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 16);
 
 	label = gtk_label_new(title);
 	gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
