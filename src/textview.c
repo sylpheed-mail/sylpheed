@@ -97,6 +97,13 @@ static GdkColor good_sig_color = {
 	(gushort)0
 };
 
+static GdkColor untrusted_sig_color = {
+	(gulong)0,
+	(gushort)0xefff,
+	(gushort)0,
+	(gushort)0
+};
+
 static GdkColor nocheck_sig_color = {
 	(gulong)0,
 	(gushort)0,
@@ -272,6 +279,9 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 #if USE_GPGME
 	gtk_text_buffer_create_tag(buffer, "good-signature",
 				   "foreground-gdk", &good_sig_color,
+				   NULL);
+	gtk_text_buffer_create_tag(buffer, "untrusted-signature",
+				   "foreground-gdk", &untrusted_sig_color,
 				   NULL);
 	gtk_text_buffer_create_tag(buffer, "bad-signature",
 				   "foreground-gdk", &bad_sig_color,
@@ -518,6 +528,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		const gchar *color;
 		if (!strcmp(mimeinfo->sigstatus, _("Good signature")))
 			color = "good-signature";
+		else if (!strcmp(mimeinfo->sigstatus, _("Valid signature (untrusted key)")))
+			color = "untrusted-signature";
 		else if (!strcmp(mimeinfo->sigstatus, _("BAD signature")))
 			color = "bad-signature";
 		else

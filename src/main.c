@@ -103,9 +103,11 @@ static struct RemoteCmd {
 
 static void parse_cmd_opt(int argc, char *argv[]);
 
+#if 0
 #if USE_GPGME
 static void idle_function_for_gpgme(void);
 #endif /* USE_GPGME */
+#endif /* 0 */
 
 static gint prohibit_duplicate_launch	(void);
 static gint lock_socket_remove		(void);
@@ -236,11 +238,22 @@ int main(int argc, char *argv[])
 	prefs_common_read_config();
 
 #if USE_GPGME
-	if (gpgme_check_engine()) {  /* Also does some gpgme init */
+	if (gpgme_check_version("0.4.5")) {  /* Also does some gpgme init */
+        gpgme_engine_info_t engineInfo;
 		rfc2015_disable_all();
-		debug_print("gpgme_engine_version:\n%s\n",
-			    gpgme_get_engine_info());
 
+        gpgme_set_locale(NULL, LC_CTYPE, setlocale(LC_CTYPE, NULL));
+        gpgme_set_locale(NULL, LC_MESSAGES, setlocale(LC_MESSAGES, NULL));
+
+        if (!gpgme_get_engine_info(&engineInfo)) {
+            while (engineInfo) {
+                debug_print("GpgME Protocol: %s\n      Version: %s\n",
+                    gpgme_get_protocol_name(engineInfo->protocol),
+                    engineInfo->version);
+                engineInfo = engineInfo->next;
+            }
+        }
+    } else {
 		if (prefs_common.gpg_warning) {
 			AlertValue val;
 
@@ -253,7 +266,12 @@ int main(int argc, char *argv[])
 				prefs_common.gpg_warning = FALSE;
 		}
 	}
-	gpgme_register_idle(idle_function_for_gpgme);
+    /* FIXME: This function went away.  We can either block until gpgme
+     * operations finish (currently implemented) or register callbacks
+     * with the gtk main loop via the gpgme io callback interface instead.
+     *
+	 * gpgme_register_idle(idle_function_for_gpgme);
+     */
 #endif
 
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
@@ -493,6 +511,7 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	gtk_main_quit();
 }
 
+#if 0
 #if USE_GPGME
 static void idle_function_for_gpgme(void)
 {
@@ -500,6 +519,7 @@ static void idle_function_for_gpgme(void)
 		gtk_main_iteration();
 }
 #endif /* USE_GPGME */
+#endif /* 0 */
 
 static gchar *get_socket_name(void)
 {

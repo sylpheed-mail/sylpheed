@@ -30,6 +30,7 @@
 #include <string.h>
 #include <locale.h>
 #include <ctype.h>
+#include <errno.h>
 
 #include <gpgme.h>
 
@@ -120,147 +121,64 @@ rfc2015_secure_remove (const char *fname)
     remove (fname);
 }
 
-
-static const gchar *
-sig_status_to_string (GpgmeSigStat status)
-{
-    const gchar *result;
-
-    switch (status) {
-      case GPGME_SIG_STAT_NONE:
-        result = _("Oops: Signature not verified");
-        break;
-      case GPGME_SIG_STAT_NOSIG:
-        result = _("No signature found");
-        break;
-      case GPGME_SIG_STAT_GOOD:
-        result = _("Good signature");
-        break;
-      case GPGME_SIG_STAT_BAD:
-        result = _("BAD signature");
-        break;
-      case GPGME_SIG_STAT_NOKEY:
-        result = _("No public key to verify the signature");
-        break;
-      case GPGME_SIG_STAT_ERROR:
-        result = _("Error verifying the signature");
-        break;
-      case GPGME_SIG_STAT_DIFF:
-        result = _("Different results for signatures");
-        break;
-      default:
-	result = _("Error: Unknown status");
-	break;
-    }
-
-    return result;
-}
-
-static const gchar *
-sig_status_with_name (GpgmeSigStat status)
-{
-    const gchar *result;
-
-    switch (status) {
-      case GPGME_SIG_STAT_NONE:
-        result = _("Oops: Signature not verified");
-        break;
-      case GPGME_SIG_STAT_NOSIG:
-        result = _("No signature found");
-        break;
-      case GPGME_SIG_STAT_GOOD:
-        result = _("Good signature from \"%s\"");
-        break;
-      case GPGME_SIG_STAT_BAD:
-        result = _("BAD signature from \"%s\"");
-        break;
-      case GPGME_SIG_STAT_NOKEY:
-        result = _("No public key to verify the signature");
-        break;
-      case GPGME_SIG_STAT_ERROR:
-        result = _("Error verifying the signature");
-        break;
-      case GPGME_SIG_STAT_DIFF:
-        result = _("Different results for signatures");
-        break;
-      default:
-	result = _("Error: Unknown status");
-	break;
-    }
-
-    return result;
-}
-
 static void
-sig_status_for_key(GString *str, GpgmeCtx ctx, GpgmeSigStat status, 
-		   GpgmeKey key, const gchar *fpr)
+sig_status_for_key(GString *str, gpgme_ctx_t ctx, gpgme_signature_t sig)
 {
-	gint idx = 0;
-	const char *uid;
+	gpgme_key_t key;
+	gpgme_user_id_t user;
 
-	uid = gpgme_key_get_string_attr (key, GPGME_ATTR_USERID, NULL, idx);
-	if (uid == NULL) {
+	gpgme_get_key(ctx, sig->fpr, &key, 0);
+	if (key == NULL || key->uids->uid == NULL) {
 		g_string_sprintfa (str, "%s\n",
-				   sig_status_to_string (status));
-		if ((fpr != NULL) && (*fpr != '\0'))
-			g_string_sprintfa (str, "Key fingerprint: %s\n", fpr);
+				   gpgmegtk_sig_status_to_string (sig, FALSE));
+		if ((sig->fpr != NULL) && (*(sig->fpr) != '\0'))
+			g_string_sprintfa
+				(str, "Key fingerprint: %s\n", sig->fpr);
 		g_string_append (str, _("Cannot find user ID for this key."));
 		return;
 	}
-	g_string_sprintfa (str, sig_status_with_name (status), uid);
+	user = key->uids;
+	g_string_sprintfa
+		(str, gpgmegtk_sig_status_to_string (sig, TRUE), user->uid);
 	g_string_append (str, "\n");
 
-	while (1) {
-		uid = gpgme_key_get_string_attr (key, GPGME_ATTR_USERID,
-						 NULL, ++idx);
-		if (uid == NULL)
-			break;
-		g_string_sprintfa (str, _("                aka \"%s\"\n"),
-				   uid);
+	user = user->next;
+	while (user) {
+		g_string_sprintfa
+			(str, _("		aka \"%s\"\n"), user->uid);
+		user = user->next;
 	}
 }
 
 static gchar *
-sig_status_full (GpgmeCtx ctx)
+sig_status_full (gpgme_ctx_t ctx, gpgme_verify_result_t result)
 {
 	GString *str;
-	gint sig_idx = 0;
-	GpgmeError err;
-	GpgmeSigStat status;
-	GpgmeKey key;
-	const char *fpr;
+	gpgme_signature_t sig;
 	time_t created;
 	struct tm *ctime_val;
-	char ctime_str[80];
+	char ctime_str[80], ctime_str_utf8[80];
 	gchar *retval;
 
 	str = g_string_new ("");
 
-	fpr = gpgme_get_sig_status (ctx, sig_idx, &status, &created);
-	while (fpr != NULL) {
-		if (created != 0) {
+	sig = result->signatures;
+	while (sig != NULL) {
+		if (sig->timestamp != 0) {
+			created = sig->timestamp;
 			ctime_val = localtime (&created);
 			strftime (ctime_str, sizeof (ctime_str), "%c", 
 				  ctime_val);
+			conv_localetodisp (ctime_str_utf8,
+					   sizeof (ctime_str_utf8), ctime_str);
 			g_string_sprintfa (str,
 					   _("Signature made at %s\n"),
-					   ctime_str);
+					   ctime_str_utf8);
 		}
-		err = gpgme_get_sig_key (ctx, sig_idx, &key);
-		if (err != 0) {
-			g_string_sprintfa (str, "%s\n",
-					   sig_status_to_string (status));
-			if ((fpr != NULL) && (*fpr != '\0'))
-				g_string_sprintfa (str, 
-						   _("Key fingerprint: %s\n"),
-						   fpr);
-		} else {
-			sig_status_for_key (str, ctx, status, key, fpr);
-			gpgme_key_unref (key);
-		}
-		g_string_append (str, "\n\n");
-
-		fpr = gpgme_get_sig_status (ctx, ++sig_idx, &status, &created);
+		sig_status_for_key(str, ctx, sig);
+		if (sig->next)
+			g_string_append (str, "\n\n");
+		sig = sig->next;
 	}
 
 	retval = str->str;
@@ -270,10 +188,10 @@ sig_status_full (GpgmeCtx ctx)
 
 static void check_signature (MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
 {
-    GpgmeCtx ctx = NULL;
-    GpgmeError err;
-    GpgmeData sig = NULL, text = NULL;
-    GpgmeSigStat status = GPGME_SIG_STAT_NONE;
+    gpgme_ctx_t ctx = NULL;
+    gpgme_error_t err;
+    gpgme_data_t sig = NULL, text = NULL;
+    gpgme_verify_result_t verifyresult = NULL;
     GpgmegtkSigStatus statuswindow = NULL;
     const char *result = NULL;
     gchar *tmp_file;
@@ -338,19 +256,26 @@ static void check_signature (MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
         goto leave;
     }
 
-    err = gpgme_op_verify (ctx, sig, text, &status);
+    err = gpgme_op_verify (ctx, sig, text, NULL);
     if (err)  {
         debug_print ("gpgme_op_verify failed: %s\n", gpgme_strerror (err));
         goto leave;
     }
+    verifyresult = gpgme_op_verify_result(ctx);
 
     /* FIXME: check what the heck this sig_status_full stuff is.
-     * it should better go into sigstatus.c */
+     * Maybe it belongs in sigstatus.c 
+     *
+     * I think it belongs here as it is interfacing with gmime (Toshio). */
     g_free (partinfo->sigstatus_full);
-    partinfo->sigstatus_full = sig_status_full (ctx);
+    partinfo->sigstatus_full = sig_status_full (ctx, verifyresult);
 
 leave:
-    result = gpgmegtk_sig_status_to_string(status);
+    if (verifyresult) {
+        result = gpgmegtk_sig_status_to_string(verifyresult->signatures, FALSE);
+    } else {
+        result = _("Error verifying the signature");
+    }
     debug_print("verification status: %s\n", result);
     if (prefs_common.gpg_signature_popup)
 	gpgmegtk_sig_status_update (statuswindow, ctx);
@@ -406,13 +331,12 @@ copy_gpgmedata_to_temp (GpgmeData data, guint *length)
     return tmp;
 }
 #endif
-
-static GpgmeData
+static gpgme_data_t
 pgp_decrypt (MimeInfo *partinfo, FILE *fp)
 {
-    GpgmeCtx ctx = NULL;
-    GpgmeError err;
-    GpgmeData cipher = NULL, plain = NULL;
+    gpgme_ctx_t ctx = NULL;
+    gpgme_error_t err;
+    gpgme_data_t cipher = NULL, plain = NULL;
     struct passphrase_cb_info_s info;
 
     memset (&info, 0, sizeof info);
@@ -459,13 +383,28 @@ leave:
     return plain;
 }
 
-MimeInfo * rfc2015_find_signature (MimeInfo *mimeinfo)
+MimeInfo ** rfc2015_find_signature (MimeInfo *mimeinfo)
 {
     MimeInfo *partinfo;
+    MimeInfo **signedinfo = NULL;
     int n = 0;
 
     if (!mimeinfo)
         return NULL;
+
+    /* We could have a signature nested within multipart/mixed so
+     * recurse to find it.
+     */
+    if (!g_strcasecmp (mimeinfo->content_type, "multipart/mixed")) {
+        for (partinfo = mimeinfo->children; partinfo != NULL; 
+                partinfo = partinfo->next) {
+            signedinfo = rfc2015_find_signature (partinfo);
+            if (signedinfo) {
+                return signedinfo;
+            }
+        }
+        return NULL;
+    }
     if (g_strcasecmp (mimeinfo->content_type, "multipart/signed"))
         return NULL;
 
@@ -479,7 +418,13 @@ MimeInfo * rfc2015_find_signature (MimeInfo *mimeinfo)
             break;
     }
 
-    return partinfo;
+    if (partinfo) {
+        signedinfo = g_malloc(sizeof(MimeInfo *) * 2);
+        signedinfo[0] = mimeinfo;
+        signedinfo[1] = partinfo;
+    }
+    /* This is NULL if partinfo was not set */
+    return signedinfo;
 }
 
 gboolean rfc2015_has_signature (MimeInfo *mimeinfo)
@@ -489,10 +434,10 @@ gboolean rfc2015_has_signature (MimeInfo *mimeinfo)
 
 void rfc2015_check_signature (MimeInfo *mimeinfo, FILE *fp)
 {
-    MimeInfo *partinfo;
+    MimeInfo **signedinfo;
 
-    partinfo = rfc2015_find_signature (mimeinfo);
-    if (!partinfo)
+    signedinfo = rfc2015_find_signature (mimeinfo);
+    if (!signedinfo)
         return;
 
 #if 0
@@ -503,7 +448,8 @@ void rfc2015_check_signature (MimeInfo *mimeinfo, FILE *fp)
     dump_part (mimeinfo->children, fp);
 #endif
 
-    check_signature (mimeinfo, partinfo, fp);
+    check_signature (signedinfo[0], signedinfo[1], fp);
+    g_free(signedinfo);
 }
 
 int rfc2015_is_encrypted (MimeInfo *mimeinfo)
@@ -590,12 +536,12 @@ void rfc2015_decrypt_message (MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
     MimeInfo *tmpinfo, *partinfo;
     int ver_ok = 0;
     char *fname;
-    GpgmeData plain;
+    gpgme_data_t plain;
     FILE *dstfp;
-    size_t nread;
+    ssize_t nread;
     char buf[BUFFSIZE];
     int in_cline;
-    GpgmeError err;
+    gpgme_error_t err;
 
     g_return_if_fail (msginfo != NULL);
     g_return_if_fail (mimeinfo != NULL);
@@ -669,16 +615,20 @@ void rfc2015_decrypt_message (MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
         fputs (buf, dstfp);
     }
 
-    err = gpgme_data_rewind (plain);
+    err = (gpgme_data_seek (plain, 0, SEEK_SET) == -1) ?
+	gpgme_error_from_errno(errno) : 0;
     if (err)
-        debug_print ("gpgme_data_rewind failed: %s\n", gpgme_strerror (err));
+	debug_print ("gpgme_data_seek failed: %s\n", gpgme_strerror (err));
 
-    while (!(err = gpgme_data_read (plain, buf, sizeof(buf), &nread))) {
+    nread = gpgme_data_read(plain, buf, sizeof(buf));
+    while (nread > 0) {
         fwrite (buf, nread, 1, dstfp);
+	nread = gpgme_data_read(plain, buf, sizeof(buf));
     }
 
-    if (err != GPGME_EOF) {
-        debug_print ("gpgme_data_read failed: %s\n", gpgme_strerror (err));
+    if (nread != 0) {
+	debug_print ("gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
     }
 
     fclose (dstfp);
@@ -696,19 +646,29 @@ void rfc2015_decrypt_message (MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
  * Encrypt it and return an GpgmeData object with the encrypted version of
  * the file or NULL in case of error.
  */
-static GpgmeData
-pgp_encrypt ( GpgmeData plain, GpgmeRecipients rset )
+static gpgme_data_t
+pgp_encrypt ( gpgme_data_t plain, gpgme_key_t kset[] )
 {
-    GpgmeCtx ctx = NULL;
-    GpgmeError err;
-    GpgmeData cipher = NULL;
+    gpgme_ctx_t ctx = NULL;
+    gpgme_error_t err;
+    gpgme_data_t cipher = NULL;
 
     err = gpgme_new (&ctx);
     if (!err)
 	err = gpgme_data_new (&cipher);
     if (!err) {
         gpgme_set_armor (ctx, 1);
-	err = gpgme_op_encrypt (ctx, rset, plain, cipher);
+    err = (gpgme_data_seek(plain, 0, SEEK_SET) == -1) ?
+        gpgme_error_from_errno(errno) : 0;
+        if (!err) {
+            /*
+             * Note -- it is currently the responsibility of select-keys.c::
+             * gpgmegtk_recipient_selection() to prompt the user whether to
+             * encrypt to recipients whose key is not trusted.
+             */
+            err = gpgme_op_encrypt (ctx, kset, GPGME_ENCRYPT_ALWAYS_TRUST,
+                    plain, cipher);
+        }
     }
 
     if (err) {
@@ -731,10 +691,10 @@ pgp_encrypt ( GpgmeData plain, GpgmeRecipients rset )
 GSList *rfc2015_create_signers_list (const char *keyid)
 {
 	GSList *key_list = NULL;
-	GpgmeCtx list_ctx = NULL;
+	gpgme_ctx_t list_ctx = NULL;
 	GSList *p;
-	GpgmeError err;
-	GpgmeKey key;
+	gpgme_error_t err;
+	gpgme_key_t key;
 
 	err = gpgme_new (&list_ctx);
 	if (err)
@@ -745,7 +705,7 @@ GSList *rfc2015_create_signers_list (const char *keyid)
 	while ( !(err = gpgme_op_keylist_next (list_ctx, &key)) ) {
 		key_list = g_slist_append (key_list, key);
 	}
-	if (err != GPGME_EOF)
+	if (gpgme_err_code(err) != GPG_ERR_EOF)
 		goto leave;
 	err = 0;
 	if (key_list == NULL) {
@@ -756,7 +716,7 @@ leave:
 	if (err) {
 		debug_print ("rfc2015_create_signers_list failed: %s\n", gpgme_strerror (err));
 		for (p = key_list; p != NULL; p = p->next)
-			gpgme_key_unref ((GpgmeKey) p->data);
+			gpgme_key_unref ((gpgme_key_t) p->data);
 		g_slist_free (key_list);
 	}
 	if (list_ctx)
@@ -775,20 +735,20 @@ rfc2015_encrypt (const char *file, GSList *recp_list, gboolean ascii_armored)
     char buf[BUFFSIZE];
     int i, clineidx, saved_last;
     char *clines[3] = {NULL};
-    GpgmeError err;
-    GpgmeData header = NULL;
-    GpgmeData plain = NULL;
-    GpgmeData cipher = NULL;
-    GpgmeRecipients rset = NULL;
-    size_t nread;
+    gpgme_error_t err;
+    gpgme_data_t header = NULL;
+    gpgme_data_t plain = NULL;
+    gpgme_data_t cipher = NULL;
+    gpgme_key_t *kset = NULL;
+    ssize_t bytesRW = 0;
     int mime_version_seen = 0;
     char *boundary;
 
     boundary = generate_mime_boundary ("Encrypt");
 
     /* Create the list of recipients */
-    rset = gpgmegtk_recipient_selection (recp_list);
-    if (!rset) {
+    kset = gpgmegtk_recipient_selection (recp_list);
+    if (!kset) {
         debug_print ("error creating recipient list\n" );
         goto failure;
     }
@@ -836,7 +796,7 @@ rfc2015_encrypt (const char *file, GSList *recp_list, gboolean ascii_armored)
 
         if (buf[0] == '\r' || buf[0] == '\n')
             break;
-        err = gpgme_data_write (header, buf, strlen (buf));
+	bytesRW = gpgme_data_write (header, buf, strlen (buf));
     }
     if (ferror (fp)) {
         FILE_OP_ERROR (file, "fgets");
@@ -844,27 +804,34 @@ rfc2015_encrypt (const char *file, GSList *recp_list, gboolean ascii_armored)
     }
 
     /* write them to the temp data and add the rest of the message */
-    for (i = 0; !err && i < clineidx; i++) {
+    for (i = 0; (bytesRW != -1) && i < clineidx; i++) {
         debug_print ("%% %s:%d: cline=`%s'", __FILE__ ,__LINE__, clines[i]);
-        err = gpgme_data_write (plain, clines[i], strlen (clines[i]));
+	bytesRW = gpgme_data_write (plain, clines[i], strlen (clines[i]));
     }
-    if (!err)
-        err = gpgme_data_write (plain, "\r\n", 2);
-    while (!err && fgets(buf, sizeof(buf), fp)) {
-        err = gpgme_data_write (plain, buf, strlen (buf));
+    if (bytesRW != -1)
+	bytesRW = gpgme_data_write (plain, "\r\n", 2);
+    while ((bytesRW != -1) && fgets(buf, sizeof(buf), fp)) {
+	bytesRW = gpgme_data_write (plain, buf, strlen (buf));
     }
     if (ferror (fp)) {
         FILE_OP_ERROR (file, "fgets");
         goto failure;
     }
-    if (err) {
-        debug_print ("gpgme_data_write failed: %s\n", gpgme_strerror (err));
+    if (bytesRW == -1) {
+	debug_print ("gpgme_data_write failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
 
-    cipher = pgp_encrypt (plain, rset);
+    cipher = pgp_encrypt (plain, kset);
     gpgme_data_release (plain); plain = NULL;
-    gpgme_recipients_release (rset); rset = NULL;
+    i = 0;
+    while (kset[i] != NULL) {
+	gpgme_key_unref(kset[i]);
+	i++;
+    }
+    g_free(kset);
+    kset = NULL;
     if (!cipher)
         goto failure;
 
@@ -889,18 +856,24 @@ rfc2015_encrypt (const char *file, GSList *recp_list, gboolean ascii_armored)
     }
 
     /* Write the header, append new content lines, part 1 and part 2 header */
-    err = gpgme_data_rewind (header);
+    err = (gpgme_data_seek(header, 0 , SEEK_SET) == -1) ?
+	gpgme_error_from_errno(errno) : 0;
     if (err) {
-        debug_print ("gpgme_data_rewind failed: %s\n", gpgme_strerror (err));
+	debug_print ("gpgme_data_seek failed: %s\n", gpgme_strerror (err));
         goto failure;
     }
-    while (!(err = gpgme_data_read (header, buf, BUFFSIZE, &nread))) {
-        fwrite (buf, nread, 1, fp);
+    bytesRW = gpgme_data_read(header, buf, BUFFSIZE);
+    while (bytesRW > 0) {
+	fwrite (buf, bytesRW, 1, fp);
+	bytesRW = gpgme_data_read(header, buf, BUFFSIZE);
     }
-    if (err != GPGME_EOF) {
-        debug_print ("gpgme_data_read failed: %s\n", gpgme_strerror (err));
+
+    if (bytesRW != 0) {
+	debug_print ("gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
+
     if (ferror (fp)) {
         FILE_OP_ERROR (file, "fwrite");
         goto failure;
@@ -933,18 +906,24 @@ rfc2015_encrypt (const char *file, GSList *recp_list, gboolean ascii_armored)
     }
 
     /* append the encrypted stuff */
-    err = gpgme_data_rewind (cipher);
+    err = (gpgme_data_seek(cipher, 0 , SEEK_SET) == -1) ?
+	gpgme_error_from_errno(errno) : 0;
     if (err) {
-        debug_print ("** gpgme_data_rewind on cipher failed: %s\n",
+	debug_print ("** gpgme_data_seek on cipher failed: %s\n",
                    gpgme_strerror (err));
+	debug_print ("gpgme_data_seek failed: %s\n", gpgme_strerror (err));
         goto failure;
     }
 
-    while (!(err = gpgme_data_read (cipher, buf, BUFFSIZE, &nread))) {
-        fwrite (buf, nread, 1, fp);
+    bytesRW = gpgme_data_read(cipher, buf, BUFFSIZE);
+    while (bytesRW > 0) {
+	fwrite (buf, bytesRW, 1, fp);
+	bytesRW = gpgme_data_read(cipher, buf, BUFFSIZE);
     }
-    if (err != GPGME_EOF) {
-        debug_print ("** gpgme_data_read failed: %s\n", gpgme_strerror (err));
+
+    if (bytesRW != 0) {
+	debug_print ("** gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
 
@@ -970,7 +949,15 @@ failure:
     gpgme_data_release (header);
     gpgme_data_release (plain);
     gpgme_data_release (cipher);
-    gpgme_recipients_release (rset);
+
+    if (kset != NULL) {
+	i = 0;
+	while (kset[i] != NULL) {
+	    gpgme_key_unref(kset[i]);
+	    i++;
+	}
+	g_free(kset);
+    }
     g_free (boundary);
     return -1; /* error */
 }
@@ -978,19 +965,20 @@ failure:
 /* 
  * plain contains an entire mime object.  Sign it and return an
  * GpgmeData object with the signature of it or NULL in case of error.
- * r_siginfo returns an XML object with information about the signature.
+ * micalg returns the micalg information about the signature.
  */
-static GpgmeData
-pgp_sign (GpgmeData plain, GSList *key_list, gboolean clearsign,
-	  char **r_siginfo)
+static gpgme_data_t
+pgp_sign (gpgme_data_t plain, GSList *key_list, gboolean clearsign,
+	  char **micalg)
 {
     GSList *p;
-    GpgmeCtx ctx = NULL;
-    GpgmeError err;
-    GpgmeData sig = NULL;
+    gpgme_ctx_t ctx = NULL;
+    gpgme_error_t err;
+    gpgme_data_t sig = NULL;
+    gpgme_sign_result_t result = NULL;
     struct passphrase_cb_info_s info;
 
-    *r_siginfo = NULL;
+    *micalg = NULL;
     memset (&info, 0, sizeof info);
 
     err = gpgme_new (&ctx);
@@ -1008,21 +996,31 @@ pgp_sign (GpgmeData plain, GSList *key_list, gboolean clearsign,
     gpgme_set_armor (ctx, 1);
     gpgme_signers_clear (ctx);
     for (p = key_list; p != NULL; p = p->next) {
-	err = gpgme_signers_add (ctx, (GpgmeKey) p->data);
+    err = gpgme_signers_add (ctx, (gpgme_key_t) p->data);
 	if (err)
 	    goto leave;
     }
     for (p = key_list; p != NULL; p = p->next)
-	gpgme_key_unref ((GpgmeKey) p->data);
+	gpgme_key_unref ((gpgme_key_t) p->data);
     g_slist_free (key_list);
 
-    if (err)
-	goto leave;
-    err = gpgme_op_sign
-	(ctx, plain, sig,
+    err = (gpgme_data_seek(plain, 0, SEEK_SET) == -1) ?
+        gpgme_error_from_errno(errno) : 0;
+    if (!err) {
+        err = gpgme_op_sign (ctx, plain, sig,
 	 clearsign ? GPGME_SIG_MODE_CLEAR : GPGME_SIG_MODE_DETACH);
+    }
     if (!err)
-        *r_siginfo = gpgme_get_op_info (ctx, 0);
+	result = gpgme_op_sign_result(ctx);
+	if (result) {
+	    if (gpgme_get_protocol(ctx) == GPGME_PROTOCOL_OpenPGP) {
+		*micalg = g_strdup_printf("PGP-%s", gpgme_hash_algo_name(
+			    result->signatures->hash_algo));
+	    } else {
+		*micalg = g_strdup(gpgme_hash_algo_name(
+			    result->signatures->hash_algo));
+	    }
+	}
 
 leave:
     if (err) {
@@ -1039,66 +1037,6 @@ leave:
     return sig;
 }
 
-/*
- * Find TAG in XML and return a pointer into xml set just behind the
- * closing angle.  Return NULL if not found. 
- */
-static const char *
-find_xml_tag (const char *xml, const char *tag)
-{
-    int taglen = strlen (tag);
-    const char *s = xml;
- 
-    while ( (s = strchr (s, '<')) ) {
-        s++;
-        if (!strncmp (s, tag, taglen)) {
-            const char *s2 = s + taglen;
-            if (*s2 == '>' || isspace (*(const unsigned char*)s2) ) {
-                /* found */
-                while (*s2 && *s2 != '>') /* skip attributes */
-                    s2++;
-                /* fixme: do need to handle angles inside attribute vallues? */
-                return *s2? (s2+1):NULL;
-            }
-        }
-        while (*s && *s != '>') /* skip to end of tag */
-            s++;
-    }
-    return NULL;
-}
-
-
-/*
- * Extract the micalg from an GnupgOperationInfo XML container.
- */
-static char *
-extract_micalg (char *xml)
-{
-    const char *s;
-
-    s = find_xml_tag (xml, "GnupgOperationInfo");
-    if (s) {
-        const char *s_end = find_xml_tag (s, "/GnupgOperationInfo");
-        s = find_xml_tag (s, "signature");
-        if (s && s_end && s < s_end) {
-            const char *s_end2 = find_xml_tag (s, "/signature");
-            if (s_end2 && s_end2 < s_end) {
-                s = find_xml_tag (s, "micalg");
-                if (s && s < s_end2) {
-                    s_end = strchr (s, '<');
-                    if (s_end) {
-                        char *p = g_malloc (s_end - s + 1);
-                        memcpy (p, s, s_end - s);
-                        p[s_end-s] = 0;
-                        return p;
-                    }
-                }
-            }
-        }
-    }
-    return NULL;
-}
-
 
 /*
  * Sign the file and replace its content with the signed one.
@@ -1110,15 +1048,14 @@ rfc2015_sign (const char *file, GSList *key_list)
     char buf[BUFFSIZE];
     int i, clineidx, saved_last;
     char *clines[3] = {NULL};
-    GpgmeError err;
-    GpgmeData header = NULL;
-    GpgmeData plain = NULL;
-    GpgmeData sigdata = NULL;
-    size_t nread;
+    gpgme_error_t err;
+    gpgme_data_t header = NULL;
+    gpgme_data_t plain = NULL;
+    gpgme_data_t sigdata = NULL;
+    ssize_t bytesRW = -1;
     int mime_version_seen = 0;
     char *boundary;
     char *micalg = NULL;
-    char *siginfo;
 
     boundary = generate_mime_boundary ("Signature");
 
@@ -1165,7 +1102,7 @@ rfc2015_sign (const char *file, GSList *key_list)
 
         if (buf[0] == '\r' || buf[0] == '\n')
             break;
-        err = gpgme_data_write (header, buf, strlen (buf));
+	 bytesRW = gpgme_data_write (header, buf, strlen (buf));
     }
     if (ferror (fp)) {
         FILE_OP_ERROR (file, "fgets");
@@ -1173,28 +1110,25 @@ rfc2015_sign (const char *file, GSList *key_list)
     }
 
     /* write them to the temp data and add the rest of the message */
-    for (i = 0; !err && i < clineidx; i++) {
-        err = gpgme_data_write (plain, clines[i], strlen (clines[i]));
+    for (i = 0; (bytesRW != -1) && i < clineidx; i++) {
+	bytesRW = gpgme_data_write (plain, clines[i], strlen (clines[i]));
     }
-    if (!err)
-        err = gpgme_data_write (plain, "\r\n", 2 );
-    while (!err && fgets(buf, sizeof(buf), fp)) {
-        err = gpgme_data_write (plain, buf, strlen (buf));
+    if (bytesRW != -1)
+	bytesRW = gpgme_data_write (plain, "\r\n", 2 );
+    while ((bytesRW != -1) && fgets(buf, sizeof(buf), fp)) {
+	bytesRW = gpgme_data_write (plain, buf, strlen (buf));
     }
     if (ferror (fp)) {
         FILE_OP_ERROR (file, "fgets");
         goto failure;
     }
-    if (err) {
-        debug_print ("gpgme_data_write failed: %s\n", gpgme_strerror (err));
+    if (bytesRW == -1) {
+	debug_print ("gpgme_data_write failed: %s\n", 
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
 
-    sigdata = pgp_sign (plain, key_list, FALSE, &siginfo); 
-    if (siginfo) {
-	micalg = extract_micalg (siginfo);
-	free (siginfo);
-    }
+    sigdata = pgp_sign (plain, key_list, FALSE, &micalg); 
     if (!sigdata) 
         goto failure;
 
@@ -1212,14 +1146,18 @@ rfc2015_sign (const char *file, GSList *key_list)
     }
 
     /* Write the rfc822 header and add new content lines */
-    err = gpgme_data_rewind (header);
+    err = (gpgme_data_seek (header, 0, SEEK_SET) == -1) ?
+	    gpgme_error_from_errno(errno) : 0;
     if (err)
-        debug_print ("gpgme_data_rewind failed: %s\n", gpgme_strerror (err));
-    while (!(err = gpgme_data_read (header, buf, BUFFSIZE, &nread))) {
-        fwrite (buf, nread, 1, fp);
+	debug_print ("gpgme_data_seek failed: %s\n", gpgme_strerror (err));
+    bytesRW = gpgme_data_read (header, buf, BUFFSIZE);
+    while (bytesRW > 0) {
+	fwrite (buf, bytesRW, 1, fp);
+	bytesRW = gpgme_data_read (header, buf, BUFFSIZE);
     }
-    if (err != GPGME_EOF) {
-        debug_print ("gpgme_data_read failed: %s\n", gpgme_strerror (err));
+    if (bytesRW != 0) {
+	debug_print ("gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
     if (ferror (fp)) {
@@ -1241,17 +1179,21 @@ rfc2015_sign (const char *file, GSList *key_list)
     fprintf (fp, "\r\n"
                  "--%s\r\n",
                  boundary);
-    err = gpgme_data_rewind (plain);
+    err = (gpgme_data_seek (plain, 0, SEEK_SET) == -1) ?
+	    gpgme_error_from_errno(errno) : 0;
     if (err) {
-        debug_print ("gpgme_data_rewind on plain failed: %s\n",
+	debug_print ("gpgme_data_seek on plain failed: %s\n",
                    gpgme_strerror (err));
         goto failure;
     }
-    while (!(err = gpgme_data_read (plain, buf, BUFFSIZE, &nread))) {
-        fwrite (buf, nread, 1, fp);   
+    bytesRW = gpgme_data_read (plain, buf, BUFFSIZE);
+    while (bytesRW > 0) {
+	fwrite (buf, bytesRW, 1, fp);   
+	bytesRW = gpgme_data_read (plain, buf, BUFFSIZE);
     }
-    if (err != GPGME_EOF) {
-        debug_print ("gpgme_data_read failed: %s\n", gpgme_strerror (err));
+    if (bytesRW != 0) {
+	debug_print ("gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
 
@@ -1262,18 +1204,22 @@ rfc2015_sign (const char *file, GSList *key_list)
     fputs ("Content-Type: application/pgp-signature\r\n"
 	   "\r\n", fp);
 
-    err = gpgme_data_rewind (sigdata);
+    err = (gpgme_data_seek (sigdata, 0, SEEK_SET) == -1) ?
+	    gpgme_error_from_errno(errno) : 0;
     if (err) {
-        debug_print ("gpgme_data_rewind on sigdata failed: %s\n",
-                   gpgme_strerror (err));
+	debug_print ("gpgme_data_seek on sigdata failed: %s\n",
+		   gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
 
-    while (!(err = gpgme_data_read (sigdata, buf, BUFFSIZE, &nread))) {
-        fwrite (buf, nread, 1, fp);
+    bytesRW = gpgme_data_read (sigdata, buf, BUFFSIZE);
+    while (bytesRW > 0) {
+	fwrite (buf, bytesRW, 1, fp);
+	bytesRW = gpgme_data_read (sigdata, buf, BUFFSIZE);
     }
-    if (err != GPGME_EOF) {
-        debug_print ("gpgme_data_read failed: %s\n", gpgme_strerror (err));
+    if (bytesRW != 0) {
+	debug_print ("gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
         goto failure;
     }
 
@@ -1314,11 +1260,11 @@ rfc2015_clearsign (const gchar *file, GSList *key_list)
 {
     FILE *fp;
     gchar buf[BUFFSIZE];
-    GpgmeError err;
-    GpgmeData text = NULL;
-    GpgmeData sigdata = NULL;
-    size_t nread;
-    gchar *siginfo;
+    gpgme_error_t err;
+    gpgme_data_t text = NULL;
+    gpgme_data_t sigdata = NULL;
+    ssize_t bytesRW = 0;
+    gchar *micalg;
 
     if ((fp = fopen(file, "rb")) == NULL) {
 	FILE_OP_ERROR(file, "fopen");
@@ -1331,21 +1277,22 @@ rfc2015_clearsign (const gchar *file, GSList *key_list)
 	goto failure;
     }
 
-    while (!err && fgets(buf, sizeof(buf), fp)) {
-	err = gpgme_data_write(text, buf, strlen(buf));
+    while ((bytesRW != -1) && fgets(buf, sizeof(buf), fp)) {
+	bytesRW = gpgme_data_write(text, buf, strlen(buf));
     }
     if (ferror(fp)) {
 	FILE_OP_ERROR(file, "fgets");
 	goto failure;
     }
-    if (err) {
-	debug_print("gpgme_data_write failed: %s\n", gpgme_strerror(err));
+    if (bytesRW == -1) {
+	debug_print("gpgme_data_write failed: %s\n",
+		gpgme_strerror(gpgme_error_from_errno(errno)));
 	goto failure;
     }
 
-    sigdata = pgp_sign(text, key_list, TRUE, &siginfo);
-    if (siginfo) {
-	g_free(siginfo);
+    sigdata = pgp_sign(text, key_list, TRUE, &micalg);
+    if (micalg) {
+	g_free(micalg);
     }
     if (!sigdata)
 	goto failure;
@@ -1360,18 +1307,22 @@ rfc2015_clearsign (const gchar *file, GSList *key_list)
 	goto failure;
     }
 
-    err = gpgme_data_rewind(sigdata);
+    err = (gpgme_data_seek (sigdata, 0, SEEK_SET) == -1) ?
+	    gpgme_error_from_errno(errno) : 0;
     if (err) {
-	debug_print("gpgme_data_rewind on sigdata failed: %s\n",
+	debug_print("gpgme_data_seek on sigdata failed: %s\n",
 		    gpgme_strerror(err));
 	goto failure;
     }
 
-    while (!(err = gpgme_data_read(sigdata, buf, sizeof(buf), &nread))) {
-	fwrite(buf, nread, 1, fp);
+    bytesRW = gpgme_data_read (sigdata, buf, BUFFSIZE);
+    while (bytesRW > 0) {
+	fwrite (buf, bytesRW, 1, fp);
+	bytesRW = gpgme_data_read (sigdata, buf, BUFFSIZE);
     }
-    if (err != GPGME_EOF) {
-	debug_print("gpgme_data_read failed: %s\n", gpgme_strerror(err));
+    if (bytesRW != 0) {
+	debug_print ("gpgme_data_read failed: %s\n",
+		gpgme_strerror (gpgme_error_from_errno(errno)));
 	goto failure;
     }
 

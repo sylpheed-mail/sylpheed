@@ -59,19 +59,20 @@ static gint passphrase_deleted(GtkWidget *widget, GdkEventAny *event,
 			       gpointer data);
 static gboolean passphrase_key_pressed(GtkWidget *widget, GdkEventKey *event,
 				       gpointer data);
-static gchar* passphrase_mbox (const gchar *desc);
+static gchar* passphrase_mbox(const gchar *uid_hint, const gchar *pass_hint,
+			      gint prev_bad);
 
-
-static GtkWidget *create_description (const gchar *desc);
+static GtkWidget *create_description(const gchar *uid_hint,
+				     const gchar *pass_hint, gint prev_bad);
 
 void
-gpgmegtk_set_passphrase_grab (gint yes)
+gpgmegtk_set_passphrase_grab(gint yes)
 {
     grab_all = yes;
 }
 
 static gchar*
-passphrase_mbox (const gchar *desc)
+passphrase_mbox(const gchar *uid_hint, const gchar *pass_hint, gint prev_bad)
 {
     gchar *the_passphrase = NULL;
     GtkWidget *vbox;
@@ -98,9 +99,9 @@ passphrase_mbox (const gchar *desc)
     gtk_container_add(GTK_CONTAINER(window), vbox);
     gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
 
-    if (desc) {
+    if (uid_hint || pass_hint) {
         GtkWidget *label;
-        label = create_description (desc);
+        label = create_description (uid_hint, pass_hint, prev_bad);
         gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
     }
 
@@ -225,29 +226,25 @@ linelen (const gchar *s)
 }
 
 static GtkWidget *
-create_description (const gchar *desc)
+create_description(const gchar *uid_hint, const gchar *pass_hint, gint prev_bad)
 {
-    const gchar *cmd = NULL, *uid = NULL, *info = NULL;
+    const gchar *uid = NULL, *info = NULL;
     gchar *buf;
     GtkWidget *label;
 
-    cmd = desc;
-    uid = strchr (cmd, '\n');
-    if (uid) {
-        info = strchr (++uid, '\n');
-        if (info )
-            info++;
-    }
-
-    if (!uid)
+    if (!uid_hint)
         uid = _("[no user id]");
-    if (!info)
+    else
+        uid = uid_hint;
+    if (!pass_hint)
         info = "";
+    else
+        info = pass_hint;
 
     buf = g_strdup_printf (_("%sPlease enter the passphrase for:\n\n"
                            "  %.*s  \n"
                            "(%.*s)\n"),
-                           !strncmp (cmd, "TRY_AGAIN", 9 ) ?
+                           prev_bad ?
                            _("Bad passphrase! Try again...\n\n") : "",
                            linelen (uid), uid, linelen (info), info);
 
@@ -270,28 +267,25 @@ static int free_passphrase(gpointer _unused)
     return FALSE;
 }
 
-const char*
-gpgmegtk_passphrase_cb (void *opaque, const char *desc, void **r_hd)
+gpgme_error_t
+gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
+        const char *passphrase_hint, int prev_bad, int fd)
 {
-    struct passphrase_cb_info_s *info = opaque;
-    GpgmeCtx ctx = info ? info->c : NULL;
     const char *pass;
 
-    if (!desc) {
-        /* FIXME: cleanup by looking at *r_hd */
-        return NULL;
+    if (prefs_common.store_passphrase && last_pass != NULL && !prev_bad) {
+        write(fd, last_pass, strlen(last_pass));
+        write(fd, "\n", 1);
+        return GPG_ERR_NO_ERROR;
     }
-    if (prefs_common.store_passphrase && last_pass != NULL &&
-        strncmp(desc, "TRY_AGAIN", 9) != 0)
-        return g_strdup(last_pass);
-
     gpgmegtk_set_passphrase_grab (prefs_common.passphrase_grab);
-    debug_print ("%% requesting passphrase for `%s': ", desc);
-    pass = passphrase_mbox (desc);
+    debug_print ("%% requesting passphrase for `%s': ", uid_hint);
+    pass = passphrase_mbox (uid_hint, passphrase_hint, prev_bad);
     gpgmegtk_free_passphrase();
     if (!pass) {
         debug_print ("%% cancel passphrase entry");
-        gpgme_cancel (ctx);
+        write(fd, "\n", 1);
+        return GPG_ERR_CANCELED;
     }
     else {
         if (prefs_common.store_passphrase) {
@@ -306,8 +300,9 @@ gpgmegtk_passphrase_cb (void *opaque, const char *desc, void **r_hd)
         }
         debug_print ("%% sending passphrase");
     }
-
-    return pass;
+    write(fd, pass, strlen(pass));
+    write(fd, "\n", 1);
+    return GPG_ERR_NO_ERROR;
 }
 
 void gpgmegtk_free_passphrase()

@@ -257,17 +257,19 @@ static gboolean mimeview_is_signed(MimeView *mimeview)
 
 static void set_unchecked_signature(MimeInfo *mimeinfo)
 {
-	MimeInfo *sig_partinfo;
+	MimeInfo **signedinfo;
 
-	sig_partinfo = rfc2015_find_signature(mimeinfo);
-	if (sig_partinfo == NULL) return;
+	signedinfo = rfc2015_find_signature(mimeinfo);
+	if (signedinfo == NULL) return;
 
-	g_free(sig_partinfo->sigstatus);
-	sig_partinfo->sigstatus =
+	g_free(signedinfo[1]->sigstatus);
+	signedinfo[1]->sigstatus =
 		g_strdup(_("Select \"Check signature\" to check"));
 
-	g_free(sig_partinfo->sigstatus_full);
-	sig_partinfo->sigstatus_full = NULL;
+	g_free(signedinfo[1]->sigstatus_full);
+	signedinfo[1]->sigstatus_full = NULL;
+
+    g_free(signedinfo);
 }
 #endif /* USE_GPGME */
 

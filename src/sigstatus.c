@@ -172,39 +172,36 @@ void gpgmegtk_sig_status_destroy(GpgmegtkSigStatus hd)
 	}
 }
 
-/* Fixme: remove status and get it from the context */
-void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, GpgmeCtx ctx)
+void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, gpgme_ctx_t ctx)
 {
-	gint idx;
-	time_t created;
-	GpgmeSigStat status;
+	gpgme_verify_result_t result;
+	gpgme_signature_t sig;
 	gchar *text = NULL;
 
 	if (!hd || !hd->running || !ctx)
 		return;
-
-	for (idx = 0; gpgme_get_sig_status(ctx, idx, &status, &created);
-	     idx++) {
+	result = gpgme_op_verify_result(ctx);
+	sig = result->signatures;
+	while (sig) {
 		gchar *tmp;
 		const gchar *userid;
-		GpgmeKey key = NULL;
+		gpgme_key_t key = NULL;
 
-		if (!gpgme_get_sig_key (ctx, idx, &key)) {
-			userid = gpgme_key_get_string_attr
-				(key, GPGME_ATTR_USERID, NULL, 0);
-		} else
+		if (!gpgme_get_key(ctx, sig->fpr, &key, 0)) {
+			userid = key->uids->uid;
+		} else {
 			userid = "[?]";
-
+		}
 		tmp = g_strdup_printf(_("%s%s%s from \"%s\""),
 				      text ? text : "",
 				      text ? "\n" : "",
-				      gpgmegtk_sig_status_to_string(status),
+				gpgmegtk_sig_status_to_string(sig, FALSE),
 				      userid);
 		g_free (text);
 		text = tmp;
 		gpgme_key_unref (key);
+		sig = sig->next;
 	}
-
 	gtk_label_set_text(GTK_LABEL(hd->label), text); 
 	g_free(text);
 
@@ -212,30 +209,50 @@ void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, GpgmeCtx ctx)
 		gtk_main_iteration();
 }
 
-const char *gpgmegtk_sig_status_to_string(GpgmeSigStat status)
+const gchar *gpgmegtk_sig_status_to_string(gpgme_signature_t signature,
+        gboolean use_name)
 {
-	const char *result = "?";
-
-	switch (status) {
-	case GPGME_SIG_STAT_NONE:
-		result = _("Oops: Signature not verified");
-		break;
-	case GPGME_SIG_STAT_NOSIG:
+	const gchar *result = "?";
+    switch (gpg_err_code(signature->status)) {
+      case GPG_ERR_NO_DATA:
 		result = _("No signature found");
 		break;
-	case GPGME_SIG_STAT_GOOD:
-		result = _("Good signature");
+      case GPG_ERR_NO_ERROR:
+        switch (signature->validity) {
+          case GPGME_VALIDITY_ULTIMATE:
+          case GPGME_VALIDITY_FULL:
+          case GPGME_VALIDITY_MARGINAL:
+            result = use_name ? _("Good signature from \"%s\"") :
+                _("Good signature");
+            break;
+          default:
+            result = use_name ?
+                _("Valid signature but the key for \"%s\" is not trusted") :
+                    _("Valid signature (untrusted key)");
+            break;
+        }
 		break;
-	case GPGME_SIG_STAT_BAD:
-		result = _("BAD signature");
+      case GPG_ERR_SIG_EXPIRED:
+        result = use_name ? _("Signature valid but expired for \"%s\"") :
+            _("Signature valid but expired");
+        break;
+      case GPG_ERR_KEY_EXPIRED:
+        result = use_name ? _("Signature valid but the signing key for \"%s\" has expired") :
+            _("Signature valid but the signing key has expired");
+        break;
+      case GPG_ERR_CERT_REVOKED:
+        result = use_name ? _("Signature valid but the signing key for \"%s\" has been revoked") :
+            _("Signature valid but the signing key has been revoked");
+        break;
+      case GPG_ERR_BAD_SIGNATURE:
+		result = use_name ? _("BAD signature from \"%s\"") :
+            _("BAD signature");
 		break;
-	case GPGME_SIG_STAT_NOKEY:
+      case GPG_ERR_NO_PUBKEY:
 		result = _("No public key to verify the signature");
 		break;
-	case GPGME_SIG_STAT_ERROR:
-		result = _("Error verifying the signature");
-		break;
 	default:
+        result = _("Error verifying the signature");
 		break;
 	}
 

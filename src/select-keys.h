@@ -23,7 +23,7 @@
 #include <gpgme.h>
 
 
-GpgmeRecipients gpgmegtk_recipient_selection (GSList *recp_names);
+gpgme_key_t *gpgmegtk_recipient_selection (GSList *recp_names);
 
 
 #endif /* GPGMEGTK_SELECT_KEYS_H */

@@ -27,7 +27,7 @@
 
 void rfc2015_disable_all		(void);
 void rfc2015_secure_remove		(const gchar	*fname);
-MimeInfo *rfc2015_find_signature	(MimeInfo	*mimeinfo);
+MimeInfo **rfc2015_find_signature	(MimeInfo	*mimeinfo);
 gboolean rfc2015_has_signature		(MimeInfo	*mimeinfo);
 void rfc2015_check_signature		(MimeInfo	*mimeinfo,
 					 FILE		*fp);

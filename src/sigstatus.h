@@ -26,8 +26,9 @@ typedef struct gpgmegtk_sig_status_s *GpgmegtkSigStatus;
 
 GpgmegtkSigStatus gpgmegtk_sig_status_create(void);
 void gpgmegtk_sig_status_destroy(GpgmegtkSigStatus hd);
-void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, GpgmeCtx ctx);
+void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, gpgme_ctx_t ctx);
 
-const char *gpgmegtk_sig_status_to_string(GpgmeSigStat status);
+const gchar *gpgmegtk_sig_status_to_string(gpgme_signature_t signature,
+        gboolean use_name);
 
 #endif /* GPGMEGTK_SIGSTATUS_H */
