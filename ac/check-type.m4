@@ -5,7 +5,7 @@ dnl `stddef.h' checks files included by INCLUDES, which should be a
 dnl series of #include statements.  If TYPE is not defined, define it
 dnl to DEFAULT.
 dnl
-AC_DEFUN(SYLPHEED_CHECK_TYPE,
+AC_DEFUN([SYLPHEED_CHECK_TYPE],
 [AC_REQUIRE([AC_HEADER_STDC])dnl
 AC_MSG_CHECKING(for $1)
 AC_CACHE_VAL(sylpheed_cv_type_$1,
