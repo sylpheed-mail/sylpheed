@@ -684,7 +684,6 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
 	const gchar *src_encoding;
 	gboolean conv_fail = FALSE;
 	gchar buf[BUFFSIZE];
-	gchar *str;
 
 	g_return_val_if_fail(mimeinfo != NULL, NULL);
 	g_return_val_if_fail(infp != NULL, NULL);
@@ -714,6 +713,8 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
 
 	if (mimeinfo->mime_type == MIME_TEXT) {
 		while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
+			gchar *str;
+
 			str = conv_codeset_strdup(buf, src_encoding, encoding);
 			if (str) {
 				fputs(str, outfp);
@@ -726,6 +727,7 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
 	} else if (mimeinfo->mime_type == MIME_TEXT_HTML) {
 		HTMLParser *parser;
 		CodeConverter *conv;
+		const gchar *str;
 
 		conv = conv_code_converter_new(src_encoding, encoding);
 		parser = html_parser_new(tmpfp, conv);

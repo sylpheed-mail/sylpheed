@@ -1,5 +1,11 @@
 2005-03-18
 
+	* src/html.[ch]: html_parse(): made return value const.
+	* src/textview.c: textview_show_html(): force output of newline.
+	* src/procmime.c: procmime_get_text_content(): follow the API change.
+
+2005-03-18
+
 	* src/account.c: account_find_from_message_file(): added missing
 	  NULL terminator of the HeaderEntry array which had introduced
 	  crash on re-edit (thanks to Michael Schwendt).

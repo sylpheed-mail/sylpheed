@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,6 @@ struct _HTMLTag
 HTMLParser *html_parser_new	(FILE		*fp,
 				 CodeConverter	*conv);
 void html_parser_destroy	(HTMLParser	*parser);
-gchar *html_parse		(HTMLParser	*parser);
+const gchar *html_parse		(HTMLParser	*parser);
 
 #endif /* __HTML_H__ */

@@ -729,7 +729,7 @@ static void textview_show_html(TextView *textview, FILE *fp,
 			       CodeConverter *conv)
 {
 	HTMLParser *parser;
-	gchar *str;
+	const gchar *str;
 
 	parser = html_parser_new(fp, conv);
 	g_return_if_fail(parser != NULL);
@@ -740,6 +740,8 @@ static void textview_show_html(TextView *textview, FILE *fp,
 		else
 			textview_write_line(textview, str, NULL);
 	}
+	textview_write_line(textview, "\n", NULL);
+
 	html_parser_destroy(parser);
 }
 

@@ -1,5 +1,11 @@
 2005-03-18
 
+	* src/html.[ch]: html_parse(): 戻り値を const にした。
+	* src/textview.c: textview_show_html(): 強制的に改行を出力。
+	* src/procmime.c: procmime_get_text_content(): API の変更に追従。
+
+2005-03-18
+
 	* src/account.c: account_find_from_message_file(): HeaderEntry 配列
 	  の NULL 終端が抜けていたのを追加(再編集時にクラッシュを起こして
 	  いた) (Michael Schwendt さん thanks)。
