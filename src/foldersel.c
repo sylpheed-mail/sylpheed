@@ -202,10 +202,10 @@ static void foldersel_create(void)
 	g_signal_connect(G_OBJECT(entry), "activate",
 			 G_CALLBACK(foldersel_activated), NULL);
 
-	gtkut_button_set_create(&confirm_area,
-				&ok_button,	_("OK"),
-				&cancel_button,	_("Cancel"),
-				&new_button,    _("New folder"));
+	gtkut_stock_button_set_create(&confirm_area,
+				      &ok_button,     GTK_STOCK_OK,
+				      &cancel_button, GTK_STOCK_CANCEL,
+				      &new_button,    GTK_STOCK_NEW);
 
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_button);

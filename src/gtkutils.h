@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,14 @@ void gtkut_button_set_create		(GtkWidget	**bbox,
 					 GtkWidget	**button3,
 					 const gchar	 *label3);
 
+void gtkut_stock_button_set_create	(GtkWidget	**bbox,
+					 GtkWidget	**button1,
+					 const gchar	 *label1,
+					 GtkWidget	**button2,
+					 const gchar	 *label2,
+					 GtkWidget	**button3,
+					 const gchar	 *label3);
+
 ComboButton *gtkut_combo_button_create	(GtkWidget		*button,
 					 GtkItemFactoryEntry	*entries,
 					 gint			 n_entries,
@@ -159,7 +167,6 @@ void gtkut_window_popup			(GtkWidget	*window);
 void gtkut_widget_get_uposition		(GtkWidget	*widget,
 					 gint		*px,
 					 gint		*py);
-//void gtkut_widget_disable_theme_engine	(GtkWidget	*widget);
 void gtkut_widget_wait_for_draw		(GtkWidget	*widget);
 void gtkut_widget_init			(void);
 

@@ -710,8 +710,8 @@ static void account_edit_create(void)
 	g_signal_connect (G_OBJECT(default_btn), "clicked",
 			  G_CALLBACK (account_set_default), NULL);
 
-	gtkut_button_set_create(&hbbox, &close_btn, _("Close"),
-				NULL, NULL, NULL, NULL);
+	gtkut_stock_button_set_create(&hbbox, &close_btn, GTK_STOCK_CLOSE,
+				      NULL, NULL, NULL, NULL);
 	gtk_widget_show(hbbox);
 	gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
 	gtk_widget_grab_default (close_btn);

@@ -1,7 +1,7 @@
 /*
  * Sylpheed templates subsystem 
  * Copyright (C) 2001 Alexander Barinov
- * Copyright (C) 2001-2004 Hiroyuki Yamamoto
+ * Copyright (C) 2001-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -258,8 +258,8 @@ static void prefs_template_window_create(void)
 			 G_CALLBACK (prefs_template_select_cb), NULL);
 
 	/* ok | cancel */
-	gtkut_button_set_create(&confirm_area, &ok_btn, _("OK"),
-				&cancel_btn, _("Cancel"), NULL, NULL);
+	gtkut_stock_button_set_create(&confirm_area, &ok_btn, GTK_STOCK_OK,
+				&cancel_btn, GTK_STOCK_CANCEL, NULL, NULL);
 	gtk_widget_show(confirm_area);
 	gtk_box_pack_end(GTK_BOX(vbox2), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);

@@ -179,8 +179,9 @@ static void prefs_filter_create(void)
 	gtk_widget_show(vbox);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
-	gtkut_button_set_create(&confirm_area, &close_btn, _("Close"),
-				NULL, NULL, NULL, NULL);
+	gtkut_stock_button_set_create(&confirm_area,
+				      &close_btn, GTK_STOCK_CLOSE,
+				      NULL, NULL, NULL, NULL);
 	gtk_widget_show(confirm_area);
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(close_btn);

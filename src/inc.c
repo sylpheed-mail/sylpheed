@@ -637,8 +637,8 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 	else {
 		gtk_window_set_title(GTK_WINDOW(inc_dialog->dialog->window),
 				     fin_msg);
-		gtk_label_set_text(GTK_LABEL(GTK_BIN(inc_dialog->dialog->cancel_btn)->child),
-				   _("Close"));
+		gtk_button_set_label(GTK_BUTTON(inc_dialog->dialog->cancel_btn),
+				     GTK_STOCK_CLOSE);
 	}
 
 	g_free(fin_msg);

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,6 +100,38 @@ void gtkut_button_set_create(GtkWidget **bbox,
 
 	if (button3) {
 		*button3 = gtk_button_new_with_label(label3);
+		GTK_WIDGET_SET_FLAGS(*button3, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(GTK_BOX(*bbox), *button3, TRUE, TRUE, 0);
+		gtk_widget_show(*button3);
+	}
+}
+
+void gtkut_stock_button_set_create(GtkWidget **bbox,
+				   GtkWidget **button1, const gchar *label1,
+				   GtkWidget **button2, const gchar *label2,
+				   GtkWidget **button3, const gchar *label3)
+{
+	g_return_if_fail(bbox != NULL);
+	g_return_if_fail(button1 != NULL);
+
+	*bbox = gtk_hbutton_box_new();
+	gtk_button_box_set_layout(GTK_BUTTON_BOX(*bbox), GTK_BUTTONBOX_END);
+	gtk_box_set_spacing(GTK_BOX(*bbox), 5);
+
+	*button1 = gtk_button_new_from_stock(label1);
+	GTK_WIDGET_SET_FLAGS(*button1, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(*bbox), *button1, TRUE, TRUE, 0);
+	gtk_widget_show(*button1);
+
+	if (button2) {
+		*button2 = gtk_button_new_from_stock(label2);
+		GTK_WIDGET_SET_FLAGS(*button2, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(GTK_BOX(*bbox), *button2, TRUE, TRUE, 0);
+		gtk_widget_show(*button2);
+	}
+
+	if (button3) {
+		*button3 = gtk_button_new_from_stock(label3);
 		GTK_WIDGET_SET_FLAGS(*button3, GTK_CAN_DEFAULT);
 		gtk_box_pack_start(GTK_BOX(*bbox), *button3, TRUE, TRUE, 0);
 		gtk_widget_show(*button3);

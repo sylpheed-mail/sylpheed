@@ -445,7 +445,8 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	if (compose_get_compose_list()) {
 		if (alertpanel(_("Notice"),
 			       _("Composing message exists. Really quit?"),
-			       _("OK"), _("Cancel"), NULL) != G_ALERTDEFAULT)
+			       GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
+		    != G_ALERTDEFAULT)
 			return;
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
@@ -453,7 +454,8 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	if (prefs_common.warn_queued_on_exit && get_queued_message_num() > 0) {
 		if (alertpanel(_("Queued messages"),
 			       _("Some unsent messages are queued. Exit now?"),
-			       _("OK"), _("Cancel"), NULL) != G_ALERTDEFAULT)
+			       GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
+		    != G_ALERTDEFAULT)
 			return;
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
@@ -695,7 +697,7 @@ static void migrate_old_config(void)
 	if (alertpanel(_("Migration of configuration"),
 		       _("The previous version of configuration found.\n"
 			 "Do you want to migrate it?"),
-		       _("Yes"), _("No"), NULL) != G_ALERTDEFAULT)
+		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
 		return;
 
 	debug_print("Migrating old configuration...\n");

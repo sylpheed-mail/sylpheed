@@ -595,7 +595,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 		val = alertpanel(_("Process mark"),
 				 _("Some marks are left. Process it?"),
-				 _("Yes"), _("No"), _("Cancel"));
+				 GTK_STOCK_YES, GTK_STOCK_NO, GTK_STOCK_CANCEL);
 		if (G_ALERTDEFAULT == val) {
 			summary_unlock(summaryview);
 			summary_execute(summaryview);
@@ -936,7 +936,7 @@ void summary_select_prev_unread(SummaryView *summaryview)
 		val = alertpanel(_("No more unread messages"),
 				 _("No unread message found. "
 				   "Search from the end?"),
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (val != G_ALERTDEFAULT) return;
 		node = summary_find_prev_flagged_msg(summaryview, NULL,
 						     MSG_UNREAD, FALSE);
@@ -960,7 +960,8 @@ void summary_select_next_unread(SummaryView *summaryview)
 		val = alertpanel(_("No more unread messages"),
 				 _("No unread message found. "
 				   "Go to next folder?"),
-				 _("Yes"), _("Search again"), _("No"));
+				 GTK_STOCK_YES, _("Search again"),
+				 GTK_STOCK_NO);
 		if (val == G_ALERTDEFAULT) {
 #if 0
 			if (gtk_signal_n_emissions_by_name
@@ -994,7 +995,7 @@ void summary_select_prev_new(SummaryView *summaryview)
 		val = alertpanel(_("No more new messages"),
 				 _("No new message found. "
 				   "Search from the end?"),
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (val != G_ALERTDEFAULT) return;
 		node = summary_find_prev_flagged_msg(summaryview, NULL,
 						     MSG_NEW, FALSE);
@@ -1018,7 +1019,8 @@ void summary_select_next_new(SummaryView *summaryview)
 		val = alertpanel(_("No more new messages"),
 				 _("No new message found. "
 				   "Go to next folder?"),
-				 _("Yes"), _("Search again"), _("No"));
+				 GTK_STOCK_YES, _("Search again"),
+				 GTK_STOCK_NO);
 		if (val == G_ALERTDEFAULT) {
 #if 0
 			if (gtk_signal_n_emissions_by_name
@@ -1052,7 +1054,7 @@ void summary_select_prev_marked(SummaryView *summaryview)
 		val = alertpanel(_("No more marked messages"),
 				 _("No marked message found. "
 				   "Search from the end?"),
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (val != G_ALERTDEFAULT) return;
 		node = summary_find_prev_flagged_msg(summaryview, NULL,
 						     MSG_MARKED, TRUE);
@@ -1077,7 +1079,7 @@ void summary_select_next_marked(SummaryView *summaryview)
 		val = alertpanel(_("No more marked messages"),
 				 _("No marked message found. "
 				   "Search from the beginning?"),
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (val != G_ALERTDEFAULT) return;
 		node = summary_find_next_flagged_msg(summaryview, NULL,
 						     MSG_MARKED, TRUE);
@@ -1102,7 +1104,7 @@ void summary_select_prev_labeled(SummaryView *summaryview)
 		val = alertpanel(_("No more labeled messages"),
 				 _("No labeled message found. "
 				   "Search from the end?"),
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (val != G_ALERTDEFAULT) return;
 		node = summary_find_prev_flagged_msg(summaryview, NULL,
 						     MSG_CLABEL_FLAG_MASK, TRUE);
@@ -1127,7 +1129,7 @@ void summary_select_next_labeled(SummaryView *summaryview)
 		val = alertpanel(_("No more labeled messages"),
 				 _("No labeled message found. "
 				   "Search from the beginning?"),
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (val != G_ALERTDEFAULT) return;
 		node = summary_find_next_flagged_msg(summaryview, NULL,
 						     MSG_CLABEL_FLAG_MASK, TRUE);
@@ -2409,7 +2411,7 @@ void summary_delete(SummaryView *summaryview)
 
 		aval = alertpanel(_("Delete message(s)"),
 				  _("Do you really want to delete message(s) from the trash?"),
-				  _("Yes"), _("No"), NULL);
+				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (aval != G_ALERTDEFAULT) return;
 	}
 
@@ -2731,7 +2733,7 @@ void summary_save_as(SummaryView *summaryview)
 
 		aval = alertpanel(_("Overwrite"),
 				  _("Overwrite existing file?"),
-				  _("OK"), _("Cancel"), NULL);
+				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
 		if (G_ALERTDEFAULT != aval) return;
 	}
 

@@ -497,10 +497,10 @@ void prefs_dialog_create(PrefsDialog *dialog)
 	/* GTK_WIDGET_UNSET_FLAGS (notebook, GTK_CAN_FOCUS); */
 	gtk_notebook_set_scrollable (GTK_NOTEBOOK (notebook), TRUE);
 
-	gtkut_button_set_create(&confirm_area,
-				&ok_btn,	_("OK"),
-				&cancel_btn,	_("Cancel"),
-				&apply_btn,	_("Apply"));
+	gtkut_stock_button_set_create(&confirm_area,
+				      &ok_btn, GTK_STOCK_OK,
+				      &cancel_btn, GTK_STOCK_CANCEL,
+				      &apply_btn, GTK_STOCK_APPLY);
 	gtk_widget_show(confirm_area);
 	gtk_box_pack_end (GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);

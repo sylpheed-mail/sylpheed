@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -283,16 +283,16 @@ static void alertpanel_create(const gchar *title,
 
 	/* for button(s) */
 	if (!button1_label)
-		button1_label = _("OK");
+		button1_label = GTK_STOCK_OK;
 	label2 = button2_label;
 	label3 = button3_label;
 	if (label2 && *label2 == '+') label2++;
 	if (label3 && *label3 == '+') label3++;
 
-	gtkut_button_set_create(&confirm_area,
-				&button1, button1_label,
-				button2_label ? &button2 : NULL, label2,
-				button3_label ? &button3 : NULL, label3);
+	gtkut_stock_button_set_create(&confirm_area,
+				      &button1, button1_label,
+				      button2_label ? &button2 : NULL, label2,
+				      button3_label ? &button3 : NULL, label3);
 
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(button1);

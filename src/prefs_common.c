@@ -2478,8 +2478,8 @@ static GtkWidget *date_format_create(GtkButton *button, void *data)
 	gtk_label_set_justify(GTK_LABEL(label3), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(label3), 0, 0.5);
 
-	gtkut_button_set_create(&confirm_area, &ok_btn, _("OK"),
-				&cancel_btn, _("Cancel"), NULL, NULL);
+	gtkut_stock_button_set_create(&confirm_area, &ok_btn, GTK_STOCK_OK,
+				&cancel_btn, GTK_STOCK_CANCEL, NULL, NULL);
 
 	gtk_box_pack_start(GTK_BOX(vbox1), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_show(confirm_area);
@@ -2614,8 +2614,8 @@ static void prefs_quote_colors_dialog_create(void)
 	PACK_CHECK_BUTTON (vbox, recycle_colors_btn,
 			   _("Recycle quote colors"));
 
-	gtkut_button_set_create(&hbbox, &ok_btn, _("OK"),
-				NULL, NULL, NULL, NULL);
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
+				      NULL, NULL, NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 
 	gtk_widget_grab_default(ok_btn);
@@ -2907,8 +2907,8 @@ static void prefs_quote_description_create(void)
 
 #undef PACK_LABEL
 
-	gtkut_button_set_create(&hbbox, &ok_btn, _("OK"),
-				NULL, NULL, NULL, NULL);
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
+				      NULL, NULL, NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 
 	gtk_widget_grab_default(ok_btn);
@@ -3037,8 +3037,9 @@ static void prefs_keybind_select(void)
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
-	gtkut_button_set_create (&confirm_area, &ok_btn, _("OK"),
-				 &cancel_btn, _("Cancel"), NULL, NULL);
+	gtkut_stock_button_set_create (&confirm_area, &ok_btn, GTK_STOCK_OK,
+				       &cancel_btn, GTK_STOCK_CANCEL,
+				       NULL, NULL);
 	gtk_box_pack_end (GTK_BOX (hbox1), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default (ok_btn);
 

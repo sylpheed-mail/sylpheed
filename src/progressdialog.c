@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2001 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include <gtk/gtkprogressbar.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkstock.h>
 
 #include "intl.h"
 #include "progressdialog.h"
@@ -74,8 +75,9 @@ ProgressDialog *progress_dialog_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 8);
 	gtk_widget_show(label);
 
-	gtkut_button_set_create(&cancel_area, &cancel_btn, _("Cancel"),
-				NULL, NULL, NULL, NULL);
+	gtkut_stock_button_set_create
+		(&cancel_area, &cancel_btn, GTK_STOCK_CANCEL,
+		 NULL, NULL, NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), cancel_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(cancel_btn);
 	gtk_widget_show_all(cancel_area);
