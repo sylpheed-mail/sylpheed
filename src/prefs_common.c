@@ -145,6 +145,7 @@ static struct Message {
 	GtkWidget *chkbtn_halfpage;
 
 	GtkWidget *chkbtn_resize_image;
+	GtkWidget *chkbtn_inline_image;
 } message;
 
 #if USE_GPGME
@@ -542,6 +543,9 @@ static PrefParam param[] = {
 
 	{"resize_image", "TRUE", &prefs_common.resize_image, P_BOOL,
 	 &message.chkbtn_resize_image,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"inline_image", "TRUE", &prefs_common.inline_image, P_BOOL,
+	 &message.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"show_other_header", "FALSE", &prefs_common.show_other_header, P_BOOL,
@@ -1427,10 +1431,13 @@ static void prefs_quote_create(void)
 
 	scrolledwin_quotefmt = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show (scrolledwin_quotefmt);
-	gtk_box_pack_start (GTK_BOX (vbox_quote), scrolledwin_quotefmt, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_quote), scrolledwin_quotefmt,
+			    TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy
 		(GTK_SCROLLED_WINDOW (scrolledwin_quotefmt),
 		 GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type
+		(GTK_SCROLLED_WINDOW (scrolledwin_quotefmt), GTK_SHADOW_IN);
 
 	text_quotefmt = gtk_text_view_new ();
 	gtk_widget_show (text_quotefmt);
@@ -1467,10 +1474,13 @@ static void prefs_quote_create(void)
 
 	scrolledwin_quotefmt = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show (scrolledwin_quotefmt);
-	gtk_box_pack_start (GTK_BOX (vbox_quote), scrolledwin_quotefmt, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_quote), scrolledwin_quotefmt,
+			    TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy
 		(GTK_SCROLLED_WINDOW (scrolledwin_quotefmt),
 		 GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type
+		(GTK_SCROLLED_WINDOW (scrolledwin_quotefmt), GTK_SHADOW_IN);
 
 	text_fw_quotefmt = gtk_text_view_new ();
 	gtk_widget_show (text_fw_quotefmt);
@@ -1675,7 +1685,10 @@ static void prefs_message_create(void)
 	GtkWidget *spinbtn_scrollstep;
 	GtkWidget *chkbtn_halfpage;
 
+	GtkWidget *frame_image;
+	GtkWidget *vbox_image;
 	GtkWidget *chkbtn_resize_image;
+	GtkWidget *chkbtn_inline_image;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -1797,8 +1810,17 @@ static void prefs_message_create(void)
 
 	SET_TOGGLE_SENSITIVITY (chkbtn_smoothscroll, hbox_scr)
 
-	PACK_CHECK_BUTTON(vbox1, chkbtn_resize_image,
+	PACK_FRAME(vbox1, frame_image, _("Images"));
+
+	vbox_image = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox_image);
+	gtk_container_add (GTK_CONTAINER (frame_image), vbox_image);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_image), 8);
+
+	PACK_CHECK_BUTTON(vbox_image, chkbtn_resize_image,
 			  _("Resize attached large images to fit in the window"));
+	PACK_CHECK_BUTTON(vbox_image, chkbtn_inline_image,
+			  _("Display images as inline"));
 
 	message.chkbtn_enablecol   = chkbtn_enablecol;
 	message.button_edit_col    = button_edit_col;
@@ -1813,6 +1835,7 @@ static void prefs_message_create(void)
 	message.chkbtn_halfpage        = chkbtn_halfpage;
 
 	message.chkbtn_resize_image = chkbtn_resize_image;
+	message.chkbtn_inline_image = chkbtn_inline_image;
 }
 
 #if USE_GPGME
@@ -1850,7 +1873,7 @@ static void prefs_privacy_create(void)
 	PACK_CHECK_BUTTON (vbox2, checkbtn_store_passphrase,
 			   _("Store passphrase in memory temporarily"));
 
-	vbox3 = gtk_vbox_new (FALSE, 0);
+	vbox3 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox3);
 	gtk_box_pack_start (GTK_BOX (vbox2), vbox3, FALSE, FALSE, 0);
 
@@ -1889,8 +1912,8 @@ static void prefs_privacy_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
 	gtk_widget_set_size_request (hbox_spc, 12, -1);
 
-	label = gtk_label_new (_("(Setting to '0' will store the passphrase "
-				 "for the whole session)"));
+	label = gtk_label_new (_("Setting to '0' will store the passphrase "
+				 "for the whole session."));
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
@@ -1898,6 +1921,8 @@ static void prefs_privacy_create(void)
 	gtkut_widget_set_small_font_size (label);
 
 	SET_TOGGLE_SENSITIVITY (checkbtn_store_passphrase, vbox3);
+
+	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
 
 #ifndef __MINGW32__
 	PACK_CHECK_BUTTON (vbox2, checkbtn_passphrase_grab,
@@ -1937,6 +1962,7 @@ static void prefs_interface_create(void)
 	GtkWidget *frame_recv;
 	GtkWidget *vbox_recv;
 	GtkWidget *hbox1;
+	GtkWidget *hbox_spc;
 	GtkWidget *label;
 	GtkWidget *optmenu_recvdialog;
 	GtkWidget *menu;
@@ -1979,15 +2005,20 @@ static void prefs_interface_create(void)
 		(vbox3, checkbtn_immedexec,
 		 _("Execute immediately when moving or deleting messages"));
 
-	hbox1 = gtk_hbox_new (FALSE, 0);
+	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox3), hbox1, FALSE, FALSE, 0);
 
+	hbox_spc = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox_spc);
+	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
+	gtk_widget_set_size_request (hbox_spc, 12, -1);
+
 	label = gtk_label_new
-		(_("(Messages will be marked until execution "
-		   "if this is turned off)"));
+		(_("Messages will be marked until execution "
+		   "if this is turned off."));
 	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 8);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtkut_widget_set_small_font_size (label);

@@ -195,7 +195,8 @@ TextView *textview_create(void)
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
-				       GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+				       GTK_POLICY_AUTOMATIC,
+				       GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
 					    GTK_SHADOW_IN);
 	gtk_widget_set_size_request
@@ -541,6 +542,35 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	if (mimeinfo->mime_type != MIME_TEXT &&
 	    mimeinfo->mime_type != MIME_TEXT_HTML) {
 		gtk_text_buffer_insert(buffer, &iter, buf, -1);
+		if (mimeinfo->mime_type == MIME_IMAGE &&
+		    prefs_common.inline_image) {
+			GdkPixbuf *pixbuf;
+			GError *error = NULL;
+			gchar *filename;
+
+			filename = procmime_get_tmp_file_name(mimeinfo);
+			if (procmime_get_part_fp(filename, fp, mimeinfo) < 0) {
+				g_warning("Can't get the image file.");
+				g_free(filename);
+				return;
+			}
+
+			pixbuf = gdk_pixbuf_new_from_file(filename, &error);
+			g_free(filename);
+			if (error != NULL) {
+				g_warning("%s\n", error->message);
+				g_error_free(error);
+			}
+			if (!pixbuf) {
+				g_warning("Can't load the image.");
+				return;
+			}
+
+			gtk_text_buffer_insert_pixbuf(buffer, &iter, pixbuf);
+			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+
+			g_object_unref(G_OBJECT(pixbuf));
+		}
 	} else {
 		if (!mimeinfo->main &&
 		    mimeinfo->parent &&

@@ -629,8 +629,8 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 gint procmime_get_part(const gchar *outfile, const gchar *infile,
 		       MimeInfo *mimeinfo)
 {
-	FILE *infp, *outfp;
-	gchar buf[BUFFSIZE];
+	FILE *infp;
+	gint ret;
 
 	g_return_val_if_fail(outfile != NULL, -1);
 	g_return_val_if_fail(infile != NULL, -1);
@@ -640,14 +640,27 @@ gint procmime_get_part(const gchar *outfile, const gchar *infile,
 		FILE_OP_ERROR(infile, "fopen");
 		return -1;
 	}
+	ret = procmime_get_part_fp(outfile, infp, mimeinfo);
+	fclose(infp);
+
+	return ret;
+}
+
+gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
+{
+	FILE *outfp;
+	gchar buf[BUFFSIZE];
+
+	g_return_val_if_fail(outfile != NULL, -1);
+	g_return_val_if_fail(infp != NULL, -1);
+	g_return_val_if_fail(mimeinfo != NULL, -1);
+
 	if (fseek(infp, mimeinfo->fpos, SEEK_SET) < 0) {
-		FILE_OP_ERROR(infile, "fseek");
-		fclose(infp);
+		FILE_OP_ERROR("procmime_get_part_fp()", "fseek");
 		return -1;
 	}
 	if ((outfp = fopen(outfile, "wb")) == NULL) {
 		FILE_OP_ERROR(outfile, "fopen");
-		fclose(infp);
 		return -1;
 	}
 
@@ -656,7 +669,6 @@ gint procmime_get_part(const gchar *outfile, const gchar *infile,
 
 	procmime_decode_content(outfp, infp, mimeinfo);
 
-	fclose(infp);
 	if (fclose(outfp) == EOF) {
 		FILE_OP_ERROR(outfile, "fclose");
 		unlink(outfile);

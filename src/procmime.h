@@ -152,6 +152,9 @@ FILE *procmime_decode_content		(FILE		*outfp,
 gint procmime_get_part			(const gchar	*outfile,
 					 const gchar	*infile,
 					 MimeInfo	*mimeinfo);
+gint procmime_get_part_fp		(const gchar	*outfile,
+					 FILE		*infp,
+					 MimeInfo	*mimeinfo);
 FILE *procmime_get_text_content		(MimeInfo	*mimeinfo,
 					 FILE		*infp);
 FILE *procmime_get_first_text_content	(MsgInfo	*msginfo);
