@@ -420,19 +420,19 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print(_("Usage: %s [OPTION]...\n"),
 				g_basename(argv[0]));
 
-			puts(_("  --compose [address]    open composition window"));
-			puts(_("  --attach file1 [file2]...\n"
-			       "                         open composition window with specified files\n"
-			       "                         attached"));
-			puts(_("  --receive              receive new messages"));
-			puts(_("  --receive-all          receive new messages of all accounts"));
-			puts(_("  --send                 send all queued messages"));
-			puts(_("  --status [folder]...   show the total number of messages"));
-			puts(_("  --status-full [folder]...\n"
-			       "                         show the status of each folder"));
-			puts(_("  --debug                debug mode"));
-			puts(_("  --help                 display this help and exit"));
-			puts(_("  --version              output version information and exit"));
+			g_print("%s\n", _("  --compose [address]    open composition window"));
+			g_print("%s\n", _("  --attach file1 [file2]...\n"
+				"                         open composition window with specified files\n"
+				"                         attached"));
+			g_print("%s\n", _("  --receive              receive new messages"));
+			g_print("%s\n", _("  --receive-all          receive new messages of all accounts"));
+			g_print("%s\n", _("  --send                 send all queued messages"));
+			g_print("%s\n", _("  --status [folder]...   show the total number of messages"));
+			g_print("%s\n", _("  --status-full [folder]...\n"
+				"                         show the status of each folder"));
+			g_print("%s\n", _("  --debug                debug mode"));
+			g_print("%s\n", _("  --help                 display this help and exit"));
+			g_print("%s\n", _("  --version              output version information and exit"));
 
 			exit(1);
 		}
