@@ -171,6 +171,9 @@ static gboolean textview_event_after		(GtkWidget	*widget,
 static gboolean textview_motion_notify		(GtkWidget	*widget,
 						 GdkEventMotion	*event,
 						 TextView	*textview);
+static gboolean textview_leave_notify		(GtkWidget	  *widget,
+						 GdkEventCrossing *event,
+						 TextView	  *textview);
 static gboolean textview_visibility_notify	(GtkWidget	*widget,
 						 GdkEventVisibility *event,
 						 TextView	*textview);
@@ -226,6 +229,7 @@ TextView *textview_create(void)
 		(scrolledwin, prefs_common.mainview_width, -1);
 
 	text = gtk_text_view_new();
+	gtk_widget_add_events(text, GDK_LEAVE_NOTIFY_MASK);
 	gtk_widget_show(text);
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text), GTK_WRAP_WORD);
@@ -246,6 +250,8 @@ TextView *textview_create(void)
 			 G_CALLBACK(textview_event_after), textview);
 	g_signal_connect(G_OBJECT(text), "motion-notify-event",
 			 G_CALLBACK(textview_motion_notify), textview);
+	g_signal_connect(G_OBJECT(text), "leave-notify-event",
+			 G_CALLBACK(textview_leave_notify), textview);
 	g_signal_connect(G_OBJECT(text), "visibility-notify-event",
 			 G_CALLBACK(textview_visibility_notify), textview);
 
@@ -1793,11 +1799,28 @@ static gboolean textview_motion_notify(GtkWidget *widget,
 	return FALSE;
 }
 
+static gboolean textview_leave_notify(GtkWidget *widget,
+				      GdkEventCrossing *event,
+				      TextView *textview)
+{
+	textview_set_cursor(textview, GTK_TEXT_VIEW(widget), 0, 0);
+
+	return FALSE;
+}
+
 static gboolean textview_visibility_notify(GtkWidget *widget,
 					   GdkEventVisibility *event,
 					   TextView *textview)
 {
 	gint wx, wy, bx, by;
+	GdkWindow *window;
+
+	window = gtk_text_view_get_window(GTK_TEXT_VIEW(widget),
+					  GTK_TEXT_WINDOW_TEXT);
+
+	/* check if the event occurred for the text window part */
+	if (window != event->window)
+		return FALSE;
 
 	gdk_window_get_pointer(widget->window, &wx, &wy, NULL);
 	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
