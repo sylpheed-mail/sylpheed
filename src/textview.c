@@ -882,6 +882,9 @@ static void textview_make_clickable_parts(TextView *textview,
 	};
 	const gint PARSE_ELEMS = sizeof parser / sizeof parser[0];
 
+	/* flags for search optimization */
+	gboolean do_search[] = {TRUE, TRUE, TRUE, TRUE, TRUE, TRUE};
+
 	gint  n;
 	const gchar *walk, *bp, *ep;
 
@@ -898,20 +901,23 @@ static void textview_make_clickable_parts(TextView *textview,
 	   end positions  */
 	for (walk = linebuf, n = 0;;) {
 		gint last_index = PARSE_ELEMS;
-		gchar *scanpos = NULL;
+		const gchar *scanpos = NULL;
 
 		/* FIXME: this looks phony. scanning for anything in the
 		   parse table */
 		for (n = 0; n < PARSE_ELEMS; n++) {
-			gchar *tmp;
+			const gchar *tmp;
 
-			tmp = parser[n].search(walk, parser[n].needle);
-			if (tmp) {
-				if (scanpos == NULL || tmp < scanpos) {
-					scanpos = tmp;
-					last_index = n;
-				}
-			}					
+			if (do_search[n]) {
+				tmp = parser[n].search(walk, parser[n].needle);
+				if (tmp) {
+					if (scanpos == NULL || tmp < scanpos) {
+						scanpos = tmp;
+						last_index = n;
+					}
+				} else
+					do_search[n] = FALSE;
+			}
 		}
 
 		if (scanpos) {
@@ -955,11 +961,11 @@ static void textview_make_clickable_parts(TextView *textview,
 		}
 
 		if (*normal_text)
-			gtk_text_buffer_insert_with_tags_by_name
-				(buffer, &iter, normal_text, -1, fg_tag, NULL);
+			gtkut_text_buffer_insert_with_tag_by_name
+				(buffer, &iter, normal_text, -1, fg_tag);
 	} else {
-		gtk_text_buffer_insert_with_tags_by_name
-			(buffer, &iter, linebuf, -1, fg_tag, NULL);
+		gtkut_text_buffer_insert_with_tag_by_name
+			(buffer, &iter, linebuf, -1, fg_tag);
 	}
 }
 
@@ -972,7 +978,7 @@ static void textview_write_line(TextView *textview, const gchar *str,
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 	gchar buf[BUFFSIZE];
-	gchar *fg_color;
+	gchar *fg_color = NULL;
 	gint quotelevel = -1;
 	gchar quote_tag_str[10];
 
@@ -986,7 +992,6 @@ static void textview_write_line(TextView *textview, const gchar *str,
 
 	strcrchomp(buf);
 	//if (prefs_common.conv_mb_alnum) conv_mb_alnum(buf);
-	fg_color = NULL;
 
 	/* change color of quotation
 	   >, foo>, _> ... ok, <foo>, foo bar>, foo-> ... ng
@@ -1005,9 +1010,7 @@ static void textview_write_line(TextView *textview, const gchar *str,
 		}
 	}
 
-	if (quotelevel == -1)
-		fg_color = NULL;
-	else {
+	if (quotelevel != -1) {
 		g_snprintf(quote_tag_str, sizeof(quote_tag_str),
 			   "quote%d", quotelevel);
 		fg_color = quote_tag_str;

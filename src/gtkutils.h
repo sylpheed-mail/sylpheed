@@ -150,6 +150,13 @@ gboolean gtkut_text_buffer_find_backward(GtkTextBuffer		*buffer,
 					 gboolean		 case_sens,
 					 GtkTextIter		*match_pos);
 
+void gtkut_text_buffer_insert_with_tag_by_name
+					(GtkTextBuffer		*buffer,
+					 GtkTextIter		*iter,
+					 const gchar		*text,
+					 gint			 len,
+					 const gchar		*tag);
+
 gchar *gtkut_text_view_get_selection	(GtkTextView	*textview);
 
 void gtkut_window_popup			(GtkWidget	*window);

@@ -1,3 +1,11 @@
+2005-03-08
+
+	* src/textview.c: textview_make_clickable_parts(): optimized the
+	  URI search (fixes freeze at extremely long lines with many '@').
+	* src/gtkutils.[ch]: gtkut_text_buffer_insert_with_tag_by_name():
+	  new. Force linebreak of long lines (> 8190 chars) to prevent the
+	  slowdown of GtkTextView.
+
 2005-03-07
 
 	* src/mainwindow.c

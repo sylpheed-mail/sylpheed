@@ -556,6 +556,31 @@ gboolean gtkut_text_buffer_find_backward(GtkTextBuffer *buffer,
 	return found;
 }
 
+#define MAX_TEXT_LINE_LEN	8190
+
+void gtkut_text_buffer_insert_with_tag_by_name(GtkTextBuffer *buffer,
+					       GtkTextIter *iter,
+					       const gchar *text,
+					       gint len,
+					       const gchar *tag)
+{
+	if (len < 0)
+		len = strlen(text);
+
+	gtk_text_buffer_insert_with_tags_by_name
+		(buffer, iter, text, len, tag, NULL);
+
+	if (text[len - 1] != '\n') {
+		/* somehow returns invalid value first (bug?),
+		   so call it twice */
+		gtk_text_iter_get_chars_in_line(iter);
+		if (gtk_text_iter_get_chars_in_line(iter) > MAX_TEXT_LINE_LEN) {
+			gtk_text_buffer_insert_with_tags_by_name
+				(buffer, iter, "\n", 1, tag, NULL);
+		}
+	}
+}
+
 gchar *gtkut_text_view_get_selection(GtkTextView *textview)
 {
 	GtkTextBuffer *buffer;
