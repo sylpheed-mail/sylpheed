@@ -5257,19 +5257,23 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 static void compose_attach_cb(gpointer data, guint action, GtkWidget *widget)
 {
 	Compose *compose = (Compose *)data;
-	gchar *file;
-	gchar *utf8_filename;
+	GSList *files;
+	GSList *cur;
 
-	file = filesel_select_file(_("Select file"), NULL,
-				   GTK_FILE_CHOOSER_ACTION_OPEN);
+	files = filesel_select_files(_("Select files"), NULL,
+				     GTK_FILE_CHOOSER_ACTION_OPEN);
 
-	if (file && *file) {
+	for (cur = files; cur != NULL; cur = cur->next) {
+		gchar *file = (gchar *)cur->data;
+		gchar *utf8_filename;
+
 		utf8_filename = conv_filename_to_utf8(file);
 		compose_attach_append(compose, file, utf8_filename, NULL);
 		g_free(utf8_filename);
+		g_free(file);
 	}
 
-	g_free(file);
+	g_slist_free(files);
 }
 
 static void compose_insert_file_cb(gpointer data, guint action,

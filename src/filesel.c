@@ -29,16 +29,45 @@
 #include "alertpanel.h"
 #include "utils.h"
 
-static GtkWidget *filesel_create(const gchar		*title,
-				 GtkFileChooserAction	 action);
+static GSList *filesel_select_file_full	(const gchar		*title,
+					 const gchar		*file,
+					 GtkFileChooserAction	 action,
+					 gboolean		 multiple);
+
+static GtkWidget *filesel_create	(const gchar		*title,
+					 GtkFileChooserAction	 action);
+
 
 gchar *filesel_select_file(const gchar *title, const gchar *file,
 			   GtkFileChooserAction action)
 {
+	GSList *list;
+	gchar *selected = NULL;
+
+	list = filesel_select_file_full(title, file, action, FALSE);
+	if (list) {
+		selected = (gchar *)list->data;
+		slist_free_strings(list->next);
+	}
+	g_slist_free(list);
+
+	return selected;
+}
+
+GSList *filesel_select_files(const gchar *title, const gchar *file,
+			     GtkFileChooserAction action)
+{
+	return filesel_select_file_full(title, file, action, TRUE);
+}
+
+static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
+					GtkFileChooserAction action,
+					gboolean multiple)
+{
 	static gchar *cwd = NULL;
 	GtkWidget *dialog;
-	gchar *filename = NULL;
 	gchar *prev_dir;
+	GSList *list = NULL;
 
 	if (!cwd)
 		cwd = g_strdup(startup_dir);
@@ -57,24 +86,24 @@ gchar *filesel_select_file(const gchar *title, const gchar *file,
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
 						  file);
 
+	gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(dialog),
+					     multiple);
+
 	gtk_widget_show(dialog);
 
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
-		filename = gtk_file_chooser_get_filename
-			(GTK_FILE_CHOOSER(dialog));
-		if (filename) {
-			gchar *dir;
-
-			dir = g_dirname(filename);
+		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
+		if (list) {
 			g_free(cwd);
-			cwd = dir;
+			cwd = gtk_file_chooser_get_current_folder
+				(GTK_FILE_CHOOSER(dialog));
 		}
 	}
 
 	manage_window_focus_out(dialog, NULL, NULL);
 	gtk_widget_destroy(dialog);
 
-	return filename;
+	return list;
 }
 
 gchar *filesel_save_as(const gchar *file)

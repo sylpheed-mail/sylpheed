@@ -26,6 +26,9 @@
 gchar *filesel_select_file	(const gchar		*title,
 				 const gchar		*file,
 				 GtkFileChooserAction	 action);
+GSList *filesel_select_files	(const gchar		*title,
+				 const gchar		*file,
+				 GtkFileChooserAction	 action);
 
 gchar *filesel_save_as		(const gchar		*file);
 

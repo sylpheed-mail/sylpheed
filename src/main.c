@@ -739,6 +739,9 @@ static void migrate_old_config(void)
 	if (is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST))
 		copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST,
 			  RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST, FALSE);
+	if (is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S "mime.types"))
+		copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S "mime.types",
+			  RC_DIR G_DIR_SEPARATOR_S "mime.types", FALSE);
 
 	if (is_dir_exist(OLD_RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR))
 		conv_copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
