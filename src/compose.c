@@ -1499,8 +1499,10 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 				 GTK_TEXT_SEARCH_TEXT_ONLY,
 				 &start_iter, &end_iter, NULL);
 
-		if (found)
+		if (found) {
 			gtk_text_buffer_delete(buffer, &start_iter, &end_iter);
+			iter = start_iter;
+		}
 	}
 
 	g_free(compose->sig_str);
