@@ -3389,8 +3389,8 @@ void summary_reply(SummaryView *summaryview, ComposeMode mode)
 
 	/* use selection only if the displayed message is selected */
 	if (!mlist->next && msginfo == displayed_msginfo) {
-		text = gtkut_editable_get_selection
-			(GTK_EDITABLE(summaryview->messageview->textview->text));
+		text = gtkut_text_view_get_selection
+			(GTK_TEXT_VIEW(summaryview->messageview->textview->text));
 		if (text && *text == '\0') {
 			g_free(text);
 			text = NULL;
