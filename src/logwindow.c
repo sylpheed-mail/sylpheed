@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@
 #include <gtk/gtkstyle.h>
 
 #include "logwindow.h"
+#include "prefs_common.h"
 #include "utils.h"
 #include "gtkutils.h"
 
-#define MAX_LINES	500
 #define TRIM_LINES	25
 
 static LogWindow *logwindow;
@@ -91,7 +91,7 @@ LogWindow *log_window_create(void)
 	logwin->window = window;
 	logwin->scrolledwin = scrolledwin;
 	logwin->text = text;
-	logwin->lines = 0;
+	logwin->lines = 1;
 
 	logwindow = logwin;
 
@@ -106,8 +106,6 @@ void log_window_init(LogWindow *logwin)
 		{{0, 0, 0xafff, 0}, {0, 0xefff, 0, 0}, {0, 0xefff, 0, 0}};
 	gboolean success[3];
 	gint i;
-
-	//gtkut_widget_disable_theme_engine(logwin->text);
 
 	logwin->msg_color   = color[0];
 	logwin->warn_color  = color[1];
@@ -147,30 +145,36 @@ void log_window_show(LogWindow *logwin)
 	GtkTextMark *mark;
 
 	buffer = gtk_text_view_get_buffer(text);
-
-	gtk_widget_hide(logwin->window);
-
 	mark = gtk_text_buffer_get_mark(buffer, "end");
 	gtk_text_view_scroll_mark_onscreen(text, mark);
 
-	gtk_widget_show(logwin->window);
+	gtk_window_present(GTK_WINDOW(logwin->window));
 }
 
 void log_window_append(const gchar *str, LogType type)
 {
 	GtkTextView *text;
 	GtkTextBuffer *buffer;
-	GtkTextMark *mark;
 	GtkTextIter iter;
 	GdkColor *color = NULL;
 	gchar *head = NULL;
 	const gchar *tag;
+	gint line_limit = prefs_common.logwin_line_limit;
 
 	g_return_if_fail(logwindow != NULL);
 
 	text = GTK_TEXT_VIEW(logwindow->text);
 	buffer = gtk_text_view_get_buffer(text);
-	gtk_text_buffer_get_iter_at_offset(buffer, &iter, -1);
+
+	if (line_limit > 0 && logwindow->lines >= line_limit) {
+		GtkTextIter start, end;
+
+		gtk_text_buffer_get_start_iter(buffer, &start);
+		end = start;
+		gtk_text_iter_forward_lines(&end, TRIM_LINES);
+		gtk_text_buffer_delete(buffer, &start, &end);
+		logwindow->lines = gtk_text_buffer_get_line_count(buffer);
+	}
 
 	switch (type) {
 	case LOG_MSG:
@@ -193,9 +197,7 @@ void log_window_append(const gchar *str, LogType type)
 		break;
 	}
 
-	if (logwindow->lines == MAX_LINES) {
-		//
-	}
+	gtk_text_buffer_get_end_iter(buffer, &iter);
 
 	if (head)
 		gtk_text_buffer_insert_with_tags_by_name
@@ -203,9 +205,11 @@ void log_window_append(const gchar *str, LogType type)
 	gtk_text_buffer_insert_with_tags_by_name
 		(buffer, &iter, str, -1, tag, NULL);
 
-	mark = gtk_text_buffer_get_mark(buffer, "end");
-	if (GTK_WIDGET_VISIBLE(text))
+	if (GTK_WIDGET_VISIBLE(text)) {
+		GtkTextMark *mark;
+		mark = gtk_text_buffer_get_mark(buffer, "end");
 		gtk_text_view_scroll_mark_onscreen(text, mark);
+	}
 
 	logwindow->lines++;
 }

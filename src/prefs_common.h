@@ -220,6 +220,8 @@ struct _PrefsCommon
 
 	gint io_timeout_secs;
 
+	gint logwin_line_limit;
+
 	/* Filtering */
 	GSList *fltlist;
 

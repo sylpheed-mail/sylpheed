@@ -653,6 +653,9 @@ static PrefParam param[] = {
 	 P_INT, &other.spinbtn_iotimeout,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
+	{"logwindow_line_limit", "1000", &prefs_common.logwin_line_limit,
+	 P_INT, NULL, NULL, NULL},
+
 	{NULL, NULL, NULL, P_OTHER, NULL, NULL, NULL}
 };
 
