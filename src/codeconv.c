@@ -104,35 +104,39 @@ typedef enum
 		state = JIS_AUXKANJI;	\
 	}
 
-static void conv_jistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_euctojis(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_sjistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf);
+static gchar *conv_jistoeuc(const gchar *inbuf);
+static gchar *conv_euctojis(const gchar *inbuf);
+static gchar *conv_sjistoeuc(const gchar *inbuf);
 
-static void conv_jistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_anytoutf8(gchar *outbuf, gint outlen, const gchar *inbuf);
+static gchar *conv_jistoutf8(const gchar *inbuf);
+static gchar *conv_sjistoutf8(const gchar *inbuf);
+static gchar *conv_euctoutf8(const gchar *inbuf);
+static gchar *conv_anytoutf8(const gchar *inbuf);
 
-static void conv_utf8toeuc(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_utf8tojis(gchar *outbuf, gint outlen, const gchar *inbuf);
+static gchar *conv_utf8toeuc(const gchar *inbuf);
+static gchar *conv_utf8tojis(const gchar *inbuf);
 
-static void conv_unreadable_eucjp(gchar *str);
+/* static void conv_unreadable_eucjp(gchar *str); */
 static void conv_unreadable_8bit(gchar *str);
-static void conv_unreadable_latin(gchar *str);
+/* static void conv_unreadable_latin(gchar *str); */
 
-static void conv_jistodisp(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_sjistodisp(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_euctodisp(gchar *outbuf, gint outlen, const gchar *inbuf);
+static gchar *conv_jistodisp(const gchar *inbuf);
+static gchar *conv_sjistodisp(const gchar *inbuf);
+static gchar *conv_euctodisp(const gchar *inbuf);
 
-static void conv_anytodisp(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_ustodisp(gchar *outbuf, gint outlen, const gchar *inbuf);
-static void conv_noconv(gchar *outbuf, gint outlen, const gchar *inbuf);
+static gchar *conv_anytodisp(const gchar *inbuf);
+static gchar *conv_ustodisp(const gchar *inbuf);
+static gchar *conv_noconv(const gchar *inbuf);
 
-static void conv_jistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_jistoeuc(const gchar *inbuf)
 {
+	gchar *outbuf;
 	const guchar *in = inbuf;
-	guchar *out = outbuf;
+	guchar *out;
 	JISState state = JIS_ASCII;
+
+	outbuf = g_malloc(strlen(inbuf) + 1);
+	out = outbuf;
 
 	while (*in != '\0') {
 		if (*in == ESC) {
@@ -195,6 +199,8 @@ static void conv_jistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 	}
 
 	*out = '\0';
+
+	return outbuf;
 }
 
 #define JIS_HWDAKUTEN		0x5e
@@ -263,11 +269,15 @@ static gint conv_jis_hantozen(guchar *outbuf, guchar jis_code, guchar sound_sym)
 	return 1;
 }
 
-static void conv_euctojis(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_euctojis(const gchar *inbuf)
 {
+	gchar *outbuf;
 	const guchar *in = inbuf;
-	guchar *out = outbuf;
+	guchar *out;
 	JISState state = JIS_ASCII;
+ 
+	outbuf = g_malloc(strlen(inbuf) * 3 + 4);
+	out = outbuf;
 
 	while (*in != '\0') {
 		if (isascii(*in)) {
@@ -349,12 +359,18 @@ static void conv_euctojis(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 	K_OUT();
 	*out = '\0';
+
+	return outbuf;
 }
 
-static void conv_sjistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_sjistoeuc(const gchar *inbuf)
 {
+	gchar *outbuf;
 	const guchar *in = inbuf;
-	guchar *out = outbuf;
+	guchar *out;
+
+	outbuf = g_malloc(strlen(inbuf) * 2 + 1);
+	out = outbuf;
 
 	while (*in != '\0') {
 		if (isascii(*in)) {
@@ -395,41 +411,41 @@ static void conv_sjistoeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 	}
 
 	*out = '\0';
+
+	return outbuf;
 }
 
-static void conv_jistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_jistoutf8(const gchar *inbuf)
 {
-	gchar *eucstr;
+	gchar *eucstr, *utf8str;
 
-	Xalloca(eucstr, outlen, return);
+	eucstr = conv_jistoeuc(inbuf);
+	utf8str = conv_euctoutf8(eucstr);
+	g_free(eucstr);
 
-	conv_jistoeuc(eucstr, outlen, inbuf);
-	conv_euctoutf8(outbuf, outlen, eucstr);
+	return utf8str;
 }
 
-static void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_sjistoutf8(const gchar *inbuf)
 {
-	gchar *tmpstr;
+	gchar *utf8str;
 
-	tmpstr = conv_iconv_strdup(inbuf, CS_SHIFT_JIS, CS_UTF_8, NULL);
-	if (tmpstr) {
-		strncpy2(outbuf, tmpstr, outlen);
-		g_free(tmpstr);
-	} else
-		strncpy2(outbuf, inbuf, outlen);
+	utf8str = conv_iconv_strdup(inbuf, CS_SHIFT_JIS, CS_UTF_8, NULL);
+	if (!utf8str)
+		utf8str = g_strdup(inbuf);
+
+	return utf8str;
 }
 
-static void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_euctoutf8(const gchar *inbuf)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
-	gchar *tmpstr;
 
 	if (cd == (iconv_t)-1) {
-		if (!iconv_ok) {
-			strncpy2(outbuf, inbuf, outlen);
-			return;
-		}
+		if (!iconv_ok)
+			return g_strdup(inbuf);
+
 		cd = iconv_open(CS_UTF_8, CS_EUC_JP_MS);
 		if (cd == (iconv_t)-1) {
 			cd = iconv_open(CS_UTF_8, CS_EUC_JP);
@@ -437,49 +453,37 @@ static void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 				g_warning("conv_euctoutf8(): %s\n",
 					  g_strerror(errno));
 				iconv_ok = FALSE;
-				strncpy2(outbuf, inbuf, outlen);
-				return;
+				return g_strdup(inbuf);
 			}
 		}
 	}
 
-	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd, NULL);
-	if (tmpstr) {
-		strncpy2(outbuf, tmpstr, outlen);
-		g_free(tmpstr);
-	} else
-		strncpy2(outbuf, inbuf, outlen);
+	return conv_iconv_strdup_with_cd(inbuf, cd, NULL);
 }
 
-static void conv_anytoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_anytoutf8(const gchar *inbuf)
 {
 	switch (conv_guess_ja_encoding(inbuf)) {
 	case C_ISO_2022_JP:
-		conv_jistoutf8(outbuf, outlen, inbuf);
-		break;
+		return conv_jistoutf8(inbuf);
 	case C_SHIFT_JIS:
-		conv_sjistoutf8(outbuf, outlen, inbuf);
-		break;
+		return conv_sjistoutf8(inbuf);
 	case C_EUC_JP:
-		conv_euctoutf8(outbuf, outlen, inbuf);
-		break;
+		return conv_euctoutf8(inbuf);
 	default:
-		strncpy2(outbuf, inbuf, outlen);
-		break;
+		return g_strdup(inbuf);
 	}
 }
 
-static void conv_utf8toeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_utf8toeuc(const gchar *inbuf)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
-	gchar *tmpstr;
 
 	if (cd == (iconv_t)-1) {
-		if (!iconv_ok) {
-			strncpy2(outbuf, inbuf, outlen);
-			return;
-		}
+		if (!iconv_ok)
+			return g_strdup(inbuf);
+
 		cd = iconv_open(CS_EUC_JP_MS, CS_UTF_8);
 		if (cd == (iconv_t)-1) {
 			cd = iconv_open(CS_EUC_JP, CS_UTF_8);
@@ -487,30 +491,26 @@ static void conv_utf8toeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 				g_warning("conv_utf8toeuc(): %s\n",
 					  g_strerror(errno));
 				iconv_ok = FALSE;
-				strncpy2(outbuf, inbuf, outlen);
-				return;
+				return g_strdup(inbuf);
 			}
 		}
 	}
 
-	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd, NULL);
-	if (tmpstr) {
-		strncpy2(outbuf, tmpstr, outlen);
-		g_free(tmpstr);
-	} else
-		strncpy2(outbuf, inbuf, outlen);
+	return conv_iconv_strdup_with_cd(inbuf, cd, NULL);
 }
 
-static void conv_utf8tojis(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_utf8tojis(const gchar *inbuf)
 {
-	gchar *eucstr;
+	gchar *eucstr, *jisstr;
 
-	Xalloca(eucstr, outlen, return);
+	eucstr = conv_utf8toeuc(inbuf);
+	jisstr = conv_euctojis(eucstr);
+	g_free(eucstr);
 
-	conv_utf8toeuc(eucstr, outlen, inbuf);
-	conv_euctojis(outbuf, outlen, eucstr);
+	return jisstr;
 }
 
+#if 0
 static gchar valid_eucjp_tbl[][96] = {
 	/* 0xa2a0 - 0xa2ff */
 	{ 0, 1, 1, 1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 0,
@@ -635,6 +635,7 @@ static void conv_unreadable_eucjp(gchar *str)
 			*p++ = SUBST_CHAR;
 	}
 }
+#endif
 
 static void conv_unreadable_8bit(gchar *str)
 {
@@ -649,6 +650,7 @@ static void conv_unreadable_8bit(gchar *str)
 	}
 }
 
+#if 0
 static void conv_unreadable_latin(gchar *str)
 {
 	register guchar *p = str;
@@ -662,6 +664,7 @@ static void conv_unreadable_latin(gchar *str)
 		p++;
 	}
 }
+#endif
 
 #define NCV	'\0'
 
@@ -771,58 +774,65 @@ CharSet conv_guess_ja_encoding(const gchar *str)
 	return guessed;
 }
 
-static void conv_jistodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_jistodisp(const gchar *inbuf)
 {
-	conv_jistoutf8(outbuf, outlen, inbuf);
+	return conv_jistoutf8(inbuf);
 }
 
-static void conv_sjistodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_sjistodisp(const gchar *inbuf)
 {
-	conv_sjistoutf8(outbuf, outlen, inbuf);
+	return conv_sjistoutf8(inbuf);
 }
 
-static void conv_euctodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_euctodisp(const gchar *inbuf)
 {
-	conv_euctoutf8(outbuf, outlen, inbuf);
+	return conv_euctoutf8(inbuf);
 }
 
-void conv_utf8todisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+gchar *conv_utf8todisp(const gchar *inbuf)
 {
 	if (g_utf8_validate(inbuf, -1, NULL) == TRUE)
-		strncpy2(outbuf, inbuf, outlen);
+		return g_strdup(inbuf);
 	else
-		conv_ustodisp(outbuf, outlen, inbuf);
+		return conv_ustodisp(inbuf);
 }
 
-static void conv_anytodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_anytodisp(const gchar *inbuf)
 {
-	conv_anytoutf8(outbuf, outlen, inbuf);
+	gchar *outbuf;
+
+	outbuf = conv_anytoutf8(inbuf);
 	if (g_utf8_validate(outbuf, -1, NULL) != TRUE)
 		conv_unreadable_8bit(outbuf);
+
+	return outbuf;
 }
 
-static void conv_ustodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_ustodisp(const gchar *inbuf)
 {
-	strncpy2(outbuf, inbuf, outlen);
+	gchar *outbuf;
+
+	outbuf = g_strdup(inbuf);
 	conv_unreadable_8bit(outbuf);
+
+	return outbuf;
 }
 
-void conv_localetodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+gchar *conv_localetodisp(const gchar *inbuf)
 {
-	gchar *tmpstr;
+	gchar *str;
 
-	tmpstr = conv_iconv_strdup(inbuf, conv_get_locale_charset_str(),
-				   CS_INTERNAL, NULL);
-	if (tmpstr) {
-		strncpy2(outbuf, tmpstr, outlen);
-		g_free(tmpstr);
-	} else
-		conv_utf8todisp(outbuf, outlen, inbuf);
+	str = conv_iconv_strdup(inbuf, conv_get_locale_charset_str(),
+				CS_INTERNAL, NULL);
+	if (!str)
+		str = conv_utf8todisp(inbuf);
+
+	return str;
 }
 
-static void conv_noconv(gchar *outbuf, gint outlen, const gchar *inbuf)
+static gchar *conv_noconv(const gchar *inbuf)
 {
-	strncpy2(outbuf, inbuf, outlen);
+	return g_strdup(inbuf);
 }
 
 CodeConverter *conv_code_converter_new(const gchar *src_encoding,
@@ -846,25 +856,13 @@ void conv_code_converter_destroy(CodeConverter *conv)
 	g_free(conv);
 }
 
-gint conv_convert(CodeConverter *conv, gchar *outbuf, gint outlen,
-		  const gchar *inbuf)
+gchar *conv_convert(CodeConverter *conv, const gchar *inbuf)
 {
 	if (conv->code_conv_func != conv_noconv)
-		conv->code_conv_func(outbuf, outlen, inbuf);
-	else {
-		gchar *str;
-
-		str = conv_iconv_strdup
+		return conv->code_conv_func(inbuf);
+	else
+		return conv_iconv_strdup
 			(inbuf, conv->src_encoding, conv->dest_encoding, NULL);
-		if (!str)
-			return -1;
-		else {
-			strncpy2(outbuf, str, outlen);
-			g_free(str);
-		}
-	}
-
-	return 0;
 }
 
 gchar *conv_codeset_strdup(const gchar *inbuf,
@@ -877,22 +875,16 @@ gchar *conv_codeset_strdup_full(const gchar *inbuf,
 				const gchar *src_code, const gchar *dest_code,
 				gint *error)
 {
-	gchar *buf;
-	size_t len;
 	CodeConvFunc conv_func;
 
 	conv_func = conv_get_code_conv_func(src_code, dest_code);
 	if (conv_func != conv_noconv) {
-		len = (strlen(inbuf) + 1) * 3;
-		buf = g_malloc(len);
-		if (!buf) {
-			if (error)
-				*error = -1;
-			return NULL;
-		}
+		gchar *outbuf;
 
-		conv_func(buf, len, inbuf);
-		return g_realloc(buf, strlen(buf) + 1);
+		outbuf = conv_func(inbuf);
+		if (!outbuf && error)
+			*error = -1;
+		return outbuf;
 	}
 
 	return conv_iconv_strdup(inbuf, src_code, dest_code, error);
@@ -1558,31 +1550,31 @@ const gchar *conv_get_current_locale(void)
 
 gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 {
-	gchar buf[BUFFSIZE];
+	gchar *buf;
+	gchar *decoded_str;
 
 	if (is_ascii_str(str))
 		return unmime_header(str);
 
 	if (default_encoding) {
-		gchar *utf8_buf;
-
-		utf8_buf = conv_codeset_strdup
+		buf = conv_codeset_strdup
 			(str, default_encoding, CS_INTERNAL);
-		if (utf8_buf) {
-			gchar *decoded_str;
-
-			decoded_str = unmime_header(utf8_buf);
-			g_free(utf8_buf);
+		if (buf) {
+			decoded_str = unmime_header(buf);
+			g_free(buf);
 			return decoded_str;
 		}
 	}
 
 	if (conv_get_locale_charset() == C_EUC_JP)
-		conv_anytodisp(buf, sizeof(buf), str);
+		buf = conv_anytodisp(str);
 	else
-		conv_localetodisp(buf, sizeof(buf), str);
+		buf = conv_localetodisp(str);
 
-	return unmime_header(buf);
+	decoded_str = unmime_header(buf);
+	g_free(buf);
+
+	return decoded_str;
 }
 
 #define MAX_LINELEN		76
@@ -1782,7 +1774,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 {
 	FILE *src_fp, *dest_fp;
-	gchar buf[BUFFSIZE], outbuf[BUFFSIZE];
+	gchar buf[BUFFSIZE];
 	CodeConverter *conv;
 	gboolean err = FALSE;
 
@@ -1804,9 +1796,13 @@ gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 	conv = conv_code_converter_new(encoding, NULL);
 
 	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
-		if (conv_convert(conv, outbuf, sizeof(outbuf), buf) == 0)
+		gchar *outbuf;
+
+		outbuf = conv_convert(conv, buf);
+		if (outbuf) {
 			fputs(outbuf, dest_fp);
-		else
+			g_free(outbuf);
+		} else
 			fputs(buf, dest_fp);
 	}
 

@@ -92,7 +92,7 @@ typedef enum
 	C_TCVN5712_1
 } CharSet;
 
-typedef void (*CodeConvFunc) (gchar *outbuf, gint outlen, const gchar *inbuf);
+typedef gchar *(*CodeConvFunc) (const gchar *inbuf);
 
 struct _CodeConverter
 {
@@ -171,17 +171,15 @@ struct _CodeConverter
 
 //void conv_mb_alnum(gchar *str);
 
-CharSet conv_guess_ja_encoding(const gchar *str);
+CharSet conv_guess_ja_encoding		(const gchar	*str);
 
-void conv_utf8todisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
-void conv_localetodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
+gchar *conv_utf8todisp			(const gchar	*inbuf);
+gchar *conv_localetodisp		(const gchar	*inbuf);
 
 CodeConverter *conv_code_converter_new	(const gchar	*src_encoding,
 					 const gchar	*dest_encoding);
 void conv_code_converter_destroy	(CodeConverter	*conv);
-gint conv_convert			(CodeConverter	*conv,
-					 gchar		*outbuf,
-					 gint		 outlen,
+gchar *conv_convert			(CodeConverter	*conv,
 					 const gchar	*inbuf);
 
 gchar *conv_codeset_strdup		(const gchar	*inbuf,

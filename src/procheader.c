@@ -779,7 +779,7 @@ void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
 {
 	struct tm *lt;
 	gchar *default_format = "%y/%m/%d(%a) %H:%M";
-	gchar *tmp;
+	gchar *tmp, *buf;
 
 	Xalloca(tmp, len + 1, dest[0] = '\0'; return;);
 
@@ -790,5 +790,7 @@ void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
 	else
 		strftime(tmp, len, default_format, lt);
 
-	conv_localetodisp(dest, len, tmp);
+	buf = conv_localetodisp(tmp);
+	strncpy2(dest, buf, len);
+	g_free(buf);
 }

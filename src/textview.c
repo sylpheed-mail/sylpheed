@@ -1010,7 +1010,7 @@ static void textview_write_line(TextView *textview, const gchar *str,
 	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
-	gchar buf[BUFFSIZE];
+	gchar *buf;
 	gchar *fg_color = NULL;
 	gint quotelevel = -1;
 	gchar quote_tag_str[10];
@@ -1018,10 +1018,12 @@ static void textview_write_line(TextView *textview, const gchar *str,
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_get_end_iter(buffer, &iter);
 
-	if (!conv)
-		strncpy2(buf, str, sizeof(buf));
-	else if (conv_convert(conv, buf, sizeof(buf), str) < 0)
-		conv_utf8todisp(buf, sizeof(buf), str);
+	if (conv) {
+		buf = conv_convert(conv, str);
+		if (!buf)
+			buf = conv_utf8todisp(str);
+	} else
+		buf = g_strdup(str);
 
 	strcrchomp(buf);
 	//if (prefs_common.conv_mb_alnum) conv_mb_alnum(buf);
@@ -1053,15 +1055,17 @@ static void textview_write_line(TextView *textview, const gchar *str,
 		textview_make_clickable_parts(textview, fg_color, "link", buf);
 	else
 		textview_make_clickable_parts(textview, fg_color, NULL, buf);
+
+	g_free(buf);
 }
 
-void textview_write_link(TextView *textview, const gchar *str,
-			 const gchar *uri, CodeConverter *conv)
+static void textview_write_link(TextView *textview, const gchar *str,
+				const gchar *uri, CodeConverter *conv)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
-	gchar buf[BUFFSIZE];
+	gchar *buf;
 	gchar *bufp;
 	RemoteURI *r_uri;
 
@@ -1071,15 +1075,19 @@ void textview_write_link(TextView *textview, const gchar *str,
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_get_end_iter(buffer, &iter);
 
-	if (!conv)
-		strncpy2(buf, str, sizeof(buf));
-	else if (conv_convert(conv, buf, sizeof(buf), str) < 0)
-		conv_utf8todisp(buf, sizeof(buf), str);
+	if (conv) {
+		buf = conv_convert(conv, str);
+		if (!buf)
+			buf = conv_utf8todisp(str);
+	} else
+		buf = g_strdup(str);
 
 	strcrchomp(buf);
 
-	for (bufp = buf; isspace(*(guchar *)bufp); bufp++)
-		gtk_text_buffer_insert(buffer, &iter, bufp, 1);
+	for (bufp = buf; g_ascii_isspace(*bufp); bufp++)
+		;
+	if (bufp > buf)
+		gtk_text_buffer_insert(buffer, &iter, buf, bufp - buf);
 
 	r_uri = g_new(RemoteURI, 1);
 	r_uri->uri = g_strdup(uri);
@@ -1089,6 +1097,8 @@ void textview_write_link(TextView *textview, const gchar *str,
 		(buffer, &iter, bufp, -1, "link", NULL);
 	r_uri->end = gtk_text_iter_get_offset(&iter);
 	textview->uri_list = g_slist_append(textview->uri_list, r_uri);
+
+	g_free(buf);
 }
 
 void textview_clear(TextView *textview)

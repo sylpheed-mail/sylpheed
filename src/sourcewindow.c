@@ -153,12 +153,10 @@ void source_window_append(SourceWindow *sourcewin, const gchar *str)
 
 	buffer = gtk_text_view_get_buffer(text);
 
-	len = strlen(str) + 1;
-	Xalloca(out, len, return);
-	conv_utf8todisp(out, len, str);
-
+	out = conv_utf8todisp(str);
 	gtk_text_buffer_get_iter_at_offset(buffer, &iter, -1);
 	gtk_text_buffer_insert(buffer, &iter, out, -1);
+	g_free(out);
 }
 
 static void source_window_size_alloc_cb(GtkWidget *widget,

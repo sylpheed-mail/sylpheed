@@ -157,7 +157,8 @@ sig_status_full (gpgme_ctx_t ctx, gpgme_verify_result_t result)
 	gpgme_signature_t sig;
 	time_t created;
 	struct tm *ctime_val;
-	char ctime_str[80], ctime_str_utf8[80];
+	gchar ctime_str[80];
+	gchar *ctime_str_utf8;
 	gchar *retval;
 
 	str = g_string_new ("");
@@ -169,11 +170,11 @@ sig_status_full (gpgme_ctx_t ctx, gpgme_verify_result_t result)
 			ctime_val = localtime (&created);
 			strftime (ctime_str, sizeof (ctime_str), "%c", 
 				  ctime_val);
-			conv_localetodisp (ctime_str_utf8,
-					   sizeof (ctime_str_utf8), ctime_str);
+			ctime_str_utf8 = conv_localetodisp (ctime_str);
 			g_string_sprintfa (str,
 					   _("Signature made at %s\n"),
 					   ctime_str_utf8);
+			g_free (ctime_str_utf8);
 		}
 		sig_status_for_key(str, ctx, sig);
 		if (sig->next)

@@ -225,7 +225,7 @@ gchar *html_parse(HTMLParser *parser)
 static HTMLState html_read_line(HTMLParser *parser)
 {
 	gchar buf[HTMLBUFSIZE];
-	gchar buf2[HTMLBUFSIZE];
+	gchar *conv_str;
 	gint index;
 
 	if (fgets(buf, sizeof(buf), parser->fp) == NULL) {
@@ -233,11 +233,13 @@ static HTMLState html_read_line(HTMLParser *parser)
 		return HTML_EOF;
 	}
 
-	if (conv_convert(parser->conv, buf2, sizeof(buf2), buf) < 0) {
+	conv_str = conv_convert(parser->conv, buf);
+	if (!conv_str) {
 		index = parser->bufp - parser->buf->str;
 
-		conv_utf8todisp(buf2, sizeof(buf2), buf);
-		g_string_append(parser->buf, buf2);
+		conv_str = conv_utf8todisp(buf);
+		g_string_append(parser->buf, conv_str);
+		g_free(conv_str);
 
 		parser->bufp = parser->buf->str + index;
 
@@ -246,7 +248,8 @@ static HTMLState html_read_line(HTMLParser *parser)
 
 	index = parser->bufp - parser->buf->str;
 
-	g_string_append(parser->buf, buf2);
+	g_string_append(parser->buf, conv_str);
+	g_free(conv_str);
 
 	parser->bufp = parser->buf->str + index;
 
