@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkitemfactory.h>
+#include <gtk/gtktexttag.h>
 
 typedef struct _Compose		Compose;
 typedef struct _AttachInfo	AttachInfo;
@@ -163,7 +164,7 @@ struct _Compose
 
 	UndoMain *undostruct;
 
-	gchar *sig_str;
+	GtkTextTag *sig_tag;
 
 	/* external editor */
 	gchar *exteditor_file;

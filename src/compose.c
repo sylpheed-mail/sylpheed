@@ -1515,7 +1515,7 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 	GtkTextBuffer *buffer;
 	GtkTextMark *mark;
 	GtkTextIter iter;
-	gint cur_pos;
+	gchar *sig_str;
 	gboolean prev_autowrap;
 
 	g_return_if_fail(compose->account != NULL);
@@ -1526,45 +1526,35 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 	buffer = gtk_text_view_get_buffer(text);
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
-	cur_pos = gtk_text_iter_get_offset(&iter);
 
-	if (replace)
+	if (replace) {
+		GtkTextIter start_iter, end_iter;
+
+		gtk_text_buffer_get_start_iter(buffer, &start_iter);
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 
-	if (replace && compose->sig_str) {
-		GtkTextIter first_iter, start_iter, end_iter;
-		gboolean found;
-
-		gtk_text_buffer_get_start_iter(buffer, &first_iter);
-
-		if (compose->sig_str[0] == '\0')
-			found = FALSE;
-		else
-			found = gtk_text_iter_forward_search
-				(&first_iter, compose->sig_str,
-				 GTK_TEXT_SEARCH_TEXT_ONLY,
-				 &start_iter, &end_iter, NULL);
-
-		if (found) {
-			gtk_text_buffer_delete(buffer, &start_iter, &end_iter);
-			iter = start_iter;
+		while (gtk_text_iter_begins_tag
+			(&start_iter, compose->sig_tag) ||
+		       gtk_text_iter_forward_to_tag_toggle
+			(&start_iter, compose->sig_tag)) {
+			end_iter = start_iter;
+			if (gtk_text_iter_forward_to_tag_toggle
+				(&end_iter, compose->sig_tag)) {
+				gtk_text_buffer_delete
+					(buffer, &start_iter, &end_iter);
+				iter = start_iter;
+			}
 		}
 	}
 
-	g_free(compose->sig_str);
-	compose->sig_str = compose_get_signature_str(compose);
-	if (compose->sig_str) {
+	sig_str = compose_get_signature_str(compose);
+	if (sig_str) {
 		if (!replace)
 			gtk_text_buffer_insert(buffer, &iter, "\n\n", 2);
-		gtk_text_buffer_insert(buffer, &iter, compose->sig_str, -1);
-	} else
-		compose->sig_str = g_strdup("");
-
-	if (cur_pos > gtk_text_buffer_get_char_count(buffer))
-		cur_pos = gtk_text_buffer_get_char_count(buffer);
-
-	gtk_text_buffer_get_iter_at_offset(buffer, &iter, cur_pos);
-	gtk_text_buffer_place_cursor(buffer, &iter);
+		gtk_text_buffer_insert_with_tags
+			(buffer, &iter, sig_str, -1, compose->sig_tag, NULL);
+		g_free(sig_str);
+	}
 
 	compose->autowrap = prev_autowrap;
 	if (compose->autowrap)
@@ -3622,6 +3612,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	GtkTextBuffer *buffer;
 	GtkClipboard *clipboard;
+	GtkTextTag *sig_tag;
 
 	GtkWidget *table;
 	GtkWidget *hbox;
@@ -3828,7 +3819,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text), GTK_WRAP_WORD);
 	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_add_selection_clipboard(buffer, clipboard);
-	/* GTK_STEXT(text)->default_tab_width = 8; */
+	sig_tag = gtk_text_buffer_create_tag(buffer, "signature", NULL);
 	gtk_container_add(GTK_CONTAINER(scrolledwin), text);
 
 	g_signal_connect(G_OBJECT(text), "grab_focus",
@@ -4010,7 +4001,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->undostruct = undostruct;
 
-	compose->sig_str = NULL;
+	compose->sig_tag = sig_tag;
 
 	compose->exteditor_file    = NULL;
 	compose->exteditor_pid     = -1;
@@ -4377,8 +4368,6 @@ static void compose_destroy(Compose *compose)
 
 	if (compose->undostruct)
 		undo_destroy(compose->undostruct);
-
-	g_free(compose->sig_str);
 
 	g_free(compose->exteditor_file);
 
@@ -5000,7 +4989,6 @@ static gint calc_cursor_xpos(GtkTextView *text, gint extra, gint char_width)
 
 	return cursor_pos;
 #endif
-#warning FIXME_GTK2
 	return 0;
 }
 
