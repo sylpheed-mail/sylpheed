@@ -127,12 +127,6 @@ static void about_create(void)
 
 	g_snprintf(buf, sizeof(buf),
 		   "Compiled-in features:%s",
-#if HAVE_GDK_IMLIB
-		   " gdk_imlib"
-#endif
-#if HAVE_GDK_PIXBUF
-		   " gdk-pixbuf"
-#endif
 #if USE_THREADS
 		   " gthread"
 #endif

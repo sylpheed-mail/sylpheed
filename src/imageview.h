@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <glib.h>
 #include <gtk/gtkwidget.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 typedef struct _ImageView	ImageView;
 
@@ -48,5 +49,9 @@ void imageview_show_image	(ImageView	*imageview,
 				 gboolean	 resize);
 void imageview_clear		(ImageView	*imageview);
 void imageview_destroy		(ImageView	*imageview);
+
+GdkPixbuf *imageview_get_resized_pixbuf	(GdkPixbuf	*pixbuf,
+					 GtkWidget	*parent,
+					 gint		 margin);
 
 #endif /* __IMAGEVIEW_H__ */

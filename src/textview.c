@@ -30,6 +30,7 @@
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtksignal.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -37,6 +38,7 @@
 
 #include "main.h"
 #include "summaryview.h"
+#include "imageview.h"
 #include "procheader.h"
 #include "prefs_common.h"
 #include "codeconv.h"
@@ -619,10 +621,19 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 				return;
 			}
 
+			if (prefs_common.resize_image) {
+				GdkPixbuf *scaled;
+
+				scaled = imageview_get_resized_pixbuf
+					(pixbuf, textview->text, 8);
+				g_object_unref(pixbuf);
+				pixbuf = scaled;
+			}
+
 			gtk_text_buffer_insert_pixbuf(buffer, &iter, pixbuf);
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 
-			g_object_unref(G_OBJECT(pixbuf));
+			g_object_unref(pixbuf);
 		}
 	} else {
 		if (!mimeinfo->main &&

@@ -95,15 +95,6 @@ AC_SUBST(manualdir)
 faqdir='${prefix}/${DATADIRNAME}/${PACKAGE}/faq'
 AC_SUBST(faqdir)
 
-dnl Check for built-in image view support
-AC_ARG_ENABLE(gdk-pixbuf,
-	[  --disable-gdk-pixbuf    Do not use gdk-pixbuf],
-	[ac_cv_enable_gdk_pixbuf=$enableval], [ac_cv_enable_gdk_pixbuf=yes])
-
-if test "$ac_cv_enable_gdk_pixbuf" = yes; then
-	AC_DEFINE(HAVE_GDK_PIXBUF, 1, Define if you use gdk-pixbuf to support image view)
-fi
-
 dnl GPGME is used to support OpenPGP 
 AC_ARG_ENABLE(gpgme,
 	[  --enable-gpgme          Enable GnuPG support using GPGME [default=no]],
@@ -343,7 +334,6 @@ dnl Output the configuration summary
 echo ""
 echo "$PACKAGE $VERSION"
 echo ""
-echo "image support : $ac_cv_enable_gdk_pixbuf"
 echo "GnuPG         : $ac_cv_enable_gpgme"
 echo "JPilot        : $ac_cv_enable_jpilot"
 echo "LDAP          : $ac_cv_enable_ldap"

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,10 +25,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkimage.h>
-
-#if HAVE_GDK_PIXBUF
-#  include <gdk-pixbuf/gdk-pixbuf.h>
-#endif /* HAVE_GDK_PIXBUF */
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "mainwindow.h"
 #include "prefs_common.h"
@@ -85,15 +82,10 @@ void imageview_init(ImageView *imageview)
 {
 }
 
-#if HAVE_GDK_PIXBUF
 void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
 			  const gchar *file, gboolean resize)
 {
 	GdkPixbuf *pixbuf;
-	gint avail_width;
-	gint avail_height;
-	gint new_width;
-	gint new_height;
 	GError *error = NULL;
 
 	g_return_if_fail(imageview != NULL);
@@ -119,21 +111,8 @@ void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
 	imageview->resize = resize;
 
 	if (resize) {
-		GdkPixbuf *pixbuf_scaled;
-
-		avail_width = imageview->scrolledwin->parent->allocation.width;
-		avail_height = imageview->scrolledwin->parent->allocation.height;
-		if (avail_width > 8) avail_width -= 8;
-		if (avail_height > 8) avail_height -= 8;
-
-		get_resized_size(gdk_pixbuf_get_width(pixbuf),
-				 gdk_pixbuf_get_height(pixbuf),
-				 avail_width, avail_height,
-				 &new_width, &new_height);
-
-		pixbuf_scaled = gdk_pixbuf_scale_simple
-			(pixbuf, new_width, new_height, GDK_INTERP_BILINEAR);
-		pixbuf = pixbuf_scaled;
+		pixbuf = imageview_get_resized_pixbuf
+			(pixbuf, imageview->scrolledwin->parent, 8);
 	} else
 		g_object_ref(pixbuf);
 
@@ -146,16 +125,10 @@ void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
 	} else
 		gtk_image_set_from_pixbuf(GTK_IMAGE(imageview->image), pixbuf);
 
-	gdk_pixbuf_unref(pixbuf);
+	g_object_unref(pixbuf);
 
 	gtk_widget_show(imageview->image);
 }
-#else
-void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
-			  const gchar *file, gboolean resize)
-{
-}
-#endif /* HAVE_GDK_PIXBUF */
 
 void imageview_clear(ImageView *imageview)
 {
@@ -172,9 +145,7 @@ void imageview_clear(ImageView *imageview)
 	gtk_adjustment_set_value(vadj, 0.0);
 
 	if (imageview->image_data) {
-#if HAVE_GDK_PIXBUF
-		gdk_pixbuf_unref((GdkPixbuf *)imageview->image_data);
-#endif
+		g_object_unref(imageview->image_data);
 		imageview->image_data = NULL;
 	}
 }
@@ -183,6 +154,28 @@ void imageview_destroy(ImageView *imageview)
 {
 	imageview_clear(imageview);
 	g_free(imageview);
+}
+
+GdkPixbuf *imageview_get_resized_pixbuf(GdkPixbuf *pixbuf, GtkWidget *parent,
+					gint margin)
+{
+	gint avail_width;
+	gint avail_height;
+	gint new_width;
+	gint new_height;
+
+	avail_width = parent->allocation.width;
+	avail_height = parent->allocation.height;
+	if (avail_width > margin) avail_width -= margin;
+	if (avail_height > margin) avail_height -= margin;
+
+	get_resized_size(gdk_pixbuf_get_width(pixbuf),
+			 gdk_pixbuf_get_height(pixbuf),
+			 avail_width, avail_height,
+			 &new_width, &new_height);
+
+	return gdk_pixbuf_scale_simple
+		(pixbuf, new_width, new_height, GDK_INTERP_BILINEAR);
 }
 
 static void get_resized_size(gint w, gint h, gint aw, gint ah,

@@ -695,11 +695,9 @@ static void mimeview_selected(GtkCTree *ctree, GtkCTreeNode *node, gint column,
 	case MIME_MULTIPART:
 		mimeview_show_message_part(mimeview, partinfo);
 		break;
-#if (HAVE_GDK_PIXBUF || HAVE_GDK_IMLIB)
 	case MIME_IMAGE:
 		mimeview_show_image_part(mimeview, partinfo);
 		break;
-#endif
 	default:
 		mimeview_change_view_type(mimeview, MIMEVIEW_TEXT);
 #if USE_GPGME
