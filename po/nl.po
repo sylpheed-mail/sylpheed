@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-09 17:45+0900\n"
+"POT-Creation-Date: 2005-02-18 19:50+0900\n"
 "PO-Revision-Date: 2003-02-18 13:03--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -99,7 +99,7 @@ msgstr ""
 "u op de knop 'Alles ophalen' klikt."
 
 #: src/account.c:638 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3818 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3548 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:149 src/prefs_filter.c:214 src/prefs_folder_item.c:170
@@ -152,13 +152,13 @@ msgstr "Account verwijderen"
 msgid "Do you really want to delete this account?"
 msgstr "Wilt u dit account werkelijk verwijderen?"
 
-#: src/account.c:758 src/compose.c:2756 src/compose.c:4974
+#: src/account.c:758 src/compose.c:2473 src/compose.c:4705
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "Yes"
 msgstr "Ja"
 
-#: src/account.c:758 src/compose.c:2756 src/compose.c:4974
+#: src/account.c:758 src/compose.c:2473 src/compose.c:4705
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "+No"
@@ -261,7 +261,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Adres toevoegen aan adresboek"
 
-#: src/addressadd.c:196 src/compose.c:4358 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4089 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adres"
@@ -275,7 +275,7 @@ msgstr "Opmerkingen"
 msgid "Select Address Book Folder"
 msgstr "Selecteer adresboekmap"
 
-#: src/addressbook.c:334 src/compose.c:456 src/mainwindow.c:453
+#: src/addressbook.c:334 src/compose.c:469 src/mainwindow.c:453
 #: src/messageview.c:130
 msgid "/_File"
 msgstr "/_Bestand"
@@ -296,8 +296,8 @@ msgstr "/_Bestand/Nieuwe _JPilot"
 msgid "/_File/New _Server"
 msgstr "/_Bestand/Nieuwe _Server"
 
-#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:461
-#: src/compose.c:466 src/compose.c:470 src/mainwindow.c:470
+#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:474
+#: src/compose.c:479 src/compose.c:483 src/mainwindow.c:470
 #: src/mainwindow.c:473 src/mainwindow.c:475 src/mainwindow.c:478
 #: src/mainwindow.c:480 src/messageview.c:133
 msgid "/_File/---"
@@ -315,7 +315,7 @@ msgstr "/_Bestand/_Verwijderen"
 msgid "/_File/_Save"
 msgstr "/_Bestand/_Opslaan"
 
-#: src/addressbook.c:348 src/compose.c:471 src/messageview.c:134
+#: src/addressbook.c:348 src/compose.c:484 src/messageview.c:134
 msgid "/_File/_Close"
 msgstr "/_Bestand/_Sluiten"
 
@@ -347,7 +347,7 @@ msgstr "/_Adres/_Bewerken"
 msgid "/_Address/_Delete"
 msgstr "/_Adres/_Verwijderen"
 
-#: src/addressbook.c:356 src/compose.c:572 src/mainwindow.c:687
+#: src/addressbook.c:356 src/compose.c:585 src/mainwindow.c:687
 #: src/messageview.c:242
 msgid "/_Tools"
 msgstr "/_Gereedschap"
@@ -356,12 +356,12 @@ msgstr "/_Gereedschap"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Gereedschap/_LDIF bestand importeren"
 
-#: src/addressbook.c:358 src/compose.c:585 src/mainwindow.c:732
+#: src/addressbook.c:358 src/compose.c:598 src/mainwindow.c:732
 #: src/messageview.c:260
 msgid "/_Help"
 msgstr "/_Hulp"
 
-#: src/addressbook.c:359 src/compose.c:586 src/mainwindow.c:743
+#: src/addressbook.c:359 src/compose.c:599 src/mainwindow.c:743
 #: src/messageview.c:261
 msgid "/_Help/_About"
 msgstr "/_Hulp/_Info"
@@ -378,7 +378,7 @@ msgstr "/Nieuwe _groep"
 msgid "/New _Folder"
 msgstr "/Nieuwe _map"
 
-#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:450
+#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:463
 #: src/folderview.c:220 src/folderview.c:222 src/folderview.c:226
 #: src/folderview.c:236 src/folderview.c:238 src/folderview.c:240
 #: src/folderview.c:244 src/folderview.c:254 src/folderview.c:256
@@ -388,7 +388,7 @@ msgstr "/Nieuwe _map"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:473
+#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:486
 #: src/mainwindow.c:484 src/messageview.c:136
 msgid "/_Edit"
 msgstr "/Be_werken"
@@ -401,7 +401,7 @@ msgstr "/Ver_wijderen"
 msgid "E-Mail address"
 msgstr "E-mail adres"
 
-#: src/addressbook.c:493 src/compose.c:4359 src/prefs_common.c:2183
+#: src/addressbook.c:493 src/compose.c:4090 src/prefs_common.c:2183
 msgid "Address book"
 msgstr "Adresboek"
 
@@ -604,15 +604,15 @@ msgstr "Algemene adressen"
 msgid "Personal address"
 msgstr "Persoonlijke adressen"
 
-#: src/alertpanel.c:123 src/compose.c:4974 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4705 src/main.c:464
 msgid "Notice"
 msgstr "Bericht"
 
-#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1847
+#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1937
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: src/alertpanel.c:149 src/compose.c:2756 src/inc.c:557
+#: src/alertpanel.c:149 src/compose.c:2473 src/inc.c:557
 msgid "Error"
 msgstr "Fout"
 
@@ -660,307 +660,307 @@ msgstr "Bruin"
 msgid "None"
 msgstr "Geen"
 
-#: src/compose.c:448
+#: src/compose.c:461
 msgid "/_Add..."
 msgstr "/_Toevoegen..."
 
-#: src/compose.c:449
+#: src/compose.c:462
 msgid "/_Remove"
 msgstr "/_Verwijderen"
 
-#: src/compose.c:451 src/folderview.c:228 src/folderview.c:246
+#: src/compose.c:464 src/folderview.c:228 src/folderview.c:246
 #: src/folderview.c:261
 msgid "/_Properties..."
 msgstr "/_Eigenschappen..."
 
-#: src/compose.c:457
+#: src/compose.c:470
 #, fuzzy
 msgid "/_File/_Send"
 msgstr "/_Bestand/_Opslaan"
 
-#: src/compose.c:459
+#: src/compose.c:472
 #, fuzzy
 msgid "/_File/Send _later"
 msgstr "/Be_richt/_Later verzenden"
 
-#: src/compose.c:462
+#: src/compose.c:475
 #, fuzzy
 msgid "/_File/Save to _draft folder"
 msgstr "/Be_richt/Klad opslaan"
 
-#: src/compose.c:464
+#: src/compose.c:477
 #, fuzzy
 msgid "/_File/Save and _keep editing"
 msgstr "/Be_richt/Opslaan en blijven bewer_ken"
 
-#: src/compose.c:467
+#: src/compose.c:480
 msgid "/_File/_Attach file"
 msgstr "/_Bestand/_Bijlage toevoegen"
 
-#: src/compose.c:468
+#: src/compose.c:481
 msgid "/_File/_Insert file"
 msgstr "/_Bestand/Bijlage _invoegen"
 
-#: src/compose.c:469
+#: src/compose.c:482
 msgid "/_File/Insert si_gnature"
 msgstr "/_Bestand/_Handtekening Invoegen"
 
-#: src/compose.c:474
+#: src/compose.c:487
 msgid "/_Edit/_Undo"
 msgstr "/B_ewerken/_Ongedaan maken"
 
-#: src/compose.c:475
+#: src/compose.c:488
 msgid "/_Edit/_Redo"
 msgstr "/B_ewerken/O_pnieuw toepassen"
 
-#: src/compose.c:476 src/compose.c:554 src/mainwindow.c:488
+#: src/compose.c:489 src/compose.c:567 src/mainwindow.c:488
 #: src/messageview.c:139
 msgid "/_Edit/---"
 msgstr "/B_ewerken/---"
 
-#: src/compose.c:477
+#: src/compose.c:490
 msgid "/_Edit/Cu_t"
 msgstr "/B_ewerken/Knippen"
 
-#: src/compose.c:478 src/mainwindow.c:485 src/messageview.c:137
+#: src/compose.c:491 src/mainwindow.c:485 src/messageview.c:137
 msgid "/_Edit/_Copy"
 msgstr "/B_ewerken/_Kopiëren"
 
-#: src/compose.c:479
+#: src/compose.c:492
 msgid "/_Edit/_Paste"
 msgstr "/B_ewerken/_Plakken"
 
-#: src/compose.c:480
+#: src/compose.c:493
 msgid "/_Edit/Paste as _quotation"
 msgstr "/B_ewerken/Plakken als _citaat"
 
-#: src/compose.c:482 src/mainwindow.c:486 src/messageview.c:138
+#: src/compose.c:495 src/mainwindow.c:486 src/messageview.c:138
 msgid "/_Edit/Select _all"
 msgstr "/B_ewerken/_Alles selecteren"
 
-#: src/compose.c:483
+#: src/compose.c:496
 msgid "/_Edit/A_dvanced"
 msgstr "/B_ewerken/Ge_avanceerd"
 
-#: src/compose.c:484
+#: src/compose.c:497
 msgid "/_Edit/A_dvanced/Move a character backward"
 msgstr "/B_ewerken/Ge_avanceerd/Ga een teken terug"
 
-#: src/compose.c:489
+#: src/compose.c:502
 msgid "/_Edit/A_dvanced/Move a character forward"
 msgstr "/B_ewerken/Ge_avanceerd/Ga een teken verder"
 
-#: src/compose.c:494
+#: src/compose.c:507
 msgid "/_Edit/A_dvanced/Move a word backward"
 msgstr "/B_ewerken/Ge_avanceerd/Ga een woord terug"
 
-#: src/compose.c:499
+#: src/compose.c:512
 msgid "/_Edit/A_dvanced/Move a word forward"
 msgstr "/B_ewerken/Ge_avanceerd/Ga een woord verder"
 
-#: src/compose.c:504
+#: src/compose.c:517
 msgid "/_Edit/A_dvanced/Move to beginning of line"
 msgstr "/B_ewerken/Ge_avanceerd/Ga naar begin van regel"
 
-#: src/compose.c:509
+#: src/compose.c:522
 msgid "/_Edit/A_dvanced/Move to end of line"
 msgstr "/B_ewerken/Ge_avanceerd/Ga naar einde van regel"
 
-#: src/compose.c:514
+#: src/compose.c:527
 msgid "/_Edit/A_dvanced/Move to previous line"
 msgstr "/B_ewerken/Ge_avanceerd/Ga naar vorige regel"
 
-#: src/compose.c:519
+#: src/compose.c:532
 msgid "/_Edit/A_dvanced/Move to next line"
 msgstr "/B_ewerken/Ge_avanceerd/Ga naar volgende regel"
 
-#: src/compose.c:524
+#: src/compose.c:537
 msgid "/_Edit/A_dvanced/Delete a character backward"
 msgstr "/B_ewerken/Ge_avanceerd/Verwijder vorig teken"
 
-#: src/compose.c:529
+#: src/compose.c:542
 msgid "/_Edit/A_dvanced/Delete a character forward"
 msgstr "/B_ewerken/Ge_avanceerd/Verwijder volgend teken"
 
-#: src/compose.c:534
+#: src/compose.c:547
 msgid "/_Edit/A_dvanced/Delete a word backward"
 msgstr "/B_ewerken/Ge_avanceerd/Verwijder vorig woord"
 
-#: src/compose.c:539
+#: src/compose.c:552
 msgid "/_Edit/A_dvanced/Delete a word forward"
 msgstr "/B_ewerken/Ge_avanceerd/Verwijder volgend woord"
 
-#: src/compose.c:544
+#: src/compose.c:557
 msgid "/_Edit/A_dvanced/Delete line"
 msgstr "/B_ewerken/Ge_avanceerd/Verwijder regel"
 
-#: src/compose.c:549
+#: src/compose.c:562
 msgid "/_Edit/A_dvanced/Delete to end of line"
 msgstr "/B_ewerken/Ge_avanceerd/Verwijder alles tot einde regel"
 
-#: src/compose.c:555
+#: src/compose.c:568
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/Be_werken/Regelterugloop in deze paragraaf"
 
-#: src/compose.c:557
+#: src/compose.c:570
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/B_ewerken/Regelterugloop in hele bericht"
 
-#: src/compose.c:559
+#: src/compose.c:572
 #, fuzzy
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/B_ewerken/_Kopiëren"
 
-#: src/compose.c:560 src/mainwindow.c:493 src/messageview.c:143
+#: src/compose.c:573 src/mainwindow.c:493 src/messageview.c:143
 #: src/summaryview.c:370
 msgid "/_View"
 msgstr "/B_eeld"
 
-#: src/compose.c:561
+#: src/compose.c:574
 msgid "/_View/_To"
 msgstr "/B_eeld/_Aan"
 
-#: src/compose.c:562
+#: src/compose.c:575
 msgid "/_View/_Cc"
 msgstr "/B_eeld/_Cc"
 
-#: src/compose.c:563
+#: src/compose.c:576
 msgid "/_View/_Bcc"
 msgstr "/B_eeld/_Bcc"
 
-#: src/compose.c:564
+#: src/compose.c:577
 msgid "/_View/_Reply to"
 msgstr "/B_eeld/Ant_woord naar"
 
-#: src/compose.c:565 src/compose.c:567 src/compose.c:569 src/mainwindow.c:511
+#: src/compose.c:578 src/compose.c:580 src/compose.c:582 src/mainwindow.c:511
 #: src/mainwindow.c:514 src/mainwindow.c:540 src/mainwindow.c:564
 #: src/mainwindow.c:640 src/mainwindow.c:644 src/messageview.c:219
 msgid "/_View/---"
 msgstr "/B_eeld/---"
 
-#: src/compose.c:566
+#: src/compose.c:579
 msgid "/_View/_Followup to"
 msgstr "/Be_richt/_Vervolg op"
 
-#: src/compose.c:568
+#: src/compose.c:581
 msgid "/_View/R_uler"
 msgstr "/B_eeld/_Lineaal"
 
-#: src/compose.c:570
+#: src/compose.c:583
 msgid "/_View/_Attachment"
 msgstr "/B_eeld/_Bijvoeging"
 
-#: src/compose.c:573 src/mainwindow.c:688 src/messageview.c:243
+#: src/compose.c:586 src/mainwindow.c:688 src/messageview.c:243
 msgid "/_Tools/_Address book"
 msgstr "/_Gereedschap/_Adresboek"
 
-#: src/compose.c:574
+#: src/compose.c:587
 msgid "/_Tools/_Template"
 msgstr "/_Gereedschap/_Sjabloon"
 
-#: src/compose.c:575 src/mainwindow.c:706 src/messageview.c:258
+#: src/compose.c:588 src/mainwindow.c:706 src/messageview.c:258
 msgid "/_Tools/Actio_ns"
 msgstr "/_Gereedschap/A_cties"
 
-#: src/compose.c:576 src/compose.c:580 src/mainwindow.c:691
+#: src/compose.c:589 src/compose.c:593 src/mainwindow.c:691
 #: src/mainwindow.c:705 src/mainwindow.c:707 src/mainwindow.c:710
 #: src/mainwindow.c:712 src/messageview.c:246 src/messageview.c:257
 msgid "/_Tools/---"
 msgstr "/_Gereedschap/---"
 
-#: src/compose.c:577
+#: src/compose.c:590
 #, fuzzy
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/B_ewerken/Be_werken met externe editor"
 
-#: src/compose.c:581
+#: src/compose.c:594
 #, fuzzy
 msgid "/_Tools/PGP Si_gn"
 msgstr "/_Gereedschap/A_cties"
 
-#: src/compose.c:582
+#: src/compose.c:595
 #, fuzzy
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/Be_richt/Codeer"
 
-#: src/compose.c:787
+#: src/compose.c:800
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: bestand bestaat niet\n"
 
-#: src/compose.c:886 src/compose.c:941 src/procmsg.c:1301
+#: src/compose.c:899 src/compose.c:954 src/procmsg.c:1301
 msgid "Can't get text part\n"
 msgstr "Kan tekstgedeelte niet ophalen\n"
 
-#: src/compose.c:1302
+#: src/compose.c:1315
 msgid "Quote mark format error."
 msgstr "Citeerteken opmaakfout."
 
-#: src/compose.c:1314
+#: src/compose.c:1327
 msgid "Message reply/forward format error."
 msgstr "Bericht beantwoorden/doorsturen opmaakfout."
 
-#: src/compose.c:1628
+#: src/compose.c:1641
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Bestand %s bestaat niet\n"
 
-#: src/compose.c:1632
+#: src/compose.c:1645
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Kan de bestandsgrootte niet bepalen van %s\n"
 
-#: src/compose.c:1636
+#: src/compose.c:1649
 #, c-format
 msgid "File %s is empty."
 msgstr "Bestand %s is leeg"
 
-#: src/compose.c:1640
+#: src/compose.c:1653
 #, c-format
 msgid "Can't read %s."
 msgstr "Kan %s niet inlezen."
 
-#: src/compose.c:1675
+#: src/compose.c:1688
 #, c-format
 msgid "Message: %s"
 msgstr "Bericht: %s"
 
-#: src/compose.c:1746 src/mimeview.c:482
+#: src/compose.c:1759 src/mimeview.c:482
 msgid "Can't get the part of multipart message."
 msgstr "Ik kan het deel van een meerdelig bericht niet ophalen."
 
-#: src/compose.c:2377
+#: src/compose.c:2106
 msgid " [Edited]"
 msgstr " [Aangepast]"
 
-#: src/compose.c:2379
+#: src/compose.c:2108
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - bericht opstellen%s"
 
-#: src/compose.c:2382
+#: src/compose.c:2111
 #, c-format
 msgid "Compose message%s"
 msgstr "Bericht opstellen%s"
 
-#: src/compose.c:2493
+#: src/compose.c:2222
 msgid "Recipient is not specified."
 msgstr "Ontvanger is niet gespecificeerd."
 
-#: src/compose.c:2501 src/compose.c:4279 src/mainwindow.c:2133
+#: src/compose.c:2230 src/compose.c:4010 src/mainwindow.c:2133
 #: src/prefs_account.c:703 src/prefs_common.c:847
 msgid "Send"
 msgstr "Verzenden"
 
-#: src/compose.c:2502
+#: src/compose.c:2231
 msgid "Subject is empty. Send it anyway?"
 msgstr "U heeft geen onderwerp ingevuld. Toch versturen?"
 
-#: src/compose.c:2553
+#: src/compose.c:2282
 msgid "can't get recipient list."
 msgstr "Kan geen ontvangerlijst opvragen."
 
-#: src/compose.c:2573
+#: src/compose.c:2302
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -968,26 +968,26 @@ msgstr ""
 "Account voor het verzenden van email is niet gespecificeerd.\n"
 "Selecteer een account voordat u verzend."
 
-#: src/compose.c:2587 src/send_message.c:261
+#: src/compose.c:2316 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Er is een fout opgetreden bij het versturen van het bericht naar %s."
 
-#: src/compose.c:2610
+#: src/compose.c:2339
 msgid "Can't save the message to outbox."
 msgstr "Het bericht kan niet opgeslagen worden in de outbox."
 
-#: src/compose.c:2646
+#: src/compose.c:2375
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Kon gee bijpassende sleutel vinden voor geselecteerde sleutel-id `%s'."
 
-#: src/compose.c:2706 src/compose.c:2921 src/compose.c:2984 src/compose.c:3103
-#: src/utils.c:2174
+#: src/compose.c:2436 src/compose.c:2651 src/compose.c:2714 src/compose.c:2833
+#: src/utils.c:2189
 msgid "can't change file mode\n"
 msgstr "kan de bestandmodus niet veranderen\n"
 
-#: src/compose.c:2752
+#: src/compose.c:2469
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message from\n"
@@ -998,140 +998,140 @@ msgstr ""
 "%s naar %s.\n"
 "Toch versturen?"
 
-#: src/compose.c:2792
+#: src/compose.c:2522
 msgid "can't write headers\n"
 msgstr "kan geen headers schrijven\n"
 
-#: src/compose.c:3063
+#: src/compose.c:2793
 msgid "can't remove the old message\n"
 msgstr "kan het oude bericht niet verwijderen\n"
 
-#: src/compose.c:3081
+#: src/compose.c:2811
 msgid "queueing message...\n"
 msgstr "bericht wordt in de wachtrij geplaatst...\n"
 
-#: src/compose.c:3163
+#: src/compose.c:2893
 msgid "can't find queue folder\n"
 msgstr "kan de Wachtrij-map niet vinden\n"
 
-#: src/compose.c:3170
+#: src/compose.c:2900
 msgid "can't queue the message\n"
 msgstr "kan het bericht niet in de wachtrij plaatsen\n"
 
-#: src/compose.c:3716
+#: src/compose.c:3446
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "gegenereerd bericht-ID: %s\n"
 
-#: src/compose.c:3813
+#: src/compose.c:3543
 msgid "Creating compose window...\n"
 msgstr "Venster \"Bericht opstellen\" wordt aangemaakt...\n"
 
-#: src/compose.c:3816 src/compose.c:4765
+#: src/compose.c:3546 src/compose.c:4496
 msgid "MIME type"
 msgstr "MIME type"
 
 #. S_COL_DATE
-#: src/compose.c:3817 src/mimeview.c:148 src/prefs_filter_edit.c:569
+#: src/compose.c:3547 src/mimeview.c:148 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "Grootte"
 
-#: src/compose.c:3868 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3598 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "Afzender:"
 
-#: src/compose.c:4280
+#: src/compose.c:4011
 msgid "Send message"
 msgstr "Verzend bericht"
 
-#: src/compose.c:4288
+#: src/compose.c:4019
 msgid "Send later"
 msgstr "Wachtrij"
 
-#: src/compose.c:4289
+#: src/compose.c:4020
 msgid "Put into queue folder and send later"
 msgstr "In de wachtrij plaatsen en later verzenden"
 
-#: src/compose.c:4297
+#: src/compose.c:4028
 msgid "Draft"
 msgstr "Klad"
 
-#: src/compose.c:4298
+#: src/compose.c:4029
 msgid "Save to draft folder"
 msgstr "Opslaan als klad"
 
-#: src/compose.c:4308 src/compose.c:5540
+#: src/compose.c:4039 src/compose.c:5271
 msgid "Insert"
 msgstr "Invoegen"
 
-#: src/compose.c:4309
+#: src/compose.c:4040
 msgid "Insert file"
 msgstr "Bestand invoegen"
 
-#: src/compose.c:4317
+#: src/compose.c:4048
 msgid "Attach"
 msgstr "Bijvoegen"
 
-#: src/compose.c:4318
+#: src/compose.c:4049
 msgid "Attach file"
 msgstr "Bestand bijvoegen"
 
 #. signature
-#: src/compose.c:4328 src/prefs_account.c:1338 src/prefs_common.c:1258
+#: src/compose.c:4059 src/prefs_account.c:1338 src/prefs_common.c:1258
 msgid "Signature"
 msgstr "Tekenen"
 
-#: src/compose.c:4329
+#: src/compose.c:4060
 msgid "Insert signature"
 msgstr "Handtekening (signature) invoegen"
 
-#: src/compose.c:4338 src/prefs_common.c:1280 src/prefs_common.c:2162
+#: src/compose.c:4069 src/prefs_common.c:1280 src/prefs_common.c:2162
 msgid "Editor"
 msgstr "Editor"
 
-#: src/compose.c:4339
+#: src/compose.c:4070
 msgid "Edit with external editor"
 msgstr "Bewerken met ander (extern) programma"
 
-#: src/compose.c:4347
+#: src/compose.c:4078
 msgid "Linewrap"
 msgstr "Terugloop"
 
-#: src/compose.c:4348
+#: src/compose.c:4079
 msgid "Wrap all long lines"
 msgstr "Lange regels op meerdere regels zetten"
 
-#: src/compose.c:4659
+#: src/compose.c:4390
 msgid "Invalid MIME type."
 msgstr "Ongeldig MIME type."
 
-#: src/compose.c:4678
+#: src/compose.c:4409
 msgid "File doesn't exist or is empty."
 msgstr "Bestand bestaat niet of is leeg."
 
-#: src/compose.c:4747
+#: src/compose.c:4478
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: src/compose.c:4767
+#: src/compose.c:4498
 msgid "Encoding"
 msgstr "Codering"
 
-#: src/compose.c:4790 src/prefs_folder_item.c:183
+#: src/compose.c:4521 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Pad"
 
-#: src/compose.c:4791
+#: src/compose.c:4522
 msgid "File name"
 msgstr "Bestandsnaam"
 
-#: src/compose.c:4945
+#: src/compose.c:4676
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "De ingegeven opdracht voor de externe editor is onjuist: '%s'\n"
 
-#: src/compose.c:4971
+#: src/compose.c:4702
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1142,67 +1142,67 @@ msgstr ""
 "Zal ik het programma afbreken?\n"
 "procesgroep id: %d"
 
-#: src/compose.c:4984
+#: src/compose.c:4715
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Programma (id: %d) afgebroken."
 
-#: src/compose.c:4985
+#: src/compose.c:4716
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Tijdelijk bestand: %s"
 
-#: src/compose.c:5009
+#: src/compose.c:4740
 msgid "Compose: input from monitoring process\n"
 msgstr "Opstellen: invoer van \"monitoring process\"\n"
 
 #. failed
-#: src/compose.c:5042
+#: src/compose.c:4773
 msgid "Couldn't exec external editor\n"
 msgstr "Kon het externe programma voor bewerken van e-mail niet aanroepen\n"
 
-#: src/compose.c:5046
+#: src/compose.c:4777
 msgid "Couldn't write to file\n"
 msgstr "Kon niet naar bestand schrijven\n"
 
-#: src/compose.c:5048
+#: src/compose.c:4779
 msgid "Pipe read failed\n"
 msgstr "Inlezen van pijp mislukt\n"
 
-#: src/compose.c:5350 src/compose.c:5358 src/compose.c:5364
+#: src/compose.c:5081 src/compose.c:5089 src/compose.c:5095
 msgid "Can't queue the message."
 msgstr "Kan bericht niet in de wachtrij plaatsen."
 
-#: src/compose.c:5455 src/compose.c:5470
+#: src/compose.c:5186 src/compose.c:5201
 msgid "Select file"
 msgstr "Selecteer bestand"
 
-#: src/compose.c:5502
+#: src/compose.c:5233
 msgid "Discard message"
 msgstr "Gooi bericht weg"
 
-#: src/compose.c:5503
+#: src/compose.c:5234
 msgid "This message has been modified. discard it?"
 msgstr "Dit bericht is aangepast. weggooien?"
 
-#: src/compose.c:5504
+#: src/compose.c:5235
 msgid "Discard"
 msgstr "Gooi weg"
 
-#: src/compose.c:5504
+#: src/compose.c:5235
 msgid "to Draft"
 msgstr "opslaan als klad"
 
-#: src/compose.c:5537
+#: src/compose.c:5268
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Wilt u het sjabloon '%s' toepassen?"
 
-#: src/compose.c:5539
+#: src/compose.c:5270
 msgid "Apply template"
 msgstr "Sjabloon toepassen"
 
-#: src/compose.c:5540
+#: src/compose.c:5271
 msgid "Replace"
 msgstr "Vervangen"
 
@@ -5561,7 +5561,7 @@ msgstr "Geen hadtekening gevonden"
 msgid "Good signature from \"%s\""
 msgstr "Goedgekeurde handtekening van \"%s\""
 
-#: src/sigstatus.c:226 src/textview.c:560
+#: src/sigstatus.c:226 src/textview.c:574
 msgid "Good signature"
 msgstr "Correcte handtekening"
 
@@ -5570,7 +5570,7 @@ msgstr "Correcte handtekening"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:231 src/textview.c:562
+#: src/sigstatus.c:231 src/textview.c:576
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5607,7 +5607,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "SLECHTE handtekening van \"%s\""
 
-#: src/sigstatus.c:249 src/textview.c:564
+#: src/sigstatus.c:249 src/textview.c:578
 msgid "BAD signature"
 msgstr "FOUTIEVE handtekening"
 
@@ -5636,12 +5636,12 @@ msgstr "Bronvenster wordt aangemaakt...\n"
 msgid "Source of the message"
 msgstr "Broncode van het bericht"
 
-#: src/sourcewindow.c:132
+#: src/sourcewindow.c:133
 #, c-format
 msgid "Displaying the source of %s ...\n"
 msgstr "Bron wordt weergegeven voor %s ...\n"
 
-#: src/sourcewindow.c:134
+#: src/sourcewindow.c:135
 #, c-format
 msgid "%s - Source"
 msgstr "%s - Broncode"
@@ -6057,34 +6057,34 @@ msgstr "bericht %d is reeds gebufferd.\n"
 msgid "file %s already exists\n"
 msgstr "bestand %s bestaat al\n"
 
-#: src/textview.c:216
+#: src/textview.c:225
 msgid "Creating text view...\n"
 msgstr "Tekstvenster wordt aangemaakt...\n"
 
-#: src/textview.c:656
+#: src/textview.c:670
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "een bericht wordt niet ontvangen\n"
 
-#: src/textview.c:672
+#: src/textview.c:686
 msgid "To save this part, pop up the context menu with "
 msgstr "Om dit deel te bewaren, kunt u met de rechter muisknop het "
 
-#: src/textview.c:673
+#: src/textview.c:687
 msgid "right click and select `Save as...', "
 msgstr "contextmenu oproepen en de optie 'Opslaan als...' selecteren,"
 
-#: src/textview.c:674
+#: src/textview.c:688
 msgid ""
 "or press `y' key.\n"
 "\n"
 msgstr "of druk op de 'y'-toets.\n"
 
-#: src/textview.c:676
+#: src/textview.c:690
 msgid "To display this part as a text message, select "
 msgstr "Om dit gedeelte weer te geven als een tekstbericht"
 
-#: src/textview.c:677
+#: src/textview.c:691
 msgid ""
 "`Display as text', or press `t' key.\n"
 "\n"
@@ -6092,36 +6092,40 @@ msgstr ""
 "selecteert u de optie 'Als tekst weergeven', of druk op de 't'-toets.\n"
 "\n"
 
-#: src/textview.c:679
+#: src/textview.c:693
 msgid "To open this part with external program, select "
 msgstr "Om dit deel te openen met een extern programma selecteert u "
 
-#: src/textview.c:680
+#: src/textview.c:694
 msgid "`Open' or `Open with...', "
 msgstr "de optie 'Openen' of 'Openen met...',"
 
-#: src/textview.c:681
+#: src/textview.c:695
 msgid "or double-click, or click the center button, "
 msgstr "of dubbelklik, of klik met de middelste muisknop,"
 
-#: src/textview.c:682
+#: src/textview.c:696
 msgid "or press `l' key."
 msgstr "of druk op de 'l'-toets."
 
-#: src/textview.c:700
+#: src/textview.c:714
 msgid "This signature has not been checked yet.\n"
 msgstr "Deze handtekening is nog niet gecontroleerd.\n"
 
-#: src/textview.c:701
+#: src/textview.c:715
 msgid "To check it, pop up the context menu with\n"
 msgstr ""
 "Om te controleren kunt u met de rechter muisknop het contextmenu oproepen\n"
 
-#: src/textview.c:702
+#: src/textview.c:716
 msgid "right click and select `Check signature'.\n"
 msgstr "en de optie'Controleer handtekening' selecteren.\n"
 
-#: src/textview.c:1843
+#: src/textview.c:1871
+msgid "Copy this _link"
+msgstr ""
+
+#: src/textview.c:1933
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6149,7 +6153,7 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: src/utils.c:2181 src/utils.c:2308
+#: src/utils.c:2196 src/utils.c:2323
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "schrijven naar %s is mislukt.\n"

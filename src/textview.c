@@ -178,6 +178,12 @@ static gboolean textview_visibility_notify	(GtkWidget	*widget,
 						 GdkEventVisibility *event,
 						 TextView	*textview);
 
+static void textview_populate_popup		(GtkWidget	*widget,
+						 GtkMenu	*menu,
+						 TextView	*textview);
+static void textview_popup_menu_activate_copy_cb(GtkMenuItem	*menuitem,
+						 gpointer	 data);
+
 static void textview_smooth_scroll_do		(TextView	*textview,
 						 gfloat		 old_value,
 						 gfloat		 last_value,
@@ -254,6 +260,8 @@ TextView *textview_create(void)
 			 G_CALLBACK(textview_leave_notify), textview);
 	g_signal_connect(G_OBJECT(text), "visibility-notify-event",
 			 G_CALLBACK(textview_visibility_notify), textview);
+	g_signal_connect(G_OBJECT(text), "populate-popup",
+			 G_CALLBACK(textview_populate_popup), textview);
 
 	gtk_widget_show(scrolledwin);
 
@@ -1829,6 +1837,65 @@ static gboolean textview_visibility_notify(GtkWidget *widget,
 	textview_set_cursor(textview, GTK_TEXT_VIEW(widget), bx, by);
 
 	return FALSE;
+}
+
+static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
+				    TextView *textview)
+{
+	gint px, py, x, y;
+	GtkWidget *separator, *menuitem;
+	GtkTextBuffer *buffer;
+	GtkTextIter iter, start, end;
+	gboolean on_link;
+	RemoteURI *uri;
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
+
+	gdk_window_get_pointer(widget->window, &px, &py, NULL);
+	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
+					      GTK_TEXT_WINDOW_WIDGET,
+					      px, py, &x, &y);
+	gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(widget), &iter, x, y);
+	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
+	if (!on_link)
+		return;
+
+	uri = textview_get_uri(textview, &start, &end);
+	if (!uri)
+		return;
+
+	separator = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+	gtk_widget_show(separator);
+
+	menuitem = gtk_menu_item_new_with_mnemonic(_("Copy this _link"));
+	g_signal_connect(menuitem, "activate",
+			 G_CALLBACK(textview_popup_menu_activate_copy_cb), uri);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	gtk_widget_show(menuitem);
+}
+
+static void textview_popup_menu_activate_copy_cb(GtkMenuItem *menuitem,
+						 gpointer data)
+{
+	RemoteURI *uri = (RemoteURI *)data;
+	const gchar *uri_string;
+	GtkClipboard *clipboard;
+
+	g_return_if_fail(uri != NULL);
+
+	if (!uri->uri)
+		return;
+
+	if (!g_strncasecmp(uri->uri, "mailto:", 7))
+		uri_string = uri->uri + 7;
+	else
+		uri_string = uri->uri;
+
+	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+	gtk_clipboard_set_text(clipboard, uri_string, -1);
+	clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	gtk_clipboard_set_text(clipboard, uri_string, -1);
 }
 
 static gboolean textview_uri_security_check(TextView *textview, RemoteURI *uri)
