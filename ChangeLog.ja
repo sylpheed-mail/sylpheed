@@ -1,3 +1,14 @@
+2005-03-04
+
+	* src/codeconv.[ch]: ヒープのバッファオーバーフローを起こしていた
+	  conv_unmime_header_overwrite() を削除。
+	  conv_unmime_header(): 新たに確保された文字列を返すように修正。
+	* src/compose.c: compose_parse_header(): バッファオーバーフローを
+	  起こす conv_unmime_header_overwrite() を使用しないようにした。
+	* src/procheader.c
+	  src/news.c
+	  src/procmime.c: API の変更に追従。
+
 2005-03-03
 
 	* 不正なヘッダ文字列のフォールバックエンコーディングとして

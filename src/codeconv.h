@@ -209,11 +209,8 @@ gboolean conv_is_multibyte_encoding		(CharSet	 encoding);
 
 const gchar *conv_get_current_locale		(void);
 
-void conv_unmime_header_overwrite	(gchar		*str);
-void conv_unmime_header			(gchar		*outbuf,
-					 gint		 outlen,
-					 const gchar	*str,
-					 const gchar	*charset);
+gchar *conv_unmime_header		(const gchar	*str,
+					 const gchar	*default_encoding);
 void conv_encode_header			(gchar		*dest,
 					 gint		 len,
 					 const gchar	*src,

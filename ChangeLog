@@ -1,3 +1,15 @@
+2005-03-04
+
+	* src/codeconv.[ch]: removed conv_unmime_header_overwrite() because
+	  it had introduced heap buffer overflow.
+	  conv_unmime_header(): modified so that it returns newly-allocated
+	  string.
+	* src/compose.c: compose_parse_header(): don't use
+	  conv_unmime_header_overwrite() which introduced buffer overflow.
+	* src/procheader.c
+	  src/news.c
+	  src/procmime.c: followed the API change.
+
 2005-03-03
 
 	* use Content-Type's charset as a fallback encoding of broken header

@@ -911,7 +911,6 @@ static GSList *news_get_uncached_articles(NNTPSession *session,
 static MsgInfo *news_parse_xover(const gchar *xover_str)
 {
 	MsgInfo *msginfo;
-	gchar buf[NNTPBUFSIZE];
 	gchar *subject, *sender, *size, *line, *date, *msgid, *ref, *tmp;
 	gchar *p;
 	gint num, size_int, line_int;
@@ -944,12 +943,10 @@ static MsgInfo *news_parse_xover(const gchar *xover_str)
 	msginfo->date = g_strdup(date);
 	msginfo->date_t = procheader_date_parse(NULL, date, 0);
 
-	conv_unmime_header(buf, sizeof(buf), sender, NULL);
-	msginfo->from = g_strdup(buf);
-	msginfo->fromname = procheader_get_fromname(buf);
+	msginfo->from = conv_unmime_header(sender, NULL);
+	msginfo->fromname = procheader_get_fromname(msginfo->from);
 
-	conv_unmime_header(buf, sizeof(buf), subject, NULL);
-	msginfo->subject = g_strdup(buf);
+	msginfo->subject = conv_unmime_header(subject, NULL);
 
 	extract_parenthesis(msgid, '<', '>');
 	remove_space(msgid);

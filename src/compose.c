@@ -1164,13 +1164,14 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 	fclose(fp);
 
 	if (hentry[H_REPLY_TO].body != NULL) {
-		conv_unmime_header_overwrite(hentry[H_REPLY_TO].body);
-		compose->replyto = hentry[H_REPLY_TO].body;
+		compose->replyto =
+			conv_unmime_header(hentry[H_REPLY_TO].body, NULL);
+		g_free(hentry[H_REPLY_TO].body);
 		hentry[H_REPLY_TO].body = NULL;
 	}
 	if (hentry[H_CC].body != NULL) {
-		conv_unmime_header_overwrite(hentry[H_CC].body);
-		compose->cc = hentry[H_CC].body;
+		compose->cc = conv_unmime_header(hentry[H_CC].body, NULL);
+		g_free(hentry[H_CC].body);
 		hentry[H_CC].body = NULL;
 	}
 	if (hentry[H_REFERENCES].body != NULL) {
@@ -1184,11 +1185,10 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		hentry[H_REFERENCES].body = NULL;
 	}
 	if (hentry[H_BCC].body != NULL) {
-		if (compose->mode == COMPOSE_REEDIT) {
-			conv_unmime_header_overwrite(hentry[H_BCC].body);
-			compose->bcc = hentry[H_BCC].body;
-		} else
-			g_free(hentry[H_BCC].body);
+		if (compose->mode == COMPOSE_REEDIT)
+			compose->bcc =
+				conv_unmime_header(hentry[H_BCC].body, NULL);
+		g_free(hentry[H_BCC].body);
 		hentry[H_BCC].body = NULL;
 	}
 	if (hentry[H_NEWSGROUPS].body != NULL) {
@@ -1196,8 +1196,9 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		hentry[H_NEWSGROUPS].body = NULL;
 	}
 	if (hentry[H_FOLLOWUP_TO].body != NULL) {
-		conv_unmime_header_overwrite(hentry[H_FOLLOWUP_TO].body);
-		compose->followup_to = hentry[H_FOLLOWUP_TO].body;
+		compose->followup_to =
+			conv_unmime_header(hentry[H_FOLLOWUP_TO].body, NULL);
+		g_free(hentry[H_FOLLOWUP_TO].body);
 		hentry[H_FOLLOWUP_TO].body = NULL;
 	}
 	if (hentry[H_LIST_POST].body != NULL) {

@@ -403,15 +403,9 @@ void procmime_scan_content_type_str(const gchar *content_type,
 		if (*value) {
 			if (charset && !g_strcasecmp(attr, "charset"))
 				*charset = g_strdup(value);
-			else if (name && !g_strcasecmp(attr, "name")) {
-				gchar *tmp;
-				size_t len;
-
-				len = strlen(value) + 1;
-				Xalloca(tmp, len, return);
-				conv_unmime_header(tmp, len, value, NULL);
-				*name = g_strdup(tmp);
-			} else if (boundary && !g_strcasecmp(attr, "boundary"))
+			else if (name && !g_strcasecmp(attr, "name"))
+				*name = conv_unmime_header(value, NULL);
+			else if (boundary && !g_strcasecmp(attr, "boundary"))
 				*boundary = g_strdup(value);
 		}
 
@@ -457,14 +451,9 @@ void procmime_scan_content_disposition(MimeInfo *mimeinfo,
 
 		if (*value) {
 			if (!strcasecmp(attr, "filename")) {
-				gchar *tmp;
-				size_t len;
-
-				len = strlen(value) + 1;
-				Xalloca(tmp, len, return);
-				conv_unmime_header(tmp, len, value, NULL);
 				g_free(mimeinfo->filename);
-				mimeinfo->filename = g_strdup(tmp);
+				mimeinfo->filename =
+					conv_unmime_header(value, NULL);
 				break;
 			}
 		}

@@ -1541,54 +1541,46 @@ const gchar *conv_get_current_locale(void)
 	return cur_locale;
 }
 
-void conv_unmime_header_overwrite(gchar *str)
+gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 {
 	gchar *buf;
 	gint buflen;
-
-	buflen = strlen(str) * 2 + 1;
-	Xalloca(buf, buflen, return);
-
-	if (conv_get_locale_charset() == C_EUC_JP)
-		conv_anytodisp(buf, buflen, str);
-	else
-		conv_localetodisp(buf, buflen, str);
-
-	unmime_header(str, buf);
-}
-
-void conv_unmime_header(gchar *outbuf, gint outlen, const gchar *str,
-			const gchar *default_encoding)
-{
-	gchar *buf;
-	gint buflen;
+	gchar *utf8_buf;
 
 	if (is_ascii_str(str)) {
-		unmime_header(outbuf, str);
-		return;
+		buflen = strlen(str) * 6 + 1;
+		Xalloca(buf, buflen, return NULL);
+		unmime_header(buf, str);
+		return g_strdup(buf);
 	}
 
 	if (default_encoding) {
-		gchar *utf8_str;
-
-		utf8_str = conv_codeset_strdup
+		utf8_buf = conv_codeset_strdup
 			(str, default_encoding, CS_INTERNAL);
-		if (utf8_str) {
-			unmime_header(outbuf, utf8_str);
-			g_free(utf8_str);
-			return;
+		if (utf8_buf) {
+			buflen = strlen(utf8_buf) * 6 + 1;
+			Xalloca(buf, buflen,
+				{ g_free(utf8_buf); return NULL; });
+			unmime_header(buf, utf8_buf);
+			g_free(utf8_buf);
+			return g_strdup(buf);
 		}
 	}
 
-	buflen = strlen(str) * 2 + 1;
-	Xalloca(buf, buflen, return);
+	buflen = strlen(str) * 6 + 1;
+	Xalloca(utf8_buf, buflen, return NULL);
 
 	if (conv_get_locale_charset() == C_EUC_JP)
-		conv_anytodisp(buf, buflen, str);
+		conv_anytodisp(utf8_buf, buflen, str);
 	else
-		conv_localetodisp(buf, buflen, str);
+		conv_localetodisp(utf8_buf, buflen, str);
 
-	unmime_header(outbuf, buf);
+	buflen = strlen(utf8_buf) * 6 + 1;
+	Xalloca(buf, buflen, return NULL);
+
+	unmime_header(buf, utf8_buf);
+
+	return g_strdup(buf);
 }
 
 #define MAX_LINELEN		76

@@ -225,7 +225,7 @@ GSList *procheader_get_header_list_from_file(const gchar *file)
 
 GSList *procheader_get_header_list(FILE *fp)
 {
-	gchar buf[BUFFSIZE], tmp[BUFFSIZE];
+	gchar buf[BUFFSIZE];
 	gchar *p;
 	GSList *hlist = NULL;
 	Header *header;
@@ -240,8 +240,7 @@ GSList *procheader_get_header_list(FILE *fp)
 				header->name = g_strndup(buf, p - buf);
 				p++;
 				while (*p == ' ' || *p == '\t') p++;
-				conv_unmime_header(tmp, sizeof(tmp), p, NULL);
-				header->body = g_strdup(tmp);
+				header->body = conv_unmime_header(p, NULL);
 
 				hlist = g_slist_append(hlist, header);
 				break;
@@ -298,7 +297,7 @@ gint procheader_find_header_list(GSList *hlist, const gchar *header_name)
 
 GPtrArray *procheader_get_header_array(FILE *fp, const gchar *encoding)
 {
-	gchar buf[BUFFSIZE], tmp[BUFFSIZE];
+	gchar buf[BUFFSIZE];
 	gchar *p;
 	GPtrArray *headers;
 	Header *header;
@@ -315,9 +314,7 @@ GPtrArray *procheader_get_header_array(FILE *fp, const gchar *encoding)
 				header->name = g_strndup(buf, p - buf);
 				p++;
 				while (*p == ' ' || *p == '\t') p++;
-				conv_unmime_header(tmp, sizeof(tmp), p,
-						   encoding);
-				header->body = g_strdup(tmp);
+				header->body = conv_unmime_header(p, encoding);
 
 				g_ptr_array_add(headers, header);
 				break;
@@ -330,7 +327,7 @@ GPtrArray *procheader_get_header_array(FILE *fp, const gchar *encoding)
 
 GPtrArray *procheader_get_header_array_asis(FILE *fp, const gchar *encoding)
 {
-	gchar buf[BUFFSIZE], tmp[BUFFSIZE];
+	gchar buf[BUFFSIZE];
 	gchar *p;
 	GPtrArray *headers;
 	Header *header;
@@ -346,9 +343,7 @@ GPtrArray *procheader_get_header_array_asis(FILE *fp, const gchar *encoding)
 				header = g_new(Header, 1);
 				header->name = g_strndup(buf, p - buf);
 				p++;
-				conv_unmime_header(tmp, sizeof(tmp), p,
-						   encoding);
-				header->body = g_strdup(tmp);
+				header->body = conv_unmime_header(p, encoding);
 
 				g_ptr_array_add(headers, header);
 				break;
@@ -507,7 +502,7 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 					    {NULL,		NULL, FALSE}};
 
 	MsgInfo *msginfo;
-	gchar buf[BUFFSIZE], tmp[BUFFSIZE];
+	gchar buf[BUFFSIZE];
 	gchar *reference = NULL;
 	gchar *p;
 	gchar *hp;
@@ -614,24 +609,20 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 	}
 
 	if (from) {
-		conv_unmime_header(tmp, sizeof(tmp), from, charset);
-		msginfo->from = g_strdup(tmp);
-		msginfo->fromname = procheader_get_fromname(tmp);
+		msginfo->from = conv_unmime_header(from, charset);
+		msginfo->fromname = procheader_get_fromname(msginfo->from);
 		g_free(from);
 	}
 	if (to) {
-		conv_unmime_header(tmp, sizeof(tmp), to, charset);
-		msginfo->to = g_strdup(tmp);
+		msginfo->to = conv_unmime_header(to, charset);
 		g_free(to);
 	}
 	if (subject) {
-		conv_unmime_header(tmp, sizeof(tmp), subject, charset);
-		msginfo->subject = g_strdup(tmp);
+		msginfo->subject = conv_unmime_header(subject, charset);
 		g_free(subject);
 	}
 	if (cc) {
-		conv_unmime_header(tmp, sizeof(tmp), cc, charset);
-		msginfo->cc = g_strdup(tmp);
+		msginfo->cc = conv_unmime_header(cc, charset);
 		g_free(cc);
 	}
 
