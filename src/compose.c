@@ -2541,6 +2541,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			AlertValue aval;
 			gchar *msg;
 
+			g_free(buf);
+
 			msg = g_strdup_printf(_("Can't convert the character encoding of the message body from %s to %s.\n"
 						"Send it as %s anyway?"),
 					      src_codeset, out_codeset,
