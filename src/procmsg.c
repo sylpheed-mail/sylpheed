@@ -695,14 +695,14 @@ static FILE *procmsg_open_data_file(const gchar *file, guint version,
 
 	/* check version */
 	if ((fp = fopen(file, "rb")) == NULL)
-		debug_print("Mark/Cache file not found\n");
+		debug_print("Mark/Cache file '%s' not found\n", file);
 	else {
 		if (buf && buf_size > 0)
 			setvbuf(fp, buf, _IOFBF, buf_size);
 		if (fread(&data_ver, sizeof(data_ver), 1, fp) != 1 ||
 		    version != data_ver) {
-			g_message("Mark/Cache version is different (%u != %u). "
-				  "Discarding it.\n", data_ver, version);
+			g_message("%s: Mark/Cache version is different (%u != %u). Discarding it.\n",
+				  file, data_ver, version);
 			fclose(fp);
 			fp = NULL;
 		}
@@ -779,21 +779,14 @@ GNode *procmsg_get_thread_tree(GSList *mlist)
 
 	for (; mlist != NULL; mlist = mlist->next) {
 		msginfo = (MsgInfo *)mlist->data;
-		parent = NULL;
+		parent = root;
 
-		if (msginfo->inreplyto)
+		/* only look for the real parent first */
+		if (msginfo->inreplyto) {
 			parent = g_hash_table_lookup(table, msginfo->inreplyto);
-
-		if (!parent && msginfo->references) {
-			for (reflist = msginfo->references;
-			     reflist != NULL; reflist = reflist->next)
-				if ((parent = g_hash_table_lookup
-					(table, reflist->data)) != NULL)
-					break;
+			if (parent == NULL)
+				parent = root;
 		}
-
-		if (parent == NULL)
-			parent = root;
 
 		node = g_node_insert_data_before
 			(parent, parent == root ? parent->children : NULL,
@@ -812,6 +805,7 @@ GNode *procmsg_get_thread_tree(GSList *mlist)
 		if (msginfo->inreplyto)
 			parent = g_hash_table_lookup(table, msginfo->inreplyto);
 
+		/* try looking for the indirect parent */
 		if (!parent && msginfo->references) {
 			for (reflist = msginfo->references;
 			     reflist != NULL; reflist = reflist->next)

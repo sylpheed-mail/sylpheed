@@ -1,5 +1,12 @@
 2005-03-28
 
+	* src/procmsg.c: procmsg_get_thread_tree(): look for indirect parent
+	  only the second loop for accurate threading.
+	* src/procheader.c: procheader_parse_stream(): made In-Reply-To take
+	  priority of References for MsgInfo::inreplyto.
+
+2005-03-28
+
 	* src/utils.[ch]: references_list_prepend(): new.
 	* src/procmsg.[ch]
 	  src/procheader.c

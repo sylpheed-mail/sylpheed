@@ -1,5 +1,12 @@
 2005-03-28
 
+	* src/procmsg.c: procmsg_get_thread_tree(): 正確なスレッド生成のため
+	  2回目のループのときのみ間接的な親を探すようにした。
+	* src/procheader.c: procheader_parse_stream(): MsgInfo::inreplyto
+	  に対して In-Reply-To が References より優先されるようにした。
+
+2005-03-28
+
 	* src/utils.[ch]: references_list_prepend(): 新規。
 	* src/procmsg.[ch]
 	  src/procheader.c

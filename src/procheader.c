@@ -503,7 +503,6 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 
 	MsgInfo *msginfo;
 	gchar buf[BUFFSIZE];
-	gchar *reference = NULL;
 	gchar *p, *q;
 	gchar *hp;
 	HeaderEntry *hentry;
@@ -571,19 +570,17 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			msginfo->references =
 				references_list_prepend(msginfo->references,
 							hp);
-			if (msginfo->references && !reference)
-				reference = g_strdup((gchar *)msginfo->references->data);
 			break;
 		case H_IN_REPLY_TO:
-			if (!reference) {
-				eliminate_parenthesis(hp, '(', ')');
-				if ((p = strrchr(hp, '<')) != NULL &&
-				    strchr(p + 1, '>') != NULL) {
-					extract_parenthesis(p, '<', '>');
-					remove_space(p);
-					if (*p != '\0')
-						reference = g_strdup(p);
-				}
+			if (msginfo->inreplyto) break;
+
+			eliminate_parenthesis(hp, '(', ')');
+			if ((p = strrchr(hp, '<')) != NULL &&
+			    strchr(p + 1, '>') != NULL) {
+				extract_parenthesis(p, '<', '>');
+				remove_space(p);
+				if (*p != '\0')
+					msginfo->inreplyto = g_strdup(p);
 			}
 			break;
 		case H_CONTENT_TYPE:
@@ -633,7 +630,9 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 		g_free(cc);
 	}
 
-	msginfo->inreplyto = reference;
+	if (!msginfo->inreplyto && msginfo->references)
+		msginfo->inreplyto =
+			g_strdup((gchar *)msginfo->references->data);
 
 	g_free(charset);
 
