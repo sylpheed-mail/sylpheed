@@ -284,6 +284,7 @@ static void foldersel_create(void)
 	gtk_tree_view_column_set_attributes(column, renderer,
 					    "text", FOLDERSEL_FOLDERNAME,
 					    NULL);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 

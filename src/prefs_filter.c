@@ -256,6 +256,7 @@ static void prefs_filter_create(void)
 	renderer = gtk_cell_renderer_text_new();
 	column = gtk_tree_view_column_new_with_attributes
 		(_("Name"), renderer, "text", COL_NAME, NULL);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	gtk_widget_show(treeview);
