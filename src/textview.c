@@ -131,6 +131,10 @@ static GdkColor bad_sig_color = {
 			  textview->messageview->statusbar_cid);	   \
 }
 
+static GdkCursor *hand_cursor = NULL;
+static GdkCursor *regular_cursor = NULL;
+
+
 static void textview_add_part		(TextView	*textview,
 					 MimeInfo	*mimeinfo,
 					 FILE		*fp);
@@ -161,10 +165,14 @@ static void textview_show_header	(TextView	*textview,
 static gboolean textview_key_pressed		(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 TextView	*textview);
-static gboolean textview_uri_button_pressed	(GtkTextTag	*tag,
-						 GObject	*obj,
+static gboolean textview_event_after		(GtkWidget	*widget,
 						 GdkEvent	*event,
-						 GtkTextIter	*iter,
+						 TextView	*textview);
+static gboolean textview_motion_notify		(GtkWidget	*widget,
+						 GdkEventMotion	*event,
+						 TextView	*textview);
+static gboolean textview_visibility_notify	(GtkWidget	*widget,
+						 GdkEventVisibility *event,
 						 TextView	*textview);
 
 static void textview_smooth_scroll_do		(TextView	*textview,
@@ -175,6 +183,21 @@ static void textview_smooth_scroll_one_line	(TextView	*textview,
 						 gboolean	 up);
 static gboolean textview_smooth_scroll_page	(TextView	*textview,
 						 gboolean	 up);
+
+static gboolean textview_get_link_tag_bounds	(TextView	*textview,
+						 GtkTextIter	*iter,
+						 GtkTextIter	*start,
+						 GtkTextIter	*end);
+static RemoteURI *textview_get_uri		(TextView	*textview,
+						 GtkTextIter	*start,
+						 GtkTextIter	*end);
+static void textview_show_uri			(TextView	*textview,
+						 GtkTextIter	*start,
+						 GtkTextIter	*end);
+static void textview_set_cursor			(TextView	*textview,
+						 GtkTextView	*text,
+						 gint		 x,
+						 gint		 y);
 
 static gboolean textview_uri_security_check	(TextView	*textview,
 						 RemoteURI	*uri);
@@ -217,8 +240,14 @@ TextView *textview_create(void)
 
 	gtk_container_add(GTK_CONTAINER(scrolledwin), text);
 
-	g_signal_connect(G_OBJECT(text), "key_press_event",
+	g_signal_connect(G_OBJECT(text), "key-press-event",
 			 G_CALLBACK(textview_key_pressed), textview);
+	g_signal_connect(G_OBJECT(text), "event-after",
+			 G_CALLBACK(textview_event_after), textview);
+	g_signal_connect(G_OBJECT(text), "motion-notify-event",
+			 G_CALLBACK(textview_motion_notify), textview);
+	g_signal_connect(G_OBJECT(text), "visibility-notify-event",
+			 G_CALLBACK(textview_visibility_notify), textview);
 
 	gtk_widget_show(scrolledwin);
 
@@ -240,15 +269,10 @@ TextView *textview_create(void)
 static void textview_create_tags(GtkTextView *text, TextView *textview)
 {
 	GtkTextBuffer *buffer;
-	GtkTextTag *tag;
-	static PangoFontDescription *font_desc, *bold_font_desc;
+	static PangoFontDescription *font_desc;
 
-	if (!font_desc) {
+	if (!font_desc)
 		font_desc = gtkut_get_default_font_desc();
-		bold_font_desc = pango_font_description_copy(font_desc);
-		pango_font_description_set_weight
-			(bold_font_desc, PANGO_WEIGHT_BOLD);
-	}
 
 	buffer = gtk_text_view_get_buffer(text);
 
@@ -260,7 +284,7 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 				   "font-desc", font_desc,
 				   NULL);
 	gtk_text_buffer_create_tag(buffer, "header_title",
-				   "font-desc", bold_font_desc,
+				   "weight", PANGO_WEIGHT_BOLD,
 				   NULL);
 	gtk_text_buffer_create_tag(buffer, "quote0",
 				   "foreground-gdk", &quote_colors[0],
@@ -274,9 +298,13 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 	gtk_text_buffer_create_tag(buffer, "emphasis",
 				   "foreground-gdk", &emphasis_color,
 				   NULL);
-	tag = gtk_text_buffer_create_tag(buffer, "link",
-					 "foreground-gdk", &uri_color,
-					 NULL);
+	gtk_text_buffer_create_tag(buffer, "link",
+				   "foreground-gdk", &uri_color,
+				   NULL);
+	gtk_text_buffer_create_tag(buffer, "hover-link",
+				   "foreground-gdk", &uri_color,
+				   "underline", PANGO_UNDERLINE_SINGLE,
+				   NULL);
 #if USE_GPGME
 	gtk_text_buffer_create_tag(buffer, "good-signature",
 				   "foreground-gdk", &good_sig_color,
@@ -291,13 +319,15 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 				   "foreground-gdk", &nocheck_sig_color,
 				   NULL);
 #endif /* USE_GPGME */
-
-	g_signal_connect(G_OBJECT(tag), "event",
-			 G_CALLBACK(textview_uri_button_pressed), textview);
 }
 
 void textview_init(TextView *textview)
 {
+	if (!hand_cursor)
+		hand_cursor = gdk_cursor_new(GDK_HAND2);
+	if (!regular_cursor)
+		regular_cursor = gdk_cursor_new(GDK_XTERM);
+
 	textview_update_message_colors();
 	textview_set_all_headers(textview, FALSE);
 	textview_set_font(textview, NULL);
@@ -1393,7 +1423,6 @@ static void textview_smooth_scroll_do(TextView *textview,
 		up = TRUE;
 	}
 
-#warning FIXME_GTK2
 	/* gdk_key_repeat_disable(); */
 
 	for (i = step; i <= change_value; i += step) {
@@ -1404,7 +1433,6 @@ static void textview_smooth_scroll_do(TextView *textview,
 	vadj->value = last_value;
 	g_signal_emit_by_name(G_OBJECT(vadj), "value_changed", 0);
 
-#warning FIXME_GTK2
 	/* gdk_key_repeat_restore(); */
 }
 
@@ -1486,13 +1514,13 @@ static gboolean textview_smooth_scroll_page(TextView *textview, gboolean up)
 #if 0
 #define KEY_PRESS_EVENT_STOP() \
 	if (gtk_signal_n_emissions_by_name \
-		(GTK_OBJECT(widget), "key_press_event") > 0) { \
+		(GTK_OBJECT(widget), "key-press-event") > 0) { \
 		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), \
-					     "key_press_event"); \
+					     "key-press-event"); \
 	}
 #else
 #define KEY_PRESS_EVENT_STOP() \
-	g_signal_stop_emission_by_name(G_OBJECT(widget), "key_press_event");
+	g_signal_stop_emission_by_name(G_OBJECT(widget), "key-press-event");
 #endif
 
 static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
@@ -1570,37 +1598,49 @@ static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	return FALSE;
 }
 
-static gboolean textview_uri_button_pressed(GtkTextTag *tag, GObject *obj,
-					    GdkEvent *event, GtkTextIter *iter,
-					    TextView *textview)
+static gboolean textview_get_link_tag_bounds(TextView *textview,
+					     GtkTextIter *iter,
+					     GtkTextIter *start,
+					     GtkTextIter *end)
 {
-	GtkTextIter start_iter, end_iter;
+	GSList *tags, *cur;
+	gboolean on_link = FALSE;
+
+	tags = gtk_text_iter_get_tags(iter);
+	*start = *end = *iter;
+
+	for (cur = tags; cur != NULL; cur = cur->next) {
+		GtkTextTag *tag = cur->data;
+		gchar *tag_name;
+
+		g_object_get(G_OBJECT(tag), "name", &tag_name, NULL);
+		if (tag_name && !strcmp(tag_name, "link")) {
+			if (!gtk_text_iter_begins_tag(start, tag))
+				gtk_text_iter_backward_to_tag_toggle
+					(start, tag);
+			if (!gtk_text_iter_ends_tag(end, tag))
+				gtk_text_iter_forward_to_tag_toggle(end, tag);
+			on_link = TRUE;
+			g_free(tag_name);
+			break;
+		}
+	}
+
+	if (tags)
+		g_slist_free(tags);
+
+	return on_link;
+}
+
+static RemoteURI *textview_get_uri(TextView *textview, GtkTextIter *start,
+				   GtkTextIter *end)
+{
 	gint start_pos, end_pos;
-	GdkEventButton *bevent;
-	RemoteURI *uri = NULL;
 	GSList *cur;
-	gchar *trimmed_uri;
+	RemoteURI *uri = NULL;
 
-	if (!event)
-		return FALSE;
-
-	if (event->type != GDK_BUTTON_PRESS && event->type != GDK_2BUTTON_PRESS)
-		return FALSE;
-
-	start_iter = *iter;
-
-	if (!gtk_text_iter_backward_to_tag_toggle(&start_iter, tag)) {
-		debug_print("Can't find start point.");
-		return FALSE;
-	}
-	start_pos = gtk_text_iter_get_offset(&start_iter);
-
-	end_iter = *iter;
-	if (!gtk_text_iter_forward_to_tag_toggle(&end_iter, tag)) {
-		debug_print("Can't find end");
-		return FALSE;
-	}
-	end_pos = gtk_text_iter_get_offset(&end_iter);
+	start_pos = gtk_text_iter_get_offset(start);
+	end_pos = gtk_text_iter_get_offset(end);
 
 	for (cur = textview->uri_list; cur != NULL; cur = cur->next) {
 		RemoteURI *uri_ = (RemoteURI *)cur->data;
@@ -1611,32 +1651,157 @@ static gboolean textview_uri_button_pressed(GtkTextTag *tag, GObject *obj,
 		}
 	}
 
-	STATUSBAR_POP(textview);
+	return uri;
+}
 
+static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
+				     TextView *textview)
+{
+	GdkEventButton *bevent = (GdkEventButton *)event;
+	GtkTextBuffer *buffer;
+	GtkTextIter iter, start, end;
+	gint x, y;
+	gboolean on_link;
+	RemoteURI *uri;
+
+	if (event->type != GDK_BUTTON_RELEASE)
+		return FALSE;
+	if (bevent->button != 1 && bevent->button != 2)
+		return FALSE;
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
+
+	/* don't follow a link if the user has selected something */
+	gtk_text_buffer_get_selection_bounds(buffer, &start, &end);
+	if (!gtk_text_iter_equal(&start, &end))
+		return FALSE;
+
+	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
+					      GTK_TEXT_WINDOW_WIDGET,
+					      bevent->x, bevent->y, &x, &y);
+	gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(widget), &iter, x, y);
+	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
+	if (!on_link)
+		return FALSE;
+
+	uri = textview_get_uri(textview, &start, &end);
 	if (!uri)
 		return FALSE;
 
-	trimmed_uri = trim_string(uri->uri, 60);
-	STATUSBAR_PUSH(textview, trimmed_uri);
-	g_free(trimmed_uri);
+	if (!g_strncasecmp(uri->uri, "mailto:", 7)) {
+		PrefsAccount *ac = NULL;
+		MsgInfo *msginfo = textview->messageview->msginfo;
 
-	bevent = (GdkEventButton *)event;
-	if ((event->type == GDK_2BUTTON_PRESS && bevent->button == 1) ||
-	     bevent->button == 2) {
-		if (!g_strncasecmp(uri->uri, "mailto:", 7)) {
-			PrefsAccount *ac = NULL;
-			MsgInfo *msginfo = textview->messageview->msginfo;
+		if (msginfo && msginfo->folder)
+			ac = account_find_from_item(msginfo->folder);
+		if (ac && ac->protocol == A_NNTP)
+			ac = NULL;
+		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
+	} else if (textview_uri_security_check(textview, uri) == TRUE)
+		open_uri(uri->uri, prefs_common.uri_cmd);
 
-			if (msginfo && msginfo->folder)
-				ac = account_find_from_item(msginfo->folder);
-			if (ac && ac->protocol == A_NNTP)
-				ac = NULL;
-			compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
-		} else if (textview_uri_security_check(textview, uri) == TRUE) {
-			open_uri(uri->uri, prefs_common.uri_cmd);
-			return TRUE; //
-		}
+	return FALSE;
+}
+
+static void textview_show_uri(TextView *textview, GtkTextIter *start,
+			      GtkTextIter *end)
+{
+	RemoteURI *uri;
+
+	STATUSBAR_POP(textview);
+	uri = textview_get_uri(textview, start, end);
+	if (uri) {
+		gchar *trimmed_uri;
+
+		trimmed_uri = trim_string(uri->uri, 60);
+		STATUSBAR_PUSH(textview, trimmed_uri);
+		g_free(trimmed_uri);
 	}
+}
+
+static void textview_set_cursor(TextView *textview, GtkTextView *text,
+				gint x, gint y)
+{
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
+	GtkTextIter start, end;
+	GtkTextMark *start_mark, *end_mark;
+	gboolean on_link = FALSE;
+
+	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_view_get_iter_at_location(text, &iter, x, y);
+	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
+
+	start_mark = gtk_text_buffer_get_mark(buffer, "hover-link-start");
+	end_mark = gtk_text_buffer_get_mark(buffer, "hover-link-end");
+	if (start_mark) {
+		GtkTextIter prev_start, prev_end;
+
+		gtk_text_buffer_get_iter_at_mark(buffer, &prev_start,
+						 start_mark);
+		gtk_text_buffer_get_iter_at_mark(buffer, &prev_end, end_mark);
+		if (on_link) {
+			if (gtk_text_iter_equal(&prev_start, &start))
+				return;
+		}
+
+		gtk_text_buffer_get_iter_at_mark(buffer, &prev_start,
+						 start_mark);
+		gtk_text_buffer_get_iter_at_mark(buffer, &prev_end, end_mark);
+		gtk_text_buffer_remove_tag_by_name(buffer, "hover-link",
+						   &prev_start, &prev_end);
+		gtk_text_buffer_delete_mark(buffer, start_mark);
+		gtk_text_buffer_delete_mark(buffer, end_mark);
+	} else {
+		if (!on_link)
+			return;
+	}
+
+	if (on_link) {
+		gtk_text_buffer_create_mark
+			(buffer, "hover-link-start", &start, FALSE);
+		gtk_text_buffer_create_mark
+			(buffer, "hover-link-end", &end, FALSE);
+		gtk_text_buffer_apply_tag_by_name
+			(buffer, "hover-link", &start, &end);
+		gdk_window_set_cursor
+			(gtk_text_view_get_window(text, GTK_TEXT_WINDOW_TEXT),
+			 hand_cursor);
+		textview_show_uri(textview, &start, &end);
+	} else {
+		gdk_window_set_cursor
+			(gtk_text_view_get_window(text, GTK_TEXT_WINDOW_TEXT),
+			 regular_cursor);
+		STATUSBAR_POP(textview);
+	}
+}
+
+static gboolean textview_motion_notify(GtkWidget *widget,
+				       GdkEventMotion *event,
+				       TextView *textview)
+{
+	gint x, y;
+
+	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
+					      GTK_TEXT_WINDOW_WIDGET,
+					      event->x, event->y, &x, &y);
+	textview_set_cursor(textview, GTK_TEXT_VIEW(widget), x, y);
+	gdk_window_get_pointer(widget->window, NULL, NULL, NULL);
+
+	return FALSE;
+}
+
+static gboolean textview_visibility_notify(GtkWidget *widget,
+					   GdkEventVisibility *event,
+					   TextView *textview)
+{
+	gint wx, wy, bx, by;
+
+	gdk_window_get_pointer(widget->window, &wx, &wy, NULL);
+	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
+					      GTK_TEXT_WINDOW_WIDGET,
+					      wx, wy, &bx, &by);
+	textview_set_cursor(textview, GTK_TEXT_VIEW(widget), bx, by);
 
 	return FALSE;
 }
