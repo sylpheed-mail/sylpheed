@@ -1022,7 +1022,7 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
 	while ((n_conv = iconv(cd, (ICONV_CONST gchar **)&inbuf_p, &in_left,
 			       &outbuf_p, &out_left)) == (size_t)-1) {
 		if (EILSEQ == errno) {
-			g_print("iconv(): at %d: %s\n", in_size - in_left, g_strerror(errno));
+			//g_print("iconv(): at %d: %s\n", in_size - in_left, g_strerror(errno));
 			inbuf_p++;
 			in_left--;
 			if (out_left == 0) {
