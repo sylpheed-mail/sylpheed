@@ -1,5 +1,15 @@
 2005-02-23
 
+	* src/gtkutils.[ch]: removed unused functions.
+	  gtkut_text_buffer_match_string()
+	  gtkut_text_buffer_find(): changed the API to use iterator.
+	  gtkut_text_buffer_find_backward(): new.
+	* src/textview.c:
+	  textview_search_string()
+	  textview_search_string_backward(): use new API.
+
+2005-02-23
+
 	* src/logwindow.c
 	  src/prefs_common.[ch]: re-enabled the line number limit, and made
 	  the value configurable.
