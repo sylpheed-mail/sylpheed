@@ -1950,7 +1950,7 @@ gint remove_numbered_files(const gchar *dir, guint first, guint last)
 	DIR *dp;
 	struct dirent *d;
 	gchar *prev_dir;
-	gint fileno;
+	gint file_no;
 
 	prev_dir = g_get_current_dir();
 
@@ -1967,8 +1967,8 @@ gint remove_numbered_files(const gchar *dir, guint first, guint last)
 	}
 
 	while ((d = readdir(dp)) != NULL) {
-		fileno = to_number(d->d_name);
-		if (fileno >= 0 && first <= fileno && fileno <= last) {
+		file_no = to_number(d->d_name);
+		if (file_no > 0 && first <= file_no && file_no <= last) {
 			if (is_dir_exist(d->d_name))
 				continue;
 			if (unlink(d->d_name) < 0)
@@ -2000,7 +2000,7 @@ gint remove_expired_files(const gchar *dir, guint hours)
 	struct dirent *d;
 	struct stat s;
 	gchar *prev_dir;
-	gint fileno;
+	gint file_no;
 	time_t mtime, now, expire_time;
 
 	prev_dir = g_get_current_dir();
@@ -2021,8 +2021,8 @@ gint remove_expired_files(const gchar *dir, guint hours)
 	expire_time = hours * 60 * 60;
 
 	while ((d = readdir(dp)) != NULL) {
-		fileno = to_number(d->d_name);
-		if (fileno >= 0) {
+		file_no = to_number(d->d_name);
+		if (file_no > 0) {
 			if (stat(d->d_name, &s) < 0) {
 				FILE_OP_ERROR(d->d_name, "stat");
 				continue;

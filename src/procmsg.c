@@ -262,8 +262,8 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 
 		/* if the message file doesn't exist or is changed,
 		   don't add the data */
-		if (type == F_MH && scan_file &&
-		    folder_item_is_msg_changed(item, msginfo))
+		if ((type == F_MH && scan_file &&
+		     folder_item_is_msg_changed(item, msginfo)) || num == 0)
 			procmsg_msginfo_free(msginfo);
 		else {
 			msginfo->folder = item;

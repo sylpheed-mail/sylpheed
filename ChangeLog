@@ -1,5 +1,15 @@
 2005-01-19
 
+	* src/mh.c
+	  src/utils.c
+	  src/procmsg.c: ignore 0-numbered message file. Don't use symbol
+	  'fileno' used in stdio.h.
+	* src/messageview.c: messageview_show(): check if
+	  procmsg_msginfo_get_full_info() succeeds (fixes crash when
+	  opening 0-numbered message) (thanks to WAKAI Kazunao).
+
+2005-01-19
+
 	* src/summaryview.c: summary_reply(): fixed a bug that didn't
 	  correctly get text selection.
 

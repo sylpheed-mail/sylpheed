@@ -427,6 +427,8 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 	if (messageview->msginfo != msginfo) {
 		procmsg_msginfo_free(messageview->msginfo);
 		messageview->msginfo = procmsg_msginfo_get_full_info(msginfo);
+		if (!messageview->msginfo)
+			messageview->msginfo = procmsg_msginfo_copy(msginfo);
 	}
 	headerview_show(messageview->headerview, messageview->msginfo);
 

@@ -1,5 +1,16 @@
 2005-01-19
 
+	* src/mh.c
+	  src/utils.c
+	  src/procmsg.c: 0番のメッセージファイルを無視するようにした。
+	  stdio.h で使用されているシンボル 'fileno' を使用しないようにした。
+	* src/messageview.c: messageview_show():
+	  procmsg_msginfo_get_full_info() が成功したかどうか確認するように
+	  した(0番のメッセージを開こうとしたときにクラッシュするのを修正)
+	  (若居さん thanks)。
+
+2005-01-19
+
 	* src/summaryview.c: summary_reply(): 正しくテキストセレクションを
 	  取得していないバグを修正。
 

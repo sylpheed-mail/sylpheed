@@ -715,7 +715,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 		folder->ui_func(folder, item, folder->ui_func_data);
 
 	while ((d = readdir(dp)) != NULL) {
-		if ((num = to_number(d->d_name)) >= 0 &&
+		if ((num = to_number(d->d_name)) > 0 &&
 		    dirent_is_regular_file(d)) {
 			n_msg++;
 			if (max < num)
@@ -974,7 +974,7 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 
 	if (msg_table) {
 		while ((d = readdir(dp)) != NULL) {
-			if ((num = to_number(d->d_name)) < 0) continue;
+			if ((num = to_number(d->d_name)) <= 0) continue;
 
 			msginfo = g_hash_table_lookup
 				(msg_table, GUINT_TO_POINTER(num));
@@ -997,7 +997,7 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 	} else {
 		/* discard all previous cache */
 		while ((d = readdir(dp)) != NULL) {
-			if (to_number(d->d_name) < 0) continue;
+			if (to_number(d->d_name) <= 0) continue;
 
 			msginfo = mh_parse_msg(d->d_name, item);
 			if (!msginfo) continue;
@@ -1227,7 +1227,7 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			}
 
 			mh_scan_tree_recursive(new_item);
-		} else if (to_number(d->d_name) != -1) n_msg++;
+		} else if (to_number(d->d_name) > 0) n_msg++;
 
 		g_free(entry);
 		g_free(utf8entry);
