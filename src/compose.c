@@ -1997,6 +1997,7 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 	GtkTextIter iter, break_pos;
 	gchar *quote_str = NULL;
 	gint quote_len;
+	gboolean wrap_quote = prefs_common.linewrap_quote;
 
 	buffer = gtk_text_view_get_buffer(text);
 
@@ -2031,8 +2032,14 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 
 	do {
 		quote_str = compose_get_quote_str(buffer, &iter, &quote_len);
-		if (quote_str)
+		if (quote_str) {
+			if (!wrap_quote) {
+				gtk_text_iter_forward_line(&iter);
+				g_free(quote_str);
+				continue;
+			}
 			debug_print("compose_wrap_paragraph(): quote_str = '%s'\n", quote_str);
+		}
 
 		if (compose_get_line_break_pos(buffer, &iter, &break_pos,
 					       prefs_common.linewrap_len,
@@ -2045,8 +2052,6 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 			iter = break_pos;
 			compose_join_next_line(buffer, &iter, quote_str);
 
-			g_free(quote_str);
-
 			/* move iter to current line start */
 			gtk_text_iter_set_line_offset(&iter, 0);
 		} else {
@@ -2054,6 +2059,8 @@ static void compose_wrap_paragraph(Compose *compose, GtkTextIter *par_iter)
 			iter = break_pos;
 			gtk_text_iter_forward_line(&iter);
 		}
+
+		g_free(quote_str);
 	} while (!gtk_text_iter_ends_line(&iter));
 	/* stop if paragraph end (empty line) */
 
