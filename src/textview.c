@@ -197,21 +197,12 @@ TextView *textview_create(void)
 	gtk_widget_show(text);
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text), GTK_WRAP_WORD);
-	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(text), 4);
-	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(text), 4);
+	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(text), 6);
+	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(text), 6);
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text));
 	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_add_selection_clipboard(buffer, clipboard);
-
-#if 0
-	if (prefs_common.normalfont)
-		font_desc = pango_font_description_from_string
-			(prefs_common.normalfont);
-	if (font_desc)
-		gtk_widget_modify_font(text, font_desc);
-	pango_font_description_free(font_desc);
-#endif
 
 	gtk_widget_ref(scrolledwin);
 
@@ -1066,12 +1057,6 @@ void textview_set_font(TextView *textview, const gchar *codeset)
 
 	gtk_text_view_set_pixels_above_lines(text, prefs_common.line_space / 2);
 	gtk_text_view_set_pixels_below_lines(text, prefs_common.line_space / 2);
-#if 0
-	if (prefs_common.head_space)
-		gtk_text_view_set_left_margin(text, 6);
-	else
-		gtk_text_view_set_left_margin(text, 0);
-#endif
 }
 
 void textview_set_position(TextView *textview, gint pos)

@@ -138,7 +138,6 @@ static struct Message {
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *spinbtn_linespc;
 	GtkObject *spinbtn_linespc_adj;
-	GtkWidget *chkbtn_headspc;
 
 	GtkWidget *chkbtn_smoothscroll;
 	GtkWidget *spinbtn_scrollstep;
@@ -539,9 +538,6 @@ static PrefParam param[] = {
 	{"line_space", "2", &prefs_common.line_space, P_INT,
 	 &message.spinbtn_linespc,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
-	{"enable_head_space", "FALSE", &prefs_common.head_space, P_BOOL,
-	 &message.chkbtn_headspc,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"enable_smooth_scroll", "FALSE",
 	 &prefs_common.enable_smooth_scroll, P_BOOL,
@@ -1678,7 +1674,6 @@ static void prefs_message_create(void)
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
 	GtkWidget *spinbtn_linespc;
-	GtkWidget *chkbtn_headspc;
 
 	GtkWidget *frame_scr;
 	GtkWidget *vbox_scr;
@@ -1772,8 +1767,6 @@ static void prefs_message_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox_linespc), label_linespc,
 			    FALSE, FALSE, 0);
 
-	PACK_CHECK_BUTTON(hbox1, chkbtn_headspc, _("Leave space on head"));
-
 	PACK_FRAME(vbox1, frame_scr, _("Scroll"));
 
 	vbox_scr = gtk_vbox_new (FALSE, 0);
@@ -1822,7 +1815,6 @@ static void prefs_message_create(void)
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
 	message.chkbtn_disphdr     = chkbtn_disphdr;
 	message.spinbtn_linespc    = spinbtn_linespc;
-	message.chkbtn_headspc     = chkbtn_headspc;
 
 	message.chkbtn_smoothscroll    = chkbtn_smoothscroll;
 	message.spinbtn_scrollstep     = spinbtn_scrollstep;

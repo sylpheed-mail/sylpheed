@@ -169,7 +169,6 @@ struct _PrefsCommon
 	gboolean conv_mb_alnum;
 	gboolean display_header_pane;
 	gboolean display_header;
-	gboolean head_space;
 	gint line_space;
 	gboolean enable_smooth_scroll;
 	gint scroll_step;
