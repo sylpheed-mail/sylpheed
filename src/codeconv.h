@@ -189,6 +189,8 @@ CharSet conv_guess_ja_encoding(const gchar *str);
 void conv_jistodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_sjistodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_euctodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
+void conv_utf8todisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
+void conv_anytodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_ustodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_latintodisp	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_noconv	(gchar *outbuf, gint outlen, const gchar *inbuf);

@@ -1,6 +1,13 @@
 2005-01-21
 
 	* src/colorlabel.c: removed include of gdk/gdkx.h.
+	* src/compose.c: compose_connect_changed_callbacks(): fixed a typo.
+	* src/codeconv.[ch]: added conv_utf8todisp().
+	* src/sourcewindow.c: source_window_append()
+	  src/textview.c: textview_write_line(), textview_write_link()
+	  src/unmime.c: unmime_header()
+	  src/html.c: html_read_line(): assume the encoding of source
+	  string is UTF-8 instead of locale encoding.
 
 2005-01-20
 

@@ -120,7 +120,7 @@ void unmime_header(gchar *out, const gchar *str)
 			g_free(conv_str);
 		} else {
 			len = strlen(decoded_text);
-			conv_localetodisp(outp, len + 1, decoded_text);
+			conv_utf8todisp(outp, len + 1, decoded_text);
 		}
 		outp += len;
 

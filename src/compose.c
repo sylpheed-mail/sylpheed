@@ -4266,7 +4266,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 static void compose_connect_changed_callbacks(Compose *compose)
 {
-	GtkTextView *text = GTK_TEXT_VIEW(compose->text);;
+	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 	GtkTextBuffer *buffer;
 
 	buffer = gtk_text_view_get_buffer(text);

@@ -782,6 +782,11 @@ void conv_euctodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 	conv_euctoutf8(outbuf, outlen, inbuf);
 }
 
+void conv_utf8todisp(gchar *outbuf, gint outlen, const gchar *inbuf)
+{
+	strncpy2(outbuf, inbuf, outlen);
+}
+
 void conv_anytodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
 	conv_anytoutf8(outbuf, outlen, inbuf);

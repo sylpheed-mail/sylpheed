@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -154,8 +154,7 @@ void source_window_append(SourceWindow *sourcewin, const gchar *str)
 
 	len = strlen(str) + 1;
 	Xalloca(out, len, return);
-#warning FIXME_GTK2
-	conv_localetodisp(out, len, str);
+	conv_utf8todisp(out, len, str);
 
 	gtk_text_buffer_get_iter_at_offset(buffer, &iter, -1);
 	gtk_text_buffer_insert(buffer, &iter, out, -1);

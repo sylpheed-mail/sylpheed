@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -941,7 +941,7 @@ static void textview_write_line(TextView *textview, const gchar *str,
 	if (!conv)
 		strncpy2(buf, str, sizeof(buf));
 	else if (conv_convert(conv, buf, sizeof(buf), str) < 0)
-		conv_localetodisp(buf, sizeof(buf), str);
+		conv_utf8todisp(buf, sizeof(buf), str);
 
 	strcrchomp(buf);
 	//if (prefs_common.conv_mb_alnum) conv_mb_alnum(buf);
@@ -997,7 +997,7 @@ void textview_write_link(TextView *textview, const gchar *str,
 	if (!conv)
 		strncpy2(buf, str, sizeof(buf));
 	else if (conv_convert(conv, buf, sizeof(buf), str) < 0)
-		conv_localetodisp(buf, sizeof(buf), str);
+		conv_utf8todisp(buf, sizeof(buf), str);
 
 	strcrchomp(buf);
 
