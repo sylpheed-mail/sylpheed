@@ -21,6 +21,8 @@
 #  include "config.h"
 #endif
 
+#include "defs.h"
+
 #include <glib.h>
 #include <stdio.h>
 #include <string.h>
@@ -454,19 +456,12 @@ GHashTable *pop3_get_uidl_table(PrefsAccount *ac_prefs)
 	table = g_hash_table_new(g_str_hash, g_str_equal);
 
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
-			   "uidl", G_DIR_SEPARATOR_S, ac_prefs->recv_server,
+			   UIDL_DIR, G_DIR_SEPARATOR_S, ac_prefs->recv_server,
 			   "-", ac_prefs->userid, NULL);
 	if ((fp = fopen(path, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(path, "fopen");
 		g_free(path);
-		path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
-				   "uidl-", ac_prefs->recv_server,
-				   "-", ac_prefs->userid, NULL);
-		if ((fp = fopen(path, "rb")) == NULL) {
-			if (ENOENT != errno) FILE_OP_ERROR(path, "fopen");
-			g_free(path);
-			return table;
-		}
+		return table;
 	}
 	g_free(path);
 

@@ -224,7 +224,7 @@ int main(int argc, char *argv[])
 	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_tmp_dir());
-	MAKE_DIR_IF_NOT_EXIST(RC_DIR G_DIR_SEPARATOR_S "uidl");
+	MAKE_DIR_IF_NOT_EXIST(RC_DIR G_DIR_SEPARATOR_S UIDL_DIR);
 
 	if (is_file_exist(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log")) {
 		if (rename(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log",
@@ -702,33 +702,37 @@ static void migrate_old_config(void)
 
 	debug_print("Migrating old configuration...\n");
 
-#define COPY_FILE(rcfile)					\
-	conv_copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S rcfile,	\
-		       RC_DIR G_DIR_SEPARATOR_S rcfile,		\
-		       conv_get_locale_charset_str())
+#define COPY_FILE(rcfile)						\
+	if (is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S rcfile)) {	\
+		conv_copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S rcfile,	\
+			       RC_DIR G_DIR_SEPARATOR_S rcfile,		\
+			       conv_get_locale_charset_str());		\
+	}
 
 	COPY_FILE(ACCOUNT_RC);
 	COPY_FILE(ACTIONS_RC);
+	COPY_FILE(COMMON_RC);
 	COPY_FILE(CUSTOM_HEADER_RC);
 	COPY_FILE(DISPLAY_HEADER_RC);
 	COPY_FILE(FILTER_HEADER_RC);
-#if 0
-	COPY_FILE(COMMON_RC);
-#endif
 	COPY_FILE(COMMAND_HISTORY);
 
 #undef COPY_FILE
 
-	copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FILTER_LIST,
-		  RC_DIR G_DIR_SEPARATOR_S FILTER_LIST, FALSE);
-	copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST,
-		  RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST, FALSE);
+	if (is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S FILTER_LIST))
+		copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FILTER_LIST,
+			  RC_DIR G_DIR_SEPARATOR_S FILTER_LIST, FALSE);
+	if (is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST))
+		copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST,
+			  RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST, FALSE);
 
-	conv_copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
-		      RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
-		      conv_get_locale_charset_str());
-	copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S "uidl",
-		 RC_DIR G_DIR_SEPARATOR_S "uidl");
+	if (is_dir_exist(OLD_RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR))
+		conv_copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
+			      RC_DIR G_DIR_SEPARATOR_S TEMPLATE_DIR,
+			      conv_get_locale_charset_str());
+	if (is_dir_exist(OLD_RC_DIR G_DIR_SEPARATOR_S UIDL_DIR))
+		copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S UIDL_DIR,
+			 RC_DIR G_DIR_SEPARATOR_S UIDL_DIR);
 
 	if (!is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S ADDRESSBOOK_INDEX_FILE))
 		return;

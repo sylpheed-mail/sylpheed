@@ -338,17 +338,17 @@ static PrefParam param[] = {
 	 prefs_set_data_from_text, prefs_set_text},
 
 	/* Display */
-	{"widget_font", NULL, &prefs_common.widgetfont, P_STRING,
+	{"widget_font_name", NULL, &prefs_common.widgetfont, P_STRING,
 	 NULL, NULL, NULL},
-	{"message_font", DEFAULT_MESSAGE_FONT, &prefs_common.textfont, P_STRING,
+	{"message_font_name", DEFAULT_MESSAGE_FONT, &prefs_common.textfont, P_STRING,
 	 &display.entry_textfont, prefs_set_data_from_entry, prefs_set_entry},
-	{"normal_font", DEFAULT_NORMAL_FONT, &prefs_common.normalfont, P_STRING,
+	{"normal_font_name", DEFAULT_NORMAL_FONT, &prefs_common.normalfont, P_STRING,
 	 NULL, NULL, NULL},
-	{"bold_font", DEFAULT_BOLD_FONT, &prefs_common.boldfont, P_STRING,
+	{"bold_font_name", DEFAULT_BOLD_FONT, &prefs_common.boldfont, P_STRING,
 	 NULL, NULL, NULL},
-	{"small_font", DEFAULT_SMALL_FONT, &prefs_common.smallfont, P_STRING,
+	{"small_font_name", DEFAULT_SMALL_FONT, &prefs_common.smallfont, P_STRING,
 	 NULL, NULL, NULL},
-	{"title_font", DEFAULT_TITLE_FONT, &prefs_common.titlefont, P_STRING,
+	{"title_font_name", DEFAULT_TITLE_FONT, &prefs_common.titlefont, P_STRING,
 	 NULL, NULL, NULL},
 
 	{"display_folder_unread_num", "TRUE",

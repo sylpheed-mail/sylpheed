@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@
 #define COMMAND_HISTORY		"command_history"
 #define TEMPLATE_DIR		"templates"
 #define TMP_DIR			"tmp"
+#define UIDL_DIR		"uidl"
 #define NEWSGROUP_LIST		".newsgroup_list"
 #define ADDRESS_BOOK		"addressbook.xml"
 #define MANUAL_HTML_INDEX	"sylpheed.html"
@@ -102,10 +103,10 @@
 #define SESSION_TIMEOUT_INTERVAL	60	/* sec */
 #define MAX_HISTORY_SIZE		16
 
-#define DEFAULT_NORMAL_FONT	"Helvetica 12"
-#define DEFAULT_MESSAGE_FONT	"Helvetica 14"
-#define DEFAULT_BOLD_FONT	"Helvetica Bold 12"
-#define DEFAULT_SMALL_FONT	"Helvetica 10"
-#define DEFAULT_TITLE_FONT	"Helvetica 16"
+#define DEFAULT_NORMAL_FONT	"Sans 12"
+#define DEFAULT_MESSAGE_FONT	"Sans 14"
+#define DEFAULT_BOLD_FONT	"Sans Bold 12"
+#define DEFAULT_SMALL_FONT	"Sans 10"
+#define DEFAULT_TITLE_FONT	"Sans 16"
 
 #endif /* __DEFS_H__ */
