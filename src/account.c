@@ -48,16 +48,16 @@
 #include "utils.h"
 #include "alertpanel.h"
 
-typedef enum
+enum
 {
-	COL_DEFAULT	= 0,
-	COL_GETALL	= 1,
-	COL_NAME	= 2,
-	COL_PROTOCOL	= 3,
-	COL_SERVER	= 4
-} EditAccountColumnPos;
-
-# define N_EDIT_ACCOUNT_COLS	5
+	COL_DEFAULT,
+	COL_GETALL,
+	COL_NAME,
+	COL_PROTOCOL,
+	COL_SERVER,
+	COL_ACCOUNT,
+	N_COLS
+};
 
 #define PREFSBUFSIZE		1024
 
@@ -67,16 +67,13 @@ static GList *account_list = NULL;
 
 static struct EditAccount {
 	GtkWidget *window;
-	GtkWidget *clist;
+
+	GtkWidget *treeview;
+	GtkListStore *store;
+	GtkTreeSelection *selection;
+
 	GtkWidget *close_btn;
 } edit_account;
-
-static GdkPixmap *markxpm;
-static GdkBitmap *markxpmmask;
-static GdkPixmap *checkboxonxpm;
-static GdkPixmap *checkboxonxpmmask;
-static GdkPixmap *checkboxoffxpm;
-static GdkPixmap *checkboxoffxpmmask;
 
 static void account_edit_create		(void);
 
@@ -89,26 +86,45 @@ static void account_down		(void);
 static void account_set_default		(void);
 
 static void account_edit_close		(void);
+
+static gboolean account_selected	(GtkTreeSelection	*selection,
+					 GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 gboolean		 cur_selected,
+					 gpointer		 data);
+
+static void account_default_toggled	(GtkCellRenderer	*cell,
+					 gchar			*path,
+					 gpointer		 data);
+static void account_getall_toggled	(GtkCellRenderer	*cell,
+					 gchar			*path,
+					 gpointer		 data);
+
+static void account_row_activated	(GtkTreeView		*treeview,
+					 GtkTreePath		*path,
+					 GtkTreeViewColumn	*column,
+					 gpointer		 data);
+static void account_row_reordered	(GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 GtkTreeIter		*iter,
+					 gpointer		 data);
+
 static gint account_delete_event	(GtkWidget	*widget,
 					 GdkEventAny	*event,
 					 gpointer	 data);
-static void account_selected		(GtkCList	*clist,
-					 gint		 row,
-					 gint		 column,
-					 GdkEvent	*event,
-					 gpointer	 data);
-static void account_row_moved		(GtkCList	*clist,
-					 gint		 source_row,
-					 gint		 dest_row);
 static gboolean account_key_pressed	(GtkWidget	*widget,
 					 GdkEventKey	*event,
 					 gpointer	 data);
 
-static gint account_clist_set_row	(PrefsAccount	*ac_prefs,
-					 gint		 row);
-static void account_clist_set		(void);
+static void account_set_row		(PrefsAccount	*ac_prefs,
+					 GtkTreeIter	*iter,
+					 GtkTreeIter	*new,
+					 gboolean	 move_view);
+static void account_set_dialog		(void);
+static void account_update_dialog	(void);
 
-static void account_list_set		(void);
+static void account_set_list		(void);
+
 
 void account_read_config_all(void)
 {
@@ -349,7 +365,7 @@ void account_edit_open(void)
 	if (!edit_account.window)
 		account_edit_create();
 
-	account_clist_set();
+	account_set_dialog();
 
 	manage_window_set_transient(GTK_WINDOW(edit_account.window));
 	gtk_widget_grab_focus(edit_account.close_btn);
@@ -371,7 +387,7 @@ void account_add(void)
 	if (ac_prefs->is_default)
 		account_set_as_default(ac_prefs);
 
-	account_clist_set();
+	account_set_row(ac_prefs, NULL, NULL, TRUE);
 
 	if (ac_prefs->protocol == A_IMAP4 || ac_prefs->protocol == A_NNTP) {
 		Folder *folder;
@@ -577,9 +593,11 @@ static void account_edit_create(void)
 	GtkWidget *label;
 	GtkWidget *hbox;
 	GtkWidget *scrolledwin;
-	GtkWidget *clist;
-	gchar *titles[N_EDIT_ACCOUNT_COLS];
-	gint i;
+	GtkWidget *treeview;
+	GtkListStore *store;
+	GtkTreeSelection *selection;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
 
 	GtkWidget *vbox2;
 	GtkWidget *add_btn;
@@ -627,41 +645,69 @@ static void account_edit_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
 
-	scrolledwin = gtk_scrolled_window_new (NULL, NULL);
-	gtk_widget_show (scrolledwin);
-	gtk_box_pack_start (GTK_BOX (hbox), scrolledwin, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwin),
-					GTK_POLICY_AUTOMATIC,
-					GTK_POLICY_AUTOMATIC);
+	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
+	gtk_widget_show(scrolledwin);
+	gtk_box_pack_start(GTK_BOX(hbox), scrolledwin, TRUE, TRUE, 0);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
+				       GTK_POLICY_AUTOMATIC,
+				       GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
+					    GTK_SHADOW_IN);
 
-	titles[COL_DEFAULT]  = "D";
-	titles[COL_GETALL]   = "G";
-	titles[COL_NAME]     = _("Name");
-	titles[COL_PROTOCOL] = _("Protocol");
-	titles[COL_SERVER]   = _("Server");
+	store = gtk_list_store_new
+		(N_COLS, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN, G_TYPE_STRING,
+		 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
 
-	clist = gtk_clist_new_with_titles (N_EDIT_ACCOUNT_COLS, titles);
-	gtk_widget_show (clist);
-	gtk_container_add (GTK_CONTAINER (scrolledwin), clist);
-	gtk_clist_set_column_width (GTK_CLIST(clist), COL_DEFAULT , 10);
-	gtk_clist_set_column_width (GTK_CLIST(clist), COL_GETALL  , 11);
-	gtk_clist_set_column_width (GTK_CLIST(clist), COL_NAME    , 100);
-	gtk_clist_set_column_width (GTK_CLIST(clist), COL_PROTOCOL, 100);
-	gtk_clist_set_column_width (GTK_CLIST(clist), COL_SERVER  , 100);
-	gtk_clist_set_column_justification (GTK_CLIST(clist), COL_DEFAULT,
-					    GTK_JUSTIFY_CENTER);
-	gtk_clist_set_column_justification (GTK_CLIST(clist), COL_GETALL,
-					    GTK_JUSTIFY_CENTER);
-	gtk_clist_set_selection_mode (GTK_CLIST(clist), GTK_SELECTION_BROWSE);
+	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), COL_NAME);
+	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), TRUE);
 
-	for (i = 0; i < N_EDIT_ACCOUNT_COLS; i++)
-		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist)->column[i].button,
-				       GTK_CAN_FOCUS);
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
+	gtk_tree_selection_set_select_function(selection, account_selected,
+					       NULL, NULL);
 
-	g_signal_connect (G_OBJECT (clist), "select_row",
-			  G_CALLBACK (account_selected), NULL);
-	g_signal_connect_after (G_OBJECT (clist), "row_move",
-				G_CALLBACK (account_row_moved), NULL);
+	renderer = gtk_cell_renderer_toggle_new();
+	gtk_cell_renderer_toggle_set_radio(GTK_CELL_RENDERER_TOGGLE(renderer),
+					   TRUE);
+	g_signal_connect(renderer, "toggled",
+			 G_CALLBACK(account_default_toggled), NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		("D", renderer, "active", COL_DEFAULT, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_toggle_new();
+	g_signal_connect(renderer, "toggled",
+			 G_CALLBACK(account_getall_toggled), NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		("G", renderer, "active", COL_GETALL, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		 (_("Name"), renderer, "text", COL_NAME, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		 (_("Protocol"), renderer, "text", COL_PROTOCOL, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		 (_("Server"), renderer, "text", COL_SERVER, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	gtk_widget_show(treeview);
+	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
+
+	g_signal_connect(G_OBJECT(treeview), "row-activated",
+			 G_CALLBACK(account_row_activated), NULL);
+	g_signal_connect_after(G_OBJECT(store), "rows-reordered",
+			       G_CALLBACK(account_row_reordered), NULL);
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -720,47 +766,51 @@ static void account_edit_create(void)
 	g_signal_connect (G_OBJECT (close_btn), "clicked",
 			  G_CALLBACK (account_edit_close), NULL);
 
-	stock_pixmap_gdk(clist, STOCK_PIXMAP_MARK, &markxpm, &markxpmmask);
-	stock_pixmap_gdk(clist, STOCK_PIXMAP_CHECKBOX_ON,
-			 &checkboxonxpm, &checkboxonxpmmask);
-	stock_pixmap_gdk(clist, STOCK_PIXMAP_CHECKBOX_OFF,
-			 &checkboxoffxpm, &checkboxoffxpmmask);
-
 	edit_account.window    = window;
-	edit_account.clist     = clist;
+	edit_account.treeview  = treeview;
+	edit_account.store     = store;
+	edit_account.selection = selection;
 	edit_account.close_btn = close_btn;
 }
 
 static void account_edit_prefs(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
+	GtkTreeIter iter;
 	PrefsAccount *ac_prefs;
-	gint row;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(edit_account.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	ac_prefs = gtk_clist_get_row_data(clist, row);
+	gtk_tree_model_get(GTK_TREE_MODEL(edit_account.store), &iter,
+			   COL_ACCOUNT, &ac_prefs, -1);
 	account_open(ac_prefs);
 
-	account_clist_set();
+	account_set_row(ac_prefs, &iter, NULL, FALSE);
 }
 
 static void account_delete(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
+	GtkTreeIter iter;
 	PrefsAccount *ac_prefs;
-	gint row;
+	gchar buf[BUFFSIZE];
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(edit_account.selection,
+					     NULL, &iter))
+		return;
 
-	if (alertpanel(_("Delete account"),
-		       _("Do you really want to delete this account?"),
+	gtk_tree_model_get(GTK_TREE_MODEL(edit_account.store), &iter,
+			   COL_ACCOUNT, &ac_prefs, -1);
+	g_return_if_fail(ac_prefs != NULL);
+
+	g_snprintf(buf, sizeof(buf),
+		   _("Do you really want to delete the account '%s'?"),
+		   ac_prefs->account_name ? ac_prefs->account_name :
+		   _("(Untitled)"));
+	if (alertpanel(_("Delete account"), buf,
 		       _("Yes"), _("+No"), NULL) != G_ALERTDEFAULT)
 		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	ac_prefs = gtk_clist_get_row_data(clist, row);
 	if (ac_prefs->folder) {
 		FolderItem *item;
 
@@ -770,46 +820,59 @@ static void account_delete(void)
 		folder_destroy(FOLDER(ac_prefs->folder));
 		folderview_set_all();
 	}
+
 	account_destroy(ac_prefs);
-	account_clist_set();
+	gtk_list_store_remove(edit_account.store, &iter);
+	account_update_dialog();
 }
 
 static void account_up(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
-	gint row;
+	GtkTreeModel *model = GTK_TREE_MODEL(edit_account.store);
+	GtkTreeIter iter, prev;
+	GtkTreePath *path;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(edit_account.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	if (row > 0)
-		gtk_clist_row_move(clist, row, row - 1);
+	path = gtk_tree_model_get_path(model, &iter);
+	if (gtk_tree_path_prev(path)) {
+		gtk_tree_model_get_iter(model, &prev, path);
+		gtk_list_store_swap(edit_account.store, &iter, &prev);
+	}
+	gtk_tree_path_free(path);
 }
 
 static void account_down(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
-	gint row;
+	GtkTreeIter iter, next;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(edit_account.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	if (row < clist->rows - 1)
-		gtk_clist_row_move(clist, row, row + 1);
+	next = iter;
+	if (gtk_tree_model_iter_next(GTK_TREE_MODEL(edit_account.store),
+				     &next))
+		gtk_list_store_swap(edit_account.store, &iter, &next);
 }
 
 static void account_set_default(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
-	gint row;
+	GtkTreeIter iter;
 	PrefsAccount *ac_prefs;
 
-	if (!clist->selection) return;
+	if (!gtk_tree_selection_get_selected(edit_account.selection,
+					     NULL, &iter))
+		return;
 
-	row = GPOINTER_TO_INT(clist->selection->data);
-	ac_prefs = gtk_clist_get_row_data(clist, row);
+	gtk_tree_model_get(GTK_TREE_MODEL(edit_account.store), &iter,
+			   COL_ACCOUNT, &ac_prefs, -1);
+	g_return_if_fail(ac_prefs != NULL);
+
 	account_set_as_default(ac_prefs);
-	account_clist_set();
+	account_update_dialog();
 
 	cur_account = ac_prefs;
 	account_set_menu();
@@ -818,7 +881,7 @@ static void account_set_default(void)
 
 static void account_edit_close(void)
 {
-	account_list_set();
+	account_set_list();
 	account_write_config_all();
 
 	if (!cur_account && account_list) {
@@ -842,31 +905,74 @@ static gint account_delete_event(GtkWidget *widget, GdkEventAny *event,
 	return TRUE;
 }
 
-static void account_selected(GtkCList *clist, gint row, gint column,
-			     GdkEvent *event, gpointer data)
+static gboolean account_selected(GtkTreeSelection *selection,
+				 GtkTreeModel *model, GtkTreePath *path,
+				 gboolean cur_selected, gpointer data)
 {
-	if (event && event->type == GDK_2BUTTON_PRESS) {
-		account_edit_prefs();
-		return;
-	}
+	return TRUE;
+}
 
-	if (column == COL_GETALL) {
-		PrefsAccount *ac;
+static void account_default_toggled(GtkCellRenderer *cell, gchar *path_str,
+				    gpointer data)
+{
+	GtkTreeIter iter;
+	PrefsAccount *ac;
+	GtkTreePath *path;
 
-		ac = gtk_clist_get_row_data(clist, row);
-		if (ac->protocol == A_POP3 || ac->protocol == A_IMAP4 ||
-		    ac->protocol == A_NNTP) {
-			ac->recv_at_getall ^= TRUE;
-			account_clist_set_row(ac, row);
-		}
+	path = gtk_tree_path_new_from_string(path_str);
+	gtk_tree_model_get_iter(GTK_TREE_MODEL(edit_account.store),
+				&iter, path);
+	gtk_tree_path_free(path);
+	gtk_tree_model_get(GTK_TREE_MODEL(edit_account.store), &iter,
+			   COL_ACCOUNT, &ac, -1);
+
+	account_set_as_default(ac);
+	account_update_dialog();
+}
+
+static void account_getall_toggled(GtkCellRenderer *cell, gchar *path_str,
+				   gpointer data)
+{
+	GtkTreeIter iter;
+	PrefsAccount *ac;
+	GtkTreePath *path;
+
+	path = gtk_tree_path_new_from_string(path_str);
+	gtk_tree_model_get_iter(GTK_TREE_MODEL(edit_account.store),
+				&iter, path);
+	gtk_tree_path_free(path);
+	gtk_tree_model_get(GTK_TREE_MODEL(edit_account.store), &iter,
+			   COL_ACCOUNT, &ac, -1);
+
+	if (ac->protocol == A_POP3 || ac->protocol == A_IMAP4 ||
+	    ac->protocol == A_NNTP) {
+		ac->recv_at_getall ^= TRUE;
+		account_set_row(ac, &iter, NULL, FALSE);
 	}
 }
 
-static void account_row_moved(GtkCList *clist, gint source_row, gint dest_row)
+static void account_row_activated(GtkTreeView *treeview, GtkTreePath *path,
+				  GtkTreeViewColumn *column, gpointer data)
 {
-	account_list_set();
-	if (gtk_clist_row_is_visible(clist, dest_row) != GTK_VISIBILITY_FULL)
-		gtk_clist_moveto(clist, dest_row, -1, 0.5, 0.0);
+	account_edit_prefs();
+}
+
+static void account_row_reordered	(GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 GtkTreeIter		*iter,
+					 gpointer		 data)
+{
+	GtkTreeIter iter_;
+	GtkTreePath *path_;
+
+	if (!gtk_tree_selection_get_selected(edit_account.selection,
+					     NULL, &iter_))
+		return;
+	path_ = gtk_tree_model_get_path
+		(GTK_TREE_MODEL(edit_account.store), &iter_);
+	gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(edit_account.treeview),
+				     path_, NULL, FALSE, 0.0, 0.0);
+	gtk_tree_path_free(path_);
 }
 
 static gboolean account_key_pressed(GtkWidget *widget, GdkEventKey *event,
@@ -877,115 +983,132 @@ static gboolean account_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	return FALSE;
 }
 
-/* set one CList row or add new row */
-static gint account_clist_set_row(PrefsAccount *ac_prefs, gint row)
+static void account_set_row(PrefsAccount *ac_prefs, GtkTreeIter *iter,
+			    GtkTreeIter *new, gboolean move_view)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
-	gchar *text[N_EDIT_ACCOUNT_COLS];
-	gboolean has_getallbox;
-	gboolean getall;
+	GtkListStore *store = edit_account.store;
+	GtkTreeIter iter_;
+	const gchar *protocol, *server;
+	gboolean has_getall;
 
-	text[COL_DEFAULT] = "";
-	text[COL_GETALL]  = "";
-	text[COL_NAME]    = ac_prefs->account_name;
+	g_return_if_fail(ac_prefs != NULL);
+
 #if USE_SSL
-	text[COL_PROTOCOL] = ac_prefs->protocol == A_POP3 ?
-			     (ac_prefs->ssl_pop == SSL_TUNNEL ?
-			      "POP3 (SSL)" :
-			      ac_prefs->ssl_pop == SSL_STARTTLS ?
-			      "POP3 (TLS)" : "POP3") :
-			     ac_prefs->protocol == A_IMAP4 ?
-			     (ac_prefs->ssl_imap == SSL_TUNNEL ?
-			      "IMAP4 (SSL)" :
-			      ac_prefs->ssl_imap == SSL_STARTTLS ?
-			      "IMAP4 (TLS)" : "IMAP4") :
-			     ac_prefs->protocol == A_NNTP ?
-			     (ac_prefs->ssl_nntp == SSL_TUNNEL ?
-			      "NNTP (SSL)" : "NNTP") :
-			     "";
+	protocol = ac_prefs->protocol == A_POP3 ?
+		   (ac_prefs->ssl_pop == SSL_TUNNEL ?
+		    "POP3 (SSL)" :
+		    ac_prefs->ssl_pop == SSL_STARTTLS ?
+		    "POP3 (TLS)" : "POP3") :
+		   ac_prefs->protocol == A_IMAP4 ?
+		   (ac_prefs->ssl_imap == SSL_TUNNEL ?
+		    "IMAP4 (SSL)" :
+		    ac_prefs->ssl_imap == SSL_STARTTLS ?
+		    "IMAP4 (TLS)" : "IMAP4") :
+		   ac_prefs->protocol == A_NNTP ?
+		   (ac_prefs->ssl_nntp == SSL_TUNNEL ?
+		    "NNTP (SSL)" : "NNTP") :
+		   "";
 #else
-	text[COL_PROTOCOL] = ac_prefs->protocol == A_POP3  ? "POP3" :
-			     ac_prefs->protocol == A_IMAP4 ? "IMAP4" :
-			     ac_prefs->protocol == A_NNTP  ? "NNTP" : "";
+	protocol = ac_prefs->protocol == A_POP3  ? "POP3" :
+		   ac_prefs->protocol == A_IMAP4 ? "IMAP4" :
+		   ac_prefs->protocol == A_NNTP  ? "NNTP" : "";
 #endif
-	text[COL_SERVER] = ac_prefs->protocol == A_NNTP
-		? ac_prefs->nntp_server : ac_prefs->recv_server;
+	server = ac_prefs->protocol == A_NNTP ?
+		ac_prefs->nntp_server : ac_prefs->recv_server;
 
-	if (row < 0)
-		row = gtk_clist_append(clist, text);
-	else {
-		gtk_clist_set_text(clist, row, COL_DEFAULT, text[COL_DEFAULT]);
-		gtk_clist_set_text(clist, row, COL_GETALL, text[COL_GETALL]);
-		gtk_clist_set_text(clist, row, COL_NAME, text[COL_NAME]);
-		gtk_clist_set_text(clist, row, COL_PROTOCOL, text[COL_PROTOCOL]);
-		gtk_clist_set_text(clist, row, COL_SERVER, text[COL_SERVER]);
+	has_getall = (ac_prefs->protocol == A_POP3  ||
+		      ac_prefs->protocol == A_IMAP4 ||
+		      ac_prefs->protocol == A_NNTP);
+
+	if (!iter)
+		gtk_list_store_append(store, &iter_);
+	else
+		iter_ = *iter;
+
+	gtk_list_store_set(store, &iter_,
+			   COL_DEFAULT, ac_prefs->is_default,
+			   COL_GETALL, has_getall && ac_prefs->recv_at_getall,
+			   COL_NAME, ac_prefs->account_name,
+			   COL_PROTOCOL, protocol,
+			   COL_SERVER, server,
+			   COL_ACCOUNT, ac_prefs,
+			   -1);
+
+	if (new)
+		*new = iter_;
+
+	if (move_view) {
+		GtkTreePath *path;
+
+		path = gtk_tree_model_get_path
+			(GTK_TREE_MODEL(edit_account.store), &iter_);
+		gtk_tree_view_scroll_to_cell
+			(GTK_TREE_VIEW(edit_account.treeview),
+			 path, NULL, TRUE, 0.5, 0.0);
+		gtk_tree_path_free(path);
 	}
-
-	has_getallbox = (ac_prefs->protocol == A_POP3  ||
-			 ac_prefs->protocol == A_IMAP4 ||
-			 ac_prefs->protocol == A_NNTP);
-	getall = has_getallbox && ac_prefs->recv_at_getall;
-
-	if (ac_prefs->is_default)
-		gtk_clist_set_pixmap(clist, row, COL_DEFAULT,
-				     markxpm, markxpmmask);
-	if (getall)
-		gtk_clist_set_pixmap(clist, row, COL_GETALL,
-				     checkboxonxpm, checkboxonxpmmask);
-	else if (has_getallbox)
-		gtk_clist_set_pixmap(clist, row, COL_GETALL,
-				     checkboxoffxpm, checkboxoffxpmmask);
-
-	gtk_clist_set_row_data(clist, row, ac_prefs);
-
-	return row;
 }
 
-/* set CList from account list */
-static void account_clist_set(void)
+/* set dialog from account list */
+static void account_set_dialog(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
 	GList *cur;
-	gint row = -1, prev_row = -1;
+	GtkTreeIter iter;
+	GtkTreePath *path;
 
-	if (clist->selection)
-		prev_row = GPOINTER_TO_INT(clist->selection->data);
-
-	gtk_clist_freeze(clist);
-	gtk_clist_clear(clist);
+	gtk_list_store_clear(edit_account.store);
 
 	for (cur = account_list; cur != NULL; cur = cur->next) {
-		row = account_clist_set_row((PrefsAccount *)cur->data, -1);
+		account_set_row((PrefsAccount *)cur->data, NULL, &iter, FALSE);
 		if ((PrefsAccount *)cur->data == cur_account) {
-			gtk_clist_select_row(clist, row, -1);
-			gtkut_clist_set_focus_row(clist, row);
+			gtk_tree_selection_select_iter(edit_account.selection,
+						       &iter);
 		}
 	}
 
-	if (prev_row >= 0) {
-		row = prev_row;
-		gtk_clist_select_row(clist, row, -1);
-		gtkut_clist_set_focus_row(clist, row);
-	}
-
-	if (row >= 0 &&
-	    gtk_clist_row_is_visible(clist, row) != GTK_VISIBILITY_FULL)
-		gtk_clist_moveto(clist, row, -1, 0.5, 0);
-
-	gtk_clist_thaw(clist);
+	if (!gtk_tree_selection_get_selected(edit_account.selection, NULL,
+					     &iter))
+		return;
+	path = gtk_tree_model_get_path(GTK_TREE_MODEL(edit_account.store),
+				       &iter);
+	gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(edit_account.treeview),
+				     path, NULL, FALSE, 0.0, 0.0);
+	gtk_tree_path_free(path);
 }
 
-/* set account list from CList */
-static void account_list_set(void)
+/* update dialog to the latest state */
+static void account_update_dialog(void)
 {
-	GtkCList *clist = GTK_CLIST(edit_account.clist);
-	gint row;
-	PrefsAccount *ac_prefs;
+	GtkTreeIter iter;
+	GtkTreeModel *model = GTK_TREE_MODEL(edit_account.store);
+	PrefsAccount *ac;
 
-	while (account_list)
-		account_list = g_list_remove(account_list, account_list->data);
+	if (!gtk_tree_model_get_iter_first(model, &iter))
+		return;
 
-	for (row = 0; (ac_prefs = gtk_clist_get_row_data(clist, row)) != NULL;
-	     row++)
-		account_list = g_list_append(account_list, ac_prefs);
+	do {
+		gtk_tree_model_get(model, &iter, COL_ACCOUNT, &ac, -1);
+		if (ac)
+			account_set_row(ac, &iter, NULL, FALSE);
+	} while (gtk_tree_model_iter_next(model, &iter));
+}
+
+/* set account list from dialog */
+static void account_set_list(void)
+{
+	GtkTreeIter iter;
+	GtkTreeModel *model = GTK_TREE_MODEL(edit_account.store);
+	PrefsAccount *ac;
+
+	g_list_free(account_list);
+	account_list = NULL;
+
+	if (!gtk_tree_model_get_iter_first(model, &iter))
+		return;
+
+	do {
+		gtk_tree_model_get(model, &iter, COL_ACCOUNT, &ac, -1);
+		if (ac)
+			account_list = g_list_append(account_list, ac);
+	} while (gtk_tree_model_iter_next(model, &iter));
 }
