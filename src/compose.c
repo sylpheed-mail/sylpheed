@@ -1974,6 +1974,44 @@ static gchar *compose_get_quote_str(GtkTextBuffer *buffer,
 	return NULL;
 }
 
+/* return TRUE if the line is itemized */
+static gboolean compose_is_itemized(GtkTextBuffer *buffer,
+				    const GtkTextIter *start)
+{
+	GtkTextIter iter = *start;
+	gunichar wc;
+	gchar ch[6];
+	gint clen;
+
+	if (gtk_text_iter_ends_line(&iter))
+		return FALSE;
+
+	while (1) {
+		wc = gtk_text_iter_get_char(&iter);
+		if (!g_unichar_isspace(wc))
+			break;
+		gtk_text_iter_forward_char(&iter);
+		if (gtk_text_iter_ends_line(&iter))
+			return FALSE;
+	}
+
+	clen = g_unichar_to_utf8(wc, ch);
+	if (clen != 1)
+		return FALSE;
+
+	if (!strchr("*-+", ch[0]))
+		return FALSE;
+
+	gtk_text_iter_forward_char(&iter);
+	if (gtk_text_iter_ends_line(&iter))
+		return FALSE;
+	wc = gtk_text_iter_get_char(&iter);
+	if (g_unichar_isspace(wc))
+		return TRUE;
+
+	return FALSE;
+}
+
 static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 					   const GtkTextIter *start,
 					   GtkTextIter *break_pos,
@@ -2070,7 +2108,7 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 				       GtkTextIter *iter,
 				       const gchar *quote_str)
 {
-	GtkTextIter iter_ = *iter, cur, prev, next;
+	GtkTextIter iter_ = *iter, cur, prev, next, end;
 	PangoLogAttr attrs[3];
 	gchar *str;
 	gchar *next_quote_str;
@@ -2091,15 +2129,20 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 	}
 	g_free(next_quote_str);
 
-	/* delete quote str */
+	end = iter_;
 	if (quote_len > 0) {
-		GtkTextIter end = iter_;
-
 		gtk_text_iter_forward_chars(&end, quote_len);
 		if (gtk_text_iter_ends_line(&end))
 			return FALSE;
-		gtk_text_buffer_delete(buffer, &iter_, &end);
 	}
+
+	/* don't join itemized lines */
+	if (compose_is_itemized(buffer, &end))
+		return FALSE;
+
+	/* delete quote str */
+	if (quote_len > 0)
+		gtk_text_buffer_delete(buffer, &iter_, &end);
 
 	/* delete linebreak and extra spaces */
 	prev = cur = iter_;
