@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 0.9.9 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-18 19:50+0900\n"
+"POT-Creation-Date: 2005-02-21 18:36+0900\n"
 "PO-Revision-Date: 2003-12-26 11:25+0200\n"
 "Last-Translator: Przemysław Sułek <pbs@linux.net.pl>\n"
 "Language-Team: POLISH <pl@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 "w kolumnie \"G\" konta, które mają być sprawdzone przez 'Odbierz wsz.'"
 
 #: src/account.c:638 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3548 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3601 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:149 src/prefs_filter.c:214 src/prefs_folder_item.c:170
@@ -151,13 +151,13 @@ msgstr "Usuń konto"
 msgid "Do you really want to delete this account?"
 msgstr "Czy naprawdę chcesz usunąć to konto?"
 
-#: src/account.c:758 src/compose.c:2473 src/compose.c:4705
+#: src/account.c:758 src/compose.c:2526 src/compose.c:4758
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "Yes"
 msgstr "Tak"
 
-#: src/account.c:758 src/compose.c:2473 src/compose.c:4705
+#: src/account.c:758 src/compose.c:2526 src/compose.c:4758
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "+No"
@@ -262,7 +262,7 @@ msgstr "Argumenty użytkownika dla akcji"
 msgid "Add Address to Book"
 msgstr "Dodaj do książki adresowej"
 
-#: src/addressadd.c:196 src/compose.c:4089 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4142 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adres"
@@ -402,7 +402,7 @@ msgstr "/_Usuń"
 msgid "E-Mail address"
 msgstr "Adres e-mail"
 
-#: src/addressbook.c:493 src/compose.c:4090 src/prefs_common.c:2183
+#: src/addressbook.c:493 src/compose.c:4143 src/prefs_common.c:2183
 msgid "Address book"
 msgstr "Książka adresowa"
 
@@ -607,7 +607,7 @@ msgstr "Wspólny adres:"
 msgid "Personal address"
 msgstr "Osobisty adres:"
 
-#: src/alertpanel.c:123 src/compose.c:4705 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4758 src/main.c:464
 msgid "Notice"
 msgstr "Notatka"
 
@@ -615,7 +615,7 @@ msgstr "Notatka"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/alertpanel.c:149 src/compose.c:2473 src/inc.c:557
+#: src/alertpanel.c:149 src/compose.c:2526 src/inc.c:557
 msgid "Error"
 msgstr "Błąd"
 
@@ -903,67 +903,67 @@ msgstr "Błąd formatu znacznika cytatu."
 msgid "Message reply/forward format error."
 msgstr "Błąd formatu odpowiedz/przekaż wiadomość."
 
-#: src/compose.c:1641
+#: src/compose.c:1649
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Plik %s nie istnieje\n"
 
-#: src/compose.c:1645
+#: src/compose.c:1653
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Nie można odczytać wielkości pliku %s\n"
 
-#: src/compose.c:1649
+#: src/compose.c:1657
 #, c-format
 msgid "File %s is empty."
 msgstr "Plik %s jest pusty."
 
-#: src/compose.c:1653
+#: src/compose.c:1661
 #, c-format
 msgid "Can't read %s."
 msgstr "Nie można odczytać %s."
 
-#: src/compose.c:1688
+#: src/compose.c:1696
 #, c-format
 msgid "Message: %s"
 msgstr "Wiadomość: %s"
 
-#: src/compose.c:1759 src/mimeview.c:482
+#: src/compose.c:1767 src/mimeview.c:482
 msgid "Can't get the part of multipart message."
 msgstr "Nie można pobrać części wiadomości wieloczęściowej."
 
-#: src/compose.c:2106
+#: src/compose.c:2159
 msgid " [Edited]"
 msgstr " [Edytowany]"
 
-#: src/compose.c:2108
+#: src/compose.c:2161
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - Utwórz wiadomość%s"
 
-#: src/compose.c:2111
+#: src/compose.c:2164
 #, c-format
 msgid "Compose message%s"
 msgstr "Utwórz wiadomość%s"
 
-#: src/compose.c:2222
+#: src/compose.c:2275
 msgid "Recipient is not specified."
 msgstr "Nie podano odbiorcy."
 
-#: src/compose.c:2230 src/compose.c:4010 src/mainwindow.c:2133
+#: src/compose.c:2283 src/compose.c:4063 src/mainwindow.c:2133
 #: src/prefs_account.c:703 src/prefs_common.c:847
 msgid "Send"
 msgstr "Wyślij"
 
-#: src/compose.c:2231
+#: src/compose.c:2284
 msgid "Subject is empty. Send it anyway?"
 msgstr "Wiadomość nie posiada tematu. Czy wysłać ją mimo tego ?"
 
-#: src/compose.c:2282
+#: src/compose.c:2335
 msgid "can't get recipient list."
 msgstr "nie można pobrać listy odbiorców."
 
-#: src/compose.c:2302
+#: src/compose.c:2355
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -971,27 +971,27 @@ msgstr ""
 "Nie podano konta pocztowego do wysyłania wiadomości.\n"
 "Należy wybrać konto przed wysłaniem."
 
-#: src/compose.c:2316 src/send_message.c:261
+#: src/compose.c:2369 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Błąd podczas wysyłania wiadomości do %s."
 
-#: src/compose.c:2339
+#: src/compose.c:2392
 msgid "Can't save the message to outbox."
 msgstr "Nie można zapisać wiadomości do outbox."
 
-#: src/compose.c:2375
+#: src/compose.c:2428
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Nie można znaleźć klucza związanego z wybranym identyfikatorem klucza \"%s\"."
 
-#: src/compose.c:2436 src/compose.c:2651 src/compose.c:2714 src/compose.c:2833
+#: src/compose.c:2489 src/compose.c:2704 src/compose.c:2767 src/compose.c:2886
 #: src/utils.c:2189
 msgid "can't change file mode\n"
 msgstr "nie można zmienić trybu pliku\n"
 
-#: src/compose.c:2469
+#: src/compose.c:2522
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message from\n"
@@ -1002,140 +1002,140 @@ msgstr ""
 "%s na %s.\n"
 "Czy mimo to wysłać wiadomość?"
 
-#: src/compose.c:2522
+#: src/compose.c:2575
 msgid "can't write headers\n"
 msgstr "nie można zapisać nagłówków\n"
 
-#: src/compose.c:2793
+#: src/compose.c:2846
 msgid "can't remove the old message\n"
 msgstr "Nie można usunąć starej wiadomości\n"
 
-#: src/compose.c:2811
+#: src/compose.c:2864
 msgid "queueing message...\n"
 msgstr "kolejkowanie wiadomości...\n"
 
-#: src/compose.c:2893
+#: src/compose.c:2946
 msgid "can't find queue folder\n"
 msgstr "nie można znaleźć katalogu kolejki\n"
 
-#: src/compose.c:2900
+#: src/compose.c:2953
 msgid "can't queue the message\n"
 msgstr "nie można zapisać wiadomości do kolejki\n"
 
-#: src/compose.c:3446
+#: src/compose.c:3499
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "wygenerowany Message-ID: %s\n"
 
-#: src/compose.c:3543
+#: src/compose.c:3596
 msgid "Creating compose window...\n"
 msgstr "Tworzenie okna edycji...\n"
 
-#: src/compose.c:3546 src/compose.c:4496
+#: src/compose.c:3599 src/compose.c:4549
 msgid "MIME type"
 msgstr "typ MIME"
 
 #. S_COL_DATE
-#: src/compose.c:3547 src/mimeview.c:148 src/prefs_filter_edit.c:569
+#: src/compose.c:3600 src/mimeview.c:148 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "Rozmiar"
 
-#: src/compose.c:3598 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3651 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "Od:"
 
-#: src/compose.c:4011
+#: src/compose.c:4064
 msgid "Send message"
 msgstr "Wyślij wiadomość"
 
-#: src/compose.c:4019
+#: src/compose.c:4072
 msgid "Send later"
 msgstr "Wyślij później"
 
-#: src/compose.c:4020
+#: src/compose.c:4073
 msgid "Put into queue folder and send later"
 msgstr "Umieść w katalogu kolejki i wyślij później"
 
-#: src/compose.c:4028
+#: src/compose.c:4081
 msgid "Draft"
 msgstr "Draft"
 
-#: src/compose.c:4029
+#: src/compose.c:4082
 msgid "Save to draft folder"
 msgstr "Zapisz w katalogu szablonów"
 
-#: src/compose.c:4039 src/compose.c:5271
+#: src/compose.c:4092 src/compose.c:5324
 msgid "Insert"
 msgstr "Wstaw"
 
-#: src/compose.c:4040
+#: src/compose.c:4093
 msgid "Insert file"
 msgstr "Wstaw plik"
 
-#: src/compose.c:4048
+#: src/compose.c:4101
 msgid "Attach"
 msgstr "Dołącz"
 
-#: src/compose.c:4049
+#: src/compose.c:4102
 msgid "Attach file"
 msgstr "Dołącz plik"
 
 #. signature
-#: src/compose.c:4059 src/prefs_account.c:1338 src/prefs_common.c:1258
+#: src/compose.c:4112 src/prefs_account.c:1338 src/prefs_common.c:1258
 msgid "Signature"
 msgstr "Podpis"
 
-#: src/compose.c:4060
+#: src/compose.c:4113
 msgid "Insert signature"
 msgstr "Wstaw podpis"
 
-#: src/compose.c:4069 src/prefs_common.c:1280 src/prefs_common.c:2162
+#: src/compose.c:4122 src/prefs_common.c:1280 src/prefs_common.c:2162
 msgid "Editor"
 msgstr "Edytor"
 
-#: src/compose.c:4070
+#: src/compose.c:4123
 msgid "Edit with external editor"
 msgstr "Edytuj w zewnętrznym edytorze"
 
-#: src/compose.c:4078
+#: src/compose.c:4131
 msgid "Linewrap"
 msgstr "Zawijanie linii"
 
-#: src/compose.c:4079
+#: src/compose.c:4132
 msgid "Wrap all long lines"
 msgstr "Zawijaj wszystkie długie linie"
 
-#: src/compose.c:4390
+#: src/compose.c:4443
 msgid "Invalid MIME type."
 msgstr "Niepoprawny typ MIME."
 
-#: src/compose.c:4409
+#: src/compose.c:4462
 msgid "File doesn't exist or is empty."
 msgstr "Brak pliku lub pusty plik."
 
-#: src/compose.c:4478
+#: src/compose.c:4531
 msgid "Properties"
 msgstr "Właściwości"
 
-#: src/compose.c:4498
+#: src/compose.c:4551
 msgid "Encoding"
 msgstr "Kodowanie"
 
-#: src/compose.c:4521 src/prefs_folder_item.c:183
+#: src/compose.c:4574 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Ścieżka"
 
-#: src/compose.c:4522
+#: src/compose.c:4575
 msgid "File name"
 msgstr "Nazwa pliku"
 
-#: src/compose.c:4676
+#: src/compose.c:4729
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Niepoprawna linia wywołania zewnętrznego edytora: \"%s\"\n"
 
-#: src/compose.c:4702
+#: src/compose.c:4755
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1146,67 +1146,67 @@ msgstr ""
 "Czy wymusić zakończenie procesu?\n"
 "identyfikator grupy procesów: %d"
 
-#: src/compose.c:4715
+#: src/compose.c:4768
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Identyfikator zakończonej grupy procesów: %d"
 
-#: src/compose.c:4716
+#: src/compose.c:4769
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Plik tymczasowy: %s"
 
-#: src/compose.c:4740
+#: src/compose.c:4793
 msgid "Compose: input from monitoring process\n"
 msgstr "Edycja: wejście z procesu monitorującego\n"
 
 #. failed
-#: src/compose.c:4773
+#: src/compose.c:4826
 msgid "Couldn't exec external editor\n"
 msgstr "Nie można uruchomić zewnętrznego edytora\n"
 
-#: src/compose.c:4777
+#: src/compose.c:4830
 msgid "Couldn't write to file\n"
 msgstr "Nie można zapisać do pliku\n"
 
-#: src/compose.c:4779
+#: src/compose.c:4832
 msgid "Pipe read failed\n"
 msgstr "Błędny odczyt z potoku\n"
 
-#: src/compose.c:5081 src/compose.c:5089 src/compose.c:5095
+#: src/compose.c:5134 src/compose.c:5142 src/compose.c:5148
 msgid "Can't queue the message."
 msgstr "Nie można wstawić wiadomości do kolejki."
 
-#: src/compose.c:5186 src/compose.c:5201
+#: src/compose.c:5239 src/compose.c:5254
 msgid "Select file"
 msgstr "Wybierz plik"
 
-#: src/compose.c:5233
+#: src/compose.c:5286
 msgid "Discard message"
 msgstr "Porzuć wiadomość"
 
-#: src/compose.c:5234
+#: src/compose.c:5287
 msgid "This message has been modified. discard it?"
 msgstr "Wiadomość została zmieniona, czy porzucić ją?"
 
-#: src/compose.c:5235
+#: src/compose.c:5288
 msgid "Discard"
 msgstr "Porzuć"
 
-#: src/compose.c:5235
+#: src/compose.c:5288
 msgid "to Draft"
 msgstr "do Draft"
 
-#: src/compose.c:5268
+#: src/compose.c:5321
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Czy chcesz zastosować szablon \"%s\"?"
 
-#: src/compose.c:5270
+#: src/compose.c:5323
 msgid "Apply template"
 msgstr "Zastosuj szablon"
 
-#: src/compose.c:5271
+#: src/compose.c:5324
 msgid "Replace"
 msgstr "Zamień"
 

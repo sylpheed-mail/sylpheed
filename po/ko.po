@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-18 19:50+0900\n"
+"POT-Creation-Date: 2005-02-21 18:36+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -84,7 +84,7 @@ msgstr ""
 "받으려면 `G' 컬럼 상자를 선택하세요."
 
 #: src/account.c:638 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3548 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3601 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:149 src/prefs_filter.c:214 src/prefs_folder_item.c:170
@@ -137,13 +137,13 @@ msgstr "계정 삭제"
 msgid "Do you really want to delete this account?"
 msgstr "정말로 이 계정을 삭제하시겠습니까?"
 
-#: src/account.c:758 src/compose.c:2473 src/compose.c:4705
+#: src/account.c:758 src/compose.c:2526 src/compose.c:4758
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "Yes"
 msgstr "확인"
 
-#: src/account.c:758 src/compose.c:2473 src/compose.c:4705
+#: src/account.c:758 src/compose.c:2526 src/compose.c:4758
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "+No"
@@ -246,7 +246,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "주소록에 추가"
 
-#: src/addressadd.c:196 src/compose.c:4089 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4142 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "주소"
@@ -386,7 +386,7 @@ msgstr "/삭제(_D)"
 msgid "E-Mail address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:493 src/compose.c:4090 src/prefs_common.c:2183
+#: src/addressbook.c:493 src/compose.c:4143 src/prefs_common.c:2183
 msgid "Address book"
 msgstr "주소록"
 
@@ -583,7 +583,7 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:123 src/compose.c:4705 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4758 src/main.c:464
 msgid "Notice"
 msgstr "알림"
 
@@ -591,7 +591,7 @@ msgstr "알림"
 msgid "Warning"
 msgstr "경고"
 
-#: src/alertpanel.c:149 src/compose.c:2473 src/inc.c:557
+#: src/alertpanel.c:149 src/compose.c:2526 src/inc.c:557
 msgid "Error"
 msgstr "에러"
 
@@ -880,67 +880,67 @@ msgstr "인용 부호 형식 에러."
 msgid "Message reply/forward format error."
 msgstr "메시지 회신/전달 형식 에러."
 
-#: src/compose.c:1641
+#: src/compose.c:1649
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "%s파일이 없습니다\n"
 
-#: src/compose.c:1645
+#: src/compose.c:1653
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "%s의 파일 크기를 알수가 없습니다\n"
 
-#: src/compose.c:1649
+#: src/compose.c:1657
 #, c-format
 msgid "File %s is empty."
 msgstr "%s 파일이 빈 파일입니다."
 
-#: src/compose.c:1653
+#: src/compose.c:1661
 #, c-format
 msgid "Can't read %s."
 msgstr "%s를 읽을 수가 없습니다."
 
-#: src/compose.c:1688
+#: src/compose.c:1696
 #, c-format
 msgid "Message: %s"
 msgstr "메시지: %s"
 
-#: src/compose.c:1759 src/mimeview.c:482
+#: src/compose.c:1767 src/mimeview.c:482
 msgid "Can't get the part of multipart message."
 msgstr "multipart 메시지의 부분을 얻을 수가 없습니다."
 
-#: src/compose.c:2106
+#: src/compose.c:2159
 msgid " [Edited]"
 msgstr " [수정됨]"
 
-#: src/compose.c:2108
+#: src/compose.c:2161
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - 메시지 편집%s "
 
-#: src/compose.c:2111
+#: src/compose.c:2164
 #, c-format
 msgid "Compose message%s"
 msgstr "메시지%s 편집"
 
-#: src/compose.c:2222
+#: src/compose.c:2275
 msgid "Recipient is not specified."
 msgstr "받는 사람이 지정되지않았습니다"
 
-#: src/compose.c:2230 src/compose.c:4010 src/mainwindow.c:2133
+#: src/compose.c:2283 src/compose.c:4063 src/mainwindow.c:2133
 #: src/prefs_account.c:703 src/prefs_common.c:847
 msgid "Send"
 msgstr "메일 발송"
 
-#: src/compose.c:2231
+#: src/compose.c:2284
 msgid "Subject is empty. Send it anyway?"
 msgstr "제목이 비었습니다. 그래도 보낼까요?"
 
-#: src/compose.c:2282
+#: src/compose.c:2335
 msgid "can't get recipient list."
 msgstr "받는 사람 목록을 얻을 수가 없습니다"
 
-#: src/compose.c:2302
+#: src/compose.c:2355
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -948,26 +948,26 @@ msgstr ""
 "메일을 보내기위한 계정이 지정되어있지않습니다.\n"
 "보내기 전에 메일 계정을 선택하세요."
 
-#: src/compose.c:2316 src/send_message.c:261
+#: src/compose.c:2369 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
 
-#: src/compose.c:2339
+#: src/compose.c:2392
 msgid "Can't save the message to outbox."
 msgstr "메시지를 보낸 편지함에 저장할 수가 없습니다"
 
-#: src/compose.c:2375
+#: src/compose.c:2428
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "현재 선택된 키 ID `%s'에 연결된 어떤 키도 찾을 수 없습니다."
 
-#: src/compose.c:2436 src/compose.c:2651 src/compose.c:2714 src/compose.c:2833
+#: src/compose.c:2489 src/compose.c:2704 src/compose.c:2767 src/compose.c:2886
 #: src/utils.c:2189
 msgid "can't change file mode\n"
 msgstr "파일 모드를 바꿀수가 없습니다\n"
 
-#: src/compose.c:2469
+#: src/compose.c:2522
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message from\n"
@@ -977,141 +977,141 @@ msgstr ""
 "메시지의 문자셋을 변경할 수가 없습니다.\n"
 "그래도 보낼까요?"
 
-#: src/compose.c:2522
+#: src/compose.c:2575
 msgid "can't write headers\n"
 msgstr "헤더를 쓸 수가 없습니다\n"
 
-#: src/compose.c:2793
+#: src/compose.c:2846
 msgid "can't remove the old message\n"
 msgstr "오래된 메시지를 제거할 수가 없습니다\n"
 
-#: src/compose.c:2811
+#: src/compose.c:2864
 msgid "queueing message...\n"
 msgstr "메시지를 임시 보관합니다...\n"
 
-#: src/compose.c:2893
+#: src/compose.c:2946
 msgid "can't find queue folder\n"
 msgstr "큐 폴더를 찾을 수가 없습니다\n"
 
-#: src/compose.c:2900
+#: src/compose.c:2953
 msgid "can't queue the message\n"
 msgstr "메시지를 임시 보관할 수가 없습니다\n"
 
-#: src/compose.c:3446
+#: src/compose.c:3499
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "생성된 Message-ID: %s\n"
 
-#: src/compose.c:3543
+#: src/compose.c:3596
 msgid "Creating compose window...\n"
 msgstr "편집창을 생성합니다...\n"
 
-#: src/compose.c:3546 src/compose.c:4496
+#: src/compose.c:3599 src/compose.c:4549
 msgid "MIME type"
 msgstr "마임 타입"
 
 #. S_COL_DATE
-#: src/compose.c:3547 src/mimeview.c:148 src/prefs_filter_edit.c:569
+#: src/compose.c:3600 src/mimeview.c:148 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "크기"
 
-#: src/compose.c:3598 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3651 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "보낸 사람:"
 
-#: src/compose.c:4011
+#: src/compose.c:4064
 msgid "Send message"
 msgstr "메시지 보내기"
 
-#: src/compose.c:4019
+#: src/compose.c:4072
 msgid "Send later"
 msgstr "나중에 보내기"
 
-#: src/compose.c:4020
+#: src/compose.c:4073
 msgid "Put into queue folder and send later"
 msgstr "보낼 편지함에 넣어서 나중에 보내기"
 
-#: src/compose.c:4028
+#: src/compose.c:4081
 msgid "Draft"
 msgstr "임시 보관함"
 
-#: src/compose.c:4029
+#: src/compose.c:4082
 msgid "Save to draft folder"
 msgstr "임시 보관함에 넣기"
 
-#: src/compose.c:4039 src/compose.c:5271
+#: src/compose.c:4092 src/compose.c:5324
 msgid "Insert"
 msgstr "삽입"
 
-#: src/compose.c:4040
+#: src/compose.c:4093
 msgid "Insert file"
 msgstr "파일을 삽입합니다"
 
-#: src/compose.c:4048
+#: src/compose.c:4101
 msgid "Attach"
 msgstr "첨부"
 
-#: src/compose.c:4049
+#: src/compose.c:4102
 msgid "Attach file"
 msgstr "파일 첨부"
 
 #. signature
-#: src/compose.c:4059 src/prefs_account.c:1338 src/prefs_common.c:1258
+#: src/compose.c:4112 src/prefs_account.c:1338 src/prefs_common.c:1258
 msgid "Signature"
 msgstr "서명"
 
-#: src/compose.c:4060
+#: src/compose.c:4113
 msgid "Insert signature"
 msgstr "서명 파일을 끼워넣습니다"
 
-#: src/compose.c:4069 src/prefs_common.c:1280 src/prefs_common.c:2162
+#: src/compose.c:4122 src/prefs_common.c:1280 src/prefs_common.c:2162
 msgid "Editor"
 msgstr "편집기"
 
-#: src/compose.c:4070
+#: src/compose.c:4123
 msgid "Edit with external editor"
 msgstr "외부 편집기로 편집"
 
-#: src/compose.c:4078
+#: src/compose.c:4131
 msgid "Linewrap"
 msgstr "줄바꿈"
 
-#: src/compose.c:4079
+#: src/compose.c:4132
 msgid "Wrap all long lines"
 msgstr "긴 줄에대해 자동 줄바꿈을 합니다"
 
-#: src/compose.c:4390
+#: src/compose.c:4443
 msgid "Invalid MIME type."
 msgstr "올바르지않은 마임 타입."
 
-#: src/compose.c:4409
+#: src/compose.c:4462
 msgid "File doesn't exist or is empty."
 msgstr "파일이 없거나 비여있습니다."
 
-#: src/compose.c:4478
+#: src/compose.c:4531
 #, fuzzy
 msgid "Properties"
 msgstr "특성"
 
-#: src/compose.c:4498
+#: src/compose.c:4551
 msgid "Encoding"
 msgstr "인코딩"
 
-#: src/compose.c:4521 src/prefs_folder_item.c:183
+#: src/compose.c:4574 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "경로"
 
-#: src/compose.c:4522
+#: src/compose.c:4575
 msgid "File name"
 msgstr "파일 이름"
 
-#: src/compose.c:4676
+#: src/compose.c:4729
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "외부 편집기 명령어가 올바르지않습니다: `%s'\n"
 
-#: src/compose.c:4702
+#: src/compose.c:4755
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1122,67 +1122,67 @@ msgstr ""
 "이 프로세스를 강제로 종료시킬까요?\n"
 "프로세스 그룹 아이디: %d"
 
-#: src/compose.c:4715
+#: src/compose.c:4768
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "프로세스 그룹 id: %d를 종료시킴"
 
-#: src/compose.c:4716
+#: src/compose.c:4769
 #, c-format
 msgid "Temporary file: %s"
 msgstr "임시 파일: %s"
 
-#: src/compose.c:4740
+#: src/compose.c:4793
 msgid "Compose: input from monitoring process\n"
 msgstr "편집: 모니터링하는 프로세스로부터 입력이 있었습니다\n"
 
 #. failed
-#: src/compose.c:4773
+#: src/compose.c:4826
 msgid "Couldn't exec external editor\n"
 msgstr "외부 편집기를 실행할 수가 없습니다\n"
 
-#: src/compose.c:4777
+#: src/compose.c:4830
 msgid "Couldn't write to file\n"
 msgstr "파일로 쓸 수가 없습니다\n"
 
-#: src/compose.c:4779
+#: src/compose.c:4832
 msgid "Pipe read failed\n"
 msgstr "파이프 읽기 실패\n"
 
-#: src/compose.c:5081 src/compose.c:5089 src/compose.c:5095
+#: src/compose.c:5134 src/compose.c:5142 src/compose.c:5148
 msgid "Can't queue the message."
 msgstr "메시지를 임시 보관함에 넣을수가 없습니다."
 
-#: src/compose.c:5186 src/compose.c:5201
+#: src/compose.c:5239 src/compose.c:5254
 msgid "Select file"
 msgstr "파일 선택"
 
-#: src/compose.c:5233
+#: src/compose.c:5286
 msgid "Discard message"
 msgstr "메시지 버리기"
 
-#: src/compose.c:5234
+#: src/compose.c:5287
 msgid "This message has been modified. discard it?"
 msgstr "이 메시지는 수정되었습니다. 변경사항을 버릴까요?"
 
-#: src/compose.c:5235
+#: src/compose.c:5288
 msgid "Discard"
 msgstr "버리기"
 
-#: src/compose.c:5235
+#: src/compose.c:5288
 msgid "to Draft"
 msgstr "임시 보관함으로"
 
-#: src/compose.c:5268
+#: src/compose.c:5321
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "`%s' 템플릿을 적용할까요?"
 
-#: src/compose.c:5270
+#: src/compose.c:5323
 msgid "Apply template"
 msgstr "템플릿을 적용합니다."
 
-#: src/compose.c:5271
+#: src/compose.c:5324
 msgid "Replace"
 msgstr "대체"
 
