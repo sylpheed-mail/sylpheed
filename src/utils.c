@@ -1593,6 +1593,17 @@ const gchar *get_rc_dir(void)
 	return rc_dir;
 }
 
+const gchar *get_old_rc_dir(void)
+{
+	static gchar *old_rc_dir = NULL;
+
+	if (!old_rc_dir)
+		old_rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
+					 OLD_RC_DIR, NULL);
+
+	return old_rc_dir;
+}
+
 const gchar *get_news_cache_dir(void)
 {
 	static gchar *news_cache_dir = NULL;

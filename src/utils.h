@@ -331,6 +331,7 @@ gint scan_mailto_url			(const gchar	*mailto,
 /* return static strings */
 const gchar *get_home_dir		(void);
 const gchar *get_rc_dir			(void);
+const gchar *get_old_rc_dir		(void);
 const gchar *get_news_cache_dir		(void);
 const gchar *get_imap_cache_dir		(void);
 const gchar *get_mime_tmp_dir		(void);

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 #include "stock_pixmap.h"
 #include "statusbar.h"
 #include "inc.h"
+#include "codeconv.h"
 #include "gtkutils.h"
 #include "utils.h"
 #include "alertpanel.h"
@@ -114,13 +115,23 @@ void account_read_config_all(void)
 {
 	GSList *ac_label_list = NULL, *cur;
 	gchar *rcpath;
+	const gchar *encoding = NULL;
 	FILE *fp;
 	gchar buf[PREFSBUFSIZE];
 	PrefsAccount *ac_prefs;
 
 	debug_print(_("Reading all config for each account...\n"));
 
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, ACCOUNT_RC, NULL);
+	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, ACCOUNT_RC,
+			     NULL);
+	if (!is_file_exist(rcpath)) {
+		debug_print("reading older version of accountrc ...\n");
+		g_free(rcpath);
+		rcpath = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
+				     ACCOUNT_RC, NULL);
+		encoding = conv_get_locale_charset_str();
+	}
+
 	if ((fp = fopen(rcpath, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
 		g_free(rcpath);
@@ -133,9 +144,22 @@ void account_read_config_all(void)
 			strretchomp(buf);
 			memmove(buf, buf + 1, strlen(buf));
 			buf[strlen(buf) - 1] = '\0';
-			debug_print(_("Found label: %s\n"), buf);
-			ac_label_list = g_slist_append(ac_label_list,
-						       g_strdup(buf));
+			if (encoding) {
+				gchar *conv_str;
+
+				conv_str = conv_codeset_strdup
+					(buf, encoding,
+					 conv_get_internal_charset_str());
+				if (!conv_str)
+					conv_str = g_strdup(buf);
+				debug_print("Found label: %s\n", conv_str);
+				ac_label_list = g_slist_append(ac_label_list,
+							       conv_str);
+			} else {
+				debug_print("Found label: %s\n", buf);
+				ac_label_list = g_slist_append(ac_label_list,
+							       g_strdup(buf));
+			}
 		}
 	}
 	fclose(fp);

@@ -339,7 +339,14 @@ gint folder_read_list(void)
 	gchar *path;
 
 	path = folder_get_list_path();
-	if (!is_file_exist(path)) return -1;
+	if (!is_file_exist(path)) {
+		debug_print("reading older version of folderlist.xml ...\n");
+		path = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
+				   FOLDER_LIST, NULL);
+		AUTORELEASE_STR(path, return -1);
+		if (!is_file_exist(path))
+			return -1;
+	}
 	node = xml_parse_file(path);
 	if (!node) return -1;
 

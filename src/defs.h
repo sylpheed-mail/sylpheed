@@ -38,6 +38,7 @@
 #define DRAFT_DIR		"draft"
 #define TRASH_DIR		"trash"
 #define RC_DIR			".sylpheed-2.0"
+#define OLD_RC_DIR		".sylpheed"
 #define NEWS_CACHE_DIR		"newscache"
 #define IMAP_CACHE_DIR		"imapcache"
 #define MIME_TMP_DIR		"mimetmp"

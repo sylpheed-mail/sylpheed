@@ -41,28 +41,24 @@ typedef enum
 } DummyEnum;
 
 void prefs_read_config(PrefParam *param, const gchar *label,
-		       const gchar *rcfile)
+		       const gchar *rcfile, const gchar *encoding)
 {
 	FILE *fp;
 	gchar buf[PREFSBUFSIZE];
-	gchar *rcpath;
 	gchar *block_label;
 
 	g_return_if_fail(param != NULL);
 	g_return_if_fail(label != NULL);
 	g_return_if_fail(rcfile != NULL);
 
-	debug_print(_("Reading configuration...\n"));
+	debug_print("Reading configuration...\n");
 
 	prefs_set_default(param);
 
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, rcfile, NULL);
-	if ((fp = fopen(rcpath, "rb")) == NULL) {
-		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
-		g_free(rcpath);
+	if ((fp = fopen(rcfile, "rb")) == NULL) {
+		if (ENOENT != errno) FILE_OP_ERROR(rcfile, "fopen");
 		return;
 	}
-	g_free(rcpath);
 
 	block_label = g_strdup_printf("[%s]", label);
 
@@ -70,9 +66,21 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gint val;
 
-		val = strncmp(buf, block_label, strlen(block_label));
+		if (encoding) {
+			gchar *conv_str;
+
+			conv_str = conv_codeset_strdup
+				(buf, encoding,
+				 conv_get_internal_charset_str());
+			if (!conv_str)
+				conv_str = g_strdup(buf);
+			val = strncmp
+				(conv_str, block_label, strlen(block_label));
+			g_free(conv_str);
+		} else
+			val = strncmp(buf, block_label, strlen(block_label));
 		if (val == 0) {
-			debug_print(_("Found %s\n"), block_label);
+			debug_print("Found %s\n", block_label);
 			break;
 		}
 	}
@@ -83,10 +91,21 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 		/* reached next block */
 		if (buf[0] == '[') break;
 
-		prefs_config_parse_one_line(param, buf);
+		if (encoding) {
+			gchar *conv_str;
+
+			conv_str = conv_codeset_strdup
+				(buf, encoding,
+				 conv_get_internal_charset_str());
+			if (!conv_str)
+				conv_str = g_strdup(buf);
+			prefs_config_parse_one_line(param, conv_str);
+			g_free(conv_str);
+		} else
+			prefs_config_parse_one_line(param, buf);
 	}
 
-	debug_print(_("Finished reading configuration.\n"));
+	debug_print("Finished reading configuration.\n");
 	fclose(fp);
 }
 

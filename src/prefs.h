@@ -131,7 +131,8 @@ struct _PrefsDialog
 
 void prefs_read_config		(PrefParam	*param,
 				 const gchar	*label,
-				 const gchar	*rcfile);
+				 const gchar	*rcfile,
+				 const gchar	*encoding);
 void prefs_config_parse_one_line(PrefParam	*param,
 				 const gchar	*buf);
 void prefs_write_config		(PrefParam	*param,

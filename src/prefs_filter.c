@@ -74,8 +74,6 @@ static GdkBitmap *markxpmmask;
 
 static void prefs_filter_create			(void);
 
-//static void prefs_filter_read_old_config	(void);
-
 static void prefs_filter_set_dialog		(void);
 static void prefs_filter_set_list_row		(gint		 row,
 						 FilterRule	*rule,
@@ -328,13 +326,17 @@ void prefs_filter_read_config(void)
 						      rule);
 	}
 
-#warning FIXME_GTK2
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
 			     NULL);
 	if (!is_file_exist(rcpath)) {
-		//prefs_filter_read_old_config();
+		debug_print("reading older version of filter.xml ...\n");
 		g_free(rcpath);
-		return;
+		rcpath = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
+				     FILTER_LIST, NULL);
+		if (!is_file_exist(rcpath)) {
+			g_free(rcpath);
+			return;
+		}
 	}
 
 	node = xml_parse_file(rcpath);
@@ -349,37 +351,6 @@ void prefs_filter_read_config(void)
 
 	xml_free_tree(node);
 }
-
-#if 0
-static void prefs_filter_read_old_config(void)
-{
-	gchar *rcpath;
-	FILE *fp;
-	gchar buf[PREFSBUFSIZE];
-	FilterRule *rule;
-
-	debug_print("Reading old filter configuration...\n");
-
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_RC, NULL);
-	if ((fp = fopen(rcpath, "rb")) == NULL) {
-		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
-		g_free(rcpath);
-		return;
-	}
-	g_free(rcpath);
-
-	while (fgets(buf, sizeof(buf), fp) != NULL) {
-		g_strchomp(buf);
-		rule = filter_read_str(buf);
-		if (rule) {
-			prefs_common.fltlist =
-				g_slist_append(prefs_common.fltlist, rule);
-		}
-	}
-
-	fclose(fp);
-}
-#endif
 
 void prefs_filter_write_config(void)
 {

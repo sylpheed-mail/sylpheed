@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@
 #include "foldersel.h"
 #include "inc.h"
 #include "menu.h"
+#include "codeconv.h"
 #include "gtkutils.h"
 #include "utils.h"
 #include "alertpanel.h"
@@ -514,13 +515,27 @@ PrefsAccount *prefs_account_new(void)
 void prefs_account_read_config(PrefsAccount *ac_prefs, const gchar *label)
 {
 	const guchar *p = label;
+	gchar *rcpath;
+	const gchar *encoding = NULL;
 	gint id;
 
 	g_return_if_fail(ac_prefs != NULL);
 	g_return_if_fail(label != NULL);
 
 	memset(&tmp_ac_prefs, 0, sizeof(PrefsAccount));
-	prefs_read_config(param, label, ACCOUNT_RC);
+
+	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, ACCOUNT_RC, NULL);
+	if (!is_file_exist(rcpath)) {
+		debug_print("reading older version of accountrc ...\n");
+		g_free(rcpath);
+		rcpath = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
+				     ACCOUNT_RC, NULL);
+		encoding = conv_get_locale_charset_str();
+	}
+
+	prefs_read_config(param, label, rcpath, encoding);
+	g_free(rcpath);
+
 	*ac_prefs = tmp_ac_prefs;
 	while (*p && !isdigit(*p)) p++;
 	id = atoi(p);
