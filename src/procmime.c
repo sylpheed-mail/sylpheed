@@ -349,14 +349,7 @@ void procmime_scan_content_type(MimeInfo *mimeinfo, const gchar *content_type)
 	gchar *delim, *p, *cnttype;
 	gchar *buf;
 
-	if (conv_get_locale_charset() == C_EUC_JP &&
-	    strchr(content_type, '\033')) {
-		gint len;
-		len = strlen(content_type) * 2 + 1;
-		Xalloca(buf, len, return);
-		conv_jistoeuc(buf, len, content_type);
-	} else
-		Xstrdup_a(buf, content_type, return);
+	Xstrdup_a(buf, content_type, return);
 
 	g_free(mimeinfo->content_type);
 	g_free(mimeinfo->charset);
@@ -423,14 +416,7 @@ void procmime_scan_content_disposition(MimeInfo *mimeinfo,
 	gchar *delim, *p, *dispos;
 	gchar *buf;
 
-	if (conv_get_locale_charset() == C_EUC_JP &&
-	    strchr(content_disposition, '\033')) {
-		gint len;
-		len = strlen(content_disposition) * 2 + 1;
-		Xalloca(buf, len, return);
-		conv_jistoeuc(buf, len, content_disposition);
-	} else
-		Xstrdup_a(buf, content_disposition, return);
+	Xstrdup_a(buf, content_disposition, return);
 
 	if ((delim = strchr(buf, ';'))) *delim = '\0';
 	mimeinfo->content_disposition = dispos = g_strdup(g_strstrip(buf));

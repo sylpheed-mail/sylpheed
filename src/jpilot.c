@@ -53,6 +53,7 @@
 #include "addrcache.h"
 #include "jpilot.h"
 #include "codeconv.h"
+#include "utils.h"
 
 #define JPILOT_DBHOME_DIR   ".jpilot"
 #define JPILOT_DBHOME_FILE  "AddressDB.pdb"
@@ -1048,8 +1049,8 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 
 		if( convert_charcode ) {
 			gchar *nameConv;
-			nameConv = g_strdup( fullName );
-			conv_sjistodisp( fullName, FULLNAME_BUFSIZE, nameConv );
+			nameConv = conv_codeset_strdup( fullName, CS_SHIFT_JIS, CS_INTERNAL );
+			strncpy2( fullName, nameConv, FULLNAME_BUFSIZE );
 			g_free( nameConv );
 		}
 
@@ -1096,7 +1097,6 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 		/* Add entry for each custom label */
 		node = pilotFile->labelInd;
 		while( node ) {
-			gchar convertBuff[ JPILOT_LEN_LABEL ];
 			gint ind;
 
 			ind = GPOINTER_TO_INT( node->data );
@@ -1115,8 +1115,10 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 					addritem_email_set_address( email, bufEMail );
 
 					if( convert_charcode ) {
-						conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, ai->labels[ind] );
+						gchar *convertBuff;
+						convertBuff = conv_codeset_strdup( ai->labels[ind], CS_SHIFT_JIS, CS_INTERNAL );
 						addritem_email_set_remarks( email, convertBuff );
+						g_free( convertBuff );
 					}
 					else {
 						addritem_email_set_remarks( email, ai->labels[ind] );
@@ -1283,7 +1285,9 @@ static gboolean jpilot_setup_labels( JPilotFile *pilotFile ) {
 				gchar convertBuff[ JPILOT_LEN_LABEL ];
 
 				if( convert_charcode ) {
-					conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, labelName );
+					labelName = conv_codeset_strdup( labelName, CS_SHIFT_JIS, CS_INTERNAL );
+					strncpy2( convertBuff, labelName, JPILOT_LEN_LABEL );
+					g_free( labelName );
 					labelName = convertBuff;
 				}
 
@@ -1312,14 +1316,15 @@ GList *jpilot_load_label( JPilotFile *pilotFile, GList *labelList ) {
 		struct AddressAppInfo *ai = & pilotFile->addrInfo;
 		for( i = 0; i < JPILOT_NUM_LABELS; i++ ) {
 			gchar *labelName = ai->labels[i];
-			gchar convertBuff[JPILOT_LEN_LABEL];
 
 			if( labelName ) {
 				if( convert_charcode ) {
-					conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, labelName );
-					labelName = convertBuff;
+					labelName = conv_codeset_strdup( labelName, CS_SHIFT_JIS, CS_INTERNAL );
 				}
-				labelList = g_list_append( labelList, g_strdup( labelName ) );
+				else {
+					labelName = g_strdup( labelName );
+				}
+				labelList = g_list_append( labelList, labelName );
 			}
 			else {
 				labelList = g_list_append( labelList, g_strdup( "" ) );
@@ -1381,7 +1386,6 @@ GList *jpilot_load_phone_label( JPilotFile *pilotFile, GList *labelList ) {
 */
 GList *jpilot_load_custom_label( JPilotFile *pilotFile, GList *labelList ) {
 	gint i;
-	char convertBuff[JPILOT_LEN_LABEL];
 
 	g_return_val_if_fail( pilotFile != NULL, NULL );
 
@@ -1394,10 +1398,12 @@ GList *jpilot_load_custom_label( JPilotFile *pilotFile, GList *labelList ) {
 				g_strchug( labelName );
 				if( *labelName != '\0' ) {
 					if( convert_charcode ) {
-						conv_sjistodisp( convertBuff, JPILOT_LEN_LABEL, labelName );
-						labelName = convertBuff;
+						labelName = conv_codeset_strdup( labelName, CS_SHIFT_JIS, CS_INTERNAL );
 					}
-					labelList = g_list_append( labelList, g_strdup( labelName ) );
+					else {
+						labelName = g_strdup( labelName );
+					}
+					labelList = g_list_append( labelList, labelName );
 				}
 			}
 		}
@@ -1442,9 +1448,10 @@ static void jpilot_build_category_list( JPilotFile *pilotFile ) {
 		ItemFolder *folder = addritem_create_item_folder();
 
 		if( convert_charcode ) {
-			gchar catName[ JPILOT_LEN_CATEG ];
-			conv_sjistodisp( catName, JPILOT_LEN_CATEG, cat->name[i] );
+			gchar *catName;
+			catName = conv_codeset_strdup( cat->name[i], CS_SHIFT_JIS, CS_INTERNAL );
 			addritem_folder_set_name( folder, catName );
+			g_free( catName );
 		}
 		else {
 			addritem_folder_set_name( folder, cat->name[i] );

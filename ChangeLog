@@ -1,14 +1,23 @@
 2005-01-26
 
-	src/compose.c
-	src/folder.c
-	src/prefs.c
-	src/codeconv.[ch]
-	src/imap.c
-	src/xml.c
-	src/addrbook.c
-	src/addrindex.c: added constant C_INTERNAL and CS_INTERNAL which
-	replace conv_get_internal_charset_str().
+	* src/procmime.c:
+	  procmime_scan_content_type()
+	  procmime_scan_content_disposition(): removed raw ISO-2022-JP to
+	  EUC-JP conversion.
+	* src/jpilot.c: use conv_codeset_strdup() instead of
+	  conv_sjistodisp().
+
+2005-01-26
+
+	* src/compose.c
+	  src/folder.c
+	  src/prefs.c
+	  src/codeconv.[ch]
+	  src/imap.c
+	  src/xml.c
+	  src/addrbook.c
+	  src/addrindex.c: added constant C_INTERNAL and CS_INTERNAL which
+	  replace conv_get_internal_charset_str().
 
 2005-01-25
 

@@ -1,5 +1,14 @@
 2005-01-26
 
+	* src/procmime.c:
+	  procmime_scan_content_type()
+	  procmime_scan_content_disposition(): 生の ISO-2022-JP から EUC-JP
+	  への変換を削除。
+	* src/jpilot.c: conv_sjistodisp() の代わりに conv_codeset_strdup()
+	  を使用。
+
+2005-01-26
+
 	* src/compose.c
 	  src/folder.c
 	  src/prefs.c
