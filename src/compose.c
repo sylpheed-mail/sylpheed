@@ -1967,10 +1967,12 @@ static gboolean compose_join_next_line(GtkTextBuffer *buffer,
 	}
 
 	/* delete linebreak */
-	gtk_text_buffer_backspace(buffer, &iter_, FALSE, TRUE);
+	prev = iter_;
+	gtk_text_iter_backward_char(&prev);
+	gtk_text_buffer_delete(buffer, &prev, &iter_);
 
 	/* insert space if required */
-	prev = next = iter_;
+	next = iter_;
 	gtk_text_iter_backward_char(&prev);
 	wc1 = gtk_text_iter_get_char(&prev);
 	wc2 = gtk_text_iter_get_char(&next);
