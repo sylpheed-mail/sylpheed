@@ -1953,7 +1953,6 @@ static void compose_wrap_line(Compose *compose)
 }
 
 #undef WRAP_DEBUG
-#define WRAP_DEBUG
 #ifdef WRAP_DEBUG
 /* Darko: used when I debug wrapping */
 void dump_text(GtkTextBuffer *textbuf, int pos, int tlen, int breakoncr)
