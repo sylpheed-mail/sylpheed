@@ -165,6 +165,7 @@ struct _PrefsCommon
 	gboolean display_header_pane;
 	gboolean display_header;
 	gint line_space;
+	gboolean render_html;
 	gboolean enable_smooth_scroll;
 	gint scroll_step;
 	gboolean scroll_halfpage;

@@ -713,7 +713,8 @@ static void textview_write_body(TextView *textview, MimeInfo *mimeinfo,
 
 	tmpfp = procmime_decode_content(NULL, fp, mimeinfo);
 	if (tmpfp) {
-		if (mimeinfo->mime_type == MIME_TEXT_HTML)
+		if (mimeinfo->mime_type == MIME_TEXT_HTML &&
+		    prefs_common.render_html)
 			textview_show_html(textview, tmpfp, conv);
 		else
 			while (fgets(buf, sizeof(buf), tmpfp) != NULL)

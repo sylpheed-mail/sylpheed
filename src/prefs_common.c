@@ -136,6 +136,7 @@ static struct Message {
 	GtkWidget *chkbtn_mbalnum;
 	GtkWidget *chkbtn_disphdrpane;
 	GtkWidget *chkbtn_disphdr;
+	GtkWidget *chkbtn_html;
 	GtkWidget *spinbtn_linespc;
 	GtkObject *spinbtn_linespc_adj;
 
@@ -525,6 +526,9 @@ static PrefParam param[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"display_header", "TRUE", &prefs_common.display_header, P_BOOL,
 	 &message.chkbtn_disphdr,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"render_html", "TRUE", &prefs_common.render_html, P_BOOL,
+	 &message.chkbtn_html,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"line_space", "2", &prefs_common.line_space, P_INT,
 	 &message.spinbtn_linespc,
@@ -1686,6 +1690,7 @@ static void prefs_message_create(void)
 	GtkWidget *chkbtn_disphdrpane;
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *button_edit_disphdr;
+	GtkWidget *chkbtn_html;
 	GtkWidget *hbox_linespc;
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
@@ -1756,6 +1761,9 @@ static void prefs_message_create(void)
 			  G_CALLBACK (prefs_display_header_open), NULL);
 
 	SET_TOGGLE_SENSITIVITY(chkbtn_disphdr, button_edit_disphdr);
+
+	PACK_CHECK_BUTTON(vbox2, chkbtn_html,
+			  _("Render HTML messages as text"));
 
 	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
@@ -1842,6 +1850,7 @@ static void prefs_message_create(void)
 	message.chkbtn_mbalnum     = chkbtn_mbalnum;
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
 	message.chkbtn_disphdr     = chkbtn_disphdr;
+	message.chkbtn_html        = chkbtn_html;
 	message.spinbtn_linespc    = spinbtn_linespc;
 
 	message.chkbtn_smoothscroll    = chkbtn_smoothscroll;
