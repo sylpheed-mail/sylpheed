@@ -530,7 +530,7 @@ gboolean gtkut_text_buffer_match_string(GtkTextBuffer *textbuf, gint pos,
 		return FALSE;
 	}
 
-	for (; match_count < len; pos++, match_count++) {
+	for (; match_count < len; match_count++) {
 		gchar *ptr;
 		gunichar ch;
 
@@ -626,6 +626,39 @@ guint gtkut_text_buffer_str_compare(GtkTextBuffer *textbuf,
 	g_free(wcs);
 
 	return result ? len : 0;
+}
+
+gint gtkut_text_buffer_find(GtkTextBuffer *buffer, guint start_pos,
+			    const gchar *str, gboolean case_sens)
+{
+	gint pos;
+	gunichar *wcs;
+	gint len;
+	glong items_read = 0, items_written = 0;
+	GError *error = NULL;
+	GtkTextIter iter;
+	gint found_pos = -1;
+
+	wcs = g_utf8_to_ucs4(str, -1, &items_read, &items_written, &error);
+	if (error != NULL) {
+		g_warning("An error occured while converting a string from UTF-8 to UCS-4: %s\n", error->message);
+		g_error_free(error);
+	}
+	if (!wcs || items_written <= 0) return -1;
+	len = (gint)items_written;
+
+	gtk_text_buffer_get_iter_at_offset(buffer, &iter, start_pos);
+	do {
+		pos = gtk_text_iter_get_offset(&iter);
+		if (gtkut_text_buffer_match_string
+			(buffer, pos, wcs, len, case_sens) == TRUE) {
+			found_pos = pos;
+			break;
+		}
+	} while (gtk_text_iter_forward_char(&iter));
+
+	g_free(wcs);
+	return found_pos;
 }
 
 gboolean gtkut_text_buffer_is_uri_string(GtkTextBuffer *textbuf,

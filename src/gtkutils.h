@@ -156,6 +156,10 @@ guint gtkut_text_buffer_str_compare	(GtkTextBuffer	*text,
 					 guint		 start_pos,
 					 guint		 text_len,
 					 const gchar	*str);
+gint gtkut_text_buffer_find		(GtkTextBuffer	*text,
+					 guint		 start_pos,
+					 const gchar	*str,
+					 gboolean	 case_sens);
 gboolean gtkut_text_buffer_is_uri_string(GtkTextBuffer	*text,
 					 guint		 start_pos,
 					 guint		 text_len);
