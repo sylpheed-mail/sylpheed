@@ -177,8 +177,7 @@ gint xml_get_dtd(XMLFile *file)
 			extract_quote(bufp, '"');
 			file->encoding = g_strdup(bufp);
 		} else
-			file->encoding =
-				g_strdup(conv_get_internal_charset_str());
+			file->encoding = g_strdup(CS_INTERNAL);
 	} else {
 		g_warning("Can't get xml dtd\n");
 		return -1;
@@ -232,8 +231,7 @@ gint xml_parse_next_tag(XMLFile *file)
 
 	while (*bufp != '\0' && !isspace(*bufp)) bufp++;
 	if (*bufp == '\0') {
-		tag_str = conv_codeset_strdup(buf, file->encoding,
-					      conv_get_internal_charset_str());
+		tag_str = conv_codeset_strdup(buf, file->encoding, CS_INTERNAL);
 		if (tag_str) {
 			tag->tag = XML_STRING_ADD(tag_str);
 			g_free(tag_str);
@@ -242,8 +240,7 @@ gint xml_parse_next_tag(XMLFile *file)
 		return 0;
 	} else {
 		*bufp++ = '\0';
-		tag_str = conv_codeset_strdup(buf, file->encoding,
-					      conv_get_internal_charset_str());
+		tag_str = conv_codeset_strdup(buf, file->encoding, CS_INTERNAL);
 		if (tag_str) {
 			tag->tag = XML_STRING_ADD(tag_str);
 			g_free(tag_str);
@@ -288,11 +285,9 @@ gint xml_parse_next_tag(XMLFile *file)
 		g_strchomp(attr_name);
 		xml_unescape_str(attr_value);
 		utf8_attr_name = conv_codeset_strdup
-			(attr_name, file->encoding,
-			 conv_get_internal_charset_str());
+			(attr_name, file->encoding, CS_INTERNAL);
 		utf8_attr_value = conv_codeset_strdup
-			(attr_value, file->encoding,
-			 conv_get_internal_charset_str());
+			(attr_value, file->encoding, CS_INTERNAL);
 		if (!utf8_attr_name)
 			utf8_attr_name = g_strdup(attr_name);
 		if (!utf8_attr_value)
@@ -372,8 +367,7 @@ gchar *xml_get_element(XMLFile *file)
 		return NULL;
 	}
 
-	new_str = conv_codeset_strdup(str, file->encoding,
-				      conv_get_internal_charset_str());
+	new_str = conv_codeset_strdup(str, file->encoding, CS_INTERNAL);
 	if (!new_str)
 		new_str = g_strdup(str);
 	g_free(str);
@@ -564,8 +558,7 @@ gint xml_file_put_xml_decl(FILE *fp)
 {
 	g_return_val_if_fail(fp != NULL, -1);
 
-	fprintf(fp, "<?xml version=\"1.0\" encoding=\"%s\"?>\n",
-		conv_get_internal_charset_str());
+	fprintf(fp, "<?xml version=\"1.0\" encoding=\"%s\"?>\n", CS_INTERNAL);
 	return 0;
 }
 

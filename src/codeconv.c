@@ -809,7 +809,7 @@ void conv_localetodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 	gchar *tmpstr;
 
 	tmpstr = conv_iconv_strdup(inbuf, conv_get_locale_charset_str(),
-				   conv_get_internal_charset_str());
+				   CS_INTERNAL);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -969,7 +969,7 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 	if (!src_code)
 		src_code = conv_get_outgoing_charset_str();
 	if (!dest_code)
-		dest_code = conv_get_internal_charset_str();
+		dest_code = CS_INTERNAL;
 
 	/* don't convert if src and dest codeset are identical */
 	if (!strcasecmp(src_code, dest_code))
@@ -1423,17 +1423,17 @@ const gchar *conv_get_locale_charset_str(void)
 	if (!codeset)
 		codeset = conv_get_charset_str(conv_get_locale_charset());
 
-	return codeset ? codeset : CS_UTF_8;
+	return codeset ? codeset : CS_INTERNAL;
 }
 
 CharSet conv_get_internal_charset(void)
 {
-	return C_UTF_8;
+	return C_INTERNAL;
 }
 
 const gchar *conv_get_internal_charset_str(void)
 {
-	return CS_UTF_8;
+	return CS_INTERNAL;
 }
 
 CharSet conv_get_outgoing_charset(void)
@@ -1626,7 +1626,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 		mimesep_enc = "?Q?";
 	}
 
-	cur_encoding = conv_get_internal_charset_str();
+	cur_encoding = CS_INTERNAL;
 	out_encoding = conv_get_outgoing_charset_str();
 	if (!strcmp(out_encoding, CS_US_ASCII))
 		out_encoding = CS_ISO_8859_1;

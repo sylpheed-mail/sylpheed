@@ -1080,8 +1080,7 @@ gint addrbook_write_to( AddressBookFile *book, gchar *newFile ) {
 	g_free( fileSpec );
 	if( pfile ) {
 		fp = pfile->fp;
-		fprintf( fp, "<?xml version=\"1.0\" encoding=\"%s\" ?>\n",
-				conv_get_internal_charset_str() );
+		fprintf( fp, "<?xml version=\"1.0\" encoding=\"%s\" ?>\n", CS_INTERNAL );
 #endif
 		addrbook_write_elem_s( fp, 0, AB_ELTAG_ADDRESS_BOOK );
 		addrbook_write_attr( fp, AB_ATTAG_NAME, book->name );

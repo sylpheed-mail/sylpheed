@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3660,10 +3660,10 @@ static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 	if (!iconv_ok) return g_strdup(mutf7_str);
 
 	if (cd == (iconv_t)-1) {
-		cd = iconv_open(conv_get_internal_charset_str(), CS_UTF_7);
+		cd = iconv_open(CS_INTERNAL, CS_UTF_7);
 		if (cd == (iconv_t)-1) {
 			g_warning("iconv cannot convert UTF-7 to %s\n",
-				  conv_get_internal_charset_str());
+				  CS_INTERNAL);
 			iconv_ok = FALSE;
 			return g_strdup(mutf7_str);
 		}
@@ -3729,10 +3729,10 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 	if (!iconv_ok) return g_strdup(from);
 
 	if (cd == (iconv_t)-1) {
-		cd = iconv_open(CS_UTF_7, conv_get_internal_charset_str());
+		cd = iconv_open(CS_UTF_7, CS_INTERNAL);
 		if (cd == (iconv_t)-1) {
 			g_warning(_("iconv cannot convert %s to UTF-7\n"),
-				  conv_get_internal_charset_str());
+				  CS_INTERNAL);
 			iconv_ok = FALSE;
 			return g_strdup(from);
 		}

@@ -166,6 +166,9 @@ struct _CodeConverter
 #define CS_GEORGIAN_PS		"GEORGIAN-PS"
 #define CS_TCVN5712_1		"TCVN5712-1"
 
+#define C_INTERNAL		C_UTF_8
+#define CS_INTERNAL		CS_UTF_8
+
 void conv_jistoeuc	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_euctojis	(gchar *outbuf, gint outlen, const gchar *inbuf);
 void conv_sjistoeuc	(gchar *outbuf, gint outlen, const gchar *inbuf);

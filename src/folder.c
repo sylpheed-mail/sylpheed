@@ -371,7 +371,7 @@ void folder_write_list(void)
 	if ((pfile = prefs_file_open(path)) == NULL) return;
 
 	fprintf(pfile->fp, "<?xml version=\"1.0\" encoding=\"%s\"?>\n",
-		conv_get_internal_charset_str());
+		CS_INTERNAL);
 	fputs("\n<folderlist>\n", pfile->fp);
 
 	for (list = folder_list; list != NULL; list = list->next) {

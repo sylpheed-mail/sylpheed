@@ -1561,9 +1561,7 @@ static gchar *compose_get_signature_str(Compose *compose)
 
 	if (sig_str) {
 		utf8_sig_str = conv_codeset_strdup
-			(sig_str,
-			 conv_get_locale_charset_str(),
-			 conv_get_internal_charset_str());
+			(sig_str, conv_get_locale_charset_str(), CS_INTERNAL);
 		g_free(sig_str);
 	}
 
@@ -1597,8 +1595,7 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
 
-		str = conv_codeset_strdup
-			(buf, cur_encoding, conv_get_internal_charset_str());
+		str = conv_codeset_strdup(buf, cur_encoding, CS_INTERNAL);
 		if (!str) continue;
 
 		/* strip <CR> if DOS/Windows file,
@@ -2760,7 +2757,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			encoding = ENC_BASE64;
 #endif
 
-		src_codeset = conv_get_internal_charset_str();
+		src_codeset = CS_INTERNAL;
 
 		debug_print("src encoding = %s, out encoding = %s, transfer encoding = %s\n",
 			    src_codeset, out_codeset, procmime_get_encoding_str(encoding));
@@ -2947,9 +2944,8 @@ static gint compose_write_body_to_file(Compose *compose, const gchar *file)
 	gtk_text_buffer_get_end_iter(buffer, &end);
 	tmp = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
 
-	chars = conv_codeset_strdup(tmp,
-				    conv_get_internal_charset_str(),
-				    conv_get_locale_charset_str());
+	chars = conv_codeset_strdup
+		(tmp, CS_INTERNAL, conv_get_locale_charset_str());
 
 	g_free(tmp);
 

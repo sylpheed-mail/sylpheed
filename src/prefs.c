@@ -70,8 +70,7 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 			gchar *conv_str;
 
 			conv_str = conv_codeset_strdup
-				(buf, encoding,
-				 conv_get_internal_charset_str());
+				(buf, encoding, CS_INTERNAL);
 			if (!conv_str)
 				conv_str = g_strdup(buf);
 			val = strncmp
@@ -95,8 +94,7 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 			gchar *conv_str;
 
 			conv_str = conv_codeset_strdup
-				(buf, encoding,
-				 conv_get_internal_charset_str());
+				(buf, encoding, CS_INTERNAL);
 			if (!conv_str)
 				conv_str = g_strdup(buf);
 			prefs_config_parse_one_line(param, conv_str);
