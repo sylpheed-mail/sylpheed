@@ -697,7 +697,7 @@ static void folderview_rescan_tree(FolderView *folderview, Folder *folder)
 	avalue = alertpanel
 		(_("Rebuild folder tree"),
 		 _("The folder tree will be rebuilt. Continue?"),
-		 _("Yes"), _("No"), NULL);
+		 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	if (avalue != G_ALERTDEFAULT) return;
 
 	if (!FOLDER_IS_LOCAL(folder) &&
@@ -1962,7 +1962,7 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 	if (item->stype != F_TRASH) return;
 
 	if (alertpanel(_("Empty trash"), _("Empty all messages in trash?"),
-		       _("Yes"), _("No"), NULL) != G_ALERTDEFAULT)
+		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
 		return;
 
 	procmsg_empty_trash(folder->trash);

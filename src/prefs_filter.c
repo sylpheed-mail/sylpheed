@@ -698,7 +698,7 @@ static void prefs_filter_delete_cb(void)
 
 	if (alertpanel(_("Delete rule"),
 		       _("Do you really want to delete this rule?"),
-		       _("Yes"), _("No"), NULL) != G_ALERTDEFAULT)
+		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
 		return;
 
 	rule = gtk_clist_get_row_data(clist, row);

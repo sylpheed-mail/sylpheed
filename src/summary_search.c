@@ -326,7 +326,7 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 				str = _("End of list reached; continue from beginning?");
 
 			val = alertpanel(_("Search finished"), str,
-					 _("Yes"), _("No"), NULL);
+					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 			if (G_ALERTDEFAULT == val) {
 				if (backward)
 					node = GTK_CTREE_NODE

@@ -524,7 +524,7 @@ static void prefs_template_delete_cb(void)
 
 	if (alertpanel(_("Delete template"),
 		       _("Do you really want to delete this template?"),
-		       _("Yes"), _("No"), NULL) == G_ALERTALTERNATE)
+		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
 		return;
 
 	tmpl = gtk_clist_get_row_data(clist, row);

@@ -197,7 +197,7 @@ static void message_search_execute(GtkButton *button, gpointer data)
 				"continue from beginning?");
 
 		val = alertpanel(_("Search finished"), str,
-				 _("Yes"), _("No"), NULL);
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (G_ALERTDEFAULT == val) {
 			manage_window_focus_in(window, NULL, NULL);
 			messageview_set_position(messageview,
