@@ -1,5 +1,11 @@
 2005-03-31
 
+	* src/smtp.c: smtp_auth_plain(): fixed a bug that extra '\0' was
+	  included in the auth string and PLAIN authentication failed
+	  (thanks to IWAMOTO Kouichi).
+
+2005-03-31
+
 	* src/prefs_filter.c: reimplemented filter prefs dialog using
 	  GtkTreeView.
 

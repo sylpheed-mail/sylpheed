@@ -1,5 +1,10 @@
 2005-03-31
 
+	* src/smtp.c: smtp_auth_plain(): 余分な '\0' が認証文字列に含まれて
+	  おり、 PLAIN 認証に失敗するバグを修正(岩本さん thanks)。
+
+2005-03-31
+
 	* src/prefs_filter.c: フィルタ設定ダイアログを GtkTreeView を使用して
 	  再実装。
 

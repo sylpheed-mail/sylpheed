@@ -325,11 +325,11 @@ static gint smtp_auth_plain(SMTPSession *session)
 	session->auth_type = SMTPAUTH_PLAIN;
 
 	/*
-	 * construct the string: \0<user>\0<pass>\0
+	 * construct the string: \0<user>\0<pass>
 	 */
 
-	authlen = 1 + strlen(session->user) + 1 + strlen(session->pass) + 1;
-	authstr = g_malloc(authlen);
+	authlen = 1 + strlen(session->user) + 1 + strlen(session->pass);
+	authstr = g_malloc(authlen + 1);
 
 	p = authstr;
 
