@@ -863,19 +863,22 @@ gchar *procmime_get_tmp_file_name(MimeInfo *mimeinfo)
 	g_snprintf(f_prefix, sizeof(f_prefix), "%08x.", id++);
 
 	if (MIME_TEXT_HTML == mimeinfo->mime_type)
-		base = "mimetmp.html";
+		base = g_strdup("mimetmp.html");
 	else {
 		const gchar *base_;
+
 		base_ = mimeinfo->filename ? mimeinfo->filename
 			: mimeinfo->name ? mimeinfo->name : "mimetmp";
 		base_ = g_basename(base_);
 		if (*base_ == '\0') base_ = "mimetmp";
-		Xstrdup_a(base, base_, return NULL);
+		base = conv_filename_from_utf8(base_);
 		subst_for_filename(base);
 	}
 
 	filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
 			       f_prefix, base, NULL);
+
+	g_free(base);
 
 	return filename;
 }
