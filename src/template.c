@@ -133,7 +133,8 @@ GSList *template_read_config(void)
 	while ((de = readdir(dp)) != NULL) {
 		if (*de->d_name == '.') continue;
 
-		filename = g_strconcat(path, G_DIR_SEPARATOR_S, de->d_name, NULL);
+		filename = g_strconcat(path, G_DIR_SEPARATOR_S,
+				       de->d_name, NULL);
 
 		if (stat(filename, &s) != 0 || !S_ISREG(s.st_mode) ) {
 			debug_print("%s:%d %s is not an ordinary file\n",
@@ -144,6 +145,7 @@ GSList *template_read_config(void)
 		tmpl = template_load(filename);
 		if (tmpl)
 			tmpl_list = g_slist_append(tmpl_list, tmpl);
+
 		g_free(filename);
 	}
 
@@ -199,7 +201,9 @@ void template_write_config(GSList *tmpl_list)
 			fprintf(fp, "Subject: %s\n", tmpl->subject);
 		fputs("\n", fp);
 		fwrite(tmpl->value, sizeof(gchar) * strlen(tmpl->value), 1, fp);
+
 		fclose(fp);
+		g_free(filename);
 	}
 }
 
