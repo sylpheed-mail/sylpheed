@@ -25,6 +25,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkpixmap.h>
 #include <gtk/gtkmenu.h>
@@ -36,7 +37,6 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkdrawingarea.h>
 
-#include "intl.h"
 #include "colorlabel.h"
 #include "gtkutils.h"
 #include "utils.h"

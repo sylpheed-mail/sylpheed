@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #ifdef GDK_WINDOWING_X11
@@ -38,7 +39,6 @@
 #include <signal.h>
 #include <unistd.h>
 
-#include "intl.h"
 #include "utils.h"
 #include "gtkutils.h"
 #include "manage_window.h"

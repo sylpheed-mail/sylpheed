@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
@@ -32,7 +33,6 @@
 #include <gtk/gtkbutton.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "intl.h"
 #include "prefs.h"
 #include "prefs_common.h"
 #include "prefs_summary_column.h"

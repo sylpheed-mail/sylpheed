@@ -21,13 +21,13 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
 
-#include "intl.h"
 #include "template.h"
 #include "main.h"
 #include "inc.h"

@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkvbox.h>
@@ -34,7 +35,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "intl.h"
 #include "main.h"
 #include "summaryview.h"
 #include "procheader.h"

@@ -24,12 +24,12 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <stdio.h>
 #include <errno.h>
 
-#include "intl.h"
 #include "main.h"
 #include "mainwindow.h"
 #include "folderview.h"

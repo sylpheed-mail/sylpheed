@@ -22,6 +22,7 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkhbox.h>
@@ -31,7 +32,6 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkstock.h>
 
-#include "intl.h"
 #include "progressdialog.h"
 #include "gtkutils.h"
 #include "utils.h"

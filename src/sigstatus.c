@@ -23,6 +23,7 @@
 #if USE_GPGME
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkhbox.h>
@@ -32,7 +33,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gpgme.h>
 
-#include "intl.h"
 #include "gtkutils.h"
 #include "utils.h"
 #include "sigstatus.h"

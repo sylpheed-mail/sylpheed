@@ -26,6 +26,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
@@ -34,7 +35,6 @@
 
 #include <gpgme.h>
 
-#include "intl.h"
 #include "procmime.h"
 #include "procheader.h"
 #include "base64.h"

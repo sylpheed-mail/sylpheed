@@ -22,10 +22,10 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "intl.h"
 #include "nntp.h"
 #include "socket.h"
 #include "utils.h"

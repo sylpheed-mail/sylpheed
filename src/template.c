@@ -21,12 +21,12 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <ctype.h>
 
-#include "intl.h"
 #include "main.h"
 #include "template.h"
 #include "utils.h"

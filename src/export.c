@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwidget.h>
@@ -37,7 +38,6 @@
 #include <gtk/gtkfilesel.h>
 #include <gtk/gtksignal.h>
 
-#include "intl.h"
 #include "main.h"
 #include "inc.h"
 #include "mbox.h"

@@ -22,6 +22,7 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkimage.h>
 
@@ -29,7 +30,6 @@
 #  include <gdk-pixbuf/gdk-pixbuf.h>
 #endif /* HAVE_GDK_PIXBUF */
 
-#include "intl.h"
 #include "mainwindow.h"
 #include "prefs_common.h"
 #include "procmime.h"

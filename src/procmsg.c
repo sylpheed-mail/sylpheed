@@ -20,11 +20,11 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "intl.h"
 #include "main.h"
 #include "utils.h"
 #include "procmsg.h"

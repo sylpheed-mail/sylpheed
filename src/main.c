@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkrc.h>
 
@@ -46,7 +47,6 @@
 #  include <gpgme.h>
 #endif
 
-#include "intl.h"
 #include "main.h"
 #include "mainwindow.h"
 #include "folderview.h"

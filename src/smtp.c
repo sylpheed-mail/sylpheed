@@ -22,10 +22,10 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "intl.h"
 #include "smtp.h"
 #include "md5.h"
 #include "base64.h"

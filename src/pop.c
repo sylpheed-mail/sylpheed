@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -32,7 +33,6 @@
 #include <time.h>
 #include <errno.h>
 
-#include "intl.h"
 #include "pop.h"
 #include "md5.h"
 #include "prefs_account.h"

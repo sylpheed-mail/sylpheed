@@ -22,10 +22,10 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkstatusbar.h>
 #include <stdarg.h>
 
-#include "intl.h"
 #include "statusbar.h"
 #include "gtkutils.h"
 #include "utils.h"

@@ -20,6 +20,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkwidget.h>
@@ -41,7 +42,6 @@
 #include <gtk/gtktooltips.h>
 #include <string.h>
 
-#include "intl.h"
 #include "main.h"
 #include "mainwindow.h"
 #include "folderview.h"

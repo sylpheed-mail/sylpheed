@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtksignal.h>
@@ -39,7 +40,6 @@
 #include <signal.h>
 #include <errno.h>
 
-#include "intl.h"
 #include "main.h"
 #include "inc.h"
 #include "mainwindow.h"

@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -32,7 +33,6 @@
 #include <ctype.h>
 #include <time.h>
 
-#include "intl.h"
 #include "mbox.h"
 #include "procmsg.h"
 #include "folder.h"

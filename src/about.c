@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkwindow.h>
@@ -39,7 +40,6 @@
 #  include <sys/utsname.h>
 #endif
 
-#include "intl.h"
 #include "about.h"
 #include "gtkutils.h"
 #include "stock_pixmap.h"

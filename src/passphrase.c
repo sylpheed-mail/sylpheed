@@ -22,10 +22,8 @@
 
 #if USE_GPGME
 
-#include <string.h>
-#include <sys/types.h>
-#include <sys/mman.h>
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #ifdef GDK_WINDOWING_X11
 #  include <gdk/gdkx.h>  /* GDK_DISPLAY() */
@@ -41,8 +39,10 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkfilesel.h>
 #include <gtk/gtksignal.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/mman.h>
 
-#include "intl.h"
 #include "passphrase.h"
 #include "prefs_common.h"
 #include "manage_window.h"

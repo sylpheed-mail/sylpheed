@@ -24,12 +24,12 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
 
-#include "intl.h"
 #include "recv.h"
 #include "socket.h"
 #include "utils.h"

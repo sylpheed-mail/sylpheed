@@ -24,10 +24,10 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "intl.h"
 #include "folder.h"
 #include "prefs.h"
 #include "prefs_folder_item.h"

@@ -22,13 +22,13 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 #include <sys/stat.h>
 
-#include "intl.h"
 #include "procheader.h"
 #include "procmsg.h"
 #include "codeconv.h"

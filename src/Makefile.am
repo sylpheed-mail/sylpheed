@@ -1,7 +1,6 @@
 bin_PROGRAMS = sylpheed
 
 sylpheed_SOURCES = \
-	intl.h \
 	defs.h \
 	version.h \
 	main.c main.h \
@@ -177,7 +176,6 @@ EXTRA_DIST = \
 
 INCLUDES = \
 	-DG_LOG_DOMAIN=\"Sylpheed\" \
-	-I$(top_srcdir)/intl \
 	$(GTK_CFLAGS) \
 	$(GDK_PIXBUF_CFLAGS) \
 	$(GPGME_CFLAGS) \

@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <string.h>
 #include <strings.h>
 #include <stdlib.h>
@@ -31,7 +32,6 @@
 #include <regex.h>
 #include <time.h>
 
-#include "intl.h"
 #include "procheader.h"
 #include "filter.h"
 #include "folder.h"

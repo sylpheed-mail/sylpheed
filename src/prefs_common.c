@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 #include <stdio.h>
@@ -34,7 +35,6 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-#include "intl.h"
 #include "main.h"
 #include "prefs.h"
 #include "prefs_common.h"

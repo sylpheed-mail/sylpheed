@@ -20,6 +20,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkwindow.h>
@@ -30,7 +31,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "intl.h"
 #include "sourcewindow.h"
 #include "procmsg.h"
 #include "utils.h"

@@ -20,6 +20,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkwidget.h>
@@ -44,7 +45,6 @@
 #include <ctype.h>
 #include <unistd.h>
 
-#include "intl.h"
 #include "main.h"
 #include "menu.h"
 #include "mainwindow.h"

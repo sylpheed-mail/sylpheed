@@ -20,6 +20,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkcontainer.h>
@@ -32,7 +33,6 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "intl.h"
 #include "main.h"
 #include "messageview.h"
 #include "message_search.h"

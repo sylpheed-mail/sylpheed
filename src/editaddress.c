@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtksignal.h>
@@ -32,7 +33,6 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtktable.h>
 
-#include "intl.h"
 #include "mgutils.h"
 #include "addressbook.h"
 #include "addressitem.h"

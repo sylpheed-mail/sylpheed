@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkwindow.h>
@@ -31,7 +32,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "intl.h"
 #include "send_message.h"
 #include "session.h"
 #include "ssl.h"

@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -35,7 +36,6 @@
 
 #include <iconv.h>
 
-#include "intl.h"
 #include "codeconv.h"
 #include "unmime.h"
 #include "base64.h"

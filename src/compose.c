@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmenu.h>
@@ -69,7 +70,6 @@
 #  include <wctype.h>
 #endif
 
-#include "intl.h"
 #include "main.h"
 #include "mainwindow.h"
 #include "compose.h"

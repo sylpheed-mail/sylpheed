@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtknotebook.h>
 #include <gtk/gtkscrolledwindow.h>
@@ -37,7 +38,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "intl.h"
 #include "main.h"
 #include "mimeview.h"
 #include "textview.h"

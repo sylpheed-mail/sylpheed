@@ -23,10 +23,11 @@
 
 #include "defs.h"
 
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "intl.h"
 #include "alertpanel.h"
 #include "manage_window.h"
 #include "utils.h"

@@ -24,6 +24,7 @@
 #include "defs.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkwindow.h>
@@ -41,7 +42,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "intl.h"
 #include "main.h"
 #include "summary_search.h"
 #include "summaryview.h"
