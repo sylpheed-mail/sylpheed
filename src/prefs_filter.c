@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -329,14 +329,8 @@ void prefs_filter_read_config(void)
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
 			     NULL);
 	if (!is_file_exist(rcpath)) {
-		debug_print("reading older version of filter.xml ...\n");
 		g_free(rcpath);
-		rcpath = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
-				     FILTER_LIST, NULL);
-		if (!is_file_exist(rcpath)) {
-			g_free(rcpath);
-			return;
-		}
+		return;
 	}
 
 	node = xml_parse_file(rcpath);

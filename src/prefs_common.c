@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -755,15 +755,6 @@ void prefs_common_read_config(void)
 	gchar buf[PREFSBUFSIZE];
 
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, COMMON_RC, NULL);
-#if 0
-	if (!is_file_exist(path)) {
-		debug_print("reading older version of sylpheedrc ...\n");
-		g_free(path);
-		path = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
-				   COMMON_RC, NULL);
-		encoding = conv_get_locale_charset_str();
-	}
-#endif
 
 	prefs_read_config(param, "Common", path, NULL);
 	g_free(path);

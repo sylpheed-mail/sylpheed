@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2215,6 +2215,41 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 		unlink(dest_bak);
 
 	g_free(dest_bak);
+
+	return 0;
+}
+
+gint copy_dir(const gchar *src, const gchar *dest)
+{
+	DIR *dp;
+	struct dirent *d;
+	gchar *src_file;
+	gchar *dest_file;
+
+	if ((dp = opendir(src)) == NULL) {
+		FILE_OP_ERROR(src, "opendir");
+		return -1;
+	}
+
+	if (make_dir_hier(dest) < 0) {
+		closedir(dp);
+		return -1;
+	}
+
+	while ((d = readdir(dp)) != NULL) {
+		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
+			continue;
+
+		src_file = g_strconcat(src, G_DIR_SEPARATOR_S, d->d_name, NULL);
+		dest_file = g_strconcat(dest, G_DIR_SEPARATOR_S, d->d_name,
+					NULL);
+		if (is_file_exist(src_file))
+			copy_file(src_file, dest_file, FALSE);
+		g_free(dest_file);
+		g_free(src_file);
+	}
+
+	closedir(dp);
 
 	return 0;
 }

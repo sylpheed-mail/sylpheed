@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
+
+#include "defs.h"
 
 #include <glib.h>
 #include <string.h>
@@ -1760,3 +1762,53 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 }
 
 #undef LBREAK_IF_REQUIRED
+
+gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
+{
+	FILE *src_fp, *dest_fp;
+	gchar buf[BUFFSIZE], outbuf[BUFFSIZE];
+	CodeConverter *conv;
+	gboolean err = FALSE;
+
+	if ((src_fp = fopen(src, "rb")) == NULL) {
+		FILE_OP_ERROR(src, "fopen");
+		return -1;
+	}
+	if ((dest_fp = fopen(dest, "wb")) == NULL) {
+		FILE_OP_ERROR(dest, "fopen");
+		fclose(src_fp);
+		return -1;
+	}
+
+	if (change_file_mode_rw(dest_fp, dest) < 0) {
+		FILE_OP_ERROR(dest, "chmod");
+		g_warning("can't change file mode\n");
+	}
+
+	conv = conv_code_converter_new(encoding);
+
+	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
+		if (conv_convert(conv, outbuf, sizeof(outbuf), buf) == 0)
+			fputs(outbuf, dest_fp);
+		else
+			fputs(buf, dest_fp);
+	}
+
+	conv_code_converter_destroy(conv);
+
+	if (ferror(src_fp)) {
+		FILE_OP_ERROR(src, "fgets");
+		err = TRUE;
+	}
+	fclose(src_fp);
+	if (fclose(dest_fp) == EOF) {
+		FILE_OP_ERROR(dest, "fclose");
+		err = TRUE;
+	}
+	if (err) {
+		unlink(dest);
+		return -1;
+	}
+
+	return 0;
+}

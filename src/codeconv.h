@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -237,5 +237,8 @@ void conv_encode_header			(gchar		*dest,
 					 gint		 header_len,
 					 gboolean	 addr_field);
 
+gint conv_copy_file			(const gchar	*src,
+					 const gchar	*dest,
+					 const gchar	*src_encoding);
 
 #endif /* __CODECONV_H__ */

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,10 +27,6 @@
 #include <gtk/gtkmain.h>
 #include <gtk/gtkrc.h>
 
-#if HAVE_GDK_IMLIB
-#  include <gdk_imlib.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,6 +36,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <signal.h>
+#include <dirent.h>
 
 #if HAVE_LOCALE_H
 #  include <locale.h>
@@ -67,6 +64,7 @@
 #include "alertpanel.h"
 #include "statusbar.h"
 #include "addressbook.h"
+#include "addrindex.h"
 #include "compose.h"
 #include "folder.h"
 #include "setup.h"
@@ -115,6 +113,8 @@ static void lock_socket_input_cb	(gpointer	   data,
 					 gint		   source,
 					 GdkInputCondition condition);
 static gchar *get_socket_name		(void);
+
+static void migrate_old_config		(void);
 
 static void open_compose_new		(const gchar	*address,
 					 GPtrArray	*attach_files);
@@ -181,12 +181,6 @@ int main(int argc, char *argv[])
 		g_error(_("g_thread is not supported by glib.\n"));
 #endif
 
-#if HAVE_GDK_IMLIB
-	gdk_imlib_init();
-	gtk_widget_push_visual(gdk_imlib_get_visual());
-	gtk_widget_push_colormap(gdk_imlib_get_colormap());
-#endif
-
 #if USE_SSL
 	ssl_init();
 #endif
@@ -217,7 +211,15 @@ int main(int argc, char *argv[])
 		if (rename(RC_DIR, RC_DIR ".bak") < 0)
 			FILE_OP_ERROR(RC_DIR, "rename");
 	}
-	MAKE_DIR_IF_NOT_EXIST(RC_DIR);
+
+	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
+	if (!is_dir_exist(RC_DIR)) {
+		if (make_dir(RC_DIR) < 0)
+			return 1;
+		if (is_dir_exist(OLD_RC_DIR))
+			migrate_old_config();
+	}
+
 	MAKE_DIR_IF_NOT_EXIST(get_imap_cache_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
@@ -682,6 +684,75 @@ static void lock_socket_input_cb(gpointer data,
 	}
 
 	fd_close(sock);
+}
+
+static void migrate_old_config(void)
+{
+	DIR *dp;
+	struct dirent *d;
+	GPatternSpec *pspec;
+
+	if (alertpanel(_("Migration of configuration"),
+		       _("The previous version of configuration found.\n"
+			 "Do you want to migrate it?"),
+		       _("Yes"), _("No"), NULL) != G_ALERTDEFAULT)
+		return;
+
+	debug_print("Migrating old configuration...\n");
+
+#define COPY_FILE(rcfile)					\
+	conv_copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S rcfile,	\
+		       RC_DIR G_DIR_SEPARATOR_S rcfile,		\
+		       conv_get_locale_charset_str())
+
+	COPY_FILE(ACCOUNT_RC);
+	COPY_FILE(ACTIONS_RC);
+	COPY_FILE(CUSTOM_HEADER_RC);
+	COPY_FILE(DISPLAY_HEADER_RC);
+	COPY_FILE(FILTER_HEADER_RC);
+#if 0
+	COPY_FILE(COMMON_RC);
+#endif
+	COPY_FILE(COMMAND_HISTORY);
+
+#undef COPY_FILE
+
+	copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FILTER_LIST,
+		  RC_DIR G_DIR_SEPARATOR_S FILTER_LIST, FALSE);
+	copy_file(OLD_RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST,
+		  RC_DIR G_DIR_SEPARATOR_S FOLDER_LIST, FALSE);
+
+	copy_dir(OLD_RC_DIR G_DIR_SEPARATOR_S "uidl",
+		 RC_DIR G_DIR_SEPARATOR_S "uidl");
+
+	if (!is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S ADDRESSBOOK_INDEX_FILE))
+		return;
+
+	if ((dp = opendir(OLD_RC_DIR)) == NULL) {
+		FILE_OP_ERROR(OLD_RC_DIR, "opendir");
+		return;
+	}
+
+	pspec = g_pattern_spec_new("addrbook-*.xml");
+
+	while ((d = readdir(dp)) != NULL) {
+		if (g_pattern_match_string(pspec, d->d_name)) {
+			gchar *old_file;
+			gchar *new_file;
+
+			old_file = g_strconcat(OLD_RC_DIR G_DIR_SEPARATOR_S,
+					       d->d_name, NULL);
+			new_file = g_strconcat(RC_DIR G_DIR_SEPARATOR_S,
+					       d->d_name, NULL);
+			copy_file(old_file, new_file, FALSE);
+			g_free(new_file);
+			g_free(old_file);
+		}
+	}
+
+	g_pattern_spec_free(pspec);
+
+	closedir(dp);
 }
 
 static void open_compose_new(const gchar *address, GPtrArray *attach_files)

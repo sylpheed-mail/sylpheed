@@ -369,6 +369,8 @@ gint remove_dir_recursive	(const gchar	*dir);
 gint copy_file			(const gchar	*src,
 				 const gchar	*dest,
 				 gboolean	 keep_backup);
+gint copy_dir			(const gchar	*src,
+				 const gchar	*dest);
 gint move_file			(const gchar	*src,
 				 const gchar	*dest,
 				 gboolean	 overwrite);

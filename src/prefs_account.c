@@ -43,7 +43,6 @@
 #include "foldersel.h"
 #include "inc.h"
 #include "menu.h"
-#include "codeconv.h"
 #include "gtkutils.h"
 #include "utils.h"
 #include "alertpanel.h"
@@ -516,7 +515,6 @@ void prefs_account_read_config(PrefsAccount *ac_prefs, const gchar *label)
 {
 	const guchar *p = label;
 	gchar *rcpath;
-	const gchar *encoding = NULL;
 	gint id;
 
 	g_return_if_fail(ac_prefs != NULL);
@@ -525,15 +523,7 @@ void prefs_account_read_config(PrefsAccount *ac_prefs, const gchar *label)
 	memset(&tmp_ac_prefs, 0, sizeof(PrefsAccount));
 
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, ACCOUNT_RC, NULL);
-	if (!is_file_exist(rcpath)) {
-		debug_print("reading older version of accountrc ...\n");
-		g_free(rcpath);
-		rcpath = g_strconcat(get_old_rc_dir(), G_DIR_SEPARATOR_S,
-				     ACCOUNT_RC, NULL);
-		encoding = conv_get_locale_charset_str();
-	}
-
-	prefs_read_config(param, label, rcpath, encoding);
+	prefs_read_config(param, label, rcpath, NULL);
 	g_free(rcpath);
 
 	*ac_prefs = tmp_ac_prefs;

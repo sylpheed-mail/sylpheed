@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,6 @@ gint xml_get_dtd(XMLFile *file)
 			bufp += 9;
 			extract_quote(bufp, '"');
 			file->encoding = g_strdup(bufp);
-			g_print("encoding = %s\n", bufp);
 		} else
 			file->encoding =
 				g_strdup(conv_get_internal_charset_str());
