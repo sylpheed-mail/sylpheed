@@ -1,5 +1,14 @@
 2005-03-14
 
+	* src/compose.c: compose_write_to_file(): コード変換に対して厳密な
+	  チェックを行うようにした。
+	* src/codeconv.[ch]:
+	  conv_codeset_strdup_full()
+	  conv_iconv_strdup()
+	  conv_iconv_strdup_with_cd(): エラー値を返すための引数を追加。
+
+2005-03-14
+
 	* src/smtp.[ch]
 	  src/prefs_account.c: PLAIN 認証方式を実装(mori さん thanks)。
 

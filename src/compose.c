@@ -2529,28 +2529,22 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		out_codeset = CS_US_ASCII;
 		encoding = ENC_7BIT;
 	} else {
+		gint error = 0;
+
 		out_codeset = conv_get_outgoing_charset_str();
 		if (!strcasecmp(out_codeset, CS_US_ASCII))
 			out_codeset = CS_ISO_8859_1;
 
-		if (prefs_common.encoding_method == CTE_BASE64)
-			encoding = ENC_BASE64;
-		else if (prefs_common.encoding_method == CTE_QUOTED_PRINTABLE)
-			encoding = ENC_QUOTED_PRINTABLE;
-		else if (prefs_common.encoding_method == CTE_8BIT)
-			encoding = ENC_8BIT;
-		else
-			encoding = procmime_get_encoding_for_charset
-				(out_codeset);
-
-		buf = conv_codeset_strdup(chars, src_codeset, out_codeset);
-		if (!buf) {
+		buf = conv_codeset_strdup_full(chars, src_codeset, out_codeset,
+					       &error);
+		if (!buf || error != 0) {
 			AlertValue aval;
 			gchar *msg;
 
-			msg = g_strdup_printf(_("Can't convert the character encoding of the message from\n"
-						"%s to %s.\n"
-						"Send it anyway?"), src_codeset, out_codeset);
+			msg = g_strdup_printf(_("Can't convert the character encoding of the message body from %s to %s.\n"
+						"Send it as %s anyway?"),
+					      src_codeset, out_codeset,
+					      src_codeset);
 			aval = alertpanel
 				(_("Error"), msg, _("Yes"), _("+No"), NULL);
 			g_free(msg);
@@ -2566,6 +2560,16 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 				chars = NULL;
 			}
 		}
+
+		if (prefs_common.encoding_method == CTE_BASE64)
+			encoding = ENC_BASE64;
+		else if (prefs_common.encoding_method == CTE_QUOTED_PRINTABLE)
+			encoding = ENC_QUOTED_PRINTABLE;
+		else if (prefs_common.encoding_method == CTE_8BIT)
+			encoding = ENC_8BIT;
+		else
+			encoding = procmime_get_encoding_for_charset
+				(out_codeset);
 	}
 	g_free(chars);
 

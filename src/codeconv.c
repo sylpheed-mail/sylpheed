@@ -411,7 +411,7 @@ static void conv_sjistoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
 	gchar *tmpstr;
 
-	tmpstr = conv_iconv_strdup(inbuf, CS_SHIFT_JIS, CS_UTF_8);
+	tmpstr = conv_iconv_strdup(inbuf, CS_SHIFT_JIS, CS_UTF_8, NULL);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -443,7 +443,7 @@ static void conv_euctoutf8(gchar *outbuf, gint outlen, const gchar *inbuf)
 		}
 	}
 
-	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd);
+	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd, NULL);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -493,7 +493,7 @@ static void conv_utf8toeuc(gchar *outbuf, gint outlen, const gchar *inbuf)
 		}
 	}
 
-	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd);
+	tmpstr = conv_iconv_strdup_with_cd(inbuf, cd, NULL);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -812,7 +812,7 @@ void conv_localetodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 	gchar *tmpstr;
 
 	tmpstr = conv_iconv_strdup(inbuf, conv_get_locale_charset_str(),
-				   CS_INTERNAL);
+				   CS_INTERNAL, NULL);
 	if (tmpstr) {
 		strncpy2(outbuf, tmpstr, outlen);
 		g_free(tmpstr);
@@ -855,7 +855,7 @@ gint conv_convert(CodeConverter *conv, gchar *outbuf, gint outlen,
 		gchar *str;
 
 		str = conv_iconv_strdup
-			(inbuf, conv->src_encoding, conv->dest_encoding);
+			(inbuf, conv->src_encoding, conv->dest_encoding, NULL);
 		if (!str)
 			return -1;
 		else {
@@ -870,6 +870,13 @@ gint conv_convert(CodeConverter *conv, gchar *outbuf, gint outlen,
 gchar *conv_codeset_strdup(const gchar *inbuf,
 			   const gchar *src_code, const gchar *dest_code)
 {
+	return conv_codeset_strdup_full(inbuf, src_code, dest_code, NULL);
+}
+
+gchar *conv_codeset_strdup_full(const gchar *inbuf,
+				const gchar *src_code, const gchar *dest_code,
+				gint *error)
+{
 	gchar *buf;
 	size_t len;
 	CodeConvFunc conv_func;
@@ -878,13 +885,17 @@ gchar *conv_codeset_strdup(const gchar *inbuf,
 	if (conv_func != conv_noconv) {
 		len = (strlen(inbuf) + 1) * 3;
 		buf = g_malloc(len);
-		if (!buf) return NULL;
+		if (!buf) {
+			if (error)
+				*error = -1;
+			return NULL;
+		}
 
 		conv_func(buf, len, inbuf);
 		return g_realloc(buf, strlen(buf) + 1);
 	}
 
-	return conv_iconv_strdup(inbuf, src_code, dest_code);
+	return conv_iconv_strdup(inbuf, src_code, dest_code, error);
 }
 
 CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
@@ -973,7 +984,8 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
 }
 
 gchar *conv_iconv_strdup(const gchar *inbuf,
-			 const gchar *src_code, const gchar *dest_code)
+			 const gchar *src_code, const gchar *dest_code,
+			 gint *error)
 {
 	iconv_t cd;
 	gchar *outbuf;
@@ -984,17 +996,20 @@ gchar *conv_iconv_strdup(const gchar *inbuf,
 		dest_code = CS_INTERNAL;
 
 	cd = iconv_open(dest_code, src_code);
-	if (cd == (iconv_t)-1)
+	if (cd == (iconv_t)-1) {
+		if (error)
+			*error = -1;
 		return NULL;
+	}
 
-	outbuf = conv_iconv_strdup_with_cd(inbuf, cd);
+	outbuf = conv_iconv_strdup_with_cd(inbuf, cd, error);
 
 	iconv_close(cd);
 
 	return outbuf;
 }
 
-gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
+gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd, gint *error)
 {
 	const gchar *inbuf_p;
 	gchar *outbuf;
@@ -1005,6 +1020,7 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
 	size_t out_left;
 	size_t n_conv;
 	size_t len;
+	gint error_ = 0;
 
 	inbuf_p = inbuf;
 	in_size = strlen(inbuf);
@@ -1026,7 +1042,8 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
 	while ((n_conv = iconv(cd, (ICONV_CONST gchar **)&inbuf_p, &in_left,
 			       &outbuf_p, &out_left)) == (size_t)-1) {
 		if (EILSEQ == errno) {
-			//g_print("iconv(): at %d: %s\n", in_size - in_left, g_strerror(errno));
+			/* g_print("iconv(): at %d: %s\n", in_size - in_left, g_strerror(errno)); */
+			error_ = -1;
 			inbuf_p++;
 			in_left--;
 			if (out_left == 0) {
@@ -1035,12 +1052,14 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
 			*outbuf_p++ = SUBST_CHAR;
 			out_left--;
 		} else if (EINVAL == errno) {
+			error_ = -1;
 			break;
 		} else if (E2BIG == errno) {
 			EXPAND_BUF();
 		} else {
 			g_warning("conv_iconv_strdup(): %s\n",
 				  g_strerror(errno));
+			error_ = -1;
 			break;
 		}
 	}
@@ -1052,6 +1071,7 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
 		} else {
 			g_warning("conv_iconv_strdup(): %s\n",
 				  g_strerror(errno));
+			error_ = -1;
 			break;
 		}
 	}
@@ -1061,6 +1081,9 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd)
 	len = outbuf_p - outbuf;
 	outbuf = g_realloc(outbuf, len + 1);
 	outbuf[len] = '\0';
+
+	if (error)
+		*error = error_;
 
 	return outbuf;
 }

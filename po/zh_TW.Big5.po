@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-10 20:29+0900\n"
+"POT-Creation-Date: 2005-03-14 20:05+0900\n"
 "PO-Revision-Date: 2004-12-04 08:24+0800\n"
 "Last-Translator: Frank J. J. Weng <franklin@goodhorse.idv.tw>\n"
 "Language-Team: zh-l10n <zh-l10n@linux.org.tw>\n"
@@ -82,7 +82,7 @@ msgstr ""
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
 #: src/account.c:638 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3653 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3648 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:151 src/prefs_filter.c:214 src/prefs_folder_item.c:170
@@ -135,13 +135,13 @@ msgstr "刪除帳號"
 msgid "Do you really want to delete this account?"
 msgstr "您確定要刪除這個帳號嗎？"
 
-#: src/account.c:758 src/compose.c:2565 src/compose.c:4812
+#: src/account.c:758 src/compose.c:2549 src/compose.c:4805
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "Yes"
 msgstr "是的"
 
-#: src/account.c:758 src/compose.c:2565 src/compose.c:4812
+#: src/account.c:758 src/compose.c:2549 src/compose.c:4805
 #: src/folderview.c:1916 src/folderview.c:1998 src/folderview.c:2034
 #: src/folderview.c:2156 src/folderview.c:2192
 msgid "+No"
@@ -246,7 +246,7 @@ msgstr "使用者設定之命令參數"
 msgid "Add Address to Book"
 msgstr "將位址加入位址簿"
 
-#: src/addressadd.c:196 src/compose.c:4194 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4189 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "位址"
@@ -386,7 +386,7 @@ msgstr "/刪除(_D)"
 msgid "E-Mail address"
 msgstr "E-Mail位址"
 
-#: src/addressbook.c:493 src/compose.c:4195 src/prefs_common.c:2186
+#: src/addressbook.c:493 src/compose.c:4190 src/prefs_common.c:2186
 msgid "Address book"
 msgstr "位址簿"
 
@@ -560,7 +560,7 @@ msgid "Group"
 msgstr "群組"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3133 src/folderview.c:283 src/prefs_account.c:1823
+#: src/addressbook.c:3133 src/folderview.c:283 src/prefs_account.c:1824
 msgid "Folder"
 msgstr "資料夾"
 
@@ -584,15 +584,15 @@ msgstr "共用位址紀錄"
 msgid "Personal address"
 msgstr "私人位址紀錄"
 
-#: src/alertpanel.c:123 src/compose.c:4812 src/main.c:458
+#: src/alertpanel.c:123 src/compose.c:4805 src/main.c:458
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1947
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1954
 msgid "Warning"
 msgstr "警告"
 
-#: src/alertpanel.c:149 src/compose.c:2565 src/inc.c:558
+#: src/alertpanel.c:149 src/compose.c:2549 src/inc.c:558
 msgid "Error"
 msgstr "錯誤"
 
@@ -872,67 +872,67 @@ msgstr "引言格式錯誤。"
 msgid "Message reply/forward format error."
 msgstr "回覆/轉寄信件格式錯誤。"
 
-#: src/compose.c:1689
+#: src/compose.c:1679
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "檔案 %s 不存在 \n"
 
-#: src/compose.c:1693
+#: src/compose.c:1683
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "無法取得檔案 %s 的大小 \n"
 
-#: src/compose.c:1697
+#: src/compose.c:1687
 #, c-format
 msgid "File %s is empty."
 msgstr "檔案 %s 是空的。"
 
-#: src/compose.c:1701
+#: src/compose.c:1691
 #, c-format
 msgid "Can't read %s."
 msgstr "無法讀取 %s。"
 
-#: src/compose.c:1736
+#: src/compose.c:1726
 #, c-format
 msgid "Message: %s"
 msgstr "信件：%s"
 
-#: src/compose.c:1807 src/mimeview.c:491
+#: src/compose.c:1797 src/mimeview.c:491
 msgid "Can't get the part of multipart message."
 msgstr "無法取得這個附加檔。"
 
-#: src/compose.c:2198
+#: src/compose.c:2188
 msgid " [Edited]"
 msgstr " [已修改]"
 
-#: src/compose.c:2200
+#: src/compose.c:2190
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - 新郵件%s"
 
-#: src/compose.c:2203
+#: src/compose.c:2193
 #, c-format
 msgid "Compose message%s"
 msgstr "新郵件%s"
 
-#: src/compose.c:2314
+#: src/compose.c:2304
 msgid "Recipient is not specified."
 msgstr "沒有指定收件人。"
 
-#: src/compose.c:2322 src/compose.c:4115 src/mainwindow.c:2144
+#: src/compose.c:2312 src/compose.c:4110 src/mainwindow.c:2144
 #: src/prefs_account.c:703 src/prefs_common.c:850
 msgid "Send"
 msgstr "送出"
 
-#: src/compose.c:2323
+#: src/compose.c:2313
 msgid "Subject is empty. Send it anyway?"
 msgstr "沒有標題。確定要送出？"
 
-#: src/compose.c:2374
+#: src/compose.c:2364
 msgid "can't get recipient list."
 msgstr "無法取得收件人或收件新聞群組名單。"
 
-#: src/compose.c:2394
+#: src/compose.c:2384
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -940,169 +940,168 @@ msgstr ""
 "您選用的帳號並非一個電子郵件帳號，可能是用來在新聞群組上發表文章用的。\n"
 "要發送郵件請選擇電子郵件帳號。"
 
-#: src/compose.c:2408 src/send_message.c:261
+#: src/compose.c:2398 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "向 %s 發出文章時出現錯誤。"
 
-#: src/compose.c:2431
+#: src/compose.c:2421
 msgid "Can't save the message to outbox."
 msgstr "無法將信件送至寄件夾中。"
 
-#: src/compose.c:2467
+#: src/compose.c:2457
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "無法找到所指定的 key id '%s'"
 
-#: src/compose.c:2528 src/compose.c:2743 src/compose.c:2806 src/compose.c:2925
+#: src/compose.c:2518 src/compose.c:2737 src/compose.c:2800 src/compose.c:2919
 #: src/utils.c:2189
 msgid "can't change file mode\n"
 msgstr "無法改變檔案型態 \n"
 
-#: src/compose.c:2561
-#, c-format
+#: src/compose.c:2544
+#, fuzzy, c-format
 msgid ""
-"Can't convert the character encoding of the message from\n"
-"%s to %s.\n"
-"Send it anyway?"
+"Can't convert the character encoding of the message body from %s to %s.\n"
+"Send it as %s anyway?"
 msgstr ""
 "無法轉換將信件的編碼設定由 %s 轉換為 %s。\n"
 "仍舊要傳送嗎？"
 
-#: src/compose.c:2614
+#: src/compose.c:2608
 msgid "can't write headers\n"
 msgstr "無法寫入標頭\n"
 
-#: src/compose.c:2885
+#: src/compose.c:2879
 msgid "can't remove the old message\n"
 msgstr "無法刪除原有的舊信件。\n"
 
-#: src/compose.c:2903
+#: src/compose.c:2897
 msgid "queueing message...\n"
 msgstr "送進暫存資料夾中...\n"
 
-#: src/compose.c:2985
+#: src/compose.c:2979
 msgid "can't find queue folder\n"
 msgstr "找不到暫存資料夾。\n"
 
-#: src/compose.c:2992
+#: src/compose.c:2986
 msgid "can't queue the message\n"
 msgstr "無法放進暫存資料夾。\n"
 
-#: src/compose.c:3551
+#: src/compose.c:3545
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "產生信件的編號：%s\n"
 
-#: src/compose.c:3648
+#: src/compose.c:3643
 msgid "Creating compose window...\n"
 msgstr "產生新郵件...\n"
 
-#: src/compose.c:3651 src/compose.c:4603
+#: src/compose.c:3646 src/compose.c:4596
 msgid "MIME type"
 msgstr "MIME 型態"
 
 #. S_COL_DATE
-#: src/compose.c:3652 src/mimeview.c:150 src/prefs_filter_edit.c:569
+#: src/compose.c:3647 src/mimeview.c:150 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:3703 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3698 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "來自："
 
-#: src/compose.c:4116
+#: src/compose.c:4111
 msgid "Send message"
 msgstr "送出信件"
 
-#: src/compose.c:4124
+#: src/compose.c:4119
 msgid "Send later"
 msgstr "待會再送出"
 
-#: src/compose.c:4125
+#: src/compose.c:4120
 msgid "Put into queue folder and send later"
 msgstr "放到寄件夾中待會再送出"
 
-#: src/compose.c:4133
+#: src/compose.c:4128
 msgid "Draft"
 msgstr "草稿"
 
-#: src/compose.c:4134
+#: src/compose.c:4129
 msgid "Save to draft folder"
 msgstr "儲存至草稿資料夾"
 
-#: src/compose.c:4144 src/compose.c:5388
+#: src/compose.c:4139 src/compose.c:5380
 msgid "Insert"
 msgstr "插入"
 
-#: src/compose.c:4145
+#: src/compose.c:4140
 msgid "Insert file"
 msgstr "插入檔案"
 
-#: src/compose.c:4153
+#: src/compose.c:4148
 msgid "Attach"
 msgstr "附加"
 
-#: src/compose.c:4154
+#: src/compose.c:4149
 msgid "Attach file"
 msgstr "附加檔案"
 
 #. signature
-#: src/compose.c:4164 src/prefs_account.c:1338 src/prefs_common.c:1261
+#: src/compose.c:4159 src/prefs_account.c:1339 src/prefs_common.c:1261
 msgid "Signature"
 msgstr "簽名"
 
-#: src/compose.c:4165
+#: src/compose.c:4160
 msgid "Insert signature"
 msgstr "插入簽名"
 
-#: src/compose.c:4174 src/prefs_common.c:1283 src/prefs_common.c:2165
+#: src/compose.c:4169 src/prefs_common.c:1283 src/prefs_common.c:2165
 msgid "Editor"
 msgstr "編輯器"
 
-#: src/compose.c:4175
+#: src/compose.c:4170
 msgid "Edit with external editor"
 msgstr "使用其他的編輯器"
 
-#: src/compose.c:4183
+#: src/compose.c:4178
 msgid "Linewrap"
 msgstr "切割"
 
-#: src/compose.c:4184
+#: src/compose.c:4179
 msgid "Wrap all long lines"
 msgstr "切割所有過長的文字行"
 
-#: src/compose.c:4497
+#: src/compose.c:4490
 msgid "Invalid MIME type."
 msgstr "不合法的 MIME 型態"
 
-#: src/compose.c:4516
+#: src/compose.c:4509
 msgid "File doesn't exist or is empty."
 msgstr "檔案不存在, 或檔案是空的"
 
-#: src/compose.c:4585
+#: src/compose.c:4578
 msgid "Properties"
 msgstr "內容"
 
-#: src/compose.c:4605
+#: src/compose.c:4598
 msgid "Encoding"
 msgstr "編碼"
 
-#: src/compose.c:4628 src/prefs_folder_item.c:183
+#: src/compose.c:4621 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "路徑"
 
-#: src/compose.c:4629
+#: src/compose.c:4622
 msgid "File name"
 msgstr "檔名"
 
-#: src/compose.c:4783
+#: src/compose.c:4776
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外用編輯器的命令是錯誤的：`%s'\n"
 
-#: src/compose.c:4809
+#: src/compose.c:4802
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1113,72 +1112,72 @@ msgstr ""
 "要強迫結束該行程嗎？\n"
 "行程的群組代碼是：%d"
 
-#: src/compose.c:4822
+#: src/compose.c:4815
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "結束群組代碼為 %d 的行程"
 
-#: src/compose.c:4823
+#: src/compose.c:4816
 #, c-format
 msgid "Temporary file: %s"
 msgstr "暫存檔案：%s"
 
-#: src/compose.c:4847
+#: src/compose.c:4840
 msgid "Compose: input from monitoring process\n"
 msgstr ""
 
 #. failed
-#: src/compose.c:4880
+#: src/compose.c:4873
 msgid "Couldn't exec external editor\n"
 msgstr "無法執行外部編輯器。\n"
 
-#: src/compose.c:4884
+#: src/compose.c:4877
 msgid "Couldn't write to file\n"
 msgstr "無法寫入檔案。\n"
 
-#: src/compose.c:4886
+#: src/compose.c:4879
 msgid "Pipe read failed\n"
 msgstr "Pipe 讀取失敗。\n"
 
-#: src/compose.c:5188 src/compose.c:5196 src/compose.c:5202
+#: src/compose.c:5180 src/compose.c:5188 src/compose.c:5194
 msgid "Can't queue the message."
 msgstr "無法放進暫存資料夾。"
 
-#: src/compose.c:5293
+#: src/compose.c:5285
 #, fuzzy
 msgid "Select files"
 msgstr "選擇檔案"
 
-#: src/compose.c:5315
+#: src/compose.c:5307
 msgid "Select file"
 msgstr "選擇檔案"
 
-#: src/compose.c:5350
+#: src/compose.c:5342
 msgid "Discard message"
 msgstr "放棄信件"
 
-#: src/compose.c:5351
+#: src/compose.c:5343
 msgid "This message has been modified. discard it?"
 msgstr "信件已被修改過。要放棄它嗎？"
 
-#: src/compose.c:5352
+#: src/compose.c:5344
 msgid "Discard"
 msgstr "放棄"
 
-#: src/compose.c:5352
+#: src/compose.c:5344
 msgid "to Draft"
 msgstr "放入草稿資料夾"
 
-#: src/compose.c:5385
+#: src/compose.c:5377
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "您確定要套用 '%s' 這個信件樣板嗎？"
 
-#: src/compose.c:5387
+#: src/compose.c:5379
 msgid "Apply template"
 msgstr "套用信件樣板"
 
-#: src/compose.c:5388
+#: src/compose.c:5380
 msgid "Replace"
 msgstr "置換"
 
@@ -1283,7 +1282,7 @@ msgid " Check File "
 msgstr "檢查檔案(_C)"
 
 #: src/editbook.c:203 src/editjpilot.c:308 src/editvcard.c:223
-#: src/prefs_account.c:1349
+#: src/prefs_account.c:1350
 msgid "File"
 msgstr "/檔案(_F)"
 
@@ -1361,7 +1360,7 @@ msgid "Edit JPilot Entry"
 msgstr "編輯 JPilot 資料"
 
 #: src/editjpilot.c:315 src/editldap.c:342 src/editvcard.c:230
-#: src/importldif.c:527 src/prefs_account.c:1851
+#: src/importldif.c:527 src/prefs_account.c:1852
 msgid " ... "
 msgstr "..."
 
@@ -1490,15 +1489,15 @@ msgstr "選擇..."
 msgid "Select exporting file"
 msgstr "選擇匯出檔案："
 
-#: src/filesel.c:113
+#: src/filesel.c:121
 msgid "Save as"
 msgstr "另存新檔"
 
-#: src/filesel.c:119
+#: src/filesel.c:127
 msgid "Overwrite"
 msgstr "覆寫"
 
-#: src/filesel.c:120
+#: src/filesel.c:128
 msgid "Overwrite existing file?"
 msgstr "您要取代已存在的檔案嗎？"
 
@@ -3482,15 +3481,15 @@ msgstr "這個數位簽章尚未經過檢查\n"
 msgid "_Check signature"
 msgstr "/檢查數位簽章(_C)"
 
-#: src/mimeview.c:880 src/mimeview.c:925 src/mimeview.c:945 src/mimeview.c:968
+#: src/mimeview.c:883 src/mimeview.c:928 src/mimeview.c:948 src/mimeview.c:971
 msgid "Can't save the part of multipart message."
 msgstr "無法儲存這個附加檔。"
 
-#: src/mimeview.c:978
+#: src/mimeview.c:981
 msgid "Open with"
 msgstr "以別的程式開啟"
 
-#: src/mimeview.c:979
+#: src/mimeview.c:982
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3499,7 +3498,7 @@ msgstr ""
 "請輸入開啟指令：\n"
 "（ `%s' 將會被置換為檔名）"
 
-#: src/mimeview.c:1034
+#: src/mimeview.c:1037
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "開啟此 MIME 型態的命令是錯誤的：`%s'"
@@ -3664,11 +3663,11 @@ msgstr "信箱已被鎖定，可能前一次抓取未完成。\n"
 msgid "session timeout\n"
 msgstr "作業逾時\n"
 
-#: src/pop.c:664 src/smtp.c:510
+#: src/pop.c:664 src/smtp.c:557
 msgid "can't start TLS session\n"
 msgstr "無法啟動 TLS\n"
 
-#: src/pop.c:671 src/smtp.c:445
+#: src/pop.c:671 src/smtp.c:492
 msgid "error occurred on authentication\n"
 msgstr "認證時發生錯誤\n"
 
@@ -3754,12 +3753,12 @@ msgstr "服務公司/組織"
 msgid "Server information"
 msgstr "伺服器資訊"
 
-#: src/prefs_account.c:843 src/prefs_account.c:990 src/prefs_account.c:1595
+#: src/prefs_account.c:843 src/prefs_account.c:990 src/prefs_account.c:1596
 msgid "POP3"
 msgstr ""
 
-#: src/prefs_account.c:845 src/prefs_account.c:1102 src/prefs_account.c:1612
-#: src/prefs_account.c:1799
+#: src/prefs_account.c:845 src/prefs_account.c:1102 src/prefs_account.c:1613
+#: src/prefs_account.c:1800
 msgid "IMAP4"
 msgstr ""
 
@@ -3787,11 +3786,11 @@ msgstr "接收郵件伺服器"
 msgid "SMTP server (send)"
 msgstr "發送郵件伺服器 (SMTP)"
 
-#: src/prefs_account.c:920 src/prefs_account.c:1258
+#: src/prefs_account.c:920 src/prefs_account.c:1259
 msgid "User ID"
 msgstr "帳號"
 
-#: src/prefs_account.c:926 src/prefs_account.c:1267
+#: src/prefs_account.c:926 src/prefs_account.c:1268
 msgid "Password"
 msgstr "密碼"
 
@@ -3879,179 +3878,179 @@ msgstr "認證"
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP 認證"
 
-#: src/prefs_account.c:1289
+#: src/prefs_account.c:1290
 #, fuzzy
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
 msgstr "若是此欄空白，將使用接收時的帳號與密碼。"
 
-#: src/prefs_account.c:1301
+#: src/prefs_account.c:1302
 msgid "Authenticate with POP3 before sending"
 msgstr "送信前先做 POP3 認證"
 
-#: src/prefs_account.c:1357
+#: src/prefs_account.c:1358
 msgid "Command output"
 msgstr "命令輸出"
 
-#: src/prefs_account.c:1368 src/prefs_folder_item.c:300
+#: src/prefs_account.c:1369 src/prefs_folder_item.c:300
 msgid "Automatically set the following addresses"
 msgstr "在相關欄位上自動加入下列電子郵件信箱："
 
-#: src/prefs_account.c:1377
+#: src/prefs_account.c:1378
 msgid "Cc"
 msgstr "複本"
 
-#: src/prefs_account.c:1390
+#: src/prefs_account.c:1391
 msgid "Bcc"
 msgstr "密件複本"
 
-#: src/prefs_account.c:1403
+#: src/prefs_account.c:1404
 msgid "Reply-To"
 msgstr "回信地址"
 
-#: src/prefs_account.c:1455
+#: src/prefs_account.c:1456
 msgid "Encrypt message by default"
 msgstr "信件自動加密"
 
-#: src/prefs_account.c:1457
+#: src/prefs_account.c:1458
 msgid "Sign message by default"
 msgstr "信件自動做數位簽章"
 
-#: src/prefs_account.c:1459
+#: src/prefs_account.c:1460
 msgid "Use ASCII-armored format for encryption"
 msgstr "使用 ASCII-armored 格式做加密"
 
-#: src/prefs_account.c:1461
+#: src/prefs_account.c:1462
 msgid "Use clear text signature"
 msgstr "使用明碼簽名"
 
-#: src/prefs_account.c:1466
+#: src/prefs_account.c:1467
 msgid "Sign key"
 msgstr "簽章鑰匙"
 
-#: src/prefs_account.c:1474
+#: src/prefs_account.c:1475
 msgid "Use default GnuPG key"
 msgstr "使用預設的 GnuPG key"
 
-#: src/prefs_account.c:1483
+#: src/prefs_account.c:1484
 msgid "Select key by your email address"
 msgstr "根據你的電子郵件地址選擇 key"
 
-#: src/prefs_account.c:1492
+#: src/prefs_account.c:1493
 msgid "Specify key manually"
 msgstr "手動指定 key"
 
-#: src/prefs_account.c:1508
+#: src/prefs_account.c:1509
 msgid "User or key ID:"
 msgstr "使用者代號或 key 的識別碼："
 
-#: src/prefs_account.c:1603 src/prefs_account.c:1620 src/prefs_account.c:1636
-#: src/prefs_account.c:1654
+#: src/prefs_account.c:1604 src/prefs_account.c:1621 src/prefs_account.c:1637
+#: src/prefs_account.c:1655
 msgid "Don't use SSL"
 msgstr "不使用 SSL"
 
-#: src/prefs_account.c:1606
+#: src/prefs_account.c:1607
 msgid "Use SSL for POP3 connection"
 msgstr "POP3 連線時使用 SSL"
 
-#: src/prefs_account.c:1609 src/prefs_account.c:1626 src/prefs_account.c:1660
+#: src/prefs_account.c:1610 src/prefs_account.c:1627 src/prefs_account.c:1661
 msgid "Use STARTTLS command to start SSL session"
 msgstr "用 STARTTLS 命令來啟動 SSL"
 
-#: src/prefs_account.c:1623
+#: src/prefs_account.c:1624
 msgid "Use SSL for IMAP4 connection"
 msgstr "IMAP4 連線時使用 SSL"
 
-#: src/prefs_account.c:1629
+#: src/prefs_account.c:1630
 msgid "NNTP"
 msgstr ""
 
-#: src/prefs_account.c:1644
+#: src/prefs_account.c:1645
 msgid "Use SSL for NNTP connection"
 msgstr "NNTP 連線時使用 SSL"
 
-#: src/prefs_account.c:1646
+#: src/prefs_account.c:1647
 msgid "Send (SMTP)"
 msgstr "送信設定 (SMTP)"
 
-#: src/prefs_account.c:1657
+#: src/prefs_account.c:1658
 msgid "Use SSL for SMTP connection"
 msgstr "SMTP 連線時使用 SSL"
 
-#: src/prefs_account.c:1668
+#: src/prefs_account.c:1669
 msgid "Use non-blocking SSL"
 msgstr "使用 non-blocking SSL"
 
-#: src/prefs_account.c:1680
+#: src/prefs_account.c:1681
 msgid "(Turn this off if you have problems in SSL connection)"
 msgstr "（若您使用 SSL 連線時發生問題，請關閉此選項）"
 
-#: src/prefs_account.c:1769
+#: src/prefs_account.c:1770
 msgid "Specify SMTP port"
 msgstr "指定 SMTP 連接埠"
 
-#: src/prefs_account.c:1775
+#: src/prefs_account.c:1776
 msgid "Specify POP3 port"
 msgstr "指定 POP3 連接埠"
 
-#: src/prefs_account.c:1781
+#: src/prefs_account.c:1782
 msgid "Specify IMAP4 port"
 msgstr "指定 IMAP4 連接埠"
 
-#: src/prefs_account.c:1787
+#: src/prefs_account.c:1788
 msgid "Specify NNTP port"
 msgstr "指定 NNTP 連接埠"
 
-#: src/prefs_account.c:1792
+#: src/prefs_account.c:1793
 msgid "Specify domain name"
 msgstr "指定網域"
 
-#: src/prefs_account.c:1810
+#: src/prefs_account.c:1811
 msgid "IMAP server directory"
 msgstr "IMAP 伺服器目錄"
 
-#: src/prefs_account.c:1864
+#: src/prefs_account.c:1865
 msgid "Put sent messages in"
 msgstr "將已送出之信件存到"
 
-#: src/prefs_account.c:1866
+#: src/prefs_account.c:1867
 msgid "Put draft messages in"
 msgstr "將信件草稿存到"
 
-#: src/prefs_account.c:1868
+#: src/prefs_account.c:1869
 msgid "Put deleted messages in"
 msgstr "將刪除信件存到"
 
-#: src/prefs_account.c:1929
+#: src/prefs_account.c:1930
 msgid "Account name is not entered."
 msgstr "未輸入帳號名稱。"
 
-#: src/prefs_account.c:1933
+#: src/prefs_account.c:1934
 msgid "Mail address is not entered."
 msgstr "未輸入電子郵件信箱。"
 
-#: src/prefs_account.c:1938
+#: src/prefs_account.c:1939
 msgid "SMTP server is not entered."
 msgstr "未輸入發送郵件伺服器。"
 
-#: src/prefs_account.c:1943
+#: src/prefs_account.c:1944
 msgid "User ID is not entered."
 msgstr "未輸入使用者帳號。"
 
-#: src/prefs_account.c:1948
+#: src/prefs_account.c:1949
 msgid "POP3 server is not entered."
 msgstr "未輸入接收郵件伺服器。"
 
-#: src/prefs_account.c:1953
+#: src/prefs_account.c:1954
 msgid "IMAP4 server is not entered."
 msgstr "未輸入接收郵件伺服器。"
 
-#: src/prefs_account.c:1958
+#: src/prefs_account.c:1959
 msgid "NNTP server is not entered."
 msgstr "未輸入新聞伺服器。"
 
-#: src/prefs_account.c:2040
+#: src/prefs_account.c:2041
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -5530,15 +5529,15 @@ msgstr "簽章檢查錯誤"
 msgid "No public key to verify the signature"
 msgstr "沒有公開鑰匙供檢查簽章"
 
-#: src/smtp.c:151
+#: src/smtp.c:156
 msgid "SMTP AUTH not available\n"
 msgstr "不支援 SMTP 認證\n"
 
-#: src/smtp.c:416 src/smtp.c:465
+#: src/smtp.c:462 src/smtp.c:512
 msgid "bad SMTP response\n"
 msgstr "SMTP 回覆錯誤\n"
 
-#: src/smtp.c:436 src/smtp.c:454 src/smtp.c:550
+#: src/smtp.c:483 src/smtp.c:501 src/smtp.c:598
 msgid "error occurred on SMTP session\n"
 msgstr "SMTP 認證時發生錯誤\n"
 
@@ -5975,16 +5974,16 @@ msgstr "產生文字視窗...\n"
 msgid "This message can't be displayed.\n"
 msgstr "無法顯示郵件。\n"
 
-#: src/textview.c:1835
+#: src/textview.c:1842
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "另存新檔...(_S)"
 
-#: src/textview.c:1855
+#: src/textview.c:1862
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1943
+#: src/textview.c:1950
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

@@ -187,15 +187,21 @@ gint conv_convert			(CodeConverter	*conv,
 gchar *conv_codeset_strdup		(const gchar	*inbuf,
 					 const gchar	*src_code,
 					 const gchar	*dest_code);
+gchar *conv_codeset_strdup_full		(const gchar	*inbuf,
+					 const gchar	*src_code,
+					 const gchar	*dest_code,
+					 gint		*error);
 
 CodeConvFunc conv_get_code_conv_func	(const gchar	*src_charset_str,
 					 const gchar	*dest_charset_str);
 
 gchar *conv_iconv_strdup		(const gchar	*inbuf,
 					 const gchar	*src_code,
-					 const gchar	*dest_code);
+					 const gchar	*dest_code,
+					 gint		*error);
 gchar *conv_iconv_strdup_with_cd	(const gchar	*inbuf,
-					 iconv_t	 cd);
+					 iconv_t	 cd,
+					 gint		*error);
 
 const gchar *conv_get_charset_str		(CharSet	 charset);
 CharSet conv_get_charset_from_str		(const gchar	*charset);
