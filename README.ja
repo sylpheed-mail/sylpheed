@@ -1,6 +1,6 @@
 	Sylpheed - GTK+ ベースの軽量で高速な電子メールクライアント
 
-   Copyright(C) 1999-2004 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+   Copyright(C) 1999-2005 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -131,17 +131,24 @@ Wanderlust 等の Emacs 系メーラを参考にしており、キーボードのみによる操作
 起動前の準備
 ------------
 
-日本語を使用したい場合、 Sylpheed を実行する前にロカールに関連する
-環境変数を指定しなければなりません(日本語 Linux ディストリビューション
-の場合は大抵すでに設定されています)。例えば、
+ファイル名に UTF-8 以外の文字コードを使用している場合は、以下の環境変数
+を指定する必要があります。
 
-% export LANG=ja_JP.eucJP	(sh, bash etc.)
+(ロケール依存のエンコーディングを使用)
+% export G_FILENAME_ENCODING=@locale
 
 または
 
-% setenv LANG ja_JP.eucJP	(csh, tcsh etc.)
+(直接エンコーディングを指定)
+% export G_FILENAME_ENCODING=ISO-8859-1
 
-(ja_JP.eucJP は適切なロカール名に置き換えてください。)
+日本語に翻訳されたメッセージを表示したい場合、 ロケールに関連する環境変数
+を指定しなければなりません(日本語 Linux ディストリビューションの場合は
+大抵すでに設定されています)。例えば、
+
+% export LANG=ja_JP.eucJP
+
+(ja_JP.eucJP は実際のロケール名に置き換えてください。)
 
 翻訳されたメッセージが必要なければ、 LC_MESSAGES を "C" に指定して
 ください(LC_ALL が指定されていれば外してください)。
@@ -155,10 +162,13 @@ Wanderlust 等の Emacs 系メーラを参考にしており、キーボードのみによる操作
 初回起動時の注意
 ----------------
 
-初回の起動時に、 ~/.sylpheed/ 以下に設定ファイルが自動的に作成されます。
+初回の起動時に、 ~/.sylpheed-2.0/ 以下に設定ファイルが自動的に作成されます。
 また、メールボックスの位置を質問します。デフォルトは ~/Mail です。もしそ
 のディレクトリに MH フォーマットではないファイルがすでに存在する場合、別
 の場所を指定しなければなりません。
+
+もし ~/.sylpheed-2.0/ が存在せず、 ~/.sylpheed/ に以前のバージョンの
+設定が存在する場合は、確認の後自動的に設定の移行を行います。
 
 必要な設定
 ----------
@@ -176,14 +186,11 @@ Wanderlust 等の Emacs 系メーラを参考にしており、キーボードのみによる操作
 
 Sylpheed のほとんどの機能は設定ダイアログから設定できますが、ユーザインタ
 フェースを持たない設定項目がいくつかあります(通常は変更する必要はありません)。
-Sylpheed が起動していないときに ~/.sylpheed/sylpheedrc をエディタで編集
+Sylpheed が起動していないときに ~/.sylpheed-2.0/sylpheedrc をエディタで編集
 する必要があります。
 
 allow_jisx0201_kana		JIS X 0201 カナ(半角カナ)を送信時に許可します。
 				0: off  1: on   [デフォルト: 0]
-bold_font			フォルダ、サマリ、テキストビューで使用される
-				ボールドフォント
-small_font			サマリビュー等で使用される小フォント
 enable_hscrollbar		サマリビューで水平スクロールバーを有効にする
 				0: off  1: on   [デフォルト: 1]
 bold_unread			サマリビューで未読メッセージをボールド
@@ -213,30 +220,26 @@ folderview_vscrollbar_policy	フォルダビューの垂直スクロールバーのポリシー
 意見、アイデア、バグレポート(これが一番重要)(と、特にパッチ)は
 大変歓迎します。
 
-Anonymous cvs
-=============
+Subversion
+==========
 
-anonymous cvs で最新のソースを取得することができます。
-
-まず環境変数 CVSROOT に
-
-	:pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed
-
-を指定します。その後、
-
-	cvs login
-
-でログインし、 CVS password: に対しては単に Enter キーを押して下さい。
+Subversion のリポジトリから最新のソースを取得することができます。
 
 適当なディレクトリに移動し、以下のコマンド
 
-	cvs -z3 checkout sylpheed
+	svn checkout svn://sylpheed.good-day.net/sylpheed
 
 で カレントディレクトリ以下に sylpheed というソースツリーが作成されます。
 
-最新のソースツリーにアップデートするには、ソースツリーのトップディレクトリで、
+sylpheed ディレクトリ以下は次のように分かれています。
 
-	cvs -z3 update
+    * trunk/     メインのツリー
+    * branches/  各種実験用ブランチ
+    * tags/      リリースタグを付けたブランチ
+
+最新のソースツリーにアップデートするには、対象のディレクトリで、
+
+	svn update
 
 を実行して下さい。
 

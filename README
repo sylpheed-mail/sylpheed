@@ -1,6 +1,6 @@
 	Sylpheed - a GTK+ based, lightweight, and fast e-mail client
 
-   Copyright(C) 1999-2004 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+   Copyright(C) 1999-2005 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -116,17 +116,24 @@ Usage
 Preparation before running
 --------------------------
 
-If you want to use characters other than English (aka US-ASCII),
-you must specify some environmental variables related to locale.
-For example:
+If you are using a character encodings other than UTF-8 for filename,
+you must set the following environmental variable:
 
-% export LANG=de_DE	(sh, bash etc.)
+(use locale-specific encoding)
+% export G_FILENAME_ENCODING=@locale
 
 or
 
-% setenv LANG de_DE	(csh, tcsh etc.)
+(manually specifying encoding)
+% export G_FILENAME_ENCODING=ISO-8859-1
 
-(replace de_DE to appropriate locale name)
+If you want to display messages translated to your language,
+you must specify some environmental variables related to locale.
+For example:
+
+% export LANG=de_DE
+
+(replace de_DE to the actual locale name)
 
 If you don't want translated messages, set LC_MESSAGES to "C"
 (and unset LC_ALL if specified).
@@ -141,9 +148,13 @@ Initial startup
 ---------------
 
 When Sylpheed is executed for the first time, it automatically creates the
-configuration files under ~/.sylpheed/, and asks you the location of
+configuration files under ~/.sylpheed-2.0/, and asks you the location of
 mailbox. The default is ~/Mail. If some files which are non-MH format
 already exist on the directory, you will have to specify another location.
+
+If ~/.sylpheed-2.0/ doesn't exist, but the previous version of configuration
+exists in ~/.sylpheed/, migration will be made automatically after the
+confirmation.
 
 Required settings
 -----------------
@@ -162,13 +173,11 @@ Hidden settings
 You can configure most of the features in Sylpheed through the preferences
 dialog, but there are a few parameters which don't have user interface
 (you don't have to modify them in normal use). You must edit
-~/.sylpheed/sylpheedrc by an editor when Sylpheed is not running.
+~/.sylpheed-2.0/sylpheedrc by an editor when Sylpheed is not running.
 
 allow_jisx0201_kana		allow JIS X 0201 Kana (half-width kana) on
 				sending.
 				0: off  1: on   [default: 0]
-bold_font			bold font used in folder, summary and text view
-small_font			small font used in summary view etc.
 enable_hscrollbar		enable horizontal scroll bar in summary view
 				0: off  1: on	[default: 1]
 bold_unread			show unread messages using bold font in
@@ -196,32 +205,28 @@ Feedback
 Comments, ideas and (most of all) bug reports (and especially patches) are
 very welcome.
 
-Anonymous cvs
-=============
+Subversion
+==========
 
-You can get the newest source code with the anonymous cvs.
-
-First, set your CVSROOT environment variable to:
-
-	:pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed
-
-Next, login with:
-
-	cvs login
-
-and just press Enter key to `CVS password:'.
+You can get the newest source code from the Subversion repository.
 
 Move to an appropriate directory, and with the command:
 
-	cvs -z3 checkout sylpheed
+	svn checkout svn://sylpheed.good-day.net/sylpheed
 
 a source tree named `sylpheed' is created under the current directory.
 
+The subdirectory of sylpheed is divided as following:
+
+    * trunk/     Main tree
+    * branches/  Miscellaneous experimental branches
+    * tags/      Release-tagged branches
+
 To update to the newest source tree, run the command:
 
-	cvs -z3 update
+	svn update
 
-on the top directory of the source tree.
+at the target directory.
 
 -- 
 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
