@@ -788,7 +788,10 @@ static void conv_euctodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 
 void conv_utf8todisp(gchar *outbuf, gint outlen, const gchar *inbuf)
 {
-	strncpy2(outbuf, inbuf, outlen);
+	if (g_utf8_validate(inbuf, -1, NULL) == TRUE)
+		strncpy2(outbuf, inbuf, outlen);
+	else
+		conv_ustodisp(outbuf, outlen, inbuf);
 }
 
 static void conv_anytodisp(gchar *outbuf, gint outlen, const gchar *inbuf)
