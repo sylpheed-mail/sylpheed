@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
-"Report-Msgid-Bugs-To: hiro-y@kcn.ne.jp\n"
-"POT-Creation-Date: 2005-02-04 15:19+0900\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-07 18:21+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Name"
 msgstr "이름"
 
-#: src/account.c:639 src/prefs_account.c:832
+#: src/account.c:639 src/prefs_account.c:833
 msgid "Protocol"
 msgstr "프로토콜"
 
@@ -174,7 +174,7 @@ msgstr ""
 "선택된 동작은 편지 작성 창에서 사용될 수 없습니다\n"
 "왜냐하면 %%f, %%F 혹은 %%p를 포함하고 있기 때문입니다."
 
-#: src/action.c:704
+#: src/action.c:705
 #, c-format
 msgid ""
 "Command could not be started. Pipe creation failed.\n"
@@ -183,7 +183,8 @@ msgstr ""
 "명령을 시작할 수 없습니다. 파이프 생성이 실패했습니다.\n"
 "%s"
 
-#: src/action.c:792
+#. Fork error
+#: src/action.c:793
 #, c-format
 msgid ""
 "Could not fork to execute the following command:\n"
@@ -396,6 +397,7 @@ msgstr "주소록"
 msgid "Name:"
 msgstr "이름:"
 
+#. Buttons
 #: src/addressbook.c:625 src/addressbook.c:1665 src/addressbook.c:1671
 #: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2201
 #: src/prefs_actions.c:263 src/prefs_display_header.c:275
@@ -420,6 +422,7 @@ msgstr "참조:"
 msgid "Bcc:"
 msgstr "숨은 참조:"
 
+#. Confirm deletion
 #: src/addressbook.c:838
 msgid "Delete address(es)"
 msgstr "주소를 삭제"
@@ -558,7 +561,8 @@ msgstr "이메일 주소"
 msgid "Group"
 msgstr "그룹"
 
-#: src/addressbook.c:3133 src/folderview.c:283 src/prefs_account.c:1822
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3133 src/folderview.c:283 src/prefs_account.c:1823
 msgid "Folder"
 msgstr "폴더"
 
@@ -582,23 +586,23 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:122 src/compose.c:4974 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4974 src/main.c:464
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:135 src/main.c:261 src/textview.c:1644
+#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1650
 msgid "Warning"
 msgstr "경고"
 
-#: src/alertpanel.c:148 src/compose.c:2756 src/inc.c:557
+#: src/alertpanel.c:149 src/compose.c:2756 src/inc.c:557
 msgid "Error"
 msgstr "에러"
 
-#: src/alertpanel.c:191
+#: src/alertpanel.c:192
 msgid "Creating alert panel dialog...\n"
 msgstr "경고 패널 다이얼로그를 생성합니다...\n"
 
-#: src/alertpanel.c:277
+#: src/alertpanel.c:278
 msgid "Show this message next time"
 msgstr "다음번에 이 메시지 보기"
 
@@ -630,6 +634,10 @@ msgstr "녹색"
 msgid "Brown"
 msgstr "갈색"
 
+#. create sub items. for the menu item activation callback we pass the
+#. * index of label_colors[] as data parameter. for the None color we
+#. * pass an invalid (high) value. also we attach a data pointer so we
+#. * can always get back the SummaryView pointer.
 #: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3568
 msgid "None"
 msgstr "없음"
@@ -923,7 +931,7 @@ msgid "Recipient is not specified."
 msgstr "받는 사람이 지정되지않았습니다"
 
 #: src/compose.c:2501 src/compose.c:4279 src/mainwindow.c:2133
-#: src/prefs_account.c:702 src/prefs_common.c:843
+#: src/prefs_account.c:703 src/prefs_common.c:843
 msgid "Send"
 msgstr "메일 발송"
 
@@ -1005,6 +1013,7 @@ msgstr "편집창을 생성합니다...\n"
 msgid "MIME type"
 msgstr "마임 타입"
 
+#. S_COL_DATE
 #: src/compose.c:3817 src/mimeview.c:148 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
@@ -1050,7 +1059,8 @@ msgstr "첨부"
 msgid "Attach file"
 msgstr "파일 첨부"
 
-#: src/compose.c:4328 src/prefs_account.c:1337 src/prefs_common.c:1254
+#. signature
+#: src/compose.c:4328 src/prefs_account.c:1338 src/prefs_common.c:1254
 msgid "Signature"
 msgstr "서명"
 
@@ -1129,6 +1139,7 @@ msgstr "임시 파일: %s"
 msgid "Compose: input from monitoring process\n"
 msgstr "편집: 모니터링하는 프로세스로부터 입력이 있었습니다\n"
 
+#. failed
 #: src/compose.c:5042
 msgid "Couldn't exec external editor\n"
 msgstr "외부 편집기를 실행할 수가 없습니다\n"
@@ -1178,6 +1189,7 @@ msgstr "템플릿을 적용합니다."
 msgid "Replace"
 msgstr "대체"
 
+#. gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 #: src/editaddress.c:177
 msgid "Edit address"
 msgstr "주소 편집"
@@ -1198,6 +1210,7 @@ msgstr "메일 주소가 지정되지 않았습니다."
 msgid "A Name and Value must be supplied."
 msgstr "이름과 값이 지정되지 않았습니다."
 
+#. gtk_container_set_border_width(GTK_CONTAINER(window), 0);
 #: src/editaddress.c:640
 msgid "Edit Person Data"
 msgstr "인물 자료 편집"
@@ -1227,6 +1240,7 @@ msgstr "이메일 주소"
 msgid "Alias"
 msgstr "별명"
 
+#. Buttons
 #: src/editaddress.c:872
 msgid "Move Up"
 msgstr "위로 이동"
@@ -1276,7 +1290,7 @@ msgid " Check File "
 msgstr " 파일 확인 "
 
 #: src/editbook.c:203 src/editjpilot.c:308 src/editvcard.c:223
-#: src/prefs_account.c:1348
+#: src/prefs_account.c:1349
 msgid "File"
 msgstr "파일"
 
@@ -1354,7 +1368,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilot 항목 편집"
 
 #: src/editjpilot.c:315 src/editldap.c:342 src/editvcard.c:230
-#: src/importldif.c:527 src/prefs_account.c:1850
+#: src/importldif.c:527 src/prefs_account.c:1851
 msgid " ... "
 msgstr " ... "
 
@@ -1418,7 +1432,7 @@ msgstr ""
 msgid "Maximum Entries"
 msgstr ""
 
-#: src/editldap.c:463 src/prefs_account.c:698
+#: src/editldap.c:463 src/prefs_account.c:699
 msgid "Basic"
 msgstr "기본"
 
@@ -1475,7 +1489,7 @@ msgid "Exporting file:"
 msgstr ""
 
 #: src/export.c:185 src/export.c:191 src/import.c:190 src/import.c:196
-#: src/prefs_account.c:1081
+#: src/prefs_account.c:1082
 msgid " Select... "
 msgstr "고르기..."
 
@@ -1483,8 +1497,8 @@ msgstr "고르기..."
 msgid "Select exporting file"
 msgstr ""
 
-#: src/filter.c:827 src/prefs.c:157 src/prefs.c:185 src/prefs.c:230
-#: src/prefs_account.c:562 src/prefs_account.c:576
+#: src/filter.c:827 src/prefs.c:158 src/prefs.c:186 src/prefs.c:231
+#: src/prefs_account.c:563 src/prefs_account.c:577
 #: src/prefs_customheader.c:382 src/prefs_customheader.c:428
 #: src/prefs_display_header.c:407 src/prefs_display_header.c:432
 msgid "failed to write configuration to file\n"
@@ -1583,6 +1597,7 @@ msgstr "폴더 뷰를 생성합니다...\n"
 msgid "New"
 msgstr "새것"
 
+#. S_COL_MARK
 #: src/folderview.c:285 src/prefs_summary_column.c:68
 msgid "Unread"
 msgstr "안읽음"
@@ -2061,6 +2076,7 @@ msgstr ""
 msgid "Import LDIF file into Address Book"
 msgstr "LDIF 파일을 주소록으로 가져오기"
 
+#. Button panel
 #: src/importldif.c:760
 msgid "Prev"
 msgstr "이전"
@@ -2280,6 +2296,7 @@ msgstr "암호 입력"
 msgid "Protocol log"
 msgstr "프로토콜 로그"
 
+#. for gettext
 #: src/main.c:128 src/main.c:137 src/mh.c:792
 #, c-format
 msgid ""
@@ -2368,6 +2385,7 @@ msgstr ""
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
+#. remote command mode
 #: src/main.c:551
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
@@ -2460,6 +2478,7 @@ msgstr "/파일(_F)/인쇄(_P)..."
 msgid "/_File/_Work offline"
 msgstr "/파일(_F)/파일 삽입(_I)"
 
+#. {N_("/_File/_Close"),		"<alt>W", app_exit_cb, 0, NULL},
 #: src/mainwindow.c:482
 msgid "/_File/E_xit"
 msgstr "/파일(_F)/끝내기(_x)"
@@ -3166,7 +3185,7 @@ msgstr "모든 계정에서 새 메일을 가져옵니다"
 msgid "Send queued message(s)"
 msgstr "임시 보관된 메시지를 보냅니다"
 
-#: src/mainwindow.c:2144 src/prefs_account.c:704 src/prefs_common.c:845
+#: src/mainwindow.c:2144 src/prefs_account.c:705 src/prefs_common.c:845
 #: src/prefs_folder_item.c:137
 msgid "Compose"
 msgstr "작성"
@@ -3677,379 +3696,379 @@ msgstr "명령어"
 msgid "error occurred on POP3 session\n"
 msgstr "인증 도중 에러 발생\n"
 
-#: src/prefs.c:200
+#: src/prefs.c:201
 #, c-format
 msgid "Found %s\n"
 msgstr "%s을 발견\n"
 
-#: src/prefs.c:233
+#: src/prefs.c:234
 msgid "Configuration is saved.\n"
 msgstr "설정이 저장되었습니다.\n"
 
-#: src/prefs_account.c:607
+#: src/prefs_account.c:608
 msgid "Opening account preferences window...\n"
 msgstr "계정 설정 창을 엽니다...\n"
 
-#: src/prefs_account.c:633
+#: src/prefs_account.c:634
 #, c-format
 msgid "Account%d"
 msgstr "계정%d"
 
-#: src/prefs_account.c:652
+#: src/prefs_account.c:653
 msgid "Preferences for new account"
 msgstr "새 계정에대한 설정"
 
-#: src/prefs_account.c:657
+#: src/prefs_account.c:658
 msgid "Account preferences"
 msgstr "계정 기본 설정"
 
-#: src/prefs_account.c:680
+#: src/prefs_account.c:681
 msgid "Creating account preferences window...\n"
 msgstr "계정 설정 창을 생성합니다...\n"
 
-#: src/prefs_account.c:700 src/prefs_common.c:841
+#: src/prefs_account.c:701 src/prefs_common.c:841
 msgid "Receive"
 msgstr "받기"
 
-#: src/prefs_account.c:707 src/prefs_common.c:854
+#: src/prefs_account.c:708 src/prefs_common.c:854
 msgid "Privacy"
 msgstr "프라이버시"
 
-#: src/prefs_account.c:711
+#: src/prefs_account.c:712
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account.c:714
+#: src/prefs_account.c:715
 msgid "Advanced"
 msgstr "고급"
 
-#: src/prefs_account.c:763
+#: src/prefs_account.c:764
 msgid "Name of this account"
 msgstr "이 계정의 이름"
 
-#: src/prefs_account.c:772
+#: src/prefs_account.c:773
 msgid "Set as default"
 msgstr "기본 계정으로 설정"
 
-#: src/prefs_account.c:776
+#: src/prefs_account.c:777
 msgid "Personal information"
 msgstr "신상 정보"
 
-#: src/prefs_account.c:785
+#: src/prefs_account.c:786
 msgid "Full name"
 msgstr "정식 이름"
 
-#: src/prefs_account.c:791
+#: src/prefs_account.c:792
 msgid "Mail address"
 msgstr "메일 주소"
 
-#: src/prefs_account.c:797
+#: src/prefs_account.c:798
 msgid "Organization"
 msgstr "기관"
 
-#: src/prefs_account.c:821
+#: src/prefs_account.c:822
 msgid "Server information"
 msgstr "서버 정보"
 
-#: src/prefs_account.c:842 src/prefs_account.c:989 src/prefs_account.c:1594
+#: src/prefs_account.c:843 src/prefs_account.c:990 src/prefs_account.c:1595
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account.c:844 src/prefs_account.c:1101 src/prefs_account.c:1611
-#: src/prefs_account.c:1798
+#: src/prefs_account.c:845 src/prefs_account.c:1102 src/prefs_account.c:1612
+#: src/prefs_account.c:1799
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account.c:846
+#: src/prefs_account.c:847
 msgid "News (NNTP)"
 msgstr "뉴스(NNTP)"
 
-#: src/prefs_account.c:848
+#: src/prefs_account.c:849
 msgid "None (local)"
 msgstr "로컬"
 
-#: src/prefs_account.c:861
+#: src/prefs_account.c:862
 msgid "This server requires authentication"
 msgstr "이 서버는 인증을 필요로 합니다"
 
-#: src/prefs_account.c:900
+#: src/prefs_account.c:901
 msgid "News server"
 msgstr "뉴스 서버"
 
-#: src/prefs_account.c:906
+#: src/prefs_account.c:907
 msgid "Server for receiving"
 msgstr "받는 서버"
 
-#: src/prefs_account.c:912
+#: src/prefs_account.c:913
 msgid "SMTP server (send)"
 msgstr "SMTP 서버(발송용)"
 
-#: src/prefs_account.c:919 src/prefs_account.c:1257
+#: src/prefs_account.c:920 src/prefs_account.c:1258
 msgid "User ID"
 msgstr "사용자 계정"
 
-#: src/prefs_account.c:925 src/prefs_account.c:1266
+#: src/prefs_account.c:926 src/prefs_account.c:1267
 msgid "Password"
 msgstr "암호"
 
-#: src/prefs_account.c:997
+#: src/prefs_account.c:998
 #, fuzzy
 msgid "Use secure authentication (APOP)"
 msgstr "이 서버는 인증을 필요로 합니다"
 
-#: src/prefs_account.c:1000
+#: src/prefs_account.c:1001
 msgid "Remove messages on server when received"
 msgstr "받은 후 서버에서 메시지를 지움"
 
-#: src/prefs_account.c:1011
+#: src/prefs_account.c:1012
 msgid "Remove after"
 msgstr ""
 
-#: src/prefs_account.c:1020
+#: src/prefs_account.c:1021
 msgid "days"
 msgstr ""
 
-#: src/prefs_account.c:1037
+#: src/prefs_account.c:1038
 msgid "(0 days: remove immediately)"
 msgstr "(0 일: 즉시 삭제)"
 
-#: src/prefs_account.c:1044
+#: src/prefs_account.c:1045
 msgid "Download all messages on server"
 msgstr "서버에서 모든 메시지를 받음"
 
-#: src/prefs_account.c:1050
+#: src/prefs_account.c:1051
 msgid "Receive size limit"
 msgstr "받을 크기 한도"
 
-#: src/prefs_account.c:1057 src/prefs_filter_edit.c:622
+#: src/prefs_account.c:1058 src/prefs_filter_edit.c:622
 msgid "KB"
 msgstr ""
 
-#: src/prefs_account.c:1064
+#: src/prefs_account.c:1065
 msgid "Filter messages on receiving"
 msgstr "받을때 메시지를 필터링"
 
-#: src/prefs_account.c:1072
+#: src/prefs_account.c:1073
 msgid "Default inbox"
 msgstr "기본 우편함"
 
-#: src/prefs_account.c:1095
+#: src/prefs_account.c:1096
 msgid "(Unfiltered messages will be stored in this folder)"
 msgstr "(필터링 되지 않은 메시지는 이 폴더에 저장될 것입니다)"
 
-#: src/prefs_account.c:1112 src/prefs_account.c:1228
+#: src/prefs_account.c:1113 src/prefs_account.c:1229
 msgid "Authentication method"
 msgstr "인증 방법"
 
-#: src/prefs_account.c:1122 src/prefs_account.c:1238 src/prefs_common.c:1182
+#: src/prefs_account.c:1123 src/prefs_account.c:1239 src/prefs_common.c:1182
 msgid "Automatic"
 msgstr "자동"
 
-#: src/prefs_account.c:1130
+#: src/prefs_account.c:1131
 msgid "`Get all' checks for new messages on this account"
 msgstr ""
 
-#: src/prefs_account.c:1178 src/prefs_customheader.c:189
+#: src/prefs_account.c:1179 src/prefs_customheader.c:189
 msgid "Header"
 msgstr "헤더"
 
-#: src/prefs_account.c:1185
+#: src/prefs_account.c:1186
 msgid "Add Date header field"
 msgstr "Date 헤더 항목을 추가"
 
-#: src/prefs_account.c:1186
+#: src/prefs_account.c:1187
 msgid "Generate Message-ID"
 msgstr "Message-ID 생성"
 
-#: src/prefs_account.c:1193
+#: src/prefs_account.c:1194
 msgid "Add user-defined header"
 msgstr "사용자 정의된 헤더 추가"
 
-#: src/prefs_account.c:1195 src/prefs_common.c:1698 src/prefs_common.c:1723
+#: src/prefs_account.c:1196 src/prefs_common.c:1698 src/prefs_common.c:1723
 msgid " Edit... "
 msgstr " 편집..."
 
-#: src/prefs_account.c:1205
+#: src/prefs_account.c:1206
 msgid "Authentication"
 msgstr "인증"
 
-#: src/prefs_account.c:1213
+#: src/prefs_account.c:1214
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP 인증(SMTP AUTH)"
 
-#: src/prefs_account.c:1288
+#: src/prefs_account.c:1289
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
 msgstr ""
 
-#: src/prefs_account.c:1300
+#: src/prefs_account.c:1301
 msgid "Authenticate with POP3 before sending"
 msgstr "보내기전 POP3와 인증"
 
-#: src/prefs_account.c:1356
+#: src/prefs_account.c:1357
 #, fuzzy
 msgid "Command output"
 msgstr "명령어"
 
-#: src/prefs_account.c:1367 src/prefs_folder_item.c:300
+#: src/prefs_account.c:1368 src/prefs_folder_item.c:300
 msgid "Automatically set the following addresses"
 msgstr "다음 주소를 자동적으로 정함"
 
-#: src/prefs_account.c:1376
+#: src/prefs_account.c:1377
 msgid "Cc"
 msgstr "참조"
 
-#: src/prefs_account.c:1389
+#: src/prefs_account.c:1390
 msgid "Bcc"
 msgstr "숨은 참조"
 
-#: src/prefs_account.c:1402
+#: src/prefs_account.c:1403
 msgid "Reply-To"
 msgstr "회신주소"
 
-#: src/prefs_account.c:1454
+#: src/prefs_account.c:1455
 msgid "Encrypt message by default"
 msgstr "기본으로 메시지를 암호화"
 
-#: src/prefs_account.c:1456
+#: src/prefs_account.c:1457
 msgid "Sign message by default"
 msgstr "기본으로 메시지에 사인을 함"
 
-#: src/prefs_account.c:1458
+#: src/prefs_account.c:1459
 msgid "Use ASCII-armored format for encryption"
 msgstr ""
 
-#: src/prefs_account.c:1460
+#: src/prefs_account.c:1461
 msgid "Use clear text signature"
 msgstr "순수한 텍스트 서명 사용"
 
-#: src/prefs_account.c:1465
+#: src/prefs_account.c:1466
 msgid "Sign key"
 msgstr ""
 
-#: src/prefs_account.c:1473
+#: src/prefs_account.c:1474
 msgid "Use default GnuPG key"
 msgstr "기본 GnuPG 키 사용"
 
-#: src/prefs_account.c:1482
+#: src/prefs_account.c:1483
 msgid "Select key by your email address"
 msgstr "당신의 전자우편 주소로 키 선택"
 
-#: src/prefs_account.c:1491
+#: src/prefs_account.c:1492
 msgid "Specify key manually"
 msgstr "수동으로 키 지정"
 
-#: src/prefs_account.c:1507
+#: src/prefs_account.c:1508
 msgid "User or key ID:"
 msgstr "사용자 혹은 키 ID:"
 
-#: src/prefs_account.c:1602 src/prefs_account.c:1619 src/prefs_account.c:1635
-#: src/prefs_account.c:1653
+#: src/prefs_account.c:1603 src/prefs_account.c:1620 src/prefs_account.c:1636
+#: src/prefs_account.c:1654
 msgid "Don't use SSL"
 msgstr "SSL을 사용하지 않습니다"
 
-#: src/prefs_account.c:1605
+#: src/prefs_account.c:1606
 msgid "Use SSL for POP3 connection"
 msgstr "POP3 연결에 SSL을 사용합니다"
 
-#: src/prefs_account.c:1608 src/prefs_account.c:1625 src/prefs_account.c:1659
+#: src/prefs_account.c:1609 src/prefs_account.c:1626 src/prefs_account.c:1660
 msgid "Use STARTTLS command to start SSL session"
 msgstr "SSL 세션을 시작하기 위해 STARTTLS 명령을 사용합니다"
 
-#: src/prefs_account.c:1622
+#: src/prefs_account.c:1623
 msgid "Use SSL for IMAP4 connection"
 msgstr "IMAP4 연결에 SSL을 사용합니다"
 
-#: src/prefs_account.c:1628
+#: src/prefs_account.c:1629
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account.c:1643
+#: src/prefs_account.c:1644
 msgid "Use SSL for NNTP connection"
 msgstr "NNTP 연결에 SSL을 사용합니다"
 
-#: src/prefs_account.c:1645
+#: src/prefs_account.c:1646
 msgid "Send (SMTP)"
 msgstr ""
 
-#: src/prefs_account.c:1656
+#: src/prefs_account.c:1657
 msgid "Use SSL for SMTP connection"
 msgstr "SMTP 연결에 SSL을 사용합니다"
 
-#: src/prefs_account.c:1667
+#: src/prefs_account.c:1668
 msgid "Use non-blocking SSL"
 msgstr ""
 
-#: src/prefs_account.c:1679
+#: src/prefs_account.c:1680
 msgid "(Turn this off if you have problems in SSL connection)"
 msgstr ""
 
-#: src/prefs_account.c:1768
+#: src/prefs_account.c:1769
 msgid "Specify SMTP port"
 msgstr "SMTP 포트 번호"
 
-#: src/prefs_account.c:1774
+#: src/prefs_account.c:1775
 msgid "Specify POP3 port"
 msgstr "POP3 포트 번호"
 
-#: src/prefs_account.c:1780
+#: src/prefs_account.c:1781
 msgid "Specify IMAP4 port"
 msgstr "IMAP4 포트 지정"
 
-#: src/prefs_account.c:1786
+#: src/prefs_account.c:1787
 msgid "Specify NNTP port"
 msgstr "NNTP 포트 지정"
 
-#: src/prefs_account.c:1791
+#: src/prefs_account.c:1792
 msgid "Specify domain name"
 msgstr "도메인 이름 지정"
 
-#: src/prefs_account.c:1809
+#: src/prefs_account.c:1810
 msgid "IMAP server directory"
 msgstr "IMAP 서버 디렉토리"
 
-#: src/prefs_account.c:1863
+#: src/prefs_account.c:1864
 msgid "Put sent messages in"
 msgstr "보낸 메시지 저장"
 
-#: src/prefs_account.c:1865
+#: src/prefs_account.c:1866
 msgid "Put draft messages in"
 msgstr "임시 메시지 저장"
 
-#: src/prefs_account.c:1867
+#: src/prefs_account.c:1868
 msgid "Put deleted messages in"
 msgstr "삭제된 메시지 저장"
 
-#: src/prefs_account.c:1928
+#: src/prefs_account.c:1929
 msgid "Account name is not entered."
 msgstr "계정 이름이 입력되지 않았습니다."
 
-#: src/prefs_account.c:1932
+#: src/prefs_account.c:1933
 msgid "Mail address is not entered."
 msgstr "메일 주소가 지정되지않았습니다."
 
-#: src/prefs_account.c:1937
+#: src/prefs_account.c:1938
 msgid "SMTP server is not entered."
 msgstr "SMTP 서버가 지정되지않았습니다."
 
-#: src/prefs_account.c:1942
+#: src/prefs_account.c:1943
 msgid "User ID is not entered."
 msgstr "사용자 아이디가 지정되지않았습니다."
 
-#: src/prefs_account.c:1947
+#: src/prefs_account.c:1948
 msgid "POP3 server is not entered."
 msgstr "POP3 서버가 지정되지않았습니다."
 
-#: src/prefs_account.c:1952
+#: src/prefs_account.c:1953
 msgid "IMAP4 server is not entered."
 msgstr "IMAP4 서버가 지정되지않았습니다."
 
-#: src/prefs_account.c:1957
+#: src/prefs_account.c:1958
 msgid "NNTP server is not entered."
 msgstr "NNTP 서버가 지정되지않았습니다."
 
-#: src/prefs_account.c:2039
+#: src/prefs_account.c:2040
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -4407,6 +4426,7 @@ msgstr "회신할 때 메시지를 인용"
 msgid "Reply button invokes mailing list reply"
 msgstr "회신 버튼이 메일링리스트에 대한 회신으로 동작"
 
+#. reply
 #: src/prefs_common.c:1404
 msgid "Reply format"
 msgstr "회신 형식"
@@ -4415,6 +4435,7 @@ msgstr "회신 형식"
 msgid "Quotation mark"
 msgstr "인용 부호"
 
+#. forward
 #: src/prefs_common.c:1443
 msgid "Forward format"
 msgstr "전달 형식"
@@ -4443,6 +4464,7 @@ msgstr ""
 msgid "letters"
 msgstr ""
 
+#. ---- Summary ----
 #: src/prefs_common.c:1593
 msgid "Summary View"
 msgstr "요약 보기"
@@ -5169,22 +5191,29 @@ msgstr "회신주소:"
 msgid "Mark"
 msgstr "표시"
 
+#. S_COL_UNREAD
 #: src/prefs_summary_column.c:69
 msgid "Attachment"
 msgstr "첨부"
 
+#. S_COL_MIME
+#. S_COL_UNREAD
+#. S_COL_MIME
 #: src/prefs_summary_column.c:70 src/summaryview.c:383
 msgid "Subject"
 msgstr "제목"
 
+#. S_COL_SUBJECT
 #: src/prefs_summary_column.c:71 src/summaryview.c:384
 msgid "From"
 msgstr "보낸 사람"
 
+#. S_COL_FROM
 #: src/prefs_summary_column.c:72 src/summaryview.c:385
 msgid "Date"
 msgstr "날짜"
 
+#. S_COL_SIZE
 #: src/prefs_summary_column.c:74
 msgid "Number"
 msgstr "숫자"
@@ -5583,6 +5612,7 @@ msgstr "ssl 문맥 생성 에러\n"
 msgid "SSL connect failed (%s)\n"
 msgstr "SSL 연결이 실패했습니다(%s)\n"
 
+#. Get the cipher
 #: src/ssl.c:113
 #, c-format
 msgid "SSL connection using %s\n"
@@ -5711,10 +5741,12 @@ msgstr "/인쇄(_)..."
 msgid "M"
 msgstr "M"
 
+#. S_COL_MARK
 #: src/summaryview.c:381
 msgid "U"
 msgstr "U"
 
+#. S_COL_SIZE
 #: src/summaryview.c:387
 msgid "No."
 msgstr "번호"
@@ -6018,7 +6050,7 @@ msgstr ""
 msgid "right click and select `Check signature'.\n"
 msgstr ""
 
-#: src/textview.c:1640
+#: src/textview.c:1646
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

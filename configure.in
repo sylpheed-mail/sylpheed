@@ -75,8 +75,9 @@ ALL_LINGUAS="bg cs da de el es et fr gl hr hu it ja ko nl pl pt_BR ro ru sk sl s
 GETTEXT_PACKAGE=sylpheed
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Define text domain.])
-dnl AM_GLIB_GNU_GETTEXT
-AM_GNU_GETTEXT
+
+AM_GLIB_GNU_GETTEXT
+dnl AM_GNU_GETTEXT
 dnl AC_CHECK_FUNC(gettext, AC_CHECK_LIB(intl, gettext))
 localedir='${prefix}/${DATADIRNAME}/locale'
 AC_SUBST(localedir)
@@ -328,7 +329,6 @@ AC_CHECK_FUNCS(gethostname mkdir mktime socket strstr strchr \
 AC_OUTPUT([
 Makefile
 sylpheed.spec
-intl/Makefile
 ac/Makefile
 po/Makefile.in
 src/version.h

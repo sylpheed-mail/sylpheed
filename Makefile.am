@@ -1,4 +1,4 @@
-SUBDIRS = ac po intl src manual faq
+SUBDIRS = ac po src manual faq
 
 EXTRA_DIST = config.rpath  \
 	ChangeLog.ja \

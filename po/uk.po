@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 1.0.0beta1\n"
-"Report-Msgid-Bugs-To: hiro-y@kcn.ne.jp\n"
-"POT-Creation-Date: 2005-02-04 15:19+0900\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-07 18:21+0900\n"
 "PO-Revision-Date: Sun 31 Oct 2004 23:17:57\n"
 "Last-Translator: O. Nykyforchyn <nick@pu.if,ua>, 2004.\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -108,7 +108,7 @@ msgstr ""
 msgid "Name"
 msgstr "Ім'я"
 
-#: src/account.c:639 src/prefs_account.c:832
+#: src/account.c:639 src/prefs_account.c:833
 msgid "Protocol"
 msgstr "Протокол"
 
@@ -190,7 +190,7 @@ msgstr ""
 "Обрану дію не можна вживати у вікні створення,\n"
 "оскільки вона містить %%f, %%F або %%p."
 
-#: src/action.c:704
+#: src/action.c:705
 #, c-format
 msgid ""
 "Command could not be started. Pipe creation failed.\n"
@@ -199,7 +199,8 @@ msgstr ""
 "Команду не запущено. Не вдалось створити канал.\n"
 "%s"
 
-#: src/action.c:792
+#. Fork error
+#: src/action.c:793
 #, c-format
 msgid ""
 "Could not fork to execute the following command:\n"
@@ -414,6 +415,7 @@ msgstr "Адресна книга"
 msgid "Name:"
 msgstr "Ім'я:"
 
+#. Buttons
 #: src/addressbook.c:625 src/addressbook.c:1665 src/addressbook.c:1671
 #: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2201
 #: src/prefs_actions.c:263 src/prefs_display_header.c:275
@@ -438,6 +440,7 @@ msgstr "Копія:"
 msgid "Bcc:"
 msgstr "Приховано:"
 
+#. Confirm deletion
 #: src/addressbook.c:838
 msgid "Delete address(es)"
 msgstr "Видалити адресу(и)"
@@ -576,7 +579,8 @@ msgstr "Адреса e-mail"
 msgid "Group"
 msgstr "Група"
 
-#: src/addressbook.c:3133 src/folderview.c:283 src/prefs_account.c:1822
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3133 src/folderview.c:283 src/prefs_account.c:1823
 msgid "Folder"
 msgstr "Папка"
 
@@ -600,23 +604,23 @@ msgstr "Адреса організації"
 msgid "Personal address"
 msgstr "Особиста адреса"
 
-#: src/alertpanel.c:122 src/compose.c:4974 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4974 src/main.c:464
 msgid "Notice"
 msgstr "Примітка"
 
-#: src/alertpanel.c:135 src/main.c:261 src/textview.c:1644
+#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1650
 msgid "Warning"
 msgstr "Попередження"
 
-#: src/alertpanel.c:148 src/compose.c:2756 src/inc.c:557
+#: src/alertpanel.c:149 src/compose.c:2756 src/inc.c:557
 msgid "Error"
 msgstr "Помилка"
 
-#: src/alertpanel.c:191
+#: src/alertpanel.c:192
 msgid "Creating alert panel dialog...\n"
 msgstr "Створення діалогу термінового попередження...\n"
 
-#: src/alertpanel.c:277
+#: src/alertpanel.c:278
 msgid "Show this message next time"
 msgstr "Показати це повідомлення наступного разу"
 
@@ -648,6 +652,10 @@ msgstr "Зелений"
 msgid "Brown"
 msgstr "Коричневий"
 
+#. create sub items. for the menu item activation callback we pass the
+#. * index of label_colors[] as data parameter. for the None color we
+#. * pass an invalid (high) value. also we attach a data pointer so we
+#. * can always get back the SummaryView pointer.
 #: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3568
 msgid "None"
 msgstr "Ніякий"
@@ -932,7 +940,7 @@ msgid "Recipient is not specified."
 msgstr "Не вказано отримувача."
 
 #: src/compose.c:2501 src/compose.c:4279 src/mainwindow.c:2133
-#: src/prefs_account.c:702 src/prefs_common.c:843
+#: src/prefs_account.c:703 src/prefs_common.c:843
 msgid "Send"
 msgstr "Послати"
 
@@ -1015,6 +1023,7 @@ msgstr "Відкриваємо вікно створення листа...\n"
 msgid "MIME type"
 msgstr "тип MIME"
 
+#. S_COL_DATE
 #: src/compose.c:3817 src/mimeview.c:148 src/prefs_filter_edit.c:569
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
@@ -1060,7 +1069,8 @@ msgstr "Приєднати"
 msgid "Attach file"
 msgstr "Приєднати файл"
 
-#: src/compose.c:4328 src/prefs_account.c:1337 src/prefs_common.c:1254
+#. signature
+#: src/compose.c:4328 src/prefs_account.c:1338 src/prefs_common.c:1254
 msgid "Signature"
 msgstr "Підпис"
 
@@ -1138,6 +1148,7 @@ msgstr "Тимчасовий файл: %s"
 msgid "Compose: input from monitoring process\n"
 msgstr "Створення: ввід від спостерігаючого процесу\n"
 
+#. failed
 #: src/compose.c:5042
 msgid "Couldn't exec external editor\n"
 msgstr "Не вдалось запустити зовнішній редактор\n"
@@ -1187,6 +1198,7 @@ msgstr "Застосувати шаблон"
 msgid "Replace"
 msgstr "Замінити"
 
+#. gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 #: src/editaddress.c:177
 msgid "Edit address"
 msgstr "Редагувати адресу"
@@ -1207,6 +1219,7 @@ msgstr "Адреса e-mail обов'язкова."
 msgid "A Name and Value must be supplied."
 msgstr "Потрібно надати ім'я та значення."
 
+#. gtk_container_set_border_width(GTK_CONTAINER(window), 0);
 #: src/editaddress.c:640
 msgid "Edit Person Data"
 msgstr "Редагувати особисті дані"
@@ -1236,6 +1249,7 @@ msgstr "Адреса e-mail"
 msgid "Alias"
 msgstr "Синонім"
 
+#. Buttons
 #: src/editaddress.c:872
 msgid "Move Up"
 msgstr "Вгору"
@@ -1285,7 +1299,7 @@ msgid " Check File "
 msgstr " Перевірити файл "
 
 #: src/editbook.c:203 src/editjpilot.c:308 src/editvcard.c:223
-#: src/prefs_account.c:1348
+#: src/prefs_account.c:1349
 msgid "File"
 msgstr "Файл"
 
@@ -1363,7 +1377,7 @@ msgid "Edit JPilot Entry"
 msgstr "Редагувати запис JPilot"
 
 #: src/editjpilot.c:315 src/editldap.c:342 src/editvcard.c:230
-#: src/importldif.c:527 src/prefs_account.c:1850
+#: src/importldif.c:527 src/prefs_account.c:1851
 msgid " ... "
 msgstr " ... "
 
@@ -1427,7 +1441,7 @@ msgstr "Таймаут (с)"
 msgid "Maximum Entries"
 msgstr "Максимальний розмір результату"
 
-#: src/editldap.c:463 src/prefs_account.c:698
+#: src/editldap.c:463 src/prefs_account.c:699
 msgid "Basic"
 msgstr "Основні"
 
@@ -1484,7 +1498,7 @@ msgid "Exporting file:"
 msgstr "Експорт файла:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:190 src/import.c:196
-#: src/prefs_account.c:1081
+#: src/prefs_account.c:1082
 msgid " Select... "
 msgstr " Обрати... "
 
@@ -1492,8 +1506,8 @@ msgstr " Обрати... "
 msgid "Select exporting file"
 msgstr "Оберіть файл для експорту"
 
-#: src/filter.c:827 src/prefs.c:157 src/prefs.c:185 src/prefs.c:230
-#: src/prefs_account.c:562 src/prefs_account.c:576
+#: src/filter.c:827 src/prefs.c:158 src/prefs.c:186 src/prefs.c:231
+#: src/prefs_account.c:563 src/prefs_account.c:577
 #: src/prefs_customheader.c:382 src/prefs_customheader.c:428
 #: src/prefs_display_header.c:407 src/prefs_display_header.c:432
 msgid "failed to write configuration to file\n"
@@ -1591,6 +1605,7 @@ msgstr "Створення області перегляду папок...\n"
 msgid "New"
 msgstr "Нові"
 
+#. S_COL_MARK
 #: src/folderview.c:285 src/prefs_summary_column.c:68
 msgid "Unread"
 msgstr "Непрочитані"
@@ -2063,6 +2078,7 @@ msgstr "Записи :"
 msgid "Import LDIF file into Address Book"
 msgstr "Імпортувати файл LDIF в адресну книгу"
 
+#. Button panel
 #: src/importldif.c:760
 msgid "Prev"
 msgstr "Назад"
@@ -2286,6 +2302,7 @@ msgstr "Введіть пароль"
 msgid "Protocol log"
 msgstr "Журнал протоколу"
 
+#. for gettext
 #: src/main.c:128 src/main.c:137 src/mh.c:792
 #, c-format
 msgid ""
@@ -2374,6 +2391,7 @@ msgstr "Листи в черзі"
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Деякі невідіслані листи - в черзі. Вийти зараз?"
 
+#. remote command mode
 #: src/main.c:551
 msgid "another Sylpheed is already running.\n"
 msgstr "вже запущено інший Sylpheed.\n"
@@ -2465,6 +2483,7 @@ msgstr "/Файл/Друкувати..."
 msgid "/_File/_Work offline"
 msgstr "/Файл/Працювати без з'єднання"
 
+#. {N_("/_File/_Close"),		"<alt>W", app_exit_cb, 0, NULL},
 #: src/mainwindow.c:482
 msgid "/_File/E_xit"
 msgstr "/Файл/Вийти"
@@ -3160,7 +3179,7 @@ msgstr "Отримати нові листи для всіх записів"
 msgid "Send queued message(s)"
 msgstr "Відіслати лист(и) з черги"
 
-#: src/mainwindow.c:2144 src/prefs_account.c:704 src/prefs_common.c:845
+#: src/mainwindow.c:2144 src/prefs_account.c:705 src/prefs_common.c:845
 #: src/prefs_folder_item.c:137
 msgid "Compose"
 msgstr "Створення листа"
@@ -3668,207 +3687,207 @@ msgstr "команда не підтримується\n"
 msgid "error occurred on POP3 session\n"
 msgstr "помилка під час сесії POP3\n"
 
-#: src/prefs.c:200
+#: src/prefs.c:201
 #, c-format
 msgid "Found %s\n"
 msgstr "Знайдено %s\n"
 
-#: src/prefs.c:233
+#: src/prefs.c:234
 msgid "Configuration is saved.\n"
 msgstr "Конфігурацію збережено.\n"
 
-#: src/prefs_account.c:607
+#: src/prefs_account.c:608
 msgid "Opening account preferences window...\n"
 msgstr "Відкриття вікна опцій account'а...\n"
 
-#: src/prefs_account.c:633
+#: src/prefs_account.c:634
 #, c-format
 msgid "Account%d"
 msgstr "Запис%d"
 
-#: src/prefs_account.c:652
+#: src/prefs_account.c:653
 msgid "Preferences for new account"
 msgstr "Налаштування для нового запису"
 
-#: src/prefs_account.c:657
+#: src/prefs_account.c:658
 msgid "Account preferences"
 msgstr "Налаштування запису"
 
-#: src/prefs_account.c:680
+#: src/prefs_account.c:681
 msgid "Creating account preferences window...\n"
 msgstr "Створення вікна опцій запису...\n"
 
-#: src/prefs_account.c:700 src/prefs_common.c:841
+#: src/prefs_account.c:701 src/prefs_common.c:841
 msgid "Receive"
 msgstr "Отримання"
 
-#: src/prefs_account.c:707 src/prefs_common.c:854
+#: src/prefs_account.c:708 src/prefs_common.c:854
 msgid "Privacy"
 msgstr "Privacy"
 
-#: src/prefs_account.c:711
+#: src/prefs_account.c:712
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account.c:714
+#: src/prefs_account.c:715
 msgid "Advanced"
 msgstr "Advanced"
 
-#: src/prefs_account.c:763
+#: src/prefs_account.c:764
 msgid "Name of this account"
 msgstr "Назва цього запису"
 
-#: src/prefs_account.c:772
+#: src/prefs_account.c:773
 msgid "Set as default"
 msgstr "Встановити як default"
 
-#: src/prefs_account.c:776
+#: src/prefs_account.c:777
 msgid "Personal information"
 msgstr "Особиста інформація"
 
-#: src/prefs_account.c:785
+#: src/prefs_account.c:786
 msgid "Full name"
 msgstr "Повне ім'я"
 
-#: src/prefs_account.c:791
+#: src/prefs_account.c:792
 msgid "Mail address"
 msgstr "Поштова адреса"
 
-#: src/prefs_account.c:797
+#: src/prefs_account.c:798
 msgid "Organization"
 msgstr "Організація"
 
-#: src/prefs_account.c:821
+#: src/prefs_account.c:822
 msgid "Server information"
 msgstr "Інформація про сервер"
 
-#: src/prefs_account.c:842 src/prefs_account.c:989 src/prefs_account.c:1594
+#: src/prefs_account.c:843 src/prefs_account.c:990 src/prefs_account.c:1595
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account.c:844 src/prefs_account.c:1101 src/prefs_account.c:1611
-#: src/prefs_account.c:1798
+#: src/prefs_account.c:845 src/prefs_account.c:1102 src/prefs_account.c:1612
+#: src/prefs_account.c:1799
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account.c:846
+#: src/prefs_account.c:847
 msgid "News (NNTP)"
 msgstr "Новини (NNTP)"
 
-#: src/prefs_account.c:848
+#: src/prefs_account.c:849
 msgid "None (local)"
 msgstr "Нема (локально)"
 
-#: src/prefs_account.c:861
+#: src/prefs_account.c:862
 msgid "This server requires authentication"
 msgstr "Цей сервер вимагає аутентифікації"
 
-#: src/prefs_account.c:900
+#: src/prefs_account.c:901
 msgid "News server"
 msgstr "Сервер новин"
 
-#: src/prefs_account.c:906
+#: src/prefs_account.c:907
 msgid "Server for receiving"
 msgstr "Сервер для отримання"
 
-#: src/prefs_account.c:912
+#: src/prefs_account.c:913
 msgid "SMTP server (send)"
 msgstr "Сервер SMTP (відсилання)"
 
-#: src/prefs_account.c:919 src/prefs_account.c:1257
+#: src/prefs_account.c:920 src/prefs_account.c:1258
 msgid "User ID"
 msgstr "ID користувача"
 
-#: src/prefs_account.c:925 src/prefs_account.c:1266
+#: src/prefs_account.c:926 src/prefs_account.c:1267
 msgid "Password"
 msgstr "Пароль"
 
-#: src/prefs_account.c:997
+#: src/prefs_account.c:998
 #, fuzzy
 msgid "Use secure authentication (APOP)"
 msgstr "Цей сервер вимагає аутентифікації"
 
-#: src/prefs_account.c:1000
+#: src/prefs_account.c:1001
 msgid "Remove messages on server when received"
 msgstr "Видаляти листи на сервері після отримання"
 
-#: src/prefs_account.c:1011
+#: src/prefs_account.c:1012
 msgid "Remove after"
 msgstr "Видалити через"
 
-#: src/prefs_account.c:1020
+#: src/prefs_account.c:1021
 msgid "days"
 msgstr "днів"
 
-#: src/prefs_account.c:1037
+#: src/prefs_account.c:1038
 msgid "(0 days: remove immediately)"
 msgstr "(0 днів - видаляти негайно)"
 
-#: src/prefs_account.c:1044
+#: src/prefs_account.c:1045
 msgid "Download all messages on server"
 msgstr "Завантажити всі листи на сервері"
 
-#: src/prefs_account.c:1050
+#: src/prefs_account.c:1051
 msgid "Receive size limit"
 msgstr "Обмеження розміру отриманих листів"
 
-#: src/prefs_account.c:1057 src/prefs_filter_edit.c:622
+#: src/prefs_account.c:1058 src/prefs_filter_edit.c:622
 msgid "KB"
 msgstr "Кб"
 
-#: src/prefs_account.c:1064
+#: src/prefs_account.c:1065
 msgid "Filter messages on receiving"
 msgstr "Фільтрувати листи при отриманні"
 
-#: src/prefs_account.c:1072
+#: src/prefs_account.c:1073
 msgid "Default inbox"
 msgstr "Вхідна папка по замовчуванню"
 
-#: src/prefs_account.c:1095
+#: src/prefs_account.c:1096
 msgid "(Unfiltered messages will be stored in this folder)"
 msgstr "(Тут складаємо невідфільтровані листи)"
 
-#: src/prefs_account.c:1112 src/prefs_account.c:1228
+#: src/prefs_account.c:1113 src/prefs_account.c:1229
 msgid "Authentication method"
 msgstr "Метод аутентифікації"
 
-#: src/prefs_account.c:1122 src/prefs_account.c:1238 src/prefs_common.c:1182
+#: src/prefs_account.c:1123 src/prefs_account.c:1239 src/prefs_common.c:1182
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: src/prefs_account.c:1130
+#: src/prefs_account.c:1131
 msgid "`Get all' checks for new messages on this account"
 msgstr "Перевіряти за командою `Отримати всі'"
 
-#: src/prefs_account.c:1178 src/prefs_customheader.c:189
+#: src/prefs_account.c:1179 src/prefs_customheader.c:189
 msgid "Header"
 msgstr "Заголовок"
 
-#: src/prefs_account.c:1185
+#: src/prefs_account.c:1186
 msgid "Add Date header field"
 msgstr "Додати поле дати заголовка"
 
-#: src/prefs_account.c:1186
+#: src/prefs_account.c:1187
 msgid "Generate Message-ID"
 msgstr "Генерувати Message-ID"
 
-#: src/prefs_account.c:1193
+#: src/prefs_account.c:1194
 msgid "Add user-defined header"
 msgstr "Вживати заголовок, визначений користувачем"
 
-#: src/prefs_account.c:1195 src/prefs_common.c:1698 src/prefs_common.c:1723
+#: src/prefs_account.c:1196 src/prefs_common.c:1698 src/prefs_common.c:1723
 msgid " Edit... "
 msgstr " Редагувати... "
 
-#: src/prefs_account.c:1205
+#: src/prefs_account.c:1206
 msgid "Authentication"
 msgstr "Аутентифікація"
 
-#: src/prefs_account.c:1213
+#: src/prefs_account.c:1214
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "Аутентифікація SMTP (SMTP AUTH)"
 
-#: src/prefs_account.c:1288
+#: src/prefs_account.c:1289
 #, fuzzy
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
@@ -3877,172 +3896,172 @@ msgstr ""
 "Якщо Ви залишите ці поля порожніми, буде вжито ті ж\n"
 "ID користувача та пароль, що й для отримання пошти."
 
-#: src/prefs_account.c:1300
+#: src/prefs_account.c:1301
 msgid "Authenticate with POP3 before sending"
 msgstr "Аутентифікація POP3 перед відсиланням"
 
-#: src/prefs_account.c:1356
+#: src/prefs_account.c:1357
 msgid "Command output"
 msgstr "Вивід команди"
 
-#: src/prefs_account.c:1367 src/prefs_folder_item.c:300
+#: src/prefs_account.c:1368 src/prefs_folder_item.c:300
 msgid "Automatically set the following addresses"
 msgstr "Автоматично встановлювати наступні адреси"
 
-#: src/prefs_account.c:1376
+#: src/prefs_account.c:1377
 msgid "Cc"
 msgstr "Копія"
 
-#: src/prefs_account.c:1389
+#: src/prefs_account.c:1390
 msgid "Bcc"
 msgstr "Приховано"
 
-#: src/prefs_account.c:1402
+#: src/prefs_account.c:1403
 msgid "Reply-To"
 msgstr "Зворотня адреса"
 
-#: src/prefs_account.c:1454
+#: src/prefs_account.c:1455
 msgid "Encrypt message by default"
 msgstr "Шифрувати лист по замовчуванню"
 
-#: src/prefs_account.c:1456
+#: src/prefs_account.c:1457
 msgid "Sign message by default"
 msgstr "Підписувати лист по замовчуванню"
 
-#: src/prefs_account.c:1458
+#: src/prefs_account.c:1459
 msgid "Use ASCII-armored format for encryption"
 msgstr "Вживати \"ASCII-armored\" формат для шифрування"
 
-#: src/prefs_account.c:1460
+#: src/prefs_account.c:1461
 msgid "Use clear text signature"
 msgstr "Вживати підпис відкритим текстом"
 
-#: src/prefs_account.c:1465
+#: src/prefs_account.c:1466
 msgid "Sign key"
 msgstr "Ключ підпису"
 
-#: src/prefs_account.c:1473
+#: src/prefs_account.c:1474
 msgid "Use default GnuPG key"
 msgstr "Вживати ключ GnuPG по замовчуванню"
 
-#: src/prefs_account.c:1482
+#: src/prefs_account.c:1483
 msgid "Select key by your email address"
 msgstr "Обрати ключ за Вашою адресою e-mail"
 
-#: src/prefs_account.c:1491
+#: src/prefs_account.c:1492
 msgid "Specify key manually"
 msgstr "Визначити ключ власноручно"
 
-#: src/prefs_account.c:1507
+#: src/prefs_account.c:1508
 msgid "User or key ID:"
 msgstr "Користувач або ідентифікатор ключа:"
 
-#: src/prefs_account.c:1602 src/prefs_account.c:1619 src/prefs_account.c:1635
-#: src/prefs_account.c:1653
+#: src/prefs_account.c:1603 src/prefs_account.c:1620 src/prefs_account.c:1636
+#: src/prefs_account.c:1654
 msgid "Don't use SSL"
 msgstr "Не вживати SSL"
 
-#: src/prefs_account.c:1605
+#: src/prefs_account.c:1606
 msgid "Use SSL for POP3 connection"
 msgstr "Вживати SSL для з'єднання POP3"
 
-#: src/prefs_account.c:1608 src/prefs_account.c:1625 src/prefs_account.c:1659
+#: src/prefs_account.c:1609 src/prefs_account.c:1626 src/prefs_account.c:1660
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Вживати команду STARTTLS для початку сесії SSL"
 
-#: src/prefs_account.c:1622
+#: src/prefs_account.c:1623
 msgid "Use SSL for IMAP4 connection"
 msgstr "Вживати SSL для з'єднання IMAP4"
 
-#: src/prefs_account.c:1628
+#: src/prefs_account.c:1629
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account.c:1643
+#: src/prefs_account.c:1644
 msgid "Use SSL for NNTP connection"
 msgstr "Вживати SSL для з'єднання NNTP"
 
-#: src/prefs_account.c:1645
+#: src/prefs_account.c:1646
 msgid "Send (SMTP)"
 msgstr "Відсилка (SMTP)"
 
-#: src/prefs_account.c:1656
+#: src/prefs_account.c:1657
 msgid "Use SSL for SMTP connection"
 msgstr "Вживати SSL для з'єднання SMTP"
 
-#: src/prefs_account.c:1667
+#: src/prefs_account.c:1668
 msgid "Use non-blocking SSL"
 msgstr "Вживати неблокуючий SSL"
 
-#: src/prefs_account.c:1679
+#: src/prefs_account.c:1680
 msgid "(Turn this off if you have problems in SSL connection)"
 msgstr "(Вимкніть це, якщо стикаєтесь з проблемами при з'єднанні SSL )"
 
-#: src/prefs_account.c:1768
+#: src/prefs_account.c:1769
 msgid "Specify SMTP port"
 msgstr "Вказати порт SMTP"
 
-#: src/prefs_account.c:1774
+#: src/prefs_account.c:1775
 msgid "Specify POP3 port"
 msgstr "Вказати порт POP3"
 
-#: src/prefs_account.c:1780
+#: src/prefs_account.c:1781
 msgid "Specify IMAP4 port"
 msgstr "Вказати порт IMAP4"
 
-#: src/prefs_account.c:1786
+#: src/prefs_account.c:1787
 msgid "Specify NNTP port"
 msgstr "Вказати порт NNTP"
 
-#: src/prefs_account.c:1791
+#: src/prefs_account.c:1792
 msgid "Specify domain name"
 msgstr "Вказати ім'я домена"
 
-#: src/prefs_account.c:1809
+#: src/prefs_account.c:1810
 msgid "IMAP server directory"
 msgstr "Каталог сервера IMAP"
 
-#: src/prefs_account.c:1863
+#: src/prefs_account.c:1864
 msgid "Put sent messages in"
 msgstr "Зберігати відіслані листи в"
 
-#: src/prefs_account.c:1865
+#: src/prefs_account.c:1866
 msgid "Put draft messages in"
 msgstr "Зберігати чорновики листів в"
 
-#: src/prefs_account.c:1867
+#: src/prefs_account.c:1868
 msgid "Put deleted messages in"
 msgstr "Зберігати видалені листи в"
 
-#: src/prefs_account.c:1928
+#: src/prefs_account.c:1929
 msgid "Account name is not entered."
 msgstr "Назву запису не вказано."
 
-#: src/prefs_account.c:1932
+#: src/prefs_account.c:1933
 msgid "Mail address is not entered."
 msgstr "Не вказано поштову адресу."
 
-#: src/prefs_account.c:1937
+#: src/prefs_account.c:1938
 msgid "SMTP server is not entered."
 msgstr "Не вказано сервер SMTP."
 
-#: src/prefs_account.c:1942
+#: src/prefs_account.c:1943
 msgid "User ID is not entered."
 msgstr "Не вказано ID користувача."
 
-#: src/prefs_account.c:1947
+#: src/prefs_account.c:1948
 msgid "POP3 server is not entered."
 msgstr "Не вказано сервер POP3."
 
-#: src/prefs_account.c:1952
+#: src/prefs_account.c:1953
 msgid "IMAP4 server is not entered."
 msgstr "Не вказано сервер IMAP4."
 
-#: src/prefs_account.c:1957
+#: src/prefs_account.c:1958
 msgid "NNTP server is not entered."
 msgstr "Не вказано сервер NNTP."
 
-#: src/prefs_account.c:2039
+#: src/prefs_account.c:2040
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -4421,6 +4440,7 @@ msgstr "Цитувати лист при відповіді"
 msgid "Reply button invokes mailing list reply"
 msgstr "Кнопка відповіді запускає відповідь конференції"
 
+#. reply
 #: src/prefs_common.c:1404
 msgid "Reply format"
 msgstr "Формат відповіді"
@@ -4429,6 +4449,7 @@ msgstr "Формат відповіді"
 msgid "Quotation mark"
 msgstr "Знак цитати"
 
+#. forward
 #: src/prefs_common.c:1443
 msgid "Forward format"
 msgstr "Формат пересилання"
@@ -4457,6 +4478,7 @@ msgstr "Скорочувати назви конференцій, довші н�
 msgid "letters"
 msgstr "літер"
 
+#. ---- Summary ----
 #: src/prefs_common.c:1593
 msgid "Summary View"
 msgstr "Список повідомлень"
@@ -5169,22 +5191,29 @@ msgstr "Зворотня:"
 msgid "Mark"
 msgstr "Позначка"
 
+#. S_COL_UNREAD
 #: src/prefs_summary_column.c:69
 msgid "Attachment"
 msgstr "Вкладення"
 
+#. S_COL_MIME
+#. S_COL_UNREAD
+#. S_COL_MIME
 #: src/prefs_summary_column.c:70 src/summaryview.c:383
 msgid "Subject"
 msgstr "Тема"
 
+#. S_COL_SUBJECT
 #: src/prefs_summary_column.c:71 src/summaryview.c:384
 msgid "From"
 msgstr "Від"
 
+#. S_COL_FROM
 #: src/prefs_summary_column.c:72 src/summaryview.c:385
 msgid "Date"
 msgstr "Дата"
 
+#. S_COL_SIZE
 #: src/prefs_summary_column.c:74
 msgid "Number"
 msgstr "Номер"
@@ -5586,6 +5615,7 @@ msgstr "Помилка у створенні контексту ssl\n"
 msgid "SSL connect failed (%s)\n"
 msgstr "Збій контексту SSL (%s)\n"
 
+#. Get the cipher
 #: src/ssl.c:113
 #, c-format
 msgid "SSL connection using %s\n"
@@ -5715,10 +5745,12 @@ msgstr "/Друк..."
 msgid "M"
 msgstr "M"
 
+#. S_COL_MARK
 #: src/summaryview.c:381
 msgid "U"
 msgstr "U"
 
+#. S_COL_SIZE
 #: src/summaryview.c:387
 msgid "No."
 msgstr "Номер"
@@ -6023,7 +6055,7 @@ msgstr "Щоб перевірити його, викличте контекст�
 msgid "right click and select `Check signature'.\n"
 msgstr "правою кнопкою і оберіть `Перевірити підпис'.\n"
 
-#: src/textview.c:1640
+#: src/textview.c:1646
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
