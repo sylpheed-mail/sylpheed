@@ -90,12 +90,7 @@ struct _PrefsCommon
 	gchar *fw_quotefmt;
 
 	/* Display */
-	gchar *widgetfont;
 	gchar *textfont;
-	gchar *normalfont;
-	gchar *boldfont;
-	gchar *smallfont;
-	gchar *titlefont;
 
 	gboolean trans_hdr;
 	gboolean display_folder_unread;

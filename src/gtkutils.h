@@ -82,9 +82,8 @@ struct _ComboButton
 gboolean gtkut_get_font_size		(GtkWidget	*widget,
 					 gint		*width,
 					 gint		*height);
-
-GdkFont *gtkut_font_load		(const gchar	*fontset_name);
-GdkFont *gtkut_font_load_from_fontset	(const gchar	*fontset_name);
+PangoFontDescription *gtkut_get_default_font_desc
+					(void);
 
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);

@@ -488,8 +488,9 @@ SummaryView *summary_create(void)
 
 void summary_init(SummaryView *summaryview)
 {
-	GtkStyle *style;
 	GtkWidget *pixmap;
+	PangoFontDescription *font_desc;
+	gint size;
 
 	gtk_widget_realize(summaryview->ctree);
 	stock_pixmap_gdk(summaryview->ctree, STOCK_PIXMAP_MARK,
@@ -510,19 +511,10 @@ void summary_init(SummaryView *summaryview)
 			 &clipxpm, &clipxpmmask);
 
 	if (!bold_style) {
-		PangoFontDescription *font_desc = NULL;
-
 		bold_style = gtk_style_copy
 			(gtk_widget_get_style(summaryview->ctree));
-		if (prefs_common.boldfont)
-			font_desc = pango_font_description_from_string
-				(prefs_common.boldfont);
-		if (font_desc) {
-			if (bold_style->font_desc)
-				pango_font_description_free
-					(bold_style->font_desc);
-			bold_style->font_desc = font_desc;
-		}
+		pango_font_description_set_weight
+			(bold_style->font_desc, PANGO_WEIGHT_BOLD);
 		bold_marked_style = gtk_style_copy(bold_style);
 		bold_marked_style->fg[GTK_STATE_NORMAL] =
 			summaryview->color_marked;
@@ -531,23 +523,14 @@ void summary_init(SummaryView *summaryview)
 			summaryview->color_dim;
 	}
 
-	style = gtk_style_copy(gtk_widget_get_style
-				(summaryview->statlabel_folder));
-	if (prefs_common.smallfont) {
-		PangoFontDescription *font_desc = NULL;
-
-		if (prefs_common.smallfont)
-			font_desc = pango_font_description_from_string
-				(prefs_common.smallfont);
-		if (font_desc) {
-			if (style->font_desc)
-				pango_font_description_free(style->font_desc);
-			style->font_desc = font_desc;
-		}
-	}
-	gtk_widget_set_style(summaryview->statlabel_folder, style);
-	gtk_widget_set_style(summaryview->statlabel_select, style);
-	gtk_widget_set_style(summaryview->statlabel_msgs, style);
+	font_desc = pango_font_description_new();
+	size = pango_font_description_get_size
+		(summaryview->statlabel_folder->style->font_desc);
+	pango_font_description_set_size(font_desc, size * PANGO_SCALE_SMALL);
+	gtk_widget_modify_font(summaryview->statlabel_folder, font_desc);
+	gtk_widget_modify_font(summaryview->statlabel_select, font_desc);
+	gtk_widget_modify_font(summaryview->statlabel_msgs, font_desc);
+	pango_font_description_free(font_desc);
 
 	pixmap = stock_pixmap_widget(summaryview->hbox_l, STOCK_PIXMAP_DIR_OPEN);
 	gtk_box_pack_start(GTK_BOX(summaryview->hbox_l), pixmap, FALSE, FALSE, 4);

@@ -233,6 +233,14 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 {
 	GtkTextBuffer *buffer;
 	GtkTextTag *tag;
+	static PangoFontDescription *font_desc, *bold_font_desc;
+
+	if (!font_desc) {
+		font_desc = gtkut_get_default_font_desc();
+		bold_font_desc = pango_font_description_copy(font_desc);
+		pango_font_description_set_weight
+			(bold_font_desc, PANGO_WEIGHT_BOLD);
+	}
 
 	buffer = gtk_text_view_get_buffer(text);
 
@@ -241,11 +249,10 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 				   "pixels-above-lines-set", TRUE,
 				   "pixels-below-lines", 0,
 				   "pixels-below-lines-set", TRUE,
-				   //"left-margin", 0,
-				   //"left-margin-set", TRUE,
+				   "font-desc", font_desc,
 				   NULL);
 	gtk_text_buffer_create_tag(buffer, "header_title",
-				   "font", prefs_common.boldfont,
+				   "font-desc", bold_font_desc,
 				   NULL);
 	gtk_text_buffer_create_tag(buffer, "quote0",
 				   "foreground-gdk", &quote_colors[0],
@@ -280,7 +287,6 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 
 void textview_init(TextView *textview)
 {
-	//gtkut_widget_disable_theme_engine(textview->text);
 	textview_update_message_colors();
 	textview_set_all_headers(textview, FALSE);
 	textview_set_font(textview, NULL);
@@ -907,7 +913,7 @@ static void textview_make_clickable_parts(TextView *textview,
 			uri->start = gtk_text_iter_get_offset(&iter);
 			gtk_text_buffer_insert_with_tags_by_name
 				(buffer, &iter, last->bp, last->ep - last->bp,
-				 uri_tag, NULL);
+				 uri_tag, fg_tag, NULL);
 			uri->end = gtk_text_iter_get_offset(&iter);
 			textview->uri_list =
 				g_slist_append(textview->uri_list, uri);

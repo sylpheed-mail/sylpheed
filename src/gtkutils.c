@@ -64,6 +64,23 @@ gboolean gtkut_get_font_size(GtkWidget *widget, gint *width, gint *height)
 	return TRUE;
 }
 
+PangoFontDescription *gtkut_get_default_font_desc(void)
+{
+	static PangoFontDescription *font_desc = NULL;
+
+	if (!font_desc) {
+		GtkWidget *window;
+
+		window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+		gtk_widget_ensure_style(window);
+		font_desc = pango_font_description_copy
+			(window->style->font_desc);
+		gtk_object_sink(GTK_OBJECT(window));
+	}
+
+	return pango_font_description_copy(font_desc);
+}
+
 void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)
 {
 	g_return_if_fail(color != NULL);

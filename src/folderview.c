@@ -416,16 +416,9 @@ void folderview_init(FolderView *folderview)
 	stock_pixmap_gdk(ctree, STOCK_PIXMAP_TRASH, &trashxpm, &trashxpmmask);
 
 	if (!bold_style) {
-		PangoFontDescription *font_desc;
 		bold_style = gtk_style_copy(gtk_widget_get_style(ctree));
-		font_desc = pango_font_description_from_string
-			(prefs_common.boldfont);
-		if (font_desc) {
-			if (bold_style->font_desc)
-				pango_font_description_free
-					(bold_style->font_desc);
-			bold_style->font_desc = font_desc;
-		}
+		pango_font_description_set_weight
+			(bold_style->font_desc, PANGO_WEIGHT_BOLD);
 		bold_color_style = gtk_style_copy(bold_style);
 		bold_color_style->fg[GTK_STATE_NORMAL] = folderview->color_new;
 	}
