@@ -123,12 +123,6 @@ static void open_compose_new		(const gchar	*address,
 
 static void send_queue			(void);
 
-#if 0
-/* for gettext */
-_("File `%s' already exists.\n"
-  "Can't create folder.")
-#endif
-
 #define MAKE_DIR_IF_NOT_EXIST(dir) \
 { \
 	if (!is_dir_exist(dir)) { \

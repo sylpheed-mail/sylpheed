@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-01 15:06+0900\n"
+"POT-Creation-Date: 2005-03-01 23:57+0900\n"
 "PO-Revision-Date: 2001-10-08\n"
 "Last-Translator: Michalis Kabrianis <Michalis@bigfoot.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -600,11 +600,11 @@ msgstr "Κοινές διευθύνσεις"
 msgid "Personal address"
 msgstr "Προσωπικές διευθύνσεις"
 
-#: src/alertpanel.c:123 src/compose.c:4779 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4779 src/main.c:458
 msgid "Notice"
 msgstr "Σημείωση"
 
-#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1863
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1863
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
@@ -652,7 +652,7 @@ msgstr "Καφέ"
 #. * index of label_colors[] as data parameter. for the None color we
 #. * pass an invalid (high) value. also we attach a data pointer so we
 #. * can always get back the SummaryView pointer.
-#: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3567
+#: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3569
 msgid "None"
 msgstr "Τέλος"
 
@@ -935,7 +935,7 @@ msgstr "δεν μπορώ να δημιουργήσω %s\n"
 msgid "Message: %s"
 msgstr "Μήνυμα: %s"
 
-#: src/compose.c:1775 src/mimeview.c:488
+#: src/compose.c:1775 src/mimeview.c:513
 msgid "Can't get the part of multipart message."
 msgstr "Δεν μπορώ να λάβω το τμήμα του πολυτμηματικού μηνύματος"
 
@@ -1673,12 +1673,12 @@ msgstr "Θέτω τις πληροφορίες καταλόγων...\n"
 msgid "Setting folder info..."
 msgstr "Θέτω τις πληροφορίες καταλόγων..."
 
-#: src/folderview.c:652 src/mainwindow.c:3159 src/setup.c:81
+#: src/folderview.c:652 src/mainwindow.c:3173 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Σάρωση καταλόγων %s%c%s ..."
 
-#: src/folderview.c:656 src/mainwindow.c:3164 src/setup.c:86
+#: src/folderview.c:656 src/mainwindow.c:3178 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Σάρωση καταλόγου %s ..."
@@ -2385,8 +2385,7 @@ msgstr "Δώστε τον κωδικό"
 msgid "Protocol log"
 msgstr "Καταγραφή πρωτοκόλλου"
 
-#. for gettext
-#: src/main.c:128 src/main.c:137 src/mh.c:792
+#: src/main.c:131 src/mh.c:792
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -2395,11 +2394,11 @@ msgstr ""
 "Το αρχείο `%s' υπάρχει ήδη.\n"
 "Δεν μπορώ να δημιουργήσω τον κατάλογο."
 
-#: src/main.c:183
+#: src/main.c:177
 msgid "g_thread is not supported by glib.\n"
 msgstr "το g_thread δεν υποστηρίζεται από την glib.\n"
 
-#: src/main.c:262
+#: src/main.c:256
 #, fuzzy
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
@@ -2408,82 +2407,82 @@ msgstr ""
 "Το GnuPG δεν έχει εγκατασταθεί σωστά.\n"
 "Απενεργοποιείται η υποστήριξη OpenPGP."
 
-#: src/main.c:420
+#: src/main.c:414
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Χρήση: %s [ΕΠΙΛΟΓΗ]...\n"
 
-#: src/main.c:423
+#: src/main.c:417
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [διεύθυνση]  άνοιγμα παραθύρου σύνθεσης"
 
-#: src/main.c:424
+#: src/main.c:418
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
 "                         attached"
 msgstr ""
 
-#: src/main.c:427
+#: src/main.c:421
 msgid "  --receive              receive new messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:428
+#: src/main.c:422
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          λήψη νέων μηνυμάτων όλων των λογαριασμών"
 
-#: src/main.c:429
+#: src/main.c:423
 #, fuzzy
 msgid "  --send                 send all queued messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:430
+#: src/main.c:424
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:431
+#: src/main.c:425
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:433
+#: src/main.c:427
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:434
+#: src/main.c:428
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 εμφάνιση αυτού του κειμένου και έξοδος"
 
-#: src/main.c:435
+#: src/main.c:429
 msgid "  --version              output version information and exit"
 msgstr "  --version              εμφάνιση της έκδοσης και έξοδος"
 
-#: src/main.c:465
+#: src/main.c:459
 msgid "Composing message exists. Really quit?"
 msgstr "Υπάρχει παράθυρο σύνθεσης μηνύματος. Να κλείσω;"
 
-#: src/main.c:473
+#: src/main.c:467
 msgid "Queued messages"
 msgstr "Μηνύματα στην ουρά"
 
-#: src/main.c:474
+#: src/main.c:468
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Μερικά μηνύματα δεν έχουν σταλεί και είναι στην ουρά. Να κλείσω;"
 
 #. remote command mode
-#: src/main.c:551
+#: src/main.c:545
 msgid "another Sylpheed is already running.\n"
 msgstr "ένα άλλο Sylpheed τρέχει ήδη.\n"
 
-#: src/main.c:717
+#: src/main.c:711
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Γράφω τις ρυθμίσεις των φίλτρων...\n"
 
-#: src/main.c:718
+#: src/main.c:712
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3219,9 +3218,9 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: η κατανομή χρωμάτων %d απέτυχε\n"
 
 #: src/mainwindow.c:1020 src/summaryview.c:1368 src/summaryview.c:1677
-#: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2450
-#: src/summaryview.c:3077 src/summaryview.c:3143 src/summaryview.c:3168
-#: src/summaryview.c:3281
+#: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2452
+#: src/summaryview.c:3079 src/summaryview.c:3145 src/summaryview.c:3170
+#: src/summaryview.c:3283
 msgid "done.\n"
 msgstr "έγινε.\n"
 
@@ -3559,16 +3558,16 @@ msgstr "Η αναζήτηση τελείωσε"
 msgid "Creating message view...\n"
 msgstr "Δημιουργώ απεικόνιση μηνύματος...\n"
 
-#: src/messageview.c:628 src/summaryview.c:2721
+#: src/messageview.c:628 src/summaryview.c:2723
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/messageview.c:672 src/prefs_common.c:2154 src/summaryview.c:2741
+#: src/messageview.c:672 src/prefs_common.c:2154 src/summaryview.c:2743
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: src/messageview.c:673 src/summaryview.c:2742
+#: src/messageview.c:673 src/summaryview.c:2744
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3577,7 +3576,7 @@ msgstr ""
 "Εισάγετε την γραμμή εντολής εκτύπωσης:\n"
 "(Το `%s' θα αντικατασταθεί με το όνομα αρχείου)"
 
-#: src/messageview.c:679 src/summaryview.c:2748
+#: src/messageview.c:679 src/summaryview.c:2750
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -3641,55 +3640,55 @@ msgstr "Τύπος MIME"
 msgid "Text"
 msgstr "Κείμενο"
 
-#: src/mimeview.c:201
+#: src/mimeview.c:202
 #, fuzzy
 msgid "Attachments"
 msgstr "Προσάρτηση"
 
-#: src/mimeview.c:273
+#: src/mimeview.c:274
 msgid "Select \"Check signature\" to check"
 msgstr "Επιλέξτε \"Έλεγχος υπογραφής\" για έλεγχο"
 
-#: src/mimeview.c:546
+#: src/mimeview.c:571
 msgid "Select an action for the attached file:\n"
 msgstr ""
 
-#: src/mimeview.c:565
+#: src/mimeview.c:590
 #, fuzzy
 msgid "Open _with..."
 msgstr "/Άνοιγμα με..."
 
-#: src/mimeview.c:569
+#: src/mimeview.c:594
 #, fuzzy
 msgid "_Display as text"
 msgstr "/Εμφάνιση σαν κείμενο"
 
-#: src/mimeview.c:573
+#: src/mimeview.c:598
 #, fuzzy
 msgid "_Save as..."
 msgstr "/Αποθήκευση ως..."
 
-#: src/mimeview.c:619
+#: src/mimeview.c:644
 #, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
 msgstr "Αυτή η υπογραφή δεν έχει έλεγχθεί ακόμα.\n"
 
-#: src/mimeview.c:624
+#: src/mimeview.c:649
 #, fuzzy
 msgid "_Check signature"
 msgstr "/Έλεγχος υπογραφής"
 
-#: src/mimeview.c:909 src/mimeview.c:954 src/mimeview.c:974 src/mimeview.c:997
+#: src/mimeview.c:904 src/mimeview.c:949 src/mimeview.c:969 src/mimeview.c:992
 msgid "Can't save the part of multipart message."
 msgstr "Δεν μπορώ να αποθηκεύσω το τμήμα του πολυτμηματικού μηνύματος"
 
-#: src/mimeview.c:1007
+#: src/mimeview.c:1002
 msgid "Open with"
 msgstr "Άνοιγμα με"
 
-#: src/mimeview.c:1008
+#: src/mimeview.c:1003
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3698,7 +3697,7 @@ msgstr ""
 "Εισάγετε την γραμμή εντολής για το άνοιγμα του αρχείου:\n"
 "(Το `%s' θα αντικατασταθεί με το όνομα αρχείου)"
 
-#: src/mimeview.c:1063
+#: src/mimeview.c:1058
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "Η γραμμή εντολής για απεικόνιση MIME είναι μη έγκυρη: `%s'"
@@ -6151,94 +6150,94 @@ msgstr ""
 msgid "(No Date)"
 msgstr "(Χωρίς ημερομηνία)"
 
-#: src/summaryview.c:2228
+#: src/summaryview.c:2230
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Το μήνυμα %d σημειώθηκε\n"
 
-#: src/summaryview.c:2263
+#: src/summaryview.c:2265
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Το μήνυμα %d σημειώθηκε ως διαβασμένο\n"
 
-#: src/summaryview.c:2328
+#: src/summaryview.c:2330
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Το μήνυμα %d σημειώθηκε ως αδιάβαστο\n"
 
-#: src/summaryview.c:2375
+#: src/summaryview.c:2377
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Το μήνυμα %s/%d έχει οριστεί για διαγραφή\n"
 
-#: src/summaryview.c:2395
+#: src/summaryview.c:2397
 #, fuzzy
 msgid "Delete message(s)"
 msgstr "Διαγραφή μηνύματος"
 
-#: src/summaryview.c:2396
+#: src/summaryview.c:2398
 #, fuzzy
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Θέλετε πράγματι να διαγραφεί αυτή η κεφαλίδα;"
 
-#: src/summaryview.c:2437 src/summaryview.c:2439
+#: src/summaryview.c:2439 src/summaryview.c:2441
 msgid "Deleting duplicated messages..."
 msgstr "Διαγράφω τα διπλά μηνύματα..."
 
-#: src/summaryview.c:2488
+#: src/summaryview.c:2490
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Το μήνυμα %s/%d δεν έχει σημειωθεί\n"
 
-#: src/summaryview.c:2530
+#: src/summaryview.c:2532
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί για μετακίνηση στο %s\n"
 
-#: src/summaryview.c:2545
+#: src/summaryview.c:2547
 msgid "Destination is same as current folder."
 msgstr "Ο προορισμός είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:2595
+#: src/summaryview.c:2597
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί να αντιγραφεί στο %s\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2612
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Ο προορισμός αντιγραφής είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:2659
+#: src/summaryview.c:2661
 msgid "Selecting all messages..."
 msgstr "Επιλέγω όλα τα μηνύματα..."
 
-#: src/summaryview.c:2789
+#: src/summaryview.c:2791
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Ένα σφάλμα συνέβη καθώς επεξεργάζομαι το mail."
 
-#: src/summaryview.c:3034 src/summaryview.c:3035
+#: src/summaryview.c:3036 src/summaryview.c:3037
 msgid "Building threads..."
 msgstr "Δημιουργώ τα νήματα..."
 
-#: src/summaryview.c:3117 src/summaryview.c:3118
+#: src/summaryview.c:3119 src/summaryview.c:3120
 msgid "Unthreading..."
 msgstr ""
 
-#: src/summaryview.c:3157
+#: src/summaryview.c:3159
 msgid "Unthreading for execution..."
 msgstr ""
 
-#: src/summaryview.c:3247
+#: src/summaryview.c:3249
 msgid "filtering..."
 msgstr "φιλτράρω..."
 
-#: src/summaryview.c:3248
+#: src/summaryview.c:3250
 msgid "Filtering..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3290
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "το μήνυμα %d είναι ήδη στη μνήμη.\n"

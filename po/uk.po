@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 1.0.0beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-01 15:06+0900\n"
+"POT-Creation-Date: 2005-03-01 23:57+0900\n"
 "PO-Revision-Date: Sun 31 Oct 2004 23:17:57\n"
 "Last-Translator: O. Nykyforchyn <nick@pu.if,ua>, 2004.\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -601,11 +601,11 @@ msgstr "Адреса організації"
 msgid "Personal address"
 msgstr "Особиста адреса"
 
-#: src/alertpanel.c:123 src/compose.c:4779 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4779 src/main.c:458
 msgid "Notice"
 msgstr "Примітка"
 
-#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1863
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1863
 msgid "Warning"
 msgstr "Попередження"
 
@@ -653,7 +653,7 @@ msgstr "Коричневий"
 #. * index of label_colors[] as data parameter. for the None color we
 #. * pass an invalid (high) value. also we attach a data pointer so we
 #. * can always get back the SummaryView pointer.
-#: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3567
+#: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3569
 msgid "None"
 msgstr "Ніякий"
 
@@ -914,7 +914,7 @@ msgstr "Не вдалось прочитати %s."
 msgid "Message: %s"
 msgstr "Лист: %s"
 
-#: src/compose.c:1775 src/mimeview.c:488
+#: src/compose.c:1775 src/mimeview.c:513
 msgid "Can't get the part of multipart message."
 msgstr "Не вдалось отримати одну з частин листа."
 
@@ -1631,12 +1631,12 @@ msgstr "Встановлюємо інформацію папки...\n"
 msgid "Setting folder info..."
 msgstr "Встановлюємо інформацію папки..."
 
-#: src/folderview.c:652 src/mainwindow.c:3159 src/setup.c:81
+#: src/folderview.c:652 src/mainwindow.c:3173 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Перечитуємо папку %s%c%s ..."
 
-#: src/folderview.c:656 src/mainwindow.c:3164 src/setup.c:86
+#: src/folderview.c:656 src/mainwindow.c:3178 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Перечитуємо папку %s ..."
@@ -2311,8 +2311,7 @@ msgstr "Введіть пароль"
 msgid "Protocol log"
 msgstr "Журнал протоколу"
 
-#. for gettext
-#: src/main.c:128 src/main.c:137 src/mh.c:792
+#: src/main.c:131 src/mh.c:792
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -2321,11 +2320,11 @@ msgstr ""
 "Файл `%s' вже існує.\n"
 "Неможливо створити папку."
 
-#: src/main.c:183
+#: src/main.c:177
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread не підтримується glib.\n"
 
-#: src/main.c:262
+#: src/main.c:256
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2333,16 +2332,16 @@ msgstr ""
 "GnuPG не встановлено належно, або надто стара версія.\n"
 "Відключено підтримку OpenPGP."
 
-#: src/main.c:420
+#: src/main.c:414
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Вживання: %s [ОПЦІЇ]...\n"
 
-#: src/main.c:423
+#: src/main.c:417
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    відкрити вікно для нового листа"
 
-#: src/main.c:424
+#: src/main.c:418
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2352,23 +2351,23 @@ msgstr ""
 "                         відкрити вікно створення з приєднанням вказаних\n"
 "                         файлів"
 
-#: src/main.c:427
+#: src/main.c:421
 msgid "  --receive              receive new messages"
 msgstr "  --receive              отримати нові листи"
 
-#: src/main.c:428
+#: src/main.c:422
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          отримати нові листи для всіх записів"
 
-#: src/main.c:429
+#: src/main.c:423
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 відіслати всі відкладені листи"
 
-#: src/main.c:430
+#: src/main.c:424
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [folder]...   показати загальну кількість листів"
 
-#: src/main.c:431
+#: src/main.c:425
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2376,41 +2375,41 @@ msgstr ""
 "  --status-full [folder]...\n"
 "                         показати стан кожної папки"
 
-#: src/main.c:433
+#: src/main.c:427
 msgid "  --debug                debug mode"
 msgstr "  --debug                режим відлагодження"
 
-#: src/main.c:434
+#: src/main.c:428
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 показати цю довідку і вийти"
 
-#: src/main.c:435
+#: src/main.c:429
 msgid "  --version              output version information and exit"
 msgstr "  --version              видати інформацію про версію і вийти"
 
-#: src/main.c:465
+#: src/main.c:459
 msgid "Composing message exists. Really quit?"
 msgstr "Є незавершені листи. Справді вийти?"
 
-#: src/main.c:473
+#: src/main.c:467
 msgid "Queued messages"
 msgstr "Листи в черзі"
 
-#: src/main.c:474
+#: src/main.c:468
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Деякі невідіслані листи - в черзі. Вийти зараз?"
 
 #. remote command mode
-#: src/main.c:551
+#: src/main.c:545
 msgid "another Sylpheed is already running.\n"
 msgstr "вже запущено інший Sylpheed.\n"
 
-#: src/main.c:717
+#: src/main.c:711
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Конфігурування дій"
 
-#: src/main.c:718
+#: src/main.c:712
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3062,9 +3061,9 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача розміщення кольору %d\n"
 
 #: src/mainwindow.c:1020 src/summaryview.c:1368 src/summaryview.c:1677
-#: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2450
-#: src/summaryview.c:3077 src/summaryview.c:3143 src/summaryview.c:3168
-#: src/summaryview.c:3281
+#: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2452
+#: src/summaryview.c:3079 src/summaryview.c:3145 src/summaryview.c:3170
+#: src/summaryview.c:3283
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -3392,16 +3391,16 @@ msgstr "Пошук закінчено"
 msgid "Creating message view...\n"
 msgstr "Створюємо область перегляду листа...\n"
 
-#: src/messageview.c:628 src/summaryview.c:2721
+#: src/messageview.c:628 src/summaryview.c:2723
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не вдалось зберегти файл `%s'."
 
-#: src/messageview.c:672 src/prefs_common.c:2154 src/summaryview.c:2741
+#: src/messageview.c:672 src/prefs_common.c:2154 src/summaryview.c:2743
 msgid "Print"
 msgstr "Друк"
 
-#: src/messageview.c:673 src/summaryview.c:2742
+#: src/messageview.c:673 src/summaryview.c:2744
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3410,7 +3409,7 @@ msgstr ""
 "Введіть команду друку:\n"
 "(`%s' буде замінено іменем файла)"
 
-#: src/messageview.c:679 src/summaryview.c:2748
+#: src/messageview.c:679 src/summaryview.c:2750
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -3474,54 +3473,54 @@ msgstr "Тип MIME"
 msgid "Text"
 msgstr "Текст"
 
-#: src/mimeview.c:201
+#: src/mimeview.c:202
 msgid "Attachments"
 msgstr "Вкладення"
 
-#: src/mimeview.c:273
+#: src/mimeview.c:274
 msgid "Select \"Check signature\" to check"
 msgstr "Оберіть \"Перевірити підпис\", щоб зробити це"
 
-#: src/mimeview.c:546
+#: src/mimeview.c:571
 msgid "Select an action for the attached file:\n"
 msgstr ""
 
-#: src/mimeview.c:565
+#: src/mimeview.c:590
 #, fuzzy
 msgid "Open _with..."
 msgstr "/Відкрити з"
 
-#: src/mimeview.c:569
+#: src/mimeview.c:594
 #, fuzzy
 msgid "_Display as text"
 msgstr "/Показати як текст"
 
-#: src/mimeview.c:573
+#: src/mimeview.c:598
 #, fuzzy
 msgid "_Save as..."
 msgstr "/Зберегти як..."
 
-#: src/mimeview.c:619
+#: src/mimeview.c:644
 #, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
 msgstr "Підпис ще не перевірено.\n"
 
-#: src/mimeview.c:624
+#: src/mimeview.c:649
 #, fuzzy
 msgid "_Check signature"
 msgstr "/Перевірити підпис"
 
-#: src/mimeview.c:909 src/mimeview.c:954 src/mimeview.c:974 src/mimeview.c:997
+#: src/mimeview.c:904 src/mimeview.c:949 src/mimeview.c:969 src/mimeview.c:992
 msgid "Can't save the part of multipart message."
 msgstr "Не вдалось зберегти одну з частин листа."
 
-#: src/mimeview.c:1007
+#: src/mimeview.c:1002
 msgid "Open with"
 msgstr "Відкрити з"
 
-#: src/mimeview.c:1008
+#: src/mimeview.c:1003
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3530,7 +3529,7 @@ msgstr ""
 "Введіть команду для відкриття файла:\n"
 "(`%s' буде замінено на його ім'я)"
 
-#: src/mimeview.c:1063
+#: src/mimeview.c:1058
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "Командний рядок переглядача MIME невірний: `%s'"
@@ -5923,90 +5922,90 @@ msgstr "Пишемо кеш списка (%s)..."
 msgid "(No Date)"
 msgstr "(Без дати)"
 
-#: src/summaryview.c:2228
+#: src/summaryview.c:2230
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Лист %d позначено\n"
 
-#: src/summaryview.c:2263
+#: src/summaryview.c:2265
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Лист %d позначено як прочитаний\n"
 
-#: src/summaryview.c:2328
+#: src/summaryview.c:2330
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Лист %d позначено як непрочитаний\n"
 
-#: src/summaryview.c:2375
+#: src/summaryview.c:2377
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Лист %s/%d призначено до видалення\n"
 
-#: src/summaryview.c:2395
+#: src/summaryview.c:2397
 msgid "Delete message(s)"
 msgstr "Видалити лист(и)"
 
-#: src/summaryview.c:2396
+#: src/summaryview.c:2398
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Справді видалити лист(и) з кошика?"
 
-#: src/summaryview.c:2437 src/summaryview.c:2439
+#: src/summaryview.c:2439 src/summaryview.c:2441
 msgid "Deleting duplicated messages..."
 msgstr "Видаляємо повторювані листи..."
 
-#: src/summaryview.c:2488
+#: src/summaryview.c:2490
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "З листа %s/%d знято позначки\n"
 
-#: src/summaryview.c:2530
+#: src/summaryview.c:2532
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Лист %d призначено до переміщення в %s\n"
 
-#: src/summaryview.c:2545
+#: src/summaryview.c:2547
 msgid "Destination is same as current folder."
 msgstr "Призначення збігається з поточною папкою."
 
-#: src/summaryview.c:2595
+#: src/summaryview.c:2597
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Лист %d призначено до копіювання в %s\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2612
 msgid "Destination for copy is same as current folder."
 msgstr "Пропонується копіювання з папки в неї ж."
 
-#: src/summaryview.c:2659
+#: src/summaryview.c:2661
 msgid "Selecting all messages..."
 msgstr "Обираємо всі листи..."
 
-#: src/summaryview.c:2789
+#: src/summaryview.c:2791
 msgid "Error occurred while processing messages."
 msgstr "При обробці пошти трапилась помилка."
 
-#: src/summaryview.c:3034 src/summaryview.c:3035
+#: src/summaryview.c:3036 src/summaryview.c:3037
 msgid "Building threads..."
 msgstr "Будуємо нитки обговорення..."
 
-#: src/summaryview.c:3117 src/summaryview.c:3118
+#: src/summaryview.c:3119 src/summaryview.c:3120
 msgid "Unthreading..."
 msgstr "Скасування ниток обговорення..."
 
-#: src/summaryview.c:3157
+#: src/summaryview.c:3159
 msgid "Unthreading for execution..."
 msgstr "Скасування ниток обговорення для виконання..."
 
-#: src/summaryview.c:3247
+#: src/summaryview.c:3249
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:3248
+#: src/summaryview.c:3250
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3290
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."

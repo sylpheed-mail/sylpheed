@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-01 15:06+0900\n"
+"POT-Creation-Date: 2005-03-01 23:57+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Mattias Ostergren <spikboll@gmx.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -602,11 +602,11 @@ msgstr "Vanlig adress"
 msgid "Personal address"
 msgstr "Privat adress"
 
-#: src/alertpanel.c:123 src/compose.c:4779 src/main.c:464
+#: src/alertpanel.c:123 src/compose.c:4779 src/main.c:458
 msgid "Notice"
 msgstr "Notera"
 
-#: src/alertpanel.c:136 src/main.c:261 src/textview.c:1863
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1863
 msgid "Warning"
 msgstr "Varning"
 
@@ -654,7 +654,7 @@ msgstr "Brun"
 #. * index of label_colors[] as data parameter. for the None color we
 #. * pass an invalid (high) value. also we attach a data pointer so we
 #. * can always get back the SummaryView pointer.
-#: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3567
+#: src/colorlabel.c:283 src/prefs_folder_item.c:285 src/summaryview.c:3569
 msgid "None"
 msgstr "Ingen"
 
@@ -915,7 +915,7 @@ msgstr "kan inte läsa %s"
 msgid "Message: %s"
 msgstr "Meddelande: %s"
 
-#: src/compose.c:1775 src/mimeview.c:488
+#: src/compose.c:1775 src/mimeview.c:513
 msgid "Can't get the part of multipart message."
 msgstr "Kan inte läsa delen av multipart-meddelandet."
 
@@ -1632,12 +1632,12 @@ msgstr "Ställer in mappinfo...\n"
 msgid "Setting folder info..."
 msgstr "Ställer in mappinfo..."
 
-#: src/folderview.c:652 src/mainwindow.c:3159 src/setup.c:81
+#: src/folderview.c:652 src/mainwindow.c:3173 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Söker igenom mapp %s%c%s..."
 
-#: src/folderview.c:656 src/mainwindow.c:3164 src/setup.c:86
+#: src/folderview.c:656 src/mainwindow.c:3178 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Söker igenom mapp %s ..."
@@ -2312,8 +2312,7 @@ msgstr "Skriv in lösenord"
 msgid "Protocol log"
 msgstr "Protokollogg"
 
-#. for gettext
-#: src/main.c:128 src/main.c:137 src/mh.c:792
+#: src/main.c:131 src/mh.c:792
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -2322,11 +2321,11 @@ msgstr ""
 "Filen \"%s\" finns redan.\n"
 "Kan inte skapa mapp."
 
-#: src/main.c:183
+#: src/main.c:177
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread stöds inte av glib.\n"
 
-#: src/main.c:262
+#: src/main.c:256
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2334,16 +2333,16 @@ msgstr ""
 "GnuPG är inte installerad riktigt eller så är versionen för gammal.\n"
 "OpenPGP-stöd avstängt."
 
-#: src/main.c:420
+#: src/main.c:414
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Användning: %s [FLAGGOR]...\n"
 
-#: src/main.c:423
+#: src/main.c:417
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adress]    öppna skrivfönster"
 
-#: src/main.c:424
+#: src/main.c:418
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2353,23 +2352,23 @@ msgstr ""
 "                         öppna skrivfönster med angivna filer\n"
 "                         bifogade"
 
-#: src/main.c:427
+#: src/main.c:421
 msgid "  --receive              receive new messages"
 msgstr "  --receive             ta emot nya meddelanden"
 
-#: src/main.c:428
+#: src/main.c:422
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all         ta emot nya meddelanden från alla konton"
 
-#: src/main.c:429
+#: src/main.c:423
 msgid "  --send                 send all queued messages"
 msgstr "  --send                skicka alla köade meddelanden"
 
-#: src/main.c:430
+#: src/main.c:424
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mapp]...    visar det totala antalet meddelanden"
 
-#: src/main.c:431
+#: src/main.c:425
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2377,41 +2376,41 @@ msgstr ""
 "  --status-full [mapp]...\n"
 "                          visa status för varje mapp"
 
-#: src/main.c:433
+#: src/main.c:427
 msgid "  --debug                debug mode"
 msgstr "  --debug               felsökningsläge"
 
-#: src/main.c:434
+#: src/main.c:428
 msgid "  --help                 display this help and exit"
 msgstr "  --help                visa denna hjälp och avsluta"
 
-#: src/main.c:435
+#: src/main.c:429
 msgid "  --version              output version information and exit"
 msgstr "  --version             skriv ut versionsinformation och avsluta"
 
-#: src/main.c:465
+#: src/main.c:459
 msgid "Composing message exists. Really quit?"
 msgstr "Ett skrivet meddelande finns. Avsluta ändå?"
 
-#: src/main.c:473
+#: src/main.c:467
 msgid "Queued messages"
 msgstr "Meddelanden i kö"
 
-#: src/main.c:474
+#: src/main.c:468
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Några oskickade meddelanden ligger i kö. Avsluta nu?"
 
 #. remote command mode
-#: src/main.c:551
+#: src/main.c:545
 msgid "another Sylpheed is already running.\n"
 msgstr "en annan instans av Sylpheed är redan igång.\n"
 
-#: src/main.c:717
+#: src/main.c:711
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Åtgärdskonfiguration"
 
-#: src/main.c:718
+#: src/main.c:712
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3055,9 +3054,9 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Huvudfönster: färgtilldelning %d misslyckades\n"
 
 #: src/mainwindow.c:1020 src/summaryview.c:1368 src/summaryview.c:1677
-#: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2450
-#: src/summaryview.c:3077 src/summaryview.c:3143 src/summaryview.c:3168
-#: src/summaryview.c:3281
+#: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2452
+#: src/summaryview.c:3079 src/summaryview.c:3145 src/summaryview.c:3170
+#: src/summaryview.c:3283
 msgid "done.\n"
 msgstr "färdigt.\n"
 
@@ -3382,16 +3381,16 @@ msgstr "Sökning klar"
 msgid "Creating message view...\n"
 msgstr "Skapar meddelandevy...\n"
 
-#: src/messageview.c:628 src/summaryview.c:2721
+#: src/messageview.c:628 src/summaryview.c:2723
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Kan inte spara filen \"%s\"."
 
-#: src/messageview.c:672 src/prefs_common.c:2154 src/summaryview.c:2741
+#: src/messageview.c:672 src/prefs_common.c:2154 src/summaryview.c:2743
 msgid "Print"
 msgstr "Skriv ut"
 
-#: src/messageview.c:673 src/summaryview.c:2742
+#: src/messageview.c:673 src/summaryview.c:2744
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3400,7 +3399,7 @@ msgstr ""
 "Skriv in utskriftskommando:\n"
 "(\"%s\" kommer att ersättas med filnamnet)"
 
-#: src/messageview.c:679 src/summaryview.c:2748
+#: src/messageview.c:679 src/summaryview.c:2750
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -3464,54 +3463,54 @@ msgstr "MIME-typ"
 msgid "Text"
 msgstr "Text"
 
-#: src/mimeview.c:201
+#: src/mimeview.c:202
 msgid "Attachments"
 msgstr "Bilagor"
 
-#: src/mimeview.c:273
+#: src/mimeview.c:274
 msgid "Select \"Check signature\" to check"
 msgstr "Välj \"Undersök signatur\" för att undersöka"
 
-#: src/mimeview.c:546
+#: src/mimeview.c:571
 msgid "Select an action for the attached file:\n"
 msgstr ""
 
-#: src/mimeview.c:565
+#: src/mimeview.c:590
 #, fuzzy
 msgid "Open _with..."
 msgstr "/Öppna _med..."
 
-#: src/mimeview.c:569
+#: src/mimeview.c:594
 #, fuzzy
 msgid "_Display as text"
 msgstr "/Visa som _text"
 
-#: src/mimeview.c:573
+#: src/mimeview.c:598
 #, fuzzy
 msgid "_Save as..."
 msgstr "/_Spara som..."
 
-#: src/mimeview.c:619
+#: src/mimeview.c:644
 #, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
 msgstr "Denna signatur har ännu inte undersökts.\n"
 
-#: src/mimeview.c:624
+#: src/mimeview.c:649
 #, fuzzy
 msgid "_Check signature"
 msgstr "/_Undersök signatur"
 
-#: src/mimeview.c:909 src/mimeview.c:954 src/mimeview.c:974 src/mimeview.c:997
+#: src/mimeview.c:904 src/mimeview.c:949 src/mimeview.c:969 src/mimeview.c:992
 msgid "Can't save the part of multipart message."
 msgstr "Kan inte spara delen av multipart-meddelandet."
 
-#: src/mimeview.c:1007
+#: src/mimeview.c:1002
 msgid "Open with"
 msgstr "Öppna med"
 
-#: src/mimeview.c:1008
+#: src/mimeview.c:1003
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3520,7 +3519,7 @@ msgstr ""
 "Skriv in kommandot för att öppna filen:\n"
 "(\"%s\" kommer att ersättas med filnamnet)"
 
-#: src/mimeview.c:1063
+#: src/mimeview.c:1058
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "MIME-visningskommandot är felaktigt:\"%s\""
@@ -5912,90 +5911,90 @@ msgstr "Skriver summeringscache (%s)..."
 msgid "(No Date)"
 msgstr "(Inget datum)"
 
-#: src/summaryview.c:2228
+#: src/summaryview.c:2230
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Meddelande %d är markerat\n"
 
-#: src/summaryview.c:2263
+#: src/summaryview.c:2265
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Meddelande %d är markerat som läst\n"
 
-#: src/summaryview.c:2328
+#: src/summaryview.c:2330
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Meddelande %d är markerat som oläst\n"
 
-#: src/summaryview.c:2375
+#: src/summaryview.c:2377
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Meddelande %s/%d är valt för borttagning\n"
 
-#: src/summaryview.c:2395
+#: src/summaryview.c:2397
 msgid "Delete message(s)"
 msgstr "Ta bort meddelande(n)"
 
-#: src/summaryview.c:2396
+#: src/summaryview.c:2398
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Vill du verkligen tömma papperkorgen?"
 
-#: src/summaryview.c:2437 src/summaryview.c:2439
+#: src/summaryview.c:2439 src/summaryview.c:2441
 msgid "Deleting duplicated messages..."
 msgstr "Tar bort meddelandedubbletter..."
 
-#: src/summaryview.c:2488
+#: src/summaryview.c:2490
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Meddelande %s/%d är avmarkerat\n"
 
-#: src/summaryview.c:2530
+#: src/summaryview.c:2532
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Meddelande %d är valt för att flyttas till %s\n"
 
-#: src/summaryview.c:2545
+#: src/summaryview.c:2547
 msgid "Destination is same as current folder."
 msgstr "Destinationen är samma som aktuell mapp."
 
-#: src/summaryview.c:2595
+#: src/summaryview.c:2597
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Meddelandet %d är valt för att kopieras till %s\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2612
 msgid "Destination for copy is same as current folder."
 msgstr "Destinationen att kopiera till är samma som aktuell mapp."
 
-#: src/summaryview.c:2659
+#: src/summaryview.c:2661
 msgid "Selecting all messages..."
 msgstr "Markerar alla meddelanden..."
 
-#: src/summaryview.c:2789
+#: src/summaryview.c:2791
 msgid "Error occurred while processing messages."
 msgstr "Fel uppstod när meddelanden behandlades."
 
-#: src/summaryview.c:3034 src/summaryview.c:3035
+#: src/summaryview.c:3036 src/summaryview.c:3037
 msgid "Building threads..."
 msgstr "Skapar trådar..."
 
-#: src/summaryview.c:3117 src/summaryview.c:3118
+#: src/summaryview.c:3119 src/summaryview.c:3120
 msgid "Unthreading..."
 msgstr "Avtrådar..."
 
-#: src/summaryview.c:3157
+#: src/summaryview.c:3159
 msgid "Unthreading for execution..."
 msgstr "Avtrådar för att utföra köade åtgärder..."
 
-#: src/summaryview.c:3247
+#: src/summaryview.c:3249
 msgid "filtering..."
 msgstr "filtrerar..."
 
-#: src/summaryview.c:3248
+#: src/summaryview.c:3250
 msgid "Filtering..."
 msgstr "Filtrerar..."
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3290
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d meddelande(n) har filtrerats."
