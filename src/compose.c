@@ -1259,8 +1259,11 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 	fclose(fp);
 
 	if (hentry[H_REPLY_TO].body != NULL) {
-		compose->replyto =
-			conv_unmime_header(hentry[H_REPLY_TO].body, NULL);
+		if (hentry[H_REPLY_TO].body[0] != '\0') {
+			compose->replyto =
+				conv_unmime_header(hentry[H_REPLY_TO].body,
+						   NULL);
+		}
 		g_free(hentry[H_REPLY_TO].body);
 		hentry[H_REPLY_TO].body = NULL;
 	}
@@ -1291,8 +1294,11 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		hentry[H_NEWSGROUPS].body = NULL;
 	}
 	if (hentry[H_FOLLOWUP_TO].body != NULL) {
-		compose->followup_to =
-			conv_unmime_header(hentry[H_FOLLOWUP_TO].body, NULL);
+		if (hentry[H_FOLLOWUP_TO].body[0] != '\0') {
+			compose->followup_to =
+				conv_unmime_header(hentry[H_FOLLOWUP_TO].body,
+						   NULL);
+		}
 		g_free(hentry[H_FOLLOWUP_TO].body);
 		hentry[H_FOLLOWUP_TO].body = NULL;
 	}
