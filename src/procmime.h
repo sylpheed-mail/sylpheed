@@ -174,6 +174,7 @@ gboolean procmime_find_string		(MsgInfo	*msginfo,
 					 const gchar	*str,
 					 StrFindFunc	 find_func);
 
+gchar *procmime_get_part_file_name	(MimeInfo	*mimeinfo);
 gchar *procmime_get_tmp_file_name	(MimeInfo	*mimeinfo);
 
 ContentType procmime_scan_mime_type	(const gchar	*mime_type);

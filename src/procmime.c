@@ -851,6 +851,21 @@ gboolean procmime_find_string(MsgInfo *msginfo, const gchar *str,
 	return found;
 }
 
+gchar *procmime_get_part_file_name(MimeInfo *mimeinfo)
+{
+	gchar *base;
+	const gchar *base_;
+
+	base_ = mimeinfo->filename ? mimeinfo->filename
+		: mimeinfo->name ? mimeinfo->name : "mimetmp";
+	base_ = g_basename(base_);
+	if (*base_ == '\0') base_ = "mimetmp";
+	base = conv_filename_from_utf8(base_);
+	subst_for_filename(base);
+
+	return base;
+}
+
 gchar *procmime_get_tmp_file_name(MimeInfo *mimeinfo)
 {
 	static guint32 id = 0;
@@ -864,16 +879,8 @@ gchar *procmime_get_tmp_file_name(MimeInfo *mimeinfo)
 
 	if (MIME_TEXT_HTML == mimeinfo->mime_type)
 		base = g_strdup("mimetmp.html");
-	else {
-		const gchar *base_;
-
-		base_ = mimeinfo->filename ? mimeinfo->filename
-			: mimeinfo->name ? mimeinfo->name : "mimetmp";
-		base_ = g_basename(base_);
-		if (*base_ == '\0') base_ = "mimetmp";
-		base = conv_filename_from_utf8(base_);
-		subst_for_filename(base);
-	}
+	else
+		base = procmime_get_part_file_name(mimeinfo);
 
 	filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
 			       f_prefix, base, NULL);

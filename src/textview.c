@@ -50,6 +50,7 @@
 #include "html.h"
 #include "compose.h"
 #include "displayheader.h"
+#include "filesel.h"
 #include "alertpanel.h"
 
 typedef struct _RemoteURI	RemoteURI;
@@ -57,6 +58,8 @@ typedef struct _RemoteURI	RemoteURI;
 struct _RemoteURI
 {
 	gchar *uri;
+
+	gchar *filename;
 
 	guint start;
 	guint end;
@@ -185,6 +188,9 @@ static void textview_populate_popup		(GtkWidget	*widget,
 						 GtkMenu	*menu,
 						 TextView	*textview);
 static void textview_popup_menu_activate_copy_cb(GtkMenuItem	*menuitem,
+						 gpointer	 data);
+static void textview_popup_menu_activate_image_cb
+						(GtkMenuItem	*menuitem,
 						 gpointer	 data);
 
 static void textview_smooth_scroll_do		(TextView	*textview,
@@ -602,6 +608,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			GdkPixbuf *pixbuf;
 			GError *error = NULL;
 			gchar *filename;
+			RemoteURI *uri;
+			gchar *uri_str;
 
 			filename = procmime_get_tmp_file_name(mimeinfo);
 			if (procmime_get_part_fp(filename, fp, mimeinfo) < 0) {
@@ -611,13 +619,13 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			}
 
 			pixbuf = gdk_pixbuf_new_from_file(filename, &error);
-			g_free(filename);
 			if (error != NULL) {
 				g_warning("%s\n", error->message);
 				g_error_free(error);
 			}
 			if (!pixbuf) {
 				g_warning("Can't load the image.");
+				g_free(filename);
 				return;
 			}
 
@@ -630,10 +638,22 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 				pixbuf = scaled;
 			}
 
+			uri_str = g_filename_to_uri(filename, NULL, NULL);
+			if (uri_str) {
+				uri = g_new(RemoteURI, 1);
+				uri->uri = uri_str;
+				uri->filename =
+					procmime_get_part_file_name(mimeinfo);
+				uri->start = gtk_text_iter_get_offset(&iter);
+				uri->end = uri->start + 1;
+				textview->uri_list =
+					g_slist_append(textview->uri_list, uri);
+			}
 			gtk_text_buffer_insert_pixbuf(buffer, &iter, pixbuf);
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 
 			g_object_unref(pixbuf);
+			g_free(filename);
 		}
 	} else {
 		if (!mimeinfo->main &&
@@ -962,6 +982,7 @@ static void textview_make_clickable_parts(TextView *textview,
 					 fg_tag, NULL);
 			uri->uri = parser[last->pti].build_uri(last->bp,
 							       last->ep);
+			uri->filename = NULL;
 			uri->start = gtk_text_iter_get_offset(&iter);
 			gtk_text_buffer_insert_with_tags_by_name
 				(buffer, &iter, last->bp, last->ep - last->bp,
@@ -1061,6 +1082,7 @@ void textview_write_link(TextView *textview, const gchar *str,
 
 	r_uri = g_new(RemoteURI, 1);
 	r_uri->uri = g_strdup(uri);
+	r_uri->filename = NULL;
 	r_uri->start = gtk_text_iter_get_offset(&iter);
 	gtk_text_buffer_insert_with_tags_by_name
 		(buffer, &iter, bufp, -1, "link", NULL);
@@ -1791,6 +1813,7 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	GtkTextIter iter, start, end;
 	gboolean on_link;
 	RemoteURI *uri;
+	GdkPixbuf *pixbuf;
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
 
@@ -1799,6 +1822,24 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 					      GTK_TEXT_WINDOW_WIDGET,
 					      px, py, &x, &y);
 	gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(widget), &iter, x, y);
+	if ((pixbuf = gtk_text_iter_get_pixbuf(&iter)) != NULL) {
+		start = end = iter;
+		gtk_text_iter_forward_char(&end);
+		uri = textview_get_uri(textview, &start, &end);
+
+		separator = gtk_separator_menu_item_new();
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+		gtk_widget_show(separator);
+
+		menuitem = gtk_menu_item_new_with_mnemonic
+			(_("Sa_ve this image as..."));
+		g_signal_connect
+			(menuitem, "activate",
+			 G_CALLBACK(textview_popup_menu_activate_image_cb),
+			 uri);
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+		gtk_widget_show(menuitem);
+	}
 	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
 	if (!on_link)
 		return;
@@ -1839,6 +1880,32 @@ static void textview_popup_menu_activate_copy_cb(GtkMenuItem *menuitem,
 	gtk_clipboard_set_text(clipboard, uri_string, -1);
 	clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	gtk_clipboard_set_text(clipboard, uri_string, -1);
+}
+
+static void textview_popup_menu_activate_image_cb(GtkMenuItem *menuitem,
+						  gpointer data)
+{
+	RemoteURI *uri = (RemoteURI *)data;
+	gchar *src;
+	gchar *dest;
+	gchar *filename;
+
+	g_return_if_fail(uri != NULL);
+
+	if (!uri->uri)
+		return;
+
+	src = g_filename_from_uri(uri->uri, NULL, NULL);
+	g_return_if_fail(src != NULL);
+
+	filename = conv_filename_to_utf8(uri->filename);
+	dest = filesel_save_as(filename);
+	if (dest) {
+		copy_file(src, dest, FALSE);
+		g_free(dest);
+	}
+	g_free(filename);
+	g_free(src);
 }
 
 static gboolean textview_uri_security_check(TextView *textview, RemoteURI *uri)
@@ -1894,9 +1961,12 @@ static void textview_uri_list_remove_all(GSList *uri_list)
 	GSList *cur;
 
 	for (cur = uri_list; cur != NULL; cur = cur->next) {
-		if (cur->data) {
-			g_free(((RemoteURI *)cur->data)->uri);
-			g_free(cur->data);
+		RemoteURI *uri = (RemoteURI *)cur->data;
+
+		if (uri) {
+			g_free(uri->uri);
+			g_free(uri->filename);
+			g_free(uri);
 		}
 	}
 
