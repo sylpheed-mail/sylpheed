@@ -104,7 +104,6 @@ static void mimeview_drag_data_get      (GtkWidget	  *widget,
 					 MimeView	  *mimeview);
 
 static void mimeview_display_as_text	(MimeView	*mimeview);
-static void mimeview_save_as		(MimeView	*mimeview);
 static void mimeview_launch		(MimeView	*mimeview);
 static void mimeview_open_with		(MimeView	*mimeview);
 static void mimeview_view_file		(const gchar	*filename,
@@ -922,7 +921,7 @@ static void mimeview_display_as_text(MimeView *mimeview)
 	mimeview_show_message_part(mimeview, partinfo);
 }
 
-static void mimeview_save_as(MimeView *mimeview)
+void mimeview_save_as(MimeView *mimeview)
 {
 	gchar *filename;
 	gchar *defname = NULL;

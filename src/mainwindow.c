@@ -49,6 +49,7 @@
 #include "summaryview.h"
 #include "summary_search.h"
 #include "messageview.h"
+#include "mimeview.h"
 #include "message_search.h"
 #include "headerview.h"
 #include "menu.h"
@@ -2586,7 +2587,13 @@ static void empty_trash_cb(MainWindow *mainwin, guint action,
 
 static void save_as_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
-	summary_save_as(mainwin->summaryview);
+	MessageView *messageview = mainwin->messageview;
+
+	if (messageview_get_selected_mime_part(messageview) &&
+	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->ctree))
+		mimeview_save_as(messageview->mimeview);
+	else
+		summary_save_as(mainwin->summaryview);
 }
 
 static void print_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
