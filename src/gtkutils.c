@@ -106,38 +106,6 @@ void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)
 	color->blue  = (int) (((gdouble) (rgbvalue & 0x0000ff)        / 255.0) * 65535.0);
 }
 
-void gtkut_button_set_create(GtkWidget **bbox,
-			     GtkWidget **button1, const gchar *label1,
-			     GtkWidget **button2, const gchar *label2,
-			     GtkWidget **button3, const gchar *label3)
-{
-	g_return_if_fail(bbox != NULL);
-	g_return_if_fail(button1 != NULL);
-
-	*bbox = gtk_hbutton_box_new();
-	gtk_button_box_set_layout(GTK_BUTTON_BOX(*bbox), GTK_BUTTONBOX_END);
-	gtk_box_set_spacing(GTK_BOX(*bbox), 5);
-
-	*button1 = gtk_button_new_with_label(label1);
-	GTK_WIDGET_SET_FLAGS(*button1, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(*bbox), *button1, TRUE, TRUE, 0);
-	gtk_widget_show(*button1);
-
-	if (button2) {
-		*button2 = gtk_button_new_with_label(label2);
-		GTK_WIDGET_SET_FLAGS(*button2, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(*bbox), *button2, TRUE, TRUE, 0);
-		gtk_widget_show(*button2);
-	}
-
-	if (button3) {
-		*button3 = gtk_button_new_with_label(label3);
-		GTK_WIDGET_SET_FLAGS(*button3, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(*bbox), *button3, TRUE, TRUE, 0);
-		gtk_widget_show(*button3);
-	}
-}
-
 void gtkut_stock_button_set_create(GtkWidget **bbox,
 				   GtkWidget **button1, const gchar *label1,
 				   GtkWidget **button2, const gchar *label2,
@@ -468,45 +436,8 @@ void gtkut_editable_disable_im(GtkEditable *editable)
 #endif
 }
 
-/*
- * Walk through the widget tree and disclaim the selection from all currently
- * realized GtkEditable widgets.
- */
-static void gtkut_check_before_remove(GtkWidget *widget, gpointer unused)
-{
-	g_return_if_fail(widget != NULL);
-
-	if (!GTK_WIDGET_REALIZED(widget))
-		return; /* all nested widgets must be unrealized too */
-	if (GTK_IS_CONTAINER(widget))
-		gtk_container_forall(GTK_CONTAINER(widget),
-				     gtkut_check_before_remove, NULL);
-#if 0
-	if (GTK_IS_EDITABLE(widget))
-		gtk_editable_claim_selection(GTK_EDITABLE(widget),
-					     FALSE, GDK_CURRENT_TIME);
-#endif
-}
-
-/*
- * Wrapper around gtk_container_remove to work around a bug in GtkText and
- * GtkEntry (in all GTK+ versions up to and including at least 1.2.10).
- *
- * The problem is that unrealizing a GtkText or GtkEntry widget which has the
- * active selection completely messes up selection handling, leading to
- * non-working selections and crashes.  Removing a widget from its container
- * implies unrealizing it and all its child widgets; this triggers the bug if
- * the removed widget or any of its children is GtkText or GtkEntry.  As a
- * workaround, this function walks through the widget subtree before removing
- * and disclaims the selection from all GtkEditable widgets found.
- *
- * A similar workaround may be needed for gtk_widget_reparent(); currently it
- * is not necessary because Sylpheed does not use gtk_widget_reparent() for
- * GtkEditable widgets or containers holding such widgets.
- */
 void gtkut_container_remove(GtkContainer *container, GtkWidget *widget)
 {
-	gtkut_check_before_remove(widget, NULL);
 	gtk_container_remove(container, widget);
 }
 

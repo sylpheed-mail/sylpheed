@@ -89,14 +89,6 @@ void gtkut_widget_set_small_font_size	(GtkWidget	*widget);
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);
 
-void gtkut_button_set_create		(GtkWidget	**bbox,
-					 GtkWidget	**button1,
-					 const gchar	 *label1,
-					 GtkWidget	**button2,
-					 const gchar	 *label2,
-					 GtkWidget	**button3,
-					 const gchar	 *label3);
-
 void gtkut_stock_button_set_create	(GtkWidget	**bbox,
 					 GtkWidget	**button1,
 					 const gchar	 *label1,
