@@ -1103,8 +1103,9 @@ static void create_io_dialog(Children *children)
 		gtk_widget_grab_focus(entry);
 	}
 
-	gtkut_button_set_create(&hbox, &abort_button, _("Abort"),
-				&close_button, _("Close"), NULL, NULL);
+	gtkut_stock_button_set_create(&hbox, &abort_button, _("Abort"),
+				      &close_button, GTK_STOCK_CLOSE,
+				      NULL, NULL);
 	g_signal_connect(G_OBJECT(abort_button), "clicked",
 			 G_CALLBACK(kill_children_cb), children);
 	g_signal_connect(G_OBJECT(close_button), "clicked",

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkhbbox.h>
+#include <gtk/gtkstock.h>
 #include <string.h>
 #include <fnmatch.h>
 
@@ -241,10 +242,10 @@ static void grouplist_dialog_create(void)
 	status_label = gtk_label_new("");
 	gtk_box_pack_start(GTK_BOX(hbox), status_label, FALSE, FALSE, 0);
 
-	gtkut_button_set_create(&confirm_area,
-				&ok_button,      _("OK"),
-				&cancel_button,  _("Cancel"),
-				&refresh_button, _("Refresh"));
+	gtkut_stock_button_set_create(&confirm_area,
+				      &ok_button, GTK_STOCK_OK,
+				      &cancel_button, GTK_STOCK_CANCEL,
+				      &refresh_button, GTK_STOCK_REFRESH);
 	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area),
 			  confirm_area);
 	gtk_widget_grab_default(ok_button);

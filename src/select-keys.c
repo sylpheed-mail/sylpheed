@@ -318,10 +318,10 @@ create_dialog (struct select_keys_s *sk)
     hbox = gtk_hbox_new (FALSE, 8);
     gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-    gtkut_button_set_create (&bbox, 
-                             &select_btn, _("Select"),
-                             &cancel_btn, _("Cancel"),
-                             &other_btn,  _("Other"));
+    gtkut_stock_button_set_create (&bbox, 
+                                   &select_btn, _("Select"),
+                                   &cancel_btn, GTK_STOCK_CANCEL,
+                                   &other_btn,  _("Other"));
     gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
     gtk_widget_grab_default (select_btn);
 

@@ -239,8 +239,9 @@ static void addressadd_create( void ) {
 	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, BORDER_WIDTH);
 
 	/* Button panel */
-	gtkut_button_set_create(&hbbox, &ok_btn, _("OK"),
-				&cancel_btn, _("Cancel"), NULL, NULL);
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
+				      &cancel_btn, GTK_STOCK_CANCEL,
+				      NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 	gtk_container_set_border_width( GTK_CONTAINER(hbbox), 0 );
 	gtk_widget_grab_default(ok_btn);

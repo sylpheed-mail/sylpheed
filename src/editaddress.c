@@ -196,8 +196,9 @@ static void addressbook_edit_address_create(gboolean *cancelled)
 	SET_LABEL_AND_ENTRY(_("Address"), addr_entry, 1);
 	SET_LABEL_AND_ENTRY(_("Remarks"), rem_entry,  2);
 
-	gtkut_button_set_create(&hbbox, &ok_btn, _("OK"),
-				&cancel_btn, _("Cancel"), NULL, NULL);
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
+				      &cancel_btn, GTK_STOCK_CANCEL,
+				      NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);
 
@@ -669,8 +670,9 @@ static void addressbook_edit_person_dialog_create( gboolean *cancelled ) {
 	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, BORDER_WIDTH);
 
 	/* Button panel */
-	gtkut_button_set_create(&hbbox, &ok_btn, _("OK"),
-				&cancel_btn, _("Cancel"), NULL, NULL);
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
+				      &cancel_btn, GTK_STOCK_CANCEL,
+				      NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vnbox), hbbox, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);
 

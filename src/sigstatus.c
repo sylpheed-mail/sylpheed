@@ -132,8 +132,8 @@ GpgmegtkSigStatus gpgmegtk_sig_status_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 8);
 	gtk_widget_show(label);
 
-	gtkut_button_set_create(&okay_area, &okay_btn, _("OK"),
-				NULL, NULL, NULL, NULL);
+	gtkut_stock_button_set_create(&okay_area, &okay_btn, GTK_STOCK_OK,
+				      NULL, NULL, NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), okay_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(okay_btn);
 	g_signal_connect(G_OBJECT(okay_btn), "clicked",
