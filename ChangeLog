@@ -1,5 +1,10 @@
 2005-02-02
 
+	* src/compose.c: GET_CHAR(): speed up by using
+	  gtk_text_iter_get_char().
+
+2005-02-02
+
 	* src/compose.c:
 	  text_inserted(): revalidate iterator so as not to invalidate it
 	  after gtk_text_buffer_insert() while enabling auto wrapping.

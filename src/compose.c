@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1761,34 +1761,17 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 
 #define CHAR_BUF_SIZE	8
 
-#define GET_CHAR(iter_p, buf, len)					     \
-{									     \
-	GtkTextIter end_iter;						     \
-	gchar *tmp;							     \
-	end_iter = *iter_p;						     \
-									     \
-	gtk_text_iter_forward_char(&end_iter);				     \
-	tmp = gtk_text_buffer_get_text(textbuf, iter_p, &end_iter, FALSE);   \
-	if (tmp) {							     \
-		glong items_read, items_witten;				     \
-		GError *error = NULL;					     \
-		gunichar *wide_char;					     \
-									     \
-		strncpy2(buf, tmp, CHAR_BUF_SIZE);			     \
-		wide_char = g_utf8_to_ucs4(tmp, -1,			     \
-					   &items_read, &items_witten,	     \
-					   &error);			     \
-		if (error != NULL) {					     \
-			g_warning("%s\n", error->message);		     \
-			g_error_free(error);				     \
-		}							     \
-		len = wide_char && g_unichar_iswide(*wide_char) ? 2 : 1;     \
-		g_free(wide_char);					     \
-	} else {							     \
-		buf[0] = '\0';						     \
-		len = 1;						     \
-	}								     \
-	g_free(tmp);							     \
+#define GET_CHAR(iter_p, buf, len)				\
+{								\
+	gunichar uc;						\
+								\
+	uc = gtk_text_iter_get_char(iter_p);			\
+	if (uc != 0)						\
+		len = g_unichar_to_utf8(uc, buf) > 1 ? 2 : 1;	\
+	else {							\
+		buf[0] = '\0';					\
+		len = 1;					\
+	}							\
 }
 
 #define INDENT_CHARS	">|#"
@@ -1970,10 +1953,12 @@ static void compose_wrap_line(Compose *compose)
 }
 
 #undef WRAP_DEBUG
+#define WRAP_DEBUG
 #ifdef WRAP_DEBUG
 /* Darko: used when I debug wrapping */
 void dump_text(GtkTextBuffer *textbuf, int pos, int tlen, int breakoncr)
 {
+	GtkTextIter iter, end_iter;
 	gint clen;
 	gchar cbuf[CHAR_BUF_SIZE];
 
@@ -6106,6 +6091,12 @@ static void subject_activated(GtkWidget *widget, Compose *compose)
 static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
 			  const gchar *text, gint len, Compose *compose)
 {
+	GtkTextMark *mark;
+
+	/* pass to the default handler */
+	if (!compose->autowrap)
+		return;
+
 	g_return_if_fail(text != NULL);
 
 	g_signal_handlers_block_by_func(G_OBJECT(buffer),
@@ -6114,14 +6105,10 @@ static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
 
 	gtk_text_buffer_insert(buffer, iter, text, len);
 
-	if (compose->autowrap) {
-		GtkTextMark *mark;
-
-		mark = gtk_text_buffer_create_mark(buffer, NULL, iter, FALSE);
-		compose_wrap_line_all_full(compose, TRUE);
-		gtk_text_buffer_get_iter_at_mark(buffer, iter, mark);
-		gtk_text_buffer_delete_mark(buffer, mark);
-	}
+	mark = gtk_text_buffer_create_mark(buffer, NULL, iter, FALSE);
+	compose_wrap_line_all_full(compose, TRUE);
+	gtk_text_buffer_get_iter_at_mark(buffer, iter, mark);
+	gtk_text_buffer_delete_mark(buffer, mark);
 
 	g_signal_handlers_unblock_by_func(G_OBJECT(buffer),
 					  G_CALLBACK(text_inserted),
