@@ -272,6 +272,44 @@ void folder_item_destroy(FolderItem *item)
 	g_free(item);
 }
 
+gint folder_item_compare(FolderItem *item_a, FolderItem *item_b)
+{
+	gint ret;
+	gchar *str_a, *str_b;
+
+	if (!item_a || !item_b)
+		return 0;
+	if (!item_a->parent || !item_b->parent)
+		return 0;
+	if (!item_a->name || !item_b->name)
+		return 0;
+
+	/* if both a and b are special folders, sort them according to
+	 * their types (which is in-order). Note that this assumes that
+	 * there are no multiple folders of a special type. */
+	if (item_a->stype != F_NORMAL && item_b->stype != F_NORMAL)
+		return item_a->stype - item_b->stype;
+
+	 /* if b is normal folder, and a is not, b is smaller (ends up
+	  * lower in the list) */
+	if (item_a->stype != F_NORMAL && item_b->stype == F_NORMAL)
+		return item_b->stype - item_a->stype;
+
+	/* if b is special folder, and a is not, b is larger (ends up
+	 * higher in the list) */
+	if (item_a->stype == F_NORMAL && item_b->stype != F_NORMAL)
+		return item_b->stype - item_a->stype;
+
+	/* otherwise just compare the folder names */
+	str_a = g_utf8_casefold(item_a->name, -1);
+	str_b = g_utf8_casefold(item_b->name, -1);
+	ret = g_utf8_collate(str_a, str_b);
+	g_free(str_b);
+	g_free(str_a);
+
+	return ret;
+}
+
 void folder_set_ui_func(Folder *folder, FolderUIFunc func, gpointer data)
 {
 	g_return_if_fail(folder != NULL);

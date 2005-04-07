@@ -315,7 +315,7 @@ int main(int argc, char *argv[])
 	else if (cmd.receive)
 		inc_mail(mainwin);
 	else
-		gtk_widget_grab_focus(folderview->ctree);
+		gtk_widget_grab_focus(folderview->treeview);
 
 	if (cmd.compose)
 		open_compose_new(cmd.compose_mailto, cmd.attach_files);

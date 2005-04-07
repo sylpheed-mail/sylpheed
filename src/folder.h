@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -303,6 +303,9 @@ void        folder_item_append		(FolderItem	*parent,
 void        folder_item_remove		(FolderItem	*item);
 void        folder_item_remove_children	(FolderItem	*item);
 void        folder_item_destroy		(FolderItem	*item);
+
+gint        folder_item_compare		(FolderItem	*item_a,
+					 FolderItem	*item_b);
 
 void        folder_set_ui_func	(Folder		*folder,
 				 FolderUIFunc	 func,

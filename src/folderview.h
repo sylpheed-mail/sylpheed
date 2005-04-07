@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@
 
 #include <glib.h>
 #include <gtk/gtkwidget.h>
-#include <gtk/gtkctree.h>
+#include <gtk/gtktreestore.h>
+#include <gtk/gtktreeview.h>
 
 #include "folder.h"
 
@@ -34,7 +35,12 @@ typedef struct _FolderView	FolderView;
 struct _FolderView
 {
 	GtkWidget *scrolledwin;
-	GtkWidget *ctree;
+
+	GtkWidget *treeview;
+
+	GtkTreeStore *store;
+	GtkTreeSelection *selection;
+
 	GtkWidget *mail_popup;
 	GtkWidget *imap_popup;
 	GtkWidget *news_popup;
@@ -43,11 +49,8 @@ struct _FolderView
 	GtkItemFactory *imap_factory;
 	GtkItemFactory *news_factory;
 
-	GtkCTreeNode *selected;
-	GtkCTreeNode *opened;
-
-	GtkCTreeNode *spring_node;
-	guint spring_timer;
+	GtkTreeRowReference *selected;
+	GtkTreeRowReference *opened;
 
 	gboolean open_folder;
 
@@ -61,6 +64,8 @@ struct _FolderView
 FolderView *folderview_create		(void);
 void folderview_init			(FolderView	*folderview);
 
+FolderView *folderview_get		(void);
+
 void folderview_set			(FolderView	*folderview);
 void folderview_set_all			(void);
 
@@ -71,10 +76,11 @@ void folderview_select_next_unread	(FolderView	*folderview);
 
 FolderItem *folderview_get_selected_item(FolderView	*folderview);
 
-void folderview_update_msg_num		(FolderView	*folderview,
-					 GtkCTreeNode	*row);
+void folderview_update_opened_msg_num	(FolderView	*folderview);
 
-void folderview_append_item		(FolderItem	*item);
+gboolean folderview_append_item		(FolderView	*folderview,
+					 GtkTreeIter	*iter,
+					 FolderItem	*item);
 
 void folderview_check_new		(Folder		*folder);
 void folderview_check_new_all		(void);

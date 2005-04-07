@@ -553,7 +553,6 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	gboolean is_refresh;
 	guint selected_msgnum = 0;
 	guint displayed_msgnum = 0;
-	GtkCTreeNode *selected_node = summaryview->folderview->selected;
 
 	if (summary_is_locked(summaryview)) return FALSE;
 
@@ -593,7 +592,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	} else
 		summary_write_cache(summaryview);
 
-	summaryview->folderview->opened = selected_node;
+	//summaryview->folderview->opened = selected_node;
 
 	gtk_clist_freeze(GTK_CLIST(ctree));
 
@@ -1514,8 +1513,7 @@ static void summary_status_show(SummaryView *summaryview)
 	gtk_label_set(GTK_LABEL(summaryview->statlabel_msgs), str);
 	g_free(str);
 
-	folderview_update_msg_num(summaryview->folderview,
-				  summaryview->folderview->opened);
+	folderview_update_opened_msg_num(summaryview->folderview);
 }
 
 static void summary_set_column_titles(SummaryView *summaryview)
@@ -2861,7 +2859,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 	if (!GTK_CLIST(summaryview->ctree)->row_list) {
 		menu_set_insensitive_all
 			(GTK_MENU_SHELL(summaryview->popupmenu));
-		gtk_widget_grab_focus(summaryview->folderview->ctree);
+		gtk_widget_grab_focus(summaryview->folderview->treeview);
 	} else
 		gtk_widget_grab_focus(summaryview->ctree);
 
@@ -3813,7 +3811,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			break;
 		/* FALLTHROUGH */
 	case GDK_Escape:
-		gtk_widget_grab_focus(summaryview->folderview->ctree);
+		gtk_widget_grab_focus(summaryview->folderview->treeview);
 		return FALSE;
 	default:
 		break;

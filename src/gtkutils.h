@@ -31,6 +31,8 @@
 #include <gtk/gtkcontainer.h>
 #include <gtk/gtkeditable.h>
 #include <gtk/gtkctree.h>
+#include <gtk/gtktreemodel.h>
+#include <gtk/gtktreeview.h>
 #include <gtk/gtkcombo.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktextview.h>
@@ -125,6 +127,20 @@ void gtkut_ctree_set_focus_row		(GtkCTree	*ctree,
 
 void gtkut_clist_set_focus_row		(GtkCList	*clist,
 					 gint		 row);
+
+gboolean gtkut_tree_model_next		(GtkTreeModel	*model,
+					 GtkTreeIter	*iter);
+gboolean gtkut_tree_model_find_by_column_data
+					(GtkTreeModel	*model,
+					 GtkTreeIter	*iter,
+					 GtkTreeIter	*start,
+					 gint		 col,
+					 gpointer	 data);
+
+gboolean gtkut_tree_view_find_collapsed_parent
+					(GtkTreeView	*treeview,
+					 GtkTreeIter	*parent,
+					 GtkTreeIter	*iter);
 
 void gtkut_combo_set_items		(GtkCombo	*combo,
 					 const gchar	*str1, ...);

@@ -1519,7 +1519,7 @@ void main_window_empty_trash(MainWindow *mainwin, gboolean confirm)
 
 	if (mainwin->summaryview->folder_item &&
 	    mainwin->summaryview->folder_item->stype == F_TRASH)
-		gtk_widget_grab_focus(mainwin->folderview->ctree);
+		gtk_widget_grab_focus(mainwin->folderview->treeview);
 }
 
 void main_window_add_mailbox(MainWindow *mainwin)
@@ -3001,17 +3001,10 @@ static void execute_summary_cb(MainWindow *mainwin, guint action,
 static void update_summary_cb(MainWindow *mainwin, guint action,
 			      GtkWidget *widget)
 {
-	FolderItem *fitem;
-	FolderView *folderview = mainwin->folderview;
-
 	if (!mainwin->summaryview->folder_item) return;
-	if (!folderview->opened) return;
 
-	fitem = gtk_ctree_node_get_row_data(GTK_CTREE(folderview->ctree),
-					    folderview->opened);
-	if (!fitem) return;
-
-	summary_show(mainwin->summaryview, fitem, TRUE);
+	summary_show(mainwin->summaryview, mainwin->summaryview->folder_item,
+		     TRUE);
 }
 
 static void prev_cb(MainWindow *mainwin, guint action, GtkWidget *widget)

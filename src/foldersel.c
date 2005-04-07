@@ -538,7 +538,7 @@ static void foldersel_new_folder(GtkButton *button, gpointer data)
 	gtk_tree_path_free(new_child_p);
 	gtk_tree_path_free(selected_p);
 
-	folderview_append_item(new_item);
+	folderview_append_item(folderview_get(), NULL, new_item);
 	folder_write_list();
 }
 
@@ -569,46 +569,12 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data
 static gint foldersel_folder_name_compare(GtkTreeModel *model, GtkTreeIter *a,
 					  GtkTreeIter *b, gpointer context)
 {
-	gchar *str_a = NULL, *str_b = NULL;
-	gint val = 0;
 	FolderItem *item_a = NULL, *item_b = NULL;
-	GtkTreeIter parent;
 
 	gtk_tree_model_get(model, a, FOLDERSEL_FOLDERITEM, &item_a, -1);
 	gtk_tree_model_get(model, b, FOLDERSEL_FOLDERITEM, &item_b, -1);
 
-	/* no sort for root folder */
-	if (!gtk_tree_model_iter_parent(GTK_TREE_MODEL(model), &parent, a))
-		return 0;
-
-	/* if both a and b are special folders, sort them according to
-	 * their types (which is in-order). Note that this assumes that
-	 * there are no multiple folders of a special type. */
-	if (item_a->stype != F_NORMAL && item_b->stype != F_NORMAL)
-		return item_a->stype - item_b->stype;
-
-	/* if b is normal folder, and a is not, b is smaller (ends up
-	 * lower in the list) */
-	if (item_a->stype != F_NORMAL && item_b->stype == F_NORMAL)
-		return item_b->stype - item_a->stype;
-
-	/* if b is special folder, and a is not, b is larger (ends up
-	 * higher in the list) */
-	if (item_a->stype == F_NORMAL && item_b->stype != F_NORMAL)
-		return item_b->stype - item_a->stype;
-
-	/* XXX g_utf8_collate_key() comparisons may speed things
-	 * up when having large lists of folders */
-	gtk_tree_model_get(model, a, FOLDERSEL_FOLDERNAME, &str_a, -1);
-	gtk_tree_model_get(model, b, FOLDERSEL_FOLDERNAME, &str_b, -1);
-
-	/* otherwise just compare the folder names */
-	val = g_utf8_collate(str_a, str_b);
-
-	g_free(str_a);
-	g_free(str_b);
-
-	return val;
+	return folder_item_compare(item_a, item_b);
 }
 
 static gboolean tree_view_folder_item_func(GtkTreeModel *model,

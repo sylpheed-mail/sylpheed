@@ -383,6 +383,101 @@ void gtkut_clist_set_focus_row(GtkCList *clist, gint row)
 	GTKUT_CTREE_REFRESH(clist);
 }
 
+gboolean gtkut_tree_model_next(GtkTreeModel *model, GtkTreeIter *iter)
+{
+	GtkTreeIter iter_, parent;
+	gboolean valid;
+
+	if (gtk_tree_model_iter_children(model, &iter_, iter)) {
+		*iter = iter_;
+		return TRUE;
+	}
+
+	iter_ = *iter;
+	if (gtk_tree_model_iter_next(model, &iter_)) {
+		*iter = iter_;
+		return TRUE;
+	}
+
+	iter_ = *iter;
+	valid = gtk_tree_model_iter_parent(model, &parent, &iter_);
+	while (valid) {
+		iter_ = parent;
+		if (gtk_tree_model_iter_next(model, &iter_)) {
+			*iter = iter_;
+			return TRUE;
+		}
+
+		iter_ = parent;
+		valid = gtk_tree_model_iter_parent(model, &parent, &iter_);
+	}
+
+	return FALSE;
+}
+
+gboolean gtkut_tree_model_find_by_column_data(GtkTreeModel *model,
+					      GtkTreeIter *iter,
+					      GtkTreeIter *start,
+					      gint col, gpointer data)
+{
+	gboolean valid;
+	GtkTreeIter iter_;
+	gpointer store_data;
+
+	if (start)
+		valid = gtk_tree_model_iter_children(model, &iter_, start);
+	else
+		valid = gtk_tree_model_get_iter_first(model, &iter_);
+
+	while (valid) {
+		gtk_tree_model_get(model, &iter_, col, &store_data, -1);
+		if (store_data == data) {
+			*iter = iter_;
+			return TRUE;
+		}
+
+		if (gtk_tree_model_iter_has_child(model, &iter_)) {
+			if (gtkut_tree_model_find_by_column_data
+				(model, iter, &iter_, col, data)) {
+				return TRUE;
+			}
+		}
+
+		valid = gtk_tree_model_iter_next(model, &iter_);
+	}
+
+	return FALSE;
+}
+
+gboolean gtkut_tree_view_find_collapsed_parent(GtkTreeView *treeview,
+					       GtkTreeIter *parent,
+					       GtkTreeIter *iter)
+{
+	GtkTreeModel *model;
+	GtkTreeIter iter_, parent_;
+	GtkTreePath *path;
+	gboolean valid;
+
+	if (!iter) return FALSE;
+
+	model = gtk_tree_view_get_model(treeview);
+	valid = gtk_tree_model_iter_parent(model, &parent_, iter);
+
+	while (valid) {
+		path = gtk_tree_model_get_path(model, &parent_);
+		if (!gtk_tree_view_row_expanded(treeview, path)) {
+			*parent = parent_;
+			gtk_tree_path_free(path);
+			return TRUE;
+		}
+		gtk_tree_path_free(path);
+		iter_ = parent_;
+		valid = gtk_tree_model_iter_parent(model, &parent_, &iter_);
+	}
+
+	return FALSE;
+}
+
 void gtkut_combo_set_items(GtkCombo *combo, const gchar *str1, ...)
 {
 	va_list args;
