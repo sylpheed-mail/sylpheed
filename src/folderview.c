@@ -1568,6 +1568,15 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	return FALSE;
 }
 
+static gboolean folderview_focus_idle_func(gpointer data)
+{
+	FolderView *folderview = (FolderView *)data;
+
+	GTK_WIDGET_SET_FLAGS(folderview->treeview, GTK_CAN_FOCUS);
+
+	return FALSE;
+}
+
 static void folderview_selection_changed(GtkTreeSelection *selection,
 					 FolderView *folderview)
 {
@@ -1624,6 +1633,13 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 		gtk_tree_view_scroll_to_cell
 			(GTK_TREE_VIEW(folderview->treeview), path, NULL, FALSE,
 			 0.0, 0.0);
+		if (item->total > 0) {
+			/* don't let GtkTreeView::gtk_tree_view_button_press()
+			 * grab focus */
+			GTK_WIDGET_UNSET_FLAGS(folderview->treeview,
+					       GTK_CAN_FOCUS);
+			g_idle_add(folderview_focus_idle_func, folderview);
+		}
 	} else
 		folderview_select_row_ref(folderview, folderview->opened);
 

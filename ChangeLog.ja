@@ -1,5 +1,11 @@
 2005-04-07
 
+	* src/folderview.c: folderview_selection_changed(): ボタン押下で
+	  フォルダを開いた後 GtkTreeView::gtk_tree_view_button_press() に
+	  フォーカスを取得させないようにした。
+
+2005-04-07
+
 	* src/folderview.[ch]: フォルダビューを GtkTreeView で再実装
 	  (DnD は未実装)。
 	* src/folder.[ch]: folder_item_compare(): FolderItem のソート用の

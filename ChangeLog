@@ -1,5 +1,11 @@
 2005-04-07
 
+	* src/folderview.c: folderview_selection_changed(): don't let
+	  GtkTreeView::gtk_tree_view_button_press() grab focus after opening
+	  a folder by button press.
+
+2005-04-07
+
 	* src/folderview.[ch]: reimplemented folder view with GtkTreeView
 	  (DnD is not implemented yet).
 	* src/folder.[ch]: folder_item_compare(): compare function to sort
