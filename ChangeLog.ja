@@ -2,6 +2,9 @@
 
 	* src/folderview.c: folderview_check_new(): 無限ループバグを修正。
 	  folderview_new_news_group_cb(): 購読時のクラッシュバグを修正。
+	* src/summaryview.c: summary_show():
+	  folderview_update_opened_msg_num() が呼ばれる前に FolderView::opened
+	  を更新。
 
 2005-04-07
 
