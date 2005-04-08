@@ -2155,7 +2155,7 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 	GSList *cur;
 	GNode *gnode;
 	GtkTreePath *server_path;
-	GtkTreeIter iter;
+	GtkTreeIter iter, root;
 
 	item = folderview_get_selected_item(folderview);
 	if (!item)
@@ -2167,10 +2167,13 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 	g_return_if_fail(folder->account != NULL);
 
 	server_path = gtk_tree_row_reference_get_path(folderview->selected);
-	gtk_tree_path_up(server_path);
-
 	gtk_tree_model_get_iter(model, &iter, server_path);
-	gtk_tree_model_get(model, &iter, COL_FOLDER_ITEM, &rootitem, -1);
+	gtk_tree_path_free(server_path);
+
+	if (!gtk_tree_model_iter_parent(model, &root, &iter))
+		root = iter;
+
+	gtk_tree_model_get(model, &root, COL_FOLDER_ITEM, &rootitem, -1);
 
 	new_subscr = grouplist_dialog(folder);
 
@@ -2187,7 +2190,7 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 		}
 
 		if (!gtkut_tree_model_find_by_column_data
-			(model, &found, &iter, COL_FOLDER_ITEM, item)) {
+			(model, &found, &root, COL_FOLDER_ITEM, item)) {
 			gnode = next;
 			continue;
 		}
@@ -2214,6 +2217,13 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 		newitem = folder_item_new(name, name);
 		folder_item_append(rootitem, newitem);
 		folderview_append_item(folderview, NULL, newitem);
+	}
+
+	if (new_subscr) {
+		server_path = gtk_tree_model_get_path(model, &root);
+		gtk_tree_view_expand_row(GTK_TREE_VIEW(folderview->treeview),
+					 server_path, FALSE);
+		gtk_tree_path_free(server_path);
 	}
 
 	slist_free_strings(new_subscr);
