@@ -434,6 +434,9 @@ FolderView *folderview_create(void)
 			 G_CALLBACK(folderview_popup_close), folderview);
 
         /* drop callback */
+	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(treeview),
+					     summary_drag_types, 1,
+					     GDK_ACTION_MOVE|GDK_ACTION_COPY);
 #if 0
 	gtk_drag_dest_set(ctree, GTK_DEST_DEFAULT_ALL &
 			  ~GTK_DEST_DEFAULT_HIGHLIGHT,
@@ -839,8 +842,8 @@ void folderview_check_new(Folder *folder)
 		main_window_lock(folderview->mainwin);
 		gtk_widget_set_sensitive(folderview->treeview, FALSE);
 
-		valid = gtk_tree_model_get_iter_first(model, &iter);
-		while (valid) {
+		for (valid = gtk_tree_model_get_iter_first(model, &iter);
+		     valid; valid = gtkut_tree_model_next(model, &iter)) {
 			item = NULL;
 			gtk_tree_model_get(model, &iter,
 					   COL_FOLDER_ITEM, &item, -1);
@@ -855,8 +858,6 @@ void folderview_check_new(Folder *folder)
 					break;
 			}
 			folderview_update_row(folderview, &iter);
-
-			valid = gtkut_tree_model_next(model, &iter);
 		}
 
 		gtk_widget_set_sensitive(folderview->treeview, TRUE);
