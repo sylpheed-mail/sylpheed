@@ -1213,12 +1213,13 @@ static void catch_output(gpointer data, gint source, GdkInputCondition cond)
 		GtkTextView *text =
 			GTK_TEXT_VIEW(child_info->children->msg_text);
 		GtkTextBuffer *textbuf = gtk_text_view_get_buffer(text);
-		GtkTextIter iter1, iter2;
+		GtkTextIter iter;
 		GtkTextMark *mark;
+		gint ins_pos;
 
 		mark = gtk_text_buffer_get_insert(textbuf);
-		gtk_text_buffer_get_iter_at_mark(textbuf, &iter1, mark);
-		gtk_text_buffer_get_iter_at_mark(textbuf, &iter2, mark);
+		gtk_text_buffer_get_iter_at_mark(textbuf, &iter, mark);
+		ins_pos = gtk_text_iter_get_offset(&iter);
 
 		while (TRUE) {
 			gsize bytes_read = 0, bytes_written = 0;
@@ -1232,17 +1233,19 @@ static void catch_output(gpointer data, gint source, GdkInputCondition cond)
 				(buf, c, &bytes_read, &bytes_written, NULL);
 			if (ret_str && bytes_written > 0) {
 				gtk_text_buffer_insert
-					(textbuf, &iter2, ret_str,
+					(textbuf, &iter, ret_str,
 					 bytes_written);
 				g_free(ret_str);
 			} else
-				gtk_text_buffer_insert(textbuf, &iter2, buf, c);
+				gtk_text_buffer_insert(textbuf, &iter, buf, c);
 		}
 
 		if (child_info->children->is_selection) {
-			gtk_text_buffer_place_cursor(textbuf, &iter1);
-			gtk_text_buffer_move_mark_by_name
-				(textbuf, "selection_bound", &iter2);
+			GtkTextIter ins;
+
+			gtk_text_buffer_get_iter_at_offset
+				(textbuf, &ins, ins_pos);
+			gtk_text_buffer_select_range(textbuf, &ins, &iter);
 		}
 	} else {
 		c = read(source, buf, sizeof(buf) - 1);
