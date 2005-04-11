@@ -478,6 +478,36 @@ gboolean gtkut_tree_view_find_collapsed_parent(GtkTreeView *treeview,
 	return FALSE;
 }
 
+#define SCROLL_EDGE_SIZE 15
+
+/* borrowed from gtktreeview.c */
+void gtkut_tree_view_vertical_autoscroll(GtkTreeView *treeview)
+{
+	GdkRectangle visible_rect;
+	gint y, wy;
+	gint offset;
+	GtkAdjustment *vadj;
+	gfloat value;
+
+	gdk_window_get_pointer(gtk_tree_view_get_bin_window(treeview),
+			       NULL, &wy, NULL);
+	gtk_tree_view_widget_to_tree_coords(treeview, 0, wy, NULL, &y);
+
+	gtk_tree_view_get_visible_rect(treeview, &visible_rect);
+
+	/* see if we are near the edge. */
+	offset = y - (visible_rect.y + 2 * SCROLL_EDGE_SIZE);
+	if (offset > 0) {
+		offset = y - (visible_rect.y + visible_rect.height - 2 * SCROLL_EDGE_SIZE);
+		if (offset < 0)
+			return;
+	}
+
+	vadj = gtk_tree_view_get_vadjustment(treeview);
+	value = CLAMP(vadj->value + offset, 0.0, vadj->upper - vadj->page_size);
+	gtk_adjustment_set_value(vadj, value);
+}
+
 void gtkut_combo_set_items(GtkCombo *combo, const gchar *str1, ...)
 {
 	va_list args;
