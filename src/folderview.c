@@ -146,6 +146,10 @@ static void folderview_row_collapsed	(GtkTreeView		*treeview,
 static void folderview_popup_close	(GtkMenuShell	*menu_shell,
 					 FolderView	*folderview);
 
+static void folderview_col_resized	(GtkTreeView	*treeview,
+					 GtkAllocation	*allocation,
+					 FolderView	*folderview);
+
 static void folderview_download_cb	(FolderView	*folderview,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -347,6 +351,9 @@ FolderView *folderview_create(void)
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview), column);
 
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(folderview_col_resized), folderview);
+
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
@@ -421,9 +428,6 @@ FolderView *folderview_create(void)
 			       G_CALLBACK(folderview_row_collapsed),
 			       folderview);
 
-	//g_signal_connect(G_OBJECT(ctree), "resize_column",
-	//		 G_CALLBACK(folderview_col_resized), folderview);
-
 	g_signal_connect(G_OBJECT(mail_popup), "selection_done",
 			 G_CALLBACK(folderview_popup_close), folderview);
 	g_signal_connect(G_OBJECT(imap_popup), "selection_done",
@@ -466,7 +470,6 @@ void folderview_init(FolderView *folderview)
 {
 	GtkWidget *treeview = folderview->treeview;
 
-	//gtk_widget_realize(treeview);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_INBOX, &inbox_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_OUTBOX, &outbox_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_CLOSE, &folder_pixbuf);
@@ -632,8 +635,9 @@ void folderview_select_next_unread(FolderView *folderview)
 		return;
 	}
 
-	if (!folderview->opened) // return if searched from first
+	if (!folderview->opened)
 		return;
+
 	/* search again from the first row */
 	if (folderview_find_next_unread(model, &next, NULL))
 		folderview_select_row(folderview, &next);
@@ -1411,8 +1415,9 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 				folder_property = TRUE;
 		} else {
 			folder_property = TRUE;
-			//if (folderview->selected == folderview->opened)
-			//	search_folder = TRUE;
+			if (gtkut_tree_row_reference_equal(folderview->selected,
+							   folderview->opened))
+				search_folder = TRUE;
 		}
 		if (FOLDER_IS_LOCAL(folder) || FOLDER_TYPE(folder) == F_IMAP) {
 			if (item->parent == NULL)
@@ -1488,8 +1493,6 @@ static gboolean folderview_button_pressed(GtkWidget *widget,
 	GtkTreeView *treeview = GTK_TREE_VIEW(widget);
 	GtkTreePath *path;
 
-	//g_print("button pressed\n");
-
 	if (!event)
 		return FALSE;
 
@@ -1513,7 +1516,6 @@ static gboolean folderview_button_released(GtkWidget *treeview,
 					   GdkEventButton *event,
 					   FolderView *folderview)
 {
-	//g_print("button released\n");
 	folderview->open_folder = FALSE;
 	return FALSE;
 }
@@ -1700,28 +1702,12 @@ static void folderview_popup_close(GtkMenuShell *menu_shell,
 	gtk_tree_path_free(path);
 }
 
-#if 0
-static void folderview_col_resized(GtkCList *clist, gint column, gint width,
+static void folderview_col_resized(GtkTreeView *treeview,
+				   GtkAllocation *allocation,
 				   FolderView *folderview)
 {
-	switch (column) {
-	case COL_FOLDER:
-		prefs_common.folder_col_folder = width;
-		break;
-	case COL_NEW:
-		prefs_common.folder_col_new = width;
-		break;
-	case COL_UNREAD:
-		prefs_common.folder_col_unread = width;
-		break;
-	case COL_TOTAL:
-		prefs_common.folder_col_total = width;
-		break;
-	default:
-		break;
-	}
+	prefs_common.folder_col_folder = allocation->width;
 }
-#endif
 
 static void folderview_download_func(Folder *folder, FolderItem *item,
 				     gpointer data)

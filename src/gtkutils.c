@@ -449,6 +449,25 @@ gboolean gtkut_tree_model_find_by_column_data(GtkTreeModel *model,
 	return FALSE;
 }
 
+gboolean gtkut_tree_row_reference_equal(GtkTreeRowReference *ref1,
+					GtkTreeRowReference *ref2)
+{
+	GtkTreePath *path1, *path2;
+	gint result;
+
+	g_return_val_if_fail(ref1 != NULL && ref2 != NULL, FALSE);
+
+	path1 = gtk_tree_row_reference_get_path(ref1);
+	path2 = gtk_tree_row_reference_get_path(ref2);
+
+	result = gtk_tree_path_compare(path1, path2);
+
+	gtk_tree_path_free(path2);
+	gtk_tree_path_free(path1);
+
+	return (result == 0);
+}
+
 gboolean gtkut_tree_view_find_collapsed_parent(GtkTreeView *treeview,
 					       GtkTreeIter *parent,
 					       GtkTreeIter *iter)

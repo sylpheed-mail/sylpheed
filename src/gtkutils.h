@@ -141,6 +141,9 @@ gboolean gtkut_tree_model_find_by_column_data
 					 gint		 col,
 					 gpointer	 data);
 
+gboolean gtkut_tree_row_reference_equal	(GtkTreeRowReference	*ref1,
+					 GtkTreeRowReference	*ref2);
+
 gboolean gtkut_tree_view_find_collapsed_parent
 					(GtkTreeView	*treeview,
 					 GtkTreeIter	*parent,
