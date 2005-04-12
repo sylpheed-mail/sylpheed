@@ -158,6 +158,7 @@ struct _CodeConverter
 #define CS_EUC_CN		"EUC-CN"
 #define CS_GB2312		"GB2312"
 #define CS_GBK			"GBK"
+#define CS_X_GBK		"X-GBK"
 #define CS_EUC_TW		"EUC-TW"
 #define CS_BIG5			"Big5"
 #define CS_BIG5_HKSCS		"BIG5-HKSCS"
@@ -188,16 +189,16 @@ gchar *conv_convert			(CodeConverter	*conv,
 	(conv_codeset_strdup_full(inbuf, src_code, dest_code, NULL))
 
 gchar *conv_codeset_strdup_full		(const gchar	*inbuf,
-					 const gchar	*src_code,
-					 const gchar	*dest_code,
+					 const gchar	*src_encoding,
+					 const gchar	*dest_encoding,
 					 gint		*error);
 
-CodeConvFunc conv_get_code_conv_func	(const gchar	*src_charset_str,
-					 const gchar	*dest_charset_str);
+CodeConvFunc conv_get_code_conv_func	(const gchar	*src_encoding,
+					 const gchar	*dest_encoding);
 
 gchar *conv_iconv_strdup		(const gchar	*inbuf,
-					 const gchar	*src_code,
-					 const gchar	*dest_code,
+					 const gchar	*src_encoding,
+					 const gchar	*dest_encoding,
 					 gint		*error);
 gchar *conv_iconv_strdup_with_cd	(const gchar	*inbuf,
 					 iconv_t	 cd,

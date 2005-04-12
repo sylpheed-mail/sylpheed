@@ -885,10 +885,24 @@ static gchar *conv_noconv(const gchar *inbuf, gint *error)
 	return g_strdup(inbuf);
 }
 
+static const gchar *
+conv_get_fallback_for_private_encoding(const gchar *encoding)
+{
+	if (encoding && (encoding[0] == 'X' || encoding[0] == 'x') &&
+	    encoding[1] == '-') {
+		if (!g_strcasecmp(encoding, CS_X_GBK))
+			return CS_GBK;
+	}
+
+	return encoding;
+}
+
 CodeConverter *conv_code_converter_new(const gchar *src_encoding,
 				       const gchar *dest_encoding)
 {
 	CodeConverter *conv;
+
+	src_encoding = conv_get_fallback_for_private_encoding(src_encoding);
 
 	conv = g_new0(CodeConverter, 1);
 	conv->code_conv_func =
@@ -916,39 +930,42 @@ gchar *conv_convert(CodeConverter *conv, const gchar *inbuf)
 }
 
 gchar *conv_codeset_strdup_full(const gchar *inbuf,
-				const gchar *src_code, const gchar *dest_code,
+				const gchar *src_encoding,
+				const gchar *dest_encoding,
 				gint *error)
 {
 	CodeConvFunc conv_func;
 
-	conv_func = conv_get_code_conv_func(src_code, dest_code);
+	src_encoding = conv_get_fallback_for_private_encoding(src_encoding);
+
+	conv_func = conv_get_code_conv_func(src_encoding, dest_encoding);
 	if (conv_func != conv_noconv)
 		return conv_func(inbuf, error);
 
-	return conv_iconv_strdup(inbuf, src_code, dest_code, error);
+	return conv_iconv_strdup(inbuf, src_encoding, dest_encoding, error);
 }
 
-CodeConvFunc conv_get_code_conv_func(const gchar *src_charset_str,
-				     const gchar *dest_charset_str)
+CodeConvFunc conv_get_code_conv_func(const gchar *src_encoding,
+				     const gchar *dest_encoding)
 {
 	CodeConvFunc code_conv = conv_noconv;
 	CharSet src_charset;
 	CharSet dest_charset;
 
-	if (!src_charset_str)
+	if (!src_encoding)
 		src_charset = conv_get_locale_charset();
 	else
-		src_charset = conv_get_charset_from_str(src_charset_str);
+		src_charset = conv_get_charset_from_str(src_encoding);
 
 	/* auto detection mode */
-	if (!src_charset_str && !dest_charset_str) {
+	if (!src_encoding && !dest_encoding) {
 		if (src_charset == C_EUC_JP || src_charset == C_SHIFT_JIS)
 			return conv_anytodisp;
 		else
 			return conv_noconv;
 	}
 
-	dest_charset = conv_get_charset_from_str(dest_charset_str);
+	dest_charset = conv_get_charset_from_str(dest_encoding);
 
 	if (dest_charset == C_US_ASCII)
 		return conv_ustodisp;
@@ -1201,7 +1218,7 @@ static const struct {
 	{"ko_KR.EUC-KR"	, C_EUC_KR	, C_EUC_KR},
 	{"ko_KR"	, C_EUC_KR	, C_EUC_KR},
 	{"zh_CN.GB2312"	, C_GB2312	, C_GB2312},
-	{"zh_CN.GBK"	, C_GBK		, C_GB2312},
+	{"zh_CN.GBK"	, C_GBK		, C_GBK},
 	{"zh_CN"	, C_GB2312	, C_GB2312},
 	{"zh_HK"	, C_BIG5_HKSCS	, C_BIG5_HKSCS},
 	{"zh_TW.eucTW"	, C_EUC_TW	, C_BIG5},
@@ -1560,6 +1577,7 @@ gboolean conv_is_multibyte_encoding(CharSet encoding)
 	case C_ISO_2022_CN:
 	case C_SHIFT_JIS:
 	case C_GB2312:
+	case C_GBK:
 	case C_BIG5:
 	case C_UTF_8:
 	case C_UTF_7:

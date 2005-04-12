@@ -1159,6 +1159,7 @@ static void prefs_send_create(void)
 #endif /* 0 */
 	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Simplified Chinese (GB2312)"),	 CS_GB2312);
+	SET_MENUITEM(_("Simplified Chinese (GBK)"),	 CS_GBK);
 	SET_MENUITEM(_("Traditional Chinese (Big5)"),	 CS_BIG5);
 #if 0
 	SET_MENUITEM(_("Traditional Chinese (EUC-TW)"),  CS_EUC_TW);
