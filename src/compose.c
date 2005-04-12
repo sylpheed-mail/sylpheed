@@ -2715,7 +2715,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 #if USE_GPGME
 	/* force encoding to protect trailing spaces */
-	if (!is_draft && compose->use_signing) {
+	if (!is_draft && compose->use_signing && !compose->account->clearsign) {
 		if (encoding == ENC_7BIT)
 			encoding = ENC_QUOTED_PRINTABLE;
 		else if (encoding == ENC_8BIT)
@@ -2723,6 +2723,10 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	}
 
 	if (!is_draft && compose->use_signing && compose->account->clearsign) {
+		/* MIME encoding doesn't fit with cleartext signature */
+		if (encoding == ENC_QUOTED_PRINTABLE || encoding == ENC_BASE64)
+			encoding = ENC_8BIT;
+
 		if (compose_clearsign_text(compose, &buf) < 0) {
 			g_warning("clearsign failed\n");
 			fclose(fp);
