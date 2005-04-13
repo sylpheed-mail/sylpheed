@@ -222,6 +222,8 @@ const gchar *gpgmegtk_sig_status_to_string(gpgme_signature_t signature,
 {
 	const gchar *result = "?";
 
+	g_return_val_if_fail(signature != NULL, result);
+
 	switch (gpg_err_code(signature->status)) {
 	case GPG_ERR_NO_DATA:
 		result = _("No signature found");

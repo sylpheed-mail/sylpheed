@@ -659,8 +659,8 @@ pgp_encrypt ( gpgme_data_t plain, gpgme_key_t kset[] )
 	err = gpgme_data_new (&cipher);
     if (!err) {
         gpgme_set_armor (ctx, 1);
-    err = (gpgme_data_seek(plain, 0, SEEK_SET) == -1) ?
-        gpgme_error_from_errno(errno) : 0;
+        err = (gpgme_data_seek(plain, 0, SEEK_SET) == -1) ?
+            gpgme_error_from_errno(errno) : 0;
         if (!err) {
             /*
              * Note -- it is currently the responsibility of select-keys.c::
@@ -673,7 +673,8 @@ pgp_encrypt ( gpgme_data_t plain, gpgme_key_t kset[] )
     }
 
     if (err) {
-        debug_print ("encryption failed: %s\n", gpgme_strerror (err));
+        g_warning ("pgp_encrypt(): encryption failed: %s\n",
+		   gpgme_strerror (err));
         gpgme_data_release (cipher);
         cipher = NULL;
     }
@@ -997,7 +998,7 @@ pgp_sign (gpgme_data_t plain, GSList *key_list, gboolean clearsign,
     gpgme_set_armor (ctx, 1);
     gpgme_signers_clear (ctx);
     for (p = key_list; p != NULL; p = p->next) {
-    err = gpgme_signers_add (ctx, (gpgme_key_t) p->data);
+        err = gpgme_signers_add (ctx, (gpgme_key_t) p->data);
 	if (err)
 	    goto leave;
     }
@@ -1011,9 +1012,9 @@ pgp_sign (gpgme_data_t plain, GSList *key_list, gboolean clearsign,
         err = gpgme_op_sign (ctx, plain, sig,
 	 clearsign ? GPGME_SIG_MODE_CLEAR : GPGME_SIG_MODE_DETACH);
     }
-    if (!err)
+    if (!err) {
 	result = gpgme_op_sign_result(ctx);
-	if (result) {
+	if (result && result->signatures) {
 	    if (gpgme_get_protocol(ctx) == GPGME_PROTOCOL_OpenPGP) {
 		*micalg = g_strdup_printf("PGP-%s", gpgme_hash_algo_name(
 			    result->signatures->hash_algo));
@@ -1021,16 +1022,19 @@ pgp_sign (gpgme_data_t plain, GSList *key_list, gboolean clearsign,
 		*micalg = g_strdup(gpgme_hash_algo_name(
 			    result->signatures->hash_algo));
 	    }
+	} else {
+	    /* can't get result (maybe no signing key?) */
+	    err = GPG_ERR_USER_1;
 	}
+    }
 
 leave:
     if (err) {
         gpgmegtk_free_passphrase();
-        debug_print ("signing failed: %s\n", gpgme_strerror (err));
+        g_warning ("pgp_sign(): signing failed: %s\n", gpgme_strerror (err));
         gpgme_data_release (sig);
         sig = NULL;
-    }
-    else {
+    } else {
         debug_print ("signing succeeded\n");
     }
 
@@ -1265,7 +1269,7 @@ rfc2015_clearsign (const gchar *file, GSList *key_list)
     gpgme_data_t text = NULL;
     gpgme_data_t sigdata = NULL;
     ssize_t bytesRW = 0;
-    gchar *micalg;
+    gchar *micalg = NULL;
 
     if ((fp = fopen(file, "rb")) == NULL) {
 	FILE_OP_ERROR(file, "fopen");

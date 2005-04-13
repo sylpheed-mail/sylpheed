@@ -1,3 +1,11 @@
+2005-04-13
+
+	* src/rfc2015.c: pgp_sign(): 括弧が抜けていたのを修正。
+	  result->signatures が NULL でないかどうかをチェック(~/.gnupg が
+	  存在しない場合にクラッシュするのを修正)。
+	* src/sigstatus.c: gpgmegtk_sig_status_to_string(): signature が
+	  NULL でないかどうかをチェック。
+
 2005-04-12
 
 	* version 1.9.8
