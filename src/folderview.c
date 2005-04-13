@@ -26,7 +26,8 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
-#include <gtk/gtkstyle.h>
+#include <gtk/gtkcellrendererpixbuf.h>
+#include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkstatusbar.h>
@@ -143,7 +144,7 @@ static void folderview_row_collapsed	(GtkTreeView		*treeview,
 static void folderview_popup_close	(GtkMenuShell	*menu_shell,
 					 FolderView	*folderview);
 
-static void folderview_col_resized	(GtkTreeView	*treeview,
+static void folderview_col_resized	(GtkWidget	*widget,
 					 GtkAllocation	*allocation,
 					 FolderView	*folderview);
 
@@ -1701,8 +1702,7 @@ static void folderview_popup_close(GtkMenuShell *menu_shell,
 	gtk_tree_path_free(path);
 }
 
-static void folderview_col_resized(GtkTreeView *treeview,
-				   GtkAllocation *allocation,
+static void folderview_col_resized(GtkWidget *widget, GtkAllocation *allocation,
 				   FolderView *folderview)
 {
 	prefs_common.folder_col_folder = allocation->width;
