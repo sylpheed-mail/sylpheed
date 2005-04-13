@@ -92,9 +92,6 @@ enum
 
 static GList *folderview_list = NULL;
 
-static GtkStyle *bold_style;
-static GtkStyle *bold_color_style;
-
 static GdkPixbuf *inbox_pixbuf;
 static GdkPixbuf *outbox_pixbuf;
 static GdkPixbuf *folder_pixbuf;
@@ -477,14 +474,6 @@ void folderview_init(FolderView *folderview)
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_NOSELECT,
 			 &foldernoselect_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_TRASH, &trash_pixbuf);
-
-	if (!bold_style) {
-		bold_style = gtk_style_copy(gtk_widget_get_style(treeview));
-		pango_font_description_set_weight
-			(bold_style->font_desc, PANGO_WEIGHT_BOLD);
-		bold_color_style = gtk_style_copy(bold_style);
-		bold_color_style->fg[GTK_STATE_NORMAL] = folderview->color_new;
-	}
 }
 
 FolderView *folderview_get(void)
@@ -538,16 +527,22 @@ void folderview_select(FolderView *folderview, FolderItem *item)
 
 static void folderview_select_row(FolderView *folderview, GtkTreeIter *iter)
 {
-	GtkTreePath *path;
+	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
+	GtkTreePath *path, *parent_path;
+	GtkTreeIter parent;
 
 	g_return_if_fail(iter != NULL);
 
-	path = gtk_tree_model_get_path
-		(GTK_TREE_MODEL(folderview->store), iter);
+	path = gtk_tree_model_get_path(model, iter);
+
+	if (gtk_tree_model_iter_parent(model, &parent, iter)) {
+		parent_path = gtk_tree_model_get_path(model, &parent);
+		gtk_tree_view_expand_to_path
+			(GTK_TREE_VIEW(folderview->treeview), parent_path);
+		gtk_tree_path_free(parent_path);
+	}
 
 	folderview->open_folder = TRUE;
-
-	gtk_tree_view_expand_to_path(GTK_TREE_VIEW(folderview->treeview), path);
 	gtk_tree_view_set_cursor(GTK_TREE_VIEW(folderview->treeview), path,
 				 NULL, FALSE);
 	if (folderview->summaryview->folder_item &&
@@ -1596,13 +1591,18 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 	folderview->open_folder = FALSE;
 
 	gtk_tree_model_get(model, &iter, COL_FOLDER_ITEM, &item, -1);
-	if (!item) return;
+	if (!item) {
+		gtk_tree_path_free(path);
+		return;
+	}
 
 	if (item->path)
 		debug_print(_("Folder %s is selected\n"), item->path);
 
-	if (summary_is_locked(folderview->summaryview))
+	if (summary_is_locked(folderview->summaryview)) {
+		gtk_tree_path_free(path);
 		return;
+	}
 
 	if (folderview->opened) {
 		GtkTreePath *open_path = NULL;
@@ -1611,7 +1611,6 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 		if (gtk_tree_path_compare(open_path, path) == 0) {
 			gtk_tree_path_free(open_path);
 			gtk_tree_path_free(path);
-			folderview->open_folder = FALSE;
 			return;
 		}
 		gtk_tree_path_free(open_path);

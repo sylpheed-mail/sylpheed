@@ -1,5 +1,12 @@
 2005-04-13
 
+	* src/imap.c: imap_close(): don't do anything if item->path is NULL.
+	* src/folderview.c: removed unused GtkStyle.
+	  folderview_select_row(): don't expand the row itself.
+	  folderview_selection_changed(): fixed a memory leak.
+
+2005-04-13
+
 	* src/rfc2015.c: pgp_sign(): fixed missing brackets. Check if
 	  result->signatures is not NULL (fix crashes when ~/.gnupg doesn't
 	  exist).

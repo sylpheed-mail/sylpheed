@@ -1,5 +1,13 @@
 2005-04-13
 
+	* src/imap.c: imap_close(): item->path が NULL の場合は何もしない
+	  ようにした。
+	* src/folderview.c: 未使用の GtkStyle を削除。
+	  folderview_select_row(): その行自身は展開しないようにした。
+	  folderview_selection_changed(): メモリリークを修正。
+
+2005-04-13
+
 	* src/rfc2015.c: pgp_sign(): 括弧が抜けていたのを修正。
 	  result->signatures が NULL でないかどうかをチェック(~/.gnupg が
 	  存在しない場合にクラッシュするのを修正)。

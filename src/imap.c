@@ -1453,6 +1453,8 @@ static gint imap_close(Folder *folder, FolderItem *item)
 
 	g_return_val_if_fail(folder != NULL, -1);
 
+	if (!item->path) return 0;
+
 	session = imap_session_get(folder);
 	if (!session) return -1;
 
