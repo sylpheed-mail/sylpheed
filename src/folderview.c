@@ -336,8 +336,12 @@ FolderView *folderview_create(void)
 		 NULL);
 
 	renderer = gtk_cell_renderer_text_new();
+#if GTK_CHECK_VERSION(2, 6, 0)
 	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0,
 		     NULL);
+#else
+	g_object_set(renderer, "ypad", 0, NULL);
+#endif
 	gtk_tree_view_column_pack_start(column, renderer, TRUE);
 	gtk_tree_view_column_set_attributes(column, renderer,
 					    "text", COL_FOLDER_NAME,
