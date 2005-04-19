@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-12 19:10+0900\n"
+"POT-Creation-Date: 2005-04-19 15:59+0900\n"
 "PO-Revision-Date: 2003-05-30 13:31GMT+0100\n"
 "Last-Translator: Radek Vybíral <Radek.Vybiral@vsb.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -96,7 +96,7 @@ msgstr ""
 "kontrolován při volbě 'Stáhnout vše, zaškrtněte políčko ve sloupci 'G'."
 
 #: src/account.c:691 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3809 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3735 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:151 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -155,15 +155,15 @@ msgstr "Neoznačený"
 msgid "Delete account"
 msgstr "Smazat účet"
 
-#: src/account.c:811 src/compose.c:2687 src/compose.c:5004
-#: src/folderview.c:1954 src/folderview.c:2047 src/folderview.c:2091
-#: src/folderview.c:2229 src/folderview.c:2273
+#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/folderview.c:1957 src/folderview.c:2050 src/folderview.c:2094
+#: src/folderview.c:2232 src/folderview.c:2276
 msgid "Yes"
 msgstr "Ano"
 
-#: src/account.c:811 src/compose.c:2687 src/compose.c:5004
-#: src/folderview.c:1954 src/folderview.c:2047 src/folderview.c:2091
-#: src/folderview.c:2229 src/folderview.c:2273
+#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/folderview.c:1957 src/folderview.c:2050 src/folderview.c:2094
+#: src/folderview.c:2232 src/folderview.c:2276
 msgid "+No"
 msgstr "+Ne"
 
@@ -266,7 +266,7 @@ msgstr "Argument uživatele pro akci"
 msgid "Add Address to Book"
 msgstr "Přidat adresu do databáze"
 
-#: src/addressadd.c:196 src/compose.c:4353 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4278 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresa"
@@ -280,7 +280,7 @@ msgstr "Poznámky"
 msgid "Select Address Book Folder"
 msgstr "Vybrat složku pro databázi adres"
 
-#: src/addressbook.c:334 src/compose.c:478 src/mainwindow.c:454
+#: src/addressbook.c:334 src/compose.c:475 src/mainwindow.c:454
 #: src/messageview.c:134
 msgid "/_File"
 msgstr "/_Soubor"
@@ -301,8 +301,8 @@ msgstr "/_Soubor/Nový _JPilot"
 msgid "/_File/New _Server"
 msgstr "/_Soubor/Nový _server"
 
-#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:483
-#: src/compose.c:488 src/compose.c:492 src/mainwindow.c:471
+#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:480
+#: src/compose.c:485 src/compose.c:489 src/mainwindow.c:471
 #: src/mainwindow.c:474 src/mainwindow.c:476 src/mainwindow.c:479
 #: src/mainwindow.c:481 src/messageview.c:137
 msgid "/_File/---"
@@ -320,7 +320,7 @@ msgstr "/_Soubor/_Smazat"
 msgid "/_File/_Save"
 msgstr "/_Soubor/_Uložit"
 
-#: src/addressbook.c:348 src/compose.c:493 src/messageview.c:138
+#: src/addressbook.c:348 src/compose.c:490 src/messageview.c:138
 msgid "/_File/_Close"
 msgstr "/_Soubor/_Zavřít"
 
@@ -352,7 +352,7 @@ msgstr "/_Adresa/U_pravit"
 msgid "/_Address/_Delete"
 msgstr "/_Adresa/S_mazat"
 
-#: src/addressbook.c:356 src/compose.c:667 src/mainwindow.c:699
+#: src/addressbook.c:356 src/compose.c:593 src/mainwindow.c:699
 #: src/messageview.c:248
 msgid "/_Tools"
 msgstr "/_Nástroje"
@@ -361,12 +361,12 @@ msgstr "/_Nástroje"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Nástroje/Importovat _LDIF soubor"
 
-#: src/addressbook.c:358 src/compose.c:680 src/mainwindow.c:744
+#: src/addressbook.c:358 src/compose.c:606 src/mainwindow.c:744
 #: src/messageview.c:266
 msgid "/_Help"
 msgstr "/Nápo_věda"
 
-#: src/addressbook.c:359 src/compose.c:681 src/mainwindow.c:755
+#: src/addressbook.c:359 src/compose.c:607 src/mainwindow.c:755
 #: src/messageview.c:267
 msgid "/_Help/_About"
 msgstr "/Nápo_věda/_O aplikaci"
@@ -383,17 +383,17 @@ msgstr "/Nová _skupina"
 msgid "/New _Folder"
 msgstr "/Nová s_ložka"
 
-#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:472
-#: src/folderview.c:223 src/folderview.c:225 src/folderview.c:229
-#: src/folderview.c:239 src/folderview.c:241 src/folderview.c:243
-#: src/folderview.c:247 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:262 src/summaryview.c:346 src/summaryview.c:350
+#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:469
+#: src/folderview.c:221 src/folderview.c:223 src/folderview.c:227
+#: src/folderview.c:237 src/folderview.c:239 src/folderview.c:241
+#: src/folderview.c:245 src/folderview.c:255 src/folderview.c:257
+#: src/folderview.c:260 src/summaryview.c:346 src/summaryview.c:350
 #: src/summaryview.c:354 src/summaryview.c:364 src/summaryview.c:366
 #: src/summaryview.c:369 src/summaryview.c:375
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:495
+#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:492
 #: src/mainwindow.c:485 src/messageview.c:140
 msgid "/_Edit"
 msgstr "/Úp_ravy"
@@ -406,7 +406,7 @@ msgstr "/_Smazat"
 msgid "E-Mail address"
 msgstr "E-mail adresa"
 
-#: src/addressbook.c:493 src/compose.c:4354 src/prefs_common.c:2208
+#: src/addressbook.c:493 src/compose.c:4279 src/prefs_common.c:2208
 msgid "Address book"
 msgstr "Databáze adres"
 
@@ -584,7 +584,7 @@ msgid "Group"
 msgstr "Skupina"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3133 src/folderview.c:332 src/prefs_account.c:1824
+#: src/addressbook.c:3133 src/folderview.c:330 src/prefs_account.c:1824
 msgid "Folder"
 msgstr "Složka"
 
@@ -608,7 +608,7 @@ msgstr "Společná adresa"
 msgid "Personal address"
 msgstr "Osobní adresa"
 
-#: src/alertpanel.c:123 src/compose.c:5004 src/main.c:458
+#: src/alertpanel.c:123 src/compose.c:4929 src/main.c:458
 msgid "Notice"
 msgstr "Poznámka"
 
@@ -616,7 +616,7 @@ msgstr "Poznámka"
 msgid "Warning"
 msgstr "Varování"
 
-#: src/alertpanel.c:149 src/compose.c:2687 src/inc.c:558
+#: src/alertpanel.c:149 src/compose.c:2613 src/inc.c:558
 msgid "Error"
 msgstr "Chyba"
 
@@ -664,430 +664,370 @@ msgstr "Hnědá"
 msgid "None"
 msgstr "Žádná"
 
-#: src/compose.c:470
+#: src/compose.c:467
 msgid "/_Add..."
 msgstr "/_Přidat..."
 
-#: src/compose.c:471
+#: src/compose.c:468
 msgid "/_Remove"
 msgstr "/_Odstranit"
 
-#: src/compose.c:473 src/folderview.c:231 src/folderview.c:249
-#: src/folderview.c:264
+#: src/compose.c:470 src/folderview.c:229 src/folderview.c:247
+#: src/folderview.c:262
 msgid "/_Properties..."
 msgstr "/_Vlastnosti..."
 
-#: src/compose.c:479
+#: src/compose.c:476
 #, fuzzy
 msgid "/_File/_Send"
 msgstr "/_Soubor/_Uložit"
 
-#: src/compose.c:481
+#: src/compose.c:478
 #, fuzzy
 msgid "/_File/Send _later"
 msgstr "/_Zpráva/Poslat p_ozději"
 
-#: src/compose.c:484
+#: src/compose.c:481
 #, fuzzy
 msgid "/_File/Save to _draft folder"
 msgstr "/_Zpráva/Uložit jako _koncept"
 
-#: src/compose.c:486
+#: src/compose.c:483
 #, fuzzy
 msgid "/_File/Save and _keep editing"
 msgstr "/_Zpráva/Uložit a pok_račovat v editaci"
 
-#: src/compose.c:489
+#: src/compose.c:486
 msgid "/_File/_Attach file"
 msgstr "/_Soubor/_Připojit soubor"
 
-#: src/compose.c:490
+#: src/compose.c:487
 msgid "/_File/_Insert file"
 msgstr "/_Soubor/_Vložit soubor"
 
-#: src/compose.c:491
+#: src/compose.c:488
 msgid "/_File/Insert si_gnature"
 msgstr "/_Soubor/Vložit p_odpis"
 
-#: src/compose.c:496
+#: src/compose.c:493
 msgid "/_Edit/_Undo"
 msgstr "/Úp_ravy/_Zpět"
 
-#: src/compose.c:497
+#: src/compose.c:494
 msgid "/_Edit/_Redo"
 msgstr "/Úp_ravy/Z_nova"
 
-#: src/compose.c:498 src/compose.c:576 src/mainwindow.c:489
+#: src/compose.c:495 src/compose.c:502 src/mainwindow.c:489
 #: src/messageview.c:143
 msgid "/_Edit/---"
 msgstr "/Úp_ravy/---"
 
-#: src/compose.c:499
+#: src/compose.c:496
 msgid "/_Edit/Cu_t"
 msgstr "/Úp_ravy/_Vyjmout"
 
-#: src/compose.c:500 src/mainwindow.c:486 src/messageview.c:141
+#: src/compose.c:497 src/mainwindow.c:486 src/messageview.c:141
 msgid "/_Edit/_Copy"
 msgstr "/Úp_ravy/_Kopírovat"
 
-#: src/compose.c:501
+#: src/compose.c:498
 msgid "/_Edit/_Paste"
 msgstr "/Úp_ravy/V_ložit"
 
-#: src/compose.c:502
+#: src/compose.c:499
 msgid "/_Edit/Paste as _quotation"
 msgstr "/Úp_ravy/Vložit jako _citaci"
 
-#: src/compose.c:504 src/mainwindow.c:487 src/messageview.c:142
+#: src/compose.c:501 src/mainwindow.c:487 src/messageview.c:142
 msgid "/_Edit/Select _all"
 msgstr "/Úp_ravy/Vybr_at vše"
 
-#: src/compose.c:505
-msgid "/_Edit/A_dvanced"
-msgstr "/Úp_ravy/_Rozšířené"
-
-#: src/compose.c:506
-msgid "/_Edit/A_dvanced/Move a character backward"
-msgstr "/Úp_ravy/_Rozšířené/Přesun o znak zpět"
-
-#: src/compose.c:511
-msgid "/_Edit/A_dvanced/Move a character forward"
-msgstr "/Úp_ravy/_Rozšířené/Přesun o znak dále"
-
-#: src/compose.c:516
-msgid "/_Edit/A_dvanced/Move a word backward"
-msgstr "/Úp_ravy/_Rozšířené/Přesun o slovo zpět"
-
-#: src/compose.c:521
-msgid "/_Edit/A_dvanced/Move a word forward"
-msgstr "/Úp_ravy/_Rozšířené/Přesun o slov dále"
-
-#: src/compose.c:526
-msgid "/_Edit/A_dvanced/Move to beginning of line"
-msgstr "/Úp_ravy/_Rozšířené/Přesun na začátek řádku"
-
-#: src/compose.c:531
-msgid "/_Edit/A_dvanced/Move to end of line"
-msgstr "/Úp_ravy/_Rozšířené/Přesun na konec řádku"
-
-#: src/compose.c:536
-msgid "/_Edit/A_dvanced/Move to previous line"
-msgstr "/Úp_ravy/_Rozšířené/Přesun na předchozí řádek"
-
-#: src/compose.c:541
-msgid "/_Edit/A_dvanced/Move to next line"
-msgstr "/Úp_ravy/_Rozšířené/Přesun na další řádek"
-
-#: src/compose.c:546
-msgid "/_Edit/A_dvanced/Delete a character backward"
-msgstr "/Úp_ravy/_Rozšířené/Smazat znak zpět"
-
-#: src/compose.c:551
-msgid "/_Edit/A_dvanced/Delete a character forward"
-msgstr "/Úp_ravy/_Rozšířené/Smazat znak vpředu"
-
-#: src/compose.c:556
-msgid "/_Edit/A_dvanced/Delete a word backward"
-msgstr "/Úp_ravy/_Rozšířené/Smazat slovo zpět"
-
-#: src/compose.c:561
-msgid "/_Edit/A_dvanced/Delete a word forward"
-msgstr "/Úp_ravy/_Rozšířené/Smazat slovo vpředu"
-
-#: src/compose.c:566
-msgid "/_Edit/A_dvanced/Delete line"
-msgstr "/Úp_ravy/_Rozšířené/Smazat řádek"
-
-#: src/compose.c:571
-msgid "/_Edit/A_dvanced/Delete to end of line"
-msgstr "/Úp_ravy/_Rozšířené/Smazat do konce řádku"
-
-#: src/compose.c:577
+#: src/compose.c:503
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/Úp_ravy/_Zarovnat aktuální odstavec"
 
-#: src/compose.c:579
+#: src/compose.c:505
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/Úp_ravy/Zarovnat _všechny dlouhá řádky"
 
-#: src/compose.c:581
+#: src/compose.c:507
 #, fuzzy
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/Úp_ravy/_Kopírovat"
 
-#: src/compose.c:582 src/mainwindow.c:494 src/messageview.c:147
+#: src/compose.c:508 src/mainwindow.c:494 src/messageview.c:147
 #: src/summaryview.c:370
 msgid "/_View"
 msgstr "/Z_obrazit"
 
-#: src/compose.c:583
+#: src/compose.c:509
 msgid "/_View/_To"
 msgstr "/Z_obrazit/_Komu"
 
-#: src/compose.c:584
+#: src/compose.c:510
 msgid "/_View/_Cc"
 msgstr "/Z_obrazit/K_opie"
 
-#: src/compose.c:585
+#: src/compose.c:511
 msgid "/_View/_Bcc"
 msgstr "/Z_obrazit/_Slepá kopie"
 
-#: src/compose.c:586
+#: src/compose.c:512
 msgid "/_View/_Reply to"
 msgstr "/Z_obrazit/_Odpověď komu "
 
-#: src/compose.c:587 src/compose.c:589 src/compose.c:591 src/compose.c:593
+#: src/compose.c:513 src/compose.c:515 src/compose.c:517 src/compose.c:519
 #: src/mainwindow.c:512 src/mainwindow.c:515 src/mainwindow.c:541
 #: src/mainwindow.c:565 src/mainwindow.c:652 src/mainwindow.c:656
 #: src/messageview.c:225
 msgid "/_View/---"
 msgstr "/Z_obrazit/---"
 
-#: src/compose.c:588
+#: src/compose.c:514
 msgid "/_View/_Followup to"
 msgstr "/Z_obrazit/_Předat"
 
-#: src/compose.c:590
+#: src/compose.c:516
 msgid "/_View/R_uler"
 msgstr "/Z_obrazit/Praví_tko"
 
-#: src/compose.c:592
+#: src/compose.c:518
 msgid "/_View/_Attachment"
 msgstr "/Z_obrazit/Přílo_ha"
 
-#: src/compose.c:599 src/mainwindow.c:572 src/messageview.c:154
+#: src/compose.c:525 src/mainwindow.c:572 src/messageview.c:154
 #, fuzzy
 msgid "/_View/Character _encoding"
 msgstr "/Z_obrazit/Setříd_it/Sestupně"
 
-#: src/compose.c:600
+#: src/compose.c:526
 msgid "/_View/Character _encoding/_Automatic"
 msgstr ""
 
-#: src/compose.c:602 src/compose.c:608 src/compose.c:614 src/compose.c:618
-#: src/compose.c:624 src/compose.c:628 src/compose.c:632 src/compose.c:642
-#: src/compose.c:646 src/compose.c:656 src/compose.c:660 src/mainwindow.c:568
+#: src/compose.c:528 src/compose.c:534 src/compose.c:540 src/compose.c:544
+#: src/compose.c:550 src/compose.c:554 src/compose.c:558 src/compose.c:568
+#: src/compose.c:572 src/compose.c:582 src/compose.c:586 src/mainwindow.c:568
 #: src/mainwindow.c:575 src/messageview.c:150
 #, fuzzy
 msgid "/_View/Character _encoding/---"
 msgstr "/Z_obrazit/Setříd_it/Sestupně"
 
-#: src/compose.c:604 src/mainwindow.c:576 src/messageview.c:158
+#: src/compose.c:530 src/mainwindow.c:576 src/messageview.c:158
 #, fuzzy
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/Z_obrazit/_Znaková sada/7bitová ascii (US-ASC_II)"
 
-#: src/compose.c:606 src/mainwindow.c:578 src/messageview.c:161
+#: src/compose.c:532 src/mainwindow.c:578 src/messageview.c:161
 #, fuzzy
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/Z_obrazit/_Znaková sada/Unicode (_UTF-8)"
 
-#: src/compose.c:610 src/mainwindow.c:582 src/messageview.c:164
+#: src/compose.c:536 src/mainwindow.c:582 src/messageview.c:164
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/Z_obrazit/_Znaková sada/Západní Evropa (ISO-8859-_1)"
 
-#: src/compose.c:612 src/mainwindow.c:584 src/messageview.c:166
+#: src/compose.c:538 src/mainwindow.c:584 src/messageview.c:166
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/Z_obrazit/_Znaková sada/Západní Evropa (ISO-8859-15)"
 
-#: src/compose.c:616 src/mainwindow.c:588 src/messageview.c:169
+#: src/compose.c:542 src/mainwindow.c:588 src/messageview.c:169
 #, fuzzy
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/Z_obrazit/_Znaková sada/Střední Evropa (ISO-8859-_2)"
 
-#: src/compose.c:620 src/mainwindow.c:592 src/messageview.c:172
+#: src/compose.c:546 src/mainwindow.c:592 src/messageview.c:172
 #, fuzzy
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/Z_obrazit/_Znaková sada/_Baltská (ISO-8859-13)"
 
-#: src/compose.c:622 src/mainwindow.c:594 src/messageview.c:174
+#: src/compose.c:548 src/mainwindow.c:594 src/messageview.c:174
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/Z_obrazit/_Znaková sada/Baltská (ISO-8859-_4)"
 
-#: src/compose.c:626 src/mainwindow.c:598 src/messageview.c:177
+#: src/compose.c:552 src/mainwindow.c:598 src/messageview.c:177
 #, fuzzy
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/Z_obrazit/_Znaková sada/Řecká (ISO-8859-_7)"
 
-#: src/compose.c:630 src/mainwindow.c:602 src/messageview.c:180
+#: src/compose.c:556 src/mainwindow.c:602 src/messageview.c:180
 #, fuzzy
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/Z_obrazit/_Znaková sada/Turecká (ISO-8859-_9)"
 
-#: src/compose.c:634 src/mainwindow.c:606 src/messageview.c:183
+#: src/compose.c:560 src/mainwindow.c:606 src/messageview.c:183
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/Z_obrazit/_Znaková sada/Azbuka (ISO-8859-_5)"
 
-#: src/compose.c:636 src/mainwindow.c:608 src/messageview.c:185
+#: src/compose.c:562 src/mainwindow.c:608 src/messageview.c:185
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/Z_obrazit/_Znaková sada/Azbuka (KOI8-_R)"
 
-#: src/compose.c:638 src/mainwindow.c:610 src/messageview.c:187
+#: src/compose.c:564 src/mainwindow.c:610 src/messageview.c:187
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/Z_obrazit/_Znaková sada/Azbuka (KOI8-_R)"
 
-#: src/compose.c:640 src/mainwindow.c:612 src/messageview.c:189
+#: src/compose.c:566 src/mainwindow.c:612 src/messageview.c:189
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/Z_obrazit/_Znaková sada/Azbuka (Windows-1251)"
 
-#: src/compose.c:644 src/mainwindow.c:616 src/messageview.c:192
+#: src/compose.c:570 src/mainwindow.c:616 src/messageview.c:192
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/Z_obrazit/_Znaková sada/Japonská (ISO-2022-_JP)"
 
-#: src/compose.c:648 src/mainwindow.c:626 src/messageview.c:201
+#: src/compose.c:574 src/mainwindow.c:626 src/messageview.c:201
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/Z_obrazit/_Znaková sada/Zjednodušená čínská (_GB2312)"
 
-#: src/compose.c:650 src/mainwindow.c:628 src/messageview.c:203
+#: src/compose.c:576 src/mainwindow.c:628 src/messageview.c:203
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/Z_obrazit/_Znaková sada/Zjednodušená čínská (_GB2312)"
 
-#: src/compose.c:652 src/mainwindow.c:630 src/messageview.c:205
+#: src/compose.c:578 src/mainwindow.c:630 src/messageview.c:205
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/Z_obrazit/_Znaková sada/Tradiční čínská (_Big5)"
 
-#: src/compose.c:654 src/mainwindow.c:632 src/messageview.c:207
+#: src/compose.c:580 src/mainwindow.c:632 src/messageview.c:207
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/Z_obrazit/_Znaková sada/Tradiční čínská (EUC-_TW)"
 
-#: src/compose.c:658 src/mainwindow.c:638 src/messageview.c:212
+#: src/compose.c:584 src/mainwindow.c:638 src/messageview.c:212
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/Z_obrazit/_Znaková sada/Korejská (EUC-_KR)"
 
-#: src/compose.c:662 src/mainwindow.c:644 src/messageview.c:217
+#: src/compose.c:588 src/mainwindow.c:644 src/messageview.c:217
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/Z_obrazit/_Znaková sada/Thajská (TIS-620)"
 
-#: src/compose.c:664 src/mainwindow.c:646 src/messageview.c:219
+#: src/compose.c:590 src/mainwindow.c:646 src/messageview.c:219
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/Z_obrazit/_Znaková sada/Thajská (Windows-874)"
 
-#: src/compose.c:668 src/mainwindow.c:700 src/messageview.c:249
+#: src/compose.c:594 src/mainwindow.c:700 src/messageview.c:249
 msgid "/_Tools/_Address book"
 msgstr "/_Nástroje/_Databáze adres"
 
-#: src/compose.c:669
+#: src/compose.c:595
 msgid "/_Tools/_Template"
 msgstr "/_Nástroje/Ša_blona"
 
-#: src/compose.c:670 src/mainwindow.c:718 src/messageview.c:264
+#: src/compose.c:596 src/mainwindow.c:718 src/messageview.c:264
 msgid "/_Tools/Actio_ns"
 msgstr "/_Nástroje/_Akce"
 
-#: src/compose.c:671 src/compose.c:675 src/mainwindow.c:703
+#: src/compose.c:597 src/compose.c:601 src/mainwindow.c:703
 #: src/mainwindow.c:717 src/mainwindow.c:719 src/mainwindow.c:722
 #: src/mainwindow.c:724 src/messageview.c:252 src/messageview.c:263
 msgid "/_Tools/---"
 msgstr "/_Nástroje/---"
 
-#: src/compose.c:672
+#: src/compose.c:598
 #, fuzzy
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/Úp_ravy/Upravit pomocí e_xterního editoru"
 
-#: src/compose.c:676
+#: src/compose.c:602
 #, fuzzy
 msgid "/_Tools/PGP Si_gn"
 msgstr "/_Nástroje/_Akce"
 
-#: src/compose.c:677
+#: src/compose.c:603
 #, fuzzy
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/_Zpráva/Zaši_frovat"
 
-#: src/compose.c:882
+#: src/compose.c:808
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: soubor neexistuje\n"
 
-#: src/compose.c:981 src/compose.c:1040 src/procmsg.c:1336
+#: src/compose.c:907 src/compose.c:966 src/procmsg.c:1336
 msgid "Can't get text part\n"
 msgstr "Nelze získat část textu\n"
 
-#: src/compose.c:1428
+#: src/compose.c:1354
 msgid "Quote mark format error."
 msgstr "Chyba v uvozovkách."
 
-#: src/compose.c:1440
+#: src/compose.c:1366
 msgid "Message reply/forward format error."
 msgstr "Chyba formátu odpovědi/přeposlání."
 
-#: src/compose.c:1767
+#: src/compose.c:1693
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Soubor %s neexistuje\n"
 
-#: src/compose.c:1771
+#: src/compose.c:1697
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Nemohu zjistit délku souboru %s\n"
 
-#: src/compose.c:1775
+#: src/compose.c:1701
 #, c-format
 msgid "File %s is empty."
 msgstr "Soubor %s je prázdný."
 
-#: src/compose.c:1779
+#: src/compose.c:1705
 #, c-format
 msgid "Can't read %s."
 msgstr "Nemohu načíst %s."
 
-#: src/compose.c:1814
+#: src/compose.c:1740
 #, c-format
 msgid "Message: %s"
 msgstr "Zpráva: %s"
 
-#: src/compose.c:1885 src/mimeview.c:491
+#: src/compose.c:1811 src/mimeview.c:491
 msgid "Can't get the part of multipart message."
 msgstr "Nemohu získat část z mnohačásťové zprávy."
 
-#: src/compose.c:2319
+#: src/compose.c:2245
 msgid " [Edited]"
 msgstr " [Upraveno]"
 
-#: src/compose.c:2321
+#: src/compose.c:2247
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - Psaní zprávy%s"
 
-#: src/compose.c:2324
+#: src/compose.c:2250
 #, c-format
 msgid "Compose message%s"
 msgstr "Psaní zprávy%s"
 
-#: src/compose.c:2435
+#: src/compose.c:2361
 msgid "Recipient is not specified."
 msgstr "Není uveden příjemce."
 
-#: src/compose.c:2443 src/compose.c:4274 src/mainwindow.c:2155
+#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2155
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Odeslat"
 
-#: src/compose.c:2444
+#: src/compose.c:2370
 msgid "Subject is empty. Send it anyway?"
 msgstr "Předmět je prázdný. Přesto mám zprávu odeslat?"
 
-#: src/compose.c:2495
+#: src/compose.c:2421
 msgid "can't get recipient list."
 msgstr "Nelze načíst seznam příjemců."
 
-#: src/compose.c:2515
+#: src/compose.c:2441
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1095,26 +1035,26 @@ msgstr ""
 "Není zadán účet pro odesílání mailů.\n"
 "Před odesláním vyberte prosím nějaký účet."
 
-#: src/compose.c:2529 src/send_message.c:261
+#: src/compose.c:2455 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Vyskytla se chyba při posílání zprávy na %s ."
 
-#: src/compose.c:2552
+#: src/compose.c:2478
 msgid "Can't save the message to outbox."
 msgstr "Zprávu nelze uložit do odeslané pošty."
 
-#: src/compose.c:2588
+#: src/compose.c:2514
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Nemohu najít žádný klíč asociovaný s aktuálně vybraným id klíče '%s'."
 
-#: src/compose.c:2650 src/compose.c:2879 src/compose.c:2942 src/compose.c:3062
+#: src/compose.c:2576 src/compose.c:2805 src/compose.c:2868 src/compose.c:2988
 #: src/utils.c:2194
 msgid "can't change file mode\n"
 msgstr "nelze změnit mód souboru\n"
 
-#: src/compose.c:2682
+#: src/compose.c:2608
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1124,140 +1064,140 @@ msgstr ""
 "%s na %s.\n"
 "Přesto poslat?"
 
-#: src/compose.c:2750
+#: src/compose.c:2676
 msgid "can't write headers\n"
 msgstr "nelze zapsat záhlaví\n"
 
-#: src/compose.c:3022
+#: src/compose.c:2948
 msgid "can't remove the old message\n"
 msgstr "nelze smazat staré zprávy\n"
 
-#: src/compose.c:3040
+#: src/compose.c:2966
 msgid "queueing message...\n"
 msgstr "zařazuji zprávu...\n"
 
-#: src/compose.c:3122
+#: src/compose.c:3048
 msgid "can't find queue folder\n"
 msgstr "nelze najít složku s frontou zpráv\n"
 
-#: src/compose.c:3129
+#: src/compose.c:3055
 msgid "can't queue the message\n"
 msgstr "Zprávu nelze zařadit\n"
 
-#: src/compose.c:3706
+#: src/compose.c:3632
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "vytvářím číslo zprávy: %s\n"
 
-#: src/compose.c:3804
+#: src/compose.c:3730
 msgid "Creating compose window...\n"
 msgstr "Vytvářím okno pro psaní...\n"
 
-#: src/compose.c:3807 src/compose.c:4795
+#: src/compose.c:3733 src/compose.c:4720
 msgid "MIME type"
 msgstr "MIME typ"
 
 #. S_COL_DATE
-#: src/compose.c:3808 src/mimeview.c:150 src/prefs_filter_edit.c:585
+#: src/compose.c:3734 src/mimeview.c:150 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "Délka"
 
-#: src/compose.c:3859 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3785 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "Od:"
 
-#: src/compose.c:4275
+#: src/compose.c:4200
 msgid "Send message"
 msgstr "Odešle zprávu"
 
-#: src/compose.c:4283
+#: src/compose.c:4208
 msgid "Send later"
 msgstr "Poslat později"
 
-#: src/compose.c:4284
+#: src/compose.c:4209
 msgid "Put into queue folder and send later"
 msgstr "Zařadí do výstupní fronty a odešle později"
 
-#: src/compose.c:4292
+#: src/compose.c:4217
 msgid "Draft"
 msgstr "Koncept"
 
-#: src/compose.c:4293
+#: src/compose.c:4218
 msgid "Save to draft folder"
 msgstr "Uloží koncept do složky"
 
-#: src/compose.c:4303 src/compose.c:5588
+#: src/compose.c:4228 src/compose.c:5513
 msgid "Insert"
 msgstr "Vložit"
 
-#: src/compose.c:4304
+#: src/compose.c:4229
 msgid "Insert file"
 msgstr "Vloží soubor"
 
-#: src/compose.c:4312
+#: src/compose.c:4237
 msgid "Attach"
 msgstr "Příloha"
 
-#: src/compose.c:4313
+#: src/compose.c:4238
 msgid "Attach file"
 msgstr "Připojí soubor"
 
 #. signature
-#: src/compose.c:4323 src/prefs_account.c:1339 src/prefs_common.c:1278
+#: src/compose.c:4248 src/prefs_account.c:1339 src/prefs_common.c:1278
 msgid "Signature"
 msgstr "Podpis"
 
-#: src/compose.c:4324
+#: src/compose.c:4249
 msgid "Insert signature"
 msgstr "Vloží podpis"
 
-#: src/compose.c:4333 src/prefs_common.c:1300 src/prefs_common.c:2187
+#: src/compose.c:4258 src/prefs_common.c:1300 src/prefs_common.c:2187
 msgid "Editor"
 msgstr "Editor"
 
-#: src/compose.c:4334
+#: src/compose.c:4259
 msgid "Edit with external editor"
 msgstr "Úprava externím editorem"
 
-#: src/compose.c:4342
+#: src/compose.c:4267
 msgid "Linewrap"
 msgstr "Zarovnání"
 
-#: src/compose.c:4343
+#: src/compose.c:4268
 msgid "Wrap all long lines"
 msgstr "Zarovnání dlouhých řádků"
 
-#: src/compose.c:4689
+#: src/compose.c:4614
 msgid "Invalid MIME type."
 msgstr "Neplatný MIME typ."
 
-#: src/compose.c:4708
+#: src/compose.c:4633
 msgid "File doesn't exist or is empty."
 msgstr "Soubor neexistuje nebo je prázdný."
 
-#: src/compose.c:4777
+#: src/compose.c:4702
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: src/compose.c:4797
+#: src/compose.c:4722
 msgid "Encoding"
 msgstr "Kódování"
 
-#: src/compose.c:4820 src/prefs_folder_item.c:183
+#: src/compose.c:4745 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Cesta k souboru"
 
-#: src/compose.c:4821
+#: src/compose.c:4746
 msgid "File name"
 msgstr "Název souboru"
 
-#: src/compose.c:4975
+#: src/compose.c:4900
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Špatný příkaz v externím editoru: '%s'\n"
 
-#: src/compose.c:5001
+#: src/compose.c:4926
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1268,72 +1208,72 @@ msgstr ""
 "Mám přerušit proces?\n"
 "číslo procesu: %d"
 
-#: src/compose.c:5014
+#: src/compose.c:4939
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Přerušen proces číslo: %d"
 
-#: src/compose.c:5015
+#: src/compose.c:4940
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Dočasný soubor: %s"
 
-#: src/compose.c:5039
+#: src/compose.c:4964
 msgid "Compose: input from monitoring process\n"
 msgstr "Psaní: vstup z externího procesu\n"
 
 #. failed
-#: src/compose.c:5072
+#: src/compose.c:4997
 msgid "Couldn't exec external editor\n"
 msgstr "Nelze spustit externí editor\n"
 
-#: src/compose.c:5076
+#: src/compose.c:5001
 msgid "Couldn't write to file\n"
 msgstr "Nelze zapisovat do souboru\n"
 
-#: src/compose.c:5078
+#: src/compose.c:5003
 msgid "Pipe read failed\n"
 msgstr "Nelze číst\n"
 
-#: src/compose.c:5379 src/compose.c:5387 src/compose.c:5393
+#: src/compose.c:5304 src/compose.c:5312 src/compose.c:5318
 msgid "Can't queue the message."
 msgstr "Zprávu nelze zařadit."
 
-#: src/compose.c:5484
+#: src/compose.c:5409
 #, fuzzy
 msgid "Select files"
 msgstr "Vybrat soubor"
 
-#: src/compose.c:5506
+#: src/compose.c:5431
 msgid "Select file"
 msgstr "Vybrat soubor"
 
-#: src/compose.c:5541
+#: src/compose.c:5466
 msgid "Discard message"
 msgstr "Zrušit zprávu"
 
-#: src/compose.c:5542
+#: src/compose.c:5467
 msgid "This message has been modified. discard it?"
 msgstr "Obsah zprávy se změnil. Chcete ji stornovat?"
 
-#: src/compose.c:5543
+#: src/compose.c:5468
 msgid "Discard"
 msgstr "Stornovat"
 
-#: src/compose.c:5543
+#: src/compose.c:5468
 msgid "to Draft"
 msgstr "Uložit jako koncept"
 
-#: src/compose.c:5585
+#: src/compose.c:5510
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Opravdu chcete použít šablonu '%s' ?"
 
-#: src/compose.c:5587
+#: src/compose.c:5512
 msgid "Apply template"
 msgstr "Přidat šablonu"
 
-#: src/compose.c:5588
+#: src/compose.c:5513
 msgid "Replace"
 msgstr "Nahradit"
 
@@ -1495,12 +1435,12 @@ msgstr "Upravit složku"
 msgid "Input the new name of folder:"
 msgstr "Zadejte název složky:"
 
-#: src/editgroup.c:513 src/foldersel.c:492 src/folderview.c:1807
-#: src/folderview.c:1813
+#: src/editgroup.c:513 src/foldersel.c:492 src/folderview.c:1810
+#: src/folderview.c:1816
 msgid "New folder"
 msgstr "Nová složka"
 
-#: src/editgroup.c:514 src/foldersel.c:493 src/folderview.c:1814
+#: src/editgroup.c:514 src/foldersel.c:493 src/folderview.c:1817
 msgid "Input the name of new folder:"
 msgstr "Zadejte název složky:"
 
@@ -1689,89 +1629,89 @@ msgstr "Koš"
 msgid "Drafts"
 msgstr "Koncepty"
 
-#: src/foldersel.c:494 src/folderview.c:1811 src/folderview.c:1815
+#: src/foldersel.c:494 src/folderview.c:1814 src/folderview.c:1818
 msgid "NewFolder"
 msgstr "Nová složka"
 
-#: src/foldersel.c:502 src/folderview.c:1823 src/folderview.c:1879
+#: src/foldersel.c:502 src/folderview.c:1826 src/folderview.c:1882
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "%c nemůže být obsaženo ve jméně složky."
 
-#: src/foldersel.c:512 src/folderview.c:1833 src/folderview.c:1886
+#: src/foldersel.c:512 src/folderview.c:1836 src/folderview.c:1889
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Složka '%s' už existuje."
 
-#: src/foldersel.c:520 src/folderview.c:1840
+#: src/foldersel.c:520 src/folderview.c:1843
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Nemohu vytvořit složku '%s'."
 
-#: src/folderview.c:220 src/folderview.c:236
+#: src/folderview.c:218 src/folderview.c:234
 msgid "/Create _new folder..."
 msgstr "/_Vytvořit novou složku..."
 
-#: src/folderview.c:221 src/folderview.c:237
+#: src/folderview.c:219 src/folderview.c:235
 msgid "/_Rename folder..."
 msgstr "/Přej_menovat složku..."
 
-#: src/folderview.c:222 src/folderview.c:238
+#: src/folderview.c:220 src/folderview.c:236
 msgid "/_Delete folder"
 msgstr "/_Smazat složku"
 
-#: src/folderview.c:224 src/folderview.c:240
+#: src/folderview.c:222 src/folderview.c:238
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Vyprázdnit koš"
 
-#: src/folderview.c:226 src/folderview.c:244 src/folderview.c:260
+#: src/folderview.c:224 src/folderview.c:242 src/folderview.c:258
 msgid "/_Check for new messages"
 msgstr "/_Zkontrolovat nové zprávy"
 
-#: src/folderview.c:228 src/folderview.c:246
+#: src/folderview.c:226 src/folderview.c:244
 msgid "/R_ebuild folder tree"
 msgstr "/O_bnovit strom složek"
 
-#: src/folderview.c:230 src/folderview.c:248 src/folderview.c:263
+#: src/folderview.c:228 src/folderview.c:246 src/folderview.c:261
 msgid "/_Search messages..."
 msgstr "/Na_jít zprávy..."
 
-#: src/folderview.c:242 src/folderview.c:258
+#: src/folderview.c:240 src/folderview.c:256
 #, fuzzy
 msgid "/Down_load"
 msgstr "Žádné nepřečtené zprávy."
 
-#: src/folderview.c:254
+#: src/folderview.c:252
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Při_hlásit diskusní skupinu..."
 
-#: src/folderview.c:256
+#: src/folderview.c:254
 msgid "/_Remove newsgroup"
 msgstr "/Smazat d_iskusní skupinu"
 
-#: src/folderview.c:285
+#: src/folderview.c:283
 msgid "Creating folder view...\n"
 msgstr "Vytvářím náhled pro složku...\n"
 
-#: src/folderview.c:360
+#: src/folderview.c:362
 msgid "New"
 msgstr "Nová"
 
 #. S_COL_MARK
-#: src/folderview.c:371 src/prefs_summary_column.c:68
+#: src/folderview.c:373 src/prefs_summary_column.c:68
 msgid "Unread"
 msgstr "Nepřečtené"
 
-#: src/folderview.c:382
+#: src/folderview.c:384
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:500
+#: src/folderview.c:494
 msgid "Setting folder info...\n"
 msgstr "Nastavuji informace o složce...\n"
 
-#: src/folderview.c:501
+#: src/folderview.c:495
 msgid "Setting folder info..."
 msgstr "Nastavuji informace o složce..."
 
@@ -1806,22 +1746,22 @@ msgstr "Provádím obnovu stromu složek..."
 msgid "Checking for new messages in all folders..."
 msgstr "Zjišťuji nové zprávy ve všech složkách..."
 
-#: src/folderview.c:1602
+#: src/folderview.c:1605
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Je vybrána složka %s\n"
 
-#: src/folderview.c:1723
+#: src/folderview.c:1726
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Posílám zprávu"
 
-#: src/folderview.c:1758
+#: src/folderview.c:1761
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Vyskytla se chyba při posílání zprávy na %s ."
 
-#: src/folderview.c:1808
+#: src/folderview.c:1811
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -1831,16 +1771,16 @@ msgstr ""
 "(Pokud chcete vytvořit složku, která bude mít další\n"
 "podsložky, přidejte nakonec názvu '/')"
 
-#: src/folderview.c:1870
+#: src/folderview.c:1873
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Zadejte nové jméno pro '%s' :"
 
-#: src/folderview.c:1871
+#: src/folderview.c:1874
 msgid "Rename folder"
 msgstr "Přejmenovat složku"
 
-#: src/folderview.c:1951
+#: src/folderview.c:1954
 #, c-format
 msgid ""
 "All folder(s) and message(s) under `%s' will be deleted.\n"
@@ -1849,24 +1789,24 @@ msgstr ""
 "Všechny složky a zprávy v '%s' budou vymazány.\n"
 "Chcete je opravdu smazat ?"
 
-#: src/folderview.c:1953
+#: src/folderview.c:1956
 msgid "Delete folder"
 msgstr "Smazat složku "
 
-#: src/folderview.c:1975
+#: src/folderview.c:1978
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Nemohu odstranit složku '%s'."
 
-#: src/folderview.c:2009
+#: src/folderview.c:2012
 msgid "Empty trash"
 msgstr "Vyprázdnit koš"
 
-#: src/folderview.c:2009
+#: src/folderview.c:2012
 msgid "Empty all messages in trash?"
 msgstr "Vyprázdnit všechny zprávy v koši?"
 
-#: src/folderview.c:2044
+#: src/folderview.c:2047
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -1875,34 +1815,34 @@ msgstr ""
 "Opravdu odebrat poštovní schránku '%s'?\n"
 "(Zprávy NEBUDOU smazány z disku)"
 
-#: src/folderview.c:2046
+#: src/folderview.c:2049
 msgid "Remove mailbox"
 msgstr "Odstranit poštovní schránku"
 
-#: src/folderview.c:2089
+#: src/folderview.c:2092
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Opravdu smazat IMAP4 účet '%s'?"
 
-#: src/folderview.c:2090
+#: src/folderview.c:2093
 msgid "Delete IMAP4 account"
 msgstr "Smazat IMAP4 účet"
 
-#: src/folderview.c:2227
+#: src/folderview.c:2230
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Opravdu chcete smazat diskusní skupinu '%s' ?"
 
-#: src/folderview.c:2228
+#: src/folderview.c:2231
 msgid "Delete newsgroup"
 msgstr "Smazat diskusní skupinu"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2274
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Opravdu smazat účet pro diskusní skupinu '%s'?"
 
-#: src/folderview.c:2272
+#: src/folderview.c:2275
 msgid "Delete news account"
 msgstr "Smazat účet pro diskuzní skupinu"
 
@@ -2015,127 +1955,127 @@ msgstr "nelze odstranit\n"
 msgid "can't set deleted flags: 1:*\n"
 msgstr "nelze nastavit příznak smazané: 1: %d\n"
 
-#: src/imap.c:1464
+#: src/imap.c:1466
 #, fuzzy
 msgid "can't close folder\n"
 msgstr "nelze vybrat složku: %s\n"
 
-#: src/imap.c:1542
+#: src/imap.c:1544
 #, fuzzy, c-format
 msgid "root folder %s not exist\n"
 msgstr "Označený soubor nebyl nalezen.\n"
 
-#: src/imap.c:1720 src/imap.c:1728
+#: src/imap.c:1722 src/imap.c:1730
 msgid "error occurred while getting LIST.\n"
 msgstr "Během příkazu LIST se vyskytla chyba.\n"
 
-#: src/imap.c:1842
+#: src/imap.c:1844
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "Nemohu vytvořit '%s'\n"
 
-#: src/imap.c:1847
+#: src/imap.c:1849
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "Nemohu vytvořit '%s' v Doručené poště\n"
 
-#: src/imap.c:1908
+#: src/imap.c:1910
 msgid "can't create mailbox: LIST failed\n"
 msgstr "nelze vytvořit poštovní schránku: selhal příkaz LIST\n"
 
-#: src/imap.c:1928
+#: src/imap.c:1930
 msgid "can't create mailbox\n"
 msgstr "nelze vytvořit poštovní schránku\n"
 
-#: src/imap.c:1997
+#: src/imap.c:1999
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "nelze přejmenovat poštovní schránku: %s na %s\n"
 
-#: src/imap.c:2059
+#: src/imap.c:2061
 msgid "can't delete mailbox\n"
 msgstr "nelze smazat poštovní schránku\n"
 
-#: src/imap.c:2098
+#: src/imap.c:2100
 msgid "can't get envelope\n"
 msgstr "Nemohu načíst obálku\n"
 
-#: src/imap.c:2106
+#: src/imap.c:2108
 msgid "error occurred while getting envelope.\n"
 msgstr "Během načítání obálky se vyskytla chyba.\n"
 
-#: src/imap.c:2127
+#: src/imap.c:2129
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "Nemohu analyzovat obálku: %s\n"
 
-#: src/imap.c:2250
+#: src/imap.c:2252
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Nemohu se spojit s IMAP4 serverem: %s:%d\n"
 
-#: src/imap.c:2257
+#: src/imap.c:2259
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Nelze navázat relaci s IMAP4 serverem: %s:%d\n"
 
-#: src/imap.c:2332
+#: src/imap.c:2334
 msgid "can't get namespace\n"
 msgstr "nemohu najít obálku\n"
 
-#: src/imap.c:2850
+#: src/imap.c:2852
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "nelze vybrat složku: %s\n"
 
-#: src/imap.c:3021
+#: src/imap.c:3023
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "Autentikace selhala."
 
-#: src/imap.c:3038
+#: src/imap.c:3040
 msgid "IMAP4 login failed.\n"
 msgstr "Neúspěšné přihlášení k IMAP4.\n"
 
-#: src/imap.c:3359
+#: src/imap.c:3361
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "Nemohu přidat %s do %s\n"
 
-#: src/imap.c:3366
+#: src/imap.c:3368
 msgid "(sending file...)"
 msgstr "(posílám soubor...)"
 
-#: src/imap.c:3394
+#: src/imap.c:3396
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "nelze přidat zprávu %s\n"
 
-#: src/imap.c:3426
+#: src/imap.c:3428
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "nelze kopírovat %d na %s\n"
 
-#: src/imap.c:3450
+#: src/imap.c:3452
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "chyba příkazu služby imap: STORE %d %d %s\n"
 
-#: src/imap.c:3464
+#: src/imap.c:3466
 msgid "error while imap command: EXPUNGE\n"
 msgstr "chyba příkazu služby imap: EXPUNGE\n"
 
-#: src/imap.c:3477
+#: src/imap.c:3479
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "chyba příkazu služby imap: EXPUNGE\n"
 
-#: src/imap.c:3704
+#: src/imap.c:3706
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv nemůže konvertovat UTF-7 na %s\n"
 
-#: src/imap.c:3734
+#: src/imap.c:3736
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv nemůže konvertovat %s na UTF-7\n"
@@ -5015,11 +4955,11 @@ msgstr ""
 "Klávesovou zkratku pro nabídku můžete také změnit tak,\n"
 "že při najetí myší na položku stisknete odpovídající klávesu."
 
-#: src/prefs_common.c:3083 src/prefs_common.c:3432
+#: src/prefs_common.c:3083 src/prefs_common.c:3407
 msgid "Default"
 msgstr "Výchozí"
 
-#: src/prefs_common.c:3086 src/prefs_common.c:3441
+#: src/prefs_common.c:3086 src/prefs_common.c:3416
 msgid "Old Sylpheed"
 msgstr "Starý Sylpheed"
 
@@ -5486,7 +5426,7 @@ msgstr ""
 msgid "Signature made at %s\n"
 msgstr "Podpis vyrobil %s\n"
 
-#: src/rfc2015.c:278 src/sigstatus.c:264
+#: src/rfc2015.c:278 src/sigstatus.c:266
 msgid "Error verifying the signature"
 msgstr "Chyba při verifikaci podpisu"
 
@@ -5634,66 +5574,66 @@ msgstr "Zkontrolovat podpis"
 msgid "%s%s%s from \"%s\""
 msgstr "%s%s%s od \"%s\""
 
-#: src/sigstatus.c:227
+#: src/sigstatus.c:229
 msgid "No signature found"
 msgstr "Podpis nenalezen"
 
-#: src/sigstatus.c:234
+#: src/sigstatus.c:236
 #, c-format
 msgid "Good signature from \"%s\""
 msgstr "Správný podpis od \"%s\""
 
-#: src/sigstatus.c:235 src/textview.c:591
+#: src/sigstatus.c:237 src/textview.c:591
 msgid "Good signature"
 msgstr "Správný podpis"
 
-#: src/sigstatus.c:239
+#: src/sigstatus.c:241
 #, c-format
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:240 src/textview.c:593
+#: src/sigstatus.c:242 src/textview.c:593
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
-#: src/sigstatus.c:245
+#: src/sigstatus.c:247
 #, c-format
 msgid "Signature valid but expired for \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:246
+#: src/sigstatus.c:248
 #, fuzzy
 msgid "Signature valid but expired"
 msgstr "Podpis vyrobil %s\n"
 
-#: src/sigstatus.c:249
+#: src/sigstatus.c:251
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has expired"
 msgstr ""
 
-#: src/sigstatus.c:250
+#: src/sigstatus.c:252
 msgid "Signature valid but the signing key has expired"
 msgstr ""
 
-#: src/sigstatus.c:253
+#: src/sigstatus.c:255
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has been revoked"
 msgstr ""
 
-#: src/sigstatus.c:254
+#: src/sigstatus.c:256
 msgid "Signature valid but the signing key has been revoked"
 msgstr ""
 
-#: src/sigstatus.c:257
+#: src/sigstatus.c:259
 #, c-format
 msgid "BAD signature from \"%s\""
 msgstr "ŠPATNÝ podpis od \"%s\""
 
-#: src/sigstatus.c:258 src/textview.c:595
+#: src/sigstatus.c:260 src/textview.c:595
 msgid "BAD signature"
 msgstr "ŠPATNÝ podpis"
 
-#: src/sigstatus.c:261
+#: src/sigstatus.c:263
 msgid "No public key to verify the signature"
 msgstr "Nelze najít veřejný klíč pro podpis"
 
@@ -6187,6 +6127,51 @@ msgstr "%.2fGB"
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "Neúspěšný zápis do %s.\n"
+
+#~ msgid "/_Edit/A_dvanced"
+#~ msgstr "/Úp_ravy/_Rozšířené"
+
+#~ msgid "/_Edit/A_dvanced/Move a character backward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun o znak zpět"
+
+#~ msgid "/_Edit/A_dvanced/Move a character forward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun o znak dále"
+
+#~ msgid "/_Edit/A_dvanced/Move a word backward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun o slovo zpět"
+
+#~ msgid "/_Edit/A_dvanced/Move a word forward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun o slov dále"
+
+#~ msgid "/_Edit/A_dvanced/Move to beginning of line"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun na začátek řádku"
+
+#~ msgid "/_Edit/A_dvanced/Move to end of line"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun na konec řádku"
+
+#~ msgid "/_Edit/A_dvanced/Move to previous line"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun na předchozí řádek"
+
+#~ msgid "/_Edit/A_dvanced/Move to next line"
+#~ msgstr "/Úp_ravy/_Rozšířené/Přesun na další řádek"
+
+#~ msgid "/_Edit/A_dvanced/Delete a character backward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Smazat znak zpět"
+
+#~ msgid "/_Edit/A_dvanced/Delete a character forward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Smazat znak vpředu"
+
+#~ msgid "/_Edit/A_dvanced/Delete a word backward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Smazat slovo zpět"
+
+#~ msgid "/_Edit/A_dvanced/Delete a word forward"
+#~ msgstr "/Úp_ravy/_Rozšířené/Smazat slovo vpředu"
+
+#~ msgid "/_Edit/A_dvanced/Delete line"
+#~ msgstr "/Úp_ravy/_Rozšířené/Smazat řádek"
+
+#~ msgid "/_Edit/A_dvanced/Delete to end of line"
+#~ msgstr "/Úp_ravy/_Rozšířené/Smazat do konce řádku"
 
 #~ msgid "Rebuilding all folder trees..."
 #~ msgstr "Provádím obnovu stromu složek..."

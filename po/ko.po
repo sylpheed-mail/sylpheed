@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-12 19:10+0900\n"
+"POT-Creation-Date: 2005-04-19 15:59+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -84,7 +84,7 @@ msgstr ""
 "받으려면 `G' 컬럼 상자를 선택하세요."
 
 #: src/account.c:691 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3809 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3735 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:151 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -143,15 +143,15 @@ msgstr "제목 없슴"
 msgid "Delete account"
 msgstr "계정 삭제"
 
-#: src/account.c:811 src/compose.c:2687 src/compose.c:5004
-#: src/folderview.c:1954 src/folderview.c:2047 src/folderview.c:2091
-#: src/folderview.c:2229 src/folderview.c:2273
+#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/folderview.c:1957 src/folderview.c:2050 src/folderview.c:2094
+#: src/folderview.c:2232 src/folderview.c:2276
 msgid "Yes"
 msgstr "확인"
 
-#: src/account.c:811 src/compose.c:2687 src/compose.c:5004
-#: src/folderview.c:1954 src/folderview.c:2047 src/folderview.c:2091
-#: src/folderview.c:2229 src/folderview.c:2273
+#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/folderview.c:1957 src/folderview.c:2050 src/folderview.c:2094
+#: src/folderview.c:2232 src/folderview.c:2276
 msgid "+No"
 msgstr "아니요"
 
@@ -252,7 +252,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "주소록에 추가"
 
-#: src/addressadd.c:196 src/compose.c:4353 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4278 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "주소"
@@ -266,7 +266,7 @@ msgstr "메모"
 msgid "Select Address Book Folder"
 msgstr "주소록 폴더 선택"
 
-#: src/addressbook.c:334 src/compose.c:478 src/mainwindow.c:454
+#: src/addressbook.c:334 src/compose.c:475 src/mainwindow.c:454
 #: src/messageview.c:134
 msgid "/_File"
 msgstr "/파일(_F)"
@@ -287,8 +287,8 @@ msgstr "/파일(_F)/새 JPilot(_J)"
 msgid "/_File/New _Server"
 msgstr "/파일(_F)/새 서버(_S)"
 
-#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:483
-#: src/compose.c:488 src/compose.c:492 src/mainwindow.c:471
+#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:480
+#: src/compose.c:485 src/compose.c:489 src/mainwindow.c:471
 #: src/mainwindow.c:474 src/mainwindow.c:476 src/mainwindow.c:479
 #: src/mainwindow.c:481 src/messageview.c:137
 msgid "/_File/---"
@@ -306,7 +306,7 @@ msgstr "/파일(_F)/삭제(_D)"
 msgid "/_File/_Save"
 msgstr "/파일(_F)/저장(_S)"
 
-#: src/addressbook.c:348 src/compose.c:493 src/messageview.c:138
+#: src/addressbook.c:348 src/compose.c:490 src/messageview.c:138
 msgid "/_File/_Close"
 msgstr "/파일(_F)/닫기(_C)"
 
@@ -338,7 +338,7 @@ msgstr "/주소(_A)/편집(_E)"
 msgid "/_Address/_Delete"
 msgstr "/주소(_A)/삭제(_D)"
 
-#: src/addressbook.c:356 src/compose.c:667 src/mainwindow.c:699
+#: src/addressbook.c:356 src/compose.c:593 src/mainwindow.c:699
 #: src/messageview.c:248
 msgid "/_Tools"
 msgstr "/도구(_T)"
@@ -347,12 +347,12 @@ msgstr "/도구(_T)"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/도구(_T)/LDIF 파일 가져오기(_L)"
 
-#: src/addressbook.c:358 src/compose.c:680 src/mainwindow.c:744
+#: src/addressbook.c:358 src/compose.c:606 src/mainwindow.c:744
 #: src/messageview.c:266
 msgid "/_Help"
 msgstr "/도움말(_H)"
 
-#: src/addressbook.c:359 src/compose.c:681 src/mainwindow.c:755
+#: src/addressbook.c:359 src/compose.c:607 src/mainwindow.c:755
 #: src/messageview.c:267
 msgid "/_Help/_About"
 msgstr "/도움말(_H)/sylpheed 정보(_A)"
@@ -369,17 +369,17 @@ msgstr "/새 그룹(_G)"
 msgid "/New _Folder"
 msgstr "/새 폴더(_F)"
 
-#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:472
-#: src/folderview.c:223 src/folderview.c:225 src/folderview.c:229
-#: src/folderview.c:239 src/folderview.c:241 src/folderview.c:243
-#: src/folderview.c:247 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:262 src/summaryview.c:346 src/summaryview.c:350
+#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:469
+#: src/folderview.c:221 src/folderview.c:223 src/folderview.c:227
+#: src/folderview.c:237 src/folderview.c:239 src/folderview.c:241
+#: src/folderview.c:245 src/folderview.c:255 src/folderview.c:257
+#: src/folderview.c:260 src/summaryview.c:346 src/summaryview.c:350
 #: src/summaryview.c:354 src/summaryview.c:364 src/summaryview.c:366
 #: src/summaryview.c:369 src/summaryview.c:375
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:495
+#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:492
 #: src/mainwindow.c:485 src/messageview.c:140
 msgid "/_Edit"
 msgstr "/편집(_E)"
@@ -392,7 +392,7 @@ msgstr "/삭제(_D)"
 msgid "E-Mail address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:493 src/compose.c:4354 src/prefs_common.c:2208
+#: src/addressbook.c:493 src/compose.c:4279 src/prefs_common.c:2208
 msgid "Address book"
 msgstr "주소록"
 
@@ -565,7 +565,7 @@ msgid "Group"
 msgstr "그룹"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3133 src/folderview.c:332 src/prefs_account.c:1824
+#: src/addressbook.c:3133 src/folderview.c:330 src/prefs_account.c:1824
 msgid "Folder"
 msgstr "폴더"
 
@@ -589,7 +589,7 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:123 src/compose.c:5004 src/main.c:458
+#: src/alertpanel.c:123 src/compose.c:4929 src/main.c:458
 msgid "Notice"
 msgstr "알림"
 
@@ -597,7 +597,7 @@ msgstr "알림"
 msgid "Warning"
 msgstr "경고"
 
-#: src/alertpanel.c:149 src/compose.c:2687 src/inc.c:558
+#: src/alertpanel.c:149 src/compose.c:2613 src/inc.c:558
 msgid "Error"
 msgstr "에러"
 
@@ -645,431 +645,371 @@ msgstr "갈색"
 msgid "None"
 msgstr "없음"
 
-#: src/compose.c:470
+#: src/compose.c:467
 msgid "/_Add..."
 msgstr "/추가(_A)..."
 
-#: src/compose.c:471
+#: src/compose.c:468
 msgid "/_Remove"
 msgstr "/삭제(_R)"
 
-#: src/compose.c:473 src/folderview.c:231 src/folderview.c:249
-#: src/folderview.c:264
+#: src/compose.c:470 src/folderview.c:229 src/folderview.c:247
+#: src/folderview.c:262
 #, fuzzy
 msgid "/_Properties..."
 msgstr "/특성(_P)..."
 
-#: src/compose.c:479
+#: src/compose.c:476
 #, fuzzy
 msgid "/_File/_Send"
 msgstr "/파일(_F)/저장(_S)"
 
-#: src/compose.c:481
+#: src/compose.c:478
 #, fuzzy
 msgid "/_File/Send _later"
 msgstr "/메시지(_M)/나중에 보내기(_l)"
 
-#: src/compose.c:484
+#: src/compose.c:481
 #, fuzzy
 msgid "/_File/Save to _draft folder"
 msgstr "/메시지(_M)/임시 보관함으로 보내기(_d)"
 
-#: src/compose.c:486
+#: src/compose.c:483
 #, fuzzy
 msgid "/_File/Save and _keep editing"
 msgstr "/메시지(_M)/저장하고 편집 보존(_k)"
 
-#: src/compose.c:489
+#: src/compose.c:486
 msgid "/_File/_Attach file"
 msgstr "/파일(_F)/첨부 파일(_A)"
 
-#: src/compose.c:490
+#: src/compose.c:487
 msgid "/_File/_Insert file"
 msgstr "/파일(_F)/파일 삽입(_I)"
 
-#: src/compose.c:491
+#: src/compose.c:488
 msgid "/_File/Insert si_gnature"
 msgstr "/파일(_F)/서명 삽입(_g)"
 
-#: src/compose.c:496
+#: src/compose.c:493
 msgid "/_Edit/_Undo"
 msgstr "/편집(_E)/실행취소(_U)"
 
-#: src/compose.c:497
+#: src/compose.c:494
 msgid "/_Edit/_Redo"
 msgstr "/편집(_E)/다시 실행(_R)"
 
-#: src/compose.c:498 src/compose.c:576 src/mainwindow.c:489
+#: src/compose.c:495 src/compose.c:502 src/mainwindow.c:489
 #: src/messageview.c:143
 msgid "/_Edit/---"
 msgstr "/편집(_E)/---"
 
-#: src/compose.c:499
+#: src/compose.c:496
 msgid "/_Edit/Cu_t"
 msgstr "/편집(_E)/잘라내기(_t)"
 
-#: src/compose.c:500 src/mainwindow.c:486 src/messageview.c:141
+#: src/compose.c:497 src/mainwindow.c:486 src/messageview.c:141
 msgid "/_Edit/_Copy"
 msgstr "/편집(_E)/복사(_C)"
 
-#: src/compose.c:501
+#: src/compose.c:498
 msgid "/_Edit/_Paste"
 msgstr "/편집(_E)/붙여넣기(_P)"
 
-#: src/compose.c:502
+#: src/compose.c:499
 msgid "/_Edit/Paste as _quotation"
 msgstr "/편집(_E)/quotation으로 붙여넣기(_q)"
 
-#: src/compose.c:504 src/mainwindow.c:487 src/messageview.c:142
+#: src/compose.c:501 src/mainwindow.c:487 src/messageview.c:142
 msgid "/_Edit/Select _all"
 msgstr "/편집(_E)/모두 선택(_a)"
 
-#: src/compose.c:505
-msgid "/_Edit/A_dvanced"
-msgstr "/편집(_E)/고급(_d)"
-
-#: src/compose.c:506
-msgid "/_Edit/A_dvanced/Move a character backward"
-msgstr "/편집(_E)/고급(_d)/문자를 뒤로 이동"
-
-#: src/compose.c:511
-msgid "/_Edit/A_dvanced/Move a character forward"
-msgstr "/편집(_E)/고급(_d)/문자를 앞으로 이동"
-
-#: src/compose.c:516
-msgid "/_Edit/A_dvanced/Move a word backward"
-msgstr "/편집(_E)/고급(_d)/단어를 뒤로 이동"
-
-#: src/compose.c:521
-msgid "/_Edit/A_dvanced/Move a word forward"
-msgstr "/편집(_E)/고급(_d)/단어를 앞으로 이동"
-
-#: src/compose.c:526
-msgid "/_Edit/A_dvanced/Move to beginning of line"
-msgstr "/편집(_E)/고급(_d)/라인의 처음으로 이동"
-
-#: src/compose.c:531
-msgid "/_Edit/A_dvanced/Move to end of line"
-msgstr "/편집(_E)/고급(_d)/라인의 끝으로 이동"
-
-#: src/compose.c:536
-msgid "/_Edit/A_dvanced/Move to previous line"
-msgstr "/편집(_E)/고급(_d)/이전 라인으로 이동"
-
-#: src/compose.c:541
-msgid "/_Edit/A_dvanced/Move to next line"
-msgstr "/편집(_E)/고급(_d)/다음 라인으로 이동"
-
-#: src/compose.c:546
-msgid "/_Edit/A_dvanced/Delete a character backward"
-msgstr "/편집(_E)/고급(_d)/문자를 뒤로 삭제"
-
-#: src/compose.c:551
-msgid "/_Edit/A_dvanced/Delete a character forward"
-msgstr "/편집(_E)/고급(_d)/문자를 앞으로 삭제"
-
-#: src/compose.c:556
-msgid "/_Edit/A_dvanced/Delete a word backward"
-msgstr "/편집(_E)/고급(_d)/단어를 뒤로 삭제"
-
-#: src/compose.c:561
-msgid "/_Edit/A_dvanced/Delete a word forward"
-msgstr "/편집(_E)/고급(_d)/단어를 앞으로 삭제"
-
-#: src/compose.c:566
-msgid "/_Edit/A_dvanced/Delete line"
-msgstr "/편집(_E)/고급(_d)/라인 삭제"
-
-#: src/compose.c:571
-msgid "/_Edit/A_dvanced/Delete to end of line"
-msgstr "/편집(_E)/고급(_d)/라인 끝까지 삭제"
-
-#: src/compose.c:577
+#: src/compose.c:503
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/편집(_E)/현재 단락 자동 줄바꿈(_W)"
 
-#: src/compose.c:579
+#: src/compose.c:505
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/편집(_E)/모든 긴 라인 자동 줄바꿈(_l)"
 
-#: src/compose.c:581
+#: src/compose.c:507
 #, fuzzy
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/편집(_E)/복사(_C)"
 
-#: src/compose.c:582 src/mainwindow.c:494 src/messageview.c:147
+#: src/compose.c:508 src/mainwindow.c:494 src/messageview.c:147
 #: src/summaryview.c:370
 msgid "/_View"
 msgstr "/보기(_V)"
 
-#: src/compose.c:583
+#: src/compose.c:509
 msgid "/_View/_To"
 msgstr "/보기(_V)/To(_T)"
 
-#: src/compose.c:584
+#: src/compose.c:510
 msgid "/_View/_Cc"
 msgstr "/보기(_V)/Cc(_C)"
 
-#: src/compose.c:585
+#: src/compose.c:511
 msgid "/_View/_Bcc"
 msgstr "/보기(_V)/Bcc(_B)"
 
-#: src/compose.c:586
+#: src/compose.c:512
 msgid "/_View/_Reply to"
 msgstr "/보기(_V)/Reply to(_R)"
 
-#: src/compose.c:587 src/compose.c:589 src/compose.c:591 src/compose.c:593
+#: src/compose.c:513 src/compose.c:515 src/compose.c:517 src/compose.c:519
 #: src/mainwindow.c:512 src/mainwindow.c:515 src/mainwindow.c:541
 #: src/mainwindow.c:565 src/mainwindow.c:652 src/mainwindow.c:656
 #: src/messageview.c:225
 msgid "/_View/---"
 msgstr "/보기(_V)/---"
 
-#: src/compose.c:588
+#: src/compose.c:514
 msgid "/_View/_Followup to"
 msgstr "/보기(_V)/따라올리기(_F)"
 
-#: src/compose.c:590
+#: src/compose.c:516
 msgid "/_View/R_uler"
 msgstr "/보기(_V)/Ruler(_u)"
 
-#: src/compose.c:592
+#: src/compose.c:518
 msgid "/_View/_Attachment"
 msgstr "/보기(_V)/첨부(_A)"
 
-#: src/compose.c:599 src/mainwindow.c:572 src/messageview.c:154
+#: src/compose.c:525 src/mainwindow.c:572 src/messageview.c:154
 #, fuzzy
 msgid "/_View/Character _encoding"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
 
-#: src/compose.c:600
+#: src/compose.c:526
 msgid "/_View/Character _encoding/_Automatic"
 msgstr ""
 
-#: src/compose.c:602 src/compose.c:608 src/compose.c:614 src/compose.c:618
-#: src/compose.c:624 src/compose.c:628 src/compose.c:632 src/compose.c:642
-#: src/compose.c:646 src/compose.c:656 src/compose.c:660 src/mainwindow.c:568
+#: src/compose.c:528 src/compose.c:534 src/compose.c:540 src/compose.c:544
+#: src/compose.c:550 src/compose.c:554 src/compose.c:558 src/compose.c:568
+#: src/compose.c:572 src/compose.c:582 src/compose.c:586 src/mainwindow.c:568
 #: src/mainwindow.c:575 src/messageview.c:150
 #, fuzzy
 msgid "/_View/Character _encoding/---"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
 
-#: src/compose.c:604 src/mainwindow.c:576 src/messageview.c:158
+#: src/compose.c:530 src/mainwindow.c:576 src/messageview.c:158
 #, fuzzy
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/보기(_V)/문자셋(_C)/7bit 아스키 (US-ASC_II)"
 
-#: src/compose.c:606 src/mainwindow.c:578 src/messageview.c:161
+#: src/compose.c:532 src/mainwindow.c:578 src/messageview.c:161
 #, fuzzy
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/보기(_V)/문자셋(_C)/유니코드(_UTF-8)"
 
-#: src/compose.c:610 src/mainwindow.c:582 src/messageview.c:164
+#: src/compose.c:536 src/mainwindow.c:582 src/messageview.c:164
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/보기(_V)/문자셋(_C)/서부 유럽(ISO-8859-_1)"
 
-#: src/compose.c:612 src/mainwindow.c:584 src/messageview.c:166
+#: src/compose.c:538 src/mainwindow.c:584 src/messageview.c:166
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/보기(_V)/문자셋(_C)/서부 유럽(ISO-8859-15)"
 
-#: src/compose.c:616 src/mainwindow.c:588 src/messageview.c:169
+#: src/compose.c:542 src/mainwindow.c:588 src/messageview.c:169
 #, fuzzy
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/보기(_V)/문자셋(_C)/중앙 유럽(ISO-8859-_2)"
 
-#: src/compose.c:620 src/mainwindow.c:592 src/messageview.c:172
+#: src/compose.c:546 src/mainwindow.c:592 src/messageview.c:172
 #, fuzzy
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/보기(_V)/문자셋(_C)/_Baltic (ISO-8859-13)"
 
-#: src/compose.c:622 src/mainwindow.c:594 src/messageview.c:174
+#: src/compose.c:548 src/mainwindow.c:594 src/messageview.c:174
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/보기(_V)/문자셋(_C)/Baltic (ISO-8859-_4)"
 
-#: src/compose.c:626 src/mainwindow.c:598 src/messageview.c:177
+#: src/compose.c:552 src/mainwindow.c:598 src/messageview.c:177
 #, fuzzy
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/보기(_V)/문자셋(_C)/그리스(ISO-8859-_7)"
 
-#: src/compose.c:630 src/mainwindow.c:602 src/messageview.c:180
+#: src/compose.c:556 src/mainwindow.c:602 src/messageview.c:180
 #, fuzzy
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/보기(_V)/문자셋(_C)/터기 (ISO-8859-_9)"
 
-#: src/compose.c:634 src/mainwindow.c:606 src/messageview.c:183
+#: src/compose.c:560 src/mainwindow.c:606 src/messageview.c:183
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (ISo-8859-_5)"
 
-#: src/compose.c:636 src/mainwindow.c:608 src/messageview.c:185
+#: src/compose.c:562 src/mainwindow.c:608 src/messageview.c:185
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (KOI8-_R)"
 
-#: src/compose.c:638 src/mainwindow.c:610 src/messageview.c:187
+#: src/compose.c:564 src/mainwindow.c:610 src/messageview.c:187
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (KOI8-_R)"
 
-#: src/compose.c:640 src/mainwindow.c:612 src/messageview.c:189
+#: src/compose.c:566 src/mainwindow.c:612 src/messageview.c:189
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (Windows-1251)"
 
-#: src/compose.c:644 src/mainwindow.c:616 src/messageview.c:192
+#: src/compose.c:570 src/mainwindow.c:616 src/messageview.c:192
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/보기(_V)/문자셋(_C)/일본 (ISO-2022-_JP)"
 
-#: src/compose.c:648 src/mainwindow.c:626 src/messageview.c:201
+#: src/compose.c:574 src/mainwindow.c:626 src/messageview.c:201
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/보기(_V)/문자셋(_C)/Simplified Chinese (_GB2312)"
 
-#: src/compose.c:650 src/mainwindow.c:628 src/messageview.c:203
+#: src/compose.c:576 src/mainwindow.c:628 src/messageview.c:203
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/보기(_V)/문자셋(_C)/Simplified Chinese (_GB2312)"
 
-#: src/compose.c:652 src/mainwindow.c:630 src/messageview.c:205
+#: src/compose.c:578 src/mainwindow.c:630 src/messageview.c:205
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/보기(_V)/문자셋(_C)/Traditional Chinese (_Big5)"
 
-#: src/compose.c:654 src/mainwindow.c:632 src/messageview.c:207
+#: src/compose.c:580 src/mainwindow.c:632 src/messageview.c:207
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/보기(_V)/문자셋(_C)/Traditional Chinese (EUC-_TW)"
 
-#: src/compose.c:658 src/mainwindow.c:638 src/messageview.c:212
+#: src/compose.c:584 src/mainwindow.c:638 src/messageview.c:212
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/보기(_V)/문자셋(_C)/한국 (EUC-KR)"
 
-#: src/compose.c:662 src/mainwindow.c:644 src/messageview.c:217
+#: src/compose.c:588 src/mainwindow.c:644 src/messageview.c:217
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/보기(_V)/문자셋(_C)/Thai (TIS-620)"
 
-#: src/compose.c:664 src/mainwindow.c:646 src/messageview.c:219
+#: src/compose.c:590 src/mainwindow.c:646 src/messageview.c:219
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/보기(_V)/문자셋(_C)/Thai (Windows-874)"
 
-#: src/compose.c:668 src/mainwindow.c:700 src/messageview.c:249
+#: src/compose.c:594 src/mainwindow.c:700 src/messageview.c:249
 msgid "/_Tools/_Address book"
 msgstr "/도구(_T)/주소록(_A)"
 
-#: src/compose.c:669
+#: src/compose.c:595
 msgid "/_Tools/_Template"
 msgstr "/도구(_T)/템플릿(_T)"
 
-#: src/compose.c:670 src/mainwindow.c:718 src/messageview.c:264
+#: src/compose.c:596 src/mainwindow.c:718 src/messageview.c:264
 msgid "/_Tools/Actio_ns"
 msgstr "/도구(_T)/동작(_n)"
 
-#: src/compose.c:671 src/compose.c:675 src/mainwindow.c:703
+#: src/compose.c:597 src/compose.c:601 src/mainwindow.c:703
 #: src/mainwindow.c:717 src/mainwindow.c:719 src/mainwindow.c:722
 #: src/mainwindow.c:724 src/messageview.c:252 src/messageview.c:263
 msgid "/_Tools/---"
 msgstr "/도구(_T)/---"
 
-#: src/compose.c:672
+#: src/compose.c:598
 #, fuzzy
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/편집(_E)/외부 편집기로 편집(_x)"
 
-#: src/compose.c:676
+#: src/compose.c:602
 #, fuzzy
 msgid "/_Tools/PGP Si_gn"
 msgstr "/도구(_T)/동작(_n)"
 
-#: src/compose.c:677
+#: src/compose.c:603
 #, fuzzy
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/메시지(_M)/암호화(_E)"
 
-#: src/compose.c:882
+#: src/compose.c:808
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: 파일이 없습니다\n"
 
-#: src/compose.c:981 src/compose.c:1040 src/procmsg.c:1336
+#: src/compose.c:907 src/compose.c:966 src/procmsg.c:1336
 msgid "Can't get text part\n"
 msgstr "텍스트 부분을 얻을 수가 없습니다\n"
 
-#: src/compose.c:1428
+#: src/compose.c:1354
 msgid "Quote mark format error."
 msgstr "인용 부호 형식 에러."
 
-#: src/compose.c:1440
+#: src/compose.c:1366
 msgid "Message reply/forward format error."
 msgstr "메시지 회신/전달 형식 에러."
 
-#: src/compose.c:1767
+#: src/compose.c:1693
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "%s파일이 없습니다\n"
 
-#: src/compose.c:1771
+#: src/compose.c:1697
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "%s의 파일 크기를 알수가 없습니다\n"
 
-#: src/compose.c:1775
+#: src/compose.c:1701
 #, c-format
 msgid "File %s is empty."
 msgstr "%s 파일이 빈 파일입니다."
 
-#: src/compose.c:1779
+#: src/compose.c:1705
 #, c-format
 msgid "Can't read %s."
 msgstr "%s를 읽을 수가 없습니다."
 
-#: src/compose.c:1814
+#: src/compose.c:1740
 #, c-format
 msgid "Message: %s"
 msgstr "메시지: %s"
 
-#: src/compose.c:1885 src/mimeview.c:491
+#: src/compose.c:1811 src/mimeview.c:491
 msgid "Can't get the part of multipart message."
 msgstr "multipart 메시지의 부분을 얻을 수가 없습니다."
 
-#: src/compose.c:2319
+#: src/compose.c:2245
 msgid " [Edited]"
 msgstr " [수정됨]"
 
-#: src/compose.c:2321
+#: src/compose.c:2247
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - 메시지 편집%s "
 
-#: src/compose.c:2324
+#: src/compose.c:2250
 #, c-format
 msgid "Compose message%s"
 msgstr "메시지%s 편집"
 
-#: src/compose.c:2435
+#: src/compose.c:2361
 msgid "Recipient is not specified."
 msgstr "받는 사람이 지정되지않았습니다"
 
-#: src/compose.c:2443 src/compose.c:4274 src/mainwindow.c:2155
+#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2155
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "메일 발송"
 
-#: src/compose.c:2444
+#: src/compose.c:2370
 msgid "Subject is empty. Send it anyway?"
 msgstr "제목이 비었습니다. 그래도 보낼까요?"
 
-#: src/compose.c:2495
+#: src/compose.c:2421
 msgid "can't get recipient list."
 msgstr "받는 사람 목록을 얻을 수가 없습니다"
 
-#: src/compose.c:2515
+#: src/compose.c:2441
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1077,26 +1017,26 @@ msgstr ""
 "메일을 보내기위한 계정이 지정되어있지않습니다.\n"
 "보내기 전에 메일 계정을 선택하세요."
 
-#: src/compose.c:2529 src/send_message.c:261
+#: src/compose.c:2455 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
 
-#: src/compose.c:2552
+#: src/compose.c:2478
 msgid "Can't save the message to outbox."
 msgstr "메시지를 보낸 편지함에 저장할 수가 없습니다"
 
-#: src/compose.c:2588
+#: src/compose.c:2514
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "현재 선택된 키 ID `%s'에 연결된 어떤 키도 찾을 수 없습니다."
 
-#: src/compose.c:2650 src/compose.c:2879 src/compose.c:2942 src/compose.c:3062
+#: src/compose.c:2576 src/compose.c:2805 src/compose.c:2868 src/compose.c:2988
 #: src/utils.c:2194
 msgid "can't change file mode\n"
 msgstr "파일 모드를 바꿀수가 없습니다\n"
 
-#: src/compose.c:2682
+#: src/compose.c:2608
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1105,141 +1045,141 @@ msgstr ""
 "메시지의 문자셋을 변경할 수가 없습니다.\n"
 "그래도 보낼까요?"
 
-#: src/compose.c:2750
+#: src/compose.c:2676
 msgid "can't write headers\n"
 msgstr "헤더를 쓸 수가 없습니다\n"
 
-#: src/compose.c:3022
+#: src/compose.c:2948
 msgid "can't remove the old message\n"
 msgstr "오래된 메시지를 제거할 수가 없습니다\n"
 
-#: src/compose.c:3040
+#: src/compose.c:2966
 msgid "queueing message...\n"
 msgstr "메시지를 임시 보관합니다...\n"
 
-#: src/compose.c:3122
+#: src/compose.c:3048
 msgid "can't find queue folder\n"
 msgstr "큐 폴더를 찾을 수가 없습니다\n"
 
-#: src/compose.c:3129
+#: src/compose.c:3055
 msgid "can't queue the message\n"
 msgstr "메시지를 임시 보관할 수가 없습니다\n"
 
-#: src/compose.c:3706
+#: src/compose.c:3632
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "생성된 Message-ID: %s\n"
 
-#: src/compose.c:3804
+#: src/compose.c:3730
 msgid "Creating compose window...\n"
 msgstr "편집창을 생성합니다...\n"
 
-#: src/compose.c:3807 src/compose.c:4795
+#: src/compose.c:3733 src/compose.c:4720
 msgid "MIME type"
 msgstr "마임 타입"
 
 #. S_COL_DATE
-#: src/compose.c:3808 src/mimeview.c:150 src/prefs_filter_edit.c:585
+#: src/compose.c:3734 src/mimeview.c:150 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "크기"
 
-#: src/compose.c:3859 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3785 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "보낸 사람:"
 
-#: src/compose.c:4275
+#: src/compose.c:4200
 msgid "Send message"
 msgstr "메시지 보내기"
 
-#: src/compose.c:4283
+#: src/compose.c:4208
 msgid "Send later"
 msgstr "나중에 보내기"
 
-#: src/compose.c:4284
+#: src/compose.c:4209
 msgid "Put into queue folder and send later"
 msgstr "보낼 편지함에 넣어서 나중에 보내기"
 
-#: src/compose.c:4292
+#: src/compose.c:4217
 msgid "Draft"
 msgstr "임시 보관함"
 
-#: src/compose.c:4293
+#: src/compose.c:4218
 msgid "Save to draft folder"
 msgstr "임시 보관함에 넣기"
 
-#: src/compose.c:4303 src/compose.c:5588
+#: src/compose.c:4228 src/compose.c:5513
 msgid "Insert"
 msgstr "삽입"
 
-#: src/compose.c:4304
+#: src/compose.c:4229
 msgid "Insert file"
 msgstr "파일을 삽입합니다"
 
-#: src/compose.c:4312
+#: src/compose.c:4237
 msgid "Attach"
 msgstr "첨부"
 
-#: src/compose.c:4313
+#: src/compose.c:4238
 msgid "Attach file"
 msgstr "파일 첨부"
 
 #. signature
-#: src/compose.c:4323 src/prefs_account.c:1339 src/prefs_common.c:1278
+#: src/compose.c:4248 src/prefs_account.c:1339 src/prefs_common.c:1278
 msgid "Signature"
 msgstr "서명"
 
-#: src/compose.c:4324
+#: src/compose.c:4249
 msgid "Insert signature"
 msgstr "서명 파일을 끼워넣습니다"
 
-#: src/compose.c:4333 src/prefs_common.c:1300 src/prefs_common.c:2187
+#: src/compose.c:4258 src/prefs_common.c:1300 src/prefs_common.c:2187
 msgid "Editor"
 msgstr "편집기"
 
-#: src/compose.c:4334
+#: src/compose.c:4259
 msgid "Edit with external editor"
 msgstr "외부 편집기로 편집"
 
-#: src/compose.c:4342
+#: src/compose.c:4267
 msgid "Linewrap"
 msgstr "줄바꿈"
 
-#: src/compose.c:4343
+#: src/compose.c:4268
 msgid "Wrap all long lines"
 msgstr "긴 줄에대해 자동 줄바꿈을 합니다"
 
-#: src/compose.c:4689
+#: src/compose.c:4614
 msgid "Invalid MIME type."
 msgstr "올바르지않은 마임 타입."
 
-#: src/compose.c:4708
+#: src/compose.c:4633
 msgid "File doesn't exist or is empty."
 msgstr "파일이 없거나 비여있습니다."
 
-#: src/compose.c:4777
+#: src/compose.c:4702
 #, fuzzy
 msgid "Properties"
 msgstr "특성"
 
-#: src/compose.c:4797
+#: src/compose.c:4722
 msgid "Encoding"
 msgstr "인코딩"
 
-#: src/compose.c:4820 src/prefs_folder_item.c:183
+#: src/compose.c:4745 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "경로"
 
-#: src/compose.c:4821
+#: src/compose.c:4746
 msgid "File name"
 msgstr "파일 이름"
 
-#: src/compose.c:4975
+#: src/compose.c:4900
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "외부 편집기 명령어가 올바르지않습니다: `%s'\n"
 
-#: src/compose.c:5001
+#: src/compose.c:4926
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1250,72 +1190,72 @@ msgstr ""
 "이 프로세스를 강제로 종료시킬까요?\n"
 "프로세스 그룹 아이디: %d"
 
-#: src/compose.c:5014
+#: src/compose.c:4939
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "프로세스 그룹 id: %d를 종료시킴"
 
-#: src/compose.c:5015
+#: src/compose.c:4940
 #, c-format
 msgid "Temporary file: %s"
 msgstr "임시 파일: %s"
 
-#: src/compose.c:5039
+#: src/compose.c:4964
 msgid "Compose: input from monitoring process\n"
 msgstr "편집: 모니터링하는 프로세스로부터 입력이 있었습니다\n"
 
 #. failed
-#: src/compose.c:5072
+#: src/compose.c:4997
 msgid "Couldn't exec external editor\n"
 msgstr "외부 편집기를 실행할 수가 없습니다\n"
 
-#: src/compose.c:5076
+#: src/compose.c:5001
 msgid "Couldn't write to file\n"
 msgstr "파일로 쓸 수가 없습니다\n"
 
-#: src/compose.c:5078
+#: src/compose.c:5003
 msgid "Pipe read failed\n"
 msgstr "파이프 읽기 실패\n"
 
-#: src/compose.c:5379 src/compose.c:5387 src/compose.c:5393
+#: src/compose.c:5304 src/compose.c:5312 src/compose.c:5318
 msgid "Can't queue the message."
 msgstr "메시지를 임시 보관함에 넣을수가 없습니다."
 
-#: src/compose.c:5484
+#: src/compose.c:5409
 #, fuzzy
 msgid "Select files"
 msgstr "파일 선택"
 
-#: src/compose.c:5506
+#: src/compose.c:5431
 msgid "Select file"
 msgstr "파일 선택"
 
-#: src/compose.c:5541
+#: src/compose.c:5466
 msgid "Discard message"
 msgstr "메시지 버리기"
 
-#: src/compose.c:5542
+#: src/compose.c:5467
 msgid "This message has been modified. discard it?"
 msgstr "이 메시지는 수정되었습니다. 변경사항을 버릴까요?"
 
-#: src/compose.c:5543
+#: src/compose.c:5468
 msgid "Discard"
 msgstr "버리기"
 
-#: src/compose.c:5543
+#: src/compose.c:5468
 msgid "to Draft"
 msgstr "임시 보관함으로"
 
-#: src/compose.c:5585
+#: src/compose.c:5510
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "`%s' 템플릿을 적용할까요?"
 
-#: src/compose.c:5587
+#: src/compose.c:5512
 msgid "Apply template"
 msgstr "템플릿을 적용합니다."
 
-#: src/compose.c:5588
+#: src/compose.c:5513
 msgid "Replace"
 msgstr "대체"
 
@@ -1476,12 +1416,12 @@ msgstr "폴더 편집"
 msgid "Input the new name of folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
-#: src/editgroup.c:513 src/foldersel.c:492 src/folderview.c:1807
-#: src/folderview.c:1813
+#: src/editgroup.c:513 src/foldersel.c:492 src/folderview.c:1810
+#: src/folderview.c:1816
 msgid "New folder"
 msgstr "새 폴더"
 
-#: src/editgroup.c:514 src/foldersel.c:493 src/folderview.c:1814
+#: src/editgroup.c:514 src/foldersel.c:493 src/folderview.c:1817
 msgid "Input the name of new folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
@@ -1670,89 +1610,89 @@ msgstr "지운 편지함"
 msgid "Drafts"
 msgstr "임시 보관함"
 
-#: src/foldersel.c:494 src/folderview.c:1811 src/folderview.c:1815
+#: src/foldersel.c:494 src/folderview.c:1814 src/folderview.c:1818
 msgid "NewFolder"
 msgstr "새 폴더"
 
-#: src/foldersel.c:502 src/folderview.c:1823 src/folderview.c:1879
+#: src/foldersel.c:502 src/folderview.c:1826 src/folderview.c:1882
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c'는 폴더 이름에 포함될 수 없습니다."
 
-#: src/foldersel.c:512 src/folderview.c:1833 src/folderview.c:1886
+#: src/foldersel.c:512 src/folderview.c:1836 src/folderview.c:1889
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "`%s' 폴더가 이미 존재합니다."
 
-#: src/foldersel.c:520 src/folderview.c:1840
+#: src/foldersel.c:520 src/folderview.c:1843
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "`%s' 폴더를 생성할 수가 없습니다."
 
-#: src/folderview.c:220 src/folderview.c:236
+#: src/folderview.c:218 src/folderview.c:234
 msgid "/Create _new folder..."
 msgstr "/새 폴더 만들기(_n)..."
 
-#: src/folderview.c:221 src/folderview.c:237
+#: src/folderview.c:219 src/folderview.c:235
 msgid "/_Rename folder..."
 msgstr "/폴더 이름 바꾸기(_R)..."
 
-#: src/folderview.c:222 src/folderview.c:238
+#: src/folderview.c:220 src/folderview.c:236
 msgid "/_Delete folder"
 msgstr "/폴더 지우기(_D)"
 
-#: src/folderview.c:224 src/folderview.c:240
+#: src/folderview.c:222 src/folderview.c:238
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:226 src/folderview.c:244 src/folderview.c:260
+#: src/folderview.c:224 src/folderview.c:242 src/folderview.c:258
 msgid "/_Check for new messages"
 msgstr "/새 메시지 확인(_C)"
 
-#: src/folderview.c:228 src/folderview.c:246
+#: src/folderview.c:226 src/folderview.c:244
 msgid "/R_ebuild folder tree"
 msgstr "/폴더 트리 갱신(_e)"
 
-#: src/folderview.c:230 src/folderview.c:248 src/folderview.c:263
+#: src/folderview.c:228 src/folderview.c:246 src/folderview.c:261
 msgid "/_Search messages..."
 msgstr "/메시지 찾기(_S)..."
 
-#: src/folderview.c:242 src/folderview.c:258
+#: src/folderview.c:240 src/folderview.c:256
 #, fuzzy
 msgid "/Down_load"
 msgstr "안 읽은 메시지가 없습니다."
 
-#: src/folderview.c:254
+#: src/folderview.c:252
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/뉴스그룹 구독(_b)..."
 
-#: src/folderview.c:256
+#: src/folderview.c:254
 msgid "/_Remove newsgroup"
 msgstr "/뉴스그룹 삭제(_R)"
 
-#: src/folderview.c:285
+#: src/folderview.c:283
 msgid "Creating folder view...\n"
 msgstr "폴더 뷰를 생성합니다...\n"
 
-#: src/folderview.c:360
+#: src/folderview.c:362
 msgid "New"
 msgstr "새것"
 
 #. S_COL_MARK
-#: src/folderview.c:371 src/prefs_summary_column.c:68
+#: src/folderview.c:373 src/prefs_summary_column.c:68
 msgid "Unread"
 msgstr "안읽음"
 
-#: src/folderview.c:382
+#: src/folderview.c:384
 msgid "#"
 msgstr "전체"
 
-#: src/folderview.c:500
+#: src/folderview.c:494
 msgid "Setting folder info...\n"
 msgstr "폴더 정보를 설정합니다...\n"
 
-#: src/folderview.c:501
+#: src/folderview.c:495
 msgid "Setting folder info..."
 msgstr "폴더 정보를 설정합니다..."
 
@@ -1787,22 +1727,22 @@ msgstr "폴더 트리를 갱신합니다..."
 msgid "Checking for new messages in all folders..."
 msgstr "모든 폴더의 새로운 메시지를 확인합니다..."
 
-#: src/folderview.c:1602
+#: src/folderview.c:1605
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "%s 폴더가 선택되었습니다\n"
 
-#: src/folderview.c:1723
+#: src/folderview.c:1726
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "메시지을 보내는 중"
 
-#: src/folderview.c:1758
+#: src/folderview.c:1761
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
 
-#: src/folderview.c:1808
+#: src/folderview.c:1811
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -1812,16 +1752,16 @@ msgstr ""
 "(만일 하위폴더를 저장하기 위한 폴더를 생성하려면,\n"
 "이름의 마지막에 `/'를 추가하세요)"
 
-#: src/folderview.c:1870
+#: src/folderview.c:1873
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "`%s'에대한 새 이름을 넣으세요:"
 
-#: src/folderview.c:1871
+#: src/folderview.c:1874
 msgid "Rename folder"
 msgstr "폴더 이름 변경"
 
-#: src/folderview.c:1951
+#: src/folderview.c:1954
 #, c-format
 msgid ""
 "All folder(s) and message(s) under `%s' will be deleted.\n"
@@ -1830,24 +1770,24 @@ msgstr ""
 "`%s'아래에 있는 모든 폴더와 메시지가 삭제될 것입니다.\n"
 "정말로 삭제하시겠습니까?"
 
-#: src/folderview.c:1953
+#: src/folderview.c:1956
 msgid "Delete folder"
 msgstr "폴더 삭제"
 
-#: src/folderview.c:1975
+#: src/folderview.c:1978
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2009
+#: src/folderview.c:2012
 msgid "Empty trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:2009
+#: src/folderview.c:2012
 msgid "Empty all messages in trash?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/folderview.c:2044
+#: src/folderview.c:2047
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -1856,34 +1796,34 @@ msgstr ""
 "`%s' 메일박스를 정말로 삭제하시겠습니까?\n"
 "(메시지가 디스크로부터 삭제되는것은 아닙니다)"
 
-#: src/folderview.c:2046
+#: src/folderview.c:2049
 msgid "Remove mailbox"
 msgstr "메일박스를 제거합니다"
 
-#: src/folderview.c:2089
+#: src/folderview.c:2092
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "정말로 `%s' IMAP4 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2090
+#: src/folderview.c:2093
 msgid "Delete IMAP4 account"
 msgstr "IMAP4 계정 삭제"
 
-#: src/folderview.c:2227
+#: src/folderview.c:2230
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "정말로 `%s' 뉴스그룹을 삭제하시겠습니까?"
 
-#: src/folderview.c:2228
+#: src/folderview.c:2231
 msgid "Delete newsgroup"
 msgstr "뉴스그룹 삭제"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2274
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "정말로 `%s' 뉴스그룹 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2272
+#: src/folderview.c:2275
 msgid "Delete news account"
 msgstr "뉴스그룹 계정 삭제"
 
@@ -1996,128 +1936,128 @@ msgstr "지울 수가 없습니다\n"
 msgid "can't set deleted flags: 1:*\n"
 msgstr "삭제 플래그를 설정할 수가 없습니다: 1:%d\n"
 
-#: src/imap.c:1464
+#: src/imap.c:1466
 #, fuzzy
 msgid "can't close folder\n"
 msgstr "폴더를 선택할 수가 없습니다: %s\n"
 
-#: src/imap.c:1542
+#: src/imap.c:1544
 #, fuzzy, c-format
 msgid "root folder %s not exist\n"
 msgstr "표시 파일이 발견되지않음.\n"
 
-#: src/imap.c:1720 src/imap.c:1728
+#: src/imap.c:1722 src/imap.c:1730
 #, fuzzy
 msgid "error occurred while getting LIST.\n"
 msgstr "LIST를 얻는 도중 에러가 발생.\n"
 
-#: src/imap.c:1842
+#: src/imap.c:1844
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "'%s'를 생성할 수가 없습니다\n"
 
-#: src/imap.c:1847
+#: src/imap.c:1849
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "INBOX 아래에 '%s'를 생성할 수가 없습니다\n"
 
-#: src/imap.c:1908
+#: src/imap.c:1910
 msgid "can't create mailbox: LIST failed\n"
 msgstr "우편함을 생성할 수 없습니다: LIST 실패\n"
 
-#: src/imap.c:1928
+#: src/imap.c:1930
 msgid "can't create mailbox\n"
 msgstr "우편함을 생성할 수 없습니다\n"
 
-#: src/imap.c:1997
+#: src/imap.c:1999
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "우편함명을 바꿀 수 없습니다: %s에서 %s로\n"
 
-#: src/imap.c:2059
+#: src/imap.c:2061
 msgid "can't delete mailbox\n"
 msgstr "우편함을 삭제할 수 없습니다\n"
 
-#: src/imap.c:2098
+#: src/imap.c:2100
 msgid "can't get envelope\n"
 msgstr "envelope를 얻을 수가 없습니다\n"
 
-#: src/imap.c:2106
+#: src/imap.c:2108
 msgid "error occurred while getting envelope.\n"
 msgstr "envelope를 얻는 중 에러 발생.\n"
 
-#: src/imap.c:2127
+#: src/imap.c:2129
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "envelope를 파싱할 수가 없습니다: %s\n"
 
-#: src/imap.c:2250
+#: src/imap.c:2252
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "%s:%d IMAP4 서버에 연결할 수가 없습니다\n"
 
-#: src/imap.c:2257
+#: src/imap.c:2259
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "IMAP4 세션을 만들 수 없습니다: %s: %d\n"
 
-#: src/imap.c:2332
+#: src/imap.c:2334
 msgid "can't get namespace\n"
 msgstr "namespace를 얻을 수 없습니다\n"
 
-#: src/imap.c:2850
+#: src/imap.c:2852
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "폴더를 선택할 수가 없습니다: %s\n"
 
-#: src/imap.c:3021
+#: src/imap.c:3023
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "인증 방법"
 
-#: src/imap.c:3038
+#: src/imap.c:3040
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 로그인을 실패했습니다.\n"
 
-#: src/imap.c:3359
+#: src/imap.c:3361
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "%s를 %s에 붙일 수 없습니다\n"
 
-#: src/imap.c:3366
+#: src/imap.c:3368
 msgid "(sending file...)"
 msgstr "(파일을 보냅니다...)"
 
-#: src/imap.c:3394
+#: src/imap.c:3396
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "%s 메시지를 추가할 수가 없습니다\n"
 
-#: src/imap.c:3426
+#: src/imap.c:3428
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "%d를 %s로 복사할 수가 없습니다\n"
 
-#: src/imap.c:3450
+#: src/imap.c:3452
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap 명령어 실행중 에러: STORE %d:%d %s\n"
 
-#: src/imap.c:3464
+#: src/imap.c:3466
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: src/imap.c:3477
+#: src/imap.c:3479
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: src/imap.c:3704
+#: src/imap.c:3706
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv가 UTF-7를 %s로 변환할 수 없습니다\n"
 
-#: src/imap.c:3734
+#: src/imap.c:3736
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv가 %s를 UTF-7로 변환할 수 없습니다\n"
@@ -4956,11 +4896,11 @@ msgid ""
 "any key(s) when placing the mouse pointer on the item."
 msgstr ""
 
-#: src/prefs_common.c:3083 src/prefs_common.c:3432
+#: src/prefs_common.c:3083 src/prefs_common.c:3407
 msgid "Default"
 msgstr "기본"
 
-#: src/prefs_common.c:3086 src/prefs_common.c:3441
+#: src/prefs_common.c:3086 src/prefs_common.c:3416
 msgid "Old Sylpheed"
 msgstr "예전 Sylpheed"
 
@@ -5425,7 +5365,7 @@ msgstr ""
 msgid "Signature made at %s\n"
 msgstr ""
 
-#: src/rfc2015.c:278 src/sigstatus.c:264
+#: src/rfc2015.c:278 src/sigstatus.c:266
 msgid "Error verifying the signature"
 msgstr "서명을 검증하는 도중 에러"
 
@@ -5571,65 +5511,65 @@ msgstr "서명 확인"
 msgid "%s%s%s from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:227
+#: src/sigstatus.c:229
 msgid "No signature found"
 msgstr "서명이 발견되지않음"
 
-#: src/sigstatus.c:234
+#: src/sigstatus.c:236
 #, c-format
 msgid "Good signature from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:235 src/textview.c:591
+#: src/sigstatus.c:237 src/textview.c:591
 msgid "Good signature"
 msgstr "Good signature"
 
-#: src/sigstatus.c:239
+#: src/sigstatus.c:241
 #, c-format
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:240 src/textview.c:593
+#: src/sigstatus.c:242 src/textview.c:593
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
-#: src/sigstatus.c:245
+#: src/sigstatus.c:247
 #, c-format
 msgid "Signature valid but expired for \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:246
+#: src/sigstatus.c:248
 msgid "Signature valid but expired"
 msgstr ""
 
-#: src/sigstatus.c:249
+#: src/sigstatus.c:251
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has expired"
 msgstr ""
 
-#: src/sigstatus.c:250
+#: src/sigstatus.c:252
 msgid "Signature valid but the signing key has expired"
 msgstr ""
 
-#: src/sigstatus.c:253
+#: src/sigstatus.c:255
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has been revoked"
 msgstr ""
 
-#: src/sigstatus.c:254
+#: src/sigstatus.c:256
 msgid "Signature valid but the signing key has been revoked"
 msgstr ""
 
-#: src/sigstatus.c:257
+#: src/sigstatus.c:259
 #, c-format
 msgid "BAD signature from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:258 src/textview.c:595
+#: src/sigstatus.c:260 src/textview.c:595
 msgid "BAD signature"
 msgstr "BAD signature"
 
-#: src/sigstatus.c:261
+#: src/sigstatus.c:263
 msgid "No public key to verify the signature"
 msgstr "서명을 검증할 공개키가 없습니다"
 
@@ -6124,6 +6064,51 @@ msgstr ""
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s로 쓰기가 실패했습니다.\n"
+
+#~ msgid "/_Edit/A_dvanced"
+#~ msgstr "/편집(_E)/고급(_d)"
+
+#~ msgid "/_Edit/A_dvanced/Move a character backward"
+#~ msgstr "/편집(_E)/고급(_d)/문자를 뒤로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move a character forward"
+#~ msgstr "/편집(_E)/고급(_d)/문자를 앞으로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move a word backward"
+#~ msgstr "/편집(_E)/고급(_d)/단어를 뒤로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move a word forward"
+#~ msgstr "/편집(_E)/고급(_d)/단어를 앞으로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move to beginning of line"
+#~ msgstr "/편집(_E)/고급(_d)/라인의 처음으로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move to end of line"
+#~ msgstr "/편집(_E)/고급(_d)/라인의 끝으로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move to previous line"
+#~ msgstr "/편집(_E)/고급(_d)/이전 라인으로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Move to next line"
+#~ msgstr "/편집(_E)/고급(_d)/다음 라인으로 이동"
+
+#~ msgid "/_Edit/A_dvanced/Delete a character backward"
+#~ msgstr "/편집(_E)/고급(_d)/문자를 뒤로 삭제"
+
+#~ msgid "/_Edit/A_dvanced/Delete a character forward"
+#~ msgstr "/편집(_E)/고급(_d)/문자를 앞으로 삭제"
+
+#~ msgid "/_Edit/A_dvanced/Delete a word backward"
+#~ msgstr "/편집(_E)/고급(_d)/단어를 뒤로 삭제"
+
+#~ msgid "/_Edit/A_dvanced/Delete a word forward"
+#~ msgstr "/편집(_E)/고급(_d)/단어를 앞으로 삭제"
+
+#~ msgid "/_Edit/A_dvanced/Delete line"
+#~ msgstr "/편집(_E)/고급(_d)/라인 삭제"
+
+#~ msgid "/_Edit/A_dvanced/Delete to end of line"
+#~ msgstr "/편집(_E)/고급(_d)/라인 끝까지 삭제"
 
 #~ msgid "Rebuilding all folder trees..."
 #~ msgstr "모든 폴더 트리를 갱신합니다..."

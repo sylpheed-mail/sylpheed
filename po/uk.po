@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 1.0.0beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-12 19:10+0900\n"
+"POT-Creation-Date: 2005-04-19 15:59+0900\n"
 "PO-Revision-Date: Sun 31 Oct 2004 23:17:57\n"
 "Last-Translator: O. Nykyforchyn <nick@pu.if,ua>, 2004.\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -100,7 +100,7 @@ msgstr ""
 "account'и, які поповнюються через `Отримати всі'."
 
 #: src/account.c:691 src/addressadd.c:186 src/addressbook.c:488
-#: src/compose.c:3809 src/editaddress.c:195 src/editaddress.c:936
+#: src/compose.c:3735 src/editaddress.c:195 src/editaddress.c:936
 #: src/editaddress.c:984 src/editbook.c:191 src/editgroup.c:257
 #: src/editjpilot.c:296 src/editldap.c:300 src/editvcard.c:211
 #: src/mimeview.c:151 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -159,15 +159,15 @@ msgstr "БезНазви"
 msgid "Delete account"
 msgstr "Видалити обліковий запис"
 
-#: src/account.c:811 src/compose.c:2687 src/compose.c:5004
-#: src/folderview.c:1954 src/folderview.c:2047 src/folderview.c:2091
-#: src/folderview.c:2229 src/folderview.c:2273
+#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/folderview.c:1957 src/folderview.c:2050 src/folderview.c:2094
+#: src/folderview.c:2232 src/folderview.c:2276
 msgid "Yes"
 msgstr "Авжеж"
 
-#: src/account.c:811 src/compose.c:2687 src/compose.c:5004
-#: src/folderview.c:1954 src/folderview.c:2047 src/folderview.c:2091
-#: src/folderview.c:2229 src/folderview.c:2273
+#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/folderview.c:1957 src/folderview.c:2050 src/folderview.c:2094
+#: src/folderview.c:2232 src/folderview.c:2276
 msgid "+No"
 msgstr "+Нізащо"
 
@@ -270,7 +270,7 @@ msgstr "Аргумент користувача"
 msgid "Add Address to Book"
 msgstr "Додати адресу до книги"
 
-#: src/addressadd.c:196 src/compose.c:4353 src/editaddress.c:196
+#: src/addressadd.c:196 src/compose.c:4278 src/editaddress.c:196
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Адреса"
@@ -284,7 +284,7 @@ msgstr "Нотатки"
 msgid "Select Address Book Folder"
 msgstr "Обрати папку адресної книги"
 
-#: src/addressbook.c:334 src/compose.c:478 src/mainwindow.c:454
+#: src/addressbook.c:334 src/compose.c:475 src/mainwindow.c:454
 #: src/messageview.c:134
 msgid "/_File"
 msgstr "/Файл"
@@ -305,8 +305,8 @@ msgstr "/Файл/Новий JPilot"
 msgid "/_File/New _Server"
 msgstr "/Файл/Новий сервер"
 
-#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:483
-#: src/compose.c:488 src/compose.c:492 src/mainwindow.c:471
+#: src/addressbook.c:343 src/addressbook.c:346 src/compose.c:480
+#: src/compose.c:485 src/compose.c:489 src/mainwindow.c:471
 #: src/mainwindow.c:474 src/mainwindow.c:476 src/mainwindow.c:479
 #: src/mainwindow.c:481 src/messageview.c:137
 msgid "/_File/---"
@@ -324,7 +324,7 @@ msgstr "/Файл/Видалити"
 msgid "/_File/_Save"
 msgstr "/Файл/Зберегти"
 
-#: src/addressbook.c:348 src/compose.c:493 src/messageview.c:138
+#: src/addressbook.c:348 src/compose.c:490 src/messageview.c:138
 msgid "/_File/_Close"
 msgstr "/Файл/Закрити"
 
@@ -356,7 +356,7 @@ msgstr "/Адреса/Редагувати"
 msgid "/_Address/_Delete"
 msgstr "/Адреса/Видалити"
 
-#: src/addressbook.c:356 src/compose.c:667 src/mainwindow.c:699
+#: src/addressbook.c:356 src/compose.c:593 src/mainwindow.c:699
 #: src/messageview.c:248
 msgid "/_Tools"
 msgstr "/Інструменти"
@@ -365,12 +365,12 @@ msgstr "/Інструменти"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/Інструменти/Імпортувати файл LDIF"
 
-#: src/addressbook.c:358 src/compose.c:680 src/mainwindow.c:744
+#: src/addressbook.c:358 src/compose.c:606 src/mainwindow.c:744
 #: src/messageview.c:266
 msgid "/_Help"
 msgstr "/Допомога"
 
-#: src/addressbook.c:359 src/compose.c:681 src/mainwindow.c:755
+#: src/addressbook.c:359 src/compose.c:607 src/mainwindow.c:755
 #: src/messageview.c:267
 msgid "/_Help/_About"
 msgstr "/Допомога/Про програму"
@@ -387,17 +387,17 @@ msgstr "/Нова група"
 msgid "/New _Folder"
 msgstr "/Нова папка"
 
-#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:472
-#: src/folderview.c:223 src/folderview.c:225 src/folderview.c:229
-#: src/folderview.c:239 src/folderview.c:241 src/folderview.c:243
-#: src/folderview.c:247 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:262 src/summaryview.c:346 src/summaryview.c:350
+#: src/addressbook.c:381 src/addressbook.c:391 src/compose.c:469
+#: src/folderview.c:221 src/folderview.c:223 src/folderview.c:227
+#: src/folderview.c:237 src/folderview.c:239 src/folderview.c:241
+#: src/folderview.c:245 src/folderview.c:255 src/folderview.c:257
+#: src/folderview.c:260 src/summaryview.c:346 src/summaryview.c:350
 #: src/summaryview.c:354 src/summaryview.c:364 src/summaryview.c:366
 #: src/summaryview.c:369 src/summaryview.c:375
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:495
+#: src/addressbook.c:382 src/addressbook.c:392 src/compose.c:492
 #: src/mainwindow.c:485 src/messageview.c:140
 msgid "/_Edit"
 msgstr "/Редагувати"
@@ -410,7 +410,7 @@ msgstr "/Видалити"
 msgid "E-Mail address"
 msgstr "Адреса e-mail"
 
-#: src/addressbook.c:493 src/compose.c:4354 src/prefs_common.c:2208
+#: src/addressbook.c:493 src/compose.c:4279 src/prefs_common.c:2208
 msgid "Address book"
 msgstr "Адресна книга"
 
@@ -583,7 +583,7 @@ msgid "Group"
 msgstr "Група"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3133 src/folderview.c:332 src/prefs_account.c:1824
+#: src/addressbook.c:3133 src/folderview.c:330 src/prefs_account.c:1824
 msgid "Folder"
 msgstr "Папка"
 
@@ -607,7 +607,7 @@ msgstr "Адреса організації"
 msgid "Personal address"
 msgstr "Особиста адреса"
 
-#: src/alertpanel.c:123 src/compose.c:5004 src/main.c:458
+#: src/alertpanel.c:123 src/compose.c:4929 src/main.c:458
 msgid "Notice"
 msgstr "Примітка"
 
@@ -615,7 +615,7 @@ msgstr "Примітка"
 msgid "Warning"
 msgstr "Попередження"
 
-#: src/alertpanel.c:149 src/compose.c:2687 src/inc.c:558
+#: src/alertpanel.c:149 src/compose.c:2613 src/inc.c:558
 msgid "Error"
 msgstr "Помилка"
 
@@ -663,422 +663,362 @@ msgstr "Коричневий"
 msgid "None"
 msgstr "Ніякий"
 
-#: src/compose.c:470
+#: src/compose.c:467
 msgid "/_Add..."
 msgstr "/Додати..."
 
-#: src/compose.c:471
+#: src/compose.c:468
 msgid "/_Remove"
 msgstr "/Видалити"
 
-#: src/compose.c:473 src/folderview.c:231 src/folderview.c:249
-#: src/folderview.c:264
+#: src/compose.c:470 src/folderview.c:229 src/folderview.c:247
+#: src/folderview.c:262
 msgid "/_Properties..."
 msgstr "/Властивості..."
 
-#: src/compose.c:479
+#: src/compose.c:476
 msgid "/_File/_Send"
 msgstr "/Файл/Послати"
 
-#: src/compose.c:481
+#: src/compose.c:478
 msgid "/_File/Send _later"
 msgstr "/Файл/Послати пізніше"
 
-#: src/compose.c:484
+#: src/compose.c:481
 msgid "/_File/Save to _draft folder"
 msgstr "/Файл/Зберегти в папці чорновиків"
 
-#: src/compose.c:486
+#: src/compose.c:483
 msgid "/_File/Save and _keep editing"
 msgstr "/Файл/Зберегти і редагувати далі"
 
-#: src/compose.c:489
+#: src/compose.c:486
 msgid "/_File/_Attach file"
 msgstr "/Файл/Приєднати файл"
 
-#: src/compose.c:490
+#: src/compose.c:487
 msgid "/_File/_Insert file"
 msgstr "/Файл/Вставити файл"
 
-#: src/compose.c:491
+#: src/compose.c:488
 msgid "/_File/Insert si_gnature"
 msgstr "/Файл/Вставити підпис"
 
-#: src/compose.c:496
+#: src/compose.c:493
 msgid "/_Edit/_Undo"
 msgstr "/Редагувати/Undo"
 
-#: src/compose.c:497
+#: src/compose.c:494
 msgid "/_Edit/_Redo"
 msgstr "/Редагувати/Redo"
 
-#: src/compose.c:498 src/compose.c:576 src/mainwindow.c:489
+#: src/compose.c:495 src/compose.c:502 src/mainwindow.c:489
 #: src/messageview.c:143
 msgid "/_Edit/---"
 msgstr "/Редагувати/---"
 
-#: src/compose.c:499
+#: src/compose.c:496
 msgid "/_Edit/Cu_t"
 msgstr "/Редагувати/Вирізати"
 
-#: src/compose.c:500 src/mainwindow.c:486 src/messageview.c:141
+#: src/compose.c:497 src/mainwindow.c:486 src/messageview.c:141
 msgid "/_Edit/_Copy"
 msgstr "/Редагувати/Копіювати"
 
-#: src/compose.c:501
+#: src/compose.c:498
 msgid "/_Edit/_Paste"
 msgstr "/Редагувати/Вставити"
 
-#: src/compose.c:502
+#: src/compose.c:499
 msgid "/_Edit/Paste as _quotation"
 msgstr "/Редагувати/Вставити як цитату"
 
-#: src/compose.c:504 src/mainwindow.c:487 src/messageview.c:142
+#: src/compose.c:501 src/mainwindow.c:487 src/messageview.c:142
 msgid "/_Edit/Select _all"
 msgstr "/Редагувати/Виділити все"
 
-#: src/compose.c:505
-msgid "/_Edit/A_dvanced"
-msgstr "/Редагувати/Advanced"
-
-#: src/compose.c:506
-msgid "/_Edit/A_dvanced/Move a character backward"
-msgstr "/Редагувати/Advanced/На літеру назад"
-
-#: src/compose.c:511
-msgid "/_Edit/A_dvanced/Move a character forward"
-msgstr "/Редагувати/Advanced/На літеру вперед"
-
-#: src/compose.c:516
-msgid "/_Edit/A_dvanced/Move a word backward"
-msgstr "/Редагувати/Advanced/На слово назад"
-
-#: src/compose.c:521
-msgid "/_Edit/A_dvanced/Move a word forward"
-msgstr "/Редагувати/Advanced/На слово вперед"
-
-#: src/compose.c:526
-msgid "/_Edit/A_dvanced/Move to beginning of line"
-msgstr "/Редагувати/Advanced/На початок рядка"
-
-#: src/compose.c:531
-msgid "/_Edit/A_dvanced/Move to end of line"
-msgstr "/Редагувати/Advanced/На кінець рядка"
-
-#: src/compose.c:536
-msgid "/_Edit/A_dvanced/Move to previous line"
-msgstr "/Редагувати/Advanced/На попередній рядок"
-
-#: src/compose.c:541
-msgid "/_Edit/A_dvanced/Move to next line"
-msgstr "/Редагувати/Advanced/На наступний рядок"
-
-#: src/compose.c:546
-msgid "/_Edit/A_dvanced/Delete a character backward"
-msgstr "/Редагувати/Advanced/Видалити літеру назад"
-
-#: src/compose.c:551
-msgid "/_Edit/A_dvanced/Delete a character forward"
-msgstr "/Редагувати/Advanced/Видалити літеру вперед"
-
-#: src/compose.c:556
-msgid "/_Edit/A_dvanced/Delete a word backward"
-msgstr "/Редагувати/Advanced/Видалити слово назад"
-
-#: src/compose.c:561
-msgid "/_Edit/A_dvanced/Delete a word forward"
-msgstr "/Редагувати/Advanced/Видалити слово вперед"
-
-#: src/compose.c:566
-msgid "/_Edit/A_dvanced/Delete line"
-msgstr "/Редагувати/Advanced/Видалити рядок"
-
-#: src/compose.c:571
-msgid "/_Edit/A_dvanced/Delete to end of line"
-msgstr "/Редагувати/Advanced/Видалити до кінця рядка"
-
-#: src/compose.c:577
+#: src/compose.c:503
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/Редагувати/Згорнути поточний абзац"
 
-#: src/compose.c:579
+#: src/compose.c:505
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/Редагувати/Згорнути всі довгі рядки"
 
-#: src/compose.c:581
+#: src/compose.c:507
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/Редагувати/Автозгортання"
 
-#: src/compose.c:582 src/mainwindow.c:494 src/messageview.c:147
+#: src/compose.c:508 src/mainwindow.c:494 src/messageview.c:147
 #: src/summaryview.c:370
 msgid "/_View"
 msgstr "/Вигляд"
 
-#: src/compose.c:583
+#: src/compose.c:509
 msgid "/_View/_To"
 msgstr "/Вигляд/Кому"
 
-#: src/compose.c:584
+#: src/compose.c:510
 msgid "/_View/_Cc"
 msgstr "/Вигляд/Копія"
 
-#: src/compose.c:585
+#: src/compose.c:511
 msgid "/_View/_Bcc"
 msgstr "/Вигляд/Приховано"
 
-#: src/compose.c:586
+#: src/compose.c:512
 msgid "/_View/_Reply to"
 msgstr "/Вигляд/Зворотня адреса"
 
-#: src/compose.c:587 src/compose.c:589 src/compose.c:591 src/compose.c:593
+#: src/compose.c:513 src/compose.c:515 src/compose.c:517 src/compose.c:519
 #: src/mainwindow.c:512 src/mainwindow.c:515 src/mainwindow.c:541
 #: src/mainwindow.c:565 src/mainwindow.c:652 src/mainwindow.c:656
 #: src/messageview.c:225
 msgid "/_View/---"
 msgstr "/Вигляд/---"
 
-#: src/compose.c:588
+#: src/compose.c:514
 msgid "/_View/_Followup to"
 msgstr "/Вигляд/Конференції для відповіді"
 
-#: src/compose.c:590
+#: src/compose.c:516
 msgid "/_View/R_uler"
 msgstr "/Вигляд/Лінійка"
 
-#: src/compose.c:592
+#: src/compose.c:518
 msgid "/_View/_Attachment"
 msgstr "/Вигляд/Вкладення"
 
-#: src/compose.c:599 src/mainwindow.c:572 src/messageview.c:154
+#: src/compose.c:525 src/mainwindow.c:572 src/messageview.c:154
 #, fuzzy
 msgid "/_View/Character _encoding"
 msgstr "/Вигляд/Сортувати/За спаданням"
 
-#: src/compose.c:600
+#: src/compose.c:526
 msgid "/_View/Character _encoding/_Automatic"
 msgstr ""
 
-#: src/compose.c:602 src/compose.c:608 src/compose.c:614 src/compose.c:618
-#: src/compose.c:624 src/compose.c:628 src/compose.c:632 src/compose.c:642
-#: src/compose.c:646 src/compose.c:656 src/compose.c:660 src/mainwindow.c:568
+#: src/compose.c:528 src/compose.c:534 src/compose.c:540 src/compose.c:544
+#: src/compose.c:550 src/compose.c:554 src/compose.c:558 src/compose.c:568
+#: src/compose.c:572 src/compose.c:582 src/compose.c:586 src/mainwindow.c:568
 #: src/mainwindow.c:575 src/messageview.c:150
 #, fuzzy
 msgid "/_View/Character _encoding/---"
 msgstr "/Вигляд/Сортувати/За спаданням"
 
-#: src/compose.c:604 src/mainwindow.c:576 src/messageview.c:158
+#: src/compose.c:530 src/mainwindow.c:576 src/messageview.c:158
 #, fuzzy
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/Вигляд/Кодова таблиця/7bit ascii (US-ASC_II)"
 
-#: src/compose.c:606 src/mainwindow.c:578 src/messageview.c:161
+#: src/compose.c:532 src/mainwindow.c:578 src/messageview.c:161
 #, fuzzy
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/Вигляд/Кодова таблиця/Unicode (UT_F-8)"
 
-#: src/compose.c:610 src/mainwindow.c:582 src/messageview.c:164
+#: src/compose.c:536 src/mainwindow.c:582 src/messageview.c:164
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/Вигляд/Кодова таблиця/Західноєвропейська (ISO-8859-_1)"
 
-#: src/compose.c:612 src/mainwindow.c:584 src/messageview.c:166
+#: src/compose.c:538 src/mainwindow.c:584 src/messageview.c:166
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/Вигляд/Кодова таблиця/Західноєвропейська (ISO-8859-15)"
 
-#: src/compose.c:616 src/mainwindow.c:588 src/messageview.c:169
+#: src/compose.c:542 src/mainwindow.c:588 src/messageview.c:169
 #, fuzzy
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/Вигляд/Кодова таблиця/Західноєвропейська (ISO-8859-_2)"
 
-#: src/compose.c:620 src/mainwindow.c:592 src/messageview.c:172
+#: src/compose.c:546 src/mainwindow.c:592 src/messageview.c:172
 #, fuzzy
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/Вигляд/Кодова таблиця/Балтійська (ISO-8859-1_3)"
 
-#: src/compose.c:622 src/mainwindow.c:594 src/messageview.c:174
+#: src/compose.c:548 src/mainwindow.c:594 src/messageview.c:174
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/Вигляд/Кодова таблиця/Балтійська (ISO-8859-_4)"
 
-#: src/compose.c:626 src/mainwindow.c:598 src/messageview.c:177
+#: src/compose.c:552 src/mainwindow.c:598 src/messageview.c:177
 #, fuzzy
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/Вигляд/Кодова таблиця/Грецька (ISO-8859-_7)"
 
-#: src/compose.c:630 src/mainwindow.c:602 src/messageview.c:180
+#: src/compose.c:556 src/mainwindow.c:602 src/messageview.c:180
 #, fuzzy
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/Вигляд/Кодова таблиця/Турецька (ISO-8859-_9)"
 
-#: src/compose.c:634 src/mainwindow.c:606 src/messageview.c:183
+#: src/compose.c:560 src/mainwindow.c:606 src/messageview.c:183
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/Вигляд/Кодова таблиця/Кирилиця (ISO-8859-_5)"
 
-#: src/compose.c:636 src/mainwindow.c:608 src/messageview.c:185
+#: src/compose.c:562 src/mainwindow.c:608 src/messageview.c:185
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/Вигляд/Кодова таблиця/Кирилиця (KOI8-_R)"
 
-#: src/compose.c:638 src/mainwindow.c:610 src/messageview.c:187
+#: src/compose.c:564 src/mainwindow.c:610 src/messageview.c:187
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/Вигляд/Кодова таблиця/Кирилиця (KOI8-_U)"
 
-#: src/compose.c:640 src/mainwindow.c:612 src/messageview.c:189
+#: src/compose.c:566 src/mainwindow.c:612 src/messageview.c:189
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/Вигляд/Кодова таблиця/Кирилиця (_Windows-1251)"
 
-#: src/compose.c:644 src/mainwindow.c:616 src/messageview.c:192
+#: src/compose.c:570 src/mainwindow.c:616 src/messageview.c:192
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/Вигляд/Кодова таблиця/Японська (ISO-2022-_JP)"
 
-#: src/compose.c:648 src/mainwindow.c:626 src/messageview.c:201
+#: src/compose.c:574 src/mainwindow.c:626 src/messageview.c:201
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/Вигляд/Кодова таблиця/Спрощена китайська (_GB2312)"
 
-#: src/compose.c:650 src/mainwindow.c:628 src/messageview.c:203
+#: src/compose.c:576 src/mainwindow.c:628 src/messageview.c:203
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/Вигляд/Кодова таблиця/Спрощена китайська (_GB2312)"
 
-#: src/compose.c:652 src/mainwindow.c:630 src/messageview.c:205
+#: src/compose.c:578 src/mainwindow.c:630 src/messageview.c:205
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/Вигляд/Кодова таблиця/Традиційна китайська (_Big5)"
 
-#: src/compose.c:654 src/mainwindow.c:632 src/messageview.c:207
+#: src/compose.c:580 src/mainwindow.c:632 src/messageview.c:207
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/Вигляд/Кодова таблиця/Традиційна китайська (EUC-_TW)"
 
-#: src/compose.c:658 src/mainwindow.c:638 src/messageview.c:212
+#: src/compose.c:584 src/mainwindow.c:638 src/messageview.c:212
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/Вигляд/Кодова таблиця/Корейська (EUC-_KR)"
 
-#: src/compose.c:662 src/mainwindow.c:644 src/messageview.c:217
+#: src/compose.c:588 src/mainwindow.c:644 src/messageview.c:217
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/Вигляд/Кодова таблиця/Тайська (TIS-620)"
 
-#: src/compose.c:664 src/mainwindow.c:646 src/messageview.c:219
+#: src/compose.c:590 src/mainwindow.c:646 src/messageview.c:219
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/Вигляд/Кодова таблиця/Тайська (Windows-874)"
 
-#: src/compose.c:668 src/mainwindow.c:700 src/messageview.c:249
+#: src/compose.c:594 src/mainwindow.c:700 src/messageview.c:249
 msgid "/_Tools/_Address book"
 msgstr "/Інструменти/Адресна книга"
 
-#: src/compose.c:669
+#: src/compose.c:595
 msgid "/_Tools/_Template"
 msgstr "/Інструменти/Шаблон"
 
-#: src/compose.c:670 src/mainwindow.c:718 src/messageview.c:264
+#: src/compose.c:596 src/mainwindow.c:718 src/messageview.c:264
 msgid "/_Tools/Actio_ns"
 msgstr "/Інструменти/Дії"
 
-#: src/compose.c:671 src/compose.c:675 src/mainwindow.c:703
+#: src/compose.c:597 src/compose.c:601 src/mainwindow.c:703
 #: src/mainwindow.c:717 src/mainwindow.c:719 src/mainwindow.c:722
 #: src/mainwindow.c:724 src/messageview.c:252 src/messageview.c:263
 msgid "/_Tools/---"
 msgstr "/Інструменти/---"
 
-#: src/compose.c:672
+#: src/compose.c:598
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/Інструменти/Редагувати зовнішнім редактором"
 
-#: src/compose.c:676
+#: src/compose.c:602
 msgid "/_Tools/PGP Si_gn"
 msgstr "/Інструменти/Підпис PGP"
 
-#: src/compose.c:677
+#: src/compose.c:603
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/Інструменти/Шифрування PGP"
 
-#: src/compose.c:882
+#: src/compose.c:808
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: файл не існує\n"
 
-#: src/compose.c:981 src/compose.c:1040 src/procmsg.c:1336
+#: src/compose.c:907 src/compose.c:966 src/procmsg.c:1336
 msgid "Can't get text part\n"
 msgstr "Не вдалось отримати текстову частину\n"
 
-#: src/compose.c:1428
+#: src/compose.c:1354
 msgid "Quote mark format error."
 msgstr "Помилка у форматі цитування."
 
-#: src/compose.c:1440
+#: src/compose.c:1366
 msgid "Message reply/forward format error."
 msgstr "Помилка у форматі message reply/forward."
 
-#: src/compose.c:1767
+#: src/compose.c:1693
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Файл %s не існує\n"
 
-#: src/compose.c:1771
+#: src/compose.c:1697
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Не вдалось отримати розмір %s\n"
 
-#: src/compose.c:1775
+#: src/compose.c:1701
 #, c-format
 msgid "File %s is empty."
 msgstr "Файл %s порожній."
 
-#: src/compose.c:1779
+#: src/compose.c:1705
 #, c-format
 msgid "Can't read %s."
 msgstr "Не вдалось прочитати %s."
 
-#: src/compose.c:1814
+#: src/compose.c:1740
 #, c-format
 msgid "Message: %s"
 msgstr "Лист: %s"
 
-#: src/compose.c:1885 src/mimeview.c:491
+#: src/compose.c:1811 src/mimeview.c:491
 msgid "Can't get the part of multipart message."
 msgstr "Не вдалось отримати одну з частин листа."
 
-#: src/compose.c:2319
+#: src/compose.c:2245
 msgid " [Edited]"
 msgstr " [Редагований]"
 
-#: src/compose.c:2321
+#: src/compose.c:2247
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - Створити лист%s"
 
-#: src/compose.c:2324
+#: src/compose.c:2250
 #, c-format
 msgid "Compose message%s"
 msgstr "Створити лист%s"
 
-#: src/compose.c:2435
+#: src/compose.c:2361
 msgid "Recipient is not specified."
 msgstr "Не вказано отримувача."
 
-#: src/compose.c:2443 src/compose.c:4274 src/mainwindow.c:2155
+#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2155
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Послати"
 
-#: src/compose.c:2444
+#: src/compose.c:2370
 msgid "Subject is empty. Send it anyway?"
 msgstr "Поле Subject порожнє. Все ж послати?"
 
-#: src/compose.c:2495
+#: src/compose.c:2421
 msgid "can't get recipient list."
 msgstr "не вдалось отримати список отримувачів."
 
-#: src/compose.c:2515
+#: src/compose.c:2441
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1086,26 +1026,26 @@ msgstr ""
 "Обліковий запис для відсилання пошти не вказано.\n"
 "Оберіть, будь-ласка, запис перед відправкою."
 
-#: src/compose.c:2529 src/send_message.c:261
+#: src/compose.c:2455 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Трапилась помилка при відсиланні листа до %s ."
 
-#: src/compose.c:2552
+#: src/compose.c:2478
 msgid "Can't save the message to outbox."
 msgstr "Не вдалось зберегти лист в outbox."
 
-#: src/compose.c:2588
+#: src/compose.c:2514
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Не вдалось знайти ключа, відповідного обраному ідентифікатору `%s'."
 
-#: src/compose.c:2650 src/compose.c:2879 src/compose.c:2942 src/compose.c:3062
+#: src/compose.c:2576 src/compose.c:2805 src/compose.c:2868 src/compose.c:2988
 #: src/utils.c:2194
 msgid "can't change file mode\n"
 msgstr "не вдалось змінити права доступу файла\n"
 
-#: src/compose.c:2682
+#: src/compose.c:2608
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1115,140 +1055,140 @@ msgstr ""
 "%s на %s.\n"
 "Все ж послати?"
 
-#: src/compose.c:2750
+#: src/compose.c:2676
 msgid "can't write headers\n"
 msgstr "не вдалось записати заголовки\n"
 
-#: src/compose.c:3022
+#: src/compose.c:2948
 msgid "can't remove the old message\n"
 msgstr "не вдалось видалити старий лист\n"
 
-#: src/compose.c:3040
+#: src/compose.c:2966
 msgid "queueing message...\n"
 msgstr "лист в чергу...\n"
 
-#: src/compose.c:3122
+#: src/compose.c:3048
 msgid "can't find queue folder\n"
 msgstr "не вдалось знайти папку черги\n"
 
-#: src/compose.c:3129
+#: src/compose.c:3055
 msgid "can't queue the message\n"
 msgstr "не вдалось поставити лист в чергу\n"
 
-#: src/compose.c:3706
+#: src/compose.c:3632
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "генерований Message-ID: %s\n"
 
-#: src/compose.c:3804
+#: src/compose.c:3730
 msgid "Creating compose window...\n"
 msgstr "Відкриваємо вікно створення листа...\n"
 
-#: src/compose.c:3807 src/compose.c:4795
+#: src/compose.c:3733 src/compose.c:4720
 msgid "MIME type"
 msgstr "тип MIME"
 
 #. S_COL_DATE
-#: src/compose.c:3808 src/mimeview.c:150 src/prefs_filter_edit.c:585
+#: src/compose.c:3734 src/mimeview.c:150 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:73 src/select-keys.c:317 src/summaryview.c:386
 msgid "Size"
 msgstr "Розмір"
 
-#: src/compose.c:3859 src/headerview.c:53 src/summary_search.c:169
+#: src/compose.c:3785 src/headerview.c:53 src/summary_search.c:169
 msgid "From:"
 msgstr "Від:"
 
-#: src/compose.c:4275
+#: src/compose.c:4200
 msgid "Send message"
 msgstr "Послати лист"
 
-#: src/compose.c:4283
+#: src/compose.c:4208
 msgid "Send later"
 msgstr "Послати пізніше"
 
-#: src/compose.c:4284
+#: src/compose.c:4209
 msgid "Put into queue folder and send later"
 msgstr "Покласти в папку черги і послати пізніше"
 
-#: src/compose.c:4292
+#: src/compose.c:4217
 msgid "Draft"
 msgstr "Чорновик"
 
-#: src/compose.c:4293
+#: src/compose.c:4218
 msgid "Save to draft folder"
 msgstr "Зберегти в папці чорновиків"
 
-#: src/compose.c:4303 src/compose.c:5588
+#: src/compose.c:4228 src/compose.c:5513
 msgid "Insert"
 msgstr "Вставити"
 
-#: src/compose.c:4304
+#: src/compose.c:4229
 msgid "Insert file"
 msgstr "Вставити файл"
 
-#: src/compose.c:4312
+#: src/compose.c:4237
 msgid "Attach"
 msgstr "Приєднати"
 
-#: src/compose.c:4313
+#: src/compose.c:4238
 msgid "Attach file"
 msgstr "Приєднати файл"
 
 #. signature
-#: src/compose.c:4323 src/prefs_account.c:1339 src/prefs_common.c:1278
+#: src/compose.c:4248 src/prefs_account.c:1339 src/prefs_common.c:1278
 msgid "Signature"
 msgstr "Підпис"
 
-#: src/compose.c:4324
+#: src/compose.c:4249
 msgid "Insert signature"
 msgstr "Вставити підпис"
 
-#: src/compose.c:4333 src/prefs_common.c:1300 src/prefs_common.c:2187
+#: src/compose.c:4258 src/prefs_common.c:1300 src/prefs_common.c:2187
 msgid "Editor"
 msgstr "Редактор"
 
-#: src/compose.c:4334
+#: src/compose.c:4259
 msgid "Edit with external editor"
 msgstr "Редагувати зовнішнім редактором"
 
-#: src/compose.c:4342
+#: src/compose.c:4267
 msgid "Linewrap"
 msgstr "Згортання рядків"
 
-#: src/compose.c:4343
+#: src/compose.c:4268
 msgid "Wrap all long lines"
 msgstr "Згорнути всі довгі рядки"
 
-#: src/compose.c:4689
+#: src/compose.c:4614
 msgid "Invalid MIME type."
 msgstr "Неправильний тип MIME."
 
-#: src/compose.c:4708
+#: src/compose.c:4633
 msgid "File doesn't exist or is empty."
 msgstr "Файл не існує або порожній."
 
-#: src/compose.c:4777
+#: src/compose.c:4702
 msgid "Properties"
 msgstr "Властивості"
 
-#: src/compose.c:4797
+#: src/compose.c:4722
 msgid "Encoding"
 msgstr "Кодування"
 
-#: src/compose.c:4820 src/prefs_folder_item.c:183
+#: src/compose.c:4745 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Шлях"
 
-#: src/compose.c:4821
+#: src/compose.c:4746
 msgid "File name"
 msgstr "Ім'я файлу"
 
-#: src/compose.c:4975
+#: src/compose.c:4900
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Командний рядок зовнішнього редактора неправильний: `%s'\n"
 
-#: src/compose.c:5001
+#: src/compose.c:4926
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1259,72 +1199,72 @@ msgstr ""
 "Примусово обірвати процес?\n"
 "group id процесу: %d"
 
-#: src/compose.c:5014
+#: src/compose.c:4939
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Обірвано процес з group id: %d"
 
-#: src/compose.c:5015
+#: src/compose.c:4940
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Тимчасовий файл: %s"
 
-#: src/compose.c:5039
+#: src/compose.c:4964
 msgid "Compose: input from monitoring process\n"
 msgstr "Створення: ввід від спостерігаючого процесу\n"
 
 #. failed
-#: src/compose.c:5072
+#: src/compose.c:4997
 msgid "Couldn't exec external editor\n"
 msgstr "Не вдалось запустити зовнішній редактор\n"
 
-#: src/compose.c:5076
+#: src/compose.c:5001
 msgid "Couldn't write to file\n"
 msgstr "Не вдалось записати в файл\n"
 
-#: src/compose.c:5078
+#: src/compose.c:5003
 msgid "Pipe read failed\n"
 msgstr "Не вдалось прочитати з каналу\n"
 
-#: src/compose.c:5379 src/compose.c:5387 src/compose.c:5393
+#: src/compose.c:5304 src/compose.c:5312 src/compose.c:5318
 msgid "Can't queue the message."
 msgstr "Не вдалось поставити лист в чергу."
 
-#: src/compose.c:5484
+#: src/compose.c:5409
 #, fuzzy
 msgid "Select files"
 msgstr "Обрати файл"
 
-#: src/compose.c:5506
+#: src/compose.c:5431
 msgid "Select file"
 msgstr "Обрати файл"
 
-#: src/compose.c:5541
+#: src/compose.c:5466
 msgid "Discard message"
 msgstr "Відмовитись від листа"
 
-#: src/compose.c:5542
+#: src/compose.c:5467
 msgid "This message has been modified. discard it?"
 msgstr "Цей лист було змінено. Відмовитись від нього?"
 
-#: src/compose.c:5543
+#: src/compose.c:5468
 msgid "Discard"
 msgstr "Відмовитись"
 
-#: src/compose.c:5543
+#: src/compose.c:5468
 msgid "to Draft"
 msgstr "В чорновики"
 
-#: src/compose.c:5585
+#: src/compose.c:5510
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Чи бажаєте Ви застосувати шаблон `%s' ?"
 
-#: src/compose.c:5587
+#: src/compose.c:5512
 msgid "Apply template"
 msgstr "Застосувати шаблон"
 
-#: src/compose.c:5588
+#: src/compose.c:5513
 msgid "Replace"
 msgstr "Замінити"
 
@@ -1485,12 +1425,12 @@ msgstr "Редагувати папку"
 msgid "Input the new name of folder:"
 msgstr "Введіть нову назву папки:"
 
-#: src/editgroup.c:513 src/foldersel.c:492 src/folderview.c:1807
-#: src/folderview.c:1813
+#: src/editgroup.c:513 src/foldersel.c:492 src/folderview.c:1810
+#: src/folderview.c:1816
 msgid "New folder"
 msgstr "Нова папка"
 
-#: src/editgroup.c:514 src/foldersel.c:493 src/folderview.c:1814
+#: src/editgroup.c:514 src/foldersel.c:493 src/folderview.c:1817
 msgid "Input the name of new folder:"
 msgstr "Введіть назву нової папки:"
 
@@ -1679,88 +1619,88 @@ msgstr "Кошик"
 msgid "Drafts"
 msgstr "Чорновики"
 
-#: src/foldersel.c:494 src/folderview.c:1811 src/folderview.c:1815
+#: src/foldersel.c:494 src/folderview.c:1814 src/folderview.c:1818
 msgid "NewFolder"
 msgstr "НоваПапка"
 
-#: src/foldersel.c:502 src/folderview.c:1823 src/folderview.c:1879
+#: src/foldersel.c:502 src/folderview.c:1826 src/folderview.c:1882
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c' не може міститись в назві папки."
 
-#: src/foldersel.c:512 src/folderview.c:1833 src/folderview.c:1886
+#: src/foldersel.c:512 src/folderview.c:1836 src/folderview.c:1889
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Папка `%s' вже існує."
 
-#: src/foldersel.c:520 src/folderview.c:1840
+#: src/foldersel.c:520 src/folderview.c:1843
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Не вдалось створити папку `%s'."
 
-#: src/folderview.c:220 src/folderview.c:236
+#: src/folderview.c:218 src/folderview.c:234
 msgid "/Create _new folder..."
 msgstr "/Створити нову папку..."
 
-#: src/folderview.c:221 src/folderview.c:237
+#: src/folderview.c:219 src/folderview.c:235
 msgid "/_Rename folder..."
 msgstr "/Перейменувати папку..."
 
-#: src/folderview.c:222 src/folderview.c:238
+#: src/folderview.c:220 src/folderview.c:236
 msgid "/_Delete folder"
 msgstr "/Видалити папку"
 
-#: src/folderview.c:224 src/folderview.c:240
+#: src/folderview.c:222 src/folderview.c:238
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Спорожнити кошик"
 
-#: src/folderview.c:226 src/folderview.c:244 src/folderview.c:260
+#: src/folderview.c:224 src/folderview.c:242 src/folderview.c:258
 msgid "/_Check for new messages"
 msgstr "/Перевірити за новими листами"
 
-#: src/folderview.c:228 src/folderview.c:246
+#: src/folderview.c:226 src/folderview.c:244
 msgid "/R_ebuild folder tree"
 msgstr "/Перебудувати дерево папок"
 
-#: src/folderview.c:230 src/folderview.c:248 src/folderview.c:263
+#: src/folderview.c:228 src/folderview.c:246 src/folderview.c:261
 msgid "/_Search messages..."
 msgstr "/Шукати листи..."
 
-#: src/folderview.c:242 src/folderview.c:258
+#: src/folderview.c:240 src/folderview.c:256
 msgid "/Down_load"
 msgstr "/Завантажити"
 
-#: src/folderview.c:254
+#: src/folderview.c:252
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Передплатити конференцію"
 
-#: src/folderview.c:256
+#: src/folderview.c:254
 msgid "/_Remove newsgroup"
 msgstr "/Видалити конференцію"
 
-#: src/folderview.c:285
+#: src/folderview.c:283
 msgid "Creating folder view...\n"
 msgstr "Створення області перегляду папок...\n"
 
-#: src/folderview.c:360
+#: src/folderview.c:362
 msgid "New"
 msgstr "Нові"
 
 #. S_COL_MARK
-#: src/folderview.c:371 src/prefs_summary_column.c:68
+#: src/folderview.c:373 src/prefs_summary_column.c:68
 msgid "Unread"
 msgstr "Непрочитані"
 
-#: src/folderview.c:382
+#: src/folderview.c:384
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:500
+#: src/folderview.c:494
 msgid "Setting folder info...\n"
 msgstr "Встановлюємо інформацію папки...\n"
 
-#: src/folderview.c:501
+#: src/folderview.c:495
 msgid "Setting folder info..."
 msgstr "Встановлюємо інформацію папки..."
 
@@ -1794,22 +1734,22 @@ msgstr "Не вдалось перебудувати дерево папок."
 msgid "Checking for new messages in all folders..."
 msgstr "Перевірити за новими листами у всіх папках..."
 
-#: src/folderview.c:1602
+#: src/folderview.c:1605
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Папку %s обрано\n"
 
-#: src/folderview.c:1723
+#: src/folderview.c:1726
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Завантажуємо листи у %s ..."
 
-#: src/folderview.c:1758
+#: src/folderview.c:1761
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Трапилась помилка при завантаженні листів у `%s'."
 
-#: src/folderview.c:1808
+#: src/folderview.c:1811
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -1819,16 +1759,16 @@ msgstr ""
 "(якщо бажаєте створити папку, яка містить підпапки,\n"
 " додайте `/' в кінці назви)"
 
-#: src/folderview.c:1870
+#: src/folderview.c:1873
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Введіть нову назву для `%s':"
 
-#: src/folderview.c:1871
+#: src/folderview.c:1874
 msgid "Rename folder"
 msgstr "Перейменувати папку"
 
-#: src/folderview.c:1951
+#: src/folderview.c:1954
 #, c-format
 msgid ""
 "All folder(s) and message(s) under `%s' will be deleted.\n"
@@ -1837,24 +1777,24 @@ msgstr ""
 "Всі папки і листи в `%s' буде видалено.\n"
 "Справді бажаєте видалити?"
 
-#: src/folderview.c:1953
+#: src/folderview.c:1956
 msgid "Delete folder"
 msgstr "Видалити папку"
 
-#: src/folderview.c:1975
+#: src/folderview.c:1978
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Не вдалось видалити папку `%s'."
 
-#: src/folderview.c:2009
+#: src/folderview.c:2012
 msgid "Empty trash"
 msgstr "Спорожнити кошик"
 
-#: src/folderview.c:2009
+#: src/folderview.c:2012
 msgid "Empty all messages in trash?"
 msgstr "Видалити всі листи з кошика?"
 
-#: src/folderview.c:2044
+#: src/folderview.c:2047
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -1863,34 +1803,34 @@ msgstr ""
 "Справді видалити скриньку `%s' ?\n"
 "(Листи НЕ видаляються з диска)"
 
-#: src/folderview.c:2046
+#: src/folderview.c:2049
 msgid "Remove mailbox"
 msgstr "Видалити скриньку"
 
-#: src/folderview.c:2089
+#: src/folderview.c:2092
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Справді видалити обліковий запис IMAP4 `%s'?"
 
-#: src/folderview.c:2090
+#: src/folderview.c:2093
 msgid "Delete IMAP4 account"
 msgstr "Видалити обліковий запис IMAP4"
 
-#: src/folderview.c:2227
+#: src/folderview.c:2230
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Дійсно видалити конференцію `%s'?"
 
-#: src/folderview.c:2228
+#: src/folderview.c:2231
 msgid "Delete newsgroup"
 msgstr "Видалити конференцію"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2274
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Дійсно видалити обліковий запис конференції `%s'?"
 
-#: src/folderview.c:2272
+#: src/folderview.c:2275
 msgid "Delete news account"
 msgstr "Видалити обліковий запис конференції"
 
@@ -2002,124 +1942,124 @@ msgstr "не вдалось очистити папку від видалени�
 msgid "can't set deleted flags: 1:*\n"
 msgstr "не вдалось встановити прапорець видалення: 1:*\n"
 
-#: src/imap.c:1464
+#: src/imap.c:1466
 msgid "can't close folder\n"
 msgstr "не вдалось закрити папку\n"
 
-#: src/imap.c:1542
+#: src/imap.c:1544
 #, c-format
 msgid "root folder %s not exist\n"
 msgstr "коренева папка %s не існує\n"
 
-#: src/imap.c:1720 src/imap.c:1728
+#: src/imap.c:1722 src/imap.c:1730
 msgid "error occurred while getting LIST.\n"
 msgstr "помилка при отриманні LIST'а.\n"
 
-#: src/imap.c:1842
+#: src/imap.c:1844
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "Не вдалось створити '%s'\n"
 
-#: src/imap.c:1847
+#: src/imap.c:1849
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "Не вдалось створити '%s' всередині INBOX\n"
 
-#: src/imap.c:1908
+#: src/imap.c:1910
 msgid "can't create mailbox: LIST failed\n"
 msgstr "не вдалось створити скриньку: невдача LIST\n"
 
-#: src/imap.c:1928
+#: src/imap.c:1930
 msgid "can't create mailbox\n"
 msgstr "не вдалось створити скриньку\n"
 
-#: src/imap.c:1997
+#: src/imap.c:1999
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "не вдалось перейменувати скриньку: %s на %s\n"
 
-#: src/imap.c:2059
+#: src/imap.c:2061
 msgid "can't delete mailbox\n"
 msgstr "не вдалось видалити скриньку\n"
 
-#: src/imap.c:2098
+#: src/imap.c:2100
 msgid "can't get envelope\n"
 msgstr "не вдалось отримати конверт\n"
 
-#: src/imap.c:2106
+#: src/imap.c:2108
 msgid "error occurred while getting envelope.\n"
 msgstr "трапилась помилка при отриманні конверта.\n"
 
-#: src/imap.c:2127
+#: src/imap.c:2129
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "не вдалось розібрати конверт: %s\n"
 
-#: src/imap.c:2250
+#: src/imap.c:2252
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Не вдалось з'єднатись з сервером IMAP4: %s:%d\n"
 
-#: src/imap.c:2257
+#: src/imap.c:2259
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Не вдалось встановити сесію IMAP4 з: %s:%d\n"
 
-#: src/imap.c:2332
+#: src/imap.c:2334
 msgid "can't get namespace\n"
 msgstr "не вдалось отримати простір імен\n"
 
-#: src/imap.c:2850
+#: src/imap.c:2852
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "не вдалось отримати папку: %s\n"
 
-#: src/imap.c:3021
+#: src/imap.c:3023
 msgid "IMAP4 authentication failed.\n"
 msgstr "Невдача авторизації IMAP4.\n"
 
-#: src/imap.c:3038
+#: src/imap.c:3040
 msgid "IMAP4 login failed.\n"
 msgstr "Невдача авторизації IMAP4.\n"
 
-#: src/imap.c:3359
+#: src/imap.c:3361
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "не вдалось додати %s до %s\n"
 
-#: src/imap.c:3366
+#: src/imap.c:3368
 msgid "(sending file...)"
 msgstr "(посилаємо файл...)"
 
-#: src/imap.c:3394
+#: src/imap.c:3396
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "не вдалось приєднати лист до %s\n"
 
-#: src/imap.c:3426
+#: src/imap.c:3428
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "не вдалось скопіювати %s в %s\n"
 
-#: src/imap.c:3450
+#: src/imap.c:3452
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "помилка при виконанні команди imap:  STORE %s %s\n"
 
-#: src/imap.c:3464
+#: src/imap.c:3466
 msgid "error while imap command: EXPUNGE\n"
 msgstr "помилка при виконанні команди imap: EXPUNGE\n"
 
-#: src/imap.c:3477
+#: src/imap.c:3479
 msgid "error while imap command: CLOSE\n"
 msgstr "помилка при виконанні команди imap: CLOSE\n"
 
-#: src/imap.c:3704
+#: src/imap.c:3706
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv не може конвертувати UTF-7 в %s\n"
 
-#: src/imap.c:3734
+#: src/imap.c:3736
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv не може конвертувати %s в UTF-7\n"
@@ -4985,11 +4925,11 @@ msgstr ""
 "Ви також можете змінити кожен shortcut меню, натиснувши\n"
 "будь-яку(і) клавішу(і), тримаючи вказівник миші на пункті."
 
-#: src/prefs_common.c:3083 src/prefs_common.c:3432
+#: src/prefs_common.c:3083 src/prefs_common.c:3407
 msgid "Default"
 msgstr "По замовчуванню"
 
-#: src/prefs_common.c:3086 src/prefs_common.c:3441
+#: src/prefs_common.c:3086 src/prefs_common.c:3416
 msgid "Old Sylpheed"
 msgstr "Старий Sylpheed"
 
@@ -5431,7 +5371,7 @@ msgstr ""
 msgid "Signature made at %s\n"
 msgstr "Підпис створений %s\n"
 
-#: src/rfc2015.c:278 src/sigstatus.c:264
+#: src/rfc2015.c:278 src/sigstatus.c:266
 msgid "Error verifying the signature"
 msgstr "Помилка при перевірці підпису"
 
@@ -5578,66 +5518,66 @@ msgstr "Перевіряємо підпис"
 msgid "%s%s%s from \"%s\""
 msgstr "%s%s%s від \"%s\""
 
-#: src/sigstatus.c:227
+#: src/sigstatus.c:229
 msgid "No signature found"
 msgstr "Підпису не знайдено"
 
-#: src/sigstatus.c:234
+#: src/sigstatus.c:236
 #, c-format
 msgid "Good signature from \"%s\""
 msgstr "Гарний підпис від \"%s\""
 
-#: src/sigstatus.c:235 src/textview.c:591
+#: src/sigstatus.c:237 src/textview.c:591
 msgid "Good signature"
 msgstr "Гарний підпис"
 
-#: src/sigstatus.c:239
+#: src/sigstatus.c:241
 #, c-format
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:240 src/textview.c:593
+#: src/sigstatus.c:242 src/textview.c:593
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
-#: src/sigstatus.c:245
+#: src/sigstatus.c:247
 #, c-format
 msgid "Signature valid but expired for \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:246
+#: src/sigstatus.c:248
 #, fuzzy
 msgid "Signature valid but expired"
 msgstr "Підпис створений %s\n"
 
-#: src/sigstatus.c:249
+#: src/sigstatus.c:251
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has expired"
 msgstr ""
 
-#: src/sigstatus.c:250
+#: src/sigstatus.c:252
 msgid "Signature valid but the signing key has expired"
 msgstr ""
 
-#: src/sigstatus.c:253
+#: src/sigstatus.c:255
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has been revoked"
 msgstr ""
 
-#: src/sigstatus.c:254
+#: src/sigstatus.c:256
 msgid "Signature valid but the signing key has been revoked"
 msgstr ""
 
-#: src/sigstatus.c:257
+#: src/sigstatus.c:259
 #, c-format
 msgid "BAD signature from \"%s\""
 msgstr "ПОГАНИЙ підпис від \"%s\""
 
-#: src/sigstatus.c:258 src/textview.c:595
+#: src/sigstatus.c:260 src/textview.c:595
 msgid "BAD signature"
 msgstr "ПОГАНИЙ підпис"
 
-#: src/sigstatus.c:261
+#: src/sigstatus.c:263
 msgid "No public key to verify the signature"
 msgstr "Немає публічного ключа для перевірки підпису"
 
@@ -6132,6 +6072,51 @@ msgstr "%.2fGB"
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "Невдача запису в %s.\n"
+
+#~ msgid "/_Edit/A_dvanced"
+#~ msgstr "/Редагувати/Advanced"
+
+#~ msgid "/_Edit/A_dvanced/Move a character backward"
+#~ msgstr "/Редагувати/Advanced/На літеру назад"
+
+#~ msgid "/_Edit/A_dvanced/Move a character forward"
+#~ msgstr "/Редагувати/Advanced/На літеру вперед"
+
+#~ msgid "/_Edit/A_dvanced/Move a word backward"
+#~ msgstr "/Редагувати/Advanced/На слово назад"
+
+#~ msgid "/_Edit/A_dvanced/Move a word forward"
+#~ msgstr "/Редагувати/Advanced/На слово вперед"
+
+#~ msgid "/_Edit/A_dvanced/Move to beginning of line"
+#~ msgstr "/Редагувати/Advanced/На початок рядка"
+
+#~ msgid "/_Edit/A_dvanced/Move to end of line"
+#~ msgstr "/Редагувати/Advanced/На кінець рядка"
+
+#~ msgid "/_Edit/A_dvanced/Move to previous line"
+#~ msgstr "/Редагувати/Advanced/На попередній рядок"
+
+#~ msgid "/_Edit/A_dvanced/Move to next line"
+#~ msgstr "/Редагувати/Advanced/На наступний рядок"
+
+#~ msgid "/_Edit/A_dvanced/Delete a character backward"
+#~ msgstr "/Редагувати/Advanced/Видалити літеру назад"
+
+#~ msgid "/_Edit/A_dvanced/Delete a character forward"
+#~ msgstr "/Редагувати/Advanced/Видалити літеру вперед"
+
+#~ msgid "/_Edit/A_dvanced/Delete a word backward"
+#~ msgstr "/Редагувати/Advanced/Видалити слово назад"
+
+#~ msgid "/_Edit/A_dvanced/Delete a word forward"
+#~ msgstr "/Редагувати/Advanced/Видалити слово вперед"
+
+#~ msgid "/_Edit/A_dvanced/Delete line"
+#~ msgstr "/Редагувати/Advanced/Видалити рядок"
+
+#~ msgid "/_Edit/A_dvanced/Delete to end of line"
+#~ msgstr "/Редагувати/Advanced/Видалити до кінця рядка"
 
 #~ msgid "Rebuilding all folder trees..."
 #~ msgstr "Перебудовуємо всі дерева папок..."
