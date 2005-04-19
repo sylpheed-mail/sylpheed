@@ -381,9 +381,6 @@ static void compose_paste_cb		(Compose	*compose);
 static void compose_paste_as_quote_cb	(Compose	*compose);
 static void compose_allsel_cb		(Compose	*compose);
 
-static void compose_action_cb		(Compose	*compose,
-					 ComposeAction	 action);
-
 static void compose_grab_focus_cb	(GtkWidget	*widget,
 					 Compose	*compose);
 
@@ -502,77 +499,6 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_Edit/Paste as _quotation"),
 					NULL, compose_paste_as_quote_cb, 0, NULL},
 	{N_("/_Edit/Select _all"),	"<control>A", compose_allsel_cb, 0, NULL},
-	{N_("/_Edit/A_dvanced"),	NULL, NULL, 0, "<Branch>"},
-	{N_("/_Edit/A_dvanced/Move a character backward"),
-					"<control>B",
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_BACKWARD_CHARACTER,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move a character forward"),
-					"<control>F",
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_FORWARD_CHARACTER,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move a word backward"),
-					NULL, /* "<alt>B" */
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_BACKWARD_WORD,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move a word forward"),
-					NULL, /* "<alt>F" */
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_FORWARD_WORD,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move to beginning of line"),
-					NULL, /* "<control>A" */
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_BEGINNING_OF_LINE,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move to end of line"),
-					"<control>E",
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_END_OF_LINE,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move to previous line"),
-					"<control>P",
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_PREVIOUS_LINE,
-					NULL},
-	{N_("/_Edit/A_dvanced/Move to next line"),
-					"<control>N",
-					compose_action_cb,
-					COMPOSE_ACTION_MOVE_NEXT_LINE,
-					NULL},
-	{N_("/_Edit/A_dvanced/Delete a character backward"),
-					"<control>H",
-					compose_action_cb,
-					COMPOSE_ACTION_DELETE_BACKWARD_CHARACTER,
-					NULL},
-	{N_("/_Edit/A_dvanced/Delete a character forward"),
-					"<control>D",
-					compose_action_cb,
-					COMPOSE_ACTION_DELETE_FORWARD_CHARACTER,
-					NULL},
-	{N_("/_Edit/A_dvanced/Delete a word backward"),
-					NULL, /* "<control>W" */
-					compose_action_cb,
-					COMPOSE_ACTION_DELETE_BACKWARD_WORD,
-					NULL},
-	{N_("/_Edit/A_dvanced/Delete a word forward"),
-					NULL, /* "<alt>D", */
-					compose_action_cb,
-					COMPOSE_ACTION_DELETE_FORWARD_WORD,
-					NULL},
-	{N_("/_Edit/A_dvanced/Delete line"),
-					"<control>U",
-					compose_action_cb,
-					COMPOSE_ACTION_DELETE_LINE,
-					NULL},
-	{N_("/_Edit/A_dvanced/Delete to end of line"),
-					"<control>K",
-					compose_action_cb,
-					COMPOSE_ACTION_DELETE_TO_LINE_END,
-					NULL},
 	{N_("/_Edit/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Edit/_Wrap current paragraph"),
 					"<control>L", compose_wrap_cb, 0, NULL},
@@ -4191,7 +4117,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		menu_set_sensitive(ifactory, "/Edit/Wrap current paragraph", FALSE);
 		menu_set_sensitive(ifactory, "/Edit/Wrap all long lines", FALSE);
 		menu_set_sensitive(ifactory, "/Edit/Auto wrapping", FALSE);
-		menu_set_sensitive(ifactory, "/Edit/Advanced", FALSE);
 		menu_set_sensitive(ifactory, "/View/Attachment", FALSE);
 		menu_set_sensitive(ifactory, "/Tools/Template", FALSE);
 		menu_set_sensitive(ifactory, "/Tools/Actions", FALSE);
@@ -5737,92 +5662,6 @@ static void compose_allsel_cb(Compose *compose)
 				(buffer, "selection_bound", &iter);
 		}
 	}
-}
-
-static void textview_move_beginning_of_line(GtkTextView *text)
-{
-}
-
-static void textview_move_forward_character(GtkTextView *text)
-{
-}
-
-static void textview_move_backward_character(GtkTextView *text)
-{
-}
-
-static void textview_move_forward_word(GtkTextView *text)
-{
-}
-
-static void textview_move_backward_word(GtkTextView *text)
-{
-}
-
-static void textview_move_end_of_line(GtkTextView *text)
-{
-}
-
-static void textview_move_next_line(GtkTextView *text)
-{
-}
-
-static void textview_move_previous_line(GtkTextView *text)
-{
-}
-
-static void textview_delete_forward_character(GtkTextView *text)
-{
-}
-
-static void textview_delete_backward_character(GtkTextView *text)
-{
-}
-
-static void textview_delete_forward_word(GtkTextView *text)
-{
-}
-
-static void textview_delete_backward_word(GtkTextView *text)
-{
-}
-
-static void textview_delete_line(GtkTextView *text)
-{
-}
-
-static void textview_delete_to_line_end(GtkTextView *text)
-{
-}
-
-static void compose_action_cb(Compose *compose, ComposeAction action)
-{
-	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
-	static struct {
-		void (*do_action) (GtkTextView *text);
-	} action_table[] = {
-		{textview_move_beginning_of_line},
-		{textview_move_forward_character},
-		{textview_move_backward_character},
-		{textview_move_forward_word},
-		{textview_move_backward_word},
-		{textview_move_end_of_line},
-		{textview_move_next_line},
-		{textview_move_previous_line},
-		{textview_delete_forward_character},
-		{textview_delete_backward_character},
-		{textview_delete_forward_word},
-		{textview_delete_backward_word},
-		{textview_delete_line},
-		{NULL}, /* textview_delete_line_n */
-		{textview_delete_to_line_end}
-	};
-
-	if (!GTK_WIDGET_HAS_FOCUS(text)) return;
-
-	if (action >= COMPOSE_ACTION_MOVE_BEGINNING_OF_LINE &&
-	    action <= COMPOSE_ACTION_DELETE_TO_LINE_END)
-		action_table[action].do_action(text);
 }
 
 static void compose_grab_focus_cb(GtkWidget *widget, Compose *compose)

@@ -3208,11 +3208,6 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 
 		{"<Compose>/File/Close",			"<control>W"},
 		{"<Compose>/Edit/Select all",			"<control>A"},
-		{"<Compose>/Edit/Advanced/Move a word backward",	""},
-		{"<Compose>/Edit/Advanced/Move a word forward",		""},
-		{"<Compose>/Edit/Advanced/Move to beginning of line",	""},
-		{"<Compose>/Edit/Advanced/Delete a word backward",	""},
-		{"<Compose>/Edit/Advanced/Delete a word forward",	""},
 	};
 
 	static struct KeyBind mew_wl_menurc[] = {
@@ -3261,11 +3256,6 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 
 		{"<Compose>/File/Close",			"<alt>W"},
 		{"<Compose>/Edit/Select all",			""},
-		{"<Compose>/Edit/Advanced/Move a word backward",	"<alt>B"},
-		{"<Compose>/Edit/Advanced/Move a word forward",		"<alt>F"},
-		{"<Compose>/Edit/Advanced/Move to beginning of line",	"<control>A"},
-		{"<Compose>/Edit/Advanced/Delete a word backward",	"<control>W"},
-		{"<Compose>/Edit/Advanced/Delete a word forward",	"<alt>D"},
 	};
 
 	static struct KeyBind mutt_menurc[] = {
@@ -3314,11 +3304,6 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 
 		{"<Compose>/File/Close",			"<alt>W"},
 		{"<Compose>/Edit/Select all",			""},
-		{"<Compose>/Edit/Advanced/Move a word backward",	"<alt>B"},
-		{"<Compose>/Edit/Advanced/Move a word forward",		"<alt>F"},
-		{"<Compose>/Edit/Advanced/Move to beginning of line",	"<control>A"},
-		{"<Compose>/Edit/Advanced/Delete a word backward",	"<control>W"},
-		{"<Compose>/Edit/Advanced/Delete a word forward",	"<alt>D"},
 	};
 
 	static struct KeyBind old_sylpheed_menurc[] = {
@@ -3367,11 +3352,6 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 
 		{"<Compose>/File/Close",			"<alt>W"},
 		{"<Compose>/Edit/Select all",			""},
-		{"<Compose>/Edit/Advanced/Move a word backward",	"<alt>B"},
-		{"<Compose>/Edit/Advanced/Move a word forward",		"<alt>F"},
-		{"<Compose>/Edit/Advanced/Move to beginning of line",	"<control>A"},
-		{"<Compose>/Edit/Advanced/Delete a word backward",	"<control>W"},
-		{"<Compose>/Edit/Advanced/Delete a word forward",	"<alt>D"},
 	};
 
 	static struct KeyBind empty_menurc[] = {
@@ -3420,11 +3400,6 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 
 		{"<Compose>/File/Close",			""},
 		{"<Compose>/Edit/Select all",			""},
-		{"<Compose>/Edit/Advanced/Move a word backward",	""},
-		{"<Compose>/Edit/Advanced/Move a word forward",		""},
-		{"<Compose>/Edit/Advanced/Move to beginning of line",	""},
-		{"<Compose>/Edit/Advanced/Delete a word backward",	""},
-		{"<Compose>/Edit/Advanced/Delete a word forward",	""},
 	};
 
 	text = gtk_entry_get_text(entry);
