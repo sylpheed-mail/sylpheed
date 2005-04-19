@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,10 @@ void session_init(Session *session)
 	session->write_buf = NULL;
 	session->write_buf_p = NULL;
 	session->write_buf_len = 0;
+
+	session->write_data = NULL;
+	session->write_data_p = NULL;
+	session->write_data_len = 0;
 
 	session->timeout_tag = 0;
 	session->timeout_interval = 0;
@@ -363,16 +367,15 @@ gint session_send_data(Session *session, const guchar *data, guint size)
 {
 	gboolean ret;
 
-	g_return_val_if_fail(session->write_buf == NULL, -1);
+	g_return_val_if_fail(session->write_data == NULL, -1);
 	g_return_val_if_fail(data != NULL, -1);
 	g_return_val_if_fail(size != 0, -1);
 
 	session->state = SESSION_SEND;
 
-	session->write_buf = g_malloc(size);
-	session->write_buf_p = session->write_buf;
-	memcpy(session->write_buf, data, size);
-	session->write_buf_len = size;
+	session->write_data = data;
+	session->write_data_p = session->write_data;
+	session->write_data_len = size;
 	gettimeofday(&session->tv_prev, NULL);
 
 	ret = session_write_data_cb(session->sock, G_IO_OUT, session);
@@ -654,6 +657,48 @@ static gint session_write_buf(Session *session)
 	return 0;
 }
 
+static gint session_write_data(Session *session)
+{
+	gint write_len;
+	gint to_write_len;
+
+	g_return_val_if_fail(session->write_data != NULL, -1);
+	g_return_val_if_fail(session->write_data_p != NULL, -1);
+	g_return_val_if_fail(session->write_data_len > 0, -1);
+
+	to_write_len = session->write_data_len -
+		(session->write_data_p - session->write_data);
+	to_write_len = MIN(to_write_len, SESSION_BUFFSIZE);
+
+	write_len = sock_write(session->sock, session->write_data_p,
+			       to_write_len);
+
+	if (write_len < 0) {
+		switch (errno) {
+		case EAGAIN:
+			write_len = 0;
+			break;
+		default:
+			g_warning("sock_write: %s\n", g_strerror(errno));
+			session->state = SESSION_ERROR;
+			return -1;
+		}
+	}
+
+	/* incomplete write */
+	if (session->write_data_p - session->write_data + write_len <
+	    session->write_data_len) {
+		session->write_data_p += write_len;
+		return 1;
+	}
+
+	session->write_data = NULL;
+	session->write_data_p = NULL;
+	session->write_data_len = 0;
+
+	return 0;
+}
+
 static gboolean session_write_msg_cb(SockInfo *source, GIOCondition condition,
 				     gpointer data)
 {
@@ -687,17 +732,17 @@ static gboolean session_write_data_cb(SockInfo *source,
 				      GIOCondition condition, gpointer data)
 {
 	Session *session = SESSION(data);
-	guint write_buf_len;
+	guint write_data_len;
 	gint ret;
 
 	g_return_val_if_fail(condition == G_IO_OUT, FALSE);
-	g_return_val_if_fail(session->write_buf != NULL, FALSE);
-	g_return_val_if_fail(session->write_buf_p != NULL, FALSE);
-	g_return_val_if_fail(session->write_buf_len > 0, FALSE);
+	g_return_val_if_fail(session->write_data != NULL, FALSE);
+	g_return_val_if_fail(session->write_data_p != NULL, FALSE);
+	g_return_val_if_fail(session->write_data_len > 0, FALSE);
 
-	write_buf_len = session->write_buf_len;
+	write_data_len = session->write_data_len;
 
-	ret = session_write_buf(session);
+	ret = session_write_data(session);
 
 	if (ret < 0) {
 		session->state = SESSION_ERROR;
@@ -712,8 +757,8 @@ static gboolean session_write_data_cb(SockInfo *source,
 			session_set_timeout(session, session->timeout_interval);
 			session->send_data_progressive_notify
 				(session,
-				 session->write_buf_p - session->write_buf,
-				 write_buf_len,
+				 session->write_data_p - session->write_data,
+				 write_data_len,
 				 session->send_data_progressive_notify_data);
 			gettimeofday(&session->tv_prev, NULL);
 		}
@@ -726,8 +771,8 @@ static gboolean session_write_data_cb(SockInfo *source,
 	}
 
 	/* callback */
-	ret = session->send_data_finished(session, write_buf_len);
-	session->send_data_notify(session, write_buf_len,
+	ret = session->send_data_finished(session, write_data_len);
+	session->send_data_notify(session, write_data_len,
 				  session->send_data_notify_data);
 
 	return FALSE;

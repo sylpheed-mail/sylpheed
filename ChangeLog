@@ -1,5 +1,10 @@
 2005-04-19
 
+	* src/session.[ch]: use separate buffer for large data to be sent,
+	  and don't duplicate it (reduces memory usage).
+
+2005-04-19
+
 	* src/compose.c
 	  src/prefs_common.c: removed '/Edit/Advanced' menu which had been
 	  provided for old GtkSText, and had interfered with gtk-key-theme

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,9 +116,15 @@ struct _Session
 	GByteArray *read_data_buf;
 	gchar *read_data_terminator;
 
+	/* buffer for short messages */
 	gchar *write_buf;
 	gchar *write_buf_p;
 	gint write_buf_len;
+
+	/* buffer for large data */
+	const guchar *write_data;
+	const guchar *write_data_p;
+	gint write_data_len;
 
 	guint timeout_tag;
 	guint timeout_interval;
