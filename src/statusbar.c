@@ -59,7 +59,7 @@ void statusbar_puts(GtkStatusbar *statusbar, const gchar *str)
 	cid = gtk_statusbar_get_context_id(statusbar, "Standard Output");
 	gtk_statusbar_pop(statusbar, cid);
 	gtk_statusbar_push(statusbar, cid, buf);
-	gtkut_widget_wait_for_draw(GTK_WIDGET(statusbar)->parent);
+	gtkut_widget_draw_now(GTK_WIDGET(statusbar));
 
 	g_free(buf);
 }

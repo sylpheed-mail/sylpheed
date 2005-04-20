@@ -82,7 +82,7 @@ enum
 { \
 	gtk_statusbar_push(GTK_STATUSBAR(mainwin->statusbar), \
 			   mainwin->folderview_cid, str); \
-	gtkut_widget_wait_for_draw(mainwin->statusbar); \
+	gtkut_widget_draw_now(mainwin->statusbar); \
 }
 
 #define STATUSBAR_POP(mainwin) \

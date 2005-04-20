@@ -1,5 +1,18 @@
 2005-04-20
 
+	* src/gtkutils.[ch]: gtkut_widget_draw_now(): use
+	  gdk_window_process_updates() to force update of widgets.
+	  Removed gtkut_widget_wait_for_draw() which had a big overhead
+	  because of waiting for all events processed.
+	* src/statusbar.c
+	  src/summaryview.c
+	  src/setup.c
+	  src/folderview.c
+	  src/mainwindow.c: use gtkut_widget_draw_now(). Improved performance
+	  of the update of statusbar.
+
+2005-04-20
+
 	* src/textview.c: textview_smooth_scroll_do(): redraw it after scroll
 	  is done (fixed incorrect display when a part of the view is hidden).
 

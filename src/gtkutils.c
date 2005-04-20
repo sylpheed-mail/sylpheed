@@ -792,13 +792,10 @@ void gtkut_widget_get_uposition(GtkWidget *widget, gint *px, gint *py)
 	*py = y;
 }
 
-#warning FIXME_GTK2
-void gtkut_widget_wait_for_draw(GtkWidget *widget)
+void gtkut_widget_draw_now(GtkWidget *widget)
 {
-	if (!GTK_WIDGET_VISIBLE(widget) || !GTK_WIDGET_MAPPED(widget)) return;
-
-	while (gtk_events_pending())
-		gtk_main_iteration();
+	if (GTK_WIDGET_VISIBLE(widget) && GTK_WIDGET_DRAWABLE(widget))
+		gdk_window_process_updates(widget->window, FALSE);
 }
 
 static void gtkut_clist_bindings_add(GtkWidget *clist)

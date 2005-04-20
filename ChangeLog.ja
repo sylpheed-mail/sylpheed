@@ -1,5 +1,18 @@
 2005-04-20
 
+	* src/gtkutils.[ch]: gtkut_widget_draw_now(): ウィジェットの強制更新
+	  に gdk_window_process_updates() を使用。
+	  全てのイベントが処理されるのを待っていたために大きなオーバーヘッド
+	  を生じていた gtkut_widget_wait_for_draw() を削除。
+	* src/statusbar.c
+	  src/summaryview.c
+	  src/setup.c
+	  src/folderview.c
+	  src/mainwindow.c: gtkut_widget_draw_now() を使用。ステータスバー
+	  の更新の処理速度を向上。
+
+2005-04-20
+
 	* src/textview.c: textview_smooth_scroll_do(): スクロール完了後に
 	  再描画するようにした(ビューの一部が隠れている場合に正しく描画
 	  されないのを修正)。
