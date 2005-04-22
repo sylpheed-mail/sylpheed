@@ -803,6 +803,7 @@ static void folderview_rescan_tree(FolderView *folderview, Folder *folder)
 	window = label_window_create(_("Rebuilding folder tree..."));
 
 	summary_show(folderview->summaryview, NULL, FALSE);
+	GTK_EVENTS_FLUSH();
 
 	folder_set_ui_func(folder, folderview_scan_tree_func, NULL);
 	if (folder->klass->scan_tree(folder) < 0)
@@ -819,50 +820,48 @@ static void folderview_rescan_tree(FolderView *folderview, Folder *folder)
 
 void folderview_check_new(Folder *folder)
 {
-	GList *list;
 	FolderItem *item;
 	FolderView *folderview;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	gboolean valid;
 
-	for (list = folderview_list; list != NULL; list = list->next) {
-		folderview = (FolderView *)list->data;
-		model = GTK_TREE_MODEL(folderview->store);
+	folderview = (FolderView *)folderview_list->data;
+	model = GTK_TREE_MODEL(folderview->store);
 
-		if (folder && !FOLDER_IS_LOCAL(folder)) {
-			if (!main_window_toggle_online_if_offline
-				(folderview->mainwin))
-				return;
-		}
-
-		inc_lock();
-		main_window_lock(folderview->mainwin);
-		gtk_widget_set_sensitive(folderview->treeview, FALSE);
-
-		for (valid = gtk_tree_model_get_iter_first(model, &iter);
-		     valid; valid = gtkut_tree_model_next(model, &iter)) {
-			item = NULL;
-			gtk_tree_model_get(model, &iter,
-					   COL_FOLDER_ITEM, &item, -1);
-			if (!item || !item->path || !item->folder) continue;
-			if (item->no_select) continue;
-			if (folder && folder != item->folder) continue;
-			if (!folder && !FOLDER_IS_LOCAL(item->folder)) continue;
-
-			folderview_scan_tree_func(item->folder, item, NULL);
-			if (folder_item_scan(item) < 0) {
-				if (folder && !FOLDER_IS_LOCAL(folder))
-					break;
-			}
-			folderview_update_row(folderview, &iter);
-		}
-
-		gtk_widget_set_sensitive(folderview->treeview, TRUE);
-		main_window_unlock(folderview->mainwin);
-		inc_unlock();
-		statusbar_pop_all();
+	if (folder && !FOLDER_IS_LOCAL(folder)) {
+		if (!main_window_toggle_online_if_offline
+			(folderview->mainwin))
+			return;
 	}
+
+	inc_lock();
+	main_window_lock(folderview->mainwin);
+	gtk_widget_set_sensitive(folderview->treeview, FALSE);
+	GTK_EVENTS_FLUSH();
+
+	for (valid = gtk_tree_model_get_iter_first(model, &iter);
+	     valid; valid = gtkut_tree_model_next(model, &iter)) {
+		item = NULL;
+		gtk_tree_model_get(model, &iter,
+				   COL_FOLDER_ITEM, &item, -1);
+		if (!item || !item->path || !item->folder) continue;
+		if (item->no_select) continue;
+		if (folder && folder != item->folder) continue;
+		if (!folder && !FOLDER_IS_LOCAL(item->folder)) continue;
+
+		folderview_scan_tree_func(item->folder, item, NULL);
+		if (folder_item_scan(item) < 0) {
+			if (folder && !FOLDER_IS_LOCAL(folder))
+				break;
+		}
+		folderview_update_row(folderview, &iter);
+	}
+
+	gtk_widget_set_sensitive(folderview->treeview, TRUE);
+	main_window_unlock(folderview->mainwin);
+	inc_unlock();
+	statusbar_pop_all();
 
 	folder_write_list();
 }
