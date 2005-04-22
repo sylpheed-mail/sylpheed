@@ -1,5 +1,11 @@
 2005-04-22
 
+	* src/imap.c: imap_auth(): 認証方式が自動の場合は CRAM-MD5 を優先して
+	  使用するようにした。 CAPABILITY に LOGINDISABLED がある場合は
+	  LOGIN を使用しないようにした。
+
+2005-04-22
+
 	* src/folderview.c: folderview_selection_changed(): サマリ表示の前に
 	  セレクション変更を反映させるためにウィジェットをフラッシュする
 	  ようにした。

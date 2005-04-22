@@ -490,12 +490,32 @@ static gint imap_greeting(IMAPSession *session)
 static gint imap_auth(IMAPSession *session, const gchar *user,
 		      const gchar *pass, IMAPAuthType type)
 {
-	gint ok;
+	gboolean nologin;
+	gint ok = IMAP_AUTHFAIL;
 
-	if (type == 0 || type == IMAP_AUTH_LOGIN)
-		ok = imap_cmd_login(session, user, pass);
-	else
+	nologin = imap_has_capability(session, "LOGINDISABLED");
+
+	switch (type) {
+	case 0:
+		if (imap_has_capability(session, "AUTH=CRAM-MD5"))
+			ok = imap_cmd_authenticate(session, user, pass, type);
+		else if (nologin)
+			log_print(_("IMAP4 server disables LOGIN.\n"));
+		else
+			ok = imap_cmd_login(session, user, pass);
+		break;
+	case IMAP_AUTH_LOGIN:
+		if (nologin)
+			log_warning(_("IMAP4 server disables LOGIN.\n"));
+		else
+			ok = imap_cmd_login(session, user, pass);
+		break;
+	case IMAP_AUTH_CRAM_MD5:
 		ok = imap_cmd_authenticate(session, user, pass, type);
+		break;
+	default:
+		break;
+	}
 
 	if (ok == IMAP_SUCCESS)
 		session->authenticated = TRUE;
@@ -2990,7 +3010,8 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 	gchar *response;
 	gchar *response64;
 
-	g_return_val_if_fail(type == IMAP_AUTH_CRAM_MD5, IMAP_ERROR);
+	g_return_val_if_fail((type == 0 || type == IMAP_AUTH_CRAM_MD5),
+			     IMAP_ERROR);
 
 	auth_type = "CRAM-MD5";
 
