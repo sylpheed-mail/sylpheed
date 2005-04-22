@@ -1620,6 +1620,7 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 		gtk_tree_path_free(open_path);
 	}
 
+	GTK_EVENTS_FLUSH();
 	opened = summary_show(folderview->summaryview, item, FALSE);
 
 	if (opened) {
