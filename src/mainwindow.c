@@ -771,7 +771,9 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *online_pixmap;
 	GtkWidget *offline_pixmap;
 	GtkTooltips *online_tip;
+#if !GTK_CHECK_VERSION(2, 6, 0)
 	GtkWidget *spacer_hbox;
+#endif
 	GtkWidget *ac_button;
 	GtkWidget *ac_label;
 
@@ -785,8 +787,6 @@ MainWindow *main_window_create(SeparateType type)
 	GtkItemFactory *ifactory;
 	GtkWidget *ac_menu;
 	GtkWidget *menuitem;
-	gint w;
-	gint h;
 	gint i;
 
 	static GdkGeometry geometry;
@@ -869,8 +869,10 @@ MainWindow *main_window_create(SeparateType type)
 
 	online_tip = gtk_tooltips_new();
 
+#if !GTK_CHECK_VERSION(2, 6, 0)
 	spacer_hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(statusbar), spacer_hbox, FALSE, FALSE, 0);
+#endif
 
 	ac_button = gtk_button_new();
 	gtk_button_set_relief(GTK_BUTTON(ac_button), GTK_RELIEF_NONE);
@@ -1010,9 +1012,15 @@ MainWindow *main_window_create(SeparateType type)
 	/* show main window */
 	gtk_widget_show(mainwin->window);
 
-	gdk_drawable_get_size
-		(GDK_DRAWABLE(GTK_STATUSBAR(statusbar)->grip_window), &w, &h);
-	gtk_widget_set_size_request(spacer_hbox, w, -1);
+#if !GTK_CHECK_VERSION(2, 6, 0)
+	{
+		gint w, h;
+		gdk_drawable_get_size
+			(GDK_DRAWABLE(GTK_STATUSBAR(statusbar)->grip_window),
+			 &w, &h);
+		gtk_widget_set_size_request(spacer_hbox, w, -1);
+	}
+#endif
 
 	/* initialize views */
 	folderview_init(folderview);
