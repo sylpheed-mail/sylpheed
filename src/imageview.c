@@ -33,7 +33,7 @@
 #include "imageview.h"
 #include "utils.h"
 
-static void get_resized_size	(gint	 w,
+static gboolean get_resized_size(gint	 w,
 				 gint	 h,
 				 gint	 aw,
 				 gint	 ah,
@@ -169,17 +169,19 @@ GdkPixbuf *imageview_get_resized_pixbuf(GdkPixbuf *pixbuf, GtkWidget *parent,
 	if (avail_width > margin) avail_width -= margin;
 	if (avail_height > margin) avail_height -= margin;
 
-	get_resized_size(gdk_pixbuf_get_width(pixbuf),
-			 gdk_pixbuf_get_height(pixbuf),
-			 avail_width, avail_height,
-			 &new_width, &new_height);
+	if (get_resized_size(gdk_pixbuf_get_width(pixbuf),
+			     gdk_pixbuf_get_height(pixbuf),
+			     avail_width, avail_height,
+			     &new_width, &new_height))
+		return gdk_pixbuf_scale_simple
+			(pixbuf, new_width, new_height, GDK_INTERP_BILINEAR);
 
-	return gdk_pixbuf_scale_simple
-		(pixbuf, new_width, new_height, GDK_INTERP_BILINEAR);
+	g_object_ref(pixbuf);
+	return pixbuf;
 }
 
-static void get_resized_size(gint w, gint h, gint aw, gint ah,
-			     gint *sw, gint *sh)
+static gboolean get_resized_size(gint w, gint h, gint aw, gint ah,
+				 gint *sw, gint *sh)
 {
 	gfloat wratio = 1.0;
 	gfloat hratio = 1.0;
@@ -188,7 +190,7 @@ static void get_resized_size(gint w, gint h, gint aw, gint ah,
 	if (w <= aw && h <= ah) {
 		*sw = w;
 		*sh = h;
-		return;
+		return FALSE;
 	}
 
 	if (w > aw)
@@ -214,6 +216,8 @@ static void get_resized_size(gint w, gint h, gint aw, gint ah,
 			*sh = (gint)(h * ratio);
 		}
 	}
+
+	return TRUE;
 }
 
 static gint button_press_cb(GtkWidget *widget, GdkEventButton *event,
