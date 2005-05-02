@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-19 15:59+0900\n"
+"POT-Creation-Date: 2005-05-02 14:22+0900\n"
 "PO-Revision-Date: 2003-01-17 10:05+0100\n"
 "Last-Translator: Jorge Rivas\n"
 "Language-Team: Jorge Rivas\n"
@@ -116,7 +116,7 @@ msgstr "Servidor"
 #: src/account.c:716 src/addressbook.c:628 src/editaddress.c:884
 #: src/editaddress.c:1017 src/prefs_actions.c:251 src/prefs_customheader.c:235
 #: src/prefs_display_header.c:269 src/prefs_display_header.c:324
-#: src/prefs_filter_edit.c:1570
+#: src/prefs_filter_edit.c:1572
 msgid "Add"
 msgstr "Engadir"
 
@@ -124,7 +124,7 @@ msgstr "Engadir"
 msgid "Edit"
 msgstr "Editar"
 
-#: src/account.c:728 src/prefs_customheader.c:241 src/prefs_filter_edit.c:1573
+#: src/account.c:728 src/prefs_customheader.c:241 src/prefs_filter_edit.c:1575
 msgid " Delete "
 msgstr " Borrar "
 
@@ -415,7 +415,7 @@ msgstr "Nome:"
 
 #. Buttons
 #: src/addressbook.c:625 src/addressbook.c:1665 src/addressbook.c:1671
-#: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2223
+#: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2231
 #: src/prefs_actions.c:263 src/prefs_display_header.c:275
 #: src/prefs_display_header.c:330 src/prefs_template.c:227
 msgid "Delete"
@@ -613,7 +613,7 @@ msgstr "Enderezo persoal"
 msgid "Notice"
 msgstr "Notificación"
 
-#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1967
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1969
 msgid "Warning"
 msgstr "Aviso"
 
@@ -1016,7 +1016,7 @@ msgstr "Compoñer mensaxe%s"
 msgid "Recipient is not specified."
 msgstr "Non se especificou o destinatario."
 
-#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2155
+#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2163
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Enviar"
@@ -1611,23 +1611,23 @@ msgstr "fallo escribiendo a configuración a ficheiro\n"
 msgid "Select folder"
 msgstr "Seleccionar carpeta"
 
-#: src/foldersel.c:337 src/folderview.c:1012 src/prefs_folder_item.c:212
+#: src/foldersel.c:337 src/folderview.c:1011 src/prefs_folder_item.c:212
 msgid "Inbox"
 msgstr "Entrada"
 
-#: src/foldersel.c:341 src/folderview.c:1018 src/prefs_folder_item.c:213
+#: src/foldersel.c:341 src/folderview.c:1017 src/prefs_folder_item.c:213
 msgid "Sent"
 msgstr "Enviado"
 
-#: src/foldersel.c:345 src/folderview.c:1024 src/prefs_folder_item.c:215
+#: src/foldersel.c:345 src/folderview.c:1023 src/prefs_folder_item.c:215
 msgid "Queue"
 msgstr "Cola"
 
-#: src/foldersel.c:349 src/folderview.c:1030 src/prefs_folder_item.c:216
+#: src/foldersel.c:349 src/folderview.c:1029 src/prefs_folder_item.c:216
 msgid "Trash"
 msgstr "Papeleira"
 
-#: src/foldersel.c:353 src/folderview.c:1037 src/prefs_folder_item.c:214
+#: src/foldersel.c:353 src/folderview.c:1036 src/prefs_folder_item.c:214
 msgid "Drafts"
 msgstr "Borradores"
 
@@ -1717,12 +1717,12 @@ msgstr "Establecendo información de carpeta...\n"
 msgid "Setting folder info..."
 msgstr "Establecendo información de carpeta..."
 
-#: src/folderview.c:747 src/mainwindow.c:3194 src/setup.c:81
+#: src/folderview.c:747 src/mainwindow.c:3202 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Revisando carpeta %s%c%s ..."
 
-#: src/folderview.c:751 src/mainwindow.c:3199 src/setup.c:86
+#: src/folderview.c:751 src/mainwindow.c:3207 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Revisando carpeta %s ..."
@@ -1739,16 +1739,16 @@ msgstr ""
 msgid "Rebuilding folder tree..."
 msgstr "Reconstruindo a arbre de carpetas..."
 
-#: src/folderview.c:809
+#: src/folderview.c:810
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "Reconstruindo a arbre de carpetas..."
 
-#: src/folderview.c:881
+#: src/folderview.c:880
 msgid "Checking for new messages in all folders..."
 msgstr "Comprobar si hai mensaxes novos en todas as carpetas..."
 
-#: src/folderview.c:1605
+#: src/folderview.c:1604
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Carpeta %s seleccionada\n"
@@ -1934,150 +1934,155 @@ msgstr "Non se pode cargar a imaxen."
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "Perdeuse a conexión IMAP4 con %s:%d . Reconectando...\n"
 
-#: src/imap.c:535
+#: src/imap.c:503 src/imap.c:509
+#, fuzzy
+msgid "IMAP4 server disables LOGIN.\n"
+msgstr "Directorio do servidor IMAP4"
+
+#: src/imap.c:555
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "creando conexión IMAP4 con %s:%d ...\n"
 
-#: src/imap.c:583
+#: src/imap.c:603
 msgid "Can't start TLS session.\n"
 msgstr "Non podo iniciar a sesión TLS.\n"
 
-#: src/imap.c:1327
+#: src/imap.c:1347
 #, fuzzy, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "non podo establecer os indicadores borrados: %d\n"
 
-#: src/imap.c:1335 src/imap.c:1427
+#: src/imap.c:1355 src/imap.c:1447
 msgid "can't expunge\n"
 msgstr "non podo baleirar\n"
 
-#: src/imap.c:1421
+#: src/imap.c:1441
 #, fuzzy
 msgid "can't set deleted flags: 1:*\n"
 msgstr "non podo establecer os indicadores borrados: 1:%d\n"
 
-#: src/imap.c:1466
+#: src/imap.c:1486
 #, fuzzy
 msgid "can't close folder\n"
 msgstr "non se pode seleccionar a carpeta: %s\n"
 
-#: src/imap.c:1544
+#: src/imap.c:1564
 #, fuzzy, c-format
 msgid "root folder %s not exist\n"
 msgstr "Ficheiro de marcas non atopado.\n"
 
-#: src/imap.c:1722 src/imap.c:1730
+#: src/imap.c:1742 src/imap.c:1750
 msgid "error occurred while getting LIST.\n"
 msgstr "ocurriu un erro obtendo LIST.\n"
 
-#: src/imap.c:1844
+#: src/imap.c:1864
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "Non podo crear '%s'\n"
 
-#: src/imap.c:1849
+#: src/imap.c:1869
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "Non podo crear '%s' bajo Entrada\n"
 
-#: src/imap.c:1910
+#: src/imap.c:1930
 msgid "can't create mailbox: LIST failed\n"
 msgstr "non podo crear a: LIST falló\n"
 
-#: src/imap.c:1930
+#: src/imap.c:1950
 msgid "can't create mailbox\n"
 msgstr "non podo crear a caixa de correo\n"
 
-#: src/imap.c:1999
+#: src/imap.c:2019
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "non podo renomear a caixa de correo: %s a %s\n"
 
-#: src/imap.c:2061
+#: src/imap.c:2081
 msgid "can't delete mailbox\n"
 msgstr "non podo borrar a caixa de correo\n"
 
-#: src/imap.c:2100
+#: src/imap.c:2120
 msgid "can't get envelope\n"
 msgstr "non se pode obter a estructura da mensaxe\n"
 
-#: src/imap.c:2108
+#: src/imap.c:2128
 msgid "error occurred while getting envelope.\n"
 msgstr "Erro obtendo a estructura da mensaxe.\n"
 
-#: src/imap.c:2129
+#: src/imap.c:2149
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "Non se pode interpretar a estructura da mensaxe: %s\n"
 
-#: src/imap.c:2252
+#: src/imap.c:2272
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Non se pode conectar con o servidor IMAP4: %s:%d\n"
 
-#: src/imap.c:2259
+#: src/imap.c:2279
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Non podo establecer unha sesión IMAP4 con: %s:%d\n"
 
-#: src/imap.c:2334
+#: src/imap.c:2354
 msgid "can't get namespace\n"
 msgstr "no se pode obter o espacio de nomes\n"
 
-#: src/imap.c:2852
+#: src/imap.c:2872
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "non se pode seleccionar a carpeta: %s\n"
 
-#: src/imap.c:3023
+#: src/imap.c:3044
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "Fallo de autenticación"
 
-#: src/imap.c:3040
+#: src/imap.c:3061
 msgid "IMAP4 login failed.\n"
 msgstr "Autentificación IMAP4 fallida.\n"
 
-#: src/imap.c:3361
+#: src/imap.c:3382
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "non podo engadir %s a %s\n"
 
-#: src/imap.c:3368
+#: src/imap.c:3389
 msgid "(sending file...)"
 msgstr "(enviando ficheiro...)"
 
-#: src/imap.c:3396
+#: src/imap.c:3417
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "non se pode engadir o mensaxe %s\n"
 
-#: src/imap.c:3428
+#: src/imap.c:3449
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "non podo copiar %d a %s\n"
 
-#: src/imap.c:3452
+#: src/imap.c:3473
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "erro no comando imap: STORE %d:%d %s\n"
 
-#: src/imap.c:3466
+#: src/imap.c:3487
 msgid "error while imap command: EXPUNGE\n"
 msgstr "erro no comando imap: EXPUNGE\n"
 
-#: src/imap.c:3479
+#: src/imap.c:3500
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "erro no comando imap: EXPUNGE\n"
 
-#: src/imap.c:3706
+#: src/imap.c:3727
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv non pode convertir UTF-7 a %s\n"
 
-#: src/imap.c:3736
+#: src/imap.c:3757
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv non pode convertir %s a UTF-7\n"
@@ -2179,7 +2184,7 @@ msgstr "Importar ficheiro LDIF na axenda"
 msgid "Prev"
 msgstr "Anterior"
 
-#: src/importldif.c:761 src/mainwindow.c:2241
+#: src/importldif.c:761 src/mainwindow.c:2249
 msgid "Next"
 msgstr "Seguinte"
 
@@ -3073,54 +3078,54 @@ msgstr "/_Axuda/---"
 msgid "Creating main window...\n"
 msgstr "Creando Fiestra principal...\n"
 
-#: src/mainwindow.c:954
+#: src/mainwindow.c:956
 #, c-format
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: fallo solicitando cor %d\n"
 
-#: src/mainwindow.c:1032 src/summaryview.c:1369 src/summaryview.c:1677
+#: src/mainwindow.c:1040 src/summaryview.c:1369 src/summaryview.c:1677
 #: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2453
 #: src/summaryview.c:3090 src/summaryview.c:3156 src/summaryview.c:3181
 #: src/summaryview.c:3294
 msgid "done.\n"
 msgstr "feito.\n"
 
-#: src/mainwindow.c:1148 src/mainwindow.c:1189 src/mainwindow.c:1217
+#: src/mainwindow.c:1156 src/mainwindow.c:1197 src/mainwindow.c:1225
 msgid "Untitled"
 msgstr "Sen título"
 
-#: src/mainwindow.c:1218
+#: src/mainwindow.c:1226
 msgid "none"
 msgstr "ningunha"
 
-#: src/mainwindow.c:1268
+#: src/mainwindow.c:1276
 #, c-format
 msgid "Changing window separation type from %d to %d\n"
 msgstr "Cambiando o tipo de separación de fiestra de %d a %d\n"
 
-#: src/mainwindow.c:1488
+#: src/mainwindow.c:1496
 msgid "Offline"
 msgstr ""
 
-#: src/mainwindow.c:1489
+#: src/mainwindow.c:1497
 msgid "You are offline. Go online?"
 msgstr ""
 
-#: src/mainwindow.c:1503
+#: src/mainwindow.c:1511
 #, fuzzy
 msgid "Empty all trash"
 msgstr "Baleirar papeleira"
 
-#: src/mainwindow.c:1504
+#: src/mainwindow.c:1512
 #, fuzzy
 msgid "Empty messages in all trash?"
 msgstr "¿Baleirar todas as mensaxes da papeleira?"
 
-#: src/mainwindow.c:1532
+#: src/mainwindow.c:1540
 msgid "Add mailbox"
 msgstr "Engadir caixa de correo"
 
-#: src/mainwindow.c:1533
+#: src/mainwindow.c:1541
 msgid ""
 "Input the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3130,16 +3135,16 @@ msgstr ""
 "Si xa existe será\n"
 "examinado automáticamente."
 
-#: src/mainwindow.c:1539
+#: src/mainwindow.c:1547
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "a caixa de correo `%s' xa existe."
 
-#: src/mainwindow.c:1544 src/setup.c:57
+#: src/mainwindow.c:1552 src/setup.c:57
 msgid "Mailbox"
 msgstr "Correo"
 
-#: src/mainwindow.c:1550 src/setup.c:63
+#: src/mainwindow.c:1558 src/setup.c:63
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3149,144 +3154,144 @@ msgstr ""
 "Quizáis xa existan os ficheiros ou non teña permisos suficientes para "
 "escribir no directorio."
 
-#: src/mainwindow.c:1923
+#: src/mainwindow.c:1931
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Arbre de carpetas"
 
-#: src/mainwindow.c:1943 src/messageview.c:360
+#: src/mainwindow.c:1951 src/messageview.c:360
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Vista de mensaxe"
 
-#: src/mainwindow.c:2090 src/summaryview.c:340
+#: src/mainwindow.c:2098 src/summaryview.c:340
 msgid "/_Reply"
 msgstr "/_Respostar"
 
-#: src/mainwindow.c:2091
+#: src/mainwindow.c:2099
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "Respostar a todos"
 
-#: src/mainwindow.c:2092
+#: src/mainwindow.c:2100
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/Respon_der a/Ó _remitente"
 
-#: src/mainwindow.c:2093
+#: src/mainwindow.c:2101
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/Respon_der a/Á _lista de correo"
 
-#: src/mainwindow.c:2098 src/summaryview.c:347
+#: src/mainwindow.c:2106 src/summaryview.c:347
 msgid "/_Forward"
 msgstr "/_Reenviar"
 
-#: src/mainwindow.c:2099 src/summaryview.c:348
+#: src/mainwindow.c:2107 src/summaryview.c:348
 msgid "/For_ward as attachment"
 msgstr "/Reen_viar como adxunto"
 
-#: src/mainwindow.c:2100 src/summaryview.c:349
+#: src/mainwindow.c:2108 src/summaryview.c:349
 msgid "/Redirec_t"
 msgstr "/Red_irixir"
 
-#: src/mainwindow.c:2136
+#: src/mainwindow.c:2144
 msgid "Get"
 msgstr "Traer"
 
-#: src/mainwindow.c:2137
+#: src/mainwindow.c:2145
 msgid "Incorporate new mail"
 msgstr "Incorporar correo novo"
 
-#: src/mainwindow.c:2144
+#: src/mainwindow.c:2152
 msgid "Get all"
 msgstr "Traer todo"
 
-#: src/mainwindow.c:2145
+#: src/mainwindow.c:2153
 msgid "Incorporate new mail of all accounts"
 msgstr "Incorporar correo novo de todas as contas"
 
-#: src/mainwindow.c:2156
+#: src/mainwindow.c:2164
 msgid "Send queued message(s)"
 msgstr "Enviar mensaxe(s) na cola"
 
-#: src/mainwindow.c:2166 src/prefs_account.c:705 src/prefs_common.c:856
+#: src/mainwindow.c:2174 src/prefs_account.c:705 src/prefs_common.c:856
 #: src/prefs_folder_item.c:137
 msgid "Compose"
 msgstr "Compoñer"
 
-#: src/mainwindow.c:2167
+#: src/mainwindow.c:2175
 msgid "Compose new message"
 msgstr "Compoñer mensaxe novo"
 
-#: src/mainwindow.c:2175 src/prefs_common.c:1370
+#: src/mainwindow.c:2183 src/prefs_common.c:1370
 msgid "Reply"
 msgstr "Respostar"
 
-#: src/mainwindow.c:2176 src/mainwindow.c:2189
+#: src/mainwindow.c:2184 src/mainwindow.c:2197
 msgid "Reply to the message"
 msgstr "Respostar ó mensaxe"
 
-#: src/mainwindow.c:2194
+#: src/mainwindow.c:2202
 msgid "Reply all"
 msgstr "A todos"
 
-#: src/mainwindow.c:2195
+#: src/mainwindow.c:2203
 msgid "Reply to all"
 msgstr "Respostar a todos"
 
-#: src/mainwindow.c:2203 src/prefs_filter_edit.c:741
+#: src/mainwindow.c:2211 src/prefs_filter_edit.c:741
 msgid "Forward"
 msgstr "Reenviar"
 
-#: src/mainwindow.c:2204 src/mainwindow.c:2217
+#: src/mainwindow.c:2212 src/mainwindow.c:2225
 msgid "Forward the message"
 msgstr "Reenviar o mensaxe"
 
-#: src/mainwindow.c:2224
+#: src/mainwindow.c:2232
 msgid "Delete the message"
 msgstr "Borrar o mensaxe"
 
-#: src/mainwindow.c:2232
+#: src/mainwindow.c:2240
 msgid "Execute"
 msgstr "Executar"
 
-#: src/mainwindow.c:2233
+#: src/mainwindow.c:2241
 msgid "Execute marked process"
 msgstr "Executar o proceso marcado"
 
-#: src/mainwindow.c:2242
+#: src/mainwindow.c:2250
 msgid "Next unread message"
 msgstr "Seguinte non leído"
 
-#: src/mainwindow.c:2253
+#: src/mainwindow.c:2261
 msgid "Prefs"
 msgstr "Preferencias"
 
-#: src/mainwindow.c:2254
+#: src/mainwindow.c:2262
 msgid "Common preferences"
 msgstr "Preferencias comuns"
 
-#: src/mainwindow.c:2261 src/prefs_folder_item.c:258
+#: src/mainwindow.c:2269 src/prefs_folder_item.c:258
 #: src/prefs_folder_item.c:269 src/progressdialog.c:50
 msgid "Account"
 msgstr "conta"
 
-#: src/mainwindow.c:2262
+#: src/mainwindow.c:2270
 msgid "Account setting"
 msgstr "Preferencias da conta"
 
-#: src/mainwindow.c:2436
+#: src/mainwindow.c:2444
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2447
+#: src/mainwindow.c:2455
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2635
+#: src/mainwindow.c:2643
 msgid "Exit"
 msgstr "Sair"
 
-#: src/mainwindow.c:2635
+#: src/mainwindow.c:2643
 msgid "Exit this program?"
 msgstr "¿Sair do programa?"
 
@@ -3881,6 +3886,7 @@ msgid "Receive size limit"
 msgstr "Tamaño límite para recibir"
 
 #: src/prefs_account.c:1058 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
 msgid "KB"
 msgstr ""
 
@@ -5174,61 +5180,66 @@ msgstr "Executar"
 msgid "Stop rule evaluation"
 msgstr ""
 
-#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1080
+#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1082
 #, fuzzy
 msgid "folder:"
 msgstr "Carpeta"
 
-#: src/prefs_filter_edit.c:1120
+#: src/prefs_filter_edit.c:1056
+#, fuzzy
+msgid "day(s)"
+msgstr "días"
+
+#: src/prefs_filter_edit.c:1122
 #, fuzzy
 msgid "address:"
 msgstr "Enderezo"
 
-#: src/prefs_filter_edit.c:1527
+#: src/prefs_filter_edit.c:1529
 #, fuzzy
 msgid "Edit header list"
 msgstr "Cabeceira"
 
-#: src/prefs_filter_edit.c:1550
+#: src/prefs_filter_edit.c:1552
 #, fuzzy
 msgid "Headers"
 msgstr "Cabeceira"
 
-#: src/prefs_filter_edit.c:1561
+#: src/prefs_filter_edit.c:1563
 #, fuzzy
 msgid "Header:"
 msgstr "Cabeceira"
 
-#: src/prefs_filter_edit.c:1677
+#: src/prefs_filter_edit.c:1679
 #, fuzzy
 msgid "Rule name is not specified."
 msgstr "Non se especificou o destinatario."
 
-#: src/prefs_filter_edit.c:1765 src/prefs_filter_edit.c:1844
-#: src/prefs_filter_edit.c:1852
+#: src/prefs_filter_edit.c:1767 src/prefs_filter_edit.c:1846
+#: src/prefs_filter_edit.c:1854
 #, fuzzy
 msgid "Command is not specified."
 msgstr "Non se estableceu o comando."
 
-#: src/prefs_filter_edit.c:1799
+#: src/prefs_filter_edit.c:1801
 msgid "Invalid condition exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1821 src/prefs_filter_edit.c:1829
+#: src/prefs_filter_edit.c:1823 src/prefs_filter_edit.c:1831
 #, fuzzy
 msgid "Destination folder is not specified."
 msgstr "Non se especificou destinatario."
 
-#: src/prefs_filter_edit.c:1883
+#: src/prefs_filter_edit.c:1885
 msgid "Invalid action exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1892
+#: src/prefs_filter_edit.c:1894
 #, fuzzy
 msgid "Condition not exist."
 msgstr "Non se estableceu o comando."
 
-#: src/prefs_filter_edit.c:1894
+#: src/prefs_filter_edit.c:1896
 #, fuzzy
 msgid "Action not exist."
 msgstr "%s: o ficheiro non existe\n"
@@ -6085,16 +6096,16 @@ msgstr "Creando vista de texto...\n"
 msgid "This message can't be displayed.\n"
 msgstr "unha mensaxe non será recibido\n"
 
-#: src/textview.c:1855
+#: src/textview.c:1857
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/_Gardar como..."
 
-#: src/textview.c:1875
+#: src/textview.c:1877
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1963
+#: src/textview.c:1965
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

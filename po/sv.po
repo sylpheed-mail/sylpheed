@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-19 15:59+0900\n"
+"POT-Creation-Date: 2005-05-02 14:22+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Mattias Ostergren <spikboll@gmx.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -118,7 +118,7 @@ msgstr "Server"
 #: src/account.c:716 src/addressbook.c:628 src/editaddress.c:884
 #: src/editaddress.c:1017 src/prefs_actions.c:251 src/prefs_customheader.c:235
 #: src/prefs_display_header.c:269 src/prefs_display_header.c:324
-#: src/prefs_filter_edit.c:1570
+#: src/prefs_filter_edit.c:1572
 msgid "Add"
 msgstr "Lägg till"
 
@@ -126,7 +126,7 @@ msgstr "Lägg till"
 msgid "Edit"
 msgstr "Redigera"
 
-#: src/account.c:728 src/prefs_customheader.c:241 src/prefs_filter_edit.c:1573
+#: src/account.c:728 src/prefs_customheader.c:241 src/prefs_filter_edit.c:1575
 msgid " Delete "
 msgstr " Ta bort "
 
@@ -419,7 +419,7 @@ msgstr "Namn:"
 
 #. Buttons
 #: src/addressbook.c:625 src/addressbook.c:1665 src/addressbook.c:1671
-#: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2223
+#: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2231
 #: src/prefs_actions.c:263 src/prefs_display_header.c:275
 #: src/prefs_display_header.c:330 src/prefs_template.c:227
 msgid "Delete"
@@ -612,7 +612,7 @@ msgstr "Privat adress"
 msgid "Notice"
 msgstr "Notera"
 
-#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1967
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1969
 msgid "Warning"
 msgstr "Varning"
 
@@ -1006,7 +1006,7 @@ msgstr "Skriv meddelande%s"
 msgid "Recipient is not specified."
 msgstr "Mottagare är inte angiven."
 
-#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2155
+#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2163
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Skicka"
@@ -1601,23 +1601,23 @@ msgstr "misslyckades skriva konfiguration till fil\n"
 msgid "Select folder"
 msgstr "Välj mapp"
 
-#: src/foldersel.c:337 src/folderview.c:1012 src/prefs_folder_item.c:212
+#: src/foldersel.c:337 src/folderview.c:1011 src/prefs_folder_item.c:212
 msgid "Inbox"
 msgstr "Inkorg"
 
-#: src/foldersel.c:341 src/folderview.c:1018 src/prefs_folder_item.c:213
+#: src/foldersel.c:341 src/folderview.c:1017 src/prefs_folder_item.c:213
 msgid "Sent"
 msgstr "Skickat"
 
-#: src/foldersel.c:345 src/folderview.c:1024 src/prefs_folder_item.c:215
+#: src/foldersel.c:345 src/folderview.c:1023 src/prefs_folder_item.c:215
 msgid "Queue"
 msgstr "Kö"
 
-#: src/foldersel.c:349 src/folderview.c:1030 src/prefs_folder_item.c:216
+#: src/foldersel.c:349 src/folderview.c:1029 src/prefs_folder_item.c:216
 msgid "Trash"
 msgstr "Papperskorg"
 
-#: src/foldersel.c:353 src/folderview.c:1037 src/prefs_folder_item.c:214
+#: src/foldersel.c:353 src/folderview.c:1036 src/prefs_folder_item.c:214
 msgid "Drafts"
 msgstr "Utkast"
 
@@ -1705,12 +1705,12 @@ msgstr "Ställer in mappinfo...\n"
 msgid "Setting folder info..."
 msgstr "Ställer in mappinfo..."
 
-#: src/folderview.c:747 src/mainwindow.c:3194 src/setup.c:81
+#: src/folderview.c:747 src/mainwindow.c:3202 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Söker igenom mapp %s%c%s..."
 
-#: src/folderview.c:751 src/mainwindow.c:3199 src/setup.c:86
+#: src/folderview.c:751 src/mainwindow.c:3207 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Söker igenom mapp %s ..."
@@ -1727,15 +1727,15 @@ msgstr "Mappträdet kommer att uppdateras. Fortsätt?"
 msgid "Rebuilding folder tree..."
 msgstr "Uppdaterar mappträd..."
 
-#: src/folderview.c:809
+#: src/folderview.c:810
 msgid "Rebuilding of the folder tree failed."
 msgstr "Uppdatering av mappträdet misslyckades."
 
-#: src/folderview.c:881
+#: src/folderview.c:880
 msgid "Checking for new messages in all folders..."
 msgstr "Letar efter nya meddelanden i alla mappar..."
 
-#: src/folderview.c:1605
+#: src/folderview.c:1604
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Mappen %s är vald\n"
@@ -1921,146 +1921,151 @@ msgstr "Kan inte öppna bilden."
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "IMAP4-förbindelse till %s har avbrutits. Återuppkopplar...\n"
 
-#: src/imap.c:535
+#: src/imap.c:503 src/imap.c:509
+#, fuzzy
+msgid "IMAP4 server disables LOGIN.\n"
+msgstr "IMAP-servermapp"
+
+#: src/imap.c:555
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "skapar IMAP4-förbindelse till %s:%d...\n"
 
-#: src/imap.c:583
+#: src/imap.c:603
 msgid "Can't start TLS session.\n"
 msgstr "Kan inte starta TLS-session.\n"
 
-#: src/imap.c:1327
+#: src/imap.c:1347
 #, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "kan inte sätta borttaget-flaggor: %s\n"
 
-#: src/imap.c:1335 src/imap.c:1427
+#: src/imap.c:1355 src/imap.c:1447
 msgid "can't expunge\n"
 msgstr "kan inte utplåna\n"
 
-#: src/imap.c:1421
+#: src/imap.c:1441
 msgid "can't set deleted flags: 1:*\n"
 msgstr "kan inte sätta borttaget-flaggor: 1:*\n"
 
-#: src/imap.c:1466
+#: src/imap.c:1486
 msgid "can't close folder\n"
 msgstr "kan inte stänga mapp\n"
 
-#: src/imap.c:1544
+#: src/imap.c:1564
 #, c-format
 msgid "root folder %s not exist\n"
 msgstr "rotmapp %s finns inte\n"
 
-#: src/imap.c:1722 src/imap.c:1730
+#: src/imap.c:1742 src/imap.c:1750
 msgid "error occurred while getting LIST.\n"
 msgstr "fel uppstod vid hämtning av LIST.\n"
 
-#: src/imap.c:1844
+#: src/imap.c:1864
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "Kan inte skapa \"%s\"\n"
 
-#: src/imap.c:1849
+#: src/imap.c:1869
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "kan inte skapa \"%s\" under INBOX\n"
 
-#: src/imap.c:1910
+#: src/imap.c:1930
 msgid "can't create mailbox: LIST failed\n"
 msgstr "kan inte skapa brevlåda: LIST misslyckades\n"
 
-#: src/imap.c:1930
+#: src/imap.c:1950
 msgid "can't create mailbox\n"
 msgstr "kan inte skapa brevlåda\n"
 
-#: src/imap.c:1999
+#: src/imap.c:2019
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "kan inte byta namn på brevlåda %s till %s\n"
 
-#: src/imap.c:2061
+#: src/imap.c:2081
 msgid "can't delete mailbox\n"
 msgstr "kan inte ta bort brevlåda\n"
 
-#: src/imap.c:2100
+#: src/imap.c:2120
 msgid "can't get envelope\n"
 msgstr "kan inte hämta kuvert\n"
 
-#: src/imap.c:2108
+#: src/imap.c:2128
 msgid "error occurred while getting envelope.\n"
 msgstr "fel uppstod vid hämtning av kuvert.\n"
 
-#: src/imap.c:2129
+#: src/imap.c:2149
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "kan inte tolka kuvert: %s\n"
 
-#: src/imap.c:2252
+#: src/imap.c:2272
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Kan inte ansluta till IMAP4-server: %s:%d\n"
 
-#: src/imap.c:2259
+#: src/imap.c:2279
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Kan inte skapa IMAP4-session med: %s:%d\n"
 
-#: src/imap.c:2334
+#: src/imap.c:2354
 msgid "can't get namespace\n"
 msgstr "kan inte hämta namnutrymme\n"
 
-#: src/imap.c:2852
+#: src/imap.c:2872
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "kan inte välja mapp: %s\n"
 
-#: src/imap.c:3023
+#: src/imap.c:3044
 msgid "IMAP4 authentication failed.\n"
 msgstr "IMAP4-autentisering misslyckades.\n"
 
-#: src/imap.c:3040
+#: src/imap.c:3061
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4-inloggning misslyckades.\n"
 
-#: src/imap.c:3361
+#: src/imap.c:3382
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "kan inte lägga till %s till %s\n"
 
-#: src/imap.c:3368
+#: src/imap.c:3389
 msgid "(sending file...)"
 msgstr "(skickar fil...)"
 
-#: src/imap.c:3396
+#: src/imap.c:3417
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "kan inte lägga till meddelande till %s\n"
 
-#: src/imap.c:3428
+#: src/imap.c:3449
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "kan inte kopiera %s till %s\n"
 
-#: src/imap.c:3452
+#: src/imap.c:3473
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "fel vid imapkommando: STORE %s %s\n"
 
-#: src/imap.c:3466
+#: src/imap.c:3487
 msgid "error while imap command: EXPUNGE\n"
 msgstr "fel vid imapkommando: EXPUNGE\n"
 
-#: src/imap.c:3479
+#: src/imap.c:3500
 msgid "error while imap command: CLOSE\n"
 msgstr "fel vid imapkommando: CLOSE\n"
 
-#: src/imap.c:3706
+#: src/imap.c:3727
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv kan inte konvertera UTF-7 till %s\n"
 
-#: src/imap.c:3736
+#: src/imap.c:3757
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv kan inte konvertera %s till UTF-7\n"
@@ -2162,7 +2167,7 @@ msgstr "Importera LDIF-fil till adressboken"
 msgid "Prev"
 msgstr "Föregående"
 
-#: src/importldif.c:761 src/mainwindow.c:2241
+#: src/importldif.c:761 src/mainwindow.c:2249
 msgid "Next"
 msgstr "Nästa"
 
@@ -3037,52 +3042,52 @@ msgstr "/_Hjälp/---"
 msgid "Creating main window...\n"
 msgstr "Skapar huvudfönster...\n"
 
-#: src/mainwindow.c:954
+#: src/mainwindow.c:956
 #, c-format
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Huvudfönster: färgtilldelning %d misslyckades\n"
 
-#: src/mainwindow.c:1032 src/summaryview.c:1369 src/summaryview.c:1677
+#: src/mainwindow.c:1040 src/summaryview.c:1369 src/summaryview.c:1677
 #: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2453
 #: src/summaryview.c:3090 src/summaryview.c:3156 src/summaryview.c:3181
 #: src/summaryview.c:3294
 msgid "done.\n"
 msgstr "färdigt.\n"
 
-#: src/mainwindow.c:1148 src/mainwindow.c:1189 src/mainwindow.c:1217
+#: src/mainwindow.c:1156 src/mainwindow.c:1197 src/mainwindow.c:1225
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: src/mainwindow.c:1218
+#: src/mainwindow.c:1226
 msgid "none"
 msgstr "inget"
 
-#: src/mainwindow.c:1268
+#: src/mainwindow.c:1276
 #, c-format
 msgid "Changing window separation type from %d to %d\n"
 msgstr "Byter fönsterseparationstyp från %d till %d\n"
 
-#: src/mainwindow.c:1488
+#: src/mainwindow.c:1496
 msgid "Offline"
 msgstr "Frånkopplad"
 
-#: src/mainwindow.c:1489
+#: src/mainwindow.c:1497
 msgid "You are offline. Go online?"
 msgstr "Du är frånkopplad. Vill du ansluta?"
 
-#: src/mainwindow.c:1503
+#: src/mainwindow.c:1511
 msgid "Empty all trash"
 msgstr "Töm alla papperskorgar"
 
-#: src/mainwindow.c:1504
+#: src/mainwindow.c:1512
 msgid "Empty messages in all trash?"
 msgstr "Töm alla meddelanden i alla papperskorgar?"
 
-#: src/mainwindow.c:1532
+#: src/mainwindow.c:1540
 msgid "Add mailbox"
 msgstr "Lägg till brevlåda"
 
-#: src/mainwindow.c:1533
+#: src/mainwindow.c:1541
 msgid ""
 "Input the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3092,16 +3097,16 @@ msgstr ""
 "Om en existerande brevlåda specificeras, kommer den\n"
 "att sökas igenom automatiskt."
 
-#: src/mainwindow.c:1539
+#: src/mainwindow.c:1547
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "Brevlådan \"%s\" finns redan."
 
-#: src/mainwindow.c:1544 src/setup.c:57
+#: src/mainwindow.c:1552 src/setup.c:57
 msgid "Mailbox"
 msgstr "Brevlåda"
 
-#: src/mainwindow.c:1550 src/setup.c:63
+#: src/mainwindow.c:1558 src/setup.c:63
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3110,141 +3115,141 @@ msgstr ""
 "Brevlådan kunde inte skapas.\n"
 "Några filer finns redan eller så saknar du skrivrättigheter där."
 
-#: src/mainwindow.c:1923
+#: src/mainwindow.c:1931
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Mappvy"
 
-#: src/mainwindow.c:1943 src/messageview.c:360
+#: src/mainwindow.c:1951 src/messageview.c:360
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Meddelandevy"
 
-#: src/mainwindow.c:2090 src/summaryview.c:340
+#: src/mainwindow.c:2098 src/summaryview.c:340
 msgid "/_Reply"
 msgstr "/Sva_ra"
 
-#: src/mainwindow.c:2091
+#: src/mainwindow.c:2099
 msgid "/Reply to _all"
 msgstr "/Svara till _alla"
 
-#: src/mainwindow.c:2092
+#: src/mainwindow.c:2100
 msgid "/Reply to _sender"
 msgstr "/Svara till av_sändaren"
 
-#: src/mainwindow.c:2093
+#: src/mainwindow.c:2101
 msgid "/Reply to mailing _list"
 msgstr "/Svara till e-post_lista"
 
-#: src/mainwindow.c:2098 src/summaryview.c:347
+#: src/mainwindow.c:2106 src/summaryview.c:347
 msgid "/_Forward"
 msgstr "/Vi_darebefordra"
 
-#: src/mainwindow.c:2099 src/summaryview.c:348
+#: src/mainwindow.c:2107 src/summaryview.c:348
 msgid "/For_ward as attachment"
 msgstr "/Vidarebefordra som _bilaga"
 
-#: src/mainwindow.c:2100 src/summaryview.c:349
+#: src/mainwindow.c:2108 src/summaryview.c:349
 msgid "/Redirec_t"
 msgstr "/_Omdirigera"
 
-#: src/mainwindow.c:2136
+#: src/mainwindow.c:2144
 msgid "Get"
 msgstr "Hämta"
 
-#: src/mainwindow.c:2137
+#: src/mainwindow.c:2145
 msgid "Incorporate new mail"
 msgstr "Hämta ny post"
 
-#: src/mainwindow.c:2144
+#: src/mainwindow.c:2152
 msgid "Get all"
 msgstr "Hämta allt"
 
-#: src/mainwindow.c:2145
+#: src/mainwindow.c:2153
 msgid "Incorporate new mail of all accounts"
 msgstr "Hämta ny post från alla konton"
 
-#: src/mainwindow.c:2156
+#: src/mainwindow.c:2164
 msgid "Send queued message(s)"
 msgstr "Skicka köade meddelanden"
 
-#: src/mainwindow.c:2166 src/prefs_account.c:705 src/prefs_common.c:856
+#: src/mainwindow.c:2174 src/prefs_account.c:705 src/prefs_common.c:856
 #: src/prefs_folder_item.c:137
 msgid "Compose"
 msgstr "Skriv"
 
-#: src/mainwindow.c:2167
+#: src/mainwindow.c:2175
 msgid "Compose new message"
 msgstr "Skriv nytt meddelande"
 
-#: src/mainwindow.c:2175 src/prefs_common.c:1370
+#: src/mainwindow.c:2183 src/prefs_common.c:1370
 msgid "Reply"
 msgstr "Svara"
 
-#: src/mainwindow.c:2176 src/mainwindow.c:2189
+#: src/mainwindow.c:2184 src/mainwindow.c:2197
 msgid "Reply to the message"
 msgstr "Svara på meddelandet"
 
-#: src/mainwindow.c:2194
+#: src/mainwindow.c:2202
 msgid "Reply all"
 msgstr "Svara alla"
 
-#: src/mainwindow.c:2195
+#: src/mainwindow.c:2203
 msgid "Reply to all"
 msgstr "Svara till alla"
 
-#: src/mainwindow.c:2203 src/prefs_filter_edit.c:741
+#: src/mainwindow.c:2211 src/prefs_filter_edit.c:741
 msgid "Forward"
 msgstr "Vidarebefordra"
 
-#: src/mainwindow.c:2204 src/mainwindow.c:2217
+#: src/mainwindow.c:2212 src/mainwindow.c:2225
 msgid "Forward the message"
 msgstr "Vidarebefordra meddelandet"
 
-#: src/mainwindow.c:2224
+#: src/mainwindow.c:2232
 msgid "Delete the message"
 msgstr "Ta bort meddelandet"
 
-#: src/mainwindow.c:2232
+#: src/mainwindow.c:2240
 msgid "Execute"
 msgstr "Utför köade åtgärder"
 
-#: src/mainwindow.c:2233
+#: src/mainwindow.c:2241
 msgid "Execute marked process"
 msgstr "Kör markerad process"
 
-#: src/mainwindow.c:2242
+#: src/mainwindow.c:2250
 msgid "Next unread message"
 msgstr "Nästa olästa meddelande"
 
-#: src/mainwindow.c:2253
+#: src/mainwindow.c:2261
 msgid "Prefs"
 msgstr "Inst."
 
-#: src/mainwindow.c:2254
+#: src/mainwindow.c:2262
 msgid "Common preferences"
 msgstr "Allmänna inställningar"
 
-#: src/mainwindow.c:2261 src/prefs_folder_item.c:258
+#: src/mainwindow.c:2269 src/prefs_folder_item.c:258
 #: src/prefs_folder_item.c:269 src/progressdialog.c:50
 msgid "Account"
 msgstr "Konto"
 
-#: src/mainwindow.c:2262
+#: src/mainwindow.c:2270
 msgid "Account setting"
 msgstr "Kontoinställningar"
 
-#: src/mainwindow.c:2436
+#: src/mainwindow.c:2444
 msgid "You are offline. Click the icon to go online."
 msgstr "Du är frånkopplad. Klicka på ikonen för att ansluta."
 
-#: src/mainwindow.c:2447
+#: src/mainwindow.c:2455
 msgid "You are online. Click the icon to go offline."
 msgstr "Du är ansluten. Klicka på ikonen för att koppla från."
 
-#: src/mainwindow.c:2635
+#: src/mainwindow.c:2643
 msgid "Exit"
 msgstr "Avsluta"
 
-#: src/mainwindow.c:2635
+#: src/mainwindow.c:2643
 msgid "Exit this program?"
 msgstr "Avsluta detta program?"
 
@@ -3837,6 +3842,7 @@ msgid "Receive size limit"
 msgstr "Gräns för mottagningsstorlek"
 
 #: src/prefs_account.c:1058 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
 msgid "KB"
 msgstr "KB"
 
@@ -5120,52 +5126,57 @@ msgstr "Kör kommando"
 msgid "Stop rule evaluation"
 msgstr "Stoppa regelutvärdering"
 
-#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1080
+#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1082
 msgid "folder:"
 msgstr "mapp"
 
-#: src/prefs_filter_edit.c:1120
+#: src/prefs_filter_edit.c:1056
+#, fuzzy
+msgid "day(s)"
+msgstr "dagar"
+
+#: src/prefs_filter_edit.c:1122
 msgid "address:"
 msgstr "adress"
 
-#: src/prefs_filter_edit.c:1527
+#: src/prefs_filter_edit.c:1529
 msgid "Edit header list"
 msgstr "Redigera brevhuvudlista"
 
-#: src/prefs_filter_edit.c:1550
+#: src/prefs_filter_edit.c:1552
 msgid "Headers"
 msgstr "Brevhuvuden"
 
-#: src/prefs_filter_edit.c:1561
+#: src/prefs_filter_edit.c:1563
 msgid "Header:"
 msgstr "Brevhuvud:"
 
-#: src/prefs_filter_edit.c:1677
+#: src/prefs_filter_edit.c:1679
 msgid "Rule name is not specified."
 msgstr "Regelnamn är inte angivet."
 
-#: src/prefs_filter_edit.c:1765 src/prefs_filter_edit.c:1844
-#: src/prefs_filter_edit.c:1852
+#: src/prefs_filter_edit.c:1767 src/prefs_filter_edit.c:1846
+#: src/prefs_filter_edit.c:1854
 msgid "Command is not specified."
 msgstr "Kommando är inte angivet."
 
-#: src/prefs_filter_edit.c:1799
+#: src/prefs_filter_edit.c:1801
 msgid "Invalid condition exists."
 msgstr "Ogiltigt villkor existerar."
 
-#: src/prefs_filter_edit.c:1821 src/prefs_filter_edit.c:1829
+#: src/prefs_filter_edit.c:1823 src/prefs_filter_edit.c:1831
 msgid "Destination folder is not specified."
 msgstr "Destinationsmapp är inte angiven."
 
-#: src/prefs_filter_edit.c:1883
+#: src/prefs_filter_edit.c:1885
 msgid "Invalid action exists."
 msgstr "Ogiltig åtgärd existerar."
 
-#: src/prefs_filter_edit.c:1892
+#: src/prefs_filter_edit.c:1894
 msgid "Condition not exist."
 msgstr "Villkor saknas."
 
-#: src/prefs_filter_edit.c:1894
+#: src/prefs_filter_edit.c:1896
 msgid "Action not exist."
 msgstr "Åtgärd saknas"
 
@@ -6017,16 +6028,16 @@ msgstr "Skapar textvy...\n"
 msgid "This message can't be displayed.\n"
 msgstr "Detta meddelande kan inte visas.\n"
 
-#: src/textview.c:1855
+#: src/textview.c:1857
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/_Spara som..."
 
-#: src/textview.c:1875
+#: src/textview.c:1877
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1963
+#: src/textview.c:1965
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

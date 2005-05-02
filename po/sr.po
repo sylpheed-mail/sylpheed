@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-19 15:59+0900\n"
+"POT-Creation-Date: 2005-05-02 14:22+0900\n"
 "PO-Revision-Date: 2002-11-29 21:08+0100\n"
 "Last-Translator: garret <garret@garrets.tk>\n"
 "Language-Team: Serbian\n"
@@ -116,7 +116,7 @@ msgstr "Server"
 #: src/account.c:716 src/addressbook.c:628 src/editaddress.c:884
 #: src/editaddress.c:1017 src/prefs_actions.c:251 src/prefs_customheader.c:235
 #: src/prefs_display_header.c:269 src/prefs_display_header.c:324
-#: src/prefs_filter_edit.c:1570
+#: src/prefs_filter_edit.c:1572
 msgid "Add"
 msgstr "Dodaj"
 
@@ -124,7 +124,7 @@ msgstr "Dodaj"
 msgid "Edit"
 msgstr "Izmeni"
 
-#: src/account.c:728 src/prefs_customheader.c:241 src/prefs_filter_edit.c:1573
+#: src/account.c:728 src/prefs_customheader.c:241 src/prefs_filter_edit.c:1575
 msgid " Delete "
 msgstr " Obriši "
 
@@ -415,7 +415,7 @@ msgstr "Ime:"
 
 #. Buttons
 #: src/addressbook.c:625 src/addressbook.c:1665 src/addressbook.c:1671
-#: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2223
+#: src/editaddress.c:878 src/editaddress.c:1011 src/mainwindow.c:2231
 #: src/prefs_actions.c:263 src/prefs_display_header.c:275
 #: src/prefs_display_header.c:330 src/prefs_template.c:227
 msgid "Delete"
@@ -606,7 +606,7 @@ msgstr "Lične adrese"
 msgid "Notice"
 msgstr "Obaveštenje"
 
-#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1967
+#: src/alertpanel.c:136 src/main.c:255 src/textview.c:1969
 msgid "Warning"
 msgstr "Upozorenje"
 
@@ -1009,7 +1009,7 @@ msgstr "Pisanje poruke%s"
 msgid "Recipient is not specified."
 msgstr "Primalac nije upisan."
 
-#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2155
+#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2163
 #: src/prefs_account.c:703 src/prefs_common.c:854
 msgid "Send"
 msgstr "Pošalji"
@@ -1604,23 +1604,23 @@ msgstr "neuspeh pri pisanju konfiguracije u datoteku\n"
 msgid "Select folder"
 msgstr "Odaberite direktorijum"
 
-#: src/foldersel.c:337 src/folderview.c:1012 src/prefs_folder_item.c:212
+#: src/foldersel.c:337 src/folderview.c:1011 src/prefs_folder_item.c:212
 msgid "Inbox"
 msgstr "Sanduče"
 
-#: src/foldersel.c:341 src/folderview.c:1018 src/prefs_folder_item.c:213
+#: src/foldersel.c:341 src/folderview.c:1017 src/prefs_folder_item.c:213
 msgid "Sent"
 msgstr "Poslato"
 
-#: src/foldersel.c:345 src/folderview.c:1024 src/prefs_folder_item.c:215
+#: src/foldersel.c:345 src/folderview.c:1023 src/prefs_folder_item.c:215
 msgid "Queue"
 msgstr "Odloženo"
 
-#: src/foldersel.c:349 src/folderview.c:1030 src/prefs_folder_item.c:216
+#: src/foldersel.c:349 src/folderview.c:1029 src/prefs_folder_item.c:216
 msgid "Trash"
 msgstr "Smeće"
 
-#: src/foldersel.c:353 src/folderview.c:1037 src/prefs_folder_item.c:214
+#: src/foldersel.c:353 src/folderview.c:1036 src/prefs_folder_item.c:214
 msgid "Drafts"
 msgstr "Nedovršeno"
 
@@ -1710,12 +1710,12 @@ msgstr "Postavljam info direktorijuma...\n"
 msgid "Setting folder info..."
 msgstr "Postavljam info direktorijuma..."
 
-#: src/folderview.c:747 src/mainwindow.c:3194 src/setup.c:81
+#: src/folderview.c:747 src/mainwindow.c:3202 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Pretražujem direktorijume %s%c%s ..."
 
-#: src/folderview.c:751 src/mainwindow.c:3199 src/setup.c:86
+#: src/folderview.c:751 src/mainwindow.c:3207 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Pretražujem direktorijum %s ..."
@@ -1732,16 +1732,16 @@ msgstr ""
 msgid "Rebuilding folder tree..."
 msgstr "Osvežavam stablo direktorijuma..."
 
-#: src/folderview.c:809
+#: src/folderview.c:810
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "Osvežavam stablo direktorijuma..."
 
-#: src/folderview.c:881
+#: src/folderview.c:880
 msgid "Checking for new messages in all folders..."
 msgstr "Proveravanje novih poruka u svim direktorijumima..."
 
-#: src/folderview.c:1605
+#: src/folderview.c:1604
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Direktorijum %s je odabran\n"
@@ -1927,151 +1927,156 @@ msgstr "Ne mogu prikazati sliku."
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "IMAP4 veza prema %s:%d je pukla. Povezujem se ponovo...\n"
 
-#: src/imap.c:535
+#: src/imap.c:503 src/imap.c:509
+#, fuzzy
+msgid "IMAP4 server disables LOGIN.\n"
+msgstr "Direktorijum IMAP servera"
+
+#: src/imap.c:555
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "ostvarujem IMAP4 vezu prema %s:%d ...\n"
 
-#: src/imap.c:583
+#: src/imap.c:603
 msgid "Can't start TLS session.\n"
 msgstr "Ne mogu pokrenuti TLS sesiju.\n"
 
-#: src/imap.c:1327
+#: src/imap.c:1347
 #, fuzzy, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "ne mogu postaviti obrisane oznake: %d\n"
 
-#: src/imap.c:1335 src/imap.c:1427
+#: src/imap.c:1355 src/imap.c:1447
 msgid "can't expunge\n"
 msgstr "ne mogu obrisati\n"
 
-#: src/imap.c:1421
+#: src/imap.c:1441
 #, fuzzy
 msgid "can't set deleted flags: 1:*\n"
 msgstr "ne mogu postaviti obrisane oznake: 1:%d\n"
 
-#: src/imap.c:1466
+#: src/imap.c:1486
 #, fuzzy
 msgid "can't close folder\n"
 msgstr "ne mogu odabrati direktorijum: %s\n"
 
-#: src/imap.c:1544
+#: src/imap.c:1564
 #, fuzzy, c-format
 msgid "root folder %s not exist\n"
 msgstr "Označena datoteka ne postoji.\n"
 
-#: src/imap.c:1722 src/imap.c:1730
+#: src/imap.c:1742 src/imap.c:1750
 #, fuzzy
 msgid "error occurred while getting LIST.\n"
 msgstr "došlo je do greške prilikom dohvatanja LISTe.\n"
 
-#: src/imap.c:1844
+#: src/imap.c:1864
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "ne mogu kreirati '%s'\n"
 
-#: src/imap.c:1849
+#: src/imap.c:1869
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "ne mogu kreirati '%s' ispod INBOX\n"
 
-#: src/imap.c:1910
+#: src/imap.c:1930
 msgid "can't create mailbox: LIST failed\n"
 msgstr "ne mogu kreirati sanduče: LIST nije uspeo\n"
 
-#: src/imap.c:1930
+#: src/imap.c:1950
 msgid "can't create mailbox\n"
 msgstr "ne mogu kreirati sanduče\n"
 
-#: src/imap.c:1999
+#: src/imap.c:2019
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "ne mogu promeniti ime sandučeta %s u %s\n"
 
-#: src/imap.c:2061
+#: src/imap.c:2081
 msgid "can't delete mailbox\n"
 msgstr "ne mogu obrisati sanduče\n"
 
-#: src/imap.c:2100
+#: src/imap.c:2120
 msgid "can't get envelope\n"
 msgstr "ne mogu dobiti omot\n"
 
-#: src/imap.c:2108
+#: src/imap.c:2128
 msgid "error occurred while getting envelope.\n"
 msgstr "došlo je do greške prilikom dobijanja omota.\n"
 
-#: src/imap.c:2129
+#: src/imap.c:2149
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "ne mogu analizirati omot: %s\n"
 
-#: src/imap.c:2252
+#: src/imap.c:2272
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Ne mogu se povezati sa IMAP4 serverom: %s:%d\n"
 
-#: src/imap.c:2259
+#: src/imap.c:2279
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Ne mogu se povezati s IMAP4 serverom: %s:%d\n"
 
-#: src/imap.c:2334
+#: src/imap.c:2354
 msgid "can't get namespace\n"
 msgstr "ne mogu dobiti namespace\n"
 
-#: src/imap.c:2852
+#: src/imap.c:2872
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "ne mogu odabrati direktorijum: %s\n"
 
-#: src/imap.c:3023
+#: src/imap.c:3044
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "Način provere identieta"
 
-#: src/imap.c:3040
+#: src/imap.c:3061
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 login nije uspeo.\n"
 
-#: src/imap.c:3361
+#: src/imap.c:3382
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "ne mogu dodati %s na %s\n"
 
-#: src/imap.c:3368
+#: src/imap.c:3389
 msgid "(sending file...)"
 msgstr "(šaljem datoteku...)"
 
-#: src/imap.c:3396
+#: src/imap.c:3417
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "ne mogu dodati poruku %s\n"
 
-#: src/imap.c:3428
+#: src/imap.c:3449
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "ne mogu kopirati %d u %s\n"
 
-#: src/imap.c:3452
+#: src/imap.c:3473
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "grečka prilikom imap naredbe: STORE %d:%d %s\n"
 
-#: src/imap.c:3466
+#: src/imap.c:3487
 msgid "error while imap command: EXPUNGE\n"
 msgstr "greška prilikom imap naredbe: EXPUNGE\n"
 
-#: src/imap.c:3479
+#: src/imap.c:3500
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "greška prilikom imap naredbe: EXPUNGE\n"
 
-#: src/imap.c:3706
+#: src/imap.c:3727
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv ne može prebaciti UTF-7 to %s\n"
 
-#: src/imap.c:3736
+#: src/imap.c:3757
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv ne može prebaciti %s to UTF-7\n"
@@ -2173,7 +2178,7 @@ msgstr "Unesi LDIF datoteku u Adresar"
 msgid "Prev"
 msgstr "Preth."
 
-#: src/importldif.c:761 src/mainwindow.c:2241
+#: src/importldif.c:761 src/mainwindow.c:2249
 msgid "Next"
 msgstr "Sled."
 
@@ -3062,54 +3067,54 @@ msgstr "/_Pomoć/---"
 msgid "Creating main window...\n"
 msgstr "Kreiranje glavnih prozora...\n"
 
-#: src/mainwindow.c:954
+#: src/mainwindow.c:956
 #, c-format
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Glavni Prozor: prikaz boje %d nije uspeo\n"
 
-#: src/mainwindow.c:1032 src/summaryview.c:1369 src/summaryview.c:1677
+#: src/mainwindow.c:1040 src/summaryview.c:1369 src/summaryview.c:1677
 #: src/summaryview.c:1785 src/summaryview.c:1831 src/summaryview.c:2453
 #: src/summaryview.c:3090 src/summaryview.c:3156 src/summaryview.c:3181
 #: src/summaryview.c:3294
 msgid "done.\n"
 msgstr "gotovo.\n"
 
-#: src/mainwindow.c:1148 src/mainwindow.c:1189 src/mainwindow.c:1217
+#: src/mainwindow.c:1156 src/mainwindow.c:1197 src/mainwindow.c:1225
 msgid "Untitled"
 msgstr "Neimenovano"
 
-#: src/mainwindow.c:1218
+#: src/mainwindow.c:1226
 msgid "none"
 msgstr "ništa"
 
-#: src/mainwindow.c:1268
+#: src/mainwindow.c:1276
 #, c-format
 msgid "Changing window separation type from %d to %d\n"
 msgstr "Menjanje vrste podele prozora iz %d u %d\n"
 
-#: src/mainwindow.c:1488
+#: src/mainwindow.c:1496
 msgid "Offline"
 msgstr ""
 
-#: src/mainwindow.c:1489
+#: src/mainwindow.c:1497
 msgid "You are offline. Go online?"
 msgstr ""
 
-#: src/mainwindow.c:1503
+#: src/mainwindow.c:1511
 #, fuzzy
 msgid "Empty all trash"
 msgstr "Isprazni smeće"
 
-#: src/mainwindow.c:1504
+#: src/mainwindow.c:1512
 #, fuzzy
 msgid "Empty messages in all trash?"
 msgstr "Isprazniti sve poruke iz smeća?"
 
-#: src/mainwindow.c:1532
+#: src/mainwindow.c:1540
 msgid "Add mailbox"
 msgstr "Dodaj sanduče"
 
-#: src/mainwindow.c:1533
+#: src/mainwindow.c:1541
 msgid ""
 "Input the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3119,16 +3124,16 @@ msgstr ""
 "Ako je unešen postojeće sanduče, automatski\n"
 "će biti pretražen."
 
-#: src/mainwindow.c:1539
+#: src/mainwindow.c:1547
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "Sanduče`%s' već postoji."
 
-#: src/mainwindow.c:1544 src/setup.c:57
+#: src/mainwindow.c:1552 src/setup.c:57
 msgid "Mailbox"
 msgstr "Sanduče"
 
-#: src/mainwindow.c:1550 src/setup.c:63
+#: src/mainwindow.c:1558 src/setup.c:63
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3137,144 +3142,144 @@ msgstr ""
 "Kreiranje sandučeta nije uspelo.\n"
 "Možda neke datoteke već postoje ili nemate pravo pisanja u direktoriju."
 
-#: src/mainwindow.c:1923
+#: src/mainwindow.c:1931
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Direktorijumi"
 
-#: src/mainwindow.c:1943 src/messageview.c:360
+#: src/mainwindow.c:1951 src/messageview.c:360
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Poruke"
 
-#: src/mainwindow.c:2090 src/summaryview.c:340
+#: src/mainwindow.c:2098 src/summaryview.c:340
 msgid "/_Reply"
 msgstr "/Od_govor"
 
-#: src/mainwindow.c:2091
+#: src/mainwindow.c:2099
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "Odgovori svima"
 
-#: src/mainwindow.c:2092
+#: src/mainwindow.c:2100
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/O_dgovori/_pošiljaocu"
 
-#: src/mainwindow.c:2093
+#: src/mainwindow.c:2101
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/O_dgovori/na mailing _listu"
 
-#: src/mainwindow.c:2098 src/summaryview.c:347
+#: src/mainwindow.c:2106 src/summaryview.c:347
 msgid "/_Forward"
 msgstr "/P_rosledi"
 
-#: src/mainwindow.c:2099 src/summaryview.c:348
+#: src/mainwindow.c:2107 src/summaryview.c:348
 msgid "/For_ward as attachment"
 msgstr "/Pro_sledi kao dodatak"
 
-#: src/mainwindow.c:2100 src/summaryview.c:349
+#: src/mainwindow.c:2108 src/summaryview.c:349
 msgid "/Redirec_t"
 msgstr "/Pre_usmeri"
 
-#: src/mainwindow.c:2136
+#: src/mainwindow.c:2144
 msgid "Get"
 msgstr "Primi"
 
-#: src/mainwindow.c:2137
+#: src/mainwindow.c:2145
 msgid "Incorporate new mail"
 msgstr "Prima novu poštu"
 
-#: src/mainwindow.c:2144
+#: src/mainwindow.c:2152
 msgid "Get all"
 msgstr "Primi sve"
 
-#: src/mainwindow.c:2145
+#: src/mainwindow.c:2153
 msgid "Incorporate new mail of all accounts"
 msgstr "Prima novu poštu sa svih naloga"
 
-#: src/mainwindow.c:2156
+#: src/mainwindow.c:2164
 msgid "Send queued message(s)"
 msgstr "Šalje odložene poruku/e"
 
-#: src/mainwindow.c:2166 src/prefs_account.c:705 src/prefs_common.c:856
+#: src/mainwindow.c:2174 src/prefs_account.c:705 src/prefs_common.c:856
 #: src/prefs_folder_item.c:137
 msgid "Compose"
 msgstr "Napiši"
 
-#: src/mainwindow.c:2167
+#: src/mainwindow.c:2175
 msgid "Compose new message"
 msgstr "Napiši novu poruku"
 
-#: src/mainwindow.c:2175 src/prefs_common.c:1370
+#: src/mainwindow.c:2183 src/prefs_common.c:1370
 msgid "Reply"
 msgstr "Odgovori"
 
-#: src/mainwindow.c:2176 src/mainwindow.c:2189
+#: src/mainwindow.c:2184 src/mainwindow.c:2197
 msgid "Reply to the message"
 msgstr "Odgovari na poruku"
 
-#: src/mainwindow.c:2194
+#: src/mainwindow.c:2202
 msgid "Reply all"
 msgstr "Odgovori na sve"
 
-#: src/mainwindow.c:2195
+#: src/mainwindow.c:2203
 msgid "Reply to all"
 msgstr "Odgovori svima"
 
-#: src/mainwindow.c:2203 src/prefs_filter_edit.c:741
+#: src/mainwindow.c:2211 src/prefs_filter_edit.c:741
 msgid "Forward"
 msgstr "Prosledi"
 
-#: src/mainwindow.c:2204 src/mainwindow.c:2217
+#: src/mainwindow.c:2212 src/mainwindow.c:2225
 msgid "Forward the message"
 msgstr "Prosleđuje poruku"
 
-#: src/mainwindow.c:2224
+#: src/mainwindow.c:2232
 msgid "Delete the message"
 msgstr "Obriši poruku"
 
-#: src/mainwindow.c:2232
+#: src/mainwindow.c:2240
 msgid "Execute"
 msgstr "Izvrši"
 
-#: src/mainwindow.c:2233
+#: src/mainwindow.c:2241
 msgid "Execute marked process"
 msgstr "Izvrši označene procese"
 
-#: src/mainwindow.c:2242
+#: src/mainwindow.c:2250
 msgid "Next unread message"
 msgstr "Sledeća nepročitana poruka"
 
-#: src/mainwindow.c:2253
+#: src/mainwindow.c:2261
 msgid "Prefs"
 msgstr "Svojstva"
 
-#: src/mainwindow.c:2254
+#: src/mainwindow.c:2262
 msgid "Common preferences"
 msgstr "Uobičajena svojstva"
 
-#: src/mainwindow.c:2261 src/prefs_folder_item.c:258
+#: src/mainwindow.c:2269 src/prefs_folder_item.c:258
 #: src/prefs_folder_item.c:269 src/progressdialog.c:50
 msgid "Account"
 msgstr "Nalog"
 
-#: src/mainwindow.c:2262
+#: src/mainwindow.c:2270
 msgid "Account setting"
 msgstr "Podešavanja naloga"
 
-#: src/mainwindow.c:2436
+#: src/mainwindow.c:2444
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2447
+#: src/mainwindow.c:2455
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2635
+#: src/mainwindow.c:2643
 msgid "Exit"
 msgstr "Izlaz"
 
-#: src/mainwindow.c:2635
+#: src/mainwindow.c:2643
 msgid "Exit this program?"
 msgstr "Izlaz iz ovog programa?"
 
@@ -3871,6 +3876,7 @@ msgid "Receive size limit"
 msgstr "Ograničenje u veličini za primanje"
 
 #: src/prefs_account.c:1058 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
 msgid "KB"
 msgstr ""
 
@@ -5165,61 +5171,66 @@ msgstr "Izvrši"
 msgid "Stop rule evaluation"
 msgstr ""
 
-#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1080
+#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1082
 #, fuzzy
 msgid "folder:"
 msgstr "Direktorijum"
 
-#: src/prefs_filter_edit.c:1120
+#: src/prefs_filter_edit.c:1056
+#, fuzzy
+msgid "day(s)"
+msgstr "dana"
+
+#: src/prefs_filter_edit.c:1122
 #, fuzzy
 msgid "address:"
 msgstr "Adresa"
 
-#: src/prefs_filter_edit.c:1527
+#: src/prefs_filter_edit.c:1529
 #, fuzzy
 msgid "Edit header list"
 msgstr "Zaglavlje"
 
-#: src/prefs_filter_edit.c:1550
+#: src/prefs_filter_edit.c:1552
 #, fuzzy
 msgid "Headers"
 msgstr "Zaglavlje"
 
-#: src/prefs_filter_edit.c:1561
+#: src/prefs_filter_edit.c:1563
 #, fuzzy
 msgid "Header:"
 msgstr "Zaglavlje"
 
-#: src/prefs_filter_edit.c:1677
+#: src/prefs_filter_edit.c:1679
 #, fuzzy
 msgid "Rule name is not specified."
 msgstr "Primalac nije upisan."
 
-#: src/prefs_filter_edit.c:1765 src/prefs_filter_edit.c:1844
-#: src/prefs_filter_edit.c:1852
+#: src/prefs_filter_edit.c:1767 src/prefs_filter_edit.c:1846
+#: src/prefs_filter_edit.c:1854
 #, fuzzy
 msgid "Command is not specified."
 msgstr "Linija za neredbe nije podešena."
 
-#: src/prefs_filter_edit.c:1799
+#: src/prefs_filter_edit.c:1801
 msgid "Invalid condition exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1821 src/prefs_filter_edit.c:1829
+#: src/prefs_filter_edit.c:1823 src/prefs_filter_edit.c:1831
 #, fuzzy
 msgid "Destination folder is not specified."
 msgstr "Odredište nije postavljeno."
 
-#: src/prefs_filter_edit.c:1883
+#: src/prefs_filter_edit.c:1885
 msgid "Invalid action exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1892
+#: src/prefs_filter_edit.c:1894
 #, fuzzy
 msgid "Condition not exist."
 msgstr "Linija za neredbe nije podešena."
 
-#: src/prefs_filter_edit.c:1894
+#: src/prefs_filter_edit.c:1896
 #, fuzzy
 msgid "Action not exist."
 msgstr "%s: datoteka ne postoji\n"
@@ -6079,16 +6090,16 @@ msgstr "Stvaranje pregleda teksta...\n"
 msgid "This message can't be displayed.\n"
 msgstr "poruka neće biti primljena\n"
 
-#: src/textview.c:1855
+#: src/textview.c:1857
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/S_ačuvaj kao"
 
-#: src/textview.c:1875
+#: src/textview.c:1877
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1963
+#: src/textview.c:1965
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

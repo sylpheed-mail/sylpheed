@@ -1044,6 +1044,7 @@ static void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox,
 		gtk_widget_hide(hbox->key_entry);
 		gtk_widget_show(hbox->spin_btn);
 		gtk_widget_show(hbox->label);
+		gtk_label_set_text(GTK_LABEL(hbox->label), _("KB"));
 		break;
 	case PF_COND_AGE:
 		gtk_widget_hide(hbox->match_type_optmenu);
@@ -1051,7 +1052,8 @@ static void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox,
 		gtk_widget_show(hbox->age_match_optmenu);
 		gtk_widget_hide(hbox->key_entry);
 		gtk_widget_show(hbox->spin_btn);
-		gtk_widget_hide(hbox->label);
+		gtk_widget_show(hbox->label);
+		gtk_label_set_text(GTK_LABEL(hbox->label), _("day(s)"));
 		break;
 	case PF_COND_ACCOUNT:
 		gtk_widget_hide(hbox->match_type_optmenu);
