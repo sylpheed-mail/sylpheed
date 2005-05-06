@@ -1,3 +1,9 @@
+2005-05-06
+
+	* src/socket.c: sock_connect_address_list_async(): 低確率で起こる
+	  接続の問題を避けるために G_IO_OUT のみを watch するようにした
+	  (Thorsten Maerz さん thanks)。
+
 2005-05-02
 
 	* src/prefs_filter_edit.c: prefs_filter_edit_set_cond_hbox_widgets():

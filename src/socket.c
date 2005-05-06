@@ -741,7 +741,7 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 	conn_data->cur_addr = conn_data->cur_addr->next;
 
 	conn_data->channel = g_io_channel_unix_new(sock);
-	conn_data->io_tag = g_io_add_watch(conn_data->channel, G_IO_IN|G_IO_OUT,
+	conn_data->io_tag = g_io_add_watch(conn_data->channel, G_IO_OUT,
 					   sock_connect_async_cb, conn_data);
 
 	return 0;
