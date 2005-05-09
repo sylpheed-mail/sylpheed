@@ -38,6 +38,11 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkstatusbar.h>
+#include <gtk/gtkspinbutton.h>
+#include <gtk/gtkvbox.h>
+#include <gtk/gtknotebook.h>
+#include <gtk/gtkoptionmenu.h>
 
 #include "addressbook.h"
 #include "prefs_common.h"

@@ -35,10 +35,14 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkhbox.h>
+#include <gtk/gtkvbox.h>
+#include <gtk/gtktable.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkstatusbar.h>
+#include <gtk/gtkhseparator.h>
 
 #include "prefs_common.h"
 #include "syldap.h"
