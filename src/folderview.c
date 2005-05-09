@@ -26,6 +26,7 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
+#include <gtk/gtktreeselection.h>
 #include <gtk/gtkcellrendererpixbuf.h>
 #include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtksignal.h>
@@ -34,6 +35,8 @@
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtkitemfactory.h>
+#include <gtk/gtkstock.h>
+#include <gtk/gtkversion.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -310,6 +313,7 @@ FolderView *folderview_create(void)
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview),
 					COL_FOLDER_NAME);
 	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), FALSE);
+	//g_object_set(treeview, "fixed-height-mode", TRUE, NULL);
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
@@ -361,7 +365,7 @@ FolderView *folderview_create(void)
 	column = gtk_tree_view_column_new_with_attributes
 		(_("New"), renderer, "text", COL_NEW, NULL);
 	gtk_tree_view_column_set_alignment(column, 1.0);
-	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_new);
 	gtk_tree_view_column_set_resizable(column, TRUE);
@@ -372,7 +376,7 @@ FolderView *folderview_create(void)
 	column = gtk_tree_view_column_new_with_attributes
 		(_("Unread"), renderer, "text", COL_UNREAD, NULL);
 	gtk_tree_view_column_set_alignment(column, 1.0);
-	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_unread);
 	gtk_tree_view_column_set_resizable(column, TRUE);
@@ -383,7 +387,7 @@ FolderView *folderview_create(void)
 	column = gtk_tree_view_column_new_with_attributes
 		(_("#"), renderer, "text", COL_TOTAL, NULL);
 	gtk_tree_view_column_set_alignment(column, 1.0);
-	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_GROW_ONLY);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_total);
 	gtk_tree_view_column_set_resizable(column, TRUE);
@@ -533,26 +537,21 @@ void folderview_select(FolderView *folderview, FolderItem *item)
 static void folderview_select_row(FolderView *folderview, GtkTreeIter *iter)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
-	GtkTreePath *path, *parent_path;
-	GtkTreeIter parent;
+	GtkTreePath *path;
 
 	g_return_if_fail(iter != NULL);
 
 	path = gtk_tree_model_get_path(model, iter);
 
-	if (gtk_tree_model_iter_parent(model, &parent, iter)) {
-		parent_path = gtk_tree_model_get_path(model, &parent);
-		gtk_tree_view_expand_to_path
-			(GTK_TREE_VIEW(folderview->treeview), parent_path);
-		gtk_tree_path_free(parent_path);
-	}
+	gtkut_tree_view_expand_parent_all(GTK_TREE_VIEW(folderview->treeview),
+					  iter);
 
 	folderview->open_folder = TRUE;
 	gtk_tree_view_set_cursor(GTK_TREE_VIEW(folderview->treeview), path,
 				 NULL, FALSE);
 	if (folderview->summaryview->folder_item &&
 	    folderview->summaryview->folder_item->total > 0)
-		gtk_widget_grab_focus(folderview->summaryview->ctree);
+		gtk_widget_grab_focus(folderview->summaryview->treeview);
 	else
 		gtk_widget_grab_focus(folderview->treeview);
 
@@ -2378,7 +2377,7 @@ static gboolean folderview_drag_motion_cb(GtkWidget      *widget,
 	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
 	GtkTreePath *path = NULL, *prev_path = NULL;
 	GtkTreeIter iter;
-	FolderItem *item = NULL, *src_item;
+	FolderItem *item = NULL, *src_item = NULL;
 	gboolean acceptable = FALSE;
 
 	if (gtk_tree_view_get_dest_row_at_pos
@@ -2414,7 +2413,8 @@ static gboolean folderview_drag_motion_cb(GtkWidget      *widget,
 	}
 
 	if (acceptable) {
-		if ((context->actions & GDK_ACTION_MOVE) != 0)
+		if ((context->actions & GDK_ACTION_MOVE) != 0 &&
+		    FOLDER_ITEM_CAN_ADD(src_item))
 			gdk_drag_status(context, GDK_ACTION_MOVE, time);
 		else if ((context->actions & GDK_ACTION_COPY) != 0)
 			gdk_drag_status(context, GDK_ACTION_COPY, time);
@@ -2469,12 +2469,14 @@ static void folderview_drag_received_cb(GtkWidget        *widget,
 	src_item = folderview->summaryview->folder_item;
 
 	if (FOLDER_ITEM_CAN_ADD(item) && src_item && src_item != item) {
-		if ((context->actions & GDK_ACTION_MOVE) != 0) {
+		if ((context->actions & GDK_ACTION_MOVE) != 0 &&
+		    FOLDER_ITEM_CAN_ADD(src_item)) {
 			summary_move_selected_to(folderview->summaryview, item);
-			gtk_drag_finish(context, TRUE, TRUE, time);
+			context->action = 0;
+			gtk_drag_finish(context, TRUE, FALSE, time);
 		} else if ((context->actions & GDK_ACTION_COPY) != 0) {
 			summary_copy_selected_to(folderview->summaryview, item);
-			gtk_drag_finish(context, TRUE, TRUE, time);
+			gtk_drag_finish(context, TRUE, FALSE, time);
 		} else
 			gtk_drag_finish(context, FALSE, FALSE, time);
 	} else

@@ -22,6 +22,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
+#include <gtk/gtkversion.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtksignal.h>
@@ -40,6 +41,8 @@
 #include <gtk/gtktoolbar.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtktooltips.h>
+#include <gtk/gtkarrow.h>
+#include <gtk/gtkstock.h>
 #include <string.h>
 
 #include "main.h"
@@ -1378,7 +1381,7 @@ void main_window_toggle_message_view(MainWindow *mainwin)
 
 	prefs_common.msgview_visible = mainwin->messageview->visible;
 
-	gtk_widget_grab_focus(summaryview->ctree);
+	gtk_widget_grab_focus(summaryview->treeview);
 }
 
 void main_window_get_size(MainWindow *mainwin)
@@ -2864,7 +2867,7 @@ static void show_all_header_cb(MainWindow *mainwin, guint action,
 			       GtkWidget *widget)
 {
 	if (mainwin->menu_lock_count) return;
-	summary_display_msg_selected(mainwin->summaryview,
+	summary_display_msg_selected(mainwin->summaryview, FALSE,
 				     GTK_CHECK_MENU_ITEM(widget)->active);
 }
 
@@ -3107,7 +3110,7 @@ static void allsel_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
 	MessageView *msgview = mainwin->messageview;
 
-	if (GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->ctree))
+	if (GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->treeview))
 		summary_select_all(mainwin->summaryview);
 	else if (messageview_is_visible(msgview) &&
 		 (GTK_WIDGET_HAS_FOCUS(msgview->textview->text) ||

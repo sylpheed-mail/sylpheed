@@ -37,6 +37,8 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktextview.h>
 #include <gtk/gtkitemfactory.h>
+#include <gtk/gtkstock.h>
+
 #include <stdlib.h>
 #if HAVE_WCHAR_H
 #  include <wchar.h>
@@ -134,6 +136,12 @@ void gtkut_clist_set_focus_row		(GtkCList	*clist,
 
 gboolean gtkut_tree_model_next		(GtkTreeModel	*model,
 					 GtkTreeIter	*iter);
+gboolean gtkut_tree_model_prev		(GtkTreeModel	*model,
+					 GtkTreeIter	*iter);
+
+gboolean gtkut_tree_model_get_iter_last	(GtkTreeModel	*model,
+					 GtkTreeIter	*iter);
+
 gboolean gtkut_tree_model_find_by_column_data
 					(GtkTreeModel	*model,
 					 GtkTreeIter	*iter,
@@ -141,12 +149,18 @@ gboolean gtkut_tree_model_find_by_column_data
 					 gint		 col,
 					 gpointer	 data);
 
+gboolean gtkut_tree_row_reference_get_iter
+					(GtkTreeModel		*model,
+					 GtkTreeRowReference	*ref,
+					 GtkTreeIter		*iter);
 gboolean gtkut_tree_row_reference_equal	(GtkTreeRowReference	*ref1,
 					 GtkTreeRowReference	*ref2);
 
 gboolean gtkut_tree_view_find_collapsed_parent
 					(GtkTreeView	*treeview,
 					 GtkTreeIter	*parent,
+					 GtkTreeIter	*iter);
+void gtkut_tree_view_expand_parent_all	(GtkTreeView	*treeview,
 					 GtkTreeIter	*iter);
 
 void gtkut_tree_view_vertical_autoscroll(GtkTreeView	*treeview);

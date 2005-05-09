@@ -32,10 +32,15 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtksignal.h>
+#include <gtk/gtkvbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkstatusbar.h>
+#include <gtk/gtkfilesel.h>
+#include <gtk/gtkhseparator.h>
+#include <gtk/gtkstock.h>
 
 #include "addressbook.h"
 #include "prefs_common.h"

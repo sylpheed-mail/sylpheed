@@ -27,6 +27,8 @@
 #include <glib/gi18n.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkrc.h>
+#include <gtk/gtkstock.h>
+#include <gtk/gtkaccelmap.h>
 
 #include <stdio.h>
 #include <stdlib.h>

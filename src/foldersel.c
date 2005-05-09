@@ -26,12 +26,16 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
+#include <gtk/gtktreeselection.h>
+#include <gtk/gtkcellrendererpixbuf.h>
+#include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtksignal.h>
+#include <gtk/gtkstock.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>

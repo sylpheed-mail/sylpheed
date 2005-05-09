@@ -25,13 +25,14 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkclist.h>
 #include <gtk/gtkbutton.h>
-#include <gdk/gdkkeysyms.h>
+#include <gtk/gtkstock.h>
 
 #include "prefs.h"
 #include "prefs_common.h"
@@ -63,7 +64,7 @@ static struct _SummaryColumnDialog
 	gboolean finished;
 } summary_col;
 
-static const gchar *const col_name[N_SUMMARY_COLS] = {
+static const gchar *const col_name[N_SUMMARY_VISIBLE_COLS] = {
 	N_("Mark"),		/* S_COL_MARK    */
 	N_("Unread"),		/* S_COL_UNREAD  */
 	N_("Attachment"),	/* S_COL_MIME    */
@@ -74,7 +75,7 @@ static const gchar *const col_name[N_SUMMARY_COLS] = {
 	N_("Number")		/* S_COL_NUMBER  */
 };
 
-static SummaryColumnState default_state[N_SUMMARY_COLS] = {
+static SummaryColumnState default_state[N_SUMMARY_VISIBLE_COLS] = {
 	{ S_COL_MARK   , TRUE  },
 	{ S_COL_UNREAD , TRUE  },
 	{ S_COL_MIME   , TRUE  },
@@ -328,16 +329,16 @@ static void prefs_summary_column_create(void)
 
 SummaryColumnState *prefs_summary_column_get_config(void)
 {
-	static SummaryColumnState state[N_SUMMARY_COLS];
+	static SummaryColumnState state[N_SUMMARY_VISIBLE_COLS];
 	SummaryColumnType type;
 	gint pos;
 
-	for (pos = 0; pos < N_SUMMARY_COLS; pos++)
+	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++)
 		state[pos].type = -1;
 
-	for (type = 0; type < N_SUMMARY_COLS; type++) {
+	for (type = 0; type < N_SUMMARY_VISIBLE_COLS; type++) {
 		pos = prefs_common.summary_col_pos[type];
-		if (pos < 0 || pos >= N_SUMMARY_COLS ||
+		if (pos < 0 || pos >= N_SUMMARY_VISIBLE_COLS ||
 		    state[pos].type != -1) {
 			g_warning("Wrong column position\n");
 			prefs_summary_column_set_config(default_state);
@@ -356,7 +357,7 @@ void prefs_summary_column_set_config(SummaryColumnState *state)
 	SummaryColumnType type;
 	gint pos;
 
-	for (pos = 0; pos < N_SUMMARY_COLS; pos++) {
+	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++) {
 		type = state[pos].type;
 		prefs_common.summary_col_visible[type] = state[pos].visible;
 		prefs_common.summary_col_pos[type] = pos;
@@ -377,7 +378,7 @@ static void prefs_summary_column_set_dialog(SummaryColumnState *state)
 	if (!state)
 		state = prefs_summary_column_get_config();
 
-	for (pos = 0; pos < N_SUMMARY_COLS; pos++) {
+	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++) {
 		gint row;
 		type = state[pos].type;
 		name = gettext(col_name[type]);
@@ -398,12 +399,12 @@ static void prefs_summary_column_set_view(void)
 {
 	GtkCList *stock_clist = GTK_CLIST(summary_col.stock_clist);
 	GtkCList *shown_clist = GTK_CLIST(summary_col.shown_clist);
-	SummaryColumnState state[N_SUMMARY_COLS];
+	SummaryColumnState state[N_SUMMARY_VISIBLE_COLS];
 	SummaryColumnType type;
 	gint row, pos = 0;
 
-	g_return_if_fail
-		(stock_clist->rows + shown_clist->rows == N_SUMMARY_COLS);
+	g_return_if_fail(stock_clist->rows + shown_clist->rows ==
+			 N_SUMMARY_VISIBLE_COLS);
 
 	for (row = 0; row < stock_clist->rows; row++) {
 		type = GPOINTER_TO_INT

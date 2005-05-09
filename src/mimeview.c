@@ -34,6 +34,7 @@
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkdnd.h>
 #include <gtk/gtkselection.h>
+#include <gtk/gtknotebook.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -51,6 +52,7 @@
 #include "gtkutils.h"
 #include "prefs_common.h"
 #include "rfc2015.h"
+#include "gtksctree.h"
 
 typedef enum
 {
@@ -839,7 +841,7 @@ static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		return TRUE;
 	case GDK_Escape:
 		if (summaryview)
-			gtk_widget_grab_focus(summaryview->ctree);
+			gtk_widget_grab_focus(summaryview->treeview);
 		break;
 	case GDK_Left:
 	case GDK_Delete:

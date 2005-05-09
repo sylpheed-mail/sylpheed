@@ -37,7 +37,8 @@
 #include <gtk/gtkcheckbutton.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtkctree.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtkstock.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -239,9 +240,8 @@ static void summary_search_create(SummaryView *summaryview)
 
 static void summary_search_execute(GtkButton *button, gpointer data)
 {
+#if 0
 	SummaryView *summaryview = data;
-	GtkCTree *ctree = GTK_CTREE(summaryview->ctree);
-	GtkCTreeNode *node;
 	MsgInfo *msginfo;
 	gboolean bool_and;
 	gboolean case_sens;
@@ -403,8 +403,8 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 				if (messageview_is_visible
 					(summaryview->messageview)) {
 					summary_unlock(summaryview);
-					summary_select_node
-						(summaryview, node, TRUE, TRUE);
+					summary_select_row
+						(summaryview, &iter, TRUE, TRUE);
 					summary_lock(summaryview);
 					if (body_matched) {
 						messageview_search_string
@@ -427,6 +427,7 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 		main_window_cursor_normal(summaryview->mainwin);
 
 	summary_unlock(summaryview);
+#endif
 }
 
 static void summary_search_clear(GtkButton *button, gpointer data)

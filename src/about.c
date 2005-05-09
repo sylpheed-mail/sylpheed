@@ -36,6 +36,8 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktextview.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkstock.h>
+
 #if HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>
 #endif

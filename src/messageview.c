@@ -29,6 +29,8 @@
 #include <gtk/gtktextview.h>
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkmenuitem.h>
+#include <gtk/gtkcheckmenuitem.h>
+#include <gtk/gtkstatusbar.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>

@@ -36,7 +36,7 @@
 #include <gtk/gtkcheckbutton.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtkctree.h>
+#include <gtk/gtkstock.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

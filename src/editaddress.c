@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2002 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,10 @@
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtktable.h>
+#include <gtk/gtkstatusbar.h>
+#include <gtk/gtknotebook.h>
+#include <gtk/gtkvbbox.h>
+#include <gtk/gtkstock.h>
 
 #include "mgutils.h"
 #include "addressbook.h"

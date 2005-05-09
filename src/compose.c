@@ -38,7 +38,6 @@
 #include <gtk/gtkoptionmenu.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkclist.h>
-#include <gtk/gtkctree.h>
 #include <gtk/gtkvpaned.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkeditable.h>
@@ -55,6 +54,7 @@
 #include <gtk/gtktreeview.h>
 #include <gtk/gtkdnd.h>
 #include <gtk/gtkclipboard.h>
+#include <gtk/gtkstock.h>
 #include <pango/pango-break.h>
 #include <stdio.h>
 #include <stdlib.h>

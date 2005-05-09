@@ -415,6 +415,60 @@ gboolean gtkut_tree_model_next(GtkTreeModel *model, GtkTreeIter *iter)
 	return FALSE;
 }
 
+gboolean gtkut_tree_model_prev(GtkTreeModel *model, GtkTreeIter *iter)
+{
+	GtkTreeIter iter_, child, next, parent;
+	GtkTreePath *path;
+	gboolean found = FALSE;
+
+	iter_ = *iter;
+
+	path = gtk_tree_model_get_path(model, &iter_);
+
+	if (gtk_tree_path_prev(path)) {
+		gtk_tree_model_get_iter(model, &child, path);
+
+		while (gtk_tree_model_iter_has_child(model, &child)) {
+			iter_ = child;
+			gtk_tree_model_iter_children(model, &child, &iter_);
+			next = child;
+			while (gtk_tree_model_iter_next(model, &next))
+				child = next;
+		}
+
+		*iter = child;
+		found = TRUE;
+	} else if (gtk_tree_model_iter_parent(model, &parent, &iter_)) {
+		*iter = parent;
+		found = TRUE;
+	}
+
+	gtk_tree_path_free(path);
+
+	return found;
+}
+
+gboolean gtkut_tree_model_get_iter_last(GtkTreeModel *model, GtkTreeIter *iter)
+{
+	GtkTreeIter iter_, child, next;
+
+	if (!gtk_tree_model_get_iter_first(model, &iter_))
+		return FALSE;
+
+	for (;;) {
+		next = iter_;
+		while (gtk_tree_model_iter_next(model, &next))
+			iter_ = next;
+		if (gtk_tree_model_iter_children(model, &child, &iter_))
+			iter_ = child;
+		else
+			break;
+	}
+
+	*iter = iter_;
+	return TRUE;
+}
+
 gboolean gtkut_tree_model_find_by_column_data(GtkTreeModel *model,
 					      GtkTreeIter *iter,
 					      GtkTreeIter *start,
@@ -449,13 +503,32 @@ gboolean gtkut_tree_model_find_by_column_data(GtkTreeModel *model,
 	return FALSE;
 }
 
+gboolean gtkut_tree_row_reference_get_iter(GtkTreeModel *model,
+					   GtkTreeRowReference *ref,
+					   GtkTreeIter *iter)
+{
+	GtkTreePath *path;
+	gboolean valid = FALSE;
+
+	if (ref) {
+		path = gtk_tree_row_reference_get_path(ref);
+		if (path) {
+			valid = gtk_tree_model_get_iter(model, iter, path);
+			gtk_tree_path_free(path);
+		}
+	}
+
+	return valid;
+}
+
 gboolean gtkut_tree_row_reference_equal(GtkTreeRowReference *ref1,
 					GtkTreeRowReference *ref2)
 {
 	GtkTreePath *path1, *path2;
 	gint result;
 
-	g_return_val_if_fail(ref1 != NULL && ref2 != NULL, FALSE);
+	if (ref1 == NULL || ref2 == NULL)
+		return FALSE;
 
 	path1 = gtk_tree_row_reference_get_path(ref1);
 	path2 = gtk_tree_row_reference_get_path(ref2);
@@ -495,6 +568,21 @@ gboolean gtkut_tree_view_find_collapsed_parent(GtkTreeView *treeview,
 	}
 
 	return FALSE;
+}
+
+void gtkut_tree_view_expand_parent_all(GtkTreeView *treeview, GtkTreeIter *iter)
+{
+	GtkTreeModel *model;
+	GtkTreeIter parent;
+	GtkTreePath *path;
+
+	model = gtk_tree_view_get_model(treeview);
+
+	if (gtk_tree_model_iter_parent(model, &parent, iter)) {
+		path = gtk_tree_model_get_path(model, &parent);
+		gtk_tree_view_expand_to_path(treeview, path);
+		gtk_tree_path_free(path);
+	}
 }
 
 #define SCROLL_EDGE_SIZE 15

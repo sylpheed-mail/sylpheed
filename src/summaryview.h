@@ -24,7 +24,8 @@
 #include <gdk/gdk.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkitemfactory.h>
-#include <gtk/gtkctree.h>
+#include <gtk/gtktreestore.h>
+#include <gtk/gtktreeview.h>
 #include <gtk/gtkdnd.h>
 
 typedef struct _SummaryView		SummaryView;
@@ -37,7 +38,6 @@ typedef struct _SummaryColumnState	SummaryColumnState;
 #include "compose.h"
 #include "prefs_filter.h"
 #include "folder.h"
-#include "gtksctree.h"
 
 typedef enum
 {
@@ -49,9 +49,19 @@ typedef enum
 	S_COL_DATE,
 	S_COL_SIZE,
 	S_COL_NUMBER,
+
+	S_COL_MSG_INFO,
+
+	S_COL_LABEL,
+	S_COL_TO,
+
+	S_COL_FOREGROUND,
+	S_COL_BOLD,
+
+	N_SUMMARY_COLS
 } SummaryColumnType;
 
-#define N_SUMMARY_COLS	8
+#define N_SUMMARY_VISIBLE_COLS	S_COL_MSG_INFO
 
 typedef enum
 {
@@ -79,7 +89,12 @@ struct _SummaryView
 {
 	GtkWidget *vbox;
 	GtkWidget *scrolledwin;
-	GtkWidget *ctree;
+	GtkWidget *treeview;
+
+	GtkTreeStore *store;
+	GtkTreeSelection *selection;
+	GtkTreeViewColumn *columns[N_SUMMARY_VISIBLE_COLS];
+
 	GtkWidget *hbox;
 	GtkWidget *hbox_l;
 	GtkWidget *statlabel_folder;
@@ -97,13 +112,13 @@ struct _SummaryView
 
 	GtkWidget *window;
 
-	GtkCTreeNode *selected;
-	GtkCTreeNode *displayed;
+	GtkTreeRowReference *selected;
+	GtkTreeRowReference *displayed;
 
 	gboolean display_msg;
 
-	SummaryColumnState col_state[N_SUMMARY_COLS];
-	gint col_pos[N_SUMMARY_COLS];
+	SummaryColumnState col_state[N_SUMMARY_VISIBLE_COLS];
+	gint col_pos[N_SUMMARY_VISIBLE_COLS];
 
 	GdkColor color_marked;
 	GdkColor color_dim;
@@ -135,6 +150,14 @@ private:
 	GHashTable *folder_table;
 	/* counter for filtering */
 	gint filtered;
+
+	/* for DnD */
+	gboolean can_toggle_selection;
+	gboolean on_drag;
+	GtkTreePath *pressed_path;
+
+	/* unthreading */
+	GSList *pos_list;
 };
 
 SummaryView	*summary_create(void);
@@ -163,8 +186,8 @@ void summary_select_prev_labeled  (SummaryView		*summaryview);
 void summary_select_next_labeled  (SummaryView		*summaryview);
 void summary_select_by_msgnum	  (SummaryView		*summaryview,
 				   guint		 msgnum);
-void summary_select_node	  (SummaryView		*summaryview,
-				   GtkCTreeNode		*node,
+void summary_select_row		  (SummaryView		*summaryview,
+				   GtkTreeIter		*iter,
 				   gboolean		 display_msg,
 				   gboolean		 do_refresh);
 
@@ -196,6 +219,7 @@ void summary_pass_key_press_event (SummaryView		*summaryview,
 				   GdkEventKey		*event);
 
 void summary_display_msg_selected (SummaryView		*summaryview,
+				   gboolean		 new_window,
 				   gboolean		 all_headers);
 void summary_redisplay_msg	  (SummaryView		*summaryview);
 void summary_open_msg		  (SummaryView		*summaryview);
@@ -204,7 +228,8 @@ void summary_reedit		  (SummaryView		*summaryview);
 gboolean summary_step		  (SummaryView		*summaryview,
 				   GtkScrollType	 type);
 void summary_toggle_view	  (SummaryView		*summaryview);
-void summary_set_marks_selected	  (SummaryView		*summaryview);
+
+void summary_update_selected_rows (SummaryView		*summaryview);
 
 void summary_move_selected_to	  (SummaryView		*summaryview,
 				   FolderItem		*to_folder);
@@ -230,9 +255,6 @@ void summary_reply		  (SummaryView		*summaryview,
 void summary_set_colorlabel	  (SummaryView		*summaryview,
 				   guint		 labelcolor,
 				   GtkWidget		*widget);
-void summary_set_colorlabel_color (GtkCTree		*ctree,
-				   GtkCTreeNode		*node,
-				   guint		 labelcolor);
 
 void summary_set_column_order	  (SummaryView		*summaryview);
 

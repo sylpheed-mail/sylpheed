@@ -37,6 +37,7 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkfilesel.h>
 #include <gtk/gtksignal.h>
+#include <gtk/gtkstock.h>
 
 #include "main.h"
 #include "inc.h"

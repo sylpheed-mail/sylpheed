@@ -27,10 +27,14 @@
 #include <glib/gi18n.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtksignal.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gtk/gtkmenu.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtkseparatormenuitem.h>
+#include <gtk/gtkstock.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -1563,7 +1567,7 @@ static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		break;
 	case GDK_Escape:
 		if (summaryview && textview == messageview->textview)
-			gtk_widget_grab_focus(summaryview->ctree);
+			gtk_widget_grab_focus(summaryview->treeview);
 		else if (messageview->type == MVIEW_MIME &&
 			 textview == messageview->mimeview->textview)
 			gtk_widget_grab_focus(messageview->mimeview->ctree);
