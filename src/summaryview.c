@@ -649,9 +649,11 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		if (!summaryview->selected) {
 			/* no selected message - select first unread
 			   message, but do not display it */
-			if (!summary_find_next_flagged_msg
-				(summaryview, &iter, NULL, MSG_UNREAD, FALSE) &&
-			    item->total > 0) {
+			if (summary_find_next_flagged_msg
+				(summaryview, &iter, NULL, MSG_UNREAD, FALSE)) {
+				summary_select_row(summaryview, &iter,
+						   FALSE, TRUE);
+			} else if (item->total > 0) {
 				g_signal_emit_by_name
 					(treeview, "move-cursor",
 					 GTK_MOVEMENT_BUFFER_ENDS,
@@ -673,11 +675,13 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				summary_select_row(summaryview, &iter,
 						   FALSE, TRUE);
 		} else {
+			summary_unlock(summaryview);
 			g_signal_emit_by_name
 				(treeview, "move-cursor",
 				 GTK_MOVEMENT_BUFFER_ENDS,
 				 item->sort_type == SORT_DESCENDING ?
 				 -1 : 1, &moved);
+			summary_lock(summaryview);
 		}
 	}
 
@@ -3802,6 +3806,7 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 	GtkTreePath *path;
 	GtkTreeViewColumn *column = NULL;
 	gboolean is_selected;
+	gboolean mod_pressed;
 
 	if (!event) return FALSE;
 
@@ -3812,6 +3817,8 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 
 	is_selected = gtk_tree_selection_path_is_selected
 		(summaryview->selection, path);
+	mod_pressed = ((event->state &
+		        (GDK_SHIFT_MASK|GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0);
 
 	if ((event->button == 1 || event->button == 2)) {
 		GtkTreeIter iter;
@@ -3863,12 +3870,14 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 
 	if (event->button == 1) {
 		if (summary_get_selection_type(summaryview) ==
-			SUMMARY_SELECTED_MULTIPLE && is_selected) {
+			SUMMARY_SELECTED_MULTIPLE && is_selected &&
+			!mod_pressed) {
 			summaryview->can_toggle_selection = FALSE;
 			summaryview->pressed_path = gtk_tree_path_copy(path);
 		} else {
 			summaryview->can_toggle_selection = TRUE;
-			if (messageview_is_visible(summaryview->messageview))
+			if (!mod_pressed &&
+			    messageview_is_visible(summaryview->messageview))
 				summaryview->display_msg = TRUE;
 		}
 	} else if (event->button == 2) {
@@ -4042,9 +4051,16 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 	summary_status_show(summaryview);
 
 	if (gtk_tree_selection_count_selected_rows(selection) != 1) {
-		gtk_tree_row_reference_free(summaryview->selected);
-		summaryview->selected = NULL;
+		if (summaryview->selected) {
+			gtk_tree_row_reference_free(summaryview->selected);
+			summaryview->selected = NULL;
+		}
 		summaryview->display_msg = FALSE;
+		if (summaryview->displayed && prefs_common.always_show_msg) {
+			messageview_clear(summaryview->messageview);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed = NULL;
+		}
 		summary_set_menu_sensitive(summaryview);
 		main_window_set_toolbar_sensitive(summaryview->mainwin);
 		return;
