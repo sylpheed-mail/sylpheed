@@ -39,6 +39,8 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtkstock.h>
+#include <gtk/gtktreemodel.h>
+#include <gtk/gtktreeselection.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -240,8 +242,9 @@ static void summary_search_create(SummaryView *summaryview)
 
 static void summary_search_execute(GtkButton *button, gpointer data)
 {
-#if 0
 	SummaryView *summaryview = data;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
 	MsgInfo *msginfo;
 	gboolean bool_and;
 	gboolean case_sens;
@@ -252,9 +255,12 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 	gboolean body_matched;
 	const gchar *from_str, *to_str, *subject_str, *body_str;
 	StrFindFunc str_find_func;
+	gboolean valid;
 
 	if (summary_is_locked(summaryview)) return;
 	summary_lock(summaryview);
+
+	model = GTK_TREE_MODEL(summaryview->store);
 
 	bool_and = menu_get_option_menu_active_index
 		(GTK_OPTION_MENU(bool_optmenu));
@@ -276,39 +282,41 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 	body_str    = gtk_entry_get_text(GTK_ENTRY(body_entry));
 
 	if (search_all) {
-		gtk_clist_freeze(GTK_CLIST(ctree));
-		gtk_clist_unselect_all(GTK_CLIST(ctree));
-		node = GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
+		summary_unselect_all(summaryview);
+		valid = gtk_tree_model_get_iter_first(model, &iter);
 		backward = FALSE;
 	} else if (!summaryview->selected) {
 		if (backward)
-			node = GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list_end);
+			valid  = gtkut_tree_model_get_iter_last(model, &iter);
 		else
-			node = GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
-
-		if (!node) {
+			valid = gtk_tree_model_get_iter_first(model, &iter);
+		if (!valid) {
 			summary_unlock(summaryview);
 			return;
 		}
 	} else {
+		valid = gtkut_tree_row_reference_get_iter
+			(model, summaryview->selected, &iter);
+		if (!valid) {
+			summary_unlock(summaryview);
+			return;
+		}
+
 		if (backward)
-			node = gtkut_ctree_node_prev
-				(ctree, summaryview->selected);
+			valid = gtkut_tree_model_prev(model, &iter);
 		else
-			node = gtkut_ctree_node_next
-				(ctree, summaryview->selected);
+			valid = gtkut_tree_model_next(model, &iter);
 	}
 
 	if (*body_str)
 		main_window_cursor_wait(summaryview->mainwin);
 
 	for (;;) {
-		if (!node) {
+		if (!valid) {
 			gchar *str;
 			AlertValue val;
 
 			if (search_all) {
-				gtk_clist_thaw(GTK_CLIST(ctree));
 				break;
 			}
 
@@ -329,21 +337,18 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 			if (G_ALERTDEFAULT == val) {
 				if (backward)
-					node = GTK_CTREE_NODE
-						(GTK_CLIST(ctree)->row_list_end);
+					valid  = gtkut_tree_model_get_iter_last
+						(model, &iter);
 				else
-					node = GTK_CTREE_NODE
-						(GTK_CLIST(ctree)->row_list);
-
+					valid = gtk_tree_model_get_iter_first
+						(model, &iter);
 				all_searched = TRUE;
-
 				manage_window_focus_in(window, NULL, NULL);
 			} else
 				break;
 		}
 
-
-		msginfo = gtk_ctree_node_get_row_data(ctree, node);
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
 		body_matched = FALSE;
 
 		if (bool_and) {
@@ -397,14 +402,16 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 		}
 
 		if (matched) {
-			if (search_all)
-				gtk_ctree_select(ctree, node);
-			else {
+			if (search_all) {
+				gtk_tree_selection_select_iter
+					(summaryview->selection, &iter);
+			} else {
 				if (messageview_is_visible
 					(summaryview->messageview)) {
 					summary_unlock(summaryview);
 					summary_select_row
-						(summaryview, &iter, TRUE, TRUE);
+						(summaryview, &iter,
+						 TRUE, TRUE);
 					summary_lock(summaryview);
 					if (body_matched) {
 						messageview_search_string
@@ -412,22 +419,24 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 							 body_str, case_sens);
 					}
 				} else {
-					summary_select_node
-						(summaryview, node, FALSE, TRUE);
+					summary_select_row
+						(summaryview, &iter,
+						 FALSE, TRUE);
 				}
 				break;
 			}
 		}
 
-		node = backward ? gtkut_ctree_node_prev(ctree, node)
-				: gtkut_ctree_node_next(ctree, node);
+		if (backward)
+			valid = gtkut_tree_model_prev(model, &iter);
+		else
+			valid = gtkut_tree_model_next(model, &iter);
 	}
 
 	if (*body_str)
 		main_window_cursor_normal(summaryview->mainwin);
 
 	summary_unlock(summaryview);
-#endif
 }
 
 static void summary_search_clear(GtkButton *button, gpointer data)
