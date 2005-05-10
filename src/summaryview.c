@@ -2716,20 +2716,41 @@ void summary_unselect_all(SummaryView *summaryview)
 
 void summary_select_thread(SummaryView *summaryview)
 {
-#if 0
-	while (GTK_CTREE_ROW(node)->parent != NULL)
-		node = GTK_CTREE_ROW(node)->parent;
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeIter iter, parent, child, next;
+	GtkTreePath *start_path, *end_path;
+	gboolean valid;
 
-	if (node != summaryview->selected)
-		summary_select_row
-			(summaryview, iter,
-			 messageview_is_visible(summaryview->messageview),
-			 FALSE);
+	valid = gtkut_tree_row_reference_get_iter(model, summaryview->selected,
+						  &iter);
+	if (!valid)
+		return;
 
-	gtk_ctree_select_recursive(ctree, node);
+	while (gtk_tree_model_iter_parent(model, &parent, &iter))
+		iter = parent;
 
-	summary_status_show(summaryview);
-#endif
+	if (!gtk_tree_model_iter_children(model, &child, &iter))
+		return;
+
+	start_path = gtk_tree_model_get_path(model, &iter);
+
+	for (;;) {
+		next = iter = child;
+		while (gtk_tree_model_iter_next(model, &next))
+			iter = next;
+		if (!gtk_tree_model_iter_children(model, &child, &iter))
+			break;
+	}
+
+	end_path = gtk_tree_model_get_path(model, &iter);
+
+	gtk_tree_view_expand_row(GTK_TREE_VIEW(summaryview->treeview),
+				 start_path, TRUE);
+	gtk_tree_selection_select_range(summaryview->selection,
+					start_path, end_path);
+
+	gtk_tree_path_free(end_path);
+	gtk_tree_path_free(start_path);
 }
 
 void summary_save_as(SummaryView *summaryview)
