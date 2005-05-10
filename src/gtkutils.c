@@ -32,6 +32,10 @@
 #include <gtk/gtkcombo.h>
 #include <gtk/gtkbindings.h>
 #include <gtk/gtkitemfactory.h>
+#include <gtk/gtktreemodel.h>
+#include <gtk/gtktreesortable.h>
+#include <gtk/gtktreeview.h>
+#include <gtk/gtkversion.h>
 #include <stdlib.h>
 #include <stdarg.h>
 
@@ -539,6 +543,27 @@ gboolean gtkut_tree_row_reference_equal(GtkTreeRowReference *ref1,
 	gtk_tree_path_free(path1);
 
 	return (result == 0);
+}
+
+void gtkut_tree_sortable_unset_sort_column_id(GtkTreeSortable *sortable)
+{
+#if GTK_CHECK_VERSION(2, 6, 0)
+	gtk_tree_sortable_set_sort_column_id
+		(sortable, GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID,
+		 GTK_SORT_ASCENDING);
+#else
+	GtkTreeStore *store = GTK_TREE_STORE(sortable);
+
+	g_return_if_fail(GTK_IS_TREE_STORE(sortable));
+
+	if (store->sort_column_id == -2 && store->order == GTK_SORT_ASCENDING)
+		return;
+
+	store->sort_column_id = -2;
+	store->order = GTK_SORT_ASCENDING;
+
+	gtk_tree_sortable_sort_column_changed(sortable);
+#endif
 }
 
 gboolean gtkut_tree_view_find_collapsed_parent(GtkTreeView *treeview,

@@ -156,6 +156,9 @@ gboolean gtkut_tree_row_reference_get_iter
 gboolean gtkut_tree_row_reference_equal	(GtkTreeRowReference	*ref1,
 					 GtkTreeRowReference	*ref2);
 
+void gtkut_tree_sortable_unset_sort_column_id
+					(GtkTreeSortable	*sortable);
+
 gboolean gtkut_tree_view_find_collapsed_parent
 					(GtkTreeView	*treeview,
 					 GtkTreeIter	*parent,

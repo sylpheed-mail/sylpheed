@@ -748,9 +748,8 @@ void summary_clear_list(SummaryView *summaryview)
 	gtk_tree_store_clear(summaryview->store);
 	gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(summaryview->store));
 
-	gtk_tree_sortable_set_sort_column_id
-		(GTK_TREE_SORTABLE(summaryview->store),
-		 GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID, GTK_SORT_ASCENDING);
+	gtkut_tree_sortable_unset_sort_column_id
+		(GTK_TREE_SORTABLE(summaryview->store));
 }
 
 void summary_clear_all(SummaryView *summaryview)
@@ -1596,9 +1595,7 @@ void summary_sort(SummaryView *summaryview,
 	if (col_type == -1) {
 		item->sort_key = SORT_BY_NONE;
 		item->sort_type = SORT_ASCENDING;
-		gtk_tree_sortable_set_sort_column_id
-			(sortable, GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID,
-			 GTK_SORT_ASCENDING);
+		gtkut_tree_sortable_unset_sort_column_id(sortable);
 		summary_set_column_titles(summaryview);
 		summary_set_menu_sensitive(summaryview);
 		return;
