@@ -2932,13 +2932,10 @@ static void thread_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	if (mainwin->menu_lock_count) return;
 	if (!mainwin->summaryview->folder_item) return;
 
-	if (GTK_CHECK_MENU_ITEM(widget)->active) {
-		mainwin->summaryview->folder_item->threaded = TRUE;
+	if (GTK_CHECK_MENU_ITEM(widget)->active)
 		summary_thread_build(mainwin->summaryview);
-	} else {
-		mainwin->summaryview->folder_item->threaded = FALSE;
+	else
 		summary_unthread(mainwin->summaryview);
-	}
 }
 
 static void expand_threads_cb(MainWindow *mainwin, guint action,

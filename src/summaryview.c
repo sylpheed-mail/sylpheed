@@ -116,6 +116,8 @@ static void summary_msgid_table_destroy	(SummaryView		*summaryview);
 
 static void summary_set_menu_sensitive	(SummaryView		*summaryview);
 
+static void summary_scroll_to_selected	(SummaryView		*summaryview);
+
 static guint summary_get_msgnum		(SummaryView		*summaryview,
 					 GtkTreeRowReference	*row);
 
@@ -1201,6 +1203,22 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 	gtk_tree_path_free(path);
 }
 
+static void summary_scroll_to_selected(SummaryView *summaryview)
+{
+	GtkTreePath *path;
+
+	if (!summaryview->selected)
+		return;
+
+	path = gtk_tree_row_reference_get_path(summaryview->selected);
+	if (path) {
+		gtk_tree_view_scroll_to_cell
+			(GTK_TREE_VIEW(summaryview->treeview),
+			 path, NULL, FALSE, 0.0, 0.0);
+		gtk_tree_path_free(path);
+	}
+}
+
 static guint summary_get_msgnum(SummaryView *summaryview,
 				GtkTreeRowReference *row)
 {
@@ -1430,17 +1448,7 @@ void summary_attract_by_subject(SummaryView *summaryview)
 
 	g_hash_table_destroy(subject_table);
 
-	if (summaryview->selected) {
-		GtkTreePath *path;
-
-		path = gtk_tree_row_reference_get_path(summaryview->selected);
-		if (path) {
-			gtk_tree_view_scroll_to_cell
-				(GTK_TREE_VIEW(summaryview->treeview),
-				 path, NULL, FALSE, 0.0, 0.0);
-			gtk_tree_path_free(path);
-		}
-	}
+	summary_scroll_to_selected(summaryview);
 
 	debug_print("done.\n");
 	STATUSBAR_POP(summaryview->mainwin);
@@ -3058,13 +3066,14 @@ static gint summary_execute_delete(SummaryView *summaryview)
 
 void summary_thread_build(SummaryView *summaryview)
 {
-#if 0
-	GtkCTree *ctree = GTK_CTREE(summaryview->ctree);
-	GtkCTreeNode *node;
-	GtkCTreeNode *next;
-	GtkCTreeNode *parent;
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeStore *store = summaryview->store;
+	GtkTreeIter iter, next;
+	GSList *mlist;
+	GNode *root, *node;
+	GHashTable *node_table;
 	MsgInfo *msginfo;
-	GSList *reflist;
+	gboolean valid;
 
 	summary_lock(summaryview);
 
@@ -3072,60 +3081,48 @@ void summary_thread_build(SummaryView *summaryview)
 	STATUSBAR_PUSH(summaryview->mainwin, _("Building threads..."));
 	main_window_cursor_wait(summaryview->mainwin);
 
-	g_signal_handlers_block_by_func(G_OBJECT(ctree),
-					G_CALLBACK(summary_tree_expanded),
-					summaryview);
-	gtk_clist_freeze(GTK_CLIST(ctree));
+	if (summaryview->folder_item)
+		summaryview->folder_item->threaded = TRUE;
 
-	node = GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
-	while (node) {
-		next = GTK_CTREE_ROW(node)->sibling;
-
-		msginfo = GTKUT_CTREE_NODE_GET_ROW_DATA(node);
-		if (msginfo && msginfo->inreplyto) {
-			parent = g_hash_table_lookup(summaryview->msgid_table,
-						     msginfo->inreplyto);
-			if (!parent && msginfo->references) {
-				for (reflist = msginfo->references;
-				     reflist != NULL; reflist = reflist->next)
-					if ((parent = g_hash_table_lookup
-						(summaryview->msgid_table,
-						 reflist->data)))
-						break;
-			}
-
-			if (parent && parent != node) {
-				gtk_ctree_move(ctree, node, parent, NULL);
-				gtk_ctree_expand(ctree, node);
-			}
-		}
-
-		node = next;
+	mlist = summary_get_msg_list(summaryview);
+	root = procmsg_get_thread_tree(mlist);
+	g_slist_free(mlist);
+	node_table = g_hash_table_new(NULL, NULL);
+	for (node = root->children; node != NULL; node = node->next) {
+		g_hash_table_insert(node_table, node->data, node);
 	}
 
-	node = GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
+	valid = gtk_tree_model_get_iter_first(model, &next);
+	while (valid) {
+		iter = next;
+		valid = gtk_tree_model_iter_next(model, &next);
 
-	while (node) {
-		next = GTK_CTREE_NODE_NEXT(node);
-		if (prefs_common.expand_thread)
-			gtk_ctree_expand(ctree, node);
-		if (prefs_common.bold_unread &&
-		    GTK_CTREE_ROW(node)->children)
-			summary_set_row_marks(summaryview, node);
-		node = next;
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		node = g_hash_table_lookup(node_table, msginfo);
+		if (node) {
+			GtkTreeIter child;
+
+			for (node = node->children; node != NULL;
+			     node = node->next) {
+				summary_insert_gnode(summaryview, store, &child,
+						     &iter, NULL, node);
+			}
+		} else
+			gtk_tree_store_remove(store, &iter);
 	}
 
-	gtk_clist_thaw(GTK_CLIST(ctree));
-	g_signal_handlers_unblock_by_func(G_OBJECT(ctree),
-					  G_CALLBACK(summary_tree_expanded),
-					  summaryview);
+	g_node_destroy(root);
+
+	if (prefs_common.expand_thread)
+		gtk_tree_view_expand_all(GTK_TREE_VIEW(summaryview->treeview));
+
+	summary_scroll_to_selected(summaryview);
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
 	main_window_cursor_normal(summaryview->mainwin);
 
 	summary_unlock(summaryview);
-#endif
 }
 
 static void summary_unthread_node_recursive(SummaryView *summaryview,
@@ -3181,6 +3178,9 @@ void summary_unthread(SummaryView *summaryview)
 	STATUSBAR_PUSH(summaryview->mainwin, _("Unthreading..."));
 	main_window_cursor_wait(summaryview->mainwin);
 
+	if (summaryview->folder_item)
+		summaryview->folder_item->threaded = FALSE;
+
 	valid = gtk_tree_model_get_iter_first(model, &next);
 
 	while (valid) {
@@ -3188,6 +3188,8 @@ void summary_unthread(SummaryView *summaryview)
 		valid = gtk_tree_model_iter_next(model, &next);
 		summary_unthread_node(summaryview, &iter);
 	}
+
+	summary_scroll_to_selected(summaryview);
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
