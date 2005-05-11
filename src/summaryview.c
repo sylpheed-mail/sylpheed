@@ -1633,6 +1633,30 @@ void summary_sort(SummaryView *summaryview,
 	main_window_cursor_normal(summaryview->mainwin);
 }
 
+static gboolean summary_have_unread_children(SummaryView *summaryview,
+					     GtkTreeIter *iter)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeIter iter_;
+	MsgInfo *msginfo;
+	gboolean valid;
+
+	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
+	if (MSG_IS_UNREAD(msginfo->flags))
+		return TRUE;
+
+	valid = gtk_tree_model_iter_children(model, &iter_, iter);
+
+	while (valid) {
+		if (summary_have_unread_children(summaryview, &iter_))
+			return TRUE;
+
+		valid = gtk_tree_model_iter_next(model, &iter_);
+	}
+
+	return FALSE;
+}
+
 static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			    MsgInfo *msginfo)
 {
@@ -2133,47 +2157,6 @@ void summary_toggle_view(SummaryView *summaryview)
 		summary_display_msg_selected(summaryview, FALSE, FALSE);
 	else
 		main_window_toggle_message_view(summaryview->mainwin);
-}
-
-#if 0
-static gboolean summary_search_unread_recursive(GtkCTree *ctree,
-						GtkTreeIter *iter)
-{
-	MsgInfo *msginfo;
-
-	if (node) {
-		msginfo = gtk_ctree_node_get_row_data(ctree, node);
-		if (msginfo && MSG_IS_UNREAD(msginfo->flags))
-			return TRUE;
-		node = GTK_CTREE_ROW(node)->children;
-	} else
-		node = GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
-
-	while (node) {
-		if (summary_search_unread_recursive(ctree, node) == TRUE)
-			return TRUE;
-		node = GTK_CTREE_ROW(node)->sibling;
-	}
-
-	return FALSE;
-}
-#endif
-
-static gboolean summary_have_unread_children(SummaryView *summaryview,
-					     GtkTreeIter *iter)
-{
-#if 0
-	if (!node) return FALSE;
-
-	node = GTK_CTREE_ROW(node)->children;
-
-	while (node) {
-		if (summary_search_unread_recursive(ctree, node) == TRUE)
-			return TRUE;
-		node = GTK_CTREE_ROW(node)->sibling;
-	}
-#endif
-	return FALSE;
 }
 
 void summary_update_selected_rows(SummaryView *summaryview)
@@ -3086,7 +3069,6 @@ void summary_thread_build(SummaryView *summaryview)
 
 	mlist = summary_get_msg_list(summaryview);
 	root = procmsg_get_thread_tree(mlist);
-	g_slist_free(mlist);
 	node_table = g_hash_table_new(NULL, NULL);
 	for (node = root->children; node != NULL; node = node->next) {
 		g_hash_table_insert(node_table, node->data, node);
@@ -3111,7 +3093,9 @@ void summary_thread_build(SummaryView *summaryview)
 			gtk_tree_store_remove(store, &iter);
 	}
 
+	g_hash_table_destroy(node_table);
 	g_node_destroy(root);
+	g_slist_free(mlist);
 
 	if (prefs_common.expand_thread)
 		gtk_tree_view_expand_all(GTK_TREE_VIEW(summaryview->treeview));
@@ -3783,12 +3767,12 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	g_signal_connect(G_OBJECT(selection), "changed",
 			 G_CALLBACK(summary_selection_changed), summaryview);
 
-#if 0
 	g_signal_connect_after(G_OBJECT(treeview), "row-expanded",
-			       G_CALLBACK(summary_tree_expanded),
+			       G_CALLBACK(summary_row_expanded),
 			       summaryview);
+#if 0
 	g_signal_connect_after(G_OBJECT(treeview), "row-collapsed",
-			       G_CALLBACK(summary_tree_collapsed),
+			       G_CALLBACK(summary_row_collapsed),
 			       summaryview);
 #endif
 
@@ -4062,15 +4046,16 @@ static void summary_row_activated(GtkTreeView *treeview, GtkTreePath *path,
 	summaryview->display_msg = FALSE;
 }
 
-#if 0
-static void summary_tree_expanded(GtkTreeView *treeview, GtkTreeIter *iter,
-				  GtkTreePath *path, SummaryView *summaryview)
+static void summary_row_expanded(GtkTreeView *treeview, GtkTreeIter *iter,
+				 GtkTreePath *path, SummaryView *summaryview)
 {
+	gtk_tree_view_expand_row(treeview, path, TRUE);
 	//summary_set_row(summaryview, iter, NULL);
 }
 
-static void summary_tree_collapsed(GtkTreeView *treeview, GtkTreeIter *iter,
-				   GtkTreePath *path, SummaryView *summaryview)
+#if 0
+static void summary_row_collapsed(GtkTreeView *treeview, GtkTreeIter *iter,
+				  GtkTreePath *path, SummaryView *summaryview)
 {
 	//summary_set_row(summaryview, iter, NULL);
 }
