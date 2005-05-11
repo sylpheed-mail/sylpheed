@@ -1,3 +1,14 @@
+2005-05-11
+
+	* src/utils.c: remove_dir_recursive(): カレントディレクトリが削除
+	  されるディレクトリ内にある場合に処理に失敗するのを修正。
+	* src/summaryview.c: summary_unthread(): 実装。
+	* src/folderview.c: FolderView::selected が無効になったときに
+	  クラッシュするのを修正。セレクションが空になった場合は未設定にする
+	  ようにした。
+	* src/defs.h: DEFAULT_MESSAHE_FONT を "Sans 14" から "Monospace 12"
+	  に変更。
+
 2005-05-10
 
 	* src/summaryview.c: summary_select_thread(): 実装。

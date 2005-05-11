@@ -103,6 +103,6 @@
 #define SESSION_TIMEOUT_INTERVAL	60	/* sec */
 #define MAX_HISTORY_SIZE		16
 
-#define DEFAULT_MESSAGE_FONT	"Sans 14"
+#define DEFAULT_MESSAGE_FONT	"Monospace 12"
 
 #endif /* __DEFS_H__ */

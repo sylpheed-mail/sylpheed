@@ -2070,14 +2070,12 @@ gint remove_expired_files(const gchar *dir, guint hours)
 	return 0;
 }
 
-gint remove_dir_recursive(const gchar *dir)
+static gint remove_dir_recursive_real(const gchar *dir)
 {
 	struct stat s;
 	DIR *dp;
 	struct dirent *d;
 	gchar *prev_dir;
-
-	/* g_print("dir = %s\n", dir); */
 
 	if (stat(dir, &s) < 0) {
 		FILE_OP_ERROR(dir, "stat");
@@ -2096,15 +2094,6 @@ gint remove_dir_recursive(const gchar *dir)
 
 	prev_dir = g_get_current_dir();
 	/* g_print("prev_dir = %s\n", prev_dir); */
-
-	if (!path_cmp(prev_dir, dir)) {
-		g_free(prev_dir);
-		if (chdir("..") < 0) {
-			FILE_OP_ERROR(dir, "chdir");
-			return -1;
-		}
-		prev_dir = g_get_current_dir();
-	}
 
 	if (chdir(dir) < 0) {
 		FILE_OP_ERROR(dir, "chdir");
@@ -2128,7 +2117,7 @@ gint remove_dir_recursive(const gchar *dir)
 		/* g_print("removing %s\n", d->d_name); */
 
 		if (dirent_is_directory(d)) {
-			if (remove_dir_recursive(d->d_name) < 0) {
+			if (remove_dir_recursive_real(d->d_name) < 0) {
 				g_warning("can't remove directory\n");
 				return -1;
 			}
@@ -2154,6 +2143,38 @@ gint remove_dir_recursive(const gchar *dir)
 	}
 
 	return 0;
+}
+
+gint remove_dir_recursive(const gchar *dir)
+{
+	gchar *cur_dir;
+	gint ret;
+
+	cur_dir = g_get_current_dir();
+
+	if (chdir(dir) < 0) {
+		FILE_OP_ERROR(dir, "chdir");
+		ret = -1;
+		goto leave;
+	}
+	if (chdir("..") < 0) {
+		FILE_OP_ERROR(dir, "chdir");
+		ret = -1;
+		goto leave;
+	}
+
+	ret = remove_dir_recursive_real(dir);
+
+leave:
+	if (is_dir_exist(cur_dir)) {
+		if (chdir(cur_dir) < 0) {
+			FILE_OP_ERROR(cur_dir, "chdir");
+		}
+	}
+
+	g_free(cur_dir);
+
+	return ret;
 }
 
 gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)

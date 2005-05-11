@@ -1,3 +1,13 @@
+2005-05-11
+
+	* src/utils.c: remove_dir_recursive(): fixed operation failure if
+	  current directory is inside one which is to be removed.
+	* src/summaryview.c: summary_unthread(): implemented.
+	* src/folderview.c: fixed crash when FolderView::selected became
+	  invalid. Unset it if selection becomes empty.
+	* src/defs.h: changed DEFAULT_MESSAHE_FONT from "Sans 14" to
+	  "Monospace 12".
+
 2005-05-10
 
 	* src/summaryview.c: summary_select_thread(): implemented.
