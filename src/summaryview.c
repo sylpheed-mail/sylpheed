@@ -1392,12 +1392,17 @@ static gint attract_compare_func(gconstpointer a, gconstpointer b)
 void summary_attract_by_subject(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GtkTreeIter iter, next;
-	GtkTreeIter *src_iter, *dest_iter;
-	MsgInfo *src_msginfo, *dest_msginfo;
-	GHashTable *subject_table;
+	GtkTreeIter iter;
+	MsgInfo *msginfo, *dest_msginfo;
+	GHashTable *subject_table, *order_table;
+	GSList *mlist = NULL, *list, *dest, *last = NULL, *next = NULL;
 	gboolean valid;
-	gint c = 0;
+	gint count, i;
+	gint *new_order;
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+	if (!valid)
+		return;
 
 	debug_print("Attracting messages by subject...");
 	STATUSBAR_PUSH(summaryview->mainwin,
@@ -1405,45 +1410,75 @@ void summary_attract_by_subject(SummaryView *summaryview)
 
 	main_window_cursor_wait(summaryview->mainwin);
 
-	subject_table = g_hash_table_new_full
-		(attract_hash_func, attract_compare_func, NULL,
-		 (GDestroyNotify)gtk_tree_iter_free);
+	order_table = g_hash_table_new(NULL, NULL);
 
-	for (valid = gtk_tree_model_get_iter_first(model, &iter);
-	     valid == TRUE; iter = next) {
-		next = iter;
-		valid = gtk_tree_model_iter_next(model, &next);
+	for (count = 1; valid == TRUE; ++count) {
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		g_hash_table_insert(order_table, msginfo,
+				    GINT_TO_POINTER(count));
+		mlist = g_slist_prepend(mlist, msginfo);
+		valid = gtk_tree_model_iter_next(model, &iter);
+	}
+	--count;
 
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &src_msginfo,
-				   -1);
-		if (!src_msginfo->subject) continue;
+	mlist = g_slist_reverse(mlist);
+
+	subject_table = g_hash_table_new(attract_hash_func,
+					 attract_compare_func);
+
+	for (list = mlist; list != NULL; list = next) {
+		msginfo = (MsgInfo *)list->data;
+
+		next = list->next;
+
+		if (!msginfo->subject) {
+			last = list;
+			continue;
+		}
 
 		/* find attracting node */
-		dest_iter = g_hash_table_lookup(subject_table,
-						src_msginfo->subject);
+		dest = g_hash_table_lookup(subject_table, msginfo->subject);
 
-		if (dest_iter) {
-			gtk_tree_model_get(model, dest_iter, S_COL_MSG_INFO,
-					   &dest_msginfo, -1);
+		if (dest) {
+			dest_msginfo = (MsgInfo *)dest->data;
 
-			/* if the time difference is more than 20 days,
+			/* if the time difference is more than 30 days,
 			   don't attract */
-			if (ABS(src_msginfo->date_t - dest_msginfo->date_t)
-			    > 60 * 60 * 24 * 20)
+			if (ABS(msginfo->date_t - dest_msginfo->date_t)
+			    > 60 * 60 * 24 * 30) {
+				last = list;
 				continue;
+			}
 
-			printf("found attracting node %d\n", c++);
-			gtk_tree_store_move_after(GTK_TREE_STORE(model),
-						  &iter, dest_iter);
-		}
-		else printf("checking node %d\n", c++);
+			if (dest->next != list) {
+				last->next = list->next;
+				list->next = dest->next;
+				dest->next = list;
+			} else
+				last = list;
+		} else
+			last = list;
 
-		src_iter = gtk_tree_iter_copy(&iter);
-		g_hash_table_replace(subject_table, src_msginfo->subject,
-				     src_iter);
+		g_hash_table_replace(subject_table, msginfo->subject, list);
 	}
 
 	g_hash_table_destroy(subject_table);
+
+	new_order = g_new(gint, count);
+	for (list = mlist, i = 0; list != NULL; list = list->next, ++i) {
+		gint old_pos;
+
+		msginfo = (MsgInfo *)list->data;
+
+		old_pos = GPOINTER_TO_INT
+			(g_hash_table_lookup(order_table, msginfo));
+		new_order[i] = old_pos - 1;
+	}
+	gtk_tree_store_reorder(GTK_TREE_STORE(model), NULL, new_order);
+	g_free(new_order);
+
+	g_slist_free(mlist);
+	g_hash_table_destroy(order_table);
 
 	summary_scroll_to_selected(summaryview);
 
