@@ -1182,9 +1182,6 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 	if (do_refresh)
 		gtk_widget_grab_focus(summaryview->treeview);
 
-	//summary_unselect_all(summaryview);
-	//if (display_msg && summaryview->displayed == node)
-	//	summaryview->displayed = NULL;
 	summaryview->display_msg = display_msg;
 	path = gtk_tree_model_get_path(GTK_TREE_MODEL(summaryview->store),
 				       iter);
@@ -1815,6 +1812,12 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 		     gnode = gnode->next) {
 			summary_insert_gnode
 				(summaryview, store, &iter, NULL, NULL, gnode);
+			if (gnode->children && !prefs_common.expand_thread &&
+			    prefs_common.bold_unread &&
+			    summary_have_unread_children(summaryview, &iter)) {
+				gtk_tree_store_set(store, &iter,
+						   S_COL_BOLD, TRUE, -1);
+			}
 		}
 
 		g_node_destroy(root);
@@ -1851,8 +1854,6 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 			(GTK_TREE_VIEW(summaryview->treeview));
 
 	if (summaryview->folder_item->sort_key != SORT_BY_NONE) {
-		//gtk_tree_view_column_set_sort_indicator(summaryview->columns[S_COL_DATE], TRUE);
-		//gtk_tree_view_column_set_sort_order(summaryview->columns[S_COL_DATE], GTK_SORT_ASCENDING);
 		summary_sort(summaryview, summaryview->folder_item->sort_key,
 			     summaryview->folder_item->sort_type);
 	}
@@ -3767,14 +3768,10 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	g_signal_connect(G_OBJECT(selection), "changed",
 			 G_CALLBACK(summary_selection_changed), summaryview);
 
-	g_signal_connect_after(G_OBJECT(treeview), "row-expanded",
-			       G_CALLBACK(summary_row_expanded),
-			       summaryview);
-#if 0
-	g_signal_connect_after(G_OBJECT(treeview), "row-collapsed",
-			       G_CALLBACK(summary_row_collapsed),
-			       summaryview);
-#endif
+	g_signal_connect(G_OBJECT(treeview), "row-expanded",
+			 G_CALLBACK(summary_row_expanded), summaryview);
+	g_signal_connect(G_OBJECT(treeview), "row-collapsed",
+			 G_CALLBACK(summary_row_collapsed), summaryview);
 
 	gtk_tree_view_enable_model_drag_source
 		(GTK_TREE_VIEW(treeview),
@@ -4046,20 +4043,48 @@ static void summary_row_activated(GtkTreeView *treeview, GtkTreePath *path,
 	summaryview->display_msg = FALSE;
 }
 
+static void summary_set_bold_recursive(SummaryView *summaryview,
+				       GtkTreeIter *iter)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeIter child;
+	MsgInfo *msginfo;
+	gboolean valid;
+
+	if (!gtk_tree_model_iter_has_child(model, iter))
+		return;
+
+	GET_MSG_INFO(msginfo, iter);
+	if (!MSG_IS_UNREAD(msginfo->flags)) {
+		gtk_tree_store_set(summaryview->store, iter,
+				   S_COL_BOLD, FALSE, -1);
+	}
+
+	valid = gtk_tree_model_iter_children(model, &child, iter);
+	while (valid) {
+		summary_set_bold_recursive(summaryview, &child);
+		valid = gtk_tree_model_iter_next(model, &child);
+	}
+}
+
 static void summary_row_expanded(GtkTreeView *treeview, GtkTreeIter *iter,
 				 GtkTreePath *path, SummaryView *summaryview)
 {
 	gtk_tree_view_expand_row(treeview, path, TRUE);
-	//summary_set_row(summaryview, iter, NULL);
+
+	if (prefs_common.bold_unread)
+		summary_set_bold_recursive(summaryview, iter);
 }
 
-#if 0
 static void summary_row_collapsed(GtkTreeView *treeview, GtkTreeIter *iter,
 				  GtkTreePath *path, SummaryView *summaryview)
 {
-	//summary_set_row(summaryview, iter, NULL);
+	if (prefs_common.bold_unread &&
+	    summary_have_unread_children(summaryview, iter)) {
+		gtk_tree_store_set(summaryview->store, iter, S_COL_BOLD, TRUE,
+				   -1);
+	}
 }
-#endif
 
 static gboolean summary_select_func(GtkTreeSelection *treeview,
 				    GtkTreeModel *model, GtkTreePath *path,
