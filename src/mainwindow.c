@@ -1871,9 +1871,13 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 	if (item && item->sort_key != SORT_BY_NONE) {
 		menu_set_sensitive(ifactory, "/View/Sort/Ascending", TRUE);
 		menu_set_sensitive(ifactory, "/View/Sort/Descending", TRUE);
+		menu_set_sensitive(ifactory, "/View/Sort/Attract by subject",
+				   FALSE);
 	} else {
 		menu_set_sensitive(ifactory, "/View/Sort/Ascending", FALSE);
 		menu_set_sensitive(ifactory, "/View/Sort/Descending", FALSE);
+		menu_set_sensitive(ifactory, "/View/Sort/Attract by subject",
+				   (item != NULL));
 	}
 
 	SET_CHECK_MENU_ACTIVE("/View/Show all header",

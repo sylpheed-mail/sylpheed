@@ -1400,6 +1400,10 @@ void summary_attract_by_subject(SummaryView *summaryview)
 	gint count, i;
 	gint *new_order;
 
+	if (summaryview->folder_item &&
+	    summaryview->folder_item->sort_key != SORT_BY_NONE)
+		return;
+
 	valid = gtk_tree_model_get_iter_first(model, &iter);
 	if (!valid)
 		return;
