@@ -96,8 +96,8 @@
 			   S_COL_MSG_INFO, &msginfo, -1); \
 }
 
-#define SUMMARY_COL_MARK_WIDTH		17
-#define SUMMARY_COL_UNREAD_WIDTH	20
+#define SUMMARY_COL_MARK_WIDTH		21
+#define SUMMARY_COL_UNREAD_WIDTH	24
 #define SUMMARY_COL_MIME_WIDTH		17
 
 static GdkPixbuf *mark_pixbuf;
