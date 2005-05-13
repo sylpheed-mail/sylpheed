@@ -162,6 +162,8 @@ static void summary_display_msg_full	(SummaryView		*summaryview,
 					 gboolean		 all_headers,
 					 gboolean		 redisplay);
 
+static void summary_activate_selected	(SummaryView		*summaryview);
+
 /* message handling */
 static void summary_mark_row		(SummaryView		*summaryview,
 					 GtkTreeIter		*iter);
@@ -213,11 +215,6 @@ static gboolean summary_button_released	(GtkWidget		*treeview,
 					 SummaryView		*summaryview);
 static gboolean summary_key_pressed	(GtkWidget		*treeview,
 					 GdkEventKey		*event,
-					 SummaryView		*summaryview);
-
-static void summary_row_activated	(GtkTreeView		*treeview,
-					 GtkTreePath		*path,
-					 GtkTreeViewColumn	*column,
 					 SummaryView		*summaryview);
 
 static void summary_row_expanded	(GtkTreeView		*treeview,
@@ -2120,6 +2117,21 @@ void summary_open_msg(SummaryView *summaryview)
 	summary_display_msg_selected(summaryview, TRUE, FALSE);
 }
 
+static void summary_activate_selected(SummaryView *summaryview)
+{
+	if (!summaryview->folder_item)
+		return;
+
+	if (summaryview->folder_item->stype == F_OUTBOX ||
+	    summaryview->folder_item->stype == F_DRAFT  ||
+	    summaryview->folder_item->stype == F_QUEUE)
+		summary_reedit(summaryview);
+	else
+		summary_open_msg(summaryview);
+
+	summaryview->display_msg = FALSE;
+}
+
 void summary_view_source(SummaryView *summaryview)
 {
 	GtkTreeIter iter;
@@ -3801,9 +3813,6 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	g_signal_connect(G_OBJECT(treeview), "key_press_event",
 			 G_CALLBACK(summary_key_pressed), summaryview);
 
-	g_signal_connect(G_OBJECT(treeview), "row-activated",
-			 G_CALLBACK(summary_row_activated), summaryview);
-
 	g_signal_connect(G_OBJECT(selection), "changed",
 			 G_CALLBACK(summary_selection_changed), summaryview);
 
@@ -3869,6 +3878,7 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 				       GdkEventButton *event,
 				       SummaryView *summaryview)
 {
+	GtkTreeIter iter;
 	GtkTreePath *path;
 	GtkTreeViewColumn *column = NULL;
 	gboolean is_selected;
@@ -3880,6 +3890,9 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 					   event->x, event->y, &path, &column,
 					   NULL, NULL))
 		return FALSE;
+	if (!gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
+				     &iter, path))
+		return FALSE;
 
 	is_selected = gtk_tree_selection_path_is_selected
 		(summaryview->selection, path);
@@ -3887,12 +3900,7 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 		        (GDK_SHIFT_MASK|GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0);
 
 	if ((event->button == 1 || event->button == 2)) {
-		GtkTreeIter iter;
 		MsgInfo *msginfo;
-
-		if (!gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
-					     &iter, path))
-			return FALSE;
 
 		GET_MSG_INFO(msginfo, &iter);
 
@@ -3941,13 +3949,19 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 			summaryview->can_toggle_selection = FALSE;
 			summaryview->pressed_path = gtk_tree_path_copy(path);
 		} else {
-			summaryview->can_toggle_selection = TRUE;
-			if (!mod_pressed &&
-			    messageview_is_visible(summaryview->messageview))
-				summaryview->display_msg = TRUE;
+			if (event->type == GDK_2BUTTON_PRESS && is_selected)
+				summary_activate_selected(summaryview);
+			else {
+				summaryview->can_toggle_selection = TRUE;
+				if (!mod_pressed &&
+				    messageview_is_visible(summaryview->messageview))
+					summaryview->display_msg = TRUE;
+			}
 		}
 	} else if (event->button == 2) {
-		summaryview->display_msg = TRUE;
+		summary_select_row(summaryview, &iter, TRUE, FALSE);
+		gtk_tree_path_free(path);
+		return TRUE;
 	} else if (event->button == 3) {
 		/* right clicked */
 		gtk_menu_popup(GTK_MENU(summaryview->popupmenu), NULL, NULL,
@@ -4066,20 +4080,6 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	}
 
 	return FALSE;
-}
-
-static void summary_row_activated(GtkTreeView *treeview, GtkTreePath *path,
-				  GtkTreeViewColumn *column,
-				  SummaryView *summaryview)
-{
-	if (summaryview->folder_item->stype == F_OUTBOX ||
-	    summaryview->folder_item->stype == F_DRAFT  ||
-	    summaryview->folder_item->stype == F_QUEUE)
-		summary_reedit(summaryview);
-	else
-		summary_open_msg(summaryview);
-
-	summaryview->display_msg = FALSE;
 }
 
 static void summary_set_bold_recursive(SummaryView *summaryview,
