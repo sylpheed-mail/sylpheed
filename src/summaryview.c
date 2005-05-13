@@ -1752,10 +1752,10 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 		mark_pix = deleted_pixbuf;
 		foreground = &summaryview->color_dim;
 	} else if (MSG_IS_MOVE(flags)) {
-		//mark_pix = move_pixbuf;
+		/* mark_pix = move_pixbuf; */
 		foreground = &summaryview->color_marked;
 	} else if (MSG_IS_COPY(flags)) {
-		//mark_pix = copy_pixbuf;
+		/* mark_pix = copy_pixbuf; */
 		foreground = &summaryview->color_marked;
 	} else if (MSG_IS_MARKED(flags))
 		mark_pix = mark_pixbuf;
@@ -1833,7 +1833,6 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 	GtkTreeIter iter;
 	MsgInfo *msginfo;
 	GSList *cur;
-	struct timeval tv_bef, tv_aft, tv_res;
 
 	if (!mlist) return;
 
@@ -1841,8 +1840,6 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 	STATUSBAR_PUSH(summaryview->mainwin,
 		       _("Setting summary from message data..."));
 	gdk_flush();
-
-	gettimeofday(&tv_bef, NULL);
 
 	/* temporarily remove the model for speed up */
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
@@ -1887,7 +1884,7 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 				summaryview->deleted++;
 			summaryview->total_size += msginfo->size;
 		}
-		//mlist = g_slist_reverse(mlist);
+		/* mlist = g_slist_reverse(mlist); */
 	}
 
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
@@ -1901,12 +1898,6 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 		summary_sort(summaryview, summaryview->folder_item->sort_key,
 			     summaryview->folder_item->sort_type);
 	}
-
-	gettimeofday(&tv_aft, NULL);
-	timersub(&tv_aft, &tv_bef, &tv_res);
-	g_print("set_model: %s: elapsed time: %ld.%06ld sec\n",
-		summaryview->folder_item->path,
-		tv_res.tv_sec, tv_res.tv_usec);
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
@@ -3358,13 +3349,11 @@ static void summary_modify_threads(SummaryView *summaryview)
 void summary_expand_threads(SummaryView *summaryview)
 {
 	gtk_tree_view_expand_all(GTK_TREE_VIEW(summaryview->treeview));
-	//gtk_ctree_node_moveto(ctree, summaryview->selected, -1, 0.5, 0);
 }
 
 void summary_collapse_threads(SummaryView *summaryview)
 {
 	gtk_tree_view_collapse_all(GTK_TREE_VIEW(summaryview->treeview));
-	//gtk_ctree_node_moveto(ctree, summaryview->selected, -1, 0.5, 0);
 }
 
 static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
@@ -3739,7 +3728,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 
 	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
 	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
-	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview),
+				     prefs_common.enable_rules_hint);
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), S_COL_SUBJECT);
 	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), FALSE);
 	g_object_set(treeview, "fixed-height-mode", TRUE, NULL);

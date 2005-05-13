@@ -535,7 +535,13 @@ gboolean gtkut_tree_row_reference_equal(GtkTreeRowReference *ref1,
 		return FALSE;
 
 	path1 = gtk_tree_row_reference_get_path(ref1);
+	if (!path1)
+		return FALSE;
 	path2 = gtk_tree_row_reference_get_path(ref2);
+	if (!path2) {
+		gtk_tree_path_free(path1);
+		return FALSE;
+	}
 
 	result = gtk_tree_path_compare(path1, path2);
 

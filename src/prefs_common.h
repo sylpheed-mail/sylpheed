@@ -100,9 +100,9 @@ struct _PrefsCommon
 	gboolean expand_thread;
 	gchar *date_format;
 
+	gboolean enable_rules_hint;
 	gboolean enable_hscrollbar;
 	gboolean bold_unread;
-	gboolean enable_thread;
 
 	ToolbarStyle toolbar_style;
 	gboolean show_statusbar;

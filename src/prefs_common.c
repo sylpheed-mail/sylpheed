@@ -367,13 +367,13 @@ static PrefParam param[] = {
 	 &display.chkbtn_expand_thread,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
+	{"enable_rules_hint", "TRUE", &prefs_common.enable_rules_hint, P_BOOL,
+	 NULL, NULL, NULL},
 	{"enable_hscrollbar", "TRUE", &prefs_common.enable_hscrollbar, P_BOOL,
 	 NULL, NULL, NULL},
 	{"bold_unread", "TRUE", &prefs_common.bold_unread, P_BOOL,
 	 NULL, NULL, NULL},
 
-	{"enable_thread", "TRUE", &prefs_common.enable_thread, P_BOOL,
-	 NULL, NULL, NULL},
 	{"toolbar_style", "3", &prefs_common.toolbar_style, P_ENUM,
 	 NULL, NULL, NULL},
 	{"show_statusbar", "TRUE", &prefs_common.show_statusbar, P_BOOL,
