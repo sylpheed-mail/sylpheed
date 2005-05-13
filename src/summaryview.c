@@ -997,7 +997,10 @@ static void summary_select_prev_flagged(SummaryView *summaryview,
 		if (notice)
 			alertpanel_notice(notice);
 	} else
-		summary_select_row(summaryview, &prev, TRUE, FALSE);
+		summary_select_row
+			(summaryview, &prev,
+			 messageview_is_visible(summaryview->messageview),
+			 FALSE);
 }
 
 static void summary_select_next_flagged(SummaryView *summaryview,
@@ -1034,7 +1037,10 @@ static void summary_select_next_flagged(SummaryView *summaryview,
 		if (notice)
 			alertpanel_notice(notice);
 	} else
-		summary_select_row(summaryview, &next, TRUE, FALSE);
+		summary_select_row
+			(summaryview, &next,
+			 messageview_is_visible(summaryview->messageview),
+			 FALSE);
 }
 
 static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
@@ -1070,7 +1076,9 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 			return;
 	}
 
-	summary_select_row(summaryview, &next, TRUE, FALSE);
+	summary_select_row(summaryview, &next,
+			   messageview_is_visible(summaryview->messageview),
+			   FALSE);
 }
 
 void summary_select_prev_unread(SummaryView *summaryview)
