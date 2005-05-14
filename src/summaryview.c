@@ -3881,6 +3881,7 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 	GtkTreeViewColumn *column = NULL;
 	gboolean is_selected;
 	gboolean mod_pressed;
+	gint px, py;
 
 	if (!event) return FALSE;
 
@@ -3888,6 +3889,12 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 					   event->x, event->y, &path, &column,
 					   NULL, NULL))
 		return FALSE;
+
+	/* pass through if the border of column titles is clicked */
+	gtk_widget_get_pointer(treeview, &px, &py);
+	if (py == (gint)event->y)
+		return FALSE;
+
 	if (!gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
 				     &iter, path))
 		return FALSE;
