@@ -4032,7 +4032,8 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		break;
 	}
 
-	if (!summaryview->selected)
+	if (!summaryview->selected &&
+	    gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
 		return FALSE;
 
 	messageview = summaryview->messageview;
@@ -4048,7 +4049,8 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 
 	switch (event->keyval) {
 	case GDK_space:		/* Page down or go to the next */
-		if (!gtkut_tree_row_reference_equal(summaryview->displayed,
+		if (summaryview->selected &&
+		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
 		} else if (mod_pressed) {
@@ -4063,7 +4065,8 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		textview_scroll_page(textview, TRUE);
 		return TRUE;
 	case GDK_Return:	/* Scroll up/down one line */
-		if (!gtkut_tree_row_reference_equal(summaryview->displayed,
+		if (summaryview->selected &&
+		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
 		} else
