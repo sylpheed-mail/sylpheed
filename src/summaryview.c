@@ -2454,28 +2454,23 @@ void summary_delete(SummaryView *summaryview)
 		summary_delete_row(summaryview, &last_sel);
 	}
 
-	valid = summary_find_next_msg(summaryview, &next, &last_sel);
-	if (!valid)
-		valid = summary_find_prev_msg(summaryview, &next, &last_sel);
+	if (prefs_common.immediate_exec || item->stype == F_TRASH) {
+		summary_execute(summaryview);
+	} else {
+		valid = summary_find_next_msg(summaryview, &next, &last_sel);
+		if (!valid)
+			valid = summary_find_prev_msg
+				(summaryview, &next, &last_sel);
 
-	if (valid) {
-#if 0
-		if (sel_last && node == gtkut_ctree_node_next(ctree, sel_last))
-			summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
-		else if (sel_last && node == GTK_CTREE_NODE_PREV(sel_last))
-			summary_step(summaryview, GTK_SCROLL_STEP_BACKWARD);
-		else
-#endif
+		if (valid) {
 			summary_select_row
 				(summaryview, &next,
-				 messageview_is_visible(summaryview->messageview),
+				 messageview_is_visible
+					(summaryview->messageview),
 				 FALSE);
-	}
-
-	if (prefs_common.immediate_exec || item->stype == F_TRASH)
-		summary_execute(summaryview);
-	else
+		}
 		summary_status_show(summaryview);
+	}
 }
 
 static gboolean summary_delete_duplicated_func(GtkTreeModel *model,
@@ -2634,12 +2629,12 @@ void summary_move_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 	}
 	g_list_free(rows);
 
-	summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
-
 	if (prefs_common.immediate_exec)
 		summary_execute(summaryview);
-	else
+	else {
+		summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
 		summary_status_show(summaryview);
+	}
 }
 
 void summary_move_to(SummaryView *summaryview)
@@ -2707,12 +2702,12 @@ void summary_copy_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 	}
 	g_list_free(rows);
 
-	summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
-
 	if (prefs_common.immediate_exec)
 		summary_execute(summaryview);
-	else
+	else {
+		summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
 		summary_status_show(summaryview);
+	}
 }
 
 void summary_copy_to(SummaryView *summaryview)
@@ -2902,6 +2897,17 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 
 	if (summaryview->folder_item->threaded)
 		summary_modify_threads(summaryview);
+
+	valid = gtkut_tree_row_reference_get_iter(model, summaryview->selected,
+						  &iter);
+	if (valid) {
+		valid = summary_find_next_msg(summaryview, &next, &iter);
+		if (!valid)
+			valid = summary_find_prev_msg(summaryview, &next,
+						      &iter);
+		if (valid)
+			summary_select_row(summaryview, &next, FALSE, FALSE);
+	}
 
 	for (valid = gtk_tree_model_get_iter_first(model, &iter);
 	     valid == TRUE; iter = next) {
@@ -3285,13 +3291,15 @@ static GNode *summary_get_modified_node(SummaryView *summaryview,
 	return node;
 }
 
-static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter)
+static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
+				GtkTreeIter *selected)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	MsgInfo *msginfo;
+	MsgInfo *msginfo, *sel_msginfo = NULL;
 	GNode *root, *cur;
 	GtkTreeIter iter_, sibling;
-	GtkTreePath *path;
+	GtkTreePath *path, *sel_path;
+	gboolean found = FALSE;
 
 	if (!gtk_tree_model_iter_has_child(model, iter))
 		return;
@@ -3299,6 +3307,17 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter)
 		return;
 
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
+
+	if (selected) {
+		path = gtk_tree_model_get_path(model, iter);
+		sel_path = gtk_tree_model_get_path(model, selected);
+		if (gtk_tree_path_compare(path, sel_path) == 0 ||
+		    gtk_tree_path_is_ancestor(path, sel_path))
+			gtk_tree_model_get(model, selected,
+					   S_COL_MSG_INFO, &sel_msginfo, -1);
+		gtk_tree_path_free(sel_path);
+		gtk_tree_path_free(path);
+	}
 
 	root = g_node_new(NULL);
 	summary_get_modified_node(summaryview, iter, root, NULL);
@@ -3315,6 +3334,11 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter)
 				 path, TRUE);
 			gtk_tree_path_free(path);
 		}
+		if (sel_msginfo && !found) {
+			found = gtkut_tree_model_find_by_column_data
+				(model, selected, &iter_,
+				 S_COL_MSG_INFO, sel_msginfo);
+		}
 		sibling = iter_;
 	}
 
@@ -3326,20 +3350,39 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter)
 static void summary_modify_threads(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GtkTreeIter iter, next;
-	gboolean valid;
+	GtkTreeIter iter, next, selected;
+	GtkTreeIter *selected_p = NULL;
+	gboolean valid, has_selection;
 
 	summary_lock(summaryview);
 
 	debug_print("Modifying threads for execution...");
+
+	has_selection = gtkut_tree_row_reference_get_iter
+		(model, summaryview->selected, &selected);
+	if (has_selection) {
+		valid = summary_find_next_msg(summaryview, &next, &selected);
+		if (!valid)
+			valid = summary_find_prev_msg(summaryview, &next,
+						      &selected);
+		if (valid) {
+			selected = next;
+			selected_p = &selected;
+		} else
+			has_selection = FALSE;
+	}
 
 	valid = gtk_tree_model_get_iter_first(model, &next);
 
 	while (valid) {
 		iter = next;
 		valid = gtk_tree_model_iter_next(model, &next);
-		summary_modify_node(summaryview, &iter);
+		summary_modify_node(summaryview, &iter, selected_p);
 	}
+
+	if (has_selection &&
+	    !gtk_tree_row_reference_valid(summaryview->selected))
+		summary_select_row(summaryview, &selected, FALSE, FALSE);
 
 	debug_print("done.\n");
 
@@ -4039,8 +4082,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		break;
 	}
 
-	if (!summaryview->selected &&
-	    gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
+	if (!summaryview->selected)
 		return FALSE;
 
 	messageview = summaryview->messageview;
@@ -4121,6 +4163,9 @@ static void summary_row_expanded(GtkTreeView *treeview, GtkTreeIter *iter,
 
 	if (prefs_common.bold_unread)
 		summary_set_bold_recursive(summaryview, iter);
+
+	/* workaround for last row expand problem */
+	gtk_widget_queue_resize(GTK_WIDGET(treeview));
 }
 
 static void summary_row_collapsed(GtkTreeView *treeview, GtkTreeIter *iter,
@@ -4154,9 +4199,14 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 	summary_status_show(summaryview);
 
 	if (gtk_tree_selection_count_selected_rows(selection) != 1) {
-		if (summaryview->selected) {
+		list = gtk_tree_selection_get_selected_rows(selection, NULL);
+		if (list) {
+			path = (GtkTreePath *)list->data;
 			gtk_tree_row_reference_free(summaryview->selected);
-			summaryview->selected = NULL;
+			summaryview->selected =
+				gtk_tree_row_reference_new(model, path);
+			g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
+			g_list_free(list);
 		}
 		summaryview->display_msg = FALSE;
 		if (summaryview->displayed && prefs_common.always_show_msg) {

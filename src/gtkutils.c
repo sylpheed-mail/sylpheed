@@ -482,23 +482,20 @@ gboolean gtkut_tree_model_find_by_column_data(GtkTreeModel *model,
 	GtkTreeIter iter_;
 	gpointer store_data;
 
-	if (start)
+	if (start) {
+		gtk_tree_model_get(model, start, col, &store_data, -1);
+		if (store_data == data) {
+			*iter = *start;
+			return TRUE;
+		}
 		valid = gtk_tree_model_iter_children(model, &iter_, start);
-	else
+	} else
 		valid = gtk_tree_model_get_iter_first(model, &iter_);
 
 	while (valid) {
-		gtk_tree_model_get(model, &iter_, col, &store_data, -1);
-		if (store_data == data) {
-			*iter = iter_;
+		if (gtkut_tree_model_find_by_column_data
+			(model, iter, &iter_, col, data)) {
 			return TRUE;
-		}
-
-		if (gtk_tree_model_iter_has_child(model, &iter_)) {
-			if (gtkut_tree_model_find_by_column_data
-				(model, iter, &iter_, col, data)) {
-				return TRUE;
-			}
 		}
 
 		valid = gtk_tree_model_iter_next(model, &iter_);
