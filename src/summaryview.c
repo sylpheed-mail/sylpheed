@@ -4191,23 +4191,29 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 				      SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	MsgInfo *msginfo = NULL;
 	GtkTreeIter iter;
 	GtkTreePath *path;
 	GList *list;
+	gboolean single_selection = FALSE;
 
 	summary_status_show(summaryview);
 
-	if (gtk_tree_selection_count_selected_rows(selection) != 1) {
-		list = gtk_tree_selection_get_selected_rows(selection, NULL);
-		if (list) {
-			path = (GtkTreePath *)list->data;
-			gtk_tree_row_reference_free(summaryview->selected);
-			summaryview->selected =
-				gtk_tree_row_reference_new(model, path);
-			g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
-			g_list_free(list);
-		}
+	list = gtk_tree_selection_get_selected_rows(selection, NULL);
+
+	gtk_tree_row_reference_free(summaryview->selected);
+	if (list) {
+		if (list->next == NULL)
+			single_selection = TRUE;
+		path = (GtkTreePath *)list->data;
+		gtk_tree_model_get_iter(model, &iter, path);
+		summaryview->selected =
+			gtk_tree_row_reference_new(model, path);
+		g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
+		g_list_free(list);
+	} else
+		summaryview->selected = NULL;
+
+	if (!single_selection) {
 		summaryview->display_msg = FALSE;
 		if (summaryview->displayed && prefs_common.always_show_msg) {
 			messageview_clear(summaryview->messageview);
@@ -4218,19 +4224,6 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 		main_window_set_toolbar_sensitive(summaryview->mainwin);
 		return;
 	}
-
-	list = gtk_tree_selection_get_selected_rows(selection, NULL);
-	path = (GtkTreePath *)list->data;
-	g_list_free(list);
-	gtk_tree_model_get_iter(model, &iter, path);
-
-	gtk_tree_row_reference_free(summaryview->selected);
-	summaryview->selected = gtk_tree_row_reference_new(model, path);
-
-	gtk_tree_path_free(path);
-
-	gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
-	g_return_if_fail(msginfo != NULL);
 
 	if (summaryview->display_msg ||
 	    (prefs_common.always_show_msg &&
