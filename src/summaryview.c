@@ -2877,9 +2877,9 @@ gboolean summary_execute(SummaryView *summaryview)
 	statusbar_pop_all();
 	STATUSBAR_POP(summaryview->mainwin);
 
-	summary_remove_invalid_messages(summaryview);
-
 	summary_unlock(summaryview);
+
+	summary_remove_invalid_messages(summaryview);
 
 	if (val != 0) {
 		alertpanel_error(_("Error occurred while processing messages."));
@@ -2891,9 +2891,31 @@ gboolean summary_execute(SummaryView *summaryview)
 static void summary_remove_invalid_messages(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	MsgInfo *msginfo;
+	MsgInfo *disp_msginfo = NULL, *msginfo;
 	GtkTreeIter iter, next;
+	GtkTreePath *path;
 	gboolean valid;
+
+	if (summaryview->displayed) {
+		GtkTreeIter displayed;
+
+		valid = gtkut_tree_row_reference_get_iter
+			(model, summaryview->displayed, &displayed);
+		if (valid) {
+			gtk_tree_model_get(model, &displayed,
+					   S_COL_MSG_INFO, &disp_msginfo, -1);
+			if (MSG_IS_INVALID(disp_msginfo->flags)) {
+				valid = FALSE;
+				disp_msginfo = NULL;
+			}
+		}
+		if (!valid) {
+			/* g_print("displayed became invalid before removing\n"); */
+			messageview_clear(summaryview->messageview);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed = NULL;
+		}
+	}
 
 	if (summaryview->folder_item->threaded)
 		summary_modify_threads(summaryview);
@@ -2905,8 +2927,24 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 		if (!valid)
 			valid = summary_find_prev_msg(summaryview, &next,
 						      &iter);
-		if (valid)
+		if (valid) {
+			gtk_tree_model_get(model, &next,
+					   S_COL_MSG_INFO, &msginfo, -1);
+			if (disp_msginfo && disp_msginfo == msginfo) {
+				/* g_print("replace displayed\n"); */
+				path = gtk_tree_model_get_path(model, &next);
+				gtk_tree_row_reference_free
+					(summaryview->displayed);
+				summaryview->displayed =
+					gtk_tree_row_reference_new(model, path);
+				gtk_tree_path_free(path);
+			}
 			summary_select_row(summaryview, &next, FALSE, FALSE);
+		}
+	}
+	if (!valid) {
+		gtk_tree_row_reference_free(summaryview->selected);
+		summaryview->selected = NULL;
 	}
 
 	for (valid = gtk_tree_model_get_iter_first(model, &iter);
@@ -2914,7 +2952,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 		next = iter;
 		valid = gtkut_tree_model_next(model, &next);
 
-		GET_MSG_INFO(msginfo, &iter);
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
 		if (!MSG_IS_INVALID(msginfo->flags))
 			continue;
 
@@ -2930,9 +2968,21 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 
 	if (summaryview->displayed &&
 	    !gtk_tree_row_reference_valid(summaryview->displayed)) {
-		messageview_clear(summaryview->messageview);
-		gtk_tree_row_reference_free(summaryview->displayed);
-		summaryview->displayed = NULL;
+		/* g_print("displayed became invalid after removing. searching disp_msginfo...\n"); */
+		if (disp_msginfo &&
+		    gtkut_tree_model_find_by_column_data
+			(model, &iter, NULL, S_COL_MSG_INFO, disp_msginfo)) {
+			/* g_print("replace displayed\n"); */
+			path = gtk_tree_model_get_path(model, &iter);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed =
+				gtk_tree_row_reference_new(model, path);
+			gtk_tree_path_free(path);
+		} else {
+			messageview_clear(summaryview->messageview);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed = NULL;
+		}
 	}
 
 	if (gtk_tree_model_get_iter_first(model, &iter))
@@ -3265,31 +3315,50 @@ static GNode *summary_get_modified_node(SummaryView *summaryview,
 					GNode *parent, GNode *sibling)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GNode *node;
+	GNode *node = NULL, *new_sibling;
 	GtkTreeIter child;
 	MsgInfo *msginfo;
 	gboolean valid;
 
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
-	node = g_node_new(msginfo);
-	g_node_insert_after(parent, sibling, node);
 
 	if (!MSG_IS_INVALID(msginfo->flags)) {
+		node = g_node_new(msginfo);
+		g_node_insert_after(parent, sibling, node);
 		parent = node;
 		sibling = NULL;
 	} else
-		sibling = node;
+		procmsg_msginfo_free(msginfo);
 
 	valid = gtk_tree_model_iter_children(model, &child, iter);
 
 	while (valid) {
-		sibling = summary_get_modified_node(summaryview, &child,
-						    parent, sibling);
+		new_sibling = summary_get_modified_node(summaryview, &child,
+							parent, sibling);
+		if (new_sibling) {
+			sibling = new_sibling;
+			if (!node)
+				node = sibling;
+		}
 		valid = gtk_tree_model_iter_next(model, &child);
 	}
 
 	return node;
 }
+
+#if 0
+static gboolean traverse(GNode *node, gpointer data)
+{
+	gint i;
+
+	if (!node->data)
+		return FALSE;
+	for (i = 0; i < g_node_depth(node); i++)
+		g_print(" ");
+	g_print("%s\n", ((MsgInfo *)node->data)->subject);
+	return FALSE;
+}
+#endif
 
 static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 				GtkTreeIter *selected)
@@ -3321,6 +3390,8 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 
 	root = g_node_new(NULL);
 	summary_get_modified_node(summaryview, iter, root, NULL);
+
+	/* g_node_traverse(root, G_PRE_ORDER, G_TRAVERSE_ALL, -1, traverse, NULL); */
 
 	sibling = *iter;
 	for (cur = root->children; cur != NULL; cur = cur->next) {
