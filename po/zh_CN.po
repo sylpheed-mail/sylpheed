@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-13 18:31+0900\n"
+"POT-Creation-Date: 2005-05-17 18:40+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -425,7 +425,7 @@ msgstr "删除"
 msgid "Lookup"
 msgstr "查找"
 
-#: src/addressbook.c:645 src/headerview.c:54 src/prefs_folder_item.c:308
+#: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
 #: src/prefs_template.c:172 src/summary_search.c:179
 msgid "To:"
 msgstr "收件人："
@@ -650,7 +650,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3656
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3770
 msgid "None"
 msgstr "没有"
 
@@ -1058,11 +1058,11 @@ msgstr "MIME 类型"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3798
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3912
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:3785 src/headerview.c:53 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
 msgid "From:"
 msgstr "发件人："
 
@@ -1853,23 +1853,23 @@ msgstr "完成。"
 msgid "%d newsgroups received (%s read)"
 msgstr "已接收 %d 个新闻组(已读取 %s)"
 
-#: src/headerview.c:55
+#: src/headerview.c:56
 msgid "Newsgroups:"
 msgstr "新闻组："
 
-#: src/headerview.c:56 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
 msgid "Subject:"
 msgstr "标题："
 
-#: src/headerview.c:86
+#: src/headerview.c:87
 msgid "Creating header view...\n"
 msgstr "正在创建标题视图...\n"
 
-#: src/headerview.c:174 src/summaryview.c:1793
+#: src/headerview.c:175 src/summaryview.c:1793
 msgid "(No From)"
 msgstr "(没有发件人)"
 
-#: src/headerview.c:189 src/summaryview.c:1790
+#: src/headerview.c:190 src/summaryview.c:1790
 msgid "(No Subject)"
 msgstr "(没有主题)"
 
@@ -3006,7 +3006,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "主窗口：分配颜色 %d 失败\n"
 
 #: src/mainwindow.c:1043 src/summaryview.c:1902 src/summaryview.c:1964
-#: src/summaryview.c:3156 src/summaryview.c:3229 src/summaryview.c:3433
+#: src/summaryview.c:3212 src/summaryview.c:3285 src/summaryview.c:3547
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -3338,16 +3338,16 @@ msgstr "文本"
 msgid "Attachments"
 msgstr "附件"
 
-#: src/messageview.c:650 src/summaryview.c:2827
+#: src/messageview.c:650 src/summaryview.c:2822
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "无法保存文件“%s”'。"
 
-#: src/messageview.c:701 src/prefs_common.c:2176 src/summaryview.c:2846
+#: src/messageview.c:701 src/prefs_common.c:2176 src/summaryview.c:2841
 msgid "Print"
 msgstr "打印"
 
-#: src/messageview.c:702 src/summaryview.c:2847
+#: src/messageview.c:702 src/summaryview.c:2842
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3356,7 +3356,7 @@ msgstr ""
 "输入打印命令行：\n"
 "(“%s”将被替换为文件名)"
 
-#: src/messageview.c:708 src/summaryview.c:2853
+#: src/messageview.c:708 src/summaryview.c:2848
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5155,17 +5155,17 @@ msgid "Attachment"
 msgstr "附件"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3791
+#: src/prefs_summary_column.c:71 src/summaryview.c:3905
 msgid "Subject"
 msgstr "主题"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3794
+#: src/prefs_summary_column.c:72 src/summaryview.c:3908
 msgid "From"
 msgstr "发件人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3796
+#: src/prefs_summary_column.c:73 src/summaryview.c:3910
 msgid "Date"
 msgstr "日期"
 
@@ -5872,59 +5872,59 @@ msgstr "删除邮件"
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您确实要删除废件箱中的邮件吗？"
 
-#: src/summaryview.c:2517
+#: src/summaryview.c:2512
 msgid "Deleting duplicated messages..."
 msgstr "正在删除重复邮件..."
 
-#: src/summaryview.c:2553
+#: src/summaryview.c:2548
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "邮件 %s/%d 被取消标记\n"
 
-#: src/summaryview.c:2605
+#: src/summaryview.c:2600
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "邮件 %d 被设置为移到 %s\n"
 
-#: src/summaryview.c:2622
+#: src/summaryview.c:2617
 msgid "Destination is same as current folder."
 msgstr "目标与当前文件夹相同。"
 
-#: src/summaryview.c:2678
+#: src/summaryview.c:2673
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "邮件 %d 被设置为复制到 %s\n"
 
-#: src/summaryview.c:2695
+#: src/summaryview.c:2690
 msgid "Destination for copy is same as current folder."
 msgstr "复制目标与当前文件夹相同。"
 
-#: src/summaryview.c:2890
+#: src/summaryview.c:2885
 msgid "Error occurred while processing messages."
 msgstr "处理邮件时发生错误。"
 
-#: src/summaryview.c:3114 src/summaryview.c:3115
+#: src/summaryview.c:3170 src/summaryview.c:3171
 msgid "Building threads..."
 msgstr "正在创建线索..."
 
-#: src/summaryview.c:3212 src/summaryview.c:3213
+#: src/summaryview.c:3268 src/summaryview.c:3269
 msgid "Unthreading..."
 msgstr "正在取消线索..."
 
-#: src/summaryview.c:3409
+#: src/summaryview.c:3523
 msgid "filtering..."
 msgstr "正在过滤..."
 
-#: src/summaryview.c:3410
+#: src/summaryview.c:3524
 msgid "Filtering..."
 msgstr "正在过滤..."
 
-#: src/summaryview.c:3440
+#: src/summaryview.c:3554
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已经过滤 %d 个邮件。"
 
-#: src/summaryview.c:3800
+#: src/summaryview.c:3914
 msgid "No."
 msgstr "No."
 

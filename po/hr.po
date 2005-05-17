@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-13 18:31+0900\n"
+"POT-Creation-Date: 2005-05-17 18:40+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -422,7 +422,7 @@ msgstr "Obriši"
 msgid "Lookup"
 msgstr "Potraži"
 
-#: src/addressbook.c:645 src/headerview.c:54 src/prefs_folder_item.c:308
+#: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
 #: src/prefs_template.c:172 src/summary_search.c:179
 msgid "To:"
 msgstr "Za:"
@@ -650,7 +650,7 @@ msgstr "Smeđa"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3656
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3770
 msgid "None"
 msgstr "Ništa"
 
@@ -1100,11 +1100,11 @@ msgstr "MIME tip"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3798
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3912
 msgid "Size"
 msgstr "Veličina"
 
-#: src/compose.c:3785 src/headerview.c:53 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
 msgid "From:"
 msgstr "Od:"
 
@@ -1911,23 +1911,23 @@ msgstr "Gotovo."
 msgid "%d newsgroups received (%s read)"
 msgstr "%d news grupa primljeno (%s pročitano)"
 
-#: src/headerview.c:55
+#: src/headerview.c:56
 msgid "Newsgroups:"
 msgstr "News grupe:"
 
-#: src/headerview.c:56 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
 msgid "Subject:"
 msgstr "Tema:"
 
-#: src/headerview.c:86
+#: src/headerview.c:87
 msgid "Creating header view...\n"
 msgstr "Stvaram pregled zaglavlja...\n"
 
-#: src/headerview.c:174 src/summaryview.c:1793
+#: src/headerview.c:175 src/summaryview.c:1793
 msgid "(No From)"
 msgstr "(Bez pošiljatelja)"
 
-#: src/headerview.c:189 src/summaryview.c:1790
+#: src/headerview.c:190 src/summaryview.c:1790
 msgid "(No Subject)"
 msgstr "(Bez teme)"
 
@@ -3177,7 +3177,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: prikaz boje %d nije uspio\n"
 
 #: src/mainwindow.c:1043 src/summaryview.c:1902 src/summaryview.c:1964
-#: src/summaryview.c:3156 src/summaryview.c:3229 src/summaryview.c:3433
+#: src/summaryview.c:3212 src/summaryview.c:3285 src/summaryview.c:3547
 msgid "done.\n"
 msgstr "gotovo.\n"
 
@@ -3519,16 +3519,16 @@ msgstr "Tekst"
 msgid "Attachments"
 msgstr "Prilog"
 
-#: src/messageview.c:650 src/summaryview.c:2827
+#: src/messageview.c:650 src/summaryview.c:2822
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Ne mogu premjestiti spis `%s'."
 
-#: src/messageview.c:701 src/prefs_common.c:2176 src/summaryview.c:2846
+#: src/messageview.c:701 src/prefs_common.c:2176 src/summaryview.c:2841
 msgid "Print"
 msgstr "Ispiši"
 
-#: src/messageview.c:702 src/summaryview.c:2847
+#: src/messageview.c:702 src/summaryview.c:2842
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3537,7 +3537,7 @@ msgstr ""
 "Unesite naredbu za ispis:\n"
 "(`%s' predstavlja datoteku)"
 
-#: src/messageview.c:708 src/summaryview.c:2853
+#: src/messageview.c:708 src/summaryview.c:2848
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5376,17 +5376,17 @@ msgid "Attachment"
 msgstr "Prilog"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3791
+#: src/prefs_summary_column.c:71 src/summaryview.c:3905
 msgid "Subject"
 msgstr "Tema"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3794
+#: src/prefs_summary_column.c:72 src/summaryview.c:3908
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3796
+#: src/prefs_summary_column.c:73 src/summaryview.c:3910
 msgid "Date"
 msgstr "Datum"
 
@@ -6109,61 +6109,61 @@ msgstr "Obriši poruku/e"
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Želite li uistinu obrisati poruke iz smeća?"
 
-#: src/summaryview.c:2517
+#: src/summaryview.c:2512
 msgid "Deleting duplicated messages..."
 msgstr "Brišim duplicirane poruke..."
 
-#: src/summaryview.c:2553
+#: src/summaryview.c:2548
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Poruka %s/%d je neoznačena\n"
 
-#: src/summaryview.c:2605
+#: src/summaryview.c:2600
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Poruka %d je označena za premještanje u %s\n"
 
-#: src/summaryview.c:2622
+#: src/summaryview.c:2617
 msgid "Destination is same as current folder."
 msgstr "Destinacija je ista kao i trenutni spis."
 
-#: src/summaryview.c:2678
+#: src/summaryview.c:2673
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Poruka %d je označena za kopiranje u %s\n"
 
-#: src/summaryview.c:2695
+#: src/summaryview.c:2690
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Destinacija za kopiranje je ista kao i trenutni spis."
 
-#: src/summaryview.c:2890
+#: src/summaryview.c:2885
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Došlo je do greške pri radu s poštom."
 
-#: src/summaryview.c:3114 src/summaryview.c:3115
+#: src/summaryview.c:3170 src/summaryview.c:3171
 msgid "Building threads..."
 msgstr "Izgrađujem stablo..."
 
-#: src/summaryview.c:3212 src/summaryview.c:3213
+#: src/summaryview.c:3268 src/summaryview.c:3269
 msgid "Unthreading..."
 msgstr "Rasipavam..."
 
-#: src/summaryview.c:3409
+#: src/summaryview.c:3523
 msgid "filtering..."
 msgstr "filtriram..."
 
-#: src/summaryview.c:3410
+#: src/summaryview.c:3524
 msgid "Filtering..."
 msgstr "Filtriranje..."
 
-#: src/summaryview.c:3440
+#: src/summaryview.c:3554
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "poruka %d već je prihvaćena.\n"
 
-#: src/summaryview.c:3800
+#: src/summaryview.c:3914
 msgid "No."
 msgstr "Ne."
 
