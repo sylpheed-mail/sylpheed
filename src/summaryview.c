@@ -128,6 +128,10 @@ static gboolean summary_find_next_msg	(SummaryView		*summaryview,
 					 GtkTreeIter		*next,
 					 GtkTreeIter		*iter);
 
+static gboolean summary_find_nearest_msg(SummaryView		*summaryview,
+					 GtkTreeIter		*target,
+					 GtkTreeIter		*iter);
+
 static gboolean summary_find_prev_flagged_msg
 					(SummaryView	*summaryview,
 					 GtkTreeIter	*prev,
@@ -1291,6 +1295,18 @@ static gboolean summary_find_next_msg(SummaryView *summaryview,
 	return FALSE;
 }
 
+static gboolean summary_find_nearest_msg(SummaryView *summaryview,
+					 GtkTreeIter *target, GtkTreeIter *iter)
+{
+	gboolean valid;
+
+	valid = summary_find_next_msg(summaryview, target, iter);
+	if (!valid)
+		valid = summary_find_prev_msg(summaryview, target, iter);
+
+	return valid;
+}
+
 static gboolean summary_find_prev_flagged_msg(SummaryView *summaryview,
 					      GtkTreeIter *prev,
 					      GtkTreeIter *iter,
@@ -2427,7 +2443,6 @@ void summary_delete(SummaryView *summaryview)
 	FolderItem *item = summaryview->folder_item;
 	GList *rows, *cur;
 	GtkTreeIter last_sel, next;
-	gboolean valid;
 
 	if (!item || FOLDER_TYPE(item->folder) == F_NEWS) return;
 
@@ -2457,12 +2472,7 @@ void summary_delete(SummaryView *summaryview)
 	if (prefs_common.immediate_exec || item->stype == F_TRASH) {
 		summary_execute(summaryview);
 	} else {
-		valid = summary_find_next_msg(summaryview, &next, &last_sel);
-		if (!valid)
-			valid = summary_find_prev_msg
-				(summaryview, &next, &last_sel);
-
-		if (valid) {
+		if (summary_find_nearest_msg(summaryview, &next, &last_sel)) {
 			summary_select_row
 				(summaryview, &next,
 				 messageview_is_visible
@@ -2874,12 +2884,12 @@ gboolean summary_execute(SummaryView *summaryview)
 	val |= summary_execute_copy(summaryview);
 	val |= summary_execute_delete(summaryview);
 
-	statusbar_pop_all();
-	STATUSBAR_POP(summaryview->mainwin);
-
 	summary_unlock(summaryview);
 
 	summary_remove_invalid_messages(summaryview);
+
+	statusbar_pop_all();
+	STATUSBAR_POP(summaryview->mainwin);
 
 	if (val != 0) {
 		alertpanel_error(_("Error occurred while processing messages."));
@@ -2923,10 +2933,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 	valid = gtkut_tree_row_reference_get_iter(model, summaryview->selected,
 						  &iter);
 	if (valid) {
-		valid = summary_find_next_msg(summaryview, &next, &iter);
-		if (!valid)
-			valid = summary_find_prev_msg(summaryview, &next,
-						      &iter);
+		valid = summary_find_nearest_msg(summaryview, &next, &iter);
 		if (valid) {
 			gtk_tree_model_get(model, &next,
 					   S_COL_MSG_INFO, &msginfo, -1);
@@ -2939,7 +2946,12 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 					gtk_tree_row_reference_new(model, path);
 				gtk_tree_path_free(path);
 			}
-			summary_select_row(summaryview, &next, FALSE, FALSE);
+			summary_select_row
+				(summaryview, &next,
+				 (prefs_common.immediate_exec &&
+				  messageview_is_visible
+					(summaryview->messageview)),
+				 FALSE);
 		}
 	}
 	if (!valid) {
@@ -3432,11 +3444,7 @@ static void summary_modify_threads(SummaryView *summaryview)
 	has_selection = gtkut_tree_row_reference_get_iter
 		(model, summaryview->selected, &selected);
 	if (has_selection) {
-		valid = summary_find_next_msg(summaryview, &next, &selected);
-		if (!valid)
-			valid = summary_find_prev_msg(summaryview, &next,
-						      &selected);
-		if (valid) {
+		if (summary_find_nearest_msg(summaryview, &next, &selected)) {
 			selected = next;
 			selected_p = &selected;
 		} else
