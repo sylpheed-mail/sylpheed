@@ -3885,6 +3885,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	gtk_tree_view_column_set_sizing					\
 		(column, GTK_TREE_VIEW_COLUMN_FIXED);			\
 	gtk_tree_view_column_set_fixed_width(column, width);		\
+	gtk_tree_view_column_set_min_width(column, 8);			\
 	gtk_tree_view_column_set_sort_column_id(column, col);		\
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);	\
 	g_signal_connect(G_OBJECT(column->button), "clicked",		\

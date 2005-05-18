@@ -356,7 +356,6 @@ FolderView *folderview_create(void)
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview), column);
-
 	g_signal_connect(G_OBJECT(column->button), "size-allocate",
 			 G_CALLBACK(folderview_col_resized), folderview);
 
@@ -368,8 +367,11 @@ FolderView *folderview_create(void)
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_new);
+	gtk_tree_view_column_set_min_width(column, 8);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(folderview_col_resized), folderview);
 
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
@@ -379,8 +381,11 @@ FolderView *folderview_create(void)
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_unread);
+	gtk_tree_view_column_set_min_width(column, 8);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(folderview_col_resized), folderview);
 
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
@@ -390,8 +395,11 @@ FolderView *folderview_create(void)
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_total);
+	gtk_tree_view_column_set_min_width(column, 8);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(folderview_col_resized), folderview);
 
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(store),
 					     COL_FOLDER_NAME,
@@ -1724,7 +1732,33 @@ static void folderview_popup_close(GtkMenuShell *menu_shell,
 static void folderview_col_resized(GtkWidget *widget, GtkAllocation *allocation,
 				   FolderView *folderview)
 {
-	prefs_common.folder_col_folder = allocation->width;
+	GtkTreeViewColumn *column;
+	gint type;
+	gint width = allocation->width;
+
+	for (type = 0; type <= COL_TOTAL; type++) {
+		column = gtk_tree_view_get_column
+			(GTK_TREE_VIEW(folderview->treeview), type);
+		if (column && column->button == widget) {
+			switch (type) {
+			case COL_FOLDER_NAME:
+				prefs_common.folder_col_folder = width;
+				break;
+			case COL_NEW:
+				prefs_common.folder_col_new = width;
+				break;
+			case COL_UNREAD:
+				prefs_common.folder_col_unread = width;
+				break;
+			case COL_TOTAL:
+				prefs_common.folder_col_total = width;
+				break;
+			default:
+				break;
+			}
+			break;
+		}
+	}
 }
 
 static void folderview_download_func(Folder *folder, FolderItem *item,
