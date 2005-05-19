@@ -572,9 +572,11 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 			summary_unlock(summaryview);
 			summary_execute(summaryview);
 			summary_lock(summaryview);
-		} else if (G_ALERTALTERNATE == val)
+			GTK_EVENTS_FLUSH();
+		} else if (G_ALERTALTERNATE == val) {
 			summary_write_cache(summaryview);
-		else {
+			GTK_EVENTS_FLUSH();
+		} else {
 			summary_unlock(summaryview);
 			inc_unlock();
 			return FALSE;
@@ -1966,6 +1968,7 @@ gint summary_write_cache(SummaryView *summaryview)
 	buf = g_strdup_printf(_("Writing summary cache (%s)..."), item->path);
 	debug_print(buf);
 	STATUSBAR_PUSH(summaryview->mainwin, buf);
+	gdk_flush();
 	g_free(buf);
 
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
