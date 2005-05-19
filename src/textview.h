@@ -49,8 +49,11 @@ struct _TextView
 	MessageView *messageview;
 };
 
-TextView *textview_create	(void);
-void textview_init		(TextView	*textview);
+TextView *textview_create		(void);
+void textview_init			(TextView	*textview);
+void textview_update_message_colors	(void);
+void textview_reflect_prefs		(TextView	*textview);
+
 void textview_show_message	(TextView	*textview,
 				 MimeInfo	*mimeinfo,
 				 const gchar	*file);
@@ -73,8 +76,6 @@ void textview_scroll_one_line	(TextView	*textview,
 				 gboolean	 up);
 gboolean textview_scroll_page	(TextView	*textview,
 				 gboolean	 up);
-
-void textview_update_message_colors	(void);
 
 gboolean textview_search_string			(TextView	*textview,
 						 const gchar	*str,

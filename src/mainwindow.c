@@ -1119,9 +1119,13 @@ void main_window_reflect_prefs_all(void)
 		else
 			gtk_widget_show(mainwin->exec_btn);
 
-		summary_redisplay_msg(mainwin->summaryview);
 		headerview_set_visibility(mainwin->messageview->headerview,
 					  prefs_common.display_header_pane);
+
+		textview_reflect_prefs(mainwin->messageview->textview);
+		textview_reflect_prefs(mainwin->messageview->mimeview->textview);
+
+		summary_redisplay_msg(mainwin->summaryview);
 	}
 }
 

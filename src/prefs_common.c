@@ -137,6 +137,7 @@ static struct Message {
 	GtkWidget *chkbtn_disphdrpane;
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *chkbtn_html;
+	GtkWidget *chkbtn_cursor;
 	GtkWidget *spinbtn_linespc;
 	GtkObject *spinbtn_linespc_adj;
 
@@ -530,6 +531,9 @@ static PrefParam param[] = {
 	{"render_html", "TRUE", &prefs_common.render_html, P_BOOL,
 	 &message.chkbtn_html,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"textview_cursor_visible", "FALSE",
+	 &prefs_common.textview_cursor_visible, P_BOOL,
+	 &message.chkbtn_cursor, prefs_set_data_from_toggle, prefs_set_toggle},
 	{"line_space", "2", &prefs_common.line_space, P_INT,
 	 &message.spinbtn_linespc,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
@@ -1692,6 +1696,7 @@ static void prefs_message_create(void)
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *button_edit_disphdr;
 	GtkWidget *chkbtn_html;
+	GtkWidget *chkbtn_cursor;
 	GtkWidget *hbox_linespc;
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
@@ -1765,6 +1770,9 @@ static void prefs_message_create(void)
 
 	PACK_CHECK_BUTTON(vbox2, chkbtn_html,
 			  _("Render HTML messages as text"));
+
+	PACK_CHECK_BUTTON(vbox2, chkbtn_cursor,
+			  _("Display cursor in message view"));
 
 	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
@@ -1852,6 +1860,7 @@ static void prefs_message_create(void)
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
 	message.chkbtn_disphdr     = chkbtn_disphdr;
 	message.chkbtn_html        = chkbtn_html;
+	message.chkbtn_cursor      = chkbtn_cursor;
 	message.spinbtn_linespc    = spinbtn_linespc;
 
 	message.chkbtn_smoothscroll    = chkbtn_smoothscroll;

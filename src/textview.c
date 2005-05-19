@@ -355,7 +355,7 @@ void textview_init(TextView *textview)
 	if (!regular_cursor)
 		regular_cursor = gdk_cursor_new(GDK_XTERM);
 
-	textview_update_message_colors();
+	textview_reflect_prefs(textview);
 	textview_set_all_headers(textview, FALSE);
 	textview_set_font(textview, NULL);
 	textview_create_tags(GTK_TEXT_VIEW(textview->text), textview);
@@ -379,6 +379,13 @@ void textview_update_message_colors(void)
 		quote_colors[0] = quote_colors[1] = quote_colors[2] = 
 			uri_color = emphasis_color = black;
 	}
+}
+
+void textview_reflect_prefs(TextView *textview)
+{
+	textview_update_message_colors();
+	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview->text),
+					 prefs_common.textview_cursor_visible);
 }
 
 void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
