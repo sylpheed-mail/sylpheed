@@ -2906,6 +2906,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 	GtkTreePath *path;
 	gboolean valid;
 
+	/* get currently displayed message */
 	if (summaryview->displayed) {
 		GtkTreeIter displayed;
 
@@ -2930,6 +2931,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 	if (summaryview->folder_item->threaded)
 		summary_modify_threads(summaryview);
 
+	/* update selection */
 	valid = gtkut_tree_row_reference_get_iter(model, summaryview->selected,
 						  &iter);
 	if (valid) {
@@ -3441,6 +3443,9 @@ static void summary_modify_threads(SummaryView *summaryview)
 
 	debug_print("Modifying threads for execution...");
 
+	g_signal_handlers_block_by_func(summaryview->selection,
+					summary_selection_changed, summaryview);
+
 	has_selection = gtkut_tree_row_reference_get_iter
 		(model, summaryview->selected, &selected);
 	if (has_selection) {
@@ -3458,6 +3463,10 @@ static void summary_modify_threads(SummaryView *summaryview)
 		valid = gtk_tree_model_iter_next(model, &next);
 		summary_modify_node(summaryview, &iter, selected_p);
 	}
+
+	g_signal_handlers_unblock_by_func(summaryview->selection,
+					  summary_selection_changed,
+					  summaryview);
 
 	if (has_selection &&
 	    !gtk_tree_row_reference_valid(summaryview->selected))
