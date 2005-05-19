@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 16:32+0900\n"
+"POT-Creation-Date: 2005-05-19 19:23+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Mattias Ostergren <spikboll@gmx.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -430,7 +430,7 @@ msgid "Lookup"
 msgstr "Slå upp"
 
 #: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
-#: src/prefs_template.c:172 src/summary_search.c:179
+#: src/prefs_template.c:172 src/summary_search.c:221
 msgid "To:"
 msgstr "Till:"
 
@@ -659,7 +659,7 @@ msgstr "Brun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3787
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3790
 msgid "None"
 msgstr "Ingen"
 
@@ -1091,11 +1091,11 @@ msgstr "MIME-typ"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3930
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3933
 msgid "Size"
 msgstr "Storlek"
 
-#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "Från:"
 
@@ -1878,7 +1878,7 @@ msgstr "okänd"
 msgid "Can't retrieve newsgroup list."
 msgstr "Kan inte hämta grupplista."
 
-#: src/grouplistdialog.c:449 src/summaryview.c:697
+#: src/grouplistdialog.c:449 src/summaryview.c:699
 msgid "Done."
 msgstr "Färdig."
 
@@ -1891,7 +1891,7 @@ msgstr "%d diskussionsgrupper mottagna (%s lästa)"
 msgid "Newsgroups:"
 msgstr "Diskussionsgrupper:"
 
-#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:228
 msgid "Subject:"
 msgstr "Ämne:"
 
@@ -1899,11 +1899,11 @@ msgstr "Ämne:"
 msgid "Creating header view...\n"
 msgstr "Skapar brevhuvudvy...\n"
 
-#: src/headerview.c:175 src/summaryview.c:1809
+#: src/headerview.c:175 src/summaryview.c:1811
 msgid "(No From)"
 msgstr "(Inget Från)"
 
-#: src/headerview.c:190 src/summaryview.c:1806
+#: src/headerview.c:190 src/summaryview.c:1808
 msgid "(No Subject)"
 msgstr "(Inget Ämne)"
 
@@ -3046,8 +3046,8 @@ msgstr "Skapar huvudfönster...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Huvudfönster: färgtilldelning %d misslyckades\n"
 
-#: src/mainwindow.c:1043 src/summaryview.c:1918 src/summaryview.c:1980
-#: src/summaryview.c:3226 src/summaryview.c:3299 src/summaryview.c:3564
+#: src/mainwindow.c:1043 src/summaryview.c:1920 src/summaryview.c:1983
+#: src/summaryview.c:3229 src/summaryview.c:3302 src/summaryview.c:3567
 msgid "done.\n"
 msgstr "färdigt.\n"
 
@@ -3340,19 +3340,19 @@ msgstr "Sök i aktuellt meddelande"
 msgid "Find text:"
 msgstr "Söktext:"
 
-#: src/message_search.c:122 src/summary_search.c:205
+#: src/message_search.c:122 src/summary_search.c:247
 msgid "Case sensitive"
 msgstr "Skiftlägeskänslig"
 
-#: src/message_search.c:128 src/summary_search.c:211
+#: src/message_search.c:128
 msgid "Backward search"
 msgstr "Sök baklänges"
 
-#: src/message_search.c:184 src/summary_search.c:325
+#: src/message_search.c:184 src/summary_search.c:385
 msgid "Search failed"
 msgstr "Sökning misslyckades"
 
-#: src/message_search.c:185 src/summary_search.c:326
+#: src/message_search.c:185 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "Söksträngen inte funnen."
 
@@ -3364,7 +3364,7 @@ msgstr "Början av meddelandet nått; fortsätta från slutet?"
 msgid "End of message reached; continue from beginning?"
 msgstr "Slutet av meddelandet nått; fortsätta från början?"
 
-#: src/message_search.c:199 src/summary_search.c:336
+#: src/message_search.c:199 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Sökning klar"
 
@@ -3380,16 +3380,16 @@ msgstr "Text"
 msgid "Attachments"
 msgstr "Bilagor"
 
-#: src/messageview.c:650 src/summaryview.c:2832
+#: src/messageview.c:650 src/summaryview.c:2835
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Kan inte spara filen \"%s\"."
 
-#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2851
+#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2854
 msgid "Print"
 msgstr "Skriv ut"
 
-#: src/messageview.c:702 src/summaryview.c:2852
+#: src/messageview.c:702 src/summaryview.c:2855
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3398,7 +3398,7 @@ msgstr ""
 "Skriv in utskriftskommando:\n"
 "(\"%s\" kommer att ersättas med filnamnet)"
 
-#: src/messageview.c:708 src/summaryview.c:2858
+#: src/messageview.c:708 src/summaryview.c:2861
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5224,17 +5224,17 @@ msgid "Attachment"
 msgstr "Bilaga"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3923
+#: src/prefs_summary_column.c:71 src/summaryview.c:3926
 msgid "Subject"
 msgstr "Ärende"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3926
+#: src/prefs_summary_column.c:72 src/summaryview.c:3929
 msgid "From"
 msgstr "Från"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3928
+#: src/prefs_summary_column.c:73 src/summaryview.c:3931
 msgid "Date"
 msgstr "Datum"
 
@@ -5666,31 +5666,31 @@ msgstr "  Ärende:  %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Utfärdare: %s\n"
 
-#: src/summary_search.c:110
+#: src/summary_search.c:148
 msgid "Search messages"
 msgstr "Sök meddelanden"
 
-#: src/summary_search.c:133
+#: src/summary_search.c:171
 msgid "Match any of the following"
 msgstr "Matcha någon av följande"
 
-#: src/summary_search.c:134
+#: src/summary_search.c:172
 msgid "Match all of the following"
 msgstr "Matcha alla av följande"
 
-#: src/summary_search.c:193
+#: src/summary_search.c:235
 msgid "Body:"
 msgstr "Text:"
 
-#: src/summary_search.c:217
-msgid "Select all matched"
-msgstr "Välj alla matchande"
+#: src/summary_search.c:258
+msgid "Find all"
+msgstr ""
 
-#: src/summary_search.c:332
+#: src/summary_search.c:392
 msgid "Beginning of list reached; continue from end?"
 msgstr "Början av lista nådd; fortsätt från slutet?"
 
-#: src/summary_search.c:334
+#: src/summary_search.c:394
 msgid "End of list reached; continue from beginning?"
 msgstr "Slutet av lista nådd; fortsätt från början?"
 
@@ -5782,218 +5782,218 @@ msgstr "Behandla markering"
 msgid "Some marks are left. Process it?"
 msgstr "Några markeringar finns kvar. Behandla dem?"
 
-#: src/summaryview.c:616
+#: src/summaryview.c:618
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Söker igenom mapp (%s)..."
 
-#: src/summaryview.c:1070
+#: src/summaryview.c:1072
 msgid "Search again"
 msgstr "Sök igen"
 
-#: src/summaryview.c:1091 src/summaryview.c:1100
+#: src/summaryview.c:1093 src/summaryview.c:1102
 msgid "No more unread messages"
 msgstr "Inga fler olästa meddelande"
 
-#: src/summaryview.c:1092
+#: src/summaryview.c:1094
 msgid "No unread message found. Search from the end?"
 msgstr "Inget oläst meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1094
+#: src/summaryview.c:1096
 msgid "No unread messages."
 msgstr "Inga olästa meddelanden."
 
-#: src/summaryview.c:1101
+#: src/summaryview.c:1103
 msgid "No unread message found. Go to next folder?"
 msgstr "Inget oläst meddelande funnet. Gå till nästa mapp?"
 
-#: src/summaryview.c:1109 src/summaryview.c:1118
+#: src/summaryview.c:1111 src/summaryview.c:1120
 msgid "No more new messages"
 msgstr "Inga fler nya meddelanden"
 
-#: src/summaryview.c:1110
+#: src/summaryview.c:1112
 msgid "No new message found. Search from the end?"
 msgstr "Inget nytt meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1112
+#: src/summaryview.c:1114
 msgid "No new messages."
 msgstr "Inga nya meddelanden."
 
-#: src/summaryview.c:1119
+#: src/summaryview.c:1121
 msgid "No new message found. Go to next folder?"
 msgstr "Inget nytt meddelande funnet. Gå till nästa mapp?"
 
-#: src/summaryview.c:1127 src/summaryview.c:1136
+#: src/summaryview.c:1129 src/summaryview.c:1138
 msgid "No more marked messages"
 msgstr "Inga fler markerade meddelanden"
 
-#: src/summaryview.c:1128
+#: src/summaryview.c:1130
 msgid "No marked message found. Search from the end?"
 msgstr "Inget markerat meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1130 src/summaryview.c:1139
+#: src/summaryview.c:1132 src/summaryview.c:1141
 msgid "No marked messages."
 msgstr "Inga markerade meddelanden."
 
-#: src/summaryview.c:1137
+#: src/summaryview.c:1139
 msgid "No marked message found. Search from the beginning?"
 msgstr "Inget markerat meddelande funnet. Sök från början?"
 
-#: src/summaryview.c:1145 src/summaryview.c:1154
+#: src/summaryview.c:1147 src/summaryview.c:1156
 msgid "No more labeled messages"
 msgstr "Inga fler färgade meddelanden"
 
-#: src/summaryview.c:1146
+#: src/summaryview.c:1148
 msgid "No labeled message found. Search from the end?"
 msgstr "Inget färgat meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1148 src/summaryview.c:1157
+#: src/summaryview.c:1150 src/summaryview.c:1159
 msgid "No labeled messages."
 msgstr "Inga färgade meddelanden."
 
-#: src/summaryview.c:1155
+#: src/summaryview.c:1157
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Inget färgat meddelande funnet. Sök från början?"
 
-#: src/summaryview.c:1434
+#: src/summaryview.c:1436
 msgid "Attracting messages by subject..."
 msgstr "Attraherar meddelanden efter ärende..."
 
-#: src/summaryview.c:1593
+#: src/summaryview.c:1595
 #, c-format
 msgid "%d deleted"
 msgstr "%d borttagen"
 
-#: src/summaryview.c:1597
+#: src/summaryview.c:1599
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d flyttad"
 
-#: src/summaryview.c:1598 src/summaryview.c:1605
+#: src/summaryview.c:1600 src/summaryview.c:1607
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1603
+#: src/summaryview.c:1605
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d kopierad"
 
-#: src/summaryview.c:1620
+#: src/summaryview.c:1622
 msgid " item(s) selected"
 msgstr " objekt valda"
 
-#: src/summaryview.c:1630
+#: src/summaryview.c:1632
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d nya, %d olästa, %d totalt (%s)"
 
-#: src/summaryview.c:1636
+#: src/summaryview.c:1638
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d nya, %d olästa, %d totalt"
 
-#: src/summaryview.c:1674
+#: src/summaryview.c:1676
 msgid "Sorting summary..."
 msgstr "Sorterar summering..."
 
-#: src/summaryview.c:1746
+#: src/summaryview.c:1748
 msgid "(No Date)"
 msgstr "(Inget datum)"
 
-#: src/summaryview.c:1855
+#: src/summaryview.c:1857
 msgid "\tSetting summary from message data..."
 msgstr "\tSkapar summering från meddelandedata..."
 
-#: src/summaryview.c:1857
+#: src/summaryview.c:1859
 msgid "Setting summary from message data..."
 msgstr "Skapar summering från meddelandedata..."
 
-#: src/summaryview.c:1966
+#: src/summaryview.c:1968
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Skriver summeringscache (%s)..."
 
-#: src/summaryview.c:2265
+#: src/summaryview.c:2268
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Meddelande %d är markerat\n"
 
-#: src/summaryview.c:2309
+#: src/summaryview.c:2312
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Meddelande %d är markerat som läst\n"
 
-#: src/summaryview.c:2382
+#: src/summaryview.c:2385
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Meddelande %d är markerat som oläst\n"
 
-#: src/summaryview.c:2437
+#: src/summaryview.c:2440
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Meddelande %s/%d är valt för borttagning\n"
 
-#: src/summaryview.c:2455
+#: src/summaryview.c:2458
 msgid "Delete message(s)"
 msgstr "Ta bort meddelande(n)"
 
-#: src/summaryview.c:2456
+#: src/summaryview.c:2459
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Vill du verkligen tömma papperkorgen?"
 
-#: src/summaryview.c:2522
+#: src/summaryview.c:2525
 msgid "Deleting duplicated messages..."
 msgstr "Tar bort meddelandedubbletter..."
 
-#: src/summaryview.c:2558
+#: src/summaryview.c:2561
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Meddelande %s/%d är avmarkerat\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2613
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Meddelande %d är valt för att flyttas till %s\n"
 
-#: src/summaryview.c:2627
+#: src/summaryview.c:2630
 msgid "Destination is same as current folder."
 msgstr "Destinationen är samma som aktuell mapp."
 
-#: src/summaryview.c:2683
+#: src/summaryview.c:2686
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Meddelandet %d är valt för att kopieras till %s\n"
 
-#: src/summaryview.c:2700
+#: src/summaryview.c:2703
 msgid "Destination for copy is same as current folder."
 msgstr "Destinationen att kopiera till är samma som aktuell mapp."
 
-#: src/summaryview.c:2895
+#: src/summaryview.c:2898
 msgid "Error occurred while processing messages."
 msgstr "Fel uppstod när meddelanden behandlades."
 
-#: src/summaryview.c:3184 src/summaryview.c:3185
+#: src/summaryview.c:3187 src/summaryview.c:3188
 msgid "Building threads..."
 msgstr "Skapar trådar..."
 
-#: src/summaryview.c:3282 src/summaryview.c:3283
+#: src/summaryview.c:3285 src/summaryview.c:3286
 msgid "Unthreading..."
 msgstr "Avtrådar..."
 
-#: src/summaryview.c:3540
+#: src/summaryview.c:3543
 msgid "filtering..."
 msgstr "filtrerar..."
 
-#: src/summaryview.c:3541
+#: src/summaryview.c:3544
 msgid "Filtering..."
 msgstr "Filtrerar..."
 
-#: src/summaryview.c:3571
+#: src/summaryview.c:3574
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d meddelande(n) har filtrerats."
 
-#: src/summaryview.c:3932
+#: src/summaryview.c:3935
 msgid "No."
 msgstr "Nr."
 
@@ -6054,6 +6054,9 @@ msgstr "%.2fGB"
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "skrivning till %s misslyckades.\n"
+
+#~ msgid "Select all matched"
+#~ msgstr "Välj alla matchande"
 
 #~ msgid "M"
 #~ msgstr "M"

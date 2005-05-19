@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 16:32+0900\n"
+"POT-Creation-Date: 2005-05-19 19:23+0900\n"
 "PO-Revision-Date: 2000-08-28\n"
 "Last-Translator: Little Dragon <littledragon@altern.org>\n"
 "Language-Team: Little Dragon <littledragon@altern.org>\n"
@@ -433,7 +433,7 @@ msgid "Lookup"
 msgstr "Căutare"
 
 #: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
-#: src/prefs_template.c:172 src/summary_search.c:179
+#: src/prefs_template.c:172 src/summary_search.c:221
 msgid "To:"
 msgstr "La:"
 
@@ -668,7 +668,7 @@ msgstr "Maro"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3787
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3790
 msgid "None"
 msgstr "Niciunul"
 
@@ -1113,11 +1113,11 @@ msgstr "Tip MIME"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3930
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3933
 msgid "Size"
 msgstr "Dimensiune"
 
-#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "De la:"
 
@@ -1921,7 +1921,7 @@ msgstr "necunoscut"
 msgid "Can't retrieve newsgroup list."
 msgstr "Lista de newsgroup-uri nu a putut fi obţinută."
 
-#: src/grouplistdialog.c:449 src/summaryview.c:697
+#: src/grouplistdialog.c:449 src/summaryview.c:699
 msgid "Done."
 msgstr "Gata."
 
@@ -1934,7 +1934,7 @@ msgstr "%d newsgroup-uri recepţionate (%s citite)"
 msgid "Newsgroups:"
 msgstr "Grupuri de discuţii:"
 
-#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:228
 msgid "Subject:"
 msgstr "Subiect:"
 
@@ -1942,11 +1942,11 @@ msgstr "Subiect:"
 msgid "Creating header view...\n"
 msgstr "Creare vedere antet...\n"
 
-#: src/headerview.c:175 src/summaryview.c:1809
+#: src/headerview.c:175 src/summaryview.c:1811
 msgid "(No From)"
 msgstr "(Fără expeditor)"
 
-#: src/headerview.c:190 src/summaryview.c:1806
+#: src/headerview.c:190 src/summaryview.c:1808
 msgid "(No Subject)"
 msgstr "(Fără subiect)"
 
@@ -3200,8 +3200,8 @@ msgstr "Creare fereastră principală...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Fereastra principală: alocarea culorii %d a eşuat\n"
 
-#: src/mainwindow.c:1043 src/summaryview.c:1918 src/summaryview.c:1980
-#: src/summaryview.c:3226 src/summaryview.c:3299 src/summaryview.c:3564
+#: src/mainwindow.c:1043 src/summaryview.c:1920 src/summaryview.c:1983
+#: src/summaryview.c:3229 src/summaryview.c:3302 src/summaryview.c:3567
 msgid "done.\n"
 msgstr "gata.\n"
 
@@ -3504,19 +3504,19 @@ msgstr "salvare mesaj trimis...\n"
 msgid "Find text:"
 msgstr ""
 
-#: src/message_search.c:122 src/summary_search.c:205
+#: src/message_search.c:122 src/summary_search.c:247
 msgid "Case sensitive"
 msgstr "Distincţie minuscule/majuscule"
 
-#: src/message_search.c:128 src/summary_search.c:211
+#: src/message_search.c:128
 msgid "Backward search"
 msgstr "Căutare înapoi"
 
-#: src/message_search.c:184 src/summary_search.c:325
+#: src/message_search.c:184 src/summary_search.c:385
 msgid "Search failed"
 msgstr "Căutarea a eşuat"
 
-#: src/message_search.c:185 src/summary_search.c:326
+#: src/message_search.c:185 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "Textul căutat nu a fost găsit."
 
@@ -3530,7 +3530,7 @@ msgstr "S-a atins prima linie din listă; continuaţi de la sfârşit ?"
 msgid "End of message reached; continue from beginning?"
 msgstr "S-a atins sfârşitul listei; continuaţi de la început ?"
 
-#: src/message_search.c:199 src/summary_search.c:336
+#: src/message_search.c:199 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Căutarea a luat sfârşit"
 
@@ -3547,16 +3547,16 @@ msgstr "Înainte"
 msgid "Attachments"
 msgstr "Ataşamente"
 
-#: src/messageview.c:650 src/summaryview.c:2832
+#: src/messageview.c:650 src/summaryview.c:2835
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Directorul `%s' nu a putut fi creat."
 
-#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2851
+#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2854
 msgid "Print"
 msgstr "Imprimare"
 
-#: src/messageview.c:702 src/summaryview.c:2852
+#: src/messageview.c:702 src/summaryview.c:2855
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3565,7 +3565,7 @@ msgstr ""
 "Introduceţi linia de comandă pentru imprimare:\n"
 "('%s' va fi înlocuit cu numele fişierului)"
 
-#: src/messageview.c:708 src/summaryview.c:2858
+#: src/messageview.c:708 src/summaryview.c:2861
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5448,17 +5448,17 @@ msgid "Attachment"
 msgstr "Ataşamente"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3923
+#: src/prefs_summary_column.c:71 src/summaryview.c:3926
 msgid "Subject"
 msgstr "Subiect"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3926
+#: src/prefs_summary_column.c:72 src/summaryview.c:3929
 msgid "From"
 msgstr "De la"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3928
+#: src/prefs_summary_column.c:73 src/summaryview.c:3931
 msgid "Date"
 msgstr "Data"
 
@@ -5919,34 +5919,33 @@ msgstr "Subiect:"
 msgid "  Issuer: %s\n"
 msgstr ""
 
-#: src/summary_search.c:110
+#: src/summary_search.c:148
 #, fuzzy
 msgid "Search messages"
 msgstr "Trimitere mesaj"
 
-#: src/summary_search.c:133
+#: src/summary_search.c:171
 msgid "Match any of the following"
 msgstr ""
 
-#: src/summary_search.c:134
+#: src/summary_search.c:172
 #, fuzzy
 msgid "Match all of the following"
 msgstr "Setare automată a adreselor următoare"
 
-#: src/summary_search.c:193
+#: src/summary_search.c:235
 msgid "Body:"
 msgstr ""
 
-#: src/summary_search.c:217
-#, fuzzy
-msgid "Select all matched"
-msgstr "/Selectare t_ot"
+#: src/summary_search.c:258
+msgid "Find all"
+msgstr ""
 
-#: src/summary_search.c:332
+#: src/summary_search.c:392
 msgid "Beginning of list reached; continue from end?"
 msgstr "S-a atins prima linie din listă; continuaţi de la sfârşit ?"
 
-#: src/summary_search.c:334
+#: src/summary_search.c:394
 msgid "End of list reached; continue from beginning?"
 msgstr "S-a atins sfârşitul listei; continuaţi de la început ?"
 
@@ -6048,251 +6047,251 @@ msgstr "Procesare marcaje"
 msgid "Some marks are left. Process it?"
 msgstr "Au mai rămas nişte marcaje. Doriţi să fie procesate ?"
 
-#: src/summaryview.c:616
+#: src/summaryview.c:618
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Scanare director (%s)..."
 
-#: src/summaryview.c:1070
+#: src/summaryview.c:1072
 #, fuzzy
 msgid "Search again"
 msgstr "Căutarea a eşuat"
 
-#: src/summaryview.c:1091 src/summaryview.c:1100
+#: src/summaryview.c:1093 src/summaryview.c:1102
 #, fuzzy
 msgid "No more unread messages"
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1092
+#: src/summaryview.c:1094
 #, fuzzy
 msgid "No unread message found. Search from the end?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1094
+#: src/summaryview.c:1096
 #, fuzzy
 msgid "No unread messages."
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1101
+#: src/summaryview.c:1103
 msgid "No unread message found. Go to next folder?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1109 src/summaryview.c:1118
+#: src/summaryview.c:1111 src/summaryview.c:1120
 #, fuzzy
 msgid "No more new messages"
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1110
+#: src/summaryview.c:1112
 #, fuzzy
 msgid "No new message found. Search from the end?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1112
+#: src/summaryview.c:1114
 #, fuzzy
 msgid "No new messages."
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1119
+#: src/summaryview.c:1121
 #, fuzzy
 msgid "No new message found. Go to next folder?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1127 src/summaryview.c:1136
+#: src/summaryview.c:1129 src/summaryview.c:1138
 #, fuzzy
 msgid "No more marked messages"
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1128
+#: src/summaryview.c:1130
 #, fuzzy
 msgid "No marked message found. Search from the end?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1130 src/summaryview.c:1139
+#: src/summaryview.c:1132 src/summaryview.c:1141
 #, fuzzy
 msgid "No marked messages."
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1137
+#: src/summaryview.c:1139
 #, fuzzy
 msgid "No marked message found. Search from the beginning?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1145 src/summaryview.c:1154
+#: src/summaryview.c:1147 src/summaryview.c:1156
 #, fuzzy
 msgid "No more labeled messages"
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1146
+#: src/summaryview.c:1148
 #, fuzzy
 msgid "No labeled message found. Search from the end?"
 msgstr ""
 "Nu au fost găsite mesaje necitite.\n"
 "Doriţi avansarea la directorul următor ?"
 
-#: src/summaryview.c:1148 src/summaryview.c:1157
+#: src/summaryview.c:1150 src/summaryview.c:1159
 #, fuzzy
 msgid "No labeled messages."
 msgstr "Nu există mesaje necitite"
 
-#: src/summaryview.c:1155
+#: src/summaryview.c:1157
 msgid "No labeled message found. Search from the beginning?"
 msgstr ""
 
-#: src/summaryview.c:1434
+#: src/summaryview.c:1436
 msgid "Attracting messages by subject..."
 msgstr "Atragere mesaje după subiect..."
 
-#: src/summaryview.c:1593
+#: src/summaryview.c:1595
 #, c-format
 msgid "%d deleted"
 msgstr "%d şters(e)"
 
-#: src/summaryview.c:1597
+#: src/summaryview.c:1599
 #, fuzzy, c-format
 msgid "%s%d moved"
 msgstr "%d mutat(e)"
 
-#: src/summaryview.c:1598 src/summaryview.c:1605
+#: src/summaryview.c:1600 src/summaryview.c:1607
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1603
+#: src/summaryview.c:1605
 #, fuzzy, c-format
 msgid "%s%d copied"
 msgstr "%d mutat(e)"
 
-#: src/summaryview.c:1620
+#: src/summaryview.c:1622
 msgid " item(s) selected"
 msgstr " elemente selectate"
 
-#: src/summaryview.c:1630
+#: src/summaryview.c:1632
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d noi, %d necitite, %d în total (%s)"
 
-#: src/summaryview.c:1636
+#: src/summaryview.c:1638
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d nou(i), %d necitit(e), %d în total"
 
-#: src/summaryview.c:1674
+#: src/summaryview.c:1676
 msgid "Sorting summary..."
 msgstr "Sortare rezumat..."
 
-#: src/summaryview.c:1746
+#: src/summaryview.c:1748
 msgid "(No Date)"
 msgstr "(Fără Dată)"
 
-#: src/summaryview.c:1855
+#: src/summaryview.c:1857
 msgid "\tSetting summary from message data..."
 msgstr "\tDefinire rezumat din datele din mesaj..."
 
-#: src/summaryview.c:1857
+#: src/summaryview.c:1859
 msgid "Setting summary from message data..."
 msgstr "Definire rezumat din datele din mesaj..."
 
-#: src/summaryview.c:1966
+#: src/summaryview.c:1968
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Scriere cache rezumat (%s)..."
 
-#: src/summaryview.c:2265
+#: src/summaryview.c:2268
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Mesajul %d este marcat\n"
 
-#: src/summaryview.c:2309
+#: src/summaryview.c:2312
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Mesajul %d este marcat ca citit\n"
 
-#: src/summaryview.c:2382
+#: src/summaryview.c:2385
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Mesajul %d este marcat ca necitit\n"
 
-#: src/summaryview.c:2437
+#: src/summaryview.c:2440
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Mesajul %s/%d este marcat pentru ştergere\n"
 
-#: src/summaryview.c:2455
+#: src/summaryview.c:2458
 #, fuzzy
 msgid "Delete message(s)"
 msgstr "Ştergere mesaj"
 
-#: src/summaryview.c:2456
+#: src/summaryview.c:2459
 #, fuzzy
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această regulă ?"
 
-#: src/summaryview.c:2522
+#: src/summaryview.c:2525
 msgid "Deleting duplicated messages..."
 msgstr "Ştergere mesaje duplicate..."
 
-#: src/summaryview.c:2558
+#: src/summaryview.c:2561
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Mesajul %s/%d este demarcat\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2613
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Mesajul %d este marcat pentru mutare în %s\n"
 
-#: src/summaryview.c:2627
+#: src/summaryview.c:2630
 msgid "Destination is same as current folder."
 msgstr "Destinaţia este aceeaşi cu directorul curent."
 
-#: src/summaryview.c:2683
+#: src/summaryview.c:2686
 #, fuzzy, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Mesajul %d este marcat pentru mutare în %s\n"
 
-#: src/summaryview.c:2700
+#: src/summaryview.c:2703
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Destinaţia este aceeaşi cu directorul curent."
 
-#: src/summaryview.c:2895
+#: src/summaryview.c:2898
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "A avut loc o eroare la procesarea mesajului."
 
-#: src/summaryview.c:3184 src/summaryview.c:3185
+#: src/summaryview.c:3187 src/summaryview.c:3188
 msgid "Building threads..."
 msgstr "Construire fire de discuţie..."
 
-#: src/summaryview.c:3282 src/summaryview.c:3283
+#: src/summaryview.c:3285 src/summaryview.c:3286
 msgid "Unthreading..."
 msgstr "Distrugere fire de discuţie..."
 
-#: src/summaryview.c:3540
+#: src/summaryview.c:3543
 msgid "filtering..."
 msgstr "filtrare..."
 
-#: src/summaryview.c:3541
+#: src/summaryview.c:3544
 msgid "Filtering..."
 msgstr "Filtrare..."
 
-#: src/summaryview.c:3571
+#: src/summaryview.c:3574
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "mesajul %d a fost deja stocat.\n"
 
-#: src/summaryview.c:3932
+#: src/summaryview.c:3935
 msgid "No."
 msgstr "Nu."
 
@@ -6351,6 +6350,10 @@ msgstr ""
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "scrierea în %s a eşuat.\n"
+
+#, fuzzy
+#~ msgid "Select all matched"
+#~ msgstr "/Selectare t_ot"
 
 #~ msgid "M"
 #~ msgstr "M"

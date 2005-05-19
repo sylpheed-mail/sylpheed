@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 16:32+0900\n"
+"POT-Creation-Date: 2005-05-19 19:23+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -426,7 +426,7 @@ msgid "Lookup"
 msgstr "查找"
 
 #: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
-#: src/prefs_template.c:172 src/summary_search.c:179
+#: src/prefs_template.c:172 src/summary_search.c:221
 msgid "To:"
 msgstr "收件人："
 
@@ -650,7 +650,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3787
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3790
 msgid "None"
 msgstr "没有"
 
@@ -1058,11 +1058,11 @@ msgstr "MIME 类型"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3930
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3933
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "发件人："
 
@@ -1844,7 +1844,7 @@ msgstr "未知"
 msgid "Can't retrieve newsgroup list."
 msgstr "无法取回新闻组列表。"
 
-#: src/grouplistdialog.c:449 src/summaryview.c:697
+#: src/grouplistdialog.c:449 src/summaryview.c:699
 msgid "Done."
 msgstr "完成。"
 
@@ -1857,7 +1857,7 @@ msgstr "已接收 %d 个新闻组(已读取 %s)"
 msgid "Newsgroups:"
 msgstr "新闻组："
 
-#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:228
 msgid "Subject:"
 msgstr "标题："
 
@@ -1865,11 +1865,11 @@ msgstr "标题："
 msgid "Creating header view...\n"
 msgstr "正在创建标题视图...\n"
 
-#: src/headerview.c:175 src/summaryview.c:1809
+#: src/headerview.c:175 src/summaryview.c:1811
 msgid "(No From)"
 msgstr "(没有发件人)"
 
-#: src/headerview.c:190 src/summaryview.c:1806
+#: src/headerview.c:190 src/summaryview.c:1808
 msgid "(No Subject)"
 msgstr "(没有主题)"
 
@@ -3005,8 +3005,8 @@ msgstr "正在创建主窗口...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "主窗口：分配颜色 %d 失败\n"
 
-#: src/mainwindow.c:1043 src/summaryview.c:1918 src/summaryview.c:1980
-#: src/summaryview.c:3226 src/summaryview.c:3299 src/summaryview.c:3564
+#: src/mainwindow.c:1043 src/summaryview.c:1920 src/summaryview.c:1983
+#: src/summaryview.c:3229 src/summaryview.c:3302 src/summaryview.c:3567
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -3298,19 +3298,19 @@ msgstr "在当前邮件中查找"
 msgid "Find text:"
 msgstr "查找文字："
 
-#: src/message_search.c:122 src/summary_search.c:205
+#: src/message_search.c:122 src/summary_search.c:247
 msgid "Case sensitive"
 msgstr "区分大小写"
 
-#: src/message_search.c:128 src/summary_search.c:211
+#: src/message_search.c:128
 msgid "Backward search"
 msgstr "向前搜索"
 
-#: src/message_search.c:184 src/summary_search.c:325
+#: src/message_search.c:184 src/summary_search.c:385
 msgid "Search failed"
 msgstr "搜索失败"
 
-#: src/message_search.c:185 src/summary_search.c:326
+#: src/message_search.c:185 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "要搜索的字符串没找到。"
 
@@ -3322,7 +3322,7 @@ msgstr "已查找到邮件开头；从结尾继续？"
 msgid "End of message reached; continue from beginning?"
 msgstr "已查找到邮件结尾；从开头继续？"
 
-#: src/message_search.c:199 src/summary_search.c:336
+#: src/message_search.c:199 src/summary_search.c:396
 msgid "Search finished"
 msgstr "搜索结束"
 
@@ -3338,16 +3338,16 @@ msgstr "文本"
 msgid "Attachments"
 msgstr "附件"
 
-#: src/messageview.c:650 src/summaryview.c:2832
+#: src/messageview.c:650 src/summaryview.c:2835
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "无法保存文件“%s”'。"
 
-#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2851
+#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2854
 msgid "Print"
 msgstr "打印"
 
-#: src/messageview.c:702 src/summaryview.c:2852
+#: src/messageview.c:702 src/summaryview.c:2855
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3356,7 +3356,7 @@ msgstr ""
 "输入打印命令行：\n"
 "(“%s”将被替换为文件名)"
 
-#: src/messageview.c:708 src/summaryview.c:2858
+#: src/messageview.c:708 src/summaryview.c:2861
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5160,17 +5160,17 @@ msgid "Attachment"
 msgstr "附件"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3923
+#: src/prefs_summary_column.c:71 src/summaryview.c:3926
 msgid "Subject"
 msgstr "主题"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3926
+#: src/prefs_summary_column.c:72 src/summaryview.c:3929
 msgid "From"
 msgstr "发件人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3928
+#: src/prefs_summary_column.c:73 src/summaryview.c:3931
 msgid "Date"
 msgstr "日期"
 
@@ -5602,31 +5602,31 @@ msgstr "  标题：%s\n"
 msgid "  Issuer: %s\n"
 msgstr "  签发者：%s\n"
 
-#: src/summary_search.c:110
+#: src/summary_search.c:148
 msgid "Search messages"
 msgstr "查找邮件"
 
-#: src/summary_search.c:133
+#: src/summary_search.c:171
 msgid "Match any of the following"
 msgstr "匹配以下任何"
 
-#: src/summary_search.c:134
+#: src/summary_search.c:172
 msgid "Match all of the following"
 msgstr "匹配以下所有"
 
-#: src/summary_search.c:193
+#: src/summary_search.c:235
 msgid "Body:"
 msgstr "内容："
 
-#: src/summary_search.c:217
-msgid "Select all matched"
-msgstr "选中所有匹配的"
+#: src/summary_search.c:258
+msgid "Find all"
+msgstr ""
 
-#: src/summary_search.c:332
+#: src/summary_search.c:392
 msgid "Beginning of list reached; continue from end?"
 msgstr "已到达列表的开始；继续从最后开始吗？"
 
-#: src/summary_search.c:334
+#: src/summary_search.c:394
 msgid "End of list reached; continue from beginning?"
 msgstr "已到达列表的最后；继续从头开始吗？"
 
@@ -5718,218 +5718,218 @@ msgstr "处理标志"
 msgid "Some marks are left. Process it?"
 msgstr "有一些剩余标记。处理吗？"
 
-#: src/summaryview.c:616
+#: src/summaryview.c:618
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "正在扫描文件夹 (%s)..."
 
-#: src/summaryview.c:1070
+#: src/summaryview.c:1072
 msgid "Search again"
 msgstr "再次查找"
 
-#: src/summaryview.c:1091 src/summaryview.c:1100
+#: src/summaryview.c:1093 src/summaryview.c:1102
 msgid "No more unread messages"
 msgstr "没有未读邮件"
 
-#: src/summaryview.c:1092
+#: src/summaryview.c:1094
 msgid "No unread message found. Search from the end?"
 msgstr "没发现未读邮件。从后面开始查找？"
 
-#: src/summaryview.c:1094
+#: src/summaryview.c:1096
 msgid "No unread messages."
 msgstr "没有未读邮件"
 
-#: src/summaryview.c:1101
+#: src/summaryview.c:1103
 msgid "No unread message found. Go to next folder?"
 msgstr "没发现未读邮件。到下一个文件夹？"
 
-#: src/summaryview.c:1109 src/summaryview.c:1118
+#: src/summaryview.c:1111 src/summaryview.c:1120
 msgid "No more new messages"
 msgstr "没有新邮件"
 
-#: src/summaryview.c:1110
+#: src/summaryview.c:1112
 msgid "No new message found. Search from the end?"
 msgstr "没发现新邮件。从后面开始查找？"
 
-#: src/summaryview.c:1112
+#: src/summaryview.c:1114
 msgid "No new messages."
 msgstr "没有新邮件"
 
-#: src/summaryview.c:1119
+#: src/summaryview.c:1121
 msgid "No new message found. Go to next folder?"
 msgstr "没发现新邮件。到下一个文件夹？"
 
-#: src/summaryview.c:1127 src/summaryview.c:1136
+#: src/summaryview.c:1129 src/summaryview.c:1138
 msgid "No more marked messages"
 msgstr "没有标记过的邮件"
 
-#: src/summaryview.c:1128
+#: src/summaryview.c:1130
 msgid "No marked message found. Search from the end?"
 msgstr "没有标记过的邮件。从后面开始查找？"
 
-#: src/summaryview.c:1130 src/summaryview.c:1139
+#: src/summaryview.c:1132 src/summaryview.c:1141
 msgid "No marked messages."
 msgstr "没有标记过的邮件"
 
-#: src/summaryview.c:1137
+#: src/summaryview.c:1139
 msgid "No marked message found. Search from the beginning?"
 msgstr "没有标记过的邮件。从前面开始查找？"
 
-#: src/summaryview.c:1145 src/summaryview.c:1154
+#: src/summaryview.c:1147 src/summaryview.c:1156
 msgid "No more labeled messages"
 msgstr "没有找到用颜色标注过的邮件"
 
-#: src/summaryview.c:1146
+#: src/summaryview.c:1148
 msgid "No labeled message found. Search from the end?"
 msgstr "没有找到用颜色标注过的邮件。从后面开始查找？"
 
-#: src/summaryview.c:1148 src/summaryview.c:1157
+#: src/summaryview.c:1150 src/summaryview.c:1159
 msgid "No labeled messages."
 msgstr "没有用颜色标注的邮件。"
 
-#: src/summaryview.c:1155
+#: src/summaryview.c:1157
 msgid "No labeled message found. Search from the beginning?"
 msgstr "没有找到用颜色标注过的邮件。从前面开始查找？"
 
-#: src/summaryview.c:1434
+#: src/summaryview.c:1436
 msgid "Attracting messages by subject..."
 msgstr "正在按标题归类邮件..."
 
-#: src/summaryview.c:1593
+#: src/summaryview.c:1595
 #, c-format
 msgid "%d deleted"
 msgstr "删除了 %d 个邮件"
 
-#: src/summaryview.c:1597
+#: src/summaryview.c:1599
 #, c-format
 msgid "%s%d moved"
 msgstr "移动了 %s%d"
 
-#: src/summaryview.c:1598 src/summaryview.c:1605
+#: src/summaryview.c:1600 src/summaryview.c:1607
 msgid ", "
 msgstr "，"
 
-#: src/summaryview.c:1603
+#: src/summaryview.c:1605
 #, c-format
 msgid "%s%d copied"
 msgstr "复制了 %s%d"
 
-#: src/summaryview.c:1620
+#: src/summaryview.c:1622
 msgid " item(s) selected"
 msgstr " 项被选中"
 
-#: src/summaryview.c:1630
+#: src/summaryview.c:1632
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d 个新邮件，%d 个未读邮件，共 %d 个邮件(%s)"
 
-#: src/summaryview.c:1636
+#: src/summaryview.c:1638
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d 个新邮件邮件，%d 个未读邮件，共 %d 个邮件"
 
-#: src/summaryview.c:1674
+#: src/summaryview.c:1676
 msgid "Sorting summary..."
 msgstr "正在排序摘要..."
 
-#: src/summaryview.c:1746
+#: src/summaryview.c:1748
 msgid "(No Date)"
 msgstr "(没有日期)"
 
-#: src/summaryview.c:1855
+#: src/summaryview.c:1857
 msgid "\tSetting summary from message data..."
 msgstr "\t正在从邮件数据中设置摘要..."
 
-#: src/summaryview.c:1857
+#: src/summaryview.c:1859
 msgid "Setting summary from message data..."
 msgstr "正在从邮件数据中设置摘要..."
 
-#: src/summaryview.c:1966
+#: src/summaryview.c:1968
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "正在写摘要缓存(%s)..."
 
-#: src/summaryview.c:2265
+#: src/summaryview.c:2268
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "邮件 %d 被标记\n"
 
-#: src/summaryview.c:2309
+#: src/summaryview.c:2312
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "邮件 %d 被标记为已读\n"
 
-#: src/summaryview.c:2382
+#: src/summaryview.c:2385
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "邮件 %d 被标记为未读\n"
 
-#: src/summaryview.c:2437
+#: src/summaryview.c:2440
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "邮件 %s/%d 设置为要删除\n"
 
-#: src/summaryview.c:2455
+#: src/summaryview.c:2458
 msgid "Delete message(s)"
 msgstr "删除邮件"
 
-#: src/summaryview.c:2456
+#: src/summaryview.c:2459
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您确实要删除废件箱中的邮件吗？"
 
-#: src/summaryview.c:2522
+#: src/summaryview.c:2525
 msgid "Deleting duplicated messages..."
 msgstr "正在删除重复邮件..."
 
-#: src/summaryview.c:2558
+#: src/summaryview.c:2561
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "邮件 %s/%d 被取消标记\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2613
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "邮件 %d 被设置为移到 %s\n"
 
-#: src/summaryview.c:2627
+#: src/summaryview.c:2630
 msgid "Destination is same as current folder."
 msgstr "目标与当前文件夹相同。"
 
-#: src/summaryview.c:2683
+#: src/summaryview.c:2686
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "邮件 %d 被设置为复制到 %s\n"
 
-#: src/summaryview.c:2700
+#: src/summaryview.c:2703
 msgid "Destination for copy is same as current folder."
 msgstr "复制目标与当前文件夹相同。"
 
-#: src/summaryview.c:2895
+#: src/summaryview.c:2898
 msgid "Error occurred while processing messages."
 msgstr "处理邮件时发生错误。"
 
-#: src/summaryview.c:3184 src/summaryview.c:3185
+#: src/summaryview.c:3187 src/summaryview.c:3188
 msgid "Building threads..."
 msgstr "正在创建线索..."
 
-#: src/summaryview.c:3282 src/summaryview.c:3283
+#: src/summaryview.c:3285 src/summaryview.c:3286
 msgid "Unthreading..."
 msgstr "正在取消线索..."
 
-#: src/summaryview.c:3540
+#: src/summaryview.c:3543
 msgid "filtering..."
 msgstr "正在过滤..."
 
-#: src/summaryview.c:3541
+#: src/summaryview.c:3544
 msgid "Filtering..."
 msgstr "正在过滤..."
 
-#: src/summaryview.c:3571
+#: src/summaryview.c:3574
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已经过滤 %d 个邮件。"
 
-#: src/summaryview.c:3932
+#: src/summaryview.c:3935
 msgid "No."
 msgstr "No."
 
@@ -5989,6 +5989,9 @@ msgstr "%.2fGB"
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "写入 %s 时失败。\n"
+
+#~ msgid "Select all matched"
+#~ msgstr "选中所有匹配的"
 
 #~ msgid "M"
 #~ msgstr "M"

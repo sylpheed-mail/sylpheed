@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 16:32+0900\n"
+"POT-Creation-Date: 2005-05-19 19:23+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -427,7 +427,7 @@ msgid "Lookup"
 msgstr "検索"
 
 #: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
-#: src/prefs_template.c:172 src/summary_search.c:179
+#: src/prefs_template.c:172 src/summary_search.c:221
 msgid "To:"
 msgstr "宛先:"
 
@@ -659,7 +659,7 @@ msgstr "茶"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3787
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3790
 msgid "None"
 msgstr "なし"
 
@@ -1066,11 +1066,11 @@ msgstr "MIME タイプ"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3930
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3933
 msgid "Size"
 msgstr "サイズ"
 
-#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "差出人:"
 
@@ -1852,7 +1852,7 @@ msgstr "不明"
 msgid "Can't retrieve newsgroup list."
 msgstr "ニュースグループリストを取得できません。"
 
-#: src/grouplistdialog.c:449 src/summaryview.c:697
+#: src/grouplistdialog.c:449 src/summaryview.c:699
 msgid "Done."
 msgstr "完了."
 
@@ -1865,7 +1865,7 @@ msgstr "%d ニュースグループを受信 (%s 受信)"
 msgid "Newsgroups:"
 msgstr "ニュースグループ:"
 
-#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:228
 msgid "Subject:"
 msgstr "件名:"
 
@@ -1873,11 +1873,11 @@ msgstr "件名:"
 msgid "Creating header view...\n"
 msgstr "ヘッダビューを作成中...\n"
 
-#: src/headerview.c:175 src/summaryview.c:1809
+#: src/headerview.c:175 src/summaryview.c:1811
 msgid "(No From)"
 msgstr "(差出人不明)"
 
-#: src/headerview.c:190 src/summaryview.c:1806
+#: src/headerview.c:190 src/summaryview.c:1808
 msgid "(No Subject)"
 msgstr "(件名なし)"
 
@@ -2545,7 +2545,7 @@ msgstr "/編集(_E)/スレッドを選択(_T)"
 
 #: src/mainwindow.c:493 src/messageview.c:146
 msgid "/_Edit/_Find in current message..."
-msgstr "/編集(_E)/現在のメッセージを検索(_F)..."
+msgstr "/編集(_E)/現在のメッセージ内を検索(_F)..."
 
 #: src/mainwindow.c:495
 msgid "/_Edit/_Search messages..."
@@ -3015,8 +3015,8 @@ msgstr "メインウィンドウを作成中...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: 色の割り当て %d に失敗しました\n"
 
-#: src/mainwindow.c:1043 src/summaryview.c:1918 src/summaryview.c:1980
-#: src/summaryview.c:3226 src/summaryview.c:3299 src/summaryview.c:3564
+#: src/mainwindow.c:1043 src/summaryview.c:1920 src/summaryview.c:1983
+#: src/summaryview.c:3229 src/summaryview.c:3302 src/summaryview.c:3567
 msgid "done.\n"
 msgstr "完了。\n"
 
@@ -3308,19 +3308,19 @@ msgstr "現在のメッセージを検索"
 msgid "Find text:"
 msgstr "検索文字列:"
 
-#: src/message_search.c:122 src/summary_search.c:205
+#: src/message_search.c:122 src/summary_search.c:247
 msgid "Case sensitive"
 msgstr "大文字/小文字を区別"
 
-#: src/message_search.c:128 src/summary_search.c:211
+#: src/message_search.c:128
 msgid "Backward search"
 msgstr "後方検索"
 
-#: src/message_search.c:184 src/summary_search.c:325
+#: src/message_search.c:184 src/summary_search.c:385
 msgid "Search failed"
 msgstr "検索失敗"
 
-#: src/message_search.c:185 src/summary_search.c:326
+#: src/message_search.c:185 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "検索文字列が見つかりません。"
 
@@ -3332,7 +3332,7 @@ msgstr "メッセージの先頭まで検索しました。最後から検索し
 msgid "End of message reached; continue from beginning?"
 msgstr "メッセージの終わりまで検索しました。始めから検索しますか?"
 
-#: src/message_search.c:199 src/summary_search.c:336
+#: src/message_search.c:199 src/summary_search.c:396
 msgid "Search finished"
 msgstr "検索完了"
 
@@ -3348,16 +3348,16 @@ msgstr "テキスト"
 msgid "Attachments"
 msgstr "添付"
 
-#: src/messageview.c:650 src/summaryview.c:2832
+#: src/messageview.c:650 src/summaryview.c:2835
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
 
-#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2851
+#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2854
 msgid "Print"
 msgstr "印刷"
 
-#: src/messageview.c:702 src/summaryview.c:2852
+#: src/messageview.c:702 src/summaryview.c:2855
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3366,7 +3366,7 @@ msgstr ""
 "印刷コマンドを入力してください:\n"
 "(`%s' はファイル名で置き換えられます)"
 
-#: src/messageview.c:708 src/summaryview.c:2858
+#: src/messageview.c:708 src/summaryview.c:2861
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5172,17 +5172,17 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3923
+#: src/prefs_summary_column.c:71 src/summaryview.c:3926
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3926
+#: src/prefs_summary_column.c:72 src/summaryview.c:3929
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3928
+#: src/prefs_summary_column.c:73 src/summaryview.c:3931
 msgid "Date"
 msgstr "日付"
 
@@ -5615,31 +5615,31 @@ msgstr "  Subject: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
 
-#: src/summary_search.c:110
+#: src/summary_search.c:148
 msgid "Search messages"
 msgstr "メッセージを検索"
 
-#: src/summary_search.c:133
+#: src/summary_search.c:171
 msgid "Match any of the following"
 msgstr "次の条件のいずれかが該当"
 
-#: src/summary_search.c:134
+#: src/summary_search.c:172
 msgid "Match all of the following"
 msgstr "次の条件のすべてが該当"
 
-#: src/summary_search.c:193
+#: src/summary_search.c:235
 msgid "Body:"
 msgstr "本文:"
 
-#: src/summary_search.c:217
-msgid "Select all matched"
-msgstr "一括検索"
+#: src/summary_search.c:258
+msgid "Find all"
+msgstr "すべて検索"
 
-#: src/summary_search.c:332
+#: src/summary_search.c:392
 msgid "Beginning of list reached; continue from end?"
 msgstr "リストの先頭まで検索しました。最後から検索しますか?"
 
-#: src/summary_search.c:334
+#: src/summary_search.c:394
 msgid "End of list reached; continue from beginning?"
 msgstr "リストの終わりまで検索しました。始めから検索しますか?"
 
@@ -5731,218 +5731,218 @@ msgstr "マークの処理"
 msgid "Some marks are left. Process it?"
 msgstr "マークが残っています。処理しますか?"
 
-#: src/summaryview.c:616
+#: src/summaryview.c:618
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "フォルダをスキャン中 (%s)..."
 
-#: src/summaryview.c:1070
+#: src/summaryview.c:1072
 msgid "Search again"
 msgstr "再検索"
 
-#: src/summaryview.c:1091 src/summaryview.c:1100
+#: src/summaryview.c:1093 src/summaryview.c:1102
 msgid "No more unread messages"
 msgstr "未読メッセージなし"
 
-#: src/summaryview.c:1092
+#: src/summaryview.c:1094
 msgid "No unread message found. Search from the end?"
 msgstr "未読メッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1094
+#: src/summaryview.c:1096
 msgid "No unread messages."
 msgstr "未読メッセージがありません。"
 
-#: src/summaryview.c:1101
+#: src/summaryview.c:1103
 msgid "No unread message found. Go to next folder?"
 msgstr "未読メッセージがありません。次のフォルダに移動しますか?"
 
-#: src/summaryview.c:1109 src/summaryview.c:1118
+#: src/summaryview.c:1111 src/summaryview.c:1120
 msgid "No more new messages"
 msgstr "新着メッセージなし"
 
-#: src/summaryview.c:1110
+#: src/summaryview.c:1112
 msgid "No new message found. Search from the end?"
 msgstr "新着メッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1112
+#: src/summaryview.c:1114
 msgid "No new messages."
 msgstr "新着メッセージがありません。"
 
-#: src/summaryview.c:1119
+#: src/summaryview.c:1121
 msgid "No new message found. Go to next folder?"
 msgstr "新着メッセージがありません。次のフォルダに移動しますか?"
 
-#: src/summaryview.c:1127 src/summaryview.c:1136
+#: src/summaryview.c:1129 src/summaryview.c:1138
 msgid "No more marked messages"
 msgstr "マーク付きメッセージなし"
 
-#: src/summaryview.c:1128
+#: src/summaryview.c:1130
 msgid "No marked message found. Search from the end?"
 msgstr "マーク付きメッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1130 src/summaryview.c:1139
+#: src/summaryview.c:1132 src/summaryview.c:1141
 msgid "No marked messages."
 msgstr "マーク付きメッセージがありません。"
 
-#: src/summaryview.c:1137
+#: src/summaryview.c:1139
 msgid "No marked message found. Search from the beginning?"
 msgstr "マーク付きメッセージがありません。最初から検索しますか?"
 
-#: src/summaryview.c:1145 src/summaryview.c:1154
+#: src/summaryview.c:1147 src/summaryview.c:1156
 msgid "No more labeled messages"
 msgstr "ラベル付きメッセージなし"
 
-#: src/summaryview.c:1146
+#: src/summaryview.c:1148
 msgid "No labeled message found. Search from the end?"
 msgstr "ラベル付きメッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1148 src/summaryview.c:1157
+#: src/summaryview.c:1150 src/summaryview.c:1159
 msgid "No labeled messages."
 msgstr "ラベル付きメッセージがありません。"
 
-#: src/summaryview.c:1155
+#: src/summaryview.c:1157
 msgid "No labeled message found. Search from the beginning?"
 msgstr "ラベル付きメッセージがありません。最初から検索しますか?"
 
-#: src/summaryview.c:1434
+#: src/summaryview.c:1436
 msgid "Attracting messages by subject..."
 msgstr "メッセージを件名でまとめています..."
 
-#: src/summaryview.c:1593
+#: src/summaryview.c:1595
 #, c-format
 msgid "%d deleted"
 msgstr "%d 通削除"
 
-#: src/summaryview.c:1597
+#: src/summaryview.c:1599
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d 通移動"
 
-#: src/summaryview.c:1598 src/summaryview.c:1605
+#: src/summaryview.c:1600 src/summaryview.c:1607
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1603
+#: src/summaryview.c:1605
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d 通コピー"
 
-#: src/summaryview.c:1620
+#: src/summaryview.c:1622
 msgid " item(s) selected"
 msgstr " 通選択"
 
-#: src/summaryview.c:1630
+#: src/summaryview.c:1632
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "新着 %d 通, 未読 %d 通, 総数 %d 通 (%s)"
 
-#: src/summaryview.c:1636
+#: src/summaryview.c:1638
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "新着 %d 通, 未読 %d 通, 総数 %d 通"
 
-#: src/summaryview.c:1674
+#: src/summaryview.c:1676
 msgid "Sorting summary..."
 msgstr "サマリをソート中..."
 
-#: src/summaryview.c:1746
+#: src/summaryview.c:1748
 msgid "(No Date)"
 msgstr "(日付なし)"
 
-#: src/summaryview.c:1855
+#: src/summaryview.c:1857
 msgid "\tSetting summary from message data..."
 msgstr "\tメッセージデータからサマリを設定中..."
 
-#: src/summaryview.c:1857
+#: src/summaryview.c:1859
 msgid "Setting summary from message data..."
 msgstr "メッセージデータからサマリを設定中..."
 
-#: src/summaryview.c:1966
+#: src/summaryview.c:1968
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "サマリキャッシュを書き込み中 (%s)..."
 
-#: src/summaryview.c:2265
+#: src/summaryview.c:2268
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "メッセージ %d をマークしました\n"
 
-#: src/summaryview.c:2309
+#: src/summaryview.c:2312
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "メッセージ %d を既読としてマークしました\n"
 
-#: src/summaryview.c:2382
+#: src/summaryview.c:2385
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "メッセージ %d を未読としてマークしました\n"
 
-#: src/summaryview.c:2437
+#: src/summaryview.c:2440
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "メッセージ %s/%d を削除するようにセットしました\n"
 
-#: src/summaryview.c:2455
+#: src/summaryview.c:2458
 msgid "Delete message(s)"
 msgstr "メッセージの削除"
 
-#: src/summaryview.c:2456
+#: src/summaryview.c:2459
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "本当にごみ箱からメッセージを削除してもいいですか?"
 
-#: src/summaryview.c:2522
+#: src/summaryview.c:2525
 msgid "Deleting duplicated messages..."
 msgstr "重複メッセージを削除しています..."
 
-#: src/summaryview.c:2558
+#: src/summaryview.c:2561
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "メッセージ %s/%d をマーク解除しました\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2613
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "メッセージ %d を %s に移動するようにセットしました\n"
 
-#: src/summaryview.c:2627
+#: src/summaryview.c:2630
 msgid "Destination is same as current folder."
 msgstr "移動先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:2683
+#: src/summaryview.c:2686
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "メッセージ %d を %s にコピーするようにセットしました\n"
 
-#: src/summaryview.c:2700
+#: src/summaryview.c:2703
 msgid "Destination for copy is same as current folder."
 msgstr "コピー先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:2895
+#: src/summaryview.c:2898
 msgid "Error occurred while processing messages."
 msgstr "メッセージの処理中にエラーが発生しました。"
 
-#: src/summaryview.c:3184 src/summaryview.c:3185
+#: src/summaryview.c:3187 src/summaryview.c:3188
 msgid "Building threads..."
 msgstr "スレッドを構築中..."
 
-#: src/summaryview.c:3282 src/summaryview.c:3283
+#: src/summaryview.c:3285 src/summaryview.c:3286
 msgid "Unthreading..."
 msgstr "スレッドを解除中..."
 
-#: src/summaryview.c:3540
+#: src/summaryview.c:3543
 msgid "filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:3541
+#: src/summaryview.c:3544
 msgid "Filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:3571
+#: src/summaryview.c:3574
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d 通のメッセージが振り分けられました。"
 
-#: src/summaryview.c:3932
+#: src/summaryview.c:3935
 msgid "No."
 msgstr "番号"
 

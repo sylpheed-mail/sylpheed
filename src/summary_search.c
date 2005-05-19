@@ -56,55 +56,93 @@
 #include "manage_window.h"
 #include "alertpanel.h"
 
-static GtkWidget *window;
-static GtkWidget *bool_optmenu;
-static GtkWidget *from_entry;
-static GtkWidget *to_entry;
-static GtkWidget *subject_entry;
-static GtkWidget *body_entry;
-static GtkWidget *case_checkbtn;
-static GtkWidget *backward_checkbtn;
-static GtkWidget *all_checkbtn;
-static GtkWidget *search_btn;
-static GtkWidget *clear_btn;
-static GtkWidget *close_btn;
+static struct SummarySearchWindow {
+	GtkWidget *window;
 
-static void summary_search_create(SummaryView *summaryview);
-static void summary_search_execute(GtkButton *button, gpointer data);
-static void summary_search_clear(GtkButton *button, gpointer data);
-static void from_activated(void);
-static void to_activated(void);
-static void subject_activated(void);
-static void body_activated(void);
-static void all_clicked(GtkButton *button);
-static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
-			    gpointer data);
+	GtkWidget *bool_optmenu;
+
+	GtkWidget *from_entry;
+	GtkWidget *to_entry;
+	GtkWidget *subject_entry;
+	GtkWidget *body_entry;
+
+	GtkWidget *case_checkbtn;
+
+	GtkWidget *clear_btn;
+	GtkWidget *all_btn;
+	GtkWidget *prev_btn;
+	GtkWidget *next_btn;
+	GtkWidget *close_btn;
+
+	SummaryView *summaryview;
+} search_window;
+
+static void summary_search_create	(void);
+
+static void summary_search_execute	(gboolean	 backward,
+					 gboolean	 search_all);
+
+static void summary_search_clear	(GtkButton	*button,
+					 gpointer	 data);
+static void summary_search_prev_clicked	(GtkButton	*button,
+					 gpointer	 data);
+static void summary_search_next_clicked	(GtkButton	*button,
+					 gpointer	 data);
+static void summary_search_all_clicked	(GtkButton	*button,
+					 gpointer	 data);
+
+static void from_activated		(void);
+static void to_activated		(void);
+static void subject_activated		(void);
+static void body_activated		(void);
+
+static gboolean key_pressed		(GtkWidget	*widget,
+					 GdkEventKey	*event,
+					 gpointer	 data);
+
 
 void summary_search(SummaryView *summaryview)
 {
-	if (!window)
-		summary_search_create(summaryview);
+	if (!search_window.window)
+		summary_search_create();
 	else
-		gtk_widget_hide(window);
+		gtk_widget_hide(search_window.window);
 
-	gtk_widget_grab_focus(search_btn);
-	gtk_widget_grab_focus(subject_entry);
-	gtk_widget_show(window);
+	search_window.summaryview = summaryview;
+
+	gtk_widget_grab_focus(search_window.next_btn);
+	gtk_widget_grab_focus(search_window.subject_entry);
+	gtk_widget_show(search_window.window);
 }
 
-static void summary_search_create(SummaryView *summaryview)
+static void summary_search_create(void)
 {
+	GtkWidget *window;
 	GtkWidget *vbox1;
 	GtkWidget *bool_hbox;
+	GtkWidget *bool_optmenu;
 	GtkWidget *bool_menu;
 	GtkWidget *menuitem;
+	GtkWidget *clear_btn;
+
 	GtkWidget *table1;
 	GtkWidget *from_label;
+	GtkWidget *from_entry;
 	GtkWidget *to_label;
+	GtkWidget *to_entry;
 	GtkWidget *subject_label;
+	GtkWidget *subject_entry;
 	GtkWidget *body_label;
+	GtkWidget *body_entry;
+
 	GtkWidget *checkbtn_hbox;
+	GtkWidget *case_checkbtn;
+
 	GtkWidget *confirm_area;
+	GtkWidget *all_btn;
+	GtkWidget *prev_btn;
+	GtkWidget *next_btn;
+	GtkWidget *close_btn;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW (window), _("Search messages"));
@@ -134,6 +172,10 @@ static void summary_search_create(SummaryView *summaryview)
 	MENUITEM_ADD(bool_menu, menuitem, _("Match all of the following"), 1);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(bool_optmenu), bool_menu);
 
+	clear_btn = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
+	gtk_widget_show(clear_btn);
+	gtk_box_pack_end(GTK_BOX(bool_hbox), clear_btn, FALSE, FALSE, 0);
+
 	table1 = gtk_table_new (4, 3, FALSE);
 	gtk_widget_show (table1);
 	gtk_box_pack_start (GTK_BOX (vbox1), table1, TRUE, TRUE, 0);
@@ -146,28 +188,28 @@ static void summary_search_create(SummaryView *summaryview)
 	gtk_table_attach (GTK_TABLE (table1), from_entry, 1, 3, 0, 1,
 			  GTK_EXPAND|GTK_FILL, 0, 0, 0);
 	g_signal_connect(G_OBJECT(from_entry), "activate",
-			 G_CALLBACK(from_activated), summaryview);
+			 G_CALLBACK(from_activated), NULL);
 
 	to_entry = gtk_entry_new ();
 	gtk_widget_show (to_entry);
 	gtk_table_attach (GTK_TABLE (table1), to_entry, 1, 3, 1, 2,
 			  GTK_EXPAND|GTK_FILL, 0, 0, 0);
 	g_signal_connect(G_OBJECT(to_entry), "activate",
-			 G_CALLBACK(to_activated), summaryview);
+			 G_CALLBACK(to_activated), NULL);
 
 	subject_entry = gtk_entry_new ();
 	gtk_widget_show (subject_entry);
 	gtk_table_attach (GTK_TABLE (table1), subject_entry, 1, 3, 2, 3,
 			  GTK_EXPAND|GTK_FILL, 0, 0, 0);
 	g_signal_connect(G_OBJECT(subject_entry), "activate",
-			 G_CALLBACK(subject_activated), summaryview);
+			 G_CALLBACK(subject_activated), NULL);
 
 	body_entry = gtk_entry_new ();
 	gtk_widget_show (body_entry);
 	gtk_table_attach (GTK_TABLE (table1), body_entry, 1, 3, 3, 4,
 			  GTK_EXPAND|GTK_FILL, 0, 0, 0);
 	g_signal_connect(G_OBJECT(body_entry), "activate",
-			 G_CALLBACK(body_activated), summaryview);
+			 G_CALLBACK(body_activated), NULL);
 
 	from_label = gtk_label_new (_("From:"));
 	gtk_widget_show (from_label);
@@ -207,49 +249,71 @@ static void summary_search_create(SummaryView *summaryview)
 	gtk_box_pack_start (GTK_BOX (checkbtn_hbox), case_checkbtn,
 			    FALSE, FALSE, 0);
 
-	backward_checkbtn =
-		gtk_check_button_new_with_label (_("Backward search"));
-	gtk_widget_show (backward_checkbtn);
-	gtk_box_pack_start (GTK_BOX (checkbtn_hbox), backward_checkbtn,
-			    FALSE, FALSE, 0);
-
-	all_checkbtn =
-		gtk_check_button_new_with_label (_("Select all matched"));
-	gtk_widget_show (all_checkbtn);
-	gtk_box_pack_start (GTK_BOX (checkbtn_hbox), all_checkbtn,
-			    FALSE, FALSE, 0);
-	g_signal_connect(G_OBJECT(all_checkbtn), "clicked",
-			 G_CALLBACK(all_clicked), summaryview);
-
-	gtkut_stock_button_set_create(&confirm_area,
-				      &search_btn, GTK_STOCK_FIND,
-				      &clear_btn, GTK_STOCK_CLEAR,
-				      &close_btn, GTK_STOCK_CLOSE);
+	confirm_area = gtk_hbutton_box_new();
 	gtk_widget_show (confirm_area);
-	gtk_box_pack_start (GTK_BOX (vbox1), confirm_area, FALSE, FALSE, 0);
-	gtk_widget_grab_default(search_btn);
+	gtk_button_box_set_layout(GTK_BUTTON_BOX(confirm_area),
+				  GTK_BUTTONBOX_END);
+	gtk_box_set_spacing(GTK_BOX(confirm_area), 5);
 
-	g_signal_connect(G_OBJECT(search_btn), "clicked",
-			 G_CALLBACK(summary_search_execute), summaryview);
+	all_btn = gtk_button_new_from_stock(_("Find all"));
+	GTK_WIDGET_SET_FLAGS(all_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(confirm_area), all_btn, TRUE, TRUE, 0);
+	gtk_widget_show(all_btn);
+
+	prev_btn = gtk_button_new_from_stock(GTK_STOCK_GO_BACK);
+	GTK_WIDGET_SET_FLAGS(prev_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(confirm_area), prev_btn, TRUE, TRUE, 0);
+	gtk_widget_show(prev_btn);
+
+	next_btn = gtk_button_new_from_stock(GTK_STOCK_GO_FORWARD);
+	GTK_WIDGET_SET_FLAGS(next_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(confirm_area), next_btn, TRUE, TRUE, 0);
+	gtk_widget_show(next_btn);
+
+	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(confirm_area), close_btn, TRUE, TRUE, 0);
+	gtk_widget_show(close_btn);
+
+	gtk_box_pack_start (GTK_BOX (vbox1), confirm_area, FALSE, FALSE, 0);
+	gtk_widget_grab_default(next_btn);
+
 	g_signal_connect(G_OBJECT(clear_btn), "clicked",
-			 G_CALLBACK(summary_search_clear), summaryview);
+			 G_CALLBACK(summary_search_clear), NULL);
+	g_signal_connect(G_OBJECT(all_btn), "clicked",
+			 G_CALLBACK(summary_search_all_clicked), NULL);
+	g_signal_connect(G_OBJECT(prev_btn), "clicked",
+			 G_CALLBACK(summary_search_prev_clicked), NULL);
+	g_signal_connect(G_OBJECT(next_btn), "clicked",
+			 G_CALLBACK(summary_search_next_clicked), NULL);
 	g_signal_connect_closure
 		(G_OBJECT(close_btn), "clicked",
 		 g_cclosure_new_swap(G_CALLBACK(gtk_widget_hide),
 				     window, NULL),
 		 FALSE);
+
+	search_window.window = window;
+	search_window.bool_optmenu = bool_optmenu;
+	search_window.from_entry = from_entry;
+	search_window.to_entry = to_entry;
+	search_window.subject_entry = subject_entry;
+	search_window.body_entry = body_entry;
+	search_window.case_checkbtn = case_checkbtn;
+	search_window.clear_btn = clear_btn;
+	search_window.all_btn = all_btn;
+	search_window.prev_btn = prev_btn;
+	search_window.next_btn = next_btn;
+	search_window.close_btn = close_btn;
 }
 
-static void summary_search_execute(GtkButton *button, gpointer data)
+static void summary_search_execute(gboolean backward, gboolean search_all)
 {
-	SummaryView *summaryview = data;
+	SummaryView *summaryview = search_window.summaryview;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	MsgInfo *msginfo;
 	gboolean bool_and;
 	gboolean case_sens;
-	gboolean backward;
-	gboolean search_all;
 	gboolean all_searched = FALSE;
 	gboolean matched;
 	gboolean body_matched;
@@ -263,23 +327,19 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 	model = GTK_TREE_MODEL(summaryview->store);
 
 	bool_and = menu_get_option_menu_active_index
-		(GTK_OPTION_MENU(bool_optmenu));
+		(GTK_OPTION_MENU(search_window.bool_optmenu));
 	case_sens = gtk_toggle_button_get_active
-		(GTK_TOGGLE_BUTTON(case_checkbtn));
-	backward = gtk_toggle_button_get_active
-		(GTK_TOGGLE_BUTTON(backward_checkbtn));
-	search_all = gtk_toggle_button_get_active
-		(GTK_TOGGLE_BUTTON(all_checkbtn));
+		(GTK_TOGGLE_BUTTON(search_window.case_checkbtn));
 
 	if (case_sens)
 		str_find_func = str_find;
 	else
 		str_find_func = str_case_find;
 
-	from_str    = gtk_entry_get_text(GTK_ENTRY(from_entry));
-	to_str      = gtk_entry_get_text(GTK_ENTRY(to_entry));
-	subject_str = gtk_entry_get_text(GTK_ENTRY(subject_entry));
-	body_str    = gtk_entry_get_text(GTK_ENTRY(body_entry));
+	from_str    = gtk_entry_get_text(GTK_ENTRY(search_window.from_entry));
+	to_str      = gtk_entry_get_text(GTK_ENTRY(search_window.to_entry));
+	subject_str = gtk_entry_get_text(GTK_ENTRY(search_window.subject_entry));
+	body_str    = gtk_entry_get_text(GTK_ENTRY(search_window.body_entry));
 
 	if (search_all) {
 		summary_unselect_all(summaryview);
@@ -287,7 +347,7 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 		backward = FALSE;
 	} else if (!summaryview->selected) {
 		if (backward)
-			valid  = gtkut_tree_model_get_iter_last(model, &iter);
+			valid = gtkut_tree_model_get_iter_last(model, &iter);
 		else
 			valid = gtk_tree_model_get_iter_first(model, &iter);
 		if (!valid) {
@@ -343,7 +403,8 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 					valid = gtk_tree_model_get_iter_first
 						(model, &iter);
 				all_searched = TRUE;
-				manage_window_focus_in(window, NULL, NULL);
+				manage_window_focus_in(search_window.window,
+						       NULL, NULL);
 			} else
 				break;
 		}
@@ -441,44 +502,55 @@ static void summary_search_execute(GtkButton *button, gpointer data)
 
 static void summary_search_clear(GtkButton *button, gpointer data)
 {
-	gtk_editable_delete_text(GTK_EDITABLE(from_entry),    0, -1);
-	gtk_editable_delete_text(GTK_EDITABLE(to_entry),      0, -1);
-	gtk_editable_delete_text(GTK_EDITABLE(subject_entry), 0, -1);
-	gtk_editable_delete_text(GTK_EDITABLE(body_entry),    0, -1);
+	gtk_editable_delete_text(GTK_EDITABLE(search_window.from_entry),
+				 0, -1);
+	gtk_editable_delete_text(GTK_EDITABLE(search_window.to_entry),
+				 0, -1);
+	gtk_editable_delete_text(GTK_EDITABLE(search_window.subject_entry),
+				 0, -1);
+	gtk_editable_delete_text(GTK_EDITABLE(search_window.body_entry),
+				 0, -1);
+}
+
+static void summary_search_prev_clicked(GtkButton *button, gpointer data)
+{
+	summary_search_execute(TRUE, FALSE);
+}
+
+static void summary_search_next_clicked(GtkButton *button, gpointer data)
+{
+	summary_search_execute(FALSE, FALSE);
+}
+
+static void summary_search_all_clicked(GtkButton *button, gpointer data)
+{
+	summary_search_execute(FALSE, TRUE);
 }
 
 static void from_activated(void)
 {
-	gtk_widget_grab_focus(to_entry);
+	gtk_widget_grab_focus(search_window.to_entry);
 }
 
 static void to_activated(void)
 {
-	gtk_widget_grab_focus(subject_entry);
+	gtk_widget_grab_focus(search_window.subject_entry);
 }
 
 static void subject_activated(void)
 {
-	gtk_button_clicked(GTK_BUTTON(search_btn));
+	gtk_button_clicked(GTK_BUTTON(search_window.next_btn));
 }
 
 static void body_activated(void)
 {
-	gtk_button_clicked(GTK_BUTTON(search_btn));
-}
-
-static void all_clicked(GtkButton *button)
-{
-	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)))
-		gtk_widget_set_sensitive(backward_checkbtn, FALSE);
-	else
-		gtk_widget_set_sensitive(backward_checkbtn, TRUE);
+	gtk_button_clicked(GTK_BUTTON(search_window.next_btn));
 }
 
 static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 			    gpointer data)
 {
 	if (event && event->keyval == GDK_Escape)
-		gtk_widget_hide(window);
+		gtk_widget_hide(search_window.window);
 	return FALSE;
 }

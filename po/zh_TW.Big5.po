@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 16:32+0900\n"
+"POT-Creation-Date: 2005-05-19 19:23+0900\n"
 "PO-Revision-Date: 2004-12-04 08:24+0800\n"
 "Last-Translator: Frank J. J. Weng <franklin@goodhorse.idv.tw>\n"
 "Language-Team: zh-l10n <zh-l10n@linux.org.tw>\n"
@@ -413,7 +413,7 @@ msgid "Lookup"
 msgstr "尋找"
 
 #: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
-#: src/prefs_template.c:172 src/summary_search.c:179
+#: src/prefs_template.c:172 src/summary_search.c:221
 msgid "To:"
 msgstr "收件人"
 
@@ -641,7 +641,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3787
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3790
 msgid "None"
 msgstr "無"
 
@@ -1071,11 +1071,11 @@ msgstr "MIME 型態"
 
 #. S_COL_DATE
 #: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3930
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3933
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:172
+#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "來自："
 
@@ -1858,7 +1858,7 @@ msgstr "未知的"
 msgid "Can't retrieve newsgroup list."
 msgstr "無法取得收件人或收件新聞群組名單。"
 
-#: src/grouplistdialog.c:449 src/summaryview.c:697
+#: src/grouplistdialog.c:449 src/summaryview.c:699
 msgid "Done."
 msgstr "完成"
 
@@ -1871,7 +1871,7 @@ msgstr "已接收 %d 個新聞群組 (%s 已讀)"
 msgid "Newsgroups:"
 msgstr "新聞群組："
 
-#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:186
+#: src/headerview.c:57 src/prefs_template.c:176 src/summary_search.c:228
 msgid "Subject:"
 msgstr "標題："
 
@@ -1879,11 +1879,11 @@ msgstr "標題："
 msgid "Creating header view...\n"
 msgstr "產生標頭視窗...\n"
 
-#: src/headerview.c:175 src/summaryview.c:1809
+#: src/headerview.c:175 src/summaryview.c:1811
 msgid "(No From)"
 msgstr "（沒有來源）"
 
-#: src/headerview.c:190 src/summaryview.c:1806
+#: src/headerview.c:190 src/summaryview.c:1808
 msgid "(No Subject)"
 msgstr "（沒有標題）"
 
@@ -3021,8 +3021,8 @@ msgstr "產生主視窗...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "主視窗：顏色 %d 配置失敗。\n"
 
-#: src/mainwindow.c:1043 src/summaryview.c:1918 src/summaryview.c:1980
-#: src/summaryview.c:3226 src/summaryview.c:3299 src/summaryview.c:3564
+#: src/mainwindow.c:1043 src/summaryview.c:1920 src/summaryview.c:1983
+#: src/summaryview.c:3229 src/summaryview.c:3302 src/summaryview.c:3567
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -3315,19 +3315,19 @@ msgstr "在目前信件中尋找"
 msgid "Find text:"
 msgstr "尋找文字："
 
-#: src/message_search.c:122 src/summary_search.c:205
+#: src/message_search.c:122 src/summary_search.c:247
 msgid "Case sensitive"
 msgstr "區分大小寫"
 
-#: src/message_search.c:128 src/summary_search.c:211
+#: src/message_search.c:128
 msgid "Backward search"
 msgstr "往回尋找"
 
-#: src/message_search.c:184 src/summary_search.c:325
+#: src/message_search.c:184 src/summary_search.c:385
 msgid "Search failed"
 msgstr "搜尋失敗"
 
-#: src/message_search.c:185 src/summary_search.c:326
+#: src/message_search.c:185 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "找不到該字串。"
 
@@ -3339,7 +3339,7 @@ msgstr "搜尋已到頂端。要從尾端繼續搜尋嗎？"
 msgid "End of message reached; continue from beginning?"
 msgstr "搜尋已到尾端。要從頂端繼續搜尋嗎？"
 
-#: src/message_search.c:199 src/summary_search.c:336
+#: src/message_search.c:199 src/summary_search.c:396
 msgid "Search finished"
 msgstr "搜尋結束"
 
@@ -3355,16 +3355,16 @@ msgstr "文字"
 msgid "Attachments"
 msgstr "附加檔"
 
-#: src/messageview.c:650 src/summaryview.c:2832
+#: src/messageview.c:650 src/summaryview.c:2835
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案 `%s'。"
 
-#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2851
+#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2854
 msgid "Print"
 msgstr "列印"
 
-#: src/messageview.c:702 src/summaryview.c:2852
+#: src/messageview.c:702 src/summaryview.c:2855
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3373,7 +3373,7 @@ msgstr ""
 "請輸入列印指令：\n"
 "（ `%s' 將會被置換為檔名）"
 
-#: src/messageview.c:708 src/summaryview.c:2858
+#: src/messageview.c:708 src/summaryview.c:2861
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5178,17 +5178,17 @@ msgid "Attachment"
 msgstr "附加"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3923
+#: src/prefs_summary_column.c:71 src/summaryview.c:3926
 msgid "Subject"
 msgstr "主題"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3926
+#: src/prefs_summary_column.c:72 src/summaryview.c:3929
 msgid "From"
 msgstr "來源(From)"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3928
+#: src/prefs_summary_column.c:73 src/summaryview.c:3931
 msgid "Date"
 msgstr "日期"
 
@@ -5619,31 +5619,31 @@ msgstr "  主旨: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  發信人: %s\n"
 
-#: src/summary_search.c:110
+#: src/summary_search.c:148
 msgid "Search messages"
 msgstr "尋找信件(_S)"
 
-#: src/summary_search.c:133
+#: src/summary_search.c:171
 msgid "Match any of the following"
 msgstr "下列任一條件符合"
 
-#: src/summary_search.c:134
+#: src/summary_search.c:172
 msgid "Match all of the following"
 msgstr "下列所有條件均符合"
 
-#: src/summary_search.c:193
+#: src/summary_search.c:235
 msgid "Body:"
 msgstr "本文:"
 
-#: src/summary_search.c:217
-msgid "Select all matched"
-msgstr "自動選擇所有找到的郵件"
+#: src/summary_search.c:258
+msgid "Find all"
+msgstr ""
 
-#: src/summary_search.c:332
+#: src/summary_search.c:392
 msgid "Beginning of list reached; continue from end?"
 msgstr "搜尋已到頂端。要從結尾繼續搜尋嗎？"
 
-#: src/summary_search.c:334
+#: src/summary_search.c:394
 msgid "End of list reached; continue from beginning?"
 msgstr "搜尋已到結尾。要從開頭繼續搜尋嗎？"
 
@@ -5735,218 +5735,218 @@ msgstr "信件標記"
 msgid "Some marks are left. Process it?"
 msgstr "某些信件已被標記。要繼續嗎？"
 
-#: src/summaryview.c:616
+#: src/summaryview.c:618
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "掃描資料夾(%s)..."
 
-#: src/summaryview.c:1070
+#: src/summaryview.c:1072
 msgid "Search again"
 msgstr "再次搜尋"
 
-#: src/summaryview.c:1091 src/summaryview.c:1100
+#: src/summaryview.c:1093 src/summaryview.c:1102
 msgid "No more unread messages"
 msgstr "沒有其他未讀信件"
 
-#: src/summaryview.c:1092
+#: src/summaryview.c:1094
 msgid "No unread message found. Search from the end?"
 msgstr "沒有找到未讀信件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1094
+#: src/summaryview.c:1096
 msgid "No unread messages."
 msgstr "沒有未讀信件"
 
-#: src/summaryview.c:1101
+#: src/summaryview.c:1103
 msgid "No unread message found. Go to next folder?"
 msgstr "沒有未讀信件。要到下一個資料夾嗎？"
 
-#: src/summaryview.c:1109 src/summaryview.c:1118
+#: src/summaryview.c:1111 src/summaryview.c:1120
 msgid "No more new messages"
 msgstr "沒有其他新信件"
 
-#: src/summaryview.c:1110
+#: src/summaryview.c:1112
 msgid "No new message found. Search from the end?"
 msgstr "沒有找到新信件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1112
+#: src/summaryview.c:1114
 msgid "No new messages."
 msgstr "沒有新信件"
 
-#: src/summaryview.c:1119
+#: src/summaryview.c:1121
 msgid "No new message found. Go to next folder?"
 msgstr "沒有新信件。要到下一個資料夾嗎？"
 
-#: src/summaryview.c:1127 src/summaryview.c:1136
+#: src/summaryview.c:1129 src/summaryview.c:1138
 msgid "No more marked messages"
 msgstr "沒有其他已標記信件"
 
-#: src/summaryview.c:1128
+#: src/summaryview.c:1130
 msgid "No marked message found. Search from the end?"
 msgstr "沒有找到已標記信件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1130 src/summaryview.c:1139
+#: src/summaryview.c:1132 src/summaryview.c:1141
 msgid "No marked messages."
 msgstr "沒有已標記信件"
 
-#: src/summaryview.c:1137
+#: src/summaryview.c:1139
 msgid "No marked message found. Search from the beginning?"
 msgstr "沒有找到已標記信件。要從開頭繼續搜尋嗎？"
 
-#: src/summaryview.c:1145 src/summaryview.c:1154
+#: src/summaryview.c:1147 src/summaryview.c:1156
 msgid "No more labeled messages"
 msgstr "沒有已標記顏色之信件"
 
-#: src/summaryview.c:1146
+#: src/summaryview.c:1148
 msgid "No labeled message found. Search from the end?"
 msgstr "沒有找到已標記顏色之信件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1148 src/summaryview.c:1157
+#: src/summaryview.c:1150 src/summaryview.c:1159
 msgid "No labeled messages."
 msgstr "沒有已標記顏色之信件"
 
-#: src/summaryview.c:1155
+#: src/summaryview.c:1157
 msgid "No labeled message found. Search from the beginning?"
 msgstr "沒有找到已標記顏色之信件。要從開頭繼續搜尋嗎？"
 
-#: src/summaryview.c:1434
+#: src/summaryview.c:1436
 msgid "Attracting messages by subject..."
 msgstr "展開信件中..."
 
-#: src/summaryview.c:1593
+#: src/summaryview.c:1595
 #, c-format
 msgid "%d deleted"
 msgstr "%d 已刪除"
 
-#: src/summaryview.c:1597
+#: src/summaryview.c:1599
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d 已移動"
 
-#: src/summaryview.c:1598 src/summaryview.c:1605
+#: src/summaryview.c:1600 src/summaryview.c:1607
 msgid ", "
 msgstr ""
 
-#: src/summaryview.c:1603
+#: src/summaryview.c:1605
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d 已複製"
 
-#: src/summaryview.c:1620
+#: src/summaryview.c:1622
 msgid " item(s) selected"
 msgstr "封已選擇"
 
-#: src/summaryview.c:1630
+#: src/summaryview.c:1632
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d 封未讀，%d 封已讀，共 %d 封(%s)"
 
-#: src/summaryview.c:1636
+#: src/summaryview.c:1638
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d 封未讀，%d 封已讀，共 %d 封"
 
-#: src/summaryview.c:1674
+#: src/summaryview.c:1676
 msgid "Sorting summary..."
 msgstr "信件排序中..."
 
-#: src/summaryview.c:1746
+#: src/summaryview.c:1748
 msgid "(No Date)"
 msgstr "(沒有日期)"
 
-#: src/summaryview.c:1855
+#: src/summaryview.c:1857
 msgid "\tSetting summary from message data..."
 msgstr "\t產生信件列表中..."
 
-#: src/summaryview.c:1857
+#: src/summaryview.c:1859
 msgid "Setting summary from message data..."
 msgstr "產生信件列表中..."
 
-#: src/summaryview.c:1966
+#: src/summaryview.c:1968
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "寫入快取(%s)..."
 
-#: src/summaryview.c:2265
+#: src/summaryview.c:2268
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "信件 %d 已標記\n"
 
-#: src/summaryview.c:2309
+#: src/summaryview.c:2312
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "信件 %d 已標記成已讀\n"
 
-#: src/summaryview.c:2382
+#: src/summaryview.c:2385
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "信件 %d 已標記成未讀\n"
 
-#: src/summaryview.c:2437
+#: src/summaryview.c:2440
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "信件 %s/%d 已標記刪除\n"
 
-#: src/summaryview.c:2455
+#: src/summaryview.c:2458
 msgid "Delete message(s)"
 msgstr "刪除信件"
 
-#: src/summaryview.c:2456
+#: src/summaryview.c:2459
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您確定要從刪除的郵件資料夾中刪除這封信件嗎？"
 
-#: src/summaryview.c:2522
+#: src/summaryview.c:2525
 msgid "Deleting duplicated messages..."
 msgstr "刪除重覆的信件..."
 
-#: src/summaryview.c:2558
+#: src/summaryview.c:2561
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "信件 %s/%d 已消除標記\n"
 
-#: src/summaryview.c:2610
+#: src/summaryview.c:2613
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "信件 %d 已設定移動到 %s\n"
 
-#: src/summaryview.c:2627
+#: src/summaryview.c:2630
 msgid "Destination is same as current folder."
 msgstr "目標資料夾與來源資料夾相同"
 
-#: src/summaryview.c:2683
+#: src/summaryview.c:2686
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "信件 %d 已設定複製到 %s\n"
 
-#: src/summaryview.c:2700
+#: src/summaryview.c:2703
 msgid "Destination for copy is same as current folder."
 msgstr "信件無法複製到同一個資料夾內"
 
-#: src/summaryview.c:2895
+#: src/summaryview.c:2898
 msgid "Error occurred while processing messages."
 msgstr "處理郵件時發生錯誤。"
 
-#: src/summaryview.c:3184 src/summaryview.c:3185
+#: src/summaryview.c:3187 src/summaryview.c:3188
 msgid "Building threads..."
 msgstr "產生信件串列中..."
 
-#: src/summaryview.c:3282 src/summaryview.c:3283
+#: src/summaryview.c:3285 src/summaryview.c:3286
 msgid "Unthreading..."
 msgstr "解除信件串列中..."
 
-#: src/summaryview.c:3540
+#: src/summaryview.c:3543
 msgid "filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:3541
+#: src/summaryview.c:3544
 msgid "Filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:3571
+#: src/summaryview.c:3574
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已過濾 %d 封信件"
 
-#: src/summaryview.c:3932
+#: src/summaryview.c:3935
 msgid "No."
 msgstr ""
 
@@ -6006,6 +6006,9 @@ msgstr ""
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "寫入到 %s 的動作失敗。\n"
+
+#~ msgid "Select all matched"
+#~ msgstr "自動選擇所有找到的郵件"
 
 #~ msgid "Selecting all messages..."
 #~ msgstr "選擇所有的信件..."
