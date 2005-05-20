@@ -537,6 +537,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		      gboolean update_cache)
 {
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 	GSList *mlist = NULL;
 	gchar *buf;
@@ -647,10 +648,18 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 	if (is_refresh) {
 		if (summary_find_msg_by_msgnum(summaryview, displayed_msgnum,
-					       &iter))
-			summary_select_row(summaryview, &iter, FALSE, TRUE);
-		else
+					       &iter)) {
+			GtkTreePath *path;
+
+			path = gtk_tree_model_get_path(model, &iter);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed =
+				gtk_tree_row_reference_new(model, path);
+			gtk_tree_path_free(path);
+		} else
 			messageview_clear(summaryview->messageview);
+
+		summary_select_by_msgnum(summaryview, selected_msgnum);
 
 		if (!summaryview->selected) {
 			/* no selected message - select first unread
