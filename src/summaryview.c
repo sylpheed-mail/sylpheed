@@ -384,6 +384,7 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/_Print..."),		NULL, summary_print,	0, NULL}
 };
 
+
 SummaryView *summary_create(void)
 {
 	SummaryView *summaryview;
@@ -720,6 +721,7 @@ static gboolean summary_free_msginfo_func(GtkTreeModel *model,
 void summary_clear_list(SummaryView *summaryview)
 {
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
+	GtkAdjustment *adj;
 
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
 			       summary_free_msginfo_func, NULL);
@@ -756,6 +758,10 @@ void summary_clear_list(SummaryView *summaryview)
 	gtk_tree_view_set_model(treeview, NULL);
 	gtk_tree_store_clear(summaryview->store);
 	gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(summaryview->store));
+
+	/* ensure that the "value-changed" signal is always emitted */
+	adj = gtk_tree_view_get_vadjustment(treeview);
+	adj->value = 0.0;
 
 	gtkut_tree_sortable_unset_sort_column_id
 		(GTK_TREE_SORTABLE(summaryview->store));
