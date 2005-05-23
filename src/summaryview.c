@@ -2207,31 +2207,24 @@ gboolean summary_step(SummaryView *summaryview, GtkScrollType type)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
-	gboolean moved;
 
 	if (summary_is_locked(summaryview)) return FALSE;
 
+	if (!gtkut_tree_row_reference_get_iter
+		(model, summaryview->selected, &iter))
+		return FALSE;
+
 	if (type == GTK_SCROLL_STEP_FORWARD) {
-		if (summaryview->selected) {
-			if (gtkut_tree_row_reference_get_iter
-				(model, summaryview->selected, &iter) &&
-			    gtkut_tree_model_next(model, &iter))
-				gtkut_tree_view_expand_parent_all
-					(GTK_TREE_VIEW(summaryview->treeview),
-					 &iter);
-			else
-				return FALSE;
-		}
+		if (!gtkut_tree_model_next(model, &iter))
+			return FALSE;
+	} else {
+		if (!gtkut_tree_model_prev(model, &iter))
+			return FALSE;
 	}
 
-	if (messageview_is_visible(summaryview->messageview))
-		summaryview->display_msg = TRUE;
-
-	gtk_widget_grab_focus(summaryview->treeview);
-	g_signal_emit_by_name(G_OBJECT(summaryview->treeview), "move-cursor",
-			      GTK_MOVEMENT_DISPLAY_LINES,
-			      type == GTK_SCROLL_STEP_FORWARD ? 1 : -1,
-			      &moved);
+	summary_select_row(summaryview, &iter,
+			   messageview_is_visible(summaryview->messageview),
+			   FALSE);
 
 	return TRUE;
 }
