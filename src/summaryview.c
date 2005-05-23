@@ -340,7 +340,7 @@ static FolderSortKey col_to_sort_key[] = {
 
 GtkTargetEntry summary_drag_types[1] =
 {
-	{"text/plain", GTK_TARGET_SAME_APP, TARGET_DUMMY}
+	{"text/uri-list", 0, 0}
 };
 
 static GtkItemFactoryEntry summary_popup_entries[] =
@@ -4418,53 +4418,44 @@ static void summary_drag_data_get(GtkWidget        *widget,
 				  SummaryView      *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GList *rows, *cur;
+	gchar *mail_list = NULL, *uri, *file;
+	MsgInfo *msginfo;
+	GtkTreeIter iter;
 
-	if (info == TARGET_MAIL_URI_LIST) {
-		GList *rows, *cur;
-		gchar *mail_list = NULL, *uri, *file;
-		MsgInfo *msginfo;
-		GtkTreeIter iter;
+	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
+						    NULL);
 
-		rows = gtk_tree_selection_get_selected_rows
-			(summaryview->selection, NULL);
+	for (cur = rows; cur != NULL; cur = cur->next) {
+		gtk_tree_model_get_iter(model, &iter,
+					(GtkTreePath *)cur->data);
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO,
+				   &msginfo, -1);
+		file = procmsg_get_message_file(msginfo);
+		if (!file) continue;
+		uri = g_strconcat("file://", file, NULL);
+		g_free(file);
 
-		for (cur = rows; cur != NULL; cur = cur->next) {
-			gtk_tree_model_get_iter(model, &iter,
-						(GtkTreePath *)cur->data);
-			gtk_tree_model_get(model, &iter, S_COL_MSG_INFO,
-					   &msginfo, -1);
-			file = procmsg_get_message_file(msginfo);
-			if (!file) continue;
-			uri = g_strconcat("file://", file, NULL);
-			g_free(file);
-
-			if (!mail_list) {
-				mail_list = uri;
-			} else {
-				file = g_strconcat(mail_list, uri, NULL);
-				g_free(mail_list);
-				g_free(uri);
-				mail_list = file;
-			}
-
-			gtk_tree_path_free((GtkTreePath *)cur->data);
-		}
-
-		if (mail_list != NULL) {
-			gtk_selection_data_set(selection_data,
-					       selection_data->target, 8,
-					       mail_list, strlen(mail_list));
+		if (!mail_list) {
+			mail_list = uri;
+		} else {
+			file = g_strconcat(mail_list, "\n", uri, NULL);
 			g_free(mail_list);
+			g_free(uri);
+			mail_list = file;
 		}
 
-		g_list_free(rows);
-	} else if (info == TARGET_DUMMY) {
-		if (gtk_tree_selection_count_selected_rows
-			(summaryview->selection) > 0)
-			gtk_selection_data_set(selection_data,
-					       selection_data->target, 8,
-					       "Dummy", 6);
+		gtk_tree_path_free((GtkTreePath *)cur->data);
 	}
+
+	if (mail_list != NULL) {
+		gtk_selection_data_set(selection_data,
+				       selection_data->target, 8,
+				       mail_list, strlen(mail_list));
+		g_free(mail_list);
+	}
+
+	g_list_free(rows);
 }
 
 

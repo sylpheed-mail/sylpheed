@@ -71,12 +71,6 @@ typedef enum
 	SUMMARY_SELECTED_MULTIPLE
 } SummarySelection;
 
-typedef enum
-{
-	TARGET_MAIL_URI_LIST,
-	TARGET_DUMMY
-} TargetInfo;
-
 extern GtkTargetEntry summary_drag_types[1];
 
 struct _SummaryColumnState
