@@ -1577,7 +1577,7 @@ static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			gtk_widget_grab_focus(summaryview->treeview);
 		else if (messageview->type == MVIEW_MIME &&
 			 textview == messageview->mimeview->textview)
-			gtk_widget_grab_focus(messageview->mimeview->ctree);
+			gtk_widget_grab_focus(messageview->mimeview->treeview);
 		break;
 	case GDK_n:
 	case GDK_N:

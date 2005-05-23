@@ -2630,7 +2630,7 @@ static void save_as_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	MessageView *messageview = mainwin->messageview;
 
 	if (messageview_get_selected_mime_part(messageview) &&
-	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->ctree))
+	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->treeview))
 		mimeview_save_as(messageview->mimeview);
 	else
 		summary_save_as(mainwin->summaryview);
@@ -3030,7 +3030,7 @@ static void prev_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	MessageView *messageview = mainwin->messageview;
 
 	if (messageview_get_selected_mime_part(messageview) &&
-	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->ctree) &&
+	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->treeview) &&
 	    mimeview_step(messageview->mimeview, GTK_SCROLL_STEP_BACKWARD))
 		return;
 
@@ -3042,7 +3042,7 @@ static void next_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	MessageView *messageview = mainwin->messageview;
 
 	if (messageview_get_selected_mime_part(messageview) &&
-	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->ctree) &&
+	    GTK_WIDGET_HAS_FOCUS(messageview->mimeview->treeview) &&
 	    mimeview_step(messageview->mimeview, GTK_SCROLL_STEP_FORWARD))
 		return;
 

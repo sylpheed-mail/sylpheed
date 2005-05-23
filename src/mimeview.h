@@ -23,7 +23,9 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <gtk/gtkwidget.h>
-#include <gtk/gtkctree.h>
+#include <gtk/gtktreemodel.h>
+#include <gtk/gtktreestore.h>
+#include <gtk/gtktreeselection.h>
 
 typedef struct _MimeView	MimeView;
 
@@ -43,7 +45,10 @@ struct _MimeView
 	GtkWidget *paned;
 
 	GtkWidget *scrolledwin;
-	GtkWidget *ctree;
+	GtkWidget *treeview;
+
+	GtkTreeStore *store;
+	GtkTreeSelection *selection;
 
 	GtkWidget *mime_vbox;
 
@@ -52,7 +57,7 @@ struct _MimeView
 	GtkWidget *popupmenu;
 	GtkItemFactory *popupfactory;
 
-	GtkCTreeNode *opened;
+	GtkTreePath *opened;
 
 	TextView *textview;
 	ImageView *imageview;
@@ -62,6 +67,8 @@ struct _MimeView
 	MimeInfo *mimeinfo;
 
 	gchar *file;
+
+	gchar *drag_file;
 };
 
 MimeView *mimeview_create	(void);

@@ -2082,7 +2082,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		val = messageview_show(msgview, msginfo, all_headers);
 		if (msgview->type == MVIEW_TEXT ||
 		    (msgview->type == MVIEW_MIME &&
-		     (GTK_CLIST(msgview->mimeview->ctree)->row_list == NULL ||
+		     (msgview->mimeview->opened == NULL ||
 		      gtk_notebook_get_current_page
 			(GTK_NOTEBOOK(msgview->notebook)) == 0)))
 			gtk_widget_grab_focus(summaryview->treeview);
@@ -2227,6 +2227,7 @@ gboolean summary_step(SummaryView *summaryview, GtkScrollType type)
 	if (messageview_is_visible(summaryview->messageview))
 		summaryview->display_msg = TRUE;
 
+	gtk_widget_grab_focus(summaryview->treeview);
 	g_signal_emit_by_name(G_OBJECT(summaryview->treeview), "move-cursor",
 			      GTK_MOVEMENT_DISPLAY_LINES,
 			      type == GTK_SCROLL_STEP_FORWARD ? 1 : -1,
