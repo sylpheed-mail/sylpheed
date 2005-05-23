@@ -126,8 +126,8 @@ static struct Compose {
 
 #if USE_GPGME
 static struct Privacy {
-	GtkWidget *default_encrypt_chkbtn;
 	GtkWidget *default_sign_chkbtn;
+	GtkWidget *default_encrypt_chkbtn;
 	GtkWidget *ascii_armored_chkbtn;
 	GtkWidget *clearsign_chkbtn;
 	GtkWidget *defaultkey_radiobtn;
@@ -357,11 +357,11 @@ static PrefParam param[] = {
 
 #if USE_GPGME
 	/* Privacy */
-	{"default_encrypt", "FALSE", &tmp_ac_prefs.default_encrypt, P_BOOL,
-	 &privacy.default_encrypt_chkbtn,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"default_sign", "FALSE", &tmp_ac_prefs.default_sign, P_BOOL,
 	 &privacy.default_sign_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"default_encrypt", "FALSE", &tmp_ac_prefs.default_encrypt, P_BOOL,
+	 &privacy.default_encrypt_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"ascii_armored", "FALSE", &tmp_ac_prefs.ascii_armored, P_BOOL,
 	 &privacy.ascii_armored_chkbtn,
@@ -1434,8 +1434,8 @@ static void prefs_account_privacy_create(void)
 	GtkWidget *vbox2;
 	GtkWidget *hbox1;
 	GtkWidget *label;
-	GtkWidget *default_encrypt_chkbtn;
 	GtkWidget *default_sign_chkbtn;
+	GtkWidget *default_encrypt_chkbtn;
 	GtkWidget *ascii_armored_chkbtn;
 	GtkWidget *clearsign_chkbtn;
 	GtkWidget *defaultkey_radiobtn;
@@ -1452,10 +1452,10 @@ static void prefs_account_privacy_create(void)
 	gtk_widget_show (vbox2);
 	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
 
-	PACK_CHECK_BUTTON (vbox2, default_encrypt_chkbtn,
-			   _("Encrypt message by default"));
 	PACK_CHECK_BUTTON (vbox2, default_sign_chkbtn,
 			   _("Sign message by default"));
+	PACK_CHECK_BUTTON (vbox2, default_encrypt_chkbtn,
+			   _("Encrypt message by default"));
 	PACK_CHECK_BUTTON (vbox2, ascii_armored_chkbtn,
 			   _("Use ASCII-armored format for encryption"));
 	PACK_CHECK_BUTTON (vbox2, clearsign_chkbtn,
@@ -1517,8 +1517,8 @@ static void prefs_account_privacy_create(void)
 
 	SET_TOGGLE_SENSITIVITY (customkey_radiobtn, customkey_entry);
 
-	privacy.default_encrypt_chkbtn = default_encrypt_chkbtn;
 	privacy.default_sign_chkbtn    = default_sign_chkbtn;
+	privacy.default_encrypt_chkbtn = default_encrypt_chkbtn;
 	privacy.ascii_armored_chkbtn   = ascii_armored_chkbtn;
 	privacy.clearsign_chkbtn       = clearsign_chkbtn;
 	privacy.defaultkey_radiobtn    = defaultkey_radiobtn;

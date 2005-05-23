@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-1.9.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 19:23+0900\n"
+"POT-Creation-Date: 2005-05-23 18:35+0900\n"
 "PO-Revision-Date: 2005-04-24 13:20+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
@@ -100,10 +100,10 @@ msgstr ""
 "funkció bekapcsolásához válassza ki a 'G' oszlopban a jelölődobozt!"
 
 #: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
-#: src/compose.c:3735 src/editaddress.c:199 src/editaddress.c:940
+#: src/compose.c:3745 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
-#: src/mimeview.c:153 src/prefs_filter.c:258 src/prefs_folder_item.c:170
+#: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Név"
@@ -158,13 +158,13 @@ msgstr "(Névtelen)"
 msgid "Delete account"
 msgstr "Hozzáférés törlése"
 
-#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/account.c:811 src/compose.c:2618 src/compose.c:4958
 #: src/folderview.c:2009 src/folderview.c:2105 src/folderview.c:2151
 #: src/folderview.c:2292 src/folderview.c:2338
 msgid "Yes"
 msgstr "Igen"
 
-#: src/account.c:811 src/compose.c:2613 src/compose.c:4929
+#: src/account.c:811 src/compose.c:2618 src/compose.c:4958
 #: src/folderview.c:2009 src/folderview.c:2105 src/folderview.c:2151
 #: src/folderview.c:2292 src/folderview.c:2338
 msgid "+No"
@@ -270,7 +270,7 @@ msgstr "A művelet felhasználói paramétere"
 msgid "Add Address to Book"
 msgstr "Cím hozzáadása a címlistához"
 
-#: src/addressadd.c:201 src/compose.c:4278 src/editaddress.c:200
+#: src/addressadd.c:201 src/compose.c:4307 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Cím"
@@ -284,7 +284,7 @@ msgstr "Megjegyzések"
 msgid "Select Address Book Folder"
 msgstr "Címjegyzék mappa választás"
 
-#: src/addressbook.c:336 src/compose.c:475 src/mainwindow.c:457
+#: src/addressbook.c:336 src/compose.c:480 src/mainwindow.c:457
 #: src/messageview.c:136
 msgid "/_File"
 msgstr "/_Fájl"
@@ -305,8 +305,8 @@ msgstr "/_Fájl/Új _JPilot"
 msgid "/_File/New _Server"
 msgstr "/_Fájl/Új _Szerver"
 
-#: src/addressbook.c:345 src/addressbook.c:348 src/compose.c:480
-#: src/compose.c:485 src/compose.c:489 src/mainwindow.c:474
+#: src/addressbook.c:345 src/addressbook.c:348 src/compose.c:485
+#: src/compose.c:490 src/compose.c:494 src/mainwindow.c:474
 #: src/mainwindow.c:477 src/mainwindow.c:479 src/mainwindow.c:482
 #: src/mainwindow.c:484 src/messageview.c:139
 msgid "/_File/---"
@@ -324,7 +324,7 @@ msgstr "/_Fájl/_Törlés"
 msgid "/_File/_Save"
 msgstr "/_Fájl/_Mentés"
 
-#: src/addressbook.c:350 src/compose.c:490 src/messageview.c:140
+#: src/addressbook.c:350 src/compose.c:495 src/messageview.c:140
 msgid "/_File/_Close"
 msgstr "/_Fájl/_Bezárás"
 
@@ -356,7 +356,7 @@ msgstr "/_Cím/_Szerkesztés"
 msgid "/_Address/_Delete"
 msgstr "/_Cím/_Törlés"
 
-#: src/addressbook.c:358 src/compose.c:593 src/mainwindow.c:702
+#: src/addressbook.c:358 src/compose.c:598 src/mainwindow.c:702
 #: src/messageview.c:250
 msgid "/_Tools"
 msgstr "/_Eszközök"
@@ -365,12 +365,12 @@ msgstr "/_Eszközök"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Eszközök/_LDIF fájl importálása"
 
-#: src/addressbook.c:360 src/compose.c:606 src/mainwindow.c:747
+#: src/addressbook.c:360 src/compose.c:611 src/mainwindow.c:747
 #: src/messageview.c:268
 msgid "/_Help"
 msgstr "/_Súgó"
 
-#: src/addressbook.c:361 src/compose.c:607 src/mainwindow.c:758
+#: src/addressbook.c:361 src/compose.c:612 src/mainwindow.c:758
 #: src/messageview.c:269
 msgid "/_Help/_About"
 msgstr "/_Súgó/_Névjegy"
@@ -387,7 +387,7 @@ msgstr "/Új cso_port"
 msgid "/New _Folder"
 msgstr "/Ú_j Mappa"
 
-#: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:469
+#: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:474
 #: src/folderview.c:224 src/folderview.c:226 src/folderview.c:230
 #: src/folderview.c:240 src/folderview.c:242 src/folderview.c:244
 #: src/folderview.c:248 src/folderview.c:258 src/folderview.c:260
@@ -397,7 +397,7 @@ msgstr "/Ú_j Mappa"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:492
+#: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:497
 #: src/mainwindow.c:488 src/messageview.c:142
 msgid "/_Edit"
 msgstr "/_Szerkesztés"
@@ -410,7 +410,7 @@ msgstr "/_Törlés"
 msgid "E-Mail address"
 msgstr "E-Mail cím"
 
-#: src/addressbook.c:495 src/compose.c:4279 src/prefs_common.c:2217
+#: src/addressbook.c:495 src/compose.c:4308 src/prefs_common.c:2217
 msgid "Address book"
 msgstr "Címjegyzék"
 
@@ -610,7 +610,7 @@ msgstr "Általános cím"
 msgid "Personal address"
 msgstr "Személyes cím"
 
-#: src/alertpanel.c:123 src/compose.c:4929 src/main.c:460
+#: src/alertpanel.c:123 src/compose.c:4958 src/main.c:460
 msgid "Notice"
 msgstr "Megjegyzés"
 
@@ -618,7 +618,7 @@ msgstr "Megjegyzés"
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: src/alertpanel.c:149 src/compose.c:2613 src/inc.c:559
+#: src/alertpanel.c:149 src/compose.c:2618 src/inc.c:559
 msgid "Error"
 msgstr "Hiba"
 
@@ -661,343 +661,343 @@ msgstr "Barna"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3790
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3799
 msgid "None"
 msgstr "Semmi"
 
-#: src/compose.c:467
+#: src/compose.c:472
 msgid "/_Add..."
 msgstr "/_Hozzáadás..."
 
-#: src/compose.c:468
+#: src/compose.c:473
 msgid "/_Remove"
 msgstr "/_Eltávolítás"
 
-#: src/compose.c:470 src/folderview.c:232 src/folderview.c:250
+#: src/compose.c:475 src/folderview.c:232 src/folderview.c:250
 #: src/folderview.c:265
 msgid "/_Properties..."
 msgstr "/_Tulajdonságok..."
 
-#: src/compose.c:476
+#: src/compose.c:481
 msgid "/_File/_Send"
 msgstr "/_Fájl/_Küldés"
 
-#: src/compose.c:478
+#: src/compose.c:483
 msgid "/_File/Send _later"
 msgstr "/_Fájl/Kü_ldés később"
 
-#: src/compose.c:481
+#: src/compose.c:486
 msgid "/_File/Save to _draft folder"
 msgstr "/_Fájl/Mentés a Vázlatok mappába"
 
-#: src/compose.c:483
+#: src/compose.c:488
 msgid "/_File/Save and _keep editing"
 msgstr "/_Fájl/Mentés és _szerkesztésben marad"
 
-#: src/compose.c:486
+#: src/compose.c:491
 msgid "/_File/_Attach file"
 msgstr "/_Fájl/Fájl _csatolása"
 
-#: src/compose.c:487
+#: src/compose.c:492
 msgid "/_File/_Insert file"
 msgstr "/_Fájl/Fájl _beszúrása"
 
-#: src/compose.c:488
+#: src/compose.c:493
 msgid "/_File/Insert si_gnature"
 msgstr "/_Fájl/_Aláírás beszúrása"
 
-#: src/compose.c:493
+#: src/compose.c:498
 msgid "/_Edit/_Undo"
 msgstr "/_Szerkesztés/_Visszavonás"
 
-#: src/compose.c:494
+#: src/compose.c:499
 msgid "/_Edit/_Redo"
 msgstr "/_Szerkesztés/_Ismétlés"
 
-#: src/compose.c:495 src/compose.c:502 src/mainwindow.c:492
+#: src/compose.c:500 src/compose.c:507 src/mainwindow.c:492
 #: src/messageview.c:145
 msgid "/_Edit/---"
 msgstr "/_Szerkesztés/---"
 
-#: src/compose.c:496
+#: src/compose.c:501
 msgid "/_Edit/Cu_t"
 msgstr "/_Szerkesztés/_Kivágás"
 
-#: src/compose.c:497 src/mainwindow.c:489 src/messageview.c:143
+#: src/compose.c:502 src/mainwindow.c:489 src/messageview.c:143
 msgid "/_Edit/_Copy"
 msgstr "/_Szerkesztés/_Másolás"
 
-#: src/compose.c:498
+#: src/compose.c:503
 msgid "/_Edit/_Paste"
 msgstr "/_Szerkesztés/_Beillesztés"
 
-#: src/compose.c:499
+#: src/compose.c:504
 msgid "/_Edit/Paste as _quotation"
 msgstr "/_Szerkesztés/_Beillesztés idézetként"
 
-#: src/compose.c:501 src/mainwindow.c:490 src/messageview.c:144
+#: src/compose.c:506 src/mainwindow.c:490 src/messageview.c:144
 msgid "/_Edit/Select _all"
 msgstr "/_Szerkesztés/Mindet kijelöli"
 
-#: src/compose.c:503
+#: src/compose.c:508
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/_Szerkesztés/Aktuális bekez_dés törése"
 
-#: src/compose.c:505
+#: src/compose.c:510
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/__Szerkesztés/Minden hosszú _sor törése"
 
-#: src/compose.c:507
+#: src/compose.c:512
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/_Szerkesztés/A_utomata tördelés"
 
-#: src/compose.c:508 src/mainwindow.c:497 src/messageview.c:149
+#: src/compose.c:513 src/mainwindow.c:497 src/messageview.c:149
 #: src/summaryview.c:378
 msgid "/_View"
 msgstr "/_Nézet"
 
-#: src/compose.c:509
+#: src/compose.c:514
 msgid "/_View/_To"
 msgstr "/_Nézet/_Címzett"
 
-#: src/compose.c:510
+#: src/compose.c:515
 msgid "/_View/_Cc"
 msgstr "/_Nézet/_Másolat"
 
-#: src/compose.c:511
+#: src/compose.c:516
 msgid "/_View/_Bcc"
 msgstr "/_Nézet/_Titkos másolat"
 
-#: src/compose.c:512
+#: src/compose.c:517
 msgid "/_View/_Reply to"
 msgstr "/_Nézet/_Válasz"
 
-#: src/compose.c:513 src/compose.c:515 src/compose.c:517 src/compose.c:519
+#: src/compose.c:518 src/compose.c:520 src/compose.c:522 src/compose.c:524
 #: src/mainwindow.c:515 src/mainwindow.c:518 src/mainwindow.c:544
 #: src/mainwindow.c:568 src/mainwindow.c:655 src/mainwindow.c:659
 #: src/messageview.c:227
 msgid "/_View/---"
 msgstr "/_Nézet/---"
 
-#: src/compose.c:514
+#: src/compose.c:519
 msgid "/_View/_Followup to"
 msgstr "/_Nézet/_Nyomkövetés"
 
-#: src/compose.c:516
+#: src/compose.c:521
 msgid "/_View/R_uler"
 msgstr "/_Nézet/V_onalzó"
 
-#: src/compose.c:518
+#: src/compose.c:523
 msgid "/_View/_Attachment"
 msgstr "/_Nézet/_Csatolás"
 
-#: src/compose.c:525 src/mainwindow.c:575 src/messageview.c:156
+#: src/compose.c:530 src/mainwindow.c:575 src/messageview.c:156
 msgid "/_View/Character _encoding"
 msgstr "/_Nézet/_Karakterkódolás"
 
-#: src/compose.c:526
+#: src/compose.c:531
 msgid "/_View/Character _encoding/_Automatic"
 msgstr "/_Nézet/_Karakterkódolás/_Automatikus"
 
-#: src/compose.c:528 src/compose.c:534 src/compose.c:540 src/compose.c:544
-#: src/compose.c:550 src/compose.c:554 src/compose.c:558 src/compose.c:568
-#: src/compose.c:572 src/compose.c:582 src/compose.c:586 src/mainwindow.c:571
+#: src/compose.c:533 src/compose.c:539 src/compose.c:545 src/compose.c:549
+#: src/compose.c:555 src/compose.c:559 src/compose.c:563 src/compose.c:573
+#: src/compose.c:577 src/compose.c:587 src/compose.c:591 src/mainwindow.c:571
 #: src/mainwindow.c:578 src/messageview.c:152
 msgid "/_View/Character _encoding/---"
 msgstr "/_Nézet/_Karakterkódolás/---"
 
-#: src/compose.c:530 src/mainwindow.c:579 src/messageview.c:160
+#: src/compose.c:535 src/mainwindow.c:579 src/messageview.c:160
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/_Nézet/_Karakterkódolás/7 bites ascii (US-ASC_II)"
 
-#: src/compose.c:532 src/mainwindow.c:581 src/messageview.c:163
+#: src/compose.c:537 src/mainwindow.c:581 src/messageview.c:163
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/_Nézet/_Karakterkódolás/Unicode (_UTF-8)"
 
-#: src/compose.c:536 src/mainwindow.c:585 src/messageview.c:166
+#: src/compose.c:541 src/mainwindow.c:585 src/messageview.c:166
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/_Nézet/_Karakterkódolás/Nyugat-Európai (ISO-8859-_1)"
 
-#: src/compose.c:538 src/mainwindow.c:587 src/messageview.c:168
+#: src/compose.c:543 src/mainwindow.c:587 src/messageview.c:168
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/_Nézet/_Karakterkódolás/Nyugat-Európai (ISO-8859-15)"
 
-#: src/compose.c:542 src/mainwindow.c:591 src/messageview.c:171
+#: src/compose.c:547 src/mainwindow.c:591 src/messageview.c:171
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/_Nézet/_Karakterkódolás/Közép-Európai (ISO-8859-_2)"
 
-#: src/compose.c:546 src/mainwindow.c:595 src/messageview.c:174
+#: src/compose.c:551 src/mainwindow.c:595 src/messageview.c:174
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/_Nézet/_Karakterkódolás/_Baltikumi (ISO-8859-13)"
 
-#: src/compose.c:548 src/mainwindow.c:597 src/messageview.c:176
+#: src/compose.c:553 src/mainwindow.c:597 src/messageview.c:176
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/_Nézet/_Karakterkódolás/Baltikumi (ISO-8859-_4)"
 
-#: src/compose.c:552 src/mainwindow.c:601 src/messageview.c:179
+#: src/compose.c:557 src/mainwindow.c:601 src/messageview.c:179
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/_Nézet/_Karakterkódolás/Görög (ISO-8859-_7)"
 
-#: src/compose.c:556 src/mainwindow.c:605 src/messageview.c:182
+#: src/compose.c:561 src/mainwindow.c:605 src/messageview.c:182
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/_Nézet/_Karakterkódolás/Török (ISO-8859-_9)"
 
-#: src/compose.c:560 src/mainwindow.c:609 src/messageview.c:185
+#: src/compose.c:565 src/mainwindow.c:609 src/messageview.c:185
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/_Nézet/_Karakterkódolás/Cirill (ISO-8859-_5)"
 
-#: src/compose.c:562 src/mainwindow.c:611 src/messageview.c:187
+#: src/compose.c:567 src/mainwindow.c:611 src/messageview.c:187
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/_Nézet/_Karakterkódolás/Cirill (KOI8-_R)"
 
-#: src/compose.c:564 src/mainwindow.c:613 src/messageview.c:189
+#: src/compose.c:569 src/mainwindow.c:613 src/messageview.c:189
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/_Nézet/_Karakterkódolás/Cirill (KOI8-_U)"
 
-#: src/compose.c:566 src/mainwindow.c:615 src/messageview.c:191
+#: src/compose.c:571 src/mainwindow.c:615 src/messageview.c:191
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/_Nézet/_Karakterkódolás/Cirill (Windows-1251)"
 
-#: src/compose.c:570 src/mainwindow.c:619 src/messageview.c:194
+#: src/compose.c:575 src/mainwindow.c:619 src/messageview.c:194
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/_Nézet/_Karakterkódolás/Japán (ISO-2022-_JP)"
 
-#: src/compose.c:574 src/mainwindow.c:629 src/messageview.c:203
+#: src/compose.c:579 src/mainwindow.c:629 src/messageview.c:203
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/_Nézet/_Karakterkódolás/Egyszerűsített Kínai (_GB2312)"
 
-#: src/compose.c:576 src/mainwindow.c:631 src/messageview.c:205
+#: src/compose.c:581 src/mainwindow.c:631 src/messageview.c:205
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/_Nézet/_Karakterkódolás/Egyszerűsített Kínai (GBK)"
 
-#: src/compose.c:578 src/mainwindow.c:633 src/messageview.c:207
+#: src/compose.c:583 src/mainwindow.c:633 src/messageview.c:207
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/_Nézet/_Karakterkódolás/Tradicionális Kínai (_Big5)"
 
-#: src/compose.c:580 src/mainwindow.c:635 src/messageview.c:209
+#: src/compose.c:585 src/mainwindow.c:635 src/messageview.c:209
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/_Nézet/_Karakterkódolás/Tradicionális Kínai (EUC-_TW)"
 
-#: src/compose.c:584 src/mainwindow.c:641 src/messageview.c:214
+#: src/compose.c:589 src/mainwindow.c:641 src/messageview.c:214
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/_Nézet/_Karakterkódolás/Koreai (EUC-_KR)"
 
-#: src/compose.c:588 src/mainwindow.c:647 src/messageview.c:219
+#: src/compose.c:593 src/mainwindow.c:647 src/messageview.c:219
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/_Nézet/_Karakterkódolás/Thai (TIS-620)"
 
-#: src/compose.c:590 src/mainwindow.c:649 src/messageview.c:221
+#: src/compose.c:595 src/mainwindow.c:649 src/messageview.c:221
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/_Nézet/_Karakterkódolás/Thai (Windows-874)"
 
-#: src/compose.c:594 src/mainwindow.c:703 src/messageview.c:251
+#: src/compose.c:599 src/mainwindow.c:703 src/messageview.c:251
 msgid "/_Tools/_Address book"
 msgstr "/_Eszközök/_Címjegyzék"
 
-#: src/compose.c:595
+#: src/compose.c:600
 msgid "/_Tools/_Template"
 msgstr "/_Eszközök/_Sablon"
 
-#: src/compose.c:596 src/mainwindow.c:721 src/messageview.c:266
+#: src/compose.c:601 src/mainwindow.c:721 src/messageview.c:266
 msgid "/_Tools/Actio_ns"
 msgstr "/_Eszközök/_Akciók"
 
-#: src/compose.c:597 src/compose.c:601 src/mainwindow.c:706
+#: src/compose.c:602 src/compose.c:606 src/mainwindow.c:706
 #: src/mainwindow.c:720 src/mainwindow.c:722 src/mainwindow.c:725
 #: src/mainwindow.c:727 src/messageview.c:254 src/messageview.c:265
 msgid "/_Tools/---"
 msgstr "/_Eszközök/---"
 
-#: src/compose.c:598
+#: src/compose.c:603
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/_Szerkesztés/Szerkesztés _külső programmal"
 
-#: src/compose.c:602
+#: src/compose.c:607
 msgid "/_Tools/PGP Si_gn"
 msgstr "/_Eszközök/PGP _Aláírás"
 
-#: src/compose.c:603
+#: src/compose.c:608
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/_Eszközök/PGP _Titkosítás"
 
-#: src/compose.c:808
+#: src/compose.c:813
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: fájl nem létezik\n"
 
-#: src/compose.c:907 src/compose.c:966 src/procmsg.c:1336
+#: src/compose.c:912 src/compose.c:971 src/procmsg.c:1336
 msgid "Can't get text part\n"
 msgstr "Nem tudtam olvasni a szövegrészt\n"
 
-#: src/compose.c:1354
+#: src/compose.c:1359
 msgid "Quote mark format error."
 msgstr "Idézet jelölés formátum hiba."
 
-#: src/compose.c:1366
+#: src/compose.c:1371
 msgid "Message reply/forward format error."
 msgstr "Üzenet válasz/továbbítás formátum hiba."
 
-#: src/compose.c:1693
+#: src/compose.c:1698
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "%s fájl nem létezik\n"
 
-#: src/compose.c:1697
+#: src/compose.c:1702
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "%s mérete nem meghatározható\n"
 
-#: src/compose.c:1701
+#: src/compose.c:1706
 #, c-format
 msgid "File %s is empty."
 msgstr "A(z) %s fájl üres."
 
-#: src/compose.c:1705
+#: src/compose.c:1710
 #, c-format
 msgid "Can't read %s."
 msgstr "%s nem olvasható."
 
-#: src/compose.c:1740
+#: src/compose.c:1745
 #, c-format
 msgid "Message: %s"
 msgstr "Üzenet: %s"
 
-#: src/compose.c:1811 src/mimeview.c:493
+#: src/compose.c:1816 src/mimeview.c:557
 msgid "Can't get the part of multipart message."
 msgstr "Egy több részes üzenet egy darabja nem hozzáférhető."
 
-#: src/compose.c:2245
+#: src/compose.c:2250
 msgid " [Edited]"
 msgstr " [Szerkesztett]"
 
-#: src/compose.c:2247
+#: src/compose.c:2252
 #, c-format
 msgid "%s - Compose message%s"
 msgstr "%s - Üzenet írása%s"
 
-#: src/compose.c:2250
+#: src/compose.c:2255
 #, c-format
 msgid "Compose message%s"
 msgstr "Üzenet írása%s"
 
-#: src/compose.c:2361
+#: src/compose.c:2366
 msgid "Recipient is not specified."
 msgstr "Nincs címzett megadva."
 
-#: src/compose.c:2369 src/compose.c:4199 src/mainwindow.c:2174
+#: src/compose.c:2374 src/compose.c:4228 src/mainwindow.c:2174
 #: src/prefs_account.c:703 src/prefs_common.c:858
 msgid "Send"
 msgstr "Küldés"
 
-#: src/compose.c:2370
+#: src/compose.c:2375
 msgid "Subject is empty. Send it anyway?"
 msgstr "A levél tárgya üres. Ennek ellenére elküldi?"
 
-#: src/compose.c:2421
+#: src/compose.c:2426
 msgid "can't get recipient list."
 msgstr "címzett lista nem hozzáférhető."
 
-#: src/compose.c:2441
+#: src/compose.c:2446
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1005,27 +1005,27 @@ msgstr ""
 "Nincs megadva hozzáférés a levél küldéshez.\n"
 "Válasszon ki egy hozzáférést küldés előtt!"
 
-#: src/compose.c:2455 src/send_message.c:261
+#: src/compose.c:2460 src/send_message.c:261
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Hiba lépett fel a %s-nak/nek küldendő üzenet küldése közben."
 
-#: src/compose.c:2478
+#: src/compose.c:2483
 msgid "Can't save the message to outbox."
 msgstr "Az üzenet nem menthető a kimenő mappába."
 
-#: src/compose.c:2514
+#: src/compose.c:2519
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Nem találtam hozzárendelt kulcsot a kiválasztott kulcs azonosítóhoz `%s'."
 
-#: src/compose.c:2576 src/compose.c:2805 src/compose.c:2868 src/compose.c:2988
+#: src/compose.c:2581 src/compose.c:2810 src/compose.c:2873 src/compose.c:2993
 #: src/utils.c:2215
 msgid "can't change file mode\n"
 msgstr "fájl módja nem változtatható\n"
 
-#: src/compose.c:2608
+#: src/compose.c:2613
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1034,140 +1034,150 @@ msgstr ""
 "Nem lehet konvertálni az üzenet karakterkódolását %s-ról/ről %s-ra.\n"
 "Ennek ellenére elküldi mint %s?"
 
-#: src/compose.c:2676
+#: src/compose.c:2681
 msgid "can't write headers\n"
 msgstr "fejléc nem írható\n"
 
-#: src/compose.c:2948
+#: src/compose.c:2953
 msgid "can't remove the old message\n"
 msgstr "a régi üzenetet nem lehet eltávolítani\n"
 
-#: src/compose.c:2966
+#: src/compose.c:2971
 msgid "queueing message...\n"
 msgstr "üzenet a Várakozó sorba...\n"
 
-#: src/compose.c:3048
+#: src/compose.c:3053
 msgid "can't find queue folder\n"
 msgstr "nem található a Várakozó sor mappája\n"
 
-#: src/compose.c:3055
+#: src/compose.c:3060
 msgid "can't queue the message\n"
 msgstr "Az üzenetet nem sikerült a Várakozó sorba rakni\n"
 
-#: src/compose.c:3632
+#: src/compose.c:3637
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generált Üzenet-azonosító: %s\n"
 
-#: src/compose.c:3730
+#: src/compose.c:3740
 msgid "Creating compose window...\n"
 msgstr "Szerkesztőablak létrehozása...\n"
 
-#: src/compose.c:3733 src/compose.c:4720
+#: src/compose.c:3743 src/compose.c:4749
 msgid "MIME type"
 msgstr "MIME típus"
 
 #. S_COL_DATE
-#: src/compose.c:3734 src/mimeview.c:152 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3933
+#: src/compose.c:3744 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:3942
 msgid "Size"
 msgstr "Méret"
 
-#: src/compose.c:3785 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3794 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "Feladó:"
 
-#: src/compose.c:4200
+#: src/compose.c:3856
+#, fuzzy
+msgid "PGP Sign"
+msgstr "/_Eszközök/PGP _Aláírás"
+
+#: src/compose.c:3858
+#, fuzzy
+msgid "PGP Encrypt"
+msgstr "/_Eszközök/PGP _Titkosítás"
+
+#: src/compose.c:4229
 msgid "Send message"
 msgstr "Üzenet küldése"
 
-#: src/compose.c:4208
+#: src/compose.c:4237
 msgid "Send later"
 msgstr "Küldés később"
 
-#: src/compose.c:4209
+#: src/compose.c:4238
 msgid "Put into queue folder and send later"
 msgstr "Üzenet a Várakozó sorba, küldés később"
 
-#: src/compose.c:4217
+#: src/compose.c:4246
 msgid "Draft"
 msgstr "Vázlat"
 
-#: src/compose.c:4218
+#: src/compose.c:4247
 msgid "Save to draft folder"
 msgstr "Mentés a vázlat mappába"
 
-#: src/compose.c:4228 src/compose.c:5513
+#: src/compose.c:4257 src/compose.c:5542
 msgid "Insert"
 msgstr "Beszúrás"
 
-#: src/compose.c:4229
+#: src/compose.c:4258
 msgid "Insert file"
 msgstr "Fájl beszúrása"
 
-#: src/compose.c:4237
+#: src/compose.c:4266
 msgid "Attach"
 msgstr "Csatolás"
 
-#: src/compose.c:4238
+#: src/compose.c:4267
 msgid "Attach file"
 msgstr "Fájl csatolása"
 
 #. signature
-#: src/compose.c:4248 src/prefs_account.c:1339 src/prefs_common.c:1282
+#: src/compose.c:4277 src/prefs_account.c:1339 src/prefs_common.c:1282
 msgid "Signature"
 msgstr "Aláírás"
 
-#: src/compose.c:4249
+#: src/compose.c:4278
 msgid "Insert signature"
 msgstr "Aláírás beillesztése"
 
-#: src/compose.c:4258 src/prefs_common.c:1304 src/prefs_common.c:2196
+#: src/compose.c:4287 src/prefs_common.c:1304 src/prefs_common.c:2196
 msgid "Editor"
 msgstr "Szerkesztő"
 
-#: src/compose.c:4259
+#: src/compose.c:4288
 msgid "Edit with external editor"
 msgstr "Szerkesztés külső programmal"
 
-#: src/compose.c:4267
+#: src/compose.c:4296
 msgid "Linewrap"
 msgstr "Sortörés"
 
-#: src/compose.c:4268
+#: src/compose.c:4297
 msgid "Wrap all long lines"
 msgstr "Az összes hosszú sor törése"
 
-#: src/compose.c:4614
+#: src/compose.c:4643
 msgid "Invalid MIME type."
 msgstr "Érvénytelen MIME típus."
 
-#: src/compose.c:4633
+#: src/compose.c:4662
 msgid "File doesn't exist or is empty."
 msgstr "A fájl nem létezik vagy üres."
 
-#: src/compose.c:4702
+#: src/compose.c:4731
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: src/compose.c:4722
+#: src/compose.c:4751
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: src/compose.c:4745 src/prefs_folder_item.c:183
+#: src/compose.c:4774 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Elérési út"
 
-#: src/compose.c:4746
+#: src/compose.c:4775
 msgid "File name"
 msgstr "Fájlnév"
 
-#: src/compose.c:4900
+#: src/compose.c:4929
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Külső szerkesztő parancssora érvénytelen: `%s'\n"
 
-#: src/compose.c:4926
+#: src/compose.c:4955
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1178,71 +1188,71 @@ msgstr ""
 "Processz kilövése?\n"
 "processz csoport azonosító: %d"
 
-#: src/compose.c:4939
+#: src/compose.c:4968
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "A leállított processz csoport azonosítója: %d"
 
-#: src/compose.c:4940
+#: src/compose.c:4969
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Ideiglenes fájl: %s"
 
-#: src/compose.c:4964
+#: src/compose.c:4993
 msgid "Compose: input from monitoring process\n"
 msgstr "Szerkesztés: bemenet a monitorozó processzből\n"
 
 #. failed
-#: src/compose.c:4997
+#: src/compose.c:5026
 msgid "Couldn't exec external editor\n"
 msgstr "Külső szerkesztő nem indítható\n"
 
-#: src/compose.c:5001
+#: src/compose.c:5030
 msgid "Couldn't write to file\n"
 msgstr "Nem lehet a fájlba írni\n"
 
-#: src/compose.c:5003
+#: src/compose.c:5032
 msgid "Pipe read failed\n"
 msgstr "Hiba történt a csővezeték olvasása közben\n"
 
-#: src/compose.c:5304 src/compose.c:5312 src/compose.c:5318
+#: src/compose.c:5333 src/compose.c:5341 src/compose.c:5347
 msgid "Can't queue the message."
 msgstr "Az üzenetet nem sikerült a Várakozó sorba rakni"
 
-#: src/compose.c:5409
+#: src/compose.c:5438
 msgid "Select files"
 msgstr "Fájlok választása"
 
-#: src/compose.c:5431
+#: src/compose.c:5460
 msgid "Select file"
 msgstr "Fájl választás"
 
-#: src/compose.c:5466
+#: src/compose.c:5495
 msgid "Discard message"
 msgstr "Üzenet elvetése"
 
-#: src/compose.c:5467
+#: src/compose.c:5496
 msgid "This message has been modified. discard it?"
 msgstr "Az üzenet megváltozott. Eldobja?"
 
-#: src/compose.c:5468
+#: src/compose.c:5497
 msgid "Discard"
 msgstr "Elvet"
 
-#: src/compose.c:5468
+#: src/compose.c:5497
 msgid "to Draft"
 msgstr "Vázlatok közé"
 
-#: src/compose.c:5510
+#: src/compose.c:5539
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Tényleg alkalmazni szeretné a(z) `%s' sablont?"
 
-#: src/compose.c:5512
+#: src/compose.c:5541
 msgid "Apply template"
 msgstr "Sablon alkalmazása"
 
-#: src/compose.c:5513
+#: src/compose.c:5542
 msgid "Replace"
 msgstr "Helyettesít"
 
@@ -1855,7 +1865,7 @@ msgstr "ismeretlen"
 msgid "Can't retrieve newsgroup list."
 msgstr "Nem lehet olvasni a hírcsoportok listáját."
 
-#: src/grouplistdialog.c:449 src/summaryview.c:699
+#: src/grouplistdialog.c:449 src/summaryview.c:709
 msgid "Done."
 msgstr "Kész."
 
@@ -1876,11 +1886,11 @@ msgstr "Tárgy:"
 msgid "Creating header view...\n"
 msgstr "Fejléc nézet létrehozása...\n"
 
-#: src/headerview.c:175 src/summaryview.c:1811
+#: src/headerview.c:175 src/summaryview.c:1826
 msgid "(No From)"
 msgstr "(Nincs Feladó)"
 
-#: src/headerview.c:190 src/summaryview.c:1808
+#: src/headerview.c:190 src/summaryview.c:1823
 msgid "(No Subject)"
 msgstr "(Nincs Tárgy)"
 
@@ -3016,8 +3026,8 @@ msgstr "Főablak létrehozása...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Főablak: %d szín foglalása nem sikerült\n"
 
-#: src/mainwindow.c:1043 src/summaryview.c:1920 src/summaryview.c:1983
-#: src/summaryview.c:3229 src/summaryview.c:3302 src/summaryview.c:3567
+#: src/mainwindow.c:1043 src/summaryview.c:1935 src/summaryview.c:1998
+#: src/summaryview.c:3238 src/summaryview.c:3311 src/summaryview.c:3576
 msgid "done.\n"
 msgstr "kész.\n"
 
@@ -3303,39 +3313,35 @@ msgstr "nem lehet nulla méretűre változtatni a postafiókot.\n"
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Üzenetek exportálása %s-ból %s-ba...\n"
 
-#: src/message_search.c:89
+#: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Keresés az aktuális üzenetben"
 
-#: src/message_search.c:107
+#: src/message_search.c:126
 msgid "Find text:"
 msgstr "Szöveg keresése:"
 
-#: src/message_search.c:122 src/summary_search.c:247
+#: src/message_search.c:141 src/summary_search.c:247
 msgid "Case sensitive"
 msgstr "Nagy- és kisbetű érzékenység"
 
-#: src/message_search.c:128
-msgid "Backward search"
-msgstr "Keresés visszafelé"
-
-#: src/message_search.c:184 src/summary_search.c:385
+#: src/message_search.c:208 src/summary_search.c:385
 msgid "Search failed"
 msgstr "Keresés sikertelen"
 
-#: src/message_search.c:185 src/summary_search.c:386
+#: src/message_search.c:209 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "A keresett szöveg nem található."
 
-#: src/message_search.c:193
+#: src/message_search.c:217
 msgid "Beginning of message reached; continue from end?"
 msgstr "Az üzenet elejére értem; folytassam a végéről?"
 
-#: src/message_search.c:196
+#: src/message_search.c:220
 msgid "End of message reached; continue from beginning?"
 msgstr "Az üzenet végére értem; folytassam az elejéről?"
 
-#: src/message_search.c:199 src/summary_search.c:396
+#: src/message_search.c:223 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Keresés befejeződött"
 
@@ -3351,16 +3357,16 @@ msgstr "Szöveg"
 msgid "Attachments"
 msgstr "Csatolások"
 
-#: src/messageview.c:650 src/summaryview.c:2835
+#: src/messageview.c:650 src/summaryview.c:2844
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "`%s' fájlt nem lehet elmenteni."
 
-#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2854
+#: src/messageview.c:701 src/prefs_common.c:2185 src/summaryview.c:2863
 msgid "Print"
 msgstr "Nyomtatás"
 
-#: src/messageview.c:702 src/summaryview.c:2855
+#: src/messageview.c:702 src/summaryview.c:2864
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3369,7 +3375,7 @@ msgstr ""
 "Adja meg a nyomtatási parancsot:\n"
 "(`%s' helyére a fájlnév kerül)"
 
-#: src/messageview.c:708 src/summaryview.c:2861
+#: src/messageview.c:708 src/summaryview.c:2870
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -3401,56 +3407,56 @@ msgstr "%s%c%d üzenet másolása %s-ba ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Az utolsó szám a(z) %s mappában = %d\n"
 
-#: src/mimeview.c:119
+#: src/mimeview.c:124
 msgid "/_Open"
 msgstr "/_Megnyitás"
 
-#: src/mimeview.c:120
+#: src/mimeview.c:125
 msgid "/Open _with..."
 msgstr "/Megnyitás m_int..."
 
-#: src/mimeview.c:121
+#: src/mimeview.c:126
 msgid "/_Display as text"
 msgstr "/Megjelenítés _szövegként"
 
-#: src/mimeview.c:122
+#: src/mimeview.c:127
 msgid "/_Save as..."
 msgstr "/Menté_s másként..."
 
-#: src/mimeview.c:125
+#: src/mimeview.c:130
 msgid "/_Check signature"
 msgstr "/Digitális aláírás _ellenőrzése"
 
-#: src/mimeview.c:148
+#: src/mimeview.c:155
 msgid "Creating MIME view...\n"
 msgstr "MIME nézet létrehozása...\n"
 
-#: src/mimeview.c:151
+#: src/mimeview.c:184
 msgid "MIME Type"
 msgstr "MIME típus"
 
-#: src/mimeview.c:255
+#: src/mimeview.c:297
 msgid "Select \"Check signature\" to check"
 msgstr ""
 "Válassza ki a \"Digitális aláírás ellenőrzése\" pontot az ellenőrzéshez"
 
-#: src/mimeview.c:551
+#: src/mimeview.c:615
 msgid "Select an action for the attached file:\n"
 msgstr "Válasszon egy műveletet a csatolt fájlnak:\n"
 
-#: src/mimeview.c:570
+#: src/mimeview.c:634
 msgid "Open _with..."
 msgstr "Megnyitás m_int..."
 
-#: src/mimeview.c:574
+#: src/mimeview.c:638
 msgid "_Display as text"
 msgstr "Megjelenítés _szövegként"
 
-#: src/mimeview.c:578
+#: src/mimeview.c:642
 msgid "_Save as..."
 msgstr "Menté_s másként..."
 
-#: src/mimeview.c:624
+#: src/mimeview.c:688
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
@@ -3458,19 +3464,20 @@ msgstr ""
 "Ez a digitális aláírás még nincs ellenőrizve.\n"
 "\n"
 
-#: src/mimeview.c:629
+#: src/mimeview.c:693
 msgid "_Check signature"
 msgstr "Digitális aláírás _ellenőrzése"
 
-#: src/mimeview.c:885 src/mimeview.c:930 src/mimeview.c:950 src/mimeview.c:973
+#: src/mimeview.c:950 src/mimeview.c:1019 src/mimeview.c:1039
+#: src/mimeview.c:1062
 msgid "Can't save the part of multipart message."
 msgstr "Egy többrészes üzenet egy darabja nem menthető."
 
-#: src/mimeview.c:983
+#: src/mimeview.c:1072
 msgid "Open with"
 msgstr "Megnyitás mint"
 
-#: src/mimeview.c:984
+#: src/mimeview.c:1073
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3479,7 +3486,7 @@ msgstr ""
 "Adja meg a fájl megnyitásához szükséges parancsot:\n"
 "(`%s' helyére a fájlnév kerül)"
 
-#: src/mimeview.c:1039
+#: src/mimeview.c:1128
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "MIME megjelenítő parancssor érvénytelen: `%s'"
@@ -3897,12 +3904,12 @@ msgid "Reply-To"
 msgstr "Válaszcím"
 
 #: src/prefs_account.c:1456
-msgid "Encrypt message by default"
-msgstr "Üzenetet mindig titkosítsa"
-
-#: src/prefs_account.c:1458
 msgid "Sign message by default"
 msgstr "Üzenetet mindig írja alá digitálisan"
+
+#: src/prefs_account.c:1458
+msgid "Encrypt message by default"
+msgstr "Üzenetet mindig titkosítsa"
 
 #: src/prefs_account.c:1460
 msgid "Use ASCII-armored format for encryption"
@@ -5181,17 +5188,17 @@ msgid "Attachment"
 msgstr "Csatolás"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:3926
+#: src/prefs_summary_column.c:71 src/summaryview.c:3935
 msgid "Subject"
 msgstr "Tárgy"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:3929
+#: src/prefs_summary_column.c:72 src/summaryview.c:3938
 msgid "From"
 msgstr "Feladó"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:3931
+#: src/prefs_summary_column.c:73 src/summaryview.c:3940
 msgid "Date"
 msgstr "Dátum"
 
@@ -5727,230 +5734,230 @@ msgstr "/_Nézet/_Minden fejléc megjelenítése"
 msgid "/_Print..."
 msgstr "/_Nyomtat..."
 
-#: src/summaryview.c:408
+#: src/summaryview.c:409
 msgid "Creating summary view...\n"
 msgstr "Áttekintő nézet létrehozása...\n"
 
-#: src/summaryview.c:568
+#: src/summaryview.c:570
 msgid "Process mark"
 msgstr "Kijelöltek feldolgozása"
 
-#: src/summaryview.c:569
+#: src/summaryview.c:571
 msgid "Some marks are left. Process it?"
 msgstr "Maradt még néhány kijelölt. Feldolgoás?"
 
-#: src/summaryview.c:618
+#: src/summaryview.c:620
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "(%s) mappa átvizsgálása..."
 
-#: src/summaryview.c:1072
+#: src/summaryview.c:1087
 msgid "Search again"
 msgstr "Keresés újra"
 
-#: src/summaryview.c:1093 src/summaryview.c:1102
+#: src/summaryview.c:1108 src/summaryview.c:1117
 msgid "No more unread messages"
 msgstr "Nincs további olvasatlan üzenet"
 
-#: src/summaryview.c:1094
+#: src/summaryview.c:1109
 msgid "No unread message found. Search from the end?"
 msgstr "Nem található olvasatlan üzenet. Keresés a végéről?"
 
-#: src/summaryview.c:1096
+#: src/summaryview.c:1111
 msgid "No unread messages."
 msgstr "Nincs olvasatlan üzenet.."
 
-#: src/summaryview.c:1103
+#: src/summaryview.c:1118
 msgid "No unread message found. Go to next folder?"
 msgstr "Nem található olvasatlan üzenet. Ugrás a következő mappára?"
 
-#: src/summaryview.c:1111 src/summaryview.c:1120
+#: src/summaryview.c:1126 src/summaryview.c:1135
 msgid "No more new messages"
 msgstr "Nincs több új üzenet"
 
-#: src/summaryview.c:1112
+#: src/summaryview.c:1127
 msgid "No new message found. Search from the end?"
 msgstr "Nem található új üzenet. Keresés a végéről?"
 
-#: src/summaryview.c:1114
+#: src/summaryview.c:1129
 msgid "No new messages."
 msgstr "Nincs új üzenet."
 
-#: src/summaryview.c:1121
+#: src/summaryview.c:1136
 msgid "No new message found. Go to next folder?"
 msgstr "Nem található új üzenet. Ugrás a következő mappára?"
 
-#: src/summaryview.c:1129 src/summaryview.c:1138
+#: src/summaryview.c:1144 src/summaryview.c:1153
 msgid "No more marked messages"
 msgstr "Nincs további kijelölt üzenet"
 
-#: src/summaryview.c:1130
+#: src/summaryview.c:1145
 msgid "No marked message found. Search from the end?"
 msgstr "Nem található kijelölt üzenet. Keresés a végéről?"
 
-#: src/summaryview.c:1132 src/summaryview.c:1141
+#: src/summaryview.c:1147 src/summaryview.c:1156
 msgid "No marked messages."
 msgstr "Nincs kijelölt üzenet."
 
-#: src/summaryview.c:1139
+#: src/summaryview.c:1154
 msgid "No marked message found. Search from the beginning?"
 msgstr "Nem található kijelölt üzenet. Keresés az elejéről?"
 
-#: src/summaryview.c:1147 src/summaryview.c:1156
+#: src/summaryview.c:1162 src/summaryview.c:1171
 msgid "No more labeled messages"
 msgstr "Nincs további címkézett üzenet."
 
-#: src/summaryview.c:1148
+#: src/summaryview.c:1163
 msgid "No labeled message found. Search from the end?"
 msgstr "Nem található címkézett üzenet. Keresés a végéről?"
 
-#: src/summaryview.c:1150 src/summaryview.c:1159
+#: src/summaryview.c:1165 src/summaryview.c:1174
 msgid "No labeled messages."
 msgstr "Nincs címkézett üzenet."
 
-#: src/summaryview.c:1157
+#: src/summaryview.c:1172
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Nem található címkézett üzenet. Keresés az elejéről?"
 
-#: src/summaryview.c:1436
+#: src/summaryview.c:1451
 msgid "Attracting messages by subject..."
 msgstr "Üzenetek tárgy szerint..."
 
-#: src/summaryview.c:1595
+#: src/summaryview.c:1610
 #, c-format
 msgid "%d deleted"
 msgstr "%d törölve"
 
-#: src/summaryview.c:1599
+#: src/summaryview.c:1614
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d mozgatva"
 
-#: src/summaryview.c:1600 src/summaryview.c:1607
+#: src/summaryview.c:1615 src/summaryview.c:1622
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1605
+#: src/summaryview.c:1620
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d másolva"
 
-#: src/summaryview.c:1622
+#: src/summaryview.c:1637
 msgid " item(s) selected"
 msgstr " elem kiválasztva"
 
-#: src/summaryview.c:1632
+#: src/summaryview.c:1647
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d új, %d olvasatlan, %d összesen (%s)"
 
-#: src/summaryview.c:1638
+#: src/summaryview.c:1653
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d új, %d olvasatlan, %d összesen"
 
-#: src/summaryview.c:1676
+#: src/summaryview.c:1691
 msgid "Sorting summary..."
 msgstr "Összefoglaló rendezése..."
 
-#: src/summaryview.c:1748
+#: src/summaryview.c:1763
 msgid "(No Date)"
 msgstr "(Nincs Dátum)"
 
-#: src/summaryview.c:1857
+#: src/summaryview.c:1872
 msgid "\tSetting summary from message data..."
 msgstr "\tÖsszefoglaló beállítása az üzenetek adataiból..."
 
-#: src/summaryview.c:1859
+#: src/summaryview.c:1874
 msgid "Setting summary from message data..."
 msgstr "Összefoglaló beállítása az üzenetek adataiból..."
 
-#: src/summaryview.c:1968
+#: src/summaryview.c:1983
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Összefoglaló gyorstár írása (%s)..."
 
-#: src/summaryview.c:2268
+#: src/summaryview.c:2277
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "%d üzenet kijelölve.\n"
 
-#: src/summaryview.c:2312
+#: src/summaryview.c:2321
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "%d üzenet olvasottnak jelölve.\n"
 
-#: src/summaryview.c:2385
+#: src/summaryview.c:2394
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "%d üzenet olvasatlannak jelölve.\n"
 
-#: src/summaryview.c:2440
+#: src/summaryview.c:2449
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "%s/%d üzenet törlésre kijelölve\n"
 
-#: src/summaryview.c:2458
+#: src/summaryview.c:2467
 msgid "Delete message(s)"
 msgstr "Üzenet(ek) törlése"
 
-#: src/summaryview.c:2459
+#: src/summaryview.c:2468
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Tényleg törölni szeretné az üzenete(ke)t a kukából?"
 
-#: src/summaryview.c:2525
+#: src/summaryview.c:2534
 msgid "Deleting duplicated messages..."
 msgstr "Több példányban létező üzenetek törlése..."
 
-#: src/summaryview.c:2561
+#: src/summaryview.c:2570
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "%s/%d üzenet kijelölésének megszüntetése.\n"
 
-#: src/summaryview.c:2613
+#: src/summaryview.c:2622
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "%d üzenet kijelölve %s mappába mozgatásra\n"
 
-#: src/summaryview.c:2630
+#: src/summaryview.c:2639
 msgid "Destination is same as current folder."
 msgstr "A cél azonos az aktuális mappával."
 
-#: src/summaryview.c:2686
+#: src/summaryview.c:2695
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "%d üzenet kijelölve %s mappába másolásra\n"
 
-#: src/summaryview.c:2703
+#: src/summaryview.c:2712
 msgid "Destination for copy is same as current folder."
 msgstr "A másolás célja megegyezik az aktuális mappával."
 
-#: src/summaryview.c:2898
+#: src/summaryview.c:2907
 msgid "Error occurred while processing messages."
 msgstr "Hiba az üzenetek feldolgozása közben."
 
-#: src/summaryview.c:3187 src/summaryview.c:3188
+#: src/summaryview.c:3196 src/summaryview.c:3197
 msgid "Building threads..."
 msgstr "Üzenetfolyam felépítése"
 
-#: src/summaryview.c:3285 src/summaryview.c:3286
+#: src/summaryview.c:3294 src/summaryview.c:3295
 msgid "Unthreading..."
 msgstr "Üzenetfolyam lebontás..."
 
-#: src/summaryview.c:3543
+#: src/summaryview.c:3552
 msgid "filtering..."
 msgstr "szűrés..."
 
-#: src/summaryview.c:3544
+#: src/summaryview.c:3553
 msgid "Filtering..."
 msgstr "Szűrés..."
 
-#: src/summaryview.c:3574
+#: src/summaryview.c:3583
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d üzenet szűrése elvégezve."
 
-#: src/summaryview.c:3935
+#: src/summaryview.c:3944
 msgid "No."
 msgstr "Db"
 
@@ -6010,6 +6017,9 @@ msgstr "%.2fGB"
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s fájlba nem sikerült írni.\n"
+
+#~ msgid "Backward search"
+#~ msgstr "Keresés visszafelé"
 
 #~ msgid "Select all matched"
 #~ msgstr "Minden találatot kiválaszt"
