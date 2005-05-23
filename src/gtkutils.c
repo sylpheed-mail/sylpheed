@@ -28,6 +28,7 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkarrow.h>
 #include <gtk/gtkctree.h>
 #include <gtk/gtkcombo.h>
 #include <gtk/gtkbindings.h>
@@ -46,11 +47,9 @@
 
 #include "gtkutils.h"
 #include "utils.h"
-#include "gtksctree.h"
 #include "codeconv.h"
 #include "menu.h"
 
-#warning FIXME_GTK2
 gboolean gtkut_get_font_size(GtkWidget *widget, gint *width, gint *height)
 {
 	PangoLayout *layout;
@@ -941,12 +940,6 @@ void gtkut_widget_init(void)
 	g_object_unref(G_OBJECT(clist));
 
 	clist = gtk_ctree_new(1, 0);
-	g_object_ref(G_OBJECT(clist));
-	gtk_object_sink(GTK_OBJECT(clist));
-	gtkut_clist_bindings_add(clist);
-	g_object_unref(G_OBJECT(clist));
-
-	clist = gtk_sctree_new_with_titles(1, 0, NULL);
 	g_object_ref(G_OBJECT(clist));
 	gtk_object_sink(GTK_OBJECT(clist));
 	gtkut_clist_bindings_add(clist);

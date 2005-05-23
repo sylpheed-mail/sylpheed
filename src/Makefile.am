@@ -22,7 +22,6 @@ sylpheed_SOURCES = \
 	action.c action.h \
 	compose.c compose.h \
 	gtkshruler.c gtkshruler.h \
-	gtksctree.c gtksctree.h \
 	menu.c menu.h \
 	stock_pixmap.c stock_pixmap.h \
 	prefs.c prefs.h \
