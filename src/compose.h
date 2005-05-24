@@ -106,6 +106,8 @@ struct _Compose
 	GtkWidget *followup_hbox;
 	GtkWidget *followup_entry;
 
+	GtkWidget *misc_hbox;
+	GtkWidget *attach_toggle;
 	GtkWidget *signing_chkbtn;
 	GtkWidget *encrypt_chkbtn;
 
