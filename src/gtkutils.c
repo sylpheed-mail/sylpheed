@@ -36,6 +36,7 @@
 #include <gtk/gtktreemodel.h>
 #include <gtk/gtktreesortable.h>
 #include <gtk/gtktreeview.h>
+#include <gtk/gtktreestore.h>
 #include <gtk/gtkversion.h>
 #include <stdlib.h>
 #include <stdarg.h>
