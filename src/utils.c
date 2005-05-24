@@ -1401,6 +1401,7 @@ GList *uri_list_extract_filenames(const gchar *uri_list)
 			while (isspace(*p)) p++;
 			if (!strncmp(p, "file:", 5)) {
 				p += 5;
+				while (*p == '/' && *(p + 1) == '/') p++;
 				q = p;
 				while (*q && *q != '\n' && *q != '\r') q++;
 
@@ -1410,6 +1411,7 @@ GList *uri_list_extract_filenames(const gchar *uri_list)
 					file = g_malloc(q - p + 2);
 					strncpy(file, p, q - p + 1);
 					file[q - p + 1] = '\0';
+					decode_uri(file, file);
 					result = g_list_append(result,file);
 				}
 			}
@@ -1486,6 +1488,7 @@ gint get_uri_len(const gchar *str)
 
 /* Decodes URL-Encoded strings (i.e. strings in which spaces are replaced by
  * plusses, and escape characters are used)
+ * Note: decoded_uri and encoded_uri can point the same location
  */
 void decode_uri(gchar *decoded_uri, const gchar *encoded_uri)
 {

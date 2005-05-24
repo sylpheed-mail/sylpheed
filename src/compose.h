@@ -24,6 +24,7 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkitemfactory.h>
 #include <gtk/gtktexttag.h>
+#include <gtk/gtkliststore.h>
 
 typedef struct _Compose		Compose;
 typedef struct _AttachInfo	AttachInfo;
@@ -111,7 +112,8 @@ struct _Compose
 	GtkWidget *paned;
 
 	GtkWidget *attach_scrwin;
-	GtkWidget *attach_clist;
+	GtkWidget *attach_treeview;
+	GtkListStore *attach_store;
 
 	GtkWidget *edit_vbox;
 	GtkWidget *ruler_hbox;

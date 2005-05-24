@@ -37,7 +37,10 @@
 #include <gtk/gtkcheckmenuitem.h>
 #include <gtk/gtkoptionmenu.h>
 #include <gtk/gtkwidget.h>
-#include <gtk/gtkclist.h>
+#include <gtk/gtkliststore.h>
+#include <gtk/gtktreeview.h>
+#include <gtk/gtktreeselection.h>
+#include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtkvpaned.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkeditable.h>
@@ -115,14 +118,14 @@
 #  include "rfc2015.h"
 #endif
 
-typedef enum
+enum
 {
-	COL_MIMETYPE = 0,
-	COL_SIZE     = 1,
-	COL_NAME     = 2
-} AttachColumnPos;
-
-#define N_ATTACH_COLS		3
+	COL_MIMETYPE,
+	COL_SIZE,
+	COL_NAME,
+	COL_ATTACH_INFO,
+	N_ATTACH_COLS
+};
 
 typedef enum
 {
@@ -316,11 +319,9 @@ static void toolbar_address_cb		(GtkWidget	*widget,
 static void account_activated		(GtkMenuItem	*menuitem,
 					 gpointer	 data);
 
-static void attach_selected		(GtkCList	*clist,
-					 gint		 row,
-					 gint		 column,
-					 GdkEvent	*event,
-					 gpointer	 data);
+static void attach_selection_changed	(GtkTreeSelection	*selection,
+					 gpointer		 data);
+
 static gboolean attach_button_pressed	(GtkWidget	*widget,
 					 GdkEventButton	*event,
 					 gpointer	 data);
@@ -1685,11 +1686,10 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 				  const gchar *filename,
 				  const gchar *content_type)
 {
+	GtkTreeIter iter;
 	AttachInfo *ainfo;
-	gchar *text[N_ATTACH_COLS];
 	FILE *fp;
 	off_t size;
-	gint row;
 
 	g_return_if_fail(file != NULL);
 	g_return_if_fail(*file != '\0');
@@ -1768,12 +1768,13 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 	}
 	ainfo->size = size;
 
-	text[COL_MIMETYPE] = ainfo->content_type;
-	text[COL_SIZE] = to_human_readable(size);
-	text[COL_NAME] = ainfo->name;
-
-	row = gtk_clist_append(GTK_CLIST(compose->attach_clist), text);
-	gtk_clist_set_row_data(GTK_CLIST(compose->attach_clist), row, ainfo);
+	gtk_list_store_append(compose->attach_store, &iter);
+	gtk_list_store_set(compose->attach_store, &iter,
+			   COL_MIMETYPE, ainfo->content_type,
+			   COL_SIZE, to_human_readable(ainfo->size),
+			   COL_NAME, ainfo->name,
+			   COL_ATTACH_INFO, ainfo,
+			   -1);
 }
 
 #define IS_FIRST_PART_TEXT(info) \
@@ -2560,6 +2561,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 {
 	GtkTextBuffer *buffer;
 	GtkTextIter start, end;
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
 	FILE *fp;
 	size_t len;
 	gchar *chars;
@@ -2686,7 +2688,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	}
 
 	if (compose->use_attach &&
-	    GTK_CLIST(compose->attach_clist)->row_list) {
+	    gtk_tree_model_iter_n_children(model, NULL) > 0) {
 #if USE_GPGME
             /* This prolog message is ignored by mime software and
              * because it would make our signing/encryption task
@@ -2745,7 +2747,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	g_free(buf);
 
 	if (compose->use_attach &&
-	    GTK_CLIST(compose->attach_clist)->row_list)
+	    gtk_tree_model_iter_n_children(model, NULL) > 0)
 		compose_write_attach(compose, fp, out_charset);
 
 	if (fclose(fp) == EOF) {
@@ -3081,16 +3083,19 @@ static gint compose_queue(Compose *compose, const gchar *file)
 static void compose_write_attach(Compose *compose, FILE *fp,
 				 const gchar *charset)
 {
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeIter iter;
+	gboolean valid;
 	AttachInfo *ainfo;
-	GtkCList *clist = GTK_CLIST(compose->attach_clist);
-	gint row;
 	FILE *attach_fp;
 	gchar filename[BUFFSIZE];
 	gint len;
 	EncodingType encoding;
 
-	for (row = 0; (ainfo = gtk_clist_get_row_data(clist, row)) != NULL;
-	     row++) {
+	for (valid = gtk_tree_model_get_iter_first(model, &iter); valid;
+	     valid = gtk_tree_model_iter_next(model, &iter)) {
+		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
+
 		if ((attach_fp = fopen(ainfo->file, "rb")) == NULL) {
 			g_warning("Can't open file %s\n", ainfo->file);
 			continue;
@@ -3434,7 +3439,8 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	/* MIME */
 	fprintf(fp, "Mime-Version: 1.0\n");
 	if (compose->use_attach &&
-	    GTK_CLIST(compose->attach_clist)->row_list) {
+	    gtk_tree_model_iter_n_children
+		(GTK_TREE_MODEL(compose->attach_store), NULL) > 0) {
 		compose->boundary = generate_mime_boundary(NULL);
 		fprintf(fp,
 			"Content-Type: multipart/mixed;\n"
@@ -3706,7 +3712,11 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	GtkWidget *paned;
 
 	GtkWidget *attach_scrwin;
-	GtkWidget *attach_clist;
+	GtkWidget *attach_treeview;
+	GtkListStore *store;
+	GtkTreeSelection *selection;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
 
 	GtkWidget *edit_vbox;
 	GtkWidget *ruler_hbox;
@@ -3720,7 +3730,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	UndoMain *undostruct;
 
-	gchar *titles[N_ATTACH_COLS];
 	guint n_menu_entries;
 	GdkColormap *cmap;
 	GdkColor color[1];
@@ -3731,7 +3740,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	GtkWidget *tmpl_menu;
 	gint n_entries;
 	gint count = 0;
-	gint i;
 
 	static GdkGeometry geometry;
 
@@ -3739,10 +3747,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	debug_print(_("Creating compose window...\n"));
 	compose = g_new0(Compose, 1);
-
-	titles[COL_MIMETYPE] = _("MIME type");
-	titles[COL_SIZE]     = _("Size");
-	titles[COL_NAME]     = _("Name");
 
 	compose->account = account;
 
@@ -3871,35 +3875,65 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 				       GTK_POLICY_ALWAYS);
 	gtk_widget_set_size_request(attach_scrwin, -1, 80);
 
-	attach_clist = gtk_clist_new_with_titles(N_ATTACH_COLS, titles);
-	gtk_clist_set_column_justification(GTK_CLIST(attach_clist), COL_SIZE,
-					   GTK_JUSTIFY_RIGHT);
-	gtk_clist_set_column_width(GTK_CLIST(attach_clist), COL_MIMETYPE, 240);
-	gtk_clist_set_column_width(GTK_CLIST(attach_clist), COL_SIZE, 64);
-	gtk_clist_set_selection_mode(GTK_CLIST(attach_clist),
-				     GTK_SELECTION_EXTENDED);
-	for (i = 0; i < N_ATTACH_COLS; i++)
-		GTK_WIDGET_UNSET_FLAGS
-			(GTK_CLIST(attach_clist)->column[i].button,
-			 GTK_CAN_FOCUS);
-	gtk_container_add(GTK_CONTAINER(attach_scrwin), attach_clist);
+	store = gtk_list_store_new(N_ATTACH_COLS, G_TYPE_STRING, G_TYPE_STRING,
+				   G_TYPE_STRING, G_TYPE_POINTER);
 
-	g_signal_connect(G_OBJECT(attach_clist), "select_row",
-			 G_CALLBACK(attach_selected), compose);
-	g_signal_connect(G_OBJECT(attach_clist), "button_press_event",
+	attach_treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(attach_treeview), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(attach_treeview), TRUE);
+	gtk_tree_view_set_search_column(GTK_TREE_VIEW(attach_treeview),
+					COL_NAME);
+	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(attach_treeview), FALSE);
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(attach_treeview));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
+
+	gtk_container_add(GTK_CONTAINER(attach_scrwin), attach_treeview);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(_("MIME type"), renderer, "text", COL_MIMETYPE, NULL);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 240);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(attach_treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Size"), renderer, "text", COL_SIZE, NULL);
+	gtk_tree_view_column_set_alignment(column, 1.0);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 64);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(attach_treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Name"), renderer, "text", COL_NAME, NULL);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(attach_treeview), column);
+
+	g_signal_connect(G_OBJECT(selection), "changed",
+			 G_CALLBACK(attach_selection_changed), compose);
+	g_signal_connect(G_OBJECT(attach_treeview), "button_press_event",
 			 G_CALLBACK(attach_button_pressed), compose);
-	g_signal_connect(G_OBJECT(attach_clist), "key_press_event",
+	g_signal_connect(G_OBJECT(attach_treeview), "key_press_event",
 			 G_CALLBACK(attach_key_pressed), compose);
 
 	/* drag and drop */
-	gtk_drag_dest_set(attach_clist,
+	gtk_drag_dest_set(attach_treeview,
 			  GTK_DEST_DEFAULT_ALL, compose_mime_types, 1,
 			  GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	g_signal_connect(G_OBJECT(attach_clist), "drag_data_received",
+	g_signal_connect(G_OBJECT(attach_treeview), "drag-data-received",
 			 G_CALLBACK(compose_attach_drag_received_cb),
 			 compose);
 
-	/* pane between attach clist and text */
+	/* pane between attach tree view and text */
 	paned = gtk_vpaned_new();
 	gtk_paned_add1(GTK_PANED(paned), attach_scrwin);
 	gtk_widget_ref(paned);
@@ -3948,7 +3982,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	/* drag and drop */
 	gtk_drag_dest_set(text, GTK_DEST_DEFAULT_ALL, compose_mime_types, 1,
 			  GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	g_signal_connect(G_OBJECT(text), "drag_data_received",
+	g_signal_connect(G_OBJECT(text), "drag-data-received",
 			 G_CALLBACK(compose_insert_drag_received_cb),
 			 compose);
 
@@ -4066,8 +4100,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->paned = paned;
 
-	compose->attach_scrwin = attach_scrwin;
-	compose->attach_clist  = attach_clist;
+	compose->attach_scrwin   = attach_scrwin;
+	compose->attach_treeview = attach_treeview;
+	compose->attach_store    = store;
 
 	compose->edit_vbox     = edit_vbox;
 	compose->ruler_hbox    = ruler_hbox;
@@ -4494,8 +4529,9 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 
 static void compose_destroy(Compose *compose)
 {
-	gint row;
-	GtkCList *clist = GTK_CLIST(compose->attach_clist);
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeIter iter;
+	gboolean valid;
 	AttachInfo *ainfo;
 
 	/* NOTE: address_completion_end() does nothing with the window
@@ -4528,9 +4564,11 @@ static void compose_destroy(Compose *compose)
 
 	g_free(compose->exteditor_file);
 
-	for (row = 0; (ainfo = gtk_clist_get_row_data(clist, row)) != NULL;
-	     row++)
+	for (valid = gtk_tree_model_get_iter_first(model, &iter); valid;
+	     valid = gtk_tree_model_iter_next(model, &iter)) {
+		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
 		compose_attach_info_free(ainfo);
+	}
 
 	if (addressbook_get_target_compose() == compose)
 		addressbook_set_target_compose(NULL);
@@ -4557,16 +4595,29 @@ static void compose_attach_info_free(AttachInfo *ainfo)
 
 static void compose_attach_remove_selected(Compose *compose)
 {
-	GtkCList *clist = GTK_CLIST(compose->attach_clist);
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GList *rows, *cur;
 	AttachInfo *ainfo;
-	gint row;
 
-	while (clist->selection != NULL) {
-		row = GPOINTER_TO_INT(clist->selection->data);
-		ainfo = gtk_clist_get_row_data(clist, row);
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW(compose->attach_treeview));
+
+	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+
+	/* delete from below so that GtkTreePath doesn't point wrong row */
+	rows = g_list_reverse(rows);
+
+	for (cur = rows; cur != NULL; cur = cur->next) {
+		gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)cur->data);
+		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
 		compose_attach_info_free(ainfo);
-		gtk_clist_remove(clist, row);
+		gtk_list_store_remove(compose->attach_store, &iter);
+		gtk_tree_path_free((GtkTreePath *)cur->data);
 	}
+
+	g_list_free(rows);
 }
 
 static struct _AttachProperty
@@ -4582,17 +4633,28 @@ static struct _AttachProperty
 
 static void compose_attach_property(Compose *compose)
 {
-	GtkCList *clist = GTK_CLIST(compose->attach_clist);
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GList *rows;
 	AttachInfo *ainfo;
-	gint row;
+	gchar *path = NULL;
 	GtkOptionMenu *optmenu;
 	static gboolean cancelled;
 
-	if (!clist->selection) return;
-	row = GPOINTER_TO_INT(clist->selection->data);
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW(compose->attach_treeview));
 
-	ainfo = gtk_clist_get_row_data(clist, row);
-	if (!ainfo) return;
+	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+
+	if (!rows)
+		return;
+
+	gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)rows->data);
+	gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
+
+	g_list_foreach(rows, (GFunc)gtk_tree_path_free, NULL);
+	g_list_free(rows);
 
 	if (!attach_prop.window)
 		compose_attach_property_create(&cancelled);
@@ -4606,12 +4668,16 @@ static void compose_attach_property(Compose *compose)
 	else
 		gtk_option_menu_set_history(optmenu, ainfo->encoding);
 
+	if (ainfo->file)
+		path = conv_filename_to_utf8(ainfo->file);
+
 	gtk_entry_set_text(GTK_ENTRY(attach_prop.mimetype_entry),
 			   ainfo->content_type ? ainfo->content_type : "");
-	gtk_entry_set_text(GTK_ENTRY(attach_prop.path_entry),
-			   ainfo->file ? ainfo->file : "");
+	gtk_entry_set_text(GTK_ENTRY(attach_prop.path_entry), path ? path : "");
 	gtk_entry_set_text(GTK_ENTRY(attach_prop.filename_entry),
 			   ainfo->name ? ainfo->name : "");
+
+	g_free(path);
 
 	for (;;) {
 		const gchar *entry_text;
@@ -4654,15 +4720,17 @@ static void compose_attach_property(Compose *compose)
 		entry_text = gtk_entry_get_text
 			(GTK_ENTRY(attach_prop.path_entry));
 		if (*entry_text != '\0') {
-			if (is_file_exist(entry_text) &&
-			    (size = get_file_size(entry_text)) > 0)
-				file = g_strdup(entry_text);
-			else {
+			file = conv_filename_from_utf8(entry_text);
+			if (!is_file_exist(file) ||
+			    (size = get_file_size(file)) <= 0) {
 				alertpanel_error
 					(_("File doesn't exist or is empty."));
+				g_free(file);
 				g_free(cnttype);
 				continue;
 			}
+			g_free(ainfo->file);
+			ainfo->file = file;
 		}
 
 		entry_text = gtk_entry_get_text
@@ -4676,18 +4744,14 @@ static void compose_attach_property(Compose *compose)
 			g_free(ainfo->content_type);
 			ainfo->content_type = cnttype;
 		}
-		if (file) {
-			g_free(ainfo->file);
-			ainfo->file = file;
-		}
 		if (size)
 			ainfo->size = size;
 
-		gtk_clist_set_text(clist, row, COL_MIMETYPE,
-				   ainfo->content_type);
-		gtk_clist_set_text(clist, row, COL_SIZE,
-				   to_human_readable(ainfo->size));
-		gtk_clist_set_text(clist, row, COL_NAME, ainfo->name);
+		gtk_list_store_set(compose->attach_store, &iter,
+				   COL_MIMETYPE, ainfo->content_type,
+				   COL_SIZE, to_human_readable(ainfo->size),
+				   COL_NAME, ainfo->name,
+				   -1);
 
 		gtk_widget_hide(attach_prop.window);
 		break;
@@ -5244,39 +5308,42 @@ static void account_activated(GtkMenuItem *menuitem, gpointer data)
 		compose_select_account(compose, ac, FALSE);
 }
 
-static void attach_selected(GtkCList *clist, gint row, gint column,
-			    GdkEvent *event, gpointer data)
+static void attach_selection_changed(GtkTreeSelection *selection, gpointer data)
 {
-	Compose *compose = (Compose *)data;
-
-	if (event && event->type == GDK_2BUTTON_PRESS)
-		compose_attach_property(compose);
 }
 
 static gboolean attach_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				      gpointer data)
 {
 	Compose *compose = (Compose *)data;
-	GtkCList *clist = GTK_CLIST(compose->attach_clist);
-	gint row, column;
+	GtkTreeView *treeview = GTK_TREE_VIEW(compose->attach_treeview);
+	GtkTreeSelection *selection;
+	GtkTreePath *path = NULL;
 
 	if (!event) return FALSE;
 
-	if (event->button == 3) {
-		if ((clist->selection && !clist->selection->next) ||
-		    !clist->selection) {
-			gtk_clist_unselect_all(clist);
-			if (gtk_clist_get_selection_info(clist,
-							 event->x, event->y,
-							 &row, &column)) {
-				gtk_clist_select_row(clist, row, column);
-				gtkut_clist_set_focus_row(clist, row);
-			}
-		}
+	gtk_tree_view_get_path_at_pos(treeview, event->x, event->y,
+				      &path, NULL, NULL, NULL);
+
+	if (event->button == 2 && path)
+		gtk_tree_view_set_cursor(treeview, path, NULL, FALSE);
+
+	if (event->button == 2 ||
+	    (event->button == 1 && event->type == GDK_2BUTTON_PRESS)) {
+		compose_attach_property(compose);
+	} else if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(compose->popupmenu), NULL, NULL,
 			       NULL, NULL, event->button, event->time);
+
+		selection = gtk_tree_view_get_selection(treeview);
+		if (path &&
+		    gtk_tree_selection_path_is_selected(selection, path)) {
+			gtk_tree_path_free(path);
+			return TRUE;
+		}
 	}
 
+	gtk_tree_path_free(path);
 	return FALSE;
 }
 
@@ -5951,15 +6018,18 @@ static void compose_attach_drag_received_cb (GtkWidget		*widget,
 					     gpointer		 user_data)
 {
 	Compose *compose = (Compose *)user_data;
-	GList *list, *tmp;
+	GList *list, *cur;
+	gchar *path, *filename;
 
 	list = uri_list_extract_filenames((const gchar *)data->data);
-	for (tmp = list; tmp != NULL; tmp = tmp->next)
-		compose_attach_append
-			(compose, (const gchar *)tmp->data,
-			 (const gchar *)tmp->data, NULL);
+	for (cur = list; cur != NULL; cur = cur->next) {
+		path = (gchar *)cur->data;
+		filename = conv_filename_to_utf8(path);
+		compose_attach_append(compose, path, filename, NULL);
+		g_free(filename);
+		g_free(path);
+	}
 	if (list) compose_changed_cb(NULL, compose);
-	list_free_strings(list);
 	g_list_free(list);
 }
 
@@ -5973,11 +6043,11 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 					     gpointer		 user_data)
 {
 	Compose *compose = (Compose *)user_data;
-	GList *list, *tmp;
+	GList *list, *cur;
 
 	list = uri_list_extract_filenames((const gchar *)data->data);
-	for (tmp = list; tmp != NULL; tmp = tmp->next)
-		compose_insert_file(compose, (const gchar *)tmp->data);
+	for (cur = list; cur != NULL; cur = cur->next)
+		compose_insert_file(compose, (const gchar *)cur->data);
 	list_free_strings(list);
 	g_list_free(list);
 }
