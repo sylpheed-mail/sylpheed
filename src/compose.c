@@ -392,8 +392,10 @@ static void compose_encrypt_toggled	(GtkWidget	*widget,
 					 Compose	*compose);
 #endif
 
+#if 0
 static void compose_attach_toggled	(GtkWidget	*widget,
 					 Compose	*compose);
+#endif
 
 static void compose_changed_cb		(GtkTextBuffer	*textbuf,
 					 Compose	*compose);
@@ -3708,13 +3710,15 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	GtkWidget *followup_entry;
 	GtkWidget *followup_hbox;
 
-	GtkWidget *misc_hbox;
 #if USE_GPGME
+	GtkWidget *misc_hbox;
 	GtkWidget *signing_chkbtn;
 	GtkWidget *encrypt_chkbtn;
 #endif /* USE_GPGME */
+#if 0
 	GtkWidget *attach_img;
 	GtkWidget *attach_toggle;
+#endif
 
 	GtkWidget *paned;
 
@@ -3860,9 +3864,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	g_signal_connect(G_OBJECT(subject_entry), "grab_focus",
 			 G_CALLBACK(compose_grab_focus_cb), compose);
 
-	misc_hbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox2), misc_hbox, FALSE, FALSE, 0);
-
+#if 0
 	attach_img = stock_pixbuf_widget(window, STOCK_PIXMAP_CLIP);
 	attach_toggle = gtk_toggle_button_new();
 	GTK_WIDGET_UNSET_FLAGS(attach_toggle, GTK_CAN_FOCUS);
@@ -3870,8 +3872,12 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_box_pack_start(GTK_BOX(misc_hbox), attach_toggle, FALSE, FALSE, 8);
 	g_signal_connect(G_OBJECT(attach_toggle), "toggled",
 			 G_CALLBACK(compose_attach_toggled), compose);
+#endif
 
 #if USE_GPGME
+	misc_hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), misc_hbox, FALSE, FALSE, 0);
+
 	signing_chkbtn = gtk_check_button_new_with_label(_("PGP Sign"));
 	GTK_WIDGET_UNSET_FLAGS(signing_chkbtn, GTK_CAN_FOCUS);
 	gtk_box_pack_start(GTK_BOX(misc_hbox), signing_chkbtn, FALSE, FALSE, 8);
@@ -4112,9 +4118,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->followup_hbox    = followup_hbox;
 	compose->followup_entry   = followup_entry;
 
-	compose->misc_hbox      = misc_hbox;
-	compose->attach_toggle = attach_toggle;
+	/* compose->attach_toggle = attach_toggle; */
 #if USE_GPGME
+	compose->misc_hbox      = misc_hbox;
 	compose->signing_chkbtn = signing_chkbtn;
 	compose->encrypt_chkbtn = encrypt_chkbtn;
 #endif /* USE_GPGME */
@@ -4217,7 +4223,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		gtk_widget_set_sensitive(compose->exteditor_btn, FALSE);
 		gtk_widget_set_sensitive(compose->linewrap_btn, FALSE);
 
-		gtk_widget_set_sensitive(compose->attach_toggle, FALSE);
+		/* gtk_widget_set_sensitive(compose->attach_toggle, FALSE); */
 
 		menu_set_sensitive_all(GTK_MENU_SHELL(compose->popupmenu),
 				       FALSE);
@@ -5818,6 +5824,7 @@ static void compose_encrypt_toggled(GtkWidget *widget, Compose *compose)
 }
 #endif /* USE_GPGME */
 
+#if 0
 static void compose_attach_toggled(GtkWidget *widget, Compose *compose)
 {
 	GtkItemFactory *ifactory;
@@ -5830,6 +5837,7 @@ static void compose_attach_toggled(GtkWidget *widget, Compose *compose)
 	ifactory = gtk_item_factory_from_widget(compose->menubar);
 	menu_set_active(ifactory, "/View/Attachment", compose->use_attach);
 }
+#endif
 
 static void compose_changed_cb(GtkTextBuffer *textbuf, Compose *compose)
 {
@@ -5998,8 +6006,10 @@ static void compose_toggle_attach_cb(gpointer data, guint action,
 		compose->use_attach = FALSE;
 	}
 
+#if 0
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(compose->attach_toggle),
 				     compose->use_attach);
+#endif
 }
 
 #if USE_GPGME
