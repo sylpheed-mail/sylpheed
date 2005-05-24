@@ -173,6 +173,8 @@ FolderItem *folder_item_new(const gchar *name, const gchar *path)
 	item->collapsed = FALSE;
 	item->threaded = TRUE;
 	item->opened = FALSE;
+	item->updated = FALSE;
+	item->cache_dirty = FALSE;
 	item->node = NULL;
 	item->parent = NULL;
 	item->folder = NULL;

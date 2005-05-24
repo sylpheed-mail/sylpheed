@@ -315,10 +315,13 @@ static GSList *news_get_article_list(Folder *folder, FolderItem *item,
 		cache_last = procmsg_get_last_num_in_msg_list(alist);
 		newlist = news_get_uncached_articles
 			(session, item, cache_last, &first, &last);
+		if (newlist)
+			item->cache_dirty = TRUE;
 		if (first == 0 && last == 0) {
 			news_delete_all_articles(item);
 			procmsg_msg_list_free(alist);
 			alist = NULL;
+			item->cache_dirty = TRUE;
 		} else {
 			alist = news_delete_old_articles(alist, item, first);
 			news_delete_expired_caches(alist, item);
@@ -334,11 +337,14 @@ static GSList *news_get_article_list(Folder *folder, FolderItem *item,
 			(session, item, 0, NULL, &last);
 		news_delete_all_articles(item);
 		item->last_num = last;
+		item->cache_dirty = TRUE;
 	}
 
 	procmsg_set_flags(alist, item);
 
 	alist = procmsg_sort_msg_list(alist, item->sort_key, item->sort_type);
+
+	debug_print("cache_dirty: %d\n", item->cache_dirty);
 
 	return alist;
 }
@@ -1014,6 +1020,7 @@ static GSList *news_delete_old_articles(GSList *alist, FolderItem *item,
 		if (msginfo && msginfo->msgnum < first) {
 			procmsg_msginfo_free(msginfo);
 			alist = g_slist_remove(alist, msginfo);
+			item->cache_dirty = TRUE;
 		}
 
 		cur = next;

@@ -888,6 +888,7 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 				item->total--;
 				mlist = g_slist_remove(mlist, msginfo);
 				procmsg_msginfo_free(msginfo);
+				item->cache_dirty = TRUE;
 				continue;
 			}
 
@@ -960,12 +961,15 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 			newlist = imap_get_uncached_messages(session, item,
 							     begin, last_uid,
 							     TRUE);
+			if (newlist)
+				item->cache_dirty = TRUE;
 			mlist = g_slist_concat(mlist, newlist);
 		}
 	} else {
 		imap_delete_all_cached_messages(item);
 		mlist = imap_get_uncached_messages(session, item, 0, 0, TRUE);
 		last_uid = procmsg_get_last_num_in_msg_list(mlist);
+		item->cache_dirty = TRUE;
 	}
 
 	item->mtime = uid_validity;
@@ -973,6 +977,8 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
 
 	item->last_num = last_uid;
+
+	debug_print("cache_dirty: %d\n", item->cache_dirty);
 
 catch:
 	return mlist;

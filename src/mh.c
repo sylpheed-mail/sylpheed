@@ -204,21 +204,27 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 	if (use_cache && item->mtime == cur_mtime) {
 		debug_print("Folder is not modified.\n");
 		mlist = procmsg_read_cache(item, FALSE);
-		if (!mlist)
+		if (!mlist) {
 			mlist = mh_get_uncached_msgs(NULL, item);
+			if (mlist)
+				item->cache_dirty = TRUE;
+		}
 	} else if (use_cache) {
 		GSList *newlist;
 
 		mlist = procmsg_read_cache(item, TRUE);
 		msg_table = procmsg_msg_hash_table_create(mlist);
-
 		newlist = mh_get_uncached_msgs(msg_table, item);
+		if (newlist)
+			item->cache_dirty = TRUE;
 		if (msg_table)
 			g_hash_table_destroy(msg_table);
 
 		mlist = g_slist_concat(mlist, newlist);
-	} else
+	} else {
 		mlist = mh_get_uncached_msgs(NULL, item);
+		item->cache_dirty = TRUE;
+	}
 
 	item->mtime = cur_mtime;
 
@@ -233,6 +239,7 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 	g_print("mh_get_msg_list: %s: elapsed time: %ld.%06ld sec\n",
 		item->path, tv_result.tv_sec, tv_result.tv_usec);
 #endif
+	debug_print("cache_dirty: %d\n", item->cache_dirty);
 
 	return mlist;
 }

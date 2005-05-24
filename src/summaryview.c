@@ -1955,7 +1955,8 @@ static gboolean summary_write_cache_func(GtkTreeModel *model,
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW);
 	}
 
-	procmsg_write_cache(msginfo, fps->cache_fp);
+	if (fps->cache_fp)
+		procmsg_write_cache(msginfo, fps->cache_fp);
 	procmsg_write_flags(msginfo, fps->mark_fp);
 
 	return FALSE;
@@ -1971,20 +1972,27 @@ gint summary_write_cache(SummaryView *summaryview)
 	if (!item || !item->path)
 		return -1;
 
-	fps.cache_fp = procmsg_open_cache_file(item, DATA_WRITE);
-	if (fps.cache_fp == NULL)
-		return -1;
+	if (item->cache_dirty) {
+		fps.cache_fp = procmsg_open_cache_file(item, DATA_WRITE);
+		if (fps.cache_fp == NULL)
+			return -1;
+	} else
+		fps.cache_fp = NULL;
 	fps.mark_fp = procmsg_open_mark_file(item, DATA_WRITE);
 	if (fps.mark_fp == NULL) {
-		fclose(fps.cache_fp);
+		if (fps.cache_fp)
+			fclose(fps.cache_fp);
 		return -1;
 	}
 
-	buf = g_strdup_printf(_("Writing summary cache (%s)..."), item->path);
-	debug_print(buf);
-	STATUSBAR_PUSH(summaryview->mainwin, buf);
-	gdk_flush();
-	g_free(buf);
+	if (item->cache_dirty) {
+		buf = g_strdup_printf(_("Writing summary cache (%s)..."),
+				      item->path);
+		debug_print(buf);
+		STATUSBAR_PUSH(summaryview->mainwin, buf);
+		gdk_flush();
+		g_free(buf);
+	}
 
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
 			       summary_write_cache_func, &fps);
@@ -1992,11 +2000,17 @@ gint summary_write_cache(SummaryView *summaryview)
 	procmsg_flush_mark_queue(item, fps.mark_fp);
 	item->unmarked_num = 0;
 
-	fclose(fps.cache_fp);
+	if (fps.cache_fp)
+		fclose(fps.cache_fp);
 	fclose(fps.mark_fp);
 
 	debug_print(_("done.\n"));
-	STATUSBAR_POP(summaryview->mainwin);
+
+	if (item->cache_dirty) {
+		STATUSBAR_POP(summaryview->mainwin);
+	}
+
+	item->cache_dirty = FALSE;
 
 	return 0;
 }
@@ -2914,6 +2928,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	MsgInfo *disp_msginfo = NULL, *msginfo;
+	FolderItem *item = summaryview->folder_item;
 	GtkTreeIter iter, next;
 	GtkTreePath *path;
 	gboolean valid;
@@ -2940,7 +2955,7 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 		}
 	}
 
-	if (summaryview->folder_item->threaded)
+	if (item->threaded)
 		summary_modify_threads(summaryview);
 
 	/* update selection */
@@ -2990,6 +3005,8 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 
 		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 		procmsg_msginfo_free(msginfo);
+
+		item->cache_dirty = TRUE;
 	}
 
 	if (summaryview->displayed &&
@@ -3442,6 +3459,8 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 	g_node_destroy(root);
 
 	gtk_tree_store_remove(GTK_TREE_STORE(model), iter);
+
+	summaryview->folder_item->cache_dirty = TRUE;
 }
 
 static void summary_modify_threads(SummaryView *summaryview)

@@ -1,5 +1,17 @@
 2005-05-24
 
+	* src/folder.[ch]: added FolderItem::cache_dirty flag to determine
+	  if cache file really needs to be updated.
+	* src/mh.c
+	  src/imap.c
+	  src/procmsg.c
+	  src/news.c: set cache_dirty flag if folder contents differ from
+	  the cache file.
+	* src/summaryview.c: set cache_dirty flag if folder contents changed.
+	  Write cache file only if cache_dirty flag is set.
+
+2005-05-24
+
 	* src/compose.c: disable attach toggle button for now.
 
 2005-05-24

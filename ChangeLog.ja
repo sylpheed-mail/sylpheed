@@ -1,5 +1,18 @@
 2005-05-24
 
+	* src/folder.[ch]: FolderItem::cache_dirty を追加し、キャッシュ
+	  ファイルを本当に更新する必要があるかどうかを判断するようにした。
+	* src/mh.c
+	  src/imap.c
+	  src/procmsg.c
+	  src/news.c: フォルダの内容とキャッシュファイルが異なる場合に
+	  cache_dirty フラグを立てるようにした。
+	* src/summaryview.c: フォルダの内容が変更されたら cache_dirty フラグ
+	  を立てるようにした。 cache_dirty フラグが立っている場合のみ
+	  キャッシュファイルを書き出すようにした。
+
+2005-05-24
+
 	* src/compose.c: 添付トグルボタンを現状無効にした。
 
 2005-05-24

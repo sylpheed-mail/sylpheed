@@ -255,6 +255,8 @@ struct _FolderItem
 	guint opened    : 1; /* opened by summary view */
 	guint updated   : 1; /* folderview should be updated */
 
+	guint cache_dirty : 1; /* cache file needs to be updated */
+
 	FolderSortKey sort_key;
 	FolderSortType sort_type;
 
