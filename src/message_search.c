@@ -53,7 +53,6 @@ static struct MessageSearchWindow {
 	GtkWidget *window;
 	GtkWidget *body_entry;
 	GtkWidget *case_checkbtn;
-	GtkWidget *clear_btn;
 	GtkWidget *prev_btn;
 	GtkWidget *next_btn;
 	GtkWidget *close_btn;
@@ -61,15 +60,17 @@ static struct MessageSearchWindow {
 	MessageView *messageview;
 } search_window;
 
-static void message_search_create(void);
-static void message_search_execute(gboolean backward);
+static void message_search_create	(void);
+static void message_search_execute	(gboolean	 backward);
 
-static void message_search_clear(GtkButton *button, gpointer data);
-static void message_search_prev_clicked(GtkButton *button, gpointer data);
-static void message_search_next_clicked(GtkButton *button, gpointer data);
-static void body_activated(void);
-static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
-			    gpointer data);
+static void message_search_prev_clicked	(GtkButton	*button,
+					 gpointer	 data);
+static void message_search_next_clicked	(GtkButton	*button,
+					 gpointer	 data);
+static void body_activated		(void);
+static gboolean key_pressed		(GtkWidget	*widget,
+					 GdkEventKey	*event,
+					 gpointer	 data);
 
 void message_search(MessageView *messageview)
 {
@@ -96,7 +97,6 @@ static void message_search_create(void)
 
 	GtkWidget *checkbtn_hbox;
 	GtkWidget *case_checkbtn;
-	GtkWidget *clear_btn;
 
 	GtkWidget *confirm_area;
 	GtkWidget *prev_btn;
@@ -143,10 +143,6 @@ static void message_search_create(void)
 	gtk_box_pack_start (GTK_BOX (checkbtn_hbox), case_checkbtn,
 			    FALSE, FALSE, 0);
 
-	clear_btn = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
-	gtk_widget_show(clear_btn);
-	gtk_box_pack_end(GTK_BOX(checkbtn_hbox), clear_btn, FALSE, FALSE, 0);
-
 	gtkut_stock_button_set_create(&confirm_area,
 				      &prev_btn, GTK_STOCK_GO_BACK,
 				      &next_btn, GTK_STOCK_GO_FORWARD,
@@ -155,8 +151,6 @@ static void message_search_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox1), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(next_btn);
 
-	g_signal_connect(G_OBJECT(clear_btn), "clicked",
-			 G_CALLBACK(message_search_clear), NULL);
 	g_signal_connect(G_OBJECT(prev_btn), "clicked",
 			 G_CALLBACK(message_search_prev_clicked), NULL);
 	g_signal_connect(G_OBJECT(next_btn), "clicked",
@@ -170,7 +164,6 @@ static void message_search_create(void)
 	search_window.window = window;
 	search_window.body_entry = body_entry;
 	search_window.case_checkbtn = case_checkbtn;
-	search_window.clear_btn = clear_btn;
 	search_window.prev_btn = prev_btn;
 	search_window.next_btn = next_btn;
 	search_window.close_btn = close_btn;
@@ -230,11 +223,6 @@ static void message_search_execute(gboolean backward)
 		} else
 			break;
 	}
-}
-
-static void message_search_clear(GtkButton *button, gpointer data)
-{
-	gtk_editable_delete_text(GTK_EDITABLE(search_window.body_entry), 0, -1);
 }
 
 static void message_search_prev_clicked(GtkButton *button, gpointer data)
