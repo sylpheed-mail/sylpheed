@@ -2944,29 +2944,18 @@ gint execute_command_line(const gchar *cmdline, gboolean async)
 
 gchar *get_command_output(const gchar *cmdline)
 {
-	gchar buf[BUFFSIZE];
-	FILE *fp;
-	GString *str;
-	gchar *ret;
+	gchar *child_stdout;
+	gint status;
 
 	g_return_val_if_fail(cmdline != NULL, NULL);
 
-	if ((fp = popen(cmdline, "r")) == NULL) {
-		FILE_OP_ERROR(cmdline, "popen");
+	if (g_spawn_command_line_sync(cmdline, &child_stdout, NULL, &status,
+				      NULL) == FALSE) {
+		g_warning("Can't execute command: %s\n", cmdline);
 		return NULL;
 	}
 
-	str = g_string_new("");
-
-	while (fgets(buf, sizeof(buf), fp) != NULL)
-		g_string_append(str, buf);
-
-	pclose(fp);
-
-	ret = str->str;
-	g_string_free(str, FALSE);
-
-	return ret;
+	return child_stdout;
 }
 
 gint open_uri(const gchar *uri, const gchar *cmdline)
