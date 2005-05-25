@@ -1082,7 +1082,9 @@ static void textview_write_link(TextView *textview, const gchar *str,
 	gchar *bufp;
 	RemoteURI *r_uri;
 
-	if (*str == '\0')
+	if (!str || *str == '\0')
+		return;
+	if (!uri)
 		return;
 
 	buffer = gtk_text_view_get_buffer(text);
@@ -1095,10 +1097,20 @@ static void textview_write_link(TextView *textview, const gchar *str,
 	} else
 		buf = g_strdup(str);
 
+	if (g_utf8_validate(buf, -1, NULL) == FALSE) {
+		g_free(buf);
+		return;
+	}
+
 	strcrchomp(buf);
 
-	for (bufp = buf; g_ascii_isspace(*bufp); bufp++)
-		;
+	for (bufp = buf; *bufp != '\0'; bufp = g_utf8_next_char(bufp)) {
+		gunichar ch;
+
+		ch = g_utf8_get_char(bufp);
+		if (!g_unichar_isspace(ch))
+			break;
+	}
 	if (bufp > buf)
 		gtk_text_buffer_insert(buffer, &iter, buf, bufp - buf);
 
@@ -1515,18 +1527,8 @@ static gboolean textview_smooth_scroll_page(TextView *textview, gboolean up)
 	return TRUE;
 }
 
-#warning FIXME_GTK2
-#if 0
-#define KEY_PRESS_EVENT_STOP() \
-	if (gtk_signal_n_emissions_by_name \
-		(GTK_OBJECT(widget), "key-press-event") > 0) { \
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), \
-					     "key-press-event"); \
-	}
-#else
 #define KEY_PRESS_EVENT_STOP() \
 	g_signal_stop_emission_by_name(G_OBJECT(widget), "key-press-event");
-#endif
 
 static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 				     TextView *textview)

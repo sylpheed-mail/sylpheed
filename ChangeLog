@@ -1,5 +1,10 @@
 2005-05-25
 
+	* src/textview.c: textview_write_link(): also skip non-ascii space
+	  at the head of link strings (phishing check didn't work at the case).
+
+2005-05-25
+
 	* src/utils.c: get_command_output(): use g_spawn_command_line_sync()
 	  instead of popen().
 

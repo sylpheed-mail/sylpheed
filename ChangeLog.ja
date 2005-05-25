@@ -1,5 +1,11 @@
 2005-05-25
 
+	* src/textview.c: textview_write_link(): リンク文字列の先頭の
+	  非 ASCII 空白もスキップするようにした(その場合フィッシングチェック
+	  が働かなかった)。
+
+2005-05-25
+
 	* src/utils.c: get_command_output(): popen() でなく
 	  g_spawn_command_line_sync() を使用するようにした。
 
