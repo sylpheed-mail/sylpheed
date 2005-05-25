@@ -46,6 +46,7 @@
 #include "inputdialog.h"
 #include "alertpanel.h"
 #include "manage_window.h"
+#include "socket.h"
 #include "utils.h"
 
 #define SMTP_PORT	25
@@ -268,27 +269,56 @@ gint send_message_queue(QueueInfo *qinfo)
 
 static gint send_message_local(const gchar *command, FILE *fp)
 {
-	FILE *pipefp;
+	gchar **argv;
+	GPid pid;
+	gint child_stdin;
 	gchar buf[BUFFSIZE];
+	gboolean err = FALSE;
 
 	g_return_val_if_fail(command != NULL, -1);
 	g_return_val_if_fail(fp != NULL, -1);
 
-	pipefp = popen(command, "w");
-	if (!pipefp) {
-		g_warning("Can't execute external command: %s\n", command);
+	log_message(_("Sending message using command: %s\n"), command);
+
+	argv = strsplit_with_quote(command, " ", 0);
+
+	if (g_spawn_async_with_pipes(NULL, argv, NULL, 0, NULL, NULL, &pid,
+				     &child_stdin, NULL, NULL, NULL) == FALSE) {
+		g_snprintf(buf, sizeof(buf),
+			   _("Can't execute command: %s"), command);
+		log_warning("%s\n", buf);
+		alertpanel_error("%s", buf);
+		g_strfreev(argv);
 		return -1;
 	}
+	g_strfreev(argv);
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		strretchomp(buf);
-		if (buf[0] == '.' && buf[1] == '\0')
-			fputc('.', pipefp);
-		fputs(buf, pipefp);
-		fputc('\n', pipefp);
+		if (buf[0] == '.' && buf[1] == '\0') {
+			if (fd_write_all(child_stdin, ".", 1) < 0) {
+				err = TRUE;
+				break;
+			}
+		}
+		if (fd_write_all(child_stdin, buf, strlen(buf)) < 0 ||
+		    fd_write_all(child_stdin, "\n", 1) < 0) {
+			err = TRUE;
+			break;
+		}
 	}
 
-	pclose(pipefp);
+	fd_close(child_stdin);
+	g_spawn_close_pid(pid);
+
+	if (err) {
+		g_snprintf(buf, sizeof(buf),
+			   _("Error occurred while executing command: %s"),
+			   command);
+		log_warning("%s\n", buf);
+		alertpanel_error("%s", buf);
+		return -1;
+	}
 
 	return 0;
 }
