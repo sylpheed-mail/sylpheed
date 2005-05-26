@@ -149,6 +149,7 @@ private:
 	gboolean can_toggle_selection;
 	gboolean on_drag;
 	GtkTreePath *pressed_path;
+	gchar *drag_list;
 
 	/* unthreading */
 	GSList *pos_list;

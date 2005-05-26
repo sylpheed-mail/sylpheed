@@ -1517,6 +1517,17 @@ void decode_uri(gchar *decoded_uri, const gchar *encoded_uri)
 	*dec = '\0';
 }
 
+gchar *encode_uri(const gchar *filename)
+{
+	gchar *uri;
+
+	uri = g_filename_to_uri(filename, NULL, NULL);
+	if (!uri)
+		uri = g_strconcat("file://", filename, NULL);
+
+	return uri;
+}
+
 gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 		     gchar **subject, gchar **body)
 {

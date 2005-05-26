@@ -387,6 +387,9 @@ void mimeview_clear(MimeView *mimeview)
 
 	g_free(mimeview->file);
 	mimeview->file = NULL;
+
+	g_free(mimeview->drag_file);
+	mimeview->drag_file = NULL;
 }
 
 void mimeview_destroy(MimeView *mimeview)
@@ -948,9 +951,10 @@ static void mimeview_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
 
 	if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
 		g_warning(_("Can't save the part of multipart message."));
-		g_free(filename);
 	} else
-		mimeview->drag_file = filename;
+		mimeview->drag_file = encode_uri(filename);
+
+	g_free(filename);
 
 	gtk_drag_set_icon_default(drag_context);
 }
@@ -971,14 +975,11 @@ static void mimeview_drag_data_get(GtkWidget	    *widget,
 				   guint	     time,
 				   MimeView	    *mimeview)
 {
-	gchar *uriname;
-
 	if (!mimeview->drag_file) return;
 
-	uriname = g_strconcat("file://", mimeview->drag_file, NULL);
 	gtk_selection_data_set(selection_data, selection_data->target, 8,
-			       uriname, strlen(uriname));
-	g_free(uriname);
+			       mimeview->drag_file,
+			       strlen(mimeview->drag_file));
 }
 
 static void mimeview_display_as_text(MimeView *mimeview)

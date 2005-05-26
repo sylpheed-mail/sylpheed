@@ -495,6 +495,7 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	g_free(filename);
 
 	/* delete temporary files */
+	remove_all_files(get_tmp_dir());
 	remove_all_files(get_mime_tmp_dir());
 
 	close_log_file();

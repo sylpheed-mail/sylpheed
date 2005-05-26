@@ -260,6 +260,9 @@ static void summary_column_clicked	(GtkWidget		*button,
 static void summary_drag_begin		(GtkWidget	  *widget,
 					 GdkDragContext	  *drag_context,
 					 SummaryView	  *summaryview);
+static void summary_drag_end		(GtkWidget	  *widget,
+					 GdkDragContext	  *drag_context,
+					 SummaryView	  *summaryview);
 static void summary_drag_data_get       (GtkWidget        *widget,
 					 GdkDragContext   *drag_context,
 					 GtkSelectionData *selection_data,
@@ -762,6 +765,10 @@ void summary_clear_list(SummaryView *summaryview)
 	if (summaryview->pressed_path) {
 		gtk_tree_path_free(summaryview->pressed_path);
 		summaryview->pressed_path = NULL;
+	}
+	if (summaryview->drag_list) {
+		g_free(summaryview->drag_list);
+		summaryview->drag_list = NULL;
 	}
 
 	gtk_tree_view_set_model(treeview, NULL);
@@ -3988,6 +3995,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 
 	g_signal_connect_after(G_OBJECT(treeview), "drag-begin",
 			 G_CALLBACK(summary_drag_begin), summaryview);
+	g_signal_connect_after(G_OBJECT(treeview), "drag-end",
+			 G_CALLBACK(summary_drag_end), summaryview);
 	g_signal_connect(G_OBJECT(treeview), "drag-data-get",
 			 G_CALLBACK(summary_drag_data_get), summaryview);
 
@@ -4429,6 +4438,15 @@ static void summary_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
 	gtk_drag_set_icon_default(drag_context);
 }
 
+static void summary_drag_end(GtkWidget *widget, GdkDragContext *drag_context,
+			     SummaryView *summaryview)
+{
+	if (summaryview->drag_list) {
+		g_free(summaryview->drag_list);
+		summaryview->drag_list = NULL;
+	}
+}
+
 static void summary_drag_data_get(GtkWidget        *widget,
 				  GdkDragContext   *drag_context,
 				  GtkSelectionData *selection_data,
@@ -4438,43 +4456,91 @@ static void summary_drag_data_get(GtkWidget        *widget,
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GList *rows, *cur;
-	gchar *mail_list = NULL, *uri, *file;
+	gchar *mail_list = NULL;
+	gchar *file, *filename, *fs_filename, *tmp;
+	gint suffix = 0;
 	MsgInfo *msginfo;
 	GtkTreeIter iter;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	if (!summaryview->drag_list) {
+		rows = gtk_tree_selection_get_selected_rows
+			(summaryview->selection, NULL);
 
-	for (cur = rows; cur != NULL; cur = cur->next) {
-		gtk_tree_model_get_iter(model, &iter,
-					(GtkTreePath *)cur->data);
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO,
-				   &msginfo, -1);
-		file = procmsg_get_message_file(msginfo);
-		if (!file) continue;
-		uri = g_strconcat("file://", file, NULL);
-		g_free(file);
+		for (cur = rows; cur != NULL; cur = cur->next) {
+			gtk_tree_model_get_iter(model, &iter,
+						(GtkTreePath *)cur->data);
+			gtk_tree_model_get(model, &iter, S_COL_MSG_INFO,
+					   &msginfo, -1);
+			file = procmsg_get_message_file(msginfo);
+			if (!file) continue;
 
-		if (!mail_list) {
-			mail_list = uri;
-		} else {
-			file = g_strconcat(mail_list, "\n", uri, NULL);
-			g_free(mail_list);
-			g_free(uri);
-			mail_list = file;
+			if (msginfo->subject && *msginfo->subject != '\0') {
+				filename = g_strdup(msginfo->subject);
+				subst_for_filename(filename);
+			} else
+				filename = g_strdup(g_basename(file));
+			fs_filename = conv_filename_from_utf8(filename);
+
+			suffix = 0;
+			do {
+				if (suffix == 0)
+					tmp = g_strdup_printf
+						("%s%c%s.eml", get_tmp_dir(),
+						 G_DIR_SEPARATOR,
+						 fs_filename);
+				else
+					tmp = g_strdup_printf
+						("%s%c%s_(%d).eml",
+						 get_tmp_dir(),
+						 G_DIR_SEPARATOR, fs_filename,
+						 suffix);
+
+				if (is_file_exist(tmp)) {
+					suffix++;
+					g_free(tmp);
+				} else
+					break;
+			} while (1);
+
+			if (copy_file(file, tmp, FALSE) < 0) {
+				g_warning("Can't copy '%s'\n", file);
+			} else {
+				gchar *uri;
+
+				uri = encode_uri(tmp);
+
+				if (!mail_list) {
+					mail_list = uri;
+				} else {
+					gchar *list_tmp;
+
+					list_tmp = g_strconcat
+						(mail_list, "\n", uri, NULL);
+					g_free(mail_list);
+					g_free(uri);
+					mail_list = list_tmp;
+				}
+			}
+
+			g_free(tmp);
+			g_free(fs_filename);
+			g_free(filename);
+			g_free(file);
+			gtk_tree_path_free((GtkTreePath *)cur->data);
 		}
 
-		gtk_tree_path_free((GtkTreePath *)cur->data);
+		g_list_free(rows);
+
+		summaryview->drag_list = mail_list;
 	}
 
-	if (mail_list != NULL) {
+	if (summaryview->drag_list) {
 		gtk_selection_data_set(selection_data,
 				       selection_data->target, 8,
-				       mail_list, strlen(mail_list));
-		g_free(mail_list);
+				       summaryview->drag_list,
+				       strlen(summaryview->drag_list));
 	}
 
-	g_list_free(rows);
 }
 
 
