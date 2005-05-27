@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -344,7 +344,8 @@ static GSList *news_get_article_list(Folder *folder, FolderItem *item,
 
 	alist = procmsg_sort_msg_list(alist, item->sort_key, item->sort_type);
 
-	debug_print("cache_dirty: %d\n", item->cache_dirty);
+	debug_print("cache_dirty: %d, mark_dirty: %d\n",
+		    item->cache_dirty, item->mark_dirty);
 
 	return alist;
 }

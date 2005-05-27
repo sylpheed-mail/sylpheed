@@ -1,5 +1,17 @@
 2005-05-27
 
+	* src/mh.c
+	  src/compose.c
+	  src/folder.[ch]
+	  src/imap.c
+	  src/procmsg.c
+	  src/news.c
+	  src/summaryview.c: added FolderItem::mark_dirty flag to determine
+	  if mark file really needs to be updated.
+	  Write mark file only if cache_dirty or mark_dirty flag is set.
+
+2005-05-27
+
 	* src/imap.c: don't destroy the previous Session object when
 	  reconnecting (fixed crash when reconnection happened while scanning
 	  tree).

@@ -175,6 +175,7 @@ FolderItem *folder_item_new(const gchar *name, const gchar *path)
 	item->opened = FALSE;
 	item->updated = FALSE;
 	item->cache_dirty = FALSE;
+	item->mark_dirty = FALSE;
 	item->node = NULL;
 	item->parent = NULL;
 	item->folder = NULL;

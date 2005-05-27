@@ -256,6 +256,7 @@ struct _FolderItem
 	guint updated   : 1; /* folderview should be updated */
 
 	guint cache_dirty : 1; /* cache file needs to be updated */
+	guint mark_dirty  : 1; /* mark file needs to be updated */
 
 	FolderSortKey sort_key;
 	FolderSortType sort_type;

@@ -926,6 +926,7 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 				mlist = g_slist_remove(mlist, msginfo);
 				procmsg_msginfo_free(msginfo);
 				item->cache_dirty = TRUE;
+				item->mark_dirty = TRUE;
 				continue;
 			}
 
@@ -934,27 +935,46 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 					item->unread++;
 					MSG_SET_PERM_FLAGS(msginfo->flags,
 							   MSG_UNREAD);
+					item->mark_dirty = TRUE;
 				}
 			} else {
-				if (MSG_IS_NEW(msginfo->flags))
+				if (MSG_IS_NEW(msginfo->flags)) {
 					item->new--;
-				if (MSG_IS_UNREAD(msginfo->flags))
+					item->mark_dirty = TRUE;
+				}
+				if (MSG_IS_UNREAD(msginfo->flags)) {
 					item->unread--;
+					item->mark_dirty = TRUE;
+				}
 				MSG_UNSET_PERM_FLAGS(msginfo->flags,
 						     MSG_NEW|MSG_UNREAD);
 			}
 
 			if (IMAP_IS_FLAGGED(imap_flags)) {
-				MSG_SET_PERM_FLAGS(msginfo->flags, MSG_MARKED);
+				if (!MSG_IS_MARKED(msginfo->flags)) {
+					MSG_SET_PERM_FLAGS(msginfo->flags,
+							   MSG_MARKED);
+					item->mark_dirty = TRUE;
+				}
 			} else {
-				MSG_UNSET_PERM_FLAGS(msginfo->flags,
-						     MSG_MARKED);
+				if (MSG_IS_MARKED(msginfo->flags)) {
+					MSG_UNSET_PERM_FLAGS(msginfo->flags,
+							     MSG_MARKED);
+					item->mark_dirty = TRUE;
+				}
 			}
 			if (IMAP_IS_ANSWERED(imap_flags)) {
-				MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
+				if (!MSG_IS_REPLIED(msginfo->flags)) {
+					MSG_SET_PERM_FLAGS(msginfo->flags,
+							   MSG_REPLIED);
+					item->mark_dirty = TRUE;
+				}
 			} else {
-				MSG_UNSET_PERM_FLAGS(msginfo->flags,
-						     MSG_REPLIED);
+				if (MSG_IS_REPLIED(msginfo->flags)) {
+					MSG_UNSET_PERM_FLAGS(msginfo->flags,
+							     MSG_REPLIED);
+					item->mark_dirty = TRUE;
+				}
 			}
 		}
 
@@ -1015,7 +1035,8 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 
 	item->last_num = last_uid;
 
-	debug_print("cache_dirty: %d\n", item->cache_dirty);
+	debug_print("cache_dirty: %d, mark_dirty: %d\n",
+		    item->cache_dirty, item->mark_dirty);
 
 catch:
 	return mlist;

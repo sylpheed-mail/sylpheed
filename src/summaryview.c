@@ -1964,7 +1964,8 @@ static gboolean summary_write_cache_func(GtkTreeModel *model,
 
 	if (fps->cache_fp)
 		procmsg_write_cache(msginfo, fps->cache_fp);
-	procmsg_write_flags(msginfo, fps->mark_fp);
+	if (fps->mark_fp)
+		procmsg_write_flags(msginfo, fps->mark_fp);
 
 	return FALSE;
 }
@@ -1978,19 +1979,28 @@ gint summary_write_cache(SummaryView *summaryview)
 	item = summaryview->folder_item;
 	if (!item || !item->path)
 		return -1;
+	if (item->mark_queue)
+		item->mark_dirty = TRUE;
+	if (!item->cache_dirty && !item->mark_dirty)
+		return 0;
 
 	if (item->cache_dirty) {
 		fps.cache_fp = procmsg_open_cache_file(item, DATA_WRITE);
 		if (fps.cache_fp == NULL)
 			return -1;
+		item->mark_dirty = TRUE;
 	} else
 		fps.cache_fp = NULL;
-	fps.mark_fp = procmsg_open_mark_file(item, DATA_WRITE);
-	if (fps.mark_fp == NULL) {
-		if (fps.cache_fp)
-			fclose(fps.cache_fp);
-		return -1;
-	}
+
+	if (item->mark_dirty) {
+		fps.mark_fp = procmsg_open_mark_file(item, DATA_WRITE);
+		if (fps.mark_fp == NULL) {
+			if (fps.cache_fp)
+				fclose(fps.cache_fp);
+			return -1;
+		}
+	} else
+		fps.mark_fp = NULL;
 
 	if (item->cache_dirty) {
 		buf = g_strdup_printf(_("Writing summary cache (%s)..."),
@@ -2004,12 +2014,15 @@ gint summary_write_cache(SummaryView *summaryview)
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
 			       summary_write_cache_func, &fps);
 
-	procmsg_flush_mark_queue(item, fps.mark_fp);
+	if (item->mark_queue)
+		procmsg_flush_mark_queue(item, fps.mark_fp);
+
 	item->unmarked_num = 0;
 
 	if (fps.cache_fp)
 		fclose(fps.cache_fp);
-	fclose(fps.mark_fp);
+	if (fps.mark_fp)
+		fclose(fps.mark_fp);
 
 	debug_print(_("done.\n"));
 
@@ -2017,7 +2030,7 @@ gint summary_write_cache(SummaryView *summaryview)
 		STATUSBAR_POP(summaryview->mainwin);
 	}
 
-	item->cache_dirty = FALSE;
+	item->cache_dirty = item->mark_dirty = FALSE;
 
 	return 0;
 }
@@ -2116,9 +2129,11 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			summaryview->folder_item->new--;
 		if (MSG_IS_UNREAD(msginfo->flags))
 			summaryview->folder_item->unread--;
-		if (MSG_IS_NEW(msginfo->flags) || MSG_IS_UNREAD(msginfo->flags)) {
+		if (MSG_IS_NEW(msginfo->flags) ||
+		    MSG_IS_UNREAD(msginfo->flags)) {
 			MSG_UNSET_PERM_FLAGS
 				(msginfo->flags, MSG_NEW | MSG_UNREAD);
+			summaryview->folder_item->mark_dirty = TRUE;
 			if (MSG_IS_IMAP(msginfo->flags))
 				imap_msg_unset_perm_flags
 					(msginfo, MSG_NEW | MSG_UNREAD);
@@ -2293,6 +2308,7 @@ static void summary_mark_row(SummaryView *summaryview, GtkTreeIter *iter)
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
 	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_MARKED);
+	summaryview->folder_item->mark_dirty = TRUE;
 	summary_set_row(summaryview, iter, msginfo);
 
 	debug_print(_("Message %d is marked\n"), msginfo->msgnum);
@@ -2338,6 +2354,7 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 		summaryview->folder_item->unread--;
 	if (MSG_IS_NEW(msginfo->flags) || MSG_IS_UNREAD(msginfo->flags)) {
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW | MSG_UNREAD);
+		summaryview->folder_item->mark_dirty = TRUE;
 		summary_set_row(summaryview, iter, msginfo);
 		debug_print(_("Message %d is marked as being read\n"),
 			    msginfo->msgnum);
@@ -2407,11 +2424,13 @@ static void summary_mark_row_as_unread(SummaryView *summaryview,
 		msginfo->to_folder = NULL;
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 		summaryview->deleted--;
+		summaryview->folder_item->mark_dirty = TRUE;
 	}
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_REPLIED | MSG_FORWARDED);
 	if (!MSG_IS_UNREAD(msginfo->flags)) {
 		MSG_SET_PERM_FLAGS(msginfo->flags, MSG_UNREAD);
 		summaryview->folder_item->unread++;
+		summaryview->folder_item->mark_dirty = TRUE;
 		debug_print(_("Message %d is marked as unread\n"),
 			    msginfo->msgnum);
 	}
@@ -2462,6 +2481,7 @@ static void summary_delete_row(SummaryView *summaryview, GtkTreeIter *iter)
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
 	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 	summaryview->deleted++;
+	summaryview->folder_item->mark_dirty = TRUE;
 
 	if (!prefs_common.immediate_exec && 
 	    summaryview->folder_item->stype != F_TRASH)
@@ -2586,6 +2606,7 @@ static void summary_unmark_row(SummaryView *summaryview, GtkTreeIter *iter)
 		summaryview->copied--;
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_MARKED | MSG_DELETED);
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
+	summaryview->folder_item->mark_dirty = TRUE;
 	summary_set_row(summaryview, iter, msginfo);
 
 	debug_print(_("Message %s/%d is unmarked\n"),
@@ -2637,6 +2658,7 @@ static void summary_move_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MOVE);
 		summaryview->moved++;
 	}
+	summaryview->folder_item->mark_dirty = TRUE;
 	if (!prefs_common.immediate_exec)
 		summary_set_row(summaryview, iter, msginfo);
 
@@ -2710,6 +2732,7 @@ static void summary_copy_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_COPY);
 		summaryview->copied++;
 	}
+	summaryview->folder_item->mark_dirty = TRUE;
 	if (!prefs_common.immediate_exec)
 		summary_set_row(summaryview, iter, msginfo);
 

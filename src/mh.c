@@ -239,7 +239,8 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 	g_print("mh_get_msg_list: %s: elapsed time: %ld.%06ld sec\n",
 		item->path, tv_result.tv_sec, tv_result.tv_usec);
 #endif
-	debug_print("cache_dirty: %d\n", item->cache_dirty);
+	debug_print("cache_dirty: %d, mark_dirty: %d\n",
+		    item->cache_dirty, item->mark_dirty);
 
 	return mlist;
 }

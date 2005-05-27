@@ -328,6 +328,7 @@ void procmsg_set_flags(GSList *mlist, FolderItem *item)
 	if (!mark_table) {
 		item->new = item->unread = item->total = g_slist_length(mlist);
 		item->updated = TRUE;
+		item->mark_dirty = TRUE;
 		return;
 	}
 
@@ -340,6 +341,7 @@ void procmsg_set_flags(GSList *mlist, FolderItem *item)
 			if (!flags) {
 				g_hash_table_foreach(mark_table,
 						     mark_unset_new_func, NULL);
+				item->mark_dirty = TRUE;
 				break;
 			}
 		}
@@ -381,6 +383,9 @@ void procmsg_set_flags(GSList *mlist, FolderItem *item)
 	item->unmarked_num = unflagged;
 	item->last_num = lastnum;
 	item->updated = TRUE;
+
+	if (unflagged > 0)
+		item->mark_dirty = TRUE;
 
 	debug_print("new: %d unread: %d unflagged: %d total: %d\n",
 		    new, unread, unflagged, total);
@@ -628,6 +633,7 @@ static GHashTable *procmsg_read_mark_file(FolderItem *item)
 
 	if (item->mark_queue) {
 		g_hash_table_foreach(mark_table, mark_unset_new_func, NULL);
+		item->mark_dirty = TRUE;
 	}
 
 	for (cur = item->mark_queue; cur != NULL; cur = cur->next) {
@@ -650,6 +656,7 @@ static GHashTable *procmsg_read_mark_file(FolderItem *item)
 		procmsg_write_mark_file(item, mark_table);
 		procmsg_msg_list_free(item->mark_queue);
 		item->mark_queue = NULL;
+		item->mark_dirty = FALSE;
 	}
 
 	return mark_table;
