@@ -84,6 +84,8 @@ static Folder	*imap_folder_new	(const gchar	*name,
 static void	 imap_folder_destroy	(Folder		*folder);
 
 static Session *imap_session_new	(PrefsAccount	*account);
+static gint imap_session_connect	(IMAPSession	*session);
+static gint imap_session_reconnect	(IMAPSession	*session);
 static void imap_session_destroy	(Session	*session);
 /* static void imap_session_destroy_all	(void); */
 
@@ -455,11 +457,14 @@ static IMAPSession *imap_session_get(Folder *folder)
 		log_warning(_("IMAP4 connection to %s has been"
 			      " disconnected. Reconnecting...\n"),
 			    folder->account->recv_server);
-		session_destroy(rfolder->session);
-		rfolder->session = imap_session_new(folder->account);
-		if (rfolder->session)
+		if (imap_session_reconnect(IMAP_SESSION(rfolder->session))
+		    == IMAP_SUCCESS)
 			imap_parse_namespace(IMAP_SESSION(rfolder->session),
 					     IMAP_FOLDER(folder));
+		else {
+			session_destroy(rfolder->session);
+			rfolder->session = NULL;
+		}
 	}
 
 	return IMAP_SESSION(rfolder->session);
@@ -526,24 +531,11 @@ static gint imap_auth(IMAPSession *session, const gchar *user,
 static Session *imap_session_new(PrefsAccount *account)
 {
 	IMAPSession *session;
-	SockInfo *sock;
-	gchar *pass;
 	gushort port;
 
 	g_return_val_if_fail(account != NULL, NULL);
 	g_return_val_if_fail(account->recv_server != NULL, NULL);
 	g_return_val_if_fail(account->userid != NULL, NULL);
-
-	pass = account->passwd;
-	if (!pass) {
-		gchar *tmp_pass;
-		tmp_pass = input_dialog_query_password(account->recv_server,
-						       account->userid);
-		if (!tmp_pass)
-			return NULL;
-		Xstrdup_a(pass, tmp_pass, {g_free(tmp_pass); return NULL;});
-		g_free(tmp_pass);
-	}
 
 #if USE_SSL
 	port = account->set_imapport ? account->imapport
@@ -552,26 +544,19 @@ static Session *imap_session_new(PrefsAccount *account)
 	port = account->set_imapport ? account->imapport : IMAP4_PORT;
 #endif
 
-	log_message(_("creating IMAP4 connection to %s:%d ...\n"),
-		    account->recv_server, port);
-
-#if USE_SSL
-	if ((sock = imap_open(account->recv_server, port,
-				   account->ssl_imap)) == NULL)
-#else
-	if ((sock = imap_open(account->recv_server, port)) == NULL)
-#endif
-		return NULL;
-
 	session = g_new0(IMAPSession, 1);
 
 	session_init(SESSION(session));
 
 	SESSION(session)->type             = SESSION_IMAP;
+	SESSION(session)->sock             = NULL;
 	SESSION(session)->server           = g_strdup(account->recv_server);
-	SESSION(session)->sock             = sock;
+	SESSION(session)->port             = port;
+#if USE_SSL
+	SESSION(session)->ssl_type         = account->ssl_imap;
+#endif
 	SESSION(session)->last_access_time = time(NULL);
-	SESSION(session)->data             = NULL;
+	SESSION(session)->data             = account;
 
 	SESSION(session)->destroy          = imap_session_destroy;
 
@@ -581,15 +566,55 @@ static Session *imap_session_new(PrefsAccount *account)
 
 	session_list = g_list_append(session_list, session);
 
-	if (imap_greeting(session) != IMAP_SUCCESS) {
+	if (imap_session_connect(session) != IMAP_SUCCESS) {
 		session_destroy(SESSION(session));
 		return NULL;
 	}
 
-	if (imap_cmd_capability(session) != IMAP_SUCCESS) {
-		session_destroy(SESSION(session));
-		return NULL;
+	return SESSION(session);
+}
+
+static gint imap_session_connect(IMAPSession *session)
+{
+	SockInfo *sock;
+	PrefsAccount *account;
+	gchar *pass;
+
+	g_return_val_if_fail(session != NULL, IMAP_ERROR);
+
+	account = (PrefsAccount *)(SESSION(session)->data);
+
+	log_message(_("creating IMAP4 connection to %s:%d ...\n"),
+		    SESSION(session)->server, SESSION(session)->port);
+
+	pass = account->passwd;
+	if (!pass) {
+		gchar *tmp_pass;
+		tmp_pass = input_dialog_query_password(account->recv_server,
+						       account->userid);
+		if (!tmp_pass)
+			return IMAP_ERROR;
+		Xstrdup_a(pass, tmp_pass,
+			  {g_free(tmp_pass); return IMAP_ERROR;});
+		g_free(tmp_pass);
 	}
+
+#if USE_SSL
+	if ((sock = imap_open(SESSION(session)->server, SESSION(session)->port,
+			      SESSION(session)->ssl_type)) == NULL)
+#else
+	if ((sock = imap_open(SESSION(session)->server, SESSION(session)->port))
+	    == NULL)
+#endif
+		return IMAP_ERROR;
+
+	SESSION(session)->sock = sock;
+
+	if (imap_greeting(session) != IMAP_SUCCESS)
+		return IMAP_ERROR;
+	if (imap_cmd_capability(session) != IMAP_SUCCESS)
+		return IMAP_ERROR;
+
 	if (imap_has_capability(session, "UIDPLUS"))
 		session->uidplus = TRUE;
 
@@ -601,13 +626,10 @@ static Session *imap_session_new(PrefsAccount *account)
 		ok = imap_cmd_starttls(session);
 		if (ok != IMAP_SUCCESS) {
 			log_warning(_("Can't start TLS session.\n"));
-			session_destroy(SESSION(session));
-			return NULL;
+			return IMAP_ERROR;
 		}
-		if (!ssl_init_socket_with_method(sock, SSL_METHOD_TLSv1)) {
-			session_destroy(SESSION(session));
-			return NULL;
-		}
+		if (!ssl_init_socket_with_method(sock, SSL_METHOD_TLSv1))
+			return IMAP_SOCKET;
 	}
 #endif
 
@@ -615,11 +637,26 @@ static Session *imap_session_new(PrefsAccount *account)
 	    imap_auth(session, account->userid, pass, account->imap_auth_type)
 	    != IMAP_SUCCESS) {
 		imap_cmd_logout(session);
-		session_destroy(SESSION(session));
-		return NULL;
+		return IMAP_AUTHFAIL;
 	}
 
-	return SESSION(session);
+	return IMAP_SUCCESS;
+}
+
+static gint imap_session_reconnect(IMAPSession *session)
+{
+	g_return_val_if_fail(session != NULL, IMAP_ERROR);
+
+	session_disconnect(SESSION(session));
+
+	imap_capability_free(session);
+	session->uidplus = FALSE;
+	g_free(session->mbox);
+	session->mbox = NULL;
+	session->authenticated = FALSE;
+	SESSION(session)->state = SESSION_READY;
+
+	return imap_session_connect(session);
 }
 
 static void imap_session_destroy(Session *session)
@@ -3259,6 +3296,7 @@ static gint imap_cmd_search(IMAPSession *session, const gchar *criteria,
 	GArray *array;
 	gchar *str;
 	gchar *p, *ep;
+	gint i;
 	guint32 uid;
 
 	g_return_val_if_fail(criteria != NULL, IMAP_ERROR);
@@ -3269,20 +3307,22 @@ static gint imap_cmd_search(IMAPSession *session, const gchar *criteria,
 	imap_cmd_gen_send(session, "UID SEARCH %s", criteria);
 	if ((ok = imap_cmd_ok(session, argbuf)) != IMAP_SUCCESS) THROW(ok);
 
-	str = search_array_str(argbuf, "SEARCH");
-	if (!str) THROW(IMAP_ERROR);
-
 	array = g_array_new(FALSE, FALSE, sizeof(guint32));
 
-	p = str + strlen("SEARCH");
+	for (i = 0; i < argbuf->len; i++) {
+		str = g_ptr_array_index(argbuf, i);
+		if (strncmp(str, "SEARCH", 6) != 0)
+			continue;
 
-	while (*p != '\0') {
-		uid = strtoul(p, &ep, 10);
-		if (p < ep && uid > 0) {
-			g_array_append_val(array, uid);
-			p = ep;
-		} else
-			break;
+		p = str + 6;
+		while (*p != '\0') {
+			uid = strtoul(p, &ep, 10);
+			if (p < ep && uid > 0) {
+				g_array_append_val(array, uid);
+				p = ep;
+			} else
+				break;
+		}
 	}
 
 	*result = array;

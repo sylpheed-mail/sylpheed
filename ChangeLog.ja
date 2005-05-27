@@ -1,3 +1,12 @@
+2005-05-27
+
+	* src/imap.c: 再接続時に以前の Session オブジェクトを破壊しないように
+	  した(ツリーのスキャン時に再接続が発生したときにクラッシュするのを
+	  修正)。
+	  imap_cmd_search(): 最初の応答しか認識されていなかったバグを修正
+	  (Hanno Meyer-Thurow さん thanks)。
+	* src/procmsg.h: MSG_IS_SIGNED() マクロを追加。
+
 2005-05-26
 
 	* src/main.c: app_will_exit(): 終了時に tmp ディレクトリを消去。

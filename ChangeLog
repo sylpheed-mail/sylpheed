@@ -1,3 +1,12 @@
+2005-05-27
+
+	* src/imap.c: don't destroy the previous Session object when
+	  reconnecting (fixed crash when reconnection happened while scanning
+	  tree).
+	  imap_cmd_search(): fixed a bug that only the first response was
+	  recognized (thanks to Hanno Meyer-Thurow).
+	* src/procmsg.h: added MSG_IS_SIGNED() macro.
+
 2005-05-26
 
 	* src/main.c: app_will_exit(): cleanup tmp directory when exit.

@@ -128,6 +128,7 @@ typedef guint32 MsgTmpFlags;
 #define MSG_IS_ENCRYPTED(msg)		(((msg).tmp_flags & MSG_ENCRYPTED) != 0)
 #define MSG_IS_IMAP(msg)		(((msg).tmp_flags & MSG_IMAP) != 0)
 #define MSG_IS_NEWS(msg)		(((msg).tmp_flags & MSG_NEWS) != 0)
+#define MSG_IS_SIGNED(msg)		(((msg).tmp_flags & MSG_SIGNED) != 0)
 #define MSG_IS_MIME(msg)		(((msg).tmp_flags & MSG_MIME) != 0)
 #define MSG_IS_INVALID(msg)		(((msg).tmp_flags & MSG_INVALID) != 0)
 #define MSG_IS_RECEIVED(msg)		(((msg).tmp_flags & MSG_RECEIVED) != 0)
