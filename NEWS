@@ -1,5 +1,33 @@
 Changes of Sylpheed
 
+* 1.9.12 (development)
+
+    * The MIME view and the attachment list of the compose window were
+      reimplemented using GtkTreeView.
+    * An option to toggle cursor in the message view was added.
+    * The backward search button was added to the summary and message search
+      dialog.
+    * The PGP Sign and Encrypt check button were added to the compose window.
+    * The drag and drop of messages in the summary view to external
+      applications was enabled.
+    * The writing of summary cache and mark was optimized so that it will be
+      written only if it is required.
+    * The ~/.sylpheed-2.0/tmp/ directory is cleaned up on exit now.
+    * Errors are detected now when messages are sent with sendmail command.
+    * The phishing URL checking was modified so that it works even if
+      non-ascii space is put at the head of link strings.
+    * Several bugs of the summary view were fixed.
+    * The column width of the folder view is now remembered.
+    * The drag and drop of attached files with non-ascii filename was fixed.
+    * The attaching of files with locale-encoded filename by drag and drop
+      was fixed.
+    * A bug that caused crash when timeout happened while scanning IMAP4
+      folder tree was fixed.
+    * On IMAP4, a bug that only the first response of the SEARCH command was
+      recognized was fixed.
+    * Bcc header fields in mailto URL are no longer interpreted to conform to
+      RFC 2368.
+
 * 1.9.11 (development)
 
     * The bug that Return, Space and Delete key were ignored when multiple
