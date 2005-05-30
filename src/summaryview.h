@@ -109,6 +109,8 @@ struct _SummaryView
 	GtkTreeRowReference *selected;
 	GtkTreeRowReference *displayed;
 
+	GList *selection_list;
+
 	gboolean display_msg;
 
 	SummaryColumnState col_state[N_SUMMARY_VISIBLE_COLS];

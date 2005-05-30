@@ -111,6 +111,9 @@ static GdkPixbuf *forwarded_pixbuf;
 
 static GdkPixbuf *clip_pixbuf;
 
+static GList *summary_get_selected_rows	(SummaryView		*summaryview);
+static void summary_selection_list_free	(SummaryView		*summaryview);
+
 static void summary_msgid_table_create	(SummaryView		*summaryview);
 static void summary_msgid_table_destroy	(SummaryView		*summaryview);
 
@@ -747,6 +750,9 @@ void summary_clear_list(SummaryView *summaryview)
 
 	summaryview->selected = NULL;
 	summaryview->displayed = NULL;
+
+	summary_selection_list_free(summaryview);
+
 	summaryview->total_size = 0;
 	summaryview->deleted = summaryview->moved = 0;
 	summaryview->copied = 0;
@@ -827,6 +833,26 @@ SummarySelection summary_get_selection_type(SummaryView *summaryview)
 	return selection;
 }
 
+static GList *summary_get_selected_rows(SummaryView *summaryview)
+{
+	if (!summaryview->selection_list)
+		summaryview->selection_list =
+			gtk_tree_selection_get_selected_rows
+				(summaryview->selection, NULL);
+
+	return summaryview->selection_list;
+}
+
+static void summary_selection_list_free(SummaryView *summaryview)
+{
+	if (summaryview->selection_list) {
+		g_list_foreach(summaryview->selection_list,
+			       (GFunc)gtk_tree_path_free, NULL);
+		g_list_free(summaryview->selection_list);
+		summaryview->selection_list = NULL;
+	}
+}
+
 GSList *summary_get_selected_msg_list(SummaryView *summaryview)
 {
 	GSList *mlist = NULL;
@@ -836,17 +862,13 @@ GSList *summary_get_selected_msg_list(SummaryView *summaryview)
 	GtkTreeIter iter;
 	MsgInfo *msginfo;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		msginfo = NULL;
 		gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)cur->data);
 		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
 		mlist = g_slist_prepend(mlist, msginfo);
-		gtk_tree_path_free((GtkTreePath *)cur->data);
 	}
-
-	g_list_free(rows);
 
 	mlist = g_slist_reverse(mlist);
 
@@ -1445,8 +1467,9 @@ void summary_attract_by_subject(SummaryView *summaryview)
 	gint count, i;
 	gint *new_order;
 
-	if (summaryview->folder_item &&
-	    summaryview->folder_item->sort_key != SORT_BY_NONE)
+	if (!summaryview->folder_item)
+		return;
+	if (summaryview->folder_item->sort_key != SORT_BY_NONE)
 		return;
 
 	valid = gtk_tree_model_get_iter_first(model, &iter);
@@ -1529,6 +1552,8 @@ void summary_attract_by_subject(SummaryView *summaryview)
 	g_slist_free(mlist);
 	g_hash_table_destroy(order_table);
 
+	summaryview->folder_item->cache_dirty = TRUE;
+
 	summary_scroll_to_selected(summaryview);
 
 	debug_print("done.\n");
@@ -1543,9 +1568,8 @@ static void summary_update_status(SummaryView *summaryview)
 	GtkTreeIter iter;
 	gboolean valid;
 	MsgInfo *msginfo;
-
-	summaryview->total_size =
-	summaryview->deleted = summaryview->moved = summaryview->copied = 0;
+	off_t total_size = 0;
+	gint deleted = 0, moved = 0, copied = 0;
 
 	valid = gtk_tree_model_get_iter_first(model, &iter);
 
@@ -1553,15 +1577,20 @@ static void summary_update_status(SummaryView *summaryview)
 		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
 
 		if (MSG_IS_DELETED(msginfo->flags))
-			summaryview->deleted++;
+			deleted++;
 		if (MSG_IS_MOVE(msginfo->flags))
-			summaryview->moved++;
+			moved++;
 		if (MSG_IS_COPY(msginfo->flags))
-			summaryview->copied++;
-		summaryview->total_size += msginfo->size;
+			copied++;
+		total_size += msginfo->size;
 
 		valid = gtkut_tree_model_next(model, &iter);
 	}
+
+	summaryview->total_size = total_size;
+	summaryview->deleted = deleted;
+	summaryview->moved = moved;
+	summaryview->copied = copied;
 }
 
 static void summary_status_show(SummaryView *summaryview)
@@ -1583,23 +1612,16 @@ static void summary_status_show(SummaryView *summaryview)
 		return;
 	}
 
-	rowlist = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						       NULL);
+	rowlist = summary_get_selected_rows(summaryview);
 	for (cur = rowlist; cur != NULL; cur = cur->next) {
 		GtkTreeIter iter;
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
 		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
-		if (!msginfo)
-			g_warning("summary_status_show(): msginfo == NULL\n");
-		else {
-			sel_size += msginfo->size;
-			n_selected++;
-		}
-		gtk_tree_path_free(path);
+		sel_size += msginfo->size;
+		n_selected++;
 	}
-	g_list_free(rowlist);
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_NEWS) {
 		gchar *group;
@@ -1682,6 +1704,9 @@ void summary_sort(SummaryView *summaryview,
 	g_return_if_fail(sort_key >= SORT_BY_NONE && sort_key <= SORT_BY_TO);
 
 	if (!item || !item->path || !item->parent || item->no_select) return;
+
+	if (item->sort_key != sort_key || item->sort_type != sort_type)
+		item->cache_dirty = TRUE;
 
 	col_type = sort_key_to_col[sort_key];
 
@@ -2281,15 +2306,12 @@ void summary_update_selected_rows(SummaryView *summaryview)
 	GtkTreeIter iter;
 	GtkTreePath *path;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		path = (GtkTreePath *)cur->data;
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_set_row(summaryview, &iter, NULL);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 }
 
 static void summary_mark_row(SummaryView *summaryview, GtkTreeIter *iter)
@@ -2320,15 +2342,12 @@ void summary_mark(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_mark_row(summaryview, &iter);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
 		GSList *msglist;
@@ -2367,17 +2386,14 @@ void summary_mark_as_read(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_mark_row_as_read(summaryview, &iter);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
 		GSList *msglist;
@@ -2443,16 +2459,13 @@ void summary_mark_as_unread(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_mark_row_as_unread(summaryview, &iter);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
 		GSList *msglist;
@@ -2511,8 +2524,7 @@ void summary_delete(SummaryView *summaryview)
 		if (aval != G_ALERTDEFAULT) return;
 	}
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 
 	/* next code sets current row focus right. We need to find a row
 	 * that is not deleted. */
@@ -2619,15 +2631,12 @@ void summary_unmark(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_unmark_row(summaryview, &iter);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
 		GSList *msglist;
@@ -2683,16 +2692,13 @@ void summary_move_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 		return;
 	}
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_move_row_to(summaryview, &iter, to_folder);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 
 	if (prefs_common.immediate_exec)
 		summary_execute(summaryview);
@@ -2757,16 +2763,13 @@ void summary_copy_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 		return;
 	}
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_copy_row_to(summaryview, &iter, to_folder);
-		gtk_tree_path_free(path);
 	}
-	g_list_free(rows);
 
 	if (prefs_common.immediate_exec)
 		summary_execute(summaryview);
@@ -3038,6 +3041,10 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 
 		item->cache_dirty = TRUE;
 	}
+
+	/* selection list becomes invalid if modified */
+	if (item->cache_dirty)
+		summary_selection_list_free(summaryview);
 
 	if (summaryview->displayed &&
 	    !gtk_tree_row_reference_valid(summaryview->displayed)) {
@@ -3529,6 +3536,9 @@ static void summary_modify_threads(SummaryView *summaryview)
 					  summary_selection_changed,
 					  summaryview);
 
+	if (summaryview->folder_item->cache_dirty)
+		summary_selection_list_free(summaryview);
+
 	if (has_selection &&
 	    !gtk_tree_row_reference_valid(summaryview->selected))
 		summary_select_row(summaryview, &selected, FALSE, FALSE);
@@ -3750,8 +3760,7 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 	GtkTreeIter iter;
 	MsgInfo *msginfo;
 
-	rows = gtk_tree_selection_get_selected_rows(summaryview->selection,
-						    NULL);
+	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)cur->data);
 		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
@@ -3759,11 +3768,7 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_CLABEL_FLAG_MASK);
 		MSG_SET_COLORLABEL_VALUE(msginfo->flags, labelcolor);
 		summary_set_row(summaryview, &iter, msginfo);
-
-		gtk_tree_path_free((GtkTreePath *)cur->data);
 	}
-
-	g_list_free(rows);
 }
 
 static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
@@ -4350,9 +4355,10 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 	GList *list;
 	gboolean single_selection = FALSE;
 
-	summary_status_show(summaryview);
+	summary_selection_list_free(summaryview);
+	list = summary_get_selected_rows(summaryview);
 
-	list = gtk_tree_selection_get_selected_rows(selection, NULL);
+	summary_status_show(summaryview);
 
 	gtk_tree_row_reference_free(summaryview->selected);
 	if (list) {
@@ -4362,8 +4368,6 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 		gtk_tree_model_get_iter(model, &iter, path);
 		summaryview->selected =
 			gtk_tree_row_reference_new(model, path);
-		g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
-		g_list_free(list);
 	} else
 		summaryview->selected = NULL;
 
@@ -4486,8 +4490,7 @@ static void summary_drag_data_get(GtkWidget        *widget,
 	GtkTreeIter iter;
 
 	if (!summaryview->drag_list) {
-		rows = gtk_tree_selection_get_selected_rows
-			(summaryview->selection, NULL);
+		rows = summary_get_selected_rows(summaryview);
 
 		for (cur = rows; cur != NULL; cur = cur->next) {
 			gtk_tree_model_get_iter(model, &iter,
@@ -4549,10 +4552,7 @@ static void summary_drag_data_get(GtkWidget        *widget,
 			g_free(fs_filename);
 			g_free(filename);
 			g_free(file);
-			gtk_tree_path_free((GtkTreePath *)cur->data);
 		}
-
-		g_list_free(rows);
 
 		summaryview->drag_list = mail_list;
 	}
