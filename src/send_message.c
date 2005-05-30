@@ -586,6 +586,7 @@ static void send_progress_dialog_destroy(SendProgressDialog *dialog)
 {
 	g_return_if_fail(dialog != NULL);
 
+	manage_window_destroy(dialog->dialog->window, NULL);
 	progress_dialog_destroy(dialog->dialog);
 	g_free(dialog);
 }

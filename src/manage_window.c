@@ -42,8 +42,10 @@ gint manage_window_focus_out(GtkWidget *widget, GdkEventFocus *event,
 	/* debug_print("Focused window: %p\n", focus_window); */
 	/* debug_print("Focus out event: window: %p\n", widget); */
 
+#if 0
 	if (focus_window == widget)
 		focus_window = NULL;
+#endif
 
 	return FALSE;
 }

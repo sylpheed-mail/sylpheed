@@ -1,5 +1,13 @@
 2005-05-30
 
+	* src/manage_window.c: manage_window_focus_out(): focus-out イベント
+	  で focus_window をリセットしないようにした。
+	* src/inc.c
+	  src/send_message.c: ウィンドウの破壊の前に manage_window_destroy()
+	  を呼んで focus_window をリセットするようにした。
+
+2005-05-30
+
 	* src/alertpanel.c: メッセージラベルがフォーカスを得ないようにした。
 	* src/headerview.c: ヘッダラベルがフォーカスを得ないようにした。
 

@@ -1,5 +1,13 @@
 2005-05-30
 
+	* src/manage_window.c: manage_window_focus_out(): don't reset
+	  focus_window on focus-out event.
+	* src/inc.c
+	  src/send_message.c: call manage_window_destroy() to reset
+	  focus_window before destruction of window.
+
+2005-05-30
+
 	* src/alertpanel.c: don't let message label take focus.
 	* src/headerview.c: don't let header labels take focus.
 

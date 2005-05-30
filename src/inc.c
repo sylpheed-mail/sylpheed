@@ -402,6 +402,8 @@ static void inc_progress_dialog_destroy(IncProgressDialog *inc_dialog)
 
 	inc_dialog_list = g_list_remove(inc_dialog_list, inc_dialog);
 
+	manage_window_destroy(inc_dialog->dialog->window, NULL);
+
 	main_window_progress_off(inc_dialog->mainwin);
 	progress_dialog_destroy(inc_dialog->dialog);
 
