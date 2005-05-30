@@ -258,6 +258,7 @@ static void alertpanel_create(const gchar *title,
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
+	GTK_WIDGET_UNSET_FLAGS(label, GTK_CAN_FOCUS);
 
 	if (can_disable) {
 		hbox = gtk_hbox_new(FALSE, 0);

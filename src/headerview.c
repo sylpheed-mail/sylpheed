@@ -111,6 +111,11 @@ HeaderView *headerview_create(void)
 	gtk_label_set_selectable(GTK_LABEL(ng_body_label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(subject_body_label), TRUE);
 
+	GTK_WIDGET_UNSET_FLAGS(from_body_label, GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS(to_body_label, GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS(ng_body_label, GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS(subject_body_label, GTK_CAN_FOCUS);
+
 	gtk_box_pack_start(GTK_BOX(hbox1), from_header_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), from_body_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), to_header_label, FALSE, FALSE, 0);
