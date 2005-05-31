@@ -79,6 +79,8 @@ void folderview_select_next_unread	(FolderView	*folderview);
 
 FolderItem *folderview_get_selected_item(FolderView	*folderview);
 
+void folderview_set_opened_item		(FolderView	*folderview,
+					 FolderItem	*item);
 void folderview_update_opened_msg_num	(FolderView	*folderview);
 
 gboolean folderview_append_item		(FolderView	*folderview,

@@ -674,6 +674,26 @@ FolderItem *folderview_get_selected_item(FolderView *folderview)
 	return item;
 }
 
+void folderview_set_opened_item(FolderView *folderview, FolderItem *item)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
+	GtkTreeIter iter;
+	GtkTreePath *path;
+
+	gtk_tree_row_reference_free(folderview->opened);
+	folderview->opened = NULL;
+
+	if (!item)
+		return;
+
+	if (gtkut_tree_model_find_by_column_data
+		 (model, &iter, NULL, COL_FOLDER_ITEM, item)) {
+		path = gtk_tree_model_get_path(model, &iter);
+		folderview->opened = gtk_tree_row_reference_new(model, path);
+		gtk_tree_path_free(path);
+	}
+}
+
 void folderview_update_opened_msg_num(FolderView *folderview)
 {
 	GtkTreePath *path;

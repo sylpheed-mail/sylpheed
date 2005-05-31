@@ -592,9 +592,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	} else
 		summary_write_cache(summaryview);
 
-	gtk_tree_row_reference_free(summaryview->folderview->opened);
-	summaryview->folderview->opened =
-		gtk_tree_row_reference_copy(summaryview->folderview->selected);
+	folderview_set_opened_item(summaryview->folderview, item);
 
 	summary_clear_list(summaryview);
 	summary_set_column_titles(summaryview);
