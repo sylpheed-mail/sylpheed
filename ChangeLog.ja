@@ -1,5 +1,10 @@
 2005-05-31
 
+	* src/imap.c: imap_scan_tree_recursive(): STATUS コマンドはコストが
+	  かかるため、フォルダのスキャンを行わないようにした。
+
+2005-05-31
+
 	* src/summaryview.c: summary_show(): FolderView::selected が NULL
 	  のときにクラッシュするバグを修正(Yann Grossel さん thanks)。
 

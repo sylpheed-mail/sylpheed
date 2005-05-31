@@ -1772,8 +1772,10 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 			}
 		}
 
+#if 0
 		if (new_item->no_select == FALSE)
 			imap_scan_folder(folder, new_item);
+#endif
 		if (new_item->no_sub == FALSE)
 			imap_scan_tree_recursive(session, new_item);
 	}

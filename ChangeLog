@@ -1,5 +1,10 @@
 2005-05-31
 
+	* src/imap.c: imap_scan_tree_recursive(): disabled scanning of folders
+	  because the STATUS command costs much.
+
+2005-05-31
+
 	* src/summaryview.c: summary_show(): fixed a bug that caused crash
 	  if FolderView::selected is NULL (thanks to Yann Grossel).
 	* src/folderview.[ch]: folderview_set_opened_item(): new.
