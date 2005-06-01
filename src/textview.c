@@ -1305,8 +1305,7 @@ gboolean textview_search_string(TextView *textview, const gchar *str,
 	len = g_utf8_strlen(str, -1);
 	g_return_val_if_fail(len >= 0, FALSE);
 
-	mark = gtk_text_buffer_get_insert(buffer);
-	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+	gtk_text_buffer_get_selection_bounds(buffer, NULL, &iter);
 
 	if (gtkut_text_buffer_find(buffer, &iter, str, case_sens,
 				   &match_pos)) {
@@ -1315,6 +1314,7 @@ gboolean textview_search_string(TextView *textview, const gchar *str,
 		gtk_text_iter_forward_chars(&end, len);
 		/* place "insert" at the last character */
 		gtk_text_buffer_select_range(buffer, &end, &match_pos);
+		mark = gtk_text_buffer_get_insert(buffer);
 		gtk_text_view_scroll_to_mark(text, mark, 0.0, FALSE, 0.0, 0.0);
 		return TRUE;
 	}
@@ -1338,8 +1338,7 @@ gboolean textview_search_string_backward(TextView *textview, const gchar *str,
 	len = g_utf8_strlen(str, -1);
 	g_return_val_if_fail(len >= 0, FALSE);
 
-	mark = gtk_text_buffer_get_insert(buffer);
-	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+	gtk_text_buffer_get_selection_bounds(buffer, &iter, NULL);
 
 	if (gtkut_text_buffer_find_backward(buffer, &iter, str, case_sens,
 					    &match_pos)) {
@@ -1347,6 +1346,7 @@ gboolean textview_search_string_backward(TextView *textview, const gchar *str,
 
 		gtk_text_iter_forward_chars(&end, len);
 		gtk_text_buffer_select_range(buffer, &match_pos, &end);
+		mark = gtk_text_buffer_get_insert(buffer);
 		gtk_text_view_scroll_to_mark(text, mark, 0.0, FALSE, 0.0, 0.0);
 		return TRUE;
 	}
