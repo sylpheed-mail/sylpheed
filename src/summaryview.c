@@ -1093,6 +1093,7 @@ static void summary_select_next_flagged(SummaryView *summaryview,
 
 static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 						  MsgPermFlags flags,
+						  gboolean start_from_next,
 						  const gchar *title,
 						  const gchar *ask_msg,
 						  const gchar *notice)
@@ -1107,7 +1108,7 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 	}
 
 	while (summary_find_next_flagged_msg
-		(summaryview, &next, &iter, flags, FALSE) == FALSE) {
+		(summaryview, &next, &iter, flags, start_from_next) == FALSE) {
 		AlertValue val;
 
 		val = alertpanel(title, ask_msg,
@@ -1118,6 +1119,7 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 			folderview_select_next_unread(summaryview->folderview);
 			return;
 		} else if (val == G_ALERTALTERNATE) {
+			start_from_next = FALSE;
 			if (!gtk_tree_model_get_iter_first(model, &iter))
 				return;
 		} else
@@ -1131,7 +1133,7 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 
 void summary_select_prev_unread(SummaryView *summaryview)
 {
-	summary_select_prev_flagged(summaryview, MSG_UNREAD, FALSE,
+	summary_select_prev_flagged(summaryview, MSG_UNREAD, TRUE,
 				    _("No more unread messages"),
 				    _("No unread message found. "
 				      "Search from the end?"),
@@ -1140,7 +1142,7 @@ void summary_select_prev_unread(SummaryView *summaryview)
 
 void summary_select_next_unread(SummaryView *summaryview)
 {
-	summary_select_next_flagged_or_folder(summaryview, MSG_UNREAD,
+	summary_select_next_flagged_or_folder(summaryview, MSG_UNREAD, TRUE,
 					      _("No more unread messages"),
 					      _("No unread message found. "
 						"Go to next folder?"),
@@ -1149,7 +1151,7 @@ void summary_select_next_unread(SummaryView *summaryview)
 
 void summary_select_prev_new(SummaryView *summaryview)
 {
-	summary_select_prev_flagged(summaryview, MSG_NEW, FALSE,
+	summary_select_prev_flagged(summaryview, MSG_NEW, TRUE,
 				    _("No more new messages"),
 				    _("No new message found. "
 				      "Search from the end?"),
@@ -1158,7 +1160,7 @@ void summary_select_prev_new(SummaryView *summaryview)
 
 void summary_select_next_new(SummaryView *summaryview)
 {
-	summary_select_next_flagged_or_folder(summaryview, MSG_NEW,
+	summary_select_next_flagged_or_folder(summaryview, MSG_NEW, TRUE,
 					      _("No more new messages"),
 					      _("No new message found. "
 						"Go to next folder?"),
