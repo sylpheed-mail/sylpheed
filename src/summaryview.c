@@ -903,7 +903,9 @@ static gboolean summary_msgid_table_create_func(GtkTreeModel *model,
 
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
 
-	if (msginfo->msgid && msginfo->msgid[0] != '\0') {
+	if (msginfo && !MSG_IS_INVALID(msginfo->flags) &&
+	    !MSG_IS_DELETED(msginfo->flags) &&
+	    msginfo->msgid && msginfo->msgid[0] != '\0') {
 		iter_ = gtk_tree_iter_copy(iter);
 		g_hash_table_replace(msgid_table, msginfo->msgid, iter_);
 	}
