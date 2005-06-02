@@ -199,6 +199,9 @@ void summary_filter		  (SummaryView		*summaryview,
 void summary_filter_open	  (SummaryView		*summaryview,
 				   PrefsFilterType	 type);
 
+void summary_junk		  (SummaryView		*summaryview);
+void summary_not_junk		  (SummaryView		*summaryview);
+
 void summary_sort		  (SummaryView		*summaryview,
 				   FolderSortKey	 sort_key,
 				   FolderSortType	 sort_type);

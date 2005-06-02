@@ -43,6 +43,7 @@
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkarrow.h>
 #include <gtk/gtkstock.h>
+#include <gtk/gtkimage.h>
 #include <string.h>
 
 #include "main.h"
@@ -132,6 +133,8 @@ static void toolbar_forward_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 
 static void toolbar_delete_cb		(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_junk_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_exec_cb		(GtkWidget	*widget,
 					 gpointer	 data);
@@ -315,6 +318,10 @@ static void mark_as_read_cb		(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 static void mark_all_read_cb		(MainWindow	*mainwin,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void junk_cb			(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 
@@ -686,7 +693,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Message/M_ove..."),		"<control>O", move_to_cb, 0, NULL},
 	{N_("/_Message/_Copy..."),		"<shift><control>O", copy_to_cb, 0, NULL},
-	{N_("/_Message/_Delete"),		"<control>D", delete_cb,  0, NULL},
+	{N_("/_Message/_Delete"),		"<control>D", delete_cb, 0, NULL},
 	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Message/_Mark"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_Message/_Mark/_Mark"),		"<shift>asterisk", mark_cb, 0, NULL},
@@ -696,6 +703,9 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Message/_Mark/Mark as rea_d"),
 						NULL, mark_as_read_cb, 0, NULL},
 	{N_("/_Message/_Mark/Mark all _read"),	NULL, mark_all_read_cb, 0, NULL},
+	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
+	{N_("/_Message/Set as _junk mail"),	"<control>J", junk_cb, 0, NULL},
+	{N_("/_Message/Set as not j_unk mail"),	"<shift><control>J", junk_cb, 1, NULL},
 	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Message/Re-_edit"),		NULL, reedit_cb, 0, NULL},
 
@@ -1113,6 +1123,11 @@ void main_window_reflect_prefs_all(void)
 		main_window_show_cur_account(mainwin);
 		main_window_set_menu_sensitive(mainwin);
 		main_window_set_toolbar_sensitive(mainwin);
+
+		if (prefs_common.enable_junk)
+			gtk_widget_show(mainwin->junk_btn);
+		else
+			gtk_widget_hide(mainwin->junk_btn);
 
 		if (prefs_common.immediate_exec)
 			gtk_widget_hide(mainwin->exec_btn);
@@ -1589,15 +1604,16 @@ typedef enum
 	M_UNTHREADED	      = 1 << 8,
 	M_ALLOW_DELETE	      = 1 << 9,
 	M_INC_ACTIVE	      = 1 << 10,
+	M_ENABLE_JUNK	      = 1 << 11,
 
-	M_FOLDER_NEWOK	      = 1 << 11,
-	M_FOLDER_RENOK	      = 1 << 12,
-	M_FOLDER_DELOK	      = 1 << 13,
-	M_MBOX_ADDOK	      = 1 << 14,
-	M_MBOX_RMOK	      = 1 << 15,
-	M_MBOX_CHKOK	      = 1 << 16,
-	M_MBOX_CHKALLOK	      = 1 << 17,
-	M_MBOX_REBUILDOK      = 1 << 18
+	M_FOLDER_NEWOK	      = 1 << 17,
+	M_FOLDER_RENOK	      = 1 << 18,
+	M_FOLDER_DELOK	      = 1 << 19,
+	M_MBOX_ADDOK	      = 1 << 20,
+	M_MBOX_RMOK	      = 1 << 21,
+	M_MBOX_CHKOK	      = 1 << 22,
+	M_MBOX_CHKALLOK	      = 1 << 23,
+	M_MBOX_REBUILDOK      = 1 << 24
 } SensitiveCond;
 
 static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
@@ -1637,6 +1653,9 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 	if (inc_is_active())
 		state |= M_INC_ACTIVE;
 
+	if (prefs_common.enable_junk)
+		state |= M_ENABLE_JUNK;
+
 	item = folderview_get_selected_item(mainwin->folderview);
 	if (item) {
 		state |= M_FOLDER_NEWOK;
@@ -1672,7 +1691,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[12];
+	} entry[13];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1700,6 +1719,8 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
 	SET_WIDGET_COND(mainwin->delete_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE);
+	SET_WIDGET_COND(mainwin->junk_btn,
+			M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK);
 	SET_WIDGET_COND(mainwin->exec_btn, M_MSG_EXIST|M_EXEC);
 	SET_WIDGET_COND(NULL, 0);
 
@@ -1786,6 +1807,8 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/Message/Copy..."              , M_TARGET_EXIST|M_EXEC},
 		{"/Message/Delete"               , M_TARGET_EXIST|M_ALLOW_DELETE},
 		{"/Message/Mark"                 , M_TARGET_EXIST},
+		{"/Message/Set as junk mail"     , M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK},
+		{"/Message/Set as not junk mail" , M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK},
 		{"/Message/Re-edit"              , M_HAVE_ACCOUNT|M_ALLOW_REEDIT},
 
 		{"/Tools/Add sender to address book"   , M_SINGLE_TARGET_EXIST},
@@ -2139,6 +2162,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 #endif
 	GtkWidget *next_btn;
 	GtkWidget *delete_btn;
+	GtkWidget *junk_btn;
 	GtkWidget *exec_btn;
 
 	gint n_entries;
@@ -2147,6 +2171,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 	gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
+	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
+				  GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_container_add(GTK_CONTAINER(container), toolbar);
 	gtk_widget_set_size_request(toolbar, 1, -1);
 
@@ -2237,7 +2263,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_CLOSE);
+	icon_wid = gtk_image_new_from_stock(GTK_STOCK_DELETE,
+					    GTK_ICON_SIZE_SMALL_TOOLBAR);
 	delete_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Delete"),
 					  _("Delete the message"),
@@ -2246,7 +2273,18 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					  G_CALLBACK(toolbar_delete_cb),
 					  mainwin);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_EXEC);
+	icon_wid = gtk_image_new_from_stock(GTK_STOCK_CANCEL,
+					    GTK_ICON_SIZE_SMALL_TOOLBAR);
+	junk_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
+					   _("Junk"),
+					   _("Set as junk mail"),
+					   "Junk",
+					   icon_wid,
+					   G_CALLBACK(toolbar_junk_cb),
+					   mainwin);
+
+	icon_wid = gtk_image_new_from_stock(GTK_STOCK_EXECUTE,
+					    GTK_ICON_SIZE_SMALL_TOOLBAR);
 	exec_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Execute"),
 					   _("Execute marked process"),
@@ -2255,7 +2293,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					   G_CALLBACK(toolbar_exec_cb),
 					   mainwin);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_DOWN_ARROW);
+	icon_wid = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,
+					    GTK_ICON_SIZE_SMALL_TOOLBAR);
 	next_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Next"),
 					   _("Next unread message"),
@@ -2303,6 +2342,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 #endif
 	mainwin->next_btn     = next_btn;
 	mainwin->delete_btn   = delete_btn;
+	mainwin->junk_btn     = junk_btn;
 	mainwin->exec_btn     = exec_btn;
 
 	gtk_widget_show_all(toolbar);
@@ -2375,6 +2415,14 @@ static void toolbar_delete_cb	(GtkWidget	*widget,
 	MainWindow *mainwin = (MainWindow *)data;
 
 	summary_delete(mainwin->summaryview);
+}
+
+static void toolbar_junk_cb	(GtkWidget	*widget,
+				 gpointer	 data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	summary_junk(mainwin->summaryview);
 }
 
 static void toolbar_exec_cb	(GtkWidget	*widget,
@@ -2905,6 +2953,14 @@ static void mark_all_read_cb(MainWindow *mainwin, guint action,
 			     GtkWidget *widget)
 {
 	summary_mark_all_read(mainwin->summaryview);
+}
+
+static void junk_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
+{
+	if (action == 0)
+		summary_junk(mainwin->summaryview);
+	else
+		summary_not_junk(mainwin->summaryview);
 }
 
 static void reedit_cb(MainWindow *mainwin, guint action, GtkWidget *widget)

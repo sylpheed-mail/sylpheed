@@ -186,6 +186,12 @@ struct _PrefsCommon
 
 	GList *mime_open_cmd_history;
 
+	/* Junk Mail */
+	gboolean enable_junk;
+	gchar *junk_learncmd;
+	gchar *nojunk_learncmd;
+	gchar *junk_folder;
+
 #if USE_GPGME
 	/* Privacy */
 	gboolean auto_check_signatures;

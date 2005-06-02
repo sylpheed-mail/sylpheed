@@ -44,6 +44,7 @@
 #include "summaryview.h"
 #include "messageview.h"
 #include "manage_window.h"
+#include "foldersel.h"
 #include "inc.h"
 #include "menu.h"
 #include "codeconv.h"
@@ -149,6 +150,13 @@ static struct Message {
 	GtkWidget *chkbtn_resize_image;
 	GtkWidget *chkbtn_inline_image;
 } message;
+
+static struct JunkMail {
+	GtkWidget *chkbtn_enable_junk;
+	GtkWidget *entry_junk_learncmd;
+	GtkWidget *entry_nojunk_learncmd;
+	GtkWidget *entry_junkfolder;
+} junk;
 
 #if USE_GPGME
 static struct Privacy {
@@ -567,6 +575,20 @@ static PrefParam param[] = {
 	{"mime_open_command", "gedit '%s'",
 	 &prefs_common.mime_open_cmd, P_STRING, NULL, NULL, NULL},
 
+	/* Junk mail */
+	{"enable_junk", "FALSE", &prefs_common.enable_junk, P_BOOL,
+	 &junk.chkbtn_enable_junk,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"junk_learn_command", "bogofilter -s -I",
+	 &prefs_common.junk_learncmd, P_STRING,
+	 &junk.entry_junk_learncmd, prefs_set_data_from_entry, prefs_set_entry},
+	{"nojunk_learn_command", "bogofilter -n -I",
+	 &prefs_common.nojunk_learncmd, P_STRING,
+	 &junk.entry_nojunk_learncmd,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"junk_folder", NULL, &prefs_common.junk_folder, P_STRING,
+	 &junk.entry_junkfolder, prefs_set_data_from_entry, prefs_set_entry},
+
 #if USE_GPGME
 	/* Privacy */
 	{"auto_check_signatures", "TRUE",
@@ -675,6 +697,7 @@ static void prefs_compose_create	(void);
 static void prefs_quote_create		(void);
 static void prefs_display_create	(void);
 static void prefs_message_create	(void);
+static void prefs_junk_create		(void);
 #if USE_GPGME
 static void prefs_privacy_create	(void);
 #endif
@@ -742,6 +765,9 @@ static gboolean prefs_keybind_key_pressed	(GtkWidget	*widget,
 						 gpointer	 data);
 static void prefs_keybind_cancel		(void);
 static void prefs_keybind_apply_clicked		(GtkWidget	*widget);
+
+static void prefs_common_select_folder_cb	(GtkWidget	*widget,
+						 gpointer	 data);
 
 static gint prefs_common_deleted		(GtkWidget	*widget,
 						 GdkEventAny	*event,
@@ -864,6 +890,8 @@ static void prefs_common_create(void)
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Display"),   page++);
 	prefs_message_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Message"),   page++);
+	prefs_junk_create();
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Junk mail"),   page++);
 #if USE_GPGME
 	prefs_privacy_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Privacy"),   page++);
@@ -1870,6 +1898,108 @@ static void prefs_message_create(void)
 
 	message.chkbtn_resize_image = chkbtn_resize_image;
 	message.chkbtn_inline_image = chkbtn_inline_image;
+}
+
+static void prefs_junk_create(void)
+{
+	GtkWidget *vbox1;
+	GtkWidget *vbox2;
+	GtkWidget *frame;
+	GtkWidget *hbox;
+	GtkWidget *chkbtn_enable_junk;
+	GtkWidget *label;
+	GtkWidget *entry_junk_learncmd;
+	GtkWidget *entry_nojunk_learncmd;
+	GtkWidget *vbox3;
+	GtkWidget *entry_junkfolder;
+	GtkWidget *btn_folder;
+
+	vbox1 = gtk_vbox_new (FALSE, VSPACING);
+	gtk_widget_show (vbox1);
+	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
+
+	chkbtn_enable_junk = gtk_check_button_new_with_label
+		(_("Enable Junk mail control"));
+	gtk_widget_show(chkbtn_enable_junk);
+
+	PACK_FRAME(vbox1, frame, NULL);
+	gtk_frame_set_label_widget(GTK_FRAME(frame), chkbtn_enable_junk);
+
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (frame), vbox2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+	SET_TOGGLE_SENSITIVITY (chkbtn_enable_junk, vbox2);
+
+	label = gtk_label_new (_("Learning command:"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Junk"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	entry_junk_learncmd = gtk_entry_new ();
+	gtk_widget_show (entry_junk_learncmd);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_junk_learncmd, TRUE, TRUE, 0);
+
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Not Junk"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	entry_nojunk_learncmd = gtk_entry_new ();
+	gtk_widget_show (entry_nojunk_learncmd);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_nojunk_learncmd,
+			    TRUE, TRUE, 0);
+
+	PACK_VSPACER(vbox2, vbox3, 0);
+
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Junk folder"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	entry_junkfolder = gtk_entry_new ();
+	gtk_widget_show (entry_junkfolder);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_junkfolder, TRUE, TRUE, 0);
+
+	btn_folder = gtk_button_new_with_label (_(" ... "));
+	gtk_widget_show (btn_folder);
+	gtk_box_pack_start (GTK_BOX (hbox), btn_folder, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (btn_folder), "clicked",
+			  G_CALLBACK (prefs_common_select_folder_cb),
+			  entry_junkfolder);
+
+	PACK_VSPACER(vbox2, vbox3, 0);
+
+	label = gtk_label_new
+		(_("Specify command line for learning junk mail.\n"
+		   "You must add a filter rule to enable automatic filtering "
+		   "using the result of this learning."));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtkut_widget_set_small_font_size (label);
+
+	junk.chkbtn_enable_junk = chkbtn_enable_junk;
+	junk.entry_junk_learncmd = entry_junk_learncmd;
+	junk.entry_nojunk_learncmd = entry_nojunk_learncmd;
+	junk.entry_junkfolder = entry_junkfolder;
 }
 
 #if USE_GPGME
@@ -3528,6 +3658,21 @@ static void prefs_common_recv_dialog_set_optmenu(PrefParam *pparam)
 	menu = gtk_option_menu_get_menu(optmenu);
 	menuitem = gtk_menu_get_active(GTK_MENU(menu));
 	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
+}
+
+static void prefs_common_select_folder_cb(GtkWidget *widget, gpointer data)
+{
+	FolderItem *item;
+	gchar *id;
+
+	item = foldersel_folder_sel(NULL, FOLDER_SEL_COPY, NULL);
+	if (item && item->path) {
+		id = folder_item_get_identifier(item);
+		if (id) {
+			gtk_entry_set_text(GTK_ENTRY(data), id);
+			g_free(id);
+		}
+	}
 }
 
 static gint prefs_common_deleted(GtkWidget *widget, GdkEventAny *event,

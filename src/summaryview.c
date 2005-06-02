@@ -815,15 +815,15 @@ gboolean summary_is_locked(SummaryView *summaryview)
 SummarySelection summary_get_selection_type(SummaryView *summaryview)
 {
 	SummarySelection selection;
-	gint count;
+	GList *rows;
 
-	count = gtk_tree_selection_count_selected_rows(summaryview->selection);
+	rows = summary_get_selected_rows(summaryview);
 
 	if (!summaryview->folder_item || summaryview->folder_item->total == 0)
 		selection = SUMMARY_NONE;
-	else if (count == 0)
+	else if (!rows)
 		selection = SUMMARY_SELECTED_NONE;
-	else if (count == 1)
+	else if (rows && !rows->next)
 		selection = SUMMARY_SELECTED_SINGLE;
 	else
 		selection = SUMMARY_SELECTED_MULTIPLE;
@@ -3669,6 +3669,110 @@ void summary_filter_open(SummaryView *summaryview, PrefsFilterType type)
 
 	g_free(header);
 	g_free(key);
+}
+
+static void summary_junk_func(GtkTreeModel *model, GtkTreePath *path,
+			      GtkTreeIter *iter, gpointer data)
+{
+	FilterRule rule = {NULL, FLT_OR, NULL, NULL, FLT_TIMING_ANY, TRUE};
+	FilterAction action1 = {FLT_ACTION_EXEC, NULL, 0};
+	FilterAction action2 = {FLT_ACTION_MOVE, NULL, 0};
+	SummaryView *summaryview = (SummaryView *)data;
+	MsgInfo *msginfo;
+	FilterInfo *fltinfo;
+	gchar *file;
+	gint ret;
+
+	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
+	file = procmsg_get_message_file(msginfo);
+	g_return_if_fail(file != NULL);
+
+	action1.str_value = prefs_common.junk_learncmd;
+	action2.str_value = prefs_common.junk_folder;
+
+	rule.action_list = g_slist_append(rule.action_list, &action1);
+	rule.action_list = g_slist_append(rule.action_list, &action2);
+
+	fltinfo = filter_info_new();
+
+	ret = filter_action_exec(&rule, msginfo, file, fltinfo);
+
+	if (ret == 0 && fltinfo->actions[FLT_ACTION_MOVE] && fltinfo->move_dest)
+		summary_move_row_to(summaryview, iter, fltinfo->move_dest);
+
+	filter_info_free(fltinfo);
+	g_slist_free(rule.action_list);
+	g_free(file);
+}
+
+static void summary_not_junk_func(GtkTreeModel *model, GtkTreePath *path,
+				  GtkTreeIter *iter, gpointer data)
+{
+	FilterRule rule = {NULL, FLT_OR, NULL, NULL, FLT_TIMING_ANY, TRUE};
+	FilterAction action = {FLT_ACTION_EXEC, NULL, 0};
+	MsgInfo *msginfo;
+	FilterInfo *fltinfo;
+	gchar *file;
+	gint ret;
+
+	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
+	file = procmsg_get_message_file(msginfo);
+	g_return_if_fail(file != NULL);
+
+	action.str_value = prefs_common.nojunk_learncmd;
+
+	rule.action_list = g_slist_append(rule.action_list, &action);
+
+	fltinfo = filter_info_new();
+
+	ret = filter_action_exec(&rule, msginfo, file, fltinfo);
+
+	filter_info_free(fltinfo);
+	g_slist_free(rule.action_list);
+	g_free(file);
+}
+
+void summary_junk(SummaryView *summaryview)
+{
+	if (!prefs_common.enable_junk)
+		return;
+	if (!prefs_common.junk_learncmd || !prefs_common.junk_folder)
+		return;
+
+	summary_lock(summaryview);
+
+	debug_print("Set mail as junk\n");
+
+	gtk_tree_selection_selected_foreach(summaryview->selection,
+					    summary_junk_func, summaryview);
+
+	summary_unlock(summaryview);
+
+	if (prefs_common.immediate_exec)
+		summary_execute(summaryview);
+	else {
+		summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
+		summary_status_show(summaryview);
+	}
+
+	folderview_update_all_updated(FALSE);
+}
+
+void summary_not_junk(SummaryView *summaryview)
+{
+	if (!prefs_common.enable_junk)
+		return;
+	if (!prefs_common.nojunk_learncmd)
+		return;
+
+	summary_lock(summaryview);
+
+	debug_print("Set mail as not junk\n");
+
+	gtk_tree_selection_selected_foreach(summaryview->selection,
+					    summary_not_junk_func, summaryview);
+
+	summary_unlock(summaryview);
 }
 
 void summary_reply(SummaryView *summaryview, ComposeMode mode)

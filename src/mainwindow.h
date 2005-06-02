@@ -96,6 +96,7 @@ struct _MainWindow
 	GtkWidget *account_btn;
 	GtkWidget *next_btn;
 	GtkWidget *delete_btn;
+	GtkWidget *junk_btn;
 	GtkWidget *exec_btn;
 
 	/* body */
