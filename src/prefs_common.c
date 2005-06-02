@@ -3149,6 +3149,11 @@ static void prefs_font_select(GtkButton *button)
 			 FALSE);
 	}
 
+	if (prefs_common.textfont)
+		gtk_font_selection_dialog_set_font_name
+			(GTK_FONT_SELECTION_DIALOG(font_sel_win),
+			 prefs_common.textfont);
+
 	manage_window_set_transient(GTK_WINDOW(font_sel_win));
 	gtk_window_set_modal(GTK_WINDOW(font_sel_win), TRUE);
 	gtk_widget_grab_focus
