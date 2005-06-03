@@ -344,9 +344,20 @@ static FolderSortKey col_to_sort_key[] = {
 	SORT_BY_NUMBER,
 };
 
-GtkTargetEntry summary_drag_types[1] =
+enum
 {
-	{"text/uri-list", 0, 0}
+	DRAG_TYPE_TEXT,
+	DRAG_TYPE_RFC822,
+	DRAG_TYPE_URI_LIST,
+
+	N_DRAG_TYPES
+};
+
+GtkTargetEntry summary_drag_types[] =
+{
+	{"text/plain", GTK_TARGET_SAME_APP, DRAG_TYPE_TEXT},
+	{"message/rfc822", GTK_TARGET_SAME_APP, DRAG_TYPE_RFC822},
+	{"text/uri-list", 0, DRAG_TYPE_URI_LIST}
 };
 
 static GtkItemFactoryEntry summary_popup_entries[] =
@@ -4126,7 +4137,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 
 	gtk_tree_view_enable_model_drag_source
 		(GTK_TREE_VIEW(treeview),
-		 0, summary_drag_types, 1, GDK_ACTION_MOVE | GDK_ACTION_COPY);
+		 0, summary_drag_types, N_DRAG_TYPES,
+		 GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
 	g_signal_connect_after(G_OBJECT(treeview), "drag-begin",
 			 G_CALLBACK(summary_drag_begin), summaryview);
@@ -4596,6 +4608,12 @@ static void summary_drag_data_get(GtkWidget        *widget,
 	MsgInfo *msginfo;
 	GtkTreeIter iter;
 
+	if (info == DRAG_TYPE_TEXT) {
+		gtk_selection_data_set(selection_data, selection_data->target,
+				       8, "drag-from-summary", 17);
+		return;
+	}
+
 	if (!summaryview->drag_list) {
 		rows = summary_get_selected_rows(summaryview);
 
@@ -4670,7 +4688,6 @@ static void summary_drag_data_get(GtkWidget        *widget,
 				       summaryview->drag_list,
 				       strlen(summaryview->drag_list));
 	}
-
 }
 
 

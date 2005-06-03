@@ -620,9 +620,18 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_Help/_About"),		NULL, about_show, 0, NULL}
 };
 
-static GtkTargetEntry compose_mime_types[] =
+enum
 {
-	{"text/uri-list", 0, 0}
+	DRAG_TYPE_RFC822,
+	DRAG_TYPE_URI_LIST,
+
+	N_DRAG_TYPES
+};
+
+static GtkTargetEntry compose_drag_types[] =
+{
+	{"message/rfc822", GTK_TARGET_SAME_APP, DRAG_TYPE_RFC822},
+	{"text/uri-list", 0, DRAG_TYPE_URI_LIST}
 };
 
 
@@ -3950,8 +3959,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	/* drag and drop */
 	gtk_drag_dest_set(attach_treeview,
-			  GTK_DEST_DEFAULT_ALL, compose_mime_types, 1,
-			  GDK_ACTION_COPY | GDK_ACTION_MOVE);
+			  GTK_DEST_DEFAULT_ALL, compose_drag_types,
+			  N_DRAG_TYPES, GDK_ACTION_COPY | GDK_ACTION_MOVE);
 	g_signal_connect(G_OBJECT(attach_treeview), "drag-data-received",
 			 G_CALLBACK(compose_attach_drag_received_cb),
 			 compose);
@@ -4003,8 +4012,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 			       ruler);
 
 	/* drag and drop */
-	gtk_drag_dest_set(text, GTK_DEST_DEFAULT_ALL, compose_mime_types, 1,
-			  GDK_ACTION_COPY | GDK_ACTION_MOVE);
+	gtk_drag_dest_set(text, GTK_DEST_DEFAULT_ALL, compose_drag_types,
+			  N_DRAG_TYPES, GDK_ACTION_COPY | GDK_ACTION_MOVE);
 	g_signal_connect(G_OBJECT(text), "drag-data-received",
 			 G_CALLBACK(compose_insert_drag_received_cb),
 			 compose);
@@ -6067,12 +6076,16 @@ static void compose_attach_drag_received_cb (GtkWidget		*widget,
 	Compose *compose = (Compose *)user_data;
 	GList *list, *cur;
 	gchar *path, *filename;
+	gchar *content_type = NULL;
+
+	if (info == DRAG_TYPE_RFC822)
+		content_type = "message/rfc822";
 
 	list = uri_list_extract_filenames((const gchar *)data->data);
 	for (cur = list; cur != NULL; cur = cur->next) {
 		path = (gchar *)cur->data;
 		filename = conv_filename_to_utf8(path);
-		compose_attach_append(compose, path, filename, NULL);
+		compose_attach_append(compose, path, filename, content_type);
 		g_free(filename);
 		g_free(path);
 	}

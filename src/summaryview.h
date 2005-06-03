@@ -71,8 +71,6 @@ typedef enum
 	SUMMARY_SELECTED_MULTIPLE
 } SummarySelection;
 
-extern GtkTargetEntry summary_drag_types[1];
-
 struct _SummaryColumnState
 {
 	SummaryColumnType type;

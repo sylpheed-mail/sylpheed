@@ -216,6 +216,11 @@ static void folderview_drag_received_cb  (GtkWidget        *widget,
 					  guint             time,
 					  FolderView       *folderview);
 
+GtkTargetEntry folderview_drag_types[] =
+{
+	{"text/plain", GTK_TARGET_SAME_APP, 0}
+};
+
 static GtkItemFactoryEntry folderview_mail_popup_entries[] =
 {
 	{N_("/Create _new folder..."),	NULL, folderview_new_folder_cb,    0, NULL},
@@ -450,7 +455,8 @@ FolderView *folderview_create(void)
 			 G_CALLBACK(folderview_popup_close), folderview);
 
         /* drop callback */
-	gtk_drag_dest_set(treeview, GTK_DEST_DEFAULT_ALL, summary_drag_types, 1,
+	gtk_drag_dest_set(treeview, GTK_DEST_DEFAULT_ALL,
+			  folderview_drag_types, 1,
 			  GDK_ACTION_MOVE | GDK_ACTION_COPY);
 	g_signal_connect(G_OBJECT(treeview), "drag-motion",
 			 G_CALLBACK(folderview_drag_motion_cb),
