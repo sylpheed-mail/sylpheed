@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 17:33+0900\n"
+"POT-Creation-Date: 2005-06-03 16:21+0900\n"
 "PO-Revision-Date: 2004-12-04 08:24+0800\n"
 "Last-Translator: Frank J. J. Weng <franklin@goodhorse.idv.tw>\n"
 "Language-Team: zh-l10n <zh-l10n@linux.org.tw>\n"
@@ -392,7 +392,7 @@ msgstr "/刪除(_D)"
 msgid "E-Mail address"
 msgstr "E-Mail位址"
 
-#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2347
+#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2359
 msgid "Address book"
 msgstr "位址簿"
 
@@ -641,7 +641,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3959
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3960
 msgid "None"
 msgstr "無"
 
@@ -1085,7 +1085,7 @@ msgstr "MIME 型態"
 
 #. S_COL_DATE
 #: src/compose.c:3929 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4102
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4103
 msgid "Size"
 msgstr "大小"
 
@@ -1134,7 +1134,7 @@ msgstr "簽名"
 msgid "Insert signature"
 msgstr "插入簽名"
 
-#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2326
+#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2338
 msgid "Editor"
 msgstr "編輯器"
 
@@ -1438,7 +1438,7 @@ msgid "Edit JPilot Entry"
 msgstr "編輯 JPilot 資料"
 
 #: src/editjpilot.c:322 src/editldap.c:347 src/editvcard.c:235
-#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1979
+#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1993
 msgid " ... "
 msgstr "..."
 
@@ -3386,7 +3386,7 @@ msgstr "附加檔"
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案 `%s'。"
 
-#: src/messageview.c:701 src/prefs_common.c:2315 src/summaryview.c:2912
+#: src/messageview.c:701 src/prefs_common.c:2327 src/summaryview.c:2912
 msgid "Print"
 msgstr "列印"
 
@@ -4497,7 +4497,7 @@ msgstr "若發信人是你自己，就在信件列表的來源中顯示收信人
 msgid "Expand threads"
 msgstr "自動展開信件串列"
 
-#: src/prefs_common.c:1674 src/prefs_common.c:2604 src/prefs_common.c:2642
+#: src/prefs_common.c:1674 src/prefs_common.c:2616 src/prefs_common.c:2654
 msgid "Date format"
 msgstr "日期格式"
 
@@ -4582,286 +4582,290 @@ msgstr "執行命令"
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common.c:1971
+#: src/prefs_common.c:1968
+msgid ""
+"Specify command line for learning junk mail. You must add a filter rule with "
+"'Result of command' as a condition to enable automatic filtering using the "
+"result of this learning."
+msgstr ""
+
+#: src/prefs_common.c:1985
 #, fuzzy
 msgid "Junk folder"
 msgstr "資料夾："
 
-#: src/prefs_common.c:1989
-msgid ""
-"Specify command line for learning junk mail.\n"
-"You must add a filter rule to enable automatic filtering using the result of "
-"this learning."
+#: src/prefs_common.c:2002
+msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
 
-#: src/prefs_common.c:2032
+#: src/prefs_common.c:2044
 msgid "Automatically check signatures"
 msgstr "自動檢查數位簽章"
 
-#: src/prefs_common.c:2035
+#: src/prefs_common.c:2047
 msgid "Show signature check result in a popup window"
 msgstr "將數位簽章檢查結果顯示在另一視窗"
 
-#: src/prefs_common.c:2038
+#: src/prefs_common.c:2050
 msgid "Store passphrase in memory temporarily"
 msgstr "將密碼片語暫時存在記憶體中"
 
-#: src/prefs_common.c:2053
+#: src/prefs_common.c:2065
 msgid "Expired after"
 msgstr "期限："
 
-#: src/prefs_common.c:2066
+#: src/prefs_common.c:2078
 msgid "minute(s) "
 msgstr "分鐘"
 
-#: src/prefs_common.c:2079
+#: src/prefs_common.c:2091
 #, fuzzy
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "（若設定為 '0' 則表示沒有期限）"
 
-#: src/prefs_common.c:2093
+#: src/prefs_common.c:2105
 msgid "Grab input while entering a passphrase"
 msgstr "輸入 passphrase 時抓取輸入"
 
-#: src/prefs_common.c:2098
+#: src/prefs_common.c:2110
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "若 GnuPG 無法運作，則在啟動時發出警告"
 
-#: src/prefs_common.c:2150
+#: src/prefs_common.c:2162
 msgid "Always open messages in summary when selected"
 msgstr "在信件列表選擇信件時開啟信件。"
 
-#: src/prefs_common.c:2154
+#: src/prefs_common.c:2166
 msgid "Open first unread message when entering a folder"
 msgstr "進入資料夾時直接跳到第一封未讀信件上"
 
-#: src/prefs_common.c:2158
+#: src/prefs_common.c:2170
 msgid "Only mark message as read when opened in new window"
 msgstr "只在開啟新信件時標示為未讀"
 
-#: src/prefs_common.c:2162
+#: src/prefs_common.c:2174
 msgid "Go to inbox after receiving new mail"
 msgstr "接收完新郵件後直接進入收件夾中"
 
-#: src/prefs_common.c:2170
+#: src/prefs_common.c:2182
 msgid "Execute immediately when moving or deleting messages"
 msgstr "移動或刪除信件時立即執行"
 
-#: src/prefs_common.c:2182
+#: src/prefs_common.c:2194
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "（若此選項關閉，則必須按下「執行」才會執行移動或刪除）"
 
-#: src/prefs_common.c:2190
+#: src/prefs_common.c:2202
 msgid "Receive dialog"
 msgstr "接收進度對話盒"
 
-#: src/prefs_common.c:2200
+#: src/prefs_common.c:2212
 msgid "Show receive dialog"
 msgstr "顯示接收信件的進度對話盒"
 
-#: src/prefs_common.c:2210
+#: src/prefs_common.c:2222
 msgid "Always"
 msgstr "一律顯示"
 
-#: src/prefs_common.c:2211
+#: src/prefs_common.c:2223
 msgid "Only on manual receiving"
 msgstr "只在手動收取郵件時顯示"
 
-#: src/prefs_common.c:2213
+#: src/prefs_common.c:2225
 msgid "Never"
 msgstr "不顯示"
 
-#: src/prefs_common.c:2218
+#: src/prefs_common.c:2230
 msgid "Don't popup error dialog on receive error"
 msgstr "接收錯誤時不要開啟錯誤視窗。"
 
-#: src/prefs_common.c:2221
+#: src/prefs_common.c:2233
 msgid "Close receive dialog when finished"
 msgstr "完成時關閉接收信件的進度對話盒"
 
-#: src/prefs_common.c:2227
+#: src/prefs_common.c:2239
 msgid " Set key bindings... "
 msgstr "設定熱鍵"
 
-#: src/prefs_common.c:2283
+#: src/prefs_common.c:2295
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "外部指令（%s 將會被置換成檔名或 URI）"
 
-#: src/prefs_common.c:2292
+#: src/prefs_common.c:2304
 msgid "Web browser"
 msgstr "瀏覽器"
 
-#: src/prefs_common.c:2356
+#: src/prefs_common.c:2368
 msgid "Add address to destination when double-clicked"
 msgstr "在位址簿中，可利用雙擊直接將該電子郵件加入收信人中"
 
-#: src/prefs_common.c:2358
+#: src/prefs_common.c:2370
 msgid "On exit"
 msgstr "離開設定"
 
-#: src/prefs_common.c:2366
+#: src/prefs_common.c:2378
 msgid "Confirm on exit"
 msgstr "離開時確認"
 
-#: src/prefs_common.c:2373
+#: src/prefs_common.c:2385
 msgid "Empty trash on exit"
 msgstr "離開時清空刪除的郵件"
 
-#: src/prefs_common.c:2375
+#: src/prefs_common.c:2387
 msgid "Ask before emptying"
 msgstr "清除時確認"
 
-#: src/prefs_common.c:2379
+#: src/prefs_common.c:2391
 msgid "Warn if there are queued messages"
 msgstr "離開時若有尚未送出之信件即發出警告"
 
-#: src/prefs_common.c:2385
+#: src/prefs_common.c:2397
 msgid "Socket I/O timeout:"
 msgstr "Socket I/O 等待時間："
 
-#: src/prefs_common.c:2398
+#: src/prefs_common.c:2410
 msgid "second(s)"
 msgstr "秒"
 
-#: src/prefs_common.c:2580
+#: src/prefs_common.c:2592
 msgid "the full abbreviated weekday name"
 msgstr "週一、週二、..."
 
-#: src/prefs_common.c:2581
+#: src/prefs_common.c:2593
 msgid "the full weekday name"
 msgstr "星期一、星期二、..."
 
-#: src/prefs_common.c:2582
+#: src/prefs_common.c:2594
 msgid "the abbreviated month name"
 msgstr "1月、2月、..."
 
-#: src/prefs_common.c:2583
+#: src/prefs_common.c:2595
 msgid "the full month name"
 msgstr "一月、二月、..."
 
-#: src/prefs_common.c:2584
+#: src/prefs_common.c:2596
 msgid "the preferred date and time for the current locale"
 msgstr "完整的西元日期與時間（本地時間）"
 
-#: src/prefs_common.c:2585
+#: src/prefs_common.c:2597
 msgid "the century number (year/100)"
 msgstr "世紀 (年/100)"
 
-#: src/prefs_common.c:2586
+#: src/prefs_common.c:2598
 msgid "the day of the month as a decimal number"
 msgstr "今天是幾號 (以數字表示)"
 
-#: src/prefs_common.c:2587
+#: src/prefs_common.c:2599
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "現在幾點鐘 (廿四時制，以數字表示)"
 
-#: src/prefs_common.c:2588
+#: src/prefs_common.c:2600
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "現在幾點鐘 (十二時制，以數字表示)"
 
-#: src/prefs_common.c:2589
+#: src/prefs_common.c:2601
 msgid "the day of the year as a decimal number"
 msgstr "今天是今年的第幾天 (以數字表示)"
 
-#: src/prefs_common.c:2590
+#: src/prefs_common.c:2602
 msgid "the month as a decimal number"
 msgstr "現在是幾月 (以數字表示)"
 
-#: src/prefs_common.c:2591
+#: src/prefs_common.c:2603
 msgid "the minute as a decimal number"
 msgstr "現在是幾分 (以數字表示)"
 
-#: src/prefs_common.c:2592
+#: src/prefs_common.c:2604
 msgid "either AM or PM"
 msgstr "上午或下午"
 
-#: src/prefs_common.c:2593
+#: src/prefs_common.c:2605
 msgid "the second as a decimal number"
 msgstr "現在是幾秒 (以數字表示)"
 
-#: src/prefs_common.c:2594
+#: src/prefs_common.c:2606
 msgid "the day of the week as a decimal number"
 msgstr "現在是一週的第幾天 (以數字表示)"
 
-#: src/prefs_common.c:2595
+#: src/prefs_common.c:2607
 msgid "the preferred date for the current locale"
 msgstr "完整的西元日期 (本地時間)"
 
-#: src/prefs_common.c:2596
+#: src/prefs_common.c:2608
 msgid "the last two digits of a year"
 msgstr "西元年份的後兩位數字"
 
-#: src/prefs_common.c:2597
+#: src/prefs_common.c:2609
 msgid "the year as a decimal number"
 msgstr "西元年份 (以數字表示)"
 
-#: src/prefs_common.c:2598
+#: src/prefs_common.c:2610
 msgid "the time zone or name or abbreviation"
 msgstr "時區"
 
-#: src/prefs_common.c:2619
+#: src/prefs_common.c:2631
 msgid "Specifier"
 msgstr "特殊符號"
 
-#: src/prefs_common.c:2620
+#: src/prefs_common.c:2632
 msgid "Description"
 msgstr "描述"
 
-#: src/prefs_common.c:2660
+#: src/prefs_common.c:2672
 msgid "Example"
 msgstr "範例"
 
-#: src/prefs_common.c:2741
+#: src/prefs_common.c:2753
 msgid "Set message colors"
 msgstr "設定顏色"
 
-#: src/prefs_common.c:2749
+#: src/prefs_common.c:2761
 msgid "Colors"
 msgstr "顏色"
 
-#: src/prefs_common.c:2783
+#: src/prefs_common.c:2795
 msgid "Quoted Text - First Level"
 msgstr "引言內容 - 第一層"
 
-#: src/prefs_common.c:2789
+#: src/prefs_common.c:2801
 msgid "Quoted Text - Second Level"
 msgstr "引言內容 - 第二層"
 
-#: src/prefs_common.c:2795
+#: src/prefs_common.c:2807
 msgid "Quoted Text - Third Level"
 msgstr "引言內容 - 第三層"
 
-#: src/prefs_common.c:2801
+#: src/prefs_common.c:2813
 msgid "URI link"
 msgstr "超連結"
 
-#: src/prefs_common.c:2808
+#: src/prefs_common.c:2820
 msgid "Recycle quote colors"
 msgstr "三層以上引言則重複使用指定的顏色"
 
-#: src/prefs_common.c:2868
+#: src/prefs_common.c:2880
 msgid "Pick color for quotation level 1"
 msgstr "選擇第一層引言的顏色"
 
-#: src/prefs_common.c:2871
+#: src/prefs_common.c:2883
 msgid "Pick color for quotation level 2"
 msgstr "選擇第二層引言的顏色"
 
-#: src/prefs_common.c:2874
+#: src/prefs_common.c:2886
 msgid "Pick color for quotation level 3"
 msgstr "選擇第三層引言的顏色"
 
-#: src/prefs_common.c:2877
+#: src/prefs_common.c:2889
 msgid "Pick color for URI"
 msgstr "選擇超連結的顏色"
 
-#: src/prefs_common.c:3014
+#: src/prefs_common.c:3026
 msgid "Description of symbols"
 msgstr "特殊符號代表的意義"
 
-#: src/prefs_common.c:3070
+#: src/prefs_common.c:3082
 msgid ""
 "Date\n"
 "From\n"
@@ -4885,11 +4889,11 @@ msgstr ""
 "新聞群組\n"
 "信件識別碼"
 
-#: src/prefs_common.c:3083
+#: src/prefs_common.c:3095
 msgid "If x is set, displays expr"
 msgstr "若 x 已設定則顯示常規表示式"
 
-#: src/prefs_common.c:3087
+#: src/prefs_common.c:3099
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -4903,7 +4907,7 @@ msgstr ""
 "引言（不含簽名）\n"
 "% 符號"
 
-#: src/prefs_common.c:3095
+#: src/prefs_common.c:3107
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -4915,15 +4919,15 @@ msgstr ""
 "左大括弧\n"
 "右大括弧"
 
-#: src/prefs_common.c:3132
+#: src/prefs_common.c:3144
 msgid "Font selection"
 msgstr "選擇字型"
 
-#: src/prefs_common.c:3196
+#: src/prefs_common.c:3213
 msgid "Key bindings"
 msgstr "熱鍵設定"
 
-#: src/prefs_common.c:3210
+#: src/prefs_common.c:3227
 msgid ""
 "Select the preset of key bindings.\n"
 "You can also modify each menu's shortcuts by pressing\n"
@@ -4933,11 +4937,11 @@ msgstr ""
 "您也可以更改每個目錄的熱鍵，您只需要將滑鼠指標指過去，\n"
 "並按下任何鍵即可。"
 
-#: src/prefs_common.c:3222 src/prefs_common.c:3546
+#: src/prefs_common.c:3239 src/prefs_common.c:3563
 msgid "Default"
 msgstr "預設值"
 
-#: src/prefs_common.c:3225 src/prefs_common.c:3555
+#: src/prefs_common.c:3242 src/prefs_common.c:3572
 msgid "Old Sylpheed"
 msgstr "舊設定"
 
@@ -5234,17 +5238,17 @@ msgid "Attachment"
 msgstr "附加"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:4095
+#: src/prefs_summary_column.c:71 src/summaryview.c:4096
 msgid "Subject"
 msgstr "主題"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:4098
+#: src/prefs_summary_column.c:72 src/summaryview.c:4099
 msgid "From"
 msgstr "來源(From)"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:4100
+#: src/prefs_summary_column.c:73 src/summaryview.c:4101
 msgid "Date"
 msgstr "日期"
 
@@ -6017,7 +6021,7 @@ msgstr "過濾中..."
 msgid "%d message(s) have been filtered."
 msgstr "已過濾 %d 封信件"
 
-#: src/summaryview.c:4104
+#: src/summaryview.c:4105
 msgid "No."
 msgstr ""
 

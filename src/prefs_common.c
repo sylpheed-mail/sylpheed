@@ -1964,6 +1964,20 @@ static void prefs_junk_create(void)
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
+	label = gtk_label_new
+		(_("Specify command line for learning junk mail. "
+		   "You must add a filter rule with 'Result of command' "
+		   "as a condition to enable automatic filtering using "
+		   "the result of this learning."));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtkut_widget_set_small_font_size (label);
+
+	PACK_VSPACER(vbox2, vbox3, 0);
+
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
@@ -1985,10 +1999,8 @@ static void prefs_junk_create(void)
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
-	label = gtk_label_new
-		(_("Specify command line for learning junk mail.\n"
-		   "You must add a filter rule to enable automatic filtering "
-		   "using the result of this learning."));
+	label = gtk_label_new (_("The messages which are set as junk mail "
+				 "will be moved to this folder."));
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);

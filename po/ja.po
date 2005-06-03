@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 17:33+0900\n"
+"POT-Creation-Date: 2005-06-03 16:21+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -406,7 +406,7 @@ msgstr "/削除(_D)"
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2347
+#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2359
 msgid "Address book"
 msgstr "アドレス帳"
 
@@ -659,7 +659,7 @@ msgstr "茶"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3959
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3960
 msgid "None"
 msgstr "なし"
 
@@ -1078,7 +1078,7 @@ msgstr "MIME タイプ"
 
 #. S_COL_DATE
 #: src/compose.c:3929 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4102
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4103
 msgid "Size"
 msgstr "サイズ"
 
@@ -1127,7 +1127,7 @@ msgstr "署名"
 msgid "Insert signature"
 msgstr "署名を挿入"
 
-#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2326
+#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2338
 msgid "Editor"
 msgstr "エディタ"
 
@@ -1430,7 +1430,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilotエントリを編集"
 
 #: src/editjpilot.c:322 src/editldap.c:347 src/editvcard.c:235
-#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1979
+#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1993
 msgid " ... "
 msgstr " ... "
 
@@ -3374,7 +3374,7 @@ msgstr "添付"
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
 
-#: src/messageview.c:701 src/prefs_common.c:2315 src/summaryview.c:2912
+#: src/messageview.c:701 src/prefs_common.c:2327 src/summaryview.c:2912
 msgid "Print"
 msgstr "印刷"
 
@@ -4490,7 +4490,7 @@ msgstr "差出人が自分の場合は `差出人' カラムに宛先を表示�
 msgid "Expand threads"
 msgstr "スレッドを展開する"
 
-#: src/prefs_common.c:1674 src/prefs_common.c:2604 src/prefs_common.c:2642
+#: src/prefs_common.c:1674 src/prefs_common.c:2616 src/prefs_common.c:2654
 msgid "Date format"
 msgstr "日付の書式"
 
@@ -4572,287 +4572,291 @@ msgstr "学習コマンド:"
 msgid "Not Junk"
 msgstr "非迷惑メール"
 
-#: src/prefs_common.c:1971
+#: src/prefs_common.c:1968
+msgid ""
+"Specify command line for learning junk mail. You must add a filter rule with "
+"'Result of command' as a condition to enable automatic filtering using the "
+"result of this learning."
+msgstr ""
+"迷惑メールの学習コマンドを指定してください。この学習結果を利用して自動フィル"
+"タリングを行うには、条件に「コマンドの実行結果」を使用したフィルタルールを追"
+"加する必要があります。"
+
+#: src/prefs_common.c:1985
 msgid "Junk folder"
 msgstr "迷惑メールフォルダ"
 
-#: src/prefs_common.c:1989
-msgid ""
-"Specify command line for learning junk mail.\n"
-"You must add a filter rule to enable automatic filtering using the result of "
-"this learning."
-msgstr ""
-"迷惑メールの学習コマンドを指定してください。\n"
-"この学習結果を利用して自動フィルタリングを行うにはフィルタルールを追加する必"
-"要があります。"
+#: src/prefs_common.c:2002
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "迷惑メールに指定したメッセージをこのフォルダに移動します。"
 
-#: src/prefs_common.c:2032
+#: src/prefs_common.c:2044
 msgid "Automatically check signatures"
 msgstr "署名を自動的に検証する"
 
-#: src/prefs_common.c:2035
+#: src/prefs_common.c:2047
 msgid "Show signature check result in a popup window"
 msgstr "署名の検証結果をポップアップウィンドウで表示する"
 
-#: src/prefs_common.c:2038
+#: src/prefs_common.c:2050
 msgid "Store passphrase in memory temporarily"
 msgstr "パスフレーズをメモリ上に一時的に記憶する"
 
-#: src/prefs_common.c:2053
+#: src/prefs_common.c:2065
 msgid "Expired after"
 msgstr "有効期間"
 
-#: src/prefs_common.c:2066
+#: src/prefs_common.c:2078
 msgid "minute(s) "
 msgstr "分"
 
-#: src/prefs_common.c:2079
+#: src/prefs_common.c:2091
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "'0' に設定するとセッションの間中パスフレーズを記憶します。"
 
-#: src/prefs_common.c:2093
+#: src/prefs_common.c:2105
 msgid "Grab input while entering a passphrase"
 msgstr "パスフレーズの入力時に入力を捕捉する"
 
-#: src/prefs_common.c:2098
+#: src/prefs_common.c:2110
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "GnuPG が動作しない場合起動時に警告を表示する"
 
-#: src/prefs_common.c:2150
+#: src/prefs_common.c:2162
 msgid "Always open messages in summary when selected"
 msgstr "サマリでメッセージを選択したとき常に開く"
 
-#: src/prefs_common.c:2154
+#: src/prefs_common.c:2166
 msgid "Open first unread message when entering a folder"
 msgstr "フォルダに入ったときに最初の未読メッセージを開く"
 
-#: src/prefs_common.c:2158
+#: src/prefs_common.c:2170
 msgid "Only mark message as read when opened in new window"
 msgstr "新規ウィンドウで開いたときのみメッセージを既読としてマーク"
 
-#: src/prefs_common.c:2162
+#: src/prefs_common.c:2174
 msgid "Go to inbox after receiving new mail"
 msgstr "新着メールを受信した後受信箱に移動する"
 
-#: src/prefs_common.c:2170
+#: src/prefs_common.c:2182
 msgid "Execute immediately when moving or deleting messages"
 msgstr "メッセージを移動または削除したら即座に実行する"
 
-#: src/prefs_common.c:2182
+#: src/prefs_common.c:2194
 msgid "Messages will be marked until execution if this is turned off."
 msgstr ""
 "これを無効にすると、メッセージは実行されるまでマークされた状態になります。"
 
-#: src/prefs_common.c:2190
+#: src/prefs_common.c:2202
 msgid "Receive dialog"
 msgstr "受信ダイアログ"
 
-#: src/prefs_common.c:2200
+#: src/prefs_common.c:2212
 msgid "Show receive dialog"
 msgstr "受信ダイアログを"
 
-#: src/prefs_common.c:2210
+#: src/prefs_common.c:2222
 msgid "Always"
 msgstr "常に表示"
 
-#: src/prefs_common.c:2211
+#: src/prefs_common.c:2223
 msgid "Only on manual receiving"
 msgstr "手動で受信した場合のみ表示"
 
-#: src/prefs_common.c:2213
+#: src/prefs_common.c:2225
 msgid "Never"
 msgstr "表示しない"
 
-#: src/prefs_common.c:2218
+#: src/prefs_common.c:2230
 msgid "Don't popup error dialog on receive error"
 msgstr "受信エラー時にエラーダイアログをポップアップしない"
 
-#: src/prefs_common.c:2221
+#: src/prefs_common.c:2233
 msgid "Close receive dialog when finished"
 msgstr "完了時に受信ダイアログを閉じる"
 
-#: src/prefs_common.c:2227
+#: src/prefs_common.c:2239
 msgid " Set key bindings... "
 msgstr " キーバインドを設定... "
 
-#: src/prefs_common.c:2283
+#: src/prefs_common.c:2295
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "外部コマンド (%s はファイル名・URIで置き換えられます)"
 
-#: src/prefs_common.c:2292
+#: src/prefs_common.c:2304
 msgid "Web browser"
 msgstr "Webブラウザ"
 
-#: src/prefs_common.c:2356
+#: src/prefs_common.c:2368
 msgid "Add address to destination when double-clicked"
 msgstr "ダブルクリックしたときにアドレスを宛先に追加する"
 
-#: src/prefs_common.c:2358
+#: src/prefs_common.c:2370
 msgid "On exit"
 msgstr "終了時"
 
-#: src/prefs_common.c:2366
+#: src/prefs_common.c:2378
 msgid "Confirm on exit"
 msgstr "終了時に確認する"
 
-#: src/prefs_common.c:2373
+#: src/prefs_common.c:2385
 msgid "Empty trash on exit"
 msgstr "終了時にごみ箱を空にする"
 
-#: src/prefs_common.c:2375
+#: src/prefs_common.c:2387
 msgid "Ask before emptying"
 msgstr "空にする前に尋ねる"
 
-#: src/prefs_common.c:2379
+#: src/prefs_common.c:2391
 msgid "Warn if there are queued messages"
 msgstr "送信待機中のメッセージがあれば警告する"
 
-#: src/prefs_common.c:2385
+#: src/prefs_common.c:2397
 msgid "Socket I/O timeout:"
 msgstr "ソケット I/O のタイムアウト:"
 
-#: src/prefs_common.c:2398
+#: src/prefs_common.c:2410
 msgid "second(s)"
 msgstr "秒"
 
-#: src/prefs_common.c:2580
+#: src/prefs_common.c:2592
 msgid "the full abbreviated weekday name"
 msgstr "曜日の省略名"
 
-#: src/prefs_common.c:2581
+#: src/prefs_common.c:2593
 msgid "the full weekday name"
 msgstr "曜日の完全な名前"
 
-#: src/prefs_common.c:2582
+#: src/prefs_common.c:2594
 msgid "the abbreviated month name"
 msgstr "月の省略名"
 
-#: src/prefs_common.c:2583
+#: src/prefs_common.c:2595
 msgid "the full month name"
 msgstr "月の完全な名前"
 
-#: src/prefs_common.c:2584
+#: src/prefs_common.c:2596
 msgid "the preferred date and time for the current locale"
 msgstr "現在の地域における一般的な日付と時刻の表記"
 
-#: src/prefs_common.c:2585
+#: src/prefs_common.c:2597
 msgid "the century number (year/100)"
 msgstr "世紀(西暦年の上2桁)"
 
-#: src/prefs_common.c:2586
+#: src/prefs_common.c:2598
 msgid "the day of the month as a decimal number"
 msgstr "日(10進数表記)"
 
-#: src/prefs_common.c:2587
+#: src/prefs_common.c:2599
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "24時間時計での時"
 
-#: src/prefs_common.c:2588
+#: src/prefs_common.c:2600
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "12時間時計での時"
 
-#: src/prefs_common.c:2589
+#: src/prefs_common.c:2601
 msgid "the day of the year as a decimal number"
 msgstr "年の初めから通算の日数(10進数表記)"
 
-#: src/prefs_common.c:2590
+#: src/prefs_common.c:2602
 msgid "the month as a decimal number"
 msgstr "月(10進数表記)"
 
-#: src/prefs_common.c:2591
+#: src/prefs_common.c:2603
 msgid "the minute as a decimal number"
 msgstr "分(10進数表記)"
 
-#: src/prefs_common.c:2592
+#: src/prefs_common.c:2604
 msgid "either AM or PM"
 msgstr "午前または午後"
 
-#: src/prefs_common.c:2593
+#: src/prefs_common.c:2605
 msgid "the second as a decimal number"
 msgstr "秒(10進数表記)"
 
-#: src/prefs_common.c:2594
+#: src/prefs_common.c:2606
 msgid "the day of the week as a decimal number"
 msgstr "週の何番目の日か(10進数表記)"
 
-#: src/prefs_common.c:2595
+#: src/prefs_common.c:2607
 msgid "the preferred date for the current locale"
 msgstr "現在の地域における一般的な日付表記"
 
-#: src/prefs_common.c:2596
+#: src/prefs_common.c:2608
 msgid "the last two digits of a year"
 msgstr "西暦の下2桁(世紀部分を含まない年)"
 
-#: src/prefs_common.c:2597
+#: src/prefs_common.c:2609
 msgid "the year as a decimal number"
 msgstr "(4桁の)西暦年"
 
-#: src/prefs_common.c:2598
+#: src/prefs_common.c:2610
 msgid "the time zone or name or abbreviation"
 msgstr "タイムゾーンまたはゾーン名または省略名"
 
-#: src/prefs_common.c:2619
+#: src/prefs_common.c:2631
 msgid "Specifier"
 msgstr "指定子"
 
-#: src/prefs_common.c:2620
+#: src/prefs_common.c:2632
 msgid "Description"
 msgstr "説明"
 
-#: src/prefs_common.c:2660
+#: src/prefs_common.c:2672
 msgid "Example"
 msgstr "例"
 
-#: src/prefs_common.c:2741
+#: src/prefs_common.c:2753
 msgid "Set message colors"
 msgstr "メッセージの色を指定"
 
-#: src/prefs_common.c:2749
+#: src/prefs_common.c:2761
 msgid "Colors"
 msgstr "色"
 
-#: src/prefs_common.c:2783
+#: src/prefs_common.c:2795
 msgid "Quoted Text - First Level"
 msgstr "引用文 - 1段階"
 
-#: src/prefs_common.c:2789
+#: src/prefs_common.c:2801
 msgid "Quoted Text - Second Level"
 msgstr "引用文 - 2段階"
 
-#: src/prefs_common.c:2795
+#: src/prefs_common.c:2807
 msgid "Quoted Text - Third Level"
 msgstr "引用文 - 3段階"
 
-#: src/prefs_common.c:2801
+#: src/prefs_common.c:2813
 msgid "URI link"
 msgstr "URI リンク"
 
-#: src/prefs_common.c:2808
+#: src/prefs_common.c:2820
 msgid "Recycle quote colors"
 msgstr "引用色を循環"
 
-#: src/prefs_common.c:2868
+#: src/prefs_common.c:2880
 msgid "Pick color for quotation level 1"
 msgstr "引用レベル1の色を選択"
 
-#: src/prefs_common.c:2871
+#: src/prefs_common.c:2883
 msgid "Pick color for quotation level 2"
 msgstr "引用レベル2の色を選択"
 
-#: src/prefs_common.c:2874
+#: src/prefs_common.c:2886
 msgid "Pick color for quotation level 3"
 msgstr "引用レベル3の色を選択"
 
-#: src/prefs_common.c:2877
+#: src/prefs_common.c:2889
 msgid "Pick color for URI"
 msgstr "URI の色を選択"
 
-#: src/prefs_common.c:3014
+#: src/prefs_common.c:3026
 msgid "Description of symbols"
 msgstr "記号の説明"
 
-#: src/prefs_common.c:3070
+#: src/prefs_common.c:3082
 msgid ""
 "Date\n"
 "From\n"
@@ -4876,11 +4880,11 @@ msgstr ""
 "ニュースグループ\n"
 "メッセージID"
 
-#: src/prefs_common.c:3083
+#: src/prefs_common.c:3095
 msgid "If x is set, displays expr"
 msgstr "xが指定されていればexprを表示"
 
-#: src/prefs_common.c:3087
+#: src/prefs_common.c:3099
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -4894,7 +4898,7 @@ msgstr ""
 "引用符付きメッセージ本文(署名なし)\n"
 "文字 %"
 
-#: src/prefs_common.c:3095
+#: src/prefs_common.c:3107
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -4906,15 +4910,15 @@ msgstr ""
 "文字 開き中括弧\n"
 "文字 閉じ中括弧"
 
-#: src/prefs_common.c:3132
+#: src/prefs_common.c:3144
 msgid "Font selection"
 msgstr "フォントの選択"
 
-#: src/prefs_common.c:3196
+#: src/prefs_common.c:3213
 msgid "Key bindings"
 msgstr "キーバインド"
 
-#: src/prefs_common.c:3210
+#: src/prefs_common.c:3227
 msgid ""
 "Select the preset of key bindings.\n"
 "You can also modify each menu's shortcuts by pressing\n"
@@ -4924,11 +4928,11 @@ msgstr ""
 "また、マウスポインタをメニューの項目の上に置きキーを押す\n"
 "ことで各メニューのショートカットを変更することもできます。"
 
-#: src/prefs_common.c:3222 src/prefs_common.c:3546
+#: src/prefs_common.c:3239 src/prefs_common.c:3563
 msgid "Default"
 msgstr "標準"
 
-#: src/prefs_common.c:3225 src/prefs_common.c:3555
+#: src/prefs_common.c:3242 src/prefs_common.c:3572
 msgid "Old Sylpheed"
 msgstr "旧Sylpheed"
 
@@ -5224,17 +5228,17 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:4095
+#: src/prefs_summary_column.c:71 src/summaryview.c:4096
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:4098
+#: src/prefs_summary_column.c:72 src/summaryview.c:4099
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:4100
+#: src/prefs_summary_column.c:73 src/summaryview.c:4101
 msgid "Date"
 msgstr "日付"
 
@@ -6009,7 +6013,7 @@ msgstr "振り分け中..."
 msgid "%d message(s) have been filtered."
 msgstr "%d 通のメッセージが振り分けられました。"
 
-#: src/summaryview.c:4104
+#: src/summaryview.c:4105
 msgid "No."
 msgstr "番号"
 

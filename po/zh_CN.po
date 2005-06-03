@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 17:33+0900\n"
+"POT-Creation-Date: 2005-06-03 16:21+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -405,7 +405,7 @@ msgstr "/删除(_D)"
 msgid "E-Mail address"
 msgstr "电子邮件地址"
 
-#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2347
+#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2359
 msgid "Address book"
 msgstr "地址簿"
 
@@ -650,7 +650,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3959
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3960
 msgid "None"
 msgstr "没有"
 
@@ -1072,7 +1072,7 @@ msgstr "MIME 类型"
 
 #. S_COL_DATE
 #: src/compose.c:3929 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4102
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4103
 msgid "Size"
 msgstr "大小"
 
@@ -1121,7 +1121,7 @@ msgstr "签名"
 msgid "Insert signature"
 msgstr "插入签名"
 
-#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2326
+#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2338
 msgid "Editor"
 msgstr "编辑器"
 
@@ -1424,7 +1424,7 @@ msgid "Edit JPilot Entry"
 msgstr "编辑 JPilot 项"
 
 #: src/editjpilot.c:322 src/editldap.c:347 src/editvcard.c:235
-#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1979
+#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1993
 msgid " ... "
 msgstr " ... "
 
@@ -3369,7 +3369,7 @@ msgstr "附件"
 msgid "Can't save the file `%s'."
 msgstr "无法保存文件“%s”'。"
 
-#: src/messageview.c:701 src/prefs_common.c:2315 src/summaryview.c:2912
+#: src/messageview.c:701 src/prefs_common.c:2327 src/summaryview.c:2912
 msgid "Print"
 msgstr "打印"
 
@@ -4480,7 +4480,7 @@ msgstr "如果发件人是您自己，“发件人”栏中显示的是收件人
 msgid "Expand threads"
 msgstr "展开线索"
 
-#: src/prefs_common.c:1674 src/prefs_common.c:2604 src/prefs_common.c:2642
+#: src/prefs_common.c:1674 src/prefs_common.c:2616 src/prefs_common.c:2654
 msgid "Date format"
 msgstr "日期格式"
 
@@ -4566,284 +4566,288 @@ msgstr "执行命令"
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common.c:1971
+#: src/prefs_common.c:1968
+msgid ""
+"Specify command line for learning junk mail. You must add a filter rule with "
+"'Result of command' as a condition to enable automatic filtering using the "
+"result of this learning."
+msgstr ""
+
+#: src/prefs_common.c:1985
 #, fuzzy
 msgid "Junk folder"
 msgstr "文件夹："
 
-#: src/prefs_common.c:1989
-msgid ""
-"Specify command line for learning junk mail.\n"
-"You must add a filter rule to enable automatic filtering using the result of "
-"this learning."
+#: src/prefs_common.c:2002
+msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
 
-#: src/prefs_common.c:2032
+#: src/prefs_common.c:2044
 msgid "Automatically check signatures"
 msgstr "自动检查签名"
 
-#: src/prefs_common.c:2035
+#: src/prefs_common.c:2047
 msgid "Show signature check result in a popup window"
 msgstr "在弹出窗口中显示签名检查结果"
 
-#: src/prefs_common.c:2038
+#: src/prefs_common.c:2050
 msgid "Store passphrase in memory temporarily"
 msgstr "将口令串临时存放在内存中"
 
-#: src/prefs_common.c:2053
+#: src/prefs_common.c:2065
 msgid "Expired after"
 msgstr "过期时间"
 
-#: src/prefs_common.c:2066
+#: src/prefs_common.c:2078
 msgid "minute(s) "
 msgstr "分钟后"
 
-#: src/prefs_common.c:2079
+#: src/prefs_common.c:2091
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "设置为“0”将在整个会话过程中储存口令串"
 
-#: src/prefs_common.c:2093
+#: src/prefs_common.c:2105
 msgid "Grab input while entering a passphrase"
 msgstr "输入口令串时捕获输入(更安全)"
 
-#: src/prefs_common.c:2098
+#: src/prefs_common.c:2110
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "如果 GnuPG 无法工作，在启动时显示警告"
 
-#: src/prefs_common.c:2150
+#: src/prefs_common.c:2162
 msgid "Always open messages in summary when selected"
 msgstr "在摘要窗口中选择邮件时打开邮件"
 
-#: src/prefs_common.c:2154
+#: src/prefs_common.c:2166
 msgid "Open first unread message when entering a folder"
 msgstr "进入文件夹时打开第一个未读的邮件"
 
-#: src/prefs_common.c:2158
+#: src/prefs_common.c:2170
 msgid "Only mark message as read when opened in new window"
 msgstr "仅在新窗口中打开邮件时标记邮件为已读"
 
-#: src/prefs_common.c:2162
+#: src/prefs_common.c:2174
 msgid "Go to inbox after receiving new mail"
 msgstr "收到新邮件时转到收件箱"
 
-#: src/prefs_common.c:2170
+#: src/prefs_common.c:2182
 msgid "Execute immediately when moving or deleting messages"
 msgstr "当移动或删除邮件时立即执行"
 
-#: src/prefs_common.c:2182
+#: src/prefs_common.c:2194
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "如果该选项关闭，标记邮件直到完成执行。"
 
-#: src/prefs_common.c:2190
+#: src/prefs_common.c:2202
 msgid "Receive dialog"
 msgstr "收对话框"
 
-#: src/prefs_common.c:2200
+#: src/prefs_common.c:2212
 msgid "Show receive dialog"
 msgstr "显示接收对话框"
 
-#: src/prefs_common.c:2210
+#: src/prefs_common.c:2222
 msgid "Always"
 msgstr "总是"
 
-#: src/prefs_common.c:2211
+#: src/prefs_common.c:2223
 msgid "Only on manual receiving"
 msgstr "仅在手工接收时"
 
-#: src/prefs_common.c:2213
+#: src/prefs_common.c:2225
 msgid "Never"
 msgstr "从不"
 
-#: src/prefs_common.c:2218
+#: src/prefs_common.c:2230
 msgid "Don't popup error dialog on receive error"
 msgstr "在接收错误时不弹出错误对话框"
 
-#: src/prefs_common.c:2221
+#: src/prefs_common.c:2233
 msgid "Close receive dialog when finished"
 msgstr "完成后关闭接收对话框"
 
-#: src/prefs_common.c:2227
+#: src/prefs_common.c:2239
 msgid " Set key bindings... "
 msgstr " 设置键盘关联... "
 
-#: src/prefs_common.c:2283
+#: src/prefs_common.c:2295
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "外部命令 (%s 将被替换为文件名或URI)"
 
-#: src/prefs_common.c:2292
+#: src/prefs_common.c:2304
 msgid "Web browser"
 msgstr "网页浏览器"
 
-#: src/prefs_common.c:2356
+#: src/prefs_common.c:2368
 msgid "Add address to destination when double-clicked"
 msgstr "双击时将地址添加为收件人"
 
-#: src/prefs_common.c:2358
+#: src/prefs_common.c:2370
 msgid "On exit"
 msgstr "退出程序时"
 
-#: src/prefs_common.c:2366
+#: src/prefs_common.c:2378
 msgid "Confirm on exit"
 msgstr "退出时进行确认"
 
-#: src/prefs_common.c:2373
+#: src/prefs_common.c:2385
 msgid "Empty trash on exit"
 msgstr "退出时清空废件箱"
 
-#: src/prefs_common.c:2375
+#: src/prefs_common.c:2387
 msgid "Ask before emptying"
 msgstr "在清空前询问"
 
-#: src/prefs_common.c:2379
+#: src/prefs_common.c:2391
 msgid "Warn if there are queued messages"
 msgstr "如果队列中有邮件就发出警告"
 
-#: src/prefs_common.c:2385
+#: src/prefs_common.c:2397
 msgid "Socket I/O timeout:"
 msgstr "套接字 I/O 超时："
 
-#: src/prefs_common.c:2398
+#: src/prefs_common.c:2410
 msgid "second(s)"
 msgstr "秒"
 
-#: src/prefs_common.c:2580
+#: src/prefs_common.c:2592
 msgid "the full abbreviated weekday name"
 msgstr "缩写的星期名"
 
-#: src/prefs_common.c:2581
+#: src/prefs_common.c:2593
 msgid "the full weekday name"
 msgstr "完整的星期名"
 
-#: src/prefs_common.c:2582
+#: src/prefs_common.c:2594
 msgid "the abbreviated month name"
 msgstr "缩写的月份名"
 
-#: src/prefs_common.c:2583
+#: src/prefs_common.c:2595
 msgid "the full month name"
 msgstr "完整的月份名"
 
-#: src/prefs_common.c:2584
+#: src/prefs_common.c:2596
 msgid "the preferred date and time for the current locale"
 msgstr "当前区域设置首选的日期和时间格式"
 
-#: src/prefs_common.c:2585
+#: src/prefs_common.c:2597
 msgid "the century number (year/100)"
 msgstr "世纪(年份/100)"
 
-#: src/prefs_common.c:2586
+#: src/prefs_common.c:2598
 msgid "the day of the month as a decimal number"
 msgstr "十进制表示的月中的天数"
 
-#: src/prefs_common.c:2587
+#: src/prefs_common.c:2599
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "24小时时钟的十进制小时"
 
-#: src/prefs_common.c:2588
+#: src/prefs_common.c:2600
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "12小时时钟的十进制小时"
 
-#: src/prefs_common.c:2589
+#: src/prefs_common.c:2601
 msgid "the day of the year as a decimal number"
 msgstr "十进制表示的一年中的天数"
 
-#: src/prefs_common.c:2590
+#: src/prefs_common.c:2602
 msgid "the month as a decimal number"
 msgstr "十进制表示的月份"
 
-#: src/prefs_common.c:2591
+#: src/prefs_common.c:2603
 msgid "the minute as a decimal number"
 msgstr "十进制表示的天数"
 
-#: src/prefs_common.c:2592
+#: src/prefs_common.c:2604
 msgid "either AM or PM"
 msgstr "AM或PM"
 
-#: src/prefs_common.c:2593
+#: src/prefs_common.c:2605
 msgid "the second as a decimal number"
 msgstr "十进制表示的秒"
 
-#: src/prefs_common.c:2594
+#: src/prefs_common.c:2606
 msgid "the day of the week as a decimal number"
 msgstr "十进制表示的星期中的天数"
 
-#: src/prefs_common.c:2595
+#: src/prefs_common.c:2607
 msgid "the preferred date for the current locale"
 msgstr "当前区域设置的首选日期格式"
 
-#: src/prefs_common.c:2596
+#: src/prefs_common.c:2608
 msgid "the last two digits of a year"
 msgstr "年份的最后两个数字"
 
-#: src/prefs_common.c:2597
+#: src/prefs_common.c:2609
 msgid "the year as a decimal number"
 msgstr "十进制的年份"
 
-#: src/prefs_common.c:2598
+#: src/prefs_common.c:2610
 msgid "the time zone or name or abbreviation"
 msgstr "时区、名字或缩写"
 
-#: src/prefs_common.c:2619
+#: src/prefs_common.c:2631
 msgid "Specifier"
 msgstr "说明符"
 
-#: src/prefs_common.c:2620
+#: src/prefs_common.c:2632
 msgid "Description"
 msgstr "描述"
 
-#: src/prefs_common.c:2660
+#: src/prefs_common.c:2672
 msgid "Example"
 msgstr "示例"
 
-#: src/prefs_common.c:2741
+#: src/prefs_common.c:2753
 msgid "Set message colors"
 msgstr "设置邮件颜色"
 
-#: src/prefs_common.c:2749
+#: src/prefs_common.c:2761
 msgid "Colors"
 msgstr "颜色"
 
-#: src/prefs_common.c:2783
+#: src/prefs_common.c:2795
 msgid "Quoted Text - First Level"
 msgstr "引文－第一级"
 
-#: src/prefs_common.c:2789
+#: src/prefs_common.c:2801
 msgid "Quoted Text - Second Level"
 msgstr "引文－第二级"
 
-#: src/prefs_common.c:2795
+#: src/prefs_common.c:2807
 msgid "Quoted Text - Third Level"
 msgstr "引文－第三级"
 
-#: src/prefs_common.c:2801
+#: src/prefs_common.c:2813
 msgid "URI link"
 msgstr "URI 链接"
 
-#: src/prefs_common.c:2808
+#: src/prefs_common.c:2820
 msgid "Recycle quote colors"
 msgstr "循环使用引文颜色"
 
-#: src/prefs_common.c:2868
+#: src/prefs_common.c:2880
 msgid "Pick color for quotation level 1"
 msgstr "选择引文级别 1 的颜色"
 
-#: src/prefs_common.c:2871
+#: src/prefs_common.c:2883
 msgid "Pick color for quotation level 2"
 msgstr "选择引文级别 2 的颜色"
 
-#: src/prefs_common.c:2874
+#: src/prefs_common.c:2886
 msgid "Pick color for quotation level 3"
 msgstr "选择引文级别 3 的颜色"
 
-#: src/prefs_common.c:2877
+#: src/prefs_common.c:2889
 msgid "Pick color for URI"
 msgstr "选择URI的颜色"
 
-#: src/prefs_common.c:3014
+#: src/prefs_common.c:3026
 msgid "Description of symbols"
 msgstr "符号的描述"
 
-#: src/prefs_common.c:3070
+#: src/prefs_common.c:3082
 msgid ""
 "Date\n"
 "From\n"
@@ -4867,11 +4871,11 @@ msgstr ""
 "新闻组\n"
 "邮件标识号"
 
-#: src/prefs_common.c:3083
+#: src/prefs_common.c:3095
 msgid "If x is set, displays expr"
 msgstr "如果 x 设置了值则显示 expr"
 
-#: src/prefs_common.c:3087
+#: src/prefs_common.c:3099
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -4885,7 +4889,7 @@ msgstr ""
 "没有签名的引文内容\n"
 "%"
 
-#: src/prefs_common.c:3095
+#: src/prefs_common.c:3107
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -4897,15 +4901,15 @@ msgstr ""
 "左括号\n"
 "右括号"
 
-#: src/prefs_common.c:3132
+#: src/prefs_common.c:3144
 msgid "Font selection"
 msgstr "字体选择"
 
-#: src/prefs_common.c:3196
+#: src/prefs_common.c:3213
 msgid "Key bindings"
 msgstr "键盘关联"
 
-#: src/prefs_common.c:3210
+#: src/prefs_common.c:3227
 msgid ""
 "Select the preset of key bindings.\n"
 "You can also modify each menu's shortcuts by pressing\n"
@@ -4915,11 +4919,11 @@ msgstr ""
 "您也可以将鼠标放在菜单项上并按下任何键\n"
 "(或组合键)来修改菜单快捷键。"
 
-#: src/prefs_common.c:3222 src/prefs_common.c:3546
+#: src/prefs_common.c:3239 src/prefs_common.c:3563
 msgid "Default"
 msgstr "默认"
 
-#: src/prefs_common.c:3225 src/prefs_common.c:3555
+#: src/prefs_common.c:3242 src/prefs_common.c:3572
 msgid "Old Sylpheed"
 msgstr "旧式的Sylpheed"
 
@@ -5216,17 +5220,17 @@ msgid "Attachment"
 msgstr "附件"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:4095
+#: src/prefs_summary_column.c:71 src/summaryview.c:4096
 msgid "Subject"
 msgstr "主题"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:4098
+#: src/prefs_summary_column.c:72 src/summaryview.c:4099
 msgid "From"
 msgstr "发件人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:4100
+#: src/prefs_summary_column.c:73 src/summaryview.c:4101
 msgid "Date"
 msgstr "日期"
 
@@ -6000,7 +6004,7 @@ msgstr "正在过滤..."
 msgid "%d message(s) have been filtered."
 msgstr "已经过滤 %d 个邮件。"
 
-#: src/summaryview.c:4104
+#: src/summaryview.c:4105
 msgid "No."
 msgstr "No."
 

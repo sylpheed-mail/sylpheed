@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 17:33+0900\n"
+"POT-Creation-Date: 2005-06-03 16:21+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -392,7 +392,7 @@ msgstr "/삭제(_D)"
 msgid "E-Mail address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2347
+#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2359
 msgid "Address book"
 msgstr "주소록"
 
@@ -640,7 +640,7 @@ msgstr "갈색"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3959
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3960
 msgid "None"
 msgstr "없음"
 
@@ -1093,7 +1093,7 @@ msgstr "마임 타입"
 
 #. S_COL_DATE
 #: src/compose.c:3929 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4102
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4103
 msgid "Size"
 msgstr "크기"
 
@@ -1142,7 +1142,7 @@ msgstr "서명"
 msgid "Insert signature"
 msgstr "서명 파일을 끼워넣습니다"
 
-#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2326
+#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2338
 msgid "Editor"
 msgstr "편집기"
 
@@ -1447,7 +1447,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilot 항목 편집"
 
 #: src/editjpilot.c:322 src/editldap.c:347 src/editvcard.c:235
-#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1979
+#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1993
 msgid " ... "
 msgstr " ... "
 
@@ -3426,7 +3426,7 @@ msgstr "첨부"
 msgid "Can't save the file `%s'."
 msgstr "`%s' 파일을 저장할 수가 없습니다."
 
-#: src/messageview.c:701 src/prefs_common.c:2315 src/summaryview.c:2912
+#: src/messageview.c:701 src/prefs_common.c:2327 src/summaryview.c:2912
 msgid "Print"
 msgstr "인쇄"
 
@@ -4531,7 +4531,7 @@ msgstr "보낸 사람이 본인인 경우 보낸 사람 칸에 받는 사람을 
 msgid "Expand threads"
 msgstr "쓰레드 펴기"
 
-#: src/prefs_common.c:1674 src/prefs_common.c:2604 src/prefs_common.c:2642
+#: src/prefs_common.c:1674 src/prefs_common.c:2616 src/prefs_common.c:2654
 msgid "Date format"
 msgstr "날짜 형식"
 
@@ -4619,288 +4619,292 @@ msgstr "실행"
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common.c:1971
+#: src/prefs_common.c:1968
+msgid ""
+"Specify command line for learning junk mail. You must add a filter rule with "
+"'Result of command' as a condition to enable automatic filtering using the "
+"result of this learning."
+msgstr ""
+
+#: src/prefs_common.c:1985
 #, fuzzy
 msgid "Junk folder"
 msgstr "폴더"
 
-#: src/prefs_common.c:1989
-msgid ""
-"Specify command line for learning junk mail.\n"
-"You must add a filter rule to enable automatic filtering using the result of "
-"this learning."
+#: src/prefs_common.c:2002
+msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
 
-#: src/prefs_common.c:2032
+#: src/prefs_common.c:2044
 msgid "Automatically check signatures"
 msgstr "자동으로 서명 확인"
 
-#: src/prefs_common.c:2035
+#: src/prefs_common.c:2047
 msgid "Show signature check result in a popup window"
 msgstr "팝업 창에 서명 확인 결과 보이기"
 
-#: src/prefs_common.c:2038
+#: src/prefs_common.c:2050
 msgid "Store passphrase in memory temporarily"
 msgstr "비밀번호를 메모리에 임시 보관"
 
-#: src/prefs_common.c:2053
+#: src/prefs_common.c:2065
 msgid "Expired after"
 msgstr ""
 
-#: src/prefs_common.c:2066
+#: src/prefs_common.c:2078
 msgid "minute(s) "
 msgstr "분 "
 
-#: src/prefs_common.c:2079
+#: src/prefs_common.c:2091
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr ""
 
-#: src/prefs_common.c:2093
+#: src/prefs_common.c:2105
 msgid "Grab input while entering a passphrase"
 msgstr "passphrase를 입력할때 Grab input"
 
-#: src/prefs_common.c:2098
+#: src/prefs_common.c:2110
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "GnuPG가 동작하지 않을 경우 시작시 경고 표시"
 
-#: src/prefs_common.c:2150
+#: src/prefs_common.c:2162
 #, fuzzy
 msgid "Always open messages in summary when selected"
 msgstr "어떤 메시지 파일도 선택되지 않았습니다."
 
-#: src/prefs_common.c:2154
+#: src/prefs_common.c:2166
 msgid "Open first unread message when entering a folder"
 msgstr "폴더에 들어가면 첫번째 안읽은 메시지 열기"
 
-#: src/prefs_common.c:2158
+#: src/prefs_common.c:2170
 msgid "Only mark message as read when opened in new window"
 msgstr "새 창에서 열렸을 경우에만 메시지를 읽은 것으로 표시"
 
-#: src/prefs_common.c:2162
+#: src/prefs_common.c:2174
 msgid "Go to inbox after receiving new mail"
 msgstr "새 편지를 받은 후 받은 편지함으로 가기"
 
-#: src/prefs_common.c:2170
+#: src/prefs_common.c:2182
 msgid "Execute immediately when moving or deleting messages"
 msgstr "메시지를 이동하거나 지울때 즉시 실행"
 
-#: src/prefs_common.c:2182
+#: src/prefs_common.c:2194
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr ""
 "(이것이 꺼져있는 경우 메시지는 실행때까지\n"
 "단지 표시만 될 것입니다)"
 
-#: src/prefs_common.c:2190
+#: src/prefs_common.c:2202
 msgid "Receive dialog"
 msgstr "받기 대화상자"
 
-#: src/prefs_common.c:2200
+#: src/prefs_common.c:2212
 msgid "Show receive dialog"
 msgstr "받기 대화상자 보기"
 
-#: src/prefs_common.c:2210
+#: src/prefs_common.c:2222
 msgid "Always"
 msgstr "항상"
 
-#: src/prefs_common.c:2211
+#: src/prefs_common.c:2223
 msgid "Only on manual receiving"
 msgstr ""
 
-#: src/prefs_common.c:2213
+#: src/prefs_common.c:2225
 msgid "Never"
 msgstr "보이지 않음"
 
-#: src/prefs_common.c:2218
+#: src/prefs_common.c:2230
 msgid "Don't popup error dialog on receive error"
 msgstr "받기 에러 발생시 에러 상자 보이지 않음"
 
-#: src/prefs_common.c:2221
+#: src/prefs_common.c:2233
 msgid "Close receive dialog when finished"
 msgstr "끝났을 때 받기 대화상자 닫기"
 
-#: src/prefs_common.c:2227
+#: src/prefs_common.c:2239
 msgid " Set key bindings... "
 msgstr " 키 바인딩 설정... "
 
-#: src/prefs_common.c:2283
+#: src/prefs_common.c:2295
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "외부 명령 (%s는 파일 이름 / URI로 대체됩니다)"
 
-#: src/prefs_common.c:2292
+#: src/prefs_common.c:2304
 msgid "Web browser"
 msgstr "웹 탐색기"
 
-#: src/prefs_common.c:2356
+#: src/prefs_common.c:2368
 msgid "Add address to destination when double-clicked"
 msgstr "더블클릭시에 대상에 주소 추가"
 
-#: src/prefs_common.c:2358
+#: src/prefs_common.c:2370
 msgid "On exit"
 msgstr "끝낼때"
 
-#: src/prefs_common.c:2366
+#: src/prefs_common.c:2378
 msgid "Confirm on exit"
 msgstr "끝냈때 확인"
 
-#: src/prefs_common.c:2373
+#: src/prefs_common.c:2385
 msgid "Empty trash on exit"
 msgstr "끝낼때 지운 편지함 비우기"
 
-#: src/prefs_common.c:2375
+#: src/prefs_common.c:2387
 msgid "Ask before emptying"
 msgstr "지운 편지함 비울때 확인하기"
 
-#: src/prefs_common.c:2379
+#: src/prefs_common.c:2391
 msgid "Warn if there are queued messages"
 msgstr "큐에 메시지가 있을 때 경고"
 
-#: src/prefs_common.c:2385
+#: src/prefs_common.c:2397
 msgid "Socket I/O timeout:"
 msgstr ""
 
-#: src/prefs_common.c:2398
+#: src/prefs_common.c:2410
 msgid "second(s)"
 msgstr ""
 
-#: src/prefs_common.c:2580
+#: src/prefs_common.c:2592
 msgid "the full abbreviated weekday name"
 msgstr ""
 
-#: src/prefs_common.c:2581
+#: src/prefs_common.c:2593
 msgid "the full weekday name"
 msgstr ""
 
-#: src/prefs_common.c:2582
+#: src/prefs_common.c:2594
 msgid "the abbreviated month name"
 msgstr ""
 
-#: src/prefs_common.c:2583
+#: src/prefs_common.c:2595
 msgid "the full month name"
 msgstr ""
 
-#: src/prefs_common.c:2584
+#: src/prefs_common.c:2596
 msgid "the preferred date and time for the current locale"
 msgstr "현재 로케일에 적당한 날짜와 시간"
 
-#: src/prefs_common.c:2585
+#: src/prefs_common.c:2597
 msgid "the century number (year/100)"
 msgstr "년도 (년/100)"
 
-#: src/prefs_common.c:2586
+#: src/prefs_common.c:2598
 msgid "the day of the month as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2587
+#: src/prefs_common.c:2599
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr ""
 
-#: src/prefs_common.c:2588
+#: src/prefs_common.c:2600
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr ""
 
-#: src/prefs_common.c:2589
+#: src/prefs_common.c:2601
 msgid "the day of the year as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2590
+#: src/prefs_common.c:2602
 msgid "the month as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2591
+#: src/prefs_common.c:2603
 msgid "the minute as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2592
+#: src/prefs_common.c:2604
 msgid "either AM or PM"
 msgstr ""
 
-#: src/prefs_common.c:2593
+#: src/prefs_common.c:2605
 msgid "the second as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2594
+#: src/prefs_common.c:2606
 msgid "the day of the week as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2595
+#: src/prefs_common.c:2607
 msgid "the preferred date for the current locale"
 msgstr ""
 
-#: src/prefs_common.c:2596
+#: src/prefs_common.c:2608
 msgid "the last two digits of a year"
 msgstr ""
 
-#: src/prefs_common.c:2597
+#: src/prefs_common.c:2609
 msgid "the year as a decimal number"
 msgstr ""
 
-#: src/prefs_common.c:2598
+#: src/prefs_common.c:2610
 msgid "the time zone or name or abbreviation"
 msgstr ""
 
-#: src/prefs_common.c:2619
+#: src/prefs_common.c:2631
 msgid "Specifier"
 msgstr ""
 
-#: src/prefs_common.c:2620
+#: src/prefs_common.c:2632
 msgid "Description"
 msgstr "설명"
 
-#: src/prefs_common.c:2660
+#: src/prefs_common.c:2672
 msgid "Example"
 msgstr "예제"
 
-#: src/prefs_common.c:2741
+#: src/prefs_common.c:2753
 msgid "Set message colors"
 msgstr "메시지 색 설정"
 
-#: src/prefs_common.c:2749
+#: src/prefs_common.c:2761
 msgid "Colors"
 msgstr "색"
 
-#: src/prefs_common.c:2783
+#: src/prefs_common.c:2795
 msgid "Quoted Text - First Level"
 msgstr "인용문 - 첫번째 단계"
 
-#: src/prefs_common.c:2789
+#: src/prefs_common.c:2801
 msgid "Quoted Text - Second Level"
 msgstr "인용문 - 두번째 단계"
 
-#: src/prefs_common.c:2795
+#: src/prefs_common.c:2807
 msgid "Quoted Text - Third Level"
 msgstr "인용문 - 세번째 단계"
 
-#: src/prefs_common.c:2801
+#: src/prefs_common.c:2813
 msgid "URI link"
 msgstr "URI 링크"
 
-#: src/prefs_common.c:2808
+#: src/prefs_common.c:2820
 msgid "Recycle quote colors"
 msgstr "인용 색 반복"
 
-#: src/prefs_common.c:2868
+#: src/prefs_common.c:2880
 msgid "Pick color for quotation level 1"
 msgstr "첫번째 단계 인용문 색 선택"
 
-#: src/prefs_common.c:2871
+#: src/prefs_common.c:2883
 msgid "Pick color for quotation level 2"
 msgstr "두번째 단계 인용문 색 선택"
 
-#: src/prefs_common.c:2874
+#: src/prefs_common.c:2886
 msgid "Pick color for quotation level 3"
 msgstr "세번째 단계 인용문 색 선택"
 
-#: src/prefs_common.c:2877
+#: src/prefs_common.c:2889
 msgid "Pick color for URI"
 msgstr "URI 색 선택"
 
-#: src/prefs_common.c:3014
+#: src/prefs_common.c:3026
 msgid "Description of symbols"
 msgstr "부호 설명"
 
-#: src/prefs_common.c:3070
+#: src/prefs_common.c:3082
 msgid ""
 "Date\n"
 "From\n"
@@ -4924,11 +4928,11 @@ msgstr ""
 "뉴스그룹\n"
 "메시지-ID"
 
-#: src/prefs_common.c:3083
+#: src/prefs_common.c:3095
 msgid "If x is set, displays expr"
 msgstr ""
 
-#: src/prefs_common.c:3087
+#: src/prefs_common.c:3099
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -4937,7 +4941,7 @@ msgid ""
 "Literal %"
 msgstr ""
 
-#: src/prefs_common.c:3095
+#: src/prefs_common.c:3107
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -4945,26 +4949,26 @@ msgid ""
 "Literal closing curly brace"
 msgstr ""
 
-#: src/prefs_common.c:3132
+#: src/prefs_common.c:3144
 msgid "Font selection"
 msgstr "글꼴 선택"
 
-#: src/prefs_common.c:3196
+#: src/prefs_common.c:3213
 msgid "Key bindings"
 msgstr "키 바인딩"
 
-#: src/prefs_common.c:3210
+#: src/prefs_common.c:3227
 msgid ""
 "Select the preset of key bindings.\n"
 "You can also modify each menu's shortcuts by pressing\n"
 "any key(s) when placing the mouse pointer on the item."
 msgstr ""
 
-#: src/prefs_common.c:3222 src/prefs_common.c:3546
+#: src/prefs_common.c:3239 src/prefs_common.c:3563
 msgid "Default"
 msgstr "기본"
 
-#: src/prefs_common.c:3225 src/prefs_common.c:3555
+#: src/prefs_common.c:3242 src/prefs_common.c:3572
 msgid "Old Sylpheed"
 msgstr "예전 Sylpheed"
 
@@ -5285,17 +5289,17 @@ msgid "Attachment"
 msgstr "첨부"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:4095
+#: src/prefs_summary_column.c:71 src/summaryview.c:4096
 msgid "Subject"
 msgstr "제목"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:4098
+#: src/prefs_summary_column.c:72 src/summaryview.c:4099
 msgid "From"
 msgstr "보낸 사람"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:4100
+#: src/prefs_summary_column.c:73 src/summaryview.c:4101
 msgid "Date"
 msgstr "날짜"
 
@@ -6068,7 +6072,7 @@ msgstr "필터링..."
 msgid "%d message(s) have been filtered."
 msgstr "메시지 %d는 이미 캐쉬되었습니다.\n"
 
-#: src/summaryview.c:4104
+#: src/summaryview.c:4105
 msgid "No."
 msgstr "번호"
 

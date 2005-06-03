@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 17:33+0900\n"
+"POT-Creation-Date: 2005-06-03 16:21+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -405,7 +405,7 @@ msgstr "/_Slet"
 msgid "E-Mail address"
 msgstr "E-post adresse"
 
-#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2347
+#: src/addressbook.c:495 src/compose.c:4370 src/prefs_common.c:2359
 msgid "Address book"
 msgstr "Adressebog"
 
@@ -654,7 +654,7 @@ msgstr "Brun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3959
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:3960
 msgid "None"
 msgstr "Ingen"
 
@@ -1107,7 +1107,7 @@ msgstr "MIME type"
 
 #. S_COL_DATE
 #: src/compose.c:3929 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4102
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4103
 msgid "Size"
 msgstr "Størrelse"
 
@@ -1156,7 +1156,7 @@ msgstr "Underskrift"
 msgid "Insert signature"
 msgstr "Indsæt underskrift"
 
-#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2326
+#: src/compose.c:4349 src/prefs_common.c:1332 src/prefs_common.c:2338
 msgid "Editor"
 msgstr "Editor"
 
@@ -1460,7 +1460,7 @@ msgid "Edit JPilot Entry"
 msgstr "Redigér JPilot indtastning"
 
 #: src/editjpilot.c:322 src/editldap.c:347 src/editvcard.c:235
-#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1979
+#: src/importldif.c:534 src/prefs_account.c:1852 src/prefs_common.c:1993
 msgid " ... "
 msgstr " ... "
 
@@ -3446,7 +3446,7 @@ msgstr "Vedhæftet"
 msgid "Can't save the file `%s'."
 msgstr "Kan ikke gemme fil `%s'."
 
-#: src/messageview.c:701 src/prefs_common.c:2315 src/summaryview.c:2912
+#: src/messageview.c:701 src/prefs_common.c:2327 src/summaryview.c:2912
 msgid "Print"
 msgstr "Udskriv"
 
@@ -4573,7 +4573,7 @@ msgstr "Vis modtager i `Fra' hvis du er afsender"
 msgid "Expand threads"
 msgstr "Åbn tråde"
 
-#: src/prefs_common.c:1674 src/prefs_common.c:2604 src/prefs_common.c:2642
+#: src/prefs_common.c:1674 src/prefs_common.c:2616 src/prefs_common.c:2654
 msgid "Date format"
 msgstr "Dato format"
 
@@ -4661,288 +4661,292 @@ msgstr "Udfør"
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common.c:1971
+#: src/prefs_common.c:1968
+msgid ""
+"Specify command line for learning junk mail. You must add a filter rule with "
+"'Result of command' as a condition to enable automatic filtering using the "
+"result of this learning."
+msgstr ""
+
+#: src/prefs_common.c:1985
 #, fuzzy
 msgid "Junk folder"
 msgstr "Mappe"
 
-#: src/prefs_common.c:1989
-msgid ""
-"Specify command line for learning junk mail.\n"
-"You must add a filter rule to enable automatic filtering using the result of "
-"this learning."
+#: src/prefs_common.c:2002
+msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
 
-#: src/prefs_common.c:2032
+#: src/prefs_common.c:2044
 msgid "Automatically check signatures"
 msgstr "Check signatur automatisk"
 
-#: src/prefs_common.c:2035
+#: src/prefs_common.c:2047
 msgid "Show signature check result in a popup window"
 msgstr "Vis signatur check resultat i separat vindue"
 
-#: src/prefs_common.c:2038
+#: src/prefs_common.c:2050
 msgid "Store passphrase in memory temporarily"
 msgstr "Gem  adgangssætning midlertidigt i hukommelsen"
 
-#: src/prefs_common.c:2053
+#: src/prefs_common.c:2065
 msgid "Expired after"
 msgstr "Udløb efter"
 
-#: src/prefs_common.c:2066
+#: src/prefs_common.c:2078
 msgid "minute(s) "
 msgstr "minut(er)"
 
-#: src/prefs_common.c:2079
+#: src/prefs_common.c:2091
 #, fuzzy
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr ""
 "(Sæt til '0' vil gemme adgangssætningen\n"
 " for hele sessionen)"
 
-#: src/prefs_common.c:2093
+#: src/prefs_common.c:2105
 msgid "Grab input while entering a passphrase"
 msgstr "Overtag indtastning mens adgangssætning indtastes"
 
-#: src/prefs_common.c:2098
+#: src/prefs_common.c:2110
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Advarsel ved start hvis GnuPG ikke virker"
 
-#: src/prefs_common.c:2150
+#: src/prefs_common.c:2162
 msgid "Always open messages in summary when selected"
 msgstr "Åbn altid besked i oversigtsbilledet hvis valgt"
 
-#: src/prefs_common.c:2154
+#: src/prefs_common.c:2166
 msgid "Open first unread message when entering a folder"
 msgstr "Åbn første ulæste meddelelse ved indgang til mappe"
 
-#: src/prefs_common.c:2158
+#: src/prefs_common.c:2170
 msgid "Only mark message as read when opened in new window"
 msgstr "Markér kun meddelelser som læst hvis åbnet i nyt vindue"
 
-#: src/prefs_common.c:2162
+#: src/prefs_common.c:2174
 msgid "Go to inbox after receiving new mail"
 msgstr "Gå til Indbakke efter modtagelse af ny post"
 
-#: src/prefs_common.c:2170
+#: src/prefs_common.c:2182
 msgid "Execute immediately when moving or deleting messages"
 msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
 
-#: src/prefs_common.c:2182
+#: src/prefs_common.c:2194
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "(Ellers markéres meddelelese indtil der vælges 'Udfør')"
 
-#: src/prefs_common.c:2190
+#: src/prefs_common.c:2202
 msgid "Receive dialog"
 msgstr "Vis modtag billede"
 
-#: src/prefs_common.c:2200
+#: src/prefs_common.c:2212
 msgid "Show receive dialog"
 msgstr "Vis modtag billede"
 
-#: src/prefs_common.c:2210
+#: src/prefs_common.c:2222
 msgid "Always"
 msgstr "Altid"
 
-#: src/prefs_common.c:2211
+#: src/prefs_common.c:2223
 msgid "Only on manual receiving"
 msgstr ""
 
-#: src/prefs_common.c:2213
+#: src/prefs_common.c:2225
 msgid "Never"
 msgstr "Aldrig"
 
-#: src/prefs_common.c:2218
+#: src/prefs_common.c:2230
 msgid "Don't popup error dialog on receive error"
 msgstr "Vis ikke fejlmeddelelse ved fejl"
 
-#: src/prefs_common.c:2221
+#: src/prefs_common.c:2233
 msgid "Close receive dialog when finished"
 msgstr "Luk modtag vindue efter overførsel"
 
-#: src/prefs_common.c:2227
+#: src/prefs_common.c:2239
 msgid " Set key bindings... "
 msgstr " Vælg tast bindinger... "
 
-#: src/prefs_common.c:2283
+#: src/prefs_common.c:2295
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "Ekstern editor (%s erstattes af filnavn / URI)"
 
-#: src/prefs_common.c:2292
+#: src/prefs_common.c:2304
 msgid "Web browser"
 msgstr "Web browser"
 
-#: src/prefs_common.c:2356
+#: src/prefs_common.c:2368
 msgid "Add address to destination when double-clicked"
 msgstr "Tilføj adresse til 'Til' ved dobbeltklik"
 
-#: src/prefs_common.c:2358
+#: src/prefs_common.c:2370
 msgid "On exit"
 msgstr "Ved afslut"
 
-#: src/prefs_common.c:2366
+#: src/prefs_common.c:2378
 msgid "Confirm on exit"
 msgstr "Spørg ved afslut"
 
-#: src/prefs_common.c:2373
+#: src/prefs_common.c:2385
 msgid "Empty trash on exit"
 msgstr "Tøm Slettet ved afslut"
 
-#: src/prefs_common.c:2375
+#: src/prefs_common.c:2387
 msgid "Ask before emptying"
 msgstr "Spørg før tømning"
 
-#: src/prefs_common.c:2379
+#: src/prefs_common.c:2391
 msgid "Warn if there are queued messages"
 msgstr "Advar ved meddelelser i kø"
 
-#: src/prefs_common.c:2385
+#: src/prefs_common.c:2397
 msgid "Socket I/O timeout:"
 msgstr "Socket I/O timeout:"
 
-#: src/prefs_common.c:2398
+#: src/prefs_common.c:2410
 msgid "second(s)"
 msgstr "sekund(er)"
 
-#: src/prefs_common.c:2580
+#: src/prefs_common.c:2592
 msgid "the full abbreviated weekday name"
 msgstr "kort ugedags navn"
 
-#: src/prefs_common.c:2581
+#: src/prefs_common.c:2593
 msgid "the full weekday name"
 msgstr "Ugedags navn"
 
-#: src/prefs_common.c:2582
+#: src/prefs_common.c:2594
 msgid "the abbreviated month name"
 msgstr "kort måneds navn"
 
-#: src/prefs_common.c:2583
+#: src/prefs_common.c:2595
 msgid "the full month name"
 msgstr "måneds navn"
 
-#: src/prefs_common.c:2584
+#: src/prefs_common.c:2596
 msgid "the preferred date and time for the current locale"
 msgstr "ønsket dato format for nuværende locale"
 
-#: src/prefs_common.c:2585
+#: src/prefs_common.c:2597
 msgid "the century number (year/100)"
 msgstr "århundrede (år/100)"
 
-#: src/prefs_common.c:2586
+#: src/prefs_common.c:2598
 msgid "the day of the month as a decimal number"
 msgstr "dag i måned som tal"
 
-#: src/prefs_common.c:2587
+#: src/prefs_common.c:2599
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "time som tal (24 timers visning)"
 
-#: src/prefs_common.c:2588
+#: src/prefs_common.c:2600
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "time som tal (12 timers visning)"
 
-#: src/prefs_common.c:2589
+#: src/prefs_common.c:2601
 msgid "the day of the year as a decimal number"
 msgstr "århundrede som tal"
 
-#: src/prefs_common.c:2590
+#: src/prefs_common.c:2602
 msgid "the month as a decimal number"
 msgstr "måned som tal"
 
-#: src/prefs_common.c:2591
+#: src/prefs_common.c:2603
 msgid "the minute as a decimal number"
 msgstr "minut som tal"
 
-#: src/prefs_common.c:2592
+#: src/prefs_common.c:2604
 msgid "either AM or PM"
 msgstr "enten AM eller PM"
 
-#: src/prefs_common.c:2593
+#: src/prefs_common.c:2605
 msgid "the second as a decimal number"
 msgstr "sekund som tal"
 
-#: src/prefs_common.c:2594
+#: src/prefs_common.c:2606
 msgid "the day of the week as a decimal number"
 msgstr "ugedag som tal"
 
-#: src/prefs_common.c:2595
+#: src/prefs_common.c:2607
 msgid "the preferred date for the current locale"
 msgstr "ønsket dato format for nuværende locale"
 
-#: src/prefs_common.c:2596
+#: src/prefs_common.c:2608
 msgid "the last two digits of a year"
 msgstr "de sidste to cifre i året"
 
-#: src/prefs_common.c:2597
+#: src/prefs_common.c:2609
 msgid "the year as a decimal number"
 msgstr "året som tal"
 
-#: src/prefs_common.c:2598
+#: src/prefs_common.c:2610
 msgid "the time zone or name or abbreviation"
 msgstr "tidszone som navn eller forkortelse"
 
-#: src/prefs_common.c:2619
+#: src/prefs_common.c:2631
 msgid "Specifier"
 msgstr "Vælger"
 
-#: src/prefs_common.c:2620
+#: src/prefs_common.c:2632
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: src/prefs_common.c:2660
+#: src/prefs_common.c:2672
 msgid "Example"
 msgstr "Eksempel"
 
-#: src/prefs_common.c:2741
+#: src/prefs_common.c:2753
 msgid "Set message colors"
 msgstr "Angiv meddelelses farve"
 
-#: src/prefs_common.c:2749
+#: src/prefs_common.c:2761
 msgid "Colors"
 msgstr "Farve"
 
-#: src/prefs_common.c:2783
+#: src/prefs_common.c:2795
 msgid "Quoted Text - First Level"
 msgstr "Citeret tekst - 1. niveau"
 
-#: src/prefs_common.c:2789
+#: src/prefs_common.c:2801
 msgid "Quoted Text - Second Level"
 msgstr "Citeret tekst - 2. niveau"
 
-#: src/prefs_common.c:2795
+#: src/prefs_common.c:2807
 msgid "Quoted Text - Third Level"
 msgstr "Citeret tekst - 3. nivaur"
 
-#: src/prefs_common.c:2801
+#: src/prefs_common.c:2813
 msgid "URI link"
 msgstr "URI-Link"
 
-#: src/prefs_common.c:2808
+#: src/prefs_common.c:2820
 msgid "Recycle quote colors"
 msgstr "Genbrug citat farver"
 
-#: src/prefs_common.c:2868
+#: src/prefs_common.c:2880
 msgid "Pick color for quotation level 1"
 msgstr "Vælg farve for nivau 1"
 
-#: src/prefs_common.c:2871
+#: src/prefs_common.c:2883
 msgid "Pick color for quotation level 2"
 msgstr "Vælg farve for nivau 2"
 
-#: src/prefs_common.c:2874
+#: src/prefs_common.c:2886
 msgid "Pick color for quotation level 3"
 msgstr "Vælg farve for nivau 3"
 
-#: src/prefs_common.c:2877
+#: src/prefs_common.c:2889
 msgid "Pick color for URI"
 msgstr "Vælg farve for URI"
 
-#: src/prefs_common.c:3014
+#: src/prefs_common.c:3026
 msgid "Description of symbols"
 msgstr "Beskrivelse af symboler"
 
-#: src/prefs_common.c:3070
+#: src/prefs_common.c:3082
 msgid ""
 "Date\n"
 "From\n"
@@ -4966,11 +4970,11 @@ msgstr ""
 "Nyhedsgrupper\n"
 "Meddelelses ID"
 
-#: src/prefs_common.c:3083
+#: src/prefs_common.c:3095
 msgid "If x is set, displays expr"
 msgstr "Hvis x er valgt vises expr"
 
-#: src/prefs_common.c:3087
+#: src/prefs_common.c:3099
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -4984,7 +4988,7 @@ msgstr ""
 "Citeret meddelelses krop uden signatur\n"
 "%"
 
-#: src/prefs_common.c:3095
+#: src/prefs_common.c:3107
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -4996,15 +5000,15 @@ msgstr ""
 "{\n"
 "}"
 
-#: src/prefs_common.c:3132
+#: src/prefs_common.c:3144
 msgid "Font selection"
 msgstr "Skrifttype"
 
-#: src/prefs_common.c:3196
+#: src/prefs_common.c:3213
 msgid "Key bindings"
 msgstr "Tast bindinger"
 
-#: src/prefs_common.c:3210
+#: src/prefs_common.c:3227
 msgid ""
 "Select the preset of key bindings.\n"
 "You can also modify each menu's shortcuts by pressing\n"
@@ -5014,11 +5018,11 @@ msgstr ""
 "Du kan også ændre hver menus genvejstast ved at taste enhver ved at placere\n"
 "mus over menu punkt og taste en tast."
 
-#: src/prefs_common.c:3222 src/prefs_common.c:3546
+#: src/prefs_common.c:3239 src/prefs_common.c:3563
 msgid "Default"
 msgstr "Standard"
 
-#: src/prefs_common.c:3225 src/prefs_common.c:3555
+#: src/prefs_common.c:3242 src/prefs_common.c:3572
 msgid "Old Sylpheed"
 msgstr "Gl. Sylpheed"
 
@@ -5339,17 +5343,17 @@ msgid "Attachment"
 msgstr "Vedhæftet"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:4095
+#: src/prefs_summary_column.c:71 src/summaryview.c:4096
 msgid "Subject"
 msgstr "Emne"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:4098
+#: src/prefs_summary_column.c:72 src/summaryview.c:4099
 msgid "From"
 msgstr "Fra"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:4100
+#: src/prefs_summary_column.c:73 src/summaryview.c:4101
 msgid "Date"
 msgstr "Dato"
 
@@ -6130,7 +6134,7 @@ msgstr "Filtrering..."
 msgid "%d message(s) have been filtered."
 msgstr "meddelelse %d er allerede gemt.\n"
 
-#: src/summaryview.c:4104
+#: src/summaryview.c:4105
 msgid "No."
 msgstr "Nr."
 
