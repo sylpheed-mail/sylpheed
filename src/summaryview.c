@@ -3691,7 +3691,8 @@ static void summary_junk_func(GtkTreeModel *model, GtkTreePath *path,
 	action2.str_value = prefs_common.junk_folder;
 
 	rule.action_list = g_slist_append(rule.action_list, &action1);
-	rule.action_list = g_slist_append(rule.action_list, &action2);
+	if (prefs_common.junk_folder)
+		rule.action_list = g_slist_append(rule.action_list, &action2);
 
 	fltinfo = filter_info_new();
 
@@ -3736,7 +3737,7 @@ void summary_junk(SummaryView *summaryview)
 {
 	if (!prefs_common.enable_junk)
 		return;
-	if (!prefs_common.junk_learncmd || !prefs_common.junk_folder)
+	if (!prefs_common.junk_learncmd)
 		return;
 
 	summary_lock(summaryview);
@@ -3748,7 +3749,7 @@ void summary_junk(SummaryView *summaryview)
 
 	summary_unlock(summaryview);
 
-	if (prefs_common.immediate_exec)
+	if (prefs_common.junk_folder && prefs_common.immediate_exec)
 		summary_execute(summaryview);
 	else {
 		summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
