@@ -1,5 +1,11 @@
 2005-06-06
 
+	* src/summaryview.c: summary_remove_invalid_messages(): 全メッセージ
+	  を選択してそれを削除した場合に O(n^2) のオーダーで時間がかかって
+	  いたバグを修正。
+
+2005-06-06
+
 	* src/compose.c
 	  src/messageview.c
 	  src/prefs_common.c

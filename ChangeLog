@@ -1,5 +1,11 @@
 2005-06-06
 
+	* src/summaryview.c: summary_remove_invalid_messages(): fixed a bug
+	  that it took time at O(n^2) order if all messages were selected
+	  and then they were removed.
+
+2005-06-06
+
 	* src/compose.c
 	  src/messageview.c
 	  src/prefs_common.c

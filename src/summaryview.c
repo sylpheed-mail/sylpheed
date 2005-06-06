@@ -3029,10 +3029,8 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 				 FALSE);
 		}
 	}
-	if (!valid) {
-		gtk_tree_row_reference_free(summaryview->selected);
-		summaryview->selected = NULL;
-	}
+	if (!valid)
+		summary_unselect_all(summaryview);
 
 	for (valid = gtk_tree_model_get_iter_first(model, &iter);
 	     valid == TRUE; iter = next) {
