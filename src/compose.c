@@ -371,8 +371,6 @@ static void compose_ext_editor_cb	(gpointer	 data,
 static gint compose_delete_cb		(GtkWidget	*widget,
 					 GdkEventAny	*event,
 					 gpointer	 data);
-static void compose_destroy_cb		(GtkWidget	*widget,
-					 Compose	*compose);
 
 static void compose_undo_cb		(Compose	*compose);
 static void compose_redo_cb		(Compose	*compose);
@@ -3788,8 +3786,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(compose_delete_cb), compose);
-	g_signal_connect(G_OBJECT(window), "destroy",
-			 G_CALLBACK(compose_destroy_cb), compose);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 	gtk_widget_realize(window);
 
@@ -4576,6 +4572,8 @@ static void compose_destroy(Compose *compose)
 	gboolean valid;
 	AttachInfo *ainfo;
 
+	compose_list = g_list_remove(compose_list, compose);
+
 	/* NOTE: address_completion_end() does nothing with the window
 	 * however this may change. */
 	address_completion_end(compose->window);
@@ -4622,9 +4620,9 @@ static void compose_destroy(Compose *compose)
 		gtk_widget_destroy(compose->paned);
 	gtk_widget_destroy(compose->popupmenu);
 
-	g_free(compose);
+	gtk_widget_destroy(compose->window);
 
-	compose_list = g_list_remove(compose_list, compose);
+	g_free(compose);
 }
 
 static void compose_attach_info_free(AttachInfo *ainfo)
@@ -5412,7 +5410,8 @@ static void compose_send_cb(gpointer data, guint action, GtkWidget *widget)
 
 	val = compose_send(compose);
 
-	if (val == 0) gtk_widget_destroy(compose->window);
+	if (val == 0)
+		compose_destroy(compose);
 }
 
 static void compose_send_later_cb(gpointer data, guint action,
@@ -5460,7 +5459,7 @@ static void compose_send_later_cb(gpointer data, guint action,
 	if (unlink(tmp) < 0)
 		FILE_OP_ERROR(tmp, "unlink");
 
-	gtk_widget_destroy(compose->window);
+	compose_destroy(compose);
 }
 
 static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
@@ -5513,7 +5512,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 
 	/* 0: quit editing  1: keep editing */
 	if (action == 0)
-		gtk_widget_destroy(compose->window);
+		compose_destroy(compose);
 	else {
 		struct stat s;
 		gchar *path;
@@ -5616,7 +5615,7 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 		}
 	}
 
-	gtk_widget_destroy(compose->window);
+	compose_destroy(compose);
 }
 
 static void compose_set_encoding_cb(gpointer data, guint action,
@@ -5663,11 +5662,6 @@ static void compose_ext_editor_cb(gpointer data, guint action,
 	Compose *compose = (Compose *)data;
 
 	compose_exec_ext_editor(compose);
-}
-
-static void compose_destroy_cb(GtkWidget *widget, Compose *compose)
-{
-	compose_destroy(compose);
 }
 
 static void compose_undo_cb(Compose *compose)
