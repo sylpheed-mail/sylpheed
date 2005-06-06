@@ -1566,6 +1566,7 @@ void summary_attract_by_subject(SummaryView *summaryview)
 	g_hash_table_destroy(order_table);
 
 	summaryview->folder_item->cache_dirty = TRUE;
+	summary_selection_list_free(summaryview);
 
 	summary_scroll_to_selected(summaryview);
 
@@ -1743,6 +1744,7 @@ void summary_sort(SummaryView *summaryview,
 	gtk_tree_sortable_set_sort_column_id(sortable, col_type,
 					     (GtkSortType)sort_type);
 
+	summary_selection_list_free(summaryview);
 	summary_set_column_titles(summaryview);
 	summary_set_menu_sensitive(summaryview);
 
