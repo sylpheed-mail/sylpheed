@@ -215,6 +215,7 @@ const gchar *conv_get_outgoing_charset_str	(void);
 gboolean conv_is_multibyte_encoding		(CharSet	 encoding);
 
 const gchar *conv_get_current_locale		(void);
+gboolean conv_is_ja_locale			(void);
 
 gchar *conv_unmime_header		(const gchar	*str,
 					 const gchar	*default_encoding);
