@@ -566,6 +566,12 @@ static GtkItemFactoryEntry compose_entries[] =
 	 ENC_ACTION(C_ISO_8859_7)},
 	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
 
+	{N_("/_View/Character _encoding/Hebrew (ISO-8859-_8)"),
+	 ENC_ACTION(C_ISO_8859_8)},
+	{N_("/_View/Character _encoding/Hebrew (Windows-1255)"),
+	 ENC_ACTION(C_WINDOWS_1255)},
+	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
+
 	{N_("/_View/Character _encoding/Turkish (ISO-8859-_9)"),
 	 ENC_ACTION(C_ISO_8859_9)},
 	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
@@ -577,7 +583,7 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_View/Character _encoding/Cyrillic (KOI8-U)"),
 	 ENC_ACTION(C_KOI8_U)},
 	{N_("/_View/Character _encoding/Cyrillic (Windows-1251)"),
-	 ENC_ACTION(C_CP1251)},
+	 ENC_ACTION(C_WINDOWS_1251)},
 	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
 
 	{N_("/_View/Character _encoding/Japanese (ISO-2022-_JP)"),
