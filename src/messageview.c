@@ -66,7 +66,8 @@ static GList *messageview_list = NULL;
 
 static void messageview_change_view_type(MessageView		*messageview,
 					 MessageType		 type);
-static void messageview_destroy_cb	(GtkWidget		*widget,
+static gint messageview_delete_cb	(GtkWidget		*widget,
+					 GdkEventAny		*event,
 					 MessageView		*messageview);
 static void messageview_size_allocate_cb(GtkWidget		*widget,
 					 GtkAllocation		*allocation);
@@ -378,8 +379,8 @@ MessageView *messageview_create_with_new_window(void)
 	g_signal_connect(G_OBJECT(window), "size_allocate",
 			 G_CALLBACK(messageview_size_allocate_cb),
 			 msgview);
-	g_signal_connect(G_OBJECT(window), "destroy",
-			 G_CALLBACK(messageview_destroy_cb), msgview);
+	g_signal_connect(G_OBJECT(window), "delete_event",
+			 G_CALLBACK(messageview_delete_cb), msgview);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), msgview);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
@@ -387,7 +388,6 @@ MessageView *messageview_create_with_new_window(void)
 	n_menu_entries = sizeof(msgview_entries) / sizeof (msgview_entries[0]);
 	menubar = menubar_create(window, msgview_entries, n_menu_entries,
 				 "<MessageView>", msgview);
-#warning FIXME_GTK2
 #if 0
 	menu_factory_copy_rc("<Main>", "<MessageView>");
 #endif
@@ -535,6 +535,9 @@ void messageview_destroy(MessageView *messageview)
 
 	procmsg_msginfo_free(messageview->msginfo);
 
+	if (messageview->window)
+		gtk_widget_destroy(messageview->window);
+
 	g_free(messageview);
 
 	gtk_widget_unref(textview);
@@ -660,9 +663,11 @@ void messageview_save_as(MessageView *messageview)
 	g_free(dest);
 }
 
-static void messageview_destroy_cb(GtkWidget *widget, MessageView *messageview)
+static gint messageview_delete_cb(GtkWidget *widget, GdkEventAny *event,
+				  MessageView *messageview)
 {
 	messageview_destroy(messageview);
+	return TRUE;
 }
 
 static void messageview_size_allocate_cb(GtkWidget *widget,
@@ -684,8 +689,10 @@ static void messageview_switch_page_cb(GtkNotebook *notebook,
 static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 			    MessageView *messageview)
 {
-	if (event && event->keyval == GDK_Escape && messageview->window)
-		gtk_widget_destroy(messageview->window);
+	if (event && event->keyval == GDK_Escape && messageview->window) {
+		messageview_destroy(messageview);
+		return TRUE;
+	}
 	return FALSE;
 }
 
@@ -723,7 +730,7 @@ static void print_cb(gpointer data, guint action, GtkWidget *widget)
 static void close_cb(gpointer data, guint action, GtkWidget *widget)
 {
 	MessageView *messageview = (MessageView *)data;
-	gtk_widget_destroy(messageview->window);
+	messageview_destroy(messageview);
 }
 
 static void copy_cb(gpointer data, guint action, GtkWidget *widget)

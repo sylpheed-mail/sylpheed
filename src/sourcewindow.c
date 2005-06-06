@@ -39,7 +39,8 @@
 
 static void source_window_size_alloc_cb	(GtkWidget	*widget,
 					 GtkAllocation	*allocation);
-static void source_window_destroy_cb	(GtkWidget	*widget,
+static gint source_window_delete_cb	(GtkWidget	*widget,
+					 GdkEventAny	*event,
 					 SourceWindow	*sourcewin);
 static gboolean key_pressed		(GtkWidget	*widget,
 					 GdkEventKey	*event,
@@ -68,8 +69,8 @@ SourceWindow *source_window_create(void)
 				    prefs_common.sourcewin_height);
 	g_signal_connect(G_OBJECT(window), "size_allocate",
 			 G_CALLBACK(source_window_size_alloc_cb), sourcewin);
-	g_signal_connect(G_OBJECT(window), "destroy",
-			 G_CALLBACK(source_window_destroy_cb), sourcewin);
+	g_signal_connect(G_OBJECT(window), "delete_event",
+			 G_CALLBACK(source_window_delete_cb), sourcewin);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), sourcewin);
 	gtk_widget_realize(window);
@@ -109,6 +110,7 @@ void source_window_show(SourceWindow *sourcewin)
 
 void source_window_destroy(SourceWindow *sourcewin)
 {
+	gtk_widget_destroy(sourcewin->window);
 	g_free(sourcewin);
 }
 
@@ -167,16 +169,19 @@ static void source_window_size_alloc_cb(GtkWidget *widget,
 	prefs_common.sourcewin_height = allocation->height;
 }
 
-static void source_window_destroy_cb(GtkWidget *widget,
-				     SourceWindow *sourcewin)
+static gint source_window_delete_cb(GtkWidget *widget, GdkEventAny *event,
+				    SourceWindow *sourcewin)
 {
 	source_window_destroy(sourcewin);
+	return TRUE;
 }
 
 static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 			    SourceWindow *sourcewin)
 {
-	if (event && event->keyval == GDK_Escape)
-		gtk_widget_destroy(sourcewin->window);
+	if (event && event->keyval == GDK_Escape) {
+		source_window_destroy(sourcewin);
+		return TRUE;
+	}
 	return FALSE;
 }
