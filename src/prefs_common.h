@@ -64,6 +64,7 @@ struct _PrefsCommon
 	gboolean use_extsend;
 	gchar *extsend_cmd;
 	gboolean savemsg;
+	gboolean filter_sent;
 	gchar *outgoing_charset;
 	TransferEncodingMethod encoding_method;
 

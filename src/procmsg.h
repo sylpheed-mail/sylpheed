@@ -266,10 +266,10 @@ void	procmsg_empty_trash		(FolderItem	*trash);
 void	procmsg_empty_all_trash		(void);
 
 gint	procmsg_send_queue		(FolderItem	*queue,
-					 gboolean	 save_msgs);
+					 gboolean	 save_msgs,
+					 gboolean	 filter_msgs);
 gint	procmsg_save_to_outbox		(FolderItem	*outbox,
-					 const gchar	*file,
-					 gboolean	 is_queued);
+					 const gchar	*file);
 void	procmsg_print_message		(MsgInfo	*msginfo,
 					 const gchar	*cmdline);
 

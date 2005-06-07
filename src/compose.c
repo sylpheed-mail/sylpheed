@@ -109,6 +109,7 @@
 #include "manage_window.h"
 #include "gtkshruler.h"
 #include "folder.h"
+#include "filter.h"
 #include "addr_compl.h"
 #include "quote_fmt.h"
 #include "template.h"
@@ -2497,11 +2498,25 @@ static gint compose_send(Compose *compose)
 
 			outbox = account_get_special_folder
 				(compose->account, F_OUTBOX);
-			if (procmsg_save_to_outbox(outbox, tmp, FALSE) < 0)
+			if (procmsg_save_to_outbox(outbox, tmp) < 0)
 				alertpanel_error
 					(_("Can't save the message to outbox."));
 			else
 				folderview_update_item(outbox, TRUE);
+		}
+		/* filter sent message */
+		if (prefs_common.filter_sent) {
+			FilterInfo *fltinfo;
+
+			fltinfo = filter_info_new();
+			fltinfo->account = compose->account;
+			fltinfo->flags.perm_flags = 0;
+			fltinfo->flags.tmp_flags = MSG_RECEIVED;
+
+			filter_apply(prefs_common.fltlist, tmp, fltinfo);
+
+			folderview_update_all_updated(TRUE);
+			filter_info_free(fltinfo);
 		}
 	}
 

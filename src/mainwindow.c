@@ -2867,7 +2867,8 @@ static void send_queue_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 			gint ret;
 
 			ret = procmsg_send_queue(folder->queue,
-						 prefs_common.savemsg);
+						 prefs_common.savemsg,
+						 prefs_common.filter_sent);
 			statusbar_pop_all();
 			if (ret > 0)
 				folder_item_scan(folder->queue);

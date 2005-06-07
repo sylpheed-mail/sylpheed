@@ -33,6 +33,7 @@
 #include "send_message.h"
 #include "procmime.h"
 #include "statusbar.h"
+#include "prefs_common.h"
 #include "prefs_filter.h"
 #include "filter.h"
 #include "folder.h"
@@ -1223,7 +1224,8 @@ void procmsg_empty_all_trash(void)
 	}
 }
 
-gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs)
+gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs,
+			gboolean filter_msgs)
 {
 	gint ret = 0;
 	GSList *mlist = NULL;
@@ -1239,45 +1241,65 @@ gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs)
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		gchar *file;
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		QueueInfo *qinfo;
+		gchar tmp[MAXPATHLEN + 1];
 
 		file = procmsg_get_message_file(msginfo);
-		if (file) {
-			QueueInfo *qinfo;
+		if (!file)
+			continue;
 
-			qinfo = send_get_queue_info(file);
-			if (!qinfo || send_message_queue(qinfo) < 0) {
-				g_warning(_("Sending queued message %d failed.\n"),
-					  msginfo->msgnum);
-			} else {
-				ret++;
-				if (save_msgs) {
-					FolderItem *outbox;
-					outbox = account_get_special_folder
-						(qinfo->ac, F_OUTBOX);
-					procmsg_save_to_outbox(outbox, file,
-							       TRUE);
-				}
-				folder_item_remove_msg(queue, msginfo);
-			}
+		qinfo = send_get_queue_info(file);
+		if (!qinfo || send_message_queue(qinfo) < 0) {
+			g_warning("Sending queued message %d failed.\n",
+				  msginfo->msgnum);
 			send_queue_info_free(qinfo);
 			g_free(file);
+			continue;
 		}
 
-		procmsg_msginfo_free(msginfo);
+		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
+			   get_rc_dir(), G_DIR_SEPARATOR,
+			   (guint)random());
+
+		if (send_get_queue_contents(qinfo, tmp) == 0) {
+			if (save_msgs) {
+				FolderItem *outbox;
+				outbox = account_get_special_folder
+					(qinfo->ac, F_OUTBOX);
+				procmsg_save_to_outbox(outbox, tmp);
+			}
+			if (filter_msgs) {
+				FilterInfo *fltinfo;
+
+				fltinfo = filter_info_new();
+				fltinfo->account = qinfo->ac;
+				fltinfo->flags.perm_flags = 0;
+				fltinfo->flags.tmp_flags = MSG_RECEIVED;
+
+				filter_apply(prefs_common.fltlist, tmp,
+					     fltinfo);
+
+				filter_info_free(fltinfo);
+			}
+			unlink(tmp);
+		}
+
+		folder_item_remove_msg(queue, msginfo);
+		ret++;
+
+		send_queue_info_free(qinfo);
+		g_free(file);
 	}
 
-	g_slist_free(mlist);
-
+	procmsg_msg_list_free(mlist);
 	queue->mtime = 0;
 
 	return ret;
 }
 
-gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file,
-			    gboolean is_queued)
+gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file)
 {
 	gint num;
-	FILE *fp;
 	MsgFlags flag = {0, 0};
 
 	debug_print("saving sent message...\n");
@@ -1286,43 +1308,10 @@ gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file,
 		outbox = folder_get_default_outbox();
 	g_return_val_if_fail(outbox != NULL, -1);
 
-	/* remove queueing headers */
-	if (is_queued) {
-		gchar tmp[MAXPATHLEN + 1];
-		gchar buf[BUFFSIZE];
-		FILE *outfp;
-
-		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
-			   get_rc_dir(), G_DIR_SEPARATOR, (guint)random());
-		if ((fp = fopen(file, "rb")) == NULL) {
-			FILE_OP_ERROR(file, "fopen");
-			return -1;
-		}
-		if ((outfp = fopen(tmp, "wb")) == NULL) {
-			FILE_OP_ERROR(tmp, "fopen");
-			fclose(fp);
-			return -1;
-		}
-		while (fgets(buf, sizeof(buf), fp) != NULL)
-			if (buf[0] == '\r' || buf[0] == '\n') break;
-		while (fgets(buf, sizeof(buf), fp) != NULL)
-			fputs(buf, outfp);
-		fclose(outfp);
-		fclose(fp);
-
-		folder_item_scan(outbox);
-		if ((num = folder_item_add_msg(outbox, tmp, &flag, TRUE)) < 0) {
-			g_warning("can't save message\n");
-			unlink(tmp);
-			return -1;
-		}
-	} else {
-		folder_item_scan(outbox);
-		if ((num = folder_item_add_msg
-			(outbox, file, &flag, FALSE)) < 0) {
-			g_warning("can't save message\n");
-			return -1;
-		}
+	folder_item_scan(outbox);
+	if ((num = folder_item_add_msg(outbox, file, &flag, FALSE)) < 0) {
+		g_warning("can't save message\n");
+		return -1;
 	}
 
 	return 0;

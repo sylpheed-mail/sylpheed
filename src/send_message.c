@@ -193,6 +193,37 @@ QueueInfo *send_get_queue_info(const gchar *file)
 	return qinfo;
 }
 
+gint send_get_queue_contents(QueueInfo *qinfo, const gchar *dest)
+{
+	FILE *fp;
+	glong pos;
+	gchar buf[BUFFSIZE];
+
+	g_return_val_if_fail(qinfo != NULL, -1);
+	g_return_val_if_fail(qinfo->fp != NULL, -1);
+	g_return_val_if_fail(dest != NULL, -1);
+
+	if ((fp = fopen(dest, "wb")) == NULL) {
+		FILE_OP_ERROR(dest, "fopen");
+		return -1;
+	}
+
+	pos = ftell(qinfo->fp);
+
+	while (fgets(buf, sizeof(buf), qinfo->fp) != NULL)
+		fputs(buf, fp);
+
+	if (fclose(fp) < 0) {
+		FILE_OP_ERROR(dest, "fclose");
+		unlink(dest);
+		return -1;
+	}
+
+	fseek(qinfo->fp, pos, SEEK_SET);
+
+	return 0;
+}
+
 void send_queue_info_free(QueueInfo *qinfo)
 {
 	if (qinfo == NULL) return;
@@ -213,6 +244,8 @@ gint send_message_queue(QueueInfo *qinfo)
 	PrefsAccount *mailac = NULL, *newsac = NULL;
 
 	g_return_val_if_fail(qinfo != NULL, -1);
+
+	fpos = ftell(qinfo->fp);
 
 	if (prefs_common.use_extsend && prefs_common.extsend_cmd) {
 		val = send_message_local(prefs_common.extsend_cmd, qinfo->fp);
@@ -235,7 +268,6 @@ gint send_message_queue(QueueInfo *qinfo)
 		} else
 			mailac = qinfo->ac;
 
-		fpos = ftell(qinfo->fp);
 		if (qinfo->to_list) {
 			if (mailac)
 				val = send_message_smtp(mailac, qinfo->to_list,
@@ -263,6 +295,8 @@ gint send_message_queue(QueueInfo *qinfo)
 						 newsac->nntp_server);
 		}
 	}
+
+	fseek(qinfo->fp, fpos, SEEK_SET);
 
 	return val;
 }

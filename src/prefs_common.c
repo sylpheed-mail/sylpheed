@@ -84,6 +84,7 @@ static struct Send {
 	GtkWidget *button_extsend;
 
 	GtkWidget *checkbtn_savemsg;
+	GtkWidget *checkbtn_filter_sent;
 
 	GtkWidget *optmenu_charset;
 	GtkWidget *optmenu_encoding_method;
@@ -274,6 +275,9 @@ static PrefParam param[] = {
 	 &p_send.entry_extsend, prefs_set_data_from_entry, prefs_set_entry},
 	{"save_message", "TRUE", &prefs_common.savemsg, P_BOOL,
 	 &p_send.checkbtn_savemsg,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"filter_sent_message", "FALSE", &prefs_common.filter_sent, P_BOOL,
+	 &p_send.checkbtn_filter_sent,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"outgoing_charset", CS_AUTO, &prefs_common.outgoing_charset, P_STRING,
@@ -1092,6 +1096,7 @@ static void prefs_send_create(void)
 	GtkWidget *entry_extsend;
 	/* GtkWidget *button_extsend; */
 	GtkWidget *checkbtn_savemsg;
+	GtkWidget *checkbtn_filter_sent;
 	GtkWidget *label_outcharset;
 	GtkWidget *optmenu_charset;
 	GtkWidget *optmenu_menu;
@@ -1141,6 +1146,8 @@ static void prefs_send_create(void)
 
 	PACK_CHECK_BUTTON (vbox2, checkbtn_savemsg,
 			   _("Save sent messages to outbox"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_filter_sent,
+			   _("Apply filter rules to sent messages"));
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
@@ -1265,9 +1272,10 @@ static void prefs_send_create(void)
 	p_send.entry_extsend    = entry_extsend;
 	/* p_send.button_extsend   = button_extsend; */
 
-	p_send.checkbtn_savemsg  = checkbtn_savemsg;
+	p_send.checkbtn_savemsg     = checkbtn_savemsg;
+	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 
-	p_send.optmenu_charset = optmenu_charset;
+	p_send.optmenu_charset         = optmenu_charset;
 	p_send.optmenu_encoding_method = optmenu_encoding;
 }
 
