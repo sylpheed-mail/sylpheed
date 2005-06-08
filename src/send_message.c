@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
 #include <gtk/gtkmain.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkwindow.h>
-#include <gtk/gtkclist.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -363,8 +362,6 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 	SMTPSession *smtp_session;
 	gushort port;
 	SendProgressDialog *dialog;
-	GtkCList *clist;
-	const gchar *text[3];
 	gchar buf[BUFFSIZE];
 	gint ret = 0;
 
@@ -443,11 +440,8 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 	dialog = send_progress_dialog_create();
 	dialog->session = session;
 
-	text[0] = NULL;
-	text[1] = ac_prefs->smtp_server;
-	text[2] = _("Connecting");
-	clist = GTK_CLIST(dialog->dialog->clist);
-	gtk_clist_append(clist, (gchar **)text);
+	progress_dialog_append(dialog->dialog, NULL, ac_prefs->smtp_server,
+			       _("Connecting"), NULL);
 
 	g_snprintf(buf, sizeof(buf), _("Connecting to SMTP server: %s ..."),
 		   ac_prefs->smtp_server);
@@ -554,7 +548,7 @@ static gint send_recv_message(Session *session, const gchar *msg, gpointer data)
 	}
 
 	progress_dialog_set_label(dialog->dialog, buf);
-	gtk_clist_set_text(GTK_CLIST(dialog->dialog->clist), 0, 2, state_str);
+	progress_dialog_set_row_status(dialog->dialog, 0, state_str);
 
 	return 0;
 }

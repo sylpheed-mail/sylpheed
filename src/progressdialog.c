@@ -28,6 +28,11 @@
 #include <gtk/gtklabel.h>
 #include <gtk/gtkprogressbar.h>
 #include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtkliststore.h>
+#include <gtk/gtktreeview.h>
+#include <gtk/gtktreeselection.h>
+#include <gtk/gtkcellrendererpixbuf.h>
+#include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkstock.h>
 
@@ -44,11 +49,11 @@ ProgressDialog *progress_dialog_create(void)
 	GtkWidget *cancel_btn;
 	GtkWidget *progressbar;
 	GtkWidget *scrolledwin;
-	GtkWidget *clist;
-	gchar *text[] = {NULL, NULL, NULL};
-
-	text[1] = _("Account");
-	text[2] = _("Status");
+	GtkWidget *treeview;
+	GtkListStore *store;
+	GtkTreeSelection *selection;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
 
 	debug_print(_("Creating progress dialog...\n"));
 	progress = g_new0(ProgressDialog, 1);
@@ -92,23 +97,63 @@ ProgressDialog *progress_dialog_create(void)
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
+					    GTK_SHADOW_IN);
 
-	clist = gtk_clist_new_with_titles(3, text);
-	gtk_widget_show(clist);
-	gtk_container_add(GTK_CONTAINER(scrolledwin), clist);
-	gtk_widget_set_size_request(clist, -1, 120);
-	gtk_clist_set_column_justification(GTK_CLIST(clist), 0,
-					   GTK_JUSTIFY_CENTER);
-	gtk_clist_set_column_width(GTK_CLIST(clist), 0, 16);
-	gtk_clist_set_column_width(GTK_CLIST(clist), 1, 160);
+	store = gtk_list_store_new(PROG_N_COLS, GDK_TYPE_PIXBUF, G_TYPE_STRING,
+				   G_TYPE_STRING, G_TYPE_POINTER);
+
+	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_widget_show(treeview);
+	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
+	gtk_widget_set_size_request(treeview, -1, 120);
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
+
+	renderer = gtk_cell_renderer_pixbuf_new();
+	g_object_set(renderer, "xalign", 0.5, NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(NULL, renderer, "pixbuf", PROG_COL_PIXBUF, NULL);
+	gtk_tree_view_column_set_alignment(column, 0.5);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 20);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Account"), renderer, "text", PROG_COL_NAME, NULL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 160);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Status"), renderer, "text", PROG_COL_STATUS, NULL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	progress->window      = dialog;
 	progress->label       = label;
 	progress->cancel_btn  = cancel_btn;
 	progress->progressbar = progressbar;
-	progress->clist       = clist;
+	progress->treeview    = treeview;
+	progress->store       = store;
 
 	return progress;
+}
+
+void progress_dialog_destroy(ProgressDialog *progress)
+{
+	if (progress) {
+		gtk_widget_destroy(progress->window);
+		g_free(progress);
+	}
 }
 
 void progress_dialog_set_label(ProgressDialog *progress, gchar *str)
@@ -128,10 +173,88 @@ void progress_dialog_set_percentage(ProgressDialog *progress,
 				    percentage);
 }
 
-void progress_dialog_destroy(ProgressDialog *progress)
+void progress_dialog_append(ProgressDialog *progress, GdkPixbuf *pixbuf,
+			    const gchar *name, const gchar *status,
+			    gpointer data)
 {
-	if (progress) {
-		gtk_widget_destroy(progress->window);
-		g_free(progress);
+	GtkListStore *store = progress->store;
+	GtkTreeIter iter;
+
+	gtk_list_store_append(store, &iter);
+
+	gtk_list_store_set(store, &iter,
+			   PROG_COL_PIXBUF, pixbuf,
+			   PROG_COL_NAME, name,
+			   PROG_COL_STATUS, status,
+			   PROG_COL_POINTER, data,
+			   -1);
+}
+
+void progress_dialog_set_row(ProgressDialog *progress, gint row,
+			     GdkPixbuf *pixbuf, const gchar *name,
+			     const gchar *status, gpointer data)
+{
+	GtkListStore *store = progress->store;
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store),
+					  &iter, NULL, row)) {
+		gtk_list_store_set(store, &iter,
+				   PROG_COL_PIXBUF, pixbuf,
+				   PROG_COL_NAME, name,
+				   PROG_COL_STATUS, status,
+				   PROG_COL_POINTER, data,
+				   -1);
 	}
+}
+
+void progress_dialog_set_row_pixbuf(ProgressDialog *progress, gint row,
+				    GdkPixbuf *pixbuf)
+{
+	GtkListStore *store = progress->store;
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store),
+					  &iter, NULL, row)) {
+		gtk_list_store_set(store, &iter, PROG_COL_PIXBUF, pixbuf, -1);
+	}
+}
+
+void progress_dialog_set_row_name(ProgressDialog *progress, gint row,
+				  const gchar *name)
+{
+	GtkListStore *store = progress->store;
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store),
+					  &iter, NULL, row)) {
+		gtk_list_store_set(store, &iter, PROG_COL_NAME, name, -1);
+	}
+}
+
+void progress_dialog_set_row_status(ProgressDialog *progress, gint row,
+				    const gchar *status)
+{
+	GtkListStore *store = progress->store;
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store),
+					  &iter, NULL, row)) {
+		gtk_list_store_set(store, &iter, PROG_COL_STATUS, status, -1);
+	}
+}
+
+void progress_dialog_scroll_to_row(ProgressDialog *progress, gint row)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(progress->store);
+	GtkTreeIter iter;
+	GtkTreePath *path;
+
+	if (!gtk_tree_model_iter_nth_child(model, &iter, NULL, row))
+		return;
+
+	path = gtk_tree_model_get_path(model, &iter);
+	gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(progress->treeview),
+				     path, NULL, FALSE, 0.0, 0.0);
+	gtk_tree_path_free(path);
 }

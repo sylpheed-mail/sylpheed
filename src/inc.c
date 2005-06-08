@@ -70,12 +70,9 @@ static GList *inc_dialog_list = NULL;
 
 static guint inc_lock_count = 0;
 
-static GdkPixmap *currentxpm;
-static GdkBitmap *currentxpmmask;
-static GdkPixmap *errorxpm;
-static GdkBitmap *errorxpmmask;
-static GdkPixmap *okxpm;
-static GdkBitmap *okxpmmask;
+static GdkPixbuf *current_pixbuf;
+static GdkPixbuf *error_pixbuf;
+static GdkPixbuf *ok_pixbuf;
 
 #define MSGBUFSIZE	8192
 
@@ -345,13 +342,10 @@ static IncProgressDialog *inc_progress_dialog_create(gboolean autocheck)
 
 	progress_dialog_set_value(progress, 0.0);
 
-	gtk_widget_realize(progress->clist);
-	stock_pixmap_gdk(progress->clist, STOCK_PIXMAP_COMPLETE,
-			 &okxpm, &okxpmmask);
-	stock_pixmap_gdk(progress->clist, STOCK_PIXMAP_CONTINUE,
-			 &currentxpm, &currentxpmmask);
-	stock_pixmap_gdk(progress->clist, STOCK_PIXMAP_ERROR,
-			 &errorxpm, &errorxpmmask);
+	stock_pixbuf_gdk(progress->treeview, STOCK_PIXMAP_COMPLETE, &ok_pixbuf);
+	stock_pixbuf_gdk(progress->treeview, STOCK_PIXMAP_CONTINUE,
+			 &current_pixbuf);
+	stock_pixbuf_gdk(progress->treeview, STOCK_PIXMAP_ERROR, &error_pixbuf);
 
 	if (prefs_common.recv_dialog_mode == RECV_DIALOG_ALWAYS ||
 	    (prefs_common.recv_dialog_mode == RECV_DIALOG_MANUAL &&
@@ -378,14 +372,11 @@ static void inc_progress_dialog_set_list(IncProgressDialog *inc_dialog)
 	for (list = inc_dialog->queue_list; list != NULL; list = list->next) {
 		IncSession *session = list->data;
 		Pop3Session *pop3_session = POP3_SESSION(session->session);
-		gchar *text[3];
 
 		session->data = inc_dialog;
-
-		text[0] = NULL;
-		text[1] = pop3_session->ac_prefs->account_name;
-		text[2] = _("Standby");
-		gtk_clist_append(GTK_CLIST(inc_dialog->dialog->clist), text);
+		progress_dialog_append(inc_dialog->dialog, NULL,
+				       pop3_session->ac_prefs->account_name,
+				       _("Standby"), NULL);
 	}
 }
 
@@ -453,7 +444,6 @@ static void inc_session_destroy(IncSession *session)
 static gint inc_start(IncProgressDialog *inc_dialog)
 {
 	IncSession *session;
-	GtkCList *clist = GTK_CLIST(inc_dialog->dialog->clist);
 	GList *qlist;
 	Pop3Session *pop3_session;
 	IncState inc_state;
@@ -502,10 +492,12 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		qlist = next;
 	}
 
-#define SET_PIXMAP_AND_TEXT(xpm, xpmmask, str)				   \
-{									   \
-	gtk_clist_set_pixmap(clist, inc_dialog->cur_row, 0, xpm, xpmmask); \
-	gtk_clist_set_text(clist, inc_dialog->cur_row, 2, str);		   \
+#define SET_PIXMAP_AND_TEXT(pixbuf, str)				\
+{									\
+	progress_dialog_set_row_pixbuf(inc_dialog->dialog,		\
+				       inc_dialog->cur_row, pixbuf);	\
+	progress_dialog_set_row_status(inc_dialog->dialog,		\
+				       inc_dialog->cur_row, str);	\
 }
 
 	for (; inc_dialog->queue_list != NULL; inc_dialog->cur_row++) {
@@ -513,7 +505,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		pop3_session = POP3_SESSION(session->session);
 
 		if (pop3_session->pass == NULL) {
-			SET_PIXMAP_AND_TEXT(okxpm, okxpmmask, _("Cancelled"));
+			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"));
 			inc_session_destroy(session);
 			inc_dialog->queue_list =
 				g_list_remove(inc_dialog->queue_list, session);
@@ -521,10 +513,10 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		}
 
 		inc_progress_dialog_clear(inc_dialog);
-		gtk_clist_moveto(clist, inc_dialog->cur_row, -1, 1.0, 0.0);
+		progress_dialog_scroll_to_row(inc_dialog->dialog,
+					      inc_dialog->cur_row);
 
-		SET_PIXMAP_AND_TEXT(currentxpm, currentxpmmask,
-				    _("Retrieving"));
+		SET_PIXMAP_AND_TEXT(current_pixbuf, _("Retrieving"));
 
 		/* begin POP3 session */
 		inc_state = inc_pop3_session_do(session);
@@ -538,33 +530,31 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 					 to_human_readable(pop3_session->cur_total_recv_bytes));
 			else
 				msg = g_strdup_printf(_("Done (no new messages)"));
-			SET_PIXMAP_AND_TEXT(okxpm, okxpmmask, msg);
+			SET_PIXMAP_AND_TEXT(ok_pixbuf, msg);
 			g_free(msg);
 			break;
 		case INC_CONNECT_ERROR:
-			SET_PIXMAP_AND_TEXT(errorxpm, errorxpmmask,
+			SET_PIXMAP_AND_TEXT(error_pixbuf,
 					    _("Connection failed"));
 			break;
 		case INC_AUTH_FAILED:
-			SET_PIXMAP_AND_TEXT(errorxpm, errorxpmmask,
-					    _("Auth failed"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Auth failed"));
 			break;
 		case INC_LOCKED:
-			SET_PIXMAP_AND_TEXT(errorxpm, errorxpmmask,
-					    _("Locked"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Locked"));
 			break;
 		case INC_ERROR:
 		case INC_NO_SPACE:
 		case INC_IO_ERROR:
 		case INC_SOCKET_ERROR:
 		case INC_EOF:
-			SET_PIXMAP_AND_TEXT(errorxpm, errorxpmmask, _("Error"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Error"));
 			break;
 		case INC_TIMEOUT:
-			SET_PIXMAP_AND_TEXT(errorxpm, errorxpmmask, _("Timeout"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Timeout"));
 			break;
 		case INC_CANCEL:
-			SET_PIXMAP_AND_TEXT(okxpm, okxpmmask, _("Cancelled"));
+			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"));
 			break;
 		default:
 			break;
@@ -854,8 +844,8 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 			   pop3_session->cur_total_num,
 			   to_human_readable
 			   (pop3_session->cur_total_recv_bytes));
-		gtk_clist_set_text(GTK_CLIST(inc_dialog->dialog->clist),
-				   inc_dialog->cur_row, 2, buf);
+		progress_dialog_set_row_status(inc_dialog->dialog,
+					       inc_dialog->cur_row, buf);
 	}
 }
 

@@ -22,6 +22,8 @@
 
 #include <glib.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtkliststore.h>
+#include <gdk/gdkpixbuf.h>
 
 typedef struct _ProgressDialog	ProgressDialog;
 
@@ -31,16 +33,53 @@ struct _ProgressDialog
 	GtkWidget *label;
 	GtkWidget *cancel_btn;
 	GtkWidget *progressbar;
-	GtkWidget *clist;
+
+	GtkWidget *treeview;
+	GtkListStore *store;
 };
 
+typedef enum
+{
+	PROG_COL_PIXBUF,
+	PROG_COL_NAME,
+	PROG_COL_STATUS,
+	PROG_COL_POINTER,
+	PROG_N_COLS
+} ProgressColumn;
+
 ProgressDialog *progress_dialog_create	(void);
+void progress_dialog_destroy		(ProgressDialog	*progress);
+
 void progress_dialog_set_label		(ProgressDialog	*progress,
 					 gchar		*str);
 void progress_dialog_set_value		(ProgressDialog	*progress,
 					 gfloat		 value);
 void progress_dialog_set_percentage	(ProgressDialog	*progress,
 					 gfloat		 percentage);
-void progress_dialog_destroy		(ProgressDialog	*progress);
+
+void progress_dialog_append		(ProgressDialog	*progress,
+					 GdkPixbuf	*pixbuf,
+					 const gchar	*name,
+					 const gchar	*status,
+					 gpointer	 data);
+void progress_dialog_set_row		(ProgressDialog	*progress,
+					 gint		 row,
+					 GdkPixbuf	*pixbuf,
+					 const gchar	*name,
+					 const gchar	*status,
+					 gpointer	 data);
+
+void progress_dialog_set_row_pixbuf	(ProgressDialog	*progress,
+					 gint		 row,
+					 GdkPixbuf	*pixbuf);
+void progress_dialog_set_row_name	(ProgressDialog	*progress,
+					 gint		 row,
+					 const gchar	*name);
+void progress_dialog_set_row_status	(ProgressDialog	*progress,
+					 gint		 row,
+					 const gchar	*status);
+
+void progress_dialog_scroll_to_row	(ProgressDialog	*progress,
+					 gint		 row);
 
 #endif /* __PROGRESS_H__ */
