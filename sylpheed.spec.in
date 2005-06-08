@@ -1,5 +1,5 @@
 %define ver @VERSION@
-%define rel 1
+%define rel %(if [ "${SYLPHEED_REL_DIST}" == "" ] ; then echo "1"; else echo "${SYLPHEED_REL_DIST}"; fi)
 %define prefix /usr
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
@@ -7,7 +7,7 @@ Name: sylpheed
 Version: %{ver}
 Release: %{rel}
 Source: http://sylpheed.good-day.net/sylpheed/%{name}-%{ver}.tar.gz
-Copyright: GPL
+License: GPL
 URL: http://sylpheed.good-day.net/
 Requires: gtk+ >= 2.4.0
 Group: Applications/Internet
@@ -15,6 +15,10 @@ Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 Buildroot: %{_tmppath}/%{name}-root
 
 %changelog
+* Tue Jun 7 2005 Paul Dickson <paul@permanentmail.com>
+- replaced "Copyright:" with "License:"
+- if environmental variable SYLPHEED_REL_DIST is set, assign that to rel (1.FC4,2.FC4, etc)
+
 * Thu Feb 3 2005 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 - modified for the latest version
 
