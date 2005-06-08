@@ -317,7 +317,11 @@ static void prefs_filter_create(void)
 	g_signal_connect(G_OBJECT(add_btn), "clicked",
 			 G_CALLBACK(prefs_filter_add_cb), NULL);
 
+#ifdef GTK_STOCK_EDIT
+	edit_btn = gtk_button_new_from_stock(GTK_STOCK_EDIT);
+#else
 	edit_btn = gtk_button_new_with_label(_("Edit"));
+#endif
 	gtk_widget_show(edit_btn);
 	gtk_box_pack_start(GTK_BOX(btn_hbox), edit_btn, FALSE, TRUE, 0);
 	g_signal_connect(G_OBJECT(edit_btn), "clicked",

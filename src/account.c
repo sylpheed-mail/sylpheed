@@ -713,31 +713,35 @@ static void account_edit_create(void)
 	gtk_widget_show (vbox2);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
 
-	add_btn = gtk_button_new_with_label (_("Add"));
+	add_btn = gtk_button_new_from_stock (GTK_STOCK_ADD);
 	gtk_widget_show (add_btn);
 	gtk_box_pack_start (GTK_BOX (vbox2), add_btn, FALSE, FALSE, 4);
 	g_signal_connect (G_OBJECT(add_btn), "clicked",
 			  G_CALLBACK (account_add), NULL);
 
+#ifdef GTK_STOCK_EDIT
+	edit_btn = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+#else
 	edit_btn = gtk_button_new_with_label (_("Edit"));
+#endif
 	gtk_widget_show (edit_btn);
 	gtk_box_pack_start (GTK_BOX (vbox2), edit_btn, FALSE, FALSE, 4);
 	g_signal_connect (G_OBJECT(edit_btn), "clicked",
 			  G_CALLBACK (account_edit_prefs), NULL);
 
-	del_btn = gtk_button_new_with_label (_(" Delete "));
+	del_btn = gtk_button_new_from_stock (GTK_STOCK_DELETE);
 	gtk_widget_show (del_btn);
 	gtk_box_pack_start (GTK_BOX (vbox2), del_btn, FALSE, FALSE, 4);
 	g_signal_connect (G_OBJECT(del_btn), "clicked",
 			  G_CALLBACK (account_delete), NULL);
 
-	down_btn = gtk_button_new_with_label (_("Down"));
+	down_btn = gtk_button_new_from_stock (GTK_STOCK_GO_DOWN);
 	gtk_widget_show (down_btn);
 	gtk_box_pack_end (GTK_BOX (vbox2), down_btn, FALSE, FALSE, 4);
 	g_signal_connect (G_OBJECT(down_btn), "clicked",
 			  G_CALLBACK (account_down), NULL);
 
-	up_btn = gtk_button_new_with_label (_("Up"));
+	up_btn = gtk_button_new_from_stock (GTK_STOCK_GO_UP);
 	gtk_widget_show (up_btn);
 	gtk_box_pack_end (GTK_BOX (vbox2), up_btn, FALSE, FALSE, 4);
 	g_signal_connect (G_OBJECT(up_btn), "clicked",
