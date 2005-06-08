@@ -4045,6 +4045,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
 	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview),
 				     prefs_common.enable_rules_hint);
+	gtk_tree_view_set_enable_search(GTK_TREE_VIEW(treeview), FALSE);
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), S_COL_SUBJECT);
 	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), FALSE);
 	g_object_set(treeview, "fixed-height-mode", TRUE, NULL);
