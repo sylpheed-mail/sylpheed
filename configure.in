@@ -4,12 +4,12 @@ AC_INIT(src/main.c)
 PACKAGE=sylpheed
 
 dnl version number
-MAJOR_VERSION=1
-MINOR_VERSION=9
-MICRO_VERSION=12
+MAJOR_VERSION=2
+MINOR_VERSION=0
+MICRO_VERSION=0
 INTERFACE_AGE=0
 BINARY_AGE=0
-EXTRA_VERSION=+svn
+EXTRA_VERSION=beta1
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
 
 dnl set $target
@@ -79,7 +79,7 @@ AM_ICONV
 AC_CHECK_FUNCS(bind_textdomain_codeset)
 
 dnl for gettext
-ALL_LINGUAS="bg cs da de el es et fr gl hr hu it ja ko nl pl pt_BR ro ru sk sl sr sv tr uk zh_CN zh_TW.Big5"
+ALL_LINGUAS="bg cs da de el es et fr gl hr hu it ja ko lt nl pl pt_BR ro ru sk sl sr sv tr uk zh_CN zh_TW.Big5"
 GETTEXT_PACKAGE=sylpheed
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Define text domain.])
