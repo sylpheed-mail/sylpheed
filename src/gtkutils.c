@@ -243,136 +243,12 @@ ComboButton *gtkut_combo_button_create(GtkWidget *button,
 	return combo;
 }
 
-#define CELL_SPACING 1
-#define ROW_TOP_YPIXEL(clist, row) (((clist)->row_height * (row)) + \
-				    (((row) + 1) * CELL_SPACING) + \
-				    (clist)->voffset)
-#define ROW_FROM_YPIXEL(clist, y) (((y) - (clist)->voffset) / \
-				   ((clist)->row_height + CELL_SPACING))
-
-void gtkut_ctree_node_move_if_on_the_edge(GtkCTree *ctree, GtkCTreeNode *node)
-{
-	GtkCList *clist = GTK_CLIST(ctree);
-	gint row;
-	GtkVisibility row_visibility, prev_row_visibility, next_row_visibility;
-
-	g_return_if_fail(ctree != NULL);
-	g_return_if_fail(node != NULL);
-
-	row = g_list_position(clist->row_list, (GList *)node);
-	if (row < 0 || row >= clist->rows || clist->row_height == 0) return;
-	row_visibility = gtk_clist_row_is_visible(clist, row);
-	prev_row_visibility = gtk_clist_row_is_visible(clist, row - 1);
-	next_row_visibility = gtk_clist_row_is_visible(clist, row + 1);
-
-	if (row_visibility == GTK_VISIBILITY_NONE) {
-		gtk_clist_moveto(clist, row, -1, 0.5, 0);
-		return;
-	}
-	if (row_visibility == GTK_VISIBILITY_FULL &&
-	    prev_row_visibility == GTK_VISIBILITY_FULL &&
-	    next_row_visibility == GTK_VISIBILITY_FULL)
-		return;
-	if (prev_row_visibility != GTK_VISIBILITY_FULL &&
-	    next_row_visibility != GTK_VISIBILITY_FULL)
-		return;
-
-	if (prev_row_visibility != GTK_VISIBILITY_FULL) {
-		gtk_clist_moveto(clist, row, -1, 0.2, 0);
-		return;
-	}
-	if (next_row_visibility != GTK_VISIBILITY_FULL) {
-		gtk_clist_moveto(clist, row, -1, 0.8, 0);
-		return;
-	}
-}
-
-#undef CELL_SPACING
-#undef ROW_TOP_YPIXEL
-#undef ROW_FROM_YPIXEL
-
 gint gtkut_ctree_get_nth_from_node(GtkCTree *ctree, GtkCTreeNode *node)
 {
 	g_return_val_if_fail(ctree != NULL, -1);
 	g_return_val_if_fail(node != NULL, -1);
 
 	return g_list_position(GTK_CLIST(ctree)->row_list, (GList *)node);
-}
-
-/* get the next node, including the invisible one */
-GtkCTreeNode *gtkut_ctree_node_next(GtkCTree *ctree, GtkCTreeNode *node)
-{
-	GtkCTreeNode *parent;
-
-	if (!node) return NULL;
-
-	if (GTK_CTREE_ROW(node)->children)
-		return GTK_CTREE_ROW(node)->children;
-
-	if (GTK_CTREE_ROW(node)->sibling)
-		return GTK_CTREE_ROW(node)->sibling;
-
-	for (parent = GTK_CTREE_ROW(node)->parent; parent != NULL;
-	     parent = GTK_CTREE_ROW(parent)->parent) {
-		if (GTK_CTREE_ROW(parent)->sibling)
-			return GTK_CTREE_ROW(parent)->sibling;
-	}
-
-	return NULL;
-}
-
-/* get the previous node, including the invisible one */
-GtkCTreeNode *gtkut_ctree_node_prev(GtkCTree *ctree, GtkCTreeNode *node)
-{
-	GtkCTreeNode *prev;
-	GtkCTreeNode *child;
-
-	if (!node) return NULL;
-
-	prev = GTK_CTREE_NODE_PREV(node);
-	if (prev == GTK_CTREE_ROW(node)->parent)
-		return prev;
-
-	child = prev;
-	while (GTK_CTREE_ROW(child)->children != NULL) {
-		child = GTK_CTREE_ROW(child)->children;
-		while (GTK_CTREE_ROW(child)->sibling != NULL)
-			child = GTK_CTREE_ROW(child)->sibling;
-	}
-
-	return child;
-}
-
-gboolean gtkut_ctree_node_is_selected(GtkCTree *ctree, GtkCTreeNode *node)
-{
-	GtkCList *clist = GTK_CLIST(ctree);
-	GList *cur;
-
-	for (cur = clist->selection; cur != NULL; cur = cur->next) {
-		if (node == GTK_CTREE_NODE(cur->data))
-			return TRUE;
-	}
-
-	return FALSE;
-}
-
-GtkCTreeNode *gtkut_ctree_find_collapsed_parent(GtkCTree *ctree,
-						GtkCTreeNode *node)
-{
-	if (!node) return NULL;
-
-	while ((node = GTK_CTREE_ROW(node)->parent) != NULL) {
-		if (!GTK_CTREE_ROW(node)->expanded)
-			return node;
-	}
-
-	return NULL;
-}
-
-void gtkut_ctree_expand_parent_all(GtkCTree *ctree, GtkCTreeNode *node)
-{
-	while ((node = gtkut_ctree_find_collapsed_parent(ctree, node)) != NULL)
-		gtk_ctree_expand(ctree, node);
 }
 
 void gtkut_ctree_set_focus_row(GtkCTree *ctree, GtkCTreeNode *node)
@@ -641,6 +517,32 @@ void gtkut_tree_view_vertical_autoscroll(GtkTreeView *treeview)
 	vadj = gtk_tree_view_get_vadjustment(treeview);
 	value = CLAMP(vadj->value + offset, 0.0, vadj->upper - vadj->page_size);
 	gtk_adjustment_set_value(vadj, value);
+}
+
+/* modified version of gtk_tree_view_scroll_to_cell */
+void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path)
+{
+	GdkRectangle cell_rect;
+	GdkRectangle vis_rect;
+	gint dest_x, dest_y;
+
+	if (!path)
+		return;
+
+	gtk_tree_view_get_cell_area(treeview, path, NULL, &cell_rect);
+	gtk_tree_view_widget_to_tree_coords(treeview, cell_rect.x, cell_rect.y,
+					    NULL, &(cell_rect.y));
+	gtk_tree_view_get_visible_rect(treeview, &vis_rect);
+
+	dest_x = vis_rect.x;
+	dest_y = vis_rect.y;
+
+	if (cell_rect.y < vis_rect.y)
+		dest_y = cell_rect.y;
+	if (cell_rect.y + cell_rect.height > vis_rect.y + vis_rect.height)
+		dest_y = cell_rect.y + cell_rect.height - vis_rect.height;
+
+	gtk_tree_view_scroll_to_point(treeview, dest_x, dest_y);
 }
 
 void gtkut_combo_set_items(GtkCombo *combo, const gchar *str1, ...)

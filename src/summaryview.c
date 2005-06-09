@@ -119,7 +119,8 @@ static void summary_msgid_table_destroy	(SummaryView		*summaryview);
 
 static void summary_set_menu_sensitive	(SummaryView		*summaryview);
 
-static void summary_scroll_to_selected	(SummaryView		*summaryview);
+static void summary_scroll_to_selected	(SummaryView		*summaryview,
+					 gboolean		 align_center);
 
 static guint summary_get_msgnum		(SummaryView		*summaryview,
 					 GtkTreeRowReference	*row);
@@ -689,6 +690,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 					 GTK_MOVEMENT_BUFFER_ENDS,
 					 item->sort_type == SORT_DESCENDING ?
 					 -1 : 1, &moved);
+				summary_scroll_to_selected(summaryview, TRUE);
 			}
 		}
 	} else {
@@ -712,6 +714,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				 item->sort_type == SORT_DESCENDING ?
 				 -1 : 1, &moved);
 			summary_lock(summaryview);
+			summary_scroll_to_selected(summaryview, TRUE);
 		}
 	}
 
@@ -1255,20 +1258,19 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 				       iter);
 	gtk_tree_view_set_cursor(GTK_TREE_VIEW(summaryview->treeview), path,
 				 NULL, FALSE);
-	if (do_refresh) {
+	if (do_refresh)
 		gtk_tree_view_scroll_to_cell
 			(GTK_TREE_VIEW(summaryview->treeview),
 			 path, NULL, TRUE, 0.5, 0.0);
-	} else {
-		gtk_tree_view_scroll_to_cell
-			(GTK_TREE_VIEW(summaryview->treeview),
-			 path, NULL, FALSE, 0.0, 0.0);
-	}
+	else
+		gtkut_tree_view_scroll_to_cell
+			(GTK_TREE_VIEW(summaryview->treeview), path);
 
 	gtk_tree_path_free(path);
 }
 
-static void summary_scroll_to_selected(SummaryView *summaryview)
+static void summary_scroll_to_selected(SummaryView *summaryview,
+				       gboolean align_center)
 {
 	GtkTreePath *path;
 
@@ -1277,9 +1279,13 @@ static void summary_scroll_to_selected(SummaryView *summaryview)
 
 	path = gtk_tree_row_reference_get_path(summaryview->selected);
 	if (path) {
-		gtk_tree_view_scroll_to_cell
-			(GTK_TREE_VIEW(summaryview->treeview),
-			 path, NULL, FALSE, 0.0, 0.0);
+		if (align_center)
+			gtk_tree_view_scroll_to_cell
+				(GTK_TREE_VIEW(summaryview->treeview),
+				 path, NULL, TRUE, 0.5, 0.0);
+		else
+			gtkut_tree_view_scroll_to_cell
+				(GTK_TREE_VIEW(summaryview->treeview), path);
 		gtk_tree_path_free(path);
 	}
 }
@@ -1568,7 +1574,7 @@ void summary_attract_by_subject(SummaryView *summaryview)
 	summaryview->folder_item->cache_dirty = TRUE;
 	summary_selection_list_free(summaryview);
 
-	summary_scroll_to_selected(summaryview);
+	summary_scroll_to_selected(summaryview, TRUE);
 
 	debug_print("done.\n");
 	STATUSBAR_POP(summaryview->mainwin);
@@ -1747,6 +1753,8 @@ void summary_sort(SummaryView *summaryview,
 	summary_selection_list_free(summaryview);
 	summary_set_column_titles(summaryview);
 	summary_set_menu_sensitive(summaryview);
+
+	summary_scroll_to_selected(summaryview, TRUE);
 
 	debug_print("done.\n");
 	STATUSBAR_POP(summaryview->mainwin);
@@ -2149,9 +2157,6 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		if (!messageview_is_visible(msgview)) {
 			main_window_toggle_message_view(summaryview->mainwin);
 			GTK_EVENTS_FLUSH();
-			gtk_tree_view_scroll_to_cell
-				(GTK_TREE_VIEW(summaryview->treeview),
-				 path, NULL, FALSE, 0.0, 0.0);
 		}
 		val = messageview_show(msgview, msginfo, all_headers);
 		if (msgview->type == MVIEW_TEXT ||
@@ -2160,6 +2165,8 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		      gtk_notebook_get_current_page
 			(GTK_NOTEBOOK(msgview->notebook)) == 0)))
 			gtk_widget_grab_focus(summaryview->treeview);
+		gtkut_tree_view_scroll_to_cell
+			(GTK_TREE_VIEW(summaryview->treeview), path);
 		gtk_tree_path_free(path);
 	}
 
@@ -3300,7 +3307,7 @@ void summary_thread_build(SummaryView *summaryview)
 	if (prefs_common.expand_thread)
 		gtk_tree_view_expand_all(GTK_TREE_VIEW(summaryview->treeview));
 
-	summary_scroll_to_selected(summaryview);
+	summary_scroll_to_selected(summaryview, TRUE);
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
@@ -3373,7 +3380,7 @@ void summary_unthread(SummaryView *summaryview)
 		summary_unthread_node(summaryview, &iter);
 	}
 
-	summary_scroll_to_selected(summaryview);
+	summary_scroll_to_selected(summaryview, TRUE);
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);

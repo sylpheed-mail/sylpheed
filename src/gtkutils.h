@@ -110,25 +110,10 @@ ComboButton *gtkut_combo_button_create	(GtkWidget		*button,
 
 /* CTree functions */
 
-void gtkut_ctree_node_move_if_on_the_edge
-					(GtkCTree	*ctree,
-					 GtkCTreeNode	*node);
 gint gtkut_ctree_get_nth_from_node	(GtkCTree	*ctree,
-					 GtkCTreeNode	*node);
-GtkCTreeNode *gtkut_ctree_node_next	(GtkCTree	*ctree,
-					 GtkCTreeNode	*node);
-GtkCTreeNode *gtkut_ctree_node_prev	(GtkCTree	*ctree,
-					 GtkCTreeNode	*node);
-gboolean gtkut_ctree_node_is_selected	(GtkCTree	*ctree,
-					 GtkCTreeNode	*node);
-GtkCTreeNode *gtkut_ctree_find_collapsed_parent
-					(GtkCTree	*ctree,
-					 GtkCTreeNode	*node);
-void gtkut_ctree_expand_parent_all	(GtkCTree	*ctree,
 					 GtkCTreeNode	*node);
 void gtkut_ctree_set_focus_row		(GtkCTree	*ctree,
 					 GtkCTreeNode	*node);
-
 void gtkut_clist_set_focus_row		(GtkCList	*clist,
 					 gint		 row);
 
@@ -167,6 +152,9 @@ void gtkut_tree_view_expand_parent_all	(GtkTreeView	*treeview,
 					 GtkTreeIter	*iter);
 
 void gtkut_tree_view_vertical_autoscroll(GtkTreeView	*treeview);
+
+void gtkut_tree_view_scroll_to_cell	(GtkTreeView	*treeview,
+					 GtkTreePath	*path);
 
 void gtkut_combo_set_items		(GtkCombo	*combo,
 					 const gchar	*str1, ...);
