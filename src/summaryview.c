@@ -4705,7 +4705,7 @@ static void summary_drag_data_get(GtkWidget        *widget,
 static gint func_name(GtkTreeModel *model,				\
 		      GtkTreeIter *a, GtkTreeIter *b, gpointer data)	\
 {									\
-	MsgInfo *msginfo_a, *msginfo_b;					\
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;			\
 									\
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
@@ -4735,7 +4735,7 @@ CMP_FUNC_DEF(summary_cmp_by_date, msginfo_a->date_t - msginfo_b->date_t)
 static gint func_name(GtkTreeModel *model,				\
 		      GtkTreeIter *a, GtkTreeIter *b, gpointer data)	\
 {									\
-	MsgInfo *msginfo_a, *msginfo_b;					\
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;			\
 									\
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
@@ -4756,23 +4756,23 @@ CMP_FUNC_DEF(summary_cmp_by_to, to);
 
 #undef CMP_FUNC_DEF
 
-static gint summary_cmp_by_subject(GtkTreeModel *model,			\
-				   GtkTreeIter *a, GtkTreeIter *b,	\
-				   gpointer data)			\
-{									\
-	MsgInfo *msginfo_a, *msginfo_b;					\
-									\
-	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
-	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
-									\
-	if (!msginfo_a || !msginfo_b)					\
-		return 0;						\
-									\
-	if (msginfo_a->subject == NULL)					\
-		return -(msginfo_b->subject != NULL);			\
-	if (msginfo_b->subject == NULL)					\
-		return (msginfo_a->subject != NULL);			\
-									\
-	return subject_compare_for_sort					\
-		(msginfo_a->subject, msginfo_b->subject);		\
+static gint summary_cmp_by_subject(GtkTreeModel *model,
+				   GtkTreeIter *a, GtkTreeIter *b,
+				   gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+
+	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	if (msginfo_a->subject == NULL)
+		return -(msginfo_b->subject != NULL);
+	if (msginfo_b->subject == NULL)
+		return (msginfo_a->subject != NULL);
+
+	return subject_compare_for_sort
+		(msginfo_a->subject, msginfo_b->subject);
 }
