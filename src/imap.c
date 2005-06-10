@@ -1757,16 +1757,20 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 
 			base = g_basename(new_item->path);
 
-			if (!folder->outbox && !strcasecmp(base, "Sent")) {
+			if (!folder->outbox &&
+			    !g_ascii_strcasecmp(base, "Sent")) {
 				new_item->stype = F_OUTBOX;
 				folder->outbox = new_item;
-			} else if (!folder->draft && !strcasecmp(base, "Drafts")) {
+			} else if (!folder->draft &&
+				   !g_ascii_strcasecmp(base, "Drafts")) {
 				new_item->stype = F_DRAFT;
 				folder->draft = new_item;
-			} else if (!folder->queue && !strcasecmp(base, "Queue")) {
+			} else if (!folder->queue &&
+				   !g_ascii_strcasecmp(base, "Queue")) {
 				new_item->stype = F_QUEUE;
 				folder->queue = new_item;
-			} else if (!folder->trash && !strcasecmp(base, "Trash")) {
+			} else if (!folder->trash &&
+				   !g_ascii_strcasecmp(base, "Trash")) {
 				new_item->stype = F_TRASH;
 				folder->trash = new_item;
 			}
@@ -2656,15 +2660,16 @@ static MsgFlags imap_parse_flags(const gchar *flag_str)
 	while ((p = strchr(p, '\\')) != NULL) {
 		p++;
 
-		if (g_strncasecmp(p, "Recent", 6) == 0 && MSG_IS_UNREAD(flags)) {
+		if (g_ascii_strncasecmp(p, "Recent", 6) == 0 &&
+		    MSG_IS_UNREAD(flags)) {
 			MSG_SET_PERM_FLAGS(flags, MSG_NEW);
-		} else if (g_strncasecmp(p, "Seen", 4) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Seen", 4) == 0) {
 			MSG_UNSET_PERM_FLAGS(flags, MSG_NEW|MSG_UNREAD);
-		} else if (g_strncasecmp(p, "Deleted", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Deleted", 7) == 0) {
 			MSG_SET_PERM_FLAGS(flags, MSG_DELETED);
-		} else if (g_strncasecmp(p, "Flagged", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Flagged", 7) == 0) {
 			MSG_SET_PERM_FLAGS(flags, MSG_MARKED);
-		} else if (g_strncasecmp(p, "Answered", 8) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Answered", 8) == 0) {
 			MSG_SET_PERM_FLAGS(flags, MSG_REPLIED);
 		}
 	}
@@ -2680,13 +2685,13 @@ static IMAPFlags imap_parse_imap_flags(const gchar *flag_str)
 	while ((p = strchr(p, '\\')) != NULL) {
 		p++;
 
-		if (g_strncasecmp(p, "Seen", 4) == 0) {
+		if (g_ascii_strncasecmp(p, "Seen", 4) == 0) {
 			flags |= IMAP_FLAG_SEEN;
-		} else if (g_strncasecmp(p, "Deleted", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Deleted", 7) == 0) {
 			flags |= IMAP_FLAG_DELETED;
-		} else if (g_strncasecmp(p, "Flagged", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Flagged", 7) == 0) {
 			flags |= IMAP_FLAG_FLAGGED;
-		} else if (g_strncasecmp(p, "Answered", 8) == 0) {
+		} else if (g_ascii_strncasecmp(p, "Answered", 8) == 0) {
 			flags |= IMAP_FLAG_ANSWERED;
 		}
 	}
@@ -3019,7 +3024,7 @@ static gboolean imap_has_capability(IMAPSession	*session,
 	gchar **p;
 
 	for (p = session->capability; *p != NULL; ++p) {
-		if (!g_strcasecmp(*p, capability))
+		if (!g_ascii_strcasecmp(*p, capability))
 			return TRUE;
 	}
 
@@ -3622,7 +3627,8 @@ static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 	session->cmd_count++;
 
 	g_snprintf(buf, sizeof(buf), "%d %s\r\n", session->cmd_count, tmp);
-	if (!strncasecmp(tmp, "LOGIN ", 6) && (p = strchr(tmp + 6, ' '))) {
+	if (!g_ascii_strncasecmp(tmp, "LOGIN ", 6) &&
+	    (p = strchr(tmp + 6, ' '))) {
 		*p = '\0';
 		log_print("IMAP4> %d %s ********\n", session->cmd_count, tmp);
 	} else

@@ -83,7 +83,7 @@ CustomHeader *custom_header_find(GSList *header_list, const gchar *header)
 
 	for (cur = header_list; cur != NULL; cur = cur->next) {
 		chdr = (CustomHeader *)cur->data;
-		if (!strcasecmp(chdr->name, header))
+		if (!g_ascii_strcasecmp(chdr->name, header))
 			return chdr;
 	}
 

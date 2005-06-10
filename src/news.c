@@ -504,7 +504,7 @@ static void news_group_info_free(NewsGroupInfo *ginfo)
 static gint news_group_info_compare(NewsGroupInfo *ginfo1,
 				    NewsGroupInfo *ginfo2)
 {
-	return g_strcasecmp(ginfo1->name, ginfo2->name);
+	return g_ascii_strcasecmp(ginfo1->name, ginfo2->name);
 }
 
 GSList *news_get_group_list(Folder *folder)
@@ -725,7 +725,8 @@ static gint news_select_group(NNTPSession *session, const gchar *group,
 	gint num_, first_, last_;
 
 	if (!num || !first || !last) {
-		if (session->group && g_strcasecmp(session->group, group) == 0)
+		if (session->group &&
+		    g_ascii_strcasecmp(session->group, group) == 0)
 			return NN_SUCCESS;
 		num = &num_;
 		first = &first_;

@@ -498,19 +498,19 @@ static void ldif_add_value( Ldif_ParsedRec *rec, gchar *tagName, gchar *tagValue
 		val = g_strdup( "" );
 	}
 	g_strstrip( val );
-	if( g_strcasecmp( nm, LDIF_TAG_COMMONNAME ) == 0 ) {
+	if( g_ascii_strcasecmp( nm, LDIF_TAG_COMMONNAME ) == 0 ) {
 		rec->listCName = g_slist_append( rec->listCName, val );
 	}
-	else if( g_strcasecmp( nm, LDIF_TAG_FIRSTNAME ) == 0 ) {
+	else if( g_ascii_strcasecmp( nm, LDIF_TAG_FIRSTNAME ) == 0 ) {
 		rec->listFName = g_slist_append( rec->listFName, val );
 	}
-	else if( g_strcasecmp( nm, LDIF_TAG_LASTNAME ) == 0 ) {
+	else if( g_ascii_strcasecmp( nm, LDIF_TAG_LASTNAME ) == 0 ) {
 		rec->listLName = g_slist_append( rec->listLName, val );
 	}
-	else if( g_strcasecmp( nm, LDIF_TAG_NICKNAME ) == 0 ) {
+	else if( g_ascii_strcasecmp( nm, LDIF_TAG_NICKNAME ) == 0 ) {
 		rec->listNName = g_slist_append( rec->listNName, val );
 	}
-	else if( g_strcasecmp( nm, LDIF_TAG_EMAIL ) == 0 ) {
+	else if( g_ascii_strcasecmp( nm, LDIF_TAG_EMAIL ) == 0 ) {
 		rec->listAddress = g_slist_append( rec->listAddress, val );
 	}
 	else {
@@ -743,19 +743,19 @@ static void ldif_hash_add_list( GHashTable *table, GSList *list ) {
 			gchar *key = g_strdup( tag );
 
 			rec = ldif_create_fieldrec( tag );
-			if( g_strcasecmp( tag, LDIF_TAG_COMMONNAME ) == 0 ) {
+			if( g_ascii_strcasecmp( tag, LDIF_TAG_COMMONNAME ) == 0 ) {
 				rec->reserved = TRUE;
 			}
-			else if( g_strcasecmp( tag, LDIF_TAG_FIRSTNAME ) == 0 ) {
+			else if( g_ascii_strcasecmp( tag, LDIF_TAG_FIRSTNAME ) == 0 ) {
 				rec->reserved = TRUE;
 			}
-			else if( g_strcasecmp( tag, LDIF_TAG_LASTNAME ) == 0 ) {
+			else if( g_ascii_strcasecmp( tag, LDIF_TAG_LASTNAME ) == 0 ) {
 				rec->reserved = TRUE;
 			}
-			else if( g_strcasecmp( tag, LDIF_TAG_NICKNAME ) == 0 ) {
+			else if( g_ascii_strcasecmp( tag, LDIF_TAG_NICKNAME ) == 0 ) {
 				rec->reserved = TRUE;
 			}
-			else if( g_strcasecmp( tag, LDIF_TAG_EMAIL ) == 0 ) {
+			else if( g_ascii_strcasecmp( tag, LDIF_TAG_EMAIL ) == 0 ) {
 				rec->reserved = TRUE;
 			}
 			g_hash_table_insert( table, key, rec );
@@ -770,7 +770,7 @@ static void ldif_hash_add_list( GHashTable *table, GSList *list ) {
 static int ldif_field_compare( gconstpointer ptr1, gconstpointer ptr2 ) {
 	const Ldif_FieldRec *rec1 = ptr1;
 	const Ldif_FieldRec *rec2 = ptr2;
-	return g_strcasecmp( rec1->tagName, rec2->tagName );
+	return g_ascii_strcasecmp( rec1->tagName, rec2->tagName );
 }
 
 /*
@@ -842,7 +842,7 @@ static void ldif_read_tag_list( LdifFile *ldifFile ) {
 				if( tagName ) {
 					/* Add tag to list */
 					listTags = g_slist_append( listTags, tagName );
-					if( g_strcasecmp( tagName, LDIF_TAG_EMAIL ) == 0 ) {
+					if( g_ascii_strcasecmp( tagName, LDIF_TAG_EMAIL ) == 0 ) {
 						flagMail = TRUE;
 					}
 				}

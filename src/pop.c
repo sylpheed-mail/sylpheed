@@ -385,7 +385,7 @@ static void pop3_gen_send(Pop3Session *session, const gchar *format, ...)
 	g_vsnprintf(buf, sizeof(buf) - 2, format, args);
 	va_end(args);
 
-	if (!strncasecmp(buf, "PASS ", 5))
+	if (!g_ascii_strncasecmp(buf, "PASS ", 5))
 		log_print("POP3> PASS ********\n");
 	else
 		log_print("POP3> %s\n", buf);

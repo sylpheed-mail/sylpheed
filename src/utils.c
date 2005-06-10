@@ -95,7 +95,7 @@ void hash_free_value_mem(GHashTable *table)
 
 gint str_case_equal(gconstpointer v, gconstpointer v2)
 {
-	return strcasecmp((const gchar *)v, (const gchar *)v2) == 0;
+	return g_ascii_strcasecmp((const gchar *)v, (const gchar *)v2) == 0;
 }
 
 guint str_case_hash(gconstpointer key)
@@ -142,7 +142,7 @@ gboolean str_find_equal(const gchar *haystack, const gchar *needle)
 
 gboolean str_case_find_equal(const gchar *haystack, const gchar *needle)
 {
-	return strcasecmp(haystack, needle) == 0;
+	return g_ascii_strcasecmp(haystack, needle) == 0;
 }
 
 gint to_number(const gchar *nstr)
@@ -272,7 +272,7 @@ gchar *strcasestr(const gchar *haystack, const gchar *needle)
 		return NULL;
 
 	while (haystack_len >= needle_len) {
-		if (!strncasecmp(haystack, needle, needle_len))
+		if (!g_ascii_strncasecmp(haystack, needle, needle_len))
 			return (gchar *)haystack;
 		else {
 			haystack++;
@@ -581,7 +581,7 @@ gint subject_compare_for_sort(const gchar *s1, const gchar *s2)
 	trim_subject_for_sort(str1);
 	trim_subject_for_sort(str2);
 
-	return strcasecmp(str1, str2);
+	return g_ascii_strcasecmp(str1, str2);
 }
 
 void trim_subject_for_compare(gchar *str)
@@ -592,7 +592,7 @@ void trim_subject_for_compare(gchar *str)
 	eliminate_parenthesis(str, '(', ')');
 	g_strstrip(str);
 
-	while (!strncasecmp(str, "Re:", 3)) {
+	while (!g_ascii_strncasecmp(str, "Re:", 3)) {
 		srcp = str + 3;
 		while (isspace(*srcp)) srcp++;
 		memmove(str, srcp, strlen(srcp) + 1);
@@ -605,7 +605,7 @@ void trim_subject_for_sort(gchar *str)
 
 	g_strstrip(str);
 
-	while (!strncasecmp(str, "Re:", 3)) {
+	while (!g_ascii_strncasecmp(str, "Re:", 3)) {
 		srcp = str + 3;
 		while (isspace(*srcp)) srcp++;
 		memmove(str, srcp, strlen(srcp) + 1);
@@ -619,7 +619,7 @@ void trim_subject(gchar *str)
 	gint in_brace;
 
 	destp = str;
-	while (!strncasecmp(destp, "Re:", 3)) {
+	while (!g_ascii_strncasecmp(destp, "Re:", 3)) {
 		destp += 3;
 		while (isspace(*destp)) destp++;
 	}
@@ -1453,19 +1453,19 @@ static gint axtoi(const gchar *hex_str)
 
 gboolean is_uri_string(const gchar *str)
 {
-	return (g_strncasecmp(str, "http://", 7) == 0 ||
-		g_strncasecmp(str, "https://", 8) == 0 ||
-		g_strncasecmp(str, "ftp://", 6) == 0 ||
-		g_strncasecmp(str, "www.", 4) == 0);
+	return (g_ascii_strncasecmp(str, "http://", 7) == 0 ||
+		g_ascii_strncasecmp(str, "https://", 8) == 0 ||
+		g_ascii_strncasecmp(str, "ftp://", 6) == 0 ||
+		g_ascii_strncasecmp(str, "www.", 4) == 0);
 }
 
 gchar *get_uri_path(const gchar *uri)
 {
-	if (g_strncasecmp(uri, "http://", 7) == 0)
+	if (g_ascii_strncasecmp(uri, "http://", 7) == 0)
 		return (gchar *)(uri + 7);
-	else if (g_strncasecmp(uri, "https://", 8) == 0)
+	else if (g_ascii_strncasecmp(uri, "https://", 8) == 0)
 		return (gchar *)(uri + 8);
-	else if (g_strncasecmp(uri, "ftp://", 6) == 0)
+	else if (g_ascii_strncasecmp(uri, "ftp://", 6) == 0)
 		return (gchar *)(uri + 6);
 	else
 		return (gchar *)uri;
@@ -1568,15 +1568,16 @@ gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 
 		if (*value == '\0') continue;
 
-		if (cc && !*cc && !g_strcasecmp(field, "cc")) {
+		if (cc && !*cc && !g_ascii_strcasecmp(field, "cc")) {
 			*cc = g_strdup(value);
-		} else if (bcc && !*bcc && !g_strcasecmp(field, "bcc")) {
+		} else if (bcc && !*bcc && !g_ascii_strcasecmp(field, "bcc")) {
 			*bcc = g_strdup(value);
 		} else if (subject && !*subject &&
-			   !g_strcasecmp(field, "subject")) {
+			   !g_ascii_strcasecmp(field, "subject")) {
 			*subject = g_malloc(strlen(value) + 1);
 			decode_uri(*subject, value);
-		} else if (body && !*body && !g_strcasecmp(field, "body")) {
+		} else if (body && !*body &&
+			   !g_ascii_strcasecmp(field, "body")) {
 			*body = g_malloc(strlen(value) + 1);
 			decode_uri(*body, value);
 		}
@@ -2627,7 +2628,7 @@ gchar *get_outgoing_rfc2822_str(FILE *fp)
 	/* output header part */
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		strretchomp(buf);
-		if (!g_strncasecmp(buf, "Bcc:", 4)) {
+		if (!g_ascii_strncasecmp(buf, "Bcc:", 4)) {
 			gint next;
 
 			for (;;) {
@@ -3017,7 +3018,7 @@ time_t remote_tzoffset_sec(const gchar *zone)
 		remoteoffset = 0;
 	} else if (strlen(zone3) == 3) {
 		for (p = ustzstr; *p != '\0'; p += 3) {
-			if (!strncasecmp(p, zone3, 3)) {
+			if (!g_ascii_strncasecmp(p, zone3, 3)) {
 				iustz = ((gint)(p - ustzstr) / 3 + 1) / 2 - 8;
 				remoteoffset = iustz * 3600;
 				break;

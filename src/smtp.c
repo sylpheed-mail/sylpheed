@@ -271,7 +271,7 @@ static gint smtp_ehlo_recv(SMTPSession *session, const gchar *msg)
 		const gchar *p = msg;
 		p += 3;
 		if (*p == '-' || *p == ' ') p++;
-		if (g_strncasecmp(p, "AUTH", 4) == 0 && p[4] != '\0') {
+		if (g_ascii_strncasecmp(p, "AUTH", 4) == 0 && p[4] != '\0') {
 			p += 5;
 			if (strcasestr(p, "PLAIN"))
 				session->avail_auth_type |= SMTPAUTH_PLAIN;

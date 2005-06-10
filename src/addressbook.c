@@ -2766,7 +2766,7 @@ static gint addressbook_list_compare_func(GtkCList *clist,
 	if( obj2 ) name2 = obj2->name;
 	if( ! name1 ) return ( name2 != NULL );
 	if( ! name2 ) return -1;
-	return strcasecmp(name1, name2);
+	return g_ascii_strcasecmp(name1, name2);
 }
 */
 
@@ -2781,7 +2781,7 @@ static gint addressbook_list_compare_func( GtkCList *clist, gconstpointer ptr1, 
 	if( cell2 ) name2 = cell2->u.text;
 	if( ! name1 ) return ( name2 != NULL );
 	if( ! name2 ) return -1;
-	return strcasecmp( name1, name2 );
+	return g_ascii_strcasecmp( name1, name2 );
 }
 
 /* static */ 
@@ -2796,7 +2796,7 @@ gint addressbook_obj_name_compare(gconstpointer a, gconstpointer b)
 	atci = addrbookctl_lookup( obj->type );
 	if( ! atci ) return -1;
 	if( ! obj->name ) return -1;
-	return strcasecmp(obj->name, name);
+	return g_ascii_strcasecmp(obj->name, name);
 }
 
 #if 0

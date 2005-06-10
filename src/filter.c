@@ -397,7 +397,8 @@ static gboolean filter_match_header_cond(FilterCond *cond, GSList *hlist)
 
 		switch (cond->type) {
 		case FLT_COND_HEADER:
-			if (!strcasecmp(header->name, cond->header_name)) {
+			if (!g_ascii_strcasecmp
+				(header->name, cond->header_name)) {
 				if (!cond->str_value ||
 				    cond->match_func(header->body,
 						     cond->str_value))
@@ -410,8 +411,8 @@ static gboolean filter_match_header_cond(FilterCond *cond, GSList *hlist)
 				matched = TRUE;
 			break;
 		case FLT_COND_TO_OR_CC:
-			if (!strcasecmp(header->name, "To") ||
-			    !strcasecmp(header->name, "Cc")) {
+			if (!g_ascii_strcasecmp(header->name, "To") ||
+			    !g_ascii_strcasecmp(header->name, "Cc")) {
 				if (!cond->str_value ||
 				    cond->match_func(header->body,
 						     cond->str_value))

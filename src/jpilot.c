@@ -1291,7 +1291,7 @@ static gboolean jpilot_setup_labels( JPilotFile *pilotFile ) {
 					labelName = convertBuff;
 				}
 
-				if( g_strcasecmp( labelName, lbl ) == 0 ) {
+				if( g_ascii_strcasecmp( labelName, lbl ) == 0 ) {
 					ind = i;
 					break;
 				}
@@ -1507,18 +1507,11 @@ static void jpilot_remove_empty( JPilotFile *pilotFile ) {
 * ============================================================================================
 */
 gint jpilot_read_data( JPilotFile *pilotFile ) {
-	const gchar *cur_locale;
-
 	name_order = FAMILY_LAST;
 	convert_charcode = FALSE;
 
-	cur_locale = conv_get_current_locale();
-
-	if( g_strncasecmp( cur_locale, "ja", 2 ) == 0 ) {
+	if( conv_is_ja_locale() ) {
 		name_order = FAMILY_FIRST;
-	}
-
-	if( conv_get_locale_charset() == C_EUC_JP ) {
 		convert_charcode = TRUE;
 	}
 
@@ -1587,7 +1580,7 @@ gint jpilot_check_label( struct AddressAppInfo *ai, gchar *lblCheck ) {
 		lblName = ai->labels[i];
 		if( lblName ) {
 			if( strlen( lblName ) ) {
-				if( g_strcasecmp( lblName, lblCheck ) == 0 ) return i;
+				if( g_ascii_strcasecmp( lblName, lblCheck ) == 0 ) return i;
 			}
 		}
 	}
@@ -1692,7 +1685,7 @@ gboolean jpilot_test_custom_label( JPilotFile *pilotFile, const gchar *labelName
 	if( labelName ) {
 		node = pilotFile->customLabels;
 		while( node ) {
-			if( g_strcasecmp( labelName, node->data ) == 0 ) {
+			if( g_ascii_strcasecmp( labelName, node->data ) == 0 ) {
 				retVal = TRUE;
 				break;
 			}

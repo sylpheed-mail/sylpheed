@@ -689,8 +689,8 @@ static void textview_add_parts(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	for (;;) {
 		textview_add_part(textview, mimeinfo, fp);
 		if (mimeinfo->parent && mimeinfo->parent->content_type &&
-		    !strcasecmp(mimeinfo->parent->content_type,
-				"multipart/alternative"))
+		    !g_ascii_strcasecmp(mimeinfo->parent->content_type,
+					"multipart/alternative"))
 			mimeinfo = mimeinfo->parent->next;
 		else
 			mimeinfo = procmime_mimeinfo_next(mimeinfo);
@@ -1213,7 +1213,7 @@ static GPtrArray *textview_scan_header(TextView *textview, FILE *fp,
 		for (i = 0; i < headers->len; i++) {
 			header = g_ptr_array_index(headers, i);
 
-			if (!g_strcasecmp(header->name, dp->name)) {
+			if (!g_ascii_strcasecmp(header->name, dp->name)) {
 				if (dp->hidden)
 					procheader_header_free(header);
 				else
@@ -1262,10 +1262,10 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 			(buffer, &iter, ":", 1,
 			 "header_title", "header", NULL);
 
-		if (!g_strcasecmp(header->name, "Subject") ||
-		    !g_strcasecmp(header->name, "From")    ||
-		    !g_strcasecmp(header->name, "To")      ||
-		    !g_strcasecmp(header->name, "Cc"))
+		if (!g_ascii_strcasecmp(header->name, "Subject") ||
+		    !g_ascii_strcasecmp(header->name, "From")    ||
+		    !g_ascii_strcasecmp(header->name, "To")      ||
+		    !g_ascii_strcasecmp(header->name, "Cc"))
 			unfold_line(header->body);
 
 		if (prefs_common.enable_color &&
@@ -1704,7 +1704,7 @@ static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
 	if (!uri)
 		return FALSE;
 
-	if (!g_strncasecmp(uri->uri, "mailto:", 7)) {
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
 		PrefsAccount *ac = NULL;
 		MsgInfo *msginfo = textview->messageview->msginfo;
 
@@ -1906,7 +1906,7 @@ static void textview_popup_menu_activate_copy_cb(GtkMenuItem *menuitem,
 	if (!uri->uri)
 		return;
 
-	if (!g_strncasecmp(uri->uri, "mailto:", 7))
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7))
 		uri_string = uri->uri + 7;
 	else
 		uri_string = uri->uri;

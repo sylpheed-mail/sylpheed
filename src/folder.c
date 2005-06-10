@@ -636,7 +636,7 @@ static FolderType folder_get_type_from_string(const gchar *str)
 
 	for (i = 0; i < sizeof(type_str_table) / sizeof(type_str_table[0]);
 	     i++) {
-		if (g_strcasecmp(type_str_table[i].str, str) == 0)
+		if (g_ascii_strcasecmp(type_str_table[i].str, str) == 0)
 			return type_str_table[i].type;
 	}
 
@@ -1234,17 +1234,17 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 
 		if (!attr || !attr->name || !attr->value) continue;
 		if (!strcmp(attr->name, "type")) {
-			if (!strcasecmp(attr->value, "normal"))
+			if (!g_ascii_strcasecmp(attr->value, "normal"))
 				stype = F_NORMAL;
-			else if (!strcasecmp(attr->value, "inbox"))
+			else if (!g_ascii_strcasecmp(attr->value, "inbox"))
 				stype = F_INBOX;
-			else if (!strcasecmp(attr->value, "outbox"))
+			else if (!g_ascii_strcasecmp(attr->value, "outbox"))
 				stype = F_OUTBOX;
-			else if (!strcasecmp(attr->value, "draft"))
+			else if (!g_ascii_strcasecmp(attr->value, "draft"))
 				stype = F_DRAFT;
-			else if (!strcasecmp(attr->value, "queue"))
+			else if (!g_ascii_strcasecmp(attr->value, "queue"))
 				stype = F_QUEUE;
-			else if (!strcasecmp(attr->value, "trash"))
+			else if (!g_ascii_strcasecmp(attr->value, "trash"))
 				stype = F_TRASH;
 		} else if (!strcmp(attr->name, "name"))
 			name = attr->value;
@@ -1387,15 +1387,15 @@ static gboolean folder_read_folder_func(GNode *node, gpointer data)
 
 		if (!attr || !attr->name || !attr->value) continue;
 		if (!strcmp(attr->name, "type")) {
-			if (!strcasecmp(attr->value, "mh"))
+			if (!g_ascii_strcasecmp(attr->value, "mh"))
 				type = F_MH;
-			else if (!strcasecmp(attr->value, "mbox"))
+			else if (!g_ascii_strcasecmp(attr->value, "mbox"))
 				type = F_MBOX;
-			else if (!strcasecmp(attr->value, "maildir"))
+			else if (!g_ascii_strcasecmp(attr->value, "maildir"))
 				type = F_MAILDIR;
-			else if (!strcasecmp(attr->value, "imap"))
+			else if (!g_ascii_strcasecmp(attr->value, "imap"))
 				type = F_IMAP;
-			else if (!strcasecmp(attr->value, "news"))
+			else if (!g_ascii_strcasecmp(attr->value, "news"))
 				type = F_NEWS;
 		} else if (!strcmp(attr->name, "name"))
 			name = attr->value;

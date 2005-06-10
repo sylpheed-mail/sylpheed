@@ -1429,7 +1429,7 @@ static void prefs_filter_edit_activate_cond_header(const gchar *header)
 						"header_str");
 		if (!menu_header)
 			break;
-		if (!g_strcasecmp(menu_header, header)) {
+		if (!g_ascii_strcasecmp(menu_header, header)) {
 			gtk_option_menu_set_history
 				(GTK_OPTION_MENU(hbox->cond_type_optmenu),
 				 index);
@@ -1468,7 +1468,7 @@ static void edit_header_list_dialog_add(void)
 
 	for (row = 0; gtk_clist_get_text(clist, row, 0, &row_text) != 0;
 	     row++) {
-		if (g_strcasecmp(row_text, text) == 0) return;
+		if (g_ascii_strcasecmp(row_text, text) == 0) return;
 	}
 
 	ctext[0] = (gchar *)text;

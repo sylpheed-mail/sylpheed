@@ -116,7 +116,7 @@ void prefs_config_parse_one_line(PrefParam *param, const gchar *buf)
 
 	for (i = 0; param[i].name != NULL; i++) {
 		name_len = strlen(param[i].name);
-		if (strncasecmp(buf, param[i].name, name_len))
+		if (g_ascii_strncasecmp(buf, param[i].name, name_len))
 			continue;
 		if (buf[name_len] != '=')
 			continue;
@@ -381,7 +381,7 @@ void prefs_set_default(PrefParam *param)
 		switch (param[i].type) {
 		case P_STRING:
 			if (param[i].defval != NULL) {
-				if (!strncasecmp(param[i].defval, "ENV_", 4)) {
+				if (!g_ascii_strncasecmp(param[i].defval, "ENV_", 4)) {
 					const gchar *envstr;
 					gchar *tmp = NULL;
 
@@ -419,7 +419,7 @@ void prefs_set_default(PrefParam *param)
 			break;
 		case P_BOOL:
 			if (param[i].defval != NULL) {
-				if (!strcasecmp(param[i].defval, "TRUE"))
+				if (!g_ascii_strcasecmp(param[i].defval, "TRUE"))
 					*((gboolean *)param[i].data) = TRUE;
 				else
 					*((gboolean *)param[i].data) =
@@ -568,7 +568,7 @@ void prefs_set_dialog_to_default(PrefParam *param)
 		case P_STRING:
 #warning FIXME_GTK2
 			if (tmpparam.defval) {
-				if (!strncasecmp(tmpparam.defval, "ENV_", 4)) {
+				if (!g_ascii_strncasecmp(tmpparam.defval, "ENV_", 4)) {
 					str_data = g_strdup(g_getenv(param[i].defval + 4));
 					tmpparam.data = &str_data;
 					break;
@@ -599,7 +599,7 @@ void prefs_set_dialog_to_default(PrefParam *param)
 			break;
 		case P_BOOL:
 			if (tmpparam.defval) {
-				if (!strcasecmp(tmpparam.defval, "TRUE"))
+				if (!g_ascii_strcasecmp(tmpparam.defval, "TRUE"))
 					bool_data = TRUE;
 				else
 					bool_data = atoi(tmpparam.defval)

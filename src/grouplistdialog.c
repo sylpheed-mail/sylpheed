@@ -430,8 +430,9 @@ static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
 
 		if (g_pattern_match_string(pspec, ginfo->name)) {
 			node = grouplist_create_branch(ginfo, pattern);
-			if (g_slist_find_custom(subscribed, ginfo->name,
-						(GCompareFunc)g_strcasecmp)
+			if (g_slist_find_custom
+				(subscribed, ginfo->name,
+				 (GCompareFunc)g_ascii_strcasecmp)
 			    != NULL)
 				gtk_ctree_select(GTK_CTREE(ctree), node);
 		}
@@ -555,7 +556,7 @@ static void ctree_unselected(GtkCTree *ctree, GtkCTreeNode *node, gint column,
 	if (!ginfo) return;
 
 	list = g_slist_find_custom(subscribed, ginfo->name,
-				   (GCompareFunc)g_strcasecmp);
+				   (GCompareFunc)g_ascii_strcasecmp);
 	if (list) {
 		g_free(list->data);
 		subscribed = g_slist_remove(subscribed, list->data);

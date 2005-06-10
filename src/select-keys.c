@@ -508,7 +508,7 @@ cmp_name (GtkCList *clist, gconstpointer pa, gconstpointer pb)
         return !!sb;
     if (!sb)
         return -1;
-    return strcasecmp(sa, sb);
+    return g_ascii_strcasecmp(sa, sb);
 }
 
 static gint 
@@ -524,7 +524,7 @@ cmp_email (GtkCList *clist, gconstpointer pa, gconstpointer pb)
         return !!sb;
     if (!sb)
         return -1;
-    return strcasecmp(sa, sb);
+    return g_ascii_strcasecmp(sa, sb);
 }
 
 static void

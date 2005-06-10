@@ -55,13 +55,13 @@ static Template *template_load(gchar *filename)
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		if (buf[0] == '\n')
 			break;
-		else if (!g_strncasecmp(buf, "Name:", 5))
+		else if (!g_ascii_strncasecmp(buf, "Name:", 5))
 			tmpl->name = g_strdup(g_strstrip(buf + 5));
-		else if (!g_strncasecmp(buf, "To:", 3))
+		else if (!g_ascii_strncasecmp(buf, "To:", 3))
 			tmpl->to = g_strdup(g_strstrip(buf + 3));
-		else if (!g_strncasecmp(buf, "Cc:", 3))
+		else if (!g_ascii_strncasecmp(buf, "Cc:", 3))
 			tmpl->cc = g_strdup(g_strstrip(buf + 3));
-		else if (!g_strncasecmp(buf, "Subject:", 8))
+		else if (!g_ascii_strncasecmp(buf, "Subject:", 8))
 			tmpl->subject = g_strdup(g_strstrip(buf + 8));
 	}
 

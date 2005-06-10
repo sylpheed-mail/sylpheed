@@ -352,7 +352,7 @@ static gint nntp_gen_send(SockInfo *sock, const gchar *format, ...)
 	va_end(args);
 
 	if (verbose) {
-		if (!g_strncasecmp(buf, "AUTHINFO PASS", 13))
+		if (!g_ascii_strncasecmp(buf, "AUTHINFO PASS", 13))
 			log_print("NNTP> AUTHINFO PASS ********\n");
 		else
 			log_print("NNTP> %s\n", buf);

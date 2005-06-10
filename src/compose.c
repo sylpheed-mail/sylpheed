@@ -1478,7 +1478,7 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 		if (msginfo->folder && msginfo->folder->trim_compose_subject)
 			trim_subject(buf);
 
-		while (!strncasecmp(buf, "Re:", 3)) {
+		while (!g_ascii_strncasecmp(buf, "Re:", 3)) {
 			p = buf + 3;
 			while (isspace(*p)) p++;
 			memmove(buf, p, strlen(p) + 1);
@@ -1745,7 +1745,7 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 
 	if (content_type) {
 		ainfo->content_type = g_strdup(content_type);
-		if (!strcasecmp(content_type, "message/rfc822")) {
+		if (!g_ascii_strcasecmp(content_type, "message/rfc822")) {
 			MsgInfo *msginfo;
 			MsgFlags flags = {0, 0};
 			const gchar *name;
@@ -1765,7 +1765,7 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 
 			procmsg_msginfo_free(msginfo);
 		} else {
-			if (!g_strncasecmp(content_type, "text", 4))
+			if (!g_ascii_strncasecmp(content_type, "text", 4))
 				ainfo->encoding = procmime_get_encoding_for_text_file(file);
 			else
 				ainfo->encoding = ENC_BASE64;
@@ -1778,7 +1778,7 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 			ainfo->content_type =
 				g_strdup("application/octet-stream");
 			ainfo->encoding = ENC_BASE64;
-		} else if (!g_strncasecmp(ainfo->content_type, "text", 4))
+		} else if (!g_ascii_strncasecmp(ainfo->content_type, "text", 4))
 			ainfo->encoding =
 				procmime_get_encoding_for_text_file(file);
 		else
@@ -1799,7 +1799,7 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 #define IS_FIRST_PART_TEXT(info) \
 	((info->mime_type == MIME_TEXT || info->mime_type == MIME_TEXT_HTML) || \
 	 (info->mime_type == MIME_MULTIPART && info->content_type && \
-	  !strcasecmp(info->content_type, "multipart/alternative") && \
+	  !g_ascii_strcasecmp(info->content_type, "multipart/alternative") && \
 	  (info->children && \
 	   (info->children->mime_type == MIME_TEXT || \
 	    info->children->mime_type == MIME_TEXT_HTML))))
@@ -2620,7 +2620,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	out_charset = conv_get_charset_str(compose->out_encoding);
 	if (!out_charset)
 		out_charset = conv_get_outgoing_charset_str();
-	if (!g_strcasecmp(out_charset, CS_US_ASCII))
+	if (!g_ascii_strcasecmp(out_charset, CS_US_ASCII))
 		out_charset = CS_ISO_8859_1;
 	body_charset = out_charset;
 
@@ -2909,23 +2909,23 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 	}
 
 	while (procheader_get_one_field(buf, sizeof(buf), fp, NULL) == 0) {
-		if (g_strncasecmp(buf, "Return-Path:",
-				   strlen("Return-Path:")) == 0 ||
-		    g_strncasecmp(buf, "Delivered-To:",
-				  strlen("Delivered-To:")) == 0 ||
-		    g_strncasecmp(buf, "Received:",
-				  strlen("Received:")) == 0 ||
-		    g_strncasecmp(buf, "Subject:",
-				  strlen("Subject:")) == 0 ||
-		    g_strncasecmp(buf, "X-UIDL:",
-				  strlen("X-UIDL:")) == 0)
+		if (g_ascii_strncasecmp(buf, "Return-Path:",
+					strlen("Return-Path:")) == 0 ||
+		    g_ascii_strncasecmp(buf, "Delivered-To:",
+					strlen("Delivered-To:")) == 0 ||
+		    g_ascii_strncasecmp(buf, "Received:",
+					strlen("Received:")) == 0 ||
+		    g_ascii_strncasecmp(buf, "Subject:",
+					strlen("Subject:")) == 0 ||
+		    g_ascii_strncasecmp(buf, "X-UIDL:",
+					strlen("X-UIDL:")) == 0)
 			continue;
 
 		if (fputs(buf, fdest) == EOF)
 			goto error;
 
 #if 0
-		if (g_strncasecmp(buf, "From:", strlen("From:")) == 0) {
+		if (g_ascii_strncasecmp(buf, "From:", strlen("From:")) == 0) {
 			fputs("\n (by way of ", fdest);
 			if (compose->account->name) {
 				compose_convert_header(compose,
@@ -3136,7 +3136,7 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 
 		fprintf(fp, "\n--%s\n", compose->boundary);
 
-		if (!g_strcasecmp(ainfo->content_type, "message/rfc822")) {
+		if (!g_ascii_strcasecmp(ainfo->content_type, "message/rfc822")) {
 			fprintf(fp, "Content-Type: %s\n", ainfo->content_type);
 			fprintf(fp, "Content-Disposition: inline\n");
 		} else {
@@ -3448,17 +3448,16 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		     cur = cur->next) {
 			CustomHeader *chdr = (CustomHeader *)cur->data;
 
-			if (strcasecmp(chdr->name, "Date")         != 0 &&
-			    strcasecmp(chdr->name, "From")         != 0 &&
-			    strcasecmp(chdr->name, "To")           != 0 &&
-			 /* strcasecmp(chdr->name, "Sender")       != 0 && */
-			    strcasecmp(chdr->name, "Message-Id")   != 0 &&
-			    strcasecmp(chdr->name, "In-Reply-To")  != 0 &&
-			    strcasecmp(chdr->name, "References")   != 0 &&
-			    strcasecmp(chdr->name, "Mime-Version") != 0 &&
-			    strcasecmp(chdr->name, "Content-Type") != 0 &&
-			    strcasecmp(chdr->name, "Content-Transfer-Encoding")
-			    != 0) {
+			if (g_ascii_strcasecmp(chdr->name, "Date") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "From") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "To") != 0 &&
+			 /* g_ascii_strcasecmp(chdr->name, "Sender") != 0 && */
+			    g_ascii_strcasecmp(chdr->name, "Message-Id") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "In-Reply-To") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "References") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "Mime-Version") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "Content-Type") != 0 &&
+			    g_ascii_strcasecmp(chdr->name, "Content-Transfer-Encoding") != 0) {
 				compose_convert_header
 					(compose, buf, sizeof(buf),
 					 chdr->value ? chdr->value : "",

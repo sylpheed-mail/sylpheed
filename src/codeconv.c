@@ -890,7 +890,7 @@ conv_get_fallback_for_private_encoding(const gchar *encoding)
 {
 	if (encoding && (encoding[0] == 'X' || encoding[0] == 'x') &&
 	    encoding[1] == '-') {
-		if (!g_strcasecmp(encoding, CS_X_GBK))
+		if (!g_ascii_strcasecmp(encoding, CS_X_GBK))
 			return CS_GBK;
 	}
 
@@ -1472,14 +1472,15 @@ CharSet conv_get_locale_charset(void)
 
 		/* "ja_JP.EUC" matches with "ja_JP.eucJP", "ja_JP.EUC" and
 		   "ja_JP". "ja_JP" matches with "ja_JP.xxxx" and "ja" */
-		if (!strncasecmp(cur_locale, locale_table[i].locale,
-				 strlen(locale_table[i].locale))) {
+		if (!g_ascii_strncasecmp(cur_locale, locale_table[i].locale,
+					 strlen(locale_table[i].locale))) {
 			cur_charset = locale_table[i].charset;
 			return cur_charset;
 		} else if ((p = strchr(locale_table[i].locale, '_')) &&
 			 !strchr(p + 1, '.')) {
 			if (strlen(cur_locale) == 2 &&
-			    !strncasecmp(cur_locale, locale_table[i].locale, 2)) {
+			    !g_ascii_strncasecmp(cur_locale,
+						 locale_table[i].locale, 2)) {
 				cur_charset = locale_table[i].charset;
 				return cur_charset;
 			}
@@ -1534,14 +1535,15 @@ CharSet conv_get_outgoing_charset(void)
 	for (i = 0; i < sizeof(locale_table) / sizeof(locale_table[0]); i++) {
 		const gchar *p;
 
-		if (!strncasecmp(cur_locale, locale_table[i].locale,
-				 strlen(locale_table[i].locale))) {
+		if (!g_ascii_strncasecmp(cur_locale, locale_table[i].locale,
+					 strlen(locale_table[i].locale))) {
 			out_charset = locale_table[i].out_charset;
 			break;
 		} else if ((p = strchr(locale_table[i].locale, '_')) &&
 			 !strchr(p + 1, '.')) {
 			if (strlen(cur_locale) == 2 &&
-			    !strncasecmp(cur_locale, locale_table[i].locale, 2)) {
+			    !g_ascii_strncasecmp(cur_locale,
+						 locale_table[i].locale, 2)) {
 				out_charset = locale_table[i].out_charset;
 				break;
 			}
@@ -1615,7 +1617,7 @@ gboolean conv_is_ja_locale(void)
 	is_ja_locale = 0;
 	cur_locale = conv_get_current_locale();
 	if (cur_locale) {
-		if (g_strncasecmp(cur_locale, "ja", 2) == 0)
+		if (g_ascii_strncasecmp(cur_locale, "ja", 2) == 0)
 			is_ja_locale = 1;
 	}
 

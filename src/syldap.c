@@ -584,22 +584,22 @@ gint syldap_search( SyldapServer *ldapServer ) {
 		/* Process all attributes */
 		for( attribute = ldap_first_attribute( ld, e, &ber ); attribute != NULL;
 			       attribute = ldap_next_attribute( ld, e, ber ) ) {
-			if( strcasecmp( attribute, SYLDAP_ATTR_COMMONNAME ) == 0 ) {
+			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_COMMONNAME ) == 0 ) {
 				listName = syldap_add_list_values( ld, e, attribute );
 			}
-			if( strcasecmp( attribute, SYLDAP_ATTR_EMAIL ) == 0 ) {
+			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_EMAIL ) == 0 ) {
 				listAddress = syldap_add_list_values( ld, e, attribute );
 			}
-			if( strcasecmp( attribute, SYLDAP_ATTR_UID ) == 0 ) {
+			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_UID ) == 0 ) {
 				listID = syldap_add_single_value( ld, e, attribute );
 			}
-			if( strcasecmp( attribute, SYLDAP_ATTR_GIVENNAME ) == 0 ) {
+			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_GIVENNAME ) == 0 ) {
 				listFirst = syldap_add_list_values( ld, e, attribute );
 			}
-			if( strcasecmp( attribute, SYLDAP_ATTR_SURNAME ) == 0 ) {
+			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_SURNAME ) == 0 ) {
 				listLast = syldap_add_single_value( ld, e, attribute );
 			}
-			if( strcasecmp( attribute, SYLDAP_ATTR_DN ) == 0 ) {
+			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_DN ) == 0 ) {
 				listDN = syldap_add_single_value( ld, e, attribute );
 			}
 		}
@@ -812,7 +812,7 @@ GList *syldap_read_basedn_s( const gchar *host, const gint port, const gchar *bi
 			/* Process attributes */
 			for( attribute = ldap_first_attribute( ld, e, &ber ); attribute != NULL;
 					attribute = ldap_next_attribute( ld, e, ber ) ) {
-				if( strcasecmp( attribute, SYLDAP_V3_TEST_ATTR ) == 0 ) {
+				if( g_ascii_strcasecmp( attribute, SYLDAP_V3_TEST_ATTR ) == 0 ) {
 					if( ( vals = ldap_get_values( ld, e, attribute ) ) != NULL ) {
 						for( i = 0; vals[i] != NULL; i++ ) {
 							/* printf( "\t%s: %s\n", attribute, vals[i] ); */
@@ -847,7 +847,7 @@ GList *syldap_read_basedn_s( const gchar *host, const gint port, const gchar *bi
 				for( attribute = ldap_first_attribute( ld, e, &ber ); attribute != NULL;
 					       attribute = ldap_next_attribute( ld, e, ber ) ) {
 					/* if( baseDN ) break;			 */
-					if( strcasecmp( attribute, SYLDAP_V2_TEST_ATTR ) == 0 ) {
+					if( g_ascii_strcasecmp( attribute, SYLDAP_V2_TEST_ATTR ) == 0 ) {
 						if( ( vals = ldap_get_values( ld, e, attribute ) ) != NULL ) {
 							for( i = 0; vals[i] != NULL; i++ ) {
 								char *ch;
@@ -941,7 +941,7 @@ GList *syldap_read_basedn( SyldapServer *ldapServer ) {
 			/* Process attributes */
 			for( attribute = ldap_first_attribute( ld, e, &ber ); attribute != NULL;
 					attribute = ldap_next_attribute( ld, e, ber ) ) {
-				if( strcasecmp( attribute, SYLDAP_V3_TEST_ATTR ) == 0 ) {
+				if( g_ascii_strcasecmp( attribute, SYLDAP_V3_TEST_ATTR ) == 0 ) {
 					if( ( vals = ldap_get_values( ld, e, attribute ) ) != NULL ) {
 						for( i = 0; vals[i] != NULL; i++ ) {
 							/* printf( "\t%s: %s\n", attribute, vals[i] ); */
@@ -978,7 +978,7 @@ GList *syldap_read_basedn( SyldapServer *ldapServer ) {
 				for( attribute = ldap_first_attribute( ld, e, &ber ); attribute != NULL;
 					       attribute = ldap_next_attribute( ld, e, ber ) ) {
 					/* if( baseDN ) break;			 */
-					if( strcasecmp( attribute, SYLDAP_V2_TEST_ATTR ) == 0 ) {
+					if( g_ascii_strcasecmp( attribute, SYLDAP_V2_TEST_ATTR ) == 0 ) {
 						if( ( vals = ldap_get_values( ld, e, attribute ) ) != NULL ) {
 							for( i = 0; vals[i] != NULL; i++ ) {
 								char *ch;

@@ -328,15 +328,15 @@ void procmime_scan_encoding(MimeInfo *mimeinfo, const gchar *encoding)
 	g_free(mimeinfo->encoding);
 
 	mimeinfo->encoding = g_strdup(g_strstrip(buf));
-	if (!strcasecmp(buf, "7bit"))
+	if (!g_ascii_strcasecmp(buf, "7bit"))
 		mimeinfo->encoding_type = ENC_7BIT;
-	else if (!strcasecmp(buf, "8bit"))
+	else if (!g_ascii_strcasecmp(buf, "8bit"))
 		mimeinfo->encoding_type = ENC_8BIT;
-	else if (!strcasecmp(buf, "quoted-printable"))
+	else if (!g_ascii_strcasecmp(buf, "quoted-printable"))
 		mimeinfo->encoding_type = ENC_QUOTED_PRINTABLE;
-	else if (!strcasecmp(buf, "base64"))
+	else if (!g_ascii_strcasecmp(buf, "base64"))
 		mimeinfo->encoding_type = ENC_BASE64;
-	else if (!strcasecmp(buf, "x-uuencode"))
+	else if (!g_ascii_strcasecmp(buf, "x-uuencode"))
 		mimeinfo->encoding_type = ENC_X_UUENCODE;
 	else
 		mimeinfo->encoding_type = ENC_UNKNOWN;
@@ -401,11 +401,12 @@ void procmime_scan_content_type_str(const gchar *content_type,
 		}
 
 		if (*value) {
-			if (charset && !g_strcasecmp(attr, "charset"))
+			if (charset && !g_ascii_strcasecmp(attr, "charset"))
 				*charset = g_strdup(value);
-			else if (name && !g_strcasecmp(attr, "name"))
+			else if (name && !g_ascii_strcasecmp(attr, "name"))
 				*name = conv_unmime_header(value, NULL);
-			else if (boundary && !g_strcasecmp(attr, "boundary"))
+			else if (boundary &&
+				 !g_ascii_strcasecmp(attr, "boundary"))
 				*boundary = g_strdup(value);
 		}
 
@@ -450,7 +451,7 @@ void procmime_scan_content_disposition(MimeInfo *mimeinfo,
 		}
 
 		if (*value) {
-			if (!strcasecmp(attr, "filename")) {
+			if (!g_ascii_strcasecmp(attr, "filename")) {
 				g_free(mimeinfo->filename);
 				mimeinfo->filename =
 					conv_unmime_header(value, NULL);
@@ -896,25 +897,26 @@ ContentType procmime_scan_mime_type(const gchar *mime_type)
 {
 	ContentType type;
 
-	if (!strncasecmp(mime_type, "text/html", 9))
+	if (!g_ascii_strncasecmp(mime_type, "text/html", 9))
 		type = MIME_TEXT_HTML;
-	else if (!strncasecmp(mime_type, "text/", 5))
+	else if (!g_ascii_strncasecmp(mime_type, "text/", 5))
 		type = MIME_TEXT;
-	else if (!strncasecmp(mime_type, "message/rfc822", 14))
+	else if (!g_ascii_strncasecmp(mime_type, "message/rfc822", 14))
 		type = MIME_MESSAGE_RFC822;
-	else if (!strncasecmp(mime_type, "message/", 8))
+	else if (!g_ascii_strncasecmp(mime_type, "message/", 8))
 		type = MIME_TEXT;
-	else if (!strncasecmp(mime_type, "application/octet-stream", 24))
+	else if (!g_ascii_strncasecmp(mime_type, "application/octet-stream",
+				      24))
 		type = MIME_APPLICATION_OCTET_STREAM;
-	else if (!strncasecmp(mime_type, "application/", 12))
+	else if (!g_ascii_strncasecmp(mime_type, "application/", 12))
 		type = MIME_APPLICATION;
-	else if (!strncasecmp(mime_type, "multipart/", 10))
+	else if (!g_ascii_strncasecmp(mime_type, "multipart/", 10))
 		type = MIME_MULTIPART;
-	else if (!strncasecmp(mime_type, "image/", 6))
+	else if (!g_ascii_strncasecmp(mime_type, "image/", 6))
 		type = MIME_IMAGE;
-	else if (!strncasecmp(mime_type, "audio/", 6))
+	else if (!g_ascii_strncasecmp(mime_type, "audio/", 6))
 		type = MIME_AUDIO;
-	else if (!strcasecmp(mime_type, "text"))
+	else if (!g_ascii_strcasecmp(mime_type, "text"))
 		type = MIME_TEXT;
 	else
 		type = MIME_UNKNOWN;
@@ -1063,14 +1065,14 @@ EncodingType procmime_get_encoding_for_charset(const gchar *charset)
 {
 	if (!charset)
 		return ENC_8BIT;
-	else if (!strncasecmp(charset, "ISO-2022-", 9) ||
-		 !strcasecmp(charset, "US-ASCII"))
+	else if (!g_ascii_strncasecmp(charset, "ISO-2022-", 9) ||
+		 !g_ascii_strcasecmp(charset, "US-ASCII"))
 		return ENC_7BIT;
-	else if (!strcasecmp(charset, "ISO-8859-5") ||
-		 !strncasecmp(charset, "KOI8-", 5) ||
-		 !strcasecmp(charset, "Windows-1251"))
+	else if (!g_ascii_strcasecmp(charset, "ISO-8859-5") ||
+		 !g_ascii_strncasecmp(charset, "KOI8-", 5) ||
+		 !g_ascii_strcasecmp(charset, "Windows-1251"))
 		return ENC_8BIT;
-	else if (!strncasecmp(charset, "ISO-8859-", 9))
+	else if (!g_ascii_strncasecmp(charset, "ISO-8859-", 9))
 		return ENC_QUOTED_PRINTABLE;
 	else
 		return ENC_8BIT;

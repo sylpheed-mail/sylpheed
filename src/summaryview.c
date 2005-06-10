@@ -4774,7 +4774,8 @@ static gint func_name(GtkTreeModel *model,				\
 	if (msginfo_b->var_name == NULL)				\
 		return (msginfo_a->var_name != NULL);			\
 									\
-	return g_strcasecmp(msginfo_a->var_name, msginfo_b->var_name);	\
+	return g_ascii_strcasecmp					\
+		(msginfo_a->var_name, msginfo_b->var_name);		\
 }
 
 CMP_FUNC_DEF(summary_cmp_by_from, fromname)

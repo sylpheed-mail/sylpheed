@@ -2877,16 +2877,16 @@ static void quote_color_set_dialog(GtkWidget *widget, gpointer data)
 	gint rgbvalue = 0;
 	GtkColorSelectionDialog *dialog;
 
-	if(g_strcasecmp(type, "LEVEL1") == 0) {
+	if(g_ascii_strcasecmp(type, "LEVEL1") == 0) {
 		title = _("Pick color for quotation level 1");
 		rgbvalue = prefs_common.quote_level1_col;
-	} else if(g_strcasecmp(type, "LEVEL2") == 0) {
+	} else if(g_ascii_strcasecmp(type, "LEVEL2") == 0) {
 		title = _("Pick color for quotation level 2");
 		rgbvalue = prefs_common.quote_level2_col;
-	} else if(g_strcasecmp(type, "LEVEL3") == 0) {
+	} else if(g_ascii_strcasecmp(type, "LEVEL3") == 0) {
 		title = _("Pick color for quotation level 3");
 		rgbvalue = prefs_common.quote_level3_col;
-	} else if(g_strcasecmp(type, "URI") == 0) {
+	} else if(g_ascii_strcasecmp(type, "URI") == 0) {
 		title = _("Pick color for URI");
 		rgbvalue = prefs_common.uri_col;
 	} else {   /* Should never be called */
@@ -2939,16 +2939,16 @@ static void quote_colors_set_dialog_ok(GtkWidget *widget, gpointer data)
 	fprintf(stderr, "Color is %x\n", rgbvalue);
 #endif
 
-	if (g_strcasecmp(type, "LEVEL1") == 0) {
+	if (g_ascii_strcasecmp(type, "LEVEL1") == 0) {
 		prefs_common.quote_level1_col = rgbvalue;
 		set_button_bg_color(color_buttons.quote_level1_btn, rgbvalue);
-	} else if (g_strcasecmp(type, "LEVEL2") == 0) {
+	} else if (g_ascii_strcasecmp(type, "LEVEL2") == 0) {
 		prefs_common.quote_level2_col = rgbvalue;
 		set_button_bg_color(color_buttons.quote_level2_btn, rgbvalue);
-	} else if (g_strcasecmp(type, "LEVEL3") == 0) {
+	} else if (g_ascii_strcasecmp(type, "LEVEL3") == 0) {
 		prefs_common.quote_level3_col = rgbvalue;
 		set_button_bg_color(color_buttons.quote_level3_btn, rgbvalue);
-	} else if (g_strcasecmp(type, "URI") == 0) {
+	} else if (g_ascii_strcasecmp(type, "URI") == 0) {
 		prefs_common.uri_col = rgbvalue;
 		set_button_bg_color(color_buttons.uri_btn, rgbvalue);
 	} else

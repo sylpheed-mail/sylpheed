@@ -502,7 +502,7 @@ static gint prefs_display_header_find_header(GtkCList *clist,
 	DisplayHeaderProp *dp;
 
 	while ((dp = gtk_clist_get_row_data(clist, row)) != NULL) {
-		if (g_strcasecmp(dp->name, header) == 0)
+		if (g_ascii_strcasecmp(dp->name, header) == 0)
 			return row;
 		row++;
 	}

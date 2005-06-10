@@ -586,9 +586,9 @@ void prefs_filter_set_msg_header_list(MsgInfo *msginfo)
 	     cur = next) {
 		next = cur->next;
 		header = (Header *)cur->data;
-		if (!g_strcasecmp(header->name, "Received") ||
-		    !g_strcasecmp(header->name, "Mime-Version") ||
-		    !g_strcasecmp(header->name, "X-UIDL")) {
+		if (!g_ascii_strcasecmp(header->name, "Received") ||
+		    !g_ascii_strcasecmp(header->name, "Mime-Version") ||
+		    !g_ascii_strcasecmp(header->name, "X-UIDL")) {
 			procheader_header_free(header);
 			rule_list_window.msg_hdr_list =
 				g_slist_remove(rule_list_window.msg_hdr_list,

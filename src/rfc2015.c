@@ -396,7 +396,7 @@ MimeInfo ** rfc2015_find_signature (MimeInfo *mimeinfo)
     /* We could have a signature nested within multipart/mixed so
      * recurse to find it.
      */
-    if (!g_strcasecmp (mimeinfo->content_type, "multipart/mixed")) {
+    if (!g_ascii_strcasecmp (mimeinfo->content_type, "multipart/mixed")) {
         for (partinfo = mimeinfo->children; partinfo != NULL; 
                 partinfo = partinfo->next) {
             signedinfo = rfc2015_find_signature (partinfo);
@@ -406,7 +406,7 @@ MimeInfo ** rfc2015_find_signature (MimeInfo *mimeinfo)
         }
         return NULL;
     }
-    if (g_strcasecmp (mimeinfo->content_type, "multipart/signed"))
+    if (g_ascii_strcasecmp (mimeinfo->content_type, "multipart/signed"))
         return NULL;
 
     debug_print ("** multipart/signed encountered\n");
@@ -414,8 +414,8 @@ MimeInfo ** rfc2015_find_signature (MimeInfo *mimeinfo)
     /* check that we have at least 2 parts of the correct type */
     for (partinfo = mimeinfo->children;
          partinfo != NULL; partinfo = partinfo->next) {
-        if (++n > 1  && !g_strcasecmp (partinfo->content_type,
-				       "application/pgp-signature"))
+        if (++n > 1  && !g_ascii_strcasecmp (partinfo->content_type,
+					     "application/pgp-signature"))
             break;
     }
 
@@ -457,7 +457,7 @@ int rfc2015_is_encrypted (MimeInfo *mimeinfo)
 {
     if (!mimeinfo || mimeinfo->mime_type != MIME_MULTIPART)
         return 0;
-    if (g_strcasecmp (mimeinfo->content_type, "multipart/encrypted"))
+    if (g_ascii_strcasecmp (mimeinfo->content_type, "multipart/encrypted"))
         return 0;
     /* fixme: we should check the protocol parameter */
     return 1;
@@ -566,13 +566,15 @@ void rfc2015_decrypt_message (MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
     if (!partinfo || !partinfo->next) {
         DECRYPTION_ABORT();
     }
-    if (!g_strcasecmp (partinfo->content_type, "application/pgp-encrypted")) {
+    if (!g_ascii_strcasecmp (partinfo->content_type,
+			     "application/pgp-encrypted")) {
         /* Fixme: check that the version is 1 */
         ver_ok = 1;
     }
     partinfo = partinfo->next;
     if (ver_ok &&
-        !g_strcasecmp (partinfo->content_type, "application/octet-stream")) {
+        !g_ascii_strcasecmp (partinfo->content_type,
+			     "application/octet-stream")) {
         if (partinfo->next)
             g_warning ("oops: pgp_encrypted with more than 2 parts");
     }

@@ -1539,8 +1539,9 @@ static gint func_name(gconstpointer a, gconstpointer b)			\
 	if (!msginfo2->var_name)					\
 		return -1;						\
 									\
-	return strcasecmp(msginfo1->var_name, msginfo2->var_name) *	\
-		(cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
+	return g_ascii_strcasecmp					\
+		(msginfo1->var_name, msginfo2->var_name) *		\
+			(cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);\
 }
 
 CMP_FUNC_DEF(procmsg_cmp_by_from, fromname)

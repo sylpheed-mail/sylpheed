@@ -56,8 +56,8 @@ gint procheader_get_one_field(gchar *buf, size_t len, FILE *fp,
 
 			for (hp = hentry, hnum = 0; hp->name != NULL;
 			     hp++, hnum++) {
-				if (!strncasecmp(hp->name, buf,
-						 strlen(hp->name)))
+				if (!g_ascii_strncasecmp(hp->name, buf,
+							 strlen(hp->name)))
 					break;
 			}
 		} while (hp->name == NULL);
@@ -288,7 +288,7 @@ gint procheader_find_header_list(GSList *hlist, const gchar *header_name)
 
 	for (cur = hlist; cur != NULL; cur = cur->next, index++) {
 		header = (Header *)cur->data;
-		if (g_strcasecmp(header->name, header_name) == 0)
+		if (g_ascii_strcasecmp(header->name, header_name) == 0)
 			return index;
 	}
 
@@ -405,8 +405,8 @@ void procheader_get_header_fields(FILE *fp, HeaderEntry hentry[])
 
 		if (hp->body == NULL)
 			hp->body = g_strdup(p);
-		else if (!strcasecmp(hp->name, "To:") ||
-			 !strcasecmp(hp->name, "Cc:")) {
+		else if (!g_ascii_strcasecmp(hp->name, "To:") ||
+			 !g_ascii_strcasecmp(hp->name, "Cc:")) {
 			gchar *tp = hp->body;
 			hp->body = g_strconcat(tp, ", ", p, NULL);
 			g_free(tp);
@@ -584,7 +584,7 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 			}
 			break;
 		case H_CONTENT_TYPE:
-			if (!g_strncasecmp(hp, "multipart", 9)) {
+			if (!g_ascii_strncasecmp(hp, "multipart", 9)) {
 				MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MIME);
 			} else if (!charset) {
 				procmime_scan_content_type_str
@@ -752,7 +752,7 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 
 	month[3] = '\0';
 	for (p = monthstr; *p != '\0'; p += 3) {
-		if (!strncasecmp(p, month, 3)) {
+		if (!g_ascii_strncasecmp(p, month, 3)) {
 			dmonth = (gint)(p - monthstr) / 3 + 1;
 			break;
 		}

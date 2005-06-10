@@ -386,7 +386,7 @@ static void vcard_build_items( VCardFile *cardFile, GSList *listName, GSList *li
 				str = nodeRemarks->data;
 				if( nodeRemarks ) {
 					if( str ) {
-						if( g_strcasecmp( str, "internet" ) != 0 ) {
+						if( g_ascii_strcasecmp( str, "internet" ) != 0 ) {
 							if( *str != '\0' ) addritem_email_set_remarks( email, str );
 						}
 					}
@@ -505,34 +505,34 @@ static void vcard_read_file( VCardFile *cardFile ) {
 		/* fprintf( stdout, "\ttype:  %s\n", tagtype ); */
 		/* fprintf( stdout, "\tvalue: %s\n", tagvalue ); */
 
-		if( g_strcasecmp( tagtype, VCARD_TYPE_QP ) == 0 ) {
+		if( g_ascii_strcasecmp( tagtype, VCARD_TYPE_QP ) == 0 ) {
 			/* Quoted-Printable: could span multiple lines */
 			tagvalue = vcard_read_qp( cardFile, tagvalue );
 			vcard_unescape_qp( tagvalue );
 			/* fprintf( stdout, "QUOTED-PRINTABLE !!! final\n>%s<\n", tagvalue ); */
 		}
 
-		if( g_strcasecmp( tagname, VCARD_TAG_START ) == 0 &&
-			g_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
+		if( g_ascii_strcasecmp( tagname, VCARD_TAG_START ) == 0 &&
+			g_ascii_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
 			/* fprintf( stdout, "start card\n" ); */
 			vcard_free_lists( listName, listAddress, listRemarks, listID );
 			listName = listAddress = listRemarks = listID = NULL;
 		}
-		if( g_strcasecmp( tagname, VCARD_TAG_FULLNAME ) == 0 ) {
+		if( g_ascii_strcasecmp( tagname, VCARD_TAG_FULLNAME ) == 0 ) {
 			/* fprintf( stdout, "- full name: %s\n", tagvalue ); */
 			listName = g_slist_append( listName, g_strdup( tagvalue ) );
 		}
-		if( g_strcasecmp( tagname, VCARD_TAG_EMAIL ) == 0 ) {
+		if( g_ascii_strcasecmp( tagname, VCARD_TAG_EMAIL ) == 0 ) {
 			/* fprintf( stdout, "- address: %s\n", tagvalue ); */
 			listAddress = g_slist_append( listAddress, g_strdup( tagvalue ) );
 			listRemarks = g_slist_append( listRemarks, g_strdup( tagtype ) );
 		}
-		if( g_strcasecmp( tagname, VCARD_TAG_UID ) == 0 ) {
+		if( g_ascii_strcasecmp( tagname, VCARD_TAG_UID ) == 0 ) {
 			/* fprintf( stdout, "- id: %s\n", tagvalue ); */
 			listID = g_slist_append( listID, g_strdup( tagvalue ) );
 		}
-		if( g_strcasecmp( tagname, VCARD_TAG_END ) == 0 &&
-			g_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
+		if( g_ascii_strcasecmp( tagname, VCARD_TAG_END ) == 0 &&
+			g_ascii_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
 			/* vCard is complete */
 			/* fprintf( stdout, "end card\n--\n" ); */
 			/* vcard_dump_lists( listName, listAddress, listRemarks, listID, stdout ); */
@@ -670,7 +670,7 @@ gchar *vcard_find_gnomecard( void ) {
 		/* Read configuration file */
 		lenlbl = strlen( GNOMECARD_SECTION );
 		while( fgets( buf, sizeof( buf ), fp ) != NULL ) {
-			if( 0 == g_strncasecmp( buf, GNOMECARD_SECTION, lenlbl ) ) {
+			if( 0 == g_ascii_strncasecmp( buf, GNOMECARD_SECTION, lenlbl ) ) {
 				break;
 			}
 		}
@@ -680,7 +680,7 @@ gchar *vcard_find_gnomecard( void ) {
 			if( buf[0] == '[' ) break;
 			for( i = 0; i < lenlbl; i++ ) {
 				if( buf[i] == '=' ) {
-					if( 0 == g_strncasecmp( buf, GNOMECARD_PARAM, i ) ) {
+					if( 0 == g_ascii_strncasecmp( buf, GNOMECARD_PARAM, i ) ) {
 						fileSpec = g_strdup( buf + i + 1 );
 						g_strstrip( fileSpec );
 					}
@@ -743,17 +743,17 @@ gint vcard_test_read_file( const gchar *fileSpec ) {
 				tagtemp = NULL;
 			}
 
-			if( g_strcasecmp( tagtype, VCARD_TYPE_QP ) == 0 ) {
+			if( g_ascii_strcasecmp( tagtype, VCARD_TYPE_QP ) == 0 ) {
 				/* Quoted-Printable: could span multiple lines */
 				tagvalue = vcard_read_qp( cardFile, tagvalue );
 				vcard_unescape_qp( tagvalue );
 			}
-			if( g_strcasecmp( tagname, VCARD_TAG_START ) == 0 &&
-				g_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
+			if( g_ascii_strcasecmp( tagname, VCARD_TAG_START ) == 0 &&
+				g_ascii_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
 				haveStart = TRUE;
 			}
-			if( g_strcasecmp( tagname, VCARD_TAG_END ) == 0 &&
-				g_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
+			if( g_ascii_strcasecmp( tagname, VCARD_TAG_END ) == 0 &&
+				g_ascii_strcasecmp( tagvalue, VCARD_NAME ) == 0 ) {
 				/* vCard is complete */
 				if( haveStart ) cardFile->retVal = MGU_SUCCESS;
 			}

@@ -2246,7 +2246,8 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 
 		item = FOLDER_ITEM(gnode->data);
 		if (g_slist_find_custom(new_subscr, item->path,
-					(GCompareFunc)g_strcasecmp) != NULL) {
+					(GCompareFunc)g_ascii_strcasecmp)
+		    != NULL) {
 			gnode = next;
 			continue;
 		}
