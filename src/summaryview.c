@@ -4740,6 +4740,9 @@ static gint func_name(GtkTreeModel *model,				\
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
 									\
+	if (!msginfo_a || !msginfo_b)					\
+		return 0;						\
+									\
 	if (msginfo_a->var_name == NULL)				\
 		return -(msginfo_b->var_name != NULL);			\
 	if (msginfo_b->var_name == NULL)				\
@@ -4761,6 +4764,9 @@ static gint summary_cmp_by_subject(GtkTreeModel *model,			\
 									\
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
+									\
+	if (!msginfo_a || !msginfo_b)					\
+		return 0;						\
 									\
 	if (msginfo_a->subject == NULL)					\
 		return -(msginfo_b->subject != NULL);			\
