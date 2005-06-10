@@ -690,6 +690,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 					 GTK_MOVEMENT_BUFFER_ENDS,
 					 item->sort_type == SORT_DESCENDING ?
 					 -1 : 1, &moved);
+				GTK_EVENTS_FLUSH();
 				summary_scroll_to_selected(summaryview, TRUE);
 			}
 		}
@@ -714,6 +715,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				 item->sort_type == SORT_DESCENDING ?
 				 -1 : 1, &moved);
 			summary_lock(summaryview);
+			GTK_EVENTS_FLUSH();
 			summary_scroll_to_selected(summaryview, TRUE);
 		}
 	}
@@ -1258,13 +1260,15 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 				       iter);
 	gtk_tree_view_set_cursor(GTK_TREE_VIEW(summaryview->treeview), path,
 				 NULL, FALSE);
-	if (do_refresh)
+	if (do_refresh) {
+		GTK_EVENTS_FLUSH();
 		gtk_tree_view_scroll_to_cell
 			(GTK_TREE_VIEW(summaryview->treeview),
 			 path, NULL, TRUE, 0.5, 0.0);
-	else
+	} else {
 		gtkut_tree_view_scroll_to_cell
 			(GTK_TREE_VIEW(summaryview->treeview), path);
+	}
 
 	gtk_tree_path_free(path);
 }
