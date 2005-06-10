@@ -944,21 +944,18 @@ static void prefs_receive_create(void)
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
-	PACK_FRAME(vbox1, frame_incext, _("External program"));
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_incext, checkbtn_incext,
+				     _("Use external program for incorporation"));
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
 	gtk_container_add (GTK_CONTAINER (frame_incext), vbox2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
-
-	/* Use of external incorporation program */
-	PACK_CHECK_BUTTON (vbox2, checkbtn_incext,
-			   _("Use external program for incorporation"));
+	SET_TOGGLE_SENSITIVITY (checkbtn_incext, vbox2);
 
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-	SET_TOGGLE_SENSITIVITY (checkbtn_incext, hbox);
 
 	label_incext = gtk_label_new (_("Command"));
 	gtk_widget_show (label_incext);
@@ -974,26 +971,25 @@ static void prefs_receive_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox), button_incext, FALSE, FALSE, 0);
 #endif
 
-	PACK_FRAME(vbox1, frame_spool, _("Local spool"));
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_spool, checkbtn_local,
+				     _("Incorporate from local spool"));
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
 	gtk_container_add (GTK_CONTAINER (frame_spool), vbox2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+	SET_TOGGLE_SENSITIVITY (checkbtn_local, vbox2);
 
 	hbox = gtk_hbox_new (FALSE, 32);
 	gtk_widget_show (hbox);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
-	PACK_CHECK_BUTTON (hbox, checkbtn_local, _("Incorporate from spool"));
 	PACK_CHECK_BUTTON (hbox, checkbtn_filter_on_inc,
 			   _("Filter on incorporation"));
-	SET_TOGGLE_SENSITIVITY (checkbtn_local, checkbtn_filter_on_inc);
 
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-	SET_TOGGLE_SENSITIVITY (checkbtn_local, hbox);
 
 	label_spool = gtk_label_new (_("Spool path"));
 	gtk_widget_show (label_spool);
@@ -1111,20 +1107,18 @@ static void prefs_send_create(void)
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
-	PACK_FRAME(vbox1, frame_extsend, _("External program"));
+	PACK_FRAME_WITH_CHECK_BUTTON (vbox1, frame_extsend, checkbtn_extsend,
+				      _("Use external program for sending"));
 
 	vbox_extsend = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox_extsend);
 	gtk_container_add (GTK_CONTAINER (frame_extsend), vbox_extsend);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox_extsend), 8);
-
-	PACK_CHECK_BUTTON (vbox_extsend, checkbtn_extsend,
-			   _("Use external program for sending"));
+	SET_TOGGLE_SENSITIVITY(checkbtn_extsend, vbox_extsend);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox_extsend), hbox1, FALSE, FALSE, 0);
-	SET_TOGGLE_SENSITIVITY(checkbtn_extsend, hbox1);
 
 	label_extsend = gtk_label_new (_("Command"));
 	gtk_widget_show (label_extsend);
@@ -1930,12 +1924,8 @@ static void prefs_junk_create(void)
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
-	chkbtn_enable_junk = gtk_check_button_new_with_label
-		(_("Enable Junk mail control"));
-	gtk_widget_show(chkbtn_enable_junk);
-
-	PACK_FRAME(vbox1, frame, NULL);
-	gtk_frame_set_label_widget(GTK_FRAME(frame), chkbtn_enable_junk);
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame, chkbtn_enable_junk,
+				     _("Enable Junk mail control"));
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);

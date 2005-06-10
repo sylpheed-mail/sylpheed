@@ -115,6 +115,14 @@ struct _PrefsDialog
 	gtk_frame_set_label_align(GTK_FRAME(frame), 0.01, 0.5); \
 }
 
+#define PACK_FRAME_WITH_CHECK_BUTTON(box, frame, chkbtn, label) \
+{ \
+	chkbtn = gtk_check_button_new_with_label(label); \
+	gtk_widget_show(chkbtn); \
+	PACK_FRAME(box, frame, NULL); \
+	gtk_frame_set_label_widget(GTK_FRAME(frame), chkbtn); \
+}
+
 #define PACK_VSPACER(box, vbox, spacing) \
 { \
 	vbox = gtk_vbox_new(FALSE, 0); \
