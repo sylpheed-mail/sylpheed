@@ -1918,6 +1918,25 @@ static void summary_insert_gnode(SummaryView *summaryview, GtkTreeStore *store,
 	}
 }
 
+static void summary_insert_gnode_before(SummaryView *summaryview,
+					GtkTreeStore *store,
+					GtkTreeIter *iter, GtkTreeIter *parent,
+					GtkTreeIter *sibling, GNode *gnode)
+{
+	MsgInfo *msginfo = (MsgInfo *)gnode->data;
+
+	gtk_tree_store_insert_before(store, iter, parent, sibling);
+
+	summary_set_row(summaryview, iter, msginfo);
+
+	for (gnode = gnode->children; gnode != NULL; gnode = gnode->next) {
+		GtkTreeIter child;
+
+		summary_insert_gnode_before(summaryview, store, &child, iter,
+					    NULL, gnode);
+	}
+}
+
 static void summary_set_tree_model_from_list(SummaryView *summaryview,
 					     GSList *mlist)
 {
@@ -3471,6 +3490,7 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 	MsgInfo *msginfo, *sel_msginfo = NULL;
 	GNode *root, *cur;
 	GtkTreeIter iter_, sibling;
+	GtkTreeIter *sibling_p = NULL;
 	GtkTreePath *path, *sel_path;
 	gboolean found = FALSE;
 
@@ -3498,9 +3518,14 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 	/* g_node_traverse(root, G_PRE_ORDER, G_TRAVERSE_ALL, -1, traverse, NULL); */
 
 	sibling = *iter;
+	if (gtk_tree_model_iter_next(model, &sibling))
+		sibling_p = &sibling;
+
+	gtk_tree_store_remove(GTK_TREE_STORE(model), iter);
+
 	for (cur = root->children; cur != NULL; cur = cur->next) {
-		summary_insert_gnode(summaryview, GTK_TREE_STORE(model),
-				     &iter_, NULL, &sibling, cur);
+		summary_insert_gnode_before(summaryview, GTK_TREE_STORE(model),
+					    &iter_, NULL, sibling_p, cur);
 		if (summaryview->folder_item->threaded &&
 		    prefs_common.expand_thread) {
 			path = gtk_tree_model_get_path(model, &iter_);
@@ -3514,12 +3539,9 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 				(model, selected, &iter_,
 				 S_COL_MSG_INFO, sel_msginfo);
 		}
-		sibling = iter_;
 	}
 
 	g_node_destroy(root);
-
-	gtk_tree_store_remove(GTK_TREE_STORE(model), iter);
 
 	summaryview->folder_item->cache_dirty = TRUE;
 }
