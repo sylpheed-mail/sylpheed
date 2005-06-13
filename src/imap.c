@@ -561,8 +561,10 @@ static Session *imap_session_new(PrefsAccount *account)
 	SESSION(session)->destroy          = imap_session_destroy;
 
 	session->authenticated = FALSE;
-	session->mbox      = NULL;
-	session->cmd_count = 0;
+	session->capability    = NULL;
+	session->uidplus       = FALSE;
+	session->mbox          = NULL;
+	session->cmd_count     = 0;
 
 	session_list = g_list_append(session_list, session);
 
@@ -630,6 +632,10 @@ static gint imap_session_connect(IMAPSession *session)
 		}
 		if (!ssl_init_socket_with_method(sock, SSL_METHOD_TLSv1))
 			return IMAP_SOCKET;
+
+		/* capability can be changed after STARTTLS */
+		if (imap_cmd_capability(session) != IMAP_SUCCESS)
+			return IMAP_ERROR;
 	}
 #endif
 
@@ -3033,8 +3039,10 @@ static gboolean imap_has_capability(IMAPSession	*session,
 
 static void imap_capability_free(IMAPSession *session)
 {
-	g_strfreev(session->capability);
-	session->capability = NULL;
+	if (session->capability) {
+		g_strfreev(session->capability);
+		session->capability = NULL;
+	}
 }
 
 
@@ -3058,7 +3066,8 @@ static gint imap_cmd_capability(IMAPSession *session)
 
 	capability += strlen("CAPABILITY ");
 
-	IMAP_SESSION(session)->capability = g_strsplit(capability, " ", -1);
+	imap_capability_free(session);
+	session->capability = g_strsplit(capability, " ", -1);
 
 catch:
 	ptr_array_free_strings(argbuf);
