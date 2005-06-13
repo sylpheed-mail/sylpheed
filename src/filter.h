@@ -186,6 +186,7 @@ void filter_rule_match_type_str_to_enum	(const gchar		*type_str,
 					 FilterMatchType	*type,
 					 FilterMatchFlag	*flag);
 
+void filter_rule_list_free		(GSList			*fltlist);
 void filter_rule_free			(FilterRule		*rule);
 void filter_cond_list_free		(GSList			*cond_list);
 void filter_action_list_free		(GSList			*action_list);

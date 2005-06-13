@@ -1169,6 +1169,15 @@ void filter_rule_match_type_str_to_enum(const gchar *match_type,
 	}
 }
 
+void filter_rule_list_free(GSList *fltlist)
+{
+	GSList *cur;
+
+	for (cur = fltlist; cur != NULL; cur = cur->next)
+		filter_rule_free((FilterRule *)cur->data);
+	g_slist_free(fltlist);
+}
+
 void filter_rule_free(FilterRule *rule)
 {
 	if (!rule) return;

@@ -47,6 +47,7 @@
 #include "foldersel.h"
 #include "inc.h"
 #include "menu.h"
+#include "filter.h"
 #include "codeconv.h"
 #include "utils.h"
 #include "gtkutils.h"
@@ -156,7 +157,9 @@ static struct JunkMail {
 	GtkWidget *chkbtn_enable_junk;
 	GtkWidget *entry_junk_learncmd;
 	GtkWidget *entry_nojunk_learncmd;
+	GtkWidget *entry_classify_cmd;
 	GtkWidget *entry_junkfolder;
+	GtkWidget *chkbtn_filter_on_recv;
 } junk;
 
 #if USE_GPGME
@@ -590,8 +593,14 @@ static PrefParam param[] = {
 	 &prefs_common.nojunk_learncmd, P_STRING,
 	 &junk.entry_nojunk_learncmd,
 	 prefs_set_data_from_entry, prefs_set_entry},
+	{"junk_classify_command", "bogofilter -I",
+	 &prefs_common.junk_classify_cmd, P_STRING,
+	 &junk.entry_classify_cmd, prefs_set_data_from_entry, prefs_set_entry},
 	{"junk_folder", NULL, &prefs_common.junk_folder, P_STRING,
 	 &junk.entry_junkfolder, prefs_set_data_from_entry, prefs_set_entry},
+	{"filter_junk_on_receive", "FALSE", &prefs_common.filter_junk_on_recv,
+	 P_BOOL, &junk.chkbtn_filter_on_recv,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 #if USE_GPGME
 	/* Privacy */
@@ -692,6 +701,8 @@ static PrefParam param[] = {
 
 	{NULL, NULL, NULL, P_OTHER, NULL, NULL, NULL}
 };
+
+static void prefs_common_junk_filter_list_set	(void);
 
 /* widget creating functions */
 static void prefs_common_create		(void);
@@ -814,6 +825,8 @@ void prefs_common_read_config(void)
 
 	prefs_common.mime_open_cmd_history =
 		g_list_reverse(prefs_common.mime_open_cmd_history);
+
+	prefs_common_junk_filter_list_set();
 }
 
 void prefs_common_write_config(void)
@@ -857,6 +870,35 @@ void prefs_common_open(void)
 	prefs_set_dialog(param);
 
 	gtk_widget_show(dialog.window);
+}
+
+static void prefs_common_junk_filter_list_set(void)
+{
+	FilterRule *rule;
+	FilterCond *cond;
+	FilterAction *action;
+	GSList *cond_list = NULL, *action_list = NULL;
+
+	if (prefs_common.junk_fltlist) {
+		filter_rule_list_free(prefs_common.junk_fltlist);
+		prefs_common.junk_fltlist = NULL;
+	}
+
+	if (!prefs_common.junk_classify_cmd || !prefs_common.junk_folder)
+		return;
+
+	cond = filter_cond_new(FLT_COND_CMD_TEST, 0, 0, NULL,
+			       prefs_common.junk_classify_cmd);
+	cond_list = g_slist_append(NULL, cond);
+	action = filter_action_new(FLT_ACTION_COPY, prefs_common.junk_folder);
+	action_list = g_slist_append(NULL, action);
+	action = filter_action_new(FLT_ACTION_DELETE, NULL);
+	action_list = g_slist_append(action_list, action);
+
+	rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
+			       cond_list, action_list);
+
+	prefs_common.junk_fltlist = g_slist_append(NULL, rule);
 }
 
 static void prefs_common_create(void)
@@ -1915,9 +1957,11 @@ static void prefs_junk_create(void)
 	GtkWidget *label;
 	GtkWidget *entry_junk_learncmd;
 	GtkWidget *entry_nojunk_learncmd;
+	GtkWidget *entry_classify_cmd;
 	GtkWidget *vbox3;
 	GtkWidget *entry_junkfolder;
 	GtkWidget *btn_folder;
+	GtkWidget *chkbtn_filter_on_recv;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -1965,17 +2009,17 @@ static void prefs_junk_create(void)
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
-	label = gtk_label_new
-		(_("Specify command line for learning junk mail. "
-		   "You must add a filter rule with 'Result of command' "
-		   "as a condition to enable automatic filtering using "
-		   "the result of this learning."));
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Classifying command"));
 	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtkut_widget_set_small_font_size (label);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	entry_classify_cmd = gtk_entry_new ();
+	gtk_widget_show (entry_classify_cmd);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_classify_cmd, TRUE, TRUE, 0);
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
@@ -2009,10 +2053,27 @@ static void prefs_junk_create(void)
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtkut_widget_set_small_font_size (label);
 
-	junk.chkbtn_enable_junk = chkbtn_enable_junk;
-	junk.entry_junk_learncmd = entry_junk_learncmd;
+	PACK_VSPACER(vbox2, vbox3, 0);
+
+	PACK_CHECK_BUTTON(vbox2, chkbtn_filter_on_recv,
+			  _("Filter messages classified as junk on receiving"));
+
+	label = gtk_label_new
+		(_("Filtered messages will be moved to the junk folder and "
+		   "deleted from the server."));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtkut_widget_set_small_font_size (label);
+
+	junk.chkbtn_enable_junk    = chkbtn_enable_junk;
+	junk.entry_junk_learncmd   = entry_junk_learncmd;
 	junk.entry_nojunk_learncmd = entry_nojunk_learncmd;
-	junk.entry_junkfolder = entry_junkfolder;
+	junk.entry_classify_cmd    = entry_classify_cmd;
+	junk.entry_junkfolder      = entry_junkfolder;
+	junk.chkbtn_filter_on_recv = chkbtn_filter_on_recv;
 }
 
 #if USE_GPGME
@@ -3721,6 +3782,7 @@ static void prefs_common_ok(void)
 static void prefs_common_apply(void)
 {
 	prefs_set_data_from_dialog(param);
+	prefs_common_junk_filter_list_set();
 	main_window_reflect_prefs_all();
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
 	prefs_common_write_config();

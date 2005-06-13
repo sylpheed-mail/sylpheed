@@ -1021,6 +1021,11 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 
 	if (session->ac_prefs->filter_on_recv)
 		filter_apply(prefs_common.fltlist, file, fltinfo);
+	if (!fltinfo->drop_done) {
+		if (prefs_common.enable_junk &&
+		    prefs_common.filter_junk_on_recv)
+			filter_apply(prefs_common.junk_fltlist, file, fltinfo);
+	}
 
 	if (!fltinfo->drop_done) {
 		if (folder_item_add_msg

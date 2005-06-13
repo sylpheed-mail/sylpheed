@@ -191,7 +191,9 @@ struct _PrefsCommon
 	gboolean enable_junk;
 	gchar *junk_learncmd;
 	gchar *nojunk_learncmd;
+	gchar *junk_classify_cmd;
 	gchar *junk_folder;
+	gboolean filter_junk_on_recv;
 
 #if USE_GPGME
 	/* Privacy */
@@ -233,6 +235,7 @@ struct _PrefsCommon
 
 	/* Filtering */
 	GSList *fltlist;
+	GSList *junk_fltlist;
 
 	/* Actions */
 	GSList *actions_list;
