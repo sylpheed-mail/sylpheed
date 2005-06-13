@@ -162,6 +162,8 @@ static void summary_set_column_titles	(SummaryView		*summaryview);
 static void summary_set_tree_model_from_list
 					(SummaryView		*summaryview,
 					 GSList			*mlist);
+static gboolean summary_row_is_displayed(SummaryView		*summaryview,
+					 GtkTreeIter		*iter);
 static void summary_display_msg		(SummaryView		*summaryview,
 					 GtkTreeIter		*iter);
 static void summary_display_msg_full	(SummaryView		*summaryview,
@@ -1033,18 +1035,22 @@ static void summary_set_menu_sensitive(SummaryView *summaryview)
 
 static void summary_select_prev_flagged(SummaryView *summaryview,
 					MsgPermFlags flags,
-					gboolean start_from_prev,
 					const gchar *title,
 					const gchar *ask_msg,
 					const gchar *notice)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter prev, iter;
+	gboolean start_from_prev = FALSE;
 	gboolean found;
 
 	if (!gtkut_tree_row_reference_get_iter(model, summaryview->selected,
 					       &iter))
 		return;
+
+	if (!messageview_is_visible(summaryview->messageview) ||
+	    summary_row_is_displayed(summaryview, &iter))
+		start_from_prev = TRUE;
 
 	found = summary_find_prev_flagged_msg
 		(summaryview, &prev, &iter, flags, start_from_prev);
@@ -1071,13 +1077,13 @@ static void summary_select_prev_flagged(SummaryView *summaryview,
 
 static void summary_select_next_flagged(SummaryView *summaryview,
 					MsgPermFlags flags,
-					gboolean start_from_next,
 					const gchar *title,
 					const gchar *ask_msg,
 					const gchar *notice)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter next, iter;
+	gboolean start_from_next = FALSE;
 	gboolean found;
 
 	if (!gtkut_tree_row_reference_get_iter(model, summaryview->selected,
@@ -1085,6 +1091,10 @@ static void summary_select_next_flagged(SummaryView *summaryview,
 		if (!gtk_tree_model_get_iter_first(model, &iter))
 			return;
 	}
+
+	if (!messageview_is_visible(summaryview->messageview) ||
+	    summary_row_is_displayed(summaryview, &iter))
+		start_from_next = TRUE;
 
 	found = summary_find_next_flagged_msg
 		(summaryview, &next, &iter, flags, start_from_next);
@@ -1111,19 +1121,23 @@ static void summary_select_next_flagged(SummaryView *summaryview,
 
 static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 						  MsgPermFlags flags,
-						  gboolean start_from_next,
 						  const gchar *title,
 						  const gchar *ask_msg,
 						  const gchar *notice)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter, next;
+	gboolean start_from_next = FALSE;
 
 	if (!gtkut_tree_row_reference_get_iter(model, summaryview->selected,
 					       &iter)) {
 		if (!gtk_tree_model_get_iter_first(model, &iter))
 			return;
 	}
+
+	if (!messageview_is_visible(summaryview->messageview) ||
+	    summary_row_is_displayed(summaryview, &iter))
+		start_from_next = TRUE;
 
 	while (summary_find_next_flagged_msg
 		(summaryview, &next, &iter, flags, start_from_next) == FALSE) {
@@ -1151,7 +1165,7 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 
 void summary_select_prev_unread(SummaryView *summaryview)
 {
-	summary_select_prev_flagged(summaryview, MSG_UNREAD, TRUE,
+	summary_select_prev_flagged(summaryview, MSG_UNREAD,
 				    _("No more unread messages"),
 				    _("No unread message found. "
 				      "Search from the end?"),
@@ -1160,7 +1174,7 @@ void summary_select_prev_unread(SummaryView *summaryview)
 
 void summary_select_next_unread(SummaryView *summaryview)
 {
-	summary_select_next_flagged_or_folder(summaryview, MSG_UNREAD, TRUE,
+	summary_select_next_flagged_or_folder(summaryview, MSG_UNREAD,
 					      _("No more unread messages"),
 					      _("No unread message found. "
 						"Go to next folder?"),
@@ -1169,7 +1183,7 @@ void summary_select_next_unread(SummaryView *summaryview)
 
 void summary_select_prev_new(SummaryView *summaryview)
 {
-	summary_select_prev_flagged(summaryview, MSG_NEW, TRUE,
+	summary_select_prev_flagged(summaryview, MSG_NEW,
 				    _("No more new messages"),
 				    _("No new message found. "
 				      "Search from the end?"),
@@ -1178,7 +1192,7 @@ void summary_select_prev_new(SummaryView *summaryview)
 
 void summary_select_next_new(SummaryView *summaryview)
 {
-	summary_select_next_flagged_or_folder(summaryview, MSG_NEW, TRUE,
+	summary_select_next_flagged_or_folder(summaryview, MSG_NEW,
 					      _("No more new messages"),
 					      _("No new message found. "
 						"Go to next folder?"),
@@ -1187,7 +1201,7 @@ void summary_select_next_new(SummaryView *summaryview)
 
 void summary_select_prev_marked(SummaryView *summaryview)
 {
-	summary_select_prev_flagged(summaryview, MSG_MARKED, TRUE,
+	summary_select_prev_flagged(summaryview, MSG_MARKED,
 				    _("No more marked messages"),
 				    _("No marked message found. "
 				      "Search from the end?"),
@@ -1196,7 +1210,7 @@ void summary_select_prev_marked(SummaryView *summaryview)
 
 void summary_select_next_marked(SummaryView *summaryview)
 {
-	summary_select_next_flagged(summaryview, MSG_MARKED, TRUE,
+	summary_select_next_flagged(summaryview, MSG_MARKED,
 				    _("No more marked messages"),
 				    _("No marked message found. "
 				      "Search from the beginning?"),
@@ -1205,7 +1219,7 @@ void summary_select_next_marked(SummaryView *summaryview)
 
 void summary_select_prev_labeled(SummaryView *summaryview)
 {
-	summary_select_prev_flagged(summaryview, MSG_CLABEL_FLAG_MASK, TRUE,
+	summary_select_prev_flagged(summaryview, MSG_CLABEL_FLAG_MASK,
 				    _("No more labeled messages"),
 				    _("No labeled message found. "
 				      "Search from the end?"),
@@ -1214,7 +1228,7 @@ void summary_select_prev_labeled(SummaryView *summaryview)
 
 void summary_select_next_labeled(SummaryView *summaryview)
 {
-	summary_select_next_flagged(summaryview, MSG_CLABEL_FLAG_MASK, TRUE,
+	summary_select_next_flagged(summaryview, MSG_CLABEL_FLAG_MASK,
 				    _("No more labeled messages"),
 				    _("No labeled message found. "
 				      "Search from the beginning?"),
