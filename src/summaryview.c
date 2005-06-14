@@ -3934,6 +3934,9 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 		MSG_SET_COLORLABEL_VALUE(msginfo->flags, labelcolor);
 		summary_set_row(summaryview, &iter, msginfo);
 	}
+
+	if (rows)
+		summaryview->folder_item->mark_dirty = TRUE;
 }
 
 static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
