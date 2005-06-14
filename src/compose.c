@@ -5765,35 +5765,39 @@ static void compose_paste_cb(Compose *compose)
 		} else if (GTK_IS_TEXT_VIEW(compose->focused_editable)) {
 			GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 			GtkTextBuffer *buffer;
+			GtkTextMark *mark;
 			GtkClipboard *clipboard;
 
 			buffer = gtk_text_view_get_buffer(text);
+			mark = gtk_text_buffer_get_insert(buffer);
 			clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 
 			gtk_text_buffer_paste_clipboard(buffer, clipboard,
 							NULL, TRUE);
+
+			gtk_text_view_scroll_mark_onscreen(text, mark);
 		}
 	}
 }
 
 static void compose_paste_as_quote_cb(Compose *compose)
 {
+	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
+	GtkTextBuffer *buffer;
+	GtkTextMark *mark;
+	GtkClipboard *clipboard;
 	gchar *str = NULL;
 	const gchar *qmark;
 
-	if (compose->focused_editable &&
-	    GTK_WIDGET_HAS_FOCUS(compose->focused_editable)) {
-		if (GTK_IS_TEXT_VIEW(compose->focused_editable)) {
-			GtkTextView *text = GTK_TEXT_VIEW(compose->text);
-			GtkTextBuffer *buffer;
-			GtkClipboard *clipboard;
+	if (!compose->focused_editable ||
+	    !GTK_WIDGET_HAS_FOCUS(compose->focused_editable) ||
+	    !GTK_IS_TEXT_VIEW(compose->focused_editable))
+			return;
 
-			buffer = gtk_text_view_get_buffer(text);
-			clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-			str = gtk_clipboard_wait_for_text(clipboard);
-		}
-	}
-
+	buffer = gtk_text_view_get_buffer(text);
+	mark = gtk_text_buffer_get_insert(buffer);
+	clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	str = gtk_clipboard_wait_for_text(clipboard);
 	if (!str)
 		return;
 
@@ -5804,6 +5808,8 @@ static void compose_paste_as_quote_cb(Compose *compose)
 	compose_quote_fmt(compose, NULL, "%Q", qmark, str);
 
 	g_free(str);
+
+	gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 static void compose_allsel_cb(Compose *compose)
