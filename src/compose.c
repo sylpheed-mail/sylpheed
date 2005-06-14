@@ -197,10 +197,13 @@ static void compose_reedit_set_entry		(Compose	*compose,
 						 MsgInfo	*msginfo);
 
 static void compose_insert_sig			(Compose	*compose,
-						 gboolean	 replace);
+						 gboolean	 replace,
+						 gboolean	 scroll);
 static gchar *compose_get_signature_str		(Compose	*compose);
+
 static void compose_insert_file			(Compose	*compose,
-						 const gchar	*file);
+						 const gchar	*file,
+						 gboolean	 scroll);
 
 static void compose_attach_append		(Compose	*compose,
 						 const gchar	*file,
@@ -656,7 +659,7 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 	undo_block(compose->undostruct);
 
 	if (prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE);
+		compose_insert_sig(compose, FALSE, FALSE);
 
 	text = GTK_TEXT_VIEW(compose->text);
 	buffer = gtk_text_view_get_buffer(text);
@@ -763,7 +766,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	}
 
 	if (prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE);
+		compose_insert_sig(compose, FALSE, FALSE);
 
 	if (quote && prefs_common.linewrap_quote)
 		compose_wrap_all(compose);
@@ -876,7 +879,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	}
 
 	if (prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE);
+		compose_insert_sig(compose, FALSE, FALSE);
 
 	if (prefs_common.linewrap_quote)
 		compose_wrap_all(compose);
@@ -1548,7 +1551,8 @@ static void compose_reedit_set_entry(Compose *compose, MsgInfo *msginfo)
 	compose_entry_set(compose, msginfo->subject, COMPOSE_ENTRY_SUBJECT);
 }
 
-static void compose_insert_sig(Compose *compose, gboolean replace)
+static void compose_insert_sig(Compose *compose, gboolean replace,
+			       gboolean scroll)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 	GtkTextBuffer *buffer;
@@ -1599,7 +1603,8 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 	if (compose->autowrap)
 		compose_wrap_all(compose);
 
-	gtk_text_view_scroll_mark_onscreen(text, mark);
+	if (scroll)
+		gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 static gchar *compose_get_signature_str(Compose *compose)
@@ -1649,7 +1654,8 @@ static gchar *compose_get_signature_str(Compose *compose)
 	return utf8_sig_str;
 }
 
-static void compose_insert_file(Compose *compose, const gchar *file)
+static void compose_insert_file(Compose *compose, const gchar *file,
+				gboolean scroll)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 	GtkTextBuffer *buffer;
@@ -1702,7 +1708,8 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 	if (compose->autowrap)
 		compose_wrap_all(compose);
 
-	gtk_text_view_scroll_mark_onscreen(text, mark);
+	if (scroll)
+		gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 static void compose_attach_append(Compose *compose, const gchar *file,
@@ -2347,7 +2354,7 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 #endif /* USE_GPGME */
 
 	if (!init && compose->mode != COMPOSE_REDIRECT && prefs_common.auto_sig)
-		compose_insert_sig(compose, TRUE);
+		compose_insert_sig(compose, TRUE, FALSE);
 }
 
 static gboolean compose_check_for_valid_recipient(Compose *compose)
@@ -4572,7 +4579,7 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 	}
 
 	if (replace && parsed_str && prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE);
+		compose_insert_sig(compose, FALSE, FALSE);
 
 	if (replace && parsed_str) {
 		gtk_text_buffer_get_start_iter(buffer, &iter);
@@ -5135,11 +5142,19 @@ static void compose_input_cb(gpointer data, gint source,
 	if (buf[0] == '0') {		/* success */
 		GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 		GtkTextBuffer *buffer;
+		GtkTextMark *mark;
+		GtkTextIter iter;
 
 		buffer = gtk_text_view_get_buffer(text);
 
 		gtk_text_buffer_set_text(buffer, "", 0);
-		compose_insert_file(compose, compose->exteditor_file);
+		compose_insert_file(compose, compose->exteditor_file, FALSE);
+
+		gtk_text_buffer_get_start_iter(buffer, &iter);
+		gtk_text_buffer_place_cursor(buffer, &iter);
+		mark = gtk_text_buffer_get_insert(buffer);
+		gtk_text_view_scroll_mark_onscreen(text, mark);
+
 		compose_changed_cb(NULL, compose);
 
 		if (unlink(compose->exteditor_file) < 0)
@@ -5331,7 +5346,7 @@ static void toolbar_sig_cb(GtkWidget *widget, gpointer data)
 {
 	Compose *compose = (Compose *)data;
 
-	compose_insert_sig(compose, FALSE);
+	compose_insert_sig(compose, FALSE, TRUE);
 }
 
 static void toolbar_ext_editor_cb(GtkWidget *widget, gpointer data)
@@ -5587,7 +5602,7 @@ static void compose_insert_file_cb(gpointer data, guint action,
 				   GTK_FILE_CHOOSER_ACTION_OPEN);
 
 	if (file && *file)
-		compose_insert_file(compose, file);
+		compose_insert_file(compose, file, TRUE);
 
 	g_free(file);
 }
@@ -5597,7 +5612,7 @@ static void compose_insert_sig_cb(gpointer data, guint action,
 {
 	Compose *compose = (Compose *)data;
 
-	compose_insert_sig(compose, FALSE);
+	compose_insert_sig(compose, FALSE, TRUE);
 }
 
 static gint compose_delete_cb(GtkWidget *widget, GdkEventAny *event,
@@ -6125,7 +6140,7 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 
 	list = uri_list_extract_filenames((const gchar *)data->data);
 	for (cur = list; cur != NULL; cur = cur->next)
-		compose_insert_file(compose, (const gchar *)cur->data);
+		compose_insert_file(compose, (const gchar *)cur->data, TRUE);
 	list_free_strings(list);
 	g_list_free(list);
 }
