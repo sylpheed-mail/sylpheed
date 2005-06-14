@@ -1,5 +1,11 @@
 2005-06-14
 
+	* src/mh.c: mh_remove_msg(): fixed a bug that unintentionally set
+	  FolderItem::last_num to 0 (which caused wrong unread number
+	  display).
+
+2005-06-14
+
 	* src/summaryview.c: summary_set_colorlabel(): fixed a bug that the
 	  change of color labels was not saved.
 

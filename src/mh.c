@@ -649,7 +649,7 @@ static gint mh_remove_msg(Folder *folder, FolderItem *item, MsgInfo *msginfo)
 	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_INVALID);
 
 	if (msginfo->msgnum == item->last_num)
-		item->last_num = mh_scan_folder_full(folder, item, FALSE);
+		mh_scan_folder_full(folder, item, FALSE);
 
 	return 0;
 }

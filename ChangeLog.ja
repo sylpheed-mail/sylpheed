@@ -1,5 +1,10 @@
 2005-06-14
 
+	* src/mh.c: mh_remove_msg(): 意図せず FolderItem::last_num を 0 に
+	  セットしていたバグを修正(間違った未読数表示を引き起こしていた)。
+
+2005-06-14
+
 	* src/summaryview.c: summary_set_colorlabel(): カラーラベルの変更が
 	  保存されていなかったバグを修正。
 
