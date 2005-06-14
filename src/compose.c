@@ -1598,6 +1598,8 @@ static void compose_insert_sig(Compose *compose, gboolean replace)
 	compose->autowrap = prev_autowrap;
 	if (compose->autowrap)
 		compose_wrap_all(compose);
+
+	gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 static gchar *compose_get_signature_str(Compose *compose)
@@ -1694,11 +1696,13 @@ static void compose_insert_file(Compose *compose, const gchar *file)
 		g_free(str);
 	}
 
+	fclose(fp);
+
 	compose->autowrap = prev_autowrap;
 	if (compose->autowrap)
 		compose_wrap_all(compose);
 
-	fclose(fp);
+	gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 static void compose_attach_append(Compose *compose, const gchar *file,
