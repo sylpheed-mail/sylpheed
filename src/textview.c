@@ -391,9 +391,15 @@ void textview_reflect_prefs(TextView *textview)
 void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 			   const gchar *file)
 {
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
+	GtkTextBuffer *buffer;
+	GtkTextMark *mark;
+	GtkTextIter iter;
 	FILE *fp;
 	const gchar *charset = NULL;
 	GPtrArray *headers = NULL;
+
+	buffer = gtk_text_view_get_buffer(text);
 
 	if ((fp = fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
@@ -413,14 +419,9 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 	if (fseek(fp, mimeinfo->fpos, SEEK_SET) < 0) perror("fseek");
 	headers = textview_scan_header(textview, fp, charset);
 	if (headers) {
-		GtkTextView *text = GTK_TEXT_VIEW(textview->text);
-		GtkTextBuffer *buffer;
-		GtkTextIter iter;
-
 		textview_show_header(textview, headers);
 		procheader_header_array_destroy(headers);
 
-		buffer = gtk_text_view_get_buffer(text);
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
 	}
@@ -430,6 +431,8 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 	fclose(fp);
 
 	textview_set_position(textview, 0);
+	mark = gtk_text_buffer_get_insert(buffer);
+	gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
