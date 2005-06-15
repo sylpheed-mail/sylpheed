@@ -5346,7 +5346,7 @@ static void toolbar_sig_cb(GtkWidget *widget, gpointer data)
 {
 	Compose *compose = (Compose *)data;
 
-	compose_insert_sig(compose, FALSE, TRUE);
+	compose_insert_sig(compose, TRUE, TRUE);
 }
 
 static void toolbar_ext_editor_cb(GtkWidget *widget, gpointer data)
@@ -5612,7 +5612,7 @@ static void compose_insert_sig_cb(gpointer data, guint action,
 {
 	Compose *compose = (Compose *)data;
 
-	compose_insert_sig(compose, FALSE, TRUE);
+	compose_insert_sig(compose, TRUE, TRUE);
 }
 
 static gint compose_delete_cb(GtkWidget *widget, GdkEventAny *event,
