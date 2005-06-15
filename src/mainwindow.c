@@ -366,6 +366,9 @@ static void delete_duplicated_cb (MainWindow	*mainwin,
 static void filter_cb		 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+static void filter_junk_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
 static void execute_summary_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
@@ -733,6 +736,11 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, create_filter_cb, FILTER_BY_TO, NULL},
 	{N_("/_Tools/_Create filter rule/by _Subject"),
 						NULL, create_filter_cb, FILTER_BY_SUBJECT, NULL},
+	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
+	{N_("/_Tools/Filter _junk mails in folder"),
+						NULL, filter_junk_cb, 0, NULL},
+	{N_("/_Tools/Filter junk _mails in selected messages"),
+						NULL, filter_junk_cb, 1, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/Actio_ns"),		NULL, NULL, 0, "<Branch>"},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
@@ -1821,6 +1829,8 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/Tools/Filter all messages in folder", M_MSG_EXIST|M_EXEC},
 		{"/Tools/Filter selected messages"     , M_TARGET_EXIST|M_EXEC},
 		{"/Tools/Create filter rule"           , M_SINGLE_TARGET_EXIST|M_UNLOCKED},
+		{"/Tools/Filter junk mails in folder"  , M_MSG_EXIST|M_EXEC|M_ENABLE_JUNK},
+		{"/Tools/Filter junk mails in selected messages", M_TARGET_EXIST|M_EXEC|M_ENABLE_JUNK},
 		{"/Tools/Actions"                      , M_TARGET_EXIST|M_UNLOCKED},
 		{"/Tools/Execute"                      , M_MSG_EXIST|M_EXEC},
 		{"/Tools/Delete duplicated messages"   , M_MSG_EXIST|M_ALLOW_DELETE},
@@ -3071,6 +3081,11 @@ static void delete_duplicated_cb(MainWindow *mainwin, guint action,
 static void filter_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
 	summary_filter(mainwin->summaryview, (gboolean)action);
+}
+
+static void filter_junk_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
+{
+	summary_filter_junk(mainwin->summaryview, (gboolean)action);
 }
 
 static void execute_summary_cb(MainWindow *mainwin, guint action,

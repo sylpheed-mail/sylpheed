@@ -197,6 +197,9 @@ void summary_filter		  (SummaryView		*summaryview,
 void summary_filter_open	  (SummaryView		*summaryview,
 				   PrefsFilterType	 type);
 
+void summary_filter_junk	  (SummaryView		*summaryview,
+				   gboolean		 selected_only);
+
 void summary_junk		  (SummaryView		*summaryview);
 void summary_not_junk		  (SummaryView		*summaryview);
 

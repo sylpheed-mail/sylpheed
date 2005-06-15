@@ -3660,7 +3660,34 @@ static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
 	return FALSE;
 }
 
-void summary_filter(SummaryView *summaryview, gboolean selected_only)
+static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
+					 GtkTreeIter *iter, gpointer data)
+{
+	SummaryView *summaryview = (SummaryView *)data;
+	MsgInfo *msginfo;
+	FilterInfo *fltinfo;
+
+	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
+
+	fltinfo = filter_info_new();
+	fltinfo->flags = msginfo->flags;
+	filter_apply_msginfo(prefs_common.junk_fltlist, msginfo, fltinfo);
+
+	if (fltinfo->actions[FLT_ACTION_COPY] ||
+	    fltinfo->actions[FLT_ACTION_DELETE])
+		summaryview->filtered++;
+
+	if (fltinfo->actions[FLT_ACTION_DELETE])
+		summary_delete_row(summaryview, iter);
+
+	filter_info_free(fltinfo);
+
+	return FALSE;
+}
+
+static void summary_filter_real(SummaryView *summaryview,
+				GtkTreeModelForeachFunc func,
+				gboolean selected_only)
 {
 	if (!prefs_common.fltlist) return;
 
@@ -3677,11 +3704,11 @@ void summary_filter(SummaryView *summaryview, gboolean selected_only)
 	if (selected_only)
 		gtk_tree_selection_selected_foreach
 			(summaryview->selection,
-			 (GtkTreeSelectionForeachFunc)summary_filter_func,
+			 (GtkTreeSelectionForeachFunc)func,
 			 summaryview);
 	else
 		gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
-				       summary_filter_func, summaryview);
+				       func, summaryview);
 
 	summary_unlock(summaryview);
 
@@ -3704,6 +3731,18 @@ void summary_filter(SummaryView *summaryview, gboolean selected_only)
 		STATUSBAR_PUSH(summaryview->mainwin, result_msg);
 	}
 	summaryview->filtered = 0;
+}
+
+void summary_filter(SummaryView *summaryview, gboolean selected_only)
+{
+	summary_filter_real(summaryview, summary_filter_func, selected_only);
+}
+
+void summary_filter_junk(SummaryView *summaryview, gboolean selected_only)
+{
+	if (prefs_common.junk_fltlist)
+		summary_filter_real(summaryview, summary_filter_junk_func,
+				    selected_only);
 }
 
 void summary_filter_open(SummaryView *summaryview, PrefsFilterType type)
