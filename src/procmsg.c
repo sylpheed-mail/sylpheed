@@ -1210,6 +1210,8 @@ void procmsg_empty_trash(FolderItem *trash)
 		if (fp) fclose(fp);
 		fp = procmsg_open_mark_file(trash, DATA_WRITE);
 		if (fp) fclose(fp);
+		trash->cache_dirty = FALSE;
+		trash->mark_dirty = FALSE;
 	}
 }
 
