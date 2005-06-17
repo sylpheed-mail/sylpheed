@@ -74,6 +74,8 @@ static struct Receive {
 
 	GtkWidget *checkbtn_chkonstartup;
 	GtkWidget *checkbtn_scan_after_inc;
+	GtkWidget *checkbtn_newmsg_notify;
+	GtkWidget *entry_newmsg_notify;
 
 	GtkWidget *spinbtn_maxarticle;
 	GtkObject *spinbtn_maxarticle_adj;
@@ -264,6 +266,12 @@ static PrefParam param[] = {
 	{"scan_all_after_inc", "FALSE", &prefs_common.scan_all_after_inc,
 	 P_BOOL, &receive.checkbtn_scan_after_inc,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"enable_newmsg_notify", "FALSE", &prefs_common.enable_newmsg_notify,
+	 P_BOOL, &receive.checkbtn_newmsg_notify,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"newmsg_notify_command", NULL, &prefs_common.newmsg_notify_cmd,
+	 P_STRING, &receive.entry_newmsg_notify,
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"max_news_articles", "300", &prefs_common.max_articles, P_INT,
 	 &receive.spinbtn_maxarticle,
@@ -954,6 +962,7 @@ static void prefs_receive_create(void)
 {
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
+	GtkWidget *vbox3;
 	GtkWidget *frame_incext;
 	GtkWidget *checkbtn_incext;
 	GtkWidget *hbox;
@@ -975,6 +984,10 @@ static void prefs_receive_create(void)
 	GtkWidget *label_autochk2;
 	GtkWidget *checkbtn_chkonstartup;
 	GtkWidget *checkbtn_scan_after_inc;
+	GtkWidget *checkbtn_newmsg_notify;
+	GtkWidget *label_newmsg_notify;
+	GtkWidget *entry_newmsg_notify;
+	GtkWidget *label_notify_cmd_desc;
 
 	GtkWidget *frame_news;
 	GtkWidget *label_maxarticle;
@@ -1078,6 +1091,35 @@ static void prefs_receive_create(void)
 	PACK_CHECK_BUTTON (vbox2, checkbtn_scan_after_inc,
 			   _("Update all local folders after incorporation"));
 
+	/* New message notify */
+	PACK_CHECK_BUTTON (vbox2, checkbtn_newmsg_notify,
+			   _("Execute command when new messages arrived"));
+
+	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
+
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	label_newmsg_notify = gtk_label_new (_("Command"));
+	gtk_widget_show (label_newmsg_notify);
+	gtk_box_pack_start (GTK_BOX (hbox), label_newmsg_notify,
+			    FALSE, FALSE, 0);
+
+	entry_newmsg_notify = gtk_entry_new ();
+	gtk_widget_show (entry_newmsg_notify);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_newmsg_notify, TRUE, TRUE, 0);
+
+	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
+
+	PACK_SMALL_LABEL
+		(vbox2, label_notify_cmd_desc,
+		 _("`%d' will be replaced with the number of new messages."));
+
+	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, hbox);
+	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, label_notify_cmd_desc);
+
+	/* News */
 	PACK_FRAME(vbox1, frame_news, _("News"));
 
 	hbox = gtk_hbox_new (FALSE, 8);
@@ -1117,6 +1159,8 @@ static void prefs_receive_create(void)
 
 	receive.checkbtn_chkonstartup   = checkbtn_chkonstartup;
 	receive.checkbtn_scan_after_inc = checkbtn_scan_after_inc;
+	receive.checkbtn_newmsg_notify  = checkbtn_newmsg_notify;
+	receive.entry_newmsg_notify     = entry_newmsg_notify;
 
 	receive.spinbtn_maxarticle     = spinbtn_maxarticle;
 	receive.spinbtn_maxarticle_adj = spinbtn_maxarticle_adj;
@@ -1252,20 +1296,9 @@ static void prefs_send_create(void)
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_charset),
 				  optmenu_menu);
 
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-
-	label_charset_desc = gtk_label_new
-		(_("If `Automatic' is selected, the optimal encoding "
-		   "for the current locale will be used."));
-	gtk_widget_show (label_charset_desc);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_charset_desc,
-			    FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label_charset_desc),
-			       GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label_charset_desc), TRUE);
-	gtkut_widget_set_small_font_size (label_charset_desc);
+	PACK_SMALL_LABEL (vbox1, label_charset_desc,
+			  _("If `Automatic' is selected, the optimal encoding "
+			    "for the current locale will be used."));
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
@@ -1289,20 +1322,9 @@ static void prefs_send_create(void)
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_encoding),
 				  optmenu_menu);
 
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-
-	label_encoding_desc = gtk_label_new
-		(_("Specify Content-Transfer-Encoding used when "
-		   "message body contains non-ASCII characters."));
-	gtk_widget_show (label_encoding_desc);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding_desc,
-			    FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label_encoding_desc),
-			       GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label_encoding_desc), TRUE);
-	gtkut_widget_set_small_font_size (label_encoding_desc);
+	PACK_SMALL_LABEL (vbox1, label_encoding_desc,
+			  _("Specify Content-Transfer-Encoding used when "
+			    "message body contains non-ASCII characters."));
 
 	p_send.checkbtn_extsend = checkbtn_extsend;
 	p_send.entry_extsend    = entry_extsend;
@@ -2044,29 +2066,19 @@ static void prefs_junk_create(void)
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
-	label = gtk_label_new (_("The messages which are set as junk mail "
-				 "will be moved to this folder."));
-	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtkut_widget_set_small_font_size (label);
+	PACK_SMALL_LABEL (vbox2, label,
+			  _("The messages which are set as junk mail "
+			    "will be moved to this folder."));
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
 	PACK_CHECK_BUTTON(vbox2, chkbtn_filter_on_recv,
 			  _("Filter messages classified as junk on receiving"));
 
-	label = gtk_label_new
-		(_("Filtered messages will be moved to the junk folder and "
+	PACK_SMALL_LABEL
+		(vbox2, label,
+		 _("Filtered messages will be moved to the junk folder and "
 		   "deleted from the server."));
-	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtkut_widget_set_small_font_size (label);
 
 	junk.chkbtn_enable_junk    = chkbtn_enable_junk;
 	junk.entry_junk_learncmd   = entry_junk_learncmd;
@@ -2150,13 +2162,9 @@ static void prefs_privacy_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
 	gtk_widget_set_size_request (hbox_spc, 12, -1);
 
-	label = gtk_label_new (_("Setting to '0' will store the passphrase "
-				 "for the whole session."));
-	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtkut_widget_set_small_font_size (label);
+	PACK_SMALL_LABEL (hbox1, label,
+			  _("Setting to '0' will store the passphrase "
+			    "for the whole session."));
 
 	SET_TOGGLE_SENSITIVITY (checkbtn_store_passphrase, vbox3);
 
@@ -2252,14 +2260,9 @@ static void prefs_interface_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
 	gtk_widget_set_size_request (hbox_spc, 12, -1);
 
-	label = gtk_label_new
-		(_("Messages will be marked until execution "
-		   "if this is turned off."));
-	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtkut_widget_set_small_font_size (label);
+	PACK_SMALL_LABEL (hbox1, label,
+			  _("Messages will be marked until execution "
+			    "if this is turned off."));
 
 	PACK_FRAME (vbox1, frame_recv, _("Receive dialog"));
 	vbox_recv = gtk_vbox_new (FALSE, 0);

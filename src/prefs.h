@@ -123,6 +123,17 @@ struct _PrefsDialog
 	gtk_frame_set_label_widget(GTK_FRAME(frame), chkbtn); \
 }
 
+#define PACK_SMALL_LABEL(box, label, str) \
+{ \
+	label = gtk_label_new(str); \
+	gtk_widget_show(label); \
+	gtk_box_pack_start(GTK_BOX(box), label, FALSE, TRUE, 0); \
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5); \
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT); \
+	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE); \
+	gtkut_widget_set_small_font_size(label); \
+}
+
 #define PACK_VSPACER(box, vbox, spacing) \
 { \
 	vbox = gtk_vbox_new(FALSE, 0); \
