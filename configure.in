@@ -97,8 +97,8 @@ AC_SUBST(faqdir)
 
 dnl GPGME is used to support OpenPGP 
 AC_ARG_ENABLE(gpgme,
-	[  --enable-gpgme          Enable GnuPG support using GPGME [default=no]],
-	[ac_cv_enable_gpgme=$enableval], [ac_cv_enable_gpgme=no])
+	[  --disable-gpgme         Disable GnuPG support using GPGME],
+	[ac_cv_enable_gpgme=$enableval], [ac_cv_enable_gpgme=yes])
 AC_MSG_CHECKING([whether to use GPGME])
 if test $ac_cv_enable_gpgme = yes; then
 	AC_MSG_RESULT(yes)
@@ -112,7 +112,7 @@ fi
 dnl for JPilot support in addressbook
 dnl no check for libraries; these are dynamically loaded
 AC_ARG_ENABLE(jpilot,
-	[  --enable-jpilot         Enable JPilot support [default=no]],
+	[  --enable-jpilot         Enable JPilot support [[default=no]]],
 	[ac_cv_enable_jpilot=$enableval], [ac_cv_enable_jpilot=no])
 AC_MSG_CHECKING([whether to use JPilot])
 if test "$ac_cv_enable_jpilot" = yes; then
@@ -138,7 +138,7 @@ fi
 dnl for LDAP support in addressbook
 dnl no check for libraries; dynamically loaded
 AC_ARG_ENABLE(ldap,
-	[  --enable-ldap           Enable LDAP support [default=no]],
+	[  --enable-ldap           Enable LDAP support [[default=no]]],
 	[ac_cv_enable_ldap=$enableval], [ac_cv_enable_ldap=no])
 AC_MSG_CHECKING([whether to use LDAP])
 if test "$ac_cv_enable_ldap" = yes; then
@@ -181,21 +181,32 @@ fi
 
 dnl Check for OpenSSL
 AC_ARG_ENABLE(ssl,
-	[  --enable-ssl            Enable SSL support using OpenSSL [default=no]],
-	[ac_cv_enable_ssl=$enableval], [ac_cv_enable_ssl=no])
+	[  --disable-ssl           Disable SSL support using OpenSSL],
+	[ac_cv_enable_ssl=$enableval], [ac_cv_enable_ssl=yes])
 AC_MSG_CHECKING([whether to use OpenSSL])
 if test $ac_cv_enable_ssl = yes; then
 	AC_MSG_RESULT(yes)
-	AC_MSG_CHECKING([if openssl is available])
-	LIBS="$LIBS -lssl -lcrypto"
-	AC_TRY_LINK([
+	dnl First check with pkg-config
+	PKG_CHECK_MODULES(OPENSSL, openssl, [:], [:])
+	if test "x$OPENSSL_LIBS" != "x"; then
+		CFLAGS="$CFLAGS $OPENSSL_CFLAGS"
+		LIBS="$LIBS $OPENSSL_LIBS"
+		AC_MSG_CHECKING([if openssl is available])
+		AC_MSG_RESULT(yes)
+		AC_DEFINE(USE_SSL, 1, Define if you use OpenSSL to support SSL.)
+	else
+		dnl If pkg-config fails, run compile/link test.
+		AC_MSG_CHECKING([if openssl is available])
+		LIBS="$LIBS -lssl -lcrypto"
+		AC_TRY_LINK([
 #include <openssl/opensslv.h>
-],	[ return OPENSSL_VERSION_NUMBER; ],
-	[ AC_MSG_RESULT(yes)
-	  AC_DEFINE(USE_SSL, 1, Define if you use OpenSSL to support SSL.) ],
-	[ AC_MSG_RESULT(no)
-	  LIBS="$ac_save_LIBS"
-	  ac_cv_enable_ssl=no ])
+],		[ return OPENSSL_VERSION_NUMBER; ],
+		[ AC_MSG_RESULT(yes)
+		  AC_DEFINE(USE_SSL, 1, Define if you use OpenSSL to support SSL.) ],
+		[ AC_MSG_RESULT(no)
+		  LIBS="$ac_save_LIBS"
+		  ac_cv_enable_ssl=no ])
+	fi
 else
 	AC_MSG_RESULT(no)
 fi
@@ -212,7 +223,7 @@ AC_CHECK_LIB(xpg4, setlocale)
 
 dnl for GThread support (currently disabled)
 dnl AC_ARG_ENABLE(threads,
-dnl	[  --enable-threads        Enable multithread support [default=no]],
+dnl	[  --enable-threads        Enable multithread support [[default=no]]],
 dnl	[use_threads=$enableval], [use_threads=no])
 
 AC_MSG_CHECKING([whether to use threads])

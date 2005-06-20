@@ -1,5 +1,11 @@
 2005-06-20
 
+	* configure.in: デフォルトで GPGME と OpenSSL 対応を有効にした。
+	  OpenSSL の検出を pkg-config で行うようにした(Michael Schwendt さん
+	  thanks)。
+
+2005-06-20
+
 	* src/imap.c: ブロックデータをパースするときに埋め込まれた null 文字
 	  を ' ' で置換するようにした(ヘッダに埋め込まれた null 文字が出現
 	  した場合にパースエラーが起こるのを修正)。
