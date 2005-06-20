@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2004-12-04 08:24+0800\n"
 "Last-Translator: Frank J. J. Weng <franklin@goodhorse.idv.tw>\n"
 "Language-Team: zh-l10n <zh-l10n@linux.org.tw>\n"
@@ -81,7 +81,7 @@ msgstr ""
 "檢查新郵件時將會依照下面的順序。您可以勾選 G 欄位中的方塊，\n"
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -227,21 +227,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr "使用者設定之命令參數"
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "將位址加入位址簿"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "位址"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "備註"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "選擇位址簿資料夾"
 
@@ -580,7 +580,7 @@ msgstr "私人位址紀錄"
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "警告"
 
@@ -2906,8 +2906,9 @@ msgstr "/信件(_M)/接收新郵件(_i)"
 msgid "/_Message/Re-_edit"
 msgstr "/信件(_M)/重新編輯(_e)"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/工具(_T)/將寄信人加入位址簿(_k)"
 
 #: src/mainwindow.c:726
@@ -3375,6 +3376,10 @@ msgstr "搜尋已到尾端。要從頂端繼續搜尋嗎？"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "搜尋結束"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/工具(_T)/將寄信人加入位址簿(_k)"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5606,7 +5611,7 @@ msgstr "未發現簽章"
 msgid "Good signature from \"%s\""
 msgstr "來自 %s 的簽章檢查正確"
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "簽章檢查正確"
 
@@ -5615,7 +5620,7 @@ msgstr "簽章檢查正確"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5652,7 +5657,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "來自 \"%s\" 的簽章檢查錯誤"
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "簽章檢查錯誤"
 
@@ -5832,7 +5837,8 @@ msgid "/Re-_edit"
 msgstr "/重新編輯(_e)"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "將寄信人加入位址簿(_k)"
 
 #: src/summaryview.c:401
@@ -6079,24 +6085,34 @@ msgstr ""
 msgid "file %s already exists\n"
 msgstr "檔案 %s 已存在。\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "產生文字視窗...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 msgid "This message can't be displayed.\n"
 msgstr "無法顯示郵件。\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "另存新檔...(_S)"
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "將寄信人加入位址簿(_k)"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "共用位址紀錄"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

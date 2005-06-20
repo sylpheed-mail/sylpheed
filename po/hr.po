@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -95,7 +95,7 @@ msgstr ""
 "Nove poruke biti će provjerene ovim redom. Označite pod\n"
 "S one račune s kojih želite skinuti poštu sa `Primi sve'."
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -236,21 +236,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr ""
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Dodaj adresu u adresar"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresa"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "Bilješke"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "Odaberite spis adresara"
 
@@ -589,7 +589,7 @@ msgstr "Osobne adrese"
 msgid "Notice"
 msgstr "Obavijest"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "Upozorenje"
 
@@ -3044,9 +3044,9 @@ msgstr "/_Pošta/Primi novu _poštu"
 msgid "/_Message/Re-_edit"
 msgstr "/_Pošta/Pre_Uredi"
 
-#: src/mainwindow.c:723 src/messageview.c:258
+#: src/mainwindow.c:723
 #, fuzzy
-msgid "/_Tools/Add sender to address boo_k"
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/Dod_aj pošiljatelja u adresar"
 
 #: src/mainwindow.c:726
@@ -3538,6 +3538,11 @@ msgstr "Kraj liste dosegnut; nastaviti od početka?"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Potraga završena"
+
+#: src/messageview.c:258
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/Dod_aj pošiljatelja u adresar"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5813,7 +5818,7 @@ msgstr "Nema potpisa"
 msgid "Good signature from \"%s\""
 msgstr "Dobar potpis od \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "Dobar potpis"
 
@@ -5822,7 +5827,7 @@ msgstr "Dobar potpis"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5859,7 +5864,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "LOŠ potpis od \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "LOŠ potpis"
 
@@ -6047,7 +6052,8 @@ msgid "/Re-_edit"
 msgstr "/Pre-_uredi"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/Dod_aj pošiljatelja u adresar"
 
 #: src/summaryview.c:401
@@ -6301,25 +6307,35 @@ msgstr "Ne."
 msgid "file %s already exists\n"
 msgstr "datoteka %s već postoji\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "Kreiram pregled teksta...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "poruka neće biti primljena\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/S_premi kao"
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/Dod_aj pošiljatelja u adresar"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "Uobičajene adrese"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

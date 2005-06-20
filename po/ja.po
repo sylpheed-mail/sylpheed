@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -96,7 +96,7 @@ msgstr ""
 "新着メッセージはこの順番でチェックされます。「全受信」によるメッセージ\n"
 "の取得を有効にするには、「G」カラムのボックスをチェックしてください。"
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -241,21 +241,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr "アクションのユーザ引数"
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "アドレスをアドレス帳に追加"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "アドレス"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "備考"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "アドレス帳フォルダを選択"
 
@@ -598,7 +598,7 @@ msgstr "個人用アドレス"
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "警告"
 
@@ -2894,9 +2894,9 @@ msgstr "/メッセージ(_M)/迷惑メールではない(_U)"
 msgid "/_Message/Re-_edit"
 msgstr "/メッセージ(_M)/再編集(_E)"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
-msgstr "/ツール(_T)/差出人をアドレス帳に追加(_K)"
+#: src/mainwindow.c:723
+msgid "/_Tools/Add sender to address boo_k..."
+msgstr "/ツール(_T)/差出人をアドレス帳に追加(_K)..."
 
 #: src/mainwindow.c:726
 msgid "/_Tools/_Filter all messages in folder"
@@ -3359,6 +3359,10 @@ msgstr "メッセージの終わりまで検索しました。始めから検索
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "検索完了"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/ツール(_T)/差出人をアドレス帳に追加(_K)"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5585,7 +5589,7 @@ msgstr "署名がありません"
 msgid "Good signature from \"%s\""
 msgstr "差出人 \"%s\" の正当な署名"
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "正当な署名"
 
@@ -5594,7 +5598,7 @@ msgstr "正当な署名"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "有効な署名ですが \"%s\" の鍵は信用されていません"
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr "有効な署名 (信用されていない鍵)"
 
@@ -5630,7 +5634,7 @@ msgstr "署名は有効ですが署名鍵が失効しています"
 msgid "BAD signature from \"%s\""
 msgstr "差出人 \"%s\" の不正な署名"
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "不正な署名"
 
@@ -5810,8 +5814,8 @@ msgid "/Re-_edit"
 msgstr "/再編集(_E)"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
-msgstr "/差出人をアドレス帳に追加(_K)"
+msgid "/Add sender to address boo_k..."
+msgstr "/差出人をアドレス帳に追加(_K)..."
 
 #: src/summaryview.c:401
 msgid "/_View/_Source"
@@ -6057,23 +6061,31 @@ msgstr "番号"
 msgid "file %s already exists\n"
 msgstr "ファイル %s はすでに存在します\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "テキストビューを作成中...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 msgid "This message can't be displayed.\n"
 msgstr "このメッセージは表示できません。\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 msgid "Sa_ve this image as..."
 msgstr "画像を保存(_V)..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+msgid "Add to address _book..."
+msgstr "アドレス帳に追加(_B)..."
+
+#: src/textview.c:1906
+msgid "Copy this add_ress"
+msgstr "アドレスをコピー(_R)"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr "リンクをコピー(_L)"
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

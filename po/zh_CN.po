@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -94,7 +94,7 @@ msgstr ""
 "按照该顺序检查新邮件。选中“G”列的复选框，在“全部接收”\n"
 "时会检查新邮件。"
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -240,21 +240,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr "动作的用户参数"
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "将地址添加到地址簿"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "地址"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "注释"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "选择地址簿文件夹"
 
@@ -589,7 +589,7 @@ msgstr "个人地址"
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "警告"
 
@@ -2890,8 +2890,9 @@ msgstr "/邮件(_M)/接收新邮件(_i)"
 msgid "/_Message/Re-_edit"
 msgstr "/邮件(_M)/重新编辑(_E)"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/工具(_T)/将发件人添加到地址簿中(_K)"
 
 #: src/mainwindow.c:726
@@ -3358,6 +3359,10 @@ msgstr "已查找到邮件结尾；从开头继续？"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "搜索结束"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/工具(_T)/将发件人添加到地址簿中(_K)"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5590,7 +5595,7 @@ msgstr "没有找到签名"
 msgid "Good signature from \"%s\""
 msgstr "来自“%s”的正确签名"
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "正确的签名"
 
@@ -5599,7 +5604,7 @@ msgstr "正确的签名"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "签名有效，但是“%s”的密钥不被信任"
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr "签名有效 (非信任的密钥)"
 
@@ -5635,7 +5640,7 @@ msgstr "签名有效，但签名密钥已经被废止"
 msgid "BAD signature from \"%s\""
 msgstr "“%s”的签名错误"
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "签名错误"
 
@@ -5815,7 +5820,8 @@ msgid "/Re-_edit"
 msgstr "/重新编辑(_E)"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/添加发件人到地址簿(_K)"
 
 #: src/summaryview.c:401
@@ -6062,23 +6068,33 @@ msgstr "No."
 msgid "file %s already exists\n"
 msgstr "文件 %s 已经存在。\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "正在创建文本视图...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 msgid "This message can't be displayed.\n"
 msgstr "无法显示该邮件。\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 msgid "Sa_ve this image as..."
 msgstr "图像另存为(_V)..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/添加发件人到地址簿(_K)"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "复制链接(_L)"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr "复制链接(_L)"
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

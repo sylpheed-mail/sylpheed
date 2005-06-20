@@ -50,6 +50,7 @@
 #include "addritem.h"
 #include "addrbook.h"
 #include "addrindex.h"
+#include "editaddress.h"
 #include "manage_window.h"
 
 typedef struct {
@@ -392,7 +393,12 @@ gboolean addressadd_selection( AddressIndex *addrIndex, const gchar *name, const
 		if( addressadd_dlg.fiSelected ) {
 			FolderInfo *fi = addressadd_dlg.fiSelected;
 			person = addrbook_add_contact( fi->book, fi->folder, name, address, remarks );
-			if( person ) retVal = TRUE;
+			if( person ) {
+				if( addressbook_edit_person( fi->book, NULL, person, FALSE ) == NULL )
+					addrbook_remove_person( fi->book, person );
+				else
+					retVal = TRUE;
+			}
 		}
 	}
 

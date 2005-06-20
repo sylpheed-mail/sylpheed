@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Mattias Ostergren <spikboll@gmx.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 "Markera rutorna i `G'-kolumnen för att aktivera meddelandehämtning\n"
 "via \"Hämta alla\""
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -244,21 +244,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr "Åtgärdens användarargument"
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Lägg till i adressbok"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adress"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "Kommentarer"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "Välj adressboksmapp"
 
@@ -598,7 +598,7 @@ msgstr "Privat adress"
 msgid "Notice"
 msgstr "Notera"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "Varning"
 
@@ -2930,8 +2930,9 @@ msgstr ""
 msgid "/_Message/Re-_edit"
 msgstr "/_Meddelande/Redigera _om"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/V_erktyg/Lägg till avsändaren i adressbo_ken"
 
 #: src/mainwindow.c:726
@@ -3399,6 +3400,10 @@ msgstr "Slutet av meddelandet nått; fortsätta från början?"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Sökning klar"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/V_erktyg/Lägg till avsändaren i adressbo_ken"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5652,7 +5657,7 @@ msgstr "Ingen signatur funnen"
 msgid "Good signature from \"%s\""
 msgstr "Bra signatur från \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "Bra signatur"
 
@@ -5661,7 +5666,7 @@ msgstr "Bra signatur"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5698,7 +5703,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "FELAKTIG signatur från \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "FELAKTIG signatur"
 
@@ -5878,7 +5883,8 @@ msgid "/Re-_edit"
 msgstr "/Redigera _om"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/_Lägg till avsändaren till adressboken"
 
 #: src/summaryview.c:401
@@ -6125,24 +6131,34 @@ msgstr "Nr."
 msgid "file %s already exists\n"
 msgstr "filen %s finns redan\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "Skapar textvy...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 msgid "This message can't be displayed.\n"
 msgstr "Detta meddelande kan inte visas.\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/_Spara som..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/_Lägg till avsändaren till adressboken"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "Vanlig adress"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

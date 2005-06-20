@@ -191,6 +191,9 @@ static gboolean textview_visibility_notify	(GtkWidget	*widget,
 static void textview_populate_popup		(GtkWidget	*widget,
 						 GtkMenu	*menu,
 						 TextView	*textview);
+static void textview_popup_menu_activate_add_address_cb
+						(GtkMenuItem	*menuitem,
+						 gpointer	 data);
 static void textview_popup_menu_activate_copy_cb(GtkMenuItem	*menuitem,
 						 gpointer	 data);
 static void textview_popup_menu_activate_image_cb
@@ -1852,6 +1855,7 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	gboolean on_link;
 	RemoteURI *uri;
 	GdkPixbuf *pixbuf;
+	const gchar *copy_link_label;
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
 
@@ -1890,11 +1894,43 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
 	gtk_widget_show(separator);
 
-	menuitem = gtk_menu_item_new_with_mnemonic(_("Copy this _link"));
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
+		menuitem = gtk_menu_item_new_with_mnemonic
+			(_("Add to address _book..."));
+		g_signal_connect
+			(menuitem, "activate",
+			 G_CALLBACK(textview_popup_menu_activate_add_address_cb), uri);
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+		gtk_widget_show(menuitem);
+
+		copy_link_label = _("Copy this add_ress");
+	} else
+		copy_link_label = _("Copy this _link");
+
+	menuitem = gtk_menu_item_new_with_mnemonic(copy_link_label);
 	g_signal_connect(menuitem, "activate",
 			 G_CALLBACK(textview_popup_menu_activate_copy_cb), uri);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	gtk_widget_show(menuitem);
+}
+
+static void textview_popup_menu_activate_add_address_cb(GtkMenuItem *menuitem,
+							gpointer data)
+{
+	RemoteURI *uri = (RemoteURI *)data;
+	const gchar *addr;
+
+	g_return_if_fail(uri != NULL);
+
+	if (!uri->uri)
+		return;
+
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7))
+		addr = uri->uri + 7;
+	else
+		addr = uri->uri;
+
+	addressbook_add_contact(addr, addr, NULL);
 }
 
 static void textview_popup_menu_activate_copy_cb(GtkMenuItem *menuitem,

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -83,7 +83,7 @@ msgstr ""
 "새 메시지는 이 순서대로 확인될 것입니다. `모두 받기'로 메시지를\n"
 "받으려면 `G' 컬럼 상자를 선택하세요."
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -227,21 +227,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr ""
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "주소록에 추가"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "주소"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "메모"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "주소록 폴더 선택"
 
@@ -579,7 +579,7 @@ msgstr "개인 주소록"
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "경고"
 
@@ -2939,8 +2939,9 @@ msgstr "/메시지(_M)/새 메일 받기(_i)"
 msgid "/_Message/Re-_edit"
 msgstr "/메시지(_M)/다시 편집(_e)"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/도구(_T)/주소록에 보낸이 추가(_k)"
 
 #: src/mainwindow.c:726
@@ -3415,6 +3416,10 @@ msgstr "메시지의 끝에 도달했습니다; 시작부분에서 계속할까�
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "찾기가 완료"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/도구(_T)/주소록에 보낸이 추가(_k)"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5654,7 +5659,7 @@ msgstr "서명이 발견되지않음"
 msgid "Good signature from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "Good signature"
 
@@ -5663,7 +5668,7 @@ msgstr "Good signature"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5699,7 +5704,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "BAD signature"
 
@@ -5881,7 +5886,8 @@ msgid "/Re-_edit"
 msgstr "/다시 편집(_e)"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/주소록에 보낸이 추가(_k)"
 
 #: src/summaryview.c:401
@@ -6130,25 +6136,35 @@ msgstr "번호"
 msgid "file %s already exists\n"
 msgstr "%s 파일이 이미 존재합니다\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "텍스트 뷰를 생성합니다...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "이 메시지를 받지않을 것입니다\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/새 이름으로(_S)..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/주소록에 보낸이 추가(_k)"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "공용 주소록"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

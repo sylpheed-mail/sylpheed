@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2004-12-09 20:16+0100\n"
 "Last-Translator: Nicolas Boos <nicolas.boos@wanadoo.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -104,7 +104,7 @@ msgstr ""
 "case dans la colonne G pour relever le courrier du compte \n"
 "correspondant lorsque « Tout relever » est activé"
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -250,21 +250,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr "Argument de l'action"
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Ajouter l'adresse au carnet"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresse"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "Remarques"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "Choisissez un dossier"
 
@@ -612,7 +612,7 @@ msgstr "Adresse personnelle :"
 msgid "Notice"
 msgstr "Information"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "Avertissement"
 
@@ -2960,8 +2960,9 @@ msgstr ""
 msgid "/_Message/Re-_edit"
 msgstr "/_Message/Réédit_er"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/_Outils/Aj_outer l'expéditeur dans le carnet d'adresses"
 
 #: src/mainwindow.c:726
@@ -3429,6 +3430,10 @@ msgstr "Fin de message atteint, reprendre depuis le début ?"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Recherche terminée"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/_Outils/Aj_outer l'expéditeur dans le carnet d'adresses"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5686,7 +5691,7 @@ msgstr "Pas de signature trouvée"
 msgid "Good signature from \"%s\""
 msgstr "Signature correcte de \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "Signature correcte"
 
@@ -5695,7 +5700,7 @@ msgstr "Signature correcte"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5732,7 +5737,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "Mauvaise signature de \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "MAUVAISE signature"
 
@@ -5913,7 +5918,8 @@ msgid "/Re-_edit"
 msgstr "/Réédit_er"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/_Ajouter l'expéditeur dans le carnet d'adresses"
 
 #: src/summaryview.c:401
@@ -6162,24 +6168,34 @@ msgstr "N°"
 msgid "file %s already exists\n"
 msgstr "le fichier %s existe déjà\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "Création de la vue texte...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 msgid "This message can't be displayed.\n"
 msgstr "Impossible d'afficher ce message.\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/Enregistrer so_us..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/_Ajouter l'expéditeur dans le carnet d'adresses"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "Adresse courante :"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

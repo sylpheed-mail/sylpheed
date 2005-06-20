@@ -392,7 +392,7 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/Re-_edit"),		NULL, summary_reedit,   0, NULL},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
-	{N_("/Add sender to address boo_k"),
+	{N_("/Add sender to address boo_k..."),
 					NULL, summary_add_address_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/_View"),			NULL, NULL,		0, "<Branch>"},
@@ -1016,7 +1016,7 @@ static void summary_set_menu_sensitive(SummaryView *summaryview)
 	menu_set_sensitive(ifactory, "/Forward as attachment",	  TRUE);
 	menu_set_sensitive(ifactory, "/Redirect",		  sens);
 
-	menu_set_sensitive(ifactory, "/Add sender to address book", sens);
+	menu_set_sensitive(ifactory, "/Add sender to address book...", sens);
 
 	menu_set_sensitive(ifactory, "/View", sens);
 	menu_set_sensitive(ifactory, "/View/Open in new window", sens);

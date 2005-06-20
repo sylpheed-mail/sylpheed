@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 2.0.0beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2005-06-11 18:48+0200\n"
 "Last-Translator: Danilo Bodei <dbodei@lombardiacom.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -99,7 +99,7 @@ msgstr ""
 "colonna «G» per consentire il recupero dei messaggi attraverso «Ricevi "
 "tutti»."
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -244,21 +244,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr "Argomento dell'azione utente"
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Aggiunta dell'indirizzo alla rubrica"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Indirizzo"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "Note"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "Selezione della cartella della rubrica"
 
@@ -604,7 +604,7 @@ msgstr "Indirizzo personale"
 msgid "Notice"
 msgstr "Avviso"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "Avvertimento"
 
@@ -2902,8 +2902,9 @@ msgstr "/_Messaggio/Im_posta come mail normale"
 msgid "/_Message/Re-_edit"
 msgstr "/M_essaggio/Rimodi_fica"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/S_trumenti/Aggiungi mittente alla ru_brica"
 
 #: src/mainwindow.c:726
@@ -3371,6 +3372,10 @@ msgstr "Ho raggiunto la fine del messaggio; continuo dall'inizio?"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Ricerca terminata"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/S_trumenti/Aggiungi mittente alla ru_brica"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5612,7 +5617,7 @@ msgstr "Firma non trovata"
 msgid "Good signature from \"%s\""
 msgstr "Firma valida da «%s»"
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "Firma corretta"
 
@@ -5621,7 +5626,7 @@ msgstr "Firma corretta"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Firma valida, ma la chiave per «%s» non è fidata"
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr "Firma valida (chiave non fidata)"
 
@@ -5657,7 +5662,7 @@ msgstr "Firma valida, ma la firma della chiave è stata revocata"
 msgid "BAD signature from \"%s\""
 msgstr "Firma DIFETTOSA da «%s»"
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "Firma DIFETTOSA"
 
@@ -5837,7 +5842,8 @@ msgid "/Re-_edit"
 msgstr "/Rim_odifica"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/Aggiungi mittente alla ru_brica"
 
 #: src/summaryview.c:401
@@ -6086,23 +6092,33 @@ msgstr "No."
 msgid "file %s already exists\n"
 msgstr "il file %s esiste già\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "Creazione della vista del testo...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 msgid "This message can't be displayed.\n"
 msgstr "Questo messaggio non può essere visualizzato.\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 msgid "Sa_ve this image as..."
 msgstr "Sa_lva questa immagine come..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/Aggiungi mittente alla ru_brica"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "Copia questo _link"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr "Copia questo _link"
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"

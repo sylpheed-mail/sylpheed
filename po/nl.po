@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 17:28+0900\n"
+"POT-Creation-Date: 2005-06-20 17:14+0900\n"
 "PO-Revision-Date: 2003-02-18 13:03--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -98,7 +98,7 @@ msgstr ""
 "Zet een vinkje in de 'G' kolom om berichten binnen te halen wanneer\n"
 "u op de knop 'Alles ophalen' klikt."
 
-#: src/account.c:691 src/addressadd.c:191 src/addressbook.c:490
+#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
 #: src/compose.c:3975 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
@@ -242,21 +242,21 @@ msgstr ""
 msgid "Action's user argument"
 msgstr ""
 
-#: src/addressadd.c:171
+#: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Adres toevoegen aan adresboek"
 
-#: src/addressadd.c:201 src/compose.c:4405 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4405 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adres"
 
-#: src/addressadd.c:211 src/addressbook.c:492 src/editaddress.c:201
+#: src/addressadd.c:212 src/addressbook.c:492 src/editaddress.c:201
 #: src/editaddress.c:793 src/editaddress.c:858 src/editgroup.c:266
 msgid "Remarks"
 msgstr "Opmerkingen"
 
-#: src/addressadd.c:233
+#: src/addressadd.c:234
 msgid "Select Address Book Folder"
 msgstr "Selecteer adresboekmap"
 
@@ -600,7 +600,7 @@ msgstr "Persoonlijke adressen"
 msgid "Notice"
 msgstr "Bericht"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:1985
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
 msgid "Warning"
 msgstr "Waarschuwing"
 
@@ -2967,8 +2967,9 @@ msgstr "/Be_richt/E-mail _ophalen"
 msgid "/_Message/Re-_edit"
 msgstr "/Be_richt/Bewerken"
 
-#: src/mainwindow.c:723 src/messageview.c:258
-msgid "/_Tools/Add sender to address boo_k"
+#: src/mainwindow.c:723
+#, fuzzy
+msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/_Gereedschap/Af_zender toevoegen aan adresboek"
 
 #: src/mainwindow.c:726
@@ -3444,6 +3445,10 @@ msgstr "Einde van het bericht bereikt; verdergaan vanaf het begin?"
 #: src/message_search.c:216 src/summary_search.c:396
 msgid "Search finished"
 msgstr "Zoeken voltooid"
+
+#: src/messageview.c:258
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/_Gereedschap/Af_zender toevoegen aan adresboek"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -5730,7 +5735,7 @@ msgstr "Geen hadtekening gevonden"
 msgid "Good signature from \"%s\""
 msgstr "Goedgekeurde handtekening van \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:605
+#: src/sigstatus.c:237 src/textview.c:608
 msgid "Good signature"
 msgstr "Correcte handtekening"
 
@@ -5739,7 +5744,7 @@ msgstr "Correcte handtekening"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:607
+#: src/sigstatus.c:242 src/textview.c:610
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5776,7 +5781,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "SLECHTE handtekening van \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:609
+#: src/sigstatus.c:260 src/textview.c:612
 msgid "BAD signature"
 msgstr "FOUTIEVE handtekening"
 
@@ -5958,7 +5963,8 @@ msgid "/Re-_edit"
 msgstr "/Be_werken"
 
 #: src/summaryview.c:395
-msgid "/Add sender to address boo_k"
+#, fuzzy
+msgid "/Add sender to address boo_k..."
 msgstr "/Afz_ender toevoegen aan adresboek"
 
 #: src/summaryview.c:401
@@ -6208,25 +6214,35 @@ msgstr "Nr."
 msgid "file %s already exists\n"
 msgstr "bestand %s bestaat al\n"
 
-#: src/textview.c:238
+#: src/textview.c:241
 msgid "Creating text view...\n"
 msgstr "Tekstvenster wordt aangemaakt...\n"
 
-#: src/textview.c:716
+#: src/textview.c:719
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "een bericht wordt niet ontvangen\n"
 
-#: src/textview.c:1873
+#: src/textview.c:1877
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/Opslaan als..."
 
-#: src/textview.c:1893
+#: src/textview.c:1899
+#, fuzzy
+msgid "Add to address _book..."
+msgstr "/Afz_ender toevoegen aan adresboek"
+
+#: src/textview.c:1906
+#, fuzzy
+msgid "Copy this add_ress"
+msgstr "Algemene adressen"
+
+#: src/textview.c:1908
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:1981
+#: src/textview.c:2017
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
