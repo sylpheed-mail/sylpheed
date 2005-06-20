@@ -5,10 +5,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed 2.0.0beta1\n"
+"Project-Id-Version: Sylpheed 2.0.0beta2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-20 17:14+0900\n"
-"PO-Revision-Date: 2005-06-11 18:48+0200\n"
+"POT-Creation-Date: 2005-06-20 19:35+0900\n"
+"PO-Revision-Date: 2005-06-18 15:30+0200\n"
 "Last-Translator: Danilo Bodei <dbodei@lombardiacom.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1021,7 +1021,7 @@ msgstr ""
 "attualmente selezionato."
 
 #: src/compose.c:2627 src/compose.c:2856 src/compose.c:2919 src/compose.c:3039
-#: src/utils.c:2230
+#: src/utils.c:2241
 msgid "can't change file mode\n"
 msgstr "impossibile cambiare i permessi del file\n"
 
@@ -2000,57 +2000,57 @@ msgstr "Impossibile stabilire la sessione IMAP4 con: %s:%d\n"
 msgid "can't get namespace\n"
 msgstr "impossibile ricevere il namespace\n"
 
-#: src/imap.c:2949
+#: src/imap.c:2957
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "impossibile selezionare la cartella: %s\n"
 
-#: src/imap.c:3124
+#: src/imap.c:3132
 msgid "IMAP4 authentication failed.\n"
 msgstr "Autenticazione IMAP4 fallita.\n"
 
-#: src/imap.c:3141
+#: src/imap.c:3149
 msgid "IMAP4 login failed.\n"
 msgstr "Login IMAP4 fallito.\n"
 
-#: src/imap.c:3465
+#: src/imap.c:3473
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "impossibile aggiungere %s a %s\n"
 
-#: src/imap.c:3472
+#: src/imap.c:3480
 msgid "(sending file...)"
 msgstr "(spedizione del file...)"
 
-#: src/imap.c:3500
+#: src/imap.c:3508
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "impossibile aggiungere a %s\n"
 
-#: src/imap.c:3532
+#: src/imap.c:3540
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "impossibile copiare %s in %s\n"
 
-#: src/imap.c:3556
+#: src/imap.c:3564
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "errore durante il comando imap: STORE %s %s\n"
 
-#: src/imap.c:3570
+#: src/imap.c:3578
 msgid "error while imap command: EXPUNGE\n"
 msgstr "errore durante il comando imap: EXPUNGE\n"
 
-#: src/imap.c:3583
+#: src/imap.c:3591
 msgid "error while imap command: CLOSE\n"
 msgstr "errore durante il comando imap: CLOSE\n"
 
-#: src/imap.c:3811
+#: src/imap.c:3819
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv non può convertire UTF-7 in %s\n"
 
-#: src/imap.c:3841
+#: src/imap.c:3849
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv non può convertire %s in UTF-7\n"
@@ -2936,14 +2936,12 @@ msgid "/_Tools/_Create filter rule/by _Subject"
 msgstr "/S_trumenti/_Crea regola per il filtro/con l'_Oggetto"
 
 #: src/mainwindow.c:740
-#, fuzzy
 msgid "/_Tools/Filter _junk mails in folder"
-msgstr "/S_trumenti/_Filtra tutti i messaggi nella cartella"
+msgstr "/S_trumenti/Filtra le mail s_pazzatura nella cartella"
 
 #: src/mainwindow.c:742
-#, fuzzy
 msgid "/_Tools/Filter junk _mails in selected messages"
-msgstr "/S_trumenti/Filtra i messaggi _selezionati"
+msgstr "/S_trumenti/Filtra le mail spa_zzatura nei messaggi selezionati"
 
 #: src/mainwindow.c:747
 msgid "/_Tools/Delete du_plicated messages"
@@ -4205,9 +4203,8 @@ msgid "Do you really want to delete this action?"
 msgstr "Eliminare questa azione?"
 
 #: src/prefs_common.c:906
-#, fuzzy
 msgid "Junk mail filter"
-msgstr "Mail spazzatura"
+msgstr "Filtro mail spazzatura"
 
 #: src/prefs_common.c:916
 msgid "Creating common preferences window...\n"
@@ -4246,9 +4243,8 @@ msgid "Command"
 msgstr "Comando"
 
 #: src/prefs_common.c:1030
-#, fuzzy
 msgid "Incorporate from local spool"
-msgstr "Incorpora dallo spool"
+msgstr "Incorpora dallo spool locale"
 
 #: src/prefs_common.c:1043
 msgid "Filter on incorporation"
@@ -4629,9 +4625,8 @@ msgid "Not Junk"
 msgstr "Normale"
 
 #: src/prefs_common.c:2038
-#, fuzzy
 msgid "Classifying command"
-msgstr "Comando di apprendimento:"
+msgstr "Comando di classificazione"
 
 #: src/prefs_common.c:2052
 msgid "Junk folder"
@@ -4644,16 +4639,16 @@ msgstr ""
 "cartella."
 
 #: src/prefs_common.c:2076
-#, fuzzy
 msgid "Filter messages classified as junk on receiving"
-msgstr "Filtra i messaggi in ricezione"
+msgstr "Filtra in ricezione i messaggi classificati come spazzatura"
 
 #: src/prefs_common.c:2080
-#, fuzzy
 msgid ""
 "Filtered messages will be moved to the junk folder and deleted from the "
 "server."
-msgstr "(I messaggi non filtrati saranno memorizzati in questa cartella)"
+msgstr ""
+"I messaggi filtrati saranno spostati nella cartella spazzatura ed eliminati "
+"dal server."
 
 #: src/prefs_common.c:2118
 msgid "Automatically check signatures"
@@ -6149,23 +6144,7 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: src/utils.c:2237 src/utils.c:2364
+#: src/utils.c:2248 src/utils.c:2375
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "la scrittura su %s è fallita.\n"
-
-#~ msgid "External program"
-#~ msgstr "Programma esterno"
-
-#~ msgid "Local spool"
-#~ msgstr "Spool locale"
-
-#~ msgid ""
-#~ "Specify command line for learning junk mail. You must add a filter rule "
-#~ "with 'Result of command' as a condition to enable automatic filtering "
-#~ "using the result of this learning."
-#~ msgstr ""
-#~ "Linea di comando specifica per l'apprendimento della mail spazzatura. Si "
-#~ "deve aggiungere una regola del filtro con «Risultato del comando» come "
-#~ "condizione per abilitare il filtraggio automatico usando il risultato di "
-#~ "questo apprendimento."
