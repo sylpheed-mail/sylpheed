@@ -1048,6 +1048,17 @@ void subst_chars(gchar *str, gchar *orig, gchar subst)
 	}
 }
 
+void subst_null(gchar *str, gint len, gchar subst)
+{
+	register gchar *p = str;
+
+	while (len--) {
+		if (*p == '\0')
+			*p = subst;
+		p++;
+	}
+}
+
 void subst_for_filename(gchar *str)
 {
 	subst_chars(str, " \t\r\n\"'/\\", '_');

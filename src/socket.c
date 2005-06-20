@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1168,61 +1168,68 @@ gint sock_gets(SockInfo *sock, gchar *buf, gint len)
 	return fd_gets(sock->sock, buf, len);
 }
 
-gchar *fd_getline(gint fd)
+gint fd_getline(gint fd, gchar **line)
 {
 	gchar buf[BUFFSIZE];
 	gchar *str = NULL;
 	gint len;
-	gulong size = 1;
+	gulong size = 0;
+	gulong cur_offset = 0;
 
 	while ((len = fd_gets(fd, buf, sizeof(buf))) > 0) {
 		size += len;
-		if (!str)
-			str = g_strdup(buf);
-		else {
-			str = g_realloc(str, size);
-			strcat(str, buf);
-		}
+		str = g_realloc(str, size + 1);
+		memcpy(str + cur_offset, buf, len + 1);
+		cur_offset += len;
 		if (buf[len - 1] == '\n')
 			break;
 	}
 
-	return str;
+	*line = str;
+
+	if (!str)
+		return -1;
+	else
+		return (gint)size;
 }
 
 #if USE_SSL
-gchar *ssl_getline(SSL *ssl)
+gint ssl_getline(SSL *ssl, gchar **line)
 {
 	gchar buf[BUFFSIZE];
 	gchar *str = NULL;
 	gint len;
-	gulong size = 1;
+	gulong size = 0;
+	gulong cur_offset = 0;
 
 	while ((len = ssl_gets(ssl, buf, sizeof(buf))) > 0) {
 		size += len;
-		if (!str)
-			str = g_strdup(buf);
-		else {
-			str = g_realloc(str, size);
-			strcat(str, buf);
-		}
+		str = g_realloc(str, size + 1);
+		memcpy(str + cur_offset, buf, len + 1);
+		cur_offset += len;
 		if (buf[len - 1] == '\n')
 			break;
 	}
 
-	return str;
+	*line = str;
+
+	if (!str)
+		return -1;
+	else
+		return (gint)size;
 }
 #endif
 
-gchar *sock_getline(SockInfo *sock)
+gint sock_getline(SockInfo *sock, gchar **line)
 {
-	g_return_val_if_fail(sock != NULL, NULL);
+	g_return_val_if_fail(sock != NULL, -1);
+	g_return_val_if_fail(line != NULL, -1);
 
 #if USE_SSL
 	if (sock->ssl)
-		return ssl_getline(sock->ssl);
+		return ssl_getline(sock->ssl, line);
 #endif
-	return fd_getline(sock->sock);
+	return fd_getline(sock->sock, line);
 }
 
 gint sock_puts(SockInfo *sock, const gchar *buf)

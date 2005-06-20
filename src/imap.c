@@ -2200,7 +2200,7 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	str = g_string_new(NULL);
 
 	for (;;) {
-		if ((tmp = sock_getline(SESSION(session)->sock)) == NULL) {
+		if (sock_getline(SESSION(session)->sock, &tmp) < 0) {
 			log_warning(_("error occurred while getting envelope.\n"));
 			g_string_free(str, TRUE);
 			return newlist;
@@ -2548,7 +2548,7 @@ static gchar *imap_parse_atom(IMAPSession *session, gchar *src,
 	/* read the next line if the current response buffer is empty */
 	while (isspace(*(guchar *)cur_pos)) cur_pos++;
 	while (*cur_pos == '\0') {
-		if ((nextline = sock_getline(SESSION(session)->sock)) == NULL)
+		if (sock_getline(SESSION(session)->sock, &nextline) < 0)
 			return cur_pos;
 		g_string_assign(str, nextline);
 		cur_pos = str->str;
@@ -2571,7 +2571,7 @@ static gchar *imap_parse_atom(IMAPSession *session, gchar *src,
 	} else if (*cur_pos == '{') {
 		gchar buf[32];
 		gint len;
-		gint line_len = 0;
+		gint block_len = 0;
 
 		cur_pos = strchr_cpy(cur_pos + 1, '}', buf, sizeof(buf));
 		len = atoi(buf);
@@ -2581,17 +2581,21 @@ static gchar *imap_parse_atom(IMAPSession *session, gchar *src,
 		cur_pos = str->str;
 
 		do {
-			if ((nextline = sock_getline(SESSION(session)->sock))
-				== NULL)
+			gint cur_len;
+
+			cur_len = sock_getline(SESSION(session)->sock,
+					       &nextline);
+			if (cur_len < 0)
 				return cur_pos;
-			line_len += strlen(nextline);
+			block_len += cur_len;
+			subst_null(nextline, cur_len, ' ');
 			g_string_append(str, nextline);
 			cur_pos = str->str;
 			strretchomp(nextline);
 			/* log_print("IMAP4< %s\n", nextline); */
 			debug_print("IMAP4< %s\n", nextline);
 			g_free(nextline);
-		} while (line_len < len);
+		} while (block_len < len);
 
 		memcpy(dest, cur_pos, MIN(len, dest_len - 1));
 		dest[MIN(len, dest_len - 1)] = '\0';
@@ -2625,12 +2629,16 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 	cur_pos = str->str;
 
 	do {
-		if ((nextline = sock_getline(SESSION(session)->sock)) == NULL)
+		gint cur_len;
+
+		cur_len = sock_getline(SESSION(session)->sock, &nextline);
+		if (cur_len < 0)
 			return cur_pos;
-		block_len += strlen(nextline);
+		block_len += cur_len;
+		subst_null(nextline, cur_len, ' ');
 		g_string_append(str, nextline);
 		cur_pos = str->str;
-		strretchomp(nextline);
+		/* strretchomp(nextline); */
 		/* debug_print("IMAP4< %s\n", nextline); */
 		g_free(nextline);
 	} while (block_len < len);
@@ -2642,7 +2650,7 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 
 	while (isspace(*(guchar *)cur_pos)) cur_pos++;
 	while (*cur_pos == '\0') {
-		if ((nextline = sock_getline(SESSION(session)->sock)) == NULL)
+		if (sock_getline(SESSION(session)->sock, &nextline) < 0)
 			return cur_pos;
 		g_string_assign(str, nextline);
 		cur_pos = str->str;
@@ -3648,7 +3656,7 @@ static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 
 static gint imap_cmd_gen_recv(IMAPSession *session, gchar **ret)
 {
-	if ((*ret = sock_getline(SESSION(session)->sock)) == NULL)
+	if (sock_getline(SESSION(session)->sock, ret) < 0)
 		return IMAP_SOCKET;
 
 	strretchomp(*ret);

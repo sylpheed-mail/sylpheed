@@ -1,5 +1,15 @@
 2005-06-20
 
+	* src/imap.c: replace embedded null characters with ' ' when parsing
+	  block data (fix parse errors when embedded null characters appeared
+	  in headers).
+	* src/socket.[ch]: modified *_getline() so that it returns the length
+	  of string including embedded null characters.
+	* src/utils.[ch]: subst_null(): replaces null characters with
+	  specified one.
+
+2005-06-20
+
 	* src/textview.c: added "Add to address book" to the context menu
 	  (thanks to Tomohiro Masubuchi), and changed "Copy this link" to
 	  "Copy this address" when address is clicked.

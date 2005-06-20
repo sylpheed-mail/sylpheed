@@ -87,7 +87,7 @@ gint sock_read		(SockInfo *sock, gchar *buf, gint len);
 gint sock_write		(SockInfo *sock, const gchar *buf, gint len);
 gint sock_write_all	(SockInfo *sock, const gchar *buf, gint len);
 gint sock_gets		(SockInfo *sock, gchar *buf, gint len);
-gchar *sock_getline	(SockInfo *sock);
+gint sock_getline	(SockInfo *sock, gchar **line);
 gint sock_puts		(SockInfo *sock, const gchar *buf);
 gint sock_peek		(SockInfo *sock, gchar *buf, gint len);
 gint sock_close		(SockInfo *sock);
@@ -101,7 +101,7 @@ gint fd_read		(gint sock, gchar *buf, gint len);
 gint fd_write		(gint sock, const gchar *buf, gint len);
 gint fd_write_all	(gint sock, const gchar *buf, gint len);
 gint fd_gets		(gint sock, gchar *buf, gint len);
-gchar *fd_getline	(gint sock);
+gint fd_getline		(gint sock, gchar **line);
 gint fd_close		(gint sock);
 
 /* Functions for SSL */
@@ -110,7 +110,7 @@ gint ssl_read		(SSL *ssl, gchar *buf, gint len);
 gint ssl_write		(SSL *ssl, const gchar *buf, gint len);
 gint ssl_write_all	(SSL *ssl, const gchar *buf, gint len);
 gint ssl_gets		(SSL *ssl, gchar *buf, gint len);
-gchar *ssl_getline	(SSL *ssl);
+gint ssl_getline	(SSL *ssl, gchar **line);
 gint ssl_peek		(SSL *ssl, gchar *buf, gint len);
 #endif
 
