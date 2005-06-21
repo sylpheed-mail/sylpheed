@@ -76,9 +76,6 @@ static struct Receive {
 	GtkWidget *checkbtn_scan_after_inc;
 	GtkWidget *checkbtn_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
-
-	GtkWidget *spinbtn_maxarticle;
-	GtkObject *spinbtn_maxarticle_adj;
 } receive;
 
 static struct Send {
@@ -272,10 +269,6 @@ static PrefParam param[] = {
 	{"newmsg_notify_command", NULL, &prefs_common.newmsg_notify_cmd,
 	 P_STRING, &receive.entry_newmsg_notify,
 	 prefs_set_data_from_entry, prefs_set_entry},
-
-	{"max_news_articles", "300", &prefs_common.max_articles, P_INT,
-	 &receive.spinbtn_maxarticle,
-	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
 	/* Send */
 	{"use_ext_sendmail", "FALSE", &prefs_common.use_extsend, P_BOOL,
@@ -989,11 +982,6 @@ static void prefs_receive_create(void)
 	GtkWidget *entry_newmsg_notify;
 	GtkWidget *label_notify_cmd_desc;
 
-	GtkWidget *frame_news;
-	GtkWidget *label_maxarticle;
-	GtkWidget *spinbtn_maxarticle;
-	GtkObject *spinbtn_maxarticle_adj;
-
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
@@ -1119,32 +1107,6 @@ static void prefs_receive_create(void)
 	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, hbox);
 	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, label_notify_cmd_desc);
 
-	/* News */
-	PACK_FRAME(vbox1, frame_news, _("News"));
-
-	hbox = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox);
-	gtk_container_add (GTK_CONTAINER (frame_news), hbox);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
-
-	label_maxarticle = gtk_label_new
-		(_("Maximum number of articles to download\n"
-		   "(unlimited if 0 is specified)"));
-	gtk_widget_show (label_maxarticle);
-	gtk_box_pack_start (GTK_BOX (hbox), label_maxarticle, FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label_maxarticle), GTK_JUSTIFY_LEFT);
-
-	spinbtn_maxarticle_adj =
-		gtk_adjustment_new (300, 0, 10000, 10, 100, 100);
-	spinbtn_maxarticle = gtk_spin_button_new
-		(GTK_ADJUSTMENT (spinbtn_maxarticle_adj), 10, 0);
-	gtk_widget_show (spinbtn_maxarticle);
-	gtk_box_pack_start (GTK_BOX (hbox), spinbtn_maxarticle,
-			    FALSE, FALSE, 0);
-	gtk_widget_set_size_request (spinbtn_maxarticle, 64, -1);
-	gtk_spin_button_set_numeric
-		(GTK_SPIN_BUTTON (spinbtn_maxarticle), TRUE);
-
 	receive.checkbtn_incext = checkbtn_incext;
 	receive.entry_incext    = entry_incext;
 	/* receive.button_incext   = button_incext; */
@@ -1161,9 +1123,6 @@ static void prefs_receive_create(void)
 	receive.checkbtn_scan_after_inc = checkbtn_scan_after_inc;
 	receive.checkbtn_newmsg_notify  = checkbtn_newmsg_notify;
 	receive.entry_newmsg_notify     = entry_newmsg_notify;
-
-	receive.spinbtn_maxarticle     = spinbtn_maxarticle;
-	receive.spinbtn_maxarticle_adj = spinbtn_maxarticle_adj;
 }
 
 static void prefs_send_create(void)

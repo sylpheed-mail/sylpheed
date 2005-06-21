@@ -755,6 +755,7 @@ static GSList *news_get_uncached_articles(NNTPSession *session,
 	GSList *newlist = NULL;
 	GSList *llast = NULL;
 	MsgInfo *msginfo;
+	gint max_articles;
 
 	if (rfirst) *rfirst = -1;
 	if (rlast)  *rlast  = -1;
@@ -762,6 +763,7 @@ static GSList *news_get_uncached_articles(NNTPSession *session,
 	g_return_val_if_fail(session != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
 	g_return_val_if_fail(item->folder != NULL, NULL);
+	g_return_val_if_fail(item->folder->account != NULL, NULL);
 	g_return_val_if_fail(FOLDER_TYPE(item->folder) == F_NEWS, NULL);
 
 	ok = news_select_group(session, item->path, &num, &first, &last);
@@ -794,9 +796,9 @@ static GSList *news_get_uncached_articles(NNTPSession *session,
 		begin = cache_last + 1;
 	end = last;
 
-	if (prefs_common.max_articles > 0 &&
-	    end - begin + 1 > prefs_common.max_articles)
-		begin = end - prefs_common.max_articles + 1;
+	max_articles = item->folder->account->max_nntp_articles;
+	if (max_articles > 0 && end - begin + 1 > max_articles)
+		begin = end - max_articles + 1;
 
 	log_message(_("getting xover %d - %d in %s...\n"),
 		    begin, end, item->path);

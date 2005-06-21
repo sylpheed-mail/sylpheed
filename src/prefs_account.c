@@ -96,6 +96,10 @@ static struct Receive {
 	GtkWidget *imap_frame;
 	GtkWidget *imap_auth_type_optmenu;
 
+	GtkWidget *nntp_frame;
+	GtkWidget *maxarticle_spinbtn;
+	GtkObject *maxarticle_spinbtn_adj;
+
 	GtkWidget *recvatgetall_chkbtn;
 } receive;
 
@@ -284,6 +288,10 @@ static PrefParam param[] = {
 	 &receive.imap_auth_type_optmenu,
 	 prefs_account_imap_auth_type_set_data_from_optmenu,
 	 prefs_account_imap_auth_type_set_optmenu},
+
+	{"max_nntp_articles", "300", &tmp_ac_prefs.max_nntp_articles, P_INT,
+	 &receive.maxarticle_spinbtn,
+	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
 	{"receive_at_get_all", "TRUE", &tmp_ac_prefs.recv_at_getall, P_BOOL,
 	 &receive.recvatgetall_chkbtn,
@@ -980,10 +988,18 @@ static void prefs_account_receive_create(void)
 	GtkWidget *inbox_label;
 	GtkWidget *inbox_entry;
 	GtkWidget *inbox_btn;
+
 	GtkWidget *imap_frame;
 	GtkWidget *optmenu;
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
+
+	GtkWidget *nntp_frame;
+	GtkWidget *maxarticle_label;
+	GtkWidget *maxarticle_spinbtn;
+	GtkObject *maxarticle_spinbtn_adj;
+	GtkWidget *maxarticle_desc_label;
+
 	GtkWidget *recvatgetall_chkbtn;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -1092,16 +1108,9 @@ static void prefs_account_receive_create(void)
 
 	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
-
-	label = gtk_label_new
-		(_("(Unfiltered messages will be stored in this folder)"));
-	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-	gtkut_widget_set_small_font_size (label);
+	PACK_SMALL_LABEL
+		(vbox2, label, 
+		 _("Unfiltered messages will be stored in this folder."));
 
 	PACK_FRAME (vbox1, imap_frame, _("IMAP4"));
 
@@ -1130,6 +1139,37 @@ static void prefs_account_receive_create(void)
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu), optmenu_menu);
 
+	PACK_FRAME (vbox1, nntp_frame, _("News"));
+
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (nntp_frame), vbox2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+
+	maxarticle_label = gtk_label_new
+		(_("Maximum number of articles to download"));
+	gtk_widget_show (maxarticle_label);
+	gtk_box_pack_start (GTK_BOX (hbox1), maxarticle_label, FALSE, FALSE, 0);
+	gtk_label_set_justify (GTK_LABEL (maxarticle_label), GTK_JUSTIFY_LEFT);
+
+	maxarticle_spinbtn_adj =
+		gtk_adjustment_new (300, 0, 10000, 10, 100, 100);
+	maxarticle_spinbtn = gtk_spin_button_new
+		(GTK_ADJUSTMENT (maxarticle_spinbtn_adj), 10, 0);
+	gtk_widget_show (maxarticle_spinbtn);
+	gtk_box_pack_start (GTK_BOX (hbox1), maxarticle_spinbtn,
+			    FALSE, FALSE, 0);
+	gtk_widget_set_size_request (maxarticle_spinbtn, 64, -1);
+	gtk_spin_button_set_numeric
+		(GTK_SPIN_BUTTON (maxarticle_spinbtn), TRUE);
+
+	PACK_SMALL_LABEL (vbox2, maxarticle_desc_label,
+			  _("No limit if 0 is specified."));
+
 	PACK_CHECK_BUTTON
 		(vbox1, recvatgetall_chkbtn,
 		 _("`Get all' checks for new messages on this account"));
@@ -1148,6 +1188,10 @@ static void prefs_account_receive_create(void)
 
 	receive.imap_frame             = imap_frame;
 	receive.imap_auth_type_optmenu = optmenu;
+
+	receive.nntp_frame             = nntp_frame;
+	receive.maxarticle_spinbtn     = maxarticle_spinbtn;
+	receive.maxarticle_spinbtn_adj = maxarticle_spinbtn_adj;
 
 	receive.recvatgetall_chkbtn = recvatgetall_chkbtn;
 }
@@ -1592,8 +1636,6 @@ static void prefs_account_ssl_create(void)
 
 	GtkWidget *vbox6;
 	GtkWidget *use_nonblocking_ssl_chkbtn;
-	GtkWidget *hbox;
-	GtkWidget *hbox_spc;
 	GtkWidget *label;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -1675,21 +1717,9 @@ static void prefs_account_ssl_create(void)
 
 	PACK_CHECK_BUTTON(vbox6, use_nonblocking_ssl_chkbtn,
 			  _("Use non-blocking SSL"));
-
-	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_widget_show (hbox);
-	gtk_box_pack_start (GTK_BOX (vbox6), hbox, FALSE, FALSE, 0);
-
-	hbox_spc = gtk_hbox_new (FALSE, 0);
-	gtk_widget_show (hbox_spc);
-	gtk_box_pack_start (GTK_BOX (hbox), hbox_spc, FALSE, FALSE, 0);
-	gtk_widget_set_size_request (hbox_spc, 16, -1);
-
-	label = gtk_label_new
-		(_("(Turn this off if you have problems in SSL connection)"));
-	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-	gtkut_widget_set_small_font_size (label);
+	PACK_SMALL_LABEL
+		(vbox6, label,
+		 _("Turn this off if you have problems in SSL connection."));
 
 	ssl.pop_frame               = pop_frame;
 	ssl.pop_nossl_radiobtn      = pop_nossl_radiobtn;
@@ -2186,6 +2216,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_set_sensitive(basic.pass_entry, active);
 		gtk_widget_hide(receive.pop3_frame);
 		gtk_widget_hide(receive.imap_frame);
+		gtk_widget_show(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, TRUE);
 
 		if (!tmp_ac_prefs.account_name) {
@@ -2221,6 +2252,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_set_sensitive(basic.pass_entry, FALSE);
 		gtk_widget_hide(receive.pop3_frame);
 		gtk_widget_hide(receive.imap_frame);
+		gtk_widget_hide(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, FALSE);
 
 		if (!tmp_ac_prefs.account_name) {
@@ -2256,6 +2288,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_set_sensitive(basic.pass_entry, TRUE);
 		gtk_widget_hide(receive.pop3_frame);
 		gtk_widget_show(receive.imap_frame);
+		gtk_widget_hide(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, TRUE);
 
 		if (!tmp_ac_prefs.account_name) {
@@ -2292,6 +2325,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_set_sensitive(basic.pass_entry, TRUE);
 		gtk_widget_show(receive.pop3_frame);
 		gtk_widget_hide(receive.imap_frame);
+		gtk_widget_hide(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, TRUE);
 
 		if (!tmp_ac_prefs.account_name) {

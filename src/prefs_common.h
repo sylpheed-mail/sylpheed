@@ -60,7 +60,6 @@ struct _PrefsCommon
 	gboolean chk_on_startup;
 	gboolean enable_newmsg_notify;
 	gchar *newmsg_notify_cmd;
-	gint max_articles;
 
 	/* Send */
 	gboolean use_extsend;

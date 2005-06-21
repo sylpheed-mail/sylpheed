@@ -96,6 +96,7 @@ struct _PrefsAccount
 	gchar *inbox;
 
 	gint imap_auth_type;
+	gint max_nntp_articles;
 
 	/* Send */
 	gboolean add_date;
