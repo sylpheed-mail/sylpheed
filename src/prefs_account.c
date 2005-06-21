@@ -128,6 +128,7 @@ static struct Compose {
 static struct Privacy {
 	GtkWidget *default_sign_chkbtn;
 	GtkWidget *default_encrypt_chkbtn;
+	GtkWidget *encrypt_reply_chkbtn;
 	GtkWidget *ascii_armored_chkbtn;
 	GtkWidget *clearsign_chkbtn;
 	GtkWidget *defaultkey_radiobtn;
@@ -362,6 +363,9 @@ static PrefParam param[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"default_encrypt", "FALSE", &tmp_ac_prefs.default_encrypt, P_BOOL,
 	 &privacy.default_encrypt_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"encrypt_reply", "TRUE", &tmp_ac_prefs.encrypt_reply, P_BOOL,
+	 &privacy.encrypt_reply_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"ascii_armored", "FALSE", &tmp_ac_prefs.ascii_armored, P_BOOL,
 	 &privacy.ascii_armored_chkbtn,
@@ -1436,6 +1440,7 @@ static void prefs_account_privacy_create(void)
 	GtkWidget *label;
 	GtkWidget *default_sign_chkbtn;
 	GtkWidget *default_encrypt_chkbtn;
+	GtkWidget *encrypt_reply_chkbtn;
 	GtkWidget *ascii_armored_chkbtn;
 	GtkWidget *clearsign_chkbtn;
 	GtkWidget *defaultkey_radiobtn;
@@ -1456,6 +1461,8 @@ static void prefs_account_privacy_create(void)
 			   _("Sign message by default"));
 	PACK_CHECK_BUTTON (vbox2, default_encrypt_chkbtn,
 			   _("Encrypt message by default"));
+	PACK_CHECK_BUTTON (vbox2, encrypt_reply_chkbtn,
+			   _("Encrypt when replying to encrypted message"));
 	PACK_CHECK_BUTTON (vbox2, ascii_armored_chkbtn,
 			   _("Use ASCII-armored format for encryption"));
 	PACK_CHECK_BUTTON (vbox2, clearsign_chkbtn,
@@ -1519,6 +1526,7 @@ static void prefs_account_privacy_create(void)
 
 	privacy.default_sign_chkbtn    = default_sign_chkbtn;
 	privacy.default_encrypt_chkbtn = default_encrypt_chkbtn;
+	privacy.encrypt_reply_chkbtn   = encrypt_reply_chkbtn;
 	privacy.ascii_armored_chkbtn   = ascii_armored_chkbtn;
 	privacy.clearsign_chkbtn       = clearsign_chkbtn;
 	privacy.defaultkey_radiobtn    = defaultkey_radiobtn;

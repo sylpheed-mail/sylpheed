@@ -781,6 +781,16 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 
 	compose_connect_changed_callbacks(compose);
 
+#if USE_GPGME
+	if (account->encrypt_reply &&
+	    MSG_IS_ENCRYPTED(compose->replyinfo->flags)) {
+		GtkItemFactory *ifactory;
+
+		ifactory = gtk_item_factory_from_widget(compose->menubar);
+		menu_set_active(ifactory, "/Tools/PGP Encrypt", TRUE);
+	}
+#endif
+
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
