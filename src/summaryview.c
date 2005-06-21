@@ -3896,11 +3896,17 @@ void summary_reply(SummaryView *summaryview, ComposeMode mode)
 
 	/* use selection only if the displayed message is selected */
 	if (!mlist->next && msginfo == displayed_msginfo) {
-		text = gtkut_text_view_get_selection
-			(GTK_TEXT_VIEW(summaryview->messageview->textview->text));
-		if (text && *text == '\0') {
-			g_free(text);
-			text = NULL;
+		TextView *textview;
+
+		textview = messageview_get_current_textview
+			(summaryview->messageview);
+		if (textview) {
+			text = gtkut_text_view_get_selection
+				(GTK_TEXT_VIEW(textview->text));
+			if (text && *text == '\0') {
+				g_free(text);
+				text = NULL;
+			}
 		}
 	}
 
