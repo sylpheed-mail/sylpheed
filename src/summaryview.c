@@ -236,6 +236,9 @@ static void summary_row_collapsed	(GtkTreeView		*treeview,
 					 GtkTreePath		*path,
 					 SummaryView		*summaryview);
 
+static void summary_columns_changed	(GtkTreeView		*treeview,
+					 SummaryView		*summaryview);
+
 static gboolean summary_select_func	(GtkTreeSelection	*treeview,
 					 GtkTreeModel		*model,
 					 GtkTreePath		*path,
@@ -4176,6 +4179,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	gtk_tree_view_column_set_fixed_width(column, width);		\
 	gtk_tree_view_column_set_min_width(column, 8);			\
 	gtk_tree_view_column_set_sort_column_id(column, col);		\
+	gtk_tree_view_column_set_reorderable(column, TRUE);		\
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);	\
 	g_signal_connect(G_OBJECT(column->button), "clicked",		\
 			 G_CALLBACK(summary_column_clicked),		\
@@ -4231,6 +4235,9 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	g_signal_connect(G_OBJECT(treeview), "row-collapsed",
 			 G_CALLBACK(summary_row_collapsed), summaryview);
 
+	g_signal_connect(G_OBJECT(treeview), "columns-changed",
+			 G_CALLBACK(summary_columns_changed), summaryview);
+
 	gtk_tree_view_enable_model_drag_source
 		(GTK_TREE_VIEW(treeview),
 		 0, summary_drag_types, N_DRAG_TYPES,
@@ -4253,6 +4260,9 @@ void summary_set_column_order(SummaryView *summaryview)
 	GtkTreeViewColumn *column, *last_column = NULL;
 	gint pos;
 
+	g_signal_handlers_block_by_func(summaryview->treeview,
+					summary_columns_changed, summaryview);
+
 	col_state = prefs_summary_column_get_config();
 
 	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++) {
@@ -4272,6 +4282,38 @@ void summary_set_column_order(SummaryView *summaryview)
 			    "pos %d : type %d, vislble %d\n",
 			    pos, type, summaryview->col_state[pos].visible);
 	}
+
+	g_signal_handlers_unblock_by_func(summaryview->treeview,
+					  summary_columns_changed, summaryview);
+}
+
+void summary_get_column_order(SummaryView *summaryview)
+{
+	GtkTreeViewColumn *column;
+	GList *columns, *cur;
+	gint pos = 0;
+	SummaryColumnType type;
+	gboolean visible;
+
+	columns = gtk_tree_view_get_columns
+		(GTK_TREE_VIEW(summaryview->treeview));
+
+	for (cur = columns; cur != NULL && pos < N_SUMMARY_VISIBLE_COLS;
+	     cur = cur->next, pos++) {
+		column = (GtkTreeViewColumn *)cur->data;
+		type = gtk_tree_view_column_get_sort_column_id(column);
+		visible = gtk_tree_view_column_get_visible(column);
+		summaryview->col_state[pos].type = type;
+		summaryview->col_state[pos].visible = visible;
+		summaryview->col_pos[type] = pos;
+		debug_print("summary_get_column_order: "
+			    "pos: %d, type: %d, visible: %d\n",
+			    pos, type, visible);
+	}
+
+	prefs_summary_column_set_config(summaryview->col_state);
+
+	g_list_free(columns);
 }
 
 
@@ -4550,6 +4592,12 @@ static void summary_row_collapsed(GtkTreeView *treeview, GtkTreeIter *iter,
 		gtk_tree_store_set(summaryview->store, iter, S_COL_BOLD, TRUE,
 				   -1);
 	}
+}
+
+static void summary_columns_changed(GtkTreeView *treeview,
+				    SummaryView *summaryview)
+{
+	summary_get_column_order(summaryview);
 }
 
 static gboolean summary_select_func(GtkTreeSelection *treeview,

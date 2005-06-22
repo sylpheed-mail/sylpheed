@@ -258,5 +258,6 @@ void summary_set_colorlabel	  (SummaryView		*summaryview,
 				   GtkWidget		*widget);
 
 void summary_set_column_order	  (SummaryView		*summaryview);
+void summary_get_column_order	  (SummaryView		*summaryview);
 
 #endif /* __SUMMARY_H__ */
