@@ -2792,7 +2792,6 @@ void prefs_quote_colors_dialog(void)
 	gtk_main();
 	gtk_widget_hide(quote_color_win);
 
-	textview_update_message_colors();
 	main_window_reflect_prefs_all();
 }
 
@@ -3027,7 +3026,10 @@ static gboolean quote_colors_set_dialog_key_pressed(GtkWidget *widget,
 						    GdkEventKey *event,
 						    gpointer data)
 {
-	gtk_widget_destroy(color_dialog);
+	if (event && event->keyval == GDK_Escape) {
+		gtk_widget_destroy(color_dialog);
+		return TRUE;
+	}
 	return FALSE;
 }
 

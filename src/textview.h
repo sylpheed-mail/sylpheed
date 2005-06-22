@@ -26,6 +26,7 @@
 
 #include <glib.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtktexttag.h>
 
 typedef struct _TextView	TextView;
 
@@ -41,6 +42,12 @@ struct _TextView
 	GtkWidget *popup_menu;
 	GtkItemFactory *popup_factory;
 
+	GtkTextTag *quote0_tag;
+	GtkTextTag *quote1_tag;
+	GtkTextTag *quote2_tag;
+	GtkTextTag *link_tag;
+	GtkTextTag *hover_link_tag;
+
 	GSList *uri_list;
 	gint body_pos;
 
@@ -51,7 +58,6 @@ struct _TextView
 
 TextView *textview_create		(void);
 void textview_init			(TextView	*textview);
-void textview_update_message_colors	(void);
 void textview_reflect_prefs		(TextView	*textview);
 
 void textview_show_message	(TextView	*textview,

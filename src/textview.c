@@ -296,8 +296,9 @@ TextView *textview_create(void)
 	return textview;
 }
 
-static void textview_create_tags(GtkTextView *text, TextView *textview)
+static void textview_create_tags(TextView *textview)
 {
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
 	GtkTextBuffer *buffer;
 	static PangoFontDescription *font_desc;
 
@@ -316,24 +317,31 @@ static void textview_create_tags(GtkTextView *text, TextView *textview)
 	gtk_text_buffer_create_tag(buffer, "header_title",
 				   "weight", PANGO_WEIGHT_BOLD,
 				   NULL);
-	gtk_text_buffer_create_tag(buffer, "quote0",
-				   "foreground-gdk", &quote_colors[0],
-				   NULL);
-	gtk_text_buffer_create_tag(buffer, "quote1",
-				   "foreground-gdk", &quote_colors[1],
-				   NULL);
-	gtk_text_buffer_create_tag(buffer, "quote2",
-				   "foreground-gdk", &quote_colors[2],
-				   NULL);
+
+	textview->quote0_tag =
+		gtk_text_buffer_create_tag(buffer, "quote0",
+					   "foreground-gdk", &quote_colors[0],
+					   NULL);
+	textview->quote1_tag =
+		gtk_text_buffer_create_tag(buffer, "quote1",
+					   "foreground-gdk", &quote_colors[1],
+					   NULL);
+	textview->quote2_tag =
+		gtk_text_buffer_create_tag(buffer, "quote2",
+					   "foreground-gdk", &quote_colors[2],
+					   NULL);
+	textview->link_tag =
+		gtk_text_buffer_create_tag(buffer, "link",
+					   "foreground-gdk", &uri_color,
+					   NULL);
+	textview->hover_link_tag =
+		gtk_text_buffer_create_tag(buffer, "hover-link",
+					   "foreground-gdk", &uri_color,
+					   "underline", PANGO_UNDERLINE_SINGLE,
+					   NULL);
+
 	gtk_text_buffer_create_tag(buffer, "emphasis",
 				   "foreground-gdk", &emphasis_color,
-				   NULL);
-	gtk_text_buffer_create_tag(buffer, "link",
-				   "foreground-gdk", &uri_color,
-				   NULL);
-	gtk_text_buffer_create_tag(buffer, "hover-link",
-				   "foreground-gdk", &uri_color,
-				   "underline", PANGO_UNDERLINE_SINGLE,
 				   NULL);
 #if USE_GPGME
 	gtk_text_buffer_create_tag(buffer, "good-signature",
@@ -358,18 +366,19 @@ void textview_init(TextView *textview)
 	if (!regular_cursor)
 		regular_cursor = gdk_cursor_new(GDK_XTERM);
 
+	textview_create_tags(textview);
 	textview_reflect_prefs(textview);
 	textview_set_all_headers(textview, FALSE);
 	textview_set_font(textview, NULL);
-	textview_create_tags(GTK_TEXT_VIEW(textview->text), textview);
 }
 
-void textview_update_message_colors(void)
+static void textview_update_message_colors(void)
 {
 	GdkColor black = {0, 0, 0, 0};
 
 	if (prefs_common.enable_color) {
-		/* grab the quote colors, converting from an int to a GdkColor */
+		/* grab the quote colors, converting from an int to a
+		   GdkColor */
 		gtkut_convert_int_to_gdk_color(prefs_common.quote_level1_col,
 					       &quote_colors[0]);
 		gtkut_convert_int_to_gdk_color(prefs_common.quote_level2_col,
@@ -384,9 +393,23 @@ void textview_update_message_colors(void)
 	}
 }
 
+static void textview_update_tags(TextView *textview)
+{
+	g_object_set(textview->quote0_tag, "foreground-gdk", &quote_colors[0],
+		     NULL);
+	g_object_set(textview->quote1_tag, "foreground-gdk", &quote_colors[1],
+		     NULL);
+	g_object_set(textview->quote2_tag, "foreground-gdk", &quote_colors[2],
+		     NULL);
+	g_object_set(textview->link_tag, "foreground-gdk", &uri_color, NULL);
+	g_object_set(textview->hover_link_tag, "foreground-gdk", &uri_color,
+		     NULL);
+}
+
 void textview_reflect_prefs(TextView *textview)
 {
 	textview_update_message_colors();
+	textview_update_tags(textview);
 	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview->text),
 					 prefs_common.textview_cursor_visible);
 }
