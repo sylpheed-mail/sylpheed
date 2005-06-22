@@ -230,9 +230,11 @@ struct _PrefsCommon
 	gboolean ask_on_clean;
 	gboolean warn_queued_on_exit;
 
-	gint io_timeout_secs;
-
 	gint logwin_line_limit;
+
+	/* Advanced */
+	gboolean strict_cache_check;
+	gint io_timeout_secs;
 
 	/* Filtering */
 	GSList *fltlist;

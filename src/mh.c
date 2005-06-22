@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@
 #include "procmsg.h"
 #include "procheader.h"
 #include "utils.h"
+#include "prefs_common.h"
 
 static void	mh_folder_init		(Folder		*folder,
 					 const gchar	*name,
@@ -210,15 +211,31 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 				item->cache_dirty = TRUE;
 		}
 	} else if (use_cache) {
-		GSList *newlist;
+		GSList *newlist, *cur, *next;
 
-		mlist = procmsg_read_cache(item, TRUE);
+		mlist = procmsg_read_cache
+			(item, prefs_common.strict_cache_check);
 		msg_table = procmsg_msg_hash_table_create(mlist);
 		newlist = mh_get_uncached_msgs(msg_table, item);
 		if (newlist)
 			item->cache_dirty = TRUE;
 		if (msg_table)
 			g_hash_table_destroy(msg_table);
+
+		if (!prefs_common.strict_cache_check) {
+			/* remove nonexistent messages */
+			for (cur = mlist; cur != NULL; cur = next) {
+				MsgInfo *msginfo = (MsgInfo *)cur->data;
+				next = cur->next;
+				if (!MSG_IS_CACHED(msginfo->flags)) {
+					debug_print("removing nonexistent message %d from cache\n", msginfo->msgnum);
+					mlist = g_slist_remove(mlist, msginfo);
+					procmsg_msginfo_free(msginfo);
+					item->cache_dirty = TRUE;
+					item->mark_dirty = TRUE;
+				}
+			}
+		}
 
 		mlist = g_slist_concat(mlist, newlist);
 	} else {
@@ -987,7 +1004,9 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 			msginfo = g_hash_table_lookup
 				(msg_table, GUINT_TO_POINTER(num));
 
-			if (!msginfo) {
+			if (msginfo) {
+				MSG_SET_TMP_FLAGS(msginfo->flags, MSG_CACHED);
+			} else {
 				/* not found in the cache (uncached message) */
 				msginfo = mh_parse_msg(d->d_name, item);
 				if (!msginfo) continue;

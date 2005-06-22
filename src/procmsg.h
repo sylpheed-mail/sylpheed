@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,6 +89,7 @@ typedef guint32 MsgPermFlags;
 #define MSG_IMAP		(1U << 19)
 #define MSG_NEWS		(1U << 20)
 #define MSG_SIGNED		(1U << 21)
+#define MSG_CACHED		(1U << 28)
 #define MSG_MIME		(1U << 29)
 #define MSG_INVALID		(1U << 30)
 #define MSG_RECEIVED		(1U << 31)
@@ -129,6 +130,7 @@ typedef guint32 MsgTmpFlags;
 #define MSG_IS_IMAP(msg)		(((msg).tmp_flags & MSG_IMAP) != 0)
 #define MSG_IS_NEWS(msg)		(((msg).tmp_flags & MSG_NEWS) != 0)
 #define MSG_IS_SIGNED(msg)		(((msg).tmp_flags & MSG_SIGNED) != 0)
+#define MSG_IS_CACHED(msg)		(((msg).tmp_flags & MSG_CACHED) != 0)
 #define MSG_IS_MIME(msg)		(((msg).tmp_flags & MSG_MIME) != 0)
 #define MSG_IS_INVALID(msg)		(((msg).tmp_flags & MSG_INVALID) != 0)
 #define MSG_IS_RECEIVED(msg)		(((msg).tmp_flags & MSG_RECEIVED) != 0)

@@ -196,10 +196,13 @@ static struct Other {
 	GtkWidget *checkbtn_cleanonexit;
 	GtkWidget *checkbtn_askonclean;
 	GtkWidget *checkbtn_warnqueued;
+} other;
 
+static struct Advanced {
+	GtkWidget *checkbtn_strict_cache_check;
 	GtkWidget *spinbtn_iotimeout;
 	GtkObject *spinbtn_iotimeout_adj;
-} other;
+} advanced;
 
 static struct MessageColorButtons {
 	GtkWidget *quote_level1_btn;
@@ -693,12 +696,16 @@ static PrefParam param[] = {
 	 P_BOOL, &other.checkbtn_warnqueued,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
-	{"io_timeout_secs", "60", &prefs_common.io_timeout_secs,
-	 P_INT, &other.spinbtn_iotimeout,
-	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
-
 	{"logwindow_line_limit", "1000", &prefs_common.logwin_line_limit,
 	 P_INT, NULL, NULL, NULL},
+
+	/* Advanced */
+	{"strict_cache_check", "FALSE", &prefs_common.strict_cache_check,
+	 P_BOOL, &advanced.checkbtn_strict_cache_check,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"io_timeout_secs", "60", &prefs_common.io_timeout_secs,
+	 P_INT, &advanced.spinbtn_iotimeout,
+	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
 	{NULL, NULL, NULL, P_OTHER, NULL, NULL, NULL}
 };
@@ -719,6 +726,7 @@ static void prefs_privacy_create	(void);
 #endif
 static void prefs_interface_create	(void);
 static void prefs_other_create		(void);
+static void prefs_advanced_create	(void);
 
 static void date_format_ok_btn_clicked		(GtkButton	*button,
 						 GtkWidget     **widget);
@@ -947,6 +955,8 @@ static void prefs_common_create(void)
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Interface"), page++);
 	prefs_other_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Other"),     page++);
+	prefs_advanced_create();
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"),  page++);
 
 	gtk_widget_show_all(dialog.window);
 }
@@ -2306,10 +2316,6 @@ static void prefs_other_create(void)
 	GtkWidget *checkbtn_askonclean;
 	GtkWidget *checkbtn_warnqueued;
 
-	GtkWidget *label_iotimeout;
-	GtkWidget *spinbtn_iotimeout;
-	GtkObject *spinbtn_iotimeout_adj;
-
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
@@ -2414,6 +2420,50 @@ static void prefs_other_create(void)
 	PACK_CHECK_BUTTON (vbox_exit, checkbtn_warnqueued,
 			   _("Warn if there are queued messages"));
 
+	other.uri_combo = uri_combo;
+	other.uri_entry = uri_entry;
+	other.printcmd_entry = printcmd_entry;
+
+	other.exteditor_combo = exteditor_combo;
+	other.exteditor_entry = exteditor_entry;
+
+	other.checkbtn_addaddrbyclick = checkbtn_addaddrbyclick;
+
+	other.checkbtn_confonexit  = checkbtn_confonexit;
+	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
+	other.checkbtn_askonclean  = checkbtn_askonclean;
+	other.checkbtn_warnqueued  = checkbtn_warnqueued;
+}
+
+static void prefs_advanced_create(void)
+{
+	GtkWidget *vbox1;
+
+	GtkWidget *vbox2;
+	GtkWidget *checkbtn_strict_cache_check;
+	GtkWidget *label;
+
+	GtkWidget *hbox1;
+	GtkWidget *label_iotimeout;
+	GtkWidget *spinbtn_iotimeout;
+	GtkObject *spinbtn_iotimeout_adj;
+
+	vbox1 = gtk_vbox_new (FALSE, VSPACING);
+	gtk_widget_show (vbox1);
+	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
+
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_strict_cache_check,
+			   _("Enable strict checking of the integrity of summary caches"));
+	PACK_SMALL_LABEL
+		(vbox2, label,
+		 _("Enable this if the contents of folders have the possibility of modification by other applications.\n"
+		   "This option will degrade the performance of displaying summary."));
+
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
@@ -2435,22 +2485,10 @@ static void prefs_other_create(void)
 	gtk_widget_show (label_iotimeout);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_iotimeout, FALSE, FALSE, 0);
 
-	other.uri_combo = uri_combo;
-	other.uri_entry = uri_entry;
-	other.printcmd_entry = printcmd_entry;
+	advanced.checkbtn_strict_cache_check = checkbtn_strict_cache_check;
 
-	other.exteditor_combo = exteditor_combo;
-	other.exteditor_entry = exteditor_entry;
-
-	other.checkbtn_addaddrbyclick = checkbtn_addaddrbyclick;
-
-	other.checkbtn_confonexit  = checkbtn_confonexit;
-	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
-	other.checkbtn_askonclean  = checkbtn_askonclean;
-	other.checkbtn_warnqueued  = checkbtn_warnqueued;
-
-	other.spinbtn_iotimeout     = spinbtn_iotimeout;
-	other.spinbtn_iotimeout_adj = spinbtn_iotimeout_adj;
+	advanced.spinbtn_iotimeout     = spinbtn_iotimeout;
+	advanced.spinbtn_iotimeout_adj = spinbtn_iotimeout_adj;
 }
 
 static void date_format_ok_btn_clicked(GtkButton *button, GtkWidget **widget)
