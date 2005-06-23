@@ -318,7 +318,7 @@ FolderView *folderview_create(void)
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview),
 					COL_FOLDER_NAME);
 	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), FALSE);
-	//g_object_set(treeview, "fixed-height-mode", TRUE, NULL);
+	/* g_object_set(treeview, "fixed-height-mode", TRUE, NULL); */
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
@@ -1543,12 +1543,18 @@ static gboolean folderview_button_pressed(GtkWidget *widget,
 	if (event->button == 1 || event->button == 2) {
 		folderview->open_folder = TRUE;
 	} else if (event->button == 3) {
-		gtk_tree_view_set_cursor(treeview, path, NULL, FALSE);
+		if (folderview->selected) {
+			folderview->prev_selected =
+				gtk_tree_row_reference_copy
+					(folderview->selected);
+		}
+		gtk_tree_selection_select_path(folderview->selection, path);
 		folderview_menu_popup(folderview, event);
+		gtk_tree_path_free(path);
+		return TRUE;
 	}
 
 	gtk_tree_path_free(path);
-
 	return FALSE;
 }
 
@@ -1745,13 +1751,14 @@ static void folderview_popup_close(GtkMenuShell *menu_shell,
 {
 	GtkTreePath *path;
 
-	if (!folderview->opened) return;
+	if (!folderview->prev_selected) return;
 
-	path = gtk_tree_row_reference_get_path(folderview->opened);
+	path = gtk_tree_row_reference_get_path(folderview->prev_selected);
+	gtk_tree_row_reference_free(folderview->prev_selected);
+	folderview->prev_selected = NULL;
 	if (!path)
 		return;
-	gtk_tree_view_set_cursor(GTK_TREE_VIEW(folderview->treeview), path,
-				 NULL, FALSE);
+	gtk_tree_selection_select_path(folderview->selection, path);
 	gtk_tree_path_free(path);
 }
 

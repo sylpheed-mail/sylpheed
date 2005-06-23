@@ -51,6 +51,7 @@ struct _FolderView
 
 	GtkTreeRowReference *selected;
 	GtkTreeRowReference *opened;
+	GtkTreeRowReference *prev_selected;
 
 	gboolean open_folder;
 
