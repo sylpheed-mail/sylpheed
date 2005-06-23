@@ -542,7 +542,7 @@ static void foldersel_new_folder(GtkButton *button, gpointer data)
 	gtk_tree_path_free(new_child_p);
 	gtk_tree_path_free(selected_p);
 
-	folderview_append_item(folderview_get(), NULL, new_item);
+	folderview_append_item(folderview_get(), NULL, new_item, TRUE);
 	folder_write_list();
 }
 

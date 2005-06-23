@@ -86,7 +86,8 @@ void folderview_update_opened_msg_num	(FolderView	*folderview);
 
 gboolean folderview_append_item		(FolderView	*folderview,
 					 GtkTreeIter	*iter,
-					 FolderItem	*item);
+					 FolderItem	*item,
+					 gboolean	 expand_parent);
 
 void folderview_check_new		(Folder		*folder);
 void folderview_check_new_all		(void);

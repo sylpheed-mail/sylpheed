@@ -718,7 +718,7 @@ void folderview_update_opened_msg_num(FolderView *folderview)
 }
 
 gboolean folderview_append_item(FolderView *folderview, GtkTreeIter *iter,
-				FolderItem *item)
+				FolderItem *item, gboolean expand_parent)
 {
 	FolderItem *parent_item;
 	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
@@ -746,6 +746,15 @@ gboolean folderview_append_item(FolderView *folderview, GtkTreeIter *iter,
 		folderview_update_row(folderview, &child);
 		if (iter)
 			*iter = child;
+		if (expand_parent && iter_p) {
+			GtkTreePath *path;
+
+			path = gtk_tree_model_get_path(model, iter_p);
+			gtk_tree_view_expand_row
+				(GTK_TREE_VIEW(folderview->treeview),
+				 path, FALSE);
+			gtk_tree_path_free(path);
+		}
 		return TRUE;
 	}
 
@@ -1252,7 +1261,7 @@ static void folderview_insert_item_recursive(FolderView *folderview,
 
 	g_return_if_fail(item != NULL);
 
-	valid = folderview_append_item(folderview, &iter, item);
+	valid = folderview_append_item(folderview, &iter, item, FALSE);
 	g_return_if_fail(valid == TRUE);
 
 	for (node = item->node->children; node != NULL; node = node->next) {
@@ -1926,7 +1935,7 @@ static void folderview_new_folder_cb(FolderView *folderview, guint action,
 		return;
 	}
 
-	folderview_append_item(folderview, NULL, new_item);
+	folderview_append_item(folderview, NULL, new_item, TRUE);
 	folder_write_list();
 }
 
@@ -2287,7 +2296,7 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 
 		newitem = folder_item_new(name, name);
 		folder_item_append(rootitem, newitem);
-		folderview_append_item(folderview, NULL, newitem);
+		folderview_append_item(folderview, NULL, newitem, TRUE);
 	}
 
 	if (new_subscr) {
