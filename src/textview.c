@@ -1893,7 +1893,6 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
 
-
 	gdk_window_get_pointer(widget->window, &px, &py, NULL);
 	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
 					      GTK_TEXT_WINDOW_WIDGET,
