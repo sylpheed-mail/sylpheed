@@ -191,6 +191,9 @@ static gboolean textview_visibility_notify	(GtkWidget	*widget,
 static void textview_populate_popup		(GtkWidget	*widget,
 						 GtkMenu	*menu,
 						 TextView	*textview);
+static void textview_popup_menu_activate_open_uri_cb
+						(GtkMenuItem	*menuitem,
+						 gpointer	 data);
 static void textview_popup_menu_activate_add_address_cb
 						(GtkMenuItem	*menuitem,
 						 gpointer	 data);
@@ -1868,6 +1871,15 @@ static gboolean textview_visibility_notify(GtkWidget *widget,
 	return FALSE;
 }
 
+#define ADD_MENU(label, func)						\
+{									\
+	menuitem = gtk_menu_item_new_with_mnemonic(label);		\
+	g_signal_connect(menuitem, "activate", G_CALLBACK(func), uri);	\
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);		\
+	g_object_set_data(G_OBJECT(menuitem), "textview", textview);	\
+	gtk_widget_show(menuitem);					\
+}
+
 static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 				    TextView *textview)
 {
@@ -1878,9 +1890,9 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	gboolean on_link;
 	RemoteURI *uri;
 	GdkPixbuf *pixbuf;
-	const gchar *copy_link_label;
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
+
 
 	gdk_window_get_pointer(widget->window, &px, &py, NULL);
 	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
@@ -1896,14 +1908,8 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
 		gtk_widget_show(separator);
 
-		menuitem = gtk_menu_item_new_with_mnemonic
-			(_("Sa_ve this image as..."));
-		g_signal_connect
-			(menuitem, "activate",
-			 G_CALLBACK(textview_popup_menu_activate_image_cb),
-			 uri);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-		gtk_widget_show(menuitem);
+		ADD_MENU(_("Sa_ve this image as..."),
+			 textview_popup_menu_activate_image_cb);
 	}
 	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
 	if (!on_link)
@@ -1918,23 +1924,45 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	gtk_widget_show(separator);
 
 	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
-		menuitem = gtk_menu_item_new_with_mnemonic
-			(_("Add to address _book..."));
-		g_signal_connect
-			(menuitem, "activate",
-			 G_CALLBACK(textview_popup_menu_activate_add_address_cb), uri);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-		gtk_widget_show(menuitem);
+		ADD_MENU(_("Compose _new message"),
+			 textview_popup_menu_activate_open_uri_cb);
+		ADD_MENU(_("Add to address _book..."),
+			 textview_popup_menu_activate_add_address_cb);
+		ADD_MENU(_("Copy this add_ress"),
+			 textview_popup_menu_activate_copy_cb);
+	} else {
+		ADD_MENU(_("_Open with Web browser"),
+			 textview_popup_menu_activate_open_uri_cb);
+		ADD_MENU(_("Copy this _link"),
+			 textview_popup_menu_activate_copy_cb);
+	}
+}
 
-		copy_link_label = _("Copy this add_ress");
-	} else
-		copy_link_label = _("Copy this _link");
+static void textview_popup_menu_activate_open_uri_cb(GtkMenuItem *menuitem,
+						     gpointer data)
+{
+	RemoteURI *uri = (RemoteURI *)data;
+	TextView *textview;
 
-	menuitem = gtk_menu_item_new_with_mnemonic(copy_link_label);
-	g_signal_connect(menuitem, "activate",
-			 G_CALLBACK(textview_popup_menu_activate_copy_cb), uri);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	gtk_widget_show(menuitem);
+	g_return_if_fail(uri != NULL);
+
+	if (!uri->uri)
+		return;
+
+	textview = g_object_get_data(G_OBJECT(menuitem), "textview");
+	g_return_if_fail(textview != NULL);
+
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
+		PrefsAccount *ac = NULL;
+		MsgInfo *msginfo = textview->messageview->msginfo;
+
+		if (msginfo && msginfo->folder)
+			ac = account_find_from_item(msginfo->folder);
+		if (ac && ac->protocol == A_NNTP)
+			ac = NULL;
+		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
+	} else if (textview_uri_security_check(textview, uri) == TRUE)
+		open_uri(uri->uri, prefs_common.uri_cmd);
 }
 
 static void textview_popup_menu_activate_add_address_cb(GtkMenuItem *menuitem,

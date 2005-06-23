@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-22 16:40+0900\n"
+"POT-Creation-Date: 2005-06-23 17:35+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -134,14 +134,14 @@ msgid "Delete account"
 msgstr "删除帐号"
 
 #: src/account.c:815 src/compose.c:2674 src/compose.c:5097
-#: src/folderview.c:2036 src/folderview.c:2132 src/folderview.c:2178
-#: src/folderview.c:2320 src/folderview.c:2366
+#: src/folderview.c:2043 src/folderview.c:2139 src/folderview.c:2185
+#: src/folderview.c:2327 src/folderview.c:2373
 msgid "Yes"
 msgstr "是"
 
 #: src/account.c:815 src/compose.c:2674 src/compose.c:5097
-#: src/folderview.c:2036 src/folderview.c:2132 src/folderview.c:2178
-#: src/folderview.c:2320 src/folderview.c:2366
+#: src/folderview.c:2043 src/folderview.c:2139 src/folderview.c:2185
+#: src/folderview.c:2327 src/folderview.c:2373
 msgid "+No"
 msgstr "+否"
 
@@ -365,9 +365,9 @@ msgstr "/新建文件夹(_F)"
 #: src/folderview.c:229 src/folderview.c:231 src/folderview.c:235
 #: src/folderview.c:245 src/folderview.c:247 src/folderview.c:249
 #: src/folderview.c:253 src/folderview.c:263 src/folderview.c:265
-#: src/folderview.c:268 src/summaryview.c:374 src/summaryview.c:378
-#: src/summaryview.c:382 src/summaryview.c:392 src/summaryview.c:394
-#: src/summaryview.c:397 src/summaryview.c:403
+#: src/folderview.c:268 src/summaryview.c:377 src/summaryview.c:381
+#: src/summaryview.c:385 src/summaryview.c:395 src/summaryview.c:397
+#: src/summaryview.c:400 src/summaryview.c:406
 msgid "/---"
 msgstr "/---"
 
@@ -376,7 +376,7 @@ msgstr "/---"
 msgid "/_Edit"
 msgstr "/编辑(_E)"
 
-#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:381
+#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:384
 msgid "/_Delete"
 msgstr "/删除(_D)"
 
@@ -589,7 +589,7 @@ msgstr "个人地址"
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2021
+#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2072
 msgid "Warning"
 msgstr "警告"
 
@@ -636,7 +636,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:4066
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:4069
 msgid "None"
 msgstr "没有"
 
@@ -727,7 +727,7 @@ msgid "/_Edit/Aut_o wrapping"
 msgstr "/编辑(_E)/自动折行(_O)"
 
 #: src/compose.c:523 src/mainwindow.c:507 src/messageview.c:150
-#: src/summaryview.c:398
+#: src/summaryview.c:401
 msgid "/_View"
 msgstr "/查看(_V)"
 
@@ -1069,7 +1069,7 @@ msgstr "MIME 类型"
 
 #. S_COL_DATE
 #: src/compose.c:3975 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4210
+#: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4214
 msgid "Size"
 msgstr "大小"
 
@@ -1399,12 +1399,12 @@ msgstr "编辑文件夹"
 msgid "Input the new name of folder:"
 msgstr "输入文件夹的新名字："
 
-#: src/editgroup.c:520 src/foldersel.c:496 src/folderview.c:1885
-#: src/folderview.c:1891
+#: src/editgroup.c:520 src/foldersel.c:496 src/folderview.c:1892
+#: src/folderview.c:1898
 msgid "New folder"
 msgstr "新建文件夹"
 
-#: src/editgroup.c:521 src/foldersel.c:497 src/folderview.c:1892
+#: src/editgroup.c:521 src/foldersel.c:497 src/folderview.c:1899
 msgid "Input the name of new folder:"
 msgstr "输入新建文件夹的名字："
 
@@ -1441,7 +1441,7 @@ msgstr "成功连接到服务器"
 msgid "Could not connect to server"
 msgstr "无法连接到服务器"
 
-#: src/editldap.c:221 src/editldap.c:541
+#: src/editldap.c:221 src/editldap.c:542
 msgid "Edit LDAP Server"
 msgstr "编辑LDAP服务器"
 
@@ -1477,23 +1477,23 @@ msgstr "绑定 DN"
 msgid "Bind Password"
 msgstr "绑定密码"
 
-#: src/editldap.c:427
+#: src/editldap.c:428
 msgid "Timeout (secs)"
 msgstr "超时(秒)"
 
-#: src/editldap.c:441
+#: src/editldap.c:442
 msgid "Maximum Entries"
 msgstr "最大项数"
 
-#: src/editldap.c:468 src/prefs_account.c:711
+#: src/editldap.c:469 src/prefs_account.c:711
 msgid "Basic"
 msgstr "基本"
 
-#: src/editldap.c:469
+#: src/editldap.c:470
 msgid "Extended"
 msgstr "扩展"
 
-#: src/editldap.c:553
+#: src/editldap.c:554
 msgid "Add New LDAP Server"
 msgstr "添加新的LDAP服务器"
 
@@ -1593,21 +1593,21 @@ msgstr "废件箱"
 msgid "Drafts"
 msgstr "草稿箱"
 
-#: src/foldersel.c:498 src/folderview.c:1889 src/folderview.c:1893
+#: src/foldersel.c:498 src/folderview.c:1896 src/folderview.c:1900
 msgid "NewFolder"
 msgstr "新文件夹"
 
-#: src/foldersel.c:506 src/folderview.c:1901 src/folderview.c:1957
+#: src/foldersel.c:506 src/folderview.c:1908 src/folderview.c:1964
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "字符“%c”不能包含在文件夹名字中。"
 
-#: src/foldersel.c:516 src/folderview.c:1911 src/folderview.c:1964
+#: src/foldersel.c:516 src/folderview.c:1918 src/folderview.c:1971
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "文件夹“%s”已存在。"
 
-#: src/foldersel.c:524 src/folderview.c:1918
+#: src/foldersel.c:524 src/folderview.c:1925
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "无法创建文件夹“%s”。"
@@ -1707,22 +1707,22 @@ msgstr "重建文件夹树失败。"
 msgid "Checking for new messages in all folders..."
 msgstr "正在检查所有文件夹中的新邮件..."
 
-#: src/folderview.c:1651
+#: src/folderview.c:1657
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "选中文件夹 %s\n"
 
-#: src/folderview.c:1801
+#: src/folderview.c:1808
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "正在下载 %s 中的邮件..."
 
-#: src/folderview.c:1836
+#: src/folderview.c:1843
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "下载“%s”中的邮件时发生错误。"
 
-#: src/folderview.c:1886
+#: src/folderview.c:1893
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -1732,16 +1732,16 @@ msgstr ""
 "(如果您要创建一个保存子文件夹的文件夹，\n"
 "在名字的最后添加“/”)"
 
-#: src/folderview.c:1948
+#: src/folderview.c:1955
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "输入“%s”的新名字："
 
-#: src/folderview.c:1949
+#: src/folderview.c:1956
 msgid "Rename folder"
 msgstr "重命名文件件"
 
-#: src/folderview.c:2032
+#: src/folderview.c:2039
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -1752,24 +1752,24 @@ msgstr ""
 "“%s”下的所有文件夹和邮件将被删除。\n"
 "您真的要删除吗？"
 
-#: src/folderview.c:2035
+#: src/folderview.c:2042
 msgid "Delete folder"
 msgstr "删除文件夹"
 
-#: src/folderview.c:2059
+#: src/folderview.c:2066
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "无法删除文件夹“%s”。"
 
-#: src/folderview.c:2093
+#: src/folderview.c:2100
 msgid "Empty trash"
 msgstr "清空废件箱"
 
-#: src/folderview.c:2093
+#: src/folderview.c:2100
 msgid "Empty all messages in trash?"
 msgstr "清空废件箱里的所有信件？"
 
-#: src/folderview.c:2129
+#: src/folderview.c:2136
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -1778,34 +1778,34 @@ msgstr ""
 "真的要删除邮件箱“%s”？\n"
 "(邮件不会从磁盘删除)"
 
-#: src/folderview.c:2131
+#: src/folderview.c:2138
 msgid "Remove mailbox"
 msgstr "删除邮箱"
 
-#: src/folderview.c:2176
+#: src/folderview.c:2183
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "真的要删除 IMAP4 帐号“%s”？"
 
-#: src/folderview.c:2177
+#: src/folderview.c:2184
 msgid "Delete IMAP4 account"
 msgstr "删除 IMAP4 帐号"
 
-#: src/folderview.c:2318
+#: src/folderview.c:2325
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "真的要删除新闻组“%s”？"
 
-#: src/folderview.c:2319
+#: src/folderview.c:2326
 msgid "Delete newsgroup"
 msgstr "删除新闻组"
 
-#: src/folderview.c:2364
+#: src/folderview.c:2371
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "真到要删除新闻组帐号“%s”？"
 
-#: src/folderview.c:2365
+#: src/folderview.c:2372
 msgid "Delete news account"
 msgstr "删除新闻组帐号"
 
@@ -1853,7 +1853,7 @@ msgstr "未知"
 msgid "Can't retrieve newsgroup list."
 msgstr "无法取回新闻组列表。"
 
-#: src/grouplistdialog.c:450 src/summaryview.c:731
+#: src/grouplistdialog.c:450 src/summaryview.c:734
 msgid "Done."
 msgstr "完成。"
 
@@ -1874,11 +1874,11 @@ msgstr "标题："
 msgid "Creating header view...\n"
 msgstr "正在创建标题视图...\n"
 
-#: src/headerview.c:180 src/summaryview.c:1899
+#: src/headerview.c:180 src/summaryview.c:1902
 msgid "(No From)"
 msgstr "(没有发件人)"
 
-#: src/headerview.c:195 src/summaryview.c:1896
+#: src/headerview.c:195 src/summaryview.c:1899
 msgid "(No Subject)"
 msgstr "(没有主题)"
 
@@ -2751,7 +2751,7 @@ msgstr "/查看(_V)/字符编码(_E)/中文 (ISO-2022-_CN)"
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/查看(_V)/字符编码(_E)/朝鲜语 (ISO-2022-KR)"
 
-#: src/mainwindow.c:672 src/summaryview.c:399
+#: src/mainwindow.c:672 src/summaryview.c:402
 msgid "/_View/Open in new _window"
 msgstr "/查看(_V)/在新窗口中打开(_W)"
 
@@ -3036,8 +3036,8 @@ msgstr "正在创建主窗口...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "主窗口：分配颜色 %d 失败\n"
 
-#: src/mainwindow.c:1067 src/summaryview.c:2027 src/summaryview.c:2112
-#: src/summaryview.c:3349 src/summaryview.c:3422 src/summaryview.c:3722
+#: src/mainwindow.c:1067 src/summaryview.c:2030 src/summaryview.c:2115
+#: src/summaryview.c:3352 src/summaryview.c:3425 src/summaryview.c:3725
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -3109,7 +3109,7 @@ msgstr "Sylpheed－文件夹视图"
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed－邮件视图"
 
-#: src/mainwindow.c:2148 src/summaryview.c:368
+#: src/mainwindow.c:2148 src/summaryview.c:371
 msgid "/_Reply"
 msgstr "/回复(_R)"
 
@@ -3125,15 +3125,15 @@ msgstr "/回复到发件人(_S)"
 msgid "/Reply to mailing _list"
 msgstr "/回复到邮件列表(_L)"
 
-#: src/mainwindow.c:2156 src/summaryview.c:375
+#: src/mainwindow.c:2156 src/summaryview.c:378
 msgid "/_Forward"
 msgstr "/转发(_F)"
 
-#: src/mainwindow.c:2157 src/summaryview.c:376
+#: src/mainwindow.c:2157 src/summaryview.c:379
 msgid "/For_ward as attachment"
 msgstr "/作为附件转发(_W)"
 
-#: src/mainwindow.c:2158 src/summaryview.c:377
+#: src/mainwindow.c:2158 src/summaryview.c:380
 msgid "/Redirec_t"
 msgstr "/重定向(_T)"
 
@@ -3378,16 +3378,16 @@ msgstr "文本"
 msgid "Attachments"
 msgstr "附件"
 
-#: src/messageview.c:658 src/summaryview.c:2950
+#: src/messageview.c:658 src/summaryview.c:2953
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "无法保存文件“%s”'。"
 
-#: src/messageview.c:713 src/prefs_common.c:2357 src/summaryview.c:2969
+#: src/messageview.c:713 src/prefs_common.c:2357 src/summaryview.c:2972
 msgid "Print"
 msgstr "打印"
 
-#: src/messageview.c:714 src/summaryview.c:2970
+#: src/messageview.c:714 src/summaryview.c:2973
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3396,7 +3396,7 @@ msgstr ""
 "输入打印命令行：\n"
 "(“%s”将被替换为文件名)"
 
-#: src/messageview.c:720 src/summaryview.c:2976
+#: src/messageview.c:720 src/summaryview.c:2979
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -4877,55 +4877,55 @@ msgstr "描述"
 msgid "Example"
 msgstr "示例"
 
-#: src/prefs_common.c:2815
+#: src/prefs_common.c:2814
 msgid "Set message colors"
 msgstr "设置邮件颜色"
 
-#: src/prefs_common.c:2823
+#: src/prefs_common.c:2822
 msgid "Colors"
 msgstr "颜色"
 
-#: src/prefs_common.c:2857
+#: src/prefs_common.c:2856
 msgid "Quoted Text - First Level"
 msgstr "引文－第一级"
 
-#: src/prefs_common.c:2863
+#: src/prefs_common.c:2862
 msgid "Quoted Text - Second Level"
 msgstr "引文－第二级"
 
-#: src/prefs_common.c:2869
+#: src/prefs_common.c:2868
 msgid "Quoted Text - Third Level"
 msgstr "引文－第三级"
 
-#: src/prefs_common.c:2875
+#: src/prefs_common.c:2874
 msgid "URI link"
 msgstr "URI 链接"
 
-#: src/prefs_common.c:2882
+#: src/prefs_common.c:2881
 msgid "Recycle quote colors"
 msgstr "循环使用引文颜色"
 
-#: src/prefs_common.c:2942
+#: src/prefs_common.c:2941
 msgid "Pick color for quotation level 1"
 msgstr "选择引文级别 1 的颜色"
 
-#: src/prefs_common.c:2945
+#: src/prefs_common.c:2944
 msgid "Pick color for quotation level 2"
 msgstr "选择引文级别 2 的颜色"
 
-#: src/prefs_common.c:2948
+#: src/prefs_common.c:2947
 msgid "Pick color for quotation level 3"
 msgstr "选择引文级别 3 的颜色"
 
-#: src/prefs_common.c:2951
+#: src/prefs_common.c:2950
 msgid "Pick color for URI"
 msgstr "选择URI的颜色"
 
-#: src/prefs_common.c:3088
+#: src/prefs_common.c:3090
 msgid "Description of symbols"
 msgstr "符号的描述"
 
-#: src/prefs_common.c:3144
+#: src/prefs_common.c:3146
 msgid ""
 "Date\n"
 "From\n"
@@ -4949,11 +4949,11 @@ msgstr ""
 "新闻组\n"
 "邮件标识号"
 
-#: src/prefs_common.c:3157
+#: src/prefs_common.c:3159
 msgid "If x is set, displays expr"
 msgstr "如果 x 设置了值则显示 expr"
 
-#: src/prefs_common.c:3161
+#: src/prefs_common.c:3163
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -4967,7 +4967,7 @@ msgstr ""
 "没有签名的引文内容\n"
 "%"
 
-#: src/prefs_common.c:3169
+#: src/prefs_common.c:3171
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -4979,15 +4979,15 @@ msgstr ""
 "左括号\n"
 "右括号"
 
-#: src/prefs_common.c:3206
+#: src/prefs_common.c:3208
 msgid "Font selection"
 msgstr "字体选择"
 
-#: src/prefs_common.c:3275
+#: src/prefs_common.c:3277
 msgid "Key bindings"
 msgstr "键盘关联"
 
-#: src/prefs_common.c:3289
+#: src/prefs_common.c:3291
 msgid ""
 "Select the preset of key bindings.\n"
 "You can also modify each menu's shortcuts by pressing\n"
@@ -4997,11 +4997,11 @@ msgstr ""
 "您也可以将鼠标放在菜单项上并按下任何键\n"
 "(或组合键)来修改菜单快捷键。"
 
-#: src/prefs_common.c:3301 src/prefs_common.c:3625
+#: src/prefs_common.c:3303 src/prefs_common.c:3627
 msgid "Default"
 msgstr "默认"
 
-#: src/prefs_common.c:3304 src/prefs_common.c:3634
+#: src/prefs_common.c:3306 src/prefs_common.c:3636
 msgid "Old Sylpheed"
 msgstr "旧式的Sylpheed"
 
@@ -5302,17 +5302,17 @@ msgid "Attachment"
 msgstr "附件"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:71 src/summaryview.c:4203
+#: src/prefs_summary_column.c:71 src/summaryview.c:4207
 msgid "Subject"
 msgstr "主题"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:72 src/summaryview.c:4206
+#: src/prefs_summary_column.c:72 src/summaryview.c:4210
 msgid "From"
 msgstr "发件人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:73 src/summaryview.c:4208
+#: src/prefs_summary_column.c:73 src/summaryview.c:4212
 msgid "Date"
 msgstr "日期"
 
@@ -5618,7 +5618,7 @@ msgstr "没有找到签名"
 msgid "Good signature from \"%s\""
 msgstr "来自“%s”的正确签名"
 
-#: src/sigstatus.c:237 src/textview.c:608
+#: src/sigstatus.c:237 src/textview.c:634
 msgid "Good signature"
 msgstr "正确的签名"
 
@@ -5627,7 +5627,7 @@ msgstr "正确的签名"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "签名有效，但是“%s”的密钥不被信任"
 
-#: src/sigstatus.c:242 src/textview.c:610
+#: src/sigstatus.c:242 src/textview.c:636
 msgid "Valid signature (untrusted key)"
 msgstr "签名有效 (非信任的密钥)"
 
@@ -5663,7 +5663,7 @@ msgstr "签名有效，但签名密钥已经被废止"
 msgid "BAD signature from \"%s\""
 msgstr "“%s”的签名错误"
 
-#: src/sigstatus.c:260 src/textview.c:612
+#: src/sigstatus.c:260 src/textview.c:638
 msgid "BAD signature"
 msgstr "签名错误"
 
@@ -5782,307 +5782,307 @@ msgstr "已到达列表的开始；继续从最后开始吗？"
 msgid "End of list reached; continue from beginning?"
 msgstr "已到达列表的最后；继续从头开始吗？"
 
-#: src/summaryview.c:369
+#: src/summaryview.c:372
 msgid "/Repl_y to"
 msgstr "/回复到(_Y)"
 
-#: src/summaryview.c:370
+#: src/summaryview.c:373
 msgid "/Repl_y to/_all"
 msgstr "/回复到(_Y)/全部(_A)"
 
-#: src/summaryview.c:371
+#: src/summaryview.c:374
 msgid "/Repl_y to/_sender"
 msgstr "/回复到(_Y)/发件人(_S)"
 
-#: src/summaryview.c:372
+#: src/summaryview.c:375
 msgid "/Repl_y to/mailing _list"
 msgstr "/回复到(_Y)/邮件列表(_L)"
 
-#: src/summaryview.c:379
+#: src/summaryview.c:382
 msgid "/M_ove..."
 msgstr "/移动(_O)..."
 
-#: src/summaryview.c:380
+#: src/summaryview.c:383
 msgid "/_Copy..."
 msgstr "/复制(_C)..."
 
-#: src/summaryview.c:383
+#: src/summaryview.c:386
 msgid "/_Mark"
 msgstr "/标记(_M)"
 
-#: src/summaryview.c:384
+#: src/summaryview.c:387
 msgid "/_Mark/_Mark"
 msgstr "/标记(_M)/标记(_M)"
 
-#: src/summaryview.c:385
+#: src/summaryview.c:388
 msgid "/_Mark/_Unmark"
 msgstr "/标记(_M)/取消标记(_U)"
 
-#: src/summaryview.c:386
+#: src/summaryview.c:389
 msgid "/_Mark/---"
 msgstr "/标记(_M)/---"
 
-#: src/summaryview.c:387
+#: src/summaryview.c:390
 msgid "/_Mark/Mark as unr_ead"
 msgstr "/标记(_M)/标记为未读(_E)"
 
-#: src/summaryview.c:388
+#: src/summaryview.c:391
 msgid "/_Mark/Mark as rea_d"
 msgstr "/标记(_M)/标记为已读(_D)"
 
-#: src/summaryview.c:390
+#: src/summaryview.c:393
 msgid "/_Mark/Mark all _read"
 msgstr "/标记(_M)/全部标记为已读(_R)"
 
-#: src/summaryview.c:391
+#: src/summaryview.c:394
 msgid "/Color la_bel"
 msgstr "/颜色标签(_B)"
 
-#: src/summaryview.c:393
+#: src/summaryview.c:396
 msgid "/Re-_edit"
 msgstr "/重新编辑(_E)"
 
-#: src/summaryview.c:395
+#: src/summaryview.c:398
 #, fuzzy
 msgid "/Add sender to address boo_k..."
 msgstr "/添加发件人到地址簿(_K)"
 
-#: src/summaryview.c:401
+#: src/summaryview.c:404
 msgid "/_View/_Source"
 msgstr "/查看(_V)/原文(_S)"
 
-#: src/summaryview.c:402
+#: src/summaryview.c:405
 msgid "/_View/All _header"
 msgstr "/查看(_V)/所有标题(_H)"
 
-#: src/summaryview.c:404
+#: src/summaryview.c:407
 msgid "/_Print..."
 msgstr "/打印(_P)..."
 
-#: src/summaryview.c:429
+#: src/summaryview.c:432
 msgid "Creating summary view...\n"
 msgstr "正在创建摘要视图...\n"
 
-#: src/summaryview.c:590
+#: src/summaryview.c:593
 msgid "Process mark"
 msgstr "处理标志"
 
-#: src/summaryview.c:591
+#: src/summaryview.c:594
 msgid "Some marks are left. Process it?"
 msgstr "有一些剩余标记。处理吗？"
 
-#: src/summaryview.c:638
+#: src/summaryview.c:641
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "正在扫描文件夹 (%s)..."
 
-#: src/summaryview.c:1147
+#: src/summaryview.c:1150
 msgid "Search again"
 msgstr "再次查找"
 
-#: src/summaryview.c:1169 src/summaryview.c:1178
+#: src/summaryview.c:1172 src/summaryview.c:1181
 msgid "No more unread messages"
 msgstr "没有未读邮件"
 
-#: src/summaryview.c:1170
+#: src/summaryview.c:1173
 msgid "No unread message found. Search from the end?"
 msgstr "没发现未读邮件。从后面开始查找？"
 
-#: src/summaryview.c:1172
+#: src/summaryview.c:1175
 msgid "No unread messages."
 msgstr "没有未读邮件"
 
-#: src/summaryview.c:1179
+#: src/summaryview.c:1182
 msgid "No unread message found. Go to next folder?"
 msgstr "没发现未读邮件。到下一个文件夹？"
 
-#: src/summaryview.c:1187 src/summaryview.c:1196
+#: src/summaryview.c:1190 src/summaryview.c:1199
 msgid "No more new messages"
 msgstr "没有新邮件"
 
-#: src/summaryview.c:1188
+#: src/summaryview.c:1191
 msgid "No new message found. Search from the end?"
 msgstr "没发现新邮件。从后面开始查找？"
 
-#: src/summaryview.c:1190
+#: src/summaryview.c:1193
 msgid "No new messages."
 msgstr "没有新邮件"
 
-#: src/summaryview.c:1197
+#: src/summaryview.c:1200
 msgid "No new message found. Go to next folder?"
 msgstr "没发现新邮件。到下一个文件夹？"
 
-#: src/summaryview.c:1205 src/summaryview.c:1214
+#: src/summaryview.c:1208 src/summaryview.c:1217
 msgid "No more marked messages"
 msgstr "没有标记过的邮件"
 
-#: src/summaryview.c:1206
+#: src/summaryview.c:1209
 msgid "No marked message found. Search from the end?"
 msgstr "没有标记过的邮件。从后面开始查找？"
 
-#: src/summaryview.c:1208 src/summaryview.c:1217
+#: src/summaryview.c:1211 src/summaryview.c:1220
 msgid "No marked messages."
 msgstr "没有标记过的邮件"
 
-#: src/summaryview.c:1215
+#: src/summaryview.c:1218
 msgid "No marked message found. Search from the beginning?"
 msgstr "没有标记过的邮件。从前面开始查找？"
 
-#: src/summaryview.c:1223 src/summaryview.c:1232
+#: src/summaryview.c:1226 src/summaryview.c:1235
 msgid "No more labeled messages"
 msgstr "没有找到用颜色标注过的邮件"
 
-#: src/summaryview.c:1224
+#: src/summaryview.c:1227
 msgid "No labeled message found. Search from the end?"
 msgstr "没有找到用颜色标注过的邮件。从后面开始查找？"
 
-#: src/summaryview.c:1226 src/summaryview.c:1235
+#: src/summaryview.c:1229 src/summaryview.c:1238
 msgid "No labeled messages."
 msgstr "没有用颜色标注的邮件。"
 
-#: src/summaryview.c:1233
+#: src/summaryview.c:1236
 msgid "No labeled message found. Search from the beginning?"
 msgstr "没有找到用颜色标注过的邮件。从前面开始查找？"
 
-#: src/summaryview.c:1518
+#: src/summaryview.c:1521
 msgid "Attracting messages by subject..."
 msgstr "正在按标题归类邮件..."
 
-#: src/summaryview.c:1677
+#: src/summaryview.c:1680
 #, c-format
 msgid "%d deleted"
 msgstr "删除了 %d 个邮件"
 
-#: src/summaryview.c:1681
+#: src/summaryview.c:1684
 #, c-format
 msgid "%s%d moved"
 msgstr "移动了 %s%d"
 
-#: src/summaryview.c:1682 src/summaryview.c:1689
+#: src/summaryview.c:1685 src/summaryview.c:1692
 msgid ", "
 msgstr "，"
 
-#: src/summaryview.c:1687
+#: src/summaryview.c:1690
 #, c-format
 msgid "%s%d copied"
 msgstr "复制了 %s%d"
 
-#: src/summaryview.c:1704
+#: src/summaryview.c:1707
 msgid " item(s) selected"
 msgstr " 项被选中"
 
-#: src/summaryview.c:1714
+#: src/summaryview.c:1717
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d 个新邮件，%d 个未读邮件，共 %d 个邮件(%s)"
 
-#: src/summaryview.c:1720
+#: src/summaryview.c:1723
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d 个新邮件邮件，%d 个未读邮件，共 %d 个邮件"
 
-#: src/summaryview.c:1761
+#: src/summaryview.c:1764
 msgid "Sorting summary..."
 msgstr "正在排序摘要..."
 
-#: src/summaryview.c:1836
+#: src/summaryview.c:1839
 msgid "(No Date)"
 msgstr "(没有日期)"
 
-#: src/summaryview.c:1964
+#: src/summaryview.c:1967
 msgid "\tSetting summary from message data..."
 msgstr "\t正在从邮件数据中设置摘要..."
 
-#: src/summaryview.c:1966
+#: src/summaryview.c:1969
 msgid "Setting summary from message data..."
 msgstr "正在从邮件数据中设置摘要..."
 
-#: src/summaryview.c:2091
+#: src/summaryview.c:2094
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "正在写摘要缓存(%s)..."
 
-#: src/summaryview.c:2395
+#: src/summaryview.c:2398
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "邮件 %d 被标记\n"
 
-#: src/summaryview.c:2437
+#: src/summaryview.c:2440
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "邮件 %d 被标记为已读\n"
 
-#: src/summaryview.c:2509
+#: src/summaryview.c:2512
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "邮件 %d 被标记为未读\n"
 
-#: src/summaryview.c:2562
+#: src/summaryview.c:2565
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "邮件 %s/%d 设置为要删除\n"
 
-#: src/summaryview.c:2580
+#: src/summaryview.c:2583
 msgid "Delete message(s)"
 msgstr "删除邮件"
 
-#: src/summaryview.c:2581
+#: src/summaryview.c:2584
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您确实要删除废件箱中的邮件吗？"
 
-#: src/summaryview.c:2646
+#: src/summaryview.c:2649
 msgid "Deleting duplicated messages..."
 msgstr "正在删除重复邮件..."
 
-#: src/summaryview.c:2683
+#: src/summaryview.c:2686
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "邮件 %s/%d 被取消标记\n"
 
-#: src/summaryview.c:2733
+#: src/summaryview.c:2736
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "邮件 %d 被设置为移到 %s\n"
 
-#: src/summaryview.c:2750
+#: src/summaryview.c:2753
 msgid "Destination is same as current folder."
 msgstr "目标与当前文件夹相同。"
 
-#: src/summaryview.c:2804
+#: src/summaryview.c:2807
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "邮件 %d 被设置为复制到 %s\n"
 
-#: src/summaryview.c:2821
+#: src/summaryview.c:2824
 msgid "Destination for copy is same as current folder."
 msgstr "复制目标与当前文件夹相同。"
 
-#: src/summaryview.c:3013
+#: src/summaryview.c:3016
 msgid "Error occurred while processing messages."
 msgstr "处理邮件时发生错误。"
 
-#: src/summaryview.c:3307 src/summaryview.c:3308
+#: src/summaryview.c:3310 src/summaryview.c:3311
 msgid "Building threads..."
 msgstr "正在创建线索..."
 
-#: src/summaryview.c:3405 src/summaryview.c:3406
+#: src/summaryview.c:3408 src/summaryview.c:3409
 msgid "Unthreading..."
 msgstr "正在取消线索..."
 
-#: src/summaryview.c:3698
+#: src/summaryview.c:3701
 msgid "filtering..."
 msgstr "正在过滤..."
 
-#: src/summaryview.c:3699
+#: src/summaryview.c:3702
 msgid "Filtering..."
 msgstr "正在过滤..."
 
-#: src/summaryview.c:3729
+#: src/summaryview.c:3732
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已经过滤 %d 个邮件。"
 
-#: src/summaryview.c:4212
+#: src/summaryview.c:4216
 msgid "No."
 msgstr "No."
 
@@ -6091,33 +6091,43 @@ msgstr "No."
 msgid "file %s already exists\n"
 msgstr "文件 %s 已经存在。\n"
 
-#: src/textview.c:241
+#: src/textview.c:244
 msgid "Creating text view...\n"
 msgstr "正在创建文本视图...\n"
 
-#: src/textview.c:719
+#: src/textview.c:745
 msgid "This message can't be displayed.\n"
 msgstr "无法显示该邮件。\n"
 
-#: src/textview.c:1877
+#: src/textview.c:1911
 msgid "Sa_ve this image as..."
 msgstr "图像另存为(_V)..."
 
-#: src/textview.c:1899
+#: src/textview.c:1927
+#, fuzzy
+msgid "Compose _new message"
+msgstr "撰写新邮件"
+
+#: src/textview.c:1929
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/添加发件人到地址簿(_K)"
 
-#: src/textview.c:1906
+#: src/textview.c:1931
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "复制链接(_L)"
 
-#: src/textview.c:1908
+#: src/textview.c:1934
+#, fuzzy
+msgid "_Open with Web browser"
+msgstr "网页浏览器"
+
+#: src/textview.c:1936
 msgid "Copy this _link"
 msgstr "复制链接(_L)"
 
-#: src/textview.c:2017
+#: src/textview.c:2068
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
