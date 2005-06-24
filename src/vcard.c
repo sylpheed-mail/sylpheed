@@ -31,6 +31,7 @@
 #include "vcard.h"
 #include "addritem.h"
 #include "addrcache.h"
+#include "utils.h"
 
 #define GNOMECARD_DIR     ".gnome"
 #define GNOMECARD_FILE    "GnomeCard"
@@ -650,7 +651,7 @@ gchar *vcard_find_gnomecard( void ) {
 	gint len, lenlbl, i;
 	FILE *fp;
 
-	homedir = g_get_home_dir();
+	homedir = get_home_dir();
 	if( ! homedir ) return NULL;
 
 	strcpy( str, homedir );

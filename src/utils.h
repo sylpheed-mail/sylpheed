@@ -425,6 +425,11 @@ gchar *tzoffset			(time_t		*now);
 void get_rfc822_date		(gchar		*buf,
 				 gint		 len);
 
+size_t my_strftime		(gchar			*s,
+				 size_t			 max,
+				 const gchar		*format,
+				 const struct tm	*tm);
+
 /* logging */
 void set_log_file	(const gchar *filename);
 void close_log_file	(void);

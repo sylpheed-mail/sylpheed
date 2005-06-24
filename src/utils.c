@@ -3151,6 +3151,13 @@ void get_rfc822_date(gchar *buf, gint len)
 		   day, dd, mon, yyyy, hh, mm, ss, tzoffset(&t));
 }
 
+/* just a wrapper to suppress the warning of gcc about %c */
+size_t my_strftime(gchar *s, size_t max, const gchar *format,
+		   const struct tm *tm)
+{
+	return strftime(s, max, format, tm);
+}
+
 static FILE *log_fp = NULL;
 
 void set_log_file(const gchar *filename)

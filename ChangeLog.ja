@@ -1,5 +1,14 @@
 2005-06-24
 
+	* src/utils.[ch]
+	  src/rfc2015.c: gcc の %c についての警告を抑制するために strftime()
+	  のラッパーを使用。
+	* src/procheader.c: 不正な日付に対する警告を削除。
+	* src/jpilot.c
+	  src/vcard.c: g_get_home_dir() の代わりに get_home_dir() を使用。
+
+2005-06-24
+
 	* src/prefs_common.[ch]: 未使用のオプション 'enable_hscrollbar' を
 	  削除。
 

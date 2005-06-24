@@ -736,7 +736,6 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 
 	if (procheader_scan_date_string(src, weekday, &day, month, &year,
 					&hh, &mm, &ss, zone) < 0) {
-		g_warning("Invalid date: %s\n", src);
 		if (dest && len > 0)
 			strncpy2(dest, src, len);
 		return 0;
@@ -757,8 +756,6 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 			break;
 		}
 	}
-	if (*p == '\0')
-		g_warning("Invalid month: %s\n", month);
 
 	t.tm_sec = ss;
 	t.tm_min = mm;

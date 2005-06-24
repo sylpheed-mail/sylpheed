@@ -1,5 +1,14 @@
 2005-06-24
 
+	* src/utils.[ch]
+	  src/rfc2015.c: use a wrapper of strftime() to suppress the warning
+	  of gcc about %c.
+	* src/procheader.c: removed warning about invalid date.
+	* src/jpilot.c
+	  src/vcard.c: use get_home_dir() instead of g_get_home_dir().
+
+2005-06-24
+
 	* src/prefs_common.[ch]: removed unused option 'enable_hscrollbar'.
 
 2005-06-24
