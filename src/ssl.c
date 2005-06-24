@@ -155,8 +155,9 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 		if (verify_result == X509_V_OK)
 			debug_print("SSL verify OK\n");
 		else
-			g_warning("%s: SSL certificate verify failed (%ld)\n",
-				  sockinfo->hostname, verify_result);
+			g_warning("%s: SSL certificate verify failed (%ld: %s)\n",
+				  sockinfo->hostname, verify_result,
+				  X509_verify_cert_error_string(verify_result));
 
 		X509_free(server_cert);
 	}
