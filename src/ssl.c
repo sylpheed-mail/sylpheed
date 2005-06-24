@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2002 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,14 +36,28 @@ static SSL_CTX *ssl_ctx_TLSv1;
 
 void ssl_init(void)
 {
+	gchar *certs_dir;
+
 	SSL_library_init();
 	SSL_load_error_strings();
+
+	certs_dir = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "certs", NULL);
+	if (!is_dir_exist(certs_dir)) {
+		debug_print("%s doesn't exist, or not a directory.\n",
+			    certs_dir);
+		g_free(certs_dir);
+		certs_dir = NULL;
+	}
 
 	ssl_ctx_SSLv23 = SSL_CTX_new(SSLv23_client_method());
 	if (ssl_ctx_SSLv23 == NULL) {
 		debug_print(_("SSLv23 not available\n"));
 	} else {
 		debug_print(_("SSLv23 available\n"));
+		if (certs_dir &&
+		    !SSL_CTX_load_verify_locations(ssl_ctx_SSLv23, NULL,
+						   certs_dir))
+			g_warning("SSLv23 SSL_CTX_load_verify_locations failed.\n");
 	}
 
 	ssl_ctx_TLSv1 = SSL_CTX_new(TLSv1_client_method());
@@ -51,7 +65,13 @@ void ssl_init(void)
 		debug_print(_("TLSv1 not available\n"));
 	} else {
 		debug_print(_("TLSv1 available\n"));
+		if (certs_dir &&
+		    !SSL_CTX_load_verify_locations(ssl_ctx_TLSv1, NULL,
+						   certs_dir))
+			g_warning("TLSv1 SSL_CTX_load_verify_locations failed.\n");
 	}
+
+	g_free(certs_dir);
 }
 
 void ssl_done(void)
@@ -117,18 +137,26 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 
 	if ((server_cert = SSL_get_peer_certificate(sockinfo->ssl)) != NULL) {
 		gchar *str;
+		glong verify_result;
 
 		debug_print(_("Server certificate:\n"));
 
 		if ((str = X509_NAME_oneline(X509_get_subject_name(server_cert), 0, 0)) != NULL) {
 			debug_print(_("  Subject: %s\n"), str);
-			free(str);
+			g_free(str);
 		}
 
 		if ((str = X509_NAME_oneline(X509_get_issuer_name(server_cert), 0, 0)) != NULL) {
 			debug_print(_("  Issuer: %s\n"), str);
-			free(str);
+			g_free(str);
 		}
+
+		verify_result = SSL_get_verify_result(sockinfo->ssl);
+		if (verify_result == X509_V_OK)
+			debug_print("SSL verify OK\n");
+		else
+			g_warning("%s: SSL certificate verify failed (%ld)\n",
+				  sockinfo->hostname, verify_result);
 
 		X509_free(server_cert);
 	}
