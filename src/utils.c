@@ -1828,41 +1828,22 @@ gboolean file_exist(const gchar *file, gboolean allow_fifo)
 
 gboolean is_dir_exist(const gchar *dir)
 {
-	struct stat s;
-
 	if (dir == NULL)
 		return FALSE;
 
-	if (stat(dir, &s) < 0) {
-		if (ENOENT != errno) FILE_OP_ERROR(dir, "stat");
-		return FALSE;
-	}
-
-	if (S_ISDIR(s.st_mode))
-		return TRUE;
-
-	return FALSE;
+	return g_file_test(dir, G_FILE_TEST_IS_DIR);
 }
 
 gboolean is_file_entry_exist(const gchar *file)
 {
-	struct stat s;
-
 	if (file == NULL)
 		return FALSE;
 
-	if (stat(file, &s) < 0) {
-		if (ENOENT != errno) FILE_OP_ERROR(file, "stat");
-		return FALSE;
-	}
-
-	return TRUE;
+	return g_file_test(file, G_FILE_TEST_EXISTS);
 }
 
 gboolean dirent_is_regular_file(struct dirent *d)
 {
-	struct stat s;
-
 #ifdef HAVE_DIRENT_D_TYPE
 	if (d->d_type == DT_REG)
 		return TRUE;
@@ -1870,13 +1851,11 @@ gboolean dirent_is_regular_file(struct dirent *d)
 		return FALSE;
 #endif
 
-	return (stat(d->d_name, &s) == 0 && S_ISREG(s.st_mode));
+	return g_file_test(d->d_name, G_FILE_TEST_IS_REGULAR);
 }
 
 gboolean dirent_is_directory(struct dirent *d)
 {
-	struct stat s;
-
 #ifdef HAVE_DIRENT_D_TYPE
 	if (d->d_type == DT_DIR)
 		return TRUE;
@@ -1884,7 +1863,7 @@ gboolean dirent_is_directory(struct dirent *d)
 		return FALSE;
 #endif
 
-	return (stat(d->d_name, &s) == 0 && S_ISDIR(s.st_mode));
+	return g_file_test(d->d_name, G_FILE_TEST_IS_DIR);
 }
 
 gint change_dir(const gchar *dir)
