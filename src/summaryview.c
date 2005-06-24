@@ -158,7 +158,6 @@ static void summary_update_status	(SummaryView		*summaryview);
 
 /* display functions */
 static void summary_status_show		(SummaryView		*summaryview);
-static void summary_set_column_titles	(SummaryView		*summaryview);
 static void summary_set_tree_model_from_list
 					(SummaryView		*summaryview,
 					 GSList			*mlist);
@@ -551,7 +550,6 @@ void summary_init(SummaryView *summaryview)
 
 	summary_clear_list(summaryview);
 	summary_set_column_order(summaryview);
-	summary_set_column_titles(summaryview);
 	summary_colorlabel_menu_create(summaryview);
 	summary_set_menu_sensitive(summaryview);
 }
@@ -612,7 +610,6 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	folderview_set_opened_item(summaryview->folderview, item);
 
 	summary_clear_list(summaryview);
-	summary_set_column_titles(summaryview);
 
 	buf = NULL;
 	if (!item || !item->path || !item->parent || item->no_select ||
@@ -725,7 +722,6 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		}
 	}
 
-	summary_set_column_titles(summaryview);
 	summary_status_show(summaryview);
 	summary_set_menu_sensitive(summaryview);
 	main_window_set_toolbar_sensitive(summaryview->mainwin);
@@ -1731,10 +1727,6 @@ static void summary_status_show(SummaryView *summaryview)
 	folderview_update_opened_msg_num(summaryview->folderview);
 }
 
-static void summary_set_column_titles(SummaryView *summaryview)
-{
-}
-
 void summary_sort(SummaryView *summaryview,
 		  FolderSortKey sort_key, FolderSortType sort_type)
 {
@@ -1755,7 +1747,6 @@ void summary_sort(SummaryView *summaryview,
 		item->sort_key = SORT_BY_NONE;
 		item->sort_type = SORT_ASCENDING;
 		gtkut_tree_sortable_unset_sort_column_id(sortable);
-		summary_set_column_titles(summaryview);
 		summary_set_menu_sensitive(summaryview);
 		return;
 	}
@@ -1772,7 +1763,6 @@ void summary_sort(SummaryView *summaryview,
 					     (GtkSortType)sort_type);
 
 	summary_selection_list_free(summaryview);
-	summary_set_column_titles(summaryview);
 	summary_set_menu_sensitive(summaryview);
 
 	summary_scroll_to_selected(summaryview, TRUE);
