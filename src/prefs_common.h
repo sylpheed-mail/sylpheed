@@ -103,7 +103,6 @@ struct _PrefsCommon
 	gchar *date_format;
 
 	gboolean enable_rules_hint;
-	gboolean enable_hscrollbar;
 	gboolean bold_unread;
 
 	ToolbarStyle toolbar_style;
