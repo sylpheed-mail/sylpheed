@@ -89,6 +89,8 @@ void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
 	GError *error = NULL;
 
 	g_return_if_fail(imageview != NULL);
+	g_return_if_fail(imageview->scrolledwin != NULL);
+	g_return_if_fail(imageview->scrolledwin->parent != NULL);
 
 	if (file) {
 		imageview_clear(imageview);
@@ -242,6 +244,8 @@ static void size_allocate_cb(GtkWidget *widget,GtkAllocation *allocation,
 			imageview->resizing = FALSE;
 			return;
 		}
+		if (!imageview->scrolledwin->parent)
+			return;
 		imageview_show_image(imageview, NULL, NULL, TRUE);
 		imageview->resizing = TRUE;
 	}
