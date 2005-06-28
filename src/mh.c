@@ -1214,6 +1214,20 @@ static void mh_scan_tree_recursive(FolderItem *item)
 				continue;
 			}
 #endif
+			if (g_utf8_validate(utf8name, -1, NULL) == FALSE) {
+				g_warning(_("Directory name\n"
+					    "'%s' is not a valid UTF-8 string.\n"
+					    "Maybe the locale encoding is used for filename.\n"
+					    "If that is the case, you must set the following environmental variable\n"
+					    "(see README for detail):\n"
+					    "\n"
+					    "\tG_FILENAME_ENCODING=@locale\n"),
+					  utf8name);
+				g_free(entry);
+				g_free(utf8entry);
+				g_free(utf8name);
+				continue;
+			}
 
 			node = item->node;
 			for (node = node->children; node != NULL; node = node->next) {
