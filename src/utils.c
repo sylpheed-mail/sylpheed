@@ -2632,6 +2632,9 @@ gchar *get_outgoing_rfc2822_str(FILE *fp)
 				if (fgets(buf, sizeof(buf), fp) == NULL)
 					break;
 			}
+		} else if (!g_ascii_strncasecmp(buf, "Date:", 5)) {
+			get_rfc822_date(buf, sizeof(buf));
+			g_string_append_printf(str, "Date: %s\r\n", buf);
 		} else {
 			g_string_append(str, buf);
 			g_string_append(str, "\r\n");
