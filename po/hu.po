@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Sylpheed-1.9.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-28 18:44+0900\n"
-"PO-Revision-Date: 2005-05-29 15:50+0200\n"
+"PO-Revision-Date: 2005-06-23 18:30+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
 "MIME-Version: 1.0\n"
@@ -825,14 +825,12 @@ msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/_Nézet/_Karakterkódolás/Görög (ISO-8859-_7)"
 
 #: src/compose.c:571 src/mainwindow.c:615 src/messageview.c:183
-#, fuzzy
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
-msgstr "/_Nézet/_Karakterkódolás/Görög (ISO-8859-_7)"
+msgstr "/_Nézet/_Karakterkódolás/Héber (ISO-8859-_8)"
 
 #: src/compose.c:573 src/mainwindow.c:617 src/messageview.c:185
-#, fuzzy
 msgid "/_View/Character _encoding/Hebrew (Windows-1255)"
-msgstr "/_Nézet/_Karakterkódolás/Cirill (Windows-1251)"
+msgstr "/_Nézet/_Karakterkódolás/Héber (Windows-1255)"
 
 #: src/compose.c:577 src/mainwindow.c:621 src/messageview.c:188
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
@@ -1751,15 +1749,17 @@ msgid "Rename folder"
 msgstr "Mappa átnevezése"
 
 #: src/folderview.c:2048
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
 "\n"
 "Do you really want to delete?"
 msgstr ""
-"`%s' minden mappája és üzenete törlődik.\n"
-"Tényleg ezt szeretné?"
+"A(z) `%s' alatti összes mappa és üzenet véglegesen törlődni fog.\n"
+"A visszaállításuk nem lehetséges.\n"
+"\n"
+"Biztosan törölni szeretné?"
 
 #: src/folderview.c:2051
 msgid "Delete folder"
@@ -2888,22 +2888,20 @@ msgid "/_Message/_Mark/Mark all _read"
 msgstr "/_Üzenet/_Megjelöl/_Minden olvasottat"
 
 #: src/mainwindow.c:716
-#, fuzzy
 msgid "/_Message/Set as _junk mail"
-msgstr "/_Üzenet/_Megjelöl/Megjelölés visszavonása"
+msgstr "/_Üzenet/_Levélszemétként beállítás"
 
 #: src/mainwindow.c:717
 msgid "/_Message/Set as not j_unk mail"
-msgstr ""
+msgstr "/_Üzenet/_Nem levélszemétként beállítás"
 
 #: src/mainwindow.c:719 src/messageview.c:254
 msgid "/_Message/Re-_edit"
 msgstr "/_Üzenet/_Szerkesztés újra"
 
 #: src/mainwindow.c:723
-#, fuzzy
 msgid "/_Tools/Add sender to address boo_k..."
-msgstr "/_Eszközök/_Küldő címét a címlistába"
+msgstr "/_Eszközök/Küldő hozzáadása a cím_listához..."
 
 #: src/mainwindow.c:726
 msgid "/_Tools/_Filter all messages in folder"
@@ -2934,14 +2932,12 @@ msgid "/_Tools/_Create filter rule/by _Subject"
 msgstr "/_Eszközök/_Szűrési szabályok/_Tárgy alapján"
 
 #: src/mainwindow.c:740
-#, fuzzy
 msgid "/_Tools/Filter _junk mails in folder"
-msgstr "/_Eszközök/Összes üzenet szűrése a mappában"
+msgstr "/_Eszközök/Levélszemét szűrése a mappában"
 
 #: src/mainwindow.c:742
-#, fuzzy
 msgid "/_Tools/Filter junk _mails in selected messages"
-msgstr "/_Eszközök/Kivá_lasztott üzenetek szűrése"
+msgstr "/_Eszközök/Kivá_lasztott üzenetek levélszemét szűrése"
 
 #: src/mainwindow.c:747
 msgid "/_Tools/Delete du_plicated messages"
@@ -3205,12 +3201,11 @@ msgstr "Üzenet törlése"
 
 #: src/mainwindow.c:2295 src/prefs_common.c:1978
 msgid "Junk"
-msgstr ""
+msgstr "Levélszemét"
 
 #: src/mainwindow.c:2296
-#, fuzzy
 msgid "Set as junk mail"
-msgstr "Alapértelmzésként beállítás"
+msgstr "Levélszemétként beállítás"
 
 #: src/mainwindow.c:2305
 msgid "Execute"
@@ -3374,7 +3369,7 @@ msgstr "Keresés befejeződött"
 
 #: src/messageview.c:258
 msgid "/_Tools/Add sender to address boo_k"
-msgstr "/_Eszközök/_Küldő címét a címlistába"
+msgstr "/_Eszközök/Küldő hozzáadása a cím_listához"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -3871,9 +3866,8 @@ msgid "Default inbox"
 msgstr "Alapértelmezett bejövő postafiók"
 
 #: src/prefs_account.c:1113
-#, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
-msgstr "(A nem szűrt üzenetek ebbe a mappába kerülnek)"
+msgstr "A nem szűrt üzenetek ebbe a mappába fognak kerülni."
 
 #: src/prefs_account.c:1126 src/prefs_account.c:1277
 msgid "Authentication method"
@@ -3888,16 +3882,12 @@ msgid "News"
 msgstr "Hírek"
 
 #: src/prefs_account.c:1154
-#, fuzzy
 msgid "Maximum number of articles to download"
-msgstr ""
-"Maximum ennyi cikk letöltése\n"
-"(0 esetén korlátlan)"
+msgstr "A letölteni kívánt maximális cikkek száma"
 
 #: src/prefs_account.c:1171
-#, fuzzy
 msgid "No limit if 0 is specified."
-msgstr "Nincs címzett megadva."
+msgstr "Ha 0 van megadva, akkor korlátlan."
 
 #: src/prefs_account.c:1175
 msgid "`Get all' checks for new messages on this account"
@@ -3973,7 +3963,7 @@ msgstr "Üzenetet mindig titkosítsa"
 
 #: src/prefs_account.c:1509
 msgid "Encrypt when replying to encrypted message"
-msgstr ""
+msgstr "Titkosítás, ha titkosított üzenetre válaszol"
 
 #: src/prefs_account.c:1511
 msgid "Use ASCII-armored format for encryption"
@@ -4041,9 +4031,8 @@ msgid "Use non-blocking SSL"
 msgstr "Nem-blokkolódó SSL használata"
 
 #: src/prefs_account.c:1722
-#, fuzzy
 msgid "Turn this off if you have problems in SSL connection."
-msgstr "(Ezt kapcsolja ki, ha az SSL kapcsolattal probléma van!)"
+msgstr "Ezt kapcsolja ki, ha az SSL kapcsolattal probléma van."
 
 #: src/prefs_account.c:1808
 msgid "Specify SMTP port"
@@ -4238,9 +4227,8 @@ msgid "Do you really want to delete this action?"
 msgstr "Tényleg töröljem ezt a műveletet?"
 
 #: src/prefs_common.c:905
-#, fuzzy
 msgid "Junk mail filter"
-msgstr "mappa:"
+msgstr "Levélszemét szűrő"
 
 #: src/prefs_common.c:915
 msgid "Creating common preferences window...\n"
@@ -4264,7 +4252,7 @@ msgstr "Üzenet"
 
 #: src/prefs_common.c:947
 msgid "Junk mail"
-msgstr ""
+msgstr "Levélszemét"
 
 #: src/prefs_common.c:955 src/select-keys.c:344
 msgid "Other"
@@ -4279,9 +4267,8 @@ msgid "Command"
 msgstr "Parancs"
 
 #: src/prefs_common.c:1026
-#, fuzzy
 msgid "Incorporate from local spool"
-msgstr "Fogadás tárolóból"
+msgstr "Egyesítés helyi tárolóból"
 
 #: src/prefs_common.c:1039
 msgid "Filter on incorporation"
@@ -4312,14 +4299,13 @@ msgid "Update all local folders after incorporation"
 msgstr "Fogadás után minden helyi mappa frissítése"
 
 #: src/prefs_common.c:1092
-#, fuzzy
 msgid "Execute command when new messages arrived"
-msgstr "Azonnali végrehajtás üzenet mozgatás vagy törlés esetén"
+msgstr "Parancs végrehajtása, ha új üzenet érkezett"
 
 #: src/prefs_common.c:1113
-#, fuzzy, c-format
+#, c-format
 msgid "`%d' will be replaced with the number of new messages."
-msgstr "Új üzenetek számának megszerzése (STAT)..."
+msgstr "`%d' lesz helyettesítve az új üzenetek számával."
 
 #: src/prefs_common.c:1164
 msgid "Use external program for sending"
@@ -4331,7 +4317,7 @@ msgstr "Elküldött üzenetek mentése a Kimenő postafiókba"
 
 #: src/prefs_common.c:1197
 msgid "Apply filter rules to sent messages"
-msgstr ""
+msgstr "Szűrőszabályok alkalmazása az elküldött üzenetekre"
 
 #: src/prefs_common.c:1203
 msgid "Outgoing encoding"
@@ -4374,14 +4360,12 @@ msgid "Greek (ISO-8859-7)"
 msgstr "Görög (ISO-8859-7)"
 
 #: src/prefs_common.c:1234
-#, fuzzy
 msgid "Hebrew (ISO-8859-8)"
-msgstr "Görög (ISO-8859-7)"
+msgstr "Héber (ISO-8859-8)"
 
 #: src/prefs_common.c:1235
-#, fuzzy
 msgid "Hebrew (Windows-1255)"
-msgstr "Cirill (Windows-1251)"
+msgstr "Héber (Windows-1255)"
 
 #: src/prefs_common.c:1237
 msgid "Turkish (ISO-8859-9)"
@@ -4640,42 +4624,41 @@ msgstr "Képek megjelenítése egyvonalban"
 
 #: src/prefs_common.c:1961
 msgid "Enable Junk mail control"
-msgstr ""
+msgstr "Levélszemét szabályozás engedélyezése"
 
 #: src/prefs_common.c:1969
-#, fuzzy
 msgid "Learning command:"
-msgstr "Parancs futtatása"
+msgstr "Tanítás parancs:"
 
 #: src/prefs_common.c:1990
 msgid "Not Junk"
-msgstr ""
+msgstr "Nem levélszemét"
 
 #: src/prefs_common.c:2005
-#, fuzzy
 msgid "Classifying command"
-msgstr "Parancs futtatása"
+msgstr "Osztályozó parancs"
 
 #: src/prefs_common.c:2019
-#, fuzzy
 msgid "Junk folder"
-msgstr "mappa:"
+msgstr "Levélszemét mappa"
 
 #: src/prefs_common.c:2037
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
+"Azon üzenetek, melyek levélszemétként lettek beállítva törlődni fognak ebből "
+"a mappából."
 
 #: src/prefs_common.c:2043
-#, fuzzy
 msgid "Filter messages classified as junk on receiving"
-msgstr "Üzenetek szűrése fogadás közben"
+msgstr "A fogadáskor megszűrt üzenetek levélszemétként osztályozva"
 
 #: src/prefs_common.c:2047
-#, fuzzy
 msgid ""
 "Filtered messages will be moved to the junk folder and deleted from the "
 "server."
-msgstr "(A nem szűrt üzenetek ebbe a mappába kerülnek)"
+msgstr ""
+"A megszűrt üzenetek a levélszemét mappába kerülnek át, és a törlésre "
+"kerülnek a szerverről."
 
 #: src/prefs_common.c:2085
 msgid "Automatically check signatures"
@@ -4800,9 +4783,8 @@ msgid "Warn if there are queued messages"
 msgstr "Elküldetlen üzenetek esetén figyelmeztet"
 
 #: src/prefs_common.c:2459
-#, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
-msgstr "Összefoglaló gyorstár írása (%s)..."
+msgstr "Összefoglaló gyorstár sértetlenségének pontos ellenőrzése engedélyezés"
 
 #: src/prefs_common.c:2462
 msgid ""
@@ -4810,6 +4792,9 @@ msgid ""
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
+"Kapcsolja be, ha lehetőség van arra, hogy a mappák tartalmát egy másik "
+"alkalmazás módosítja.\n"
+"Ez az opció lassítja az összefoglaló megjelenítésének idejét."
 
 #: src/prefs_common.c:2469
 msgid "Socket I/O timeout:"
@@ -5872,9 +5857,8 @@ msgid "/Re-_edit"
 msgstr "/Új_raszerkeszt"
 
 #: src/summaryview.c:397
-#, fuzzy
 msgid "/Add sender to address boo_k..."
-msgstr "/Küldő _címét a címlistába"
+msgstr "/Küldő hozzáadása a cím_listához"
 
 #: src/summaryview.c:403
 msgid "/_View/_Source"
@@ -6133,24 +6117,20 @@ msgid "Sa_ve this image as..."
 msgstr "A kép me_ntése mint..."
 
 #: src/textview.c:1926
-#, fuzzy
 msgid "Compose _new message"
-msgstr "Új üzenet szerkesztése"
+msgstr "Ú_j üzenet szerkesztése"
 
 #: src/textview.c:1928
-#, fuzzy
 msgid "Add to address _book..."
-msgstr "/Küldő _címét a címlistába"
+msgstr "Hozzáadás a _címlistához..."
 
 #: src/textview.c:1930
-#, fuzzy
 msgid "Copy this add_ress"
-msgstr "A _hivatkozás másolása"
+msgstr "A cí_m másolása"
 
 #: src/textview.c:1933
-#, fuzzy
 msgid "_Open with Web browser"
-msgstr "Web böngésző"
+msgstr "M_egnyitás webböngészővel"
 
 #: src/textview.c:1935
 msgid "Copy this _link"
@@ -6199,4 +6179,4 @@ msgstr "%s fájlba nem sikerült írni.\n"
 #~ msgstr "Helyi tároló"
 
 #~ msgid "Sending queued message %d failed.\n"
-#~ msgstr "Hiba a(z) %d besorolt üzenet küldésekor.\n"
+#~ msgstr "%d üzenet küldése sikertelen a tárolóból.\n"

@@ -5,10 +5,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed 2.0.0beta2\n"
+"Project-Id-Version: Sylpheed 2.0.0beta3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-28 18:44+0900\n"
-"PO-Revision-Date: 2005-06-18 15:30+0200\n"
+"PO-Revision-Date: 2005-06-25 16:55+0200\n"
 "Last-Translator: Danilo Bodei <dbodei@lombardiacom.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1756,14 +1756,17 @@ msgid "Rename folder"
 msgstr "Rinomina la cartella"
 
 #: src/folderview.c:2048
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
 "\n"
 "Do you really want to delete?"
 msgstr ""
-"Tutte le cartelle e i messaggi all'interno di «%s» saranno eliminati.\n"
+"Tutte le cartelle e i messaggi all'interno di «%s» saranno permanentemente "
+"eliminati.\n"
+"Il loro recupero non sarà più possibile.\n"
+"\n"
 "Eliminare?"
 
 #: src/folderview.c:2051
@@ -2905,9 +2908,8 @@ msgid "/_Message/Re-_edit"
 msgstr "/M_essaggio/Rimodi_fica"
 
 #: src/mainwindow.c:723
-#, fuzzy
 msgid "/_Tools/Add sender to address boo_k..."
-msgstr "/S_trumenti/Aggiungi mittente alla ru_brica"
+msgstr "/S_trumenti/Aggiungi mittente alla ru_brica..."
 
 #: src/mainwindow.c:726
 msgid "/_Tools/_Filter all messages in folder"
@@ -2943,7 +2945,7 @@ msgstr "/S_trumenti/Filtra le mail s_pazzatura nella cartella"
 
 #: src/mainwindow.c:742
 msgid "/_Tools/Filter junk _mails in selected messages"
-msgstr "/S_trumenti/Filtra le mail spa_zzatura nei messaggi selezionati"
+msgstr "/S_trumenti/Filtra le _mail spazzatura nei messaggi selezionati"
 
 #: src/mainwindow.c:747
 msgid "/_Tools/Delete du_plicated messages"
@@ -2995,7 +2997,7 @@ msgstr "/_Configurazione/_Modifica account..."
 
 #: src/mainwindow.c:768
 msgid "/_Configuration/C_hange current account"
-msgstr "/_Configurazione/Ca_mbia account attuale"
+msgstr "/_Configurazione/Cam_bia account attuale"
 
 #: src/mainwindow.c:772
 msgid "/_Help/_Manual"
@@ -3872,9 +3874,8 @@ msgid "Default inbox"
 msgstr "Inbox predefinita"
 
 #: src/prefs_account.c:1113
-#, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
-msgstr "(I messaggi non filtrati saranno memorizzati in questa cartella)"
+msgstr "I messaggi non filtrati saranno memorizzati in questa cartella."
 
 #: src/prefs_account.c:1126 src/prefs_account.c:1277
 msgid "Authentication method"
@@ -3889,16 +3890,12 @@ msgid "News"
 msgstr "News"
 
 #: src/prefs_account.c:1154
-#, fuzzy
 msgid "Maximum number of articles to download"
-msgstr ""
-"Massimo numero di articoli da scaricare\n"
-"(0 significa illimitato)"
+msgstr "Numero massimo di articoli da scaricare"
 
 #: src/prefs_account.c:1171
-#, fuzzy
 msgid "No limit if 0 is specified."
-msgstr "Il destinatario non è specificato."
+msgstr "Nessun limite se viene specificato 0."
 
 #: src/prefs_account.c:1175
 msgid "`Get all' checks for new messages on this account"
@@ -3974,7 +3971,7 @@ msgstr "Cifra il messaggio per predefinizione"
 
 #: src/prefs_account.c:1509
 msgid "Encrypt when replying to encrypted message"
-msgstr ""
+msgstr "Cifra quando rispondi a un messaggio cifrato"
 
 #: src/prefs_account.c:1511
 msgid "Use ASCII-armored format for encryption"
@@ -4042,9 +4039,8 @@ msgid "Use non-blocking SSL"
 msgstr "Usa SSL non bloccato"
 
 #: src/prefs_account.c:1722
-#, fuzzy
 msgid "Turn this off if you have problems in SSL connection."
-msgstr "(Disattivare se si hanno problemi nella connessione SSL)"
+msgstr "Disattivare se si hanno problemi nella connessione SSL."
 
 #: src/prefs_account.c:1808
 msgid "Specify SMTP port"
@@ -4311,14 +4307,13 @@ msgid "Update all local folders after incorporation"
 msgstr "Aggiorna tutte le cartelle locali dopo l'incorporazione"
 
 #: src/prefs_common.c:1092
-#, fuzzy
 msgid "Execute command when new messages arrived"
-msgstr "Esegui immediatamente quando sposti o elimini dei messaggi"
+msgstr "Esegui il comando quando arrivano nuovi messaggi"
 
 #: src/prefs_common.c:1113
-#, fuzzy, c-format
+#, c-format
 msgid "`%d' will be replaced with the number of new messages."
-msgstr "Ricezione del numero dei nuovi messaggi (STAT)..."
+msgstr "«%d» sarà sostituito con il numero dei nuovi messaggi."
 
 #: src/prefs_common.c:1164
 msgid "Use external program for sending"
@@ -4798,9 +4793,8 @@ msgid "Warn if there are queued messages"
 msgstr "Avverti se ci sono messaggi accodati"
 
 #: src/prefs_common.c:2459
-#, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
-msgstr "Scrittura della cache del sommario (%s)..."
+msgstr "Abilita il controllo stretto dell'integrità delle cache del sommario"
 
 #: src/prefs_common.c:2462
 msgid ""
@@ -4808,6 +4802,9 @@ msgid ""
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
+"Da abilitare se i contenuti delle cartelle hanno la possibilità di essere "
+"modificati da altre applicazioni.\n"
+"Questa opzione degraderà le prestazioni della visualizzazione del sommario."
 
 #: src/prefs_common.c:2469
 msgid "Socket I/O timeout:"
@@ -5872,9 +5869,8 @@ msgid "/Re-_edit"
 msgstr "/Rim_odifica"
 
 #: src/summaryview.c:397
-#, fuzzy
 msgid "/Add sender to address boo_k..."
-msgstr "/Aggiungi mittente alla ru_brica"
+msgstr "/Aggiungi mittente alla ru_brica..."
 
 #: src/summaryview.c:403
 msgid "/_View/_Source"
@@ -6135,24 +6131,20 @@ msgid "Sa_ve this image as..."
 msgstr "Sa_lva questa immagine come..."
 
 #: src/textview.c:1926
-#, fuzzy
 msgid "Compose _new message"
-msgstr "Compone un nuovo messaggio"
+msgstr "Componi un _nuovo messaggio"
 
 #: src/textview.c:1928
-#, fuzzy
 msgid "Add to address _book..."
-msgstr "/Aggiungi mittente alla ru_brica"
+msgstr "Aggiungi alla ru_brica..."
 
 #: src/textview.c:1930
-#, fuzzy
 msgid "Copy this add_ress"
-msgstr "Copia questo _link"
+msgstr "Copia questo indi_rizzo"
 
 #: src/textview.c:1933
-#, fuzzy
 msgid "_Open with Web browser"
-msgstr "Browser web"
+msgstr "Apri c_on il browser web"
 
 #: src/textview.c:1935
 msgid "Copy this _link"
