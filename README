@@ -71,6 +71,7 @@ Features
 	o multiple accounts
 	o thread display
 	o powerful filtering
+	o Junk mail control
 	o MIME (attachments)
 	o integrated News reader
 	o SMTP AUTH support (PLAIN / LOGIN / CRAM-MD5)
@@ -118,7 +119,8 @@ Preparation before running
 --------------------------
 
 If you are using a character encodings other than UTF-8 for filename,
-you must set the following environmental variable:
+you must set the following environmental variable (it will not work if
+it is not specified):
 
 (use locale-specific encoding)
 % export G_FILENAME_ENCODING=@locale
@@ -157,6 +159,9 @@ If ~/.sylpheed-2.0/ doesn't exist, but the previous version of configuration
 exists in ~/.sylpheed/, migration will be made automatically after the
 confirmation.
 
+If the locale encoding is not UTF-8 and the environmental variable
+G_FILENAME_ENCODING is not set, an alert dialog will be displayed.
+
 Required settings
 -----------------
 
@@ -190,6 +195,19 @@ folderview_vscrollbar_policy	specify the policy of vertical scroll bar
 logwindow_line_limit		specify the limit of line numbers of log
 				window
 				0: unlimited  n (> 0): n lines [default: 1000]
+
+Unlike 1.0.x, this version doesn't allow the direct modification of menu
+shortcuts by default. You can use the follwing methods to configure them:
+
+1. Using GNOME 2.8 or later
+   Run gconf-editor from 'Applications - System Tools - Configuration Editor'.
+   Select 'desktop - gnome - interface' and check 'can-change-accels' in it.
+
+2. Using before GNOME 2.8 or other environments
+   Add (or create a new one) gtk-can-change-accels = 1 to ~/.gtkrc-2.0.
+
+3. When Sylpheed is not running, directly edit ~/.sylpheed-2.0/menurc using
+   editors.
 
 Information
 ===========
