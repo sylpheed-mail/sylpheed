@@ -212,6 +212,29 @@ int main(int argc, char *argv[])
 
 	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
 	if (!is_dir_exist(RC_DIR)) {
+		const gchar *envstr;
+		AlertValue val;
+
+		/* check for filename encoding */
+		if (conv_get_locale_charset() != C_UTF_8) {
+			envstr = g_getenv("G_FILENAME_ENCODING");
+			if (!envstr)
+				envstr = g_getenv("G_BROKEN_FILENAMES");
+			if (!envstr) {
+				val = alertpanel(_("Filename encoding"),
+						 _("The locale encoding is not UTF-8, but the environmental variable G_FILENAME_ENCODING is not set.\n"
+						   "If the locale encoding is used for file name or directory name, it will not work correctly.\n"
+						   "In that case, you must set the following environmental variable (see README for detail):\n"
+						   "\n"
+						   "\tG_FILENAME_ENCODING=@locale\n"
+						   "\n"
+						   "Continue?"),
+						 GTK_STOCK_OK, GTK_STOCK_QUIT,
+						 NULL);
+				if (G_ALERTDEFAULT != val)
+					return 1;
+			}
+		}
 		if (make_dir(RC_DIR) < 0)
 			return 1;
 		if (is_dir_exist(OLD_RC_DIR))

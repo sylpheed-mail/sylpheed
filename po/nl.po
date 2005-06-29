@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-28 18:44+0900\n"
+"POT-Creation-Date: 2005-06-29 17:13+0900\n"
 "PO-Revision-Date: 2003-02-18 13:03--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -596,11 +596,11 @@ msgstr "Algemene adressen"
 msgid "Personal address"
 msgstr "Persoonlijke adressen"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:460
+#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
 msgid "Notice"
 msgstr "Bericht"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2071
+#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
 msgid "Warning"
 msgstr "Waarschuwing"
 
@@ -2428,7 +2428,26 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread is niet ondersteunt door glib\n"
 
-#: src/main.c:258
+#: src/main.c:223
+#, fuzzy
+msgid "Filename encoding"
+msgstr "Codering voor uitgaande berichten"
+
+#: src/main.c:224
+msgid ""
+"The locale encoding is not UTF-8, but the environmental variable "
+"G_FILENAME_ENCODING is not set.\n"
+"If the locale encoding is used for file name or directory name, it will not "
+"work correctly.\n"
+"In that case, you must set the following environmental variable (see README "
+"for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Continue?"
+msgstr ""
+
+#: src/main.c:280
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2436,16 +2455,16 @@ msgstr ""
 "GnuPG is niet goed geïnstalleerd of is te oud.\n"
 "OpenPGP ondersteuning wordt uitgeschakeld."
 
-#: src/main.c:416
+#: src/main.c:438
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Gebruik: %s [OPTIES]...\n"
 
-#: src/main.c:419
+#: src/main.c:441
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adres]      open venster \"Bericht opstellen\""
 
-#: src/main.c:420
+#: src/main.c:442
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2455,67 +2474,67 @@ msgstr ""
 "                         venster 'bericht opstellen' openen met de\n"
 "                         gespacificeerde bestanden als bijvoegingen"
 
-#: src/main.c:423
+#: src/main.c:445
 msgid "  --receive              receive new messages"
 msgstr "  --receive              haal nieuwe berichten op"
 
-#: src/main.c:424
+#: src/main.c:446
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          Berichten ophalen van alle accounts"
 
-#: src/main.c:425
+#: src/main.c:447
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 verstuur alle berichten uit de wachtrij"
 
-#: src/main.c:426
+#: src/main.c:448
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status\t\t\ttotaal aantal berichten weergeven"
 
-#: src/main.c:427
+#: src/main.c:449
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status\t\t\ttotaal aantal berichten weergeven"
 
-#: src/main.c:429
+#: src/main.c:451
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug modus"
 
-#: src/main.c:430
+#: src/main.c:452
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 geef deze hulp weer"
 
-#: src/main.c:431
+#: src/main.c:453
 msgid "  --version              output version information and exit"
 msgstr " --version\t\tgeef versie informatie en sluit af"
 
-#: src/main.c:461
+#: src/main.c:483
 msgid "Composing message exists. Really quit?"
 msgstr ""
 "U bent een bericht aan het opstellen.\n"
 "Wilt u werkelijk het programma afsluiten?"
 
-#: src/main.c:469
+#: src/main.c:491
 msgid "Queued messages"
 msgstr "Berichten zijn in de wachtrij gezet"
 
-#: src/main.c:470
+#: src/main.c:492
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Er staan nog berichten in de wachtrij. Toch afsluiten?"
 
 #. remote command mode
-#: src/main.c:548
+#: src/main.c:570
 msgid "another Sylpheed is already running.\n"
 msgstr "er draait al een Sylpheed.\n"
 
-#: src/main.c:714
+#: src/main.c:736
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Bezig met wegschrijven van configuratie van acties...\n"
 
-#: src/main.c:715
+#: src/main.c:737
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

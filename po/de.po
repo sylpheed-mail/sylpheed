@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-28 18:44+0900\n"
+"POT-Creation-Date: 2005-06-29 17:13+0900\n"
 "PO-Revision-Date: 2005-02-08 22:49+0100\n"
 "Last-Translator: Manfred Usselmann <usselmann.m@icg-online.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -601,11 +601,11 @@ msgstr "Allgemeine Adressen"
 msgid "Personal address"
 msgstr "Persönliche Adressen"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:460
+#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
 msgid "Notice"
 msgstr "Notiz"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2071
+#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
 msgid "Warning"
 msgstr "Warnung"
 
@@ -2415,7 +2415,26 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread wird nicht unterstützt von Glib.\n"
 
-#: src/main.c:258
+#: src/main.c:223
+#, fuzzy
+msgid "Filename encoding"
+msgstr "Ausgehender Zeichensatz"
+
+#: src/main.c:224
+msgid ""
+"The locale encoding is not UTF-8, but the environmental variable "
+"G_FILENAME_ENCODING is not set.\n"
+"If the locale encoding is used for file name or directory name, it will not "
+"work correctly.\n"
+"In that case, you must set the following environmental variable (see README "
+"for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Continue?"
+msgstr ""
+
+#: src/main.c:280
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2423,16 +2442,16 @@ msgstr ""
 "GnuPG is nicht richtig installiert, oder die Version ist zu alt.\n"
 "OpenPGP-Unterstützung ausgeschaltet"
 
-#: src/main.c:416
+#: src/main.c:438
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Aufruf: %s [OPTION]...\n"
 
-#: src/main.c:419
+#: src/main.c:441
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [Adresse]    öffnet Verfassenfenster"
 
-#: src/main.c:420
+#: src/main.c:442
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2442,23 +2461,23 @@ msgstr ""
 "                         öffne Verfassen-Fenster mit angegebenen Dateien\n"
 "                         angehängt"
 
-#: src/main.c:423
+#: src/main.c:445
 msgid "  --receive              receive new messages"
 msgstr "  --receive              empfängt neue Nachrichten"
 
-#: src/main.c:424
+#: src/main.c:446
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          empfängt neue Nachrichten von allen Accounts"
 
-#: src/main.c:425
+#: src/main.c:447
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 sendet alle Nachrichten aus der Warteschlange"
 
-#: src/main.c:426
+#: src/main.c:448
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [Ablage]...   zeigt die Gesamtzahl aller Nachrichten"
 
-#: src/main.c:427
+#: src/main.c:449
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2466,40 +2485,40 @@ msgstr ""
 "  --status-full [Ablage]...\n"
 "                         zeigt die Gesamtzahl aller Nachrichten"
 
-#: src/main.c:429
+#: src/main.c:451
 msgid "  --debug                debug mode"
 msgstr "  --debug                Fehlersuche"
 
-#: src/main.c:430
+#: src/main.c:452
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 diese Hilfe"
 
-#: src/main.c:431
+#: src/main.c:453
 msgid "  --version              output version information and exit"
 msgstr "  --version              gibt Version aus und beendet"
 
-#: src/main.c:461
+#: src/main.c:483
 msgid "Composing message exists. Really quit?"
 msgstr "Verfasste Nachricht existiert. Wirklich beenden?"
 
-#: src/main.c:469
+#: src/main.c:491
 msgid "Queued messages"
 msgstr "Wartende Nachrichten"
 
-#: src/main.c:470
+#: src/main.c:492
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Einige ungesendete Nachrichten vorhanden. Jetzt beenden?"
 
 #. remote command mode
-#: src/main.c:548
+#: src/main.c:570
 msgid "another Sylpheed is already running.\n"
 msgstr "Ein anderes Sylpheed läuft schon.\n"
 
-#: src/main.c:714
+#: src/main.c:736
 msgid "Migration of configuration"
 msgstr "Konfigurationsmigration"
 
-#: src/main.c:715
+#: src/main.c:737
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

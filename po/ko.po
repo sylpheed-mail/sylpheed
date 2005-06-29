@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-28 18:44+0900\n"
+"POT-Creation-Date: 2005-06-29 17:13+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -575,11 +575,11 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:460
+#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2071
+#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
 msgid "Warning"
 msgstr "경고"
 
@@ -2401,7 +2401,26 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread가 glib에의해 지원되지않습니다.\n"
 
-#: src/main.c:258
+#: src/main.c:223
+#, fuzzy
+msgid "Filename encoding"
+msgstr "보내는 메일의 문자셋"
+
+#: src/main.c:224
+msgid ""
+"The locale encoding is not UTF-8, but the environmental variable "
+"G_FILENAME_ENCODING is not set.\n"
+"If the locale encoding is used for file name or directory name, it will not "
+"work correctly.\n"
+"In that case, you must set the following environmental variable (see README "
+"for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Continue?"
+msgstr ""
+
+#: src/main.c:280
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2409,16 +2428,16 @@ msgstr ""
 "GnuPG가 적절하게 인스톨되지 않았거나 너무 오래된 버전입니다.\n"
 "OpenPGP 지원기능을 끕니다."
 
-#: src/main.c:416
+#: src/main.c:438
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:419
+#: src/main.c:441
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:420
+#: src/main.c:442
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2428,65 +2447,65 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:423
+#: src/main.c:445
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:424
+#: src/main.c:446
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:425
+#: src/main.c:447
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:426
+#: src/main.c:448
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:427
+#: src/main.c:449
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:429
+#: src/main.c:451
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:430
+#: src/main.c:452
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:431
+#: src/main.c:453
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:461
+#: src/main.c:483
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:469
+#: src/main.c:491
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:470
+#: src/main.c:492
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
 #. remote command mode
-#: src/main.c:548
+#: src/main.c:570
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:714
+#: src/main.c:736
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:715
+#: src/main.c:737
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

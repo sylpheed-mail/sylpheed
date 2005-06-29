@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-1.9.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-28 18:44+0900\n"
+"POT-Creation-Date: 2005-06-29 17:13+0900\n"
 "PO-Revision-Date: 2005-06-23 18:30+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
@@ -596,11 +596,11 @@ msgstr "Általános cím"
 msgid "Personal address"
 msgstr "Személyes cím"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:460
+#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
 msgid "Notice"
 msgstr "Megjegyzés"
 
-#: src/alertpanel.c:136 src/main.c:257 src/textview.c:2071
+#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
@@ -2382,7 +2382,26 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread-et a glib nem támogatja.\n"
 
-#: src/main.c:258
+#: src/main.c:223
+#, fuzzy
+msgid "Filename encoding"
+msgstr "Kimenők karakterkódolása"
+
+#: src/main.c:224
+msgid ""
+"The locale encoding is not UTF-8, but the environmental variable "
+"G_FILENAME_ENCODING is not set.\n"
+"If the locale encoding is used for file name or directory name, it will not "
+"work correctly.\n"
+"In that case, you must set the following environmental variable (see README "
+"for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Continue?"
+msgstr ""
+
+#: src/main.c:280
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2390,16 +2409,16 @@ msgstr ""
 "A GnuPG nincs megfelelően telepítve, vagy túl régi verzió.\n"
 "OpenPGP támogatás kikapcsolva."
 
-#: src/main.c:416
+#: src/main.c:438
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Használat: %s [OPCIÓ]...\n"
 
-#: src/main.c:419
+#: src/main.c:441
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [cím]    szerkesztőablak megnyitása"
 
-#: src/main.c:420
+#: src/main.c:442
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2409,23 +2428,23 @@ msgstr ""
 "                          szerkesztőablak nyitása a megadott fájl(ok)\n"
 "                          csatolásával"
 
-#: src/main.c:423
+#: src/main.c:445
 msgid "  --receive              receive new messages"
 msgstr "  --receive              új üzenetek vétele"
 
-#: src/main.c:424
+#: src/main.c:446
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          új üzenetek vétele minden hozzáférésről"
 
-#: src/main.c:425
+#: src/main.c:447
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 minden várakozó levél küldése"
 
-#: src/main.c:426
+#: src/main.c:448
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mappa]...  üzenetek számának kijelzése"
 
-#: src/main.c:427
+#: src/main.c:449
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2433,40 +2452,40 @@ msgstr ""
 "  --status-full [mappa]...\n"
 "                       az összes mappa státuszának kijelzése"
 
-#: src/main.c:429
+#: src/main.c:451
 msgid "  --debug                debug mode"
 msgstr "  --debug                hibakereső üzemmód"
 
-#: src/main.c:430
+#: src/main.c:452
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 e segítség megjelenítése és kilépés"
 
-#: src/main.c:431
+#: src/main.c:453
 msgid "  --version              output version information and exit"
 msgstr "  --version              verzió információk kiírása és kilépés"
 
-#: src/main.c:461
+#: src/main.c:483
 msgid "Composing message exists. Really quit?"
 msgstr "Üzenet szerkesztés alatt. Tényleg kilép?"
 
-#: src/main.c:469
+#: src/main.c:491
 msgid "Queued messages"
 msgstr "Várakozó üzenetek"
 
-#: src/main.c:470
+#: src/main.c:492
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Vannak elküldetlen üzenetek. Kilépés most?"
 
 #. remote command mode
-#: src/main.c:548
+#: src/main.c:570
 msgid "another Sylpheed is already running.\n"
 msgstr "Egy másik Sylpheed már fut.\n"
 
-#: src/main.c:714
+#: src/main.c:736
 msgid "Migration of configuration"
 msgstr "Beállítások migrálása"
 
-#: src/main.c:715
+#: src/main.c:737
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
