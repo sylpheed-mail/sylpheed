@@ -3636,11 +3636,16 @@ static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
 	    fltinfo->actions[FLT_ACTION_REDIRECT])
 		summaryview->filtered++;
 
-	if ((fltinfo->actions[FLT_ACTION_MARK] ||
-	     fltinfo->actions[FLT_ACTION_COLOR_LABEL] ||
-	     fltinfo->actions[FLT_ACTION_MARK_READ])) {
+	if (msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
 		msginfo->flags = fltinfo->flags;
 		summary_set_row(summaryview, iter, msginfo);
+		if (MSG_IS_IMAP(msginfo->flags)) {
+			if (fltinfo->actions[FLT_ACTION_MARK])
+				imap_msg_set_perm_flags(msginfo, MSG_MARKED);
+			if (fltinfo->actions[FLT_ACTION_MARK_READ])
+				imap_msg_unset_perm_flags(msginfo,
+							  MSG_NEW|MSG_UNREAD);
+		}
 	}
 
 	if (fltinfo->actions[FLT_ACTION_MOVE] && fltinfo->move_dest)
