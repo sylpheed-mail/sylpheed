@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-29 17:13+0900\n"
+"POT-Creation-Date: 2005-06-30 14:43+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -84,7 +84,7 @@ msgstr ""
 "받으려면 `G' 컬럼 상자를 선택하세요."
 
 #: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
-#: src/compose.c:3985 src/editaddress.c:199 src/editaddress.c:940
+#: src/compose.c:4007 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
 #: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -122,13 +122,13 @@ msgstr "제목 없슴"
 msgid "Delete account"
 msgstr "계정 삭제"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "Yes"
 msgstr "확인"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "+No"
@@ -231,7 +231,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "주소록에 추가"
 
-#: src/addressadd.c:202 src/compose.c:4415 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4437 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "주소"
@@ -371,7 +371,7 @@ msgstr "/삭제(_D)"
 msgid "E-Mail address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:495 src/compose.c:4416 src/prefs_common.c:2387
+#: src/addressbook.c:495 src/compose.c:4438 src/prefs_common.c:2387
 msgid "Address book"
 msgstr "주소록"
 
@@ -575,15 +575,15 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
+#: src/alertpanel.c:123 src/compose.c:5119 src/main.c:483
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
+#: src/alertpanel.c:136 src/compose.c:2746 src/main.c:280 src/textview.c:2071
 msgid "Warning"
 msgstr "경고"
 
-#: src/alertpanel.c:149 src/compose.c:2674 src/inc.c:570
+#: src/alertpanel.c:149 src/compose.c:2675 src/inc.c:570
 msgid "Error"
 msgstr "에러"
 
@@ -992,7 +992,7 @@ msgstr "메시지%s 편집"
 msgid "Recipient is not specified."
 msgstr "받는 사람이 지정되지않았습니다"
 
-#: src/compose.c:2415 src/compose.c:4336 src/mainwindow.c:2216
+#: src/compose.c:2415 src/compose.c:4358 src/mainwindow.c:2216
 #: src/prefs_account.c:715 src/prefs_common.c:937
 msgid "Send"
 msgstr "메일 발송"
@@ -1027,12 +1027,12 @@ msgstr "메시지를 보낸 편지함에 저장할 수가 없습니다"
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "현재 선택된 키 ID `%s'에 연결된 어떤 키도 찾을 수 없습니다."
 
-#: src/compose.c:2637 src/compose.c:2866 src/compose.c:2929 src/compose.c:3049
-#: src/utils.c:2220
+#: src/compose.c:2638 src/compose.c:2888 src/compose.c:2951 src/compose.c:3071
+#: src/utils.c:2246
 msgid "can't change file mode\n"
 msgstr "파일 모드를 바꿀수가 없습니다\n"
 
-#: src/compose.c:2669
+#: src/compose.c:2670
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1041,151 +1041,156 @@ msgstr ""
 "메시지의 문자셋을 변경할 수가 없습니다.\n"
 "그래도 보낼까요?"
 
-#: src/compose.c:2737
-msgid "can't write headers\n"
-msgstr "헤더를 쓸 수가 없습니다\n"
+#: src/compose.c:2742
+#, c-format
+msgid ""
+"Line %d exceeds the line length limit (998 bytes).\n"
+"The contents of the message might be broken on the way to the delivery.\n"
+"\n"
+"Send it anyway?"
+msgstr ""
 
-#: src/compose.c:3009
+#: src/compose.c:3031
 msgid "can't remove the old message\n"
 msgstr "오래된 메시지를 제거할 수가 없습니다\n"
 
-#: src/compose.c:3027
+#: src/compose.c:3049
 msgid "queueing message...\n"
 msgstr "메시지를 임시 보관합니다...\n"
 
-#: src/compose.c:3109
+#: src/compose.c:3131
 msgid "can't find queue folder\n"
 msgstr "큐 폴더를 찾을 수가 없습니다\n"
 
-#: src/compose.c:3116
+#: src/compose.c:3138
 msgid "can't queue the message\n"
 msgstr "메시지를 임시 보관할 수가 없습니다\n"
 
-#: src/compose.c:3696
+#: src/compose.c:3718
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "생성된 Message-ID: %s\n"
 
-#: src/compose.c:3805
+#: src/compose.c:3827
 msgid "Creating compose window...\n"
 msgstr "편집창을 생성합니다...\n"
 
-#: src/compose.c:3853 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3875 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "보낸 사람:"
 
-#: src/compose.c:3925
+#: src/compose.c:3947
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/도구(_T)/동작(_n)"
 
-#: src/compose.c:3928
+#: src/compose.c:3950
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/메시지(_M)/암호화(_E)"
 
-#: src/compose.c:3966 src/compose.c:4888
+#: src/compose.c:3988 src/compose.c:4910
 msgid "MIME type"
 msgstr "마임 타입"
 
 #. S_COL_DATE
-#: src/compose.c:3975 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/compose.c:3997 src/mimeview.c:192 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4204
 msgid "Size"
 msgstr "크기"
 
-#: src/compose.c:4337
+#: src/compose.c:4359
 msgid "Send message"
 msgstr "메시지 보내기"
 
-#: src/compose.c:4345
+#: src/compose.c:4367
 msgid "Send later"
 msgstr "나중에 보내기"
 
-#: src/compose.c:4346
+#: src/compose.c:4368
 msgid "Put into queue folder and send later"
 msgstr "보낼 편지함에 넣어서 나중에 보내기"
 
-#: src/compose.c:4354
+#: src/compose.c:4376
 msgid "Draft"
 msgstr "임시 보관함"
 
-#: src/compose.c:4355
+#: src/compose.c:4377
 msgid "Save to draft folder"
 msgstr "임시 보관함에 넣기"
 
-#: src/compose.c:4365 src/compose.c:5693
+#: src/compose.c:4387 src/compose.c:5715
 msgid "Insert"
 msgstr "삽입"
 
-#: src/compose.c:4366
+#: src/compose.c:4388
 msgid "Insert file"
 msgstr "파일을 삽입합니다"
 
-#: src/compose.c:4374
+#: src/compose.c:4396
 msgid "Attach"
 msgstr "첨부"
 
-#: src/compose.c:4375
+#: src/compose.c:4397
 msgid "Attach file"
 msgstr "파일 첨부"
 
 #. signature
-#: src/compose.c:4385 src/prefs_account.c:1387 src/prefs_common.c:1346
+#: src/compose.c:4407 src/prefs_account.c:1387 src/prefs_common.c:1346
 msgid "Signature"
 msgstr "서명"
 
-#: src/compose.c:4386
+#: src/compose.c:4408
 msgid "Insert signature"
 msgstr "서명 파일을 끼워넣습니다"
 
-#: src/compose.c:4395 src/prefs_common.c:1368 src/prefs_common.c:2366
+#: src/compose.c:4417 src/prefs_common.c:1368 src/prefs_common.c:2366
 msgid "Editor"
 msgstr "편집기"
 
-#: src/compose.c:4396
+#: src/compose.c:4418
 msgid "Edit with external editor"
 msgstr "외부 편집기로 편집"
 
-#: src/compose.c:4404
+#: src/compose.c:4426
 msgid "Linewrap"
 msgstr "줄바꿈"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "Wrap all long lines"
 msgstr "긴 줄에대해 자동 줄바꿈을 합니다"
 
-#: src/compose.c:4784
+#: src/compose.c:4806
 msgid "Invalid MIME type."
 msgstr "올바르지않은 마임 타입."
 
-#: src/compose.c:4802
+#: src/compose.c:4824
 msgid "File doesn't exist or is empty."
 msgstr "파일이 없거나 비여있습니다."
 
-#: src/compose.c:4870
+#: src/compose.c:4892
 #, fuzzy
 msgid "Properties"
 msgstr "특성"
 
-#: src/compose.c:4890
+#: src/compose.c:4912
 msgid "Encoding"
 msgstr "인코딩"
 
-#: src/compose.c:4913 src/prefs_folder_item.c:183
+#: src/compose.c:4935 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "경로"
 
-#: src/compose.c:4914
+#: src/compose.c:4936
 msgid "File name"
 msgstr "파일 이름"
 
-#: src/compose.c:5068
+#: src/compose.c:5090
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "외부 편집기 명령어가 올바르지않습니다: `%s'\n"
 
-#: src/compose.c:5094
+#: src/compose.c:5116
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1196,72 +1201,72 @@ msgstr ""
 "이 프로세스를 강제로 종료시킬까요?\n"
 "프로세스 그룹 아이디: %d"
 
-#: src/compose.c:5107
+#: src/compose.c:5129
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "프로세스 그룹 id: %d를 종료시킴"
 
-#: src/compose.c:5108
+#: src/compose.c:5130
 #, c-format
 msgid "Temporary file: %s"
 msgstr "임시 파일: %s"
 
-#: src/compose.c:5132
+#: src/compose.c:5154
 msgid "Compose: input from monitoring process\n"
 msgstr "편집: 모니터링하는 프로세스로부터 입력이 있었습니다\n"
 
 #. failed
-#: src/compose.c:5173
+#: src/compose.c:5195
 msgid "Couldn't exec external editor\n"
 msgstr "외부 편집기를 실행할 수가 없습니다\n"
 
-#: src/compose.c:5177
+#: src/compose.c:5199
 msgid "Couldn't write to file\n"
 msgstr "파일로 쓸 수가 없습니다\n"
 
-#: src/compose.c:5179
+#: src/compose.c:5201
 msgid "Pipe read failed\n"
 msgstr "파이프 읽기 실패\n"
 
-#: src/compose.c:5484 src/compose.c:5492 src/compose.c:5498
+#: src/compose.c:5506 src/compose.c:5514 src/compose.c:5520
 msgid "Can't queue the message."
 msgstr "메시지를 임시 보관함에 넣을수가 없습니다."
 
-#: src/compose.c:5589
+#: src/compose.c:5611
 #, fuzzy
 msgid "Select files"
 msgstr "파일 선택"
 
-#: src/compose.c:5611
+#: src/compose.c:5633
 msgid "Select file"
 msgstr "파일 선택"
 
-#: src/compose.c:5646
+#: src/compose.c:5668
 msgid "Discard message"
 msgstr "메시지 버리기"
 
-#: src/compose.c:5647
+#: src/compose.c:5669
 msgid "This message has been modified. discard it?"
 msgstr "이 메시지는 수정되었습니다. 변경사항을 버릴까요?"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "Discard"
 msgstr "버리기"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "to Draft"
 msgstr "임시 보관함으로"
 
-#: src/compose.c:5690
+#: src/compose.c:5712
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "`%s' 템플릿을 적용할까요?"
 
-#: src/compose.c:5692
+#: src/compose.c:5714
 msgid "Apply template"
 msgstr "템플릿을 적용합니다."
 
-#: src/compose.c:5693
+#: src/compose.c:5715
 msgid "Replace"
 msgstr "대체"
 
@@ -2401,12 +2406,12 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread가 glib에의해 지원되지않습니다.\n"
 
-#: src/main.c:223
+#: src/main.c:224
 #, fuzzy
 msgid "Filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/main.c:224
+#: src/main.c:225
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2420,7 +2425,7 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:280
+#: src/main.c:281
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2428,16 +2433,16 @@ msgstr ""
 "GnuPG가 적절하게 인스톨되지 않았거나 너무 오래된 버전입니다.\n"
 "OpenPGP 지원기능을 끕니다."
 
-#: src/main.c:438
+#: src/main.c:439
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:441
+#: src/main.c:442
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:442
+#: src/main.c:443
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2447,65 +2452,65 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:445
+#: src/main.c:446
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:446
+#: src/main.c:447
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:447
+#: src/main.c:448
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:448
+#: src/main.c:449
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:449
+#: src/main.c:450
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:451
+#: src/main.c:452
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:452
+#: src/main.c:453
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:453
+#: src/main.c:454
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:483
+#: src/main.c:484
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:491
+#: src/main.c:492
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:492
+#: src/main.c:493
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
 #. remote command mode
-#: src/main.c:570
+#: src/main.c:571
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:736
+#: src/main.c:737
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:737
+#: src/main.c:738
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6255,10 +6260,13 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: src/utils.c:2227 src/utils.c:2354
+#: src/utils.c:2253 src/utils.c:2380
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s로 쓰기가 실패했습니다.\n"
+
+#~ msgid "can't write headers\n"
+#~ msgstr "헤더를 쓸 수가 없습니다\n"
 
 #~ msgid "External program"
 #~ msgstr "외부 프로그램"

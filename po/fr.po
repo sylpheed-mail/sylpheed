@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-29 17:13+0900\n"
+"POT-Creation-Date: 2005-06-30 14:43+0900\n"
 "PO-Revision-Date: 2004-12-09 20:16+0100\n"
 "Last-Translator: Nicolas Boos <nicolas.boos@wanadoo.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -105,7 +105,7 @@ msgstr ""
 "correspondant lorsque « Tout relever » est activé"
 
 #: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
-#: src/compose.c:3985 src/editaddress.c:199 src/editaddress.c:940
+#: src/compose.c:4007 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
 #: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -143,13 +143,13 @@ msgstr "Sans titre"
 msgid "Delete account"
 msgstr "Supprimer le compte"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "Yes"
 msgstr "Oui"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "+No"
@@ -254,7 +254,7 @@ msgstr "Argument de l'action"
 msgid "Add Address to Book"
 msgstr "Ajouter l'adresse au carnet"
 
-#: src/addressadd.c:202 src/compose.c:4415 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4437 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresse"
@@ -394,7 +394,7 @@ msgstr "/_Supprimer"
 msgid "E-Mail address"
 msgstr "Adresse électronique"
 
-#: src/addressbook.c:495 src/compose.c:4416 src/prefs_common.c:2387
+#: src/addressbook.c:495 src/compose.c:4438 src/prefs_common.c:2387
 msgid "Address book"
 msgstr "Carnet d'adresses"
 
@@ -608,15 +608,15 @@ msgstr "Adresse courante :"
 msgid "Personal address"
 msgstr "Adresse personnelle :"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
+#: src/alertpanel.c:123 src/compose.c:5119 src/main.c:483
 msgid "Notice"
 msgstr "Information"
 
-#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
+#: src/alertpanel.c:136 src/compose.c:2746 src/main.c:280 src/textview.c:2071
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/alertpanel.c:149 src/compose.c:2674 src/inc.c:570
+#: src/alertpanel.c:149 src/compose.c:2675 src/inc.c:570
 msgid "Error"
 msgstr "Erreur"
 
@@ -1018,7 +1018,7 @@ msgstr "Composition d'un message%s"
 msgid "Recipient is not specified."
 msgstr "Destinataire non spécifié."
 
-#: src/compose.c:2415 src/compose.c:4336 src/mainwindow.c:2216
+#: src/compose.c:2415 src/compose.c:4358 src/mainwindow.c:2216
 #: src/prefs_account.c:715 src/prefs_common.c:937
 msgid "Send"
 msgstr "Envoyer"
@@ -1053,12 +1053,12 @@ msgstr "Impossible d'enregistrer de message dans la boîte de messages envoyés"
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Impossible de trouver une touche associée au code (de touche) « %s »."
 
-#: src/compose.c:2637 src/compose.c:2866 src/compose.c:2929 src/compose.c:3049
-#: src/utils.c:2220
+#: src/compose.c:2638 src/compose.c:2888 src/compose.c:2951 src/compose.c:3071
+#: src/utils.c:2246
 msgid "can't change file mode\n"
 msgstr "impossible de modifier les droits d'accès du fichier\n"
 
-#: src/compose.c:2669
+#: src/compose.c:2670
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1067,150 +1067,155 @@ msgstr ""
 "Impossible de convertir le jeu de caractères du message\n"
 "de %s vers %s. Voulez-vous néanmoins l'envoyer ?"
 
-#: src/compose.c:2737
-msgid "can't write headers\n"
-msgstr "impossible d'écrire les en-têtes\n"
+#: src/compose.c:2742
+#, c-format
+msgid ""
+"Line %d exceeds the line length limit (998 bytes).\n"
+"The contents of the message might be broken on the way to the delivery.\n"
+"\n"
+"Send it anyway?"
+msgstr ""
 
-#: src/compose.c:3009
+#: src/compose.c:3031
 msgid "can't remove the old message\n"
 msgstr "Impossible d'enlever l'ancien message\n"
 
-#: src/compose.c:3027
+#: src/compose.c:3049
 msgid "queueing message...\n"
 msgstr "Mise en file d'attente des messages...\n"
 
-#: src/compose.c:3109
+#: src/compose.c:3131
 msgid "can't find queue folder\n"
 msgstr "Impossible de trouver le dossier de file d'attente\n"
 
-#: src/compose.c:3116
+#: src/compose.c:3138
 msgid "can't queue the message\n"
 msgstr "Impossible de mettre ce message dans la file d'attente\n"
 
-#: src/compose.c:3696
+#: src/compose.c:3718
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "Message-ID créé : %s\n"
 
-#: src/compose.c:3805
+#: src/compose.c:3827
 msgid "Creating compose window...\n"
 msgstr "Création de la fenêtre de composition...\n"
 
-#: src/compose.c:3853 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3875 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "De :"
 
-#: src/compose.c:3925
+#: src/compose.c:3947
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Outils/_Signer"
 
-#: src/compose.c:3928
+#: src/compose.c:3950
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Outils/_Chiffrer"
 
-#: src/compose.c:3966 src/compose.c:4888
+#: src/compose.c:3988 src/compose.c:4910
 msgid "MIME type"
 msgstr "Type MIME"
 
 #. S_COL_DATE
-#: src/compose.c:3975 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/compose.c:3997 src/mimeview.c:192 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4204
 msgid "Size"
 msgstr "Taille"
 
-#: src/compose.c:4337
+#: src/compose.c:4359
 msgid "Send message"
 msgstr "Envoyer le message"
 
-#: src/compose.c:4345
+#: src/compose.c:4367
 msgid "Send later"
 msgstr "Envoi différé"
 
-#: src/compose.c:4346
+#: src/compose.c:4368
 msgid "Put into queue folder and send later"
 msgstr "Mettre en file d'attente et envoyer plus tard"
 
-#: src/compose.c:4354
+#: src/compose.c:4376
 msgid "Draft"
 msgstr "Brouillon"
 
-#: src/compose.c:4355
+#: src/compose.c:4377
 msgid "Save to draft folder"
 msgstr "Enregistrer dans le dossier brouillon"
 
-#: src/compose.c:4365 src/compose.c:5693
+#: src/compose.c:4387 src/compose.c:5715
 msgid "Insert"
 msgstr "Insertion"
 
-#: src/compose.c:4366
+#: src/compose.c:4388
 msgid "Insert file"
 msgstr "Insérer un fichier"
 
-#: src/compose.c:4374
+#: src/compose.c:4396
 msgid "Attach"
 msgstr "Joindre"
 
-#: src/compose.c:4375
+#: src/compose.c:4397
 msgid "Attach file"
 msgstr "Joindre un fichier"
 
 #. signature
-#: src/compose.c:4385 src/prefs_account.c:1387 src/prefs_common.c:1346
+#: src/compose.c:4407 src/prefs_account.c:1387 src/prefs_common.c:1346
 msgid "Signature"
 msgstr "Signature"
 
-#: src/compose.c:4386
+#: src/compose.c:4408
 msgid "Insert signature"
 msgstr "Insérer la signature"
 
-#: src/compose.c:4395 src/prefs_common.c:1368 src/prefs_common.c:2366
+#: src/compose.c:4417 src/prefs_common.c:1368 src/prefs_common.c:2366
 msgid "Editor"
 msgstr "Éditeur de texte"
 
-#: src/compose.c:4396
+#: src/compose.c:4418
 msgid "Edit with external editor"
 msgstr "Éditer avec un éditeur externe"
 
-#: src/compose.c:4404
+#: src/compose.c:4426
 msgid "Linewrap"
 msgstr "Justifier"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "Wrap all long lines"
 msgstr "Justifier tout le message"
 
-#: src/compose.c:4784
+#: src/compose.c:4806
 msgid "Invalid MIME type."
 msgstr "Type MIME invalide."
 
-#: src/compose.c:4802
+#: src/compose.c:4824
 msgid "File doesn't exist or is empty."
 msgstr "Le fichier n'existe pas ou est vide."
 
-#: src/compose.c:4870
+#: src/compose.c:4892
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/compose.c:4890
+#: src/compose.c:4912
 msgid "Encoding"
 msgstr "Encodage"
 
-#: src/compose.c:4913 src/prefs_folder_item.c:183
+#: src/compose.c:4935 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Chemin d'accès"
 
-#: src/compose.c:4914
+#: src/compose.c:4936
 msgid "File name"
 msgstr "Nom du fichier"
 
-#: src/compose.c:5068
+#: src/compose.c:5090
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "La ligne de commande pour l'éditeur externe est invalide : « %s »\n"
 
-#: src/compose.c:5094
+#: src/compose.c:5116
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1221,74 +1226,74 @@ msgstr ""
 "Forcer sa fermeture ?\n"
 "id de traitement de groupe: %d"
 
-#: src/compose.c:5107
+#: src/compose.c:5129
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Id de traitement de groupe terminé : %d"
 
-#: src/compose.c:5108
+#: src/compose.c:5130
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Fichier temporaire : %s"
 
-#: src/compose.c:5132
+#: src/compose.c:5154
 msgid "Compose: input from monitoring process\n"
 msgstr "Compose : entrée à partir d'une surveillance de traitement\n"
 
 #. failed
-#: src/compose.c:5173
+#: src/compose.c:5195
 msgid "Couldn't exec external editor\n"
 msgstr "Impossible de lancer l'éditeur externe\n"
 
-#: src/compose.c:5177
+#: src/compose.c:5199
 msgid "Couldn't write to file\n"
 msgstr "Impossible d'écrire dans le fichier\n"
 
-#: src/compose.c:5179
+#: src/compose.c:5201
 msgid "Pipe read failed\n"
 msgstr "Échec de lecture de pipe\n"
 
-#: src/compose.c:5484 src/compose.c:5492 src/compose.c:5498
+#: src/compose.c:5506 src/compose.c:5514 src/compose.c:5520
 msgid "Can't queue the message."
 msgstr "Impossible de mettre ce message dans la file d'attente."
 
-#: src/compose.c:5589
+#: src/compose.c:5611
 #, fuzzy
 msgid "Select files"
 msgstr "Choisissez un fichier"
 
-#: src/compose.c:5611
+#: src/compose.c:5633
 msgid "Select file"
 msgstr "Choisissez un fichier"
 
-#: src/compose.c:5646
+#: src/compose.c:5668
 msgid "Discard message"
 msgstr "Interruption de la composition du message"
 
-#: src/compose.c:5647
+#: src/compose.c:5669
 msgid "This message has been modified. discard it?"
 msgstr ""
 "Ce message a été modifié mais pas envoyé. Voulez-vous interrompre la "
 "composition ?"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "Discard"
 msgstr "Interrompre"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "to Draft"
 msgstr "vers brouillon"
 
-#: src/compose.c:5690
+#: src/compose.c:5712
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Voulez-vous appliquer le modèle « %s » ?"
 
-#: src/compose.c:5692
+#: src/compose.c:5714
 msgid "Apply template"
 msgstr "Appliquer un modèle"
 
-#: src/compose.c:5693
+#: src/compose.c:5715
 msgid "Replace"
 msgstr "Remplacer"
 
@@ -2429,12 +2434,12 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread non supporté par glib.\n"
 
-#: src/main.c:223
+#: src/main.c:224
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Jeu de caractères pour l'envoi"
 
-#: src/main.c:224
+#: src/main.c:225
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2448,7 +2453,7 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:280
+#: src/main.c:281
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2456,16 +2461,16 @@ msgstr ""
 "GnuPG n'est pas installé correctement.\n"
 "Support OpenPGP désactivé."
 
-#: src/main.c:438
+#: src/main.c:439
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Utilisation : %s [OPTION]...\n"
 
-#: src/main.c:441
+#: src/main.c:442
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresse]    ouvrir une fenêtre de composition de message"
 
-#: src/main.c:442
+#: src/main.c:443
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2476,24 +2481,24 @@ msgstr ""
 "(s)\n"
 "                         jointe(s) le(s) fichier(s) spécifié(s)"
 
-#: src/main.c:445
+#: src/main.c:446
 msgid "  --receive              receive new messages"
 msgstr "  --receive              récupérer les nouveaux messages"
 
-#: src/main.c:446
+#: src/main.c:447
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr ""
 "  --receive-all          récupérer les nouveaux messages de tous les comptes"
 
-#: src/main.c:447
+#: src/main.c:448
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 envoyer les messages en attente"
 
-#: src/main.c:448
+#: src/main.c:449
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [dossier]...  afficher le nombre total de messages"
 
-#: src/main.c:449
+#: src/main.c:450
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2501,45 +2506,45 @@ msgstr ""
 "  --status-full [dossier]...\n"
 "                         afficher l'état de chaque dossier"
 
-#: src/main.c:451
+#: src/main.c:452
 msgid "  --debug                debug mode"
 msgstr "  --debug                afficher les informations de mise au point"
 
-#: src/main.c:452
+#: src/main.c:453
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 afficher l'aide-mémoire"
 
-#: src/main.c:453
+#: src/main.c:454
 msgid "  --version              output version information and exit"
 msgstr "  --version              afficher les informations de version"
 
-#: src/main.c:483
+#: src/main.c:484
 msgid "Composing message exists. Really quit?"
 msgstr ""
 "Une fenêtre de composition de message existe.\n"
 "Voulez-vous vraiment quitter ?"
 
-#: src/main.c:491
+#: src/main.c:492
 msgid "Queued messages"
 msgstr "Messages en file d'attente"
 
-#: src/main.c:492
+#: src/main.c:493
 msgid "Some unsent messages are queued. Exit now?"
 msgstr ""
 "Quelques messages non envoyés sont dans la file d'attente. Quitter "
 "maintenant ?"
 
 #. remote command mode
-#: src/main.c:570
+#: src/main.c:571
 msgid "another Sylpheed is already running.\n"
 msgstr "une autre session de Sylpheed existe.\n"
 
-#: src/main.c:736
+#: src/main.c:737
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Actions"
 
-#: src/main.c:737
+#: src/main.c:738
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6290,10 +6295,13 @@ msgstr "%.2f Mo"
 msgid "%.2fGB"
 msgstr "%.2f Go"
 
-#: src/utils.c:2227 src/utils.c:2354
+#: src/utils.c:2253 src/utils.c:2380
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "L'écriture dans %s a échoué.\n"
+
+#~ msgid "can't write headers\n"
+#~ msgstr "impossible d'écrire les en-têtes\n"
 
 #~ msgid "External program"
 #~ msgstr "Programme externe"

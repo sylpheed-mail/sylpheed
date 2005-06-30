@@ -1133,6 +1133,32 @@ gint get_quote_level(const gchar *str)
 	return quote_level;
 }
 
+gint check_line_length(const gchar *str, gint max_chars, gint *line)
+{
+	const gchar *p = str, *q;
+	gint cur_line = 0, len;
+
+	while ((q = strchr(p, '\n')) != NULL) {
+		len = q - p + 1;
+		if (len > max_chars) {
+			if (line)
+				*line = cur_line;
+			return -1;
+		}
+		p = q + 1;
+		++cur_line;
+	}
+
+	len = strlen(p);
+	if (len > max_chars) {
+		if (line)
+			*line = cur_line;
+		return -1;
+	}
+
+	return 0;
+}
+
 gchar *strstr_with_skip_quote(const gchar *haystack, const gchar *needle)
 {
 	register guint haystack_len, needle_len;

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-29 17:13+0900\n"
+"POT-Creation-Date: 2005-06-30 14:43+0900\n"
 "PO-Revision-Date: 2002-11-29 21:08+0100\n"
 "Last-Translator: garret <garret@garrets.tk>\n"
 "Language-Team: Serbian\n"
@@ -97,7 +97,7 @@ msgstr ""
 "`G' one naloge sa kojih želite skinuti e-poštu sa `Primi sve'."
 
 #: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
-#: src/compose.c:3985 src/editaddress.c:199 src/editaddress.c:940
+#: src/compose.c:4007 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
 #: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -135,13 +135,13 @@ msgstr "Neimenovano"
 msgid "Delete account"
 msgstr "Obriši nalog"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "Yes"
 msgstr "Da"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "+No"
@@ -244,7 +244,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Dodaj adresu u adresar"
 
-#: src/addressadd.c:202 src/compose.c:4415 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4437 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresa"
@@ -384,7 +384,7 @@ msgstr "/_Obriši"
 msgid "E-Mail address"
 msgstr "Adresa e-pošte"
 
-#: src/addressbook.c:495 src/compose.c:4416 src/prefs_common.c:2387
+#: src/addressbook.c:495 src/compose.c:4438 src/prefs_common.c:2387
 msgid "Address book"
 msgstr "Adresar"
 
@@ -588,15 +588,15 @@ msgstr "Uobičajene adrese"
 msgid "Personal address"
 msgstr "Lične adrese"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
+#: src/alertpanel.c:123 src/compose.c:5119 src/main.c:483
 msgid "Notice"
 msgstr "Obaveštenje"
 
-#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
+#: src/alertpanel.c:136 src/compose.c:2746 src/main.c:280 src/textview.c:2071
 msgid "Warning"
 msgstr "Upozorenje"
 
-#: src/alertpanel.c:149 src/compose.c:2674 src/inc.c:570
+#: src/alertpanel.c:149 src/compose.c:2675 src/inc.c:570
 msgid "Error"
 msgstr "Greška"
 
@@ -1005,7 +1005,7 @@ msgstr "Pisanje poruke%s"
 msgid "Recipient is not specified."
 msgstr "Primalac nije upisan."
 
-#: src/compose.c:2415 src/compose.c:4336 src/mainwindow.c:2216
+#: src/compose.c:2415 src/compose.c:4358 src/mainwindow.c:2216
 #: src/prefs_account.c:715 src/prefs_common.c:937
 msgid "Send"
 msgstr "Pošalji"
@@ -1041,12 +1041,12 @@ msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Ne mogu pronaći nijedan ključ kome je trenutno dodeljen id ključa `%s'."
 
-#: src/compose.c:2637 src/compose.c:2866 src/compose.c:2929 src/compose.c:3049
-#: src/utils.c:2220
+#: src/compose.c:2638 src/compose.c:2888 src/compose.c:2951 src/compose.c:3071
+#: src/utils.c:2246
 msgid "can't change file mode\n"
 msgstr "ne mogu promeniti atribut datoteke\n"
 
-#: src/compose.c:2669
+#: src/compose.c:2670
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1055,151 +1055,156 @@ msgstr ""
 "Ne mogu promeniti kodni raspored poruke.\n"
 "Da je ipak pošaljem?"
 
-#: src/compose.c:2737
-msgid "can't write headers\n"
-msgstr "ne mogu upisati zaglavlje\n"
+#: src/compose.c:2742
+#, c-format
+msgid ""
+"Line %d exceeds the line length limit (998 bytes).\n"
+"The contents of the message might be broken on the way to the delivery.\n"
+"\n"
+"Send it anyway?"
+msgstr ""
 
-#: src/compose.c:3009
+#: src/compose.c:3031
 msgid "can't remove the old message\n"
 msgstr "ne mogu skloniti staru poruku\n"
 
-#: src/compose.c:3027
+#: src/compose.c:3049
 msgid "queueing message...\n"
 msgstr "odlaganje poruke...\n"
 
-#: src/compose.c:3109
+#: src/compose.c:3131
 msgid "can't find queue folder\n"
 msgstr "ne mogu da pronađem direktorijum odloženo\n"
 
-#: src/compose.c:3116
+#: src/compose.c:3138
 msgid "can't queue the message\n"
 msgstr "ne mogu odložiti poruku\n"
 
-#: src/compose.c:3696
+#: src/compose.c:3718
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generisan ID-poruke: %s\n"
 
-#: src/compose.c:3805
+#: src/compose.c:3827
 msgid "Creating compose window...\n"
 msgstr "Stvaranje prozora za pisanje...\n"
 
-#: src/compose.c:3853 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3875 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "Od:"
 
-#: src/compose.c:3925
+#: src/compose.c:3947
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Alat/Akci_je"
 
-#: src/compose.c:3928
+#: src/compose.c:3950
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Poruka/_Enkriptuj"
 
-#: src/compose.c:3966 src/compose.c:4888
+#: src/compose.c:3988 src/compose.c:4910
 msgid "MIME type"
 msgstr "MIME tip"
 
 #. S_COL_DATE
-#: src/compose.c:3975 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/compose.c:3997 src/mimeview.c:192 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4204
 msgid "Size"
 msgstr "Veličina"
 
-#: src/compose.c:4337
+#: src/compose.c:4359
 msgid "Send message"
 msgstr "Pošalji poruku"
 
-#: src/compose.c:4345
+#: src/compose.c:4367
 msgid "Send later"
 msgstr "Pošalji kasnije"
 
-#: src/compose.c:4346
+#: src/compose.c:4368
 msgid "Put into queue folder and send later"
 msgstr "Odloži u direktotijum odloženo i pošalji kasnije"
 
-#: src/compose.c:4354
+#: src/compose.c:4376
 msgid "Draft"
 msgstr "Nedovršeno"
 
-#: src/compose.c:4355
+#: src/compose.c:4377
 msgid "Save to draft folder"
 msgstr "Sačuvaj u direktorijum nedovršeno"
 
-#: src/compose.c:4365 src/compose.c:5693
+#: src/compose.c:4387 src/compose.c:5715
 msgid "Insert"
 msgstr "Unesi"
 
-#: src/compose.c:4366
+#: src/compose.c:4388
 msgid "Insert file"
 msgstr "Unesi datoteku"
 
-#: src/compose.c:4374
+#: src/compose.c:4396
 msgid "Attach"
 msgstr "Prikači"
 
-#: src/compose.c:4375
+#: src/compose.c:4397
 msgid "Attach file"
 msgstr "Prikači datoteku"
 
 #. signature
-#: src/compose.c:4385 src/prefs_account.c:1387 src/prefs_common.c:1346
+#: src/compose.c:4407 src/prefs_account.c:1387 src/prefs_common.c:1346
 msgid "Signature"
 msgstr "Potpis"
 
-#: src/compose.c:4386
+#: src/compose.c:4408
 msgid "Insert signature"
 msgstr "Unesi potpis"
 
-#: src/compose.c:4395 src/prefs_common.c:1368 src/prefs_common.c:2366
+#: src/compose.c:4417 src/prefs_common.c:1368 src/prefs_common.c:2366
 msgid "Editor"
 msgstr "Editor"
 
-#: src/compose.c:4396
+#: src/compose.c:4418
 msgid "Edit with external editor"
 msgstr "Izmeni sa nezavisnim ediorom"
 
-#: src/compose.c:4404
+#: src/compose.c:4426
 msgid "Linewrap"
 msgstr "Sažimanje"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "Wrap all long lines"
 msgstr "Sažmi sve duge linije"
 
-#: src/compose.c:4784
+#: src/compose.c:4806
 msgid "Invalid MIME type."
 msgstr "Pogrešan MIME tip"
 
-#: src/compose.c:4802
+#: src/compose.c:4824
 msgid "File doesn't exist or is empty."
 msgstr "Datoteka ne postoji ili je prazna."
 
-#: src/compose.c:4870
+#: src/compose.c:4892
 #, fuzzy
 msgid "Properties"
 msgstr "Svojstva"
 
-#: src/compose.c:4890
+#: src/compose.c:4912
 msgid "Encoding"
 msgstr "Kodiranje"
 
-#: src/compose.c:4913 src/prefs_folder_item.c:183
+#: src/compose.c:4935 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Putanja"
 
-#: src/compose.c:4914
+#: src/compose.c:4936
 msgid "File name"
 msgstr "Ime datoteke"
 
-#: src/compose.c:5068
+#: src/compose.c:5090
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Naredba za nezavisni editor je pogrešna: `%s'\n"
 
-#: src/compose.c:5094
+#: src/compose.c:5116
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1210,72 +1215,72 @@ msgstr ""
 "Nasilno prekinuti proces?\n"
 "grupa procesa: %d"
 
-#: src/compose.c:5107
+#: src/compose.c:5129
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Prekinuta grupa procesa: %d"
 
-#: src/compose.c:5108
+#: src/compose.c:5130
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Privremena datoteka: %s"
 
-#: src/compose.c:5132
+#: src/compose.c:5154
 msgid "Compose: input from monitoring process\n"
 msgstr "Napiši: unos iz procesa praćenja\n"
 
 #. failed
-#: src/compose.c:5173
+#: src/compose.c:5195
 msgid "Couldn't exec external editor\n"
 msgstr "Ne mogu pokrenuti nezavisni editor\n"
 
-#: src/compose.c:5177
+#: src/compose.c:5199
 msgid "Couldn't write to file\n"
 msgstr "Ne mogu snimiti u datoteku\n"
 
-#: src/compose.c:5179
+#: src/compose.c:5201
 msgid "Pipe read failed\n"
 msgstr "Čitanje pipe-a nije uspelo\n"
 
-#: src/compose.c:5484 src/compose.c:5492 src/compose.c:5498
+#: src/compose.c:5506 src/compose.c:5514 src/compose.c:5520
 msgid "Can't queue the message."
 msgstr "Ne mogu odložiti poruku."
 
-#: src/compose.c:5589
+#: src/compose.c:5611
 #, fuzzy
 msgid "Select files"
 msgstr "Odaberite datoteku"
 
-#: src/compose.c:5611
+#: src/compose.c:5633
 msgid "Select file"
 msgstr "Odaberite datoteku"
 
-#: src/compose.c:5646
+#: src/compose.c:5668
 msgid "Discard message"
 msgstr "Odbaci poruku"
 
-#: src/compose.c:5647
+#: src/compose.c:5669
 msgid "This message has been modified. discard it?"
 msgstr "Ova poruka je promenjena, odbaciti?"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "Discard"
 msgstr "Odbaci"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "to Draft"
 msgstr "u Nedovršeno"
 
-#: src/compose.c:5690
+#: src/compose.c:5712
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Želite li primeniti šablon `%s'?"
 
-#: src/compose.c:5692
+#: src/compose.c:5714
 msgid "Apply template"
 msgstr "Primeni šablon"
 
-#: src/compose.c:5693
+#: src/compose.c:5715
 msgid "Replace"
 msgstr "Zameni"
 
@@ -2416,12 +2421,12 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "glib ne podržava g_thread.\n"
 
-#: src/main.c:223
+#: src/main.c:224
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Izlazni charset"
 
-#: src/main.c:224
+#: src/main.c:225
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2435,7 +2440,7 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:280
+#: src/main.c:281
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2443,16 +2448,16 @@ msgstr ""
 "GnuPG nije pravilno instaliran ili je verzija suviše stara.\n"
 "OpenPGP podrška je onemogućena."
 
-#: src/main.c:438
+#: src/main.c:439
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Upotreba: %s [OPCIJA]...\n"
 
-#: src/main.c:441
+#: src/main.c:442
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresa]     otvara prozor za pisanje"
 
-#: src/main.c:442
+#: src/main.c:443
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2462,65 +2467,65 @@ msgstr ""
 "                         otvara prozor za pisanje sa navedenim datotekama\n"
 "                         dodato"
 
-#: src/main.c:445
+#: src/main.c:446
 msgid "  --receive              receive new messages"
 msgstr "  --receive              prima nove poruke"
 
-#: src/main.c:446
+#: src/main.c:447
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          primi sve poruke sa svih naloga"
 
-#: src/main.c:447
+#: src/main.c:448
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 šalje sve odložene poruke"
 
-#: src/main.c:448
+#: src/main.c:449
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               pokazuje ukupan broj poruka"
 
-#: src/main.c:449
+#: src/main.c:450
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               pokazuje ukupan broj poruka"
 
-#: src/main.c:451
+#: src/main.c:452
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug način"
 
-#: src/main.c:452
+#: src/main.c:453
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 prikaž ovu pomoć izađi"
 
-#: src/main.c:453
+#: src/main.c:454
 msgid "  --version              output version information and exit"
 msgstr "  --version              prikazuje verziju i izlazi"
 
-#: src/main.c:483
+#: src/main.c:484
 msgid "Composing message exists. Really quit?"
 msgstr "Napisana poruka postoji. Zaista prekinuti?"
 
-#: src/main.c:491
+#: src/main.c:492
 msgid "Queued messages"
 msgstr "Odložene poruke"
 
-#: src/main.c:492
+#: src/main.c:493
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Neke neposlate poruke su odložene. Izaći odmah?"
 
 #. remote command mode
-#: src/main.c:570
+#: src/main.c:571
 msgid "another Sylpheed is already running.\n"
 msgstr "drugi Sylpheed već radi.\n"
 
-#: src/main.c:736
+#: src/main.c:737
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Pisanje konfiguracije za akcije...\n"
 
-#: src/main.c:737
+#: src/main.c:738
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6312,10 +6317,13 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: src/utils.c:2227 src/utils.c:2354
+#: src/utils.c:2253 src/utils.c:2380
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "pisanje u %s nije uspelo.\n"
+
+#~ msgid "can't write headers\n"
+#~ msgstr "ne mogu upisati zaglavlje\n"
 
 #~ msgid "External program"
 #~ msgstr "Spoljni program"

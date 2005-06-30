@@ -2625,6 +2625,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	const gchar *body_charset;
 	const gchar *src_charset = CS_INTERNAL;
 	EncodingType encoding;
+	gint line;
 
 	if ((fp = fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
@@ -2731,10 +2732,31 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		    src_charset, out_charset, body_charset,
 		    procmime_get_encoding_str(encoding));
 
+	/* check for line length limit */
+	if (encoding != ENC_QUOTED_PRINTABLE && encoding != ENC_BASE64 &&
+	    check_line_length(buf, 1000, &line) < 0) {
+		AlertValue aval;
+		gchar *msg;
+
+		msg = g_strdup_printf
+			(_("Line %d exceeds the line length limit (998 bytes).\n"
+			   "The contents of the message might be broken on the way to the delivery.\n"
+			   "\n"
+			   "Send it anyway?"), line + 1);
+		aval = alertpanel(_("Warning"), msg, _("Yes"), _("+No"), NULL);
+		if (aval != G_ALERTDEFAULT) {
+			g_free(msg);
+			fclose(fp);
+			unlink(file);
+			g_free(buf);
+			return -1;
+		}
+	}
+
 	/* write headers */
 	if (compose_write_headers(compose, fp, out_charset,
 				  body_charset, encoding, is_draft) < 0) {
-		g_warning(_("can't write headers\n"));
+		g_warning("can't write headers\n");
 		fclose(fp);
 		unlink(file);
 		g_free(buf);

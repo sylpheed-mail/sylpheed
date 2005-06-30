@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -299,6 +299,9 @@ void subst_for_filename			(gchar		*str);
 gboolean is_header_line			(const gchar	*str);
 gboolean is_ascii_str			(const guchar	*str);
 gint get_quote_level			(const gchar	*str);
+gint check_line_length			(const gchar	*str,
+					 gint		 max_chars,
+					 gint		*line);
 
 gchar *strstr_with_skip_quote		(const gchar	*haystack,
 					 const gchar	*needle);

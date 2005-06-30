@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-29 17:13+0900\n"
+"POT-Creation-Date: 2005-06-30 14:43+0900\n"
 "PO-Revision-Date: 2002-10-02 09:08+0300\n"
 "Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -95,7 +95,7 @@ msgstr ""
 "'G' tulbas lubamaks kirjade võtmist kasutades 'Võta kõik'."
 
 #: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
-#: src/compose.c:3985 src/editaddress.c:199 src/editaddress.c:940
+#: src/compose.c:4007 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
 #: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -133,13 +133,13 @@ msgstr "Tiitlita"
 msgid "Delete account"
 msgstr "Kustuta konto"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "Yes"
 msgstr "Jah"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "+No"
@@ -242,7 +242,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Lisa aadress raamatusse"
 
-#: src/addressadd.c:202 src/compose.c:4415 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4437 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Aadress"
@@ -382,7 +382,7 @@ msgstr "/Kustuta"
 msgid "E-Mail address"
 msgstr "E-Posti aadress"
 
-#: src/addressbook.c:495 src/compose.c:4416 src/prefs_common.c:2387
+#: src/addressbook.c:495 src/compose.c:4438 src/prefs_common.c:2387
 msgid "Address book"
 msgstr "Aadressiraamat"
 
@@ -592,15 +592,15 @@ msgstr "Üldine aadress"
 msgid "Personal address"
 msgstr "Isiklik aadress"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
+#: src/alertpanel.c:123 src/compose.c:5119 src/main.c:483
 msgid "Notice"
 msgstr "Märkus"
 
-#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
+#: src/alertpanel.c:136 src/compose.c:2746 src/main.c:280 src/textview.c:2071
 msgid "Warning"
 msgstr "Hoiatus"
 
-#: src/alertpanel.c:149 src/compose.c:2674 src/inc.c:570
+#: src/alertpanel.c:149 src/compose.c:2675 src/inc.c:570
 msgid "Error"
 msgstr "Viga"
 
@@ -1009,7 +1009,7 @@ msgstr "Kirjuta kiri%s"
 msgid "Recipient is not specified."
 msgstr "Saaja pole määratud."
 
-#: src/compose.c:2415 src/compose.c:4336 src/mainwindow.c:2216
+#: src/compose.c:2415 src/compose.c:4358 src/mainwindow.c:2216
 #: src/prefs_account.c:715 src/prefs_common.c:937
 msgid "Send"
 msgstr "Saada"
@@ -1045,12 +1045,12 @@ msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Ei suutnud leida ühtki võtit, mis oleks seotud valitud võtmega (id'%s')."
 
-#: src/compose.c:2637 src/compose.c:2866 src/compose.c:2929 src/compose.c:3049
-#: src/utils.c:2220
+#: src/compose.c:2638 src/compose.c:2888 src/compose.c:2951 src/compose.c:3071
+#: src/utils.c:2246
 msgid "can't change file mode\n"
 msgstr "Ei suuda muuta faili omadusi\n"
 
-#: src/compose.c:2669
+#: src/compose.c:2670
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1059,151 +1059,156 @@ msgstr ""
 "Ei suuda transleerida kirja tekstikoodi.\n"
 "Kas igatahes saata ?"
 
-#: src/compose.c:2737
-msgid "can't write headers\n"
-msgstr "Ei suuda kirjutada päist\n"
+#: src/compose.c:2742
+#, c-format
+msgid ""
+"Line %d exceeds the line length limit (998 bytes).\n"
+"The contents of the message might be broken on the way to the delivery.\n"
+"\n"
+"Send it anyway?"
+msgstr ""
 
-#: src/compose.c:3009
+#: src/compose.c:3031
 msgid "can't remove the old message\n"
 msgstr "Ei suuda eemaldada vana kirja\n"
 
-#: src/compose.c:3027
+#: src/compose.c:3049
 msgid "queueing message...\n"
 msgstr "Asetan kirja järjekorda...\n"
 
-#: src/compose.c:3109
+#: src/compose.c:3131
 msgid "can't find queue folder\n"
 msgstr "järjekorra kausta ei leidunud\n"
 
-#: src/compose.c:3116
+#: src/compose.c:3138
 msgid "can't queue the message\n"
 msgstr "Ei suutnud kirja järjekorda asetada\n"
 
-#: src/compose.c:3696
+#: src/compose.c:3718
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "Loodud Kirja-ID: %s\n"
 
-#: src/compose.c:3805
+#: src/compose.c:3827
 msgid "Creating compose window...\n"
 msgstr "Loon kirjutamise akent...\n"
 
-#: src/compose.c:3853 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3875 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "Kellelt:"
 
-#: src/compose.c:3925
+#: src/compose.c:3947
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Tööriist/Tegevused"
 
-#: src/compose.c:3928
+#: src/compose.c:3950
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Kiri/Krüpteeri"
 
-#: src/compose.c:3966 src/compose.c:4888
+#: src/compose.c:3988 src/compose.c:4910
 msgid "MIME type"
 msgstr "MIME tüüp"
 
 #. S_COL_DATE
-#: src/compose.c:3975 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/compose.c:3997 src/mimeview.c:192 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4204
 msgid "Size"
 msgstr "Suurus"
 
-#: src/compose.c:4337
+#: src/compose.c:4359
 msgid "Send message"
 msgstr "Saada kiri"
 
-#: src/compose.c:4345
+#: src/compose.c:4367
 msgid "Send later"
 msgstr "Hiljem"
 
-#: src/compose.c:4346
+#: src/compose.c:4368
 msgid "Put into queue folder and send later"
 msgstr "Pane järjekorda ja saada hiljem"
 
-#: src/compose.c:4354
+#: src/compose.c:4376
 msgid "Draft"
 msgstr "Mustand"
 
-#: src/compose.c:4355
+#: src/compose.c:4377
 msgid "Save to draft folder"
 msgstr "Salvesta mustandite kausta"
 
-#: src/compose.c:4365 src/compose.c:5693
+#: src/compose.c:4387 src/compose.c:5715
 msgid "Insert"
 msgstr "Lisa"
 
-#: src/compose.c:4366
+#: src/compose.c:4388
 msgid "Insert file"
 msgstr "Lisa fail"
 
-#: src/compose.c:4374
+#: src/compose.c:4396
 msgid "Attach"
 msgstr "Manusta"
 
-#: src/compose.c:4375
+#: src/compose.c:4397
 msgid "Attach file"
 msgstr "Manusta fail"
 
 #. signature
-#: src/compose.c:4385 src/prefs_account.c:1387 src/prefs_common.c:1346
+#: src/compose.c:4407 src/prefs_account.c:1387 src/prefs_common.c:1346
 msgid "Signature"
 msgstr "Allkiri"
 
-#: src/compose.c:4386
+#: src/compose.c:4408
 msgid "Insert signature"
 msgstr "Lisa allkiri"
 
-#: src/compose.c:4395 src/prefs_common.c:1368 src/prefs_common.c:2366
+#: src/compose.c:4417 src/prefs_common.c:1368 src/prefs_common.c:2366
 msgid "Editor"
 msgstr "Redaktor"
 
-#: src/compose.c:4396
+#: src/compose.c:4418
 msgid "Edit with external editor"
 msgstr "Redigeeri välise redaktoriga"
 
-#: src/compose.c:4404
+#: src/compose.c:4426
 msgid "Linewrap"
 msgstr "Reaäär"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "Wrap all long lines"
 msgstr "Murra kõik pikad read"
 
-#: src/compose.c:4784
+#: src/compose.c:4806
 msgid "Invalid MIME type."
 msgstr "Vale MIME tüüp."
 
-#: src/compose.c:4802
+#: src/compose.c:4824
 msgid "File doesn't exist or is empty."
 msgstr "Faili ei eksisteeri või on see tühi."
 
-#: src/compose.c:4870
+#: src/compose.c:4892
 #, fuzzy
 msgid "Properties"
 msgstr "Omadus"
 
-#: src/compose.c:4890
+#: src/compose.c:4912
 msgid "Encoding"
 msgstr "Kodeerimine"
 
-#: src/compose.c:4913 src/prefs_folder_item.c:183
+#: src/compose.c:4935 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Tee"
 
-#: src/compose.c:4914
+#: src/compose.c:4936
 msgid "File name"
 msgstr "Failinimi"
 
-#: src/compose.c:5068
+#: src/compose.c:5090
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Välise redaktori käsurida on vale: `%s'\n"
 
-#: src/compose.c:5094
+#: src/compose.c:5116
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1214,72 +1219,72 @@ msgstr ""
 "Kas hävitame protsessi?\n"
 "protsessi grupi id: %d"
 
-#: src/compose.c:5107
+#: src/compose.c:5129
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Hävitatud protsessi grupi id: %d"
 
-#: src/compose.c:5108
+#: src/compose.c:5130
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Ajutine fail: %s"
 
-#: src/compose.c:5132
+#: src/compose.c:5154
 msgid "Compose: input from monitoring process\n"
 msgstr "Kirjutaja: sisend monitoorprotsessilt\n"
 
 #. failed
-#: src/compose.c:5173
+#: src/compose.c:5195
 msgid "Couldn't exec external editor\n"
 msgstr "Ei suutnud välist redaktorit käivitada\n"
 
-#: src/compose.c:5177
+#: src/compose.c:5199
 msgid "Couldn't write to file\n"
 msgstr "Ei suutnud faili salvestada\n"
 
-#: src/compose.c:5179
+#: src/compose.c:5201
 msgid "Pipe read failed\n"
 msgstr "Torust lugemine ebaõnnestus\n"
 
-#: src/compose.c:5484 src/compose.c:5492 src/compose.c:5498
+#: src/compose.c:5506 src/compose.c:5514 src/compose.c:5520
 msgid "Can't queue the message."
 msgstr "Kirja ei õnnestunud järjekorda asetada."
 
-#: src/compose.c:5589
+#: src/compose.c:5611
 #, fuzzy
 msgid "Select files"
 msgstr "Määra fail"
 
-#: src/compose.c:5611
+#: src/compose.c:5633
 msgid "Select file"
 msgstr "Määra fail"
 
-#: src/compose.c:5646
+#: src/compose.c:5668
 msgid "Discard message"
 msgstr "Kaota kiri"
 
-#: src/compose.c:5647
+#: src/compose.c:5669
 msgid "This message has been modified. discard it?"
 msgstr "Seda kirja on muudetud. kas kaotame selle?"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "Discard"
 msgstr "Kaota"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "to Draft"
 msgstr "Mustanditesse"
 
-#: src/compose.c:5690
+#: src/compose.c:5712
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Kas te tahate seda malli lisada '%s'-e ?"
 
-#: src/compose.c:5692
+#: src/compose.c:5714
 msgid "Apply template"
 msgstr "Lisa mall"
 
-#: src/compose.c:5693
+#: src/compose.c:5715
 msgid "Replace"
 msgstr "Asenda"
 
@@ -2425,12 +2430,12 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread ei ole glib poolt toetatud.\n"
 
-#: src/main.c:223
+#: src/main.c:224
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Väljuva kirja kooditabel"
 
-#: src/main.c:224
+#: src/main.c:225
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2444,7 +2449,7 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:280
+#: src/main.c:281
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2452,16 +2457,16 @@ msgstr ""
 "GnuPG pole installeeritud, või on liialt vana.\n"
 "OpenPGP toetus keelustatud."
 
-#: src/main.c:438
+#: src/main.c:439
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Kauta: %s [SEADED]...\n"
 
-#: src/main.c:441
+#: src/main.c:442
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [aadress]    ava kirjakirjutamise aken"
 
-#: src/main.c:442
+#: src/main.c:443
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2471,65 +2476,65 @@ msgstr ""
 "                          ava uue kirja aken nii, et märgitud failid\n"
 "                          on manustatud kirjale"
 
-#: src/main.c:445
+#: src/main.c:446
 msgid "  --receive              receive new messages"
 msgstr "  --receive              võta uued kirjad"
 
-#: src/main.c:446
+#: src/main.c:447
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          võta uued kirjad kõigilt konto"
 
-#: src/main.c:447
+#: src/main.c:448
 msgid "  --send                 send all queued messages"
 msgstr "  --saada              saada kõik järjekorras olevad kirjad"
 
-#: src/main.c:448
+#: src/main.c:449
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --staatus              näita kogu kirjade arvu"
 
-#: src/main.c:449
+#: src/main.c:450
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --staatus              näita kogu kirjade arvu"
 
-#: src/main.c:451
+#: src/main.c:452
 msgid "  --debug                debug mode"
 msgstr "  --debug                veaotsimise režiim"
 
-#: src/main.c:452
+#: src/main.c:453
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 näita seda teadet ja välju"
 
-#: src/main.c:453
+#: src/main.c:454
 msgid "  --version              output version information and exit"
 msgstr "  --version              näita versiooni informatsiooni ja välju"
 
-#: src/main.c:483
+#: src/main.c:484
 msgid "Composing message exists. Really quit?"
 msgstr "Kirjakirjutamine on pooleli. Tõesti lõpetame?"
 
-#: src/main.c:491
+#: src/main.c:492
 msgid "Queued messages"
 msgstr "kirjad järjekorras"
 
-#: src/main.c:492
+#: src/main.c:493
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Mõned saatmata kirjad on järjekooras. Lõpetame?"
 
 #. remote command mode
-#: src/main.c:570
+#: src/main.c:571
 msgid "another Sylpheed is already running.\n"
 msgstr "üks teine Sylpheed juba töötab.\n"
 
-#: src/main.c:736
+#: src/main.c:737
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Tegevuste konfiguratsiooni kirjutamine...\n"
 
-#: src/main.c:737
+#: src/main.c:738
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6321,10 +6326,13 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: src/utils.c:2227 src/utils.c:2354
+#: src/utils.c:2253 src/utils.c:2380
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s-i kirjutamine ebaõnnestus.\n"
+
+#~ msgid "can't write headers\n"
+#~ msgstr "Ei suuda kirjutada päist\n"
 
 #~ msgid "External program"
 #~ msgstr "Väline programm"

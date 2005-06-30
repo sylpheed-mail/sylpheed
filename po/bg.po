@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.9.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-29 17:13+0900\n"
+"POT-Creation-Date: 2005-06-30 14:43+0900\n"
 "PO-Revision-Date: 2004-01-09 02:06+0200\n"
 "Last-Translator: Pavel Pyuter <pavel@unix-bg.org>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -97,7 +97,7 @@ msgstr ""
 "в колонка `G' за разрешаване на изтегляне на съобщенията от `Get All'."
 
 #: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
-#: src/compose.c:3985 src/editaddress.c:199 src/editaddress.c:940
+#: src/compose.c:4007 src/editaddress.c:199 src/editaddress.c:940
 #: src/editaddress.c:988 src/editbook.c:195 src/editgroup.c:264
 #: src/editjpilot.c:303 src/editldap.c:305 src/editvcard.c:216
 #: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
@@ -135,13 +135,13 @@ msgstr "Неозаглавен"
 msgid "Delete account"
 msgstr "Изтриване на акаунт"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "Yes"
 msgstr "Да"
 
-#: src/account.c:815 src/compose.c:2674 src/compose.c:5097
+#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5119
 #: src/folderview.c:2052 src/folderview.c:2148 src/folderview.c:2194
 #: src/folderview.c:2336 src/folderview.c:2382
 msgid "+No"
@@ -246,7 +246,7 @@ msgstr "Потребителски аргумент на действието"
 msgid "Add Address to Book"
 msgstr "Добавяне на Адреса към Книгата"
 
-#: src/addressadd.c:202 src/compose.c:4415 src/editaddress.c:200
+#: src/addressadd.c:202 src/compose.c:4437 src/editaddress.c:200
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Адрес"
@@ -386,7 +386,7 @@ msgstr "/_Изтриване"
 msgid "E-Mail address"
 msgstr "E-Mail адрес"
 
-#: src/addressbook.c:495 src/compose.c:4416 src/prefs_common.c:2387
+#: src/addressbook.c:495 src/compose.c:4438 src/prefs_common.c:2387
 msgid "Address book"
 msgstr "Адресна книга"
 
@@ -597,15 +597,15 @@ msgstr "Публичен адрес"
 msgid "Personal address"
 msgstr "Личен адрес"
 
-#: src/alertpanel.c:123 src/compose.c:5097 src/main.c:482
+#: src/alertpanel.c:123 src/compose.c:5119 src/main.c:483
 msgid "Notice"
 msgstr "Забележка"
 
-#: src/alertpanel.c:136 src/main.c:279 src/textview.c:2071
+#: src/alertpanel.c:136 src/compose.c:2746 src/main.c:280 src/textview.c:2071
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: src/alertpanel.c:149 src/compose.c:2674 src/inc.c:570
+#: src/alertpanel.c:149 src/compose.c:2675 src/inc.c:570
 msgid "Error"
 msgstr "Грешка"
 
@@ -1013,7 +1013,7 @@ msgstr "Съставяне на съобщение%s"
 msgid "Recipient is not specified."
 msgstr "Не е указан получател"
 
-#: src/compose.c:2415 src/compose.c:4336 src/mainwindow.c:2216
+#: src/compose.c:2415 src/compose.c:4358 src/mainwindow.c:2216
 #: src/prefs_account.c:715 src/prefs_common.c:937
 msgid "Send"
 msgstr "Изпращане"
@@ -1048,12 +1048,12 @@ msgstr "Не може да се запази съобщението в изхо�
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Не можа да се намери бутон асоцииран с избрания `%s'."
 
-#: src/compose.c:2637 src/compose.c:2866 src/compose.c:2929 src/compose.c:3049
-#: src/utils.c:2220
+#: src/compose.c:2638 src/compose.c:2888 src/compose.c:2951 src/compose.c:3071
+#: src/utils.c:2246
 msgid "can't change file mode\n"
 msgstr "не може да се смени вида на файла\n"
 
-#: src/compose.c:2669
+#: src/compose.c:2670
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1063,150 +1063,155 @@ msgstr ""
 "%s към %s.\n"
 "Изпращане така?"
 
-#: src/compose.c:2737
-msgid "can't write headers\n"
-msgstr "Не може да се запишат хедърите\n"
+#: src/compose.c:2742
+#, c-format
+msgid ""
+"Line %d exceeds the line length limit (998 bytes).\n"
+"The contents of the message might be broken on the way to the delivery.\n"
+"\n"
+"Send it anyway?"
+msgstr ""
 
-#: src/compose.c:3009
+#: src/compose.c:3031
 msgid "can't remove the old message\n"
 msgstr "не може да се изтрие старото съобщение\n"
 
-#: src/compose.c:3027
+#: src/compose.c:3049
 msgid "queueing message...\n"
 msgstr "нареждане на съобщението на опашката...\n"
 
-#: src/compose.c:3109
+#: src/compose.c:3131
 msgid "can't find queue folder\n"
 msgstr "не може да се намери папката за опашка\n"
 
-#: src/compose.c:3116
+#: src/compose.c:3138
 msgid "can't queue the message\n"
 msgstr "не може да се нареди съобщението на опашката\n"
 
-#: src/compose.c:3696
+#: src/compose.c:3718
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "генерирано Message-ID: %s\n"
 
-#: src/compose.c:3805
+#: src/compose.c:3827
 msgid "Creating compose window...\n"
 msgstr "Създаване на прозорец за съставяне...\n"
 
-#: src/compose.c:3853 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3875 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "От:"
 
-#: src/compose.c:3925
+#: src/compose.c:3947
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Инструменти/_Действия"
 
-#: src/compose.c:3928
+#: src/compose.c:3950
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Съобщение/_Криптиране"
 
-#: src/compose.c:3966 src/compose.c:4888
+#: src/compose.c:3988 src/compose.c:4910
 msgid "MIME type"
 msgstr "MIME тип"
 
 #. S_COL_DATE
-#: src/compose.c:3975 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/compose.c:3997 src/mimeview.c:192 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:74 src/select-keys.c:317 src/summaryview.c:4204
 msgid "Size"
 msgstr "Размер"
 
-#: src/compose.c:4337
+#: src/compose.c:4359
 msgid "Send message"
 msgstr "Изпращане на съобщение"
 
-#: src/compose.c:4345
+#: src/compose.c:4367
 msgid "Send later"
 msgstr "Изпращане по-късно"
 
-#: src/compose.c:4346
+#: src/compose.c:4368
 msgid "Put into queue folder and send later"
 msgstr "Поставяне в папката за опашка и изпращане по-късно"
 
-#: src/compose.c:4354
+#: src/compose.c:4376
 msgid "Draft"
 msgstr "Чернови"
 
-#: src/compose.c:4355
+#: src/compose.c:4377
 msgid "Save to draft folder"
 msgstr "Запазване в папката с чернови"
 
-#: src/compose.c:4365 src/compose.c:5693
+#: src/compose.c:4387 src/compose.c:5715
 msgid "Insert"
 msgstr "Вмъкване"
 
-#: src/compose.c:4366
+#: src/compose.c:4388
 msgid "Insert file"
 msgstr "Вмъкване на файл"
 
-#: src/compose.c:4374
+#: src/compose.c:4396
 msgid "Attach"
 msgstr "Прикрепване"
 
-#: src/compose.c:4375
+#: src/compose.c:4397
 msgid "Attach file"
 msgstr "Прикрепване на файл"
 
 #. signature
-#: src/compose.c:4385 src/prefs_account.c:1387 src/prefs_common.c:1346
+#: src/compose.c:4407 src/prefs_account.c:1387 src/prefs_common.c:1346
 msgid "Signature"
 msgstr "Сигнатура"
 
-#: src/compose.c:4386
+#: src/compose.c:4408
 msgid "Insert signature"
 msgstr "Вмъкване на сигнатура"
 
-#: src/compose.c:4395 src/prefs_common.c:1368 src/prefs_common.c:2366
+#: src/compose.c:4417 src/prefs_common.c:1368 src/prefs_common.c:2366
 msgid "Editor"
 msgstr "Редактор"
 
-#: src/compose.c:4396
+#: src/compose.c:4418
 msgid "Edit with external editor"
 msgstr "Редакция с външен редактор"
 
-#: src/compose.c:4404
+#: src/compose.c:4426
 msgid "Linewrap"
 msgstr "Свиванен на редовете"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "Wrap all long lines"
 msgstr "Свиване на всички дълги редове"
 
-#: src/compose.c:4784
+#: src/compose.c:4806
 msgid "Invalid MIME type."
 msgstr "Невалиден MIME тип"
 
-#: src/compose.c:4802
+#: src/compose.c:4824
 msgid "File doesn't exist or is empty."
 msgstr "Файлът не съществува или е празен"
 
-#: src/compose.c:4870
+#: src/compose.c:4892
 msgid "Properties"
 msgstr "Аксесоари"
 
-#: src/compose.c:4890
+#: src/compose.c:4912
 msgid "Encoding"
 msgstr "Кодиране"
 
-#: src/compose.c:4913 src/prefs_folder_item.c:183
+#: src/compose.c:4935 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "Път"
 
-#: src/compose.c:4914
+#: src/compose.c:4936
 msgid "File name"
 msgstr "Име на файл"
 
-#: src/compose.c:5068
+#: src/compose.c:5090
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Командния ред за външен редактор е невалиден: `%s'\n"
 
-#: src/compose.c:5094
+#: src/compose.c:5116
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1217,72 +1222,72 @@ msgstr ""
 "Желаете ли принудително прекратяване на процеса?\n"
 "process group id: %d"
 
-#: src/compose.c:5107
+#: src/compose.c:5129
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Прекратен process group id: %d"
 
-#: src/compose.c:5108
+#: src/compose.c:5130
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Временен файл: %s"
 
-#: src/compose.c:5132
+#: src/compose.c:5154
 msgid "Compose: input from monitoring process\n"
 msgstr "Съставяне: вход от наблюдаващ процес\n"
 
 #. failed
-#: src/compose.c:5173
+#: src/compose.c:5195
 msgid "Couldn't exec external editor\n"
 msgstr "Не може да се стартира външен редактор\n"
 
-#: src/compose.c:5177
+#: src/compose.c:5199
 msgid "Couldn't write to file\n"
 msgstr "Не може да се запише във файл\n"
 
-#: src/compose.c:5179
+#: src/compose.c:5201
 msgid "Pipe read failed\n"
 msgstr "Четене на pipe провалено\n"
 
-#: src/compose.c:5484 src/compose.c:5492 src/compose.c:5498
+#: src/compose.c:5506 src/compose.c:5514 src/compose.c:5520
 msgid "Can't queue the message."
 msgstr "Не може да се нареди съобщението на опашката."
 
-#: src/compose.c:5589
+#: src/compose.c:5611
 #, fuzzy
 msgid "Select files"
 msgstr "Избор на файл"
 
-#: src/compose.c:5611
+#: src/compose.c:5633
 msgid "Select file"
 msgstr "Избор на файл"
 
-#: src/compose.c:5646
+#: src/compose.c:5668
 msgid "Discard message"
 msgstr "Изоставяне на съобщение"
 
-#: src/compose.c:5647
+#: src/compose.c:5669
 msgid "This message has been modified. discard it?"
 msgstr "Съобщението беше променено. Изоставяне?"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "Discard"
 msgstr "Изоставяне"
 
-#: src/compose.c:5648
+#: src/compose.c:5670
 msgid "to Draft"
 msgstr "при Чернови"
 
-#: src/compose.c:5690
+#: src/compose.c:5712
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Желаете ли да приложите шаблонът `%s' ?"
 
-#: src/compose.c:5692
+#: src/compose.c:5714
 msgid "Apply template"
 msgstr "Прилагане на шаблон"
 
-#: src/compose.c:5693
+#: src/compose.c:5715
 msgid "Replace"
 msgstr "Заменяне"
 
@@ -2422,12 +2427,12 @@ msgstr ""
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread не се поддържа от glib.\n"
 
-#: src/main.c:223
+#: src/main.c:224
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Изходяща кодова таблица"
 
-#: src/main.c:224
+#: src/main.c:225
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2441,7 +2446,7 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:280
+#: src/main.c:281
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2449,16 +2454,16 @@ msgstr ""
 "GnuPG не е инсталиран правилно, или версията му е твърде стара.\n"
 "OpenPGP поддръжката е отменена."
 
-#: src/main.c:438
+#: src/main.c:439
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Употреба: %s [ОПЦИЯ]...\n"
 
-#: src/main.c:441
+#: src/main.c:442
 msgid "  --compose [address]    open composition window"
 msgstr " --compose [адрес]    отваряне на прозорец за съставяне"
 
-#: src/main.c:442
+#: src/main.c:443
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2468,23 +2473,23 @@ msgstr ""
 "                         отваряне на прозорец за съставяне с прикрепени\n"
 "                         указаните файлове."
 
-#: src/main.c:445
+#: src/main.c:446
 msgid "  --receive              receive new messages"
 msgstr "  --receive             получаване на нови съобщения"
 
-#: src/main.c:446
+#: src/main.c:447
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all\t     получаване на нови съобщения от всички акаунти"
 
-#: src/main.c:447
+#: src/main.c:448
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 изпращане на всички съобщения в опашката"
 
-#: src/main.c:448
+#: src/main.c:449
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [папка]...   показване на пълния брой на съобщения"
 
-#: src/main.c:449
+#: src/main.c:450
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2492,43 +2497,43 @@ msgstr ""
 "  --status-full [папка]...\n"
 "                         показване на състоянието на всяка папка"
 
-#: src/main.c:451
+#: src/main.c:452
 msgid "  --debug                debug mode"
 msgstr "  --debug                режим на дебъг"
 
-#: src/main.c:452
+#: src/main.c:453
 msgid "  --help                 display this help and exit"
 msgstr ""
 "  --help                 извеждане на тази помощна информация и излизане"
 
-#: src/main.c:453
+#: src/main.c:454
 msgid "  --version              output version information and exit"
 msgstr "  --version              извеждане на версията и излизане"
 
-#: src/main.c:483
+#: src/main.c:484
 msgid "Composing message exists. Really quit?"
 msgstr "Съставя се ново съобщение. Желаете ли изход от програмата?"
 
-#: src/main.c:491
+#: src/main.c:492
 msgid "Queued messages"
 msgstr "Съобщения в опашката"
 
-#: src/main.c:492
+#: src/main.c:493
 msgid "Some unsent messages are queued. Exit now?"
 msgstr ""
 "Някои неизпратени съобщения са в опашката. Желаете ли изход от програмата?"
 
 #. remote command mode
-#: src/main.c:570
+#: src/main.c:571
 msgid "another Sylpheed is already running.\n"
 msgstr "друг Sylpheed е стартиран вече.\n"
 
-#: src/main.c:736
+#: src/main.c:737
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Конфигурация на действия"
 
-#: src/main.c:737
+#: src/main.c:738
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6312,10 +6317,13 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: src/utils.c:2227 src/utils.c:2354
+#: src/utils.c:2253 src/utils.c:2380
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "записът в %s се провали.\n"
+
+#~ msgid "can't write headers\n"
+#~ msgstr "Не може да се запишат хедърите\n"
 
 #~ msgid "External program"
 #~ msgstr "Външна програма"
