@@ -1092,6 +1092,8 @@ void filter_rule_rename_dest_path(FilterRule *rule, const gchar *old_path,
 	gchar *dest_path;
 	gint oldpathlen;
 
+	oldpathlen = strlen(old_path);
+
 	for (cur = rule->action_list; cur != NULL; cur = cur->next) {
 		action = (FilterAction *)cur->data;
 
@@ -1099,10 +1101,11 @@ void filter_rule_rename_dest_path(FilterRule *rule, const gchar *old_path,
 		    action->type != FLT_ACTION_COPY)
 			continue;
 
-		oldpathlen = strlen(old_path);
 		if (action->str_value &&
 		    !strncmp(old_path, action->str_value, oldpathlen)) {
 			base = action->str_value + oldpathlen;
+			if (*base != G_DIR_SEPARATOR && *base != '\0')
+				continue;
 			while (*base == G_DIR_SEPARATOR) base++;
 			if (*base == '\0')
 				dest_path = g_strdup(new_path);
@@ -1121,6 +1124,9 @@ void filter_rule_delete_action_by_dest_path(FilterRule *rule, const gchar *path)
 	FilterAction *action;
 	GSList *cur;
 	GSList *next;
+	gint pathlen;
+
+	pathlen = strlen(path);
 
 	for (cur = rule->action_list; cur != NULL; cur = next) {
 		action = (FilterAction *)cur->data;
@@ -1131,7 +1137,9 @@ void filter_rule_delete_action_by_dest_path(FilterRule *rule, const gchar *path)
 			continue;
 
 		if (action->str_value &&
-		    !strncmp(path, action->str_value, strlen(path))) {
+		    !strncmp(path, action->str_value, pathlen) &&
+		    (action->str_value[pathlen] == G_DIR_SEPARATOR ||
+		     action->str_value[pathlen] == '\0')) {
 			rule->action_list = g_slist_remove
 				(rule->action_list, action);
 			filter_action_free(action);

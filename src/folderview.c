@@ -1298,19 +1298,10 @@ void folderview_new_folder(FolderView *folderview)
 
 	g_return_if_fail(item->folder != NULL);
 
-	switch (FOLDER_TYPE(item->folder)) {
-	case F_MH:
-	case F_MBOX:
-	case F_MAILDIR:
-	case F_IMAP:
+	if (item->folder->klass->create_folder)
 		folderview_new_folder_cb(folderview, 0, NULL);
-		break;
-	case F_NEWS:
+	else if (FOLDER_TYPE(item->folder) == F_NEWS)
 		folderview_new_news_group_cb(folderview, 0, NULL);
-		break;
-	default:
-		break;
-	}
 }
 
 void folderview_rename_folder(FolderView *folderview)
@@ -1326,17 +1317,8 @@ void folderview_rename_folder(FolderView *folderview)
 	if (!item->path) return;
 	if (item->stype != F_NORMAL) return;
 
-	switch (FOLDER_TYPE(item->folder)) {
-	case F_MH:
-	case F_MBOX:
-	case F_MAILDIR:
-	case F_IMAP:
+	if (item->folder->klass->rename_folder)
 		folderview_rename_folder_cb(folderview, 0, NULL);
-		break;
-	case F_NEWS:
-	default:
-		break;
-	}
 }
 
 void folderview_delete_folder(FolderView *folderview)
@@ -1352,19 +1334,10 @@ void folderview_delete_folder(FolderView *folderview)
 	if (!item->path) return;
 	if (item->stype != F_NORMAL) return;
 
-	switch (FOLDER_TYPE(item->folder)) {
-	case F_MH:
-	case F_MBOX:
-	case F_MAILDIR:
-	case F_IMAP:
+	if (item->folder->klass->remove_folder)
 		folderview_delete_folder_cb(folderview, 0, NULL);
-		break;
-	case F_NEWS:
+	else if (FOLDER_TYPE(item->folder) == F_NEWS)
 		folderview_rm_news_group_cb(folderview, 0, NULL);
-		break;
-	default:
-		break;
-	}
 }
 
 void folderview_check_new_selected(FolderView *folderview)
