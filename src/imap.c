@@ -391,6 +391,7 @@ static FolderClass imap_class =
 
 	imap_create_folder,
 	imap_rename_folder,
+	NULL,
 	imap_remove_folder
 };
 

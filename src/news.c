@@ -153,6 +153,7 @@ static FolderClass news_class =
 
 	NULL,
 	NULL,
+	NULL,
 	NULL
 };
 

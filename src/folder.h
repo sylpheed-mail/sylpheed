@@ -200,6 +200,9 @@ struct _FolderClass
 	gint     (*rename_folder)	(Folder		*folder,
 					 FolderItem	*item,
 					 const gchar	*name);
+	gint     (*move_folder)		(Folder		*folder,
+					 FolderItem	*item,
+					 FolderItem	*new_parent);
 	gint     (*remove_folder)	(Folder		*folder,
 					 FolderItem	*item);
 };

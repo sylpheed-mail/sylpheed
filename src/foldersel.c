@@ -84,10 +84,12 @@ static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
 static GtkWidget *new_button;
 
+static GtkTreeStore *tree_store;
+
 static FolderItem *folder_item;
 static FolderItem *selected_item;
 
-static GtkTreeStore *tree_store;
+FolderSelectionType sel_type;
 
 static gboolean cancelled;
 static gboolean finished;
@@ -100,8 +102,7 @@ static void foldersel_append_item	(GtkTreeStore	*store,
 					 GtkTreeIter	*iter,
 					 GtkTreeIter	*parent);
 
-static void foldersel_set_tree		(Folder			*cur_folder,
-					 FolderSelectionType	 type);
+static void foldersel_set_tree		(Folder		*cur_folder);
 
 static gboolean foldersel_selected	(GtkTreeSelection *selection,
 					 GtkTreeModel	  *model,
@@ -145,13 +146,14 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 				 const gchar *default_folder)
 {
 	selected_item = NULL;
+	sel_type = type;
 
 	if (!window) {
 		foldersel_create();
 		foldersel_init();
 	}
 
-	foldersel_set_tree(cur_folder, type);
+	foldersel_set_tree(cur_folder);
 
 	/* select current */
 	if (folder_item) {
@@ -199,12 +201,16 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 	gtk_entry_set_text(GTK_ENTRY(entry), "");
 	gtk_tree_store_clear(tree_store);
 
-	if (!cancelled &&
-	    selected_item && selected_item->path && !selected_item->no_select) {
+	if (cancelled || !selected_item)
+		return NULL;
+
+	if (type == FOLDER_SEL_MOVE_FOLDER ||
+	    (selected_item->path && !selected_item->no_select)) {
 		folder_item = selected_item;
 		return folder_item;
-	} else
-		return NULL;
+	}
+
+	return NULL;
 }
 
 static void foldersel_create(void)
@@ -410,7 +416,7 @@ static void foldersel_insert_gnode_in_store(GtkTreeStore *store, GNode *node,
 		foldersel_insert_gnode_in_store(store, iter, &child);
 }
 
-static void foldersel_set_tree(Folder *cur_folder, FolderSelectionType type)
+static void foldersel_set_tree(Folder *cur_folder)
 {
 	Folder *folder;
 	GList *list;
@@ -419,10 +425,12 @@ static void foldersel_set_tree(Folder *cur_folder, FolderSelectionType type)
 		folder = FOLDER(list->data);
 		g_return_if_fail(folder != NULL);
 
-		if (type != FOLDER_SEL_ALL) {
+		if (sel_type != FOLDER_SEL_ALL) {
 			if (FOLDER_TYPE(folder) == F_NEWS)
 				continue;
 		}
+		if (sel_type == FOLDER_SEL_MOVE_FOLDER && folder != cur_folder)
+			continue;
 
 		foldersel_insert_gnode_in_store(tree_store, folder->node, NULL);
 	}
@@ -451,7 +459,9 @@ static gboolean foldersel_selected(GtkTreeSelection *selection,
 			   FOLDERSEL_FOLDERITEM, &item, -1);
 
 	selected_item = item;
-	if (selected_item && selected_item->path && !selected_item->no_select) {
+	if (selected_item &&
+	    (sel_type == FOLDER_SEL_MOVE_FOLDER ||
+	     (selected_item->path && !selected_item->no_select))) {
 		gchar *id;
 		id = folder_item_get_identifier(selected_item);
 		gtk_entry_set_text(GTK_ENTRY(entry), id);

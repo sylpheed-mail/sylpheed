@@ -100,6 +100,7 @@ void folderview_update_all_updated	(gboolean	 update_summary);
 
 void folderview_new_folder		(FolderView	*folderview);
 void folderview_rename_folder		(FolderView	*folderview);
+void folderview_move_folder		(FolderView	*folderview);
 void folderview_delete_folder		(FolderView	*folderview);
 
 void folderview_check_new_selected	(FolderView	*folderview);

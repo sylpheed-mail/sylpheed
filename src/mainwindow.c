@@ -194,6 +194,9 @@ static void new_folder_cb	 (MainWindow	*mainwin,
 static void rename_folder_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+static void move_folder_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
 static void delete_folder_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
@@ -469,6 +472,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_File/_Folder/Create _new folder..."),
 						NULL, new_folder_cb, 0, NULL},
 	{N_("/_File/_Folder/_Rename folder..."),NULL, rename_folder_cb, 0, NULL},
+	{N_("/_File/_Folder/_Move folder..."),  NULL, move_folder_cb, 0, NULL},
 	{N_("/_File/_Folder/_Delete folder"),	NULL, delete_folder_cb, 0, NULL},
 	{N_("/_File/_Mailbox"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_File/_Mailbox/Add _mailbox..."),	NULL, add_mailbox_cb, 0, NULL},
@@ -1622,12 +1626,13 @@ typedef enum
 
 	M_FOLDER_NEWOK	      = 1 << 17,
 	M_FOLDER_RENOK	      = 1 << 18,
-	M_FOLDER_DELOK	      = 1 << 19,
-	M_MBOX_ADDOK	      = 1 << 20,
-	M_MBOX_RMOK	      = 1 << 21,
-	M_MBOX_CHKOK	      = 1 << 22,
-	M_MBOX_CHKALLOK	      = 1 << 23,
-	M_MBOX_REBUILDOK      = 1 << 24
+	M_FOLDER_MOVEOK	      = 1 << 19,
+	M_FOLDER_DELOK	      = 1 << 20,
+	M_MBOX_ADDOK	      = 1 << 21,
+	M_MBOX_RMOK	      = 1 << 22,
+	M_MBOX_CHKOK	      = 1 << 23,
+	M_MBOX_CHKALLOK	      = 1 << 24,
+	M_MBOX_REBUILDOK      = 1 << 25
 } SensitiveCond;
 
 static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
@@ -1684,6 +1689,8 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 			else if (item->stype == F_NORMAL) {
 				state |= M_FOLDER_RENOK;
 				state |= M_FOLDER_DELOK;
+				if (item->folder->klass->move_folder)
+					state |= M_FOLDER_MOVEOK;
 			}
 		} else if (FOLDER_TYPE(item->folder) == F_NEWS) {
 			if (item->parent != NULL)
@@ -1766,6 +1773,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 	} entry[] = {
 		{"/File/Folder/Create new folder...", M_UNLOCKED|M_FOLDER_NEWOK},
 		{"/File/Folder/Rename folder..."    , M_UNLOCKED|M_FOLDER_RENOK},
+		{"/File/Folder/Move folder..."      , M_UNLOCKED|M_FOLDER_MOVEOK},
 		{"/File/Folder/Delete folder"       , M_UNLOCKED|M_FOLDER_DELOK},
 		{"/File/Mailbox/Add mailbox..."     , M_UNLOCKED|M_MBOX_ADDOK},
 		{"/File/Mailbox/Remove mailbox"     , M_UNLOCKED|M_MBOX_RMOK},
@@ -2636,6 +2644,11 @@ static void rename_folder_cb(MainWindow *mainwin, guint action,
 			     GtkWidget *widget)
 {
 	folderview_rename_folder(mainwin->folderview);
+}
+
+static void move_folder_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
+{
+	folderview_move_folder(mainwin->folderview);
 }
 
 static void delete_folder_cb(MainWindow *mainwin, guint action,

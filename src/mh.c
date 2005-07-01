@@ -108,6 +108,9 @@ static FolderItem *mh_create_folder	(Folder		*folder,
 static gint    mh_rename_folder		(Folder		*folder,
 					 FolderItem	*item,
 					 const gchar	*name);
+static gint    mh_move_folder		(Folder		*folder,
+					 FolderItem	*item,
+					 FolderItem	*new_parent);
 static gint    mh_remove_folder		(Folder		*folder,
 					 FolderItem	*item);
 
@@ -156,6 +159,7 @@ static FolderClass mh_class =
 
 	mh_create_folder,
 	mh_rename_folder,
+	mh_move_folder,
 	mh_remove_folder,
 };
 
@@ -931,6 +935,84 @@ static gint mh_rename_folder(Folder *folder, FolderItem *item,
 
 	g_free(paths[0]);
 	g_free(paths[1]);
+
+	return 0;
+}
+
+static gint mh_move_folder(Folder *folder, FolderItem *item,
+			   FolderItem *new_parent)
+{
+	gchar *oldpath;
+	gchar *newpath;
+	gchar *new_dir;
+	gchar *name;
+	gchar *utf8_name;
+	gchar *paths[2];
+
+	g_return_val_if_fail(folder != NULL, -1);
+	g_return_val_if_fail(item != NULL, -1);
+	g_return_val_if_fail(item->path != NULL, -1);
+	g_return_val_if_fail(new_parent != NULL, -1);
+	g_return_val_if_fail(item != new_parent, -1);
+	g_return_val_if_fail(item->parent != new_parent, -1);
+	g_return_val_if_fail(folder == item->folder, -1);
+	g_return_val_if_fail(item->folder == new_parent->folder, -1);
+
+	if (g_node_is_ancestor(item->node, new_parent->node)) {
+		g_warning("folder to be moved is ancestor of new parent\n");
+		return -1;
+	}
+
+	oldpath = folder_item_get_path(item);
+	name = g_path_get_basename(oldpath);
+	utf8_name = g_filename_to_utf8(name, -1, NULL, NULL, NULL);
+	if (!utf8_name)
+		utf8_name = g_strdup(name);
+	new_dir = folder_item_get_path(new_parent);
+	newpath = g_strconcat(new_dir, G_DIR_SEPARATOR_S, name, NULL);
+	g_free(new_dir);
+
+	if (is_file_entry_exist(newpath)) {
+		g_warning("%s already exists\n", newpath);
+		g_free(oldpath);
+		g_free(newpath);
+		g_free(utf8_name);
+		return -1;
+	}
+
+	debug_print("mh_move_folder: rename(%s, %s)\n", oldpath, newpath);
+	g_free(name);
+
+	if (rename(oldpath, newpath) < 0) {
+		FILE_OP_ERROR(oldpath, "rename");
+		g_free(oldpath);
+		g_free(newpath);
+		g_free(utf8_name);
+		return -1;
+	}
+
+	g_free(oldpath);
+	g_free(newpath);
+
+	g_node_unlink(item->node);
+	g_node_append(new_parent->node, item->node);
+	item->parent = new_parent;
+
+	if (new_parent->path != NULL) {
+		newpath = g_strconcat(new_parent->path, G_DIR_SEPARATOR_S,
+				      utf8_name, NULL);
+		g_free(utf8_name);
+	} else
+		newpath = utf8_name;
+
+	paths[0] = g_strdup(item->path);
+	paths[1] = newpath;
+	g_node_traverse(item->node, G_PRE_ORDER, G_TRAVERSE_ALL, -1,
+			mh_rename_folder_func, paths);
+
+	g_free(paths[0]);
+	g_free(paths[1]);
+
 	return 0;
 }
 
