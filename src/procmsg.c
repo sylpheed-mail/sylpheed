@@ -237,8 +237,10 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 	}
 
 	if ((fp = procmsg_open_cache_file_with_buffer
-		(item, DATA_READ, file_buf, sizeof(file_buf))) == NULL)
+		(item, DATA_READ, file_buf, sizeof(file_buf))) == NULL) {
+		item->cache_dirty = TRUE;
 		return NULL;
+	}
 
 	debug_print("Reading summary cache...");
 
