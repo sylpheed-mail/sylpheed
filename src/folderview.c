@@ -246,6 +246,7 @@ static GtkItemFactoryEntry folderview_imap_popup_entries[] =
 {
 	{N_("/Create _new folder..."),	NULL, folderview_new_folder_cb,    0, NULL},
 	{N_("/_Rename folder..."),	NULL, folderview_rename_folder_cb, 0, NULL},
+	{N_("/_Move folder..."),	NULL, folderview_move_folder_cb, 0, NULL},
 	{N_("/_Delete folder"),		NULL, folderview_delete_folder_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/Empty _trash"),		NULL, folderview_empty_trash_cb, 0, NULL},
@@ -1509,6 +1510,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		menu_set_insensitive_all(GTK_MENU_SHELL(popup));
 		SET_SENS(imap_factory, "/Create new folder...", new_folder);
 		SET_SENS(imap_factory, "/Rename folder...", rename_folder);
+		SET_SENS(imap_factory, "/Move folder...", move_folder);
 		SET_SENS(imap_factory, "/Delete folder", delete_folder);
 		SET_SENS(imap_factory, "/Empty trash", empty_trash);
 		SET_SENS(imap_factory, "/Download", download_msg);

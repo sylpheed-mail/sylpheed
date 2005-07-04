@@ -157,6 +157,9 @@ static FolderItem *imap_create_folder	(Folder		*folder,
 static gint imap_rename_folder		(Folder		*folder,
 					 FolderItem	*item,
 					 const gchar	*name);
+static gint imap_move_folder		(Folder		*folder,
+					 FolderItem	*item,
+					 FolderItem	*new_parent);
 static gint imap_remove_folder		(Folder		*folder,
 					 FolderItem	*item);
 
@@ -391,7 +394,7 @@ static FolderClass imap_class =
 
 	imap_create_folder,
 	imap_rename_folder,
-	NULL,
+	imap_move_folder,
 	imap_remove_folder
 };
 
@@ -2045,10 +2048,9 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 	return new_item;
 }
 
-static gint imap_rename_folder(Folder *folder, FolderItem *item,
-			       const gchar *name)
+static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
+				    FolderItem *new_parent, const gchar *name)
 {
-	gchar *dirpath;
 	gchar *newpath;
 	gchar *real_oldpath;
 	gchar *real_newpath;
@@ -2063,8 +2065,18 @@ static gint imap_rename_folder(Folder *folder, FolderItem *item,
 
 	g_return_val_if_fail(folder != NULL, -1);
 	g_return_val_if_fail(item != NULL, -1);
+	g_return_val_if_fail(folder == item->folder, -1);
 	g_return_val_if_fail(item->path != NULL, -1);
-	g_return_val_if_fail(name != NULL, -1);
+	g_return_val_if_fail(new_parent != NULL || name != NULL, -1);
+	if (new_parent) {
+		g_return_val_if_fail(item != new_parent, -1);
+		g_return_val_if_fail(item->parent != new_parent, -1);
+		g_return_val_if_fail(item->folder == new_parent->folder, -1);
+		if (g_node_is_ancestor(item->node, new_parent->node)) {
+			g_warning("folder to be moved is ancestor of new parent\n");
+			return -1;
+		}
+	}
 
 	session = imap_session_get(folder);
 	if (!session) return -1;
@@ -2081,12 +2093,31 @@ static gint imap_rename_folder(Folder *folder, FolderItem *item,
 	}
 
 	separator = imap_get_path_separator(IMAP_FOLDER(folder), item->path);
-	if (strchr(item->path, G_DIR_SEPARATOR)) {
-		dirpath = g_dirname(item->path);
-		newpath = g_strconcat(dirpath, G_DIR_SEPARATOR_S, name, NULL);
-		g_free(dirpath);
-	} else
-		newpath = g_strdup(name);
+	if (new_parent) {
+		if (name) {
+			newpath = g_strconcat(new_parent->path,
+					      G_DIR_SEPARATOR_S, name, NULL);
+		} else {
+			gchar *name_;
+
+			name_ = g_path_get_basename(item->path);
+			newpath = g_strconcat(new_parent->path,
+					      G_DIR_SEPARATOR_S, name_, NULL);
+			AUTORELEASE_STR(name_, );
+			name = name_;
+		}
+	} else {
+		if (strchr(item->path, G_DIR_SEPARATOR)) {
+			gchar *dirpath;
+
+			dirpath = g_dirname(item->path);
+			newpath = g_strconcat(dirpath, G_DIR_SEPARATOR_S, name,
+					      NULL);
+			g_free(dirpath);
+		} else
+			newpath = g_strdup(name);
+	}
+	g_print("oldpath = %s, newpath = %s\n", item->path, newpath);
 
 	real_newpath = imap_utf8_to_modified_utf7(newpath);
 	imap_path_separator_subst(real_newpath, separator);
@@ -2099,6 +2130,12 @@ static gint imap_rename_folder(Folder *folder, FolderItem *item,
 		g_free(newpath);
 		g_free(real_newpath);
 		return -1;
+	}
+
+	if (new_parent) {
+		g_node_unlink(item->node);
+		g_node_append(new_parent->node, item->node);
+		item->parent = new_parent;
 	}
 
 	g_free(item->name);
@@ -2126,6 +2163,18 @@ static gint imap_rename_folder(Folder *folder, FolderItem *item,
 	g_free(real_newpath);
 
 	return 0;
+}
+
+static gint imap_rename_folder(Folder *folder, FolderItem *item,
+			       const gchar *name)
+{
+	return imap_rename_folder_real(folder, item, NULL, name);
+}
+
+static gint imap_move_folder(Folder *folder, FolderItem *item,
+			     FolderItem *new_parent)
+{
+	return imap_rename_folder_real(folder, item, new_parent, NULL);
 }
 
 static gint imap_remove_folder(Folder *folder, FolderItem *item)
