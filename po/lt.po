@@ -1030,6 +1030,10 @@ msgid ""
 "\n"
 "Send it anyway?"
 msgstr ""
+"Eilutė %d viršija eilutės ilgio limitą (998 baitai).\n"
+"Žinutės turinys gali būti sugadintas pristatymo metu.\n"
+"\n"
+"Ar tikrai norite ją išsiųsti?"
 
 #: src/compose.c:3031
 msgid "can't remove the old message\n"
@@ -1626,9 +1630,8 @@ msgid "/_Rename folder..."
 msgstr "/Pe_rvadinti katalogą..."
 
 #: src/folderview.c:232
-#, fuzzy
 msgid "/_Move folder..."
-msgstr "/Pe_rvadinti katalogą..."
+msgstr "/Per_kelti katalogą..."
 
 #: src/folderview.c:233 src/folderview.c:249
 msgid "/_Delete folder"
@@ -1752,12 +1755,12 @@ msgid "Rename folder"
 msgstr "Pervadinti katalogą"
 
 #: src/folderview.c:2055
-#, fuzzy, c-format
+#, c-format
 msgid "Can't move the folder `%s'."
-msgstr "Negaliu pašalinti katalogo „%s“"
+msgstr "Negaliu perkelti katalogo „%s“"
 
 #: src/folderview.c:2109
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
@@ -1765,6 +1768,8 @@ msgid ""
 "Do you really want to delete?"
 msgstr ""
 "Visi pakatalogiai ir žinutės kataloge „%s“ bus ištrinti.\n"
+"Atkūrimas nebus įmanomas.\n"
+"\n"
 "Ar tikrai norite ištrinti?"
 
 #: src/folderview.c:2112
@@ -2389,9 +2394,8 @@ msgid "g_thread is not supported by glib.\n"
 msgstr "glib nepalaiko g_thread.\n"
 
 #: src/main.c:224
-#, fuzzy
 msgid "Filename encoding"
-msgstr "Siunčiamų laiškų koduotė"
+msgstr "Bylų vardų koduotė"
 
 #: src/main.c:225
 msgid ""
@@ -2406,6 +2410,16 @@ msgid ""
 "\n"
 "Continue?"
 msgstr ""
+"Lokalės nustatyta koduotė nėra UTF-8, bet aplinkos kintamasis "
+"„G_FILENAME_ENCODING“ nenustatytas.\n"
+"Jeigu bylų ar katalogų vardams yra naudojama lokalės koduotė, ji nedirbs "
+"teisingai.\n"
+"Tokiu atveju, jūs turite nustatyti aplinkos kintamąjį (išsamesnės "
+"instrukcijos byloje „README“):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Tęsti?"
 
 #: src/main.c:281
 msgid ""
@@ -2512,9 +2526,8 @@ msgid "/_File/_Folder/_Rename folder..."
 msgstr "/_Byla/_Katalogas/Pe_rvadinti..."
 
 #: src/mainwindow.c:475
-#, fuzzy
 msgid "/_File/_Folder/_Move folder..."
-msgstr "/_Byla/_Katalogas/Pe_rvadinti..."
+msgstr "/_Byla/_Katalogas/Per_kelti..."
 
 #: src/mainwindow.c:476
 msgid "/_File/_Folder/_Delete folder"
@@ -2930,7 +2943,6 @@ msgid "/_Message/Re-_edit"
 msgstr "/_Message/P_ertaisyti"
 
 #: src/mainwindow.c:727
-#, fuzzy
 msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/Į_rankiai/Įrašyti siuntėją į adresų _knygą"
 
@@ -3474,6 +3486,13 @@ msgid ""
 "\n"
 "\tG_FILENAME_ENCODING=@locale\n"
 msgstr ""
+"Katalogo pavadinimas\n"
+"'%s' nėra teisingas UTF-8 tekstas.\n"
+"Galbūt bylų pavadinimams naudojama lokalės koduotė.\n"
+"Tokiu atveju jūs turite nustatyti aplinkos kintamąjį\n"
+"(detalesnės instrukcijos byloje „README“):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
 
 #: src/mimeview.c:124
 msgid "/_Open"
@@ -3895,9 +3914,8 @@ msgid "Default inbox"
 msgstr "Gaunamų laiškų dėžutė"
 
 #: src/prefs_account.c:1113
-#, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
-msgstr "(Nefiltruotos žinutės bus laikomos šiame kataloge)"
+msgstr "Nefiltruotos žinutės bus laikomos šiame kataloge."
 
 #: src/prefs_account.c:1126 src/prefs_account.c:1277
 msgid "Authentication method"
@@ -3912,16 +3930,12 @@ msgid "News"
 msgstr "Naujienos"
 
 #: src/prefs_account.c:1154
-#, fuzzy
 msgid "Maximum number of articles to download"
-msgstr ""
-"Maksimalus parsiunčiamų žinučių skaičius\n"
-"(nelimituojama, jei nurodyta „0“)"
+msgstr "Maksimalus parsiunčiamų žinučių skaičius"
 
 #: src/prefs_account.c:1171
-#, fuzzy
 msgid "No limit if 0 is specified."
-msgstr "Nenurodytas gavėjas."
+msgstr "Nelimituojama, jei nurodyta „0“."
 
 #: src/prefs_account.c:1175
 msgid "`Get all' checks for new messages on this account"
@@ -3997,7 +4011,7 @@ msgstr "Koduoti žinutes"
 
 #: src/prefs_account.c:1509
 msgid "Encrypt when replying to encrypted message"
-msgstr ""
+msgstr "Koduoti kai atsakoma į koduotą žinutę"
 
 #: src/prefs_account.c:1511
 msgid "Use ASCII-armored format for encryption"
@@ -4065,9 +4079,8 @@ msgid "Use non-blocking SSL"
 msgstr "Naudoti „non-blocking SSL“"
 
 #: src/prefs_account.c:1722
-#, fuzzy
 msgid "Turn this off if you have problems in SSL connection."
-msgstr "(Išjunkite, jei turite problemų su SSL prisijungimais"
+msgstr "Išjunkite, jei turite problemų su SSL prisijungimais."
 
 #: src/prefs_account.c:1808
 msgid "Specify SMTP port"
@@ -4814,9 +4827,8 @@ msgid "Warn if there are queued messages"
 msgstr "Perspėti jei yra žinučių eilėje"
 
 #: src/prefs_common.c:2459
-#, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
-msgstr "Rašoma santraukos laikinoji atmintis (%s)..."
+msgstr "Įjungti griežtą santraukos laikinosios atminties vientisumo tikrinimą"
 
 #: src/prefs_common.c:2462
 msgid ""
@@ -4824,6 +4836,8 @@ msgid ""
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
+"Įjunkite, jei katalogų turinys gali būti modifikuotas kitų programų.\n"
+"Šis pasirinkimas sumažins santraukos rodymo greitį."
 
 #: src/prefs_common.c:2469
 msgid "Socket I/O timeout:"
@@ -5887,7 +5901,6 @@ msgid "/Re-_edit"
 msgstr "/R_edaguoti"
 
 #: src/summaryview.c:397
-#, fuzzy
 msgid "/Add sender to address boo_k..."
 msgstr "/Pridėti siuntėją į adresų _knygą"
 
@@ -6148,24 +6161,20 @@ msgid "Sa_ve this image as..."
 msgstr "Saugoti pa_veikslėlį kaip"
 
 #: src/textview.c:1926
-#, fuzzy
 msgid "Compose _new message"
-msgstr "Rašyti naują laišką"
+msgstr "Rašyti _naują laišką"
 
 #: src/textview.c:1928
-#, fuzzy
 msgid "Add to address _book..."
-msgstr "/Pridėti siuntėją į adresų _knygą"
+msgstr "Pridėti į adresų _knygą"
 
 #: src/textview.c:1930
-#, fuzzy
 msgid "Copy this add_ress"
-msgstr "Kopijuoti _nuorodą"
+msgstr "Kopijuoti ad_resą"
 
 #: src/textview.c:1933
-#, fuzzy
 msgid "_Open with Web browser"
-msgstr "Naršyklė"
+msgstr "_Atverti su naršykle"
 
 #: src/textview.c:1935
 msgid "Copy this _link"
