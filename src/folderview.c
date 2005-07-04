@@ -1555,6 +1555,9 @@ static gboolean folderview_button_pressed(GtkWidget *widget,
 					   &path, NULL, NULL, NULL))
 		return TRUE;
 
+	if (folderview->selection_locked)
+		return TRUE;
+
 	if (event->button == 1 || event->button == 2) {
 		folderview->open_folder = TRUE;
 	} else if (event->button == 3) {
@@ -1587,6 +1590,9 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	GtkTreePath *opened = NULL, *selected = NULL;
 
 	if (!event) return FALSE;
+
+	if (folderview->selection_locked)
+		return TRUE;
 
 	switch (event->keyval) {
 	case GDK_Return:
@@ -1688,6 +1694,8 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 		gtk_tree_path_free(open_path);
 	}
 
+	folderview->selection_locked = TRUE;
+
 	GTK_EVENTS_FLUSH();
 	opened = summary_show(folderview->summaryview, item, FALSE);
 
@@ -1708,6 +1716,8 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 		folderview_select_row_ref(folderview, folderview->opened);
 
 	gtk_tree_path_free(path);
+
+	folderview->selection_locked = FALSE;
 }
 
 static void folderview_row_expanded(GtkTreeView *treeview, GtkTreeIter *iter,

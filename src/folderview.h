@@ -58,6 +58,8 @@ struct _FolderView
 	guint expand_timeout;
 	guint scroll_timeout;
 
+	gboolean selection_locked;
+
 	GdkColor color_new;
 	GdkColor color_noselect;
 
