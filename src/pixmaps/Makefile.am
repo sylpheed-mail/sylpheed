@@ -36,7 +36,36 @@ EXTRA_DIST = \
 	stock_mail-send.png \
 	stock_mail.png \
 	stock_outbox.png \
-	stock_spam.png
+	stock_spam.png \
+	clip.xpm \
+	deleted.xpm \
+	dir-close.xpm \
+	dir-open.xpm \
+	dir-noselect.xpm \
+	forwarded.xpm \
+	group.xpm \
+	mark.xpm \
+	new.xpm \
+	offline.xpm \
+	online.xpm \
+	replied.xpm \
+	unread.xpm \
+	linewrap.xpm \
+	continue.xpm \
+	complete.xpm \
+	error.xpm \
+	stock_close.xpm \
+	stock_exec.xpm \
+	stock_down_arrow.xpm \
+	sylpheed-logo.xpm \
+	address.xpm \
+	book.xpm \
+	category.xpm \
+	interface.xpm \
+	jpilot.xpm \
+	ldap.xpm \
+	vcard.xpm \
+	mail.xpm
 
 %.h: %.png
 	gdk-pixbuf-csource --name=`echo $(*F)|sed s/-/_/g` $< > $@

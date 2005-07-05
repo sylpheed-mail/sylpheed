@@ -122,58 +122,7 @@ BUILT_SOURCES = \
 EXTRA_DIST = \
 	quote_fmt_parse.h \
 	sylpheed-marshal.list \
-	version.h.in \
-	pixmaps/clip.xpm \
-	pixmaps/deleted.xpm \
-	pixmaps/dir-close.xpm \
-	pixmaps/dir-open.xpm \
-	pixmaps/dir-noselect.xpm \
-	pixmaps/forwarded.xpm \
-	pixmaps/group.xpm \
-	pixmaps/inbox.xpm \
-	pixmaps/mark.xpm \
-	pixmaps/checkbox_on.xpm \
-	pixmaps/checkbox_off.xpm \
-	pixmaps/new.xpm \
-	pixmaps/offline.xpm \
-	pixmaps/online.xpm \
-	pixmaps/outbox.xpm \
-	pixmaps/replied.xpm \
-	pixmaps/trash.xpm \
-	pixmaps/unread.xpm \
-	pixmaps/linewrap.xpm \
-	pixmaps/continue.xpm \
-	pixmaps/complete.xpm \
-	pixmaps/error.xpm \
-	pixmaps/stock_mail.xpm \
-	pixmaps/stock_mail_attach.xpm \
-	pixmaps/stock_mail_receive.xpm \
-	pixmaps/stock_mail_receive_all.xpm \
-	pixmaps/stock_mail_send.xpm \
-	pixmaps/stock_mail_send_queue.xpm \
-	pixmaps/stock_mail_compose.xpm \
-	pixmaps/stock_mail_reply.xpm \
-	pixmaps/stock_mail_reply_to_all.xpm \
-	pixmaps/stock_mail_forward.xpm \
-	pixmaps/stock_preferences.xpm \
-	pixmaps/stock_properties.xpm \
-	pixmaps/stock_search.xpm \
-	pixmaps/stock_close.xpm \
-	pixmaps/stock_exec.xpm \
-	pixmaps/stock_trash.xpm \
-	pixmaps/stock_up_arrow.xpm \
-	pixmaps/stock_down_arrow.xpm \
-	pixmaps/stock_paste.xpm \
-	pixmaps/tb_address_book.xpm \
-	pixmaps/sylpheed-logo.xpm \
-	pixmaps/address.xpm \
-	pixmaps/book.xpm \
-	pixmaps/category.xpm \
-	pixmaps/interface.xpm \
-	pixmaps/jpilot.xpm \
-	pixmaps/ldap.xpm \
-	pixmaps/vcard.xpm \
-	pixmaps/mail.xpm
+	version.h.in
 
 INCLUDES = \
 	-DG_LOG_DOMAIN=\"Sylpheed\" \
