@@ -101,7 +101,7 @@ static void about_create(void)
 	vbox = gtk_vbox_new(FALSE, 6);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
-	pixmap = stock_pixmap_widget(window, STOCK_PIXMAP_SYLPHEED_LOGO);
+	pixmap = stock_pixbuf_widget(window, STOCK_PIXMAP_SYLPHEED_LOGO);
 	gtk_box_pack_start(GTK_BOX(vbox), pixmap, FALSE, FALSE, 0);
 
 	label = gtk_label_new("version "VERSION);

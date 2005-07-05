@@ -1,3 +1,5 @@
+SUBDIRS = pixmaps
+
 bin_PROGRAMS = sylpheed
 
 sylpheed_SOURCES = \

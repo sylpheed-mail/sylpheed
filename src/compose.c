@@ -4350,10 +4350,12 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 	gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
+	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
+				  GTK_ICON_SIZE_LARGE_TOOLBAR);
 	gtk_container_add(GTK_CONTAINER(container), toolbar);
 	gtk_widget_set_size_request(toolbar, 1, -1);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_SEND);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_SEND);
 	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Send"),
 					   _("Send message"),
@@ -4362,7 +4364,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					   G_CALLBACK(toolbar_send_cb),
 					   compose);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_SEND_QUEUE);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_SEND_QUEUE);
 	sendl_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Send later"),
 					   _("Put into queue folder and send later"),
@@ -4371,7 +4373,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					   G_CALLBACK(toolbar_send_later_cb),
 					   compose);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL);
 	draft_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					    _("Draft"),
 					    _("Save to draft folder"),
@@ -4382,7 +4384,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_PASTE);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_PASTE);
 	insert_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Insert"),
 					     _("Insert file"),
@@ -4391,7 +4393,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					     G_CALLBACK(toolbar_insert_cb),
 					     compose);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_ATTACH);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_ATTACH);
 	attach_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Attach"),
 					     _("Attach file"),
@@ -4402,7 +4404,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL);
 	sig_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Signature"),
 					  _("Insert signature"),
@@ -4412,7 +4414,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_COMPOSE);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_COMPOSE);
 	exteditor_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 						_("Editor"),
 						_("Edit with external editor"),
@@ -4421,7 +4423,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 						G_CALLBACK(toolbar_ext_editor_cb),
 						compose);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_LINEWRAP);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_LINEWRAP);
 	linewrap_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					       _("Linewrap"),
 					       _("Wrap all long lines"),
@@ -4432,7 +4434,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_ADDRESS_BOOK);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_ADDRESS_BOOK);
 	addrbook_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					       _("Address"),
 					       _("Address book"),

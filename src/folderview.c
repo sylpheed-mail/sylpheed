@@ -102,6 +102,7 @@ static GdkPixbuf *outbox_pixbuf;
 static GdkPixbuf *folder_pixbuf;
 static GdkPixbuf *folderopen_pixbuf;
 static GdkPixbuf *foldernoselect_pixbuf;
+static GdkPixbuf *draft_pixbuf;
 static GdkPixbuf *trash_pixbuf;
 
 static void folderview_select_row	(FolderView	*folderview,
@@ -502,6 +503,7 @@ void folderview_init(FolderView *folderview)
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_OPEN, &folderopen_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_NOSELECT,
 			 &foldernoselect_pixbuf);
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DRAFT, &draft_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_TRASH, &trash_pixbuf);
 }
 
@@ -1086,8 +1088,7 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 				item->name);
 		break;
 	case F_DRAFT:
-		pixbuf = folder_pixbuf;
-		open_pixbuf = folderopen_pixbuf;
+		pixbuf = open_pixbuf = draft_pixbuf;
 		name = g_strdup(FOLDER_IS_LOCAL(item->folder) &&
 				!strcmp2(item->name, DRAFT_DIR) ? _("Drafts") :
 				item->name);

@@ -883,8 +883,8 @@ MainWindow *main_window_create(SeparateType type)
 
 	online_hbox = gtk_hbox_new(FALSE, 0);
 
-	online_pixmap = stock_pixmap_widget(statusbar, STOCK_PIXMAP_ONLINE);
-	offline_pixmap = stock_pixmap_widget(statusbar, STOCK_PIXMAP_OFFLINE);
+	online_pixmap = stock_pixbuf_widget(statusbar, STOCK_PIXMAP_ONLINE);
+	offline_pixmap = stock_pixbuf_widget(statusbar, STOCK_PIXMAP_OFFLINE);
 	gtk_box_pack_start(GTK_BOX(online_hbox), online_pixmap,
 			   FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(online_hbox), offline_pixmap,
@@ -2196,11 +2196,11 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
-				  GTK_ICON_SIZE_SMALL_TOOLBAR);
+				  GTK_ICON_SIZE_LARGE_TOOLBAR);
 	gtk_container_add(GTK_CONTAINER(container), toolbar);
 	gtk_widget_set_size_request(toolbar, 1, -1);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_RECEIVE);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_RECEIVE);
 	get_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Get"),
 					  _("Incorporate new mail"),
@@ -2208,7 +2208,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					  icon_wid,
 					  G_CALLBACK(toolbar_inc_cb),
 					  mainwin);
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_RECEIVE_ALL);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_RECEIVE_ALL);
 	getall_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Get all"),
 					     _("Incorporate new mail of all accounts"),
@@ -2219,7 +2219,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_SEND);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_SEND);
 	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Send"),
 					   _("Send queued message(s)"),
@@ -2230,7 +2230,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_COMPOSE);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_COMPOSE);
 	compose_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					      _("Compose"),
 					      _("Compose new message"),
@@ -2239,7 +2239,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					      G_CALLBACK(toolbar_compose_cb),
 					      mainwin);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_REPLY);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_REPLY);
 	reply_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					    _("Reply"),
 					    _("Reply to the message"),
@@ -2257,7 +2257,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 				  GTK_WIDGET_PTR(reply_combo),
 				  _("Reply to the message"), "Reply");
 
-	icon_wid = stock_pixmap_widget
+	icon_wid = stock_pixbuf_widget
 		(container, STOCK_PIXMAP_MAIL_REPLY_TO_ALL);
 	replyall_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					       _("Reply all"),
@@ -2267,7 +2267,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					       G_CALLBACK(toolbar_reply_to_all_cb),
 					       mainwin);
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_MAIL_FORWARD);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_FORWARD);
 	fwd_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Forward"),
 					  _("Forward the message"),
@@ -2287,8 +2287,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = gtk_image_new_from_stock(GTK_STOCK_DELETE,
-					    GTK_ICON_SIZE_SMALL_TOOLBAR);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_DELETE);
 	delete_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Delete"),
 					  _("Delete the message"),
@@ -2297,8 +2296,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					  G_CALLBACK(toolbar_delete_cb),
 					  mainwin);
 
-	icon_wid = gtk_image_new_from_stock(GTK_STOCK_CANCEL,
-					    GTK_ICON_SIZE_SMALL_TOOLBAR);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_SPAM);
 	junk_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Junk"),
 					   _("Set as junk mail"),
@@ -2308,7 +2306,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					   mainwin);
 
 	icon_wid = gtk_image_new_from_stock(GTK_STOCK_EXECUTE,
-					    GTK_ICON_SIZE_SMALL_TOOLBAR);
+					    GTK_ICON_SIZE_LARGE_TOOLBAR);
 	exec_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Execute"),
 					   _("Execute marked process"),
@@ -2318,7 +2316,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					   mainwin);
 
 	icon_wid = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,
-					    GTK_ICON_SIZE_SMALL_TOOLBAR);
+					    GTK_ICON_SIZE_LARGE_TOOLBAR);
 	next_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Next"),
 					   _("Next unread message"),
@@ -2330,7 +2328,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 #if 0
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_PREFERENCES);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_PREFERENCES);
 	prefs_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					    _("Prefs"),
 					    _("Common preferences"),
@@ -2338,7 +2336,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					    icon_wid,
 					    G_CALLBACK(toolbar_prefs_cb),
 					    mainwin);
-	icon_wid = stock_pixmap_widget(container, STOCK_PIXMAP_PROPERTIES);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_PROPERTIES);
 	account_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					      _("Account"),
 					      _("Account setting"),

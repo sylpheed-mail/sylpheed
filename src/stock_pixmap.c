@@ -21,6 +21,7 @@
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkpixmap.h>
 #include <gtk/gtkimage.h>
+#include <gtk/gtkicontheme.h>
 
 #include "stock_pixmap.h"
 #include "gtkutils.h"
@@ -28,8 +29,6 @@
 #include "pixmaps/address.xpm"
 #include "pixmaps/book.xpm"
 #include "pixmaps/category.xpm"
-#include "pixmaps/checkbox_off.xpm"
-#include "pixmaps/checkbox_on.xpm"
 #include "pixmaps/clip.xpm"
 #include "pixmaps/complete.xpm"
 #include "pixmaps/continue.xpm"
@@ -40,39 +39,40 @@
 #include "pixmaps/error.xpm"
 #include "pixmaps/forwarded.xpm"
 #include "pixmaps/group.xpm"
-#include "pixmaps/inbox.xpm"
+#include "pixmaps/stock_inbox.h"
 #include "pixmaps/interface.xpm"
 #include "pixmaps/jpilot.xpm"
 #include "pixmaps/ldap.xpm"
 #include "pixmaps/linewrap.xpm"
 #include "pixmaps/mark.xpm"
 #include "pixmaps/new.xpm"
-#include "pixmaps/outbox.xpm"
+#include "pixmaps/stock_outbox.h"
 #include "pixmaps/replied.xpm"
 #include "pixmaps/stock_close.xpm"
 #include "pixmaps/stock_down_arrow.xpm"
 #include "pixmaps/stock_exec.xpm"
-#include "pixmaps/stock_mail.xpm"
-#include "pixmaps/stock_mail_attach.xpm"
-#include "pixmaps/stock_mail_compose.xpm"
-#include "pixmaps/stock_mail_forward.xpm"
-#include "pixmaps/stock_mail_receive.xpm"
-#include "pixmaps/stock_mail_receive_all.xpm"
-#include "pixmaps/stock_mail_reply.xpm"
-#include "pixmaps/stock_mail_reply_to_all.xpm"
-#include "pixmaps/stock_mail_send.xpm"
-#include "pixmaps/stock_mail_send_queue.xpm"
-#include "pixmaps/stock_paste.xpm"
-#include "pixmaps/stock_preferences.xpm"
-#include "pixmaps/stock_properties.xpm"
+#include "pixmaps/stock_mail.h"
+#include "pixmaps/stock_attach.h"
+#include "pixmaps/stock_mail-compose.h"
+#include "pixmaps/stock_mail-compose_16.h"
+#include "pixmaps/stock_mail-forward.h"
+#include "pixmaps/stock_mail-receive.h"
+#include "pixmaps/stock_mail_receive_all.h"
+#include "pixmaps/stock_mail-reply.h"
+#include "pixmaps/stock_mail-reply-to-all.h"
+#include "pixmaps/stock_mail-send.h"
+#include "pixmaps/stock_mail_send_queue.h"
+#include "pixmaps/stock_insert-file.h"
 #include "pixmaps/sylpheed-logo.xpm"
-#include "pixmaps/tb_address_book.xpm"
-#include "pixmaps/trash.xpm"
+#include "pixmaps/stock_addressbook.h"
+#include "pixmaps/stock_delete.h"
+#include "pixmaps/stock_delete_16.h"
 #include "pixmaps/unread.xpm"
 #include "pixmaps/vcard.xpm"
 #include "pixmaps/online.xpm"
 #include "pixmaps/offline.xpm"
 #include "pixmaps/mail.xpm"
+#include "pixmaps/stock_spam.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -82,58 +82,63 @@ struct _StockPixmapData
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
 	GdkPixbuf *pixbuf;
+	const guint8 *pixbuf_data;
+	gint pixbuf_data_len;
+	gchar *icon_name;
+	gint size;
 };
 
 static StockPixmapData pixmaps[] =
 {
-	{address_xpm			, NULL, NULL},
-	{book_xpm			, NULL, NULL},
-	{category_xpm			, NULL, NULL},
-	{checkbox_off_xpm		, NULL, NULL},
-	{checkbox_on_xpm		, NULL, NULL},
-	{clip_xpm			, NULL, NULL},
-	{complete_xpm			, NULL, NULL},
-	{continue_xpm			, NULL, NULL},
-	{deleted_xpm			, NULL, NULL},
-	{dir_close_xpm			, NULL, NULL},
-	{dir_open_xpm			, NULL, NULL},
-	{dir_noselect_xpm		, NULL, NULL},
-	{error_xpm			, NULL, NULL},
-	{forwarded_xpm			, NULL, NULL},
-	{group_xpm			, NULL, NULL},
-	{inbox_xpm			, NULL, NULL},
-	{interface_xpm			, NULL, NULL},
-	{jpilot_xpm			, NULL, NULL},
-	{ldap_xpm			, NULL, NULL},
-	{linewrap_xpm			, NULL, NULL},
-	{mark_xpm			, NULL, NULL},
-	{new_xpm			, NULL, NULL},
-	{outbox_xpm			, NULL, NULL},
-	{replied_xpm			, NULL, NULL},
-	{stock_close_xpm		, NULL, NULL},
-	{stock_down_arrow_xpm		, NULL, NULL},
-	{stock_exec_xpm			, NULL, NULL},
-	{stock_mail_xpm			, NULL, NULL},
-	{stock_mail_attach_xpm		, NULL, NULL},
-	{stock_mail_compose_xpm		, NULL, NULL},
-	{stock_mail_forward_xpm		, NULL, NULL},
-	{stock_mail_receive_xpm		, NULL, NULL},
-	{stock_mail_receive_all_xpm	, NULL, NULL},
-	{stock_mail_reply_xpm		, NULL, NULL},
-	{stock_mail_reply_to_all_xpm	, NULL, NULL},
-	{stock_mail_send_xpm		, NULL, NULL},
-	{stock_mail_send_queue_xpm	, NULL, NULL},
-	{stock_paste_xpm		, NULL, NULL},
-	{stock_preferences_xpm		, NULL, NULL},
-	{stock_properties_xpm		, NULL, NULL},
-	{sylpheed_logo_xpm		, NULL, NULL},
-	{tb_address_book_xpm		, NULL, NULL},
-	{trash_xpm			, NULL, NULL},
-	{unread_xpm			, NULL, NULL},
-	{vcard_xpm			, NULL, NULL},
-	{online_xpm			, NULL, NULL},
-	{offline_xpm			, NULL, NULL},
-	{mail_xpm			, NULL, NULL},
+	{address_xpm	, NULL, NULL},
+	{book_xpm	, NULL, NULL},
+	{category_xpm	, NULL, NULL},
+	{clip_xpm	, NULL, NULL},
+	{complete_xpm	, NULL, NULL},
+	{continue_xpm	, NULL, NULL},
+	{deleted_xpm	, NULL, NULL},
+	{dir_close_xpm	, NULL, NULL},
+	{dir_open_xpm	, NULL, NULL},
+	{dir_noselect_xpm, NULL, NULL},
+	{error_xpm	, NULL, NULL},
+	{forwarded_xpm	, NULL, NULL},
+	{group_xpm	, NULL, NULL},
+	{NULL		, NULL, NULL, NULL, stock_inbox, sizeof(stock_inbox), "stock_inbox", 16},
+	{interface_xpm	, NULL, NULL},
+	{jpilot_xpm	, NULL, NULL},
+	{ldap_xpm	, NULL, NULL},
+	{linewrap_xpm	, NULL, NULL},
+	{mark_xpm	, NULL, NULL},
+	{new_xpm	, NULL, NULL},
+	{NULL		, NULL, NULL, NULL, stock_outbox, sizeof(stock_outbox), "stock_outbox", 16},
+	{replied_xpm	, NULL, NULL},
+	{stock_close_xpm, NULL, NULL},
+	{stock_down_arrow_xpm, NULL, NULL},
+	{stock_exec_xpm	, NULL, NULL},
+	{NULL		, NULL, NULL, NULL, stock_mail, sizeof(stock_mail), "stock_mail", 24},
+	{NULL		, NULL, NULL, NULL, stock_attach, sizeof(stock_attach), "stock_attach", 24},
+	{NULL		, NULL, NULL, NULL, stock_mail_compose, sizeof(stock_mail_compose), "stock_mail-compose", 24},
+	{NULL		, NULL, NULL, NULL, stock_mail_forward, sizeof(stock_mail_forward), "stock_mail-forward", 24},
+	{NULL		, NULL, NULL, NULL, stock_mail_receive, sizeof(stock_mail_receive), "stock_mail-receive", 24},
+	{NULL	, NULL, NULL, NULL, stock_mail_receive_all, sizeof(stock_mail_receive_all), NULL, 0},
+	{NULL		, NULL, NULL, NULL, stock_mail_reply, sizeof(stock_mail_reply), "stock_mail-reply", 24},
+	{NULL	, NULL, NULL, NULL, stock_mail_reply_to_all, sizeof(stock_mail_reply_to_all), "stock_mail-reply-to-all", 24},
+	{NULL		, NULL, NULL, NULL, stock_mail_send, sizeof(stock_mail_send), "stock_mail-send", 24},
+	{NULL		, NULL, NULL, NULL, stock_mail_send_queue, sizeof(stock_mail_send_queue), NULL, 0},
+	{NULL		, NULL, NULL, NULL, stock_insert_file, sizeof(stock_insert_file), "stock_insert-file", 24},
+	{NULL		, NULL, NULL, NULL, NULL, 0, GTK_STOCK_PREFERENCES, 24},
+	{NULL		, NULL, NULL, NULL, NULL, 0, GTK_STOCK_PROPERTIES, 24},
+	{sylpheed_logo_xpm, NULL, NULL},
+	{NULL		, NULL, NULL, NULL, stock_addressbook, sizeof(stock_addressbook), "stock_addressbook", 24},
+	{NULL		, NULL, NULL, NULL, stock_mail_compose_16, sizeof(stock_mail_compose_16), "stock_mail-compose", 16},
+	{NULL		, NULL, NULL, NULL, stock_delete_16, sizeof(stock_delete_16), GTK_STOCK_DELETE, 16},
+	{unread_xpm	, NULL, NULL},
+	{vcard_xpm	, NULL, NULL},
+	{online_xpm	, NULL, NULL},
+	{offline_xpm	, NULL, NULL},
+	{mail_xpm	, NULL, NULL},
+	{NULL		, NULL, NULL, NULL, stock_delete, sizeof(stock_delete), GTK_STOCK_DELETE, 24},
+	{NULL		, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24}
 };
 
 /* return newly constructed GtkPixmap from GdkPixmap */
@@ -174,6 +179,8 @@ gint stock_pixmap_gdk(GtkWidget *window, StockPixmap icon,
 
 	pix_d = &pixmaps[icon];
 
+	g_return_val_if_fail(pix_d->data != NULL, -1);
+
 	if (!pix_d->pixmap) {
 		PIXMAP_CREATE(window, pix_d->pixmap, pix_d->mask,
 			      pix_d->data);
@@ -197,11 +204,21 @@ gint stock_pixbuf_gdk(GtkWidget *window, StockPixmap icon, GdkPixbuf **pixbuf)
 
 	pix_d = &pixmaps[icon];
 
-	if (!pix_d->pixbuf)
+	if (!pix_d->pixbuf && pix_d->pixbuf_data)
+		pix_d->pixbuf = gdk_pixbuf_new_from_inline
+			(pix_d->pixbuf_data_len, pix_d->pixbuf_data,
+			 FALSE, NULL);
+	if (!pix_d->pixbuf && pix_d->icon_name)
+		pix_d->pixbuf = gtk_icon_theme_load_icon
+			(gtk_icon_theme_get_default(),
+			 pix_d->icon_name, pix_d->size, 0, NULL);
+	if (!pix_d->pixbuf && pix_d->data)
 		pix_d->pixbuf = gdk_pixbuf_new_from_xpm_data
 			((const gchar **)pix_d->data);
-	if (!pix_d->pixbuf)
+	if (!pix_d->pixbuf) {
+		g_warning("can't read image %d\n", icon);
 		return -1;
+	}
 
 	if (pixbuf)
 		*pixbuf = pix_d->pixbuf;
