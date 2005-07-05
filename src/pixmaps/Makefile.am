@@ -65,10 +65,8 @@ EXTRA_DIST = \
 	jpilot.xpm \
 	ldap.xpm \
 	vcard.xpm \
-	mail.xpm
+	mail.xpm \
+	$(BUILT_SOURCES)
 
 %.h: %.png
 	gdk-pixbuf-csource --name=`echo $(*F)|sed s/-/_/g` $< > $@
-
-clean:
-	rm -f $(BUILT_SOURCES)
