@@ -65,7 +65,7 @@
 #include "pixmaps/stock_delete_16.h"
 #include "pixmaps/stock_spam.h"
 #include "pixmaps/stock_hand-signed.h"
-#include "pixmaps/sylpheed-logo.xpm"
+#include "pixmaps/sylpheed-logo.h"
 #include "pixmaps/unread.xpm"
 #include "pixmaps/vcard.xpm"
 #include "pixmaps/online.xpm"
@@ -129,11 +129,11 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, stock_mail_send, sizeof(stock_mail_send), "stock_mail-send", 24},
 	{NULL, NULL, NULL, NULL, stock_mail_send_queue, sizeof(stock_mail_send_queue), NULL, 0},
 	{NULL, NULL, NULL, NULL, stock_insert_file, sizeof(stock_insert_file), "stock_insert-file", 24},
-	{sylpheed_logo_xpm, NULL, NULL},
 	{NULL, NULL, NULL, NULL, stock_addressbook, sizeof(stock_addressbook), "stock_addressbook", 24},
 	{NULL, NULL, NULL, NULL, stock_delete, sizeof(stock_delete), GTK_STOCK_DELETE, 24},
 	{NULL, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24},
-	{NULL, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24}
+	{NULL, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24},
+	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 };
 
 /* return newly constructed GtkPixmap from GdkPixmap */

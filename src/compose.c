@@ -4384,7 +4384,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_PASTE);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_INSERT_FILE);
 	insert_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Insert"),
 					     _("Insert file"),
