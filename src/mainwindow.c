@@ -2328,7 +2328,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 #if 0
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_PREFERENCES);
+	icon_wid = gtk_image_new_from_stock(GTK_STOCK_PREFERENCES,
+					    GTK_ICON_SIZE_LARGE_TOOLBAR);
 	prefs_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					    _("Prefs"),
 					    _("Common preferences"),
@@ -2336,7 +2337,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					    icon_wid,
 					    G_CALLBACK(toolbar_prefs_cb),
 					    mainwin);
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_PROPERTIES);
+	icon_wid = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,
+					    GTK_ICON_SIZE_LARGE_TOOLBAR);
 	account_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					      _("Account"),
 					      _("Account setting"),
