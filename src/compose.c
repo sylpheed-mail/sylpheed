@@ -4404,7 +4404,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL);
+	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_SIGN);
 	sig_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Signature"),
 					  _("Insert signature"),

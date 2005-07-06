@@ -39,18 +39,18 @@
 #include "pixmaps/error.xpm"
 #include "pixmaps/forwarded.xpm"
 #include "pixmaps/group.xpm"
-#include "pixmaps/stock_inbox.h"
 #include "pixmaps/interface.xpm"
 #include "pixmaps/jpilot.xpm"
 #include "pixmaps/ldap.xpm"
 #include "pixmaps/linewrap.xpm"
 #include "pixmaps/mark.xpm"
 #include "pixmaps/new.xpm"
-#include "pixmaps/stock_outbox.h"
 #include "pixmaps/replied.xpm"
 #include "pixmaps/stock_close.xpm"
 #include "pixmaps/stock_down_arrow.xpm"
 #include "pixmaps/stock_exec.xpm"
+#include "pixmaps/stock_inbox.h"
+#include "pixmaps/stock_outbox.h"
 #include "pixmaps/stock_mail.h"
 #include "pixmaps/stock_attach.h"
 #include "pixmaps/stock_mail-compose.h"
@@ -63,16 +63,17 @@
 #include "pixmaps/stock_mail-send.h"
 #include "pixmaps/stock_mail_send_queue.h"
 #include "pixmaps/stock_insert-file.h"
-#include "pixmaps/sylpheed-logo.xpm"
 #include "pixmaps/stock_addressbook.h"
 #include "pixmaps/stock_delete.h"
 #include "pixmaps/stock_delete_16.h"
+#include "pixmaps/stock_spam.h"
+#include "pixmaps/stock_hand-signed.h"
+#include "pixmaps/sylpheed-logo.xpm"
 #include "pixmaps/unread.xpm"
 #include "pixmaps/vcard.xpm"
 #include "pixmaps/online.xpm"
 #include "pixmaps/offline.xpm"
 #include "pixmaps/mail.xpm"
-#include "pixmaps/stock_spam.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -138,7 +139,8 @@ static StockPixmapData pixmaps[] =
 	{offline_xpm	, NULL, NULL},
 	{mail_xpm	, NULL, NULL},
 	{NULL		, NULL, NULL, NULL, stock_delete, sizeof(stock_delete), GTK_STOCK_DELETE, 24},
-	{NULL		, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24}
+	{NULL		, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24},
+	{NULL		, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24}
 };
 
 /* return newly constructed GtkPixmap from GdkPixmap */
