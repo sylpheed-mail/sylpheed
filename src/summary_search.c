@@ -69,10 +69,10 @@ static struct SummarySearchWindow {
 	GtkWidget *case_checkbtn;
 
 	GtkWidget *clear_btn;
+	GtkWidget *close_btn;
 	GtkWidget *all_btn;
 	GtkWidget *prev_btn;
 	GtkWidget *next_btn;
-	GtkWidget *close_btn;
 
 	SummaryView *summaryview;
 } search_window;
@@ -139,10 +139,10 @@ static void summary_search_create(void)
 	GtkWidget *case_checkbtn;
 
 	GtkWidget *confirm_area;
+	GtkWidget *close_btn;
 	GtkWidget *all_btn;
 	GtkWidget *prev_btn;
 	GtkWidget *next_btn;
-	GtkWidget *close_btn;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW (window), _("Search messages"));
@@ -255,6 +255,11 @@ static void summary_search_create(void)
 				  GTK_BUTTONBOX_END);
 	gtk_box_set_spacing(GTK_BOX(confirm_area), 6);
 
+	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(confirm_area), close_btn, TRUE, TRUE, 0);
+	gtk_widget_show(close_btn);
+
 	all_btn = gtk_button_new_from_stock(_("Find all"));
 	GTK_WIDGET_SET_FLAGS(all_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(confirm_area), all_btn, TRUE, TRUE, 0);
@@ -269,11 +274,6 @@ static void summary_search_create(void)
 	GTK_WIDGET_SET_FLAGS(next_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(confirm_area), next_btn, TRUE, TRUE, 0);
 	gtk_widget_show(next_btn);
-
-	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(confirm_area), close_btn, TRUE, TRUE, 0);
-	gtk_widget_show(close_btn);
 
 	gtk_box_pack_start (GTK_BOX (vbox1), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(next_btn);
@@ -300,10 +300,10 @@ static void summary_search_create(void)
 	search_window.body_entry = body_entry;
 	search_window.case_checkbtn = case_checkbtn;
 	search_window.clear_btn = clear_btn;
+	search_window.close_btn = close_btn;
 	search_window.all_btn = all_btn;
 	search_window.prev_btn = prev_btn;
 	search_window.next_btn = next_btn;
-	search_window.close_btn = close_btn;
 }
 
 static void summary_search_execute(gboolean backward, gboolean search_all)

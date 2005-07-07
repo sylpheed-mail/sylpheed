@@ -53,8 +53,8 @@ static struct MessageSearchWindow {
 	GtkWidget *window;
 	GtkWidget *body_entry;
 	GtkWidget *case_checkbtn;
-	GtkWidget *prev_btn;
 	GtkWidget *next_btn;
+	GtkWidget *prev_btn;
 	GtkWidget *close_btn;
 
 	MessageView *messageview;
@@ -99,8 +99,8 @@ static void message_search_create(void)
 	GtkWidget *case_checkbtn;
 
 	GtkWidget *confirm_area;
-	GtkWidget *prev_btn;
 	GtkWidget *next_btn;
+	GtkWidget *prev_btn;
 	GtkWidget *close_btn;
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -144,9 +144,10 @@ static void message_search_create(void)
 			    FALSE, FALSE, 0);
 
 	gtkut_stock_button_set_create(&confirm_area,
-				      &prev_btn, GTK_STOCK_GO_BACK,
 				      &next_btn, GTK_STOCK_GO_FORWARD,
+				      &prev_btn, GTK_STOCK_GO_BACK,
 				      &close_btn, GTK_STOCK_CLOSE);
+	gtkut_box_set_reverse_order(GTK_BOX(confirm_area), FALSE);
 	gtk_widget_show (confirm_area);
 	gtk_box_pack_start (GTK_BOX (vbox1), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(next_btn);
@@ -164,8 +165,8 @@ static void message_search_create(void)
 	search_window.window = window;
 	search_window.body_entry = body_entry;
 	search_window.case_checkbtn = case_checkbtn;
-	search_window.prev_btn = prev_btn;
 	search_window.next_btn = next_btn;
+	search_window.prev_btn = prev_btn;
 	search_window.close_btn = close_btn;
 }
 
