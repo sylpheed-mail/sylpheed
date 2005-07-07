@@ -75,6 +75,7 @@ struct _PrefsDialog
 	GtkWidget *window;
 	GtkWidget *notebook;
 
+	GtkWidget *confirm_area;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *apply_btn;

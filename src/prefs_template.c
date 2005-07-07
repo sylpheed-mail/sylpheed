@@ -42,13 +42,15 @@
 
 static struct Templates {
 	GtkWidget *window;
-	GtkWidget *ok_btn;
 	GtkWidget *clist_tmpls;
 	GtkWidget *entry_name;
 	GtkWidget *entry_to;
 	GtkWidget *entry_cc;
 	GtkWidget *entry_subject;
 	GtkWidget *text_value;
+	GtkWidget *confirm_area;
+	GtkWidget *ok_btn;
+	GtkWidget *cancel_btn;
 } templates;
 
 /* widget creating functions */
@@ -181,8 +183,10 @@ static void prefs_template_window_create(void)
 	scroll2 = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_show(scroll2);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll2),
-				       GTK_POLICY_NEVER,
-				       GTK_POLICY_ALWAYS);
+				       GTK_POLICY_AUTOMATIC,
+				       GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll2),
+					    GTK_SHADOW_IN);
 	gtk_box_pack_start(GTK_BOX(vbox1), scroll2, TRUE, TRUE, 0);
 
 	text_value = gtk_text_view_new();
@@ -259,7 +263,8 @@ static void prefs_template_window_create(void)
 
 	/* ok | cancel */
 	gtkut_stock_button_set_create(&confirm_area, &ok_btn, GTK_STOCK_OK,
-				&cancel_btn, GTK_STOCK_CANCEL, NULL, NULL);
+				      &cancel_btn, GTK_STOCK_CANCEL,
+				      NULL, NULL);
 	gtk_widget_show(confirm_area);
 	gtk_box_pack_end(GTK_BOX(vbox2), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);
@@ -279,13 +284,15 @@ static void prefs_template_window_create(void)
 	address_completion_start(window);
 
 	templates.window = window;
-	templates.ok_btn = ok_btn;
 	templates.clist_tmpls = clist_tmpls;
 	templates.entry_name = entry_name;
 	templates.entry_to = entry_to;
 	templates.entry_cc = entry_cc;
 	templates.entry_subject = entry_subject;
 	templates.text_value = text_value;
+	templates.confirm_area = confirm_area;
+	templates.ok_btn = ok_btn;
+	templates.cancel_btn = cancel_btn;
 }
 
 static void prefs_template_window_setup(void)
@@ -297,6 +304,8 @@ static void prefs_template_window_setup(void)
 	gint row;
 	Template *tmpl;
 
+	gtkut_box_set_reverse_order(GTK_BOX(templates.confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(templates.window));
 	gtk_widget_grab_focus(templates.ok_btn);
 

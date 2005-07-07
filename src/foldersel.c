@@ -54,6 +54,7 @@
 #include "folderview.h"
 #include "inputdialog.h"
 #include "folder.h"
+#include "prefs_common.h"
 
 enum {
 	FOLDERSEL_FOLDERNAME,
@@ -80,6 +81,7 @@ static GdkPixbuf *foldernoselect_pixbuf;
 static GtkWidget *window;
 static GtkWidget *treeview;
 static GtkWidget *entry;
+static GtkWidget *confirm_area;
 static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
 static GtkWidget *new_button;
@@ -186,6 +188,8 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 	} else
 		gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(treeview), 0, 0);
 
+	gtkut_box_set_reverse_order(GTK_BOX(confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(ok_button);
 	gtk_widget_grab_focus(treeview);
 
@@ -217,7 +221,6 @@ static void foldersel_create(void)
 {
 	GtkWidget *vbox;
 	GtkWidget *scrolledwin;
-	GtkWidget *confirm_area;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *renderer;
 	GtkTreeSelection *selection;

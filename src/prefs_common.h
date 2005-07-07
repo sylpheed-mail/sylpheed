@@ -208,21 +208,22 @@ struct _PrefsCommon
 	/* Interface */
 	gboolean sep_folder;
 	gboolean sep_msg;
-	gboolean emulate_emacs;
 	gboolean always_show_msg;
 	gboolean open_unread_on_enter;
 	gboolean mark_as_read_on_new_window;
 	gboolean open_inbox_on_inc;
 	gboolean immediate_exec;
 	RecvDialogMode recv_dialog_mode;
-	gboolean close_recv_dialog;
 	gboolean no_recv_err_panel;
-	gboolean add_address_by_click;
+	gboolean close_recv_dialog;
+	gboolean comply_gnome_hig;
 
 	/* Other */
 	gchar *uri_cmd;
 	gchar *print_cmd;
 	gchar *ext_editor_cmd;
+
+	gboolean add_address_by_click;
 
 	gboolean confirm_on_exit;
 	gboolean clean_on_exit;

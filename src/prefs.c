@@ -504,11 +504,12 @@ void prefs_dialog_create(PrefsDialog *dialog)
 	gtk_box_pack_end (GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);
 
-	dialog->window     = window;
-	dialog->notebook   = notebook;
-	dialog->ok_btn     = ok_btn;
-	dialog->cancel_btn = cancel_btn;
-	dialog->apply_btn  = apply_btn;
+	dialog->window       = window;
+	dialog->notebook     = notebook;
+	dialog->confirm_area = confirm_area;
+	dialog->ok_btn       = ok_btn;
+	dialog->cancel_btn   = cancel_btn;
+	dialog->apply_btn    = apply_btn;
 }
 
 void prefs_dialog_destroy(PrefsDialog *dialog)

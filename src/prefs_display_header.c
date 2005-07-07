@@ -44,6 +44,7 @@
 static struct DisplayHeader {
 	GtkWidget *window;
 
+	GtkWidget *confirm_area;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 
@@ -132,6 +133,8 @@ void prefs_display_header_open(void)
 		prefs_display_header_create();
 	}
 
+	gtkut_box_set_reverse_order(GTK_BOX(dispheader.confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(dispheader.window));
 	gtk_widget_grab_focus(dispheader.ok_btn);
 
@@ -145,9 +148,9 @@ static void prefs_display_header_create(void)
 	GtkWidget *window;
 	GtkWidget *vbox;
 	GtkWidget *btn_hbox;
+	GtkWidget *confirm_area;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
-	GtkWidget *confirm_area;
 
 	GtkWidget *vbox1;
 
@@ -341,6 +344,8 @@ static void prefs_display_header_create(void)
 	gtk_widget_show_all(window);
 
 	dispheader.window        = window;
+
+	dispheader.confirm_area  = confirm_area;
 	dispheader.ok_btn        = ok_btn;
 	dispheader.cancel_btn    = cancel_btn;
 

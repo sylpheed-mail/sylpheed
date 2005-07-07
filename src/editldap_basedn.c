@@ -56,6 +56,7 @@ static struct _LDAPEdit_basedn {
 	GtkWidget *port_label;
 	GtkWidget *basedn_entry;
 	GtkWidget *basedn_list;
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *statusbar;
@@ -241,6 +242,7 @@ static void edit_ldap_bdn_create(void) {
 	ldapedit_basedn.port_label = port_label;
 	ldapedit_basedn.basedn_entry = basedn_entry;
 	ldapedit_basedn.basedn_list  = basedn_list;
+	ldapedit_basedn.hbbox      = hbbox;
 	ldapedit_basedn.ok_btn     = ok_btn;
 	ldapedit_basedn.cancel_btn = cancel_btn;
 	ldapedit_basedn.statusbar  = statusbar;
@@ -305,6 +307,8 @@ gchar *edit_ldap_basedn_selection( const gchar *hostName, const gint port, gchar
 
 	ldapedit_basedn_cancelled = FALSE;
 	if( ! ldapedit_basedn.window ) edit_ldap_bdn_create();
+	gtkut_box_set_reverse_order(GTK_BOX(ldapedit_basedn.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(ldapedit_basedn.ok_btn);
 	gtk_widget_show(ldapedit_basedn.window);
 	manage_window_set_transient(GTK_WINDOW(ldapedit_basedn.window));

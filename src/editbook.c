@@ -57,6 +57,7 @@ static struct _AddrBookEdit_Dlg {
 	GtkWidget *window;
 	GtkWidget *name_entry;
 	GtkWidget *file_label;
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *check_btn;
@@ -248,6 +249,7 @@ static void addressbook_edit_book_create( gboolean *cancelled ) {
 	addrbookedit_dlg.window     = window;
 	addrbookedit_dlg.name_entry = name_entry;
 	addrbookedit_dlg.file_label = file_label;
+	addrbookedit_dlg.hbbox      = hbbox;
 	addrbookedit_dlg.ok_btn     = ok_btn;
 	addrbookedit_dlg.cancel_btn = cancel_btn;
 	addrbookedit_dlg.check_btn  = check_btn;
@@ -267,6 +269,8 @@ AdapterDSource *addressbook_edit_book( AddressIndex *addrIndex, AdapterDSource *
 
 	if (!addrbookedit_dlg.window)
 		addressbook_edit_book_create(&cancelled);
+	gtkut_box_set_reverse_order(GTK_BOX(addrbookedit_dlg.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(addrbookedit_dlg.ok_btn);
 	gtk_widget_grab_focus(addrbookedit_dlg.name_entry);
 	gtk_widget_show(addrbookedit_dlg.window);

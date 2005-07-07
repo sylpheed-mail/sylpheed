@@ -94,6 +94,7 @@ void gtkut_widget_set_small_font_size	(GtkWidget	*widget);
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);
 
+void gtkut_stock_button_set_set_reverse	(gboolean	 reverse);
 void gtkut_stock_button_set_create	(GtkWidget	**bbox,
 					 GtkWidget	**button1,
 					 const gchar	 *label1,
@@ -101,6 +102,9 @@ void gtkut_stock_button_set_create	(GtkWidget	**bbox,
 					 const gchar	 *label2,
 					 GtkWidget	**button3,
 					 const gchar	 *label3);
+
+void gtkut_box_set_reverse_order	(GtkBox		*box,
+					 gboolean	 reverse);
 
 ComboButton *gtkut_combo_button_create	(GtkWidget		*button,
 					 GtkItemFactoryEntry	*entries,

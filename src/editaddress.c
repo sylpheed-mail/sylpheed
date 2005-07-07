@@ -62,6 +62,7 @@ static struct _AddressEdit_dlg {
 static struct _PersonEdit_dlg {
 	GtkWidget *window;
 	GtkWidget *notebook;
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *statusbar;
@@ -691,6 +692,7 @@ static void addressbook_edit_person_dialog_create( gboolean *cancelled ) {
 
 	personeditdlg.window     = window;
 	personeditdlg.notebook   = notebook;
+	personeditdlg.hbbox      = hbbox;
 	personeditdlg.ok_btn     = ok_btn;
 	personeditdlg.cancel_btn = cancel_btn;
 	personeditdlg.statusbar  = statusbar;
@@ -1098,6 +1100,8 @@ ItemPerson *addressbook_edit_person( AddressBookFile *abf, ItemFolder *parent, I
 
 	if (!personeditdlg.window)
 		addressbook_edit_person_create(&cancelled);
+	gtkut_box_set_reverse_order(GTK_BOX(personeditdlg.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(personeditdlg.ok_btn);
 	gtk_widget_grab_focus(personeditdlg.entry_name);
 	gtk_widget_show(personeditdlg.window);

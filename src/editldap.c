@@ -62,6 +62,7 @@
 static struct _LDAPEdit {
 	GtkWidget *window;
 	GtkWidget *notebook;
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *statusbar;
@@ -263,6 +264,7 @@ static void addressbook_edit_ldap_dialog_create( gboolean *cancelled ) {
 
 	ldapedit.window     = window;
 	ldapedit.notebook   = notebook;
+	ldapedit.hbbox      = hbbox;
 	ldapedit.ok_btn     = ok_btn;
 	ldapedit.cancel_btn = cancel_btn;
 	ldapedit.statusbar  = statusbar;
@@ -514,6 +516,8 @@ AdapterDSource *addressbook_edit_ldap( AddressIndex *addrIndex, AdapterDSource *
 
 	if (!ldapedit.window)
 		addressbook_edit_ldap_create(&cancelled);
+	gtkut_box_set_reverse_order(GTK_BOX(ldapedit.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_notebook_set_current_page( GTK_NOTEBOOK(ldapedit.notebook), 0 );
 	gtk_widget_grab_focus(ldapedit.ok_btn);
 	gtk_widget_grab_focus(ldapedit.entry_name);

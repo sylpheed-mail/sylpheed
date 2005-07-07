@@ -182,6 +182,7 @@ static struct Interface {
 	GtkWidget *optmenu_recvdialog;
 	GtkWidget *checkbtn_no_recv_err_panel;
 	GtkWidget *checkbtn_close_recv_dialog;
+	GtkWidget *checkbtn_comply_gnome_hig;
 } interface;
 
 static struct Other {
@@ -637,8 +638,6 @@ static PrefParam param[] = {
 	{"separate_message", "FALSE", &prefs_common.sep_msg, P_BOOL,
 	 NULL, NULL, NULL},
 
-	{"emulate_emacs", "FALSE", &prefs_common.emulate_emacs, P_BOOL,
-	 NULL, NULL, NULL},
 	{"always_show_message_when_selected", "FALSE",
 	 &prefs_common.always_show_msg,
 	 P_BOOL, &interface.checkbtn_always_show_msg,
@@ -665,6 +664,10 @@ static PrefParam param[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"close_receive_dialog", "TRUE", &prefs_common.close_recv_dialog,
 	 P_BOOL, &interface.checkbtn_close_recv_dialog,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+
+	{"comply_gnome_hig", "TRUE", &prefs_common.comply_gnome_hig, P_BOOL,
+	 &interface.checkbtn_comply_gnome_hig,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Other */
@@ -814,6 +817,9 @@ void prefs_common_read_config(void)
 
 	prefs_common.online_mode = TRUE;
 
+	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
+	prefs_common_junk_filter_list_set();
+
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, COMMAND_HISTORY,
 			   NULL);
 	if ((fp = fopen(path, "rb")) == NULL) {
@@ -832,8 +838,6 @@ void prefs_common_read_config(void)
 
 	prefs_common.mime_open_cmd_history =
 		g_list_reverse(prefs_common.mime_open_cmd_history);
-
-	prefs_common_junk_filter_list_set();
 }
 
 void prefs_common_write_config(void)
@@ -870,6 +874,8 @@ void prefs_common_open(void)
 		prefs_common_create();
 	}
 
+	gtkut_box_set_reverse_order(GTK_BOX(dialog.confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(dialog.window));
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(dialog.notebook), 0);
 	gtk_widget_grab_focus(dialog.ok_btn);
@@ -2182,6 +2188,7 @@ static void prefs_interface_create(void)
 	GtkWidget *menuitem;
 	GtkWidget *checkbtn_no_recv_err_panel;
 	GtkWidget *checkbtn_close_recv_dialog;
+	GtkWidget *checkbtn_comply_gnome_hig;
 
 	GtkWidget *button_keybind;
 
@@ -2264,6 +2271,9 @@ static void prefs_interface_create(void)
 	PACK_CHECK_BUTTON (vbox_recv, checkbtn_close_recv_dialog,
 			   _("Close receive dialog when finished"));
 
+	PACK_CHECK_BUTTON (vbox1, checkbtn_comply_gnome_hig,
+			   _("Make the order of buttons comply with GNOME HIG"));
+
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
@@ -2283,6 +2293,8 @@ static void prefs_interface_create(void)
 	interface.optmenu_recvdialog         = optmenu_recvdialog;
 	interface.checkbtn_no_recv_err_panel = checkbtn_no_recv_err_panel;
 	interface.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
+
+	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
 }
 
 static void prefs_other_create(void)
@@ -3783,6 +3795,7 @@ static void prefs_common_apply(void)
 {
 	prefs_set_data_from_dialog(param);
 	prefs_common_junk_filter_list_set();
+	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
 	main_window_reflect_prefs_all();
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
 	prefs_common_write_config();

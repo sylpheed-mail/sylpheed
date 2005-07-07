@@ -38,6 +38,7 @@
 #include "prefs.h"
 #include "prefs_account.h"
 #include "prefs_customheader.h"
+#include "prefs_common.h"
 #include "account.h"
 #include "mainwindow.h"
 #include "manage_window.h"
@@ -632,6 +633,8 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 		prefs_account_create();
 	}
 
+	gtkut_box_set_reverse_order(GTK_BOX(dialog.confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(dialog.window));
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(dialog.notebook), 0);
 	gtk_widget_grab_focus(dialog.ok_btn);

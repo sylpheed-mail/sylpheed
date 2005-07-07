@@ -47,6 +47,7 @@ static struct Actions
 {
 	GtkWidget *window;
 
+	GtkWidget *confirm_area;
 	GtkWidget *ok_btn;
 
 	GtkWidget *name_entry;
@@ -99,6 +100,8 @@ void prefs_actions_open(MainWindow *mainwin)
 	if (!actions.window)
 		prefs_actions_create(mainwin);
 
+	gtkut_box_set_reverse_order(GTK_BOX(actions.confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(actions.window));
 	gtk_widget_grab_focus(actions.ok_btn);
 
@@ -318,6 +321,8 @@ static void prefs_actions_create(MainWindow *mainwin)
 	gtk_widget_show(window);
 
 	actions.window = window;
+
+	actions.confirm_area = confirm_area;
 	actions.ok_btn = ok_btn;
 
 	actions.name_entry = name_entry;

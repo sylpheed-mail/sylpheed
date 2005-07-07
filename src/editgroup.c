@@ -66,6 +66,7 @@ typedef enum {
 
 static struct _GroupEdit_dlg {
 	GtkWidget *window;
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *statusbar;
@@ -401,6 +402,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 			 G_CALLBACK(edit_group_list_group_button), NULL);
 
 	groupeditdlg.window     = window;
+	groupeditdlg.hbbox      = hbbox;
 	groupeditdlg.ok_btn     = ok_btn;
 	groupeditdlg.cancel_btn = cancel_btn;
 	groupeditdlg.statusbar  = statusbar;
@@ -445,6 +447,8 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 
 	if (!groupeditdlg.window)
 		addressbook_edit_group_create(&cancelled);
+	gtkut_box_set_reverse_order(GTK_BOX(groupeditdlg.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(groupeditdlg.ok_btn);
 	gtk_widget_grab_focus(groupeditdlg.entry_name);
 	gtk_widget_show(groupeditdlg.window);

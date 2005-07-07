@@ -64,6 +64,7 @@ static struct _JPilotEdit {
 	GtkWidget *file_entry;
 	GtkWidget *custom_check[JPILOT_NUM_CUSTOM_LABEL];
 	GtkWidget *custom_label[JPILOT_NUM_CUSTOM_LABEL];
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *statusbar;
@@ -373,6 +374,7 @@ static void addressbook_edit_jpilot_create( gboolean *cancelled ) {
 	jpilotedit.window     = window;
 	jpilotedit.name_entry = name_entry;
 	jpilotedit.file_entry = file_entry;
+	jpilotedit.hbbox      = hbbox;
 	jpilotedit.ok_btn     = ok_btn;
 	jpilotedit.cancel_btn = cancel_btn;
 	jpilotedit.statusbar  = statusbar;
@@ -393,6 +395,8 @@ AdapterDSource *addressbook_edit_jpilot( AddressIndex *addrIndex, AdapterDSource
 
 	if( ! jpilotedit.window )
 		addressbook_edit_jpilot_create(&cancelled);
+	gtkut_box_set_reverse_order(GTK_BOX(jpilotedit.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(jpilotedit.ok_btn);
 	gtk_widget_grab_focus(jpilotedit.name_entry);
 	gtk_widget_show(jpilotedit.window);

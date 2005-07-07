@@ -41,6 +41,7 @@
 #include "inputdialog.h"
 #include "manage_window.h"
 #include "inc.h"
+#include "prefs_common.h"
 #include "gtkutils.h"
 #include "utils.h"
 
@@ -62,6 +63,7 @@ static GtkWidget *dialog;
 static GtkWidget *msg_label;
 static GtkWidget *entry;
 static GtkWidget *combo;
+static GtkWidget *confirm_area;
 static GtkWidget *ok_button;
 
 static void input_dialog_create	(void);
@@ -163,7 +165,6 @@ static void input_dialog_create(void)
 {
 	GtkWidget *vbox;
 	GtkWidget *hbox;
-	GtkWidget *confirm_area;
 	GtkWidget *cancel_button;
 
 	dialog = gtk_dialog_new();
@@ -214,7 +215,6 @@ static void input_dialog_create(void)
 	g_signal_connect(G_OBJECT(cancel_button), "clicked",
 			 G_CALLBACK(cancel_clicked), NULL);
 
-
 	gtk_widget_show_all(GTK_DIALOG(dialog)->vbox);
 }
 
@@ -228,6 +228,8 @@ static gchar *input_dialog_open(const gchar *title, const gchar *message,
 	if (!dialog)
 		input_dialog_create();
 
+	gtkut_box_set_reverse_order(GTK_BOX(confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	input_dialog_set(title, message, default_string);
 	gtk_widget_show(dialog);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);

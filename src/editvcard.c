@@ -56,6 +56,7 @@ static struct _VCardEdit {
 	GtkWidget *window;
 	GtkWidget *name_entry;
 	GtkWidget *file_entry;
+	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	GtkWidget *statusbar;
@@ -266,6 +267,7 @@ static void addressbook_edit_vcard_create( gboolean *cancelled ) {
 	vcardedit.window     = window;
 	vcardedit.name_entry = name_entry;
 	vcardedit.file_entry = file_entry;
+	vcardedit.hbbox      = hbbox;
 	vcardedit.ok_btn     = ok_btn;
 	vcardedit.cancel_btn = cancel_btn;
 	vcardedit.statusbar  = statusbar;
@@ -282,6 +284,8 @@ AdapterDSource *addressbook_edit_vcard( AddressIndex *addrIndex, AdapterDSource 
 
 	if( ! vcardedit.window )
 		addressbook_edit_vcard_create(&cancelled);
+	gtkut_box_set_reverse_order(GTK_BOX(vcardedit.hbbox),
+				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(vcardedit.ok_btn);
 	gtk_widget_grab_focus(vcardedit.name_entry);
 	gtk_widget_show(vcardedit.window);

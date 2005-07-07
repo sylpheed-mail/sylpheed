@@ -26,6 +26,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdk.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtkbox.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkarrow.h>
@@ -110,6 +111,13 @@ void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)
 	color->blue  = (int) (((gdouble) (rgbvalue & 0x0000ff)        / 255.0) * 65535.0);
 }
 
+static gboolean reverse_order = FALSE;
+
+void gtkut_stock_button_set_set_reverse(gboolean reverse)
+{
+	reverse_order = reverse;
+}
+
 void gtkut_stock_button_set_create(GtkWidget **bbox,
 				   GtkWidget **button1, const gchar *label1,
 				   GtkWidget **button2, const gchar *label2,
@@ -120,26 +128,58 @@ void gtkut_stock_button_set_create(GtkWidget **bbox,
 
 	*bbox = gtk_hbutton_box_new();
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(*bbox), GTK_BUTTONBOX_END);
-	gtk_box_set_spacing(GTK_BOX(*bbox), 5);
-
-	*button1 = gtk_button_new_from_stock(label1);
-	GTK_WIDGET_SET_FLAGS(*button1, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(*bbox), *button1, TRUE, TRUE, 0);
-	gtk_widget_show(*button1);
-
-	if (button2) {
-		*button2 = gtk_button_new_from_stock(label2);
-		GTK_WIDGET_SET_FLAGS(*button2, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(*bbox), *button2, TRUE, TRUE, 0);
-		gtk_widget_show(*button2);
-	}
+	gtk_box_set_spacing(GTK_BOX(*bbox), 6);
 
 	if (button3) {
 		*button3 = gtk_button_new_from_stock(label3);
 		GTK_WIDGET_SET_FLAGS(*button3, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(*bbox), *button3, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(*bbox), *button3, FALSE, FALSE, 0);
 		gtk_widget_show(*button3);
 	}
+
+	if (button2) {
+		*button2 = gtk_button_new_from_stock(label2);
+		GTK_WIDGET_SET_FLAGS(*button2, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(GTK_BOX(*bbox), *button2, FALSE, FALSE, 0);
+		gtk_widget_show(*button2);
+	}
+
+	*button1 = gtk_button_new_from_stock(label1);
+	GTK_WIDGET_SET_FLAGS(*button1, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(*bbox), *button1, FALSE, FALSE, 0);
+	gtk_widget_show(*button1);
+
+	if (reverse_order)
+		gtkut_box_set_reverse_order(GTK_BOX(*bbox), TRUE);
+}
+
+void gtkut_box_set_reverse_order(GtkBox *box, gboolean reverse)
+{
+	GList *cur;
+	GList *new_order = NULL;
+	gint pos = 0;
+	gboolean is_reversed;
+
+	g_return_if_fail(box != NULL);
+
+	is_reversed = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(box), "reverse-order"));
+	if (is_reversed == reverse)
+		return;
+	g_object_set_data(G_OBJECT(box), "reverse-order",
+			  GINT_TO_POINTER(reverse));
+
+	for (cur = box->children; cur != NULL; cur = cur->next) {
+		GtkBoxChild *cinfo = cur->data;
+		new_order = g_list_prepend(new_order, cinfo->widget);
+	}
+
+	for (cur = new_order; cur != NULL; cur = cur->next) {
+		GtkWidget *child = cur->data;
+		gtk_box_reorder_child(box, child, pos++);
+	}
+
+	g_list_free(new_order);
 }
 
 static void combo_button_size_request(GtkWidget *widget,

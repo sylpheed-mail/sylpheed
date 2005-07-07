@@ -58,6 +58,7 @@ static struct _SummaryColumnDialog
 
 	GtkWidget *default_btn;
 
+	GtkWidget *confirm_area;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 
@@ -117,6 +118,8 @@ void prefs_summary_column_open(void)
 	if (!summary_col.window)
 		prefs_summary_column_create();
 
+	gtkut_box_set_reverse_order(GTK_BOX(summary_col.confirm_area),
+				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(summary_col.window));
 	gtk_widget_grab_focus(summary_col.ok_btn);
 
@@ -316,15 +319,16 @@ static void prefs_summary_column_create(void)
 	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
 			 G_CALLBACK(prefs_summary_column_cancel), NULL);
 
-	summary_col.window      = window;
-	summary_col.stock_clist = stock_clist;
-	summary_col.shown_clist = shown_clist;
-	summary_col.add_btn     = add_btn;
-	summary_col.remove_btn  = remove_btn;
-	summary_col.up_btn      = up_btn;
-	summary_col.down_btn    = down_btn;
-	summary_col.ok_btn      = ok_btn;
-	summary_col.cancel_btn  = cancel_btn;
+	summary_col.window       = window;
+	summary_col.stock_clist  = stock_clist;
+	summary_col.shown_clist  = shown_clist;
+	summary_col.add_btn      = add_btn;
+	summary_col.remove_btn   = remove_btn;
+	summary_col.up_btn       = up_btn;
+	summary_col.down_btn     = down_btn;
+	summary_col.confirm_area = confirm_area;
+	summary_col.ok_btn       = ok_btn;
+	summary_col.cancel_btn   = cancel_btn;
 }
 
 SummaryColumnState *prefs_summary_column_get_config(void)
