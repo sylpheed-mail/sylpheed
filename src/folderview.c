@@ -2122,8 +2122,9 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 		(_("All folders and messages under `%s' will be permanently deleted.\n"
 		   "Recovery will not be possible.\n\n"
 		   "Do you really want to delete?"), name);
-	avalue = alertpanel(_("Delete folder"), message,
-			    _("Yes"), _("+No"), NULL);
+	avalue = alertpanel_full(_("Delete folder"), message,
+				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	if (avalue != G_ALERTDEFAULT) return;
 
@@ -2218,8 +2219,9 @@ static void folderview_remove_mailbox_cb(FolderView *folderview, guint action,
 	message = g_strdup_printf
 		(_("Really remove the mailbox `%s' ?\n"
 		   "(The messages are NOT deleted from the disk)"), name);
-	avalue = alertpanel(_("Remove mailbox"), message,
-			    _("Yes"), _("+No"), NULL);
+	avalue = alertpanel_full(_("Remove mailbox"), message,
+				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	g_free(name);
 	if (avalue != G_ALERTDEFAULT) return;
@@ -2264,8 +2266,9 @@ static void folderview_rm_imap_server_cb(FolderView *folderview, guint action,
 
 	name = trim_string(item->folder->name, 32);
 	message = g_strdup_printf(_("Really delete IMAP4 account `%s'?"), name);
-	avalue = alertpanel(_("Delete IMAP4 account"), message,
-			    _("Yes"), _("+No"), NULL);
+	avalue = alertpanel_full(_("Delete IMAP4 account"), message,
+				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	g_free(name);
 
@@ -2406,8 +2409,9 @@ static void folderview_rm_news_group_cb(FolderView *folderview, guint action,
 
 	name = trim_string_before(item->path, 32);
 	message = g_strdup_printf(_("Really delete newsgroup `%s'?"), name);
-	avalue = alertpanel(_("Delete newsgroup"), message,
-			    _("Yes"), _("+No"), NULL);
+	avalue = alertpanel_full(_("Delete newsgroup"), message,
+				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	g_free(name);
 	if (avalue != G_ALERTDEFAULT) return;
@@ -2452,8 +2456,9 @@ static void folderview_rm_news_server_cb(FolderView *folderview, guint action,
 
 	name = trim_string(item->folder->name, 32);
 	message = g_strdup_printf(_("Really delete news account `%s'?"), name);
-	avalue = alertpanel(_("Delete news account"), message,
-			    _("Yes"), _("+No"), NULL);
+	avalue = alertpanel_full(_("Delete news account"), message,
+				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	g_free(name);
 

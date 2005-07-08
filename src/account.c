@@ -811,8 +811,10 @@ static void account_delete(void)
 		   _("Do you really want to delete the account '%s'?"),
 		   ac_prefs->account_name ? ac_prefs->account_name :
 		   _("(Untitled)"));
-	if (alertpanel(_("Delete account"), buf,
-		       _("Yes"), _("+No"), NULL) != G_ALERTDEFAULT)
+	if (alertpanel_full(_("Delete account"), buf,
+			    ALERT_QUESTION, G_ALERTALTERNATE, FALSE,
+			    GTK_STOCK_YES, GTK_STOCK_NO, NULL)
+	    != G_ALERTDEFAULT)
 		return;
 
 	if (ac_prefs->folder) {

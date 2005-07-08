@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-07 19:19+0900\n"
+"POT-Creation-Date: 2005-07-08 16:18+0900\n"
 "PO-Revision-Date: 2004-12-04 08:24+0800\n"
 "Last-Translator: Frank J. J. Weng <franklin@goodhorse.idv.tw>\n"
 "Language-Team: zh-l10n <zh-l10n@linux.org.tw>\n"
@@ -82,10 +82,10 @@ msgstr ""
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
 #: src/account.c:691 src/addressadd.c:192 src/addressbook.c:490
-#: src/compose.c:4007 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4013 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:304 src/editldap.c:307 src/editvcard.c:217
-#: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:171
+#: src/mimeview.c:201 src/prefs_filter.c:258 src/prefs_folder_item.c:170
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "名稱"
@@ -119,18 +119,6 @@ msgstr "無標題"
 #: src/account.c:814
 msgid "Delete account"
 msgstr "刪除帳號"
-
-#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5121
-#: src/folderview.c:2126 src/folderview.c:2222 src/folderview.c:2268
-#: src/folderview.c:2410 src/folderview.c:2456
-msgid "Yes"
-msgstr "是的"
-
-#: src/account.c:815 src/compose.c:2675 src/compose.c:2746 src/compose.c:5121
-#: src/folderview.c:2126 src/folderview.c:2222 src/folderview.c:2268
-#: src/folderview.c:2410 src/folderview.c:2456
-msgid "+No"
-msgstr "+不要"
 
 #: src/action.c:329
 #, c-format
@@ -231,7 +219,7 @@ msgstr "使用者設定之命令參數"
 msgid "Add Address to Book"
 msgstr "將位址加入位址簿"
 
-#: src/addressadd.c:202 src/compose.c:4439 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4445 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "位址"
@@ -371,7 +359,7 @@ msgstr "/刪除(_D)"
 msgid "E-Mail address"
 msgstr "E-Mail位址"
 
-#: src/addressbook.c:495 src/compose.c:4440 src/prefs_common.c:2399
+#: src/addressbook.c:495 src/compose.c:4446 src/prefs_common.c:2399
 msgid "Address book"
 msgstr "位址簿"
 
@@ -398,16 +386,16 @@ msgstr "新增"
 msgid "Lookup"
 msgstr "尋找"
 
-#: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:309
+#: src/addressbook.c:645 src/headerview.c:55 src/prefs_folder_item.c:308
 #: src/prefs_template.c:174 src/summary_search.c:221
 msgid "To:"
 msgstr "收件人"
 
-#: src/addressbook.c:649 src/prefs_folder_item.c:326 src/prefs_template.c:176
+#: src/addressbook.c:649 src/prefs_folder_item.c:325 src/prefs_template.c:176
 msgid "Cc:"
 msgstr "副本"
 
-#: src/addressbook.c:653 src/prefs_folder_item.c:337
+#: src/addressbook.c:653 src/prefs_folder_item.c:336
 msgid "Bcc:"
 msgstr "密件副本"
 
@@ -576,23 +564,23 @@ msgstr "共用位址紀錄"
 msgid "Personal address"
 msgstr "私人位址紀錄"
 
-#: src/alertpanel.c:123 src/compose.c:5121 src/main.c:483
+#: src/alertpanel.c:138 src/compose.c:5127 src/main.c:483
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:136 src/compose.c:2746 src/main.c:280 src/textview.c:2071
+#: src/alertpanel.c:151 src/main.c:280 src/textview.c:2071
 msgid "Warning"
 msgstr "警告"
 
-#: src/alertpanel.c:149 src/compose.c:2675 src/inc.c:570
+#: src/alertpanel.c:164 src/inc.c:570
 msgid "Error"
 msgstr "錯誤"
 
-#: src/alertpanel.c:190
+#: src/alertpanel.c:206
 msgid "Creating alert panel dialog...\n"
 msgstr "產生警告對話框中... \n"
 
-#: src/alertpanel.c:269
+#: src/alertpanel.c:285
 msgid "Show this message next time"
 msgstr "下次再提醒我"
 
@@ -627,7 +615,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:286 src/summaryview.c:4064
+#: src/colorlabel.c:280 src/prefs_folder_item.c:285 src/summaryview.c:4064
 msgid "None"
 msgstr "無"
 
@@ -984,10 +972,10 @@ msgstr "新郵件%s"
 msgid "Recipient is not specified."
 msgstr "沒有指定收件人。"
 
-#: src/compose.c:2415 src/compose.c:4360 src/mainwindow.c:2224
-#: src/prefs_account.c:718 src/prefs_common.c:943
-msgid "Send"
-msgstr "送出"
+#: src/compose.c:2415
+#, fuzzy
+msgid "Empty subject"
+msgstr "主題"
 
 #: src/compose.c:2416
 msgid "Subject is empty. Send it anyway?"
@@ -1019,7 +1007,7 @@ msgstr "無法將信件送至寄件夾中。"
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "無法找到所指定的 key id '%s'"
 
-#: src/compose.c:2638 src/compose.c:2888 src/compose.c:2951 src/compose.c:3071
+#: src/compose.c:2638 src/compose.c:2894 src/compose.c:2957 src/compose.c:3077
 #: src/utils.c:2246
 msgid "can't change file mode\n"
 msgstr "無法改變檔案型態 \n"
@@ -1028,12 +1016,18 @@ msgstr "無法改變檔案型態 \n"
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
+"\n"
 "Send it as %s anyway?"
 msgstr ""
 "無法轉換將信件的編碼設定由 %s 轉換為 %s。\n"
 "仍舊要傳送嗎？"
 
-#: src/compose.c:2742
+#: src/compose.c:2676
+#, fuzzy
+msgid "Code conversion error"
+msgstr "轉換位址簿格式時發生錯誤"
+
+#: src/compose.c:2745
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1042,146 +1036,155 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:3031
+#: src/compose.c:2749
+msgid "Line length limit"
+msgstr ""
+
+#: src/compose.c:3037
 msgid "can't remove the old message\n"
 msgstr "無法刪除原有的舊信件。\n"
 
-#: src/compose.c:3049
+#: src/compose.c:3055
 msgid "queueing message...\n"
 msgstr "送進暫存資料夾中...\n"
 
-#: src/compose.c:3131
+#: src/compose.c:3137
 msgid "can't find queue folder\n"
 msgstr "找不到暫存資料夾。\n"
 
-#: src/compose.c:3138
+#: src/compose.c:3144
 msgid "can't queue the message\n"
 msgstr "無法放進暫存資料夾。\n"
 
-#: src/compose.c:3718
+#: src/compose.c:3724
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "產生信件的編號：%s\n"
 
-#: src/compose.c:3827
+#: src/compose.c:3833
 msgid "Creating compose window...\n"
 msgstr "產生新郵件...\n"
 
-#: src/compose.c:3875 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3881 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "來自："
 
-#: src/compose.c:3947
+#: src/compose.c:3953
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/工具(_T)/PGP 簽章(_g)"
 
-#: src/compose.c:3950
+#: src/compose.c:3956
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/工具(_T)/PGP 加密(_E)"
 
-#: src/compose.c:3988 src/compose.c:4912
+#: src/compose.c:3994 src/compose.c:4918
 msgid "MIME type"
 msgstr "MIME 型態"
 
 #. S_COL_DATE
-#: src/compose.c:3997 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/compose.c:4003 src/mimeview.c:192 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:75 src/select-keys.c:317 src/summaryview.c:4209
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:4361
+#: src/compose.c:4366 src/mainwindow.c:2224 src/prefs_account.c:718
+#: src/prefs_common.c:943
+msgid "Send"
+msgstr "送出"
+
+#: src/compose.c:4367
 msgid "Send message"
 msgstr "送出信件"
 
-#: src/compose.c:4369
+#: src/compose.c:4375
 msgid "Send later"
 msgstr "待會再送出"
 
-#: src/compose.c:4370
+#: src/compose.c:4376
 msgid "Put into queue folder and send later"
 msgstr "放到寄件夾中待會再送出"
 
-#: src/compose.c:4378
+#: src/compose.c:4384
 msgid "Draft"
 msgstr "草稿"
 
-#: src/compose.c:4379
+#: src/compose.c:4385
 msgid "Save to draft folder"
 msgstr "儲存至草稿資料夾"
 
-#: src/compose.c:4389 src/compose.c:5717
+#: src/compose.c:4395 src/compose.c:5726
 msgid "Insert"
 msgstr "插入"
 
-#: src/compose.c:4390
+#: src/compose.c:4396
 msgid "Insert file"
 msgstr "插入檔案"
 
-#: src/compose.c:4398
+#: src/compose.c:4404
 msgid "Attach"
 msgstr "附加"
 
-#: src/compose.c:4399
+#: src/compose.c:4405
 msgid "Attach file"
 msgstr "附加檔案"
 
 #. signature
-#: src/compose.c:4409 src/prefs_account.c:1390 src/prefs_common.c:1352
+#: src/compose.c:4415 src/prefs_account.c:1390 src/prefs_common.c:1352
 msgid "Signature"
 msgstr "簽名"
 
-#: src/compose.c:4410
+#: src/compose.c:4416
 msgid "Insert signature"
 msgstr "插入簽名"
 
-#: src/compose.c:4419 src/prefs_common.c:1374 src/prefs_common.c:2378
+#: src/compose.c:4425 src/prefs_common.c:1374 src/prefs_common.c:2378
 msgid "Editor"
 msgstr "編輯器"
 
-#: src/compose.c:4420
+#: src/compose.c:4426
 msgid "Edit with external editor"
 msgstr "使用其他的編輯器"
 
-#: src/compose.c:4428
+#: src/compose.c:4434
 msgid "Linewrap"
 msgstr "切割"
 
-#: src/compose.c:4429
+#: src/compose.c:4435
 msgid "Wrap all long lines"
 msgstr "切割所有過長的文字行"
 
-#: src/compose.c:4808
+#: src/compose.c:4814
 msgid "Invalid MIME type."
 msgstr "不合法的 MIME 型態"
 
-#: src/compose.c:4826
+#: src/compose.c:4832
 msgid "File doesn't exist or is empty."
 msgstr "檔案不存在, 或檔案是空的"
 
-#: src/compose.c:4894
+#: src/compose.c:4900
 msgid "Properties"
 msgstr "內容"
 
-#: src/compose.c:4914
+#: src/compose.c:4920
 msgid "Encoding"
 msgstr "編碼"
 
-#: src/compose.c:4937 src/prefs_folder_item.c:184
+#: src/compose.c:4943 src/prefs_folder_item.c:183
 msgid "Path"
 msgstr "路徑"
 
-#: src/compose.c:4938
+#: src/compose.c:4944
 msgid "File name"
 msgstr "檔名"
 
-#: src/compose.c:5092
+#: src/compose.c:5098
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外用編輯器的命令是錯誤的：`%s'\n"
 
-#: src/compose.c:5118
+#: src/compose.c:5124
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1192,72 +1195,70 @@ msgstr ""
 "要強迫結束該行程嗎？\n"
 "行程的群組代碼是：%d"
 
-#: src/compose.c:5131
+#: src/compose.c:5139
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "結束群組代碼為 %d 的行程"
 
-#: src/compose.c:5132
+#: src/compose.c:5140
 #, c-format
 msgid "Temporary file: %s"
 msgstr "暫存檔案：%s"
 
-#: src/compose.c:5156
+#: src/compose.c:5164
 msgid "Compose: input from monitoring process\n"
 msgstr ""
 
 #. failed
-#: src/compose.c:5197
+#: src/compose.c:5205
 msgid "Couldn't exec external editor\n"
 msgstr "無法執行外部編輯器。\n"
 
-#: src/compose.c:5201
+#: src/compose.c:5209
 msgid "Couldn't write to file\n"
 msgstr "無法寫入檔案。\n"
 
-#: src/compose.c:5203
+#: src/compose.c:5211
 msgid "Pipe read failed\n"
 msgstr "Pipe 讀取失敗。\n"
 
-#: src/compose.c:5508 src/compose.c:5516 src/compose.c:5522
+#: src/compose.c:5516 src/compose.c:5524 src/compose.c:5530
 msgid "Can't queue the message."
 msgstr "無法放進暫存資料夾。"
 
-#: src/compose.c:5613
+#: src/compose.c:5621
 #, fuzzy
 msgid "Select files"
 msgstr "選擇檔案"
 
-#: src/compose.c:5635
+#: src/compose.c:5643
 msgid "Select file"
 msgstr "選擇檔案"
 
-#: src/compose.c:5670
-msgid "Discard message"
-msgstr "放棄信件"
+#: src/compose.c:5678
+#, fuzzy
+msgid "Save message"
+msgstr "送出信件"
 
-#: src/compose.c:5671
-msgid "This message has been modified. discard it?"
+#: src/compose.c:5679
+#, fuzzy
+msgid "This message has been modified. Save it to draft folder?"
 msgstr "信件已被修改過。要放棄它嗎？"
 
-#: src/compose.c:5672
-msgid "Discard"
-msgstr "放棄"
+#: src/compose.c:5681
+msgid "Close _without saving"
+msgstr ""
 
-#: src/compose.c:5672
-msgid "to Draft"
-msgstr "放入草稿資料夾"
-
-#: src/compose.c:5714
+#: src/compose.c:5723
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "您確定要套用 '%s' 這個信件樣板嗎？"
 
-#: src/compose.c:5716
+#: src/compose.c:5725
 msgid "Apply template"
 msgstr "套用信件樣板"
 
-#: src/compose.c:5717
+#: src/compose.c:5726
 msgid "Replace"
 msgstr "置換"
 
@@ -1592,23 +1593,23 @@ msgstr "寫入組態設定時失敗。\n"
 msgid "Select folder"
 msgstr "選擇資料夾"
 
-#: src/foldersel.c:350 src/folderview.c:1069 src/prefs_folder_item.c:213
+#: src/foldersel.c:350 src/folderview.c:1069 src/prefs_folder_item.c:212
 msgid "Inbox"
 msgstr "收件夾"
 
-#: src/foldersel.c:354 src/folderview.c:1075 src/prefs_folder_item.c:214
+#: src/foldersel.c:354 src/folderview.c:1075 src/prefs_folder_item.c:213
 msgid "Sent"
 msgstr "寄件夾"
 
-#: src/foldersel.c:358 src/folderview.c:1081 src/prefs_folder_item.c:216
+#: src/foldersel.c:358 src/folderview.c:1081 src/prefs_folder_item.c:215
 msgid "Queue"
 msgstr "暫存資料夾"
 
-#: src/foldersel.c:362 src/folderview.c:1087 src/prefs_folder_item.c:217
+#: src/foldersel.c:362 src/folderview.c:1087 src/prefs_folder_item.c:216
 msgid "Trash"
 msgstr "刪除的郵件"
 
-#: src/foldersel.c:366 src/folderview.c:1093 src/prefs_folder_item.c:215
+#: src/foldersel.c:366 src/folderview.c:1093 src/prefs_folder_item.c:214
 msgid "Drafts"
 msgstr "草稿"
 
@@ -1785,20 +1786,20 @@ msgstr ""
 msgid "Delete folder"
 msgstr "刪除資料夾"
 
-#: src/folderview.c:2149
+#: src/folderview.c:2150
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "無法刪除資料夾 `%s'。"
 
-#: src/folderview.c:2183
+#: src/folderview.c:2184
 msgid "Empty trash"
 msgstr "清空刪除的郵件"
 
-#: src/folderview.c:2183
+#: src/folderview.c:2184
 msgid "Empty all messages in trash?"
 msgstr "您確定要清除所有被刪除的郵件？"
 
-#: src/folderview.c:2219
+#: src/folderview.c:2220
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -1807,34 +1808,34 @@ msgstr ""
 "確定要刪除信箱 %s？\n"
 "注意：信箱中的郵件將不會從硬碟中被刪除。"
 
-#: src/folderview.c:2221
+#: src/folderview.c:2222
 msgid "Remove mailbox"
 msgstr "/刪除信箱"
 
-#: src/folderview.c:2266
+#: src/folderview.c:2268
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "您確定要刪除 %s 這個 IMAP4 帳號？"
 
-#: src/folderview.c:2267
+#: src/folderview.c:2269
 msgid "Delete IMAP4 account"
 msgstr "刪除 IMAP4 帳號"
 
-#: src/folderview.c:2408
+#: src/folderview.c:2411
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "您確定要刪除新聞群組 `%s' 嗎？"
 
-#: src/folderview.c:2409
+#: src/folderview.c:2412
 msgid "Delete newsgroup"
 msgstr "刪除新聞群組"
 
-#: src/folderview.c:2454
+#: src/folderview.c:2458
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "您確定要刪除新聞群組帳號 `%s' 嗎？"
 
-#: src/folderview.c:2455
+#: src/folderview.c:2459
 msgid "Delete news account"
 msgstr "刪除帳號"
 
@@ -1862,7 +1863,7 @@ msgstr "新聞群組名稱："
 msgid "Messages"
 msgstr "信件"
 
-#: src/grouplistdialog.c:221 src/prefs_folder_item.c:197
+#: src/grouplistdialog.c:221 src/prefs_folder_item.c:196
 msgid "Type"
 msgstr "MIME 型態"
 
@@ -3214,7 +3215,7 @@ msgid "Send queued message(s)"
 msgstr "將暫存資料夾中的信件送出"
 
 #: src/mainwindow.c:2235 src/prefs_account.c:720 src/prefs_common.c:945
-#: src/prefs_folder_item.c:138
+#: src/prefs_folder_item.c:137
 msgid "Compose"
 msgstr "撰寫郵件"
 
@@ -3279,8 +3280,8 @@ msgstr "設定"
 msgid "Common preferences"
 msgstr "一般設定"
 
-#: src/mainwindow.c:2343 src/prefs_folder_item.c:259
-#: src/prefs_folder_item.c:270 src/progressdialog.c:128
+#: src/mainwindow.c:2343 src/prefs_folder_item.c:258
+#: src/prefs_folder_item.c:269 src/progressdialog.c:128
 msgid "Account"
 msgstr "帳號"
 
@@ -3398,23 +3399,23 @@ msgstr "尋找文字："
 msgid "Case sensitive"
 msgstr "區分大小寫"
 
-#: src/message_search.c:201 src/summary_search.c:385
+#: src/message_search.c:202 src/summary_search.c:385
 msgid "Search failed"
 msgstr "搜尋失敗"
 
-#: src/message_search.c:202 src/summary_search.c:386
+#: src/message_search.c:203 src/summary_search.c:386
 msgid "Search string not found."
 msgstr "找不到該字串。"
 
-#: src/message_search.c:210
+#: src/message_search.c:211
 msgid "Beginning of message reached; continue from end?"
 msgstr "搜尋已到頂端。要從尾端繼續搜尋嗎？"
 
-#: src/message_search.c:213
+#: src/message_search.c:214
 msgid "End of message reached; continue from beginning?"
 msgstr "搜尋已到尾端。要從頂端繼續搜尋嗎？"
 
-#: src/message_search.c:216 src/summary_search.c:396
+#: src/message_search.c:217 src/summary_search.c:396
 msgid "Search finished"
 msgstr "搜尋結束"
 
@@ -3990,7 +3991,7 @@ msgstr "送信前先做 POP3 認證"
 msgid "Command output"
 msgstr "命令輸出"
 
-#: src/prefs_account.c:1420 src/prefs_folder_item.c:301
+#: src/prefs_account.c:1420 src/prefs_folder_item.c:300
 msgid "Automatically set the following addresses"
 msgstr "在相關欄位上自動加入下列電子郵件信箱："
 
@@ -5333,35 +5334,35 @@ msgstr "未設定條件"
 msgid "Action not exist."
 msgstr "指定的指令不存在"
 
-#: src/prefs_folder_item.c:116
+#: src/prefs_folder_item.c:115
 msgid "Folder properties"
 msgstr "資料夾屬性"
 
-#: src/prefs_folder_item.c:137
+#: src/prefs_folder_item.c:136
 msgid "General"
 msgstr "一般"
 
-#: src/prefs_folder_item.c:212
+#: src/prefs_folder_item.c:211
 msgid "Normal"
 msgstr "正常"
 
-#: src/prefs_folder_item.c:225
+#: src/prefs_folder_item.c:224
 msgid "Don't display [...] or (...) at the beginning of subject in summary"
 msgstr "在信件列表中不要顯示信件標題前面的中括號 [] 或小括號 ()"
 
-#: src/prefs_folder_item.c:227
+#: src/prefs_folder_item.c:226
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "回覆時刪除信件標題前面的中括號 [] 或小括號 ()"
 
-#: src/prefs_folder_item.c:299
+#: src/prefs_folder_item.c:298
 msgid "Apply to subfolders"
 msgstr "應用到子資料夾"
 
-#: src/prefs_folder_item.c:324
+#: src/prefs_folder_item.c:323
 msgid "use also on reply"
 msgstr "回覆信件時也使用"
 
-#: src/prefs_folder_item.c:348
+#: src/prefs_folder_item.c:347
 msgid "Reply-To:"
 msgstr "回信位址："
 
@@ -5842,7 +5843,7 @@ msgstr "下列所有條件均符合"
 msgid "Body:"
 msgstr "本文:"
 
-#: src/summary_search.c:258
+#: src/summary_search.c:263
 msgid "Find all"
 msgstr ""
 
@@ -5948,7 +5949,7 @@ msgstr "某些信件已被標記。要繼續嗎？"
 msgid "Scanning folder (%s)..."
 msgstr "掃描資料夾(%s)..."
 
-#: src/summaryview.c:1146
+#: src/summaryview.c:1147
 msgid "Search again"
 msgstr "再次搜尋"
 
@@ -6234,6 +6235,21 @@ msgstr ""
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "寫入到 %s 的動作失敗。\n"
+
+#~ msgid "Yes"
+#~ msgstr "是的"
+
+#~ msgid "+No"
+#~ msgstr "+不要"
+
+#~ msgid "Discard message"
+#~ msgstr "放棄信件"
+
+#~ msgid "Discard"
+#~ msgstr "放棄"
+
+#~ msgid "to Draft"
+#~ msgstr "放入草稿資料夾"
 
 #~ msgid "can't write headers\n"
 #~ msgstr "無法寫入標頭\n"

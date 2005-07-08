@@ -2412,7 +2412,7 @@ static gboolean compose_check_entries(Compose *compose)
 	if (*str == '\0') {
 		AlertValue aval;
 
-		aval = alertpanel(_("Send"),
+		aval = alertpanel(_("Empty subject"),
 				  _("Subject is empty. Send it anyway?"),
 				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (aval != G_ALERTDEFAULT)
@@ -2668,11 +2668,14 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			g_free(buf);
 
 			msg = g_strdup_printf(_("Can't convert the character encoding of the message body from %s to %s.\n"
+						"\n"
 						"Send it as %s anyway?"),
 					      src_charset, body_charset,
 					      src_charset);
-			aval = alertpanel
-				(_("Error"), msg, _("Yes"), _("+No"), NULL);
+			aval = alertpanel_full
+				(_("Code conversion error"), msg, ALERT_ERROR,
+				 G_ALERTALTERNATE,
+				 FALSE, GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 			g_free(msg);
 
 			if (aval != G_ALERTDEFAULT) {
@@ -2743,7 +2746,10 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			   "The contents of the message might be broken on the way to the delivery.\n"
 			   "\n"
 			   "Send it anyway?"), line + 1);
-		aval = alertpanel(_("Warning"), msg, _("Yes"), _("+No"), NULL);
+		aval = alertpanel_full(_("Line length limit"),
+				       msg, ALERT_WARNING,
+				       G_ALERTALTERNATE, FALSE,
+				       GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (aval != G_ALERTDEFAULT) {
 			g_free(msg);
 			fclose(fp);
@@ -5118,7 +5124,9 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 			(_("The external editor is still working.\n"
 			   "Force terminating the process?\n"
 			   "process group id: %d"), -pgid);
-		val = alertpanel(_("Notice"), msg, _("Yes"), _("+No"), NULL);
+		val = alertpanel_full(_("Notice"), msg, ALERT_NOTICE,
+				      G_ALERTALTERNATE, FALSE,
+				      GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		g_free(msg);
 
 		if (val == G_ALERTDEFAULT) {
@@ -5667,16 +5675,17 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	}
 
 	if (compose->modified) {
-		val = alertpanel(_("Discard message"),
-				 _("This message has been modified. discard it?"),
-				 _("Discard"), _("to Draft"), GTK_STOCK_CANCEL);
+		val = alertpanel(_("Save message"),
+				 _("This message has been modified. Save it to draft folder?"),
+				 GTK_STOCK_SAVE, GTK_STOCK_CANCEL,
+				 _("Close _without saving"));
 
 		switch (val) {
 		case G_ALERTDEFAULT:
-			break;
-		case G_ALERTALTERNATE:
 			compose_draft_cb(data, 0, NULL);
 			return;
+		case G_ALERTOTHER:
+			break;
 		default:
 			return;
 		}

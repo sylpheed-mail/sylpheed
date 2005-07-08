@@ -43,11 +43,20 @@ typedef enum
 	ALERT_ERROR
 } AlertType;
 
-AlertValue alertpanel	(const gchar	*title,
-			 const gchar	*message,
-			 const gchar	*button1_label,
-			 const gchar	*button2_label,
-			 const gchar	*button3_label);
+AlertValue alertpanel_full	(const gchar	*title,
+				 const gchar	*message,
+				 AlertType	 type,
+				 AlertValue	 default_value,
+				 gboolean	 can_disable,
+				 const gchar	*button1_label,
+				 const gchar	*button2_label,
+				 const gchar	*button3_label);
+
+AlertValue alertpanel		(const gchar	*title,
+				 const gchar	*message,
+				 const gchar	*button1_label,
+				 const gchar	*button2_label,
+				 const gchar	*button3_label);
 
 void alertpanel_message	(const gchar	*title,
 			 const gchar	*message,

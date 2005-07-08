@@ -47,11 +47,12 @@ static GtkWidget *dialog;
 static void alertpanel_show		(void);
 static void alertpanel_create		(const gchar	*title,
 					 const gchar	*message,
+					 AlertType	 type,
+					 AlertValue      default_value,
+					 gboolean	 can_disable,
 					 const gchar	*button1_label,
 					 const gchar	*button2_label,
-					 const gchar	*button3_label,
-					 gboolean	 can_disable,
-					 AlertType	 type);
+					 const gchar	*button3_label);
 
 static void alertpanel_button_toggled	(GtkToggleButton	*button,
 					 gpointer		 data);
@@ -64,23 +65,35 @@ static gboolean alertpanel_close	(GtkWidget		*widget,
 					 GdkEventAny		*event,
 					 gpointer		 data);
 
-AlertValue alertpanel(const gchar *title,
-		      const gchar *message,
-		      const gchar *button1_label,
-		      const gchar *button2_label,
-		      const gchar *button3_label)
+AlertValue alertpanel_full(const gchar *title, const gchar *message,
+			   AlertType type, AlertValue default_value,
+			   gboolean can_disable,
+			   const gchar *button1_label,
+			   const gchar *button2_label,
+			   const gchar *button3_label)
 {
 	if (alertpanel_is_open)
 		return -1;
 	else
 		alertpanel_is_open = TRUE;
 
-	alertpanel_create(title, message, button1_label, button2_label,
-			  button3_label, FALSE, ALERT_QUESTION);
+	alertpanel_create(title, message, type, default_value, can_disable,
+			  button1_label, button2_label, button3_label);
 	alertpanel_show();
 
 	debug_print("return value = %d\n", value);
 	return value;
+}
+
+AlertValue alertpanel(const gchar *title,
+		      const gchar *message,
+		      const gchar *button1_label,
+		      const gchar *button2_label,
+		      const gchar *button3_label)
+{
+	return alertpanel_full(title, message, ALERT_QUESTION, G_ALERTDEFAULT,
+			       FALSE,
+			       button1_label, button2_label, button3_label);
 }
 
 void alertpanel_message(const gchar *title, const gchar *message,
@@ -91,7 +104,8 @@ void alertpanel_message(const gchar *title, const gchar *message,
 	else
 		alertpanel_is_open = TRUE;
 
-	alertpanel_create(title, message, NULL, NULL, NULL, FALSE, type);
+	alertpanel_create(title, message, type, G_ALERTDEFAULT, FALSE,
+			  NULL, NULL, NULL);
 	alertpanel_show();
 }
 
@@ -104,7 +118,8 @@ AlertValue alertpanel_message_with_disable(const gchar *title,
 	else
 		alertpanel_is_open = TRUE;
 
-	alertpanel_create(title, message, NULL, NULL, NULL, TRUE, type);
+	alertpanel_create(title, message, type, G_ALERTDEFAULT, TRUE,
+			  NULL, NULL, NULL);
 	alertpanel_show();
 
 	return value;
@@ -168,11 +183,12 @@ static void alertpanel_show(void)
 
 static void alertpanel_create(const gchar *title,
 			      const gchar *message,
+			      AlertType    type,
+			      AlertValue   default_value,
+			      gboolean	   can_disable,
 			      const gchar *button1_label,
 			      const gchar *button2_label,
-			      const gchar *button3_label,
-			      gboolean	   can_disable,
-			      AlertType    type)
+			      const gchar *button3_label)
 {
 	static PangoFontDescription *font_desc;
 	GtkWidget *image;
@@ -294,11 +310,13 @@ static void alertpanel_create(const gchar *title,
 	gtk_container_set_border_width(GTK_CONTAINER(confirm_area), 5);
 	gtk_widget_grab_default(button1);
 	gtk_widget_grab_focus(button1);
-	if (button2_label && *button2_label == '+') {
+	if (button2_label &&
+	    (default_value == G_ALERTALTERNATE || *button2_label == '+')) {
 		gtk_widget_grab_default(button2);
 		gtk_widget_grab_focus(button2);
 	}
-	if (button3_label && *button3_label == '+') {
+	if (button3_label &&
+	    (default_value == G_ALERTOTHER || *button3_label == '+')) {
 		gtk_widget_grab_default(button3);
 		gtk_widget_grab_focus(button3);
 	}
