@@ -52,7 +52,9 @@
 #include "addressitem.h"
 #include "jpilot.h"
 #include "mgutils.h"
+#include "filesel.h"
 #include "gtkutils.h"
+#include "codeconv.h"
 #include "manage_window.h"
 
 #define ADDRESSBOOK_GUESS_JPILOT "MyJPilot"
@@ -70,8 +72,6 @@ static struct _JPilotEdit {
 	GtkWidget *statusbar;
 	gint status_cid;
 } jpilotedit;
-
-static struct _AddressFileSelection jpilot_file_selector;
 
 /*
 * Edit functions.
@@ -164,16 +164,18 @@ static void edit_jpilot_read_check_box( JPilotFile *pilotFile ) {
 static void edit_jpilot_file_check( void ) {
 	gint t = -1;
 	gchar *sFile;
+	gchar *sFSFile;
 	gchar *sMsg;
 	gboolean flg;
 
 	flg = FALSE;
 	sFile = gtk_editable_get_chars( GTK_EDITABLE(jpilotedit.file_entry), 0, -1 );
 	if( sFile ) {
-		g_strchomp( sFile ); g_strchug( sFile );
-		if( *sFile != '\0' ) {
+		sFSFile = conv_filename_from_utf8( sFile );
+		if( sFSFile && *sFSFile != '\0' ) {
 			/* Attempt to read file */
-			JPilotFile *jpf = jpilot_create_path( sFile );
+			JPilotFile *jpf;
+			jpf = jpilot_create_path( sFSFile );
 			t = jpilot_read_data( jpf );
 			if( t == MGU_SUCCESS ) {
 				/* Set check boxes */
@@ -183,12 +185,13 @@ static void edit_jpilot_file_check( void ) {
 			jpilot_free( jpf );
 			jpf = NULL;
 		}
+		g_free( sFSFile );
+		g_free( sFile );
 	}
 	if( ! flg ) {
 		/* Clear all check boxes */
 		edit_jpilot_fill_check_box_new();
 	}
-	g_free( sFile );
 
 	/* Display appropriate message */
 	if( t == MGU_SUCCESS ) {
@@ -203,55 +206,19 @@ static void edit_jpilot_file_check( void ) {
 	edit_jpilot_status_show( sMsg );
 }
 
-static void edit_jpilot_file_ok( GtkWidget *widget, gpointer data ) {
-	const gchar *sFile;
-	AddressFileSelection *afs;
-	GtkWidget *fileSel;
-
-	afs = ( AddressFileSelection * ) data;
-	fileSel = afs->fileSelector;
-	sFile = gtk_file_selection_get_filename( GTK_FILE_SELECTION(fileSel) );
-
-	afs->cancelled = FALSE;
-	gtk_entry_set_text( GTK_ENTRY(jpilotedit.file_entry), sFile );
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	edit_jpilot_file_check();
-	gtk_widget_grab_focus( jpilotedit.file_entry );
-}
-
-static void edit_jpilot_file_cancel( GtkWidget *widget, gpointer data ) {
-	AddressFileSelection *afs = ( AddressFileSelection * ) data;
-	afs->cancelled = TRUE;
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	gtk_widget_grab_focus( jpilotedit.file_entry );
-}
-
-static void edit_jpilot_file_select_create( AddressFileSelection *afs ) {
-	GtkWidget *fileSelector;
-
-	fileSelector = gtk_file_selection_new( _("Select JPilot File") );
-	gtk_file_selection_hide_fileop_buttons( GTK_FILE_SELECTION(fileSelector) );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->ok_button),
-			  "clicked", G_CALLBACK (edit_jpilot_file_ok), ( gpointer ) afs );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->cancel_button),
-			  "clicked", G_CALLBACK (edit_jpilot_file_cancel), ( gpointer ) afs );
-	afs->fileSelector = fileSelector;
-	afs->cancelled = TRUE;
-}
-
 static void edit_jpilot_file_select( void ) {
 	gchar *sFile;
+	gchar *sUTF8File;
 
-	if (! jpilot_file_selector.fileSelector )
-		edit_jpilot_file_select_create( & jpilot_file_selector );
+	sFile = filesel_select_file( _("Select JPilot File"), NULL, GTK_FILE_CHOOSER_ACTION_OPEN );
 
-	sFile = gtk_editable_get_chars( GTK_EDITABLE(jpilotedit.file_entry), 0, -1 );
-	gtk_file_selection_set_filename( GTK_FILE_SELECTION( jpilot_file_selector.fileSelector ), sFile );
-	g_free( sFile );
-	gtk_widget_show( jpilot_file_selector.fileSelector );
-	gtk_grab_add( jpilot_file_selector.fileSelector );
+	if( sFile ) {
+		sUTF8File = conv_filename_to_utf8( sFile );
+		gtk_entry_set_text( GTK_ENTRY(jpilotedit.file_entry), sUTF8File );
+		g_free( sUTF8File );
+		g_free( sFile );
+		edit_jpilot_file_check();
+	}
 }
 
 static void addressbook_edit_jpilot_create( gboolean *cancelled ) {
@@ -389,6 +356,7 @@ AdapterDSource *addressbook_edit_jpilot( AddressIndex *addrIndex, AdapterDSource
 	static gboolean cancelled;
 	gchar *sName;
 	gchar *sFile;
+	gchar *sFSFile;
 	AddressDataSource *ds = NULL;
 	JPilotFile *jpf = NULL;
 	gboolean fin;
@@ -431,8 +399,10 @@ AdapterDSource *addressbook_edit_jpilot( AddressIndex *addrIndex, AdapterDSource
 	fin = FALSE;
 	sName = gtk_editable_get_chars( GTK_EDITABLE(jpilotedit.name_entry), 0, -1 );
 	sFile = gtk_editable_get_chars( GTK_EDITABLE(jpilotedit.file_entry), 0, -1 );
+	sFSFile = conv_filename_from_utf8( sFile );
 	if( *sName == '\0' ) fin = TRUE;
 	if( *sFile == '\0' ) fin = TRUE;
+	if( ! sFSFile || *sFSFile == '\0' ) fin = TRUE;
 
 	if( ! fin ) {
 		if( ! ads ) {
@@ -442,11 +412,12 @@ AdapterDSource *addressbook_edit_jpilot( AddressIndex *addrIndex, AdapterDSource
 		}
 		addressbook_ads_set_name( ads, sName );
 		jpilot_set_name( jpf, sName );
-		jpilot_set_file( jpf, sFile );
+		jpilot_set_file( jpf, sFSFile );
 		edit_jpilot_read_check_box( jpf );
 	}
-	g_free( sName );
+	g_free( sFSFile );
 	g_free( sFile );
+	g_free( sName );
 
 	return ads;
 }

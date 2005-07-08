@@ -47,7 +47,9 @@
 #include "addressitem.h"
 #include "vcard.h"
 #include "mgutils.h"
+#include "filesel.h"
 #include "gtkutils.h"
+#include "codeconv.h"
 #include "manage_window.h"
 
 #define ADDRESSBOOK_GUESS_VCARD  "MyGnomeCard"
@@ -62,8 +64,6 @@ static struct _VCardEdit {
 	GtkWidget *statusbar;
 	gint status_cid;
 } vcardedit;
-
-static struct _AddressFileSelection vcard_file_selector;
 
 /*
 * Edit functions.
@@ -90,10 +90,13 @@ static void edit_vcard_cancel( GtkWidget *widget, gboolean *cancelled ) {
 static void edit_vcard_file_check( void ) {
 	gint t;
 	gchar *sFile;
+	gchar *sFSFile;
 	gchar *sMsg;
 
 	sFile = gtk_editable_get_chars( GTK_EDITABLE(vcardedit.file_entry), 0, -1 );
-	t = vcard_test_read_file( sFile );
+	sFSFile = conv_filename_from_utf8( sFile );
+	t = vcard_test_read_file( sFSFile );
+	g_free( sFSFile );
 	g_free( sFile );
 	if( t == MGU_SUCCESS ) {
 		sMsg = "";
@@ -107,55 +110,19 @@ static void edit_vcard_file_check( void ) {
 	edit_vcard_status_show( sMsg );
 }
 
-static void edit_vcard_file_ok( GtkWidget *widget, gpointer data ) {
-	const gchar *sFile;
-	AddressFileSelection *afs;
-	GtkWidget *fileSel;
-
-	afs = ( AddressFileSelection * ) data;
-	fileSel = afs->fileSelector;
-	sFile = gtk_file_selection_get_filename( GTK_FILE_SELECTION(fileSel) );
-
-	afs->cancelled = FALSE;
-	gtk_entry_set_text( GTK_ENTRY(vcardedit.file_entry), sFile );
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	edit_vcard_file_check();
-	gtk_widget_grab_focus( vcardedit.file_entry );
-}
-
-static void edit_vcard_file_cancel( GtkWidget *widget, gpointer data ) {
-	AddressFileSelection *afs = ( AddressFileSelection * ) data;
-	afs->cancelled = TRUE;
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	gtk_widget_grab_focus( vcardedit.file_entry );
-}
-
-static void edit_vcard_file_select_create( AddressFileSelection *afs ) {
-	GtkWidget *fileSelector;
-
-	fileSelector = gtk_file_selection_new( _("Select vCard File") );
-	gtk_file_selection_hide_fileop_buttons( GTK_FILE_SELECTION(fileSelector) );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->ok_button),
-			  "clicked", G_CALLBACK (edit_vcard_file_ok), ( gpointer ) afs );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->cancel_button),
-			  "clicked", G_CALLBACK (edit_vcard_file_cancel), ( gpointer ) afs );
-	afs->fileSelector = fileSelector;
-	afs->cancelled = TRUE;
-}
-
 static void edit_vcard_file_select( void ) {
 	gchar *sFile;
+	gchar *sUTF8File;
 
-	if (! vcard_file_selector.fileSelector )
-		edit_vcard_file_select_create( & vcard_file_selector );
+	sFile = filesel_select_file( _("Select vCard File"), NULL, GTK_FILE_CHOOSER_ACTION_OPEN );
 
-	sFile = gtk_editable_get_chars( GTK_EDITABLE(vcardedit.file_entry), 0, -1 );
-	gtk_file_selection_set_filename( GTK_FILE_SELECTION( vcard_file_selector.fileSelector ), sFile );
-	g_free( sFile );
-	gtk_widget_show( vcard_file_selector.fileSelector );
-	gtk_grab_add( vcard_file_selector.fileSelector );
+	if( sFile ) {
+		sUTF8File = conv_filename_to_utf8( sFile );
+		gtk_entry_set_text( GTK_ENTRY(vcardedit.file_entry), sUTF8File );
+		g_free( sUTF8File );
+		g_free( sFile );
+		edit_vcard_file_check();
+	}
 }
 
 static gint edit_vcard_delete_event( GtkWidget *widget, GdkEventAny *event, gboolean *cancelled ) {
@@ -278,6 +245,7 @@ AdapterDSource *addressbook_edit_vcard( AddressIndex *addrIndex, AdapterDSource 
 	static gboolean cancelled;
 	gchar *sName;
 	gchar *sFile;
+	gchar *sFSFile;
 	AddressDataSource *ds = NULL;
 	VCardFile *vcf = NULL;
 	gboolean fin;
@@ -314,8 +282,10 @@ AdapterDSource *addressbook_edit_vcard( AddressIndex *addrIndex, AdapterDSource 
 	fin = FALSE;
 	sName = gtk_editable_get_chars( GTK_EDITABLE(vcardedit.name_entry), 0, -1 );
 	sFile = gtk_editable_get_chars( GTK_EDITABLE(vcardedit.file_entry), 0, -1 );
+	sFSFile = conv_filename_from_utf8( sFile );
 	if( *sName == '\0' ) fin = TRUE;
 	if( *sFile == '\0' ) fin = TRUE;
+	if( ! sFSFile || *sFSFile == '\0' ) fin = TRUE;
 
 	if( ! fin ) {
 		if( ! ads ) {
@@ -325,10 +295,11 @@ AdapterDSource *addressbook_edit_vcard( AddressIndex *addrIndex, AdapterDSource 
 		}
 		addressbook_ads_set_name( ads, sName );
 		vcard_set_name( vcf, sName );
-		vcard_set_file( vcf, sFile );
+		vcard_set_file( vcf, sFSFile );
 	}
-	g_free( sName );
+	g_free( sFSFile );
 	g_free( sFile );
+	g_free( sName );
 
 	return ads;
 }
