@@ -1666,7 +1666,7 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 				obj->name );
 		aval = alertpanel( _("Delete"), message, _("Folder only"), _("Folder and Addresses"), GTK_STOCK_CANCEL );
 		g_free(message);
-		if( aval == G_ALERTOTHER ) return;
+		if( aval != G_ALERTDEFAULT && aval != G_ALERTALTERNATE ) return;
 	}
 	else {
 		message = g_strdup_printf(_("Really delete `%s' ?"), obj->name);

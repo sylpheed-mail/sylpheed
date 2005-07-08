@@ -196,10 +196,10 @@ static void alertpanel_create(const gchar *title,
 	gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
 	g_signal_connect(G_OBJECT(dialog), "delete_event",
 			 G_CALLBACK(alertpanel_deleted),
-			 (gpointer)G_ALERTOTHER);
+			 (gpointer)G_ALERTCANCEL);
 	g_signal_connect(G_OBJECT(dialog), "key_press_event",
 			 G_CALLBACK(alertpanel_close),
-			 (gpointer)G_ALERTOTHER);
+			 (gpointer)G_ALERTCANCEL);
 
 	/* for title icon, label and message */
 	hbox = gtk_hbox_new(FALSE, 12);

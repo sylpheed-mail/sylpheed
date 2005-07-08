@@ -27,10 +27,13 @@ typedef enum
 	G_ALERTDEFAULT,
 	G_ALERTALTERNATE,
 	G_ALERTOTHER,
+	G_ALERTCANCEL,
 	G_ALERTWAIT,
 
 	G_ALERTDISABLE	= 1 << 16
 } AlertValue;
+
+#define G_ALERT_VALUE_MASK	0x0000ffff
 
 typedef enum
 {
@@ -39,8 +42,6 @@ typedef enum
 	ALERT_WARNING,
 	ALERT_ERROR
 } AlertType;
-
-#define G_ALERT_VALUE_MASK	0x0000ffff
 
 AlertValue alertpanel	(const gchar	*title,
 			 const gchar	*message,

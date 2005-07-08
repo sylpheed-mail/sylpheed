@@ -1143,13 +1143,13 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 		AlertValue val;
 
 		val = alertpanel(title, ask_msg,
-				 GTK_STOCK_YES, _("Search again"),
-				 GTK_STOCK_NO);
+				 GTK_STOCK_YES, GTK_STOCK_NO,
+				 _("Search again"));
 
 		if (val == G_ALERTDEFAULT) {
 			folderview_select_next_unread(summaryview->folderview);
 			return;
-		} else if (val == G_ALERTALTERNATE) {
+		} else if (val == G_ALERTOTHER) {
 			start_from_next = FALSE;
 			if (!gtk_tree_model_get_iter_first(model, &iter))
 				return;
