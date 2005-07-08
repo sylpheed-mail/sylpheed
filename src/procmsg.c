@@ -1465,6 +1465,23 @@ MsgInfo *procmsg_msginfo_get_full_info(MsgInfo *msginfo)
 	return full_msginfo;
 }
 
+gboolean procmsg_msginfo_equal(MsgInfo *msginfo_a, MsgInfo *msginfo_b)
+{
+	if (!msginfo_a || !msginfo_b)
+		return FALSE;
+
+	if (msginfo_a == msginfo_b)
+		return TRUE;
+
+	if (msginfo_a->folder == msginfo_b->folder &&
+	    msginfo_a->msgnum == msginfo_b->msgnum &&
+	    msginfo_a->size   == msginfo_b->size   &&
+	    msginfo_a->mtime  == msginfo_b->mtime)
+		return TRUE;
+
+	return FALSE;
+}
+
 void procmsg_msginfo_free(MsgInfo *msginfo)
 {
 	if (msginfo == NULL) return;

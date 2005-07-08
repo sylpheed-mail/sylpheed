@@ -277,6 +277,8 @@ void	procmsg_print_message		(MsgInfo	*msginfo,
 
 MsgInfo *procmsg_msginfo_copy		(MsgInfo	*msginfo);
 MsgInfo *procmsg_msginfo_get_full_info	(MsgInfo	*msginfo);
+gboolean procmsg_msginfo_equal		(MsgInfo	*msginfo_a,
+					 MsgInfo	*msginfo_b);
 void	 procmsg_msginfo_free		(MsgInfo	*msginfo);
 
 gint procmsg_cmp_msgnum_for_sort	(gconstpointer	 a,

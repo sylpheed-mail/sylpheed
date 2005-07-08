@@ -158,6 +158,7 @@ static GList *compose_list = NULL;
 
 static Compose *compose_create			(PrefsAccount	*account,
 						 ComposeMode	 mode);
+static Compose *compose_find_window_by_target	(MsgInfo	*msginfo);
 static void compose_connect_changed_callbacks	(Compose	*compose);
 static void compose_toolbar_create		(Compose	*compose,
 						 GtkWidget	*container);
@@ -989,6 +990,17 @@ void compose_reedit(MsgInfo *msginfo)
 	account = account_find_from_msginfo(msginfo);
 	if (!account) account = cur_account;
 	g_return_if_fail(account != NULL);
+
+	if (msginfo->folder->stype == F_DRAFT ||
+	    msginfo->folder->stype == F_QUEUE) {
+		compose = compose_find_window_by_target(msginfo);
+		if (compose) {
+			debug_print
+				("compose_reedit(): existing window found.\n");
+			gtk_window_present(GTK_WINDOW(compose->window));
+			return;
+		}
+	}
 
 	compose = compose_create(account, COMPOSE_REEDIT);
 	compose->targetinfo = procmsg_msginfo_copy(msginfo);
@@ -4311,6 +4323,22 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_widget_show(window);
 
 	return compose;
+}
+
+static Compose *compose_find_window_by_target(MsgInfo *msginfo)
+{
+	GList *cur;
+	Compose *compose;
+
+	g_return_val_if_fail(msginfo != NULL, NULL);
+
+	for (cur = compose_list; cur != NULL; cur = cur->next) {
+		compose = cur->data;
+		if (procmsg_msginfo_equal(compose->targetinfo, msginfo))
+			return compose;
+	}
+
+	return NULL;
 }
 
 static void compose_connect_changed_callbacks(Compose *compose)
