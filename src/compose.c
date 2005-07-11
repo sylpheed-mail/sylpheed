@@ -1696,9 +1696,14 @@ static gchar *compose_get_signature_str(Compose *compose)
 		sig_str = sig_body;
 
 	if (sig_str) {
-		utf8_sig_str = conv_codeset_strdup
-			(sig_str, conv_get_locale_charset_str(), CS_INTERNAL);
-		g_free(sig_str);
+		if (g_utf8_validate(sig_str, -1, NULL) == TRUE)
+			utf8_sig_str = sig_str;
+		else {
+			utf8_sig_str = conv_codeset_strdup
+				(sig_str, conv_get_locale_charset_str(),
+				 CS_INTERNAL);
+			g_free(sig_str);
+		}
 	}
 
 	return utf8_sig_str;
@@ -1736,7 +1741,11 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
 
-		str = conv_codeset_strdup(buf, cur_encoding, CS_INTERNAL);
+		if (g_utf8_validate(buf, -1, NULL) == TRUE)
+			str = g_strdup(buf);
+		else
+			str = conv_codeset_strdup
+				(buf, cur_encoding, CS_INTERNAL);
 		if (!str) continue;
 
 		/* strip <CR> if DOS/Windows file,
