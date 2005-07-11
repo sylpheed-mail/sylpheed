@@ -565,6 +565,7 @@ void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path)
 	GdkRectangle cell_rect;
 	GdkRectangle vis_rect;
 	gint dest_x, dest_y;
+	gint margin = 0;
 
 	if (!path)
 		return;
@@ -577,10 +578,16 @@ void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path)
 	dest_x = vis_rect.x;
 	dest_y = vis_rect.y;
 
-	if (cell_rect.y < vis_rect.y)
-		dest_y = cell_rect.y;
-	if (cell_rect.y + cell_rect.height > vis_rect.y + vis_rect.height)
-		dest_y = cell_rect.y + cell_rect.height - vis_rect.height;
+	/* add margin */
+	if (cell_rect.height * 2 < vis_rect.height)
+		margin = cell_rect.height + 2;
+
+	if (cell_rect.y < vis_rect.y + margin)
+		dest_y = cell_rect.y - margin;
+	if (cell_rect.y + cell_rect.height >
+		vis_rect.y + vis_rect.height - margin)
+		dest_y = cell_rect.y + cell_rect.height - vis_rect.height +
+			margin;
 
 	gtk_tree_view_scroll_to_point(treeview, dest_x, dest_y);
 }
