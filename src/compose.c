@@ -1217,6 +1217,7 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 				       {"Newsgroups:",  NULL, TRUE},
 				       {"Followup-To:", NULL, TRUE},
 				       {"List-Post:",   NULL, FALSE},
+				       {"Content-Type:",NULL, FALSE},
 				       {NULL,		NULL, FALSE}};
 
 	enum
@@ -1227,10 +1228,12 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		H_BCC		= 3,
 		H_NEWSGROUPS    = 4,
 		H_FOLLOWUP_TO	= 5,
-		H_LIST_POST     = 6
+		H_LIST_POST     = 6,
+		H_CONTENT_TYPE  = 7
 	};
 
 	FILE *fp;
+	gchar *charset = NULL;
 
 	g_return_val_if_fail(msginfo != NULL, -1);
 
@@ -1238,17 +1241,23 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 	procheader_get_header_fields(fp, hentry);
 	fclose(fp);
 
+	if (hentry[H_CONTENT_TYPE].body != NULL) {
+		procmime_scan_content_type_str(hentry[H_CONTENT_TYPE].body,
+					       NULL, &charset, NULL, NULL);
+		g_free(hentry[H_CONTENT_TYPE].body);
+		hentry[H_CONTENT_TYPE].body = NULL;
+	}
 	if (hentry[H_REPLY_TO].body != NULL) {
 		if (hentry[H_REPLY_TO].body[0] != '\0') {
 			compose->replyto =
 				conv_unmime_header(hentry[H_REPLY_TO].body,
-						   NULL);
+						   charset);
 		}
 		g_free(hentry[H_REPLY_TO].body);
 		hentry[H_REPLY_TO].body = NULL;
 	}
 	if (hentry[H_CC].body != NULL) {
-		compose->cc = conv_unmime_header(hentry[H_CC].body, NULL);
+		compose->cc = conv_unmime_header(hentry[H_CC].body, charset);
 		g_free(hentry[H_CC].body);
 		hentry[H_CC].body = NULL;
 	}
@@ -1265,7 +1274,7 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 	if (hentry[H_BCC].body != NULL) {
 		if (compose->mode == COMPOSE_REEDIT)
 			compose->bcc =
-				conv_unmime_header(hentry[H_BCC].body, NULL);
+				conv_unmime_header(hentry[H_BCC].body, charset);
 		g_free(hentry[H_BCC].body);
 		hentry[H_BCC].body = NULL;
 	}
@@ -1277,7 +1286,7 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		if (hentry[H_FOLLOWUP_TO].body[0] != '\0') {
 			compose->followup_to =
 				conv_unmime_header(hentry[H_FOLLOWUP_TO].body,
-						   NULL);
+						   charset);
 		}
 		g_free(hentry[H_FOLLOWUP_TO].body);
 		hentry[H_FOLLOWUP_TO].body = NULL;
@@ -1297,6 +1306,8 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		g_free(hentry[H_LIST_POST].body);
 		hentry[H_LIST_POST].body = NULL;
 	}
+
+	g_free(charset);
 
 	if (compose->mode == COMPOSE_REEDIT) {
 		if (msginfo->inreplyto && *msginfo->inreplyto)
