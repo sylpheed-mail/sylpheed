@@ -200,6 +200,7 @@ static void compose_reedit_set_entry		(Compose	*compose,
 static void compose_insert_sig			(Compose	*compose,
 						 gboolean	 replace,
 						 gboolean	 scroll);
+static void compose_enable_sig			(Compose	*compose);
 static gchar *compose_get_signature_str		(Compose	*compose);
 
 static void compose_insert_file			(Compose	*compose,
@@ -1026,6 +1027,7 @@ void compose_reedit(MsgInfo *msginfo)
 			strcrchomp(buf);
 			gtk_text_buffer_insert(buffer, &iter, buf, -1);
 		}
+		compose_enable_sig(compose);
 		compose->autowrap = prev_autowrap;
 		fclose(fp);
 	}
@@ -1627,6 +1629,32 @@ static void compose_insert_sig(Compose *compose, gboolean replace,
 
 	if (scroll)
 		gtk_text_view_scroll_mark_onscreen(text, mark);
+}
+
+static void compose_enable_sig(Compose *compose)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
+	GtkTextBuffer *buffer;
+	GtkTextIter iter, start, end;
+	gchar *sig_str;
+
+	g_return_if_fail(compose->account != NULL);
+
+	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+
+	sig_str = compose_get_signature_str(compose);
+	if (!sig_str)
+		return;
+
+	if (gtkut_text_buffer_find(buffer, &iter, sig_str, TRUE, &start)) {
+		end = start;
+		gtk_text_iter_forward_chars(&end, g_utf8_strlen(sig_str, -1));
+		gtk_text_buffer_apply_tag(buffer, compose->sig_tag,
+					  &start, &end);
+	}
+
+	g_free(sig_str);
 }
 
 static gchar *compose_get_signature_str(Compose *compose)
@@ -5210,6 +5238,7 @@ static gboolean compose_input_cb(GIOChannel *source, GIOCondition condition,
 
 		gtk_text_buffer_set_text(buffer, "", 0);
 		compose_insert_file(compose, compose->exteditor_file, FALSE);
+		compose_enable_sig(compose);
 
 		gtk_text_buffer_get_start_iter(buffer, &iter);
 		gtk_text_buffer_place_cursor(buffer, &iter);
