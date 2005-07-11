@@ -278,14 +278,14 @@ static gboolean attach_property_key_pressed	(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 gboolean	*cancelled);
 
-static void compose_exec_ext_editor		(Compose	   *compose);
-static gint compose_exec_ext_editor_real	(const gchar	   *file);
-static gboolean compose_ext_editor_kill		(Compose	   *compose);
-static void compose_input_cb			(gpointer	    data,
-						 gint		    source,
-						 GdkInputCondition  condition);
-static void compose_set_ext_editor_sensitive	(Compose	   *compose,
-						 gboolean	    sensitive);
+static void compose_exec_ext_editor		(Compose	*compose);
+static gint compose_exec_ext_editor_real	(const gchar	*file);
+static gboolean compose_ext_editor_kill		(Compose	*compose);
+static gboolean compose_input_cb		(GIOChannel	*source,
+						 GIOCondition	 condition,
+						 gpointer	 data);
+static void compose_set_ext_editor_sensitive	(Compose	*compose,
+						 gboolean	 sensitive);
 
 static void compose_undo_state_changed		(UndoMain	*undostruct,
 						 gint		 undo_state,
@@ -4273,7 +4273,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->exteditor_file    = NULL;
 	compose->exteditor_pid     = -1;
-	compose->exteditor_readdes = -1;
 	compose->exteditor_tag     = -1;
 
 	compose_select_account(compose, account, TRUE);
@@ -5056,13 +5055,14 @@ static void compose_exec_ext_editor(Compose *compose)
 
 		compose->exteditor_file    = g_strdup(tmp);
 		compose->exteditor_pid     = pid;
-		compose->exteditor_readdes = pipe_fds[0];
 
 		compose_set_ext_editor_sensitive(compose, FALSE);
 
-		compose->exteditor_tag =
-			gdk_input_add(pipe_fds[0], GDK_INPUT_READ,
-				      compose_input_cb, compose);
+		compose->exteditor_ch = g_io_channel_unix_new(pipe_fds[0]);
+		compose->exteditor_tag = g_io_add_watch(compose->exteditor_ch,
+							G_IO_IN,
+							compose_input_cb,
+							compose);
 	} else {	/* process-monitoring process */
 		pid_t pid_ed;
 
@@ -5158,8 +5158,10 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 		g_free(msg);
 
 		if (val == G_ALERTDEFAULT) {
-			gdk_input_remove(compose->exteditor_tag);
-			close(compose->exteditor_readdes);
+			g_source_remove(compose->exteditor_tag);
+			g_io_channel_shutdown(compose->exteditor_ch,
+					      FALSE, NULL);
+			g_io_channel_unref(compose->exteditor_ch);
 
 			if (kill(pgid, SIGTERM) < 0) perror("kill");
 			waitpid(compose->exteditor_pid, NULL, 0);
@@ -5173,7 +5175,7 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 			g_free(compose->exteditor_file);
 			compose->exteditor_file    = NULL;
 			compose->exteditor_pid     = -1;
-			compose->exteditor_readdes = -1;
+			compose->exteditor_ch      = NULL;
 			compose->exteditor_tag     = -1;
 		} else
 			return FALSE;
@@ -5182,30 +5184,19 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 	return TRUE;
 }
 
-static void compose_input_cb(gpointer data, gint source,
-			     GdkInputCondition condition)
+static gboolean compose_input_cb(GIOChannel *source, GIOCondition condition,
+				 gpointer data)
 {
-	gchar buf[3];
+	gchar buf[3] = "3";
 	Compose *compose = (Compose *)data;
-	gint i = 0;
+	gsize bytes_read;
 
 	debug_print(_("Compose: input from monitoring process\n"));
 
-	gdk_input_remove(compose->exteditor_tag);
+	g_io_channel_read_chars(source, buf, sizeof(buf), &bytes_read, NULL);
 
-	for (;;) {
-		if (read(source, &buf[i], 1) < 1) {
-			buf[0] = '3';
-			break;
-		}
-		if (buf[i] == '\n') {
-			buf[i] = '\0';
-			break;
-		}
-		i++;
-		if (i == sizeof(buf) - 1)
-			break;
-	}
+	g_io_channel_shutdown(source, FALSE, NULL);
+	g_io_channel_unref(source);
 
 	waitpid(compose->exteditor_pid, NULL, 0);
 
@@ -5239,15 +5230,15 @@ static void compose_input_cb(gpointer data, gint source,
 		g_warning(_("Pipe read failed\n"));
 	}
 
-	close(source);
-
 	compose_set_ext_editor_sensitive(compose, TRUE);
 
 	g_free(compose->exteditor_file);
 	compose->exteditor_file    = NULL;
 	compose->exteditor_pid     = -1;
-	compose->exteditor_readdes = -1;
+	compose->exteditor_ch      = NULL;
 	compose->exteditor_tag     = -1;
+
+	return FALSE;
 }
 
 static void compose_set_ext_editor_sensitive(Compose *compose,

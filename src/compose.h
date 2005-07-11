@@ -177,10 +177,10 @@ struct _Compose
 	GtkTextTag *sig_tag;
 
 	/* external editor */
-	gchar *exteditor_file;
-	pid_t  exteditor_pid;
-	gint   exteditor_readdes;
-	gint   exteditor_tag;
+	gchar      *exteditor_file;
+	pid_t       exteditor_pid;
+	GIOChannel *exteditor_ch;
+	gint        exteditor_tag;
 };
 
 struct _AttachInfo
