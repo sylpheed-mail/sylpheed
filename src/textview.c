@@ -2066,10 +2066,12 @@ static gboolean textview_uri_security_check(TextView *textview, RemoteURI *uri)
 
 		msg = g_strdup_printf(_("The real URL (%s) is different from\n"
 					"the apparent URL (%s).\n"
+					"\n"
 					"Open it anyway?"),
 				      uri->uri, visible_str);
-		aval = alertpanel(_("Warning"), msg,
-				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+		aval = alertpanel_full(_("Fake URL warning"), msg,
+				       ALERT_WARNING, G_ALERTDEFAULT, FALSE,
+				       GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		g_free(msg);
 		if (aval == G_ALERTDEFAULT)
 			retval = TRUE;

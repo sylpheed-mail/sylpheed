@@ -1660,11 +1660,11 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 
 	/* Confirm deletion */
 	if( obj->type == ADDR_ITEM_FOLDER ) {
-		message = g_strdup_printf( _(
-				"Do you want to delete the folder AND all addresses in `%s' ? \n" \
-				"If deleting the folder only, addresses will be moved into parent folder." ),
-				obj->name );
-		aval = alertpanel( _("Delete"), message, _("Folder only"), _("Folder and Addresses"), GTK_STOCK_CANCEL );
+		message = g_strdup_printf
+			( _( "Do you want to delete the folder AND all addresses in `%s' ?\n"
+			     "If deleting the folder only, addresses will be moved into parent folder." ),
+			 obj->name );
+		aval = alertpanel( _("Delete folder"), message, _("_Folder only"), _("Folder and _addresses"), GTK_STOCK_CANCEL );
 		g_free(message);
 		if( aval != G_ALERTDEFAULT && aval != G_ALERTALTERNATE ) return;
 	}

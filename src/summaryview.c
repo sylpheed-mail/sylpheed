@@ -1144,7 +1144,7 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 
 		val = alertpanel(title, ask_msg,
 				 GTK_STOCK_YES, GTK_STOCK_NO,
-				 _("Search again"));
+				 _("_Search again"));
 
 		if (val == G_ALERTDEFAULT) {
 			folderview_select_next_unread(summaryview->folderview);

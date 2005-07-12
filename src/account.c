@@ -755,7 +755,8 @@ static void account_edit_create(void)
 	gtk_widget_show (vbox2);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
 
-	default_btn = gtk_button_new_with_label (_(" Set as default account "));
+	default_btn = gtk_button_new_with_mnemonic
+		(_(" _Set as default account "));
 	gtk_widget_show (default_btn);
 	gtk_box_pack_start (GTK_BOX (vbox2), default_btn, TRUE, FALSE, 0);
 	g_signal_connect (G_OBJECT(default_btn), "clicked",
