@@ -73,6 +73,7 @@
 #include "utils.h"
 #include "gtkutils.h"
 #include "socket.h"
+#include "stock_pixmap.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -145,6 +146,7 @@ int main(int argc, char *argv[])
 	gchar *userrc;
 	MainWindow *mainwin;
 	FolderView *folderview;
+	GdkPixbuf *icon;
 
 	setlocale(LC_ALL, "");
 	bindtextdomain(PACKAGE, LOCALEDIR);
@@ -300,6 +302,8 @@ int main(int argc, char *argv[])
 	prefs_display_header_read_config();
 
 	gtkut_widget_init();
+	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED, &icon);
+	gtk_window_set_default_icon(icon);
 
 	mainwin = main_window_create
 		(prefs_common.sep_folder | prefs_common.sep_msg << 1);

@@ -18,6 +18,7 @@ BUILT_SOURCES = \
 	stock_mail_send_queue.h \
 	stock_outbox.h \
 	stock_spam.h \
+	stock_sylpheed.h \
 	sylpheed-logo.h
 
 EXTRA_DIST = \
@@ -40,6 +41,7 @@ EXTRA_DIST = \
 	stock_mail_send_queue.png \
 	stock_outbox.png \
 	stock_spam.png \
+	stock_sylpheed.png \
 	sylpheed-logo.png \
 	clip.xpm \
 	deleted.xpm \

@@ -46,6 +46,11 @@
 #include "pixmaps/mark.xpm"
 #include "pixmaps/new.xpm"
 #include "pixmaps/replied.xpm"
+#include "pixmaps/unread.xpm"
+#include "pixmaps/vcard.xpm"
+#include "pixmaps/online.xpm"
+#include "pixmaps/offline.xpm"
+#include "pixmaps/mail.xpm"
 #include "pixmaps/stock_inbox.h"
 #include "pixmaps/stock_outbox.h"
 #include "pixmaps/stock_mail.h"
@@ -65,12 +70,8 @@
 #include "pixmaps/stock_delete_16.h"
 #include "pixmaps/stock_spam.h"
 #include "pixmaps/stock_hand-signed.h"
+#include "pixmaps/stock_sylpheed.h"
 #include "pixmaps/sylpheed-logo.h"
-#include "pixmaps/unread.xpm"
-#include "pixmaps/vcard.xpm"
-#include "pixmaps/online.xpm"
-#include "pixmaps/offline.xpm"
-#include "pixmaps/mail.xpm"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -133,6 +134,7 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, stock_delete, sizeof(stock_delete), GTK_STOCK_DELETE, 24},
 	{NULL, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24},
 	{NULL, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24},
+	{NULL, NULL, NULL, NULL, stock_sylpheed, sizeof(stock_sylpheed), NULL, 0},
 	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 };
 
@@ -194,7 +196,6 @@ gint stock_pixbuf_gdk(GtkWidget *window, StockPixmap icon, GdkPixbuf **pixbuf)
 	if (pixbuf)
 		*pixbuf = NULL;
 
-	g_return_val_if_fail(window != NULL, -1);
 	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, -1);
 
 	pix_d = &pixmaps[icon];
