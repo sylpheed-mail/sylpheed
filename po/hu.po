@@ -5,10 +5,10 @@
 # Németh Tamás <ntomasz@vipmail.hu>, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed-1.9.9\n"
+"Project-Id-Version: Sylpheed-2.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-12 15:22+0900\n"
-"PO-Revision-Date: 2005-06-23 18:30+0200\n"
+"POT-Creation-Date: 2005-07-12 15:47+0900\n"
+"PO-Revision-Date: 2005-07-04 17:05+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgstr "A művelet felhasználói paramétere"
 
 #: src/addressadd.c:172
 msgid "Add Address to Book"
-msgstr "Cím hozzáadása a címlistához"
+msgstr "Cím hozzáadása a címjegyzékhez"
 
 #: src/addressadd.c:202 src/compose.c:4520 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -975,9 +975,8 @@ msgid "Recipient is not specified."
 msgstr "Nincs címzett megadva."
 
 #: src/compose.c:2475
-#, fuzzy
 msgid "Empty subject"
-msgstr "Tárgy"
+msgstr "Nincs tárgy"
 
 #: src/compose.c:2476
 msgid "Subject is empty. Send it anyway?"
@@ -1016,19 +1015,19 @@ msgid "can't change file mode\n"
 msgstr "fájl módja nem változtatható\n"
 
 #: src/compose.c:2730
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
 "\n"
 "Send it as %s anyway?"
 msgstr ""
 "Nem lehet konvertálni az üzenet karakterkódolását %s-ról/ről %s-ra.\n"
+"\n"
 "Ennek ellenére elküldi mint %s?"
 
 #: src/compose.c:2736
-#, fuzzy
 msgid "Code conversion error"
-msgstr "Címjegyzék konvertálási hiba"
+msgstr "Kód konvertálási hiba"
 
 #: src/compose.c:2805
 #, c-format
@@ -1038,10 +1037,14 @@ msgid ""
 "\n"
 "Send it anyway?"
 msgstr ""
+"A(z) %d. sor meghaladja a sorhossz határát (998 bájt).\n"
+"Az üzenet tartalma megtörhet a célbaérés során.\n"
+"\n"
+"Ennek ellenére elküldi?"
 
 #: src/compose.c:2809
 msgid "Line length limit"
-msgstr ""
+msgstr "Sorhossz határ"
 
 #: src/compose.c:3097
 msgid "can't remove the old message\n"
@@ -1236,18 +1239,16 @@ msgid "Select file"
 msgstr "Fájl választás"
 
 #: src/compose.c:5746
-#, fuzzy
 msgid "Save message"
-msgstr "Üzenet küldése"
+msgstr "Üzenet mentése"
 
 #: src/compose.c:5747
-#, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
-msgstr "Az üzenet megváltozott. Eldobja?"
+msgstr "Az üzenet megváltozott. Menti a Vázlatok mappába?"
 
 #: src/compose.c:5749
 msgid "Close _without saving"
-msgstr ""
+msgstr "Bezárás mentés _nélkül"
 
 #: src/compose.c:5791
 #, c-format
@@ -1576,15 +1577,15 @@ msgstr " Kiválaszt... "
 msgid "Select exporting file"
 msgstr "Exportálandó fájl választás"
 
-#: src/filesel.c:135
+#: src/filesel.c:136
 msgid "Save as"
 msgstr "Mentés másként"
 
-#: src/filesel.c:141
+#: src/filesel.c:142
 msgid "Overwrite"
 msgstr "Felülírás"
 
-#: src/filesel.c:142
+#: src/filesel.c:143
 msgid "Overwrite existing file?"
 msgstr "Létező fájl felülírása?"
 
@@ -1647,9 +1648,8 @@ msgid "/_Rename folder..."
 msgstr "/Mappa át_nevezése..."
 
 #: src/folderview.c:233 src/folderview.c:250
-#, fuzzy
 msgid "/_Move folder..."
-msgstr "/Mappa át_nevezése..."
+msgstr "/Mappa át_helyezése..."
 
 #: src/folderview.c:234 src/folderview.c:251
 msgid "/_Delete folder"
@@ -1773,9 +1773,9 @@ msgid "Rename folder"
 msgstr "Mappa átnevezése"
 
 #: src/folderview.c:2068
-#, fuzzy, c-format
+#, c-format
 msgid "Can't move the folder `%s'."
-msgstr "`%s' nem távolítható el."
+msgstr "`%s' mappa nem helyezhető át."
 
 #: src/folderview.c:2122
 #, c-format
@@ -2408,9 +2408,8 @@ msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread-et a glib nem támogatja.\n"
 
 #: src/main.c:224
-#, fuzzy
 msgid "Filename encoding"
-msgstr "Kimenők karakterkódolása"
+msgstr "Fájlnév karakterkódolása"
 
 #: src/main.c:225
 msgid ""
@@ -2425,6 +2424,16 @@ msgid ""
 "\n"
 "Continue?"
 msgstr ""
+"A helyi karakterkódolás nem UTF-8, de a G_FILENAME_ENCODING környezeti "
+"változó nincs beállítva.\n"
+"Ha a helyi karakterkódolást használja a fájlnevekhez és könyvtárakhoz, akkor "
+"ez nem fog rendesen működni.\n"
+"Ezesetben Önnek be kell állítania a következő környezeti változót (lásd a "
+"README-t a részletekhez):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Folytatja?"
 
 #: src/main.c:281
 msgid ""
@@ -2531,9 +2540,8 @@ msgid "/_File/_Folder/_Rename folder..."
 msgstr "/_Fájl/_Mappa/Mappa Át_nevezése..."
 
 #: src/mainwindow.c:475
-#, fuzzy
 msgid "/_File/_Folder/_Move folder..."
-msgstr "/_Fájl/_Mappa/Mappa Át_nevezése..."
+msgstr "/_Fájl/_Mappa/Mappa át_helyezése..."
 
 #: src/mainwindow.c:476
 msgid "/_File/_Folder/_Delete folder"
@@ -2950,7 +2958,7 @@ msgstr "/_Üzenet/_Szerkesztés újra"
 
 #: src/mainwindow.c:727
 msgid "/_Tools/Add sender to address boo_k..."
-msgstr "/_Eszközök/Küldő hozzáadása a cím_listához..."
+msgstr "/_Eszközök/Küldő hozzáadása a cím_jegyzékhez..."
 
 #: src/mainwindow.c:730
 msgid "/_Tools/_Filter all messages in folder"
@@ -3418,7 +3426,7 @@ msgstr "Keresés befejeződött"
 
 #: src/messageview.c:258
 msgid "/_Tools/Add sender to address boo_k"
-msgstr "/_Eszközök/Küldő hozzáadása a cím_listához"
+msgstr "/_Eszközök/Küldő hozzáadása a cím_jegyzékhez"
 
 #: src/messageview.c:288
 msgid "Creating message view...\n"
@@ -3493,6 +3501,13 @@ msgid ""
 "\n"
 "\tG_FILENAME_ENCODING=@locale\n"
 msgstr ""
+"Könyvtár neve\n"
+"A(z) '%s' nem valós UTF-8 sztring.\n"
+"Talán a helyi karakterkódolás van használatban a fájlnevekre.\n"
+"Ha ez a helyzet, akkor be kell állítania a következő környezeti változót\n"
+"(lásd a README-t a részletekhez):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
 
 #: src/mimeview.c:124
 msgid "/_Open"
@@ -4796,7 +4811,7 @@ msgstr "Fogadó ablak bezárása ha végzett"
 
 #: src/prefs_common.c:2275
 msgid "Make the order of buttons comply with GNOME HIG"
-msgstr ""
+msgstr "A gombrendszer elkészítése a GNOME HIG szerint"
 
 #: src/prefs_common.c:2281
 msgid " Set key bindings... "
@@ -4837,7 +4852,7 @@ msgstr "Elküldetlen üzenetek esetén figyelmeztet"
 
 #: src/prefs_common.c:2471
 msgid "Enable strict checking of the integrity of summary caches"
-msgstr "Összefoglaló gyorstár sértetlenségének pontos ellenőrzése engedélyezés"
+msgstr "Összefoglaló gyorstár sértetlenségének pontos ellenőrzése"
 
 #: src/prefs_common.c:2474
 msgid ""
@@ -4846,8 +4861,8 @@ msgid ""
 "This option will degrade the performance of displaying summary."
 msgstr ""
 "Kapcsolja be, ha lehetőség van arra, hogy a mappák tartalmát egy másik "
-"alkalmazás módosítja.\n"
-"Ez az opció lassítja az összefoglaló megjelenítésének idejét."
+"alkalmazás módosíthatja.\n"
+"Ez az opció lassítja az összefoglalás megjelenésének idejét."
 
 #: src/prefs_common.c:2481
 msgid "Socket I/O timeout:"
@@ -5911,7 +5926,7 @@ msgstr "/Új_raszerkeszt"
 
 #: src/summaryview.c:397
 msgid "/Add sender to address boo_k..."
-msgstr "/Küldő hozzáadása a cím_listához"
+msgstr "/Küldő hozzáadása a cím_jegyzékhez..."
 
 #: src/summaryview.c:403
 msgid "/_View/_Source"
@@ -6176,7 +6191,7 @@ msgstr "Ú_j üzenet szerkesztése"
 
 #: src/textview.c:1928
 msgid "Add to address _book..."
-msgstr "Hozzáadás a _címlistához..."
+msgstr "Hozzáadás a _címjegyzékhez..."
 
 #: src/textview.c:1930
 msgid "Copy this add_ress"

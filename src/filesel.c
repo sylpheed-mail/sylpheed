@@ -29,6 +29,7 @@
 #include "manage_window.h"
 #include "alertpanel.h"
 #include "utils.h"
+#include "prefs_common.h"
 
 static GSList *filesel_select_file_full	(const gchar		*title,
 					 const gchar		*file,
@@ -155,12 +156,20 @@ static GtkWidget *filesel_create(const gchar *title,
 {
 	GtkWidget *dialog;
 
-	dialog = gtk_file_chooser_dialog_new
-		(title, NULL, action,
-		 action == GTK_FILE_CHOOSER_ACTION_SAVE ? GTK_STOCK_SAVE
-		 : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-		 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		 NULL);
+	if (prefs_common.comply_gnome_hig)
+		dialog = gtk_file_chooser_dialog_new
+			(title, NULL, action,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 action == GTK_FILE_CHOOSER_ACTION_SAVE ? GTK_STOCK_SAVE
+			 : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+			 NULL);
+	else
+		dialog = gtk_file_chooser_dialog_new
+			(title, NULL, action,
+			 action == GTK_FILE_CHOOSER_ACTION_SAVE ? GTK_STOCK_SAVE
+			 : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 NULL);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	gtk_window_set_wmclass
