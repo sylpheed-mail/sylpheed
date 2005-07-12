@@ -2062,6 +2062,7 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 	gint pos = 0;
 	gboolean can_break = FALSE;
 	gboolean do_break = FALSE;
+	gboolean prev_hyphen = FALSE;
 
 	gtk_text_iter_forward_to_line_end(&line_end);
 	str = gtk_text_buffer_get_text(buffer, &iter, &line_end, FALSE);
@@ -2095,7 +2096,7 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 		gunichar wc;
 		gint uri_len;
 
-		if (attr->is_line_break && can_break)
+		if (attr->is_line_break && can_break && !prev_hyphen)
 			pos = i;
 
 		/* don't wrap URI */
@@ -2112,9 +2113,11 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 		}
 
 		wc = g_utf8_get_char(p);
-		if (g_unichar_iswide(wc))
+		if (g_unichar_iswide(wc)) {
 			col += 2;
-		else if (*p == '\t')
+			if (prev_hyphen && can_break && attr->is_line_break)
+				pos = i;
+		} else if (*p == '\t')
 			col += 8;
 		else
 			col++;
@@ -2122,6 +2125,11 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 			do_break = TRUE;
 			break;
 		}
+
+		if (*p == '-')
+			prev_hyphen = TRUE;
+		else
+			prev_hyphen = FALSE;
 
 		p = g_utf8_next_char(p);
 		can_break = TRUE;
