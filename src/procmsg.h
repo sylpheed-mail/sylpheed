@@ -243,6 +243,9 @@ FILE   *procmsg_open_cache_file		(FolderItem	*item,
 FILE   *procmsg_open_mark_file		(FolderItem	*item,
 					 DataOpenMode	 mode);
 
+void	procmsg_clear_cache		(FolderItem	*item);
+void	procmsg_clear_mark		(FolderItem	*item);
+
 GNode  *procmsg_get_thread_tree		(GSList		*mlist);
 
 gint	procmsg_move_messages		(GSList		*mlist);

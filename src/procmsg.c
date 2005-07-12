@@ -776,6 +776,24 @@ FILE *procmsg_open_mark_file(FolderItem *item, DataOpenMode mode)
 	return fp;
 }
 
+void procmsg_clear_cache(FolderItem *item)
+{
+	FILE *fp;
+
+	fp = procmsg_open_cache_file(item, DATA_WRITE);
+	if (fp)
+		fclose(fp);
+}
+
+void procmsg_clear_mark(FolderItem *item)
+{
+	FILE *fp;
+
+	fp = procmsg_open_mark_file(item, DATA_WRITE);
+	if (fp)
+		fclose(fp);
+}
+
 /* return the reversed thread tree */
 GNode *procmsg_get_thread_tree(GSList *mlist)
 {
@@ -1202,16 +1220,12 @@ void procmsg_get_filter_keyword(MsgInfo *msginfo, gchar **header, gchar **key,
 
 void procmsg_empty_trash(FolderItem *trash)
 {
-	FILE *fp;
-
 	if (trash && trash->total > 0) {
 		debug_print("Emptying messages in %s ...\n", trash->path);
 
 		folder_item_remove_all_msg(trash);
-		fp = procmsg_open_cache_file(trash, DATA_WRITE);
-		if (fp) fclose(fp);
-		fp = procmsg_open_mark_file(trash, DATA_WRITE);
-		if (fp) fclose(fp);
+		procmsg_clear_cache(trash);
+		procmsg_clear_mark(trash);
 		trash->cache_dirty = FALSE;
 		trash->mark_dirty = FALSE;
 	}
@@ -1296,6 +1310,9 @@ gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs,
 	}
 
 	procmsg_msg_list_free(mlist);
+
+	procmsg_clear_cache(queue);
+	queue->cache_dirty = FALSE;
 	queue->mtime = 0;
 
 	return ret;
