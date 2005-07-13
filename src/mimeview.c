@@ -618,13 +618,15 @@ static void mimeview_show_mime_part(MimeView *mimeview, MimeInfo *partinfo)
 			       _("Select an action for the attached file:\n"),
 			       -1);
 	if (partinfo->filename || partinfo->name)
-		g_snprintf(buf, sizeof(buf), "[%s  %s (%d bytes)]\n\n",
+		g_snprintf(buf, sizeof(buf), "[%s  %s (%s)]\n\n",
 			   partinfo->filename ? partinfo->filename :
 			   partinfo->name,
-			   partinfo->content_type, partinfo->content_size);
+			   partinfo->content_type,
+			   to_human_readable(partinfo->content_size));
 	else
-		g_snprintf(buf, sizeof(buf), "[%s (%d bytes)]\n\n",
-			   partinfo->content_type, partinfo->content_size);
+		g_snprintf(buf, sizeof(buf), "[%s (%s)]\n\n",
+			   partinfo->content_type,
+			   to_human_readable(partinfo->content_size));
 	gtk_text_buffer_insert(buffer, &iter, buf, -1);
 
 	vbbox = gtk_vbutton_box_new();
