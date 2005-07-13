@@ -620,13 +620,15 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	else
 #endif
 	if (mimeinfo->filename || mimeinfo->name)
-		g_snprintf(buf, sizeof(buf), "\n[%s  %s (%d bytes)]\n",
+		g_snprintf(buf, sizeof(buf), "\n[%s  %s (%s)]\n",
 			   mimeinfo->filename ? mimeinfo->filename :
 			   mimeinfo->name,
-			   mimeinfo->content_type, mimeinfo->size);
+			   mimeinfo->content_type,
+			   to_human_readable(mimeinfo->content_size));
 	else
-		g_snprintf(buf, sizeof(buf), "\n[%s (%d bytes)]\n",
-			   mimeinfo->content_type, mimeinfo->size);
+		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
+			   mimeinfo->content_type,
+			   to_human_readable(mimeinfo->content_size));
 
 #if USE_GPGME
 	if (mimeinfo->sigstatus) {

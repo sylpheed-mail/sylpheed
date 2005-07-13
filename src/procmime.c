@@ -197,7 +197,10 @@ MimeInfo *procmime_scan_message(MsgInfo *msginfo)
 #endif
 
 	if (mimeinfo) {
-		mimeinfo->size = get_left_file_size(fp);
+		mimeinfo->size = msginfo->size;
+		mimeinfo->content_size = get_left_file_size(fp);
+		if (mimeinfo->encoding_type == ENC_BASE64)
+			mimeinfo->content_size = mimeinfo->content_size / 4 * 3;
 		if (mimeinfo->mime_type == MIME_MULTIPART ||
 		    mimeinfo->mime_type == MIME_MESSAGE_RFC822)
 			procmime_scan_multipart_message(mimeinfo, fp);
@@ -248,17 +251,23 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 	for (;;) {
 		MimeInfo *partinfo;
 		gboolean eom = FALSE;
+		glong content_pos;
+		gboolean is_base64;
 		gint len;
+		guint b64_content_len = 0;
+		gint b64_pad_len = 0;
 
 		prev_fpos = fpos;
 		debug_print("prev_fpos: %ld\n", fpos);
 
+		/* scan part header */
 		if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
 			MimeInfo *sub;
 
 			mimeinfo->sub = sub = procmime_scan_mime_header(fp);
 			if (!sub) break;
 
+			debug_print("message/rfc822 part found\n");
 			sub->level = mimeinfo->level + 1;
 			sub->parent = mimeinfo->parent;
 			sub->main = mimeinfo;
@@ -272,6 +281,10 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 				    partinfo->content_type);
 		}
 
+		/* begin content */
+		content_pos = ftell(fp);
+		debug_print("content_pos: %ld\n", content_pos);
+
 		if (partinfo->mime_type == MIME_MULTIPART ||
 		    partinfo->mime_type == MIME_MESSAGE_RFC822) {
 			if (partinfo->level < 8)
@@ -280,12 +293,20 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 		/* look for next boundary */
 		buf[0] = '\0';
+		is_base64 = partinfo->encoding_type == ENC_BASE64;
 		while ((p = fgets(buf, sizeof(buf), fp)) != NULL) {
 			if (IS_BOUNDARY(buf, boundary, boundary_len)) {
 				if (buf[2 + boundary_len]     == '-' &&
 				    buf[2 + boundary_len + 1] == '-')
 					eom = TRUE;
 				break;
+			} else if (is_base64) {
+				const gchar *s;
+				for (s = buf; *s && *s != '\r' && *s != '\n';
+				     ++s)
+					if (*s == '=')
+						++b64_pad_len;
+				b64_content_len += s - buf;
 			}
 		}
 		if (p == NULL) {
@@ -300,7 +321,14 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 		len = strlen(buf);
 		partinfo->size = fpos - prev_fpos - len;
+		if (is_base64)
+			partinfo->content_size =
+				b64_content_len / 4 * 3 - b64_pad_len;
+		else
+			partinfo->content_size = fpos - content_pos - len;
 		debug_print("partinfo->size: %d\n", partinfo->size);
+		debug_print("partinfo->content_size: %d\n",
+			    partinfo->content_size);
 		if (partinfo->sub && !partinfo->sub->sub &&
 		    !partinfo->sub->children) {
 			partinfo->sub->size =

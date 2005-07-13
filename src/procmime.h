@@ -99,6 +99,7 @@ struct _MimeInfo
 
 	glong fpos;
 	guint size;
+	guint content_size;
 
 	MimeInfo *main;
 	MimeInfo *sub;

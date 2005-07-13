@@ -497,7 +497,7 @@ static gboolean mimeview_append_part(MimeView *mimeview, MimeInfo *partinfo,
 	gchar *name;
 
 	mime_type = partinfo->content_type ? partinfo->content_type : "";
-	size = to_human_readable(partinfo->size);
+	size = to_human_readable(partinfo->content_size);
 	name = get_part_name(partinfo);
 
 	gtk_tree_store_append(mimeview->store, iter, parent);
@@ -621,10 +621,10 @@ static void mimeview_show_mime_part(MimeView *mimeview, MimeInfo *partinfo)
 		g_snprintf(buf, sizeof(buf), "[%s  %s (%d bytes)]\n\n",
 			   partinfo->filename ? partinfo->filename :
 			   partinfo->name,
-			   partinfo->content_type, partinfo->size);
+			   partinfo->content_type, partinfo->content_size);
 	else
 		g_snprintf(buf, sizeof(buf), "[%s (%d bytes)]\n\n",
-			   partinfo->content_type, partinfo->size);
+			   partinfo->content_type, partinfo->content_size);
 	gtk_text_buffer_insert(buffer, &iter, buf, -1);
 
 	vbbox = gtk_vbutton_box_new();
