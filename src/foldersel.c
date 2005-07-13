@@ -61,7 +61,8 @@ enum {
 	FOLDERSEL_FOLDERITEM,
 	FOLDERSEL_PIXBUF,
 	FOLDERSEL_PIXBUF_OPEN,
-	FOLDERSEL_EXPANDER,
+	FOLDERSEL_FOREGROUND,
+	FOLDERSEL_BOLD,
 	N_FOLDERSEL_COLUMNS
 };
 
@@ -256,6 +257,7 @@ static void foldersel_create(void)
 					G_TYPE_POINTER,
 					GDK_TYPE_PIXBUF,
 					GDK_TYPE_PIXBUF,
+					GDK_TYPE_COLOR,
 					G_TYPE_BOOLEAN);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(tree_store),
 					FOLDERSEL_FOLDERNAME,
@@ -285,7 +287,6 @@ static void foldersel_create(void)
 	gtk_tree_view_column_pack_start(column, renderer, FALSE);
 	gtk_tree_view_column_set_attributes
 		(column, renderer,
-		 "is-expander", FOLDERSEL_EXPANDER,
 		 "pixbuf", FOLDERSEL_PIXBUF,
 		 "pixbuf-expander-open", FOLDERSEL_PIXBUF_OPEN,
 		 "pixbuf-expander-closed", FOLDERSEL_PIXBUF,
@@ -294,9 +295,13 @@ static void foldersel_create(void)
 	/* create text renderer */
 	renderer = gtk_cell_renderer_text_new();
 	gtk_tree_view_column_pack_start(column, renderer, TRUE);
-	gtk_tree_view_column_set_attributes(column, renderer,
-					    "text", FOLDERSEL_FOLDERNAME,
-					    NULL);
+	gtk_tree_view_column_set_attributes
+		(column, renderer,
+		 "text", FOLDERSEL_FOLDERNAME,
+		 "foreground-gdk", FOLDERSEL_FOREGROUND,
+		 "weight-set", FOLDERSEL_BOLD,
+		 NULL);
+	g_object_set(G_OBJECT(renderer), "weight", PANGO_WEIGHT_BOLD, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
@@ -338,8 +343,12 @@ static void foldersel_init(void)
 static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 				  GtkTreeIter *iter, GtkTreeIter *parent)
 {
-	const gchar *name;
+	gchar *name;
 	GdkPixbuf *pixbuf, *pixbuf_open;
+	gboolean use_bold, use_color;
+	GdkColor *foreground = NULL;
+	static GdkColor color_noselect = {0, COLOR_DIM, COLOR_DIM, COLOR_DIM};
+	static GdkColor color_new = {0, (guint16)55000, 15000, 15000};
 
 	name = item->name;
 
@@ -383,21 +392,43 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 		}
 	}
 
-	gtk_tree_store_append(store, iter, parent);
+	if (item->stype == F_QUEUE && item->total > 0) {
+		name = g_strdup_printf("%s (%d)", name, item->total);
+	} else if (item->unread > 0) {
+		name = g_strdup_printf("%s (%d)", name, item->unread);
+	} else
+		name = g_strdup(name);
 
-	pixbuf = item->no_select ? foldernoselect_pixbuf : folder_pixbuf,
+	pixbuf = item->no_select ? foldernoselect_pixbuf : folder_pixbuf;
 	pixbuf_open =
-		item->no_select ? foldernoselect_pixbuf : folderopen_pixbuf,
+		item->no_select ? foldernoselect_pixbuf : folderopen_pixbuf;
+
+	if (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
+	    item->stype == F_TRASH) {
+		use_bold = use_color = FALSE;
+	} else if (item->stype == F_QUEUE) {
+		use_bold = use_color = (item->total > 0);
+	} else {
+		use_bold = (item->unread > 0);
+		use_color = (item->new > 0);
+	}
+
+	if (item->no_select)
+		foreground = &color_noselect;
+	else if (use_color)
+		foreground = &color_new;
 
 	/* insert this node */
+	gtk_tree_store_append(store, iter, parent);
 	gtk_tree_store_set(store, iter,
 			   FOLDERSEL_FOLDERNAME, name,
 			   FOLDERSEL_FOLDERITEM, item,
 			   FOLDERSEL_PIXBUF, pixbuf,
 			   FOLDERSEL_PIXBUF_OPEN, pixbuf_open,
-			   FOLDERSEL_EXPANDER,
-				item->node->children ? TRUE : FALSE,
+			   FOLDERSEL_FOREGROUND, foreground,
+			   FOLDERSEL_BOLD, use_bold,
 			   -1);
+	g_free(name);
 }
 
 static void foldersel_insert_gnode_in_store(GtkTreeStore *store, GNode *node,
@@ -537,10 +568,6 @@ static void foldersel_new_folder(GtkButton *button, gpointer data)
 		alertpanel_error(_("Can't create the folder `%s'."), disp_name);
 		return;
 	}
-
-	/* parent can expand */
-	gtk_tree_store_set(store, &selected, FOLDERSEL_EXPANDER, TRUE,
-			   -1);
 
 	/* add new child */
 	foldersel_append_item(store, new_item, &new_child, &selected);
