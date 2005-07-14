@@ -1967,7 +1967,7 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	gchar *old_id;
 	gchar *new_id;
 	GtkTreePath *sel_path;
-	GtkTreePath *open_path;
+	GtkTreePath *open_path = NULL;
 	GtkTreeIter iter;
 
 	item = folderview_get_selected_item(folderview);
@@ -2016,7 +2016,8 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	g_free(new_id);
 
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
-	open_path = gtk_tree_row_reference_get_path(folderview->opened);
+	if (folderview->opened)
+		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	if (sel_path) {
 		gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store),
 					&iter, sel_path);
@@ -2044,8 +2045,9 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 	FolderItem *item;
 	FolderItem *new_parent;
 	GtkTreePath *sel_path;
-	GtkTreePath *open_path;
+	GtkTreePath *open_path = NULL;
 	GtkTreeIter iter;
+	gchar *old_path, *old_id, *new_id;
 
 	item = folderview_get_selected_item(folderview);
 	if (!item)
@@ -2063,16 +2065,28 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 	if (new_parent == item->parent)
 		return;
 
+	old_path = g_strdup(item->path);
+	old_id = folder_item_get_identifier(item);
+
 	if (item->folder->klass->move_folder
 		(item->folder, item, new_parent) < 0) {
 		alertpanel_error(_("Can't move the folder `%s'."), item->name);
+		g_free(old_id);
+		g_free(old_path);
 		return;
 	}
 
-	/* rename filter paths */
+	if (folder_get_default_folder() == item->folder)
+		prefs_filter_rename_path(old_path, item->path);
+	new_id = folder_item_get_identifier(item);
+	prefs_filter_rename_path(old_id, new_id);
+	g_free(new_id);
+	g_free(old_id);
+	g_free(old_path);
 
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
-	open_path = gtk_tree_row_reference_get_path(folderview->opened);
+	if (folderview->opened)
+		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	g_return_if_fail(sel_path != NULL);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store), &iter,
 				sel_path);
@@ -2104,7 +2118,7 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 	AlertValue avalue;
 	gchar *old_path;
 	gchar *old_id;
-	GtkTreePath *sel_path, *open_path;
+	GtkTreePath *sel_path, *open_path = NULL;
 	GtkTreeIter iter;
 
 	item = folderview_get_selected_item(folderview);
@@ -2133,7 +2147,8 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	g_return_if_fail(sel_path != NULL);
-	open_path = gtk_tree_row_reference_get_path(folderview->opened);
+	if (folderview->opened)
+		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store), &iter,
 				sel_path);
 	if (sel_path && open_path &&
@@ -2396,7 +2411,7 @@ static void folderview_rm_news_group_cb(FolderView *folderview, guint action,
 	gchar *name;
 	gchar *message;
 	AlertValue avalue;
-	GtkTreePath *sel_path, *open_path;
+	GtkTreePath *sel_path, *open_path = NULL;
 	GtkTreeIter iter;
 
 	item = folderview_get_selected_item(folderview);
@@ -2418,7 +2433,8 @@ static void folderview_rm_news_group_cb(FolderView *folderview, guint action,
 
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	g_return_if_fail(sel_path != NULL);
-	open_path = gtk_tree_row_reference_get_path(folderview->opened);
+	if (folderview->opened)
+		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store), &iter,
 				sel_path);
 	if (open_path && sel_path &&
