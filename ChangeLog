@@ -1,5 +1,11 @@
 2005-07-14
 
+	* src/procmime.c: procmime_decode_content(): don't uncanonicalize
+	  files whose name is *.txt but the Content-Type is
+	  application/octet-stream.
+
+2005-07-14
+
 	* src/filter.c
 	  src/folderview.c: modify filter rules after moving folders.
 

@@ -1,5 +1,11 @@
 2005-07-14
 
+	* src/procmime.c: procmime_decode_content(): 名前が *.txt だが
+	  Content-Type が application/octet-stream であるようなファイルを
+	  正規化解除しないようにした。
+
+2005-07-14
+
 	* src/filter.c
 	  src/folderview.c: フォルダの移動後にフィルタルールを修正するように
 	  した。
