@@ -71,7 +71,6 @@ static gchar *menu_translate(const gchar *path, gpointer data)
 	return retval;
 }
 
-#warning FIXME_GTK2
 #if 0
 static void factory_print_func(gpointer data, gchar *string)
 {

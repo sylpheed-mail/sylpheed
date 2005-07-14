@@ -567,10 +567,11 @@ void prefs_set_dialog_to_default(PrefParam *param)
 
 		switch (tmpparam.type) {
 		case P_STRING:
-#warning FIXME_GTK2
 			if (tmpparam.defval) {
-				if (!g_ascii_strncasecmp(tmpparam.defval, "ENV_", 4)) {
-					str_data = g_strdup(g_getenv(param[i].defval + 4));
+				if (!g_ascii_strncasecmp
+					(tmpparam.defval, "ENV_", 4)) {
+					str_data = g_strdup
+						(g_getenv(param[i].defval + 4));
 					tmpparam.data = &str_data;
 					break;
 				} else if (tmpparam.defval[0] == '~') {
