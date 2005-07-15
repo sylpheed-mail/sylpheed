@@ -3556,8 +3556,9 @@ static void summary_modify_node(SummaryView *summaryview, GtkTreeIter *iter,
 static void summary_modify_threads(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GtkTreeIter iter, next, selected;
+	GtkTreeIter iter, next, selected, new_selected;
 	GtkTreeIter *selected_p = NULL;
+	GtkTreePath *prev_path = NULL;
 	gboolean valid, has_selection;
 
 	summary_lock(summaryview);
@@ -3570,6 +3571,8 @@ static void summary_modify_threads(SummaryView *summaryview)
 	has_selection = gtkut_tree_row_reference_get_iter
 		(model, summaryview->selected, &selected);
 	if (has_selection) {
+		prev_path = gtk_tree_row_reference_get_path
+			(summaryview->selected);
 		if (summary_find_nearest_msg(summaryview, &next, &selected)) {
 			selected = next;
 			selected_p = &selected;
@@ -3593,8 +3596,13 @@ static void summary_modify_threads(SummaryView *summaryview)
 		summary_selection_list_free(summaryview);
 
 	if (has_selection &&
-	    !gtk_tree_row_reference_valid(summaryview->selected))
+	    !gtk_tree_row_reference_valid(summaryview->selected)) {
+		if (prev_path &&
+		    gtk_tree_model_get_iter(model, &new_selected, prev_path))
+			selected = new_selected;
 		summary_select_row(summaryview, &selected, FALSE, FALSE);
+	}
+	gtk_tree_path_free(prev_path);
 
 	debug_print("done.\n");
 
