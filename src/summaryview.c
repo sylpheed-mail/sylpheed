@@ -358,7 +358,7 @@ enum
 	N_DRAG_TYPES
 };
 
-GtkTargetEntry summary_drag_types[] =
+static GtkTargetEntry summary_drag_types[] =
 {
 	{"text/plain", GTK_TARGET_SAME_APP, DRAG_TYPE_TEXT},
 	{"message/rfc822", GTK_TARGET_SAME_APP, DRAG_TYPE_RFC822},

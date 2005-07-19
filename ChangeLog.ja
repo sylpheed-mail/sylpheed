@@ -1,3 +1,10 @@
+2005-07-19
+
+	* src/compose.c: GDK_ACTION_MOVE の際に drag source を削除しないよう
+	  にした。明示的に gtk_drag_finish() を呼ぶようにした。
+	* src/summaryview.c
+	  src/folderview.c: GtkTargetEntry を static にした。
+
 2005-07-15
 
 	* src/summaryview.c: summary_modify_threads(): ソートが有効になって

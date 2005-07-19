@@ -6239,6 +6239,9 @@ static void compose_attach_drag_received_cb (GtkWidget		*widget,
 	if (info == DRAG_TYPE_RFC822)
 		content_type = "message/rfc822";
 
+	debug_print("compose_attach_drag_received_cb(): received %s\n",
+		    (const gchar *)data->data);
+
 	list = uri_list_extract_filenames((const gchar *)data->data);
 	for (cur = list; cur != NULL; cur = cur->next) {
 		path = (gchar *)cur->data;
@@ -6249,6 +6252,10 @@ static void compose_attach_drag_received_cb (GtkWidget		*widget,
 	}
 	if (list) compose_changed_cb(NULL, compose);
 	g_list_free(list);
+
+	if ((drag_context->actions & GDK_ACTION_MOVE) != 0)
+		drag_context->action = 0;
+	gtk_drag_finish(drag_context, TRUE, FALSE, time);
 }
 
 static void compose_insert_drag_received_cb (GtkWidget		*widget,
@@ -6263,11 +6270,18 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 	Compose *compose = (Compose *)user_data;
 	GList *list, *cur;
 
+	debug_print("compose_insert_drag_received_cb(): received %s\n",
+		    (const gchar *)data->data);
+
 	list = uri_list_extract_filenames((const gchar *)data->data);
 	for (cur = list; cur != NULL; cur = cur->next)
 		compose_insert_file(compose, (const gchar *)cur->data, TRUE);
 	list_free_strings(list);
 	g_list_free(list);
+
+	if ((drag_context->actions & GDK_ACTION_MOVE) != 0)
+		drag_context->action = 0;
+	gtk_drag_finish(drag_context, TRUE, FALSE, time);
 }
 
 static void to_activated(GtkWidget *widget, Compose *compose)

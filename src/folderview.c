@@ -221,7 +221,7 @@ static void folderview_drag_received_cb  (GtkWidget        *widget,
 					  guint             time,
 					  FolderView       *folderview);
 
-GtkTargetEntry folderview_drag_types[] =
+static GtkTargetEntry folderview_drag_types[] =
 {
 	{"text/plain", GTK_TARGET_SAME_APP, 0}
 };
