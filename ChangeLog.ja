@@ -1,5 +1,10 @@
 2005-07-19
 
+	* src/compose.c: compose_get_line_break_pos(): '/' の後で改行しない
+	  ようにした(ファイルパス等を保護するため)。
+
+2005-07-19
+
 	* src/compose.c: GDK_ACTION_MOVE の際に drag source を削除しないよう
 	  にした。明示的に gtk_drag_finish() を呼ぶようにした。
 	* src/summaryview.c

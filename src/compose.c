@@ -2062,13 +2062,13 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 	gint pos = 0;
 	gboolean can_break = FALSE;
 	gboolean do_break = FALSE;
-	gboolean prev_hyphen = FALSE;
+	gboolean prev_dont_break = FALSE;
 
 	gtk_text_iter_forward_to_line_end(&line_end);
 	str = gtk_text_buffer_get_text(buffer, &iter, &line_end, FALSE);
 	len = g_utf8_strlen(str, -1);
-	//g_print("breaking line: %d: %s (len = %d)\n",
-	//	gtk_text_iter_get_line(&iter), str, len);
+	/* g_print("breaking line: %d: %s (len = %d)\n",
+		gtk_text_iter_get_line(&iter), str, len); */
 	attrs = g_new(PangoLogAttr, len + 1);
 
 	pango_default_break(str, -1, NULL, attrs, len + 1);
@@ -2096,7 +2096,7 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 		gunichar wc;
 		gint uri_len;
 
-		if (attr->is_line_break && can_break && !prev_hyphen)
+		if (attr->is_line_break && can_break && !prev_dont_break)
 			pos = i;
 
 		/* don't wrap URI */
@@ -2115,7 +2115,7 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 		wc = g_utf8_get_char(p);
 		if (g_unichar_iswide(wc)) {
 			col += 2;
-			if (prev_hyphen && can_break && attr->is_line_break)
+			if (prev_dont_break && can_break && attr->is_line_break)
 				pos = i;
 		} else if (*p == '\t')
 			col += 8;
@@ -2126,10 +2126,10 @@ static gboolean compose_get_line_break_pos(GtkTextBuffer *buffer,
 			break;
 		}
 
-		if (*p == '-')
-			prev_hyphen = TRUE;
+		if (*p == '-' || *p == '/')
+			prev_dont_break = TRUE;
 		else
-			prev_hyphen = FALSE;
+			prev_dont_break = FALSE;
 
 		p = g_utf8_next_char(p);
 		can_break = TRUE;
