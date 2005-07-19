@@ -6269,9 +6269,30 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 {
 	Compose *compose = (Compose *)user_data;
 	GList *list, *cur;
+	static GdkDragContext *context_ = NULL;
+	static gint x_ = -1, y_ = -1;
+	static guint info_ = N_DRAG_TYPES;
+	static guint time_ = G_MAXUINT;
 
 	debug_print("compose_insert_drag_received_cb(): received %s\n",
 		    (const gchar *)data->data);
+
+	/* FIXME: somehow drag-data-received signal is emitted twice.
+	 * This hack prevents duplicated insertion. */
+	if (context_ == drag_context && x_ == x && y_ == y && info_ == info &&
+	    time_ == time) {
+		debug_print("dup event\n");
+		context_ = NULL;
+		x_ = y_ = -1;
+		info_ = N_DRAG_TYPES;
+		time_ = G_MAXUINT;
+		return;
+	}
+	context_ = drag_context;
+	x_ = x;
+	y_ = y;
+	info_ = info;
+	time_ = time;
 
 	list = uri_list_extract_filenames((const gchar *)data->data);
 	for (cur = list; cur != NULL; cur = cur->next)
