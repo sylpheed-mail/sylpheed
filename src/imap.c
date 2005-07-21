@@ -2117,7 +2117,6 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 		} else
 			newpath = g_strdup(name);
 	}
-	g_print("oldpath = %s, newpath = %s\n", item->path, newpath);
 
 	real_newpath = imap_utf8_to_modified_utf7(newpath);
 	imap_path_separator_subst(real_newpath, separator);
@@ -3840,6 +3839,7 @@ static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 	for (p = mutf7_str; *p != '\0'; p++) {
 		/* replace: '&'  -> '+',
 			    "&-" -> '&',
+			    "+"  -> "+-",
 			    escaped ','  -> '/' */
 		if (!in_escape && *p == '&') {
 			if (*(p + 1) != '-') {
@@ -3849,6 +3849,8 @@ static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 				g_string_append_c(norm_utf7, '&');
 				p++;
 			}
+		} else if (!in_escape && *p == '+') {
+			g_string_append(norm_utf7, "+-");
 		} else if (in_escape && *p == ',') {
 			g_string_append_c(norm_utf7, '/');
 		} else if (in_escape && *p == '-') {
@@ -3859,6 +3861,8 @@ static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 		}
 	}
 
+	/* somehow iconv() returns error when the last of the string is "+-" */
+	g_string_append_c(norm_utf7, '\n');
 	norm_utf7_p = norm_utf7->str;
 	norm_utf7_len = norm_utf7->len;
 	to_len = strlen(mutf7_str) * 5;
@@ -3866,8 +3870,7 @@ static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 
 	if (iconv(cd, (ICONV_CONST gchar **)&norm_utf7_p, &norm_utf7_len,
 		  &to_p, &to_len) == -1) {
-		g_warning(_("iconv cannot convert UTF-7 to %s\n"),
-			  conv_get_locale_charset_str());
+		g_warning(_("iconv cannot convert UTF-7 to %s\n"), CS_INTERNAL);
 		g_string_free(norm_utf7, TRUE);
 		g_free(to_str);
 		return g_strdup(mutf7_str);
@@ -3877,6 +3880,7 @@ static gchar *imap_modified_utf7_to_utf8(const gchar *mutf7_str)
 	iconv(cd, NULL, NULL, &to_p, &to_len);
 	g_string_free(norm_utf7, TRUE);
 	*to_p = '\0';
+	strretchomp(to_str);
 
 	return to_str;
 }
@@ -3910,8 +3914,6 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 	Xalloca(norm_utf7, norm_utf7_len + 1, return g_strdup(from));
 	norm_utf7_p = norm_utf7;
 
-#define IS_PRINT(ch) (isprint(ch) && isascii(ch))
-
 	while (from_len > 0) {
 		if (*from_tmp == '+') {
 			*norm_utf7_p++ = '+';
@@ -3919,7 +3921,7 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 			norm_utf7_len -= 2;
 			from_tmp++;
 			from_len--;
-		} else if (IS_PRINT(*(guchar *)from_tmp)) {
+		} else if (g_ascii_isprint(*from_tmp)) {
 			/* printable ascii char */
 			*norm_utf7_p = *from_tmp;
 			norm_utf7_p++;
@@ -3931,7 +3933,7 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 
 			/* unprintable char: convert to UTF-7 */
 			p = from_tmp;
-			while (!IS_PRINT(*(guchar *)p) && conv_len < from_len) {
+			while (!g_ascii_isprint(*p) && conv_len < from_len) {
 				conv_len += g_utf8_skip[*(guchar *)p];
 				p += g_utf8_skip[*(guchar *)p];
 			}
@@ -3941,7 +3943,7 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 				  &conv_len,
 				  &norm_utf7_p, &norm_utf7_len) == -1) {
 				g_warning("iconv cannot convert %s to UTF-7\n",
-					  conv_get_locale_charset_str());
+					  CS_INTERNAL);
 				return g_strdup(from);
 			}
 
@@ -3949,8 +3951,6 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 			iconv(cd, NULL, NULL, &norm_utf7_p, &norm_utf7_len);
 		}
 	}
-
-#undef IS_PRINT
 
 	*norm_utf7_p = '\0';
 	to_str = g_string_new(NULL);

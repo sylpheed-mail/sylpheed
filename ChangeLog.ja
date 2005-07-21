@@ -1,5 +1,13 @@
 2005-07-21
 
+	* src/imap.c: imap_modified_utf7_to_utf8(): 文字列が '+' を含むときの
+	  modified-UTF7 から UTF-8 への変換を修正。
+	  imap_utf8_to_modified_utf7(): locale 依存の isprint() の代わりに
+	  g_ascii_isprint() を使用。
+	  変換エラー時の警告を修正。
+
+2005-07-21
+
 	* src/prefs_folder_item.c: パスを GtkLabel で表示。
 
 2005-07-20

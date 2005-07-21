@@ -1,5 +1,14 @@
 2005-07-21
 
+	* src/imap.c:
+	  imap_modified_utf7_to_utf8(): fixed modified-UTF7 to UTF-8
+	  conversion when the string includes '+'.
+	  imap_utf8_to_modified_utf7(): use g_ascii_isprint() instead of
+	  locale-dependent isprint().
+	  Fixed warnings on conversion error.
+
+2005-07-21
+
 	* src/prefs_folder_item.c: display path with GtkLabel.
 
 2005-07-20
