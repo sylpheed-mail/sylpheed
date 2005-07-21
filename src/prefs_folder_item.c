@@ -47,7 +47,7 @@ struct _PrefsFolderItemDialog
 
 	/* General */
 	GtkWidget *name_entry;
-	GtkWidget *path_entry;
+	GtkWidget *path_label;
 	GtkWidget *type_optmenu;
 
 	GtkWidget *trim_summary_subj_chkbtn;
@@ -146,7 +146,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	GtkWidget *hbox;
 	GtkWidget *label;
 	GtkWidget *name_entry;
-	GtkWidget *path_entry;
+	GtkWidget *path_label;
 	GtkWidget *optmenu;
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
@@ -185,11 +185,14 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 			 GTK_FILL, 0, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 
-	path_entry = gtk_entry_new();
-	gtk_editable_set_editable(GTK_EDITABLE(path_entry), FALSE);
-	gtk_widget_set_size_request(path_entry, 200, -1);
-	gtk_widget_set_style(path_entry, style);
-	gtk_table_attach(GTK_TABLE(table), path_entry, 1, 2, 1, 2,
+	path_label = gtk_label_new("");
+	gtk_label_set_selectable(GTK_LABEL(path_label), TRUE);
+	gtk_misc_set_alignment(GTK_MISC(path_label), 0, 0.5);
+	gtk_label_set_justify(GTK_LABEL(path_label), GTK_JUSTIFY_LEFT);
+#if GTK_CHECK_VERSION(2, 6, 0)
+	gtk_label_set_ellipsize(GTK_LABEL(path_label), PANGO_ELLIPSIZE_MIDDLE);
+#endif
+	gtk_table_attach(GTK_TABLE(table), path_label, 1, 2, 1, 2,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
@@ -226,7 +229,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 			  _("Delete [...] or (...) at the beginning of subject on reply"));
 
 	dialog->name_entry = name_entry;
-	dialog->path_entry = path_entry;
+	dialog->path_label = path_label;
 	dialog->type_optmenu = optmenu;
 	dialog->trim_summary_subj_chkbtn = trim_summary_subj_chkbtn;
 	dialog->trim_compose_subj_chkbtn = trim_compose_subj_chkbtn;
@@ -384,7 +387,7 @@ static void prefs_folder_item_set_dialog(PrefsFolderItemDialog *dialog)
 	SET_ENTRY(name_entry, name);
 
 	id = folder_item_get_identifier(dialog->item);
-	gtk_entry_set_text(GTK_ENTRY(dialog->path_entry), id);
+	gtk_label_set_text(GTK_LABEL(dialog->path_label), id);
 	g_free(id);
 
 	optmenu = GTK_OPTION_MENU(dialog->type_optmenu);
