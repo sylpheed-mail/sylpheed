@@ -216,9 +216,12 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 		}
 	} else if (use_cache) {
 		GSList *newlist, *cur, *next;
+		gboolean strict_cache_check = prefs_common.strict_cache_check;
 
-		mlist = procmsg_read_cache
-			(item, prefs_common.strict_cache_check);
+		if (item->stype == F_QUEUE || item->stype == F_DRAFT)
+			strict_cache_check = TRUE;
+
+		mlist = procmsg_read_cache(item, strict_cache_check);
 		msg_table = procmsg_msg_hash_table_create(mlist);
 		newlist = mh_get_uncached_msgs(msg_table, item);
 		if (newlist)
@@ -226,7 +229,7 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 		if (msg_table)
 			g_hash_table_destroy(msg_table);
 
-		if (!prefs_common.strict_cache_check) {
+		if (!strict_cache_check) {
 			/* remove nonexistent messages */
 			for (cur = mlist; cur != NULL; cur = next) {
 				MsgInfo *msginfo = (MsgInfo *)cur->data;
