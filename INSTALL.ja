@@ -1,12 +1,13 @@
 インストール方法
 ================
 
-このプログラムをコンパイルするには GTK+ 2.4.0 以降が必要です。
+このプログラムをコンパイルするには GTK+ 2.4.0 以降が必要です(GTK+ 2.6.0
+以降推奨)。
 
 このプログラムは Debian GNU/Linux (sarge/sid) (Linux 2.6.x + glibc 2.3.2)
-上で開発されているため、他の環境ではうまく動作しない可能性があります。
+上で開発されています。他の環境ではうまく動作しない可能性もあります。
 
-以下の環境で動作が確認されています(※最新版で動作するとは限りません):
+現在以下の環境で動作が確認されています(※最新版で動作するとは限りません):
 
 Linux
 
@@ -116,10 +117,10 @@ GnuPG (PGP)対応を有効にしたい場合は、 GPGME 1.0.0 以降と GnuPG 1.2.0 以降が
 configure スクリプトのオプション
 ================================
 
-  --disable-compface  compface (X-Face)対応を無効にする
+  --disable-compface  compface(X-Face)対応を無効にする
   --disable-ipv6      IPv6 対応を無効にする
-  --enable-ssl        SSL 対応 (要 OpenSSL)
-  --enable-gpgme      GnuPG 対応 (要 GPGME と GnuPG)
+  --disable-ssl       SSL 対応(要 OpenSSL)を無効にする
+  --disable-gpgme     GnuPG 対応(要 GPGME と GnuPG)を無効にする
   --enable-ldap       LDAP 対応
   --enable-jpilot     JPilot 対応
 
