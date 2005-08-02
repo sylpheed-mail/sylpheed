@@ -131,13 +131,13 @@ static gchar *conv_noconv(const gchar *inbuf, gint *error);
 static gchar *conv_jistoeuc(const gchar *inbuf, gint *error)
 {
 	gchar *outbuf;
-	const guchar *in = inbuf;
+	const guchar *in = (guchar *)inbuf;
 	guchar *out;
 	JISState state = JIS_ASCII;
 	gint error_ = 0;
 
 	outbuf = g_malloc(strlen(inbuf) * 2 + 1);
-	out = outbuf;
+	out = (guchar *)outbuf;
 
 	while (*in != '\0') {
 		if (*in == ESC) {
@@ -279,13 +279,13 @@ static gint conv_jis_hantozen(guchar *outbuf, guchar jis_code, guchar sound_sym)
 static gchar *conv_euctojis(const gchar *inbuf, gint *error)
 {
 	gchar *outbuf;
-	const guchar *in = inbuf;
+	const guchar *in = (guchar *)inbuf;
 	guchar *out;
 	JISState state = JIS_ASCII;
 	gint error_ = 0;
  
 	outbuf = g_malloc(strlen(inbuf) * 3 + 4);
-	out = outbuf;
+	out = (guchar *)outbuf;
 
 	while (*in != '\0') {
 		if (isascii(*in)) {
@@ -381,12 +381,12 @@ static gchar *conv_euctojis(const gchar *inbuf, gint *error)
 static gchar *conv_sjistoeuc(const gchar *inbuf, gint *error)
 {
 	gchar *outbuf;
-	const guchar *in = inbuf;
+	const guchar *in = (guchar *)inbuf;
 	guchar *out;
 	gint error_ = 0;
 
 	outbuf = g_malloc(strlen(inbuf) * 2 + 1);
-	out = outbuf;
+	out = (guchar *)outbuf;
 
 	while (*in != '\0') {
 		if (isascii(*in)) {
@@ -680,13 +680,13 @@ static void conv_unreadable_eucjp(gchar *str)
 
 static void conv_unreadable_8bit(gchar *str)
 {
-	register guchar *p = str;
+	register gchar *p = str;
 
 	while (*p != '\0') {
 		/* convert CR+LF -> LF */
 		if (*p == '\r' && *(p + 1) == '\n')
 			memmove(p, p + 1, strlen(p));
-		else if (!isascii(*p)) *p = SUBST_CHAR;
+		else if (!isascii(*(guchar *)p)) *p = SUBST_CHAR;
 		p++;
 	}
 }
@@ -729,7 +729,7 @@ void conv_mb_alnum(gchar *str)
 		NCV, NCV, NCV, NCV, NCV, NCV, NCV, NCV
 	};
 
-	register guchar *p = str;
+	register guchar *p = (guchar *)str;
 	register gint len;
 
 	len = strlen(str);
@@ -775,7 +775,7 @@ void conv_mb_alnum(gchar *str)
 
 CharSet conv_guess_ja_encoding(const gchar *str)
 {
-	const guchar *p = str;
+	const guchar *p = (const guchar *)str;
 	CharSet guessed = C_US_ASCII;
 
 	while (*p != '\0') {
@@ -1662,16 +1662,17 @@ gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 
 #define LBREAK_IF_REQUIRED(cond, is_plain_text)				\
 {									\
-	if (len - (destp - (guchar *)dest) < MAX_LINELEN + 2) {		\
+	if (len - (destp - dest) < MAX_LINELEN + 2) {			\
 		*destp = '\0';						\
 		return;							\
 	}								\
 									\
 	if ((cond) && *srcp) {						\
-		if (destp > (guchar *)dest && left < MAX_LINELEN - 1) {	\
-			if (isspace(*(destp - 1)))			\
+		if (destp > dest && left < MAX_LINELEN - 1) {		\
+			if (g_ascii_isspace(*(destp - 1)))		\
 				destp--;				\
-			else if (is_plain_text && isspace(*srcp))	\
+			else if (is_plain_text &&			\
+				 g_ascii_isspace(*srcp))		\
 				srcp++;					\
 			if (*srcp) {					\
 				*destp++ = '\n';			\
@@ -1690,8 +1691,8 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 	gint mimestr_len;
 	gchar *mimesep_enc;
 	gint left;
-	const guchar *srcp = src;
-	guchar *destp = dest;
+	const gchar *srcp = src;
+	gchar *destp = dest;
 	gboolean use_base64;
 
 	g_return_if_fail(g_utf8_validate(src, -1, NULL) == TRUE);
@@ -1718,7 +1719,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 	while (*srcp) {
 		LBREAK_IF_REQUIRED(left <= 0, TRUE);
 
-		while (isspace(*srcp)) {
+		while (g_ascii_isspace(*srcp)) {
 			*destp++ = *srcp++;
 			left--;
 			LBREAK_IF_REQUIRED(left <= 0, TRUE);
@@ -1753,21 +1754,22 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 			gchar *part_str;
 			gchar *out_str;
 			gchar *enc_str;
-			const guchar *p = srcp;
+			const gchar *p = srcp;
 			gint out_str_len;
 			gint out_enc_str_len;
 			gint mime_block_len;
 			gboolean cont = FALSE;
 
 			while (*p != '\0') {
-				if (isspace(*p) && !is_next_nonascii(p + 1))
+				if (g_ascii_isspace(*p) &&
+				    !is_next_nonascii(p + 1))
 					break;
 				/* don't include parentheses in encoded
 				   strings */
 				if (addr_field && (*p == '(' || *p == ')'))
 					break;
 
-				mb_len = g_utf8_skip[*p];
+				mb_len = g_utf8_skip[*(guchar *)p];
 
 				Xstrndup_a(part_str, srcp, cur_len + mb_len, );
 				out_str = conv_codeset_strdup
@@ -1783,7 +1785,8 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 					out_enc_str_len = B64LEN(out_str_len);
 				else
 					out_enc_str_len =
-						qp_get_q_encoding_len(out_str);
+						qp_get_q_encoding_len
+							((guchar *)out_str);
 
 				g_free(out_str);
 
@@ -1814,13 +1817,16 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 					out_enc_str_len = B64LEN(out_str_len);
 				else
 					out_enc_str_len =
-						qp_get_q_encoding_len(out_str);
+						qp_get_q_encoding_len
+							((guchar *)out_str);
 
 				Xalloca(enc_str, out_enc_str_len + 1, );
 				if (use_base64)
-					base64_encode(enc_str, out_str, out_str_len);
+					base64_encode(enc_str,
+						      (guchar *)out_str,
+						      out_str_len);
 				else
-					qp_q_encode(enc_str, out_str);
+					qp_q_encode(enc_str, (guchar *)out_str);
 
 				g_free(out_str);
 

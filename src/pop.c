@@ -696,7 +696,7 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 {
 	Pop3Session *pop3_session = POP3_SESSION(session);
 	Pop3ErrorValue val = PS_SUCCESS;
-	const guchar *body;
+	const gchar *body;
 
 	body = msg;
 	if (pop3_session->state != POP3_GETRANGE_UIDL_RECV &&
@@ -711,9 +711,9 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 
 		if (*body == '+' || *body == '-')
 			body++;
-		while (isalpha(*body))
+		while (g_ascii_isalpha(*body))
 			body++;
-		while (isspace(*body))
+		while (g_ascii_isspace(*body))
 			body++;
 	}
 

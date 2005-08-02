@@ -2436,7 +2436,7 @@ static GList *imap_parse_namespace_str(gchar *str)
 		*p = '\0';
 		p++;
 
-		while (*p && isspace(*p)) p++;
+		while (*p && g_ascii_isspace(*p)) p++;
 		if (*p == '\0') break;
 		if (strncmp(p, "NIL", 3) == 0)
 			separator = NULL;
@@ -2595,7 +2595,7 @@ static gchar *imap_parse_atom(IMAPSession *session, gchar *src,
 	g_return_val_if_fail(str != NULL, cur_pos);
 
 	/* read the next line if the current response buffer is empty */
-	while (isspace(*(guchar *)cur_pos)) cur_pos++;
+	while (g_ascii_isspace(*cur_pos)) cur_pos++;
 	while (*cur_pos == '\0') {
 		if (sock_getline(SESSION(session)->sock, &nextline) < 0)
 			return cur_pos;
@@ -2606,7 +2606,7 @@ static gchar *imap_parse_atom(IMAPSession *session, gchar *src,
 		debug_print("IMAP4< %s\n", nextline);
 		g_free(nextline);
 
-		while (isspace(*(guchar *)cur_pos)) cur_pos++;
+		while (g_ascii_isspace(*cur_pos)) cur_pos++;
 	}
 
 	if (!strncmp(cur_pos, "NIL", 3)) {
@@ -2666,7 +2666,7 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 
 	g_return_val_if_fail(str != NULL, cur_pos);
 
-	while (isspace(*(guchar *)cur_pos)) cur_pos++;
+	while (g_ascii_isspace(*cur_pos)) cur_pos++;
 
 	g_return_val_if_fail(*cur_pos == '{', cur_pos);
 
@@ -2697,7 +2697,7 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 	*headers = g_strndup(cur_pos, len);
 	cur_pos += len;
 
-	while (isspace(*(guchar *)cur_pos)) cur_pos++;
+	while (g_ascii_isspace(*cur_pos)) cur_pos++;
 	while (*cur_pos == '\0') {
 		if (sock_getline(SESSION(session)->sock, &nextline) < 0)
 			return cur_pos;
@@ -2707,7 +2707,7 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 		debug_print("IMAP4< %s\n", nextline);
 		g_free(nextline);
 
-		while (isspace(*(guchar *)cur_pos)) cur_pos++;
+		while (g_ascii_isspace(*cur_pos)) cur_pos++;
 	}
 
 	return cur_pos;

@@ -1171,14 +1171,14 @@ void procmsg_get_filter_keyword(MsgInfo *msginfo, gchar **header, gchar **key,
 		} else if (hentry[H_X_MAILING_LIST].body != NULL) {
 			SET_FILTER_KEY("X-Mailing-list", H_X_MAILING_LIST);
 		} else if (hentry[H_X_SEQUENCE].body != NULL) {
-			guchar *p;
+			gchar *p;
 
 			SET_FILTER_KEY("X-Sequence", H_X_SEQUENCE);
 			p = *key;
 			while (*p != '\0') {
-				while (*p != '\0' && !isspace(*p)) p++;
-				while (isspace(*p)) p++;
-				if (isdigit(*p)) {
+				while (*p != '\0' && !g_ascii_isspace(*p)) p++;
+				while (g_ascii_isspace(*p)) p++;
+				if (g_ascii_isdigit(*p)) {
 					*p = '\0';
 					break;
 				}

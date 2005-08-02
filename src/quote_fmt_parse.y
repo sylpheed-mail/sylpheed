@@ -122,7 +122,7 @@ int quote_fmtwrap(void)
 
 static int isseparator(int ch)
 {
-	return isspace(ch) || ch == '.' || ch == '-';
+	return g_ascii_isspace(ch) || ch == '.' || ch == '-';
 }
 %}
 
@@ -194,14 +194,14 @@ special:
 	| SHOW_FIRST_NAME
 	{
 		if (msginfo->fromname) {
-			guchar *p;
+			gchar *p;
 			gchar *str;
 
 			str = alloca(strlen(msginfo->fromname) + 1);
 			if (str != NULL) {
 				strcpy(str, msginfo->fromname);
 				p = str;
-				while (*p && !isspace(*p)) p++;
+				while (*p && !g_ascii_isspace(*p)) p++;
 				*p = '\0';
 				INSERT(str);
 			}
@@ -212,15 +212,15 @@ special:
 #define MAX_SENDER_INITIAL 20
 		if (msginfo->fromname) {
 			gchar tmp[MAX_SENDER_INITIAL];
-			guchar *p;
+			gchar *p;
 			gchar *cur;
 			gint len = 0;
 
 			p = msginfo->fromname;
 			cur = tmp;
 			while (*p) {
-				if (*p && isalnum(*p)) {
-					*cur = toupper(*p);
+				if (*p && g_ascii_isalnum(*p)) {
+					*cur = g_ascii_toupper(*p);
 						cur++;
 					len++;
 					if (len >= MAX_SENDER_INITIAL - 1)

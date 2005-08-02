@@ -842,11 +842,11 @@ static gchar *make_uri_string(const gchar *bp, const gchar *ep)
 	(isascii(ch) && \
 	 (ch) > 32   && \
 	 (ch) != 127 && \
-	 !isspace(ch) && \
+	 !g_ascii_isspace(ch) && \
 	 !strchr("(),;<>\"", (ch)))
 
 /* alphabet and number within 7bit ASCII */
-#define IS_ASCII_ALNUM(ch)	(isascii(ch) && isalnum(ch))
+#define IS_ASCII_ALNUM(ch)	(isascii(ch) && g_ascii_isalnum(ch))
 
 /* get_email_part() - retrieves an email address. Returns TRUE if succesful */
 static gboolean get_email_part(const gchar *start, const gchar *scanpos,

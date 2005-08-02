@@ -1047,7 +1047,7 @@ static GList *procmime_get_mime_type_list(const gchar *file)
 	GList *list = NULL;
 	FILE *fp;
 	gchar buf[BUFFSIZE];
-	guchar *p;
+	gchar *p;
 	gchar *delim;
 	MimeType *mime_type;
 
@@ -1061,7 +1061,7 @@ static GList *procmime_get_mime_type_list(const gchar *file)
 		g_strstrip(buf);
 
 		p = buf;
-		while (*p && !isspace(*p)) p++;
+		while (*p && !g_ascii_isspace(*p)) p++;
 		if (*p) {
 			*p = '\0';
 			p++;
@@ -1074,7 +1074,7 @@ static GList *procmime_get_mime_type_list(const gchar *file)
 		mime_type->type = g_strdup(buf);
 		mime_type->sub_type = g_strdup(delim + 1);
 
-		while (*p && isspace(*p)) p++;
+		while (*p && g_ascii_isspace(*p)) p++;
 		if (*p)
 			mime_type->extension = g_strdup(p);
 		else

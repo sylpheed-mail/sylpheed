@@ -1509,7 +1509,7 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 
 	if (msginfo->subject && *msginfo->subject) {
 		gchar *buf;
-		guchar *p;
+		gchar *p;
 
 		buf = g_strdup(msginfo->subject);
 
@@ -1518,7 +1518,7 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 
 		while (!g_ascii_strncasecmp(buf, "Re:", 3)) {
 			p = buf + 3;
-			while (isspace(*p)) p++;
+			while (g_ascii_isspace(*p)) p++;
 			memmove(buf, p, strlen(p) + 1);
 		}
 
@@ -2867,7 +2867,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 		for (i = 0; i < len; i += B64_LINE_SIZE) {
 			l = MIN(B64_LINE_SIZE, len - i);
-			base64_encode(outbuf, buf + i, l);
+			base64_encode(outbuf, (guchar *)buf + i, l);
 			fputs(outbuf, fp);
 			fputc('\n', fp);
 		}
@@ -2876,7 +2876,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		size_t outlen;
 
 		outbuf = g_malloc(len * 4);
-		qp_encode_line(outbuf, buf);
+		qp_encode_line(outbuf, (guchar *)buf);
 		outlen = strlen(outbuf);
 		if (fwrite(outbuf, sizeof(gchar), outlen, fp) != outlen) {
 			FILE_OP_ERROR(file, "fwrite");
@@ -3311,12 +3311,13 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 			while ((len = fread(inbuf, sizeof(gchar),
 					    B64_LINE_SIZE, tmp_fp))
 			       == B64_LINE_SIZE) {
-				base64_encode(outbuf, inbuf, B64_LINE_SIZE);
+				base64_encode(outbuf, (guchar *)inbuf,
+					      B64_LINE_SIZE);
 				fputs(outbuf, fp);
 				fputc('\n', fp);
 			}
 			if (len > 0 && feof(tmp_fp)) {
-				base64_encode(outbuf, inbuf, len);
+				base64_encode(outbuf, (guchar *)inbuf, len);
 				fputs(outbuf, fp);
 				fputc('\n', fp);
 			}
@@ -3330,7 +3331,7 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 			gchar inbuf[BUFFSIZE], outbuf[BUFFSIZE * 4];
 
 			while (fgets(inbuf, sizeof(inbuf), attach_fp) != NULL) {
-				qp_encode_line(outbuf, inbuf);
+				qp_encode_line(outbuf, (guchar *)inbuf);
 				fputs(outbuf, fp);
 			}
 		} else {

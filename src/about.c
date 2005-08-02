@@ -233,6 +233,7 @@ static void about_create(void)
 				      NULL, NULL, NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_button);
+	gtk_widget_grab_focus(ok_button);
 	g_signal_connect_closure
 		(G_OBJECT(ok_button), "clicked",
 		 g_cclosure_new_swap(G_CALLBACK(gtk_widget_hide_on_delete),

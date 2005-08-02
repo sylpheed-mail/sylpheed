@@ -234,8 +234,8 @@ wchar_t *wcscasestr		(const wchar_t *haystack,
 				 const wchar_t *needle);
 gint get_mbs_len		(const gchar	*s);
 
-gboolean is_next_nonascii	(const guchar *s);
-gint get_next_word_len		(const guchar *s);
+gboolean is_next_nonascii	(const gchar *s);
+gint get_next_word_len		(const gchar *s);
 
 /* functions for string parsing */
 gint subject_compare			(const gchar	*s1,
@@ -297,7 +297,7 @@ void subst_null				(gchar		*str,
 					 gchar		 subst);
 void subst_for_filename			(gchar		*str);
 gboolean is_header_line			(const gchar	*str);
-gboolean is_ascii_str			(const guchar	*str);
+gboolean is_ascii_str			(const gchar	*str);
 gint get_quote_level			(const gchar	*str);
 gint check_line_length			(const gchar	*str,
 					 gint		 max_chars,

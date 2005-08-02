@@ -189,7 +189,7 @@ gint xml_get_dtd(XMLFile *file)
 gint xml_parse_next_tag(XMLFile *file)
 {
 	gchar buf[XMLBUFSIZE];
-	guchar *bufp = buf;
+	gchar *bufp = buf;
 	gchar *tag_str;
 	XMLTag *tag;
 	gint len;
@@ -229,7 +229,7 @@ gint xml_parse_next_tag(XMLFile *file)
 		return -1;
 	}
 
-	while (*bufp != '\0' && !isspace(*bufp)) bufp++;
+	while (*bufp != '\0' && !g_ascii_isspace(*bufp)) bufp++;
 	if (*bufp == '\0') {
 		tag_str = conv_codeset_strdup(buf, file->encoding, CS_INTERNAL);
 		if (tag_str) {
@@ -258,7 +258,7 @@ gint xml_parse_next_tag(XMLFile *file)
 		gchar *p;
 		gchar quote;
 
-		while (isspace(*bufp)) bufp++;
+		while (g_ascii_isspace(*bufp)) bufp++;
 		attr_name = bufp;
 		if ((p = strchr(attr_name, '=')) == NULL) {
 			g_warning("xml_parse_next_tag(): Syntax error in tag\n");
@@ -266,7 +266,7 @@ gint xml_parse_next_tag(XMLFile *file)
 		}
 		bufp = p;
 		*bufp++ = '\0';
-		while (isspace(*bufp)) bufp++;
+		while (g_ascii_isspace(*bufp)) bufp++;
 
 		if (*bufp != '"' && *bufp != '\'') {
 			g_warning("xml_parse_next_tag(): Syntax error in tag\n");

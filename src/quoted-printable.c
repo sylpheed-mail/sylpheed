@@ -92,9 +92,10 @@ gint qp_decode_line(gchar *str)
 	while (*inp != '\0') {
 		if (*inp == '=') {
 			if (inp[1] && inp[2] &&
-			    get_hex_value(outp, inp[1], inp[2]) == TRUE) {
+			    get_hex_value((guchar *)outp, inp[1], inp[2])
+			    == TRUE) {
 				inp += 3;
-			} else if (inp[1] == '\0' || isspace((guchar)inp[1])) {
+			} else if (inp[1] == '\0' || g_ascii_isspace(inp[1])) {
 				/* soft line break */
 				break;
 			} else {
@@ -150,7 +151,7 @@ gint qp_get_q_encoding_len(const guchar *str)
 		if (*inp == 0x20)
 			len++;
 		else if (*inp == '=' || *inp == '?' || *inp == '_' ||
-			 *inp < 32 || *inp > 127 || isspace(*inp))
+			 *inp < 32 || *inp > 127 || g_ascii_isspace(*inp))
 			len += 3;
 		else
 			len++;
@@ -170,7 +171,7 @@ void qp_q_encode(gchar *out, const guchar *in)
 		if (*inp == 0x20)
 			*outp++ = '_';
 		else if (*inp == '=' || *inp == '?' || *inp == '_' ||
-			 *inp < 32 || *inp > 127 || isspace(*inp)) {
+			 *inp < 32 || *inp > 127 || g_ascii_isspace(*inp)) {
 			*outp++ = '=';
 			get_hex_str(outp, *inp);
 			outp += 2;

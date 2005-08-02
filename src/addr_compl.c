@@ -243,7 +243,7 @@ gchar *get_address_from_edit(GtkEntry *entry, gint *start_pos)
 		return NULL;
 
 #define IS_VALID_CHAR(x) \
-	(isalnum(x) || (x) == '"' || (x) == '<' || ((guchar)(x) > 0x7f))
+	(g_ascii_isalnum(x) || (x) == '"' || (x) == '<' || ((guchar)(x) > 0x7f))
 
 	/* now scan back until we hit a valid character */
 	for (; *p && !IS_VALID_CHAR(*p); p = g_utf8_next_char(p))

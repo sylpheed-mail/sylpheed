@@ -1,3 +1,21 @@
+2005-08-02
+
+	* src/compose.c
+	  src/textview.c
+	  src/quote_fmt_parse.y
+	  src/pop.c
+	  src/prefs_account.c
+	  src/codeconv.c
+	  src/imap.c
+	  src/xml.c
+	  src/utils.[ch]
+	  src/addr_compl.c
+	  src/procmsg.c
+	  src/procmime.c
+	  src/quoted-printable.c: 正しくないロケール依存の ctype 関数を GLib
+	  のもので置き換えた。符号の不一致を訂正。
+	* src/about.c: フォーカスを OK ボタンに合わせるようにした。
+
 2005-07-29
 
 	* version 2.0.0
