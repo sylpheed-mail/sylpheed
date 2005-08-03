@@ -2900,58 +2900,28 @@ gchar *file_read_stream_to_str(FILE *fp)
 
 gint execute_async(gchar *const argv[])
 {
-	pid_t pid;
-	gint status;
+	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
 
-	if ((pid = fork()) < 0) {
-		perror("fork");
+	if (g_spawn_async(NULL, (gchar **)argv, NULL, G_SPAWN_SEARCH_PATH,
+			  NULL, NULL, NULL, FALSE) == FALSE) {
+		g_warning("Can't execute command: %s\n", argv[0]);
 		return -1;
 	}
 
-	if (pid == 0) {			/* child process */
-		pid_t gch_pid;
-
-		if ((gch_pid = fork()) < 0) {
-			perror("fork");
-			_exit(1);
-		}
-
-		if (gch_pid == 0) {	/* grandchild process */
-			execvp(argv[0], argv);
-
-			perror("execvp");
-			_exit(1);
-		}
-
-		_exit(0);
-	}
-
-	waitpid(pid, &status, 0);
-
-	if (WIFEXITED(status))
-		return WEXITSTATUS(status);
-	else
-		return -1;
+	return 0;
 }
 
 gint execute_sync(gchar *const argv[])
 {
-	pid_t pid;
 	gint status;
 
-	if ((pid = fork()) < 0) {
-		perror("fork");
+	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
+
+	if (g_spawn_sync(NULL, (gchar **)argv, NULL, G_SPAWN_SEARCH_PATH,
+			 NULL, NULL, NULL, NULL, &status, NULL) == FALSE) {
+		g_warning("Can't execute command: %s\n", argv[0]);
 		return -1;
 	}
-
-	if (pid == 0) {		/* child process */
-		execvp(argv[0], argv);
-
-		perror("execvp");
-		_exit(1);
-	}
-
-	waitpid(pid, &status, 0);
 
 	if (WIFEXITED(status))
 		return WEXITSTATUS(status);
@@ -2964,7 +2934,7 @@ gint execute_command_line(const gchar *cmdline, gboolean async)
 	gchar **argv;
 	gint ret;
 
-	debug_print("executing: %s\n", cmdline);
+	debug_print("execute_command_line(): executing: %s\n", cmdline);
 
 	argv = strsplit_with_quote(cmdline, " ", 0);
 
@@ -2984,6 +2954,8 @@ gchar *get_command_output(const gchar *cmdline)
 	gint status;
 
 	g_return_val_if_fail(cmdline != NULL, NULL);
+
+	debug_print("get_command_output(): executing: %s\n", cmdline);
 
 	if (g_spawn_command_line_sync(cmdline, &child_stdout, NULL, &status,
 				      NULL) == FALSE) {
