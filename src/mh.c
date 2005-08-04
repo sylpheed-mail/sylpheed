@@ -32,7 +32,7 @@
 #include <string.h>
 #include <errno.h>
 
-#define MEASURE_TIME
+#undef MEASURE_TIME
 
 #include "folder.h"
 #include "mh.h"
