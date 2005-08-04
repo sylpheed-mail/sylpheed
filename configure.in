@@ -57,6 +57,9 @@ case "$target" in
 *-darwin*)
 	CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
 	;;
+*-*-mingw*)
+	CFLAGS="$CFLAGS -mms-bitfields"
+	;;
 esac
 
 dnl Checks for libraries.
