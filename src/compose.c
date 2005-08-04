@@ -3788,7 +3788,7 @@ static void compose_generate_msgid(Compose *compose, gchar *buf, gint len)
 		   lt->tm_year + 1900, lt->tm_mon + 1,
 		   lt->tm_mday, lt->tm_hour,
 		   lt->tm_min, lt->tm_sec,
-		   (guint)random(), addr);
+		   g_random_int(), addr);
 
 	debug_print(_("generated Message-ID: %s\n"), buf);
 

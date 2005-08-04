@@ -2715,18 +2715,9 @@ gchar *generate_mime_boundary(const gchar *prefix)
 	gchar buf_uniq[17];
 	gchar buf_date[64];
 	gint i;
-	gint pid;
 
-	pid = getpid();
-
-	/* We make the boundary depend on the pid, so that all running
-	 * processes generate different values even when they have been
-	 * started within the same second and srandom(time(NULL)) has been
-	 * used.  I can't see whether this is really an advantage but it
-	 * doesn't do any harm.
-	 */
 	for (i = 0; i < sizeof(buf_uniq) - 1; i++)
-		buf_uniq[i] = tbl[(random() ^ pid) % (sizeof(tbl) - 1)];
+		buf_uniq[i] = tbl[g_random_int_range(0, sizeof(tbl) - 1)];
 	buf_uniq[i] = '\0';
 
 	get_rfc822_date(buf_date, sizeof(buf_date));

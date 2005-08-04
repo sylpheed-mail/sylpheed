@@ -185,8 +185,6 @@ int main(int argc, char *argv[])
 	ssl_init();
 #endif
 
-	srandom((gint)time(NULL));
-
 	/* parse gtkrc files */
 	userrc = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S, ".gtkrc-2.0",
 			     NULL);

@@ -1276,8 +1276,7 @@ gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs,
 		}
 
 		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
-			   get_rc_dir(), G_DIR_SEPARATOR,
-			   (guint)random());
+			   get_rc_dir(), G_DIR_SEPARATOR, g_random_int());
 
 		if (send_get_queue_contents(qinfo, tmp) == 0) {
 			if (save_msgs) {
