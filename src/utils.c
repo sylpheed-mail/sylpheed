@@ -104,9 +104,9 @@ guint str_case_hash(gconstpointer key)
 	guint h = *p;
 
 	if (h) {
-		h = tolower(h);
+		h = g_ascii_tolower(h);
 		for (p += 1; *p != '\0'; p++)
-			h = (h << 5) - h + tolower(*p);
+			h = (h << 5) - h + g_ascii_tolower(*p);
 	}
 
 	return h;

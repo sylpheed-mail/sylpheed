@@ -1,5 +1,9 @@
 2005-08-04
 
+	* src/utils.c: replaced tolower() with g_ascii_tolower().
+
+2005-08-04
+
 	* src/compose.c
 	  src/main.c
 	  src/utils.c
@@ -44,7 +48,7 @@
 	  src/addr_compl.c
 	  src/procmsg.c
 	  src/procmime.c
-	  src/quoted-printable.c: replaced incorrect locale-independent ctype
+	  src/quoted-printable.c: replaced incorrect locale-dependent ctype
 	  functions with GLib's. Corrected signedness mismatch.
 	* src/about.c: set focus to the OK button.
 
