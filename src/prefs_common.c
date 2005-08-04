@@ -2388,7 +2388,6 @@ static void prefs_other_create(void)
 	gtkut_combo_set_items (GTK_COMBO (exteditor_combo),
 			       "gedit %s",
 			       "kedit %s",
-			       "mgedit --no-fork %s",
 			       "emacs %s",
 			       "xemacs %s",
 			       "kterm -e jed %s",
