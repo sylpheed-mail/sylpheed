@@ -280,6 +280,7 @@ static gboolean attach_property_key_pressed	(GtkWidget	*widget,
 						 gboolean	*cancelled);
 
 static void compose_exec_ext_editor		(Compose	*compose);
+#ifdef G_OS_UNIX
 static gint compose_exec_ext_editor_real	(const gchar	*file);
 static gboolean compose_ext_editor_kill		(Compose	*compose);
 static gboolean compose_input_cb		(GIOChannel	*source,
@@ -287,6 +288,7 @@ static gboolean compose_input_cb		(GIOChannel	*source,
 						 gpointer	 data);
 static void compose_set_ext_editor_sensitive	(Compose	*compose,
 						 gboolean	 sensitive);
+#endif /* G_OS_UNIX */
 
 static void compose_undo_state_changed		(UndoMain	*undostruct,
 						 gint		 undo_state,
@@ -5087,6 +5089,7 @@ static gboolean attach_property_key_pressed(GtkWidget *widget,
 
 static void compose_exec_ext_editor(Compose *compose)
 {
+#ifdef G_OS_UNIX
 	gchar *tmp;
 	pid_t pid;
 	gint pipe_fds[2];
@@ -5150,8 +5153,10 @@ static void compose_exec_ext_editor(Compose *compose)
 	}
 
 	g_free(tmp);
+#endif /* G_OS_UNIX */
 }
 
+#ifdef G_OS_UNIX
 static gint compose_exec_ext_editor_real(const gchar *file)
 {
 	static gchar *def_cmd = "emacs %s";
@@ -5326,6 +5331,7 @@ static void compose_set_ext_editor_sensitive(Compose *compose,
 	gtk_widget_set_sensitive(compose->exteditor_btn, sensitive);
 	gtk_widget_set_sensitive(compose->linewrap_btn,  sensitive);
 }
+#endif /* G_OS_UNIX */
 
 /**
  * compose_undo_state_changed:

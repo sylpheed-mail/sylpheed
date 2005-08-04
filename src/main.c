@@ -38,7 +38,9 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <signal.h>
+#ifdef G_OS_UNIX
+#  include <signal.h>
+#endif
 #include <dirent.h>
 
 #if HAVE_LOCALE_H
@@ -341,7 +343,9 @@ int main(int argc, char *argv[])
 	inc_autocheck_timer_init(mainwin);
 
 	/* ignore SIGPIPE signal for preventing sudden death of program */
+#ifdef G_OS_UNIX
 	signal(SIGPIPE, SIG_IGN);
+#endif
 
 	if (cmd.receive_all)
 		inc_all_account_mail(mainwin, FALSE);

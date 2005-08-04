@@ -124,6 +124,7 @@ static gint sock_connect_by_getaddrinfo	(const gchar	*hostname,
 					 gushort	 port);
 #endif
 
+#ifdef G_OS_UNIX
 static void sock_address_list_free		(GList		*addr_list);
 
 static gboolean sock_connect_async_cb		(GIOChannel	*source,
@@ -144,6 +145,7 @@ static SockLookupData *sock_get_address_info_async
 						 SockAddrFunc	 func,
 						 gpointer	 data);
 static gint sock_get_address_info_async_cancel	(SockLookupData	*lookup_data);
+#endif /* G_OS_UNIX */
 
 
 gint sock_init(void)
@@ -380,12 +382,14 @@ static gint fd_check_io(gint fd, GIOCondition cond)
 	}
 }
 
+#ifdef G_OS_UNIX
 static sigjmp_buf jmpenv;
 
 static void timeout_handler(gint sig)
 {
 	siglongjmp(jmpenv, 1);
 }
+#endif
 
 static gint sock_connect_with_timeout(gint sock,
 				      const struct sockaddr *serv_addr,
@@ -393,6 +397,7 @@ static gint sock_connect_with_timeout(gint sock,
 				      guint timeout_secs)
 {
 	gint ret;
+#ifdef G_OS_UNIX
 	void (*prev_handler)(gint);
 
 	alarm(0);
@@ -404,11 +409,14 @@ static gint sock_connect_with_timeout(gint sock,
 		return -1;
 	}
 	alarm(timeout_secs);
+#endif
 
 	ret = connect(sock, serv_addr, addrlen);
 
+#ifdef G_OS_UNIX
 	alarm(0);
 	signal(SIGALRM, prev_handler);
+#endif
 
 	return ret;
 }
@@ -416,6 +424,7 @@ static gint sock_connect_with_timeout(gint sock,
 struct hostent *my_gethostbyname(const gchar *hostname)
 {
 	struct hostent *hp;
+#ifdef G_OS_UNIX
 	void (*prev_handler)(gint);
 
 	alarm(0);
@@ -428,17 +437,22 @@ struct hostent *my_gethostbyname(const gchar *hostname)
 		return NULL;
 	}
 	alarm(io_timeout);
+#endif
 
 	if ((hp = gethostbyname(hostname)) == NULL) {
+#ifdef G_OS_UNIX
 		alarm(0);
 		signal(SIGALRM, prev_handler);
+#endif
 		fprintf(stderr, "%s: unknown host.\n", hostname);
 		errno = 0;
 		return NULL;
 	}
 
+#ifdef G_OS_UNIX
 	alarm(0);
 	signal(SIGALRM, prev_handler);
+#endif
 
 	return hp;
 }
@@ -571,6 +585,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	return sockinfo;
 }
 
+#ifdef G_OS_UNIX
 static void sock_address_list_free(GList *addr_list)
 {
 	GList *cur;
@@ -964,6 +979,7 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 
 	return 0;
 }
+#endif /* G_OS_UNIX */
 
 
 gint sock_printf(SockInfo *sock, const gchar *format, ...)
