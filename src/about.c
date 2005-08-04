@@ -111,15 +111,24 @@ static void about_create(void)
 #if HAVE_SYS_UTSNAME_H
 	uname(&utsbuf);
 	g_snprintf(buf, sizeof(buf),
-		   "GTK+ version %d.%d.%d\n"
+		   "GTK+ %d.%d.%d / GLib %d.%d.%d\n"
 		   "Operating System: %s %s (%s)",
 		   gtk_major_version, gtk_minor_version, gtk_micro_version,
+		   glib_major_version, glib_minor_version, glib_micro_version,
 		   utsbuf.sysname, utsbuf.release, utsbuf.machine);
+#elif G_OS_WIN32
+	g_snprintf(buf, sizeof(buf),
+		   "GTK+ %d.%d.%d / GLib %d.%d.%d\n"
+		   "Operating System: %s",
+		   gtk_major_version, gtk_minor_version, gtk_micro_version,
+		   glib_major_version, glib_minor_version, glib_micro_version,
+		   "Win32");
 #else
 	g_snprintf(buf, sizeof(buf),
-		   "GTK+ version %d.%d.%d\n"
-		   "Operating System: Windoze",
-		   gtk_major_version, gtk_minor_version, gtk_micro_version);
+		   "GTK+ %d.%d.%d / GLib %d.%d.%d\n"
+		   "Operating System: unknown",
+		   gtk_major_version, gtk_minor_version, gtk_micro_version,
+		   glib_major_version, glib_minor_version, glib_micro_version);
 #endif
 
 	label = gtk_label_new(buf);

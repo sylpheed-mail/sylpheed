@@ -146,6 +146,16 @@ static SockLookupData *sock_get_address_info_async
 static gint sock_get_address_info_async_cancel	(SockLookupData	*lookup_data);
 
 
+gint sock_init(void)
+{
+	return 0;
+}
+
+gint sock_cleanup(void)
+{
+	return 0;
+}
+
 gint sock_set_io_timeout(guint sec)
 {
 	io_timeout = sec;
