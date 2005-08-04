@@ -32,7 +32,6 @@
 #include <unistd.h>
 #include <sys/signal.h>
 #include <sys/wait.h>
-#include <sys/time.h>
 #include <time.h>
 #include <errno.h>
 
@@ -75,7 +74,7 @@ void session_init(Session *session)
 	session->state = SESSION_READY;
 	session->last_access_time = time(NULL);
 
-	gettimeofday(&session->tv_prev, NULL);
+	g_get_current_time(&session->tv_prev);
 
 	session->conn_id = 0;
 
@@ -376,7 +375,7 @@ gint session_send_data(Session *session, const guchar *data, guint size)
 	session->write_data = data;
 	session->write_data_p = session->write_data;
 	session->write_data_len = size;
-	gettimeofday(&session->tv_prev, NULL);
+	g_get_current_time(&session->tv_prev);
 
 	ret = session_write_data_cb(session->sock, G_IO_OUT, session);
 
@@ -398,7 +397,7 @@ gint session_recv_data(Session *session, guint size, const gchar *terminator)
 
 	g_free(session->read_data_terminator);
 	session->read_data_terminator = g_strdup(terminator);
-	gettimeofday(&session->tv_prev, NULL);
+	g_get_current_time(&session->tv_prev);
 
 	if (session->read_buf_len > 0)
 		g_idle_add(session_recv_data_idle_cb, session);
@@ -577,16 +576,16 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 
 	/* incomplete read */
 	if (!complete) {
-		struct timeval tv_cur;
+		GTimeVal tv_cur;
 
-		gettimeofday(&tv_cur, NULL);
+		g_get_current_time(&tv_cur);
 		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
 		    tv_cur.tv_usec - session->tv_prev.tv_usec >
 		    UI_REFRESH_INTERVAL) {
 			session->recv_data_progressive_notify
 				(session, data_buf->len, 0,
 				 session->recv_data_progressive_notify_data);
-			gettimeofday(&session->tv_prev, NULL);
+			g_get_current_time(&session->tv_prev);
 		}
 		return TRUE;
 	}
@@ -748,9 +747,9 @@ static gboolean session_write_data_cb(SockInfo *source,
 		session->state = SESSION_ERROR;
 		return FALSE;
 	} else if (ret > 0) {
-		struct timeval tv_cur;
+		GTimeVal tv_cur;
 
-		gettimeofday(&tv_cur, NULL);
+		g_get_current_time(&tv_cur);
 		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
 		    tv_cur.tv_usec - session->tv_prev.tv_usec >
 		    UI_REFRESH_INTERVAL) {
@@ -760,7 +759,7 @@ static gboolean session_write_data_cb(SockInfo *source,
 				 session->write_data_p - session->write_data,
 				 write_data_len,
 				 session->send_data_progressive_notify_data);
-			gettimeofday(&session->tv_prev, NULL);
+			g_get_current_time(&session->tv_prev);
 		}
 		return TRUE;
 	}

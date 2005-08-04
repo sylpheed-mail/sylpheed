@@ -1,5 +1,15 @@
 2005-08-04
 
+	* src/mh.c: use GTimer for measuring time.
+	* src/inc.[ch]
+	  src/recv.c
+	  src/session.[ch]: replaced gettimeofday() with portable
+	  g_get_current_time(). 
+	* src/socket.c: corrected signedness. Replaced usleep() with
+	  portable g_usleep().
+
+2005-08-04
+
 	* src/prefs_common.c: removed mgedit from exteditor's candidates.
 
 2005-08-03

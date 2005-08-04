@@ -209,7 +209,7 @@ gint fd_open_unix(const gchar *path)
 gint fd_accept(gint sock)
 {
 	struct sockaddr_in caddr;
-	gint caddr_len;
+	guint caddr_len;
 
 	caddr_len = sizeof(caddr);
 	return accept(sock, (struct sockaddr *)&caddr, &caddr_len);
@@ -556,7 +556,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	sockinfo->port = port;
 	sockinfo->state = CONN_ESTABLISHED;
 
-	usleep(100000);
+	g_usleep(100000);
 
 	return sockinfo;
 }
@@ -582,7 +582,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	SockConnectData *conn_data = (SockConnectData *)data;
 	gint fd;
 	gint val;
-	gint len;
+	guint len;
 	SockInfo *sockinfo;
 
 	fd = g_io_channel_unix_get_fd(source);

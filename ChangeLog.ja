@@ -1,5 +1,15 @@
 2005-08-04
 
+	* src/mh.c: 時間測定に GTimer を使用。
+	* src/inc.[ch]
+	  src/recv.c
+	  src/session.[ch]: gettimeofday() を portable な g_get_current_time()
+	  で置き換えた。
+	* src/socket.c: 符号の訂正。 usleep() を portable な g_usleep() で
+	  置き換えた。
+
+2005-08-04
+
 	* src/prefs_common.c: 外部エディタの候補から mgedit を外した。
 
 2005-08-03

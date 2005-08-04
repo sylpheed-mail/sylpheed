@@ -27,15 +27,12 @@
 #include <glib/gi18n.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <time.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 
-#undef MEASURE_TIME
-
-#ifdef MEASURE_TIME
-#  include <sys/time.h>
-#endif
+#define MEASURE_TIME
 
 #include "folder.h"
 #include "mh.h"
@@ -197,12 +194,14 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 	GHashTable *msg_table;
 	time_t cur_mtime;
 #ifdef MEASURE_TIME
-	struct timeval tv_before, tv_after, tv_result;
-
-	gettimeofday(&tv_before, NULL);
+	GTimer *timer;
 #endif
 
 	g_return_val_if_fail(item != NULL, NULL);
+
+#ifdef MEASURE_TIME
+	timer = g_timer_new();
+#endif
 
 	cur_mtime = mh_get_mtime(item);
 
@@ -257,11 +256,10 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
 
 #ifdef MEASURE_TIME
-	gettimeofday(&tv_after, NULL);
-
-	timersub(&tv_after, &tv_before, &tv_result);
-	g_print("mh_get_msg_list: %s: elapsed time: %ld.%06ld sec\n",
-		item->path, tv_result.tv_sec, tv_result.tv_usec);
+	g_timer_stop(timer);
+	g_print("%s: %s: elapsed time: %f sec\n",
+		G_STRFUNC, item->path, g_timer_elapsed(timer, NULL));
+	g_timer_destroy(timer);
 #endif
 	debug_print("cache_dirty: %d, mark_dirty: %d\n",
 		    item->cache_dirty, item->mark_dirty);

@@ -33,8 +33,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-#include <time.h>
-#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -374,8 +372,8 @@ static IncProgressDialog *inc_progress_dialog_create(gboolean autocheck)
 	}
 
 	dialog->dialog = progress;
-	gettimeofday(&dialog->progress_tv, NULL);
-	gettimeofday(&dialog->folder_tv, NULL);
+	g_get_current_time(&dialog->progress_tv);
+	g_get_current_time(&dialog->folder_tv);
 	dialog->queue_list = NULL;
 	dialog->cur_row = 0;
 
@@ -887,17 +885,17 @@ static void inc_update_folderview(IncProgressDialog *inc_dialog,
 static void inc_progress_dialog_update_periodic(IncProgressDialog *inc_dialog,
 						IncSession *inc_session)
 {
-	struct timeval tv_cur;
-	struct timeval tv_result;
+	GTimeVal tv_cur;
+	GTimeVal tv_result;
 	gint msec;
 
-	gettimeofday(&tv_cur, NULL);
+	g_get_current_time(&tv_cur);
 
 	tv_result.tv_sec = tv_cur.tv_sec - inc_dialog->progress_tv.tv_sec;
 	tv_result.tv_usec = tv_cur.tv_usec - inc_dialog->progress_tv.tv_usec;
 	if (tv_result.tv_usec < 0) {
 		tv_result.tv_sec--;
-		tv_result.tv_usec += 1000000;
+		tv_result.tv_usec += G_USEC_PER_SEC;
 	}
 
 	msec = tv_result.tv_sec * 1000 + tv_result.tv_usec / 1000;
@@ -911,17 +909,17 @@ static void inc_progress_dialog_update_periodic(IncProgressDialog *inc_dialog,
 static void inc_update_folderview_periodic(IncProgressDialog *inc_dialog,
 					   IncSession *inc_session)
 {
-	struct timeval tv_cur;
-	struct timeval tv_result;
+	GTimeVal tv_cur;
+	GTimeVal tv_result;
 	gint msec;
 
-	gettimeofday(&tv_cur, NULL);
+	g_get_current_time(&tv_cur);
 
 	tv_result.tv_sec = tv_cur.tv_sec - inc_dialog->folder_tv.tv_sec;
 	tv_result.tv_usec = tv_cur.tv_usec - inc_dialog->folder_tv.tv_usec;
 	if (tv_result.tv_usec < 0) {
 		tv_result.tv_sec--;
-		tv_result.tv_usec += 1000000;
+		tv_result.tv_usec += G_USEC_PER_SEC;
 	}
 
 	msec = tv_result.tv_sec * 1000 + tv_result.tv_usec / 1000;

@@ -27,7 +27,6 @@
 #include <glib.h>
 
 #include <time.h>
-#include <sys/time.h>
 #include <unistd.h>
 
 #include "socket.h"
@@ -102,7 +101,7 @@ struct _Session
 	SessionState state;
 
 	time_t last_access_time;
-	struct timeval tv_prev;
+	GTimeVal tv_prev;
 
 	gint conn_id;
 
