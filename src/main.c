@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 
 	/* backup if old rc file exists */
 	if (is_file_exist(RC_DIR)) {
-		if (rename(RC_DIR, RC_DIR ".bak") < 0)
+		if (rename_force(RC_DIR, RC_DIR ".bak") < 0)
 			FILE_OP_ERROR(RC_DIR, "rename");
 	}
 
@@ -258,8 +258,9 @@ int main(int argc, char *argv[])
 	remove_all_files(get_mime_tmp_dir());
 
 	if (is_file_exist(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log")) {
-		if (rename(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log",
-			   RC_DIR G_DIR_SEPARATOR_S "sylpheed.log.bak") < 0)
+		if (rename_force
+			(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log",
+			 RC_DIR G_DIR_SEPARATOR_S "sylpheed.log.bak") < 0)
 			FILE_OP_ERROR("sylpheed.log", "rename");
 	}
 	set_log_file(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log");

@@ -376,6 +376,8 @@ gint remove_all_numbered_files	(const gchar	*dir);
 gint remove_expired_files	(const gchar	*dir,
 				 guint		 hours);
 gint remove_dir_recursive	(const gchar	*dir);
+gint rename_force		(const gchar	*oldpath,
+				 const gchar	*newpath);
 gint copy_file			(const gchar	*src,
 				 const gchar	*dest,
 				 gboolean	 keep_backup);

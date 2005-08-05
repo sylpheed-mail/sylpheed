@@ -328,7 +328,7 @@ gint prefs_file_close(PrefFile *pfile)
 
 	if (is_file_exist(path)) {
 		bakpath = g_strconcat(path, ".bak", NULL);
-		if (rename(path, bakpath) < 0) {
+		if (rename_force(path, bakpath) < 0) {
 			FILE_OP_ERROR(path, "rename");
 			unlink(tmppath);
 			g_free(path);
@@ -338,7 +338,7 @@ gint prefs_file_close(PrefFile *pfile)
 		}
 	}
 
-	if (rename(tmppath, path) < 0) {
+	if (rename_force(tmppath, path) < 0) {
 		FILE_OP_ERROR(tmppath, "rename");
 		unlink(tmppath);
 		g_free(path);

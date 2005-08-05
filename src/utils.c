@@ -2221,6 +2221,21 @@ leave:
 	return ret;
 }
 
+gint rename_force(const gchar *oldpath, const gchar *newpath)
+{
+#ifndef G_OS_UNIX
+	if (!is_file_entry_exist(oldpath)) {
+		errno = ENOENT;
+		return -1;
+	}
+	if (is_file_exist(newpath)) {
+		if (unlink(newpath) < 0)
+			FILE_OP_ERROR(newpath, "unlink");
+	}
+#endif
+	return rename(oldpath, newpath);
+}
+
 gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 {
 	FILE *src_fp, *dest_fp;
@@ -2235,7 +2250,7 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 	}
 	if (is_file_exist(dest)) {
 		dest_bak = g_strconcat(dest, ".bak", NULL);
-		if (rename(dest, dest_bak) < 0) {
+		if (rename_force(dest, dest_bak) < 0) {
 			FILE_OP_ERROR(dest, "rename");
 			fclose(src_fp);
 			g_free(dest_bak);
@@ -2247,7 +2262,7 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 		FILE_OP_ERROR(dest, "fopen");
 		fclose(src_fp);
 		if (dest_bak) {
-			if (rename(dest_bak, dest) < 0)
+			if (rename_force(dest_bak, dest) < 0)
 				FILE_OP_ERROR(dest_bak, "rename");
 			g_free(dest_bak);
 		}
@@ -2268,7 +2283,7 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 			fclose(src_fp);
 			unlink(dest);
 			if (dest_bak) {
-				if (rename(dest_bak, dest) < 0)
+				if (rename_force(dest_bak, dest) < 0)
 					FILE_OP_ERROR(dest_bak, "rename");
 				g_free(dest_bak);
 			}
@@ -2289,7 +2304,7 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 	if (err) {
 		unlink(dest);
 		if (dest_bak) {
-			if (rename(dest_bak, dest) < 0)
+			if (rename_force(dest_bak, dest) < 0)
 				FILE_OP_ERROR(dest_bak, "rename");
 			g_free(dest_bak);
 		}
@@ -2346,7 +2361,7 @@ gint move_file(const gchar *src, const gchar *dest, gboolean overwrite)
 		return -1;
 	}
 
-	if (rename(src, dest) == 0) return 0;
+	if (rename_force(src, dest) == 0) return 0;
 
 	if (EXDEV != errno) {
 		FILE_OP_ERROR(src, "rename");

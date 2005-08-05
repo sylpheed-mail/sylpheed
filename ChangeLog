@@ -1,5 +1,12 @@
 2005-08-05
 
+	* src/utils.[ch]: rename_force(): force rename even if the destination
+	  file already exists (on non-Unix environment).
+	* src/prefs.c
+	  src/main.c: use rename_force().
+
+2005-08-05
+
 	* src/addrcache.c
 	  src/compose.c
 	  src/inc.c

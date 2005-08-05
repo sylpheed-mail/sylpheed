@@ -1,5 +1,12 @@
 2005-08-05
 
+	* src/utils.[ch]: rename_force(): 移動先ファイルが既に存在していた
+	  場合でも強制的に rename するようにした(Unix 以外の場合)。
+	* src/prefs.c
+	  src/main.c: rename_force() を使用。
+
+2005-08-05
+
 	* src/addrcache.c
 	  src/compose.c
 	  src/inc.c
