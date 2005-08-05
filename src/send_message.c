@@ -31,7 +31,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/wait.h>
+#if HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
+#endif
 
 #include "send_message.h"
 #include "session.h"
@@ -348,9 +350,11 @@ static gint send_message_local(const gchar *command, FILE *fp)
 
 	fd_close(child_stdin);
 
+#ifdef G_OS_UNIX
 	waitpid(pid, &status, 0);
 	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
 		err = TRUE;
+#endif
 
 	g_spawn_close_pid(pid);
 

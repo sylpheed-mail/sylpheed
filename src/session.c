@@ -28,10 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <unistd.h>
-#include <sys/signal.h>
-#include <sys/wait.h>
 #include <time.h>
 #include <errno.h>
 
@@ -102,6 +99,7 @@ void session_init(Session *session)
 
 gint session_connect(Session *session, const gchar *server, gushort port)
 {
+#ifdef G_OS_UNIX
 	session->server = g_strdup(server);
 	session->port = port;
 
@@ -114,6 +112,21 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 	}
 
 	return 0;
+#else
+	SockInfo *sock;
+
+	session->server = g_strdup(server);
+	session->port = port;
+
+	sock = sock_connect(server, port);
+	if (sock == NULL) {
+		g_warning("can't connect to server.");
+		session_close(session);
+		return -1;
+	}
+
+	return session_connect_cb(sock, session);
+#endif
 }
 
 static gint session_connect_cb(SockInfo *sock, gpointer data)

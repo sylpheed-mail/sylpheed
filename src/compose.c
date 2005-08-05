@@ -67,9 +67,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
-/* #include <sys/utsname.h> */
 #include <stdlib.h>
-#include <sys/wait.h>
+#if HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
+#endif
 #include <signal.h>
 #include <errno.h>
 
@@ -3397,7 +3398,6 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	const gchar *entry_str;
 	gchar *str;
 	gchar *name;
-	/* struct utsname utsbuf; */
 
 	g_return_val_if_fail(fp != NULL, -1);
 	g_return_val_if_fail(charset != NULL, -1);
@@ -3544,20 +3544,17 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	}
 
 	/* Program version and system info */
-	/* uname(&utsbuf); */
 	if (compose->to_list && !IS_IN_CUSTOM_HEADER("X-Mailer")) {
 		fprintf(fp, "X-Mailer: %s (GTK+ %d.%d.%d; %s)\n",
 			prog_version,
 			gtk_major_version, gtk_minor_version, gtk_micro_version,
 			TARGET_ALIAS);
-			/* utsbuf.sysname, utsbuf.release, utsbuf.machine); */
 	}
 	if (compose->newsgroup_list && !IS_IN_CUSTOM_HEADER("X-Newsreader")) {
 		fprintf(fp, "X-Newsreader: %s (GTK+ %d.%d.%d; %s)\n",
 			prog_version,
 			gtk_major_version, gtk_minor_version, gtk_micro_version,
 			TARGET_ALIAS);
-			/* utsbuf.sysname, utsbuf.release, utsbuf.machine); */
 	}
 
 	/* custom headers */
@@ -5752,10 +5749,12 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	Compose *compose = (Compose *)data;
 	AlertValue val;
 
+#ifdef G_OS_UNIX
 	if (compose->exteditor_tag != -1) {
 		if (!compose_ext_editor_kill(compose))
 			return;
 	}
+#endif
 
 	if (compose->modified) {
 		val = alertpanel(_("Save message"),

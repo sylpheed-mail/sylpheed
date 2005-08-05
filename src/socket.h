@@ -25,7 +25,9 @@
 #endif
 
 #include <glib.h>
-#include <netdb.h>
+#if HAVE_NETDB_H
+#  include <netdb.h>
+#endif
 
 typedef struct _SockInfo	SockInfo;
 

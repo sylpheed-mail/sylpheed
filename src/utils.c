@@ -39,7 +39,9 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <sys/types.h>
-#include <sys/wait.h>
+#if HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
+#endif
 #include <dirent.h>
 #include <time.h>
 
@@ -1747,6 +1749,7 @@ gchar *get_tmp_file(void)
 
 const gchar *get_domain_name(void)
 {
+#ifdef G_OS_UNIX
 	static gchar *domain_name = NULL;
 
 	if (!domain_name) {
@@ -1770,6 +1773,9 @@ const gchar *get_domain_name(void)
 	}
 
 	return domain_name;
+#else
+	return "unknown";
+#endif
 }
 
 off_t get_file_size(const gchar *file)
@@ -1921,7 +1927,11 @@ gint change_dir(const gchar *dir)
 
 gint make_dir(const gchar *dir)
 {
+#ifdef G_OS_WIN32
+	if (mkdir(dir) < 0) {
+#else
 	if (mkdir(dir, S_IRWXU) < 0) {
+#endif
 		FILE_OP_ERROR(dir, "mkdir");
 		return -1;
 	}
@@ -2914,10 +2924,14 @@ gint execute_sync(gchar *const argv[])
 		return -1;
 	}
 
+#ifdef G_OS_UNIX
 	if (WIFEXITED(status))
 		return WEXITSTATUS(status);
 	else
 		return -1;
+#else
+	return status;
+#endif
 }
 
 gint execute_command_line(const gchar *cmdline, gboolean async)

@@ -35,7 +35,9 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <sys/wait.h>
+#if HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
+#endif
 #include <signal.h>
 #include <unistd.h>
 
@@ -688,6 +690,7 @@ static gboolean execute_actions(gchar *action, GSList *msg_list,
 static ChildInfo *fork_child(gchar *cmd, const gchar *msg_str,
 			     Children *children)
 {
+#ifdef G_OS_UNIX
 	gint chld_in[2], chld_out[2], chld_err[2], chld_status[2];
 	gchar *cmdline[4];
 	pid_t pid, gch_pid;
@@ -845,10 +848,14 @@ static ChildInfo *fork_child(gchar *cmd, const gchar *msg_str,
 	}
 
 	return child_info;
+#else
+	return NULL;
+#endif /* G_OS_UNIX */
 }
 
 static void kill_children_cb(GtkWidget *widget, gpointer data)
 {
+#ifdef G_OS_UNIX
 	GSList *cur;
 	Children *children = (Children *) data;
 	ChildInfo *child_info;
@@ -859,6 +866,7 @@ static void kill_children_cb(GtkWidget *widget, gpointer data)
 		if (child_info->pid && kill(-child_info->pid, SIGTERM) < 0)
 			perror("kill");
 	}
+#endif /* G_OS_UNIX */
 }
 
 static gint wait_for_children(Children *children)
@@ -1156,7 +1164,9 @@ static void catch_status(gpointer data, gint source, GdkInputCondition cond)
 	c = read(source, &buf, 1);
 	debug_print("Child returned %c\n", buf);
 
+#ifdef G_OS_UNIX
 	waitpid(-child_info->pid, NULL, 0);
+#endif
 	childinfo_close_pipes(child_info);
 	child_info->pid = 0;
 

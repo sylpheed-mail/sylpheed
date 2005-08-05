@@ -194,7 +194,7 @@ gboolean addrcache_check_file( AddressCache *cache, gchar *path ) {
 	struct stat filestat;
 	retVal = TRUE;
 	if( path ) {
-		if( 0 == lstat( path, &filestat ) ) {
+		if( 0 == stat( path, &filestat ) ) {
 			if( filestat.st_mtime == cache->modifyTime ) retVal = FALSE;
 		}
 	}
@@ -209,7 +209,7 @@ gboolean addrcache_mark_file( AddressCache *cache, gchar *path ) {
 	gboolean retVal = FALSE;
 	struct stat filestat;
 	if( path ) {
-		if( 0 == lstat( path, &filestat ) ) {
+		if( 0 == stat( path, &filestat ) ) {
 			cache->modifyTime = filestat.st_mtime;
 			retVal = TRUE;
 		}

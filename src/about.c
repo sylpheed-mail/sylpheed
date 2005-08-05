@@ -116,7 +116,7 @@ static void about_create(void)
 		   gtk_major_version, gtk_minor_version, gtk_micro_version,
 		   glib_major_version, glib_minor_version, glib_micro_version,
 		   utsbuf.sysname, utsbuf.release, utsbuf.machine);
-#elif G_OS_WIN32
+#elif defined(G_OS_WIN32)
 	g_snprintf(buf, sizeof(buf),
 		   "GTK+ %d.%d.%d / GLib %d.%d.%d\n"
 		   "Operating System: %s",

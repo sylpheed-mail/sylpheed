@@ -160,7 +160,10 @@ int main(int argc, char *argv[])
 
 	parse_cmd_opt(argc, argv);
 
+	sock_init();
+
 	/* check and create unix domain socket for remote operation */
+#ifdef G_OS_UNIX
 	lock_socket = prohibit_duplicate_launch();
 	if (lock_socket < 0) return 0;
 
@@ -169,6 +172,7 @@ int main(int argc, char *argv[])
 		lock_socket_remove();
 		return 0;
 	}
+#endif
 
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
@@ -318,10 +322,12 @@ int main(int argc, char *argv[])
 	folderview = mainwin->folderview;
 
 	/* register the callback of unix domain socket input */
+#ifdef G_OS_UNIX
 	lock_socket_tag = gdk_input_add(lock_socket,
 					GDK_INPUT_READ | GDK_INPUT_EXCEPTION,
 					lock_socket_input_cb,
 					mainwin);
+#endif
 
 	account_read_config_all();
 
@@ -542,6 +548,8 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	ssl_done();
 #endif
 
+	sock_cleanup();
+
 	gtk_main_quit();
 }
 
@@ -562,7 +570,11 @@ static gchar *get_socket_name(void)
 	if (filename == NULL) {
 		filename = g_strdup_printf("%s%csylpheed-%d",
 					   g_get_tmp_dir(), G_DIR_SEPARATOR,
+#if HAVE_GETUID
 					   getuid());
+#else
+					   0);
+#endif
 	}
 
 	return filename;
@@ -653,6 +665,7 @@ static gint prohibit_duplicate_launch(void)
 
 static gint lock_socket_remove(void)
 {
+#ifdef G_OS_UNIX
 	gchar *filename;
 
 	if (lock_socket < 0) return -1;
@@ -662,6 +675,7 @@ static gint lock_socket_remove(void)
 	fd_close(lock_socket);
 	filename = get_socket_name();
 	unlink(filename);
+#endif
 
 	return 0;
 }

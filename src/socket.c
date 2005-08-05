@@ -24,12 +24,18 @@
 #include <glib.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
+#ifdef G_OS_WIN32
+#  include <winsock2.h>
+#else
+#  if HAVE_SYS_WAIT_H
+#    include <sys/wait.h>
+#  endif
+#  include <sys/socket.h>
+#  include <sys/un.h>
+#  include <netinet/in.h>
+#  include <arpa/inet.h>
+#  include <netdb.h>
+#endif /* G_OS_WIN32 */
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -150,11 +156,24 @@ static gint sock_get_address_info_async_cancel	(SockLookupData	*lookup_data);
 
 gint sock_init(void)
 {
+#ifdef G_OS_WIN32
+	WSADATA wsadata;
+	gint result;
+
+	result = WSAStartup(MAKEWORD(2, 2), &wsadata);
+	if (result != NO_ERROR) {
+		g_warning("WSAStartup() failed\n");
+		return -1;
+	}
+#endif
 	return 0;
 }
 
 gint sock_cleanup(void)
 {
+#ifdef G_OS_WIN32
+	WSACleanup();
+#endif
 	return 0;
 }
 
@@ -166,6 +185,7 @@ gint sock_set_io_timeout(guint sec)
 
 gint fd_connect_unix(const gchar *path)
 {
+#ifdef G_OS_UNIX
 	gint sock;
 	struct sockaddr_un addr;
 
@@ -185,10 +205,14 @@ gint fd_connect_unix(const gchar *path)
 	}
 
 	return sock;
+#else
+	return -1;
+#endif
 }
 
 gint fd_open_unix(const gchar *path)
 {
+#ifdef G_OS_UNIX
 	gint sock;
 	struct sockaddr_un addr;
 
@@ -216,20 +240,28 @@ gint fd_open_unix(const gchar *path)
 	}
 
 	return sock;
+#else
+	return -1;
+#endif
 }
 
 gint fd_accept(gint sock)
 {
+#ifdef G_OS_UNIX
 	struct sockaddr_in caddr;
 	guint caddr_len;
 
 	caddr_len = sizeof(caddr);
 	return accept(sock, (struct sockaddr *)&caddr, &caddr_len);
+#else
+	return -1;
+#endif
 }
 
 
 static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 {
+#ifdef G_OS_UNIX
 	gint flags;
 
 	flags = fcntl(fd, F_GETFL, 0);
@@ -244,6 +276,9 @@ static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 		flags &= ~O_NONBLOCK;
 
 	return fcntl(fd, F_SETFL, flags);
+#else
+	return -1;
+#endif
 }
 
 gint sock_set_nonblocking_mode(SockInfo *sock, gboolean nonblock)
@@ -255,6 +290,7 @@ gint sock_set_nonblocking_mode(SockInfo *sock, gboolean nonblock)
 
 static gboolean is_nonblocking_mode(gint fd)
 {
+#ifdef G_OS_UNIX
 	gint flags;
 
 	flags = fcntl(fd, F_GETFL, 0);
@@ -264,6 +300,9 @@ static gboolean is_nonblocking_mode(gint fd)
 	}
 
 	return ((flags & O_NONBLOCK) != 0);
+#else
+	return FALSE;
+#endif
 }
 
 gboolean sock_is_nonblocking_mode(SockInfo *sock)
@@ -327,7 +366,10 @@ static gboolean sock_watch_cb(GIOChannel *source, GIOCondition condition,
 {
 	SockInfo *sock = (SockInfo *)data;
 
-	return sock->callback(sock, condition, sock->data);
+	if ((condition & sock->condition) == 0)
+		return TRUE;
+
+	return sock->callback(sock, sock->condition, sock->data);
 }
 
 guint sock_add_watch(SockInfo *sock, GIOCondition condition, SockFunc func,
@@ -554,15 +596,24 @@ static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 
 SockInfo *sock_connect(const gchar *hostname, gushort port)
 {
+#ifdef G_OS_WIN32
+	SOCKET sock;
+#else
 	gint sock;
+#endif
 	SockInfo *sockinfo;
 
 #ifdef INET6
 	if ((sock = sock_connect_by_getaddrinfo(hostname, port)) < 0)
 		return NULL;
 #else
+#ifdef G_OS_WIN32
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+		g_warning("socket() failed: %ld\n", WSAGetLastError());
+#else
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		perror("socket");
+#endif /* G_OS_WIN32 */
 		return NULL;
 	}
 
@@ -1010,7 +1061,11 @@ gint fd_read(gint fd, gchar *buf, gint len)
 	if (fd_check_io(fd, G_IO_IN) < 0)
 		return -1;
 
+#ifdef G_OS_WIN32
+	return recv(fd, buf, len, 0);
+#else
 	return read(fd, buf, len);
+#endif
 }
 
 #if USE_SSL
@@ -1059,7 +1114,11 @@ gint fd_write(gint fd, const gchar *buf, gint len)
 	if (fd_check_io(fd, G_IO_OUT) < 0)
 		return -1;
 
+#ifdef G_OS_WIN32
+	return send(fd, buf, len, 0);
+#else
 	return write(fd, buf, len);
+#endif
 }
 
 #if USE_SSL
