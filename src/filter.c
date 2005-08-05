@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,9 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <regex.h>
+#if HAVE_REGEX_H
+#  include <regex.h>
+#endif
 #include <time.h>
 
 #include "procheader.h"
@@ -271,6 +273,7 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 
 static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 {
+#if HAVE_REGEX_H && HAVE_REGCOMP
 	gint ret = 0;
 	regex_t preg;
 	regmatch_t pmatch[1];
@@ -286,6 +289,7 @@ static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 	if (pmatch[0].rm_so != -1)
 		return TRUE;
 	else
+#endif
 		return FALSE;
 }
 
