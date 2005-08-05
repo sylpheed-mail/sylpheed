@@ -1,5 +1,12 @@
 2005-08-05
 
+	* src/mh.c
+	  src/session.c
+	  src/mbox.c: Unix 特有のコードを #ifdef G_OS_UNIX で括った。
+	* configure.in: MinGW 環境で -lws2_32 を付加。
+
+2005-08-05
+
 	* src/filter.c
 	  configure.in: regex.h と regcomp() をチェック。
 

@@ -257,6 +257,7 @@ gint proc_mbox(FolderItem *dest, const gchar *mbox, GHashTable *folder_table)
 
 gint lock_mbox(const gchar *base, LockType type)
 {
+#ifdef G_OS_UNIX
 	gint retval = 0;
 
 	if (type == LOCK_FILE) {
@@ -327,6 +328,9 @@ gint lock_mbox(const gchar *base, LockType type)
 	}
 
 	return retval;
+#else
+	return -1;
+#endif /* G_OS_UNIX */
 }
 
 gint unlock_mbox(const gchar *base, gint fd, LockType type)

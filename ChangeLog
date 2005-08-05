@@ -1,5 +1,12 @@
 2005-08-05
 
+	* src/mh.c
+	  src/session.c
+	  src/mbox.c: braced Unix-specific code with #ifdef G_OS_UNIX.
+	* configure.in: added -lws2_32 on MinGW environment.
+
+2005-08-05
+
 	* src/filter.c
 	  configure.in: check for regex.h and regcomp().
 

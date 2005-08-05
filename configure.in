@@ -59,6 +59,7 @@ case "$target" in
 	;;
 *-*-mingw*)
 	CFLAGS="$CFLAGS -mms-bitfields"
+	LIBS="$LIBS -lws2_32"
 	;;
 esac
 

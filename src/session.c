@@ -275,11 +275,13 @@ static gint session_close(Session *session)
 {
 	g_return_val_if_fail(session != NULL, -1);
 
+#ifdef G_OS_UNIX
 	if (session->conn_id > 0) {
 		sock_connect_async_cancel(session->conn_id);
 		session->conn_id = 0;
 		debug_print("session (%p): connection cancelled\n", session);
 	}
+#endif
 
 	session_set_timeout(session, 0);
 
