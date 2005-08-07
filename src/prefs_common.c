@@ -622,11 +622,11 @@ static PrefParam param[] = {
 	 &prefs_common.store_passphrase_timeout, P_INT,
 	 &privacy.spinbtn_store_passphrase,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
-#ifndef __MINGW32__
+#ifndef G_OS_WIN32
 	{"passphrase_grab", "FALSE", &prefs_common.passphrase_grab, P_BOOL,
 	 &privacy.checkbtn_passphrase_grab,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-#endif /* __MINGW32__ */
+#endif /* G_OS_WIN32 */
 	{"gpg_warning", "TRUE", &prefs_common.gpg_warning, P_BOOL,
 	 &privacy.checkbtn_gpg_warning,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -666,7 +666,11 @@ static PrefParam param[] = {
 	 P_BOOL, &interface.checkbtn_close_recv_dialog,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
+#ifdef G_OS_WIN32
+	{"comply_gnome_hig", "FALSE", &prefs_common.comply_gnome_hig, P_BOOL,
+#else
 	{"comply_gnome_hig", "TRUE", &prefs_common.comply_gnome_hig, P_BOOL,
+#endif
 	 &interface.checkbtn_comply_gnome_hig,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
@@ -2143,7 +2147,7 @@ static void prefs_privacy_create(void)
 
 	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
 
-#ifndef __MINGW32__
+#ifndef G_OS_WIN32
 	PACK_CHECK_BUTTON (vbox2, checkbtn_passphrase_grab,
 			   _("Grab input while entering a passphrase"));
 #endif
