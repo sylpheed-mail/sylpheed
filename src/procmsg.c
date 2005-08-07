@@ -1301,11 +1301,11 @@ gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs,
 			unlink(tmp);
 		}
 
-		folder_item_remove_msg(queue, msginfo);
-		ret++;
-
 		send_queue_info_free(qinfo);
 		g_free(file);
+
+		folder_item_remove_msg(queue, msginfo);
+		ret++;
 	}
 
 	procmsg_msg_list_free(mlist);
