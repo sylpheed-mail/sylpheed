@@ -1214,7 +1214,11 @@ static const struct {
 	{"ja_JP.ujis"	, C_EUC_JP	, C_ISO_2022_JP},
 	{"ja_JP.SJIS"	, C_SHIFT_JIS	, C_ISO_2022_JP},
 	{"ja_JP.JIS"	, C_ISO_2022_JP	, C_ISO_2022_JP},
+#ifdef G_OS_WIN32
+	{"ja_JP"	, C_SHIFT_JIS	, C_ISO_2022_JP},
+#else
 	{"ja_JP"	, C_EUC_JP	, C_ISO_2022_JP},
+#endif
 	{"ko_KR.EUC-KR"	, C_EUC_KR	, C_EUC_KR},
 	{"ko_KR"	, C_EUC_KR	, C_EUC_KR},
 	{"zh_CN.GB2312"	, C_GB2312	, C_GB2312},
@@ -1594,10 +1598,14 @@ const gchar *conv_get_current_locale(void)
 	static const gchar *cur_locale;
 
 	if (!cur_locale) {
+#ifdef G_OS_WIN32
+		cur_locale = g_win32_getlocale();
+#else
 		cur_locale = g_getenv("LC_ALL");
 		if (!cur_locale) cur_locale = g_getenv("LC_CTYPE");
 		if (!cur_locale) cur_locale = g_getenv("LANG");
 		if (!cur_locale) cur_locale = setlocale(LC_CTYPE, NULL);
+#endif /* G_OS_WIN32 */
 
 		debug_print("current locale: %s\n",
 			    cur_locale ? cur_locale : "(none)");
