@@ -218,6 +218,7 @@ int main(int argc, char *argv[])
 
 	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
 	if (!is_dir_exist(RC_DIR)) {
+#ifdef G_OS_UNIX
 		const gchar *envstr;
 		AlertValue val;
 
@@ -241,6 +242,8 @@ int main(int argc, char *argv[])
 					return 1;
 			}
 		}
+#endif /* G_OS_UNIX */
+
 		if (make_dir(RC_DIR) < 0)
 			return 1;
 		if (is_dir_exist(OLD_RC_DIR))
