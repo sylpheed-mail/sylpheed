@@ -430,7 +430,7 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 
 	buffer = gtk_text_view_get_buffer(text);
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return;
 	}

@@ -34,6 +34,7 @@
 #include "addritem.h"
 #include "addrcache.h"
 #include "addrbook.h"
+#include "utils.h"
 
 #ifndef DEV_STANDALONE
 #include "prefs.h"
@@ -1071,7 +1072,7 @@ gint addrbook_write_to( AddressBookFile *book, gchar *newFile ) {
 
 	book->retVal = MGU_OPEN_FILE;
 #ifdef DEV_STANDALONE
-	fp = fopen( fileSpec, "wb" );
+	fp = g_fopen( fileSpec, "wb" );
 	g_free( fileSpec );
 	if( fp ) {
 		fputs( "<?xml version=\"1.0\" ?>\n", fp );
@@ -1672,7 +1673,7 @@ GList *addrbook_get_bookfile_list( AddressBookFile *book ) {
 
 		strcpy( buf, adbookdir );
 		strcat( buf, entry->d_name );
-		stat( buf, &statbuf );
+		g_stat( buf, &statbuf );
 		if( S_IFREG & statbuf.st_mode ) {
 			if( strncmp( entry->d_name, ADDRBOOK_PREFIX, lenpre ) == 0 ) {
 				if( strncmp( (entry->d_name) + lennum, ADDRBOOK_SUFFIX, lensuf ) == 0 ) {

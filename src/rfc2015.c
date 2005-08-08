@@ -114,7 +114,7 @@ void rfc2015_secure_remove(const gchar *fname)
 	if (!fname)
 		return;
 	/* fixme: overwrite the file first */
-	remove(fname);
+	g_remove(fname);
 }
 
 static void sig_status_for_key(GString *str, gpgme_ctx_t ctx,
@@ -232,14 +232,14 @@ static void check_signature(MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
 		goto leave;
 	}
 	if (canonicalize_file_replace(tmp_file) < 0) {
-		unlink(tmp_file);
+		g_unlink(tmp_file);
 		g_free(tmp_file);
 		goto leave;
 	}
 
 	err = gpgme_data_new_from_file(&text, tmp_file, 1);
 
-	unlink(tmp_file);
+	g_unlink(tmp_file);
 	g_free(tmp_file);
 
 	if (!err)
@@ -305,7 +305,7 @@ static gchar *copy_gpgmedata_to_temp(GpgmeData data, guint *length)
 	tmp = g_strdup_printf("%s%cgpgtmp.%08x",
 	                      get_mime_tmp_dir(), G_DIR_SEPARATOR, ++id);
 
-	if ((fp = fopen(tmp, "wb")) == NULL) {
+	if ((fp = g_fopen(tmp, "wb")) == NULL) {
 		FILE_OP_ERROR(tmp, "fopen");
 		g_free(tmp);
 		return NULL;
@@ -466,7 +466,7 @@ gboolean rfc2015_msg_is_encrypted(const gchar *file)
 	MimeInfo *mimeinfo;
 	gint ret;
 
-	if ((fp = fopen(file, "rb")) == NULL)
+	if ((fp = g_fopen(file, "rb")) == NULL)
 		return FALSE;
 
 	mimeinfo = procmime_scan_mime_header(fp);
@@ -586,7 +586,7 @@ void rfc2015_decrypt_message(MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
 	fname = g_strdup_printf("%s%cplaintext.%08x",
 	                        get_mime_tmp_dir(), G_DIR_SEPARATOR, ++id);
 
-	if ((dstfp = fopen(fname, "wb")) == NULL) {
+	if ((dstfp = g_fopen(fname, "wb")) == NULL) {
 		FILE_OP_ERROR(fname, "fopen");
 		g_free(fname);
 		DECRYPTION_ABORT();
@@ -752,7 +752,7 @@ gint rfc2015_encrypt(const gchar *file, GSList *recp_list,
 	}
 
 	/* Open the source file */
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		goto failure;
 	}
@@ -849,7 +849,7 @@ gint rfc2015_encrypt(const gchar *file, GSList *recp_list,
 		FILE_OP_ERROR(file, "fclose");
 		goto failure;
 	}
-	if ((fp = fopen(file, "wb")) == NULL) {
+	if ((fp = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		goto failure;
 	}
@@ -1062,7 +1062,7 @@ gint rfc2015_sign(const gchar *file, GSList *key_list)
 	boundary = generate_mime_boundary("Signature");
 
 	/* Open the source file */
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		goto failure;
 	}
@@ -1142,7 +1142,7 @@ gint rfc2015_sign(const gchar *file, GSList *key_list)
 		FILE_OP_ERROR(file, "fclose");
 		goto failure;
 	}
-	if ((fp = fopen(file, "wb")) == NULL) {
+	if ((fp = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		goto failure;
 	}
@@ -1268,7 +1268,7 @@ gint rfc2015_clearsign(const gchar *file, GSList *key_list)
 	ssize_t bytesRW = 0;
 	gchar *micalg = NULL;
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		goto failure;
 	}
@@ -1304,7 +1304,7 @@ gint rfc2015_clearsign(const gchar *file, GSList *key_list)
 		fp = NULL;
 		goto failure;
 	}
-	if ((fp = fopen(file, "wb")) == NULL) {
+	if ((fp = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		goto failure;
 	}

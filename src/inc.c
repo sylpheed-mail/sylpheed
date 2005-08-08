@@ -1269,7 +1269,7 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 		folder_table = g_hash_table_new(NULL, NULL);
 	msgs = proc_mbox(dest, tmp_mbox, folder_table);
 
-	unlink(tmp_mbox);
+	g_unlink(tmp_mbox);
 	if (msgs >= 0) empty_mbox(mbox);
 	unlock_mbox(mbox, lockfd, LOCK_FLOCK);
 

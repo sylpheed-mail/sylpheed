@@ -324,7 +324,7 @@ void mimeview_show_message(MimeView *mimeview, MimeInfo *mimeinfo,
 	if (prefs_common.auto_check_signatures) {
 		FILE *fp;
 
-		if ((fp = fopen(file, "rb")) == NULL) {
+		if ((fp = g_fopen(file, "rb")) == NULL) {
 			FILE_OP_ERROR(file, "fopen");
 			return;
 		}
@@ -530,7 +530,7 @@ static void mimeview_show_message_part(MimeView *mimeview, MimeInfo *partinfo)
 #endif /* USE_GPGME */
 	if (!fname) return;
 
-	if ((fp = fopen(fname, "rb")) == NULL) {
+	if ((fp = g_fopen(fname, "rb")) == NULL) {
 		FILE_OP_ERROR(fname, "fopen");
 		return;
 	}
@@ -562,7 +562,7 @@ static void mimeview_show_image_part(MimeView *mimeview, MimeInfo *partinfo)
 		mimeview_change_view_type(mimeview, MIMEVIEW_IMAGE);
 		imageview_show_image(mimeview->imageview, partinfo, filename,
 				     prefs_common.resize_image);
-		unlink(filename);
+		g_unlink(filename);
 	}
 
 	g_free(filename);
@@ -1192,7 +1192,7 @@ static void mimeview_check_signature(MimeView *mimeview)
 	while (mimeinfo->parent)
 		mimeinfo = mimeinfo->parent;
 
-	if ((fp = fopen(mimeview->file, "rb")) == NULL) {
+	if ((fp = g_fopen(mimeview->file, "rb")) == NULL) {
 		FILE_OP_ERROR(mimeview->file, "fopen");
 		return;
 	}

@@ -101,7 +101,7 @@ gint send_message(const gchar *file, PrefsAccount *ac_prefs, GSList *to_list)
 	g_return_val_if_fail(ac_prefs != NULL, -1);
 	g_return_val_if_fail(to_list != NULL, -1);
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return -1;
 	}
@@ -140,7 +140,7 @@ QueueInfo *send_get_queue_info(const gchar *file)
 
 	g_return_val_if_fail(file != NULL, NULL);
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return NULL;
 	}
@@ -206,7 +206,7 @@ gint send_get_queue_contents(QueueInfo *qinfo, const gchar *dest)
 	g_return_val_if_fail(qinfo->fp != NULL, -1);
 	g_return_val_if_fail(dest != NULL, -1);
 
-	if ((fp = fopen(dest, "wb")) == NULL) {
+	if ((fp = g_fopen(dest, "wb")) == NULL) {
 		FILE_OP_ERROR(dest, "fopen");
 		return -1;
 	}
@@ -218,7 +218,7 @@ gint send_get_queue_contents(QueueInfo *qinfo, const gchar *dest)
 
 	if (fclose(fp) < 0) {
 		FILE_OP_ERROR(dest, "fclose");
-		unlink(dest);
+		g_unlink(dest);
 		return -1;
 	}
 

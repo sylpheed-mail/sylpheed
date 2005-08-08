@@ -623,7 +623,7 @@ static void prefs_filter_set_header_list(MsgInfo *msginfo)
 	list = NULL;
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_HEADER_RC,
 			   NULL);
-	if ((fp = fopen(path, "rb")) != NULL) {
+	if ((fp = g_fopen(path, "rb")) != NULL) {
 		gchar buf[PREFSBUFSIZE];
 
 		while (fgets(buf, sizeof(buf), fp) != NULL) {

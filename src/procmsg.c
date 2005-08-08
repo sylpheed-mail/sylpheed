@@ -693,7 +693,7 @@ static FILE *procmsg_open_data_file(const gchar *file, guint version,
 	g_return_val_if_fail(file != NULL, NULL);
 
 	if (mode == DATA_WRITE) {
-		if ((fp = fopen(file, "wb")) == NULL) {
+		if ((fp = g_fopen(file, "wb")) == NULL) {
 			FILE_OP_ERROR(file, "fopen");
 			return NULL;
 		}
@@ -705,7 +705,7 @@ static FILE *procmsg_open_data_file(const gchar *file, guint version,
 	}
 
 	/* check version */
-	if ((fp = fopen(file, "rb")) == NULL)
+	if ((fp = g_fopen(file, "rb")) == NULL)
 		debug_print("Mark/Cache file '%s' not found\n", file);
 	else {
 		if (buf && buf_size > 0)
@@ -725,7 +725,7 @@ static FILE *procmsg_open_data_file(const gchar *file, guint version,
 	if (fp) {
 		/* reopen with append mode */
 		fclose(fp);
-		if ((fp = fopen(file, "ab")) == NULL)
+		if ((fp = g_fopen(file, "ab")) == NULL)
 			FILE_OP_ERROR(file, "fopen");
 	} else {
 		/* open with overwrite mode if mark file doesn't exist or
@@ -1034,7 +1034,7 @@ FILE *procmsg_open_message(MsgInfo *msginfo)
 			return NULL;
 	}
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		g_free(file);
 		return NULL;
@@ -1298,7 +1298,7 @@ gint procmsg_send_queue(FolderItem *queue, gboolean save_msgs,
 
 				filter_info_free(fltinfo);
 			}
-			unlink(tmp);
+			g_unlink(tmp);
 		}
 
 		send_queue_info_free(qinfo);
@@ -1357,7 +1357,7 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 	prtmp = g_strdup_printf("%s%cprinttmp.%08x",
 				get_mime_tmp_dir(), G_DIR_SEPARATOR, id++);
 
-	if ((prfp = fopen(prtmp, "wb")) == NULL) {
+	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
 		FILE_OP_ERROR(prtmp, "fopen");
 		g_free(prtmp);
 		fclose(tmpfp);

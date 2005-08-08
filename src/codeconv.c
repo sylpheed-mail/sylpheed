@@ -1868,11 +1868,11 @@ gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 	CodeConverter *conv;
 	gboolean err = FALSE;
 
-	if ((src_fp = fopen(src, "rb")) == NULL) {
+	if ((src_fp = g_fopen(src, "rb")) == NULL) {
 		FILE_OP_ERROR(src, "fopen");
 		return -1;
 	}
-	if ((dest_fp = fopen(dest, "wb")) == NULL) {
+	if ((dest_fp = g_fopen(dest, "wb")) == NULL) {
 		FILE_OP_ERROR(dest, "fopen");
 		fclose(src_fp);
 		return -1;
@@ -1908,7 +1908,7 @@ gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 		err = TRUE;
 	}
 	if (err) {
-		unlink(dest);
+		g_unlink(dest);
 		return -1;
 	}
 

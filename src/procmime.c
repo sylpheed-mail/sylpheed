@@ -666,7 +666,7 @@ gint procmime_get_part(const gchar *outfile, const gchar *infile,
 	g_return_val_if_fail(infile != NULL, -1);
 	g_return_val_if_fail(mimeinfo != NULL, -1);
 
-	if ((infp = fopen(infile, "rb")) == NULL) {
+	if ((infp = g_fopen(infile, "rb")) == NULL) {
 		FILE_OP_ERROR(infile, "fopen");
 		return -1;
 	}
@@ -689,7 +689,7 @@ gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
 		FILE_OP_ERROR("procmime_get_part_fp()", "fseek");
 		return -1;
 	}
-	if ((outfp = fopen(outfile, "wb")) == NULL) {
+	if ((outfp = g_fopen(outfile, "wb")) == NULL) {
 		FILE_OP_ERROR(outfile, "fopen");
 		return -1;
 	}
@@ -701,7 +701,7 @@ gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
 
 	if (fclose(outfp) == EOF) {
 		FILE_OP_ERROR(outfile, "fclose");
-		unlink(outfile);
+		g_unlink(outfile);
 		return -1;
 	}
 
@@ -826,7 +826,7 @@ gboolean procmime_find_string_part(MimeInfo *mimeinfo, const gchar *filename,
 	g_return_val_if_fail(str != NULL, FALSE);
 	g_return_val_if_fail(find_func != NULL, FALSE);
 
-	if ((infp = fopen(filename, "rb")) == NULL) {
+	if ((infp = g_fopen(filename, "rb")) == NULL) {
 		FILE_OP_ERROR(filename, "fopen");
 		return FALSE;
 	}
@@ -1051,7 +1051,7 @@ static GList *procmime_get_mime_type_list(const gchar *file)
 	gchar *delim;
 	MimeType *mime_type;
 
-	if ((fp = fopen(file, "rb")) == NULL) return NULL;
+	if ((fp = g_fopen(file, "rb")) == NULL) return NULL;
 
 	debug_print("Reading %s ...\n", file);
 
@@ -1117,7 +1117,7 @@ EncodingType procmime_get_encoding_for_text_file(const gchar *file)
 	size_t total_len = 0;
 	gfloat octet_percentage;
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return ENC_UNKNOWN;
 	}

@@ -40,7 +40,7 @@ static Template *template_load(gchar *filename)
 	gchar buf[BUFFSIZE];
 	gint bytes_read;
 
-	if ((fp = fopen(filename, "rb")) == NULL) {
+	if ((fp = g_fopen(filename, "rb")) == NULL) {
 		FILE_OP_ERROR(filename, "fopen");
 		return NULL;
 	}
@@ -136,7 +136,7 @@ GSList *template_read_config(void)
 		filename = g_strconcat(path, G_DIR_SEPARATOR_S,
 				       de->d_name, NULL);
 
-		if (stat(filename, &s) != 0 || !S_ISREG(s.st_mode) ) {
+		if (g_stat(filename, &s) != 0 || !S_ISREG(s.st_mode) ) {
 			debug_print("%s:%d %s is not an ordinary file\n",
 				    __FILE__, __LINE__, filename);
 			continue;
@@ -186,7 +186,7 @@ void template_write_config(GSList *tmpl_list)
 		filename = g_strconcat(path, G_DIR_SEPARATOR_S,
 				       itos(tmpl_num), NULL);
 
-		if ((fp = fopen(filename, "wb")) == NULL) {
+		if ((fp = g_fopen(filename, "wb")) == NULL) {
 			FILE_OP_ERROR(filename, "fopen");
 			g_free(filename);
 			return;

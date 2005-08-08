@@ -56,7 +56,7 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 
 	prefs_set_default(param);
 
-	if ((fp = fopen(rcfile, "rb")) == NULL) {
+	if ((fp = g_fopen(rcfile, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(rcfile, "fopen");
 		return;
 	}
@@ -178,7 +178,7 @@ void prefs_write_config(PrefParam *param, const gchar *label,
 	g_return_if_fail(rcfile != NULL);
 
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, rcfile, NULL);
-	if ((orig_fp = fopen(rcpath, "rb")) == NULL) {
+	if ((orig_fp = g_fopen(rcpath, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
 	}
 
@@ -286,7 +286,7 @@ PrefFile *prefs_file_open(const gchar *path)
 	g_return_val_if_fail(path != NULL, NULL);
 
 	tmppath = g_strconcat(path, ".tmp", NULL);
-	if ((fp = fopen(tmppath, "wb")) == NULL) {
+	if ((fp = g_fopen(tmppath, "wb")) == NULL) {
 		FILE_OP_ERROR(tmppath, "fopen");
 		g_free(tmppath);
 		return NULL;
@@ -320,7 +320,7 @@ gint prefs_file_close(PrefFile *pfile)
 	tmppath = g_strconcat(path, ".tmp", NULL);
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(tmppath, "fclose");
-		unlink(tmppath);
+		g_unlink(tmppath);
 		g_free(path);
 		g_free(tmppath);
 		return -1;
@@ -330,7 +330,7 @@ gint prefs_file_close(PrefFile *pfile)
 		bakpath = g_strconcat(path, ".bak", NULL);
 		if (rename_force(path, bakpath) < 0) {
 			FILE_OP_ERROR(path, "rename");
-			unlink(tmppath);
+			g_unlink(tmppath);
 			g_free(path);
 			g_free(tmppath);
 			g_free(bakpath);
@@ -340,7 +340,7 @@ gint prefs_file_close(PrefFile *pfile)
 
 	if (rename_force(tmppath, path) < 0) {
 		FILE_OP_ERROR(tmppath, "rename");
-		unlink(tmppath);
+		g_unlink(tmppath);
 		g_free(path);
 		g_free(tmppath);
 		g_free(bakpath);
@@ -361,7 +361,8 @@ gint prefs_file_close_revert(PrefFile *pfile)
 
 	tmppath = g_strconcat(pfile->path, ".tmp", NULL);
 	fclose(pfile->fp);
-	if (unlink(tmppath) < 0) FILE_OP_ERROR(tmppath, "unlink");
+	if (g_unlink(tmppath) < 0)
+		FILE_OP_ERROR(tmppath, "unlink");
 	g_free(tmppath);
 	g_free(pfile->path);
 	g_free(pfile);

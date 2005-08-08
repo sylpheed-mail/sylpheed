@@ -1738,7 +1738,7 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 
 	g_return_if_fail(file != NULL);
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return;
 	}
@@ -1809,7 +1809,7 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 		alertpanel_notice(_("File %s is empty."), file);
 		return;
 	}
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		alertpanel_error(_("Can't read %s."), file);
 		return;
 	}
@@ -2536,7 +2536,7 @@ static gint compose_send(Compose *compose)
 
 	if (!compose->to_list && !compose->newsgroup_list) {
 		g_warning(_("can't get recipient list."));
-		unlink(tmp);
+		g_unlink(tmp);
 		lock = FALSE;
 		return -1;
 	}
@@ -2557,7 +2557,7 @@ static gint compose_send(Compose *compose)
 			if (!ac || ac->protocol == A_NNTP) {
 				alertpanel_error(_("Account for sending mail is not specified.\n"
 						   "Please select a mail account before sending."));
-				unlink(tmp);
+				g_unlink(tmp);
 				lock = FALSE;
 				return -1;
 			}
@@ -2571,7 +2571,7 @@ static gint compose_send(Compose *compose)
 		if (ok < 0) {
 			alertpanel_error(_("Error occurred while posting the message to %s ."),
 					 compose->account->nntp_server);
-			unlink(tmp);
+			g_unlink(tmp);
 			lock = FALSE;
 			return -1;
 		}
@@ -2612,7 +2612,7 @@ static gint compose_send(Compose *compose)
 		}
 	}
 
-	unlink(tmp);
+	g_unlink(tmp);
 	lock = FALSE;
 	return ok;
 }
@@ -2665,14 +2665,14 @@ static gint compose_clearsign_text(Compose *compose, gchar **text)
 
 	if (compose_create_signers_list(compose, &key_list) < 0 ||
 	    rfc2015_clearsign(tmp_file, key_list) < 0) {
-		unlink(tmp_file);
+		g_unlink(tmp_file);
 		g_free(tmp_file);
 		return -1;
 	}
 
 	g_free(*text);
 	*text = file_read_to_str(tmp_file);
-	unlink(tmp_file);
+	g_unlink(tmp_file);
 	g_free(tmp_file);
 	if (*text == NULL)
 		return -1;
@@ -2698,7 +2698,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	EncodingType encoding;
 	gint line;
 
-	if ((fp = fopen(file, "wb")) == NULL) {
+	if ((fp = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return -1;
 	}
@@ -2752,7 +2752,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			if (aval != G_ALERTDEFAULT) {
 				g_free(chars);
 				fclose(fp);
-				unlink(file);
+				g_unlink(file);
 				return -1;
 			} else {
 				buf = chars;
@@ -2794,7 +2794,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		if (compose_clearsign_text(compose, &buf) < 0) {
 			g_warning("clearsign failed\n");
 			fclose(fp);
-			unlink(file);
+			g_unlink(file);
 			g_free(buf);
 			return -1;
 		}
@@ -2824,7 +2824,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		if (aval != G_ALERTDEFAULT) {
 			g_free(msg);
 			fclose(fp);
-			unlink(file);
+			g_unlink(file);
 			g_free(buf);
 			return -1;
 		}
@@ -2835,7 +2835,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 				  body_charset, encoding, is_draft) < 0) {
 		g_warning("can't write headers\n");
 		fclose(fp);
-		unlink(file);
+		g_unlink(file);
 		g_free(buf);
 		return -1;
 	}
@@ -2884,7 +2884,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		if (fwrite(outbuf, sizeof(gchar), outlen, fp) != outlen) {
 			FILE_OP_ERROR(file, "fwrite");
 			fclose(fp);
-			unlink(file);
+			g_unlink(file);
 			g_free(outbuf);
 			g_free(buf);
 			return -1;
@@ -2893,7 +2893,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	} else if (fwrite(buf, sizeof(gchar), len, fp) != len) {
 		FILE_OP_ERROR(file, "fwrite");
 		fclose(fp);
-		unlink(file);
+		g_unlink(file);
 		g_free(buf);
 		return -1;
 	}
@@ -2905,7 +2905,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(file, "fclose");
-		unlink(file);
+		g_unlink(file);
 		return -1;
 	}
 
@@ -2918,7 +2918,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	if ((compose->use_signing && !compose->account->clearsign) ||
 	    compose->use_encryption) {
 		if (canonicalize_file_replace(file) < 0) {
-			unlink(file);
+			g_unlink(file);
 			return -1;
 		}
 	}
@@ -2928,14 +2928,14 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 		if (compose_create_signers_list(compose, &key_list) < 0 ||
 		    rfc2015_sign(file, key_list) < 0) {
-			unlink(file);
+			g_unlink(file);
 			return -1;
 		}
 	}
 	if (compose->use_encryption) {
 		if (rfc2015_encrypt(file, compose->to_list,
 				    compose->account->ascii_armored) < 0) {
-			unlink(file);
+			g_unlink(file);
 			return -1;
 		}
 	}
@@ -2954,7 +2954,7 @@ static gint compose_write_body_to_file(Compose *compose, const gchar *file)
 	size_t len;
 	gchar *chars, *tmp;
 
-	if ((fp = fopen(file, "wb")) == NULL) {
+	if ((fp = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return -1;
 	}
@@ -2977,7 +2977,7 @@ static gint compose_write_body_to_file(Compose *compose, const gchar *file)
 
 	if (!chars) {
 		fclose(fp);
-		unlink(file);
+		g_unlink(file);
 		return -1;
 	}
 
@@ -2987,7 +2987,7 @@ static gint compose_write_body_to_file(Compose *compose, const gchar *file)
 		FILE_OP_ERROR(file, "fwrite");
 		g_free(chars);
 		fclose(fp);
-		unlink(file);
+		g_unlink(file);
 		return -1;
 	}
 
@@ -2995,7 +2995,7 @@ static gint compose_write_body_to_file(Compose *compose, const gchar *file)
 
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(file, "fclose");
-		unlink(file);
+		g_unlink(file);
 		return -1;
 	}
 	return 0;
@@ -3017,7 +3017,7 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 	if ((fp = procmsg_open_message(compose->targetinfo)) == NULL)
 		return -1;
 
-	if ((fdest = fopen(file, "wb")) == NULL) {
+	if ((fdest = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		fclose(fp);
 		return -1;
@@ -3077,7 +3077,7 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 	fclose(fp);
 	if (fclose(fdest) == EOF) {
 		FILE_OP_ERROR(file, "fclose");
-		unlink(file);
+		g_unlink(file);
 		return -1;
 	}
 
@@ -3085,7 +3085,7 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 error:
 	fclose(fp);
 	fclose(fdest);
-	unlink(file);
+	g_unlink(file);
 
 	return -1;
 }
@@ -3131,15 +3131,15 @@ static gint compose_queue(Compose *compose, const gchar *file)
 
 	tmp = g_strdup_printf("%s%cqueue.%p", get_tmp_dir(),
 			      G_DIR_SEPARATOR, compose);
-	if ((fp = fopen(tmp, "wb")) == NULL) {
+	if ((fp = g_fopen(tmp, "wb")) == NULL) {
 		FILE_OP_ERROR(tmp, "fopen");
 		g_free(tmp);
 		return -1;
 	}
-	if ((src_fp = fopen(file, "rb")) == NULL) {
+	if ((src_fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		fclose(fp);
-		unlink(tmp);
+		g_unlink(tmp);
 		g_free(tmp);
 		return -1;
 	}
@@ -3189,7 +3189,7 @@ static gint compose_queue(Compose *compose, const gchar *file)
 			FILE_OP_ERROR(tmp, "fputs");
 			fclose(fp);
 			fclose(src_fp);
-			unlink(tmp);
+			g_unlink(tmp);
 			g_free(tmp);
 			return -1;
 		}
@@ -3198,7 +3198,7 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	fclose(src_fp);
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(tmp, "fclose");
-		unlink(tmp);
+		g_unlink(tmp);
 		g_free(tmp);
 		return -1;
 	}
@@ -3206,14 +3206,14 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	queue = account_get_special_folder(compose->account, F_QUEUE);
 	if (!queue) {
 		g_warning(_("can't find queue folder\n"));
-		unlink(tmp);
+		g_unlink(tmp);
 		g_free(tmp);
 		return -1;
 	}
 	folder_item_scan(queue);
 	if ((num = folder_item_add_msg(queue, tmp, &flag, TRUE)) < 0) {
 		g_warning(_("can't queue the message\n"));
-		unlink(tmp);
+		g_unlink(tmp);
 		g_free(tmp);
 		return -1;
 	}
@@ -3249,7 +3249,7 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 	     valid = gtk_tree_model_iter_next(model, &iter)) {
 		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
 
-		if ((attach_fp = fopen(ainfo->file, "rb")) == NULL) {
+		if ((attach_fp = g_fopen(ainfo->file, "rb")) == NULL) {
 			g_warning("Can't open file %s\n", ainfo->file);
 			continue;
 		}
@@ -3302,9 +3302,9 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 					fclose(attach_fp);
 					continue;
 				}
-				if ((tmp_fp = fopen(tmp_file, "rb")) == NULL) {
+				if ((tmp_fp = g_fopen(tmp_file, "rb")) == NULL) {
 					FILE_OP_ERROR(tmp_file, "fopen");
-					unlink(tmp_file);
+					g_unlink(tmp_file);
 					g_free(tmp_file);
 					fclose(attach_fp);
 					continue;
@@ -3327,7 +3327,7 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 
 			if (tmp_file) {
 				fclose(tmp_fp);
-				unlink(tmp_file);
+				g_unlink(tmp_file);
 				g_free(tmp_file);
 			}
 		} else if (encoding == ENC_QUOTED_PRINTABLE) {
@@ -5278,11 +5278,11 @@ static gboolean compose_input_cb(GIOChannel *source, GIOCondition condition,
 
 		compose_changed_cb(NULL, compose);
 
-		if (unlink(compose->exteditor_file) < 0)
+		if (g_unlink(compose->exteditor_file) < 0)
 			FILE_OP_ERROR(compose->exteditor_file, "unlink");
 	} else if (buf[0] == '1') {	/* failed */
 		g_warning(_("Couldn't exec external editor\n"));
-		if (unlink(compose->exteditor_file) < 0)
+		if (g_unlink(compose->exteditor_file) < 0)
 			FILE_OP_ERROR(compose->exteditor_file, "unlink");
 	} else if (buf[0] == '2') {
 		g_warning(_("Couldn't write to file\n"));
@@ -5611,7 +5611,7 @@ static void compose_send_later_cb(gpointer data, guint action,
 		return;
 	}
 
-	if (unlink(tmp) < 0)
+	if (g_unlink(tmp) < 0)
 		FILE_OP_ERROR(tmp, "unlink");
 
 	compose_destroy(compose);
@@ -5644,7 +5644,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 
 	folder_item_scan(draft);
 	if ((msgnum = folder_item_add_msg(draft, tmp, &flag, TRUE)) < 0) {
-		unlink(tmp);
+		g_unlink(tmp);
 		g_free(tmp);
 		lock = FALSE;
 		return;
@@ -5674,7 +5674,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 
 		path = folder_item_fetch_msg(draft, msgnum);
 		g_return_if_fail(path != NULL);
-		if (stat(path, &s) < 0) {
+		if (g_stat(path, &s) < 0) {
 			FILE_OP_ERROR(path, "stat");
 			g_free(path);
 			lock = FALSE;

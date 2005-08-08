@@ -186,7 +186,7 @@ static gint vcard_open_file( VCardFile* cardFile ) {
 	/* fprintf( stdout, "Opening file\n" ); */
 	cardFile->addressCache->dataRead = FALSE;
 	if( cardFile->path ) {
-		cardFile->file = fopen( cardFile->path, "rb" );
+		cardFile->file = g_fopen( cardFile->path, "rb" );
 		if( ! cardFile->file ) {
 			/* fprintf( stderr, "can't open %s\n", cardFile->path ); */
 			cardFile->retVal = MGU_OPEN_FILE;
@@ -667,7 +667,7 @@ gchar *vcard_find_gnomecard( void ) {
 	strcat( str, GNOMECARD_FILE );
 
 	fileSpec = NULL;
-	if( ( fp = fopen( str, "rb" ) ) != NULL ) {
+	if( ( fp = g_fopen( str, "rb" ) ) != NULL ) {
 		/* Read configuration file */
 		lenlbl = strlen( GNOMECARD_SECTION );
 		while( fgets( buf, sizeof( buf ), fp ) != NULL ) {

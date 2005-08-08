@@ -1222,7 +1222,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	if (remove_source) {
 		for (cur = file_list; cur != NULL; cur = cur->next) {
 			fileinfo = (MsgFileInfo *)cur->data;
-			if (unlink(fileinfo->file) < 0)
+			if (g_unlink(fileinfo->file) < 0)
 				 FILE_OP_ERROR(fileinfo->file, "unlink");
 		}
 	}
@@ -2149,7 +2149,7 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 
 	if (is_dir_exist(old_cache_dir)) {
 		new_cache_dir = folder_item_get_path(item);
-		if (rename(old_cache_dir, new_cache_dir) < 0) {
+		if (g_rename(old_cache_dir, new_cache_dir) < 0) {
 			FILE_OP_ERROR(old_cache_dir, "rename");
 		}
 		g_free(new_cache_dir);
@@ -2320,7 +2320,7 @@ static void imap_delete_cached_message(FolderItem *item, guint32 uid)
 
 	debug_print("Deleting cached message: %s\n", file);
 
-	unlink(file);
+	g_unlink(file);
 
 	g_free(file);
 	g_free(dir);
@@ -2464,7 +2464,7 @@ static GList *imap_parse_namespace_str(gchar *str)
 
 static void imap_parse_namespace(IMAPSession *session, IMAPFolder *folder)
 {
-	gchar *ns_str;
+	gchar *ns_str = NULL;
 	gchar **str_array;
 
 	g_return_if_fail(session != NULL);
@@ -3507,7 +3507,7 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 	g_return_val_if_fail(file != NULL, IMAP_ERROR);
 
 	size = get_file_size_as_crlf(file);
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return -1;
 	}

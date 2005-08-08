@@ -314,7 +314,7 @@ void prefs_custom_header_read_config(PrefsAccount *ac)
 
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
 			     CUSTOM_HEADER_RC, NULL);
-	if ((fp = fopen(rcpath, "rb")) == NULL) {
+	if ((fp = g_fopen(rcpath, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
 		g_free(rcpath);
 		ac->customhdr_list = NULL;
@@ -359,7 +359,7 @@ void prefs_custom_header_write_config(PrefsAccount *ac)
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
 			     CUSTOM_HEADER_RC, NULL);
 
-	if ((fp = fopen(rcpath, "rb")) == NULL) {
+	if ((fp = g_fopen(rcpath, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
 	} else {
 		all_hdrs = NULL;

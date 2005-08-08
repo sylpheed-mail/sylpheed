@@ -126,7 +126,7 @@ void source_window_show_msg(SourceWindow *sourcewin, MsgInfo *msginfo)
 	file = procmsg_get_message_file(msginfo);
 	g_return_if_fail(file != NULL);
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		g_free(file);
 		return;

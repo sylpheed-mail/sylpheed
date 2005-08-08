@@ -369,7 +369,7 @@ void prefs_display_header_read_config(void)
 
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
 			     DISPLAY_HEADER_RC, NULL);
-	if ((fp = fopen(rcpath, "rb")) == NULL) {
+	if ((fp = g_fopen(rcpath, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
 		g_free(rcpath);
 		prefs_common.disphdr_list = NULL;

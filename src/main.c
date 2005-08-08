@@ -592,7 +592,7 @@ static gint prohibit_duplicate_launch(void)
 	path = get_socket_name();
 	uxsock = fd_connect_unix(path);
 	if (uxsock < 0) {
-		unlink(path);
+		g_unlink(path);
 		return fd_open_unix(path);
 	}
 
@@ -678,7 +678,7 @@ static gint lock_socket_remove(void)
 		gdk_input_remove(lock_socket_tag);
 	fd_close(lock_socket);
 	filename = get_socket_name();
-	unlink(filename);
+	g_unlink(filename);
 #endif
 
 	return 0;

@@ -455,7 +455,7 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	if (remove_source) {
 		for (cur = file_list; cur != NULL; cur = cur->next) {
 			fileinfo = (MsgFileInfo *)cur->data;
-			if (unlink(fileinfo->file) < 0)
+			if (g_unlink(fileinfo->file) < 0)
 				FILE_OP_ERROR(fileinfo->file, "unlink");
 		}
 	}
@@ -659,7 +659,7 @@ static gint mh_remove_msg(Folder *folder, FolderItem *item, MsgInfo *msginfo)
 	file = mh_fetch_msg(folder, item, msginfo->msgnum);
 	g_return_val_if_fail(file != NULL, -1);
 
-	if (unlink(file) < 0) {
+	if (g_unlink(file) < 0) {
 		FILE_OP_ERROR(file, "unlink");
 		g_free(file);
 		return -1;
@@ -705,7 +705,7 @@ static gboolean mh_is_msg_changed(Folder *folder, FolderItem *item,
 {
 	struct stat s;
 
-	if (stat(itos(msginfo->msgnum), &s) < 0 ||
+	if (g_stat(itos(msginfo->msgnum), &s) < 0 ||
 	    msginfo->size  != s.st_size ||
 	    msginfo->mtime != s.st_mtime)
 		return TRUE;
@@ -955,7 +955,7 @@ static gint mh_move_folder_real(Folder *folder, FolderItem *item,
 
 	debug_print("mh_move_folder: rename(%s, %s)\n", oldpath, newpath);
 
-	if (rename(oldpath, newpath) < 0) {
+	if (g_rename(oldpath, newpath) < 0) {
 		FILE_OP_ERROR(oldpath, "rename");
 		g_free(oldpath);
 		g_free(newpath);
@@ -1043,7 +1043,7 @@ static time_t mh_get_mtime(FolderItem *item)
 	struct stat s;
 
 	path = folder_item_get_path(item);
-	if (stat(path, &s) < 0) {
+	if (g_stat(path, &s) < 0) {
 		FILE_OP_ERROR(path, "stat");
 		return -1;
 	} else {
@@ -1280,7 +1280,7 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			d->d_type == DT_DIR ||
 			(d->d_type == DT_UNKNOWN &&
 #endif
-			stat(entry, &s) == 0 && S_ISDIR(s.st_mode)
+			g_stat(entry, &s) == 0 && S_ISDIR(s.st_mode)
 #ifdef HAVE_DIRENT_D_TYPE
 			)
 #endif

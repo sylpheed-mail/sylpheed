@@ -212,7 +212,7 @@ GSList *procheader_get_header_list_from_file(const gchar *file)
 	FILE *fp;
 	GSList *hlist;
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return NULL;
 	}
@@ -421,14 +421,14 @@ MsgInfo *procheader_parse_file(const gchar *file, MsgFlags flags,
 	FILE *fp;
 	MsgInfo *msginfo;
 
-	if (stat(file, &s) < 0) {
+	if (g_stat(file, &s) < 0) {
 		FILE_OP_ERROR(file, "stat");
 		return NULL;
 	}
 	if (!S_ISREG(s.st_mode))
 		return NULL;
 
-	if ((fp = fopen(file, "rb")) == NULL) {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return NULL;
 	}
