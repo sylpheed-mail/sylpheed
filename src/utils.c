@@ -2061,8 +2061,8 @@ gint make_dir_hier(const gchar *dir)
 
 gint remove_all_files(const gchar *dir)
 {
-	DIR *dp;
-	struct dirent *d;
+	GDir *dp;
+	const gchar *dir_name;
 	gchar *prev_dir;
 
 	prev_dir = g_get_current_dir();
@@ -2073,22 +2073,18 @@ gint remove_all_files(const gchar *dir)
 		return -1;
 	}
 
-	if ((dp = opendir(".")) == NULL) {
-		FILE_OP_ERROR(dir, "opendir");
+	if ((dp = g_dir_open(".", 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s\n", dir);
 		g_free(prev_dir);
 		return -1;
 	}
 
-	while ((d = readdir(dp)) != NULL) {
-		if (!strcmp(d->d_name, ".") ||
-		    !strcmp(d->d_name, ".."))
-			continue;
-
-		if (g_unlink(d->d_name) < 0)
-			FILE_OP_ERROR(d->d_name, "unlink");
+	while ((dir_name = g_dir_read_name(dp)) != NULL) {
+		if (g_unlink(dir_name) < 0)
+			FILE_OP_ERROR(dir_name, "unlink");
 	}
 
-	closedir(dp);
+	g_dir_close(dp);
 
 	if (g_chdir(prev_dir) < 0) {
 		FILE_OP_ERROR(prev_dir, "chdir");
@@ -2103,8 +2099,8 @@ gint remove_all_files(const gchar *dir)
 
 gint remove_numbered_files(const gchar *dir, guint first, guint last)
 {
-	DIR *dp;
-	struct dirent *d;
+	GDir *dp;
+	const gchar *dir_name;
 	gchar *prev_dir;
 	gint file_no;
 
@@ -2116,23 +2112,23 @@ gint remove_numbered_files(const gchar *dir, guint first, guint last)
 		return -1;
 	}
 
-	if ((dp = opendir(".")) == NULL) {
-		FILE_OP_ERROR(dir, "opendir");
+	if ((dp = g_dir_open(".", 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s\n", dir);
 		g_free(prev_dir);
 		return -1;
 	}
 
-	while ((d = readdir(dp)) != NULL) {
-		file_no = to_number(d->d_name);
+	while ((dir_name = g_dir_read_name(dp)) != NULL) {
+		file_no = to_number(dir_name);
 		if (file_no > 0 && first <= file_no && file_no <= last) {
-			if (is_dir_exist(d->d_name))
+			if (is_dir_exist(dir_name))
 				continue;
-			if (g_unlink(d->d_name) < 0)
-				FILE_OP_ERROR(d->d_name, "unlink");
+			if (g_unlink(dir_name) < 0)
+				FILE_OP_ERROR(dir_name, "unlink");
 		}
 	}
 
-	closedir(dp);
+	g_dir_close(dp);
 
 	if (g_chdir(prev_dir) < 0) {
 		FILE_OP_ERROR(prev_dir, "chdir");
@@ -2152,8 +2148,8 @@ gint remove_all_numbered_files(const gchar *dir)
 
 gint remove_expired_files(const gchar *dir, guint hours)
 {
-	DIR *dp;
-	struct dirent *d;
+	GDir *dp;
+	const gchar *dir_name;
 	struct stat s;
 	gchar *prev_dir;
 	gint file_no;
@@ -2167,8 +2163,8 @@ gint remove_expired_files(const gchar *dir, guint hours)
 		return -1;
 	}
 
-	if ((dp = opendir(".")) == NULL) {
-		FILE_OP_ERROR(dir, "opendir");
+	if ((dp = g_dir_open(".", 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s\n", dir);
 		g_free(prev_dir);
 		return -1;
 	}
@@ -2176,24 +2172,24 @@ gint remove_expired_files(const gchar *dir, guint hours)
 	now = time(NULL);
 	expire_time = hours * 60 * 60;
 
-	while ((d = readdir(dp)) != NULL) {
-		file_no = to_number(d->d_name);
+	while ((dir_name = g_dir_read_name(dp)) != NULL) {
+		file_no = to_number(dir_name);
 		if (file_no > 0) {
-			if (g_stat(d->d_name, &s) < 0) {
-				FILE_OP_ERROR(d->d_name, "stat");
+			if (g_stat(dir_name, &s) < 0) {
+				FILE_OP_ERROR(dir_name, "stat");
 				continue;
 			}
 			if (S_ISDIR(s.st_mode))
 				continue;
 			mtime = MAX(s.st_mtime, s.st_atime);
 			if (now - mtime > expire_time) {
-				if (g_unlink(d->d_name) < 0)
-					FILE_OP_ERROR(d->d_name, "unlink");
+				if (g_unlink(dir_name) < 0)
+					FILE_OP_ERROR(dir_name, "unlink");
 			}
 		}
 	}
 
-	closedir(dp);
+	g_dir_close(dp);
 
 	if (g_chdir(prev_dir) < 0) {
 		FILE_OP_ERROR(prev_dir, "chdir");
@@ -2209,8 +2205,8 @@ gint remove_expired_files(const gchar *dir, guint hours)
 static gint remove_dir_recursive_real(const gchar *dir)
 {
 	struct stat s;
-	DIR *dp;
-	struct dirent *d;
+	GDir *dp;
+	const gchar *dir_name;
 	gchar *prev_dir;
 
 	if (g_stat(dir, &s) < 0) {
@@ -2237,33 +2233,29 @@ static gint remove_dir_recursive_real(const gchar *dir)
 		return -1;
 	}
 
-	if ((dp = opendir(".")) == NULL) {
-		FILE_OP_ERROR(dir, "opendir");
+	if ((dp = g_dir_open(".", 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s\n", dir);
 		g_chdir(prev_dir);
 		g_free(prev_dir);
 		return -1;
 	}
 
 	/* remove all files in the directory */
-	while ((d = readdir(dp)) != NULL) {
-		if (!strcmp(d->d_name, ".") ||
-		    !strcmp(d->d_name, ".."))
-			continue;
+	while ((dir_name = g_dir_read_name(dp)) != NULL) {
+		/* g_print("removing %s\n", dir_name); */
 
-		/* g_print("removing %s\n", d->d_name); */
-
-		if (dirent_is_directory(d)) {
-			if (remove_dir_recursive_real(d->d_name) < 0) {
+		if (is_dir_exist(dir_name)) {
+			if (remove_dir_recursive_real(dir_name) < 0) {
 				g_warning("can't remove directory\n");
 				return -1;
 			}
 		} else {
-			if (g_unlink(d->d_name) < 0)
-				FILE_OP_ERROR(d->d_name, "unlink");
+			if (g_unlink(dir_name) < 0)
+				FILE_OP_ERROR(dir_name, "unlink");
 		}
 	}
 
-	closedir(dp);
+	g_dir_close(dp);
 
 	if (g_chdir(prev_dir) < 0) {
 		FILE_OP_ERROR(prev_dir, "chdir");
@@ -2413,27 +2405,24 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 
 gint copy_dir(const gchar *src, const gchar *dest)
 {
-	DIR *dp;
-	struct dirent *d;
+	GDir *dir;
+	const gchar *dir_name;
 	gchar *src_file;
 	gchar *dest_file;
 
-	if ((dp = opendir(src)) == NULL) {
-		FILE_OP_ERROR(src, "opendir");
+	if ((dir = g_dir_open(src, 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s\n", src);
 		return -1;
 	}
 
 	if (make_dir_hier(dest) < 0) {
-		closedir(dp);
+		g_dir_close(dir);
 		return -1;
 	}
 
-	while ((d = readdir(dp)) != NULL) {
-		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
-			continue;
-
-		src_file = g_strconcat(src, G_DIR_SEPARATOR_S, d->d_name, NULL);
-		dest_file = g_strconcat(dest, G_DIR_SEPARATOR_S, d->d_name,
+	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+		src_file = g_strconcat(src, G_DIR_SEPARATOR_S, dir_name, NULL);
+		dest_file = g_strconcat(dest, G_DIR_SEPARATOR_S, dir_name,
 					NULL);
 		if (is_file_exist(src_file))
 			copy_file(src_file, dest_file, FALSE);
@@ -2441,7 +2430,7 @@ gint copy_dir(const gchar *src, const gchar *dest)
 		g_free(src_file);
 	}
 
-	closedir(dp);
+	g_dir_close(dir);
 
 	return 0;
 }

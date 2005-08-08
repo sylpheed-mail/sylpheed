@@ -1226,8 +1226,13 @@ static void mh_remove_missing_folder_items(Folder *folder)
 static void mh_scan_tree_recursive(FolderItem *item)
 {
 	Folder *folder;
+#ifdef G_OS_WIN32
+	GDir *dir;
+#else
 	DIR *dp;
 	struct dirent *d;
+#endif
+	const gchar *dir_name;
 	struct stat s;
 	gchar *fs_path;
 	gchar *entry;
@@ -1245,12 +1250,21 @@ static void mh_scan_tree_recursive(FolderItem *item)
 		: g_strdup(".");
 	if (!fs_path)
 		fs_path = g_strdup(item->path);
+#ifdef G_OS_WIN32
+	dir = g_dir_open(fs_path, 0, NULL);
+	if (!dir) {
+		g_warning("failed to open directory: %s\n", fs_path);
+		g_free(fs_path);
+		return;
+	}
+#else
 	dp = opendir(fs_path);
 	if (!dp) {
 		FILE_OP_ERROR(fs_path, "opendir");
 		g_free(fs_path);
 		return;
 	}
+#endif
 	g_free(fs_path);
 
 	debug_print("scanning %s ...\n",
@@ -1259,12 +1273,17 @@ static void mh_scan_tree_recursive(FolderItem *item)
 	if (folder->ui_func)
 		folder->ui_func(folder, item, folder->ui_func_data);
 
+#ifdef G_OS_WIN32
+	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+#else
 	while ((d = readdir(dp)) != NULL) {
-		if (d->d_name[0] == '.') continue;
+		dir_name = d->d_name;
+#endif
+		if (dir_name[0] == '.') continue;
 
-		utf8name = g_filename_to_utf8(d->d_name, -1, NULL, NULL, NULL);
+		utf8name = g_filename_to_utf8(dir_name, -1, NULL, NULL, NULL);
 		if (!utf8name)
-			utf8name = g_strdup(d->d_name);
+			utf8name = g_strdup(dir_name);
 
 		if (item->path)
 			utf8entry = g_strconcat(item->path, G_DIR_SEPARATOR_S,
@@ -1276,12 +1295,12 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			entry = g_strdup(utf8entry);
 
 		if (
-#ifdef HAVE_DIRENT_D_TYPE
+#if !defined(G_OS_WIN32) && defined(HAVE_DIRENT_D_TYPE)
 			d->d_type == DT_DIR ||
 			(d->d_type == DT_UNKNOWN &&
 #endif
 			g_stat(entry, &s) == 0 && S_ISDIR(s.st_mode)
-#ifdef HAVE_DIRENT_D_TYPE
+#if !defined(G_OS_WIN32) && defined(HAVE_DIRENT_D_TYPE)
 			)
 #endif
 		   ) {
@@ -1296,6 +1315,8 @@ static void mh_scan_tree_recursive(FolderItem *item)
 				continue;
 			}
 #endif
+
+#ifndef G_OS_WIN32
 			if (g_utf8_validate(utf8name, -1, NULL) == FALSE) {
 				g_warning(_("Directory name\n"
 					    "'%s' is not a valid UTF-8 string.\n"
@@ -1310,6 +1331,7 @@ static void mh_scan_tree_recursive(FolderItem *item)
 				g_free(utf8name);
 				continue;
 			}
+#endif /* G_OS_WIN32 */
 
 			node = item->node;
 			for (node = node->children; node != NULL; node = node->next) {
@@ -1327,37 +1349,41 @@ static void mh_scan_tree_recursive(FolderItem *item)
 
 			if (!item->path) {
 				if (!folder->inbox &&
-				    !strcmp(d->d_name, INBOX_DIR)) {
+				    !strcmp(dir_name, INBOX_DIR)) {
 					new_item->stype = F_INBOX;
 					folder->inbox = new_item;
 				} else if (!folder->outbox &&
-					   !strcmp(d->d_name, OUTBOX_DIR)) {
+					   !strcmp(dir_name, OUTBOX_DIR)) {
 					new_item->stype = F_OUTBOX;
 					folder->outbox = new_item;
 				} else if (!folder->draft &&
-					   !strcmp(d->d_name, DRAFT_DIR)) {
+					   !strcmp(dir_name, DRAFT_DIR)) {
 					new_item->stype = F_DRAFT;
 					folder->draft = new_item;
 				} else if (!folder->queue &&
-					   !strcmp(d->d_name, QUEUE_DIR)) {
+					   !strcmp(dir_name, QUEUE_DIR)) {
 					new_item->stype = F_QUEUE;
 					folder->queue = new_item;
 				} else if (!folder->trash &&
-					   !strcmp(d->d_name, TRASH_DIR)) {
+					   !strcmp(dir_name, TRASH_DIR)) {
 					new_item->stype = F_TRASH;
 					folder->trash = new_item;
 				}
 			}
 
 			mh_scan_tree_recursive(new_item);
-		} else if (to_number(d->d_name) > 0) n_msg++;
+		} else if (to_number(dir_name) > 0) n_msg++;
 
 		g_free(entry);
 		g_free(utf8entry);
 		g_free(utf8name);
 	}
 
+#ifdef G_OS_WIN32
+	g_dir_close(dir);
+#else
 	closedir(dp);
+#endif
 
 	if (item->path) {
 		gint new, unread, total, min, max;

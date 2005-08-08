@@ -41,7 +41,6 @@
 #ifdef G_OS_UNIX
 #  include <signal.h>
 #endif
-#include <dirent.h>
 
 #if HAVE_LOCALE_H
 #  include <locale.h>
@@ -762,8 +761,8 @@ static void lock_socket_input_cb(gpointer data,
 
 static void migrate_old_config(void)
 {
-	DIR *dp;
-	struct dirent *d;
+	GDir *dir;
+	const gchar *dir_name;
 	GPatternSpec *pspec;
 
 	if (alertpanel(_("Migration of configuration"),
@@ -812,22 +811,22 @@ static void migrate_old_config(void)
 	if (!is_file_exist(OLD_RC_DIR G_DIR_SEPARATOR_S ADDRESSBOOK_INDEX_FILE))
 		return;
 
-	if ((dp = opendir(OLD_RC_DIR)) == NULL) {
-		FILE_OP_ERROR(OLD_RC_DIR, "opendir");
+	if ((dir = g_dir_open(OLD_RC_DIR, 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s\n", OLD_RC_DIR);
 		return;
 	}
 
 	pspec = g_pattern_spec_new("addrbook-*.xml");
 
-	while ((d = readdir(dp)) != NULL) {
-		if (g_pattern_match_string(pspec, d->d_name)) {
+	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+		if (g_pattern_match_string(pspec, dir_name)) {
 			gchar *old_file;
 			gchar *new_file;
 
 			old_file = g_strconcat(OLD_RC_DIR G_DIR_SEPARATOR_S,
-					       d->d_name, NULL);
+					       dir_name, NULL);
 			new_file = g_strconcat(RC_DIR G_DIR_SEPARATOR_S,
-					       d->d_name, NULL);
+					       dir_name, NULL);
 			copy_file(old_file, new_file, FALSE);
 			g_free(new_file);
 			g_free(old_file);
@@ -835,8 +834,7 @@ static void migrate_old_config(void)
 	}
 
 	g_pattern_spec_free(pspec);
-
-	closedir(dp);
+	g_dir_close(dir);
 }
 
 static void open_compose_new(const gchar *address, GPtrArray *attach_files)

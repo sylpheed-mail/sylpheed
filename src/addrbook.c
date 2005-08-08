@@ -24,7 +24,6 @@
 #include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <dirent.h>
 #include <sys/stat.h>
 #include <math.h>
 #include <setjmp.h>
@@ -1627,8 +1626,8 @@ ItemFolder *addrbook_remove_folder_delete( AddressBookFile *book, ItemFolder *fo
 */
 GList *addrbook_get_bookfile_list( AddressBookFile *book ) {
 	gchar *adbookdir;
-	DIR *dp;
-	struct dirent *entry;
+	GDir *dir;
+	const gchar *dir_name;
 	struct stat statbuf;
 	gchar buf[ WORK_BUFLEN ];
 	gchar numbuf[ WORK_BUFLEN ];
@@ -1655,7 +1654,7 @@ GList *addrbook_get_bookfile_list( AddressBookFile *book ) {
 	adbookdir = g_strdup( buf );
 	strcat( buf, ADDRBOOK_PREFIX );
 
-	if( ( dp = opendir( adbookdir ) ) == NULL ) {
+	if( ( dir = g_dir_open( adbookdir, 0, NULL ) ) == NULL ) {
 		book->retVal = MGU_OPEN_DIRECTORY;
 		g_free( adbookdir );
 		return NULL;
@@ -1666,18 +1665,18 @@ GList *addrbook_get_bookfile_list( AddressBookFile *book ) {
 	lennum = FILE_NUMDIGITS + lenpre;
 	maxval = -1;
 
-	while( ( entry = readdir( dp ) ) != NULL ) {
+	while( ( dir_name = g_dir_read_name( dir ) ) != NULL ) {
 		gchar *endptr = NULL;
 		gint i;
 		gboolean flg;
 
 		strcpy( buf, adbookdir );
-		strcat( buf, entry->d_name );
+		strcat( buf, dir_name );
 		g_stat( buf, &statbuf );
 		if( S_IFREG & statbuf.st_mode ) {
-			if( strncmp( entry->d_name, ADDRBOOK_PREFIX, lenpre ) == 0 ) {
-				if( strncmp( (entry->d_name) + lennum, ADDRBOOK_SUFFIX, lensuf ) == 0 ) {
-					strncpy( numbuf, (entry->d_name) + lenpre, FILE_NUMDIGITS );
+			if( strncmp( dir_name, ADDRBOOK_PREFIX, lenpre ) == 0 ) {
+				if( strncmp( (dir_name) + lennum, ADDRBOOK_SUFFIX, lensuf ) == 0 ) {
+					strncpy( numbuf, (dir_name) + lenpre, FILE_NUMDIGITS );
 					numbuf[ FILE_NUMDIGITS ] = '\0';
 					flg = TRUE;
 					for( i = 0; i < FILE_NUMDIGITS; i++ ) {
@@ -1691,14 +1690,14 @@ GList *addrbook_get_bookfile_list( AddressBookFile *book ) {
 						val = strtol( numbuf, &endptr, 10 );
 						if( endptr  && val > -1 ) {
 							if( val > maxval ) maxval = val;
-							fileList = g_list_append( fileList, g_strdup( entry->d_name ) );
+							fileList = g_list_append( fileList, g_strdup( dir_name ) );
 						}
 					}
 				}
 			}
 		}
 	}
-	closedir( dp );
+	g_dir_close( dir );
 	g_free( adbookdir );
 
 	book->maxValue = maxval; 
