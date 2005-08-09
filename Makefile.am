@@ -8,6 +8,7 @@ EXTRA_DIST = config.rpath  \
 	ChangeLog-1.0 \
 	ChangeLog-1.0.ja \
 	NEWS-1.0 \
+	NEWS-2.0 \
 	sylpheed.desktop \
 	sylpheed.spec \
 	sylpheed.spec.in \
