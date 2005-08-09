@@ -897,7 +897,7 @@ gchar *folder_item_get_path(FolderItem *item)
 		}
 	}
 
-	if (folder_path[0] == G_DIR_SEPARATOR) {
+	if (g_path_is_absolute(folder_path)) {
 		if (item_path)
 			path = g_strconcat(folder_path, G_DIR_SEPARATOR_S,
 					   item_path, NULL);
@@ -905,12 +905,13 @@ gchar *folder_item_get_path(FolderItem *item)
 			path = g_strdup(folder_path);
 	} else {
 		if (item_path)
-			path = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
-					   folder_path, G_DIR_SEPARATOR_S,
-					   item_path, NULL);
+			path = g_strconcat(get_mail_base_dir(),
+					   G_DIR_SEPARATOR_S, folder_path,
+					   G_DIR_SEPARATOR_S, item_path, NULL);
 		else
-			path = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
-					   folder_path, NULL);
+			path = g_strconcat(get_mail_base_dir(),
+					   G_DIR_SEPARATOR_S, folder_path,
+					   NULL);
 	}
 
 	g_free(item_path);

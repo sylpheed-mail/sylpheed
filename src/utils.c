@@ -1724,34 +1724,20 @@ gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 	return 0;
 }
 
-/*
- * We need this wrapper around g_get_home_dir(), so that
- * we can fix some Windoze things here.  Should be done in glibc of course
- * but as long as we are not able to do our own extensions to glibc, we do 
- * it here.
- */
 const gchar *get_home_dir(void)
 {
-#if HAVE_DOSISH_SYSTEM
-    static gchar *home_dir;
+#ifdef G_OS_WIN32
+	static const gchar *home_dir = NULL;
 
-    if (!home_dir) {
-        home_dir = read_w32_registry_string(NULL,
-                                            "Software\\Sylpheed", "HomeDir" );
-        if (!home_dir || !*home_dir) {
-            if (getenv ("HOMEDRIVE") && getenv("HOMEPATH")) {
-                const char *s = g_get_home_dir();
-                if (s && *s)
-                    home_dir = g_strdup (s);
-            }
-            if (!home_dir || !*home_dir) 
-                home_dir = g_strdup ("c:\\sylpheed");
-        }
-        debug_print("initialized home_dir to `%s'\n", home_dir);
-    }
-    return home_dir;
-#else /* standard glib */
-    return g_get_home_dir();
+	if (!home_dir) {
+		home_dir = g_get_home_dir();
+		if (!home_dir)
+			home_dir = "C:\\Sylpheed";
+	}
+
+	return home_dir;
+#else
+	return g_get_home_dir();
 #endif
 }
 
@@ -1760,8 +1746,14 @@ const gchar *get_rc_dir(void)
 	static gchar *rc_dir = NULL;
 
 	if (!rc_dir)
+#ifdef G_OS_WIN32
+		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
+				     "Application Data", G_DIR_SEPARATOR_S,
+				     RC_DIR, NULL);
+#else
 		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
 				     RC_DIR, NULL);
+#endif
 
 	return rc_dir;
 }
@@ -1775,6 +1767,21 @@ const gchar *get_old_rc_dir(void)
 					 OLD_RC_DIR, NULL);
 
 	return old_rc_dir;
+}
+
+const gchar *get_mail_base_dir(void)
+{
+#if G_OS_WIN32
+	static gchar *mail_base_dir = NULL;
+
+	if (!mail_base_dir)
+		mail_base_dir = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
+					    "Mailboxes", NULL);
+
+	return mail_base_dir;
+#else
+	return get_home_dir();
+#endif
 }
 
 const gchar *get_news_cache_dir(void)

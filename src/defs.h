@@ -44,7 +44,7 @@
 #define DRAFT_DIR		"draft"
 #define TRASH_DIR		"trash"
 #ifdef G_OS_WIN32
-#  define RC_DIR		"sylpheed-2.0"
+#  define RC_DIR		"Sylpheed"
 #else
 #  define RC_DIR		".sylpheed-2.0"
 #endif

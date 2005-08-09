@@ -209,6 +209,7 @@ int main(int argc, char *argv[])
 
 	CHDIR_RETURN_VAL_IF_FAIL(get_home_dir(), 1);
 
+#ifndef G_OS_WIN32
 	/* backup if old rc file exists */
 	if (is_file_exist(RC_DIR)) {
 		if (rename_force(RC_DIR, RC_DIR ".bak") < 0)
@@ -217,7 +218,6 @@ int main(int argc, char *argv[])
 
 	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
 	if (!is_dir_exist(RC_DIR)) {
-#ifdef G_OS_UNIX
 		const gchar *envstr;
 		AlertValue val;
 
@@ -241,13 +241,20 @@ int main(int argc, char *argv[])
 					return 1;
 			}
 		}
-#endif /* G_OS_UNIX */
 
 		if (make_dir(RC_DIR) < 0)
 			return 1;
 		if (is_dir_exist(OLD_RC_DIR))
 			migrate_old_config();
 	}
+#else
+	if (!is_dir_exist(get_rc_dir())) {
+		if (make_dir_hier(get_rc_dir()) < 0)
+			return 1;
+	}
+
+	MAKE_DIR_IF_NOT_EXIST(get_mail_base_dir());
+#endif /* G_OS_WIN32 */
 
 	MAKE_DIR_IF_NOT_EXIST(get_imap_cache_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
