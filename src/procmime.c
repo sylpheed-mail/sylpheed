@@ -1003,8 +1003,8 @@ static GHashTable *procmime_get_mime_type_table(void)
 			list = procmime_get_mime_type_list("/etc/mime.types");
 			mime_type_list = g_list_concat(mime_type_list, list);
 		}
-		dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S, RC_DIR,
-				  G_DIR_SEPARATOR_S, "mime.types", NULL);
+		dir = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
+				  "mime.types", NULL);
 		list = procmime_get_mime_type_list(dir);
 		g_free(dir);
 		mime_type_list = g_list_concat(mime_type_list, list);

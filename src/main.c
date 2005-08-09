@@ -256,23 +256,25 @@ int main(int argc, char *argv[])
 	MAKE_DIR_IF_NOT_EXIST(get_mail_base_dir());
 #endif /* G_OS_WIN32 */
 
+	CHDIR_RETURN_VAL_IF_FAIL(get_rc_dir(), 1);
+
 	MAKE_DIR_IF_NOT_EXIST(get_imap_cache_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_tmp_dir());
-	MAKE_DIR_IF_NOT_EXIST(RC_DIR G_DIR_SEPARATOR_S UIDL_DIR);
+	MAKE_DIR_IF_NOT_EXIST(UIDL_DIR);
 
 	/* remove temporary files */
 	remove_all_files(get_tmp_dir());
 	remove_all_files(get_mime_tmp_dir());
 
-	if (is_file_exist(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log")) {
-		if (rename_force
-			(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log",
-			 RC_DIR G_DIR_SEPARATOR_S "sylpheed.log.bak") < 0)
+	if (is_file_exist("sylpheed.log")) {
+		if (rename_force("sylpheed.log", "sylpheed.log.bak") < 0)
 			FILE_OP_ERROR("sylpheed.log", "rename");
 	}
-	set_log_file(RC_DIR G_DIR_SEPARATOR_S "sylpheed.log");
+	set_log_file("sylpheed.log");
+
+	CHDIR_RETURN_VAL_IF_FAIL(get_home_dir(), 1);
 
 	prefs_common_read_config();
 

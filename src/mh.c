@@ -838,7 +838,7 @@ static gint mh_create_tree(Folder *folder)
 
 	g_return_val_if_fail(folder != NULL, -1);
 
-	CHDIR_RETURN_VAL_IF_FAIL(get_home_dir(), -1);
+	CHDIR_RETURN_VAL_IF_FAIL(get_mail_base_dir(), -1);
 	rootpath = LOCAL_FOLDER(folder)->rootpath;
 	MAKE_DIR_IF_NOT_EXIST(rootpath);
 	CHDIR_RETURN_VAL_IF_FAIL(rootpath, -1);
