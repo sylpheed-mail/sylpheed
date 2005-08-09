@@ -1771,7 +1771,7 @@ const gchar *get_old_rc_dir(void)
 
 const gchar *get_mail_base_dir(void)
 {
-#if G_OS_WIN32
+#ifdef G_OS_WIN32
 	static gchar *mail_base_dir = NULL;
 
 	if (!mail_base_dir)
