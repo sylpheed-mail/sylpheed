@@ -37,7 +37,6 @@
 #include <gtk/gtkeditable.h>
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkmenuitem.h>
-#include <gtk/gtkhandlebox.h>
 #include <gtk/gtktoolbar.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtktooltips.h>
@@ -112,8 +111,7 @@ static void main_window_show_cur_account	(MainWindow	*mainwin);
 
 static void main_window_set_widgets		(MainWindow	*mainwin,
 						 SeparateType	 type);
-static void main_window_toolbar_create		(MainWindow	*mainwin,
-						 GtkWidget	*container);
+static GtkWidget *main_window_toolbar_create	(MainWindow	*mainwin);
 
 /* callback functions */
 static void toolbar_inc_cb		(GtkWidget	*widget,
@@ -152,13 +150,6 @@ static void toolbar_account_button_pressed	(GtkWidget	*widget,
 						 GdkEventButton	*event,
 						 gpointer	 data);
 #endif
-
-static void toolbar_child_attached		(GtkWidget	*widget,
-						 GtkWidget	*child,
-						 gpointer	 data);
-static void toolbar_child_detached		(GtkWidget	*widget,
-						 GtkWidget	*child,
-						 gpointer	 data);
 
 static void online_switch_clicked		(GtkWidget	*widget,
 						 gpointer	 data);
@@ -792,7 +783,7 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *window;
 	GtkWidget *vbox;
 	GtkWidget *menubar;
-	GtkWidget *handlebox;
+	GtkWidget *toolbar;
 	GtkWidget *vbox_body;
 	GtkWidget *statusbar;
 	GtkWidget *progressbar;
@@ -852,18 +843,13 @@ MainWindow *main_window_create(SeparateType type)
 	menubar = menubar_create(window, mainwin_entries, 
 				 n_menu_entries, "<Main>", mainwin);
 	gtk_widget_show(menubar);
+	gtk_widget_set_size_request(menubar, 300, -1);
 	gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, TRUE, 0);
 	ifactory = gtk_item_factory_from_widget(menubar);
 
-	handlebox = gtk_handle_box_new();
-	gtk_widget_show(handlebox);
-	gtk_box_pack_start(GTK_BOX(vbox), handlebox, FALSE, FALSE, 0);
-	g_signal_connect(G_OBJECT(handlebox), "child_attached",
-			 G_CALLBACK(toolbar_child_attached), mainwin);
-	g_signal_connect(G_OBJECT(handlebox), "child_detached",
-			 G_CALLBACK(toolbar_child_detached), mainwin);
-
-	main_window_toolbar_create(mainwin, handlebox);
+	toolbar = main_window_toolbar_create(mainwin);
+	gtk_widget_set_size_request(toolbar, 300, -1);
+	gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
 
 	/* vbox that contains body */
 	vbox_body = gtk_vbox_new(FALSE, BORDER_WIDTH);
@@ -939,7 +925,7 @@ MainWindow *main_window_create(SeparateType type)
 	mainwin->vbox           = vbox;
 	mainwin->menubar        = menubar;
 	mainwin->menu_factory   = ifactory;
-	mainwin->handlebox      = handlebox;
+	mainwin->toolbar        = toolbar;
 	mainwin->vbox_body      = vbox_body;
 	mainwin->statusbar      = statusbar;
 	mainwin->progressbar    = progressbar;
@@ -2166,8 +2152,7 @@ static GtkItemFactoryEntry forward_entries[] =
 	{N_("/Redirec_t"),		NULL, reply_cb, COMPOSE_REDIRECT, NULL}
 };
 
-static void main_window_toolbar_create(MainWindow *mainwin,
-				       GtkWidget *container)
+static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 {
 	GtkWidget *toolbar;
 	GtkWidget *icon_wid;
@@ -2197,10 +2182,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
 				  GTK_ICON_SIZE_LARGE_TOOLBAR);
-	gtk_container_add(GTK_CONTAINER(container), toolbar);
-	gtk_widget_set_size_request(toolbar, 1, -1);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_RECEIVE);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_RECEIVE);
 	get_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Get"),
 					  _("Incorporate new mail"),
@@ -2208,7 +2191,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					  icon_wid,
 					  G_CALLBACK(toolbar_inc_cb),
 					  mainwin);
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_RECEIVE_ALL);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_RECEIVE_ALL);
 	getall_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Get all"),
 					     _("Incorporate new mail of all accounts"),
@@ -2219,7 +2202,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_SEND);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_SEND);
 	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Send"),
 					   _("Send queued message(s)"),
@@ -2230,7 +2213,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_COMPOSE);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_COMPOSE);
 	compose_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					      _("Compose"),
 					      _("Compose new message"),
@@ -2239,7 +2222,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					      G_CALLBACK(toolbar_compose_cb),
 					      mainwin);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_REPLY);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_REPLY);
 	reply_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					    _("Reply"),
 					    _("Reply to the message"),
@@ -2257,8 +2240,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 				  GTK_WIDGET_PTR(reply_combo),
 				  _("Reply to the message"), "Reply");
 
-	icon_wid = stock_pixbuf_widget
-		(container, STOCK_PIXMAP_MAIL_REPLY_TO_ALL);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_REPLY_TO_ALL);
 	replyall_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					       _("Reply all"),
 					       _("Reply to all"),
@@ -2267,7 +2249,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					       G_CALLBACK(toolbar_reply_to_all_cb),
 					       mainwin);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_FORWARD);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_FORWARD);
 	fwd_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Forward"),
 					  _("Forward the message"),
@@ -2287,7 +2269,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_DELETE);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_DELETE);
 	delete_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Delete"),
 					  _("Delete the message"),
@@ -2296,7 +2278,7 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 					  G_CALLBACK(toolbar_delete_cb),
 					  mainwin);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_SPAM);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_SPAM);
 	junk_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Junk"),
 					   _("Set as junk mail"),
@@ -2350,7 +2332,6 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 			 G_CALLBACK(toolbar_account_button_pressed), mainwin);
 #endif
 
-	mainwin->toolbar      = toolbar;
 	mainwin->get_btn      = get_btn;
 	mainwin->getall_btn   = getall_btn;
 	mainwin->compose_btn  = compose_btn;
@@ -2370,6 +2351,8 @@ static void main_window_toolbar_create(MainWindow *mainwin,
 	mainwin->exec_btn     = exec_btn;
 
 	gtk_widget_show_all(toolbar);
+
+	return toolbar;
 }
 
 /* callback functions */
@@ -2497,18 +2480,6 @@ static void toolbar_account_button_pressed(GtkWidget *widget,
 		       event->button, event->time);
 }
 #endif
-
-static void toolbar_child_attached(GtkWidget *widget, GtkWidget *child,
-				   gpointer data)
-{
-	gtk_widget_set_size_request(child, 1, -1);
-}
-
-static void toolbar_child_detached(GtkWidget *widget, GtkWidget *child,
-				   gpointer data)
-{
-	gtk_widget_set_size_request(child, -1, -1);
-}
 
 static void online_switch_clicked(GtkWidget *widget, gpointer data)
 {
@@ -2796,7 +2767,7 @@ static void toggle_toolbar_cb(MainWindow *mainwin, guint action,
 {
 	switch ((ToolbarStyle)action) {
 	case TOOLBAR_NONE:
-		gtk_widget_hide(mainwin->handlebox);
+		gtk_widget_hide(mainwin->toolbar);
 	case TOOLBAR_ICON:
 		gtk_toolbar_set_style(GTK_TOOLBAR(mainwin->toolbar),
 				      GTK_TOOLBAR_ICONS);
@@ -2812,8 +2783,8 @@ static void toggle_toolbar_cb(MainWindow *mainwin, guint action,
 	}
 
 	if (action != TOOLBAR_NONE) {
-		gtk_widget_show(mainwin->handlebox);
-		gtk_widget_queue_resize(mainwin->handlebox);
+		gtk_widget_show(mainwin->toolbar);
+		gtk_widget_queue_resize(mainwin->toolbar);
 	}
 
 	mainwin->toolbar_style = (ToolbarStyle)action;

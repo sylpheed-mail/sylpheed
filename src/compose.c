@@ -48,7 +48,6 @@
 #include <gtk/gtksignal.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkcontainer.h>
-#include <gtk/gtkhandlebox.h>
 #include <gtk/gtktoolbar.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkhbox.h>
@@ -161,8 +160,7 @@ static Compose *compose_create			(PrefsAccount	*account,
 						 ComposeMode	 mode);
 static Compose *compose_find_window_by_target	(MsgInfo	*msginfo);
 static void compose_connect_changed_callbacks	(Compose	*compose);
-static void compose_toolbar_create		(Compose	*compose,
-						 GtkWidget	*container);
+static GtkWidget *compose_toolbar_create	(Compose	*compose);
 static GtkWidget *compose_account_option_menu_create
 						(Compose	*compose);
 static void compose_set_out_encoding		(Compose	*compose);
@@ -3829,7 +3827,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	GtkWidget *window;
 	GtkWidget *vbox;
 	GtkWidget *menubar;
-	GtkWidget *handlebox;
+	GtkWidget *toolbar;
 
 	GtkWidget *vbox2;
 
@@ -3926,12 +3924,12 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	n_menu_entries = sizeof(compose_entries) / sizeof(compose_entries[0]);
 	menubar = menubar_create(window, compose_entries,
 				 n_menu_entries, "<Compose>", compose);
+	gtk_widget_set_size_request(menubar, 300, -1);
 	gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, TRUE, 0);
 
-	handlebox = gtk_handle_box_new();
-	gtk_box_pack_start(GTK_BOX(vbox), handlebox, FALSE, FALSE, 0);
-
-	compose_toolbar_create(compose, handlebox);
+	toolbar = compose_toolbar_create(compose);
+	gtk_widget_set_size_request(toolbar, 300, -1);
+	gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
 
 	vbox2 = gtk_vbox_new(FALSE, 2);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox2, TRUE, TRUE, 0);
@@ -4213,19 +4211,16 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	switch (prefs_common.toolbar_style) {
 	case TOOLBAR_NONE:
-		gtk_widget_hide(handlebox);
+		gtk_widget_hide(toolbar);
 		break;
 	case TOOLBAR_ICON:
-		gtk_toolbar_set_style(GTK_TOOLBAR(compose->toolbar),
-				      GTK_TOOLBAR_ICONS);
+		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
 		break;
 	case TOOLBAR_TEXT:
-		gtk_toolbar_set_style(GTK_TOOLBAR(compose->toolbar),
-				      GTK_TOOLBAR_TEXT);
+		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_TEXT);
 		break;
 	case TOOLBAR_BOTH:
-		gtk_toolbar_set_style(GTK_TOOLBAR(compose->toolbar),
-				      GTK_TOOLBAR_BOTH);
+		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 		break;
 	}
 
@@ -4238,7 +4233,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->window        = window;
 	compose->vbox	       = vbox;
 	compose->menubar       = menubar;
-	compose->handlebox     = handlebox;
+	compose->toolbar       = toolbar;
 
 	compose->vbox2	       = vbox2;
 
@@ -4421,7 +4416,7 @@ static void compose_connect_changed_callbacks(Compose *compose)
 			 G_CALLBACK(compose_changed_cb), compose);
 }
 
-static void compose_toolbar_create(Compose *compose, GtkWidget *container)
+static GtkWidget *compose_toolbar_create(Compose *compose)
 {
 	GtkWidget *toolbar;
 	GtkWidget *icon_wid;
@@ -4441,10 +4436,8 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
 				  GTK_ICON_SIZE_LARGE_TOOLBAR);
-	gtk_container_add(GTK_CONTAINER(container), toolbar);
-	gtk_widget_set_size_request(toolbar, 1, -1);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_SEND);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_SEND);
 	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Send"),
 					   _("Send message"),
@@ -4453,7 +4446,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					   G_CALLBACK(toolbar_send_cb),
 					   compose);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_SEND_QUEUE);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_SEND_QUEUE);
 	sendl_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					   _("Send later"),
 					   _("Put into queue folder and send later"),
@@ -4462,7 +4455,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					   G_CALLBACK(toolbar_send_later_cb),
 					   compose);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL);
 	draft_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					    _("Draft"),
 					    _("Save to draft folder"),
@@ -4473,7 +4466,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_INSERT_FILE);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_INSERT_FILE);
 	insert_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Insert"),
 					     _("Insert file"),
@@ -4482,7 +4475,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					     G_CALLBACK(toolbar_insert_cb),
 					     compose);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_ATTACH);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_ATTACH);
 	attach_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					     _("Attach"),
 					     _("Attach file"),
@@ -4493,7 +4486,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_SIGN);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_SIGN);
 	sig_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Signature"),
 					  _("Insert signature"),
@@ -4503,7 +4496,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_MAIL_COMPOSE);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_COMPOSE);
 	exteditor_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 						_("Editor"),
 						_("Edit with external editor"),
@@ -4512,7 +4505,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 						G_CALLBACK(toolbar_ext_editor_cb),
 						compose);
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_LINEWRAP);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_LINEWRAP);
 	linewrap_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					       _("Linewrap"),
 					       _("Wrap all long lines"),
@@ -4523,7 +4516,7 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 
 	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
-	icon_wid = stock_pixbuf_widget(container, STOCK_PIXMAP_ADDRESS_BOOK);
+	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_ADDRESS_BOOK);
 	addrbook_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					       _("Address"),
 					       _("Address book"),
@@ -4532,7 +4525,6 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 					       G_CALLBACK(toolbar_address_cb),
 					       compose);
 
-	compose->toolbar       = toolbar;
 	compose->send_btn      = send_btn;
 	compose->sendl_btn     = sendl_btn;
 	compose->draft_btn     = draft_btn;
@@ -4544,6 +4536,8 @@ static void compose_toolbar_create(Compose *compose, GtkWidget *container)
 	compose->addrbook_btn  = addrbook_btn;
 
 	gtk_widget_show_all(toolbar);
+
+	return toolbar;
 }
 
 static GtkWidget *compose_account_option_menu_create(Compose *compose)

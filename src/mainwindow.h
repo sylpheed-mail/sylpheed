@@ -81,7 +81,6 @@ struct _MainWindow
 	GtkItemFactory *menu_factory;
 
 	/* toolbar */
-	GtkWidget *handlebox;
 	GtkWidget *toolbar;
 	GtkWidget *get_btn;
 	GtkWidget *getall_btn;

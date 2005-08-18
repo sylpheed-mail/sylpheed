@@ -155,7 +155,6 @@ GtkWidget *stock_pixbuf_widget(GtkWidget *window, StockPixmap icon)
 {
 	GdkPixbuf *pixbuf;
 
-	g_return_val_if_fail(window != NULL, NULL);
 	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, NULL);
 
 	stock_pixbuf_gdk(window, icon, &pixbuf);

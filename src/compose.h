@@ -76,7 +76,6 @@ struct _Compose
 	GtkWidget *vbox;
 	GtkWidget *menubar;
 
-	GtkWidget *handlebox;
 	GtkWidget *toolbar;
 	GtkWidget *send_btn;
 	GtkWidget *sendl_btn;
