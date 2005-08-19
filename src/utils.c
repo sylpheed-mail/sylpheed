@@ -300,6 +300,9 @@ gint strcmp2(const gchar *s1, const gchar *s2)
 gint path_cmp(const gchar *s1, const gchar *s2)
 {
 	gint len1, len2;
+#ifdef G_OS_WIN32
+	gchar *s1_, *s2_;
+#endif
 
 	if (s1 == NULL || s2 == NULL) return -1;
 	if (*s1 == '\0' || *s2 == '\0') return -1;
@@ -307,10 +310,21 @@ gint path_cmp(const gchar *s1, const gchar *s2)
 	len1 = strlen(s1);
 	len2 = strlen(s2);
 
+#ifdef G_OS_WIN32
+	Xstrdup_a(s1_, s1, return -1);
+	Xstrdup_a(s2_, s2, return -1);
+	subst_char(s1_, '/', G_DIR_SEPARATOR);
+	subst_char(s2_, '/', G_DIR_SEPARATOR);
+	if (s1_[len1 - 1] == G_DIR_SEPARATOR) len1--;
+	if (s2_[len2 - 1] == G_DIR_SEPARATOR) len2--;
+
+	return strncmp(s1_, s2_, MAX(len1, len2));
+#else
 	if (s1[len1 - 1] == G_DIR_SEPARATOR) len1--;
 	if (s2[len2 - 1] == G_DIR_SEPARATOR) len2--;
 
 	return strncmp(s1, s2, MAX(len1, len2));
+#endif
 }
 
 /* remove trailing return code */
