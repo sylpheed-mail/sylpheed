@@ -1,5 +1,10 @@
 2005-08-19
 
+	* src/socket.c: fd_write_all(): write() を直接使わずに fd_write() を
+	  使用するようにした(win32 上の IMAP4 を修正)。
+
+2005-08-19
+
 	* src/pixmaps/: src/icons/ に名称変更。
 
 2005-08-18

@@ -1157,9 +1157,7 @@ gint fd_write_all(gint fd, const gchar *buf, gint len)
 	gint n, wrlen = 0;
 
 	while (len) {
-		if (fd_check_io(fd, G_IO_OUT) < 0)
-			return -1;
-		n = write(fd, buf, len);
+		n = fd_write(fd, buf, len);
 		if (n <= 0)
 			return -1;
 		len -= n;
