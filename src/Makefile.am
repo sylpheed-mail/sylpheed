@@ -1,4 +1,4 @@
-SUBDIRS = pixmaps
+SUBDIRS = icons
 
 bin_PROGRAMS = sylpheed
 
