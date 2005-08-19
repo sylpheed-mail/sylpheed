@@ -3436,6 +3436,7 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	gchar *cur_pos;
 	gchar size_str[32];
 	glong size_num;
+	gint ret;
 
 	g_return_val_if_fail(filename != NULL, IMAP_ERROR);
 
@@ -3471,9 +3472,11 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 
 	g_free(buf);
 
-	if (recv_bytes_write_to_file(SESSION(session)->sock,
-				     size_num, filename) != 0)
-		return IMAP_ERROR;
+	if ((ret = recv_bytes_write_to_file(SESSION(session)->sock,
+					    size_num, filename)) != 0) {
+		if (ret == -2)
+			return IMAP_SOCKET;
+	}
 
 	if (imap_cmd_gen_recv(session, &buf) != IMAP_SUCCESS)
 		return IMAP_ERROR;
@@ -3485,6 +3488,9 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	g_free(buf);
 
 	ok = imap_cmd_ok(session, NULL);
+
+	if (ret != 0)
+		return IMAP_ERROR;
 
 	return ok;
 }
