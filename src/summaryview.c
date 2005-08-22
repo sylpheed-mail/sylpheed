@@ -4845,6 +4845,7 @@ static gint func_name(GtkTreeModel *model,				\
 		      GtkTreeIter *a, GtkTreeIter *b, gpointer data)	\
 {									\
 	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;			\
+	gint ret;							\
 									\
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
@@ -4852,7 +4853,9 @@ static gint func_name(GtkTreeModel *model,				\
 	if (!msginfo_a || !msginfo_b)					\
 		return 0;						\
 									\
-	return (val);							\
+	ret = (val);							\
+	return (ret != 0) ? ret :					\
+		(msginfo_a->date_t - msginfo_b->date_t);		\
 }
 
 CMP_FUNC_DEF(summary_cmp_by_mark,
@@ -4864,9 +4867,25 @@ CMP_FUNC_DEF(summary_cmp_by_mime,
 CMP_FUNC_DEF(summary_cmp_by_label,
 	     MSG_GET_COLORLABEL(msginfo_a->flags) -
 	     MSG_GET_COLORLABEL(msginfo_b->flags))
+CMP_FUNC_DEF(summary_cmp_by_size, msginfo_a->size - msginfo_b->size)
+
+#undef CMP_FUNC_DEF
+#define CMP_FUNC_DEF(func_name, val)					\
+static gint func_name(GtkTreeModel *model,				\
+		      GtkTreeIter *a, GtkTreeIter *b, gpointer data)	\
+{									\
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;			\
+									\
+	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
+	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
+									\
+	if (!msginfo_a || !msginfo_b)					\
+		return 0;						\
+									\
+	return (val);							\
+}
 
 CMP_FUNC_DEF(summary_cmp_by_num, msginfo_a->msgnum - msginfo_b->msgnum)
-CMP_FUNC_DEF(summary_cmp_by_size, msginfo_a->size - msginfo_b->size)
 CMP_FUNC_DEF(summary_cmp_by_date, msginfo_a->date_t - msginfo_b->date_t)
 
 #undef CMP_FUNC_DEF
@@ -4875,6 +4894,7 @@ static gint func_name(GtkTreeModel *model,				\
 		      GtkTreeIter *a, GtkTreeIter *b, gpointer data)	\
 {									\
 	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;			\
+	gint ret;							\
 									\
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);	\
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);	\
@@ -4887,8 +4907,11 @@ static gint func_name(GtkTreeModel *model,				\
 	if (msginfo_b->var_name == NULL)				\
 		return (msginfo_a->var_name != NULL);			\
 									\
-	return g_ascii_strcasecmp					\
+	ret = g_ascii_strcasecmp					\
 		(msginfo_a->var_name, msginfo_b->var_name);		\
+									\
+	return (ret != 0) ? ret :					\
+		(msginfo_a->date_t - msginfo_b->date_t);		\
 }
 
 CMP_FUNC_DEF(summary_cmp_by_from, fromname)
@@ -4901,6 +4924,7 @@ static gint summary_cmp_by_subject(GtkTreeModel *model,
 				   gpointer data)
 {
 	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
 
 	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, -1);
 	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, -1);
@@ -4913,6 +4937,8 @@ static gint summary_cmp_by_subject(GtkTreeModel *model,
 	if (msginfo_b->subject == NULL)
 		return (msginfo_a->subject != NULL);
 
-	return subject_compare_for_sort
-		(msginfo_a->subject, msginfo_b->subject);
+	ret = subject_compare_for_sort(msginfo_a->subject, msginfo_b->subject);
+
+	return (ret != 0) ? ret :
+		(msginfo_a->date_t - msginfo_b->date_t);
 }

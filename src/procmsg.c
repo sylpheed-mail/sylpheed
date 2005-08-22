@@ -1530,10 +1530,8 @@ gint procmsg_cmp_msgnum_for_sort(gconstpointer a, gconstpointer b)
 	const MsgInfo *msginfo1 = a;
 	const MsgInfo *msginfo2 = b;
 
-	if (!msginfo1)
-		return -1;
-	if (!msginfo2)
-		return -1;
+	if (!msginfo1 || !msginfo2)
+		return 0;
 
 	return msginfo1->msgnum - msginfo2->msgnum;
 }
@@ -1543,11 +1541,16 @@ static gint func_name(gconstpointer a, gconstpointer b)			\
 {									\
 	const MsgInfo *msginfo1 = a;					\
 	const MsgInfo *msginfo2 = b;					\
+	gint ret;							\
 									\
 	if (!msginfo1 || !msginfo2)					\
-		return -1;						\
+		return 0;						\
 									\
-	return (val) * (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
+	ret = (val);							\
+	if (ret == 0)							\
+		ret = msginfo1->date_t - msginfo2->date_t;		\
+									\
+	return ret * (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
 }
 
 CMP_FUNC_DEF(procmsg_cmp_by_mark,
@@ -1559,9 +1562,22 @@ CMP_FUNC_DEF(procmsg_cmp_by_mime,
 CMP_FUNC_DEF(procmsg_cmp_by_label,
 	     MSG_GET_COLORLABEL(msginfo1->flags) -
 	     MSG_GET_COLORLABEL(msginfo2->flags))
+CMP_FUNC_DEF(procmsg_cmp_by_size, msginfo1->size - msginfo2->size)
+
+#undef CMP_FUNC_DEF
+#define CMP_FUNC_DEF(func_name, val)					\
+static gint func_name(gconstpointer a, gconstpointer b)			\
+{									\
+	const MsgInfo *msginfo1 = a;					\
+	const MsgInfo *msginfo2 = b;					\
+									\
+	if (!msginfo1 || !msginfo2)					\
+		return 0;						\
+									\
+	return (val) * (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
+}
 
 CMP_FUNC_DEF(procmsg_cmp_by_number, msginfo1->msgnum - msginfo2->msgnum)
-CMP_FUNC_DEF(procmsg_cmp_by_size, msginfo1->size - msginfo2->size)
 CMP_FUNC_DEF(procmsg_cmp_by_date, msginfo1->date_t - msginfo2->date_t)
 
 #undef CMP_FUNC_DEF
@@ -1570,15 +1586,20 @@ static gint func_name(gconstpointer a, gconstpointer b)			\
 {									\
 	const MsgInfo *msginfo1 = a;					\
 	const MsgInfo *msginfo2 = b;					\
+	gint ret;							\
 									\
 	if (!msginfo1->var_name)					\
-		return (msginfo2->var_name != NULL);			\
+		return (msginfo2->var_name != NULL) *			\
+			(cmp_func_sort_type == SORT_ASCENDING ? -1 : 1);\
 	if (!msginfo2->var_name)					\
-		return -1;						\
+		return (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
 									\
-	return g_ascii_strcasecmp					\
-		(msginfo1->var_name, msginfo2->var_name) *		\
-			(cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);\
+	ret = g_ascii_strcasecmp					\
+		(msginfo1->var_name, msginfo2->var_name);		\
+	if (ret == 0)							\
+		ret = msginfo1->date_t - msginfo2->date_t;		\
+									\
+	return ret * (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
 }
 
 CMP_FUNC_DEF(procmsg_cmp_by_from, fromname)
@@ -1586,17 +1607,21 @@ CMP_FUNC_DEF(procmsg_cmp_by_to, to)
 
 #undef CMP_FUNC_DEF
 
-static gint procmsg_cmp_by_subject(gconstpointer a, gconstpointer b)	\
-{									\
-	const MsgInfo *msginfo1 = a;					\
-	const MsgInfo *msginfo2 = b;					\
-									\
-	if (!msginfo1->subject)						\
-		return (msginfo2->subject != NULL);			\
-	if (!msginfo2->subject)						\
-		return -1;						\
-									\
-	return subject_compare_for_sort					\
-		(msginfo1->subject, msginfo2->subject) *		\
-		(cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);	\
+static gint procmsg_cmp_by_subject(gconstpointer a, gconstpointer b)
+{
+	const MsgInfo *msginfo1 = a;
+	const MsgInfo *msginfo2 = b;
+	gint ret;
+
+	if (!msginfo1->subject)
+		return (msginfo2->subject != NULL) *
+			(cmp_func_sort_type == SORT_ASCENDING ? -1 : 1);
+	if (!msginfo2->subject)
+		return (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);
+
+	ret = subject_compare_for_sort(msginfo1->subject, msginfo2->subject);
+	if (ret == 0)
+		ret = msginfo1->date_t - msginfo2->date_t;
+
+	return ret * (cmp_func_sort_type == SORT_ASCENDING ? 1 : -1);
 }
