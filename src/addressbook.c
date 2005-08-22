@@ -1094,6 +1094,7 @@ static void addressbook_tree_selected(GtkCTree *ctree, GtkCTreeNode *node,
 	AddressDataSource *ds = NULL;
 	ItemFolder *rootFolder = NULL;
 
+	if( addrbook.treeSelected == node ) return;
 	addrbook.treeSelected = node;
 	addrbook.listSelected = NULL;
 	addressbook_status_show( "" );
@@ -1247,7 +1248,7 @@ static void addressbook_list_row_selected( GtkCTree *clist, GtkCTreeNode *node, 
 	addrbook.listSelected = node;
 	obj = gtk_ctree_node_get_row_data( clist, node );
 	if( obj != NULL ) {
-		/* printf( "list select: %d : '%s'\n", obj->type, obj->name ); */
+		/* g_print( "list select: %d : '%s'\n", obj->type, obj->name ); */
 		addressbook_list_select_add( obj );
 	}
 
@@ -1401,7 +1402,7 @@ static gboolean addressbook_tree_button_pressed(GtkWidget *ctree,
 			       event->button, event->time);
 	}
 
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean addressbook_tree_button_released(GtkWidget *ctree,
