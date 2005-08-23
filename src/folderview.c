@@ -2196,7 +2196,8 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 	if (folder->trash != item) return;
 	if (item->stype != F_TRASH) return;
 
-	if (alertpanel(_("Empty trash"), _("Empty all messages in trash?"),
+	if (alertpanel(_("Empty trash"),
+		       _("Delete all messages in the trash folder?"),
 		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
 		return;
 

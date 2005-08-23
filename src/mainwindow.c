@@ -1564,7 +1564,7 @@ void main_window_empty_trash(MainWindow *mainwin, gboolean confirm)
 
 	if (confirm) {
 		if (alertpanel(_("Empty all trash"),
-			       _("Empty messages in all trash?"),
+			       _("Delete all messages in trash folders?"),
 			       GTK_STOCK_YES, GTK_STOCK_NO, NULL)
 		    != G_ALERTDEFAULT)
 			return;
