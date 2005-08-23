@@ -311,7 +311,7 @@ static void textview_create_tags(TextView *textview)
 	buffer = gtk_text_view_get_buffer(text);
 
 	gtk_text_buffer_create_tag(buffer, "header",
-				   "pixels-above-lines", 0,
+				   "pixels-above-lines", 1,
 				   "pixels-above-lines-set", TRUE,
 				   "pixels-below-lines", 0,
 				   "pixels-below-lines-set", TRUE,
@@ -319,6 +319,14 @@ static void textview_create_tags(TextView *textview)
 				   NULL);
 	gtk_text_buffer_create_tag(buffer, "header_title",
 				   "weight", PANGO_WEIGHT_BOLD,
+				   NULL);
+
+	gtk_text_buffer_create_tag(buffer, "mimepart",
+				   "pixels-above-lines", 1,
+				   "pixels-above-lines-set", TRUE,
+				   "pixels-below-lines", 1,
+				   "pixels-below-lines-set", TRUE,
+				   "font-desc", font_desc,
 				   NULL);
 
 	textview->quote0_tag =
@@ -647,7 +655,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 #endif
 	if (mimeinfo->mime_type != MIME_TEXT &&
 	    mimeinfo->mime_type != MIME_TEXT_HTML) {
-		gtk_text_buffer_insert(buffer, &iter, buf, -1);
+		gtk_text_buffer_insert_with_tags_by_name
+			(buffer, &iter, buf, -1, "mimepart", NULL);
 		if (mimeinfo->mime_type == MIME_IMAGE &&
 		    prefs_common.inline_image) {
 			GdkPixbuf *pixbuf;
@@ -704,7 +713,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		if (!mimeinfo->main &&
 		    mimeinfo->parent &&
 		    mimeinfo->parent->children != mimeinfo)
-			gtk_text_buffer_insert(buffer, &iter, buf, -1);
+			gtk_text_buffer_insert_with_tags_by_name
+				(buffer, &iter, buf, -1, "mimepart", NULL);
 		else
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		textview_write_body(textview, mimeinfo, fp, charset);
