@@ -161,6 +161,24 @@ GtkWidget *stock_pixbuf_widget(GtkWidget *window, StockPixmap icon)
 	return gtk_image_new_from_pixbuf(pixbuf);
 }
 
+GtkWidget *stock_pixbuf_widget_scale(GtkWidget *window, StockPixmap icon,
+				     gint width, gint height)
+{
+	GdkPixbuf *pixbuf;
+	GdkPixbuf *scaled_pixbuf;
+	GtkWidget *image;
+
+	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, NULL);
+
+	stock_pixbuf_gdk(window, icon, &pixbuf);
+	scaled_pixbuf = gdk_pixbuf_scale_simple(pixbuf, width, height,
+						GDK_INTERP_HYPER);
+	image = gtk_image_new_from_pixbuf(scaled_pixbuf);
+	g_object_unref(scaled_pixbuf);
+
+	return image;
+}
+
 /* create GdkPixmap if it has not created yet */
 gint stock_pixmap_gdk(GtkWidget *window, StockPixmap icon,
 		      GdkPixmap **pixmap, GdkBitmap **mask)

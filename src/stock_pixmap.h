@@ -80,6 +80,12 @@ GtkWidget *stock_pixmap_widget	(GtkWidget	 *window,
 				 StockPixmap	  icon);
 GtkWidget *stock_pixbuf_widget	(GtkWidget	 *window,
 				 StockPixmap	  icon);
+
+GtkWidget *stock_pixbuf_widget_scale	(GtkWidget	*window,
+					 StockPixmap	 icon,
+					 gint		 width,
+					 gint		 height);
+
 gint stock_pixmap_gdk		(GtkWidget	 *window,
 				 StockPixmap	  icon,
 				 GdkPixmap	**pixmap,
