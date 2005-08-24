@@ -112,8 +112,6 @@ struct _MainWindow
 	GtkWidget *ac_menu;
 
 	GtkWidget *tray_icon;
-	GtkWidget *tray_icon_img;
-	GtkTooltips *tray_icon_tip;
 
 	/* context IDs for status bar */
 	gint mainwin_cid;

@@ -109,6 +109,7 @@ sylpheed_SOURCES = \
 	manual.c manual.h \
 	stringtable.c stringtable.h \
 	eggtrayicon.c eggtrayicon.h \
+	trayicon.c trayicon.h \
 	quote_fmt_lex.l quote_fmt_lex.h \
 	quote_fmt_parse.y quote_fmt.h \
 	sylpheed-marshal.c sylpheed-marshal.h

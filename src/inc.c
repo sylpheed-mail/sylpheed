@@ -56,6 +56,7 @@
 #include "progressdialog.h"
 #include "inputdialog.h"
 #include "alertpanel.h"
+#include "trayicon.h"
 #include "filter.h"
 #include "folder.h"
 
@@ -150,6 +151,16 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 
 	if (prefs_common.scan_all_after_inc)
 		folderview_check_new(NULL);
+
+	if (new_messages > 0) {
+		gchar buf[1024];
+
+		g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"),
+			   new_messages);
+		trayicon_set_tooltip(buf);
+	} else {
+		trayicon_set_tooltip(_("Sylpheed"));
+	}
 
 	if (new_messages <= 0 && !prefs_common.scan_all_after_inc) return;
 

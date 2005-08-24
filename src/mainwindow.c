@@ -77,7 +77,7 @@
 #include "alertpanel.h"
 #include "statusbar.h"
 #include "inputdialog.h"
-#include "eggtrayicon.h"
+#include "trayicon.h"
 #include "utils.h"
 #include "gtkutils.h"
 #include "codeconv.h"
@@ -158,10 +158,6 @@ static void ac_label_button_pressed		(GtkWidget	*widget,
 						 GdkEventButton	*event,
 						 gpointer	 data);
 static void ac_menu_popup_closed		(GtkMenuShell	*menu_shell,
-						 gpointer	 data);
-
-static void tray_icon_button_pressed		(GtkWidget	*widget,
-						 GdkEventButton	*event,
 						 gpointer	 data);
 
 static gint main_window_close_cb		(GtkWidget	*widget,
@@ -805,9 +801,6 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *ac_label;
 
 	GtkWidget *tray_icon;
-	GtkWidget *tray_icon_img;
-	GtkWidget *eventbox;
-	GtkTooltips *tray_icon_tip;
 
 	FolderView *folderview;
 	SummaryView *summaryview;
@@ -914,20 +907,7 @@ MainWindow *main_window_create(SeparateType type)
 
 	gtk_widget_show_all(statusbar);
 
-	tray_icon = GTK_WIDGET(egg_tray_icon_new("Sylpheed"));
-
-	eventbox = gtk_event_box_new();
-	gtk_container_add(GTK_CONTAINER(tray_icon), eventbox);
-	g_signal_connect(G_OBJECT(eventbox), "button_press_event",
-			 G_CALLBACK(tray_icon_button_pressed), mainwin);
-	tray_icon_img = stock_pixbuf_widget_scale(NULL, STOCK_PIXMAP_SYLPHEED,
-						  24, 24);
-	gtk_container_add(GTK_CONTAINER(eventbox), tray_icon_img);
-
-	tray_icon_tip = gtk_tooltips_new();
-	gtk_tooltips_set_tip(tray_icon_tip, tray_icon, _("Sylpheed"), NULL);
-
-	gtk_widget_show_all(tray_icon);
+	tray_icon = trayicon_create(mainwin);
 
 	/* create views */
 	mainwin->folderview  = folderview  = folderview_create();
@@ -963,8 +943,6 @@ MainWindow *main_window_create(SeparateType type)
 	mainwin->ac_label       = ac_label;
 
 	mainwin->tray_icon      = tray_icon;
-	mainwin->tray_icon_img  = tray_icon_img;
-	mainwin->tray_icon_tip  = tray_icon_tip;
 
 	/* set context IDs for status bar */
 	mainwin->mainwin_cid = gtk_statusbar_get_context_id
@@ -2568,15 +2546,6 @@ static void ac_menu_popup_closed(GtkMenuShell *menu_shell, gpointer data)
 	gtk_button_set_relief(GTK_BUTTON(button), GTK_RELIEF_NONE);
 	g_object_set_data(G_OBJECT(mainwin->ac_menu), "menu_button", NULL);
 	manage_window_focus_in(mainwin->window, NULL, NULL);
-}
-
-static void tray_icon_button_pressed(GtkWidget *widget, GdkEventButton *event,
-				     gpointer data)
-{
-	MainWindow *mainwin = (MainWindow *)data;
-
-	if (event && event->button == 1)
-		gtk_window_present(GTK_WINDOW(mainwin->window));
 }
 
 static gint main_window_close_cb(GtkWidget *widget, GdkEventAny *event,
