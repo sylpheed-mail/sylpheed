@@ -186,5 +186,7 @@ void prefs_set_data_from_toggle	(PrefParam	*pparam);
 void prefs_set_toggle		(PrefParam	*pparam);
 void prefs_set_data_from_spinbtn(PrefParam	*pparam);
 void prefs_set_spinbtn		(PrefParam	*pparam);
+void prefs_set_data_from_fontbtn(PrefParam	*pparam);
+void prefs_set_fontbtn		(PrefParam	*pparam);
 
 #endif /* __PREFS_H__ */

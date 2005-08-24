@@ -836,3 +836,43 @@ void prefs_set_spinbtn(PrefParam *pparam)
 			  pparam->type);
 	}
 }
+
+void prefs_set_data_from_fontbtn(PrefParam *pparam)
+{
+	gchar **str;
+	const gchar *font_str;
+
+	g_return_if_fail(*pparam->widget != NULL);
+
+	font_str = gtk_font_button_get_font_name
+		(GTK_FONT_BUTTON(*pparam->widget));
+
+	switch (pparam->type) {
+	case P_STRING:
+		str = (gchar **)pparam->data;
+		g_free(*str);
+		*str = font_str[0] ? g_strdup(font_str) : NULL;
+		break;
+	default:
+		g_warning("Invalid PrefType for GtkFontButton widget: %d\n",
+			  pparam->type);
+	}
+}
+
+void prefs_set_fontbtn(PrefParam *pparam)
+{
+	gchar **str;
+
+	g_return_if_fail(*pparam->widget != NULL);
+
+	switch (pparam->type) {
+	case P_STRING:
+		str = (gchar **)pparam->data;
+		gtk_font_button_set_font_name(GTK_FONT_BUTTON(*pparam->widget),
+					      *str ? *str : "");
+		break;
+	default:
+		g_warning("Invalid PrefType for GtkFontButton widget: %d\n",
+			  pparam->type);
+	}
+}
