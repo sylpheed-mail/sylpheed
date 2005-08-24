@@ -543,7 +543,8 @@ void summary_init(SummaryView *summaryview)
 	gtk_widget_modify_font(summaryview->statlabel_msgs, font_desc);
 	pango_font_description_free(font_desc);
 
-	pixmap = stock_pixmap_widget(summaryview->hbox_l, STOCK_PIXMAP_DIR_OPEN);
+	pixmap = stock_pixbuf_widget(summaryview->hbox_l,
+				     STOCK_PIXMAP_DIR_OPEN);
 	gtk_box_pack_start(GTK_BOX(summaryview->hbox_l), pixmap, FALSE, FALSE, 4);
 	gtk_box_reorder_child(GTK_BOX(summaryview->hbox_l), pixmap, 0);
 	gtk_widget_show(pixmap);

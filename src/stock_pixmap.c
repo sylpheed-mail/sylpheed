@@ -138,18 +138,6 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 };
 
-/* return newly constructed GtkPixmap from GdkPixmap */
-GtkWidget *stock_pixmap_widget(GtkWidget *window, StockPixmap icon)
-{
-	GdkPixmap *pixmap;
-	GdkBitmap *mask;
-
-	g_return_val_if_fail(window != NULL, NULL);
-	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, NULL);
-
-	stock_pixmap_gdk(window, icon, &pixmap, &mask);
-	return gtk_pixmap_new(pixmap, mask);
-}
 
 GtkWidget *stock_pixbuf_widget(GtkWidget *window, StockPixmap icon)
 {

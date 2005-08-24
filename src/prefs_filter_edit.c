@@ -761,7 +761,7 @@ static ActionHBox *prefs_filter_edit_action_hbox_create(void)
 	gtk_widget_show(folder_entry);
 	gtk_box_pack_start(GTK_BOX(hbox), folder_entry, TRUE, TRUE, 0);
 
-	folder_img = stock_pixmap_widget(rule_edit_window.window,
+	folder_img = stock_pixbuf_widget(rule_edit_window.window,
 					 STOCK_PIXMAP_DIR_OPEN);
 	gtk_widget_show(folder_img);
 

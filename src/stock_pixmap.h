@@ -76,8 +76,6 @@ typedef enum
 	N_STOCK_PIXMAPS
 } StockPixmap;
 
-GtkWidget *stock_pixmap_widget	(GtkWidget	 *window,
-				 StockPixmap	  icon);
 GtkWidget *stock_pixbuf_widget	(GtkWidget	 *window,
 				 StockPixmap	  icon);
 
