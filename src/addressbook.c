@@ -427,6 +427,7 @@ void addressbook_refresh(void)
 {
 	if (addrbook.window) {
 		if (addrbook.treeSelected) {
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select(GTK_CTREE(addrbook.ctree),
 					 addrbook.treeSelected);
 		}
@@ -882,7 +883,8 @@ static void addressbook_del_clicked(GtkButton *button, gpointer data)
 			}
 		}
 		addressbook_list_select_clear();
-		gtk_ctree_select( ctree, addrbook.opened);
+		addrbook.treeSelected = NULL;
+		gtk_ctree_select( ctree, addrbook.opened );
 		return;
 	}
 	else if( pobj->type == ADDR_ITEM_GROUP ) {
@@ -904,7 +906,8 @@ static void addressbook_del_clicked(GtkButton *button, gpointer data)
 			}
 		}
 		addressbook_list_select_clear();
-		gtk_ctree_select( ctree, addrbook.opened);
+		addrbook.treeSelected = NULL;
+		gtk_ctree_select( ctree, addrbook.opened );
 		return;
 	}
 
@@ -1409,8 +1412,10 @@ static gboolean addressbook_tree_button_released(GtkWidget *ctree,
 						 GdkEventButton *event,
 						 gpointer data)
 {
+#if 0
 	gtk_ctree_select(GTK_CTREE(addrbook.ctree), addrbook.opened);
 	gtkut_ctree_set_focus_row(GTK_CTREE(addrbook.ctree), addrbook.opened);
+#endif
 	return FALSE;
 }
 
@@ -1615,6 +1620,7 @@ static void addressbook_treenode_edit_cb(gpointer data, guint action,
 		addressbook_change_node_name( node, name );
 		gtk_ctree_sort_node(ctree, parentNode);
 		gtk_ctree_expand( ctree, node );
+		addrbook.treeSelected = NULL;
 		gtk_ctree_select( ctree, node );
 	}
 }
@@ -1748,6 +1754,7 @@ static void addressbook_new_address_cb( gpointer data, guint action, GtkWidget *
 			ItemPerson *person = addressbook_edit_person( abf, NULL, NULL, FALSE );
 			if( person ) {
 				if( addrbook.treeSelected == addrbook.opened ) {
+					addrbook.treeSelected = NULL;
 					gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 				}
 			}
@@ -1759,6 +1766,7 @@ static void addressbook_new_address_cb( gpointer data, guint action, GtkWidget *
 		ItemPerson *person = addressbook_edit_person( abf, folder, NULL, FALSE );
 		if( person ) {
 			if (addrbook.treeSelected == addrbook.opened) {
+				addrbook.treeSelected = NULL;
 				gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 			}
 		}
@@ -1770,6 +1778,7 @@ static void addressbook_new_address_cb( gpointer data, guint action, GtkWidget *
 		if (addrbook.treeSelected == addrbook.opened) {
 			/* Change node name in tree. */
 			addressbook_change_node_name( addrbook.treeSelected, ADDRITEM_NAME(group) );
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 		}
 	}
@@ -1873,6 +1882,7 @@ static void addressbook_edit_address_cb( gpointer data, guint action, GtkWidget 
 			/* Edit person - email page */
 			person = ( ItemPerson * ) ADDRITEM_PARENT(email);
 			if( addressbook_edit_person( abf, NULL, person, TRUE ) == NULL ) return;
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select( ctree, addrbook.opened );
 			invalidate_address_completion();
 			return;
@@ -1882,6 +1892,7 @@ static void addressbook_edit_address_cb( gpointer data, guint action, GtkWidget 
 		/* Edit person - basic page */
 		ItemPerson *person = ( ItemPerson * ) obj;
 		if( addressbook_edit_person( abf, NULL, person, FALSE ) == NULL ) return;
+		addrbook.treeSelected = NULL;
 		gtk_ctree_select( ctree, addrbook.opened );
 		invalidate_address_completion();
 		return;
@@ -1901,6 +1912,7 @@ static void addressbook_edit_address_cb( gpointer data, guint action, GtkWidget 
 	if( node == NULL ) return;
 	addressbook_change_node_name( node, name );
 	gtk_ctree_sort_node( ctree, parentNode );
+	addrbook.treeSelected = NULL;
 	gtk_ctree_select( ctree, addrbook.opened );
 }
 
@@ -2827,6 +2839,7 @@ static void addressbook_new_book_cb( gpointer data, guint action, GtkWidget *wid
 	if( ads ) {
 		addressbook_add_object( addrbook.treeSelected, ADDRESS_OBJECT(ads) );
 		if( addrbook.treeSelected == addrbook.opened ) {
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 		}
 	}
@@ -2843,6 +2856,7 @@ static void addressbook_new_vcard_cb( gpointer data, guint action, GtkWidget *wi
 	if( ads ) {
 		addressbook_add_object( addrbook.treeSelected, ADDRESS_OBJECT(ads) );
 		if( addrbook.treeSelected == addrbook.opened ) {
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 		}
 	}
@@ -2878,6 +2892,7 @@ static void addressbook_new_jpilot_cb( gpointer data, guint action, GtkWidget *w
 	if( ads ) {
 		addressbook_add_object( addrbook.treeSelected, ADDRESS_OBJECT(ads) );
 		if( addrbook.treeSelected == addrbook.opened ) {
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 		}
 	}
@@ -2914,6 +2929,7 @@ static void addressbook_new_ldap_cb( gpointer data, guint action, GtkWidget *wid
 	if( ads ) {
 		addressbook_add_object( addrbook.treeSelected, ADDRESS_OBJECT(ads) );
 		if( addrbook.treeSelected == addrbook.opened ) {
+			addrbook.treeSelected = NULL;
 			gtk_ctree_select( GTK_CTREE(addrbook.ctree), addrbook.opened );
 		}
 	}
@@ -3493,6 +3509,7 @@ static void addressbook_import_ldif_cb() {
 	addressbook_ads_set_name( ads, abf->name );
 	newNode = addressbook_add_object( adapter->treeNode, ADDRESS_OBJECT(ads) );
 	if ( newNode ) {
+		addrbook.treeSelected = NULL;
 		gtk_ctree_select( GTK_CTREE(addrbook.ctree), newNode );
 		addrbook.treeSelected = newNode;
 	}
