@@ -1560,6 +1560,12 @@ static gboolean folderview_button_pressed(GtkWidget *widget,
 		return TRUE;
 
 	if (event->button == 1 || event->button == 2) {
+		if (event->type == GDK_2BUTTON_PRESS) {
+			if (gtk_tree_view_row_expanded(treeview, path))
+				gtk_tree_view_collapse_row(treeview, path);
+			else
+				gtk_tree_view_expand_row(treeview, path, FALSE);
+		}
 		folderview->open_folder = TRUE;
 	} else if (event->button == 3) {
 		if (folderview->selected) {
