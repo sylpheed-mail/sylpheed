@@ -200,7 +200,7 @@ gint fd_connect_unix(const gchar *path)
 	strncpy(addr.sun_path, path, sizeof(addr.sun_path) - 1);
 
 	if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-		close(sock);
+		fd_close(sock);
 		return -1;
 	}
 
@@ -229,13 +229,13 @@ gint fd_open_unix(const gchar *path)
 
 	if (bind(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("bind");
-		close(sock);
+		fd_close(sock);
 		return -1;
 	}
 
 	if (listen(sock, 1) < 0) {
 		perror("listen");
-		close(sock);
+		fd_close(sock);
 		return -1;		
 	}
 
@@ -581,7 +581,7 @@ static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 			(sock, ai->ai_addr, ai->ai_addrlen, io_timeout) == 0)
 			break;
 
-		close(sock);
+		fd_close(sock);
 	}
 
 	if (res != NULL)
@@ -619,7 +619,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 
 	if (sock_connect_by_hostname(sock, hostname, port) < 0) {
 		if (errno != 0) perror("connect");
-		close(sock);
+		fd_close(sock);
 		return NULL;
 	}
 #endif /* INET6 */
@@ -670,13 +670,13 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	len = sizeof(val);
 	if (getsockopt(fd, SOL_SOCKET, SO_ERROR, &val, &len) < 0) {
 		perror("getsockopt");
-		close(fd);
+		fd_close(fd);
 		sock_connect_address_list_async(conn_data);
 		return FALSE;
 	}
 
 	if (val != 0) {
-		close(fd);
+		fd_close(fd);
 		sock_connect_address_list_async(conn_data);
 		return FALSE;
 	}
@@ -762,7 +762,7 @@ gint sock_connect_async_cancel(gint id)
 		if (conn_data->io_tag > 0)
 			g_source_remove(conn_data->io_tag);
 		if (conn_data->channel) {
-			g_io_channel_close(conn_data->channel);
+			g_io_channel_shutdown(conn_data->channel, FALSE, NULL);
 			g_io_channel_unref(conn_data->channel);
 		}
 
@@ -799,7 +799,7 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 				break;
 			} else {
 				perror("connect");
-				close(sock);
+				fd_close(sock);
 			}
 		} else
 			break;
@@ -880,7 +880,7 @@ static gboolean sock_get_address_info_async_cb(GIOChannel *source,
 		addr_list = g_list_append(addr_list, addr_data);
 	}
 
-	g_io_channel_close(source);
+	g_io_channel_shutdown(source, FALSE, NULL);
 	g_io_channel_unref(source);
 
 	kill(lookup_data->child_pid, SIGKILL);
@@ -1016,7 +1016,7 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 	if (lookup_data->io_tag > 0)
 		g_source_remove(lookup_data->io_tag);
 	if (lookup_data->channel) {
-		g_io_channel_close(lookup_data->channel);
+		g_io_channel_shutdown(lookup_data->channel, FALSE, NULL);
 		g_io_channel_unref(lookup_data->channel);
 	}
 
@@ -1368,26 +1368,30 @@ gint sock_peek(SockInfo *sock, gchar *buf, gint len)
 
 gint sock_close(SockInfo *sock)
 {
-	gint ret;
-
 	if (!sock)
 		return 0;
-
-	if (sock->sock_ch)
-		g_io_channel_unref(sock->sock_ch);
 
 #if USE_SSL
 	if (sock->ssl)
 		ssl_done_socket(sock);
 #endif
-	ret = fd_close(sock->sock); 
+
+	if (sock->sock_ch) {
+		g_io_channel_shutdown(sock->sock_ch, FALSE, NULL);
+		g_io_channel_unref(sock->sock_ch);
+	}
+
 	g_free(sock->hostname);
 	g_free(sock);
 
-	return ret;
+	return 0;
 }
 
 gint fd_close(gint fd)
 {
+#ifdef G_OS_WIN32
+	return closesocket(fd);
+#else
 	return close(fd);
+#endif
 }

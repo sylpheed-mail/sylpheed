@@ -1,3 +1,10 @@
+2005-08-26
+
+	* src/socket.c: deprecated な g_io_channel_close() でなく
+	  g_io_channel_shutdown() を使用するようにした。
+	  sock_close(): 直接 close() を呼ばずに g_io_channel_shutdown()
+	  を使用するようにした(Win32 でリソースがリークするのを修正)。
+
 2005-08-25
 
 	* src/folderview.c: folderview_button_pressed(): ダブルクリックで

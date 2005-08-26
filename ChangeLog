@@ -1,3 +1,11 @@
+2005-08-26
+
+	* src/socket.c: use g_io_channel_shutdown() instead of deprecated
+	  g_io_channel_close().
+	  sock_close(): use g_io_channel_shutdown() instead of directly
+	  calling close() (fixes resource leak on Win32).
+	  fd_close(): call closesocket() on Win32.
+
 2005-08-25
 
 	* src/folderview.c: folderview_button_pressed(): expand/collapse
