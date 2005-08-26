@@ -4162,6 +4162,11 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		}
 	}
 
+	gtk_text_view_set_pixels_above_lines
+		(GTK_TEXT_VIEW(text), prefs_common.line_space / 2);
+	gtk_text_view_set_pixels_below_lines
+		(GTK_TEXT_VIEW(text), prefs_common.line_space / 2);
+
 	color[0] = quote_color;
 	cmap = gdk_window_get_colormap(window->window);
 	gdk_colormap_alloc_colors(cmap, color, 1, FALSE, TRUE, success);
