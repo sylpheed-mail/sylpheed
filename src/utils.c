@@ -52,7 +52,6 @@
 
 #include "utils.h"
 #include "socket.h"
-#include "statusbar.h"
 
 #define BUFFSIZE	8192
 
@@ -3302,7 +3301,7 @@ void set_debug_mode(gboolean enable)
 	debug_mode = enable;
 }
 
-void log_dummy_func(const gchar *str)
+static void log_dummy_func(const gchar *str)
 {
 }
 
@@ -3311,6 +3310,8 @@ static LogFunc log_message_ui_func = log_dummy_func;
 static LogFunc log_warning_ui_func = log_dummy_func;
 static LogFunc log_error_ui_func = log_dummy_func;
 
+static LogFunc log_show_status_func = log_dummy_func;
+
 void set_log_ui_func(LogFunc print_func, LogFunc message_func,
 		     LogFunc warning_func, LogFunc error_func)
 {
@@ -3318,6 +3319,11 @@ void set_log_ui_func(LogFunc print_func, LogFunc message_func,
 	log_message_ui_func = message_func;
 	log_warning_ui_func = warning_func;
 	log_error_ui_func = error_func;
+}
+
+void set_log_show_status_func(LogFunc status_func)
+{
+	log_show_status_func = status_func;
 }
 
 void debug_print(const gchar *format, ...)
@@ -3356,7 +3362,7 @@ void log_print(const gchar *format, ...)
 		fflush(log_fp);
 	}
 	if (log_verbosity_count)
-		statusbar_puts_all(buf + TIME_LEN);
+		log_show_status_func(buf + TIME_LEN);
 }
 
 void log_message(const gchar *format, ...)
@@ -3380,7 +3386,7 @@ void log_message(const gchar *format, ...)
 		fputs(buf + TIME_LEN, log_fp);
 		fflush(log_fp);
 	}
-	statusbar_puts_all(buf + TIME_LEN);
+	log_show_status_func(buf + TIME_LEN);
 }
 
 void log_warning(const gchar *format, ...)

@@ -477,6 +477,13 @@ void set_log_verbosity	(gboolean	 verbose);
 gboolean get_debug_mode	(void);
 void set_debug_mode	(gboolean	 enable);
 
+void set_log_ui_func	(LogFunc	 print_func,
+			 LogFunc	 message_func,
+			 LogFunc	 warning_func,
+			 LogFunc	 error_func);
+
+void set_log_show_status_func	(LogFunc	 status_func);
+
 void debug_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_print		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_message	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);

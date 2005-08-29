@@ -42,6 +42,8 @@ GtkWidget *statusbar_create(void)
 	gtk_widget_set_size_request(statusbar, 1, -1);
 	statusbar_list = g_list_append(statusbar_list, statusbar);
 
+	set_log_show_status_func(statusbar_puts_all);
+
 	return statusbar;
 }
 
