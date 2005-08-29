@@ -40,6 +40,11 @@
 
 static LogWindow *logwindow;
 
+static void log_window_print_func	(const gchar	*str);
+static void log_window_message_func	(const gchar	*str);
+static void log_window_warning_func	(const gchar	*str);
+static void log_window_error_func	(const gchar	*str);
+
 static void hide_cb		(GtkWidget	*widget,
 				 LogWindow	*logwin);
 static gboolean key_pressed	(GtkWidget	*widget,
@@ -136,6 +141,9 @@ void log_window_init(LogWindow *logwin)
 	gtk_text_buffer_create_tag(buffer, "error",
 				   "foreground-gdk", &logwindow->error_color,
 				   NULL);
+
+	set_log_ui_func(log_window_print_func, log_window_message_func,
+			log_window_warning_func, log_window_error_func);
 }
 
 void log_window_show(LogWindow *logwin)
@@ -212,6 +220,26 @@ void log_window_append(const gchar *str, LogType type)
 	}
 
 	logwindow->lines++;
+}
+
+static void log_window_print_func(const gchar *str)
+{
+	log_window_append(str, LOG_NORMAL);
+}
+
+static void log_window_message_func(const gchar *str)
+{
+	log_window_append(str, LOG_MSG);
+}
+
+static void log_window_warning_func(const gchar *str)
+{
+	log_window_append(str, LOG_WARN);
+}
+
+static void log_window_error_func(const gchar *str)
+{
+	log_window_append(str, LOG_ERROR);
 }
 
 static void hide_cb(GtkWidget *widget, LogWindow *logwin)

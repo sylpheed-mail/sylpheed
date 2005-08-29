@@ -176,6 +176,8 @@ gint g_chmod	(const gchar	*path,
 	perror(func); \
 }
 
+typedef void (*LogFunc)		(const gchar	*str);
+
 /* for macro expansion */
 #define Str(x)	#x
 #define Xstr(x)	Str(x)

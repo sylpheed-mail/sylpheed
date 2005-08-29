@@ -53,7 +53,6 @@
 #include "utils.h"
 #include "socket.h"
 #include "statusbar.h"
-#include "logwindow.h"
 
 #define BUFFSIZE	8192
 
@@ -3303,6 +3302,24 @@ void set_debug_mode(gboolean enable)
 	debug_mode = enable;
 }
 
+void log_dummy_func(const gchar *str)
+{
+}
+
+static LogFunc log_print_ui_func = log_dummy_func;
+static LogFunc log_message_ui_func = log_dummy_func;
+static LogFunc log_warning_ui_func = log_dummy_func;
+static LogFunc log_error_ui_func = log_dummy_func;
+
+void set_log_ui_func(LogFunc print_func, LogFunc message_func,
+		     LogFunc warning_func, LogFunc error_func)
+{
+	log_print_ui_func = print_func;
+	log_message_ui_func = message_func;
+	log_warning_ui_func = warning_func;
+	log_error_ui_func = error_func;
+}
+
 void debug_print(const gchar *format, ...)
 {
 	va_list args;
@@ -3333,7 +3350,7 @@ void log_print(const gchar *format, ...)
 	va_end(args);
 
 	if (debug_mode) fputs(buf, stdout);
-	log_window_append(buf, LOG_NORMAL);
+	log_print_ui_func(buf);
 	if (log_fp) {
 		fputs(buf, log_fp);
 		fflush(log_fp);
@@ -3356,7 +3373,7 @@ void log_message(const gchar *format, ...)
 	va_end(args);
 
 	if (debug_mode) g_message("%s", buf + TIME_LEN);
-	log_window_append(buf + TIME_LEN, LOG_MSG);
+	log_message_ui_func(buf + TIME_LEN);
 	if (log_fp) {
 		fwrite(buf, TIME_LEN, 1, log_fp);
 		fputs("* message: ", log_fp);
@@ -3380,7 +3397,7 @@ void log_warning(const gchar *format, ...)
 	va_end(args);
 
 	g_warning("%s", buf);
-	log_window_append(buf + TIME_LEN, LOG_WARN);
+	log_warning_ui_func(buf + TIME_LEN);
 	if (log_fp) {
 		fwrite(buf, TIME_LEN, 1, log_fp);
 		fputs("** warning: ", log_fp);
@@ -3403,7 +3420,7 @@ void log_error(const gchar *format, ...)
 	va_end(args);
 
 	g_warning("%s", buf);
-	log_window_append(buf + TIME_LEN, LOG_ERROR);
+	log_error_ui_func(buf + TIME_LEN);
 	if (log_fp) {
 		fwrite(buf, TIME_LEN, 1, log_fp);
 		fputs("*** error: ", log_fp);
