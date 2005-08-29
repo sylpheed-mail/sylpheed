@@ -3254,9 +3254,16 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 
 		fprintf(fp, "\n--%s\n", compose->boundary);
 
-		if (!g_ascii_strcasecmp(ainfo->content_type, "message/rfc822")) {
+		encoding = ainfo->encoding;
+
+		if (!g_ascii_strncasecmp(ainfo->content_type, "message/", 8)) {
 			fprintf(fp, "Content-Type: %s\n", ainfo->content_type);
 			fprintf(fp, "Content-Disposition: inline\n");
+
+			/* message/... shouldn't be encoded */
+			if (encoding == ENC_QUOTED_PRINTABLE ||
+			    encoding == ENC_BASE64)
+				encoding = ENC_8BIT;
 		} else {
 			compose_convert_header(compose,
 					       filename, sizeof(filename),
@@ -3266,19 +3273,18 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 				ainfo->content_type, filename);
 			fprintf(fp, "Content-Disposition: attachment;\n"
 				    " filename=\"%s\"\n", filename);
-		}
-
-		encoding = ainfo->encoding;
 
 #if USE_GPGME
-		/* force encoding to protect trailing spaces */
-		if (compose->use_signing) {
-			if (encoding == ENC_7BIT)
-				encoding = ENC_QUOTED_PRINTABLE;
-			else if (encoding == ENC_8BIT)
-				encoding = ENC_BASE64;
-		}
+			/* force encoding to protect trailing spaces */
+			if (compose->use_signing &&
+			    !compose->account->clearsign) {
+				if (encoding == ENC_7BIT)
+					encoding = ENC_QUOTED_PRINTABLE;
+				else if (encoding == ENC_8BIT)
+					encoding = ENC_BASE64;
+			}
 #endif
+		}
 
 		fprintf(fp, "Content-Transfer-Encoding: %s\n\n",
 			procmime_get_encoding_str(encoding));

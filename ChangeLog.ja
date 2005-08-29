@@ -1,3 +1,9 @@
+2005-08-29
+
+	* src/compose.c: compose_write_attach(): message/* のパートを
+	  quoted-printable または base64 でエンコードしないようにした
+	  (pgp 署名時に添付ファイルが壊れるバグを修正)。
+
 2005-08-26
 
 	* src/compose.c: 行間の設定がメッセージ作成ウィンドウに適用される
