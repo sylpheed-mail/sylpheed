@@ -57,7 +57,7 @@
 
 #define BUFFSIZE	8192
 
-extern gboolean debug_mode;
+static gboolean debug_mode = FALSE;
 
 
 #if !GLIB_CHECK_VERSION(2, 7, 0) && !defined(G_OS_UNIX)
@@ -3285,12 +3285,22 @@ void close_log_file(void)
 
 static guint log_verbosity_count = 0;
 
-void log_verbosity_set(gboolean verbose)
+void set_log_verbosity(gboolean verbose)
 {
 	if (verbose)
 		log_verbosity_count++;
 	else if (log_verbosity_count > 0)
 		log_verbosity_count--;
+}
+
+gboolean get_debug_mode(void)
+{
+	return debug_mode;
+}
+
+void set_debug_mode(gboolean enable)
+{
+	debug_mode = enable;
 }
 
 void debug_print(const gchar *format, ...)

@@ -87,7 +87,6 @@
 
 gchar *prog_version;
 gchar *startup_dir;
-gboolean debug_mode = FALSE;
 
 static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
@@ -403,7 +402,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 
 	for (i = 1; i < argc; i++) {
 		if (!strncmp(argv[i], "--debug", 7))
-			debug_mode = TRUE;
+			set_debug_mode(TRUE);
 		else if (!strncmp(argv[i], "--receive-all", 13))
 			cmd.receive_all = TRUE;
 		else if (!strncmp(argv[i], "--receive", 9))

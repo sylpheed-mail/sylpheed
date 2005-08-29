@@ -469,9 +469,12 @@ size_t my_strftime		(gchar			*s,
 				 const struct tm	*tm);
 
 /* logging */
-void set_log_file	(const gchar *filename);
+void set_log_file	(const gchar	*filename);
 void close_log_file	(void);
-void log_verbosity_set	(gboolean verbose);
+void set_log_verbosity	(gboolean	 verbose);
+gboolean get_debug_mode	(void);
+void set_debug_mode	(gboolean	 enable);
+
 void debug_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_print		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_message	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
