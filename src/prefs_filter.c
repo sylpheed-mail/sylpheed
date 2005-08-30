@@ -34,6 +34,7 @@
 
 #include "main.h"
 #include "prefs.h"
+#include "prefs_ui.h"
 #include "prefs_filter.h"
 #include "prefs_filter_edit.h"
 #include "prefs_common.h"

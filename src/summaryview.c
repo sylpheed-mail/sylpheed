@@ -30,7 +30,6 @@
 #include <gtk/gtkcellrendererpixbuf.h>
 #include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtksignal.h>
-#include <gtk/gtktext.h>
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtkcheckmenuitem.h>
@@ -42,6 +41,7 @@
 #include <gtk/gtkeventbox.h>
 #include <gtk/gtkstatusbar.h>
 #include <gtk/gtkstock.h>
+#include <gtk/gtknotebook.h>
 
 #include <stdio.h>
 #include <stdlib.h>

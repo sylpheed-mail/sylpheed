@@ -30,6 +30,7 @@
 
 #include "folder.h"
 #include "prefs.h"
+#include "prefs_ui.h"
 #include "prefs_folder_item.h"
 #include "prefs_account.h"
 #include "account.h"

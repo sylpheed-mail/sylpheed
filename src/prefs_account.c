@@ -36,6 +36,7 @@
 
 #include "main.h"
 #include "prefs.h"
+#include "prefs_ui.h"
 #include "prefs_account.h"
 #include "prefs_customheader.h"
 #include "prefs_common.h"
@@ -215,270 +216,278 @@ static void prefs_account_ascii_armored_warning		(GtkWidget *widget);
 static PrefParam param[] = {
 	/* Basic */
 	{"account_name", NULL, &tmp_ac_prefs.account_name, P_STRING,
-	 &basic.acname_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.acname_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"is_default", "FALSE", &tmp_ac_prefs.is_default, P_BOOL,
-	 &basic.default_chkbtn,
+	 P_WID(&basic.default_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"name", NULL, &tmp_ac_prefs.name, P_STRING,
-	 &basic.name_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.name_entry), prefs_set_data_from_entry, prefs_set_entry},
 
 	{"address", NULL, &tmp_ac_prefs.address, P_STRING,
-	 &basic.addr_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.addr_entry), prefs_set_data_from_entry, prefs_set_entry},
 
 	{"organization", NULL, &tmp_ac_prefs.organization, P_STRING,
-	 &basic.org_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.org_entry), prefs_set_data_from_entry, prefs_set_entry},
 
 	{"protocol", NULL, &tmp_ac_prefs.protocol, P_ENUM,
-	 &basic.protocol_optmenu,
+	 P_WID(&basic.protocol_optmenu),
 	 prefs_account_protocol_set_data_from_optmenu,
 	 prefs_account_protocol_set_optmenu},
 
 	{"receive_server", NULL, &tmp_ac_prefs.recv_server, P_STRING,
-	 &basic.recvserv_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.recvserv_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"smtp_server", NULL, &tmp_ac_prefs.smtp_server, P_STRING,
-	 &basic.smtpserv_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.smtpserv_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"nntp_server", NULL, &tmp_ac_prefs.nntp_server, P_STRING,
-	 &basic.nntpserv_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.nntpserv_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"use_nntp_auth", "FALSE", &tmp_ac_prefs.use_nntp_auth, P_BOOL,
-	 &basic.nntpauth_chkbtn,
+	 P_WID(&basic.nntpauth_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"user_id", "ENV_USER", &tmp_ac_prefs.userid, P_STRING,
-	 &basic.uid_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.uid_entry), prefs_set_data_from_entry, prefs_set_entry},
 
 	{"password", NULL, &tmp_ac_prefs.passwd, P_STRING,
-	 &basic.pass_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&basic.pass_entry), prefs_set_data_from_entry, prefs_set_entry},
 
 	{"inbox", "inbox", &tmp_ac_prefs.inbox, P_STRING,
-	 &receive.inbox_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&receive.inbox_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	/* Receive */
 	{"use_apop_auth", "FALSE", &tmp_ac_prefs.use_apop_auth, P_BOOL,
-	 &receive.use_apop_chkbtn,
+	 P_WID(&receive.use_apop_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"remove_mail", "TRUE", &tmp_ac_prefs.rmmail, P_BOOL,
-	 &receive.rmmail_chkbtn,
+	 P_WID(&receive.rmmail_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"message_leave_time", "0", &tmp_ac_prefs.msg_leave_time, P_INT,
-	 &receive.leave_time_entry,
+	 P_WID(&receive.leave_time_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"get_all_mail", "FALSE", &tmp_ac_prefs.getall, P_BOOL,
-	 &receive.getall_chkbtn,
+	 P_WID(&receive.getall_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"enable_size_limit", "FALSE", &tmp_ac_prefs.enable_size_limit, P_BOOL,
-	 &receive.size_limit_chkbtn,
+	 P_WID(&receive.size_limit_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"size_limit", "1024", &tmp_ac_prefs.size_limit, P_INT,
-	 &receive.size_limit_entry,
+	 P_WID(&receive.size_limit_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"filter_on_receive", "TRUE", &tmp_ac_prefs.filter_on_recv, P_BOOL,
-	 &receive.filter_on_recv_chkbtn,
+	 P_WID(&receive.filter_on_recv_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"imap_auth_method", "0", &tmp_ac_prefs.imap_auth_type, P_ENUM,
-	 &receive.imap_auth_type_optmenu,
+	 P_WID(&receive.imap_auth_type_optmenu),
 	 prefs_account_imap_auth_type_set_data_from_optmenu,
 	 prefs_account_imap_auth_type_set_optmenu},
 
 	{"max_nntp_articles", "300", &tmp_ac_prefs.max_nntp_articles, P_INT,
-	 &receive.maxarticle_spinbtn,
+	 P_WID(&receive.maxarticle_spinbtn),
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
 	{"receive_at_get_all", "TRUE", &tmp_ac_prefs.recv_at_getall, P_BOOL,
-	 &receive.recvatgetall_chkbtn,
+	 P_WID(&receive.recvatgetall_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Send */
 	{"add_date", "TRUE", &tmp_ac_prefs.add_date, P_BOOL,
-	 &p_send.date_chkbtn,
+	 P_WID(&p_send.date_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"generate_msgid", "TRUE", &tmp_ac_prefs.gen_msgid, P_BOOL,
-	 &p_send.msgid_chkbtn,
+	 P_WID(&p_send.msgid_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"add_custom_header", "FALSE", &tmp_ac_prefs.add_customhdr, P_BOOL,
-	 &p_send.customhdr_chkbtn,
+	 P_WID(&p_send.customhdr_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"use_smtp_auth", "FALSE", &tmp_ac_prefs.use_smtp_auth, P_BOOL,
-	 &p_send.smtp_auth_chkbtn,
+	 P_WID(&p_send.smtp_auth_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"smtp_auth_method", "0", &tmp_ac_prefs.smtp_auth_type, P_ENUM,
-	 &p_send.smtp_auth_type_optmenu,
+	 P_WID(&p_send.smtp_auth_type_optmenu),
 	 prefs_account_smtp_auth_type_set_data_from_optmenu,
 	 prefs_account_smtp_auth_type_set_optmenu},
 
 	{"smtp_user_id", NULL, &tmp_ac_prefs.smtp_userid, P_STRING,
-	 &p_send.smtp_uid_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&p_send.smtp_uid_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 	{"smtp_password", NULL, &tmp_ac_prefs.smtp_passwd, P_STRING,
-	 &p_send.smtp_pass_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&p_send.smtp_pass_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"pop_before_smtp", "FALSE", &tmp_ac_prefs.pop_before_smtp, P_BOOL,
 	 NULL, NULL, NULL},
 #if 0
-	 &p_send.pop_bfr_smtp_chkbtn,
+	 P_WID(&p_send.pop_bfr_smtp_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif
 
 	/* Compose */
 	{"signature_type", "0", &tmp_ac_prefs.sig_type, P_ENUM,
-	 &compose.sigfile_radiobtn,
+	 P_WID(&compose.sigfile_radiobtn),
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 	{"signature_path", "~" G_DIR_SEPARATOR_S DEFAULT_SIGNATURE,
 	 &tmp_ac_prefs.sig_path, P_STRING,
-	 &compose.sigpath_entry,
+	 P_WID(&compose.sigpath_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_autocc", "FALSE", &tmp_ac_prefs.set_autocc, P_BOOL,
-	 &compose.autocc_chkbtn,
+	 P_WID(&compose.autocc_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"auto_cc", NULL, &tmp_ac_prefs.auto_cc, P_STRING,
-	 &compose.autocc_entry,
+	 P_WID(&compose.autocc_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_autobcc", "FALSE", &tmp_ac_prefs.set_autobcc, P_BOOL,
-	 &compose.autobcc_chkbtn,
+	 P_WID(&compose.autobcc_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"auto_bcc", NULL, &tmp_ac_prefs.auto_bcc, P_STRING,
-	 &compose.autobcc_entry,
+	 P_WID(&compose.autobcc_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_autoreplyto", "FALSE", &tmp_ac_prefs.set_autoreplyto, P_BOOL,
-	 &compose.autoreplyto_chkbtn,
+	 P_WID(&compose.autoreplyto_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"auto_replyto", NULL, &tmp_ac_prefs.auto_replyto, P_STRING,
-	 &compose.autoreplyto_entry,
+	 P_WID(&compose.autoreplyto_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 #if USE_GPGME
 	/* Privacy */
 	{"default_sign", "FALSE", &tmp_ac_prefs.default_sign, P_BOOL,
-	 &privacy.default_sign_chkbtn,
+	 P_WID(&privacy.default_sign_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"default_encrypt", "FALSE", &tmp_ac_prefs.default_encrypt, P_BOOL,
-	 &privacy.default_encrypt_chkbtn,
+	 P_WID(&privacy.default_encrypt_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"encrypt_reply", "TRUE", &tmp_ac_prefs.encrypt_reply, P_BOOL,
-	 &privacy.encrypt_reply_chkbtn,
+	 P_WID(&privacy.encrypt_reply_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"ascii_armored", "FALSE", &tmp_ac_prefs.ascii_armored, P_BOOL,
-	 &privacy.ascii_armored_chkbtn,
+	 P_WID(&privacy.ascii_armored_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"clearsign", "FALSE", &tmp_ac_prefs.clearsign, P_BOOL,
-	 &privacy.clearsign_chkbtn,
+	 P_WID(&privacy.clearsign_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"sign_key", NULL, &tmp_ac_prefs.sign_key, P_ENUM,
-	 &privacy.defaultkey_radiobtn,
+	 P_WID(&privacy.defaultkey_radiobtn),
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 	{"sign_key_id", NULL, &tmp_ac_prefs.sign_key_id, P_STRING,
-	 &privacy.customkey_entry,
+	 P_WID(&privacy.customkey_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 #endif /* USE_GPGME */
 
 #if USE_SSL
 	/* SSL */
 	{"ssl_pop", "0", &tmp_ac_prefs.ssl_pop, P_ENUM,
-	 &ssl.pop_nossl_radiobtn,
+	 P_WID(&ssl.pop_nossl_radiobtn),
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 	{"ssl_imap", "0", &tmp_ac_prefs.ssl_imap, P_ENUM,
-	 &ssl.imap_nossl_radiobtn,
+	 P_WID(&ssl.imap_nossl_radiobtn),
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 	{"ssl_nntp", "0", &tmp_ac_prefs.ssl_nntp, P_ENUM,
-	 &ssl.nntp_nossl_radiobtn,
+	 P_WID(&ssl.nntp_nossl_radiobtn),
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 	{"ssl_smtp", "0", &tmp_ac_prefs.ssl_smtp, P_ENUM,
-	 &ssl.smtp_nossl_radiobtn,
+	 P_WID(&ssl.smtp_nossl_radiobtn),
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 
 	{"use_nonblocking_ssl", "1", &tmp_ac_prefs.use_nonblocking_ssl, P_BOOL,
-	 &ssl.use_nonblocking_ssl_chkbtn,
+	 P_WID(&ssl.use_nonblocking_ssl_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif /* USE_SSL */
 
 	/* Advanced */
 	{"set_smtpport", "FALSE", &tmp_ac_prefs.set_smtpport, P_BOOL,
-	 &advanced.smtpport_chkbtn,
+	 P_WID(&advanced.smtpport_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"smtp_port", "25", &tmp_ac_prefs.smtpport, P_USHORT,
-	 &advanced.smtpport_entry,
+	 P_WID(&advanced.smtpport_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_popport", "FALSE", &tmp_ac_prefs.set_popport, P_BOOL,
-	 &advanced.popport_chkbtn,
+	 P_WID(&advanced.popport_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"pop_port", "110", &tmp_ac_prefs.popport, P_USHORT,
-	 &advanced.popport_entry,
+	 P_WID(&advanced.popport_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_imapport", "FALSE", &tmp_ac_prefs.set_imapport, P_BOOL,
-	 &advanced.imapport_chkbtn,
+	 P_WID(&advanced.imapport_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"imap_port", "143", &tmp_ac_prefs.imapport, P_USHORT,
-	 &advanced.imapport_entry,
+	 P_WID(&advanced.imapport_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_nntpport", "FALSE", &tmp_ac_prefs.set_nntpport, P_BOOL,
-	 &advanced.nntpport_chkbtn,
+	 P_WID(&advanced.nntpport_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"nntp_port", "119", &tmp_ac_prefs.nntpport, P_USHORT,
-	 &advanced.nntpport_entry,
+	 P_WID(&advanced.nntpport_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_domain", "FALSE", &tmp_ac_prefs.set_domain, P_BOOL,
-	 &advanced.domain_chkbtn,
+	 P_WID(&advanced.domain_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"domain", NULL, &tmp_ac_prefs.domain, P_STRING,
-	 &advanced.domain_entry,
+	 P_WID(&advanced.domain_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"imap_directory", NULL, &tmp_ac_prefs.imap_dir, P_STRING,
-	 &advanced.imapdir_entry, prefs_set_data_from_entry, prefs_set_entry},
+	 P_WID(&advanced.imapdir_entry),
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_sent_folder", "FALSE", &tmp_ac_prefs.set_sent_folder, P_BOOL,
-	 &advanced.sent_folder_chkbtn,
+	 P_WID(&advanced.sent_folder_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"sent_folder", NULL, &tmp_ac_prefs.sent_folder, P_STRING,
-	 &advanced.sent_folder_entry,
+	 P_WID(&advanced.sent_folder_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_draft_folder", "FALSE", &tmp_ac_prefs.set_draft_folder, P_BOOL,
-	 &advanced.draft_folder_chkbtn,
+	 P_WID(&advanced.draft_folder_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"draft_folder", NULL, &tmp_ac_prefs.draft_folder, P_STRING,
-	 &advanced.draft_folder_entry,
+	 P_WID(&advanced.draft_folder_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{"set_trash_folder", "FALSE", &tmp_ac_prefs.set_trash_folder, P_BOOL,
-	 &advanced.trash_folder_chkbtn,
+	 P_WID(&advanced.trash_folder_chkbtn),
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"trash_folder", NULL, &tmp_ac_prefs.trash_folder, P_STRING,
-	 &advanced.trash_folder_entry,
+	 P_WID(&advanced.trash_folder_entry),
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	{NULL, NULL, NULL, P_OTHER, NULL, NULL, NULL}

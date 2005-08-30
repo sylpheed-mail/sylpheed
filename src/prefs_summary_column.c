@@ -35,6 +35,7 @@
 #include <gtk/gtkstock.h>
 
 #include "prefs.h"
+#include "prefs_ui.h"
 #include "prefs_common.h"
 #include "prefs_summary_column.h"
 #include "manage_window.h"

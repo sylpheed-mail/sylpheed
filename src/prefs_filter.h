@@ -26,8 +26,6 @@
 
 #include <glib.h>
 
-#include "procmsg.h"
-
 typedef enum
 {
 	FILTER_BY_NONE,
@@ -36,6 +34,8 @@ typedef enum
 	FILTER_BY_TO,
 	FILTER_BY_SUBJECT
 } PrefsFilterType;
+
+#include "procmsg.h"
 
 void prefs_filter_read_config	(void);
 void prefs_filter_write_config	(void);

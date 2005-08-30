@@ -52,6 +52,7 @@
 #include <gtk/gtktable.h>
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
+#include <gtk/gtkcheckbutton.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreeview.h>
 #include <gtk/gtkdnd.h>

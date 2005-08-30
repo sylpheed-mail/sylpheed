@@ -41,6 +41,7 @@
 #include "xml.h"
 #include "prefs.h"
 #include "prefs_account.h"
+#include "account.h"
 
 typedef enum
 {
