@@ -155,8 +155,8 @@ int main(int argc, char *argv[])
 	FolderView *folderview;
 	GdkPixbuf *icon;
 
-	parse_cmd_opt(argc, argv);
 	app_init();
+	parse_cmd_opt(argc, argv);
 
 #ifdef G_OS_UNIX
 	/* check and create unix domain socket for remote operation */
