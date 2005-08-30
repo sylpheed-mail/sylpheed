@@ -104,21 +104,22 @@ static struct RemoteCmd {
 	gboolean send;
 } cmd;
 
-static void parse_cmd_opt(int argc, char *argv[]);
+static void parse_cmd_opt		(int		 argc,
+					 char		*argv[]);
 
-#if 0
-#if USE_GPGME
-static void idle_function_for_gpgme(void);
-#endif /* USE_GPGME */
-#endif /* 0 */
+static void app_init			(void);
+static void parse_gtkrc_files		(void);
+static void setup_rc_dir		(void);
+static void check_gpg			(void);
 
+static gchar *get_socket_name		(void);
 static gint prohibit_duplicate_launch	(void);
 static gint lock_socket_remove		(void);
 static void lock_socket_input_cb	(gpointer	   data,
 					 gint		   source,
 					 GdkInputCondition condition);
-static gchar *get_socket_name		(void);
 
+static void remote_command_exec		(void);
 static void migrate_old_config		(void);
 
 static void open_compose_new		(const gchar	*address,
@@ -126,42 +127,39 @@ static void open_compose_new		(const gchar	*address,
 
 static void send_queue			(void);
 
-#define MAKE_DIR_IF_NOT_EXIST(dir) \
-{ \
-	if (!is_dir_exist(dir)) { \
-		if (is_file_exist(dir)) { \
-			alertpanel_warning \
-				(_("File `%s' already exists.\n" \
-				   "Can't create folder."), \
-				 dir); \
-			return 1; \
-		} \
-		if (make_dir(dir) < 0) \
-			return 1; \
-	} \
+#define MAKE_DIR_IF_NOT_EXIST(dir)					\
+{									\
+	if (!is_dir_exist(dir)) {					\
+		if (is_file_exist(dir)) {				\
+			alertpanel_warning				\
+				(_("File `%s' already exists.\n"	\
+				   "Can't create folder."),		\
+				 dir);					\
+			exit(1);					\
+		}							\
+		if (make_dir(dir) < 0)					\
+			exit(1);					\
+	}								\
 }
+
+#define CHDIR_EXIT_IF_FAIL(dir, val)	\
+{					\
+	if (change_dir(dir) < 0)	\
+		exit(val);		\
+}
+
 
 int main(int argc, char *argv[])
 {
-	gchar *userrc;
 	MainWindow *mainwin;
 	FolderView *folderview;
 	GdkPixbuf *icon;
 
-	setlocale(LC_ALL, "");
-	bindtextdomain(PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
-	textdomain(PACKAGE);
-
-	prog_version = PROG_VERSION;
-	startup_dir = g_get_current_dir();
-
 	parse_cmd_opt(argc, argv);
+	app_init();
 
-	sock_init();
-
-	/* check and create unix domain socket for remote operation */
 #ifdef G_OS_UNIX
+	/* check and create unix domain socket for remote operation */
 	lock_socket = prohibit_duplicate_launch();
 	if (lock_socket < 0) return 0;
 
@@ -185,87 +183,8 @@ int main(int argc, char *argv[])
 		g_error(_("g_thread is not supported by glib.\n"));
 #endif
 
-#if USE_SSL
-	ssl_init();
-#endif
-
-	/* parse gtkrc files */
-	userrc = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S, ".gtkrc-2.0",
-			     NULL);
-	gtk_rc_parse(userrc);
-	g_free(userrc);
-	userrc = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S, ".gtk",
-			     G_DIR_SEPARATOR_S, "gtkrc-2.0", NULL);
-	gtk_rc_parse(userrc);
-	g_free(userrc);
-	userrc = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "gtkrc", NULL);
-	gtk_rc_parse(userrc);
-	g_free(userrc);
-
-	userrc = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, MENU_RC, NULL);
-	gtk_accel_map_load(userrc);
-	g_free(userrc);
-
-	CHDIR_RETURN_VAL_IF_FAIL(get_home_dir(), 1);
-
-#ifndef G_OS_WIN32
-	/* backup if old rc file exists */
-	if (is_file_exist(RC_DIR)) {
-		if (rename_force(RC_DIR, RC_DIR ".bak") < 0)
-			FILE_OP_ERROR(RC_DIR, "rename");
-	}
-
-	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
-	if (!is_dir_exist(RC_DIR)) {
-		const gchar *envstr;
-		AlertValue val;
-
-		/* check for filename encoding */
-		if (conv_get_locale_charset() != C_UTF_8) {
-			envstr = g_getenv("G_FILENAME_ENCODING");
-			if (!envstr)
-				envstr = g_getenv("G_BROKEN_FILENAMES");
-			if (!envstr) {
-				val = alertpanel(_("Filename encoding"),
-						 _("The locale encoding is not UTF-8, but the environmental variable G_FILENAME_ENCODING is not set.\n"
-						   "If the locale encoding is used for file name or directory name, it will not work correctly.\n"
-						   "In that case, you must set the following environmental variable (see README for detail):\n"
-						   "\n"
-						   "\tG_FILENAME_ENCODING=@locale\n"
-						   "\n"
-						   "Continue?"),
-						 GTK_STOCK_OK, GTK_STOCK_QUIT,
-						 NULL);
-				if (G_ALERTDEFAULT != val)
-					return 1;
-			}
-		}
-
-		if (make_dir(RC_DIR) < 0)
-			return 1;
-		if (is_dir_exist(OLD_RC_DIR))
-			migrate_old_config();
-	}
-#else
-	if (!is_dir_exist(get_rc_dir())) {
-		if (make_dir_hier(get_rc_dir()) < 0)
-			return 1;
-	}
-
-	MAKE_DIR_IF_NOT_EXIST(get_mail_base_dir());
-#endif /* G_OS_WIN32 */
-
-	CHDIR_RETURN_VAL_IF_FAIL(get_rc_dir(), 1);
-
-	MAKE_DIR_IF_NOT_EXIST(get_imap_cache_dir());
-	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
-	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
-	MAKE_DIR_IF_NOT_EXIST(get_tmp_dir());
-	MAKE_DIR_IF_NOT_EXIST(UIDL_DIR);
-
-	/* remove temporary files */
-	remove_all_files(get_tmp_dir());
-	remove_all_files(get_mime_tmp_dir());
+	parse_gtkrc_files();
+	setup_rc_dir();
 
 	if (is_file_exist("sylpheed.log")) {
 		if (rename_force("sylpheed.log", "sylpheed.log.bak") < 0)
@@ -273,56 +192,16 @@ int main(int argc, char *argv[])
 	}
 	set_log_file("sylpheed.log");
 
-	CHDIR_RETURN_VAL_IF_FAIL(get_home_dir(), 1);
+	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 
 	prefs_common_read_config();
-
-#if USE_GPGME
-	if (gpgme_check_version("0.4.5")) {
-		/* Also does some gpgme init */
-	        gpgme_engine_info_t engineInfo;
-
-		rfc2015_disable_all();
-
-		gpgme_set_locale(NULL, LC_CTYPE, setlocale(LC_CTYPE, NULL));
-		gpgme_set_locale(NULL, LC_MESSAGES,
-				 setlocale(LC_MESSAGES, NULL));
-
-		if (!gpgme_get_engine_info(&engineInfo)) {
-			while (engineInfo) {
-				debug_print("GpgME Protocol: %s\n      Version: %s\n",
-					    gpgme_get_protocol_name
-						(engineInfo->protocol),
-					    engineInfo->version);
-				engineInfo = engineInfo->next;
-			}
-		}
-	} else {
-		if (prefs_common.gpg_warning) {
-			AlertValue val;
-
-			val = alertpanel_message_with_disable
-				(_("Warning"),
-				 _("GnuPG is not installed properly, or its version is too old.\n"
-				   "OpenPGP support disabled."),
-				 ALERT_WARNING);
-			if (val & G_ALERTDISABLE)
-				prefs_common.gpg_warning = FALSE;
-		}
-	}
-	/* FIXME: This function went away.  We can either block until gpgme
-	 * operations finish (currently implemented) or register callbacks
-	 * with the gtk main loop via the gpgme io callback interface instead.
-	 *
-	 * gpgme_register_idle(idle_function_for_gpgme);
-	 */
-#endif
-
-	sock_set_io_timeout(prefs_common.io_timeout_secs);
-
 	prefs_filter_read_config();
 	prefs_actions_read_config();
 	prefs_display_header_read_config();
+
+	check_gpg();
+
+	sock_set_io_timeout(prefs_common.io_timeout_secs);
 
 	gtkut_widget_init();
 	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED, &icon);
@@ -332,8 +211,8 @@ int main(int argc, char *argv[])
 		(prefs_common.sep_folder | prefs_common.sep_msg << 1);
 	folderview = mainwin->folderview;
 
-	/* register the callback of unix domain socket input */
 #ifdef G_OS_UNIX
+	/* register the callback of unix domain socket input */
 	lock_socket_tag = gdk_input_add(lock_socket,
 					GDK_INPUT_READ | GDK_INPUT_EXCEPTION,
 					lock_socket_input_cb,
@@ -359,37 +238,7 @@ int main(int argc, char *argv[])
 
 	inc_autocheck_timer_init(mainwin);
 
-	/* ignore SIGPIPE signal for preventing sudden death of program */
-#ifdef G_OS_UNIX
-	signal(SIGPIPE, SIG_IGN);
-#endif
-
-	if (cmd.receive_all)
-		inc_all_account_mail(mainwin, FALSE);
-	else if (prefs_common.chk_on_startup)
-		inc_all_account_mail(mainwin, TRUE);
-	else if (cmd.receive)
-		inc_mail(mainwin);
-	else
-		gtk_widget_grab_focus(folderview->treeview);
-
-	if (cmd.compose)
-		open_compose_new(cmd.compose_mailto, cmd.attach_files);
-	if (cmd.attach_files) {
-		ptr_array_free_strings(cmd.attach_files);
-		g_ptr_array_free(cmd.attach_files, TRUE);
-		cmd.attach_files = NULL;
-	}
-	if (cmd.send)
-		send_queue();
-	if (cmd.status_folders) {
-		g_ptr_array_free(cmd.status_folders, TRUE);
-		cmd.status_folders = NULL;
-	}
-	if (cmd.status_full_folders) {
-		g_ptr_array_free(cmd.status_full_folders, TRUE);
-		cmd.status_full_folders = NULL;
-	}
+	remote_command_exec();
 
 	gtk_main();
 
@@ -505,6 +354,113 @@ static gint get_queued_message_num(void)
 	return queue->total;
 }
 
+static void app_init(void)
+{
+	setlocale(LC_ALL, "");
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
+	textdomain(PACKAGE);
+
+	prog_version = PROG_VERSION;
+	startup_dir = g_get_current_dir();
+
+	sock_init();
+#if USE_SSL
+	ssl_init();
+#endif
+
+#ifdef G_OS_UNIX
+	/* ignore SIGPIPE signal for preventing sudden death of program */
+	signal(SIGPIPE, SIG_IGN);
+#endif
+}
+
+static void parse_gtkrc_files(void)
+{
+	gchar *userrc;
+
+	/* parse gtkrc files */
+	userrc = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S, ".gtkrc-2.0",
+			     NULL);
+	gtk_rc_parse(userrc);
+	g_free(userrc);
+	userrc = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S, ".gtk",
+			     G_DIR_SEPARATOR_S, "gtkrc-2.0", NULL);
+	gtk_rc_parse(userrc);
+	g_free(userrc);
+	userrc = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "gtkrc", NULL);
+	gtk_rc_parse(userrc);
+	g_free(userrc);
+
+	userrc = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, MENU_RC, NULL);
+	gtk_accel_map_load(userrc);
+	g_free(userrc);
+}
+
+static void setup_rc_dir(void)
+{
+	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
+
+#ifndef G_OS_WIN32
+	/* backup if old rc file exists */
+	if (is_file_exist(RC_DIR)) {
+		if (rename_force(RC_DIR, RC_DIR ".bak") < 0)
+			FILE_OP_ERROR(RC_DIR, "rename");
+	}
+
+	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
+	if (!is_dir_exist(RC_DIR)) {
+		const gchar *envstr;
+		AlertValue val;
+
+		/* check for filename encoding */
+		if (conv_get_locale_charset() != C_UTF_8) {
+			envstr = g_getenv("G_FILENAME_ENCODING");
+			if (!envstr)
+				envstr = g_getenv("G_BROKEN_FILENAMES");
+			if (!envstr) {
+				val = alertpanel(_("Filename encoding"),
+						 _("The locale encoding is not UTF-8, but the environmental variable G_FILENAME_ENCODING is not set.\n"
+						   "If the locale encoding is used for file name or directory name, it will not work correctly.\n"
+						   "In that case, you must set the following environmental variable (see README for detail):\n"
+						   "\n"
+						   "\tG_FILENAME_ENCODING=@locale\n"
+						   "\n"
+						   "Continue?"),
+						 GTK_STOCK_OK, GTK_STOCK_QUIT,
+						 NULL);
+				if (G_ALERTDEFAULT != val)
+					exit(1);
+			}
+		}
+
+		if (make_dir(RC_DIR) < 0)
+			exit(1);
+		if (is_dir_exist(OLD_RC_DIR))
+			migrate_old_config();
+	}
+#else
+	if (!is_dir_exist(get_rc_dir())) {
+		if (make_dir_hier(get_rc_dir()) < 0)
+			exit(1);
+	}
+
+	MAKE_DIR_IF_NOT_EXIST(get_mail_base_dir());
+#endif /* G_OS_WIN32 */
+
+	CHDIR_EXIT_IF_FAIL(get_rc_dir(), 1);
+
+	MAKE_DIR_IF_NOT_EXIST(get_imap_cache_dir());
+	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
+	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
+	MAKE_DIR_IF_NOT_EXIST(get_tmp_dir());
+	MAKE_DIR_IF_NOT_EXIST(UIDL_DIR);
+
+	/* remove temporary files */
+	remove_all_files(get_tmp_dir());
+	remove_all_files(get_mime_tmp_dir());
+}
+
 void app_will_exit(GtkWidget *widget, gpointer data)
 {
 	MainWindow *mainwin = data;
@@ -573,6 +529,50 @@ static void idle_function_for_gpgme(void)
 }
 #endif /* USE_GPGME */
 #endif /* 0 */
+
+static void check_gpg(void)
+{
+#if USE_GPGME
+	if (gpgme_check_version("0.4.5")) {
+		/* Also does some gpgme init */
+	        gpgme_engine_info_t engineInfo;
+
+		rfc2015_disable_all();
+
+		gpgme_set_locale(NULL, LC_CTYPE, setlocale(LC_CTYPE, NULL));
+		gpgme_set_locale(NULL, LC_MESSAGES,
+				 setlocale(LC_MESSAGES, NULL));
+
+		if (!gpgme_get_engine_info(&engineInfo)) {
+			while (engineInfo) {
+				debug_print("GpgME Protocol: %s\n      Version: %s\n",
+					    gpgme_get_protocol_name
+						(engineInfo->protocol),
+					    engineInfo->version);
+				engineInfo = engineInfo->next;
+			}
+		}
+	} else {
+		if (prefs_common.gpg_warning) {
+			AlertValue val;
+
+			val = alertpanel_message_with_disable
+				(_("Warning"),
+				 _("GnuPG is not installed properly, or its version is too old.\n"
+				   "OpenPGP support disabled."),
+				 ALERT_WARNING);
+			if (val & G_ALERTDISABLE)
+				prefs_common.gpg_warning = FALSE;
+		}
+	}
+	/* FIXME: This function went away.  We can either block until gpgme
+	 * operations finish (currently implemented) or register callbacks
+	 * with the gtk main loop via the gpgme io callback interface instead.
+	 *
+	 * gpgme_register_idle(idle_function_for_gpgme);
+	 */
+#endif
+}
 
 static gchar *get_socket_name(void)
 {
@@ -765,6 +765,38 @@ static void lock_socket_input_cb(gpointer data,
 	}
 
 	fd_close(sock);
+}
+
+static void remote_command_exec(void)
+{
+	MainWindow *mainwin;
+
+	mainwin = main_window_get();
+
+	if (cmd.receive_all)
+		inc_all_account_mail(mainwin, FALSE);
+	else if (prefs_common.chk_on_startup)
+		inc_all_account_mail(mainwin, TRUE);
+	else if (cmd.receive)
+		inc_mail(mainwin);
+
+	if (cmd.compose)
+		open_compose_new(cmd.compose_mailto, cmd.attach_files);
+	if (cmd.attach_files) {
+		ptr_array_free_strings(cmd.attach_files);
+		g_ptr_array_free(cmd.attach_files, TRUE);
+		cmd.attach_files = NULL;
+	}
+	if (cmd.send)
+		send_queue();
+	if (cmd.status_folders) {
+		g_ptr_array_free(cmd.status_folders, TRUE);
+		cmd.status_folders = NULL;
+	}
+	if (cmd.status_full_folders) {
+		g_ptr_array_free(cmd.status_full_folders, TRUE);
+		cmd.status_full_folders = NULL;
+	}
 }
 
 static void migrate_old_config(void)
