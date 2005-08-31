@@ -26,7 +26,6 @@ sylpheed_SOURCES = \
 	gtkshruler.c gtkshruler.h \
 	menu.c menu.h \
 	stock_pixmap.c stock_pixmap.h \
-	prefs.c prefs.h \
 	prefs_ui.c prefs_ui.h \
 	prefs_common.c prefs_common.h \
 	prefs_filter.c prefs_filter.h \
@@ -76,17 +75,8 @@ sylpheed_SOURCES = \
 	grouplistdialog.c grouplistdialog.h \
 	about.c about.h \
 	setup.c setup.h \
-	utils.c utils.h \
 	gtkutils.c gtkutils.h \
-	codeconv.c codeconv.h \
-	unmime.c unmime.h \
-	base64.c base64.h \
-	quoted-printable.c quoted-printable.h \
-	uuencode.c uuencode.h \
 	md5.c md5.h \
-	socket.c socket.h \
-	ssl.c ssl.h \
-	session.c session.h \
 	smtp.c smtp.h \
 	pop.c pop.h \
 	mh.c mh.h \
@@ -99,7 +89,6 @@ sylpheed_SOURCES = \
 	nntp.c nntp.h \
 	news.c news.h \
 	imap.c imap.h \
-	xml.c xml.h \
 	html.c html.h \
 	procmime.c procmime.h \
 	rfc2015.c rfc2015.h \
@@ -108,7 +97,6 @@ sylpheed_SOURCES = \
 	sigstatus.c sigstatus.h \
 	simple-gettext.c \
 	manual.c manual.h \
-	stringtable.c stringtable.h \
 	eggtrayicon.c eggtrayicon.h \
 	trayicon.c trayicon.h \
 	quote_fmt_lex.l quote_fmt_lex.h \
@@ -132,14 +120,16 @@ INCLUDES = \
 	$(GTK_CFLAGS) \
 	$(GDK_PIXBUF_CFLAGS) \
 	$(GPGME_CFLAGS) \
-	-I$(includedir)
+	-I$(includedir) \
+	-I$(top_srcdir)/libsylph
 
 sylpheed_LDADD = \
 	$(INTLLIBS) \
 	$(GTK_LIBS) \
 	$(GPGME_LIBS) \
 	$(LDAP_LIBS) \
-	$(LIBICONV)
+	$(LIBICONV) \
+	../libsylph/libsylph.la
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \

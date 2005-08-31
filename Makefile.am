@@ -1,4 +1,4 @@
-SUBDIRS = ac po src manual faq
+SUBDIRS = ac libsylph src po manual faq
 
 EXTRA_DIST = config.rpath  \
 	ChangeLog.ja \

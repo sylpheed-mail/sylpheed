@@ -41,7 +41,6 @@
 #include "base64.h"
 #include "quoted-printable.h"
 #include "utils.h"
-#include "prefs_common.h"
 
 typedef enum
 {
@@ -308,7 +307,8 @@ static gchar *conv_euctojis(const gchar *inbuf, gint *error)
 			}
 		} else if (iseuchwkana1(*in)) {
 			if (iseuchwkana2(*(in + 1))) {
-				if (prefs_common.allow_jisx0201_kana) {
+				//if (prefs_common.allow_jisx0201_kana) {
+				if (0) {
 					HW_IN();
 					in++;
 					*out++ = *in++ & 0x7f;

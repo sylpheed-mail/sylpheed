@@ -23,7 +23,6 @@
 #include <ctype.h>
 
 #include "xml.h"
-#include "main.h"
 #include "utils.h"
 #include "codeconv.h"
 
