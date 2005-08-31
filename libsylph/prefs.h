@@ -28,8 +28,6 @@ typedef struct _PrefFile	PrefFile;
 
 #define PREFSBUFSIZE		1024
 
-#define P_WID(wid)		((gpointer *)(wid))
-
 typedef enum
 {
 	P_STRING,
@@ -48,9 +46,7 @@ struct _PrefParam {
 	gchar	      *defval;
 	gpointer       data;
 	PrefType       type;
-	gpointer      *widget;
-	DataSetFunc    data_set_func;
-	WidgetSetFunc  widget_set_func;
+	gpointer       ui_data;
 };
 
 struct _PrefFile {

@@ -28,9 +28,11 @@ sylpheed_SOURCES = \
 	stock_pixmap.c stock_pixmap.h \
 	prefs_ui.c prefs_ui.h \
 	prefs_common.c prefs_common.h \
+	prefs_common_dialog.c prefs_common_dialog.h \
 	prefs_filter.c prefs_filter.h \
 	prefs_filter_edit.c prefs_filter_edit.h \
 	prefs_account.c prefs_account.h \
+	prefs_account_dialog.c prefs_account_dialog.h \
 	prefs_folder_item.c prefs_folder_item.h \
 	prefs_display_header.c prefs_display_header.h \
 	prefs_customheader.c prefs_customheader.h \

@@ -36,6 +36,7 @@
 #include "alertpanel.h"
 #include "manage_window.h"
 #include "prefs_common.h"
+#include "prefs_common_dialog.h"
 #include "compose.h"
 #include "addr_compl.h"
 #include "quote_fmt.h"

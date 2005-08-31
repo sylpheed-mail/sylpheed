@@ -26,12 +26,13 @@
 
 #include <glib.h>
 
+typedef struct _PrefsCommon	PrefsCommon;
+
+#include "prefs.h"
 #include "mainwindow.h"
 #include "summaryview.h"
-#include "codeconv.h"
-#include "textview.h"
-
-typedef struct _PrefsCommon	PrefsCommon;
+//#include "codeconv.h"
+//#include "textview.h"
 
 typedef enum {
 	RECV_DIALOG_ALWAYS,
@@ -249,10 +250,11 @@ struct _PrefsCommon
 
 extern PrefsCommon prefs_common;
 
-void prefs_common_read_config	(void);
-void prefs_common_write_config	(void);
-void prefs_common_open		(void);
+PrefParam *prefs_common_get_params	(void);
 
-void prefs_quote_description	(void);
+void prefs_common_read_config		(void);
+void prefs_common_write_config		(void);
+
+void prefs_common_junk_filter_list_set	(void);
 
 #endif /* __PREFS_COMMON_H__ */

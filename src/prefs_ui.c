@@ -105,29 +105,52 @@ void prefs_button_toggled(GtkToggleButton *toggle_btn, GtkWidget *widget)
 	gtk_widget_set_sensitive(widget, is_active);
 }
 
+void prefs_register_ui(PrefParam *param, PrefsUIData *ui_data)
+{
+	GHashTable *param_table;
+	PrefParam *param_;
+	gint i;
+
+	param_table = prefs_param_table_get(param);
+
+	for (i = 0; ui_data[i].name != NULL; i++) {
+		param_ = g_hash_table_lookup(param_table, ui_data[i].name);
+		if (param_) {
+			param_->ui_data = &ui_data[i];
+		}
+	}
+
+	prefs_param_table_destroy(param_table);
+}
+
 void prefs_set_dialog(PrefParam *param)
 {
+	PrefsUIData *ui_data;
 	gint i;
 
 	for (i = 0; param[i].name != NULL; i++) {
-		if (param[i].widget_set_func)
-			param[i].widget_set_func(&param[i]);
+		ui_data = (PrefsUIData *)param[i].ui_data;
+		if (ui_data && ui_data->widget_set_func)
+			ui_data->widget_set_func(&param[i]);
 	}
 }
 
 void prefs_set_data_from_dialog(PrefParam *param)
 {
+	PrefsUIData *ui_data;
 	gint i;
 
 	for (i = 0; param[i].name != NULL; i++) {
-		if (param[i].data_set_func)
-			param[i].data_set_func(&param[i]);
+		ui_data = (PrefsUIData *)param[i].ui_data;
+		if (ui_data && ui_data->data_set_func)
+			ui_data->data_set_func(&param[i]);
 	}
 }
 
 void prefs_set_dialog_to_default(PrefParam *param)
 {
 	gint	   i;
+	PrefsUIData *ui_data;
 	PrefParam  tmpparam;
 	gchar	  *str_data = NULL;
 	gint	   int_data;
@@ -136,7 +159,8 @@ void prefs_set_dialog_to_default(PrefParam *param)
 	DummyEnum  enum_data;
 
 	for (i = 0; param[i].name != NULL; i++) {
-		if (!param[i].widget_set_func) continue;
+		ui_data = (PrefsUIData *)param[i].ui_data;
+		if (!ui_data || !ui_data->widget_set_func) continue;
 
 		tmpparam = param[i];
 
@@ -195,7 +219,7 @@ void prefs_set_dialog_to_default(PrefParam *param)
 		case P_OTHER:
 			break;
 		}
-		tmpparam.widget_set_func(&tmpparam);
+		ui_data->widget_set_func(&tmpparam);
 		g_free(str_data);
 		str_data = NULL;
 	}
@@ -203,12 +227,15 @@ void prefs_set_dialog_to_default(PrefParam *param)
 
 void prefs_set_data_from_entry(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
 	gchar **str;
 	const gchar *entry_str;
 
-	g_return_if_fail(*pparam->widget != NULL);
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
-	entry_str = gtk_entry_get_text(GTK_ENTRY(*pparam->widget));
+	entry_str = gtk_entry_get_text(GTK_ENTRY(*ui_data->widget));
 
 	switch (pparam->type) {
 	case P_STRING:
@@ -230,22 +257,25 @@ void prefs_set_data_from_entry(PrefParam *pparam)
 
 void prefs_set_entry(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
 	gchar **str;
 
-	g_return_if_fail(*pparam->widget != NULL);
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
 	switch (pparam->type) {
 	case P_STRING:
 		str = (gchar **)pparam->data;
-		gtk_entry_set_text(GTK_ENTRY(*pparam->widget),
+		gtk_entry_set_text(GTK_ENTRY(*ui_data->widget),
 				   *str ? *str : "");
 		break;
 	case P_INT:
-		gtk_entry_set_text(GTK_ENTRY(*pparam->widget),
+		gtk_entry_set_text(GTK_ENTRY(*ui_data->widget),
 				   itos(*((gint *)pparam->data)));
 		break;
 	case P_USHORT:
-		gtk_entry_set_text(GTK_ENTRY(*pparam->widget),
+		gtk_entry_set_text(GTK_ENTRY(*ui_data->widget),
 				   itos(*((gushort *)pparam->data)));
 		break;
 	default:
@@ -256,23 +286,26 @@ void prefs_set_entry(PrefParam *pparam)
 
 void prefs_set_data_from_text(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
 	gchar **str;
 	gchar *text = NULL, *tp = NULL;
 	gchar *tmp, *tmpp;
 
-	g_return_if_fail(*pparam->widget != NULL);
-	g_return_if_fail(GTK_IS_EDITABLE(*pparam->widget) ||
-			 GTK_IS_TEXT_VIEW(*pparam->widget));
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+	g_return_if_fail(GTK_IS_EDITABLE(*ui_data->widget) ||
+			 GTK_IS_TEXT_VIEW(*ui_data->widget));
 
 	switch (pparam->type) {
 	case P_STRING:
 		str = (gchar **)pparam->data;
 		g_free(*str);
-		if (GTK_IS_EDITABLE(*pparam->widget)) {
+		if (GTK_IS_EDITABLE(*ui_data->widget)) {
 			tp = text = gtk_editable_get_chars
-				(GTK_EDITABLE(*pparam->widget), 0, -1);
-		} else if (GTK_IS_TEXT_VIEW(*pparam->widget)) {
-			GtkTextView *textview = GTK_TEXT_VIEW(*pparam->widget);
+				(GTK_EDITABLE(*ui_data->widget), 0, -1);
+		} else if (GTK_IS_TEXT_VIEW(*ui_data->widget)) {
+			GtkTextView *textview = GTK_TEXT_VIEW(*ui_data->widget);
 			GtkTextBuffer *buffer;
 			GtkTextIter start, end;
 
@@ -313,13 +346,16 @@ void prefs_set_data_from_text(PrefParam *pparam)
 
 void prefs_set_text(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
 	gchar *buf, *sp, *bufp;
 	gchar **str;
 	GtkTextView *text;
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 
-	g_return_if_fail(*pparam->widget != NULL);
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
 	switch (pparam->type) {
 	case P_STRING:
@@ -341,7 +377,7 @@ void prefs_set_text(PrefParam *pparam)
 		} else
 			buf = "";
 
-		text = GTK_TEXT_VIEW(*pparam->widget);
+		text = GTK_TEXT_VIEW(*ui_data->widget);
 		buffer = gtk_text_view_get_buffer(text);
 		gtk_text_buffer_set_text(buffer, "", 0);
 		gtk_text_buffer_get_start_iter(buffer, &iter);
@@ -355,36 +391,48 @@ void prefs_set_text(PrefParam *pparam)
 
 void prefs_set_data_from_toggle(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
 	g_return_if_fail(pparam->type == P_BOOL);
-	g_return_if_fail(*pparam->widget != NULL);
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 	
 	*((gboolean *)pparam->data) =
-		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(*pparam->widget));
+		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(*ui_data->widget));
 }
 
 void prefs_set_toggle(PrefParam *pparam)
 {
-	g_return_if_fail(pparam->type == P_BOOL);
-	g_return_if_fail(*pparam->widget != NULL);
+	PrefsUIData *ui_data;
 
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(*pparam->widget),
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(pparam->type == P_BOOL);
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(*ui_data->widget),
 				     *((gboolean *)pparam->data));
 }
 
 void prefs_set_data_from_spinbtn(PrefParam *pparam)
 {
-	g_return_if_fail(*pparam->widget != NULL);
+	PrefsUIData *ui_data;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
 	switch (pparam->type) {
 	case P_INT:
 		*((gint *)pparam->data) =
 			gtk_spin_button_get_value_as_int
-			(GTK_SPIN_BUTTON(*pparam->widget));
+			(GTK_SPIN_BUTTON(*ui_data->widget));
 		break;
 	case P_USHORT:
 		*((gushort *)pparam->data) =
 			(gushort)gtk_spin_button_get_value_as_int
-			(GTK_SPIN_BUTTON(*pparam->widget));
+			(GTK_SPIN_BUTTON(*ui_data->widget));
 		break;
 	default:
 		g_warning("Invalid PrefType for GtkSpinButton widget: %d\n",
@@ -394,15 +442,19 @@ void prefs_set_data_from_spinbtn(PrefParam *pparam)
 
 void prefs_set_spinbtn(PrefParam *pparam)
 {
-	g_return_if_fail(*pparam->widget != NULL);
+	PrefsUIData *ui_data;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
 	switch (pparam->type) {
 	case P_INT:
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(*pparam->widget),
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(*ui_data->widget),
 					  (gfloat)*((gint *)pparam->data));
 		break;
 	case P_USHORT:
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON(*pparam->widget),
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON(*ui_data->widget),
 					  (gfloat)*((gushort *)pparam->data));
 		break;
 	default:
@@ -413,13 +465,16 @@ void prefs_set_spinbtn(PrefParam *pparam)
 
 void prefs_set_data_from_fontbtn(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
 	gchar **str;
 	const gchar *font_str;
 
-	g_return_if_fail(*pparam->widget != NULL);
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
 	font_str = gtk_font_button_get_font_name
-		(GTK_FONT_BUTTON(*pparam->widget));
+		(GTK_FONT_BUTTON(*ui_data->widget));
 
 	switch (pparam->type) {
 	case P_STRING:
@@ -435,14 +490,17 @@ void prefs_set_data_from_fontbtn(PrefParam *pparam)
 
 void prefs_set_fontbtn(PrefParam *pparam)
 {
+	PrefsUIData *ui_data;
 	gchar **str;
 
-	g_return_if_fail(*pparam->widget != NULL);
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
 
 	switch (pparam->type) {
 	case P_STRING:
 		str = (gchar **)pparam->data;
-		gtk_font_button_set_font_name(GTK_FONT_BUTTON(*pparam->widget),
+		gtk_font_button_set_font_name(GTK_FONT_BUTTON(*ui_data->widget),
 					      *str ? *str : "");
 		break;
 	default:

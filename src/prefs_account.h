@@ -30,6 +30,7 @@ typedef struct _PrefsAccount	PrefsAccount;
 
 #include "folder.h"
 #include "smtp.h"
+#include "prefs.h"
 
 typedef enum {
 	A_POP3,
@@ -167,12 +168,15 @@ struct _PrefsAccount
 
 PrefsAccount *prefs_account_new		(void);
 
+PrefsAccount *prefs_account_get_tmp_prefs	(void);
+void prefs_account_set_tmp_prefs		(PrefsAccount	*ac_prefs);
+void prefs_account_apply_tmp_prefs		(PrefsAccount	*ac_prefs);
+PrefParam *prefs_account_get_params		(void);
+
 void prefs_account_read_config		(PrefsAccount	*ac_prefs,
 					 const gchar	*label);
 void prefs_account_write_config_all	(GList		*account_list);
 
 void prefs_account_free			(PrefsAccount	*ac_prefs);
-
-PrefsAccount *prefs_account_open	(PrefsAccount	*ac_prefs);
 
 #endif /* __PREFS_ACCOUNT_H__ */

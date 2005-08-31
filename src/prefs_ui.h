@@ -31,6 +31,7 @@
 #include <stdio.h>
 
 typedef struct _PrefsDialog	PrefsDialog;
+typedef struct _PrefsUIData	PrefsUIData;
 
 #include "prefs.h"
 #include "gtkutils.h"
@@ -40,6 +41,14 @@ typedef struct _PrefsDialog	PrefsDialog;
 #define VSPACING_NARROW_2	2
 #define VBOX_BORDER		16
 #define DEFAULT_ENTRY_WIDTH	80
+
+struct _PrefsUIData
+{
+	gchar *name;
+	GtkWidget **widget;
+	DataSetFunc data_set_func;
+	WidgetSetFunc widget_set_func;
+};
 
 struct _PrefsDialog 
 {
@@ -125,6 +134,9 @@ void prefs_dialog_destroy	(PrefsDialog	*dialog);
 
 void prefs_button_toggled	(GtkToggleButton	*toggle_btn,
 				 GtkWidget		*widget);
+
+void prefs_register_ui		(PrefParam	*param,
+				 PrefsUIData	*ui_data);
 
 void prefs_set_dialog		(PrefParam	*param);
 void prefs_set_data_from_dialog	(PrefParam	*param);

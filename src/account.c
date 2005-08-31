@@ -37,6 +37,7 @@
 #include "account.h"
 #include "prefs.h"
 #include "prefs_account.h"
+#include "prefs_account_dialog.h"
 #include "procmsg.h"
 #include "procheader.h"
 #include "compose.h"
