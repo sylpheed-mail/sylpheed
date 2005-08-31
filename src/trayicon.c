@@ -35,6 +35,7 @@
 #include "eggtrayicon.h"
 #include "stock_pixmap.h"
 
+#ifdef GDK_WINDOWING_X11
 
 static GtkWidget *trayicon;
 static GtkWidget *trayicon_img;
@@ -54,7 +55,7 @@ GtkWidget *trayicon_create(MainWindow *mainwin)
 	g_signal_connect(G_OBJECT(eventbox), "button_press_event",
 			 G_CALLBACK(trayicon_button_pressed), mainwin);
 	trayicon_img = stock_pixbuf_widget_scale(NULL, STOCK_PIXMAP_SYLPHEED,
-						  24, 24);
+						 24, 24);
 	gtk_container_add(GTK_CONTAINER(eventbox), trayicon_img);
 
 	trayicon_tip = gtk_tooltips_new();
@@ -90,3 +91,20 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	if (event && event->button == 1)
 		gtk_window_present(GTK_WINDOW(mainwin->window));
 }
+
+#else /* GDK_WINDOWING_X11 */
+
+GtkWidget *trayicon_create(MainWindow *mainwin)
+{
+	return NULL;
+}
+
+void trayicon_set_tooltip(const gchar *text)
+{
+}
+
+void trayicon_set_stock_icon(StockPixmap icon)
+{
+}
+
+#endif /* GDK_WINDOWING_X11 */
