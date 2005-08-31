@@ -38,12 +38,37 @@ typedef enum
 	DUMMY_PARAM
 } DummyEnum;
 
+static void prefs_config_parse_one_line	(GHashTable	*param_table,
+					 const gchar	*buf);
+
+GHashTable *prefs_param_table_get(PrefParam *param)
+{
+	GHashTable *table;
+	gint i;
+
+	g_return_val_if_fail(param != NULL, NULL);
+
+	table = g_hash_table_new(g_str_hash, g_str_equal);
+
+	for (i = 0; param[i].name != NULL; i++) {
+		g_hash_table_insert(table, param[i].name, &param[i]);
+	}
+
+	return table;
+}
+
+void prefs_param_table_destroy(GHashTable *param_table)
+{
+	g_hash_table_destroy(param_table);
+}
+
 void prefs_read_config(PrefParam *param, const gchar *label,
 		       const gchar *rcfile, const gchar *encoding)
 {
 	FILE *fp;
 	gchar buf[PREFSBUFSIZE];
 	gchar *block_label;
+	GHashTable *param_table;
 
 	g_return_if_fail(param != NULL);
 	g_return_if_fail(label != NULL);
@@ -83,8 +108,11 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 	}
 	g_free(block_label);
 
+	param_table = prefs_param_table_get(param);
+
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		strretchomp(buf);
+		if (buf[0] == '\0') continue;
 		/* reached next block */
 		if (buf[0] == '[') break;
 
@@ -95,58 +123,71 @@ void prefs_read_config(PrefParam *param, const gchar *label,
 				(buf, encoding, CS_INTERNAL);
 			if (!conv_str)
 				conv_str = g_strdup(buf);
-			prefs_config_parse_one_line(param, conv_str);
+			prefs_config_parse_one_line(param_table, conv_str);
 			g_free(conv_str);
 		} else
-			prefs_config_parse_one_line(param, buf);
+			prefs_config_parse_one_line(param_table, buf);
 	}
+
+	prefs_param_table_destroy(param_table);
 
 	debug_print("Finished reading configuration.\n");
 	fclose(fp);
 }
 
-void prefs_config_parse_one_line(PrefParam *param, const gchar *buf)
+static void prefs_config_parse_one_line(GHashTable *param_table,
+					const gchar *buf)
 {
-	gint i;
-	gint name_len;
+	PrefParam *param;
+	const gchar *p = buf;
+	gchar *name;
 	const gchar *value;
 
-	for (i = 0; param[i].name != NULL; i++) {
-		name_len = strlen(param[i].name);
-		if (g_ascii_strncasecmp(buf, param[i].name, name_len))
-			continue;
-		if (buf[name_len] != '=')
-			continue;
-		value = buf + name_len + 1;
-		/* debug_print("%s = %s\n", param[i].name, value); */
+	while (*p && *p != '=')
+		p++;
 
-		switch (param[i].type) {
-		case P_STRING:
-			g_free(*((gchar **)param[i].data));
-			*((gchar **)param[i].data) =
-				*value ? g_strdup(value) : NULL;
-			break;
-		case P_INT:
-			*((gint *)param[i].data) =
-				(gint)atoi(value);
-			break;
-		case P_BOOL:
-			*((gboolean *)param[i].data) =
-				(*value == '0' || *value == '\0')
-					? FALSE : TRUE;
-			break;
-		case P_ENUM:
-			*((DummyEnum *)param[i].data) =
-				(DummyEnum)atoi(value);
-			break;
-		case P_USHORT:
-			*((gushort *)param[i].data) =
-				(gushort)atoi(value);
-			break;
-		default:
-			break;
-		}
+	if (*p != '=') {
+		g_warning("invalid pref line: %s\n", buf);
+		return;
 	}
+
+	name = g_strndup(buf, p - buf);
+	value = p + 1;
+
+	/* debug_print("%s = %s\n", name, value); */
+
+	param = g_hash_table_lookup(param_table, name);
+
+	if (!param) {
+		debug_print("pref key '%s' (value '%s') not found\n",
+			    name, value);
+		g_free(name);
+		return;
+	}
+
+	switch (param->type) {
+	case P_STRING:
+		g_free(*((gchar **)param->data));
+		*((gchar **)param->data) = *value ? g_strdup(value) : NULL;
+		break;
+	case P_INT:
+		*((gint *)param->data) = (gint)atoi(value);
+		break;
+	case P_BOOL:
+		*((gboolean *)param->data) =
+			(*value == '0' || *value == '\0') ? FALSE : TRUE;
+		break;
+	case P_ENUM:
+		*((DummyEnum *)param->data) = (DummyEnum)atoi(value);
+		break;
+	case P_USHORT:
+		*((gushort *)param->data) = (gushort)atoi(value);
+		break;
+	default:
+		break;
+	}
+
+	g_free(name);
 }
 
 #define TRY(func) \

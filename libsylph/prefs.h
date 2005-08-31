@@ -58,12 +58,13 @@ struct _PrefFile {
 	gchar *path;
 };
 
+GHashTable *prefs_param_table_get	(PrefParam	*param);
+void prefs_param_table_destroy		(GHashTable	*param_table);
+
 void prefs_read_config		(PrefParam	*param,
 				 const gchar	*label,
 				 const gchar	*rcfile,
 				 const gchar	*encoding);
-void prefs_config_parse_one_line(PrefParam	*param,
-				 const gchar	*buf);
 void prefs_write_config		(PrefParam	*param,
 				 const gchar	*label,
 				 const gchar	*rcfile);
