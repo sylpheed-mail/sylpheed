@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2002 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,19 +43,16 @@ PrefsAccount *account_find_from_item		(FolderItem	*item);
 PrefsAccount *account_find_from_message_file	(const gchar	*file);
 PrefsAccount *account_find_from_msginfo		(MsgInfo	*msginfo);
 
-void	      account_set_menu		(void);
-
 void	      account_foreach		(AccountFunc	 func,
 					 gpointer	 user_data);
 GList	     *account_get_list		(void);
+void	      account_list_free		(void);
+void	      account_append		(PrefsAccount	*ac_prefs);
 
-void	      account_edit_open		(void);
-void	      account_add		(void);
-void	      account_open		(PrefsAccount	*ac_prefs);
 void	      account_set_as_default	(PrefsAccount	*ac_prefs);
 PrefsAccount *account_get_default	(void);
 
-void	      account_set_missing_folder(void);
+//void	      account_set_missing_folder(void);
 FolderItem   *account_get_special_folder(PrefsAccount		*ac_prefs,
 					 SpecialFolderItemType	 type);
 

@@ -72,6 +72,7 @@
 #include "prefs_template.h"
 #include "action.h"
 #include "account.h"
+#include "account_dialog.h"
 #include "addressbook.h"
 #include "logwindow.h"
 #include "manage_window.h"

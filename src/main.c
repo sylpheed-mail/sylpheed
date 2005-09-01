@@ -59,6 +59,7 @@
 #include "prefs_actions.h"
 #include "prefs_display_header.h"
 #include "account.h"
+#include "account_dialog.h"
 #include "procmsg.h"
 #include "filter.h"
 #include "inc.h"
@@ -222,6 +223,8 @@ int main(int argc, char *argv[])
 #endif
 
 	account_read_config_all();
+	account_set_menu();
+	main_window_reflect_prefs_all();
 
 	if (folder_read_list() < 0) {
 		setup(mainwin);

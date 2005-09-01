@@ -41,6 +41,7 @@ sylpheed_SOURCES = \
 	prefs_template.c prefs_template.h \
 	prefs_actions.c prefs_actions.h \
 	account.c account.h \
+	account_dialog.c account_dialog.h \
 	displayheader.c displayheader.h \
 	customheader.c customheader.h \
 	template.c template.h \

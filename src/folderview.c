@@ -62,6 +62,7 @@
 #include "prefs_filter.h"
 #include "prefs_folder_item.h"
 #include "account.h"
+#include "account_dialog.h"
 #include "folder.h"
 #include "inc.h"
 
