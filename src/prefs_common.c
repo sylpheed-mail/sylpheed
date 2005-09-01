@@ -359,7 +359,6 @@ void prefs_common_read_config(void)
 
 	prefs_common.online_mode = TRUE;
 
-	//gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
 	prefs_common_junk_filter_list_set();
 
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, COMMAND_HISTORY,

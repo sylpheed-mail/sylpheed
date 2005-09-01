@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2001 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,10 @@
 
 #include <glib.h>
 
+typedef struct _CustomHeader	CustomHeader;
+
+#include "prefs_account.h"
+
 struct _CustomHeader
 {
 	gint account_id;
@@ -29,7 +33,8 @@ struct _CustomHeader
 	gchar *value;
 };
 
-typedef struct _CustomHeader	CustomHeader;
+void custom_header_read_config		(PrefsAccount	*ac);
+void custom_header_write_config		(PrefsAccount	*ac);
 
 gchar *custom_header_get_str		(CustomHeader	*ch);
 CustomHeader *custom_header_read_str	(const gchar	*buf);

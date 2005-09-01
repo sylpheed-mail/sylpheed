@@ -199,6 +199,8 @@ int main(int argc, char *argv[])
 	prefs_actions_read_config();
 	prefs_display_header_read_config();
 
+	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
+
 	check_gpg();
 
 	sock_set_io_timeout(prefs_common.io_timeout_secs);

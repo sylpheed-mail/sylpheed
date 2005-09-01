@@ -34,12 +34,9 @@
 
 #include "prefs.h"
 #include "prefs_account.h"
-#include "prefs_customheader.h"
-#include "prefs_common.h"
+#include "customheader.h"
 #include "account.h"
 #include "utils.h"
-#include "smtp.h"
-#include "imap.h"
 
 static PrefsAccount tmp_ac_prefs;
 
@@ -197,7 +194,7 @@ void prefs_account_read_config(PrefsAccount *ac_prefs, const gchar *label)
 		ac_prefs->use_apop_auth = TRUE;
 	}
 
-	prefs_custom_header_read_config(ac_prefs);
+	custom_header_read_config(ac_prefs);
 }
 
 void prefs_account_write_config_all(GList *account_list)

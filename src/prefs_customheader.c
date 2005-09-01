@@ -27,10 +27,6 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 
 #include "main.h"
 #include "prefs.h"
@@ -304,133 +300,6 @@ static void prefs_custom_header_create(void)
 	customhdr.customhdr_clist   = customhdr_clist;
 }
 
-void prefs_custom_header_read_config(PrefsAccount *ac)
-{
-	gchar *rcpath;
-	FILE *fp;
-	gchar buf[PREFSBUFSIZE];
-	CustomHeader *ch;
-
-	debug_print("Reading custom header configuration...\n");
-
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
-			     CUSTOM_HEADER_RC, NULL);
-	if ((fp = g_fopen(rcpath, "rb")) == NULL) {
-		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
-		g_free(rcpath);
-		ac->customhdr_list = NULL;
-		return;
-	}
-	g_free(rcpath);
-
-	/* remove all previous headers list */
-	while (ac->customhdr_list != NULL) {
-		ch = (CustomHeader *)ac->customhdr_list->data;
-		custom_header_free(ch);
-		ac->customhdr_list = g_slist_remove(ac->customhdr_list, ch);
-	}
-
-	while (fgets(buf, sizeof(buf), fp) != NULL) {
-		ch = custom_header_read_str(buf);
-		if (ch) {
-			if (ch->account_id == ac->account_id) {
-				ac->customhdr_list =
-					g_slist_append(ac->customhdr_list, ch);
-			} else
-				custom_header_free(ch);
-		}
-	}
-
-	fclose(fp);
-}
-
-void prefs_custom_header_write_config(PrefsAccount *ac)
-{
-	gchar *rcpath;
-	PrefFile *pfile;
-	GSList *cur;
-	gchar buf[PREFSBUFSIZE];
-	FILE * fp;
-	CustomHeader *ch;
-
-	GSList *all_hdrs = NULL;
-
-	debug_print("Writing custom header configuration...\n");
-
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
-			     CUSTOM_HEADER_RC, NULL);
-
-	if ((fp = g_fopen(rcpath, "rb")) == NULL) {
-		if (ENOENT != errno) FILE_OP_ERROR(rcpath, "fopen");
-	} else {
-		all_hdrs = NULL;
-
-		while (fgets(buf, sizeof(buf), fp) != NULL) {
-			ch = custom_header_read_str(buf);
-			if (ch) {
-				if (ch->account_id != ac->account_id)
-					all_hdrs =
-						g_slist_append(all_hdrs, ch);
-				else
-					custom_header_free(ch);
-			}
-		}
-
-		fclose(fp);
-	}
-
-	if ((pfile = prefs_file_open(rcpath)) == NULL) {
-		g_warning(_("failed to write configuration to file\n"));
-		g_free(rcpath);
-		return;
-	}
-
-	for (cur = all_hdrs; cur != NULL; cur = cur->next) {
- 		CustomHeader *hdr = (CustomHeader *)cur->data;
-		gchar *chstr;
-
-		chstr = custom_header_get_str(hdr);
-		if (fputs(chstr, pfile->fp) == EOF ||
-		    fputc('\n', pfile->fp) == EOF) {
-			FILE_OP_ERROR(rcpath, "fputs || fputc");
-			prefs_file_close_revert(pfile);
-			g_free(rcpath);
-			g_free(chstr);
-			return;
-		}
-		g_free(chstr);
-	}
-
-	for (cur = ac->customhdr_list; cur != NULL; cur = cur->next) {
- 		CustomHeader *hdr = (CustomHeader *)cur->data;
-		gchar *chstr;
-
-		chstr = custom_header_get_str(hdr);
-		if (fputs(chstr, pfile->fp) == EOF ||
-		    fputc('\n', pfile->fp) == EOF) {
-			FILE_OP_ERROR(rcpath, "fputs || fputc");
-			prefs_file_close_revert(pfile);
-			g_free(rcpath);
-			g_free(chstr);
-			return;
-		}
-		g_free(chstr);
-	}
-
-	g_free(rcpath);
-
- 	while (all_hdrs != NULL) {
- 		ch = (CustomHeader *)all_hdrs->data;
- 		custom_header_free(ch);
- 		all_hdrs = g_slist_remove(all_hdrs, ch);
- 	}
-
-	if (prefs_file_close(pfile) < 0) {
-		g_warning(_("failed to write configuration to file\n"));
-		return;
-	}
-}
-
 static void prefs_custom_header_set_dialog(PrefsAccount *ac)
 {
 	GtkCList *clist = GTK_CLIST(customhdr.customhdr_clist);
@@ -607,13 +476,13 @@ static gboolean prefs_custom_header_key_pressed(GtkWidget *widget,
 
 static void prefs_custom_header_ok(void)
 {
-	prefs_custom_header_write_config(cur_ac);
+	custom_header_write_config(cur_ac);
 	gtk_widget_hide(customhdr.window);
 }
 
 static void prefs_custom_header_cancel(void)
 {
-	prefs_custom_header_read_config(cur_ac); 
+	custom_header_read_config(cur_ac); 
 	gtk_widget_hide(customhdr.window);
 }
 
