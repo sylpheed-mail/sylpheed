@@ -4,6 +4,7 @@ bin_PROGRAMS = sylpheed
 
 sylpheed_SOURCES = \
 	defs.h \
+	enums.h \
 	version.h \
 	main.c main.h \
 	mainwindow.c mainwindow.h \

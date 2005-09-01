@@ -26,11 +26,6 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <errno.h>
 
 #include "main.h"
@@ -39,8 +34,6 @@
 #include "filter.h"
 #include "codeconv.h"
 #include "utils.h"
-#include "folder.h"
-#include "socket.h"
 
 PrefsCommon prefs_common;
 

@@ -26,11 +26,8 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
 
 #include "prefs.h"
 #include "prefs_account.h"

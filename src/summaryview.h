@@ -31,6 +31,7 @@
 typedef struct _SummaryView		SummaryView;
 typedef struct _SummaryColumnState	SummaryColumnState;
 
+#include "enums.h"
 #include "mainwindow.h"
 #include "folderview.h"
 #include "headerview.h"
@@ -38,30 +39,6 @@ typedef struct _SummaryColumnState	SummaryColumnState;
 #include "compose.h"
 #include "prefs_filter.h"
 #include "folder.h"
-
-typedef enum
-{
-	S_COL_MARK,
-	S_COL_UNREAD,
-	S_COL_MIME,
-	S_COL_SUBJECT,
-	S_COL_FROM,
-	S_COL_DATE,
-	S_COL_SIZE,
-	S_COL_NUMBER,
-
-	S_COL_MSG_INFO,
-
-	S_COL_LABEL,
-	S_COL_TO,
-
-	S_COL_FOREGROUND,
-	S_COL_BOLD,
-
-	N_SUMMARY_COLS
-} SummaryColumnType;
-
-#define N_SUMMARY_VISIBLE_COLS	S_COL_MSG_INFO
 
 typedef enum
 {

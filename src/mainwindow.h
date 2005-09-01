@@ -27,6 +27,7 @@
 
 typedef struct _MainWindow	MainWindow;
 
+#include "enums.h"
 #include "folderview.h"
 #include "summaryview.h"
 #include "headerview.h"
@@ -41,14 +42,6 @@ typedef enum
 	SEPARATE_MESSAGE = 1 << 1,
 	SEPARATE_BOTH	 = (SEPARATE_FOLDER | SEPARATE_MESSAGE)
 } SeparateType;
-
-typedef enum
-{
-	TOOLBAR_NONE	= 0,
-	TOOLBAR_ICON	= 1,
-	TOOLBAR_TEXT	= 2,
-	TOOLBAR_BOTH	= 3
-} ToolbarStyle;
 
 struct _MainWindow
 {

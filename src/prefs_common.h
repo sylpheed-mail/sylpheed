@@ -28,11 +28,8 @@
 
 typedef struct _PrefsCommon	PrefsCommon;
 
+#include "enums.h"
 #include "prefs.h"
-#include "mainwindow.h"
-#include "summaryview.h"
-//#include "codeconv.h"
-//#include "textview.h"
 
 typedef enum {
 	RECV_DIALOG_ALWAYS,

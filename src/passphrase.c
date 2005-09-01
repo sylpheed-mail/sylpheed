@@ -41,6 +41,7 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkfilesel.h>
 #include <gtk/gtksignal.h>
+#include <gtk/gtkstock.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -49,6 +50,7 @@
 #include "prefs_common.h"
 #include "manage_window.h"
 #include "utils.h"
+#include "gtkutils.h"
 
 static gboolean grab_all = FALSE;
 
