@@ -23,16 +23,13 @@
 #include <glib/gi18n.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 
-#include "main.h"
 #include "utils.h"
 #include "procmsg.h"
 #include "procheader.h"
 #include "account.h"
 #include "send_message.h"
 #include "procmime.h"
-#include "statusbar.h"
 #include "prefs_common.h"
 #include "prefs_filter.h"
 #include "filter.h"

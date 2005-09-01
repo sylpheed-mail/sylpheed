@@ -28,7 +28,6 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include "main.h"
 #include "prefs.h"
 #include "prefs_common.h"
 #include "filter.h"
