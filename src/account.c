@@ -28,7 +28,6 @@
 #include <stdio.h>
 #include <errno.h>
 
-#include "main.h"
 #include "folder.h"
 #include "account.h"
 #include "prefs.h"
