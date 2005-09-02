@@ -93,7 +93,6 @@ sylpheed_SOURCES = \
 	nntp.c nntp.h \
 	news.c news.h \
 	imap.c imap.h \
-	html.c html.h \
 	procmime.c procmime.h \
 	rfc2015.c rfc2015.h \
 	passphrase.c passphrase.h \

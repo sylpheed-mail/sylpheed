@@ -10,6 +10,7 @@ libsylph_la_SOURCES = \
 	defs.h \
 	base64.c base64.h \
 	codeconv.c codeconv.h \
+	html.c html.h \
 	prefs.c prefs.h \
 	quoted-printable.c quoted-printable.h \
 	session.c session.h \
