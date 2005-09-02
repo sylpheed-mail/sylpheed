@@ -59,8 +59,8 @@
 #include "gtkutils.h"
 #include "prefs_common.h"
 #include "prefs_account.h"
-#include "prefs_filter.h"
 #include "prefs_folder_item.h"
+#include "filter.h"
 #include "account.h"
 #include "account_dialog.h"
 #include "folder.h"
@@ -2016,9 +2016,9 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	}
 
 	if (folder_get_default_folder() == item->folder)
-		prefs_filter_rename_path(old_path, item->path);
+		filter_list_rename_path(old_path, item->path);
 	new_id = folder_item_get_identifier(item);
-	prefs_filter_rename_path(old_id, new_id);
+	filter_list_rename_path(old_id, new_id);
 	g_free(old_id);
 	g_free(new_id);
 
@@ -2084,9 +2084,9 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 	}
 
 	if (folder_get_default_folder() == item->folder)
-		prefs_filter_rename_path(old_path, item->path);
+		filter_list_rename_path(old_path, item->path);
 	new_id = folder_item_get_identifier(item);
-	prefs_filter_rename_path(old_id, new_id);
+	filter_list_rename_path(old_id, new_id);
 	g_free(new_id);
 	g_free(old_id);
 	g_free(old_path);
@@ -2175,8 +2175,8 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 	}
 
 	if (folder_get_default_folder() == folder)
-		prefs_filter_delete_path(old_path);
-	prefs_filter_delete_path(old_id);
+		filter_list_delete_path(old_path);
+	filter_list_delete_path(old_id);
 	g_free(old_id);
 
 	gtk_tree_store_remove(folderview->store, &iter);

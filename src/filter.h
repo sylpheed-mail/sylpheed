@@ -183,6 +183,10 @@ void filter_rule_delete_action_by_dest_path
 					(FilterRule		*rule,
 					 const gchar		*path);
 
+void filter_list_rename_path		(const gchar		*old_path,
+					 const gchar		*new_path);
+void filter_list_delete_path		(const gchar		*path);
+
 void filter_rule_match_type_str_to_enum	(const gchar		*type_str,
 					 FilterMatchType	*type,
 					 FilterMatchFlag	*flag);

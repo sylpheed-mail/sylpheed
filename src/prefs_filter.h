@@ -48,8 +48,4 @@ gchar *prefs_filter_get_msg_header_field	(const gchar	*header_name);
 void prefs_filter_set_user_header_list		(GSList		*list);
 void prefs_filter_set_msg_header_list		(MsgInfo	*msginfo);
 
-void prefs_filter_rename_path	(const gchar	*old_path,
-				 const gchar	*new_path);
-void prefs_filter_delete_path	(const gchar	*path);
-
 #endif /* __PREFS_FILTER_H__ */

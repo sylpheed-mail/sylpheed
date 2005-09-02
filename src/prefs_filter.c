@@ -360,43 +360,6 @@ static void prefs_filter_create(void)
 	rule_list_window.msg_hdr_table = NULL;
 }
 
-void prefs_filter_rename_path(const gchar *old_path, const gchar *new_path)
-{
-	GSList *cur;
-
-	g_return_if_fail(old_path != NULL);
-	g_return_if_fail(new_path != NULL);
-
-	for (cur = prefs_common.fltlist; cur != NULL; cur = cur->next) {
-		FilterRule *rule = (FilterRule *)cur->data;
-		filter_rule_rename_dest_path(rule, old_path, new_path);
-	}
-
-	filter_write_config();
-}
-
-void prefs_filter_delete_path(const gchar *path)
-{
-	GSList *cur;
-	GSList *next;
-
-	g_return_if_fail(path != NULL);
-
-	for (cur = prefs_common.fltlist; cur != NULL; cur = next) {
-		FilterRule *rule = (FilterRule *)cur->data;
-		next = cur->next;
-
-		filter_rule_delete_action_by_dest_path(rule, path);
-		if (!rule->action_list) {
-			prefs_common.fltlist =
-				g_slist_remove(prefs_common.fltlist, rule);
-			filter_rule_free(rule);
-		}
-	}
-
-	filter_write_config();
-}
-
 static void prefs_filter_set_dialog(void)
 {
 	GSList *cur;

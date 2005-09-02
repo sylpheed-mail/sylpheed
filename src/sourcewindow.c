@@ -33,6 +33,7 @@
 
 #include "sourcewindow.h"
 #include "procmsg.h"
+#include "codeconv.h"
 #include "utils.h"
 #include "gtkutils.h"
 #include "prefs_common.h"
