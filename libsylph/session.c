@@ -569,7 +569,7 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 	if (session->read_buf_len == 0)
 		return TRUE;
 
-	g_byte_array_append(data_buf, session->read_buf_p,
+	g_byte_array_append(data_buf, (guchar *)session->read_buf_p,
 			    session->read_buf_len);
 
 	session->read_buf_len = 0;
@@ -614,7 +614,7 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 	data_len = data_buf->len - terminator_len;
 
 	/* callback */
-	ret = session->recv_data_finished(session, (gchar *)data_buf->data,
+	ret = session->recv_data_finished(session, (guchar *)data_buf->data,
 					  data_len);
 
 	g_byte_array_set_size(data_buf, 0);
@@ -684,7 +684,7 @@ static gint session_write_data(Session *session)
 		(session->write_data_p - session->write_data);
 	to_write_len = MIN(to_write_len, SESSION_BUFFSIZE);
 
-	write_len = sock_write(session->sock, session->write_data_p,
+	write_len = sock_write(session->sock, (gchar *)session->write_data_p,
 			       to_write_len);
 
 	if (write_len < 0) {

@@ -307,7 +307,7 @@ static HTMLTag *html_get_tag(const gchar *str)
 {
 	HTMLTag *tag;
 	gchar *tmp;
-	guchar *tmpp;
+	gchar *tmpp;
 
 	g_return_val_if_fail(str != NULL, NULL);
 
