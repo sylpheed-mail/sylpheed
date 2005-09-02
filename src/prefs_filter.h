@@ -37,9 +37,6 @@ typedef enum
 
 #include "procmsg.h"
 
-void prefs_filter_read_config	(void);
-void prefs_filter_write_config	(void);
-
 void prefs_filter_open		(MsgInfo	*msginfo,
 				 const gchar	*header);
 

@@ -360,47 +360,6 @@ static void prefs_filter_create(void)
 	rule_list_window.msg_hdr_table = NULL;
 }
 
-void prefs_filter_read_config(void)
-{
-	gchar *rcpath;
-	GNode *node;
-	FilterRule *rule;
-
-	debug_print("Reading filter configuration...\n");
-
-	/* remove all previous filter list */
-	while (prefs_common.fltlist != NULL) {
-		rule = (FilterRule *)prefs_common.fltlist->data;
-		filter_rule_free(rule);
-		prefs_common.fltlist = g_slist_remove(prefs_common.fltlist,
-						      rule);
-	}
-
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
-			     NULL);
-	if (!is_file_exist(rcpath)) {
-		g_free(rcpath);
-		return;
-	}
-
-	node = xml_parse_file(rcpath);
-	if (!node) {
-		g_warning("Can't parse %s\n", rcpath);
-		g_free(rcpath);
-		return;
-	}
-	g_free(rcpath);
-
-	prefs_common.fltlist = filter_xml_node_to_filter_list(node);
-
-	xml_free_tree(node);
-}
-
-void prefs_filter_write_config(void)
-{
-	filter_write_config(prefs_common.fltlist);
-}
-
 void prefs_filter_rename_path(const gchar *old_path, const gchar *new_path)
 {
 	GSList *cur;
@@ -413,7 +372,7 @@ void prefs_filter_rename_path(const gchar *old_path, const gchar *new_path)
 		filter_rule_rename_dest_path(rule, old_path, new_path);
 	}
 
-	filter_write_config(prefs_common.fltlist);
+	filter_write_config();
 }
 
 void prefs_filter_delete_path(const gchar *path)
@@ -435,7 +394,7 @@ void prefs_filter_delete_path(const gchar *path)
 		}
 	}
 
-	filter_write_config(prefs_common.fltlist);
+	filter_write_config();
 }
 
 static void prefs_filter_set_dialog(void)
@@ -900,7 +859,7 @@ static void prefs_filter_close(void)
 	prefs_filter_set_msg_header_list(NULL);
 	prefs_filter_write_user_header_list();
 	prefs_filter_set_list();
-	filter_write_config(prefs_common.fltlist);
+	filter_write_config();
 	gtk_widget_hide(rule_list_window.window);
 	gtk_list_store_clear(rule_list_window.store);
 	inc_unlock();

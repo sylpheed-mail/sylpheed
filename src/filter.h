@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,7 +156,8 @@ gboolean filter_match_rule		(FilterRule		*rule,
 
 /* read / write config */
 GSList *filter_xml_node_to_filter_list	(GNode			*node);
-void filter_write_config		(GSList			*fltlist);
+void filter_read_config			(void);
+void filter_write_config		(void);
 
 /* for old filterrc */
 gchar *filter_get_str			(FilterRule		*rule);

@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 
 	prefs_common_read_config();
-	prefs_filter_read_config();
+	filter_read_config();
 	prefs_actions_read_config();
 	prefs_display_header_read_config();
 
@@ -501,7 +501,7 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	main_window_get_size(mainwin);
 	main_window_get_position(mainwin);
 	prefs_common_write_config();
-	prefs_filter_write_config();
+	filter_write_config();
 	account_write_config_all();
 	addressbook_export_to_file();
 

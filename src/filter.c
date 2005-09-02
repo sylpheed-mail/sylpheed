@@ -40,6 +40,7 @@
 #include "utils.h"
 #include "xml.h"
 #include "prefs.h"
+#include "prefs_common.h"
 #include "prefs_account.h"
 #include "account.h"
 
@@ -645,12 +646,48 @@ GSList *filter_xml_node_to_filter_list(GNode *node)
 	return fltlist;
 }
 
+void filter_read_config(void)
+{
+	gchar *rcpath;
+	GNode *node;
+	FilterRule *rule;
+
+	debug_print("Reading filter configuration...\n");
+
+	/* remove all previous filter list */
+	while (prefs_common.fltlist != NULL) {
+		rule = (FilterRule *)prefs_common.fltlist->data;
+		filter_rule_free(rule);
+		prefs_common.fltlist = g_slist_remove(prefs_common.fltlist,
+						      rule);
+	}
+
+	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
+			     NULL);
+	if (!is_file_exist(rcpath)) {
+		g_free(rcpath);
+		return;
+	}
+
+	node = xml_parse_file(rcpath);
+	if (!node) {
+		g_warning("Can't parse %s\n", rcpath);
+		g_free(rcpath);
+		return;
+	}
+	g_free(rcpath);
+
+	prefs_common.fltlist = filter_xml_node_to_filter_list(node);
+
+	xml_free_tree(node);
+}
+
 #define NODE_NEW(tag, text) \
 	node = xml_node_new(xml_tag_new(tag), text)
 #define ADD_ATTR(name, value) \
 	xml_tag_add_attr(node->tag, xml_attr_new(name, value))
 
-void filter_write_config(GSList *fltlist)
+void filter_write_config(void)
 {
 	gchar *rcpath;
 	PrefFile *pfile;
@@ -669,7 +706,7 @@ void filter_write_config(GSList *fltlist)
 	xml_file_put_xml_decl(pfile->fp);
 	fputs("\n<filter>\n", pfile->fp);
 
-	for (cur = fltlist; cur != NULL; cur = cur->next) {
+	for (cur = prefs_common.fltlist; cur != NULL; cur = cur->next) {
 		FilterRule *rule = (FilterRule *)cur->data;
 		GSList *cur_cond;
 		GSList *cur_action;
