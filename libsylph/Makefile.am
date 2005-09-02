@@ -13,6 +13,7 @@ libsylph_la_SOURCES = \
 	html.c html.h \
 	prefs.c prefs.h \
 	quoted-printable.c quoted-printable.h \
+	recv.c recv.h \
 	session.c session.h \
 	socket.c socket.h \
 	ssl.c ssl.h \
