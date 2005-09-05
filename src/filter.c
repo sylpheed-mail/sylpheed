@@ -34,8 +34,9 @@
 #endif
 #include <time.h>
 
-#include "procheader.h"
 #include "filter.h"
+#include "procmsg.h"
+#include "procheader.h"
 #include "folder.h"
 #include "utils.h"
 #include "xml.h"
@@ -1258,6 +1259,106 @@ void filter_rule_match_type_str_to_enum(const gchar *match_type,
 	} else if (!strcmp(match_type, "gt")) {
 	} else if (!strcmp(match_type, "lt")) {
 		*flag = FLT_NOT_MATCH;
+	}
+}
+
+void filter_get_keyword_from_msg(MsgInfo *msginfo, gchar **header, gchar **key,
+				 FilterCreateType type)
+{
+	static HeaderEntry hentry[] = {{"List-Id:",	   NULL, TRUE},
+				       {"X-ML-Name:",	   NULL, TRUE},
+				       {"X-List:",	   NULL, TRUE},
+				       {"X-Mailing-list:", NULL, TRUE},
+				       {"X-Sequence:",	   NULL, TRUE},
+				       {NULL,		   NULL, FALSE}};
+	enum
+	{
+		H_LIST_ID	 = 0,
+		H_X_ML_NAME	 = 1,
+		H_X_LIST	 = 2,
+		H_X_MAILING_LIST = 3,
+		H_X_SEQUENCE	 = 4
+	};
+
+	FILE *fp;
+
+	g_return_if_fail(msginfo != NULL);
+	g_return_if_fail(header != NULL);
+	g_return_if_fail(key != NULL);
+
+	*header = NULL;
+	*key = NULL;
+
+	switch (type) {
+	case FLT_BY_NONE:
+		return;
+	case FLT_BY_AUTO:
+		if ((fp = procmsg_open_message(msginfo)) == NULL)
+			return;
+		procheader_get_header_fields(fp, hentry);
+		fclose(fp);
+
+#define SET_FILTER_KEY(hstr, idx)	\
+{					\
+	*header = g_strdup(hstr);	\
+	*key = hentry[idx].body;	\
+	hentry[idx].body = NULL;	\
+}
+
+		if (hentry[H_LIST_ID].body != NULL) {
+			SET_FILTER_KEY("List-Id", H_LIST_ID);
+			extract_list_id_str(*key);
+		} else if (hentry[H_X_ML_NAME].body != NULL) {
+			SET_FILTER_KEY("X-ML-Name", H_X_ML_NAME);
+		} else if (hentry[H_X_LIST].body != NULL) {
+			SET_FILTER_KEY("X-List", H_X_LIST);
+		} else if (hentry[H_X_MAILING_LIST].body != NULL) {
+			SET_FILTER_KEY("X-Mailing-list", H_X_MAILING_LIST);
+		} else if (hentry[H_X_SEQUENCE].body != NULL) {
+			gchar *p;
+
+			SET_FILTER_KEY("X-Sequence", H_X_SEQUENCE);
+			p = *key;
+			while (*p != '\0') {
+				while (*p != '\0' && !g_ascii_isspace(*p)) p++;
+				while (g_ascii_isspace(*p)) p++;
+				if (g_ascii_isdigit(*p)) {
+					*p = '\0';
+					break;
+				}
+			}
+			g_strstrip(*key);
+		} else if (msginfo->subject) {
+			*header = g_strdup("Subject");
+			*key = g_strdup(msginfo->subject);
+		}
+
+#undef SET_FILTER_KEY
+
+		g_free(hentry[H_LIST_ID].body);
+		hentry[H_LIST_ID].body = NULL;
+		g_free(hentry[H_X_ML_NAME].body);
+		hentry[H_X_ML_NAME].body = NULL;
+		g_free(hentry[H_X_LIST].body);
+		hentry[H_X_LIST].body = NULL;
+		g_free(hentry[H_X_MAILING_LIST].body);
+		hentry[H_X_MAILING_LIST].body = NULL;
+
+		break;
+	case FLT_BY_FROM:
+		*header = g_strdup("From");
+		*key = g_strdup(msginfo->from);
+		break;
+	case FLT_BY_TO:
+		*header = g_strdup("To");
+		*key = g_strdup(msginfo->to);
+		break;
+	case FLT_BY_SUBJECT:
+		*header = g_strdup("Subject");
+		*key = g_strdup(msginfo->subject);
+		break;
+	default:
+		break;
 	}
 }
 

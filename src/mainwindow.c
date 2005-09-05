@@ -728,13 +728,13 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, filter_cb, 1, NULL},
 	{N_("/_Tools/_Create filter rule"),	NULL, NULL, 0, "<Branch>"},
 	{N_("/_Tools/_Create filter rule/_Automatically"),
-						NULL, create_filter_cb, FILTER_BY_AUTO, NULL},
+						NULL, create_filter_cb, FLT_BY_AUTO, NULL},
 	{N_("/_Tools/_Create filter rule/by _From"),
-						NULL, create_filter_cb, FILTER_BY_FROM, NULL},
+						NULL, create_filter_cb, FLT_BY_FROM, NULL},
 	{N_("/_Tools/_Create filter rule/by _To"),
-						NULL, create_filter_cb, FILTER_BY_TO, NULL},
+						NULL, create_filter_cb, FLT_BY_TO, NULL},
 	{N_("/_Tools/_Create filter rule/by _Subject"),
-						NULL, create_filter_cb, FILTER_BY_SUBJECT, NULL},
+						NULL, create_filter_cb, FLT_BY_SUBJECT, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/Filter _junk mails in folder"),
 						NULL, filter_junk_cb, 0, NULL},
@@ -3204,7 +3204,7 @@ static void select_thread_cb(MainWindow *mainwin, guint action,
 static void create_filter_cb(MainWindow *mainwin, guint action,
 			     GtkWidget *widget)
 {
-	summary_filter_open(mainwin->summaryview, (PrefsFilterType)action);
+	summary_filter_open(mainwin->summaryview, (FilterCreateType)action);
 }
 
 static void prefs_common_open_cb(MainWindow *mainwin, guint action,

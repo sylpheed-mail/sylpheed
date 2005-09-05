@@ -262,11 +262,6 @@ FILE   *procmsg_open_message_decrypted	(MsgInfo	*msginfo,
 #endif
 gboolean procmsg_msg_exist		(MsgInfo	*msginfo);
 
-void	procmsg_get_filter_keyword	(MsgInfo	  *msginfo,
-					 gchar	         **header,
-					 gchar	         **key,
-					 PrefsFilterType   type);
-
 void	procmsg_empty_trash		(FolderItem	*trash);
 void	procmsg_empty_all_trash		(void);
 

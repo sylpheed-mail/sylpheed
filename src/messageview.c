@@ -58,6 +58,7 @@
 #include "prefs_common.h"
 #include "prefs_account.h"
 #include "prefs_filter.h"
+#include "filter.h"
 #include "gtkutils.h"
 #include "utils.h"
 #include "rfc2015.h"
@@ -261,13 +262,13 @@ static GtkItemFactoryEntry msgview_entries[] =
 	{N_("/_Tools/_Create filter rule"),
 					NULL, NULL, 0, "<Branch>"},
 	{N_("/_Tools/_Create filter rule/_Automatically"),
-					NULL, create_filter_cb, FILTER_BY_AUTO, NULL},
+					NULL, create_filter_cb, FLT_BY_AUTO, NULL},
 	{N_("/_Tools/_Create filter rule/by _From"),
-					NULL, create_filter_cb, FILTER_BY_FROM, NULL},
+					NULL, create_filter_cb, FLT_BY_FROM, NULL},
 	{N_("/_Tools/_Create filter rule/by _To"),
-					NULL, create_filter_cb, FILTER_BY_TO, NULL},
+					NULL, create_filter_cb, FLT_BY_TO, NULL},
 	{N_("/_Tools/_Create filter rule/by _Subject"),
-					NULL, create_filter_cb, FILTER_BY_SUBJECT, NULL},
+					NULL, create_filter_cb, FLT_BY_SUBJECT, NULL},
 	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/Actio_ns"),	NULL, NULL, 0, "<Branch>"},
 
@@ -899,8 +900,8 @@ static void create_filter_cb(gpointer data, guint action, GtkWidget *widget)
 
 	if (!messageview->msginfo) return;
 
-	procmsg_get_filter_keyword(messageview->msginfo, &header, &key,
-				   (PrefsFilterType)action);
+	filter_get_keyword_from_msg(messageview->msginfo, &header, &key,
+				    (FilterCreateType)action);
 	prefs_filter_open(messageview->msginfo, header);
 
 	g_free(header);

@@ -3752,7 +3752,7 @@ void summary_filter_junk(SummaryView *summaryview, gboolean selected_only)
 				    selected_only);
 }
 
-void summary_filter_open(SummaryView *summaryview, PrefsFilterType type)
+void summary_filter_open(SummaryView *summaryview, FilterCreateType type)
 {
 	GtkTreeIter iter;
 	MsgInfo *msginfo = NULL;
@@ -3768,7 +3768,7 @@ void summary_filter_open(SummaryView *summaryview, PrefsFilterType type)
 	GET_MSG_INFO(msginfo, &iter);
 	if (!msginfo) return;
 
-	procmsg_get_filter_keyword(msginfo, &header, &key, type);
+	filter_get_keyword_from_msg(msginfo, &header, &key, type);
 	prefs_filter_open(msginfo, header);
 
 	g_free(header);

@@ -26,15 +26,6 @@
 
 #include <glib.h>
 
-typedef enum
-{
-	FILTER_BY_NONE,
-	FILTER_BY_AUTO,
-	FILTER_BY_FROM,
-	FILTER_BY_TO,
-	FILTER_BY_SUBJECT
-} PrefsFilterType;
-
 #include "procmsg.h"
 
 void prefs_filter_open		(MsgInfo	*msginfo,

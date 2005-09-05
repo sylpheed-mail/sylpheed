@@ -37,7 +37,7 @@ typedef struct _SummaryColumnState	SummaryColumnState;
 #include "headerview.h"
 #include "messageview.h"
 #include "compose.h"
-#include "prefs_filter.h"
+#include "filter.h"
 #include "folder.h"
 
 typedef enum
@@ -172,7 +172,7 @@ void summary_collapse_threads	  (SummaryView		*summaryview);
 void summary_filter		  (SummaryView		*summaryview,
 				   gboolean		 selected_only);
 void summary_filter_open	  (SummaryView		*summaryview,
-				   PrefsFilterType	 type);
+				   FilterCreateType	 type);
 
 void summary_filter_junk	  (SummaryView		*summaryview,
 				   gboolean		 selected_only);

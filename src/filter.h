@@ -87,6 +87,15 @@ typedef enum
 	FLT_ACTION_NONE
 } FilterActionType;
 
+typedef enum
+{
+	FLT_BY_NONE,
+	FLT_BY_AUTO,
+	FLT_BY_FROM,
+	FLT_BY_TO,
+	FLT_BY_SUBJECT
+} FilterCreateType;
+
 #define FLT_IS_NOT_MATCH(flag)	((flag & FLT_NOT_MATCH) != 0)
 #define FLT_IS_CASE_SENS(flag)	((flag & FLT_CASE_SENS) != 0)
 
@@ -190,6 +199,11 @@ void filter_list_delete_path		(const gchar		*path);
 void filter_rule_match_type_str_to_enum	(const gchar		*type_str,
 					 FilterMatchType	*type,
 					 FilterMatchFlag	*flag);
+
+void filter_get_keyword_from_msg	(MsgInfo		*msginfo,
+					 gchar		       **header,
+					 gchar		       **key,
+					 FilterCreateType	 type);
 
 void filter_rule_list_free		(GSList			*fltlist);
 void filter_rule_free			(FilterRule		*rule);
