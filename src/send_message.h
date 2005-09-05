@@ -26,6 +26,7 @@
 typedef struct _QueueInfo	QueueInfo;
 
 #include "prefs_account.h"
+#include "folder.h"
 
 struct _QueueInfo
 {
@@ -39,10 +40,14 @@ struct _QueueInfo
 gint send_message		(const gchar	*file,
 				 PrefsAccount	*ac_prefs,
 				 GSList		*to_list);
+
 QueueInfo *send_get_queue_info	(const gchar	*file);
 gint send_get_queue_contents	(QueueInfo	*qinfo,
 				 const gchar	*dest);
 void send_queue_info_free	(QueueInfo	*qinfo);
 gint send_message_queue		(QueueInfo	*qinfo);
+gint send_message_queue_all	(FolderItem	*queue,
+				 gboolean	 save_msgs,
+				 gboolean	 filter_msgs);
 
 #endif /* __SEND_H__ */

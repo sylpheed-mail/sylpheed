@@ -62,6 +62,7 @@
 #include "account_dialog.h"
 #include "procmsg.h"
 #include "filter.h"
+#include "send_message.h"
 #include "inc.h"
 #include "import.h"
 #include "manage_window.h"
@@ -907,9 +908,9 @@ static void send_queue(void)
 		if (folder->queue) {
 			gint ret;
 
-			ret = procmsg_send_queue(folder->queue,
-						 prefs_common.savemsg,
-						 prefs_common.filter_sent);
+			ret = send_message_queue_all(folder->queue,
+						     prefs_common.savemsg,
+						     prefs_common.filter_sent);
 			statusbar_pop_all();
 			if (ret > 0)
 				folder_item_scan(folder->queue);

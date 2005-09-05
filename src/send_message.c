@@ -44,6 +44,9 @@
 #include "prefs_account.h"
 #include "procheader.h"
 #include "account.h"
+#include "folder.h"
+#include "procmsg.h"
+#include "filter.h"
 #include "progressdialog.h"
 #include "statusbar.h"
 #include "inputdialog.h"
@@ -302,6 +305,81 @@ gint send_message_queue(QueueInfo *qinfo)
 	fseek(qinfo->fp, fpos, SEEK_SET);
 
 	return val;
+}
+
+gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
+			    gboolean filter_msgs)
+{
+	gint ret = 0;
+	GSList *mlist = NULL;
+	GSList *cur;
+
+	if (!queue)
+		queue = folder_get_default_queue();
+	g_return_val_if_fail(queue != NULL, -1);
+
+	mlist = folder_item_get_msg_list(queue, FALSE);
+	mlist = procmsg_sort_msg_list(mlist, SORT_BY_NUMBER, SORT_ASCENDING);
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		gchar *file;
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		QueueInfo *qinfo;
+		gchar tmp[MAXPATHLEN + 1];
+
+		file = procmsg_get_message_file(msginfo);
+		if (!file)
+			continue;
+
+		qinfo = send_get_queue_info(file);
+		if (!qinfo || send_message_queue(qinfo) < 0) {
+			g_warning("Sending queued message %d failed.\n",
+				  msginfo->msgnum);
+			send_queue_info_free(qinfo);
+			g_free(file);
+			continue;
+		}
+
+		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
+			   get_rc_dir(), G_DIR_SEPARATOR, g_random_int());
+
+		if (send_get_queue_contents(qinfo, tmp) == 0) {
+			if (save_msgs) {
+				FolderItem *outbox;
+				outbox = account_get_special_folder
+					(qinfo->ac, F_OUTBOX);
+				procmsg_save_to_outbox(outbox, tmp);
+			}
+			if (filter_msgs) {
+				FilterInfo *fltinfo;
+
+				fltinfo = filter_info_new();
+				fltinfo->account = qinfo->ac;
+				fltinfo->flags.perm_flags = 0;
+				fltinfo->flags.tmp_flags = MSG_RECEIVED;
+
+				filter_apply(prefs_common.fltlist, tmp,
+					     fltinfo);
+
+				filter_info_free(fltinfo);
+			}
+			g_unlink(tmp);
+		}
+
+		send_queue_info_free(qinfo);
+		g_free(file);
+
+		folder_item_remove_msg(queue, msginfo);
+		ret++;
+	}
+
+	procmsg_msg_list_free(mlist);
+
+	procmsg_clear_cache(queue);
+	queue->cache_dirty = FALSE;
+	queue->mtime = 0;
+
+	return ret;
 }
 
 static gint send_message_local(const gchar *command, FILE *fp)

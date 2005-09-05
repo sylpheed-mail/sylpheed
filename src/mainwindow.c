@@ -61,6 +61,7 @@
 #include "inc.h"
 #include "compose.h"
 #include "procmsg.h"
+#include "send_message.h"
 #include "import.h"
 #include "export.h"
 #include "prefs_common.h"
@@ -2869,9 +2870,9 @@ static void send_queue_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		if (folder->queue) {
 			gint ret;
 
-			ret = procmsg_send_queue(folder->queue,
-						 prefs_common.savemsg,
-						 prefs_common.filter_sent);
+			ret = send_message_queue_all(folder->queue,
+						     prefs_common.savemsg,
+						     prefs_common.filter_sent);
 			statusbar_pop_all();
 			if (ret > 0)
 				folder_item_scan(folder->queue);

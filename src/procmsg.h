@@ -270,9 +270,6 @@ void	procmsg_get_filter_keyword	(MsgInfo	  *msginfo,
 void	procmsg_empty_trash		(FolderItem	*trash);
 void	procmsg_empty_all_trash		(void);
 
-gint	procmsg_send_queue		(FolderItem	*queue,
-					 gboolean	 save_msgs,
-					 gboolean	 filter_msgs);
 gint	procmsg_save_to_outbox		(FolderItem	*outbox,
 					 const gchar	*file);
 void	procmsg_print_message		(MsgInfo	*msginfo,
