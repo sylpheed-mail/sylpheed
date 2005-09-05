@@ -108,12 +108,10 @@ struct _MimeInfo
 	MimeInfo *parent;
 	MimeInfo *children;
 
-#if USE_GPGME
 	MimeInfo *plaintext;
 	gchar *plaintextfile;
 	gchar *sigstatus;
 	gchar *sigstatus_full;
-#endif
 
 	gint level;
 };

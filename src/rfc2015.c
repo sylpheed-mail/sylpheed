@@ -35,6 +35,7 @@
 
 #include <gpgme.h>
 
+#include "procmsg.h"
 #include "procmime.h"
 #include "procheader.h"
 #include "base64.h"
@@ -636,6 +637,55 @@ void rfc2015_decrypt_message(MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
 }
 
 #undef DECRYPTION_ABORT
+
+FILE *rfc2015_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
+{
+	FILE *fp;
+	MimeInfo *mimeinfo_;
+	glong fpos;
+
+	g_return_val_if_fail(msginfo != NULL, NULL);
+
+	if (mimeinfo) *mimeinfo = NULL;
+
+	if ((fp = procmsg_open_message(msginfo)) == NULL) return NULL;
+
+	mimeinfo_ = procmime_scan_mime_header(fp);
+	if (!mimeinfo_) {
+		fclose(fp);
+		return NULL;
+	}
+
+	if (!MSG_IS_ENCRYPTED(msginfo->flags) &&
+	    rfc2015_is_encrypted(mimeinfo_)) {
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_ENCRYPTED);
+	}
+
+	if (MSG_IS_ENCRYPTED(msginfo->flags) &&
+	    !msginfo->plaintext_file &&
+	    !msginfo->decryption_failed) {
+		fpos = ftell(fp);
+		rfc2015_decrypt_message(msginfo, mimeinfo_, fp);
+		if (msginfo->plaintext_file &&
+		    !msginfo->decryption_failed) {
+			fclose(fp);
+			procmime_mimeinfo_free_all(mimeinfo_);
+			if ((fp = procmsg_open_message(msginfo)) == NULL)
+				return NULL;
+			mimeinfo_ = procmime_scan_mime_header(fp);
+			if (!mimeinfo_) {
+				fclose(fp);
+				return NULL;
+			}
+		} else {
+			if (fseek(fp, fpos, SEEK_SET) < 0)
+				perror("fseek");
+		}
+	}
+
+	if (mimeinfo) *mimeinfo = mimeinfo_;
+	return fp;
+}
 
 
 /*

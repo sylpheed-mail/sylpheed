@@ -561,6 +561,9 @@ static void check_gpg(void)
 				engineInfo = engineInfo->next;
 			}
 		}
+
+		procmsg_set_decrypt_message_func
+			(rfc2015_open_message_decrypted);
 	} else {
 		if (prefs_common.gpg_warning) {
 			AlertValue val;

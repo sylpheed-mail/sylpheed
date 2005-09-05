@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <stdio.h>
 
+#include "procmsg.h"
 #include "procmime.h"
 
 void rfc2015_disable_all		(void);
@@ -31,11 +32,15 @@ MimeInfo **rfc2015_find_signature	(MimeInfo	*mimeinfo);
 gboolean rfc2015_has_signature		(MimeInfo	*mimeinfo);
 void rfc2015_check_signature		(MimeInfo	*mimeinfo,
 					 FILE		*fp);
+
 gint rfc2015_is_encrypted		(MimeInfo	*mimeinfo);
 gboolean rfc2015_msg_is_encrypted	(const gchar	*file);
 void rfc2015_decrypt_message		(MsgInfo	*msginfo,
 					 MimeInfo	*mimeinfo,
 					 FILE		*fp);
+FILE *rfc2015_open_message_decrypted	(MsgInfo	*msginfo,
+					 MimeInfo      **mimeinfo);
+
 GSList *rfc2015_create_signers_list	(const gchar	*keyid);
 gint rfc2015_encrypt			(const gchar	*file,
 					 GSList		*recp_list,

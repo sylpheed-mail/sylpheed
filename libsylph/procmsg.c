@@ -32,9 +32,6 @@
 #include "prefs_common.h"
 #include "folder.h"
 #include "codeconv.h"
-#if USE_GPGME
-#  include "rfc2015.h"
-#endif
 
 static void mark_sum_func			(gpointer	 key,
 						 gpointer	 value,
@@ -1046,56 +1043,27 @@ FILE *procmsg_open_message(MsgInfo *msginfo)
 	return fp;
 }
 
-#if USE_GPGME
+static DecryptMessageFunc decrypt_message_func = NULL;
+
+void procmsg_set_decrypt_message_func(DecryptMessageFunc func)
+{
+	decrypt_message_func = func;
+}
+
 FILE *procmsg_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
 {
 	FILE *fp;
-	MimeInfo *mimeinfo_;
-	glong fpos;
 
-	g_return_val_if_fail(msginfo != NULL, NULL);
+	if (decrypt_message_func)
+		return decrypt_message_func(msginfo, mimeinfo);
 
-	if (mimeinfo) *mimeinfo = NULL;
-
-	if ((fp = procmsg_open_message(msginfo)) == NULL) return NULL;
-
-	mimeinfo_ = procmime_scan_mime_header(fp);
-	if (!mimeinfo_) {
-		fclose(fp);
+	*mimeinfo = NULL;
+	if ((fp = procmsg_open_message(msginfo)) == NULL)
 		return NULL;
-	}
+	*mimeinfo = procmime_scan_mime_header(fp);
 
-	if (!MSG_IS_ENCRYPTED(msginfo->flags) &&
-	    rfc2015_is_encrypted(mimeinfo_)) {
-		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_ENCRYPTED);
-	}
-
-	if (MSG_IS_ENCRYPTED(msginfo->flags) &&
-	    !msginfo->plaintext_file &&
-	    !msginfo->decryption_failed) {
-		fpos = ftell(fp);
-		rfc2015_decrypt_message(msginfo, mimeinfo_, fp);
-		if (msginfo->plaintext_file &&
-		    !msginfo->decryption_failed) {
-			fclose(fp);
-			procmime_mimeinfo_free_all(mimeinfo_);
-			if ((fp = procmsg_open_message(msginfo)) == NULL)
-				return NULL;
-			mimeinfo_ = procmime_scan_mime_header(fp);
-			if (!mimeinfo_) {
-				fclose(fp);
-				return NULL;
-			}
-		} else {
-			if (fseek(fp, fpos, SEEK_SET) < 0)
-				perror("fseek");
-		}
-	}
-
-	if (mimeinfo) *mimeinfo = mimeinfo_;
 	return fp;
 }
-#endif
 
 gboolean procmsg_msg_exist(MsgInfo *msginfo)
 {
@@ -1292,10 +1260,8 @@ MsgInfo *procmsg_msginfo_get_full_info(MsgInfo *msginfo)
 
 	full_msginfo->file_path = g_strdup(msginfo->file_path);
 
-#if USE_GPGME
 	full_msginfo->plaintext_file = g_strdup(msginfo->plaintext_file);
 	full_msginfo->decryption_failed = msginfo->decryption_failed;
-#endif
 
 	return full_msginfo;
 }

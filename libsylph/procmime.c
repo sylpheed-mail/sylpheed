@@ -40,10 +40,6 @@
 #include "utils.h"
 #include "prefs_common.h"
 
-#if USE_GPGME
-#  include "rfc2015.h"
-#endif
-
 static GHashTable *procmime_get_mime_type_table	(void);
 static GList *procmime_get_mime_type_list	(const gchar *file);
 
@@ -71,17 +67,14 @@ void procmime_mimeinfo_free_all(MimeInfo *mimeinfo)
 		g_free(mimeinfo->boundary);
 		g_free(mimeinfo->content_disposition);
 		g_free(mimeinfo->filename);
-#if USE_GPGME
+
 		g_free(mimeinfo->plaintextfile);
 		g_free(mimeinfo->sigstatus);
 		g_free(mimeinfo->sigstatus_full);
-#endif
 
 		procmime_mimeinfo_free_all(mimeinfo->sub);
 		procmime_mimeinfo_free_all(mimeinfo->children);
-#if USE_GPGME
 		procmime_mimeinfo_free_all(mimeinfo->plaintext);
-#endif
 
 		next = mimeinfo->next;
 		g_free(mimeinfo);
@@ -188,13 +181,8 @@ MimeInfo *procmime_scan_message(MsgInfo *msginfo)
 
 	g_return_val_if_fail(msginfo != NULL, NULL);
 
-#if USE_GPGME
 	if ((fp = procmsg_open_message_decrypted(msginfo, &mimeinfo)) == NULL)
 		return NULL;
-#else
-	if ((fp = procmsg_open_message(msginfo)) == NULL) return NULL;
-	mimeinfo = procmime_scan_mime_header(fp);
-#endif
 
 	if (mimeinfo) {
 		mimeinfo->size = msginfo->size;
