@@ -1147,6 +1147,8 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	guint32 last_uid = 0;
 	GSList *cur;
 	MsgFileInfo *fileinfo;
+	gint count = 1;
+	gint total;
 	gint ok;
 
 	g_return_val_if_fail(folder != NULL, -1);
@@ -1170,6 +1172,8 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	if (first)
 		*first = uid_next;
 
+	total = g_slist_length(file_list);
+
 	for (cur = file_list; cur != NULL; cur = cur->next) {
 		IMAPFlags iflags = 0;
 		guint32 new_uid = 0;
@@ -1190,6 +1194,8 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		    dest->stype == F_DRAFT  ||
 		    dest->stype == F_TRASH)
 			iflags |= IMAP_FLAG_SEEN;
+
+		print_status(_("appending message (%d / %d)"), count++, total);
 
 		ok = imap_cmd_append(session, destdir, fileinfo->file, iflags,
 				     &new_uid);
@@ -2228,6 +2234,7 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	GString *str;
 	MsgInfo *msginfo;
 	gchar seq_set[22];
+	gint count = 1;
 
 	g_return_val_if_fail(session != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
@@ -2248,6 +2255,8 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	str = g_string_new(NULL);
 
 	for (;;) {
+		print_status(_("getting headers of message %d"), count++);
+
 		if (sock_getline(SESSION(session)->sock, &tmp) < 0) {
 			log_warning(_("error occurred while getting envelope.\n"));
 			g_string_free(str, TRUE);
