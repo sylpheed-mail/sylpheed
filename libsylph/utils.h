@@ -176,7 +176,9 @@ gint g_chmod	(const gchar	*path,
 	perror(func); \
 }
 
-typedef void (*LogFunc)		(const gchar	*str);
+typedef gchar * (*QueryPasswordFunc)	(const gchar	*server,
+					 const gchar	*user);
+typedef void (*LogFunc)			(const gchar	*str);
 
 /* for macro expansion */
 #define Str(x)	#x
@@ -470,6 +472,12 @@ size_t my_strftime		(gchar			*s,
 				 const gchar		*format,
 				 const struct tm	*tm);
 
+/* user input */
+void set_input_query_password_func	(QueryPasswordFunc	func);
+
+gchar *input_query_password	(const gchar	*server,
+				 const gchar	*user);
+
 /* logging */
 void set_log_file	(const gchar	*filename);
 void close_log_file	(void);
@@ -485,6 +493,8 @@ void set_log_ui_func	(LogFunc	 print_func,
 void set_log_show_status_func	(LogFunc	 status_func);
 
 void debug_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
+void print_status	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
+
 void log_print		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_message	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_warning	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);

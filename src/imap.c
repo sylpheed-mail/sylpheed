@@ -49,7 +49,6 @@
 #include "base64.h"
 #include "utils.h"
 #include "prefs_common.h"
-#include "inputdialog.h"
 
 #define IMAP4_PORT	143
 #if USE_SSL
@@ -596,8 +595,8 @@ static gint imap_session_connect(IMAPSession *session)
 	pass = account->passwd;
 	if (!pass) {
 		gchar *tmp_pass;
-		tmp_pass = input_dialog_query_password(account->recv_server,
-						       account->userid);
+		tmp_pass = input_query_password(account->recv_server,
+						account->userid);
 		if (!tmp_pass)
 			return IMAP_ERROR;
 		Xstrdup_a(pass, tmp_pass,

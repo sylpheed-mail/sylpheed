@@ -3263,6 +3263,25 @@ size_t my_strftime(gchar *s, size_t max, const gchar *format,
 	return strftime(s, max, format, tm);
 }
 
+/* user input */
+
+static QueryPasswordFunc query_password_func = NULL;
+
+void set_input_query_password_func(QueryPasswordFunc func)
+{
+	query_password_func = func;
+}
+
+gchar *input_query_password(const gchar *server, const gchar *user)
+{
+	if (query_password_func)
+		return query_password_func(server, user);
+	else
+		return NULL;
+}
+
+/* logging */
+
 static FILE *log_fp = NULL;
 
 void set_log_file(const gchar *filename)
@@ -3338,6 +3357,18 @@ void debug_print(const gchar *format, ...)
 	va_end(args);
 
 	g_print("%s", buf);
+}
+
+void print_status(const gchar *format, ...)
+{
+	va_list args;
+	gchar buf[BUFFSIZE];
+
+	va_start(args, format);
+	g_vsnprintf(buf, sizeof(buf), format, args);
+	va_end(args);
+
+	log_show_status_func(buf);
 }
 
 #define TIME_LEN	11

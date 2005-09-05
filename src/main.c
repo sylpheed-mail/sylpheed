@@ -67,6 +67,7 @@
 #include "import.h"
 #include "manage_window.h"
 #include "alertpanel.h"
+#include "inputdialog.h"
 #include "statusbar.h"
 #include "addressbook.h"
 #include "addrindex.h"
@@ -193,6 +194,8 @@ int main(int argc, char *argv[])
 			FILE_OP_ERROR("sylpheed.log", "rename");
 	}
 	set_log_file("sylpheed.log");
+
+	set_input_query_password_func(input_dialog_query_password);
 
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 

@@ -44,8 +44,6 @@
 #include "utils.h"
 #include "prefs_common.h"
 #include "prefs_account.h"
-#include "inputdialog.h"
-#include "alertpanel.h"
 #if USE_SSL
 #  include "ssl.h"
 #endif
@@ -234,8 +232,7 @@ static Session *news_session_new_for_folder(Folder *folder)
 		if (ac->passwd && ac->passwd[0])
 			passwd = g_strdup(ac->passwd);
 		else
-			passwd = input_dialog_query_password(ac->nntp_server,
-							     userid);
+			passwd = input_query_password(ac->nntp_server, userid);
 	}
 
 #if USE_SSL

@@ -49,7 +49,6 @@
 #include "filter.h"
 #include "progressdialog.h"
 #include "statusbar.h"
-#include "inputdialog.h"
 #include "alertpanel.h"
 #include "manage_window.h"
 #include "socket.h"
@@ -482,7 +481,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 					g_strdup(ac_prefs->tmp_smtp_pass);
 			else {
 				smtp_session->pass =
-					input_dialog_query_password
+					input_query_password
 						(ac_prefs->smtp_server,
 						 smtp_session->user);
 				if (!smtp_session->pass)
@@ -499,7 +498,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 					g_strdup(ac_prefs->tmp_pass);
 			else {
 				smtp_session->pass =
-					input_dialog_query_password
+					input_query_password
 						(ac_prefs->smtp_server,
 						 smtp_session->user);
 				if (!smtp_session->pass)

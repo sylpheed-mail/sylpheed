@@ -54,7 +54,6 @@
 #include "manage_window.h"
 #include "stock_pixmap.h"
 #include "progressdialog.h"
-#include "inputdialog.h"
 #include "alertpanel.h"
 #include "trayicon.h"
 #include "filter.h"
@@ -496,7 +495,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 					(inc_dialog->dialog->window,
 					 NULL, NULL);
 
-			pass = input_dialog_query_password
+			pass = input_query_password
 				(pop3_session->ac_prefs->recv_server,
 				 pop3_session->user);
 
