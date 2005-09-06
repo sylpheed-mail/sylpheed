@@ -3263,6 +3263,21 @@ size_t my_strftime(gchar *s, size_t max, const gchar *format,
 	return strftime(s, max, format, tm);
 }
 
+/* UI hints */
+
+static UIUpdateFunc ui_update_func = NULL;
+
+void set_ui_update_func(UIUpdateFunc func)
+{
+	ui_update_func = func;
+}
+
+void ui_update(void)
+{
+	if (ui_update_func)
+		ui_update_func();
+}
+
 /* user input */
 
 static QueryPasswordFunc query_password_func = NULL;

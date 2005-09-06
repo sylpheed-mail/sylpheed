@@ -207,4 +207,6 @@ void gtkut_widget_get_uposition		(GtkWidget	*widget,
 void gtkut_widget_draw_now		(GtkWidget	*widget);
 void gtkut_widget_init			(void);
 
+void gtkut_events_flush			(void);
+
 #endif /* __GTKUTILS_H__ */

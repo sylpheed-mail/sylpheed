@@ -194,6 +194,7 @@ static GSList *imap_get_uncached_messages	(IMAPSession	*session,
 						 FolderItem	*item,
 						 guint32	 first_uid,
 						 guint32	 last_uid,
+						 gint		 exists,
 						 gboolean	 update_count);
 static void imap_delete_cached_message		(FolderItem	*item,
 						 guint32	 uid);
@@ -1024,16 +1025,17 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 
 		if (begin > 0 && begin <= last_uid) {
 			GSList *newlist;
-			newlist = imap_get_uncached_messages(session, item,
-							     begin, last_uid,
-							     TRUE);
+			newlist = imap_get_uncached_messages
+				(session, item, begin, last_uid,
+				 exists - item->total, TRUE);
 			if (newlist)
 				item->cache_dirty = TRUE;
 			mlist = g_slist_concat(mlist, newlist);
 		}
 	} else {
 		imap_delete_all_cached_messages(item);
-		mlist = imap_get_uncached_messages(session, item, 0, 0, TRUE);
+		mlist = imap_get_uncached_messages(session, item, 0, 0, exists,
+						   TRUE);
 		last_uid = procmsg_get_last_num_in_msg_list(mlist);
 		item->cache_dirty = TRUE;
 	}
@@ -1111,7 +1113,7 @@ static MsgInfo *imap_get_msginfo(Folder *folder, FolderItem *item, gint uid)
 	session = imap_session_get(folder);
 	g_return_val_if_fail(session != NULL, NULL);
 
-	list = imap_get_uncached_messages(session, item, uid, uid, FALSE);
+	list = imap_get_uncached_messages(session, item, uid, uid, 0, FALSE);
 	if (list) {
 		msginfo = (MsgInfo *)list->data;
 		list->data = NULL;
@@ -1158,6 +1160,8 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	session = imap_session_get(folder);
 	if (!session) return -1;
 
+	ui_update();
+
 	ok = imap_status(session, IMAP_FOLDER(folder), dest->path,
 			 &messages, &recent, &uid_next, &uid_validity, &unseen);
 	if (ok != IMAP_SUCCESS) {
@@ -1195,7 +1199,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		    dest->stype == F_TRASH)
 			iflags |= IMAP_FLAG_SEEN;
 
-		print_status(_("appending message (%d / %d)"), count++, total);
+		print_status(_("Appending messages (%d / %d)"), count++, total);
 
 		ok = imap_cmd_append(session, destdir, fileinfo->file, iflags,
 				     &new_uid);
@@ -1252,6 +1256,8 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 	session = imap_session_get(folder);
 	if (!session) return -1;
 
+	ui_update();
+
 	msginfo = (MsgInfo *)msglist->data;
 
 	src = msginfo->folder;
@@ -1272,14 +1278,20 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 	for (cur = seq_list; cur != NULL; cur = cur->next) {
 		gchar *seq_set = (gchar *)cur->data;
 
-		if (remove_source)
+		if (remove_source) {
+			print_status(_("Moving messages %s to %s ..."),
+				     seq_set, destdir);
 			debug_print("Moving message %s%c[%s] to %s ...\n",
 				    src->path, G_DIR_SEPARATOR,
 				    seq_set, destdir);
-		else
+		} else {
+			print_status(_("Copying messages %s to %s ..."),
+				     seq_set, destdir);
 			debug_print("Copying message %s%c[%s] to %s ...\n",
 				    src->path, G_DIR_SEPARATOR,
 				    seq_set, destdir);
+		}
+		ui_update();
 
 		ok = imap_cmd_copy(session, seq_set, destdir);
 		if (ok != IMAP_SUCCESS) {
@@ -1420,6 +1432,9 @@ static gint imap_remove_msgs_by_seq_set(Folder *folder, FolderItem *item,
 	for (cur = seq_list; cur != NULL; cur = cur->next) {
 		gchar *seq_set = (gchar *)cur->data;
 
+		print_status(_("Removing messages %s"), seq_set);
+		ui_update();
+
 		ok = imap_set_message_flags(session, seq_set, IMAP_FLAG_DELETED,
 					    TRUE);
 		if (ok != IMAP_SUCCESS) {
@@ -1513,6 +1528,9 @@ static gint imap_remove_all_msg(Folder *folder, FolderItem *item)
 			 NULL, NULL, NULL, NULL);
 	if (ok != IMAP_SUCCESS)
 		return ok;
+
+	print_status(_("Removing all messages in %s"), item->path);
+	ui_update();
 
 	imap_cmd_gen_send(session, "STORE 1:* +FLAGS.SILENT (\\Deleted)");
 	ok = imap_cmd_ok(session, NULL);
@@ -2226,7 +2244,7 @@ static gint imap_remove_folder(Folder *folder, FolderItem *item)
 static GSList *imap_get_uncached_messages(IMAPSession *session,
 					  FolderItem *item,
 					  guint32 first_uid, guint32 last_uid,
-					  gboolean update_count)
+					  gint exists, gboolean update_count)
 {
 	gchar *tmp;
 	GSList *newlist = NULL;
@@ -2242,6 +2260,8 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	g_return_val_if_fail(FOLDER_TYPE(item->folder) == F_IMAP, NULL);
 	g_return_val_if_fail(first_uid <= last_uid, NULL);
 
+	ui_update();
+
 	if (first_uid == 0 && last_uid == 0)
 		strcpy(seq_set, "1:*");
 	else
@@ -2255,7 +2275,10 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	str = g_string_new(NULL);
 
 	for (;;) {
-		print_status(_("getting headers of message %d"), count++);
+		if (exists > 0)
+			print_status(_("Getting message headers (%d / %d)"),
+				     count, exists);
+		++count;
 
 		if (sock_getline(SESSION(session)->sock, &tmp) < 0) {
 			log_warning(_("error occurred while getting envelope.\n"));
@@ -2421,7 +2444,7 @@ static SockInfo *imap_open(const gchar *server, gushort port)
 
 static GList *imap_parse_namespace_str(gchar *str)
 {
-	guchar *p = str;
+	gchar *p = str;
 	gchar *name;
 	gchar *separator;
 	IMAPNameSpace *namespace;
@@ -2993,7 +3016,8 @@ static gint imap_select(IMAPSession *session, IMAPFolder *folder,
 {
 	gchar *real_path;
 	gint ok;
-	gint exists_, recent_, unseen_, uid_validity_;
+	gint exists_, recent_, unseen_;
+	guint32 uid_validity_;
 
 	if (!exists || !recent || !unseen || !uid_validity) {
 		if (session->mbox && strcmp(session->mbox, path) == 0)
@@ -3168,18 +3192,19 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 	}
 
 	challenge = g_malloc(strlen(buf + 2) + 1);
-	challenge_len = base64_decode(challenge, buf + 2, -1);
+	challenge_len = base64_decode((guchar *)challenge, buf + 2, -1);
 	challenge[challenge_len] = '\0';
 	g_free(buf);
 	log_print("IMAP< [Decoded: %s]\n", challenge);
 
-	md5_hex_hmac(hexdigest, challenge, challenge_len, pass, strlen(pass));
+	md5_hex_hmac(hexdigest, (guchar *)challenge, challenge_len,
+		     (guchar *)pass, strlen(pass));
 	g_free(challenge);
 
 	response = g_strdup_printf("%s %s", user, hexdigest);
 	log_print("IMAP> [Encoded: %s]\n", response);
 	response64 = g_malloc((strlen(response) + 3) * 2 + 1);
-	base64_encode(response64, response, strlen(response));
+	base64_encode(response64, (guchar *)response, strlen(response));
 	g_free(response);
 
 	log_print("IMAP> %s\n", response64);

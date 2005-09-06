@@ -895,3 +895,8 @@ void gtkut_widget_init(void)
 	gtkut_clist_bindings_add(clist);
 	g_object_unref(G_OBJECT(clist));
 }
+
+void gtkut_events_flush(void)
+{
+	GTK_EVENTS_FLUSH();
+}

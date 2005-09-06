@@ -195,6 +195,7 @@ int main(int argc, char *argv[])
 	}
 	set_log_file("sylpheed.log");
 
+	set_ui_update_func(gtkut_events_flush);
 	set_input_query_password_func(input_dialog_query_password);
 
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
