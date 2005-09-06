@@ -86,7 +86,6 @@ static PrefParam param[] = {
 	{"set_autoreplyto", "FALSE", &tmp_ac_prefs.set_autoreplyto, P_BOOL},
 	{"auto_replyto", NULL, &tmp_ac_prefs.auto_replyto, P_STRING},
 
-#if USE_GPGME
 	/* Privacy */
 	{"default_sign", "FALSE", &tmp_ac_prefs.default_sign, P_BOOL},
 	{"default_encrypt", "FALSE", &tmp_ac_prefs.default_encrypt, P_BOOL},
@@ -95,16 +94,13 @@ static PrefParam param[] = {
 	{"clearsign", "FALSE", &tmp_ac_prefs.clearsign, P_BOOL},
 	{"sign_key", NULL, &tmp_ac_prefs.sign_key, P_ENUM},
 	{"sign_key_id", NULL, &tmp_ac_prefs.sign_key_id, P_STRING},
-#endif /* USE_GPGME */
 
-#if USE_SSL
 	/* SSL */
 	{"ssl_pop", "0", &tmp_ac_prefs.ssl_pop, P_ENUM},
 	{"ssl_imap", "0", &tmp_ac_prefs.ssl_imap, P_ENUM},
 	{"ssl_nntp", "0", &tmp_ac_prefs.ssl_nntp, P_ENUM},
 	{"ssl_smtp", "0", &tmp_ac_prefs.ssl_smtp, P_ENUM},
 	{"use_nonblocking_ssl", "1", &tmp_ac_prefs.use_nonblocking_ssl, P_BOOL},
-#endif /* USE_SSL */
 
 	/* Advanced */
 	{"set_smtpport", "FALSE", &tmp_ac_prefs.set_smtpport, P_BOOL},

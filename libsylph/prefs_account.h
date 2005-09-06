@@ -47,13 +47,11 @@ typedef enum {
 	SIG_DIRECT
 } SigType;
 
-#if USE_GPGME
 typedef enum {
 	SIGN_KEY_DEFAULT,
 	SIGN_KEY_BY_FROM,
 	SIGN_KEY_CUSTOM
 } SignKeyType;
-#endif /* USE_GPGME */
 
 struct _PrefsAccount
 {
@@ -73,14 +71,12 @@ struct _PrefsAccount
 	gchar *userid;
 	gchar *passwd;
 
-#if USE_SSL
 	/* SSL */
-	SSLType ssl_pop;
-	SSLType ssl_imap;
-	SSLType ssl_nntp;
-	SSLType ssl_smtp;
+	gint ssl_pop;
+	gint ssl_imap;
+	gint ssl_nntp;
+	gint ssl_smtp;
 	gboolean use_nonblocking_ssl;
-#endif /* USE_SSL */
 
 	/* Temporarily preserved password */
 	gchar *tmp_pass;
@@ -125,7 +121,6 @@ struct _PrefsAccount
 	gboolean  set_autoreplyto;
 	gchar    *auto_replyto;
 
-#if USE_GPGME
 	/* Privacy */
 	gboolean default_sign;
 	gboolean default_encrypt;
@@ -135,7 +130,6 @@ struct _PrefsAccount
 
 	SignKeyType sign_key;
 	gchar *sign_key_id;
-#endif /* USE_GPGME */
 
 	/* Advanced */
 	gboolean  set_smtpport;

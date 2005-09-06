@@ -38,9 +38,7 @@ typedef struct _Pop3Session	Pop3Session;
 typedef enum {
 	POP3_READY,
 	POP3_GREETING,
-#if USE_SSL
 	POP3_STLS,
-#endif
 	POP3_GETAUTH_USER,
 	POP3_GETAUTH_PASS,
 	POP3_GETAUTH_APOP,

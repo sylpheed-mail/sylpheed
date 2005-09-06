@@ -266,7 +266,6 @@ static PrefParam param[] = {
 	{"filter_junk_on_receive", "FALSE", &prefs_common.filter_junk_on_recv,
 	 P_BOOL},
 
-#if USE_GPGME
 	/* Privacy */
 	{"auto_check_signatures", "TRUE", &prefs_common.auto_check_signatures,
 	 P_BOOL},
@@ -275,11 +274,8 @@ static PrefParam param[] = {
 	{"store_passphrase", "FALSE", &prefs_common.store_passphrase, P_BOOL},
 	{"store_passphrase_timeout", "0",
 	 &prefs_common.store_passphrase_timeout, P_INT},
-#ifndef G_OS_WIN32
 	{"passphrase_grab", "FALSE", &prefs_common.passphrase_grab, P_BOOL},
-#endif /* G_OS_WIN32 */
 	{"gpg_warning", "TRUE", &prefs_common.gpg_warning, P_BOOL},
-#endif /* USE_GPGME */
 
 	/* Interface */
 	{"separate_folder", "FALSE", &prefs_common.sep_folder, P_BOOL},

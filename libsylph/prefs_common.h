@@ -193,7 +193,6 @@ struct _PrefsCommon
 	gchar *junk_folder;
 	gboolean filter_junk_on_recv;
 
-#if USE_GPGME
 	/* Privacy */
 	gboolean auto_check_signatures;
 	gboolean gpg_signature_popup;
@@ -201,7 +200,6 @@ struct _PrefsCommon
 	gint store_passphrase_timeout;
 	gboolean passphrase_grab;
 	gboolean gpg_warning;
-#endif /* USE_GPGME */
 
 	/* Interface */
 	gboolean sep_folder;
