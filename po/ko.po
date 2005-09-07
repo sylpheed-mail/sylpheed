@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-31 16:17+0900\n"
+"POT-Creation-Date: 2005-09-07 19:48+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -14,12 +14,403 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libsylph/prefs.c:196 libsylph/prefs.c:224 libsylph/prefs.c:269
-#: src/filter.c:833 src/prefs_account.c:586 src/prefs_account.c:600
-#: src/prefs_customheader.c:383 src/prefs_customheader.c:429
-#: src/prefs_display_header.c:413 src/prefs_display_header.c:438
+#: libsylph/account.c:54
+msgid "Reading all config for each account...\n"
+msgstr "각 계정에대한 모든 설정을 읽습니다...\n"
+
+#: libsylph/filter.c:871 libsylph/prefs.c:196 libsylph/prefs.c:224
+#: libsylph/prefs.c:269 libsylph/prefs_account.c:211
+#: libsylph/prefs_account.c:225 src/prefs_display_header.c:413
+#: src/prefs_display_header.c:438
 msgid "failed to write configuration to file\n"
 msgstr "파일에 설정을 쓰기가 실패했습니다\n"
+
+#: libsylph/imap.c:463
+#, fuzzy, c-format
+msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
+msgstr "%s:%d에대한 IMAP4 접속이 끊어졌습니다. 다시 접속...\n"
+
+#: libsylph/imap.c:514 libsylph/imap.c:520
+#, fuzzy
+msgid "IMAP4 server disables LOGIN.\n"
+msgstr "IMAP 서버 디렉토리"
+
+#: libsylph/imap.c:595
+#, c-format
+msgid "creating IMAP4 connection to %s:%d ...\n"
+msgstr "%s:%d에대한 IMAP4 접속을 만듭니다 ...\n"
+
+#: libsylph/imap.c:636
+msgid "Can't start TLS session.\n"
+msgstr "TLS 세션을 시작할 수 없습니다.\n"
+
+#: libsylph/imap.c:1211
+#, fuzzy, c-format
+msgid "Appending messages to %s (%d / %d)"
+msgstr "메시지를 보내는 중 (%d / %d 바이트)"
+
+#: libsylph/imap.c:1296
+#, fuzzy, c-format
+msgid "Moving messages %s to %s ..."
+msgstr "메시지 %s%c%d를 %s로 이동합니다...\n"
+
+#: libsylph/imap.c:1302
+#, fuzzy, c-format
+msgid "Copying messages %s to %s ..."
+msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
+
+#: libsylph/imap.c:1449
+#, fuzzy, c-format
+msgid "Removing messages %s"
+msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
+
+#: libsylph/imap.c:1455
+#, fuzzy, c-format
+msgid "can't set deleted flags: %s\n"
+msgstr "삭제 플래그를 설정할 수가 없습니다: %d\n"
+
+#: libsylph/imap.c:1463 libsylph/imap.c:1558
+msgid "can't expunge\n"
+msgstr "지울 수가 없습니다\n"
+
+#: libsylph/imap.c:1546
+#, fuzzy, c-format
+msgid "Removing all messages in %s"
+msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
+
+#: libsylph/imap.c:1552
+#, fuzzy
+msgid "can't set deleted flags: 1:*\n"
+msgstr "삭제 플래그를 설정할 수가 없습니다: 1:%d\n"
+
+#: libsylph/imap.c:1597
+#, fuzzy
+msgid "can't close folder\n"
+msgstr "폴더를 선택할 수가 없습니다: %s\n"
+
+#: libsylph/imap.c:1675
+#, fuzzy, c-format
+msgid "root folder %s not exist\n"
+msgstr "표시 파일이 발견되지않음.\n"
+
+#: libsylph/imap.c:1859 libsylph/imap.c:1867
+#, fuzzy
+msgid "error occurred while getting LIST.\n"
+msgstr "LIST를 얻는 도중 에러가 발생.\n"
+
+#: libsylph/imap.c:1981
+#, c-format
+msgid "Can't create '%s'\n"
+msgstr "'%s'를 생성할 수가 없습니다\n"
+
+#: libsylph/imap.c:1986
+#, c-format
+msgid "Can't create '%s' under INBOX\n"
+msgstr "INBOX 아래에 '%s'를 생성할 수가 없습니다\n"
+
+#: libsylph/imap.c:2047
+msgid "can't create mailbox: LIST failed\n"
+msgstr "우편함을 생성할 수 없습니다: LIST 실패\n"
+
+#: libsylph/imap.c:2067
+msgid "can't create mailbox\n"
+msgstr "우편함을 생성할 수 없습니다\n"
+
+#: libsylph/imap.c:2163
+#, c-format
+msgid "can't rename mailbox: %s to %s\n"
+msgstr "우편함명을 바꿀 수 없습니다: %s에서 %s로\n"
+
+#: libsylph/imap.c:2243
+msgid "can't delete mailbox\n"
+msgstr "우편함을 삭제할 수 없습니다\n"
+
+#: libsylph/imap.c:2287
+msgid "can't get envelope\n"
+msgstr "envelope를 얻을 수가 없습니다\n"
+
+#: libsylph/imap.c:2300
+#, fuzzy, c-format
+msgid "Getting message headers (%d / %d)"
+msgstr "메시지를 보내는 중 (%d / %d 바이트)"
+
+#: libsylph/imap.c:2309
+msgid "error occurred while getting envelope.\n"
+msgstr "envelope를 얻는 중 에러 발생.\n"
+
+#: libsylph/imap.c:2330
+#, c-format
+msgid "can't parse envelope: %s\n"
+msgstr "envelope를 파싱할 수가 없습니다: %s\n"
+
+#: libsylph/imap.c:2453
+#, c-format
+msgid "Can't connect to IMAP4 server: %s:%d\n"
+msgstr "%s:%d IMAP4 서버에 연결할 수가 없습니다\n"
+
+#: libsylph/imap.c:2460
+#, c-format
+msgid "Can't establish IMAP4 session with: %s:%d\n"
+msgstr "IMAP4 세션을 만들 수 없습니다: %s: %d\n"
+
+#: libsylph/imap.c:2535
+msgid "can't get namespace\n"
+msgstr "namespace를 얻을 수 없습니다\n"
+
+#: libsylph/imap.c:3063
+#, c-format
+msgid "can't select folder: %s\n"
+msgstr "폴더를 선택할 수가 없습니다: %s\n"
+
+#: libsylph/imap.c:3239
+#, fuzzy
+msgid "IMAP4 authentication failed.\n"
+msgstr "인증 방법"
+
+#: libsylph/imap.c:3256
+msgid "IMAP4 login failed.\n"
+msgstr "IMAP4 로그인을 실패했습니다.\n"
+
+#: libsylph/imap.c:3586
+#, c-format
+msgid "can't append %s to %s\n"
+msgstr "%s를 %s에 붙일 수 없습니다\n"
+
+#: libsylph/imap.c:3593
+msgid "(sending file...)"
+msgstr "(파일을 보냅니다...)"
+
+#: libsylph/imap.c:3621
+#, fuzzy, c-format
+msgid "can't append message to %s\n"
+msgstr "%s 메시지를 추가할 수가 없습니다\n"
+
+#: libsylph/imap.c:3653
+#, fuzzy, c-format
+msgid "can't copy %s to %s\n"
+msgstr "%d를 %s로 복사할 수가 없습니다\n"
+
+#: libsylph/imap.c:3677
+#, fuzzy, c-format
+msgid "error while imap command: STORE %s %s\n"
+msgstr "imap 명령어 실행중 에러: STORE %d:%d %s\n"
+
+#: libsylph/imap.c:3691
+msgid "error while imap command: EXPUNGE\n"
+msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
+
+#: libsylph/imap.c:3704
+#, fuzzy
+msgid "error while imap command: CLOSE\n"
+msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
+
+#: libsylph/imap.c:3937
+#, c-format
+msgid "iconv cannot convert UTF-7 to %s\n"
+msgstr "iconv가 UTF-7를 %s로 변환할 수 없습니다\n"
+
+#: libsylph/imap.c:3967
+#, c-format
+msgid "iconv cannot convert %s to UTF-7\n"
+msgstr "iconv가 %s를 UTF-7로 변환할 수 없습니다\n"
+
+#: libsylph/mh.c:412
+#, c-format
+msgid "can't copy message %s to %s\n"
+msgstr "메시지 %s을 %s로 복사할 수가 없습니다\n"
+
+#: libsylph/mh.c:486 libsylph/mh.c:607
+msgid "Can't open mark file.\n"
+msgstr "표시 파일을 열 수가 없습니다.\n"
+
+#: libsylph/mh.c:493 libsylph/mh.c:613
+msgid "the src folder is identical to the dest.\n"
+msgstr "옮길 폴더와 옮겨질 폴더가 같습니다.\n"
+
+#: libsylph/mh.c:616
+#, c-format
+msgid "Copying message %s%c%d to %s ...\n"
+msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
+
+#: libsylph/mh.c:783
+#, c-format
+msgid "Last number in dir %s = %d\n"
+msgstr "디렉토리 %s에서 마지막 숫자 = %d\n"
+
+#: libsylph/mh.c:826 src/main.c:138
+#, c-format
+msgid ""
+"File `%s' already exists.\n"
+"Can't create folder."
+msgstr ""
+"파일 `%s'가 이미 존재합니다.\n"
+"폴더를 생성할 수가 없습니다."
+
+#: libsylph/mh.c:1321
+#, c-format
+msgid ""
+"Directory name\n"
+"'%s' is not a valid UTF-8 string.\n"
+"Maybe the locale encoding is used for filename.\n"
+"If that is the case, you must set the following environmental variable\n"
+"(see README for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+msgstr ""
+
+#: libsylph/news.c:207
+#, c-format
+msgid "creating NNTP connection to %s:%d ...\n"
+msgstr "%s:%d로 NNTP 접속을 생성합니다...\n"
+
+#: libsylph/news.c:276
+#, c-format
+msgid "NNTP connection to %s:%d has been disconnected. Reconnecting...\n"
+msgstr "%s:%d로의 NNTP 연결이 끊어졌습니다. 다시 연결합니다...\n"
+
+#: libsylph/news.c:367
+#, c-format
+msgid "article %d has been already cached.\n"
+msgstr "기사 %d는 이미 캐쉬되었습니다.\n"
+
+#: libsylph/news.c:387
+#, c-format
+msgid "getting article %d...\n"
+msgstr "기사 %d를 얻습니다...\n"
+
+#: libsylph/news.c:391
+#, c-format
+msgid "can't read article %d\n"
+msgstr "기사 %d를 읽을 수가 없습니다\n"
+
+#: libsylph/news.c:545
+msgid "can't retrieve newsgroup list\n"
+msgstr "뉴스그룹 목록을 받을 수가 없습니다\n"
+
+#: libsylph/news.c:658
+msgid "can't post article.\n"
+msgstr "기사를 올릴 수가 없습니다.\n"
+
+#: libsylph/news.c:684
+#, c-format
+msgid "can't retrieve article %d\n"
+msgstr "기사 %d를 가져올 수가 없습니다\n"
+
+#: libsylph/news.c:741
+#, fuzzy, c-format
+msgid "can't select group: %s\n"
+msgstr "%s 그룹을 선택할 수가 없습니다\n"
+
+#: libsylph/news.c:778
+#, c-format
+msgid "invalid article range: %d - %d\n"
+msgstr "올바르지않은 기사 범위: %d - %d\n"
+
+#: libsylph/news.c:791
+msgid "no new articles.\n"
+msgstr "새 기사가 없습니다.\n"
+
+#: libsylph/news.c:801
+#, c-format
+msgid "getting xover %d - %d in %s...\n"
+msgstr "%3$s에서 %1$d - %2$d xover를 가져옴...\n"
+
+#: libsylph/news.c:805
+msgid "can't get xover\n"
+msgstr "xover를 가져올 수가 없습니다\n"
+
+#: libsylph/news.c:815
+msgid "error occurred while getting xover.\n"
+msgstr "xover를 얻는 도중 에러가 발생.\n"
+
+#: libsylph/news.c:825
+#, c-format
+msgid "invalid xover line: %s\n"
+msgstr "올바르지않은 xover line: %s\n"
+
+#: libsylph/news.c:844 libsylph/news.c:876
+msgid "can't get xhdr\n"
+msgstr "xhdr을 가져올 수가 없습니다\n"
+
+#: libsylph/news.c:856 libsylph/news.c:888
+msgid "error occurred while getting xhdr.\n"
+msgstr "xhdr을 얻는 도중 에러가 발생.\n"
+
+#: libsylph/nntp.c:68
+#, c-format
+msgid "Can't connect to NNTP server: %s:%d\n"
+msgstr "%s:%d NNTP 서버에 연결할 수가 없습니다\n"
+
+#: libsylph/nntp.c:164 libsylph/nntp.c:227
+#, c-format
+msgid "protocol error: %s\n"
+msgstr "프로토콜 에러: %s\n"
+
+#: libsylph/nntp.c:187 libsylph/nntp.c:233
+msgid "protocol error\n"
+msgstr "프로토콜 에러\n"
+
+#: libsylph/nntp.c:283
+msgid "Error occurred while posting\n"
+msgstr "글을 올리는 도중 에러 발생\n"
+
+#: libsylph/nntp.c:363
+#, fuzzy
+msgid "Error occurred while sending command\n"
+msgstr "메일을 처리하는 도중 에러"
+
+#: libsylph/pop.c:149
+msgid "Required APOP timestamp not found in greeting\n"
+msgstr "greeting에서 발견되지않은 APOP 타임 스탬프가 요구됨\n"
+
+#: libsylph/pop.c:156
+msgid "Timestamp syntax error in greeting\n"
+msgstr "greeting에서 타임 스탬프에 문법 오류\n"
+
+#: libsylph/pop.c:182 libsylph/pop.c:209
+msgid "POP3 protocol error\n"
+msgstr "POP3 프로토콜 에러\n"
+
+#: libsylph/pop.c:254
+#, fuzzy, c-format
+msgid "invalid UIDL response: %s\n"
+msgstr "올바르지않은 xover line: %s\n"
+
+#: libsylph/pop.c:616
+#, c-format
+msgid "POP3: Deleting expired message %d\n"
+msgstr "POP3: 만료된 메시지 %d를 삭제합니다\n"
+
+#: libsylph/pop.c:624
+#, c-format
+msgid "POP3: Skipping message %d (%d bytes)\n"
+msgstr "POP3: 메시지 %d를 건너뜁니다 (%d 바이트)\n"
+
+#: libsylph/pop.c:655
+msgid "mailbox is locked\n"
+msgstr "우편함이 잠겨있습니다\n"
+
+#: libsylph/pop.c:658
+msgid "session timeout\n"
+msgstr ""
+
+#: libsylph/pop.c:664 libsylph/smtp.c:557
+msgid "can't start TLS session\n"
+msgstr "TLS 세션을 시작할 수 없습니다\n"
+
+#: libsylph/pop.c:671 libsylph/smtp.c:492
+msgid "error occurred on authentication\n"
+msgstr "인증 도중 에러 발생\n"
+
+#: libsylph/pop.c:676
+#, fuzzy
+msgid "command not supported\n"
+msgstr "명령어"
+
+#: libsylph/pop.c:680
+#, fuzzy
+msgid "error occurred on POP3 session\n"
+msgstr "인증 도중 에러 발생\n"
 
 #: libsylph/prefs.c:239
 #, c-format
@@ -29,6 +420,54 @@ msgstr "%s을 발견\n"
 #: libsylph/prefs.c:272
 msgid "Configuration is saved.\n"
 msgstr "설정이 저장되었습니다.\n"
+
+#: libsylph/prefs_common.c:421
+#, fuzzy
+msgid "Junk mail filter"
+msgstr "폴더"
+
+#: libsylph/procmime.c:761
+msgid "procmime_get_text_content(): Code conversion failed.\n"
+msgstr "procmime_get_text_content(): 코드 변환이 실패했습니다.\n"
+
+#: libsylph/procmsg.c:535
+msgid "can't open mark file\n"
+msgstr "표시 파일을 열수가 없습니다\n"
+
+#: libsylph/procmsg.c:964
+#, c-format
+msgid "can't fetch message %d\n"
+msgstr "메시지 %d를 가져올 수가 없습니다\n"
+
+#: libsylph/procmsg.c:1140 src/compose.c:953 src/compose.c:1023
+msgid "Can't get text part\n"
+msgstr "텍스트 부분을 얻을 수가 없습니다\n"
+
+#: libsylph/procmsg.c:1183
+#, c-format
+msgid "Print command line is invalid: `%s'\n"
+msgstr "인쇄 명령어가 올바르지않습니다: `%s'\n"
+
+#: libsylph/recv.c:112
+msgid "error occurred while retrieving data.\n"
+msgstr "데이타를 가져오는 중 에러가 발생했습니다.\n"
+
+#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+msgid "Can't write to file.\n"
+msgstr "파일에 쓸 수가 없습니다.\n"
+
+#: libsylph/smtp.c:156
+msgid "SMTP AUTH not available\n"
+msgstr "SMTP 인증을 사용할 수 없습니다\n"
+
+#: libsylph/smtp.c:462 libsylph/smtp.c:512
+msgid "bad SMTP response\n"
+msgstr ""
+
+#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#, fuzzy
+msgid "error occurred on SMTP session\n"
+msgstr "인증 도중 에러 발생\n"
 
 #: libsylph/ssl.c:54
 msgid "SSLv23 not available\n"
@@ -150,78 +589,6 @@ msgid ""
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
 
-#: src/account.c:137
-msgid "Reading all config for each account...\n"
-msgstr "각 계정에대한 모든 설정을 읽습니다...\n"
-
-#: src/account.c:357
-msgid ""
-"Some composing windows are open.\n"
-"Please close all the composing windows before editing the accounts."
-msgstr ""
-"다른 편집 창이 열려있습니다.\n"
-"계정을 편집하기전에 모든 편집창들을 닫아주세요."
-
-#: src/account.c:363
-msgid "Opening account edit window...\n"
-msgstr "계정 편집창을 엽니다...\n"
-
-#: src/account.c:614
-msgid "Creating account edit window...\n"
-msgstr "계정 편집창을 생성합니다...\n"
-
-#: src/account.c:619
-msgid "Edit accounts"
-msgstr "계정 편집"
-
-#: src/account.c:637
-msgid ""
-"New messages will be checked in this order. Check the boxes\n"
-"on the `G' column to enable message retrieval by `Get all'."
-msgstr ""
-"새 메시지는 이 순서대로 확인될 것입니다. `모두 받기'로 메시지를\n"
-"받으려면 `G' 컬럼 상자를 선택하세요."
-
-#: src/account.c:691 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
-#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
-#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
-#: src/select-keys.c:319
-msgid "Name"
-msgstr "이름"
-
-#: src/account.c:696 src/prefs_account.c:858
-msgid "Protocol"
-msgstr "프로토콜"
-
-#: src/account.c:701
-msgid "Server"
-msgstr "서버"
-
-#: src/account.c:725 src/prefs_filter.c:324
-msgid "Edit"
-msgstr "편집"
-
-#: src/account.c:759
-#, fuzzy
-msgid " _Set as default account "
-msgstr " 기본 계정으로 설정 "
-
-#: src/account.c:812
-#, fuzzy, c-format
-msgid "Do you really want to delete the account '%s'?"
-msgstr "정말로 이 계정을 삭제하시겠습니까?"
-
-#: src/account.c:814 src/prefs_filter.c:764
-#, fuzzy
-msgid "(Untitled)"
-msgstr "제목 없슴"
-
-#: src/account.c:815
-msgid "Delete account"
-msgstr "계정 삭제"
-
 #: src/action.c:331
 #, fuzzy, c-format
 msgid "Could not get message file %d"
@@ -319,6 +686,14 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "주소록에 추가"
 
+#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
+#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
+#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
+#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
+#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
+msgid "Name"
+msgstr "이름"
+
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
@@ -333,8 +708,8 @@ msgstr "메모"
 msgid "Select Address Book Folder"
 msgstr "주소록 폴더 선택"
 
-#: src/addressbook.c:336 src/compose.c:494 src/mainwindow.c:462
-#: src/messageview.c:137
+#: src/addressbook.c:336 src/compose.c:494 src/mainwindow.c:465
+#: src/messageview.c:138
 msgid "/_File"
 msgstr "/파일(_F)"
 
@@ -355,9 +730,9 @@ msgid "/_File/New _Server"
 msgstr "/파일(_F)/새 서버(_S)"
 
 #: src/addressbook.c:345 src/addressbook.c:348 src/compose.c:499
-#: src/compose.c:504 src/compose.c:508 src/mainwindow.c:480
-#: src/mainwindow.c:483 src/mainwindow.c:485 src/mainwindow.c:488
-#: src/mainwindow.c:490 src/messageview.c:140
+#: src/compose.c:504 src/compose.c:508 src/mainwindow.c:483
+#: src/mainwindow.c:486 src/mainwindow.c:488 src/mainwindow.c:491
+#: src/mainwindow.c:493 src/messageview.c:141
 msgid "/_File/---"
 msgstr "/파일(_F)/---"
 
@@ -373,7 +748,7 @@ msgstr "/파일(_F)/삭제(_D)"
 msgid "/_File/_Save"
 msgstr "/파일(_F)/저장(_S)"
 
-#: src/addressbook.c:350 src/compose.c:509 src/messageview.c:141
+#: src/addressbook.c:350 src/compose.c:509 src/messageview.c:142
 msgid "/_File/_Close"
 msgstr "/파일(_F)/닫기(_C)"
 
@@ -405,8 +780,8 @@ msgstr "/주소(_A)/편집(_E)"
 msgid "/_Address/_Delete"
 msgstr "/주소(_A)/삭제(_D)"
 
-#: src/addressbook.c:358 src/compose.c:618 src/mainwindow.c:717
-#: src/messageview.c:256
+#: src/addressbook.c:358 src/compose.c:618 src/mainwindow.c:720
+#: src/messageview.c:257
 msgid "/_Tools"
 msgstr "/도구(_T)"
 
@@ -414,13 +789,13 @@ msgstr "/도구(_T)"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/도구(_T)/LDIF 파일 가져오기(_L)"
 
-#: src/addressbook.c:360 src/compose.c:631 src/mainwindow.c:767
-#: src/messageview.c:274
+#: src/addressbook.c:360 src/compose.c:631 src/mainwindow.c:770
+#: src/messageview.c:275
 msgid "/_Help"
 msgstr "/도움말(_H)"
 
-#: src/addressbook.c:361 src/compose.c:632 src/mainwindow.c:778
-#: src/messageview.c:275
+#: src/addressbook.c:361 src/compose.c:632 src/mainwindow.c:781
+#: src/messageview.c:276
 msgid "/_Help/_About"
 msgstr "/도움말(_H)/sylpheed 정보(_A)"
 
@@ -437,17 +812,17 @@ msgid "/New _Folder"
 msgstr "/새 폴더(_F)"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:488
-#: src/folderview.c:235 src/folderview.c:237 src/folderview.c:241
-#: src/folderview.c:252 src/folderview.c:254 src/folderview.c:256
-#: src/folderview.c:260 src/folderview.c:270 src/folderview.c:272
-#: src/folderview.c:275 src/summaryview.c:376 src/summaryview.c:380
+#: src/folderview.c:236 src/folderview.c:238 src/folderview.c:242
+#: src/folderview.c:253 src/folderview.c:255 src/folderview.c:257
+#: src/folderview.c:261 src/folderview.c:271 src/folderview.c:273
+#: src/folderview.c:276 src/summaryview.c:376 src/summaryview.c:380
 #: src/summaryview.c:384 src/summaryview.c:394 src/summaryview.c:396
 #: src/summaryview.c:399 src/summaryview.c:405
 msgid "/---"
 msgstr "/---"
 
 #: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:511
-#: src/mainwindow.c:494 src/messageview.c:143
+#: src/mainwindow.c:497 src/messageview.c:144
 msgid "/_Edit"
 msgstr "/편집(_E)"
 
@@ -459,7 +834,7 @@ msgstr "/삭제(_D)"
 msgid "E-Mail address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common.c:2396
+#: src/addressbook.c:496 src/compose.c:4534
 msgid "Address book"
 msgstr "주소록"
 
@@ -469,14 +844,14 @@ msgstr "이름:"
 
 #. Buttons
 #: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
-#: src/editaddress.c:1017 src/mainwindow.c:2281 src/prefs_actions.c:266
+#: src/editaddress.c:1017 src/mainwindow.c:2284 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
-#: src/prefs_template.c:231
+#: src/prefs_template.c:232
 msgid "Delete"
 msgstr "삭제"
 
 #: src/addressbook.c:631 src/editaddress.c:890 src/editaddress.c:1023
-#: src/prefs_actions.c:254 src/prefs_customheader.c:236
+#: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:273 src/prefs_display_header.c:328
 #: src/prefs_filter_edit.c:1572
 msgid "Add"
@@ -487,11 +862,11 @@ msgid "Lookup"
 msgstr "찾기"
 
 #: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:312
-#: src/prefs_template.c:174 src/summary_search.c:221
+#: src/prefs_template.c:175 src/summary_search.c:221
 msgid "To:"
 msgstr "받는 사람:"
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:329 src/prefs_template.c:176
+#: src/addressbook.c:650 src/prefs_folder_item.c:329 src/prefs_template.c:177
 msgid "Cc:"
 msgstr "참조:"
 
@@ -517,7 +892,7 @@ msgstr ""
 "`%s'의 모든 주소와 폴더를 삭제할까요 ? \n"
 "폴더만 지울 경우 주소는 그 상위 폴더로 옮겨집니다."
 
-#: src/addressbook.c:1674 src/folderview.c:2145
+#: src/addressbook.c:1674 src/folderview.c:2148
 msgid "Delete folder"
 msgstr "폴더 삭제"
 
@@ -624,7 +999,7 @@ msgstr "주소록 변환 에러"
 msgid "Addressbook Conversion"
 msgstr "주소록 변환"
 
-#: src/addressbook.c:3072 src/prefs_common.c:966
+#: src/addressbook.c:3072
 msgid "Interface"
 msgstr "인터페이스"
 
@@ -644,8 +1019,7 @@ msgstr "이메일 주소"
 msgid "Group"
 msgstr "그룹"
 
-#. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:346 src/prefs_account.c:1875
+#: src/addressbook.c:3152 src/folderview.c:347
 msgid "Folder"
 msgstr "폴더"
 
@@ -669,15 +1043,15 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:470
+#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:480
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:151 src/main.c:560
+#: src/alertpanel.c:151 src/main.c:573
 msgid "Warning"
 msgstr "경고"
 
-#: src/alertpanel.c:164 src/inc.c:574
+#: src/alertpanel.c:164 src/inc.c:573
 msgid "Error"
 msgstr "에러"
 
@@ -732,8 +1106,8 @@ msgstr "/추가(_A)..."
 msgid "/_Remove"
 msgstr "/삭제(_R)"
 
-#: src/compose.c:489 src/folderview.c:243 src/folderview.c:262
-#: src/folderview.c:277
+#: src/compose.c:489 src/folderview.c:244 src/folderview.c:263
+#: src/folderview.c:278
 #, fuzzy
 msgid "/_Properties..."
 msgstr "/특성(_P)..."
@@ -778,8 +1152,8 @@ msgstr "/편집(_E)/실행취소(_U)"
 msgid "/_Edit/_Redo"
 msgstr "/편집(_E)/다시 실행(_R)"
 
-#: src/compose.c:514 src/compose.c:521 src/mainwindow.c:498
-#: src/messageview.c:146
+#: src/compose.c:514 src/compose.c:521 src/mainwindow.c:501
+#: src/messageview.c:147
 msgid "/_Edit/---"
 msgstr "/편집(_E)/---"
 
@@ -787,7 +1161,7 @@ msgstr "/편집(_E)/---"
 msgid "/_Edit/Cu_t"
 msgstr "/편집(_E)/잘라내기(_t)"
 
-#: src/compose.c:516 src/mainwindow.c:495 src/messageview.c:144
+#: src/compose.c:516 src/mainwindow.c:498 src/messageview.c:145
 msgid "/_Edit/_Copy"
 msgstr "/편집(_E)/복사(_C)"
 
@@ -799,7 +1173,7 @@ msgstr "/편집(_E)/붙여넣기(_P)"
 msgid "/_Edit/Paste as _quotation"
 msgstr "/편집(_E)/quotation으로 붙여넣기(_q)"
 
-#: src/compose.c:520 src/mainwindow.c:496 src/messageview.c:145
+#: src/compose.c:520 src/mainwindow.c:499 src/messageview.c:146
 msgid "/_Edit/Select _all"
 msgstr "/편집(_E)/모두 선택(_a)"
 
@@ -816,7 +1190,7 @@ msgstr "/편집(_E)/모든 긴 라인 자동 줄바꿈(_l)"
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/편집(_E)/복사(_C)"
 
-#: src/compose.c:527 src/mainwindow.c:503 src/messageview.c:150
+#: src/compose.c:527 src/mainwindow.c:506 src/messageview.c:151
 #: src/summaryview.c:400
 msgid "/_View"
 msgstr "/보기(_V)"
@@ -838,9 +1212,9 @@ msgid "/_View/_Reply to"
 msgstr "/보기(_V)/Reply to(_R)"
 
 #: src/compose.c:532 src/compose.c:534 src/compose.c:536 src/compose.c:538
-#: src/mainwindow.c:521 src/mainwindow.c:524 src/mainwindow.c:550
-#: src/mainwindow.c:574 src/mainwindow.c:667 src/mainwindow.c:671
-#: src/messageview.c:233
+#: src/mainwindow.c:524 src/mainwindow.c:527 src/mainwindow.c:553
+#: src/mainwindow.c:577 src/mainwindow.c:670 src/mainwindow.c:674
+#: src/messageview.c:234
 msgid "/_View/---"
 msgstr "/보기(_V)/---"
 
@@ -856,7 +1230,7 @@ msgstr "/보기(_V)/Ruler(_u)"
 msgid "/_View/_Attachment"
 msgstr "/보기(_V)/첨부(_A)"
 
-#: src/compose.c:544 src/mainwindow.c:581 src/messageview.c:157
+#: src/compose.c:544 src/mainwindow.c:584 src/messageview.c:158
 #, fuzzy
 msgid "/_View/Character _encoding"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
@@ -868,127 +1242,127 @@ msgstr ""
 #: src/compose.c:547 src/compose.c:553 src/compose.c:559 src/compose.c:563
 #: src/compose.c:569 src/compose.c:573 src/compose.c:579 src/compose.c:583
 #: src/compose.c:593 src/compose.c:597 src/compose.c:607 src/compose.c:611
-#: src/mainwindow.c:577 src/mainwindow.c:584 src/messageview.c:153
+#: src/mainwindow.c:580 src/mainwindow.c:587 src/messageview.c:154
 #, fuzzy
 msgid "/_View/Character _encoding/---"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
 
-#: src/compose.c:549 src/mainwindow.c:585 src/messageview.c:161
+#: src/compose.c:549 src/mainwindow.c:588 src/messageview.c:162
 #, fuzzy
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/보기(_V)/문자셋(_C)/7bit 아스키 (US-ASC_II)"
 
-#: src/compose.c:551 src/mainwindow.c:587 src/messageview.c:164
+#: src/compose.c:551 src/mainwindow.c:590 src/messageview.c:165
 #, fuzzy
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/보기(_V)/문자셋(_C)/유니코드(_UTF-8)"
 
-#: src/compose.c:555 src/mainwindow.c:591 src/messageview.c:167
+#: src/compose.c:555 src/mainwindow.c:594 src/messageview.c:168
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/보기(_V)/문자셋(_C)/서부 유럽(ISO-8859-_1)"
 
-#: src/compose.c:557 src/mainwindow.c:593 src/messageview.c:169
+#: src/compose.c:557 src/mainwindow.c:596 src/messageview.c:170
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/보기(_V)/문자셋(_C)/서부 유럽(ISO-8859-15)"
 
-#: src/compose.c:561 src/mainwindow.c:597 src/messageview.c:172
+#: src/compose.c:561 src/mainwindow.c:600 src/messageview.c:173
 #, fuzzy
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/보기(_V)/문자셋(_C)/중앙 유럽(ISO-8859-_2)"
 
-#: src/compose.c:565 src/mainwindow.c:601 src/messageview.c:175
+#: src/compose.c:565 src/mainwindow.c:604 src/messageview.c:176
 #, fuzzy
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/보기(_V)/문자셋(_C)/_Baltic (ISO-8859-13)"
 
-#: src/compose.c:567 src/mainwindow.c:603 src/messageview.c:177
+#: src/compose.c:567 src/mainwindow.c:606 src/messageview.c:178
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/보기(_V)/문자셋(_C)/Baltic (ISO-8859-_4)"
 
-#: src/compose.c:571 src/mainwindow.c:607 src/messageview.c:180
+#: src/compose.c:571 src/mainwindow.c:610 src/messageview.c:181
 #, fuzzy
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/보기(_V)/문자셋(_C)/그리스(ISO-8859-_7)"
 
-#: src/compose.c:575 src/mainwindow.c:611 src/messageview.c:183
+#: src/compose.c:575 src/mainwindow.c:614 src/messageview.c:184
 #, fuzzy
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
 msgstr "/보기(_V)/문자셋(_C)/그리스(ISO-8859-_7)"
 
-#: src/compose.c:577 src/mainwindow.c:613 src/messageview.c:185
+#: src/compose.c:577 src/mainwindow.c:616 src/messageview.c:186
 #, fuzzy
 msgid "/_View/Character _encoding/Hebrew (Windows-1255)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (Windows-1251)"
 
-#: src/compose.c:581 src/mainwindow.c:617 src/messageview.c:188
+#: src/compose.c:581 src/mainwindow.c:620 src/messageview.c:189
 #, fuzzy
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/보기(_V)/문자셋(_C)/터기 (ISO-8859-_9)"
 
-#: src/compose.c:585 src/mainwindow.c:621 src/messageview.c:191
+#: src/compose.c:585 src/mainwindow.c:624 src/messageview.c:192
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (ISo-8859-_5)"
 
-#: src/compose.c:587 src/mainwindow.c:623 src/messageview.c:193
+#: src/compose.c:587 src/mainwindow.c:626 src/messageview.c:194
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (KOI8-_R)"
 
-#: src/compose.c:589 src/mainwindow.c:625 src/messageview.c:195
+#: src/compose.c:589 src/mainwindow.c:628 src/messageview.c:196
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (KOI8-_R)"
 
-#: src/compose.c:591 src/mainwindow.c:627 src/messageview.c:197
+#: src/compose.c:591 src/mainwindow.c:630 src/messageview.c:198
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/보기(_V)/문자셋(_C)/Cyrillic (Windows-1251)"
 
-#: src/compose.c:595 src/mainwindow.c:631 src/messageview.c:200
+#: src/compose.c:595 src/mainwindow.c:634 src/messageview.c:201
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/보기(_V)/문자셋(_C)/일본 (ISO-2022-_JP)"
 
-#: src/compose.c:599 src/mainwindow.c:641 src/messageview.c:209
+#: src/compose.c:599 src/mainwindow.c:644 src/messageview.c:210
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/보기(_V)/문자셋(_C)/Simplified Chinese (_GB2312)"
 
-#: src/compose.c:601 src/mainwindow.c:643 src/messageview.c:211
+#: src/compose.c:601 src/mainwindow.c:646 src/messageview.c:212
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/보기(_V)/문자셋(_C)/Simplified Chinese (_GB2312)"
 
-#: src/compose.c:603 src/mainwindow.c:645 src/messageview.c:213
+#: src/compose.c:603 src/mainwindow.c:648 src/messageview.c:214
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/보기(_V)/문자셋(_C)/Traditional Chinese (_Big5)"
 
-#: src/compose.c:605 src/mainwindow.c:647 src/messageview.c:215
+#: src/compose.c:605 src/mainwindow.c:650 src/messageview.c:216
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/보기(_V)/문자셋(_C)/Traditional Chinese (EUC-_TW)"
 
-#: src/compose.c:609 src/mainwindow.c:653 src/messageview.c:220
+#: src/compose.c:609 src/mainwindow.c:656 src/messageview.c:221
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/보기(_V)/문자셋(_C)/한국 (EUC-KR)"
 
-#: src/compose.c:613 src/mainwindow.c:659 src/messageview.c:225
+#: src/compose.c:613 src/mainwindow.c:662 src/messageview.c:226
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/보기(_V)/문자셋(_C)/Thai (TIS-620)"
 
-#: src/compose.c:615 src/mainwindow.c:661 src/messageview.c:227
+#: src/compose.c:615 src/mainwindow.c:664 src/messageview.c:228
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/보기(_V)/문자셋(_C)/Thai (Windows-874)"
 
-#: src/compose.c:619 src/mainwindow.c:718 src/messageview.c:257
+#: src/compose.c:619 src/mainwindow.c:721 src/messageview.c:258
 msgid "/_Tools/_Address book"
 msgstr "/도구(_T)/주소록(_A)"
 
@@ -996,14 +1370,14 @@ msgstr "/도구(_T)/주소록(_A)"
 msgid "/_Tools/_Template"
 msgstr "/도구(_T)/템플릿(_T)"
 
-#: src/compose.c:621 src/mainwindow.c:741 src/messageview.c:272
+#: src/compose.c:621 src/mainwindow.c:744 src/messageview.c:273
 msgid "/_Tools/Actio_ns"
 msgstr "/도구(_T)/동작(_n)"
 
-#: src/compose.c:622 src/compose.c:626 src/mainwindow.c:721
-#: src/mainwindow.c:735 src/mainwindow.c:740 src/mainwindow.c:742
-#: src/mainwindow.c:745 src/mainwindow.c:747 src/messageview.c:260
-#: src/messageview.c:271
+#: src/compose.c:622 src/compose.c:626 src/mainwindow.c:724
+#: src/mainwindow.c:738 src/mainwindow.c:743 src/mainwindow.c:745
+#: src/mainwindow.c:748 src/mainwindow.c:750 src/messageview.c:261
+#: src/messageview.c:272
 msgid "/_Tools/---"
 msgstr "/도구(_T)/---"
 
@@ -1026,10 +1400,6 @@ msgstr "/메시지(_M)/암호화(_E)"
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: 파일이 없습니다\n"
-
-#: src/compose.c:953 src/compose.c:1023 src/procmsg.c:1353
-msgid "Can't get text part\n"
-msgstr "텍스트 부분을 얻을 수가 없습니다\n"
 
 #: src/compose.c:1419
 msgid "Quote mark format error."
@@ -1107,7 +1477,7 @@ msgstr ""
 "메일을 보내기위한 계정이 지정되어있지않습니다.\n"
 "보내기 전에 메일 계정을 선택하세요."
 
-#: src/compose.c:2571 src/send_message.c:297
+#: src/compose.c:2571 src/send_message.c:299
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
@@ -1198,8 +1568,7 @@ msgstr "마임 타입"
 msgid "Size"
 msgstr "크기"
 
-#: src/compose.c:4454 src/mainwindow.c:2214 src/prefs_account.c:728
-#: src/prefs_common.c:950
+#: src/compose.c:4454 src/mainwindow.c:2217
 msgid "Send"
 msgstr "메일 발송"
 
@@ -1239,8 +1608,7 @@ msgstr "첨부"
 msgid "Attach file"
 msgstr "파일 첨부"
 
-#. signature
-#: src/compose.c:4503 src/prefs_account.c:1400 src/prefs_common.c:1359
+#: src/compose.c:4503
 msgid "Signature"
 msgstr "서명"
 
@@ -1248,7 +1616,7 @@ msgstr "서명"
 msgid "Insert signature"
 msgstr "서명 파일을 끼워넣습니다"
 
-#: src/compose.c:4513 src/prefs_common.c:1381 src/prefs_common.c:2376
+#: src/compose.c:4513
 msgid "Editor"
 msgstr "편집기"
 
@@ -1446,7 +1814,7 @@ msgstr "수정"
 msgid "Clear"
 msgstr "지움"
 
-#: src/editaddress.c:943 src/editaddress.c:999 src/prefs_customheader.c:207
+#: src/editaddress.c:943 src/editaddress.c:999 src/prefs_customheader.c:203
 msgid "Value"
 msgstr "값"
 
@@ -1479,7 +1847,6 @@ msgid " Check File "
 msgstr " 파일 확인 "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account.c:1411
 msgid "File"
 msgstr "파일"
 
@@ -1535,12 +1902,12 @@ msgstr "폴더 편집"
 msgid "Input the new name of folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
-#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1924
-#: src/folderview.c:1930
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1927
+#: src/folderview.c:1933
 msgid "New folder"
 msgstr "새 폴더"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1931
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1934
 msgid "Input the name of new folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
@@ -1557,7 +1924,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilot 항목 편집"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534 src/prefs_account.c:1903 src/prefs_common.c:2031
+#: src/importldif.c:534
 msgid " ... "
 msgstr " ... "
 
@@ -1621,7 +1988,7 @@ msgstr ""
 msgid "Maximum Entries"
 msgstr ""
 
-#: src/editldap.c:471 src/prefs_account.c:724
+#: src/editldap.c:471
 msgid "Basic"
 msgstr "기본"
 
@@ -1678,7 +2045,6 @@ msgid "Exporting file:"
 msgstr ""
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
-#: src/prefs_account.c:1115
 msgid " Select... "
 msgstr "고르기..."
 
@@ -1702,164 +2068,164 @@ msgstr "기존 파일을 덮어쓰시겠습니까?"
 msgid "Select folder"
 msgstr "폴더 선택"
 
-#: src/foldersel.c:359 src/folderview.c:1069 src/prefs_folder_item.c:216
+#: src/foldersel.c:359 src/folderview.c:1070 src/prefs_folder_item.c:216
 msgid "Inbox"
 msgstr "받은 편지함"
 
-#: src/foldersel.c:363 src/folderview.c:1075 src/prefs_folder_item.c:217
+#: src/foldersel.c:363 src/folderview.c:1076 src/prefs_folder_item.c:217
 msgid "Sent"
 msgstr "발송 편지함"
 
-#: src/foldersel.c:367 src/folderview.c:1081 src/prefs_folder_item.c:219
+#: src/foldersel.c:367 src/folderview.c:1082 src/prefs_folder_item.c:219
 msgid "Queue"
 msgstr "보낼 편지함"
 
-#: src/foldersel.c:371 src/folderview.c:1087 src/prefs_folder_item.c:220
+#: src/foldersel.c:371 src/folderview.c:1088 src/prefs_folder_item.c:220
 msgid "Trash"
 msgstr "지운 편지함"
 
-#: src/foldersel.c:375 src/folderview.c:1093 src/prefs_folder_item.c:218
+#: src/foldersel.c:375 src/folderview.c:1094 src/prefs_folder_item.c:218
 msgid "Drafts"
 msgstr "임시 보관함"
 
-#: src/foldersel.c:542 src/folderview.c:1928 src/folderview.c:1932
+#: src/foldersel.c:542 src/folderview.c:1931 src/folderview.c:1935
 msgid "NewFolder"
 msgstr "새 폴더"
 
-#: src/foldersel.c:550 src/folderview.c:1940 src/folderview.c:1996
+#: src/foldersel.c:550 src/folderview.c:1943 src/folderview.c:1999
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c'는 폴더 이름에 포함될 수 없습니다."
 
-#: src/foldersel.c:560 src/folderview.c:1950 src/folderview.c:2003
+#: src/foldersel.c:560 src/folderview.c:1953 src/folderview.c:2006
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "`%s' 폴더가 이미 존재합니다."
 
-#: src/foldersel.c:568 src/folderview.c:1957
+#: src/foldersel.c:568 src/folderview.c:1960
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "`%s' 폴더를 생성할 수가 없습니다."
 
-#: src/folderview.c:231 src/folderview.c:248
+#: src/folderview.c:232 src/folderview.c:249
 msgid "/Create _new folder..."
 msgstr "/새 폴더 만들기(_n)..."
 
-#: src/folderview.c:232 src/folderview.c:249
+#: src/folderview.c:233 src/folderview.c:250
 msgid "/_Rename folder..."
 msgstr "/폴더 이름 바꾸기(_R)..."
 
-#: src/folderview.c:233 src/folderview.c:250
+#: src/folderview.c:234 src/folderview.c:251
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/폴더 이름 바꾸기(_R)..."
 
-#: src/folderview.c:234 src/folderview.c:251
+#: src/folderview.c:235 src/folderview.c:252
 msgid "/_Delete folder"
 msgstr "/폴더 지우기(_D)"
 
-#: src/folderview.c:236 src/folderview.c:253
+#: src/folderview.c:237 src/folderview.c:254
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:238 src/folderview.c:257 src/folderview.c:273
+#: src/folderview.c:239 src/folderview.c:258 src/folderview.c:274
 msgid "/_Check for new messages"
 msgstr "/새 메시지 확인(_C)"
 
-#: src/folderview.c:240 src/folderview.c:259
+#: src/folderview.c:241 src/folderview.c:260
 msgid "/R_ebuild folder tree"
 msgstr "/폴더 트리 갱신(_e)"
 
-#: src/folderview.c:242 src/folderview.c:261 src/folderview.c:276
+#: src/folderview.c:243 src/folderview.c:262 src/folderview.c:277
 msgid "/_Search messages..."
 msgstr "/메시지 찾기(_S)..."
 
-#: src/folderview.c:255 src/folderview.c:271
+#: src/folderview.c:256 src/folderview.c:272
 #, fuzzy
 msgid "/Down_load"
 msgstr "안 읽은 메시지가 없습니다."
 
-#: src/folderview.c:267
+#: src/folderview.c:268
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/뉴스그룹 구독(_b)..."
 
-#: src/folderview.c:269
+#: src/folderview.c:270
 msgid "/_Remove newsgroup"
 msgstr "/뉴스그룹 삭제(_R)"
 
-#: src/folderview.c:298
+#: src/folderview.c:299
 msgid "Creating folder view...\n"
 msgstr "폴더 뷰를 생성합니다...\n"
 
-#: src/folderview.c:377
+#: src/folderview.c:378
 msgid "New"
 msgstr "새것"
 
 #. S_COL_MARK
-#: src/folderview.c:391 src/prefs_summary_column.c:71
+#: src/folderview.c:392 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "안읽음"
 
-#: src/folderview.c:405
+#: src/folderview.c:406
 msgid "#"
 msgstr "전체"
 
-#: src/folderview.c:520
+#: src/folderview.c:521
 msgid "Setting folder info...\n"
 msgstr "폴더 정보를 설정합니다...\n"
 
-#: src/folderview.c:521
+#: src/folderview.c:522
 msgid "Setting folder info..."
 msgstr "폴더 정보를 설정합니다..."
 
-#: src/folderview.c:805 src/mainwindow.c:3279 src/setup.c:81
+#: src/folderview.c:806 src/mainwindow.c:3282 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "%s%c%s를 스캔합니다..."
 
-#: src/folderview.c:809 src/mainwindow.c:3284 src/setup.c:86
+#: src/folderview.c:810 src/mainwindow.c:3287 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "%s 폴더를 스캔합니다..."
 
-#: src/folderview.c:851
+#: src/folderview.c:852
 msgid "Rebuild folder tree"
 msgstr "폴더 트리 갱신"
 
-#: src/folderview.c:852
+#: src/folderview.c:853
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr ""
 
-#: src/folderview.c:861
+#: src/folderview.c:862
 msgid "Rebuilding folder tree..."
 msgstr "폴더 트리를 갱신합니다..."
 
-#: src/folderview.c:868
+#: src/folderview.c:869
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "폴더 트리를 갱신합니다..."
 
-#: src/folderview.c:938
+#: src/folderview.c:939
 msgid "Checking for new messages in all folders..."
 msgstr "모든 폴더의 새로운 메시지를 확인합니다..."
 
-#: src/folderview.c:1685
+#: src/folderview.c:1688
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "%s 폴더가 선택되었습니다\n"
 
-#: src/folderview.c:1840
+#: src/folderview.c:1843
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "메시지을 보내는 중"
 
-#: src/folderview.c:1875
+#: src/folderview.c:1878
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
 
-#: src/folderview.c:1925
+#: src/folderview.c:1928
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -1869,21 +2235,21 @@ msgstr ""
 "(만일 하위폴더를 저장하기 위한 폴더를 생성하려면,\n"
 "이름의 마지막에 `/'를 추가하세요)"
 
-#: src/folderview.c:1987
+#: src/folderview.c:1990
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "`%s'에대한 새 이름을 넣으세요:"
 
-#: src/folderview.c:1988
+#: src/folderview.c:1991
 msgid "Rename folder"
 msgstr "폴더 이름 변경"
 
-#: src/folderview.c:2079
+#: src/folderview.c:2082
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2142
+#: src/folderview.c:2145
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -1894,21 +2260,21 @@ msgstr ""
 "`%s'아래에 있는 모든 폴더와 메시지가 삭제될 것입니다.\n"
 "정말로 삭제하시겠습니까?"
 
-#: src/folderview.c:2171
+#: src/folderview.c:2174
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2205
+#: src/folderview.c:2208
 msgid "Empty trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:2206
+#: src/folderview.c:2209
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/folderview.c:2242
+#: src/folderview.c:2245
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -1917,34 +2283,34 @@ msgstr ""
 "`%s' 메일박스를 정말로 삭제하시겠습니까?\n"
 "(메시지가 디스크로부터 삭제되는것은 아닙니다)"
 
-#: src/folderview.c:2244
+#: src/folderview.c:2247
 msgid "Remove mailbox"
 msgstr "메일박스를 제거합니다"
 
-#: src/folderview.c:2290
+#: src/folderview.c:2293
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "정말로 `%s' IMAP4 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2291
+#: src/folderview.c:2294
 msgid "Delete IMAP4 account"
 msgstr "IMAP4 계정 삭제"
 
-#: src/folderview.c:2433
+#: src/folderview.c:2436
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "정말로 `%s' 뉴스그룹을 삭제하시겠습니까?"
 
-#: src/folderview.c:2434
+#: src/folderview.c:2437
 msgid "Delete newsgroup"
 msgstr "뉴스그룹 삭제"
 
-#: src/folderview.c:2481
+#: src/folderview.c:2484
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "정말로 `%s' 뉴스그룹 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2482
+#: src/folderview.c:2485
 msgid "Delete news account"
 msgstr "뉴스그룹 계정 삭제"
 
@@ -2005,7 +2371,7 @@ msgstr ""
 msgid "Newsgroups:"
 msgstr "뉴스그룹:"
 
-#: src/headerview.c:57 src/prefs_template.c:178 src/summary_search.c:228
+#: src/headerview.c:57 src/prefs_template.c:179 src/summary_search.c:228
 msgid "Subject:"
 msgstr "제목:"
 
@@ -2028,165 +2394,6 @@ msgstr "이미지 뷰를 생성합니다...\n"
 #: src/imageview.c:109
 msgid "Can't load the image."
 msgstr "이미지를 불러올 수가 없습니다."
-
-#: src/imap.c:461
-#, fuzzy, c-format
-msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
-msgstr "%s:%d에대한 IMAP4 접속이 끊어졌습니다. 다시 접속...\n"
-
-#: src/imap.c:512 src/imap.c:518
-#, fuzzy
-msgid "IMAP4 server disables LOGIN.\n"
-msgstr "IMAP 서버 디렉토리"
-
-#: src/imap.c:593
-#, c-format
-msgid "creating IMAP4 connection to %s:%d ...\n"
-msgstr "%s:%d에대한 IMAP4 접속을 만듭니다 ...\n"
-
-#: src/imap.c:634
-msgid "Can't start TLS session.\n"
-msgstr "TLS 세션을 시작할 수 없습니다.\n"
-
-#: src/imap.c:1421
-#, fuzzy, c-format
-msgid "can't set deleted flags: %s\n"
-msgstr "삭제 플래그를 설정할 수가 없습니다: %d\n"
-
-#: src/imap.c:1429 src/imap.c:1521
-msgid "can't expunge\n"
-msgstr "지울 수가 없습니다\n"
-
-#: src/imap.c:1515
-#, fuzzy
-msgid "can't set deleted flags: 1:*\n"
-msgstr "삭제 플래그를 설정할 수가 없습니다: 1:%d\n"
-
-#: src/imap.c:1560
-#, fuzzy
-msgid "can't close folder\n"
-msgstr "폴더를 선택할 수가 없습니다: %s\n"
-
-#: src/imap.c:1638
-#, fuzzy, c-format
-msgid "root folder %s not exist\n"
-msgstr "표시 파일이 발견되지않음.\n"
-
-#: src/imap.c:1822 src/imap.c:1830
-#, fuzzy
-msgid "error occurred while getting LIST.\n"
-msgstr "LIST를 얻는 도중 에러가 발생.\n"
-
-#: src/imap.c:1944
-#, c-format
-msgid "Can't create '%s'\n"
-msgstr "'%s'를 생성할 수가 없습니다\n"
-
-#: src/imap.c:1949
-#, c-format
-msgid "Can't create '%s' under INBOX\n"
-msgstr "INBOX 아래에 '%s'를 생성할 수가 없습니다\n"
-
-#: src/imap.c:2010
-msgid "can't create mailbox: LIST failed\n"
-msgstr "우편함을 생성할 수 없습니다: LIST 실패\n"
-
-#: src/imap.c:2030
-msgid "can't create mailbox\n"
-msgstr "우편함을 생성할 수 없습니다\n"
-
-#: src/imap.c:2126
-#, c-format
-msgid "can't rename mailbox: %s to %s\n"
-msgstr "우편함명을 바꿀 수 없습니다: %s에서 %s로\n"
-
-#: src/imap.c:2206
-msgid "can't delete mailbox\n"
-msgstr "우편함을 삭제할 수 없습니다\n"
-
-#: src/imap.c:2245
-msgid "can't get envelope\n"
-msgstr "envelope를 얻을 수가 없습니다\n"
-
-#: src/imap.c:2253
-msgid "error occurred while getting envelope.\n"
-msgstr "envelope를 얻는 중 에러 발생.\n"
-
-#: src/imap.c:2274
-#, c-format
-msgid "can't parse envelope: %s\n"
-msgstr "envelope를 파싱할 수가 없습니다: %s\n"
-
-#: src/imap.c:2397
-#, c-format
-msgid "Can't connect to IMAP4 server: %s:%d\n"
-msgstr "%s:%d IMAP4 서버에 연결할 수가 없습니다\n"
-
-#: src/imap.c:2404
-#, c-format
-msgid "Can't establish IMAP4 session with: %s:%d\n"
-msgstr "IMAP4 세션을 만들 수 없습니다: %s: %d\n"
-
-#: src/imap.c:2479
-msgid "can't get namespace\n"
-msgstr "namespace를 얻을 수 없습니다\n"
-
-#: src/imap.c:3006
-#, c-format
-msgid "can't select folder: %s\n"
-msgstr "폴더를 선택할 수가 없습니다: %s\n"
-
-#: src/imap.c:3181
-#, fuzzy
-msgid "IMAP4 authentication failed.\n"
-msgstr "인증 방법"
-
-#: src/imap.c:3198
-msgid "IMAP4 login failed.\n"
-msgstr "IMAP4 로그인을 실패했습니다.\n"
-
-#: src/imap.c:3528
-#, c-format
-msgid "can't append %s to %s\n"
-msgstr "%s를 %s에 붙일 수 없습니다\n"
-
-#: src/imap.c:3535
-msgid "(sending file...)"
-msgstr "(파일을 보냅니다...)"
-
-#: src/imap.c:3563
-#, fuzzy, c-format
-msgid "can't append message to %s\n"
-msgstr "%s 메시지를 추가할 수가 없습니다\n"
-
-#: src/imap.c:3595
-#, fuzzy, c-format
-msgid "can't copy %s to %s\n"
-msgstr "%d를 %s로 복사할 수가 없습니다\n"
-
-#: src/imap.c:3619
-#, fuzzy, c-format
-msgid "error while imap command: STORE %s %s\n"
-msgstr "imap 명령어 실행중 에러: STORE %d:%d %s\n"
-
-#: src/imap.c:3633
-msgid "error while imap command: EXPUNGE\n"
-msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
-
-#: src/imap.c:3646
-#, fuzzy
-msgid "error while imap command: CLOSE\n"
-msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
-
-#: src/imap.c:3879
-#, c-format
-msgid "iconv cannot convert UTF-7 to %s\n"
-msgstr "iconv가 UTF-7를 %s로 변환할 수 없습니다\n"
-
-#: src/imap.c:3909
-#, c-format
-msgid "iconv cannot convert %s to UTF-7\n"
-msgstr "iconv가 %s를 UTF-7로 변환할 수 없습니다\n"
 
 #: src/import.c:144
 msgid "Import"
@@ -2285,7 +2492,7 @@ msgstr "LDIF 파일을 주소록으로 가져오기"
 msgid "Prev"
 msgstr "이전"
 
-#: src/importldif.c:768 src/mainwindow.c:2310
+#: src/importldif.c:768 src/mainwindow.c:2313
 msgid "Next"
 msgstr "다음"
 
@@ -2301,199 +2508,199 @@ msgstr "속성"
 msgid "Finish"
 msgstr ""
 
-#: src/inc.c:158
+#: src/inc.c:157
 #, fuzzy, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "끝났습니다 (%d개의 새로운 메시지)"
 
-#: src/inc.c:162
+#: src/inc.c:161
 #, fuzzy
 msgid "Sylpheed"
 msgstr "예전 Sylpheed"
 
-#: src/inc.c:359
+#: src/inc.c:358
 msgid "Retrieving new messages"
 msgstr "새 메시지를 가져옴"
 
-#: src/inc.c:402
+#: src/inc.c:401
 msgid "Standby"
 msgstr ""
 
-#: src/inc.c:531 src/inc.c:580
+#: src/inc.c:530 src/inc.c:579
 msgid "Cancelled"
 msgstr "취소되었습니다"
 
-#: src/inc.c:542
+#: src/inc.c:541
 msgid "Retrieving"
 msgstr ""
 
-#: src/inc.c:551
+#: src/inc.c:550
 #, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "완료 (%d 메시지 (%s)가 받아짐)"
 
-#: src/inc.c:555
+#: src/inc.c:554
 msgid "Done (no new messages)"
 msgstr "완료 (새 메시지 없음)"
 
-#: src/inc.c:561
+#: src/inc.c:560
 msgid "Connection failed"
 msgstr "연결이 실패했습니다"
 
-#: src/inc.c:564
+#: src/inc.c:563
 msgid "Auth failed"
 msgstr "인증이 실패했습니다."
 
-#: src/inc.c:567
+#: src/inc.c:566
 msgid "Locked"
 msgstr ""
 
-#: src/inc.c:577
+#: src/inc.c:576
 msgid "Timeout"
 msgstr ""
 
-#: src/inc.c:627
+#: src/inc.c:626
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "끝났습니다 (%d개의 새로운 메시지)"
 
-#: src/inc.c:630
+#: src/inc.c:629
 msgid "Finished (no new messages)"
 msgstr "끝났습니다 (새 메시지 없음)"
 
-#: src/inc.c:639
+#: src/inc.c:638
 msgid "Some errors occurred while getting mail."
 msgstr "편지를 받다가 에러가 발생했습니다."
 
-#: src/inc.c:675
+#: src/inc.c:674
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "%s 계정으로부터 새 메시지를 얻습니다...\n"
 
-#: src/inc.c:678
+#: src/inc.c:677
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: 새 메시지를 가져옴"
 
-#: src/inc.c:697
+#: src/inc.c:696
 #, fuzzy, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "POP3 서버 %s에 연결합니다..."
 
-#: src/inc.c:706
+#: src/inc.c:705
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "%s:%d POP3 서버에 연결할 수가 없습니다\n"
 
-#: src/inc.c:785 src/send_message.c:537
+#: src/inc.c:784 src/send_message.c:614
 msgid "Authenticating..."
 msgstr "인증 중입니다..."
 
-#: src/inc.c:786
+#: src/inc.c:785
 #, fuzzy, c-format
 msgid "Retrieving messages from %s..."
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: src/inc.c:791
+#: src/inc.c:790
 msgid "Getting the number of new messages (STAT)..."
 msgstr "새 메시지의 갯수를 얻는 중 (STAT)..."
 
-#: src/inc.c:795
+#: src/inc.c:794
 msgid "Getting the number of new messages (LAST)..."
 msgstr "새 메시지의 갯수를 얻는 중 (LAST)..."
 
-#: src/inc.c:799
+#: src/inc.c:798
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "새 메시지의 갯수를 얻는 중 (UIDL)..."
 
-#: src/inc.c:803
+#: src/inc.c:802
 msgid "Getting the size of messages (LIST)..."
 msgstr "메시지의 크기를 얻는 중 (LIST)..."
 
-#: src/inc.c:813
+#: src/inc.c:812
 #, c-format
 msgid "Deleting message %d"
 msgstr "%d 메시지를 삭제하는 중"
 
-#: src/inc.c:820 src/send_message.c:555
+#: src/inc.c:819 src/send_message.c:632
 msgid "Quitting"
 msgstr "끝마치는 중"
 
-#: src/inc.c:845
+#: src/inc.c:844
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "메시지 (%d / %d) 를 가져오는 중 (%s / %s)"
 
-#: src/inc.c:866
+#: src/inc.c:865
 #, fuzzy, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "완료 (%d 메시지 (%s)가 받아짐)"
 
-#: src/inc.c:1098
+#: src/inc.c:1097
 #, fuzzy
 msgid "Connection failed."
 msgstr "연결이 실패했습니다"
 
-#: src/inc.c:1104
+#: src/inc.c:1103
 msgid "Error occurred while processing mail."
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/inc.c:1109
+#: src/inc.c:1108
 #, fuzzy, c-format
 msgid ""
 "Error occurred while processing mail:\n"
 "%s"
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/inc.c:1115
+#: src/inc.c:1114
 msgid "No disk space left."
 msgstr "디스크에 남은 공간이 없슴."
 
-#: src/inc.c:1120
+#: src/inc.c:1119
 msgid "Can't write file."
 msgstr "파일에 쓸 수가 없습니다."
 
-#: src/inc.c:1125
+#: src/inc.c:1124
 msgid "Socket error."
 msgstr "소켓 에러."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1131 src/send_message.c:490 src/send_message.c:678
+#: src/inc.c:1130 src/send_message.c:567 src/send_message.c:755
 msgid "Connection closed by the remote host."
 msgstr ""
 
-#: src/inc.c:1137
+#: src/inc.c:1136
 msgid "Mailbox is locked."
 msgstr "메일박스가 잠겨있습니다."
 
-#: src/inc.c:1141
+#: src/inc.c:1140
 #, fuzzy, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
 msgstr "메일박스가 잠겨있습니다."
 
-#: src/inc.c:1147 src/send_message.c:663
+#: src/inc.c:1146 src/send_message.c:740
 #, fuzzy
 msgid "Authentication failed."
 msgstr "인증 방법"
 
-#: src/inc.c:1152 src/send_message.c:666
+#: src/inc.c:1151 src/send_message.c:743
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "인증 방법"
 
-#: src/inc.c:1157 src/send_message.c:682
+#: src/inc.c:1156 src/send_message.c:759
 msgid "Session timed out."
 msgstr ""
 
-#: src/inc.c:1193
+#: src/inc.c:1192
 msgid "Incorporation cancelled\n"
 msgstr "병합이 취소되었습니다.\n"
 
-#: src/inc.c:1276
+#: src/inc.c:1275
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s로부터 %s로 새 메시지를 가져옴...\n"
@@ -2511,29 +2718,20 @@ msgstr "암호 입력"
 msgid "Protocol log"
 msgstr "프로토콜 로그"
 
-#: src/main.c:135 src/mh.c:826
-#, c-format
-msgid ""
-"File `%s' already exists.\n"
-"Can't create folder."
-msgstr ""
-"파일 `%s'가 이미 존재합니다.\n"
-"폴더를 생성할 수가 없습니다."
-
-#: src/main.c:183
+#: src/main.c:186
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread가 glib에의해 지원되지않습니다.\n"
 
-#: src/main.c:319
+#: src/main.c:329
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:322
+#: src/main.c:332
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:323
+#: src/main.c:333
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2543,48 +2741,48 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:326
+#: src/main.c:336
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:327
+#: src/main.c:337
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:328
+#: src/main.c:338
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:329
+#: src/main.c:339
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:330
+#: src/main.c:340
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:332
+#: src/main.c:342
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:333
+#: src/main.c:343
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:334
+#: src/main.c:344
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:422
+#: src/main.c:432
 #, fuzzy
 msgid "Filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/main.c:423
+#: src/main.c:433
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2598,19 +2796,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:471
+#: src/main.c:481
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:479
+#: src/main.c:489
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:480
+#: src/main.c:490
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
-#: src/main.c:561
+#: src/main.c:574
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2619,662 +2817,662 @@ msgstr ""
 "OpenPGP 지원기능을 끕니다."
 
 #. remote command mode
-#: src/main.c:608
+#: src/main.c:621
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:808
+#: src/main.c:821
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:809
+#: src/main.c:822
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
 msgstr ""
 
-#: src/mainwindow.c:463
+#: src/mainwindow.c:466
 msgid "/_File/_Folder"
 msgstr "/파일(_F)/폴더(_F)"
 
-#: src/mainwindow.c:464
+#: src/mainwindow.c:467
 msgid "/_File/_Folder/Create _new folder..."
 msgstr "/파일(_F)/폴더(_F)/새 폴더(_n)"
 
-#: src/mainwindow.c:466
+#: src/mainwindow.c:469
 msgid "/_File/_Folder/_Rename folder..."
 msgstr "/파일(_F)/폴더(_F)/폴더 이름 변경(_R)..."
 
-#: src/mainwindow.c:467
+#: src/mainwindow.c:470
 #, fuzzy
 msgid "/_File/_Folder/_Move folder..."
 msgstr "/파일(_F)/폴더(_F)/폴더 이름 변경(_R)..."
 
-#: src/mainwindow.c:468
+#: src/mainwindow.c:471
 msgid "/_File/_Folder/_Delete folder"
 msgstr "/파일(_F)/폴더(_F)/폴더 삭제(_D)"
 
-#: src/mainwindow.c:469
+#: src/mainwindow.c:472
 #, fuzzy
 msgid "/_File/_Mailbox"
 msgstr "/파일(_F)/메일 박스 추가(_A)..."
 
-#: src/mainwindow.c:470
+#: src/mainwindow.c:473
 #, fuzzy
 msgid "/_File/_Mailbox/Add _mailbox..."
 msgstr "/파일(_F)/메일 박스 추가(_A)..."
 
-#: src/mainwindow.c:471
+#: src/mainwindow.c:474
 #, fuzzy
 msgid "/_File/_Mailbox/_Remove mailbox"
 msgstr "/메일박스를 지우기(_m)"
 
-#: src/mainwindow.c:472 src/mainwindow.c:477
+#: src/mainwindow.c:475 src/mainwindow.c:480
 #, fuzzy
 msgid "/_File/_Mailbox/---"
 msgstr "/파일(_F)/폴더(_F)"
 
-#: src/mainwindow.c:473
+#: src/mainwindow.c:476
 #, fuzzy
 msgid "/_File/_Mailbox/_Check for new messages"
 msgstr "/새 메시지 확인(_C)"
 
-#: src/mainwindow.c:475
+#: src/mainwindow.c:478
 #, fuzzy
 msgid "/_File/_Mailbox/Check for new messages in _all mailboxes"
 msgstr "/파일(_F)/모든 폴더의 새 메시지 확인(_C)"
 
-#: src/mainwindow.c:478
+#: src/mainwindow.c:481
 #, fuzzy
 msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/폴더 트리 갱신(_e)"
 
-#: src/mainwindow.c:481
+#: src/mainwindow.c:484
 msgid "/_File/_Import mbox file..."
 msgstr "/파일(_F)/mbox 파일 가져오기(_I)..."
 
-#: src/mainwindow.c:482
+#: src/mainwindow.c:485
 msgid "/_File/_Export to mbox file..."
 msgstr "/파일(_F)/mbox 파일로 저장(_E)..."
 
-#: src/mainwindow.c:484
+#: src/mainwindow.c:487
 #, fuzzy
 msgid "/_File/Empty all _trash"
 msgstr "/파일(_F)/지운 편지함 비우기(_t)"
 
-#: src/mainwindow.c:486 src/messageview.c:138
+#: src/mainwindow.c:489 src/messageview.c:139
 msgid "/_File/_Save as..."
 msgstr "/파일(_F)/새 이름으로(_S)..."
 
-#: src/mainwindow.c:487 src/messageview.c:139
+#: src/mainwindow.c:490 src/messageview.c:140
 msgid "/_File/_Print..."
 msgstr "/파일(_F)/인쇄(_P)..."
 
-#: src/mainwindow.c:489
+#: src/mainwindow.c:492
 #, fuzzy
 msgid "/_File/_Work offline"
 msgstr "/파일(_F)/파일 삽입(_I)"
 
 #. {N_("/_File/_Close"),		"<alt>W", app_exit_cb, 0, NULL},
-#: src/mainwindow.c:492
+#: src/mainwindow.c:495
 msgid "/_File/E_xit"
 msgstr "/파일(_F)/끝내기(_x)"
 
-#: src/mainwindow.c:497
+#: src/mainwindow.c:500
 msgid "/_Edit/Select _thread"
 msgstr "/편집(_E)/쓰레드 선택(_t)"
 
-#: src/mainwindow.c:499 src/messageview.c:147
+#: src/mainwindow.c:502 src/messageview.c:148
 msgid "/_Edit/_Find in current message..."
 msgstr "/편집(_E)/현재 메시지 찾기(_F)..."
 
-#: src/mainwindow.c:501
+#: src/mainwindow.c:504
 msgid "/_Edit/_Search messages..."
 msgstr "/편집(_E)/메시지 찾기(_S)..."
 
-#: src/mainwindow.c:504
+#: src/mainwindow.c:507
 msgid "/_View/Show or hi_de"
 msgstr "/보기(_V)/보이거나 감추기(_d)"
 
-#: src/mainwindow.c:505
+#: src/mainwindow.c:508
 msgid "/_View/Show or hi_de/_Folder tree"
 msgstr "/보기(_V)/보이거나 감추기(d)/폴더 트리(_F)"
 
-#: src/mainwindow.c:507
+#: src/mainwindow.c:510
 msgid "/_View/Show or hi_de/_Message view"
 msgstr "/보기(_V)/보이거나 감추기(_d)/메시지 보기(_M)"
 
-#: src/mainwindow.c:509
+#: src/mainwindow.c:512
 msgid "/_View/Show or hi_de/_Toolbar"
 msgstr "/보기(_V)/보이거나 감추기(_d)/툴바(_T)"
 
-#: src/mainwindow.c:511
+#: src/mainwindow.c:514
 msgid "/_View/Show or hi_de/_Toolbar/Icon _and text"
 msgstr "/보기(_V)/보이거나 감추기(_d)/툴바(_T)/아이콘과 텍스트(_a)"
 
-#: src/mainwindow.c:513
+#: src/mainwindow.c:516
 msgid "/_View/Show or hi_de/_Toolbar/_Icon"
 msgstr "/보기(_V)/보이거나 감추기(_d)/툴바(_T)/아이콘(_I)"
 
-#: src/mainwindow.c:515
+#: src/mainwindow.c:518
 msgid "/_View/Show or hi_de/_Toolbar/_Text"
 msgstr "/보기(_V)/보이거나 감추기(_d)/툴바(_T)/텍스트(_T)"
 
-#: src/mainwindow.c:517
+#: src/mainwindow.c:520
 msgid "/_View/Show or hi_de/_Toolbar/_None"
 msgstr "/보기(_V)/보이거나 감추기(_d)/툴바(_T)/없음(_N)"
 
-#: src/mainwindow.c:519
+#: src/mainwindow.c:522
 msgid "/_View/Show or hi_de/Status _bar"
 msgstr "/보기(_V)/보이거나 감추기(_d)/상태바(_b)"
 
-#: src/mainwindow.c:522
+#: src/mainwindow.c:525
 msgid "/_View/Separate f_older tree"
 msgstr "/보기(_V)/별도의 폴더 트리 창(_o)"
 
-#: src/mainwindow.c:523
+#: src/mainwindow.c:526
 #, fuzzy
 msgid "/_View/Separate _message view"
 msgstr "/보기(_V)/별도의 메시지 창(_e)"
 
-#: src/mainwindow.c:525
+#: src/mainwindow.c:528
 msgid "/_View/_Sort"
 msgstr "/보기(_V)/정렬(_S)"
 
-#: src/mainwindow.c:526
+#: src/mainwindow.c:529
 msgid "/_View/_Sort/by _number"
 msgstr "/보기(_V)/정렬(_S)/번호(_n)"
 
-#: src/mainwindow.c:527
+#: src/mainwindow.c:530
 msgid "/_View/_Sort/by s_ize"
 msgstr "/보기(_V)/정렬(_S)/크기(_i)"
 
-#: src/mainwindow.c:528
+#: src/mainwindow.c:531
 msgid "/_View/_Sort/by _date"
 msgstr "/보기(_V)/정렬(_S)/날짜(_d)"
 
-#: src/mainwindow.c:529
+#: src/mainwindow.c:532
 msgid "/_View/_Sort/by _from"
 msgstr "/보기(_V)/정렬(_S)/보낸 사람(_f)"
 
-#: src/mainwindow.c:530
+#: src/mainwindow.c:533
 #, fuzzy
 msgid "/_View/_Sort/by _recipient"
 msgstr "/보기(_V)/정렬(_S)/크기(_i)"
 
-#: src/mainwindow.c:531
+#: src/mainwindow.c:534
 msgid "/_View/_Sort/by _subject"
 msgstr "/보기(_V)/정렬(_S)/제목(_s)"
 
-#: src/mainwindow.c:532
+#: src/mainwindow.c:535
 msgid "/_View/_Sort/by _color label"
 msgstr "/보기(_V)/정렬(_S)/색 라벨(_c)"
 
-#: src/mainwindow.c:534
+#: src/mainwindow.c:537
 msgid "/_View/_Sort/by _mark"
 msgstr "/보기(_V)/정렬(_S)/표시(_m)"
 
-#: src/mainwindow.c:535
+#: src/mainwindow.c:538
 msgid "/_View/_Sort/by _unread"
 msgstr "/보기(_V)/정렬(_S)/않읽음(_u)"
 
-#: src/mainwindow.c:536
+#: src/mainwindow.c:539
 msgid "/_View/_Sort/by a_ttachment"
 msgstr "/보기(_V)/정렬(_S)/첨부(_t)"
 
-#: src/mainwindow.c:538
+#: src/mainwindow.c:541
 msgid "/_View/_Sort/D_on't sort"
 msgstr "/보기(_V)/정렬(_S)/않함(_o)"
 
-#: src/mainwindow.c:539 src/mainwindow.c:542
+#: src/mainwindow.c:542 src/mainwindow.c:545
 msgid "/_View/_Sort/---"
 msgstr "/보기(_V)/정렬(_S)/---"
 
-#: src/mainwindow.c:540
+#: src/mainwindow.c:543
 msgid "/_View/_Sort/Ascending"
 msgstr "/보기(_V)/정렬(_S)/오름차순"
 
-#: src/mainwindow.c:541
+#: src/mainwindow.c:544
 msgid "/_View/_Sort/Descending"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
 
-#: src/mainwindow.c:543
+#: src/mainwindow.c:546
 msgid "/_View/_Sort/_Attract by subject"
 msgstr "/명령(_S)/정렬(_S)/제목(_A)"
 
-#: src/mainwindow.c:545
+#: src/mainwindow.c:548
 msgid "/_View/Th_read view"
 msgstr "/보기(_V)/쓰레드 보기(_r)"
 
-#: src/mainwindow.c:546
+#: src/mainwindow.c:549
 msgid "/_View/E_xpand all threads"
 msgstr "/보기(_V)/모든 쓰레드 펴기(_x)"
 
-#: src/mainwindow.c:547
+#: src/mainwindow.c:550
 msgid "/_View/Co_llapse all threads"
 msgstr "/보기(_V)/모든 쓰레드 접기(_l)"
 
-#: src/mainwindow.c:548
+#: src/mainwindow.c:551
 msgid "/_View/Set display _item..."
 msgstr "/보기(_V)/표시 항목 설정(_i)..."
 
-#: src/mainwindow.c:551
+#: src/mainwindow.c:554
 msgid "/_View/_Go to"
 msgstr "/보기(_V)/가기(_G)"
 
-#: src/mainwindow.c:552
+#: src/mainwindow.c:555
 msgid "/_View/_Go to/_Prev message"
 msgstr "/명령(_S)/가기(_G)/이전 메시지(_P)"
 
-#: src/mainwindow.c:553
+#: src/mainwindow.c:556
 msgid "/_View/_Go to/_Next message"
 msgstr "/보기(_V)/가기(_G)/다음 메시지(_N)"
 
-#: src/mainwindow.c:554 src/mainwindow.c:559 src/mainwindow.c:562
-#: src/mainwindow.c:567 src/mainwindow.c:572
+#: src/mainwindow.c:557 src/mainwindow.c:562 src/mainwindow.c:565
+#: src/mainwindow.c:570 src/mainwindow.c:575
 msgid "/_View/_Go to/---"
 msgstr "/보기(_V)/가기(_G)/---"
 
-#: src/mainwindow.c:555
+#: src/mainwindow.c:558
 msgid "/_View/_Go to/P_rev unread message"
 msgstr "/보기(_V)/가기(_G)/안읽은 다음 메시지(_e)"
 
-#: src/mainwindow.c:557
+#: src/mainwindow.c:560
 msgid "/_View/_Go to/N_ext unread message"
 msgstr "/보기(_V)/가기(_G)/안읽은 다음 메시지(_e)"
 
-#: src/mainwindow.c:560
+#: src/mainwindow.c:563
 msgid "/_View/_Go to/Prev ne_w message"
 msgstr "/보기(_V)/가기(_G)/이전 새 메시지(_w)"
 
-#: src/mainwindow.c:561
+#: src/mainwindow.c:564
 msgid "/_View/_Go to/Ne_xt new message"
 msgstr "/보기(_V)/가기(_G)/다음 새 메시지(_x)"
 
-#: src/mainwindow.c:563
+#: src/mainwindow.c:566
 msgid "/_View/_Go to/Prev _marked message"
 msgstr "/보기(_V)/가기(_G)/표시된 이전 메시지(_m)"
 
-#: src/mainwindow.c:565
+#: src/mainwindow.c:568
 msgid "/_View/_Go to/Next m_arked message"
 msgstr "/보기(_V)/가기(_G)/표시된 다음 메시지(_a)"
 
-#: src/mainwindow.c:568
+#: src/mainwindow.c:571
 msgid "/_View/_Go to/Prev _labeled message"
 msgstr "/보기(_V)/가기(_G)/꼬리표있는 이전 메시지(_l)"
 
-#: src/mainwindow.c:570
+#: src/mainwindow.c:573
 msgid "/_View/_Go to/Next la_beled message"
 msgstr "/보기(_V)/가기(_G)/꼬리표있는 다음 메시지(_b)"
 
-#: src/mainwindow.c:573
+#: src/mainwindow.c:576
 msgid "/_View/_Go to/Other _folder..."
 msgstr "/보기(_V)/가기(_G)/다른 폴더로(_f)..."
 
-#: src/mainwindow.c:582 src/messageview.c:158
+#: src/mainwindow.c:585 src/messageview.c:159
 #, fuzzy
 msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/보기(_V)/문자셋(_C)/자동(_A)"
 
-#: src/mainwindow.c:633 src/messageview.c:202
+#: src/mainwindow.c:636 src/messageview.c:203
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
 msgstr "/보기(_V)/문자셋(_C)/일본 (ISO-2022-JP-2)"
 
-#: src/mainwindow.c:635 src/messageview.c:204
+#: src/mainwindow.c:638 src/messageview.c:205
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (_EUC-JP)"
 msgstr "/보기(_V)/문자셋(_C)/일본 (_EUC-JP)"
 
-#: src/mainwindow.c:637 src/messageview.c:206
+#: src/mainwindow.c:640 src/messageview.c:207
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (_Shift__JIS)"
 msgstr "/보기(_V)/문자셋(_C)/일본 (_Shift__JIS)"
 
-#: src/mainwindow.c:649 src/messageview.c:217
+#: src/mainwindow.c:652 src/messageview.c:218
 #, fuzzy
 msgid "/_View/Character _encoding/Chinese (ISO-2022-_CN)"
 msgstr "/보기(_V)/문자셋(_C)/Chinese (ISO-2022-_CN)"
 
-#: src/mainwindow.c:655 src/messageview.c:222
+#: src/mainwindow.c:658 src/messageview.c:223
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/보기(_V)/문자셋(_C)/한국 (ISO-2022-KR)"
 
-#: src/mainwindow.c:668 src/summaryview.c:401
+#: src/mainwindow.c:671 src/summaryview.c:401
 msgid "/_View/Open in new _window"
 msgstr "/보기(_V)/새 창으로 열기(_w)"
 
-#: src/mainwindow.c:669 src/messageview.c:234
+#: src/mainwindow.c:672 src/messageview.c:235
 msgid "/_View/Mess_age source"
 msgstr "/보기(_V)/메시지 소스(_a)"
 
-#: src/mainwindow.c:670 src/messageview.c:235
+#: src/mainwindow.c:673 src/messageview.c:236
 msgid "/_View/Show all _header"
 msgstr "/보기(_V)/모든 헤더보기(_h)"
 
-#: src/mainwindow.c:672
+#: src/mainwindow.c:675
 msgid "/_View/_Update summary"
 msgstr "/보기(_V)/요약 갱신(_U)"
 
-#: src/mainwindow.c:674 src/messageview.c:237
+#: src/mainwindow.c:677 src/messageview.c:238
 msgid "/_Message"
 msgstr "/메시지(_M)"
 
-#: src/mainwindow.c:675
+#: src/mainwindow.c:678
 #, fuzzy
 msgid "/_Message/Recei_ve"
 msgstr "/메시지(_M)/다시 편집(_e)"
 
-#: src/mainwindow.c:676
+#: src/mainwindow.c:679
 #, fuzzy
 msgid "/_Message/Recei_ve/Get from _current account"
 msgstr "/메시지(_M)/모든 계정에서 받기(_a)"
 
-#: src/mainwindow.c:678
+#: src/mainwindow.c:681
 #, fuzzy
 msgid "/_Message/Recei_ve/Get from _all accounts"
 msgstr "/메시지(_M)/모든 계정에서 받기(_a)"
 
-#: src/mainwindow.c:680
+#: src/mainwindow.c:683
 #, fuzzy
 msgid "/_Message/Recei_ve/Cancel receivin_g"
 msgstr "/메시지(_M)/받기 취소(_g)"
 
-#: src/mainwindow.c:682
+#: src/mainwindow.c:685
 #, fuzzy
 msgid "/_Message/Recei_ve/---"
 msgstr "/메시지(_M)/다시 편집(_e)"
 
-#: src/mainwindow.c:683
+#: src/mainwindow.c:686
 msgid "/_Message/_Send queued messages"
 msgstr "/메시지(_M)/임시 보관된 메시지 발송(_S)"
 
-#: src/mainwindow.c:684 src/mainwindow.c:686 src/mainwindow.c:693
-#: src/mainwindow.c:698 src/mainwindow.c:702 src/mainwindow.c:711
-#: src/mainwindow.c:714 src/messageview.c:240 src/messageview.c:248
-#: src/messageview.c:253
+#: src/mainwindow.c:687 src/mainwindow.c:689 src/mainwindow.c:696
+#: src/mainwindow.c:701 src/mainwindow.c:705 src/mainwindow.c:714
+#: src/mainwindow.c:717 src/messageview.c:241 src/messageview.c:249
+#: src/messageview.c:254
 msgid "/_Message/---"
 msgstr "/메시지(_M)/---"
 
-#: src/mainwindow.c:685 src/messageview.c:238
+#: src/mainwindow.c:688 src/messageview.c:239
 msgid "/_Message/Compose _new message"
 msgstr "/메시지(_M)/새로 만들기(_n)"
 
-#: src/mainwindow.c:687 src/messageview.c:241
+#: src/mainwindow.c:690 src/messageview.c:242
 msgid "/_Message/_Reply"
 msgstr "/메시지(_M)/회신(_R)"
 
-#: src/mainwindow.c:688
+#: src/mainwindow.c:691
 msgid "/_Message/Repl_y to"
 msgstr "/메시지(_M)/회신(_y)"
 
-#: src/mainwindow.c:689 src/messageview.c:242
+#: src/mainwindow.c:692 src/messageview.c:243
 msgid "/_Message/Repl_y to/_all"
 msgstr "/메시지(_M)/회신(_y)/전체(_a)"
 
-#: src/mainwindow.c:690 src/messageview.c:244
+#: src/mainwindow.c:693 src/messageview.c:245
 msgid "/_Message/Repl_y to/_sender"
 msgstr "/메시지(_M)/회신(_y)/보낸이(_s)"
 
-#: src/mainwindow.c:691 src/messageview.c:246
+#: src/mainwindow.c:694 src/messageview.c:247
 msgid "/_Message/Repl_y to/mailing _list"
 msgstr "/메시지(_M)/회신(_y)/메일링리스트(_l)"
 
-#: src/mainwindow.c:694 src/messageview.c:249
+#: src/mainwindow.c:697 src/messageview.c:250
 msgid "/_Message/_Forward"
 msgstr "/메시지(_M)/전달(_F)"
 
-#: src/mainwindow.c:695 src/messageview.c:250
+#: src/mainwindow.c:698 src/messageview.c:251
 msgid "/_Message/For_ward as attachment"
 msgstr "/메시지(_M)/첨부파일로 전달(_w)"
 
-#: src/mainwindow.c:697 src/messageview.c:252
+#: src/mainwindow.c:700 src/messageview.c:253
 msgid "/_Message/Redirec_t"
 msgstr "/메시지(_M)/Redirec_t"
 
-#: src/mainwindow.c:699
+#: src/mainwindow.c:702
 msgid "/_Message/M_ove..."
 msgstr "/메시지(_M)/이동(_o)..."
 
-#: src/mainwindow.c:700
+#: src/mainwindow.c:703
 msgid "/_Message/_Copy..."
 msgstr "/메시지(_M)/복사(_C)..."
 
-#: src/mainwindow.c:701
+#: src/mainwindow.c:704
 msgid "/_Message/_Delete"
 msgstr "/메시지(_M)/삭제(_D)"
 
-#: src/mainwindow.c:703
+#: src/mainwindow.c:706
 msgid "/_Message/_Mark"
 msgstr "/메시지(_M)/표시(_M)"
 
-#: src/mainwindow.c:704
+#: src/mainwindow.c:707
 msgid "/_Message/_Mark/_Mark"
 msgstr "/메시지(_M)/표시(_M)/표시(_M)"
 
-#: src/mainwindow.c:705
+#: src/mainwindow.c:708
 msgid "/_Message/_Mark/_Unmark"
 msgstr "/메시지(_M)/표시(_M)/표시 지움(_U)"
 
-#: src/mainwindow.c:706
+#: src/mainwindow.c:709
 msgid "/_Message/_Mark/---"
 msgstr "/메시지(_M)/표시(_M)/---"
 
-#: src/mainwindow.c:707
+#: src/mainwindow.c:710
 msgid "/_Message/_Mark/Mark as unr_ead"
 msgstr "/메시지(_M)/표시(_M)/읽지않은 것으로 표시(_e)"
 
-#: src/mainwindow.c:708
+#: src/mainwindow.c:711
 msgid "/_Message/_Mark/Mark as rea_d"
 msgstr "/메시지(_M)/표시(_M)/읽은 것으로 표시(_d)"
 
-#: src/mainwindow.c:710
+#: src/mainwindow.c:713
 msgid "/_Message/_Mark/Mark all _read"
 msgstr "/메시지(_M)/표시(_M)/모두 읽은 것으로 표시(_r)"
 
-#: src/mainwindow.c:712
+#: src/mainwindow.c:715
 #, fuzzy
 msgid "/_Message/Set as _junk mail"
 msgstr "/메시지(_M)/새 메일 받기(_i)"
 
-#: src/mainwindow.c:713
+#: src/mainwindow.c:716
 #, fuzzy
 msgid "/_Message/Set as not j_unk mail"
 msgstr "/메시지(_M)/새 메일 받기(_i)"
 
-#: src/mainwindow.c:715 src/messageview.c:254
+#: src/mainwindow.c:718 src/messageview.c:255
 msgid "/_Message/Re-_edit"
 msgstr "/메시지(_M)/다시 편집(_e)"
 
-#: src/mainwindow.c:719
+#: src/mainwindow.c:722
 #, fuzzy
 msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/도구(_T)/주소록에 보낸이 추가(_k)"
 
-#: src/mainwindow.c:722
+#: src/mainwindow.c:725
 #, fuzzy
 msgid "/_Tools/_Filter all messages in folder"
 msgstr "/도구(_T)/메시지 필터(_F)"
 
-#: src/mainwindow.c:724
+#: src/mainwindow.c:727
 #, fuzzy
 msgid "/_Tools/Filter _selected messages"
 msgstr "/도구(_T)/메시지 필터(_F)"
 
-#: src/mainwindow.c:726 src/messageview.c:261
+#: src/mainwindow.c:729 src/messageview.c:262
 msgid "/_Tools/_Create filter rule"
 msgstr "/도구(_T)/필터 규칙 생성(_C)"
 
-#: src/mainwindow.c:727 src/messageview.c:263
+#: src/mainwindow.c:730 src/messageview.c:264
 msgid "/_Tools/_Create filter rule/_Automatically"
 msgstr "/도구(_T)/필터 규칙 생성(_C)/자동(_A)"
 
-#: src/mainwindow.c:729 src/messageview.c:265
+#: src/mainwindow.c:732 src/messageview.c:266
 msgid "/_Tools/_Create filter rule/by _From"
 msgstr "/도구(_T)/필터 규칙 생성(_C)/보낸이로(_F)"
 
-#: src/mainwindow.c:731 src/messageview.c:267
+#: src/mainwindow.c:734 src/messageview.c:268
 msgid "/_Tools/_Create filter rule/by _To"
 msgstr "/도구(_T)/필터 규칙 생성(_C)/받는이로(_T)"
 
-#: src/mainwindow.c:733 src/messageview.c:269
+#: src/mainwindow.c:736 src/messageview.c:270
 msgid "/_Tools/_Create filter rule/by _Subject"
 msgstr "/도구(_T)/필터 규칙 생성(_C)/제목으로(_S)"
 
-#: src/mainwindow.c:736
+#: src/mainwindow.c:739
 #, fuzzy
 msgid "/_Tools/Filter _junk mails in folder"
 msgstr "/도구(_T)/메시지 필터(_F)"
 
-#: src/mainwindow.c:738
+#: src/mainwindow.c:741
 #, fuzzy
 msgid "/_Tools/Filter junk _mails in selected messages"
 msgstr "/도구(_T)/메시지 필터(_F)"
 
-#: src/mainwindow.c:743
+#: src/mainwindow.c:746
 msgid "/_Tools/Delete du_plicated messages"
 msgstr "/도구(_T)/중복된 메시지 지우기(_p)"
 
-#: src/mainwindow.c:746
+#: src/mainwindow.c:749
 msgid "/_Tools/E_xecute"
 msgstr "/도구(_T)/실행(_x)"
 
-#: src/mainwindow.c:748
+#: src/mainwindow.c:751
 msgid "/_Tools/_Log window"
 msgstr "/도구(_T)/로그 창(_L)"
 
-#: src/mainwindow.c:750
+#: src/mainwindow.c:753
 msgid "/_Configuration"
 msgstr "/설정(_C)"
 
-#: src/mainwindow.c:751
+#: src/mainwindow.c:754
 msgid "/_Configuration/_Common preferences..."
 msgstr "/설정(_C)/기본적인 설정(_C)..."
 
-#: src/mainwindow.c:753
+#: src/mainwindow.c:756
 msgid "/_Configuration/_Filter setting..."
 msgstr "/설정(_C)/필터 설정(_F)..."
 
-#: src/mainwindow.c:755
+#: src/mainwindow.c:758
 msgid "/_Configuration/_Template..."
 msgstr "/설정(_C)/템플릿(_T)..."
 
-#: src/mainwindow.c:756
+#: src/mainwindow.c:759
 msgid "/_Configuration/_Actions..."
 msgstr "/설정(_C)/동작(_A)..."
 
-#: src/mainwindow.c:757
+#: src/mainwindow.c:760
 msgid "/_Configuration/---"
 msgstr "/설정(_C)/---"
 
-#: src/mainwindow.c:758
+#: src/mainwindow.c:761
 msgid "/_Configuration/_Preferences for current account..."
 msgstr "/설정(_C)/계정에 따른 설정(_P)..."
 
-#: src/mainwindow.c:760
+#: src/mainwindow.c:763
 msgid "/_Configuration/Create _new account..."
 msgstr "/설정(_C)/새 계정 만들기(_n)..."
 
-#: src/mainwindow.c:762
+#: src/mainwindow.c:765
 msgid "/_Configuration/_Edit accounts..."
 msgstr "/설정(_C)/계정 편집(_E)..."
 
-#: src/mainwindow.c:764
+#: src/mainwindow.c:767
 msgid "/_Configuration/C_hange current account"
 msgstr "/설정(_C)/현재 계정을 변경(_h)"
 
-#: src/mainwindow.c:768
+#: src/mainwindow.c:771
 msgid "/_Help/_Manual"
 msgstr "/도움말(_H)/설명서(_M)"
 
-#: src/mainwindow.c:769
+#: src/mainwindow.c:772
 msgid "/_Help/_Manual/_English"
 msgstr "/도움말(_H)/설명서(_M)/영어(_E)"
 
-#: src/mainwindow.c:770
+#: src/mainwindow.c:773
 msgid "/_Help/_Manual/_Japanese"
 msgstr "/도움말(_H)/설명서(_M)/일본어(_J)"
 
-#: src/mainwindow.c:771
+#: src/mainwindow.c:774
 msgid "/_Help/_FAQ"
 msgstr "/도움말(_H)/FAQ(_F)"
 
-#: src/mainwindow.c:772
+#: src/mainwindow.c:775
 msgid "/_Help/_FAQ/_English"
 msgstr "/도움말(_H)/FAQ(_F)/영어(_E)"
 
-#: src/mainwindow.c:773
+#: src/mainwindow.c:776
 msgid "/_Help/_FAQ/_German"
 msgstr "/도움말(_H)/FAQ(_F)/독일어(_G)"
 
-#: src/mainwindow.c:774
+#: src/mainwindow.c:777
 msgid "/_Help/_FAQ/_Spanish"
 msgstr "/도움말(_H)/FAQ(_F)/스페인어(_S)"
 
-#: src/mainwindow.c:775
+#: src/mainwindow.c:778
 msgid "/_Help/_FAQ/_French"
 msgstr "/도움말(_H)/FAQ(_F)/프랑스어(_F)"
 
-#: src/mainwindow.c:776
+#: src/mainwindow.c:779
 msgid "/_Help/_FAQ/_Italian"
 msgstr "/도움말(_H)/FAQ(_F)/이태리어(_I)"
 
-#: src/mainwindow.c:777
+#: src/mainwindow.c:780
 msgid "/_Help/---"
 msgstr "/도움말(_H)/---"
 
-#: src/mainwindow.c:819
+#: src/mainwindow.c:822
 msgid "Creating main window...\n"
 msgstr "새 창을 만듭니다...\n"
 
-#: src/mainwindow.c:980
+#: src/mainwindow.c:983
 #, c-format
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "메인 창: 색 할당 %d 실패\n"
 
-#: src/mainwindow.c:1064 src/summaryview.c:2021 src/summaryview.c:2106
+#: src/mainwindow.c:1067 src/summaryview.c:2021 src/summaryview.c:2106
 #: src/summaryview.c:3343 src/summaryview.c:3416 src/summaryview.c:3729
 msgid "done.\n"
 msgstr "마침.\n"
 
-#: src/mainwindow.c:1189 src/mainwindow.c:1230 src/mainwindow.c:1258
+#: src/mainwindow.c:1192 src/mainwindow.c:1233 src/mainwindow.c:1261
 msgid "Untitled"
 msgstr "제목 없슴"
 
-#: src/mainwindow.c:1259
+#: src/mainwindow.c:1262
 msgid "none"
 msgstr "없음"
 
-#: src/mainwindow.c:1309
+#: src/mainwindow.c:1312
 #, c-format
 msgid "Changing window separation type from %d to %d\n"
 msgstr "창 분리 형식을 %d에서 %d로 바꿉니다\n"
 
-#: src/mainwindow.c:1529
+#: src/mainwindow.c:1532
 msgid "Offline"
 msgstr ""
 
-#: src/mainwindow.c:1530
+#: src/mainwindow.c:1533
 msgid "You are offline. Go online?"
 msgstr ""
 
-#: src/mainwindow.c:1544
+#: src/mainwindow.c:1547
 #, fuzzy
 msgid "Empty all trash"
 msgstr "지운 편지함 비우기"
 
-#: src/mainwindow.c:1545
+#: src/mainwindow.c:1548
 #, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/mainwindow.c:1573
+#: src/mainwindow.c:1576
 msgid "Add mailbox"
 msgstr "메일박스 추가"
 
-#: src/mainwindow.c:1574
+#: src/mainwindow.c:1577
 msgid ""
 "Input the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3284,16 +3482,16 @@ msgstr ""
 "기존의 메일 박스가 지정되면 자동으로\n"
 "스캔될것입니다."
 
-#: src/mainwindow.c:1580
+#: src/mainwindow.c:1583
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "메일 박스 `%s'가 이미 존재합니다."
 
-#: src/mainwindow.c:1585 src/setup.c:57
+#: src/mainwindow.c:1588 src/setup.c:57
 msgid "Mailbox"
 msgstr "메일박스"
 
-#: src/mainwindow.c:1591 src/setup.c:63
+#: src/mainwindow.c:1594 src/setup.c:63
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3302,153 +3500,152 @@ msgstr ""
 "메일박스 생성이 실패했습니다.\n"
 "아마 어떤 파일이 이미 존재하거나 그 곳에 쓰기 권한이 없습니다."
 
-#: src/mainwindow.c:1982
+#: src/mainwindow.c:1985
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 폴더 보기"
 
-#: src/mainwindow.c:2002 src/messageview.c:368
+#: src/mainwindow.c:2005 src/messageview.c:369
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 메시지 보기"
 
-#: src/mainwindow.c:2149 src/summaryview.c:370
+#: src/mainwindow.c:2152 src/summaryview.c:370
 msgid "/_Reply"
 msgstr "/회신(_R)"
 
-#: src/mainwindow.c:2150
+#: src/mainwindow.c:2153
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2151
+#: src/mainwindow.c:2154
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/회신(_y)/보낸이(_s)"
 
-#: src/mainwindow.c:2152
+#: src/mainwindow.c:2155
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/회신(_y)/메일링리스트(_l)"
 
-#: src/mainwindow.c:2157 src/summaryview.c:377
+#: src/mainwindow.c:2160 src/summaryview.c:377
 msgid "/_Forward"
 msgstr "/전달(_F)"
 
-#: src/mainwindow.c:2158 src/summaryview.c:378
+#: src/mainwindow.c:2161 src/summaryview.c:378
 msgid "/For_ward as attachment"
 msgstr "/첨부로 전달(_w)"
 
-#: src/mainwindow.c:2159 src/summaryview.c:379
+#: src/mainwindow.c:2162 src/summaryview.c:379
 msgid "/Redirec_t"
 msgstr "/Redirec_t"
 
-#: src/mainwindow.c:2195
+#: src/mainwindow.c:2198
 msgid "Get"
 msgstr "받기"
 
-#: src/mainwindow.c:2196
+#: src/mainwindow.c:2199
 msgid "Incorporate new mail"
 msgstr "새 메일을 가져옵니다"
 
-#: src/mainwindow.c:2203
+#: src/mainwindow.c:2206
 msgid "Get all"
 msgstr "전부 받기"
 
-#: src/mainwindow.c:2204
+#: src/mainwindow.c:2207
 msgid "Incorporate new mail of all accounts"
 msgstr "모든 계정에서 새 메일을 가져옵니다"
 
-#: src/mainwindow.c:2215
+#: src/mainwindow.c:2218
 msgid "Send queued message(s)"
 msgstr "임시 보관된 메시지를 보냅니다"
 
-#: src/mainwindow.c:2225 src/prefs_account.c:730 src/prefs_common.c:952
-#: src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "작성"
 
-#: src/mainwindow.c:2226
+#: src/mainwindow.c:2229
 msgid "Compose new message"
 msgstr "새 메시지를 작성합니다"
 
-#: src/mainwindow.c:2234 src/prefs_common.c:1451
+#: src/mainwindow.c:2237
 msgid "Reply"
 msgstr "회신"
 
-#: src/mainwindow.c:2235 src/mainwindow.c:2248
+#: src/mainwindow.c:2238 src/mainwindow.c:2251
 msgid "Reply to the message"
 msgstr "메시지에 회신을 보냅니다"
 
-#: src/mainwindow.c:2252
+#: src/mainwindow.c:2255
 msgid "Reply all"
 msgstr "전체 회신"
 
-#: src/mainwindow.c:2253
+#: src/mainwindow.c:2256
 msgid "Reply to all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2261 src/prefs_filter_edit.c:741
+#: src/mainwindow.c:2264 src/prefs_filter_edit.c:741
 msgid "Forward"
 msgstr "전달"
 
-#: src/mainwindow.c:2262 src/mainwindow.c:2275
+#: src/mainwindow.c:2265 src/mainwindow.c:2278
 msgid "Forward the message"
 msgstr "메시지를 다른 사람에게 전달합니다"
 
-#: src/mainwindow.c:2282
+#: src/mainwindow.c:2285
 msgid "Delete the message"
 msgstr "메시지를 지웁니다"
 
-#: src/mainwindow.c:2290 src/prefs_common.c:1982
+#: src/mainwindow.c:2293
 msgid "Junk"
 msgstr ""
 
-#: src/mainwindow.c:2291
+#: src/mainwindow.c:2294
 #, fuzzy
 msgid "Set as junk mail"
 msgstr "기본 계정으로 설정"
 
-#: src/mainwindow.c:2300
+#: src/mainwindow.c:2303
 msgid "Execute"
 msgstr "실행"
 
-#: src/mainwindow.c:2301
+#: src/mainwindow.c:2304
 msgid "Execute marked process"
 msgstr "표시된 프로세스들을 실행합니다"
 
-#: src/mainwindow.c:2311
+#: src/mainwindow.c:2314
 msgid "Next unread message"
 msgstr "다음 안 읽은 메시지를 보여줍니다"
 
-#: src/mainwindow.c:2323
+#: src/mainwindow.c:2326
 msgid "Prefs"
 msgstr "설정"
 
-#: src/mainwindow.c:2324
+#: src/mainwindow.c:2327
 msgid "Common preferences"
 msgstr "기본적인 환경 설정"
 
-#: src/mainwindow.c:2332 src/prefs_folder_item.c:262
+#: src/mainwindow.c:2335 src/prefs_folder_item.c:262
 #: src/prefs_folder_item.c:273 src/progressdialog.c:128
 msgid "Account"
 msgstr "계정"
 
-#: src/mainwindow.c:2333
+#: src/mainwindow.c:2336
 msgid "Account setting"
 msgstr "계정을 설정합니다"
 
-#: src/mainwindow.c:2505
+#: src/mainwindow.c:2508
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2516
+#: src/mainwindow.c:2519
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2709
+#: src/mainwindow.c:2712
 msgid "Exit"
 msgstr "끝내기"
 
-#: src/mainwindow.c:2709
+#: src/mainwindow.c:2712
 msgid "Exit this program?"
 msgstr "이 프로그램을 끝내시겠습니까?"
 
@@ -3566,32 +3763,32 @@ msgstr "메시지의 끝에 도달했습니다; 시작부분에서 계속할까�
 msgid "Search finished"
 msgstr "찾기가 완료"
 
-#: src/messageview.c:258
+#: src/messageview.c:259
 msgid "/_Tools/Add sender to address boo_k"
 msgstr "/도구(_T)/주소록에 보낸이 추가(_k)"
 
-#: src/messageview.c:288
+#: src/messageview.c:289
 msgid "Creating message view...\n"
 msgstr "메시지 뷰를 생성합니다...\n"
 
-#: src/messageview.c:313 src/prefs_common.c:1647
+#: src/messageview.c:314
 msgid "Text"
 msgstr "텍스트"
 
-#: src/messageview.c:318
+#: src/messageview.c:319
 msgid "Attachments"
 msgstr "첨부"
 
-#: src/messageview.c:658 src/summaryview.c:2944
+#: src/messageview.c:659 src/summaryview.c:2944
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "`%s' 파일을 저장할 수가 없습니다."
 
-#: src/messageview.c:713 src/prefs_common.c:2365 src/summaryview.c:2963
+#: src/messageview.c:714 src/summaryview.c:2963
 msgid "Print"
 msgstr "인쇄"
 
-#: src/messageview.c:714 src/summaryview.c:2964
+#: src/messageview.c:715 src/summaryview.c:2964
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3600,7 +3797,7 @@ msgstr ""
 "인쇄 명령어서 입력하세요:\n"
 "(`%s'는 파일이름으로 대체될 것입니다)"
 
-#: src/messageview.c:720 src/summaryview.c:2970
+#: src/messageview.c:721 src/summaryview.c:2970
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -3608,41 +3805,6 @@ msgid ""
 msgstr ""
 "인쇄 명령어가 올바르지않습니다:\n"
 "`%s'"
-
-#: src/mh.c:412
-#, c-format
-msgid "can't copy message %s to %s\n"
-msgstr "메시지 %s을 %s로 복사할 수가 없습니다\n"
-
-#: src/mh.c:486 src/mh.c:607
-msgid "Can't open mark file.\n"
-msgstr "표시 파일을 열 수가 없습니다.\n"
-
-#: src/mh.c:493 src/mh.c:613
-msgid "the src folder is identical to the dest.\n"
-msgstr "옮길 폴더와 옮겨질 폴더가 같습니다.\n"
-
-#: src/mh.c:616
-#, c-format
-msgid "Copying message %s%c%d to %s ...\n"
-msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
-
-#: src/mh.c:783
-#, c-format
-msgid "Last number in dir %s = %d\n"
-msgstr "디렉토리 %s에서 마지막 숫자 = %d\n"
-
-#: src/mh.c:1321
-#, c-format
-msgid ""
-"Directory name\n"
-"'%s' is not a valid UTF-8 string.\n"
-"Maybe the locale encoding is used for filename.\n"
-"If that is the case, you must set the following environmental variable\n"
-"(see README for detail):\n"
-"\n"
-"\tG_FILENAME_ENCODING=@locale\n"
-msgstr ""
 
 #: src/mimeview.c:124
 msgid "/_Open"
@@ -3729,116 +3891,15 @@ msgstr ""
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "마임 뷰어의 명령행이 부적절합니다: `%s'"
 
-#: src/news.c:209
-#, c-format
-msgid "creating NNTP connection to %s:%d ...\n"
-msgstr "%s:%d로 NNTP 접속을 생성합니다...\n"
-
-#: src/news.c:279
-#, c-format
-msgid "NNTP connection to %s:%d has been disconnected. Reconnecting...\n"
-msgstr "%s:%d로의 NNTP 연결이 끊어졌습니다. 다시 연결합니다...\n"
-
-#: src/news.c:370
-#, c-format
-msgid "article %d has been already cached.\n"
-msgstr "기사 %d는 이미 캐쉬되었습니다.\n"
-
-#: src/news.c:390
-#, c-format
-msgid "getting article %d...\n"
-msgstr "기사 %d를 얻습니다...\n"
-
-#: src/news.c:394
-#, c-format
-msgid "can't read article %d\n"
-msgstr "기사 %d를 읽을 수가 없습니다\n"
-
-#: src/news.c:548
-msgid "can't retrieve newsgroup list\n"
-msgstr "뉴스그룹 목록을 받을 수가 없습니다\n"
-
-#: src/news.c:661
-msgid "can't post article.\n"
-msgstr "기사를 올릴 수가 없습니다.\n"
-
-#: src/news.c:687
-#, c-format
-msgid "can't retrieve article %d\n"
-msgstr "기사 %d를 가져올 수가 없습니다\n"
-
-#: src/news.c:744
-#, fuzzy, c-format
-msgid "can't select group: %s\n"
-msgstr "%s 그룹을 선택할 수가 없습니다\n"
-
-#: src/news.c:781
-#, c-format
-msgid "invalid article range: %d - %d\n"
-msgstr "올바르지않은 기사 범위: %d - %d\n"
-
-#: src/news.c:794
-msgid "no new articles.\n"
-msgstr "새 기사가 없습니다.\n"
-
-#: src/news.c:804
-#, c-format
-msgid "getting xover %d - %d in %s...\n"
-msgstr "%3$s에서 %1$d - %2$d xover를 가져옴...\n"
-
-#: src/news.c:808
-msgid "can't get xover\n"
-msgstr "xover를 가져올 수가 없습니다\n"
-
-#: src/news.c:818
-msgid "error occurred while getting xover.\n"
-msgstr "xover를 얻는 도중 에러가 발생.\n"
-
-#: src/news.c:828
-#, c-format
-msgid "invalid xover line: %s\n"
-msgstr "올바르지않은 xover line: %s\n"
-
-#: src/news.c:847 src/news.c:879
-msgid "can't get xhdr\n"
-msgstr "xhdr을 가져올 수가 없습니다\n"
-
-#: src/news.c:859 src/news.c:891
-msgid "error occurred while getting xhdr.\n"
-msgstr "xhdr을 얻는 도중 에러가 발생.\n"
-
-#: src/nntp.c:68
-#, c-format
-msgid "Can't connect to NNTP server: %s:%d\n"
-msgstr "%s:%d NNTP 서버에 연결할 수가 없습니다\n"
-
-#: src/nntp.c:164 src/nntp.c:227
-#, c-format
-msgid "protocol error: %s\n"
-msgstr "프로토콜 에러: %s\n"
-
-#: src/nntp.c:187 src/nntp.c:233
-msgid "protocol error\n"
-msgstr "프로토콜 에러\n"
-
-#: src/nntp.c:283
-msgid "Error occurred while posting\n"
-msgstr "글을 올리는 도중 에러 발생\n"
-
-#: src/nntp.c:363
-#, fuzzy
-msgid "Error occurred while sending command\n"
-msgstr "메일을 처리하는 도중 에러"
-
-#: src/passphrase.c:88
+#: src/passphrase.c:90
 msgid "Passphrase"
 msgstr "Passphrase"
 
-#: src/passphrase.c:239
+#: src/passphrase.c:241
 msgid "[no user id]"
 msgstr "[사용자 아이디 없음]"
 
-#: src/passphrase.c:247
+#: src/passphrase.c:249
 #, c-format
 msgid ""
 "%sPlease enter the passphrase for:\n"
@@ -3851,458 +3912,13 @@ msgstr ""
 "  %.*s  \n"
 "(%.*s)\n"
 
-#: src/passphrase.c:251
+#: src/passphrase.c:253
 msgid ""
 "Bad passphrase! Try again...\n"
 "\n"
 msgstr ""
 "Bad passphrase! 다시 시도하세요...\n"
 "\n"
-
-#: src/pop.c:149
-msgid "Required APOP timestamp not found in greeting\n"
-msgstr "greeting에서 발견되지않은 APOP 타임 스탬프가 요구됨\n"
-
-#: src/pop.c:156
-msgid "Timestamp syntax error in greeting\n"
-msgstr "greeting에서 타임 스탬프에 문법 오류\n"
-
-#: src/pop.c:182 src/pop.c:209
-msgid "POP3 protocol error\n"
-msgstr "POP3 프로토콜 에러\n"
-
-#: src/pop.c:254
-#, fuzzy, c-format
-msgid "invalid UIDL response: %s\n"
-msgstr "올바르지않은 xover line: %s\n"
-
-#: src/pop.c:616
-#, c-format
-msgid "POP3: Deleting expired message %d\n"
-msgstr "POP3: 만료된 메시지 %d를 삭제합니다\n"
-
-#: src/pop.c:624
-#, c-format
-msgid "POP3: Skipping message %d (%d bytes)\n"
-msgstr "POP3: 메시지 %d를 건너뜁니다 (%d 바이트)\n"
-
-#: src/pop.c:655
-msgid "mailbox is locked\n"
-msgstr "우편함이 잠겨있습니다\n"
-
-#: src/pop.c:658
-msgid "session timeout\n"
-msgstr ""
-
-#: src/pop.c:664 src/smtp.c:557
-msgid "can't start TLS session\n"
-msgstr "TLS 세션을 시작할 수 없습니다\n"
-
-#: src/pop.c:671 src/smtp.c:492
-msgid "error occurred on authentication\n"
-msgstr "인증 도중 에러 발생\n"
-
-#: src/pop.c:676
-#, fuzzy
-msgid "command not supported\n"
-msgstr "명령어"
-
-#: src/pop.c:680
-#, fuzzy
-msgid "error occurred on POP3 session\n"
-msgstr "인증 도중 에러 발생\n"
-
-#: src/prefs_account.c:631
-msgid "Opening account preferences window...\n"
-msgstr "계정 설정 창을 엽니다...\n"
-
-#: src/prefs_account.c:659
-#, c-format
-msgid "Account%d"
-msgstr "계정%d"
-
-#: src/prefs_account.c:678
-msgid "Preferences for new account"
-msgstr "새 계정에대한 설정"
-
-#: src/prefs_account.c:683
-msgid "Account preferences"
-msgstr "계정 기본 설정"
-
-#: src/prefs_account.c:706
-msgid "Creating account preferences window...\n"
-msgstr "계정 설정 창을 생성합니다...\n"
-
-#: src/prefs_account.c:726 src/prefs_common.c:948
-msgid "Receive"
-msgstr "받기"
-
-#: src/prefs_account.c:733 src/prefs_common.c:963
-msgid "Privacy"
-msgstr "프라이버시"
-
-#: src/prefs_account.c:737
-msgid "SSL"
-msgstr "SSL"
-
-#: src/prefs_account.c:740 src/prefs_common.c:970
-msgid "Advanced"
-msgstr "고급"
-
-#: src/prefs_account.c:789
-msgid "Name of this account"
-msgstr "이 계정의 이름"
-
-#: src/prefs_account.c:798
-msgid "Set as default"
-msgstr "기본 계정으로 설정"
-
-#: src/prefs_account.c:802
-msgid "Personal information"
-msgstr "신상 정보"
-
-#: src/prefs_account.c:811
-msgid "Full name"
-msgstr "정식 이름"
-
-#: src/prefs_account.c:817
-msgid "Mail address"
-msgstr "메일 주소"
-
-#: src/prefs_account.c:823
-msgid "Organization"
-msgstr "기관"
-
-#: src/prefs_account.c:847
-msgid "Server information"
-msgstr "서버 정보"
-
-#: src/prefs_account.c:868 src/prefs_account.c:1023 src/prefs_account.c:1659
-msgid "POP3"
-msgstr "POP3"
-
-#: src/prefs_account.c:870 src/prefs_account.c:1128 src/prefs_account.c:1676
-#: src/prefs_account.c:1851
-msgid "IMAP4"
-msgstr "IMAP4"
-
-#: src/prefs_account.c:872
-msgid "News (NNTP)"
-msgstr "뉴스(NNTP)"
-
-#: src/prefs_account.c:874
-msgid "None (local)"
-msgstr "로컬"
-
-#: src/prefs_account.c:887
-msgid "This server requires authentication"
-msgstr "이 서버는 인증을 필요로 합니다"
-
-#: src/prefs_account.c:926
-msgid "News server"
-msgstr "뉴스 서버"
-
-#: src/prefs_account.c:932
-msgid "Server for receiving"
-msgstr "받는 서버"
-
-#: src/prefs_account.c:938
-msgid "SMTP server (send)"
-msgstr "SMTP 서버(발송용)"
-
-#: src/prefs_account.c:945 src/prefs_account.c:1320
-msgid "User ID"
-msgstr "사용자 계정"
-
-#: src/prefs_account.c:951 src/prefs_account.c:1329
-msgid "Password"
-msgstr "암호"
-
-#: src/prefs_account.c:1031
-#, fuzzy
-msgid "Use secure authentication (APOP)"
-msgstr "이 서버는 인증을 필요로 합니다"
-
-#: src/prefs_account.c:1034
-msgid "Remove messages on server when received"
-msgstr "받은 후 서버에서 메시지를 지움"
-
-#: src/prefs_account.c:1045
-msgid "Remove after"
-msgstr ""
-
-#: src/prefs_account.c:1054
-msgid "days"
-msgstr ""
-
-#: src/prefs_account.c:1071
-msgid "(0 days: remove immediately)"
-msgstr "(0 일: 즉시 삭제)"
-
-#: src/prefs_account.c:1078
-msgid "Download all messages on server"
-msgstr "서버에서 모든 메시지를 받음"
-
-#: src/prefs_account.c:1084
-msgid "Receive size limit"
-msgstr "받을 크기 한도"
-
-#: src/prefs_account.c:1091 src/prefs_filter_edit.c:643
-#: src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr ""
-
-#: src/prefs_account.c:1098
-msgid "Filter messages on receiving"
-msgstr "받을때 메시지를 필터링"
-
-#: src/prefs_account.c:1106
-msgid "Default inbox"
-msgstr "기본 우편함"
-
-#: src/prefs_account.c:1126
-#, fuzzy
-msgid "Unfiltered messages will be stored in this folder."
-msgstr "(필터링 되지 않은 메시지는 이 폴더에 저장될 것입니다)"
-
-#: src/prefs_account.c:1139 src/prefs_account.c:1290
-msgid "Authentication method"
-msgstr "인증 방법"
-
-#: src/prefs_account.c:1149 src/prefs_account.c:1300 src/prefs_common.c:1297
-msgid "Automatic"
-msgstr "자동"
-
-#: src/prefs_account.c:1155
-msgid "News"
-msgstr "뉴스"
-
-#: src/prefs_account.c:1167
-#, fuzzy
-msgid "Maximum number of articles to download"
-msgstr ""
-"내려받을 최대 기사 수\n"
-"(0인 경우 제한 없음)"
-
-#: src/prefs_account.c:1184
-#, fuzzy
-msgid "No limit if 0 is specified."
-msgstr "받는 사람이 지정되지않았습니다"
-
-#: src/prefs_account.c:1188
-msgid "`Get all' checks for new messages on this account"
-msgstr ""
-
-#: src/prefs_account.c:1240 src/prefs_customheader.c:190
-msgid "Header"
-msgstr "헤더"
-
-#: src/prefs_account.c:1247
-msgid "Add Date header field"
-msgstr "Date 헤더 항목을 추가"
-
-#: src/prefs_account.c:1248
-msgid "Generate Message-ID"
-msgstr "Message-ID 생성"
-
-#: src/prefs_account.c:1255
-msgid "Add user-defined header"
-msgstr "사용자 정의된 헤더 추가"
-
-#: src/prefs_account.c:1257 src/prefs_common.c:1804 src/prefs_common.c:1829
-msgid " Edit... "
-msgstr " 편집..."
-
-#: src/prefs_account.c:1267
-msgid "Authentication"
-msgstr "인증"
-
-#: src/prefs_account.c:1275
-msgid "SMTP Authentication (SMTP AUTH)"
-msgstr "SMTP 인증(SMTP AUTH)"
-
-#: src/prefs_account.c:1351
-msgid ""
-"If you leave these entries empty, the same user ID and password as receiving "
-"will be used."
-msgstr ""
-
-#: src/prefs_account.c:1363
-msgid "Authenticate with POP3 before sending"
-msgstr "보내기전 POP3와 인증"
-
-#: src/prefs_account.c:1419
-#, fuzzy
-msgid "Command output"
-msgstr "명령어"
-
-#: src/prefs_account.c:1430 src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "다음 주소를 자동적으로 정함"
-
-#: src/prefs_account.c:1439
-msgid "Cc"
-msgstr "참조"
-
-#: src/prefs_account.c:1452
-msgid "Bcc"
-msgstr "숨은 참조"
-
-#: src/prefs_account.c:1465
-msgid "Reply-To"
-msgstr "회신주소"
-
-#: src/prefs_account.c:1518
-msgid "Sign message by default"
-msgstr "기본으로 메시지에 사인을 함"
-
-#: src/prefs_account.c:1520
-msgid "Encrypt message by default"
-msgstr "기본으로 메시지를 암호화"
-
-#: src/prefs_account.c:1522
-msgid "Encrypt when replying to encrypted message"
-msgstr ""
-
-#: src/prefs_account.c:1524
-msgid "Use ASCII-armored format for encryption"
-msgstr ""
-
-#: src/prefs_account.c:1526
-msgid "Use clear text signature"
-msgstr "순수한 텍스트 서명 사용"
-
-#: src/prefs_account.c:1531
-msgid "Sign key"
-msgstr ""
-
-#: src/prefs_account.c:1539
-msgid "Use default GnuPG key"
-msgstr "기본 GnuPG 키 사용"
-
-#: src/prefs_account.c:1548
-msgid "Select key by your email address"
-msgstr "당신의 전자우편 주소로 키 선택"
-
-#: src/prefs_account.c:1557
-msgid "Specify key manually"
-msgstr "수동으로 키 지정"
-
-#: src/prefs_account.c:1573
-msgid "User or key ID:"
-msgstr "사용자 혹은 키 ID:"
-
-#: src/prefs_account.c:1667 src/prefs_account.c:1684 src/prefs_account.c:1700
-#: src/prefs_account.c:1718
-msgid "Don't use SSL"
-msgstr "SSL을 사용하지 않습니다"
-
-#: src/prefs_account.c:1670
-msgid "Use SSL for POP3 connection"
-msgstr "POP3 연결에 SSL을 사용합니다"
-
-#: src/prefs_account.c:1673 src/prefs_account.c:1690 src/prefs_account.c:1724
-msgid "Use STARTTLS command to start SSL session"
-msgstr "SSL 세션을 시작하기 위해 STARTTLS 명령을 사용합니다"
-
-#: src/prefs_account.c:1687
-msgid "Use SSL for IMAP4 connection"
-msgstr "IMAP4 연결에 SSL을 사용합니다"
-
-#: src/prefs_account.c:1693
-msgid "NNTP"
-msgstr "NNTP"
-
-#: src/prefs_account.c:1708
-msgid "Use SSL for NNTP connection"
-msgstr "NNTP 연결에 SSL을 사용합니다"
-
-#: src/prefs_account.c:1710
-msgid "Send (SMTP)"
-msgstr ""
-
-#: src/prefs_account.c:1721
-msgid "Use SSL for SMTP connection"
-msgstr "SMTP 연결에 SSL을 사용합니다"
-
-#: src/prefs_account.c:1732
-msgid "Use non-blocking SSL"
-msgstr ""
-
-#: src/prefs_account.c:1735
-msgid "Turn this off if you have problems in SSL connection."
-msgstr ""
-
-#: src/prefs_account.c:1821
-msgid "Specify SMTP port"
-msgstr "SMTP 포트 번호"
-
-#: src/prefs_account.c:1827
-msgid "Specify POP3 port"
-msgstr "POP3 포트 번호"
-
-#: src/prefs_account.c:1833
-msgid "Specify IMAP4 port"
-msgstr "IMAP4 포트 지정"
-
-#: src/prefs_account.c:1839
-msgid "Specify NNTP port"
-msgstr "NNTP 포트 지정"
-
-#: src/prefs_account.c:1844
-msgid "Specify domain name"
-msgstr "도메인 이름 지정"
-
-#: src/prefs_account.c:1862
-msgid "IMAP server directory"
-msgstr "IMAP 서버 디렉토리"
-
-#: src/prefs_account.c:1916
-msgid "Put sent messages in"
-msgstr "보낸 메시지 저장"
-
-#: src/prefs_account.c:1918
-msgid "Put draft messages in"
-msgstr "임시 메시지 저장"
-
-#: src/prefs_account.c:1920
-msgid "Put deleted messages in"
-msgstr "삭제된 메시지 저장"
-
-#: src/prefs_account.c:1981
-msgid "Account name is not entered."
-msgstr "계정 이름이 입력되지 않았습니다."
-
-#: src/prefs_account.c:1985
-msgid "Mail address is not entered."
-msgstr "메일 주소가 지정되지않았습니다."
-
-#: src/prefs_account.c:1990
-msgid "SMTP server is not entered."
-msgstr "SMTP 서버가 지정되지않았습니다."
-
-#: src/prefs_account.c:1995
-msgid "User ID is not entered."
-msgstr "사용자 아이디가 지정되지않았습니다."
-
-#: src/prefs_account.c:2000
-msgid "POP3 server is not entered."
-msgstr "POP3 서버가 지정되지않았습니다."
-
-#: src/prefs_account.c:2005
-msgid "IMAP4 server is not entered."
-msgstr "IMAP4 서버가 지정되지않았습니다."
-
-#: src/prefs_account.c:2010
-msgid "NNTP server is not entered."
-msgstr "NNTP 서버가 지정되지않았습니다."
-
-#: src/prefs_account.c:2092
-msgid ""
-"It's not recommended to use the old style ASCII-armored\n"
-"mode for encrypted messages. It doesn't comply with the\n"
-"RFC 3156 - MIME Security with OpenPGP."
-msgstr ""
 
 #: src/prefs_actions.c:172
 #, fuzzy
@@ -4352,17 +3968,17 @@ msgstr ""
 msgid "Registered actions"
 msgstr "등록된 동작"
 
-#: src/prefs_actions.c:309 src/prefs_customheader.c:282
+#: src/prefs_actions.c:309 src/prefs_customheader.c:278
 #: src/prefs_display_header.c:286 src/prefs_summary_column.c:284
 msgid "Up"
 msgstr "위로"
 
-#: src/prefs_actions.c:315 src/prefs_customheader.c:288
+#: src/prefs_actions.c:315 src/prefs_customheader.c:284
 #: src/prefs_display_header.c:292 src/prefs_summary_column.c:288
 msgid "Down"
 msgstr "아래로"
 
-#: src/prefs_actions.c:422 src/prefs_template.c:315
+#: src/prefs_actions.c:422 src/prefs_template.c:316
 msgid "(New)"
 msgstr "(새 규칙)"
 
@@ -4405,821 +4021,31 @@ msgstr "동작 삭제"
 msgid "Do you really want to delete this action?"
 msgstr "정말로 이 동작을 삭제하시겠습니까?"
 
-#: src/prefs_common.c:918
-#, fuzzy
-msgid "Junk mail filter"
-msgstr "폴더"
-
-#: src/prefs_common.c:928
-msgid "Creating common preferences window...\n"
-msgstr "일반 설정 창을 생성합니다...\n"
-
-#: src/prefs_common.c:932
-msgid "Common Preferences"
-msgstr "일반 설정"
-
-#: src/prefs_common.c:954
-msgid "Quote"
-msgstr "인용"
-
-#: src/prefs_common.c:956
-msgid "Display"
-msgstr "보기"
-
-#: src/prefs_common.c:958
-msgid "Message"
-msgstr "본문"
-
-#: src/prefs_common.c:960
-msgid "Junk mail"
-msgstr ""
-
-#: src/prefs_common.c:968 src/select-keys.c:344
-msgid "Other"
-msgstr "기타"
-
-#: src/prefs_common.c:1012
-msgid "Use external program for incorporation"
-msgstr "합체을 위해 외부 프로그램을 사용"
-
-#: src/prefs_common.c:1024 src/prefs_common.c:1113 src/prefs_common.c:1189
-msgid "Command"
-msgstr "명령어"
-
-#: src/prefs_common.c:1039
-#, fuzzy
-msgid "Incorporate from local spool"
-msgstr "spool로부터 합체"
-
-#: src/prefs_common.c:1052
-msgid "Filter on incorporation"
-msgstr "합체시 필터링"
-
-#: src/prefs_common.c:1058
-msgid "Spool path"
-msgstr ""
-
-#: src/prefs_common.c:1076
-msgid "Auto-check new mail"
-msgstr "새 편지를 자동 검사"
-
-#: src/prefs_common.c:1078
-msgid "every"
-msgstr ""
-
-#: src/prefs_common.c:1090
-msgid "minute(s)"
-msgstr "분"
-
-#: src/prefs_common.c:1099
-msgid "Check new mail on startup"
-msgstr "시작할 때 새 편지를 검사"
-
-#: src/prefs_common.c:1101
-msgid "Update all local folders after incorporation"
-msgstr "병합 후에 모든 지역 폴더 갱신"
-
-#: src/prefs_common.c:1105
-#, fuzzy
-msgid "Execute command when new messages arrived"
-msgstr "메시지를 이동하거나 지울때 즉시 실행"
-
-#: src/prefs_common.c:1126
-#, fuzzy, c-format
-msgid "`%d' will be replaced with the number of new messages."
-msgstr "새 메시지의 갯수를 얻는 중 (STAT)..."
-
-#: src/prefs_common.c:1177
-msgid "Use external program for sending"
-msgstr "발송을 위해 외부 프로그램을 사용"
-
-#: src/prefs_common.c:1208
-msgid "Save sent messages to outbox"
-msgstr "보낸 메시지를 '보낸 편지함'에 저장"
-
-#: src/prefs_common.c:1210
-msgid "Apply filter rules to sent messages"
-msgstr ""
-
-#: src/prefs_common.c:1216
-#, fuzzy
-msgid "Outgoing encoding"
-msgstr "보내는 메일의 문자셋"
-
-#: src/prefs_common.c:1231
-msgid "Automatic (Recommended)"
-msgstr "자동 (추천)"
-
-#: src/prefs_common.c:1233
-msgid "7bit ascii (US-ASCII)"
-msgstr "7bit 아스키 (US-ASCII)"
-
-#: src/prefs_common.c:1235
-msgid "Unicode (UTF-8)"
-msgstr "유니코드 (UTF-8)"
-
-#: src/prefs_common.c:1237
-msgid "Western European (ISO-8859-1)"
-msgstr "서부 유럽(ISO-8859-1)"
-
-#: src/prefs_common.c:1238
-msgid "Western European (ISO-8859-15)"
-msgstr "서부 유럽(ISO-8859-15)"
-
-#: src/prefs_common.c:1240
-msgid "Central European (ISO-8859-2)"
-msgstr "중부 유럽(ISO-8859-2)"
-
-#: src/prefs_common.c:1242
-msgid "Baltic (ISO-8859-13)"
-msgstr "Baltic (ISO-8859-13)"
-
-#: src/prefs_common.c:1243
-msgid "Baltic (ISO-8859-4)"
-msgstr "Baltic (ISO-8859-4)"
-
-#: src/prefs_common.c:1245
-msgid "Greek (ISO-8859-7)"
-msgstr "그리스 (ISO-8859-7)"
-
-#: src/prefs_common.c:1247
-#, fuzzy
-msgid "Hebrew (ISO-8859-8)"
-msgstr "그리스 (ISO-8859-7)"
-
-#: src/prefs_common.c:1248
-#, fuzzy
-msgid "Hebrew (Windows-1255)"
-msgstr "Cyrillic (Windows-1251)"
-
-#: src/prefs_common.c:1250
-msgid "Turkish (ISO-8859-9)"
-msgstr "터키 (ISO-8859-9)"
-
-#: src/prefs_common.c:1252
-msgid "Cyrillic (ISO-8859-5)"
-msgstr "Cyrillic (ISO-8859-5)"
-
-#: src/prefs_common.c:1253
-msgid "Cyrillic (KOI8-R)"
-msgstr "Cyrillic (KOI8-R)"
-
-#: src/prefs_common.c:1254
-msgid "Cyrillic (KOI8-U)"
-msgstr "Cyrillic (KOI8-U)"
-
-#: src/prefs_common.c:1255
-msgid "Cyrillic (Windows-1251)"
-msgstr "Cyrillic (Windows-1251)"
-
-#: src/prefs_common.c:1257
-msgid "Japanese (ISO-2022-JP)"
-msgstr "일본 (ISO-2022-JP)"
-
-#: src/prefs_common.c:1259
-msgid "Japanese (EUC-JP)"
-msgstr "일본 (EUC-JP)"
-
-#: src/prefs_common.c:1260
-msgid "Japanese (Shift_JIS)"
-msgstr "일본 (Shift_JIS)"
-
-#: src/prefs_common.c:1263
-msgid "Simplified Chinese (GB2312)"
-msgstr "Simplified Chinese (GB2312)"
-
-#: src/prefs_common.c:1264
-#, fuzzy
-msgid "Simplified Chinese (GBK)"
-msgstr "Simplified Chinese (GB2312)"
-
-#: src/prefs_common.c:1265
-msgid "Traditional Chinese (Big5)"
-msgstr "Traditional Chinese (Big5)"
-
-#: src/prefs_common.c:1267
-msgid "Traditional Chinese (EUC-TW)"
-msgstr "Traditional Chinese (EUC-TW)"
-
-#: src/prefs_common.c:1268
-msgid "Chinese (ISO-2022-CN)"
-msgstr "중국 (ISO-2022-CN)"
-
-#: src/prefs_common.c:1271
-msgid "Korean (EUC-KR)"
-msgstr "한국 (EUC-KR)"
-
-#: src/prefs_common.c:1273
-msgid "Thai (TIS-620)"
-msgstr "Thai (TIS-620)"
-
-#: src/prefs_common.c:1274
-msgid "Thai (Windows-874)"
-msgstr "Thai (Windows-874)"
-
-#: src/prefs_common.c:1280
-#, fuzzy
-msgid ""
-"If `Automatic' is selected, the optimal encoding for the current locale will "
-"be used."
-msgstr ""
-"`자동'이 선택되면, 현재 로케일에 맞는 최적의\n"
-"인코딩 방식이 사용됩니다."
-
-#: src/prefs_common.c:1287
-#, fuzzy
-msgid "Transfer encoding"
-msgstr "보내기 전에 줄 바꿈"
-
-#: src/prefs_common.c:1306
-msgid ""
-"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
-"characters."
-msgstr ""
-
-#: src/prefs_common.c:1370
-msgid "Signature separator"
-msgstr "서명 분리자"
-
-#: src/prefs_common.c:1379
-msgid "Insert automatically"
-msgstr "지동으로 삽입"
-
-#: src/prefs_common.c:1389
-msgid "Automatically launch the external editor"
-msgstr "자동으로 외부 편집기 사용"
-
-#: src/prefs_common.c:1399
-msgid "Undo level"
-msgstr ""
-
-#: src/prefs_common.c:1419
-msgid "Wrap messages at"
-msgstr "줄 바꿈 at"
-
-#: src/prefs_common.c:1431
-msgid "characters"
-msgstr "글자"
-
-#: src/prefs_common.c:1441
-msgid "Wrap quotation"
-msgstr "인용도 줄 바꿈"
-
-#: src/prefs_common.c:1447
-msgid "Wrap on input"
-msgstr ""
-
-#: src/prefs_common.c:1449
-msgid "Wrap before sending"
-msgstr "보내기 전에 줄 바꿈"
-
-#: src/prefs_common.c:1459
-msgid "Automatically select account for replies"
-msgstr "자동으로 회신할 계정 선택"
-
-#: src/prefs_common.c:1461
-msgid "Quote message when replying"
-msgstr "회신할 때 메시지를 인용"
-
-#: src/prefs_common.c:1463
-msgid "Reply button invokes mailing list reply"
-msgstr "회신 버튼이 메일링리스트에 대한 회신으로 동작"
-
-#. reply
-#: src/prefs_common.c:1509
-msgid "Reply format"
-msgstr "회신 형식"
-
-#: src/prefs_common.c:1524 src/prefs_common.c:1566
-msgid "Quotation mark"
-msgstr "인용 부호"
-
-#. forward
-#: src/prefs_common.c:1551
-msgid "Forward format"
-msgstr "전달 형식"
-
-#: src/prefs_common.c:1598
-msgid " Description of symbols "
-msgstr " 부호 설명 "
-
-#: src/prefs_common.c:1638
-msgid "Font"
-msgstr "글꼴"
-
-#: src/prefs_common.c:1663
-msgid "Translate header name (such as `From:', `Subject:')"
-msgstr "헤더 이름을 번역(`From:', `Subject:' 등등)"
-
-#: src/prefs_common.c:1666
-msgid "Display unread number next to folder name"
-msgstr "폴더이름옆에 읽지않을 메시지 수를 표시"
-
-#: src/prefs_common.c:1675
-msgid "Abbreviate newsgroups longer than"
-msgstr ""
-
-#: src/prefs_common.c:1690
-msgid "letters"
-msgstr ""
-
-#. ---- Summary ----
-#: src/prefs_common.c:1696
-msgid "Summary View"
-msgstr "요약 보기"
-
-#: src/prefs_common.c:1705
-msgid "Display recipient on `From' column if sender is yourself"
-msgstr "보낸 사람이 본인인 경우 보낸 사람 칸에 받는 사람을 표시"
-
-#: src/prefs_common.c:1707
-msgid "Expand threads"
-msgstr "쓰레드 펴기"
-
-#: src/prefs_common.c:1715 src/prefs_common.c:2685 src/prefs_common.c:2723
-msgid "Date format"
-msgstr "날짜 형식"
-
-#: src/prefs_common.c:1736
-msgid " Set display item of summary... "
-msgstr "요약에 표시될 항목 설정... "
-
-#: src/prefs_common.c:1800
-msgid "Enable coloration of message"
-msgstr "메시지에 색을 이용하여 보여주기"
-
-#: src/prefs_common.c:1814
-msgid ""
-"Display multi-byte alphabet and numeric as\n"
-"ASCII character (Japanese only)"
-msgstr ""
-"다중바이트 알파벳과 숫자를 ASCII 문자로\n"
-"표시 (일본어인 경우에만)"
-
-#: src/prefs_common.c:1820
-msgid "Display header pane above message view"
-msgstr "메시지 보기 위에 헤더 창 표시"
-
-#: src/prefs_common.c:1827
-msgid "Display short headers on message view"
-msgstr "메시지를 볼때 간단한 헤더만 표시"
-
-#: src/prefs_common.c:1839
-msgid "Render HTML messages as text"
-msgstr ""
-
-#: src/prefs_common.c:1843
-#, fuzzy
-msgid "Display cursor in message view"
-msgstr "메시지를 볼때 간단한 헤더만 표시"
-
-#: src/prefs_common.c:1856
-msgid "Line space"
-msgstr "줄 간격"
-
-#: src/prefs_common.c:1870 src/prefs_common.c:1908
-msgid "pixel(s)"
-msgstr "픽셀"
-
-#: src/prefs_common.c:1875
-msgid "Scroll"
-msgstr "스크롤"
-
-#: src/prefs_common.c:1882
-msgid "Half page"
-msgstr "반 페이지"
-
-#: src/prefs_common.c:1888
-msgid "Smooth scroll"
-msgstr "부드러운 스크롤"
-
-#: src/prefs_common.c:1894
-msgid "Step"
-msgstr ""
-
-#: src/prefs_common.c:1914
-msgid "Images"
-msgstr ""
-
-#: src/prefs_common.c:1922
-#, fuzzy
-msgid "Resize attached large images to fit in the window"
-msgstr "첨부된 이미지 크기 조정"
-
-#: src/prefs_common.c:1924
-#, fuzzy
-msgid "Display images as inline"
-msgstr "표시될 헤더 설정"
-
-#: src/prefs_common.c:1965
-msgid "Enable Junk mail control"
-msgstr ""
-
-#: src/prefs_common.c:1973
-#, fuzzy
-msgid "Learning command:"
-msgstr "실행"
-
-#: src/prefs_common.c:1994
-msgid "Not Junk"
-msgstr ""
-
-#: src/prefs_common.c:2009
-#, fuzzy
-msgid "Classifying command"
-msgstr "실행"
-
-#: src/prefs_common.c:2023
-#, fuzzy
-msgid "Junk folder"
-msgstr "폴더"
-
-#: src/prefs_common.c:2041
-msgid "The messages which are set as junk mail will be moved to this folder."
-msgstr ""
-
-#: src/prefs_common.c:2047
-#, fuzzy
-msgid "Filter messages classified as junk on receiving"
-msgstr "받을때 메시지를 필터링"
-
-#: src/prefs_common.c:2051
-#, fuzzy
-msgid ""
-"Filtered messages will be moved to the junk folder and deleted from the "
-"server."
-msgstr "(필터링 되지 않은 메시지는 이 폴더에 저장될 것입니다)"
-
-#: src/prefs_common.c:2089
-msgid "Automatically check signatures"
-msgstr "자동으로 서명 확인"
-
-#: src/prefs_common.c:2092
-msgid "Show signature check result in a popup window"
-msgstr "팝업 창에 서명 확인 결과 보이기"
-
-#: src/prefs_common.c:2095
-msgid "Store passphrase in memory temporarily"
-msgstr "비밀번호를 메모리에 임시 보관"
-
-#: src/prefs_common.c:2110
-msgid "Expired after"
-msgstr ""
-
-#: src/prefs_common.c:2123
-msgid "minute(s) "
-msgstr "분 "
-
-#: src/prefs_common.c:2137
-msgid "Setting to '0' will store the passphrase for the whole session."
-msgstr ""
-
-#: src/prefs_common.c:2146
-msgid "Grab input while entering a passphrase"
-msgstr "passphrase를 입력할때 Grab input"
-
-#: src/prefs_common.c:2151
-msgid "Display warning on startup if GnuPG doesn't work"
-msgstr "GnuPG가 동작하지 않을 경우 시작시 경고 표시"
-
-#: src/prefs_common.c:2204
-#, fuzzy
-msgid "Always open messages in summary when selected"
-msgstr "어떤 메시지 파일도 선택되지 않았습니다."
-
-#: src/prefs_common.c:2208
-msgid "Open first unread message when entering a folder"
-msgstr "폴더에 들어가면 첫번째 안읽은 메시지 열기"
-
-#: src/prefs_common.c:2212
-msgid "Only mark message as read when opened in new window"
-msgstr "새 창에서 열렸을 경우에만 메시지를 읽은 것으로 표시"
-
-#: src/prefs_common.c:2216
-msgid "Go to inbox after receiving new mail"
-msgstr "새 편지를 받은 후 받은 편지함으로 가기"
-
-#: src/prefs_common.c:2224
-msgid "Execute immediately when moving or deleting messages"
-msgstr "메시지를 이동하거나 지울때 즉시 실행"
-
-#: src/prefs_common.c:2236
-#, fuzzy
-msgid "Messages will be marked until execution if this is turned off."
-msgstr ""
-"(이것이 꺼져있는 경우 메시지는 실행때까지\n"
-"단지 표시만 될 것입니다)"
-
-#: src/prefs_common.c:2239
-msgid "Receive dialog"
-msgstr "받기 대화상자"
-
-#: src/prefs_common.c:2249
-msgid "Show receive dialog"
-msgstr "받기 대화상자 보기"
-
-#: src/prefs_common.c:2259
-msgid "Always"
-msgstr "항상"
-
-#: src/prefs_common.c:2260
-msgid "Only on manual receiving"
-msgstr ""
-
-#: src/prefs_common.c:2262
-msgid "Never"
-msgstr "보이지 않음"
-
-#: src/prefs_common.c:2267
-msgid "Don't popup error dialog on receive error"
-msgstr "받기 에러 발생시 에러 상자 보이지 않음"
-
-#: src/prefs_common.c:2270
-msgid "Close receive dialog when finished"
-msgstr "끝났을 때 받기 대화상자 닫기"
-
-#: src/prefs_common.c:2273
-msgid "Make the order of buttons comply with GNOME HIG"
-msgstr ""
-
-#: src/prefs_common.c:2279
-msgid " Set key bindings... "
-msgstr " 키 바인딩 설정... "
-
-#: src/prefs_common.c:2333
-#, c-format
-msgid "External commands (%s will be replaced with file name / URI)"
-msgstr "외부 명령 (%s는 파일 이름 / URI로 대체됩니다)"
-
-#: src/prefs_common.c:2342
-msgid "Web browser"
-msgstr "웹 탐색기"
-
-#: src/prefs_common.c:2405
-msgid "Add address to destination when double-clicked"
-msgstr "더블클릭시에 대상에 주소 추가"
-
-#: src/prefs_common.c:2407
-msgid "On exit"
-msgstr "끝낼때"
-
-#: src/prefs_common.c:2415
-msgid "Confirm on exit"
-msgstr "끝냈때 확인"
-
-#: src/prefs_common.c:2422
-msgid "Empty trash on exit"
-msgstr "끝낼때 지운 편지함 비우기"
-
-#: src/prefs_common.c:2424
-msgid "Ask before emptying"
-msgstr "지운 편지함 비울때 확인하기"
-
-#: src/prefs_common.c:2428
-msgid "Warn if there are queued messages"
-msgstr "큐에 메시지가 있을 때 경고"
-
-#: src/prefs_common.c:2468
-#, fuzzy
-msgid "Enable strict checking of the integrity of summary caches"
-msgstr "요약 캐쉬 (%s)를 씁니다..."
-
-#: src/prefs_common.c:2471
-msgid ""
-"Enable this if the contents of folders have the possibility of modification "
-"by other applications.\n"
-"This option will degrade the performance of displaying summary."
-msgstr ""
-
-#: src/prefs_common.c:2478
-msgid "Socket I/O timeout:"
-msgstr ""
-
-#: src/prefs_common.c:2491
-msgid "second(s)"
-msgstr ""
-
-#: src/prefs_common.c:2661
-msgid "the full abbreviated weekday name"
-msgstr ""
-
-#: src/prefs_common.c:2662
-msgid "the full weekday name"
-msgstr ""
-
-#: src/prefs_common.c:2663
-msgid "the abbreviated month name"
-msgstr ""
-
-#: src/prefs_common.c:2664
-msgid "the full month name"
-msgstr ""
-
-#: src/prefs_common.c:2665
-msgid "the preferred date and time for the current locale"
-msgstr "현재 로케일에 적당한 날짜와 시간"
-
-#: src/prefs_common.c:2666
-msgid "the century number (year/100)"
-msgstr "년도 (년/100)"
-
-#: src/prefs_common.c:2667
-msgid "the day of the month as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2668
-msgid "the hour as a decimal number using a 24-hour clock"
-msgstr ""
-
-#: src/prefs_common.c:2669
-msgid "the hour as a decimal number using a 12-hour clock"
-msgstr ""
-
-#: src/prefs_common.c:2670
-msgid "the day of the year as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2671
-msgid "the month as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2672
-msgid "the minute as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2673
-msgid "either AM or PM"
-msgstr ""
-
-#: src/prefs_common.c:2674
-msgid "the second as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2675
-msgid "the day of the week as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2676
-msgid "the preferred date for the current locale"
-msgstr ""
-
-#: src/prefs_common.c:2677
-msgid "the last two digits of a year"
-msgstr ""
-
-#: src/prefs_common.c:2678
-msgid "the year as a decimal number"
-msgstr ""
-
-#: src/prefs_common.c:2679
-msgid "the time zone or name or abbreviation"
-msgstr ""
-
-#: src/prefs_common.c:2700
-msgid "Specifier"
-msgstr ""
-
-#: src/prefs_common.c:2701
-msgid "Description"
-msgstr "설명"
-
-#: src/prefs_common.c:2741
-msgid "Example"
-msgstr "예제"
-
-#: src/prefs_common.c:2821
-msgid "Set message colors"
-msgstr "메시지 색 설정"
-
-#: src/prefs_common.c:2829
-msgid "Colors"
-msgstr "색"
-
-#: src/prefs_common.c:2863
-msgid "Quoted Text - First Level"
-msgstr "인용문 - 첫번째 단계"
-
-#: src/prefs_common.c:2869
-msgid "Quoted Text - Second Level"
-msgstr "인용문 - 두번째 단계"
-
-#: src/prefs_common.c:2875
-msgid "Quoted Text - Third Level"
-msgstr "인용문 - 세번째 단계"
-
-#: src/prefs_common.c:2881
-msgid "URI link"
-msgstr "URI 링크"
-
-#: src/prefs_common.c:2888
-msgid "Recycle quote colors"
-msgstr "인용 색 반복"
-
-#: src/prefs_common.c:2948
-msgid "Pick color for quotation level 1"
-msgstr "첫번째 단계 인용문 색 선택"
-
-#: src/prefs_common.c:2951
-msgid "Pick color for quotation level 2"
-msgstr "두번째 단계 인용문 색 선택"
-
-#: src/prefs_common.c:2954
-msgid "Pick color for quotation level 3"
-msgstr "세번째 단계 인용문 색 선택"
-
-#: src/prefs_common.c:2957
-msgid "Pick color for URI"
-msgstr "URI 색 선택"
-
-#: src/prefs_common.c:3097
-msgid "Description of symbols"
-msgstr "부호 설명"
-
-#: src/prefs_common.c:3153
-msgid ""
-"Date\n"
-"From\n"
-"Full Name of Sender\n"
-"First Name of Sender\n"
-"Initial of Sender\n"
-"Subject\n"
-"To\n"
-"Cc\n"
-"Newsgroups\n"
-"Message-ID"
-msgstr ""
-"날짜\n"
-"보낸 사람\n"
-"보낸 사람의 이름\n"
-"보낸 사람의 성\n"
-"보낸 사람의 이니셜\n"
-"제목\n"
-"받는 사람\n"
-"참조\n"
-"뉴스그룹\n"
-"메시지-ID"
-
-#: src/prefs_common.c:3166
-msgid "If x is set, displays expr"
-msgstr ""
-
-#: src/prefs_common.c:3170
-msgid ""
-"Message body\n"
-"Quoted message body\n"
-"Message body without signature\n"
-"Quoted message body without signature\n"
-"Literal %"
-msgstr ""
-
-#: src/prefs_common.c:3178
-msgid ""
-"Literal backslash\n"
-"Literal question mark\n"
-"Literal opening curly brace\n"
-"Literal closing curly brace"
-msgstr ""
-
-#: src/prefs_common.c:3224
-msgid "Key bindings"
-msgstr "키 바인딩"
-
-#: src/prefs_common.c:3238
-msgid ""
-"Select the preset of key bindings.\n"
-"You can also modify each menu's shortcuts by pressing\n"
-"any key(s) when placing the mouse pointer on the item."
-msgstr ""
-
-#: src/prefs_common.c:3250 src/prefs_common.c:3574
-msgid "Default"
-msgstr "기본"
-
-#: src/prefs_common.c:3253 src/prefs_common.c:3583
-msgid "Old Sylpheed"
-msgstr "예전 Sylpheed"
-
-#: src/prefs_customheader.c:165
+#: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "사용자 헤더 설정"
 
-#: src/prefs_customheader.c:242 src/prefs_filter_edit.c:1575
+#: src/prefs_customheader.c:186
+msgid "Header"
+msgstr "헤더"
+
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
 msgstr "삭제"
 
-#: src/prefs_customheader.c:261
+#: src/prefs_customheader.c:257
 msgid "Custom headers"
 msgstr "사용자 헤더"
 
-#: src/prefs_customheader.c:482 src/prefs_display_header.c:529
+#: src/prefs_customheader.c:351 src/prefs_display_header.c:529
 msgid "Header name is not set."
 msgstr "헤더 이름이 지정되지않음"
 
-#: src/prefs_customheader.c:540
+#: src/prefs_customheader.c:409
 msgid "Delete header"
 msgstr "헤더 삭제"
 
-#: src/prefs_customheader.c:541
+#: src/prefs_customheader.c:410
 msgid "Do you really want to delete this header?"
 msgstr "정말로 이 헤더를 삭제하시겠습니까?"
 
@@ -5267,12 +4093,21 @@ msgstr "거르개 설정"
 msgid "Enabled"
 msgstr ""
 
-#: src/prefs_filter.c:763
+#: src/prefs_filter.c:324
+msgid "Edit"
+msgstr "편집"
+
+#: src/prefs_filter.c:685
 #, fuzzy, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "정말로 이 규칙을 삭제하시겠습니까?"
 
-#: src/prefs_filter.c:765
+#: src/prefs_filter.c:686
+#, fuzzy
+msgid "(Untitled)"
+msgstr "제목 없슴"
+
+#: src/prefs_filter.c:687
 msgid "Delete rule"
 msgstr "규칙 삭제"
 
@@ -5359,6 +4194,10 @@ msgstr ""
 
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
+msgstr ""
+
+#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
+msgid "KB"
 msgstr ""
 
 #: src/prefs_filter_edit.c:729
@@ -5502,6 +4341,10 @@ msgstr ""
 msgid "Apply to subfolders"
 msgstr "하위 폴더에 적용"
 
+#: src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "다음 주소를 자동적으로 정함"
+
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
 msgstr "회신시에도 사용"
@@ -5573,63 +4416,45 @@ msgstr "표시될 항목"
 msgid " Revert to default "
 msgstr " 기본값으로 원상복구 "
 
-#: src/prefs_template.c:159
+#: src/prefs_template.c:160
 msgid "Template name"
 msgstr "템플릿 이름"
 
-#: src/prefs_template.c:219
+#: src/prefs_template.c:220
 msgid "Register"
 msgstr "등록"
 
-#: src/prefs_template.c:225
+#: src/prefs_template.c:226
 msgid " Substitute "
 msgstr " 치환"
 
-#: src/prefs_template.c:237
+#: src/prefs_template.c:238
 msgid " Symbols "
 msgstr " 심볼 "
 
-#: src/prefs_template.c:251
+#: src/prefs_template.c:252
 msgid "Registered templates"
 msgstr "등록된 템플릿"
 
-#: src/prefs_template.c:272
+#: src/prefs_template.c:273
 msgid "Templates"
 msgstr "템플릿"
 
-#: src/prefs_template.c:389
+#: src/prefs_template.c:390
 msgid "Template"
 msgstr "템플릿"
 
-#: src/prefs_template.c:458
+#: src/prefs_template.c:459
 msgid "Template format error."
 msgstr "템플릿 형식 에러."
 
-#: src/prefs_template.c:534
+#: src/prefs_template.c:535
 msgid "Delete template"
 msgstr "템플릿을 지웁니다"
 
-#: src/prefs_template.c:535
+#: src/prefs_template.c:536
 msgid "Do you really want to delete this template?"
 msgstr "정말로 이 템플릿을 삭제하시겠습니까?"
-
-#: src/procmime.c:773
-msgid "procmime_get_text_content(): Code conversion failed.\n"
-msgstr "procmime_get_text_content(): 코드 변환이 실패했습니다.\n"
-
-#: src/procmsg.c:544
-msgid "can't open mark file\n"
-msgstr "표시 파일을 열수가 없습니다\n"
-
-#: src/procmsg.c:973
-#, c-format
-msgid "can't fetch message %d\n"
-msgstr "메시지 %d를 가져올 수가 없습니다\n"
-
-#: src/procmsg.c:1396
-#, c-format
-msgid "Print command line is invalid: `%s'\n"
-msgstr "인쇄 명령어가 올바르지않습니다: `%s'\n"
 
 #: src/progressdialog.c:58
 msgid "Creating progress dialog...\n"
@@ -5639,29 +4464,21 @@ msgstr "진행 다이얼로그를 생성합니다...\n"
 msgid "Status"
 msgstr "상태"
 
-#: src/recv.c:112
-msgid "error occurred while retrieving data.\n"
-msgstr "데이타를 가져오는 중 에러가 발생했습니다.\n"
-
-#: src/recv.c:154 src/recv.c:196 src/recv.c:211
-msgid "Can't write to file.\n"
-msgstr "파일에 쓸 수가 없습니다.\n"
-
-#: src/rfc2015.c:133
+#: src/rfc2015.c:134
 msgid "Cannot find user ID for this key."
 msgstr "이 키에 대한 사용자 ID를 찾을 수 없습니다."
 
-#: src/rfc2015.c:144
+#: src/rfc2015.c:145
 #, c-format
 msgid "\t\taka \"%s\"\n"
 msgstr ""
 
-#: src/rfc2015.c:169
+#: src/rfc2015.c:170
 #, c-format
 msgid "Signature made at %s\n"
 msgstr ""
 
-#: src/rfc2015.c:275 src/sigstatus.c:266
+#: src/rfc2015.c:276 src/sigstatus.c:266
 msgid "Error verifying the signature"
 msgstr "서명을 검증하는 도중 에러"
 
@@ -5687,6 +4504,10 @@ msgstr "키 ID"
 msgid "Val"
 msgstr "값"
 
+#: src/select-keys.c:344
+msgid "Other"
+msgstr "기타"
+
 #: src/select-keys.c:468
 msgid "Add key"
 msgstr "키 추가"
@@ -5707,85 +4528,85 @@ msgid ""
 "Do you trust it enough to use it anyway?"
 msgstr ""
 
-#: src/send_message.c:181
+#: src/send_message.c:183
 msgid "Queued message header is broken.\n"
 msgstr "보낼 메시지의 헤더가 깨졌습니다.\n"
 
-#: src/send_message.c:319
+#: src/send_message.c:396
 #, fuzzy, c-format
 msgid "Sending message using command: %s\n"
 msgstr "메시지를 보내는 중 (%d / %d 바이트)"
 
-#: src/send_message.c:328
+#: src/send_message.c:405
 #, fuzzy, c-format
 msgid "Can't execute command: %s"
 msgstr "외부 명령을 실행할 수가 없습니다: %s\n"
 
-#: src/send_message.c:363
+#: src/send_message.c:440
 #, fuzzy, c-format
 msgid "Error occurred while executing command: %s"
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/send_message.c:458
+#: src/send_message.c:535
 msgid "Connecting"
 msgstr "연결 중입니다"
 
-#: src/send_message.c:460
+#: src/send_message.c:537
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "SMTP 서버에 연결하고 있습니다: %s ..."
 
-#: src/send_message.c:527
+#: src/send_message.c:604
 msgid "Sending HELO..."
 msgstr "HELO를 보냅니다..."
 
-#: src/send_message.c:528 src/send_message.c:533 src/send_message.c:538
+#: src/send_message.c:605 src/send_message.c:610 src/send_message.c:615
 msgid "Authenticating"
 msgstr "인증"
 
-#: src/send_message.c:529 src/send_message.c:534
+#: src/send_message.c:606 src/send_message.c:611
 #, fuzzy
 msgid "Sending message..."
 msgstr "메시지을 보내는 중"
 
-#: src/send_message.c:532
+#: src/send_message.c:609
 msgid "Sending EHLO..."
 msgstr "EHLO를 보냅니다..."
 
-#: src/send_message.c:541
+#: src/send_message.c:618
 msgid "Sending MAIL FROM..."
 msgstr "MAIL FROM을 보냅니다..."
 
-#: src/send_message.c:542 src/send_message.c:546 src/send_message.c:551
+#: src/send_message.c:619 src/send_message.c:623 src/send_message.c:628
 msgid "Sending"
 msgstr "보냅니다"
 
-#: src/send_message.c:545
+#: src/send_message.c:622
 msgid "Sending RCPT TO..."
 msgstr "RCPT TO를 보냅니다..."
 
-#: src/send_message.c:550
+#: src/send_message.c:627
 msgid "Sending DATA..."
 msgstr "DATA를 보냅니다..."
 
-#: src/send_message.c:554
+#: src/send_message.c:631
 msgid "Quitting..."
 msgstr "끝마치는 중..."
 
-#: src/send_message.c:582
+#: src/send_message.c:659
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "메시지를 보내는 중 (%d / %d 바이트)"
 
-#: src/send_message.c:610
+#: src/send_message.c:687
 msgid "Sending message"
 msgstr "메시지을 보내는 중"
 
-#: src/send_message.c:654 src/send_message.c:674
+#: src/send_message.c:731 src/send_message.c:751
 msgid "Error occurred while sending the message."
 msgstr "메시지를 보내는데 에러 발생"
 
-#: src/send_message.c:657
+#: src/send_message.c:734
 #, fuzzy, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -5884,33 +4705,20 @@ msgstr "BAD signature"
 msgid "No public key to verify the signature"
 msgstr "서명을 검증할 공개키가 없습니다"
 
-#: src/smtp.c:156
-msgid "SMTP AUTH not available\n"
-msgstr "SMTP 인증을 사용할 수 없습니다\n"
-
-#: src/smtp.c:462 src/smtp.c:512
-msgid "bad SMTP response\n"
-msgstr ""
-
-#: src/smtp.c:483 src/smtp.c:501 src/smtp.c:598
-#, fuzzy
-msgid "error occurred on SMTP session\n"
-msgstr "인증 도중 에러 발생\n"
-
-#: src/sourcewindow.c:61
+#: src/sourcewindow.c:62
 msgid "Creating source window...\n"
 msgstr "소스 창을 만듭니다...\n"
 
-#: src/sourcewindow.c:65
+#: src/sourcewindow.c:66
 msgid "Source of the message"
 msgstr "메시지의 소스"
 
-#: src/sourcewindow.c:135
+#: src/sourcewindow.c:136
 #, c-format
 msgid "Displaying the source of %s ...\n"
 msgstr "%s의 소스를 보여줍니다...\n"
 
-#: src/sourcewindow.c:137
+#: src/sourcewindow.c:138
 #, c-format
 msgid "%s - Source"
 msgstr "%s - 소스"
@@ -6307,6 +5115,747 @@ msgstr ""
 msgid "Fake URL warning"
 msgstr ""
 
+#~ msgid ""
+#~ "Some composing windows are open.\n"
+#~ "Please close all the composing windows before editing the accounts."
+#~ msgstr ""
+#~ "다른 편집 창이 열려있습니다.\n"
+#~ "계정을 편집하기전에 모든 편집창들을 닫아주세요."
+
+#~ msgid "Opening account edit window...\n"
+#~ msgstr "계정 편집창을 엽니다...\n"
+
+#~ msgid "Creating account edit window...\n"
+#~ msgstr "계정 편집창을 생성합니다...\n"
+
+#~ msgid "Edit accounts"
+#~ msgstr "계정 편집"
+
+#~ msgid ""
+#~ "New messages will be checked in this order. Check the boxes\n"
+#~ "on the `G' column to enable message retrieval by `Get all'."
+#~ msgstr ""
+#~ "새 메시지는 이 순서대로 확인될 것입니다. `모두 받기'로 메시지를\n"
+#~ "받으려면 `G' 컬럼 상자를 선택하세요."
+
+#~ msgid "Protocol"
+#~ msgstr "프로토콜"
+
+#~ msgid "Server"
+#~ msgstr "서버"
+
+#, fuzzy
+#~ msgid " _Set as default account "
+#~ msgstr " 기본 계정으로 설정 "
+
+#, fuzzy
+#~ msgid "Do you really want to delete the account '%s'?"
+#~ msgstr "정말로 이 계정을 삭제하시겠습니까?"
+
+#~ msgid "Delete account"
+#~ msgstr "계정 삭제"
+
+#~ msgid "Opening account preferences window...\n"
+#~ msgstr "계정 설정 창을 엽니다...\n"
+
+#~ msgid "Account%d"
+#~ msgstr "계정%d"
+
+#~ msgid "Preferences for new account"
+#~ msgstr "새 계정에대한 설정"
+
+#~ msgid "Account preferences"
+#~ msgstr "계정 기본 설정"
+
+#~ msgid "Creating account preferences window...\n"
+#~ msgstr "계정 설정 창을 생성합니다...\n"
+
+#~ msgid "Receive"
+#~ msgstr "받기"
+
+#~ msgid "Privacy"
+#~ msgstr "프라이버시"
+
+#~ msgid "SSL"
+#~ msgstr "SSL"
+
+#~ msgid "Advanced"
+#~ msgstr "고급"
+
+#~ msgid "Name of this account"
+#~ msgstr "이 계정의 이름"
+
+#~ msgid "Set as default"
+#~ msgstr "기본 계정으로 설정"
+
+#~ msgid "Personal information"
+#~ msgstr "신상 정보"
+
+#~ msgid "Full name"
+#~ msgstr "정식 이름"
+
+#~ msgid "Mail address"
+#~ msgstr "메일 주소"
+
+#~ msgid "Organization"
+#~ msgstr "기관"
+
+#~ msgid "Server information"
+#~ msgstr "서버 정보"
+
+#~ msgid "POP3"
+#~ msgstr "POP3"
+
+#~ msgid "IMAP4"
+#~ msgstr "IMAP4"
+
+#~ msgid "News (NNTP)"
+#~ msgstr "뉴스(NNTP)"
+
+#~ msgid "None (local)"
+#~ msgstr "로컬"
+
+#~ msgid "This server requires authentication"
+#~ msgstr "이 서버는 인증을 필요로 합니다"
+
+#~ msgid "News server"
+#~ msgstr "뉴스 서버"
+
+#~ msgid "Server for receiving"
+#~ msgstr "받는 서버"
+
+#~ msgid "SMTP server (send)"
+#~ msgstr "SMTP 서버(발송용)"
+
+#~ msgid "User ID"
+#~ msgstr "사용자 계정"
+
+#~ msgid "Password"
+#~ msgstr "암호"
+
+#, fuzzy
+#~ msgid "Use secure authentication (APOP)"
+#~ msgstr "이 서버는 인증을 필요로 합니다"
+
+#~ msgid "Remove messages on server when received"
+#~ msgstr "받은 후 서버에서 메시지를 지움"
+
+#~ msgid "(0 days: remove immediately)"
+#~ msgstr "(0 일: 즉시 삭제)"
+
+#~ msgid "Download all messages on server"
+#~ msgstr "서버에서 모든 메시지를 받음"
+
+#~ msgid "Receive size limit"
+#~ msgstr "받을 크기 한도"
+
+#~ msgid "Filter messages on receiving"
+#~ msgstr "받을때 메시지를 필터링"
+
+#~ msgid "Default inbox"
+#~ msgstr "기본 우편함"
+
+#, fuzzy
+#~ msgid "Unfiltered messages will be stored in this folder."
+#~ msgstr "(필터링 되지 않은 메시지는 이 폴더에 저장될 것입니다)"
+
+#~ msgid "Authentication method"
+#~ msgstr "인증 방법"
+
+#~ msgid "Automatic"
+#~ msgstr "자동"
+
+#~ msgid "News"
+#~ msgstr "뉴스"
+
+#, fuzzy
+#~ msgid "Maximum number of articles to download"
+#~ msgstr ""
+#~ "내려받을 최대 기사 수\n"
+#~ "(0인 경우 제한 없음)"
+
+#, fuzzy
+#~ msgid "No limit if 0 is specified."
+#~ msgstr "받는 사람이 지정되지않았습니다"
+
+#~ msgid "Add Date header field"
+#~ msgstr "Date 헤더 항목을 추가"
+
+#~ msgid "Generate Message-ID"
+#~ msgstr "Message-ID 생성"
+
+#~ msgid "Add user-defined header"
+#~ msgstr "사용자 정의된 헤더 추가"
+
+#~ msgid " Edit... "
+#~ msgstr " 편집..."
+
+#~ msgid "Authentication"
+#~ msgstr "인증"
+
+#~ msgid "SMTP Authentication (SMTP AUTH)"
+#~ msgstr "SMTP 인증(SMTP AUTH)"
+
+#~ msgid "Authenticate with POP3 before sending"
+#~ msgstr "보내기전 POP3와 인증"
+
+#, fuzzy
+#~ msgid "Command output"
+#~ msgstr "명령어"
+
+#~ msgid "Cc"
+#~ msgstr "참조"
+
+#~ msgid "Bcc"
+#~ msgstr "숨은 참조"
+
+#~ msgid "Reply-To"
+#~ msgstr "회신주소"
+
+#~ msgid "Sign message by default"
+#~ msgstr "기본으로 메시지에 사인을 함"
+
+#~ msgid "Encrypt message by default"
+#~ msgstr "기본으로 메시지를 암호화"
+
+#~ msgid "Use clear text signature"
+#~ msgstr "순수한 텍스트 서명 사용"
+
+#~ msgid "Use default GnuPG key"
+#~ msgstr "기본 GnuPG 키 사용"
+
+#~ msgid "Select key by your email address"
+#~ msgstr "당신의 전자우편 주소로 키 선택"
+
+#~ msgid "Specify key manually"
+#~ msgstr "수동으로 키 지정"
+
+#~ msgid "User or key ID:"
+#~ msgstr "사용자 혹은 키 ID:"
+
+#~ msgid "Don't use SSL"
+#~ msgstr "SSL을 사용하지 않습니다"
+
+#~ msgid "Use SSL for POP3 connection"
+#~ msgstr "POP3 연결에 SSL을 사용합니다"
+
+#~ msgid "Use STARTTLS command to start SSL session"
+#~ msgstr "SSL 세션을 시작하기 위해 STARTTLS 명령을 사용합니다"
+
+#~ msgid "Use SSL for IMAP4 connection"
+#~ msgstr "IMAP4 연결에 SSL을 사용합니다"
+
+#~ msgid "NNTP"
+#~ msgstr "NNTP"
+
+#~ msgid "Use SSL for NNTP connection"
+#~ msgstr "NNTP 연결에 SSL을 사용합니다"
+
+#~ msgid "Use SSL for SMTP connection"
+#~ msgstr "SMTP 연결에 SSL을 사용합니다"
+
+#~ msgid "Specify SMTP port"
+#~ msgstr "SMTP 포트 번호"
+
+#~ msgid "Specify POP3 port"
+#~ msgstr "POP3 포트 번호"
+
+#~ msgid "Specify IMAP4 port"
+#~ msgstr "IMAP4 포트 지정"
+
+#~ msgid "Specify NNTP port"
+#~ msgstr "NNTP 포트 지정"
+
+#~ msgid "Specify domain name"
+#~ msgstr "도메인 이름 지정"
+
+#~ msgid "IMAP server directory"
+#~ msgstr "IMAP 서버 디렉토리"
+
+#~ msgid "Put sent messages in"
+#~ msgstr "보낸 메시지 저장"
+
+#~ msgid "Put draft messages in"
+#~ msgstr "임시 메시지 저장"
+
+#~ msgid "Put deleted messages in"
+#~ msgstr "삭제된 메시지 저장"
+
+#~ msgid "Account name is not entered."
+#~ msgstr "계정 이름이 입력되지 않았습니다."
+
+#~ msgid "Mail address is not entered."
+#~ msgstr "메일 주소가 지정되지않았습니다."
+
+#~ msgid "SMTP server is not entered."
+#~ msgstr "SMTP 서버가 지정되지않았습니다."
+
+#~ msgid "User ID is not entered."
+#~ msgstr "사용자 아이디가 지정되지않았습니다."
+
+#~ msgid "POP3 server is not entered."
+#~ msgstr "POP3 서버가 지정되지않았습니다."
+
+#~ msgid "IMAP4 server is not entered."
+#~ msgstr "IMAP4 서버가 지정되지않았습니다."
+
+#~ msgid "NNTP server is not entered."
+#~ msgstr "NNTP 서버가 지정되지않았습니다."
+
+#~ msgid "Creating common preferences window...\n"
+#~ msgstr "일반 설정 창을 생성합니다...\n"
+
+#~ msgid "Common Preferences"
+#~ msgstr "일반 설정"
+
+#~ msgid "Quote"
+#~ msgstr "인용"
+
+#~ msgid "Display"
+#~ msgstr "보기"
+
+#~ msgid "Message"
+#~ msgstr "본문"
+
+#~ msgid "Use external program for incorporation"
+#~ msgstr "합체을 위해 외부 프로그램을 사용"
+
+#~ msgid "Command"
+#~ msgstr "명령어"
+
+#, fuzzy
+#~ msgid "Incorporate from local spool"
+#~ msgstr "spool로부터 합체"
+
+#~ msgid "Filter on incorporation"
+#~ msgstr "합체시 필터링"
+
+#~ msgid "Auto-check new mail"
+#~ msgstr "새 편지를 자동 검사"
+
+#~ msgid "minute(s)"
+#~ msgstr "분"
+
+#~ msgid "Check new mail on startup"
+#~ msgstr "시작할 때 새 편지를 검사"
+
+#~ msgid "Update all local folders after incorporation"
+#~ msgstr "병합 후에 모든 지역 폴더 갱신"
+
+#, fuzzy
+#~ msgid "Execute command when new messages arrived"
+#~ msgstr "메시지를 이동하거나 지울때 즉시 실행"
+
+#, fuzzy
+#~ msgid "`%d' will be replaced with the number of new messages."
+#~ msgstr "새 메시지의 갯수를 얻는 중 (STAT)..."
+
+#~ msgid "Use external program for sending"
+#~ msgstr "발송을 위해 외부 프로그램을 사용"
+
+#~ msgid "Save sent messages to outbox"
+#~ msgstr "보낸 메시지를 '보낸 편지함'에 저장"
+
+#, fuzzy
+#~ msgid "Outgoing encoding"
+#~ msgstr "보내는 메일의 문자셋"
+
+#~ msgid "Automatic (Recommended)"
+#~ msgstr "자동 (추천)"
+
+#~ msgid "7bit ascii (US-ASCII)"
+#~ msgstr "7bit 아스키 (US-ASCII)"
+
+#~ msgid "Unicode (UTF-8)"
+#~ msgstr "유니코드 (UTF-8)"
+
+#~ msgid "Western European (ISO-8859-1)"
+#~ msgstr "서부 유럽(ISO-8859-1)"
+
+#~ msgid "Western European (ISO-8859-15)"
+#~ msgstr "서부 유럽(ISO-8859-15)"
+
+#~ msgid "Central European (ISO-8859-2)"
+#~ msgstr "중부 유럽(ISO-8859-2)"
+
+#~ msgid "Baltic (ISO-8859-13)"
+#~ msgstr "Baltic (ISO-8859-13)"
+
+#~ msgid "Baltic (ISO-8859-4)"
+#~ msgstr "Baltic (ISO-8859-4)"
+
+#~ msgid "Greek (ISO-8859-7)"
+#~ msgstr "그리스 (ISO-8859-7)"
+
+#, fuzzy
+#~ msgid "Hebrew (ISO-8859-8)"
+#~ msgstr "그리스 (ISO-8859-7)"
+
+#, fuzzy
+#~ msgid "Hebrew (Windows-1255)"
+#~ msgstr "Cyrillic (Windows-1251)"
+
+#~ msgid "Turkish (ISO-8859-9)"
+#~ msgstr "터키 (ISO-8859-9)"
+
+#~ msgid "Cyrillic (ISO-8859-5)"
+#~ msgstr "Cyrillic (ISO-8859-5)"
+
+#~ msgid "Cyrillic (KOI8-R)"
+#~ msgstr "Cyrillic (KOI8-R)"
+
+#~ msgid "Cyrillic (KOI8-U)"
+#~ msgstr "Cyrillic (KOI8-U)"
+
+#~ msgid "Cyrillic (Windows-1251)"
+#~ msgstr "Cyrillic (Windows-1251)"
+
+#~ msgid "Japanese (ISO-2022-JP)"
+#~ msgstr "일본 (ISO-2022-JP)"
+
+#~ msgid "Japanese (EUC-JP)"
+#~ msgstr "일본 (EUC-JP)"
+
+#~ msgid "Japanese (Shift_JIS)"
+#~ msgstr "일본 (Shift_JIS)"
+
+#~ msgid "Simplified Chinese (GB2312)"
+#~ msgstr "Simplified Chinese (GB2312)"
+
+#, fuzzy
+#~ msgid "Simplified Chinese (GBK)"
+#~ msgstr "Simplified Chinese (GB2312)"
+
+#~ msgid "Traditional Chinese (Big5)"
+#~ msgstr "Traditional Chinese (Big5)"
+
+#~ msgid "Traditional Chinese (EUC-TW)"
+#~ msgstr "Traditional Chinese (EUC-TW)"
+
+#~ msgid "Chinese (ISO-2022-CN)"
+#~ msgstr "중국 (ISO-2022-CN)"
+
+#~ msgid "Korean (EUC-KR)"
+#~ msgstr "한국 (EUC-KR)"
+
+#~ msgid "Thai (TIS-620)"
+#~ msgstr "Thai (TIS-620)"
+
+#~ msgid "Thai (Windows-874)"
+#~ msgstr "Thai (Windows-874)"
+
+#, fuzzy
+#~ msgid ""
+#~ "If `Automatic' is selected, the optimal encoding for the current locale "
+#~ "will be used."
+#~ msgstr ""
+#~ "`자동'이 선택되면, 현재 로케일에 맞는 최적의\n"
+#~ "인코딩 방식이 사용됩니다."
+
+#, fuzzy
+#~ msgid "Transfer encoding"
+#~ msgstr "보내기 전에 줄 바꿈"
+
+#~ msgid "Signature separator"
+#~ msgstr "서명 분리자"
+
+#~ msgid "Insert automatically"
+#~ msgstr "지동으로 삽입"
+
+#~ msgid "Automatically launch the external editor"
+#~ msgstr "자동으로 외부 편집기 사용"
+
+#~ msgid "Wrap messages at"
+#~ msgstr "줄 바꿈 at"
+
+#~ msgid "characters"
+#~ msgstr "글자"
+
+#~ msgid "Wrap quotation"
+#~ msgstr "인용도 줄 바꿈"
+
+#~ msgid "Wrap before sending"
+#~ msgstr "보내기 전에 줄 바꿈"
+
+#~ msgid "Automatically select account for replies"
+#~ msgstr "자동으로 회신할 계정 선택"
+
+#~ msgid "Quote message when replying"
+#~ msgstr "회신할 때 메시지를 인용"
+
+#~ msgid "Reply button invokes mailing list reply"
+#~ msgstr "회신 버튼이 메일링리스트에 대한 회신으로 동작"
+
+#~ msgid "Reply format"
+#~ msgstr "회신 형식"
+
+#~ msgid "Quotation mark"
+#~ msgstr "인용 부호"
+
+#~ msgid "Forward format"
+#~ msgstr "전달 형식"
+
+#~ msgid " Description of symbols "
+#~ msgstr " 부호 설명 "
+
+#~ msgid "Font"
+#~ msgstr "글꼴"
+
+#~ msgid "Translate header name (such as `From:', `Subject:')"
+#~ msgstr "헤더 이름을 번역(`From:', `Subject:' 등등)"
+
+#~ msgid "Display unread number next to folder name"
+#~ msgstr "폴더이름옆에 읽지않을 메시지 수를 표시"
+
+#~ msgid "Summary View"
+#~ msgstr "요약 보기"
+
+#~ msgid "Display recipient on `From' column if sender is yourself"
+#~ msgstr "보낸 사람이 본인인 경우 보낸 사람 칸에 받는 사람을 표시"
+
+#~ msgid "Expand threads"
+#~ msgstr "쓰레드 펴기"
+
+#~ msgid "Date format"
+#~ msgstr "날짜 형식"
+
+#~ msgid " Set display item of summary... "
+#~ msgstr "요약에 표시될 항목 설정... "
+
+#~ msgid "Enable coloration of message"
+#~ msgstr "메시지에 색을 이용하여 보여주기"
+
+#~ msgid ""
+#~ "Display multi-byte alphabet and numeric as\n"
+#~ "ASCII character (Japanese only)"
+#~ msgstr ""
+#~ "다중바이트 알파벳과 숫자를 ASCII 문자로\n"
+#~ "표시 (일본어인 경우에만)"
+
+#~ msgid "Display header pane above message view"
+#~ msgstr "메시지 보기 위에 헤더 창 표시"
+
+#~ msgid "Display short headers on message view"
+#~ msgstr "메시지를 볼때 간단한 헤더만 표시"
+
+#, fuzzy
+#~ msgid "Display cursor in message view"
+#~ msgstr "메시지를 볼때 간단한 헤더만 표시"
+
+#~ msgid "Line space"
+#~ msgstr "줄 간격"
+
+#~ msgid "pixel(s)"
+#~ msgstr "픽셀"
+
+#~ msgid "Scroll"
+#~ msgstr "스크롤"
+
+#~ msgid "Half page"
+#~ msgstr "반 페이지"
+
+#~ msgid "Smooth scroll"
+#~ msgstr "부드러운 스크롤"
+
+#, fuzzy
+#~ msgid "Resize attached large images to fit in the window"
+#~ msgstr "첨부된 이미지 크기 조정"
+
+#, fuzzy
+#~ msgid "Display images as inline"
+#~ msgstr "표시될 헤더 설정"
+
+#, fuzzy
+#~ msgid "Learning command:"
+#~ msgstr "실행"
+
+#, fuzzy
+#~ msgid "Classifying command"
+#~ msgstr "실행"
+
+#, fuzzy
+#~ msgid "Junk folder"
+#~ msgstr "폴더"
+
+#, fuzzy
+#~ msgid "Filter messages classified as junk on receiving"
+#~ msgstr "받을때 메시지를 필터링"
+
+#, fuzzy
+#~ msgid ""
+#~ "Filtered messages will be moved to the junk folder and deleted from the "
+#~ "server."
+#~ msgstr "(필터링 되지 않은 메시지는 이 폴더에 저장될 것입니다)"
+
+#~ msgid "Automatically check signatures"
+#~ msgstr "자동으로 서명 확인"
+
+#~ msgid "Show signature check result in a popup window"
+#~ msgstr "팝업 창에 서명 확인 결과 보이기"
+
+#~ msgid "Store passphrase in memory temporarily"
+#~ msgstr "비밀번호를 메모리에 임시 보관"
+
+#~ msgid "minute(s) "
+#~ msgstr "분 "
+
+#~ msgid "Grab input while entering a passphrase"
+#~ msgstr "passphrase를 입력할때 Grab input"
+
+#~ msgid "Display warning on startup if GnuPG doesn't work"
+#~ msgstr "GnuPG가 동작하지 않을 경우 시작시 경고 표시"
+
+#, fuzzy
+#~ msgid "Always open messages in summary when selected"
+#~ msgstr "어떤 메시지 파일도 선택되지 않았습니다."
+
+#~ msgid "Open first unread message when entering a folder"
+#~ msgstr "폴더에 들어가면 첫번째 안읽은 메시지 열기"
+
+#~ msgid "Only mark message as read when opened in new window"
+#~ msgstr "새 창에서 열렸을 경우에만 메시지를 읽은 것으로 표시"
+
+#~ msgid "Go to inbox after receiving new mail"
+#~ msgstr "새 편지를 받은 후 받은 편지함으로 가기"
+
+#~ msgid "Execute immediately when moving or deleting messages"
+#~ msgstr "메시지를 이동하거나 지울때 즉시 실행"
+
+#, fuzzy
+#~ msgid "Messages will be marked until execution if this is turned off."
+#~ msgstr ""
+#~ "(이것이 꺼져있는 경우 메시지는 실행때까지\n"
+#~ "단지 표시만 될 것입니다)"
+
+#~ msgid "Receive dialog"
+#~ msgstr "받기 대화상자"
+
+#~ msgid "Show receive dialog"
+#~ msgstr "받기 대화상자 보기"
+
+#~ msgid "Always"
+#~ msgstr "항상"
+
+#~ msgid "Never"
+#~ msgstr "보이지 않음"
+
+#~ msgid "Don't popup error dialog on receive error"
+#~ msgstr "받기 에러 발생시 에러 상자 보이지 않음"
+
+#~ msgid "Close receive dialog when finished"
+#~ msgstr "끝났을 때 받기 대화상자 닫기"
+
+#~ msgid " Set key bindings... "
+#~ msgstr " 키 바인딩 설정... "
+
+#~ msgid "External commands (%s will be replaced with file name / URI)"
+#~ msgstr "외부 명령 (%s는 파일 이름 / URI로 대체됩니다)"
+
+#~ msgid "Web browser"
+#~ msgstr "웹 탐색기"
+
+#~ msgid "Add address to destination when double-clicked"
+#~ msgstr "더블클릭시에 대상에 주소 추가"
+
+#~ msgid "On exit"
+#~ msgstr "끝낼때"
+
+#~ msgid "Confirm on exit"
+#~ msgstr "끝냈때 확인"
+
+#~ msgid "Empty trash on exit"
+#~ msgstr "끝낼때 지운 편지함 비우기"
+
+#~ msgid "Ask before emptying"
+#~ msgstr "지운 편지함 비울때 확인하기"
+
+#~ msgid "Warn if there are queued messages"
+#~ msgstr "큐에 메시지가 있을 때 경고"
+
+#, fuzzy
+#~ msgid "Enable strict checking of the integrity of summary caches"
+#~ msgstr "요약 캐쉬 (%s)를 씁니다..."
+
+#~ msgid "the preferred date and time for the current locale"
+#~ msgstr "현재 로케일에 적당한 날짜와 시간"
+
+#~ msgid "the century number (year/100)"
+#~ msgstr "년도 (년/100)"
+
+#~ msgid "Description"
+#~ msgstr "설명"
+
+#~ msgid "Example"
+#~ msgstr "예제"
+
+#~ msgid "Set message colors"
+#~ msgstr "메시지 색 설정"
+
+#~ msgid "Colors"
+#~ msgstr "색"
+
+#~ msgid "Quoted Text - First Level"
+#~ msgstr "인용문 - 첫번째 단계"
+
+#~ msgid "Quoted Text - Second Level"
+#~ msgstr "인용문 - 두번째 단계"
+
+#~ msgid "Quoted Text - Third Level"
+#~ msgstr "인용문 - 세번째 단계"
+
+#~ msgid "URI link"
+#~ msgstr "URI 링크"
+
+#~ msgid "Recycle quote colors"
+#~ msgstr "인용 색 반복"
+
+#~ msgid "Pick color for quotation level 1"
+#~ msgstr "첫번째 단계 인용문 색 선택"
+
+#~ msgid "Pick color for quotation level 2"
+#~ msgstr "두번째 단계 인용문 색 선택"
+
+#~ msgid "Pick color for quotation level 3"
+#~ msgstr "세번째 단계 인용문 색 선택"
+
+#~ msgid "Pick color for URI"
+#~ msgstr "URI 색 선택"
+
+#~ msgid "Description of symbols"
+#~ msgstr "부호 설명"
+
+#~ msgid ""
+#~ "Date\n"
+#~ "From\n"
+#~ "Full Name of Sender\n"
+#~ "First Name of Sender\n"
+#~ "Initial of Sender\n"
+#~ "Subject\n"
+#~ "To\n"
+#~ "Cc\n"
+#~ "Newsgroups\n"
+#~ "Message-ID"
+#~ msgstr ""
+#~ "날짜\n"
+#~ "보낸 사람\n"
+#~ "보낸 사람의 이름\n"
+#~ "보낸 사람의 성\n"
+#~ "보낸 사람의 이니셜\n"
+#~ "제목\n"
+#~ "받는 사람\n"
+#~ "참조\n"
+#~ "뉴스그룹\n"
+#~ "메시지-ID"
+
+#~ msgid "Key bindings"
+#~ msgstr "키 바인딩"
+
+#~ msgid "Default"
+#~ msgstr "기본"
+
+#~ msgid "Old Sylpheed"
+#~ msgstr "예전 Sylpheed"
+
 #~ msgid "Font selection"
 #~ msgstr "글꼴 선택"
 
@@ -6611,9 +6160,6 @@ msgstr ""
 
 #~ msgid "Setting widgets..."
 #~ msgstr "위젯들을 설정합니다..."
-
-#~ msgid "Moving message %s%c%d to %s ...\n"
-#~ msgstr "메시지 %s%c%d를 %s로 이동합니다...\n"
 
 #~ msgid "\tMarking the messages..."
 #~ msgstr "\t메시지들을 표시합니다..."
