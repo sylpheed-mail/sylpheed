@@ -61,6 +61,7 @@ typedef enum
 	(((c) & 0xff) >= 0xa1 && ((c) & 0xff) <= 0xdf)
 #define iseucaux(c) \
 	(((c) & 0xff) == 0x8f)
+
 #define issjiskanji1(c) \
 	((((c) & 0xff) >= 0x81 && ((c) & 0xff) <= 0x9f) || \
 	 (((c) & 0xff) >= 0xe0 && ((c) & 0xff) <= 0xfc))
@@ -69,6 +70,17 @@ typedef enum
 	 (((c) & 0xff) >= 0x80 && ((c) & 0xff) <= 0xfc))
 #define issjishwkana(c) \
 	(((c) & 0xff) >= 0xa1 && ((c) & 0xff) <= 0xdf)
+
+/* U+0080 - U+07FF */
+#define isutf8_2_1(c) \
+	(((c) & 0xe0) == 0xc0)
+#define isutf8_2_2(c) \
+	(((c) & 0xc0) == 0x80)
+/* U+0800 - U+FFFF */
+#define isutf8_3_1(c) \
+	(((c) & 0xf0) == 0xe0)
+#define isutf8_3_2(c) \
+	(((c) & 0xc0) == 0x80)
 
 #define K_IN()				\
 	if (state != JIS_KANJI) {	\
@@ -799,17 +811,34 @@ CharSet conv_guess_ja_encoding(const gchar *str)
 				guessed = C_EUC_JP;
 			p += 2;
 		} else if (issjiskanji1(*p) && issjiskanji2(*(p + 1))) {
-			if (iseuchwkana1(*p) && iseuchwkana2(*(p + 1)))
-				guessed = C_SHIFT_JIS;
-			else
-				return C_SHIFT_JIS;
+			guessed = C_SHIFT_JIS;
 			p += 2;
 		} else if (issjishwkana(*p)) {
 			guessed = C_SHIFT_JIS;
 			p++;
 		} else {
+			if (guessed == C_US_ASCII)
+				guessed = C_AUTO;
 			p++;
 		}
+	}
+
+	if (guessed != C_US_ASCII) {
+		p = (const guchar *)str;
+
+		while (*p != '\0') {
+			if (isascii(*p)) {
+				p++;
+			} else if (isutf8_3_1(*p) &&
+				   isutf8_3_2(*(p + 1)) &&
+				   isutf8_3_2(*(p + 2))) {
+				p += 3;
+			} else {
+				return guessed;
+			}
+		}
+
+		return C_UTF_8;
 	}
 
 	return guessed;
