@@ -1557,7 +1557,8 @@ static gboolean folderview_button_pressed(GtkWidget *widget,
 					   &path, NULL, NULL, NULL))
 		return TRUE;
 
-	if (folderview->selection_locked)
+	if (folderview->selection_locked ||
+	    summary_is_locked(folderview->summaryview))
 		return TRUE;
 
 	if (event->button == 1 || event->button == 2) {
@@ -1599,7 +1600,8 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 
 	if (!event) return FALSE;
 
-	if (folderview->selection_locked)
+	if (folderview->selection_locked ||
+	    summary_is_locked(folderview->summaryview))
 		return TRUE;
 
 	switch (event->keyval) {

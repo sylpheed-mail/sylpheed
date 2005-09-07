@@ -3374,7 +3374,7 @@ void debug_print(const gchar *format, ...)
 	g_print("%s", buf);
 }
 
-void print_status(const gchar *format, ...)
+void status_print(const gchar *format, ...)
 {
 	va_list args;
 	gchar buf[BUFFSIZE];

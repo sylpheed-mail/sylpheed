@@ -1089,6 +1089,7 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 		return NULL;
 	}
 
+	status_print("Getting message %d", uid);
 	debug_print("getting message %d...\n", uid);
 	ok = imap_cmd_fetch(session, (guint32)uid, filename);
 
@@ -1152,6 +1153,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	gint count = 1;
 	gint total;
 	gint ok;
+	GTimeVal tv_prev, tv_cur;
 
 	g_return_val_if_fail(folder != NULL, -1);
 	g_return_val_if_fail(dest != NULL, -1);
@@ -1160,6 +1162,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	session = imap_session_get(folder);
 	if (!session) return -1;
 
+	g_get_current_time(&tv_prev);
 	ui_update();
 
 	ok = imap_status(session, IMAP_FOLDER(folder), dest->path,
@@ -1199,7 +1202,16 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		    dest->stype == F_TRASH)
 			iflags |= IMAP_FLAG_SEEN;
 
-		print_status(_("Appending messages (%d / %d)"), count++, total);
+		g_get_current_time(&tv_cur);
+		if (tv_cur.tv_sec > tv_prev.tv_sec ||
+		    tv_cur.tv_usec - tv_prev.tv_usec >
+		    PROGRESS_UPDATE_INTERVAL * 1000) {
+			status_print(_("Appending messages to %s (%d / %d)"),
+				     dest->path, count, total);
+			ui_update();
+			tv_prev = tv_cur;
+		}
+		++count;
 
 		ok = imap_cmd_append(session, destdir, fileinfo->file, iflags,
 				     &new_uid);
@@ -1279,17 +1291,17 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 		gchar *seq_set = (gchar *)cur->data;
 
 		if (remove_source) {
-			print_status(_("Moving messages %s to %s ..."),
-				     seq_set, destdir);
+			status_print(_("Moving messages %s to %s ..."),
+				     seq_set, dest->path);
 			debug_print("Moving message %s%c[%s] to %s ...\n",
 				    src->path, G_DIR_SEPARATOR,
-				    seq_set, destdir);
+				    seq_set, dest->path);
 		} else {
-			print_status(_("Copying messages %s to %s ..."),
-				     seq_set, destdir);
+			status_print(_("Copying messages %s to %s ..."),
+				     seq_set, dest->path);
 			debug_print("Copying message %s%c[%s] to %s ...\n",
 				    src->path, G_DIR_SEPARATOR,
-				    seq_set, destdir);
+				    seq_set, dest->path);
 		}
 		ui_update();
 
@@ -1432,7 +1444,7 @@ static gint imap_remove_msgs_by_seq_set(Folder *folder, FolderItem *item,
 	for (cur = seq_list; cur != NULL; cur = cur->next) {
 		gchar *seq_set = (gchar *)cur->data;
 
-		print_status(_("Removing messages %s"), seq_set);
+		status_print(_("Removing messages %s"), seq_set);
 		ui_update();
 
 		ok = imap_set_message_flags(session, seq_set, IMAP_FLAG_DELETED,
@@ -1529,7 +1541,7 @@ static gint imap_remove_all_msg(Folder *folder, FolderItem *item)
 	if (ok != IMAP_SUCCESS)
 		return ok;
 
-	print_status(_("Removing all messages in %s"), item->path);
+	status_print(_("Removing all messages in %s"), item->path);
 	ui_update();
 
 	imap_cmd_gen_send(session, "STORE 1:* +FLAGS.SILENT (\\Deleted)");
@@ -2253,6 +2265,7 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	MsgInfo *msginfo;
 	gchar seq_set[22];
 	gint count = 1;
+	GTimeVal tv_prev, tv_cur;
 
 	g_return_val_if_fail(session != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
@@ -2260,6 +2273,7 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	g_return_val_if_fail(FOLDER_TYPE(item->folder) == F_IMAP, NULL);
 	g_return_val_if_fail(first_uid <= last_uid, NULL);
 
+	g_get_current_time(&tv_prev);
 	ui_update();
 
 	if (first_uid == 0 && last_uid == 0)
@@ -2275,9 +2289,18 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	str = g_string_new(NULL);
 
 	for (;;) {
-		if (exists > 0)
-			print_status(_("Getting message headers (%d / %d)"),
-				     count, exists);
+		if (exists > 0) {
+			g_get_current_time(&tv_cur);
+			if (tv_cur.tv_sec > tv_prev.tv_sec ||
+			    tv_cur.tv_usec - tv_prev.tv_usec >
+			    PROGRESS_UPDATE_INTERVAL * 1000) {
+				status_print
+					(_("Getting message headers (%d / %d)"),
+					 count, exists);
+				ui_update();
+				tv_prev = tv_cur;
+			}
+		}
 		++count;
 
 		if (sock_getline(SESSION(session)->sock, &tmp) < 0) {

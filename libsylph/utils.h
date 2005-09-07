@@ -498,7 +498,7 @@ void set_log_ui_func	(LogFunc	 print_func,
 void set_log_show_status_func	(LogFunc	 status_func);
 
 void debug_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
-void print_status	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
+void status_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 
 void log_print		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_message	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
