@@ -55,6 +55,7 @@
 #define IMAPS_PORT	993
 #endif
 
+#define IMAP_COPY_LIMIT	500
 #define IMAP_CMD_LIMIT	1000
 
 #define QUOTE_IF_REQUIRED(out, str)				\
@@ -358,7 +359,8 @@ static void imap_path_separator_subst		(gchar		*str,
 static gchar *imap_modified_utf7_to_utf8	(const gchar	*mutf7_str);
 static gchar *imap_utf8_to_modified_utf7	(const gchar	*from);
 
-static GSList *imap_get_seq_set_from_msglist	(GSList		*msglist);
+static GSList *imap_get_seq_set_from_msglist	(GSList		*msglist,
+						 gint		 limit);
 static void imap_seq_set_free			(GSList		*seq_list);
 
 static GHashTable *imap_get_uid_table		(GArray		*array);
@@ -1285,7 +1287,7 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 
 	destdir = imap_get_real_path(IMAP_FOLDER(folder), dest->path);
 
-	seq_list = imap_get_seq_set_from_msglist(msglist);
+	seq_list = imap_get_seq_set_from_msglist(msglist, IMAP_COPY_LIMIT);
 
 	for (cur = seq_list; cur != NULL; cur = cur->next) {
 		gchar *seq_set = (gchar *)cur->data;
@@ -1315,7 +1317,7 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 	dest->updated = TRUE;
 
 	if (remove_source) {
-		imap_remove_msgs_by_seq_set(folder, src, seq_list);
+		ok = imap_remove_msgs_by_seq_set(folder, src, seq_list);
 		if (ok != IMAP_SUCCESS) {
 			imap_seq_set_free(seq_list);
 			return ok;
@@ -1498,7 +1500,7 @@ static gint imap_remove_msgs(Folder *folder, FolderItem *item, GSList *msglist)
 	if (ok != IMAP_SUCCESS)
 		return ok;
 
-	seq_list = imap_get_seq_set_from_msglist(msglist);
+	seq_list = imap_get_seq_set_from_msglist(msglist, 0);
 	ok = imap_remove_msgs_by_seq_set(folder, item, seq_list);
 	imap_seq_set_free(seq_list);
 	if (ok != IMAP_SUCCESS)
@@ -2934,7 +2936,7 @@ static gint imap_msg_list_change_perm_flags(GSList *msglist, MsgPermFlags flags,
 	if (ok != IMAP_SUCCESS)
 		return ok;
 
-	seq_list = imap_get_seq_set_from_msglist(msglist);
+	seq_list = imap_get_seq_set_from_msglist(msglist, 0);
 
 	if (flags & MSG_MARKED)  iflags |= IMAP_FLAG_FLAGGED;
 	if (flags & MSG_REPLIED) iflags |= IMAP_FLAG_ANSWERED;
@@ -4052,13 +4054,14 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 	return to;
 }
 
-static GSList *imap_get_seq_set_from_msglist(GSList *msglist)
+static GSList *imap_get_seq_set_from_msglist(GSList *msglist, gint limit)
 {
 	GString *str;
 	GSList *sorted_list, *cur;
 	guint first, last, next;
 	gchar *ret_str;
 	GSList *ret_list = NULL;
+	gint count = 0;
 
 	if (msglist == NULL)
 		return NULL;
@@ -4072,11 +4075,29 @@ static GSList *imap_get_seq_set_from_msglist(GSList *msglist)
 	first = ((MsgInfo *)sorted_list->data)->msgnum;
 
 	for (cur = sorted_list; cur != NULL; cur = cur->next) {
+		++count;
 		last = ((MsgInfo *)cur->data)->msgnum;
 		if (cur->next)
 			next = ((MsgInfo *)cur->next->data)->msgnum;
 		else
 			next = 0;
+
+		if (limit > 0 && count >= limit) {
+			if (str->len > 0)
+				g_string_append_c(str, ',');
+			if (first == last)
+				g_string_sprintfa(str, "%u", first);
+			else
+				g_string_sprintfa(str, "%u:%u", first, last);
+
+			first = next;
+
+			ret_str = g_strdup(str->str);
+			ret_list = g_slist_append(ret_list, ret_str);
+			g_string_truncate(str, 0);
+			count = 0;
+			continue;
+		}
 
 		if (last + 1 != next || next == 0) {
 			if (str->len > 0)
