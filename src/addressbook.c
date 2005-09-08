@@ -1405,7 +1405,7 @@ static gboolean addressbook_tree_button_pressed(GtkWidget *ctree,
 			       event->button, event->time);
 	}
 
-	return TRUE;
+	return FALSE;
 }
 
 static gboolean addressbook_tree_button_released(GtkWidget *ctree,
