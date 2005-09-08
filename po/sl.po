@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -214,6 +214,88 @@ msgstr "iconv ne more pretvoriti UTF-7 v %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv ne more pretvoriti %s v UTF-7\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "ne morem pisati v začasno datoteko\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Sprejemam sporočila iz %s v %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "ne morem prebrati datoteke mbox.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "napačen format mbox: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "napačno oblikovan mbox: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "ne morem odpreti začasne datoteke\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"najdeno neubežno polje Od:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "najdenih %d sporočil.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "ne morem narediti datoteke za zaklepanje %s\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "če je mogoče, uporabi 'flock' namesto 'file'.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "ne morem narediti %s\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "poštni predal si lasti drug proces, čakam...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "ne morem zakleniti %s\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "neveljaven tip zaklepanja\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "ne morem odkleniti %s\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "ne morem prisekati poštnega predala na ničlo.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Izvažam sporočila iz %s v %s...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -359,55 +441,55 @@ msgstr "Med pošiljanjem je prišlo do napake\n"
 msgid "Error occurred while sending command\n"
 msgstr "Med obdelavo pošte je prišlo do napake."
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "V pozdravu ni bila najdena zahtevana časovna značka APOP\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Skladenjska napaka časovne značke v pozdravu\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "Napaka v protokolu POP3\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, fuzzy, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "neveljavna vrstica xover: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: brišem poteklo sporočilo %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Izpuščam sporočilo %d (%d zlogov)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "poštni predal je zaklenjen\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr ""
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "ne morem pričeti seje TLS\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "Med preverjanjem istovetnosti je prišlo do napake\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 #, fuzzy
 msgid "command not supported\n"
 msgstr "Ukaz"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 #, fuzzy
 msgid "error occurred on POP3 session\n"
 msgstr "Med preverjanjem istovetnosti je prišlo do napake\n"
@@ -460,11 +542,11 @@ msgstr "Ne morem pisati v datoteko.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH ni na razpolago\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr ""
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 #, fuzzy
 msgid "error occurred on SMTP session\n"
 msgstr "Med preverjanjem istovetnosti je prišlo do napake\n"
@@ -602,6 +684,74 @@ msgstr ""
 "programom; če ga niste, pišite na Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, ZDA."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Nekatera okna za sestavljanje sporočila so odprta.\n"
+"Pred urejanjem računov zaprite vsa okna za sestavljanje sporočil."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Odpiram okno za urejanje računa...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Ustvarjam okno za urejanje računa...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Urejanje računov"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Nova sporočila bodo iskana v tem vrstnem redu. Označite izbirnike\n"
+"v stolpcu `G', da omogočite pobiranje sporočil z ukazom `Poberi vsa'."
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Ime"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Protokol"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Strežnik"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Urejanje"
+
+#: src/account_dialog.c:426
+#, fuzzy
+msgid " _Set as default account "
+msgstr " Nastavi kot privzet račun "
+
+#: src/account_dialog.c:479
+#, fuzzy, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Ali resnično želite izbrisati ta račun?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+#, fuzzy
+msgid "(Untitled)"
+msgstr "Brez naslova"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Brisanje računa"
+
 #: src/action.c:331
 #, fuzzy, c-format
 msgid "Could not get message file %d"
@@ -698,14 +848,6 @@ msgstr ""
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Dodaj naslov v adresar"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Ime"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -847,7 +989,7 @@ msgstr "/_Brisanje"
 msgid "E-Mail address"
 msgstr "Elektronski naslov"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Imenik naslovov"
 
@@ -1018,7 +1160,7 @@ msgstr "Napaka pri pretvorbi imenika naslovov"
 msgid "Addressbook Conversion"
 msgstr "Pretvorba imenika naslovov"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Vmesnik"
 
@@ -1038,7 +1180,8 @@ msgstr "Elektronski naslov"
 msgid "Group"
 msgstr "Skupina"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Mapa"
 
@@ -1587,7 +1730,8 @@ msgstr "Tip MIME"
 msgid "Size"
 msgstr "Velikost"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Pošlji"
 
@@ -1627,7 +1771,9 @@ msgstr "Pripni"
 msgid "Attach file"
 msgstr "Pripni datoteko"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Podpis"
 
@@ -1635,7 +1781,8 @@ msgstr "Podpis"
 msgid "Insert signature"
 msgstr "Vstavi podpis"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Urejevalnik"
 
@@ -1866,6 +2013,7 @@ msgid " Check File "
 msgstr " Preveri Datoteko "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Datoteka"
 
@@ -1943,7 +2091,8 @@ msgid "Edit JPilot Entry"
 msgstr "Urejanje vnosa JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -2007,7 +2156,7 @@ msgstr "Čas izteka (sek.)"
 msgid "Maximum Entries"
 msgstr "Največje št. vnosov"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Osnovno"
 
@@ -2064,6 +2213,7 @@ msgid "Exporting file:"
 msgstr "Izvozi datoteko:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " Izberi... "
 
@@ -3578,7 +3728,8 @@ msgstr "Pripoji novo pošto z vseh računov"
 msgid "Send queued message(s)"
 msgstr "Pošlji čakajoča sporočila"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Sestavi"
 
@@ -3586,7 +3737,7 @@ msgstr "Sestavi"
 msgid "Compose new message"
 msgstr "Sestavi novo sporočilo"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Odgovori"
 
@@ -3614,7 +3765,7 @@ msgstr "Posreduj sporočilo"
 msgid "Delete the message"
 msgstr "Izbriši sporočilo"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr ""
 
@@ -3668,88 +3819,6 @@ msgstr "Končaj"
 msgid "Exit this program?"
 msgstr "Ali naj končam ta program?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "ne morem pisati v začasno datoteko\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Sprejemam sporočila iz %s v %s...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "ne morem prebrati datoteke mbox.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "napačen format mbox: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "napačno oblikovan mbox: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "ne morem odpreti začasne datoteke\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"najdeno neubežno polje Od:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "najdenih %d sporočil.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "ne morem narediti datoteke za zaklepanje %s\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "če je mogoče, uporabi 'flock' namesto 'file'.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "ne morem narediti %s\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "poštni predal si lasti drug proces, čakam...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "ne morem zakleniti %s\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "neveljaven tip zaklepanja\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "ne morem odkleniti %s\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "ne morem prisekati poštnega predala na ničlo.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Izvažam sporočila iz %s v %s...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Poišči v trenutnem sporočilu"
@@ -3790,7 +3859,7 @@ msgstr "/_Orodja/Doda_j pošiljatelja v adresar"
 msgid "Creating message view...\n"
 msgstr "Ustvarjam videz sporočila...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Besedilo"
 
@@ -3803,7 +3872,7 @@ msgstr "Priloge"
 msgid "Can't save the file `%s'."
 msgstr "Ne morem odstraniti datoteke `%s'."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Tiskanje"
 
@@ -3940,6 +4009,408 @@ msgstr ""
 "Napačna šifrirna fraza! Poskusite znova...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Odpiram okno za nastavitve računa...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Račun%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Nastavitve novega računa"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Nastavitve računa"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Ustvarjam okno za nastavitve računa...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Sprejmi"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Zasebnost"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Napredno"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Ime tega računa"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Nastavi kot privzeto"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Osebni podatki"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Polno ime"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "Poštni naslov"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Organizacija"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Podatki o strežniku"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Novice (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Noben (lokalen)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Ta strežnik zahteva overovitev"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Novičarski strežnik"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Strežnik za sprejemanje"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "Strežnik SMTP (pošiljanje)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "Uporabniško ime"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Geslo"
+
+#: src/prefs_account_dialog.c:819
+#, fuzzy
+msgid "Use secure authentication (APOP)"
+msgstr "Ta strežnik zahteva overovitev"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Ob sprejemu odstrani sporočila s strežnika"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Odstrani po"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "dneh"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 dnevih: odstrani nemudoma)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Naloži vsa sporočila na strežniku"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Omejitev dolžine pri sprejemanju"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr ""
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Filtriranje sporočil ob sprejemu"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Privzeta mapa za prejeto pošto"
+
+#: src/prefs_account_dialog.c:914
+#, fuzzy
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "(Nefiltrirana sporočila bodo shranjena v tej mapi)"
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Overovitvena metoda"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Samodejno"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Novice"
+
+#: src/prefs_account_dialog.c:955
+#, fuzzy
+msgid "Maximum number of articles to download"
+msgstr ""
+"Največje število člankov za nalaganje\n"
+"(neomejeno, če podate 0)"
+
+#: src/prefs_account_dialog.c:972
+#, fuzzy
+msgid "No limit if 0 is specified."
+msgstr "Naslovnik ni določen."
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "`Poberi vsa' preveri novo pošto na tem računu"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Zaglavje"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Dodaj polje z datumom v zaglavje"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Generiran ID sporočila"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Dodaj uporabniško definirano zaglavje"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " Uredi... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Overovitev"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "Avtentikacija SMTP (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+#, fuzzy
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Če pustite te vnose prazne, bosta uporabljena\n"
+"isti uporabnški ID in geslo kot pri sprejemu."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Pred pošiljanjem avtenticiraj s POP3"
+
+#: src/prefs_account_dialog.c:1207
+#, fuzzy
+msgid "Command output"
+msgstr "Ukaz"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Samodejno nastavi sledeče naslove"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Kp:"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Skp:"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Odgovor za"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Privzeto podpiši sporočilo"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "privzeto zakodiraj sporočio"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr ""
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Uporabi oklopljen zapis ASCII za enkripcijo"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Uporabi jasen tekstovni podpis"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Ključ za podpisovanje"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Uporabi privzet ključ GnuPG"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Izberi ključ glede na vaš el. naslov"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Ročno določi ključ"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Uporabnik ali ID ključa"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Ne uporabljaj SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Uporabi SSL za povezavo POP3"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Uporabi ukaz STARTTLS za pričetek seje SSL"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Uporabi SSL za povezavo IMAP4"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Uporabi SSL za povezavo NNTP"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Pošlji (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Uporabi SSL za povezavo SMTP"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr ""
+
+#: src/prefs_account_dialog.c:1523
+msgid "Turn this off if you have problems in SSL connection."
+msgstr ""
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Vnesite vrata SMTP"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Vnesite vrata POP3"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Vnesite vrata IMAP4"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Vnesite vrata NNTP"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Vnesite ime domene"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "Imenik strežnika IMAP"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Postavi poslana sporočila v"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Postavi osnutke sporočil v"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Postavi izbrisana sporočila v"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Ime računa ni vnešeno."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "Elektronski naslov ni naveden."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "Strežnik SMTP ni naveden."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Uporabnikov ID ni vnešen."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "Strežnik POP3 ni vnešen."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "Strežnik IMAP4 ni naveden."
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "Strežnik NNTP ni naveden."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Uporaba starega načina oklopljen ASCII za\n"
+"enkripcijo ni priporočljiva. Ni združljiv z\n"
+"RFC 3156 MIME Security z Open PGP"
+
 #: src/prefs_actions.c:172
 #, fuzzy
 msgid "Actions configuration"
@@ -4055,13 +4526,818 @@ msgstr "Izbriši dejanje"
 msgid "Do you really want to delete this action?"
 msgstr "Ali resnično želite izbrisati ta račun?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Ustvarjam okno za splošne nastavitve...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Splošne nastavitve"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Citat"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Prikaz"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Sporočila"
+
+#: src/prefs_common_dialog.c:697
+#, fuzzy
+msgid "Junk mail"
+msgstr "Mapa"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Ostalo"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Uporabi zunanji program za vključitev"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Ukaz"
+
+#: src/prefs_common_dialog.c:776
+#, fuzzy
+msgid "Incorporate from local spool"
+msgstr "Pripoji iz spoola"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Filtriranje ob pripojitvi"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr ""
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Samodejno preverjanje nove pošte"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "vsak"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "minut(e)"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Preveri novo pošto ob zagonu"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Posodobi vse lokalne mape po pripojitvi"
+
+#: src/prefs_common_dialog.c:842
+#, fuzzy
+msgid "Execute command when new messages arrived"
+msgstr "IZvrši takoj, ko prestavljaš ali brišeš sporočilo"
+
+#: src/prefs_common_dialog.c:863
+#, fuzzy, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "Ugotavljam število novih sporočil (STAT)..."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Uporabi zunanji program za pošiljanje"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Shrani poslana sporočila v izhodno mapo"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr ""
+
+#: src/prefs_common_dialog.c:953
+#, fuzzy
+msgid "Outgoing encoding"
+msgstr "Izhodni nabor znakov"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Samodejno (priporočeno)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7-bitni ASCII (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Zahodnoevropski (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Zahodnoevropski (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Srednjeevropski (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Baltski (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Baltski (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Grški (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+#, fuzzy
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Grški (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:985
+#, fuzzy
+msgid "Hebrew (Windows-1255)"
+msgstr "Cirilica (Windows-1251)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Turški (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Cirilica (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cirilica (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Cirilica (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Cirilica (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Japonski (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Japonski (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Japonski (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Poenostavljena kitajščina (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+#, fuzzy
+msgid "Simplified Chinese (GBK)"
+msgstr "Poenostavljena kitajščina (GB2312)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Tradicionalna kitajščina (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Tradicionalna kitajščina (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Kitajski (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Korejski (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Tajski (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Tajski (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+#, fuzzy
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Če je izbrano `Samodejno', bo uporabljeno\n"
+"optimalno kodiranje za trenutni locale."
+
+#: src/prefs_common_dialog.c:1024
+#, fuzzy
+msgid "Transfer encoding"
+msgstr "Prelomi pred pošiljanjem"
+
+#: src/prefs_common_dialog.c:1043
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Ločilo podpisa"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Vrini samodejno"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Samodejni zaženi zunanji urejevalnik"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Razveljavi nivo"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Prelom sporočila ob"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "znakov"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Prelom citata"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Prelomi ob vnosu"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Prelomi pred pošiljanjem"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Samodejno izberi račun za odgovore"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Citiraj sporočila ob odgovarjanju"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "Gumb Odgovori izvede odgovor na dopisni seznam"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Oblika odgovora"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Znak za citiranje"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Oblika posredovanja"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr "Opis simbolov"
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Pisava"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Prevedi ime zaglavja (kot `From:', `Subject:')"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Prikaži število neprebranih poleg imena mape"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Skrajšaj novičarske skupine daljše od"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "Izbriši"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Ogled povzetka"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Prikaži naslovnika v stolpcu `Od', če ste pošiljatelj vi"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Razširi niti"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Oblika datuma"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr "Nastavi del za prikaz povzetka..."
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Omogoči barvanje sporočila"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Prikaži večzložno abecedo in števila kot\n"
+"znake ASCII (samo japonščina)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Prikaži zaglavje nad ogledom sporočila"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Prikaži kratko zaglavje ob ogledu sporočila"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1580
+#, fuzzy
+msgid "Display cursor in message view"
+msgstr "Prikaži kratko zaglavje ob ogledu sporočila"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Prostor za vrstico"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "točk(e)"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Drsenje"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Polovica strani"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Nadzor gladkosti"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Korak"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1659
+#, fuzzy
+msgid "Resize attached large images to fit in the window"
+msgstr "Spremeni velikost pripetim slikam"
+
+#: src/prefs_common_dialog.c:1661
+#, fuzzy
+msgid "Display images as inline"
+msgstr "Nastavitev prikaza zaglavja"
+
+#: src/prefs_common_dialog.c:1702
+#, fuzzy
+msgid "Enable Junk mail control"
+msgstr "Mapa"
+
+#: src/prefs_common_dialog.c:1710
+#, fuzzy
+msgid "Learning command:"
+msgstr "Izvedi"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1746
+#, fuzzy
+msgid "Classifying command"
+msgstr "Izvedi"
+
+#: src/prefs_common_dialog.c:1760
+#, fuzzy
+msgid "Junk folder"
+msgstr "Mapa"
+
+#: src/prefs_common_dialog.c:1778
+#, fuzzy
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "(Nefiltrirana sporočila bodo shranjena v tej mapi)"
+
+#: src/prefs_common_dialog.c:1784
+#, fuzzy
+msgid "Filter messages classified as junk on receiving"
+msgstr "Filtriranje sporočil ob sprejemu"
+
+#: src/prefs_common_dialog.c:1788
+#, fuzzy
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr "(Nefiltrirana sporočila bodo shranjena v tej mapi)"
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Samodejno preveri podpise"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Prikaži rezultat preverjanja podpisa v novem oknu"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Začasno shrani prepustno frazo v pomnilnik"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Poteče po"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "minut(e) "
+
+#: src/prefs_common_dialog.c:1874
+#, fuzzy
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr ""
+"(Nastavitev na '0' bo shranila prepustno frazo\n"
+" za celotno sejo)"
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Zagrabi vnos med vnašanjem gesla"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Prikaži opozorilo ob zagonu, če GnuPG ne deluje"
+
+#: src/prefs_common_dialog.c:1941
+#, fuzzy
+msgid "Always open messages in summary when selected"
+msgstr "Nobena datoteka s sporočilom ni izbrana."
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Odpri prvo neprebrano sporočilo ob vstopu v mapo"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Označi sporočilo kot prebrano samo, ko je odprto v novem oknu"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Ob prejemu novih sporočil pojdi v mapo Prejeto"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "IZvrši takoj, ko prestavljaš ali brišeš sporočilo"
+
+#: src/prefs_common_dialog.c:1973
+#, fuzzy
+msgid "Messages will be marked until execution if this is turned off."
+msgstr ""
+"(Sporočila bodo označena do izvršitve,\n"
+"če je to izklopljeno)"
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Dialog za sprejem"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Prikaži pogovorno okno za sprejem"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Vedno"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Nikoli"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Ob napaki pri sprejemanju ne prikaži okna z napako"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Na koncu zapri pogovorno okno za sprejemanje"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr ""
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " Nastavi povezave na tipke... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Zunanji ukazi (%s bo zamenjan z imenom datoteke / URI)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Spletni brskalnik"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Ob dvojnem kliku dodaj naslov na cilj"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "Ob izhodu"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Potrdi ob izhodu"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Izprazni smetnjak ob izhodu"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Vprašaj pred izpranjenjem"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Opozori, če so čakajoča sporočila"
+
+#: src/prefs_common_dialog.c:2205
+#, fuzzy
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Pišem povzetek predpomnilnika (%s)..."
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr ""
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr ""
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "polno okrajšano ime dneva v tednu"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "polno ime dneva v tednu"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "okrajšano ime meseca"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "polno ime meseca"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "najustreznejša oblika datuma in časa za trenutni locale"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "številka stoletja (leto/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "dan v mesecu kot desetiško število"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "ura kot desetiško število s 24-urnim prikazom"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "ura kot desteiško število z 12-urnim prikazom"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "dan v letu kot desetiško število"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "mesec kot desetiško število"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "minute kot desetiško število"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "AM oz. PM"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "sekunde kot desetiško število"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "dan v tednu kot desetiško število"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "najustreznejši datum za trenutni locale"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "zadnji dve števki leta"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "leto kot desetiško število"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "časovni pas ali ime ali okrajšava"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Določevalec"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Opis"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Primer"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Nastavi barve sporočila"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Barve"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Citirano besedilo - prvi nivo"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Citirano besedilo - drugi nivo"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Citirano besedilo - tretji nivo"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "povezava URI"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Obnovi barve za citiranje"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "Izberite barvo za citiranje na prvem nivoju"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "Izberite barvo za citiranje na drugem nivoju"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "Izberite barvo za citiranje na tretjem nivoju"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "Izberite barvo za URI"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Opis simbolov"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Datum\n"
+"Od\n"
+"Pošiljateljevo polno ime\n"
+"Pošiljateljevo ime\n"
+"Pošiljateljeve začetnice\n"
+"Zadeva\n"
+"Do\n"
+"Kp\n"
+"Novičarske skupine\n"
+"ID sporočila"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Če je x nastavljen, prikaži expr"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Telo sporočila\n"
+"Telo citiranega sporočila\n"
+"Telo sporočila brez podpisa\n"
+"Telo citiranega sporočila brez podpisa\n"
+"Dobesedno %"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"Dobesedna povratna poševnica\n"
+"Dobesedni vprašaj\n"
+"Dobesedni zaviti oklepaj\n"
+"Dobesedni zaviti zaklepaj"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Povezave na tipke"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Izberite prednastavitev povezav na tipke.\n"
+"Lahko tudi spremenite bližnjice do vsakega menija, čepritisnete katerokoli "
+"tipko, ko na kos kaže miškin kazalec"
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "Privzeto"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Stari Sylpheed"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Nastavitev prikrojenega zaglavja"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Zaglavje"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4127,19 +5403,10 @@ msgstr "Nastavitev filtra"
 msgid "Enabled"
 msgstr ""
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Urejanje"
-
 #: src/prefs_filter.c:685
 #, fuzzy, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Ali res želite izbrisati to pravilo?"
-
-#: src/prefs_filter.c:686
-#, fuzzy
-msgid "(Untitled)"
-msgstr "Brez naslova"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4228,10 +5495,6 @@ msgstr ""
 
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
-msgstr ""
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
 msgstr ""
 
 #: src/prefs_filter_edit.c:729
@@ -4375,10 +5638,6 @@ msgstr ""
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Udejani na podmapah"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Samodejno nastavi sledeče naslove"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4540,10 +5799,6 @@ msgstr "ID ključa"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Vrednost"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Ostalo"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5153,899 +6408,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Nekatera okna za sestavljanje sporočila so odprta.\n"
-#~ "Pred urejanjem računov zaprite vsa okna za sestavljanje sporočil."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Odpiram okno za urejanje računa...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Ustvarjam okno za urejanje računa...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Urejanje računov"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Nova sporočila bodo iskana v tem vrstnem redu. Označite izbirnike\n"
-#~ "v stolpcu `G', da omogočite pobiranje sporočil z ukazom `Poberi vsa'."
-
-#~ msgid "Protocol"
-#~ msgstr "Protokol"
-
-#~ msgid "Server"
-#~ msgstr "Strežnik"
-
-#, fuzzy
-#~ msgid " _Set as default account "
-#~ msgstr " Nastavi kot privzet račun "
-
-#, fuzzy
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Ali resnično želite izbrisati ta račun?"
-
-#~ msgid "Delete account"
-#~ msgstr "Brisanje računa"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Odpiram okno za nastavitve računa...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Račun%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Nastavitve novega računa"
-
-#~ msgid "Account preferences"
-#~ msgstr "Nastavitve računa"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Ustvarjam okno za nastavitve računa...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Sprejmi"
-
-#~ msgid "Privacy"
-#~ msgstr "Zasebnost"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Napredno"
-
-#~ msgid "Name of this account"
-#~ msgstr "Ime tega računa"
-
-#~ msgid "Set as default"
-#~ msgstr "Nastavi kot privzeto"
-
-#~ msgid "Personal information"
-#~ msgstr "Osebni podatki"
-
-#~ msgid "Full name"
-#~ msgstr "Polno ime"
-
-#~ msgid "Mail address"
-#~ msgstr "Poštni naslov"
-
-#~ msgid "Organization"
-#~ msgstr "Organizacija"
-
-#~ msgid "Server information"
-#~ msgstr "Podatki o strežniku"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "Novice (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Noben (lokalen)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Ta strežnik zahteva overovitev"
-
-#~ msgid "News server"
-#~ msgstr "Novičarski strežnik"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Strežnik za sprejemanje"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "Strežnik SMTP (pošiljanje)"
-
-#~ msgid "User ID"
-#~ msgstr "Uporabniško ime"
-
-#~ msgid "Password"
-#~ msgstr "Geslo"
-
-#, fuzzy
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Ta strežnik zahteva overovitev"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Ob sprejemu odstrani sporočila s strežnika"
-
-#~ msgid "Remove after"
-#~ msgstr "Odstrani po"
-
-#~ msgid "days"
-#~ msgstr "dneh"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 dnevih: odstrani nemudoma)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Naloži vsa sporočila na strežniku"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Omejitev dolžine pri sprejemanju"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Filtriranje sporočil ob sprejemu"
-
-#~ msgid "Default inbox"
-#~ msgstr "Privzeta mapa za prejeto pošto"
-
-#, fuzzy
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "(Nefiltrirana sporočila bodo shranjena v tej mapi)"
-
-#~ msgid "Authentication method"
-#~ msgstr "Overovitvena metoda"
-
-#~ msgid "Automatic"
-#~ msgstr "Samodejno"
-
-#~ msgid "News"
-#~ msgstr "Novice"
-
-#, fuzzy
-#~ msgid "Maximum number of articles to download"
-#~ msgstr ""
-#~ "Največje število člankov za nalaganje\n"
-#~ "(neomejeno, če podate 0)"
-
-#, fuzzy
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Naslovnik ni določen."
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "`Poberi vsa' preveri novo pošto na tem računu"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Dodaj polje z datumom v zaglavje"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Generiran ID sporočila"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Dodaj uporabniško definirano zaglavje"
-
-#~ msgid " Edit... "
-#~ msgstr " Uredi... "
-
-#~ msgid "Authentication"
-#~ msgstr "Overovitev"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "Avtentikacija SMTP (SMTP AUTH)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Če pustite te vnose prazne, bosta uporabljena\n"
-#~ "isti uporabnški ID in geslo kot pri sprejemu."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Pred pošiljanjem avtenticiraj s POP3"
-
-#, fuzzy
-#~ msgid "Command output"
-#~ msgstr "Ukaz"
-
-#~ msgid "Cc"
-#~ msgstr "Kp:"
-
-#~ msgid "Bcc"
-#~ msgstr "Skp:"
-
-#~ msgid "Reply-To"
-#~ msgstr "Odgovor za"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Privzeto podpiši sporočilo"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "privzeto zakodiraj sporočio"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "Uporabi oklopljen zapis ASCII za enkripcijo"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Uporabi jasen tekstovni podpis"
-
-#~ msgid "Sign key"
-#~ msgstr "Ključ za podpisovanje"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Uporabi privzet ključ GnuPG"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Izberi ključ glede na vaš el. naslov"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Ročno določi ključ"
-
-#~ msgid "User or key ID:"
-#~ msgstr "Uporabnik ali ID ključa"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Ne uporabljaj SSL"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "Uporabi SSL za povezavo POP3"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "Uporabi ukaz STARTTLS za pričetek seje SSL"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "Uporabi SSL za povezavo IMAP4"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "Uporabi SSL za povezavo NNTP"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Pošlji (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "Uporabi SSL za povezavo SMTP"
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "Vnesite vrata SMTP"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "Vnesite vrata POP3"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "Vnesite vrata IMAP4"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "Vnesite vrata NNTP"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Vnesite ime domene"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "Imenik strežnika IMAP"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Postavi poslana sporočila v"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Postavi osnutke sporočil v"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Postavi izbrisana sporočila v"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Ime računa ni vnešeno."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "Elektronski naslov ni naveden."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "Strežnik SMTP ni naveden."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Uporabnikov ID ni vnešen."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "Strežnik POP3 ni vnešen."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "Strežnik IMAP4 ni naveden."
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "Strežnik NNTP ni naveden."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Uporaba starega načina oklopljen ASCII za\n"
-#~ "enkripcijo ni priporočljiva. Ni združljiv z\n"
-#~ "RFC 3156 MIME Security z Open PGP"
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Ustvarjam okno za splošne nastavitve...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Splošne nastavitve"
-
-#~ msgid "Quote"
-#~ msgstr "Citat"
-
-#~ msgid "Display"
-#~ msgstr "Prikaz"
-
-#~ msgid "Message"
-#~ msgstr "Sporočila"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Uporabi zunanji program za vključitev"
-
-#~ msgid "Command"
-#~ msgstr "Ukaz"
-
-#, fuzzy
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Pripoji iz spoola"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Filtriranje ob pripojitvi"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Samodejno preverjanje nove pošte"
-
-#~ msgid "every"
-#~ msgstr "vsak"
-
-#~ msgid "minute(s)"
-#~ msgstr "minut(e)"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Preveri novo pošto ob zagonu"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Posodobi vse lokalne mape po pripojitvi"
-
-#, fuzzy
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "IZvrši takoj, ko prestavljaš ali brišeš sporočilo"
-
-#, fuzzy
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "Ugotavljam število novih sporočil (STAT)..."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Uporabi zunanji program za pošiljanje"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Shrani poslana sporočila v izhodno mapo"
-
-#, fuzzy
-#~ msgid "Outgoing encoding"
-#~ msgstr "Izhodni nabor znakov"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Samodejno (priporočeno)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7-bitni ASCII (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Zahodnoevropski (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Zahodnoevropski (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Srednjeevropski (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Baltski (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Baltski (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Grški (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Grški (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Cirilica (Windows-1251)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Turški (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Cirilica (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Cirilica (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Cirilica (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Cirilica (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Japonski (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japonski (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Japonski (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Poenostavljena kitajščina (GB2312)"
-
-#, fuzzy
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Poenostavljena kitajščina (GB2312)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Tradicionalna kitajščina (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Tradicionalna kitajščina (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Kitajski (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Korejski (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Tajski (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Tajski (Windows-874)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "Če je izbrano `Samodejno', bo uporabljeno\n"
-#~ "optimalno kodiranje za trenutni locale."
-
-#, fuzzy
-#~ msgid "Transfer encoding"
-#~ msgstr "Prelomi pred pošiljanjem"
-
-#~ msgid "Signature separator"
-#~ msgstr "Ločilo podpisa"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Vrini samodejno"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Samodejni zaženi zunanji urejevalnik"
-
-#~ msgid "Undo level"
-#~ msgstr "Razveljavi nivo"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Prelom sporočila ob"
-
-#~ msgid "characters"
-#~ msgstr "znakov"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Prelom citata"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Prelomi ob vnosu"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Prelomi pred pošiljanjem"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Samodejno izberi račun za odgovore"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Citiraj sporočila ob odgovarjanju"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "Gumb Odgovori izvede odgovor na dopisni seznam"
-
-#~ msgid "Reply format"
-#~ msgstr "Oblika odgovora"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Znak za citiranje"
-
-#~ msgid "Forward format"
-#~ msgstr "Oblika posredovanja"
-
-#~ msgid " Description of symbols "
-#~ msgstr "Opis simbolov"
-
-#~ msgid "Font"
-#~ msgstr "Pisava"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Prevedi ime zaglavja (kot `From:', `Subject:')"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Prikaži število neprebranih poleg imena mape"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Skrajšaj novičarske skupine daljše od"
-
-#~ msgid "letters"
-#~ msgstr "Izbriši"
-
-#~ msgid "Summary View"
-#~ msgstr "Ogled povzetka"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Prikaži naslovnika v stolpcu `Od', če ste pošiljatelj vi"
-
-#~ msgid "Expand threads"
-#~ msgstr "Razširi niti"
-
-#~ msgid "Date format"
-#~ msgstr "Oblika datuma"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr "Nastavi del za prikaz povzetka..."
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Omogoči barvanje sporočila"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Prikaži večzložno abecedo in števila kot\n"
-#~ "znake ASCII (samo japonščina)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Prikaži zaglavje nad ogledom sporočila"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Prikaži kratko zaglavje ob ogledu sporočila"
-
-#, fuzzy
-#~ msgid "Display cursor in message view"
-#~ msgstr "Prikaži kratko zaglavje ob ogledu sporočila"
-
-#~ msgid "Line space"
-#~ msgstr "Prostor za vrstico"
-
-#~ msgid "pixel(s)"
-#~ msgstr "točk(e)"
-
-#~ msgid "Scroll"
-#~ msgstr "Drsenje"
-
-#~ msgid "Half page"
-#~ msgstr "Polovica strani"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Nadzor gladkosti"
-
-#~ msgid "Step"
-#~ msgstr "Korak"
-
-#, fuzzy
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "Spremeni velikost pripetim slikam"
-
-#, fuzzy
-#~ msgid "Display images as inline"
-#~ msgstr "Nastavitev prikaza zaglavja"
-
-#, fuzzy
-#~ msgid "Learning command:"
-#~ msgstr "Izvedi"
-
-#, fuzzy
-#~ msgid "Classifying command"
-#~ msgstr "Izvedi"
-
-#, fuzzy
-#~ msgid "Junk folder"
-#~ msgstr "Mapa"
-
-#, fuzzy
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "Filtriranje sporočil ob sprejemu"
-
-#, fuzzy
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr "(Nefiltrirana sporočila bodo shranjena v tej mapi)"
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Samodejno preveri podpise"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Prikaži rezultat preverjanja podpisa v novem oknu"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Začasno shrani prepustno frazo v pomnilnik"
-
-#~ msgid "Expired after"
-#~ msgstr "Poteče po"
-
-#~ msgid "minute(s) "
-#~ msgstr "minut(e) "
-
-#, fuzzy
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr ""
-#~ "(Nastavitev na '0' bo shranila prepustno frazo\n"
-#~ " za celotno sejo)"
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Zagrabi vnos med vnašanjem gesla"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Prikaži opozorilo ob zagonu, če GnuPG ne deluje"
-
-#, fuzzy
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Nobena datoteka s sporočilom ni izbrana."
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Odpri prvo neprebrano sporočilo ob vstopu v mapo"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr "Označi sporočilo kot prebrano samo, ko je odprto v novem oknu"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Ob prejemu novih sporočil pojdi v mapo Prejeto"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "IZvrši takoj, ko prestavljaš ali brišeš sporočilo"
-
-#, fuzzy
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr ""
-#~ "(Sporočila bodo označena do izvršitve,\n"
-#~ "če je to izklopljeno)"
-
-#~ msgid "Receive dialog"
-#~ msgstr "Dialog za sprejem"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Prikaži pogovorno okno za sprejem"
-
-#~ msgid "Always"
-#~ msgstr "Vedno"
-
-#~ msgid "Never"
-#~ msgstr "Nikoli"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Ob napaki pri sprejemanju ne prikaži okna z napako"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Na koncu zapri pogovorno okno za sprejemanje"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " Nastavi povezave na tipke... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Zunanji ukazi (%s bo zamenjan z imenom datoteke / URI)"
-
-#~ msgid "Web browser"
-#~ msgstr "Spletni brskalnik"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Ob dvojnem kliku dodaj naslov na cilj"
-
-#~ msgid "On exit"
-#~ msgstr "Ob izhodu"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Potrdi ob izhodu"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Izprazni smetnjak ob izhodu"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Vprašaj pred izpranjenjem"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Opozori, če so čakajoča sporočila"
-
-#, fuzzy
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "Pišem povzetek predpomnilnika (%s)..."
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "polno okrajšano ime dneva v tednu"
-
-#~ msgid "the full weekday name"
-#~ msgstr "polno ime dneva v tednu"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "okrajšano ime meseca"
-
-#~ msgid "the full month name"
-#~ msgstr "polno ime meseca"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "najustreznejša oblika datuma in časa za trenutni locale"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "številka stoletja (leto/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "dan v mesecu kot desetiško število"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "ura kot desetiško število s 24-urnim prikazom"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "ura kot desteiško število z 12-urnim prikazom"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "dan v letu kot desetiško število"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "mesec kot desetiško število"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "minute kot desetiško število"
-
-#~ msgid "either AM or PM"
-#~ msgstr "AM oz. PM"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "sekunde kot desetiško število"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "dan v tednu kot desetiško število"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "najustreznejši datum za trenutni locale"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "zadnji dve števki leta"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "leto kot desetiško število"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "časovni pas ali ime ali okrajšava"
-
-#~ msgid "Specifier"
-#~ msgstr "Določevalec"
-
-#~ msgid "Description"
-#~ msgstr "Opis"
-
-#~ msgid "Example"
-#~ msgstr "Primer"
-
-#~ msgid "Set message colors"
-#~ msgstr "Nastavi barve sporočila"
-
-#~ msgid "Colors"
-#~ msgstr "Barve"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Citirano besedilo - prvi nivo"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Citirano besedilo - drugi nivo"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Citirano besedilo - tretji nivo"
-
-#~ msgid "URI link"
-#~ msgstr "povezava URI"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Obnovi barve za citiranje"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "Izberite barvo za citiranje na prvem nivoju"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "Izberite barvo za citiranje na drugem nivoju"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "Izberite barvo za citiranje na tretjem nivoju"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "Izberite barvo za URI"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Opis simbolov"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Datum\n"
-#~ "Od\n"
-#~ "Pošiljateljevo polno ime\n"
-#~ "Pošiljateljevo ime\n"
-#~ "Pošiljateljeve začetnice\n"
-#~ "Zadeva\n"
-#~ "Do\n"
-#~ "Kp\n"
-#~ "Novičarske skupine\n"
-#~ "ID sporočila"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Če je x nastavljen, prikaži expr"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Telo sporočila\n"
-#~ "Telo citiranega sporočila\n"
-#~ "Telo sporočila brez podpisa\n"
-#~ "Telo citiranega sporočila brez podpisa\n"
-#~ "Dobesedno %"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "Dobesedna povratna poševnica\n"
-#~ "Dobesedni vprašaj\n"
-#~ "Dobesedni zaviti oklepaj\n"
-#~ "Dobesedni zaviti zaklepaj"
-
-#~ msgid "Key bindings"
-#~ msgstr "Povezave na tipke"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Izberite prednastavitev povezav na tipke.\n"
-#~ "Lahko tudi spremenite bližnjice do vsakega menija, čepritisnete "
-#~ "katerokoli tipko, ko na kos kaže miškin kazalec"
-
-#~ msgid "Default"
-#~ msgstr "Privzeto"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Stari Sylpheed"
 
 #~ msgid "Font selection"
 #~ msgstr "Izbira pisave"

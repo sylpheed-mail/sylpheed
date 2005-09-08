@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -211,6 +211,88 @@ msgstr "iconv kan ikke konvertere UTF-7 til %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv can ikke konvertere %s til UTF-7\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "kan ikke skrive til midlertidig fil\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Modtager meddelelse fra %s til %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "Kan ikke læse mbox fil.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "ugyldigt mbox format: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "ugyldig mbox format: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "kan ikke åbne midlertidig fil\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"ukodet Fra fundet:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "%d meddelelse fundet.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "kan ikke oprette lock fil %s\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "benyt 'flock' i stedet for 'file' hvis muligt.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "kan ikke oprette %s\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "mailbox hører til anden process, venter...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "kan ikke låse %s\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "ugyldig lock type\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "kan ikke låse %s op\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "kan ikke tømme mailbox.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Eksporterer meddelelse fra %s til %s...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -356,55 +438,55 @@ msgstr "Fejl ved afsendelse\n"
 msgid "Error occurred while sending command\n"
 msgstr "Fejl ved afsendelse af e-post."
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "Nødvendig APOP tid blev ikke fundet i velkomst\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Tid syntax fejl i velkomst\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "POP3 protokol fejl\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, fuzzy, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "ugyldig XOVER linie: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Sletter udløben meddelelse %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Sender meddelelse (%d / %d bytes)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "postkasse er låst\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "tid udløbet\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "kan ikke starte TLS session\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "fejl ved godkendelse\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 #, fuzzy
 msgid "command not supported\n"
 msgstr "Kommando tekst"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 #, fuzzy
 msgid "error occurred on POP3 session\n"
 msgstr "fejl under POP3 session\n"
@@ -457,11 +539,11 @@ msgstr "Kan ikke skrive til fil.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH ikke tilgænglig\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "forkert SMTP svar\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "fejl under SMTP session\n"
 
@@ -596,6 +678,74 @@ msgstr ""
 "program.Hvis ikke, så skriv til Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Der er ny post vinduer åbent.\n"
+"Luk alle ny post vinduer inden rettelse af konti."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Åbn konto redigérings vindue...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Opret konto redigérings vindue...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Redigér konti"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Nye meddelelser bliver testet i denne rækkefølge. Afmærk\n"
+"`G'-kolonnen, for at aktivere hentning via `hent alle'."
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Navn"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Protokol"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Server"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Redigér"
+
+#: src/account_dialog.c:426
+#, fuzzy
+msgid " _Set as default account "
+msgstr " Standard konto "
+
+#: src/account_dialog.c:479
+#, fuzzy, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Vil du virkelig slette denne konto?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+#, fuzzy
+msgid "(Untitled)"
+msgstr "Uden titel"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Slet konto"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -694,14 +844,6 @@ msgstr "Handlingens bruger parameter"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Tilføj adresse i adressebog"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Navn"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -843,7 +985,7 @@ msgstr "/_Slet"
 msgid "E-Mail address"
 msgstr "E-post adresse"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Adressebog"
 
@@ -1009,7 +1151,7 @@ msgstr "Adressebog konverterings fejl"
 msgid "Addressbook Conversion"
 msgstr "Adressebog konvertering"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Brugerflade"
 
@@ -1029,7 +1171,8 @@ msgstr "E-post adresse"
 msgid "Group"
 msgstr "Gruppe"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Mappe"
 
@@ -1578,7 +1721,8 @@ msgstr "MIME type"
 msgid "Size"
 msgstr "Størrelse"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Send"
 
@@ -1618,7 +1762,9 @@ msgstr "Vedhæft"
 msgid "Attach file"
 msgstr "Vedhæft fil"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Underskrift"
 
@@ -1626,7 +1772,8 @@ msgstr "Underskrift"
 msgid "Insert signature"
 msgstr "Indsæt underskrift"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Editor"
 
@@ -1856,6 +2003,7 @@ msgid " Check File "
 msgstr " Check fil "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Fil"
 
@@ -1933,7 +2081,8 @@ msgid "Edit JPilot Entry"
 msgstr "Redigér JPilot indtastning"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1997,7 +2146,7 @@ msgstr "Timeout (sek)"
 msgid "Maximum Entries"
 msgstr "Max. indtastninger"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Enkelt"
 
@@ -2054,6 +2203,7 @@ msgid "Exporting file:"
 msgstr "Eksporterer fil:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " Vælg... "
 
@@ -3578,7 +3728,8 @@ msgstr "Hent ny post fra alle konti"
 msgid "Send queued message(s)"
 msgstr "Sender meddelelse(r) i kø"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Opret"
 
@@ -3586,7 +3737,7 @@ msgstr "Opret"
 msgid "Compose new message"
 msgstr "Opret ny meddelelse"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Besvar"
 
@@ -3614,7 +3765,7 @@ msgstr "Videresend meddelelse"
 msgid "Delete the message"
 msgstr "Slet meddelelse"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr ""
 
@@ -3668,88 +3819,6 @@ msgstr "Afslut"
 msgid "Exit this program?"
 msgstr "Afslut program?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "kan ikke skrive til midlertidig fil\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Modtager meddelelse fra %s til %s...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "Kan ikke læse mbox fil.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "ugyldigt mbox format: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "ugyldig mbox format: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "kan ikke åbne midlertidig fil\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"ukodet Fra fundet:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "%d meddelelse fundet.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "kan ikke oprette lock fil %s\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "benyt 'flock' i stedet for 'file' hvis muligt.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "kan ikke oprette %s\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "mailbox hører til anden process, venter...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "kan ikke låse %s\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "ugyldig lock type\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "kan ikke låse %s op\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "kan ikke tømme mailbox.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Eksporterer meddelelse fra %s til %s...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Søg i aktuel meddelelse"
@@ -3790,7 +3859,7 @@ msgstr "/_Funktioner/Tilføj afsender til adressebog"
 msgid "Creating message view...\n"
 msgstr "Opretter meddelelses vindue...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Tekst"
 
@@ -3803,7 +3872,7 @@ msgstr "Vedhæftet"
 msgid "Can't save the file `%s'."
 msgstr "Kan ikke gemme fil `%s'."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Udskriv"
 
@@ -3940,6 +4009,406 @@ msgstr ""
 "Forkert adgangssætning! Prøv igen...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Åbner konti egenskaber...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Konto%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Opsæt af ny konto"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Konto opsæt"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Opretter konto egenskaber...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Modtag"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Privat"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Avanceret"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Navn på denne konto"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Standard konto"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Personlige informationener"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Fuldt navn"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "E-post adresse"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Organisation"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Server data"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "News (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Ingen (lokal)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Dennes server kræver godkendelse"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Nyheds server"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Server til modtagelse"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "SMTP server (afsendelse)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "Bruger ID"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Adgangskode"
+
+#: src/prefs_account_dialog.c:819
+#, fuzzy
+msgid "Use secure authentication (APOP)"
+msgstr "Dennes server kræver godkendelse"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Slet meddelelser fra server efter modtagelse"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Slet efter"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "dage"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 dage: slet straks)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Hent alle meddelelser fra server"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Modtagelses størrelse maks."
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "kB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Filtrere meddelelse ved modtagelse"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Standard indbakke"
+
+#: src/prefs_account_dialog.c:914
+#, fuzzy
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "(Ufiltrerede meddelelser gemmes i denne mappe)"
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Godkendelses metode"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Automatisk"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Nyheder"
+
+#: src/prefs_account_dialog.c:955
+#, fuzzy
+msgid "Maximum number of articles to download"
+msgstr "Max antal artikler ved hentning (0 angiver alle)"
+
+#: src/prefs_account_dialog.c:972
+#, fuzzy
+msgid "No limit if 0 is specified."
+msgstr "Mangler modtager"
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "`Hent alle' henter post fra denne konto"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Hoved"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Tilføj dato linie"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Opret meddelelses ID"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Tilføj bruger defineret hoved"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " Redigér... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Godkendelse"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "SMTP godkendelse (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+#, fuzzy
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Hvis du lader disse være tomme, benyttes\n"
+"samme bruger ID og adgangskode som ved modtagelse."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Godkend med POP3 før afsendelse"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Kommando tekst"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Udfyld automatisk følgende adresser"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Cc"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Bcc"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Svar til"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Signer altid meddelelse"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Krypter altid meddelelser"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr ""
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Benyt ASCII format til kodning"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Benyt klar tekst underskrift"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Underskrifts nøgle"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Benyt standard GnuPg nøgle"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Vælg nøgle efter e-post adresse"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Angiv nøgle manuelt"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Bruger eller nøgle ID"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Benyt ikke SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Benyt SSL til POP3 forbindelse"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Benyt STARTTLS kommando til at starte SSL session"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Benyt SSL til IMAP4 forbindelse"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Benyt SSL til NNTP forbindelse"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Send (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Benyt SSL til SMTP forbindelse"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Benyt ublokerende SSL"
+
+#: src/prefs_account_dialog.c:1523
+#, fuzzy
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "(Slp dette fra hvis du har problemer med SSL forbindelser)"
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Angiv SMTP port"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Angiv POP3 port"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Angiv IMAP4 port"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Angiv NNTP port"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Angiv domæne navn"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "IMAP server sti."
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Gem sendte meddelelser i"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Gem kladde i"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Gem slettede meddelelser i"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Konto navn er ikke angivet."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "E-post adresse ikke angivet."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "SMTP server ikke angivet."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Bruger ID ikke angivet."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "POP3 server ikke angivet."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "IMAP4 server ikke angivet"
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "NNTP server ikke angivet."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Det anbefales ikke at anvende det gamle ASCII format\n"
+"til at kode meddelelser. Derved overholdes RFC-3156 - MIME\n"
+"Security med OpenPGP ikke."
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "Handlingsopsæt"
@@ -4057,13 +4526,817 @@ msgstr "Slet handling"
 msgid "Do you really want to delete this action?"
 msgstr "Vil du virkelig slette denne handling?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Opretter generelt opsæt vindue...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Generelt opsæt"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Citat"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Vis"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Meddelelse"
+
+#: src/prefs_common_dialog.c:697
+#, fuzzy
+msgid "Junk mail"
+msgstr "Mappe"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Anden"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Benyt eksternt program til modtagelse af e-post"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Kommando"
+
+#: src/prefs_common_dialog.c:776
+#, fuzzy
+msgid "Incorporate from local spool"
+msgstr "Modtager fra lokal spool"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Filter ved modtagelse"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr ""
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Automatisk hentning af ny post"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "hver"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "minut(er)"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Hent e-post ved programstart"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Opdater alle mapper efter modtagelse"
+
+#: src/prefs_common_dialog.c:842
+#, fuzzy
+msgid "Execute command when new messages arrived"
+msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
+
+#: src/prefs_common_dialog.c:863
+#, fuzzy, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "Modtager antal nye meddelelser (STAT)..."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Benyt eksternt program for afsendelse"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Gem sendte meddelelser i Sendt"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr ""
+
+#: src/prefs_common_dialog.c:953
+#, fuzzy
+msgid "Outgoing encoding"
+msgstr "Udgående tegnsæt"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Automatisk (Anbefalet)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7bit ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Western European (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Western European (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Central European (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Baltic (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Baltic (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Greek (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+#, fuzzy
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Greek (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:985
+#, fuzzy
+msgid "Hebrew (Windows-1255)"
+msgstr "Cyrillic (Windows-1251)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Turkish (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Cyrillic (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cyrillic (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Cyrillic (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Cyrillic (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Japanese (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Japanese (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Japanese (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Simplified Chinese (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+#, fuzzy
+msgid "Simplified Chinese (GBK)"
+msgstr "Simplified Chinese (GB2312)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Traditional Chinese (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Traditional Chinese (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Chinese (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Korean (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Thai (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Thai (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+#, fuzzy
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Hvis `Automatisk' er valgt benyttes det optimale\n"
+"tegnsæt for den valgte locale."
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "Kodning af overførsel"
+
+#: src/prefs_common_dialog.c:1043
+#, fuzzy
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Angiv Content-Transfer-Encoding anvendt hvis\n"
+"besked inholder andet end ASCII tegn."
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Underskriftsdeling"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Tilføj automatisk"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Start automatisk ekstern editor"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Fortryd niveauer"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Del linier ved"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "tegn"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Del citat linier"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Del ved indtastning"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Del linier før afsendelse"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Vælg automatisk konto ved besvarelse"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Citat af meddelelse i svar"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "Svar knap starter svar til mail liste"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Svar format"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Citat tegn"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Videresend format"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " Beskrivelse af symboler "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Skrifttype"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Oversæt hoved navn (fx. `Fra:', `Emne:')"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Vis antal ulæste ved siden af mappe navn"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Forkort nyhedsgruppe længere end"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "bogstaver"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Meddelelses visning"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Vis modtager i `Fra' hvis du er afsender"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Åbn tråde"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Dato format"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr " Vælg oplysninger i oversigt... "
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Benyt farver i meddelelser"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Vis 2-byte alfabet og tal som ASCII\n"
+"tegn (kun japansk)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Vis hoved linier over meddelelses vindue"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Vis korte hoved linier i meddelelses vindue"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1580
+#, fuzzy
+msgid "Display cursor in message view"
+msgstr "Vis korte hoved linier i meddelelses vindue"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Linie afstand"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "punkter"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Scrol"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Halv side"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Blød scroll"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Skrift"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1659
+#, fuzzy
+msgid "Resize attached large images to fit in the window"
+msgstr "Ændre størrelse på vedhæftede billeder"
+
+#: src/prefs_common_dialog.c:1661
+#, fuzzy
+msgid "Display images as inline"
+msgstr "Hoved opsæt"
+
+#: src/prefs_common_dialog.c:1702
+#, fuzzy
+msgid "Enable Junk mail control"
+msgstr "Mappe"
+
+#: src/prefs_common_dialog.c:1710
+#, fuzzy
+msgid "Learning command:"
+msgstr "Udfør"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1746
+#, fuzzy
+msgid "Classifying command"
+msgstr "Udfør"
+
+#: src/prefs_common_dialog.c:1760
+#, fuzzy
+msgid "Junk folder"
+msgstr "Mappe"
+
+#: src/prefs_common_dialog.c:1778
+#, fuzzy
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "(Ufiltrerede meddelelser gemmes i denne mappe)"
+
+#: src/prefs_common_dialog.c:1784
+#, fuzzy
+msgid "Filter messages classified as junk on receiving"
+msgstr "Filtrere meddelelse ved modtagelse"
+
+#: src/prefs_common_dialog.c:1788
+#, fuzzy
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr "(Ufiltrerede meddelelser gemmes i denne mappe)"
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Check signatur automatisk"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Vis signatur check resultat i separat vindue"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Gem  adgangssætning midlertidigt i hukommelsen"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Udløb efter"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "minut(er)"
+
+#: src/prefs_common_dialog.c:1874
+#, fuzzy
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr ""
+"(Sæt til '0' vil gemme adgangssætningen\n"
+" for hele sessionen)"
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Overtag indtastning mens adgangssætning indtastes"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Advarsel ved start hvis GnuPG ikke virker"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "Åbn altid besked i oversigtsbilledet hvis valgt"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Åbn første ulæste meddelelse ved indgang til mappe"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Markér kun meddelelser som læst hvis åbnet i nyt vindue"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Gå til Indbakke efter modtagelse af ny post"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
+
+#: src/prefs_common_dialog.c:1973
+#, fuzzy
+msgid "Messages will be marked until execution if this is turned off."
+msgstr "(Ellers markéres meddelelese indtil der vælges 'Udfør')"
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Vis modtag billede"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Vis modtag billede"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Altid"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Aldrig"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Vis ikke fejlmeddelelse ved fejl"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Luk modtag vindue efter overførsel"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr ""
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " Vælg tast bindinger... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Ekstern editor (%s erstattes af filnavn / URI)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Web browser"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Tilføj adresse til 'Til' ved dobbeltklik"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "Ved afslut"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Spørg ved afslut"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Tøm Slettet ved afslut"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Spørg før tømning"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Advar ved meddelelser i kø"
+
+#: src/prefs_common_dialog.c:2205
+#, fuzzy
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Skriver oversigt (%s)..."
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "Socket I/O timeout:"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "sekund(er)"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "kort ugedags navn"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "Ugedags navn"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "kort måneds navn"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "måneds navn"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "ønsket dato format for nuværende locale"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "århundrede (år/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "dag i måned som tal"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "time som tal (24 timers visning)"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "time som tal (12 timers visning)"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "århundrede som tal"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "måned som tal"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "minut som tal"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "enten AM eller PM"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "sekund som tal"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "ugedag som tal"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "ønsket dato format for nuværende locale"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "de sidste to cifre i året"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "året som tal"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "tidszone som navn eller forkortelse"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Vælger"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Eksempel"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Angiv meddelelses farve"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Farve"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Citeret tekst - 1. niveau"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Citeret tekst - 2. niveau"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Citeret tekst - 3. nivaur"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "URI-Link"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Genbrug citat farver"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "Vælg farve for nivau 1"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "Vælg farve for nivau 2"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "Vælg farve for nivau 3"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "Vælg farve for URI"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Beskrivelse af symboler"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Dato\n"
+"Fra\n"
+"Afsenders fulde navn\n"
+"Afsenders fornavn\n"
+"Afsenders initaler\n"
+"Emne\n"
+"Til\n"
+"CC\n"
+"Nyhedsgrupper\n"
+"Meddelelses ID"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Hvis x er valgt vises expr"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Meddelelses krop\n"
+"Citeret meddelelses krop\n"
+"Meddelelses krop uden signatur\n"
+"Citeret meddelelses krop uden signatur\n"
+"%"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"\\\n"
+"?\n"
+"{\n"
+"}"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Tast bindinger"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Vælg standarden for genvejdstaster.\n"
+"Du kan også ændre hver menus genvejstast ved at taste enhver ved at placere\n"
+"mus over menu punkt og taste en tast."
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "Standard"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Gl. Sylpheed"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Bruger defineret hoved opsæt"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Hoved"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4129,19 +5402,10 @@ msgstr "Filter opsæt"
 msgid "Enabled"
 msgstr ""
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Redigér"
-
 #: src/prefs_filter.c:685
 #, fuzzy, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Wollen Sie wirklich diese Regel Slet?"
-
-#: src/prefs_filter.c:686
-#, fuzzy
-msgid "(Untitled)"
-msgstr "Uden titel"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4231,10 +5495,6 @@ msgstr ""
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr ""
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "kB"
 
 #: src/prefs_filter_edit.c:729
 #, fuzzy
@@ -4376,10 +5636,6 @@ msgstr "Slet [...] og (...) i starten af Emne i besvarelser"
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Benyt til undermapper"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Udfyld automatisk følgende adresser"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4541,10 +5797,6 @@ msgstr "Nøgle ID"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Val"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Anden"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5159,914 +6411,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Der er ny post vinduer åbent.\n"
-#~ "Luk alle ny post vinduer inden rettelse af konti."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Åbn konto redigérings vindue...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Opret konto redigérings vindue...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Redigér konti"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Nye meddelelser bliver testet i denne rækkefølge. Afmærk\n"
-#~ "`G'-kolonnen, for at aktivere hentning via `hent alle'."
-
-#~ msgid "Protocol"
-#~ msgstr "Protokol"
-
-#~ msgid "Server"
-#~ msgstr "Server"
-
-#, fuzzy
-#~ msgid " _Set as default account "
-#~ msgstr " Standard konto "
-
-#, fuzzy
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Vil du virkelig slette denne konto?"
-
-#~ msgid "Delete account"
-#~ msgstr "Slet konto"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Åbner konti egenskaber...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Konto%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Opsæt af ny konto"
-
-#~ msgid "Account preferences"
-#~ msgstr "Konto opsæt"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Opretter konto egenskaber...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Modtag"
-
-#~ msgid "Privacy"
-#~ msgstr "Privat"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Avanceret"
-
-#~ msgid "Name of this account"
-#~ msgstr "Navn på denne konto"
-
-#~ msgid "Set as default"
-#~ msgstr "Standard konto"
-
-#~ msgid "Personal information"
-#~ msgstr "Personlige informationener"
-
-#~ msgid "Full name"
-#~ msgstr "Fuldt navn"
-
-#~ msgid "Mail address"
-#~ msgstr "E-post adresse"
-
-#~ msgid "Organization"
-#~ msgstr "Organisation"
-
-#~ msgid "Server information"
-#~ msgstr "Server data"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "News (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Ingen (lokal)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Dennes server kræver godkendelse"
-
-#~ msgid "News server"
-#~ msgstr "Nyheds server"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Server til modtagelse"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "SMTP server (afsendelse)"
-
-#~ msgid "User ID"
-#~ msgstr "Bruger ID"
-
-#~ msgid "Password"
-#~ msgstr "Adgangskode"
-
-#, fuzzy
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Dennes server kræver godkendelse"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Slet meddelelser fra server efter modtagelse"
-
-#~ msgid "Remove after"
-#~ msgstr "Slet efter"
-
-#~ msgid "days"
-#~ msgstr "dage"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 dage: slet straks)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Hent alle meddelelser fra server"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Modtagelses størrelse maks."
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Filtrere meddelelse ved modtagelse"
-
-#~ msgid "Default inbox"
-#~ msgstr "Standard indbakke"
-
-#, fuzzy
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "(Ufiltrerede meddelelser gemmes i denne mappe)"
-
-#~ msgid "Authentication method"
-#~ msgstr "Godkendelses metode"
-
-#~ msgid "Automatic"
-#~ msgstr "Automatisk"
-
-#~ msgid "News"
-#~ msgstr "Nyheder"
-
-#, fuzzy
-#~ msgid "Maximum number of articles to download"
-#~ msgstr "Max antal artikler ved hentning (0 angiver alle)"
-
-#, fuzzy
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Mangler modtager"
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "`Hent alle' henter post fra denne konto"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Tilføj dato linie"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Opret meddelelses ID"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Tilføj bruger defineret hoved"
-
-#~ msgid " Edit... "
-#~ msgstr " Redigér... "
-
-#~ msgid "Authentication"
-#~ msgstr "Godkendelse"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "SMTP godkendelse (SMTP AUTH)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Hvis du lader disse være tomme, benyttes\n"
-#~ "samme bruger ID og adgangskode som ved modtagelse."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Godkend med POP3 før afsendelse"
-
-#~ msgid "Command output"
-#~ msgstr "Kommando tekst"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Reply-To"
-#~ msgstr "Svar til"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Signer altid meddelelse"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "Krypter altid meddelelser"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "Benyt ASCII format til kodning"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Benyt klar tekst underskrift"
-
-#~ msgid "Sign key"
-#~ msgstr "Underskrifts nøgle"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Benyt standard GnuPg nøgle"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Vælg nøgle efter e-post adresse"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Angiv nøgle manuelt"
-
-#~ msgid "User or key ID:"
-#~ msgstr "Bruger eller nøgle ID"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Benyt ikke SSL"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "Benyt SSL til POP3 forbindelse"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "Benyt STARTTLS kommando til at starte SSL session"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "Benyt SSL til IMAP4 forbindelse"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "Benyt SSL til NNTP forbindelse"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Send (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "Benyt SSL til SMTP forbindelse"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "Benyt ublokerende SSL"
-
-#, fuzzy
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr "(Slp dette fra hvis du har problemer med SSL forbindelser)"
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "Angiv SMTP port"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "Angiv POP3 port"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "Angiv IMAP4 port"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "Angiv NNTP port"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Angiv domæne navn"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "IMAP server sti."
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Gem sendte meddelelser i"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Gem kladde i"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Gem slettede meddelelser i"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Konto navn er ikke angivet."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "E-post adresse ikke angivet."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "SMTP server ikke angivet."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Bruger ID ikke angivet."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "POP3 server ikke angivet."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "IMAP4 server ikke angivet"
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "NNTP server ikke angivet."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Det anbefales ikke at anvende det gamle ASCII format\n"
-#~ "til at kode meddelelser. Derved overholdes RFC-3156 - MIME\n"
-#~ "Security med OpenPGP ikke."
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Opretter generelt opsæt vindue...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Generelt opsæt"
-
-#~ msgid "Quote"
-#~ msgstr "Citat"
-
-#~ msgid "Display"
-#~ msgstr "Vis"
-
-#~ msgid "Message"
-#~ msgstr "Meddelelse"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Benyt eksternt program til modtagelse af e-post"
-
-#~ msgid "Command"
-#~ msgstr "Kommando"
-
-#, fuzzy
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Modtager fra lokal spool"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Filter ved modtagelse"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Automatisk hentning af ny post"
-
-#~ msgid "every"
-#~ msgstr "hver"
-
-#~ msgid "minute(s)"
-#~ msgstr "minut(er)"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Hent e-post ved programstart"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Opdater alle mapper efter modtagelse"
-
-#, fuzzy
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
-
-#, fuzzy
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "Modtager antal nye meddelelser (STAT)..."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Benyt eksternt program for afsendelse"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Gem sendte meddelelser i Sendt"
-
-#, fuzzy
-#~ msgid "Outgoing encoding"
-#~ msgstr "Udgående tegnsæt"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Automatisk (Anbefalet)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7bit ascii (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Western European (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Western European (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Central European (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Baltic (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Baltic (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Greek (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Greek (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Cyrillic (Windows-1251)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Turkish (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Cyrillic (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Cyrillic (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Cyrillic (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Cyrillic (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Japanese (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japanese (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Japanese (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Simplified Chinese (GB2312)"
-
-#, fuzzy
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Simplified Chinese (GB2312)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Traditional Chinese (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Traditional Chinese (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Chinese (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Korean (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Thai (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Thai (Windows-874)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "Hvis `Automatisk' er valgt benyttes det optimale\n"
-#~ "tegnsæt for den valgte locale."
-
-#~ msgid "Transfer encoding"
-#~ msgstr "Kodning af overførsel"
-
-#, fuzzy
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "Angiv Content-Transfer-Encoding anvendt hvis\n"
-#~ "besked inholder andet end ASCII tegn."
-
-#~ msgid "Signature separator"
-#~ msgstr "Underskriftsdeling"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Tilføj automatisk"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Start automatisk ekstern editor"
-
-#~ msgid "Undo level"
-#~ msgstr "Fortryd niveauer"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Del linier ved"
-
-#~ msgid "characters"
-#~ msgstr "tegn"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Del citat linier"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Del ved indtastning"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Del linier før afsendelse"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Vælg automatisk konto ved besvarelse"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Citat af meddelelse i svar"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "Svar knap starter svar til mail liste"
-
-#~ msgid "Reply format"
-#~ msgstr "Svar format"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Citat tegn"
-
-#~ msgid "Forward format"
-#~ msgstr "Videresend format"
-
-#~ msgid " Description of symbols "
-#~ msgstr " Beskrivelse af symboler "
-
-#~ msgid "Font"
-#~ msgstr "Skrifttype"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Oversæt hoved navn (fx. `Fra:', `Emne:')"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Vis antal ulæste ved siden af mappe navn"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Forkort nyhedsgruppe længere end"
-
-#~ msgid "letters"
-#~ msgstr "bogstaver"
-
-#~ msgid "Summary View"
-#~ msgstr "Meddelelses visning"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Vis modtager i `Fra' hvis du er afsender"
-
-#~ msgid "Expand threads"
-#~ msgstr "Åbn tråde"
-
-#~ msgid "Date format"
-#~ msgstr "Dato format"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr " Vælg oplysninger i oversigt... "
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Benyt farver i meddelelser"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Vis 2-byte alfabet og tal som ASCII\n"
-#~ "tegn (kun japansk)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Vis hoved linier over meddelelses vindue"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Vis korte hoved linier i meddelelses vindue"
-
-#, fuzzy
-#~ msgid "Display cursor in message view"
-#~ msgstr "Vis korte hoved linier i meddelelses vindue"
-
-#~ msgid "Line space"
-#~ msgstr "Linie afstand"
-
-#~ msgid "pixel(s)"
-#~ msgstr "punkter"
-
-#~ msgid "Scroll"
-#~ msgstr "Scrol"
-
-#~ msgid "Half page"
-#~ msgstr "Halv side"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Blød scroll"
-
-#~ msgid "Step"
-#~ msgstr "Skrift"
-
-#, fuzzy
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "Ændre størrelse på vedhæftede billeder"
-
-#, fuzzy
-#~ msgid "Display images as inline"
-#~ msgstr "Hoved opsæt"
-
-#, fuzzy
-#~ msgid "Learning command:"
-#~ msgstr "Udfør"
-
-#, fuzzy
-#~ msgid "Classifying command"
-#~ msgstr "Udfør"
-
-#, fuzzy
-#~ msgid "Junk folder"
-#~ msgstr "Mappe"
-
-#, fuzzy
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "Filtrere meddelelse ved modtagelse"
-
-#, fuzzy
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr "(Ufiltrerede meddelelser gemmes i denne mappe)"
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Check signatur automatisk"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Vis signatur check resultat i separat vindue"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Gem  adgangssætning midlertidigt i hukommelsen"
-
-#~ msgid "Expired after"
-#~ msgstr "Udløb efter"
-
-#~ msgid "minute(s) "
-#~ msgstr "minut(er)"
-
-#, fuzzy
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr ""
-#~ "(Sæt til '0' vil gemme adgangssætningen\n"
-#~ " for hele sessionen)"
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Overtag indtastning mens adgangssætning indtastes"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Advarsel ved start hvis GnuPG ikke virker"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Åbn altid besked i oversigtsbilledet hvis valgt"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Åbn første ulæste meddelelse ved indgang til mappe"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr "Markér kun meddelelser som læst hvis åbnet i nyt vindue"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Gå til Indbakke efter modtagelse af ny post"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
-
-#, fuzzy
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr "(Ellers markéres meddelelese indtil der vælges 'Udfør')"
-
-#~ msgid "Receive dialog"
-#~ msgstr "Vis modtag billede"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Vis modtag billede"
-
-#~ msgid "Always"
-#~ msgstr "Altid"
-
-#~ msgid "Never"
-#~ msgstr "Aldrig"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Vis ikke fejlmeddelelse ved fejl"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Luk modtag vindue efter overførsel"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " Vælg tast bindinger... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Ekstern editor (%s erstattes af filnavn / URI)"
-
-#~ msgid "Web browser"
-#~ msgstr "Web browser"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Tilføj adresse til 'Til' ved dobbeltklik"
-
-#~ msgid "On exit"
-#~ msgstr "Ved afslut"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Spørg ved afslut"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Tøm Slettet ved afslut"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Spørg før tømning"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Advar ved meddelelser i kø"
-
-#, fuzzy
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "Skriver oversigt (%s)..."
-
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "Socket I/O timeout:"
-
-#~ msgid "second(s)"
-#~ msgstr "sekund(er)"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "kort ugedags navn"
-
-#~ msgid "the full weekday name"
-#~ msgstr "Ugedags navn"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "kort måneds navn"
-
-#~ msgid "the full month name"
-#~ msgstr "måneds navn"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "ønsket dato format for nuværende locale"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "århundrede (år/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "dag i måned som tal"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "time som tal (24 timers visning)"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "time som tal (12 timers visning)"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "århundrede som tal"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "måned som tal"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "minut som tal"
-
-#~ msgid "either AM or PM"
-#~ msgstr "enten AM eller PM"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "sekund som tal"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "ugedag som tal"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "ønsket dato format for nuværende locale"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "de sidste to cifre i året"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "året som tal"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "tidszone som navn eller forkortelse"
-
-#~ msgid "Specifier"
-#~ msgstr "Vælger"
-
-#~ msgid "Description"
-#~ msgstr "Beskrivelse"
-
-#~ msgid "Example"
-#~ msgstr "Eksempel"
-
-#~ msgid "Set message colors"
-#~ msgstr "Angiv meddelelses farve"
-
-#~ msgid "Colors"
-#~ msgstr "Farve"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Citeret tekst - 1. niveau"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Citeret tekst - 2. niveau"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Citeret tekst - 3. nivaur"
-
-#~ msgid "URI link"
-#~ msgstr "URI-Link"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Genbrug citat farver"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "Vælg farve for nivau 1"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "Vælg farve for nivau 2"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "Vælg farve for nivau 3"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "Vælg farve for URI"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Beskrivelse af symboler"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Dato\n"
-#~ "Fra\n"
-#~ "Afsenders fulde navn\n"
-#~ "Afsenders fornavn\n"
-#~ "Afsenders initaler\n"
-#~ "Emne\n"
-#~ "Til\n"
-#~ "CC\n"
-#~ "Nyhedsgrupper\n"
-#~ "Meddelelses ID"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Hvis x er valgt vises expr"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Meddelelses krop\n"
-#~ "Citeret meddelelses krop\n"
-#~ "Meddelelses krop uden signatur\n"
-#~ "Citeret meddelelses krop uden signatur\n"
-#~ "%"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "\\\n"
-#~ "?\n"
-#~ "{\n"
-#~ "}"
-
-#~ msgid "Key bindings"
-#~ msgstr "Tast bindinger"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Vælg standarden for genvejdstaster.\n"
-#~ "Du kan også ændre hver menus genvejstast ved at taste enhver ved at "
-#~ "placere\n"
-#~ "mus over menu punkt og taste en tast."
-
-#~ msgid "Default"
-#~ msgstr "Standard"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Gl. Sylpheed"
 
 #~ msgid "Font selection"
 #~ msgstr "Skrifttype"

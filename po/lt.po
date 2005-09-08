@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2005-06-09 13:51+0300\n"
 "Last-Translator: Vitalijus Valantiejus <vitalijus@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -208,6 +208,88 @@ msgstr "iconv negali konvertuoti UTF-7 į %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv negali konvertuoti %s į UTF-7\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "negaliu rašyti į laikiną bylą\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Gaunamos žinutės iš %s į %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "negaliu perskaityti „mbox“ bylos.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "neteisingas „mbox“ bylos formatas: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "pažeista „mbox“ byla: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "negaliu atverti laikinos bylos\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"unescaped From found:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "%d žinutės nerastos.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "negaliu sukurti užrakto bylo %s\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "naudokite „flock“ vietoj „file“ jei įmanoma.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "negaliu sukurti %s\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "dėžutę turi kitas procesas, laukiu...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "negaliu užrakinti %s\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "blogas užrakto tipas\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "negaliu atrakinti %s\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "negaliu sumažinti dėžutės iki nulio.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Eksportuojamos žinutės iš %s į %s...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -359,54 +441,54 @@ msgstr "Klaida skelbiant žinutę\n"
 msgid "Error occurred while sending command\n"
 msgstr "Klaida siunčiant komandą\n"
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "Reikalinga APOP žyma nerasta pasisveikinime\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Sintaksės klaida pasisveikinime\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "POP3 protokolo klaida\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "blogas UIDL atsakymas: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Trinama sena žinutė %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: praleidžiama žinutė %d (%d B)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "dėžutė užrakinta\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "baigėsi sesijai skirtas laikas\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "negaliu pradėti TLS sesijos\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "klaida tikrinant autentiškumą\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 msgid "command not supported\n"
 msgstr "komanda nepalaikoma\n"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 msgid "error occurred on POP3 session\n"
 msgstr "klaida POP3 sesijoje\n"
 
@@ -457,11 +539,11 @@ msgstr "Negaliu rašyti į bylą.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH neprieinamas\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "blogas SMTP atsakymas\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "klaida SMTP sesijoje\n"
 
@@ -597,6 +679,72 @@ msgstr ""
 "adresu „Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, "
 "MA 02111-1307, USA“."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Yra atidarytų laiško kūrimo langų.\n"
+"Užverkite juos prieš redaguodami sąskaitas."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Atveriamas sąskaitos redagavimo langas...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Sukuriamas sąskaitos redagavimo langas...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Redaguoti sąskaitas"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Naujos žinutės bus tikrinamos šia tvarka. Pažymėkite laukelį\n"
+"skulpelyje „G“ jei norite gauti žinutes pasirinkę „Gauti visus“."
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Vardas"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Protokolas"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Serveris"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Taisyti"
+
+#: src/account_dialog.c:426
+msgid " _Set as default account "
+msgstr " Pažymėti kaip pagrindinę _sąskaitą "
+
+#: src/account_dialog.c:479
+#, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Ar tikrai norite pašalinti sąskaitą „%s“?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+msgid "(Untitled)"
+msgstr "(Bevardis)"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Pašalinti sąskaitą"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -695,14 +843,6 @@ msgstr "Vartotojo veiksmo argumentas"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Įdėti adresą į knygą"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Vardas"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -844,7 +984,7 @@ msgstr "/_Ištrinti"
 msgid "E-Mail address"
 msgstr "El. pašto adresas"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Adresų knyga"
 
@@ -1009,7 +1149,7 @@ msgstr "Adresų knygos konvertavimo klaida"
 msgid "Addressbook Conversion"
 msgstr "Adresų knygos konvertavimas"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Sąsaja"
 
@@ -1029,7 +1169,8 @@ msgstr "El. pašto adresas"
 msgid "Group"
 msgstr "Grupė"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Katalogas"
 
@@ -1545,7 +1686,8 @@ msgstr "MIME tipas"
 msgid "Size"
 msgstr "Dydis"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Siųsti"
 
@@ -1585,7 +1727,9 @@ msgstr "Prisegti"
 msgid "Attach file"
 msgstr "Prisegti bylą"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Parašas"
 
@@ -1593,7 +1737,8 @@ msgstr "Parašas"
 msgid "Insert signature"
 msgstr "Įterpti parašą"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Redaktorius"
 
@@ -1818,6 +1963,7 @@ msgid " Check File "
 msgstr " Patikrinti bylą "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Byla"
 
@@ -1895,7 +2041,8 @@ msgid "Edit JPilot Entry"
 msgstr "Redaguoti JPilot įrašą"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1959,7 +2106,7 @@ msgstr "Skirtasis laikas (sek.)"
 msgid "Maximum Entries"
 msgstr "Įrašų maksimumas"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Pagrindinis"
 
@@ -2016,6 +2163,7 @@ msgid "Exporting file:"
 msgstr "Eksportuojama byla:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " Pasirinti... "
 
@@ -3508,7 +3656,8 @@ msgstr "Prijungti naują visų sąskaitų paštą"
 msgid "Send queued message(s)"
 msgstr "Siųsti laiškus eilėje"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Rašyti"
 
@@ -3516,7 +3665,7 @@ msgstr "Rašyti"
 msgid "Compose new message"
 msgstr "Rašyti naują laišką"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Atsakyti"
 
@@ -3544,7 +3693,7 @@ msgstr "Persiųsti laišką"
 msgid "Delete the message"
 msgstr "Ištrinti laišką"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr "Nereikalingas"
 
@@ -3597,88 +3746,6 @@ msgstr "Išeiti"
 msgid "Exit this program?"
 msgstr "Užverti programą?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "negaliu rašyti į laikiną bylą\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Gaunamos žinutės iš %s į %s...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "negaliu perskaityti „mbox“ bylos.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "neteisingas „mbox“ bylos formatas: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "pažeista „mbox“ byla: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "negaliu atverti laikinos bylos\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"unescaped From found:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "%d žinutės nerastos.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "negaliu sukurti užrakto bylo %s\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "naudokite „flock“ vietoj „file“ jei įmanoma.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "negaliu sukurti %s\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "dėžutę turi kitas procesas, laukiu...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "negaliu užrakinti %s\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "blogas užrakto tipas\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "negaliu atrakinti %s\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "negaliu sumažinti dėžutės iki nulio.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Eksportuojamos žinutės iš %s į %s...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Rasti žinutėje"
@@ -3719,7 +3786,7 @@ msgstr "/Į_rankiai/Įrašyti siuntėją į adresų _knygą"
 msgid "Creating message view...\n"
 msgstr "Sukuriama žinutės peržiūra...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Tekstas"
 
@@ -3732,7 +3799,7 @@ msgstr "Priedai"
 msgid "Can't save the file `%s'."
 msgstr "Negaliu išsaugoti bylos „%s“."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Spausdinti"
 
@@ -3866,6 +3933,400 @@ msgstr ""
 "Bloga slapta frazė! Bandykite dar kartą...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Atveriamas sąskaitos nustatymų langas...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Sąskaita%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Naujos sąskaitos nustatymai"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Sąskaitos nustatymai"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Sukuriamas sąskaitos nustatymų langas...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Gauti"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Privatumas"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Papildomi"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Sąskaitos vardas"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Pažymėti kaip įprastą"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Asmeninė informacija"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Pilnas vardas"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "El. pašto adresas"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Organizacija"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Severio informacija"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Naujienos (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Vietinis"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Serveris reikalauja patvirtinti autentiškumą"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Naujienų serveris"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Serveris pašto gavimui"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "SMTP serveris (siuntimui)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "Vartotojo ID"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Slaptažodis"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "Naudoti saugų autentiškumo tikrinimą (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Po gavimo pašalinti žinutes iš serverio"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Pašalinti po"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "dienų"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 dienų: pašalinti iš karto)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Atsisiųsti visas žinutes serveryje"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Dydžio limitas"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "KB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Filtruoti žinutes gaunant"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Gaunamų laiškų dėžutė"
+
+#: src/prefs_account_dialog.c:914
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "Nefiltruotos žinutės bus laikomos šiame kataloge."
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Autentiškumo patikrinimo metodas"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Automatinis"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Naujienos"
+
+#: src/prefs_account_dialog.c:955
+msgid "Maximum number of articles to download"
+msgstr "Maksimalus parsiunčiamų žinučių skaičius"
+
+#: src/prefs_account_dialog.c:972
+msgid "No limit if 0 is specified."
+msgstr "Nelimituojama, jei nurodyta „0“."
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "„Gauti visus“ tinkrina žinutes šioje sąskaitoje"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Antraštė"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Pridėti „Date“ antraštės lauką"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Generuoti „Message-ID“"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Pridėti vartotojo nustatytas antraštes"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " Redaguoti... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Autentiškumo patikrinimas"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "SMTP autentiškumo patikrinimas (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Jei paliksite šiuos laukus tuščius, bus naudojamas tas pats vartotojo ID ir "
+"slaptažodis kaip ir gaunant."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Prieš siunčiant patikrinti autentiškumą su POP3"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Komandos išvestis"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Automatiškai nustatyti sekančius adresus"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Cc"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Bcc"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Reply-To"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Pasirašyti žinutes"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Koduoti žinutes"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr "Koduoti kai atsakoma į koduotą žinutę"
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Naudoti „ASCII-armored“ formatą kodavimui"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Naudoti „clear text“ parašą"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Parašo raktas"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Naudoti numatytąjį GnuPG raktą"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Parinkti raktą pagal jūsų el. pašto adresą"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Nurodyti raktą"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Vartotojo arba rakto ID"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Nenaudoti SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Naudoti SSL POP3 prisijungimui"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Naudoti STARTTLS komandą SSL sesijos pradžiai"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Naudoti SSL IMAP4 prisijungimui"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Naudoti SSL NNTP prisijungimui"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Siuntimas (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Naudoti SSL SMTP prisijungimui"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Naudoti „non-blocking SSL“"
+
+#: src/prefs_account_dialog.c:1523
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "Išjunkite, jei turite problemų su SSL prisijungimais."
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Nurodykite SMTP prievadą"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Nurodykite POP3 prievadą"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Nurodykite IMAP4 prievadą"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Nurodykite NNTP prievadą"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Nurodykite domeno vardą"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "IMAP serverio katalogas"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Siųstas žinutes dėti į"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Juodraščius dėti į"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Ištrintas žinutes dėti į"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Neįvestas sąskaitos pavadinimas."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "Neįvestas pašto adresas."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "Neįvestas SMTP serveris."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Neįvestas vartotojo ID."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "Neįvestas POP3 serveris."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "Neįvestas IMAP4 serveris."
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "Neįvestas NNTP serveris."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Nerekomenduojama naudoti senamadiško „ASCII-armored“\n"
+"kodavomo rėžimo. Jis nėra suderinamas su RFC 3156 -\n"
+"„MIME Security with OpenPGP“."
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "Veiksmų derinimas"
@@ -3983,13 +4444,797 @@ msgstr "Ištrinti veiksmą"
 msgid "Do you really want to delete this action?"
 msgstr "Ar tikrai norite ištrinti šį veiksmą?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Sukuriamas bendrų nustatymų langas...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Bendri nustatymai"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Cituoti"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Vaizdas"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Žinutė"
+
+#: src/prefs_common_dialog.c:697
+msgid "Junk mail"
+msgstr "Nereikalingas paštas"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Kiti"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Naudoti išorinę programą sujungimui"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Komanda"
+
+#: src/prefs_common_dialog.c:776
+msgid "Incorporate from local spool"
+msgstr "Prijungti iš vietinio kaupo"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Filtruoti prijungiant"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr "Kelias iki kaupo"
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Automatiškai tikrinti paštą"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "kas"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "minutė(s)"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Tikrinti paštą paleidžiant"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Atnaujinti visus vietinius katalogus po prijungimo"
+
+#: src/prefs_common_dialog.c:842
+msgid "Execute command when new messages arrived"
+msgstr "Vykdyti komandą kai gautos naujos žinutės"
+
+#: src/prefs_common_dialog.c:863
+#, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "„%d“ bus pakeistas naujų žinučių skaičiumi."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Naudoti išorinę programą siuntimui"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Išsaugoti išsiųstas žinutes"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr "Filtruoti išsiųstas žinutes"
+
+#: src/prefs_common_dialog.c:953
+msgid "Outgoing encoding"
+msgstr "Siunčiamų laiškų koduotė"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Automatiškai (Rekomenduojama)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7bit ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unikodas (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Vakarų Europos (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Vakarų Europos (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Centrinės Europos (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Baltų (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Baltų (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Graikų (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Hebrajų (ISO-8859-8)"
+
+#: src/prefs_common_dialog.c:985
+msgid "Hebrew (Windows-1255)"
+msgstr "Hebrajų (Windows-1251)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Turkų (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Kirilica (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Kirilica (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Kirilica (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Kirilica (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Japonų (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Japonų (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Japonų (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Supaprastinta Kinų (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+msgid "Simplified Chinese (GBK)"
+msgstr "Supaprastinta Kinų (GBK)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Tradicinė Kinų (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Tradicinė Kinų (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Kinų (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Korėjiečių (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Tailandiečių (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Tailandiečių (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Jei pažymėta „Automatiškai“, bus naudojama optimali koduotė pagal esamą "
+"lokalę."
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "Siuntimo kodavimas"
+
+#: src/prefs_common_dialog.c:1043
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Nurodykite siuntimo kodavimą („Content-Transfer-Encoding“) naudojamą jei "
+"laiške yra ne „ASCII“ simbolių."
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Parašo skirtukas"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Įterpti automatiškai"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Automatiškai paleisti išorinį redaktorių"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Atšaukimo lygis"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Laužyti eilutes kas"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "simboliai"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Laužyti citatas"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Laužyti įvedant"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Laužyti prieš išsiunčiant"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Automatiškai pažymėti sąskaitą atsakymams"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Cituoti žinutes atsakant"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "Mygtukas „Atsakyti“ atsako pašto konferencijai"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Atsakymo formatas"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Citavimo simbolis"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Persiuntimo formatas"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " Simbolių paaiškinimas "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Šriftas"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Versti antraščių pavadinimus (tokius kaip „From:“, „Subject:“)"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Rodyti neskaitytų žinučių skaičių šalia katalogo pavadinimo"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Sutrumpinti naujienų grupes ilgesnes nei"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "raidės"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Santrauka"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Rodyti gavėją lauke „Siuntėjas“, jei siuntėjas esate Jūs"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Išskleisti gijas"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Datos formatas"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr " Nustatyti santraukoje rodomus laukus... "
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Spalvinti žinutes"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Rodyti kelių baitų abėcėlę kaip ASCII simbolius\n"
+"(tik Japonų)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Rodyti antraščių langelį virš žinutės"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Rodyti sutrumpintas antraštes"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr "Rodyti HTML žinutes kaip tekstą"
+
+#: src/prefs_common_dialog.c:1580
+msgid "Display cursor in message view"
+msgstr "Rodyti kursorių žinutėje"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Tarpas tarp eilučių:"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "taškas(-ai)"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Slinkti"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Pusė puslapio"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Lygus slinkimas"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Žingsnis"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr "Paveikslėliai"
+
+#: src/prefs_common_dialog.c:1659
+msgid "Resize attached large images to fit in the window"
+msgstr "Keisti prisegtų paveikslėlių dydį, kad tilptų į langą"
+
+#: src/prefs_common_dialog.c:1661
+msgid "Display images as inline"
+msgstr "Rodyti paveikslėlius žinutėje"
+
+#: src/prefs_common_dialog.c:1702
+msgid "Enable Junk mail control"
+msgstr "Įjungti nereikalingo pašto kontrolę"
+
+#: src/prefs_common_dialog.c:1710
+msgid "Learning command:"
+msgstr "Mokymosi komanda"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr "Reikalingas"
+
+#: src/prefs_common_dialog.c:1746
+msgid "Classifying command"
+msgstr "Klasifikavimo komanda"
+
+#: src/prefs_common_dialog.c:1760
+msgid "Junk folder"
+msgstr "Nereikalingi"
+
+#: src/prefs_common_dialog.c:1778
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "Žinutės, pažymėtos nereikalingomis, bus perkeltos į šį katalogą."
+
+#: src/prefs_common_dialog.c:1784
+msgid "Filter messages classified as junk on receiving"
+msgstr "Gaunant filtruoti žinutes klasifikuotas kaip nereikalingas"
+
+#: src/prefs_common_dialog.c:1788
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr ""
+"Filtruotos žinutės bus perkeltos į nereikalingų žinučių katalogą ir "
+"ištrintos iš serverio."
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Automatiškai tikrinti parašą"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Rodyti parašo tikrinimo rezultatą naujame lange"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Laikinai saugoti slaptą frazę atmintyje"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Galiojimas"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "minutė(s)"
+
+#: src/prefs_common_dialog.c:1874
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr "Nustatymas „0“ saugos slaptą frazę atmintyje visos sesijos metu."
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Perimti įvesti, kai įvedama slapta frazė"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Rodyti perspėjimą startuojant, jei GnuPG neveikia"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "Visuomet atidaryti santraukoje pasirinktas žinutes"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Atidaryti pirmą neskaitytą žinutę įeinant į katalogą"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Pažymėti žinutę skaityta tik jei ji atidaroma naujame lange"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Eiti į gaunamų laiškų katalogą po pašto gavimo"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Nedelsiant vykdyti žinučių perkėlimą ar trinimą"
+
+#: src/prefs_common_dialog.c:1973
+msgid "Messages will be marked until execution if this is turned off."
+msgstr "Jei išjungta, žinutės bus pažymėtos iki vykdymo"
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Gavimo langas"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Rodyti gavimo langą"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Visuomet"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr "Tik kai gaunama rankiniu būdu"
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Niekada"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Nerodyti klaidos lango po nesėkmingo gavimo"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Užverti langą baigus gavimą"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr "Išdėstyti mygtukus pagal GNOME HIG"
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " Klavišų susiejimai... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Išorinė komanda (%s bus pakeista bylos vardu / URI)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Naršyklė"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Įdėti adresus į paskirties katalogą dukart spragtelėjus"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "Išeinant"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Patvirtinti išėjimą"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Išvalyti šiukšlinę išeinant"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Paklausti prieš išvalant"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Perspėti jei yra žinučių eilėje"
+
+#: src/prefs_common_dialog.c:2205
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Įjungti griežtą santraukos laikinosios atminties vientisumo tikrinimą"
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+"Įjunkite, jei katalogų turinys gali būti modifikuotas kitų programų.\n"
+"Šis pasirinkimas sumažins santraukos rodymo greitį."
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "Prisijungimo skirtasis laikas"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "sekundė(s)"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "sutrumpinta savaitės diena"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "pilna savaitės diena"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "sutrumpintas mėnuo"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "pilnas mėnuo"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "pageidaujama data ir laikas esamai lokalei"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "amžius (metai/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "mėnesio diena"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "valanda (24)"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "valanda (12)"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "metų diena"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "mėnesio numeris"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "minutės"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "AM / PM"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "sekundės"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "savaitės dienos numeris"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "pageidaujama data esamai lokalei"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "paskutiniai du metų skaitmenys"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "metai"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "laiko zona"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Simbolis"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Aprašymas"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Pavyzdys"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Nustatyti žinutės spalvas"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Spalvos"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Cituojams tekstas - Pirmas lygis"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Cituojams tekstas - Antras lygis"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Cituojams tekstas - Trečias lygis"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "Nuoroda"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Atkurti citatos spalvas"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "Pasirinkite spalvą pirmam citatos lygiui"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "Pasirinkite spalvą antram citatos lygiui"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "Pasirinkite spalvą trečiam citatos lygiui"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "Pasirinkite nuorodos spalvą"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Simbolių apibūdinimas"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Data\n"
+"Siuntėjas\n"
+"Sintėjo pilnas vardas\n"
+"Siuntėjo vardas\n"
+"Siuntėjo inicialai\n"
+"Tema\n"
+"Gavėjas\n"
+"Kopija\n"
+"Naujienų grupė\n"
+"Žinutės-ID"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Jei egzistuoja „x“, rodo „expr“"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Žinutės tekstas\n"
+"Cituojamas tekstas\n"
+"Žinutės tekstas be parašo\n"
+"Cituojamas tekstas be parašo\n"
+"Simbolis %"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"„Backslash“\n"
+"Llaustukas\n"
+"Atidarantys riestiniai skliaustai\n"
+"Uždarantys riestiniai skliaustai"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Klavišų susiejimai"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Pasirinkite klavišų susiejimų nustatymų profilį.\n"
+"Taip pat galite keisti kiekvieno meniu punkto nuorodas\n"
+"spausdami klavišus kada pelės kursorius yra ant objekto."
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "Įprastas"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Senas „Sylpheed“"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Pasirinktų antraščių nustatymai"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Antraštė"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4055,18 +5300,10 @@ msgstr "Filtro nustatymai"
 msgid "Enabled"
 msgstr "Aktyvus"
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Taisyti"
-
 #: src/prefs_filter.c:685
 #, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Ar tikrai norite ištrinti taisyklę „%s“?"
-
-#: src/prefs_filter.c:686
-msgid "(Untitled)"
-msgstr "(Bevardis)"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4151,10 +5388,6 @@ msgstr "yra ilgesnis už"
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr "yra trumpesnis už"
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "KB"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
@@ -4276,10 +5509,6 @@ msgstr "Atsakant ištrinti [...] arba (...) temos pradžioje"
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Pritaikyti ir pakatalogiams"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Automatiškai nustatyti sekančius adresus"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4441,10 +5670,6 @@ msgstr "Rakto ID"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Val"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Kiti"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5049,928 +6274,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr "Perspėjimas dėl netikro URL"
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Yra atidarytų laiško kūrimo langų.\n"
-#~ "Užverkite juos prieš redaguodami sąskaitas."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Atveriamas sąskaitos redagavimo langas...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Sukuriamas sąskaitos redagavimo langas...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Redaguoti sąskaitas"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Naujos žinutės bus tikrinamos šia tvarka. Pažymėkite laukelį\n"
-#~ "skulpelyje „G“ jei norite gauti žinutes pasirinkę „Gauti visus“."
-
-#~ msgid "Protocol"
-#~ msgstr "Protokolas"
-
-#~ msgid "Server"
-#~ msgstr "Serveris"
-
-#~ msgid " _Set as default account "
-#~ msgstr " Pažymėti kaip pagrindinę _sąskaitą "
-
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Ar tikrai norite pašalinti sąskaitą „%s“?"
-
-#~ msgid "Delete account"
-#~ msgstr "Pašalinti sąskaitą"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Atveriamas sąskaitos nustatymų langas...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Sąskaita%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Naujos sąskaitos nustatymai"
-
-#~ msgid "Account preferences"
-#~ msgstr "Sąskaitos nustatymai"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Sukuriamas sąskaitos nustatymų langas...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Gauti"
-
-#~ msgid "Privacy"
-#~ msgstr "Privatumas"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Papildomi"
-
-#~ msgid "Name of this account"
-#~ msgstr "Sąskaitos vardas"
-
-#~ msgid "Set as default"
-#~ msgstr "Pažymėti kaip įprastą"
-
-#~ msgid "Personal information"
-#~ msgstr "Asmeninė informacija"
-
-#~ msgid "Full name"
-#~ msgstr "Pilnas vardas"
-
-#~ msgid "Mail address"
-#~ msgstr "El. pašto adresas"
-
-#~ msgid "Organization"
-#~ msgstr "Organizacija"
-
-#~ msgid "Server information"
-#~ msgstr "Severio informacija"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "Naujienos (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Vietinis"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Serveris reikalauja patvirtinti autentiškumą"
-
-#~ msgid "News server"
-#~ msgstr "Naujienų serveris"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Serveris pašto gavimui"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "SMTP serveris (siuntimui)"
-
-#~ msgid "User ID"
-#~ msgstr "Vartotojo ID"
-
-#~ msgid "Password"
-#~ msgstr "Slaptažodis"
-
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Naudoti saugų autentiškumo tikrinimą (APOP)"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Po gavimo pašalinti žinutes iš serverio"
-
-#~ msgid "Remove after"
-#~ msgstr "Pašalinti po"
-
-#~ msgid "days"
-#~ msgstr "dienų"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 dienų: pašalinti iš karto)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Atsisiųsti visas žinutes serveryje"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Dydžio limitas"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Filtruoti žinutes gaunant"
-
-#~ msgid "Default inbox"
-#~ msgstr "Gaunamų laiškų dėžutė"
-
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "Nefiltruotos žinutės bus laikomos šiame kataloge."
-
-#~ msgid "Authentication method"
-#~ msgstr "Autentiškumo patikrinimo metodas"
-
-#~ msgid "Automatic"
-#~ msgstr "Automatinis"
-
-#~ msgid "News"
-#~ msgstr "Naujienos"
-
-#~ msgid "Maximum number of articles to download"
-#~ msgstr "Maksimalus parsiunčiamų žinučių skaičius"
-
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Nelimituojama, jei nurodyta „0“."
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "„Gauti visus“ tinkrina žinutes šioje sąskaitoje"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Pridėti „Date“ antraštės lauką"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Generuoti „Message-ID“"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Pridėti vartotojo nustatytas antraštes"
-
-#~ msgid " Edit... "
-#~ msgstr " Redaguoti... "
-
-#~ msgid "Authentication"
-#~ msgstr "Autentiškumo patikrinimas"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "SMTP autentiškumo patikrinimas (SMTP AUTH)"
-
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Jei paliksite šiuos laukus tuščius, bus naudojamas tas pats vartotojo ID "
-#~ "ir slaptažodis kaip ir gaunant."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Prieš siunčiant patikrinti autentiškumą su POP3"
-
-#~ msgid "Command output"
-#~ msgstr "Komandos išvestis"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Reply-To"
-#~ msgstr "Reply-To"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Pasirašyti žinutes"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "Koduoti žinutes"
-
-#~ msgid "Encrypt when replying to encrypted message"
-#~ msgstr "Koduoti kai atsakoma į koduotą žinutę"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "Naudoti „ASCII-armored“ formatą kodavimui"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Naudoti „clear text“ parašą"
-
-#~ msgid "Sign key"
-#~ msgstr "Parašo raktas"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Naudoti numatytąjį GnuPG raktą"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Parinkti raktą pagal jūsų el. pašto adresą"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Nurodyti raktą"
-
-#~ msgid "User or key ID:"
-#~ msgstr "Vartotojo arba rakto ID"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Nenaudoti SSL"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "Naudoti SSL POP3 prisijungimui"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "Naudoti STARTTLS komandą SSL sesijos pradžiai"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "Naudoti SSL IMAP4 prisijungimui"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "Naudoti SSL NNTP prisijungimui"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Siuntimas (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "Naudoti SSL SMTP prisijungimui"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "Naudoti „non-blocking SSL“"
-
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr "Išjunkite, jei turite problemų su SSL prisijungimais."
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "Nurodykite SMTP prievadą"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "Nurodykite POP3 prievadą"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "Nurodykite IMAP4 prievadą"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "Nurodykite NNTP prievadą"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Nurodykite domeno vardą"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "IMAP serverio katalogas"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Siųstas žinutes dėti į"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Juodraščius dėti į"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Ištrintas žinutes dėti į"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Neįvestas sąskaitos pavadinimas."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "Neįvestas pašto adresas."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "Neįvestas SMTP serveris."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Neįvestas vartotojo ID."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "Neįvestas POP3 serveris."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "Neįvestas IMAP4 serveris."
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "Neįvestas NNTP serveris."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Nerekomenduojama naudoti senamadiško „ASCII-armored“\n"
-#~ "kodavomo rėžimo. Jis nėra suderinamas su RFC 3156 -\n"
-#~ "„MIME Security with OpenPGP“."
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Sukuriamas bendrų nustatymų langas...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Bendri nustatymai"
-
-#~ msgid "Quote"
-#~ msgstr "Cituoti"
-
-#~ msgid "Display"
-#~ msgstr "Vaizdas"
-
-#~ msgid "Message"
-#~ msgstr "Žinutė"
-
-#~ msgid "Junk mail"
-#~ msgstr "Nereikalingas paštas"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Naudoti išorinę programą sujungimui"
-
-#~ msgid "Command"
-#~ msgstr "Komanda"
-
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Prijungti iš vietinio kaupo"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Filtruoti prijungiant"
-
-#~ msgid "Spool path"
-#~ msgstr "Kelias iki kaupo"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Automatiškai tikrinti paštą"
-
-#~ msgid "every"
-#~ msgstr "kas"
-
-#~ msgid "minute(s)"
-#~ msgstr "minutė(s)"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Tikrinti paštą paleidžiant"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Atnaujinti visus vietinius katalogus po prijungimo"
-
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "Vykdyti komandą kai gautos naujos žinutės"
-
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "„%d“ bus pakeistas naujų žinučių skaičiumi."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Naudoti išorinę programą siuntimui"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Išsaugoti išsiųstas žinutes"
-
-#~ msgid "Apply filter rules to sent messages"
-#~ msgstr "Filtruoti išsiųstas žinutes"
-
-#~ msgid "Outgoing encoding"
-#~ msgstr "Siunčiamų laiškų koduotė"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Automatiškai (Rekomenduojama)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7bit ascii (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unikodas (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Vakarų Europos (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Vakarų Europos (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Centrinės Europos (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Baltų (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Baltų (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Graikų (ISO-8859-7)"
-
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Hebrajų (ISO-8859-8)"
-
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Hebrajų (Windows-1251)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Turkų (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Kirilica (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Kirilica (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Kirilica (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Kirilica (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Japonų (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japonų (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Japonų (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Supaprastinta Kinų (GB2312)"
-
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Supaprastinta Kinų (GBK)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Tradicinė Kinų (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Tradicinė Kinų (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Kinų (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Korėjiečių (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Tailandiečių (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Tailandiečių (Windows-874)"
-
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "Jei pažymėta „Automatiškai“, bus naudojama optimali koduotė pagal esamą "
-#~ "lokalę."
-
-#~ msgid "Transfer encoding"
-#~ msgstr "Siuntimo kodavimas"
-
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "Nurodykite siuntimo kodavimą („Content-Transfer-Encoding“) naudojamą jei "
-#~ "laiške yra ne „ASCII“ simbolių."
-
-#~ msgid "Signature separator"
-#~ msgstr "Parašo skirtukas"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Įterpti automatiškai"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Automatiškai paleisti išorinį redaktorių"
-
-#~ msgid "Undo level"
-#~ msgstr "Atšaukimo lygis"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Laužyti eilutes kas"
-
-#~ msgid "characters"
-#~ msgstr "simboliai"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Laužyti citatas"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Laužyti įvedant"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Laužyti prieš išsiunčiant"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Automatiškai pažymėti sąskaitą atsakymams"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Cituoti žinutes atsakant"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "Mygtukas „Atsakyti“ atsako pašto konferencijai"
-
-#~ msgid "Reply format"
-#~ msgstr "Atsakymo formatas"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Citavimo simbolis"
-
-#~ msgid "Forward format"
-#~ msgstr "Persiuntimo formatas"
-
-#~ msgid " Description of symbols "
-#~ msgstr " Simbolių paaiškinimas "
-
-#~ msgid "Font"
-#~ msgstr "Šriftas"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Versti antraščių pavadinimus (tokius kaip „From:“, „Subject:“)"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Rodyti neskaitytų žinučių skaičių šalia katalogo pavadinimo"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Sutrumpinti naujienų grupes ilgesnes nei"
-
-#~ msgid "letters"
-#~ msgstr "raidės"
-
-#~ msgid "Summary View"
-#~ msgstr "Santrauka"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Rodyti gavėją lauke „Siuntėjas“, jei siuntėjas esate Jūs"
-
-#~ msgid "Expand threads"
-#~ msgstr "Išskleisti gijas"
-
-#~ msgid "Date format"
-#~ msgstr "Datos formatas"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr " Nustatyti santraukoje rodomus laukus... "
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Spalvinti žinutes"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Rodyti kelių baitų abėcėlę kaip ASCII simbolius\n"
-#~ "(tik Japonų)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Rodyti antraščių langelį virš žinutės"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Rodyti sutrumpintas antraštes"
-
-#~ msgid "Render HTML messages as text"
-#~ msgstr "Rodyti HTML žinutes kaip tekstą"
-
-#~ msgid "Display cursor in message view"
-#~ msgstr "Rodyti kursorių žinutėje"
-
-#~ msgid "Line space"
-#~ msgstr "Tarpas tarp eilučių:"
-
-#~ msgid "pixel(s)"
-#~ msgstr "taškas(-ai)"
-
-#~ msgid "Scroll"
-#~ msgstr "Slinkti"
-
-#~ msgid "Half page"
-#~ msgstr "Pusė puslapio"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Lygus slinkimas"
-
-#~ msgid "Step"
-#~ msgstr "Žingsnis"
-
-#~ msgid "Images"
-#~ msgstr "Paveikslėliai"
-
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "Keisti prisegtų paveikslėlių dydį, kad tilptų į langą"
-
-#~ msgid "Display images as inline"
-#~ msgstr "Rodyti paveikslėlius žinutėje"
-
-#~ msgid "Enable Junk mail control"
-#~ msgstr "Įjungti nereikalingo pašto kontrolę"
-
-#~ msgid "Learning command:"
-#~ msgstr "Mokymosi komanda"
-
-#~ msgid "Not Junk"
-#~ msgstr "Reikalingas"
-
-#~ msgid "Classifying command"
-#~ msgstr "Klasifikavimo komanda"
-
-#~ msgid "Junk folder"
-#~ msgstr "Nereikalingi"
-
-#~ msgid ""
-#~ "The messages which are set as junk mail will be moved to this folder."
-#~ msgstr "Žinutės, pažymėtos nereikalingomis, bus perkeltos į šį katalogą."
-
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "Gaunant filtruoti žinutes klasifikuotas kaip nereikalingas"
-
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr ""
-#~ "Filtruotos žinutės bus perkeltos į nereikalingų žinučių katalogą ir "
-#~ "ištrintos iš serverio."
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Automatiškai tikrinti parašą"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Rodyti parašo tikrinimo rezultatą naujame lange"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Laikinai saugoti slaptą frazę atmintyje"
-
-#~ msgid "Expired after"
-#~ msgstr "Galiojimas"
-
-#~ msgid "minute(s) "
-#~ msgstr "minutė(s)"
-
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr "Nustatymas „0“ saugos slaptą frazę atmintyje visos sesijos metu."
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Perimti įvesti, kai įvedama slapta frazė"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Rodyti perspėjimą startuojant, jei GnuPG neveikia"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Visuomet atidaryti santraukoje pasirinktas žinutes"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Atidaryti pirmą neskaitytą žinutę įeinant į katalogą"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr "Pažymėti žinutę skaityta tik jei ji atidaroma naujame lange"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Eiti į gaunamų laiškų katalogą po pašto gavimo"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "Nedelsiant vykdyti žinučių perkėlimą ar trinimą"
-
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr "Jei išjungta, žinutės bus pažymėtos iki vykdymo"
-
-#~ msgid "Receive dialog"
-#~ msgstr "Gavimo langas"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Rodyti gavimo langą"
-
-#~ msgid "Always"
-#~ msgstr "Visuomet"
-
-#~ msgid "Only on manual receiving"
-#~ msgstr "Tik kai gaunama rankiniu būdu"
-
-#~ msgid "Never"
-#~ msgstr "Niekada"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Nerodyti klaidos lango po nesėkmingo gavimo"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Užverti langą baigus gavimą"
-
-#~ msgid "Make the order of buttons comply with GNOME HIG"
-#~ msgstr "Išdėstyti mygtukus pagal GNOME HIG"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " Klavišų susiejimai... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Išorinė komanda (%s bus pakeista bylos vardu / URI)"
-
-#~ msgid "Web browser"
-#~ msgstr "Naršyklė"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Įdėti adresus į paskirties katalogą dukart spragtelėjus"
-
-#~ msgid "On exit"
-#~ msgstr "Išeinant"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Patvirtinti išėjimą"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Išvalyti šiukšlinę išeinant"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Paklausti prieš išvalant"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Perspėti jei yra žinučių eilėje"
-
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr ""
-#~ "Įjungti griežtą santraukos laikinosios atminties vientisumo tikrinimą"
-
-#~ msgid ""
-#~ "Enable this if the contents of folders have the possibility of "
-#~ "modification by other applications.\n"
-#~ "This option will degrade the performance of displaying summary."
-#~ msgstr ""
-#~ "Įjunkite, jei katalogų turinys gali būti modifikuotas kitų programų.\n"
-#~ "Šis pasirinkimas sumažins santraukos rodymo greitį."
-
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "Prisijungimo skirtasis laikas"
-
-#~ msgid "second(s)"
-#~ msgstr "sekundė(s)"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "sutrumpinta savaitės diena"
-
-#~ msgid "the full weekday name"
-#~ msgstr "pilna savaitės diena"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "sutrumpintas mėnuo"
-
-#~ msgid "the full month name"
-#~ msgstr "pilnas mėnuo"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "pageidaujama data ir laikas esamai lokalei"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "amžius (metai/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "mėnesio diena"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "valanda (24)"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "valanda (12)"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "metų diena"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "mėnesio numeris"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "minutės"
-
-#~ msgid "either AM or PM"
-#~ msgstr "AM / PM"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "sekundės"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "savaitės dienos numeris"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "pageidaujama data esamai lokalei"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "paskutiniai du metų skaitmenys"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "metai"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "laiko zona"
-
-#~ msgid "Specifier"
-#~ msgstr "Simbolis"
-
-#~ msgid "Description"
-#~ msgstr "Aprašymas"
-
-#~ msgid "Example"
-#~ msgstr "Pavyzdys"
-
-#~ msgid "Set message colors"
-#~ msgstr "Nustatyti žinutės spalvas"
-
-#~ msgid "Colors"
-#~ msgstr "Spalvos"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Cituojams tekstas - Pirmas lygis"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Cituojams tekstas - Antras lygis"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Cituojams tekstas - Trečias lygis"
-
-#~ msgid "URI link"
-#~ msgstr "Nuoroda"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Atkurti citatos spalvas"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "Pasirinkite spalvą pirmam citatos lygiui"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "Pasirinkite spalvą antram citatos lygiui"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "Pasirinkite spalvą trečiam citatos lygiui"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "Pasirinkite nuorodos spalvą"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Simbolių apibūdinimas"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Data\n"
-#~ "Siuntėjas\n"
-#~ "Sintėjo pilnas vardas\n"
-#~ "Siuntėjo vardas\n"
-#~ "Siuntėjo inicialai\n"
-#~ "Tema\n"
-#~ "Gavėjas\n"
-#~ "Kopija\n"
-#~ "Naujienų grupė\n"
-#~ "Žinutės-ID"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Jei egzistuoja „x“, rodo „expr“"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Žinutės tekstas\n"
-#~ "Cituojamas tekstas\n"
-#~ "Žinutės tekstas be parašo\n"
-#~ "Cituojamas tekstas be parašo\n"
-#~ "Simbolis %"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "„Backslash“\n"
-#~ "Llaustukas\n"
-#~ "Atidarantys riestiniai skliaustai\n"
-#~ "Uždarantys riestiniai skliaustai"
-
-#~ msgid "Key bindings"
-#~ msgstr "Klavišų susiejimai"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Pasirinkite klavišų susiejimų nustatymų profilį.\n"
-#~ "Taip pat galite keisti kiekvieno meniu punkto nuorodas\n"
-#~ "spausdami klavišus kada pelės kursorius yra ant objekto."
-
-#~ msgid "Default"
-#~ msgstr "Įprastas"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Senas „Sylpheed“"
 
 #~ msgid "Font selection"
 #~ msgstr "Šrifto pasirinkimas"

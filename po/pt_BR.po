@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2005-09-05 17:44-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: André Casteliano <digitalcoder@users.sourceforge.net> Isaías "
@@ -211,6 +211,88 @@ msgstr "o iconv não pode converter UTF-7 para %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "o iconv não pode converter %s para UTF-7\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "não é possível gravar no arquivo temporário\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Obtendo Mensagens de %s até %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "não foi possível ler o arquivo mbox.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "formato de mbox inválido: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "mbox corrompida: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "não foi possível abrir o arquivo temporário\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"Encontrado De sem codificar:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "%d mensagens encontradas.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "não foi possível criar o arquivo de trava %s\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "usar 'flock' em vez de 'file' se for possível.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "não foi possível criar %s\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "o correio está sendo usado por outro processo, aguardando...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "não foi possível travar %s\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "tipo de trava inválido\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "não foi possível destravar %s\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "não foi possível zerar o mailbox.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Exportando mensagens de %s em %s...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -362,54 +444,54 @@ msgstr "Ocorreu um erro quando postando\n"
 msgid "Error occurred while sending command\n"
 msgstr "Erro ao enviar comando\n"
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "Timestamp APOP requerida não encontrada no greeting\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Erro de sintaxe no greeting\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "Erro do protocolo POP3\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "resposta UIDL inválida: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Apagando mensagem expirada %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Pulando mensagem %d (%d bytes)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "a caixa de correio está travada\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "tempo limite da sessão\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "não foi possível iniciar sessão TLS\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "ocorreu um erro na autenticação\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 msgid "command not supported\n"
 msgstr "comando não suportado\n"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 msgid "error occurred on POP3 session\n"
 msgstr "Erro na sessão POP3\n"
 
@@ -460,11 +542,11 @@ msgstr "Não foi possível gravar no arquivo.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH não disponível\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "resposta SMTP inválida\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "erro na sessão SMTP\n"
 
@@ -600,6 +682,71 @@ msgstr ""
 "programa; caso não, escreva para a Free Software Foundation, Inc., \n"
 "59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Por favor feche todas as janelas de composição antes de editar as contas."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Abrindo janela de edição de conta...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Criando janela de edição de conta...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Editar contas"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Mensagens novas serão baixadas nessa ordem. Marque as caixas\n"
+"na coluna `G' para habilitar essa caixa no `Baixar tudo'."
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Nome"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Protocolo"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Servidor"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Editar"
+
+#: src/account_dialog.c:426
+msgid " _Set as default account "
+msgstr " _Marcar como conta padrão "
+
+#: src/account_dialog.c:479
+#, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Quer realmente apagar a conta '%s'?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+msgid "(Untitled)"
+msgstr "(Sem título)"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Apagar conta"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -698,14 +845,6 @@ msgstr "Argumento do usuário para a ação"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Adicionar ao Catálogo de Endereços"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Nome"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -847,7 +986,7 @@ msgstr "/_Apagar"
 msgid "E-Mail address"
 msgstr "Endereço de e-mail"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Catálogo de endereços"
 
@@ -1017,7 +1156,7 @@ msgstr "Erro na conversão do catálogo de endereços"
 msgid "Addressbook Conversion"
 msgstr "Conversão do Catálogo de Endereços"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Interface"
 
@@ -1037,7 +1176,8 @@ msgstr "Endereço de e-mail"
 msgid "Group"
 msgstr "Grupo"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Pasta"
 
@@ -1554,7 +1694,8 @@ msgstr "Tipo MIME"
 msgid "Size"
 msgstr "Tamanho"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Enviar"
 
@@ -1594,7 +1735,9 @@ msgstr "Anexar"
 msgid "Attach file"
 msgstr "Anexar arquivo"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Assinatura"
 
@@ -1602,7 +1745,8 @@ msgstr "Assinatura"
 msgid "Insert signature"
 msgstr "Inserir assinatura"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Editor"
 
@@ -1827,6 +1971,7 @@ msgid " Check File "
 msgstr " Verificar Arquivo "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Arquivo"
 
@@ -1905,7 +2050,8 @@ msgid "Edit JPilot Entry"
 msgstr "Editar entrada JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1969,7 +2115,7 @@ msgstr "Timeout (segundos)"
 msgid "Maximum Entries"
 msgstr "Máximo de Entradas"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Básicas"
 
@@ -2028,6 +2174,7 @@ msgid "Exporting file:"
 msgstr "Arquivo a exportar:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr "Selecionar..."
 
@@ -3519,7 +3666,8 @@ msgstr "Incorporar novas mensagens de todas as contas"
 msgid "Send queued message(s)"
 msgstr "Enviar Mensagem(s) da fila"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Escrever"
 
@@ -3527,7 +3675,7 @@ msgstr "Escrever"
 msgid "Compose new message"
 msgstr "Escrever nova mensagem"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Responder"
 
@@ -3555,7 +3703,7 @@ msgstr "Encaminhar a mensagem"
 msgid "Delete the message"
 msgstr "Apagar a mensagem"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr "Spam"
 
@@ -3608,88 +3756,6 @@ msgstr "Sair"
 msgid "Exit this program?"
 msgstr "Sair do programa?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "não é possível gravar no arquivo temporário\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Obtendo Mensagens de %s até %s...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "não foi possível ler o arquivo mbox.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "formato de mbox inválido: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "mbox corrompida: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "não foi possível abrir o arquivo temporário\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"Encontrado De sem codificar:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "%d mensagens encontradas.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "não foi possível criar o arquivo de trava %s\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "usar 'flock' em vez de 'file' se for possível.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "não foi possível criar %s\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "o correio está sendo usado por outro processo, aguardando...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "não foi possível travar %s\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "tipo de trava inválido\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "não foi possível destravar %s\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "não foi possível zerar o mailbox.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Exportando mensagens de %s em %s...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Encontrar na mensagem atual"
@@ -3730,7 +3796,7 @@ msgstr "/_Ferramentas/Adicionar remetente ao Livro de _Endereços"
 msgid "Creating message view...\n"
 msgstr "Criando visualizador de mensagem...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Texto"
 
@@ -3743,7 +3809,7 @@ msgstr "Anexos"
 msgid "Can't save the file `%s'."
 msgstr "Não foi possível salvar arquivo `%s'."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Imprimir"
 
@@ -3877,6 +3943,400 @@ msgstr ""
 "Senha errada! Tente novamente...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Abrindo janela de preferências da conta...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Conta%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Preferências para a nova conta"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Preferências da Conta"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Criando janela de preferências da conta...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Receber"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Privacidade"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Avançadas"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Nome desta conta"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Marcar como padrão"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Informações pessoais"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Nome completo"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "Endereço de e-mail"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Organização"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Informações do servidor"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Notícias (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Nenhuma (local)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Este servidor requer autenticação"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Servidor de notícias"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Servidor de recepção"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "Servidor SMTP (envio)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "Usuario"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Senha"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "Usar autenticação segura (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Ao receber, eliminar a(s) mensagem(ns) do servidor"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Remover depois de"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "dias"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 dias: remover imediatamente)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Receber todas as mensagens no servidor"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Limite de tamanho de recebimento"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "KB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Filtrar mensagens ao receber"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Caixa de Entrada Padrão"
+
+#: src/prefs_account_dialog.c:914
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "Mensagens não filtradas serão guardadas nesta pasta."
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Método de Autenticação"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Automático"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Notícias"
+
+#: src/prefs_account_dialog.c:955
+msgid "Maximum number of articles to download"
+msgstr "Número máximo de artigos para baixar"
+
+#: src/prefs_account_dialog.c:972
+msgid "No limit if 0 is specified."
+msgstr "Sem limite se 0 for especificado."
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "`Obter todas' confere novas mensagens nessa conta"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Cabeçalho"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Adicionar campo de data"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Gerar Message-ID"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Adicionar cabeçalho do usuário"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " Editar... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Autenticação"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "Autenticação SMTP (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Se você deixar essas entradas em branco, o mesmo ID de usuário e senha do "
+"recebimento serão usados."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Autenticar com POP3 antes de enviar"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Saída de comando"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Estabelecer os seguintes endereços automaticamente"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Cc"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Bcc"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Responder"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Assinar mensagens por padrão"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Encriptar mensagems por padrão"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr "Encriptar quando responder uma mensagem encriptada"
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Usar formato ASCII-armored para encriptação"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Inserir assinatura de texto puro"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Assinar chave"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Usar chave GnuPG padrão"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Selecionar chave através de seu endereço de e-mail"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Especificar chave manualmente"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Usuário ou ID da chave:"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Não usar SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Utilizar SSL para conexão POP3"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Utilizar comando STARTTLS para iniciar a sessão SSL"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Utilizar SSL para conexão IMAP4"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Usar SSL para conexão NNTP"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Enviar (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Utilizar SSL para conexão SMTP"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Usar SSL não-bloqueante"
+
+#: src/prefs_account_dialog.c:1523
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "Desabilite isso se você tiver problemas na conexão SSL"
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Especifique a porta SMTP"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Especifique a porta POP3"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Especificar a porta IMAP4"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Especificar a porta NNTP"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Especificar nome do domínio"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "Servidor de diretório IMAP"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Colocar mensagens enviadas em"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Colocar mensagens de rascunho em"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Colocar mensagens apagadas em"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Nome da conta não definido."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "Endereço de e-mail não especificado."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "Servidor SMTP não especificado."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Usuário não especificado."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "Servidor POP3 não especificado."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "Servidor IMAP4 não especificado."
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "Servidor NNTP não especificado."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Não é recomendado o uso do velho estilo ASCII-armored\n"
+"para mensagens encriptadas. Não é compatível com a \n"
+"RFC 3156 - Segurança MIME com OpenPGP."
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "Configuração das ações"
@@ -3994,13 +4454,803 @@ msgstr "Apagar ação"
 msgid "Do you really want to delete this action?"
 msgstr "Você realmente deseja apagar esta ação?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Criando janela de preferências comuns...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Preferências comuns"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Citação"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Exibir"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Mensagem"
+
+#: src/prefs_common_dialog.c:697
+msgid "Junk mail"
+msgstr "Spam"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Outros"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Usar um programa externo para obter mensagens"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Comando"
+
+# alguma tradução boa para spool?
+#: src/prefs_common_dialog.c:776
+msgid "Incorporate from local spool"
+msgstr "Incorporar do spool local"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Filtrar ao incorporar"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr "Caminho para o spool"
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Checar nova mensagem"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "a cada"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "minuto(s)"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Checar o correio quando iniciar"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Atualizar todas as pastas locais ao incorporar"
+
+#: src/prefs_common_dialog.c:842
+msgid "Execute command when new messages arrived"
+msgstr "Executar comando quando chegarem novas mensagens"
+
+#: src/prefs_common_dialog.c:863
+#, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "`%d' será substituído pelo número de novas mensagens."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Usar programa externo para enviar"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Salvar mensagens enviadas na Caixa de saída"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr "Aplicar regras de filtragem para as mensagens enviadas"
+
+#: src/prefs_common_dialog.c:953
+msgid "Outgoing encoding"
+msgstr "Codificação de envio"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Automático (Recomendado)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "ASCII de 7 bits (US-ASC_II)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Europeu Ocidental (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Europeu Ocidental (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Europeu Central (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Báltico (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Báltico (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Grego (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Hebreu (ISO-8859-8)"
+
+#: src/prefs_common_dialog.c:985
+msgid "Hebrew (Windows-1255)"
+msgstr "Hebreu (Windows-1255)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Turco (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Cirílico (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cirílico (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Cirílico (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Cirílico (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Japonês (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Japonês (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Japonês (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Chinês simplificado (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+msgid "Simplified Chinese (GBK)"
+msgstr "Chinês simplificado (GBK)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Chinês tradicional (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Chinês tradicional (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Chinês (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Coreano (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Thai (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Thai (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Se `Automático' for selecionado, a melhor codificação para o locale atual "
+"será usada."
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "Codificação para transferência"
+
+#: src/prefs_common_dialog.c:1043
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Especifique a codificação de caracteres a ser usada quando a mensagem "
+"contiver caracteres não ASCII."
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Separador de assinatura"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Inserir automaticamente"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Executar o editor externo automaticamente"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Nível de desfazer"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Quebrar mensagens em"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "caracteres"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Quebrar quote"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Quebrar na entrada"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Quebrar antes de enviar"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Escolher conta para respostas automaticamente"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Quotar mensagem ao responder"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "Botão de responder chama resposta para a lista"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Formato de resposta"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Marca de citação"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Formato de Mensagem Encaminhada"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " Descrição dos símbolos "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Fonte"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Traduzir cabeçalhos (como `De:', `Assunto:')"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Exibir número de não lidas próximas ao nome da pasta"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Abreviar newsgroups maiores que"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "letras"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Visão de Sumário "
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Mostrar remetente na coluna `De' se ele for o mesmo"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Expandir threads"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Formato de data"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr " Elementos visíveis no cabeçalho... "
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Permitir cores na mensagem"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Exibir alfabetos de 2-bytes e numéricos com \n"
+"caracteres ASCII (1-byte)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Exibir cabeçalho acima da visão da mensagem"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Cabeçalhos pequenos na visualização da mensagem"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr "Renderizar mensagens HTML como texto"
+
+#: src/prefs_common_dialog.c:1580
+msgid "Display cursor in message view"
+msgstr "Exibir cursor na área de visualização da mensagem"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Linha de espaço"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "pixel(s)"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Rolagem"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Meia página"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Rolagem silenciosa"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Passo"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr "Imagens"
+
+#: src/prefs_common_dialog.c:1659
+msgid "Resize attached large images to fit in the window"
+msgstr "Redimensionar imagens em anexo para que caibam na janela"
+
+#: src/prefs_common_dialog.c:1661
+msgid "Display images as inline"
+msgstr "Dispor as imagens em seqüência"
+
+#: src/prefs_common_dialog.c:1702
+msgid "Enable Junk mail control"
+msgstr "Habilitar controle de spam"
+
+#: src/prefs_common_dialog.c:1710
+msgid "Learning command:"
+msgstr "Comando de aprendizado:"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr "Não spam"
+
+#: src/prefs_common_dialog.c:1746
+msgid "Classifying command"
+msgstr "Comando de classificação"
+
+#: src/prefs_common_dialog.c:1760
+msgid "Junk folder"
+msgstr "Pasta de spam"
+
+#: src/prefs_common_dialog.c:1778
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "As mensagens classificadas como spam serão movidas para esta pasta."
+
+#: src/prefs_common_dialog.c:1784
+msgid "Filter messages classified as junk on receiving"
+msgstr "Filtrar mensagens classificadas como spam ao receber"
+
+#: src/prefs_common_dialog.c:1788
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr ""
+"Mensagens filtradas serão movidas para a pasta de spam e apagadas do "
+"servidor."
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Automaticamente checar assinatura"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Exibir resultado de checagem de assinatura em uma janela popup"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Armazenar senha temporariamente na memória"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Expirado depois"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "minuto(s)"
+
+#: src/prefs_common_dialog.c:1874
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr "Definindo para '0' guardará a senha para toda a sessão."
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Obter entrada quando informando uma passphrase"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Exibir aviso na inicialização se o GnuPG não funciona"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "Sempre abrir mensagens no sumário quando selecionado"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Abrir a primeira mensagem não lida ao abrir uma pasta"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Somente marcar a mensagem como lida quando aberta em uma nova janela"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Ir para Caixa de Entrada depois de receber novas mensagens"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Executar imediatamente enquanto movendo ou apagando mensagens"
+
+#: src/prefs_common_dialog.c:1973
+msgid "Messages will be marked until execution if this is turned off."
+msgstr ""
+"Mensagens permanecerão marcadas até a execução se isto estiver desativado."
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Diálogo de recepção"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Exibir diálogo de recepção"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Sempre"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr "Apenas no recebimento manual"
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Nunca"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Não mostrar diálogo de erro no caso de erros ao receber"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Fechar diálogo de recepção quando terminar"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr "Ordenar os botões de acordo com o GNOME HIG"
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " Definir atalhos de teclado... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Comandos externos (%s será sustituido pelo nome do arquivo)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Navegador Web"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Adicionar endereço para o destino quando clicado duas vezes"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "Ao sair"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Confirmar ao sair"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Esvaziar lixeira ao sair"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Pergunte antes de esvaziar"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Avise se existirem mensagens na fila"
+
+#: src/prefs_common_dialog.c:2205
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Habilitar verificação rigorosa da integridade dos caches do sumário"
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+"Habilite isto se existe a possibilidade de o conteúdo das pastas ser "
+"modificado por outras aplicações.\n"
+"Esta opção reduzirá o desempenho de exibição do sumário."
+
+# tradução boa para socket?
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "Tempo limite de E/S no socket:"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "segundo(s)"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "o nome completo do mês abreviado"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "o nome completo do dia da semana"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "o nome do mês abreviado"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "o nome completo do mês"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "a data é hora preferida para a localização atual"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "o número do século (ano/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "o dia do mês como um número decimal"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "a hora como um número decimal usando um relógio de 24 horas"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "a hora como um número decimal usando um relógio de 12 horas"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "o dia do ano como um número decimal"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "o mês como um número decimal"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "o minuto como um número decimal"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "ou AM ou PM"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "o segundo como um número decimal"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "o dia da semana como um número decimal"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "a data preferida para localização atual"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "os últimos dois dígitos de um ano"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "o ano como um número decimal"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "o zona de tempo ou nome ou abreviação"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Especificador"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Descrição"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Exemplo"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Defina as cores de mensagens"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Cores"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Texto Quotado - Primeiro Nível"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Texto Quotado - Segundo Nível"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Texto Quotado - Terceiro Nível"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "Ligação URI"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Reaproveitar cores de quote"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "Escolher cor para quotação nível 1"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "Escolher cor para quotação nível 2"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "Escolher cor para quotação nível 3"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "Escolher cor para URI"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Descrição dos símbolos"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Data\n"
+"De\n"
+"Nome Completo do Remetente\n"
+"Primeiro Nome do Remetente\n"
+"Iniciais do Remetente\n"
+"Assunto\n"
+"Para\n"
+"CC\n"
+"Grupo de Notícias\n"
+"Message-ID\n"
+"%"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Se x estiver definido, mostra expr"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Corpo da mensagem\n"
+"Corpo da mensagem citada\n"
+"Corpo da mensagem sem assinatura\n"
+"Corpo da mensagem citada sem assinatura\n"
+"%% literal"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"Barra invertida literal\n"
+"Ponto de interrogação literal\n"
+"Abre-chave literal\n"
+"Fecha-chave literal"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Atalhos de teclado"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Selecionar os atalhos de teclado.\n"
+"Você pode também modificar o atalho para cada menu\n"
+"pressionando qualquer tecla enquanto coloca o ponteiro\n"
+"do mouse sobre o item."
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "Padrão"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Sylpheed antigo"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Configuração de cabeçalho personalizado"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Cabeçalho"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4066,18 +5316,10 @@ msgstr "Configuração de filtros"
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Editar"
-
 #: src/prefs_filter.c:685
 #, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Quer realmente apagar a regra '%s'?"
-
-#: src/prefs_filter.c:686
-msgid "(Untitled)"
-msgstr "(Sem título)"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4162,10 +5404,6 @@ msgstr "mais longo que"
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr "mais curto que"
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "KB"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
@@ -4287,10 +5525,6 @@ msgstr "Remover [...] ou (...) do começo do assunto na resposta"
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Aplicar nas subpastas"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Estabelecer os seguintes endereços automaticamente"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4453,10 +5687,6 @@ msgstr "Key ID"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Valor"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Outros"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5061,933 +6291,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr "Aviso de URL falsa"
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Por favor feche todas as janelas de composição antes de editar as contas."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Abrindo janela de edição de conta...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Criando janela de edição de conta...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Editar contas"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Mensagens novas serão baixadas nessa ordem. Marque as caixas\n"
-#~ "na coluna `G' para habilitar essa caixa no `Baixar tudo'."
-
-#~ msgid "Protocol"
-#~ msgstr "Protocolo"
-
-#~ msgid "Server"
-#~ msgstr "Servidor"
-
-#~ msgid " _Set as default account "
-#~ msgstr " _Marcar como conta padrão "
-
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Quer realmente apagar a conta '%s'?"
-
-#~ msgid "Delete account"
-#~ msgstr "Apagar conta"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Abrindo janela de preferências da conta...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Conta%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Preferências para a nova conta"
-
-#~ msgid "Account preferences"
-#~ msgstr "Preferências da Conta"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Criando janela de preferências da conta...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Receber"
-
-#~ msgid "Privacy"
-#~ msgstr "Privacidade"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Avançadas"
-
-#~ msgid "Name of this account"
-#~ msgstr "Nome desta conta"
-
-#~ msgid "Set as default"
-#~ msgstr "Marcar como padrão"
-
-#~ msgid "Personal information"
-#~ msgstr "Informações pessoais"
-
-#~ msgid "Full name"
-#~ msgstr "Nome completo"
-
-#~ msgid "Mail address"
-#~ msgstr "Endereço de e-mail"
-
-#~ msgid "Organization"
-#~ msgstr "Organização"
-
-#~ msgid "Server information"
-#~ msgstr "Informações do servidor"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "Notícias (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Nenhuma (local)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Este servidor requer autenticação"
-
-#~ msgid "News server"
-#~ msgstr "Servidor de notícias"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Servidor de recepção"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "Servidor SMTP (envio)"
-
-#~ msgid "User ID"
-#~ msgstr "Usuario"
-
-#~ msgid "Password"
-#~ msgstr "Senha"
-
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Usar autenticação segura (APOP)"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Ao receber, eliminar a(s) mensagem(ns) do servidor"
-
-#~ msgid "Remove after"
-#~ msgstr "Remover depois de"
-
-#~ msgid "days"
-#~ msgstr "dias"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 dias: remover imediatamente)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Receber todas as mensagens no servidor"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Limite de tamanho de recebimento"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Filtrar mensagens ao receber"
-
-#~ msgid "Default inbox"
-#~ msgstr "Caixa de Entrada Padrão"
-
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "Mensagens não filtradas serão guardadas nesta pasta."
-
-#~ msgid "Authentication method"
-#~ msgstr "Método de Autenticação"
-
-#~ msgid "Automatic"
-#~ msgstr "Automático"
-
-#~ msgid "News"
-#~ msgstr "Notícias"
-
-#~ msgid "Maximum number of articles to download"
-#~ msgstr "Número máximo de artigos para baixar"
-
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Sem limite se 0 for especificado."
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "`Obter todas' confere novas mensagens nessa conta"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Adicionar campo de data"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Gerar Message-ID"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Adicionar cabeçalho do usuário"
-
-#~ msgid " Edit... "
-#~ msgstr " Editar... "
-
-#~ msgid "Authentication"
-#~ msgstr "Autenticação"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "Autenticação SMTP (SMTP AUTH)"
-
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Se você deixar essas entradas em branco, o mesmo ID de usuário e senha do "
-#~ "recebimento serão usados."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Autenticar com POP3 antes de enviar"
-
-#~ msgid "Command output"
-#~ msgstr "Saída de comando"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Reply-To"
-#~ msgstr "Responder"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Assinar mensagens por padrão"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "Encriptar mensagems por padrão"
-
-#~ msgid "Encrypt when replying to encrypted message"
-#~ msgstr "Encriptar quando responder uma mensagem encriptada"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "Usar formato ASCII-armored para encriptação"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Inserir assinatura de texto puro"
-
-#~ msgid "Sign key"
-#~ msgstr "Assinar chave"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Usar chave GnuPG padrão"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Selecionar chave através de seu endereço de e-mail"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Especificar chave manualmente"
-
-#~ msgid "User or key ID:"
-#~ msgstr "Usuário ou ID da chave:"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Não usar SSL"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "Utilizar SSL para conexão POP3"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "Utilizar comando STARTTLS para iniciar a sessão SSL"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "Utilizar SSL para conexão IMAP4"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "Usar SSL para conexão NNTP"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Enviar (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "Utilizar SSL para conexão SMTP"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "Usar SSL não-bloqueante"
-
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr "Desabilite isso se você tiver problemas na conexão SSL"
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "Especifique a porta SMTP"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "Especifique a porta POP3"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "Especificar a porta IMAP4"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "Especificar a porta NNTP"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Especificar nome do domínio"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "Servidor de diretório IMAP"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Colocar mensagens enviadas em"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Colocar mensagens de rascunho em"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Colocar mensagens apagadas em"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Nome da conta não definido."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "Endereço de e-mail não especificado."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "Servidor SMTP não especificado."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Usuário não especificado."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "Servidor POP3 não especificado."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "Servidor IMAP4 não especificado."
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "Servidor NNTP não especificado."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Não é recomendado o uso do velho estilo ASCII-armored\n"
-#~ "para mensagens encriptadas. Não é compatível com a \n"
-#~ "RFC 3156 - Segurança MIME com OpenPGP."
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Criando janela de preferências comuns...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Preferências comuns"
-
-#~ msgid "Quote"
-#~ msgstr "Citação"
-
-#~ msgid "Display"
-#~ msgstr "Exibir"
-
-#~ msgid "Message"
-#~ msgstr "Mensagem"
-
-#~ msgid "Junk mail"
-#~ msgstr "Spam"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Usar um programa externo para obter mensagens"
-
-#~ msgid "Command"
-#~ msgstr "Comando"
-
-# alguma tradução boa para spool?
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Incorporar do spool local"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Filtrar ao incorporar"
-
-#~ msgid "Spool path"
-#~ msgstr "Caminho para o spool"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Checar nova mensagem"
-
-#~ msgid "every"
-#~ msgstr "a cada"
-
-#~ msgid "minute(s)"
-#~ msgstr "minuto(s)"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Checar o correio quando iniciar"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Atualizar todas as pastas locais ao incorporar"
-
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "Executar comando quando chegarem novas mensagens"
-
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "`%d' será substituído pelo número de novas mensagens."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Usar programa externo para enviar"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Salvar mensagens enviadas na Caixa de saída"
-
-#~ msgid "Apply filter rules to sent messages"
-#~ msgstr "Aplicar regras de filtragem para as mensagens enviadas"
-
-#~ msgid "Outgoing encoding"
-#~ msgstr "Codificação de envio"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Automático (Recomendado)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "ASCII de 7 bits (US-ASC_II)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Europeu Ocidental (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Europeu Ocidental (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Europeu Central (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Báltico (ISO-8859-4)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Báltico (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Grego (ISO-8859-7)"
-
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Hebreu (ISO-8859-8)"
-
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Hebreu (Windows-1255)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Turco (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Cirílico (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Cirílico (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Cirílico (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Cirílico (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Japonês (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japonês (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Japonês (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Chinês simplificado (GB2312)"
-
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Chinês simplificado (GBK)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Chinês tradicional (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Chinês tradicional (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Chinês (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Coreano (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Thai (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Thai (Windows-874)"
-
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "Se `Automático' for selecionado, a melhor codificação para o locale atual "
-#~ "será usada."
-
-#~ msgid "Transfer encoding"
-#~ msgstr "Codificação para transferência"
-
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "Especifique a codificação de caracteres a ser usada quando a mensagem "
-#~ "contiver caracteres não ASCII."
-
-#~ msgid "Signature separator"
-#~ msgstr "Separador de assinatura"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Inserir automaticamente"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Executar o editor externo automaticamente"
-
-#~ msgid "Undo level"
-#~ msgstr "Nível de desfazer"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Quebrar mensagens em"
-
-#~ msgid "characters"
-#~ msgstr "caracteres"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Quebrar quote"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Quebrar na entrada"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Quebrar antes de enviar"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Escolher conta para respostas automaticamente"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Quotar mensagem ao responder"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "Botão de responder chama resposta para a lista"
-
-#~ msgid "Reply format"
-#~ msgstr "Formato de resposta"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Marca de citação"
-
-#~ msgid "Forward format"
-#~ msgstr "Formato de Mensagem Encaminhada"
-
-#~ msgid " Description of symbols "
-#~ msgstr " Descrição dos símbolos "
-
-#~ msgid "Font"
-#~ msgstr "Fonte"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Traduzir cabeçalhos (como `De:', `Assunto:')"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Exibir número de não lidas próximas ao nome da pasta"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Abreviar newsgroups maiores que"
-
-#~ msgid "letters"
-#~ msgstr "letras"
-
-#~ msgid "Summary View"
-#~ msgstr "Visão de Sumário "
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Mostrar remetente na coluna `De' se ele for o mesmo"
-
-#~ msgid "Expand threads"
-#~ msgstr "Expandir threads"
-
-#~ msgid "Date format"
-#~ msgstr "Formato de data"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr " Elementos visíveis no cabeçalho... "
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Permitir cores na mensagem"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Exibir alfabetos de 2-bytes e numéricos com \n"
-#~ "caracteres ASCII (1-byte)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Exibir cabeçalho acima da visão da mensagem"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Cabeçalhos pequenos na visualização da mensagem"
-
-#~ msgid "Render HTML messages as text"
-#~ msgstr "Renderizar mensagens HTML como texto"
-
-#~ msgid "Display cursor in message view"
-#~ msgstr "Exibir cursor na área de visualização da mensagem"
-
-#~ msgid "Line space"
-#~ msgstr "Linha de espaço"
-
-#~ msgid "pixel(s)"
-#~ msgstr "pixel(s)"
-
-#~ msgid "Scroll"
-#~ msgstr "Rolagem"
-
-#~ msgid "Half page"
-#~ msgstr "Meia página"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Rolagem silenciosa"
-
-#~ msgid "Step"
-#~ msgstr "Passo"
-
-#~ msgid "Images"
-#~ msgstr "Imagens"
-
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "Redimensionar imagens em anexo para que caibam na janela"
-
-#~ msgid "Display images as inline"
-#~ msgstr "Dispor as imagens em seqüência"
-
-#~ msgid "Enable Junk mail control"
-#~ msgstr "Habilitar controle de spam"
-
-#~ msgid "Learning command:"
-#~ msgstr "Comando de aprendizado:"
-
-#~ msgid "Not Junk"
-#~ msgstr "Não spam"
-
-#~ msgid "Classifying command"
-#~ msgstr "Comando de classificação"
-
-#~ msgid "Junk folder"
-#~ msgstr "Pasta de spam"
-
-#~ msgid ""
-#~ "The messages which are set as junk mail will be moved to this folder."
-#~ msgstr "As mensagens classificadas como spam serão movidas para esta pasta."
-
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "Filtrar mensagens classificadas como spam ao receber"
-
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr ""
-#~ "Mensagens filtradas serão movidas para a pasta de spam e apagadas do "
-#~ "servidor."
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Automaticamente checar assinatura"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Exibir resultado de checagem de assinatura em uma janela popup"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Armazenar senha temporariamente na memória"
-
-#~ msgid "Expired after"
-#~ msgstr "Expirado depois"
-
-#~ msgid "minute(s) "
-#~ msgstr "minuto(s)"
-
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr "Definindo para '0' guardará a senha para toda a sessão."
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Obter entrada quando informando uma passphrase"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Exibir aviso na inicialização se o GnuPG não funciona"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Sempre abrir mensagens no sumário quando selecionado"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Abrir a primeira mensagem não lida ao abrir uma pasta"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr ""
-#~ "Somente marcar a mensagem como lida quando aberta em uma nova janela"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Ir para Caixa de Entrada depois de receber novas mensagens"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "Executar imediatamente enquanto movendo ou apagando mensagens"
-
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr ""
-#~ "Mensagens permanecerão marcadas até a execução se isto estiver desativado."
-
-#~ msgid "Receive dialog"
-#~ msgstr "Diálogo de recepção"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Exibir diálogo de recepção"
-
-#~ msgid "Always"
-#~ msgstr "Sempre"
-
-#~ msgid "Only on manual receiving"
-#~ msgstr "Apenas no recebimento manual"
-
-#~ msgid "Never"
-#~ msgstr "Nunca"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Não mostrar diálogo de erro no caso de erros ao receber"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Fechar diálogo de recepção quando terminar"
-
-#~ msgid "Make the order of buttons comply with GNOME HIG"
-#~ msgstr "Ordenar os botões de acordo com o GNOME HIG"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " Definir atalhos de teclado... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Comandos externos (%s será sustituido pelo nome do arquivo)"
-
-#~ msgid "Web browser"
-#~ msgstr "Navegador Web"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Adicionar endereço para o destino quando clicado duas vezes"
-
-#~ msgid "On exit"
-#~ msgstr "Ao sair"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Confirmar ao sair"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Esvaziar lixeira ao sair"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Pergunte antes de esvaziar"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Avise se existirem mensagens na fila"
-
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "Habilitar verificação rigorosa da integridade dos caches do sumário"
-
-#~ msgid ""
-#~ "Enable this if the contents of folders have the possibility of "
-#~ "modification by other applications.\n"
-#~ "This option will degrade the performance of displaying summary."
-#~ msgstr ""
-#~ "Habilite isto se existe a possibilidade de o conteúdo das pastas ser "
-#~ "modificado por outras aplicações.\n"
-#~ "Esta opção reduzirá o desempenho de exibição do sumário."
-
-# tradução boa para socket?
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "Tempo limite de E/S no socket:"
-
-#~ msgid "second(s)"
-#~ msgstr "segundo(s)"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "o nome completo do mês abreviado"
-
-#~ msgid "the full weekday name"
-#~ msgstr "o nome completo do dia da semana"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "o nome do mês abreviado"
-
-#~ msgid "the full month name"
-#~ msgstr "o nome completo do mês"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "a data é hora preferida para a localização atual"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "o número do século (ano/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "o dia do mês como um número decimal"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "a hora como um número decimal usando um relógio de 24 horas"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "a hora como um número decimal usando um relógio de 12 horas"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "o dia do ano como um número decimal"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "o mês como um número decimal"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "o minuto como um número decimal"
-
-#~ msgid "either AM or PM"
-#~ msgstr "ou AM ou PM"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "o segundo como um número decimal"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "o dia da semana como um número decimal"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "a data preferida para localização atual"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "os últimos dois dígitos de um ano"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "o ano como um número decimal"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "o zona de tempo ou nome ou abreviação"
-
-#~ msgid "Specifier"
-#~ msgstr "Especificador"
-
-#~ msgid "Description"
-#~ msgstr "Descrição"
-
-#~ msgid "Example"
-#~ msgstr "Exemplo"
-
-#~ msgid "Set message colors"
-#~ msgstr "Defina as cores de mensagens"
-
-#~ msgid "Colors"
-#~ msgstr "Cores"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Texto Quotado - Primeiro Nível"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Texto Quotado - Segundo Nível"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Texto Quotado - Terceiro Nível"
-
-#~ msgid "URI link"
-#~ msgstr "Ligação URI"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Reaproveitar cores de quote"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "Escolher cor para quotação nível 1"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "Escolher cor para quotação nível 2"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "Escolher cor para quotação nível 3"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "Escolher cor para URI"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Descrição dos símbolos"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Data\n"
-#~ "De\n"
-#~ "Nome Completo do Remetente\n"
-#~ "Primeiro Nome do Remetente\n"
-#~ "Iniciais do Remetente\n"
-#~ "Assunto\n"
-#~ "Para\n"
-#~ "CC\n"
-#~ "Grupo de Notícias\n"
-#~ "Message-ID\n"
-#~ "%"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Se x estiver definido, mostra expr"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Corpo da mensagem\n"
-#~ "Corpo da mensagem citada\n"
-#~ "Corpo da mensagem sem assinatura\n"
-#~ "Corpo da mensagem citada sem assinatura\n"
-#~ "%% literal"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "Barra invertida literal\n"
-#~ "Ponto de interrogação literal\n"
-#~ "Abre-chave literal\n"
-#~ "Fecha-chave literal"
-
-#~ msgid "Key bindings"
-#~ msgstr "Atalhos de teclado"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Selecionar os atalhos de teclado.\n"
-#~ "Você pode também modificar o atalho para cada menu\n"
-#~ "pressionando qualquer tecla enquanto coloca o ponteiro\n"
-#~ "do mouse sobre o item."
-
-#~ msgid "Default"
-#~ msgstr "Padrão"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Sylpheed antigo"
 
 #~ msgid "Font selection"
 #~ msgstr "Seleção de fonte"

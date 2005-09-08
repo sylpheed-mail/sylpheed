@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -208,6 +208,88 @@ msgstr "iconv が UTF-7 を %s に変換できません\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv が %s を UTF-7 に変換できません\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "一時ファイルに書き込めません\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "メッセージを %s から %s に取り込んでいます...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "メールボックスファイルを読み込めません。\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "無効なメールボックスの形式: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "メールボックスが異常です: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "一時ファイルを開けません\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"エスケープされていない From が見つかりました:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "%d 通のメッセージが見つかりました。\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "ロックファイル %s を開けません\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "可能であれば 'file' の代わりに 'flock' を使用してください。\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "%s を作成できません。\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "メールボックスは別のプロセスによって所有されています。待機中...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "%s をロックできません\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "無効なロックタイプです\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "%s をロック解除できません\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "メールボックスをゼロに切り詰められません。\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "メッセージを %s から %s に書き出しています...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -359,54 +441,54 @@ msgstr "ポスト中にエラーが発生しました\n"
 msgid "Error occurred while sending command\n"
 msgstr "コマンドの送信中にエラーが発生しました\n"
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "必要なAPOPタイムスタンプが応答メッセージにありません\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "応答メッセージのタイムスタンプの文法エラー\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "POP3 プロトコルエラー\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "無効な UIDL 応答です: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: 期限切れのメッセージ %d を削除します\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: メッセージ %d をスキップします (%d bytes)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "メールボックスはロックされています\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "セッションがタイムアウトしました\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "TLS セッションを開始できません\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "認証中にエラーが発生しました\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 msgid "command not supported\n"
 msgstr "コマンドがサポートされていません\n"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 msgid "error occurred on POP3 session\n"
 msgstr "POP3 セッション中にエラーが発生しました\n"
 
@@ -457,11 +539,11 @@ msgstr "ファイルに書き込めません。\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH が利用できません\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "不正な SMTP 応答です\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "SMTP セッション中にエラーが発生しました\n"
 
@@ -598,6 +680,72 @@ msgstr ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"メッセージ作成ウィンドウが開いています。\n"
+"アカウントを編集する前にすべてのメッセージ作成ウィンドウを閉じてください。"
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "アカウント編集ウィンドウを開いています...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "アカウント編集ウィンドウを作成中...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "アカウントの編集"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"新着メッセージはこの順番でチェックされます。「全受信」によるメッセージ\n"
+"の取得を有効にするには、「G」カラムのボックスをチェックしてください。"
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "名前"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "プロトコル"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "サーバ"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "編集"
+
+#: src/account_dialog.c:426
+msgid " _Set as default account "
+msgstr " 通常使用するアカウントに指定(_S) "
+
+#: src/account_dialog.c:479
+#, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "本当にアカウント '%s' を削除してもいいですか?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+msgid "(Untitled)"
+msgstr "(名称未設定)"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "アカウントの削除"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -696,14 +844,6 @@ msgstr "アクションのユーザ引数"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "アドレスをアドレス帳に追加"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "名前"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -845,7 +985,7 @@ msgstr "/削除(_D)"
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "アドレス帳"
 
@@ -1013,7 +1153,7 @@ msgstr "アドレス帳変換エラー"
 msgid "Addressbook Conversion"
 msgstr "アドレス帳変換"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "インタフェース"
 
@@ -1033,7 +1173,8 @@ msgstr "電子メール アドレス"
 msgid "Group"
 msgstr "グループ"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "フォルダ"
 
@@ -1549,7 +1690,8 @@ msgstr "MIME タイプ"
 msgid "Size"
 msgstr "サイズ"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "送信"
 
@@ -1589,7 +1731,9 @@ msgstr "添付"
 msgid "Attach file"
 msgstr "ファイルを添付"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "署名"
 
@@ -1597,7 +1741,8 @@ msgstr "署名"
 msgid "Insert signature"
 msgstr "署名を挿入"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "エディタ"
 
@@ -1822,6 +1967,7 @@ msgid " Check File "
 msgstr " ファイルをチェック "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "ファイル"
 
@@ -1899,7 +2045,8 @@ msgid "Edit JPilot Entry"
 msgstr "JPilotエントリを編集"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1963,7 +2110,7 @@ msgstr "タイムアウト(秒)"
 msgid "Maximum Entries"
 msgstr "最大エントリ数"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "基本"
 
@@ -2020,6 +2167,7 @@ msgid "Exporting file:"
 msgstr "エクスポートファイル:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " 選択... "
 
@@ -3509,7 +3657,8 @@ msgstr "全アカウントの新着メールの取込"
 msgid "Send queued message(s)"
 msgstr "送信待機中のメッセージを送信する"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "作成"
 
@@ -3517,7 +3666,7 @@ msgstr "作成"
 msgid "Compose new message"
 msgstr "新規メッセージを作成"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "返信"
 
@@ -3545,7 +3694,7 @@ msgstr "メッセージを転送する"
 msgid "Delete the message"
 msgstr "メッセージを削除する"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr "迷惑メール"
 
@@ -3598,88 +3747,6 @@ msgstr "終了"
 msgid "Exit this program?"
 msgstr "このプログラムを終了しますか?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "一時ファイルに書き込めません\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "メッセージを %s から %s に取り込んでいます...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "メールボックスファイルを読み込めません。\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "無効なメールボックスの形式: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "メールボックスが異常です: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "一時ファイルを開けません\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"エスケープされていない From が見つかりました:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "%d 通のメッセージが見つかりました。\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "ロックファイル %s を開けません\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "可能であれば 'file' の代わりに 'flock' を使用してください。\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "%s を作成できません。\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "メールボックスは別のプロセスによって所有されています。待機中...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "%s をロックできません\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "無効なロックタイプです\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "%s をロック解除できません\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "メールボックスをゼロに切り詰められません。\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "メッセージを %s から %s に書き出しています...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "現在のメッセージ内を検索"
@@ -3720,7 +3787,7 @@ msgstr "/ツール(_T)/差出人をアドレス帳に追加(_K)"
 msgid "Creating message view...\n"
 msgstr "メッセージビューを作成中...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "テキスト"
 
@@ -3733,7 +3800,7 @@ msgstr "添付"
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "印刷"
 
@@ -3867,6 +3934,399 @@ msgstr ""
 "不正なパスフレーズです! 再入力して下さい...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "アカウントプリファレンスウィンドウを開いています...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Account%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "新規アカウントの設定"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "アカウントの設定"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "アカウントプリファレンスウィンドウを作成中...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "受信"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "個人情報"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "高度な設定"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "このアカウントの名称"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "通常使用"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "個人情報"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "名前"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "メールアドレス"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "組織"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "サーバ情報"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "ニュース (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "なし (ローカル)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "このサーバは認証が必要"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "ニュースサーバ"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "受信用サーバ"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "SMTPサーバ (送信)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "ユーザID"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "パスワード"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "安全な認証方式を使用する (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "受信時にサーバ上のメッセージを削除する"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "メッセージを"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "日後に削除"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0日: 即座に削除)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "サーバ上のすべてのメッセージを受信する"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "受信サイズ制限"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "KB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "受信時にメッセージを振り分ける"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "標準の受信箱"
+
+#: src/prefs_account_dialog.c:914
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "振り分けられなかったメッセージはこのフォルダに格納されます。"
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "認証方式"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "自動"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "ニュース"
+
+#: src/prefs_account_dialog.c:955
+msgid "Maximum number of articles to download"
+msgstr "ダウンロードする記事数の上限"
+
+#: src/prefs_account_dialog.c:972
+msgid "No limit if 0 is specified."
+msgstr "0を指定すると無制限になります。"
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "「全受信」でこのアカウントの新着メッセージをチェックする"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "ヘッダ"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Dateヘッダフィールドを付ける"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "メッセージIDを生成する"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "ユーザ定義のヘッダを追加する"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " 編集... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "認証"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "SMTP認証 (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"このエントリが空のときは、受信時と同じユーザIDとパスワードが使用されます。"
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "送信前にPOP3認証を行う"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "コマンドの出力"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "以下のアドレスを自動指定"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Cc"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Bcc"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Reply-To"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "標準でメッセージに署名する"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "標準でメッセージを暗号化する"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr "暗号化されたメッセージに返信した場合は暗号化する"
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "暗号化にASCII包装形式を使用する"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "クリアテキスト署名を使用する"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "署名鍵"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "標準のGnuPG鍵を使用する"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "自分の電子メールアドレスで鍵を選択する"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "鍵を手動で指定する"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "ユーザまたは鍵ID:"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "SSLを使用しない"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "POP3の接続にSSLを使用"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "SSLセッションの開始にSTARTTLSコマンドを使用"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "IMAP4の接続にSSLを使用"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "NNTPの接続にSSLを使用"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "送信 (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "SMTPの接続にSSLを使用"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "非ブロッキングSSLを使用する"
+
+#: src/prefs_account_dialog.c:1523
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "SSLの接続に問題が生じる場合はオフにしてください。"
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "SMTPポートを指定"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "POP3ポートを指定"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "IMAP4ポートを指定"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "NNTPポートを指定"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "ドメイン名を指定"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "IMAPサーバディレクトリ"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "送信控フォルダの場所"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "草稿フォルダの場所"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "ごみ箱フォルダの場所"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "アカウント名が入力されていません。"
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "メールアドレスが入力されていません。"
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "SMTPサーバが入力されていません。"
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "ユーザIDが入力されていません。"
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "POP3サーバが入力されていません。"
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "IMAP4サーバが入力されていません。"
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "NNTPサーバが入力されていません。"
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"暗号化メッセージに旧形式の ASCII 包装方式を使用することは推奨されて\n"
+"いません。この形式は RFC 3156 - MIME Security with OpenPGP\n"
+"に準拠していません。"
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "アクションの設定"
@@ -3984,13 +4444,796 @@ msgstr "アクションの削除"
 msgid "Do you really want to delete this action?"
 msgstr "本当にこのアクションを削除してもいいですか?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "全般プリファレンスウィンドウを作成中...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "全般の設定"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "引用"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "表示"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "メッセージ"
+
+#: src/prefs_common_dialog.c:697
+msgid "Junk mail"
+msgstr "迷惑メール"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "その他"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "メールの受信に外部プログラムを使用する"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "コマンド"
+
+#: src/prefs_common_dialog.c:776
+msgid "Incorporate from local spool"
+msgstr "ローカルスプールから取り込む"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "取込時に振り分ける"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr "スプールのパス"
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "新着メールを自動チェックする"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr " "
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "分ごと"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "起動時に新着メールをチェックする"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "受信後にすべてのローカルフォルダを更新する"
+
+#: src/prefs_common_dialog.c:842
+msgid "Execute command when new messages arrived"
+msgstr "新着メッセージが到着したらコマンドを実行する"
+
+#: src/prefs_common_dialog.c:863
+#, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "`%d' は新着メッセージ数で置き換えられます。"
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "メールの送信に外部プログラムを使用する"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "送信したメッセージを送信控に保存する"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr "送信したメッセージにフィルタルールを適用する"
+
+#: src/prefs_common_dialog.c:953
+msgid "Outgoing encoding"
+msgstr "送信エンコーディング"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "自動設定 (推奨)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7bit ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "欧米 (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "欧米 (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "中欧 (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "バルト諸国 (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "バルト諸国 (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "ギリシャ語 (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+msgid "Hebrew (ISO-8859-8)"
+msgstr "ヘブライ語 (ISO-8859-8)"
+
+#: src/prefs_common_dialog.c:985
+msgid "Hebrew (Windows-1255)"
+msgstr "ヘブライ語 (Windows-1255)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "トルコ語 (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "キリル文字 (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "キリル文字 (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "キリル文字 (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "キリル文字 (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "日本語 (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "日本語 (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "日本語 (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "簡体字中国語 (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+msgid "Simplified Chinese (GBK)"
+msgstr "簡体字中国語 (GBK)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "繁体字中国語 (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "繁体字中国語 (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "中国語 (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "韓国語 (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "タイ語 (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "タイ語 (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"「自動設定」を選択した場合は、現在の言語設定に最適なエンコーディングが使用さ"
+"れます。"
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "転送符号化方式"
+
+#: src/prefs_common_dialog.c:1043
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"メッセージ本文が ASCII 文字以外を含む場合に使用する Content-Transfer-"
+"Encoding を指定してください。"
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "署名の区切り"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "自動的に挿入する"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "外部エディタを自動的に起動する"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "アンドゥの回数"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "メッセージを半角"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "文字で改行"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "引用部を自動整形する"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "入力時に自動整形する"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "送信時に自動整形する"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "返信時に自動的にアカウントを選択する"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "返信時にメッセージを引用する"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "返信ボタンでメーリングリストに返信する"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "返信の書式"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "引用符"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "転送の書式"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " 記号の説明 "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "フォント"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "ヘッダの項目を翻訳する (例えば `From:', `Subject:' 等)"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "フォルダ名の横に未読数を表示する"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "文字数が"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "字より長いニュースグループ名を簡略表示"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "サマリビュー"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "差出人が自分の場合は `差出人' カラムに宛先を表示する"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "スレッドを展開する"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "日付の書式"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr " サマリの表示項目を設定... "
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "メッセージの色を有効にする"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr "マルチバイト英数字を ASCII 文字で表示する (日本語のみ)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "メッセージビューの上部にヘッダペインを表示する"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "メッセージビューに簡略ヘッダを表示する"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr "HTML メッセージを解釈してテキスト表示する"
+
+#: src/prefs_common_dialog.c:1580
+msgid "Display cursor in message view"
+msgstr "メッセージビューにカーソルを表示する"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "行間を空ける"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "ピクセル"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "スクロール"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "半ページ単位"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "スムーズスクロール"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "間隔"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr "画像"
+
+#: src/prefs_common_dialog.c:1659
+msgid "Resize attached large images to fit in the window"
+msgstr "大きな添付画像をウィンドウにあわせてリサイズする"
+
+#: src/prefs_common_dialog.c:1661
+msgid "Display images as inline"
+msgstr "画像をインラインで表示する"
+
+#: src/prefs_common_dialog.c:1702
+msgid "Enable Junk mail control"
+msgstr "迷惑メール対策を有効にする"
+
+#: src/prefs_common_dialog.c:1710
+msgid "Learning command:"
+msgstr "学習コマンド:"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr "非迷惑メール"
+
+#: src/prefs_common_dialog.c:1746
+msgid "Classifying command"
+msgstr "判定コマンド"
+
+#: src/prefs_common_dialog.c:1760
+msgid "Junk folder"
+msgstr "迷惑メールフォルダ"
+
+#: src/prefs_common_dialog.c:1778
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "迷惑メールに指定したメッセージをこのフォルダに移動します。"
+
+#: src/prefs_common_dialog.c:1784
+msgid "Filter messages classified as junk on receiving"
+msgstr "受信時に迷惑メールと判定されたメッセージを振り分ける"
+
+#: src/prefs_common_dialog.c:1788
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr ""
+"振り分けられたメッセージを迷惑メールフォルダに移動し、サーバから削除します。"
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "署名を自動的に検証する"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "署名の検証結果をポップアップウィンドウで表示する"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "パスフレーズをメモリ上に一時的に記憶する"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "有効期間"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "分"
+
+#: src/prefs_common_dialog.c:1874
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr "'0' に設定するとセッションの間中パスフレーズを記憶します。"
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "パスフレーズの入力時に入力を捕捉する"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "GnuPG が動作しない場合起動時に警告を表示する"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "サマリでメッセージを選択したとき常に開く"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "フォルダに入ったときに最初の未読メッセージを開く"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "新規ウィンドウで開いたときのみメッセージを既読としてマーク"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "新着メールを受信した後受信箱に移動する"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "メッセージを移動または削除したら即座に実行する"
+
+#: src/prefs_common_dialog.c:1973
+msgid "Messages will be marked until execution if this is turned off."
+msgstr ""
+"これを無効にすると、メッセージは実行されるまでマークされた状態になります。"
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "受信ダイアログ"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "受信ダイアログを"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "常に表示"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr "手動で受信した場合のみ表示"
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "表示しない"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "受信エラー時にエラーダイアログをポップアップしない"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "完了時に受信ダイアログを閉じる"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr "ボタンの配置をGNOME HIGに準拠"
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " キーバインドを設定... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "外部コマンド (%s はファイル名・URIで置き換えられます)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Webブラウザ"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "ダブルクリックしたときにアドレスを宛先に追加する"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "終了時"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "終了時に確認する"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "終了時にごみ箱を空にする"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "空にする前に尋ねる"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "送信待機中のメッセージがあれば警告する"
+
+#: src/prefs_common_dialog.c:2205
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "サマリキャッシュの整合性を厳密にチェックする"
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+"フォルダの内容が他のアプリケーションによって変更される可能性がある場合は有効"
+"にしてください。\n"
+"このオプションはサマリ表示の性能を低下させます。"
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "ソケット I/O のタイムアウト:"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "秒"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "曜日の省略名"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "曜日の完全な名前"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "月の省略名"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "月の完全な名前"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "現在の地域における一般的な日付と時刻の表記"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "世紀(西暦年の上2桁)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "日(10進数表記)"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "24時間時計での時"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "12時間時計での時"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "年の初めから通算の日数(10進数表記)"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "月(10進数表記)"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "分(10進数表記)"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "午前または午後"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "秒(10進数表記)"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "週の何番目の日か(10進数表記)"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "現在の地域における一般的な日付表記"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "西暦の下2桁(世紀部分を含まない年)"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "(4桁の)西暦年"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "タイムゾーンまたはゾーン名または省略名"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "指定子"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "説明"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "例"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "メッセージの色を指定"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "色"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "引用文 - 1段階"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "引用文 - 2段階"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "引用文 - 3段階"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "URI リンク"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "引用色を循環"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "引用レベル1の色を選択"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "引用レベル2の色を選択"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "引用レベル3の色を選択"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "URI の色を選択"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "記号の説明"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"日付\n"
+"差出人\n"
+"差出人の氏名\n"
+"差出人の名前\n"
+"差出人のイニシャル\n"
+"件名\n"
+"宛先\n"
+"Cc\n"
+"ニュースグループ\n"
+"メッセージID"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "xが指定されていればexprを表示"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"メッセージ本文\n"
+"引用符付きメッセージ本文\n"
+"メッセージ本文(署名なし)\n"
+"引用符付きメッセージ本文(署名なし)\n"
+"文字 %"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"文字 バックスラッシュ(円記号)\n"
+"文字 疑問符\n"
+"文字 開き中括弧\n"
+"文字 閉じ中括弧"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "キーバインド"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"キーバインドのプリセットを選択してください。\n"
+"また、マウスポインタをメニューの項目の上に置きキーを押す\n"
+"ことで各メニューのショートカットを変更することもできます。"
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "標準"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "旧Sylpheed"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "カスタムヘッダの設定"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "ヘッダ"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4056,18 +5299,10 @@ msgstr "振り分けの設定"
 msgid "Enabled"
 msgstr "有効"
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "編集"
-
 #: src/prefs_filter.c:685
 #, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "本当にルール '%s' を削除してもいいですか?"
-
-#: src/prefs_filter.c:686
-msgid "(Untitled)"
-msgstr "(名称未設定)"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4152,10 +5387,6 @@ msgstr "が次より長い"
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr "が次より短い"
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "KB"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
@@ -4277,10 +5508,6 @@ msgstr "返信時に件名の先頭の[...]または(...)の部分を削除す�
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "サブフォルダにも適用する"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "以下のアドレスを自動指定"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4442,10 +5669,6 @@ msgstr "鍵ID"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "正当性"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "その他"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5050,923 +6273,3 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr "偽装URLの警告"
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "メッセージ作成ウィンドウが開いています。\n"
-#~ "アカウントを編集する前にすべてのメッセージ作成ウィンドウを閉じてください。"
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "アカウント編集ウィンドウを開いています...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "アカウント編集ウィンドウを作成中...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "アカウントの編集"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "新着メッセージはこの順番でチェックされます。「全受信」によるメッセージ\n"
-#~ "の取得を有効にするには、「G」カラムのボックスをチェックしてください。"
-
-#~ msgid "Protocol"
-#~ msgstr "プロトコル"
-
-#~ msgid "Server"
-#~ msgstr "サーバ"
-
-#~ msgid " _Set as default account "
-#~ msgstr " 通常使用するアカウントに指定(_S) "
-
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "本当にアカウント '%s' を削除してもいいですか?"
-
-#~ msgid "Delete account"
-#~ msgstr "アカウントの削除"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "アカウントプリファレンスウィンドウを開いています...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Account%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "新規アカウントの設定"
-
-#~ msgid "Account preferences"
-#~ msgstr "アカウントの設定"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "アカウントプリファレンスウィンドウを作成中...\n"
-
-#~ msgid "Receive"
-#~ msgstr "受信"
-
-#~ msgid "Privacy"
-#~ msgstr "個人情報"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "高度な設定"
-
-#~ msgid "Name of this account"
-#~ msgstr "このアカウントの名称"
-
-#~ msgid "Set as default"
-#~ msgstr "通常使用"
-
-#~ msgid "Personal information"
-#~ msgstr "個人情報"
-
-#~ msgid "Full name"
-#~ msgstr "名前"
-
-#~ msgid "Mail address"
-#~ msgstr "メールアドレス"
-
-#~ msgid "Organization"
-#~ msgstr "組織"
-
-#~ msgid "Server information"
-#~ msgstr "サーバ情報"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "ニュース (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "なし (ローカル)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "このサーバは認証が必要"
-
-#~ msgid "News server"
-#~ msgstr "ニュースサーバ"
-
-#~ msgid "Server for receiving"
-#~ msgstr "受信用サーバ"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "SMTPサーバ (送信)"
-
-#~ msgid "User ID"
-#~ msgstr "ユーザID"
-
-#~ msgid "Password"
-#~ msgstr "パスワード"
-
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "安全な認証方式を使用する (APOP)"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "受信時にサーバ上のメッセージを削除する"
-
-#~ msgid "Remove after"
-#~ msgstr "メッセージを"
-
-#~ msgid "days"
-#~ msgstr "日後に削除"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0日: 即座に削除)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "サーバ上のすべてのメッセージを受信する"
-
-#~ msgid "Receive size limit"
-#~ msgstr "受信サイズ制限"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "受信時にメッセージを振り分ける"
-
-#~ msgid "Default inbox"
-#~ msgstr "標準の受信箱"
-
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "振り分けられなかったメッセージはこのフォルダに格納されます。"
-
-#~ msgid "Authentication method"
-#~ msgstr "認証方式"
-
-#~ msgid "Automatic"
-#~ msgstr "自動"
-
-#~ msgid "News"
-#~ msgstr "ニュース"
-
-#~ msgid "Maximum number of articles to download"
-#~ msgstr "ダウンロードする記事数の上限"
-
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "0を指定すると無制限になります。"
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "「全受信」でこのアカウントの新着メッセージをチェックする"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Dateヘッダフィールドを付ける"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "メッセージIDを生成する"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "ユーザ定義のヘッダを追加する"
-
-#~ msgid " Edit... "
-#~ msgstr " 編集... "
-
-#~ msgid "Authentication"
-#~ msgstr "認証"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "SMTP認証 (SMTP AUTH)"
-
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "このエントリが空のときは、受信時と同じユーザIDとパスワードが使用されます。"
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "送信前にPOP3認証を行う"
-
-#~ msgid "Command output"
-#~ msgstr "コマンドの出力"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Reply-To"
-#~ msgstr "Reply-To"
-
-#~ msgid "Sign message by default"
-#~ msgstr "標準でメッセージに署名する"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "標準でメッセージを暗号化する"
-
-#~ msgid "Encrypt when replying to encrypted message"
-#~ msgstr "暗号化されたメッセージに返信した場合は暗号化する"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "暗号化にASCII包装形式を使用する"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "クリアテキスト署名を使用する"
-
-#~ msgid "Sign key"
-#~ msgstr "署名鍵"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "標準のGnuPG鍵を使用する"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "自分の電子メールアドレスで鍵を選択する"
-
-#~ msgid "Specify key manually"
-#~ msgstr "鍵を手動で指定する"
-
-#~ msgid "User or key ID:"
-#~ msgstr "ユーザまたは鍵ID:"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "SSLを使用しない"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "POP3の接続にSSLを使用"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "SSLセッションの開始にSTARTTLSコマンドを使用"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "IMAP4の接続にSSLを使用"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "NNTPの接続にSSLを使用"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "送信 (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "SMTPの接続にSSLを使用"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "非ブロッキングSSLを使用する"
-
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr "SSLの接続に問題が生じる場合はオフにしてください。"
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "SMTPポートを指定"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "POP3ポートを指定"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "IMAP4ポートを指定"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "NNTPポートを指定"
-
-#~ msgid "Specify domain name"
-#~ msgstr "ドメイン名を指定"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "IMAPサーバディレクトリ"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "送信控フォルダの場所"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "草稿フォルダの場所"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "ごみ箱フォルダの場所"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "アカウント名が入力されていません。"
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "メールアドレスが入力されていません。"
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "SMTPサーバが入力されていません。"
-
-#~ msgid "User ID is not entered."
-#~ msgstr "ユーザIDが入力されていません。"
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "POP3サーバが入力されていません。"
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "IMAP4サーバが入力されていません。"
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "NNTPサーバが入力されていません。"
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "暗号化メッセージに旧形式の ASCII 包装方式を使用することは推奨されて\n"
-#~ "いません。この形式は RFC 3156 - MIME Security with OpenPGP\n"
-#~ "に準拠していません。"
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "全般プリファレンスウィンドウを作成中...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "全般の設定"
-
-#~ msgid "Quote"
-#~ msgstr "引用"
-
-#~ msgid "Display"
-#~ msgstr "表示"
-
-#~ msgid "Message"
-#~ msgstr "メッセージ"
-
-#~ msgid "Junk mail"
-#~ msgstr "迷惑メール"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "メールの受信に外部プログラムを使用する"
-
-#~ msgid "Command"
-#~ msgstr "コマンド"
-
-#~ msgid "Incorporate from local spool"
-#~ msgstr "ローカルスプールから取り込む"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "取込時に振り分ける"
-
-#~ msgid "Spool path"
-#~ msgstr "スプールのパス"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "新着メールを自動チェックする"
-
-#~ msgid "every"
-#~ msgstr " "
-
-#~ msgid "minute(s)"
-#~ msgstr "分ごと"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "起動時に新着メールをチェックする"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "受信後にすべてのローカルフォルダを更新する"
-
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "新着メッセージが到着したらコマンドを実行する"
-
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "`%d' は新着メッセージ数で置き換えられます。"
-
-#~ msgid "Use external program for sending"
-#~ msgstr "メールの送信に外部プログラムを使用する"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "送信したメッセージを送信控に保存する"
-
-#~ msgid "Apply filter rules to sent messages"
-#~ msgstr "送信したメッセージにフィルタルールを適用する"
-
-#~ msgid "Outgoing encoding"
-#~ msgstr "送信エンコーディング"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "自動設定 (推奨)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7bit ascii (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "欧米 (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "欧米 (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "中欧 (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "バルト諸国 (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "バルト諸国 (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "ギリシャ語 (ISO-8859-7)"
-
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "ヘブライ語 (ISO-8859-8)"
-
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "ヘブライ語 (Windows-1255)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "トルコ語 (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "キリル文字 (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "キリル文字 (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "キリル文字 (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "キリル文字 (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "日本語 (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "日本語 (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "日本語 (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "簡体字中国語 (GB2312)"
-
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "簡体字中国語 (GBK)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "繁体字中国語 (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "繁体字中国語 (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "中国語 (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "韓国語 (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "タイ語 (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "タイ語 (Windows-874)"
-
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "「自動設定」を選択した場合は、現在の言語設定に最適なエンコーディングが使用"
-#~ "されます。"
-
-#~ msgid "Transfer encoding"
-#~ msgstr "転送符号化方式"
-
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "メッセージ本文が ASCII 文字以外を含む場合に使用する Content-Transfer-"
-#~ "Encoding を指定してください。"
-
-#~ msgid "Signature separator"
-#~ msgstr "署名の区切り"
-
-#~ msgid "Insert automatically"
-#~ msgstr "自動的に挿入する"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "外部エディタを自動的に起動する"
-
-#~ msgid "Undo level"
-#~ msgstr "アンドゥの回数"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "メッセージを半角"
-
-#~ msgid "characters"
-#~ msgstr "文字で改行"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "引用部を自動整形する"
-
-#~ msgid "Wrap on input"
-#~ msgstr "入力時に自動整形する"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "送信時に自動整形する"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "返信時に自動的にアカウントを選択する"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "返信時にメッセージを引用する"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "返信ボタンでメーリングリストに返信する"
-
-#~ msgid "Reply format"
-#~ msgstr "返信の書式"
-
-#~ msgid "Quotation mark"
-#~ msgstr "引用符"
-
-#~ msgid "Forward format"
-#~ msgstr "転送の書式"
-
-#~ msgid " Description of symbols "
-#~ msgstr " 記号の説明 "
-
-#~ msgid "Font"
-#~ msgstr "フォント"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "ヘッダの項目を翻訳する (例えば `From:', `Subject:' 等)"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "フォルダ名の横に未読数を表示する"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "文字数が"
-
-#~ msgid "letters"
-#~ msgstr "字より長いニュースグループ名を簡略表示"
-
-#~ msgid "Summary View"
-#~ msgstr "サマリビュー"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "差出人が自分の場合は `差出人' カラムに宛先を表示する"
-
-#~ msgid "Expand threads"
-#~ msgstr "スレッドを展開する"
-
-#~ msgid "Date format"
-#~ msgstr "日付の書式"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr " サマリの表示項目を設定... "
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "メッセージの色を有効にする"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr "マルチバイト英数字を ASCII 文字で表示する (日本語のみ)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "メッセージビューの上部にヘッダペインを表示する"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "メッセージビューに簡略ヘッダを表示する"
-
-#~ msgid "Render HTML messages as text"
-#~ msgstr "HTML メッセージを解釈してテキスト表示する"
-
-#~ msgid "Display cursor in message view"
-#~ msgstr "メッセージビューにカーソルを表示する"
-
-#~ msgid "Line space"
-#~ msgstr "行間を空ける"
-
-#~ msgid "pixel(s)"
-#~ msgstr "ピクセル"
-
-#~ msgid "Scroll"
-#~ msgstr "スクロール"
-
-#~ msgid "Half page"
-#~ msgstr "半ページ単位"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "スムーズスクロール"
-
-#~ msgid "Step"
-#~ msgstr "間隔"
-
-#~ msgid "Images"
-#~ msgstr "画像"
-
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "大きな添付画像をウィンドウにあわせてリサイズする"
-
-#~ msgid "Display images as inline"
-#~ msgstr "画像をインラインで表示する"
-
-#~ msgid "Enable Junk mail control"
-#~ msgstr "迷惑メール対策を有効にする"
-
-#~ msgid "Learning command:"
-#~ msgstr "学習コマンド:"
-
-#~ msgid "Not Junk"
-#~ msgstr "非迷惑メール"
-
-#~ msgid "Classifying command"
-#~ msgstr "判定コマンド"
-
-#~ msgid "Junk folder"
-#~ msgstr "迷惑メールフォルダ"
-
-#~ msgid ""
-#~ "The messages which are set as junk mail will be moved to this folder."
-#~ msgstr "迷惑メールに指定したメッセージをこのフォルダに移動します。"
-
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "受信時に迷惑メールと判定されたメッセージを振り分ける"
-
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr ""
-#~ "振り分けられたメッセージを迷惑メールフォルダに移動し、サーバから削除しま"
-#~ "す。"
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "署名を自動的に検証する"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "署名の検証結果をポップアップウィンドウで表示する"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "パスフレーズをメモリ上に一時的に記憶する"
-
-#~ msgid "Expired after"
-#~ msgstr "有効期間"
-
-#~ msgid "minute(s) "
-#~ msgstr "分"
-
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr "'0' に設定するとセッションの間中パスフレーズを記憶します。"
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "パスフレーズの入力時に入力を捕捉する"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "GnuPG が動作しない場合起動時に警告を表示する"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "サマリでメッセージを選択したとき常に開く"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "フォルダに入ったときに最初の未読メッセージを開く"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr "新規ウィンドウで開いたときのみメッセージを既読としてマーク"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "新着メールを受信した後受信箱に移動する"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "メッセージを移動または削除したら即座に実行する"
-
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr ""
-#~ "これを無効にすると、メッセージは実行されるまでマークされた状態になります。"
-
-#~ msgid "Receive dialog"
-#~ msgstr "受信ダイアログ"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "受信ダイアログを"
-
-#~ msgid "Always"
-#~ msgstr "常に表示"
-
-#~ msgid "Only on manual receiving"
-#~ msgstr "手動で受信した場合のみ表示"
-
-#~ msgid "Never"
-#~ msgstr "表示しない"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "受信エラー時にエラーダイアログをポップアップしない"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "完了時に受信ダイアログを閉じる"
-
-#~ msgid "Make the order of buttons comply with GNOME HIG"
-#~ msgstr "ボタンの配置をGNOME HIGに準拠"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " キーバインドを設定... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "外部コマンド (%s はファイル名・URIで置き換えられます)"
-
-#~ msgid "Web browser"
-#~ msgstr "Webブラウザ"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "ダブルクリックしたときにアドレスを宛先に追加する"
-
-#~ msgid "On exit"
-#~ msgstr "終了時"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "終了時に確認する"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "終了時にごみ箱を空にする"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "空にする前に尋ねる"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "送信待機中のメッセージがあれば警告する"
-
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "サマリキャッシュの整合性を厳密にチェックする"
-
-#~ msgid ""
-#~ "Enable this if the contents of folders have the possibility of "
-#~ "modification by other applications.\n"
-#~ "This option will degrade the performance of displaying summary."
-#~ msgstr ""
-#~ "フォルダの内容が他のアプリケーションによって変更される可能性がある場合は有"
-#~ "効にしてください。\n"
-#~ "このオプションはサマリ表示の性能を低下させます。"
-
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "ソケット I/O のタイムアウト:"
-
-#~ msgid "second(s)"
-#~ msgstr "秒"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "曜日の省略名"
-
-#~ msgid "the full weekday name"
-#~ msgstr "曜日の完全な名前"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "月の省略名"
-
-#~ msgid "the full month name"
-#~ msgstr "月の完全な名前"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "現在の地域における一般的な日付と時刻の表記"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "世紀(西暦年の上2桁)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "日(10進数表記)"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "24時間時計での時"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "12時間時計での時"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "年の初めから通算の日数(10進数表記)"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "月(10進数表記)"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "分(10進数表記)"
-
-#~ msgid "either AM or PM"
-#~ msgstr "午前または午後"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "秒(10進数表記)"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "週の何番目の日か(10進数表記)"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "現在の地域における一般的な日付表記"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "西暦の下2桁(世紀部分を含まない年)"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "(4桁の)西暦年"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "タイムゾーンまたはゾーン名または省略名"
-
-#~ msgid "Specifier"
-#~ msgstr "指定子"
-
-#~ msgid "Description"
-#~ msgstr "説明"
-
-#~ msgid "Example"
-#~ msgstr "例"
-
-#~ msgid "Set message colors"
-#~ msgstr "メッセージの色を指定"
-
-#~ msgid "Colors"
-#~ msgstr "色"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "引用文 - 1段階"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "引用文 - 2段階"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "引用文 - 3段階"
-
-#~ msgid "URI link"
-#~ msgstr "URI リンク"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "引用色を循環"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "引用レベル1の色を選択"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "引用レベル2の色を選択"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "引用レベル3の色を選択"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "URI の色を選択"
-
-#~ msgid "Description of symbols"
-#~ msgstr "記号の説明"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "日付\n"
-#~ "差出人\n"
-#~ "差出人の氏名\n"
-#~ "差出人の名前\n"
-#~ "差出人のイニシャル\n"
-#~ "件名\n"
-#~ "宛先\n"
-#~ "Cc\n"
-#~ "ニュースグループ\n"
-#~ "メッセージID"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "xが指定されていればexprを表示"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "メッセージ本文\n"
-#~ "引用符付きメッセージ本文\n"
-#~ "メッセージ本文(署名なし)\n"
-#~ "引用符付きメッセージ本文(署名なし)\n"
-#~ "文字 %"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "文字 バックスラッシュ(円記号)\n"
-#~ "文字 疑問符\n"
-#~ "文字 開き中括弧\n"
-#~ "文字 閉じ中括弧"
-
-#~ msgid "Key bindings"
-#~ msgstr "キーバインド"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "キーバインドのプリセットを選択してください。\n"
-#~ "また、マウスポインタをメニューの項目の上に置きキーを押す\n"
-#~ "ことで各メニューのショートカットを変更することもできます。"
-
-#~ msgid "Default"
-#~ msgstr "標準"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "旧Sylpheed"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2004-12-05 17:16+0300\n"
 "Last-Translator: Sergey Vlasov <vsu@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -211,6 +211,89 @@ msgstr "ошибка преобразования iconv из UTF-7 в %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "ошибка преобразования iconv из %s в UTF-7\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "ошибка записи во временный файл\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Получение сообщений из %s в %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "Ошибка чтения mbox-файла.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "неверный формат ящика: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "испорченный почтовый ящик: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "ошибка при открытии временного файла \n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"найдена незащищенная строка From:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "найдено %d сообщений.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "ошибка создания lock-файла %s\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "используйте 'flock' вместо 'file', если возможно.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "не удалось создать %s\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "почтовый ящик занят другим процессом, ожидание...\n"
+
+#: libsylph/mbox.c:319
+#, fuzzy, c-format
+msgid "can't lock %s\n"
+msgstr "не удалось создать %s\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+#, fuzzy
+msgid "invalid lock type\n"
+msgstr "Неверный тип MIME."
+
+#: libsylph/mbox.c:362
+#, fuzzy, c-format
+msgid "can't unlock %s\n"
+msgstr "не удалось создать %s\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "не удалось обрезать почтовый ящик до нуля.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Экспорт сообщений из %s в %s...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -355,54 +438,54 @@ msgstr "Произошла ошибка при отправке статьи\n"
 msgid "Error occurred while sending command\n"
 msgstr "Произошла ошибка при передаче команды.\n"
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "В сообщении сервера не найдена требуемая метка времени APOP\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Ошибка синтаксиса метки времени в сообщении сервера\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "Ошибка протокола POP3\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "неверный ответ UIDL: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Удаление устаревшего сообщения %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Пропускается сообщение %d (%d байт)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "почтовый ящик занят\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "время сеанса истекло\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "не удалось начать сеанс TLS\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "ошибка при аутентификации\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 msgid "command not supported\n"
 msgstr "команда не поддерживается\n"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 msgid "error occurred on POP3 session\n"
 msgstr "ошибка сеанса POP3\n"
 
@@ -454,11 +537,11 @@ msgstr "Ошибка записи в файл.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "Аутентификация SMTP недоступна\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "неверный ответ SMTP\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "ошибка сеанса SMTP\n"
 
@@ -594,6 +677,75 @@ msgstr ""
 "лицензии GNU; если этого не случилось, -- напишите в Free Software "
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Некоторые окна с неотправленными сообщениями открыты.\n"
+"Пожалуйста, закройте их перед изменением учетных записей."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Открытие окна редактирования учетных записей...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Создание окна редактирования учетных записей...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Редактирование учетных записей"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Новые сообщения будут приниматься в указанном порядке.\n"
+"Пометьте в колонке 'G' учетные записи, которые нужно проверять\n"
+"по команде 'Получить все'."
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Имя"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Протокол"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Сервер"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Изменить"
+
+#: src/account_dialog.c:426
+#, fuzzy
+msgid " _Set as default account "
+msgstr " Установить учетную запись по умолчанию "
+
+#: src/account_dialog.c:479
+#, fuzzy, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Вы действительно хотите удалить эту запись?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+#, fuzzy
+msgid "(Untitled)"
+msgstr "Без названия"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Удалить учетную запись"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -692,14 +844,6 @@ msgstr "Пользовательский параметр действия"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Добавление адреса в книгу"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Имя"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -841,7 +985,7 @@ msgstr "/Удалить"
 msgid "E-Mail address"
 msgstr "Адрес E-Mail"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Адресная книга"
 
@@ -1012,7 +1156,7 @@ msgstr "Ошибка преобразования адресной книги"
 msgid "Addressbook Conversion"
 msgstr "Преобразование адресной книги"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Интерфейс"
 
@@ -1032,7 +1176,8 @@ msgstr "Адрес E-Mail"
 msgid "Group"
 msgstr "Группа"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Папка"
 
@@ -1573,7 +1718,8 @@ msgstr "Тип MIME"
 msgid "Size"
 msgstr "Размер"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Отправить"
 
@@ -1613,7 +1759,9 @@ msgstr "Вложение"
 msgid "Attach file"
 msgstr "Вложить файл"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Подпись"
 
@@ -1621,7 +1769,8 @@ msgstr "Подпись"
 msgid "Insert signature"
 msgstr "Добавить подпись"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Редактор"
 
@@ -1851,6 +2000,7 @@ msgid " Check File "
 msgstr " Проверить файл "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Файл"
 
@@ -1928,7 +2078,8 @@ msgid "Edit JPilot Entry"
 msgstr "Редактирование записи JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1992,7 +2143,7 @@ msgstr "Тайм-аут (сек)"
 msgid "Maximum Entries"
 msgstr "Максимальный размер результата"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Основные"
 
@@ -2050,6 +2201,7 @@ msgid "Exporting file:"
 msgstr "Экспортировать в файл:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " Выбор... "
 
@@ -3545,7 +3697,8 @@ msgstr "Получить сообщения со всех учетных зап�
 msgid "Send queued message(s)"
 msgstr "Послать сообщения из очереди"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Написать"
 
@@ -3553,7 +3706,7 @@ msgstr "Написать"
 msgid "Compose new message"
 msgstr "Написать новое сообщение"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Ответить"
 
@@ -3581,7 +3734,7 @@ msgstr "Переслать сообщение"
 msgid "Delete the message"
 msgstr "Удалить сообщение"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr ""
 
@@ -3636,89 +3789,6 @@ msgstr "Выход"
 msgid "Exit this program?"
 msgstr "Выйти из программы?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "ошибка записи во временный файл\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Получение сообщений из %s в %s...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "Ошибка чтения mbox-файла.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "неверный формат ящика: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "испорченный почтовый ящик: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "ошибка при открытии временного файла \n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"найдена незащищенная строка From:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "найдено %d сообщений.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "ошибка создания lock-файла %s\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "используйте 'flock' вместо 'file', если возможно.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "не удалось создать %s\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "почтовый ящик занят другим процессом, ожидание...\n"
-
-#: src/mbox.c:319
-#, fuzzy, c-format
-msgid "can't lock %s\n"
-msgstr "не удалось создать %s\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-#, fuzzy
-msgid "invalid lock type\n"
-msgstr "Неверный тип MIME."
-
-#: src/mbox.c:362
-#, fuzzy, c-format
-msgid "can't unlock %s\n"
-msgstr "не удалось создать %s\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "не удалось обрезать почтовый ящик до нуля.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Экспорт сообщений из %s в %s...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Поиск в текущем сообщении"
@@ -3759,7 +3829,7 @@ msgstr "/Инструменты/Добавить отправителя в ад�
 msgid "Creating message view...\n"
 msgstr "Создание области просмотра сообщения...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Текст"
 
@@ -3772,7 +3842,7 @@ msgstr "Вложения"
 msgid "Can't save the file `%s'."
 msgstr "Ошибка при сохранении файла '%s'."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Печать"
 
@@ -3909,6 +3979,407 @@ msgstr ""
 "Неверно! Повторите...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Открытие окна настроек учетной записи...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Учетная запись %d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Настройки новой учетной записи"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Настройки учетной записи"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Создание окна настроек учетной записи...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Прием"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Защита"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Дополнительные"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Имя учетной записи"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "По умолчанию"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Личная информация"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Полное имя"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "Адрес E-Mail"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Организация"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Сведения о серверах"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Новостной (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Нет (локальный)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Этот сервер требует аутентификации"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Сервер новостей"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Сервер для приема"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "Сервер SMTP (отправка)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "ID пользователя"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Пароль"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "Использовать безопасную аутентификацию (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Удалять сообщения с сервера после приема"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Удалить через"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "дней"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 дней: удалить немедленно)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Принимать все сообщения с сервера"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Ограничить размер принимаемых сообщений"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "кб"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Фильтровать сообщения при приеме"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Папка для входящих сообщений"
+
+#: src/prefs_account_dialog.c:914
+#, fuzzy
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Метод аутентификации"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Автоматически"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Новости"
+
+#: src/prefs_account_dialog.c:955
+#, fuzzy
+msgid "Maximum number of articles to download"
+msgstr ""
+"Наибольшее число статей для загрузки\n"
+"(не ограничено, если указан 0)"
+
+#: src/prefs_account_dialog.c:972
+#, fuzzy
+msgid "No limit if 0 is specified."
+msgstr "Получатель сообщения не указан."
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "Проверять по команде 'Получить все'"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Заголовок"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Добавить в заголовок поле Date"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Создавать Message-ID"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Добавить дополнительные заголовки"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " Определить... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Аутентификация"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "Аутентификация SMTP (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+#, fuzzy
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Если оставить эти поля пустыми, будут использоваться\n"
+"имя пользователя и пароль, заданные для приема почты."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Проверка пароля через POP3 перед отправкой"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Вывод команды"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Автоматически устанавливать адреса"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Копия"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Скрытно"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Обратный адрес"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Подписывать сообщения по умолчанию"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Шифровать сообщения по умолчанию"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr ""
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Использовать ASCII-кодирование при шифровании"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Использовать открытую текстовую подпись"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Ключ подписи"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Ключ GnuPG по умолчанию"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Ключ для выбранного адреса E-mail"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Другой ключ"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "ID пользователя ключа:"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Не использовать SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Использовать SSL для соединения POP3"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Использовать команду STARTTLS для начала сеанса SSL"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Использовать SSL для соединения IMAP4"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Использовать SSL для соединения NNTP"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Отправка (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Использовать SSL для соединения SMTP"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Использовать неблокирующий режим SSL"
+
+#: src/prefs_account_dialog.c:1523
+#, fuzzy
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "(Выключите эту опцию, если возникают проблемы при использовании SSL)"
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Порт SMTP"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Порт POP3"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Порт IMAP4"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Порт NNTP"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Имя домена"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "Каталог сервера IMAP4"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Сохранять отправленные сообщения в"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Сохранять черновики в"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Сохранять удаленные сообщения в"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Не указано имя учетной записи."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "Не указан адрес."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "Не указан сервер SMTP."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Не указан идентификатор пользователя."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "Не указан сервер POP3."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "Не указан сервер IMAP4."
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "Не указан сервер NNTP."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Использование устаревшего ASCII-кодирования зашифрованных\n"
+"сообщений не рекомендуется. Этот формат не соответствует\n"
+"RFC 3156 - MIME Security with OpenPGP."
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "Настройка действий"
@@ -4025,13 +4496,819 @@ msgstr "Удалить действие"
 msgid "Do you really want to delete this action?"
 msgstr "Вы действительно хотите удалить это действие?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Создание окна общих настроек...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Общие настройки"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Цитирование"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Отображение"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Сообщение"
+
+#: src/prefs_common_dialog.c:697
+#, fuzzy
+msgid "Junk mail"
+msgstr "папку:"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Другое"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Использовать внешнюю программу для приема"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Команда"
+
+#: src/prefs_common_dialog.c:776
+#, fuzzy
+msgid "Incorporate from local spool"
+msgstr "Принимать из спула"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Фильтровать при приеме"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr "Путь к спулу"
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Проверять приход новых сообщений"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "каждые"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "минут"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Проверять приход новых сообщений при запуске"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Обновить все локальные папки после приема"
+
+#: src/prefs_common_dialog.c:842
+#, fuzzy
+msgid "Execute command when new messages arrived"
+msgstr "Немедленно выполнять перемещение и удаление сообщений"
+
+#: src/prefs_common_dialog.c:863
+#, fuzzy, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "Получение количества новых сообщений (STAT)..."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Использовать внешнюю программу для отправки"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Сохранять отправленные сообщения в папке \"Отправленные\""
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr ""
+
+#: src/prefs_common_dialog.c:953
+#, fuzzy
+msgid "Outgoing encoding"
+msgstr "Кодировка отправляемых сообщений"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Автоматически (Рекомендуется)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7 бит ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Западноевропейская (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Западноевропейская (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Центральноевропейская (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Балтийская (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Балтийская (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Греческая (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+#, fuzzy
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Греческая (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:985
+#, fuzzy
+msgid "Hebrew (Windows-1255)"
+msgstr "Кириллица Win (Windows-1251)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Турецкая (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Кириллица (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Русская (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Украинская (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Кириллица Win (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Японская (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Японская (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Японская (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Упрощенная китайская (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+#, fuzzy
+msgid "Simplified Chinese (GBK)"
+msgstr "Упрощенная китайская (GB2312)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Традиционная китайская (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Традиционная китайская (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Китайская (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Корейская (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Тайская (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Тайская (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+#, fuzzy
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"При выборе варианта 'Автоматически' будет использована\n"
+"оптимальная кодировка для текущего языка и страны."
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "Кодирование текста сообщений"
+
+#: src/prefs_common_dialog.c:1043
+#, fuzzy
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Укажите метод кодирования текстов сообщений, содержащих символы\n"
+"не из диапазона ASCII (Content-Transfer-Encoding)."
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Разделитель подписи"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Добавлять автоматически"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Автоматически запускать внешний редактор"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Число уровней отката"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Переносить строки с"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "символа"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Переносить цитаты"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Переносить при вводе"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Переносить перед отправкой"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Автоматически выбирать учетную запись при ответе"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Цитировать при ответе"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "По кнопке \"Ответить\" отвечать в список рассылки"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Формат ответа"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Знак цитаты"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Формат пересылаемого сообщения"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " Описание символов "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Шрифт"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Переводить имена заголовков ('From:', 'Subject:')"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Показывать число непрочитанных сообщений рядом с именем папки"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Сокращать названия групп новостей длиннее"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "букв"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Список сообщений"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Показывать получателя в колонке 'От', если отправитель - Вы"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Разворачивать обсуждения"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Формат даты"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr "Установить показываемые поля..."
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Разрешить раскраску сообщений"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Отображать многобайтовые алфавитно-цифровые символы\n"
+"как ASCII (только для японских кодировок)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Показывать панель заголовков над областью просмотра сообщений"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Показывать сокращенные заголовки при просмотре сообщений"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1580
+#, fuzzy
+msgid "Display cursor in message view"
+msgstr "Показывать сокращенные заголовки при просмотре сообщений"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Расстояние между строками"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "пикселей"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Прокрутка"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Половина страницы"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Плавная прокрутка"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Шаг"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1659
+msgid "Resize attached large images to fit in the window"
+msgstr "Масштабировать присоединенные изображения по размеру окна"
+
+#: src/prefs_common_dialog.c:1661
+#, fuzzy
+msgid "Display images as inline"
+msgstr "Настройка отображения заголовков"
+
+#: src/prefs_common_dialog.c:1702
+#, fuzzy
+msgid "Enable Junk mail control"
+msgstr "папку:"
+
+#: src/prefs_common_dialog.c:1710
+#, fuzzy
+msgid "Learning command:"
+msgstr "Выполнить команду"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1746
+#, fuzzy
+msgid "Classifying command"
+msgstr "Выполнить команду"
+
+#: src/prefs_common_dialog.c:1760
+#, fuzzy
+msgid "Junk folder"
+msgstr "папку:"
+
+#: src/prefs_common_dialog.c:1778
+#, fuzzy
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
+
+#: src/prefs_common_dialog.c:1784
+#, fuzzy
+msgid "Filter messages classified as junk on receiving"
+msgstr "Фильтровать сообщения при приеме"
+
+#: src/prefs_common_dialog.c:1788
+#, fuzzy
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Автоматически проверять подписи"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Показывать результат проверки подписи в отдельном окне"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Сохранять парольную фразу в памяти"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Удалять через"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "минут"
+
+#: src/prefs_common_dialog.c:1874
+#, fuzzy
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr ""
+"(При установке в 0 парольная фраза будет храниться\n"
+" в течение всего сеанса)"
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Захватить ввод при запросе пароля"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Выводить предупреждение при запуске, если GnuPG не работает"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "Всегда открывать сообщение для просмотра при выделении в списке"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Открыть первое непрочитанное сообщение при входе в папку"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Помечать сообщение как прочитанное только после открытия в новом окне"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Перейти в папку \"Входящие\" после приема новых сообщений"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Немедленно выполнять перемещение и удаление сообщений"
+
+#: src/prefs_common_dialog.c:1973
+#, fuzzy
+msgid "Messages will be marked until execution if this is turned off."
+msgstr ""
+"(Сообщения будут просто помечены до выполнения, если\n"
+" эта опция не включена)"
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Окно приема сообщений"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Показывать окно приема сообщений"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Всегда"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr "Только при ручном запуске приема"
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Никогда"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Не отображать сообщение об ошибке при получении сообщений"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Закрывать окно приема сообщений после завершения"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr ""
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " Установить клавиатурные команды... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Внешние команды (%s будет заменен на имя файла/URI)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Web-браузер"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Добавлять адрес в список адресатов по двойному щелчку"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "При выходе"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Подтверждение при выходе"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Очищать корзину при выходе"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Спрашивать перед очисткой"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Предупреждать о наличии сообщений в очереди"
+
+#: src/prefs_common_dialog.c:2205
+#, fuzzy
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Запись кеша списка (%s)..."
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "Время ожидания ответа из сети:"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "секунд"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "сокращенное название дня недели"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "полное название дня недели"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "сокращенное название месяца"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "полное название месяца"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "предпочтительный формат даты и времени для выбранной страны"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "век (год/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "день месяца"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "час, 24-часовое представление"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "час, 12-часовое представление"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "день года"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "номер месяца"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "минута"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "AM или PM"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "секунда"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "номер дня недели"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "предпочтительный формат даты для выбранной страны"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "последние две цифры года"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "год полностью"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "имя или сокращение временной зоны"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Элемент формата"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Описание"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Пример"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Настройка цветов сообщений"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Цвета"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Цитата - Первый уровень"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Цитата - Второй уровень"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Цитата - Третий уровень"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "Ссылка (URI)"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Циклически использовать цвета цитат"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "Выберите цвет для цитат уровня 1"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "Выберите цвет для цитат уровня 2"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "Выберите цвет для цитат уровня 3"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "Выберите цвет для ссылок (URI)"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Описание символов"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Дата\n"
+"Отправитель\n"
+"Полное имя отправителя\n"
+"Фамилия отправителя\n"
+"Инициалы отправителя\n"
+"Тема\n"
+"Кому\n"
+"Копия\n"
+"Группы новостей\n"
+"Message-ID"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Если x установлено, отображает expr"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Содержимое сообщения\n"
+"Содержимое сообщения со знаком цитаты\n"
+"Содержимое сообщения без подписи\n"
+"Содержимое сообщения без подписи со знаком цитаты\n"
+"Символ '%'"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"Символ '\\'\n"
+"Символ '?'\n"
+"Символ '{'\n"
+"Символ '}'"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Клавиатурные команды"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Выберите одну из стандартных настроек для клавиатурных команд.\n"
+"Чтобы назначить или изменить комбинацию клавиш для команды меню,\n"
+"нажмите эту клавишу (или комбинацию клавиш), установив указатель\n"
+"на нужную команду в меню."
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "По умолчанию"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Старая Sylpheed"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Настройка дополнительных заголовков"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Заголовок"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4097,19 +5374,10 @@ msgstr "Настройка фильтров"
 msgid "Enabled"
 msgstr "Вкл."
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Изменить"
-
 #: src/prefs_filter.c:685
 #, fuzzy, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Вы хотите удалить правило?"
-
-#: src/prefs_filter.c:686
-#, fuzzy
-msgid "(Untitled)"
-msgstr "Без названия"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4194,10 +5462,6 @@ msgstr "больше, чем"
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr "меньше, чем"
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "кб"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
@@ -4320,10 +5584,6 @@ msgstr "Удалять [...] или (...) в начале темы сообще�
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Применять к вложенным папкам"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Автоматически устанавливать адреса"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4486,10 +5746,6 @@ msgstr "ID ключа"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Val"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Другое"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5098,925 +6354,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Некоторые окна с неотправленными сообщениями открыты.\n"
-#~ "Пожалуйста, закройте их перед изменением учетных записей."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Открытие окна редактирования учетных записей...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Создание окна редактирования учетных записей...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Редактирование учетных записей"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Новые сообщения будут приниматься в указанном порядке.\n"
-#~ "Пометьте в колонке 'G' учетные записи, которые нужно проверять\n"
-#~ "по команде 'Получить все'."
-
-#~ msgid "Protocol"
-#~ msgstr "Протокол"
-
-#~ msgid "Server"
-#~ msgstr "Сервер"
-
-#, fuzzy
-#~ msgid " _Set as default account "
-#~ msgstr " Установить учетную запись по умолчанию "
-
-#, fuzzy
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Вы действительно хотите удалить эту запись?"
-
-#~ msgid "Delete account"
-#~ msgstr "Удалить учетную запись"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Открытие окна настроек учетной записи...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Учетная запись %d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Настройки новой учетной записи"
-
-#~ msgid "Account preferences"
-#~ msgstr "Настройки учетной записи"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Создание окна настроек учетной записи...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Прием"
-
-#~ msgid "Privacy"
-#~ msgstr "Защита"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Дополнительные"
-
-#~ msgid "Name of this account"
-#~ msgstr "Имя учетной записи"
-
-#~ msgid "Set as default"
-#~ msgstr "По умолчанию"
-
-#~ msgid "Personal information"
-#~ msgstr "Личная информация"
-
-#~ msgid "Full name"
-#~ msgstr "Полное имя"
-
-#~ msgid "Mail address"
-#~ msgstr "Адрес E-Mail"
-
-#~ msgid "Organization"
-#~ msgstr "Организация"
-
-#~ msgid "Server information"
-#~ msgstr "Сведения о серверах"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "Новостной (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Нет (локальный)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Этот сервер требует аутентификации"
-
-#~ msgid "News server"
-#~ msgstr "Сервер новостей"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Сервер для приема"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "Сервер SMTP (отправка)"
-
-#~ msgid "User ID"
-#~ msgstr "ID пользователя"
-
-#~ msgid "Password"
-#~ msgstr "Пароль"
-
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Использовать безопасную аутентификацию (APOP)"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Удалять сообщения с сервера после приема"
-
-#~ msgid "Remove after"
-#~ msgstr "Удалить через"
-
-#~ msgid "days"
-#~ msgstr "дней"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 дней: удалить немедленно)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Принимать все сообщения с сервера"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Ограничить размер принимаемых сообщений"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Фильтровать сообщения при приеме"
-
-#~ msgid "Default inbox"
-#~ msgstr "Папка для входящих сообщений"
-
-#, fuzzy
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
-
-#~ msgid "Authentication method"
-#~ msgstr "Метод аутентификации"
-
-#~ msgid "Automatic"
-#~ msgstr "Автоматически"
-
-#~ msgid "News"
-#~ msgstr "Новости"
-
-#, fuzzy
-#~ msgid "Maximum number of articles to download"
-#~ msgstr ""
-#~ "Наибольшее число статей для загрузки\n"
-#~ "(не ограничено, если указан 0)"
-
-#, fuzzy
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Получатель сообщения не указан."
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "Проверять по команде 'Получить все'"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Добавить в заголовок поле Date"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Создавать Message-ID"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Добавить дополнительные заголовки"
-
-#~ msgid " Edit... "
-#~ msgstr " Определить... "
-
-#~ msgid "Authentication"
-#~ msgstr "Аутентификация"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "Аутентификация SMTP (SMTP AUTH)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Если оставить эти поля пустыми, будут использоваться\n"
-#~ "имя пользователя и пароль, заданные для приема почты."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Проверка пароля через POP3 перед отправкой"
-
-#~ msgid "Command output"
-#~ msgstr "Вывод команды"
-
-#~ msgid "Cc"
-#~ msgstr "Копия"
-
-#~ msgid "Bcc"
-#~ msgstr "Скрытно"
-
-#~ msgid "Reply-To"
-#~ msgstr "Обратный адрес"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Подписывать сообщения по умолчанию"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "Шифровать сообщения по умолчанию"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "Использовать ASCII-кодирование при шифровании"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Использовать открытую текстовую подпись"
-
-#~ msgid "Sign key"
-#~ msgstr "Ключ подписи"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Ключ GnuPG по умолчанию"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Ключ для выбранного адреса E-mail"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Другой ключ"
-
-#~ msgid "User or key ID:"
-#~ msgstr "ID пользователя ключа:"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Не использовать SSL"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "Использовать SSL для соединения POP3"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "Использовать команду STARTTLS для начала сеанса SSL"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "Использовать SSL для соединения IMAP4"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "Использовать SSL для соединения NNTP"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Отправка (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "Использовать SSL для соединения SMTP"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "Использовать неблокирующий режим SSL"
-
-#, fuzzy
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr ""
-#~ "(Выключите эту опцию, если возникают проблемы при использовании SSL)"
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "Порт SMTP"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "Порт POP3"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "Порт IMAP4"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "Порт NNTP"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Имя домена"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "Каталог сервера IMAP4"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Сохранять отправленные сообщения в"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Сохранять черновики в"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Сохранять удаленные сообщения в"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Не указано имя учетной записи."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "Не указан адрес."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "Не указан сервер SMTP."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Не указан идентификатор пользователя."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "Не указан сервер POP3."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "Не указан сервер IMAP4."
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "Не указан сервер NNTP."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Использование устаревшего ASCII-кодирования зашифрованных\n"
-#~ "сообщений не рекомендуется. Этот формат не соответствует\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Создание окна общих настроек...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Общие настройки"
-
-#~ msgid "Quote"
-#~ msgstr "Цитирование"
-
-#~ msgid "Display"
-#~ msgstr "Отображение"
-
-#~ msgid "Message"
-#~ msgstr "Сообщение"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Использовать внешнюю программу для приема"
-
-#~ msgid "Command"
-#~ msgstr "Команда"
-
-#, fuzzy
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Принимать из спула"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Фильтровать при приеме"
-
-#~ msgid "Spool path"
-#~ msgstr "Путь к спулу"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Проверять приход новых сообщений"
-
-#~ msgid "every"
-#~ msgstr "каждые"
-
-#~ msgid "minute(s)"
-#~ msgstr "минут"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Проверять приход новых сообщений при запуске"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Обновить все локальные папки после приема"
-
-#, fuzzy
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "Немедленно выполнять перемещение и удаление сообщений"
-
-#, fuzzy
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "Получение количества новых сообщений (STAT)..."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Использовать внешнюю программу для отправки"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Сохранять отправленные сообщения в папке \"Отправленные\""
-
-#, fuzzy
-#~ msgid "Outgoing encoding"
-#~ msgstr "Кодировка отправляемых сообщений"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Автоматически (Рекомендуется)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7 бит ascii (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Западноевропейская (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Западноевропейская (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Центральноевропейская (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Балтийская (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Балтийская (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Греческая (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Греческая (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Кириллица Win (Windows-1251)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Турецкая (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Кириллица (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Русская (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Украинская (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Кириллица Win (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Японская (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Японская (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Японская (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Упрощенная китайская (GB2312)"
-
-#, fuzzy
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Упрощенная китайская (GB2312)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Традиционная китайская (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Традиционная китайская (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Китайская (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Корейская (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Тайская (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Тайская (Windows-874)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "При выборе варианта 'Автоматически' будет использована\n"
-#~ "оптимальная кодировка для текущего языка и страны."
-
-#~ msgid "Transfer encoding"
-#~ msgstr "Кодирование текста сообщений"
-
-#, fuzzy
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "Укажите метод кодирования текстов сообщений, содержащих символы\n"
-#~ "не из диапазона ASCII (Content-Transfer-Encoding)."
-
-#~ msgid "Signature separator"
-#~ msgstr "Разделитель подписи"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Добавлять автоматически"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Автоматически запускать внешний редактор"
-
-#~ msgid "Undo level"
-#~ msgstr "Число уровней отката"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Переносить строки с"
-
-#~ msgid "characters"
-#~ msgstr "символа"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Переносить цитаты"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Переносить при вводе"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Переносить перед отправкой"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Автоматически выбирать учетную запись при ответе"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Цитировать при ответе"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "По кнопке \"Ответить\" отвечать в список рассылки"
-
-#~ msgid "Reply format"
-#~ msgstr "Формат ответа"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Знак цитаты"
-
-#~ msgid "Forward format"
-#~ msgstr "Формат пересылаемого сообщения"
-
-#~ msgid " Description of symbols "
-#~ msgstr " Описание символов "
-
-#~ msgid "Font"
-#~ msgstr "Шрифт"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Переводить имена заголовков ('From:', 'Subject:')"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Показывать число непрочитанных сообщений рядом с именем папки"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Сокращать названия групп новостей длиннее"
-
-#~ msgid "letters"
-#~ msgstr "букв"
-
-#~ msgid "Summary View"
-#~ msgstr "Список сообщений"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Показывать получателя в колонке 'От', если отправитель - Вы"
-
-#~ msgid "Expand threads"
-#~ msgstr "Разворачивать обсуждения"
-
-#~ msgid "Date format"
-#~ msgstr "Формат даты"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr "Установить показываемые поля..."
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Разрешить раскраску сообщений"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Отображать многобайтовые алфавитно-цифровые символы\n"
-#~ "как ASCII (только для японских кодировок)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Показывать панель заголовков над областью просмотра сообщений"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Показывать сокращенные заголовки при просмотре сообщений"
-
-#, fuzzy
-#~ msgid "Display cursor in message view"
-#~ msgstr "Показывать сокращенные заголовки при просмотре сообщений"
-
-#~ msgid "Line space"
-#~ msgstr "Расстояние между строками"
-
-#~ msgid "pixel(s)"
-#~ msgstr "пикселей"
-
-#~ msgid "Scroll"
-#~ msgstr "Прокрутка"
-
-#~ msgid "Half page"
-#~ msgstr "Половина страницы"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Плавная прокрутка"
-
-#~ msgid "Step"
-#~ msgstr "Шаг"
-
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "Масштабировать присоединенные изображения по размеру окна"
-
-#, fuzzy
-#~ msgid "Display images as inline"
-#~ msgstr "Настройка отображения заголовков"
-
-#, fuzzy
-#~ msgid "Learning command:"
-#~ msgstr "Выполнить команду"
-
-#, fuzzy
-#~ msgid "Classifying command"
-#~ msgstr "Выполнить команду"
-
-#, fuzzy
-#~ msgid "Junk folder"
-#~ msgstr "папку:"
-
-#, fuzzy
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "Фильтровать сообщения при приеме"
-
-#, fuzzy
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Автоматически проверять подписи"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Показывать результат проверки подписи в отдельном окне"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Сохранять парольную фразу в памяти"
-
-#~ msgid "Expired after"
-#~ msgstr "Удалять через"
-
-#~ msgid "minute(s) "
-#~ msgstr "минут"
-
-#, fuzzy
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr ""
-#~ "(При установке в 0 парольная фраза будет храниться\n"
-#~ " в течение всего сеанса)"
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Захватить ввод при запросе пароля"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Выводить предупреждение при запуске, если GnuPG не работает"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Всегда открывать сообщение для просмотра при выделении в списке"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Открыть первое непрочитанное сообщение при входе в папку"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr ""
-#~ "Помечать сообщение как прочитанное только после открытия в новом окне"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Перейти в папку \"Входящие\" после приема новых сообщений"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "Немедленно выполнять перемещение и удаление сообщений"
-
-#, fuzzy
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr ""
-#~ "(Сообщения будут просто помечены до выполнения, если\n"
-#~ " эта опция не включена)"
-
-#~ msgid "Receive dialog"
-#~ msgstr "Окно приема сообщений"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Показывать окно приема сообщений"
-
-#~ msgid "Always"
-#~ msgstr "Всегда"
-
-#~ msgid "Only on manual receiving"
-#~ msgstr "Только при ручном запуске приема"
-
-#~ msgid "Never"
-#~ msgstr "Никогда"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Не отображать сообщение об ошибке при получении сообщений"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Закрывать окно приема сообщений после завершения"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " Установить клавиатурные команды... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Внешние команды (%s будет заменен на имя файла/URI)"
-
-#~ msgid "Web browser"
-#~ msgstr "Web-браузер"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Добавлять адрес в список адресатов по двойному щелчку"
-
-#~ msgid "On exit"
-#~ msgstr "При выходе"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Подтверждение при выходе"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Очищать корзину при выходе"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Спрашивать перед очисткой"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Предупреждать о наличии сообщений в очереди"
-
-#, fuzzy
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "Запись кеша списка (%s)..."
-
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "Время ожидания ответа из сети:"
-
-#~ msgid "second(s)"
-#~ msgstr "секунд"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "сокращенное название дня недели"
-
-#~ msgid "the full weekday name"
-#~ msgstr "полное название дня недели"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "сокращенное название месяца"
-
-#~ msgid "the full month name"
-#~ msgstr "полное название месяца"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "предпочтительный формат даты и времени для выбранной страны"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "век (год/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "день месяца"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "час, 24-часовое представление"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "час, 12-часовое представление"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "день года"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "номер месяца"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "минута"
-
-#~ msgid "either AM or PM"
-#~ msgstr "AM или PM"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "секунда"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "номер дня недели"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "предпочтительный формат даты для выбранной страны"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "последние две цифры года"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "год полностью"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "имя или сокращение временной зоны"
-
-#~ msgid "Specifier"
-#~ msgstr "Элемент формата"
-
-#~ msgid "Description"
-#~ msgstr "Описание"
-
-#~ msgid "Example"
-#~ msgstr "Пример"
-
-#~ msgid "Set message colors"
-#~ msgstr "Настройка цветов сообщений"
-
-#~ msgid "Colors"
-#~ msgstr "Цвета"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Цитата - Первый уровень"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Цитата - Второй уровень"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Цитата - Третий уровень"
-
-#~ msgid "URI link"
-#~ msgstr "Ссылка (URI)"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Циклически использовать цвета цитат"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "Выберите цвет для цитат уровня 1"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "Выберите цвет для цитат уровня 2"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "Выберите цвет для цитат уровня 3"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "Выберите цвет для ссылок (URI)"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Описание символов"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Дата\n"
-#~ "Отправитель\n"
-#~ "Полное имя отправителя\n"
-#~ "Фамилия отправителя\n"
-#~ "Инициалы отправителя\n"
-#~ "Тема\n"
-#~ "Кому\n"
-#~ "Копия\n"
-#~ "Группы новостей\n"
-#~ "Message-ID"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Если x установлено, отображает expr"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Содержимое сообщения\n"
-#~ "Содержимое сообщения со знаком цитаты\n"
-#~ "Содержимое сообщения без подписи\n"
-#~ "Содержимое сообщения без подписи со знаком цитаты\n"
-#~ "Символ '%'"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "Символ '\\'\n"
-#~ "Символ '?'\n"
-#~ "Символ '{'\n"
-#~ "Символ '}'"
-
-#~ msgid "Key bindings"
-#~ msgstr "Клавиатурные команды"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Выберите одну из стандартных настроек для клавиатурных команд.\n"
-#~ "Чтобы назначить или изменить комбинацию клавиш для команды меню,\n"
-#~ "нажмите эту клавишу (или комбинацию клавиш), установив указатель\n"
-#~ "на нужную команду в меню."
-
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Старая Sylpheed"
 
 #~ msgid "Font selection"
 #~ msgstr "Выбор шрифта"

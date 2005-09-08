@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-2.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2005-07-04 17:05+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
@@ -209,6 +209,88 @@ msgstr "az iconv nem tud UTF-7-ből %s-be/ba konvertálni\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "az iconv nem tud %s-t UTF-7-re konvertálni\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "nem lehet az ideiglenes fájlba írni\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Üzenetek fogadása %s-ból %s-ba...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "az mbox fájlt nem lehet olvasni.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "érvénytelen mbox formátum: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "sérült mbox: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "nem lehet ideiglenes fájlt megnyitni\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"Kódolatlan feladó található:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "%d üzenet található.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "%s zároló fájlt nem lehet létrehozni\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "'flock' használata 'file' helyett, ha lehet.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "%s nem hozható létre\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "A postaláda egy másik processzhez tartozik, várakozás...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "%s nem zárolható\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "érvénytelen zárolás típus\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "%s zárolása nem oldható fel\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "nem lehet nulla méretűre változtatni a postafiókot.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Üzenetek exportálása %s-ból %s-ba...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -360,54 +442,54 @@ msgstr "Hiba küldés közben\n"
 msgid "Error occurred while sending command\n"
 msgstr "Hiba történt parancsküldés közben\n"
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "A szükséges APOP időpecsét nem található az üdvözletben\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Időpecsét szintaktikai hiba az üdvözletben\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "POP3 protokollhiba\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "érvénytelen UIDL válasz: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Lejárt üzenetek törlése %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: üzenet átugrása %d (%d bájt)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "a postafiók zárolt\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "kapcsolat időtúllépése\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "nem lehet TLS menetet indítani\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "Hiba történt az azonosításkor\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 msgid "command not supported\n"
 msgstr "A parancs nem támogatott\n"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 msgid "error occurred on POP3 session\n"
 msgstr "hiba történt a POP3 kapcsolat közben\n"
 
@@ -458,11 +540,11 @@ msgstr "Nem lehet a fájlba írni.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH nem elérhető\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "hibás SMTP válasz\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "hiba történt az SMTP kapcsolat közben\n"
 
@@ -600,6 +682,73 @@ msgstr ""
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. http://www."
 "fsf.org "
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Néhány szerkesztő ablak nyitva van.\n"
+"Zárjon be minden szerkesztő ablakot a hozzáférések módosítása előtt."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Hozzáférések szerkesztőablakának megnyitása...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Hozzáférések szerkesztőablakának létrehozása...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Hozzáférések szerkesztése"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Az új üzenetek ebben a sorrendben lesznek ellenőrizve. A 'Minden üzenet "
+"letöltése'\n"
+"funkció bekapcsolásához válassza ki a 'G' oszlopban a jelölődobozt!"
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Név"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Protokoll"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Szerver"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: src/account_dialog.c:426
+msgid " _Set as default account "
+msgstr " Alapértelmezett hozzá_férésként beállít "
+
+#: src/account_dialog.c:479
+#, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Tényleg törölni szeretné  a(z) '%s' hozzáférést?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+msgid "(Untitled)"
+msgstr "(Névtelen)"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Hozzáférés törlése"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -699,14 +848,6 @@ msgstr "A művelet felhasználói paramétere"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Cím hozzáadása a címjegyzékhez"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Név"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -848,7 +989,7 @@ msgstr "/_Törlés"
 msgid "E-Mail address"
 msgstr "E-Mail cím"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Címjegyzék"
 
@@ -1014,7 +1155,7 @@ msgstr "Címjegyzék konverziós hiba"
 msgid "Addressbook Conversion"
 msgstr "Címjegyzék konverzió"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Illesztő"
 
@@ -1034,7 +1175,8 @@ msgstr "E-mail cím"
 msgid "Group"
 msgstr "Csoport"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Mappa"
 
@@ -1551,7 +1693,8 @@ msgstr "MIME típus"
 msgid "Size"
 msgstr "Méret"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Küldés"
 
@@ -1591,7 +1734,9 @@ msgstr "Csatolás"
 msgid "Attach file"
 msgstr "Fájl csatolása"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Aláírás"
 
@@ -1599,7 +1744,8 @@ msgstr "Aláírás"
 msgid "Insert signature"
 msgstr "Aláírás beillesztése"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Szerkesztő"
 
@@ -1824,6 +1970,7 @@ msgid " Check File "
 msgstr " Fájl ellenőrzése"
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Fájl"
 
@@ -1901,7 +2048,8 @@ msgid "Edit JPilot Entry"
 msgstr "JPilot bejegyzés szerkesztése"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1965,7 +2113,7 @@ msgstr "Időtúllépés (mp)"
 msgid "Maximum Entries"
 msgstr "Maximális bejegyzések"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Alap"
 
@@ -2022,6 +2170,7 @@ msgid "Exporting file:"
 msgstr "Exportálás fájlba:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " Kiválaszt... "
 
@@ -3514,7 +3663,8 @@ msgstr "Új levelek fogadása minden hozzáférésen"
 msgid "Send queued message(s)"
 msgstr "Várakozó sorból üzenet(ek) küldése"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Szerkesztés"
 
@@ -3522,7 +3672,7 @@ msgstr "Szerkesztés"
 msgid "Compose new message"
 msgstr "Új üzenet szerkesztése"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Válasz"
 
@@ -3550,7 +3700,7 @@ msgstr "Üzenet továbbítása"
 msgid "Delete the message"
 msgstr "Üzenet törlése"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr "Levélszemét"
 
@@ -3604,88 +3754,6 @@ msgstr "Kilépés"
 msgid "Exit this program?"
 msgstr "Kilépés a programból?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "nem lehet az ideiglenes fájlba írni\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Üzenetek fogadása %s-ból %s-ba...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "az mbox fájlt nem lehet olvasni.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "érvénytelen mbox formátum: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "sérült mbox: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "nem lehet ideiglenes fájlt megnyitni\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"Kódolatlan feladó található:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "%d üzenet található.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "%s zároló fájlt nem lehet létrehozni\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "'flock' használata 'file' helyett, ha lehet.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "%s nem hozható létre\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "A postaláda egy másik processzhez tartozik, várakozás...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "%s nem zárolható\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "érvénytelen zárolás típus\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "%s zárolása nem oldható fel\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "nem lehet nulla méretűre változtatni a postafiókot.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Üzenetek exportálása %s-ból %s-ba...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Keresés az aktuális üzenetben"
@@ -3726,7 +3794,7 @@ msgstr "/_Eszközök/Küldő hozzáadása a cím_jegyzékhez"
 msgid "Creating message view...\n"
 msgstr "Üzenet nézet létrehozása...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Szöveg"
 
@@ -3739,7 +3807,7 @@ msgstr "Csatolások"
 msgid "Can't save the file `%s'."
 msgstr "`%s' fájlt nem lehet elmenteni."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Nyomtatás"
 
@@ -3874,6 +3942,400 @@ msgstr ""
 "Rossz jelmondat! Próbálja újra...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Hozzáférésbeállításokok ablak megnyitása...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Hozzáférés%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Új hozzáférés beállításai"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Hozzáférés beállítások"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Hozzáférésbeállítások ablak létrehozása...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Fogadás"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Magánszféra"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Haladó"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Hozzáférés neve"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Alapértelmzésként beállítás"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Személyes információ"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Teljes név"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "E-mail cím"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Szervezet"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Szerver információ"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Hírek (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Semmi (helyi)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Ezen a szerveren kötelező az azonosítás"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Hírszerver"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Szerver a fogadáshoz"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "SMTP szerver (küldés)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "Felhasználói Azonosító"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Jelszó"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "Biztonságos hitelesítés használata (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Üzenetek törlése a szerverről fogadás után"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Eltávolítás utána"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "nap"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 nap: azonnal eltávolítani)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Minden üzenet letöltése a szerverről"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Fogadott levél méretkorlát"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "KB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Üzenetek szűrése fogadás közben"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Alapértelmezett bejövő postafiók"
+
+#: src/prefs_account_dialog.c:914
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "A nem szűrt üzenetek ebbe a mappába fognak kerülni."
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Azonosítási módszer"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Automatikus"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Hírek"
+
+#: src/prefs_account_dialog.c:955
+msgid "Maximum number of articles to download"
+msgstr "A letölteni kívánt maximális cikkek száma"
+
+#: src/prefs_account_dialog.c:972
+msgid "No limit if 0 is specified."
+msgstr "Ha 0 van megadva, akkor korlátlan."
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "`Fogadás mindről' ellenőrizze ezt a hozzáférést is"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Fejléc"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Dátum fejléc mező hozzáadás"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Üzenet-azonosító generálása"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Felhasználó által definiált fejléc hozzáadása"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr " Szerkesztés... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Azonosítás"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "SMTP Azonosítás (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Ha ezeket a mezőket üresen hagyja, a levelek fogadásához használt "
+"felhasználói azonosító és jelszó lesz használva."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Azonosítás küldés előtt POP3-mal"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Parancskimenet"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Az alábbi címek automatikus beállítása"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Másolat"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Titkos másolat"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Válaszcím"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Üzenetet mindig írja alá digitálisan"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Üzenetet mindig titkosítsa"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr "Titkosítás, ha titkosított üzenetre válaszol"
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "ASCII-páncélozott formátum használata titkosításhoz"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Szöveges aláírás használata"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Digitális aláírás kulcs"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Alapértelmezett GnuPG kulcs használata"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Kulcs választása az email címe alapján"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Kulcs kézi megadása"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Felhasználó vagy kulcs Azonosító:"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Nem használ SSL-t"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "SSL használata POP3 kapcsolathoz"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "STARTTLS parancs használata SSL kapcsolat indításához"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "SSL használata IMAP4 kapcsolathoz"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "SSL használata NNTP kapcsolathoz"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Küldés (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "SSL használata SMTP kapcsolathoz"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Nem-blokkolódó SSL használata"
+
+#: src/prefs_account_dialog.c:1523
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "Ezt kapcsolja ki, ha az SSL kapcsolattal probléma van."
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "SMTP port megadása"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "POP3 port megadása"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "IMAP4 port megadása"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "NNTP port megadása"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Tartománynév (domain) megadása"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "IMAP szerver könyvtár"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Elküldött üzenetek elhelyezése"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Vázlatok elhelyezése"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Törölt üzenetek elhelyezése"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Hozzáférés név nincs megadva."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "Nincs email cím megadva."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "Nincs megadott SMTP szerver."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Nincs felhasználói azonosító megadva."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "Nincs megadott POP3 szerver."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "Nincs megadott IMAP4 szerver."
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "Nincs megadott NNTP szerver."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Nem javasolt a régi tipusú ASCII-páncélozott mód\n"
+"használata titkosított üzenetekhez. Nem felel meg az\n"
+"RFC 3156 - MIME Security with OpenPGP-ben leírtaknak."
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "Műveletek beállítása"
@@ -3992,13 +4454,801 @@ msgstr "Művelet törlése"
 msgid "Do you really want to delete this action?"
 msgstr "Tényleg töröljem ezt a műveletet?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Általános beállítások ablak létrehozása...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Általános beállítások"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Idézet"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Megjelenítés"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Üzenet"
+
+#: src/prefs_common_dialog.c:697
+msgid "Junk mail"
+msgstr "Levélszemét"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Egyéb"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Külső program használata email fogadáshoz"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Parancs"
+
+#: src/prefs_common_dialog.c:776
+msgid "Incorporate from local spool"
+msgstr "Fogadás helyi tárolóból"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Szűrés fogadás közben"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr "Tároló elérési útja"
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Automatikus levélfigyelés"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "minden"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "perc"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Új levelek ellenőrzése induláskor"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Fogadás után minden helyi mappa frissítése"
+
+#: src/prefs_common_dialog.c:842
+msgid "Execute command when new messages arrived"
+msgstr "Parancs végrehajtása, ha új üzenet érkezett"
+
+#: src/prefs_common_dialog.c:863
+#, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "`%d' lesz helyettesítve az új üzenetek számával."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Külső program használata küldéshez"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Elküldött üzenetek mentése a Kimenő postafiókba"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr "Szűrőszabályok alkalmazása az elküldött üzenetekre"
+
+#: src/prefs_common_dialog.c:953
+msgid "Outgoing encoding"
+msgstr "Kimenők karakterkódolása"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Automatikus (Ajánlott)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7 bites ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Nyugat Európai (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Nyugat Európai (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Közép Európai (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Baltikumi (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Baltikumi (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Görög (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Héber (ISO-8859-8)"
+
+#: src/prefs_common_dialog.c:985
+msgid "Hebrew (Windows-1255)"
+msgstr "Héber (Windows-1255)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Török (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Cirill (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cirill (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Cirill (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Cirill (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Japán (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Japán (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Japán (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Egyszerűsített Kínai (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+msgid "Simplified Chinese (GBK)"
+msgstr "Egyszerűsített Kínai (GBK)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Tradicionális Kínai (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Tradicionális Kínai (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Kínai (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Koreai (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Thai (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Thai (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Ha az `Automatikus' be van kapcsolva, akkor az optimális kódolást használja "
+"a helyi nyelvi beállításoknak megfelelően."
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "Átvitel kódolása"
+
+#: src/prefs_common_dialog.c:1043
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Határozza meg a Content-Transfer-Encoding értékét, ha az üzenet tartalmaz "
+"nem-ASCII karaktereket is."
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Aláírás elválasztó"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Automatikus beillesztés"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Külső szerkesztő automatikus indítása"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Visszavonás mélysége"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Sortörés helye"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "karakter"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Idézet törése"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Bevitel tördelése"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Sortördelés küldés előtt"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Automatikus hozzáférés választás válaszkor"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Üzenet idézése a válaszban"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "A `Válasz' gomb a `Válasz levelező listára' funkciót hozza fel"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Válasz formátuma"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Idézet jele"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Továbbítás formátuma"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " Szimbólumok leírása "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Betűkészlet"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Fejléc fordítása (mint `Feladó:', `Tárgy:')"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Mappanév mellett az olvasatlan levelek számának kijelzése"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Hírcsoportok rövidítése, ha hosszabb mint"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "levél"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Összefoglaló nézet"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Címzett mutatása a `Feladó' oszlopban, ha önmagának küldte"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Folyam kifejtése"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Dátum formátuma"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr " Összefoglalás kijelzésének beállítása... "
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Színek használata az üzenetekhez"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Több byte-os karakterek és számok megjelenítése\n"
+"ASCII karakterekkel (csak japán esetén)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Fejlécmező megjelenítése az üzenet fölött"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Rövid fejlécek az üzenet nézetben"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr "HTML üzenet értelmezése szövegként"
+
+#: src/prefs_common_dialog.c:1580
+msgid "Display cursor in message view"
+msgstr "Kurzor megjelenítése üzenet nézetben"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Sortávolság"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "Képpont"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Görgetés"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Fél oldal"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Finom görgetés"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Lépés"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr "Képek"
+
+#: src/prefs_common_dialog.c:1659
+msgid "Resize attached large images to fit in the window"
+msgstr "A nagy méretű csatolt képek ablakméretre igazítása"
+
+#: src/prefs_common_dialog.c:1661
+msgid "Display images as inline"
+msgstr "Képek megjelenítése egyvonalban"
+
+#: src/prefs_common_dialog.c:1702
+msgid "Enable Junk mail control"
+msgstr "Levélszemét szabályozás engedélyezése"
+
+#: src/prefs_common_dialog.c:1710
+msgid "Learning command:"
+msgstr "Tanítás parancs:"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr "Nem levélszemét"
+
+#: src/prefs_common_dialog.c:1746
+msgid "Classifying command"
+msgstr "Osztályozó parancs"
+
+#: src/prefs_common_dialog.c:1760
+msgid "Junk folder"
+msgstr "Levélszemét mappa"
+
+#: src/prefs_common_dialog.c:1778
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr ""
+"Azon üzenetek, melyek levélszemétként lettek beállítva törlődni fognak ebből "
+"a mappából."
+
+#: src/prefs_common_dialog.c:1784
+msgid "Filter messages classified as junk on receiving"
+msgstr "A fogadáskor megszűrt üzenetek levélszemétként osztályozva"
+
+#: src/prefs_common_dialog.c:1788
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr ""
+"A megszűrt üzenetek a levélszemét mappába kerülnek át, és a törlésre "
+"kerülnek a szerverről."
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Digitális aláírás automatikus ellenőrzése"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Aláírásellenőrzés eredménye felbukkanó ablakban"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Jelmondat ideiglenes tárolása a memóriában"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Lejár ennyi után"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "perc"
+
+#: src/prefs_common_dialog.c:1874
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr "'0'-ra állítva tárolja a jelmondatot a teljes menet alatt."
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Bevitel elkapása egy jelmondat beadásakor"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Figyelmeztetés induláskor, ha a GnuPG nem működik"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "Az üzenetek mindig összefoglalva jelennek meg, ha ez kiválasztott"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Mappába lépéskor az első olvasatlan üzenet megnyitása"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Csak az új ablakban megnyitott üzeneteket jelölje olvasottként."
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Váltson a bejövő postafiókra email fogadás után"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Azonnali végrehajtás üzenet mozgatás vagy törlés esetén"
+
+#: src/prefs_common_dialog.c:1973
+msgid "Messages will be marked until execution if this is turned off."
+msgstr ""
+"Az üzenetek kijelölten láthatók a feldolgozás alatt, ha ez ki van kapcsolva."
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Fogadó ablak"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Fogadó ablak mutatása"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Mindig"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr "Csak kézi fogadáskor"
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Soha"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Ne dobjon fel hibaablakot fogadási hiba esetén"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Fogadó ablak bezárása ha végzett"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr "A gombrendszer elkészítése a GNOME HIG szerint"
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr " Billentyű hozzárendelések... "
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Külső parancsok (%s helyére a fájlnév / URI kerül)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Web böngésző"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Dupla-klikk esetén cím a célmezőbe"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "Kilépéskor"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Kilépéskor rákérdez"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Kuka ürítése kilépéskor"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Ürítés előtt rákérdez"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Elküldetlen üzenetek esetén figyelmeztet"
+
+#: src/prefs_common_dialog.c:2205
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Összefoglaló gyorstár sértetlenségének pontos ellenőrzése"
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+"Kapcsolja be, ha lehetőség van arra, hogy a mappák tartalmát egy másik "
+"alkalmazás módosíthatja.\n"
+"Ez az opció lassítja az összefoglalás megjelenésének idejét."
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "Hálózati adatátvitel időtúllépés:"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "másodperc"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "rövidített nap név"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "teljes nap név"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "rövidített hónapnév"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "a teljes hónapnév"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "ajánlott dátum- és időformátum a jelenlegi nyelvi beállításhoz"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "évszázad (év/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "hónap napja számként"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "óra számként (24 órás kijelzés)"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "óra számként (12 órás kijelzés)"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "Az év napja számként"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "hónap számként"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "perc számként"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "DE vagy DU"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "másodperc számként"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "hét napja számként"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "ajánlott dátum az aktuális nyelvi beállításhoz"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "az évszám utolsó két számjegye"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "év számként"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "időzóna vagy név vagy rövidítés"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Vezérlőjel"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Leírás"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Példa"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Üzenetszín beállítása"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Színek"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Idézett szöveg - első szint"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Idézett szöveg - második szint"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Idézett szöveg - harmadik szint"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "URI-kapocs"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Idézet színeinek újrahasznosítása"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "1. szintű idézet színe"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "2. szintű idézet színe"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "3. szintű idézet színe"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "URI színe"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Szimbólumok leírása"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Dátum\n"
+"Feladó\n"
+"Feladó teljes neve\n"
+"Feladó keresztneve\n"
+"Feladó monogramja\n"
+"Tárgy\n"
+"Címzett\n"
+"Másolat\n"
+"Hírcsoportok\n"
+"Üzenet-azonosító"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Ha x beállítva, akkor kifejezés megjelenítése"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Üzenet törzs\n"
+"Idézett üzenet törzs\n"
+"Üzenet törzs aláírás nélkül\n"
+"Idézett üzenet törzs aláírás nélkül\n"
+"Szó szerint %"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"Repjel karakterrel\n"
+"Kérdőjel karakterrel\n"
+"Nyitó kapcsos zárójel\n"
+"Záró kapcsos zárójel"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Billentyű hozzárendelések"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Billentyű hozzárendelés előválasztó beállítása.\n"
+"Módosíthatod minden menü gyorsbillentyűjét, ha az egérmutatóval\n"
+"rámutatva megnyomod a kívánt billentyűt."
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "Alapértelmezés"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Régi Sylpheed"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Saját fejléc beállítások"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Fejléc"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4064,18 +5314,10 @@ msgstr "Szűrő beállítása"
 msgid "Enabled"
 msgstr "Bakapcsolva"
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Szerkesztés"
-
 #: src/prefs_filter.c:685
 #, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Tényleg törölni szeretné a(z) '%s' szabályt?"
-
-#: src/prefs_filter.c:686
-msgid "(Untitled)"
-msgstr "(Névtelen)"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4160,10 +5402,6 @@ msgstr "régebbi, mint"
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr "fiatalabb, mint"
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "KB"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
@@ -4285,10 +5523,6 @@ msgstr "Válasz esetén törölje a [...] vagy (...) szöveget a tárgy mezőbő
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Alkalmazás almappákra"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Az alábbi címek automatikus beállítása"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4450,10 +5684,6 @@ msgstr "Kulcs azonosító"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Val"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Egyéb"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5056,933 +6286,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr "Hamis URL figyelmeztetés"
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Néhány szerkesztő ablak nyitva van.\n"
-#~ "Zárjon be minden szerkesztő ablakot a hozzáférések módosítása előtt."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Hozzáférések szerkesztőablakának megnyitása...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Hozzáférések szerkesztőablakának létrehozása...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Hozzáférések szerkesztése"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Az új üzenetek ebben a sorrendben lesznek ellenőrizve. A 'Minden üzenet "
-#~ "letöltése'\n"
-#~ "funkció bekapcsolásához válassza ki a 'G' oszlopban a jelölődobozt!"
-
-#~ msgid "Protocol"
-#~ msgstr "Protokoll"
-
-#~ msgid "Server"
-#~ msgstr "Szerver"
-
-#~ msgid " _Set as default account "
-#~ msgstr " Alapértelmezett hozzá_férésként beállít "
-
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Tényleg törölni szeretné  a(z) '%s' hozzáférést?"
-
-#~ msgid "Delete account"
-#~ msgstr "Hozzáférés törlése"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Hozzáférésbeállításokok ablak megnyitása...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Hozzáférés%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Új hozzáférés beállításai"
-
-#~ msgid "Account preferences"
-#~ msgstr "Hozzáférés beállítások"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Hozzáférésbeállítások ablak létrehozása...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Fogadás"
-
-#~ msgid "Privacy"
-#~ msgstr "Magánszféra"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Haladó"
-
-#~ msgid "Name of this account"
-#~ msgstr "Hozzáférés neve"
-
-#~ msgid "Set as default"
-#~ msgstr "Alapértelmzésként beállítás"
-
-#~ msgid "Personal information"
-#~ msgstr "Személyes információ"
-
-#~ msgid "Full name"
-#~ msgstr "Teljes név"
-
-#~ msgid "Mail address"
-#~ msgstr "E-mail cím"
-
-#~ msgid "Organization"
-#~ msgstr "Szervezet"
-
-#~ msgid "Server information"
-#~ msgstr "Szerver információ"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "Hírek (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Semmi (helyi)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Ezen a szerveren kötelező az azonosítás"
-
-#~ msgid "News server"
-#~ msgstr "Hírszerver"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Szerver a fogadáshoz"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "SMTP szerver (küldés)"
-
-#~ msgid "User ID"
-#~ msgstr "Felhasználói Azonosító"
-
-#~ msgid "Password"
-#~ msgstr "Jelszó"
-
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Biztonságos hitelesítés használata (APOP)"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Üzenetek törlése a szerverről fogadás után"
-
-#~ msgid "Remove after"
-#~ msgstr "Eltávolítás utána"
-
-#~ msgid "days"
-#~ msgstr "nap"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 nap: azonnal eltávolítani)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Minden üzenet letöltése a szerverről"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Fogadott levél méretkorlát"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Üzenetek szűrése fogadás közben"
-
-#~ msgid "Default inbox"
-#~ msgstr "Alapértelmezett bejövő postafiók"
-
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "A nem szűrt üzenetek ebbe a mappába fognak kerülni."
-
-#~ msgid "Authentication method"
-#~ msgstr "Azonosítási módszer"
-
-#~ msgid "Automatic"
-#~ msgstr "Automatikus"
-
-#~ msgid "News"
-#~ msgstr "Hírek"
-
-#~ msgid "Maximum number of articles to download"
-#~ msgstr "A letölteni kívánt maximális cikkek száma"
-
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Ha 0 van megadva, akkor korlátlan."
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "`Fogadás mindről' ellenőrizze ezt a hozzáférést is"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Dátum fejléc mező hozzáadás"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Üzenet-azonosító generálása"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Felhasználó által definiált fejléc hozzáadása"
-
-#~ msgid " Edit... "
-#~ msgstr " Szerkesztés... "
-
-#~ msgid "Authentication"
-#~ msgstr "Azonosítás"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "SMTP Azonosítás (SMTP AUTH)"
-
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Ha ezeket a mezőket üresen hagyja, a levelek fogadásához használt "
-#~ "felhasználói azonosító és jelszó lesz használva."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Azonosítás küldés előtt POP3-mal"
-
-#~ msgid "Command output"
-#~ msgstr "Parancskimenet"
-
-#~ msgid "Cc"
-#~ msgstr "Másolat"
-
-#~ msgid "Bcc"
-#~ msgstr "Titkos másolat"
-
-#~ msgid "Reply-To"
-#~ msgstr "Válaszcím"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Üzenetet mindig írja alá digitálisan"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "Üzenetet mindig titkosítsa"
-
-#~ msgid "Encrypt when replying to encrypted message"
-#~ msgstr "Titkosítás, ha titkosított üzenetre válaszol"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "ASCII-páncélozott formátum használata titkosításhoz"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Szöveges aláírás használata"
-
-#~ msgid "Sign key"
-#~ msgstr "Digitális aláírás kulcs"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Alapértelmezett GnuPG kulcs használata"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Kulcs választása az email címe alapján"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Kulcs kézi megadása"
-
-#~ msgid "User or key ID:"
-#~ msgstr "Felhasználó vagy kulcs Azonosító:"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Nem használ SSL-t"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "SSL használata POP3 kapcsolathoz"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "STARTTLS parancs használata SSL kapcsolat indításához"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "SSL használata IMAP4 kapcsolathoz"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "SSL használata NNTP kapcsolathoz"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Küldés (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "SSL használata SMTP kapcsolathoz"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "Nem-blokkolódó SSL használata"
-
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr "Ezt kapcsolja ki, ha az SSL kapcsolattal probléma van."
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "SMTP port megadása"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "POP3 port megadása"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "IMAP4 port megadása"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "NNTP port megadása"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Tartománynév (domain) megadása"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "IMAP szerver könyvtár"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Elküldött üzenetek elhelyezése"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Vázlatok elhelyezése"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Törölt üzenetek elhelyezése"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Hozzáférés név nincs megadva."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "Nincs email cím megadva."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "Nincs megadott SMTP szerver."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Nincs felhasználói azonosító megadva."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "Nincs megadott POP3 szerver."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "Nincs megadott IMAP4 szerver."
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "Nincs megadott NNTP szerver."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Nem javasolt a régi tipusú ASCII-páncélozott mód\n"
-#~ "használata titkosított üzenetekhez. Nem felel meg az\n"
-#~ "RFC 3156 - MIME Security with OpenPGP-ben leírtaknak."
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Általános beállítások ablak létrehozása...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Általános beállítások"
-
-#~ msgid "Quote"
-#~ msgstr "Idézet"
-
-#~ msgid "Display"
-#~ msgstr "Megjelenítés"
-
-#~ msgid "Message"
-#~ msgstr "Üzenet"
-
-#~ msgid "Junk mail"
-#~ msgstr "Levélszemét"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Külső program használata email fogadáshoz"
-
-#~ msgid "Command"
-#~ msgstr "Parancs"
-
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Fogadás helyi tárolóból"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Szűrés fogadás közben"
-
-#~ msgid "Spool path"
-#~ msgstr "Tároló elérési útja"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Automatikus levélfigyelés"
-
-#~ msgid "every"
-#~ msgstr "minden"
-
-#~ msgid "minute(s)"
-#~ msgstr "perc"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Új levelek ellenőrzése induláskor"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Fogadás után minden helyi mappa frissítése"
-
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "Parancs végrehajtása, ha új üzenet érkezett"
-
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "`%d' lesz helyettesítve az új üzenetek számával."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Külső program használata küldéshez"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Elküldött üzenetek mentése a Kimenő postafiókba"
-
-#~ msgid "Apply filter rules to sent messages"
-#~ msgstr "Szűrőszabályok alkalmazása az elküldött üzenetekre"
-
-#~ msgid "Outgoing encoding"
-#~ msgstr "Kimenők karakterkódolása"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Automatikus (Ajánlott)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7 bites ascii (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Nyugat Európai (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Nyugat Európai (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Közép Európai (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Baltikumi (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Baltikumi (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Görög (ISO-8859-7)"
-
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Héber (ISO-8859-8)"
-
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Héber (Windows-1255)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Török (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Cirill (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Cirill (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Cirill (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Cirill (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Japán (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japán (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Japán (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Egyszerűsített Kínai (GB2312)"
-
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Egyszerűsített Kínai (GBK)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Tradicionális Kínai (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Tradicionális Kínai (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Kínai (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Koreai (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Thai (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Thai (Windows-874)"
-
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "Ha az `Automatikus' be van kapcsolva, akkor az optimális kódolást "
-#~ "használja a helyi nyelvi beállításoknak megfelelően."
-
-#~ msgid "Transfer encoding"
-#~ msgstr "Átvitel kódolása"
-
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "Határozza meg a Content-Transfer-Encoding értékét, ha az üzenet tartalmaz "
-#~ "nem-ASCII karaktereket is."
-
-#~ msgid "Signature separator"
-#~ msgstr "Aláírás elválasztó"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Automatikus beillesztés"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Külső szerkesztő automatikus indítása"
-
-#~ msgid "Undo level"
-#~ msgstr "Visszavonás mélysége"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Sortörés helye"
-
-#~ msgid "characters"
-#~ msgstr "karakter"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Idézet törése"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Bevitel tördelése"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Sortördelés küldés előtt"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Automatikus hozzáférés választás válaszkor"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Üzenet idézése a válaszban"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "A `Válasz' gomb a `Válasz levelező listára' funkciót hozza fel"
-
-#~ msgid "Reply format"
-#~ msgstr "Válasz formátuma"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Idézet jele"
-
-#~ msgid "Forward format"
-#~ msgstr "Továbbítás formátuma"
-
-#~ msgid " Description of symbols "
-#~ msgstr " Szimbólumok leírása "
-
-#~ msgid "Font"
-#~ msgstr "Betűkészlet"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Fejléc fordítása (mint `Feladó:', `Tárgy:')"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Mappanév mellett az olvasatlan levelek számának kijelzése"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Hírcsoportok rövidítése, ha hosszabb mint"
-
-#~ msgid "letters"
-#~ msgstr "levél"
-
-#~ msgid "Summary View"
-#~ msgstr "Összefoglaló nézet"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Címzett mutatása a `Feladó' oszlopban, ha önmagának küldte"
-
-#~ msgid "Expand threads"
-#~ msgstr "Folyam kifejtése"
-
-#~ msgid "Date format"
-#~ msgstr "Dátum formátuma"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr " Összefoglalás kijelzésének beállítása... "
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Színek használata az üzenetekhez"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Több byte-os karakterek és számok megjelenítése\n"
-#~ "ASCII karakterekkel (csak japán esetén)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Fejlécmező megjelenítése az üzenet fölött"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Rövid fejlécek az üzenet nézetben"
-
-#~ msgid "Render HTML messages as text"
-#~ msgstr "HTML üzenet értelmezése szövegként"
-
-#~ msgid "Display cursor in message view"
-#~ msgstr "Kurzor megjelenítése üzenet nézetben"
-
-#~ msgid "Line space"
-#~ msgstr "Sortávolság"
-
-#~ msgid "pixel(s)"
-#~ msgstr "Képpont"
-
-#~ msgid "Scroll"
-#~ msgstr "Görgetés"
-
-#~ msgid "Half page"
-#~ msgstr "Fél oldal"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Finom görgetés"
-
-#~ msgid "Step"
-#~ msgstr "Lépés"
-
-#~ msgid "Images"
-#~ msgstr "Képek"
-
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "A nagy méretű csatolt képek ablakméretre igazítása"
-
-#~ msgid "Display images as inline"
-#~ msgstr "Képek megjelenítése egyvonalban"
-
-#~ msgid "Enable Junk mail control"
-#~ msgstr "Levélszemét szabályozás engedélyezése"
-
-#~ msgid "Learning command:"
-#~ msgstr "Tanítás parancs:"
-
-#~ msgid "Not Junk"
-#~ msgstr "Nem levélszemét"
-
-#~ msgid "Classifying command"
-#~ msgstr "Osztályozó parancs"
-
-#~ msgid "Junk folder"
-#~ msgstr "Levélszemét mappa"
-
-#~ msgid ""
-#~ "The messages which are set as junk mail will be moved to this folder."
-#~ msgstr ""
-#~ "Azon üzenetek, melyek levélszemétként lettek beállítva törlődni fognak "
-#~ "ebből a mappából."
-
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "A fogadáskor megszűrt üzenetek levélszemétként osztályozva"
-
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr ""
-#~ "A megszűrt üzenetek a levélszemét mappába kerülnek át, és a törlésre "
-#~ "kerülnek a szerverről."
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Digitális aláírás automatikus ellenőrzése"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Aláírásellenőrzés eredménye felbukkanó ablakban"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Jelmondat ideiglenes tárolása a memóriában"
-
-#~ msgid "Expired after"
-#~ msgstr "Lejár ennyi után"
-
-#~ msgid "minute(s) "
-#~ msgstr "perc"
-
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr "'0'-ra állítva tárolja a jelmondatot a teljes menet alatt."
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Bevitel elkapása egy jelmondat beadásakor"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Figyelmeztetés induláskor, ha a GnuPG nem működik"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Az üzenetek mindig összefoglalva jelennek meg, ha ez kiválasztott"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Mappába lépéskor az első olvasatlan üzenet megnyitása"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr "Csak az új ablakban megnyitott üzeneteket jelölje olvasottként."
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Váltson a bejövő postafiókra email fogadás után"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "Azonnali végrehajtás üzenet mozgatás vagy törlés esetén"
-
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr ""
-#~ "Az üzenetek kijelölten láthatók a feldolgozás alatt, ha ez ki van "
-#~ "kapcsolva."
-
-#~ msgid "Receive dialog"
-#~ msgstr "Fogadó ablak"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Fogadó ablak mutatása"
-
-#~ msgid "Always"
-#~ msgstr "Mindig"
-
-#~ msgid "Only on manual receiving"
-#~ msgstr "Csak kézi fogadáskor"
-
-#~ msgid "Never"
-#~ msgstr "Soha"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Ne dobjon fel hibaablakot fogadási hiba esetén"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Fogadó ablak bezárása ha végzett"
-
-#~ msgid "Make the order of buttons comply with GNOME HIG"
-#~ msgstr "A gombrendszer elkészítése a GNOME HIG szerint"
-
-#~ msgid " Set key bindings... "
-#~ msgstr " Billentyű hozzárendelések... "
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Külső parancsok (%s helyére a fájlnév / URI kerül)"
-
-#~ msgid "Web browser"
-#~ msgstr "Web böngésző"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Dupla-klikk esetén cím a célmezőbe"
-
-#~ msgid "On exit"
-#~ msgstr "Kilépéskor"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Kilépéskor rákérdez"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Kuka ürítése kilépéskor"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Ürítés előtt rákérdez"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Elküldetlen üzenetek esetén figyelmeztet"
-
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "Összefoglaló gyorstár sértetlenségének pontos ellenőrzése"
-
-#~ msgid ""
-#~ "Enable this if the contents of folders have the possibility of "
-#~ "modification by other applications.\n"
-#~ "This option will degrade the performance of displaying summary."
-#~ msgstr ""
-#~ "Kapcsolja be, ha lehetőség van arra, hogy a mappák tartalmát egy másik "
-#~ "alkalmazás módosíthatja.\n"
-#~ "Ez az opció lassítja az összefoglalás megjelenésének idejét."
-
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "Hálózati adatátvitel időtúllépés:"
-
-#~ msgid "second(s)"
-#~ msgstr "másodperc"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "rövidített nap név"
-
-#~ msgid "the full weekday name"
-#~ msgstr "teljes nap név"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "rövidített hónapnév"
-
-#~ msgid "the full month name"
-#~ msgstr "a teljes hónapnév"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "ajánlott dátum- és időformátum a jelenlegi nyelvi beállításhoz"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "évszázad (év/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "hónap napja számként"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "óra számként (24 órás kijelzés)"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "óra számként (12 órás kijelzés)"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "Az év napja számként"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "hónap számként"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "perc számként"
-
-#~ msgid "either AM or PM"
-#~ msgstr "DE vagy DU"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "másodperc számként"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "hét napja számként"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "ajánlott dátum az aktuális nyelvi beállításhoz"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "az évszám utolsó két számjegye"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "év számként"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "időzóna vagy név vagy rövidítés"
-
-#~ msgid "Specifier"
-#~ msgstr "Vezérlőjel"
-
-#~ msgid "Description"
-#~ msgstr "Leírás"
-
-#~ msgid "Example"
-#~ msgstr "Példa"
-
-#~ msgid "Set message colors"
-#~ msgstr "Üzenetszín beállítása"
-
-#~ msgid "Colors"
-#~ msgstr "Színek"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Idézett szöveg - első szint"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Idézett szöveg - második szint"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Idézett szöveg - harmadik szint"
-
-#~ msgid "URI link"
-#~ msgstr "URI-kapocs"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Idézet színeinek újrahasznosítása"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "1. szintű idézet színe"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "2. szintű idézet színe"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "3. szintű idézet színe"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "URI színe"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Szimbólumok leírása"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Dátum\n"
-#~ "Feladó\n"
-#~ "Feladó teljes neve\n"
-#~ "Feladó keresztneve\n"
-#~ "Feladó monogramja\n"
-#~ "Tárgy\n"
-#~ "Címzett\n"
-#~ "Másolat\n"
-#~ "Hírcsoportok\n"
-#~ "Üzenet-azonosító"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Ha x beállítva, akkor kifejezés megjelenítése"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Üzenet törzs\n"
-#~ "Idézett üzenet törzs\n"
-#~ "Üzenet törzs aláírás nélkül\n"
-#~ "Idézett üzenet törzs aláírás nélkül\n"
-#~ "Szó szerint %"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "Repjel karakterrel\n"
-#~ "Kérdőjel karakterrel\n"
-#~ "Nyitó kapcsos zárójel\n"
-#~ "Záró kapcsos zárójel"
-
-#~ msgid "Key bindings"
-#~ msgstr "Billentyű hozzárendelések"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Billentyű hozzárendelés előválasztó beállítása.\n"
-#~ "Módosíthatod minden menü gyorsbillentyűjét, ha az egérmutatóval\n"
-#~ "rámutatva megnyomod a kívánt billentyűt."
-
-#~ msgid "Default"
-#~ msgstr "Alapértelmezés"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Régi Sylpheed"
 
 #~ msgid "Font selection"
 #~ msgstr "Betűtípus választás"

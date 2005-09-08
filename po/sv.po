@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-07 19:48+0900\n"
+"POT-Creation-Date: 2005-09-08 17:08+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Mattias Ostergren <spikboll@gmx.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -210,6 +210,88 @@ msgstr "iconv kan inte konvertera UTF-7 till %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv kan inte konvertera %s till UTF-7\n"
 
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "kan inte skriva till temporär fil\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Hämtar meddelanden från %s till %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "kan inte läsa mboxfil.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "felaktigt mboxformat: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "felformad mbox: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "kan inte öppna temporär fil\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+"o-esc:at Från-fält funnet:\n"
+"%s"
+
+#: libsylph/mbox.c:253
+#, c-format
+msgid "%d messages found.\n"
+msgstr "%d meddelanden funna.\n"
+
+#: libsylph/mbox.c:271
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "kan inte skapa låsfil %s\n"
+
+#: libsylph/mbox.c:272
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "använd \"flock\" istället för \"file\" om möjligt.\n"
+
+#: libsylph/mbox.c:284
+#, c-format
+msgid "can't create %s\n"
+msgstr "kan inte skapa %s\n"
+
+#: libsylph/mbox.c:290
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "brevlådan ägs av en annan process, väntar...\n"
+
+#: libsylph/mbox.c:319
+#, c-format
+msgid "can't lock %s\n"
+msgstr "kan inte låsa %s\n"
+
+#: libsylph/mbox.c:326 libsylph/mbox.c:376
+msgid "invalid lock type\n"
+msgstr "felaktig låstyp\n"
+
+#: libsylph/mbox.c:362
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "kan inte låsa upp %s\n"
+
+#: libsylph/mbox.c:397
+msgid "can't truncate mailbox to zero.\n"
+msgstr "kan inte korta av brevlåda till noll.\n"
+
+#: libsylph/mbox.c:420
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Exporterar meddelanden från %s till %s...\n"
+
 #: libsylph/mh.c:412
 #, c-format
 msgid "can't copy message %s to %s\n"
@@ -354,54 +436,54 @@ msgstr "Fel uppstod vid postning\n"
 msgid "Error occurred while sending command\n"
 msgstr "Fel uppstod när kommandot skickades\n"
 
-#: libsylph/pop.c:149
+#: libsylph/pop.c:150
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "Nödvändig APOP-tidsmarkering inte funnen i hälsning\n"
 
-#: libsylph/pop.c:156
+#: libsylph/pop.c:157
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Syntaxfel på tidsmarkering i hälsning\n"
 
-#: libsylph/pop.c:182 libsylph/pop.c:209
+#: libsylph/pop.c:187 libsylph/pop.c:214
 msgid "POP3 protocol error\n"
 msgstr "POP3-protokollfel\n"
 
-#: libsylph/pop.c:254
+#: libsylph/pop.c:259
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "felaktigt UIDL-svar: %s\n"
 
-#: libsylph/pop.c:616
+#: libsylph/pop.c:621
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Tar bort utgånget meddelande %d\n"
 
-#: libsylph/pop.c:624
+#: libsylph/pop.c:629
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Hoppar över meddelande %d (%d byte)\n"
 
-#: libsylph/pop.c:655
+#: libsylph/pop.c:660
 msgid "mailbox is locked\n"
 msgstr "brevlådan är låst\n"
 
-#: libsylph/pop.c:658
+#: libsylph/pop.c:663
 msgid "session timeout\n"
 msgstr "sessionens väntetid tog slut\n"
 
-#: libsylph/pop.c:664 libsylph/smtp.c:557
+#: libsylph/pop.c:669 libsylph/smtp.c:560
 msgid "can't start TLS session\n"
 msgstr "kan inte starta TLS-session\n"
 
-#: libsylph/pop.c:671 libsylph/smtp.c:492
+#: libsylph/pop.c:676 libsylph/smtp.c:495
 msgid "error occurred on authentication\n"
 msgstr "fel uppstod vid autentisering\n"
 
-#: libsylph/pop.c:676
+#: libsylph/pop.c:681
 msgid "command not supported\n"
 msgstr "kommando är inte stött\n"
 
-#: libsylph/pop.c:680
+#: libsylph/pop.c:685
 msgid "error occurred on POP3 session\n"
 msgstr "fel uppstod vid POP3-session\n"
 
@@ -453,11 +535,11 @@ msgstr "Kan inte skriva till fil.\n"
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH ej tillgängligt\n"
 
-#: libsylph/smtp.c:462 libsylph/smtp.c:512
+#: libsylph/smtp.c:465 libsylph/smtp.c:515
 msgid "bad SMTP response\n"
 msgstr "felaktigt SMTP-svar\n"
 
-#: libsylph/smtp.c:483 libsylph/smtp.c:501 libsylph/smtp.c:598
+#: libsylph/smtp.c:486 libsylph/smtp.c:504 libsylph/smtp.c:601
 msgid "error occurred on SMTP session\n"
 msgstr "fel uppstod vid SMTP-session\n"
 
@@ -594,6 +676,75 @@ msgstr ""
 "program. Om inte, skriv till Free Software Foundation, Inc., 59 Temple Place "
 "- Suite 330, Boston, MA 02111-1307, USA."
 
+#: src/account_dialog.c:136
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Några skrivfönster är öppna.\n"
+"Stäng alla skrivfönster innan du redigerar kontona."
+
+#: src/account_dialog.c:142
+msgid "Opening account edit window...\n"
+msgstr "Öppnar kontoredigeringsfönstret...\n"
+
+#: src/account_dialog.c:281
+msgid "Creating account edit window...\n"
+msgstr "Skapar kontoredigeringsfönster...\n"
+
+#: src/account_dialog.c:286
+msgid "Edit accounts"
+msgstr "Redigera konton"
+
+#: src/account_dialog.c:304
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Nya meddelanden kommer att kontrolleras i denna ordning.\n"
+"Markera rutorna i `G'-kolumnen för att aktivera meddelandehämtning\n"
+"via \"Hämta alla\""
+
+#: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Namn"
+
+#: src/account_dialog.c:363 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Protokoll"
+
+#: src/account_dialog.c:368
+msgid "Server"
+msgstr "Server"
+
+#: src/account_dialog.c:392 src/prefs_filter.c:324
+msgid "Edit"
+msgstr "Redigera"
+
+#: src/account_dialog.c:426
+#, fuzzy
+msgid " _Set as default account "
+msgstr " Använd som förvalt konto "
+
+#: src/account_dialog.c:479
+#, fuzzy, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Vill du verkligen ta bort detta konto?"
+
+#: src/account_dialog.c:481 src/prefs_filter.c:686
+#, fuzzy
+msgid "(Untitled)"
+msgstr "Namnlös"
+
+#: src/account_dialog.c:482
+msgid "Delete account"
+msgstr "Ta bort konto"
+
 #: src/action.c:331
 #, c-format
 msgid "Could not get message file %d"
@@ -692,14 +843,6 @@ msgstr "Åtgärdens användarargument"
 #: src/addressadd.c:172
 msgid "Add Address to Book"
 msgstr "Lägg till i adressbok"
-
-#: src/addressadd.c:192 src/addressbook.c:491 src/compose.c:4086
-#: src/editaddress.c:200 src/editaddress.c:942 src/editaddress.c:990
-#: src/editbook.c:196 src/editgroup.c:265 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:201
-#: src/prefs_filter.c:259 src/prefs_folder_item.c:171 src/select-keys.c:319
-msgid "Name"
-msgstr "Namn"
 
 #: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
 #: src/select-keys.c:320
@@ -841,7 +984,7 @@ msgstr "/_Ta bort"
 msgid "E-Mail address"
 msgstr "E-postadress"
 
-#: src/addressbook.c:496 src/compose.c:4534
+#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Adressbok"
 
@@ -1008,7 +1151,7 @@ msgstr "Fel vid konvertering av adressbok"
 msgid "Addressbook Conversion"
 msgstr "Adressbokskonvertering"
 
-#: src/addressbook.c:3072
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:703
 msgid "Interface"
 msgstr "Gränssnitt"
 
@@ -1028,7 +1171,8 @@ msgstr "E-postadress"
 msgid "Group"
 msgstr "Grupp"
 
-#: src/addressbook.c:3152 src/folderview.c:347
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:347 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Mapp"
 
@@ -1570,7 +1714,8 @@ msgstr "MIME-typ"
 msgid "Size"
 msgstr "Storlek"
 
-#: src/compose.c:4454 src/mainwindow.c:2217
+#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Skicka"
 
@@ -1610,7 +1755,9 @@ msgstr "Bifoga"
 msgid "Attach file"
 msgstr "Bifoga fil"
 
-#: src/compose.c:4503
+#. signature
+#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Signatur"
 
@@ -1618,7 +1765,8 @@ msgstr "Signatur"
 msgid "Insert signature"
 msgstr "Infoga signatur"
 
-#: src/compose.c:4513
+#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Redigerare"
 
@@ -1848,6 +1996,7 @@ msgid " Check File "
 msgstr " Kontrollera fil "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
 msgid "File"
 msgstr "Fil"
 
@@ -1925,7 +2074,8 @@ msgid "Edit JPilot Entry"
 msgstr "Redigera JPilot-post"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1768
 msgid " ... "
 msgstr " ... "
 
@@ -1989,7 +2139,7 @@ msgstr "Väntetid (sek)"
 msgid "Maximum Entries"
 msgstr "Maximalt antal poster"
 
-#: src/editldap.c:471
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
 msgid "Basic"
 msgstr "Grundläggande"
 
@@ -2046,6 +2196,7 @@ msgid "Exporting file:"
 msgstr "Exporterar fil:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
 msgid " Select... "
 msgstr " Välj... "
 
@@ -3539,7 +3690,8 @@ msgstr "Hämta ny post från alla konton"
 msgid "Send queued message(s)"
 msgstr "Skicka köade meddelanden"
 
-#: src/mainwindow.c:2228 src/prefs_folder_item.c:138
+#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "Skriv"
 
@@ -3547,7 +3699,7 @@ msgstr "Skriv"
 msgid "Compose new message"
 msgstr "Skriv nytt meddelande"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "Svara"
 
@@ -3575,7 +3727,7 @@ msgstr "Vidarebefordra meddelandet"
 msgid "Delete the message"
 msgstr "Ta bort meddelandet"
 
-#: src/mainwindow.c:2293
+#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr ""
 
@@ -3629,88 +3781,6 @@ msgstr "Avsluta"
 msgid "Exit this program?"
 msgstr "Avsluta detta program?"
 
-#: src/mbox.c:50 src/mbox.c:196
-msgid "can't write to temporary file\n"
-msgstr "kan inte skriva till temporär fil\n"
-
-#: src/mbox.c:69
-#, c-format
-msgid "Getting messages from %s into %s...\n"
-msgstr "Hämtar meddelanden från %s till %s...\n"
-
-#: src/mbox.c:79
-msgid "can't read mbox file.\n"
-msgstr "kan inte läsa mboxfil.\n"
-
-#: src/mbox.c:86
-#, c-format
-msgid "invalid mbox format: %s\n"
-msgstr "felaktigt mboxformat: %s\n"
-
-#: src/mbox.c:93
-#, c-format
-msgid "malformed mbox: %s\n"
-msgstr "felformad mbox: %s\n"
-
-#: src/mbox.c:110
-msgid "can't open temporary file\n"
-msgstr "kan inte öppna temporär fil\n"
-
-#: src/mbox.c:161
-#, c-format
-msgid ""
-"unescaped From found:\n"
-"%s"
-msgstr ""
-"o-esc:at Från-fält funnet:\n"
-"%s"
-
-#: src/mbox.c:253
-#, c-format
-msgid "%d messages found.\n"
-msgstr "%d meddelanden funna.\n"
-
-#: src/mbox.c:271
-#, c-format
-msgid "can't create lock file %s\n"
-msgstr "kan inte skapa låsfil %s\n"
-
-#: src/mbox.c:272
-msgid "use 'flock' instead of 'file' if possible.\n"
-msgstr "använd \"flock\" istället för \"file\" om möjligt.\n"
-
-#: src/mbox.c:284
-#, c-format
-msgid "can't create %s\n"
-msgstr "kan inte skapa %s\n"
-
-#: src/mbox.c:290
-msgid "mailbox is owned by another process, waiting...\n"
-msgstr "brevlådan ägs av en annan process, väntar...\n"
-
-#: src/mbox.c:319
-#, c-format
-msgid "can't lock %s\n"
-msgstr "kan inte låsa %s\n"
-
-#: src/mbox.c:326 src/mbox.c:376
-msgid "invalid lock type\n"
-msgstr "felaktig låstyp\n"
-
-#: src/mbox.c:362
-#, c-format
-msgid "can't unlock %s\n"
-msgstr "kan inte låsa upp %s\n"
-
-#: src/mbox.c:397
-msgid "can't truncate mailbox to zero.\n"
-msgstr "kan inte korta av brevlåda till noll.\n"
-
-#: src/mbox.c:420
-#, c-format
-msgid "Exporting messages from %s into %s...\n"
-msgstr "Exporterar meddelanden från %s till %s...\n"
-
 #: src/message_search.c:108
 msgid "Find in current message"
 msgstr "Sök i aktuellt meddelande"
@@ -3751,7 +3821,7 @@ msgstr "/V_erktyg/Lägg till avsändaren i adressbo_ken"
 msgid "Creating message view...\n"
 msgstr "Skapar meddelandevy...\n"
 
-#: src/messageview.c:314
+#: src/messageview.c:314 src/prefs_common_dialog.c:1384
 msgid "Text"
 msgstr "Text"
 
@@ -3764,7 +3834,7 @@ msgstr "Bilagor"
 msgid "Can't save the file `%s'."
 msgstr "Kan inte spara filen \"%s\"."
 
-#: src/messageview.c:714 src/summaryview.c:2963
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2963
 msgid "Print"
 msgstr "Skriv ut"
 
@@ -3901,6 +3971,407 @@ msgstr ""
 "Fel lösenfras! Försök igen...\n"
 "\n"
 
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Öppnar fönster för kontoinställningar...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Konto%d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Inställningar för nytt konto"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Kontoinställningar"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Skapar fönster för kontoinställningar...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:685
+msgid "Receive"
+msgstr "Ta emot"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:700
+msgid "Privacy"
+msgstr "Integritet"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:707
+msgid "Advanced"
+msgstr "Avancerat"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Detta kontos namn"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Använd som förvalt konto"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Personlig information"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Fullst. namn"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "E-postadress"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Organisation"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Serverinformation"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Diskussionsgrupper (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Inget (lokalt)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Denna server kräver autentisering"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Diskussionsgruppsserver"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Server för mottagning"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "Server att skicka med (SMTP)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "Användar-ID"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Lösenord"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "Använd säker autentisering (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Ta bort meddelanden på server när de mottagits"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Ta bort efter"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "dagar"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 dagar: ta bort direkt)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Hämta alla meddelanden från server"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Gräns för mottagningsstorlek"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "KB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Filtrera meddelanden vid mottagning"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Förvald inkorg"
+
+#: src/prefs_account_dialog.c:914
+#, fuzzy
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "(Ofiltrerade meddelanden kommer att lagras i denna mapp)"
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Autentiseringsmetod"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:1034
+msgid "Automatic"
+msgstr "Automatisk"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Diskussionsgrupper"
+
+#: src/prefs_account_dialog.c:955
+#, fuzzy
+msgid "Maximum number of articles to download"
+msgstr ""
+"Maximalt antal inlägg att hämta\n"
+"(obegränsat om 0 angivits)"
+
+#: src/prefs_account_dialog.c:972
+#, fuzzy
+msgid "No limit if 0 is specified."
+msgstr "Mottagare är inte angiven."
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "\"Hämta allt\" hämtar post på detta konto"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Brevhuvud"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Lägg till datumfält i brevhuvud"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Skapa Meddelande-ID"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Lägg till användardefinierat brevhuvud"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1541
+#: src/prefs_common_dialog.c:1566
+msgid " Edit... "
+msgstr "Redigera..."
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Autentisering"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "SMTP-Autentisering (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+#, fuzzy
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Om du lämnar dessa poster tomma, kommer samma\n"
+"användar-ID och lösenord som vid hämtning att användas."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Autentisera med POP3 innan brev skickas"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Kommandoutdata"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+msgid "Automatically set the following addresses"
+msgstr "Sätt automatiskt följande adresser"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Kopia"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Dold kopia"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Svara till"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Signera alla meddelanden"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Kryptera alla meddelanden"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr ""
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Använd ASCII-pansar för kryptering"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Använd klartextsignatur"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Signaturnyckel"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Använd förvald GnuPG-nyckel"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Välj nyckel genom din e-postadress"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Ange nyckel manuellt"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Användar- eller nyckel-ID:"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Använd inte SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Använd SSL för POP3-förbindelse"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Använd STARTTLS-kommando för att starta SSL-session"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Använd SSL för IMAP4-förbindelse"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Använd SSL för NNTP-förbindelse"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Skicka (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Använd SSL för SMTP-förbindelse"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Använd icke-blockerande SSL"
+
+#: src/prefs_account_dialog.c:1523
+#, fuzzy
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "(Slå av detta om du har problem med SSL-förbindelsen)"
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Ange SMTP-port"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Ange POP3-port"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Ange IMAP4-port"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Ange NNTP-port"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Ange domännamn"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "IMAP-servermapp"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Lägg skickade meddelanden i"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Lägg utkast i"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Lägg borttagna meddelanden i"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Kontonamn har inte angivits."
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "E-postadress har inte angivits."
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "SMTP-server har inte angivits."
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "Användar-ID har inte angivits."
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "POP3-server har inte angivits."
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "IMAP4-server har inte angivits."
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "NNTP-server har inte angivits."
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Det är inte rekommenderat att använda det föråldrade\n"
+"ASCII-pansar-läget för krypterade meddelanden.\n"
+"Det följer inte RCF 3156 - MIME Security with OpenPGP."
+
 #: src/prefs_actions.c:172
 msgid "Actions configuration"
 msgstr "Åtgärdskonfiguration"
@@ -4018,13 +4489,819 @@ msgstr "Ta bort åtgärd"
 msgid "Do you really want to delete this action?"
 msgstr "Vill du verkligen ta bort denna åtgärd?"
 
+#: src/prefs_common_dialog.c:665
+msgid "Creating common preferences window...\n"
+msgstr "Skapar fönster för allmänna inställningar...\n"
+
+#: src/prefs_common_dialog.c:669
+msgid "Common Preferences"
+msgstr "Allmänna inställningar"
+
+#: src/prefs_common_dialog.c:691
+msgid "Quote"
+msgstr "Citat"
+
+#: src/prefs_common_dialog.c:693
+msgid "Display"
+msgstr "Visa"
+
+#: src/prefs_common_dialog.c:695
+msgid "Message"
+msgstr "Meddelande"
+
+#: src/prefs_common_dialog.c:697
+#, fuzzy
+msgid "Junk mail"
+msgstr "mapp"
+
+#: src/prefs_common_dialog.c:705 src/select-keys.c:344
+msgid "Other"
+msgstr "Övrigt"
+
+#: src/prefs_common_dialog.c:749
+msgid "Use external program for incorporation"
+msgstr "Använd externt program för hämtning"
+
+#: src/prefs_common_dialog.c:761 src/prefs_common_dialog.c:850
+#: src/prefs_common_dialog.c:926
+msgid "Command"
+msgstr "Kommando"
+
+#: src/prefs_common_dialog.c:776
+#, fuzzy
+msgid "Incorporate from local spool"
+msgstr "Inkorporera från spole"
+
+#: src/prefs_common_dialog.c:789
+msgid "Filter on incorporation"
+msgstr "Filtrera vid inkorporering"
+
+#: src/prefs_common_dialog.c:795
+msgid "Spool path"
+msgstr "Sökväg till spole"
+
+#: src/prefs_common_dialog.c:813
+msgid "Auto-check new mail"
+msgstr "Hämta ny post automatiskt"
+
+#: src/prefs_common_dialog.c:815
+msgid "every"
+msgstr "med"
+
+#: src/prefs_common_dialog.c:827
+msgid "minute(s)"
+msgstr "minuters mellanrum"
+
+#: src/prefs_common_dialog.c:836
+msgid "Check new mail on startup"
+msgstr "Hämta ny post vid uppstart"
+
+#: src/prefs_common_dialog.c:838
+msgid "Update all local folders after incorporation"
+msgstr "Uppdatera alla lokala mappar efter att ny post hämtats"
+
+#: src/prefs_common_dialog.c:842
+#, fuzzy
+msgid "Execute command when new messages arrived"
+msgstr "Utför omedelbart vid flyttning eller borttagande av meddelanden"
+
+#: src/prefs_common_dialog.c:863
+#, fuzzy, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "Tar emot meddelandenas antal (STAT)..."
+
+#: src/prefs_common_dialog.c:914
+msgid "Use external program for sending"
+msgstr "Skicka med externt program"
+
+#: src/prefs_common_dialog.c:945
+msgid "Save sent messages to outbox"
+msgstr "Spara skickade meddelanden i kö-mappen"
+
+#: src/prefs_common_dialog.c:947
+msgid "Apply filter rules to sent messages"
+msgstr ""
+
+#: src/prefs_common_dialog.c:953
+#, fuzzy
+msgid "Outgoing encoding"
+msgstr "Utgående kodning"
+
+#: src/prefs_common_dialog.c:968
+msgid "Automatic (Recommended)"
+msgstr "Automatisk (Rekommenderad)"
+
+#: src/prefs_common_dialog.c:970
+msgid "7bit ascii (US-ASCII)"
+msgstr "7 bitars ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:972
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:974
+msgid "Western European (ISO-8859-1)"
+msgstr "Västeuropeisk (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:975
+msgid "Western European (ISO-8859-15)"
+msgstr "Västeuropeisk (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:977
+msgid "Central European (ISO-8859-2)"
+msgstr "Centraleuropeisk (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:979
+msgid "Baltic (ISO-8859-13)"
+msgstr "Baltisk (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:980
+msgid "Baltic (ISO-8859-4)"
+msgstr "Baltisk (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:982
+msgid "Greek (ISO-8859-7)"
+msgstr "Grekisk (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:984
+#, fuzzy
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Grekisk (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:985
+#, fuzzy
+msgid "Hebrew (Windows-1255)"
+msgstr "Kyrillisk (Windows-1251)"
+
+#: src/prefs_common_dialog.c:987
+msgid "Turkish (ISO-8859-9)"
+msgstr "Turkisk (ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:989
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Kyrillisk (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:990
+msgid "Cyrillic (KOI8-R)"
+msgstr "Kyrillisk (KOI8-R)"
+
+#: src/prefs_common_dialog.c:991
+msgid "Cyrillic (KOI8-U)"
+msgstr "Kyrillisk (KOI8-U)"
+
+#: src/prefs_common_dialog.c:992
+msgid "Cyrillic (Windows-1251)"
+msgstr "Kyrillisk (Windows-1251)"
+
+#: src/prefs_common_dialog.c:994
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Japansk (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:996
+msgid "Japanese (EUC-JP)"
+msgstr "Japansk (EUC-JP)"
+
+#: src/prefs_common_dialog.c:997
+msgid "Japanese (Shift_JIS)"
+msgstr "Japansk (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:1000
+msgid "Simplified Chinese (GB2312)"
+msgstr "Förenklad kinesisk (GB2312)"
+
+#: src/prefs_common_dialog.c:1001
+#, fuzzy
+msgid "Simplified Chinese (GBK)"
+msgstr "Förenklad kinesisk (GB2312)"
+
+#: src/prefs_common_dialog.c:1002
+msgid "Traditional Chinese (Big5)"
+msgstr "Traditionell kinesisk (Big5)"
+
+#: src/prefs_common_dialog.c:1004
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Traditionell kinesisk (EUC-TW)"
+
+#: src/prefs_common_dialog.c:1005
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Kinesisk (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:1008
+msgid "Korean (EUC-KR)"
+msgstr "Koreansk (EUC-KR)"
+
+#: src/prefs_common_dialog.c:1010
+msgid "Thai (TIS-620)"
+msgstr "Thai (TIS-620)"
+
+#: src/prefs_common_dialog.c:1011
+msgid "Thai (Windows-874)"
+msgstr "Thai (Windows-874)"
+
+#: src/prefs_common_dialog.c:1017
+#, fuzzy
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Om \"Automatisk\" är vald, kommer den optimala\n"
+"kodningen för det nuvarande språket att användas."
+
+#: src/prefs_common_dialog.c:1024
+msgid "Transfer encoding"
+msgstr "Kodning för överföring"
+
+#: src/prefs_common_dialog.c:1043
+#, fuzzy
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Ange vilken kodning för överföring meddelandetexten\n"
+"ska ha när det innehåller icke-ASCII-tecken."
+
+#: src/prefs_common_dialog.c:1107
+msgid "Signature separator"
+msgstr "Signaturseparator"
+
+#: src/prefs_common_dialog.c:1116
+msgid "Insert automatically"
+msgstr "Infoga automatiskt"
+
+#: src/prefs_common_dialog.c:1126
+msgid "Automatically launch the external editor"
+msgstr "Starta automatiskt extern redigerare"
+
+#: src/prefs_common_dialog.c:1136
+msgid "Undo level"
+msgstr "Ångranivå"
+
+#: src/prefs_common_dialog.c:1156
+msgid "Wrap messages at"
+msgstr "Radbryt meddelanden vid"
+
+#: src/prefs_common_dialog.c:1168
+msgid "characters"
+msgstr "tecken"
+
+#: src/prefs_common_dialog.c:1178
+msgid "Wrap quotation"
+msgstr "Radbryt citering"
+
+#: src/prefs_common_dialog.c:1184
+msgid "Wrap on input"
+msgstr "Radbryt vid indata"
+
+#: src/prefs_common_dialog.c:1186
+msgid "Wrap before sending"
+msgstr "Radbryt innan brevet skickas"
+
+#: src/prefs_common_dialog.c:1196
+msgid "Automatically select account for replies"
+msgstr "Välj automatiskt konto för svar"
+
+#: src/prefs_common_dialog.c:1198
+msgid "Quote message when replying"
+msgstr "Citera meddelande vid svar"
+
+#: src/prefs_common_dialog.c:1200
+msgid "Reply button invokes mailing list reply"
+msgstr "Svara-knappen ger svar till e-postlista"
+
+#. reply
+#: src/prefs_common_dialog.c:1246
+msgid "Reply format"
+msgstr "Svarsformat"
+
+#: src/prefs_common_dialog.c:1261 src/prefs_common_dialog.c:1303
+msgid "Quotation mark"
+msgstr "Citationstecken"
+
+#. forward
+#: src/prefs_common_dialog.c:1288
+msgid "Forward format"
+msgstr "Vidarebefordringsformat"
+
+#: src/prefs_common_dialog.c:1335
+msgid " Description of symbols "
+msgstr " Beskrivning av symboler "
+
+#: src/prefs_common_dialog.c:1375
+msgid "Font"
+msgstr "Typsnitt"
+
+#: src/prefs_common_dialog.c:1400
+msgid "Translate header name (such as `From:', `Subject:')"
+msgstr "Översätt brevhuvudsnamn (t.ex. \"Från:\", \"Ärende:\")"
+
+#: src/prefs_common_dialog.c:1403
+msgid "Display unread number next to folder name"
+msgstr "Visa antal olästa bredvid mappnamn"
+
+#: src/prefs_common_dialog.c:1412
+msgid "Abbreviate newsgroups longer than"
+msgstr "Förkorta diskussionsgrupper längre än"
+
+#: src/prefs_common_dialog.c:1427
+msgid "letters"
+msgstr "bokstäver"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1433
+msgid "Summary View"
+msgstr "Summeringsvy"
+
+#: src/prefs_common_dialog.c:1442
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Visa mottagare i \"Från\"-kolumnen om du själv är avsändaren"
+
+#: src/prefs_common_dialog.c:1444
+msgid "Expand threads"
+msgstr "Expandera trådar"
+
+#: src/prefs_common_dialog.c:1452 src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2460
+msgid "Date format"
+msgstr "Datumformat"
+
+#: src/prefs_common_dialog.c:1473
+msgid " Set display item of summary... "
+msgstr " Ställ in fält att visa i summeringen... "
+
+#: src/prefs_common_dialog.c:1537
+msgid "Enable coloration of message"
+msgstr "Aktivera färgläggning av meddelande"
+
+#: src/prefs_common_dialog.c:1551
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Visa multi-byte-alfabet och -siffror som\n"
+"ASCII-tecken (endast Japanska)"
+
+#: src/prefs_common_dialog.c:1557
+msgid "Display header pane above message view"
+msgstr "Visa brevhuvudspanel ovanför meddelandevy"
+
+#: src/prefs_common_dialog.c:1564
+msgid "Display short headers on message view"
+msgstr "Visa korta brevhuvuden i meddelandevy"
+
+#: src/prefs_common_dialog.c:1576
+msgid "Render HTML messages as text"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1580
+#, fuzzy
+msgid "Display cursor in message view"
+msgstr "Visa korta brevhuvuden i meddelandevy"
+
+#: src/prefs_common_dialog.c:1593
+msgid "Line space"
+msgstr "Radavstånd"
+
+#: src/prefs_common_dialog.c:1607 src/prefs_common_dialog.c:1645
+msgid "pixel(s)"
+msgstr "bildpunkter"
+
+#: src/prefs_common_dialog.c:1612
+msgid "Scroll"
+msgstr "Rulla"
+
+#: src/prefs_common_dialog.c:1619
+msgid "Half page"
+msgstr "Halvsida"
+
+#: src/prefs_common_dialog.c:1625
+msgid "Smooth scroll"
+msgstr "Mjuk rullning"
+
+#: src/prefs_common_dialog.c:1631
+msgid "Step"
+msgstr "Steg"
+
+#: src/prefs_common_dialog.c:1651
+msgid "Images"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1659
+msgid "Resize attached large images to fit in the window"
+msgstr "Ändra storlek på bifogade stora bilder så att de ryms i fönstret"
+
+#: src/prefs_common_dialog.c:1661
+#, fuzzy
+msgid "Display images as inline"
+msgstr "Brevhuvudsinställning"
+
+#: src/prefs_common_dialog.c:1702
+#, fuzzy
+msgid "Enable Junk mail control"
+msgstr "mapp"
+
+#: src/prefs_common_dialog.c:1710
+#, fuzzy
+msgid "Learning command:"
+msgstr "Kör kommando"
+
+#: src/prefs_common_dialog.c:1731
+msgid "Not Junk"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1746
+#, fuzzy
+msgid "Classifying command"
+msgstr "Kör kommando"
+
+#: src/prefs_common_dialog.c:1760
+#, fuzzy
+msgid "Junk folder"
+msgstr "mapp"
+
+#: src/prefs_common_dialog.c:1778
+#, fuzzy
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "(Ofiltrerade meddelanden kommer att lagras i denna mapp)"
+
+#: src/prefs_common_dialog.c:1784
+#, fuzzy
+msgid "Filter messages classified as junk on receiving"
+msgstr "Filtrera meddelanden vid mottagning"
+
+#: src/prefs_common_dialog.c:1788
+#, fuzzy
+msgid ""
+"Filtered messages will be moved to the junk folder and deleted from the "
+"server."
+msgstr "(Ofiltrerade meddelanden kommer att lagras i denna mapp)"
+
+#: src/prefs_common_dialog.c:1826
+msgid "Automatically check signatures"
+msgstr "Undersök signaturer automatiskt"
+
+#: src/prefs_common_dialog.c:1829
+msgid "Show signature check result in a popup window"
+msgstr "Visa resultat av signaturundersökning i ett extrafönster"
+
+#: src/prefs_common_dialog.c:1832
+msgid "Store passphrase in memory temporarily"
+msgstr "Lagra lösenfras temporärt i minnet"
+
+#: src/prefs_common_dialog.c:1847
+msgid "Expired after"
+msgstr "Utgår efter"
+
+#: src/prefs_common_dialog.c:1860
+msgid "minute(s) "
+msgstr "minut(er)"
+
+#: src/prefs_common_dialog.c:1874
+#, fuzzy
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr ""
+"(Lösenfrasen kommer att lagras hela sessionen\n"
+"om 0 angivits)"
+
+#: src/prefs_common_dialog.c:1883
+msgid "Grab input while entering a passphrase"
+msgstr "Håll fokus under inskrivning av lösenfas"
+
+#: src/prefs_common_dialog.c:1888
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Visa varning vid start om GnuPG inte fungerar"
+
+#: src/prefs_common_dialog.c:1941
+msgid "Always open messages in summary when selected"
+msgstr "Öppna alltid meddelanden i summering, när de valts"
+
+#: src/prefs_common_dialog.c:1945
+msgid "Open first unread message when entering a folder"
+msgstr "Öppna första olästa meddelande vid öppning av mapp"
+
+#: src/prefs_common_dialog.c:1949
+msgid "Only mark message as read when opened in new window"
+msgstr "Markera endast meddelande som läst, när det öppnats i nytt fönster"
+
+#: src/prefs_common_dialog.c:1953
+msgid "Go to inbox after receiving new mail"
+msgstr "Gå till inkorgen efter att ny post kommit"
+
+#: src/prefs_common_dialog.c:1961
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Utför omedelbart vid flyttning eller borttagande av meddelanden"
+
+#: src/prefs_common_dialog.c:1973
+#, fuzzy
+msgid "Messages will be marked until execution if this is turned off."
+msgstr ""
+"(Meddelanden kommer endast vara markerade tills du väljer\n"
+" \"Utför köade meddelanden\" om detta är avstängt)"
+
+#: src/prefs_common_dialog.c:1976
+msgid "Receive dialog"
+msgstr "Mottagningsdialog"
+
+#: src/prefs_common_dialog.c:1986
+msgid "Show receive dialog"
+msgstr "Visa mottagningsdialog"
+
+#: src/prefs_common_dialog.c:1996
+msgid "Always"
+msgstr "Alltid"
+
+#: src/prefs_common_dialog.c:1997
+msgid "Only on manual receiving"
+msgstr "Bara vid manuell mottagning"
+
+#: src/prefs_common_dialog.c:1999
+msgid "Never"
+msgstr "Aldrig"
+
+#: src/prefs_common_dialog.c:2004
+msgid "Don't popup error dialog on receive error"
+msgstr "Visa inte feldialog vid hämtningsfel"
+
+#: src/prefs_common_dialog.c:2007
+msgid "Close receive dialog when finished"
+msgstr "Stäng mottagningsdialog efteråt"
+
+#: src/prefs_common_dialog.c:2010
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr ""
+
+#: src/prefs_common_dialog.c:2016
+msgid " Set key bindings... "
+msgstr "Ställ in tangentbindningar..."
+
+#: src/prefs_common_dialog.c:2070
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Externa kommandon (%s kommer att ersättas med filnamn / URI)"
+
+#: src/prefs_common_dialog.c:2079
+msgid "Web browser"
+msgstr "Webbläsare"
+
+#: src/prefs_common_dialog.c:2142
+msgid "Add address to destination when double-clicked"
+msgstr "Lägg till adress till destination vid dubbelklick"
+
+#: src/prefs_common_dialog.c:2144
+msgid "On exit"
+msgstr "Vid avslut"
+
+#: src/prefs_common_dialog.c:2152
+msgid "Confirm on exit"
+msgstr "Bekräfta avslut"
+
+#: src/prefs_common_dialog.c:2159
+msgid "Empty trash on exit"
+msgstr "Töm papperskorg vid avslut"
+
+#: src/prefs_common_dialog.c:2161
+msgid "Ask before emptying"
+msgstr "Fråga innan tömning"
+
+#: src/prefs_common_dialog.c:2165
+msgid "Warn if there are queued messages"
+msgstr "Varna om det finns köade meddelanden"
+
+#: src/prefs_common_dialog.c:2205
+#, fuzzy
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr "Skriver summeringscache (%s)..."
+
+#: src/prefs_common_dialog.c:2208
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+
+#: src/prefs_common_dialog.c:2215
+msgid "Socket I/O timeout:"
+msgstr "Väntetid för uttags-I/O (socket I/O):"
+
+#: src/prefs_common_dialog.c:2228
+msgid "second(s)"
+msgstr "sekunder"
+
+#: src/prefs_common_dialog.c:2398
+msgid "the full abbreviated weekday name"
+msgstr "förkortat veckodagsnamn"
+
+#: src/prefs_common_dialog.c:2399
+msgid "the full weekday name"
+msgstr "fullständigt veckodagsnamn"
+
+#: src/prefs_common_dialog.c:2400
+msgid "the abbreviated month name"
+msgstr "förkortat månadsnamn"
+
+#: src/prefs_common_dialog.c:2401
+msgid "the full month name"
+msgstr "fullständigt månadsnamn"
+
+#: src/prefs_common_dialog.c:2402
+msgid "the preferred date and time for the current locale"
+msgstr "datum och tid gällande lokalt"
+
+#: src/prefs_common_dialog.c:2403
+msgid "the century number (year/100)"
+msgstr "århundradetal (årtal/100)"
+
+#: src/prefs_common_dialog.c:2404
+msgid "the day of the month as a decimal number"
+msgstr "dagen i månaden som decimaltal"
+
+#: src/prefs_common_dialog.c:2405
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "timmen som decimaltal enligt 24-timmarsräkning"
+
+#: src/prefs_common_dialog.c:2406
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "timmen som decimaltal enligt 12-timmarsräkning"
+
+#: src/prefs_common_dialog.c:2407
+msgid "the day of the year as a decimal number"
+msgstr "dagen på året som ett decimaltal"
+
+#: src/prefs_common_dialog.c:2408
+msgid "the month as a decimal number"
+msgstr "månaden som ett decimaltal"
+
+#: src/prefs_common_dialog.c:2409
+msgid "the minute as a decimal number"
+msgstr "minuten som ett decimaltal"
+
+#: src/prefs_common_dialog.c:2410
+msgid "either AM or PM"
+msgstr "antingen AM eller PM"
+
+#: src/prefs_common_dialog.c:2411
+msgid "the second as a decimal number"
+msgstr "sekunden som ett decimaltal"
+
+#: src/prefs_common_dialog.c:2412
+msgid "the day of the week as a decimal number"
+msgstr "veckodagen som ett decimaltal"
+
+#: src/prefs_common_dialog.c:2413
+msgid "the preferred date for the current locale"
+msgstr "datum gällande lokalt"
+
+#: src/prefs_common_dialog.c:2414
+msgid "the last two digits of a year"
+msgstr "de sista två siffrorna av ett årtal"
+
+#: src/prefs_common_dialog.c:2415
+msgid "the year as a decimal number"
+msgstr "årtalet som ett decimaltal"
+
+#: src/prefs_common_dialog.c:2416
+msgid "the time zone or name or abbreviation"
+msgstr "tidszon eller namn eller förkortning"
+
+#: src/prefs_common_dialog.c:2437
+msgid "Specifier"
+msgstr "Symbol"
+
+#: src/prefs_common_dialog.c:2438
+msgid "Description"
+msgstr "Beskrivning"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Example"
+msgstr "Exempel"
+
+#: src/prefs_common_dialog.c:2558
+msgid "Set message colors"
+msgstr "Ställ in meddelandefärger"
+
+#: src/prefs_common_dialog.c:2566
+msgid "Colors"
+msgstr "Färger"
+
+#: src/prefs_common_dialog.c:2600
+msgid "Quoted Text - First Level"
+msgstr "Citerad text - Första nivån"
+
+#: src/prefs_common_dialog.c:2606
+msgid "Quoted Text - Second Level"
+msgstr "Citerad text - Andra nivån"
+
+#: src/prefs_common_dialog.c:2612
+msgid "Quoted Text - Third Level"
+msgstr "Citerad text - Tredje nivån"
+
+#: src/prefs_common_dialog.c:2618
+msgid "URI link"
+msgstr "URI-länk"
+
+#: src/prefs_common_dialog.c:2625
+msgid "Recycle quote colors"
+msgstr "Återanvänd citeringsfärger"
+
+#: src/prefs_common_dialog.c:2685
+msgid "Pick color for quotation level 1"
+msgstr "Välj färg för citeringsnivå 1"
+
+#: src/prefs_common_dialog.c:2688
+msgid "Pick color for quotation level 2"
+msgstr "Välj färg för citeringsnivå 2"
+
+#: src/prefs_common_dialog.c:2691
+msgid "Pick color for quotation level 3"
+msgstr "Välj färg för citeringsnivå 3"
+
+#: src/prefs_common_dialog.c:2694
+msgid "Pick color for URI"
+msgstr "Välj färg för URI"
+
+#: src/prefs_common_dialog.c:2834
+msgid "Description of symbols"
+msgstr "Beskrivning av symboler"
+
+#: src/prefs_common_dialog.c:2890
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Datum\n"
+"Från\n"
+"Fullständigt avsändarnamn\n"
+"Avsändarens förnamn\n"
+"Avsändarens initialer\n"
+"Ärende\n"
+"Till\n"
+"Kopia\n"
+"Diskussionsgrupper\n"
+"Meddelande-ID"
+
+#: src/prefs_common_dialog.c:2903
+msgid "If x is set, displays expr"
+msgstr "Om x är inställd, visas expr"
+
+#: src/prefs_common_dialog.c:2907
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Meddelandetext\n"
+"Citerad meddelandetext\n"
+"Meddelandetext utan signatur\n"
+"Citerad meddelandetext utan signatur\n"
+"Bokstavligt %"
+
+#: src/prefs_common_dialog.c:2915
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"Bokstavligt bakåtsnedstreck\n"
+"Bokstavligt frågetecken\n"
+"Bokstavlig öppnande klammerparentes\n"
+"Bokstavlig avslutande klammerparentes"
+
+#: src/prefs_common_dialog.c:2961
+msgid "Key bindings"
+msgstr "Tangentbindningar"
+
+#: src/prefs_common_dialog.c:2975
+msgid ""
+"Select the preset of key bindings.\n"
+"You can also modify each menu's shortcuts by pressing\n"
+"any key(s) when placing the mouse pointer on the item."
+msgstr ""
+"Välj förinställda tangentbindningar.\n"
+"Du kan också ändra varje menys genvägar genom\n"
+"att trycka valfri tangent eller tangentkombination\n"
+"när muspekaren är över genvägen."
+
+#: src/prefs_common_dialog.c:2987 src/prefs_common_dialog.c:3311
+msgid "Default"
+msgstr "Standard"
+
+#: src/prefs_common_dialog.c:2990 src/prefs_common_dialog.c:3320
+msgid "Old Sylpheed"
+msgstr "Gamla Sylpheed"
+
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
 msgstr "Egendefinierat brevhuvud"
-
-#: src/prefs_customheader.c:186
-msgid "Header"
-msgstr "Brevhuvud"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
 msgid " Delete "
@@ -4090,19 +5367,10 @@ msgstr "Filterinställningar"
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: src/prefs_filter.c:324
-msgid "Edit"
-msgstr "Redigera"
-
 #: src/prefs_filter.c:685
 #, fuzzy, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Vill du verkligen ta bort denna regel?"
-
-#: src/prefs_filter.c:686
-#, fuzzy
-msgid "(Untitled)"
-msgstr "Namnlös"
 
 #: src/prefs_filter.c:687
 msgid "Delete rule"
@@ -4187,10 +5455,6 @@ msgstr "är längre än"
 #: src/prefs_filter_edit.c:630
 msgid "is shorter than"
 msgstr "är kortare än"
-
-#: src/prefs_filter_edit.c:643 src/prefs_filter_edit.c:1047
-msgid "KB"
-msgstr "KB"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
@@ -4313,10 +5577,6 @@ msgstr "Ta bort [...] eller (...) i början av ärendet vid svar"
 #: src/prefs_folder_item.c:302
 msgid "Apply to subfolders"
 msgstr "Gäller även undermappar"
-
-#: src/prefs_folder_item.c:304
-msgid "Automatically set the following addresses"
-msgstr "Sätt automatiskt följande adresser"
 
 #: src/prefs_folder_item.c:327
 msgid "use also on reply"
@@ -4479,10 +5739,6 @@ msgstr "Nyckel-ID"
 #: src/select-keys.c:321
 msgid "Val"
 msgstr "Värde"
-
-#: src/select-keys.c:344
-msgid "Other"
-msgstr "Övrigt"
 
 #: src/select-keys.c:468
 msgid "Add key"
@@ -5091,923 +6347,6 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
-
-#~ msgid ""
-#~ "Some composing windows are open.\n"
-#~ "Please close all the composing windows before editing the accounts."
-#~ msgstr ""
-#~ "Några skrivfönster är öppna.\n"
-#~ "Stäng alla skrivfönster innan du redigerar kontona."
-
-#~ msgid "Opening account edit window...\n"
-#~ msgstr "Öppnar kontoredigeringsfönstret...\n"
-
-#~ msgid "Creating account edit window...\n"
-#~ msgstr "Skapar kontoredigeringsfönster...\n"
-
-#~ msgid "Edit accounts"
-#~ msgstr "Redigera konton"
-
-#~ msgid ""
-#~ "New messages will be checked in this order. Check the boxes\n"
-#~ "on the `G' column to enable message retrieval by `Get all'."
-#~ msgstr ""
-#~ "Nya meddelanden kommer att kontrolleras i denna ordning.\n"
-#~ "Markera rutorna i `G'-kolumnen för att aktivera meddelandehämtning\n"
-#~ "via \"Hämta alla\""
-
-#~ msgid "Protocol"
-#~ msgstr "Protokoll"
-
-#~ msgid "Server"
-#~ msgstr "Server"
-
-#, fuzzy
-#~ msgid " _Set as default account "
-#~ msgstr " Använd som förvalt konto "
-
-#, fuzzy
-#~ msgid "Do you really want to delete the account '%s'?"
-#~ msgstr "Vill du verkligen ta bort detta konto?"
-
-#~ msgid "Delete account"
-#~ msgstr "Ta bort konto"
-
-#~ msgid "Opening account preferences window...\n"
-#~ msgstr "Öppnar fönster för kontoinställningar...\n"
-
-#~ msgid "Account%d"
-#~ msgstr "Konto%d"
-
-#~ msgid "Preferences for new account"
-#~ msgstr "Inställningar för nytt konto"
-
-#~ msgid "Account preferences"
-#~ msgstr "Kontoinställningar"
-
-#~ msgid "Creating account preferences window...\n"
-#~ msgstr "Skapar fönster för kontoinställningar...\n"
-
-#~ msgid "Receive"
-#~ msgstr "Ta emot"
-
-#~ msgid "Privacy"
-#~ msgstr "Integritet"
-
-#~ msgid "SSL"
-#~ msgstr "SSL"
-
-#~ msgid "Advanced"
-#~ msgstr "Avancerat"
-
-#~ msgid "Name of this account"
-#~ msgstr "Detta kontos namn"
-
-#~ msgid "Set as default"
-#~ msgstr "Använd som förvalt konto"
-
-#~ msgid "Personal information"
-#~ msgstr "Personlig information"
-
-#~ msgid "Full name"
-#~ msgstr "Fullst. namn"
-
-#~ msgid "Mail address"
-#~ msgstr "E-postadress"
-
-#~ msgid "Organization"
-#~ msgstr "Organisation"
-
-#~ msgid "Server information"
-#~ msgstr "Serverinformation"
-
-#~ msgid "POP3"
-#~ msgstr "POP3"
-
-#~ msgid "IMAP4"
-#~ msgstr "IMAP4"
-
-#~ msgid "News (NNTP)"
-#~ msgstr "Diskussionsgrupper (NNTP)"
-
-#~ msgid "None (local)"
-#~ msgstr "Inget (lokalt)"
-
-#~ msgid "This server requires authentication"
-#~ msgstr "Denna server kräver autentisering"
-
-#~ msgid "News server"
-#~ msgstr "Diskussionsgruppsserver"
-
-#~ msgid "Server for receiving"
-#~ msgstr "Server för mottagning"
-
-#~ msgid "SMTP server (send)"
-#~ msgstr "Server att skicka med (SMTP)"
-
-#~ msgid "User ID"
-#~ msgstr "Användar-ID"
-
-#~ msgid "Password"
-#~ msgstr "Lösenord"
-
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "Använd säker autentisering (APOP)"
-
-#~ msgid "Remove messages on server when received"
-#~ msgstr "Ta bort meddelanden på server när de mottagits"
-
-#~ msgid "Remove after"
-#~ msgstr "Ta bort efter"
-
-#~ msgid "days"
-#~ msgstr "dagar"
-
-#~ msgid "(0 days: remove immediately)"
-#~ msgstr "(0 dagar: ta bort direkt)"
-
-#~ msgid "Download all messages on server"
-#~ msgstr "Hämta alla meddelanden från server"
-
-#~ msgid "Receive size limit"
-#~ msgstr "Gräns för mottagningsstorlek"
-
-#~ msgid "Filter messages on receiving"
-#~ msgstr "Filtrera meddelanden vid mottagning"
-
-#~ msgid "Default inbox"
-#~ msgstr "Förvald inkorg"
-
-#, fuzzy
-#~ msgid "Unfiltered messages will be stored in this folder."
-#~ msgstr "(Ofiltrerade meddelanden kommer att lagras i denna mapp)"
-
-#~ msgid "Authentication method"
-#~ msgstr "Autentiseringsmetod"
-
-#~ msgid "Automatic"
-#~ msgstr "Automatisk"
-
-#~ msgid "News"
-#~ msgstr "Diskussionsgrupper"
-
-#, fuzzy
-#~ msgid "Maximum number of articles to download"
-#~ msgstr ""
-#~ "Maximalt antal inlägg att hämta\n"
-#~ "(obegränsat om 0 angivits)"
-
-#, fuzzy
-#~ msgid "No limit if 0 is specified."
-#~ msgstr "Mottagare är inte angiven."
-
-#~ msgid "`Get all' checks for new messages on this account"
-#~ msgstr "\"Hämta allt\" hämtar post på detta konto"
-
-#~ msgid "Add Date header field"
-#~ msgstr "Lägg till datumfält i brevhuvud"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Skapa Meddelande-ID"
-
-#~ msgid "Add user-defined header"
-#~ msgstr "Lägg till användardefinierat brevhuvud"
-
-#~ msgid " Edit... "
-#~ msgstr "Redigera..."
-
-#~ msgid "Authentication"
-#~ msgstr "Autentisering"
-
-#~ msgid "SMTP Authentication (SMTP AUTH)"
-#~ msgstr "SMTP-Autentisering (SMTP AUTH)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If you leave these entries empty, the same user ID and password as "
-#~ "receiving will be used."
-#~ msgstr ""
-#~ "Om du lämnar dessa poster tomma, kommer samma\n"
-#~ "användar-ID och lösenord som vid hämtning att användas."
-
-#~ msgid "Authenticate with POP3 before sending"
-#~ msgstr "Autentisera med POP3 innan brev skickas"
-
-#~ msgid "Command output"
-#~ msgstr "Kommandoutdata"
-
-#~ msgid "Cc"
-#~ msgstr "Kopia"
-
-#~ msgid "Bcc"
-#~ msgstr "Dold kopia"
-
-#~ msgid "Reply-To"
-#~ msgstr "Svara till"
-
-#~ msgid "Sign message by default"
-#~ msgstr "Signera alla meddelanden"
-
-#~ msgid "Encrypt message by default"
-#~ msgstr "Kryptera alla meddelanden"
-
-#~ msgid "Use ASCII-armored format for encryption"
-#~ msgstr "Använd ASCII-pansar för kryptering"
-
-#~ msgid "Use clear text signature"
-#~ msgstr "Använd klartextsignatur"
-
-#~ msgid "Sign key"
-#~ msgstr "Signaturnyckel"
-
-#~ msgid "Use default GnuPG key"
-#~ msgstr "Använd förvald GnuPG-nyckel"
-
-#~ msgid "Select key by your email address"
-#~ msgstr "Välj nyckel genom din e-postadress"
-
-#~ msgid "Specify key manually"
-#~ msgstr "Ange nyckel manuellt"
-
-#~ msgid "User or key ID:"
-#~ msgstr "Användar- eller nyckel-ID:"
-
-#~ msgid "Don't use SSL"
-#~ msgstr "Använd inte SSL"
-
-#~ msgid "Use SSL for POP3 connection"
-#~ msgstr "Använd SSL för POP3-förbindelse"
-
-#~ msgid "Use STARTTLS command to start SSL session"
-#~ msgstr "Använd STARTTLS-kommando för att starta SSL-session"
-
-#~ msgid "Use SSL for IMAP4 connection"
-#~ msgstr "Använd SSL för IMAP4-förbindelse"
-
-#~ msgid "NNTP"
-#~ msgstr "NNTP"
-
-#~ msgid "Use SSL for NNTP connection"
-#~ msgstr "Använd SSL för NNTP-förbindelse"
-
-#~ msgid "Send (SMTP)"
-#~ msgstr "Skicka (SMTP)"
-
-#~ msgid "Use SSL for SMTP connection"
-#~ msgstr "Använd SSL för SMTP-förbindelse"
-
-#~ msgid "Use non-blocking SSL"
-#~ msgstr "Använd icke-blockerande SSL"
-
-#, fuzzy
-#~ msgid "Turn this off if you have problems in SSL connection."
-#~ msgstr "(Slå av detta om du har problem med SSL-förbindelsen)"
-
-#~ msgid "Specify SMTP port"
-#~ msgstr "Ange SMTP-port"
-
-#~ msgid "Specify POP3 port"
-#~ msgstr "Ange POP3-port"
-
-#~ msgid "Specify IMAP4 port"
-#~ msgstr "Ange IMAP4-port"
-
-#~ msgid "Specify NNTP port"
-#~ msgstr "Ange NNTP-port"
-
-#~ msgid "Specify domain name"
-#~ msgstr "Ange domännamn"
-
-#~ msgid "IMAP server directory"
-#~ msgstr "IMAP-servermapp"
-
-#~ msgid "Put sent messages in"
-#~ msgstr "Lägg skickade meddelanden i"
-
-#~ msgid "Put draft messages in"
-#~ msgstr "Lägg utkast i"
-
-#~ msgid "Put deleted messages in"
-#~ msgstr "Lägg borttagna meddelanden i"
-
-#~ msgid "Account name is not entered."
-#~ msgstr "Kontonamn har inte angivits."
-
-#~ msgid "Mail address is not entered."
-#~ msgstr "E-postadress har inte angivits."
-
-#~ msgid "SMTP server is not entered."
-#~ msgstr "SMTP-server har inte angivits."
-
-#~ msgid "User ID is not entered."
-#~ msgstr "Användar-ID har inte angivits."
-
-#~ msgid "POP3 server is not entered."
-#~ msgstr "POP3-server har inte angivits."
-
-#~ msgid "IMAP4 server is not entered."
-#~ msgstr "IMAP4-server har inte angivits."
-
-#~ msgid "NNTP server is not entered."
-#~ msgstr "NNTP-server har inte angivits."
-
-#~ msgid ""
-#~ "It's not recommended to use the old style ASCII-armored\n"
-#~ "mode for encrypted messages. It doesn't comply with the\n"
-#~ "RFC 3156 - MIME Security with OpenPGP."
-#~ msgstr ""
-#~ "Det är inte rekommenderat att använda det föråldrade\n"
-#~ "ASCII-pansar-läget för krypterade meddelanden.\n"
-#~ "Det följer inte RCF 3156 - MIME Security with OpenPGP."
-
-#~ msgid "Creating common preferences window...\n"
-#~ msgstr "Skapar fönster för allmänna inställningar...\n"
-
-#~ msgid "Common Preferences"
-#~ msgstr "Allmänna inställningar"
-
-#~ msgid "Quote"
-#~ msgstr "Citat"
-
-#~ msgid "Display"
-#~ msgstr "Visa"
-
-#~ msgid "Message"
-#~ msgstr "Meddelande"
-
-#~ msgid "Use external program for incorporation"
-#~ msgstr "Använd externt program för hämtning"
-
-#~ msgid "Command"
-#~ msgstr "Kommando"
-
-#, fuzzy
-#~ msgid "Incorporate from local spool"
-#~ msgstr "Inkorporera från spole"
-
-#~ msgid "Filter on incorporation"
-#~ msgstr "Filtrera vid inkorporering"
-
-#~ msgid "Spool path"
-#~ msgstr "Sökväg till spole"
-
-#~ msgid "Auto-check new mail"
-#~ msgstr "Hämta ny post automatiskt"
-
-#~ msgid "every"
-#~ msgstr "med"
-
-#~ msgid "minute(s)"
-#~ msgstr "minuters mellanrum"
-
-#~ msgid "Check new mail on startup"
-#~ msgstr "Hämta ny post vid uppstart"
-
-#~ msgid "Update all local folders after incorporation"
-#~ msgstr "Uppdatera alla lokala mappar efter att ny post hämtats"
-
-#, fuzzy
-#~ msgid "Execute command when new messages arrived"
-#~ msgstr "Utför omedelbart vid flyttning eller borttagande av meddelanden"
-
-#, fuzzy
-#~ msgid "`%d' will be replaced with the number of new messages."
-#~ msgstr "Tar emot meddelandenas antal (STAT)..."
-
-#~ msgid "Use external program for sending"
-#~ msgstr "Skicka med externt program"
-
-#~ msgid "Save sent messages to outbox"
-#~ msgstr "Spara skickade meddelanden i kö-mappen"
-
-#, fuzzy
-#~ msgid "Outgoing encoding"
-#~ msgstr "Utgående kodning"
-
-#~ msgid "Automatic (Recommended)"
-#~ msgstr "Automatisk (Rekommenderad)"
-
-#~ msgid "7bit ascii (US-ASCII)"
-#~ msgstr "7 bitars ascii (US-ASCII)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western European (ISO-8859-1)"
-#~ msgstr "Västeuropeisk (ISO-8859-1)"
-
-#~ msgid "Western European (ISO-8859-15)"
-#~ msgstr "Västeuropeisk (ISO-8859-15)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Centraleuropeisk (ISO-8859-2)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Baltisk (ISO-8859-13)"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Baltisk (ISO-8859-4)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Grekisk (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (ISO-8859-8)"
-#~ msgstr "Grekisk (ISO-8859-7)"
-
-#, fuzzy
-#~ msgid "Hebrew (Windows-1255)"
-#~ msgstr "Kyrillisk (Windows-1251)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Turkisk (ISO-8859-9)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Kyrillisk (ISO-8859-5)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Kyrillisk (KOI8-R)"
-
-#~ msgid "Cyrillic (KOI8-U)"
-#~ msgstr "Kyrillisk (KOI8-U)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Kyrillisk (Windows-1251)"
-
-#~ msgid "Japanese (ISO-2022-JP)"
-#~ msgstr "Japansk (ISO-2022-JP)"
-
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Japansk (EUC-JP)"
-
-#~ msgid "Japanese (Shift_JIS)"
-#~ msgstr "Japansk (Shift_JIS)"
-
-#~ msgid "Simplified Chinese (GB2312)"
-#~ msgstr "Förenklad kinesisk (GB2312)"
-
-#, fuzzy
-#~ msgid "Simplified Chinese (GBK)"
-#~ msgstr "Förenklad kinesisk (GB2312)"
-
-#~ msgid "Traditional Chinese (Big5)"
-#~ msgstr "Traditionell kinesisk (Big5)"
-
-#~ msgid "Traditional Chinese (EUC-TW)"
-#~ msgstr "Traditionell kinesisk (EUC-TW)"
-
-#~ msgid "Chinese (ISO-2022-CN)"
-#~ msgstr "Kinesisk (ISO-2022-CN)"
-
-#~ msgid "Korean (EUC-KR)"
-#~ msgstr "Koreansk (EUC-KR)"
-
-#~ msgid "Thai (TIS-620)"
-#~ msgstr "Thai (TIS-620)"
-
-#~ msgid "Thai (Windows-874)"
-#~ msgstr "Thai (Windows-874)"
-
-#, fuzzy
-#~ msgid ""
-#~ "If `Automatic' is selected, the optimal encoding for the current locale "
-#~ "will be used."
-#~ msgstr ""
-#~ "Om \"Automatisk\" är vald, kommer den optimala\n"
-#~ "kodningen för det nuvarande språket att användas."
-
-#~ msgid "Transfer encoding"
-#~ msgstr "Kodning för överföring"
-
-#, fuzzy
-#~ msgid ""
-#~ "Specify Content-Transfer-Encoding used when message body contains non-"
-#~ "ASCII characters."
-#~ msgstr ""
-#~ "Ange vilken kodning för överföring meddelandetexten\n"
-#~ "ska ha när det innehåller icke-ASCII-tecken."
-
-#~ msgid "Signature separator"
-#~ msgstr "Signaturseparator"
-
-#~ msgid "Insert automatically"
-#~ msgstr "Infoga automatiskt"
-
-#~ msgid "Automatically launch the external editor"
-#~ msgstr "Starta automatiskt extern redigerare"
-
-#~ msgid "Undo level"
-#~ msgstr "Ångranivå"
-
-#~ msgid "Wrap messages at"
-#~ msgstr "Radbryt meddelanden vid"
-
-#~ msgid "characters"
-#~ msgstr "tecken"
-
-#~ msgid "Wrap quotation"
-#~ msgstr "Radbryt citering"
-
-#~ msgid "Wrap on input"
-#~ msgstr "Radbryt vid indata"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "Radbryt innan brevet skickas"
-
-#~ msgid "Automatically select account for replies"
-#~ msgstr "Välj automatiskt konto för svar"
-
-#~ msgid "Quote message when replying"
-#~ msgstr "Citera meddelande vid svar"
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "Svara-knappen ger svar till e-postlista"
-
-#~ msgid "Reply format"
-#~ msgstr "Svarsformat"
-
-#~ msgid "Quotation mark"
-#~ msgstr "Citationstecken"
-
-#~ msgid "Forward format"
-#~ msgstr "Vidarebefordringsformat"
-
-#~ msgid " Description of symbols "
-#~ msgstr " Beskrivning av symboler "
-
-#~ msgid "Font"
-#~ msgstr "Typsnitt"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Översätt brevhuvudsnamn (t.ex. \"Från:\", \"Ärende:\")"
-
-#~ msgid "Display unread number next to folder name"
-#~ msgstr "Visa antal olästa bredvid mappnamn"
-
-#~ msgid "Abbreviate newsgroups longer than"
-#~ msgstr "Förkorta diskussionsgrupper längre än"
-
-#~ msgid "letters"
-#~ msgstr "bokstäver"
-
-#~ msgid "Summary View"
-#~ msgstr "Summeringsvy"
-
-#~ msgid "Display recipient on `From' column if sender is yourself"
-#~ msgstr "Visa mottagare i \"Från\"-kolumnen om du själv är avsändaren"
-
-#~ msgid "Expand threads"
-#~ msgstr "Expandera trådar"
-
-#~ msgid "Date format"
-#~ msgstr "Datumformat"
-
-#~ msgid " Set display item of summary... "
-#~ msgstr " Ställ in fält att visa i summeringen... "
-
-#~ msgid "Enable coloration of message"
-#~ msgstr "Aktivera färgläggning av meddelande"
-
-#~ msgid ""
-#~ "Display multi-byte alphabet and numeric as\n"
-#~ "ASCII character (Japanese only)"
-#~ msgstr ""
-#~ "Visa multi-byte-alfabet och -siffror som\n"
-#~ "ASCII-tecken (endast Japanska)"
-
-#~ msgid "Display header pane above message view"
-#~ msgstr "Visa brevhuvudspanel ovanför meddelandevy"
-
-#~ msgid "Display short headers on message view"
-#~ msgstr "Visa korta brevhuvuden i meddelandevy"
-
-#, fuzzy
-#~ msgid "Display cursor in message view"
-#~ msgstr "Visa korta brevhuvuden i meddelandevy"
-
-#~ msgid "Line space"
-#~ msgstr "Radavstånd"
-
-#~ msgid "pixel(s)"
-#~ msgstr "bildpunkter"
-
-#~ msgid "Scroll"
-#~ msgstr "Rulla"
-
-#~ msgid "Half page"
-#~ msgstr "Halvsida"
-
-#~ msgid "Smooth scroll"
-#~ msgstr "Mjuk rullning"
-
-#~ msgid "Step"
-#~ msgstr "Steg"
-
-#~ msgid "Resize attached large images to fit in the window"
-#~ msgstr "Ändra storlek på bifogade stora bilder så att de ryms i fönstret"
-
-#, fuzzy
-#~ msgid "Display images as inline"
-#~ msgstr "Brevhuvudsinställning"
-
-#, fuzzy
-#~ msgid "Learning command:"
-#~ msgstr "Kör kommando"
-
-#, fuzzy
-#~ msgid "Classifying command"
-#~ msgstr "Kör kommando"
-
-#, fuzzy
-#~ msgid "Junk folder"
-#~ msgstr "mapp"
-
-#, fuzzy
-#~ msgid "Filter messages classified as junk on receiving"
-#~ msgstr "Filtrera meddelanden vid mottagning"
-
-#, fuzzy
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr "(Ofiltrerade meddelanden kommer att lagras i denna mapp)"
-
-#~ msgid "Automatically check signatures"
-#~ msgstr "Undersök signaturer automatiskt"
-
-#~ msgid "Show signature check result in a popup window"
-#~ msgstr "Visa resultat av signaturundersökning i ett extrafönster"
-
-#~ msgid "Store passphrase in memory temporarily"
-#~ msgstr "Lagra lösenfras temporärt i minnet"
-
-#~ msgid "Expired after"
-#~ msgstr "Utgår efter"
-
-#~ msgid "minute(s) "
-#~ msgstr "minut(er)"
-
-#, fuzzy
-#~ msgid "Setting to '0' will store the passphrase for the whole session."
-#~ msgstr ""
-#~ "(Lösenfrasen kommer att lagras hela sessionen\n"
-#~ "om 0 angivits)"
-
-#~ msgid "Grab input while entering a passphrase"
-#~ msgstr "Håll fokus under inskrivning av lösenfas"
-
-#~ msgid "Display warning on startup if GnuPG doesn't work"
-#~ msgstr "Visa varning vid start om GnuPG inte fungerar"
-
-#~ msgid "Always open messages in summary when selected"
-#~ msgstr "Öppna alltid meddelanden i summering, när de valts"
-
-#~ msgid "Open first unread message when entering a folder"
-#~ msgstr "Öppna första olästa meddelande vid öppning av mapp"
-
-#~ msgid "Only mark message as read when opened in new window"
-#~ msgstr "Markera endast meddelande som läst, när det öppnats i nytt fönster"
-
-#~ msgid "Go to inbox after receiving new mail"
-#~ msgstr "Gå till inkorgen efter att ny post kommit"
-
-#~ msgid "Execute immediately when moving or deleting messages"
-#~ msgstr "Utför omedelbart vid flyttning eller borttagande av meddelanden"
-
-#, fuzzy
-#~ msgid "Messages will be marked until execution if this is turned off."
-#~ msgstr ""
-#~ "(Meddelanden kommer endast vara markerade tills du väljer\n"
-#~ " \"Utför köade meddelanden\" om detta är avstängt)"
-
-#~ msgid "Receive dialog"
-#~ msgstr "Mottagningsdialog"
-
-#~ msgid "Show receive dialog"
-#~ msgstr "Visa mottagningsdialog"
-
-#~ msgid "Always"
-#~ msgstr "Alltid"
-
-#~ msgid "Only on manual receiving"
-#~ msgstr "Bara vid manuell mottagning"
-
-#~ msgid "Never"
-#~ msgstr "Aldrig"
-
-#~ msgid "Don't popup error dialog on receive error"
-#~ msgstr "Visa inte feldialog vid hämtningsfel"
-
-#~ msgid "Close receive dialog when finished"
-#~ msgstr "Stäng mottagningsdialog efteråt"
-
-#~ msgid " Set key bindings... "
-#~ msgstr "Ställ in tangentbindningar..."
-
-#~ msgid "External commands (%s will be replaced with file name / URI)"
-#~ msgstr "Externa kommandon (%s kommer att ersättas med filnamn / URI)"
-
-#~ msgid "Web browser"
-#~ msgstr "Webbläsare"
-
-#~ msgid "Add address to destination when double-clicked"
-#~ msgstr "Lägg till adress till destination vid dubbelklick"
-
-#~ msgid "On exit"
-#~ msgstr "Vid avslut"
-
-#~ msgid "Confirm on exit"
-#~ msgstr "Bekräfta avslut"
-
-#~ msgid "Empty trash on exit"
-#~ msgstr "Töm papperskorg vid avslut"
-
-#~ msgid "Ask before emptying"
-#~ msgstr "Fråga innan tömning"
-
-#~ msgid "Warn if there are queued messages"
-#~ msgstr "Varna om det finns köade meddelanden"
-
-#, fuzzy
-#~ msgid "Enable strict checking of the integrity of summary caches"
-#~ msgstr "Skriver summeringscache (%s)..."
-
-#~ msgid "Socket I/O timeout:"
-#~ msgstr "Väntetid för uttags-I/O (socket I/O):"
-
-#~ msgid "second(s)"
-#~ msgstr "sekunder"
-
-#~ msgid "the full abbreviated weekday name"
-#~ msgstr "förkortat veckodagsnamn"
-
-#~ msgid "the full weekday name"
-#~ msgstr "fullständigt veckodagsnamn"
-
-#~ msgid "the abbreviated month name"
-#~ msgstr "förkortat månadsnamn"
-
-#~ msgid "the full month name"
-#~ msgstr "fullständigt månadsnamn"
-
-#~ msgid "the preferred date and time for the current locale"
-#~ msgstr "datum och tid gällande lokalt"
-
-#~ msgid "the century number (year/100)"
-#~ msgstr "århundradetal (årtal/100)"
-
-#~ msgid "the day of the month as a decimal number"
-#~ msgstr "dagen i månaden som decimaltal"
-
-#~ msgid "the hour as a decimal number using a 24-hour clock"
-#~ msgstr "timmen som decimaltal enligt 24-timmarsräkning"
-
-#~ msgid "the hour as a decimal number using a 12-hour clock"
-#~ msgstr "timmen som decimaltal enligt 12-timmarsräkning"
-
-#~ msgid "the day of the year as a decimal number"
-#~ msgstr "dagen på året som ett decimaltal"
-
-#~ msgid "the month as a decimal number"
-#~ msgstr "månaden som ett decimaltal"
-
-#~ msgid "the minute as a decimal number"
-#~ msgstr "minuten som ett decimaltal"
-
-#~ msgid "either AM or PM"
-#~ msgstr "antingen AM eller PM"
-
-#~ msgid "the second as a decimal number"
-#~ msgstr "sekunden som ett decimaltal"
-
-#~ msgid "the day of the week as a decimal number"
-#~ msgstr "veckodagen som ett decimaltal"
-
-#~ msgid "the preferred date for the current locale"
-#~ msgstr "datum gällande lokalt"
-
-#~ msgid "the last two digits of a year"
-#~ msgstr "de sista två siffrorna av ett årtal"
-
-#~ msgid "the year as a decimal number"
-#~ msgstr "årtalet som ett decimaltal"
-
-#~ msgid "the time zone or name or abbreviation"
-#~ msgstr "tidszon eller namn eller förkortning"
-
-#~ msgid "Specifier"
-#~ msgstr "Symbol"
-
-#~ msgid "Description"
-#~ msgstr "Beskrivning"
-
-#~ msgid "Example"
-#~ msgstr "Exempel"
-
-#~ msgid "Set message colors"
-#~ msgstr "Ställ in meddelandefärger"
-
-#~ msgid "Colors"
-#~ msgstr "Färger"
-
-#~ msgid "Quoted Text - First Level"
-#~ msgstr "Citerad text - Första nivån"
-
-#~ msgid "Quoted Text - Second Level"
-#~ msgstr "Citerad text - Andra nivån"
-
-#~ msgid "Quoted Text - Third Level"
-#~ msgstr "Citerad text - Tredje nivån"
-
-#~ msgid "URI link"
-#~ msgstr "URI-länk"
-
-#~ msgid "Recycle quote colors"
-#~ msgstr "Återanvänd citeringsfärger"
-
-#~ msgid "Pick color for quotation level 1"
-#~ msgstr "Välj färg för citeringsnivå 1"
-
-#~ msgid "Pick color for quotation level 2"
-#~ msgstr "Välj färg för citeringsnivå 2"
-
-#~ msgid "Pick color for quotation level 3"
-#~ msgstr "Välj färg för citeringsnivå 3"
-
-#~ msgid "Pick color for URI"
-#~ msgstr "Välj färg för URI"
-
-#~ msgid "Description of symbols"
-#~ msgstr "Beskrivning av symboler"
-
-#~ msgid ""
-#~ "Date\n"
-#~ "From\n"
-#~ "Full Name of Sender\n"
-#~ "First Name of Sender\n"
-#~ "Initial of Sender\n"
-#~ "Subject\n"
-#~ "To\n"
-#~ "Cc\n"
-#~ "Newsgroups\n"
-#~ "Message-ID"
-#~ msgstr ""
-#~ "Datum\n"
-#~ "Från\n"
-#~ "Fullständigt avsändarnamn\n"
-#~ "Avsändarens förnamn\n"
-#~ "Avsändarens initialer\n"
-#~ "Ärende\n"
-#~ "Till\n"
-#~ "Kopia\n"
-#~ "Diskussionsgrupper\n"
-#~ "Meddelande-ID"
-
-#~ msgid "If x is set, displays expr"
-#~ msgstr "Om x är inställd, visas expr"
-
-#~ msgid ""
-#~ "Message body\n"
-#~ "Quoted message body\n"
-#~ "Message body without signature\n"
-#~ "Quoted message body without signature\n"
-#~ "Literal %"
-#~ msgstr ""
-#~ "Meddelandetext\n"
-#~ "Citerad meddelandetext\n"
-#~ "Meddelandetext utan signatur\n"
-#~ "Citerad meddelandetext utan signatur\n"
-#~ "Bokstavligt %"
-
-#~ msgid ""
-#~ "Literal backslash\n"
-#~ "Literal question mark\n"
-#~ "Literal opening curly brace\n"
-#~ "Literal closing curly brace"
-#~ msgstr ""
-#~ "Bokstavligt bakåtsnedstreck\n"
-#~ "Bokstavligt frågetecken\n"
-#~ "Bokstavlig öppnande klammerparentes\n"
-#~ "Bokstavlig avslutande klammerparentes"
-
-#~ msgid "Key bindings"
-#~ msgstr "Tangentbindningar"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Välj förinställda tangentbindningar.\n"
-#~ "Du kan också ändra varje menys genvägar genom\n"
-#~ "att trycka valfri tangent eller tangentkombination\n"
-#~ "när muspekaren är över genvägen."
-
-#~ msgid "Default"
-#~ msgstr "Standard"
-
-#~ msgid "Old Sylpheed"
-#~ msgstr "Gamla Sylpheed"
 
 #~ msgid "Font selection"
 #~ msgstr "Typsnittsval"
