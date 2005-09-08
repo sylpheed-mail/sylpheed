@@ -55,9 +55,7 @@ md5_hmac_get(const guchar *text, gint text_len,
 		/* if key is longer than 64 bytes reset it to key=MD5(key) */
 		SMD5 *tmd5;
 
-		tmd5 = s_gnet_md5_new_incremental();
-		s_gnet_md5_update(tmd5, key, key_len);
-		s_gnet_md5_final(tmd5);
+		tmd5 = s_gnet_md5_new(key, key_len);
 		memcpy(k_ipad, s_gnet_md5_get_digest(tmd5),
 		       S_GNET_MD5_HASH_LENGTH);
 		memcpy(k_opad, s_gnet_md5_get_digest(tmd5),
