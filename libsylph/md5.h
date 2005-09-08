@@ -1,49 +1,61 @@
-/* md5.h - MD5 Message-Digest Algorithm
- *	Copyright (C) 1995, 1996, 1998, 1999 Free Software Foundation, Inc.
- *
- * according to the definition of MD5 in RFC 1321 from April 1992.
- * NOTE: This is *not* the same file as the one from glibc
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2, or (at your option) any
- * later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+/**
+
+   This code is in the public domain.  See md5.c for details.
+
+   Authors:
+     Colin Plumb [original author]
+     David Helder [GNet API]
+
+   Modified the prefix of functions to prevent conflict with original GNet.
+
  */
 
-#ifndef _MD5_HDR_
-#define _MD5_HDR_
 
-#include "utils.h"
+#ifndef S_GNET_MD5_H
+#define S_GNET_MD5_H
 
-typedef struct {  /* Hmm, should be private */
-    u32 A,B,C,D;
-    u32  nblocks;
-    unsigned char buf[64];
-    int  count;
-    int  finalized;
-} MD5_CONTEXT;
+#include <glib.h>
 
-void md5_init(MD5_CONTEXT *ctx);
-void md5_update(MD5_CONTEXT *hd, const unsigned char *inbuf, size_t inlen);
-void md5_final(unsigned char *digest, MD5_CONTEXT *ctx);
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-void md5_hex_digest(char *hexdigest, const unsigned char *s);
+/**
+ *  SMD5
+ *
+ *  SMD5 is a MD5 hash.
+ *
+ **/
+typedef struct _SMD5 SMD5;
 
-void md5_hmac(unsigned char *digest,
-              const unsigned char* text, int text_len,
-              const unsigned char* key, int key_len);
-void md5_hex_hmac(char *hexdigest,
-                  const unsigned char* text, int text_len,
-                  const unsigned char* key, int key_len);
+/**
+ *  S_GNET_MD5_HASH_LENGTH
+ *
+ *  Length of the MD5 hash in bytes.
+ **/
+#define S_GNET_MD5_HASH_LENGTH	16
 
-#endif /* _MD5_HDR_ */
 
+SMD5*    s_gnet_md5_new (const guchar* buffer, guint length);
+SMD5*	 s_gnet_md5_new_string (const gchar* str);
+SMD5*    s_gnet_md5_clone (const SMD5* md5);
+void     s_gnet_md5_delete (SMD5* md5);
+	
+SMD5*	 s_gnet_md5_new_incremental (void);
+void	 s_gnet_md5_update (SMD5* md5, const guchar* buffer, guint length);
+void	 s_gnet_md5_final (SMD5* md5);
+	
+gboolean s_gnet_md5_equal (gconstpointer p1, gconstpointer p2);
+guint	 s_gnet_md5_hash (gconstpointer p);
+	
+gchar*   s_gnet_md5_get_digest (const SMD5* md5);
+gchar*   s_gnet_md5_get_string (const SMD5* md5);
+	
+void	 s_gnet_md5_copy_string (const SMD5* md5, gchar* buffer);
+
+
+#ifdef __cplusplus
+}
+#endif				/* __cplusplus */
+
+#endif /* S_GNET_MD5_H */

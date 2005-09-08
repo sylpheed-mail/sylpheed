@@ -27,7 +27,7 @@
 #include <string.h>
 
 #include "smtp.h"
-#include "md5.h"
+#include "md5_hmac.h"
 #include "base64.h"
 #include "utils.h"
 
@@ -169,7 +169,8 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 		session->state = SMTP_AUTH_LOGIN_USER;
 
 		if (!strncmp(msg, "334 ", 4)) {
-			base64_encode(buf, session->user, strlen(session->user));
+			base64_encode(buf, (guchar *)session->user,
+				      strlen(session->user));
 
 			session_send_msg(SESSION(session), SESSION_MSG_NORMAL,
 					 buf);
@@ -187,9 +188,9 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 		if (!strncmp(msg, "334 ", 4)) {
 			gchar *response;
 			gchar *response64;
-			gchar *challenge;
+			guchar *challenge;
 			gint challengelen;
-			guchar hexdigest[33];
+			gchar hexdigest[33];
 
 			challenge = g_malloc(strlen(msg + 4) + 1);
 			challengelen = base64_decode(challenge, msg + 4, -1);
@@ -198,7 +199,7 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 
 			g_snprintf(buf, sizeof(buf), "%s", session->pass);
 			md5_hex_hmac(hexdigest, challenge, challengelen,
-				     buf, strlen(session->pass));
+				     (guchar *)buf, strlen(buf));
 			g_free(challenge);
 
 			response = g_strdup_printf
@@ -206,7 +207,8 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 			log_print("ESMTP> [Encoded: %s]\n", response);
 
 			response64 = g_malloc((strlen(response) + 3) * 2 + 1);
-			base64_encode(response64, response, strlen(response));
+			base64_encode(response64, (guchar *)response,
+				      strlen(response));
 			g_free(response);
 
 			session_send_msg(SESSION(session), SESSION_MSG_NORMAL,
@@ -238,7 +240,8 @@ static gint smtp_auth_login_user_recv(SMTPSession *session, const gchar *msg)
 	session->state = SMTP_AUTH_LOGIN_PASS;
 
 	if (!strncmp(msg, "334 ", 4))
-		base64_encode(buf, session->pass, strlen(session->pass));
+		base64_encode(buf, (guchar *)session->pass,
+			      strlen(session->pass));
 	else
 		/* Server rejects AUTH */
 		g_snprintf(buf, sizeof(buf), "*");
@@ -342,7 +345,7 @@ static gint smtp_auth_plain(SMTPSession *session)
 
 	strcpy(outbuf, "AUTH PLAIN ");
 	p = outbuf + strlen(outbuf);
-	base64_encode(p, authstr, authlen);
+	base64_encode(p, (guchar *)authstr, authlen);
 
 	session_send_msg(SESSION(session), SESSION_MSG_NORMAL, outbuf);
 	log_print("ESMTP> AUTH PLAIN ********\n");

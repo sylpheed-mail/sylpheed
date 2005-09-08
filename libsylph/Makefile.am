@@ -21,6 +21,7 @@ libsylph_la_SOURCES = \
 	imap.c imap.h \
 	mbox.c mbox.h \
 	md5.c md5.h \
+	md5_hmac.c md5_hmac.h \
 	mh.c mh.h \
 	news.c news.h \
 	nntp.c nntp.h \

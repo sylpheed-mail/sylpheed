@@ -138,7 +138,8 @@ static gint pop3_getauth_apop_send(Pop3Session *session)
 {
 	gchar *start, *end;
 	gchar *apop_str;
-	gchar md5sum[33];
+	SMD5 *md5;
+	gchar *md5sum;
 
 	g_return_val_if_fail(session->user != NULL, -1);
 	g_return_val_if_fail(session->pass != NULL, -1);
@@ -161,10 +162,14 @@ static gint pop3_getauth_apop_send(Pop3Session *session)
 	*(end + 1) = '\0';
 
 	apop_str = g_strconcat(start, session->pass, NULL);
-	md5_hex_digest(md5sum, apop_str);
-	g_free(apop_str);
+	md5 = s_gnet_md5_new((guchar *)apop_str, strlen(apop_str));
+	md5sum = s_gnet_md5_get_string(md5);
 
 	pop3_gen_send(session, "APOP %s %s", session->user, md5sum);
+
+	g_free(md5sum);
+	s_gnet_md5_delete(md5);
+	g_free(apop_str);
 
 	return PS_SUCCESS;
 }

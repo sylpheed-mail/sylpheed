@@ -1,5 +1,13 @@
 2005-09-08
 
+	* libsylph/md5.[ch]: GNet の public domain なコードで置き換えた。
+	* libsylph/md5_hmac.[ch]: md5.[ch] から分離して書き直した。
+	* libsylph/pop.c
+	  libsylph/smtp.c
+	  libsylph/imap.c: 新しい MD5 インタフェースにあわせて修正。
+
+2005-09-08
+
 	* configure.in: ${prefix}/${DATADIRNAME} の代わりに ${datadir} を
 	  使用するようにした。
 
