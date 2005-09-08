@@ -91,19 +91,19 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Define text domain.])
 AM_GLIB_GNU_GETTEXT
 dnl AM_GNU_GETTEXT
 dnl AC_CHECK_FUNC(gettext, AC_CHECK_LIB(intl, gettext))
-localedir='${prefix}/${DATADIRNAME}/locale'
+localedir='${datadir}/locale'
 AC_ARG_WITH(localedir,
 	[  --with-localedir=DIR    Locale directory],
 	[localedir="$withval"])
 AC_SUBST(localedir)
 
-manualdir='${prefix}/${DATADIRNAME}/${PACKAGE}/manual'
+manualdir='${datadir}/${PACKAGE}/manual'
 AC_ARG_WITH(manualdir,
 	[  --with-manualdir=DIR    Manual directory],
 	[manualdir="$withval"])
 AC_SUBST(manualdir)
 
-faqdir='${prefix}/${DATADIRNAME}/${PACKAGE}/faq'
+faqdir='${datadir}/${PACKAGE}/faq'
 AC_ARG_WITH(faqdir,
 	[  --with-faqdir=DIR       FAQ directory],
 	[faqdir="$withval"])
