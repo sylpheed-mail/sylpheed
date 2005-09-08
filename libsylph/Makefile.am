@@ -19,6 +19,7 @@ libsylph_la_SOURCES = \
 	folder.c folder.h \
 	html.c html.h \
 	imap.c imap.h \
+	mbox.c mbox.h \
 	md5.c md5.h \
 	mh.c mh.h \
 	news.c news.h \

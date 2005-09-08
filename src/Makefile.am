@@ -70,7 +70,6 @@ sylpheed_SOURCES = \
 	about.c about.h \
 	setup.c setup.h \
 	gtkutils.c gtkutils.h \
-	mbox.c mbox.h \
 	send_message.c send_message.h \
 	inc.c inc.h \
 	import.c import.h \
