@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-08 17:08+0900\n"
+"POT-Creation-Date: 2005-09-09 18:51+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -44,172 +44,177 @@ msgstr "%s:%d에대한 IMAP4 접속을 만듭니다 ...\n"
 msgid "Can't start TLS session.\n"
 msgstr "TLS 세션을 시작할 수 없습니다.\n"
 
+#: libsylph/imap.c:1094
+#, fuzzy, c-format
+msgid "Getting message %d"
+msgstr "%d 메시지를 삭제하는 중"
+
 #: libsylph/imap.c:1211
 #, fuzzy, c-format
 msgid "Appending messages to %s (%d / %d)"
 msgstr "메시지를 보내는 중 (%d / %d 바이트)"
 
-#: libsylph/imap.c:1296
+#: libsylph/imap.c:1299
 #, fuzzy, c-format
 msgid "Moving messages %s to %s ..."
 msgstr "메시지 %s%c%d를 %s로 이동합니다...\n"
 
-#: libsylph/imap.c:1302
+#: libsylph/imap.c:1305
 #, fuzzy, c-format
 msgid "Copying messages %s to %s ..."
 msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
 
-#: libsylph/imap.c:1449
+#: libsylph/imap.c:1452
 #, fuzzy, c-format
 msgid "Removing messages %s"
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: libsylph/imap.c:1455
+#: libsylph/imap.c:1458
 #, fuzzy, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "삭제 플래그를 설정할 수가 없습니다: %d\n"
 
-#: libsylph/imap.c:1463 libsylph/imap.c:1558
+#: libsylph/imap.c:1466 libsylph/imap.c:1561
 msgid "can't expunge\n"
 msgstr "지울 수가 없습니다\n"
 
-#: libsylph/imap.c:1546
+#: libsylph/imap.c:1549
 #, fuzzy, c-format
 msgid "Removing all messages in %s"
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: libsylph/imap.c:1552
+#: libsylph/imap.c:1555
 #, fuzzy
 msgid "can't set deleted flags: 1:*\n"
 msgstr "삭제 플래그를 설정할 수가 없습니다: 1:%d\n"
 
-#: libsylph/imap.c:1597
+#: libsylph/imap.c:1600
 #, fuzzy
 msgid "can't close folder\n"
 msgstr "폴더를 선택할 수가 없습니다: %s\n"
 
-#: libsylph/imap.c:1675
+#: libsylph/imap.c:1678
 #, fuzzy, c-format
 msgid "root folder %s not exist\n"
 msgstr "표시 파일이 발견되지않음.\n"
 
-#: libsylph/imap.c:1859 libsylph/imap.c:1867
+#: libsylph/imap.c:1862 libsylph/imap.c:1870
 #, fuzzy
 msgid "error occurred while getting LIST.\n"
 msgstr "LIST를 얻는 도중 에러가 발생.\n"
 
-#: libsylph/imap.c:1981
+#: libsylph/imap.c:1984
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "'%s'를 생성할 수가 없습니다\n"
 
-#: libsylph/imap.c:1986
+#: libsylph/imap.c:1989
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "INBOX 아래에 '%s'를 생성할 수가 없습니다\n"
 
-#: libsylph/imap.c:2047
+#: libsylph/imap.c:2050
 msgid "can't create mailbox: LIST failed\n"
 msgstr "우편함을 생성할 수 없습니다: LIST 실패\n"
 
-#: libsylph/imap.c:2067
+#: libsylph/imap.c:2070
 msgid "can't create mailbox\n"
 msgstr "우편함을 생성할 수 없습니다\n"
 
-#: libsylph/imap.c:2163
+#: libsylph/imap.c:2166
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "우편함명을 바꿀 수 없습니다: %s에서 %s로\n"
 
-#: libsylph/imap.c:2243
+#: libsylph/imap.c:2246
 msgid "can't delete mailbox\n"
 msgstr "우편함을 삭제할 수 없습니다\n"
 
-#: libsylph/imap.c:2287
+#: libsylph/imap.c:2290
 msgid "can't get envelope\n"
 msgstr "envelope를 얻을 수가 없습니다\n"
 
-#: libsylph/imap.c:2300
+#: libsylph/imap.c:2303
 #, fuzzy, c-format
 msgid "Getting message headers (%d / %d)"
 msgstr "메시지를 보내는 중 (%d / %d 바이트)"
 
-#: libsylph/imap.c:2309
+#: libsylph/imap.c:2313
 msgid "error occurred while getting envelope.\n"
 msgstr "envelope를 얻는 중 에러 발생.\n"
 
-#: libsylph/imap.c:2330
+#: libsylph/imap.c:2335
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "envelope를 파싱할 수가 없습니다: %s\n"
 
-#: libsylph/imap.c:2453
+#: libsylph/imap.c:2459
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "%s:%d IMAP4 서버에 연결할 수가 없습니다\n"
 
-#: libsylph/imap.c:2460
+#: libsylph/imap.c:2466
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "IMAP4 세션을 만들 수 없습니다: %s: %d\n"
 
-#: libsylph/imap.c:2535
+#: libsylph/imap.c:2541
 msgid "can't get namespace\n"
 msgstr "namespace를 얻을 수 없습니다\n"
 
-#: libsylph/imap.c:3063
+#: libsylph/imap.c:3069
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "폴더를 선택할 수가 없습니다: %s\n"
 
-#: libsylph/imap.c:3239
+#: libsylph/imap.c:3245
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "인증 방법"
 
-#: libsylph/imap.c:3256
+#: libsylph/imap.c:3262
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 로그인을 실패했습니다.\n"
 
-#: libsylph/imap.c:3586
+#: libsylph/imap.c:3592
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "%s를 %s에 붙일 수 없습니다\n"
 
-#: libsylph/imap.c:3593
+#: libsylph/imap.c:3599
 msgid "(sending file...)"
 msgstr "(파일을 보냅니다...)"
 
-#: libsylph/imap.c:3621
+#: libsylph/imap.c:3627
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "%s 메시지를 추가할 수가 없습니다\n"
 
-#: libsylph/imap.c:3653
+#: libsylph/imap.c:3659
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "%d를 %s로 복사할 수가 없습니다\n"
 
-#: libsylph/imap.c:3677
+#: libsylph/imap.c:3683
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap 명령어 실행중 에러: STORE %d:%d %s\n"
 
-#: libsylph/imap.c:3691
+#: libsylph/imap.c:3697
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: libsylph/imap.c:3704
+#: libsylph/imap.c:3710
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: libsylph/imap.c:3937
+#: libsylph/imap.c:3943
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv가 UTF-7를 %s로 변환할 수 없습니다\n"
 
-#: libsylph/imap.c:3967
+#: libsylph/imap.c:3973
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv가 %s를 UTF-7로 변환할 수 없습니다\n"
@@ -986,7 +991,7 @@ msgstr "이름:"
 
 #. Buttons
 #: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
-#: src/editaddress.c:1017 src/mainwindow.c:2284 src/prefs_actions.c:266
+#: src/editaddress.c:1017 src/mainwindow.c:2298 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
 #: src/prefs_template.c:232
 msgid "Delete"
@@ -1186,11 +1191,11 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:480
+#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:481
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:151 src/main.c:573
+#: src/alertpanel.c:151 src/main.c:574
 msgid "Warning"
 msgstr "경고"
 
@@ -1711,7 +1716,7 @@ msgstr "마임 타입"
 msgid "Size"
 msgstr "크기"
 
-#: src/compose.c:4454 src/mainwindow.c:2217 src/prefs_account_dialog.c:516
+#: src/compose.c:4454 src/mainwindow.c:2231 src/prefs_account_dialog.c:516
 #: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "메일 발송"
@@ -2329,12 +2334,12 @@ msgstr "폴더 정보를 설정합니다...\n"
 msgid "Setting folder info..."
 msgstr "폴더 정보를 설정합니다..."
 
-#: src/folderview.c:806 src/mainwindow.c:3282 src/setup.c:81
+#: src/folderview.c:806 src/mainwindow.c:3296 src/setup.c:81
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "%s%c%s를 스캔합니다..."
 
-#: src/folderview.c:810 src/mainwindow.c:3287 src/setup.c:86
+#: src/folderview.c:810 src/mainwindow.c:3301 src/setup.c:86
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "%s 폴더를 스캔합니다..."
@@ -2642,7 +2647,7 @@ msgstr "LDIF 파일을 주소록으로 가져오기"
 msgid "Prev"
 msgstr "이전"
 
-#: src/importldif.c:768 src/mainwindow.c:2313
+#: src/importldif.c:768 src/mainwindow.c:2327
 msgid "Next"
 msgstr "다음"
 
@@ -2872,16 +2877,16 @@ msgstr "프로토콜 로그"
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread가 glib에의해 지원되지않습니다.\n"
 
-#: src/main.c:329
+#: src/main.c:330
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:332
+#: src/main.c:333
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:333
+#: src/main.c:334
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2891,48 +2896,48 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:336
+#: src/main.c:337
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:337
+#: src/main.c:338
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:338
+#: src/main.c:339
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:339
+#: src/main.c:340
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:340
+#: src/main.c:341
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:342
+#: src/main.c:343
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:343
+#: src/main.c:344
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:344
+#: src/main.c:345
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:432
+#: src/main.c:433
 #, fuzzy
 msgid "Filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/main.c:433
+#: src/main.c:434
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2946,19 +2951,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:481
+#: src/main.c:482
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:489
+#: src/main.c:490
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:490
+#: src/main.c:491
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
-#: src/main.c:574
+#: src/main.c:575
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2967,16 +2972,16 @@ msgstr ""
 "OpenPGP 지원기능을 끕니다."
 
 #. remote command mode
-#: src/main.c:621
+#: src/main.c:622
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:821
+#: src/main.c:822
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:822
+#: src/main.c:823
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3600,29 +3605,29 @@ msgstr "없음"
 msgid "Changing window separation type from %d to %d\n"
 msgstr "창 분리 형식을 %d에서 %d로 바꿉니다\n"
 
-#: src/mainwindow.c:1532
+#: src/mainwindow.c:1546
 msgid "Offline"
 msgstr ""
 
-#: src/mainwindow.c:1533
+#: src/mainwindow.c:1547
 msgid "You are offline. Go online?"
 msgstr ""
 
-#: src/mainwindow.c:1547
+#: src/mainwindow.c:1561
 #, fuzzy
 msgid "Empty all trash"
 msgstr "지운 편지함 비우기"
 
-#: src/mainwindow.c:1548
+#: src/mainwindow.c:1562
 #, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/mainwindow.c:1576
+#: src/mainwindow.c:1590
 msgid "Add mailbox"
 msgstr "메일박스 추가"
 
-#: src/mainwindow.c:1577
+#: src/mainwindow.c:1591
 msgid ""
 "Input the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3632,16 +3637,16 @@ msgstr ""
 "기존의 메일 박스가 지정되면 자동으로\n"
 "스캔될것입니다."
 
-#: src/mainwindow.c:1583
+#: src/mainwindow.c:1597
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "메일 박스 `%s'가 이미 존재합니다."
 
-#: src/mainwindow.c:1588 src/setup.c:57
+#: src/mainwindow.c:1602 src/setup.c:57
 msgid "Mailbox"
 msgstr "메일박스"
 
-#: src/mainwindow.c:1594 src/setup.c:63
+#: src/mainwindow.c:1608 src/setup.c:63
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3650,153 +3655,153 @@ msgstr ""
 "메일박스 생성이 실패했습니다.\n"
 "아마 어떤 파일이 이미 존재하거나 그 곳에 쓰기 권한이 없습니다."
 
-#: src/mainwindow.c:1985
+#: src/mainwindow.c:1999
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 폴더 보기"
 
-#: src/mainwindow.c:2005 src/messageview.c:369
+#: src/mainwindow.c:2019 src/messageview.c:369
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 메시지 보기"
 
-#: src/mainwindow.c:2152 src/summaryview.c:370
+#: src/mainwindow.c:2166 src/summaryview.c:370
 msgid "/_Reply"
 msgstr "/회신(_R)"
 
-#: src/mainwindow.c:2153
+#: src/mainwindow.c:2167
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2154
+#: src/mainwindow.c:2168
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/회신(_y)/보낸이(_s)"
 
-#: src/mainwindow.c:2155
+#: src/mainwindow.c:2169
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/회신(_y)/메일링리스트(_l)"
 
-#: src/mainwindow.c:2160 src/summaryview.c:377
+#: src/mainwindow.c:2174 src/summaryview.c:377
 msgid "/_Forward"
 msgstr "/전달(_F)"
 
-#: src/mainwindow.c:2161 src/summaryview.c:378
+#: src/mainwindow.c:2175 src/summaryview.c:378
 msgid "/For_ward as attachment"
 msgstr "/첨부로 전달(_w)"
 
-#: src/mainwindow.c:2162 src/summaryview.c:379
+#: src/mainwindow.c:2176 src/summaryview.c:379
 msgid "/Redirec_t"
 msgstr "/Redirec_t"
 
-#: src/mainwindow.c:2198
+#: src/mainwindow.c:2212
 msgid "Get"
 msgstr "받기"
 
-#: src/mainwindow.c:2199
+#: src/mainwindow.c:2213
 msgid "Incorporate new mail"
 msgstr "새 메일을 가져옵니다"
 
-#: src/mainwindow.c:2206
+#: src/mainwindow.c:2220
 msgid "Get all"
 msgstr "전부 받기"
 
-#: src/mainwindow.c:2207
+#: src/mainwindow.c:2221
 msgid "Incorporate new mail of all accounts"
 msgstr "모든 계정에서 새 메일을 가져옵니다"
 
-#: src/mainwindow.c:2218
+#: src/mainwindow.c:2232
 msgid "Send queued message(s)"
 msgstr "임시 보관된 메시지를 보냅니다"
 
-#: src/mainwindow.c:2228 src/prefs_account_dialog.c:518
+#: src/mainwindow.c:2242 src/prefs_account_dialog.c:518
 #: src/prefs_common_dialog.c:689 src/prefs_folder_item.c:138
 msgid "Compose"
 msgstr "작성"
 
-#: src/mainwindow.c:2229
+#: src/mainwindow.c:2243
 msgid "Compose new message"
 msgstr "새 메시지를 작성합니다"
 
-#: src/mainwindow.c:2237 src/prefs_common_dialog.c:1188
+#: src/mainwindow.c:2251 src/prefs_common_dialog.c:1188
 msgid "Reply"
 msgstr "회신"
 
-#: src/mainwindow.c:2238 src/mainwindow.c:2251
+#: src/mainwindow.c:2252 src/mainwindow.c:2265
 msgid "Reply to the message"
 msgstr "메시지에 회신을 보냅니다"
 
-#: src/mainwindow.c:2255
+#: src/mainwindow.c:2269
 msgid "Reply all"
 msgstr "전체 회신"
 
-#: src/mainwindow.c:2256
+#: src/mainwindow.c:2270
 msgid "Reply to all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2264 src/prefs_filter_edit.c:741
+#: src/mainwindow.c:2278 src/prefs_filter_edit.c:741
 msgid "Forward"
 msgstr "전달"
 
-#: src/mainwindow.c:2265 src/mainwindow.c:2278
+#: src/mainwindow.c:2279 src/mainwindow.c:2292
 msgid "Forward the message"
 msgstr "메시지를 다른 사람에게 전달합니다"
 
-#: src/mainwindow.c:2285
+#: src/mainwindow.c:2299
 msgid "Delete the message"
 msgstr "메시지를 지웁니다"
 
-#: src/mainwindow.c:2293 src/prefs_common_dialog.c:1719
+#: src/mainwindow.c:2307 src/prefs_common_dialog.c:1719
 msgid "Junk"
 msgstr ""
 
-#: src/mainwindow.c:2294
+#: src/mainwindow.c:2308
 #, fuzzy
 msgid "Set as junk mail"
 msgstr "기본 계정으로 설정"
 
-#: src/mainwindow.c:2303
+#: src/mainwindow.c:2317
 msgid "Execute"
 msgstr "실행"
 
-#: src/mainwindow.c:2304
+#: src/mainwindow.c:2318
 msgid "Execute marked process"
 msgstr "표시된 프로세스들을 실행합니다"
 
-#: src/mainwindow.c:2314
+#: src/mainwindow.c:2328
 msgid "Next unread message"
 msgstr "다음 안 읽은 메시지를 보여줍니다"
 
-#: src/mainwindow.c:2326
+#: src/mainwindow.c:2340
 msgid "Prefs"
 msgstr "설정"
 
-#: src/mainwindow.c:2327
+#: src/mainwindow.c:2341
 msgid "Common preferences"
 msgstr "기본적인 환경 설정"
 
-#: src/mainwindow.c:2335 src/prefs_folder_item.c:262
+#: src/mainwindow.c:2349 src/prefs_folder_item.c:262
 #: src/prefs_folder_item.c:273 src/progressdialog.c:128
 msgid "Account"
 msgstr "계정"
 
-#: src/mainwindow.c:2336
+#: src/mainwindow.c:2350
 msgid "Account setting"
 msgstr "계정을 설정합니다"
 
-#: src/mainwindow.c:2508
+#: src/mainwindow.c:2522
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2519
+#: src/mainwindow.c:2533
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2712
+#: src/mainwindow.c:2726
 msgid "Exit"
 msgstr "끝내기"
 
-#: src/mainwindow.c:2712
+#: src/mainwindow.c:2726
 msgid "Exit this program?"
 msgstr "이 프로그램을 끝내시겠습니까?"
 

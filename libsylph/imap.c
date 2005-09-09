@@ -1091,7 +1091,7 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 		return NULL;
 	}
 
-	status_print("Getting message %d", uid);
+	status_print(_("Getting message %d"), uid);
 	debug_print("getting message %d...\n", uid);
 	ok = imap_cmd_fetch(session, (guint32)uid, filename);
 
