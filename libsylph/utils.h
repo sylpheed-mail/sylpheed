@@ -177,6 +177,8 @@ gint g_chmod	(const gchar	*path,
 }
 
 typedef void (*UIUpdateFunc)		(void);
+typedef void (*ProgressFunc)		(gint		 cur,
+					 gint		 total);
 typedef gchar * (*QueryPasswordFunc)	(const gchar	*server,
 					 const gchar	*user);
 typedef void (*LogFunc)			(const gchar	*str);
@@ -475,7 +477,11 @@ size_t my_strftime		(gchar			*s,
 
 /* UI hints */
 void set_ui_update_func	(UIUpdateFunc	 func);
-void ui_update(void);
+void ui_update		(void);
+
+void set_progress_func	(ProgressFunc	 func);
+void progress_show	(gint		 cur,
+			 gint		 total);
 
 /* user input */
 void set_input_query_password_func	(QueryPasswordFunc	func);

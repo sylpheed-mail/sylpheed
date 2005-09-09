@@ -1520,6 +1520,20 @@ void main_window_progress_set(MainWindow *mainwin, gint cur, gint total)
 				(gfloat)cur / (gfloat)total);
 }
 
+void main_window_progress_show(gint cur, gint total)
+{
+	MainWindow *mainwin;
+
+	mainwin = main_window_get();
+
+	if (total > 0) {
+		gtk_progress_set_show_text(GTK_PROGRESS(mainwin->progressbar),
+					   TRUE);
+		main_window_progress_set(mainwin, cur, total);
+	} else
+		main_window_progress_off(mainwin);
+}
+
 void main_window_toggle_online(MainWindow *mainwin, gboolean online)
 {
 	if (prefs_common.online_mode != online)

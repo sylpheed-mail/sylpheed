@@ -155,6 +155,9 @@ void main_window_progress_set		(MainWindow	*mainwin,
 					 gint		 cur,
 					 gint		 total);
 
+void main_window_progress_show		(gint		 cur,
+					 gint		 total);
+
 void main_window_toggle_online			(MainWindow	*mainwin,
 						 gboolean	 online);
 gboolean main_window_toggle_online_if_offline	(MainWindow	*mainwin);
