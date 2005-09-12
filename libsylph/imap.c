@@ -55,7 +55,7 @@
 #define IMAPS_PORT	993
 #endif
 
-#define IMAP_COPY_LIMIT	500
+#define IMAP_COPY_LIMIT	200
 #define IMAP_CMD_LIMIT	1000
 
 #define QUOTE_IF_REQUIRED(out, str)				\
@@ -361,6 +361,7 @@ static gchar *imap_utf8_to_modified_utf7	(const gchar	*from);
 
 static GSList *imap_get_seq_set_from_msglist	(GSList		*msglist,
 						 gint		 limit);
+static gint imap_seq_set_get_count		(const gchar	*seq_set);
 static void imap_seq_set_free			(GSList		*seq_list);
 
 static GHashTable *imap_get_uid_table		(GArray		*array);
@@ -1264,6 +1265,7 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 	GSList *seq_list, *cur;
 	MsgInfo *msginfo;
 	IMAPSession *session;
+	gint count = 0, total;
 	gint ok = IMAP_SUCCESS;
 
 	g_return_val_if_fail(folder != NULL, -1);
@@ -1290,10 +1292,13 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 
 	destdir = imap_get_real_path(IMAP_FOLDER(folder), dest->path);
 
+	total = g_slist_length(msglist);
 	seq_list = imap_get_seq_set_from_msglist(msglist, IMAP_COPY_LIMIT);
 
 	for (cur = seq_list; cur != NULL; cur = cur->next) {
 		gchar *seq_set = (gchar *)cur->data;
+
+		count += imap_seq_set_get_count(seq_set);
 
 		if (remove_source) {
 			status_print(_("Moving messages %s to %s ..."),
@@ -1308,14 +1313,18 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 				    src->path, G_DIR_SEPARATOR,
 				    seq_set, dest->path);
 		}
+		progress_show(count, total);
 		ui_update();
 
 		ok = imap_cmd_copy(session, seq_set, destdir);
 		if (ok != IMAP_SUCCESS) {
 			imap_seq_set_free(seq_list);
+			progress_show(0, 0);
 			return -1;
 		}
 	}
+
+	progress_show(0, 0);
 
 	dest->updated = TRUE;
 
@@ -4132,6 +4141,37 @@ static GSList *imap_get_seq_set_from_msglist(GSList *msglist, gint limit)
 	g_string_free(str, TRUE);
 
 	return ret_list;
+}
+
+static gint imap_seq_set_get_count(const gchar *seq_set)
+{
+	gint count = 0;
+	guint first, last;
+	gchar *tmp, *p, *q;
+
+	p = q = tmp = g_strdup(seq_set);
+
+	while (*p) {
+		if (*p == ',') {
+			*p = '\0';
+			if (sscanf(q, "%u:%u", &first, &last) == 2)
+				count += last - first + 1;
+			else if (sscanf(q, "%u", &first) == 1)
+				count++;
+			q = ++p;
+		} else
+			++p;
+	}
+	if (q != p) {
+		if (sscanf(q, "%u:%u", &first, &last) == 2)
+			count += last - first + 1;
+		else if (sscanf(q, "%u", &first) == 1)
+			count++;
+	}
+
+	g_free(tmp);
+
+	return count;
 }
 
 static void imap_seq_set_free(GSList *seq_list)
