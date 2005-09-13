@@ -303,6 +303,10 @@ static gint summary_cmp_by_date		(GtkTreeModel		*model,
 					 GtkTreeIter		*a,
 					 GtkTreeIter		*b,
 					 gpointer		 data);
+static gint summary_cmp_by_thread_date	(GtkTreeModel		*model,
+					 GtkTreeIter		*a,
+					 GtkTreeIter		*b,
+					 gpointer		 data);
 static gint summary_cmp_by_from		(GtkTreeModel		*model,
 					 GtkTreeIter		*a,
 					 GtkTreeIter		*b,
@@ -327,6 +331,7 @@ static SummaryColumnType sort_key_to_col[] = {
 	S_COL_NUMBER,
 	S_COL_SIZE,
 	S_COL_DATE,
+	S_COL_TDATE,
 	S_COL_FROM,
 	S_COL_SUBJECT,
 	-1,
@@ -1898,6 +1903,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_MSG_INFO, msginfo,
 
 			   S_COL_LABEL, color_val,
+			   S_COL_TDATE, 0,
 			   S_COL_TO, NULL,
 
 			   S_COL_FOREGROUND, foreground,
@@ -1918,6 +1924,13 @@ static void summary_insert_gnode(SummaryView *summaryview, GtkTreeStore *store,
 
 	summary_set_row(summaryview, iter, msginfo);
 
+	if (!parent) {
+		guint tdate;
+
+		tdate = procmsg_get_thread_date(gnode);
+		gtk_tree_store_set(store, iter, S_COL_TDATE, tdate, -1);
+	}
+
 	for (gnode = gnode->children; gnode != NULL; gnode = gnode->next) {
 		GtkTreeIter child;
 
@@ -1936,6 +1949,13 @@ static void summary_insert_gnode_before(SummaryView *summaryview,
 	gtk_tree_store_insert_before(store, iter, parent, sibling);
 
 	summary_set_row(summaryview, iter, msginfo);
+
+	if (!parent) {
+		guint tdate;
+
+		tdate = procmsg_get_thread_date(gnode);
+		gtk_tree_store_set(store, iter, S_COL_TDATE, tdate, -1);
+	}
 
 	for (gnode = gnode->children; gnode != NULL; gnode = gnode->next) {
 		GtkTreeIter child;
@@ -3295,6 +3315,11 @@ void summary_thread_build(SummaryView *summaryview)
 	GHashTable *node_table;
 	MsgInfo *msginfo;
 	gboolean valid;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	if (!summaryview->folder_item)
+		return;
 
 	summary_lock(summaryview);
 
@@ -3302,14 +3327,19 @@ void summary_thread_build(SummaryView *summaryview)
 	STATUSBAR_PUSH(summaryview->mainwin, _("Building threads..."));
 	main_window_cursor_wait(summaryview->mainwin);
 
-	if (summaryview->folder_item)
-		summaryview->folder_item->threaded = TRUE;
+	summaryview->folder_item->threaded = TRUE;
 
 	mlist = summary_get_msg_list(summaryview);
 	root = procmsg_get_thread_tree(mlist);
 	node_table = g_hash_table_new(NULL, NULL);
 	for (node = root->children; node != NULL; node = node->next) {
 		g_hash_table_insert(node_table, node->data, node);
+	}
+
+	if (summaryview->folder_item->sort_key != SORT_BY_NONE) {
+		sort_key = summaryview->folder_item->sort_key;
+		sort_type = summaryview->folder_item->sort_type;
+		summary_sort(summaryview, SORT_BY_NONE, SORT_ASCENDING);
 	}
 
 	valid = gtk_tree_model_get_iter_first(model, &next);
@@ -3320,16 +3350,35 @@ void summary_thread_build(SummaryView *summaryview)
 		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
 		node = g_hash_table_lookup(node_table, msginfo);
 		if (node) {
+			GNode *cur;
 			GtkTreeIter child;
 
-			for (node = node->children; node != NULL;
-			     node = node->next) {
+			for (cur = node->children; cur != NULL;
+			     cur = cur->next) {
 				summary_insert_gnode(summaryview, store, &child,
-						     &iter, NULL, node);
+						     &iter, NULL, cur);
 			}
 		} else
 			gtk_tree_store_remove(store, &iter);
 	}
+
+	valid = gtk_tree_model_get_iter_first(model, &next);
+	while (valid) {
+		guint tdate;
+
+		iter = next;
+		valid = gtk_tree_model_iter_next(model, &next);
+
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		node = g_hash_table_lookup(node_table, msginfo);
+		if (node) {
+			tdate = procmsg_get_thread_date(node);
+			gtk_tree_store_set(store, &iter, S_COL_TDATE, tdate, -1);
+		}
+	}
+
+	if (sort_key != SORT_BY_NONE)
+		summary_sort(summaryview, sort_key, sort_type);
 
 	g_hash_table_destroy(node_table);
 	g_node_destroy(root);
@@ -3363,7 +3412,6 @@ static void summary_unthread_node_recursive(SummaryView *summaryview,
 	*sibling = iter_;
 
 	valid = gtk_tree_model_iter_children(model, &child, iter);
-
 	while (valid) {
 		summary_unthread_node_recursive(summaryview, &child, sibling);
 		valid = gtk_tree_model_iter_next(model, &child);
@@ -3379,7 +3427,6 @@ static void summary_unthread_node(SummaryView *summaryview, GtkTreeIter *iter)
 	sibling = *iter;
 
 	valid = gtk_tree_model_iter_children(model, &next, iter);
-
 	while (valid) {
 		child = next;
 		valid = gtk_tree_model_iter_next(model, &next);
@@ -3393,6 +3440,8 @@ void summary_unthread(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter, next;
 	gboolean valid;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
 
 	summary_lock(summaryview);
 
@@ -3403,13 +3452,29 @@ void summary_unthread(SummaryView *summaryview)
 	if (summaryview->folder_item)
 		summaryview->folder_item->threaded = FALSE;
 
-	valid = gtk_tree_model_get_iter_first(model, &next);
+	if (summaryview->folder_item->sort_key != SORT_BY_NONE) {
+		sort_key = summaryview->folder_item->sort_key;
+		sort_type = summaryview->folder_item->sort_type;
+		summary_sort(summaryview, SORT_BY_NONE, SORT_ASCENDING);
+	}
 
+	valid = gtk_tree_model_get_iter_first(model, &next);
+	while (valid) {
+		iter = next;
+		valid = gtk_tree_model_iter_next(model, &next);
+		gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
+				   S_COL_TDATE, 0, -1);
+	}
+
+	valid = gtk_tree_model_get_iter_first(model, &next);
 	while (valid) {
 		iter = next;
 		valid = gtk_tree_model_iter_next(model, &next);
 		summary_unthread_node(summaryview, &iter);
 	}
+
+	if (sort_key != SORT_BY_NONE)
+		summary_sort(summaryview, sort_key, sort_type);
 
 	summary_scroll_to_selected(summaryview, TRUE);
 
@@ -3431,7 +3496,6 @@ static gboolean summary_has_invalid_node(GtkTreeModel *model, GtkTreeIter *iter)
 		return TRUE;
 
 	valid = gtk_tree_model_iter_children(model, &child, iter);
-
 	while (valid) {
 		if (summary_has_invalid_node(model, &child))
 			return TRUE;
@@ -4122,6 +4186,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 				   G_TYPE_UINT,
 				   G_TYPE_POINTER,
 				   G_TYPE_INT,
+				   G_TYPE_UINT,
 				   G_TYPE_POINTER,
 				   GDK_TYPE_COLOR,
 				   G_TYPE_BOOLEAN);
@@ -4139,6 +4204,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	SET_SORT(S_COL_SIZE, summary_cmp_by_size);
 	SET_SORT(S_COL_NUMBER, summary_cmp_by_num);
 	SET_SORT(S_COL_LABEL, summary_cmp_by_label);
+	SET_SORT(S_COL_TDATE, summary_cmp_by_thread_date);
 	SET_SORT(S_COL_TO, summary_cmp_by_to);
 
 #undef SET_SORT
@@ -4890,6 +4956,28 @@ CMP_FUNC_DEF(summary_cmp_by_num, msginfo_a->msgnum - msginfo_b->msgnum)
 CMP_FUNC_DEF(summary_cmp_by_date, msginfo_a->date_t - msginfo_b->date_t)
 
 #undef CMP_FUNC_DEF
+
+static gint summary_cmp_by_thread_date(GtkTreeModel *model,
+				       GtkTreeIter *a, GtkTreeIter *b,
+				       gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	guint tdate_a, tdate_b;
+
+	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a, S_COL_TDATE,
+			   &tdate_a, -1);
+	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b, S_COL_TDATE,
+			   &tdate_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	if (tdate_a == 0 && tdate_b == 0)
+		return msginfo_a->date_t - msginfo_b->date_t;
+	else
+		return tdate_a - tdate_b;
+}
+
 #define CMP_FUNC_DEF(func_name, var_name)				\
 static gint func_name(GtkTreeModel *model,				\
 		      GtkTreeIter *a, GtkTreeIter *b, gpointer data)	\

@@ -249,6 +249,7 @@ void	procmsg_clear_cache		(FolderItem	*item);
 void	procmsg_clear_mark		(FolderItem	*item);
 
 GNode  *procmsg_get_thread_tree		(GSList		*mlist);
+guint	procmsg_get_thread_date		(GNode		*node);
 
 gint	procmsg_move_messages		(GSList		*mlist);
 gint	procmsg_copy_messages		(GSList		*mlist);

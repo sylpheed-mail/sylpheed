@@ -850,6 +850,30 @@ GNode *procmsg_get_thread_tree(GSList *mlist)
 	return root;
 }
 
+static gboolean procmsg_thread_date_func(GNode *node, gpointer data)
+{
+	guint *tdate = (guint *)data;
+	MsgInfo *msginfo = (MsgInfo *)node->data;
+
+	if (*tdate < msginfo->date_t)
+		*tdate = msginfo->date_t;
+
+	return FALSE;
+}
+
+guint procmsg_get_thread_date(GNode *node)
+{
+	guint tdate = 0;
+
+	g_return_val_if_fail(node != NULL && node->parent != NULL &&
+			     node->parent->parent == NULL, 0);
+
+	g_node_traverse(node, G_PRE_ORDER, G_TRAVERSE_ALL, -1,
+			procmsg_thread_date_func, &tdate);
+
+	return tdate;
+}
+
 gint procmsg_move_messages(GSList *mlist)
 {
 	GSList *cur, *movelist = NULL;

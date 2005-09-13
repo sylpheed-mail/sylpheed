@@ -1288,6 +1288,8 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 				sort_key = SORT_BY_SIZE;
 			else if (!strcmp(attr->value, "date"))
 				sort_key = SORT_BY_DATE;
+			else if (!strcmp(attr->value, "thread-date"))
+				sort_key = SORT_BY_TDATE;
 			else if (!strcmp(attr->value, "from"))
 				sort_key = SORT_BY_FROM;
 			else if (!strcmp(attr->value, "subject"))
@@ -1476,6 +1478,7 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 	static gchar *folder_item_stype_str[] = {"normal", "inbox", "outbox",
 						 "draft", "queue", "trash"};
 	static gchar *sort_key_str[] = {"none", "number", "size", "date",
+					"thread-date",
 					"from", "subject", "score", "label",
 					"mark", "unread", "mime", "to"};
 

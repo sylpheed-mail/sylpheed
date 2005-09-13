@@ -42,6 +42,7 @@ typedef enum
 	S_COL_MSG_INFO,
 
 	S_COL_LABEL,
+	S_COL_TDATE,
 	S_COL_TO,
 
 	S_COL_FOREGROUND,
