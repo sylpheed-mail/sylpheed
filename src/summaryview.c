@@ -1903,7 +1903,6 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_MSG_INFO, msginfo,
 
 			   S_COL_LABEL, color_val,
-			   S_COL_TDATE, 0,
 			   S_COL_TO, NULL,
 
 			   S_COL_FOREGROUND, foreground,
@@ -3352,29 +3351,18 @@ void summary_thread_build(SummaryView *summaryview)
 		if (node) {
 			GNode *cur;
 			GtkTreeIter child;
+			guint tdate;
 
 			for (cur = node->children; cur != NULL;
 			     cur = cur->next) {
 				summary_insert_gnode(summaryview, store, &child,
 						     &iter, NULL, cur);
 			}
-		} else
-			gtk_tree_store_remove(store, &iter);
-	}
 
-	valid = gtk_tree_model_get_iter_first(model, &next);
-	while (valid) {
-		guint tdate;
-
-		iter = next;
-		valid = gtk_tree_model_iter_next(model, &next);
-
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
-		node = g_hash_table_lookup(node_table, msginfo);
-		if (node) {
 			tdate = procmsg_get_thread_date(node);
 			gtk_tree_store_set(store, &iter, S_COL_TDATE, tdate, -1);
-		}
+		} else
+			gtk_tree_store_remove(store, &iter);
 	}
 
 	if (sort_key != SORT_BY_NONE)
@@ -3646,7 +3634,6 @@ static void summary_modify_threads(SummaryView *summaryview)
 	}
 
 	valid = gtk_tree_model_get_iter_first(model, &next);
-
 	while (valid) {
 		iter = next;
 		valid = gtk_tree_model_iter_next(model, &next);
