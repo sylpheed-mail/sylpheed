@@ -308,7 +308,7 @@ static gint create_xpm_from_xface(gchar *xpm[], const gchar *xface)
 	const guchar *p;
 	gchar buf[WIDTH * 4 + 1];  /* 4 = strlen("0x0000") */
 
-	p = xface;
+	p = (const guchar *)xface;
 
 	strcpy(xpm[line++], xface_header);
 	strcpy(xpm[line++], xface_black);

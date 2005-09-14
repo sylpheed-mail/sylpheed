@@ -616,7 +616,7 @@ void gtkut_combo_set_items(GtkCombo *combo, const gchar *str1, ...)
 
 gchar *gtkut_editable_get_selection(GtkEditable *editable)
 {
-	guint start_pos, end_pos;
+	gint start_pos, end_pos;
 	gboolean found;
 
 	g_return_val_if_fail(GTK_IS_EDITABLE(editable), NULL);

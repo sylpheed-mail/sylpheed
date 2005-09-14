@@ -594,7 +594,8 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		while (fgets(buf, sizeof(buf), infp) != NULL &&
 		       (!boundary ||
 			!IS_BOUNDARY(buf, boundary, boundary_len))) {
-			len = base64_decoder_decode(decoder, buf, outbuf);
+			len = base64_decoder_decode(decoder, buf,
+						    (guchar *)outbuf);
 			if (len < 0) {
 				g_warning("Bad BASE64 content\n");
 				break;

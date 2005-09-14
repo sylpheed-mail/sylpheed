@@ -817,7 +817,7 @@ static gint pop3_session_recv_data_finished(Session *session, guchar *data,
 
 	switch (pop3_session->state) {
 	case POP3_GETRANGE_UIDL_RECV:
-		val = pop3_getrange_uidl_recv(pop3_session, data, len);
+		val = pop3_getrange_uidl_recv(pop3_session, (gchar *)data, len);
 		if (val == PS_SUCCESS) {
 			if (pop3_session->new_msg_exist)
 				pop3_getsize_list_send(pop3_session);
@@ -827,7 +827,7 @@ static gint pop3_session_recv_data_finished(Session *session, guchar *data,
 			return -1;
 		break;
 	case POP3_GETSIZE_LIST_RECV:
-		val = pop3_getsize_list_recv(pop3_session, data, len);
+		val = pop3_getsize_list_recv(pop3_session, (gchar *)data, len);
 		if (val == PS_SUCCESS) {
 			if (pop3_lookup_next(pop3_session) == POP3_ERROR)
 				return -1;
@@ -835,7 +835,7 @@ static gint pop3_session_recv_data_finished(Session *session, guchar *data,
 			return -1;
 		break;
 	case POP3_RETR_RECV:
-		if (pop3_retr_recv(pop3_session, data, len) < 0)
+		if (pop3_retr_recv(pop3_session, (gchar *)data, len) < 0)
 			return -1;
 
 		if (pop3_session->msg[pop3_session->cur_msg].recv_time

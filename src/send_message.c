@@ -451,6 +451,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 {
 	Session *session;
 	SMTPSession *smtp_session;
+	gchar *out_str;
 	gushort port;
 	SendProgressDialog *dialog;
 	gchar buf[BUFFSIZE];
@@ -515,8 +516,10 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 	smtp_session->from = g_strdup(ac_prefs->address);
 	smtp_session->to_list = to_list;
 	smtp_session->cur_to = to_list;
-	smtp_session->send_data = get_outgoing_rfc2822_str(fp);
-	smtp_session->send_data_len = strlen(smtp_session->send_data);
+
+	out_str = get_outgoing_rfc2822_str(fp);
+	smtp_session->send_data = (guchar *)out_str;
+	smtp_session->send_data_len = strlen(out_str);
 
 #if USE_SSL
 	port = ac_prefs->set_smtpport ? ac_prefs->smtpport :

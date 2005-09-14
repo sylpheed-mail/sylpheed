@@ -52,7 +52,7 @@ static gint undo_merge		(GList		*list,
 				 guint		 start_pos,
 				 guint		 end_pos,
 				 gint		 action,
-				 const guchar	*text);
+				 const gchar	*text);
 static void undo_add		(const gchar	*text,
 				 gint		 start_pos,
 				 gint		 end_pos,
@@ -202,9 +202,9 @@ static void undo_check_size(UndoMain *undostruct)
  * Return Value: TRUE is merge was sucessful, FALSE otherwise
  **/
 static gint undo_merge(GList *list, guint start_pos, guint end_pos,
-		       gint action, const guchar *text) 
+		       gint action, const gchar *text) 
 {
-	guchar *temp_string;
+	gchar *temp_string;
 	UndoInfo *last_undo;
 
 	/* This are the cases in which we will NOT merge :

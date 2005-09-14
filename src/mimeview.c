@@ -980,7 +980,7 @@ static void mimeview_drag_data_get(GtkWidget	    *widget,
 	if (!mimeview->drag_file) return;
 
 	gtk_selection_data_set(selection_data, selection_data->target, 8,
-			       mimeview->drag_file,
+			       (guchar *)mimeview->drag_file,
 			       strlen(mimeview->drag_file));
 }
 
