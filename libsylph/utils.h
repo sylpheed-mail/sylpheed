@@ -310,6 +310,10 @@ gchar *strrchr_with_skip_quote		(const gchar	*str,
 void extract_address			(gchar		*str);
 void extract_list_id_str		(gchar		*str);
 
+gchar *normalize_address_field		(const gchar	*str);
+
+GSList *address_list_append_orig	(GSList		*addr_list,
+					 const gchar	*str);
 GSList *address_list_append		(GSList		*addr_list,
 					 const gchar	*str);
 GSList *references_list_prepend		(GSList		*msgid_list,

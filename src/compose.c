@@ -255,7 +255,7 @@ static gint compose_redirect_write_headers	(Compose	*compose,
 static void compose_convert_header		(Compose	*compose,
 						 gchar		*dest,
 						 gint		 len,
-						 gchar		*src,
+						 const gchar	*src,
 						 gint		 header_len,
 						 gboolean	 addr_field,
 						 const gchar	*encoding);
@@ -3754,18 +3754,27 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 #undef IS_IN_CUSTOM_HEADER
 
 static void compose_convert_header(Compose *compose, gchar *dest, gint len,
-				   gchar *src, gint header_len,
+				   const gchar *src, gint header_len,
 				   gboolean addr_field, const gchar *encoding)
 {
+	gchar *src_;
+
 	g_return_if_fail(src != NULL);
 	g_return_if_fail(dest != NULL);
 
 	if (len < 1) return;
 
-	g_strchomp(src);
+	if (addr_field)
+		src_ = normalize_address_field(src);
+	else
+		src_ = g_strdup(src);
+	g_strchomp(src_);
 	if (!encoding)
 		encoding = conv_get_charset_str(compose->out_encoding);
-	conv_encode_header(dest, len, src, header_len, addr_field, encoding);
+
+	conv_encode_header(dest, len, src_, header_len, addr_field, encoding);
+
+	g_free(src_);
 }
 
 static void compose_generate_msgid(Compose *compose, gchar *buf, gint len)

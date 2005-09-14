@@ -958,6 +958,86 @@ void extract_list_id_str(gchar *str)
 	g_strstrip(str);
 }
 
+gchar *normalize_address_field(const gchar *str)
+{
+	GString *new_str;
+	GSList *addr_list, *cur;
+	gchar *addr, *p, *q, *r;
+	gchar *ret_str;
+
+	addr_list = address_list_append_orig(NULL, str);
+
+	new_str = g_string_new(NULL);
+
+	for (cur = addr_list; cur != NULL; cur = cur->next) {
+		p = addr = (gchar *)cur->data;
+		q = strchr_with_skip_quote(p, '"', '<');
+		if (q && q > p) {
+			r = q - 1;
+			while (r > p && g_ascii_isspace(*r))
+				--r;
+			g_string_append_len(new_str, p, r - p + 1);
+			g_string_append_c(new_str, ' ');
+			p = q;
+		}
+		if (*p == '<') {
+			q = strchr(p, '>');
+			if (q) {
+				r = q + 1;
+				if (*r) {
+					while (g_ascii_isspace(*r))
+						++r;
+					g_string_append(new_str, r);
+					if (new_str->len > 0 &&
+					    !g_ascii_isspace
+						(new_str->str[new_str->len - 1]))
+						g_string_append_c(new_str, ' ');
+				}
+				g_string_append_len(new_str, p, q - p + 1);
+			} else {
+				g_string_append(new_str, p);
+				g_string_append_c(new_str, '>');
+			}
+		} else
+			g_string_append(new_str, p);
+
+		if (cur->next)
+			g_string_append(new_str, ", ");
+	}
+
+	slist_free_strings(addr_list);
+	ret_str = new_str->str;
+	g_string_free(new_str, FALSE);
+
+	return ret_str;
+}
+
+GSList *address_list_append_orig(GSList *addr_list, const gchar *str)
+{
+	const gchar *p = str, *q;
+	gchar *addr;
+
+	if (!str) return addr_list;
+
+	while (*p) {
+		if (*p == ',' || g_ascii_isspace(*p)) {
+			++p;
+		} else if ((q = strchr_with_skip_quote(p, '"', ','))) {
+			addr = g_strndup(p, q - p);
+			g_strstrip(addr);
+			addr_list = g_slist_append(addr_list, addr);
+			p = q + 1;
+		} else {
+			addr = g_strdup(p);
+			g_strstrip(addr);
+			addr_list = g_slist_append(addr_list, addr);
+			break;
+		}
+	}
+
+	return addr_list;
+}
+
 GSList *address_list_append(GSList *addr_list, const gchar *str)
 {
 	gchar *work;
