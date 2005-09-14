@@ -2,9 +2,19 @@ Changes of Sylpheed
 
 * 2.1.2 (development)
 
+    * The core parts were separated into a library (LibSylph), and its license
+      was changed to LGPL.
+    * The feature to sort the summary by thread date was implemented.
+    * When executing IMAP4 operations which take long time, its progress is
+      now displayed on the statusbar, and the UI is periodically updated.
+    * The number of messages to be copied at a time on IMAP4 was limited to
+      prevent timeout error.
+    * GPG and SSL settings are now saved even if they are disabled at the
+      compile time.
+    * The auto detection of Japanese encoding now supports UTF-8 encoding.
     * The text display has been modified a bit.
     * The initial implementation of tray icon was added.
-    * The refresh problem of folders of the addressbook was fixed.
+    * Some problems of the addressbook was fixed.
     * A bug in which message/rfc822 attachments were broken when pgp-signed
       was fixed.
     * Win32: A bug in which opened sockets were not closed properly was fixed.
