@@ -37,6 +37,7 @@
 #include <iconv.h>
 
 #include "codeconv.h"
+#include "prefs_common.h"
 #include "unmime.h"
 #include "base64.h"
 #include "quoted-printable.h"
@@ -319,8 +320,7 @@ static gchar *conv_euctojis(const gchar *inbuf, gint *error)
 			}
 		} else if (iseuchwkana1(*in)) {
 			if (iseuchwkana2(*(in + 1))) {
-				//if (prefs_common.allow_jisx0201_kana) {
-				if (0) {
+				if (prefs_common.allow_jisx0201_kana) {
 					HW_IN();
 					in++;
 					*out++ = *in++ & 0x7f;
