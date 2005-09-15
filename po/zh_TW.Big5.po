@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-13 14:51+0900\n"
+"POT-Creation-Date: 2005-09-15 16:07+0900\n"
 "PO-Revision-Date: 2005-09-08 17:11+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -512,7 +512,7 @@ msgstr "組態設定已儲存。\n"
 msgid "Junk mail filter"
 msgstr "垃圾郵件資料夾"
 
-#: libsylph/procmime.c:761
+#: libsylph/procmime.c:762
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): 轉碼失敗。\n"
 
@@ -627,12 +627,12 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2377 src/compose.c:2708 src/compose.c:2964
+#: libsylph/utils.c:2457 src/compose.c:2708 src/compose.c:2964
 #: src/compose.c:3027 src/compose.c:3147
 msgid "can't change file mode\n"
 msgstr "無法改變檔案型態\n"
 
-#: libsylph/utils.c:2384 libsylph/utils.c:2508
+#: libsylph/utils.c:2464 libsylph/utils.c:2588
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "寫入到 %s 的動作失敗。\n"
@@ -713,7 +713,7 @@ msgstr ""
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
 #: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4095 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
@@ -849,7 +849,7 @@ msgstr "使用者設定之命令參數"
 msgid "Add Address to Book"
 msgstr "將地址加入通訊錄"
 
-#: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4542 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "地址"
@@ -989,7 +989,7 @@ msgstr "/刪除(_D)"
 msgid "E-Mail address"
 msgstr "E-Mail 地址"
 
-#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
+#: src/addressbook.c:496 src/compose.c:4543 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "通訊錄"
 
@@ -1198,7 +1198,7 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:481
+#: src/alertpanel.c:138 src/compose.c:5229 src/main.c:481
 msgid "Notice"
 msgstr "注意"
 
@@ -1249,7 +1249,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4137
+#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4124
 msgid "None"
 msgstr "無"
 
@@ -1658,135 +1658,135 @@ msgstr "找不到暫存資料夾\n"
 msgid "can't queue the message\n"
 msgstr "無法放進暫存資料夾\n"
 
-#: src/compose.c:3797
+#: src/compose.c:3806
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "產生郵件的編號：%s\n"
 
-#: src/compose.c:3906
+#: src/compose.c:3915
 msgid "Creating compose window...\n"
 msgstr "正在建立編寫視窗...\n"
 
-#: src/compose.c:3954 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3963 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "來源："
 
-#: src/compose.c:4026
+#: src/compose.c:4035
 msgid "PGP Sign"
 msgstr "PGP 簽章"
 
-#: src/compose.c:4029
+#: src/compose.c:4038
 msgid "PGP Encrypt"
 msgstr "PGP 加密"
 
-#: src/compose.c:4067 src/compose.c:5007
+#: src/compose.c:4076 src/compose.c:5016
 msgid "MIME type"
 msgstr "MIME 型態"
 
 #. S_COL_DATE
-#: src/compose.c:4076 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4284
+#: src/compose.c:4085 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4271
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:4454 src/mainwindow.c:2234 src/prefs_account_dialog.c:516
+#: src/compose.c:4463 src/mainwindow.c:2234 src/prefs_account_dialog.c:516
 #: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "送出"
 
-#: src/compose.c:4455
+#: src/compose.c:4464
 msgid "Send message"
 msgstr "送出郵件"
 
-#: src/compose.c:4463
+#: src/compose.c:4472
 msgid "Send later"
 msgstr "稍後再送出"
 
-#: src/compose.c:4464
+#: src/compose.c:4473
 msgid "Put into queue folder and send later"
 msgstr "放到寄件夾中稍後再送出"
 
-#: src/compose.c:4472
+#: src/compose.c:4481
 msgid "Draft"
 msgstr "草稿"
 
-#: src/compose.c:4473
+#: src/compose.c:4482
 msgid "Save to draft folder"
 msgstr "儲存至草稿資料夾"
 
-#: src/compose.c:4483
+#: src/compose.c:4492
 msgid "Insert"
 msgstr "插入"
 
-#: src/compose.c:4484
+#: src/compose.c:4493
 msgid "Insert file"
 msgstr "插入檔案"
 
-#: src/compose.c:4492
+#: src/compose.c:4501
 msgid "Attach"
 msgstr "附加"
 
-#: src/compose.c:4493
+#: src/compose.c:4502
 msgid "Attach file"
 msgstr "附加檔案"
 
 #. signature
-#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/compose.c:4512 src/prefs_account_dialog.c:1188
 #: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "簽章"
 
-#: src/compose.c:4504
+#: src/compose.c:4513
 msgid "Insert signature"
 msgstr "插入簽章"
 
-#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/compose.c:4522 src/prefs_common_dialog.c:1118
 #: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "編輯器"
 
-#: src/compose.c:4514
+#: src/compose.c:4523
 msgid "Edit with external editor"
 msgstr "使用其他的編輯器"
 
-#: src/compose.c:4522
+#: src/compose.c:4531
 msgid "Linewrap"
 msgstr "折列"
 
-#: src/compose.c:4523
+#: src/compose.c:4532
 msgid "Wrap all long lines"
 msgstr "折換所有過長的文字列"
 
-#: src/compose.c:4903
+#: src/compose.c:4912
 msgid "Invalid MIME type."
 msgstr "不合法的 MIME 型態。"
 
-#: src/compose.c:4921
+#: src/compose.c:4930
 msgid "File doesn't exist or is empty."
 msgstr "檔案不存在或者是空的。"
 
-#: src/compose.c:4989
+#: src/compose.c:4998
 msgid "Properties"
 msgstr "內容"
 
-#: src/compose.c:5009
+#: src/compose.c:5018
 msgid "Encoding"
 msgstr "編碼"
 
-#: src/compose.c:5032 src/prefs_folder_item.c:184
+#: src/compose.c:5041 src/prefs_folder_item.c:184
 msgid "Path"
 msgstr "路徑"
 
-#: src/compose.c:5033
+#: src/compose.c:5042
 msgid "File name"
 msgstr "檔名"
 
-#: src/compose.c:5191
+#: src/compose.c:5200
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外部編輯器的命令是錯誤的：「%s」\n"
 
-#: src/compose.c:5217
+#: src/compose.c:5226
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1797,71 +1797,71 @@ msgstr ""
 "要強迫結束該行程嗎？\n"
 "行程的群組代碼是：%d"
 
-#: src/compose.c:5234
+#: src/compose.c:5243
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "結束群組代碼為 %d 的行程"
 
-#: src/compose.c:5235
+#: src/compose.c:5244
 #, c-format
 msgid "Temporary file: %s"
 msgstr "暫存檔案：%s"
 
-#: src/compose.c:5259
+#: src/compose.c:5268
 msgid "Compose: input from monitoring process\n"
 msgstr "寫作：從監視的程序中輸入\n"
 
 #. failed
-#: src/compose.c:5290
+#: src/compose.c:5299
 msgid "Couldn't exec external editor\n"
 msgstr "無法執行外部編輯器\n"
 
-#: src/compose.c:5294
+#: src/compose.c:5303
 msgid "Couldn't write to file\n"
 msgstr "無法寫入檔案\n"
 
-#: src/compose.c:5296
+#: src/compose.c:5305
 msgid "Pipe read failed\n"
 msgstr "Pipe 讀取失敗\n"
 
-#: src/compose.c:5602 src/compose.c:5610 src/compose.c:5616
+#: src/compose.c:5611 src/compose.c:5619 src/compose.c:5625
 msgid "Can't queue the message."
 msgstr "無法放進暫存資料夾。"
 
-#: src/compose.c:5707
+#: src/compose.c:5716
 msgid "Select files"
 msgstr "選擇檔案"
 
-#: src/compose.c:5729
+#: src/compose.c:5738
 msgid "Select file"
 msgstr "選擇檔案"
 
-#: src/compose.c:5766
+#: src/compose.c:5775
 msgid "Save message"
 msgstr "儲存郵件"
 
-#: src/compose.c:5767
+#: src/compose.c:5776
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "郵件已被修改過。將它儲存到草稿資料夾嗎？"
 
-#: src/compose.c:5769
+#: src/compose.c:5778
 msgid "Close _without saving"
 msgstr "關閉但不儲存(_W)"
 
-#: src/compose.c:5811
+#: src/compose.c:5820
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "您確定要套用「%s」這個郵件樣板嗎？"
 
-#: src/compose.c:5813
+#: src/compose.c:5822
 msgid "Apply template"
 msgstr "套用郵件樣板"
 
-#: src/compose.c:5814
+#: src/compose.c:5823
 msgid "_Replace"
 msgstr "置換(_R)"
 
-#: src/compose.c:5814
+#: src/compose.c:5823
 msgid "_Insert"
 msgstr "插入(_I)"
 
@@ -2712,7 +2712,7 @@ msgstr "連線到 POP3 伺服器 %s 中..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "無法連線到 POP3 伺服器：%s:%d\n"
 
-#: src/inc.c:784 src/send_message.c:614
+#: src/inc.c:784 src/send_message.c:617
 msgid "Authenticating..."
 msgstr "認證"
 
@@ -2742,7 +2742,7 @@ msgstr "取得新郵件的數量中"
 msgid "Deleting message %d"
 msgstr "刪除第 %d 號郵件"
 
-#: src/inc.c:819 src/send_message.c:632
+#: src/inc.c:819 src/send_message.c:635
 msgid "Quitting"
 msgstr "離開"
 
@@ -2786,7 +2786,7 @@ msgid "Socket error."
 msgstr "Socket 有錯誤"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1130 src/send_message.c:567 src/send_message.c:755
+#: src/inc.c:1130 src/send_message.c:570 src/send_message.c:758
 msgid "Connection closed by the remote host."
 msgstr "遠端主機關閉連線。"
 
@@ -2801,11 +2801,11 @@ msgid ""
 "%s"
 msgstr "信箱已被鎖定：%s"
 
-#: src/inc.c:1146 src/send_message.c:740
+#: src/inc.c:1146 src/send_message.c:743
 msgid "Authentication failed."
 msgstr "認證失敗"
 
-#: src/inc.c:1151 src/send_message.c:743
+#: src/inc.c:1151 src/send_message.c:746
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2814,7 +2814,7 @@ msgstr ""
 "認證失敗：\n"
 "%s"
 
-#: src/inc.c:1156 src/send_message.c:759
+#: src/inc.c:1156 src/send_message.c:762
 msgid "Session timed out."
 msgstr "作業逾時"
 
@@ -3533,8 +3533,8 @@ msgstr "建立主視窗...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "主視窗：顏色 %d 配置失敗。\n"
 
-#: src/mainwindow.c:1068 src/summaryview.c:2041 src/summaryview.c:2126
-#: src/summaryview.c:3392 src/summaryview.c:3481 src/summaryview.c:3793
+#: src/mainwindow.c:1068 src/summaryview.c:2040 src/summaryview.c:2125
+#: src/summaryview.c:3380 src/summaryview.c:3469 src/summaryview.c:3780
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -3794,16 +3794,16 @@ msgstr "文字"
 msgid "Attachments"
 msgstr "附加檔"
 
-#: src/messageview.c:659 src/summaryview.c:2964
+#: src/messageview.c:659 src/summaryview.c:2963
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案「%s」。"
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2983
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2982
 msgid "Print"
 msgstr "列印"
 
-#: src/messageview.c:715 src/summaryview.c:2984
+#: src/messageview.c:715 src/summaryview.c:2983
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3812,7 +3812,7 @@ msgstr ""
 "請輸入列印指令：\n"
 "（「%s」將會被置換為檔名）"
 
-#: src/messageview.c:721 src/summaryview.c:2990
+#: src/messageview.c:721 src/summaryview.c:2989
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5516,17 +5516,17 @@ msgid "Attachment"
 msgstr "附加檔案"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4277
+#: src/prefs_summary_column.c:73 src/summaryview.c:4264
 msgid "Subject"
 msgstr "主旨"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4280
+#: src/prefs_summary_column.c:74 src/summaryview.c:4267
 msgid "From"
 msgstr "來源"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4282
+#: src/prefs_summary_column.c:75 src/summaryview.c:4269
 msgid "Date"
 msgstr "日期"
 
@@ -5702,65 +5702,65 @@ msgstr "無法執行命令：%s"
 msgid "Error occurred while executing command: %s"
 msgstr "執行命令 %s 時發生錯誤"
 
-#: src/send_message.c:535
+#: src/send_message.c:538
 msgid "Connecting"
 msgstr "連線中"
 
-#: src/send_message.c:537
+#: src/send_message.c:540
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "連線到 SMTP 伺服器 %s..."
 
-#: src/send_message.c:604
+#: src/send_message.c:607
 msgid "Sending HELO..."
 msgstr "送出 HELO 標頭..."
 
-#: src/send_message.c:605 src/send_message.c:610 src/send_message.c:615
+#: src/send_message.c:608 src/send_message.c:613 src/send_message.c:618
 msgid "Authenticating"
 msgstr "認證中..."
 
-#: src/send_message.c:606 src/send_message.c:611
+#: src/send_message.c:609 src/send_message.c:614
 msgid "Sending message..."
 msgstr "送出郵件中..."
 
-#: src/send_message.c:609
+#: src/send_message.c:612
 msgid "Sending EHLO..."
 msgstr "送出 EHLO 標頭..."
 
-#: src/send_message.c:618
+#: src/send_message.c:621
 msgid "Sending MAIL FROM..."
 msgstr "送出 MAIL FROM 標頭..."
 
-#: src/send_message.c:619 src/send_message.c:623 src/send_message.c:628
+#: src/send_message.c:622 src/send_message.c:626 src/send_message.c:631
 msgid "Sending"
 msgstr "送信中"
 
-#: src/send_message.c:622
+#: src/send_message.c:625
 msgid "Sending RCPT TO..."
 msgstr "送出 RCPT TO 標頭..."
 
-#: src/send_message.c:627
+#: src/send_message.c:630
 msgid "Sending DATA..."
 msgstr "送出郵件資料 DATA..."
 
-#: src/send_message.c:631
+#: src/send_message.c:634
 msgid "Quitting..."
 msgstr "離開中..."
 
-#: src/send_message.c:659
+#: src/send_message.c:662
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "送出新郵件 (%d / %d 位元組)"
 
-#: src/send_message.c:687
+#: src/send_message.c:690
 msgid "Sending message"
 msgstr "送出郵件"
 
-#: src/send_message.c:731 src/send_message.c:751
+#: src/send_message.c:734 src/send_message.c:754
 msgid "Error occurred while sending the message."
 msgstr "送信時發生錯誤。"
 
-#: src/send_message.c:734
+#: src/send_message.c:737
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6112,100 +6112,100 @@ msgstr "郵件排序中..."
 msgid "(No Date)"
 msgstr "(沒有日期)"
 
-#: src/summaryview.c:1978
+#: src/summaryview.c:1977
 msgid "\tSetting summary from message data..."
 msgstr "\t產生郵件列表中..."
 
-#: src/summaryview.c:1980
+#: src/summaryview.c:1979
 msgid "Setting summary from message data..."
 msgstr "產生郵件列表中..."
 
-#: src/summaryview.c:2105
+#: src/summaryview.c:2104
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "寫入列表快取 (%s)..."
 
-#: src/summaryview.c:2409
+#: src/summaryview.c:2408
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "郵件 %d 已標記\n"
 
-#: src/summaryview.c:2451
+#: src/summaryview.c:2450
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "郵件 %d 已標記成已讀\n"
 
-#: src/summaryview.c:2523
+#: src/summaryview.c:2522
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "郵件 %d 已標記成未讀\n"
 
-#: src/summaryview.c:2576
+#: src/summaryview.c:2575
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "郵件 %s/%d 已標記刪除\n"
 
-#: src/summaryview.c:2594
+#: src/summaryview.c:2593
 msgid "Delete message(s)"
 msgstr "刪除郵件"
 
-#: src/summaryview.c:2595
+#: src/summaryview.c:2594
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您確定要從刪除的郵件資料夾中刪除這封郵件嗎？"
 
-#: src/summaryview.c:2660
+#: src/summaryview.c:2659
 msgid "Deleting duplicated messages..."
 msgstr "刪除重覆的郵件..."
 
-#: src/summaryview.c:2697
+#: src/summaryview.c:2696
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "郵件 %s/%d 已消除標記\n"
 
-#: src/summaryview.c:2747
+#: src/summaryview.c:2746
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "郵件 %d 已設定移動到 %s\n"
 
-#: src/summaryview.c:2764
+#: src/summaryview.c:2763
 msgid "Destination is same as current folder."
 msgstr "目標資料夾與來源資料夾相同。"
 
-#: src/summaryview.c:2818
+#: src/summaryview.c:2817
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "郵件 %d 已設定複製到 %s\n"
 
-#: src/summaryview.c:2835
+#: src/summaryview.c:2834
 msgid "Destination for copy is same as current folder."
 msgstr "郵件無法複製到同一個資料夾內。"
 
-#: src/summaryview.c:3027
+#: src/summaryview.c:3026
 msgid "Error occurred while processing messages."
 msgstr "處理郵件時發生錯誤。"
 
-#: src/summaryview.c:3326 src/summaryview.c:3327
+#: src/summaryview.c:3325 src/summaryview.c:3326
 msgid "Building threads..."
 msgstr "產生郵件串列中..."
 
-#: src/summaryview.c:3448 src/summaryview.c:3449
+#: src/summaryview.c:3436 src/summaryview.c:3437
 msgid "Unthreading..."
 msgstr "解除郵件串列中..."
 
-#: src/summaryview.c:3769
+#: src/summaryview.c:3756
 msgid "filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:3770
+#: src/summaryview.c:3757
 msgid "Filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:3800
+#: src/summaryview.c:3787
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已過濾 %d 封郵件"
 
-#: src/summaryview.c:4286
+#: src/summaryview.c:4273
 msgid "No."
 msgstr "No."
 

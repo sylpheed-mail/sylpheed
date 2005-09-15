@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-13 14:51+0900\n"
+"POT-Creation-Date: 2005-09-15 16:07+0900\n"
 "PO-Revision-Date: 2003-02-18 13:03--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -518,7 +518,7 @@ msgstr "Configuratie is opgeslagen.\n"
 msgid "Junk mail filter"
 msgstr "Accounts"
 
-#: libsylph/procmime.c:761
+#: libsylph/procmime.c:762
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Codeconversie mislukt\n"
 
@@ -634,12 +634,12 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2377 src/compose.c:2708 src/compose.c:2964
+#: libsylph/utils.c:2457 src/compose.c:2708 src/compose.c:2964
 #: src/compose.c:3027 src/compose.c:3147
 msgid "can't change file mode\n"
 msgstr "kan de bestandmodus niet veranderen\n"
 
-#: libsylph/utils.c:2384 libsylph/utils.c:2508
+#: libsylph/utils.c:2464 libsylph/utils.c:2588
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "schrijven naar %s is mislukt.\n"
@@ -725,7 +725,7 @@ msgstr ""
 "u op de knop 'Alles ophalen' klikt."
 
 #: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4095 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
@@ -861,7 +861,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Adres toevoegen aan adresboek"
 
-#: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4542 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adres"
@@ -1001,7 +1001,7 @@ msgstr "/Ver_wijderen"
 msgid "E-Mail address"
 msgstr "E-mail adres"
 
-#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
+#: src/addressbook.c:496 src/compose.c:4543 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Adresboek"
 
@@ -1217,7 +1217,7 @@ msgstr "Algemene adressen"
 msgid "Personal address"
 msgstr "Persoonlijke adressen"
 
-#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:481
+#: src/alertpanel.c:138 src/compose.c:5229 src/main.c:481
 msgid "Notice"
 msgstr "Bericht"
 
@@ -1268,7 +1268,7 @@ msgstr "Bruin"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4137
+#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4124
 msgid "None"
 msgstr "Geen"
 
@@ -1709,137 +1709,137 @@ msgstr "kan de Wachtrij-map niet vinden\n"
 msgid "can't queue the message\n"
 msgstr "kan het bericht niet in de wachtrij plaatsen\n"
 
-#: src/compose.c:3797
+#: src/compose.c:3806
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "gegenereerd bericht-ID: %s\n"
 
-#: src/compose.c:3906
+#: src/compose.c:3915
 msgid "Creating compose window...\n"
 msgstr "Venster \"Bericht opstellen\" wordt aangemaakt...\n"
 
-#: src/compose.c:3954 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3963 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "Afzender:"
 
-#: src/compose.c:4026
+#: src/compose.c:4035
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Gereedschap/A_cties"
 
-#: src/compose.c:4029
+#: src/compose.c:4038
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/Be_richt/Codeer"
 
-#: src/compose.c:4067 src/compose.c:5007
+#: src/compose.c:4076 src/compose.c:5016
 msgid "MIME type"
 msgstr "MIME type"
 
 #. S_COL_DATE
-#: src/compose.c:4076 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4284
+#: src/compose.c:4085 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4271
 msgid "Size"
 msgstr "Grootte"
 
-#: src/compose.c:4454 src/mainwindow.c:2234 src/prefs_account_dialog.c:516
+#: src/compose.c:4463 src/mainwindow.c:2234 src/prefs_account_dialog.c:516
 #: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Verzenden"
 
-#: src/compose.c:4455
+#: src/compose.c:4464
 msgid "Send message"
 msgstr "Verzend bericht"
 
-#: src/compose.c:4463
+#: src/compose.c:4472
 msgid "Send later"
 msgstr "Wachtrij"
 
-#: src/compose.c:4464
+#: src/compose.c:4473
 msgid "Put into queue folder and send later"
 msgstr "In de wachtrij plaatsen en later verzenden"
 
-#: src/compose.c:4472
+#: src/compose.c:4481
 msgid "Draft"
 msgstr "Klad"
 
-#: src/compose.c:4473
+#: src/compose.c:4482
 msgid "Save to draft folder"
 msgstr "Opslaan als klad"
 
-#: src/compose.c:4483
+#: src/compose.c:4492
 msgid "Insert"
 msgstr "Invoegen"
 
-#: src/compose.c:4484
+#: src/compose.c:4493
 msgid "Insert file"
 msgstr "Bestand invoegen"
 
-#: src/compose.c:4492
+#: src/compose.c:4501
 msgid "Attach"
 msgstr "Bijvoegen"
 
-#: src/compose.c:4493
+#: src/compose.c:4502
 msgid "Attach file"
 msgstr "Bestand bijvoegen"
 
 #. signature
-#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/compose.c:4512 src/prefs_account_dialog.c:1188
 #: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Tekenen"
 
-#: src/compose.c:4504
+#: src/compose.c:4513
 msgid "Insert signature"
 msgstr "Handtekening (signature) invoegen"
 
-#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/compose.c:4522 src/prefs_common_dialog.c:1118
 #: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Editor"
 
-#: src/compose.c:4514
+#: src/compose.c:4523
 msgid "Edit with external editor"
 msgstr "Bewerken met ander (extern) programma"
 
-#: src/compose.c:4522
+#: src/compose.c:4531
 msgid "Linewrap"
 msgstr "Terugloop"
 
-#: src/compose.c:4523
+#: src/compose.c:4532
 msgid "Wrap all long lines"
 msgstr "Lange regels op meerdere regels zetten"
 
-#: src/compose.c:4903
+#: src/compose.c:4912
 msgid "Invalid MIME type."
 msgstr "Ongeldig MIME type."
 
-#: src/compose.c:4921
+#: src/compose.c:4930
 msgid "File doesn't exist or is empty."
 msgstr "Bestand bestaat niet of is leeg."
 
-#: src/compose.c:4989
+#: src/compose.c:4998
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: src/compose.c:5009
+#: src/compose.c:5018
 msgid "Encoding"
 msgstr "Codering"
 
-#: src/compose.c:5032 src/prefs_folder_item.c:184
+#: src/compose.c:5041 src/prefs_folder_item.c:184
 msgid "Path"
 msgstr "Pad"
 
-#: src/compose.c:5033
+#: src/compose.c:5042
 msgid "File name"
 msgstr "Bestandsnaam"
 
-#: src/compose.c:5191
+#: src/compose.c:5200
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "De ingegeven opdracht voor de externe editor is onjuist: '%s'\n"
 
-#: src/compose.c:5217
+#: src/compose.c:5226
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1850,75 +1850,75 @@ msgstr ""
 "Zal ik het programma afbreken?\n"
 "procesgroep id: %d"
 
-#: src/compose.c:5234
+#: src/compose.c:5243
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Programma (id: %d) afgebroken."
 
-#: src/compose.c:5235
+#: src/compose.c:5244
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Tijdelijk bestand: %s"
 
-#: src/compose.c:5259
+#: src/compose.c:5268
 msgid "Compose: input from monitoring process\n"
 msgstr "Opstellen: invoer van \"monitoring process\"\n"
 
 #. failed
-#: src/compose.c:5290
+#: src/compose.c:5299
 msgid "Couldn't exec external editor\n"
 msgstr "Kon het externe programma voor bewerken van e-mail niet aanroepen\n"
 
-#: src/compose.c:5294
+#: src/compose.c:5303
 msgid "Couldn't write to file\n"
 msgstr "Kon niet naar bestand schrijven\n"
 
-#: src/compose.c:5296
+#: src/compose.c:5305
 msgid "Pipe read failed\n"
 msgstr "Inlezen van pijp mislukt\n"
 
-#: src/compose.c:5602 src/compose.c:5610 src/compose.c:5616
+#: src/compose.c:5611 src/compose.c:5619 src/compose.c:5625
 msgid "Can't queue the message."
 msgstr "Kan bericht niet in de wachtrij plaatsen."
 
-#: src/compose.c:5707
+#: src/compose.c:5716
 #, fuzzy
 msgid "Select files"
 msgstr "Selecteer bestand"
 
-#: src/compose.c:5729
+#: src/compose.c:5738
 msgid "Select file"
 msgstr "Selecteer bestand"
 
-#: src/compose.c:5766
+#: src/compose.c:5775
 #, fuzzy
 msgid "Save message"
 msgstr "Verzend bericht"
 
-#: src/compose.c:5767
+#: src/compose.c:5776
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Dit bericht is aangepast. weggooien?"
 
-#: src/compose.c:5769
+#: src/compose.c:5778
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:5811
+#: src/compose.c:5820
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Wilt u het sjabloon '%s' toepassen?"
 
-#: src/compose.c:5813
+#: src/compose.c:5822
 msgid "Apply template"
 msgstr "Sjabloon toepassen"
 
-#: src/compose.c:5814
+#: src/compose.c:5823
 #, fuzzy
 msgid "_Replace"
 msgstr "Vervangen"
 
-#: src/compose.c:5814
+#: src/compose.c:5823
 #, fuzzy
 msgid "_Insert"
 msgstr "Invoegen"
@@ -2776,7 +2776,7 @@ msgstr "Verbinden met POP3 server: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Kan niet verbinden met POP3 server: %s:%d\n"
 
-#: src/inc.c:784 src/send_message.c:614
+#: src/inc.c:784 src/send_message.c:617
 msgid "Authenticating..."
 msgstr "Bezig met identificatie..."
 
@@ -2806,7 +2806,7 @@ msgstr "Opvragen van de grootte van de nieuwe berichten (LIST)..."
 msgid "Deleting message %d"
 msgstr "Bezig met verwijderen van bericht %d"
 
-#: src/inc.c:819 src/send_message.c:632
+#: src/inc.c:819 src/send_message.c:635
 msgid "Quitting"
 msgstr "Bezig met afsluiten"
 
@@ -2849,7 +2849,7 @@ msgid "Socket error."
 msgstr "Socket-fout."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1130 src/send_message.c:567 src/send_message.c:755
+#: src/inc.c:1130 src/send_message.c:570 src/send_message.c:758
 msgid "Connection closed by the remote host."
 msgstr ""
 
@@ -2864,19 +2864,19 @@ msgid ""
 "%s"
 msgstr "Mailbox is vergrendeld."
 
-#: src/inc.c:1146 src/send_message.c:740
+#: src/inc.c:1146 src/send_message.c:743
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Identificatiemethode"
 
-#: src/inc.c:1151 src/send_message.c:743
+#: src/inc.c:1151 src/send_message.c:746
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Identificatiemethode"
 
-#: src/inc.c:1156 src/send_message.c:759
+#: src/inc.c:1156 src/send_message.c:762
 msgid "Session timed out."
 msgstr ""
 
@@ -3622,8 +3622,8 @@ msgstr "Hoofdvenster wordt aangemaakt...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "HoofdVenster: kleur %d kon niet gealloceerd worden\n"
 
-#: src/mainwindow.c:1068 src/summaryview.c:2041 src/summaryview.c:2126
-#: src/summaryview.c:3392 src/summaryview.c:3481 src/summaryview.c:3793
+#: src/mainwindow.c:1068 src/summaryview.c:2040 src/summaryview.c:2125
+#: src/summaryview.c:3380 src/summaryview.c:3469 src/summaryview.c:3780
 msgid "done.\n"
 msgstr "klaar.\n"
 
@@ -3889,16 +3889,16 @@ msgstr "Tekst"
 msgid "Attachments"
 msgstr "Bijvoegingen"
 
-#: src/messageview.c:659 src/summaryview.c:2964
+#: src/messageview.c:659 src/summaryview.c:2963
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Kan het bestand '%s' niet opslaan."
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2983
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2982
 msgid "Print"
 msgstr "Afdrukken"
 
-#: src/messageview.c:715 src/summaryview.c:2984
+#: src/messageview.c:715 src/summaryview.c:2983
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3907,7 +3907,7 @@ msgstr ""
 "Geef de afdrukopdracht:\n"
 "('%s' zal vervangen worden door de bestandsnaam)"
 
-#: src/messageview.c:721 src/summaryview.c:2990
+#: src/messageview.c:721 src/summaryview.c:2989
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5685,17 +5685,17 @@ msgid "Attachment"
 msgstr "Bijvoeging"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4277
+#: src/prefs_summary_column.c:73 src/summaryview.c:4264
 msgid "Subject"
 msgstr "Onderwerp"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4280
+#: src/prefs_summary_column.c:74 src/summaryview.c:4267
 msgid "From"
 msgstr "Afzender"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4282
+#: src/prefs_summary_column.c:75 src/summaryview.c:4269
 msgid "Date"
 msgstr "Datum"
 
@@ -5868,66 +5868,66 @@ msgstr "Kon het externe programma niet aanroepen: %s\n"
 msgid "Error occurred while executing command: %s"
 msgstr "Fout bij het verwerken van de e-mail"
 
-#: src/send_message.c:535
+#: src/send_message.c:538
 msgid "Connecting"
 msgstr "Bezig met maken van verbinding"
 
-#: src/send_message.c:537
+#: src/send_message.c:540
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Bezig met verbinden met SMTP server: %s ..."
 
-#: src/send_message.c:604
+#: src/send_message.c:607
 msgid "Sending HELO..."
 msgstr "Bezig met sturen van HELO..."
 
-#: src/send_message.c:605 src/send_message.c:610 src/send_message.c:615
+#: src/send_message.c:608 src/send_message.c:613 src/send_message.c:618
 msgid "Authenticating"
 msgstr "Bezig met identificatie"
 
-#: src/send_message.c:606 src/send_message.c:611
+#: src/send_message.c:609 src/send_message.c:614
 #, fuzzy
 msgid "Sending message..."
 msgstr "Bezig met verzenden van bericht"
 
-#: src/send_message.c:609
+#: src/send_message.c:612
 msgid "Sending EHLO..."
 msgstr "Bezig met sturen van EHLO..."
 
-#: src/send_message.c:618
+#: src/send_message.c:621
 msgid "Sending MAIL FROM..."
 msgstr "Bezig met verzenden van MAIL FROM..."
 
-#: src/send_message.c:619 src/send_message.c:623 src/send_message.c:628
+#: src/send_message.c:622 src/send_message.c:626 src/send_message.c:631
 msgid "Sending"
 msgstr "Bezig met verzenden"
 
-#: src/send_message.c:622
+#: src/send_message.c:625
 msgid "Sending RCPT TO..."
 msgstr "Bezig met verzenden van RCPT TO..."
 
-#: src/send_message.c:627
+#: src/send_message.c:630
 msgid "Sending DATA..."
 msgstr "Bezig met verzenden van DATA..."
 
-#: src/send_message.c:631
+#: src/send_message.c:634
 msgid "Quitting..."
 msgstr "Bezig met afsluiten..."
 
-#: src/send_message.c:659
+#: src/send_message.c:662
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Bezig met verzenden van bericht (%d / %d bytes)"
 
-#: src/send_message.c:687
+#: src/send_message.c:690
 msgid "Sending message"
 msgstr "Bezig met verzenden van bericht"
 
-#: src/send_message.c:731 src/send_message.c:751
+#: src/send_message.c:734 src/send_message.c:754
 msgid "Error occurred while sending the message."
 msgstr "Er is een fout opgetreden bij het verzenden."
 
-#: src/send_message.c:734
+#: src/send_message.c:737
 #, fuzzy, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6281,103 +6281,103 @@ msgstr "Lijst wordt gesorteerd..."
 msgid "(No Date)"
 msgstr "(Geen datum)"
 
-#: src/summaryview.c:1978
+#: src/summaryview.c:1977
 msgid "\tSetting summary from message data..."
 msgstr "\t"
 
-#: src/summaryview.c:1980
+#: src/summaryview.c:1979
 msgid "Setting summary from message data..."
 msgstr "Samenvatting wordt ingesteld van berichtinformatie..."
 
-#: src/summaryview.c:2105
+#: src/summaryview.c:2104
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Samenvattingbuffer wordt weggeschreven (%s)..."
 
-#: src/summaryview.c:2409
+#: src/summaryview.c:2408
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Bericht %d is gemarkeerd\n"
 
-#: src/summaryview.c:2451
+#: src/summaryview.c:2450
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Bericht %d is gemarkeerd als 'wordt gelezen'.\n"
 
-#: src/summaryview.c:2523
+#: src/summaryview.c:2522
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Bericht %d is gemarkeerd als ongelezen\n"
 
-#: src/summaryview.c:2576
+#: src/summaryview.c:2575
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Bericht %s/%d staat klaar om verwijderd te worden\n"
 
-#: src/summaryview.c:2594
+#: src/summaryview.c:2593
 msgid "Delete message(s)"
 msgstr "Verwijder bericht(en)"
 
-#: src/summaryview.c:2595
+#: src/summaryview.c:2594
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr ""
 "Wilt u dit bericht / deze berichten werkelijk verwijderen uit de prullenbak?"
 
-#: src/summaryview.c:2660
+#: src/summaryview.c:2659
 msgid "Deleting duplicated messages..."
 msgstr "Bezig met verwijderen van dubbele berichten..."
 
-#: src/summaryview.c:2697
+#: src/summaryview.c:2696
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Bericht %s/%d is gedemarkeerd\n"
 
-#: src/summaryview.c:2747
+#: src/summaryview.c:2746
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Bericht %d staat klaar om verplaatst te worden naar %s\n"
 
-#: src/summaryview.c:2764
+#: src/summaryview.c:2763
 msgid "Destination is same as current folder."
 msgstr "Doel is gelijk aan de huidige map."
 
-#: src/summaryview.c:2818
+#: src/summaryview.c:2817
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Bericht %d staat klaar om gekopieerd te worden naar %s\n"
 
-#: src/summaryview.c:2835
+#: src/summaryview.c:2834
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Doel is gelijk aan de huidige map."
 
-#: src/summaryview.c:3027
+#: src/summaryview.c:3026
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Fout bij het verwerken van de e-mail"
 
-#: src/summaryview.c:3326 src/summaryview.c:3327
+#: src/summaryview.c:3325 src/summaryview.c:3326
 msgid "Building threads..."
 msgstr "Discussies worden bij elkaar gevoegd..."
 
-#: src/summaryview.c:3448 src/summaryview.c:3449
+#: src/summaryview.c:3436 src/summaryview.c:3437
 msgid "Unthreading..."
 msgstr "Discussies worden uit elkaar gehaald..."
 
-#: src/summaryview.c:3769
+#: src/summaryview.c:3756
 msgid "filtering..."
 msgstr "Bezig met filteren..."
 
-#: src/summaryview.c:3770
+#: src/summaryview.c:3757
 msgid "Filtering..."
 msgstr "Bezig met filteren..."
 
-#: src/summaryview.c:3800
+#: src/summaryview.c:3787
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "bericht %d is reeds gebufferd.\n"
 
-#: src/summaryview.c:4286
+#: src/summaryview.c:4273
 msgid "No."
 msgstr "Nr."
 

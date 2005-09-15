@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-13 14:51+0900\n"
+"POT-Creation-Date: 2005-09-15 16:07+0900\n"
 "PO-Revision-Date: 2005-07-08 21:08+0100\n"
 "Last-Translator: Ricardo Mones <mones@aic.uniovi.es>\n"
 "Language-Team: Ricardo Mones <mones@aic.uniovi.es>\n"
@@ -510,7 +510,7 @@ msgstr "Configuración guardada.\n"
 msgid "Junk mail filter"
 msgstr "Filtro de correo basura"
 
-#: libsylph/procmime.c:761
+#: libsylph/procmime.c:762
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Conversión de códigos fallida.\n"
 
@@ -625,12 +625,12 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2377 src/compose.c:2708 src/compose.c:2964
+#: libsylph/utils.c:2457 src/compose.c:2708 src/compose.c:2964
 #: src/compose.c:3027 src/compose.c:3147
 msgid "can't change file mode\n"
 msgstr "no se pueden cambiar los permisos de archivo\n"
 
-#: libsylph/utils.c:2384 libsylph/utils.c:2508
+#: libsylph/utils.c:2464 libsylph/utils.c:2588
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "fallo escribiendo en %s.\n"
@@ -714,7 +714,7 @@ msgstr ""
 "en la columna `G' para habilitar la descarga mediante `Traer todo'."
 
 #: src/account_dialog.c:358 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4086 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4095 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:201 src/prefs_filter.c:259 src/prefs_folder_item.c:171
@@ -850,7 +850,7 @@ msgstr "Parámetro de usuario de la acción"
 msgid "Add Address to Book"
 msgstr "Añadir dirección a la agenda"
 
-#: src/addressadd.c:202 src/compose.c:4533 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4542 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Dirección"
@@ -990,7 +990,7 @@ msgstr "/_Borrar"
 msgid "E-Mail address"
 msgstr "Dirección e-mail"
 
-#: src/addressbook.c:496 src/compose.c:4534 src/prefs_common_dialog.c:2133
+#: src/addressbook.c:496 src/compose.c:4543 src/prefs_common_dialog.c:2133
 msgid "Address book"
 msgstr "Agenda de direcciones"
 
@@ -1205,7 +1205,7 @@ msgstr "Dirección común"
 msgid "Personal address"
 msgstr "Dirección personal"
 
-#: src/alertpanel.c:138 src/compose.c:5220 src/main.c:481
+#: src/alertpanel.c:138 src/compose.c:5229 src/main.c:481
 msgid "Notice"
 msgstr "Notificación"
 
@@ -1256,7 +1256,7 @@ msgstr "Marrón"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4137
+#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4124
 msgid "None"
 msgstr "Ninguno"
 
@@ -1668,135 +1668,135 @@ msgstr "no puedo encontrar la carpeta de cola\n"
 msgid "can't queue the message\n"
 msgstr "El mensaje no se puede poner en la cola\n"
 
-#: src/compose.c:3797
+#: src/compose.c:3806
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "Message-ID generado: %s\n"
 
-#: src/compose.c:3906
+#: src/compose.c:3915
 msgid "Creating compose window...\n"
 msgstr "Creando ventana de composición...\n"
 
-#: src/compose.c:3954 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:3963 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "Desde:"
 
-#: src/compose.c:4026
+#: src/compose.c:4035
 msgid "PGP Sign"
 msgstr "Firmar con PGP"
 
-#: src/compose.c:4029
+#: src/compose.c:4038
 msgid "PGP Encrypt"
 msgstr "Cifrar con PGP"
 
-#: src/compose.c:4067 src/compose.c:5007
+#: src/compose.c:4076 src/compose.c:5016
 msgid "MIME type"
 msgstr "Tipo MIME"
 
 #. S_COL_DATE
-#: src/compose.c:4076 src/mimeview.c:192 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4284
+#: src/compose.c:4085 src/mimeview.c:192 src/prefs_filter_edit.c:585
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4271
 msgid "Size"
 msgstr "Tamaño"
 
-#: src/compose.c:4454 src/mainwindow.c:2234 src/prefs_account_dialog.c:516
+#: src/compose.c:4463 src/mainwindow.c:2234 src/prefs_account_dialog.c:516
 #: src/prefs_common_dialog.c:687
 msgid "Send"
 msgstr "Enviar"
 
-#: src/compose.c:4455
+#: src/compose.c:4464
 msgid "Send message"
 msgstr "Enviar mensaje"
 
-#: src/compose.c:4463
+#: src/compose.c:4472
 msgid "Send later"
 msgstr "Enviar después"
 
-#: src/compose.c:4464
+#: src/compose.c:4473
 msgid "Put into queue folder and send later"
 msgstr "Poner en la cola y enviar después"
 
-#: src/compose.c:4472
+#: src/compose.c:4481
 msgid "Draft"
 msgstr "Borrador"
 
-#: src/compose.c:4473
+#: src/compose.c:4482
 msgid "Save to draft folder"
 msgstr "Guardar como borrador"
 
-#: src/compose.c:4483
+#: src/compose.c:4492
 msgid "Insert"
 msgstr "Insertar"
 
-#: src/compose.c:4484
+#: src/compose.c:4493
 msgid "Insert file"
 msgstr "Insertar fichero"
 
-#: src/compose.c:4492
+#: src/compose.c:4501
 msgid "Attach"
 msgstr "Adjuntar"
 
-#: src/compose.c:4493
+#: src/compose.c:4502
 msgid "Attach file"
 msgstr "Adjuntar fichero"
 
 #. signature
-#: src/compose.c:4503 src/prefs_account_dialog.c:1188
+#: src/compose.c:4512 src/prefs_account_dialog.c:1188
 #: src/prefs_common_dialog.c:1096
 msgid "Signature"
 msgstr "Firma"
 
-#: src/compose.c:4504
+#: src/compose.c:4513
 msgid "Insert signature"
 msgstr "Insertar firma"
 
-#: src/compose.c:4513 src/prefs_common_dialog.c:1118
+#: src/compose.c:4522 src/prefs_common_dialog.c:1118
 #: src/prefs_common_dialog.c:2113
 msgid "Editor"
 msgstr "Editor"
 
-#: src/compose.c:4514
+#: src/compose.c:4523
 msgid "Edit with external editor"
 msgstr "Editar con un editor externo"
 
-#: src/compose.c:4522
+#: src/compose.c:4531
 msgid "Linewrap"
 msgstr "Recortar"
 
-#: src/compose.c:4523
+#: src/compose.c:4532
 msgid "Wrap all long lines"
 msgstr "Cortar todas las líneas largas"
 
-#: src/compose.c:4903
+#: src/compose.c:4912
 msgid "Invalid MIME type."
 msgstr "Tipo MIME inválido."
 
-#: src/compose.c:4921
+#: src/compose.c:4930
 msgid "File doesn't exist or is empty."
 msgstr "El fichero no existe o está vacío."
 
-#: src/compose.c:4989
+#: src/compose.c:4998
 msgid "Properties"
 msgstr "Propiedades"
 
-#: src/compose.c:5009
+#: src/compose.c:5018
 msgid "Encoding"
 msgstr "Codificación"
 
-#: src/compose.c:5032 src/prefs_folder_item.c:184
+#: src/compose.c:5041 src/prefs_folder_item.c:184
 msgid "Path"
 msgstr "Ruta"
 
-#: src/compose.c:5033
+#: src/compose.c:5042
 msgid "File name"
 msgstr "Nombre de fichero"
 
-#: src/compose.c:5191
+#: src/compose.c:5200
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "La orden del editor externo es inválida: «%s»\n"
 
-#: src/compose.c:5217
+#: src/compose.c:5226
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1807,71 +1807,71 @@ msgstr ""
 "¿Desea terminar el proceso?\n"
 "Id. de grupo de proceso: %d"
 
-#: src/compose.c:5234
+#: src/compose.c:5243
 #, c-format
 msgid "Terminated process group id: %d"
 msgstr "Terminado grupo de proceso id.: %d"
 
-#: src/compose.c:5235
+#: src/compose.c:5244
 #, c-format
 msgid "Temporary file: %s"
 msgstr "Fichero temporal: %s"
 
-#: src/compose.c:5259
+#: src/compose.c:5268
 msgid "Compose: input from monitoring process\n"
 msgstr "Componer: entrada desde proceso monitor\n"
 
 #. failed
-#: src/compose.c:5290
+#: src/compose.c:5299
 msgid "Couldn't exec external editor\n"
 msgstr "No se pudo ejecutar el editor externo\n"
 
-#: src/compose.c:5294
+#: src/compose.c:5303
 msgid "Couldn't write to file\n"
 msgstr "No se pudo escribir en el fichero\n"
 
-#: src/compose.c:5296
+#: src/compose.c:5305
 msgid "Pipe read failed\n"
 msgstr "Fallo leyendo tubería\n"
 
-#: src/compose.c:5602 src/compose.c:5610 src/compose.c:5616
+#: src/compose.c:5611 src/compose.c:5619 src/compose.c:5625
 msgid "Can't queue the message."
 msgstr "El mensaje no se puede poner en la cola."
 
-#: src/compose.c:5707
+#: src/compose.c:5716
 msgid "Select files"
 msgstr "Seleccionar ficheros"
 
-#: src/compose.c:5729
+#: src/compose.c:5738
 msgid "Select file"
 msgstr "Seleccionar fichero"
 
-#: src/compose.c:5766
+#: src/compose.c:5775
 msgid "Save message"
 msgstr "Guardar mensaje"
 
-#: src/compose.c:5767
+#: src/compose.c:5776
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Este mensaje ha sido modificado. ¿Guardarlo en la carpeta Borradores?"
 
-#: src/compose.c:5769
+#: src/compose.c:5778
 msgid "Close _without saving"
 msgstr "Cerrar _sin guardar"
 
-#: src/compose.c:5811
+#: src/compose.c:5820
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "¿Quiere aplicar la plantilla «%s»?"
 
-#: src/compose.c:5813
+#: src/compose.c:5822
 msgid "Apply template"
 msgstr "Aplicar plantilla"
 
-#: src/compose.c:5814
+#: src/compose.c:5823
 msgid "_Replace"
 msgstr "_Reemplazar"
 
-#: src/compose.c:5814
+#: src/compose.c:5823
 msgid "_Insert"
 msgstr "_Insertar"
 
@@ -2723,7 +2723,7 @@ msgstr "Conectando al servidor POP3: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "No se puede conectar al servirdor POP3: %s:%d\n"
 
-#: src/inc.c:784 src/send_message.c:614
+#: src/inc.c:784 src/send_message.c:617
 msgid "Authenticating..."
 msgstr "Autentificando..."
 
@@ -2753,7 +2753,7 @@ msgstr "Obteniendo el tamaño de nuevos mensajes (LIST)..."
 msgid "Deleting message %d"
 msgstr "Borrando mensaje %d"
 
-#: src/inc.c:819 src/send_message.c:632
+#: src/inc.c:819 src/send_message.c:635
 msgid "Quitting"
 msgstr "Saliendo"
 
@@ -2797,7 +2797,7 @@ msgid "Socket error."
 msgstr "Error de socket."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1130 src/send_message.c:567 src/send_message.c:755
+#: src/inc.c:1130 src/send_message.c:570 src/send_message.c:758
 msgid "Connection closed by the remote host."
 msgstr "Conexión cerrada por la máquina remota."
 
@@ -2814,11 +2814,11 @@ msgstr ""
 "El buzón está bloqueado:\n"
 "%s"
 
-#: src/inc.c:1146 src/send_message.c:740
+#: src/inc.c:1146 src/send_message.c:743
 msgid "Authentication failed."
 msgstr "La autentificación falló."
 
-#: src/inc.c:1151 src/send_message.c:743
+#: src/inc.c:1151 src/send_message.c:746
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2827,7 +2827,7 @@ msgstr ""
 "La autentificación falló:\n"
 "%s"
 
-#: src/inc.c:1156 src/send_message.c:759
+#: src/inc.c:1156 src/send_message.c:762
 msgid "Session timed out."
 msgstr "Se agotó el tiempo de espera de la sesión."
 
@@ -3552,8 +3552,8 @@ msgstr "Creando ventana principal...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: fallo solicitando color %d\n"
 
-#: src/mainwindow.c:1068 src/summaryview.c:2041 src/summaryview.c:2126
-#: src/summaryview.c:3392 src/summaryview.c:3481 src/summaryview.c:3793
+#: src/mainwindow.c:1068 src/summaryview.c:2040 src/summaryview.c:2125
+#: src/summaryview.c:3380 src/summaryview.c:3469 src/summaryview.c:3780
 msgid "done.\n"
 msgstr "hecho.\n"
 
@@ -3814,16 +3814,16 @@ msgstr "Texto"
 msgid "Attachments"
 msgstr "Adjuntos"
 
-#: src/messageview.c:659 src/summaryview.c:2964
+#: src/messageview.c:659 src/summaryview.c:2963
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "No puedo guardar el fichero «%s»."
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2983
+#: src/messageview.c:714 src/prefs_common_dialog.c:2102 src/summaryview.c:2982
 msgid "Print"
 msgstr "Imprimir"
 
-#: src/messageview.c:715 src/summaryview.c:2984
+#: src/messageview.c:715 src/summaryview.c:2983
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3832,7 +3832,7 @@ msgstr ""
 "Teclee la orden para imprimir:\n"
 "(«%s» será sustituido por el fichero)"
 
-#: src/messageview.c:721 src/summaryview.c:2990
+#: src/messageview.c:721 src/summaryview.c:2989
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5549,17 +5549,17 @@ msgid "Attachment"
 msgstr "Adjunto"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4277
+#: src/prefs_summary_column.c:73 src/summaryview.c:4264
 msgid "Subject"
 msgstr "Asunto"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4280
+#: src/prefs_summary_column.c:74 src/summaryview.c:4267
 msgid "From"
 msgstr "Desde"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4282
+#: src/prefs_summary_column.c:75 src/summaryview.c:4269
 msgid "Date"
 msgstr "Fecha"
 
@@ -5735,65 +5735,65 @@ msgstr "No se puede ejecutar la orden: %s"
 msgid "Error occurred while executing command: %s"
 msgstr "Hubo un error ejecutando la orden: %s"
 
-#: src/send_message.c:535
+#: src/send_message.c:538
 msgid "Connecting"
 msgstr "Conectando"
 
-#: src/send_message.c:537
+#: src/send_message.c:540
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Conectando con el servidor SMTP: %s ..."
 
-#: src/send_message.c:604
+#: src/send_message.c:607
 msgid "Sending HELO..."
 msgstr "Enviando HELO..."
 
-#: src/send_message.c:605 src/send_message.c:610 src/send_message.c:615
+#: src/send_message.c:608 src/send_message.c:613 src/send_message.c:618
 msgid "Authenticating"
 msgstr "Autentificando"
 
-#: src/send_message.c:606 src/send_message.c:611
+#: src/send_message.c:609 src/send_message.c:614
 msgid "Sending message..."
 msgstr "Enviando mensaje..."
 
-#: src/send_message.c:609
+#: src/send_message.c:612
 msgid "Sending EHLO..."
 msgstr "Enviando EHLO..."
 
-#: src/send_message.c:618
+#: src/send_message.c:621
 msgid "Sending MAIL FROM..."
 msgstr "Enviando MAIL FROM..."
 
-#: src/send_message.c:619 src/send_message.c:623 src/send_message.c:628
+#: src/send_message.c:622 src/send_message.c:626 src/send_message.c:631
 msgid "Sending"
 msgstr "Enviando"
 
-#: src/send_message.c:622
+#: src/send_message.c:625
 msgid "Sending RCPT TO..."
 msgstr "Enviando RCPT TO..."
 
-#: src/send_message.c:627
+#: src/send_message.c:630
 msgid "Sending DATA..."
 msgstr "Enviando DATA..."
 
-#: src/send_message.c:631
+#: src/send_message.c:634
 msgid "Quitting..."
 msgstr "Terminando..."
 
-#: src/send_message.c:659
+#: src/send_message.c:662
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Enviando mensaje (%d / %d bytes)"
 
-#: src/send_message.c:687
+#: src/send_message.c:690
 msgid "Sending message"
 msgstr "Enviando mensaje"
 
-#: src/send_message.c:731 src/send_message.c:751
+#: src/send_message.c:734 src/send_message.c:754
 msgid "Error occurred while sending the message."
 msgstr "Hubo un error enviando el mensaje."
 
-#: src/send_message.c:734
+#: src/send_message.c:737
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6145,100 +6145,100 @@ msgstr "Ordenando cabeceras..."
 msgid "(No Date)"
 msgstr "(Sin fecha)"
 
-#: src/summaryview.c:1978
+#: src/summaryview.c:1977
 msgid "\tSetting summary from message data..."
 msgstr "\tExtrayendo cabeceras de los mensajes..."
 
-#: src/summaryview.c:1980
+#: src/summaryview.c:1979
 msgid "Setting summary from message data..."
 msgstr "Resumiendo los mensajes..."
 
-#: src/summaryview.c:2105
+#: src/summaryview.c:2104
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Escribiendo caché resumen (%s)..."
 
-#: src/summaryview.c:2409
+#: src/summaryview.c:2408
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Mensaje %d está marcado\n"
 
-#: src/summaryview.c:2451
+#: src/summaryview.c:2450
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Mensaje %d marcado como leído\n"
 
-#: src/summaryview.c:2523
+#: src/summaryview.c:2522
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Mensaje %d marcado como no leído\n"
 
-#: src/summaryview.c:2576
+#: src/summaryview.c:2575
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Mensaje %s/%d marcado para borrar\n"
 
-#: src/summaryview.c:2594
+#: src/summaryview.c:2593
 msgid "Delete message(s)"
 msgstr "Borrar mensaje(s)"
 
-#: src/summaryview.c:2595
+#: src/summaryview.c:2594
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "¿Quiere realmente borrar el/los mensaje(s) de la papelera?"
 
-#: src/summaryview.c:2660
+#: src/summaryview.c:2659
 msgid "Deleting duplicated messages..."
 msgstr "Borrando mensajes duplicados..."
 
-#: src/summaryview.c:2697
+#: src/summaryview.c:2696
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Mensaje %s/%d desmarcado\n"
 
-#: src/summaryview.c:2747
+#: src/summaryview.c:2746
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Mensaje %d marcado para mover a %s\n"
 
-#: src/summaryview.c:2764
+#: src/summaryview.c:2763
 msgid "Destination is same as current folder."
 msgstr "El destino es el mismo que la carpeta actual."
 
-#: src/summaryview.c:2818
+#: src/summaryview.c:2817
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Mensaje %d marcado para copiar a %s\n"
 
-#: src/summaryview.c:2835
+#: src/summaryview.c:2834
 msgid "Destination for copy is same as current folder."
 msgstr "El destino de la copia es el mismo que la carpeta actual."
 
-#: src/summaryview.c:3027
+#: src/summaryview.c:3026
 msgid "Error occurred while processing messages."
 msgstr "Hubo algún error al procesar los mensajes."
 
-#: src/summaryview.c:3326 src/summaryview.c:3327
+#: src/summaryview.c:3325 src/summaryview.c:3326
 msgid "Building threads..."
 msgstr "Construyendo hilos..."
 
-#: src/summaryview.c:3448 src/summaryview.c:3449
+#: src/summaryview.c:3436 src/summaryview.c:3437
 msgid "Unthreading..."
 msgstr "Deshaciendo hilos..."
 
-#: src/summaryview.c:3769
+#: src/summaryview.c:3756
 msgid "filtering..."
 msgstr "filtrando..."
 
-#: src/summaryview.c:3770
+#: src/summaryview.c:3757
 msgid "Filtering..."
 msgstr "Filtrando..."
 
-#: src/summaryview.c:3800
+#: src/summaryview.c:3787
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "se ha(n) filtrado %d mensaje(s)."
 
-#: src/summaryview.c:4286
+#: src/summaryview.c:4273
 msgid "No."
 msgstr "No."
 

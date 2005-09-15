@@ -91,7 +91,12 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Define text domain.])
 AM_GLIB_GNU_GETTEXT
 dnl AM_GNU_GETTEXT
 dnl AC_CHECK_FUNC(gettext, AC_CHECK_LIB(intl, gettext))
-localedir='${datadir}/locale'
+
+if test "x$DATADIRNAME" != "x"; then
+	localedir='${prefix}/${DATADIRNAME}/locale'
+else
+	localedir='${datadir}/locale'
+fi
 AC_ARG_WITH(localedir,
 	[  --with-localedir=DIR    Locale directory],
 	[localedir="$withval"])
