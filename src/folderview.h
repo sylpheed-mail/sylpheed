@@ -69,6 +69,7 @@ struct _FolderView
 
 FolderView *folderview_create		(void);
 void folderview_init			(FolderView	*folderview);
+void folderview_reflect_prefs		(FolderView	*folderview);
 
 FolderView *folderview_get		(void);
 

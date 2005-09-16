@@ -94,6 +94,7 @@ struct _PrefsCommon
 
 	gboolean trans_hdr;
 	gboolean display_folder_unread;
+	gboolean display_folder_num_columns;
 	gint ng_abbrev_len;
 
 	gboolean swap_from;
@@ -105,8 +106,6 @@ struct _PrefsCommon
 
 	ToolbarStyle toolbar_style;
 	gboolean show_statusbar;
-
-	gint folderview_vscrollbar_policy;
 
 	/* Summary columns visibility, position and size */
 	gboolean summary_col_visible[N_SUMMARY_COLS];

@@ -106,6 +106,8 @@ static GdkPixbuf *foldernoselect_pixbuf;
 static GdkPixbuf *draft_pixbuf;
 static GdkPixbuf *trash_pixbuf;
 
+static void folderview_set_columns	(FolderView	*folderview);
+
 static void folderview_select_row	(FolderView	*folderview,
 					 GtkTreeIter	*iter);
 static void folderview_select_row_ref	(FolderView	*folderview,
@@ -302,8 +304,7 @@ FolderView *folderview_create(void)
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy
 		(GTK_SCROLLED_WINDOW(scrolledwin),
-		 GTK_POLICY_AUTOMATIC,
-		 prefs_common.folderview_vscrollbar_policy);
+		 GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
 					    GTK_SHADOW_IN);
 	gtk_widget_set_size_request(scrolledwin,
@@ -487,6 +488,8 @@ FolderView *folderview_create(void)
 	folderview->news_popup   = news_popup;
 	folderview->news_factory = news_factory;
 
+	folderview_set_columns(folderview);
+
 	gtk_widget_show_all(scrolledwin);
 
 	folderview_list = g_list_append(folderview_list, folderview);
@@ -506,6 +509,11 @@ void folderview_init(FolderView *folderview)
 			 &foldernoselect_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DRAFT, &draft_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_TRASH, &trash_pixbuf);
+}
+
+void folderview_reflect_prefs(FolderView *folderview)
+{
+	folderview_set_columns(folderview);
 }
 
 FolderView *folderview_get(void)
@@ -543,6 +551,22 @@ void folderview_set_all(void)
 
 	for (list = folderview_list; list != NULL; list = list->next)
 		folderview_set((FolderView *)list->data);
+}
+
+static void folderview_set_columns(FolderView *folderview)
+{
+	GtkTreeView *treeview = GTK_TREE_VIEW(folderview->treeview);
+	GtkTreeViewColumn *column;
+
+	column = gtk_tree_view_get_column(treeview, COL_NEW);
+	gtk_tree_view_column_set_visible
+		(column, prefs_common.display_folder_num_columns);
+	column = gtk_tree_view_get_column(treeview, COL_UNREAD);
+	gtk_tree_view_column_set_visible
+		(column, prefs_common.display_folder_num_columns);
+	column = gtk_tree_view_get_column(treeview, COL_TOTAL);
+	gtk_tree_view_column_set_visible
+		(column, prefs_common.display_folder_num_columns);
 }
 
 void folderview_select(FolderView *folderview, FolderItem *item)

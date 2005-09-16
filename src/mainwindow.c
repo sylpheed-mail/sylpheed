@@ -1149,6 +1149,8 @@ void main_window_reflect_prefs_all(void)
 		else
 			gtk_widget_show(mainwin->exec_btn);
 
+		folderview_reflect_prefs(mainwin->folderview);
+
 		headerview_set_visibility(mainwin->messageview->headerview,
 					  prefs_common.display_header_pane);
 

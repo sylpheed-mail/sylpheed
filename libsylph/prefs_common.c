@@ -108,6 +108,9 @@ static PrefParam param[] = {
 
 	{"display_folder_unread_num", "TRUE",
 	 &prefs_common.display_folder_unread, P_BOOL},
+	{"display_folder_num_columns", "FALSE",
+	 &prefs_common.display_folder_num_columns, P_BOOL},
+
 	{"newsgroup_abbrev_len", "16", &prefs_common.ng_abbrev_len, P_INT},
 
 	{"translate_header", "TRUE", &prefs_common.trans_hdr, P_BOOL},
@@ -123,9 +126,6 @@ static PrefParam param[] = {
 
 	{"toolbar_style", "3", &prefs_common.toolbar_style, P_ENUM},
 	{"show_statusbar", "TRUE", &prefs_common.show_statusbar, P_BOOL},
-
-	{"folderview_vscrollbar_policy", "0",
-	 &prefs_common.folderview_vscrollbar_policy, P_ENUM},
 
 	{"summary_col_show_mark", "TRUE",
 	 &prefs_common.summary_col_visible[S_COL_MARK], P_BOOL},

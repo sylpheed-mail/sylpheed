@@ -119,11 +119,10 @@ static struct Display {
 	GtkWidget *fontbtn_textfont;
 
 	GtkWidget *chkbtn_folder_unread;
+	GtkWidget *chkbtn_folder_num_cols;
 	GtkWidget *entry_ng_abbrev_len;
 	GtkWidget *spinbtn_ng_abbrev_len;
 	GtkObject *spinbtn_ng_abbrev_len_adj;
-
-	GtkWidget *chkbtn_transhdr;
 
 	GtkWidget *chkbtn_swapfrom;
 	GtkWidget *chkbtn_expand_thread;
@@ -319,11 +318,10 @@ static PrefsUIData ui_data[] = {
 
 	{"display_folder_unread_num", &display.chkbtn_folder_unread,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"display_folder_num_columns", &display.chkbtn_folder_num_cols,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"newsgroup_abbrev_len", &display.spinbtn_ng_abbrev_len,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
-
-	{"translate_header", &display.chkbtn_transhdr,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Display: Summary View */
 	{"enable_swap_from", &display.chkbtn_swapfrom,
@@ -335,89 +333,11 @@ static PrefsUIData ui_data[] = {
 
 #if 0
 	{"enable_rules_hint", NULL, NULL, NULL},
-	{"bold_unread", NULL, NULL, NULL},
-
-	{"toolbar_style", NULL, NULL, NULL},
-	{"show_statusbar", NULL, NULL, NULL},
-
-	{"folderview_vscrollbar_policy", NULL, NULL, NULL},
-
-	{"summary_col_show_mark", NULL, NULL, NULL},
-	{"summary_col_show_unread", NULL, NULL, NULL},
-	{"summary_col_show_mime", NULL, NULL, NULL},
-	{"summary_col_show_subject", NULL, NULL, NULL},
-	{"summary_col_show_from", NULL, NULL, NULL},
-	{"summary_col_show_date", NULL, NULL, NULL},
-	{"summary_col_show_size", NULL, NULL, NULL},
-	{"summary_col_show_number", NULL, NULL, NULL},
-
-	{"summary_col_pos_mark", NULL, NULL, NULL},
-	{"summary_col_pos_unread", NULL, NULL, NULL},
-	{"summary_col_pos_mime", NULL, NULL, NULL},
-	{"summary_col_pos_subject", NULL, NULL, NULL},
-	{"summary_col_pos_from", NULL, NULL, NULL},
-	{"summary_col_pos_date", NULL, NULL, NULL},
-	{"summary_col_pos_size", NULL, NULL, NULL},
-	{"summary_col_pos_number", NULL, NULL, NULL},
-
-	{"summary_col_size_mark", NULL, NULL, NULL},
-	{"summary_col_size_unread", NULL, NULL, NULL},
-	{"summary_col_size_mime", NULL, NULL, NULL},
-	{"summary_col_size_subject", NULL, NULL, NULL},
-	{"summary_col_size_from", NULL, NULL, NULL},
-	{"summary_col_size_date", NULL, NULL, NULL},
-	{"summary_col_size_size", NULL, NULL, NULL},
-	{"summary_col_size_number", NULL, NULL, NULL},
-
-	/* Widget size */
-	{"folderwin_x", NULL, NULL, NULL},
-	{"folderwin_y", NULL, NULL, NULL},
-	{"folderview_width", NULL, NULL, NULL},
-	{"folderview_height", NULL, NULL, NULL},
-	{"folderview_visible", NULL, NULL, NULL},
-
-	{"folder_col_folder", NULL, NULL, NULL},
-	{"folder_col_new", NULL, NULL, NULL},
-	{"folder_col_unread", NULL, NULL, NULL},
-	{"folder_col_total", NULL, NULL, NULL},
-
-	{"summaryview_width", NULL, NULL, NULL},
-	{"summaryview_height", NULL, NULL, NULL},
-
-	{"main_messagewin_x", NULL, NULL, NULL},
-	{"main_messagewin_y", NULL, NULL, NULL},
-	{"messageview_width", NULL, NULL, NULL},
-	{"messageview_height", NULL, NULL, NULL},
-	{"messageview_visible", NULL, NULL, NULL},
-
-	{"mainview_x", NULL, NULL, NULL},
-	{"mainview_y", NULL, NULL, NULL},
-	{"mainview_width", NULL, NULL, NULL},
-	{"mainview_height", NULL, NULL, NULL},
-	{"mainwin_x", NULL, NULL, NULL},
-	{"mainwin_y", NULL, NULL, NULL},
-	{"mainwin_width", NULL, NULL, NULL},
-	{"mainwin_height", NULL, NULL, NULL},
-	{"messagewin_width", NULL, NULL, NULL},
-	{"messagewin_height", NULL, NULL, NULL},
-	{"sourcewin_width", NULL, NULL, NULL},
-	{"sourcewin_height", NULL, NULL, NULL},
-	{"compose_width", NULL, NULL, NULL},
-	{"compose_height", NULL, NULL, NULL},
 #endif /* 0 */
 
 	/* Message */
 	{"enable_color", &message.chkbtn_enablecol,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-
-#if 0
-	{"quote_level1_color", NULL, NULL, NULL},
-	{"quote_level2_color", NULL, NULL, NULL},
-	{"quote_level3_color", NULL, NULL, NULL},
-	{"uri_color", NULL, NULL, NULL},
-	{"signature_color", NULL, NULL, NULL},
-	{"recycle_quote_colors", NULL, NULL, NULL},
-#endif
 
 	{"convert_mb_alnum", &message.chkbtn_mbalnum,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -443,15 +363,6 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"inline_image", &message.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-
-#if 0
-	{"show_other_header", NULL, NULL, NULL},
-
-	/* MIME viewer */
-	{"mime_image_viewer", NULL, NULL, NULL},
-	{"mime_audio_player", NULL, NULL, NULL},
-	{"mime_open_command", NULL, NULL, NULL},
-#endif
 
 	/* Junk mail */
 	{"enable_junk", &junk.chkbtn_enable_junk,
@@ -487,11 +398,6 @@ static PrefsUIData ui_data[] = {
 #endif /* USE_GPGME */
 
 	/* Interface */
-#if 0
-	{"separate_folder", NULL, NULL, NULL},
-	{"separate_message", NULL, NULL, NULL},
-#endif
-
 	{"always_show_message_when_selected",
 	 &interface.checkbtn_always_show_msg,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -1351,8 +1257,9 @@ static void prefs_display_create(void)
 	GtkWidget *table1;
 	GtkWidget *label_textfont;
 	GtkWidget *fontbtn_textfont;
-	GtkWidget *chkbtn_transhdr;
+	GtkWidget *frame_folder;
 	GtkWidget *chkbtn_folder_unread;
+	GtkWidget *chkbtn_folder_num_cols;
 	GtkWidget *hbox1;
 	GtkWidget *label_ng_abbrev;
 	GtkWidget *spinbtn_ng_abbrev_len;
@@ -1391,16 +1298,19 @@ static void prefs_display_create(void)
 	gtk_table_attach (GTK_TABLE (table1), fontbtn_textfont, 1, 2, 0, 1,
 			  (GTK_EXPAND | GTK_FILL), 0, 0, 0);
 
+	/* ---- Folder View ---- */
+
+	PACK_FRAME(vbox1, frame_folder, _("Folder View"));
+
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
-	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, TRUE, 0);
-
-	PACK_CHECK_BUTTON
-		(vbox2, chkbtn_transhdr,
-		 _("Translate header name (such as `From:', `Subject:')"));
+	gtk_container_add (GTK_CONTAINER (frame_folder), vbox2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
 
 	PACK_CHECK_BUTTON (vbox2, chkbtn_folder_unread,
 			   _("Display unread number next to folder name"));
+	PACK_CHECK_BUTTON (vbox2, chkbtn_folder_num_cols,
+			   _("Display message number columns in the folder view"));
 
 	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
@@ -1478,8 +1388,8 @@ static void prefs_display_create(void)
 
 	display.fontbtn_textfont = fontbtn_textfont;
 
-	display.chkbtn_transhdr           = chkbtn_transhdr;
 	display.chkbtn_folder_unread      = chkbtn_folder_unread;
+	display.chkbtn_folder_num_cols    = chkbtn_folder_num_cols;
 	display.spinbtn_ng_abbrev_len     = spinbtn_ng_abbrev_len;
 	display.spinbtn_ng_abbrev_len_adj = spinbtn_ng_abbrev_len_adj;
 
