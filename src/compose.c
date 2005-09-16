@@ -2732,21 +2732,23 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		buf = conv_codeset_strdup_full
 			(chars, src_charset, body_charset, &error);
 		if (!buf || error != 0) {
-			AlertValue aval;
+			AlertValue aval = G_ALERTDEFAULT;
 			gchar *msg;
 
 			g_free(buf);
 
-			msg = g_strdup_printf(_("Can't convert the character encoding of the message body from %s to %s.\n"
-						"\n"
-						"Send it as %s anyway?"),
-					      src_charset, body_charset,
-					      src_charset);
-			aval = alertpanel_full
-				(_("Code conversion error"), msg, ALERT_ERROR,
-				 G_ALERTALTERNATE,
-				 FALSE, GTK_STOCK_YES, GTK_STOCK_NO, NULL);
-			g_free(msg);
+			if (!is_draft) {
+				msg = g_strdup_printf(_("Can't convert the character encoding of the message body from %s to %s.\n"
+							"\n"
+							"Send it as %s anyway?"),
+						      src_charset, body_charset,
+						      src_charset);
+				aval = alertpanel_full
+					(_("Code conversion error"), msg, ALERT_ERROR,
+					 G_ALERTALTERNATE,
+					 FALSE, GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+				g_free(msg);
+			}
 
 			if (aval != G_ALERTDEFAULT) {
 				g_free(chars);
@@ -2806,7 +2808,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		    procmime_get_encoding_str(encoding));
 
 	/* check for line length limit */
-	if (encoding != ENC_QUOTED_PRINTABLE && encoding != ENC_BASE64 &&
+	if (!is_draft &&
+	    encoding != ENC_QUOTED_PRINTABLE && encoding != ENC_BASE64 &&
 	    check_line_length(buf, 1000, &line) < 0) {
 		AlertValue aval;
 		gchar *msg;
