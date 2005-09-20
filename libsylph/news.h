@@ -43,6 +43,7 @@ struct _NewsGroupInfo
 	guint first;
 	guint last;
 	gchar type;
+	gboolean subscribed;
 };
 
 FolderClass *news_get_class		(void);

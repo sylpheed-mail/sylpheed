@@ -66,7 +66,7 @@ sylpheed_SOURCES = \
 	alertpanel.c alertpanel.h \
 	inputdialog.c inputdialog.h \
 	progressdialog.c progressdialog.h \
-	grouplistdialog.c grouplistdialog.h \
+	subscribedialog.c subscribedialog.h \
 	about.c about.h \
 	setup.c setup.h \
 	gtkutils.c gtkutils.h \

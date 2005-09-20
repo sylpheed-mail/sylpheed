@@ -489,6 +489,7 @@ static NewsGroupInfo *news_group_info_new(const gchar *name,
 	ginfo->first = first;
 	ginfo->last = last;
 	ginfo->type = type;
+	ginfo->subscribed = FALSE;
 
 	return ginfo;
 }

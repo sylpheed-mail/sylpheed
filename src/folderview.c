@@ -47,7 +47,7 @@
 #include "summaryview.h"
 #include "summary_search.h"
 #include "inputdialog.h"
-#include "grouplistdialog.h"
+#include "subscribedialog.h"
 #include "foldersel.h"
 #include "manage_window.h"
 #include "alertpanel.h"
@@ -2380,7 +2380,7 @@ static void folderview_new_news_group_cb(FolderView *folderview, guint action,
 
 	gtk_tree_model_get(model, &root, COL_FOLDER_ITEM, &rootitem, -1);
 
-	new_subscr = grouplist_dialog(folder);
+	new_subscr = subscribe_dialog(folder);
 
 	/* remove unsubscribed newsgroups */
 	for (gnode = folder->node->children; gnode != NULL; ) {

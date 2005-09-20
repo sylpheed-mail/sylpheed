@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2001 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GROUPLISTDIALOG_H__
-#define __GROUPLISTDIALOG_H__
+#ifndef __SUBSCRIBEDIALOG_H__
+#define __SUBSCRIBEDIALOG_H__
 
 #include <glib.h>
 
 #include "folder.h"
 
-GSList *grouplist_dialog	(Folder *folder);
+GSList *subscribe_dialog	(Folder *folder);
 
-#endif /* __GROUPLISTDIALOG_H__ */
+#endif /* __SUBSCRIBEDIALOG_H__ */

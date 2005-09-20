@@ -35,14 +35,18 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkentry.h>
-#include <gtk/gtkctree.h>
+#include <gtk/gtktreestore.h>
+#include <gtk/gtktreeview.h>
+#include <gtk/gtktreeselection.h>
+#include <gtk/gtkcellrenderertoggle.h>
+#include <gtk/gtkcellrenderertext.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkstock.h>
 #include <string.h>
 
-#include "grouplistdialog.h"
+#include "subscribedialog.h"
 #include "manage_window.h"
 #include "gtkutils.h"
 #include "utils.h"
@@ -52,29 +56,46 @@
 #include "recv.h"
 #include "socket.h"
 
-#define GROUPLIST_DIALOG_WIDTH		450
-#define GROUPLIST_DIALOG_HEIGHT		400
-#define GROUPLIST_COL_NAME_WIDTH	250
+enum {
+	SUBSCRIBE_TOGGLE,
+	SUBSCRIBE_NAME,
+	SUBSCRIBE_NUM,
+	SUBSCRIBE_TYPE,
+	SUBSCRIBE_INFO,
+	N_SUBSCRIBE_COLUMNS
+};
+
+#define SUBSCRIBE_DIALOG_WIDTH		450
+#define SUBSCRIBE_DIALOG_HEIGHT		400
+#define SUBSCRIBE_COL_NAME_WIDTH	250
 
 static gboolean ack;
 static gboolean locked;
 
 static GtkWidget *dialog;
 static GtkWidget *entry;
-static GtkWidget *ctree;
+static GtkWidget *treeview;
 static GtkWidget *status_label;
 static GtkWidget *ok_button;
+
+static GtkTreeStore *tree_store;
+
 static GSList *group_list;
+static GSList *subscribe_list;
 static Folder *news_folder;
 
-static GSList *subscribed;
-
-static void grouplist_dialog_create	(void);
-static void grouplist_dialog_set_list	(const gchar	*pattern,
+static void subscribe_dialog_create	(void);
+static void subscribe_dialog_set_list	(const gchar	*pattern,
 					 gboolean	 refresh);
-static void grouplist_search		(void);
-static void grouplist_clear		(void);
-static gboolean grouplist_recv_func	(SockInfo	*sock,
+static void subscribe_search		(void);
+static void subscribe_clear		(void);
+
+static gboolean subscribe_foreach_func	(GtkTreeModel	*model,
+					 GtkTreePath	*path,
+					 GtkTreeIter	*iter,
+					 gpointer	 data);
+
+static gboolean subscribe_recv_func	(SockInfo	*sock,
 					 gint		 count,
 					 gint		 read_bytes,
 					 gpointer	 data);
@@ -91,19 +112,22 @@ static void refresh_clicked	(GtkWidget	*widget,
 static gboolean key_pressed	(GtkWidget	*widget,
 				 GdkEventKey	*event,
 				 gpointer	 data);
-static void ctree_selected	(GtkCTree	*ctree,
-				 GtkCTreeNode	*node,
-				 gint		 column,
-				 gpointer	 data);
-static void ctree_unselected	(GtkCTree	*ctree,
-				 GtkCTreeNode	*node,
-				 gint		 column,
-				 gpointer	 data);
+
+static gboolean subscribe_selected	(GtkTreeSelection	*selection,
+					 GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 gboolean		 cur_selected,
+					 gpointer		 data);
+
+static void subscribe_toggled	(GtkCellRenderer	*cell,
+				 gchar			*path,
+				 gpointer		 data);
+
 static void entry_activated	(GtkEditable	*editable);
 static void search_clicked	(GtkWidget	*widget,
 				 gpointer	 data);
 
-GSList *grouplist_dialog(Folder *folder)
+GSList *subscribe_dialog(Folder *folder)
 {
 	GNode *node;
 	FolderItem *item;
@@ -111,7 +135,7 @@ GSList *grouplist_dialog(Folder *folder)
 	if (dialog && GTK_WIDGET_VISIBLE(dialog)) return NULL;
 
 	if (!dialog)
-		grouplist_dialog_create();
+		subscribe_dialog_create();
 
 	news_folder = folder;
 
@@ -119,41 +143,43 @@ GSList *grouplist_dialog(Folder *folder)
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	manage_window_set_transient(GTK_WINDOW(dialog));
 	gtk_widget_grab_focus(ok_button);
-	gtk_widget_grab_focus(ctree);
+	gtk_widget_grab_focus(treeview);
 	GTK_EVENTS_FLUSH();
 
-	subscribed = NULL;
+	subscribe_list = NULL;
 	for (node = folder->node->children; node != NULL; node = node->next) {
 		item = FOLDER_ITEM(node->data);
-		subscribed = g_slist_append(subscribed, g_strdup(item->path));
+		subscribe_list = g_slist_append(subscribe_list,
+						g_strdup(item->path));
 	}
 
-	grouplist_dialog_set_list(NULL, TRUE);
+	subscribe_dialog_set_list(NULL, TRUE);
 
 	if (ack) gtk_main();
 
 	manage_window_focus_out(dialog, NULL, NULL);
 	gtk_widget_hide(dialog);
 
-	if (!ack) {
-		slist_free_strings(subscribed);
-		g_slist_free(subscribed);
-		subscribed = NULL;
+	if (ack) {
+		GSList *cur;
 
-		for (node = folder->node->children; node != NULL;
-		     node = node->next) {
-			item = FOLDER_ITEM(node->data);
-			subscribed = g_slist_append(subscribed,
-						    g_strdup(item->path));
+		slist_free_strings(subscribe_list);
+		subscribe_list = NULL;
+		for (cur = group_list; cur != NULL; cur = cur->next) {
+			NewsGroupInfo *ginfo = (NewsGroupInfo *)cur->data;
+
+			if (ginfo->subscribed)
+				subscribe_list = g_slist_append
+					(subscribe_list, g_strdup(ginfo->name));
 		}
 	}
 
-	grouplist_clear();
+	subscribe_clear();
 
-	return subscribed;
+	return subscribe_list;
 }
 
-static void grouplist_dialog_create(void)
+static void subscribe_dialog_create(void)
 {
 	GtkWidget *vbox;
 	GtkWidget *hbox;
@@ -163,14 +189,15 @@ static void grouplist_dialog_create(void)
 	GtkWidget *cancel_button;	
 	GtkWidget *refresh_button;	
 	GtkWidget *scrolledwin;
-	gchar *titles[3];
-	gint i;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
+	GtkTreeSelection *selection;
 
 	dialog = gtk_dialog_new();
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, TRUE, FALSE);
 	gtk_widget_set_size_request(dialog,
-				    GROUPLIST_DIALOG_WIDTH,
-				    GROUPLIST_DIALOG_HEIGHT);
+				    SUBSCRIBE_DIALOG_WIDTH,
+				    SUBSCRIBE_DIALOG_HEIGHT);
 	gtk_container_set_border_width
 		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
@@ -216,24 +243,51 @@ static void grouplist_dialog_create(void)
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
 
-	titles[0] = _("Newsgroup name");
-	titles[1] = _("Messages");
-	titles[2] = _("Type");
-	ctree = gtk_ctree_new_with_titles(3, 0, titles);
-	gtk_container_add(GTK_CONTAINER(scrolledwin), ctree);
-	gtk_clist_set_column_width
-		(GTK_CLIST(ctree), 0, GROUPLIST_COL_NAME_WIDTH);
-	gtk_clist_set_selection_mode(GTK_CLIST(ctree), GTK_SELECTION_MULTIPLE);
-	gtk_ctree_set_line_style(GTK_CTREE(ctree), GTK_CTREE_LINES_DOTTED);
-	gtk_ctree_set_expander_style(GTK_CTREE(ctree),
-				     GTK_CTREE_EXPANDER_SQUARE);
-	for (i = 0; i < 3; i++)
-		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(ctree)->column[i].button,
-				       GTK_CAN_FOCUS);
-	g_signal_connect(G_OBJECT(ctree), "tree_select_row",
-			 G_CALLBACK(ctree_selected), NULL);
-	g_signal_connect(G_OBJECT(ctree), "tree_unselect_row",
-			 G_CALLBACK(ctree_unselected), NULL);
+	tree_store = gtk_tree_store_new(N_SUBSCRIBE_COLUMNS,
+					G_TYPE_BOOLEAN,
+					G_TYPE_STRING,
+					G_TYPE_STRING,
+					G_TYPE_STRING,
+					G_TYPE_POINTER);
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(tree_store),
+					     SUBSCRIBE_NAME,
+					     GTK_SORT_ASCENDING);
+
+	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(tree_store));
+	g_object_unref(G_OBJECT(tree_store));
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview),
+					SUBSCRIBE_NAME);
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
+	gtk_tree_selection_set_select_function(selection, subscribe_selected,
+					       NULL, NULL);
+
+	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
+
+	renderer = gtk_cell_renderer_toggle_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(NULL, renderer, "active", SUBSCRIBE_TOGGLE, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+	g_signal_connect(renderer, "toggled", G_CALLBACK(subscribe_toggled),
+			 NULL);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Newsgroup name"), renderer, "text", SUBSCRIBE_NAME, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Messages"), renderer, "text", SUBSCRIBE_NUM, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Type"), renderer, "text", SUBSCRIBE_TYPE, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -261,29 +315,43 @@ static void grouplist_dialog_create(void)
 
 static GHashTable *branch_node_table;
 
-static void grouplist_hash_init(void)
+static void subscribe_hash_init(void)
 {
-	branch_node_table = g_hash_table_new(g_str_hash, g_str_equal);
+	branch_node_table = g_hash_table_new_full
+		(g_str_hash, g_str_equal, NULL,
+		 (GDestroyNotify)gtk_tree_iter_free);
 }
 
-static void grouplist_hash_done(void)
+static void subscribe_hash_free(void)
 {
 	hash_free_strings(branch_node_table);
 	g_hash_table_destroy(branch_node_table);
 }
 
-static GtkCTreeNode *grouplist_hash_get_branch_node(const gchar *name)
+static gboolean subscribe_hash_get_branch_node(const gchar *name,
+					       GtkTreeIter *iter)
 {
-	return g_hash_table_lookup(branch_node_table, name);
+	GtkTreeIter *iter_;
+
+	iter_ = g_hash_table_lookup(branch_node_table, name);
+	if (iter_) {
+		*iter = *iter_;
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
-static void grouplist_hash_set_branch_node(const gchar *name,
-					   GtkCTreeNode *node)
+static void subscribe_hash_set_branch_node(const gchar *name,
+					   GtkTreeIter *iter)
 {
-	g_hash_table_insert(branch_node_table, g_strdup(name), node);
+	GtkTreeIter *iter_;
+
+	iter_ = gtk_tree_iter_copy(iter);
+	g_hash_table_replace(branch_node_table, g_strdup(name), iter_);
 }
 
-static gchar *grouplist_get_parent_name(const gchar *name)
+static gchar *subscribe_get_parent_name(const gchar *name)
 {
 	gchar *p;
 
@@ -293,98 +361,98 @@ static gchar *grouplist_get_parent_name(const gchar *name)
 	return g_strndup(name, p - name);
 }
 
-static GtkCTreeNode *grouplist_create_parent(const gchar *name,
-					     const gchar *pattern)
+static gboolean subscribe_create_parent(const gchar *name,
+					const gchar *pattern,
+					GtkTreeIter *parent)
 {
-	GtkCTreeNode *parent;
-	GtkCTreeNode *node;
-	gchar *cols[3];
+	GtkTreeIter parent_;
+	GtkTreeIter iter;
 	gchar *parent_name;
+	gboolean has_parent;
 
-	if (*name == '\0') return NULL;
-	node = grouplist_hash_get_branch_node(name);
-	if (node != NULL) return node;
+	if (*name == '\0') return FALSE;
+	if (subscribe_hash_get_branch_node(name, &iter)) {
+		*parent = iter;
+		return TRUE;
+	}
 
-	cols[0] = (gchar *)name;
-	cols[1] = cols[2] = "";
+	parent_name = subscribe_get_parent_name(name);
+	has_parent = subscribe_create_parent(parent_name, pattern, &parent_);
 
-	parent_name = grouplist_get_parent_name(name);
-	parent = grouplist_create_parent(parent_name, pattern);
+	if (has_parent) {
+		gtk_tree_store_append(tree_store, &iter, &parent_);
+		if (g_pattern_match_simple(pattern, parent_name) == FALSE)
+			gtkut_tree_view_expand_parent_all
+				(GTK_TREE_VIEW(treeview), &iter);
+	} else
+		gtk_tree_store_append(tree_store, &iter, NULL);
+	gtk_tree_store_set(tree_store, &iter, SUBSCRIBE_NAME, name, -1);
 
-	node = parent ? GTK_CTREE_ROW(parent)->children
-		: GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
-	node = gtk_ctree_insert_node(GTK_CTREE(ctree), parent, node,
-				     cols, 0, NULL, NULL, NULL, NULL,
-				     FALSE, FALSE);
-	if (parent && g_pattern_match_simple(pattern, parent_name) == FALSE)
-		gtk_ctree_expand(GTK_CTREE(ctree), parent);
-	gtk_ctree_node_set_selectable(GTK_CTREE(ctree), node, FALSE);
-
-	grouplist_hash_set_branch_node(name, node);
+	subscribe_hash_set_branch_node(name, &iter);
 
 	g_free(parent_name);
 
-	return node;
+	*parent = iter;
+
+	return TRUE;
 }
 
-static GtkCTreeNode *grouplist_create_branch(NewsGroupInfo *ginfo,
-					     const gchar *pattern)
+static gboolean subscribe_create_branch(NewsGroupInfo *ginfo,
+					const gchar *pattern,
+					GtkTreeIter *iter)
 {
-	GtkCTreeNode *node;
-	GtkCTreeNode *parent;
+	GtkTreeIter iter_;
+	GtkTreeIter parent;
 	gchar *name = (gchar *)ginfo->name;
 	gchar *parent_name;
-	gchar *count_str;
-	gchar *cols[3];
 	gint count;
+	const gchar *count_str;
+	const gchar *type_str;
+	gboolean has_parent;
 
 	count = ginfo->last - ginfo->first;
 	if (count < 0)
 		count = 0;
 	count_str = itos(count);
 
-	cols[0] = ginfo->name;
-	cols[1] = count_str;
 	if (ginfo->type == 'y')
-		cols[2] = "";
+		type_str = "";
 	else if (ginfo->type == 'm')
-		cols[2] = _("moderated");
+		type_str = _("moderated");
 	else if (ginfo->type == 'n')
-		cols[2] = _("readonly");
+		type_str = _("readonly");
 	else
-		cols[2] = _("unknown");
+		type_str = _("unknown");
 
-	parent_name = grouplist_get_parent_name(name);
-	parent = grouplist_create_parent(parent_name, pattern);
-	node = grouplist_hash_get_branch_node(name);
-	if (node) {
-		gtk_ctree_set_node_info(GTK_CTREE(ctree), node, cols[0], 0,
-					NULL, NULL, NULL, NULL, FALSE, FALSE);
-		gtk_ctree_node_set_text(GTK_CTREE(ctree), node, 1, cols[1]);
-		gtk_ctree_node_set_text(GTK_CTREE(ctree), node, 2, cols[2]);
-	} else {
-		node = parent ? GTK_CTREE_ROW(parent)->children
-			: GTK_CTREE_NODE(GTK_CLIST(ctree)->row_list);
-		node = gtk_ctree_insert_node(GTK_CTREE(ctree), parent, node,
-					     cols, 0, NULL, NULL, NULL, NULL,
-					     TRUE, FALSE);
-		if (parent &&
-		    g_pattern_match_simple(pattern, parent_name) == FALSE)
-			gtk_ctree_expand(GTK_CTREE(ctree), parent);
+	parent_name = subscribe_get_parent_name(name);
+	has_parent = subscribe_create_parent(parent_name, pattern, &parent);
+	if (!subscribe_hash_get_branch_node(name, &iter_)) {
+		if (has_parent) {
+			gtk_tree_store_append(tree_store, &iter_, &parent);
+			if (g_pattern_match_simple(pattern, parent_name) == FALSE)
+				gtkut_tree_view_expand_parent_all
+					(GTK_TREE_VIEW(treeview), &iter_);
+		} else
+			gtk_tree_store_append(tree_store, &iter_, NULL);
 	}
-	gtk_ctree_node_set_selectable(GTK_CTREE(ctree), node, TRUE);
-	if (node)
-		gtk_ctree_node_set_row_data(GTK_CTREE(ctree), node, ginfo);
+
+	gtk_tree_store_set(tree_store, &iter_,
+			   SUBSCRIBE_NAME, ginfo->name,
+			   SUBSCRIBE_NUM, count_str,
+			   SUBSCRIBE_TYPE, type_str,
+			   SUBSCRIBE_INFO, ginfo,
+			   -1);
 
 	g_free(parent_name);
 
-	return node;
+	*iter = iter_;
+
+	return TRUE;
 }
 
-static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
+static void subscribe_dialog_set_list(const gchar *pattern, gboolean refresh)
 {
 	GSList *cur;
-	GtkCTreeNode *node;
 	GPatternSpec *pspec;
 
 	if (locked) return;
@@ -395,8 +463,8 @@ static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
 
 	if (refresh) {
 		ack = TRUE;
-		grouplist_clear();
-		recv_set_ui_func(grouplist_recv_func, NULL);
+		subscribe_clear();
+		recv_set_ui_func(subscribe_recv_func, NULL);
 		group_list = news_get_group_list(news_folder);
 		group_list = g_slist_reverse(group_list);
 		recv_set_ui_func(NULL, NULL);
@@ -406,76 +474,78 @@ static void grouplist_dialog_set_list(const gchar *pattern, gboolean refresh)
 			return;
 		}
 	} else {
-		g_signal_handlers_block_by_func
-			(G_OBJECT(ctree), G_CALLBACK(ctree_unselected),
-			 NULL);
-		gtk_clist_clear(GTK_CLIST(ctree));
-		g_signal_handlers_unblock_by_func
-			(G_OBJECT(ctree), G_CALLBACK(ctree_unselected),
-			 NULL);
+		gtk_tree_store_clear(tree_store);
 	}
 	gtk_entry_set_text(GTK_ENTRY(entry), pattern);
 
-	grouplist_hash_init();
-
-	gtk_clist_freeze(GTK_CLIST(ctree));
-
-	g_signal_handlers_block_by_func(G_OBJECT(ctree),
-					G_CALLBACK(ctree_selected), NULL);
+	subscribe_hash_init();
 
 	pspec = g_pattern_spec_new(pattern);
 
 	for (cur = group_list; cur != NULL ; cur = cur->next) {
 		NewsGroupInfo *ginfo = (NewsGroupInfo *)cur->data;
+		GtkTreeIter iter;
 
 		if (g_pattern_match_string(pspec, ginfo->name)) {
-			node = grouplist_create_branch(ginfo, pattern);
+			subscribe_create_branch(ginfo, pattern, &iter);
 			if (g_slist_find_custom
-				(subscribed, ginfo->name,
+				(subscribe_list, ginfo->name,
 				 (GCompareFunc)g_ascii_strcasecmp)
-			    != NULL)
-				gtk_ctree_select(GTK_CTREE(ctree), node);
+			    != NULL) {
+				ginfo->subscribed = TRUE;
+				gtk_tree_store_set(tree_store, &iter,
+						   SUBSCRIBE_TOGGLE, TRUE, -1);
+			}
 		}
 	}
 
 	g_pattern_spec_free(pspec);
 
-	g_signal_handlers_unblock_by_func(G_OBJECT(ctree),
-					  G_CALLBACK(ctree_selected), NULL);
-
-	gtk_clist_thaw(GTK_CLIST(ctree));
-
-	grouplist_hash_done();
+	subscribe_hash_free();
 
 	gtk_label_set_text(GTK_LABEL(status_label), _("Done."));
 
 	locked = FALSE;
 }
 
-static void grouplist_search(void)
+static void subscribe_search(void)
 {
 	gchar *str;
 
 	if (locked) return;
 
 	str = gtk_editable_get_chars(GTK_EDITABLE(entry), 0, -1);
-	grouplist_dialog_set_list(str, FALSE);
+	subscribe_dialog_set_list(str, FALSE);
 	g_free(str);
 }
 
-static void grouplist_clear(void)
+static void subscribe_clear(void)
 {
-	g_signal_handlers_block_by_func(G_OBJECT(ctree),
-					G_CALLBACK(ctree_unselected), NULL);
-	gtk_clist_clear(GTK_CLIST(ctree));
+	gtk_tree_store_clear(tree_store);
 	gtk_entry_set_text(GTK_ENTRY(entry), "");
 	news_group_list_free(group_list);
 	group_list = NULL;
-	g_signal_handlers_unblock_by_func(G_OBJECT(ctree),
-					  G_CALLBACK(ctree_unselected), NULL);
 }
 
-static gboolean grouplist_recv_func(SockInfo *sock, gint count, gint read_bytes,
+static gboolean subscribe_foreach_func(GtkTreeModel *model, GtkTreePath *path,
+				       GtkTreeIter *iter, gpointer data)
+{
+	GSList **subscribed = data;
+	gboolean enabled;
+	NewsGroupInfo *ginfo;
+
+	gtk_tree_model_get(model, iter,
+			   SUBSCRIBE_TOGGLE, &enabled,
+			   SUBSCRIBE_INFO, &ginfo, -1);
+	if (ginfo && enabled) {
+		*subscribed = g_slist_append
+			(*subscribed, g_strdup(ginfo->name));
+	}
+
+	return FALSE;
+}
+
+static gboolean subscribe_recv_func(SockInfo *sock, gint count, gint read_bytes,
 				    gpointer data)
 {
 	gchar buf[BUFFSIZE];
@@ -523,7 +593,7 @@ static void refresh_clicked(GtkWidget *widget, gpointer data)
 	news_remove_group_list_cache(news_folder);
 
 	str = gtk_editable_get_chars(GTK_EDITABLE(entry), 0, -1);
-	grouplist_dialog_set_list(str, TRUE);
+	subscribe_dialog_set_list(str, TRUE);
 	g_free(str);
 }
 
@@ -535,40 +605,53 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 	return FALSE;
 }
 
-static void ctree_selected(GtkCTree *ctree, GtkCTreeNode *node, gint column,
-			   gpointer data)
+static gboolean subscribe_selected(GtkTreeSelection *selection,
+				   GtkTreeModel *model, GtkTreePath *path,
+				   gboolean cur_selected, gpointer data)
 {
+	GtkTreeIter iter;
 	NewsGroupInfo *ginfo;
 
-	ginfo = gtk_ctree_node_get_row_data(ctree, node);
-	if (!ginfo) return;
+	if (!gtk_tree_model_get_iter(GTK_TREE_MODEL(tree_store), &iter, path))
+		return FALSE;
 
-	subscribed = g_slist_append(subscribed, g_strdup(ginfo->name));
+	gtk_tree_model_get(GTK_TREE_MODEL(tree_store), &iter,
+			   SUBSCRIBE_INFO, &ginfo, -1);
+	if (!ginfo)
+		return FALSE;
+
+	return TRUE;
 }
 
-static void ctree_unselected(GtkCTree *ctree, GtkCTreeNode *node, gint column,
-			     gpointer data)
+static void subscribe_toggled(GtkCellRenderer *cell, gchar *path_str,
+			      gpointer data)
 {
+	GtkTreePath *path;
+	GtkTreeIter iter;
+	gboolean enabled;
 	NewsGroupInfo *ginfo;
-	GSList *list;
 
-	ginfo = gtk_ctree_node_get_row_data(ctree, node);
-	if (!ginfo) return;
+	path = gtk_tree_path_new_from_string(path_str);
+	gtk_tree_model_get_iter(GTK_TREE_MODEL(tree_store), &iter, path);
+	gtk_tree_path_free(path);
 
-	list = g_slist_find_custom(subscribed, ginfo->name,
-				   (GCompareFunc)g_ascii_strcasecmp);
-	if (list) {
-		g_free(list->data);
-		subscribed = g_slist_remove(subscribed, list->data);
+	gtk_tree_model_get(GTK_TREE_MODEL(tree_store), &iter,
+			   SUBSCRIBE_TOGGLE, &enabled,
+			   SUBSCRIBE_INFO, &ginfo,
+			   -1);
+	if (ginfo) {
+		ginfo->subscribed = !enabled;
+		gtk_tree_store_set(tree_store, &iter,
+				   SUBSCRIBE_TOGGLE, !enabled, -1);
 	}
 }
 
 static void entry_activated(GtkEditable *editable)
 {
-	grouplist_search();
+	subscribe_search();
 }
 
 static void search_clicked(GtkWidget *widget, gpointer data)
 {
-	grouplist_search();
+	subscribe_search();
 }
