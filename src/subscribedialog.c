@@ -53,6 +53,7 @@
 #include "news.h"
 #include "folder.h"
 #include "alertpanel.h"
+#include "statusbar.h"
 #include "recv.h"
 #include "socket.h"
 
@@ -62,6 +63,7 @@ enum {
 	SUBSCRIBE_NUM,
 	SUBSCRIBE_TYPE,
 	SUBSCRIBE_INFO,
+	SUBSCRIBE_CAN_TOGGLE,
 	N_SUBSCRIBE_COLUMNS
 };
 
@@ -89,11 +91,6 @@ static void subscribe_dialog_set_list	(const gchar	*pattern,
 					 gboolean	 refresh);
 static void subscribe_search		(void);
 static void subscribe_clear		(void);
-
-static gboolean subscribe_foreach_func	(GtkTreeModel	*model,
-					 GtkTreePath	*path,
-					 GtkTreeIter	*iter,
-					 gpointer	 data);
 
 static gboolean subscribe_recv_func	(SockInfo	*sock,
 					 gint		 count,
@@ -239,16 +236,19 @@ static void subscribe_dialog_create(void)
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_box_pack_start(GTK_BOX (vbox), scrolledwin, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (scrolledwin),
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
+					    GTK_SHADOW_IN);
 
 	tree_store = gtk_tree_store_new(N_SUBSCRIBE_COLUMNS,
 					G_TYPE_BOOLEAN,
 					G_TYPE_STRING,
 					G_TYPE_STRING,
 					G_TYPE_STRING,
-					G_TYPE_POINTER);
+					G_TYPE_POINTER,
+					G_TYPE_BOOLEAN);
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(tree_store),
 					     SUBSCRIBE_NAME,
 					     GTK_SORT_ASCENDING);
@@ -268,7 +268,10 @@ static void subscribe_dialog_create(void)
 
 	renderer = gtk_cell_renderer_toggle_new();
 	column = gtk_tree_view_column_new_with_attributes
-		(NULL, renderer, "active", SUBSCRIBE_TOGGLE, NULL);
+		(NULL, renderer, "active", SUBSCRIBE_TOGGLE,
+		 "activatable", SUBSCRIBE_CAN_TOGGLE,
+		 "visible", SUBSCRIBE_CAN_TOGGLE, NULL);
+	gtk_tree_view_column_set_min_width(column, 20);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 	g_signal_connect(renderer, "toggled", G_CALLBACK(subscribe_toggled),
 			 NULL);
@@ -441,6 +444,7 @@ static gboolean subscribe_create_branch(NewsGroupInfo *ginfo,
 			   SUBSCRIBE_NUM, count_str,
 			   SUBSCRIBE_TYPE, type_str,
 			   SUBSCRIBE_INFO, ginfo,
+			   SUBSCRIBE_CAN_TOGGLE, TRUE,
 			   -1);
 
 	g_free(parent_name);
@@ -468,6 +472,7 @@ static void subscribe_dialog_set_list(const gchar *pattern, gboolean refresh)
 		group_list = news_get_group_list(news_folder);
 		group_list = g_slist_reverse(group_list);
 		recv_set_ui_func(NULL, NULL);
+		statusbar_pop_all();
 		if (group_list == NULL && ack == TRUE) {
 			alertpanel_error(_("Can't retrieve newsgroup list."));
 			locked = FALSE;
@@ -525,24 +530,6 @@ static void subscribe_clear(void)
 	gtk_entry_set_text(GTK_ENTRY(entry), "");
 	news_group_list_free(group_list);
 	group_list = NULL;
-}
-
-static gboolean subscribe_foreach_func(GtkTreeModel *model, GtkTreePath *path,
-				       GtkTreeIter *iter, gpointer data)
-{
-	GSList **subscribed = data;
-	gboolean enabled;
-	NewsGroupInfo *ginfo;
-
-	gtk_tree_model_get(model, iter,
-			   SUBSCRIBE_TOGGLE, &enabled,
-			   SUBSCRIBE_INFO, &ginfo, -1);
-	if (ginfo && enabled) {
-		*subscribed = g_slist_append
-			(*subscribed, g_strdup(ginfo->name));
-	}
-
-	return FALSE;
 }
 
 static gboolean subscribe_recv_func(SockInfo *sock, gint count, gint read_bytes,
@@ -630,6 +617,7 @@ static void subscribe_toggled(GtkCellRenderer *cell, gchar *path_str,
 	GtkTreeIter iter;
 	gboolean enabled;
 	NewsGroupInfo *ginfo;
+	gboolean can_toggle;
 
 	path = gtk_tree_path_new_from_string(path_str);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(tree_store), &iter, path);
@@ -638,8 +626,9 @@ static void subscribe_toggled(GtkCellRenderer *cell, gchar *path_str,
 	gtk_tree_model_get(GTK_TREE_MODEL(tree_store), &iter,
 			   SUBSCRIBE_TOGGLE, &enabled,
 			   SUBSCRIBE_INFO, &ginfo,
+			   SUBSCRIBE_CAN_TOGGLE, &can_toggle,
 			   -1);
-	if (ginfo) {
+	if (ginfo && can_toggle) {
 		ginfo->subscribed = !enabled;
 		gtk_tree_store_set(tree_store, &iter,
 				   SUBSCRIBE_TOGGLE, !enabled, -1);
