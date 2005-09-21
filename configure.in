@@ -307,7 +307,6 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(fcntl.h sys/file.h unistd.h paths.h \
 		 sys/param.h sys/utsname.h sys/select.h \
-		 wchar.h wctype.h \
 		 netdb.h regex.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
@@ -320,16 +319,6 @@ AC_STRUCT_TM
 AC_SYS_LARGEFILE
 AC_FUNC_FSEEKO
 
-dnl AC_CHECK_TYPE(wint_t, unsigned int) does not work because wint_t
-dnl may be defined only in wchar.h (this happens with gcc-2.96).
-dnl So we need to use this extended macro.
-SYLPHEED_CHECK_TYPE(wint_t, unsigned int,
-[
-#if HAVE_WCHAR_H
-#include <wchar.h>
-#endif
-], Define to `unsigned int' if <stddef.h> or <wchar.h> doesn't define.)
-
 GNUPG_CHECK_TYPEDEF(u32, HAVE_U32_TYPEDEF, Used to test for a u32 typedef)
 AC_CHECK_SIZEOF(unsigned short, 2)
 AC_CHECK_SIZEOF(unsigned int, 4)
@@ -338,8 +327,6 @@ AC_CHECK_SIZEOF(unsigned long, 4)
 dnl Checks for library functions.
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(gethostname mkdir mktime socket strstr strchr \
-	       wcsstr wcswcs iswalnum iswspace towlower \
-	       wcslen wcscpy wcsncpy \
 	       uname flock lockf inet_aton inet_addr \
 	       fchmod mkstemp truncate getuid regcomp)
 
