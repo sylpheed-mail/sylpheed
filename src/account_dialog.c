@@ -57,6 +57,7 @@ enum
 	COL_PROTOCOL,
 	COL_SERVER,
 	COL_ACCOUNT,
+	COL_CAN_GETALL,
 	N_COLS
 };
 
@@ -323,7 +324,7 @@ static void account_edit_create(void)
 
 	store = gtk_list_store_new
 		(N_COLS, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN, G_TYPE_STRING,
-		 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+		 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_BOOLEAN);
 
 	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
 	g_object_unref(G_OBJECT(store));
@@ -350,7 +351,8 @@ static void account_edit_create(void)
 	g_signal_connect(renderer, "toggled",
 			 G_CALLBACK(account_getall_toggled), NULL);
 	column = gtk_tree_view_column_new_with_attributes
-		("G", renderer, "active", COL_GETALL, NULL);
+		("G", renderer, "active", COL_GETALL, "visible", COL_CAN_GETALL,
+		 NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	renderer = gtk_cell_renderer_text_new();
@@ -614,16 +616,16 @@ static void account_getall_toggled(GtkCellRenderer *cell, gchar *path_str,
 	GtkTreeIter iter;
 	PrefsAccount *ac;
 	GtkTreePath *path;
+	gboolean can_getall;
 
 	path = gtk_tree_path_new_from_string(path_str);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(edit_account.store),
 				&iter, path);
 	gtk_tree_path_free(path);
 	gtk_tree_model_get(GTK_TREE_MODEL(edit_account.store), &iter,
-			   COL_ACCOUNT, &ac, -1);
+			   COL_ACCOUNT, &ac, COL_CAN_GETALL, &can_getall, -1);
 
-	if (ac->protocol == A_POP3 || ac->protocol == A_IMAP4 ||
-	    ac->protocol == A_NNTP) {
+	if (can_getall) {
 		ac->recv_at_getall ^= TRUE;
 		account_set_row(ac, &iter, NULL, FALSE);
 	}
@@ -710,6 +712,7 @@ static void account_set_row(PrefsAccount *ac_prefs, GtkTreeIter *iter,
 			   COL_PROTOCOL, protocol,
 			   COL_SERVER, server,
 			   COL_ACCOUNT, ac_prefs,
+			   COL_CAN_GETALL, has_getall,
 			   -1);
 
 	if (new)
