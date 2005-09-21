@@ -40,9 +40,6 @@
 #include <gtk/gtkstock.h>
 
 #include <stdlib.h>
-#if HAVE_WCHAR_H
-#  include <wchar.h>
-#endif
 
 typedef struct _ComboButton	ComboButton;
 

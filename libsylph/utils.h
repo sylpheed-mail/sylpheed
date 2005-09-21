@@ -35,9 +35,6 @@
 #if HAVE_ALLOCA_H
 #  include <alloca.h>
 #endif
-#if HAVE_WCHAR_H
-#  include <wchar.h>
-#endif
 
 /* Wrappers for C library function that take pathname arguments. */
 #if GLIB_CHECK_VERSION(2, 6, 0)
@@ -236,42 +233,6 @@ gpointer my_memmem	(gconstpointer	 haystack,
 gchar *strncpy2		(gchar		*dest,
 			 const gchar	*src,
 			 size_t		 n);
-
-/* wide-character functions */
-#if !HAVE_ISWALNUM
-int iswalnum		(wint_t wc);
-#endif
-#if !HAVE_ISWSPACE
-int iswspace		(wint_t wc);
-#endif
-#if !HAVE_TOWLOWER
-wint_t towlower		(wint_t wc);
-#endif
-
-#if !HAVE_WCSLEN
-size_t wcslen		(const wchar_t *s);
-#endif
-#if !HAVE_WCSCPY
-wchar_t *wcscpy		(wchar_t       *dest,
-			 const wchar_t *src);
-#endif
-#if !HAVE_WCSNCPY
-wchar_t *wcsncpy	(wchar_t       *dest,
-			 const wchar_t *src,
-			 size_t		n);
-#endif
-
-wchar_t *wcsdup			(const wchar_t *s);
-wchar_t *wcsndup		(const wchar_t *s,
-				 size_t		n);
-wchar_t *strdup_mbstowcs	(const gchar   *s);
-gchar *strdup_wcstombs		(const wchar_t *s);
-gint wcsncasecmp		(const wchar_t *s1,
-				 const wchar_t *s2,
-				 size_t		n);
-wchar_t *wcscasestr		(const wchar_t *haystack,
-				 const wchar_t *needle);
-gint get_mbs_len		(const gchar	*s);
 
 gboolean is_next_nonascii	(const gchar *s);
 gint get_next_word_len		(const gchar *s);

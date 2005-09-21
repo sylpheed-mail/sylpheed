@@ -42,11 +42,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#if (HAVE_WCTYPE_H && HAVE_WCHAR_H)
-#  include <wchar.h>
-#  include <wctype.h>
-#endif
-
 #include "gtkutils.h"
 #include "utils.h"
 #include "codeconv.h"

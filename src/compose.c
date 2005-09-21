@@ -74,11 +74,6 @@
 #include <signal.h>
 #include <errno.h>
 
-#if (HAVE_WCTYPE_H && HAVE_WCHAR_H)
-#  include <wchar.h>
-#  include <wctype.h>
-#endif
-
 #include "main.h"
 #include "mainwindow.h"
 #include "compose.h"

@@ -27,9 +27,6 @@
 #include <glib.h>
 #include <gtk/gtktextview.h>
 
-#include <string.h> /* for strlen */
-#include <stdlib.h> /* for mbstowcs */
-
 #include "undo.h"
 #include "utils.h"
 #include "prefs_common.h"
