@@ -151,6 +151,23 @@ gchar *filesel_save_as(const gchar *file)
 	return filename;
 }
 
+gchar *filesel_select_dir(const gchar *dir)
+{
+	GSList *list;
+	gchar *selected = NULL;
+
+	list = filesel_select_file_full(_("Select directory"), dir,
+					GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+					FALSE);
+	if (list) {
+		selected = (gchar *)list->data;
+		slist_free_strings(list->next);
+	}
+	g_slist_free(list);
+
+	return selected;
+}
+
 static GtkWidget *filesel_create(const gchar *title,
 				 GtkFileChooserAction action)
 {
@@ -160,14 +177,16 @@ static GtkWidget *filesel_create(const gchar *title,
 		dialog = gtk_file_chooser_dialog_new
 			(title, NULL, action,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 action == GTK_FILE_CHOOSER_ACTION_SAVE ? GTK_STOCK_SAVE
-			 : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+			 (action == GTK_FILE_CHOOSER_ACTION_SAVE ||
+			  action == GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER)
+			 ? GTK_STOCK_SAVE : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 			 NULL);
 	else
 		dialog = gtk_file_chooser_dialog_new
 			(title, NULL, action,
-			 action == GTK_FILE_CHOOSER_ACTION_SAVE ? GTK_STOCK_SAVE
-			 : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+			 (action == GTK_FILE_CHOOSER_ACTION_SAVE ||
+			  action == GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER)
+			 ? GTK_STOCK_SAVE : GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			 NULL);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);

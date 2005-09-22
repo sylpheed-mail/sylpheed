@@ -88,5 +88,6 @@ void mimeview_pass_key_press_event	(MimeView	*mimeview,
 					 GdkEventKey	*event);
 
 void mimeview_save_as			(MimeView	*mimeview);
+void mimeview_save_all			(MimeView	*mimeview);
 
 #endif /* __MIMEVIEW_H__ */

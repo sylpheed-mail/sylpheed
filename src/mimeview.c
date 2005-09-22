@@ -124,7 +124,8 @@ static GtkItemFactoryEntry mimeview_popup_entries[] =
 	{N_("/_Open"),		  NULL, mimeview_launch,	  0, NULL},
 	{N_("/Open _with..."),	  NULL, mimeview_open_with,	  0, NULL},
 	{N_("/_Display as text"), NULL, mimeview_display_as_text, 0, NULL},
-	{N_("/_Save as..."),	  NULL, mimeview_save_as,	  0, NULL}
+	{N_("/_Save as..."),	  NULL, mimeview_save_as,	  0, NULL},
+	{N_("/Save _all..."),	  NULL, mimeview_save_all,	  0, NULL}
 #if USE_GPGME
         ,
         {N_("/_Check signature"), NULL, mimeview_check_signature, 0, NULL}
@@ -1022,6 +1023,19 @@ void mimeview_save_as(MimeView *mimeview)
 			(_("Can't save the part of multipart message."));
 
 	g_free(filename);
+}
+
+void mimeview_save_all(MimeView *mimeview)
+{
+	gchar *dir;
+
+	dir = filesel_select_dir(NULL);
+	if (!dir) return;
+
+	if (procmime_get_all_parts(dir, mimeview->file, mimeview->mimeinfo) < 0)
+		alertpanel_error(_("Can't save the attachments."));
+
+	g_free(dir);
 }
 
 static void mimeview_launch(MimeView *mimeview)

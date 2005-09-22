@@ -697,6 +697,59 @@ gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
 	return 0;
 }
 
+gint procmime_get_all_parts(const gchar *dir, const gchar *infile,
+			    MimeInfo *mimeinfo)
+{
+	FILE *fp;
+	MimeInfo *partinfo;
+	gchar *base, *filename;
+
+	g_return_val_if_fail(dir != NULL, -1);
+	g_return_val_if_fail(infile != NULL, -1);
+	g_return_val_if_fail(mimeinfo != NULL, -1);
+
+	if (!is_dir_exist(dir)) {
+		g_warning("%s: directory not exist.\n", dir);
+		return -1;
+	}
+
+	if ((fp = g_fopen(infile, "rb")) == NULL) {
+		FILE_OP_ERROR(infile, "fopen");
+		return -1;
+	}
+
+	for (partinfo = mimeinfo; partinfo != NULL;
+	     partinfo = procmime_mimeinfo_next(partinfo)) {
+		if (partinfo->filename || partinfo->name) {
+			gint count = 1;
+
+			base = procmime_get_part_file_name(partinfo);
+			filename = g_strconcat(dir, G_DIR_SEPARATOR_S, base,
+					       NULL);
+
+			while (is_file_entry_exist(filename)) {
+				gchar *base_alt;
+
+				base_alt = get_alt_filename(base, count++);
+				g_free(filename);
+				filename = g_strconcat
+					(dir, G_DIR_SEPARATOR_S, base_alt,
+					 NULL);
+				g_free(base_alt);
+			}
+
+			procmime_get_part_fp(filename, fp, partinfo);
+
+			g_free(filename);
+			g_free(base);
+		}
+	}
+
+	fclose(fp);
+
+	return 0;
+}
+
 FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
 				const gchar *encoding)
 {

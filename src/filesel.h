@@ -31,5 +31,6 @@ GSList *filesel_select_files	(const gchar		*title,
 				 GtkFileChooserAction	 action);
 
 gchar *filesel_save_as		(const gchar		*file);
+gchar *filesel_select_dir	(const gchar		*dir);
 
 #endif /* __FILESEL_H__ */

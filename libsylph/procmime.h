@@ -159,6 +159,9 @@ gint procmime_get_part			(const gchar	*outfile,
 gint procmime_get_part_fp		(const gchar	*outfile,
 					 FILE		*infp,
 					 MimeInfo	*mimeinfo);
+gint procmime_get_all_parts		(const gchar	*dir,
+					 const gchar	*infile,
+					 MimeInfo	*mimeinfo);
 FILE *procmime_get_text_content		(MimeInfo	*mimeinfo,
 					 FILE		*infp,
 					 const gchar	*encoding);

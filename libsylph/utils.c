@@ -1045,6 +1045,25 @@ void subst_for_filename(gchar *str)
 	subst_chars(str, " \t\r\n\"'/\\", '_');
 }
 
+gchar *get_alt_filename(const gchar *filename, gint count)
+{
+	const gchar *ext;
+	gchar *alt_filename;
+
+	ext = strrchr(filename, '.');
+
+	if (ext) {
+		gchar *base;
+
+		base = g_strndup(filename, ext - filename);
+		alt_filename = g_strdup_printf("%s-%d%s", base, count, ext);
+		g_free(base);
+	} else
+		alt_filename = g_strdup_printf("%s-%d", filename, count);
+
+	return alt_filename;
+}
+
 gboolean is_header_line(const gchar *str)
 {
 	if (str[0] == ':') return FALSE;

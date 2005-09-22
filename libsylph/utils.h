@@ -300,8 +300,13 @@ void subst_null				(gchar		*str,
 					 gint		 len,
 					 gchar		 subst);
 void subst_for_filename			(gchar		*str);
+
+gchar *get_alt_filename			(const gchar	*filename,
+					 gint		 count);
+
 gboolean is_header_line			(const gchar	*str);
 gboolean is_ascii_str			(const gchar	*str);
+
 gint get_quote_level			(const gchar	*str);
 gint check_line_length			(const gchar	*str,
 					 gint		 max_chars,
