@@ -789,6 +789,7 @@ void summary_clear_list(SummaryView *summaryview)
 	}
 	summaryview->filtered = 0;
 
+	summaryview->on_button_press = FALSE;
 	summaryview->can_toggle_selection = TRUE;
 	summaryview->on_drag = FALSE;
 	if (summaryview->pressed_path) {
@@ -1288,7 +1289,8 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 			 path, NULL, TRUE, 0.5, 0.0);
 	} else {
 		gtkut_tree_view_scroll_to_cell
-			(GTK_TREE_VIEW(summaryview->treeview), path);
+			(GTK_TREE_VIEW(summaryview->treeview), path,
+			 !summaryview->on_button_press);
 	}
 
 	gtk_tree_path_free(path);
@@ -1310,7 +1312,8 @@ static void summary_scroll_to_selected(SummaryView *summaryview,
 				 path, NULL, TRUE, 0.5, 0.0);
 		else
 			gtkut_tree_view_scroll_to_cell
-				(GTK_TREE_VIEW(summaryview->treeview), path);
+				(GTK_TREE_VIEW(summaryview->treeview), path,
+				 FALSE);
 		gtk_tree_path_free(path);
 	}
 }
@@ -2230,7 +2233,8 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			(GTK_NOTEBOOK(msgview->notebook)) == 0)))
 			gtk_widget_grab_focus(summaryview->treeview);
 		gtkut_tree_view_scroll_to_cell
-			(GTK_TREE_VIEW(summaryview->treeview), path);
+			(GTK_TREE_VIEW(summaryview->treeview), path,
+			 !summaryview->on_button_press);
 		gtk_tree_path_free(path);
 	}
 
@@ -4540,6 +4544,8 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 	}
 
 	if (event->button == 1) {
+		summaryview->on_button_press = TRUE;
+
 		if (summary_get_selection_type(summaryview) ==
 			SUMMARY_SELECTED_MULTIPLE && is_selected &&
 			!mod_pressed) {
@@ -4588,6 +4594,7 @@ static gboolean summary_button_released(GtkWidget *treeview,
 					 NULL, FALSE);
 	}
 
+	summaryview->on_button_press = FALSE;
 	summaryview->can_toggle_selection = TRUE;
 	summaryview->on_drag = FALSE;
 	if (summaryview->pressed_path) {

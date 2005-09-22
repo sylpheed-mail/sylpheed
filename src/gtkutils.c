@@ -555,7 +555,8 @@ void gtkut_tree_view_vertical_autoscroll(GtkTreeView *treeview)
 }
 
 /* modified version of gtk_tree_view_scroll_to_cell */
-void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path)
+void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path,
+				    gboolean align_center)
 {
 	GdkRectangle cell_rect;
 	GdkRectangle vis_rect;
@@ -575,14 +576,24 @@ void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path)
 
 	/* add margin */
 	if (cell_rect.height * 2 < vis_rect.height)
-		margin = cell_rect.height + 2;
+		margin = cell_rect.height + (align_center ? 0 : 2);
 
-	if (cell_rect.y < vis_rect.y + margin)
-		dest_y = cell_rect.y - margin;
+	if (cell_rect.y < vis_rect.y + margin) {
+		if (align_center)
+			dest_y = cell_rect.y -
+				(vis_rect.height - cell_rect.height) / 2;
+		else
+			dest_y = cell_rect.y - margin;
+	}
 	if (cell_rect.y + cell_rect.height >
-		vis_rect.y + vis_rect.height - margin)
-		dest_y = cell_rect.y + cell_rect.height - vis_rect.height +
-			margin;
+		vis_rect.y + vis_rect.height - margin) {
+		if (align_center)
+			dest_y = cell_rect.y -
+				(vis_rect.height - cell_rect.height) / 2;
+		else
+			dest_y = cell_rect.y + cell_rect.height -
+				vis_rect.height + margin;
+	}
 
 	gtk_tree_view_scroll_to_point(treeview, dest_x, dest_y);
 }

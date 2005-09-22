@@ -155,7 +155,8 @@ void gtkut_tree_view_expand_parent_all	(GtkTreeView	*treeview,
 void gtkut_tree_view_vertical_autoscroll(GtkTreeView	*treeview);
 
 void gtkut_tree_view_scroll_to_cell	(GtkTreeView	*treeview,
-					 GtkTreePath	*path);
+					 GtkTreePath	*path,
+					 gboolean	 align_center);
 
 void gtkut_combo_set_items		(GtkCombo	*combo,
 					 const gchar	*str1, ...);

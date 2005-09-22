@@ -122,6 +122,8 @@ private:
 	/* counter for filtering */
 	gint filtered;
 
+	gboolean on_button_press;
+
 	/* for DnD */
 	gboolean can_toggle_selection;
 	gboolean on_drag;
