@@ -122,6 +122,8 @@ static void summary_set_menu_sensitive	(SummaryView		*summaryview);
 static void summary_scroll_to_selected	(SummaryView		*summaryview,
 					 gboolean		 align_center);
 
+static MsgInfo *summary_get_msginfo	(SummaryView		*summaryview,
+					 GtkTreeRowReference	*row);
 static guint summary_get_msgnum		(SummaryView		*summaryview,
 					 GtkTreeRowReference	*row);
 
@@ -1313,8 +1315,8 @@ static void summary_scroll_to_selected(SummaryView *summaryview,
 	}
 }
 
-static guint summary_get_msgnum(SummaryView *summaryview,
-				GtkTreeRowReference *row)
+static MsgInfo *summary_get_msginfo(SummaryView *summaryview,
+				    GtkTreeRowReference *row)
 {
 	GtkTreeIter iter;
 	MsgInfo *msginfo = NULL;
@@ -1327,6 +1329,18 @@ static guint summary_get_msgnum(SummaryView *summaryview,
 
 	gtk_tree_model_get(GTK_TREE_MODEL(summaryview->store), &iter,
 			   S_COL_MSG_INFO, &msginfo, -1);
+
+	return msginfo;
+}
+
+static guint summary_get_msgnum(SummaryView *summaryview,
+				GtkTreeRowReference *row)
+{
+	MsgInfo *msginfo;
+
+	msginfo = summary_get_msginfo(summaryview, row);
+	if (!msginfo)
+		return 0;
 
 	return msginfo->msgnum;
 }
@@ -3309,6 +3323,7 @@ void summary_thread_build(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeStore *store = summaryview->store;
 	GtkTreeIter iter, next;
+	GtkTreePath *path;
 	GSList *mlist;
 	GNode *root, *node;
 	GHashTable *node_table;
@@ -3316,6 +3331,7 @@ void summary_thread_build(SummaryView *summaryview)
 	gboolean valid;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+	MsgInfo *selected_msg, *displayed_msg;
 
 	if (!summaryview->folder_item)
 		return;
@@ -3325,6 +3341,10 @@ void summary_thread_build(SummaryView *summaryview)
 	debug_print(_("Building threads..."));
 	STATUSBAR_PUSH(summaryview->mainwin, _("Building threads..."));
 	main_window_cursor_wait(summaryview->mainwin);
+
+	selected_msg = summary_get_msginfo(summaryview, summaryview->selected);
+	displayed_msg = summary_get_msginfo
+		(summaryview, summaryview->displayed);
 
 	summaryview->folder_item->threaded = TRUE;
 
@@ -3375,7 +3395,33 @@ void summary_thread_build(SummaryView *summaryview)
 	if (prefs_common.expand_thread)
 		gtk_tree_view_expand_all(GTK_TREE_VIEW(summaryview->treeview));
 
-	summary_scroll_to_selected(summaryview, TRUE);
+	if (!summaryview->selected ||
+	    (summaryview->selected &&
+	     !gtk_tree_row_reference_valid(summaryview->selected))) {
+		if (selected_msg &&
+		    gtkut_tree_model_find_by_column_data
+			(model, &iter, NULL, S_COL_MSG_INFO, selected_msg)) {
+			summary_select_row(summaryview, &iter, FALSE, TRUE);
+		}
+	} else
+		summary_scroll_to_selected(summaryview, TRUE);
+
+	if (summaryview->displayed &&
+	    !gtk_tree_row_reference_valid(summaryview->displayed)) {
+		if (displayed_msg &&
+		    gtkut_tree_model_find_by_column_data
+			(model, &iter, NULL, S_COL_MSG_INFO, displayed_msg)) {
+			path = gtk_tree_model_get_path(model, &iter);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed =
+				gtk_tree_row_reference_new(model, path);
+			gtk_tree_path_free(path);
+		} else {
+			messageview_clear(summaryview->messageview);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed = NULL;
+		}
+	}
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
@@ -3427,15 +3473,21 @@ void summary_unthread(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter, next;
+	GtkTreePath *path;
 	gboolean valid;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+	MsgInfo *selected_msg, *displayed_msg;
 
 	summary_lock(summaryview);
 
 	debug_print(_("Unthreading..."));
 	STATUSBAR_PUSH(summaryview->mainwin, _("Unthreading..."));
 	main_window_cursor_wait(summaryview->mainwin);
+
+	selected_msg = summary_get_msginfo(summaryview, summaryview->selected);
+	displayed_msg = summary_get_msginfo
+		(summaryview, summaryview->displayed);
 
 	if (summaryview->folder_item)
 		summaryview->folder_item->threaded = FALSE;
@@ -3464,7 +3516,33 @@ void summary_unthread(SummaryView *summaryview)
 	if (sort_key != SORT_BY_NONE)
 		summary_sort(summaryview, sort_key, sort_type);
 
-	summary_scroll_to_selected(summaryview, TRUE);
+	if (!summaryview->selected ||
+	    (summaryview->selected &&
+	     !gtk_tree_row_reference_valid(summaryview->selected))) {
+		if (selected_msg &&
+		    gtkut_tree_model_find_by_column_data
+			(model, &iter, NULL, S_COL_MSG_INFO, selected_msg)) {
+			summary_select_row(summaryview, &iter, FALSE, TRUE);
+		}
+	} else
+		summary_scroll_to_selected(summaryview, TRUE);
+
+	if (summaryview->displayed &&
+	    !gtk_tree_row_reference_valid(summaryview->displayed)) {
+		if (displayed_msg &&
+		    gtkut_tree_model_find_by_column_data
+			 (model, &iter, NULL, S_COL_MSG_INFO, displayed_msg)) {
+			path = gtk_tree_model_get_path(model, &iter);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed =
+				gtk_tree_row_reference_new(model, path);
+			gtk_tree_path_free(path);
+		} else {
+			messageview_clear(summaryview->messageview);
+			gtk_tree_row_reference_free(summaryview->displayed);
+			summaryview->displayed = NULL;
+		}
+	}
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
