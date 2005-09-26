@@ -41,74 +41,131 @@ static HTMLSymbol symbol_list[] = {
 	{"&lt;"    , "<"},
 	{"&gt;"    , ">"},
 	{"&amp;"   , "&"},
-	{"&quot;"  , "\""},
-	{"&nbsp;"  , " "},
-	{"&trade;" , "(TM)"},
-
-	{"&#153;", "(TM)"},
+	{"&quot;"  , "\""}
 };
 
-static HTMLSymbol ascii_symbol_list[] = {
-	{"&iexcl;" , "^!"},
-	{"&brvbar;", "|"},
-	{"&copy;"  , "(C)"},
-	{"&laquo;" , "<<"},
-	{"&reg;"   , "(R)"},
+/* &#160; - &#255; */
+static HTMLSymbol latin_symbol_list[] = {
+	{"&nbsp;"  , " "},
+	/* {"&nbsp;"  , "\302\240"}, */
+	{"&iexcl;" , "\302\241"},
+	{"&cent;"  , "\302\242"},
+	{"&pound;" , "\302\243"},
+	{"&curren;", "\302\244"},
+	{"&yen;"   , "\302\245"},
+	{"&brvbar;", "\302\246"},
+	{"&sect;"  , "\302\247"},
+	{"&uml;"   , "\302\250"},
+	{"&copy;"  , "\302\251"},
+	{"&ordf;"  , "\302\252"},
+	{"&laquo;" , "\302\253"},
+	{"&not;"   , "\302\254"},
+	{"&shy;"   , "\302\255"},
+	{"&reg;"   , "\302\256"},
+	{"&macr;"  , "\302\257"},
+	{"&deg;"   , "\302\260"},
+	{"&plusm;" , "\302\261"},
+	{"&sup2;"  , "\302\262"},
+	{"&sup3;"  , "\302\263"},
+	{"&acute;" , "\302\264"},
+	{"&micro;" , "\302\265"},
+	{"&para;"  , "\302\266"},
+	{"&middot;", "\302\267"},
+	{"&cedil;" , "\302\270"},
+	{"&sup1;"  , "\302\271"},
+	{"&ordm;"  , "\302\272"},
+	{"&raquo;" , "\302\273"},
+	{"&frac14;", "\302\274"},
+	{"&frac12;", "\302\275"},
+	{"&frac34;", "\302\276"},
+	{"&iquest;", "\302\277"},
 
-	{"&sup2;"  , "^2"},
-	{"&sup3;"  , "^3"},
-	{"&acute;" , "'"},
-	{"&cedil;" , ","},
-	{"&sup1;"  , "^1"},
-	{"&raquo;" , ">>"},
-	{"&frac14;", "1/4"},
-	{"&frac12;", "1/2"},
-	{"&frac34;", "3/4"},
-	{"&iquest;", "^?"},
+	{"&Agrave;", "\303\200"},
+	{"&Aacute;", "\303\201"},
+	{"&Acirc;" , "\303\202"},
+	{"&Atilde;", "\303\203"},
+	{"&Auml;"  , "\303\204"},
+	{"&Aring;" , "\303\205"},
+	{"&AElig;" , "\303\206"},
+	{"&Ccedil;", "\303\207"},
+	{"&Egrave;", "\303\210"},
+	{"&Eacute;", "\303\211"},
+	{"&Ecirc;" , "\303\212"},
+	{"&Euml;"  , "\303\213"},
+	{"&Igrave;", "\303\214"},
+	{"&Iacute;", "\303\215"},
+	{"&Icirc;" , "\303\216"},
+	{"&Iuml;"  , "\303\217"},
+	{"&ETH;"   , "\303\220"},
+	{"&Ntilde;", "\303\221"},
+	{"&Ograve;", "\303\222"},
+	{"&Oacute;", "\303\223"},
+	{"&Ocirc;" , "\303\224"},
+	{"&Otilde;", "\303\225"},
+	{"&Ouml;"  , "\303\226"},
+	{"&times;" , "\303\227"},
+	{"&Oslash;", "\303\230"},
+	{"&Ugrave;", "\303\231"},
+	{"&Uacute;", "\303\232"},
+	{"&Ucirc;" , "\303\233"},
+	{"&Uuml;"  , "\303\234"},
+	{"&Yacute;", "\303\235"},
+	{"&THORN;" , "\303\236"},
+	{"&szlig;" , "\303\237"},
+	{"&agrave;", "\303\240"},
+	{"&aacute;", "\303\241"},
+	{"&acirc;" , "\303\242"},
+	{"&atilde;", "\303\243"},
+	{"&auml;"  , "\303\244"},
+	{"&aring;" , "\303\245"},
+	{"&aelig;" , "\303\246"},
+	{"&ccedil;", "\303\247"},
+	{"&egrave;", "\303\250"},
+	{"&eacute;", "\303\251"},
+	{"&ecirc;" , "\303\252"},
+	{"&euml;"  , "\303\253"},
+	{"&igrave;", "\303\254"},
+	{"&iacute;", "\303\255"},
+	{"&icirc;" , "\303\256"},
+	{"&iuml;"  , "\303\257"},
+	{"&eth;"   , "\303\260"},
+	{"&ntilde;", "\303\261"},
+	{"&ograve;", "\303\262"},
+	{"&oacute;", "\303\263"},
+	{"&ocirc;" , "\303\264"},
+	{"&otilde;", "\303\265"},
+	{"&ouml;"  , "\303\266"},
+	{"&divide;", "\303\267"},
+	{"&oslash;", "\303\270"},
+	{"&ugrave;", "\303\271"},
+	{"&uacute;", "\303\272"},
+	{"&ucirc;" , "\303\273"},
+	{"&uuml;"  , "\303\274"},
+	{"&yacute;", "\303\275"},
+	{"&thorn;" , "\303\276"},
+	{"&yuml;"  , "\303\277"}
+};
 
-	{"&Agrave;", "A`"},
-	{"&Aacute;", "A'"},
-	{"&Acirc;" , "A^"},
-	{"&Atilde;", "A~"},
-	{"&AElig;" , "AE"},
-	{"&Egrave;", "E`"},
-	{"&Eacute;", "E'"},
-	{"&Ecirc;" , "E^"},
-	{"&Igrave;", "I`"},
-	{"&Iacute;", "I'"},
-	{"&Icirc;" , "I^"},
+static HTMLSymbol other_symbol_list[] = {
+	/* Non-standard? */
+	{"&#133;"  , "..."},
+	{"&#146;"  , "'"},
+	{"&#150;"  , "-"},
+	{"&#153;"  , "\xe2\x84\xa2"},
+	{"&#156;"  , "\xc5\x93"},
 
-	{"&Ntilde;", "N~"},
-	{"&Ograve;", "O`"},
-	{"&Oacute;", "O'"},
-	{"&Ocirc;" , "O^"},
-	{"&Otilde;", "O~"},
-	{"&Ugrave;", "U`"},
-	{"&Uacute;", "U'"},
-	{"&Ucirc;" , "U^"},
-	{"&Yacute;", "Y'"},
+	/* Symbolic characters */
+	{"&trade;" , "\xe2\x84\xa2"},
 
-	{"&agrave;", "a`"},
-	{"&aacute;", "a'"},
-	{"&acirc;" , "a^"},
-	{"&atilde;", "a~"},
-	{"&aelig;" , "ae"},
-	{"&egrave;", "e`"},
-	{"&eacute;", "e'"},
-	{"&ecirc;" , "e^"},
-	{"&igrave;", "i`"},
-	{"&iacute;", "i'"},
-	{"&icirc;" , "i^"},
-
-	{"&ntilde;", "n~"},
-	{"&ograve;", "o`"},
-	{"&oacute;", "o'"},
-	{"&ocirc;" , "o^"},
-	{"&otilde;", "o~"},
-	{"&ugrave;", "u`"},
-	{"&uacute;", "u'"},
-	{"&ucirc;" , "u^"},
-	{"&yacute;", "y'"},
+	/* Latin extended */
+	{"&OElig;" , "\xc5\x92"},
+	{"&oelig;" , "\xc5\x93"},
+	{"&Scaron;", "\xc5\xa0"},
+	{"&scaron;", "\xc5\xa1"},
+	{"&Yuml;"  , "\xc5\xb8"},
+	{"&circ;"  , "\xcb\x86"},
+	{"&tilde;" , "\xcb\x9c"},
+	{"&fnof;"  , "\xc6\x92"},
 };
 
 static GHashTable *default_symbol_table;
@@ -158,7 +215,8 @@ HTMLParser *html_parser_new(FILE *fp, CodeConverter *conv)
 		default_symbol_table =
 			g_hash_table_new(g_str_hash, g_str_equal);
 		SYMBOL_TABLE_ADD(default_symbol_table, symbol_list);
-		SYMBOL_TABLE_ADD(default_symbol_table, ascii_symbol_list);
+		SYMBOL_TABLE_ADD(default_symbol_table, latin_symbol_list);
+		SYMBOL_TABLE_ADD(default_symbol_table, other_symbol_list);
 	}
 
 #undef SYMBOL_TABLE_ADD
@@ -288,11 +346,8 @@ static void html_append_str(HTMLParser *parser, const gchar *str, gint len)
 	if (len == 0) return;
 	if (len < 0)
 		g_string_append(string, str);
-	else {
-		gchar *s;
-		Xstrndup_a(s, str, len, return);
-		g_string_append(string, s);
-	}
+	else
+		g_string_append_len(string, str, len);
 
 	parser->empty_line = FALSE;
 	if (string->len > 0 && string->str[string->len - 1] == '\n') {
@@ -514,12 +569,22 @@ static void html_parse_special(HTMLParser *parser)
 	} else if (symbol_name[1] == '#' && g_ascii_isdigit(symbol_name[2])) {
 		gint ch;
 
-		/* TODO: support other entity references */
 		ch = atoi(symbol_name + 2);
-		if (g_ascii_isprint(ch)) {
+		if (ch < 128 && g_ascii_isprint(ch)) {
 			html_append_char(parser, ch);
 			parser->state = HTML_NORMAL;
 			return;
+		} else {
+			/* ISO 10646 to UTF-8 */
+			gchar buf[6];
+			gint len;
+
+			len = g_unichar_to_utf8((gunichar)ch, buf);
+			if (len > 0) {
+				html_append_str(parser, buf, len);
+				parser->state = HTML_NORMAL;
+				return;
+			}
 		}
 	}
 
