@@ -258,6 +258,7 @@ static void check_signature(MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
 		goto leave;
 	}
 
+#if 0
 	if (partinfo->encoding_type == ENC_BASE64) {
 		err = gpgme_data_set_encoding(sig, GPGME_DATA_ENCODING_BASE64);
 		if (err) {
@@ -266,6 +267,7 @@ static void check_signature(MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
 			goto leave;
 		}
 	}
+#endif
 
 	err = gpgme_op_verify(ctx, sig, text, NULL);
 	if (err)  {
