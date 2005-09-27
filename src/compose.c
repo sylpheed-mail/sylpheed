@@ -398,7 +398,9 @@ static void compose_attach_toggled	(GtkWidget	*widget,
 					 Compose	*compose);
 #endif
 
-static void compose_changed_cb		(GtkTextBuffer	*textbuf,
+static void compose_buffer_changed_cb	(GtkTextBuffer	*textbuf,
+					 Compose	*compose);
+static void compose_changed_cb		(GtkEditable	*editable,
 					 Compose	*compose);
 
 static void compose_wrap_cb		(gpointer	 data,
@@ -700,6 +702,7 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 	undo_unblock(compose->undostruct);
 
 	compose_connect_changed_callbacks(compose);
+	compose_set_title(compose);
 
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
@@ -779,6 +782,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	undo_unblock(compose->undostruct);
 
 	compose_connect_changed_callbacks(compose);
+	compose_set_title(compose);
 
 #if USE_GPGME
 	if (account->encrypt_reply &&
@@ -899,6 +903,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	undo_unblock(compose->undostruct);
 
 	compose_connect_changed_callbacks(compose);
+	compose_set_title(compose);
 
 	if (account->protocol != A_NNTP)
 		gtk_widget_grab_focus(compose->to_entry);
@@ -969,6 +974,7 @@ void compose_redirect(MsgInfo *msginfo, FolderItem *item)
 	undo_unblock(compose->undostruct);
 
 	compose_connect_changed_callbacks(compose);
+	compose_set_title(compose);
 }
 
 void compose_reedit(MsgInfo *msginfo)
@@ -1035,6 +1041,7 @@ void compose_reedit(MsgInfo *msginfo)
 	undo_unblock(compose->undostruct);
 
 	compose_connect_changed_callbacks(compose);
+	compose_set_title(compose);
 
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
@@ -2352,13 +2359,21 @@ static void compose_set_title(Compose *compose)
 {
 	gchar *str;
 	gchar *edited;
+	const gchar *subject;
+	const gchar *address;
+
+	subject = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
+	if (!subject || subject[0] == '\0')
+		subject = _("(No Subject)");
+
+	if (compose->account && compose->account->address)
+		address = compose->account->address;
+	else
+		address = _("(No From)");
 
 	edited = compose->modified ? _(" [Edited]") : "";
-	if (compose->account && compose->account->address)
-		str = g_strdup_printf(_("%s - Compose message%s"),
-				      compose->account->address, edited);
-	else
-		str = g_strdup_printf(_("Compose message%s"), edited);
+		str = g_strdup_printf(_("%s: %s - Compose%s"),
+				      address, subject, edited);
 	gtk_window_set_title(GTK_WINDOW(compose->window), str);
 	g_free(str);
 }
@@ -4418,7 +4433,7 @@ static void compose_connect_changed_callbacks(Compose *compose)
 	buffer = gtk_text_view_get_buffer(text);
 
 	g_signal_connect(G_OBJECT(buffer), "changed",
-			 G_CALLBACK(compose_changed_cb), compose);
+			 G_CALLBACK(compose_buffer_changed_cb), compose);
 	g_signal_connect(G_OBJECT(compose->to_entry), "changed",
 			 G_CALLBACK(compose_changed_cb), compose);
 	g_signal_connect(G_OBJECT(compose->newsgroups_entry), "changed",
@@ -6023,9 +6038,18 @@ static void compose_attach_toggled(GtkWidget *widget, Compose *compose)
 }
 #endif
 
-static void compose_changed_cb(GtkTextBuffer *textbuf, Compose *compose)
+static void compose_buffer_changed_cb(GtkTextBuffer *textbuf, Compose *compose)
 {
 	if (compose->modified == FALSE) {
+		compose->modified = TRUE;
+		compose_set_title(compose);
+	}
+}
+
+static void compose_changed_cb(GtkEditable *editable, Compose *compose)
+{
+	if (compose->modified == FALSE ||
+	    editable == GTK_EDITABLE(compose->subject_entry)) {
 		compose->modified = TRUE;
 		compose_set_title(compose);
 	}
