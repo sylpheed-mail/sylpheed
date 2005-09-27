@@ -258,6 +258,15 @@ static void check_signature(MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
 		goto leave;
 	}
 
+	if (partinfo->encoding_type == ENC_BASE64) {
+		err = gpgme_data_set_encoding(sig, GPGME_DATA_ENCODING_BASE64);
+		if (err) {
+			debug_print("gpgme_data_set_encoding failed: %s\n",
+			            gpgme_strerror (err));
+			goto leave;
+		}
+	}
+
 	err = gpgme_op_verify(ctx, sig, text, NULL);
 	if (err)  {
 		debug_print("gpgme_op_verify failed: %s\n",
