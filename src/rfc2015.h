@@ -32,6 +32,9 @@ MimeInfo **rfc2015_find_signature	(MimeInfo	*mimeinfo);
 gboolean rfc2015_has_signature		(MimeInfo	*mimeinfo);
 void rfc2015_check_signature		(MimeInfo	*mimeinfo,
 					 FILE		*fp);
+gboolean rfc2015_is_pgp_signature_part	(MimeInfo	*mimeinfo);
+gboolean rfc2015_is_pkcs7_signature_part(MimeInfo	*mimeinfo);
+gboolean rfc2015_is_signature_part	(MimeInfo	*mimeinfo);
 
 gint rfc2015_is_encrypted		(MimeInfo	*mimeinfo);
 gboolean rfc2015_msg_is_encrypted	(const gchar	*file);

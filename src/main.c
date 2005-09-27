@@ -559,7 +559,8 @@ static void check_gpg(void)
 				debug_print("GpgME Protocol: %s\n      Version: %s\n",
 					    gpgme_get_protocol_name
 						(engineInfo->protocol),
-					    engineInfo->version);
+					    engineInfo->version ?
+					    engineInfo->version : "(unknown)");
 				engineInfo = engineInfo->next;
 			}
 		}

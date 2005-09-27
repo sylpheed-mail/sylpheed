@@ -202,6 +202,11 @@ static void check_signature(MimeInfo *mimeinfo, MimeInfo *partinfo, FILE *fp)
 		goto leave;
 	}
 
+	if (rfc2015_is_pkcs7_signature_part(partinfo)) {
+		debug_print("pkcs7 signature detected\n");
+		gpgme_set_protocol(ctx, GPGME_PROTOCOL_CMS);
+	}
+
 	/* don't include the last empty line.
 	   It does not belong to the signed text */
 	if (mimeinfo->children->size > 0) {
@@ -412,8 +417,7 @@ MimeInfo **rfc2015_find_signature(MimeInfo *mimeinfo)
 	/* check that we have at least 2 parts of the correct type */
 	for (partinfo = mimeinfo->children;
 	        partinfo != NULL; partinfo = partinfo->next) {
-		if (++n > 1  && !g_ascii_strcasecmp(partinfo->content_type,
-		                                    "application/pgp-signature"))
+		if (++n > 1  && rfc2015_is_signature_part(partinfo))
 			break;
 	}
 
@@ -449,6 +453,34 @@ void rfc2015_check_signature(MimeInfo *mimeinfo, FILE *fp)
 
 	check_signature(signedinfo[0], signedinfo[1], fp);
 	g_free(signedinfo);
+}
+
+gboolean rfc2015_is_pgp_signature_part(MimeInfo *mimeinfo)
+{
+	if (!mimeinfo || !mimeinfo->content_type)
+		return FALSE;
+
+	return !g_ascii_strcasecmp(mimeinfo->content_type,
+				   "application/pgp-signature");
+}
+
+gboolean rfc2015_is_pkcs7_signature_part(MimeInfo *mimeinfo)
+{
+	const gchar *c_type;
+
+	if (!mimeinfo || !mimeinfo->content_type)
+		return FALSE;
+
+	c_type = mimeinfo->content_type;
+
+	return (!g_ascii_strcasecmp(c_type, "application/pkcs7-signature") ||
+		!g_ascii_strcasecmp(c_type, "application/x-pkcs7-signature"));
+}
+
+gboolean rfc2015_is_signature_part(MimeInfo *mimeinfo)
+{
+	return (rfc2015_is_pgp_signature_part(mimeinfo) ||
+		rfc2015_is_pkcs7_signature_part(mimeinfo));
 }
 
 gint rfc2015_is_encrypted(MimeInfo *mimeinfo)

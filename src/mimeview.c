@@ -786,8 +786,7 @@ static void mimeview_selection_changed(GtkTreeSelection *selection,
 	default:
 		mimeview_change_view_type(mimeview, MIMEVIEW_TEXT);
 #if USE_GPGME
-		if (g_ascii_strcasecmp(partinfo->content_type,
-				       "application/pgp-signature") == 0)
+		if (rfc2015_is_signature_part(partinfo))
 			mimeview_show_signature_part(mimeview, partinfo);
 		else
 #endif
@@ -1185,8 +1184,7 @@ static void mimeview_update_signature_info(MimeView *mimeview)
 	partinfo = mimeview_get_selected_part(mimeview);
 	if (!partinfo) return;
 
-	if (g_ascii_strcasecmp(partinfo->content_type,
-			       "application/pgp-signature") == 0) {
+	if (rfc2015_is_signature_part(partinfo)) {
 		mimeview_change_view_type(mimeview, MIMEVIEW_TEXT);
 		mimeview_show_signature_part(mimeview, partinfo);
 	}
