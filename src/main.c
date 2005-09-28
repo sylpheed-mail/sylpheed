@@ -367,13 +367,24 @@ static gint get_queued_message_num(void)
 
 static void app_init(void)
 {
-	setlocale(LC_ALL, "");
-	bindtextdomain(PACKAGE, LOCALEDIR);
-	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
-	textdomain(PACKAGE);
-
 	prog_version = PROG_VERSION;
 	startup_dir = g_get_current_dir();
+
+	setlocale(LC_ALL, "");
+
+	if (g_path_is_absolute(LOCALEDIR))
+		bindtextdomain(PACKAGE, LOCALEDIR);
+	else {
+		gchar *locale_dir;
+
+		locale_dir = g_strconcat(startup_dir, G_DIR_SEPARATOR_S,
+					 LOCALEDIR, NULL);
+		bindtextdomain(PACKAGE, locale_dir);
+		g_free(locale_dir);
+	}
+
+	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
+	textdomain(PACKAGE);
 
 	sock_init();
 #if USE_SSL
