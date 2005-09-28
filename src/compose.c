@@ -2360,20 +2360,14 @@ static void compose_set_title(Compose *compose)
 	gchar *str;
 	gchar *edited;
 	const gchar *subject;
-	const gchar *address;
 
 	subject = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
 	if (!subject || subject[0] == '\0')
 		subject = _("(No Subject)");
 
-	if (compose->account && compose->account->address)
-		address = compose->account->address;
-	else
-		address = _("(No From)");
-
 	edited = compose->modified ? _(" [Edited]") : "";
-		str = g_strdup_printf(_("%s: %s - Compose%s"),
-				      address, subject, edited);
+
+	str = g_strdup_printf(_("%s - Compose%s"), subject, edited);
 	gtk_window_set_title(GTK_WINDOW(compose->window), str);
 	g_free(str);
 }
