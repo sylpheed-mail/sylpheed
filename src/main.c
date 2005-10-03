@@ -379,6 +379,18 @@ static void app_init(void)
 
 		locale_dir = g_strconcat(startup_dir, G_DIR_SEPARATOR_S,
 					 LOCALEDIR, NULL);
+#ifdef G_OS_WIN32
+		{
+			gchar *locale_dir_;
+
+			locale_dir_ = g_locale_from_utf8(locale_dir, -1,
+							 NULL, NULL, NULL);
+			if (locale_dir_) {
+				g_free(locale_dir);
+				locale_dir = locale_dir_;
+			}
+		}
+#endif
 		bindtextdomain(PACKAGE, locale_dir);
 		g_free(locale_dir);
 	}

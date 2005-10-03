@@ -1,5 +1,11 @@
 2005-10-03
 
+	* src/main.c: app_init(): win32: ロケールエンコーディングの
+	  ディレクトリ名を bindtextdomain() に渡すようにした(非 ascii
+	  ディレクトリで翻訳が機能しないのを修正)。
+
+2005-10-03
+
 	* libsylph/mh.c:
 	  mh_create_tree(): ルートパスのディレクトリ階層を作成するようにした。
 	  mh_move_folder_real(): Win32 で rename に失敗するのを避けるため
