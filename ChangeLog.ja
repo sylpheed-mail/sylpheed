@@ -1,3 +1,11 @@
+2005-10-03
+
+	* libsylph/mh.c:
+	  mh_create_tree(): ルートパスのディレクトリ階層を作成するようにした。
+	  mh_move_folder_real(): Win32 で rename に失敗するのを避けるため
+	  カレントディレクトリを変更。
+	  libsylph/folder.c: folder_get_path(): 常に絶対パスを返すようにした。
+
 2005-09-30
 
 	* libsylph/prefs_common.c: prefs_common_read_config(): Win32:

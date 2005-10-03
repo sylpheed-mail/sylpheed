@@ -832,6 +832,19 @@ static gint mh_scan_tree(Folder *folder)
 	} \
 }
 
+#define MAKE_DIR_HIER_IF_NOT_EXIST(dir) \
+{ \
+	if (!is_dir_exist(dir)) { \
+		if (is_file_exist(dir)) { \
+			g_warning(_("File `%s' already exists.\n" \
+				    "Can't create folder."), dir); \
+			return -1; \
+		} \
+		if (make_dir_hier(dir) < 0) \
+			return -1; \
+	} \
+}
+
 static gint mh_create_tree(Folder *folder)
 {
 	gchar *rootpath;
@@ -840,7 +853,7 @@ static gint mh_create_tree(Folder *folder)
 
 	CHDIR_RETURN_VAL_IF_FAIL(get_mail_base_dir(), -1);
 	rootpath = LOCAL_FOLDER(folder)->rootpath;
-	MAKE_DIR_IF_NOT_EXIST(rootpath);
+	MAKE_DIR_HIER_IF_NOT_EXIST(rootpath);
 	CHDIR_RETURN_VAL_IF_FAIL(rootpath, -1);
 	MAKE_DIR_IF_NOT_EXIST(INBOX_DIR);
 	MAKE_DIR_IF_NOT_EXIST(OUTBOX_DIR);
@@ -852,6 +865,7 @@ static gint mh_create_tree(Folder *folder)
 }
 
 #undef MAKE_DIR_IF_NOT_EXIST
+#undef MAKE_DIR_HIER_IF_NOT_EXIST
 
 static FolderItem *mh_create_folder(Folder *folder, FolderItem *parent,
 				    const gchar *name)
@@ -872,7 +886,7 @@ static FolderItem *mh_create_folder(Folder *folder, FolderItem *parent,
 	g_free(fs_name);
 	g_free(path);
 
-	if (make_dir(fullpath) < 0) {
+	if (make_dir_hier(fullpath) < 0) {
 		g_free(fullpath);
 		return NULL;
 	}
@@ -894,6 +908,7 @@ static FolderItem *mh_create_folder(Folder *folder, FolderItem *parent,
 static gint mh_move_folder_real(Folder *folder, FolderItem *item,
 				FolderItem *new_parent, const gchar *name)
 {
+	gchar *rootpath;
 	gchar *oldpath;
 	gchar *newpath;
 	gchar *dirname;
@@ -952,6 +967,16 @@ static gint mh_move_folder_real(Folder *folder, FolderItem *item,
 		g_free(utf8_name);
 		return -1;
 	}
+
+	rootpath = folder_get_path(folder);
+	if (change_dir(rootpath) < 0) {
+		g_free(rootpath);
+		g_free(oldpath);
+		g_free(newpath);
+		g_free(utf8_name);
+		return -1;
+	}
+	g_free(rootpath);
 
 	debug_print("mh_move_folder: rename(%s, %s)\n", oldpath, newpath);
 

@@ -861,6 +861,14 @@ gchar *folder_get_path(Folder *folder)
 			g_warning("folder_get_path: faild to convert character set\n");
 			path = g_strdup(LOCAL_FOLDER(folder)->rootpath);
 		}
+		if (!g_path_is_absolute(path)) {
+			gchar *path_;
+
+			path_ = g_strconcat(get_mail_base_dir(),
+					    G_DIR_SEPARATOR_S, path, NULL);
+			g_free(path);
+			path = path_;
+		}
 	} else if (FOLDER_TYPE(folder) == F_IMAP) {
 		g_return_val_if_fail(folder->account != NULL, NULL);
 		path = g_strconcat(get_imap_cache_dir(),
@@ -903,22 +911,11 @@ gchar *folder_item_get_path(FolderItem *item)
 #endif
 	}
 
-	if (g_path_is_absolute(folder_path)) {
-		if (item_path)
-			path = g_strconcat(folder_path, G_DIR_SEPARATOR_S,
-					   item_path, NULL);
-		else
-			path = g_strdup(folder_path);
-	} else {
-		if (item_path)
-			path = g_strconcat(get_mail_base_dir(),
-					   G_DIR_SEPARATOR_S, folder_path,
-					   G_DIR_SEPARATOR_S, item_path, NULL);
-		else
-			path = g_strconcat(get_mail_base_dir(),
-					   G_DIR_SEPARATOR_S, folder_path,
-					   NULL);
-	}
+	if (item_path)
+		path = g_strconcat(folder_path, G_DIR_SEPARATOR_S, item_path,
+				   NULL);
+	else
+		path = g_strdup(folder_path);
 
 	g_free(item_path);
 	g_free(folder_path);
