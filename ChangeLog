@@ -1,3 +1,10 @@
+2005-10-04
+
+	* libsylph/utils.c: my_tmpfile(): use g_mkstemp() instead of
+	  directly using mkstemp().
+	  win32: use _wtempnam() , open() and fdopen() instead of tmpfile()
+	  because it creates temporary files to the root directory.
+
 2005-10-03
 
 	* src/main.c: app_init(): win32: pass locale encoding directory name

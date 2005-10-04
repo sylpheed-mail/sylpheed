@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdarg.h>
 #include <sys/types.h>
@@ -2753,9 +2754,110 @@ gint change_file_mode_rw(FILE *fp, const gchar *file)
 #endif
 }
 
+gchar *_s_tempnam(const gchar *dir, const gchar *prefix)
+{
+#ifdef G_OS_WIN32
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		wchar_t *wpath;
+		wchar_t *wprefix;
+		wchar_t *wname;
+		gint save_errno;
+		gchar *name;
+
+		wpath = g_utf8_to_utf16(dir, -1, NULL, NULL, NULL);
+		if (wpath == NULL) {
+			errno = EINVAL;
+			return NULL;
+		}
+		wprefix = g_utf8_to_utf16(prefix, -1, NULL, NULL, NULL);
+		if (wprefix == NULL) {
+			errno = EINVAL;
+			g_free(wpath);
+			return NULL;
+		}
+
+		wname = _wtempnam(wpath, wprefix);
+		save_errno = errno;
+
+		name = g_utf16_to_utf8(wname, -1, NULL, NULL, NULL);
+		if (name == NULL) {
+			save_errno = EINVAL;
+		}
+
+		g_free(wname);
+		g_free(wprefix);
+		g_free(wpath);
+
+		errno = save_errno;
+		return name;
+	} else {
+		gchar *cp_path;
+		gchar *cp_prefix;
+		gchar *cp_name;
+		gint save_errno;
+		gchar *name;
+
+		cp_path = g_locale_from_utf8(dir, -1, NULL, NULL, NULL);
+		if (cp_path == NULL) {
+			errno = EINVAL;
+			return NULL;
+		}
+
+		cp_prefix = g_locale_from_utf8(prefix, -1, NULL, NULL, NULL);
+		if (cp_prefix == NULL) {
+			errno = EINVAL;
+			g_free(cp_path);
+			return NULL;
+		}
+
+		cp_name = _tempnam(cp_path, cp_prefix);
+		save_errno = errno;
+
+		name = g_locale_to_utf8(cp_name, -1, NULL, NULL, NULL);
+		if (name == NULL) {
+			save_errno = EINVAL;
+		}
+
+		g_free(cp_name);
+		g_free(cp_prefix);
+		g_free(cp_path);
+
+		errno = save_errno;
+		return name;
+	}
+#else
+	return tempnam(dir, prefix);
+#endif
+}
+
 FILE *my_tmpfile(void)
 {
-#if HAVE_MKSTEMP
+#ifdef G_OS_WIN32
+	const gchar *tmpdir;
+	gchar *fname;
+	gint fd;
+	FILE *fp;
+
+	tmpdir = get_tmp_dir();
+	fname = _s_tempnam(tmpdir, "sylph");
+	if (!fname)
+		return NULL;
+
+	fd = g_open(fname, O_RDWR | O_CREAT | O_EXCL |
+		    _O_TEMPORARY | _O_SHORT_LIVED | _O_BINARY, 0600);
+	if (fd < 0) {
+		g_free(fname);
+		return NULL;
+	}
+
+	fp = fdopen(fd, "w+b");
+	if (!fp) {
+		perror("fdopen");
+		close(fd);
+	}
+
+	return fp;
+#else
 	const gchar suffix[] = ".XXXXXX";
 	const gchar *tmpdir;
 	guint tmplen;
@@ -2777,7 +2879,7 @@ FILE *my_tmpfile(void)
 	memcpy(fname + tmplen + 1, progname, proglen);
 	memcpy(fname + tmplen + 1 + proglen, suffix, sizeof(suffix));
 
-	fd = mkstemp(fname);
+	fd = g_mkstemp(fname);
 	if (fd < 0)
 		return tmpfile();
 
@@ -2786,11 +2888,9 @@ FILE *my_tmpfile(void)
 	fp = fdopen(fd, "w+b");
 	if (!fp)
 		close(fd);
-	else
-		return fp;
-#endif /* HAVE_MKSTEMP */
 
-	return tmpfile();
+	return fp;
+#endif
 }
 
 FILE *str_open_as_stream(const gchar *str)

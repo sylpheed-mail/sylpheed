@@ -1,3 +1,11 @@
+2005-10-04
+
+	* libsylph/utils.c: my_tmpfile(): mkstemp() を直接使う代わりに
+	  g_mkstemp() を使用するようにした。
+	  win32: tmpfile() の代わりに _wtempnam(), open(), fdopen() を
+	  使用するようにした(tmpfile() は一時ファイルをルートディレクトリに
+	  作成するため)。
+
 2005-10-03
 
 	* src/main.c: app_init(): win32: ロケールエンコーディングの
