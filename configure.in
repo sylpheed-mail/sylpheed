@@ -53,11 +53,14 @@ AM_PROG_LIBTOOL
 
 SYLPHEED_ACLOCAL_INCLUDE(ac)
 
+native_win32=no
+
 case "$target" in
 *-darwin*)
 	CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
 	;;
 *-*-mingw*)
+	native_win32=yes
 	CFLAGS="$CFLAGS -mms-bitfields"
 	LIBS="$LIBS -lws2_32"
 	;;
@@ -216,7 +219,11 @@ if test $ac_cv_enable_ssl = yes; then
 	else
 		dnl If pkg-config fails, run compile/link test.
 		AC_MSG_CHECKING([if openssl is available])
-		LIBS="$LIBS -lssl -lcrypto"
+		if test "$native_win32" = yes; then
+			LIBS="$LIBS -lssl32 -leay32"
+		else
+			LIBS="$LIBS -lssl -lcrypto"
+		fi
 		AC_TRY_LINK([
 #include <openssl/opensslv.h>
 ],		[ return OPENSSL_VERSION_NUMBER; ],

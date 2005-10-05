@@ -16,7 +16,8 @@ EXTRA_DIST = config.rpath  \
 	sylpheed.png \
 	sylpheed-128x128.png \
 	sylpheed-64x64.png \
-	autogen.sh
+	autogen.sh \
+	makewin32.sh
 
 BZIP2_ENV =
 
