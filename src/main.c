@@ -367,10 +367,21 @@ static gint get_queued_message_num(void)
 
 static void app_init(void)
 {
+#ifdef G_OS_WIN32
+	gchar *newpath;
+#endif
+
+	setlocale(LC_ALL, "");
+
 	prog_version = PROG_VERSION;
 	startup_dir = g_get_current_dir();
 
-	setlocale(LC_ALL, "");
+#ifdef G_OS_WIN32
+	/* include startup directory into %PATH% for GSpawn */
+	newpath = g_strconcat(startup_dir, ";", g_getenv("PATH"), NULL);
+	g_setenv("PATH", newpath, TRUE);
+	g_free(newpath);
+#endif
 
 	if (g_path_is_absolute(LOCALEDIR))
 		bindtextdomain(PACKAGE, LOCALEDIR);
