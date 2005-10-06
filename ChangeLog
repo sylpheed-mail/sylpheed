@@ -1,5 +1,13 @@
 2005-10-06
 
+	* libsylph/utils.c: get_rc_dir(): win32: use environmental variable
+	  APPDATA.
+	* libsylph/prefs.c: prefs_set_default()
+	  src/prefs_ui.c: prefs_set_dialog_to_default(): win32: don't convert
+	  the encoding of environmental variable. Expand '~' to rc dir.
+
+2005-10-06
+
 	* src/main.c: win32: include startup directory into %PATH% for GSpawn.
 
 2005-10-05

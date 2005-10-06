@@ -1,5 +1,13 @@
 2005-10-06
 
+	* libsylph/utils.c: get_rc_dir(): win32: 環境変数 APPDATA を使用する
+	  ようにした。
+	* libsylph/prefs.c: prefs_set_default()
+	  src/prefs_ui.c: prefs_set_dialog_to_default(): win32: 環境変数の
+	  エンコーディングを変換しないようにした。 '~' を rc dir に展開。
+
+2005-10-06
+
 	* src/main.c: win32: GSpawn のために起動時のディレクトリを %PATH% に
 	  含めるようにした。
 

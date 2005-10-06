@@ -425,6 +425,9 @@ void prefs_set_default(PrefParam *param)
 					gchar *tmp = NULL;
 
 					envstr = g_getenv(param[i].defval + 4);
+#ifdef G_OS_WIN32
+					tmp = g_strdup(envstr);
+#else
 					if (envstr) {
 						tmp = conv_codeset_strdup
 							(envstr,
@@ -435,10 +438,15 @@ void prefs_set_default(PrefParam *param)
 							tmp = g_strdup(envstr);
 						}
 					}
+#endif
 					*((gchar **)param[i].data) = tmp;
 				} else if (param[i].defval[0] == '~')
 					*((gchar **)param[i].data) =
+#ifdef G_OS_WIN32
+						g_strconcat(get_rc_dir(),
+#else
 						g_strconcat(get_home_dir(),
+#endif
 							    param[i].defval + 1,
 							    NULL);
 				else if (param[i].defval[0] != '\0')

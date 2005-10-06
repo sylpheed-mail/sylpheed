@@ -1648,15 +1648,22 @@ const gchar *get_rc_dir(void)
 {
 	static gchar *rc_dir = NULL;
 
-	if (!rc_dir)
+	if (!rc_dir) {
 #ifdef G_OS_WIN32
-		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
-				     "Application Data", G_DIR_SEPARATOR_S,
-				     RC_DIR, NULL);
+		const gchar *appdata;
+
+		appdata = g_getenv("APPDATA");
+		if (appdata)
+			rc_dir = g_strconcat(appdata, G_DIR_SEPARATOR_S,
+					     RC_DIR, NULL);
+		else
+			rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
+					     RC_DIR, NULL);
 #else
 		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
 				     RC_DIR, NULL);
 #endif
+	}
 
 	return rc_dir;
 }

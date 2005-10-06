@@ -175,7 +175,11 @@ void prefs_set_dialog_to_default(PrefParam *param)
 					break;
 				} else if (tmpparam.defval[0] == '~') {
 					str_data =
+#ifdef G_OS_WIN32
+						g_strconcat(get_rc_dir(),
+#else
 						g_strconcat(get_home_dir(),
+#endif
 							    param[i].defval + 1,
 							    NULL);
 					tmpparam.data = &str_data;
