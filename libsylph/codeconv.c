@@ -1981,6 +1981,8 @@ gchar *conv_filename_from_utf8(const gchar *utf8_file)
 	gchar *fs_file;
 	GError *error = NULL;
 
+	g_return_val_if_fail(utf8_file != NULL, NULL);
+
 	fs_file = g_filename_from_utf8(utf8_file, -1, NULL, NULL, &error);
 	if (error) {
 		g_warning("failed to convert encoding of file name: %s\n",
@@ -1997,6 +1999,8 @@ gchar *conv_filename_to_utf8(const gchar *fs_file)
 {
 	gchar *utf8_file;
 	GError *error = NULL;
+
+	g_return_val_if_fail(fs_file != NULL, NULL);
 
 	utf8_file = g_filename_to_utf8(fs_file, -1, NULL, NULL, &error);
 	if (error) {
