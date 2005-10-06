@@ -2761,9 +2761,9 @@ gint change_file_mode_rw(FILE *fp, const gchar *file)
 #endif
 }
 
+#ifdef G_OS_WIN32
 gchar *_s_tempnam(const gchar *dir, const gchar *prefix)
 {
-#ifdef G_OS_WIN32
 	if (G_WIN32_HAVE_WIDECHAR_API()) {
 		wchar_t *wpath;
 		wchar_t *wprefix;
@@ -2832,10 +2832,8 @@ gchar *_s_tempnam(const gchar *dir, const gchar *prefix)
 		errno = save_errno;
 		return name;
 	}
-#else
-	return tempnam(dir, prefix);
-#endif
 }
+#endif
 
 FILE *my_tmpfile(void)
 {

@@ -48,6 +48,7 @@ struct _PrefsFolderItemDialog
 
 	/* General */
 	GtkWidget *name_entry;
+	GtkWidget *id_label;
 	GtkWidget *path_label;
 	GtkWidget *type_optmenu;
 
@@ -147,6 +148,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	GtkWidget *hbox;
 	GtkWidget *label;
 	GtkWidget *name_entry;
+	GtkWidget *id_label;
 	GtkWidget *path_label;
 	GtkWidget *optmenu;
 	GtkWidget *optmenu_menu;
@@ -163,7 +165,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	gtk_container_add(GTK_CONTAINER(dialog->dialog->notebook), vbox);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), VBOX_BORDER);
 
-	table = gtk_table_new(3, 2, FALSE);
+	table = gtk_table_new(4, 2, FALSE);
 	gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 8);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
@@ -181,8 +183,24 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-	label = gtk_label_new(_("Path"));
+	label = gtk_label_new(_("Identifier"));
 	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
+			 GTK_FILL, 0, 0, 0);
+	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+
+	id_label = gtk_label_new("");
+	gtk_label_set_selectable(GTK_LABEL(id_label), TRUE);
+	gtk_misc_set_alignment(GTK_MISC(id_label), 0, 0.5);
+	gtk_label_set_justify(GTK_LABEL(id_label), GTK_JUSTIFY_LEFT);
+#if GTK_CHECK_VERSION(2, 6, 0)
+	gtk_label_set_ellipsize(GTK_LABEL(id_label), PANGO_ELLIPSIZE_MIDDLE);
+#endif
+	gtk_table_attach(GTK_TABLE(table), id_label, 1, 2, 1, 2,
+			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+	label = gtk_label_new(_("Path"));
+	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
 			 GTK_FILL, 0, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 
@@ -193,17 +211,17 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 #if GTK_CHECK_VERSION(2, 6, 0)
 	gtk_label_set_ellipsize(GTK_LABEL(path_label), PANGO_ELLIPSIZE_MIDDLE);
 #endif
-	gtk_table_attach(GTK_TABLE(table), path_label, 1, 2, 1, 2,
+	gtk_table_attach(GTK_TABLE(table), path_label, 1, 2, 2, 3,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
 	label = gtk_label_new(_("Type"));
-	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
+	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
 			 GTK_FILL, 0, 0, 0);
 
 	hbox = gtk_hbox_new(FALSE, 8);
 	gtk_widget_show(hbox);
-	gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 2, 3,
+	gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 3, 4,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
@@ -230,6 +248,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 			  _("Delete [...] or (...) at the beginning of subject on reply"));
 
 	dialog->name_entry = name_entry;
+	dialog->id_label = id_label;
 	dialog->path_label = path_label;
 	dialog->type_optmenu = optmenu;
 	dialog->trim_summary_subj_chkbtn = trim_summary_subj_chkbtn;
@@ -378,6 +397,8 @@ static void prefs_folder_item_set_dialog(PrefsFolderItemDialog *dialog)
 	GtkWidget *menuitem;
 	GtkOptionMenu *optmenu;
 	gchar *id;
+	gchar *path;
+	gchar *utf8_path;
 	GList *cur;
 	SpecialFolderItemType type;
 	gint n;
@@ -388,8 +409,14 @@ static void prefs_folder_item_set_dialog(PrefsFolderItemDialog *dialog)
 	SET_ENTRY(name_entry, name);
 
 	id = folder_item_get_identifier(dialog->item);
-	gtk_label_set_text(GTK_LABEL(dialog->path_label), id);
+	gtk_label_set_text(GTK_LABEL(dialog->id_label), id);
 	g_free(id);
+
+	path = folder_item_get_path(dialog->item);
+	utf8_path = conv_filename_to_utf8(path);
+	gtk_label_set_text(GTK_LABEL(dialog->path_label), utf8_path);
+	g_free(utf8_path);
+	g_free(path);
 
 	optmenu = GTK_OPTION_MENU(dialog->type_optmenu);
 	menu = gtk_option_menu_get_menu(optmenu);

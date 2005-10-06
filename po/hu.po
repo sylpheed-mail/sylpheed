@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-2.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-29 15:56+0900\n"
+"POT-Creation-Date: 2005-10-06 17:39+0900\n"
 "PO-Revision-Date: 2005-07-04 17:05+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
@@ -319,7 +319,7 @@ msgstr "%s%c%d üzenet másolása %s-ba ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Az utolsó szám a(z) %s mappában = %d\n"
 
-#: libsylph/mh.c:826 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -328,7 +328,7 @@ msgstr ""
 "`%s' fájl már létezik.\n"
 "Mappa nem hozható létre."
 
-#: libsylph/mh.c:1321
+#: libsylph/mh.c:1346
 #, c-format
 msgid ""
 "Directory name\n"
@@ -507,7 +507,7 @@ msgstr "Találat %s\n"
 msgid "Configuration is saved.\n"
 msgstr "Beállítások tárolva.\n"
 
-#: libsylph/prefs_common.c:421
+#: libsylph/prefs_common.c:431
 msgid "Junk mail filter"
 msgstr "Levélszemét szűrő"
 
@@ -606,32 +606,32 @@ msgstr "  Tárgy: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Szerző: %s\n"
 
-#: libsylph/utils.c:273
+#: libsylph/utils.c:274
 #, c-format
 msgid "%dB"
 msgstr "%dB"
 
-#: libsylph/utils.c:275
+#: libsylph/utils.c:276
 #, c-format
 msgid "%.1fKB"
 msgstr "%.1fKB"
 
-#: libsylph/utils.c:277
+#: libsylph/utils.c:278
 #, c-format
 msgid "%.2fMB"
 msgstr "%.2fMB"
 
-#: libsylph/utils.c:279
+#: libsylph/utils.c:280
 #, c-format
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2267 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "fájl módja nem változtatható\n"
 
-#: libsylph/utils.c:2274 libsylph/utils.c:2398
+#: libsylph/utils.c:2282 libsylph/utils.c:2406
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s fájlba nem sikerült írni.\n"
@@ -720,7 +720,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Név"
@@ -1021,16 +1021,16 @@ msgstr "Hozzáadás"
 msgid "Lookup"
 msgstr "Előnézet"
 
-#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:312
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:331
 #: src/prefs_template.c:175 src/summary_search.c:221
 msgid "To:"
 msgstr "Címzett:"
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:329 src/prefs_template.c:177
+#: src/addressbook.c:650 src/prefs_folder_item.c:348 src/prefs_template.c:177
 msgid "Cc:"
 msgstr "Másolat:"
 
-#: src/addressbook.c:654 src/prefs_folder_item.c:340
+#: src/addressbook.c:654 src/prefs_folder_item.c:359
 msgid "Bcc:"
 msgstr "Titkos másolat:"
 
@@ -1205,11 +1205,11 @@ msgstr "Általános cím"
 msgid "Personal address"
 msgstr "Személyes cím"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:492
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
 msgid "Notice"
 msgstr "Megjegyzés"
 
-#: src/alertpanel.c:151 src/main.c:586
+#: src/alertpanel.c:151 src/main.c:609
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
@@ -1256,7 +1256,7 @@ msgstr "Barna"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4206
+#: src/colorlabel.c:280 src/prefs_folder_item.c:308 src/summaryview.c:4206
 msgid "None"
 msgstr "Semmi"
 
@@ -1781,7 +1781,7 @@ msgstr "Tulajdonságok"
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: src/compose.c:5048 src/prefs_folder_item.c:184
+#: src/compose.c:5048 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Elérési út"
 
@@ -2203,23 +2203,23 @@ msgstr "Mappa választása"
 msgid "Select folder"
 msgstr "Mappa választása"
 
-#: src/foldersel.c:359 src/folderview.c:1094 src/prefs_folder_item.c:216
+#: src/foldersel.c:359 src/folderview.c:1094 src/prefs_folder_item.c:234
 msgid "Inbox"
 msgstr "Bejövő"
 
-#: src/foldersel.c:363 src/folderview.c:1100 src/prefs_folder_item.c:217
+#: src/foldersel.c:363 src/folderview.c:1100 src/prefs_folder_item.c:235
 msgid "Sent"
 msgstr "Kimenő"
 
-#: src/foldersel.c:367 src/folderview.c:1106 src/prefs_folder_item.c:219
+#: src/foldersel.c:367 src/folderview.c:1106 src/prefs_folder_item.c:237
 msgid "Queue"
 msgstr "Várakozó"
 
-#: src/foldersel.c:371 src/folderview.c:1112 src/prefs_folder_item.c:220
+#: src/foldersel.c:371 src/folderview.c:1112 src/prefs_folder_item.c:238
 msgid "Trash"
 msgstr "Kuka"
 
-#: src/foldersel.c:375 src/folderview.c:1118 src/prefs_folder_item.c:218
+#: src/foldersel.c:375 src/folderview.c:1118 src/prefs_folder_item.c:236
 msgid "Drafts"
 msgstr "Vázlatok"
 
@@ -2857,11 +2857,11 @@ msgstr "  --help                 e segítség megjelenítése és kilépés"
 msgid "  --version              output version information and exit"
 msgstr "  --version              verzió információk kiírása és kilépés"
 
-#: src/main.c:444
+#: src/main.c:467
 msgid "Filename encoding"
 msgstr "Fájlnév karakterkódolása"
 
-#: src/main.c:445
+#: src/main.c:468
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2885,19 +2885,19 @@ msgstr ""
 "\n"
 "Folytatja?"
 
-#: src/main.c:493
+#: src/main.c:516
 msgid "Composing message exists. Really quit?"
 msgstr "Üzenet szerkesztés alatt. Tényleg kilép?"
 
-#: src/main.c:501
+#: src/main.c:524
 msgid "Queued messages"
 msgstr "Várakozó üzenetek"
 
-#: src/main.c:502
+#: src/main.c:525
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Vannak elküldetlen üzenetek. Kilépés most?"
 
-#: src/main.c:587
+#: src/main.c:610
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2906,15 +2906,15 @@ msgstr ""
 "OpenPGP támogatás kikapcsolva."
 
 #. remote command mode
-#: src/main.c:634
+#: src/main.c:657
 msgid "another Sylpheed is already running.\n"
 msgstr "Egy másik Sylpheed már fut.\n"
 
-#: src/main.c:834
+#: src/main.c:857
 msgid "Migration of configuration"
 msgstr "Beállítások migrálása"
 
-#: src/main.c:835
+#: src/main.c:858
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3621,7 +3621,7 @@ msgid "Send queued message(s)"
 msgstr "Várakozó sorból üzenet(ek) küldése"
 
 #: src/mainwindow.c:2247 src/prefs_account_dialog.c:518
-#: src/prefs_common_dialog.c:595 src/prefs_folder_item.c:138
+#: src/prefs_common_dialog.c:595 src/prefs_folder_item.c:139
 msgid "Compose"
 msgstr "Szerkesztés"
 
@@ -3685,8 +3685,8 @@ msgstr "Beállítások"
 msgid "Common preferences"
 msgstr "Közös beállítások"
 
-#: src/mainwindow.c:2354 src/prefs_folder_item.c:262
-#: src/prefs_folder_item.c:273 src/progressdialog.c:128
+#: src/mainwindow.c:2354 src/prefs_folder_item.c:281
+#: src/prefs_folder_item.c:292 src/progressdialog.c:128
 msgid "Account"
 msgstr "Hozzáférés"
 
@@ -4131,7 +4131,7 @@ msgstr "Azonosítás küldés előtt POP3-mal"
 msgid "Command output"
 msgstr "Parancskimenet"
 
-#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:323
 msgid "Automatically set the following addresses"
 msgstr "Az alábbi címek automatikus beállítása"
 
@@ -5474,39 +5474,44 @@ msgstr "Nem létező feltétel."
 msgid "Action not exist."
 msgstr "Nem létező művelet."
 
-#: src/prefs_folder_item.c:116
+#: src/prefs_folder_item.c:117
 msgid "Folder properties"
 msgstr "Mappa tulajdonságai"
 
-#: src/prefs_folder_item.c:137
+#: src/prefs_folder_item.c:138
 msgid "General"
 msgstr "Általános"
 
-#: src/prefs_folder_item.c:200 src/subscribedialog.c:292
+#: src/prefs_folder_item.c:186
+#, fuzzy
+msgid "Identifier"
+msgstr "Vezérlőjel"
+
+#: src/prefs_folder_item.c:218 src/subscribedialog.c:292
 msgid "Type"
 msgstr "Típus"
 
-#: src/prefs_folder_item.c:215
+#: src/prefs_folder_item.c:233
 msgid "Normal"
 msgstr "Normális"
 
-#: src/prefs_folder_item.c:228
+#: src/prefs_folder_item.c:246
 msgid "Don't display [...] or (...) at the beginning of subject in summary"
 msgstr "Ne mutassa a [...] vagy (...) szöveget a tárgy mezőben összegzéskor"
 
-#: src/prefs_folder_item.c:230
+#: src/prefs_folder_item.c:248
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Válasz esetén törölje a [...] vagy (...) szöveget a tárgy mezőből"
 
-#: src/prefs_folder_item.c:302
+#: src/prefs_folder_item.c:321
 msgid "Apply to subfolders"
 msgstr "Alkalmazás almappákra"
 
-#: src/prefs_folder_item.c:327
+#: src/prefs_folder_item.c:346
 msgid "use also on reply"
 msgstr "válasznál is használja"
 
-#: src/prefs_folder_item.c:351
+#: src/prefs_folder_item.c:370
 msgid "Reply-To:"
 msgstr "Válaszcím:"
 

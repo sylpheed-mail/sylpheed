@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 2.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-29 15:56+0900\n"
+"POT-Creation-Date: 2005-10-06 17:39+0900\n"
 "PO-Revision-Date: 2005-09-17 10:24+0200\n"
 "Last-Translator: danilo bodei <dbodei@lombardiacom.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -319,7 +319,7 @@ msgstr "Copia del messaggio %s%c%d in %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Ultimo numero nella cartella %s = %d\n"
 
-#: libsylph/mh.c:826 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -328,7 +328,7 @@ msgstr ""
 "Il file «%s» esiste già.\n"
 "Impossibile creare la cartella."
 
-#: libsylph/mh.c:1321
+#: libsylph/mh.c:1346
 #, c-format
 msgid ""
 "Directory name\n"
@@ -507,7 +507,7 @@ msgstr "Trovato %s\n"
 msgid "Configuration is saved.\n"
 msgstr "La configurazione è stata salvata.\n"
 
-#: libsylph/prefs_common.c:421
+#: libsylph/prefs_common.c:431
 msgid "Junk mail filter"
 msgstr "Filtro mail spazzatura"
 
@@ -606,32 +606,32 @@ msgstr "  Oggetto: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Distributore: %s\n"
 
-#: libsylph/utils.c:273
+#: libsylph/utils.c:274
 #, c-format
 msgid "%dB"
 msgstr "%dB"
 
-#: libsylph/utils.c:275
+#: libsylph/utils.c:276
 #, c-format
 msgid "%.1fKB"
 msgstr "%.1fKB"
 
-#: libsylph/utils.c:277
+#: libsylph/utils.c:278
 #, c-format
 msgid "%.2fMB"
 msgstr "%.2fMB"
 
-#: libsylph/utils.c:279
+#: libsylph/utils.c:280
 #, c-format
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2267 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "impossibile cambiare i permessi del file\n"
 
-#: libsylph/utils.c:2274 libsylph/utils.c:2398
+#: libsylph/utils.c:2282 libsylph/utils.c:2406
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "la scrittura su %s è fallita.\n"
@@ -720,7 +720,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:171
+#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Nome"
@@ -1020,16 +1020,16 @@ msgstr " Aggiungi "
 msgid "Lookup"
 msgstr "Cerca"
 
-#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:312
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:331
 #: src/prefs_template.c:175 src/summary_search.c:221
 msgid "To:"
 msgstr "A:"
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:329 src/prefs_template.c:177
+#: src/addressbook.c:650 src/prefs_folder_item.c:348 src/prefs_template.c:177
 msgid "Cc:"
 msgstr "Cc:"
 
-#: src/addressbook.c:654 src/prefs_folder_item.c:340
+#: src/addressbook.c:654 src/prefs_folder_item.c:359
 msgid "Bcc:"
 msgstr "Bcc:"
 
@@ -1209,11 +1209,11 @@ msgstr "Indirizzo comune"
 msgid "Personal address"
 msgstr "Indirizzo personale"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:492
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
 msgid "Notice"
 msgstr "Avviso"
 
-#: src/alertpanel.c:151 src/main.c:586
+#: src/alertpanel.c:151 src/main.c:609
 msgid "Warning"
 msgstr "Avvertimento"
 
@@ -1260,7 +1260,7 @@ msgstr "Marrone"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:289 src/summaryview.c:4206
+#: src/colorlabel.c:280 src/prefs_folder_item.c:308 src/summaryview.c:4206
 msgid "None"
 msgstr "Niente"
 
@@ -1788,7 +1788,7 @@ msgstr "Proprietà"
 msgid "Encoding"
 msgstr "Codifica"
 
-#: src/compose.c:5048 src/prefs_folder_item.c:184
+#: src/compose.c:5048 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Percorso"
 
@@ -2212,23 +2212,23 @@ msgstr "Selezione della cartella"
 msgid "Select folder"
 msgstr "Selezione della cartella"
 
-#: src/foldersel.c:359 src/folderview.c:1094 src/prefs_folder_item.c:216
+#: src/foldersel.c:359 src/folderview.c:1094 src/prefs_folder_item.c:234
 msgid "Inbox"
 msgstr "In entrata"
 
-#: src/foldersel.c:363 src/folderview.c:1100 src/prefs_folder_item.c:217
+#: src/foldersel.c:363 src/folderview.c:1100 src/prefs_folder_item.c:235
 msgid "Sent"
 msgstr "Inviata"
 
-#: src/foldersel.c:367 src/folderview.c:1106 src/prefs_folder_item.c:219
+#: src/foldersel.c:367 src/folderview.c:1106 src/prefs_folder_item.c:237
 msgid "Queue"
 msgstr "Coda"
 
-#: src/foldersel.c:371 src/folderview.c:1112 src/prefs_folder_item.c:220
+#: src/foldersel.c:371 src/folderview.c:1112 src/prefs_folder_item.c:238
 msgid "Trash"
 msgstr "Cestino"
 
-#: src/foldersel.c:375 src/folderview.c:1118 src/prefs_folder_item.c:218
+#: src/foldersel.c:375 src/folderview.c:1118 src/prefs_folder_item.c:236
 msgid "Drafts"
 msgstr "Bozze"
 
@@ -2865,11 +2865,11 @@ msgstr "  --help                 mostra questo aiuto ed esce"
 msgid "  --version              output version information and exit"
 msgstr "  --version              mostra informazioni sulla versione ed esce"
 
-#: src/main.c:444
+#: src/main.c:467
 msgid "Filename encoding"
 msgstr "Codifica nome file"
 
-#: src/main.c:445
+#: src/main.c:468
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2893,19 +2893,19 @@ msgstr ""
 "\n"
 "Continuo?"
 
-#: src/main.c:493
+#: src/main.c:516
 msgid "Composing message exists. Really quit?"
 msgstr "C'è un messaggio in composizione. Uscire?"
 
-#: src/main.c:501
+#: src/main.c:524
 msgid "Queued messages"
 msgstr "Messaggi accodati"
 
-#: src/main.c:502
+#: src/main.c:525
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Ci sono messaggi non spediti in «Coda». Uscire ora ?"
 
-#: src/main.c:587
+#: src/main.c:610
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2914,15 +2914,15 @@ msgstr ""
 "Il supporto per OpenPGP è disabilitato."
 
 #. remote command mode
-#: src/main.c:634
+#: src/main.c:657
 msgid "another Sylpheed is already running.\n"
 msgstr "un altro Sylpheed è già in esecuzione.\n"
 
-#: src/main.c:834
+#: src/main.c:857
 msgid "Migration of configuration"
 msgstr "Migrazione della configurazione"
 
-#: src/main.c:835
+#: src/main.c:858
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3628,7 +3628,7 @@ msgid "Send queued message(s)"
 msgstr "Invia i messaggi accodati"
 
 #: src/mainwindow.c:2247 src/prefs_account_dialog.c:518
-#: src/prefs_common_dialog.c:595 src/prefs_folder_item.c:138
+#: src/prefs_common_dialog.c:595 src/prefs_folder_item.c:139
 msgid "Compose"
 msgstr "Componi"
 
@@ -3692,8 +3692,8 @@ msgstr "Preferenze"
 msgid "Common preferences"
 msgstr "Preferenze comuni"
 
-#: src/mainwindow.c:2354 src/prefs_folder_item.c:262
-#: src/prefs_folder_item.c:273 src/progressdialog.c:128
+#: src/mainwindow.c:2354 src/prefs_folder_item.c:281
+#: src/prefs_folder_item.c:292 src/progressdialog.c:128
 msgid "Account"
 msgstr "Account"
 
@@ -4137,7 +4137,7 @@ msgstr "Autentica con POP3 prima dell'invio"
 msgid "Command output"
 msgstr "Output del comando"
 
-#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:304
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:323
 msgid "Automatically set the following addresses"
 msgstr "Imposta automaticamente i seguenti indirizzi"
 
@@ -5482,39 +5482,44 @@ msgstr "La condizione non esiste."
 msgid "Action not exist."
 msgstr "L'azione non esiste."
 
-#: src/prefs_folder_item.c:116
+#: src/prefs_folder_item.c:117
 msgid "Folder properties"
 msgstr "Proprietà della cartella"
 
-#: src/prefs_folder_item.c:137
+#: src/prefs_folder_item.c:138
 msgid "General"
 msgstr "Generale"
 
-#: src/prefs_folder_item.c:200 src/subscribedialog.c:292
+#: src/prefs_folder_item.c:186
+#, fuzzy
+msgid "Identifier"
+msgstr "Specificatore"
+
+#: src/prefs_folder_item.c:218 src/subscribedialog.c:292
 msgid "Type"
 msgstr "Tipo"
 
-#: src/prefs_folder_item.c:215
+#: src/prefs_folder_item.c:233
 msgid "Normal"
 msgstr "Normale"
 
-#: src/prefs_folder_item.c:228
+#: src/prefs_folder_item.c:246
 msgid "Don't display [...] or (...) at the beginning of subject in summary"
 msgstr "Non mostrare [...] o (...) all'inizio dell'oggetto nel sommario"
 
-#: src/prefs_folder_item.c:230
+#: src/prefs_folder_item.c:248
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Elimina [...] o (...) all'inizio dell'oggetto nella risposta"
 
-#: src/prefs_folder_item.c:302
+#: src/prefs_folder_item.c:321
 msgid "Apply to subfolders"
 msgstr "Applica alle sottocartelle"
 
-#: src/prefs_folder_item.c:327
+#: src/prefs_folder_item.c:346
 msgid "use also on reply"
 msgstr "usa anche nella risposta"
 
-#: src/prefs_folder_item.c:351
+#: src/prefs_folder_item.c:370
 msgid "Reply-To:"
 msgstr "Rispondi a:"
 
