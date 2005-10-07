@@ -36,6 +36,31 @@
 static RecvUIFunc	recv_ui_func;
 static gpointer		recv_ui_func_data;
 
+
+gchar *recv_bytes(SockInfo *sock, glong size)
+{
+	gchar *buf;
+	glong count = 0;
+
+	if (size == 0)
+		return NULL;
+
+	buf = g_malloc(size);
+
+	do {
+		gint read_count;
+
+		read_count = sock_read(sock, buf + count, size - count);
+		if (read_count < 0) {
+			g_free(buf);
+			return NULL;
+		}
+		count += read_count;
+	} while (count < size);
+
+	return buf;
+}
+
 gint recv_write_to_file(SockInfo *sock, const gchar *filename)
 {
 	FILE *fp;
@@ -164,24 +189,14 @@ gint recv_write(SockInfo *sock, FILE *fp)
 gint recv_bytes_write(SockInfo *sock, glong size, FILE *fp)
 {
 	gchar *buf;
-	glong count = 0;
 	gchar *prev, *cur;
 
 	if (size == 0)
 		return 0;
 
-	buf = g_malloc(size);
-
-	do {
-		gint read_count;
-
-		read_count = sock_read(sock, buf + count, size - count);
-		if (read_count < 0) {
-			g_free(buf);
-			return -2;
-		}
-		count += read_count;
-	} while (count < size);
+	buf = recv_bytes(sock, size);
+	if (!buf)
+		return -2;
 
 	/* +------------------+----------------+--------------------------+ *
 	 * ^buf               ^prev            ^cur             buf+size-1^ */

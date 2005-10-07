@@ -3109,6 +3109,8 @@ static gint imap_status(IMAPSession *session, IMAPFolder *folder,
 			  real_path_);
 
 	ok = imap_cmd_ok(session, argbuf);
+	if (ok != IMAP_SUCCESS)
+		log_warning(_("error on imap command: STATUS\n"));
 	if (ok != IMAP_SUCCESS || !argbuf) THROW(ok);
 
 	str = search_array_str(argbuf, "STATUS");
@@ -3727,34 +3729,64 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 	gchar *buf;
 	gint cmd_num;
 	gchar cmd_status[IMAPBUFSIZE + 1];
+	GString *str;
+	gchar *p;
+	gchar obuf[32];
+	gint len;
+	gchar *literal;
+
+	str = g_string_sized_new(256);
 
 	while ((ok = imap_cmd_gen_recv(session, &buf)) == IMAP_SUCCESS) {
-		if (buf[0] == '*' && buf[1] == ' ') {
-			if (argbuf) {
-				g_memmove(buf, buf + 2, strlen(buf + 2) + 1);
-				g_ptr_array_add(argbuf, buf);
-			} else
+		g_string_append(str, buf);
+
+		if ((p = strrchr(buf, '{'))) {
+			/* literal */
+			p = strchr_cpy(p + 1, '}', obuf, sizeof(obuf));
+			len = atoi(obuf);
+			if (len < 0 || p != '\0') {
 				g_free(buf);
+				ok = IMAP_ERROR;
+				break;
+			}
+
+			literal = recv_bytes(SESSION(session)->sock, len);
+			if (!literal) {
+				g_free(buf);
+				ok = IMAP_SOCKET;
+				break;
+			}
+
+			g_string_append(str, "\r\n");
+			g_string_append_len(str, literal, len);
+			g_free(literal);
+			g_free(buf);
 			continue;
 		}
 
-		if (sscanf(buf, "%d %" Xstr(IMAPBUFSIZE) "s",
+		g_free(buf);
+
+		if (str->str[0] == '*' && str->str[1] == ' ') {
+			if (argbuf)
+				g_ptr_array_add(argbuf, g_strdup(str->str + 2));
+
+			g_string_truncate(str, 0);
+			continue;
+		} else if (sscanf(str->str, "%d %" Xstr(IMAPBUFSIZE) "s",
 			   &cmd_num, cmd_status) < 2) {
-			g_free(buf);
-			return IMAP_ERROR;
+			ok = IMAP_ERROR;
 		} else if (cmd_num == session->cmd_count &&
 			 !strcmp(cmd_status, "OK")) {
 			if (argbuf)
-				g_ptr_array_add(argbuf, buf);
-			else
-				g_free(buf);
-			return IMAP_SUCCESS;
+				g_ptr_array_add(argbuf, g_strdup(str->str));
 		} else {
-			g_free(buf);
-			return IMAP_ERROR;
+			ok = IMAP_ERROR;
 		}
+
+		break;
 	}
 
+	g_string_free(str, TRUE);
 	return ok;
 }
 
