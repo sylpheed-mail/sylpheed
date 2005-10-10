@@ -3175,11 +3175,14 @@ time_t remote_tzoffset_sec(const gchar *zone)
 
 time_t tzoffset_sec(time_t *now)
 {
-	struct tm gmt, *lt;
+	struct tm gmt, *tmp, *lt;
 	gint off;
 
-	gmt = *gmtime(now);
+	tmp = gmtime(now);
+	g_return_val_if_fail(tmp != NULL, -1);
+	gmt = *tmp;
 	lt = localtime(now);
+	g_return_val_if_fail(lt != NULL, -1);
 
 	off = (lt->tm_hour - gmt.tm_hour) * 60 + lt->tm_min - gmt.tm_min;
 
@@ -3204,12 +3207,15 @@ time_t tzoffset_sec(time_t *now)
 gchar *tzoffset(time_t *now)
 {
 	static gchar offset_string[6];
-	struct tm gmt, *lt;
+	struct tm gmt, *tmp, *lt;
 	gint off;
 	gchar sign = '+';
 
-	gmt = *gmtime(now);
+	tmp = gmtime(now);
+	g_return_val_if_fail(tmp != NULL, NULL);
+	gmt = *tmp;
 	lt = localtime(now);
+	g_return_val_if_fail(lt != NULL, NULL);
 
 	off = (lt->tm_hour - gmt.tm_hour) * 60 + lt->tm_min - gmt.tm_min;
 

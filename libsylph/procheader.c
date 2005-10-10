@@ -768,6 +768,12 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 	t.tm_isdst = -1;
 
 	timer = mktime(&t);
+	if (timer == -1) {
+		if (dest)
+			dest[0] = '\0';
+		return 0;
+	}
+
 	tz_offset = remote_tzoffset_sec(zone);
 	if (tz_offset != -1)
 		timer += tzoffset_sec(&timer) - tz_offset;
@@ -787,6 +793,11 @@ void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
 	Xalloca(tmp, len + 1, dest[0] = '\0'; return;);
 
 	lt = localtime(&timer);
+	if (!lt) {
+		g_warning("can't get localtime of %d\n", timer);
+		dest[0] = '\0';
+		return;
+	}
 
 	if (prefs_common.date_format)
 		strftime(tmp, len, prefs_common.date_format, lt);
