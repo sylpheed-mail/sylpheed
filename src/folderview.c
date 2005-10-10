@@ -2650,6 +2650,19 @@ static gboolean folderview_drag_motion_cb(GtkWidget      *widget,
 		}
 	}
 
+#ifdef G_OS_WIN32
+	/* Win32 hack: somehow context->actions is not properly set on Win32 */
+	{
+		GdkWindow *rootwin;
+		GdkModifierType state;
+
+		rootwin = gtk_widget_get_root_window(widget);
+		gdk_window_get_pointer(rootwin, NULL, NULL, &state);
+		if ((state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) == 0)
+			context->actions = GDK_ACTION_MOVE | GDK_ACTION_COPY;
+	}
+#endif
+
 	if (acceptable) {
 		if ((context->actions & GDK_ACTION_MOVE) != 0 &&
 		    FOLDER_ITEM_CAN_ADD(src_item))
