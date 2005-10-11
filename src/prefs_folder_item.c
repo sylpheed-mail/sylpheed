@@ -218,6 +218,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	label = gtk_label_new(_("Type"));
 	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
 			 GTK_FILL, 0, 0, 0);
+	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
 
 	hbox = gtk_hbox_new(FALSE, 8);
 	gtk_widget_show(hbox);
