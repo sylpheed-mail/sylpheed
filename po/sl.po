@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -167,54 +167,59 @@ msgstr "ne morem dobiti imenskega prostora\n"
 msgid "can't select folder: %s\n"
 msgstr "ne morem izbrati mape: %s\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "napaka med IMAPovim ukazom: EXPUNGE\n"
+
+#: libsylph/imap.c:3256
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "Overovitvena metoda"
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "Prijava na IMAP4 ni uspela.\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "ne morem pripeti %s na %s\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "(pošiljam datoteko...)"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "ne morem dodati sporočila %s\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "ne morem kopirati %d na %s\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "napaka med IMAPovim ukazom: STORE %d:%d %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "napaka med IMAPovim ukazom: EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "napaka med IMAPovim ukazom: EXPUNGE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv ne more pretvoriti UTF-7 v %s\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv ne more pretvoriti %s v UTF-7\n"
@@ -324,7 +329,7 @@ msgstr "Kopiram sporočilo %s%c%d v %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Zadnja številka v imeniku %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -535,11 +540,11 @@ msgstr "Ne morem dobiti tekstovnega dela\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Ukazna vrstica za tiskanje ni veljavna: `%s'\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "med popravljanjem podatkov je prišlo do napake.\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "Ne morem pisati v datoteko.\n"
 
@@ -1210,11 +1215,11 @@ msgstr "Skupni naslov"
 msgid "Personal address"
 msgstr "Osebni naslov"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "Opomba"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "Opozorilo"
 
@@ -2840,20 +2845,20 @@ msgstr "Vnesite geslo"
 msgid "Protocol log"
 msgstr "Dnevnik protokola"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread ni podprt v glib.\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uporaba: %s [MOŽNOST]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [naslov]     odpri okno za sestavljanje novega sporočila"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2863,48 +2868,48 @@ msgstr ""
 "                         odpri okno za sestavljanje s pripetimi\n"
 "                         podanimi datotekami"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive              poberi nova sporočila"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          poberi nova sporočila z vseh računov"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 pošlji vsa čakajoča sporočila"
 
-#: src/main.c:340
+#: src/main.c:344
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               prikaži skupno število sporočil"
 
-#: src/main.c:341
+#: src/main.c:345
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               prikaži skupno število sporočil"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug                razhroščevalni način"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 prikaži to pomoč in končaj"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version              prikaži informacijo o različici in končaj"
 
-#: src/main.c:467
+#: src/main.c:471
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Izhodni nabor znakov"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2918,19 +2923,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "Še vedno sestavljate sporočilo. Ali naj res končam?"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "Čakajoča sporočila"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Nekaj neposlamih sporočil je na čakanju. Ali naj končam?"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2939,16 +2944,16 @@ msgstr ""
 "Podpora za OpenPGP je izključena."
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "Sylpheed že teče.\n"
 
-#: src/main.c:857
+#: src/main.c:953
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Pišem nastavitve dejanj..\n"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

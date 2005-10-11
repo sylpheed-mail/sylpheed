@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 1.0.0beta1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: Sun 31 Oct 2004 23:17:57\n"
 "Last-Translator: O. Nykyforchyn <nick@pu.if,ua>, 2004.\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -168,52 +168,57 @@ msgstr "не вдалось отримати простір імен\n"
 msgid "can't select folder: %s\n"
 msgstr "не вдалось отримати папку: %s\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "помилка при виконанні команди imap: CLOSE\n"
+
+#: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
 msgstr "Невдача авторизації IMAP4.\n"
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "Невдача авторизації IMAP4.\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "не вдалось додати %s до %s\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "(посилаємо файл...)"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "не вдалось приєднати лист до %s\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "не вдалось скопіювати %s в %s\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "помилка при виконанні команди imap:  STORE %s %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "помилка при виконанні команди imap: EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 msgid "error while imap command: CLOSE\n"
 msgstr "помилка при виконанні команди imap: CLOSE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv не може конвертувати UTF-7 в %s\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv не може конвертувати %s в UTF-7\n"
@@ -323,7 +328,7 @@ msgstr "Копіюємо лист %s%c%d в %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Останній номер в каталозі %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -531,11 +536,11 @@ msgstr "Не вдалось отримати текстову частину\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Невірна команда друку: `%s'\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "трапилась помилка при отриманні даних.\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "Не вдалось писати в файл.\n"
 
@@ -1200,11 +1205,11 @@ msgstr "Адреса організації"
 msgid "Personal address"
 msgstr "Особиста адреса"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "Примітка"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "Попередження"
 
@@ -2822,20 +2827,20 @@ msgstr "Введіть пароль"
 msgid "Protocol log"
 msgstr "Журнал протоколу"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread не підтримується glib.\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Вживання: %s [ОПЦІЇ]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    відкрити вікно для нового листа"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2845,23 +2850,23 @@ msgstr ""
 "                         відкрити вікно створення з приєднанням вказаних\n"
 "                         файлів"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive              отримати нові листи"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          отримати нові листи для всіх записів"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 відіслати всі відкладені листи"
 
-#: src/main.c:340
+#: src/main.c:344
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [folder]...   показати загальну кількість листів"
 
-#: src/main.c:341
+#: src/main.c:345
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2869,24 +2874,24 @@ msgstr ""
 "  --status-full [folder]...\n"
 "                         показати стан кожної папки"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug                режим відлагодження"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 показати цю довідку і вийти"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version              видати інформацію про версію і вийти"
 
-#: src/main.c:467
+#: src/main.c:471
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Кодова таблиця для вихідної пошти"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2900,19 +2905,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "Є незавершені листи. Справді вийти?"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "Листи в черзі"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Деякі невідіслані листи - в черзі. Вийти зараз?"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2921,16 +2926,16 @@ msgstr ""
 "Відключено підтримку OpenPGP."
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "вже запущено інший Sylpheed.\n"
 
-#: src/main.c:857
+#: src/main.c:953
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Конфігурування дій"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

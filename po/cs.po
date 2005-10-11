@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: 2003-05-30 13:31GMT+0100\n"
 "Last-Translator: Radek Vybíral <Radek.Vybiral@vsb.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -167,54 +167,59 @@ msgstr "nemohu najít obálku\n"
 msgid "can't select folder: %s\n"
 msgstr "nelze vybrat složku: %s\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "chyba příkazu služby imap: EXPUNGE\n"
+
+#: libsylph/imap.c:3256
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "Autentikace selhala."
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "Neúspěšné přihlášení k IMAP4.\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "Nemohu přidat %s do %s\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "(posílám soubor...)"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "nelze přidat zprávu %s\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "nelze kopírovat %d na %s\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "chyba příkazu služby imap: STORE %d %d %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "chyba příkazu služby imap: EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "chyba příkazu služby imap: EXPUNGE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv nemůže konvertovat UTF-7 na %s\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv nemůže konvertovat %s na UTF-7\n"
@@ -322,7 +327,7 @@ msgstr "Kopíruji zprávu %s%c%d do %s...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Poslední počet v adresáři %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -531,11 +536,11 @@ msgstr "Nelze získat část textu\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Neplatný příkazový řádek tisku: '%s'\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "Během obnovy dat se vyskytla chyba.\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "Nemohu zapisovat do souboru.\n"
 
@@ -1204,11 +1209,11 @@ msgstr "Společná adresa"
 msgid "Personal address"
 msgstr "Osobní adresa"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "Poznámka"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "Varování"
 
@@ -2840,20 +2845,20 @@ msgstr "Zadejte heslo"
 msgid "Protocol log"
 msgstr "Záznamový protokol"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread není v glib podporován.\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Použití: %s [VOLBY]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresa]     otevře okno pro psaní nové zprávy"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2863,48 +2868,48 @@ msgstr ""
 "                           otevře okno pro psaní zprávy s připojeným\n"
 "                           souborem(y)"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive             načte nové zprávy"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          načte všechny nové zprávy ze všech účtů"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send              pošle všechny pozdržené zprávy"
 
-#: src/main.c:340
+#: src/main.c:344
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status             vypíše celkový počet zpráv"
 
-#: src/main.c:341
+#: src/main.c:345
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status             vypíše celkový počet zpráv"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug              režim trasování"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help            vypíše tento text a skončí"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version             vypíše informace o verzi a skončí"
 
-#: src/main.c:467
+#: src/main.c:471
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Výstupní znaková sada"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2918,19 +2923,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "Právě se vytváří zpráva. Opravdu skončit?"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "Pozdržené zprávy"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Ve frontě jsou neodeslaně zprávy. Skončit nyní?"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2939,16 +2944,16 @@ msgstr ""
 "Podpora pro OpenPGP je zakázána."
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "aplikace Sylpheed je již spuštěna.\n"
 
-#: src/main.c:857
+#: src/main.c:953
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Nastavení akcí"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

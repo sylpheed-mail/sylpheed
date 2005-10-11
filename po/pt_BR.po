@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: 2005-09-27 08:30-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: André Casteliano <digitalcoder@users.sourceforge.net> Isaías "
@@ -166,52 +166,57 @@ msgstr "Não foi possível obter o 'envelope'\n"
 msgid "can't select folder: %s\n"
 msgstr "não posso selecionar pasta: %s\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "erro no comando imap: CLOSE\n"
+
+#: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
 msgstr "Falha na autenticação IMAP4.\n"
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "Falha ao logar no servidor IMAP4.\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "não foi possível copiar a mensagem %s para %s\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "(enviando arquivo...)"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "não foi possível anexar a mensagem em %s\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "não posso copiar %s para %s\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "erro no comando imap: STORE %s %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "erro no comando imap: EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 msgid "error while imap command: CLOSE\n"
 msgstr "erro no comando imap: CLOSE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "o iconv não pode converter UTF-7 para %s\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "o iconv não pode converter %s para UTF-7\n"
@@ -321,7 +326,7 @@ msgstr "Copiando mensagem %s%c%d para %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Último número no diretório %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -535,11 +540,11 @@ msgstr "Não foi possível obter o texto\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "O comando de impressão é inválido: `%s'\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "ocorreu um erro enquanto os dados eram obtidos.\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "Não foi possível gravar no arquivo.\n"
 
@@ -1206,11 +1211,11 @@ msgstr "Endereços comuns"
 msgid "Personal address"
 msgstr "Endereços pessoais"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "Notificação"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "Aviso"
 
@@ -2800,20 +2805,20 @@ msgstr "Informe a senha"
 msgid "Protocol log"
 msgstr "Log do protocolo"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread não é suportada pela glib.\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uso: %s [OPÇÃO]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [endreço]    abre janela de composição"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2823,23 +2828,23 @@ msgstr ""
 "                         abrir a janela de composição com os arquivos\n"
 "                         especificados anexados"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive              recebe novas mensgens"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          recebe novas mensagens de todas as contas"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 envia todas as mensagens da fila"
 
-#: src/main.c:340
+#: src/main.c:344
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [pasta]...   mostra o número total de mensagens"
 
-#: src/main.c:341
+#: src/main.c:345
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2847,23 +2852,23 @@ msgstr ""
 "  --status-full [pasta]...\n"
 "                         exibe o status de cada pasta"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug                modo debug"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 exibe esta ajuda e sai"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version              mostra informação de versão e sai"
 
-#: src/main.c:467
+#: src/main.c:471
 msgid "Filename encoding"
 msgstr "Codificação de nome de arquivo"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2887,19 +2892,19 @@ msgstr ""
 "\n"
 "Continuar?"
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "Ainda há mensagens sendo escritas. Deseja sair?"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "Mensagens enviadas para a fila"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Algumas mensagens não enviadas estão na fila. Sair agora?"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2908,15 +2913,15 @@ msgstr ""
 "Suporte a OpenPGP desabilitado."
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "outra cópia do Sylpheed já está sendo executada.\n"
 
-#: src/main.c:857
+#: src/main.c:953
 msgid "Migration of configuration"
 msgstr "Migração da configuração"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -163,52 +163,56 @@ msgstr "namespace を取得できません\n"
 msgid "can't select folder: %s\n"
 msgstr "フォルダ %s を選択できません\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+msgid "error on imap command: STATUS\n"
+msgstr "imap コマンド中のエラー: STATUS\n"
+
+#: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
 msgstr "IMAP4 の認証に失敗しました。\n"
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4のログインに失敗しました。\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "%s を %s に追加できません\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "(ファイルを送信中...)"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "メッセージを %s に追加できません\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "%s を %s にコピーできません\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap コマンド中のエラー: STORE %s %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap コマンド中のエラー: EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 msgid "error while imap command: CLOSE\n"
 msgstr "imap コマンド中のエラー: CLOSE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv が UTF-7 を %s に変換できません\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv が %s を UTF-7 に変換できません\n"
@@ -318,7 +322,7 @@ msgstr "メッセージ %s%c%d を %s にコピーしています...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "ディレクトリ %s 内の最後の番号 = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -532,11 +536,11 @@ msgstr "テキストパートを取得できません\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "印刷のコマンドラインが無効です: `%s'\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "データの取得中にエラーが発生しました。\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "ファイルに書き込めません。\n"
 
@@ -1203,11 +1207,11 @@ msgstr "共有アドレス"
 msgid "Personal address"
 msgstr "個人用アドレス"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "警告"
 
@@ -2792,20 +2796,20 @@ msgstr "パスワードの入力"
 msgid "Protocol log"
 msgstr "プロトコルログ"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread は glib によってサポートされていません。\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "使用法: %s [オプション]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    メッセージ作成ウィンドウを開く"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2815,23 +2819,23 @@ msgstr ""
 "                         指定したファイルを添付してメッセージ作成\n"
 "                         ウィンドウを開く"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive              新着メッセージを受信する"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          全アカウントの新着メッセージを受信する"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送信待機中のメッセージをすべて送信する"
 
-#: src/main.c:340
+#: src/main.c:344
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [folder]...   メッセージの総数を表示する"
 
-#: src/main.c:341
+#: src/main.c:345
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2839,23 +2843,23 @@ msgstr ""
 "  --status-full [folder]...\n"
 "                         各フォルダの状態を表示する"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug                デバッグモード"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 このヘルプを表示して終了する"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version              バージョン情報を出力して終了する"
 
-#: src/main.c:467
+#: src/main.c:471
 msgid "Filename encoding"
 msgstr "ファイル名エンコーディング"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2878,19 +2882,19 @@ msgstr ""
 "\n"
 "続行しますか?"
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "作成中のメッセージが存在します。本当に終了しますか?"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "送信待機中のメッセージ"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "送信待機中の未送信メッセージがあります。終了しますか?"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2899,15 +2903,15 @@ msgstr ""
 "OpenPGP サポートは無効です。"
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "別の Sylpheed がすでに起動しています。\n"
 
-#: src/main.c:857
+#: src/main.c:953
 msgid "Migration of configuration"
 msgstr "設定の移行"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

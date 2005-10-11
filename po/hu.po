@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-2.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: 2005-07-04 17:05+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
@@ -164,52 +164,57 @@ msgstr "névtér nem elérhető\n"
 msgid "can't select folder: %s\n"
 msgstr "%s mappa kiválasztása nem sikerült\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "hiba az IMAP parancs közben: CLOSE\n"
+
+#: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
 msgstr "Az IMAP4 azonosítás nem sikerült.\n"
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 bejelentkezés sikertelen.\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "%s hozzáfűzése %s-he(oö)z nem sikerült\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "(fájl küldése...)"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "üzenet hozzáfűzése %s-he(oö)z nem sikerült\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "%s nem másolható %s-be/ba\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "hiba az IMAP parancs közben: STORE %s %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "hiba az IMAP parancs közben: EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 msgid "error while imap command: CLOSE\n"
 msgstr "hiba az IMAP parancs közben: CLOSE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "az iconv nem tud UTF-7-ből %s-be/ba konvertálni\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "az iconv nem tud %s-t UTF-7-re konvertálni\n"
@@ -319,7 +324,7 @@ msgstr "%s%c%d üzenet másolása %s-ba ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Az utolsó szám a(z) %s mappában = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -533,11 +538,11 @@ msgstr "Nem tudtam olvasni a szövegrészt\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Érvénytelen nyomtató parancs: `%s'\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "hiba az adatok fogadása közben.\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "Nem lehet a fájlba írni.\n"
 
@@ -1205,11 +1210,11 @@ msgstr "Általános cím"
 msgid "Personal address"
 msgstr "Személyes cím"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "Megjegyzés"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
@@ -2798,20 +2803,20 @@ msgstr "Adja meg a jelszót"
 msgid "Protocol log"
 msgstr "Protokoll napló"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread-et a glib nem támogatja.\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Használat: %s [OPCIÓ]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [cím]    szerkesztőablak megnyitása"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2821,23 +2826,23 @@ msgstr ""
 "                          szerkesztőablak nyitása a megadott fájl(ok)\n"
 "                          csatolásával"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive              új üzenetek vétele"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          új üzenetek vétele minden hozzáférésről"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 minden várakozó levél küldése"
 
-#: src/main.c:340
+#: src/main.c:344
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mappa]...  üzenetek számának kijelzése"
 
-#: src/main.c:341
+#: src/main.c:345
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2845,23 +2850,23 @@ msgstr ""
 "  --status-full [mappa]...\n"
 "                       az összes mappa státuszának kijelzése"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug                hibakereső üzemmód"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 e segítség megjelenítése és kilépés"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version              verzió információk kiírása és kilépés"
 
-#: src/main.c:467
+#: src/main.c:471
 msgid "Filename encoding"
 msgstr "Fájlnév karakterkódolása"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2885,19 +2890,19 @@ msgstr ""
 "\n"
 "Folytatja?"
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "Üzenet szerkesztés alatt. Tényleg kilép?"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "Várakozó üzenetek"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Vannak elküldetlen üzenetek. Kilépés most?"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2906,15 +2911,15 @@ msgstr ""
 "OpenPGP támogatás kikapcsolva."
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "Egy másik Sylpheed már fut.\n"
 
-#: src/main.c:857
+#: src/main.c:953
 msgid "Migration of configuration"
 msgstr "Beállítások migrálása"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

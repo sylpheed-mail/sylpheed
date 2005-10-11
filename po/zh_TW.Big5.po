@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-06 17:39+0900\n"
+"POT-Creation-Date: 2005-10-11 16:55+0900\n"
 "PO-Revision-Date: 2005-09-08 17:11+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -166,52 +166,57 @@ msgstr "無法取得信封。\n"
 msgid "can't select folder: %s\n"
 msgstr "無法選擇資料夾：%s\n"
 
-#: libsylph/imap.c:3254
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "imap 發生錯誤，命令為： CLOSE\n"
+
+#: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
 msgstr "IMAP4 認證失敗\n"
 
-#: libsylph/imap.c:3271
+#: libsylph/imap.c:3273
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 登入失敗。\n"
 
-#: libsylph/imap.c:3601
+#: libsylph/imap.c:3603
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "無法將郵件從 %s 搬移到 %s。\n"
 
-#: libsylph/imap.c:3608
+#: libsylph/imap.c:3610
 msgid "(sending file...)"
 msgstr "（送出檔案 ...）"
 
-#: libsylph/imap.c:3636
+#: libsylph/imap.c:3638
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "無法附加訊息到 %s\n"
 
-#: libsylph/imap.c:3668
+#: libsylph/imap.c:3670
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "無法將郵件 %s 移到 %s\n"
 
-#: libsylph/imap.c:3692
+#: libsylph/imap.c:3694
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap 發生錯誤，命令為： STORE %s %s\n"
 
-#: libsylph/imap.c:3706
+#: libsylph/imap.c:3708
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap 發生錯誤，命令為： EXPUNGE\n"
 
-#: libsylph/imap.c:3719
+#: libsylph/imap.c:3721
 msgid "error while imap command: CLOSE\n"
 msgstr "imap 發生錯誤，命令為： CLOSE\n"
 
-#: libsylph/imap.c:3952
+#: libsylph/imap.c:3984
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "無法將 UTF-7 轉換為 %s\n"
 
-#: libsylph/imap.c:3982
+#: libsylph/imap.c:4014
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "無法轉換 %s 為 UTF-7\n"
@@ -321,7 +326,7 @@ msgstr "正在複製訊息 %s%c%d 到 %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "目錄 %s 中最後的編號 = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:138
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:140
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -534,11 +539,11 @@ msgstr "沒有文字部份\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "列印命令錯誤：「%s」\n"
 
-#: libsylph/recv.c:112
+#: libsylph/recv.c:137
 msgid "error occurred while retrieving data.\n"
 msgstr "擷取資料時發生錯誤。\n"
 
-#: libsylph/recv.c:154 libsylph/recv.c:196 libsylph/recv.c:211
+#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
 msgid "Can't write to file.\n"
 msgstr "無法寫入檔案。\n"
 
@@ -1198,11 +1203,11 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:515
+#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:151 src/main.c:609
+#: src/alertpanel.c:151 src/main.c:614
 msgid "Warning"
 msgstr "警告"
 
@@ -2787,20 +2792,20 @@ msgstr "輸入密碼"
 msgid "Protocol log"
 msgstr "通訊協定紀錄"
 
-#: src/main.c:186
+#: src/main.c:188
 msgid "g_thread is not supported by glib.\n"
 msgstr "glib 不支援 g_thread。\n"
 
-#: src/main.c:330
+#: src/main.c:334
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "用法：%s [選項]...\n"
 
-#: src/main.c:333
+#: src/main.c:337
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [郵件地址]   直接開啟撰寫郵件視窗"
 
-#: src/main.c:334
+#: src/main.c:338
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2809,45 +2814,45 @@ msgstr ""
 "  --attach 檔案1 [檔案2]...\n"
 "                         開啟撰寫郵件視窗，並將指定的檔案附加上去"
 
-#: src/main.c:337
+#: src/main.c:341
 msgid "  --receive              receive new messages"
 msgstr "  --receive              直接接收新郵件"
 
-#: src/main.c:338
+#: src/main.c:342
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          直接接收所有帳號的新郵件"
 
-#: src/main.c:339
+#: src/main.c:343
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送出所有暫存資料夾中的郵件"
 
-#: src/main.c:340
+#: src/main.c:344
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [資料夾]...   顯示資料夾內總共有多少郵件"
 
-#: src/main.c:341
+#: src/main.c:345
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status-full [資料夾]...     顯示每個資料夾中有多少郵件"
 
-#: src/main.c:343
+#: src/main.c:347
 msgid "  --debug                debug mode"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:344
+#: src/main.c:348
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 顯示本說明並離開"
 
-#: src/main.c:345
+#: src/main.c:349
 msgid "  --version              output version information and exit"
 msgstr "  --version              顯示版本資訊"
 
-#: src/main.c:467
+#: src/main.c:471
 msgid "Filename encoding"
 msgstr "檔案名稱編碼"
 
-#: src/main.c:468
+#: src/main.c:472
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2868,19 +2873,19 @@ msgstr ""
 "\n"
 "要繼續嗎？"
 
-#: src/main.c:516
+#: src/main.c:520
 msgid "Composing message exists. Really quit?"
 msgstr "有郵件正在編輯。確定要離開嗎？"
 
-#: src/main.c:524
+#: src/main.c:528
 msgid "Queued messages"
 msgstr "有未送出郵件"
 
-#: src/main.c:525
+#: src/main.c:529
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "有些郵件正在暫存資料夾中尚未送出。確定要離開嗎？"
 
-#: src/main.c:610
+#: src/main.c:615
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2889,15 +2894,15 @@ msgstr ""
 "關閉 OpenPGP 支援項目。"
 
 #. remote command mode
-#: src/main.c:657
+#: src/main.c:753
 msgid "another Sylpheed is already running.\n"
 msgstr "已經有 Sylpheed 程式正在執行中。\n"
 
-#: src/main.c:857
+#: src/main.c:953
 msgid "Migration of configuration"
 msgstr "設定資料轉移"
 
-#: src/main.c:858
+#: src/main.c:954
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
