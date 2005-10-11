@@ -72,6 +72,7 @@
 #include "addressbook.h"
 #include "addrindex.h"
 #include "compose.h"
+#include "logwindow.h"
 #include "folder.h"
 #include "setup.h"
 #include "utils.h"
@@ -114,6 +115,7 @@ static void app_init			(void);
 static void parse_gtkrc_files		(void);
 static void setup_rc_dir		(void);
 static void check_gpg			(void);
+static void set_log_handlers		(gboolean	 enable);
 
 static gchar *get_socket_name		(void);
 static gint prohibit_duplicate_launch	(void);
@@ -227,6 +229,8 @@ int main(int argc, char *argv[])
 					lock_socket_input_cb,
 					mainwin);
 #endif
+
+	set_log_handlers(TRUE);
 
 	account_read_config_all();
 	account_set_menu();
@@ -553,6 +557,7 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 	remove_all_files(get_tmp_dir());
 	remove_all_files(get_mime_tmp_dir());
 
+	set_log_handlers(FALSE);
 	close_log_file();
 	lock_socket_remove();
 
@@ -620,6 +625,97 @@ static void check_gpg(void)
 	 *
 	 * gpgme_register_idle(idle_function_for_gpgme);
 	 */
+#endif
+}
+
+static void default_log_func(const gchar *log_domain, GLogLevelFlags log_level,
+			     const gchar *message, gpointer user_data)
+{
+	gchar *prefix = "";
+	gchar *file_prefix = "";
+	LogType level = LOG_NORMAL;
+	gchar *str;
+	const gchar *message_;
+
+	switch (log_level) {
+	case G_LOG_LEVEL_ERROR:
+		prefix = "ERROR";
+		file_prefix = "*** ";
+		level = LOG_ERROR;
+		break;
+	case G_LOG_LEVEL_CRITICAL:
+	case G_LOG_LEVEL_WARNING:
+		prefix = "CRITICAL";
+		file_prefix = "** ";
+		level = LOG_WARN;
+		break;
+	case G_LOG_LEVEL_MESSAGE:
+		prefix = "Message";
+		file_prefix = "* ";
+		level = LOG_MSG;
+		break;
+	case G_LOG_LEVEL_INFO:
+		prefix = "INFO";
+		file_prefix = "* ";
+		level = LOG_MSG;
+		break;
+	case G_LOG_LEVEL_DEBUG:
+		prefix = "DEBUG";
+		break;
+	default:
+		prefix = "LOG";
+		break;
+	}
+
+	if (!message)
+		message_ = "(NULL) message";
+	else
+		message_ = message;
+	if (log_domain)
+		str = g_strconcat(log_domain, "-", prefix, ": ", message_, "\n",
+				  NULL);
+	else
+		str = g_strconcat(prefix, ": ", message_, "\n", NULL);
+	log_window_append(str, level);
+	log_write(str, file_prefix);
+	g_free(str);
+
+	g_log_default_handler(log_domain, log_level, message, user_data);
+}
+
+static void set_log_handlers(gboolean enable)
+{
+#if GLIB_CHECK_VERSION(2, 6, 0)
+	if (enable)
+		g_log_set_default_handler(default_log_func, NULL);
+	else
+		g_log_set_default_handler(g_log_default_handler, NULL);
+#else
+	static guint handler_id[4] = {0, 0, 0, 0};
+
+	if (enable) {
+		handler_id[0] = g_log_set_handler
+			("GLib", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
+			 | G_LOG_FLAG_RECURSION, default_log_func, NULL);
+		handler_id[1] = g_log_set_handler
+			("Gtk", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
+			 | G_LOG_FLAG_RECURSION, default_log_func, NULL);
+		handler_id[2] = g_log_set_handler
+			("LibSylph", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
+			 | G_LOG_FLAG_RECURSION, default_log_func, NULL);
+		handler_id[3] = g_log_set_handler
+			("Sylpheed", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
+			 | G_LOG_FLAG_RECURSION, default_log_func, NULL);
+	} else {
+		g_log_remove_handler("GLib", handler_id[0]);
+		g_log_remove_handler("Gtk", handler_id[1]);
+		g_log_remove_handler("LibSylph", handler_id[2]);
+		g_log_remove_handler("Sylpheed", handler_id[3]);
+		handler_id[0] = 0;
+		handler_id[1] = 0;
+		handler_id[2] = 0;
+		handler_id[3] = 0;
+	}
 #endif
 }
 

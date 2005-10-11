@@ -476,6 +476,9 @@ void set_log_show_status_func	(LogFunc	 status_func);
 void debug_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void status_print	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 
+void log_write		(const gchar	*str,
+			 const gchar	*prefix);
+
 void log_print		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_message	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_warning	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);

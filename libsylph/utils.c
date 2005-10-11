@@ -3402,6 +3402,23 @@ void status_print(const gchar *format, ...)
 
 #define TIME_LEN	11
 
+void log_write(const gchar *str, const gchar *prefix)
+{
+	if (log_fp) {
+		gchar buf[TIME_LEN + 1];
+		time_t t;
+
+		time(&t);
+		strftime(buf, TIME_LEN + 1, "[%H:%M:%S] ", localtime(&t));
+
+		fputs(buf, log_fp);
+		if (prefix)
+			fputs(prefix, log_fp);
+		fputs(str, log_fp);
+		fflush(log_fp);
+	}
+}
+
 void log_print(const gchar *format, ...)
 {
 	va_list args;
