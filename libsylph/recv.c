@@ -45,18 +45,20 @@ gchar *recv_bytes(SockInfo *sock, glong size)
 	if (size == 0)
 		return NULL;
 
-	buf = g_malloc(size);
+	buf = g_malloc(size + 1);
 
 	do {
 		gint read_count;
 
 		read_count = sock_read(sock, buf + count, size - count);
-		if (read_count < 0) {
+		if (read_count <= 0) {
 			g_free(buf);
 			return NULL;
 		}
 		count += read_count;
 	} while (count < size);
+
+	buf[size] = '\0';
 
 	return buf;
 }

@@ -3756,6 +3756,10 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 				ok = IMAP_SOCKET;
 				break;
 			}
+			if (memchr(literal, '\n', len))
+				log_print("IMAP4< (literal: %d bytes)\n", len);
+			else
+				log_print("IMAP4< %s\n", literal);
 
 			g_string_append(str, "\r\n");
 			g_string_append_len(str, literal, len);
