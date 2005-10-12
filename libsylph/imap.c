@@ -3744,7 +3744,7 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 			/* literal */
 			p = strchr_cpy(p + 1, '}', obuf, sizeof(obuf));
 			len = atoi(obuf);
-			if (len < 0 || p != '\0') {
+			if (len < 0 || p == NULL || *p != '\0') {
 				g_free(buf);
 				ok = IMAP_ERROR;
 				break;
