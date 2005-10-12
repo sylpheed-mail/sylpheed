@@ -64,6 +64,9 @@ static gint alertpanel_deleted		(GtkWidget		*widget,
 static gboolean alertpanel_close	(GtkWidget		*widget,
 					 GdkEventAny		*event,
 					 gpointer		 data);
+static gint alertpanel_focus_out	(GtkWidget		*widget,
+					 GdkEventFocus		*event,
+					 gpointer		 data);
 
 AlertValue alertpanel_full(const gchar *title, const gchar *message,
 			   AlertType type, AlertValue default_value,
@@ -216,6 +219,8 @@ static void alertpanel_create(const gchar *title,
 	g_signal_connect(G_OBJECT(dialog), "key_press_event",
 			 G_CALLBACK(alertpanel_close),
 			 (gpointer)G_ALERTCANCEL);
+	g_signal_connect(G_OBJECT(dialog), "focus_out_event",
+			 G_CALLBACK(alertpanel_focus_out), NULL);
 
 	/* for title icon, label and message */
 	hbox = gtk_hbox_new(FALSE, 12);
@@ -365,5 +370,15 @@ static gboolean alertpanel_close(GtkWidget *widget, GdkEventAny *event,
 			return FALSE;
 
 	value = (value & ~G_ALERT_VALUE_MASK) | (AlertValue)data;
+	return FALSE;
+}
+
+
+static gint alertpanel_focus_out(GtkWidget *widget, GdkEventFocus *event,
+				 gpointer data)
+{
+#ifdef G_OS_WIN32
+	gtk_window_present(GTK_WINDOW(widget));
+#endif
 	return FALSE;
 }
