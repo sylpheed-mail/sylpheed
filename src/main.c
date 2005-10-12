@@ -644,8 +644,12 @@ static void default_log_func(const gchar *log_domain, GLogLevelFlags log_level,
 		level = LOG_ERROR;
 		break;
 	case G_LOG_LEVEL_CRITICAL:
-	case G_LOG_LEVEL_WARNING:
 		prefix = "CRITICAL";
+		file_prefix = "** ";
+		level = LOG_WARN;
+		break;
+	case G_LOG_LEVEL_WARNING:
+		prefix = "WARNING";
 		file_prefix = "** ";
 		level = LOG_WARN;
 		break;
