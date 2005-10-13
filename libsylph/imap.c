@@ -3740,7 +3740,7 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 	while ((ok = imap_cmd_gen_recv(session, &buf)) == IMAP_SUCCESS) {
 		g_string_append(str, buf);
 
-		if ((p = strrchr(buf, '{'))) {
+		if ((p = strrchr_with_skip_quote(buf, '"', '{'))) {
 			/* literal */
 			p = strchr_cpy(p + 1, '}', obuf, sizeof(obuf));
 			len = atoi(obuf);
