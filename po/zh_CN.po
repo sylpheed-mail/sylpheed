@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-13 15:52+0900\n"
+"POT-Creation-Date: 2005-10-13 18:12+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -607,32 +607,32 @@ msgstr "  标题：%s\n"
 msgid "  Issuer: %s\n"
 msgstr "  签发者：%s\n"
 
-#: libsylph/utils.c:274
+#: libsylph/utils.c:275
 #, c-format
 msgid "%dB"
 msgstr "%dB"
 
-#: libsylph/utils.c:276
+#: libsylph/utils.c:277
 #, c-format
 msgid "%.1fKB"
 msgstr "%.1fKB"
 
-#: libsylph/utils.c:278
+#: libsylph/utils.c:279
 #, c-format
 msgid "%.2fMB"
 msgstr "%.2fMB"
 
-#: libsylph/utils.c:280
+#: libsylph/utils.c:281
 #, c-format
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "无法改变文件属性\n"
 
-#: libsylph/utils.c:2282 libsylph/utils.c:2406
+#: libsylph/utils.c:2300 libsylph/utils.c:2424
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "写入 %s 时失败。\n"
@@ -715,7 +715,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
+#: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "名称"
@@ -1557,7 +1557,7 @@ msgstr "无法读取 %s。"
 msgid "Message: %s"
 msgstr "邮件：%s"
 
-#: src/compose.c:1921 src/mimeview.c:561
+#: src/compose.c:1921 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "无法获得分块邮件的分块。"
 
@@ -1685,7 +1685,7 @@ msgid "MIME type"
 msgstr "MIME 类型"
 
 #. S_COL_DATE
-#: src/compose.c:4092 src/mimeview.c:193 src/prefs_filter_edit.c:585
+#: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
 msgid "Size"
 msgstr "大小"
@@ -2309,12 +2309,12 @@ msgstr "正在设置文件夹信息...\n"
 msgid "Setting folder info..."
 msgstr "正在设置文件夹信息..."
 
-#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:81
+#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "正在扫描文件夹 %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:86
+#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "正在扫描文件夹 %s ..."
@@ -3529,24 +3529,25 @@ msgid "Add mailbox"
 msgstr "添加邮箱"
 
 #: src/mainwindow.c:1594
+#, fuzzy
 msgid ""
-"Input the location of mailbox.\n"
+"Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
 "输入邮箱位置。\n"
 "如果指定了已存在的邮箱，它将被自动扫描。"
 
-#: src/mainwindow.c:1600
+#: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "邮箱“%s”已经存在。"
 
-#: src/mainwindow.c:1605 src/setup.c:57
+#: src/mainwindow.c:1605 src/setup.c:56
 msgid "Mailbox"
 msgstr "邮箱"
 
-#: src/mainwindow.c:1611 src/setup.c:63
+#: src/mainwindow.c:1611 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3777,60 +3778,60 @@ msgstr ""
 "打印命令行无效：\n"
 "“%s”"
 
-#: src/mimeview.c:124
+#: src/mimeview.c:128
 msgid "/_Open"
 msgstr "/打开(_O)"
 
-#: src/mimeview.c:125
+#: src/mimeview.c:129
 msgid "/Open _with..."
 msgstr "/打开方式(_W)..."
 
-#: src/mimeview.c:126
+#: src/mimeview.c:130
 msgid "/_Display as text"
 msgstr "/作为文本显示(_D)"
 
-#: src/mimeview.c:127
+#: src/mimeview.c:131
 msgid "/_Save as..."
 msgstr "/另存为(_S)..."
 
-#: src/mimeview.c:128
+#: src/mimeview.c:132
 #, fuzzy
 msgid "/Save _all..."
 msgstr "/另存为(_S)..."
 
-#: src/mimeview.c:131
+#: src/mimeview.c:135
 msgid "/_Check signature"
 msgstr "/检查签名(_C)"
 
-#: src/mimeview.c:156
+#: src/mimeview.c:160
 msgid "Creating MIME view...\n"
 msgstr "正在创建MIME视图...\n"
 
-#: src/mimeview.c:185
+#: src/mimeview.c:189
 msgid "MIME Type"
 msgstr "MIME类型"
 
-#: src/mimeview.c:298
+#: src/mimeview.c:302
 msgid "Select \"Check signature\" to check"
 msgstr "选择“检查签名”来检查"
 
-#: src/mimeview.c:619
+#: src/mimeview.c:623
 msgid "Select an action for the attached file:\n"
 msgstr "选择对附件文件的操作：\n"
 
-#: src/mimeview.c:640
+#: src/mimeview.c:644
 msgid "Open _with..."
 msgstr "打开方式(_W)..."
 
-#: src/mimeview.c:644
+#: src/mimeview.c:648
 msgid "_Display as text"
 msgstr "作为文本显示(_D)"
 
-#: src/mimeview.c:648
+#: src/mimeview.c:652
 msgid "_Save as..."
 msgstr "另存为(_S)..."
 
-#: src/mimeview.c:694
+#: src/mimeview.c:698
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
@@ -3838,25 +3839,25 @@ msgstr ""
 "该签名还没有被检查。\n"
 "\n"
 
-#: src/mimeview.c:699
+#: src/mimeview.c:703
 msgid "_Check signature"
 msgstr "检查签名(_C)"
 
-#: src/mimeview.c:955 src/mimeview.c:1022 src/mimeview.c:1055
-#: src/mimeview.c:1078
+#: src/mimeview.c:959 src/mimeview.c:1026 src/mimeview.c:1059
+#: src/mimeview.c:1082
 msgid "Can't save the part of multipart message."
 msgstr "无法保存分块邮件的分块。"
 
-#: src/mimeview.c:1035
+#: src/mimeview.c:1039
 #, fuzzy
 msgid "Can't save the attachments."
 msgstr "无法保存文件“%s”'。"
 
-#: src/mimeview.c:1088
+#: src/mimeview.c:1092
 msgid "Open with"
 msgstr "打开方式"
 
-#: src/mimeview.c:1089
+#: src/mimeview.c:1093
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3865,7 +3866,15 @@ msgstr ""
 "输入打开文件的命令行：\n"
 "(“%s”将被替换为文件名)"
 
-#: src/mimeview.c:1144
+#: src/mimeview.c:1136
+msgid "Opening executable file"
+msgstr ""
+
+#: src/mimeview.c:1137
+msgid "This is an executable file. Do you really want to launch it?"
+msgstr ""
+
+#: src/mimeview.c:1173
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "MIME察看器命令行无效：“%s”"
@@ -5774,15 +5783,13 @@ msgid "Mailbox setting"
 msgstr "信箱设置"
 
 #: src/setup.c:44
+#, fuzzy
 msgid ""
-"First, you have to set the location of mailbox.\n"
-"You can use existing mailbox in MH format\n"
-"if you have the one.\n"
-"If you're not sure, just select OK."
+"Specify the location of mailbox.\n"
+"If you are unsure, just select OK."
 msgstr ""
-"首先，您必须指定信箱的位置。\n"
-"如果您已经有一个 MH 格式的信箱，您可以使用它。\n"
-"假如您无法肯定，那么单击“确定”。"
+"输入邮箱位置。\n"
+"如果指定了已存在的邮箱，它将被自动扫描。"
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -6335,6 +6342,16 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "First, you have to set the location of mailbox.\n"
+#~ "You can use existing mailbox in MH format\n"
+#~ "if you have the one.\n"
+#~ "If you're not sure, just select OK."
+#~ msgstr ""
+#~ "首先，您必须指定信箱的位置。\n"
+#~ "如果您已经有一个 MH 格式的信箱，您可以使用它。\n"
+#~ "假如您无法肯定，那么单击“确定”。"
 
 #~ msgid ""
 #~ "Select the preset of key bindings.\n"

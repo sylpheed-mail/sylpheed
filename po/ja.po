@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-13 15:52+0900\n"
+"POT-Creation-Date: 2005-10-13 18:12+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -609,32 +609,32 @@ msgstr "  Subject: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
 
-#: libsylph/utils.c:274
+#: libsylph/utils.c:275
 #, c-format
 msgid "%dB"
 msgstr "%dB"
 
-#: libsylph/utils.c:276
+#: libsylph/utils.c:277
 #, c-format
 msgid "%.1fKB"
 msgstr "%.1fKB"
 
-#: libsylph/utils.c:278
+#: libsylph/utils.c:279
 #, c-format
 msgid "%.2fMB"
 msgstr "%.2fMB"
 
-#: libsylph/utils.c:280
+#: libsylph/utils.c:281
 #, c-format
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "ファイルモードを変更できません\n"
 
-#: libsylph/utils.c:2282 libsylph/utils.c:2406
+#: libsylph/utils.c:2300 libsylph/utils.c:2424
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s への書き込みに失敗しました。\n"
@@ -721,7 +721,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
+#: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "名前"
@@ -1564,7 +1564,7 @@ msgstr "%s を読み込めません。"
 msgid "Message: %s"
 msgstr "メッセージ: %s"
 
-#: src/compose.c:1921 src/mimeview.c:561
+#: src/compose.c:1921 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
@@ -1693,7 +1693,7 @@ msgid "MIME type"
 msgstr "MIME タイプ"
 
 #. S_COL_DATE
-#: src/compose.c:4092 src/mimeview.c:193 src/prefs_filter_edit.c:585
+#: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
 msgid "Size"
 msgstr "サイズ"
@@ -2311,12 +2311,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:81
+#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:86
+#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -3535,23 +3535,23 @@ msgstr "メールボックスを追加"
 
 #: src/mainwindow.c:1594
 msgid ""
-"Input the location of mailbox.\n"
+"Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
-"メールボックスの位置を入力してください。\n"
-"既存のメールボックスを指定すると自動的にスキャンします。"
+"メールボックスの場所を入力してください。\n"
+"既存のメールボックスを指定するとその内容を自動的にスキャンします。"
 
-#: src/mainwindow.c:1600
+#: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "メールボックス `%s' はすでに存在します。"
 
-#: src/mainwindow.c:1605 src/setup.c:57
+#: src/mainwindow.c:1605 src/setup.c:56
 msgid "Mailbox"
 msgstr "メール箱"
 
-#: src/mainwindow.c:1611 src/setup.c:63
+#: src/mainwindow.c:1611 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3781,59 +3781,59 @@ msgstr ""
 "印刷のコマンドラインが無効です:\n"
 "`%s'"
 
-#: src/mimeview.c:124
+#: src/mimeview.c:128
 msgid "/_Open"
 msgstr "/開く(_O)"
 
-#: src/mimeview.c:125
+#: src/mimeview.c:129
 msgid "/Open _with..."
 msgstr "/アプリケーションから開く(_W)..."
 
-#: src/mimeview.c:126
+#: src/mimeview.c:130
 msgid "/_Display as text"
 msgstr "/テキストとして表示(_D)"
 
-#: src/mimeview.c:127
+#: src/mimeview.c:131
 msgid "/_Save as..."
 msgstr "/名前を付けて保存(_S)..."
 
-#: src/mimeview.c:128
+#: src/mimeview.c:132
 msgid "/Save _all..."
 msgstr "/すべて保存(_A)..."
 
-#: src/mimeview.c:131
+#: src/mimeview.c:135
 msgid "/_Check signature"
 msgstr "/署名を検証(_C)"
 
-#: src/mimeview.c:156
+#: src/mimeview.c:160
 msgid "Creating MIME view...\n"
 msgstr "MIME ビューを作成中...\n"
 
-#: src/mimeview.c:185
+#: src/mimeview.c:189
 msgid "MIME Type"
 msgstr "MIME タイプ"
 
-#: src/mimeview.c:298
+#: src/mimeview.c:302
 msgid "Select \"Check signature\" to check"
 msgstr "検証するには「署名を検証」を選択してください"
 
-#: src/mimeview.c:619
+#: src/mimeview.c:623
 msgid "Select an action for the attached file:\n"
 msgstr "添付ファイルに対する操作を選択してください:\n"
 
-#: src/mimeview.c:640
+#: src/mimeview.c:644
 msgid "Open _with..."
 msgstr "アプリケーションから開く(_W)..."
 
-#: src/mimeview.c:644
+#: src/mimeview.c:648
 msgid "_Display as text"
 msgstr "テキストとして表示(_D)"
 
-#: src/mimeview.c:648
+#: src/mimeview.c:652
 msgid "_Save as..."
 msgstr "名前を付けて保存(_S)..."
 
-#: src/mimeview.c:694
+#: src/mimeview.c:698
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
@@ -3841,24 +3841,24 @@ msgstr ""
 "この署名はまだ検証されていません。\n"
 "\n"
 
-#: src/mimeview.c:699
+#: src/mimeview.c:703
 msgid "_Check signature"
 msgstr "署名を検証(_C)"
 
-#: src/mimeview.c:955 src/mimeview.c:1022 src/mimeview.c:1055
-#: src/mimeview.c:1078
+#: src/mimeview.c:959 src/mimeview.c:1026 src/mimeview.c:1059
+#: src/mimeview.c:1082
 msgid "Can't save the part of multipart message."
 msgstr "マルチパートメッセージのパートを保存できません。"
 
-#: src/mimeview.c:1035
+#: src/mimeview.c:1039
 msgid "Can't save the attachments."
 msgstr "添付ファイルを保存できません。"
 
-#: src/mimeview.c:1088
+#: src/mimeview.c:1092
 msgid "Open with"
 msgstr "アプリケーションから開く"
 
-#: src/mimeview.c:1089
+#: src/mimeview.c:1093
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3867,7 +3867,15 @@ msgstr ""
 "ファイルを開くコマンドを入力してください:\n"
 "(`%s' はファイル名で置き換えられます)"
 
-#: src/mimeview.c:1144
+#: src/mimeview.c:1136
+msgid "Opening executable file"
+msgstr "実行可能ファイルを開こうとしています"
+
+#: src/mimeview.c:1137
+msgid "This is an executable file. Do you really want to launch it?"
+msgstr "これは実行可能ファイルです。本当に起動しますか?"
+
+#: src/mimeview.c:1173
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "MIME ビューアのコマンドラインが無効です: `%s'"
@@ -5760,15 +5768,11 @@ msgstr "メールボックスの設定"
 
 #: src/setup.c:44
 msgid ""
-"First, you have to set the location of mailbox.\n"
-"You can use existing mailbox in MH format\n"
-"if you have the one.\n"
-"If you're not sure, just select OK."
+"Specify the location of mailbox.\n"
+"If you are unsure, just select OK."
 msgstr ""
-"最初にメールボックスの位置を指定する必要があります。\n"
-"MHフォーマットのメールボックスが既にある場合は、\n"
-"それを使用することが出来ます。\n"
-"よく分からない場合は、そのままOKを選択してください。"
+"メールボックスの場所を指定してください。\n"
+"よく分からない場合はそのままOKを選択してください。"
 
 #: src/sigstatus.c:116
 msgid "Signature check result"

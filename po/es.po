@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-13 15:52+0900\n"
+"POT-Creation-Date: 2005-10-13 18:12+0900\n"
 "PO-Revision-Date: 2005-07-08 21:08+0100\n"
 "Last-Translator: Ricardo Mones <mones@aic.uniovi.es>\n"
 "Language-Team: Ricardo Mones <mones@aic.uniovi.es>\n"
@@ -610,32 +610,32 @@ msgstr "  Asunto: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Generador: %s\n"
 
-#: libsylph/utils.c:274
+#: libsylph/utils.c:275
 #, c-format
 msgid "%dB"
 msgstr "%dB"
 
-#: libsylph/utils.c:276
+#: libsylph/utils.c:277
 #, c-format
 msgid "%.1fKB"
 msgstr "%.1fKB"
 
-#: libsylph/utils.c:278
+#: libsylph/utils.c:279
 #, c-format
 msgid "%.2fMB"
 msgstr "%.2fMB"
 
-#: libsylph/utils.c:280
+#: libsylph/utils.c:281
 #, c-format
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "no se pueden cambiar los permisos de archivo\n"
 
-#: libsylph/utils.c:2282 libsylph/utils.c:2406
+#: libsylph/utils.c:2300 libsylph/utils.c:2424
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "fallo escribiendo en %s.\n"
@@ -722,7 +722,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
+#: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Nombre"
@@ -1567,7 +1567,7 @@ msgstr "No se puede leer %s."
 msgid "Message: %s"
 msgstr "Mensaje: %s"
 
-#: src/compose.c:1921 src/mimeview.c:561
+#: src/compose.c:1921 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "No se puede obtener la parte del mensaje multipartes."
 
@@ -1698,7 +1698,7 @@ msgid "MIME type"
 msgstr "Tipo MIME"
 
 #. S_COL_DATE
-#: src/compose.c:4092 src/mimeview.c:193 src/prefs_filter_edit.c:585
+#: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
 msgid "Size"
 msgstr "Tamaño"
@@ -2318,12 +2318,12 @@ msgstr "Estableciendo información de carpeta...\n"
 msgid "Setting folder info..."
 msgstr "Estableciendo información de carpeta..."
 
-#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:81
+#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Revisando carpeta %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:86
+#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Revisando carpeta %s ..."
@@ -3544,8 +3544,9 @@ msgid "Add mailbox"
 msgstr "Añadir buzón"
 
 #: src/mainwindow.c:1594
+#, fuzzy
 msgid ""
-"Input the location of mailbox.\n"
+"Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
@@ -3553,16 +3554,16 @@ msgstr ""
 "Si el buzón especificado ya existe será\n"
 "escaneado automáticamente."
 
-#: src/mainwindow.c:1600
+#: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "El buzón «%s» ya existe."
 
-#: src/mainwindow.c:1605 src/setup.c:57
+#: src/mainwindow.c:1605 src/setup.c:56
 msgid "Mailbox"
 msgstr "Correo"
 
-#: src/mainwindow.c:1611 src/setup.c:63
+#: src/mainwindow.c:1611 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3793,60 +3794,60 @@ msgstr ""
 "La orden de impresión es inválida:\n"
 "«%s»"
 
-#: src/mimeview.c:124
+#: src/mimeview.c:128
 msgid "/_Open"
 msgstr "/_Abrir"
 
-#: src/mimeview.c:125
+#: src/mimeview.c:129
 msgid "/Open _with..."
 msgstr "/Abrir _con..."
 
-#: src/mimeview.c:126
+#: src/mimeview.c:130
 msgid "/_Display as text"
 msgstr "/_Ver como texto"
 
-#: src/mimeview.c:127
+#: src/mimeview.c:131
 msgid "/_Save as..."
 msgstr "/_Guardar como..."
 
-#: src/mimeview.c:128
+#: src/mimeview.c:132
 #, fuzzy
 msgid "/Save _all..."
 msgstr "/_Guardar como..."
 
-#: src/mimeview.c:131
+#: src/mimeview.c:135
 msgid "/_Check signature"
 msgstr "/_Verificar firma"
 
-#: src/mimeview.c:156
+#: src/mimeview.c:160
 msgid "Creating MIME view...\n"
 msgstr "Creando visor de MIME...\n"
 
-#: src/mimeview.c:185
+#: src/mimeview.c:189
 msgid "MIME Type"
 msgstr "Tipo MIME"
 
-#: src/mimeview.c:298
+#: src/mimeview.c:302
 msgid "Select \"Check signature\" to check"
 msgstr "Seleccione «Verificar firma» para verificar"
 
-#: src/mimeview.c:619
+#: src/mimeview.c:623
 msgid "Select an action for the attached file:\n"
 msgstr "Seleccione una acción para el fichero adjunto:\n"
 
-#: src/mimeview.c:640
+#: src/mimeview.c:644
 msgid "Open _with..."
 msgstr "Abrir _con..."
 
-#: src/mimeview.c:644
+#: src/mimeview.c:648
 msgid "_Display as text"
 msgstr "_Ver como texto"
 
-#: src/mimeview.c:648
+#: src/mimeview.c:652
 msgid "_Save as..."
 msgstr "_Guardar como..."
 
-#: src/mimeview.c:694
+#: src/mimeview.c:698
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
@@ -3854,25 +3855,25 @@ msgstr ""
 "Esta firma aún no ha sido verificada.\n"
 "\n"
 
-#: src/mimeview.c:699
+#: src/mimeview.c:703
 msgid "_Check signature"
 msgstr "_Verificar firma"
 
-#: src/mimeview.c:955 src/mimeview.c:1022 src/mimeview.c:1055
-#: src/mimeview.c:1078
+#: src/mimeview.c:959 src/mimeview.c:1026 src/mimeview.c:1059
+#: src/mimeview.c:1082
 msgid "Can't save the part of multipart message."
 msgstr "No se puede guardar la parte del mensaje multipartes."
 
-#: src/mimeview.c:1035
+#: src/mimeview.c:1039
 #, fuzzy
 msgid "Can't save the attachments."
 msgstr "No puedo guardar el fichero «%s»."
 
-#: src/mimeview.c:1088
+#: src/mimeview.c:1092
 msgid "Open with"
 msgstr "Abrir con"
 
-#: src/mimeview.c:1089
+#: src/mimeview.c:1093
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3881,7 +3882,15 @@ msgstr ""
 "Teclee la orden para abrir el fichero:\n"
 "(«%s» será sustituido por el fichero)"
 
-#: src/mimeview.c:1144
+#: src/mimeview.c:1136
+msgid "Opening executable file"
+msgstr ""
+
+#: src/mimeview.c:1137
+msgid "This is an executable file. Do you really want to launch it?"
+msgstr ""
+
+#: src/mimeview.c:1173
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "La orden del visualizador MIME es inválida: «%s»"
@@ -5780,16 +5789,14 @@ msgid "Mailbox setting"
 msgstr "Configurar buzón"
 
 #: src/setup.c:44
+#, fuzzy
 msgid ""
-"First, you have to set the location of mailbox.\n"
-"You can use existing mailbox in MH format\n"
-"if you have the one.\n"
-"If you're not sure, just select OK."
+"Specify the location of mailbox.\n"
+"If you are unsure, just select OK."
 msgstr ""
-"Primero establezca la localización de su buzón.\n"
-"Puede utilizar un buzón existente en formato MH\n"
-"si ya lo tiene.\n"
-"Si no está seguro, seleccione Aceptar."
+"Introduzca la localización del buzón.\n"
+"Si el buzón especificado ya existe será\n"
+"escaneado automáticamente."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -6341,6 +6348,17 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr "Aviso de URL falsa"
+
+#~ msgid ""
+#~ "First, you have to set the location of mailbox.\n"
+#~ "You can use existing mailbox in MH format\n"
+#~ "if you have the one.\n"
+#~ "If you're not sure, just select OK."
+#~ msgstr ""
+#~ "Primero establezca la localización de su buzón.\n"
+#~ "Puede utilizar un buzón existente en formato MH\n"
+#~ "si ya lo tiene.\n"
+#~ "Si no está seguro, seleccione Aceptar."
 
 #~ msgid ""
 #~ "Select the preset of key bindings.\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-13 15:52+0900\n"
+"POT-Creation-Date: 2005-10-13 18:12+0900\n"
 "PO-Revision-Date: 2004-01-22 17:46+0100\n"
 "Last-Translator: Andrej Kacian <andrej@kacian.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -608,32 +608,32 @@ msgstr "  Predmet: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Vydavateľ: %s\n"
 
-#: libsylph/utils.c:274
+#: libsylph/utils.c:275
 #, c-format
 msgid "%dB"
 msgstr "%dB"
 
-#: libsylph/utils.c:276
+#: libsylph/utils.c:277
 #, c-format
 msgid "%.1fKB"
 msgstr "%.1fKB"
 
-#: libsylph/utils.c:278
+#: libsylph/utils.c:279
 #, c-format
 msgid "%.2fMB"
 msgstr "%.2fMB"
 
-#: libsylph/utils.c:280
+#: libsylph/utils.c:281
 #, c-format
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "nedá sa zmeniť mód súboru\n"
 
-#: libsylph/utils.c:2282 libsylph/utils.c:2406
+#: libsylph/utils.c:2300 libsylph/utils.c:2424
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "nepodaril sa zápis do %s.\n"
@@ -718,7 +718,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
+#: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Meno"
@@ -1600,7 +1600,7 @@ msgstr "Nedá sa čítať %s."
 msgid "Message: %s"
 msgstr "Správa: %s"
 
-#: src/compose.c:1921 src/mimeview.c:561
+#: src/compose.c:1921 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "Nedá sa získať časť viacdielnej správy."
 
@@ -1729,7 +1729,7 @@ msgid "MIME type"
 msgstr "MIME typ"
 
 #. S_COL_DATE
-#: src/compose.c:4092 src/mimeview.c:193 src/prefs_filter_edit.c:585
+#: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
 msgid "Size"
 msgstr "Veľkosť"
@@ -2358,12 +2358,12 @@ msgstr "Nastavujem informácie o priečinku...\n"
 msgid "Setting folder info..."
 msgstr "Nastavujem informácie o priečinku..."
 
-#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:81
+#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Prehľadávam priečinok %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:86
+#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Prehľadávam priečinok %s ..."
@@ -3599,8 +3599,9 @@ msgid "Add mailbox"
 msgstr "Pridať mailbox"
 
 #: src/mainwindow.c:1594
+#, fuzzy
 msgid ""
-"Input the location of mailbox.\n"
+"Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
@@ -3608,16 +3609,16 @@ msgstr ""
 "Ak zadáte existujúci mailbox, bude\n"
 "automaticky prehľadaný."
 
-#: src/mainwindow.c:1600
+#: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "Mailbox '%s' už existuje."
 
-#: src/mainwindow.c:1605 src/setup.c:57
+#: src/mainwindow.c:1605 src/setup.c:56
 msgid "Mailbox"
 msgstr "Mailbox"
 
-#: src/mainwindow.c:1611 src/setup.c:63
+#: src/mainwindow.c:1611 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3852,89 +3853,89 @@ msgstr ""
 "Príkazový riadok tlače je neplatný:\n"
 "'%s'"
 
-#: src/mimeview.c:124
+#: src/mimeview.c:128
 msgid "/_Open"
 msgstr "/_Otvoriť"
 
-#: src/mimeview.c:125
+#: src/mimeview.c:129
 msgid "/Open _with..."
 msgstr "/O_tvoriť čím..."
 
-#: src/mimeview.c:126
+#: src/mimeview.c:130
 msgid "/_Display as text"
 msgstr "/_Zobraziť ako text"
 
-#: src/mimeview.c:127
+#: src/mimeview.c:131
 msgid "/_Save as..."
 msgstr "/_Uložiť ako..."
 
-#: src/mimeview.c:128
+#: src/mimeview.c:132
 #, fuzzy
 msgid "/Save _all..."
 msgstr "/_Uložiť ako..."
 
-#: src/mimeview.c:131
+#: src/mimeview.c:135
 msgid "/_Check signature"
 msgstr "/Overiť _podpis"
 
-#: src/mimeview.c:156
+#: src/mimeview.c:160
 msgid "Creating MIME view...\n"
 msgstr "Vytváram zobrazenie MIME...\n"
 
-#: src/mimeview.c:185
+#: src/mimeview.c:189
 msgid "MIME Type"
 msgstr "MIME typ"
 
-#: src/mimeview.c:298
+#: src/mimeview.c:302
 msgid "Select \"Check signature\" to check"
 msgstr "Zvoľte \"Overiť podpis\" pre overenie"
 
-#: src/mimeview.c:619
+#: src/mimeview.c:623
 msgid "Select an action for the attached file:\n"
 msgstr ""
 
-#: src/mimeview.c:640
+#: src/mimeview.c:644
 #, fuzzy
 msgid "Open _with..."
 msgstr "/O_tvoriť čím..."
 
-#: src/mimeview.c:644
+#: src/mimeview.c:648
 #, fuzzy
 msgid "_Display as text"
 msgstr "/_Zobraziť ako text"
 
-#: src/mimeview.c:648
+#: src/mimeview.c:652
 #, fuzzy
 msgid "_Save as..."
 msgstr "/_Uložiť ako..."
 
-#: src/mimeview.c:694
+#: src/mimeview.c:698
 #, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
 msgstr "Tento podpis ešte nebol overený.\n"
 
-#: src/mimeview.c:699
+#: src/mimeview.c:703
 #, fuzzy
 msgid "_Check signature"
 msgstr "/Overiť _podpis"
 
-#: src/mimeview.c:955 src/mimeview.c:1022 src/mimeview.c:1055
-#: src/mimeview.c:1078
+#: src/mimeview.c:959 src/mimeview.c:1026 src/mimeview.c:1059
+#: src/mimeview.c:1082
 msgid "Can't save the part of multipart message."
 msgstr "Nemôžem uložiť časť viacdielnej správy."
 
-#: src/mimeview.c:1035
+#: src/mimeview.c:1039
 #, fuzzy
 msgid "Can't save the attachments."
 msgstr "Nemôžem uložiť súbor '%s'."
 
-#: src/mimeview.c:1088
+#: src/mimeview.c:1092
 msgid "Open with"
 msgstr "Otvoriť čím"
 
-#: src/mimeview.c:1089
+#: src/mimeview.c:1093
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3943,7 +3944,15 @@ msgstr ""
 "Zadajte príkazový riadok pre otvorenie súboru:\n"
 "('%s' bude nahradené názvom súboru)"
 
-#: src/mimeview.c:1144
+#: src/mimeview.c:1136
+msgid "Opening executable file"
+msgstr ""
+
+#: src/mimeview.c:1137
+msgid "This is an executable file. Do you really want to launch it?"
+msgstr ""
+
+#: src/mimeview.c:1173
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "Príkazový riadok prehliadača MIME je neplatný: '%s'"
@@ -5891,16 +5900,14 @@ msgid "Mailbox setting"
 msgstr "Nastavenie mailboxu"
 
 #: src/setup.c:44
+#, fuzzy
 msgid ""
-"First, you have to set the location of mailbox.\n"
-"You can use existing mailbox in MH format\n"
-"if you have the one.\n"
-"If you're not sure, just select OK."
+"Specify the location of mailbox.\n"
+"If you are unsure, just select OK."
 msgstr ""
-"Najskôr musíte nastaviť umiestnenie mailboxu.\n"
-"Môžete použiť existujúci mailbox vo formáte MH,\n"
-"ak nejaký máte.\n"
-"Ak ste si nie istý, zvoľte len OK."
+"Zadajte umiestnenie mailboxu.\n"
+"Ak zadáte existujúci mailbox, bude\n"
+"automaticky prehľadaný."
 
 #: src/sigstatus.c:116
 #, fuzzy
@@ -6456,6 +6463,17 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "First, you have to set the location of mailbox.\n"
+#~ "You can use existing mailbox in MH format\n"
+#~ "if you have the one.\n"
+#~ "If you're not sure, just select OK."
+#~ msgstr ""
+#~ "Najskôr musíte nastaviť umiestnenie mailboxu.\n"
+#~ "Môžete použiť existujúci mailbox vo formáte MH,\n"
+#~ "ak nejaký máte.\n"
+#~ "Ak ste si nie istý, zvoľte len OK."
 
 #~ msgid ""
 #~ "Select the preset of key bindings.\n"

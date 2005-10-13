@@ -1591,7 +1591,7 @@ void main_window_add_mailbox(MainWindow *mainwin)
 	Folder *folder;
 
 	path = input_dialog(_("Add mailbox"),
-			    _("Input the location of mailbox.\n"
+			    _("Specify the location of mailbox.\n"
 			      "If the existing mailbox is specified, it will be\n"
 			      "scanned automatically."),
 			    "Mail");

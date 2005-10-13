@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-13 15:52+0900\n"
+"POT-Creation-Date: 2005-10-13 18:12+0900\n"
 "PO-Revision-Date: 2002-11-29 21:08+0100\n"
 "Last-Translator: garret <garret@garrets.tk>\n"
 "Language-Team: Serbian\n"
@@ -615,32 +615,32 @@ msgstr "  Tema: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Izdavač: %s\n"
 
-#: libsylph/utils.c:274
+#: libsylph/utils.c:275
 #, c-format
 msgid "%dB"
 msgstr ""
 
-#: libsylph/utils.c:276
+#: libsylph/utils.c:277
 #, c-format
 msgid "%.1fKB"
 msgstr ""
 
-#: libsylph/utils.c:278
+#: libsylph/utils.c:279
 #, c-format
 msgid "%.2fMB"
 msgstr ""
 
-#: libsylph/utils.c:280
+#: libsylph/utils.c:281
 #, c-format
 msgid "%.2fGB"
 msgstr ""
 
-#: libsylph/utils.c:2275 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "ne mogu promeniti atribut datoteke\n"
 
-#: libsylph/utils.c:2282 libsylph/utils.c:2406
+#: libsylph/utils.c:2300 libsylph/utils.c:2424
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "pisanje u %s nije uspelo.\n"
@@ -726,7 +726,7 @@ msgstr ""
 #: src/compose.c:4102 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:202 src/prefs_filter.c:259 src/prefs_folder_item.c:173
+#: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:173
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Ime"
@@ -1600,7 +1600,7 @@ msgstr "Ne mogu pročitati %s."
 msgid "Message: %s"
 msgstr "Poruka: %s"
 
-#: src/compose.c:1921 src/mimeview.c:561
+#: src/compose.c:1921 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "Ne mogu dobiti deo poruke iz više delova."
 
@@ -1729,7 +1729,7 @@ msgid "MIME type"
 msgstr "MIME tip"
 
 #. S_COL_DATE
-#: src/compose.c:4092 src/mimeview.c:193 src/prefs_filter_edit.c:585
+#: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
 msgid "Size"
 msgstr "Veličina"
@@ -2357,12 +2357,12 @@ msgstr "Postavljam info direktorijuma...\n"
 msgid "Setting folder info..."
 msgstr "Postavljam info direktorijuma..."
 
-#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:81
+#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Pretražujem direktorijume %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:86
+#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Pretražujem direktorijum %s ..."
@@ -3600,8 +3600,9 @@ msgid "Add mailbox"
 msgstr "Dodaj sanduče"
 
 #: src/mainwindow.c:1594
+#, fuzzy
 msgid ""
-"Input the location of mailbox.\n"
+"Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
@@ -3609,16 +3610,16 @@ msgstr ""
 "Ako je unešen postojeće sanduče, automatski\n"
 "će biti pretražen."
 
-#: src/mainwindow.c:1600
+#: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "Sanduče`%s' već postoji."
 
-#: src/mainwindow.c:1605 src/setup.c:57
+#: src/mainwindow.c:1605 src/setup.c:56
 msgid "Mailbox"
 msgstr "Sanduče"
 
-#: src/mainwindow.c:1611 src/setup.c:63
+#: src/mainwindow.c:1611 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3852,89 +3853,89 @@ msgstr ""
 "Naredba za štampanje je pogrešna:\n"
 "`%s'"
 
-#: src/mimeview.c:124
+#: src/mimeview.c:128
 msgid "/_Open"
 msgstr "/_Otvori"
 
-#: src/mimeview.c:125
+#: src/mimeview.c:129
 msgid "/Open _with..."
 msgstr "/Otvoranje _sa..."
 
-#: src/mimeview.c:126
+#: src/mimeview.c:130
 msgid "/_Display as text"
 msgstr "/Prikaži kao _tekst"
 
-#: src/mimeview.c:127
+#: src/mimeview.c:131
 msgid "/_Save as..."
 msgstr "/S_ačuvaj kao"
 
-#: src/mimeview.c:128
+#: src/mimeview.c:132
 #, fuzzy
 msgid "/Save _all..."
 msgstr "/S_ačuvaj kao"
 
-#: src/mimeview.c:131
+#: src/mimeview.c:135
 msgid "/_Check signature"
 msgstr "/Pro_veri potpis"
 
-#: src/mimeview.c:156
+#: src/mimeview.c:160
 msgid "Creating MIME view...\n"
 msgstr "Pravim MIME pregled...\n"
 
-#: src/mimeview.c:185
+#: src/mimeview.c:189
 msgid "MIME Type"
 msgstr "MIME tip"
 
-#: src/mimeview.c:298
+#: src/mimeview.c:302
 msgid "Select \"Check signature\" to check"
 msgstr "Odaberite \"Proveri potpis\" da proverite"
 
-#: src/mimeview.c:619
+#: src/mimeview.c:623
 msgid "Select an action for the attached file:\n"
 msgstr ""
 
-#: src/mimeview.c:640
+#: src/mimeview.c:644
 #, fuzzy
 msgid "Open _with..."
 msgstr "/Otvoranje _sa..."
 
-#: src/mimeview.c:644
+#: src/mimeview.c:648
 #, fuzzy
 msgid "_Display as text"
 msgstr "/Prikaži kao _tekst"
 
-#: src/mimeview.c:648
+#: src/mimeview.c:652
 #, fuzzy
 msgid "_Save as..."
 msgstr "/S_ačuvaj kao"
 
-#: src/mimeview.c:694
+#: src/mimeview.c:698
 #, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
 msgstr "Ovaj potpis još nije proveren.\n"
 
-#: src/mimeview.c:699
+#: src/mimeview.c:703
 #, fuzzy
 msgid "_Check signature"
 msgstr "/Pro_veri potpis"
 
-#: src/mimeview.c:955 src/mimeview.c:1022 src/mimeview.c:1055
-#: src/mimeview.c:1078
+#: src/mimeview.c:959 src/mimeview.c:1026 src/mimeview.c:1059
+#: src/mimeview.c:1082
 msgid "Can't save the part of multipart message."
 msgstr "Ne mogu sačuvati deo višedelne poruke"
 
-#: src/mimeview.c:1035
+#: src/mimeview.c:1039
 #, fuzzy
 msgid "Can't save the attachments."
 msgstr "Ne mogu sačuvati datoteku `%s'."
 
-#: src/mimeview.c:1088
+#: src/mimeview.c:1092
 msgid "Open with"
 msgstr "Otvori sa"
 
-#: src/mimeview.c:1089
+#: src/mimeview.c:1093
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -3943,7 +3944,15 @@ msgstr ""
 "Unesite naredbu za otvaranje datoteke:\n"
 "(`%s' je sinonim za ime datoteke)"
 
-#: src/mimeview.c:1144
+#: src/mimeview.c:1136
+msgid "Opening executable file"
+msgstr ""
+
+#: src/mimeview.c:1137
+msgid "This is an executable file. Do you really want to launch it?"
+msgstr ""
+
+#: src/mimeview.c:1173
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "Naredba MIME nije ispravna: `%s'"
@@ -5891,16 +5900,14 @@ msgid "Mailbox setting"
 msgstr "Podešavanje sandučeta"
 
 #: src/setup.c:44
+#, fuzzy
 msgid ""
-"First, you have to set the location of mailbox.\n"
-"You can use existing mailbox in MH format\n"
-"if you have the one.\n"
-"If you're not sure, just select OK."
+"Specify the location of mailbox.\n"
+"If you are unsure, just select OK."
 msgstr ""
-"Prvo, morate odrediti lokaciju sandučeta.\n"
-"Možete koristiti postojeći u MH fomratu\n"
-"ako imate jedan.\n"
-"Ako niste sigurni, odaberite U redu."
+"Unesite lokaciju sandučeta.\n"
+"Ako je unešen postojeće sanduče, automatski\n"
+"će biti pretražen."
 
 #: src/sigstatus.c:116
 #, fuzzy
@@ -6457,6 +6464,17 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "First, you have to set the location of mailbox.\n"
+#~ "You can use existing mailbox in MH format\n"
+#~ "if you have the one.\n"
+#~ "If you're not sure, just select OK."
+#~ msgstr ""
+#~ "Prvo, morate odrediti lokaciju sandučeta.\n"
+#~ "Možete koristiti postojeći u MH fomratu\n"
+#~ "ako imate jedan.\n"
+#~ "Ako niste sigurni, odaberite U redu."
 
 #~ msgid ""
 #~ "Select the preset of key bindings.\n"

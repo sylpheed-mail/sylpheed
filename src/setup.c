@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999,2000 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,8 @@
 #include "inputdialog.h"
 #include "alertpanel.h"
 #include "mainwindow.h"
+#include "manage_window.h"
 #include "gtkutils.h"
-
-#define SETUP_DIALOG_WIDTH	540
 
 static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data);
 
@@ -39,15 +38,15 @@ void setup(MainWindow *mainwin)
 	gchar *path;
 	Folder *folder;
 
+	manage_window_focus_in(mainwin->window, NULL, NULL);
 	path = input_dialog
 		(_("Mailbox setting"),
-		 _("First, you have to set the location of mailbox.\n"
-		   "You can use existing mailbox in MH format\n"
-		   "if you have the one.\n"
-		   "If you're not sure, just select OK."),
+		 _("Specify the location of mailbox.\n"
+		   "If you are unsure, just select OK."),
 		 "Mail");
 	if (!path) return;
 	if (folder_find_from_path(path)) {
+		alertpanel_error(_("The mailbox `%s' already exists."), path);
 		g_warning("The mailbox already exists.\n");
 		g_free(path);
 		return;
