@@ -1486,12 +1486,10 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 
 	if (folderview->mainwin->lock_count == 0) {
 		new_folder = TRUE;
+		folder_property = TRUE;
 		if (item->parent == NULL) {
 			update_tree = remove_tree = TRUE;
-			if (folder->account)
-				folder_property = TRUE;
 		} else {
-			folder_property = TRUE;
 			if (gtkut_tree_row_reference_equal(folderview->selected,
 							   folderview->opened))
 				search_folder = TRUE;

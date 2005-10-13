@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-12 13:30+0900\n"
+"POT-Creation-Date: 2005-10-13 15:52+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -211,12 +211,12 @@ msgstr "执行IMAP命令时发生错误：EXPUNGE\n"
 msgid "error while imap command: CLOSE\n"
 msgstr "执行IMAP命令时发生错误：CLOSE\n"
 
-#: libsylph/imap.c:3984
+#: libsylph/imap.c:3988
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv 无法转换 UTF-7 到 %s\n"
 
-#: libsylph/imap.c:4014
+#: libsylph/imap.c:4018
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv 无法转换 %s 到 UTF-7\n"
@@ -534,11 +534,11 @@ msgstr "无法得到文本分块\n"
 msgid "Print command line is invalid: `%s'\n"
 msgstr "打印命令行无效：“%s”\n"
 
-#: libsylph/recv.c:137
+#: libsylph/recv.c:139
 msgid "error occurred while retrieving data.\n"
 msgstr "下载数据时发生错误。\n"
 
-#: libsylph/recv.c:179 libsylph/recv.c:211 libsylph/recv.c:226
+#: libsylph/recv.c:181 libsylph/recv.c:213 libsylph/recv.c:228
 msgid "Can't write to file.\n"
 msgstr "无法写入文件。\n"
 
@@ -1017,16 +1017,16 @@ msgstr "添加"
 msgid "Lookup"
 msgstr "查找"
 
-#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:332
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:337
 #: src/prefs_template.c:175 src/summary_search.c:221
 msgid "To:"
 msgstr "收件人："
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:349 src/prefs_template.c:177
+#: src/addressbook.c:650 src/prefs_folder_item.c:354 src/prefs_template.c:177
 msgid "Cc:"
 msgstr "抄送："
 
-#: src/addressbook.c:654 src/prefs_folder_item.c:360
+#: src/addressbook.c:654 src/prefs_folder_item.c:365
 msgid "Bcc:"
 msgstr "密件抄送："
 
@@ -1048,7 +1048,7 @@ msgstr ""
 "您要删除“%s”中的文件夹和所有地址吗？\n"
 "如果仅删除文件夹，地址将被移到上一级文件夹中。"
 
-#: src/addressbook.c:1674 src/folderview.c:2172
+#: src/addressbook.c:1674 src/folderview.c:2170
 msgid "Delete folder"
 msgstr "删除文件夹"
 
@@ -1197,23 +1197,23 @@ msgstr "公用地址"
 msgid "Personal address"
 msgstr "个人地址"
 
-#: src/alertpanel.c:138 src/compose.c:5236 src/main.c:519
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:519
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:151 src/main.c:614
+#: src/alertpanel.c:154 src/main.c:614
 msgid "Warning"
 msgstr "警告"
 
-#: src/alertpanel.c:164 src/inc.c:573
+#: src/alertpanel.c:167 src/inc.c:573
 msgid "Error"
 msgstr "错误"
 
-#: src/alertpanel.c:206
+#: src/alertpanel.c:209
 msgid "Creating alert panel dialog...\n"
 msgstr "正在创建提醒面板对话框...\n"
 
-#: src/alertpanel.c:285
+#: src/alertpanel.c:290
 msgid "Show this message next time"
 msgstr "下次还显示该信息"
 
@@ -1248,7 +1248,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:309 src/summaryview.c:4219
+#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4219
 msgid "None"
 msgstr "没有"
 
@@ -2027,12 +2027,12 @@ msgstr "编辑文件夹"
 msgid "Input the new name of folder:"
 msgstr "输入文件夹的新名字："
 
-#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1951
-#: src/folderview.c:1957
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1949
+#: src/folderview.c:1955
 msgid "New folder"
 msgstr "新建文件夹"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1958
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1956
 msgid "Input the name of new folder:"
 msgstr "输入新建文件夹的名字："
 
@@ -2220,21 +2220,21 @@ msgstr "废件箱"
 msgid "Drafts"
 msgstr "草稿箱"
 
-#: src/foldersel.c:542 src/folderview.c:1955 src/folderview.c:1959
+#: src/foldersel.c:542 src/folderview.c:1953 src/folderview.c:1957
 msgid "NewFolder"
 msgstr "新文件夹"
 
-#: src/foldersel.c:550 src/folderview.c:1967 src/folderview.c:2023
+#: src/foldersel.c:550 src/folderview.c:1965 src/folderview.c:2021
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "字符“%c”不能包含在文件夹名字中。"
 
-#: src/foldersel.c:560 src/folderview.c:1977 src/folderview.c:2030
+#: src/foldersel.c:560 src/folderview.c:1975 src/folderview.c:2028
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "文件夹“%s”已存在。"
 
-#: src/foldersel.c:568 src/folderview.c:1984
+#: src/foldersel.c:568 src/folderview.c:1982
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "无法创建文件夹“%s”。"
@@ -2339,22 +2339,22 @@ msgstr "重建文件夹树失败。"
 msgid "Checking for new messages in all folders..."
 msgstr "正在检查所有文件夹中的新邮件..."
 
-#: src/folderview.c:1712
+#: src/folderview.c:1710
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "选中文件夹 %s\n"
 
-#: src/folderview.c:1867
+#: src/folderview.c:1865
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "正在下载 %s 中的邮件..."
 
-#: src/folderview.c:1902
+#: src/folderview.c:1900
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "下载“%s”中的邮件时发生错误。"
 
-#: src/folderview.c:1952
+#: src/folderview.c:1950
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2364,21 +2364,21 @@ msgstr ""
 "(如果您要创建一个保存子文件夹的文件夹，\n"
 "在名字的最后添加“/”)"
 
-#: src/folderview.c:2014
+#: src/folderview.c:2012
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "输入“%s”的新名字："
 
-#: src/folderview.c:2015
+#: src/folderview.c:2013
 msgid "Rename folder"
 msgstr "重命名文件件"
 
-#: src/folderview.c:2106
+#: src/folderview.c:2104
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "无法删除文件夹“%s”。"
 
-#: src/folderview.c:2169
+#: src/folderview.c:2167
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2389,21 +2389,21 @@ msgstr ""
 "“%s”下的所有文件夹和邮件将被删除。\n"
 "您真的要删除吗？"
 
-#: src/folderview.c:2198
+#: src/folderview.c:2196
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "无法删除文件夹“%s”。"
 
-#: src/folderview.c:2232
+#: src/folderview.c:2230
 msgid "Empty trash"
 msgstr "清空废件箱"
 
-#: src/folderview.c:2233
+#: src/folderview.c:2231
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "清空废件箱里的所有信件？"
 
-#: src/folderview.c:2269
+#: src/folderview.c:2267
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2412,34 +2412,34 @@ msgstr ""
 "真的要删除邮件箱“%s”？\n"
 "(邮件不会从磁盘删除)"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2269
 msgid "Remove mailbox"
 msgstr "删除邮箱"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2315
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "真的要删除 IMAP4 帐号“%s”？"
 
-#: src/folderview.c:2318
+#: src/folderview.c:2316
 msgid "Delete IMAP4 account"
 msgstr "删除 IMAP4 帐号"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2458
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "真的要删除新闻组“%s”？"
 
-#: src/folderview.c:2461
+#: src/folderview.c:2459
 msgid "Delete newsgroup"
 msgstr "删除新闻组"
 
-#: src/folderview.c:2508
+#: src/folderview.c:2506
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "真到要删除新闻组帐号“%s”？"
 
-#: src/folderview.c:2509
+#: src/folderview.c:2507
 msgid "Delete news account"
 msgstr "删除新闻组帐号"
 
@@ -2892,15 +2892,15 @@ msgstr ""
 "已禁用 OpenPGP 支持。"
 
 #. remote command mode
-#: src/main.c:753
+#: src/main.c:757
 msgid "another Sylpheed is already running.\n"
 msgstr "另外一个 Sylpheed 正在运行。\n"
 
-#: src/main.c:953
+#: src/main.c:957
 msgid "Migration of configuration"
 msgstr "正在迁移配置"
 
-#: src/main.c:954
+#: src/main.c:958
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3677,8 +3677,8 @@ msgstr "首选项"
 msgid "Common preferences"
 msgstr "通用首选项"
 
-#: src/mainwindow.c:2354 src/prefs_folder_item.c:282
-#: src/prefs_folder_item.c:293 src/progressdialog.c:128
+#: src/mainwindow.c:2354 src/prefs_folder_item.c:287
+#: src/prefs_folder_item.c:298 src/progressdialog.c:128
 msgid "Account"
 msgstr "帐号"
 
@@ -4124,7 +4124,7 @@ msgstr "发送前用POP3验证"
 msgid "Command output"
 msgstr "命令输出"
 
-#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:324
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:329
 msgid "Automatically set the following addresses"
 msgstr "自动设置以下地址"
 
@@ -5197,21 +5197,16 @@ msgstr ""
 msgid "Key bindings"
 msgstr "键盘关联"
 
-#: src/prefs_common_dialog.c:2885
-msgid ""
-"Select the preset of key bindings.\n"
-"You can also modify each menu's shortcuts by pressing\n"
-"any key(s) when placing the mouse pointer on the item."
-msgstr ""
-"选择预置的键关联。\n"
-"您也可以将鼠标放在菜单项上并按下任何键\n"
-"(或组合键)来修改菜单快捷键。"
+#: src/prefs_common_dialog.c:2884
+#, fuzzy
+msgid "Select the preset of key bindings."
+msgstr " 设置键盘关联... "
 
-#: src/prefs_common_dialog.c:2897 src/prefs_common_dialog.c:3221
+#: src/prefs_common_dialog.c:2894 src/prefs_common_dialog.c:3218
 msgid "Default"
 msgstr "默认"
 
-#: src/prefs_common_dialog.c:2900 src/prefs_common_dialog.c:3230
+#: src/prefs_common_dialog.c:2897 src/prefs_common_dialog.c:3227
 msgid "Old Sylpheed"
 msgstr "旧式的Sylpheed"
 
@@ -5499,15 +5494,15 @@ msgstr "在摘要中主题之前不显示 [...] 或 (...)"
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "回复时删除主题前的 [...] 或 (...)"
 
-#: src/prefs_folder_item.c:322
+#: src/prefs_folder_item.c:327
 msgid "Apply to subfolders"
 msgstr "应用到子文件夹"
 
-#: src/prefs_folder_item.c:347
+#: src/prefs_folder_item.c:352
 msgid "use also on reply"
 msgstr "回复时也使用"
 
-#: src/prefs_folder_item.c:371
+#: src/prefs_folder_item.c:376
 msgid "Reply-To:"
 msgstr "回复至："
 
@@ -6340,6 +6335,15 @@ msgstr ""
 #: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "Select the preset of key bindings.\n"
+#~ "You can also modify each menu's shortcuts by pressing\n"
+#~ "any key(s) when placing the mouse pointer on the item."
+#~ msgstr ""
+#~ "选择预置的键关联。\n"
+#~ "您也可以将鼠标放在菜单项上并按下任何键\n"
+#~ "(或组合键)来修改菜单快捷键。"
 
 #~ msgid "Compose message%s"
 #~ msgstr "撰写邮件%s"

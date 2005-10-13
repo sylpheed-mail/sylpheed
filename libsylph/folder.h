@@ -45,6 +45,8 @@ typedef struct _FolderItem	FolderItem;
 #define FOLDER_IS_LOCAL(obj)	(FOLDER_TYPE(obj) == F_MH      || \
 				 FOLDER_TYPE(obj) == F_MBOX    || \
 				 FOLDER_TYPE(obj) == F_MAILDIR)
+#define FOLDER_IS_REMOTE(obj)	(FOLDER_TYPE(obj) == F_IMAP || \
+				 FOLDER_TYPE(obj) == F_NEWS)
 
 #if 0
 #define MBOX_FOLDER(obj)	((MboxFolder *)obj)

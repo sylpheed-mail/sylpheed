@@ -2881,10 +2881,7 @@ static void prefs_keybind_select(void)
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
-	label = gtk_label_new
-		(_("Select the preset of key bindings.\n"
-		   "You can also modify each menu's shortcuts by pressing\n"
-		   "any key(s) when placing the mouse pointer on the item."));
+	label = gtk_label_new(_("Select the preset of key bindings."));
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 

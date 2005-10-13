@@ -1427,9 +1427,12 @@ static gboolean folder_read_folder_func(GNode *node, gpointer data)
 
 	folder = folder_new(type, name, path);
 	g_return_val_if_fail(folder != NULL, FALSE);
-	folder->account = account;
-	if (account && (type == F_IMAP || type == F_NEWS))
+	if (account && FOLDER_IS_REMOTE(folder)) {
+		folder->account = account;
 		account->folder = REMOTE_FOLDER(folder);
+	}
+	if (account && FOLDER_IS_LOCAL(folder))
+		ac_apply_sub = TRUE;
 	item = FOLDER_ITEM(folder->node->data);
 	node->data = item;
 	item->node = node;
@@ -1503,6 +1506,9 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 		if (folder->account)
 			fprintf(fp, " account_id=\"%d\"",
 				folder->account->account_id);
+		else if (item->account)
+			fprintf(fp, " account_id=\"%d\"",
+				item->account->account_id);
 		if (item->ac_apply_sub)
 			fputs(" account_apply_sub=\"1\"", fp);
 	} else {

@@ -248,6 +248,11 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	PACK_CHECK_BUTTON(vbox2, trim_compose_subj_chkbtn,
 			  _("Delete [...] or (...) at the beginning of subject on reply"));
 
+	if (!dialog->item->parent) {
+		gtk_widget_set_sensitive(optmenu, FALSE);
+		gtk_widget_set_sensitive(vbox2, FALSE);
+	}
+
 	dialog->name_entry = name_entry;
 	dialog->id_label = id_label;
 	dialog->path_label = path_label;
@@ -378,6 +383,11 @@ static void prefs_folder_item_compose_create(PrefsFolderItemDialog *dialog)
 	gtk_table_attach(GTK_TABLE(table), replyto_entry, 1, 2, 3, 4,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+
+	if (!dialog->item->parent) {
+		gtk_widget_set_sensitive(frame, FALSE);
+		gtk_widget_set_sensitive(ac_apply_sub_chkbtn, FALSE);
+	}
 
 	dialog->account_optmenu     = optmenu;
 	dialog->ac_apply_sub_chkbtn = ac_apply_sub_chkbtn;
@@ -574,8 +584,13 @@ static void prefs_folder_item_apply_cb(GtkWidget *widget,
 	else
 		item->account = NULL;
 
-	item->ac_apply_sub = gtk_toggle_button_get_active
-		(GTK_TOGGLE_BUTTON(dialog->ac_apply_sub_chkbtn));
+	if (!item->parent && item->account)
+		item->ac_apply_sub = TRUE;
+	else if (item->account)
+		item->ac_apply_sub = gtk_toggle_button_get_active
+			(GTK_TOGGLE_BUTTON(dialog->ac_apply_sub_chkbtn));
+	else
+		item->ac_apply_sub = FALSE;
 
 	SET_DATA_FROM_ENTRY(to_entry, auto_to);
 	item->use_auto_to_on_reply = gtk_toggle_button_get_active
