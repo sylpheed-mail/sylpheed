@@ -42,6 +42,7 @@
 #include <time.h>
 
 #ifdef G_OS_WIN32
+#  include <windows.h>
 #  include <wchar.h>
 #  include <direct.h>
 #  include <io.h>
@@ -424,6 +425,23 @@ gchar *strncpy2(gchar *dest, const gchar *src, size_t n)
 	*d = '\0';
 
 	return dest;
+}
+
+/* Similar to g_str_has_suffix() but case-insensitive */
+gboolean str_has_suffix_case(const gchar *str, const gchar *suffix)
+{
+	size_t len, s_len;
+
+	if (!str || !suffix)
+		return FALSE;
+
+	len = strlen(str);
+	s_len = strlen(suffix);
+
+	if (s_len > len)
+		return FALSE;
+
+	return (g_ascii_strcasecmp(str + (len - s_len), suffix) == 0);
 }
 
 /* Examine if next block is non-ASCII string */
@@ -3061,6 +3079,42 @@ gint execute_command_line(const gchar *cmdline, gboolean async)
 	g_strfreev(argv);
 
 	return ret;
+}
+
+gint execute_open_file(const gchar *file, const gchar *content_type)
+{
+	g_return_val_if_fail(file != NULL, -1);
+
+#ifdef G_OS_WIN32
+	log_print("opening %s - %s\n", file, content_type ? content_type : "");
+
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		wchar_t *wpath;
+
+		wpath = g_utf8_to_utf16(file, -1, NULL, NULL, NULL);
+		if (wpath == NULL)
+			return -1;
+
+		ShellExecuteW(NULL, L"open", wpath, NULL, NULL, SW_SHOWNORMAL);
+
+		g_free(wpath);
+
+		return 0;
+	} else {
+		gchar *cp_path;
+
+		cp_path = g_locale_from_utf8(file, -1, NULL, NULL, NULL);
+		if (cp_path == NULL)
+			return -1;
+
+		ShellExecuteA(NULL, "open", cp_path, NULL, NULL, SW_SHOWNORMAL);
+
+		g_free(cp_path);
+
+		return 0;
+	}
+#endif
+	return 0;
 }
 
 gchar *get_command_output(const gchar *cmdline)

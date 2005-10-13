@@ -42,6 +42,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
+
 #include "main.h"
 #include "mimeview.h"
 #include "textview.h"
@@ -1115,6 +1119,31 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 	const gchar *def_cmd;
 	const gchar *p;
 
+#ifdef G_OS_WIN32
+	if (!cmdline) {
+		DWORD dwtype;
+		AlertValue avalue;
+
+		if (str_has_suffix_case(filename, ".exe") ||
+		    str_has_suffix_case(filename, ".com") ||
+		    str_has_suffix_case(filename, ".scr") ||
+		    str_has_suffix_case(filename, ".pif") ||
+		    str_has_suffix_case(filename, ".bat") ||
+		    str_has_suffix_case(filename, ".vbs") ||
+		    str_has_suffix_case(filename, ".js")  ||
+		    GetBinaryType(filename, &dwtype)) {
+			avalue = alertpanel_full
+				(_("Opening executable file"),
+				 _("This is an executable file. Do you really want to launch it?"),
+				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+			if (avalue != G_ALERTDEFAULT)
+				return;
+		}
+		execute_open_file(filename, partinfo->content_type);
+		return;
+	}
+#endif
 	if (cmdline) {
 		cmd = cmdline;
 		def_cmd = NULL;

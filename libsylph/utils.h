@@ -234,8 +234,11 @@ gchar *strncpy2		(gchar		*dest,
 			 const gchar	*src,
 			 size_t		 n);
 
-gboolean is_next_nonascii	(const gchar *s);
-gint get_next_word_len		(const gchar *s);
+gboolean str_has_suffix_case	(const gchar	*str,
+				 const gchar	*suffix);
+
+gboolean is_next_nonascii	(const gchar	*s);
+gint get_next_word_len		(const gchar	*s);
 
 /* functions for string parsing */
 gint subject_compare			(const gchar	*s1,
@@ -428,6 +431,8 @@ gint execute_async		(gchar *const	 argv[]);
 gint execute_sync		(gchar *const	 argv[]);
 gint execute_command_line	(const gchar	*cmdline,
 				 gboolean	 async);
+gint execute_open_file		(const gchar	*file,
+				 const gchar	*content_type);
 gchar *get_command_output	(const gchar	*cmdline);
 
 /* open URI with external browser */
