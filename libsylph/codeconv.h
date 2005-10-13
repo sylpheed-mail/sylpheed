@@ -50,6 +50,7 @@ typedef enum
 	C_ISO_8859_14,
 	C_ISO_8859_15,
 	C_BALTIC,
+	C_CP932,
 	C_CP1250,
 	C_CP1251,
 	C_CP1252,
@@ -59,6 +60,7 @@ typedef enum
 	C_CP1256,
 	C_CP1257,
 	C_CP1258,
+	C_WINDOWS_932,
 	C_WINDOWS_1250,
 	C_WINDOWS_1251,
 	C_WINDOWS_1252,
@@ -121,6 +123,7 @@ struct _CodeConverter
 #define CS_ISO_8859_14		"ISO-8859-14"
 #define CS_ISO_8859_15		"ISO-8859-15"
 #define CS_BALTIC		"BALTIC"
+#define CS_CP932		"CP932"
 #define CS_CP1250		"CP1250"
 #define CS_CP1251		"CP1251"
 #define CS_CP1252		"CP1252"
@@ -130,6 +133,7 @@ struct _CodeConverter
 #define CS_CP1256		"CP1256"
 #define CS_CP1257		"CP1257"
 #define CS_CP1258		"CP1258"
+#define CS_WINDOWS_932		"Windows-932"
 #define CS_WINDOWS_1250		"Windows-1250"
 #define CS_WINDOWS_1251		"Windows-1251"
 #define CS_WINDOWS_1252		"Windows-1252"

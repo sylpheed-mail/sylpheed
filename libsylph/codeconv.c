@@ -48,29 +48,54 @@ typedef enum
 	JIS_ASCII,
 	JIS_KANJI,
 	JIS_HWKANA,
-	JIS_AUXKANJI
+	JIS_AUXKANJI,
+	JIS_UDC
 } JISState;
 
 #define SUBST_CHAR	'_'
 #define ESC		'\033'
+#define SO		0x0e
+#define SI		0x0f
+#define SS2		0x8e
+#define SS3		0x8f
 
 #define iseuckanji(c) \
 	(((c) & 0xff) >= 0xa1 && ((c) & 0xff) <= 0xfe)
 #define iseuchwkana1(c) \
-	(((c) & 0xff) == 0x8e)
+	(((c) & 0xff) == SS2)
 #define iseuchwkana2(c) \
 	(((c) & 0xff) >= 0xa1 && ((c) & 0xff) <= 0xdf)
 #define iseucaux(c) \
-	(((c) & 0xff) == 0x8f)
+	(((c) & 0xff) == SS3)
 
 #define issjiskanji1(c) \
 	((((c) & 0xff) >= 0x81 && ((c) & 0xff) <= 0x9f) || \
-	 (((c) & 0xff) >= 0xe0 && ((c) & 0xff) <= 0xfc))
+	 (((c) & 0xff) >= 0xe0 && ((c) & 0xff) <= 0xef))
 #define issjiskanji2(c) \
 	((((c) & 0xff) >= 0x40 && ((c) & 0xff) <= 0x7e) || \
 	 (((c) & 0xff) >= 0x80 && ((c) & 0xff) <= 0xfc))
 #define issjishwkana(c) \
 	(((c) & 0xff) >= 0xa1 && ((c) & 0xff) <= 0xdf)
+#define issjisext(c) \
+	(((c) & 0xff) >= 0xf0 && ((c) & 0xff) <= 0xfc)
+#define issjisudc(c) \
+	(((c) & 0xff) >= 0xf0 && ((c) & 0xff) <= 0xf9)
+#define issjisibmext(c1, c2) \
+	((((c1) & 0xff) >= 0xfa && ((c1) & 0xff) <= 0xfb && \
+	  issjiskanji2(c2)) ||                              \
+	 (((c1) & 0xff) == 0xfc &&                          \
+	  ((c2) & 0xff) >= 0x40 && ((c2) & 0xff) <= 0x4b))
+
+#define isjiskanji(c) \
+	(((c) & 0xff) >= 0x21 && ((c) & 0xff) <= 0x7e)
+#define isjishwkana(c) \
+	(((c) & 0xff) >= 0x21 && ((c) & 0xff) <= 0x5f)
+#define isjisudc(c) \
+	(((c) & 0xff) >= 0x21 && ((c) & 0xff) <= 0x34)
+#define isjisudclow(c) \
+	(((c) & 0xff) >= 0x21 && ((c) & 0xff) <= 0x2a)
+#define isjisudchigh(c) \
+	(((c) & 0xff) >= 0x2b && ((c) & 0xff) <= 0x34)
 
 /* U+0080 - U+07FF */
 #define isutf8_2_1(c) \
@@ -116,8 +141,19 @@ typedef enum
 		state = JIS_AUXKANJI;	\
 	}
 
+#define UDC_IN()			\
+	if (state != JIS_UDC) {		\
+		*out++ = ESC;		\
+		*out++ = '$';		\
+		*out++ = '(';		\
+		*out++ = '?';		\
+		state = JIS_UDC;	\
+	}
+
 static gchar *conv_jistoeuc(const gchar *inbuf, gint *error);
+static gchar *conv_jistosjis(const gchar *inbuf, gint *error);
 static gchar *conv_euctojis(const gchar *inbuf, gint *error);
+static gchar *conv_sjistojis(const gchar *inbuf, gint *error);
 static gchar *conv_sjistoeuc(const gchar *inbuf, gint *error);
 
 static gchar *conv_jistoutf8(const gchar *inbuf, gint *error);
@@ -127,6 +163,7 @@ static gchar *conv_anytoutf8(const gchar *inbuf, gint *error);
 
 static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error);
 static gchar *conv_utf8tojis(const gchar *inbuf, gint *error);
+static gchar *conv_utf8tosjis(const gchar *inbuf, gint *error);
 
 /* static void conv_unreadable_eucjp(gchar *str); */
 static void conv_unreadable_8bit(gchar *str);
@@ -209,6 +246,123 @@ static gchar *conv_jistoeuc(const gchar *inbuf, gint *error)
 				*out++ = *in++ | 0x80;
 				if (*in == '\0') break;
 				*out++ = *in++ | 0x80;
+				break;
+			default:
+				*out++ = *in++;
+				break;
+			}
+		}
+	}
+
+	*out = '\0';
+
+	if (error)
+		*error = error_;
+
+	return outbuf;
+}
+
+static gchar *conv_jistosjis(const gchar *inbuf, gint *error)
+{
+	gchar *outbuf;
+	const guchar *in = (guchar *)inbuf;
+	guchar *out;
+	JISState state = JIS_ASCII;
+	gint error_ = 0;
+
+	outbuf = g_malloc(strlen(inbuf) * 2 + 1);
+	out = (guchar *)outbuf;
+
+	while (*in != '\0') {
+		if (*in == ESC) {
+			in++;
+			if (*in == '$') {
+				if (*(in + 1) == '@' || *(in + 1) == 'B') {
+					state = JIS_KANJI;
+					in += 2;
+				} else if (*(in + 1) == '(' &&
+					   *(in + 2) == '?') {
+					/* ISO-2022-JP-MS extention */
+					state = JIS_UDC;
+					in += 3;
+				} else {
+					/* unknown escape sequence */
+					error_ = -1;
+					state = JIS_ASCII;
+				}
+			} else if (*in == '(') {
+				if (*(in + 1) == 'B' || *(in + 1) == 'J') {
+					state = JIS_ASCII;
+					in += 2;
+				} else if (*(in + 1) == 'I') {
+					state = JIS_HWKANA;
+					in += 2;
+				} else {
+					/* unknown escape sequence */
+					error_ = -1;
+					state = JIS_ASCII;
+				}
+			} else {
+				/* unknown escape sequence */
+				error_ = -1;
+				state = JIS_ASCII;
+			}
+		} else if (*in == SO) {
+			state = JIS_HWKANA;
+			in++;
+		} else if (*in == SI) {
+			state = JIS_ASCII;
+			in++;
+		} else {
+			switch (state) {
+			case JIS_ASCII:
+				*out++ = *in++;
+				break;
+			case JIS_HWKANA:
+				*out++ = *in++ | 0x80;
+				break;
+			case JIS_KANJI:
+				if ((isjiskanji(*in) ||
+				     (*in >= 0x7f && *in <= 0x97)) &&
+				    isjiskanji(*(in + 1))) {
+					*out++ = ((*in < 0x5f)
+					         ? (((*in - 0x21) / 2) + 0x81)
+					         : (((*in - 0x21) / 2) + 0xc1));
+					*out++ = ((*in % 2)
+					         ? ((*(in + 1) + ((*(in + 1) < 0x60)
+					           ? 0x1f : 0x20)))
+					         : *(in + 1) + 0x7e);
+					in += 2;
+				} else {
+					error_ = -1;
+					*out++ = SUBST_CHAR;
+					in++;
+					if (*in != '\0') {
+						*out++ = SUBST_CHAR;
+						in++;
+					}
+				}
+				break;
+			case JIS_UDC:
+				if (isjisudc(*in) && isjiskanji(*(in + 1))) {
+					*out++ = (((*in - 0x21) / 2) + 0xf0);
+					*out++ = ((*in % 2)
+					         ? ((*(in + 1) + ((*(in + 1) < 0x60)
+					           ? 0x1f : 0x20)))
+					         : *(in + 1) + 0x7e);
+					in += 2;
+				} else {
+					error_ = -1;
+					*out++ = SUBST_CHAR;
+					in++;
+					if (*in != '\0') {
+						*out++ = SUBST_CHAR;
+						in++;
+					}
+				}
+				break;
+			default:
+				*out++ = *in++;
 				break;
 			}
 		}
@@ -390,6 +544,141 @@ static gchar *conv_euctojis(const gchar *inbuf, gint *error)
 	return outbuf;
 }
 
+#define sjistoidx(c1, c2) \
+	(((c1) > 0x9f) \
+	? (((c1) - 0xc1) * 188 + (c2) - (((c2) > 0x7e) ? 0x41 : 0x40)) \
+	: (((c1) - 0x81) * 188 + (c2) - (((c2) > 0x7e) ? 0x41 : 0x40)))
+#define idxtojis1(c) (((c) / 94) + 0x21)
+#define idxtojis2(c) (((c) % 94) + 0x21)
+
+static guint conv_idx_ibmtonec(guint idx)
+{
+	if      (idx >= sjistoidx(0xfa, 0x5c))
+		idx -=  sjistoidx(0xfa, 0x5c)
+	              - sjistoidx(0xed, 0x40);
+/*	else if (idx == sjistoidx(0xfa, 0x5b)) */
+/*		idx =   sjistoidx(0x81, 0xe6); */
+/*	else if (idx == sjistoidx(0xfa, 0x5a)) */
+/*		idx =   sjistoidx(0x87, 0x84); */
+/*	else if (idx == sjistoidx(0xfa, 0x59)) */
+/*		idx =   sjistoidx(0x87, 0x82); */
+/*	else if (idx == sjistoidx(0xfa, 0x58)) */
+/*		idx =   sjistoidx(0x87, 0x8a); */
+	else if (idx >= sjistoidx(0xfa, 0x55))
+		idx -=  sjistoidx(0xfa, 0x55)
+		      - sjistoidx(0xee, 0xfa);
+/*	else if (idx == sjistoidx(0xfa, 0x54)) */
+/*		idx =   sjistoidx(0x81, 0xca); */
+/*	else if (idx >= sjistoidx(0xfa, 0x4a)) */
+/*		idx -=  sjistoidx(0xfa, 0x4a)  */
+/*		      - sjistoidx(0x87, 0x54); */
+	else if (idx >= sjistoidx(0xfa, 0x40))
+		idx -=  sjistoidx(0xfa, 0x40)
+		      - sjistoidx(0xee, 0xef);
+	return idx;
+}
+
+static gchar *conv_sjistojis(const gchar *inbuf, gint *error)
+{
+	gchar *outbuf;
+	const guchar *in = (guchar *)inbuf;
+	guchar *out;
+	JISState state = JIS_ASCII;
+	gint error_ = 0;
+	guint idx;
+ 
+	outbuf = g_malloc(strlen(inbuf) * 3 + 4);
+	out = (guchar *)outbuf;
+
+	while (*in != '\0') {
+		if (isascii(*in)) {
+			K_OUT();
+			*out++ = *in++;
+		} else if (issjiskanji1(*in)) {
+			if (issjiskanji2(*(in + 1))) {
+				K_IN();
+				idx = sjistoidx(*in, *(in + 1));
+				*out++ = idxtojis1(idx);
+				*out++ = idxtojis2(idx);
+				in += 2;
+			} else {
+				error_ = -1;
+				K_OUT();
+				*out++ = SUBST_CHAR;
+				in++;
+				if (*in != '\0' && !isascii(*in)) {
+					*out++ = SUBST_CHAR;
+					in++;
+				}
+			}
+		} else if (issjishwkana(*in)) {
+			if (prefs_common.allow_jisx0201_kana) {
+				HW_IN();
+				in++;
+				*out++ = *in++ & 0x7f;
+			} else {
+				guchar jis_ch[2];
+				gint len;
+
+				if (issjishwkana(*(in + 1)))
+					len = conv_jis_hantozen
+						(jis_ch,
+						 *in, *(in + 1));
+				else
+					len = conv_jis_hantozen
+						(jis_ch,
+						 *in, '\0');
+				if (len == 0)
+					in += 2;
+				else {
+					K_IN();
+					in += len * 2;
+					*out++ = jis_ch[0];
+					*out++ = jis_ch[1];
+				}
+			}
+		} else if (issjisibmext(*in, *(in + 1))) {
+			K_IN();
+			idx = sjistoidx(*in, *(in + 1));
+			idx = conv_idx_ibmtonec(idx);
+			*out++ = idxtojis1(idx);
+			*out++ = idxtojis2(idx);
+			in += 2;
+#if 0
+		} else if (issjisudc(*in)) {
+			UDC_IN();
+			idx = sjistoidx(*in, *(in + 1))
+			      - sjistoidx(0xf0, 0x40);
+			*out++ = idxtojis1(idx);
+			*out++ = idxtojis2(idx);
+			in += 2;
+#endif
+		} else if (issjisext(*in)) {
+			error_ = -1;
+			K_OUT();
+			*out++ = SUBST_CHAR;
+			in++;
+			if (*in != '\0' && !isascii(*in)) {
+				*out++ = SUBST_CHAR;
+				in++;
+			}
+		} else {
+			error_ = -1;
+			K_OUT();
+			*out++ = SUBST_CHAR;
+			in++;
+		}
+	}
+
+	K_OUT();
+	*out = '\0';
+
+	if (error)
+		*error = error_;
+
+	return outbuf;
+}
+
 static gchar *conv_sjistoeuc(const gchar *inbuf, gint *error)
 {
 	gchar *outbuf;
@@ -431,8 +720,16 @@ static gchar *conv_sjistoeuc(const gchar *inbuf, gint *error)
 				}
 			}
 		} else if (issjishwkana(*in)) {
-			*out++ = 0x8e;
+			*out++ = SS2;
 			*out++ = *in++;
+		} else if (issjisext(*in)) {
+			error_ = -1;
+			*out++ = SUBST_CHAR;
+			in++;
+			if (*in != '\0' && !isascii(*in)) {
+				*out++ = SUBST_CHAR;
+				in++;
+			}
 		} else {
 			error_ = -1;
 			*out++ = SUBST_CHAR;
@@ -450,28 +747,51 @@ static gchar *conv_sjistoeuc(const gchar *inbuf, gint *error)
 
 static gchar *conv_jistoutf8(const gchar *inbuf, gint *error)
 {
-	gchar *eucstr, *utf8str;
-	gint e_error = 0, u_error = 0;
+	gchar *tmpstr, *utf8str;
+	gint t_error = 0, u_error = 0;
 
-	eucstr = conv_jistoeuc(inbuf, &e_error);
-	utf8str = conv_euctoutf8(eucstr, &u_error);
-	g_free(eucstr);
+	if (strstr(inbuf, "\033$(D")) {
+		tmpstr = conv_jistoeuc(inbuf, &t_error);
+		utf8str = conv_euctoutf8(tmpstr, &u_error);
+	} else {
+		tmpstr = conv_jistosjis(inbuf, &t_error);
+		utf8str = conv_sjistoutf8(tmpstr, &u_error);
+	}
+	g_free(tmpstr);
 
 	if (error)
-		*error = (e_error | u_error);
+		*error = (t_error | u_error);
 
 	return utf8str;
 }
 
 static gchar *conv_sjistoutf8(const gchar *inbuf, gint *error)
 {
-	gchar *utf8str;
+	static iconv_t cd = (iconv_t)-1;
+	static gboolean iconv_ok = TRUE;
 
-	utf8str = conv_iconv_strdup(inbuf, CS_SHIFT_JIS, CS_UTF_8, error);
-	if (!utf8str)
-		utf8str = g_strdup(inbuf);
+	if (cd == (iconv_t)-1) {
+		if (!iconv_ok) {
+			if (error)
+				*error = -1;
+			return g_strdup(inbuf);
+		}
 
-	return utf8str;
+		cd = iconv_open(CS_UTF_8, CS_CP932);
+		if (cd == (iconv_t)-1) {
+			cd = iconv_open(CS_UTF_8, CS_SHIFT_JIS);
+			if (cd == (iconv_t)-1) {
+				g_warning("conv_sjistoutf8(): %s\n",
+					  g_strerror(errno));
+				iconv_ok = FALSE;
+				if (error)
+					*error = -1;
+				return g_strdup(inbuf);
+			}
+		}
+	}
+
+	return conv_iconv_strdup_with_cd(inbuf, cd, error);
 }
 
 static gchar *conv_euctoutf8(const gchar *inbuf, gint *error)
@@ -519,6 +839,35 @@ static gchar *conv_anytoutf8(const gchar *inbuf, gint *error)
 	}
 }
 
+static gchar *conv_utf8tosjis(const gchar *inbuf, gint *error)
+{
+	static iconv_t cd = (iconv_t)-1;
+	static gboolean iconv_ok = TRUE;
+
+	if (cd == (iconv_t)-1) {
+		if (!iconv_ok) {
+			if (error)
+				*error = -1;
+			return g_strdup(inbuf);
+		}
+
+		cd = iconv_open(CS_CP932, CS_UTF_8);
+		if (cd == (iconv_t)-1) {
+			cd = iconv_open(CS_SHIFT_JIS, CS_UTF_8);
+			if (cd == (iconv_t)-1) {
+				g_warning("conv_utf8tosjis(): %s\n",
+					  g_strerror(errno));
+				iconv_ok = FALSE;
+				if (error)
+					*error = -1;
+				return g_strdup(inbuf);
+			}
+		}
+	}
+
+	return conv_iconv_strdup_with_cd(inbuf, cd, error);
+}
+
 static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error)
 {
 	static iconv_t cd = (iconv_t)-1;
@@ -550,15 +899,20 @@ static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error)
 
 static gchar *conv_utf8tojis(const gchar *inbuf, gint *error)
 {
-	gchar *eucstr, *jisstr;
-	gint e_error = 0, j_error = 0;
+	gchar *tmpstr, *jisstr;
+	gint t_error = 0, j_error = 0;
 
-	eucstr = conv_utf8toeuc(inbuf, &e_error);
-	jisstr = conv_euctojis(eucstr, &j_error);
-	g_free(eucstr);
+#if 1
+	tmpstr = conv_utf8tosjis(inbuf, &t_error);
+	jisstr = conv_sjistojis(tmpstr, &j_error);
+#else
+	tmpstr = conv_utf8toeuc(inbuf, &t_error);
+	jisstr = conv_euctojis(tmpstr, &j_error);
+#endif
+	g_free(tmpstr);
 
 	if (error)
-		*error = (e_error | j_error);
+		*error = (t_error | j_error);
 
 	return jisstr;
 }
@@ -1187,6 +1541,7 @@ static const struct {
 	{C_ISO_8859_14,		CS_ISO_8859_14},
 	{C_ISO_8859_15,		CS_ISO_8859_15},
 	{C_BALTIC,		CS_BALTIC},
+	{C_CP932,		CS_CP932},
 	{C_CP1250,		CS_CP1250},
 	{C_CP1251,		CS_CP1251},
 	{C_CP1252,		CS_CP1252},
@@ -1196,6 +1551,7 @@ static const struct {
 	{C_CP1256,		CS_CP1256},
 	{C_CP1257,		CS_CP1257},
 	{C_CP1258,		CS_CP1258},
+	{C_WINDOWS_932,		CS_WINDOWS_932},
 	{C_WINDOWS_1250,	CS_WINDOWS_1250},
 	{C_WINDOWS_1251,	CS_WINDOWS_1251},
 	{C_WINDOWS_1252,	CS_WINDOWS_1252},
@@ -1611,6 +1967,7 @@ gboolean conv_is_multibyte_encoding(CharSet encoding)
 	case C_ISO_2022_KR:
 	case C_ISO_2022_CN:
 	case C_SHIFT_JIS:
+	case C_CP932:
 	case C_GB2312:
 	case C_GBK:
 	case C_BIG5:
