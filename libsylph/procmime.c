@@ -1004,10 +1004,17 @@ gchar *procmime_get_mime_type(const gchar *filename)
 	MimeType *mime_type;
 	const gchar *p;
 	gchar *ext;
+	static gboolean no_mime_type_table = FALSE;
+
+	if (no_mime_type_table)
+		return NULL;
 
 	if (!mime_type_table) {
 		mime_type_table = procmime_get_mime_type_table();
-		if (!mime_type_table) return NULL;
+		if (!mime_type_table) {
+			no_mime_type_table = TRUE;
+			return NULL;
+		}
 	}
 
 	filename = g_basename(filename);
@@ -1052,7 +1059,7 @@ static GHashTable *procmime_get_mime_type_table(void)
 		mime_type_list = g_list_concat(mime_type_list, list);
 
 		if (!mime_type_list) {
-			g_warning("mime.types not found\n");
+			debug_print("mime.types not found\n");
 			return NULL;
 		}
 	}

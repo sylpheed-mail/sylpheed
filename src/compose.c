@@ -1685,8 +1685,8 @@ static gchar *compose_get_signature_str(Compose *compose)
 
 	if (compose->account->sig_type == SIG_FILE) {
 		if (!is_file_or_fifo_exist(compose->account->sig_path)) {
-			g_warning("can't open signature file: %s\n",
-				  compose->account->sig_path);
+			debug_print("can't open signature file: %s\n",
+				    compose->account->sig_path);
 			return NULL;
 		}
 	}
