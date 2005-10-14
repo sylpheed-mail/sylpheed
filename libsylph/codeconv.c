@@ -1600,7 +1600,7 @@ static const struct {
 	{"ja_JP.SJIS"	, C_SHIFT_JIS	, C_ISO_2022_JP},
 	{"ja_JP.JIS"	, C_ISO_2022_JP	, C_ISO_2022_JP},
 #ifdef G_OS_WIN32
-	{"ja_JP"	, C_SHIFT_JIS	, C_ISO_2022_JP},
+	{"ja_JP"	, C_CP932	, C_ISO_2022_JP},
 #else
 	{"ja_JP"	, C_EUC_JP	, C_ISO_2022_JP},
 #endif
