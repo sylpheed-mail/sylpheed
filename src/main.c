@@ -87,6 +87,10 @@
 #  include "ssl.h"
 #endif
 
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
+
 #include "version.h"
 
 gchar *prog_version;
@@ -163,11 +167,11 @@ int main(int argc, char *argv[])
 	app_init();
 	parse_cmd_opt(argc, argv);
 
-#ifdef G_OS_UNIX
 	/* check and create unix domain socket for remote operation */
 	lock_socket = prohibit_duplicate_launch();
 	if (lock_socket < 0) return 0;
 
+#ifdef G_OS_UNIX
 	if (cmd.status || cmd.status_full) {
 		puts("0 Sylpheed not running.");
 		lock_socket_remove();
@@ -742,6 +746,21 @@ static gchar *get_socket_name(void)
 
 static gint prohibit_duplicate_launch(void)
 {
+#ifdef G_OS_WIN32
+	HANDLE hmutex;
+
+	hmutex = CreateMutexA(NULL, FALSE, "Sylpheed");
+	if (!hmutex) {
+		g_warning("cannot create Mutex\n");
+		return -1;
+	}
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		debug_print(_("another Sylpheed is already running.\n"));
+		return -1;
+	}
+
+	return 0;
+#else
 	gint uxsock;
 	gchar *path;
 
@@ -821,6 +840,7 @@ static gint prohibit_duplicate_launch(void)
 
 	fd_close(uxsock);
 	return -1;
+#endif
 }
 
 static gint lock_socket_remove(void)
