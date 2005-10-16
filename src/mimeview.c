@@ -1122,7 +1122,6 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 #ifdef G_OS_WIN32
 	if (!cmdline) {
 		DWORD dwtype;
-		AlertValue avalue;
 
 		if (str_has_suffix_case(filename, ".exe") ||
 		    str_has_suffix_case(filename, ".com") ||
@@ -1132,13 +1131,13 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 		    str_has_suffix_case(filename, ".vbs") ||
 		    str_has_suffix_case(filename, ".js")  ||
 		    GetBinaryType(filename, &dwtype)) {
-			avalue = alertpanel_full
+			alertpanel_full
 				(_("Opening executable file"),
-				 _("This is an executable file. Do you really want to launch it?"),
-				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
-				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
-			if (avalue != G_ALERTDEFAULT)
-				return;
+				 _("This is an executable file. Opening executable file is restricted for security.\n"
+				   "If you want to launch it, save it to somewhere and make sure it is not an virus or something like a malicious program."),
+				 ALERT_WARNING, G_ALERTDEFAULT, FALSE,
+				 GTK_STOCK_OK, NULL, NULL);
+			return;
 		}
 		execute_open_file(filename, partinfo->content_type);
 		return;
