@@ -302,8 +302,12 @@ static PrefParam param[] = {
 #endif
 
 	/* Other */
+#ifdef G_OS_WIN32
+	{"uri_open_command", NULL, &prefs_common.uri_cmd,
+#else
 	{"uri_open_command", DEFAULT_BROWSER_CMD, &prefs_common.uri_cmd,
 	 P_STRING},
+#endif
 	{"print_command", "lpr %s", &prefs_common.print_cmd, P_STRING},
 	{"ext_editor_command", "gedit %s", &prefs_common.ext_editor_cmd,
 	 P_STRING},

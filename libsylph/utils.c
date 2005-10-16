@@ -3142,6 +3142,11 @@ gint open_uri(const gchar *uri, const gchar *cmdline)
 
 	g_return_val_if_fail(uri != NULL, -1);
 
+#ifdef G_OS_WIN32
+	if (!cmdline || cmdline[0] == '\0')
+		return execute_open_file(uri, NULL);
+#endif
+
 	if (cmdline &&
 	    (p = strchr(cmdline, '%')) && *(p + 1) == 's' &&
 	    !strchr(p + 2, '%'))

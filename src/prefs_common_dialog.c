@@ -1997,8 +1997,12 @@ static void prefs_other_create(void)
 	gtk_table_attach (GTK_TABLE (ext_table), uri_combo, 1, 2, 0, 1,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtkut_combo_set_items (GTK_COMBO (uri_combo),
+#ifdef G_OS_WIN32
+			       "",
+#else
 			       DEFAULT_BROWSER_CMD,
 			       "mozilla-firefox '%s'",
+			       "firefox '%s'",
 			       "mozilla -remote 'openURL(%s,new-window)'",
 			       "mozilla '%s'",
 			       "netscape -remote 'openURL(%s,new-window)'",
@@ -2006,6 +2010,7 @@ static void prefs_other_create(void)
 			       "gnome-moz-remote --newwin '%s'",
 			       "rxvt -e w3m '%s'",
 			       "rxvt -e lynx '%s'",
+#endif
 			       NULL);
 	uri_entry = GTK_COMBO (uri_combo)->entry;
 
