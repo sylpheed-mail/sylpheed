@@ -2038,12 +2038,16 @@ static void prefs_other_create(void)
 	gtk_table_attach (GTK_TABLE (ext_table), exteditor_combo, 1, 2, 2, 3,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtkut_combo_set_items (GTK_COMBO (exteditor_combo),
+#ifdef G_OS_WIN32
+			       "notepad '%s'",
+#else
 			       "gedit %s",
 			       "kedit %s",
 			       "emacs %s",
 			       "xemacs %s",
-			       "kterm -e jed %s",
-			       "kterm -e vi %s",
+			       "rxvt -e jed %s",
+			       "rxvt -e vi %s",
+#endif
 			       NULL);
 	exteditor_entry = GTK_COMBO (exteditor_combo)->entry;
 
