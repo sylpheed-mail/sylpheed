@@ -223,6 +223,8 @@ static void prefs_common_encoding_set_data_from_optmenu    (PrefParam *pparam);
 static void prefs_common_encoding_set_optmenu		   (PrefParam *pparam);
 static void prefs_common_recv_dialog_set_data_from_optmenu (PrefParam *pparam);
 static void prefs_common_recv_dialog_set_optmenu	   (PrefParam *pparam);
+static void prefs_common_uri_set_data_from_entry	   (PrefParam *pparam);
+static void prefs_common_uri_set_entry			   (PrefParam *pparam);
 
 static PrefsUIData ui_data[] = {
 	/* Receive */
@@ -423,7 +425,7 @@ static PrefsUIData ui_data[] = {
 
 	/* Other */
 	{"uri_open_command", &other.uri_entry,
-	 prefs_set_data_from_entry, prefs_set_entry},
+	 prefs_common_uri_set_data_from_entry, prefs_common_uri_set_entry},
 	{"print_command", &other.printcmd_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"ext_editor_command", &other.exteditor_entry,
@@ -1998,7 +2000,7 @@ static void prefs_other_create(void)
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtkut_combo_set_items (GTK_COMBO (uri_combo),
 #ifdef G_OS_WIN32
-			       "",
+			       _("(Default browser)"),
 #else
 			       DEFAULT_BROWSER_CMD,
 			       "mozilla-firefox '%s'",
@@ -3370,6 +3372,50 @@ static void prefs_common_recv_dialog_set_optmenu(PrefParam *pparam)
 	menu = gtk_option_menu_get_menu(optmenu);
 	menuitem = gtk_menu_get_active(GTK_MENU(menu));
 	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
+}
+
+static void prefs_common_uri_set_data_from_entry(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	gchar **str;
+	const gchar *entry_str;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	entry_str = gtk_entry_get_text(GTK_ENTRY(*ui_data->widget));
+
+	if (pparam->type == P_STRING) {
+		str = (gchar **)pparam->data;
+		g_free(*str);
+
+		if (entry_str[0] == '\0' ||
+		    !strcmp(_("(Default browser)"), entry_str))
+			*str = NULL;
+		else
+			*str = g_strdup(entry_str);
+	} else {
+		g_warning("Invalid type for URI setting\n");
+	}
+}
+
+static void prefs_common_uri_set_entry(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	gchar **str;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	if (pparam->type == P_STRING) {
+		str = (gchar **)pparam->data;
+		gtk_entry_set_text(GTK_ENTRY(*ui_data->widget),
+				   *str ? *str : _("(Default browser)"));
+	} else {
+		g_warning("Invalid type for URI setting\n");
+	}
 }
 
 static void prefs_common_select_folder_cb(GtkWidget *widget, gpointer data)
