@@ -45,10 +45,14 @@ static GtkTooltips *trayicon_tip;
 static void trayicon_button_pressed	(GtkWidget	*widget,
 					 GdkEventButton	*event,
 					 gpointer	 data);
+static void trayicon_destroy_cb		(GtkWidget	*widget,
+					 gpointer	 data);
 
 GtkWidget *trayicon_create(MainWindow *mainwin)
 {
 	trayicon = GTK_WIDGET(egg_tray_icon_new("Sylpheed"));
+	g_signal_connect(G_OBJECT(trayicon), "destroy",
+			 G_CALLBACK(trayicon_destroy_cb), mainwin);
 
 	eventbox = gtk_event_box_new();
 	gtk_container_add(GTK_CONTAINER(trayicon), eventbox);
@@ -90,6 +94,17 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 	if (event && event->button == 1)
 		gtk_window_present(GTK_WINDOW(mainwin->window));
+}
+
+static gboolean trayicon_restore(gpointer data)
+{
+	trayicon_create((MainWindow *)data);
+	return FALSE;
+}
+
+static void trayicon_destroy_cb(GtkWidget *widget, gpointer data)
+{
+	g_idle_add(trayicon_restore, data);
 }
 
 #else /* GDK_WINDOWING_X11 */

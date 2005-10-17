@@ -1,3 +1,20 @@
+2005-10-17
+
+	* src/trayicon.c: destroy イベントを正しく処理するようにした(Victor
+	  Ananajevsky さん thanks)。
+
+2005-10-16
+
+	* libsylph/utils.c: open_uri(): win32: URI を ShellExecute() を使って
+	  開くようにした。
+	  libsylph/prefs_common.c
+	  src/prefs_common_dialog.c: win32: デフォルトの URI コマンドを空に
+	  した(既定のブラウザを使用することになる)。
+
+2005-10-16
+
+	* src/mimeview.c: win32: 実行ファイルの起動を抑止。
+
 2005-10-14
 
 	* src/main.c: win32: CreateMutex() を使用して二重起動を防止。
