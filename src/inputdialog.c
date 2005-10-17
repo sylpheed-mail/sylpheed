@@ -45,7 +45,7 @@
 #include "gtkutils.h"
 #include "utils.h"
 
-#define INPUT_DIALOG_WIDTH	420
+#define INPUT_ENTRY_WIDTH	400
 
 typedef enum
 {
@@ -169,7 +169,6 @@ static void input_dialog_create(void)
 
 	dialog = gtk_dialog_new();
 	gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
-	gtk_window_set_default_size(GTK_WINDOW(dialog), INPUT_DIALOG_WIDTH, -1);
 	gtk_container_set_border_width
 		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
@@ -194,11 +193,13 @@ static void input_dialog_create(void)
 
 	entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
+	gtk_widget_set_size_request(entry, INPUT_ENTRY_WIDTH, -1);
 	g_signal_connect(G_OBJECT(entry), "activate",
 			 G_CALLBACK(entry_activated), NULL);
 
 	combo = gtk_combo_new();
 	gtk_box_pack_start(GTK_BOX(vbox), combo, FALSE, FALSE, 0);
+	gtk_widget_set_size_request(combo, INPUT_ENTRY_WIDTH, -1);
 	g_signal_connect(G_OBJECT(GTK_COMBO(combo)->entry), "activate",
 			 G_CALLBACK(combo_activated), NULL);
 
