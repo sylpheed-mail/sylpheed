@@ -308,8 +308,16 @@ static PrefParam param[] = {
 	{"uri_open_command", DEFAULT_BROWSER_CMD, &prefs_common.uri_cmd,
 #endif
 	 P_STRING},
+#ifdef G_OS_WIN32
+	{"print_command", NULL, &prefs_common.print_cmd, P_STRING},
+#else
 	{"print_command", "lpr %s", &prefs_common.print_cmd, P_STRING},
+#endif
+#ifdef G_OS_WIN32
+	{"ext_editor_command", "notepad '%s'", &prefs_common.ext_editor_cmd,
+#else
 	{"ext_editor_command", "gedit %s", &prefs_common.ext_editor_cmd,
+#endif
 	 P_STRING},
 
 	{"add_address_by_click", "FALSE", &prefs_common.add_address_by_click,
