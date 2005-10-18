@@ -1,5 +1,37 @@
 Changes of Sylpheed
 
+* 2.1.4 (development)
+
+    * Bugfixes:
+      - The IMAP4 parser was fixed so that it can handle literals in response.
+      - A bug that caused crashes on receive if Date header has abnormal time
+        was fixed.
+      - Sylpheed will not close anymore even if the tray icon is closed.
+
+      - Win32:
+        o The problem that prevented the rename and move of folders was fixed.
+	o The problem that prevented the creation of temporary files by users
+	  who don't have the write permission of the root directory was fixed.
+	o The action of Drag'n'drop now becomes move.
+    * Feature changes / enhancements:
+      - The directory with multiple hierarchy can be specified when creating
+        a new mailbox.
+      - Error messages are now output to the log window and the log file.
+      - The 'Create filter rule' menu was brought back in the context menu.
+      - The display of the property of top folders was enabled.
+
+      - Win32:
+        o SSL/TLSv1 was supported.
+	o The console window was disabled.
+	o The environmental variable APPDATA is used for the location of
+	  configuration files.
+	o The default browser is used now when opening URL.
+	o The system settings will be used when opening attachments.
+	o The launch of executable files was disabled.
+	o The support of environment-dependent Japanese characters was
+	  enhanced.
+	o The duplicate launch is prohibited now.
+
 * 2.1.3 (development)
 
     * The feature to save all attachments at once was added.
