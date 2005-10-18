@@ -145,6 +145,7 @@ void prefs_filter_open(MsgInfo *msginfo, const gchar *header)
 	prefs_filter_set_dialog();
 
 	gtk_widget_show(rule_list_window.window);
+	manage_window_focus_in(rule_list_window.window, NULL, NULL);
 
 	if (msginfo) {
 		FilterRule *rule;
