@@ -43,7 +43,7 @@ EXIT_FAILURE=1
 
 PROGRAM=ltmain.sh
 PACKAGE=libtool
-VERSION="1.5.20 Debian 1.5.20-1"
+VERSION="1.5.20 Debian 1.5.20-2"
 TIMESTAMP=" (1.1220.2.287 2005/08/31 18:54:15)"
 
 # See if we are running on zsh, and set the options which allow our
