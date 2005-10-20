@@ -2060,7 +2060,13 @@ static void textview_popup_menu_activate_image_cb(GtkMenuItem *menuitem,
 static void textview_adj_value_changed(GtkAdjustment *adj, gpointer data)
 {
 	TextView *textview = (TextView *)data;
+	GtkTextBuffer *buffer;
+	GtkTextIter start, end;
 
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
+	gtk_text_buffer_get_selection_bounds(buffer, &start, &end);
+	if (!gtk_text_iter_equal(&start, &end))
+		return;
 	gtk_text_view_place_cursor_onscreen(GTK_TEXT_VIEW(textview->text));
 }
 
