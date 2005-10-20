@@ -169,15 +169,15 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 			fltinfo->actions[action->type] = TRUE;
 			break;
 		case FLT_ACTION_EXEC:
-			cmdline = g_strconcat(action->str_value, " ", file,
-					      NULL);
+			cmdline = g_strconcat(action->str_value, " \"", file,
+					      "\"", NULL);
 			execute_command_line(cmdline, FALSE);
 			g_free(cmdline);
 			fltinfo->actions[action->type] = TRUE;
 			break;
 		case FLT_ACTION_EXEC_ASYNC:
-			cmdline = g_strconcat(action->str_value, " ", file,
-					      NULL);
+			cmdline = g_strconcat(action->str_value, " \"", file,
+					      "\"", NULL);
 			execute_command_line(cmdline, TRUE);
 			g_free(cmdline);
 			fltinfo->actions[action->type] = TRUE;
@@ -365,7 +365,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		break;
 	case FLT_COND_CMD_TEST:
 		file = procmsg_get_message_file(msginfo);
-		cmdline = g_strconcat(cond->str_value, " ", file, NULL);
+		cmdline = g_strconcat(cond->str_value, " \"", file, "\"", NULL);
 		matched = (execute_command_line(cmdline, FALSE) == 0);
 		g_free(cmdline);
 		g_free(file);
