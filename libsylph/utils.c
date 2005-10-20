@@ -1645,6 +1645,38 @@ gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 	return 0;
 }
 
+static gchar *startup_dir = NULL;
+static gchar *rc_dir = NULL;
+
+void set_startup_dir(void)
+{
+	if (!startup_dir)
+		startup_dir = g_get_current_dir();
+}
+
+void set_rc_dir(const gchar *dir)
+{
+	if (rc_dir)
+		g_free(rc_dir);
+
+	if (dir) {
+		if (g_path_is_absolute(dir))
+			rc_dir = g_strdup(dir);
+		else
+			rc_dir = g_strconcat(get_startup_dir(),
+					     G_DIR_SEPARATOR_S, dir, NULL);
+	} else
+		rc_dir = NULL;
+}
+
+const gchar *get_startup_dir(void)
+{
+	if (!startup_dir)
+		set_startup_dir();
+
+	return startup_dir;
+}
+
 const gchar *get_home_dir(void)
 {
 #ifdef G_OS_WIN32
@@ -1664,8 +1696,6 @@ const gchar *get_home_dir(void)
 
 const gchar *get_rc_dir(void)
 {
-	static gchar *rc_dir = NULL;
-
 	if (!rc_dir) {
 #ifdef G_OS_WIN32
 		const gchar *appdata;

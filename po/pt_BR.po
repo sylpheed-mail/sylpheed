@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 19:02+0900\n"
-"PO-Revision-Date: 2005-09-27 08:30-0300\n"
+"POT-Creation-Date: 2005-10-20 15:13+0900\n"
+"PO-Revision-Date: 2005-10-19 13:24-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: André Casteliano <digitalcoder@users.sourceforge.net> Isaías "
 "V. Prestes <isix@uol.com.br> André Luís Lopes <andrelop@ig.com.br> Debian-BR "
@@ -52,9 +52,9 @@ msgid "Getting message %d"
 msgstr "Buscando mensagem %d"
 
 #: libsylph/imap.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid "Appending messages to %s (%d / %d)"
-msgstr "Adicionando mensagens para %s (%d / %d)"
+msgstr "Adicionando mensagens em %s (%d / %d)"
 
 #: libsylph/imap.c:1304
 #, c-format
@@ -167,9 +167,8 @@ msgid "can't select folder: %s\n"
 msgstr "não posso selecionar pasta: %s\n"
 
 #: libsylph/imap.c:3113
-#, fuzzy
 msgid "error on imap command: STATUS\n"
-msgstr "erro no comando imap: CLOSE\n"
+msgstr "erro no comando imap: STATUS\n"
 
 #: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
@@ -633,12 +632,12 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2323 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "não foi possível modificar as permissões do arquivo\n"
 
-#: libsylph/utils.c:2300 libsylph/utils.c:2424
+#: libsylph/utils.c:2330 libsylph/utils.c:2454
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "erro ao gravar em %s.\n"
@@ -1211,11 +1210,11 @@ msgstr "Endereços comuns"
 msgid "Personal address"
 msgstr "Endereços pessoais"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:523
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
 msgid "Notice"
 msgstr "Notificação"
 
-#: src/alertpanel.c:154 src/main.c:618
+#: src/alertpanel.c:154 src/main.c:628
 msgid "Warning"
 msgstr "Aviso"
 
@@ -2809,16 +2808,16 @@ msgstr "Log do protocolo"
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread não é suportada pela glib.\n"
 
-#: src/main.c:338
+#: src/main.c:347
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uso: %s [OPÇÃO]...\n"
 
-#: src/main.c:341
+#: src/main.c:350
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [endreço]    abre janela de composição"
 
-#: src/main.c:342
+#: src/main.c:351
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2828,23 +2827,23 @@ msgstr ""
 "                         abrir a janela de composição com os arquivos\n"
 "                         especificados anexados"
 
-#: src/main.c:345
+#: src/main.c:354
 msgid "  --receive              receive new messages"
 msgstr "  --receive              recebe novas mensgens"
 
-#: src/main.c:346
+#: src/main.c:355
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          recebe novas mensagens de todas as contas"
 
-#: src/main.c:347
+#: src/main.c:356
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 envia todas as mensagens da fila"
 
-#: src/main.c:348
+#: src/main.c:357
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [pasta]...   mostra o número total de mensagens"
 
-#: src/main.c:349
+#: src/main.c:358
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2852,23 +2851,28 @@ msgstr ""
 "  --status-full [pasta]...\n"
 "                         exibe o status de cada pasta"
 
-#: src/main.c:351
+#: src/main.c:360
+msgid ""
+"  --configdir dirname    specify directory which stores configuration files"
+msgstr ""
+
+#: src/main.c:361
 msgid "  --debug                debug mode"
 msgstr "  --debug                modo debug"
 
-#: src/main.c:352
+#: src/main.c:362
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 exibe esta ajuda e sai"
 
-#: src/main.c:353
+#: src/main.c:363
 msgid "  --version              output version information and exit"
 msgstr "  --version              mostra informação de versão e sai"
 
-#: src/main.c:475
+#: src/main.c:485
 msgid "Filename encoding"
 msgstr "Codificação de nome de arquivo"
 
-#: src/main.c:476
+#: src/main.c:486
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2892,19 +2896,19 @@ msgstr ""
 "\n"
 "Continuar?"
 
-#: src/main.c:524
+#: src/main.c:534
 msgid "Composing message exists. Really quit?"
 msgstr "Ainda há mensagens sendo escritas. Deseja sair?"
 
-#: src/main.c:532
+#: src/main.c:542
 msgid "Queued messages"
 msgstr "Mensagens enviadas para a fila"
 
-#: src/main.c:533
+#: src/main.c:543
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Algumas mensagens não enviadas estão na fila. Sair agora?"
 
-#: src/main.c:619
+#: src/main.c:629
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2913,15 +2917,15 @@ msgstr ""
 "Suporte a OpenPGP desabilitado."
 
 #. remote command mode
-#: src/main.c:758 src/main.c:776
+#: src/main.c:768 src/main.c:786
 msgid "another Sylpheed is already running.\n"
 msgstr "outra cópia do Sylpheed já está sendo executada.\n"
 
-#: src/main.c:977
+#: src/main.c:987
 msgid "Migration of configuration"
 msgstr "Migração da configuração"
 
-#: src/main.c:978
+#: src/main.c:988
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3542,15 +3546,14 @@ msgid "Add mailbox"
 msgstr "Adicionar caixa de correio"
 
 #: src/mainwindow.c:1594
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
 "Informe a localização da caixa de correio.\n"
-"Se uma caixa de correio existente é especificada, ela será\n"
-"mapeada automaticamente."
+"Se uma caixa de correio existente for especificada, ela será\n"
+"analisada automaticamente."
 
 #: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
@@ -3880,7 +3883,7 @@ msgstr ""
 
 #: src/mimeview.c:1135
 msgid "Opening executable file"
-msgstr ""
+msgstr "Abrindo arquivo executável"
 
 #: src/mimeview.c:1136
 msgid ""
@@ -3889,6 +3892,10 @@ msgid ""
 "If you want to launch it, save it to somewhere and make sure it is not an "
 "virus or something like a malicious program."
 msgstr ""
+"Este é um arquivo executável. Abrir um arquivo executável está restrito por "
+"questões de segurança.\n"
+"Se você quer executá-lo, salve-o em algum diretório e certifique-se de que "
+"não seja um vírus ou programa malicioso."
 
 #: src/mimeview.c:1172
 #, c-format
@@ -4975,9 +4982,8 @@ msgstr "Navegador Web"
 
 #: src/prefs_common_dialog.c:2003 src/prefs_common_dialog.c:3398
 #: src/prefs_common_dialog.c:3419
-#, fuzzy
 msgid "(Default browser)"
-msgstr "Caixa de Entrada Padrão"
+msgstr "(Navegador padrão)"
 
 #: src/prefs_common_dialog.c:2063
 msgid "Add address to destination when double-clicked"
@@ -5222,9 +5228,8 @@ msgid "Key bindings"
 msgstr "Atalhos de teclado"
 
 #: src/prefs_common_dialog.c:2895
-#, fuzzy
 msgid "Select the preset of key bindings."
-msgstr " Definir atalhos de teclado... "
+msgstr "Selecione o conjunto pré-definido de mapeamento de teclas."
 
 #: src/prefs_common_dialog.c:2905 src/prefs_common_dialog.c:3229
 msgid "Default"
@@ -5497,9 +5502,8 @@ msgid "General"
 msgstr "Geral"
 
 #: src/prefs_folder_item.c:186
-#, fuzzy
 msgid "Identifier"
-msgstr "Especificador"
+msgstr "Identificador"
 
 #: src/prefs_folder_item.c:218 src/subscribedialog.c:292
 msgid "Type"
@@ -5798,14 +5802,12 @@ msgid "Mailbox setting"
 msgstr "Configuração da caixa de correio"
 
 #: src/setup.c:44
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If you are unsure, just select OK."
 msgstr ""
 "Informe a localização da caixa de correio.\n"
-"Se uma caixa de correio existente é especificada, ela será\n"
-"mapeada automaticamente."
+"Se você não souber, apenas selecione OK."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"

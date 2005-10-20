@@ -60,7 +60,14 @@ void manual_open(ManualLang lang)
 	lang_str = get_lang_str(lang);
 	if (!lang_str) return;
 
-	file_uri = g_strconcat("file://", MANUALDIR,
+	file_uri = g_strconcat("file://",
+#ifdef G_OS_WIN32
+			       get_startup_dir(),
+			       G_DIR_SEPARATOR_S "doc" G_DIR_SEPARATOR_S
+			       "manual",
+#else
+			       MANUALDIR,
+#endif
 			       G_DIR_SEPARATOR_S, lang_str, G_DIR_SEPARATOR_S,
 			       MANUAL_HTML_INDEX, NULL);
 	debug_print("Opening manual: %s\n", file_uri);
@@ -76,7 +83,13 @@ void faq_open(ManualLang lang)
 	lang_str = get_lang_str(lang);
 	if (!lang_str) return;
 
-	file_uri = g_strconcat("file://", FAQDIR,
+	file_uri = g_strconcat("file://",
+#ifdef G_OS_WIN32
+			       get_startup_dir(),
+			       G_DIR_SEPARATOR_S "doc" G_DIR_SEPARATOR_S "faq",
+#else
+			       FAQDIR,
+#endif
 			       G_DIR_SEPARATOR_S, lang_str, G_DIR_SEPARATOR_S,
 			       FAQ_HTML_INDEX, NULL);
 	debug_print("Opening FAQ: %s\n", file_uri);

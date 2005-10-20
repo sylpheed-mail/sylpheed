@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 19:02+0900\n"
+"POT-Creation-Date: 2005-10-20 15:13+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -634,12 +634,12 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2323 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "파일 모드를 바꿀수가 없습니다\n"
 
-#: libsylph/utils.c:2300 libsylph/utils.c:2424
+#: libsylph/utils.c:2330 libsylph/utils.c:2454
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s로 쓰기가 실패했습니다.\n"
@@ -1196,11 +1196,11 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:523
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:154 src/main.c:618
+#: src/alertpanel.c:154 src/main.c:628
 msgid "Warning"
 msgstr "경고"
 
@@ -2829,16 +2829,16 @@ msgstr "프로토콜 로그"
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread가 glib에의해 지원되지않습니다.\n"
 
-#: src/main.c:338
+#: src/main.c:347
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:341
+#: src/main.c:350
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:342
+#: src/main.c:351
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2848,48 +2848,53 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:345
+#: src/main.c:354
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:346
+#: src/main.c:355
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:347
+#: src/main.c:356
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:348
+#: src/main.c:357
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:349
+#: src/main.c:358
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:351
+#: src/main.c:360
+msgid ""
+"  --configdir dirname    specify directory which stores configuration files"
+msgstr ""
+
+#: src/main.c:361
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:352
+#: src/main.c:362
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:353
+#: src/main.c:363
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:475
+#: src/main.c:485
 #, fuzzy
 msgid "Filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/main.c:476
+#: src/main.c:486
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2903,19 +2908,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:524
+#: src/main.c:534
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:532
+#: src/main.c:542
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:533
+#: src/main.c:543
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
-#: src/main.c:619
+#: src/main.c:629
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2924,16 +2929,16 @@ msgstr ""
 "OpenPGP 지원기능을 끕니다."
 
 #. remote command mode
-#: src/main.c:758 src/main.c:776
+#: src/main.c:768 src/main.c:786
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:977
+#: src/main.c:987
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:978
+#: src/main.c:988
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

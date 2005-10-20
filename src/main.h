@@ -24,7 +24,6 @@
 #include <gtk/gtkwidget.h>
 
 extern gchar *prog_version;
-extern gchar *startup_dir;
 
 void app_will_exit	(GtkWidget *widget, gpointer data);
 

@@ -94,7 +94,6 @@
 #include "version.h"
 
 gchar *prog_version;
-gchar *startup_dir;
 
 static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
@@ -105,11 +104,12 @@ static struct RemoteCmd {
 	gboolean compose;
 	const gchar *compose_mailto;
 	GPtrArray *attach_files;
+	gboolean send;
 	gboolean status;
 	gboolean status_full;
 	GPtrArray *status_folders;
 	GPtrArray *status_full_folders;
-	gboolean send;
+	gboolean configdir;
 } cmd;
 
 static void parse_cmd_opt		(int		 argc,
@@ -295,7 +295,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 				if (!cmd.attach_files)
 					cmd.attach_files = g_ptr_array_new();
 				if (*p != G_DIR_SEPARATOR)
-					file = g_strconcat(startup_dir,
+					file = g_strconcat(get_startup_dir(),
 							   G_DIR_SEPARATOR_S,
 							   p, NULL);
 				else
@@ -334,6 +334,15 @@ static void parse_cmd_opt(int argc, char *argv[])
 				i++;
 				p = argv[i + 1];
 			}
+		} else if (!strncmp(argv[i], "--configdir", 11)) {
+			const gchar *p = argv[i + 1];
+
+			if (p && *p != '\0' && *p != '-') {
+				/* this must only be done at startup */
+				cmd.configdir = TRUE;
+				set_rc_dir(p);
+				i++;
+			}
 		} else if (!strncmp(argv[i], "--help", 6)) {
 			g_print(_("Usage: %s [OPTION]...\n"),
 				g_basename(argv[0]));
@@ -348,6 +357,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print("%s\n", _("  --status [folder]...   show the total number of messages"));
 			g_print("%s\n", _("  --status-full [folder]...\n"
 				"                         show the status of each folder"));
+			g_print("%s\n", _("  --configdir dirname    specify directory which stores configuration files"));
 			g_print("%s\n", _("  --debug                debug mode"));
 			g_print("%s\n", _("  --help                 display this help and exit"));
 			g_print("%s\n", _("  --version              output version information and exit"));
@@ -382,11 +392,11 @@ static void app_init(void)
 	setlocale(LC_ALL, "");
 
 	prog_version = PROG_VERSION;
-	startup_dir = g_get_current_dir();
+	set_startup_dir();
 
 #ifdef G_OS_WIN32
 	/* include startup directory into %PATH% for GSpawn */
-	newpath = g_strconcat(startup_dir, ";", g_getenv("PATH"), NULL);
+	newpath = g_strconcat(get_startup_dir(), ";", g_getenv("PATH"), NULL);
 	g_setenv("PATH", newpath, TRUE);
 	g_free(newpath);
 #endif
@@ -396,7 +406,7 @@ static void app_init(void)
 	else {
 		gchar *locale_dir;
 
-		locale_dir = g_strconcat(startup_dir, G_DIR_SEPARATOR_S,
+		locale_dir = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S,
 					 LOCALEDIR, NULL);
 #ifdef G_OS_WIN32
 		{
@@ -452,17 +462,17 @@ static void parse_gtkrc_files(void)
 
 static void setup_rc_dir(void)
 {
+#ifndef G_OS_WIN32
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 
-#ifndef G_OS_WIN32
 	/* backup if old rc file exists */
-	if (is_file_exist(RC_DIR)) {
+	if (!cmd.configdir && is_file_exist(RC_DIR)) {
 		if (rename_force(RC_DIR, RC_DIR ".bak") < 0)
 			FILE_OP_ERROR(RC_DIR, "rename");
 	}
 
 	/* migration from ~/.sylpheed to ~/.sylpheed-2.0 */
-	if (!is_dir_exist(RC_DIR)) {
+	if (!cmd.configdir && !is_dir_exist(RC_DIR)) {
 		const gchar *envstr;
 		AlertValue val;
 
@@ -492,14 +502,14 @@ static void setup_rc_dir(void)
 		if (is_dir_exist(OLD_RC_DIR))
 			migrate_old_config();
 	}
-#else
+#endif /* !G_OS_WIN32 */
+
 	if (!is_dir_exist(get_rc_dir())) {
 		if (make_dir_hier(get_rc_dir()) < 0)
 			exit(1);
 	}
 
 	MAKE_DIR_IF_NOT_EXIST(get_mail_base_dir());
-#endif /* G_OS_WIN32 */
 
 	CHDIR_EXIT_IF_FAIL(get_rc_dir(), 1);
 

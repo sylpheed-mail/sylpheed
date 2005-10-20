@@ -85,7 +85,7 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	if ((cwd = g_hash_table_lookup(path_table, title)) != NULL)
 		change_dir(cwd);
 	else
-		change_dir(startup_dir);
+		change_dir(get_startup_dir());
 
 	dialog = filesel_create(title, action);
 

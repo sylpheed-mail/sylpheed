@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 19:02+0900\n"
+"POT-Creation-Date: 2005-10-20 15:13+0900\n"
 "PO-Revision-Date: 2003-01-17 10:05+0100\n"
 "Last-Translator: Jorge Rivas\n"
 "Language-Team: Jorge Rivas\n"
@@ -630,12 +630,12 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2323 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "non se pode cambiar os permisos de ficheiro\n"
 
-#: libsylph/utils.c:2300 libsylph/utils.c:2424
+#: libsylph/utils.c:2330 libsylph/utils.c:2454
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "fallo escribindo en %s.\n"
@@ -1212,11 +1212,11 @@ msgstr "Enderezo común"
 msgid "Personal address"
 msgstr "Enderezo persoal"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:523
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
 msgid "Notice"
 msgstr "Notificación"
 
-#: src/alertpanel.c:154 src/main.c:618
+#: src/alertpanel.c:154 src/main.c:628
 msgid "Warning"
 msgstr "Aviso"
 
@@ -2853,16 +2853,16 @@ msgstr "Rexistro do protocolo"
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread non está soportado por glib.\n"
 
-#: src/main.c:338
+#: src/main.c:347
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uso: %s [OPCIÓN]...\n"
 
-#: src/main.c:341
+#: src/main.c:350
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [dirección]  abre a fiestra de edición"
 
-#: src/main.c:342
+#: src/main.c:351
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2872,48 +2872,53 @@ msgstr ""
 "                         abre a fiestra de composición con os ficheiros\n"
 "                         especificados como adxuntos"
 
-#: src/main.c:345
+#: src/main.c:354
 msgid "  --receive              receive new messages"
 msgstr "  --receive              recibe as mensaxes novas"
 
-#: src/main.c:346
+#: src/main.c:355
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          recibe novas mensaxes para todas as contas"
 
-#: src/main.c:347
+#: src/main.c:356
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 enviar todas as mensaxes na cola"
 
-#: src/main.c:348
+#: src/main.c:357
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               mostra o número total de mensaxes"
 
-#: src/main.c:349
+#: src/main.c:358
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               mostra o número total de mensaxes"
 
-#: src/main.c:351
+#: src/main.c:360
+msgid ""
+"  --configdir dirname    specify directory which stores configuration files"
+msgstr ""
+
+#: src/main.c:361
 msgid "  --debug                debug mode"
 msgstr "  --debug                modo de depuración"
 
-#: src/main.c:352
+#: src/main.c:362
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 presenta esta axuda e finaliza"
 
-#: src/main.c:353
+#: src/main.c:363
 msgid "  --version              output version information and exit"
 msgstr "  --version              da a información da versión e finaliza"
 
-#: src/main.c:475
+#: src/main.c:485
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Codificación para enviar"
 
-#: src/main.c:476
+#: src/main.c:486
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2927,19 +2932,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:524
+#: src/main.c:534
 msgid "Composing message exists. Really quit?"
 msgstr "Está compoñendo unha mensaxe. ¿Quere sair?"
 
-#: src/main.c:532
+#: src/main.c:542
 msgid "Queued messages"
 msgstr "Mensaxes en cola"
 
-#: src/main.c:533
+#: src/main.c:543
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Hai mensaxes sin enviar na cola. ¿Sair agora?"
 
-#: src/main.c:619
+#: src/main.c:629
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2948,16 +2953,16 @@ msgstr ""
 "Soporte para OpenPGP deshabilitado."
 
 #. remote command mode
-#: src/main.c:758 src/main.c:776
+#: src/main.c:768 src/main.c:786
 msgid "another Sylpheed is already running.\n"
 msgstr "xa hai outro Sylpheed executándose.\n"
 
-#: src/main.c:977
+#: src/main.c:987
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "configuración das accions"
 
-#: src/main.c:978
+#: src/main.c:988
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

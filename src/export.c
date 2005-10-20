@@ -75,7 +75,7 @@ gint export_mbox(FolderItem *default_src)
 	else
 		gtk_widget_show(window);
 
-	change_dir(startup_dir);
+	change_dir(get_startup_dir());
 
 	if (default_src && default_src->path)
 		src_id = folder_item_get_identifier(default_src);

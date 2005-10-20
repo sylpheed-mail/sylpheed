@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-18 19:02+0900\n"
+"POT-Creation-Date: 2005-10-20 15:13+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -634,12 +634,12 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2323 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "Ne morem spremeniti pravic do dostopa do datoteke\n"
 
-#: libsylph/utils.c:2300 libsylph/utils.c:2424
+#: libsylph/utils.c:2330 libsylph/utils.c:2454
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "pisanje v %s ni uspelo.\n"
@@ -1215,11 +1215,11 @@ msgstr "Skupni naslov"
 msgid "Personal address"
 msgstr "Osebni naslov"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:523
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
 msgid "Notice"
 msgstr "Opomba"
 
-#: src/alertpanel.c:154 src/main.c:618
+#: src/alertpanel.c:154 src/main.c:628
 msgid "Warning"
 msgstr "Opozorilo"
 
@@ -2849,16 +2849,16 @@ msgstr "Dnevnik protokola"
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread ni podprt v glib.\n"
 
-#: src/main.c:338
+#: src/main.c:347
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uporaba: %s [MOŽNOST]...\n"
 
-#: src/main.c:341
+#: src/main.c:350
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [naslov]     odpri okno za sestavljanje novega sporočila"
 
-#: src/main.c:342
+#: src/main.c:351
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2868,48 +2868,53 @@ msgstr ""
 "                         odpri okno za sestavljanje s pripetimi\n"
 "                         podanimi datotekami"
 
-#: src/main.c:345
+#: src/main.c:354
 msgid "  --receive              receive new messages"
 msgstr "  --receive              poberi nova sporočila"
 
-#: src/main.c:346
+#: src/main.c:355
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          poberi nova sporočila z vseh računov"
 
-#: src/main.c:347
+#: src/main.c:356
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 pošlji vsa čakajoča sporočila"
 
-#: src/main.c:348
+#: src/main.c:357
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               prikaži skupno število sporočil"
 
-#: src/main.c:349
+#: src/main.c:358
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               prikaži skupno število sporočil"
 
-#: src/main.c:351
+#: src/main.c:360
+msgid ""
+"  --configdir dirname    specify directory which stores configuration files"
+msgstr ""
+
+#: src/main.c:361
 msgid "  --debug                debug mode"
 msgstr "  --debug                razhroščevalni način"
 
-#: src/main.c:352
+#: src/main.c:362
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 prikaži to pomoč in končaj"
 
-#: src/main.c:353
+#: src/main.c:363
 msgid "  --version              output version information and exit"
 msgstr "  --version              prikaži informacijo o različici in končaj"
 
-#: src/main.c:475
+#: src/main.c:485
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Izhodni nabor znakov"
 
-#: src/main.c:476
+#: src/main.c:486
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2923,19 +2928,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:524
+#: src/main.c:534
 msgid "Composing message exists. Really quit?"
 msgstr "Še vedno sestavljate sporočilo. Ali naj res končam?"
 
-#: src/main.c:532
+#: src/main.c:542
 msgid "Queued messages"
 msgstr "Čakajoča sporočila"
 
-#: src/main.c:533
+#: src/main.c:543
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Nekaj neposlamih sporočil je na čakanju. Ali naj končam?"
 
-#: src/main.c:619
+#: src/main.c:629
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2944,16 +2949,16 @@ msgstr ""
 "Podpora za OpenPGP je izključena."
 
 #. remote command mode
-#: src/main.c:758 src/main.c:776
+#: src/main.c:768 src/main.c:786
 msgid "another Sylpheed is already running.\n"
 msgstr "Sylpheed že teče.\n"
 
-#: src/main.c:977
+#: src/main.c:987
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Pišem nastavitve dejanj..\n"
 
-#: src/main.c:978
+#: src/main.c:988
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
