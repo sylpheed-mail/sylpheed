@@ -203,6 +203,9 @@ static void textview_popup_menu_activate_image_cb
 						(GtkMenuItem	*menuitem,
 						 gpointer	 data);
 
+static void textview_adj_value_changed		(GtkAdjustment	*adj,
+						 gpointer	 data);
+
 static void textview_smooth_scroll_do		(TextView	*textview,
 						 gfloat		 old_value,
 						 gfloat		 last_value,
@@ -281,6 +284,10 @@ TextView *textview_create(void)
 			 G_CALLBACK(textview_visibility_notify), textview);
 	g_signal_connect(G_OBJECT(text), "populate-popup",
 			 G_CALLBACK(textview_populate_popup), textview);
+
+	g_signal_connect(G_OBJECT(GTK_TEXT_VIEW(text)->vadjustment),
+			 "value-changed",
+			 G_CALLBACK(textview_adj_value_changed), textview);
 
 	gtk_widget_show(scrolledwin);
 
@@ -1484,10 +1491,16 @@ static void textview_smooth_scroll_do(TextView *textview,
 
 	/* gdk_key_repeat_disable(); */
 
+	g_signal_handlers_block_by_func(vadj, textview_adj_value_changed,
+					textview);
+
 	for (i = step; i <= change_value; i += step) {
 		vadj->value = old_value + (up ? -i : i);
 		g_signal_emit_by_name(G_OBJECT(vadj), "value_changed", 0);
 	}
+
+	g_signal_handlers_unblock_by_func(vadj, textview_adj_value_changed,
+					  textview);
 
 	vadj->value = last_value;
 	g_signal_emit_by_name(G_OBJECT(vadj), "value_changed", 0);
@@ -2042,6 +2055,13 @@ static void textview_popup_menu_activate_image_cb(GtkMenuItem *menuitem,
 	}
 	g_free(filename);
 	g_free(src);
+}
+
+static void textview_adj_value_changed(GtkAdjustment *adj, gpointer data)
+{
+	TextView *textview = (TextView *)data;
+
+	gtk_text_view_place_cursor_onscreen(GTK_TEXT_VIEW(textview->text));
 }
 
 static gboolean textview_uri_security_check(TextView *textview, RemoteURI *uri)
