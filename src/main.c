@@ -97,6 +97,7 @@ gchar *prog_version;
 
 static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
+static GIOChannel *lock_ch = NULL;
 
 static struct RemoteCmd {
 	gboolean receive;
@@ -124,9 +125,9 @@ static void set_log_handlers		(gboolean	 enable);
 static gchar *get_socket_name		(void);
 static gint prohibit_duplicate_launch	(void);
 static gint lock_socket_remove		(void);
-static void lock_socket_input_cb	(gpointer	   data,
-					 gint		   source,
-					 GdkInputCondition condition);
+static gboolean lock_socket_input_cb	(GIOChannel	*source,
+					 GIOCondition	 condition,
+					 gpointer	 data);
 
 static void remote_command_exec		(void);
 static void migrate_old_config		(void);
@@ -228,10 +229,10 @@ int main(int argc, char *argv[])
 
 #ifdef G_OS_UNIX
 	/* register the callback of unix domain socket input */
-	lock_socket_tag = gdk_input_add(lock_socket,
-					GDK_INPUT_READ | GDK_INPUT_EXCEPTION,
-					lock_socket_input_cb,
-					mainwin);
+	lock_ch = g_io_channel_unix_new(lock_socket);
+	lock_socket_tag = g_io_add_watch(lock_ch,
+					 G_IO_IN|G_IO_PRI|G_IO_ERR,
+					 lock_socket_input_cb, mainwin);
 #endif
 
 	set_log_handlers(TRUE);
@@ -861,8 +862,12 @@ static gint lock_socket_remove(void)
 	if (lock_socket < 0) return -1;
 
 	if (lock_socket_tag > 0)
-		gdk_input_remove(lock_socket_tag);
-	fd_close(lock_socket);
+		g_source_remove(lock_socket_tag);
+	if (lock_ch) {
+		g_io_channel_shutdown(lock_ch, FALSE, NULL);
+		g_io_channel_unref(lock_ch);
+		lock_ch = NULL;
+	}
 	filename = get_socket_name();
 	g_unlink(filename);
 #endif
@@ -891,15 +896,15 @@ static GPtrArray *get_folder_item_list(gint sock)
 	return folders;
 }
 
-static void lock_socket_input_cb(gpointer data,
-				 gint source,
-				 GdkInputCondition condition)
+static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
+				     gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
-	gint sock;
+	gint fd, sock;
 	gchar buf[BUFFSIZE];
 
-	sock = fd_accept(source);
+	fd = g_io_channel_unix_get_fd(source);
+	sock = fd_accept(fd);
 	fd_gets(sock, buf, sizeof(buf));
 
 	if (!strncmp(buf, "popup", 5)) {
@@ -944,6 +949,8 @@ static void lock_socket_input_cb(gpointer data,
 	}
 
 	fd_close(sock);
+
+	return TRUE;
 }
 
 static void remote_command_exec(void)
