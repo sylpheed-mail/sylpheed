@@ -4392,7 +4392,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 
 	gtk_tree_view_enable_model_drag_source
 		(GTK_TREE_VIEW(treeview),
-		 0, summary_drag_types, N_DRAG_TYPES,
+		 GDK_BUTTON1_MASK, summary_drag_types, N_DRAG_TYPES,
 		 GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
 	g_signal_connect_after(G_OBJECT(treeview), "drag-begin",
