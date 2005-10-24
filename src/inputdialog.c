@@ -66,7 +66,8 @@ static GtkWidget *combo;
 static GtkWidget *confirm_area;
 static GtkWidget *ok_button;
 
-static void input_dialog_create	(void);
+static void input_dialog_create	(InputDialogType	dialog_type);
+
 static gchar *input_dialog_open	(const gchar	*title,
 				 const gchar	*message,
 				 const gchar	*default_string);
@@ -91,15 +92,10 @@ static void combo_activated	(GtkEditable	*editable);
 gchar *input_dialog(const gchar *title, const gchar *message,
 		    const gchar *default_string)
 {
-	if (dialog && GTK_WIDGET_VISIBLE(dialog)) return NULL;
+	if (dialog)
+		return NULL;
 
-	if (!dialog)
-		input_dialog_create();
-
-	type = INPUT_DIALOG_NORMAL;
-	gtk_widget_hide(combo);
-	gtk_widget_show(entry);
-	gtk_entry_set_visibility(GTK_ENTRY(entry), TRUE);
+	input_dialog_create(INPUT_DIALOG_NORMAL);
 
 	return input_dialog_open(title, message, default_string);
 }
@@ -107,15 +103,10 @@ gchar *input_dialog(const gchar *title, const gchar *message,
 gchar *input_dialog_with_invisible(const gchar *title, const gchar *message,
 				   const gchar *default_string)
 {
-	if (dialog && GTK_WIDGET_VISIBLE(dialog)) return NULL;
+	if (dialog)
+		return NULL;
 
-	if (!dialog)
-		input_dialog_create();
-
-	type = INPUT_DIALOG_INVISIBLE;
-	gtk_widget_hide(combo);
-	gtk_widget_show(entry);
-	gtk_entry_set_visibility(GTK_ENTRY(entry), FALSE);
+	input_dialog_create(INPUT_DIALOG_INVISIBLE);
 
 	return input_dialog_open(title, message, default_string);
 }
@@ -124,14 +115,10 @@ gchar *input_dialog_combo(const gchar *title, const gchar *message,
 			  const gchar *default_string, GList *list,
 			  gboolean case_sensitive)
 {
-	if (dialog && GTK_WIDGET_VISIBLE(dialog)) return NULL;
+	if (dialog)
+		return NULL;
 
-	if (!dialog)
-		input_dialog_create();
-
-	type = INPUT_DIALOG_COMBO;
-	gtk_widget_hide(entry);
-	gtk_widget_show(combo);
+	input_dialog_create(INPUT_DIALOG_COMBO);
 
 	if (!list) {
 		GList empty_list;
@@ -161,7 +148,7 @@ gchar *input_dialog_query_password(const gchar *server, const gchar *user)
 	return pass;
 }
 
-static void input_dialog_create(void)
+static void input_dialog_create(InputDialogType dialog_type)
 {
 	GtkWidget *vbox;
 	GtkWidget *hbox;
@@ -191,17 +178,23 @@ static void input_dialog_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), msg_label, FALSE, FALSE, 0);
 	gtk_label_set_justify(GTK_LABEL(msg_label), GTK_JUSTIFY_LEFT);
 
-	entry = gtk_entry_new();
-	gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
-	gtk_widget_set_size_request(entry, INPUT_ENTRY_WIDTH, -1);
-	g_signal_connect(G_OBJECT(entry), "activate",
-			 G_CALLBACK(entry_activated), NULL);
+	type = dialog_type;
 
-	combo = gtk_combo_new();
-	gtk_box_pack_start(GTK_BOX(vbox), combo, FALSE, FALSE, 0);
-	gtk_widget_set_size_request(combo, INPUT_ENTRY_WIDTH, -1);
-	g_signal_connect(G_OBJECT(GTK_COMBO(combo)->entry), "activate",
-			 G_CALLBACK(combo_activated), NULL);
+	if (dialog_type == INPUT_DIALOG_COMBO) {
+		combo = gtk_combo_new();
+		gtk_box_pack_start(GTK_BOX(vbox), combo, FALSE, FALSE, 0);
+		gtk_widget_set_size_request(combo, INPUT_ENTRY_WIDTH, -1);
+		g_signal_connect(G_OBJECT(GTK_COMBO(combo)->entry), "activate",
+				 G_CALLBACK(combo_activated), NULL);
+	} else {
+		entry = gtk_entry_new();
+		gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
+		gtk_widget_set_size_request(entry, INPUT_ENTRY_WIDTH, -1);
+		g_signal_connect(G_OBJECT(entry), "activate",
+				 G_CALLBACK(entry_activated), NULL);
+		if (dialog_type == INPUT_DIALOG_INVISIBLE)
+			gtk_entry_set_visibility(GTK_ENTRY(entry), FALSE);
+	}
 
 	gtkut_stock_button_set_create(&confirm_area,
 				      &ok_button, GTK_STOCK_OK,
@@ -224,17 +217,12 @@ static gchar *input_dialog_open(const gchar *title, const gchar *message,
 {
 	gchar *str;
 
-	if (dialog && GTK_WIDGET_VISIBLE(dialog)) return NULL;
-
-	if (!dialog)
-		input_dialog_create();
-
 	gtkut_box_set_reverse_order(GTK_BOX(confirm_area),
 				    !prefs_common.comply_gnome_hig);
 	input_dialog_set(title, message, default_string);
-	gtk_widget_show(dialog);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	manage_window_set_transient(GTK_WINDOW(dialog));
+	gtk_widget_show(dialog);
 
 	ack = fin = FALSE;
 
@@ -244,7 +232,6 @@ static gchar *input_dialog_open(const gchar *title, const gchar *message,
 		gtk_main_iteration();
 
 	manage_window_focus_out(dialog, NULL, NULL);
-	gtk_widget_hide(dialog);
 
 	if (ack) {
 		GtkEditable *editable;
@@ -261,6 +248,9 @@ static gchar *input_dialog_open(const gchar *title, const gchar *message,
 		}
 	} else
 		str = NULL;
+
+	gtk_widget_destroy(dialog);
+	dialog = msg_label = entry = combo = confirm_area = ok_button = NULL;
 
 	GTK_EVENTS_FLUSH();
 
