@@ -87,6 +87,9 @@ static gboolean key_pressed	(GtkWidget	*widget,
 				 gpointer	 data);
 static void entry_activated	(GtkEditable	*editable);
 static void combo_activated	(GtkEditable	*editable);
+static gint focus_out		(GtkWidget	*widget,
+				 GdkEventFocus	*event,
+				 gpointer	 data);
 
 
 gchar *input_dialog(const gchar *title, const gchar *message,
@@ -163,6 +166,8 @@ static void input_dialog_create(InputDialogType dialog_type)
 			 G_CALLBACK(delete_event), NULL);
 	g_signal_connect(G_OBJECT(dialog), "key_press_event",
 			 G_CALLBACK(key_pressed), NULL);
+	g_signal_connect(G_OBJECT(dialog), "focus_out_event",
+			 G_CALLBACK(focus_out), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(dialog);
 
 	gtk_widget_realize(dialog);
@@ -323,4 +328,12 @@ static void combo_activated(GtkEditable *editable)
 {
 	ack = TRUE;
 	fin = TRUE;
+}
+
+static gint focus_out(GtkWidget *widget, GdkEventFocus *event, gpointer data)
+{
+#ifdef G_OS_WIN32
+	gtk_window_present(GTK_WINDOW(widget));
+#endif
+	return FALSE;
 }
