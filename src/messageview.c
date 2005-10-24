@@ -366,7 +366,7 @@ MessageView *messageview_create_with_new_window(void)
 	guint n_menu_entries;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), _("Sylpheed - Message View"));
+	gtk_window_set_title(GTK_WINDOW(window), _("Message View - Sylpheed"));
 	gtk_window_set_wmclass(GTK_WINDOW(window), "message_view", "Sylpheed");
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
 	gtk_widget_set_size_request(window, prefs_common.msgwin_width,
@@ -468,6 +468,14 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 		messageview->msginfo = procmsg_msginfo_get_full_info(msginfo);
 		if (!messageview->msginfo)
 			messageview->msginfo = procmsg_msginfo_copy(msginfo);
+	}
+
+	if (messageview->window && msginfo->subject) {
+		gchar *title;
+
+		title = g_strconcat(msginfo->subject, " - Sylpheed", NULL);
+		gtk_window_set_title(GTK_WINDOW(messageview->window), title);
+		g_free(title);
 	}
 	headerview_show(messageview->headerview, messageview->msginfo);
 
