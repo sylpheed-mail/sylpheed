@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-20 15:13+0900\n"
+"POT-Creation-Date: 2005-10-25 17:47+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -329,7 +329,7 @@ msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "디렉토리 %s에서 마지막 숫자 = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:144
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -531,11 +531,7 @@ msgstr "표시 파일을 열수가 없습니다\n"
 msgid "can't fetch message %d\n"
 msgstr "메시지 %d를 가져올 수가 없습니다\n"
 
-#: libsylph/procmsg.c:1164 src/compose.c:953 src/compose.c:1024
-msgid "Can't get text part\n"
-msgstr "텍스트 부분을 얻을 수가 없습니다\n"
-
-#: libsylph/procmsg.c:1207
+#: libsylph/procmsg.c:1243
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "인쇄 명령어가 올바르지않습니다: `%s'\n"
@@ -1196,11 +1192,11 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:534
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:154 src/main.c:628
+#: src/alertpanel.c:154 src/main.c:629
 msgid "Warning"
 msgstr "경고"
 
@@ -1553,6 +1549,10 @@ msgstr "/메시지(_M)/암호화(_E)"
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: 파일이 없습니다\n"
+
+#: src/compose.c:953 src/compose.c:1024
+msgid "Can't get text part\n"
+msgstr "텍스트 부분을 얻을 수가 없습니다\n"
 
 #: src/compose.c:1421
 msgid "Quote mark format error."
@@ -2812,12 +2812,12 @@ msgstr "병합이 취소되었습니다.\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s로부터 %s로 새 메시지를 가져옴...\n"
 
-#: src/inputdialog.c:156
+#: src/inputdialog.c:146
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr ""
 
-#: src/inputdialog.c:158
+#: src/inputdialog.c:148
 msgid "Input password"
 msgstr "암호 입력"
 
@@ -2825,20 +2825,20 @@ msgstr "암호 입력"
 msgid "Protocol log"
 msgstr "프로토콜 로그"
 
-#: src/main.c:192
+#: src/main.c:193
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread가 glib에의해 지원되지않습니다.\n"
 
-#: src/main.c:347
+#: src/main.c:348
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:350
+#: src/main.c:351
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:351
+#: src/main.c:352
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2848,53 +2848,53 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:354
+#: src/main.c:355
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:355
+#: src/main.c:356
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:356
+#: src/main.c:357
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:357
+#: src/main.c:358
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:358
+#: src/main.c:359
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:360
+#: src/main.c:361
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:361
+#: src/main.c:362
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:362
+#: src/main.c:363
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:363
+#: src/main.c:364
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:485
+#: src/main.c:486
 #, fuzzy
 msgid "Filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/main.c:486
+#: src/main.c:487
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2908,19 +2908,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:534
+#: src/main.c:535
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:542
+#: src/main.c:543
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:543
+#: src/main.c:544
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
-#: src/main.c:629
+#: src/main.c:630
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2929,16 +2929,16 @@ msgstr ""
 "OpenPGP 지원기능을 끕니다."
 
 #. remote command mode
-#: src/main.c:768 src/main.c:786
+#: src/main.c:769 src/main.c:787
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:987
+#: src/main.c:994
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:988
+#: src/main.c:995
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3622,7 +3622,7 @@ msgstr ""
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 폴더 보기"
 
-#: src/mainwindow.c:2024 src/messageview.c:369
+#: src/mainwindow.c:2024
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 메시지 보기"
 
@@ -3816,16 +3816,20 @@ msgstr "텍스트"
 msgid "Attachments"
 msgstr "첨부"
 
-#: src/messageview.c:659 src/summaryview.c:2994
+#: src/messageview.c:369
+msgid "Message View - Sylpheed"
+msgstr ""
+
+#: src/messageview.c:667 src/summaryview.c:2994
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "`%s' 파일을 저장할 수가 없습니다."
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
 msgid "Print"
 msgstr "인쇄"
 
-#: src/messageview.c:715 src/summaryview.c:3014
+#: src/messageview.c:723 src/summaryview.c:3014
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3834,7 +3838,7 @@ msgstr ""
 "인쇄 명령어서 입력하세요:\n"
 "(`%s'는 파일이름으로 대체될 것입니다)"
 
-#: src/messageview.c:721 src/summaryview.c:3020
+#: src/messageview.c:729 src/summaryview.c:3020
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5902,7 +5906,7 @@ msgstr "서명이 발견되지않음"
 msgid "Good signature from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:237 src/textview.c:644
+#: src/sigstatus.c:237 src/textview.c:651
 msgid "Good signature"
 msgstr "Good signature"
 
@@ -5911,7 +5915,7 @@ msgstr "Good signature"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:646
+#: src/sigstatus.c:242 src/textview.c:653
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5947,7 +5951,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr ""
 
-#: src/sigstatus.c:260 src/textview.c:648
+#: src/sigstatus.c:260 src/textview.c:655
 msgid "BAD signature"
 msgstr "BAD signature"
 
@@ -6383,45 +6387,45 @@ msgstr "번호"
 msgid "file %s already exists\n"
 msgstr "%s 파일이 이미 존재합니다\n"
 
-#: src/textview.c:244
+#: src/textview.c:247
 msgid "Creating text view...\n"
 msgstr "텍스트 뷰를 생성합니다...\n"
 
-#: src/textview.c:757
+#: src/textview.c:764
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "이 메시지를 받지않을 것입니다\n"
 
-#: src/textview.c:1922
+#: src/textview.c:1896
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/새 이름으로(_S)..."
 
-#: src/textview.c:1938
+#: src/textview.c:1912
 #, fuzzy
 msgid "Compose _new message"
 msgstr "새 메시지를 작성합니다"
 
-#: src/textview.c:1940
+#: src/textview.c:1914
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/주소록에 보낸이 추가(_k)"
 
-#: src/textview.c:1942
+#: src/textview.c:1916
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "공용 주소록"
 
-#: src/textview.c:1945
+#: src/textview.c:1919
 #, fuzzy
 msgid "_Open with Web browser"
 msgstr "웹 탐색기"
 
-#: src/textview.c:1947
+#: src/textview.c:1921
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:2079
+#: src/textview.c:2064
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6430,7 +6434,7 @@ msgid ""
 "Open it anyway?"
 msgstr ""
 
-#: src/textview.c:2084
+#: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr ""
 

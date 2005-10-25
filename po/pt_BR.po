@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-20 15:13+0900\n"
+"POT-Creation-Date: 2005-10-25 17:47+0900\n"
 "PO-Revision-Date: 2005-10-19 13:24-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: André Casteliano <digitalcoder@users.sourceforge.net> Isaías "
@@ -325,7 +325,7 @@ msgstr "Copiando mensagem %s%c%d para %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Último número no diretório %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:144
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -530,11 +530,7 @@ msgstr "não foi possível abrir o arquivo de marcas\n"
 msgid "can't fetch message %d\n"
 msgstr "não posso obter mensagem %d\n"
 
-#: libsylph/procmsg.c:1164 src/compose.c:953 src/compose.c:1024
-msgid "Can't get text part\n"
-msgstr "Não foi possível obter o texto\n"
-
-#: libsylph/procmsg.c:1207
+#: libsylph/procmsg.c:1243
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "O comando de impressão é inválido: `%s'\n"
@@ -1210,11 +1206,11 @@ msgstr "Endereços comuns"
 msgid "Personal address"
 msgstr "Endereços pessoais"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:534
 msgid "Notice"
 msgstr "Notificação"
 
-#: src/alertpanel.c:154 src/main.c:628
+#: src/alertpanel.c:154 src/main.c:629
 msgid "Warning"
 msgstr "Aviso"
 
@@ -1533,6 +1529,10 @@ msgstr "/_Ferramentas/_Encriptar (PGP)"
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: o arquivo não existe\n"
+
+#: src/compose.c:953 src/compose.c:1024
+msgid "Can't get text part\n"
+msgstr "Não foi possível obter o texto\n"
 
 #: src/compose.c:1421
 msgid "Quote mark format error."
@@ -2791,12 +2791,12 @@ msgstr "Incorporação cancelada\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Obtendo novas mensagens de %s até %s...\n"
 
-#: src/inputdialog.c:156
+#: src/inputdialog.c:146
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "Insira a senha para %s em %s:"
 
-#: src/inputdialog.c:158
+#: src/inputdialog.c:148
 msgid "Input password"
 msgstr "Informe a senha"
 
@@ -2804,20 +2804,20 @@ msgstr "Informe a senha"
 msgid "Protocol log"
 msgstr "Log do protocolo"
 
-#: src/main.c:192
+#: src/main.c:193
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread não é suportada pela glib.\n"
 
-#: src/main.c:347
+#: src/main.c:348
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uso: %s [OPÇÃO]...\n"
 
-#: src/main.c:350
+#: src/main.c:351
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [endreço]    abre janela de composição"
 
-#: src/main.c:351
+#: src/main.c:352
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2827,23 +2827,23 @@ msgstr ""
 "                         abrir a janela de composição com os arquivos\n"
 "                         especificados anexados"
 
-#: src/main.c:354
+#: src/main.c:355
 msgid "  --receive              receive new messages"
 msgstr "  --receive              recebe novas mensgens"
 
-#: src/main.c:355
+#: src/main.c:356
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          recebe novas mensagens de todas as contas"
 
-#: src/main.c:356
+#: src/main.c:357
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 envia todas as mensagens da fila"
 
-#: src/main.c:357
+#: src/main.c:358
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [pasta]...   mostra o número total de mensagens"
 
-#: src/main.c:358
+#: src/main.c:359
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2851,28 +2851,28 @@ msgstr ""
 "  --status-full [pasta]...\n"
 "                         exibe o status de cada pasta"
 
-#: src/main.c:360
+#: src/main.c:361
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:361
+#: src/main.c:362
 msgid "  --debug                debug mode"
 msgstr "  --debug                modo debug"
 
-#: src/main.c:362
+#: src/main.c:363
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 exibe esta ajuda e sai"
 
-#: src/main.c:363
+#: src/main.c:364
 msgid "  --version              output version information and exit"
 msgstr "  --version              mostra informação de versão e sai"
 
-#: src/main.c:485
+#: src/main.c:486
 msgid "Filename encoding"
 msgstr "Codificação de nome de arquivo"
 
-#: src/main.c:486
+#: src/main.c:487
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2896,19 +2896,19 @@ msgstr ""
 "\n"
 "Continuar?"
 
-#: src/main.c:534
+#: src/main.c:535
 msgid "Composing message exists. Really quit?"
 msgstr "Ainda há mensagens sendo escritas. Deseja sair?"
 
-#: src/main.c:542
+#: src/main.c:543
 msgid "Queued messages"
 msgstr "Mensagens enviadas para a fila"
 
-#: src/main.c:543
+#: src/main.c:544
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Algumas mensagens não enviadas estão na fila. Sair agora?"
 
-#: src/main.c:629
+#: src/main.c:630
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2917,15 +2917,15 @@ msgstr ""
 "Suporte a OpenPGP desabilitado."
 
 #. remote command mode
-#: src/main.c:768 src/main.c:786
+#: src/main.c:769 src/main.c:787
 msgid "another Sylpheed is already running.\n"
 msgstr "outra cópia do Sylpheed já está sendo executada.\n"
 
-#: src/main.c:987
+#: src/main.c:994
 msgid "Migration of configuration"
 msgstr "Migração da configuração"
 
-#: src/main.c:988
+#: src/main.c:995
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3578,7 +3578,7 @@ msgstr ""
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Visão de Pastas"
 
-#: src/mainwindow.c:2024 src/messageview.c:369
+#: src/mainwindow.c:2024
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Visão de Mensagens"
 
@@ -3768,16 +3768,20 @@ msgstr "Texto"
 msgid "Attachments"
 msgstr "Anexos"
 
-#: src/messageview.c:659 src/summaryview.c:2994
+#: src/messageview.c:369
+msgid "Message View - Sylpheed"
+msgstr ""
+
+#: src/messageview.c:667 src/summaryview.c:2994
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Não foi possível salvar arquivo `%s'."
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
 msgid "Print"
 msgstr "Imprimir"
 
-#: src/messageview.c:715 src/summaryview.c:3014
+#: src/messageview.c:723 src/summaryview.c:3014
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3786,7 +3790,7 @@ msgstr ""
 "Digite o comando de impressão:\n"
 "(`%s' será sustituído pelo arquivo)"
 
-#: src/messageview.c:721 src/summaryview.c:3020
+#: src/messageview.c:729 src/summaryview.c:3020
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5831,7 +5835,7 @@ msgstr "Assinatura não encontrada"
 msgid "Good signature from \"%s\""
 msgstr "Assinatura correta de \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:644
+#: src/sigstatus.c:237 src/textview.c:651
 msgid "Good signature"
 msgstr "Assinatura correta"
 
@@ -5840,7 +5844,7 @@ msgstr "Assinatura correta"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Assinatura válida mas a chave para \"%s\" não é confiável"
 
-#: src/sigstatus.c:242 src/textview.c:646
+#: src/sigstatus.c:242 src/textview.c:653
 msgid "Valid signature (untrusted key)"
 msgstr "Assinatura válida (chave desconfiável)"
 
@@ -5876,7 +5880,7 @@ msgstr "Assinatura válida mas a chave foi revogada"
 msgid "BAD signature from \"%s\""
 msgstr "Assimanatura ERRADA de \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:648
+#: src/sigstatus.c:260 src/textview.c:655
 msgid "BAD signature"
 msgstr "Assinatura ERRADA"
 
@@ -6307,39 +6311,39 @@ msgstr "Não."
 msgid "file %s already exists\n"
 msgstr "arquivo %s já existe\n"
 
-#: src/textview.c:244
+#: src/textview.c:247
 msgid "Creating text view...\n"
 msgstr "Criando visualização do texto...\n"
 
-#: src/textview.c:757
+#: src/textview.c:764
 msgid "This message can't be displayed.\n"
 msgstr "Esta mensagem não pode ser exibida.\n"
 
-#: src/textview.c:1922
+#: src/textview.c:1896
 msgid "Sa_ve this image as..."
 msgstr "_Salvar imagem como..."
 
-#: src/textview.c:1938
+#: src/textview.c:1912
 msgid "Compose _new message"
 msgstr "Escrever _nova mensagem"
 
-#: src/textview.c:1940
+#: src/textview.c:1914
 msgid "Add to address _book..."
 msgstr "Adicionar ao _catálogo de endereços"
 
-#: src/textview.c:1942
+#: src/textview.c:1916
 msgid "Copy this add_ress"
 msgstr "Copiar este _endereço"
 
-#: src/textview.c:1945
+#: src/textview.c:1919
 msgid "_Open with Web browser"
 msgstr "A_brir com o navegador Web"
 
-#: src/textview.c:1947
+#: src/textview.c:1921
 msgid "Copy this _link"
 msgstr "Copiar este _link"
 
-#: src/textview.c:2079
+#: src/textview.c:2064
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6352,7 +6356,7 @@ msgstr ""
 "\n"
 "Abrí-la mesmo assim?"
 
-#: src/textview.c:2084
+#: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr "Aviso de URL falsa"
 

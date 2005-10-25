@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-20 15:13+0900\n"
+"POT-Creation-Date: 2005-10-25 17:47+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -322,7 +322,7 @@ msgstr "メッセージ %s%c%d を %s にコピーしています...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "ディレクトリ %s 内の最後の番号 = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:144
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -527,11 +527,7 @@ msgstr "マークファイルを開けません\n"
 msgid "can't fetch message %d\n"
 msgstr "メッセージ %d を取り込めません\n"
 
-#: libsylph/procmsg.c:1164 src/compose.c:953 src/compose.c:1024
-msgid "Can't get text part\n"
-msgstr "テキストパートを取得できません\n"
-
-#: libsylph/procmsg.c:1207
+#: libsylph/procmsg.c:1243
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "印刷のコマンドラインが無効です: `%s'\n"
@@ -1207,11 +1203,11 @@ msgstr "共有アドレス"
 msgid "Personal address"
 msgstr "個人用アドレス"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:534
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:154 src/main.c:628
+#: src/alertpanel.c:154 src/main.c:629
 msgid "Warning"
 msgstr "警告"
 
@@ -1530,6 +1526,10 @@ msgstr "/ツール(_T)/PGP暗号化(_E)"
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: ファイルが存在しません\n"
+
+#: src/compose.c:953 src/compose.c:1024
+msgid "Can't get text part\n"
+msgstr "テキストパートを取得できません\n"
 
 #: src/compose.c:1421
 msgid "Quote mark format error."
@@ -2783,12 +2783,12 @@ msgstr "受信をキャンセルしました\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "新しいメッセージを %s から %s に取り込んでいます...\n"
 
-#: src/inputdialog.c:156
+#: src/inputdialog.c:146
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "%s (%s) のパスワードを入力してください:"
 
-#: src/inputdialog.c:158
+#: src/inputdialog.c:148
 msgid "Input password"
 msgstr "パスワードの入力"
 
@@ -2796,20 +2796,20 @@ msgstr "パスワードの入力"
 msgid "Protocol log"
 msgstr "プロトコルログ"
 
-#: src/main.c:192
+#: src/main.c:193
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread は glib によってサポートされていません。\n"
 
-#: src/main.c:347
+#: src/main.c:348
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "使用法: %s [オプション]...\n"
 
-#: src/main.c:350
+#: src/main.c:351
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    メッセージ作成ウィンドウを開く"
 
-#: src/main.c:351
+#: src/main.c:352
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2819,23 +2819,23 @@ msgstr ""
 "                         指定したファイルを添付してメッセージ作成\n"
 "                         ウィンドウを開く"
 
-#: src/main.c:354
+#: src/main.c:355
 msgid "  --receive              receive new messages"
 msgstr "  --receive              新着メッセージを受信する"
 
-#: src/main.c:355
+#: src/main.c:356
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          全アカウントの新着メッセージを受信する"
 
-#: src/main.c:356
+#: src/main.c:357
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送信待機中のメッセージをすべて送信する"
 
-#: src/main.c:357
+#: src/main.c:358
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [folder]...   メッセージの総数を表示する"
 
-#: src/main.c:358
+#: src/main.c:359
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2843,28 +2843,28 @@ msgstr ""
 "  --status-full [folder]...\n"
 "                         各フォルダの状態を表示する"
 
-#: src/main.c:360
+#: src/main.c:361
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr "  --configdir dirname    設定ファイルを格納するディレクトリを指定する"
 
-#: src/main.c:361
+#: src/main.c:362
 msgid "  --debug                debug mode"
 msgstr "  --debug                デバッグモード"
 
-#: src/main.c:362
+#: src/main.c:363
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 このヘルプを表示して終了する"
 
-#: src/main.c:363
+#: src/main.c:364
 msgid "  --version              output version information and exit"
 msgstr "  --version              バージョン情報を出力して終了する"
 
-#: src/main.c:485
+#: src/main.c:486
 msgid "Filename encoding"
 msgstr "ファイル名エンコーディング"
 
-#: src/main.c:486
+#: src/main.c:487
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2887,19 +2887,19 @@ msgstr ""
 "\n"
 "続行しますか?"
 
-#: src/main.c:534
+#: src/main.c:535
 msgid "Composing message exists. Really quit?"
 msgstr "作成中のメッセージが存在します。本当に終了しますか?"
 
-#: src/main.c:542
+#: src/main.c:543
 msgid "Queued messages"
 msgstr "送信待機中のメッセージ"
 
-#: src/main.c:543
+#: src/main.c:544
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "送信待機中の未送信メッセージがあります。終了しますか?"
 
-#: src/main.c:629
+#: src/main.c:630
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2908,15 +2908,15 @@ msgstr ""
 "OpenPGP サポートは無効です。"
 
 #. remote command mode
-#: src/main.c:768 src/main.c:786
+#: src/main.c:769 src/main.c:787
 msgid "another Sylpheed is already running.\n"
 msgstr "別の Sylpheed がすでに起動しています。\n"
 
-#: src/main.c:987
+#: src/main.c:994
 msgid "Migration of configuration"
 msgstr "設定の移行"
 
-#: src/main.c:988
+#: src/main.c:995
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3569,7 +3569,7 @@ msgstr ""
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - フォルダビュー"
 
-#: src/mainwindow.c:2024 src/messageview.c:369
+#: src/mainwindow.c:2024
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - メッセージビュー"
 
@@ -3759,16 +3759,20 @@ msgstr "テキスト"
 msgid "Attachments"
 msgstr "添付"
 
-#: src/messageview.c:659 src/summaryview.c:2994
+#: src/messageview.c:369
+msgid "Message View - Sylpheed"
+msgstr "メッセージビュー - Sylpheed"
+
+#: src/messageview.c:667 src/summaryview.c:2994
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
 msgid "Print"
 msgstr "印刷"
 
-#: src/messageview.c:715 src/summaryview.c:3014
+#: src/messageview.c:723 src/summaryview.c:3014
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3777,7 +3781,7 @@ msgstr ""
 "印刷コマンドを入力してください:\n"
 "(`%s' はファイル名で置き換えられます)"
 
-#: src/messageview.c:721 src/summaryview.c:3020
+#: src/messageview.c:729 src/summaryview.c:3020
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5814,7 +5818,7 @@ msgstr "署名がありません"
 msgid "Good signature from \"%s\""
 msgstr "差出人 \"%s\" の正当な署名"
 
-#: src/sigstatus.c:237 src/textview.c:644
+#: src/sigstatus.c:237 src/textview.c:651
 msgid "Good signature"
 msgstr "正当な署名"
 
@@ -5823,7 +5827,7 @@ msgstr "正当な署名"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "有効な署名ですが \"%s\" の鍵は信用されていません"
 
-#: src/sigstatus.c:242 src/textview.c:646
+#: src/sigstatus.c:242 src/textview.c:653
 msgid "Valid signature (untrusted key)"
 msgstr "有効な署名 (信用されていない鍵)"
 
@@ -5859,7 +5863,7 @@ msgstr "署名は有効ですが署名鍵が失効しています"
 msgid "BAD signature from \"%s\""
 msgstr "差出人 \"%s\" の不正な署名"
 
-#: src/sigstatus.c:260 src/textview.c:648
+#: src/sigstatus.c:260 src/textview.c:655
 msgid "BAD signature"
 msgstr "不正な署名"
 
@@ -6290,39 +6294,39 @@ msgstr "番号"
 msgid "file %s already exists\n"
 msgstr "ファイル %s はすでに存在します\n"
 
-#: src/textview.c:244
+#: src/textview.c:247
 msgid "Creating text view...\n"
 msgstr "テキストビューを作成中...\n"
 
-#: src/textview.c:757
+#: src/textview.c:764
 msgid "This message can't be displayed.\n"
 msgstr "このメッセージは表示できません。\n"
 
-#: src/textview.c:1922
+#: src/textview.c:1896
 msgid "Sa_ve this image as..."
 msgstr "画像を保存(_V)..."
 
-#: src/textview.c:1938
+#: src/textview.c:1912
 msgid "Compose _new message"
 msgstr "新規メッセージを作成(_N)"
 
-#: src/textview.c:1940
+#: src/textview.c:1914
 msgid "Add to address _book..."
 msgstr "アドレス帳に追加(_B)..."
 
-#: src/textview.c:1942
+#: src/textview.c:1916
 msgid "Copy this add_ress"
 msgstr "アドレスをコピー(_R)"
 
-#: src/textview.c:1945
+#: src/textview.c:1919
 msgid "_Open with Web browser"
 msgstr "Webブラウザで開く(_O)"
 
-#: src/textview.c:1947
+#: src/textview.c:1921
 msgid "Copy this _link"
 msgstr "リンクをコピー(_L)"
 
-#: src/textview.c:2079
+#: src/textview.c:2064
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6335,6 +6339,6 @@ msgstr ""
 "\n"
 "とにかく開きますか?"
 
-#: src/textview.c:2084
+#: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr "偽装URLの警告"

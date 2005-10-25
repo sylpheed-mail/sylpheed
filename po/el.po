@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-20 15:13+0900\n"
+"POT-Creation-Date: 2005-10-25 17:47+0900\n"
 "PO-Revision-Date: 2001-10-08\n"
 "Last-Translator: Michalis Kabrianis <Michalis@bigfoot.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -328,7 +328,7 @@ msgstr "Αντιγράφω το μήνυμα %s%c%d στο %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Τελευταίος αριθμός στον κατάλογο %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:144
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -533,11 +533,7 @@ msgstr "δεν μπορώ να ανοίξω το αρχείο mark\n"
 msgid "can't fetch message %d\n"
 msgstr "δεν μπορώ να λάβω το μήνυμα %d\n"
 
-#: libsylph/procmsg.c:1164 src/compose.c:953 src/compose.c:1024
-msgid "Can't get text part\n"
-msgstr "Δεν μπορώ να λάβω το τμήμα κειμένου\n"
-
-#: libsylph/procmsg.c:1207
+#: libsylph/procmsg.c:1243
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Η εντολή εκτύπωσης είναι άκυρη: `%s'\n"
@@ -1216,11 +1212,11 @@ msgstr "Κοινές διευθύνσεις"
 msgid "Personal address"
 msgstr "Προσωπικές διευθύνσεις"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:534
 msgid "Notice"
 msgstr "Σημείωση"
 
-#: src/alertpanel.c:154 src/main.c:628
+#: src/alertpanel.c:154 src/main.c:629
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
@@ -1585,6 +1581,10 @@ msgstr "/Μήνυμα/Κρυπτογράφηση"
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: το αρχείο δεν υπάρχει\n"
+
+#: src/compose.c:953 src/compose.c:1024
+msgid "Can't get text part\n"
+msgstr "Δεν μπορώ να λάβω το τμήμα κειμένου\n"
 
 #: src/compose.c:1421
 msgid "Quote mark format error."
@@ -2885,12 +2885,12 @@ msgstr "Λήψη νέου mail"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Λαμβάνω νέα μηνύματα από το %s στο %s...\n"
 
-#: src/inputdialog.c:156
+#: src/inputdialog.c:146
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "Εισάγετε κωδικό για %s σε %s:"
 
-#: src/inputdialog.c:158
+#: src/inputdialog.c:148
 msgid "Input password"
 msgstr "Δώστε τον κωδικό"
 
@@ -2898,74 +2898,74 @@ msgstr "Δώστε τον κωδικό"
 msgid "Protocol log"
 msgstr "Καταγραφή πρωτοκόλλου"
 
-#: src/main.c:192
+#: src/main.c:193
 msgid "g_thread is not supported by glib.\n"
 msgstr "το g_thread δεν υποστηρίζεται από την glib.\n"
 
-#: src/main.c:347
+#: src/main.c:348
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Χρήση: %s [ΕΠΙΛΟΓΗ]...\n"
 
-#: src/main.c:350
+#: src/main.c:351
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [διεύθυνση]  άνοιγμα παραθύρου σύνθεσης"
 
-#: src/main.c:351
+#: src/main.c:352
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
 "                         attached"
 msgstr ""
 
-#: src/main.c:354
+#: src/main.c:355
 msgid "  --receive              receive new messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:355
+#: src/main.c:356
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          λήψη νέων μηνυμάτων όλων των λογαριασμών"
 
-#: src/main.c:356
+#: src/main.c:357
 #, fuzzy
 msgid "  --send                 send all queued messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:357
+#: src/main.c:358
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:358
+#: src/main.c:359
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:360
+#: src/main.c:361
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:361
+#: src/main.c:362
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:362
+#: src/main.c:363
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 εμφάνιση αυτού του κειμένου και έξοδος"
 
-#: src/main.c:363
+#: src/main.c:364
 msgid "  --version              output version information and exit"
 msgstr "  --version              εμφάνιση της έκδοσης και έξοδος"
 
-#: src/main.c:485
+#: src/main.c:486
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Κωδικοσελίδα εξερχομένων"
 
-#: src/main.c:486
+#: src/main.c:487
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2979,19 +2979,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:534
+#: src/main.c:535
 msgid "Composing message exists. Really quit?"
 msgstr "Υπάρχει παράθυρο σύνθεσης μηνύματος. Να κλείσω;"
 
-#: src/main.c:542
+#: src/main.c:543
 msgid "Queued messages"
 msgstr "Μηνύματα στην ουρά"
 
-#: src/main.c:543
+#: src/main.c:544
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Μερικά μηνύματα δεν έχουν σταλεί και είναι στην ουρά. Να κλείσω;"
 
-#: src/main.c:629
+#: src/main.c:630
 #, fuzzy
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
@@ -3001,16 +3001,16 @@ msgstr ""
 "Απενεργοποιείται η υποστήριξη OpenPGP."
 
 #. remote command mode
-#: src/main.c:768 src/main.c:786
+#: src/main.c:769 src/main.c:787
 msgid "another Sylpheed is already running.\n"
 msgstr "ένα άλλο Sylpheed τρέχει ήδη.\n"
 
-#: src/main.c:987
+#: src/main.c:994
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Γράφω τις ρυθμίσεις των φίλτρων...\n"
 
-#: src/main.c:988
+#: src/main.c:995
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3764,7 +3764,7 @@ msgstr ""
 msgid "Sylpheed - Folder View"
 msgstr ""
 
-#: src/mainwindow.c:2024 src/messageview.c:369
+#: src/mainwindow.c:2024
 msgid "Sylpheed - Message View"
 msgstr ""
 
@@ -3970,16 +3970,20 @@ msgstr "Κείμενο"
 msgid "Attachments"
 msgstr "Προσάρτηση"
 
-#: src/messageview.c:659 src/summaryview.c:2994
+#: src/messageview.c:369
+msgid "Message View - Sylpheed"
+msgstr ""
+
+#: src/messageview.c:667 src/summaryview.c:2994
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: src/messageview.c:715 src/summaryview.c:3014
+#: src/messageview.c:723 src/summaryview.c:3014
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3988,7 +3992,7 @@ msgstr ""
 "Εισάγετε την γραμμή εντολής εκτύπωσης:\n"
 "(Το `%s' θα αντικατασταθεί με το όνομα αρχείου)"
 
-#: src/messageview.c:721 src/summaryview.c:3020
+#: src/messageview.c:729 src/summaryview.c:3020
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6107,7 +6111,7 @@ msgstr "Δεν βρέθηκε υπογραφή"
 msgid "Good signature from \"%s\""
 msgstr "Αποδεκτή υπογραφή από \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:644
+#: src/sigstatus.c:237 src/textview.c:651
 msgid "Good signature"
 msgstr "Αποδεκτή υπογραφή"
 
@@ -6116,7 +6120,7 @@ msgstr "Αποδεκτή υπογραφή"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:646
+#: src/sigstatus.c:242 src/textview.c:653
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -6153,7 +6157,7 @@ msgstr ""
 msgid "BAD signature from \"%s\""
 msgstr "Λάθος υπογραφή από \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:648
+#: src/sigstatus.c:260 src/textview.c:655
 msgid "BAD signature"
 msgstr "Λάθος υπογραφή"
 
@@ -6611,44 +6615,44 @@ msgstr "Αρ."
 msgid "file %s already exists\n"
 msgstr "το %s υπάρχει ήδη"
 
-#: src/textview.c:244
+#: src/textview.c:247
 msgid "Creating text view...\n"
 msgstr "Δημιουργώ απεικόνιση κειμένου...\n"
 
-#: src/textview.c:757
+#: src/textview.c:764
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "ένα μήνυμα δεν θα παραληφθεί\n"
 
-#: src/textview.c:1922
+#: src/textview.c:1896
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/Αποθήκευση ως..."
 
-#: src/textview.c:1938
+#: src/textview.c:1912
 #, fuzzy
 msgid "Compose _new message"
 msgstr "Σύνθεση νέου μηνύματος"
 
-#: src/textview.c:1940
+#: src/textview.c:1914
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/Προσθήκη αποστολέα στον κατάλογο διευθύνσεων"
 
-#: src/textview.c:1942
+#: src/textview.c:1916
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "Κοινές διευθύνσεις"
 
-#: src/textview.c:1945
+#: src/textview.c:1919
 msgid "_Open with Web browser"
 msgstr ""
 
-#: src/textview.c:1947
+#: src/textview.c:1921
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:2079
+#: src/textview.c:2064
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6657,7 +6661,7 @@ msgid ""
 "Open it anyway?"
 msgstr ""
 
-#: src/textview.c:2084
+#: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr ""
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.9.8 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-20 15:13+0900\n"
+"POT-Creation-Date: 2005-10-25 17:47+0900\n"
 "PO-Revision-Date: 2005-03-05 18:57+0100\n"
 "Last-Translator: Wit Wilinski <madman at linux dot bydg dot org>\n"
 "Language-Team: POLISH <pl@li.org>\n"
@@ -322,7 +322,7 @@ msgstr "Kopiowanie wiadomości %s%c%d do %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Ostatni numer w katalogu %s = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:144
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -522,11 +522,7 @@ msgstr "nie można otworzyć pliku zaznaczeń\n"
 msgid "can't fetch message %d\n"
 msgstr "nie można pobrać wiadomości %d\n"
 
-#: libsylph/procmsg.c:1164 src/compose.c:953 src/compose.c:1024
-msgid "Can't get text part\n"
-msgstr "Nie mogę pobrać części tekstu\n"
-
-#: libsylph/procmsg.c:1207
+#: libsylph/procmsg.c:1243
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Błędny wiersz polecenia wydruku: \"%s\"\n"
@@ -1209,11 +1205,11 @@ msgstr "Wspólny adres:"
 msgid "Personal address"
 msgstr "Osobisty adres:"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:533
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:534
 msgid "Notice"
 msgstr "Notatka"
 
-#: src/alertpanel.c:154 src/main.c:628
+#: src/alertpanel.c:154 src/main.c:629
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
@@ -1532,6 +1528,10 @@ msgstr "/_Narzędzia/Szyfrowani_e GPG"
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: brak pliku\n"
+
+#: src/compose.c:953 src/compose.c:1024
+msgid "Can't get text part\n"
+msgstr "Nie mogę pobrać części tekstu\n"
 
 #: src/compose.c:1421
 msgid "Quote mark format error."
@@ -2789,12 +2789,12 @@ msgstr "Odbieranie anulowano\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Pobieranie wiadomości z %s do %s...\n"
 
-#: src/inputdialog.c:156
+#: src/inputdialog.c:146
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "Wprowadź hasło dla %s na %s:"
 
-#: src/inputdialog.c:158
+#: src/inputdialog.c:148
 msgid "Input password"
 msgstr "Wprowadź hasło"
 
@@ -2802,20 +2802,20 @@ msgstr "Wprowadź hasło"
 msgid "Protocol log"
 msgstr "Dziennik protokołu"
 
-#: src/main.c:192
+#: src/main.c:193
 msgid "g_thread is not supported by glib.\n"
 msgstr "Bibltioteka glib nie obsługuje wywołania g_thread.\n"
 
-#: src/main.c:347
+#: src/main.c:348
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Użycie: %s [OPCJE]...\n"
 
-#: src/main.c:350
+#: src/main.c:351
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adres]      otwiera okno tworzenia wiadomości"
 
-#: src/main.c:351
+#: src/main.c:352
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2825,23 +2825,23 @@ msgstr ""
 "                         otwiera okno tworzenia wiadomości z plikami,\n"
 "                         które mają zostać dołączone"
 
-#: src/main.c:354
+#: src/main.c:355
 msgid "  --receive              receive new messages"
 msgstr "  --receive              odbiera nowe wiadomości"
 
-#: src/main.c:355
+#: src/main.c:356
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          odbiera nowe wiadomości dla wszystkich kont"
 
-#: src/main.c:356
+#: src/main.c:357
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 wysyła wszystkie skolejkowane wiadomości"
 
-#: src/main.c:357
+#: src/main.c:358
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [katalog]...    pokazuje łączną liczbę wiadomości"
 
-#: src/main.c:358
+#: src/main.c:359
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2849,30 +2849,30 @@ msgstr ""
 "  --status-full [katalog]...\n"
 "                         pokazuje łączną liczbę wiadomości"
 
-#: src/main.c:360
+#: src/main.c:361
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:361
+#: src/main.c:362
 msgid "  --debug                debug mode"
 msgstr "  --debug                tryb debugowania"
 
-#: src/main.c:362
+#: src/main.c:363
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 wyświetla tę pomoc i wychodzi"
 
-#: src/main.c:363
+#: src/main.c:364
 msgid "  --version              output version information and exit"
 msgstr ""
 "  --version              wyświetla informację o wersji i kończy działanie"
 
-#: src/main.c:485
+#: src/main.c:486
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Kodowanie wyjściowe"
 
-#: src/main.c:486
+#: src/main.c:487
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2886,19 +2886,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:534
+#: src/main.c:535
 msgid "Composing message exists. Really quit?"
 msgstr "Tworzenie nowej wiadomości. Czy zakończyć?"
 
-#: src/main.c:542
+#: src/main.c:543
 msgid "Queued messages"
 msgstr "Skolejkowane wiadomości"
 
-#: src/main.c:543
+#: src/main.c:544
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Niektóre niewysłane wiadomości zostały skolejkowane. Czy wyjść?"
 
-#: src/main.c:629
+#: src/main.c:630
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2907,15 +2907,15 @@ msgstr ""
 "wersja jest zbyt stara. Obsługa OpenPGP została wyłączona."
 
 #. remote command mode
-#: src/main.c:768 src/main.c:786
+#: src/main.c:769 src/main.c:787
 msgid "another Sylpheed is already running.\n"
 msgstr "Jest już uruchomiona kopia programu Sylpheed.\n"
 
-#: src/main.c:987
+#: src/main.c:994
 msgid "Migration of configuration"
 msgstr "Migracja ustawień"
 
-#: src/main.c:988
+#: src/main.c:995
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3574,7 +3574,7 @@ msgstr ""
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Widok Katalogów"
 
-#: src/mainwindow.c:2024 src/messageview.c:369
+#: src/mainwindow.c:2024
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Widok Wiadomości"
 
@@ -3765,16 +3765,20 @@ msgstr "Tekst"
 msgid "Attachments"
 msgstr "Załączniki"
 
-#: src/messageview.c:659 src/summaryview.c:2994
+#: src/messageview.c:369
+msgid "Message View - Sylpheed"
+msgstr ""
+
+#: src/messageview.c:667 src/summaryview.c:2994
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Nie można zapisać pliku \"%s\"."
 
-#: src/messageview.c:714 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
 msgid "Print"
 msgstr "Drukuj"
 
-#: src/messageview.c:715 src/summaryview.c:3014
+#: src/messageview.c:723 src/summaryview.c:3014
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3783,7 +3787,7 @@ msgstr ""
 "Podaj polecenie wydruku:\n"
 "(\"%s\" zostanie zastąpione nazwą pliku)"
 
-#: src/messageview.c:721 src/summaryview.c:3020
+#: src/messageview.c:729 src/summaryview.c:3020
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5835,7 +5839,7 @@ msgstr "Nie znaleziono podpisu"
 msgid "Good signature from \"%s\""
 msgstr "Poprawny podpis od \"%s\""
 
-#: src/sigstatus.c:237 src/textview.c:644
+#: src/sigstatus.c:237 src/textview.c:651
 msgid "Good signature"
 msgstr "Poprawny podpis"
 
@@ -5844,7 +5848,7 @@ msgstr "Poprawny podpis"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr ""
 
-#: src/sigstatus.c:242 src/textview.c:646
+#: src/sigstatus.c:242 src/textview.c:653
 msgid "Valid signature (untrusted key)"
 msgstr ""
 
@@ -5880,7 +5884,7 @@ msgstr "Podpis poprawny, ale klucz został unieważniony"
 msgid "BAD signature from \"%s\""
 msgstr "NIEPOPRAWNY podpis od \"%s\""
 
-#: src/sigstatus.c:260 src/textview.c:648
+#: src/sigstatus.c:260 src/textview.c:655
 msgid "BAD signature"
 msgstr "ZŁY podpis"
 
@@ -6335,43 +6339,43 @@ msgstr "Nr"
 msgid "file %s already exists\n"
 msgstr "plik %s już istnieje\n"
 
-#: src/textview.c:244
+#: src/textview.c:247
 msgid "Creating text view...\n"
 msgstr "Tworzenie widoku tekstowego...\n"
 
-#: src/textview.c:757
+#: src/textview.c:764
 msgid "This message can't be displayed.\n"
 msgstr "Ta wiadomość nie może zostać wyświetlona.\n"
 
-#: src/textview.c:1922
+#: src/textview.c:1896
 msgid "Sa_ve this image as..."
 msgstr "Zapi_sz grafikę jako..."
 
-#: src/textview.c:1938
+#: src/textview.c:1912
 #, fuzzy
 msgid "Compose _new message"
 msgstr "Utwórz nową wiadomość"
 
-#: src/textview.c:1940
+#: src/textview.c:1914
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/Dodaj nadawcę do _książki adresowej"
 
-#: src/textview.c:1942
+#: src/textview.c:1916
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "Kopiuj ten _link"
 
-#: src/textview.c:1945
+#: src/textview.c:1919
 #, fuzzy
 msgid "_Open with Web browser"
 msgstr "Przeglądarka Web"
 
-#: src/textview.c:1947
+#: src/textview.c:1921
 msgid "Copy this _link"
 msgstr "Kopiuj ten _link"
 
-#: src/textview.c:2079
+#: src/textview.c:2064
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6380,7 +6384,7 @@ msgid ""
 "Open it anyway?"
 msgstr ""
 
-#: src/textview.c:2084
+#: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr ""
 
