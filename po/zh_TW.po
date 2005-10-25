@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: sylpheed 2.0.1\n"
+"Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-25 17:47+0900\n"
-"PO-Revision-Date: 2005-09-08 17:11+0800\n"
+"POT-Creation-Date: 2005-10-18 19:02+0900\n"
+"PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -47,29 +47,29 @@ msgid "Can't start TLS session.\n"
 msgstr "無法開啟 TLS 連線\n"
 
 #: libsylph/imap.c:1095
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %d"
-msgstr "刪除第 %d 號郵件"
+msgstr "擷取第 %d 號郵件"
 
 #: libsylph/imap.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid "Appending messages to %s (%d / %d)"
-msgstr "送出新郵件 (%d / %d 位元組)"
+msgstr "附加郵件至 %s (%d / %d)"
 
 #: libsylph/imap.c:1304
-#, fuzzy, c-format
+#, c-format
 msgid "Moving messages %s to %s ..."
-msgstr "正在複製訊息 %s%c%d 到 %s ...\n"
+msgstr "正在移動郵件 %s 到 %s ..."
 
 #: libsylph/imap.c:1310
-#, fuzzy, c-format
+#, c-format
 msgid "Copying messages %s to %s ..."
-msgstr "正在複製訊息 %s%c%d 到 %s ...\n"
+msgstr "正在複製郵件 %s 到 %s ..."
 
 #: libsylph/imap.c:1461
-#, fuzzy, c-format
+#, c-format
 msgid "Removing messages %s"
-msgstr "從 %s 中取得郵件中..."
+msgstr "正在移除郵件 %s"
 
 #: libsylph/imap.c:1467
 #, c-format
@@ -81,9 +81,9 @@ msgid "can't expunge\n"
 msgstr "無法刪除\n"
 
 #: libsylph/imap.c:1558
-#, fuzzy, c-format
+#, c-format
 msgid "Removing all messages in %s"
-msgstr "您確定要清除所有被刪除的郵件？"
+msgstr "正在移除 %s 中的所有郵件"
 
 #: libsylph/imap.c:1564
 msgid "can't set deleted flags: 1:*\n"
@@ -134,9 +134,9 @@ msgid "can't get envelope\n"
 msgstr "無法取得信封。\n"
 
 #: libsylph/imap.c:2312
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message headers (%d / %d)"
-msgstr "送出新郵件 (%d / %d 位元組)"
+msgstr "擷取郵件表頭 (%d / %d)"
 
 #: libsylph/imap.c:2322
 msgid "error occurred while getting envelope.\n"
@@ -167,9 +167,8 @@ msgid "can't select folder: %s\n"
 msgstr "無法選擇資料夾：%s\n"
 
 #: libsylph/imap.c:3113
-#, fuzzy
 msgid "error on imap command: STATUS\n"
-msgstr "imap 發生錯誤，命令為： CLOSE\n"
+msgstr "發生錯誤的 imap 命令： STATUS\n"
 
 #: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
@@ -326,7 +325,7 @@ msgstr "正在複製訊息 %s%c%d 到 %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "目錄 %s 中最後的編號 = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:144
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -530,7 +529,11 @@ msgstr "無法開啟標示的檔案 \n"
 msgid "can't fetch message %d\n"
 msgstr "無法擷取郵件 %d\n"
 
-#: libsylph/procmsg.c:1243
+#: libsylph/procmsg.c:1164 src/compose.c:953 src/compose.c:1024
+msgid "Can't get text part\n"
+msgstr "沒有文字部份\n"
+
+#: libsylph/procmsg.c:1207
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "列印命令錯誤：「%s」\n"
@@ -628,12 +631,12 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2323 src/compose.c:2712 src/compose.c:2971
+#: libsylph/utils.c:2293 src/compose.c:2712 src/compose.c:2971
 #: src/compose.c:3034 src/compose.c:3154
 msgid "can't change file mode\n"
 msgstr "無法改變檔案型態\n"
 
-#: libsylph/utils.c:2330 libsylph/utils.c:2454
+#: libsylph/utils.c:2300 libsylph/utils.c:2424
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "寫入到 %s 的動作失敗。\n"
@@ -1199,11 +1202,11 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:534
+#: src/alertpanel.c:141 src/compose.c:5236 src/main.c:523
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:154 src/main.c:629
+#: src/alertpanel.c:154 src/main.c:618
 msgid "Warning"
 msgstr "警告"
 
@@ -1523,10 +1526,6 @@ msgstr "/工具(_T)/PGP 加密(_E)"
 msgid "%s: file not exist\n"
 msgstr "%s: 檔案不存在\n"
 
-#: src/compose.c:953 src/compose.c:1024
-msgid "Can't get text part\n"
-msgstr "沒有文字部份\n"
-
 #: src/compose.c:1421
 msgid "Quote mark format error."
 msgstr "引言格式錯誤。"
@@ -1573,7 +1572,7 @@ msgid " [Edited]"
 msgstr " [已修改]"
 
 #: src/compose.c:2370
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Compose%s"
 msgstr "%s - 編寫郵件%s"
 
@@ -2191,9 +2190,8 @@ msgid "Overwrite existing file?"
 msgstr "您要取代已存在的檔案嗎？"
 
 #: src/filesel.c:159
-#, fuzzy
 msgid "Select directory"
-msgstr "選擇資料夾"
+msgstr "選擇目錄"
 
 #: src/foldersel.c:230
 msgid "Select folder"
@@ -2399,7 +2397,6 @@ msgid "Empty trash"
 msgstr "清空刪除的郵件"
 
 #: src/folderview.c:2231
-#, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "您確定要清除所有被刪除的郵件？"
 
@@ -2581,14 +2578,13 @@ msgid "Finish"
 msgstr "完成"
 
 #: src/inc.c:157
-#, fuzzy, c-format
+#, c-format
 msgid "Sylpheed: %d new messages"
-msgstr "完成（%d 封新郵件）"
+msgstr "Sylpheed: %d 封新郵件"
 
 #: src/inc.c:161
-#, fuzzy
 msgid "Sylpheed"
-msgstr "舊設定"
+msgstr "Sylpheed"
 
 #: src/inc.c:358
 msgid "Retrieving new messages"
@@ -2779,12 +2775,12 @@ msgstr "動作已取消\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "從 %s 中取得郵件放入 %s...\n"
 
-#: src/inputdialog.c:146
+#: src/inputdialog.c:156
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "請輸入 %s 在 %s 上的密碼："
 
-#: src/inputdialog.c:148
+#: src/inputdialog.c:158
 msgid "Input password"
 msgstr "輸入密碼"
 
@@ -2792,20 +2788,20 @@ msgstr "輸入密碼"
 msgid "Protocol log"
 msgstr "通訊協定紀錄"
 
-#: src/main.c:193
+#: src/main.c:192
 msgid "g_thread is not supported by glib.\n"
 msgstr "glib 不支援 g_thread。\n"
 
-#: src/main.c:348
+#: src/main.c:338
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "用法：%s [選項]...\n"
 
-#: src/main.c:351
+#: src/main.c:341
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [郵件地址]   直接開啟撰寫郵件視窗"
 
-#: src/main.c:352
+#: src/main.c:342
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2814,50 +2810,45 @@ msgstr ""
 "  --attach 檔案1 [檔案2]...\n"
 "                         開啟撰寫郵件視窗，並將指定的檔案附加上去"
 
-#: src/main.c:355
+#: src/main.c:345
 msgid "  --receive              receive new messages"
 msgstr "  --receive              直接接收新郵件"
 
-#: src/main.c:356
+#: src/main.c:346
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          直接接收所有帳號的新郵件"
 
-#: src/main.c:357
+#: src/main.c:347
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送出所有暫存資料夾中的郵件"
 
-#: src/main.c:358
+#: src/main.c:348
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [資料夾]...   顯示資料夾內總共有多少郵件"
 
-#: src/main.c:359
+#: src/main.c:349
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status-full [資料夾]...     顯示每個資料夾中有多少郵件"
 
-#: src/main.c:361
-msgid ""
-"  --configdir dirname    specify directory which stores configuration files"
-msgstr ""
-
-#: src/main.c:362
+#: src/main.c:351
 msgid "  --debug                debug mode"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:363
+#: src/main.c:352
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 顯示本說明並離開"
 
-#: src/main.c:364
+#: src/main.c:353
 msgid "  --version              output version information and exit"
 msgstr "  --version              顯示版本資訊"
 
-#: src/main.c:486
+#: src/main.c:475
 msgid "Filename encoding"
 msgstr "檔案名稱編碼"
 
-#: src/main.c:487
+#: src/main.c:476
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2878,19 +2869,19 @@ msgstr ""
 "\n"
 "要繼續嗎？"
 
-#: src/main.c:535
+#: src/main.c:524
 msgid "Composing message exists. Really quit?"
 msgstr "有郵件正在編輯。確定要離開嗎？"
 
-#: src/main.c:543
+#: src/main.c:532
 msgid "Queued messages"
 msgstr "有未送出郵件"
 
-#: src/main.c:544
+#: src/main.c:533
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "有些郵件正在暫存資料夾中尚未送出。確定要離開嗎？"
 
-#: src/main.c:630
+#: src/main.c:619
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2899,15 +2890,15 @@ msgstr ""
 "關閉 OpenPGP 支援項目。"
 
 #. remote command mode
-#: src/main.c:769 src/main.c:787
+#: src/main.c:758 src/main.c:776
 msgid "another Sylpheed is already running.\n"
 msgstr "已經有 Sylpheed 程式正在執行中。\n"
 
-#: src/main.c:994
+#: src/main.c:977
 msgid "Migration of configuration"
 msgstr "設定資料轉移"
 
-#: src/main.c:995
+#: src/main.c:978
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3065,9 +3056,8 @@ msgid "/_View/_Sort/by _date"
 msgstr "/顯示(_V)/排序(_S)/用日期排序(_D)"
 
 #: src/mainwindow.c:532
-#, fuzzy
 msgid "/_View/_Sort/by t_hread date"
-msgstr "/顯示(_V)/排序(_S)/用日期排序(_D)"
+msgstr "/顯示(_V)/排序(_S)/用串列日期排序(_H)"
 
 #: src/mainwindow.c:533
 msgid "/_View/_Sort/by _from"
@@ -3521,7 +3511,6 @@ msgid "Empty all trash"
 msgstr "清空刪除的郵件"
 
 #: src/mainwindow.c:1565
-#, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "您確定要清除所有被刪除的郵件？"
 
@@ -3530,15 +3519,14 @@ msgid "Add mailbox"
 msgstr "新增信箱"
 
 #: src/mainwindow.c:1594
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
 "請輸入信箱的地址。\n"
-"並請注意不要輸入已存在的信箱名稱。\n"
-"系統將會自動判別是否信箱已存在。"
+"並請注意不要輸入已存在的信箱名稱，\n"
+"系統會自動判別是否它已存在。"
 
 #: src/mainwindow.c:1600 src/setup.c:49
 #, c-format
@@ -3562,7 +3550,7 @@ msgstr ""
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 資料夾檢視"
 
-#: src/mainwindow.c:2024
+#: src/mainwindow.c:2024 src/messageview.c:369
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 郵件列表"
 
@@ -3752,20 +3740,16 @@ msgstr "文字"
 msgid "Attachments"
 msgstr "附加檔"
 
-#: src/messageview.c:369
-msgid "Message View - Sylpheed"
-msgstr ""
-
-#: src/messageview.c:667 src/summaryview.c:2994
+#: src/messageview.c:659 src/summaryview.c:2994
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案「%s」。"
 
-#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:714 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
 msgid "Print"
 msgstr "列印"
 
-#: src/messageview.c:723 src/summaryview.c:3014
+#: src/messageview.c:715 src/summaryview.c:3014
 #, c-format
 msgid ""
 "Enter the print command line:\n"
@@ -3774,7 +3758,7 @@ msgstr ""
 "請輸入列印指令：\n"
 "（「%s」將會被置換為檔名）"
 
-#: src/messageview.c:729 src/summaryview.c:3020
+#: src/messageview.c:721 src/summaryview.c:3020
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -3800,9 +3784,8 @@ msgid "/_Save as..."
 msgstr "另存新檔(_S)..."
 
 #: src/mimeview.c:132
-#, fuzzy
 msgid "/Save _all..."
-msgstr "另存新檔(_S)..."
+msgstr "全部存檔(_A)..."
 
 #: src/mimeview.c:135
 msgid "/_Check signature"
@@ -3851,12 +3834,11 @@ msgstr "檢查數位簽章(_C)"
 #: src/mimeview.c:959 src/mimeview.c:1026 src/mimeview.c:1059
 #: src/mimeview.c:1082
 msgid "Can't save the part of multipart message."
-msgstr "無法儲存這個附加檔。"
+msgstr "無法儲存部份的多重郵件。"
 
 #: src/mimeview.c:1039
-#, fuzzy
 msgid "Can't save the attachments."
-msgstr "無法儲存檔案「%s」。"
+msgstr "無法儲存附加檔案。"
 
 #: src/mimeview.c:1092
 msgid "Open with"
@@ -3873,7 +3855,7 @@ msgstr ""
 
 #: src/mimeview.c:1135
 msgid "Opening executable file"
-msgstr ""
+msgstr "正在開啟可執行的檔案"
 
 #: src/mimeview.c:1136
 msgid ""
@@ -3882,6 +3864,9 @@ msgid ""
 "If you want to launch it, save it to somewhere and make sure it is not an "
 "virus or something like a malicious program."
 msgstr ""
+"這是個可執行檔。基於安全問題，開啟可執行的檔案是被禁止的。\n"
+"如果您要執行它，請將它存於其他地方並且確定它並非是病毒或者"
+"某種心懷不軌的程式。"
 
 #: src/mimeview.c:1172
 #, c-format
@@ -4714,18 +4699,16 @@ msgstr "字型"
 
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1305
-#, fuzzy
 msgid "Folder View"
-msgstr "資料夾"
+msgstr "資料夾檢視"
 
 #: src/prefs_common_dialog.c:1313
 msgid "Display unread number next to folder name"
 msgstr "若有未讀郵件，就顯示在資料夾名稱後面"
 
 #: src/prefs_common_dialog.c:1315
-#, fuzzy
 msgid "Display message number columns in the folder view"
-msgstr "若有未讀郵件，就顯示在資料夾名稱後面"
+msgstr "在資料夾檢視中顯示郵件編號欄"
 
 #: src/prefs_common_dialog.c:1324
 msgid "Abbreviate newsgroups longer than"
@@ -4956,9 +4939,8 @@ msgstr "瀏覽器"
 
 #: src/prefs_common_dialog.c:2003 src/prefs_common_dialog.c:3398
 #: src/prefs_common_dialog.c:3419
-#, fuzzy
 msgid "(Default browser)"
-msgstr "預設的收件夾"
+msgstr "(預設的瀏覽器)"
 
 #: src/prefs_common_dialog.c:2063
 msgid "Add address to destination when double-clicked"
@@ -5200,9 +5182,8 @@ msgid "Key bindings"
 msgstr "熱鍵設定"
 
 #: src/prefs_common_dialog.c:2895
-#, fuzzy
 msgid "Select the preset of key bindings."
-msgstr "設定熱鍵..."
+msgstr "選擇事先設定的按鍵組合。"
 
 #: src/prefs_common_dialog.c:2905 src/prefs_common_dialog.c:3229
 msgid "Default"
@@ -5475,9 +5456,8 @@ msgid "General"
 msgstr "一般"
 
 #: src/prefs_folder_item.c:186
-#, fuzzy
 msgid "Identifier"
-msgstr "特殊符號"
+msgstr "識別符號"
 
 #: src/prefs_folder_item.c:218 src/subscribedialog.c:292
 msgid "Type"
@@ -5775,14 +5755,12 @@ msgid "Mailbox setting"
 msgstr "信箱設定"
 
 #: src/setup.c:44
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If you are unsure, just select OK."
 msgstr ""
 "請輸入信箱的地址。\n"
-"並請注意不要輸入已存在的信箱名稱。\n"
-"系統將會自動判別是否信箱已存在。"
+"如果您不確定，就只要選擇「確定」。"
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -5806,7 +5784,7 @@ msgstr "未發現簽章"
 msgid "Good signature from \"%s\""
 msgstr "來自\"%s\" 的簽章檢查正確"
 
-#: src/sigstatus.c:237 src/textview.c:651
+#: src/sigstatus.c:237 src/textview.c:644
 msgid "Good signature"
 msgstr "簽章檢查正確"
 
@@ -5815,7 +5793,7 @@ msgstr "簽章檢查正確"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "此簽章是有效的，不過 \"%s\" 的金鑰不可信。"
 
-#: src/sigstatus.c:242 src/textview.c:653
+#: src/sigstatus.c:242 src/textview.c:646
 msgid "Valid signature (untrusted key)"
 msgstr "簽章有效 (不可信的金鑰)"
 
@@ -5851,7 +5829,7 @@ msgstr "此簽章是有效的，不過 \"%s\" 的金鑰已撤消"
 msgid "BAD signature from \"%s\""
 msgstr "來自 \"%s\" 的簽章檢查錯誤"
 
-#: src/sigstatus.c:260 src/textview.c:655
+#: src/sigstatus.c:260 src/textview.c:648
 msgid "BAD signature"
 msgstr "簽章檢查錯誤"
 
@@ -6019,29 +5997,24 @@ msgid "/Add sender to address boo_k..."
 msgstr "/將寄信人加入通訊錄(_K)..."
 
 #: src/summaryview.c:409
-#, fuzzy
 msgid "/Create f_ilter rule"
-msgstr "/工具(_T)/產生郵件過濾規則(_C)"
+msgstr "/產生郵件過濾規則(_I)"
 
 #: src/summaryview.c:410
-#, fuzzy
 msgid "/Create f_ilter rule/_Automatically"
-msgstr "/工具(_T)/產生郵件過濾規則(_C)/自動產生"
+msgstr "/產生郵件過濾規則(_I)/自動產生(_A)"
 
 #: src/summaryview.c:412
-#, fuzzy
 msgid "/Create f_ilter rule/by _From"
-msgstr "/工具(_T)/產生郵件過濾規則(_C)/依來源(_F)"
+msgstr "/產生郵件過濾規則(_I)/依來源(_F)"
 
 #: src/summaryview.c:414
-#, fuzzy
 msgid "/Create f_ilter rule/by _To"
-msgstr "/工具(_T)/產生郵件過濾規則(_C)/依收信人(_T)"
+msgstr "/產生郵件過濾規則(_I)/依收信人(_T)"
 
 #: src/summaryview.c:416
-#, fuzzy
 msgid "/Create f_ilter rule/by _Subject"
-msgstr "/工具(_T)/產生郵件過濾規則(_C)/依主旨(_S)"
+msgstr "/產生郵件過濾規則(_I)/依主旨(_S)"
 
 #: src/summaryview.c:422
 msgid "/_View/_Source"
@@ -6287,39 +6260,39 @@ msgstr "No."
 msgid "file %s already exists\n"
 msgstr "檔案 %s 已存在。\n"
 
-#: src/textview.c:247
+#: src/textview.c:244
 msgid "Creating text view...\n"
 msgstr "產生文字視窗...\n"
 
-#: src/textview.c:764
+#: src/textview.c:757
 msgid "This message can't be displayed.\n"
 msgstr "無法顯示郵件。\n"
 
-#: src/textview.c:1896
+#: src/textview.c:1922
 msgid "Sa_ve this image as..."
 msgstr "圖片另存新檔(_V)..."
 
-#: src/textview.c:1912
+#: src/textview.c:1938
 msgid "Compose _new message"
 msgstr "編寫新郵件(_N)"
 
-#: src/textview.c:1914
+#: src/textview.c:1940
 msgid "Add to address _book..."
 msgstr "將寄信人加入通訊錄(_B)..."
 
-#: src/textview.c:1916
+#: src/textview.c:1942
 msgid "Copy this add_ress"
 msgstr "複製此通訊地址(_R)"
 
-#: src/textview.c:1919
+#: src/textview.c:1945
 msgid "_Open with Web browser"
 msgstr "以瀏覽器開啟(_O)"
 
-#: src/textview.c:1921
+#: src/textview.c:1947
 msgid "Copy this _link"
 msgstr "複製此連接(_L)"
 
-#: src/textview.c:2064
+#: src/textview.c:2079
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6331,38 +6304,6 @@ msgstr ""
 "\n"
 "確定要開啟嗎？"
 
-#: src/textview.c:2069
+#: src/textview.c:2084
 msgid "Fake URL warning"
 msgstr "假的 URL 警告訊息"
-
-#~ msgid ""
-#~ "First, you have to set the location of mailbox.\n"
-#~ "You can use existing mailbox in MH format\n"
-#~ "if you have the one.\n"
-#~ "If you're not sure, just select OK."
-#~ msgstr ""
-#~ "首先，您必須選擇您存放郵件的位置。\n"
-#~ "如果您已經有了一個 MH 格式的信箱，您可以\n"
-#~ "直接使用。\n"
-#~ "如果您不確定有沒有，請直接按下「確定」。"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "請選擇要使用的熱鍵。\n"
-#~ "您也可以更改每個目錄的熱鍵，您只需要將滑鼠指標指過去，\n"
-#~ "並按下任何鍵即可。"
-
-#~ msgid "Compose message%s"
-#~ msgstr "編寫郵件%s"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "將標頭名稱翻譯出來 (諸如「來源：」、「主旨：」)"
-
-#~ msgid "Empty messages in all trash?"
-#~ msgstr "您確定要清除所有被刪除的郵件？"
-
-#~ msgid "Font selection"
-#~ msgstr "選擇字型"
