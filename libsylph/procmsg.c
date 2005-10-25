@@ -1229,7 +1229,7 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 	fclose(tmpfp);
 
 #ifdef G_OS_WIN32
-	if (canonicaize_file_replace(prtmp) < 0) {
+	if (canonicalize_file_replace(prtmp) < 0) {
 		g_free(prtmp);
 		return;
 	}
