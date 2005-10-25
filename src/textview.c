@@ -1235,58 +1235,20 @@ void textview_set_position(TextView *textview, gint pos)
 static GPtrArray *textview_scan_header(TextView *textview, FILE *fp,
 				       const gchar *encoding)
 {
-	gchar buf[BUFFSIZE];
-	GPtrArray *headers, *sorted_headers;
-	GSList *disphdr_list;
-	Header *header;
-	gint i;
-
 	g_return_val_if_fail(fp != NULL, NULL);
 
 	if (textview->show_all_headers)
 		return procheader_get_header_array_asis(fp, encoding);
 
 	if (!prefs_common.display_header) {
+		gchar buf[BUFFSIZE];
+
 		while (fgets(buf, sizeof(buf), fp) != NULL)
 			if (buf[0] == '\r' || buf[0] == '\n') break;
 		return NULL;
 	}
 
-	headers = procheader_get_header_array_asis(fp, encoding);
-
-	sorted_headers = g_ptr_array_new();
-
-	for (disphdr_list = prefs_common.disphdr_list; disphdr_list != NULL;
-	     disphdr_list = disphdr_list->next) {
-		DisplayHeaderProp *dp =
-			(DisplayHeaderProp *)disphdr_list->data;
-
-		for (i = 0; i < headers->len; i++) {
-			header = g_ptr_array_index(headers, i);
-
-			if (!g_ascii_strcasecmp(header->name, dp->name)) {
-				if (dp->hidden)
-					procheader_header_free(header);
-				else
-					g_ptr_array_add(sorted_headers, header);
-
-				g_ptr_array_remove_index(headers, i);
-				i--;
-			}
-		}
-	}
-
-	if (prefs_common.show_other_header) {
-		for (i = 0; i < headers->len; i++) {
-			header = g_ptr_array_index(headers, i);
-			g_ptr_array_add(sorted_headers, header);
-		}
-		g_ptr_array_free(headers, TRUE);
-	} else
-		procheader_header_array_destroy(headers);
-
-
-	return sorted_headers;
+	return procheader_get_header_array_for_display(fp, encoding);
 }
 
 static void textview_show_header(TextView *textview, GPtrArray *headers)
@@ -1300,12 +1262,12 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 	g_return_if_fail(headers != NULL);
 
 	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_buffer_get_end_iter(buffer, &iter);
 
 	for (i = 0; i < headers->len; i++) {
 		header = g_ptr_array_index(headers, i);
 		g_return_if_fail(header->name != NULL);
 
-		gtk_text_buffer_get_end_iter(buffer, &iter);
 		gtk_text_buffer_insert_with_tags_by_name
 			(buffer, &iter, header->name, -1,
 			 "header_title", "header", NULL);
@@ -1323,7 +1285,6 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 		    (!strncmp(header->name, "X-Mailer", 8) ||
 		     !strncmp(header->name, "X-Newsreader", 12)) &&
 		    strstr(header->body, "Sylpheed") != NULL) {
-			gtk_text_buffer_get_end_iter(buffer, &iter);
 			gtk_text_buffer_insert_with_tags_by_name
 				(buffer, &iter, header->body, -1,
 				 "header", "emphasis", NULL);
@@ -1334,7 +1295,7 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 			textview_make_clickable_parts
 				(textview, "header", NULL, header->body);
 		}
-		gtk_text_buffer_get_end_iter(buffer, &iter); //
+		gtk_text_buffer_get_end_iter(buffer, &iter);
 		gtk_text_buffer_insert_with_tags_by_name
 			(buffer, &iter, "\n", 1, "header", NULL);
 	}

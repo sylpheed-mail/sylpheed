@@ -15,6 +15,7 @@ libsylph_la_SOURCES = \
 	base64.c base64.h \
 	codeconv.c codeconv.h \
 	customheader.c customheader.h \
+	displayheader.c displayheader.h \
 	filter.c filter.h \
 	folder.c folder.h \
 	html.c html.h \

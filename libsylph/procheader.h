@@ -65,6 +65,9 @@ GPtrArray *procheader_get_header_array		(FILE		*fp,
 						 const gchar	*encoding);
 GPtrArray *procheader_get_header_array_asis	(FILE		*fp,
 						 const gchar	*encoding);
+GPtrArray *procheader_get_header_array_for_display
+						(FILE		*fp,
+						 const gchar	*encoding);
 void procheader_header_array_destroy		(GPtrArray	*harray);
 
 void procheader_header_free			(Header		*header);

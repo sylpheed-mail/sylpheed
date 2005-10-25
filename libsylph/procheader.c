@@ -32,6 +32,7 @@
 #include "procheader.h"
 #include "procmsg.h"
 #include "codeconv.h"
+#include "displayheader.h"
 #include "prefs_common.h"
 #include "utils.h"
 
@@ -352,6 +353,52 @@ GPtrArray *procheader_get_header_array_asis(FILE *fp, const gchar *encoding)
 	}
 
 	return headers;
+}
+
+GPtrArray *procheader_get_header_array_for_display(FILE *fp,
+						   const gchar *encoding)
+{
+	GPtrArray *headers, *sorted_headers;
+	GSList *disphdr_list;
+	Header *header;
+	gint i;
+
+	g_return_val_if_fail(fp != NULL, NULL);
+
+	headers = procheader_get_header_array_asis(fp, encoding);
+
+	sorted_headers = g_ptr_array_new();
+
+	for (disphdr_list = prefs_common.disphdr_list; disphdr_list != NULL;
+	     disphdr_list = disphdr_list->next) {
+		DisplayHeaderProp *dp =
+			(DisplayHeaderProp *)disphdr_list->data;
+
+		for (i = 0; i < headers->len; i++) {
+			header = g_ptr_array_index(headers, i);
+
+			if (!g_ascii_strcasecmp(header->name, dp->name)) {
+				if (dp->hidden)
+					procheader_header_free(header);
+				else
+					g_ptr_array_add(sorted_headers, header);
+
+				g_ptr_array_remove_index(headers, i);
+				i--;
+			}
+		}
+	}
+
+	if (prefs_common.show_other_header) {
+		for (i = 0; i < headers->len; i++) {
+			header = g_ptr_array_index(headers, i);
+			g_ptr_array_add(sorted_headers, header);
+		}
+		g_ptr_array_free(headers, TRUE);
+	} else
+		procheader_header_array_destroy(headers);
+
+	return sorted_headers;
 }
 
 void procheader_header_list_destroy(GSList *hlist)

@@ -1153,15 +1153,17 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 	static const gchar *def_cmd = "lpr %s";
 	static guint id = 0;
 	gchar *prtmp;
-	FILE *tmpfp, *prfp;
+	FILE *msgfp, *tmpfp, *prfp;
+	GPtrArray *headers;
+	gint i;
 	gchar buf[1024];
 	gchar *p;
 
-	g_return_if_fail(msginfo);
+	g_return_if_fail(msginfo != NULL);
 
 	if ((tmpfp = procmime_get_first_text_content
 		(msginfo, conv_get_locale_charset_str())) == NULL) {
-		g_warning(_("Can't get text part\n"));
+		g_warning("Can't get text part\n");
 		return;
 	}
 
@@ -1175,23 +1177,50 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 		return;
 	}
 
-#define OUTPUT_HEADER(s, fmt)						 \
-	if (s) {							 \
-		gchar *locale_str;					 \
-		locale_str = conv_codeset_strdup			 \
-			(s, CS_INTERNAL, conv_get_locale_charset_str()); \
-		fprintf(prfp, fmt, locale_str ? locale_str : s);	 \
-		g_free(locale_str);					 \
+	if ((msgfp = procmsg_open_message(msginfo)) == NULL) {
+		fclose(prfp);
+		g_free(prtmp);
+		fclose(tmpfp);
+		return;
 	}
 
-	OUTPUT_HEADER(msginfo->date, "Date: %s\n");
-	OUTPUT_HEADER(msginfo->from, "From: %s\n");
-	OUTPUT_HEADER(msginfo->to, "To: %s\n");
-	OUTPUT_HEADER(msginfo->newsgroups, "Newsgroups: %s\n");
-	OUTPUT_HEADER(msginfo->subject, "Subject: %s\n");
-	fputc('\n', prfp);
+	headers = procheader_get_header_array_for_display(msgfp, NULL);
+	fclose(msgfp);
 
-#undef OUTPUT_HEADER
+	for (i = 0; i < headers->len; i++) {
+		Header *hdr;
+		gchar *locale_str;
+		const gchar *body;
+
+		hdr = g_ptr_array_index(headers, i);
+
+		if (!g_ascii_strcasecmp(hdr->name, "Subject"))
+			body = msginfo->subject;
+		else if (!g_ascii_strcasecmp(hdr->name, "From"))
+			body = msginfo->from;
+		else if (!g_ascii_strcasecmp(hdr->name, "To"))
+			body = msginfo->to;
+		else if (!g_ascii_strcasecmp(hdr->name, "Cc")) {
+			unfold_line(hdr->body);
+			body = hdr->body;
+			while (g_ascii_isspace(*body))
+				body++;
+		} else {
+			body = hdr->body;
+			while (g_ascii_isspace(*body))
+				body++;
+		}
+
+		locale_str = conv_codeset_strdup
+			(body, CS_INTERNAL, conv_get_locale_charset_str());
+		fprintf(prfp, "%s: %s\n", hdr->name,
+			locale_str ? locale_str : body);
+		g_free(locale_str);
+	}
+
+	procheader_header_array_destroy(headers);
+
+	fputc('\n', prfp);
 
 	while (fgets(buf, sizeof(buf), tmpfp) != NULL)
 		fputs(buf, prfp);
