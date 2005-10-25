@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-25 17:47+0900\n"
+"POT-Creation-Date: 2005-10-25 18:36+0900\n"
 "PO-Revision-Date: 2002-10-02 09:08+0300\n"
 "Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -1260,7 +1260,7 @@ msgstr "Pruun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4219
+#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4226
 msgid "None"
 msgstr "Mittemiski"
 
@@ -1734,7 +1734,7 @@ msgstr "MIME tüüp"
 
 #. S_COL_DATE
 #: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4373
 msgid "Size"
 msgstr "Suurus"
 
@@ -3574,7 +3574,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "PeaAken: värvi haldamine %d ebaõnnestus\n"
 
 #: src/mainwindow.c:1068 src/summaryview.c:2070 src/summaryview.c:2155
-#: src/summaryview.c:3443 src/summaryview.c:3564 src/summaryview.c:3875
+#: src/summaryview.c:3450 src/summaryview.c:3571 src/summaryview.c:3882
 msgid "done.\n"
 msgstr "tehtud.\n"
 
@@ -3848,20 +3848,20 @@ msgstr ""
 msgid "Can't save the file `%s'."
 msgstr "Ei suuda faili '%s' salvestada."
 
-#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:726 src/summaryview.c:3017
+msgid "The message will be printed with the following command:"
+msgstr ""
+
+#: src/messageview.c:727 src/summaryview.c:3018
+#, fuzzy
+msgid "(Default print command)"
+msgstr "Käivita"
+
+#: src/messageview.c:729 src/prefs_common_dialog.c:2019 src/summaryview.c:3020
 msgid "Print"
 msgstr "Trüki"
 
-#: src/messageview.c:723 src/summaryview.c:3014
-#, c-format
-msgid ""
-"Enter the print command line:\n"
-"(`%s' will be replaced with file name)"
-msgstr ""
-"Sisesta trükkimise käsurida:\n"
-"(%s asendatakse failinimega)"
-
-#: src/messageview.c:729 src/summaryview.c:3020
+#: src/messageview.c:738 src/summaryview.c:3029
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5672,17 +5672,17 @@ msgid "Attachment"
 msgstr "Manus"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4359
+#: src/prefs_summary_column.c:73 src/summaryview.c:4366
 msgid "Subject"
 msgstr "Pealkiri"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4362
+#: src/prefs_summary_column.c:74 src/summaryview.c:4369
 msgid "From"
 msgstr "Kellelt"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4364
+#: src/prefs_summary_column.c:75 src/summaryview.c:4371
 msgid "Date"
 msgstr "Kuupäev"
 
@@ -6406,33 +6406,33 @@ msgstr "Kiri %d on määratud kopeerimisele %s-i\n"
 msgid "Destination for copy is same as current folder."
 msgstr "Kopeerimise sihtpunkt on sama mis aktiivne kaust."
 
-#: src/summaryview.c:3057
+#: src/summaryview.c:3064
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/summaryview.c:3358 src/summaryview.c:3359
+#: src/summaryview.c:3365 src/summaryview.c:3366
 msgid "Building threads..."
 msgstr "Loon teemad..."
 
-#: src/summaryview.c:3501 src/summaryview.c:3502
+#: src/summaryview.c:3508 src/summaryview.c:3509
 msgid "Unthreading..."
 msgstr "Eemaldan teemad..."
 
-#: src/summaryview.c:3851
+#: src/summaryview.c:3858
 msgid "filtering..."
 msgstr "filtreerin..."
 
-#: src/summaryview.c:3852
+#: src/summaryview.c:3859
 msgid "Filtering..."
 msgstr "Filtreerin..."
 
-#: src/summaryview.c:3882
+#: src/summaryview.c:3889
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "kiri %d on juba salvestatud.\n"
 
-#: src/summaryview.c:4368
+#: src/summaryview.c:4375
 msgid "No."
 msgstr "Ei."
 
@@ -6491,6 +6491,13 @@ msgstr ""
 #: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "Enter the print command line:\n"
+#~ "(`%s' will be replaced with file name)"
+#~ msgstr ""
+#~ "Sisesta trükkimise käsurida:\n"
+#~ "(%s asendatakse failinimega)"
 
 #~ msgid ""
 #~ "First, you have to set the location of mailbox.\n"

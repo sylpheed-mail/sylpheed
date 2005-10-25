@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-25 17:47+0900\n"
+"POT-Creation-Date: 2005-10-25 18:36+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1254,7 +1254,7 @@ msgstr "茶"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4219
+#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4226
 msgid "None"
 msgstr "なし"
 
@@ -1694,7 +1694,7 @@ msgstr "MIME タイプ"
 
 #. S_COL_DATE
 #: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4373
 msgid "Size"
 msgstr "サイズ"
 
@@ -3501,7 +3501,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: 色の割り当て %d に失敗しました\n"
 
 #: src/mainwindow.c:1068 src/summaryview.c:2070 src/summaryview.c:2155
-#: src/summaryview.c:3443 src/summaryview.c:3564 src/summaryview.c:3875
+#: src/summaryview.c:3450 src/summaryview.c:3571 src/summaryview.c:3882
 msgid "done.\n"
 msgstr "完了。\n"
 
@@ -3768,20 +3768,19 @@ msgstr "メッセージビュー - Sylpheed"
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
 
-#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:726 src/summaryview.c:3017
+msgid "The message will be printed with the following command:"
+msgstr "メッセージを以下のコマンドで印刷します:"
+
+#: src/messageview.c:727 src/summaryview.c:3018
+msgid "(Default print command)"
+msgstr "(既定の印刷コマンド)"
+
+#: src/messageview.c:729 src/prefs_common_dialog.c:2019 src/summaryview.c:3020
 msgid "Print"
 msgstr "印刷"
 
-#: src/messageview.c:723 src/summaryview.c:3014
-#, c-format
-msgid ""
-"Enter the print command line:\n"
-"(`%s' will be replaced with file name)"
-msgstr ""
-"印刷コマンドを入力してください:\n"
-"(`%s' はファイル名で置き換えられます)"
-
-#: src/messageview.c:729 src/summaryview.c:3020
+#: src/messageview.c:738 src/summaryview.c:3029
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5531,17 +5530,17 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4359
+#: src/prefs_summary_column.c:73 src/summaryview.c:4366
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4362
+#: src/prefs_summary_column.c:74 src/summaryview.c:4369
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4364
+#: src/prefs_summary_column.c:75 src/summaryview.c:4371
 msgid "Date"
 msgstr "日付"
 
@@ -6260,32 +6259,32 @@ msgstr "メッセージ %d を %s にコピーするようにセットしまし�
 msgid "Destination for copy is same as current folder."
 msgstr "コピー先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:3057
+#: src/summaryview.c:3064
 msgid "Error occurred while processing messages."
 msgstr "メッセージの処理中にエラーが発生しました。"
 
-#: src/summaryview.c:3358 src/summaryview.c:3359
+#: src/summaryview.c:3365 src/summaryview.c:3366
 msgid "Building threads..."
 msgstr "スレッドを構築中..."
 
-#: src/summaryview.c:3501 src/summaryview.c:3502
+#: src/summaryview.c:3508 src/summaryview.c:3509
 msgid "Unthreading..."
 msgstr "スレッドを解除中..."
 
-#: src/summaryview.c:3851
+#: src/summaryview.c:3858
 msgid "filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:3852
+#: src/summaryview.c:3859
 msgid "Filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:3882
+#: src/summaryview.c:3889
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d 通のメッセージが振り分けられました。"
 
-#: src/summaryview.c:4368
+#: src/summaryview.c:4375
 msgid "No."
 msgstr "番号"
 

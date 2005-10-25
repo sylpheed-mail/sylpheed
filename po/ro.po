@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-25 17:47+0900\n"
+"POT-Creation-Date: 2005-10-25 18:36+0900\n"
 "PO-Revision-Date: 2000-08-28\n"
 "Last-Translator: Little Dragon <littledragon@altern.org>\n"
 "Language-Team: Little Dragon <littledragon@altern.org>\n"
@@ -1278,7 +1278,7 @@ msgstr "Maro"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4219
+#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4226
 msgid "None"
 msgstr "Niciunul"
 
@@ -1757,7 +1757,7 @@ msgstr "Tip MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4373
 msgid "Size"
 msgstr "Dimensiune"
 
@@ -3696,7 +3696,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Fereastra principală: alocarea culorii %d a eşuat\n"
 
 #: src/mainwindow.c:1068 src/summaryview.c:2070 src/summaryview.c:2155
-#: src/summaryview.c:3443 src/summaryview.c:3564 src/summaryview.c:3875
+#: src/summaryview.c:3450 src/summaryview.c:3571 src/summaryview.c:3882
 msgid "done.\n"
 msgstr "gata.\n"
 
@@ -3979,20 +3979,20 @@ msgstr ""
 msgid "Can't save the file `%s'."
 msgstr "Directorul `%s' nu a putut fi creat."
 
-#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:726 src/summaryview.c:3017
+msgid "The message will be printed with the following command:"
+msgstr ""
+
+#: src/messageview.c:727 src/summaryview.c:3018
+#, fuzzy
+msgid "(Default print command)"
+msgstr "Executare"
+
+#: src/messageview.c:729 src/prefs_common_dialog.c:2019 src/summaryview.c:3020
 msgid "Print"
 msgstr "Imprimare"
 
-#: src/messageview.c:723 src/summaryview.c:3014
-#, c-format
-msgid ""
-"Enter the print command line:\n"
-"(`%s' will be replaced with file name)"
-msgstr ""
-"Introduceţi linia de comandă pentru imprimare:\n"
-"('%s' va fi înlocuit cu numele fişierului)"
-
-#: src/messageview.c:729 src/summaryview.c:3020
+#: src/messageview.c:738 src/summaryview.c:3029
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5839,17 +5839,17 @@ msgid "Attachment"
 msgstr "Ataşamente"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4359
+#: src/prefs_summary_column.c:73 src/summaryview.c:4366
 msgid "Subject"
 msgstr "Subiect"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4362
+#: src/prefs_summary_column.c:74 src/summaryview.c:4369
 msgid "From"
 msgstr "De la"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4364
+#: src/prefs_summary_column.c:75 src/summaryview.c:4371
 msgid "Date"
 msgstr "Data"
 
@@ -6645,33 +6645,33 @@ msgstr "Mesajul %d este marcat pentru mutare în %s\n"
 msgid "Destination for copy is same as current folder."
 msgstr "Destinaţia este aceeaşi cu directorul curent."
 
-#: src/summaryview.c:3057
+#: src/summaryview.c:3064
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "A avut loc o eroare la procesarea mesajului."
 
-#: src/summaryview.c:3358 src/summaryview.c:3359
+#: src/summaryview.c:3365 src/summaryview.c:3366
 msgid "Building threads..."
 msgstr "Construire fire de discuţie..."
 
-#: src/summaryview.c:3501 src/summaryview.c:3502
+#: src/summaryview.c:3508 src/summaryview.c:3509
 msgid "Unthreading..."
 msgstr "Distrugere fire de discuţie..."
 
-#: src/summaryview.c:3851
+#: src/summaryview.c:3858
 msgid "filtering..."
 msgstr "filtrare..."
 
-#: src/summaryview.c:3852
+#: src/summaryview.c:3859
 msgid "Filtering..."
 msgstr "Filtrare..."
 
-#: src/summaryview.c:3882
+#: src/summaryview.c:3889
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "mesajul %d a fost deja stocat.\n"
 
-#: src/summaryview.c:4368
+#: src/summaryview.c:4375
 msgid "No."
 msgstr "Nu."
 
@@ -6729,6 +6729,13 @@ msgstr ""
 #: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "Enter the print command line:\n"
+#~ "(`%s' will be replaced with file name)"
+#~ msgstr ""
+#~ "Introduceţi linia de comandă pentru imprimare:\n"
+#~ "('%s' va fi înlocuit cu numele fişierului)"
 
 #~ msgid ""
 #~ "First, you have to set the location of mailbox.\n"

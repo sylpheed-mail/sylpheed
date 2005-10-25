@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-25 17:47+0900\n"
+"POT-Creation-Date: 2005-10-25 18:36+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -1243,7 +1243,7 @@ msgstr "갈색"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4219
+#: src/colorlabel.c:280 src/prefs_folder_item.c:314 src/summaryview.c:4226
 msgid "None"
 msgstr "없음"
 
@@ -1716,7 +1716,7 @@ msgstr "마임 타입"
 
 #. S_COL_DATE
 #: src/compose.c:4092 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4366
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4373
 msgid "Size"
 msgstr "크기"
 
@@ -3550,7 +3550,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "메인 창: 색 할당 %d 실패\n"
 
 #: src/mainwindow.c:1068 src/summaryview.c:2070 src/summaryview.c:2155
-#: src/summaryview.c:3443 src/summaryview.c:3564 src/summaryview.c:3875
+#: src/summaryview.c:3450 src/summaryview.c:3571 src/summaryview.c:3882
 msgid "done.\n"
 msgstr "마침.\n"
 
@@ -3825,20 +3825,20 @@ msgstr ""
 msgid "Can't save the file `%s'."
 msgstr "`%s' 파일을 저장할 수가 없습니다."
 
-#: src/messageview.c:722 src/prefs_common_dialog.c:2019 src/summaryview.c:3013
+#: src/messageview.c:726 src/summaryview.c:3017
+msgid "The message will be printed with the following command:"
+msgstr ""
+
+#: src/messageview.c:727 src/summaryview.c:3018
+#, fuzzy
+msgid "(Default print command)"
+msgstr "실행"
+
+#: src/messageview.c:729 src/prefs_common_dialog.c:2019 src/summaryview.c:3020
 msgid "Print"
 msgstr "인쇄"
 
-#: src/messageview.c:723 src/summaryview.c:3014
-#, c-format
-msgid ""
-"Enter the print command line:\n"
-"(`%s' will be replaced with file name)"
-msgstr ""
-"인쇄 명령어서 입력하세요:\n"
-"(`%s'는 파일이름으로 대체될 것입니다)"
-
-#: src/messageview.c:729 src/summaryview.c:3020
+#: src/messageview.c:738 src/summaryview.c:3029
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5623,17 +5623,17 @@ msgid "Attachment"
 msgstr "첨부"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4359
+#: src/prefs_summary_column.c:73 src/summaryview.c:4366
 msgid "Subject"
 msgstr "제목"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4362
+#: src/prefs_summary_column.c:74 src/summaryview.c:4369
 msgid "From"
 msgstr "보낸 사람"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4364
+#: src/prefs_summary_column.c:75 src/summaryview.c:4371
 msgid "Date"
 msgstr "날짜"
 
@@ -6352,33 +6352,33 @@ msgstr ""
 msgid "Destination for copy is same as current folder."
 msgstr "복사할 대상이 현재 폴더와 같습니다."
 
-#: src/summaryview.c:3057
+#: src/summaryview.c:3064
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/summaryview.c:3358 src/summaryview.c:3359
+#: src/summaryview.c:3365 src/summaryview.c:3366
 msgid "Building threads..."
 msgstr "쓰레드를 만듭니다..."
 
-#: src/summaryview.c:3501 src/summaryview.c:3502
+#: src/summaryview.c:3508 src/summaryview.c:3509
 msgid "Unthreading..."
 msgstr "쓰레드를 없앱니다..."
 
-#: src/summaryview.c:3851
+#: src/summaryview.c:3858
 msgid "filtering..."
 msgstr "필터링..."
 
-#: src/summaryview.c:3852
+#: src/summaryview.c:3859
 msgid "Filtering..."
 msgstr "필터링..."
 
-#: src/summaryview.c:3882
+#: src/summaryview.c:3889
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "메시지 %d는 이미 캐쉬되었습니다.\n"
 
-#: src/summaryview.c:4368
+#: src/summaryview.c:4375
 msgid "No."
 msgstr "번호"
 
@@ -6437,6 +6437,13 @@ msgstr ""
 #: src/textview.c:2069
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid ""
+#~ "Enter the print command line:\n"
+#~ "(`%s' will be replaced with file name)"
+#~ msgstr ""
+#~ "인쇄 명령어서 입력하세요:\n"
+#~ "(`%s'는 파일이름으로 대체될 것입니다)"
 
 #~ msgid ""
 #~ "First, you have to set the location of mailbox.\n"
