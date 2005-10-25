@@ -3147,6 +3147,43 @@ gint execute_open_file(const gchar *file, const gchar *content_type)
 	return 0;
 }
 
+gint execute_print_file(const gchar *file)
+{
+	g_return_val_if_fail(file != NULL, -1);
+
+#ifdef G_OS_WIN32
+	log_print("printing %s\n", file);
+
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		wchar_t *wpath;
+
+		wpath = g_utf8_to_utf16(file, -1, NULL, NULL, NULL);
+		if (wpath == NULL)
+			return -1;
+
+		ShellExecuteW(NULL, L"print", wpath, NULL, NULL, SW_SHOWNORMAL);
+
+		g_free(wpath);
+
+		return 0;
+	} else {
+		gchar *cp_path;
+
+		cp_path = g_locale_from_utf8(file, -1, NULL, NULL, NULL);
+		if (cp_path == NULL)
+			return -1;
+
+		ShellExecuteA(NULL, "print", cp_path, NULL, NULL,
+			      SW_SHOWNORMAL);
+
+		g_free(cp_path);
+
+		return 0;
+	}
+#endif
+	return 0;
+}
+
 gchar *get_command_output(const gchar *cmdline)
 {
 	gchar *child_stdout;

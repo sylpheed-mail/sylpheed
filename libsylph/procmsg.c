@@ -1167,7 +1167,7 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 		return;
 	}
 
-	prtmp = g_strdup_printf("%s%cprinttmp.%08x",
+	prtmp = g_strdup_printf("%s%cprinttmp-%08x.txt",
 				get_mime_tmp_dir(), G_DIR_SEPARATOR, id++);
 
 	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
@@ -1228,14 +1228,31 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 	fclose(prfp);
 	fclose(tmpfp);
 
+#ifdef G_OS_WIN32
+	if (canonicaize_file_replace(prtmp) < 0) {
+		g_free(prtmp);
+		return;
+	}
+#endif
+
 	if (cmdline && (p = strchr(cmdline, '%')) && *(p + 1) == 's' &&
 	    !strchr(p + 2, '%'))
 		g_snprintf(buf, sizeof(buf) - 1, cmdline, prtmp);
 	else {
-		if (cmdline)
+		if (cmdline) {
 			g_warning(_("Print command line is invalid: `%s'\n"),
 				  cmdline);
+			g_free(prtmp);
+			return;
+		}
+
+#ifdef G_OS_WIN32
+		execute_print_file(prtmp);
+		g_free(prtmp);
+		return;
+#else
 		g_snprintf(buf, sizeof(buf) - 1, def_cmd, prtmp);
+#endif
 	}
 
 	g_free(prtmp);
