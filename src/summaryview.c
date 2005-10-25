@@ -3004,33 +3004,40 @@ void summary_print(SummaryView *summaryview)
 {
 	MsgInfo *msginfo;
 	GSList *mlist, *cur;
-	gchar *cmdline;
+	const gchar *cmdline;
+	gchar *msg;
 	gchar *p;
 
 	if (gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
 		return;
 
-	cmdline = input_dialog(_("Print"),
-			       _("Enter the print command line:\n"
-				 "(`%s' will be replaced with file name)"),
-			       prefs_common.print_cmd);
-	if (!cmdline) return;
-	if (!(p = strchr(cmdline, '%')) || *(p + 1) != 's' ||
-	    strchr(p + 2, '%')) {
+	cmdline = prefs_common.print_cmd;
+
+	msg = g_strconcat
+		(_("The message will be printed with the following command:"),
+		 "\n\n", cmdline ? cmdline : _("(Default print command)"),
+		 NULL);
+	if (alertpanel(_("Print"), msg, GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
+	    != G_ALERTDEFAULT) {
+		g_free(msg);
+		return;
+	}
+	g_free(msg);
+
+	if (cmdline && (!(p = strchr(cmdline, '%')) || *(p + 1) != 's' ||
+			strchr(p + 2, '%'))) {
 		alertpanel_error(_("Print command line is invalid:\n`%s'"),
 				 cmdline);
-		g_free(cmdline);
 		return;
 	}
 
 	mlist = summary_get_selected_msg_list(summaryview);
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
-		if (msginfo) procmsg_print_message(msginfo, cmdline);
+		if (msginfo)
+			procmsg_print_message(msginfo, cmdline);
 	}
 	g_slist_free(mlist);
-
-	g_free(cmdline);
 }
 
 gboolean summary_execute(SummaryView *summaryview)
