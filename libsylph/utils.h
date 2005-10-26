@@ -276,6 +276,9 @@ void extract_list_id_str		(gchar		*str);
 
 gchar *normalize_address_field		(const gchar	*str);
 
+gboolean address_equal			(const gchar	*addr1,
+					 const gchar	*addr2);
+
 GSList *address_list_append_orig	(GSList		*addr_list,
 					 const gchar	*str);
 GSList *address_list_append		(GSList		*addr_list,

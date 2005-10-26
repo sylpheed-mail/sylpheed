@@ -822,6 +822,22 @@ gchar *normalize_address_field(const gchar *str)
 	return ret_str;
 }
 
+gboolean address_equal(const gchar *addr1, const gchar *addr2)
+{
+	gchar *addr1_, *addr2_;
+
+	if (!addr1 || !addr2)
+		return FALSE;
+
+	Xstrdup_a(addr1_, addr1, return FALSE);
+	Xstrdup_a(addr2_, addr2, return FALSE);
+
+	extract_address(addr1_);
+	extract_address(addr2_);
+
+	return strcmp(addr1_, addr2_) == 0;
+}
+
 GSList *address_list_append_orig(GSList *addr_list, const gchar *str)
 {
 	const gchar *p = str, *q;

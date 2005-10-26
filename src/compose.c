@@ -1488,10 +1488,14 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 	}
 
 	if (compose->account->protocol != A_NNTP) {
-		if (!compose->replyto && to_ml && compose->ml_post)
+		if (to_ml && compose->ml_post) {
 			compose_entry_set(compose, compose->ml_post,
 					  COMPOSE_ENTRY_TO);
-		else
+			if (compose->replyto &&
+			    !address_equal(compose->replyto, compose->ml_post))
+				compose_entry_set(compose, compose->replyto,
+						  COMPOSE_ENTRY_CC);
+		} else
 			compose_entry_set(compose, 
 				 (compose->replyto && !ignore_replyto)
 				 ? compose->replyto

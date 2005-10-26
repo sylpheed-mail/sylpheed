@@ -1,5 +1,13 @@
 2005-10-26
 
+	* libsylph/utils.[ch]: address_equal(): 新規。
+	* src/compose.c: compose_reply_set_entry(): ML の投稿に返信するときに
+	  Reply-To が指定されていた場合、 ML のアドレスを To: にセットし、
+	  Reply-To のアドレスを Cc: にセットするようにした(Colin Leroy さん
+	  thanks)。
+
+2005-10-26
+
 	* libsylph/utils.c: uri_list_extract_filenames(): 利用可能であれば
 	  URI を展開するのに GLib の関数を使用するようにした。
 
