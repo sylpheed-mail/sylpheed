@@ -340,8 +340,20 @@ static void parse_cmd_opt(int argc, char *argv[])
 
 			if (p && *p != '\0' && *p != '-') {
 				/* this must only be done at startup */
-				cmd.configdir = TRUE;
+#ifdef G_OS_WIN32
+				gchar *utf8dir;
+
+				utf8dir = g_locale_to_utf8
+					(p, -1, NULL, NULL, NULL);
+				if (utf8dir) {
+					set_rc_dir(utf8dir);
+					g_free(utf8dir);
+				} else
+					set_rc_dir(p);
+#else
 				set_rc_dir(p);
+#endif
+				cmd.configdir = TRUE;
 				i++;
 			}
 		} else if (!strncmp(argv[i], "--help", 6)) {
