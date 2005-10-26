@@ -1449,8 +1449,26 @@ gchar *trim_string_before(const gchar *str, gint len)
 GList *uri_list_extract_filenames(const gchar *uri_list)
 {
 	GList *result = NULL;
-	const gchar *p, *q;
 	gchar *file;
+
+#if GLIB_CHECK_VERSION(2, 6, 0)
+	gchar **uris;
+	gint i;
+
+	uris = g_uri_list_extract_uris(uri_list);
+	g_return_val_if_fail(uris != NULL, NULL);
+
+	for (i = 0; uris[i] != NULL; i++) {
+		file = g_filename_from_uri(uris[i], NULL, NULL);
+		if (file)
+			result = g_list_append(result, file);
+	}
+
+	g_strfreev(uris);
+
+	return result;
+#else
+	const gchar *p, *q;
 
 	p = uri_list;
 
@@ -1471,7 +1489,7 @@ GList *uri_list_extract_filenames(const gchar *uri_list)
 					strncpy(file, p, q - p + 1);
 					file[q - p + 1] = '\0';
 					decode_uri(file, file);
-					result = g_list_append(result,file);
+					result = g_list_append(result, file);
 				}
 			}
 		}
@@ -1480,6 +1498,7 @@ GList *uri_list_extract_filenames(const gchar *uri_list)
 	}
 
 	return result;
+#endif
 }
 
 #define HEX_TO_INT(val, hex) \
