@@ -155,6 +155,7 @@ static struct JunkMail {
 	GtkWidget *entry_classify_cmd;
 	GtkWidget *entry_junkfolder;
 	GtkWidget *chkbtn_filter_on_recv;
+	GtkWidget *chkbtn_delete_on_recv;
 } junk;
 
 #if USE_GPGME
@@ -378,6 +379,8 @@ static PrefsUIData ui_data[] = {
 	{"junk_folder", &junk.entry_junkfolder,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"filter_junk_on_receive", &junk.chkbtn_filter_on_recv,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"delete_junk_on_receive", &junk.chkbtn_delete_on_recv,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 #if USE_GPGME
@@ -1604,6 +1607,7 @@ static void prefs_junk_create(void)
 	GtkWidget *entry_junkfolder;
 	GtkWidget *btn_folder;
 	GtkWidget *chkbtn_filter_on_recv;
+	GtkWidget *chkbtn_delete_on_recv;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -1692,13 +1696,16 @@ static void prefs_junk_create(void)
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
-	PACK_CHECK_BUTTON(vbox2, chkbtn_filter_on_recv,
-			  _("Filter messages classified as junk on receiving"));
+	vbox3 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox3);
+	gtk_box_pack_start (GTK_BOX(vbox2), vbox3, FALSE, FALSE, 0);
 
-	PACK_SMALL_LABEL
-		(vbox2, label,
-		 _("Filtered messages will be moved to the junk folder and "
-		   "deleted from the server."));
+	PACK_CHECK_BUTTON(vbox3, chkbtn_filter_on_recv,
+			  _("Filter messages classified as junk on receiving"));
+	PACK_CHECK_BUTTON
+		(vbox3, chkbtn_delete_on_recv,
+		 _("Delete junk mails from server when filtered on receiving"));
+	SET_TOGGLE_SENSITIVITY (chkbtn_filter_on_recv, chkbtn_delete_on_recv);
 
 	junk.chkbtn_enable_junk    = chkbtn_enable_junk;
 	junk.entry_junk_learncmd   = entry_junk_learncmd;
@@ -1706,6 +1713,7 @@ static void prefs_junk_create(void)
 	junk.entry_classify_cmd    = entry_classify_cmd;
 	junk.entry_junkfolder      = entry_junkfolder;
 	junk.chkbtn_filter_on_recv = chkbtn_filter_on_recv;
+	junk.chkbtn_delete_on_recv = chkbtn_delete_on_recv;
 }
 
 #if USE_GPGME

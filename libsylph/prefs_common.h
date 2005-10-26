@@ -191,6 +191,7 @@ struct _PrefsCommon
 	gchar *junk_classify_cmd;
 	gchar *junk_folder;
 	gboolean filter_junk_on_recv;
+	gboolean delete_junk_on_recv;
 
 	/* Privacy */
 	gboolean auto_check_signatures;

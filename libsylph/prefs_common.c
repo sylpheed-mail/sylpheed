@@ -265,6 +265,8 @@ static PrefParam param[] = {
 	{"junk_folder", NULL, &prefs_common.junk_folder, P_STRING},
 	{"filter_junk_on_receive", "FALSE", &prefs_common.filter_junk_on_recv,
 	 P_BOOL},
+	{"delete_junk_on_receive", "TRUE", &prefs_common.delete_junk_on_recv,
+	 P_BOOL},
 
 	/* Privacy */
 	{"auto_check_signatures", "TRUE", &prefs_common.auto_check_signatures,
@@ -435,10 +437,17 @@ void prefs_common_junk_filter_list_set(void)
 	cond = filter_cond_new(FLT_COND_CMD_TEST, 0, 0, NULL,
 			       prefs_common.junk_classify_cmd);
 	cond_list = g_slist_append(NULL, cond);
-	action = filter_action_new(FLT_ACTION_COPY, prefs_common.junk_folder);
-	action_list = g_slist_append(NULL, action);
-	action = filter_action_new(FLT_ACTION_DELETE, NULL);
-	action_list = g_slist_append(action_list, action);
+	if (prefs_common.delete_junk_on_recv) {
+		action = filter_action_new(FLT_ACTION_COPY,
+					   prefs_common.junk_folder);
+		action_list = g_slist_append(NULL, action);
+		action = filter_action_new(FLT_ACTION_DELETE, NULL);
+		action_list = g_slist_append(action_list, action);
+	} else {
+		action = filter_action_new(FLT_ACTION_MOVE,
+					   prefs_common.junk_folder);
+		action_list = g_slist_append(NULL, action);
+	}
 
 	rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
 			       cond_list, action_list);

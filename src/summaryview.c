@@ -3833,11 +3833,14 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 	fltinfo->flags = msginfo->flags;
 	filter_apply_msginfo(prefs_common.junk_fltlist, msginfo, fltinfo);
 
-	if (fltinfo->actions[FLT_ACTION_COPY] ||
+	if (fltinfo->actions[FLT_ACTION_MOVE] ||
+	    fltinfo->actions[FLT_ACTION_COPY] ||
 	    fltinfo->actions[FLT_ACTION_DELETE])
 		summaryview->filtered++;
 
-	if (fltinfo->actions[FLT_ACTION_DELETE])
+	if (fltinfo->actions[FLT_ACTION_MOVE] && fltinfo->move_dest)
+		summary_move_row_to(summaryview, iter, fltinfo->move_dest);
+	else if (fltinfo->actions[FLT_ACTION_DELETE])
 		summary_delete_row(summaryview, iter);
 
 	filter_info_free(fltinfo);
