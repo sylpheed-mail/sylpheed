@@ -336,17 +336,12 @@ gint fd_open_unix(const gchar *path)
 
 gint fd_accept(gint sock)
 {
-#ifdef G_OS_UNIX
 	struct sockaddr_in caddr;
 	guint caddr_len;
 
 	caddr_len = sizeof(caddr);
 	return accept(sock, (struct sockaddr *)&caddr, &caddr_len);
-#else
-	return -1;
-#endif
 }
-
 
 static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 {
