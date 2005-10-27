@@ -158,7 +158,8 @@ static Compose *compose_find_window_by_target	(MsgInfo	*msginfo);
 static void compose_connect_changed_callbacks	(Compose	*compose);
 static GtkWidget *compose_toolbar_create	(Compose	*compose);
 static GtkWidget *compose_account_option_menu_create
-						(Compose	*compose);
+						(Compose	*compose,
+						 GtkWidget	*hbox);
 static void compose_set_out_encoding		(Compose	*compose);
 static void compose_set_template_menu		(Compose	*compose);
 static void compose_template_apply		(Compose	*compose,
@@ -3975,11 +3976,13 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_box_pack_end(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	gtk_table_attach(GTK_TABLE(table), hbox, 0, 1, count, count + 1,
 			 GTK_FILL, 0, 2, 0);
-	from_optmenu_hbox = compose_account_option_menu_create(compose);
+
+	from_optmenu_hbox = gtk_hbox_new(FALSE, 0);
 	gtk_table_attach_defaults(GTK_TABLE(table), from_optmenu_hbox,
 				  1, 2, count, count + 1);
 	gtk_table_set_row_spacing(GTK_TABLE(table), 0, 4);
 	count++;
+	compose_account_option_menu_create(compose, from_optmenu_hbox);
 
 	/* header labels and entries */
 	compose_add_entry_field(table, &to_hbox, &to_entry, &count,
@@ -4572,10 +4575,10 @@ static GtkWidget *compose_toolbar_create(Compose *compose)
 	return toolbar;
 }
 
-static GtkWidget *compose_account_option_menu_create(Compose *compose)
+static GtkWidget *compose_account_option_menu_create(Compose *compose,
+						     GtkWidget *hbox)
 {
 	GList *accounts;
-	GtkWidget *hbox;
 	GtkWidget *optmenu;
 	GtkWidget *menu;
 	gint num = 0, def_menu = 0;
@@ -4583,7 +4586,6 @@ static GtkWidget *compose_account_option_menu_create(Compose *compose)
 	accounts = account_get_list();
 	g_return_val_if_fail(accounts != NULL, NULL);
 
-	hbox = gtk_hbox_new(FALSE, 0);
 	optmenu = gtk_option_menu_new();
 	gtk_box_pack_start(GTK_BOX(hbox), optmenu, FALSE, FALSE, 0);
 	menu = gtk_menu_new();
@@ -4612,7 +4614,7 @@ static GtkWidget *compose_account_option_menu_create(Compose *compose)
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), menu);
 	gtk_option_menu_set_history(GTK_OPTION_MENU(optmenu), def_menu);
 
-	return hbox;
+	return optmenu;
 }
 
 static void compose_set_out_encoding(Compose *compose)
