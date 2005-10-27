@@ -77,7 +77,7 @@
 #define MARK_VERSION		2
 
 #ifdef G_OS_WIN32
-#  define REMOTE_CMD_PORT	49215
+#  define REMOTE_CMD_PORT	50215
 #endif
 
 #ifdef G_OS_WIN32
