@@ -183,6 +183,87 @@ gint sock_set_io_timeout(guint sec)
 	return 0;
 }
 
+gint fd_connect_inet(gushort port)
+{
+#ifdef G_OS_WIN32
+	SOCKET sock;
+#else
+	gint sock;
+#endif
+	struct sockaddr_in addr;
+
+#ifdef G_OS_WIN32
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+		g_warning("fd_connect_inet(): socket() failed: %ld\n",
+			  WSAGetLastError());
+#else
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+		perror("fd_connect_inet(): socket");
+#endif
+		return -1;
+	}
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(port);
+	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+
+	if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+		fd_close(sock);
+		return -1;
+	}
+
+	return sock;
+}
+
+gint fd_open_inet(gushort port)
+{
+#ifdef G_OS_WIN32
+	SOCKET sock;
+#else
+	gint sock;
+#endif
+	struct sockaddr_in addr;
+	gint val;
+
+#ifdef G_OS_WIN32
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
+		g_warning("fd_open_inet(): socket() failed: %ld\n",
+			  WSAGetLastError());
+#else
+	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+		perror("fd_open_inet(): socket");
+#endif
+		return -1;
+	}
+
+	val = 1;
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) < 0) {
+		perror("setsockopt");
+		fd_close(sock);
+		return -1;
+	}
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(port);
+	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+
+	if (bind(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+		perror("bind");
+		fd_close(sock);
+		return -1;
+	}
+
+	if (listen(sock, 1) < 0) {
+		perror("listen");
+		fd_close(sock);
+		return -1;		
+	}
+
+	return sock;
+}
+
 gint fd_connect_unix(const gchar *path)
 {
 #ifdef G_OS_UNIX
@@ -191,7 +272,7 @@ gint fd_connect_unix(const gchar *path)
 
 	sock = socket(PF_UNIX, SOCK_STREAM, 0);
 	if (sock < 0) {
-		perror("sock_connect_unix(): socket");
+		perror("fd_connect_unix(): socket");
 		return -1;
 	}
 
@@ -215,11 +296,19 @@ gint fd_open_unix(const gchar *path)
 #ifdef G_OS_UNIX
 	gint sock;
 	struct sockaddr_un addr;
+	gint val;
 
 	sock = socket(PF_UNIX, SOCK_STREAM, 0);
 
 	if (sock < 0) {
 		perror("sock_open_unix(): socket");
+		return -1;
+	}
+
+	val = 1;
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) < 0) {
+		perror("setsockopt");
+		fd_close(sock);
 		return -1;
 	}
 

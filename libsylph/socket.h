@@ -100,6 +100,8 @@ gint sock_peek		(SockInfo *sock, gchar *buf, gint len);
 gint sock_close		(SockInfo *sock);
 
 /* Functions to directly work on FD.  They are needed for pipes */
+gint fd_connect_inet	(gushort port);
+gint fd_open_inet	(gushort port);
 gint fd_connect_unix	(const gchar *path);
 gint fd_open_unix	(const gchar *path);
 gint fd_accept		(gint sock);

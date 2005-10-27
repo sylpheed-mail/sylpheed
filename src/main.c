@@ -168,17 +168,15 @@ int main(int argc, char *argv[])
 	app_init();
 	parse_cmd_opt(argc, argv);
 
-	/* check and create unix domain socket for remote operation */
+	/* check and create (unix domain) socket for remote operation */
 	lock_socket = prohibit_duplicate_launch();
 	if (lock_socket < 0) return 0;
 
-#ifdef G_OS_UNIX
 	if (cmd.status || cmd.status_full) {
 		puts("0 Sylpheed not running.");
 		lock_socket_remove();
 		return 0;
 	}
-#endif
 
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
@@ -227,13 +225,13 @@ int main(int argc, char *argv[])
 		(prefs_common.sep_folder | prefs_common.sep_msg << 1);
 	folderview = mainwin->folderview;
 
-#ifdef G_OS_UNIX
-	/* register the callback of unix domain socket input */
-	lock_ch = g_io_channel_unix_new(lock_socket);
-	lock_socket_tag = g_io_add_watch(lock_ch,
-					 G_IO_IN|G_IO_PRI|G_IO_ERR,
-					 lock_socket_input_cb, mainwin);
-#endif
+	/* register the callback of socket input */
+	if (lock_socket > 0) {
+		lock_ch = g_io_channel_unix_new(lock_socket);
+		lock_socket_tag = g_io_add_watch(lock_ch,
+						 G_IO_IN|G_IO_PRI|G_IO_ERR,
+						 lock_socket_input_cb, mainwin);
+	}
 
 	set_log_handlers(TRUE);
 
@@ -769,6 +767,8 @@ static gchar *get_socket_name(void)
 
 static gint prohibit_duplicate_launch(void)
 {
+	gint sock;
+
 #ifdef G_OS_WIN32
 	HANDLE hmutex;
 
@@ -777,31 +777,35 @@ static gint prohibit_duplicate_launch(void)
 		g_warning("cannot create Mutex\n");
 		return -1;
 	}
-	if (GetLastError() == ERROR_ALREADY_EXISTS) {
-		debug_print(_("another Sylpheed is already running.\n"));
-		return -1;
+	if (GetLastError() != ERROR_ALREADY_EXISTS) {
+		sock = fd_open_inet(REMOTE_CMD_PORT);
+		if (sock < 0)
+			return 0;
+		return sock;
 	}
 
-	return 0;
+	sock = fd_connect_inet(REMOTE_CMD_PORT);
+	if (sock < 0)
+		return -1;
 #else
-	gint uxsock;
 	gchar *path;
 
 	path = get_socket_name();
-	uxsock = fd_connect_unix(path);
-	if (uxsock < 0) {
+	sock = fd_connect_unix(path);
+	if (sock < 0) {
 		g_unlink(path);
 		return fd_open_unix(path);
 	}
+#endif
 
 	/* remote command mode */
 
 	debug_print(_("another Sylpheed is already running.\n"));
 
 	if (cmd.receive_all)
-		fd_write_all(uxsock, "receive_all\n", 12);
+		fd_write_all(sock, "receive_all\n", 12);
 	else if (cmd.receive)
-		fd_write_all(uxsock, "receive\n", 8);
+		fd_write_all(sock, "receive\n", 8);
 	else if (cmd.compose && cmd.attach_files) {
 		gchar *str, *compose_str;
 		gint i;
@@ -812,16 +816,16 @@ static gint prohibit_duplicate_launch(void)
 		else
 			compose_str = g_strdup("compose_attach\n");
 
-		fd_write_all(uxsock, compose_str, strlen(compose_str));
+		fd_write_all(sock, compose_str, strlen(compose_str));
 		g_free(compose_str);
 
 		for (i = 0; i < cmd.attach_files->len; i++) {
 			str = g_ptr_array_index(cmd.attach_files, i);
-			fd_write_all(uxsock, str, strlen(str));
-			fd_write_all(uxsock, "\n", 1);
+			fd_write_all(sock, str, strlen(str));
+			fd_write_all(sock, "\n", 1);
 		}
 
-		fd_write_all(uxsock, ".\n", 2);
+		fd_write_all(sock, ".\n", 2);
 	} else if (cmd.compose) {
 		gchar *compose_str;
 
@@ -831,10 +835,10 @@ static gint prohibit_duplicate_launch(void)
 		else
 			compose_str = g_strdup("compose\n");
 
-		fd_write_all(uxsock, compose_str, strlen(compose_str));
+		fd_write_all(sock, compose_str, strlen(compose_str));
 		g_free(compose_str);
 	} else if (cmd.send) {
-		fd_write_all(uxsock, "send\n", 5);
+		fd_write_all(sock, "send\n", 5);
 	} else if (cmd.status || cmd.status_full) {
 		gchar buf[BUFFSIZE];
 		gint i;
@@ -846,30 +850,30 @@ static gint prohibit_duplicate_launch(void)
 		folders = cmd.status_full ? cmd.status_full_folders :
 			cmd.status_folders;
 
-		fd_write_all(uxsock, command, strlen(command));
+		fd_write_all(sock, command, strlen(command));
 		for (i = 0; folders && i < folders->len; ++i) {
 			folder = g_ptr_array_index(folders, i);
-			fd_write_all(uxsock, folder, strlen(folder));
-			fd_write_all(uxsock, "\n", 1);
+			fd_write_all(sock, folder, strlen(folder));
+			fd_write_all(sock, "\n", 1);
 		}
-		fd_write_all(uxsock, ".\n", 2);
+		fd_write_all(sock, ".\n", 2);
 		for (;;) {
-			fd_gets(uxsock, buf, sizeof(buf));
+			fd_gets(sock, buf, sizeof(buf));
 			if (!strncmp(buf, ".\n", 2)) break;
 			fputs(buf, stdout);
 		}
 	} else
-		fd_write_all(uxsock, "popup\n", 6);
+		fd_write_all(sock, "popup\n", 6);
 
-	fd_close(uxsock);
+	fd_close(sock);
 	return -1;
-#endif
 }
 
 static gint lock_socket_remove(void)
 {
-#ifdef G_OS_UNIX
+#ifndef G_OS_WIN32
 	gchar *filename;
+#endif
 
 	if (lock_socket < 0) return -1;
 
@@ -880,6 +884,8 @@ static gint lock_socket_remove(void)
 		g_io_channel_unref(lock_ch);
 		lock_ch = NULL;
 	}
+
+#ifndef G_OS_WIN32
 	filename = get_socket_name();
 	g_unlink(filename);
 #endif

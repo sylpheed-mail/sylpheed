@@ -1,5 +1,11 @@
 2005-10-27
 
+	* libsylph/socket.[ch]: fd_connect_inet(), fd_open_inet(): 新規。
+	  fd_open_unix(): bind() のエラーを避けるために SO_REUSEADDR を指定。
+	* src/main.c: win32: TCP socket を使用してリモートコマンドを実装。
+
+2005-10-27
+
 	* src/compose.c: オプションメニューを作成する前に hbox をウィンドウに
 	  追加するようにした(初期のウィジェットサイズが正しくないのを修正)。
 

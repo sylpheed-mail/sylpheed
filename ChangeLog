@@ -1,5 +1,11 @@
 2005-10-27
 
+	* libsylph/socket.[ch]: fd_connect_inet(), fd_open_inet(): new.
+	  fd_open_unix(): set SO_REUSEADDR flag to avoid bind() error.
+	* src/main.c: win32: implemented remote command using TCP socket.
+
+2005-10-27
+
 	* src/compose.c: add hbox into the window before creating option menu
 	  (fixed initially wrong widget size).
 
