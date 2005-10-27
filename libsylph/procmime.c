@@ -1046,12 +1046,20 @@ static GHashTable *procmime_get_mime_type_table(void)
 		GList *list;
 		gchar *dir;
 
+#ifdef G_OS_WIN32
+		dir = g_strconcat(get_startup_dir(),
+				  G_DIR_SEPARATOR_S "etc" G_DIR_SEPARATOR_S
+				  "mime.types", NULL);
+		mime_type_list = procmime_get_mime_type_list(dir);
+		g_free(dir);
+#else
 		mime_type_list =
 			procmime_get_mime_type_list(SYSCONFDIR "/mime.types");
 		if (!mime_type_list) {
 			list = procmime_get_mime_type_list("/etc/mime.types");
 			mime_type_list = g_list_concat(mime_type_list, list);
 		}
+#endif
 		dir = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
 				  "mime.types", NULL);
 		list = procmime_get_mime_type_list(dir);
