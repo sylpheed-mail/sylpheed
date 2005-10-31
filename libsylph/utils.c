@@ -3111,19 +3111,27 @@ gint execute_sync(gchar *const argv[])
 
 	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
 
+#ifdef G_OS_WIN32
+	if (g_spawn_sync(NULL, (gchar **)argv, NULL,
+			 G_SPAWN_SEARCH_PATH | G_SPAWN_CHILD_INHERITS_STDIN |
+			 G_SPAWN_LEAVE_DESCRIPTORS_OPEN,
+			 NULL, NULL, NULL, NULL, &status, NULL) == FALSE) {
+		g_warning("Can't execute command: %s\n", argv[0]);
+		return -1;
+	}
+
+	return status;
+#else
 	if (g_spawn_sync(NULL, (gchar **)argv, NULL, G_SPAWN_SEARCH_PATH,
 			 NULL, NULL, NULL, NULL, &status, NULL) == FALSE) {
 		g_warning("Can't execute command: %s\n", argv[0]);
 		return -1;
 	}
 
-#ifdef G_OS_UNIX
 	if (WIFEXITED(status))
 		return WEXITSTATUS(status);
 	else
 		return -1;
-#else
-	return status;
 #endif
 }
 
