@@ -487,6 +487,10 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	const gchar *charset = NULL;
 	GPtrArray *headers = NULL;
 	gboolean is_rfc822_part = FALSE;
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
+	GtkTextMark *mark;
 
 	g_return_if_fail(mimeinfo != NULL);
 	g_return_if_fail(fp != NULL);
@@ -555,18 +559,14 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	}
 
 	textview_set_font(textview, charset);
-
 	textview_clear(textview);
 
-	if (headers) {
-		GtkTextView *text = GTK_TEXT_VIEW(textview->text);
-		GtkTextBuffer *buffer;
-		GtkTextIter iter;
+	buffer = gtk_text_view_get_buffer(text);
 
+	if (headers) {
 		textview_show_header(textview, headers);
 		procheader_header_array_destroy(headers);
 
-		buffer = gtk_text_view_get_buffer(text);
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
 		if (!mimeinfo->main)
@@ -577,6 +577,10 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		textview_add_parts(textview, mimeinfo, fp);
 	else
 		textview_write_body(textview, mimeinfo, fp, charset);
+
+	textview_set_position(textview, 0);
+	mark = gtk_text_buffer_get_insert(buffer);
+	gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
 static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
