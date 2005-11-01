@@ -105,13 +105,24 @@ INCLUDES = \
 	-I$(includedir) \
 	-I$(top_srcdir)/libsylph
 
+if HAVE_WINDRES
+SYLPHEED_RES = sylpheed.res
+sylpheed.rc:
+	echo "SYLPHEED ICON icons/sylpheed.ico" >$@
+sylpheed.res: sylpheed.rc
+	$(WINDRES) $< -O coff -o $@
+else
+SYLPHEED_RES = 
+endif
+
 sylpheed_LDADD = \
 	$(INTLLIBS) \
 	$(GTK_LIBS) \
 	$(GPGME_LIBS) \
 	$(LDAP_LIBS) \
 	$(LIBICONV) \
-	../libsylph/libsylph.la
+	../libsylph/libsylph.la \
+	$(SYLPHEED_RES)
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \

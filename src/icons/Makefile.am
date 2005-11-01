@@ -68,6 +68,7 @@ EXTRA_DIST = \
 	ldap.xpm \
 	vcard.xpm \
 	mail.xpm \
+	sylpheed.ico \
 	$(BUILT_SOURCES)
 
 %.h: %.png
