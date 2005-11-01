@@ -3522,6 +3522,7 @@ static void prefs_common_ok(void)
 	if (quote_desc_win && GTK_WIDGET_VISIBLE(quote_desc_win))
 		gtk_widget_hide(quote_desc_win);
 
+	main_window_popup(main_window_get());
 	inc_unlock();
 }
 
@@ -3541,5 +3542,6 @@ static void prefs_common_apply(void)
 static void prefs_common_cancel(void)
 {
 	gtk_widget_hide(dialog.window);
+	main_window_popup(main_window_get());
 	inc_unlock();
 }

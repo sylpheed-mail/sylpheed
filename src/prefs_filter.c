@@ -826,5 +826,6 @@ static void prefs_filter_close(void)
 	filter_write_config();
 	gtk_widget_hide(rule_list_window.window);
 	gtk_list_store_clear(rule_list_window.store);
+	main_window_popup(main_window_get());
 	inc_unlock();
 }

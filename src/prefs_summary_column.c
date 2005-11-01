@@ -133,6 +133,7 @@ void prefs_summary_column_open(void)
 		gtk_main_iteration();
 
 	gtk_widget_hide(summary_col.window);
+	main_window_popup(main_window_get());
 
 	inc_unlock();
 }

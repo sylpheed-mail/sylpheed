@@ -38,6 +38,7 @@
 #include "prefs_common.h"
 #include "prefs_common_dialog.h"
 #include "compose.h"
+#include "mainwindow.h"
 #include "addr_compl.h"
 #include "quote_fmt.h"
 
@@ -369,6 +370,7 @@ static void prefs_template_ok_cb(void)
 	compose_reflect_prefs_all();
 	gtk_clist_clear(GTK_CLIST(templates.clist_tmpls));
 	gtk_widget_hide(templates.window);
+	main_window_popup(main_window_get());
 	inc_unlock();
 }
 
@@ -376,6 +378,7 @@ static void prefs_template_cancel_cb(void)
 {
 	prefs_template_clear();
 	gtk_widget_hide(templates.window);
+	main_window_popup(main_window_get());
 	inc_unlock();
 }
 

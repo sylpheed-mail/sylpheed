@@ -36,6 +36,7 @@
 #include "account.h"
 #include "manage_window.h"
 #include "folderview.h"
+#include "mainwindow.h"
 #include "inc.h"
 #include "menu.h"
 
@@ -489,6 +490,7 @@ void prefs_folder_item_destroy(PrefsFolderItemDialog *dialog)
 	g_free(dialog->dialog);
 	g_free(dialog);
 
+	main_window_popup(main_window_get());
 	inc_unlock();
 }
 

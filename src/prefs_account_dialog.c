@@ -475,6 +475,7 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 	gtk_widget_show(dialog.window);
 	gtk_main();
 	gtk_widget_hide(dialog.window);
+	main_window_popup(main_window_get());
 
 	inc_unlock();
 

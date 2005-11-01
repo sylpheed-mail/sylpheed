@@ -655,6 +655,7 @@ static void prefs_actions_cancel(GtkWidget *w, gpointer data)
 {
 	prefs_actions_read_config();
 	gtk_widget_hide(actions.window);
+	main_window_popup(main_window_get());
 	inc_unlock();
 }
 
@@ -667,6 +668,7 @@ static void prefs_actions_ok(GtkWidget *widget, gpointer data)
 	ifactory = gtk_item_factory_from_widget(mainwin->menubar);
 	action_update_mainwin_menu(ifactory, mainwin);
 	gtk_widget_hide(actions.window);
+	main_window_popup(main_window_get());
 	inc_unlock();
 }
 
