@@ -781,8 +781,9 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
 		return NULL;
 	}
 
-	src_encoding = prefs_common.force_charset
-		? prefs_common.force_charset : mimeinfo->charset;
+	src_encoding = prefs_common.force_charset ? prefs_common.force_charset
+		: mimeinfo->charset ? mimeinfo->charset
+		: prefs_common.fallback_encoding;
 
 	if (mimeinfo->mime_type == MIME_TEXT) {
 		while (fgets(buf, sizeof(buf), tmpfp) != NULL) {

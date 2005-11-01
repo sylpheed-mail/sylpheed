@@ -132,7 +132,6 @@ static struct Display {
 static struct Message {
 	GtkWidget *chkbtn_enablecol;
 	GtkWidget *button_edit_col;
-	GtkWidget *chkbtn_mbalnum;
 	GtkWidget *chkbtn_disphdrpane;
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *chkbtn_html;
@@ -146,6 +145,8 @@ static struct Message {
 
 	GtkWidget *chkbtn_resize_image;
 	GtkWidget *chkbtn_inline_image;
+
+	GtkWidget *optmenu_encoding;
 } message;
 
 static struct JunkMail {
@@ -342,8 +343,10 @@ static PrefsUIData ui_data[] = {
 	{"enable_color", &message.chkbtn_enablecol,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
+#if 0
 	{"convert_mb_alnum", &message.chkbtn_mbalnum,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+#endif
 	{"display_header_pane", &message.chkbtn_disphdrpane,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"display_header", &message.chkbtn_disphdr,
@@ -366,6 +369,10 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"inline_image", &message.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+
+	{"fallback_encoding", &message.optmenu_encoding,
+	 prefs_common_charset_set_data_from_optmenu,
+	 prefs_common_charset_set_optmenu},
 
 	/* Junk mail */
 	{"enable_junk", &junk.chkbtn_enable_junk,
@@ -472,6 +479,9 @@ static void prefs_privacy_create	(void);
 static void prefs_interface_create	(void);
 static void prefs_other_create		(void);
 static void prefs_advanced_create	(void);
+
+static void prefs_common_set_encoding_optmenu	(GtkOptionMenu	*optmenu,
+						 gboolean	 outgoing);
 
 static void date_format_ok_btn_clicked		(GtkButton	*button,
 						 GtkWidget     **widget);
@@ -869,60 +879,8 @@ static void prefs_send_create(void)
 	gtk_widget_show (optmenu_charset);
 	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_charset, FALSE, FALSE, 0);
 
-	optmenu_menu = gtk_menu_new ();
-
-#define SET_MENUITEM(str, data) \
-{ \
-	MENUITEM_ADD(optmenu_menu, menuitem, str, data); \
-}
-
-	SET_MENUITEM(_("Automatic (Recommended)"),	 CS_AUTO);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("7bit ascii (US-ASCII)"),	 CS_US_ASCII);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Unicode (UTF-8)"),		 CS_UTF_8);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Western European (ISO-8859-1)"),  CS_ISO_8859_1);
-	SET_MENUITEM(_("Western European (ISO-8859-15)"), CS_ISO_8859_15);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Central European (ISO-8859-2)"), CS_ISO_8859_2);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Baltic (ISO-8859-13)"),		 CS_ISO_8859_13);
-	SET_MENUITEM(_("Baltic (ISO-8859-4)"),		 CS_ISO_8859_4);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Greek (ISO-8859-7)"),		 CS_ISO_8859_7);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Hebrew (ISO-8859-8)"),		 CS_ISO_8859_8);
-	SET_MENUITEM(_("Hebrew (Windows-1255)"),	 CS_WINDOWS_1255);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Turkish (ISO-8859-9)"),		 CS_ISO_8859_9);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Cyrillic (ISO-8859-5)"),	 CS_ISO_8859_5);
-	SET_MENUITEM(_("Cyrillic (KOI8-R)"),		 CS_KOI8_R);
-	SET_MENUITEM(_("Cyrillic (KOI8-U)"),		 CS_KOI8_U);
-	SET_MENUITEM(_("Cyrillic (Windows-1251)"),	 CS_WINDOWS_1251);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Japanese (ISO-2022-JP)"),	 CS_ISO_2022_JP);
-#if 0
-	SET_MENUITEM(_("Japanese (EUC-JP)"),		 CS_EUC_JP);
-	SET_MENUITEM(_("Japanese (Shift_JIS)"),		 CS_SHIFT_JIS);
-#endif /* 0 */
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Simplified Chinese (GB2312)"),	 CS_GB2312);
-	SET_MENUITEM(_("Simplified Chinese (GBK)"),	 CS_GBK);
-	SET_MENUITEM(_("Traditional Chinese (Big5)"),	 CS_BIG5);
-#if 0
-	SET_MENUITEM(_("Traditional Chinese (EUC-TW)"),  CS_EUC_TW);
-	SET_MENUITEM(_("Chinese (ISO-2022-CN)"),	 CS_ISO_2022_CN);
-#endif /* 0 */
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Korean (EUC-KR)"),		 CS_EUC_KR);
-	SET_MENUITEM(NULL, NULL);
-	SET_MENUITEM(_("Thai (TIS-620)"),		 CS_TIS_620);
-	SET_MENUITEM(_("Thai (Windows-874)"),		 CS_WINDOWS_874);
-
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_charset),
-				  optmenu_menu);
+	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_charset),
+					   TRUE);
 
 	PACK_SMALL_LABEL (vbox1, label_charset_desc,
 			  _("If `Automatic' is selected, the optimal encoding "
@@ -942,10 +900,15 @@ static void prefs_send_create(void)
 
 	optmenu_menu = gtk_menu_new ();
 
+#define SET_MENUITEM(str, data) \
+	MENUITEM_ADD(optmenu_menu, menuitem, str, data)
+
 	SET_MENUITEM(_("Automatic"),	 CTE_AUTO);
 	SET_MENUITEM("base64",		 CTE_BASE64);
 	SET_MENUITEM("quoted-printable", CTE_QUOTED_PRINTABLE);
 	SET_MENUITEM("8bit",		 CTE_8BIT);
+
+#undef SET_MENUITEM
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_encoding),
 				  optmenu_menu);
@@ -1411,7 +1374,6 @@ static void prefs_message_create(void)
 	GtkWidget *hbox1;
 	GtkWidget *chkbtn_enablecol;
 	GtkWidget *button_edit_col;
-	GtkWidget *chkbtn_mbalnum;
 	GtkWidget *chkbtn_disphdrpane;
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *button_edit_disphdr;
@@ -1420,6 +1382,9 @@ static void prefs_message_create(void)
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
 	GtkWidget *spinbtn_linespc;
+	GtkWidget *label_encoding;
+	GtkWidget *optmenu_encoding;
+	GtkWidget *label_encoding_desc;
 
 	GtkWidget *frame_scr;
 	GtkWidget *vbox_scr;
@@ -1461,12 +1426,14 @@ static void prefs_message_create(void)
 
 	SET_TOGGLE_SENSITIVITY(chkbtn_enablecol, button_edit_col);
 
+#if 0
 	PACK_CHECK_BUTTON
 		(vbox2, chkbtn_mbalnum,
 		 _("Display multi-byte alphabet and numeric as\n"
 		   "ASCII character (Japanese only)"));
 	gtk_label_set_justify (GTK_LABEL (GTK_BIN(chkbtn_mbalnum)->child),
 			       GTK_JUSTIFY_LEFT);
+#endif
 
 	PACK_CHECK_BUTTON(vbox2, chkbtn_disphdrpane,
 			  _("Display header pane above message view"));
@@ -1575,9 +1542,31 @@ static void prefs_message_create(void)
 	PACK_CHECK_BUTTON(vbox_image, chkbtn_inline_image,
 			  _("Display images as inline"));
 
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+
+	label_encoding = gtk_label_new (_("Fallback encoding"));
+	gtk_widget_show (label_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
+
+	optmenu_encoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
+
+	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
+					   FALSE);
+
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
+	PACK_SMALL_LABEL (vbox2, label_encoding_desc,
+			  _("This is used for messages with missing charset."));
+
 	message.chkbtn_enablecol   = chkbtn_enablecol;
 	message.button_edit_col    = button_edit_col;
-	message.chkbtn_mbalnum     = chkbtn_mbalnum;
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
 	message.chkbtn_disphdr     = chkbtn_disphdr;
 	message.chkbtn_html        = chkbtn_html;
@@ -1590,6 +1579,8 @@ static void prefs_message_create(void)
 
 	message.chkbtn_resize_image = chkbtn_resize_image;
 	message.chkbtn_inline_image = chkbtn_inline_image;
+
+	message.optmenu_encoding   = optmenu_encoding;
 }
 
 static void prefs_junk_create(void)
@@ -2162,6 +2153,71 @@ static void prefs_advanced_create(void)
 
 	advanced.spinbtn_iotimeout     = spinbtn_iotimeout;
 	advanced.spinbtn_iotimeout_adj = spinbtn_iotimeout_adj;
+}
+
+static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,
+					      gboolean outgoing)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+
+	menu = gtk_menu_new();
+
+#define SET_MENUITEM(str, data) \
+	MENUITEM_ADD(menu, menuitem, str, data)
+
+	if (outgoing) {
+		SET_MENUITEM(_("Automatic (Recommended)"), NULL);
+	} else {
+		SET_MENUITEM(_("Automatic"), NULL);
+	}
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("7bit ascii (US-ASCII)"),	 CS_US_ASCII);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Unicode (UTF-8)"),		 CS_UTF_8);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Western European (ISO-8859-1)"),  CS_ISO_8859_1);
+	SET_MENUITEM(_("Western European (ISO-8859-15)"), CS_ISO_8859_15);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Central European (ISO-8859-2)"), CS_ISO_8859_2);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Baltic (ISO-8859-13)"),		 CS_ISO_8859_13);
+	SET_MENUITEM(_("Baltic (ISO-8859-4)"),		 CS_ISO_8859_4);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Greek (ISO-8859-7)"),		 CS_ISO_8859_7);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Hebrew (ISO-8859-8)"),		 CS_ISO_8859_8);
+	SET_MENUITEM(_("Hebrew (Windows-1255)"),	 CS_WINDOWS_1255);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Turkish (ISO-8859-9)"),		 CS_ISO_8859_9);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Cyrillic (ISO-8859-5)"),	 CS_ISO_8859_5);
+	SET_MENUITEM(_("Cyrillic (KOI8-R)"),		 CS_KOI8_R);
+	SET_MENUITEM(_("Cyrillic (KOI8-U)"),		 CS_KOI8_U);
+	SET_MENUITEM(_("Cyrillic (Windows-1251)"),	 CS_WINDOWS_1251);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Japanese (ISO-2022-JP)"),	 CS_ISO_2022_JP);
+	if (!outgoing) {
+		SET_MENUITEM(_("Japanese (EUC-JP)"),	 CS_EUC_JP);
+		SET_MENUITEM(_("Japanese (Shift_JIS)"),	 CS_SHIFT_JIS);
+	}
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Simplified Chinese (GB2312)"),	 CS_GB2312);
+	SET_MENUITEM(_("Simplified Chinese (GBK)"),	 CS_GBK);
+	SET_MENUITEM(_("Traditional Chinese (Big5)"),	 CS_BIG5);
+	if (!outgoing) {
+		SET_MENUITEM(_("Traditional Chinese (EUC-TW)"), CS_EUC_TW);
+		SET_MENUITEM(_("Chinese (ISO-2022-CN)"),	CS_ISO_2022_CN);
+	}
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Korean (EUC-KR)"),		 CS_EUC_KR);
+	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Thai (TIS-620)"),		 CS_TIS_620);
+	SET_MENUITEM(_("Thai (Windows-874)"),		 CS_WINDOWS_874);
+
+#undef SET_MENUITEM
+
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), menu);
 }
 
 static void date_format_ok_btn_clicked(GtkButton *button, GtkWidget **widget)
@@ -3287,7 +3343,6 @@ static void prefs_common_charset_set_optmenu(PrefParam *pparam)
 
 	optmenu = GTK_OPTION_MENU(*ui_data->widget);
 	g_return_if_fail(optmenu != NULL);
-	g_return_if_fail(*((gchar **)pparam->data) != NULL);
 
 	index = menu_find_option_menu_index(optmenu, *((gchar **)pparam->data),
 					    (GCompareFunc)strcmp2);

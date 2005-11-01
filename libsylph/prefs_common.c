@@ -244,6 +244,9 @@ static PrefParam param[] = {
 	{"resize_image", "TRUE", &prefs_common.resize_image, P_BOOL},
 	{"inline_image", "TRUE", &prefs_common.inline_image, P_BOOL},
 
+	{"fallback_encoding", CS_AUTO, &prefs_common.fallback_encoding,
+	 P_STRING},
+
 	{"show_other_header", "FALSE", &prefs_common.show_other_header, P_BOOL},
 
 	/* MIME viewer */
