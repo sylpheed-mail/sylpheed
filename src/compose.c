@@ -73,6 +73,9 @@
 #endif
 #include <signal.h>
 #include <errno.h>
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
 
 #include "main.h"
 #include "mainwindow.h"
@@ -4355,7 +4358,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->sig_tag = sig_tag;
 
 	compose->exteditor_file = NULL;
-	compose->exteditor_pid  = -1;
+	compose->exteditor_pid  = 0;
 	compose->exteditor_tag  = 0;
 
 	compose_select_account(compose, account, TRUE);
@@ -5126,6 +5129,13 @@ static void compose_exec_ext_editor(Compose *compose)
 		g_free(tmp);
 		return;
 	}
+#ifdef G_OS_WIN32
+	if (canonicalize_file_replace(tmp) < 0) {
+		g_warning("Coundn't write to file: %s\n", tmp);
+		g_free(tmp);
+		return;
+	}
+#endif
 
 	compose_set_ext_editor_sensitive(compose, FALSE);
 
@@ -5161,14 +5171,22 @@ static void compose_exec_ext_editor(Compose *compose)
 
 static gboolean compose_ext_editor_kill(Compose *compose)
 {
-#ifdef G_OS_UNIX
+#ifdef G_OS_WIN32
+	DWORD exitcode;
+#endif
 	gint ret;
 
-	g_return_val_if_fail(compose->exteditor_pid != 1, TRUE);
+	g_return_val_if_fail(compose->exteditor_pid != 0, TRUE);
 
+#ifdef G_OS_WIN32
+	ret = GetExitCodeProcess(compose->exteditor_pid, &exitcode);
+
+	if (ret && exitcode == STILL_ACTIVE) {
+#else
 	ret = kill(compose->exteditor_pid, 0);
 
 	if (ret == 0 || (ret == -1 && EPERM == errno)) {
+#endif
 		AlertValue val;
 		gchar *msg;
 
@@ -5182,24 +5200,27 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 		g_free(msg);
 
 		if (val == G_ALERTDEFAULT) {
+#ifdef G_OS_WIN32
+			if (TerminateProcess(compose->exteditor_pid, 1) == 0)
+				g_warning("TerminateProcess() failed: %d\n",
+					  GetLastError());
+#else
 			if (kill(compose->exteditor_pid, SIGTERM) < 0)
 				perror("kill");
+#endif
 
 			g_message("Terminated process group id: %d",
 				  compose->exteditor_pid);
 			g_message("Temporary file: %s",
 				  compose->exteditor_file);
 
-			while (compose->exteditor_pid != -1)
+			while (compose->exteditor_pid != 0)
 				gtk_main_iteration();
 		} else
 			return FALSE;
 	}
 
 	return TRUE;
-#else
-	return FALSE;
-#endif
 }
 
 static void compose_ext_editor_child_exit(GPid pid, gint status, gpointer data)
@@ -5234,7 +5255,7 @@ static void compose_ext_editor_child_exit(GPid pid, gint status, gpointer data)
 
 	g_free(compose->exteditor_file);
 	compose->exteditor_file = NULL;
-	compose->exteditor_pid  = -1;
+	compose->exteditor_pid  = 0;
 	compose->exteditor_tag  = 0;
 }
 
@@ -5685,7 +5706,7 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	Compose *compose = (Compose *)data;
 	AlertValue val;
 
-	if (compose->exteditor_pid != -1) {
+	if (compose->exteditor_pid != 0) {
 		if (!compose_ext_editor_kill(compose))
 			return;
 	}
