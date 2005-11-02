@@ -4778,7 +4778,10 @@ static void compose_destroy(Compose *compose)
 	if (compose->undostruct)
 		undo_destroy(compose->undostruct);
 
-	g_free(compose->exteditor_file);
+	if (compose->exteditor_file) {
+		g_unlink(compose->exteditor_file);
+		g_free(compose->exteditor_file);
+	}
 
 	for (valid = gtk_tree_model_get_iter_first(model, &iter); valid;
 	     valid = gtk_tree_model_iter_next(model, &iter)) {
@@ -5221,8 +5224,11 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 	} else if (compose->exteditor_tag != 0) {
 		g_source_remove(compose->exteditor_tag);
 		compose->exteditor_tag = 0;
-		g_free(compose->exteditor_file);
-		compose->exteditor_file = NULL;
+		if (compose->exteditor_file) {
+			g_unlink(compose->exteditor_file);
+			g_free(compose->exteditor_file);
+			compose->exteditor_file = NULL;
+		}
 		compose->exteditor_pid  = 0;
 		compose_set_ext_editor_sensitive(compose, TRUE);
 	}
