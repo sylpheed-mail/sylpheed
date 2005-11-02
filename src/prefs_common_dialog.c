@@ -145,8 +145,6 @@ static struct Message {
 
 	GtkWidget *chkbtn_resize_image;
 	GtkWidget *chkbtn_inline_image;
-
-	GtkWidget *optmenu_encoding;
 } message;
 
 static struct JunkMail {
@@ -199,8 +197,11 @@ static struct Other {
 
 static struct Advanced {
 	GtkWidget *checkbtn_strict_cache_check;
+
 	GtkWidget *spinbtn_iotimeout;
 	GtkObject *spinbtn_iotimeout_adj;
+
+	GtkWidget *optmenu_encoding;
 } advanced;
 
 static struct MessageColorButtons {
@@ -370,10 +371,6 @@ static PrefsUIData ui_data[] = {
 	{"inline_image", &message.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
-	{"fallback_encoding", &message.optmenu_encoding,
-	 prefs_common_charset_set_data_from_optmenu,
-	 prefs_common_charset_set_optmenu},
-
 	/* Junk mail */
 	{"enable_junk", &junk.chkbtn_enable_junk,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -460,6 +457,10 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"io_timeout_secs", &advanced.spinbtn_iotimeout,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
+
+	{"fallback_encoding", &advanced.optmenu_encoding,
+	 prefs_common_charset_set_data_from_optmenu,
+	 prefs_common_charset_set_optmenu},
 
 	{NULL, NULL, NULL, NULL}
 };
@@ -1382,9 +1383,6 @@ static void prefs_message_create(void)
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
 	GtkWidget *spinbtn_linespc;
-	GtkWidget *label_encoding;
-	GtkWidget *optmenu_encoding;
-	GtkWidget *label_encoding_desc;
 
 	GtkWidget *frame_scr;
 	GtkWidget *vbox_scr;
@@ -1542,29 +1540,6 @@ static void prefs_message_create(void)
 	PACK_CHECK_BUTTON(vbox_image, chkbtn_inline_image,
 			  _("Display images as inline"));
 
-	vbox2 = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox2);
-	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
-
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
-
-	label_encoding = gtk_label_new (_("Fallback encoding"));
-	gtk_widget_show (label_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
-
-	optmenu_encoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
-
-	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
-					   FALSE);
-
-	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
-	PACK_SMALL_LABEL (vbox2, label_encoding_desc,
-			  _("This is used for messages with missing charset."));
-
 	message.chkbtn_enablecol   = chkbtn_enablecol;
 	message.button_edit_col    = button_edit_col;
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
@@ -1579,8 +1554,6 @@ static void prefs_message_create(void)
 
 	message.chkbtn_resize_image = chkbtn_resize_image;
 	message.chkbtn_inline_image = chkbtn_inline_image;
-
-	message.optmenu_encoding   = optmenu_encoding;
 }
 
 static void prefs_junk_create(void)
@@ -2112,6 +2085,10 @@ static void prefs_advanced_create(void)
 	GtkWidget *spinbtn_iotimeout;
 	GtkObject *spinbtn_iotimeout_adj;
 
+	GtkWidget *label_encoding;
+	GtkWidget *optmenu_encoding;
+	GtkWidget *label_encoding_desc;
+
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
@@ -2149,10 +2126,34 @@ static void prefs_advanced_create(void)
 	gtk_widget_show (label_iotimeout);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_iotimeout, FALSE, FALSE, 0);
 
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+
+	label_encoding = gtk_label_new (_("Fallback encoding"));
+	gtk_widget_show (label_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
+
+	optmenu_encoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
+
+	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
+					   FALSE);
+
+	PACK_SMALL_LABEL (vbox2, label_encoding_desc,
+			  _("This is used for messages with missing charset."));
+
 	advanced.checkbtn_strict_cache_check = checkbtn_strict_cache_check;
 
 	advanced.spinbtn_iotimeout     = spinbtn_iotimeout;
 	advanced.spinbtn_iotimeout_adj = spinbtn_iotimeout_adj;
+
+	advanced.optmenu_encoding = optmenu_encoding;
 }
 
 static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,
