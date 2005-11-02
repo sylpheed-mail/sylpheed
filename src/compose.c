@@ -5218,6 +5218,13 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 				gtk_main_iteration();
 		} else
 			return FALSE;
+	} else if (compose->exteditor_tag != 0) {
+		g_source_remove(compose->exteditor_tag);
+		compose->exteditor_tag = 0;
+		g_free(compose->exteditor_file);
+		compose->exteditor_file = NULL;
+		compose->exteditor_pid  = 0;
+		compose_set_ext_editor_sensitive(compose, TRUE);
 	}
 
 	return TRUE;
