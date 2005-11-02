@@ -270,6 +270,7 @@ static PrefParam param[] = {
 	 P_BOOL},
 	{"delete_junk_on_receive", "TRUE", &prefs_common.delete_junk_on_recv,
 	 P_BOOL},
+	{"mark_junk_as_read", "FALSE", &prefs_common.mark_junk_as_read, P_BOOL},
 
 	/* Privacy */
 	{"auto_check_signatures", "TRUE", &prefs_common.auto_check_signatures,
@@ -450,6 +451,11 @@ void prefs_common_junk_filter_list_set(void)
 		action = filter_action_new(FLT_ACTION_MOVE,
 					   prefs_common.junk_folder);
 		action_list = g_slist_append(NULL, action);
+	}
+
+	if (prefs_common.mark_junk_as_read) {
+		action = filter_action_new(FLT_ACTION_MARK_READ, NULL);
+		action_list = g_slist_append(action_list, action);
 	}
 
 	rule = filter_rule_new(_("Junk mail filter"), FLT_OR,

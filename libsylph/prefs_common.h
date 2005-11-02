@@ -193,6 +193,7 @@ struct _PrefsCommon
 	gchar *junk_folder;
 	gboolean filter_junk_on_recv;
 	gboolean delete_junk_on_recv;
+	gboolean mark_junk_as_read;
 
 	/* Privacy */
 	gboolean auto_check_signatures;

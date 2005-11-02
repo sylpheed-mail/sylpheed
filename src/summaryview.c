@@ -3835,8 +3835,19 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	if (fltinfo->actions[FLT_ACTION_MOVE] ||
 	    fltinfo->actions[FLT_ACTION_COPY] ||
-	    fltinfo->actions[FLT_ACTION_DELETE])
+	    fltinfo->actions[FLT_ACTION_DELETE] ||
+	    fltinfo->actions[FLT_ACTION_MARK_READ])
 		summaryview->filtered++;
+
+	if (msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
+		msginfo->flags = fltinfo->flags;
+		summary_set_row(summaryview, iter, msginfo);
+		if (MSG_IS_IMAP(msginfo->flags)) {
+			if (fltinfo->actions[FLT_ACTION_MARK_READ])
+				imap_msg_unset_perm_flags(msginfo,
+							  MSG_NEW|MSG_UNREAD);
+		}
+	}
 
 	if (fltinfo->actions[FLT_ACTION_MOVE] && fltinfo->move_dest)
 		summary_move_row_to(summaryview, iter, fltinfo->move_dest);
@@ -3958,6 +3969,12 @@ static void summary_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	ret = filter_action_exec(&rule, msginfo, file, fltinfo);
 
+	if (ret == 0 && MSG_IS_UNREAD(msginfo->flags)) {
+		summary_mark_row_as_read(summaryview, iter);
+		if (MSG_IS_IMAP(msginfo->flags))
+			imap_msg_unset_perm_flags
+				(msginfo, MSG_NEW | MSG_UNREAD);
+	}
 	if (ret == 0 && fltinfo->actions[FLT_ACTION_MOVE] && fltinfo->move_dest)
 		summary_move_row_to(summaryview, iter, fltinfo->move_dest);
 
