@@ -276,15 +276,12 @@ static gboolean attach_property_key_pressed	(GtkWidget	*widget,
 						 gboolean	*cancelled);
 
 static void compose_exec_ext_editor		(Compose	*compose);
-#ifdef G_OS_UNIX
-static gint compose_exec_ext_editor_real	(const gchar	*file);
 static gboolean compose_ext_editor_kill		(Compose	*compose);
-static gboolean compose_input_cb		(GIOChannel	*source,
-						 GIOCondition	 condition,
+static void compose_ext_editor_child_exit	(GPid		 pid,
+						 gint		 status,
 						 gpointer	 data);
 static void compose_set_ext_editor_sensitive	(Compose	*compose,
 						 gboolean	 sensitive);
-#endif /* G_OS_UNIX */
 
 static void compose_undo_state_changed		(UndoMain	*undostruct,
 						 gint		 undo_state,
@@ -4357,9 +4354,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->sig_tag = sig_tag;
 
-	compose->exteditor_file    = NULL;
-	compose->exteditor_pid     = -1;
-	compose->exteditor_tag     = -1;
+	compose->exteditor_file = NULL;
+	compose->exteditor_pid  = -1;
+	compose->exteditor_tag  = 0;
 
 	compose_select_account(compose, account, TRUE);
 
@@ -5114,122 +5111,62 @@ static gboolean attach_property_key_pressed(GtkWidget *widget,
 
 static void compose_exec_ext_editor(Compose *compose)
 {
-#ifdef G_OS_UNIX
 	gchar *tmp;
-	pid_t pid;
-	gint pipe_fds[2];
-
-	tmp = g_strdup_printf("%s%ctmpmsg.%p", get_tmp_dir(),
-			      G_DIR_SEPARATOR, compose);
-
-	if (pipe(pipe_fds) < 0) {
-		perror("pipe");
-		g_free(tmp);
-		return;
-	}
-
-	if ((pid = fork()) < 0) {
-		perror("fork");
-		g_free(tmp);
-		return;
-	}
-
-	if (pid != 0) {
-		/* close the write side of the pipe */
-		close(pipe_fds[1]);
-
-		compose->exteditor_file    = g_strdup(tmp);
-		compose->exteditor_pid     = pid;
-
-		compose_set_ext_editor_sensitive(compose, FALSE);
-
-		compose->exteditor_ch = g_io_channel_unix_new(pipe_fds[0]);
-		compose->exteditor_tag = g_io_add_watch(compose->exteditor_ch,
-							G_IO_IN,
-							compose_input_cb,
-							compose);
-	} else {	/* process-monitoring process */
-		pid_t pid_ed;
-
-		if (setpgid(0, 0))
-			perror("setpgid");
-
-		/* close the read side of the pipe */
-		close(pipe_fds[0]);
-
-		if (compose_write_body_to_file(compose, tmp) < 0) {
-			fd_write_all(pipe_fds[1], "2\n", 2);
-			_exit(1);
-		}
-
-		pid_ed = compose_exec_ext_editor_real(tmp);
-		if (pid_ed < 0) {
-			fd_write_all(pipe_fds[1], "1\n", 2);
-			_exit(1);
-		}
-
-		/* wait until editor is terminated */
-		waitpid(pid_ed, NULL, 0);
-
-		fd_write_all(pipe_fds[1], "0\n", 2);
-
-		close(pipe_fds[1]);
-		_exit(0);
-	}
-
-	g_free(tmp);
-#endif /* G_OS_UNIX */
-}
-
-#ifdef G_OS_UNIX
-static gint compose_exec_ext_editor_real(const gchar *file)
-{
+	GPid pid;
 	static gchar *def_cmd = "emacs %s";
 	gchar buf[1024];
 	gchar *p;
 	gchar **cmdline;
-	pid_t pid;
 
-	g_return_val_if_fail(file != NULL, -1);
+	tmp = g_strdup_printf("%s%ctmpmsg-%p.txt", get_tmp_dir(),
+			      G_DIR_SEPARATOR, compose);
 
-	if ((pid = fork()) < 0) {
-		perror("fork");
-		return -1;
+	if (compose_write_body_to_file(compose, tmp) < 0) {
+		g_warning("Coundn't write to file: %s\n", tmp);
+		g_free(tmp);
+		return;
 	}
 
-	if (pid != 0) return pid;
-
-	/* grandchild process */
-
-	if (setpgid(0, getppid()))
-		perror("setpgid");
+	compose_set_ext_editor_sensitive(compose, FALSE);
 
 	if (prefs_common.ext_editor_cmd &&
 	    (p = strchr(prefs_common.ext_editor_cmd, '%')) &&
 	    *(p + 1) == 's' && !strchr(p + 2, '%')) {
-		g_snprintf(buf, sizeof(buf), prefs_common.ext_editor_cmd, file);
+		g_snprintf(buf, sizeof(buf), prefs_common.ext_editor_cmd, tmp);
 	} else {
 		if (prefs_common.ext_editor_cmd)
 			g_warning(_("External editor command line is invalid: `%s'\n"),
 				  prefs_common.ext_editor_cmd);
-		g_snprintf(buf, sizeof(buf), def_cmd, file);
+		g_snprintf(buf, sizeof(buf), def_cmd, tmp);
 	}
 
 	cmdline = strsplit_with_quote(buf, " ", 1024);
-	execvp(cmdline[0], cmdline);
 
-	perror("execvp");
-	g_strfreev(cmdline);
+	if (g_spawn_async(NULL, cmdline, NULL,
+			  G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
+			  NULL, NULL, &pid, NULL) == FALSE) {
+		g_warning("Couldn't execute external editor\n");
+		g_unlink(tmp);
+		g_free(tmp);
+		return;
+	}
 
-	_exit(1);
+	debug_print("compose_exec_ext_editor(): pid: %d file: %s\n", pid, tmp);
+
+	compose->exteditor_file = tmp;
+	compose->exteditor_pid = pid;
+	compose->exteditor_tag =
+		g_child_watch_add(pid, compose_ext_editor_child_exit, compose);
 }
 
 static gboolean compose_ext_editor_kill(Compose *compose)
 {
-	pid_t pgid = compose->exteditor_pid * -1;
+#ifdef G_OS_UNIX
 	gint ret;
 
-	ret = kill(pgid, 0);
+	g_return_val_if_fail(compose->exteditor_pid != 1, TRUE);
+
+	ret = kill(compose->exteditor_pid, 0);
 
 	if (ret == 0 || (ret == -1 && EPERM == errno)) {
 		AlertValue val;
@@ -5237,96 +5174,68 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 
 		msg = g_strdup_printf
 			(_("The external editor is still working.\n"
-			   "Force terminating the process?\n"
-			   "process group id: %d"), -pgid);
+			   "Force terminating the process (pid: %d)?\n"),
+			 compose->exteditor_pid);
 		val = alertpanel_full(_("Notice"), msg, ALERT_NOTICE,
 				      G_ALERTALTERNATE, FALSE,
 				      GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		g_free(msg);
 
 		if (val == G_ALERTDEFAULT) {
-			g_source_remove(compose->exteditor_tag);
-			g_io_channel_shutdown(compose->exteditor_ch,
-					      FALSE, NULL);
-			g_io_channel_unref(compose->exteditor_ch);
+			if (kill(compose->exteditor_pid, SIGTERM) < 0)
+				perror("kill");
 
-			if (kill(pgid, SIGTERM) < 0) perror("kill");
-			waitpid(compose->exteditor_pid, NULL, 0);
-
-			g_warning(_("Terminated process group id: %d"), -pgid);
-			g_warning(_("Temporary file: %s"),
+			g_message("Terminated process group id: %d",
+				  compose->exteditor_pid);
+			g_message("Temporary file: %s",
 				  compose->exteditor_file);
 
-			compose_set_ext_editor_sensitive(compose, TRUE);
-
-			g_free(compose->exteditor_file);
-			compose->exteditor_file    = NULL;
-			compose->exteditor_pid     = -1;
-			compose->exteditor_ch      = NULL;
-			compose->exteditor_tag     = -1;
+			while (compose->exteditor_pid != -1)
+				gtk_main_iteration();
 		} else
 			return FALSE;
 	}
 
 	return TRUE;
+#else
+	return FALSE;
+#endif
 }
 
-static gboolean compose_input_cb(GIOChannel *source, GIOCondition condition,
-				 gpointer data)
+static void compose_ext_editor_child_exit(GPid pid, gint status, gpointer data)
 {
-	gchar buf[3] = "3";
 	Compose *compose = (Compose *)data;
-	gsize bytes_read;
+	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
+	GtkTextBuffer *buffer;
+	GtkTextMark *mark;
+	GtkTextIter iter;
 
-	debug_print(_("Compose: input from monitoring process\n"));
+	debug_print("Compose: child exit (pid: %d status: %d)\n", pid, status);
 
-	g_io_channel_read_chars(source, buf, sizeof(buf), &bytes_read, NULL);
+	g_spawn_close_pid(pid);
 
-	g_io_channel_shutdown(source, FALSE, NULL);
-	g_io_channel_unref(source);
+	buffer = gtk_text_view_get_buffer(text);
 
-	waitpid(compose->exteditor_pid, NULL, 0);
+	gtk_text_buffer_set_text(buffer, "", 0);
+	compose_insert_file(compose, compose->exteditor_file, FALSE);
+	compose_enable_sig(compose);
 
-	if (buf[0] == '0') {		/* success */
-		GtkTextView *text = GTK_TEXT_VIEW(compose->text);
-		GtkTextBuffer *buffer;
-		GtkTextMark *mark;
-		GtkTextIter iter;
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+	gtk_text_buffer_place_cursor(buffer, &iter);
+	mark = gtk_text_buffer_get_insert(buffer);
+	gtk_text_view_scroll_mark_onscreen(text, mark);
 
-		buffer = gtk_text_view_get_buffer(text);
+	compose_changed_cb(NULL, compose);
 
-		gtk_text_buffer_set_text(buffer, "", 0);
-		compose_insert_file(compose, compose->exteditor_file, FALSE);
-		compose_enable_sig(compose);
-
-		gtk_text_buffer_get_start_iter(buffer, &iter);
-		gtk_text_buffer_place_cursor(buffer, &iter);
-		mark = gtk_text_buffer_get_insert(buffer);
-		gtk_text_view_scroll_mark_onscreen(text, mark);
-
-		compose_changed_cb(NULL, compose);
-
-		if (g_unlink(compose->exteditor_file) < 0)
-			FILE_OP_ERROR(compose->exteditor_file, "unlink");
-	} else if (buf[0] == '1') {	/* failed */
-		g_warning(_("Couldn't exec external editor\n"));
-		if (g_unlink(compose->exteditor_file) < 0)
-			FILE_OP_ERROR(compose->exteditor_file, "unlink");
-	} else if (buf[0] == '2') {
-		g_warning(_("Couldn't write to file\n"));
-	} else if (buf[0] == '3') {
-		g_warning(_("Pipe read failed\n"));
-	}
+	if (g_unlink(compose->exteditor_file) < 0)
+		FILE_OP_ERROR(compose->exteditor_file, "unlink");
 
 	compose_set_ext_editor_sensitive(compose, TRUE);
 
 	g_free(compose->exteditor_file);
-	compose->exteditor_file    = NULL;
-	compose->exteditor_pid     = -1;
-	compose->exteditor_ch      = NULL;
-	compose->exteditor_tag     = -1;
-
-	return FALSE;
+	compose->exteditor_file = NULL;
+	compose->exteditor_pid  = -1;
+	compose->exteditor_tag  = 0;
 }
 
 static void compose_set_ext_editor_sensitive(Compose *compose,
@@ -5356,7 +5265,6 @@ static void compose_set_ext_editor_sensitive(Compose *compose,
 	gtk_widget_set_sensitive(compose->exteditor_btn, sensitive);
 	gtk_widget_set_sensitive(compose->linewrap_btn,  sensitive);
 }
-#endif /* G_OS_UNIX */
 
 /**
  * compose_undo_state_changed:
@@ -5777,12 +5685,10 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	Compose *compose = (Compose *)data;
 	AlertValue val;
 
-#ifdef G_OS_UNIX
-	if (compose->exteditor_tag != -1) {
+	if (compose->exteditor_pid != -1) {
 		if (!compose_ext_editor_kill(compose))
 			return;
 	}
-#endif
 
 	if (compose->modified) {
 		val = alertpanel(_("Save message"),

@@ -3097,7 +3097,7 @@ gint execute_async(gchar *const argv[])
 	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
 
 	if (g_spawn_async(NULL, (gchar **)argv, NULL, G_SPAWN_SEARCH_PATH,
-			  NULL, NULL, NULL, FALSE) == FALSE) {
+			  NULL, NULL, NULL, NULL) == FALSE) {
 		g_warning("Can't execute command: %s\n", argv[0]);
 		return -1;
 	}
