@@ -574,6 +574,7 @@ static void account_edit_close(void)
 	main_window_reflect_prefs_all();
 
 	gtk_widget_hide(edit_account.window);
+	main_window_popup(main_window_get());
 
 	inc_unlock();
 }
