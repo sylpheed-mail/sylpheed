@@ -1559,6 +1559,43 @@ static void prefs_message_create(void)
 	message.chkbtn_inline_image = chkbtn_inline_image;
 }
 
+static const struct {
+	gchar *junk_cmd;
+	gchar *nojunk_cmd;
+	gchar *classify_cmd;
+} junk_presets[] = {
+#ifdef G_OS_WIN32
+	{"bogofilter -s -I", "bogofilter -n -I", "bogofilter -I"},
+	{"bsfilterw -su", "bsfilterw -cu", "bsfilterw"}
+#else
+	{"bogofilter -s -I", "bogofilter -n -I", "bogofilter -I"},
+	{"bsfilter -su", "bsfilter -cu", "bsfilter"}
+#endif
+};
+
+enum
+{
+	JUNK_NONE,
+	JUNK_BOGOFILTER,
+	JUNK_BSFILTER
+};
+
+static void prefs_junk_preset_activated(GtkMenuItem *menuitem, gpointer data)
+{
+	gint i;
+
+	i = (gint)g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID);
+	if (i > 0) {
+		i--;
+		gtk_entry_set_text(GTK_ENTRY(junk.entry_junk_learncmd),
+				   junk_presets[i].junk_cmd); 
+		gtk_entry_set_text(GTK_ENTRY(junk.entry_nojunk_learncmd),
+				   junk_presets[i].nojunk_cmd); 
+		gtk_entry_set_text(GTK_ENTRY(junk.entry_classify_cmd),
+				   junk_presets[i].classify_cmd); 
+	}
+}
+
 static void prefs_junk_create(void)
 {
 	GtkWidget *vbox1;
@@ -1567,6 +1604,9 @@ static void prefs_junk_create(void)
 	GtkWidget *hbox;
 	GtkWidget *chkbtn_enable_junk;
 	GtkWidget *label;
+	GtkWidget *optmenu_preset;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
 	GtkWidget *entry_junk_learncmd;
 	GtkWidget *entry_nojunk_learncmd;
 	GtkWidget *entry_classify_cmd;
@@ -1591,10 +1631,27 @@ static void prefs_junk_create(void)
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
 	SET_TOGGLE_SENSITIVITY (chkbtn_enable_junk, vbox2);
 
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
 	label = gtk_label_new (_("Learning command:"));
 	gtk_widget_show (label);
-	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	optmenu_preset = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_preset);
+	gtk_box_pack_end (GTK_BOX (hbox), optmenu_preset, FALSE, FALSE, 0);
+
+	menu = gtk_menu_new ();
+	MENUITEM_ADD (menu, menuitem, _("(Select preset)"), 0);
+	MENUITEM_ADD (menu, menuitem, "bogofilter", JUNK_BOGOFILTER);
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (prefs_junk_preset_activated), NULL);
+	MENUITEM_ADD (menu, menuitem, "bsfilter", JUNK_BSFILTER);
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (prefs_junk_preset_activated), NULL);
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_preset), menu);
 
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
