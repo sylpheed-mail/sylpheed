@@ -5202,36 +5202,38 @@ static gboolean compose_ext_editor_kill(Compose *compose)
 				      GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		g_free(msg);
 
-		if (val == G_ALERTDEFAULT) {
-#ifdef G_OS_WIN32
-			if (TerminateProcess(compose->exteditor_pid, 1) == 0)
-				g_warning("TerminateProcess() failed: %d\n",
-					  GetLastError());
-#else
-			if (kill(compose->exteditor_pid, SIGTERM) < 0)
-				perror("kill");
-#endif
-
-			g_message("Terminated process group id: %d",
-				  compose->exteditor_pid);
-			g_message("Temporary file: %s",
-				  compose->exteditor_file);
-
-			while (compose->exteditor_pid != 0)
-				gtk_main_iteration();
-		} else
+		if (val != G_ALERTDEFAULT)
 			return FALSE;
-	} else if (compose->exteditor_tag != 0) {
+	}
+
+	if (compose->exteditor_tag != 0) {
 		g_source_remove(compose->exteditor_tag);
 		compose->exteditor_tag = 0;
-		if (compose->exteditor_file) {
-			g_unlink(compose->exteditor_file);
-			g_free(compose->exteditor_file);
-			compose->exteditor_file = NULL;
-		}
-		compose->exteditor_pid  = 0;
-		compose_set_ext_editor_sensitive(compose, TRUE);
 	}
+
+	if (compose->exteditor_pid != 0) {
+#ifdef G_OS_WIN32
+		if (TerminateProcess(compose->exteditor_pid, 1) == 0)
+			g_warning("TerminateProcess() failed: %d\n",
+				  GetLastError());
+#else
+		if (kill(compose->exteditor_pid, SIGTERM) < 0)
+			perror("kill");
+#endif
+		g_message("Terminated process group id: %d\n",
+			  compose->exteditor_pid);
+		g_message("Temporary file: %s\n",
+			  compose->exteditor_file);
+		compose->exteditor_pid = 0;
+	}
+
+	if (compose->exteditor_file) {
+		g_unlink(compose->exteditor_file);
+		g_free(compose->exteditor_file);
+		compose->exteditor_file = NULL;
+	}
+
+	compose_set_ext_editor_sensitive(compose, TRUE);
 
 	return TRUE;
 }
