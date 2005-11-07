@@ -82,6 +82,9 @@ static PrefParam param[] = {
 	{"linewrap_before_sending", "FALSE", &prefs_common.linewrap_at_send,
 	 P_BOOL},
 
+	{"enable_autosave", "FALSE", &prefs_common.enable_autosave, P_BOOL},
+	{"autosave_interval", "5", &prefs_common.autosave_itv, P_INT},
+
 	{"reply_with_quote", "TRUE", &prefs_common.reply_with_quote, P_BOOL},
 	{"reply_account_autoselect", "TRUE",
 	 &prefs_common.reply_account_autosel, P_BOOL},

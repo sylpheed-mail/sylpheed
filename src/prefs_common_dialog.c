@@ -104,6 +104,10 @@ static struct Compose {
 	GtkWidget *checkbtn_autowrap;
 	GtkWidget *checkbtn_wrapatsend;
 
+	GtkWidget *checkbtn_autosave;
+	GtkWidget *spinbtn_autosave;
+	GtkObject *spinbtn_autosave_adj;
+
 	GtkWidget *checkbtn_reply_account_autosel;
 	GtkWidget *checkbtn_quote;
 	GtkWidget *checkbtn_default_reply_list;
@@ -303,6 +307,11 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"linewrap_before_sending", &compose.checkbtn_wrapatsend,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+
+	{"enable_autosave", &compose.checkbtn_autosave,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"autosave_interval", &compose.spinbtn_autosave,
+	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
 	{"reply_with_quote", &compose.checkbtn_quote,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -974,6 +983,13 @@ static void prefs_compose_create(void)
 	GtkWidget *checkbtn_autowrap;
 	GtkWidget *checkbtn_wrapatsend;
 
+	GtkWidget *hbox_autosave;
+	GtkWidget *checkbtn_autosave;
+	GtkWidget *label_autosave1;
+	GtkObject *spinbtn_autosave_adj;
+	GtkWidget *spinbtn_autosave;
+	GtkWidget *label_autosave2;
+
 	GtkWidget *frame_reply;
 	GtkWidget *checkbtn_reply_account_autosel;
 	GtkWidget *checkbtn_quote;
@@ -1078,6 +1094,38 @@ static void prefs_compose_create(void)
 	PACK_CHECK_BUTTON
 		(hbox4, checkbtn_wrapatsend, _("Wrap before sending"));
 
+	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
+
+	hbox_autosave = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox_autosave);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox_autosave, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (hbox_autosave, checkbtn_autosave,
+			   _("Auto-save to draft"));
+
+	label_autosave1 = gtk_label_new (_("every"));
+	gtk_widget_show (label_autosave1);
+	gtk_box_pack_start (GTK_BOX (hbox_autosave), label_autosave1,
+			    FALSE, FALSE, 0);
+
+	spinbtn_autosave_adj = gtk_adjustment_new (5, 1, 100, 1, 10, 10);
+	spinbtn_autosave = gtk_spin_button_new
+		(GTK_ADJUSTMENT (spinbtn_autosave_adj), 1, 0);
+	gtk_widget_show (spinbtn_autosave);
+	gtk_box_pack_start (GTK_BOX (hbox_autosave), spinbtn_autosave,
+			    FALSE, FALSE, 0);
+	gtk_widget_set_size_request (spinbtn_autosave, 64, -1);
+	gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbtn_autosave), TRUE);
+
+	label_autosave2 = gtk_label_new (_("minute(s)"));
+	gtk_widget_show (label_autosave2);
+	gtk_box_pack_start (GTK_BOX (hbox_autosave), label_autosave2,
+			    FALSE, FALSE, 0);
+
+	SET_TOGGLE_SENSITIVITY(checkbtn_autosave, label_autosave1);
+	SET_TOGGLE_SENSITIVITY(checkbtn_autosave, spinbtn_autosave);
+	SET_TOGGLE_SENSITIVITY(checkbtn_autosave, label_autosave2);
+
 	PACK_FRAME(vbox1, frame_reply, _("Reply"));
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
@@ -1105,6 +1153,10 @@ static void prefs_compose_create(void)
 	compose.checkbtn_wrapquote   = checkbtn_wrapquote;
 	compose.checkbtn_autowrap    = checkbtn_autowrap;
 	compose.checkbtn_wrapatsend  = checkbtn_wrapatsend;
+
+	compose.checkbtn_autosave    = checkbtn_autosave;
+	compose.spinbtn_autosave     = spinbtn_autosave;
+	compose.spinbtn_autosave_adj = spinbtn_autosave_adj;
 
 	compose.checkbtn_quote = checkbtn_quote;
 	compose.checkbtn_reply_account_autosel =
@@ -3632,6 +3684,7 @@ static void prefs_common_apply(void)
 	prefs_common_junk_filter_list_set();
 	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
 	main_window_reflect_prefs_all();
+	compose_reflect_prefs_all();
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
 	prefs_common_write_config();
 

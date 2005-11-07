@@ -179,6 +179,10 @@ struct _Compose
 	gchar *exteditor_file;
 	GPid   exteditor_pid;
 	guint  exteditor_tag;
+
+	guint autosave_tag;
+
+	guint lock_count;
 };
 
 struct _AttachInfo
@@ -215,6 +219,9 @@ void compose_entry_set		(Compose	  *compose,
 void compose_entry_append	(Compose	  *compose,
 				 const gchar	  *text,
 				 ComposeEntryType  type);
+
+void compose_lock		(Compose	*compose);
+void compose_unlock		(Compose	*compose);
 
 void compose_reflect_prefs_all	(void);
 

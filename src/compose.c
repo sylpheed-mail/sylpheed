@@ -479,6 +479,9 @@ static void text_inserted		(GtkTextBuffer	*buffer,
 					 gint		 len,
 					 Compose	*compose);
 
+static gboolean autosave_timeout	(gpointer	 data);
+
+
 static GtkItemFactoryEntry compose_popup_entries[] =
 {
 	{N_("/_Add..."),	NULL, compose_attach_cb, 0, NULL},
@@ -705,6 +708,10 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 	compose_connect_changed_callbacks(compose);
 	compose_set_title(compose);
 
+	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
+		compose->autosave_tag =
+			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
+				      autosave_timeout, compose);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -795,6 +802,10 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	}
 #endif
 
+	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
+		compose->autosave_tag =
+			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
+				      autosave_timeout, compose);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -911,6 +922,10 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	else
 		gtk_widget_grab_focus(compose->newsgroups_entry);
 
+	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
+		compose->autosave_tag =
+			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
+				      autosave_timeout, compose);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -1044,6 +1059,10 @@ void compose_reedit(MsgInfo *msginfo)
 	compose_connect_changed_callbacks(compose);
 	compose_set_title(compose);
 
+	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
+		compose->autosave_tag =
+			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
+				      autosave_timeout, compose);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -2501,25 +2520,36 @@ static gboolean compose_check_entries(Compose *compose)
 	return TRUE;
 }
 
+void compose_lock(Compose *compose)
+{
+	compose->lock_count++;
+}
+
+void compose_unlock(Compose *compose)
+{
+	if (compose->lock_count > 0)
+		compose->lock_count--;
+}
+
 static gint compose_send(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
 	gint ok = 0;
-	static gboolean lock = FALSE;
 
-	if (lock) return 1;
+	if (compose->lock_count > 0)
+		return 1;
 
 	g_return_val_if_fail(compose->account != NULL, -1);
 
-	lock = TRUE;
+	compose_lock(compose);
 
 	if (compose_check_entries(compose) == FALSE) {
-		lock = FALSE;
+		compose_unlock(compose);
 		return 1;
 	}
 
 	if (!main_window_toggle_online_if_offline(main_window_get())) {
-		lock = FALSE;
+		compose_unlock(compose);
 		return 1;
 	}
 
@@ -2529,7 +2559,7 @@ static gint compose_send(Compose *compose)
 
 	if (compose->mode == COMPOSE_REDIRECT) {
 		if (compose_redirect_write_to_file(compose, tmp) < 0) {
-			lock = FALSE;
+			compose_unlock(compose);
 			return -1;
 		}
 	} else {
@@ -2537,7 +2567,7 @@ static gint compose_send(Compose *compose)
 			compose_wrap_all(compose);
 
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
-			lock = FALSE;
+			compose_unlock(compose);
 			return -1;
 		}
 	}
@@ -2545,7 +2575,7 @@ static gint compose_send(Compose *compose)
 	if (!compose->to_list && !compose->newsgroup_list) {
 		g_warning(_("can't get recipient list."));
 		g_unlink(tmp);
-		lock = FALSE;
+		compose_unlock(compose);
 		return -1;
 	}
 
@@ -2566,7 +2596,7 @@ static gint compose_send(Compose *compose)
 				alertpanel_error(_("Account for sending mail is not specified.\n"
 						   "Please select a mail account before sending."));
 				g_unlink(tmp);
-				lock = FALSE;
+				compose_unlock(compose);
 				return -1;
 			}
 		}
@@ -2580,7 +2610,7 @@ static gint compose_send(Compose *compose)
 			alertpanel_error(_("Error occurred while posting the message to %s ."),
 					 compose->account->nntp_server);
 			g_unlink(tmp);
-			lock = FALSE;
+			compose_unlock(compose);
 			return -1;
 		}
 	}
@@ -2621,7 +2651,8 @@ static gint compose_send(Compose *compose)
 	}
 
 	g_unlink(tmp);
-	lock = FALSE;
+	compose_unlock(compose);
+
 	return ok;
 }
 
@@ -4361,6 +4392,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->exteditor_pid  = 0;
 	compose->exteditor_tag  = 0;
 
+	compose->autosave_tag = 0;
+
 	compose_select_account(compose, account, TRUE);
 
 	menu_set_active(ifactory, "/Edit/Auto wrapping", prefs_common.autowrap);
@@ -4685,7 +4718,21 @@ void compose_reflect_prefs_all(void)
 
 	for (cur = compose_list; cur != NULL; cur = cur->next) {
 		compose = (Compose *)cur->data;
+
+		if (compose->autosave_tag > 0) {
+			g_source_remove(compose->autosave_tag);
+			compose->autosave_tag = 0;
+		}
+
 		compose_set_template_menu(compose);
+
+		if (prefs_common.enable_autosave &&
+		    prefs_common.autosave_itv > 0 &&
+		    compose->mode != COMPOSE_REDIRECT)
+			compose->autosave_tag =
+				g_timeout_add
+					(prefs_common.autosave_itv * 60 * 1000,
+					 autosave_timeout, compose);
 	}
 }
 
@@ -4749,6 +4796,9 @@ static void compose_destroy(Compose *compose)
 	AttachInfo *ainfo;
 
 	compose_list = g_list_remove(compose_list, compose);
+
+	if (compose->autosave_tag > 0)
+		g_source_remove(compose->autosave_tag);
 
 	/* NOTE: address_completion_end() does nothing with the window
 	 * however this may change. */
@@ -5248,6 +5298,8 @@ static void compose_ext_editor_child_exit(GPid pid, gint status, gpointer data)
 
 	debug_print("Compose: child exit (pid: %d status: %d)\n", pid, status);
 
+	compose_lock(compose);
+
 	g_spawn_close_pid(pid);
 
 	buffer = gtk_text_view_get_buffer(text);
@@ -5272,6 +5324,8 @@ static void compose_ext_editor_child_exit(GPid pid, gint status, gpointer data)
 	compose->exteditor_file = NULL;
 	compose->exteditor_pid  = 0;
 	compose->exteditor_tag  = 0;
+
+	compose_unlock(compose);
 }
 
 static void compose_set_ext_editor_sensitive(Compose *compose,
@@ -5596,21 +5650,21 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 	gchar *tmp;
 	gint msgnum;
 	MsgFlags flag = {0, 0};
-	static gboolean lock = FALSE;
 
-	if (lock) return;
+	if (compose->lock_count > 0)
+		return;
 
 	draft = account_get_special_folder(compose->account, F_DRAFT);
 	g_return_if_fail(draft != NULL);
 
-	lock = TRUE;
+	compose_lock(compose);
 
 	tmp = g_strdup_printf("%s%cdraft.%p", get_tmp_dir(),
 			      G_DIR_SEPARATOR, compose);
 
 	if (compose_write_to_file(compose, tmp, TRUE) < 0) {
 		g_free(tmp);
-		lock = FALSE;
+		compose_unlock(compose);
 		return;
 	}
 
@@ -5618,7 +5672,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 	if ((msgnum = folder_item_add_msg(draft, tmp, &flag, TRUE)) < 0) {
 		g_unlink(tmp);
 		g_free(tmp);
-		lock = FALSE;
+		compose_unlock(compose);
 		return;
 	}
 	g_free(tmp);
@@ -5635,7 +5689,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 	folder_item_scan(draft);
 	folderview_update_item(draft, TRUE);
 
-	lock = FALSE;
+	compose_unlock(compose);
 
 	/* 0: quit editing  1: keep editing */
 	if (action == 0)
@@ -5649,7 +5703,6 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 		if (g_stat(path, &s) < 0) {
 			FILE_OP_ERROR(path, "stat");
 			g_free(path);
-			lock = FALSE;
 			return;
 		}
 		g_free(path);
@@ -5661,6 +5714,8 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 		compose->targetinfo->mtime = s.st_mtime;
 		compose->targetinfo->folder = draft;
 		compose->mode = COMPOSE_REEDIT;
+		compose->modified = FALSE;
+		compose_set_title(compose);
 	}
 }
 
@@ -6386,4 +6441,16 @@ static void text_inserted(GtkTextBuffer *buffer, GtkTextIter *iter,
 					  G_CALLBACK(text_inserted),
 					  compose);
 	g_signal_stop_emission_by_name(G_OBJECT(buffer), "insert-text");
+}
+
+static gboolean autosave_timeout(gpointer data)
+{
+	Compose *compose = (Compose *)data;
+
+	debug_print("auto-saving...\n");
+
+	if (compose->modified)
+		compose_draft_cb(data, 1, NULL);
+
+	return TRUE;
 }
