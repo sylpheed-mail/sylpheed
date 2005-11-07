@@ -59,6 +59,7 @@
 static PrefsDialog dialog;
 
 static struct Receive {
+#ifndef G_OS_WIN32
 	GtkWidget *checkbtn_incext;
 	GtkWidget *entry_incext;
 	GtkWidget *button_incext;
@@ -66,6 +67,7 @@ static struct Receive {
 	GtkWidget *checkbtn_local;
 	GtkWidget *checkbtn_filter_on_inc;
 	GtkWidget *entry_spool;
+#endif
 
 	GtkWidget *checkbtn_autochk;
 	GtkWidget *spinbtn_autochk;
@@ -166,7 +168,9 @@ static struct Privacy {
 	GtkWidget *checkbtn_store_passphrase;
 	GtkWidget *spinbtn_store_passphrase;
 	GtkObject *spinbtn_store_passphrase_adj;
+#ifndef G_OS_WIN32
 	GtkWidget *checkbtn_passphrase_grab;
+#endif
 	GtkWidget *checkbtn_gpg_warning;
 } privacy;
 #endif
@@ -180,7 +184,9 @@ static struct Interface {
 	GtkWidget *optmenu_recvdialog;
 	GtkWidget *checkbtn_no_recv_err_panel;
 	GtkWidget *checkbtn_close_recv_dialog;
+#ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
+#endif
 } interface;
 
 static struct Other {
@@ -231,6 +237,7 @@ static void prefs_common_uri_set_entry			   (PrefParam *pparam);
 
 static PrefsUIData ui_data[] = {
 	/* Receive */
+#ifndef G_OS_WIN32
 	{"use_ext_inc", &receive.checkbtn_incext,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"ext_inc_path", &receive.entry_incext,
@@ -242,6 +249,7 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"spool_path", &receive.entry_spool,
 	 prefs_set_data_from_entry, prefs_set_entry},
+#endif
 
 	{"autochk_newmail", &receive.checkbtn_autochk,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -432,8 +440,10 @@ static PrefsUIData ui_data[] = {
 	{"close_receive_dialog", &interface.checkbtn_close_recv_dialog,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
+#ifndef G_OS_WIN32
 	{"comply_gnome_hig", &interface.checkbtn_comply_gnome_hig,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+#endif
 
 	/* Other */
 	{"uri_open_command", &other.uri_entry,
@@ -637,9 +647,11 @@ static void prefs_receive_create(void)
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
 	GtkWidget *vbox3;
+	GtkWidget *hbox;
+
+#ifndef G_OS_WIN32
 	GtkWidget *frame_incext;
 	GtkWidget *checkbtn_incext;
-	GtkWidget *hbox;
 	GtkWidget *label_incext;
 	GtkWidget *entry_incext;
 	/* GtkWidget *button_incext; */
@@ -649,6 +661,7 @@ static void prefs_receive_create(void)
 	GtkWidget *checkbtn_filter_on_inc;
 	GtkWidget *label_spool;
 	GtkWidget *entry_spool;
+#endif
 
 	GtkWidget *hbox_autochk;
 	GtkWidget *checkbtn_autochk;
@@ -668,6 +681,7 @@ static void prefs_receive_create(void)
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
+#ifndef G_OS_WIN32
 	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_incext, checkbtn_incext,
 				     _("Use external program for incorporation"));
 
@@ -722,6 +736,7 @@ static void prefs_receive_create(void)
 	entry_spool = gtk_entry_new ();
 	gtk_widget_show (entry_spool);
 	gtk_box_pack_start (GTK_BOX (hbox), entry_spool, TRUE, TRUE, 0);
+#endif /* !G_OS_WIN32 */
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -788,6 +803,7 @@ static void prefs_receive_create(void)
 	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, hbox);
 	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, label_notify_cmd_desc);
 
+#ifndef G_OS_WIN32
 	receive.checkbtn_incext = checkbtn_incext;
 	receive.entry_incext    = entry_incext;
 	/* receive.button_incext   = button_incext; */
@@ -795,6 +811,7 @@ static void prefs_receive_create(void)
 	receive.checkbtn_local         = checkbtn_local;
 	receive.checkbtn_filter_on_inc = checkbtn_filter_on_inc;
 	receive.entry_spool            = entry_spool;
+#endif
 
 	receive.checkbtn_autochk    = checkbtn_autochk;
 	receive.spinbtn_autochk     = spinbtn_autochk;
@@ -1790,7 +1807,9 @@ static void prefs_privacy_create(void)
 	GtkWidget *checkbtn_store_passphrase;
 	GtkObject *spinbtn_store_passphrase_adj;
 	GtkWidget *spinbtn_store_passphrase;
+#ifndef G_OS_WIN32
 	GtkWidget *checkbtn_passphrase_grab;
+#endif
 	GtkWidget *checkbtn_gpg_warning;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -1878,7 +1897,9 @@ static void prefs_privacy_create(void)
 	privacy.checkbtn_store_passphrase    = checkbtn_store_passphrase;
 	privacy.spinbtn_store_passphrase     = spinbtn_store_passphrase;
 	privacy.spinbtn_store_passphrase_adj = spinbtn_store_passphrase_adj;
+#ifndef G_OS_WIN32
 	privacy.checkbtn_passphrase_grab     = checkbtn_passphrase_grab;
+#endif
 	privacy.checkbtn_gpg_warning         = checkbtn_gpg_warning;
 }
 #endif /* USE_GPGME */
@@ -1903,7 +1924,9 @@ static void prefs_interface_create(void)
 	GtkWidget *menuitem;
 	GtkWidget *checkbtn_no_recv_err_panel;
 	GtkWidget *checkbtn_close_recv_dialog;
+#ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
+#endif
 
 	GtkWidget *button_keybind;
 
@@ -1986,8 +2009,10 @@ static void prefs_interface_create(void)
 	PACK_CHECK_BUTTON (vbox_recv, checkbtn_close_recv_dialog,
 			   _("Close receive dialog when finished"));
 
+#ifndef G_OS_WIN32
 	PACK_CHECK_BUTTON (vbox1, checkbtn_comply_gnome_hig,
 			   _("Make the order of buttons comply with GNOME HIG"));
+#endif
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
@@ -2009,7 +2034,9 @@ static void prefs_interface_create(void)
 	interface.checkbtn_no_recv_err_panel = checkbtn_no_recv_err_panel;
 	interface.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
 
+#ifndef G_OS_WIN32
 	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
+#endif
 }
 
 static void prefs_other_create(void)
