@@ -173,7 +173,7 @@ struct _PrefsCommon
 	gboolean inline_image;
 
 	gchar *force_charset;
-	gchar *fallback_encoding;
+	gchar *default_encoding;
 
 	gboolean show_other_header;
 	GSList *disphdr_list;

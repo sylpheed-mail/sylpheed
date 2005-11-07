@@ -137,6 +137,7 @@ static struct Message {
 	GtkWidget *chkbtn_html;
 	GtkWidget *spinbtn_linespc;
 	GtkObject *spinbtn_linespc_adj;
+	GtkWidget *optmenu_encoding;
 
 	GtkWidget *chkbtn_smoothscroll;
 	GtkWidget *spinbtn_scrollstep;
@@ -201,8 +202,6 @@ static struct Advanced {
 
 	GtkWidget *spinbtn_iotimeout;
 	GtkObject *spinbtn_iotimeout_adj;
-
-	GtkWidget *optmenu_encoding;
 } advanced;
 
 static struct MessageColorButtons {
@@ -357,6 +356,9 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"line_space", &message.spinbtn_linespc,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
+	{"default_encoding", &message.optmenu_encoding,
+	 prefs_common_charset_set_data_from_optmenu,
+	 prefs_common_charset_set_optmenu},
 
 	/* {"textview_cursor_visible", NULL, NULL, NULL}, */
 
@@ -460,10 +462,6 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"io_timeout_secs", &advanced.spinbtn_iotimeout,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
-
-	{"fallback_encoding", &advanced.optmenu_encoding,
-	 prefs_common_charset_set_data_from_optmenu,
-	 prefs_common_charset_set_optmenu},
 
 	{NULL, NULL, NULL, NULL}
 };
@@ -1386,6 +1384,9 @@ static void prefs_message_create(void)
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
 	GtkWidget *spinbtn_linespc;
+	GtkWidget *label_encoding;
+	GtkWidget *optmenu_encoding;
+	GtkWidget *label_encoding_desc;
 
 	GtkWidget *frame_scr;
 	GtkWidget *vbox_scr;
@@ -1492,6 +1493,27 @@ static void prefs_message_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox_linespc), label_linespc,
 			    FALSE, FALSE, 0);
 
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+
+	label_encoding = gtk_label_new (_("Default character encoding"));
+	gtk_widget_show (label_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
+
+	optmenu_encoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
+
+	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
+					   FALSE);
+
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
+	PACK_SMALL_LABEL (vbox2, label_encoding_desc,
+			  _("This is used for messages with missing character encoding."));
+
 	PACK_FRAME(vbox1, frame_scr, _("Scroll"));
 
 	vbox_scr = gtk_vbox_new (FALSE, 0);
@@ -1549,6 +1571,7 @@ static void prefs_message_create(void)
 	message.chkbtn_disphdr     = chkbtn_disphdr;
 	message.chkbtn_html        = chkbtn_html;
 	message.spinbtn_linespc    = spinbtn_linespc;
+	message.optmenu_encoding   = optmenu_encoding;
 
 	message.chkbtn_smoothscroll    = chkbtn_smoothscroll;
 	message.spinbtn_scrollstep     = spinbtn_scrollstep;
@@ -2158,10 +2181,6 @@ static void prefs_advanced_create(void)
 	GtkWidget *spinbtn_iotimeout;
 	GtkObject *spinbtn_iotimeout_adj;
 
-	GtkWidget *label_encoding;
-	GtkWidget *optmenu_encoding;
-	GtkWidget *label_encoding_desc;
-
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
@@ -2203,30 +2222,10 @@ static void prefs_advanced_create(void)
 	gtk_widget_show (vbox2);
 	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
 
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
-
-	label_encoding = gtk_label_new (_("Fallback encoding"));
-	gtk_widget_show (label_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
-
-	optmenu_encoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
-
-	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
-					   FALSE);
-
-	PACK_SMALL_LABEL (vbox2, label_encoding_desc,
-			  _("This is used for messages with missing charset."));
-
 	advanced.checkbtn_strict_cache_check = checkbtn_strict_cache_check;
 
 	advanced.spinbtn_iotimeout     = spinbtn_iotimeout;
 	advanced.spinbtn_iotimeout_adj = spinbtn_iotimeout_adj;
-
-	advanced.optmenu_encoding = optmenu_encoding;
 }
 
 static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,

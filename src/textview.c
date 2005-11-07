@@ -456,8 +456,8 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 		charset = prefs_common.force_charset;
 	else if (mimeinfo->charset)
 		charset = mimeinfo->charset;
-	else if (prefs_common.fallback_encoding)
-		charset = prefs_common.fallback_encoding;
+	else if (prefs_common.default_encoding)
+		charset = prefs_common.default_encoding;
 
 	textview_set_font(textview, charset);
 	textview_clear(textview);
@@ -514,8 +514,8 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		charset = prefs_common.force_charset;
 	else if (mimeinfo->charset)
 		charset = mimeinfo->charset;
-	else if (prefs_common.fallback_encoding)
-		charset = prefs_common.fallback_encoding;
+	else if (prefs_common.default_encoding)
+		charset = prefs_common.default_encoding;
 
 	if (!boundary && mimeinfo->mime_type == MIME_TEXT) {
 		if (fseek(fp, mimeinfo->fpos, SEEK_SET) < 0)
@@ -625,8 +625,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		charset = prefs_common.force_charset;
 	else if (mimeinfo->charset)
 		charset = mimeinfo->charset;
-	else if (prefs_common.fallback_encoding)
-		charset = prefs_common.fallback_encoding;
+	else if (prefs_common.default_encoding)
+		charset = prefs_common.default_encoding;
 
 	if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
 		headers = textview_scan_header(textview, fp, charset);
