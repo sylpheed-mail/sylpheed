@@ -1279,7 +1279,10 @@ static void main_window_show_cur_account(MainWindow *mainwin)
 
 MainWindow *main_window_get(void)
 {
-	return (MainWindow *)mainwin_list->data;
+	if (mainwin_list)
+		return (MainWindow *)mainwin_list->data;
+	else
+		return NULL;
 }
 
 GtkWidget *main_window_get_folder_window(MainWindow *mainwin)
@@ -2735,7 +2738,7 @@ static void app_exit_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
 
-	app_will_exit(widget, mainwin);
+	app_will_exit(FALSE);
 }
 
 static void search_cb(MainWindow *mainwin, guint action, GtkWidget *widget)

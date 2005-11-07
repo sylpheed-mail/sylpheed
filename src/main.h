@@ -25,6 +25,6 @@
 
 extern gchar *prog_version;
 
-void app_will_exit	(GtkWidget *widget, gpointer data);
+void app_will_exit	(gboolean	 force);
 
 #endif /* __MAIN_H__ */

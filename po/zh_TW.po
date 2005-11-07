@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-07 18:07+0900\n"
+"POT-Creation-Date: 2005-11-07 18:52+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -325,7 +325,7 @@ msgstr "正在複製訊息 %s%c%d 到 %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "目錄 %s 中最後的編號 = %d\n"
 
-#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:145
+#: libsylph/mh.c:826 libsylph/mh.c:839 src/main.c:146
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -999,7 +999,7 @@ msgstr "姓名："
 
 #. Buttons
 #: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
-#: src/editaddress.c:1017 src/mainwindow.c:2303 src/prefs_actions.c:266
+#: src/editaddress.c:1017 src/mainwindow.c:2306 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
 #: src/prefs_template.c:233
 msgid "Delete"
@@ -1198,11 +1198,11 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:141 src/compose.c:5250 src/main.c:544
+#: src/alertpanel.c:141 src/compose.c:5250 src/main.c:555
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:154 src/main.c:639
+#: src/alertpanel.c:154 src/main.c:657
 msgid "Warning"
 msgstr "警告"
 
@@ -1692,7 +1692,7 @@ msgstr "MIME 型態"
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:4510 src/mainwindow.c:2236 src/prefs_account_dialog.c:516
+#: src/compose.c:4510 src/mainwindow.c:2239 src/prefs_account_dialog.c:516
 #: src/prefs_common_dialog.c:629
 msgid "Send"
 msgstr "送出"
@@ -2277,12 +2277,12 @@ msgstr "設定資料夾...\n"
 msgid "Setting folder info..."
 msgstr "設定資料夾..."
 
-#: src/folderview.c:830 src/mainwindow.c:3301 src/setup.c:80
+#: src/folderview.c:830 src/mainwindow.c:3304 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "掃描資料夾 %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3306 src/setup.c:85
+#: src/folderview.c:834 src/mainwindow.c:3309 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "掃描資料夾 %s ..."
@@ -2533,7 +2533,7 @@ msgstr "將 LDIF 檔匯入通訊錄"
 msgid "Prev"
 msgstr "前一封"
 
-#: src/importldif.c:768 src/mainwindow.c:2332
+#: src/importldif.c:768 src/mainwindow.c:2335
 msgid "Next"
 msgstr "下一封"
 
@@ -2760,20 +2760,20 @@ msgstr "輸入密碼"
 msgid "Protocol log"
 msgstr "通訊協定紀錄"
 
-#: src/main.c:191
+#: src/main.c:192
 msgid "g_thread is not supported by glib.\n"
 msgstr "glib 不支援 g_thread。\n"
 
-#: src/main.c:358
+#: src/main.c:361
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "用法：%s [選項]...\n"
 
-#: src/main.c:361
+#: src/main.c:364
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [郵件地址]   直接開啟撰寫郵件視窗"
 
-#: src/main.c:362
+#: src/main.c:365
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2782,50 +2782,55 @@ msgstr ""
 "  --attach 檔案1 [檔案2]...\n"
 "                         開啟撰寫郵件視窗，並將指定的檔案附加上去"
 
-#: src/main.c:365
+#: src/main.c:368
 msgid "  --receive              receive new messages"
 msgstr "  --receive              直接接收新郵件"
 
-#: src/main.c:366
+#: src/main.c:369
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          直接接收所有帳號的新郵件"
 
-#: src/main.c:367
+#: src/main.c:370
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送出所有暫存資料夾中的郵件"
 
-#: src/main.c:368
+#: src/main.c:371
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [資料夾]...   顯示資料夾內總共有多少郵件"
 
-#: src/main.c:369
+#: src/main.c:372
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status-full [資料夾]...     顯示每個資料夾中有多少郵件"
 
-#: src/main.c:371
+#: src/main.c:374
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:372
+#: src/main.c:375
+#, fuzzy
+msgid "  --exit                 exit Sylpheed"
+msgstr "  --debug                除錯模式"
+
+#: src/main.c:376
 msgid "  --debug                debug mode"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:373
+#: src/main.c:377
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 顯示本說明並離開"
 
-#: src/main.c:374
+#: src/main.c:378
 msgid "  --version              output version information and exit"
 msgstr "  --version              顯示版本資訊"
 
-#: src/main.c:496
+#: src/main.c:500
 msgid "Filename encoding"
 msgstr "檔案名稱編碼"
 
-#: src/main.c:497
+#: src/main.c:501
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2846,19 +2851,19 @@ msgstr ""
 "\n"
 "要繼續嗎？"
 
-#: src/main.c:545
+#: src/main.c:556
 msgid "Composing message exists. Really quit?"
 msgstr "有郵件正在編輯。確定要離開嗎？"
 
-#: src/main.c:553
+#: src/main.c:567
 msgid "Queued messages"
 msgstr "有未送出郵件"
 
-#: src/main.c:554
+#: src/main.c:568
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "有些郵件正在暫存資料夾中尚未送出。確定要離開嗎？"
 
-#: src/main.c:640
+#: src/main.c:658
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2867,15 +2872,15 @@ msgstr ""
 "關閉 OpenPGP 支援項目。"
 
 #. remote command mode
-#: src/main.c:803
+#: src/main.c:821
 msgid "another Sylpheed is already running.\n"
 msgstr "已經有 Sylpheed 程式正在執行中。\n"
 
-#: src/main.c:1012
+#: src/main.c:1038
 msgid "Migration of configuration"
 msgstr "設定資料轉移"
 
-#: src/main.c:1013
+#: src/main.c:1039
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3470,32 +3475,32 @@ msgstr "無標題"
 msgid "none"
 msgstr "無"
 
-#: src/mainwindow.c:1315
+#: src/mainwindow.c:1318
 #, c-format
 msgid "Changing window separation type from %d to %d\n"
 msgstr "正在變更視窗分割類型由 %d 到 %d\n"
 
-#: src/mainwindow.c:1549
+#: src/mainwindow.c:1552
 msgid "Offline"
 msgstr "離線"
 
-#: src/mainwindow.c:1550
+#: src/mainwindow.c:1553
 msgid "You are offline. Go online?"
 msgstr "您目前正離線中。要連線嗎？"
 
-#: src/mainwindow.c:1564
+#: src/mainwindow.c:1567
 msgid "Empty all trash"
 msgstr "清空刪除的郵件"
 
-#: src/mainwindow.c:1565
+#: src/mainwindow.c:1568
 msgid "Delete all messages in trash folders?"
 msgstr "您確定要清除所有被刪除的郵件？"
 
-#: src/mainwindow.c:1593
+#: src/mainwindow.c:1596
 msgid "Add mailbox"
 msgstr "新增信箱"
 
-#: src/mainwindow.c:1594
+#: src/mainwindow.c:1597
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3505,16 +3510,16 @@ msgstr ""
 "並請注意不要輸入已存在的信箱名稱，\n"
 "系統會自動判別是否它已存在。"
 
-#: src/mainwindow.c:1600 src/setup.c:49
+#: src/mainwindow.c:1603 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "信箱「%s」已存在。"
 
-#: src/mainwindow.c:1605 src/setup.c:56
+#: src/mainwindow.c:1608 src/setup.c:56
 msgid "Mailbox"
 msgstr "信箱"
 
-#: src/mainwindow.c:1611 src/setup.c:62
+#: src/mainwindow.c:1614 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3523,149 +3528,149 @@ msgstr ""
 "無法產生信箱目錄。\n"
 "可能是因為同樣名稱的檔案已經存在，或者是你沒有權限可以開新目錄。"
 
-#: src/mainwindow.c:2004
+#: src/mainwindow.c:2007
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 資料夾檢視"
 
-#: src/mainwindow.c:2024
+#: src/mainwindow.c:2027
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 郵件列表"
 
-#: src/mainwindow.c:2171 src/summaryview.c:380
+#: src/mainwindow.c:2174 src/summaryview.c:380
 msgid "/_Reply"
 msgstr "/直接回覆(_R)"
 
-#: src/mainwindow.c:2172
+#: src/mainwindow.c:2175
 msgid "/Reply to _all"
 msgstr "/全部回覆(_A)"
 
-#: src/mainwindow.c:2173
+#: src/mainwindow.c:2176
 msgid "/Reply to _sender"
 msgstr "/回覆給原作者(_S)"
 
-#: src/mainwindow.c:2174
+#: src/mainwindow.c:2177
 msgid "/Reply to mailing _list"
 msgstr "/回覆到郵遞論壇(_L)"
 
-#: src/mainwindow.c:2179 src/summaryview.c:387
+#: src/mainwindow.c:2182 src/summaryview.c:387
 msgid "/_Forward"
 msgstr "/轉寄(_F)"
 
-#: src/mainwindow.c:2180 src/summaryview.c:388
+#: src/mainwindow.c:2183 src/summaryview.c:388
 msgid "/For_ward as attachment"
 msgstr "/將郵件當成附加檔轉寄(_W)"
 
-#: src/mainwindow.c:2181 src/summaryview.c:389
+#: src/mainwindow.c:2184 src/summaryview.c:389
 msgid "/Redirec_t"
 msgstr "/郵件導向(_T)"
 
-#: src/mainwindow.c:2217
+#: src/mainwindow.c:2220
 msgid "Get"
 msgstr "檢查郵件"
 
-#: src/mainwindow.c:2218
+#: src/mainwindow.c:2221
 msgid "Incorporate new mail"
 msgstr "檢查目前帳號的新郵件"
 
-#: src/mainwindow.c:2225
+#: src/mainwindow.c:2228
 msgid "Get all"
 msgstr "全部檢查"
 
-#: src/mainwindow.c:2226
+#: src/mainwindow.c:2229
 msgid "Incorporate new mail of all accounts"
 msgstr "檢查所有帳號的新郵件"
 
-#: src/mainwindow.c:2237
+#: src/mainwindow.c:2240
 msgid "Send queued message(s)"
 msgstr "將暫存資料夾中的郵件送出"
 
-#: src/mainwindow.c:2247 src/prefs_account_dialog.c:518
+#: src/mainwindow.c:2250 src/prefs_account_dialog.c:518
 #: src/prefs_common_dialog.c:631 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "撰寫郵件"
 
-#: src/mainwindow.c:2248
+#: src/mainwindow.c:2251
 msgid "Compose new message"
 msgstr "編輯新郵件"
 
-#: src/mainwindow.c:2256 src/prefs_common_dialog.c:1129
+#: src/mainwindow.c:2259 src/prefs_common_dialog.c:1129
 msgid "Reply"
 msgstr "回覆"
 
-#: src/mainwindow.c:2257 src/mainwindow.c:2270
+#: src/mainwindow.c:2260 src/mainwindow.c:2273
 msgid "Reply to the message"
 msgstr "回覆郵件"
 
-#: src/mainwindow.c:2274
+#: src/mainwindow.c:2277
 msgid "Reply all"
 msgstr "全部回覆"
 
-#: src/mainwindow.c:2275
+#: src/mainwindow.c:2278
 msgid "Reply to all"
 msgstr "全部回覆"
 
-#: src/mainwindow.c:2283 src/prefs_filter_edit.c:741
+#: src/mainwindow.c:2286 src/prefs_filter_edit.c:741
 msgid "Forward"
 msgstr "轉寄"
 
-#: src/mainwindow.c:2284 src/mainwindow.c:2297
+#: src/mainwindow.c:2287 src/mainwindow.c:2300
 msgid "Forward the message"
 msgstr "轉寄郵件"
 
-#: src/mainwindow.c:2304
+#: src/mainwindow.c:2307
 msgid "Delete the message"
 msgstr "刪除郵件"
 
-#: src/mainwindow.c:2312 src/prefs_common_dialog.c:1752
+#: src/mainwindow.c:2315 src/prefs_common_dialog.c:1752
 msgid "Junk"
 msgstr "垃圾郵件"
 
-#: src/mainwindow.c:2313
+#: src/mainwindow.c:2316
 msgid "Set as junk mail"
 msgstr "歸類為垃圾郵件"
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2325
 msgid "Execute"
 msgstr "執行"
 
-#: src/mainwindow.c:2323
+#: src/mainwindow.c:2326
 msgid "Execute marked process"
 msgstr "執行標記的行程"
 
-#: src/mainwindow.c:2333
+#: src/mainwindow.c:2336
 msgid "Next unread message"
 msgstr "下一封未讀郵件"
 
-#: src/mainwindow.c:2345
+#: src/mainwindow.c:2348
 msgid "Prefs"
 msgstr "設定"
 
-#: src/mainwindow.c:2346
+#: src/mainwindow.c:2349
 msgid "Common preferences"
 msgstr "一般設定"
 
-#: src/mainwindow.c:2354 src/prefs_folder_item.c:288
+#: src/mainwindow.c:2357 src/prefs_folder_item.c:288
 #: src/prefs_folder_item.c:299 src/progressdialog.c:128
 msgid "Account"
 msgstr "帳號"
 
-#: src/mainwindow.c:2355
+#: src/mainwindow.c:2358
 msgid "Account setting"
 msgstr "帳號設定"
 
-#: src/mainwindow.c:2527
+#: src/mainwindow.c:2530
 msgid "You are offline. Click the icon to go online."
 msgstr "您目前正離線中。按下按鈕恢復連線。"
 
-#: src/mainwindow.c:2538
+#: src/mainwindow.c:2541
 msgid "You are online. Click the icon to go offline."
 msgstr "您目前正連線中。按下按鈕離線工作。"
 
-#: src/mainwindow.c:2731
+#: src/mainwindow.c:2734
 msgid "Exit"
 msgstr "離開"
 
-#: src/mainwindow.c:2731
+#: src/mainwindow.c:2734
 msgid "Exit this program?"
 msgstr "您確定要離開嗎？"
 

@@ -111,6 +111,7 @@ static struct RemoteCmd {
 	GPtrArray *status_folders;
 	GPtrArray *status_full_folders;
 	gboolean configdir;
+	gboolean exit;
 } cmd;
 
 static void parse_cmd_opt		(int		 argc,
@@ -354,6 +355,8 @@ static void parse_cmd_opt(int argc, char *argv[])
 				cmd.configdir = TRUE;
 				i++;
 			}
+		} else if (!strncmp(argv[i], "--exit", 6)) {
+			cmd.exit = TRUE;
 		} else if (!strncmp(argv[i], "--help", 6)) {
 			g_print(_("Usage: %s [OPTION]...\n"),
 				g_basename(argv[0]));
@@ -369,6 +372,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print("%s\n", _("  --status-full [folder]...\n"
 				"                         show the status of each folder"));
 			g_print("%s\n", _("  --configdir dirname    specify directory which stores configuration files"));
+			g_print("%s\n", _("  --exit                 exit Sylpheed"));
 			g_print("%s\n", _("  --debug                debug mode"));
 			g_print("%s\n", _("  --help                 display this help and exit"));
 			g_print("%s\n", _("  --version              output version information and exit"));
@@ -535,33 +539,46 @@ static void setup_rc_dir(void)
 	remove_all_files(get_mime_tmp_dir());
 }
 
-void app_will_exit(GtkWidget *widget, gpointer data)
+void app_will_exit(gboolean force)
 {
-	MainWindow *mainwin = data;
+	MainWindow *mainwin;
 	gchar *filename;
+	static gboolean on_exit = FALSE;
 
-	if (compose_get_compose_list()) {
+	if (on_exit)
+		return;
+	on_exit = TRUE;
+
+	mainwin = main_window_get();
+
+	if (!force && compose_get_compose_list()) {
 		if (alertpanel(_("Notice"),
 			       _("Composing message exists. Really quit?"),
 			       GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
-		    != G_ALERTDEFAULT)
+		    != G_ALERTDEFAULT) {
+			on_exit = FALSE;
 			return;
+		}
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
 
-	if (prefs_common.warn_queued_on_exit && get_queued_message_num() > 0) {
+	if (!force &&
+	    prefs_common.warn_queued_on_exit && get_queued_message_num() > 0) {
 		if (alertpanel(_("Queued messages"),
 			       _("Some unsent messages are queued. Exit now?"),
 			       GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
-		    != G_ALERTDEFAULT)
+		    != G_ALERTDEFAULT) {
+			on_exit = FALSE;
 			return;
+		}
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
 
 	inc_autocheck_timer_remove();
 
 	if (prefs_common.clean_on_exit)
-		main_window_empty_trash(mainwin, prefs_common.ask_on_clean);
+		main_window_empty_trash(mainwin,
+					!force && prefs_common.ask_on_clean);
 
 	/* save all state before exiting */
 	folder_write_list();
@@ -592,7 +609,8 @@ void app_will_exit(GtkWidget *widget, gpointer data)
 
 	sock_cleanup();
 
-	gtk_main_quit();
+	if (gtk_main_level() > 0)
+		gtk_main_quit();
 }
 
 #if 0
@@ -862,6 +880,8 @@ static gint prohibit_duplicate_launch(void)
 			if (!strncmp(buf, ".\n", 2)) break;
 			fputs(buf, stdout);
 		}
+	} else if (cmd.exit) {
+		fd_write_all(sock, "exit\n", 5);
 	} else
 		fd_write_all(sock, "popup\n", 6);
 
@@ -964,6 +984,8 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 		fd_write_all(sock, ".\n", 2);
 		g_free(status);
 		if (folders) g_ptr_array_free(folders, TRUE);
+	} else if (!strncmp(buf, "exit", 4)) {
+		app_will_exit(TRUE);
 	}
 
 	fd_close(sock);
@@ -1000,6 +1022,10 @@ static void remote_command_exec(void)
 	if (cmd.status_full_folders) {
 		g_ptr_array_free(cmd.status_full_folders, TRUE);
 		cmd.status_full_folders = NULL;
+	}
+	if (cmd.exit) {
+		app_will_exit(TRUE);
+		exit(0);
 	}
 }
 
