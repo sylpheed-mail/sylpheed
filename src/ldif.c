@@ -229,26 +229,29 @@ static void ldif_close_file( LdifFile *ldifFile ) {
 static gchar *ldif_get_line( LdifFile *ldifFile ) {
 	gchar buf[ LDIFBUFSIZE ];
 	gint ch;
-	gchar *ptr;
+	gint i = 0;
 
-	if( feof( ldifFile->file ) ) return NULL;
+	if( feof( ldifFile->file ) )
+		return NULL;
 
-	ptr = buf;
-	while( TRUE ) {
-		*ptr = '\0';
+	while( i < LDIFBUFSIZE - 1 ) {
 		ch = fgetc( ldifFile->file );
 		if( ch == '\0' || ch == EOF ) {
-			if( *buf == '\0' ) return NULL;
+			if( i == 0 )
+				return NULL;
 			break;
 		}
 #if HAVE_DOSISH_SYSTEM
 #else
-		if( ch == '\r' ) continue;
+		if( ch == '\r' )
+			continue;
 #endif
-		if( ch == '\n' ) break;
-		*ptr = ch;
-		ptr++;
+		if( ch == '\n' )
+			break;
+		buf[i] = ch;
+		i++;
 	}
+	buf[i] = '\0';
 
 	/* Return a copy of buffer */
 	return g_strdup( buf );
