@@ -2,15 +2,15 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Martin Schaaf <mascha@ma-scha.de>, 2000,2001,2002,2003,2004.
 # Manfred Usselmann <usselmann.m@icg-online.de>, 2004.
-#
+# Fridtjof Busse <fridtjof@fbunet.de>, 2005
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-07 18:52+0900\n"
-"PO-Revision-Date: 2005-07-22 18:18+0100\n"
-"Last-Translator: Joo Martin <debian@joomart.de>\n"
+"POT-Creation-Date: 2005-11-09 18:48+0900\n"
+"PO-Revision-Date: 2005-11-08 11:51+0100\n"
+"Last-Translator: Fridtjof Busse <fridtjof@fbunet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,29 +46,29 @@ msgid "Can't start TLS session.\n"
 msgstr "Kann TLS-Sitzung nicht beginnen.\n"
 
 #: libsylph/imap.c:1095
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %d"
-msgstr "Lösche Nachricht %d"
+msgstr "Hole Nachricht %d"
 
 #: libsylph/imap.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid "Appending messages to %s (%d / %d)"
-msgstr "Sende Nachricht (%d / %d bytes)"
+msgstr "Hänge Nachricht an %s (%d / %d)"
 
 #: libsylph/imap.c:1304
-#, fuzzy, c-format
+#, c-format
 msgid "Moving messages %s to %s ..."
-msgstr "Kopiere Nachricht %s%c%d nach %s ...\n"
+msgstr "Verschiebe Nachrichten %s nach %s ..."
 
 #: libsylph/imap.c:1310
-#, fuzzy, c-format
+#, c-format
 msgid "Copying messages %s to %s ..."
-msgstr "Kopiere Nachricht %s%c%d nach %s ...\n"
+msgstr "Kopiere Nachrichten %s nach %s ..."
 
 #: libsylph/imap.c:1461
-#, fuzzy, c-format
+#, c-format
 msgid "Removing messages %s"
-msgstr "Erhaltene Nachrichten von %s..."
+msgstr "Entferne Nachrichten von %s..."
 
 #: libsylph/imap.c:1467
 #, c-format
@@ -80,9 +80,9 @@ msgid "can't expunge\n"
 msgstr "kann nicht löschen\n"
 
 #: libsylph/imap.c:1558
-#, fuzzy, c-format
+#, c-format
 msgid "Removing all messages in %s"
-msgstr "Erhaltene Nachrichten von %s..."
+msgstr "Entferne alle Nachrichten in %s..."
 
 #: libsylph/imap.c:1564
 msgid "can't set deleted flags: 1:*\n"
@@ -133,9 +133,9 @@ msgid "can't get envelope\n"
 msgstr "kann die Nachrichteneigenschaften nicht empfangen\n"
 
 #: libsylph/imap.c:2312
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message headers (%d / %d)"
-msgstr "Sende Nachricht (%d / %d bytes)"
+msgstr "Hole Nachrichtenkopfzeilen (%d / %d bytes)"
 
 #: libsylph/imap.c:2322
 msgid "error occurred while getting envelope.\n"
@@ -166,9 +166,8 @@ msgid "can't select folder: %s\n"
 msgstr "kann Ablage %s nicht auswählen\n"
 
 #: libsylph/imap.c:3113
-#, fuzzy
 msgid "error on imap command: STATUS\n"
-msgstr "Fehler beim IMAP-Befehl: CLOSE\n"
+msgstr "Fehler beim IMAP-Befehl: STATUS\n"
 
 #: libsylph/imap.c:3256
 msgid "IMAP4 authentication failed.\n"
@@ -514,7 +513,7 @@ msgstr "Konfiguration wurde gespeichert.\n"
 
 #: libsylph/prefs_common.c:472
 msgid "Junk mail filter"
-msgstr "Spam Mail Filter"
+msgstr "Spam-Mail Filter"
 
 #: libsylph/procmime.c:816
 msgid "procmime_get_text_content(): Code conversion failed.\n"
@@ -699,15 +698,15 @@ msgstr ""
 msgid "Opening account edit window...\n"
 msgstr "Öffne Accountbearbeitungsfenster...\n"
 
-#: src/account_dialog.c:282
+#: src/account_dialog.c:284
 msgid "Creating account edit window...\n"
 msgstr "Erstelle Accountbearbeitungsfenster...\n"
 
-#: src/account_dialog.c:287
+#: src/account_dialog.c:289
 msgid "Edit accounts"
 msgstr "Bearbeite Accounts"
 
-#: src/account_dialog.c:305
+#: src/account_dialog.c:307
 msgid ""
 "New messages will be checked in this order. Check the boxes\n"
 "on the `G' column to enable message retrieval by `Get all'."
@@ -716,41 +715,41 @@ msgstr ""
 "Schalter\n"
 "in der 'G'-Spalte, um den Nachrichten-Empfang bei 'Hole alle' einzuschalten."
 
-#: src/account_dialog.c:360 src/addressadd.c:192 src/addressbook.c:491
+#: src/account_dialog.c:362 src/addressadd.c:192 src/addressbook.c:491
 #: src/compose.c:4140 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
-#: src/mimeview.c:206 src/prefs_filter.c:260 src/prefs_folder_item.c:174
+#: src/mimeview.c:206 src/prefs_filter.c:261 src/prefs_folder_item.c:174
 #: src/select-keys.c:319
 msgid "Name"
 msgstr "Name"
 
-#: src/account_dialog.c:365 src/prefs_account_dialog.c:646
+#: src/account_dialog.c:367 src/prefs_account_dialog.c:646
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: src/account_dialog.c:370
+#: src/account_dialog.c:372
 msgid "Server"
 msgstr "Server"
 
-#: src/account_dialog.c:394 src/prefs_filter.c:325
+#: src/account_dialog.c:396 src/prefs_filter.c:326
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: src/account_dialog.c:428
+#: src/account_dialog.c:430
 msgid " _Set as default account "
 msgstr "Setze als _Standardaccount "
 
-#: src/account_dialog.c:481
+#: src/account_dialog.c:483
 #, c-format
 msgid "Do you really want to delete the account '%s'?"
 msgstr "Wollen Sie den Account '%s' wirklich löschen?"
 
-#: src/account_dialog.c:483 src/prefs_filter.c:687
+#: src/account_dialog.c:485 src/prefs_filter.c:691
 msgid "(Untitled)"
 msgstr "Unbenannt"
 
-#: src/account_dialog.c:484
+#: src/account_dialog.c:486
 msgid "Delete account"
 msgstr "Account löschen"
 
@@ -1802,14 +1801,13 @@ msgid "External editor command line is invalid: `%s'\n"
 msgstr "Kommandozeile für den externen Editor ist ungültig: '%s'\n"
 
 #: src/compose.c:5247
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The external editor is still working.\n"
 "Force terminating the process (pid: %d)?\n"
 msgstr ""
-"Der externe Editor ist in Betrieb.\n"
-"Prozess terminieren?\n"
-"Prozessgruppen ID: %d"
+"Der externe Editor arbeitet noch.\n"
+"Prozess terminieren (pid: %d)?\n"
 
 #: src/compose.c:5622 src/compose.c:5630 src/compose.c:5636
 msgid "Can't queue the message."
@@ -2174,9 +2172,8 @@ msgid "Overwrite existing file?"
 msgstr "Überschreibe existierende Datei?"
 
 #: src/filesel.c:159
-#, fuzzy
 msgid "Select directory"
-msgstr "Wähle Ablage"
+msgstr "Wähle Verzeichnis"
 
 #: src/foldersel.c:230
 msgid "Select folder"
@@ -2565,14 +2562,13 @@ msgid "Finish"
 msgstr "Ende"
 
 #: src/inc.c:157
-#, fuzzy, c-format
+#, c-format
 msgid "Sylpheed: %d new messages"
-msgstr "Beendet (%d neue Nachricht(en))"
+msgstr "Sylpheed: %d neue Nachricht(en)"
 
 #: src/inc.c:161
-#, fuzzy
 msgid "Sylpheed"
-msgstr "Altes Sylpheed"
+msgstr "Sylpheed"
 
 #: src/inc.c:358
 msgid "Retrieving new messages"
@@ -2829,11 +2825,12 @@ msgstr ""
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
+"··--configdir·dirname····gib das Verzeichnis an, in dem die "
+"Konfigurationsdateien gespeichert werden"
 
 #: src/main.c:375
-#, fuzzy
 msgid "  --exit                 exit Sylpheed"
-msgstr "  --debug                Fehlersuche"
+msgstr "  --exit                Beende Sylpheed"
 
 #: src/main.c:376
 msgid "  --debug                debug mode"
@@ -3062,9 +3059,8 @@ msgid "/_View/_Sort/by _date"
 msgstr "/_Ansicht/_Sortieren/nach _Datum"
 
 #: src/mainwindow.c:532
-#, fuzzy
 msgid "/_View/_Sort/by t_hread date"
-msgstr "/_Ansicht/_Sortieren/nach _Datum"
+msgstr "/_Ansicht/_Sortieren/nach _Threaddatum"
 
 #: src/mainwindow.c:533
 msgid "/_View/_Sort/by _from"
@@ -3340,7 +3336,7 @@ msgstr "/_Nachricht/Markiere als Spam-Mail"
 
 #: src/mainwindow.c:717
 msgid "/_Message/Set as not j_unk mail"
-msgstr "/_Nachricht/Markiere als Nicht-Spam Mail"
+msgstr "/_Nachricht/Markiere als Nicht-Spam-Mail"
 
 #: src/mainwindow.c:719 src/messageview.c:255
 msgid "/_Message/Re-_edit"
@@ -3654,7 +3650,7 @@ msgstr "Spam"
 
 #: src/mainwindow.c:2316
 msgid "Set as junk mail"
-msgstr "Markiere als Spam Mail"
+msgstr "Markiere als Spam-Mail"
 
 #: src/mainwindow.c:2325
 msgid "Execute"
@@ -3751,7 +3747,7 @@ msgstr "Anhänge"
 
 #: src/messageview.c:369
 msgid "Message View - Sylpheed"
-msgstr ""
+msgstr "Nachrichtenansich - Sylpheed"
 
 #: src/messageview.c:667 src/summaryview.c:2994
 #, c-format
@@ -3760,12 +3756,11 @@ msgstr "Kann Datei `%s' nicht speichern."
 
 #: src/messageview.c:726 src/summaryview.c:3017
 msgid "The message will be printed with the following command:"
-msgstr ""
+msgstr "Diese Nachricht wird mit dem folgenden Befehl gedruckt:"
 
 #: src/messageview.c:727 src/summaryview.c:3018
-#, fuzzy
 msgid "(Default print command)"
-msgstr "Lerne Befehl:"
+msgstr "(Standarddruckbefehl)"
 
 #: src/messageview.c:729 src/prefs_common_dialog.c:2166 src/summaryview.c:3020
 msgid "Print"
@@ -3797,9 +3792,8 @@ msgid "/_Save as..."
 msgstr "/Speichern _als..."
 
 #: src/mimeview.c:132
-#, fuzzy
 msgid "/Save _all..."
-msgstr "/Speichern _als..."
+msgstr "/Alle speichern..."
 
 #: src/mimeview.c:135
 msgid "/_Check signature"
@@ -3851,9 +3845,8 @@ msgid "Can't save the part of multipart message."
 msgstr "Kann einen Teil einer mehrteiligen Nachricht nicht speichern."
 
 #: src/mimeview.c:1039
-#, fuzzy
 msgid "Can't save the attachments."
-msgstr "Kann Datei `%s' nicht speichern."
+msgstr "Kann die Anhänge nicht speichern."
 
 #: src/mimeview.c:1092
 msgid "Open with"
@@ -3870,7 +3863,7 @@ msgstr ""
 
 #: src/mimeview.c:1135
 msgid "Opening executable file"
-msgstr ""
+msgstr "Öffne ausführbare Datei"
 
 #: src/mimeview.c:1136
 msgid ""
@@ -3879,6 +3872,10 @@ msgid ""
 "If you want to launch it, save it to somewhere and make sure it is not an "
 "virus or something like a malicious program."
 msgstr ""
+"Dies ist eine ausführbare Datei. Das Öffenen von ausführbaren Dateinist aus "
+"Sicherheitsgründen beschränkt.\n"
+"Wenn Sie es starten möchten, speichern Sie es irgendwo und stellen Sie "
+"sicher,dass es sich nicht um einen Virus oder anderen Schadcode handelt."
 
 #: src/mimeview.c:1172
 #, c-format
@@ -4446,7 +4443,7 @@ msgstr "Nachricht"
 
 #: src/prefs_common_dialog.c:639
 msgid "Junk mail"
-msgstr "Spam Mail"
+msgstr "Spam-Mail"
 
 #: src/prefs_common_dialog.c:647 src/select-keys.c:344
 msgid "Other"
@@ -4576,9 +4573,8 @@ msgid "Wrap before sending"
 msgstr "Zeilenumbruch vor dem Senden"
 
 #: src/prefs_common_dialog.c:1104
-#, fuzzy
 msgid "Auto-save to draft"
-msgstr "Speichern in Entwurfablage"
+msgstr "Automatisch als Entwurf speichern"
 
 #: src/prefs_common_dialog.c:1137
 msgid "Automatically select account for replies"
@@ -4616,18 +4612,16 @@ msgstr "Schriftart"
 
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1342
-#, fuzzy
 msgid "Folder View"
-msgstr "Ablage"
+msgstr "Ordneransicht"
 
 #: src/prefs_common_dialog.c:1350
 msgid "Display unread number next to folder name"
 msgstr "Zeige Anzahl der ungelesenen E-Mails nach Ablagenname"
 
 #: src/prefs_common_dialog.c:1352
-#, fuzzy
 msgid "Display message number columns in the folder view"
-msgstr "Zeige Anzahl der ungelesenen E-Mails nach Ablagenname"
+msgstr "Zeige Nachrichtenanzahl in der Ordneransicht"
 
 #: src/prefs_common_dialog.c:1361
 msgid "Abbreviate newsgroups longer than"
@@ -4696,13 +4690,12 @@ msgid "pixel(s)"
 msgstr "Pixel"
 
 #: src/prefs_common_dialog.c:1571
-#, fuzzy
 msgid "Default character encoding"
-msgstr "/_Ansicht/_Zeichensatz"
+msgstr "Standard-Zeichensatz"
 
 #: src/prefs_common_dialog.c:1584
 msgid "This is used for messages with missing character encoding."
-msgstr ""
+msgstr "Dies wird für Nachrichten mit fehlender Zeichenkodierung verwendet."
 
 #: src/prefs_common_dialog.c:1586
 msgid "Scroll"
@@ -4734,16 +4727,15 @@ msgstr "Anzeige Bilder eingebettet an"
 
 #: src/prefs_common_dialog.c:1718
 msgid "Enable Junk mail control"
-msgstr "Aktiviere Spam Mail Kontrolle"
+msgstr "Aktiviere Spam-Mail Kontrolle"
 
 #: src/prefs_common_dialog.c:1730
 msgid "Learning command:"
 msgstr "Lerne Befehl:"
 
 #: src/prefs_common_dialog.c:1739
-#, fuzzy
 msgid "(Select preset)"
-msgstr "Wähle Schlüssel"
+msgstr "(Wähle Voreinstellung)"
 
 #: src/prefs_common_dialog.c:1764
 msgid "Not Junk"
@@ -4758,30 +4750,31 @@ msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
+"Um Spam-Mails automatisch zu klassifizieren, müssen sowohl Spam- als auch "
+"Nicht-Spam-Mails eine Wile manuell gelernt werden."
 
 #: src/prefs_common_dialog.c:1800
 msgid "Junk folder"
-msgstr "Spam Mail Ablage"
+msgstr "Spam-Mail Ablage"
 
 #: src/prefs_common_dialog.c:1818
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
-"Nachrichten, die als Spam Mails markiert wurden, werden in diese Ablage "
+"Nachrichten, die als Spam-Mails markiert wurden, werden in diese Ablage "
 "verschoben."
 
 #: src/prefs_common_dialog.c:1829
 msgid "Filter messages classified as junk on receiving"
 msgstr ""
-"Nachrichten beim Empfang ausfiltern, wenn sie als Spam Mails erkannt wurden"
+"Nachrichten beim Empfang ausfiltern, wenn sie als Spam-Mails erkannt wurden"
 
 #: src/prefs_common_dialog.c:1832
-#, fuzzy
 msgid "Delete junk mails from server on receiving"
-msgstr "Vom Server löschen"
+msgstr "Spam-Mails während des Empfangens entfernen"
 
 #: src/prefs_common_dialog.c:1836
 msgid "Mark filtered junk mails as read"
-msgstr ""
+msgstr "Markiere gefilterte Spam-Mails als gelesen"
 
 #: src/prefs_common_dialog.c:1877
 msgid "Automatically check signatures"
@@ -4894,9 +4887,8 @@ msgstr "Internet-Browser"
 
 #: src/prefs_common_dialog.c:2150 src/prefs_common_dialog.c:3613
 #: src/prefs_common_dialog.c:3634
-#, fuzzy
 msgid "(Default browser)"
-msgstr "Standard Posteingang"
+msgstr "(Standardbrowser)"
 
 #: src/prefs_common_dialog.c:2210
 msgid "Add address to destination when double-clicked"
@@ -5247,9 +5239,8 @@ msgid "Key bindings"
 msgstr "Tastenkombinationen"
 
 #: src/prefs_common_dialog.c:3111
-#, fuzzy
 msgid "Select the preset of key bindings."
-msgstr " Tastenkombinationen wählen... "
+msgstr "Voreingestellte Tastenkombinationen wählen."
 
 #: src/prefs_common_dialog.c:3121 src/prefs_common_dialog.c:3445
 msgid "Default"
@@ -5319,20 +5310,20 @@ msgstr "Schreibe Konfiguration zum Anzeigen der Kopfzeilen...\n"
 msgid "This header is already in the list."
 msgstr "Diese Kopfzeile ist bereits in der Liste enthalten."
 
-#: src/prefs_filter.c:211
+#: src/prefs_filter.c:212
 msgid "Filter setting"
 msgstr "Filtereinstellungen"
 
-#: src/prefs_filter.c:255
+#: src/prefs_filter.c:256
 msgid "Enabled"
 msgstr "An"
 
-#: src/prefs_filter.c:686
+#: src/prefs_filter.c:690
 #, c-format
 msgid "Do you really want to delete the rule '%s'?"
 msgstr "Wollen Sie wirklich die Regel '%s' löschen?"
 
-#: src/prefs_filter.c:688
+#: src/prefs_filter.c:692
 msgid "Delete rule"
 msgstr "Lösche Regel"
 
@@ -5366,7 +5357,7 @@ msgstr "Kopfzeile bearbeiten..."
 
 #: src/prefs_filter_edit.c:583
 msgid "Message body"
-msgstr "Nachrichtenkrper"
+msgstr "Nachrichtenkörper"
 
 #: src/prefs_filter_edit.c:584
 msgid "Result of command"
@@ -5418,7 +5409,7 @@ msgstr "ist kürzer als"
 
 #: src/prefs_filter_edit.c:729
 msgid "Move to"
-msgstr "Bewege zu"
+msgstr "Verschiebe nach"
 
 #: src/prefs_filter_edit.c:730
 msgid "Copy to"
@@ -5442,7 +5433,7 @@ msgstr "Setze Farbe"
 
 #: src/prefs_filter_edit.c:737
 msgid "Mark as read"
-msgstr "Markieren als gelesen"
+msgstr "Als gelesen markieren"
 
 #: src/prefs_filter_edit.c:742
 msgid "Forward as attachment"
@@ -5827,14 +5818,12 @@ msgid "Mailbox setting"
 msgstr "Setze Mailbox"
 
 #: src/setup.c:44
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If you are unsure, just select OK."
 msgstr ""
 "Geben Sie den Ort der Mailbox an.\n"
-"Wenn die existierende Mailbox angegeben wird, wird\n"
-"sie automatisch durchsucht."
+"Wenn Sie unsicher sind, klicken Sie einfach OK."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -6081,29 +6070,24 @@ msgid "/Add sender to address boo_k..."
 msgstr "/Absender in Adress_buch einfügen"
 
 #: src/summaryview.c:409
-#, fuzzy
 msgid "/Create f_ilter rule"
-msgstr "/_Werkzeug/Filter _erstellen"
+msgstr "/Filter _erstellen"
 
 #: src/summaryview.c:410
-#, fuzzy
 msgid "/Create f_ilter rule/_Automatically"
-msgstr "/_Werkzeug/Filter _erstellen/_Automatisch"
+msgstr "/Filter _erstellen/_Automatisch"
 
 #: src/summaryview.c:412
-#, fuzzy
 msgid "/Create f_ilter rule/by _From"
-msgstr "/_Werkzeug/Filter _erstellen/nach _Von"
+msgstr "/Filter _erstellen/nach _Von"
 
 #: src/summaryview.c:414
-#, fuzzy
 msgid "/Create f_ilter rule/by _To"
-msgstr "/_Werkzeug/Filter _erstellen/nach A_n"
+msgstr "/Filter _erstellen/nach A_n"
 
 #: src/summaryview.c:416
-#, fuzzy
 msgid "/Create f_ilter rule/by _Subject"
-msgstr "/_Werkzeug/Filter _erstellen/nach _Betreff"
+msgstr "/Filter _erstellen/nach _Betreff"
 
 #: src/summaryview.c:422
 msgid "/_View/_Source"
@@ -6424,7 +6408,7 @@ msgstr "Falsche URL Warnung"
 #~ "Filtered messages will be moved to the junk folder and deleted from the "
 #~ "server."
 #~ msgstr ""
-#~ "Gefilterte Nachrichten werden in die Spam Mail Ablage verschoben und vom "
+#~ "Gefilterte Nachrichten werden in die Spam-Mail Ablage verschoben und vom "
 #~ "Server gelöscht."
 
 #~ msgid ""
