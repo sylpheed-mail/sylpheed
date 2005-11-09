@@ -4150,10 +4150,10 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 			 G_CALLBACK(attach_key_pressed), compose);
 
 	/* drag and drop */
-	gtk_drag_dest_set(attach_treeview,
+	gtk_drag_dest_set(window,
 			  GTK_DEST_DEFAULT_ALL, compose_drag_types,
 			  N_DRAG_TYPES, GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	g_signal_connect(G_OBJECT(attach_treeview), "drag-data-received",
+	g_signal_connect(G_OBJECT(window), "drag-data-received",
 			 G_CALLBACK(compose_attach_drag_received_cb),
 			 compose);
 
@@ -6307,8 +6307,6 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 					     guint		 time,
 					     gpointer		 user_data)
 {
-	Compose *compose = (Compose *)user_data;
-	GList *list, *cur;
 	static GdkDragContext *context_ = NULL;
 	static gint x_ = -1, y_ = -1;
 	static guint info_ = N_DRAG_TYPES;
@@ -6321,7 +6319,7 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 	 * This hack prevents duplicated insertion. */
 	if (context_ == drag_context && x_ == x && y_ == y && info_ == info &&
 	    time_ == time) {
-		debug_print("dup event\n");
+		debug_print("dup drag-data-received event\n");
 		context_ = NULL;
 		x_ = y_ = -1;
 		info_ = N_DRAG_TYPES;
@@ -6334,15 +6332,8 @@ static void compose_insert_drag_received_cb (GtkWidget		*widget,
 	info_ = info;
 	time_ = time;
 
-	list = uri_list_extract_filenames((const gchar *)data->data);
-	for (cur = list; cur != NULL; cur = cur->next)
-		compose_insert_file(compose, (const gchar *)cur->data, TRUE);
-	list_free_strings(list);
-	g_list_free(list);
-
-	if ((drag_context->actions & GDK_ACTION_MOVE) != 0)
-		drag_context->action = 0;
-	gtk_drag_finish(drag_context, TRUE, FALSE, time);
+	compose_attach_drag_received_cb(widget, drag_context, x, y, data,
+					info, time, user_data);
 }
 
 static void to_activated(GtkWidget *widget, Compose *compose)
