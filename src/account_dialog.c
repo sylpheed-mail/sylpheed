@@ -159,6 +159,7 @@ void account_add(void)
 	PrefsAccount *ac_prefs;
 
 	ac_prefs = prefs_account_open(NULL);
+	gtk_window_present(GTK_WINDOW(edit_account.window));
 
 	if (!ac_prefs) return;
 
@@ -206,6 +207,7 @@ void account_open(PrefsAccount *ac_prefs)
 		  return);
 
 	prefs_account_open(ac_prefs);
+	gtk_window_present(GTK_WINDOW(edit_account.window));
 
 	if (!prev_default && ac_prefs->is_default)
 		account_set_as_default(ac_prefs);

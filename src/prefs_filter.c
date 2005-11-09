@@ -151,6 +151,7 @@ void prefs_filter_open(MsgInfo *msginfo, const gchar *header)
 		FilterRule *rule;
 
 		rule = prefs_filter_edit_open(NULL, header);
+		gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 		if (rule) {
 			prefs_filter_set_list_row(NULL, rule, TRUE);
@@ -618,6 +619,7 @@ static void prefs_filter_add_cb(void)
 	FilterRule *rule;
 
 	rule = prefs_filter_edit_open(NULL, NULL);
+	gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 	if (rule) {
 		prefs_filter_set_list_row(NULL, rule, TRUE);
@@ -639,6 +641,7 @@ static void prefs_filter_edit_cb(void)
 	g_return_if_fail(rule != NULL);
 
 	new_rule = prefs_filter_edit_open(rule, NULL);
+	gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 	if (new_rule) {
 		prefs_filter_set_list_row(&iter, new_rule, TRUE);
@@ -660,6 +663,7 @@ static void prefs_filter_copy_cb(void)
 	g_return_if_fail(rule != NULL);
 
 	new_rule = prefs_filter_edit_open(rule, NULL);
+	gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 	if (new_rule) {
 		prefs_filter_set_list_row(NULL, new_rule, TRUE);
