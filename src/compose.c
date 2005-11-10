@@ -793,7 +793,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	compose_set_title(compose);
 
 #if USE_GPGME
-	if (account->encrypt_reply &&
+	if (rfc2015_is_available() && account->encrypt_reply &&
 	    MSG_IS_ENCRYPTED(compose->replyinfo->flags)) {
 		GtkItemFactory *ifactory;
 
@@ -2455,10 +2455,12 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 	}
 
 #if USE_GPGME
-	if (account->default_sign)
-		menu_set_active(ifactory, "/Tools/PGP Sign", TRUE);
-	if (account->default_encrypt)
-		menu_set_active(ifactory, "/Tools/PGP Encrypt", TRUE);
+	if (rfc2015_is_available()) {
+		if (account->default_sign)
+			menu_set_active(ifactory, "/Tools/PGP Sign", TRUE);
+		if (account->default_encrypt)
+			menu_set_active(ifactory, "/Tools/PGP Encrypt", TRUE);
+	}
 #endif /* USE_GPGME */
 
 	if (!init && compose->mode != COMPOSE_REDIRECT && prefs_common.auto_sig)
@@ -2820,14 +2822,16 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 
 #if USE_GPGME
 	/* force encoding to protect trailing spaces */
-	if (!is_draft && compose->use_signing && !compose->account->clearsign) {
+	if (rfc2015_is_available() && !is_draft &&
+	    compose->use_signing && !compose->account->clearsign) {
 		if (encoding == ENC_7BIT)
 			encoding = ENC_QUOTED_PRINTABLE;
 		else if (encoding == ENC_8BIT)
 			encoding = ENC_BASE64;
 	}
 
-	if (!is_draft && compose->use_signing && compose->account->clearsign) {
+	if (rfc2015_is_available() && !is_draft &&
+	    compose->use_signing && compose->account->clearsign) {
 		/* MIME encoding doesn't fit with cleartext signature */
 		if (encoding == ENC_QUOTED_PRINTABLE || encoding == ENC_BASE64)
 			encoding = ENC_8BIT;
@@ -2888,7 +2892,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
             /* This prolog message is ignored by mime software and
              * because it would make our signing/encryption task
              * tougher, we don't emit it in that case */
-            if (!compose->use_signing && !compose->use_encryption)
+            if (!rfc2015_is_available() ||
+		(!compose->use_signing && !compose->use_encryption))
 #endif
 		fputs("This is a multi-part message in MIME format.\n", fp);
 
@@ -2896,7 +2901,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		fprintf(fp, "Content-Type: text/plain; charset=%s\n",
 			body_charset);
 #if USE_GPGME
-		if (compose->use_signing && !compose->account->clearsign)
+		if (rfc2015_is_available() &&
+		    compose->use_signing && !compose->account->clearsign)
 			fprintf(fp, "Content-Disposition: inline\n");
 #endif
 		fprintf(fp, "Content-Transfer-Encoding: %s\n",
@@ -2952,7 +2958,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	}
 
 #if USE_GPGME
-	if (is_draft) {
+	if (!rfc2015_is_available() || is_draft) {
 		uncanonicalize_file_replace(file);
 		return 0;
 	}
@@ -3320,7 +3326,7 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 
 #if USE_GPGME
 			/* force encoding to protect trailing spaces */
-			if (compose->use_signing &&
+			if (rfc2015_is_available() && compose->use_signing &&
 			    !compose->account->clearsign) {
 				if (encoding == ENC_7BIT)
 					encoding = ENC_QUOTED_PRINTABLE;
@@ -3646,7 +3652,8 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		fprintf(fp, "Content-Type: text/plain; charset=%s\n",
 			body_charset);
 #if USE_GPGME
-		if (compose->use_signing && !compose->account->clearsign)
+		if (rfc2015_is_available() &&
+		    compose->use_signing && !compose->account->clearsign)
 			fprintf(fp, "Content-Disposition: inline\n");
 #endif
 		fprintf(fp, "Content-Transfer-Encoding: %s\n",
@@ -4275,6 +4282,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		gtk_table_set_row_spacing(GTK_TABLE(table), 2, 0);
 	}
 
+	if (!rfc2015_is_available())
+		gtk_widget_hide(misc_hbox);
+
 	switch (prefs_common.toolbar_style) {
 	case TOOLBAR_NONE:
 		gtk_widget_hide(toolbar);
@@ -4430,6 +4440,13 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		menu_set_sensitive_all(GTK_MENU_SHELL(compose->popupmenu),
 				       FALSE);
 	}
+
+#if USE_GPGME
+	if (!rfc2015_is_available()) {
+		menu_set_sensitive(ifactory, "/Tools/PGP Sign", FALSE);
+		menu_set_sensitive(ifactory, "/Tools/PGP Encrypt", FALSE);
+	}
+#endif /* USE_GPGME */
 
 	compose_set_out_encoding(compose);
 	addressbook_set_target_compose(compose);
@@ -5996,6 +6013,9 @@ static void compose_signing_toggled(GtkWidget *widget, Compose *compose)
 {
 	GtkItemFactory *ifactory;
 
+	if (!rfc2015_is_available())
+		return;
+
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
 		compose->use_signing = TRUE;
 	else
@@ -6008,6 +6028,9 @@ static void compose_signing_toggled(GtkWidget *widget, Compose *compose)
 static void compose_encrypt_toggled(GtkWidget *widget, Compose *compose)
 {
 	GtkItemFactory *ifactory;
+
+	if (!rfc2015_is_available())
+		return;
 
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
 		compose->use_encryption = TRUE;
@@ -6223,6 +6246,9 @@ static void compose_toggle_sign_cb(gpointer data, guint action,
 {
 	Compose *compose = (Compose *)data;
 
+	if (!rfc2015_is_available())
+		return;
+
 	if (GTK_CHECK_MENU_ITEM(widget)->active)
 		compose->use_signing = TRUE;
 	else
@@ -6236,6 +6262,9 @@ static void compose_toggle_encrypt_cb(gpointer data, guint action,
 				      GtkWidget *widget)
 {
 	Compose *compose = (Compose *)data;
+
+	if (!rfc2015_is_available())
+		return;
 
 	if (GTK_CHECK_MENU_ITEM(widget)->active)
 		compose->use_encryption = TRUE;

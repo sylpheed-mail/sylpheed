@@ -35,6 +35,7 @@
 #include "prefs_common.h"
 #include "utils.h"
 #include "gtkutils.h"
+#include "codeconv.h"
 
 #define TRIM_LINES	25
 
@@ -210,8 +211,20 @@ void log_window_append(const gchar *str, LogType type)
 	if (head)
 		gtk_text_buffer_insert_with_tags_by_name
 			(buffer, &iter, head, -1, tag, NULL);
-	gtk_text_buffer_insert_with_tags_by_name
-		(buffer, &iter, str, -1, tag, NULL);
+
+	if (!g_utf8_validate(str, -1, NULL)) {
+		gchar *str_;
+
+		str_ = conv_utf8todisp(str, NULL);
+		if (str_) {
+			gtk_text_buffer_insert_with_tags_by_name
+				(buffer, &iter, str_, -1, tag, NULL);
+			g_free(str_);
+		}
+	} else {
+		gtk_text_buffer_insert_with_tags_by_name
+			(buffer, &iter, str, -1, tag, NULL);
+	}
 
 	if (GTK_WIDGET_VISIBLE(text)) {
 		GtkTextMark *mark;

@@ -51,6 +51,8 @@
 
 #define DIM(v)     (sizeof(v) / sizeof((v)[0]))
 
+static gboolean gpg_available = TRUE;
+
 static gchar *content_names[] = {
 	"Content-Type",
 	"Content-Disposition",
@@ -106,8 +108,12 @@ static void dump_part(MimeInfo *mimeinfo, FILE *fp)
 
 void rfc2015_disable_all(void)
 {
-	/* FIXME: set a flag, so that we don't bother the user with failed
-	 * gpgme messages */
+	gpg_available = FALSE;
+}
+
+gboolean rfc2015_is_available(void)
+{
+	return gpg_available;
 }
 
 void rfc2015_secure_remove(const gchar *fname)

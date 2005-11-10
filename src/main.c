@@ -631,8 +631,6 @@ static void check_gpg(void)
 		/* Also does some gpgme init */
 	        gpgme_engine_info_t engineInfo;
 
-		rfc2015_disable_all();
-
 		gpgme_set_locale(NULL, LC_CTYPE, setlocale(LC_CTYPE, NULL));
 		gpgme_set_locale(NULL, LC_MESSAGES,
 				 setlocale(LC_MESSAGES, NULL));
@@ -651,6 +649,8 @@ static void check_gpg(void)
 		procmsg_set_decrypt_message_func
 			(rfc2015_open_message_decrypted);
 	} else {
+		rfc2015_disable_all();
+
 		if (prefs_common.gpg_warning) {
 			AlertValue val;
 
