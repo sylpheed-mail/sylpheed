@@ -424,7 +424,7 @@ static PrefsUIData ui_data[] = {
 	{"passphrase_grab", &privacy.checkbtn_passphrase_grab,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif /* G_OS_WIN32 */
-	{"gpg_warning", &privacy.checkbtn_gpg_warning,
+	{"show_gpg_warning", &privacy.checkbtn_gpg_warning,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif /* USE_GPGME */
 

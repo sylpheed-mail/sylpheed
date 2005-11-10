@@ -292,7 +292,11 @@ static PrefParam param[] = {
 	{"store_passphrase_timeout", "0",
 	 &prefs_common.store_passphrase_timeout, P_INT},
 	{"passphrase_grab", "FALSE", &prefs_common.passphrase_grab, P_BOOL},
-	{"gpg_warning", "TRUE", &prefs_common.gpg_warning, P_BOOL},
+#ifdef G_OS_WIN32
+	{"show_gpg_warning", "FALSE", &prefs_common.gpg_warning, P_BOOL},
+#else
+	{"show_gpg_warning", "TRUE", &prefs_common.gpg_warning, P_BOOL},
+#endif
 
 	/* Interface */
 	{"separate_folder", "FALSE", &prefs_common.sep_folder, P_BOOL},
