@@ -44,7 +44,9 @@
 #include <gtk/gtkstock.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/mman.h>
+#if HAVE_SYS_MMAN_H
+#  include <sys/mman.h>
+#endif
 
 #include "passphrase.h"
 #include "prefs_common.h"
@@ -263,7 +265,9 @@ create_description(const gchar *uid_hint, const gchar *pass_hint, gint prev_bad)
 static int free_passphrase(gpointer _unused)
 {
     if (last_pass != NULL) {
+#if HAVE_MLOCK
         munlock(last_pass, strlen(last_pass));
+#endif
         g_free(last_pass);
         last_pass = NULL;
         debug_print("%% passphrase removed");
@@ -295,8 +299,10 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
     else {
         if (prefs_common.store_passphrase) {
             last_pass = g_strdup(pass);
+#if HAVE_MLOCK
             if (mlock(last_pass, strlen(last_pass)) == -1)
                 debug_print("%% locking passphrase failed");
+#endif
 
             if (prefs_common.store_passphrase_timeout > 0) {
                 gtk_timeout_add(prefs_common.store_passphrase_timeout*60*1000,

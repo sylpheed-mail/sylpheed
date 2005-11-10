@@ -317,7 +317,7 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(fcntl.h sys/file.h unistd.h paths.h \
 		 sys/param.h sys/utsname.h sys/select.h \
-		 netdb.h regex.h)
+		 netdb.h regex.h sys/mman.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -338,7 +338,7 @@ dnl Checks for library functions.
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(gethostname mkdir mktime socket strstr strchr \
 	       uname flock lockf inet_aton inet_addr \
-	       fchmod truncate getuid regcomp)
+	       fchmod truncate getuid regcomp mlock)
 
 AC_OUTPUT([
 Makefile

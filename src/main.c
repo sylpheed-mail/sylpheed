@@ -626,7 +626,8 @@ static void idle_function_for_gpgme(void)
 static void check_gpg(void)
 {
 #if USE_GPGME
-	if (gpgme_check_version("0.4.5")) {
+	if (gpgme_check_version("0.4.5") &&
+	    !gpgme_engine_check_version(GPGME_PROTOCOL_OpenPGP)) {
 		/* Also does some gpgme init */
 	        gpgme_engine_info_t engineInfo;
 
