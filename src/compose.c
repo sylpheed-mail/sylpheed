@@ -1606,11 +1606,18 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 static void compose_reedit_set_entry(Compose *compose, MsgInfo *msginfo)
 {
 	g_return_if_fail(msginfo != NULL);
+	g_return_if_fail(compose->account != NULL);
 
 	compose_entry_set(compose, msginfo->to     , COMPOSE_ENTRY_TO);
 	compose_entry_set(compose, compose->cc     , COMPOSE_ENTRY_CC);
 	compose_entry_set(compose, compose->bcc    , COMPOSE_ENTRY_BCC);
 	compose_entry_set(compose, compose->replyto, COMPOSE_ENTRY_REPLY_TO);
+	if (compose->account->protocol == A_NNTP) {
+		compose_entry_set(compose, compose->newsgroups,
+				  COMPOSE_ENTRY_NEWSGROUPS);
+		compose_entry_set(compose, compose->followup_to,
+				  COMPOSE_ENTRY_FOLLOWUP_TO);
+	}
 	compose_entry_set(compose, msginfo->subject, COMPOSE_ENTRY_SUBJECT);
 }
 
@@ -3504,7 +3511,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 				compose_convert_header(compose,
 						       buf, sizeof(buf), str,
 						       strlen("Newsgroups: "),
-						       TRUE, charset);
+						       FALSE, charset);
 				fprintf(fp, "Newsgroups: %s\n", buf);
 			}
 		}
@@ -3565,7 +3572,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 				compose_convert_header(compose,
 						       buf, sizeof(buf), str,
 						       strlen("Followup-To: "),
-						       TRUE, charset);
+						       FALSE, charset);
 				fprintf(fp, "Followup-To: %s\n", buf);
 			}
 		}
@@ -3733,7 +3740,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 				compose_convert_header(compose,
 						       buf, sizeof(buf), str,
 						       strlen("Newsgroups: "),
-						       TRUE, NULL);
+						       FALSE, NULL);
 				fprintf(fp, "Newsgroups: %s\n", buf);
 			}
 		}
@@ -3774,7 +3781,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 				compose_convert_header(compose,
 						       buf, sizeof(buf), str,
 						       strlen("Followup-To: "),
-						       TRUE, NULL);
+						       FALSE, NULL);
 				fprintf(fp, "Followup-To: %s\n", buf);
 			}
 		}
