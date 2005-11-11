@@ -402,6 +402,23 @@ static void app_init(void)
 {
 #ifdef G_OS_WIN32
 	gchar *newpath;
+	const gchar *lang_env;
+
+	/* disable locale variable such as "LANG=1041" */
+
+#define DISABLE_DIGIT_LOCALE(envstr)			\
+{							\
+	lang_env = g_getenv(envstr);			\
+	if (lang_env && g_ascii_isdigit(lang_env[0]))	\
+		g_unsetenv(envstr);			\
+}
+
+	DISABLE_DIGIT_LOCALE("LC_ALL");
+	DISABLE_DIGIT_LOCALE("LANG");
+	DISABLE_DIGIT_LOCALE("LC_CTYPE");
+	DISABLE_DIGIT_LOCALE("LC_MESSAGES");
+
+#undef DISABLE_DIGIT_LOCALE
 #endif
 
 	setlocale(LC_ALL, "");
