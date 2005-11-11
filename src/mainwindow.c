@@ -789,6 +789,7 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *vbox;
 	GtkWidget *menubar;
 	GtkWidget *toolbar;
+	GtkWidget *hbox_spc;
 	GtkWidget *vbox_body;
 	GtkWidget *statusbar;
 	GtkWidget *progressbar;
@@ -858,10 +859,15 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_widget_set_size_request(toolbar, 300, -1);
 	gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
 
+	hbox_spc = gtk_hbox_new(FALSE, 0);
+	gtk_widget_show(hbox_spc);
+	gtk_widget_set_size_request(hbox_spc, -1, BORDER_WIDTH);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox_spc, FALSE, FALSE, 0);
+
 	/* vbox that contains body */
 	vbox_body = gtk_vbox_new(FALSE, BORDER_WIDTH);
 	gtk_widget_show(vbox_body);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox_body), BORDER_WIDTH);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox_body), 0);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox_body, TRUE, TRUE, 0);
 
 	statusbar = statusbar_create();
@@ -2011,8 +2017,7 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 				      TRUE, TRUE, FALSE);
 		gtk_widget_set_uposition(folderwin, prefs_common.folderwin_x,
 					 prefs_common.folderwin_y);
-		gtk_container_set_border_width(GTK_CONTAINER(folderwin),
-					       BORDER_WIDTH);
+		gtk_container_set_border_width(GTK_CONTAINER(folderwin), 0);
 		g_signal_connect(G_OBJECT(folderwin), "delete_event",
 				 G_CALLBACK(folder_window_close_cb), mainwin);
 		gtk_container_add(GTK_CONTAINER(folderwin),
@@ -2031,8 +2036,7 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 				      TRUE, TRUE, FALSE);
 		gtk_widget_set_uposition(messagewin, prefs_common.main_msgwin_x,
 					 prefs_common.main_msgwin_y);
-		gtk_container_set_border_width(GTK_CONTAINER(messagewin),
-					       BORDER_WIDTH);
+		gtk_container_set_border_width(GTK_CONTAINER(messagewin), 0);
 		g_signal_connect(G_OBJECT(messagewin), "delete_event",
 				 G_CALLBACK(message_window_close_cb), mainwin);
 		gtk_container_add(GTK_CONTAINER(messagewin),
