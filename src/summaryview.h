@@ -64,6 +64,7 @@ struct _SummaryView
 	GtkTreeSelection *selection;
 	GtkTreeViewColumn *columns[N_SUMMARY_VISIBLE_COLS];
 
+	GtkWidget *hseparator;
 	GtkWidget *hbox;
 	GtkWidget *hbox_l;
 	GtkWidget *statlabel_folder;

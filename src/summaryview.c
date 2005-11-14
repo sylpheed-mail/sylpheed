@@ -37,6 +37,7 @@
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkwindow.h>
+#include <gtk/gtkhseparator.h>
 #include <gtk/gtkarrow.h>
 #include <gtk/gtkeventbox.h>
 #include <gtk/gtkstatusbar.h>
@@ -425,7 +426,6 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/_Print..."),		NULL, summary_print,	0, NULL}
 };
 
-
 SummaryView *summary_create(void)
 {
 	SummaryView *summaryview;
@@ -434,6 +434,7 @@ SummaryView *summary_create(void)
 	GtkWidget *treeview;
 	GtkTreeStore *store;
 	GtkTreeSelection *selection;
+	GtkWidget *hseparator;
 	GtkWidget *hbox;
 	GtkWidget *hbox_l;
 	GtkWidget *statlabel_folder;
@@ -450,7 +451,7 @@ SummaryView *summary_create(void)
 	debug_print(_("Creating summary view...\n"));
 	summaryview = g_new0(SummaryView, 1);
 
-	vbox = gtk_vbox_new(FALSE, 2);
+	vbox = gtk_vbox_new(FALSE, 1);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -471,6 +472,9 @@ SummaryView *summary_create(void)
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 
 	/* create status label */
+	hseparator = gtk_hseparator_new();
+	gtk_box_pack_end(GTK_BOX(vbox), hseparator, FALSE, FALSE, 0);
+
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
@@ -508,6 +512,7 @@ SummaryView *summary_create(void)
 	summaryview->treeview = treeview;
 	summaryview->store = store;
 	summaryview->selection = selection;
+	summaryview->hseparator = hseparator;
 	summaryview->hbox = hbox;
 	summaryview->hbox_l = hbox_l;
 	summaryview->statlabel_folder = statlabel_folder;

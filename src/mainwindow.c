@@ -1391,6 +1391,7 @@ void main_window_toggle_message_view(MainWindow *mainwin)
 	}
 
 	if (msgwin) {
+		/* separate message view */
 		if (GTK_WIDGET_VISIBLE(msgwin)) {
 			gtk_widget_hide(msgwin);
 			mainwin->messageview->visible = FALSE;
@@ -1400,16 +1401,20 @@ void main_window_toggle_message_view(MainWindow *mainwin)
 			mainwin->messageview->visible = TRUE;
 		}
 	} else if (vpaned->parent != NULL) {
+		/* hide message view */
 		mainwin->messageview->visible = FALSE;
 		summaryview->displayed = NULL;
 		gtk_widget_ref(vpaned);
 		gtkut_container_remove(GTK_CONTAINER(container), vpaned);
 		gtk_widget_reparent(GTK_WIDGET_PTR(summaryview), container);
+		gtk_widget_hide(summaryview->hseparator);
 	} else {
+		/* show message view */
 		mainwin->messageview->visible = TRUE;
 		gtk_widget_reparent(GTK_WIDGET_PTR(summaryview), vpaned);
 		gtk_container_add(GTK_CONTAINER(container), vpaned);
 		gtk_widget_unref(vpaned);
+		gtk_widget_show(summaryview->hseparator);
 	}
 
 	if (messageview_is_visible(mainwin->messageview))
@@ -2060,10 +2065,12 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 			gtk_paned_add2(GTK_PANED(hpaned), vpaned);
 			gtk_paned_add1(GTK_PANED(vpaned),
 				       GTK_WIDGET_PTR(mainwin->summaryview));
+			gtk_widget_show(mainwin->summaryview->hseparator);
 		} else {
 			gtk_paned_add2(GTK_PANED(hpaned),
 				       GTK_WIDGET_PTR(mainwin->summaryview));
 			gtk_widget_ref(vpaned);
+			gtk_widget_hide(mainwin->summaryview->hseparator);
 		}
 		gtk_paned_add2(GTK_PANED(vpaned),
 			       GTK_WIDGET_PTR(mainwin->messageview));
@@ -2080,11 +2087,13 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 					   TRUE, TRUE, 0);
 			gtk_paned_add1(GTK_PANED(vpaned),
 				       GTK_WIDGET_PTR(mainwin->summaryview));
+			gtk_widget_show(mainwin->summaryview->hseparator);
 		} else {
 			gtk_box_pack_start(GTK_BOX(vbox_body),
 					   GTK_WIDGET_PTR(mainwin->summaryview),
 					   TRUE, TRUE, 0);
 			gtk_widget_ref(vpaned);
+			gtk_widget_hide(mainwin->summaryview->hseparator);
 		}
 		gtk_paned_add2(GTK_PANED(vpaned),
 			       GTK_WIDGET_PTR(mainwin->messageview));
@@ -2102,6 +2111,7 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 			       GTK_WIDGET_PTR(mainwin->folderview));
 		gtk_paned_add2(GTK_PANED(hpaned),
 			       GTK_WIDGET_PTR(mainwin->summaryview));
+		gtk_widget_hide(mainwin->summaryview->hseparator);
 		gtk_widget_show(hpaned);
 		gtk_widget_queue_resize(hpaned);
 
@@ -2113,6 +2123,7 @@ static void main_window_set_widgets(MainWindow *mainwin, SeparateType type)
 		gtk_box_pack_start(GTK_BOX(vbox_body),
 				   GTK_WIDGET_PTR(mainwin->summaryview),
 				   TRUE, TRUE, 0);
+		gtk_widget_hide(mainwin->summaryview->hseparator);
 
 		mainwin->win.sep_both.folderwin = folderwin;
 		mainwin->win.sep_both.messagewin = messagewin;
