@@ -422,6 +422,7 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		dest->last_num++;
 		dest->total++;
 		dest->updated = TRUE;
+		dest->mtime = 0;
 
 		if (fileinfo->flags) {
 			if (MSG_IS_RECEIVED(*fileinfo->flags)) {
@@ -511,9 +512,11 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		g_free(destfile);
 		src->total--;
 		src->updated = TRUE;
+		src->mtime = 0;
 		dest->last_num++;
 		dest->total++;
 		dest->updated = TRUE;
+		dest->mtime = 0;
 
 		if (fp) {
 			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
@@ -633,6 +636,7 @@ static gint mh_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		dest->last_num++;
 		dest->total++;
 		dest->updated = TRUE;
+		dest->mtime = 0;
 
 		if (fp) {
 			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
@@ -668,6 +672,7 @@ static gint mh_remove_msg(Folder *folder, FolderItem *item, MsgInfo *msginfo)
 
 	item->total--;
 	item->updated = TRUE;
+	item->mtime = 0;
 	if (MSG_IS_NEW(msginfo->flags))
 		item->new--;
 	if (MSG_IS_UNREAD(msginfo->flags))
@@ -695,6 +700,7 @@ static gint mh_remove_all_msg(Folder *folder, FolderItem *item)
 		item->new = item->unread = item->total = 0;
 		item->last_num = 0;
 		item->updated = TRUE;
+		item->mtime = 0;
 	}
 
 	return val;
@@ -779,6 +785,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	}
 
 	item->updated = TRUE;
+	item->mtime = 0;
 
 	debug_print(_("Last number in dir %s = %d\n"), item->path, max);
 	item->last_num = max;
@@ -1423,6 +1430,7 @@ static void mh_scan_tree_recursive(FolderItem *item)
 		item->unread = unread;
 		item->total = n_msg;
 		item->updated = TRUE;
+		item->mtime = 0;
 	}
 }
 

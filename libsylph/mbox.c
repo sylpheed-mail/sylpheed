@@ -231,9 +231,6 @@ gint proc_mbox(FolderItem *dest, const gchar *mbox, GHashTable *folder_table)
 						       drop_folder));
 			}
 			if (val == 0) {
-				/* force updating */
-				if (FOLDER_IS_LOCAL(drop_folder->folder))
-					drop_folder->mtime = 0;
 				if (folder_table) {
 					g_hash_table_insert(folder_table,
 							    drop_folder,

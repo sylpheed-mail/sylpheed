@@ -5700,7 +5700,6 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 		return;
 	}
 	g_free(tmp);
-	draft->mtime = 0;	/* force updating */
 
 	if (compose->mode == COMPOSE_REEDIT) {
 		compose_remove_reedit_target(compose);
