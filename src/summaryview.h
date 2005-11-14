@@ -105,10 +105,10 @@ struct _SummaryView
 	FolderItem *folder_item;
 
 	/* current message status */
-	off_t total_size;
-	gint  deleted;
-	gint  moved;
-	gint  copied;
+	gint64 total_size;
+	gint deleted;
+	gint moved;
+	gint copied;
 
 /*
 private:

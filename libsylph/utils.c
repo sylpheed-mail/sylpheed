@@ -267,7 +267,7 @@ gchar *itos(gint n)
 	return itos_buf(nstr, n);
 }
 
-gchar *to_human_readable(off_t size)
+gchar *to_human_readable(gint64 size)
 {
 	static gchar str[10];
 

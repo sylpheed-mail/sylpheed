@@ -1,5 +1,11 @@
 2005-11-14
 
+	* libsylph/utils.[ch]
+	  src/summaryview.[ch]: sizeof(off_t) が 4 の環境でのオーバーフローを
+	  防ぐため total_size に gint64 を使用。
+
+2005-11-14
+
 	* src/textview.c: shadow type を GTK_SHADOW_ETCHED_IN に変更。
 	* src/summaryview.[ch]
 	  src/mainwindow.c: サマリステータスとヘッダペインの間にセパレータを

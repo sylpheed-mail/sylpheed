@@ -1,5 +1,11 @@
 2005-11-14
 
+	* libsylph/utils.[ch]
+	  src/summaryview.[ch]: use gint64 for total_size to avoid overflow
+	  on environments where sizeof(off_t) is 4.
+
+2005-11-14
+
 	* src/textview.c: changed the shadow type to GTK_SHADOW_ETCHED_IN.
 	* src/summaryview.[ch]
 	  src/mainwindow.c: added separator between the summary status and

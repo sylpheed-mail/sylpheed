@@ -1646,7 +1646,7 @@ static void summary_update_status(SummaryView *summaryview)
 	GtkTreeIter iter;
 	gboolean valid;
 	MsgInfo *msginfo;
-	off_t total_size = 0;
+	gint64 total_size = 0;
 	gint deleted = 0, moved = 0, copied = 0;
 
 	valid = gtk_tree_model_get_iter_first(model, &iter);
