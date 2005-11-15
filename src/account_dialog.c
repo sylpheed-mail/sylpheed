@@ -207,7 +207,10 @@ void account_open(PrefsAccount *ac_prefs)
 		  return);
 
 	prefs_account_open(ac_prefs);
-	gtk_window_present(GTK_WINDOW(edit_account.window));
+	if (edit_account.window && GTK_WIDGET_VISIBLE(edit_account.window))
+		gtk_window_present(GTK_WINDOW(edit_account.window));
+	else
+		main_window_popup(main_window_get());
 
 	if (!prev_default && ac_prefs->is_default)
 		account_set_as_default(ac_prefs);
