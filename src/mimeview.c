@@ -1123,13 +1123,9 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 	if (!cmdline) {
 		DWORD dwtype;
 
-		if (str_has_suffix_case(filename, ".exe") ||
-		    str_has_suffix_case(filename, ".com") ||
+		if (g_file_test(filename, G_FILE_TEST_IS_EXECUTABLE) ||
 		    str_has_suffix_case(filename, ".scr") ||
 		    str_has_suffix_case(filename, ".pif") ||
-		    str_has_suffix_case(filename, ".bat") ||
-		    str_has_suffix_case(filename, ".vbs") ||
-		    str_has_suffix_case(filename, ".js")  ||
 		    GetBinaryType(filename, &dwtype)) {
 			alertpanel_full
 				(_("Opening executable file"),
