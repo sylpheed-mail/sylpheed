@@ -1032,6 +1032,8 @@ static gboolean folderview_search_unread_recursive(GtkTreeModel *model,
 	if (iter) {
 		gtk_tree_model_get(model, iter, COL_FOLDER_ITEM, &item, -1);
 		if (item) {
+			if (item->stype == F_TRASH)
+				return FALSE;
 			if (item->unread > 0 ||
 			    (item->stype == F_QUEUE && item->total > 0))
 				return TRUE;
