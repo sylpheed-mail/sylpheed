@@ -97,6 +97,17 @@
 			   S_COL_MSG_INFO, &msginfo, -1); \
 }
 
+#define SORT_BLOCK(key)							 \
+	if (summaryview->folder_item->sort_key == key) {		 \
+		sort_key = key;						 \
+		sort_type = summaryview->folder_item->sort_type;	 \
+		summary_sort(summaryview, SORT_BY_NONE, SORT_ASCENDING); \
+	}
+
+#define SORT_UNBLOCK(key)					\
+	if (sort_key == key)					\
+		summary_sort(summaryview, sort_key, sort_type);
+
 #define SUMMARY_COL_MARK_WIDTH		21
 #define SUMMARY_COL_UNREAD_WIDTH	24
 #define SUMMARY_COL_MIME_WIDTH		17
@@ -2205,6 +2216,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 				     gboolean new_window, gboolean all_headers,
 				     gboolean redisplay)
 {
+	GtkTreePath *path;
 	MsgInfo *msginfo = NULL;
 	gint val;
 
@@ -2228,17 +2240,8 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		msgview = messageview_create_with_new_window();
 		val = messageview_show(msgview, msginfo, all_headers);
 	} else {
-		MessageView *msgview;
-		GtkTreePath *path;
+		MessageView *msgview = summaryview->messageview;
 
-		msgview = summaryview->messageview;
-
-		gtk_tree_row_reference_free(summaryview->displayed);
-		path = gtk_tree_model_get_path
-			(GTK_TREE_MODEL(summaryview->store), iter);
-		summaryview->displayed =
-			gtk_tree_row_reference_new
-				(GTK_TREE_MODEL(summaryview->store), path);
 		if (!messageview_is_visible(msgview)) {
 			main_window_toggle_message_view(summaryview->mainwin);
 			GTK_EVENTS_FLUSH();
@@ -2250,10 +2253,6 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		      gtk_notebook_get_current_page
 			(GTK_NOTEBOOK(msgview->notebook)) == 0)))
 			gtk_widget_grab_focus(summaryview->treeview);
-		gtkut_tree_view_scroll_to_cell
-			(GTK_TREE_VIEW(summaryview->treeview), path,
-			 !summaryview->on_button_press);
-		gtk_tree_path_free(path);
 	}
 
 	if (val == 0 &&
@@ -2274,6 +2273,22 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			summary_status_show(summaryview);
 		}
 	}
+
+	path = gtk_tree_model_get_path
+		(GTK_TREE_MODEL(summaryview->store), iter);
+	if (!new_window) {
+		gtk_tree_row_reference_free(summaryview->displayed);
+		summaryview->displayed =
+			gtk_tree_row_reference_new
+				(GTK_TREE_MODEL(summaryview->store), path);
+	}
+	gtkut_tree_view_scroll_to_cell
+		(GTK_TREE_VIEW(summaryview->treeview), path,
+		 !summaryview->on_button_press);
+	gtk_tree_path_free(path);
+
+	if (summaryview->folder_item->sort_key == SORT_BY_UNREAD)
+		summary_selection_list_free(summaryview);
 
 	summary_set_menu_sensitive(summaryview);
 	main_window_set_toolbar_sensitive(summaryview->mainwin);
@@ -2449,6 +2464,10 @@ void summary_mark(SummaryView *summaryview)
 	GList *rows, *cur;
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_MARK);
 
 	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
@@ -2464,6 +2483,8 @@ void summary_mark(SummaryView *summaryview)
 		imap_msg_list_set_perm_flags(msglist, MSG_MARKED);
 		g_slist_free(msglist);
 	}
+
+	SORT_UNBLOCK(SORT_BY_MARK);
 
 	summary_status_show(summaryview);
 }
@@ -2493,6 +2514,10 @@ void summary_mark_as_read(SummaryView *summaryview)
 	GList *rows, *cur;
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_UNREAD);
 
 	rows = summary_get_selected_rows(summaryview);
 
@@ -2511,6 +2536,8 @@ void summary_mark_as_read(SummaryView *summaryview)
 		g_slist_free(msglist);
 	}
 
+	SORT_UNBLOCK(SORT_BY_UNREAD);
+
 	summary_status_show(summaryview);
 }
 
@@ -2519,6 +2546,10 @@ void summary_mark_all_read(SummaryView *summaryview)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 	gboolean valid;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_UNREAD);
 
 	valid = gtk_tree_model_get_iter_first(model, &iter);
 
@@ -2533,6 +2564,8 @@ void summary_mark_all_read(SummaryView *summaryview)
 		imap_msg_list_unset_perm_flags(msglist, MSG_NEW | MSG_UNREAD);
 		g_slist_free(msglist);
 	}
+
+	SORT_UNBLOCK(SORT_BY_UNREAD);
 
 	summary_status_show(summaryview);
 }
@@ -2566,6 +2599,10 @@ void summary_mark_as_unread(SummaryView *summaryview)
 	GList *rows, *cur;
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_UNREAD);
 
 	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
@@ -2582,6 +2619,8 @@ void summary_mark_as_unread(SummaryView *summaryview)
 		imap_msg_list_set_perm_flags(msglist, MSG_UNREAD);
 		g_slist_free(msglist);
 	}
+
+	SORT_UNBLOCK(SORT_BY_UNREAD);
 
 	summary_status_show(summaryview);
 }
@@ -2738,6 +2777,10 @@ void summary_unmark(SummaryView *summaryview)
 	GList *rows, *cur;
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_MARK);
 
 	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
@@ -2753,6 +2796,8 @@ void summary_unmark(SummaryView *summaryview)
 		imap_msg_list_unset_perm_flags(msglist, MSG_MARKED);
 		g_slist_free(msglist);
 	}
+
+	SORT_UNBLOCK(SORT_BY_MARK);
 
 	summary_status_show(summaryview);
 }
@@ -4162,6 +4207,10 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 	GList *rows, *cur;
 	GtkTreeIter iter;
 	MsgInfo *msginfo;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_LABEL);
 
 	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
@@ -4175,6 +4224,8 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 
 	if (rows)
 		summaryview->folder_item->mark_dirty = TRUE;
+
+	SORT_UNBLOCK(SORT_BY_LABEL);
 }
 
 static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
@@ -4555,10 +4606,14 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 
 	if ((event->button == 1 || event->button == 2)) {
 		MsgInfo *msginfo;
+		FolderSortKey sort_key = SORT_BY_NONE;
+		FolderSortType sort_type = SORT_ASCENDING;
 
 		GET_MSG_INFO(msginfo, &iter);
 
 		if (column == summaryview->columns[S_COL_MARK]) {
+			SORT_BLOCK(SORT_BY_MARK);
+
 			if (!MSG_IS_DELETED(msginfo->flags) &&
 			    !MSG_IS_MOVE(msginfo->flags) &&
 			    !MSG_IS_COPY(msginfo->flags)) {
@@ -4575,8 +4630,13 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 				}
 			}
 			gtk_tree_path_free(path);
+
+			SORT_UNBLOCK(SORT_BY_MARK);
+
 			return TRUE;
 		} else if (column == summaryview->columns[S_COL_UNREAD]) {
+			SORT_BLOCK(SORT_BY_UNREAD);
+
 			if (MSG_IS_UNREAD(msginfo->flags)) {
 				summary_mark_row_as_read(summaryview, &iter);
 				if (MSG_IS_IMAP(msginfo->flags))
@@ -4592,6 +4652,9 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 				summary_status_show(summaryview);
 			}
 			gtk_tree_path_free(path);
+
+			SORT_UNBLOCK(SORT_BY_UNREAD);
+
 			return TRUE;
 		}
 	}
