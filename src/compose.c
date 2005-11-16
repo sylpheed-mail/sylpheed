@@ -4289,8 +4289,10 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		gtk_table_set_row_spacing(GTK_TABLE(table), 2, 0);
 	}
 
+#if USE_GPGME
 	if (!rfc2015_is_available())
 		gtk_widget_hide(misc_hbox);
+#endif
 
 	switch (prefs_common.toolbar_style) {
 	case TOOLBAR_NONE:
