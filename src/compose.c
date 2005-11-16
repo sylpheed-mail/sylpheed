@@ -1509,6 +1509,16 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 
 	if (compose->account->protocol != A_NNTP) {
 		if (to_ml && compose->ml_post) {
+			/* don't reply to list for confirmation request etc. */
+			if ((!msginfo->to ||
+			     !strstr_with_skip_quote(msginfo->to,
+						     compose->ml_post)) &&
+			    (!compose->cc ||
+			     !strstr_with_skip_quote(compose->cc,
+						     compose->ml_post)))
+				to_ml = FALSE;
+		}
+		if (to_ml && compose->ml_post) {
 			compose_entry_set(compose, compose->ml_post,
 					  COMPOSE_ENTRY_TO);
 			if (compose->replyto &&
