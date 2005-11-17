@@ -44,6 +44,7 @@
 #include <gtk/gtkvpaned.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkeditable.h>
+#include <gtk/gtktextview.h>
 #include <gtk/gtkwindow.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkvbox.h>
@@ -59,6 +60,13 @@
 #include <gtk/gtkclipboard.h>
 #include <gtk/gtkstock.h>
 #include <pango/pango-break.h>
+
+#if USE_GTKSPELL
+#  include <gtk/gtkradiomenuitem.h>
+#  include <gtkspell/gtkspell.h>
+#  include <aspell.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -441,6 +449,15 @@ static void compose_toggle_encrypt_cb	(gpointer	 data,
 					 GtkWidget	*widget);
 #endif
 
+#if USE_GTKSPELL
+static void compose_set_spell_lang_menu (Compose	*compose);
+static void compose_toggle_spell_cb	(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void compose_set_spell_lang_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+#endif
+
 static void compose_attach_drag_received_cb (GtkWidget		*widget,
 					     GdkDragContext	*drag_context,
 					     gint		 x,
@@ -628,6 +645,12 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_Tools/PGP Si_gn"),   	NULL, compose_toggle_sign_cb   , 0, "<ToggleItem>"},
 	{N_("/_Tools/PGP _Encrypt"),	NULL, compose_toggle_encrypt_cb, 0, "<ToggleItem>"},
 #endif /* USE_GPGME */
+
+#if USE_GTKSPELL
+	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
+	{N_("/_Tools/_Check spell"),		NULL, compose_toggle_spell_cb, 0, "<ToggleItem>"},
+	{N_("/_Tools/_Set spell language"),	NULL, NULL, 0, "<Branch>"},
+#endif /* USE_GTKSPELL */
 
 	{N_("/_Help"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_Help/_About"),		NULL, about_show, 0, NULL}
@@ -3962,6 +3985,10 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	GtkClipboard *clipboard;
 	GtkTextTag *sig_tag;
 
+#if USE_GTKSPELL
+	GtkWidget *spell_menu;
+#endif /* USE_GTKSPELL */
+
 	UndoMain *undostruct;
 
 	guint n_menu_entries;
@@ -4275,6 +4302,11 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	tmpl_menu = gtk_item_factory_get_item(ifactory, "/Tools/Template");
 
+#if USE_GTKSPELL
+	spell_menu = gtk_item_factory_get_item
+		(ifactory, "/Tools/Set spell language");
+#endif
+
 	gtk_widget_hide(bcc_hbox);
 	gtk_widget_hide(bcc_entry);
 	gtk_widget_hide(reply_hbox);
@@ -4367,6 +4399,12 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->scrolledwin   = scrolledwin;
 	compose->text	       = text;
 
+#ifdef USE_GTKSPELL
+	compose->check_spell = prefs_common.check_spell;
+	compose->spell_lang  = g_strdup(prefs_common.spell_lang);
+	compose->spell_menu  = spell_menu;
+#endif /* USE_GTKSPELL */
+
 	compose->focused_editable = NULL;
 
 	compose->popupmenu    = popupmenu;
@@ -4447,6 +4485,11 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		menu_set_sensitive(ifactory, "/Tools/PGP Sign", FALSE);
 		menu_set_sensitive(ifactory, "/Tools/PGP Encrypt", FALSE);
 #endif /* USE_GPGME */
+#if USE_GTKSPELL
+		menu_set_sensitive(ifactory, "/Tools/Check spell", FALSE);
+		menu_set_sensitive(ifactory, "/Tools/Set spell language",
+				   FALSE);
+#endif
 
 		gtk_widget_set_sensitive(compose->insert_btn, FALSE);
 		gtk_widget_set_sensitive(compose->attach_btn, FALSE);
@@ -4471,6 +4514,13 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	addressbook_set_target_compose(compose);
 	action_update_compose_menu(ifactory, compose);
 	compose_set_template_menu(compose);
+
+#if USE_GTKSPELL
+	compose_set_spell_lang_menu(compose);
+	if (mode != COMPOSE_REDIRECT)
+		menu_set_active(ifactory, "/Tools/Check spell",
+				prefs_common.check_spell);
+#endif
 
 	compose_list = g_list_append(compose_list, compose);
 
@@ -4721,6 +4771,62 @@ static void compose_set_out_encoding(Compose *compose)
 	}
 }
 
+#if USE_GTKSPELL
+static void compose_set_spell_lang_menu(Compose *compose)
+{
+	AspellConfig *config;
+	AspellDictInfoList *dlist;
+	AspellDictInfoEnumeration *dels;
+	const AspellDictInfo *entry;
+	GSList *dict_list = NULL, *menu_list = NULL, *cur;
+	GtkWidget *menu;
+	gboolean lang_set = FALSE;
+
+	config = new_aspell_config();
+	dlist = get_aspell_dict_info_list(config);
+	delete_aspell_config(config);
+
+	dels = aspell_dict_info_list_elements(dlist);
+	while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
+		dict_list = g_slist_append(dict_list, (gchar *)entry->name);
+		if (compose->spell_lang != NULL &&
+		    g_ascii_strcasecmp(compose->spell_lang, entry->name) == 0)
+			lang_set = TRUE;
+	}
+	delete_aspell_dict_info_enumeration(dels);
+
+	menu = gtk_menu_new();
+
+	for (cur = dict_list; cur != NULL; cur = cur->next) {
+		gchar *dict = (gchar *)cur->data;
+		GtkWidget *item;
+
+		if (dict == NULL) continue;
+
+		item = gtk_radio_menu_item_new_with_label(menu_list, dict);
+		menu_list = gtk_radio_menu_item_get_group
+			(GTK_RADIO_MENU_ITEM(item));
+		if (compose->spell_lang != NULL &&
+		    g_ascii_strcasecmp(compose->spell_lang, dict) == 0)
+			gtk_check_menu_item_set_active
+				(GTK_CHECK_MENU_ITEM(item), TRUE);
+		gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+		g_signal_connect(G_OBJECT(item), "activate",
+				 G_CALLBACK(compose_set_spell_lang_cb),
+				 compose);     
+		g_object_set_data(G_OBJECT(item), "spell-lang", dict);
+		gtk_widget_show(item);
+
+		if (!lang_set && g_ascii_strcasecmp("en", dict) == 0)
+			gtk_check_menu_item_set_active
+				(GTK_CHECK_MENU_ITEM(item), TRUE);
+	}
+
+	gtk_widget_show(menu);
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(compose->spell_menu), menu);
+}
+#endif
+
 static void compose_set_template_menu(Compose *compose)
 {
 	GSList *tmpl_list, *cur;
@@ -4839,6 +4945,10 @@ static void compose_destroy(Compose *compose)
 	/* NOTE: address_completion_end() does nothing with the window
 	 * however this may change. */
 	address_completion_end(compose->window);
+
+#if USE_GTKSPELL
+	g_free(compose->spell_lang);
+#endif
 
 	slist_free_strings(compose->to_list);
 	g_slist_free(compose->to_list);
@@ -6293,6 +6403,51 @@ static void compose_toggle_encrypt_cb(gpointer data, guint action,
 				     compose->use_encryption);
 }
 #endif /* USE_GPGME */
+
+#if USE_GTKSPELL
+static void compose_toggle_spell_cb(gpointer data, guint action,
+				    GtkWidget *widget)
+{
+	Compose *compose = (Compose *)data;
+	GtkSpell *speller;
+
+	if (GTK_CHECK_MENU_ITEM(widget)->active) {
+		debug_print("Spell checking enabled\n");
+		speller = gtkspell_new_attach(GTK_TEXT_VIEW(compose->text),
+					      compose->spell_lang, NULL);
+		compose->check_spell = TRUE;
+	} else {
+		debug_print("Spell checking disabled\n");
+		speller = gtkspell_get_from_text_view
+			(GTK_TEXT_VIEW(compose->text));
+		if (speller != NULL)
+			gtkspell_detach(speller);
+		compose->check_spell = FALSE;
+	}
+}
+
+static void compose_set_spell_lang_cb(GtkWidget *widget,
+				      gpointer data)
+{
+	Compose *compose = (Compose *)data;
+	gchar *dict;
+	GtkSpell *speller;
+
+	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget)))
+		return;
+
+	dict = g_object_get_data(G_OBJECT(widget), "spell-lang");
+
+	g_free(compose->spell_lang);
+	compose->spell_lang = g_strdup(dict);
+ 
+	speller = gtkspell_get_from_text_view(GTK_TEXT_VIEW(compose->text));
+	if (speller != NULL)
+		gtkspell_set_language(speller, dict, NULL);
+
+	debug_print("Spell lang set to \"%s\"\n", dict);
+}
+#endif /* USE_GTKSPELL */
 
 static void compose_toggle_ruler_cb(gpointer data, guint action,
 				    GtkWidget *widget)

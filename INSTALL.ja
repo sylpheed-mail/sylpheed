@@ -117,12 +117,13 @@ GnuPG (PGP)対応を有効にしたい場合は、 GPGME 1.0.0 以降と GnuPG 1.2.0 以降が
 configure スクリプトのオプション
 ================================
 
+  --disable-gpgme     GnuPG 対応(要 GPGME と GnuPG)を無効にする
+  --disable-ssl       SSL 対応(要 OpenSSL)を無効にする
   --disable-compface  compface(X-Face)対応を無効にする
   --disable-ipv6      IPv6 対応を無効にする
-  --disable-ssl       SSL 対応(要 OpenSSL)を無効にする
-  --disable-gpgme     GnuPG 対応(要 GPGME と GnuPG)を無効にする
-  --enable-ldap       LDAP 対応
-  --enable-jpilot     JPilot 対応
+  --enable-jpilot     JPilot 対応を有効にする
+  --enable-ldap       LDAP 対応を有効にする
+  --enable-gtkspell   スペルチェック機能を有効にする(要GtkSpell)
 
 その他のオプションについては ./configure --help を参照してください。
 

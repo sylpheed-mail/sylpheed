@@ -248,6 +248,26 @@ if test "$ac_cv_enable_compface" = yes; then
 	AC_CHECK_LIB(compface, uncompface,,[ac_cv_enable_compface=no])
 fi
 
+dnl Check for GtkSpell support
+AC_MSG_CHECKING([whether to use GtkSpell])
+AC_ARG_ENABLE(gtkspell,
+	[  --enable-gtkspell       Use GtkSpell in editor [[default=no]]],
+	[ac_cv_enable_gtkspell=$enableval], [ac_cv_enable_gtkspell=no])
+if test "$ac_cv_enable_gtkspell" = yes; then
+	AC_MSG_RESULT(yes)
+	AC_MSG_CHECKING([whether GtkSpell is available])
+	if $PKG_CONFIG gtkspell-2.0 ; then
+		AC_MSG_RESULT(yes)
+		CFLAGS="$CFLAGS `$PKG_CONFIG --cflags gtkspell-2.0`"
+		LIBS="$LIBS `$PKG_CONFIG --libs gtkspell-2.0`"
+		AC_DEFINE(USE_GTKSPELL, 1, Use GtkSpell in editor)
+	else
+		AC_MSG_RESULT(no)
+	fi
+else
+	AC_MSG_RESULT(no)		
+fi
+
 AC_CHECK_LIB(xpg4, setlocale)
 
 dnl for GThread support (currently disabled)
@@ -371,6 +391,7 @@ echo "OpenSSL       : $ac_cv_enable_ssl"
 echo "iconv         : $am_cv_func_iconv"
 echo "compface      : $ac_cv_enable_compface"
 echo "IPv6          : $ac_cv_enable_ipv6"
+echo "GtkSpell      : $ac_cv_enable_gtkspell"
 echo ""
 echo "The binary will be installed in $prefix/bin"
 echo ""

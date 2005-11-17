@@ -93,6 +93,10 @@ static PrefParam param[] = {
 
 	{"show_ruler", "TRUE", &prefs_common.show_ruler, P_BOOL},
 
+	/* Spelling */
+	{"check_spell", "FALSE", &prefs_common.check_spell, P_BOOL},
+	{"spell_lang", "en", &prefs_common.spell_lang, P_STRING},
+
 	/* Quote */
 	{"reply_quote_mark", "> ", &prefs_common.quotemark, P_STRING},
 	{"reply_quote_format", "On %d\\n%f wrote:\\n\\n%Q",
