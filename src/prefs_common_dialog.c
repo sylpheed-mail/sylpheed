@@ -550,6 +550,9 @@ static gboolean prefs_quote_description_key_pressed
 
 static void prefs_quote_colors_dialog		(void);
 static void prefs_quote_colors_dialog_create	(void);
+static gint prefs_quote_colors_deleted		(GtkWidget	*widget,
+						 GdkEventAny	*event,
+						 gpointer	 data);
 static gboolean prefs_quote_colors_key_pressed	(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 gpointer	 data);
@@ -2830,8 +2833,8 @@ static void prefs_quote_colors_dialog_create(void)
 
 	gtk_widget_grab_default(ok_btn);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
-	g_signal_connect(G_OBJECT(window), "delete_event",
-			 G_CALLBACK(gtk_main_quit), NULL);
+	g_signal_connect (G_OBJECT (window), "delete_event",
+			  G_CALLBACK (prefs_quote_colors_deleted), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(prefs_quote_colors_key_pressed), NULL);
 
@@ -2862,6 +2865,13 @@ static void prefs_quote_colors_dialog_create(void)
 
 	gtk_widget_show_all(vbox);
 	quote_color_win = window;
+}
+
+static gint prefs_quote_colors_deleted(GtkWidget *widet, GdkEventAny *event,
+				       gpointer data)
+{
+	gtk_main_quit();
+	return TRUE;
 }
 
 static gboolean prefs_quote_colors_key_pressed(GtkWidget *widget,
