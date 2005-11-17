@@ -1685,8 +1685,23 @@ static gchar *rc_dir = NULL;
 
 void set_startup_dir(void)
 {
+#ifdef G_OS_WIN32
+	if (!startup_dir) {
+		startup_dir = g_win32_get_package_installation_directory
+			(NULL, NULL);
+		if (startup_dir) {
+			if (g_chdir(startup_dir) < 0) {
+				FILE_OP_ERROR(startup_dir, "chdir");
+				g_free(startup_dir);
+				startup_dir = g_get_current_dir();
+			}
+		} else
+			startup_dir = g_get_current_dir();
+	}
+#else
 	if (!startup_dir)
 		startup_dir = g_get_current_dir();
+#endif
 }
 
 void set_rc_dir(const gchar *dir)
