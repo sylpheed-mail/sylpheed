@@ -162,6 +162,9 @@ static void about_create(void)
 #if USE_JPILOT
 		   " JPilot"
 #endif
+#if USE_GTKSPELL
+		   " GtkSpell"
+#endif
 	"");
 
 	label = gtk_label_new(buf);
