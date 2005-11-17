@@ -2429,8 +2429,7 @@ static void compose_set_title(Compose *compose)
 	if (!subject || subject[0] == '\0')
 		subject = _("(No Subject)");
 
-	edited = compose->modified ? _(" [Edited]") : "";
-
+	edited = compose->modified ? " *" : "";
 	str = g_strdup_printf(_("%s - Compose%s"), subject, edited);
 	gtk_window_set_title(GTK_WINDOW(compose->window), str);
 	g_free(str);
