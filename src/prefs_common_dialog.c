@@ -2738,6 +2738,7 @@ void prefs_quote_colors_dialog(void)
 
 	gtk_main();
 	gtk_widget_hide(quote_color_win);
+	gtk_window_present(GTK_WINDOW(dialog.window));
 
 	main_window_reflect_prefs_all();
 }
