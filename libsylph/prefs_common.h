@@ -84,16 +84,16 @@ struct _PrefsCommon
 	gboolean default_reply_list;
 	gboolean show_ruler;
 
-	/* Spelling */
-	gboolean check_spell;
-	gchar *spell_lang;
-
 	/* Quote */
 	gboolean reply_with_quote;
 	gchar *quotemark;
 	gchar *quotefmt;
 	gchar *fw_quotemark;
 	gchar *fw_quotefmt;
+
+	/* Spelling */
+	gboolean check_spell;
+	gchar *spell_lang;
 
 	/* Display */
 	gchar *textfont;

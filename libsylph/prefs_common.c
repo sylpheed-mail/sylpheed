@@ -93,10 +93,6 @@ static PrefParam param[] = {
 
 	{"show_ruler", "TRUE", &prefs_common.show_ruler, P_BOOL},
 
-	/* Spelling */
-	{"check_spell", "FALSE", &prefs_common.check_spell, P_BOOL},
-	{"spell_lang", "en", &prefs_common.spell_lang, P_STRING},
-
 	/* Quote */
 	{"reply_quote_mark", "> ", &prefs_common.quotemark, P_STRING},
 	{"reply_quote_format", "On %d\\n%f wrote:\\n\\n%Q",
@@ -108,6 +104,10 @@ static PrefParam param[] = {
 	 "?d{Date: %d\\n}?f{From: %f\\n}?t{To: %t\\n}?c{Cc: %c\\n}"
 	 "?n{Newsgroups: %n\\n}?s{Subject: %s\\n}\\n\\n%M",
 	 &prefs_common.fw_quotefmt, P_STRING},
+
+	/* Spelling */
+	{"check_spell", "FALSE", &prefs_common.check_spell, P_BOOL},
+	{"spell_lang", "en", &prefs_common.spell_lang, P_STRING},
 
 	/* Display */
 	{"message_font_name", DEFAULT_MESSAGE_FONT, &prefs_common.textfont,

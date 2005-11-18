@@ -121,6 +121,13 @@ static struct Quote {
 	GtkWidget *text_fw_quotefmt;
 } quote;
 
+#if USE_GTKSPELL
+static struct Spell {
+        GtkWidget *chkbtn_enable_spell;
+        GtkWidget *entry_spell_lang;
+} spell;
+#endif
+
 static struct Display {
 	GtkWidget *fontbtn_textfont;
 
@@ -206,13 +213,6 @@ static struct Other {
 	GtkWidget *checkbtn_askonclean;
 	GtkWidget *checkbtn_warnqueued;
 } other;
-
-#if USE_GTKSPELL
-static struct Spell {
-        GtkWidget *chkbtn_enable_spell;
-        GtkWidget *entry_spell_lang;
-} spell;
-#endif
 
 static struct Advanced {
 	GtkWidget *checkbtn_strict_cache_check;
@@ -340,6 +340,14 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"forward_quote_format", &quote.text_fw_quotefmt,
 	 prefs_set_data_from_text, prefs_set_text},
+
+#if USE_GTKSPELL
+	/* Spelling */
+	{"check_spell", &spell.chkbtn_enable_spell,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"spell_lang",  &spell.entry_spell_lang,
+	 prefs_set_data_from_entry, prefs_set_entry},
+#endif
 
 	/* Display */
 	{"message_font_name", &display.fontbtn_textfont,
@@ -483,14 +491,6 @@ static PrefsUIData ui_data[] = {
 
 	/* {"logwindow_line_limit", NULL, NULL, NULL}, */
 
-#if USE_GTKSPELL
-	/* Spelling */
-	{"check_spell", &spell.chkbtn_enable_spell,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"spell_lang",  &spell.entry_spell_lang,
-	 prefs_set_data_from_entry, prefs_set_entry},
-#endif
-
 	/* Advanced */
 	{"strict_cache_check", &advanced.checkbtn_strict_cache_check,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -506,6 +506,9 @@ static void prefs_receive_create	(void);
 static void prefs_send_create		(void);
 static void prefs_compose_create	(void);
 static void prefs_quote_create		(void);
+#if USE_GTKSPELL
+static void prefs_spell_create          (void);
+#endif
 static void prefs_display_create	(void);
 static void prefs_message_create	(void);
 static void prefs_junk_create		(void);
@@ -514,9 +517,6 @@ static void prefs_privacy_create	(void);
 #endif
 static void prefs_interface_create	(void);
 static void prefs_other_create		(void);
-#if USE_GTKSPELL
-static void prefs_spell_create          (void);
-#endif
 static void prefs_advanced_create	(void);
 
 static void prefs_common_set_encoding_optmenu	(GtkOptionMenu	*optmenu,
@@ -651,13 +651,17 @@ static void prefs_common_create(void)
 	prefs_compose_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Compose"),   page++);
 	prefs_quote_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Quote"),   page++);
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Quote"),     page++);
+#if USE_GTKSPELL
+	prefs_spell_create();
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Spell"),     page++);
+#endif
 	prefs_display_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Display"),   page++);
 	prefs_message_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Message"),   page++);
 	prefs_junk_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Junk mail"),   page++);
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Junk mail"), page++);
 #if USE_GPGME
 	prefs_privacy_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Privacy"),   page++);
@@ -666,10 +670,6 @@ static void prefs_common_create(void)
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Interface"), page++);
 	prefs_other_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Other"),     page++);
-#if USE_GTKSPELL
-	prefs_spell_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Spell"),     page++);
-#endif
 	prefs_advanced_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"),  page++);
 
@@ -1313,6 +1313,47 @@ static void prefs_quote_create(void)
 	quote.entry_fw_quotemark = entry_fw_quotemark;
 	quote.text_fw_quotefmt   = text_fw_quotefmt;
 }
+
+#if USE_GTKSPELL
+static void prefs_spell_create(void)
+{
+        GtkWidget *vbox1, *vbox2;
+        GtkWidget *frame;
+        GtkWidget *hbox;
+        GtkWidget *chkbtn_enable_spell;
+        GtkWidget *label;
+        GtkWidget *entry_spell_lang;
+ 
+        vbox1 = gtk_vbox_new (FALSE, VSPACING);
+        gtk_widget_show (vbox1);
+        gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
+ 
+        PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame, chkbtn_enable_spell,
+                                     _("Enable Spell checking"));
+ 
+        vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+        gtk_widget_show (vbox2);
+        gtk_container_add (GTK_CONTAINER (frame), vbox2);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+        SET_TOGGLE_SENSITIVITY (chkbtn_enable_spell, vbox2);
+ 
+        hbox = gtk_hbox_new (FALSE, 8);
+        gtk_widget_show (hbox);
+        gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+ 
+        label = gtk_label_new (_("Default language:"));
+        gtk_widget_show (label);
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+ 
+        entry_spell_lang = gtk_entry_new ();
+        gtk_widget_show (entry_spell_lang);
+        gtk_box_pack_start (GTK_BOX (hbox), entry_spell_lang, TRUE, TRUE, 0);
+ 
+        spell.chkbtn_enable_spell = chkbtn_enable_spell;
+        spell.entry_spell_lang = entry_spell_lang;
+}
+#endif /* USE_GTKSPELL */
 
 static void prefs_display_create(void)
 {
@@ -2271,47 +2312,6 @@ static void prefs_other_create(void)
 	other.checkbtn_askonclean  = checkbtn_askonclean;
 	other.checkbtn_warnqueued  = checkbtn_warnqueued;
 }
-
-#if USE_GTKSPELL
-static void prefs_spell_create(void)
-{
-        GtkWidget *vbox1, *vbox2;
-        GtkWidget *frame;
-        GtkWidget *hbox;
-        GtkWidget *chkbtn_enable_spell;
-        GtkWidget *label;
-        GtkWidget *entry_spell_lang;
- 
-        vbox1 = gtk_vbox_new (FALSE, VSPACING);
-        gtk_widget_show (vbox1);
-        gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
- 
-        PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame, chkbtn_enable_spell,
-                                     _("Enable Spell checking"));
- 
-        vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
-        gtk_widget_show (vbox2);
-        gtk_container_add (GTK_CONTAINER (frame), vbox2);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
-        SET_TOGGLE_SENSITIVITY (chkbtn_enable_spell, vbox2);
- 
-        hbox = gtk_hbox_new (FALSE, 8);
-        gtk_widget_show (hbox);
-        gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
- 
-        label = gtk_label_new (_("Default language:"));
-        gtk_widget_show (label);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
- 
-        entry_spell_lang = gtk_entry_new ();
-        gtk_widget_show (entry_spell_lang);
-        gtk_box_pack_start (GTK_BOX (hbox), entry_spell_lang, TRUE, TRUE, 0);
- 
-        spell.chkbtn_enable_spell = chkbtn_enable_spell;
-        spell.entry_spell_lang = entry_spell_lang;
-}
-#endif /* USE_GTKSPELL */
 
 static void prefs_advanced_create(void)
 {
