@@ -2,13 +2,20 @@ Changes of Sylpheed
 
 * 2.1.7 (development)
 
+    * The spell checking feature was implemented (requires GtkSpell).
     * The drop of files is allowed on the whole composition window.
     * The insertion of text by drag and drop was disabled.
-    * The PGP interface is hidden if GnuPG is not available.
+    * The PGP interface is disabled if GnuPG is not available.
     * A bug that aborted program if invalid UTF-8 text is put in the log
       window was fixed.
-    * The bug that the separator of newsgroups was broken was fixed.
     * The pane between summary and message view became more visible.
+    * Reply-to-list is not enabled for subscribe confirmation request etc.
+    * The bug that the separator of newsgroups was broken was fixed.
+    * The bug that broke the summary selection when mark, unread, and
+      colorlabel flags were changed while the summary was sorted by them
+      was fixed.
+    * The bug that caused crash when quote colors dialog was closed by the
+      window close button was fixed.
     * The bug that showed wrong value if the total size of a folder was more
       than 2GB was fixed.
     * Win32: The bug that occasionally the summary was not properly updated

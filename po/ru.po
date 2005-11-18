@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-17 15:48+0900\n"
+"POT-Creation-Date: 2005-11-18 14:35+0900\n"
 "PO-Revision-Date: 2004-12-05 17:16+0300\n"
 "Last-Translator: Sergey Vlasov <vsu@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -624,12 +624,12 @@ msgstr "%.2f Мб"
 msgid "%.2fGB"
 msgstr "%.2f Гб"
 
-#: libsylph/utils.c:2358 src/compose.c:2790 src/compose.c:3053
-#: src/compose.c:3116 src/compose.c:3236
+#: libsylph/utils.c:2373 src/compose.c:2789 src/compose.c:3052
+#: src/compose.c:3115 src/compose.c:3235
 msgid "can't change file mode\n"
 msgstr "не удалось изменить свойства файла\n"
 
-#: libsylph/utils.c:2365 libsylph/utils.c:2489
+#: libsylph/utils.c:2380 libsylph/utils.c:2504
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "запись в %s не удалась.\n"
@@ -638,7 +638,7 @@ msgstr "запись в %s не удалась.\n"
 msgid "About"
 msgstr "О программе"
 
-#: src/about.c:220
+#: src/about.c:223
 msgid ""
 "GPGME is copyright 2001 by Werner Koch <dd9jn@gnu.org>\n"
 "\n"
@@ -646,7 +646,7 @@ msgstr ""
 "Права на GPGME принадлежат Werner Koch <dd9jn@gnu.org>, 2001 год\n"
 "\n"
 
-#: src/about.c:224
+#: src/about.c:227
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -660,7 +660,7 @@ msgstr ""
 "более поздней версией.\n"
 "\n"
 
-#: src/about.c:230
+#: src/about.c:233
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -673,7 +673,7 @@ msgstr ""
 "ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННЫХ ЦЕЛЕЙ.  Читайте Универсальную Общественную "
 "лицензию GNU, если хотите узнать детали.\n"
 
-#: src/about.c:236
+#: src/about.c:239
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
@@ -713,7 +713,7 @@ msgstr ""
 "по команде 'Получить все'."
 
 #: src/account_dialog.c:365 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4191 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4190 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:206 src/prefs_filter.c:261 src/prefs_folder_item.c:174
@@ -851,7 +851,7 @@ msgstr "Пользовательский параметр действия"
 msgid "Add Address to Book"
 msgstr "Добавление адреса в книгу"
 
-#: src/addressadd.c:202 src/compose.c:4675 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4674 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Адрес"
@@ -991,7 +991,7 @@ msgstr "/Удалить"
 msgid "E-Mail address"
 msgstr "Адрес E-Mail"
 
-#: src/addressbook.c:496 src/compose.c:4676 src/prefs_common_dialog.c:2223
+#: src/addressbook.c:496 src/compose.c:4675 src/prefs_common_dialog.c:2267
 msgid "Address book"
 msgstr "Адресная книга"
 
@@ -1162,7 +1162,7 @@ msgstr "Ошибка преобразования адресной книги"
 msgid "Addressbook Conversion"
 msgstr "Преобразование адресной книги"
 
-#: src/addressbook.c:3072 src/prefs_common_dialog.c:663
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:670
 msgid "Interface"
 msgstr "Интерфейс"
 
@@ -1207,7 +1207,7 @@ msgstr "Адреса организаций"
 msgid "Personal address"
 msgstr "Личные адреса"
 
-#: src/alertpanel.c:141 src/compose.c:5396 src/main.c:572
+#: src/alertpanel.c:141 src/compose.c:5395 src/main.c:572
 msgid "Notice"
 msgstr "Уведомление"
 
@@ -1611,33 +1611,29 @@ msgstr "Ошибка при получении одного из компоне�
 msgid "(No Subject)"
 msgstr "(Без темы)"
 
-#: src/compose.c:2432
-msgid " [Edited]"
-msgstr " [Изменено]"
-
-#: src/compose.c:2434
+#: src/compose.c:2433
 #, fuzzy, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Подготовка сообщения%s"
 
-#: src/compose.c:2547
+#: src/compose.c:2546
 msgid "Recipient is not specified."
 msgstr "Получатель сообщения не указан."
 
-#: src/compose.c:2555
+#: src/compose.c:2554
 #, fuzzy
 msgid "Empty subject"
 msgstr "Тема"
 
-#: src/compose.c:2556
+#: src/compose.c:2555
 msgid "Subject is empty. Send it anyway?"
 msgstr "Тема сообщения не указана. Отправить без темы?"
 
-#: src/compose.c:2618
+#: src/compose.c:2617
 msgid "can't get recipient list."
 msgstr "ошибка определения списка получателей."
 
-#: src/compose.c:2638
+#: src/compose.c:2637
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1645,21 +1641,21 @@ msgstr ""
 "Учетная запись для отправки почты не определена.\n"
 "Пожалуйста, выберите ее перед отправкой."
 
-#: src/compose.c:2652 src/send_message.c:299
+#: src/compose.c:2651 src/send_message.c:299
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Произошла ошибка при отправке сообщения на %s ."
 
-#: src/compose.c:2675
+#: src/compose.c:2674
 msgid "Can't save the message to outbox."
 msgstr "Ошибка сохранения сообщения в папке отправленных."
 
-#: src/compose.c:2726
+#: src/compose.c:2725
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Не найден ключ, соответствующий выбранному идентификатору '%s'."
 
-#: src/compose.c:2823
+#: src/compose.c:2822
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1670,12 +1666,12 @@ msgstr ""
 "из %s в %s.\n"
 "Все равно послать его?"
 
-#: src/compose.c:2829
+#: src/compose.c:2828
 #, fuzzy
 msgid "Code conversion error"
 msgstr "Ошибка преобразования адресной книги"
 
-#: src/compose.c:2902
+#: src/compose.c:2901
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1684,157 +1680,157 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:2906
+#: src/compose.c:2905
 msgid "Line length limit"
 msgstr ""
 
-#: src/compose.c:3196
+#: src/compose.c:3195
 msgid "can't remove the old message\n"
 msgstr "ошибка удаления старого сообщения\n"
 
-#: src/compose.c:3214
+#: src/compose.c:3213
 msgid "queueing message...\n"
 msgstr "постановка сообщения в очередь...\n"
 
-#: src/compose.c:3296
+#: src/compose.c:3295
 msgid "can't find queue folder\n"
 msgstr "невозможно найти папку очереди\n"
 
-#: src/compose.c:3303
+#: src/compose.c:3302
 msgid "can't queue the message\n"
 msgstr "ошибка размещения в очереди\n"
 
-#: src/compose.c:3896
+#: src/compose.c:3895
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "создан Message-ID: %s\n"
 
-#: src/compose.c:4009
+#: src/compose.c:4008
 msgid "Creating compose window...\n"
 msgstr "Создание окна подготовки сообщения...\n"
 
-#: src/compose.c:4057 src/headerview.c:54 src/summary_search.c:214
+#: src/compose.c:4056 src/headerview.c:54 src/summary_search.c:214
 msgid "From:"
 msgstr "От:"
 
-#: src/compose.c:4131
+#: src/compose.c:4130
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/Инструменты/Подписать сообщение (PGP)"
 
-#: src/compose.c:4134
+#: src/compose.c:4133
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/Инструменты/Шифровать сообщение (PGP)"
 
-#: src/compose.c:4172 src/compose.c:5228
+#: src/compose.c:4171 src/compose.c:5227
 msgid "MIME type"
 msgstr "Тип MIME"
 
 #. S_COL_DATE
-#: src/compose.c:4181 src/mimeview.c:197 src/prefs_filter_edit.c:585
+#: src/compose.c:4180 src/mimeview.c:197 src/prefs_filter_edit.c:585
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4457
 msgid "Size"
 msgstr "Размер"
 
-#: src/compose.c:4596 src/mainwindow.c:2254 src/prefs_account_dialog.c:516
-#: src/prefs_common_dialog.c:647
+#: src/compose.c:4595 src/mainwindow.c:2254 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:650
 msgid "Send"
 msgstr "Отправить"
 
-#: src/compose.c:4597
+#: src/compose.c:4596
 msgid "Send message"
 msgstr "Отправить сообщение"
 
-#: src/compose.c:4605
+#: src/compose.c:4604
 msgid "Send later"
 msgstr "Отправить позже"
 
-#: src/compose.c:4606
+#: src/compose.c:4605
 msgid "Put into queue folder and send later"
 msgstr "Поместить в очередь и отправить позже"
 
-#: src/compose.c:4614
+#: src/compose.c:4613
 msgid "Draft"
 msgstr "Черновики"
 
-#: src/compose.c:4615
+#: src/compose.c:4614
 msgid "Save to draft folder"
 msgstr "Сохранить в папке черновиков"
 
-#: src/compose.c:4625
+#: src/compose.c:4624
 msgid "Insert"
 msgstr "Вставить"
 
-#: src/compose.c:4626
+#: src/compose.c:4625
 msgid "Insert file"
 msgstr "Вставить файл"
 
-#: src/compose.c:4634
+#: src/compose.c:4633
 msgid "Attach"
 msgstr "Вложение"
 
-#: src/compose.c:4635
+#: src/compose.c:4634
 msgid "Attach file"
 msgstr "Вложить файл"
 
 #. signature
-#: src/compose.c:4645 src/prefs_account_dialog.c:1188
-#: src/prefs_common_dialog.c:1027
+#: src/compose.c:4644 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:1030
 msgid "Signature"
 msgstr "Подпись"
 
-#: src/compose.c:4646
+#: src/compose.c:4645
 msgid "Insert signature"
 msgstr "Добавить подпись"
 
-#: src/compose.c:4655 src/prefs_common_dialog.c:1049
-#: src/prefs_common_dialog.c:2199
+#: src/compose.c:4654 src/prefs_common_dialog.c:1052
+#: src/prefs_common_dialog.c:2243
 msgid "Editor"
 msgstr "Редактор"
 
-#: src/compose.c:4656
+#: src/compose.c:4655
 msgid "Edit with external editor"
 msgstr "Править внешним редактором"
 
-#: src/compose.c:4664
+#: src/compose.c:4663
 msgid "Linewrap"
 msgstr "Перенос строк"
 
-#: src/compose.c:4665
+#: src/compose.c:4664
 msgid "Wrap all long lines"
 msgstr "Отформатировать все сообщение"
 
-#: src/compose.c:5124
+#: src/compose.c:5123
 msgid "Invalid MIME type."
 msgstr "Неверный тип MIME."
 
-#: src/compose.c:5142
+#: src/compose.c:5141
 msgid "File doesn't exist or is empty."
 msgstr "Файл не существует или пуст."
 
-#: src/compose.c:5210
+#: src/compose.c:5209
 msgid "Properties"
 msgstr "Свойства"
 
-#: src/compose.c:5230
+#: src/compose.c:5229
 msgid "Encoding"
 msgstr "Кодировка"
 
-#: src/compose.c:5253 src/prefs_folder_item.c:203
+#: src/compose.c:5252 src/prefs_folder_item.c:203
 msgid "Path"
 msgstr "Путь"
 
-#: src/compose.c:5254
+#: src/compose.c:5253
 msgid "File name"
 msgstr "Имя файла"
 
-#: src/compose.c:5347
+#: src/compose.c:5346
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Неверная команда вызова внешнего редактора: '%s'\n"
 
-#: src/compose.c:5393
+#: src/compose.c:5392
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1844,48 +1840,48 @@ msgstr ""
 "Завершить процесс принудительно?\n"
 "Идентификатор группы процессов: %d"
 
-#: src/compose.c:5768 src/compose.c:5776 src/compose.c:5782
+#: src/compose.c:5767 src/compose.c:5775 src/compose.c:5781
 msgid "Can't queue the message."
 msgstr "Ошибка постановки в очередь."
 
-#: src/compose.c:5873
+#: src/compose.c:5872
 #, fuzzy
 msgid "Select files"
 msgstr "Выбор файла"
 
-#: src/compose.c:5895
+#: src/compose.c:5894
 msgid "Select file"
 msgstr "Выбор файла"
 
-#: src/compose.c:5930
+#: src/compose.c:5929
 #, fuzzy
 msgid "Save message"
 msgstr "Отправить сообщение"
 
-#: src/compose.c:5931
+#: src/compose.c:5930
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Это сообщение изменено. Отказаться от него?"
 
-#: src/compose.c:5933
+#: src/compose.c:5932
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:5975
+#: src/compose.c:5974
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Применить шаблон '%s'?"
 
-#: src/compose.c:5977
+#: src/compose.c:5976
 msgid "Apply template"
 msgstr "Применить шаблон"
 
-#: src/compose.c:5978
+#: src/compose.c:5977
 #, fuzzy
 msgid "_Replace"
 msgstr "Заменить"
 
-#: src/compose.c:5978
+#: src/compose.c:5977
 #, fuzzy
 msgid "_Insert"
 msgstr "Вставить"
@@ -2070,7 +2066,7 @@ msgstr "Редактирование записи JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
 #: src/importldif.c:534 src/prefs_account_dialog.c:1691
-#: src/prefs_common_dialog.c:1830
+#: src/prefs_common_dialog.c:1874
 msgid " ... "
 msgstr " ... "
 
@@ -3653,7 +3649,7 @@ msgid "Send queued message(s)"
 msgstr "Послать сообщения из очереди"
 
 #: src/mainwindow.c:2265 src/prefs_account_dialog.c:518
-#: src/prefs_common_dialog.c:649 src/prefs_folder_item.c:140
+#: src/prefs_common_dialog.c:652 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Написать"
 
@@ -3661,7 +3657,7 @@ msgstr "Написать"
 msgid "Compose new message"
 msgstr "Написать новое сообщение"
 
-#: src/mainwindow.c:2274 src/prefs_common_dialog.c:1151
+#: src/mainwindow.c:2274 src/prefs_common_dialog.c:1154
 msgid "Reply"
 msgstr "Ответить"
 
@@ -3689,7 +3685,7 @@ msgstr "Переслать сообщение"
 msgid "Delete the message"
 msgstr "Удалить сообщение"
 
-#: src/mainwindow.c:2330 src/prefs_common_dialog.c:1774
+#: src/mainwindow.c:2330 src/prefs_common_dialog.c:1818
 msgid "Junk"
 msgstr ""
 
@@ -3784,7 +3780,7 @@ msgstr "/Инструменты/Добавить отправителя в ад�
 msgid "Creating message view...\n"
 msgstr "Создание области просмотра сообщения...\n"
 
-#: src/messageview.c:314 src/prefs_common_dialog.c:1352
+#: src/messageview.c:314 src/prefs_common_dialog.c:1396
 msgid "Text"
 msgstr "Текст"
 
@@ -3810,7 +3806,7 @@ msgstr ""
 msgid "(Default print command)"
 msgstr "Выполнить команду"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2188 src/summaryview.c:3070
+#: src/messageview.c:729 src/prefs_common_dialog.c:2232 src/summaryview.c:3070
 msgid "Print"
 msgstr "Печать"
 
@@ -3981,11 +3977,11 @@ msgstr "Настройки учетной записи"
 msgid "Creating account preferences window...\n"
 msgstr "Создание окна настроек учетной записи...\n"
 
-#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:645
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:648
 msgid "Receive"
 msgstr "Прием"
 
-#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:660
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:667
 msgid "Privacy"
 msgstr "Защита"
 
@@ -3993,7 +3989,7 @@ msgstr "Защита"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:671
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:674
 msgid "Advanced"
 msgstr "Дополнительные"
 
@@ -4118,7 +4114,7 @@ msgid "Authentication method"
 msgstr "Метод аутентификации"
 
 #: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
-#: src/prefs_common_dialog.c:956 src/prefs_common_dialog.c:2387
+#: src/prefs_common_dialog.c:959 src/prefs_common_dialog.c:2390
 msgid "Automatic"
 msgstr "Автоматически"
 
@@ -4158,8 +4154,8 @@ msgstr "Создавать Message-ID"
 msgid "Add user-defined header"
 msgstr "Добавить дополнительные заголовки"
 
-#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1514
-#: src/prefs_common_dialog.c:1541
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1558
+#: src/prefs_common_dialog.c:1585
 msgid " Edit... "
 msgstr " Определить... "
 
@@ -4477,109 +4473,109 @@ msgstr "Удалить действие"
 msgid "Do you really want to delete this action?"
 msgstr "Вы действительно хотите удалить это действие?"
 
-#: src/prefs_common_dialog.c:625
+#: src/prefs_common_dialog.c:628
 msgid "Creating common preferences window...\n"
 msgstr "Создание окна общих настроек...\n"
 
-#: src/prefs_common_dialog.c:629
+#: src/prefs_common_dialog.c:632
 msgid "Common Preferences"
 msgstr "Общие настройки"
 
-#: src/prefs_common_dialog.c:651
+#: src/prefs_common_dialog.c:654
 msgid "Quote"
 msgstr "Цитирование"
 
-#: src/prefs_common_dialog.c:653
+#: src/prefs_common_dialog.c:657
+msgid "Spell"
+msgstr ""
+
+#: src/prefs_common_dialog.c:660
 msgid "Display"
 msgstr "Отображение"
 
-#: src/prefs_common_dialog.c:655
+#: src/prefs_common_dialog.c:662
 msgid "Message"
 msgstr "Сообщение"
 
-#: src/prefs_common_dialog.c:657
+#: src/prefs_common_dialog.c:664
 #, fuzzy
 msgid "Junk mail"
 msgstr "папку:"
 
-#: src/prefs_common_dialog.c:665 src/select-keys.c:344
+#: src/prefs_common_dialog.c:672 src/select-keys.c:344
 msgid "Other"
 msgstr "Другое"
 
-#: src/prefs_common_dialog.c:668
-msgid "Spell"
-msgstr ""
-
-#: src/prefs_common_dialog.c:717
+#: src/prefs_common_dialog.c:720
 msgid "Use external program for incorporation"
 msgstr "Использовать внешнюю программу для приема"
 
-#: src/prefs_common_dialog.c:729 src/prefs_common_dialog.c:819
-#: src/prefs_common_dialog.c:897
+#: src/prefs_common_dialog.c:732 src/prefs_common_dialog.c:822
+#: src/prefs_common_dialog.c:900
 msgid "Command"
 msgstr "Команда"
 
-#: src/prefs_common_dialog.c:744
+#: src/prefs_common_dialog.c:747
 #, fuzzy
 msgid "Incorporate from local spool"
 msgstr "Принимать из спула"
 
-#: src/prefs_common_dialog.c:757
+#: src/prefs_common_dialog.c:760
 msgid "Filter on incorporation"
 msgstr "Фильтровать при приеме"
 
-#: src/prefs_common_dialog.c:763
+#: src/prefs_common_dialog.c:766
 msgid "Spool path"
 msgstr "Путь к спулу"
 
-#: src/prefs_common_dialog.c:782
+#: src/prefs_common_dialog.c:785
 msgid "Auto-check new mail"
 msgstr "Проверять приход новых сообщений"
 
-#: src/prefs_common_dialog.c:784 src/prefs_common_dialog.c:1128
+#: src/prefs_common_dialog.c:787 src/prefs_common_dialog.c:1131
 msgid "every"
 msgstr "каждые"
 
-#: src/prefs_common_dialog.c:796 src/prefs_common_dialog.c:1142
+#: src/prefs_common_dialog.c:799 src/prefs_common_dialog.c:1145
 msgid "minute(s)"
 msgstr "минут"
 
-#: src/prefs_common_dialog.c:805
+#: src/prefs_common_dialog.c:808
 msgid "Check new mail on startup"
 msgstr "Проверять приход новых сообщений при запуске"
 
-#: src/prefs_common_dialog.c:807
+#: src/prefs_common_dialog.c:810
 msgid "Update all local folders after incorporation"
 msgstr "Обновить все локальные папки после приема"
 
-#: src/prefs_common_dialog.c:811
+#: src/prefs_common_dialog.c:814
 #, fuzzy
 msgid "Execute command when new messages arrived"
 msgstr "Немедленно выполнять перемещение и удаление сообщений"
 
-#: src/prefs_common_dialog.c:832
+#: src/prefs_common_dialog.c:835
 #, fuzzy, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "Получение количества новых сообщений (STAT)..."
 
-#: src/prefs_common_dialog.c:885
+#: src/prefs_common_dialog.c:888
 msgid "Use external program for sending"
 msgstr "Использовать внешнюю программу для отправки"
 
-#: src/prefs_common_dialog.c:916
+#: src/prefs_common_dialog.c:919
 msgid "Save sent messages to outbox"
 msgstr "Сохранять отправленные сообщения в папке \"Отправленные\""
 
-#: src/prefs_common_dialog.c:918
+#: src/prefs_common_dialog.c:921
 msgid "Apply filter rules to sent messages"
 msgstr ""
 
-#: src/prefs_common_dialog.c:924
+#: src/prefs_common_dialog.c:927
 #, fuzzy
 msgid "Outgoing encoding"
 msgstr "Кодировка отправляемых сообщений"
 
-#: src/prefs_common_dialog.c:936
+#: src/prefs_common_dialog.c:939
 #, fuzzy
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
@@ -4588,11 +4584,11 @@ msgstr ""
 "При выборе варианта 'Автоматически' будет использована\n"
 "оптимальная кодировка для текущего языка и страны."
 
-#: src/prefs_common_dialog.c:943
+#: src/prefs_common_dialog.c:946
 msgid "Transfer encoding"
 msgstr "Кодирование текста сообщений"
 
-#: src/prefs_common_dialog.c:967
+#: src/prefs_common_dialog.c:970
 #, fuzzy
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
@@ -4601,131 +4597,140 @@ msgstr ""
 "Укажите метод кодирования текстов сообщений, содержащих символы\n"
 "не из диапазона ASCII (Content-Transfer-Encoding)."
 
-#: src/prefs_common_dialog.c:1038
+#: src/prefs_common_dialog.c:1041
 msgid "Signature separator"
 msgstr "Разделитель подписи"
 
-#: src/prefs_common_dialog.c:1047
+#: src/prefs_common_dialog.c:1050
 msgid "Insert automatically"
 msgstr "Добавлять автоматически"
 
-#: src/prefs_common_dialog.c:1057
+#: src/prefs_common_dialog.c:1060
 msgid "Automatically launch the external editor"
 msgstr "Автоматически запускать внешний редактор"
 
-#: src/prefs_common_dialog.c:1067
+#: src/prefs_common_dialog.c:1070
 msgid "Undo level"
 msgstr "Число уровней отката"
 
-#: src/prefs_common_dialog.c:1087
+#: src/prefs_common_dialog.c:1090
 msgid "Wrap messages at"
 msgstr "Переносить строки с"
 
-#: src/prefs_common_dialog.c:1099
+#: src/prefs_common_dialog.c:1102
 msgid "characters"
 msgstr "символа"
 
-#: src/prefs_common_dialog.c:1109
+#: src/prefs_common_dialog.c:1112
 msgid "Wrap quotation"
 msgstr "Переносить цитаты"
 
-#: src/prefs_common_dialog.c:1115
+#: src/prefs_common_dialog.c:1118
 msgid "Wrap on input"
 msgstr "Переносить при вводе"
 
-#: src/prefs_common_dialog.c:1117
+#: src/prefs_common_dialog.c:1120
 msgid "Wrap before sending"
 msgstr "Переносить перед отправкой"
 
-#: src/prefs_common_dialog.c:1126
+#: src/prefs_common_dialog.c:1129
 #, fuzzy
 msgid "Auto-save to draft"
 msgstr "Сохранить в папке черновиков"
 
-#: src/prefs_common_dialog.c:1159
+#: src/prefs_common_dialog.c:1162
 msgid "Automatically select account for replies"
 msgstr "Автоматически выбирать учетную запись при ответе"
 
-#: src/prefs_common_dialog.c:1161
+#: src/prefs_common_dialog.c:1164
 msgid "Quote message when replying"
 msgstr "Цитировать при ответе"
 
-#: src/prefs_common_dialog.c:1163
+#: src/prefs_common_dialog.c:1166
 msgid "Reply button invokes mailing list reply"
 msgstr "По кнопке \"Ответить\" отвечать в список рассылки"
 
 #. reply
-#: src/prefs_common_dialog.c:1213
+#: src/prefs_common_dialog.c:1216
 msgid "Reply format"
 msgstr "Формат ответа"
 
-#: src/prefs_common_dialog.c:1228 src/prefs_common_dialog.c:1270
+#: src/prefs_common_dialog.c:1231 src/prefs_common_dialog.c:1273
 msgid "Quotation mark"
 msgstr "Знак цитаты"
 
 #. forward
-#: src/prefs_common_dialog.c:1255
+#: src/prefs_common_dialog.c:1258
 msgid "Forward format"
 msgstr "Формат пересылаемого сообщения"
 
-#: src/prefs_common_dialog.c:1302
+#: src/prefs_common_dialog.c:1305
 msgid " Description of symbols "
 msgstr " Описание символов "
 
-#: src/prefs_common_dialog.c:1343
+#: src/prefs_common_dialog.c:1333
+msgid "Enable Spell checking"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1345
+#, fuzzy
+msgid "Default language:"
+msgstr "Папка для входящих сообщений"
+
+#: src/prefs_common_dialog.c:1387
 msgid "Font"
 msgstr "Шрифт"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1364
+#: src/prefs_common_dialog.c:1408
 #, fuzzy
 msgid "Folder View"
 msgstr "Папка"
 
-#: src/prefs_common_dialog.c:1372
+#: src/prefs_common_dialog.c:1416
 msgid "Display unread number next to folder name"
 msgstr "Показывать число непрочитанных сообщений рядом с именем папки"
 
-#: src/prefs_common_dialog.c:1374
+#: src/prefs_common_dialog.c:1418
 #, fuzzy
 msgid "Display message number columns in the folder view"
 msgstr "Показывать число непрочитанных сообщений рядом с именем папки"
 
-#: src/prefs_common_dialog.c:1383
+#: src/prefs_common_dialog.c:1427
 msgid "Abbreviate newsgroups longer than"
 msgstr "Сокращать названия групп новостей длиннее"
 
-#: src/prefs_common_dialog.c:1398
+#: src/prefs_common_dialog.c:1442
 msgid "letters"
 msgstr "букв"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1404
+#: src/prefs_common_dialog.c:1448
 msgid "Summary View"
 msgstr "Список сообщений"
 
-#: src/prefs_common_dialog.c:1413
+#: src/prefs_common_dialog.c:1457
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "Показывать получателя в колонке 'От', если отправитель - Вы"
 
-#: src/prefs_common_dialog.c:1415
+#: src/prefs_common_dialog.c:1459
 msgid "Expand threads"
 msgstr "Разворачивать обсуждения"
 
-#: src/prefs_common_dialog.c:1423 src/prefs_common_dialog.c:2622
-#: src/prefs_common_dialog.c:2660
+#: src/prefs_common_dialog.c:1467 src/prefs_common_dialog.c:2625
+#: src/prefs_common_dialog.c:2663
 msgid "Date format"
 msgstr "Формат даты"
 
-#: src/prefs_common_dialog.c:1444
+#: src/prefs_common_dialog.c:1488
 msgid " Set display item of summary... "
 msgstr "Установить показываемые поля..."
 
-#: src/prefs_common_dialog.c:1510
+#: src/prefs_common_dialog.c:1554
 msgid "Enable coloration of message"
 msgstr "Разрешить раскраску сообщений"
 
-#: src/prefs_common_dialog.c:1525
+#: src/prefs_common_dialog.c:1569
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
@@ -4733,537 +4738,528 @@ msgstr ""
 "Отображать многобайтовые алфавитно-цифровые символы\n"
 "как ASCII (только для японских кодировок)"
 
-#: src/prefs_common_dialog.c:1532
+#: src/prefs_common_dialog.c:1576
 msgid "Display header pane above message view"
 msgstr "Показывать панель заголовков над областью просмотра сообщений"
 
-#: src/prefs_common_dialog.c:1539
+#: src/prefs_common_dialog.c:1583
 msgid "Display short headers on message view"
 msgstr "Показывать сокращенные заголовки при просмотре сообщений"
 
-#: src/prefs_common_dialog.c:1551
+#: src/prefs_common_dialog.c:1595
 msgid "Render HTML messages as text"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1555
+#: src/prefs_common_dialog.c:1599
 #, fuzzy
 msgid "Display cursor in message view"
 msgstr "Показывать сокращенные заголовки при просмотре сообщений"
 
-#: src/prefs_common_dialog.c:1568
+#: src/prefs_common_dialog.c:1612
 msgid "Line space"
 msgstr "Расстояние между строками"
 
-#: src/prefs_common_dialog.c:1582 src/prefs_common_dialog.c:1641
+#: src/prefs_common_dialog.c:1626 src/prefs_common_dialog.c:1685
 msgid "pixel(s)"
 msgstr "пикселей"
 
-#: src/prefs_common_dialog.c:1593
+#: src/prefs_common_dialog.c:1637
 #, fuzzy
 msgid "Default character encoding"
 msgstr "/Вид/Сортировка/По убыванию"
 
-#: src/prefs_common_dialog.c:1606
+#: src/prefs_common_dialog.c:1650
 msgid "This is used for messages with missing character encoding."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1608
+#: src/prefs_common_dialog.c:1652
 msgid "Scroll"
 msgstr "Прокрутка"
 
-#: src/prefs_common_dialog.c:1615
+#: src/prefs_common_dialog.c:1659
 msgid "Half page"
 msgstr "Половина страницы"
 
-#: src/prefs_common_dialog.c:1621
+#: src/prefs_common_dialog.c:1665
 msgid "Smooth scroll"
 msgstr "Плавная прокрутка"
 
-#: src/prefs_common_dialog.c:1627
+#: src/prefs_common_dialog.c:1671
 msgid "Step"
 msgstr "Шаг"
 
-#: src/prefs_common_dialog.c:1647
+#: src/prefs_common_dialog.c:1691
 msgid "Images"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1655
+#: src/prefs_common_dialog.c:1699
 msgid "Resize attached large images to fit in the window"
 msgstr "Масштабировать присоединенные изображения по размеру окна"
 
-#: src/prefs_common_dialog.c:1657
+#: src/prefs_common_dialog.c:1701
 #, fuzzy
 msgid "Display images as inline"
 msgstr "Настройка отображения заголовков"
 
-#: src/prefs_common_dialog.c:1740
+#: src/prefs_common_dialog.c:1784
 #, fuzzy
 msgid "Enable Junk mail control"
 msgstr "папку:"
 
-#: src/prefs_common_dialog.c:1752
+#: src/prefs_common_dialog.c:1796
 #, fuzzy
 msgid "Learning command:"
 msgstr "Выполнить команду"
 
-#: src/prefs_common_dialog.c:1761
+#: src/prefs_common_dialog.c:1805
 #, fuzzy
 msgid "(Select preset)"
 msgstr "Выбор ключа"
 
-#: src/prefs_common_dialog.c:1786
+#: src/prefs_common_dialog.c:1830
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1801
+#: src/prefs_common_dialog.c:1845
 #, fuzzy
 msgid "Classifying command"
 msgstr "Выполнить команду"
 
-#: src/prefs_common_dialog.c:1812
+#: src/prefs_common_dialog.c:1856
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1822
+#: src/prefs_common_dialog.c:1866
 #, fuzzy
 msgid "Junk folder"
 msgstr "папку:"
 
-#: src/prefs_common_dialog.c:1840
+#: src/prefs_common_dialog.c:1884
 #, fuzzy
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
 
-#: src/prefs_common_dialog.c:1851
+#: src/prefs_common_dialog.c:1895
 #, fuzzy
 msgid "Filter messages classified as junk on receiving"
 msgstr "Фильтровать сообщения при приеме"
 
-#: src/prefs_common_dialog.c:1854
+#: src/prefs_common_dialog.c:1898
 #, fuzzy
 msgid "Delete junk mails from server on receiving"
 msgstr "Удалить с сервера"
 
-#: src/prefs_common_dialog.c:1858
+#: src/prefs_common_dialog.c:1902
 msgid "Mark filtered junk mails as read"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1899
+#: src/prefs_common_dialog.c:1943
 msgid "Automatically check signatures"
 msgstr "Автоматически проверять подписи"
 
-#: src/prefs_common_dialog.c:1902
+#: src/prefs_common_dialog.c:1946
 msgid "Show signature check result in a popup window"
 msgstr "Показывать результат проверки подписи в отдельном окне"
 
-#: src/prefs_common_dialog.c:1905
+#: src/prefs_common_dialog.c:1949
 msgid "Store passphrase in memory temporarily"
 msgstr "Сохранять парольную фразу в памяти"
 
-#: src/prefs_common_dialog.c:1920
+#: src/prefs_common_dialog.c:1964
 msgid "Expired after"
 msgstr "Удалять через"
 
-#: src/prefs_common_dialog.c:1933
+#: src/prefs_common_dialog.c:1977
 msgid "minute(s) "
 msgstr "минут"
 
-#: src/prefs_common_dialog.c:1947
+#: src/prefs_common_dialog.c:1991
 #, fuzzy
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr ""
 "(При установке в 0 парольная фраза будет храниться\n"
 " в течение всего сеанса)"
 
-#: src/prefs_common_dialog.c:1956
+#: src/prefs_common_dialog.c:2000
 msgid "Grab input while entering a passphrase"
 msgstr "Захватить ввод при запросе пароля"
 
-#: src/prefs_common_dialog.c:1961
+#: src/prefs_common_dialog.c:2005
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Выводить предупреждение при запуске, если GnuPG не работает"
 
-#: src/prefs_common_dialog.c:2018
+#: src/prefs_common_dialog.c:2062
 msgid "Always open messages in summary when selected"
 msgstr "Всегда открывать сообщение для просмотра при выделении в списке"
 
-#: src/prefs_common_dialog.c:2022
+#: src/prefs_common_dialog.c:2066
 msgid "Open first unread message when entering a folder"
 msgstr "Открыть первое непрочитанное сообщение при входе в папку"
 
-#: src/prefs_common_dialog.c:2026
+#: src/prefs_common_dialog.c:2070
 msgid "Only mark message as read when opened in new window"
 msgstr "Помечать сообщение как прочитанное только после открытия в новом окне"
 
-#: src/prefs_common_dialog.c:2030
+#: src/prefs_common_dialog.c:2074
 msgid "Go to inbox after receiving new mail"
 msgstr "Перейти в папку \"Входящие\" после приема новых сообщений"
 
-#: src/prefs_common_dialog.c:2038
+#: src/prefs_common_dialog.c:2082
 msgid "Execute immediately when moving or deleting messages"
 msgstr "Немедленно выполнять перемещение и удаление сообщений"
 
-#: src/prefs_common_dialog.c:2050
+#: src/prefs_common_dialog.c:2094
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr ""
 "(Сообщения будут просто помечены до выполнения, если\n"
 " эта опция не включена)"
 
-#: src/prefs_common_dialog.c:2053
+#: src/prefs_common_dialog.c:2097
 msgid "Receive dialog"
 msgstr "Окно приема сообщений"
 
-#: src/prefs_common_dialog.c:2063
+#: src/prefs_common_dialog.c:2107
 msgid "Show receive dialog"
 msgstr "Показывать окно приема сообщений"
 
-#: src/prefs_common_dialog.c:2073
+#: src/prefs_common_dialog.c:2117
 msgid "Always"
 msgstr "Всегда"
 
-#: src/prefs_common_dialog.c:2074
+#: src/prefs_common_dialog.c:2118
 msgid "Only on manual receiving"
 msgstr "Только при ручном запуске приема"
 
-#: src/prefs_common_dialog.c:2076
+#: src/prefs_common_dialog.c:2120
 msgid "Never"
 msgstr "Никогда"
 
-#: src/prefs_common_dialog.c:2081
+#: src/prefs_common_dialog.c:2125
 msgid "Don't popup error dialog on receive error"
 msgstr "Не отображать сообщение об ошибке при получении сообщений"
 
-#: src/prefs_common_dialog.c:2084
+#: src/prefs_common_dialog.c:2128
 msgid "Close receive dialog when finished"
 msgstr "Закрывать окно приема сообщений после завершения"
 
-#: src/prefs_common_dialog.c:2088
+#: src/prefs_common_dialog.c:2132
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2095
+#: src/prefs_common_dialog.c:2139
 msgid " Set key bindings... "
 msgstr " Установить клавиатурные команды... "
 
-#: src/prefs_common_dialog.c:2151
+#: src/prefs_common_dialog.c:2195
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "Внешние команды (%s будет заменен на имя файла/URI)"
 
-#: src/prefs_common_dialog.c:2160
+#: src/prefs_common_dialog.c:2204
 msgid "Web browser"
 msgstr "Web-браузер"
 
-#: src/prefs_common_dialog.c:2172 src/prefs_common_dialog.c:3676
-#: src/prefs_common_dialog.c:3697
+#: src/prefs_common_dialog.c:2216 src/prefs_common_dialog.c:3687
+#: src/prefs_common_dialog.c:3708
 #, fuzzy
 msgid "(Default browser)"
 msgstr "Папка для входящих сообщений"
 
-#: src/prefs_common_dialog.c:2232
+#: src/prefs_common_dialog.c:2276
 msgid "Add address to destination when double-clicked"
 msgstr "Добавлять адрес в список адресатов по двойному щелчку"
 
-#: src/prefs_common_dialog.c:2234
+#: src/prefs_common_dialog.c:2278
 msgid "On exit"
 msgstr "При выходе"
 
-#: src/prefs_common_dialog.c:2242
+#: src/prefs_common_dialog.c:2286
 msgid "Confirm on exit"
 msgstr "Подтверждение при выходе"
 
-#: src/prefs_common_dialog.c:2249
+#: src/prefs_common_dialog.c:2293
 msgid "Empty trash on exit"
 msgstr "Очищать корзину при выходе"
 
-#: src/prefs_common_dialog.c:2251
+#: src/prefs_common_dialog.c:2295
 msgid "Ask before emptying"
 msgstr "Спрашивать перед очисткой"
 
-#: src/prefs_common_dialog.c:2255
+#: src/prefs_common_dialog.c:2299
 msgid "Warn if there are queued messages"
 msgstr "Предупреждать о наличии сообщений в очереди"
 
-#: src/prefs_common_dialog.c:2288
-msgid "Enable Spell checking"
-msgstr ""
-
-#: src/prefs_common_dialog.c:2300
-#, fuzzy
-msgid "Default language:"
-msgstr "Папка для входящих сообщений"
-
-#: src/prefs_common_dialog.c:2336
+#: src/prefs_common_dialog.c:2339
 #, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "Запись кеша списка (%s)..."
 
-#: src/prefs_common_dialog.c:2339
+#: src/prefs_common_dialog.c:2342
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2346
+#: src/prefs_common_dialog.c:2349
 msgid "Socket I/O timeout:"
 msgstr "Время ожидания ответа из сети:"
 
-#: src/prefs_common_dialog.c:2359
+#: src/prefs_common_dialog.c:2362
 msgid "second(s)"
 msgstr "секунд"
 
-#: src/prefs_common_dialog.c:2385
+#: src/prefs_common_dialog.c:2388
 msgid "Automatic (Recommended)"
 msgstr "Автоматически (Рекомендуется)"
 
-#: src/prefs_common_dialog.c:2390
+#: src/prefs_common_dialog.c:2393
 msgid "7bit ascii (US-ASCII)"
 msgstr "7 бит ascii (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2392
+#: src/prefs_common_dialog.c:2395
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:2394
+#: src/prefs_common_dialog.c:2397
 msgid "Western European (ISO-8859-1)"
 msgstr "Западноевропейская (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2395
+#: src/prefs_common_dialog.c:2398
 msgid "Western European (ISO-8859-15)"
 msgstr "Западноевропейская (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2397
+#: src/prefs_common_dialog.c:2400
 msgid "Central European (ISO-8859-2)"
 msgstr "Центральноевропейская (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2399
+#: src/prefs_common_dialog.c:2402
 msgid "Baltic (ISO-8859-13)"
 msgstr "Балтийская (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2400
+#: src/prefs_common_dialog.c:2403
 msgid "Baltic (ISO-8859-4)"
 msgstr "Балтийская (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2402
+#: src/prefs_common_dialog.c:2405
 msgid "Greek (ISO-8859-7)"
 msgstr "Греческая (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2404
+#: src/prefs_common_dialog.c:2407
 #, fuzzy
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Греческая (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2405
+#: src/prefs_common_dialog.c:2408
 #, fuzzy
 msgid "Hebrew (Windows-1255)"
 msgstr "Кириллица Win (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2407
+#: src/prefs_common_dialog.c:2410
 msgid "Turkish (ISO-8859-9)"
 msgstr "Турецкая (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2409
+#: src/prefs_common_dialog.c:2412
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Кириллица (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2410
+#: src/prefs_common_dialog.c:2413
 msgid "Cyrillic (KOI8-R)"
 msgstr "Русская (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2411
+#: src/prefs_common_dialog.c:2414
 msgid "Cyrillic (KOI8-U)"
 msgstr "Украинская (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2412
+#: src/prefs_common_dialog.c:2415
 msgid "Cyrillic (Windows-1251)"
 msgstr "Кириллица Win (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2414
+#: src/prefs_common_dialog.c:2417
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Японская (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2416
+#: src/prefs_common_dialog.c:2419
 msgid "Japanese (EUC-JP)"
 msgstr "Японская (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2417
+#: src/prefs_common_dialog.c:2420
 msgid "Japanese (Shift_JIS)"
 msgstr "Японская (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2420
+#: src/prefs_common_dialog.c:2423
 msgid "Simplified Chinese (GB2312)"
 msgstr "Упрощенная китайская (GB2312)"
 
-#: src/prefs_common_dialog.c:2421
+#: src/prefs_common_dialog.c:2424
 #, fuzzy
 msgid "Simplified Chinese (GBK)"
 msgstr "Упрощенная китайская (GB2312)"
 
-#: src/prefs_common_dialog.c:2422
+#: src/prefs_common_dialog.c:2425
 msgid "Traditional Chinese (Big5)"
 msgstr "Традиционная китайская (Big5)"
 
-#: src/prefs_common_dialog.c:2424
+#: src/prefs_common_dialog.c:2427
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Традиционная китайская (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2425
+#: src/prefs_common_dialog.c:2428
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Китайская (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2428
+#: src/prefs_common_dialog.c:2431
 msgid "Korean (EUC-KR)"
 msgstr "Корейская (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2430
+#: src/prefs_common_dialog.c:2433
 msgid "Thai (TIS-620)"
 msgstr "Тайская (TIS-620)"
 
-#: src/prefs_common_dialog.c:2431
+#: src/prefs_common_dialog.c:2434
 msgid "Thai (Windows-874)"
 msgstr "Тайская (Windows-874)"
 
-#: src/prefs_common_dialog.c:2598
+#: src/prefs_common_dialog.c:2601
 msgid "the full abbreviated weekday name"
 msgstr "сокращенное название дня недели"
 
-#: src/prefs_common_dialog.c:2599
+#: src/prefs_common_dialog.c:2602
 msgid "the full weekday name"
 msgstr "полное название дня недели"
 
-#: src/prefs_common_dialog.c:2600
+#: src/prefs_common_dialog.c:2603
 msgid "the abbreviated month name"
 msgstr "сокращенное название месяца"
 
-#: src/prefs_common_dialog.c:2601
+#: src/prefs_common_dialog.c:2604
 msgid "the full month name"
 msgstr "полное название месяца"
 
-#: src/prefs_common_dialog.c:2602
+#: src/prefs_common_dialog.c:2605
 msgid "the preferred date and time for the current locale"
 msgstr "предпочтительный формат даты и времени для выбранной страны"
 
-#: src/prefs_common_dialog.c:2603
+#: src/prefs_common_dialog.c:2606
 msgid "the century number (year/100)"
 msgstr "век (год/100)"
 
-#: src/prefs_common_dialog.c:2604
+#: src/prefs_common_dialog.c:2607
 msgid "the day of the month as a decimal number"
 msgstr "день месяца"
 
-#: src/prefs_common_dialog.c:2605
+#: src/prefs_common_dialog.c:2608
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "час, 24-часовое представление"
 
-#: src/prefs_common_dialog.c:2606
+#: src/prefs_common_dialog.c:2609
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "час, 12-часовое представление"
 
-#: src/prefs_common_dialog.c:2607
+#: src/prefs_common_dialog.c:2610
 msgid "the day of the year as a decimal number"
 msgstr "день года"
 
-#: src/prefs_common_dialog.c:2608
+#: src/prefs_common_dialog.c:2611
 msgid "the month as a decimal number"
 msgstr "номер месяца"
 
-#: src/prefs_common_dialog.c:2609
+#: src/prefs_common_dialog.c:2612
 msgid "the minute as a decimal number"
 msgstr "минута"
 
-#: src/prefs_common_dialog.c:2610
+#: src/prefs_common_dialog.c:2613
 msgid "either AM or PM"
 msgstr "AM или PM"
 
-#: src/prefs_common_dialog.c:2611
+#: src/prefs_common_dialog.c:2614
 msgid "the second as a decimal number"
 msgstr "секунда"
 
-#: src/prefs_common_dialog.c:2612
+#: src/prefs_common_dialog.c:2615
 msgid "the day of the week as a decimal number"
 msgstr "номер дня недели"
 
-#: src/prefs_common_dialog.c:2613
+#: src/prefs_common_dialog.c:2616
 msgid "the preferred date for the current locale"
 msgstr "предпочтительный формат даты для выбранной страны"
 
-#: src/prefs_common_dialog.c:2614
+#: src/prefs_common_dialog.c:2617
 msgid "the last two digits of a year"
 msgstr "последние две цифры года"
 
-#: src/prefs_common_dialog.c:2615
+#: src/prefs_common_dialog.c:2618
 msgid "the year as a decimal number"
 msgstr "год полностью"
 
-#: src/prefs_common_dialog.c:2616
+#: src/prefs_common_dialog.c:2619
 msgid "the time zone or name or abbreviation"
 msgstr "имя или сокращение временной зоны"
 
-#: src/prefs_common_dialog.c:2637
+#: src/prefs_common_dialog.c:2640
 msgid "Specifier"
 msgstr "Элемент формата"
 
-#: src/prefs_common_dialog.c:2638
+#: src/prefs_common_dialog.c:2641
 msgid "Description"
 msgstr "Описание"
 
-#: src/prefs_common_dialog.c:2678
+#: src/prefs_common_dialog.c:2681
 msgid "Example"
 msgstr "Пример"
 
-#: src/prefs_common_dialog.c:2758
+#: src/prefs_common_dialog.c:2762
 msgid "Set message colors"
 msgstr "Настройка цветов сообщений"
 
-#: src/prefs_common_dialog.c:2766
+#: src/prefs_common_dialog.c:2770
 msgid "Colors"
 msgstr "Цвета"
 
-#: src/prefs_common_dialog.c:2800
+#: src/prefs_common_dialog.c:2804
 msgid "Quoted Text - First Level"
 msgstr "Цитата - Первый уровень"
 
-#: src/prefs_common_dialog.c:2806
+#: src/prefs_common_dialog.c:2810
 msgid "Quoted Text - Second Level"
 msgstr "Цитата - Второй уровень"
 
-#: src/prefs_common_dialog.c:2812
+#: src/prefs_common_dialog.c:2816
 msgid "Quoted Text - Third Level"
 msgstr "Цитата - Третий уровень"
 
-#: src/prefs_common_dialog.c:2818
+#: src/prefs_common_dialog.c:2822
 msgid "URI link"
 msgstr "Ссылка (URI)"
 
-#: src/prefs_common_dialog.c:2825
+#: src/prefs_common_dialog.c:2829
 msgid "Recycle quote colors"
 msgstr "Циклически использовать цвета цитат"
 
-#: src/prefs_common_dialog.c:2885
+#: src/prefs_common_dialog.c:2896
 msgid "Pick color for quotation level 1"
 msgstr "Выберите цвет для цитат уровня 1"
 
-#: src/prefs_common_dialog.c:2888
+#: src/prefs_common_dialog.c:2899
 msgid "Pick color for quotation level 2"
 msgstr "Выберите цвет для цитат уровня 2"
 
-#: src/prefs_common_dialog.c:2891
+#: src/prefs_common_dialog.c:2902
 msgid "Pick color for quotation level 3"
 msgstr "Выберите цвет для цитат уровня 3"
 
-#: src/prefs_common_dialog.c:2894
+#: src/prefs_common_dialog.c:2905
 msgid "Pick color for URI"
 msgstr "Выберите цвет для ссылок (URI)"
 
-#: src/prefs_common_dialog.c:3034
+#: src/prefs_common_dialog.c:3045
 msgid "Description of symbols"
 msgstr "Описание символов"
 
-#: src/prefs_common_dialog.c:3090
+#: src/prefs_common_dialog.c:3101
 msgid ""
 "Date\n"
 "From\n"
@@ -5287,11 +5283,11 @@ msgstr ""
 "Группы новостей\n"
 "Message-ID"
 
-#: src/prefs_common_dialog.c:3103
+#: src/prefs_common_dialog.c:3114
 msgid "If x is set, displays expr"
 msgstr "Если x установлено, отображает expr"
 
-#: src/prefs_common_dialog.c:3107
+#: src/prefs_common_dialog.c:3118
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5305,7 +5301,7 @@ msgstr ""
 "Содержимое сообщения без подписи со знаком цитаты\n"
 "Символ '%'"
 
-#: src/prefs_common_dialog.c:3115
+#: src/prefs_common_dialog.c:3126
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5317,20 +5313,20 @@ msgstr ""
 "Символ '{'\n"
 "Символ '}'"
 
-#: src/prefs_common_dialog.c:3161
+#: src/prefs_common_dialog.c:3172
 msgid "Key bindings"
 msgstr "Клавиатурные команды"
 
-#: src/prefs_common_dialog.c:3174
+#: src/prefs_common_dialog.c:3185
 #, fuzzy
 msgid "Select the preset of key bindings."
 msgstr " Установить клавиатурные команды... "
 
-#: src/prefs_common_dialog.c:3184 src/prefs_common_dialog.c:3508
+#: src/prefs_common_dialog.c:3195 src/prefs_common_dialog.c:3519
 msgid "Default"
 msgstr "По умолчанию"
 
-#: src/prefs_common_dialog.c:3187 src/prefs_common_dialog.c:3517
+#: src/prefs_common_dialog.c:3198 src/prefs_common_dialog.c:3528
 msgid "Old Sylpheed"
 msgstr "Старая Sylpheed"
 
@@ -6463,6 +6459,9 @@ msgstr ""
 #: src/textview.c:2079
 msgid "Fake URL warning"
 msgstr ""
+
+#~ msgid " [Edited]"
+#~ msgstr " [Изменено]"
 
 #, fuzzy
 #~ msgid "Fallback encoding"
