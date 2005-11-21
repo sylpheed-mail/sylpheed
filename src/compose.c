@@ -4020,9 +4020,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->account = account;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_wmclass(GTK_WINDOW(window), "compose", "Sylpheed");
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
 	gtk_widget_set_size_request(window, -1, prefs_common.compose_height);
-	gtk_window_set_wmclass(GTK_WINDOW(window), "compose", "Sylpheed");
 
 	if (!geometry.max_width) {
 		geometry.max_width = gdk_screen_width();
@@ -4034,7 +4034,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(compose_delete_cb), compose);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
-	gtk_widget_realize(window);
 
 	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
@@ -4287,17 +4286,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_text_view_set_pixels_below_lines
 		(GTK_TEXT_VIEW(text), prefs_common.line_space / 2);
 
-	color[0] = quote_color;
-	cmap = gdk_window_get_colormap(window->window);
-	gdk_colormap_alloc_colors(cmap, color, 1, FALSE, TRUE, success);
-	if (success[0] == FALSE) {
-		GtkStyle *style;
-
-		g_warning("Compose: color allocation failed.\n");
-		style = gtk_widget_get_style(text);
-		quote_color = style->black;
-	}
-
 	n_entries = sizeof(compose_popup_entries) /
 		sizeof(compose_popup_entries[0]);
 	popupmenu = menu_create_items(compose_popup_entries, n_entries,
@@ -4533,6 +4521,17 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose_list = g_list_append(compose_list, compose);
 
 	gtk_widget_show(window);
+
+	color[0] = quote_color;
+	cmap = gdk_window_get_colormap(window->window);
+	gdk_colormap_alloc_colors(cmap, color, 1, FALSE, TRUE, success);
+	if (success[0] == FALSE) {
+		GtkStyle *style;
+
+		g_warning("Compose: color allocation failed.\n");
+		style = gtk_widget_get_style(text);
+		quote_color = style->black;
+	}
 
 	return compose;
 }
