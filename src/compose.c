@@ -1775,14 +1775,19 @@ static gchar *compose_get_signature_str(Compose *compose)
 		sig_str = sig_body;
 
 	if (sig_str) {
-		if (g_utf8_validate(sig_str, -1, NULL) == TRUE)
-			utf8_sig_str = sig_str;
-		else {
-			utf8_sig_str = conv_codeset_strdup
-				(sig_str, conv_get_locale_charset_str(),
-				 CS_INTERNAL);
+		gint error = 0;
+
+		utf8_sig_str = conv_codeset_strdup_full
+			(sig_str, conv_get_locale_charset_str(),
+			 CS_INTERNAL, &error);
+		if (!utf8_sig_str || error != 0) {
+			if (g_utf8_validate(sig_str, -1, NULL) == TRUE) {
+				g_free(utf8_sig_str);
+				utf8_sig_str = sig_str;
+			} else
+				g_free(sig_str);
+		} else
 			g_free(sig_str);
-		}
 	}
 
 	return utf8_sig_str;
@@ -1819,12 +1824,16 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
+		gint error = 0;
 
-		if (g_utf8_validate(buf, -1, NULL) == TRUE)
-			str = g_strdup(buf);
-		else
-			str = conv_codeset_strdup
-				(buf, cur_encoding, CS_INTERNAL);
+		str = conv_codeset_strdup_full(buf, cur_encoding, CS_INTERNAL,
+					       &error);
+		if (!str || error != 0) {
+			if (g_utf8_validate(buf, -1, NULL) == TRUE) {
+				g_free(str);
+				str = g_strdup(buf);
+			}
+		}
 		if (!str) continue;
 
 		/* strip <CR> if DOS/Windows file,
