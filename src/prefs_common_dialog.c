@@ -59,16 +59,6 @@
 static PrefsDialog dialog;
 
 static struct Receive {
-#ifndef G_OS_WIN32
-	GtkWidget *checkbtn_incext;
-	GtkWidget *entry_incext;
-	GtkWidget *button_incext;
-
-	GtkWidget *checkbtn_local;
-	GtkWidget *checkbtn_filter_on_inc;
-	GtkWidget *entry_spool;
-#endif
-
 	GtkWidget *checkbtn_autochk;
 	GtkWidget *spinbtn_autochk;
 	GtkObject *spinbtn_autochk_adj;
@@ -77,13 +67,15 @@ static struct Receive {
 	GtkWidget *checkbtn_scan_after_inc;
 	GtkWidget *checkbtn_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
+
+#ifndef G_OS_WIN32
+	GtkWidget *checkbtn_local;
+	GtkWidget *checkbtn_filter_on_inc;
+	GtkWidget *entry_spool;
+#endif
 } receive;
 
 static struct Send {
-	GtkWidget *checkbtn_extsend;
-	GtkWidget *entry_extsend;
-	GtkWidget *button_extsend;
-
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
 
@@ -140,6 +132,8 @@ static struct Display {
 	GtkWidget *chkbtn_swapfrom;
 	GtkWidget *chkbtn_expand_thread;
 	GtkWidget *entry_datefmt;
+
+	GtkWidget *optmenu_encoding;
 } display;
 
 static struct Message {
@@ -150,7 +144,6 @@ static struct Message {
 	GtkWidget *chkbtn_html;
 	GtkWidget *spinbtn_linespc;
 	GtkObject *spinbtn_linespc_adj;
-	GtkWidget *optmenu_encoding;
 
 	GtkWidget *chkbtn_smoothscroll;
 	GtkWidget *spinbtn_scrollstep;
@@ -192,20 +185,15 @@ static struct Interface {
 	GtkWidget *checkbtn_mark_as_read_on_newwin;
 	GtkWidget *checkbtn_openinbox;
 	GtkWidget *checkbtn_immedexec;
-	GtkWidget *optmenu_recvdialog;
-	GtkWidget *checkbtn_no_recv_err_panel;
-	GtkWidget *checkbtn_close_recv_dialog;
 #ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
 #endif
 } interface;
 
 static struct Other {
-	GtkWidget *uri_combo;
-	GtkWidget *uri_entry;
-	GtkWidget *printcmd_entry;
-	GtkWidget *exteditor_combo;
-	GtkWidget *exteditor_entry;
+	GtkWidget *optmenu_recvdialog;
+	GtkWidget *checkbtn_no_recv_err_panel;
+	GtkWidget *checkbtn_close_recv_dialog;
 
 	GtkWidget *checkbtn_addaddrbyclick;
 	GtkWidget *checkbtn_confonexit;
@@ -213,6 +201,22 @@ static struct Other {
 	GtkWidget *checkbtn_askonclean;
 	GtkWidget *checkbtn_warnqueued;
 } other;
+
+static struct Extcmd {
+	GtkWidget *uri_combo;
+	GtkWidget *uri_entry;
+	GtkWidget *printcmd_entry;
+	GtkWidget *exteditor_combo;
+	GtkWidget *exteditor_entry;
+
+	GtkWidget *checkbtn_incext;
+	GtkWidget *entry_incext;
+	GtkWidget *button_incext;
+
+	GtkWidget *checkbtn_extsend;
+	GtkWidget *entry_extsend;
+	GtkWidget *button_extsend;
+} extcmd;
 
 static struct Advanced {
 	GtkWidget *checkbtn_strict_cache_check;
@@ -248,20 +252,6 @@ static void prefs_common_uri_set_entry			   (PrefParam *pparam);
 
 static PrefsUIData ui_data[] = {
 	/* Receive */
-#ifndef G_OS_WIN32
-	{"use_ext_inc", &receive.checkbtn_incext,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"ext_inc_path", &receive.entry_incext,
-	 prefs_set_data_from_entry, prefs_set_entry},
-
-	{"inc_local", &receive.checkbtn_local,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"filter_on_inc_local", &receive.checkbtn_filter_on_inc,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"spool_path", &receive.entry_spool,
-	 prefs_set_data_from_entry, prefs_set_entry},
-#endif
-
 	{"autochk_newmail", &receive.checkbtn_autochk,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"autochk_interval", &receive.spinbtn_autochk,
@@ -275,11 +265,16 @@ static PrefsUIData ui_data[] = {
 	{"newmsg_notify_command", &receive.entry_newmsg_notify,
 	 prefs_set_data_from_entry, prefs_set_entry},
 
-	/* Send */
-	{"use_ext_sendmail", &p_send.checkbtn_extsend,
+#ifndef G_OS_WIN32
+	{"inc_local", &receive.checkbtn_local,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"ext_sendmail_cmd", &p_send.entry_extsend,
+	{"filter_on_inc_local", &receive.checkbtn_filter_on_inc,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"spool_path", &receive.entry_spool,
 	 prefs_set_data_from_entry, prefs_set_entry},
+#endif
+
+	/* Send */
 	{"save_message", &p_send.checkbtn_savemsg,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"filter_sent_message", &p_send.checkbtn_filter_sent,
@@ -388,9 +383,6 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"line_space", &message.spinbtn_linespc,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
-	{"default_encoding", &message.optmenu_encoding,
-	 prefs_common_charset_set_data_from_optmenu,
-	 prefs_common_charset_set_optmenu},
 
 	/* {"textview_cursor_visible", NULL, NULL, NULL}, */
 
@@ -405,6 +397,11 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"inline_image", &message.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+
+	/* Encoding */
+	{"default_encoding", &display.optmenu_encoding,
+	 prefs_common_charset_set_data_from_optmenu,
+	 prefs_common_charset_set_optmenu},
 
 	/* Junk mail */
 	{"enable_junk", &junk.chkbtn_enable_junk,
@@ -456,13 +453,6 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"immediate_execution", &interface.checkbtn_immedexec,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"receive_dialog_mode", &interface.optmenu_recvdialog,
-	 prefs_common_recv_dialog_set_data_from_optmenu,
-	 prefs_common_recv_dialog_set_optmenu},
-	{"no_receive_error_panel", &interface.checkbtn_no_recv_err_panel,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"close_receive_dialog", &interface.checkbtn_close_recv_dialog,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 #ifndef G_OS_WIN32
 	{"comply_gnome_hig", &interface.checkbtn_comply_gnome_hig,
@@ -470,12 +460,13 @@ static PrefsUIData ui_data[] = {
 #endif
 
 	/* Other */
-	{"uri_open_command", &other.uri_entry,
-	 prefs_common_uri_set_data_from_entry, prefs_common_uri_set_entry},
-	{"print_command", &other.printcmd_entry,
-	 prefs_set_data_from_entry, prefs_set_entry},
-	{"ext_editor_command", &other.exteditor_entry,
-	 prefs_set_data_from_entry, prefs_set_entry},
+	{"receive_dialog_mode", &other.optmenu_recvdialog,
+	 prefs_common_recv_dialog_set_data_from_optmenu,
+	 prefs_common_recv_dialog_set_optmenu},
+	{"no_receive_error_panel", &other.checkbtn_no_recv_err_panel,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"close_receive_dialog", &other.checkbtn_close_recv_dialog,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"add_address_by_click", &other.checkbtn_addaddrbyclick,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -491,6 +482,25 @@ static PrefsUIData ui_data[] = {
 
 	/* {"logwindow_line_limit", NULL, NULL, NULL}, */
 
+	/* External commands */
+	{"uri_open_command", &extcmd.uri_entry,
+	 prefs_common_uri_set_data_from_entry, prefs_common_uri_set_entry},
+	{"print_command", &extcmd.printcmd_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"ext_editor_command", &extcmd.exteditor_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+
+#ifndef G_OS_WIN32
+	{"use_ext_inc", &extcmd.checkbtn_incext,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"ext_inc_path", &extcmd.entry_incext,
+	 prefs_set_data_from_entry, prefs_set_entry},
+#endif
+	{"use_ext_sendmail", &extcmd.checkbtn_extsend,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"ext_sendmail_cmd", &extcmd.entry_extsend,
+	 prefs_set_data_from_entry, prefs_set_entry},
+
 	/* Advanced */
 	{"strict_cache_check", &advanced.checkbtn_strict_cache_check,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -505,19 +515,20 @@ static void prefs_common_create		(void);
 static void prefs_receive_create	(void);
 static void prefs_send_create		(void);
 static void prefs_compose_create	(void);
-static void prefs_quote_create		(void);
+static GtkWidget *prefs_quote_create	(void);
 #if USE_GTKSPELL
-static void prefs_spell_create          (void);
+static GtkWidget *prefs_spell_create	(void);
 #endif
 static void prefs_display_create	(void);
-static void prefs_message_create	(void);
+static GtkWidget *prefs_message_create	(void);
 static void prefs_junk_create		(void);
 #if USE_GPGME
 static void prefs_privacy_create	(void);
 #endif
-static void prefs_interface_create	(void);
-static void prefs_other_create		(void);
-static void prefs_advanced_create	(void);
+static void prefs_details_create	(void);
+static GtkWidget *prefs_other_create	(void);
+static GtkWidget *prefs_extcmd_create	(void);
+static GtkWidget *prefs_advanced_create	(void);
 
 static void prefs_common_set_encoding_optmenu	(GtkOptionMenu	*optmenu,
 						 gboolean	 outgoing);
@@ -650,28 +661,20 @@ static void prefs_common_create(void)
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Send"),      page++);
 	prefs_compose_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Compose"),   page++);
-	prefs_quote_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Quote"),     page++);
-#if USE_GTKSPELL
-	prefs_spell_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Spell"),     page++);
-#endif
 	prefs_display_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Display"),   page++);
-	prefs_message_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Message"),   page++);
 	prefs_junk_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Junk mail"), page++);
 #if USE_GPGME
 	prefs_privacy_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Privacy"),   page++);
 #endif
-	prefs_interface_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Interface"), page++);
-	prefs_other_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Other"),     page++);
-	prefs_advanced_create();
-	SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"),  page++);
+	prefs_details_create();
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Details"), page++);
+	//prefs_other_create();
+	//SET_NOTEBOOK_LABEL(dialog.notebook, _("Other"),     page++);
+	//prefs_advanced_create();
+	//SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"),  page++);
 
 	gtk_widget_show_all(dialog.window);
 }
@@ -683,20 +686,6 @@ static void prefs_receive_create(void)
 	GtkWidget *vbox3;
 	GtkWidget *hbox;
 
-#ifndef G_OS_WIN32
-	GtkWidget *frame_incext;
-	GtkWidget *checkbtn_incext;
-	GtkWidget *label_incext;
-	GtkWidget *entry_incext;
-	/* GtkWidget *button_incext; */
-
-	GtkWidget *frame_spool;
-	GtkWidget *checkbtn_local;
-	GtkWidget *checkbtn_filter_on_inc;
-	GtkWidget *label_spool;
-	GtkWidget *entry_spool;
-#endif
-
 	GtkWidget *hbox_autochk;
 	GtkWidget *checkbtn_autochk;
 	GtkWidget *label_autochk1;
@@ -705,72 +694,25 @@ static void prefs_receive_create(void)
 	GtkWidget *label_autochk2;
 	GtkWidget *checkbtn_chkonstartup;
 	GtkWidget *checkbtn_scan_after_inc;
+
+	GtkWidget *frame_notify;
 	GtkWidget *checkbtn_newmsg_notify;
 	GtkWidget *label_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
 	GtkWidget *label_notify_cmd_desc;
 
+#ifndef G_OS_WIN32
+	GtkWidget *frame_spool;
+	GtkWidget *checkbtn_local;
+	GtkWidget *checkbtn_filter_on_inc;
+	GtkWidget *label_spool;
+	GtkWidget *entry_spool;
+#endif
+
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
-
-#ifndef G_OS_WIN32
-	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_incext, checkbtn_incext,
-				     _("Use external program for incorporation"));
-
-	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
-	gtk_widget_show (vbox2);
-	gtk_container_add (GTK_CONTAINER (frame_incext), vbox2);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
-	SET_TOGGLE_SENSITIVITY (checkbtn_incext, vbox2);
-
-	hbox = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-
-	label_incext = gtk_label_new (_("Command"));
-	gtk_widget_show (label_incext);
-	gtk_box_pack_start (GTK_BOX (hbox), label_incext, FALSE, FALSE, 0);
-
-	entry_incext = gtk_entry_new ();
-	gtk_widget_show (entry_incext);
-	gtk_box_pack_start (GTK_BOX (hbox), entry_incext, TRUE, TRUE, 0);
-
-#if 0
-	button_incext = gtk_button_new_with_label ("... ");
-	gtk_widget_show (button_incext);
-	gtk_box_pack_start (GTK_BOX (hbox), button_incext, FALSE, FALSE, 0);
-#endif
-
-	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_spool, checkbtn_local,
-				     _("Incorporate from local spool"));
-
-	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
-	gtk_widget_show (vbox2);
-	gtk_container_add (GTK_CONTAINER (frame_spool), vbox2);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
-	SET_TOGGLE_SENSITIVITY (checkbtn_local, vbox2);
-
-	hbox = gtk_hbox_new (FALSE, 32);
-	gtk_widget_show (hbox);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-
-	PACK_CHECK_BUTTON (hbox, checkbtn_filter_on_inc,
-			   _("Filter on incorporation"));
-
-	hbox = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-
-	label_spool = gtk_label_new (_("Spool path"));
-	gtk_widget_show (label_spool);
-	gtk_box_pack_start (GTK_BOX (hbox), label_spool, FALSE, FALSE, 0);
-
-	entry_spool = gtk_entry_new ();
-	gtk_widget_show (entry_spool);
-	gtk_box_pack_start (GTK_BOX (hbox), entry_spool, TRUE, TRUE, 0);
-#endif /* !G_OS_WIN32 */
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -810,14 +752,19 @@ static void prefs_receive_create(void)
 			   _("Update all local folders after incorporation"));
 
 	/* New message notify */
-	PACK_CHECK_BUTTON (vbox2, checkbtn_newmsg_notify,
-			   _("Execute command when new messages arrived"));
+	PACK_FRAME_WITH_CHECK_BUTTON
+		(vbox1, frame_notify, checkbtn_newmsg_notify,
+		 _("Execute command when new messages arrived"));
 
-	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
+	vbox3 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox3);
+	gtk_container_add (GTK_CONTAINER (frame_notify), vbox3);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox3), 8);
+	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, vbox3);
 
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox3), hbox, FALSE, FALSE, 0);
 
 	label_newmsg_notify = gtk_label_new (_("Command"));
 	gtk_widget_show (label_newmsg_notify);
@@ -828,24 +775,39 @@ static void prefs_receive_create(void)
 	gtk_widget_show (entry_newmsg_notify);
 	gtk_box_pack_start (GTK_BOX (hbox), entry_newmsg_notify, TRUE, TRUE, 0);
 
-	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
-
 	PACK_SMALL_LABEL
-		(vbox2, label_notify_cmd_desc,
+		(vbox3, label_notify_cmd_desc,
 		 _("`%d' will be replaced with the number of new messages."));
 
-	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, hbox);
-	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, label_notify_cmd_desc);
-
 #ifndef G_OS_WIN32
-	receive.checkbtn_incext = checkbtn_incext;
-	receive.entry_incext    = entry_incext;
-	/* receive.button_incext   = button_incext; */
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_spool, checkbtn_local,
+				     _("Incorporate from local spool"));
 
-	receive.checkbtn_local         = checkbtn_local;
-	receive.checkbtn_filter_on_inc = checkbtn_filter_on_inc;
-	receive.entry_spool            = entry_spool;
-#endif
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (frame_spool), vbox2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+	SET_TOGGLE_SENSITIVITY (checkbtn_local, vbox2);
+
+	hbox = gtk_hbox_new (FALSE, 32);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (hbox, checkbtn_filter_on_inc,
+			   _("Filter on incorporation"));
+
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+	label_spool = gtk_label_new (_("Spool path"));
+	gtk_widget_show (label_spool);
+	gtk_box_pack_start (GTK_BOX (hbox), label_spool, FALSE, FALSE, 0);
+
+	entry_spool = gtk_entry_new ();
+	gtk_widget_show (entry_spool);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_spool, TRUE, TRUE, 0);
+#endif /* !G_OS_WIN32 */
 
 	receive.checkbtn_autochk    = checkbtn_autochk;
 	receive.spinbtn_autochk     = spinbtn_autochk;
@@ -855,19 +817,19 @@ static void prefs_receive_create(void)
 	receive.checkbtn_scan_after_inc = checkbtn_scan_after_inc;
 	receive.checkbtn_newmsg_notify  = checkbtn_newmsg_notify;
 	receive.entry_newmsg_notify     = entry_newmsg_notify;
+
+#ifndef G_OS_WIN32
+	receive.checkbtn_local         = checkbtn_local;
+	receive.checkbtn_filter_on_inc = checkbtn_filter_on_inc;
+	receive.entry_spool            = entry_spool;
+#endif
 }
 
 static void prefs_send_create(void)
 {
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
-	GtkWidget *frame_extsend;
-	GtkWidget *vbox_extsend;
-	GtkWidget *checkbtn_extsend;
 	GtkWidget *hbox1;
-	GtkWidget *label_extsend;
-	GtkWidget *entry_extsend;
-	/* GtkWidget *button_extsend; */
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
 	GtkWidget *label_outcharset;
@@ -883,33 +845,6 @@ static void prefs_send_create(void)
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
-
-	PACK_FRAME_WITH_CHECK_BUTTON (vbox1, frame_extsend, checkbtn_extsend,
-				      _("Use external program for sending"));
-
-	vbox_extsend = gtk_vbox_new (FALSE, VSPACING_NARROW);
-	gtk_widget_show (vbox_extsend);
-	gtk_container_add (GTK_CONTAINER (frame_extsend), vbox_extsend);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox_extsend), 8);
-	SET_TOGGLE_SENSITIVITY(checkbtn_extsend, vbox_extsend);
-
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox_extsend), hbox1, FALSE, FALSE, 0);
-
-	label_extsend = gtk_label_new (_("Command"));
-	gtk_widget_show (label_extsend);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_extsend, FALSE, FALSE, 0);
-
-	entry_extsend = gtk_entry_new ();
-	gtk_widget_show (entry_extsend);
-	gtk_box_pack_start (GTK_BOX (hbox1), entry_extsend, TRUE, TRUE, 0);
-
-#if 0
-	button_extsend = gtk_button_new_with_label ("... ");
-	gtk_widget_show (button_extsend);
-	gtk_box_pack_start (GTK_BOX (hbox1), button_extsend, FALSE, FALSE, 0);
-#endif
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -970,10 +905,6 @@ static void prefs_send_create(void)
 			  _("Specify Content-Transfer-Encoding used when "
 			    "message body contains non-ASCII characters."));
 
-	p_send.checkbtn_extsend = checkbtn_extsend;
-	p_send.entry_extsend    = entry_extsend;
-	/* p_send.button_extsend   = button_extsend; */
-
 	p_send.checkbtn_savemsg     = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 
@@ -984,6 +915,10 @@ static void prefs_send_create(void)
 static void prefs_compose_create(void)
 {
 	GtkWidget *vbox1;
+
+	GtkWidget *notebook;
+	GtkWidget *vbox_tab;
+
 	GtkWidget *hbox1;
 	GtkWidget *hbox2;
 
@@ -992,7 +927,6 @@ static void prefs_compose_create(void)
 	GtkWidget *label_sigsep;
 	GtkWidget *entry_sigsep;
 
-	GtkWidget *frame_editor;
 	GtkWidget *vbox2;
 	GtkWidget *checkbtn_autoextedit;
 	GtkWidget *vbox3;
@@ -1020,14 +954,25 @@ static void prefs_compose_create(void)
 	GtkWidget *checkbtn_quote;
 	GtkWidget *checkbtn_default_reply_list;
 
-	vbox1 = gtk_vbox_new (FALSE, VSPACING);
-	gtk_widget_show (vbox1);
-	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
+	GtkWidget *quote_wid;
+#if USE_GTKSPELL
+	GtkWidget *spell_wid;
+#endif
+
+	vbox1 = gtk_vbox_new(FALSE, VSPACING);
+	gtk_widget_show(vbox1);
+	gtk_container_add(GTK_CONTAINER(dialog.notebook), vbox1);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox1), VBOX_BORDER);
+
+	notebook = gtk_notebook_new();
+	gtk_widget_show(notebook);
+	gtk_box_pack_start(GTK_BOX(vbox1), notebook, TRUE, TRUE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("General"));
 
 	/* signature */
 
-	PACK_FRAME(vbox1, frame_sig, _("Signature"));
+	PACK_FRAME(vbox_tab, frame_sig, _("Signature"));
 
 	hbox1 = gtk_hbox_new (FALSE, 32);
 	gtk_widget_show (hbox1);
@@ -1049,12 +994,27 @@ static void prefs_compose_create(void)
 
 	PACK_CHECK_BUTTON (hbox1, checkbtn_autosig, _("Insert automatically"));
 
-	PACK_FRAME (vbox1, frame_editor, _("Editor"));
+	PACK_FRAME(vbox_tab, frame_reply, _("Reply"));
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
-	gtk_container_add (GTK_CONTAINER (frame_editor), vbox2);
+	gtk_container_add (GTK_CONTAINER (frame_reply), vbox2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_reply_account_autosel,
+			   _("Automatically select account for replies"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_quote,
+			   _("Quote message when replying"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_default_reply_list,
+			   _("Reply button invokes mailing list reply"));
+
+	/* editor */
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Editor"));
+
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (vbox_tab), vbox2);
 
 	PACK_CHECK_BUTTON (vbox2, checkbtn_autoextedit,
 			   _("Automatically launch the external editor"));
@@ -1151,19 +1111,15 @@ static void prefs_compose_create(void)
 	SET_TOGGLE_SENSITIVITY(checkbtn_autosave, spinbtn_autosave);
 	SET_TOGGLE_SENSITIVITY(checkbtn_autosave, label_autosave2);
 
-	PACK_FRAME(vbox1, frame_reply, _("Reply"));
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Format"));
+	quote_wid = prefs_quote_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), quote_wid, FALSE, FALSE, 0);
 
-	vbox2 = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox2);
-	gtk_container_add (GTK_CONTAINER (frame_reply), vbox2);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
-
-	PACK_CHECK_BUTTON (vbox2, checkbtn_reply_account_autosel,
-			   _("Automatically select account for replies"));
-	PACK_CHECK_BUTTON (vbox2, checkbtn_quote,
-			   _("Quote message when replying"));
-	PACK_CHECK_BUTTON (vbox2, checkbtn_default_reply_list,
-			   _("Reply button invokes mailing list reply"));
+#if USE_GTKSPELL
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Spell checking"));
+	spell_wid = prefs_spell_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), spell_wid, FALSE, FALSE, 0);
+#endif
 
 	compose.checkbtn_autosig = checkbtn_autosig;
 	compose.entry_sigsep     = entry_sigsep;
@@ -1189,7 +1145,7 @@ static void prefs_compose_create(void)
 	compose.checkbtn_default_reply_list = checkbtn_default_reply_list;
 }
 
-static void prefs_quote_create(void)
+static GtkWidget *prefs_quote_create(void)
 {
 	GtkWidget *vbox1;
 	GtkWidget *frame_quote;
@@ -1208,8 +1164,6 @@ static void prefs_quote_create(void)
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
-	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
 	/* reply */
 
@@ -1312,12 +1266,15 @@ static void prefs_quote_create(void)
 	quote.text_quotefmt      = text_quotefmt;
 	quote.entry_fw_quotemark = entry_fw_quotemark;
 	quote.text_fw_quotefmt   = text_fw_quotefmt;
+
+	return vbox1;
 }
 
 #if USE_GTKSPELL
-static void prefs_spell_create(void)
+static GtkWidget *prefs_spell_create(void)
 {
-        GtkWidget *vbox1, *vbox2;
+        GtkWidget *vbox1;
+	GtkWidget *vbox2;
         GtkWidget *frame;
         GtkWidget *hbox;
         GtkWidget *chkbtn_enable_spell;
@@ -1326,8 +1283,6 @@ static void prefs_spell_create(void)
  
         vbox1 = gtk_vbox_new (FALSE, VSPACING);
         gtk_widget_show (vbox1);
-        gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
  
         PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame, chkbtn_enable_spell,
                                      _("Enable Spell checking"));
@@ -1352,13 +1307,18 @@ static void prefs_spell_create(void)
  
         spell.chkbtn_enable_spell = chkbtn_enable_spell;
         spell.entry_spell_lang = entry_spell_lang;
+
+	return vbox1;
 }
 #endif /* USE_GTKSPELL */
 
 static void prefs_display_create(void)
 {
 	GtkWidget *vbox1;
-	GtkWidget *frame_font;
+
+	GtkWidget *notebook;
+	GtkWidget *vbox_tab;
+
 	GtkWidget *table1;
 	GtkWidget *label_textfont;
 	GtkWidget *fontbtn_textfont;
@@ -1379,21 +1339,30 @@ static void prefs_display_create(void)
 	GtkWidget *entry_datefmt;
 	GtkWidget *button_dispitem;
 
+	GtkWidget *msg_wid;
+
+	GtkWidget *label_encoding;
+	GtkWidget *optmenu_encoding;
+	GtkWidget *label_encoding_desc;
+
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
-	PACK_FRAME(vbox1, frame_font, _("Font"));
+	notebook = gtk_notebook_new();
+	gtk_widget_show(notebook);
+	gtk_box_pack_start(GTK_BOX(vbox1), notebook, TRUE, TRUE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("General"));
 
 	table1 = gtk_table_new (1, 2, FALSE);
 	gtk_widget_show (table1);
-	gtk_container_add (GTK_CONTAINER (frame_font), table1);
-	gtk_container_set_border_width (GTK_CONTAINER (table1), 8);
+	gtk_box_pack_start(GTK_BOX(vbox_tab), table1, FALSE, FALSE, 0);
 	gtk_table_set_row_spacings (GTK_TABLE (table1), 8);
 	gtk_table_set_col_spacings (GTK_TABLE (table1), 8);
 
-	label_textfont = gtk_label_new (_("Text"));
+	label_textfont = gtk_label_new (_("Text font"));
 	gtk_widget_show (label_textfont);
 	gtk_table_attach (GTK_TABLE (table1), label_textfont, 0, 1, 0, 1,
 			  GTK_FILL, (GTK_EXPAND | GTK_FILL), 0, 0);
@@ -1405,7 +1374,7 @@ static void prefs_display_create(void)
 
 	/* ---- Folder View ---- */
 
-	PACK_FRAME(vbox1, frame_folder, _("Folder View"));
+	PACK_FRAME(vbox_tab, frame_folder, _("Folder View"));
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -1445,7 +1414,7 @@ static void prefs_display_create(void)
 
 	/* ---- Summary ---- */
 
-	PACK_FRAME(vbox1, frame_summary, _("Summary View"));
+	PACK_FRAME(vbox_tab, frame_summary, _("Summary View"));
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -1491,6 +1460,30 @@ static void prefs_display_create(void)
 	g_signal_connect (G_OBJECT (button_dispitem), "clicked",
 			  G_CALLBACK (prefs_summary_column_open), NULL);
 
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Message"));
+	msg_wid = prefs_message_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), msg_wid, FALSE, FALSE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Encoding"));
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), hbox1, FALSE, FALSE, 0);
+
+	label_encoding = gtk_label_new (_("Default character encoding"));
+	gtk_widget_show (label_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
+
+	optmenu_encoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
+
+	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
+					   FALSE);
+
+	PACK_SMALL_LABEL (vbox_tab, label_encoding_desc,
+			  _("This is used for messages with missing character encoding."));
+
 	display.fontbtn_textfont = fontbtn_textfont;
 
 	display.chkbtn_folder_unread      = chkbtn_folder_unread;
@@ -1501,9 +1494,11 @@ static void prefs_display_create(void)
 	display.chkbtn_swapfrom      = chkbtn_swapfrom;
 	display.chkbtn_expand_thread = chkbtn_expand_thread;
 	display.entry_datefmt        = entry_datefmt;
+
+	display.optmenu_encoding = optmenu_encoding;
 }
 
-static void prefs_message_create(void)
+static GtkWidget *prefs_message_create(void)
 {
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
@@ -1519,9 +1514,6 @@ static void prefs_message_create(void)
 	GtkWidget *label_linespc;
 	GtkObject *spinbtn_linespc_adj;
 	GtkWidget *spinbtn_linespc;
-	GtkWidget *label_encoding;
-	GtkWidget *optmenu_encoding;
-	GtkWidget *label_encoding_desc;
 
 	GtkWidget *frame_scr;
 	GtkWidget *vbox_scr;
@@ -1539,8 +1531,6 @@ static void prefs_message_create(void)
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
-	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -1628,27 +1618,6 @@ static void prefs_message_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox_linespc), label_linespc,
 			    FALSE, FALSE, 0);
 
-	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
-
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
-
-	label_encoding = gtk_label_new (_("Default character encoding"));
-	gtk_widget_show (label_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
-
-	optmenu_encoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
-
-	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
-					   FALSE);
-
-	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
-	PACK_SMALL_LABEL (vbox2, label_encoding_desc,
-			  _("This is used for messages with missing character encoding."));
-
 	PACK_FRAME(vbox1, frame_scr, _("Scroll"));
 
 	vbox_scr = gtk_vbox_new (FALSE, 0);
@@ -1706,7 +1675,6 @@ static void prefs_message_create(void)
 	message.chkbtn_disphdr     = chkbtn_disphdr;
 	message.chkbtn_html        = chkbtn_html;
 	message.spinbtn_linespc    = spinbtn_linespc;
-	message.optmenu_encoding   = optmenu_encoding;
 
 	message.chkbtn_smoothscroll    = chkbtn_smoothscroll;
 	message.spinbtn_scrollstep     = spinbtn_scrollstep;
@@ -1715,6 +1683,8 @@ static void prefs_message_create(void)
 
 	message.chkbtn_resize_image = chkbtn_resize_image;
 	message.chkbtn_inline_image = chkbtn_inline_image;
+
+	return vbox1;
 }
 
 static const struct {
@@ -2022,9 +1992,13 @@ static void prefs_privacy_create(void)
 }
 #endif /* USE_GPGME */
 
-static void prefs_interface_create(void)
+static void prefs_details_create(void)
 {
 	GtkWidget *vbox1;
+
+	GtkWidget *notebook;
+	GtkWidget *vbox_tab;
+
 	GtkWidget *vbox2;
 	GtkWidget *vbox3;
 	GtkWidget *checkbtn_always_show_msg;
@@ -2032,30 +2006,33 @@ static void prefs_interface_create(void)
 	GtkWidget *checkbtn_mark_as_read_on_newwin;
 	GtkWidget *checkbtn_openinbox;
 	GtkWidget *checkbtn_immedexec;
-	GtkWidget *frame_recv;
-	GtkWidget *vbox_recv;
 	GtkWidget *hbox1;
 	GtkWidget *hbox_spc;
 	GtkWidget *label;
-	GtkWidget *optmenu_recvdialog;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-	GtkWidget *checkbtn_no_recv_err_panel;
-	GtkWidget *checkbtn_close_recv_dialog;
 #ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
 #endif
 
 	GtkWidget *button_keybind;
 
+	GtkWidget *other_wid;
+	GtkWidget *extcmd_wid;
+	GtkWidget *advanced_wid;
+
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
+	notebook = gtk_notebook_new();
+	gtk_widget_show(notebook);
+	gtk_box_pack_start(GTK_BOX(vbox1), notebook, TRUE, TRUE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Interface"));
+
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
-	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), vbox2, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_always_show_msg,
@@ -2094,6 +2071,73 @@ static void prefs_interface_create(void)
 			  _("Messages will be marked until execution "
 			    "if this is turned off."));
 
+#ifndef G_OS_WIN32
+	PACK_CHECK_BUTTON (vbox_tab, checkbtn_comply_gnome_hig,
+			   _("Make the order of buttons comply with GNOME HIG"));
+#endif
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), hbox1, FALSE, FALSE, 0);
+
+	button_keybind = gtk_button_new_with_label (_(" Set key bindings... "));
+	gtk_widget_show (button_keybind);
+	gtk_box_pack_start (GTK_BOX (hbox1), button_keybind, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (button_keybind), "clicked",
+			  G_CALLBACK (prefs_keybind_select), NULL);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Other"));
+	other_wid = prefs_other_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), other_wid, FALSE, FALSE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("External commands"));
+	extcmd_wid = prefs_extcmd_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), extcmd_wid, FALSE, FALSE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Advanced"));
+	advanced_wid = prefs_advanced_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), advanced_wid, FALSE, FALSE, 0);
+
+	interface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
+	interface.checkbtn_openunread        = checkbtn_openunread;
+	interface.checkbtn_mark_as_read_on_newwin
+					     = checkbtn_mark_as_read_on_newwin;
+	interface.checkbtn_openinbox         = checkbtn_openinbox;
+	interface.checkbtn_immedexec         = checkbtn_immedexec;
+
+#ifndef G_OS_WIN32
+	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
+#endif
+}
+
+static GtkWidget *prefs_other_create(void)
+{
+	GtkWidget *vbox1;
+
+	GtkWidget *frame_recv;
+	GtkWidget *vbox_recv;
+	GtkWidget *hbox1;
+	GtkWidget *label;
+	GtkWidget *optmenu_recvdialog;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GtkWidget *checkbtn_no_recv_err_panel;
+	GtkWidget *checkbtn_close_recv_dialog;
+
+	GtkWidget *frame_addr;
+	GtkWidget *vbox_addr;
+	GtkWidget *checkbtn_addaddrbyclick;
+
+	GtkWidget *frame_exit;
+	GtkWidget *vbox_exit;
+	GtkWidget *checkbtn_confonexit;
+	GtkWidget *checkbtn_cleanonexit;
+	GtkWidget *checkbtn_askonclean;
+	GtkWidget *checkbtn_warnqueued;
+
+	vbox1 = gtk_vbox_new (FALSE, VSPACING);
+	gtk_widget_show (vbox1);
+
 	PACK_FRAME (vbox1, frame_recv, _("Receive dialog"));
 	vbox_recv = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox_recv);
@@ -2127,42 +2171,61 @@ static void prefs_interface_create(void)
 	PACK_CHECK_BUTTON (vbox_recv, checkbtn_close_recv_dialog,
 			   _("Close receive dialog when finished"));
 
-#ifndef G_OS_WIN32
-	PACK_CHECK_BUTTON (vbox1, checkbtn_comply_gnome_hig,
-			   _("Make the order of buttons comply with GNOME HIG"));
-#endif
+	PACK_FRAME (vbox1, frame_addr, _("Address book"));
 
-	hbox1 = gtk_hbox_new (FALSE, 8);
+	vbox_addr = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox_addr);
+	gtk_container_add (GTK_CONTAINER (frame_addr), vbox_addr);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_addr), 8);
+
+	PACK_CHECK_BUTTON
+		(vbox_addr, checkbtn_addaddrbyclick,
+		 _("Add address to destination when double-clicked"));
+
+	PACK_FRAME (vbox1, frame_exit, _("On exit"));
+
+	vbox_exit = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox_exit);
+	gtk_container_add (GTK_CONTAINER (frame_exit), vbox_exit);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_exit), 8);
+
+	PACK_CHECK_BUTTON (vbox_exit, checkbtn_confonexit,
+			   _("Confirm on exit"));
+
+	hbox1 = gtk_hbox_new (FALSE, 32);
 	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_exit), hbox1, FALSE, FALSE, 0);
 
-	button_keybind = gtk_button_new_with_label (_(" Set key bindings... "));
-	gtk_widget_show (button_keybind);
-	gtk_box_pack_start (GTK_BOX (hbox1), button_keybind, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (button_keybind), "clicked",
-			  G_CALLBACK (prefs_keybind_select), NULL);
+	PACK_CHECK_BUTTON (hbox1, checkbtn_cleanonexit,
+			   _("Empty trash on exit"));
+	PACK_CHECK_BUTTON (hbox1, checkbtn_askonclean,
+			   _("Ask before emptying"));
+	SET_TOGGLE_SENSITIVITY (checkbtn_cleanonexit, checkbtn_askonclean);
 
-	interface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
-	interface.checkbtn_openunread        = checkbtn_openunread;
-	interface.checkbtn_mark_as_read_on_newwin
-					     = checkbtn_mark_as_read_on_newwin;
-	interface.checkbtn_openinbox         = checkbtn_openinbox;
-	interface.checkbtn_immedexec         = checkbtn_immedexec;
-	interface.optmenu_recvdialog         = optmenu_recvdialog;
-	interface.checkbtn_no_recv_err_panel = checkbtn_no_recv_err_panel;
-	interface.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
+	PACK_CHECK_BUTTON (vbox_exit, checkbtn_warnqueued,
+			   _("Warn if there are queued messages"));
 
-#ifndef G_OS_WIN32
-	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
-#endif
+	other.optmenu_recvdialog         = optmenu_recvdialog;
+	other.checkbtn_no_recv_err_panel = checkbtn_no_recv_err_panel;
+	other.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
+
+	other.checkbtn_addaddrbyclick = checkbtn_addaddrbyclick;
+
+	other.checkbtn_confonexit  = checkbtn_confonexit;
+	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
+	other.checkbtn_askonclean  = checkbtn_askonclean;
+	other.checkbtn_warnqueued  = checkbtn_warnqueued;
+
+	return vbox1;
 }
 
-static void prefs_other_create(void)
+static GtkWidget *prefs_extcmd_create(void)
 {
 	GtkWidget *vbox1;
+	GtkWidget *hbox1;
+
 	GtkWidget *ext_frame;
 	GtkWidget *ext_table;
-	GtkWidget *hbox1;
 
 	GtkWidget *uri_label;
 	GtkWidget *uri_combo;
@@ -2175,21 +2238,21 @@ static void prefs_other_create(void)
 	GtkWidget *exteditor_combo;
 	GtkWidget *exteditor_entry;
 
-	GtkWidget *frame_addr;
-	GtkWidget *vbox_addr;
-	GtkWidget *checkbtn_addaddrbyclick;
-
-	GtkWidget *frame_exit;
-	GtkWidget *vbox_exit;
-	GtkWidget *checkbtn_confonexit;
-	GtkWidget *checkbtn_cleanonexit;
-	GtkWidget *checkbtn_askonclean;
-	GtkWidget *checkbtn_warnqueued;
+#ifndef G_OS_WIN32
+	GtkWidget *vbox2;
+	GtkWidget *frame_incext;
+	GtkWidget *checkbtn_incext;
+	GtkWidget *label_incext;
+	GtkWidget *entry_incext;
+#endif
+	GtkWidget *frame_extsend;
+	GtkWidget *vbox_extsend;
+	GtkWidget *checkbtn_extsend;
+	GtkWidget *label_extsend;
+	GtkWidget *entry_extsend;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
-	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
 	PACK_FRAME(vbox1, ext_frame,
 		   _("External commands (%s will be replaced with file name / URI)"));
@@ -2264,56 +2327,68 @@ static void prefs_other_create(void)
 			       NULL);
 	exteditor_entry = GTK_COMBO (exteditor_combo)->entry;
 
-	PACK_FRAME (vbox1, frame_addr, _("Address book"));
+#ifndef G_OS_WIN32
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_incext, checkbtn_incext,
+				     _("Use external program for incorporation"));
 
-	vbox_addr = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox_addr);
-	gtk_container_add (GTK_CONTAINER (frame_addr), vbox_addr);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox_addr), 8);
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (frame_incext), vbox2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+	SET_TOGGLE_SENSITIVITY (checkbtn_incext, vbox2);
 
-	PACK_CHECK_BUTTON
-		(vbox_addr, checkbtn_addaddrbyclick,
-		 _("Add address to destination when double-clicked"));
-
-	PACK_FRAME (vbox1, frame_exit, _("On exit"));
-
-	vbox_exit = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox_exit);
-	gtk_container_add (GTK_CONTAINER (frame_exit), vbox_exit);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox_exit), 8);
-
-	PACK_CHECK_BUTTON (vbox_exit, checkbtn_confonexit,
-			   _("Confirm on exit"));
-
-	hbox1 = gtk_hbox_new (FALSE, 32);
+	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox_exit), hbox1, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
 
-	PACK_CHECK_BUTTON (hbox1, checkbtn_cleanonexit,
-			   _("Empty trash on exit"));
-	PACK_CHECK_BUTTON (hbox1, checkbtn_askonclean,
-			   _("Ask before emptying"));
-	SET_TOGGLE_SENSITIVITY (checkbtn_cleanonexit, checkbtn_askonclean);
+	label_incext = gtk_label_new (_("Command"));
+	gtk_widget_show (label_incext);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_incext, FALSE, FALSE, 0);
 
-	PACK_CHECK_BUTTON (vbox_exit, checkbtn_warnqueued,
-			   _("Warn if there are queued messages"));
+	entry_incext = gtk_entry_new ();
+	gtk_widget_show (entry_incext);
+	gtk_box_pack_start (GTK_BOX (hbox1), entry_incext, TRUE, TRUE, 0);
+#endif /* !G_OS_WIN32 */
 
-	other.uri_combo = uri_combo;
-	other.uri_entry = uri_entry;
-	other.printcmd_entry = printcmd_entry;
+	PACK_FRAME_WITH_CHECK_BUTTON (vbox1, frame_extsend, checkbtn_extsend,
+				      _("Use external program for sending"));
 
-	other.exteditor_combo = exteditor_combo;
-	other.exteditor_entry = exteditor_entry;
+	vbox_extsend = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox_extsend);
+	gtk_container_add (GTK_CONTAINER (frame_extsend), vbox_extsend);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_extsend), 8);
+	SET_TOGGLE_SENSITIVITY(checkbtn_extsend, vbox_extsend);
 
-	other.checkbtn_addaddrbyclick = checkbtn_addaddrbyclick;
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_extsend), hbox1, FALSE, FALSE, 0);
 
-	other.checkbtn_confonexit  = checkbtn_confonexit;
-	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
-	other.checkbtn_askonclean  = checkbtn_askonclean;
-	other.checkbtn_warnqueued  = checkbtn_warnqueued;
+	label_extsend = gtk_label_new (_("Command"));
+	gtk_widget_show (label_extsend);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_extsend, FALSE, FALSE, 0);
+
+	entry_extsend = gtk_entry_new ();
+	gtk_widget_show (entry_extsend);
+	gtk_box_pack_start (GTK_BOX (hbox1), entry_extsend, TRUE, TRUE, 0);
+
+	extcmd.uri_combo = uri_combo;
+	extcmd.uri_entry = uri_entry;
+	extcmd.printcmd_entry = printcmd_entry;
+
+	extcmd.exteditor_combo = exteditor_combo;
+	extcmd.exteditor_entry = exteditor_entry;
+
+#ifndef G_OS_WIN32
+	extcmd.checkbtn_incext = checkbtn_incext;
+	extcmd.entry_incext    = entry_incext;
+#endif
+	extcmd.checkbtn_extsend = checkbtn_extsend;
+	extcmd.entry_extsend    = entry_extsend;
+
+	return vbox1;
 }
 
-static void prefs_advanced_create(void)
+static GtkWidget *prefs_advanced_create(void)
 {
 	GtkWidget *vbox1;
 
@@ -2328,8 +2403,6 @@ static void prefs_advanced_create(void)
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
-	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
@@ -2371,6 +2444,8 @@ static void prefs_advanced_create(void)
 
 	advanced.spinbtn_iotimeout     = spinbtn_iotimeout;
 	advanced.spinbtn_iotimeout_adj = spinbtn_iotimeout_adj;
+
+	return vbox1;
 }
 
 static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,

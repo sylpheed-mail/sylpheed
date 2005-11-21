@@ -39,7 +39,7 @@ typedef struct _PrefsUIData	PrefsUIData;
 #define VSPACING		10
 #define VSPACING_NARROW		4
 #define VSPACING_NARROW_2	2
-#define VBOX_BORDER		16
+#define VBOX_BORDER		12
 #define DEFAULT_ENTRY_WIDTH	80
 
 struct _PrefsUIData
@@ -72,6 +72,18 @@ struct _PrefsDialog
 		 gtk_notebook_get_nth_page \
 			(GTK_NOTEBOOK (notebook), page_num), \
 		 label); \
+}
+
+#define APPEND_SUB_NOTEBOOK(notebook, vbox, str) \
+{ \
+	GtkWidget *label; \
+ \
+	label = gtk_label_new(str); \
+	gtk_widget_show(label); \
+	vbox = gtk_vbox_new(FALSE, VSPACING); \
+	gtk_widget_show(vbox); \
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label); \
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), VBOX_BORDER); \
 }
 
 #define PACK_CHECK_BUTTON(box, chkbtn, label) \

@@ -55,7 +55,7 @@ void prefs_dialog_create(PrefsDialog *dialog)
 	g_return_if_fail(dialog != NULL);
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_container_set_border_width (GTK_CONTAINER (window), 8);
+	gtk_container_set_border_width (GTK_CONTAINER (window), 6);
 	gtk_window_set_position (GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal (GTK_WINDOW (window), TRUE);
 	gtk_window_set_policy (GTK_WINDOW(window), FALSE, TRUE, FALSE);
