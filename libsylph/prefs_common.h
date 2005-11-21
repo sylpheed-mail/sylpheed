@@ -47,11 +47,6 @@ typedef enum {
 struct _PrefsCommon
 {
 	/* Receive */
-	gboolean use_extinc;
-	gchar *extinc_cmd;
-	gboolean inc_local;
-	gboolean filter_on_inc;
-	gchar *spool_path;
 	gboolean scan_all_after_inc;
 	gboolean autochk_newmail;
 	gint autochk_itv;
@@ -59,9 +54,11 @@ struct _PrefsCommon
 	gboolean enable_newmsg_notify;
 	gchar *newmsg_notify_cmd;
 
+	gboolean inc_local;
+	gboolean filter_on_inc;
+	gchar *spool_path;
+
 	/* Send */
-	gboolean use_extsend;
-	gchar *extsend_cmd;
 	gboolean savemsg;
 	gboolean filter_sent;
 	gchar *outgoing_charset;
@@ -178,6 +175,7 @@ struct _PrefsCommon
 	gboolean resize_image;
 	gboolean inline_image;
 
+	/* Encoding */
 	gchar *force_charset;
 	gchar *default_encoding;
 
@@ -217,15 +215,12 @@ struct _PrefsCommon
 	gboolean mark_as_read_on_new_window;
 	gboolean open_inbox_on_inc;
 	gboolean immediate_exec;
-	RecvDialogMode recv_dialog_mode;
-	gboolean no_recv_err_panel;
-	gboolean close_recv_dialog;
 	gboolean comply_gnome_hig;
 
 	/* Other */
-	gchar *uri_cmd;
-	gchar *print_cmd;
-	gchar *ext_editor_cmd;
+	RecvDialogMode recv_dialog_mode;
+	gboolean no_recv_err_panel;
+	gboolean close_recv_dialog;
 
 	gboolean add_address_by_click;
 
@@ -235,6 +230,16 @@ struct _PrefsCommon
 	gboolean warn_queued_on_exit;
 
 	gint logwin_line_limit;
+
+	/* External commands */
+	gchar *uri_cmd;
+	gchar *print_cmd;
+	gchar *ext_editor_cmd;
+
+	gboolean use_extinc;
+	gchar *extinc_cmd;
+	gboolean use_extsend;
+	gchar *extsend_cmd;
 
 	/* Advanced */
 	gboolean strict_cache_check;

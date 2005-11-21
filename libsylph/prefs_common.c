@@ -38,13 +38,6 @@ PrefsCommon prefs_common;
 
 static PrefParam param[] = {
 	/* Receive */
-	{"use_ext_inc", "FALSE", &prefs_common.use_extinc, P_BOOL},
-	{"ext_inc_path", DEFAULT_INC_PATH, &prefs_common.extinc_cmd, P_STRING},
-
-	{"inc_local", "FALSE", &prefs_common.inc_local, P_BOOL},
-	{"filter_on_inc_local", "TRUE", &prefs_common.filter_on_inc, P_BOOL},
-	{"spool_path", DEFAULT_SPOOL_PATH, &prefs_common.spool_path, P_STRING},
-
 	{"autochk_newmail", "FALSE", &prefs_common.autochk_newmail, P_BOOL},
 	{"autochk_interval", "10", &prefs_common.autochk_itv, P_INT},
 	{"check_on_startup", "FALSE", &prefs_common.chk_on_startup, P_BOOL},
@@ -55,10 +48,11 @@ static PrefParam param[] = {
 	{"newmsg_notify_command", NULL, &prefs_common.newmsg_notify_cmd,
 	 P_STRING},
 
+	{"inc_local", "FALSE", &prefs_common.inc_local, P_BOOL},
+	{"filter_on_inc_local", "TRUE", &prefs_common.filter_on_inc, P_BOOL},
+	{"spool_path", DEFAULT_SPOOL_PATH, &prefs_common.spool_path, P_STRING},
+
 	/* Send */
-	{"use_ext_sendmail", "FALSE", &prefs_common.use_extsend, P_BOOL},
-	{"ext_sendmail_cmd", DEFAULT_SENDMAIL_CMD, &prefs_common.extsend_cmd,
-	 P_STRING},
 	{"save_message", "TRUE", &prefs_common.savemsg, P_BOOL},
 	{"filter_sent_message", "FALSE", &prefs_common.filter_sent, P_BOOL},
 
@@ -251,6 +245,7 @@ static PrefParam param[] = {
 	{"resize_image", "TRUE", &prefs_common.resize_image, P_BOOL},
 	{"inline_image", "TRUE", &prefs_common.inline_image, P_BOOL},
 
+	/* Encoding */
 	{"default_encoding", NULL, &prefs_common.default_encoding, P_STRING},
 
 	{"show_other_header", "FALSE", &prefs_common.show_other_header, P_BOOL},
@@ -314,11 +309,6 @@ static PrefParam param[] = {
 	 &prefs_common.mark_as_read_on_new_window, P_BOOL},
 	{"open_inbox_on_inc", "FALSE", &prefs_common.open_inbox_on_inc, P_BOOL},
 	{"immediate_execution", "TRUE", &prefs_common.immediate_exec, P_BOOL},
-	{"receive_dialog_mode", "1", &prefs_common.recv_dialog_mode, P_ENUM},
-	{"no_receive_error_panel", "FALSE", &prefs_common.no_recv_err_panel,
-	 P_BOOL},
-	{"close_receive_dialog", "TRUE", &prefs_common.close_recv_dialog,
-	 P_BOOL},
 
 #ifdef G_OS_WIN32
 	{"comply_gnome_hig", "FALSE", &prefs_common.comply_gnome_hig, P_BOOL},
@@ -327,6 +317,25 @@ static PrefParam param[] = {
 #endif
 
 	/* Other */
+	{"receive_dialog_mode", "1", &prefs_common.recv_dialog_mode, P_ENUM},
+	{"no_receive_error_panel", "FALSE", &prefs_common.no_recv_err_panel,
+	 P_BOOL},
+	{"close_receive_dialog", "TRUE", &prefs_common.close_recv_dialog,
+	 P_BOOL},
+
+	{"add_address_by_click", "FALSE", &prefs_common.add_address_by_click,
+	 P_BOOL},
+
+	{"confirm_on_exit", "FALSE", &prefs_common.confirm_on_exit, P_BOOL},
+	{"clean_trash_on_exit", "FALSE", &prefs_common.clean_on_exit, P_BOOL},
+	{"ask_on_cleaning", "TRUE", &prefs_common.ask_on_clean, P_BOOL},
+	{"warn_queued_on_exit", "TRUE", &prefs_common.warn_queued_on_exit,
+	 P_BOOL},
+
+	{"logwindow_line_limit", "1000", &prefs_common.logwin_line_limit,
+	 P_INT},
+
+	/* External commands */
 #ifdef G_OS_WIN32
 	{"uri_open_command", NULL, &prefs_common.uri_cmd,
 #else
@@ -345,17 +354,11 @@ static PrefParam param[] = {
 #endif
 	 P_STRING},
 
-	{"add_address_by_click", "FALSE", &prefs_common.add_address_by_click,
-	 P_BOOL},
-
-	{"confirm_on_exit", "FALSE", &prefs_common.confirm_on_exit, P_BOOL},
-	{"clean_trash_on_exit", "FALSE", &prefs_common.clean_on_exit, P_BOOL},
-	{"ask_on_cleaning", "TRUE", &prefs_common.ask_on_clean, P_BOOL},
-	{"warn_queued_on_exit", "TRUE", &prefs_common.warn_queued_on_exit,
-	 P_BOOL},
-
-	{"logwindow_line_limit", "1000", &prefs_common.logwin_line_limit,
-	 P_INT},
+	{"use_ext_inc", "FALSE", &prefs_common.use_extinc, P_BOOL},
+	{"ext_inc_path", DEFAULT_INC_PATH, &prefs_common.extinc_cmd, P_STRING},
+	{"use_ext_sendmail", "FALSE", &prefs_common.use_extsend, P_BOOL},
+	{"ext_sendmail_cmd", DEFAULT_SENDMAIL_CMD, &prefs_common.extsend_cmd,
+	 P_STRING},
 
 	/* Advanced */
 	{"strict_cache_check", "FALSE", &prefs_common.strict_cache_check,
