@@ -151,6 +151,8 @@ struct _PrefsCommon
 	gint sourcewin_width;
 	gint sourcewin_height;
 
+	gint compose_x;
+	gint compose_y;
 	gint compose_width;
 	gint compose_height;
 

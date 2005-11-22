@@ -74,7 +74,6 @@ SourceWindow *source_window_create(void)
 			 G_CALLBACK(source_window_delete_cb), sourcewin);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), sourcewin);
-	gtk_widget_realize(window);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -87,6 +86,8 @@ SourceWindow *source_window_create(void)
 
 	text = gtk_text_view_new();
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
+	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(text), 6);
+	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(text), 6);
 	if (!font_desc && prefs_common.textfont)
 		font_desc = pango_font_description_from_string
 			(prefs_common.textfont);

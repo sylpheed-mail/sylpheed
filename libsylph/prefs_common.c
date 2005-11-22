@@ -213,6 +213,8 @@ static PrefParam param[] = {
 	{"messagewin_height", "540", &prefs_common.msgwin_height, P_INT},
 	{"sourcewin_width", "600", &prefs_common.sourcewin_width, P_INT},
 	{"sourcewin_height", "500", &prefs_common.sourcewin_height, P_INT},
+	{"compose_x", "32", &prefs_common.compose_x, P_INT},
+	{"compose_y", "32", &prefs_common.compose_y, P_INT},
 	{"compose_width", "600", &prefs_common.compose_width, P_INT},
 	{"compose_height", "560", &prefs_common.compose_height, P_INT},
 

@@ -166,6 +166,8 @@ static GList *compose_list = NULL;
 static Compose *compose_create			(PrefsAccount	*account,
 						 ComposeMode	 mode);
 static Compose *compose_find_window_by_target	(MsgInfo	*msginfo);
+static gboolean compose_window_exist		(gint		 x,
+						 gint		 y);
 static void compose_connect_changed_callbacks	(Compose	*compose);
 static GtkWidget *compose_toolbar_create	(Compose	*compose);
 static GtkWidget *compose_account_option_menu_create
@@ -4023,6 +4025,10 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_window_set_wmclass(GTK_WINDOW(window), "compose", "Sylpheed");
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
 	gtk_widget_set_size_request(window, -1, prefs_common.compose_height);
+	if (!compose_window_exist(prefs_common.compose_x,
+				  prefs_common.compose_y))
+		gtk_window_move(GTK_WINDOW(window), prefs_common.compose_x,
+				prefs_common.compose_y);
 
 	if (!geometry.max_width) {
 		geometry.max_width = gdk_screen_width();
@@ -4552,6 +4558,22 @@ static Compose *compose_find_window_by_target(MsgInfo *msginfo)
 	return NULL;
 }
 
+static gboolean compose_window_exist(gint x, gint y)
+{
+	GList *cur;
+	Compose *compose;
+	gint x_, y_;
+
+	for (cur = compose_list; cur != NULL; cur = cur->next) {
+		compose = cur->data;
+		gtkut_widget_get_uposition(compose->window, &x_, &y_);
+		if (x == x_ && y == y_)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 static void compose_connect_changed_callbacks(Compose *compose)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
@@ -4995,6 +5017,8 @@ static void compose_destroy(Compose *compose)
 	if (addressbook_get_target_compose() == compose)
 		addressbook_set_target_compose(NULL);
 
+	gtkut_widget_get_uposition(compose->window, &prefs_common.compose_x,
+				   &prefs_common.compose_y);
 	prefs_common.compose_width = compose->scrolledwin->allocation.width;
 	prefs_common.compose_height = compose->window->allocation.height;
 
