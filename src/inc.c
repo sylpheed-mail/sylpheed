@@ -1063,13 +1063,9 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 
 		val = GPOINTER_TO_INT(g_hash_table_lookup
 				      (inc_session->folder_table, drop_folder));
-		if (val == 0) {
-			/* force updating */
-			if (FOLDER_IS_LOCAL(drop_folder->folder))
-				drop_folder->mtime = 0;
-			g_hash_table_insert(inc_session->folder_table, drop_folder,
-					    GINT_TO_POINTER(1));
-		}
+		if (val == 0)
+			g_hash_table_insert(inc_session->folder_table,
+					    drop_folder, GINT_TO_POINTER(1));
 		g_hash_table_insert(inc_session->tmp_folder_table, drop_folder,
 				    GINT_TO_POINTER(1));
 	}

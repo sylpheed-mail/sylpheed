@@ -854,6 +854,7 @@ static void prefs_send_create(void)
 			   _("Save sent messages to outbox"));
 	PACK_CHECK_BUTTON (vbox2, checkbtn_filter_sent,
 			   _("Apply filter rules to sent messages"));
+	SET_TOGGLE_SENSITIVITY (checkbtn_savemsg, checkbtn_filter_sent);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);

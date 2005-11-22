@@ -2677,28 +2677,34 @@ static gint compose_send(Compose *compose)
 		/* save message to outbox */
 		if (prefs_common.savemsg) {
 			FolderItem *outbox;
+			gboolean drop_done = FALSE;
 
-			outbox = account_get_special_folder
-				(compose->account, F_OUTBOX);
-			if (procmsg_save_to_outbox(outbox, tmp) < 0)
-				alertpanel_error
-					(_("Can't save the message to outbox."));
-			else
-				folderview_update_item(outbox, TRUE);
-		}
-		/* filter sent message */
-		if (prefs_common.filter_sent) {
-			FilterInfo *fltinfo;
+			/* filter sent message */
+			if (prefs_common.filter_sent) {
+				FilterInfo *fltinfo;
 
-			fltinfo = filter_info_new();
-			fltinfo->account = compose->account;
-			fltinfo->flags.perm_flags = 0;
-			fltinfo->flags.tmp_flags = MSG_RECEIVED;
+				fltinfo = filter_info_new();
+				fltinfo->account = compose->account;
+				fltinfo->flags.perm_flags = 0;
+				fltinfo->flags.tmp_flags = MSG_RECEIVED;
 
-			filter_apply(prefs_common.fltlist, tmp, fltinfo);
+				filter_apply(prefs_common.fltlist, tmp,
+					     fltinfo);
 
-			folderview_update_all_updated(TRUE);
-			filter_info_free(fltinfo);
+				drop_done = fltinfo->drop_done;
+				folderview_update_all_updated(TRUE);
+				filter_info_free(fltinfo);
+			}
+
+			if (!drop_done) {
+				outbox = account_get_special_folder
+					(compose->account, F_OUTBOX);
+				if (procmsg_save_to_outbox(outbox, tmp) < 0)
+					alertpanel_error
+						(_("Can't save the message to outbox."));
+				else
+					folderview_update_item(outbox, TRUE);
+			}
 		}
 	}
 
