@@ -58,19 +58,19 @@
 #define IMAP_COPY_LIMIT	200
 #define IMAP_CMD_LIMIT	1000
 
-#define QUOTE_IF_REQUIRED(out, str)				\
-{								\
-	if (*str != '"' && strpbrk(str, " \t(){}%*") != NULL) {	\
-		gchar *__tmp;					\
-		gint len;					\
-								\
-		len = strlen(str) + 3;				\
-		Xalloca(__tmp, len, return IMAP_ERROR);		\
-		g_snprintf(__tmp, len, "\"%s\"", str);		\
-		out = __tmp;					\
-	} else {						\
-		Xstrdup_a(out, str, return IMAP_ERROR);		\
-	}							\
+#define QUOTE_IF_REQUIRED(out, str)					\
+{									\
+	if (*str != '"' && strpbrk(str, " \t(){}[]%&*") != NULL) {	\
+		gchar *__tmp;						\
+		gint len;						\
+									\
+		len = strlen(str) + 3;					\
+		Xalloca(__tmp, len, return IMAP_ERROR);			\
+		g_snprintf(__tmp, len, "\"%s\"", str);			\
+		out = __tmp;						\
+	} else {							\
+		Xstrdup_a(out, str, return IMAP_ERROR);			\
+	}								\
 }
 
 static GList *session_list = NULL;
