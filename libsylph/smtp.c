@@ -87,7 +87,7 @@ Session *smtp_session_new(void)
 	session->to_list                   = NULL;
 	session->cur_to                    = NULL;
 
-	session->send_data                 = NULL;
+	session->send_data_fp              = NULL;
 	session->send_data_len             = 0;
 
 	session->avail_auth_type           = 0;
@@ -109,7 +109,8 @@ static void smtp_session_destroy(Session *session)
 	g_free(smtp_session->pass);
 	g_free(smtp_session->from);
 
-	g_free(smtp_session->send_data);
+	if (smtp_session->send_data_fp)
+		fclose(smtp_session->send_data_fp);
 
 	g_free(smtp_session->error_msg);
 }
@@ -418,7 +419,7 @@ static gint smtp_send_data(SMTPSession *session)
 {
 	session->state = SMTP_SEND_DATA;
 
-	session_send_data(SESSION(session), session->send_data,
+	session_send_data(SESSION(session), session->send_data_fp,
 			  session->send_data_len);
 
 	return SM_OK;

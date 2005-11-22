@@ -2757,6 +2757,66 @@ gchar *normalize_newlines(const gchar *str)
 	return out;
 }
 
+FILE *get_outgoing_rfc2822_file(FILE *fp)
+{
+	gchar buf[BUFFSIZE];
+	FILE *outfp;
+
+	outfp = my_tmpfile();
+	if (!outfp) {
+		FILE_OP_ERROR("get_outgoing_rfc2822_file", "my_tmpfile");
+		return NULL;
+	}
+
+	/* output header part */
+	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		strretchomp(buf);
+		if (!g_ascii_strncasecmp(buf, "Bcc:", 4)) {
+			gint next;
+
+			for (;;) {
+				next = fgetc(fp);
+				if (next == EOF)
+					break;
+				else if (next != ' ' && next != '\t') {
+					ungetc(next, fp);
+					break;
+				}
+				if (fgets(buf, sizeof(buf), fp) == NULL)
+					break;
+			}
+		} else {
+			if (fputs(buf, outfp) == EOF)
+				goto file_error;
+			if (fputs("\r\n", outfp) == EOF)
+				goto file_error;
+			if (buf[0] == '\0')
+				break;
+		}
+	}
+
+	/* output body part */
+	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		strretchomp(buf);
+		if (buf[0] == '.') {
+			if (fputc('.', outfp) == EOF)
+				goto file_error;
+		}
+		if (fputs(buf, outfp) == EOF)
+			goto file_error;
+		if (fputs("\r\n", outfp) == EOF)
+			goto file_error;
+	}
+
+	rewind(outfp);
+	return outfp;
+
+file_error:
+	g_warning("get_outgoing_rfc2822_file(): writing to temporary file failed.\n");
+	fclose(outfp);
+	return NULL;
+}
+
 gchar *get_outgoing_rfc2822_str(FILE *fp)
 {
 	gchar buf[BUFFSIZE];

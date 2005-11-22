@@ -121,8 +121,8 @@ struct _Session
 	gint write_buf_len;
 
 	/* buffer for large data */
-	const guchar *write_data;
-	const guchar *write_data_p;
+	FILE *write_data_fp;
+	gint write_data_pos;
 	gint write_data_len;
 
 	guint timeout_tag;
@@ -196,7 +196,7 @@ gint session_send_msg	(Session	*session,
 			 const gchar	*msg);
 gint session_recv_msg	(Session	*session);
 gint session_send_data	(Session	*session,
-			 const guchar	*data,
+			 FILE		*data_fp,
 			 guint		 size);
 gint session_recv_data	(Session	*session,
 			 guint		 size,

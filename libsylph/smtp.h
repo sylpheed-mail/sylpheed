@@ -101,8 +101,8 @@ struct _SMTPSession
 	GSList *to_list;
 	GSList *cur_to;
 
-	guchar *send_data;
-	guint send_data_len;
+	FILE *send_data_fp;
+	gint send_data_len;
 
 	SMTPAuthType avail_auth_type;
 	SMTPAuthType forced_auth_type;

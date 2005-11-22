@@ -421,6 +421,7 @@ gint uncanonicalize_file_replace(const gchar	*file);
 
 gchar *normalize_newlines	(const gchar	*str);
 
+FILE *get_outgoing_rfc2822_file	(FILE		*fp);
 gchar *get_outgoing_rfc2822_str	(FILE		*fp);
 gchar *generate_mime_boundary	(const gchar	*prefix);
 

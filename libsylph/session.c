@@ -87,8 +87,8 @@ void session_init(Session *session)
 	session->write_buf_p = NULL;
 	session->write_buf_len = 0;
 
-	session->write_data = NULL;
-	session->write_data_p = NULL;
+	session->write_data_fp = NULL;
+	session->write_data_pos = 0;
 	session->write_data_len = 0;
 
 	session->timeout_tag = 0;
@@ -377,18 +377,18 @@ static gboolean session_recv_msg_idle_cb(gpointer data)
 	return FALSE;
 }
 
-gint session_send_data(Session *session, const guchar *data, guint size)
+gint session_send_data(Session *session, FILE *data_fp, guint size)
 {
 	gboolean ret;
 
-	g_return_val_if_fail(session->write_data == NULL, -1);
-	g_return_val_if_fail(data != NULL, -1);
+	g_return_val_if_fail(session->write_data_fp == NULL, -1);
+	g_return_val_if_fail(data_fp != NULL, -1);
 	g_return_val_if_fail(size != 0, -1);
 
 	session->state = SESSION_SEND;
 
-	session->write_data = data;
-	session->write_data_p = session->write_data;
+	session->write_data_fp = data_fp;
+	session->write_data_pos = 0;
 	session->write_data_len = size;
 	g_get_current_time(&session->tv_prev);
 
@@ -673,19 +673,23 @@ static gint session_write_buf(Session *session)
 
 static gint session_write_data(Session *session)
 {
+	gchar buf[SESSION_BUFFSIZE];
 	gint write_len;
 	gint to_write_len;
 
-	g_return_val_if_fail(session->write_data != NULL, -1);
-	g_return_val_if_fail(session->write_data_p != NULL, -1);
+	g_return_val_if_fail(session->write_data_fp != NULL, -1);
+	g_return_val_if_fail(session->write_data_pos >= 0, -1);
 	g_return_val_if_fail(session->write_data_len > 0, -1);
 
-	to_write_len = session->write_data_len -
-		(session->write_data_p - session->write_data);
+	to_write_len = session->write_data_len - session->write_data_pos;
 	to_write_len = MIN(to_write_len, SESSION_BUFFSIZE);
+	if (fread(buf, to_write_len, 1, session->write_data_fp) < 1) {
+		g_warning("session_write_data: reading data from file failed\n");
+		session->state = SESSION_ERROR;
+		return -1;
+	}
 
-	write_len = sock_write(session->sock, (gchar *)session->write_data_p,
-			       to_write_len);
+	write_len = sock_write(session->sock, buf, to_write_len);
 
 	if (write_len < 0) {
 		switch (errno) {
@@ -700,14 +704,21 @@ static gint session_write_data(Session *session)
 	}
 
 	/* incomplete write */
-	if (session->write_data_p - session->write_data + write_len <
-	    session->write_data_len) {
-		session->write_data_p += write_len;
+	if (session->write_data_pos + write_len < session->write_data_len) {
+		session->write_data_pos += write_len;
+		if (write_len < to_write_len) {
+			if (fseek(session->write_data_fp,
+				  session->write_data_pos, SEEK_SET) < 0) {
+				g_warning("session_write_data: file seek failed\n");
+				session->state = SESSION_ERROR;
+				return -1;
+			}
+		}
 		return 1;
 	}
 
-	session->write_data = NULL;
-	session->write_data_p = NULL;
+	session->write_data_fp = NULL;
+	session->write_data_pos = 0;
 	session->write_data_len = 0;
 
 	return 0;
@@ -750,8 +761,8 @@ static gboolean session_write_data_cb(SockInfo *source,
 	gint ret;
 
 	g_return_val_if_fail(condition == G_IO_OUT, FALSE);
-	g_return_val_if_fail(session->write_data != NULL, FALSE);
-	g_return_val_if_fail(session->write_data_p != NULL, FALSE);
+	g_return_val_if_fail(session->write_data_fp != NULL, FALSE);
+	g_return_val_if_fail(session->write_data_pos >= 0, FALSE);
 	g_return_val_if_fail(session->write_data_len > 0, FALSE);
 
 	write_data_len = session->write_data_len;
@@ -771,8 +782,7 @@ static gboolean session_write_data_cb(SockInfo *source,
 			session_set_timeout(session, session->timeout_interval);
 			session->send_data_progressive_notify
 				(session,
-				 session->write_data_p - session->write_data,
-				 write_data_len,
+				 session->write_data_pos, write_data_len,
 				 session->send_data_progressive_notify_data);
 			g_get_current_time(&session->tv_prev);
 		}
