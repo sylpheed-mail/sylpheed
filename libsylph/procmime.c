@@ -575,6 +575,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		Base64Decoder *decoder;
 		gboolean uncanonicalize = FALSE;
 		FILE *tmpfp = outfp;
+#ifndef G_OS_WIN32
 		ContentType content_type;
 
 		content_type = procmime_scan_mime_type(mimeinfo->content_type);
@@ -589,6 +590,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				return NULL;
 			}
 		}
+#endif
 
 		decoder = base64_decoder_new();
 		while (fgets(buf, sizeof(buf), infp) != NULL &&
@@ -604,6 +606,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		}
 		base64_decoder_free(decoder);
 
+#ifndef G_OS_WIN32
 		if (uncanonicalize) {
 			rewind(tmpfp);
 			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
@@ -612,6 +615,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 			}
 			fclose(tmpfp);
 		}
+#endif
 	} else if (mimeinfo->encoding_type == ENC_X_UUENCODE) {
 		gchar outbuf[BUFFSIZE];
 		gint len;
