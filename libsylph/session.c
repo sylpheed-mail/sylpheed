@@ -44,12 +44,19 @@ static gboolean session_timeout_cb	(gpointer	 data);
 static gboolean session_recv_msg_idle_cb	(gpointer	 data);
 static gboolean session_recv_data_idle_cb	(gpointer	 data);
 
+static gboolean session_recv_data_as_file_idle_cb	(gpointer	 data);
+
 static gboolean session_read_msg_cb	(SockInfo	*source,
 					 GIOCondition	 condition,
 					 gpointer	 data);
 static gboolean session_read_data_cb	(SockInfo	*source,
 					 GIOCondition	 condition,
 					 gpointer	 data);
+
+static gboolean session_read_data_as_file_cb	(SockInfo	*source,
+						 GIOCondition	 condition,
+						 gpointer	 data);
+
 static gboolean session_write_msg_cb	(SockInfo	*source,
 					 GIOCondition	 condition,
 					 gpointer	 data);
@@ -82,6 +89,12 @@ void session_init(Session *session)
 
 	session->read_msg_buf = g_string_sized_new(1024);
 	session->read_data_buf = g_byte_array_new();
+	session->read_data_terminator = NULL;
+
+	session->read_data_fp = NULL;
+	session->read_data_pos = 0;
+
+	session->preread_len = 0;
 
 	session->write_buf = NULL;
 	session->write_buf_p = NULL;
@@ -183,6 +196,8 @@ void session_destroy(Session *session)
 	g_string_free(session->read_msg_buf, TRUE);
 	g_byte_array_free(session->read_data_buf, TRUE);
 	g_free(session->read_data_terminator);
+	if (session->read_data_fp)
+		fclose(session->read_data_fp);
 	g_free(session->write_buf);
 
 	debug_print("session (%p): destroyed\n", session);
@@ -437,6 +452,49 @@ static gboolean session_recv_data_idle_cb(gpointer data)
 	return FALSE;
 }
 
+gint session_recv_data_as_file(Session *session, guint size,
+			       const gchar *terminator)
+{
+	g_return_val_if_fail(session->read_data_pos == 0, -1);
+	g_return_val_if_fail(session->read_data_fp == NULL, -1);
+
+	session->state = SESSION_RECV;
+
+	g_free(session->read_data_terminator);
+	session->read_data_terminator = g_strdup(terminator);
+	g_get_current_time(&session->tv_prev);
+
+	session->read_data_fp = my_tmpfile();
+	if (!session->read_data_fp) {
+		FILE_OP_ERROR("session_recv_data_as_file", "my_tmpfile");
+		return -1;
+	}
+
+	if (session->read_buf_len > 0)
+		g_idle_add(session_recv_data_as_file_idle_cb, session);
+	else
+		session->io_tag = sock_add_watch(session->sock, G_IO_IN,
+						 session_read_data_as_file_cb,
+						 session);
+
+	return 0;
+}
+
+static gboolean session_recv_data_as_file_idle_cb(gpointer data)
+{
+	Session *session = SESSION(data);
+	gboolean ret;
+
+	ret = session_read_data_cb(session->sock, G_IO_IN, session);
+
+	if (ret == TRUE)
+		session->io_tag = sock_add_watch(session->sock, G_IO_IN,
+						 session_read_data_as_file_cb,
+						 session);
+
+	return FALSE;
+}
+
 static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 				    gpointer data)
 {
@@ -621,6 +679,176 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 
 	session->recv_data_notify(session, data_len,
 				  session->recv_data_notify_data);
+
+	if (ret < 0)
+		session->state = SESSION_ERROR;
+
+	return FALSE;
+}
+
+#define READ_BUF_LEFT() \
+	(SESSION_BUFFSIZE - (session->read_buf_p - session->read_buf) - \
+	 session->read_buf_len)
+#define PREREAD_SIZE	8
+
+static gboolean session_read_data_as_file_cb(SockInfo *source,
+					     GIOCondition condition,
+					     gpointer data)
+{
+	Session *session = SESSION(data);
+	gint terminator_len;
+	gchar *data_begin_p;
+	gint buf_data_len;
+	gboolean complete = FALSE;
+	gint read_len;
+	gint write_len;
+	gint ret;
+
+	g_return_val_if_fail(condition == G_IO_IN, FALSE);
+
+	session_set_timeout(session, session->timeout_interval);
+
+	if (session->read_buf_len != 0)
+		g_print("already read %d bytes\n", session->read_buf_len);
+
+	if (session->read_buf_len == 0) {
+		read_len = sock_read(session->sock, session->read_buf_p,
+				     READ_BUF_LEFT());
+
+		if (read_len == 0) {
+			g_warning("sock_read: received EOF\n");
+			session->state = SESSION_EOF;
+			return FALSE;
+		}
+
+		if (read_len < 0) {
+			switch (errno) {
+			case EAGAIN:
+				return TRUE;
+			default:
+				g_warning("sock_read: %s\n", g_strerror(errno));
+				session->state = SESSION_ERROR;
+				return FALSE;
+			}
+		}
+
+		g_print("read %d bytes\n", read_len);
+		session->read_buf_len = read_len;
+	}
+
+	terminator_len = strlen(session->read_data_terminator);
+
+	if (session->read_buf_len == 0)
+		return TRUE;
+
+	/* +---------------buf_data_len---------------+
+	 * +--preread_len--+-------read_buf_len-------+
+	 * +---------------+--------------------------+-------------------+ *
+	 * ^data_begin_p   ^read_buf_p
+	 * ^read_buf
+	 */
+
+	data_begin_p = session->read_buf_p - session->preread_len;
+	buf_data_len = session->preread_len + session->read_buf_len;
+
+	/* check if data is terminated */
+	if (buf_data_len >= terminator_len) {
+		if (session->read_data_pos == 0 &&
+		    buf_data_len == terminator_len &&
+		    memcmp(data_begin_p, session->read_data_terminator,
+			   terminator_len) == 0)
+			complete = TRUE;
+		else if (buf_data_len >= terminator_len + 2 &&
+			 memcmp(data_begin_p + buf_data_len -
+				(terminator_len + 2), "\r\n", 2) == 0 &&
+			 memcmp(data_begin_p + buf_data_len -
+				terminator_len, session->read_data_terminator,
+				terminator_len) == 0)
+			complete = TRUE;
+	}
+
+	/* incomplete read */
+	if (!complete) {
+		GTimeVal tv_cur;
+
+		if (buf_data_len <= PREREAD_SIZE) {
+			if (data_begin_p > session->read_buf) {
+				g_memmove(session->read_buf, data_begin_p,
+					  buf_data_len);
+				session->read_buf_p =
+					session->read_buf + buf_data_len;
+			}
+			g_print("buffer data (%d) <= PREREAD_SIZE\n", buf_data_len);
+			session->preread_len = buf_data_len;
+			session->read_buf_len = 0;
+			return TRUE;
+		}
+
+		write_len = buf_data_len - PREREAD_SIZE;
+		g_print("write_len: %d\n", write_len);
+		if (fwrite(data_begin_p, write_len, 1,
+			   session->read_data_fp) < 1) {
+			g_warning("session_read_data_as_file_cb: "
+				  "writing data to file failed\n");
+			session->state = SESSION_ERROR;
+			return FALSE;
+		}
+		session->read_data_pos += write_len;
+		g_print("written %d bytes\n", session->read_data_pos);
+
+		g_memmove(session->read_buf, data_begin_p + write_len,
+			  PREREAD_SIZE);
+		session->read_buf_p = session->read_buf + PREREAD_SIZE;
+		session->preread_len = PREREAD_SIZE;
+		session->read_buf_len = 0;
+
+		g_get_current_time(&tv_cur);
+		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
+		    tv_cur.tv_usec - session->tv_prev.tv_usec >
+		    UI_REFRESH_INTERVAL) {
+			session->recv_data_progressive_notify
+				(session, session->read_data_pos, 0,
+				 session->recv_data_progressive_notify_data);
+			g_get_current_time(&session->tv_prev);
+		}
+
+		return TRUE;
+	}
+
+	/* complete */
+	g_print("data completed\n");
+	if (session->io_tag > 0) {
+		g_source_remove(session->io_tag);
+		session->io_tag = 0;
+	}
+
+	write_len = buf_data_len - terminator_len;
+	if (write_len > 0 && fwrite(data_begin_p, write_len, 1,
+				    session->read_data_fp) < 1) {
+		g_warning("session_read_data_as_file_cb: "
+			  "writing data to file failed\n");
+		session->state = SESSION_ERROR;
+		return FALSE;
+	}
+	session->read_data_pos += write_len;
+	g_print("total %d bytes\n\n", session->read_data_pos);
+
+	rewind(session->read_data_fp);
+
+	/* callback */
+	ret = session->recv_data_as_file_finished
+		(session, session->read_data_fp, session->read_data_pos);
+
+	fclose(session->read_data_fp);
+	session->read_data_fp = NULL;
+
+	session->recv_data_notify(session, session->read_data_pos,
+				  session->recv_data_notify_data);
+
+	session->read_data_pos = 0;
+	session->preread_len = 0;
+	session->read_buf_len = 0;
+	session->read_buf_p = session->read_buf;
 
 	if (ret < 0)
 		session->state = SESSION_ERROR;

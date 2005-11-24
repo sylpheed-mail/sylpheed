@@ -64,7 +64,7 @@ static gint pop3_getsize_list_recv	(Pop3Session *session,
 					 guint        len);
 static gint pop3_retr_send		(Pop3Session *session);
 static gint pop3_retr_recv		(Pop3Session *session,
-					 const gchar *data,
+					 FILE	     *fp,
 					 guint        len);
 static gint pop3_delete_send		(Pop3Session *session);
 static gint pop3_delete_recv		(Pop3Session *session);
@@ -76,7 +76,7 @@ static void pop3_gen_send		(Pop3Session	*session,
 static void pop3_session_destroy	(Session	*session);
 
 static gint pop3_write_msg_to_file	(const gchar	*file,
-					 const gchar	*data,
+					 FILE		*src_fp,
 					 guint		 len);
 
 static Pop3State pop3_lookup_next	(Pop3Session	*session);
@@ -87,6 +87,10 @@ static gint pop3_session_recv_msg		(Session	*session,
 						 const gchar	*msg);
 static gint pop3_session_recv_data_finished	(Session	*session,
 						 guchar		*data,
+						 guint		 len);
+static gint pop3_session_recv_data_as_file_finished
+						(Session	*session,
+						 FILE		*fp,
 						 guint		 len);
 
 
@@ -328,13 +332,13 @@ static gint pop3_retr_send(Pop3Session *session)
 	return PS_SUCCESS;
 }
 
-static gint pop3_retr_recv(Pop3Session *session, const gchar *data, guint len)
+static gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 {
 	gchar *file;
 	gint drop_ok;
 
 	file = get_tmp_file();
-	if (pop3_write_msg_to_file(file, data, len) < 0) {
+	if (pop3_write_msg_to_file(file, fp, len) < 0) {
 		g_free(file);
 		session->error_val = PS_IOERR;
 		return -1;
@@ -411,8 +415,10 @@ Session *pop3_session_new(PrefsAccount *account)
 	SESSION(session)->type = SESSION_POP3;
 
 	SESSION(session)->recv_msg = pop3_session_recv_msg;
-	SESSION(session)->recv_data_finished = pop3_session_recv_data_finished;
 	SESSION(session)->send_data_finished = NULL;
+	SESSION(session)->recv_data_finished = pop3_session_recv_data_finished;
+	SESSION(session)->recv_data_as_file_finished =
+		pop3_session_recv_data_as_file_finished;
 
 	SESSION(session)->destroy = pop3_session_destroy;
 
@@ -522,11 +528,11 @@ gint pop3_write_uidl_list(Pop3Session *session)
 	return 0;
 }
 
-static gint pop3_write_msg_to_file(const gchar *file, const gchar *data,
-				   guint len)
+static gint pop3_write_msg_to_file(const gchar *file, FILE *src_fp, guint len)
 {
 	FILE *fp;
-	const gchar *prev, *cur;
+	gchar buf[BUFFSIZE];
+	gchar last_ch = '\0';
 
 	g_return_val_if_fail(file != NULL, -1);
 
@@ -538,54 +544,40 @@ static gint pop3_write_msg_to_file(const gchar *file, const gchar *data,
 	if (change_file_mode_rw(fp, file) < 0)
 		FILE_OP_ERROR(file, "chmod");
 
-	/* +------------------+----------------+--------------------------+ *
-	 * ^data              ^prev            ^cur             data+len-1^ */
+	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
+		gchar *p = buf;
+		gint len;
 
-	prev = data;
-	while ((cur = (gchar *)my_memmem(prev, len - (prev - data), "\r\n", 2))
-	       != NULL) {
-		if ((cur > prev && fwrite(prev, cur - prev, 1, fp) < 1) ||
-		    fputc('\n', fp) == EOF) {
-			FILE_OP_ERROR(file, "fwrite");
+		len = strlen(buf);
+		if (len > 0) {
+			last_ch = buf[len - 1];
+			if (last_ch == '\n' && len > 1 &&
+			    buf[len - 2] == '\r') {
+				buf[len - 2] = '\n';
+				buf[len - 1] = '\0';
+			} else if (last_ch == '\r')
+				buf[len - 1] = '\0';
+		} else
+			last_ch = '\0';
+
+		if ((last_ch == '\0' || last_ch == '\n') &&
+		    *p == '.' && *(p + 1) == '.')
+			p++;
+
+		if (fputs(p, fp) == EOF) {
+			FILE_OP_ERROR(file, "fputs");
 			g_warning("can't write to file: %s\n", file);
 			fclose(fp);
 			g_unlink(file);
 			return -1;
 		}
-
-		if (cur == data + len - 1) {
-			prev = cur + 1;
-			break;
-		}
-
-		if (*(cur + 1) == '\n')
-			prev = cur + 2;
-		else
-			prev = cur + 1;
-
-		if (prev - data < len - 1 && *prev == '.' && *(prev + 1) == '.')
-			prev++;
-
-		if (prev - data >= len)
-			break;
 	}
 
-	if (prev - data < len &&
-	    fwrite(prev, len - (prev - data), 1, fp) < 1) {
-		FILE_OP_ERROR(file, "fwrite");
-		g_warning("can't write to file: %s\n", file);
+	if (ferror(src_fp)) {
+		FILE_OP_ERROR(file, "fgets");
 		fclose(fp);
 		g_unlink(file);
 		return -1;
-	}
-	if (data[len - 1] != '\r' && data[len - 1] != '\n') {
-		if (fputc('\n', fp) == EOF) {
-			FILE_OP_ERROR(file, "fputc");
-			g_warning("can't write to file: %s\n", file);
-			fclose(fp);
-			g_unlink(file);
-			return -1;
-		}
 	}
 
 	if (fclose(fp) == EOF) {
@@ -786,7 +778,7 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 		break;
 	case POP3_RETR:
 		pop3_session->state = POP3_RETR_RECV;
-		session_recv_data(session, 0, ".\r\n");
+		session_recv_data_as_file(session, 0, ".\r\n");
 		break;
 	case POP3_DELETE:
 		pop3_delete_recv(pop3_session);
@@ -834,28 +826,37 @@ static gint pop3_session_recv_data_finished(Session *session, guchar *data,
 		} else
 			return -1;
 		break;
-	case POP3_RETR_RECV:
-		if (pop3_retr_recv(pop3_session, (gchar *)data, len) < 0)
-			return -1;
-
-		if (pop3_session->msg[pop3_session->cur_msg].recv_time
-		    == RECV_TIME_DELETE ||
-		    (pop3_session->ac_prefs->rmmail &&
-		     pop3_session->ac_prefs->msg_leave_time == 0 &&
-		     pop3_session->msg[pop3_session->cur_msg].recv_time
-		     != RECV_TIME_KEEP))
-			pop3_delete_send(pop3_session);
-		else if (pop3_session->cur_msg == pop3_session->count)
-			pop3_logout_send(pop3_session);
-		else {
-			pop3_session->cur_msg++;
-			if (pop3_lookup_next(pop3_session) == POP3_ERROR)
-				return -1;
-		}
-		break;
 	case POP3_ERROR:
 	default:
 		return -1;
+	}
+
+	return 0;
+}
+
+static gint pop3_session_recv_data_as_file_finished(Session *session, FILE *fp,
+						    guint len)
+{
+	Pop3Session *pop3_session = POP3_SESSION(session);
+
+	g_return_val_if_fail(pop3_session->state == POP3_RETR_RECV, -1);
+
+	if (pop3_retr_recv(pop3_session, fp, len) < 0)
+		return -1;
+
+	if (pop3_session->msg[pop3_session->cur_msg].recv_time
+	    == RECV_TIME_DELETE ||
+	    (pop3_session->ac_prefs->rmmail &&
+	     pop3_session->ac_prefs->msg_leave_time == 0 &&
+	     pop3_session->msg[pop3_session->cur_msg].recv_time
+	     != RECV_TIME_KEEP))
+		pop3_delete_send(pop3_session);
+	else if (pop3_session->cur_msg == pop3_session->count)
+		pop3_logout_send(pop3_session);
+	else {
+		pop3_session->cur_msg++;
+		if (pop3_lookup_next(pop3_session) == POP3_ERROR)
+			return -1;
 	}
 
 	return 0;

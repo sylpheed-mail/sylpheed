@@ -111,9 +111,18 @@ struct _Session
 	gchar *read_buf_p;
 	gint read_buf_len;
 
+	/* buffer for short messages */
 	GString *read_msg_buf;
+
+	/* buffer for relatively short multiple lines data */
 	GByteArray *read_data_buf;
 	gchar *read_data_terminator;
+
+	/* buffer for large data */
+	FILE *read_data_fp;
+	gint read_data_pos;
+
+	gint preread_len;
 
 	/* buffer for short messages */
 	gchar *write_buf;
@@ -139,6 +148,10 @@ struct _Session
 	gint (*recv_data_finished)	(Session	*session,
 					 guchar		*data,
 					 guint		 len);
+
+	gint (*recv_data_as_file_finished)	(Session	*session,
+						 FILE		*fp,
+						 guint		 len);
 
 	void (*destroy)			(Session	*session);
 
@@ -201,5 +214,9 @@ gint session_send_data	(Session	*session,
 gint session_recv_data	(Session	*session,
 			 guint		 size,
 			 const gchar	*terminator);
+
+gint session_recv_data_as_file	(Session	*session,
+				 guint		 size,
+				 const gchar	*terminator);
 
 #endif /* __SESSION_H__ */
