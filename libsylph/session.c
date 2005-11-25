@@ -485,7 +485,7 @@ static gboolean session_recv_data_as_file_idle_cb(gpointer data)
 	Session *session = SESSION(data);
 	gboolean ret;
 
-	ret = session_read_data_cb(session->sock, G_IO_IN, session);
+	ret = session_read_data_as_file_cb(session->sock, G_IO_IN, session);
 
 	if (ret == TRUE)
 		session->io_tag = sock_add_watch(session->sock, G_IO_IN,
@@ -708,7 +708,7 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 
 	session_set_timeout(session, session->timeout_interval);
 
-	if (session->read_buf_len != 0)
+	if (session->read_buf_len > 0)
 		g_print("already read %d bytes\n", session->read_buf_len);
 
 	if (session->read_buf_len == 0) {
