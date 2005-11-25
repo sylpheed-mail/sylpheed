@@ -246,6 +246,8 @@ static void size_allocate_cb(GtkWidget *widget,GtkAllocation *allocation,
 		}
 		if (!imageview->scrolledwin->parent)
 			return;
+		if (!imageview->image_data)
+			return;
 		imageview_show_image(imageview, NULL, NULL, TRUE);
 		imageview->resizing = TRUE;
 	}

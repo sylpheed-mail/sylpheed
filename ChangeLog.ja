@@ -1,5 +1,12 @@
 2005-11-25
 
+	* src/imageview.c: size_allocate_cb(): image_data が存在しなければ
+	  イメージビューを更新しないようにした。
+	* src/mimeview.c: mimeview_change_view_type(): 隠したビューをクリア
+	  するようにした。
+
+2005-11-25
+
 	* libsylph/session.[ch]: session_read_data_as_file_cb(): バッファが
 	  半分以上満たされるまでファイルに書き出さないようにした。バッファ
 	  サイズを拡大。

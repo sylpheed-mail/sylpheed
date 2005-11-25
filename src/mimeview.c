@@ -729,6 +729,17 @@ static void mimeview_change_view_type(MimeView *mimeview, MimeViewType type)
 		g_list_free(children);
 	}
 
+	switch (mimeview->type) {
+	case MIMEVIEW_IMAGE:
+		imageview_clear(mimeview->imageview);
+		break;
+	case MIMEVIEW_TEXT:
+		textview_clear(mimeview->textview);
+		break;
+	default:
+		break;
+	}
+
 	switch (type) {
 	case MIMEVIEW_IMAGE:
 		gtk_container_add(GTK_CONTAINER(mimeview->mime_vbox),

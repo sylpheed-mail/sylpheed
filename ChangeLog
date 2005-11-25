@@ -1,5 +1,11 @@
 2005-11-25
 
+	* src/imageview.c: size_allocate_cb(): don't update image view if
+	  image_data doesn't exist.
+	* src/mimeview.c: mimeview_change_view_type(): clear hidden view.
+
+2005-11-25
+
 	* libsylph/session.[ch]: session_read_data_as_file_cb(): don't write
 	  to file until buffer is filled more than the half. Extended the
 	  buffer size.
