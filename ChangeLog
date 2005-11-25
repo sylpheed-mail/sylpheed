@@ -1,5 +1,12 @@
 2005-11-25
 
+	* libsylph/pop.c
+	  libsylph/recv.c: don't convert CR+LF to LF.
+	* libsylph/procmime.c: procmime_decode_content(): don't uncanonicalize
+	  message/rfc822.
+
+2005-11-25
+
 	* src/imageview.c: size_allocate_cb(): don't update image view if
 	  image_data doesn't exist.
 	* src/mimeview.c: mimeview_change_view_type(): clear hidden view.

@@ -130,6 +130,7 @@ gint recv_write(SockInfo *sock, FILE *fp)
 	gint len;
 	gint count = 0;
 	gint bytes = 0;
+	gchar *p;
 	GTimeVal tv_prev, tv_cur;
 
 	g_get_current_time(&tv_prev);
@@ -164,19 +165,13 @@ gint recv_write(SockInfo *sock, FILE *fp)
 			}
 		}
 
-		if (len > 1 && buf[len - 1] == '\n' && buf[len - 2] == '\r') {
-			buf[len - 2] = '\n';
-			buf[len - 1] = '\0';
-			len--;
-		}
-
+		p = buf;
 		if (buf[0] == '.' && buf[1] == '.')
-			memmove(buf, buf + 1, len--);
+			p++;
+		else if (!strncmp(buf, ">From ", 6))
+			p++;
 
-		if (!strncmp(buf, ">From ", 6))
-			memmove(buf, buf + 1, len--);
-
-		if (fp && fputs(buf, fp) == EOF) {
+		if (fp && fputs(p, fp) == EOF) {
 			perror("fputs");
 			g_warning(_("Can't write to file.\n"));
 			fp = NULL;
@@ -190,46 +185,27 @@ gint recv_write(SockInfo *sock, FILE *fp)
 
 gint recv_bytes_write(SockInfo *sock, glong size, FILE *fp)
 {
-	gchar *buf;
-	gchar *prev, *cur;
+	gchar buf[BUFFSIZE];
+	glong count = 0;
 
 	if (size == 0)
 		return 0;
 
-	buf = recv_bytes(sock, size);
-	if (!buf)
-		return -2;
+	do {
+		gint read_count, to_read;
 
-	/* +------------------+----------------+--------------------------+ *
-	 * ^buf               ^prev            ^cur             buf+size-1^ */
+		to_read = MIN(sizeof(buf), size - count);
+		read_count = sock_read(sock, buf, to_read);
+		if (read_count <= 0)
+			return -2;
 
-	prev = buf;
-	while ((cur = memchr(prev, '\r', size - (prev - buf))) != NULL) {
-		if (cur == buf + size - 1) break;
-
-		if (fp && (fwrite(prev, sizeof(gchar), cur - prev, fp) == EOF ||
-		           fwrite("\n", sizeof(gchar), 1, fp) == EOF)) {
+		if (fp && fwrite(buf, read_count, 1, fp) < 1) {
 			perror("fwrite");
 			g_warning(_("Can't write to file.\n"));
 			fp = NULL;
 		}
-
-		if (*(cur + 1) == '\n')
-			prev = cur + 2;
-		else
-			prev = cur + 1;
-
-		if (prev - buf >= size) break;
-	}
-
-	if (prev - buf < size && fp &&
-	    fwrite(buf, sizeof(gchar), size - (prev - buf), fp) == EOF) {
-		perror("fwrite");
-		g_warning(_("Can't write to file.\n"));
-		fp = NULL;
-	}
-
-	g_free(buf);
+		count += read_count;
+	} while (count < size);
 
 	if (!fp) return -1;
 

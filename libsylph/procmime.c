@@ -573,15 +573,14 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		gchar outbuf[BUFFSIZE];
 		gint len;
 		Base64Decoder *decoder;
-		gboolean uncanonicalize = FALSE;
 		FILE *tmpfp = outfp;
 #ifndef G_OS_WIN32
+		gboolean uncanonicalize = FALSE;
 		ContentType content_type;
 
 		content_type = procmime_scan_mime_type(mimeinfo->content_type);
 		if (content_type == MIME_TEXT ||
-		    content_type == MIME_TEXT_HTML ||
-		    content_type == MIME_MESSAGE_RFC822) {
+		    content_type == MIME_TEXT_HTML) {
 			uncanonicalize = TRUE;
 			tmpfp = my_tmpfile();
 			if (!tmpfp) {
