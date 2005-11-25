@@ -637,9 +637,23 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				flag = TRUE;
 		}
 	} else {
+#ifndef G_OS_WIN32
+		gboolean uncanonicalize = FALSE;
+		ContentType content_type;
+
+		content_type = procmime_scan_mime_type(mimeinfo->content_type);
+		if (content_type == MIME_TEXT ||
+		    content_type == MIME_TEXT_HTML)
+			uncanonicalize = TRUE;
+#endif
+
 		while (fgets(buf, sizeof(buf), infp) != NULL &&
 		       (!boundary ||
 			!IS_BOUNDARY(buf, boundary, boundary_len))) {
+#ifndef G_OS_WIN32
+			if (uncanonicalize)
+				strcrchomp(buf);
+#endif
 			fputs(buf, outfp);
 		}
 	}
