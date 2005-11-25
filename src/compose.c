@@ -3013,19 +3013,14 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		return -1;
 	}
 
-#if USE_GPGME
-	if (!rfc2015_is_available() || is_draft) {
-		uncanonicalize_file_replace(file);
-		return 0;
+	if (canonicalize_file_replace(file) < 0) {
+		g_unlink(file);
+		return -1;
 	}
 
-	if ((compose->use_signing && !compose->account->clearsign) ||
-	    compose->use_encryption) {
-		if (canonicalize_file_replace(file) < 0) {
-			g_unlink(file);
-			return -1;
-		}
-	}
+#if USE_GPGME
+	if (!rfc2015_is_available() || is_draft)
+		return 0;
 
 	if (compose->use_signing && !compose->account->clearsign) {
 		GSList *key_list;
@@ -3044,8 +3039,6 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	}
 #endif /* USE_GPGME */
-
-	uncanonicalize_file_replace(file);
 
 	return 0;
 }
