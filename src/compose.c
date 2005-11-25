@@ -3177,6 +3177,10 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 		g_unlink(file);
 		return -1;
 	}
+	if (canonicalize_file_replace(file) < 0) {
+		g_unlink(file);
+		return -1;
+	}
 
 	return 0;
 error:
@@ -3246,40 +3250,40 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	}
 
 	/* queueing variables */
-	fprintf(fp, "AF:\n");
-	fprintf(fp, "NF:0\n");
-	fprintf(fp, "PS:10\n");
-	fprintf(fp, "SRH:1\n");
-	fprintf(fp, "SFN:\n");
-	fprintf(fp, "DSR:\n");
+	fprintf(fp, "AF:\r\n");
+	fprintf(fp, "NF:0\r\n");
+	fprintf(fp, "PS:10\r\n");
+	fprintf(fp, "SRH:1\r\n");
+	fprintf(fp, "SFN:\r\n");
+	fprintf(fp, "DSR:\r\n");
 	if (compose->msgid)
-		fprintf(fp, "MID:<%s>\n", compose->msgid);
+		fprintf(fp, "MID:<%s>\r\n", compose->msgid);
 	else
-		fprintf(fp, "MID:\n");
-	fprintf(fp, "CFG:\n");
-	fprintf(fp, "PT:0\n");
-	fprintf(fp, "S:%s\n", compose->account->address);
-	fprintf(fp, "RQ:\n");
+		fprintf(fp, "MID:\r\n");
+	fprintf(fp, "CFG:\r\n");
+	fprintf(fp, "PT:0\r\n");
+	fprintf(fp, "S:%s\r\n", compose->account->address);
+	fprintf(fp, "RQ:\r\n");
 	if (compose->account->smtp_server)
-		fprintf(fp, "SSV:%s\n", compose->account->smtp_server);
+		fprintf(fp, "SSV:%s\r\n", compose->account->smtp_server);
 	else
-		fprintf(fp, "SSV:\n");
+		fprintf(fp, "SSV:\r\n");
 	if (compose->account->nntp_server)
-		fprintf(fp, "NSV:%s\n", compose->account->nntp_server);
+		fprintf(fp, "NSV:%s\r\n", compose->account->nntp_server);
 	else
-		fprintf(fp, "NSV:\n");
-	fprintf(fp, "SSH:\n");
+		fprintf(fp, "NSV:\r\n");
+	fprintf(fp, "SSH:\r\n");
 	if (compose->to_list) {
 		fprintf(fp, "R:<%s>", (gchar *)compose->to_list->data);
 		for (cur = compose->to_list->next; cur != NULL;
 		     cur = cur->next)
 			fprintf(fp, ",<%s>", (gchar *)cur->data);
-		fprintf(fp, "\n");
+		fprintf(fp, "\r\n");
 	} else
-		fprintf(fp, "R:\n");
+		fprintf(fp, "R:\r\n");
 	/* Sylpheed account ID */
-	fprintf(fp, "AID:%d\n", compose->account->account_id);
-	fprintf(fp, "\n");
+	fprintf(fp, "AID:%d\r\n", compose->account->account_id);
+	fprintf(fp, "\r\n");
 
 	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
 		if (fputs(buf, fp) == EOF) {
