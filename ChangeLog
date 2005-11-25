@@ -1,5 +1,11 @@
 2005-11-25
 
+	* libsylph/session.[ch]: session_read_data_as_file_cb(): don't write
+	  to file until buffer is filled more than the half. Extended the
+	  buffer size.
+
+2005-11-25
+
 	* libsylph/session.c: session_recv_data_as_file_idle_cb(): fixed a bug
 	  that lost first part of message data.
 

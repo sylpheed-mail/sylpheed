@@ -31,7 +31,7 @@
 
 #include "socket.h"
 
-#define SESSION_BUFFSIZE	4096
+#define SESSION_BUFFSIZE	8192
 
 typedef struct _Session	Session;
 

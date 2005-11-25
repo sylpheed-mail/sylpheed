@@ -775,10 +775,19 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 			if (data_begin_p > session->read_buf) {
 				g_memmove(session->read_buf, data_begin_p,
 					  buf_data_len);
-				session->read_buf_p =
-					session->read_buf + buf_data_len;
+				data_begin_p = session->read_buf;
+				session->read_buf_p = session->read_buf +
+					session->preread_len;
 			}
 			g_print("buffer data (%d) <= PREREAD_SIZE\n", buf_data_len);
+			session->read_buf_p += session->read_buf_len;
+			session->preread_len = buf_data_len;
+			session->read_buf_len = 0;
+			return TRUE;
+		}
+
+		if (READ_BUF_LEFT() >= (SESSION_BUFFSIZE / 2)) {
+			session->read_buf_p += session->read_buf_len;
 			session->preread_len = buf_data_len;
 			session->read_buf_len = 0;
 			return TRUE;

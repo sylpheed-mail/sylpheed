@@ -1,5 +1,11 @@
 2005-11-25
 
+	* libsylph/session.[ch]: session_read_data_as_file_cb(): バッファが
+	  半分以上満たされるまでファイルに書き出さないようにした。バッファ
+	  サイズを拡大。
+
+2005-11-25
+
 	* libsylph/session.c: session_recv_data_as_file_idle_cb(): メッセージ
 	  データの先頭部分を失うバグを修正。
 
