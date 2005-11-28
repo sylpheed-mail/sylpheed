@@ -61,7 +61,6 @@ struct _PrefsCommon
 	/* Send */
 	gboolean savemsg;
 	gboolean filter_sent;
-	gchar *outgoing_charset;
 	TransferEncodingMethod encoding_method;
 
 	gboolean allow_jisx0201_kana;
@@ -180,6 +179,7 @@ struct _PrefsCommon
 	/* Encoding */
 	gchar *force_charset;
 	gchar *default_encoding;
+	gchar *outgoing_charset;
 
 	gboolean show_other_header;
 	GSList *disphdr_list;

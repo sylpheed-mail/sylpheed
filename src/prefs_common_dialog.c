@@ -79,7 +79,6 @@ static struct Send {
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
 
-	GtkWidget *optmenu_charset;
 	GtkWidget *optmenu_encoding_method;
 } p_send;
 
@@ -133,7 +132,8 @@ static struct Display {
 	GtkWidget *chkbtn_expand_thread;
 	GtkWidget *entry_datefmt;
 
-	GtkWidget *optmenu_encoding;
+	GtkWidget *optmenu_dispencoding;
+	GtkWidget *optmenu_outencoding;
 } display;
 
 static struct Message {
@@ -280,9 +280,6 @@ static PrefsUIData ui_data[] = {
 	{"filter_sent_message", &p_send.checkbtn_filter_sent,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
-	{"outgoing_charset", &p_send.optmenu_charset,
-	 prefs_common_charset_set_data_from_optmenu,
-	 prefs_common_charset_set_optmenu},
 	{"encoding_method", &p_send.optmenu_encoding_method,
 	 prefs_common_encoding_set_data_from_optmenu,
 	 prefs_common_encoding_set_optmenu},
@@ -399,7 +396,10 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Encoding */
-	{"default_encoding", &display.optmenu_encoding,
+	{"default_encoding", &display.optmenu_dispencoding,
+	 prefs_common_charset_set_data_from_optmenu,
+	 prefs_common_charset_set_optmenu},
+	{"outgoing_charset", &display.optmenu_outencoding,
 	 prefs_common_charset_set_data_from_optmenu,
 	 prefs_common_charset_set_optmenu},
 
@@ -832,12 +832,9 @@ static void prefs_send_create(void)
 	GtkWidget *hbox1;
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
-	GtkWidget *label_outcharset;
-	GtkWidget *optmenu_charset;
+	GtkWidget *optmenu_trencoding;
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
-	GtkWidget *label_charset_desc;
-	GtkWidget *optmenu_encoding;
 	GtkWidget *label_encoding;
 	GtkWidget *label_encoding_desc;
 
@@ -860,32 +857,14 @@ static void prefs_send_create(void)
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
 
-	label_outcharset = gtk_label_new (_("Outgoing encoding"));
-	gtk_widget_show (label_outcharset);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_outcharset, FALSE, FALSE, 0);
-
-	optmenu_charset = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_charset);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_charset, FALSE, FALSE, 0);
-
-	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_charset),
-					   TRUE);
-
-	PACK_SMALL_LABEL (vbox1, label_charset_desc,
-			  _("If `Automatic' is selected, the optimal encoding "
-			    "for the current locale will be used."));
-
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-
 	label_encoding = gtk_label_new (_("Transfer encoding"));
 	gtk_widget_show (label_encoding);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
 
-	optmenu_encoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
+	optmenu_trencoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_trencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_trencoding,
+			    FALSE, FALSE, 0);
 
 	optmenu_menu = gtk_menu_new ();
 
@@ -899,7 +878,7 @@ static void prefs_send_create(void)
 
 #undef SET_MENUITEM
 
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_encoding),
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_trencoding),
 				  optmenu_menu);
 
 	PACK_SMALL_LABEL (vbox1, label_encoding_desc,
@@ -909,8 +888,7 @@ static void prefs_send_create(void)
 	p_send.checkbtn_savemsg     = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 
-	p_send.optmenu_charset         = optmenu_charset;
-	p_send.optmenu_encoding_method = optmenu_encoding;
+	p_send.optmenu_encoding_method = optmenu_trencoding;
 }
 
 static void prefs_compose_create(void)
@@ -1342,8 +1320,10 @@ static void prefs_display_create(void)
 
 	GtkWidget *msg_wid;
 
-	GtkWidget *label_encoding;
-	GtkWidget *optmenu_encoding;
+	GtkWidget *label_dispencoding;
+	GtkWidget *optmenu_dispencoding;
+	GtkWidget *label_outencoding;
+	GtkWidget *optmenu_outencoding;
 	GtkWidget *label_encoding_desc;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -1471,19 +1451,42 @@ static void prefs_display_create(void)
 	gtk_widget_show (hbox1);
 	gtk_box_pack_start (GTK_BOX (vbox_tab), hbox1, FALSE, FALSE, 0);
 
-	label_encoding = gtk_label_new (_("Default character encoding"));
-	gtk_widget_show (label_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
+	label_dispencoding = gtk_label_new (_("Default character encoding"));
+	gtk_widget_show (label_dispencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_dispencoding,
+			    FALSE, FALSE, 0);
 
-	optmenu_encoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_encoding, FALSE, FALSE, 0);
+	optmenu_dispencoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_dispencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_dispencoding,
+			    FALSE, FALSE, 0);
 
-	prefs_common_set_encoding_optmenu (GTK_OPTION_MENU (optmenu_encoding),
-					   FALSE);
+	prefs_common_set_encoding_optmenu
+		(GTK_OPTION_MENU (optmenu_dispencoding), FALSE);
 
 	PACK_SMALL_LABEL (vbox_tab, label_encoding_desc,
-			  _("This is used for messages with missing character encoding."));
+			  _("This is used when displaying messages with missing character encoding."));
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), hbox1, FALSE, FALSE, 0);
+
+	label_outencoding = gtk_label_new (_("Outgoing character encoding"));
+	gtk_widget_show (label_outencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_outencoding,
+			    FALSE, FALSE, 0);
+
+	optmenu_outencoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_outencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_outencoding,
+			    FALSE, FALSE, 0);
+
+	prefs_common_set_encoding_optmenu
+		(GTK_OPTION_MENU (optmenu_outencoding), TRUE);
+
+	PACK_SMALL_LABEL (vbox_tab, label_encoding_desc,
+			  _("If `Automatic' is selected, the optimal encoding "
+			    "for the current locale will be used."));
 
 	display.fontbtn_textfont = fontbtn_textfont;
 
@@ -1496,7 +1499,8 @@ static void prefs_display_create(void)
 	display.chkbtn_expand_thread = chkbtn_expand_thread;
 	display.entry_datefmt        = entry_datefmt;
 
-	display.optmenu_encoding = optmenu_encoding;
+	display.optmenu_dispencoding = optmenu_dispencoding;
+	display.optmenu_outencoding  = optmenu_outencoding;
 }
 
 static GtkWidget *prefs_message_create(void)

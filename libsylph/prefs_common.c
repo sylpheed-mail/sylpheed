@@ -56,7 +56,6 @@ static PrefParam param[] = {
 	{"save_message", "TRUE", &prefs_common.savemsg, P_BOOL},
 	{"filter_sent_message", "FALSE", &prefs_common.filter_sent, P_BOOL},
 
-	{"outgoing_charset", NULL, &prefs_common.outgoing_charset, P_STRING},
 	{"encoding_method", "0", &prefs_common.encoding_method, P_ENUM},
 
 	{"allow_jisx0201_kana", "FALSE", &prefs_common.allow_jisx0201_kana,
@@ -249,6 +248,7 @@ static PrefParam param[] = {
 
 	/* Encoding */
 	{"default_encoding", NULL, &prefs_common.default_encoding, P_STRING},
+	{"outgoing_charset", NULL, &prefs_common.outgoing_charset, P_STRING},
 
 	{"show_other_header", "FALSE", &prefs_common.show_other_header, P_BOOL},
 
