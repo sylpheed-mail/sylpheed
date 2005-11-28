@@ -166,6 +166,12 @@ gint recv_write(SockInfo *sock, FILE *fp)
 		}
 
 		p = buf;
+
+		if (len > 1 && buf[len - 1] == '\n' && buf[len - 2] == '\r') {
+			buf[len - 2] = '\n';
+			buf[len - 1] = '\0';
+		}
+
 		if (buf[0] == '.' && buf[1] == '.')
 			p++;
 		else if (!strncmp(buf, ">From ", 6))
@@ -185,27 +191,46 @@ gint recv_write(SockInfo *sock, FILE *fp)
 
 gint recv_bytes_write(SockInfo *sock, glong size, FILE *fp)
 {
-	gchar buf[BUFFSIZE];
-	glong count = 0;
+	gchar *buf;
+	gchar *prev, *cur;
 
 	if (size == 0)
 		return 0;
 
-	do {
-		gint read_count, to_read;
+	buf = recv_bytes(sock, size);
+	if (!buf)
+		return -2;
 
-		to_read = MIN(sizeof(buf), size - count);
-		read_count = sock_read(sock, buf, to_read);
-		if (read_count <= 0)
-			return -2;
+	/* +------------------+----------------+--------------------------+ *
+	 * ^buf               ^prev            ^cur             buf+size-1^ */
 
-		if (fp && fwrite(buf, read_count, 1, fp) < 1) {
+	prev = buf;
+	while ((cur = memchr(prev, '\r', size - (prev - buf))) != NULL) {
+		if (cur == buf + size - 1) break;
+
+		if (fp && (fwrite(prev, sizeof(gchar), cur - prev, fp) == EOF ||
+		           fwrite("\n", sizeof(gchar), 1, fp) == EOF)) {
 			perror("fwrite");
 			g_warning(_("Can't write to file.\n"));
 			fp = NULL;
 		}
-		count += read_count;
-	} while (count < size);
+
+		if (*(cur + 1) == '\n')
+			prev = cur + 2;
+		else
+			prev = cur + 1;
+
+		if (prev - buf >= size) break;
+	}
+
+	if (prev - buf < size && fp &&
+	    fwrite(buf, sizeof(gchar), size - (prev - buf), fp) == EOF) {
+		perror("fwrite");
+		g_warning(_("Can't write to file.\n"));
+		fp = NULL;
+	}
+
+	g_free(buf);
 
 	if (!fp) return -1;
 

@@ -549,9 +549,15 @@ static gint pop3_write_msg_to_file(const gchar *file, FILE *src_fp, guint len)
 		gint len;
 
 		len = strlen(buf);
-		if (len > 0)
+		if (len > 0) {
 			last_ch = buf[len - 1];
-		else
+			if (last_ch == '\n' && len > 1 &&
+			    buf[len - 2] == '\r') {
+				buf[len - 2] = '\n';
+				buf[len - 1] = '\0';
+			} else if (last_ch == '\r')
+				buf[len - 1] = '\0';
+		} else
 			last_ch = '\0';
 
 		if ((last_ch == '\0' || last_ch == '\n') &&

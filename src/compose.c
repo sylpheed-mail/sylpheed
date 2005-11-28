@@ -3013,14 +3013,19 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		return -1;
 	}
 
-	if (canonicalize_file_replace(file) < 0) {
-		g_unlink(file);
-		return -1;
+#if USE_GPGME
+	if (!rfc2015_is_available() || is_draft) {
+		uncanonicalize_file_replace(file);
+		return 0;
 	}
 
-#if USE_GPGME
-	if (!rfc2015_is_available() || is_draft)
-		return 0;
+	if ((compose->use_signing && !compose->account->clearsign) ||
+	    compose->use_encryption) {
+		if (canonicalize_file_replace(file) < 0) {
+			g_unlink(file);
+			return -1;
+		}
+	}
 
 	if (compose->use_signing && !compose->account->clearsign) {
 		GSList *key_list;
@@ -3039,6 +3044,8 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	}
 #endif /* USE_GPGME */
+
+	uncanonicalize_file_replace(file);
 
 	return 0;
 }
@@ -3177,10 +3184,6 @@ static gint compose_redirect_write_to_file(Compose *compose, const gchar *file)
 		g_unlink(file);
 		return -1;
 	}
-	if (canonicalize_file_replace(file) < 0) {
-		g_unlink(file);
-		return -1;
-	}
 
 	return 0;
 error:
@@ -3250,40 +3253,40 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	}
 
 	/* queueing variables */
-	fprintf(fp, "AF:\r\n");
-	fprintf(fp, "NF:0\r\n");
-	fprintf(fp, "PS:10\r\n");
-	fprintf(fp, "SRH:1\r\n");
-	fprintf(fp, "SFN:\r\n");
-	fprintf(fp, "DSR:\r\n");
+	fprintf(fp, "AF:\n");
+	fprintf(fp, "NF:0\n");
+	fprintf(fp, "PS:10\n");
+	fprintf(fp, "SRH:1\n");
+	fprintf(fp, "SFN:\n");
+	fprintf(fp, "DSR:\n");
 	if (compose->msgid)
-		fprintf(fp, "MID:<%s>\r\n", compose->msgid);
+		fprintf(fp, "MID:<%s>\n", compose->msgid);
 	else
-		fprintf(fp, "MID:\r\n");
-	fprintf(fp, "CFG:\r\n");
-	fprintf(fp, "PT:0\r\n");
-	fprintf(fp, "S:%s\r\n", compose->account->address);
-	fprintf(fp, "RQ:\r\n");
+		fprintf(fp, "MID:\n");
+	fprintf(fp, "CFG:\n");
+	fprintf(fp, "PT:0\n");
+	fprintf(fp, "S:%s\n", compose->account->address);
+	fprintf(fp, "RQ:\n");
 	if (compose->account->smtp_server)
-		fprintf(fp, "SSV:%s\r\n", compose->account->smtp_server);
+		fprintf(fp, "SSV:%s\n", compose->account->smtp_server);
 	else
-		fprintf(fp, "SSV:\r\n");
+		fprintf(fp, "SSV:\n");
 	if (compose->account->nntp_server)
-		fprintf(fp, "NSV:%s\r\n", compose->account->nntp_server);
+		fprintf(fp, "NSV:%s\n", compose->account->nntp_server);
 	else
-		fprintf(fp, "NSV:\r\n");
-	fprintf(fp, "SSH:\r\n");
+		fprintf(fp, "NSV:\n");
+	fprintf(fp, "SSH:\n");
 	if (compose->to_list) {
 		fprintf(fp, "R:<%s>", (gchar *)compose->to_list->data);
 		for (cur = compose->to_list->next; cur != NULL;
 		     cur = cur->next)
 			fprintf(fp, ",<%s>", (gchar *)cur->data);
-		fprintf(fp, "\r\n");
+		fprintf(fp, "\n");
 	} else
-		fprintf(fp, "R:\r\n");
+		fprintf(fp, "R:\n");
 	/* Sylpheed account ID */
-	fprintf(fp, "AID:%d\r\n", compose->account->account_id);
-	fprintf(fp, "\r\n");
+	fprintf(fp, "AID:%d\n", compose->account->account_id);
+	fprintf(fp, "\n");
 
 	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
 		if (fputs(buf, fp) == EOF) {
