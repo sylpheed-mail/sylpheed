@@ -543,6 +543,8 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 	gchar *boundary = NULL;
 	gint boundary_len = 0;
 	gboolean tmp_file = FALSE;
+	gboolean normalize_lbreak = FALSE;
+	ContentType content_type;
 
 	g_return_val_if_fail(infp != NULL, NULL);
 	g_return_val_if_fail(mimeinfo != NULL, NULL);
@@ -561,27 +563,16 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		boundary_len = strlen(boundary);
 	}
 
-	if (mimeinfo->encoding_type == ENC_QUOTED_PRINTABLE) {
-		while (fgets(buf, sizeof(buf), infp) != NULL &&
-		       (!boundary ||
-			!IS_BOUNDARY(buf, boundary, boundary_len))) {
-			gint len;
-			len = qp_decode_line(buf);
-			fwrite(buf, len, 1, outfp);
-		}
-	} else if (mimeinfo->encoding_type == ENC_BASE64) {
-		gchar outbuf[BUFFSIZE];
-		gint len;
-		Base64Decoder *decoder;
-		FILE *tmpfp = outfp;
-#ifndef G_OS_WIN32
-		gboolean uncanonicalize = FALSE;
-		ContentType content_type;
+	content_type = procmime_scan_mime_type(mimeinfo->content_type);
+	if (content_type == MIME_TEXT ||
+	    content_type == MIME_TEXT_HTML) {
+		normalize_lbreak = TRUE;
+	}
 
-		content_type = procmime_scan_mime_type(mimeinfo->content_type);
-		if (content_type == MIME_TEXT ||
-		    content_type == MIME_TEXT_HTML) {
-			uncanonicalize = TRUE;
+	if (mimeinfo->encoding_type == ENC_QUOTED_PRINTABLE) {
+		FILE *tmpfp = outfp;
+
+		if (normalize_lbreak) {
 			tmpfp = my_tmpfile();
 			if (!tmpfp) {
 				perror("tmpfile");
@@ -589,7 +580,43 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				return NULL;
 			}
 		}
+
+		while (fgets(buf, sizeof(buf), infp) != NULL &&
+		       (!boundary ||
+			!IS_BOUNDARY(buf, boundary, boundary_len))) {
+			gint len;
+			len = qp_decode_line(buf);
+			fwrite(buf, len, 1, tmpfp);
+		}
+
+		if (normalize_lbreak) {
+			rewind(tmpfp);
+			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
+#ifdef G_OS_WIN32
+				strretchomp(buf);
+				fputs(buf, outfp);
+				fputs("\r\n", outfp);
+#else
+				strcrchomp(buf);
+				fputs(buf, outfp);
 #endif
+			}
+			fclose(tmpfp);
+		}
+	} else if (mimeinfo->encoding_type == ENC_BASE64) {
+		gchar outbuf[BUFFSIZE];
+		gint len;
+		Base64Decoder *decoder;
+		FILE *tmpfp = outfp;
+
+		if (normalize_lbreak) {
+			tmpfp = my_tmpfile();
+			if (!tmpfp) {
+				perror("tmpfile");
+				if (tmp_file) fclose(outfp);
+				return NULL;
+			}
+		}
 
 		decoder = base64_decoder_new();
 		while (fgets(buf, sizeof(buf), infp) != NULL &&
@@ -605,16 +632,20 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		}
 		base64_decoder_free(decoder);
 
-#ifndef G_OS_WIN32
-		if (uncanonicalize) {
+		if (normalize_lbreak) {
 			rewind(tmpfp);
 			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
+#ifdef G_OS_WIN32
+				strretchomp(buf);
+				fputs(buf, outfp);
+				fputs("\r\n", outfp);
+#else
 				strcrchomp(buf);
 				fputs(buf, outfp);
+#endif
 			}
 			fclose(tmpfp);
 		}
-#endif
 	} else if (mimeinfo->encoding_type == ENC_X_UUENCODE) {
 		gchar outbuf[BUFFSIZE];
 		gint len;
@@ -637,24 +668,20 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				flag = TRUE;
 		}
 	} else {
-#ifndef G_OS_WIN32
-		gboolean uncanonicalize = FALSE;
-		ContentType content_type;
-
-		content_type = procmime_scan_mime_type(mimeinfo->content_type);
-		if (content_type == MIME_TEXT ||
-		    content_type == MIME_TEXT_HTML)
-			uncanonicalize = TRUE;
-#endif
-
 		while (fgets(buf, sizeof(buf), infp) != NULL &&
 		       (!boundary ||
 			!IS_BOUNDARY(buf, boundary, boundary_len))) {
-#ifndef G_OS_WIN32
-			if (uncanonicalize)
+			if (normalize_lbreak) {
+#ifdef G_OS_WIN32
+				strretchomp(buf);
+				fputs(buf, outfp);
+				fputs("\r\n", outfp);
+#else
 				strcrchomp(buf);
+				fputs(buf, outfp);
 #endif
-			fputs(buf, outfp);
+			} else
+				fputs(buf, outfp);
 		}
 	}
 
