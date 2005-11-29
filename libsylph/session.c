@@ -708,9 +708,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 
 	session_set_timeout(session, session->timeout_interval);
 
-	if (session->read_buf_len > 0)
-		g_print("already read %d bytes\n", session->read_buf_len);
-
 	if (session->read_buf_len == 0) {
 		read_len = sock_read(session->sock, session->read_buf_p,
 				     READ_BUF_LEFT());
@@ -732,7 +729,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 			}
 		}
 
-		g_print("read %d bytes\n", read_len);
 		session->read_buf_len = read_len;
 	}
 
@@ -779,7 +775,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 				session->read_buf_p = session->read_buf +
 					session->preread_len;
 			}
-			g_print("buffer data (%d) <= PREREAD_SIZE\n", buf_data_len);
 			session->read_buf_p += session->read_buf_len;
 			session->preread_len = buf_data_len;
 			session->read_buf_len = 0;
@@ -794,7 +789,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 		}
 
 		write_len = buf_data_len - PREREAD_SIZE;
-		g_print("write_len: %d\n", write_len);
 		if (fwrite(data_begin_p, write_len, 1,
 			   session->read_data_fp) < 1) {
 			g_warning("session_read_data_as_file_cb: "
@@ -803,7 +797,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 			return FALSE;
 		}
 		session->read_data_pos += write_len;
-		g_print("written %d bytes\n", session->read_data_pos);
 
 		g_memmove(session->read_buf, data_begin_p + write_len,
 			  PREREAD_SIZE);
@@ -825,7 +818,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 	}
 
 	/* complete */
-	g_print("data completed\n");
 	if (session->io_tag > 0) {
 		g_source_remove(session->io_tag);
 		session->io_tag = 0;
@@ -840,7 +832,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 		return FALSE;
 	}
 	session->read_data_pos += write_len;
-	g_print("total %d bytes\n\n", session->read_data_pos);
 
 	rewind(session->read_data_fp);
 
