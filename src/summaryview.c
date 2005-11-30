@@ -816,6 +816,8 @@ void summary_clear_list(SummaryView *summaryview)
 		summaryview->folder_table = NULL;
 	}
 	summaryview->filtered = 0;
+	summaryview->flt_count = 0;
+	summaryview->flt_total = 0;
 
 	summaryview->on_button_press = FALSE;
 	summaryview->can_toggle_selection = TRUE;
@@ -3832,6 +3834,15 @@ static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
 
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
 
+	summaryview->flt_count++;
+	{
+		gchar msg[1024];
+		g_snprintf(msg, sizeof(msg), _("Filtering (%d / %d)..."),
+			   summaryview->flt_count, summaryview->flt_total);
+		STATUSBAR_POP(summaryview->mainwin);
+		STATUSBAR_PUSH(summaryview->mainwin, msg);
+	}
+
 	fltinfo = filter_info_new();
 	fltinfo->flags = msginfo->flags;
 	filter_apply_msginfo(prefs_common.fltlist, msginfo, fltinfo);
@@ -3879,6 +3890,15 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
 
+	summaryview->flt_count++;
+	{
+		gchar msg[1024];
+		g_snprintf(msg, sizeof(msg), _("Filtering (%d / %d)..."),
+			   summaryview->flt_count, summaryview->flt_total);
+		STATUSBAR_POP(summaryview->mainwin);
+		STATUSBAR_PUSH(summaryview->mainwin, msg);
+	}
+
 	fltinfo = filter_info_new();
 	fltinfo->flags = msginfo->flags;
 	filter_apply_msginfo(prefs_common.junk_fltlist, msginfo, fltinfo);
@@ -3913,7 +3933,10 @@ static void summary_filter_real(SummaryView *summaryview,
 				GtkTreeModelForeachFunc func,
 				gboolean selected_only)
 {
+	GList *rows;
+
 	if (!prefs_common.fltlist) return;
+	if (!summaryview->folder_item) return;
 
 	summary_lock(summaryview);
 
@@ -3924,15 +3947,21 @@ static void summary_filter_real(SummaryView *summaryview,
 	main_window_cursor_wait(summaryview->mainwin);
 
 	summaryview->filtered = 0;
+	summaryview->flt_count = 0;
 
-	if (selected_only)
+	if (selected_only) {
+		rows = summary_get_selected_rows(summaryview);
+		summaryview->flt_total = g_list_length(rows);
+
 		gtk_tree_selection_selected_foreach
 			(summaryview->selection,
 			 (GtkTreeSelectionForeachFunc)func,
 			 summaryview);
-	else
+	} else {
+		summaryview->flt_total = summaryview->folder_item->total;
 		gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
 				       func, summaryview);
+	}
 
 	summary_unlock(summaryview);
 
@@ -3955,6 +3984,8 @@ static void summary_filter_real(SummaryView *summaryview,
 		STATUSBAR_PUSH(summaryview->mainwin, result_msg);
 	}
 	summaryview->filtered = 0;
+	summaryview->flt_count = 0;
+	summaryview->flt_total = 0;
 }
 
 void summary_filter(SummaryView *summaryview, gboolean selected_only)

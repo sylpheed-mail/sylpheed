@@ -122,6 +122,8 @@ private:
 	GHashTable *folder_table;
 	/* counter for filtering */
 	gint filtered;
+	gint flt_count;
+	gint flt_total;
 
 	gboolean on_button_press;
 
