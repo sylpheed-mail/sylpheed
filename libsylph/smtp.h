@@ -25,6 +25,7 @@
 #endif
 
 #include <glib.h>
+#include <stdio.h>
 
 #include "session.h"
 
