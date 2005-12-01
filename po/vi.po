@@ -1,0 +1,6461 @@
+# translation of sylpheed.po to Vietnamese
+# This file is distributed under the same license as the Sylpheed package.
+# Copyright (C) 2005 Pham Thanh Long.
+# Pham Thanh Long <ptlong@gmail.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sylpheed\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-12-01 16:03+0900\n"
+"PO-Revision-Date: 2005-11-30 23:05+0700\n"
+"Last-Translator: Pham Thanh Long <ptlong@gmail.com>\n"
+"Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libsylph/account.c:54
+msgid "Reading all config for each account...\n"
+msgstr "Đang đọc mọi cấu hình cho mỗi tài khoản...\n"
+
+#: libsylph/filter.c:871 libsylph/prefs.c:196 libsylph/prefs.c:224
+#: libsylph/prefs.c:269 libsylph/prefs_account.c:211
+#: libsylph/prefs_account.c:225 src/prefs_display_header.c:413
+#: src/prefs_display_header.c:438
+msgid "failed to write configuration to file\n"
+msgstr "lỗi khi lưu cấu hình vào tập tin\n"
+
+#: libsylph/imap.c:464
+#, c-format
+msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
+msgstr "Kết nối IMAP4 tới %s đã bị ngắt. Đang kết nối lại...\n"
+
+#: libsylph/imap.c:515 libsylph/imap.c:521
+msgid "IMAP4 server disables LOGIN.\n"
+msgstr "Máy chủ IMAP4 cấm LOGIN.\n"
+
+#: libsylph/imap.c:596
+#, c-format
+msgid "creating IMAP4 connection to %s:%d ...\n"
+msgstr "đang tạo kết nối IMAP4 tới %s:%d ...\n"
+
+#: libsylph/imap.c:637
+msgid "Can't start TLS session.\n"
+msgstr "Không thể khởi động phiên TLS.\n"
+
+#: libsylph/imap.c:1095
+#, c-format
+msgid "Getting message %d"
+msgstr "Đang lấy thư %d"
+
+#: libsylph/imap.c:1212
+#, c-format
+msgid "Appending messages to %s (%d / %d)"
+msgstr "Đang ghép thư vào %s (%d / %d)"
+
+#: libsylph/imap.c:1304
+#, c-format
+msgid "Moving messages %s to %s ..."
+msgstr "Đang chuyển thư %s tới %s ..."
+
+#: libsylph/imap.c:1310
+#, c-format
+msgid "Copying messages %s to %s ..."
+msgstr "Đang chép thư %s tới %s ..."
+
+#: libsylph/imap.c:1461
+#, c-format
+msgid "Removing messages %s"
+msgstr "Đang xoá thư %s"
+
+#: libsylph/imap.c:1467
+#, c-format
+msgid "can't set deleted flags: %s\n"
+msgstr "không thể đặt cờ đã xoá: %s\n"
+
+#: libsylph/imap.c:1475 libsylph/imap.c:1570
+msgid "can't expunge\n"
+msgstr "không thể xoá\n"
+
+#: libsylph/imap.c:1558
+#, c-format
+msgid "Removing all messages in %s"
+msgstr "Xoá mọi thư trong %s"
+
+#: libsylph/imap.c:1564
+msgid "can't set deleted flags: 1:*\n"
+msgstr "không thể đặt cờ đã xoá: 1:*\n"
+
+#: libsylph/imap.c:1609
+msgid "can't close folder\n"
+msgstr "không thể đóng thư mục\n"
+
+#: libsylph/imap.c:1687
+#, c-format
+msgid "root folder %s not exist\n"
+msgstr "thư mục gốc %s không tồn tại\n"
+
+#: libsylph/imap.c:1871 libsylph/imap.c:1879
+msgid "error occurred while getting LIST.\n"
+msgstr "xảy ra lỗi khi lấy LIST.\n"
+
+#: libsylph/imap.c:1993
+#, c-format
+msgid "Can't create '%s'\n"
+msgstr "Không thể tạo '%s'\n"
+
+#: libsylph/imap.c:1998
+#, c-format
+msgid "Can't create '%s' under INBOX\n"
+msgstr "Không thể tạo '%s' ở INBOX\n"
+
+#: libsylph/imap.c:2059
+msgid "can't create mailbox: LIST failed\n"
+msgstr "không thể tạo hộp thư: LIST thất bại\n"
+
+#: libsylph/imap.c:2079
+msgid "can't create mailbox\n"
+msgstr "không thể tạo hộp thư\n"
+
+#: libsylph/imap.c:2175
+#, c-format
+msgid "can't rename mailbox: %s to %s\n"
+msgstr "không thể đổi tên hộp thư: %s thành %s\n"
+
+#: libsylph/imap.c:2255
+msgid "can't delete mailbox\n"
+msgstr "không thể xoá hộp thư\n"
+
+#: libsylph/imap.c:2299
+msgid "can't get envelope\n"
+msgstr "không thể lấy phong bì\n"
+
+#: libsylph/imap.c:2312
+#, c-format
+msgid "Getting message headers (%d / %d)"
+msgstr "Đang lấy header của thư (%d / %d)"
+
+#: libsylph/imap.c:2322
+msgid "error occurred while getting envelope.\n"
+msgstr "xảy ra lỗi khi lấy phong bì.\n"
+
+#: libsylph/imap.c:2344
+#, c-format
+msgid "can't parse envelope: %s\n"
+msgstr "không thể phân tích phong bì: %s\n"
+
+#: libsylph/imap.c:2468
+#, c-format
+msgid "Can't connect to IMAP4 server: %s:%d\n"
+msgstr "Không thể kết nối tới máy chủ IMAP4: %s:%d\n"
+
+#: libsylph/imap.c:2475
+#, c-format
+msgid "Can't establish IMAP4 session with: %s:%d\n"
+msgstr "Không thể tạo phiên IMAP4 với: %s:%d\n"
+
+#: libsylph/imap.c:2550
+msgid "can't get namespace\n"
+msgstr "không thể lấy khoảng định danh (namespace)\n"
+
+#: libsylph/imap.c:3078
+#, c-format
+msgid "can't select folder: %s\n"
+msgstr "không thể chọn thư mục: %s\n"
+
+#: libsylph/imap.c:3113
+#, fuzzy
+msgid "error on imap command: STATUS\n"
+msgstr "có lỗi khi chạy lệnh imap: CLOSE\n"
+
+#: libsylph/imap.c:3256
+msgid "IMAP4 authentication failed.\n"
+msgstr "Xác thực IMAP4 thất bại:\n"
+
+#: libsylph/imap.c:3273
+msgid "IMAP4 login failed.\n"
+msgstr "Đăng nhập IMAP4 thất bại.\n"
+
+#: libsylph/imap.c:3603
+#, c-format
+msgid "can't append %s to %s\n"
+msgstr "không thể ghep %s vào %s\n"
+
+#: libsylph/imap.c:3610
+msgid "(sending file...)"
+msgstr "(đang gửi tập tin...)"
+
+#: libsylph/imap.c:3638
+#, c-format
+msgid "can't append message to %s\n"
+msgstr "không thể ghép thư vào %s\n"
+
+#: libsylph/imap.c:3670
+#, c-format
+msgid "can't copy %s to %s\n"
+msgstr "không thể chép %s tới %s\n"
+
+#: libsylph/imap.c:3694
+#, c-format
+msgid "error while imap command: STORE %s %s\n"
+msgstr "có lỗi khi chạy lệnh imap: STORE %s %s\n"
+
+#: libsylph/imap.c:3708
+msgid "error while imap command: EXPUNGE\n"
+msgstr "có lỗi khi chạy lệnh imap: EXPUNGE\n"
+
+#: libsylph/imap.c:3721
+msgid "error while imap command: CLOSE\n"
+msgstr "có lỗi khi chạy lệnh imap: CLOSE\n"
+
+#: libsylph/imap.c:3988
+#, c-format
+msgid "iconv cannot convert UTF-7 to %s\n"
+msgstr "iconv không thể chuyển UTF-7 sang %s\n"
+
+#: libsylph/imap.c:4018
+#, c-format
+msgid "iconv cannot convert %s to UTF-7\n"
+msgstr "iconv không thể chuyển %s sang UTF-7\n"
+
+#: libsylph/mbox.c:50 libsylph/mbox.c:196
+msgid "can't write to temporary file\n"
+msgstr "không ghi được vào tập tin tạm\n"
+
+#: libsylph/mbox.c:69
+#, c-format
+msgid "Getting messages from %s into %s...\n"
+msgstr "Lấy thư từ %s vào %s...\n"
+
+#: libsylph/mbox.c:79
+msgid "can't read mbox file.\n"
+msgstr "không đọc được tập tin mbox.\n"
+
+#: libsylph/mbox.c:86
+#, c-format
+msgid "invalid mbox format: %s\n"
+msgstr "định dạng mbox không hợp lệ: %s\n"
+
+#: libsylph/mbox.c:93
+#, c-format
+msgid "malformed mbox: %s\n"
+msgstr "mbox có lỗi: %s\n"
+
+#: libsylph/mbox.c:110
+msgid "can't open temporary file\n"
+msgstr "không mở được tập tin tạm\n"
+
+#: libsylph/mbox.c:161
+#, c-format
+msgid ""
+"unescaped From found:\n"
+"%s"
+msgstr ""
+
+#: libsylph/mbox.c:250
+#, c-format
+msgid "%d messages found.\n"
+msgstr "Tìm thấy %d thư.\n"
+
+#: libsylph/mbox.c:268
+#, c-format
+msgid "can't create lock file %s\n"
+msgstr "không tạo được tập tin khoá %s\n"
+
+#: libsylph/mbox.c:269
+msgid "use 'flock' instead of 'file' if possible.\n"
+msgstr "dùng lệnh 'flock' thay vì 'file' nếu có thể\n"
+
+#: libsylph/mbox.c:281
+#, c-format
+msgid "can't create %s\n"
+msgstr "không tạo được %s\n"
+
+#: libsylph/mbox.c:287
+msgid "mailbox is owned by another process, waiting...\n"
+msgstr "hộp thư bị chiếm dụng bởi một tiến trình khác, đang chờ...\n"
+
+#: libsylph/mbox.c:316
+#, c-format
+msgid "can't lock %s\n"
+msgstr "không thể khoá %s\n"
+
+#: libsylph/mbox.c:323 libsylph/mbox.c:373
+msgid "invalid lock type\n"
+msgstr "kiểu khoá không hợp lệ\n"
+
+#: libsylph/mbox.c:359
+#, c-format
+msgid "can't unlock %s\n"
+msgstr "không thể mở khoá %s\n"
+
+#: libsylph/mbox.c:394
+msgid "can't truncate mailbox to zero.\n"
+msgstr "không thể giảm số lượng hộp thư xuống 0.\n"
+
+#: libsylph/mbox.c:417
+#, c-format
+msgid "Exporting messages from %s into %s...\n"
+msgstr "Xuất thư từ %s sang %s...\n"
+
+#: libsylph/mh.c:412
+#, c-format
+msgid "can't copy message %s to %s\n"
+msgstr "không thể chép thư %s tới %s\n"
+
+#: libsylph/mh.c:487 libsylph/mh.c:610
+msgid "Can't open mark file.\n"
+msgstr "Không thể mở tập tin đánh đấu.\n"
+
+#: libsylph/mh.c:494 libsylph/mh.c:616
+msgid "the src folder is identical to the dest.\n"
+msgstr "thư mục nguồn cũng chính là thư mục gốc.\n"
+
+#: libsylph/mh.c:619
+#, c-format
+msgid "Copying message %s%c%d to %s ...\n"
+msgstr "Đang chép thư %s%c%d tới %s ...\n"
+
+#: libsylph/mh.c:790
+#, c-format
+msgid "Last number in dir %s = %d\n"
+msgstr "Số cuối trong thư mục %s = %d\n"
+
+#: libsylph/mh.c:833 libsylph/mh.c:846 src/main.c:146
+#, c-format
+msgid ""
+"File `%s' already exists.\n"
+"Can't create folder."
+msgstr ""
+"Tập tin `%s' đã có trước.\n"
+"Không thể tạo thư mục."
+
+#: libsylph/mh.c:1353
+#, c-format
+msgid ""
+"Directory name\n"
+"'%s' is not a valid UTF-8 string.\n"
+"Maybe the locale encoding is used for filename.\n"
+"If that is the case, you must set the following environmental variable\n"
+"(see README for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+msgstr ""
+"Tên thư mục\n"
+"'%s' không phải là một chuối UTF-8 hợp lệ.\n"
+"Có thể mã kí tự bản địa được dùng trong tên tập tin.\n"
+"Nếu ở trong trường hợp đó, bạn phải đặt biến môi trường sau\n"
+"(đọc README để biết thêm thông tin):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+
+#: libsylph/news.c:207
+#, c-format
+msgid "creating NNTP connection to %s:%d ...\n"
+msgstr "đang tạo kết nối NNTP tới %s:%d ...\n"
+
+#: libsylph/news.c:276
+#, c-format
+msgid "NNTP connection to %s:%d has been disconnected. Reconnecting...\n"
+msgstr "Kết nối NNTP tới %s:%d đã bị ngắt. Đang kết nối lại...\n"
+
+#: libsylph/news.c:367
+#, c-format
+msgid "article %d has been already cached.\n"
+msgstr "văn bản %d vừa được đưa vào bộ đệm.\n"
+
+#: libsylph/news.c:387
+#, c-format
+msgid "getting article %d...\n"
+msgstr "đang lấy văn bản %d...\n"
+
+#: libsylph/news.c:391
+#, c-format
+msgid "can't read article %d\n"
+msgstr "không thể đọc văn bản %d\n"
+
+#: libsylph/news.c:546
+msgid "can't retrieve newsgroup list\n"
+msgstr "không lấy được danh sách nhóm tin\n"
+
+#: libsylph/news.c:659
+msgid "can't post article.\n"
+msgstr "không thể gửi bài viết.\n"
+
+#: libsylph/news.c:685
+#, c-format
+msgid "can't retrieve article %d\n"
+msgstr "không thể lấy bài viết %d\n"
+
+#: libsylph/news.c:742
+#, c-format
+msgid "can't select group: %s\n"
+msgstr "không chọn được nhóm: %s\n"
+
+#: libsylph/news.c:779
+#, c-format
+msgid "invalid article range: %d - %d\n"
+msgstr "phạm vi bài không hợp lệ: %d - %d\n"
+
+#: libsylph/news.c:792
+msgid "no new articles.\n"
+msgstr "không có bài mới.\n"
+
+#: libsylph/news.c:802
+#, c-format
+msgid "getting xover %d - %d in %s...\n"
+msgstr "đang lấy xover %d - %d trong %s...\n"
+
+#: libsylph/news.c:806
+msgid "can't get xover\n"
+msgstr "không lấy được vover\n"
+
+#: libsylph/news.c:816
+msgid "error occurred while getting xover.\n"
+msgstr "có lỗi khi lấy xover.\n"
+
+#: libsylph/news.c:826
+#, c-format
+msgid "invalid xover line: %s\n"
+msgstr "dòng xover không hợp lệ: %s\n"
+
+#: libsylph/news.c:845 libsylph/news.c:877
+msgid "can't get xhdr\n"
+msgstr "không lấy được xhdr\n"
+
+#: libsylph/news.c:857 libsylph/news.c:889
+msgid "error occurred while getting xhdr.\n"
+msgstr "có lỗi khi lấy xhdr.\n"
+
+#: libsylph/nntp.c:68
+#, c-format
+msgid "Can't connect to NNTP server: %s:%d\n"
+msgstr "Không kết nối được với máy chủ NNTP: %s:%d\n"
+
+#: libsylph/nntp.c:164 libsylph/nntp.c:227
+#, c-format
+msgid "protocol error: %s\n"
+msgstr "lỗi giao thức: %s\n"
+
+#: libsylph/nntp.c:187 libsylph/nntp.c:233
+msgid "protocol error\n"
+msgstr "lỗi giao thức\n"
+
+#: libsylph/nntp.c:283
+msgid "Error occurred while posting\n"
+msgstr "Có lỗi khi gửi\n"
+
+#: libsylph/nntp.c:363
+msgid "Error occurred while sending command\n"
+msgstr "Có gỗi khi gửi lệnh\n"
+
+#: libsylph/pop.c:154
+msgid "Required APOP timestamp not found in greeting\n"
+msgstr "Không thấy nhãn thời gian trong lời chào hỏi như yêu cầu\n"
+
+#: libsylph/pop.c:161
+msgid "Timestamp syntax error in greeting\n"
+msgstr "Lỗi cú pháp nhãn thời gian trong lời chào hỏi\n"
+
+#: libsylph/pop.c:191 libsylph/pop.c:218
+msgid "POP3 protocol error\n"
+msgstr "Lỗi giao thức POP3\n"
+
+#: libsylph/pop.c:263
+#, c-format
+msgid "invalid UIDL response: %s\n"
+msgstr "hồi đáp UIDL không hợp lệ: %s\n"
+
+#: libsylph/pop.c:613
+#, c-format
+msgid "POP3: Deleting expired message %d\n"
+msgstr "POP3: Đang xoá các thư hết hạn %d\n"
+
+#: libsylph/pop.c:621
+#, c-format
+msgid "POP3: Skipping message %d (%d bytes)\n"
+msgstr "POP3: Đang bỏ qua thư %d (%d byte)\n"
+
+#: libsylph/pop.c:652
+msgid "mailbox is locked\n"
+msgstr "hộp thư đã bị khoá\n"
+
+#: libsylph/pop.c:655
+msgid "session timeout\n"
+msgstr "phiên làm việc hết giờ\n"
+
+#: libsylph/pop.c:661 libsylph/smtp.c:561
+msgid "can't start TLS session\n"
+msgstr "không thể khởi động phiên TLS\n"
+
+#: libsylph/pop.c:668 libsylph/smtp.c:496
+msgid "error occurred on authentication\n"
+msgstr "có lỗi khi xác thực\n"
+
+#: libsylph/pop.c:673
+msgid "command not supported\n"
+msgstr "lệnh không được hỗ trợ\n"
+
+#: libsylph/pop.c:677
+msgid "error occurred on POP3 session\n"
+msgstr "có lỗi trong phiên làm việc POP3\n"
+
+#: libsylph/prefs.c:239
+#, c-format
+msgid "Found %s\n"
+msgstr "Tìm thấy %s\n"
+
+#: libsylph/prefs.c:272
+msgid "Configuration is saved.\n"
+msgstr "Cấu hình đã được lưu.\n"
+
+#: libsylph/prefs_common.c:485
+msgid "Junk mail filter"
+msgstr "Lọc thư rác"
+
+#: libsylph/procmime.c:860
+msgid "procmime_get_text_content(): Code conversion failed.\n"
+msgstr "procmime_get_text_content(): Chuyển đổi mã thất bại.\n"
+
+#: libsylph/procmsg.c:535
+msgid "can't open mark file\n"
+msgstr "không thể mở tập tin đánh dấu\n"
+
+#: libsylph/procmsg.c:988
+#, c-format
+msgid "can't fetch message %d\n"
+msgstr "không thể lấy thư %d\n"
+
+#: libsylph/procmsg.c:1243
+#, c-format
+msgid "Print command line is invalid: `%s'\n"
+msgstr "Lệnh in không hợp lệ: `%s'\n"
+
+#: libsylph/recv.c:140
+msgid "error occurred while retrieving data.\n"
+msgstr "có lỗi trong khi lấy dữ liệu.\n"
+
+#: libsylph/recv.c:182 libsylph/recv.c:214 libsylph/recv.c:229
+msgid "Can't write to file.\n"
+msgstr "Không thể ghi vào tập tin.\n"
+
+#: libsylph/smtp.c:157
+msgid "SMTP AUTH not available\n"
+msgstr "SMTP AUTH không sẵn có\n"
+
+#: libsylph/smtp.c:466 libsylph/smtp.c:516
+msgid "bad SMTP response\n"
+msgstr "phản hồi SMTP tồi\n"
+
+#: libsylph/smtp.c:487 libsylph/smtp.c:505 libsylph/smtp.c:602
+msgid "error occurred on SMTP session\n"
+msgstr "có lỗi trong phiên SMTP\n"
+
+#: libsylph/ssl.c:54
+msgid "SSLv23 not available\n"
+msgstr "SSLv23 không sẵn có\n"
+
+#: libsylph/ssl.c:56
+msgid "SSLv23 available\n"
+msgstr "SSLv23 hiện có\n"
+
+#: libsylph/ssl.c:65
+msgid "TLSv1 not available\n"
+msgstr "TLSv1 không sẵn có\n"
+
+#: libsylph/ssl.c:67
+msgid "TLSv1 available\n"
+msgstr "TLSv1 hiện có\n"
+
+#: libsylph/ssl.c:101 libsylph/ssl.c:108
+msgid "SSL method not available\n"
+msgstr "Phương thức SSL không sẵn có\n"
+
+#: libsylph/ssl.c:114
+msgid "Unknown SSL method *PROGRAM BUG*\n"
+msgstr "Phương thức SSL không xác định *PROGRAM BUG*\n"
+
+#: libsylph/ssl.c:120
+msgid "Error creating ssl context\n"
+msgstr "Lỗi khi tạo ngữ cảnh ssl\n"
+
+#: libsylph/ssl.c:126
+#, c-format
+msgid "SSL connect failed (%s)\n"
+msgstr "Kết nối SSL thất bại (%s)\n"
+
+#. Get the cipher
+#: libsylph/ssl.c:133
+#, c-format
+msgid "SSL connection using %s\n"
+msgstr "Kết nối SSL sử dụng %s\n"
+
+#: libsylph/ssl.c:142
+msgid "Server certificate:\n"
+msgstr "Máy chủ chứng nhận:\n"
+
+#: libsylph/ssl.c:145
+#, c-format
+msgid "  Subject: %s\n"
+msgstr "  Tiêu đề: %s\n"
+
+#: libsylph/ssl.c:150
+#, c-format
+msgid "  Issuer: %s\n"
+msgstr "  Người phát hành: %s\n"
+
+#: libsylph/utils.c:275
+#, c-format
+msgid "%dB"
+msgstr "%dB"
+
+#: libsylph/utils.c:277
+#, c-format
+msgid "%.1fKB"
+msgstr "%.1fKB"
+
+#: libsylph/utils.c:279
+#, c-format
+msgid "%.2fMB"
+msgstr "%.2fMB"
+
+#: libsylph/utils.c:281
+#, c-format
+msgid "%.2fGB"
+msgstr "%.2fGB"
+
+#: libsylph/utils.c:2373 src/compose.c:2806 src/compose.c:3069
+#: src/compose.c:3132 src/compose.c:3252
+msgid "can't change file mode\n"
+msgstr "không thể đổi chế độ tập tin\n"
+
+#: libsylph/utils.c:2380 libsylph/utils.c:2504
+#, c-format
+msgid "writing to %s failed.\n"
+msgstr "thất bại khi ghi vào %s.\n"
+
+#: src/about.c:91
+msgid "About"
+msgstr "Giới thiệu"
+
+#: src/about.c:223
+msgid ""
+"GPGME is copyright 2001 by Werner Koch <dd9jn@gnu.org>\n"
+"\n"
+msgstr ""
+
+#: src/about.c:227
+msgid ""
+"This program is free software; you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation; either version 2, or (at your option) any later "
+"version.\n"
+"\n"
+msgstr ""
+
+#: src/about.c:233
+msgid ""
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"more details.\n"
+"\n"
+msgstr ""
+
+#: src/about.c:239
+msgid ""
+"You should have received a copy of the GNU General Public License along with "
+"this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
+msgstr ""
+
+#: src/account_dialog.c:137
+msgid ""
+"Some composing windows are open.\n"
+"Please close all the composing windows before editing the accounts."
+msgstr ""
+"Một số cửa sổ soạn thảo đang mở.\n"
+"Hãy đóng mọi cửa sổ soạn thảo trước khi sửa tài khoản."
+
+#: src/account_dialog.c:143
+msgid "Opening account edit window...\n"
+msgstr "Mở cửa sổ sửa tài khoản...\n"
+
+#: src/account_dialog.c:287
+msgid "Creating account edit window...\n"
+msgstr "Đang tạo cửa sổ sửa tài khoản...\n"
+
+#: src/account_dialog.c:292
+msgid "Edit accounts"
+msgstr "Sửa tài khoản"
+
+#: src/account_dialog.c:310
+msgid ""
+"New messages will be checked in this order. Check the boxes\n"
+"on the `G' column to enable message retrieval by `Get all'."
+msgstr ""
+"Các thư mới sẽ được kiểm tra theo thứ tự này. Đánh dấu các hộp\n"
+"trên cột `G' để cho phép lấy thư về bằng `Lấy tất cả'."
+
+#: src/account_dialog.c:365 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4210 src/editaddress.c:200 src/editaddress.c:942
+#: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
+#: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
+#: src/mimeview.c:206 src/prefs_filter.c:261 src/prefs_folder_item.c:174
+#: src/select-keys.c:319
+msgid "Name"
+msgstr "Tên"
+
+#: src/account_dialog.c:370 src/prefs_account_dialog.c:646
+msgid "Protocol"
+msgstr "Giao thức"
+
+#: src/account_dialog.c:375
+msgid "Server"
+msgstr "Máy chủ"
+
+#: src/account_dialog.c:399 src/prefs_filter.c:326
+msgid "Edit"
+msgstr "Soạn"
+
+#: src/account_dialog.c:433
+msgid " _Set as default account "
+msgstr " Đặt là_m tài khoản mặc định "
+
+#: src/account_dialog.c:486
+#, c-format
+msgid "Do you really want to delete the account '%s'?"
+msgstr "Bạn có thực sự muốn xoá tài khoản '%s' không?"
+
+#: src/account_dialog.c:488 src/prefs_filter.c:691
+msgid "(Untitled)"
+msgstr "(Chưa đặt tên)"
+
+#: src/account_dialog.c:489
+msgid "Delete account"
+msgstr "Xoá tài khoản"
+
+#: src/action.c:331
+#, c-format
+msgid "Could not get message file %d"
+msgstr "Không thể lấy tập tin thông điệp %d"
+
+#: src/action.c:362
+msgid "Could not get message part."
+msgstr "Không thể lấy thành phần của thư."
+
+#: src/action.c:379
+msgid "Can't get part of multipart message"
+msgstr "Không thể lấy thành phần của bức thư nhiều thành phần"
+
+#: src/action.c:472
+#, c-format
+msgid ""
+"The selected action cannot be used in the compose window\n"
+"because it contains %%f, %%F or %%p."
+msgstr ""
+"Hành động đã chọn không thể được dùng trong cửa sổ soạn thảo\n"
+"bởi vì nó có chứa %%f, %%F hoặc %%p."
+
+#: src/action.c:708
+#, c-format
+msgid ""
+"Command could not be started. Pipe creation failed.\n"
+"%s"
+msgstr ""
+"Không thể khởi tạo lệnh. Việc tạo ống nối thất bại.\n"
+"%s"
+
+#. Fork error
+#: src/action.c:796
+#, c-format
+msgid ""
+"Could not fork to execute the following command:\n"
+"%s\n"
+"%s"
+msgstr ""
+"Không thể phân nhánh để chạy các lệnh sau:\n"
+"%s\n"
+"%s"
+
+#: src/action.c:1024
+#, c-format
+msgid "--- Running: %s\n"
+msgstr "--- Đang chạy: %s\n"
+
+#: src/action.c:1028
+#, c-format
+msgid "--- Ended: %s\n"
+msgstr "--- Kết thúc: %s\n"
+
+#: src/action.c:1060
+msgid "Action's input/output"
+msgstr "Đầu vào/Đầu ra của hành động"
+
+#: src/action.c:1120
+msgid " Send "
+msgstr " Gửi "
+
+#: src/action.c:1131
+msgid "Abort"
+msgstr " Thoát "
+
+#: src/action.c:1304
+#, c-format
+msgid ""
+"Enter the argument for the following action:\n"
+"(`%%h' will be replaced with the argument)\n"
+"  %s"
+msgstr ""
+"Nhập đối số cho hành động sau:\n"
+"(`%%h' sẽ được thay thế bằng đối số)\n"
+"  %s"
+
+#: src/action.c:1309
+msgid "Action's hidden user argument"
+msgstr "Đối số người dùng của hành động"
+
+#: src/action.c:1313
+#, c-format
+msgid ""
+"Enter the argument for the following action:\n"
+"(`%%u' will be replaced with the argument)\n"
+"  %s"
+msgstr ""
+"Nhập đối số cho hành động sau:\n"
+"(`%%u' sẽ được thay thế bằng đối số)\n"
+"  %s"
+
+#: src/action.c:1318
+msgid "Action's user argument"
+msgstr "Đối số người dùng của hành động"
+
+#: src/addressadd.c:172
+msgid "Add Address to Book"
+msgstr "Thêm địa chỉ vào sổ"
+
+#: src/addressadd.c:202 src/compose.c:4710 src/editaddress.c:201
+#: src/select-keys.c:320
+msgid "Address"
+msgstr "Địa chỉ"
+
+#: src/addressadd.c:212 src/addressbook.c:493 src/editaddress.c:202
+#: src/editaddress.c:795 src/editaddress.c:860 src/editgroup.c:267
+msgid "Remarks"
+msgstr "Ghi chú"
+
+#: src/addressadd.c:234
+msgid "Select Address Book Folder"
+msgstr "Chọn thư mục sổ địa chỉ"
+
+#: src/addressbook.c:336 src/compose.c:514 src/mainwindow.c:465
+#: src/messageview.c:138
+msgid "/_File"
+msgstr "/_Tập tin"
+
+#: src/addressbook.c:337
+msgid "/_File/New _Book"
+msgstr "/_Tập tin/_Sổ mới"
+
+#: src/addressbook.c:338
+msgid "/_File/New _vCard"
+msgstr "/_Tập tin/_vCard mới"
+
+#: src/addressbook.c:340
+msgid "/_File/New _JPilot"
+msgstr "/_Tập tin/_JPilot mới"
+
+#: src/addressbook.c:343
+msgid "/_File/New _Server"
+msgstr "/_Tập tin/_Máy chủ mới"
+
+#: src/addressbook.c:345 src/addressbook.c:348 src/compose.c:519
+#: src/compose.c:524 src/compose.c:528 src/mainwindow.c:483
+#: src/mainwindow.c:486 src/mainwindow.c:488 src/mainwindow.c:491
+#: src/mainwindow.c:493 src/messageview.c:141
+msgid "/_File/---"
+msgstr "/_Tập tin/---"
+
+#: src/addressbook.c:346
+msgid "/_File/_Edit"
+msgstr "/_Tập tin/Soạ_n"
+
+#: src/addressbook.c:347
+msgid "/_File/_Delete"
+msgstr "/_Tập tin/_Xoá"
+
+#: src/addressbook.c:349
+msgid "/_File/_Save"
+msgstr "/_Tập tin/_Lưu"
+
+#: src/addressbook.c:350 src/compose.c:529 src/messageview.c:142
+msgid "/_File/_Close"
+msgstr "/_Tập tin/Đón_g"
+
+#: src/addressbook.c:351
+msgid "/_Address"
+msgstr "/Đị_a chỉ"
+
+#: src/addressbook.c:352
+msgid "/_Address/New _Address"
+msgstr "/Đị_a chỉ/Địa chỉ _mới"
+
+#: src/addressbook.c:353
+msgid "/_Address/New _Group"
+msgstr "/Đị_a chỉ/_Nhóm mới"
+
+#: src/addressbook.c:354
+msgid "/_Address/New _Folder"
+msgstr "/Đị_a chỉ/_Thư mục mới"
+
+#: src/addressbook.c:355
+msgid "/_Address/---"
+msgstr "/Đị_a chỉ/---"
+
+#: src/addressbook.c:356
+msgid "/_Address/_Edit"
+msgstr "/Đị_a chỉ/_Soạn"
+
+#: src/addressbook.c:357
+msgid "/_Address/_Delete"
+msgstr "/Đị_a chỉ/_Xoá"
+
+#: src/addressbook.c:358 src/compose.c:638 src/mainwindow.c:721
+#: src/messageview.c:257
+msgid "/_Tools"
+msgstr "/_Công cụ"
+
+#: src/addressbook.c:359
+msgid "/_Tools/Import _LDIF file"
+msgstr "/_Công cụ/_Nhập tập tin LDIF"
+
+#: src/addressbook.c:360 src/compose.c:657 src/mainwindow.c:771
+#: src/messageview.c:275
+msgid "/_Help"
+msgstr "/_Hỗ trợ"
+
+#: src/addressbook.c:361 src/compose.c:658 src/mainwindow.c:782
+#: src/messageview.c:276
+msgid "/_Help/_About"
+msgstr "/_Hỗ trợ/_Giới thiệu"
+
+#: src/addressbook.c:380 src/addressbook.c:390
+msgid "/New _Address"
+msgstr "/Địa chỉ _mới"
+
+#: src/addressbook.c:381 src/addressbook.c:391
+msgid "/New _Group"
+msgstr "/_Nhóm mới"
+
+#: src/addressbook.c:382 src/addressbook.c:392
+msgid "/New _Folder"
+msgstr "/Thư _mục mới"
+
+#: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
+#: src/folderview.c:242 src/folderview.c:244 src/folderview.c:249
+#: src/folderview.c:260 src/folderview.c:262 src/folderview.c:264
+#: src/folderview.c:269 src/folderview.c:279 src/folderview.c:281
+#: src/folderview.c:285 src/summaryview.c:398 src/summaryview.c:402
+#: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
+#: src/summaryview.c:430 src/summaryview.c:436
+msgid "/---"
+msgstr "/---"
+
+#: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:531
+#: src/mainwindow.c:497 src/messageview.c:144
+msgid "/_Edit"
+msgstr "/_Soạn"
+
+#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:405
+msgid "/_Delete"
+msgstr "/_Xoá"
+
+#: src/addressbook.c:492
+msgid "E-Mail address"
+msgstr "Địa chỉ email"
+
+#: src/addressbook.c:496 src/compose.c:4711 src/prefs_common_dialog.c:2179
+msgid "Address book"
+msgstr "Sổ địa chỉ"
+
+#: src/addressbook.c:596 src/prefs_filter_edit.c:362
+msgid "Name:"
+msgstr "Tên:"
+
+#. Buttons
+#: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
+#: src/editaddress.c:1017 src/mainwindow.c:2321 src/prefs_actions.c:266
+#: src/prefs_display_header.c:279 src/prefs_display_header.c:334
+#: src/prefs_template.c:233
+msgid "Delete"
+msgstr "Xoá"
+
+#: src/addressbook.c:631 src/editaddress.c:890 src/editaddress.c:1023
+#: src/prefs_actions.c:254 src/prefs_customheader.c:232
+#: src/prefs_display_header.c:273 src/prefs_display_header.c:328
+#: src/prefs_filter_edit.c:1572
+msgid "Add"
+msgstr "Thêm"
+
+#: src/addressbook.c:634
+msgid "Lookup"
+msgstr "Tra cứu"
+
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:338
+#: src/prefs_template.c:176 src/summary_search.c:221
+msgid "To:"
+msgstr "Người nhận:"
+
+#: src/addressbook.c:650 src/prefs_folder_item.c:355 src/prefs_template.c:178
+msgid "Cc:"
+msgstr "Cc:"
+
+#: src/addressbook.c:654 src/prefs_folder_item.c:366
+msgid "Bcc:"
+msgstr "Bcc:"
+
+#. Confirm deletion
+#: src/addressbook.c:841
+msgid "Delete address(es)"
+msgstr "Xoá địa chỉ"
+
+#: src/addressbook.c:842
+msgid "Really delete the address(es)?"
+msgstr "Thực sự muốn xoá (các) địa chỉ này?"
+
+#: src/addressbook.c:1671
+#, c-format
+msgid ""
+"Do you want to delete the folder AND all addresses in `%s' ?\n"
+"If deleting the folder only, addresses will be moved into parent folder."
+msgstr ""
+"Bạn có muốn xoá thư mục VÀ mọi địa chỉ trong `%s' ?\n"
+"Nếu chỉ xoá thư mục, các địa chỉ sẽ được chuyển đến thư mục cấp cao hơn."
+
+#: src/addressbook.c:1674 src/folderview.c:2196
+msgid "Delete folder"
+msgstr "Xoá thư mục"
+
+#: src/addressbook.c:1674
+msgid "_Folder only"
+msgstr "_Chỉ thư mục"
+
+#: src/addressbook.c:1674
+msgid "Folder and _addresses"
+msgstr "Thư mục và địa c_hỉ"
+
+#: src/addressbook.c:1679
+#, c-format
+msgid "Really delete `%s' ?"
+msgstr "Thực sự muốn xoá `%s' ?"
+
+#: src/addressbook.c:2365 src/addressbook.c:2498
+msgid "New user, could not save index file."
+msgstr "Người dùng mới, không thể lưu tập tin mục lục."
+
+#: src/addressbook.c:2369 src/addressbook.c:2502
+msgid "New user, could not save address book files."
+msgstr "Người dùng mới, không thể lưu các tập tin sổ địa chỉ."
+
+#: src/addressbook.c:2379 src/addressbook.c:2512
+msgid "Old address book converted successfully."
+msgstr "Sổ địa chỉ cũ đã được chuyển đổi thành công."
+
+#: src/addressbook.c:2384
+msgid ""
+"Old address book converted,\n"
+"could not save new address index file"
+msgstr ""
+"Sổ địa chỉ cũ đã được chuyển,\n"
+"không thể lưu tập tin địa chỉ mới"
+
+#: src/addressbook.c:2397
+msgid ""
+"Could not convert address book,\n"
+"but created empty new address book files."
+msgstr ""
+"Không thể chuyển đổi sổ địa chỉ,\n"
+"nhưng đã tạo các tập tin sổ địa chỉ trống mới."
+
+#: src/addressbook.c:2403
+msgid ""
+"Could not convert address book,\n"
+"could not create new address book files."
+msgstr ""
+"Không thể chuyển đổi sổ địa chỉ,\n"
+"không thể tạo các tập tin sổ địa chỉ mới."
+
+#: src/addressbook.c:2408
+msgid ""
+"Could not convert address book\n"
+"and could not create new address book files."
+msgstr ""
+"Không thể chuyển đổi sổ địa chỉ\n"
+"và không thể các tập tin sổ địa chỉ mới."
+
+#: src/addressbook.c:2415
+msgid "Addressbook conversion error"
+msgstr "Lỗi chuyển đổi sổ địa chỉ"
+
+#: src/addressbook.c:2419
+msgid "Addressbook conversion"
+msgstr "Chuyển đổi sổ địa chỉ"
+
+#: src/addressbook.c:2454
+msgid "Addressbook Error"
+msgstr "Lỗi sổ địa chỉ"
+
+#: src/addressbook.c:2455 src/addressbook.c:2555
+msgid "Could not read address index"
+msgstr "Không thể đọc mục lục địa chỉ"
+
+#: src/addressbook.c:2517
+msgid "Old address book converted, could not save new address index file"
+msgstr ""
+"Sổ địa chỉ cũ đã được chuyển đổi, không thể lưu tập tin mục lục địa chỉ mới"
+
+#: src/addressbook.c:2531
+msgid ""
+"Could not convert address book, but created empty new address book files."
+msgstr ""
+"Không thể chuyển đổi sổ địa chỉ, nhưng đã tạo các tập tin sổ địa chỉ trống "
+"mới."
+
+#: src/addressbook.c:2537
+msgid ""
+"Could not convert address book, could not create new address book files."
+msgstr ""
+"Không thể chuyển đổi sổ địa chỉ, không thể tạo các tập tin sổ địa chỉ mới."
+
+#: src/addressbook.c:2543
+msgid ""
+"Could not convert address book and could not create new address book files."
+msgstr ""
+"Không thể chuyển đổi sổ địa chỉ và không thể tạo các tập tin sổ địa chỉ mới."
+
+#: src/addressbook.c:2561
+msgid "Addressbook Conversion Error"
+msgstr "Lỗi chuyển đổi sổ địa chỉ"
+
+#: src/addressbook.c:2567
+msgid "Addressbook Conversion"
+msgstr "Chuyển đổi sổ địa chỉ"
+
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:2036
+msgid "Interface"
+msgstr "Giao diện"
+
+#: src/addressbook.c:3088 src/importldif.c:514
+msgid "Address Book"
+msgstr "Sổ địa chỉ"
+
+#: src/addressbook.c:3104
+msgid "Person"
+msgstr "Cá nhân"
+
+#: src/addressbook.c:3120
+msgid "EMail Address"
+msgstr "Địa chỉ email"
+
+#: src/addressbook.c:3136
+msgid "Group"
+msgstr "Nhóm"
+
+#. special folder setting (maybe these options are redundant)
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1663
+msgid "Folder"
+msgstr "Thư mục"
+
+#: src/addressbook.c:3168
+msgid "vCard"
+msgstr "vCard"
+
+#: src/addressbook.c:3184 src/addressbook.c:3200
+msgid "JPilot"
+msgstr "JPilot"
+
+#: src/addressbook.c:3216
+msgid "LDAP Server"
+msgstr "Máy chủ LDAP"
+
+#: src/addrindex.c:95 src/addrindex.c:99 src/addrindex.c:106
+msgid "Common address"
+msgstr "Địa chỉ chung"
+
+#: src/addrindex.c:96 src/addrindex.c:100 src/addrindex.c:107
+msgid "Personal address"
+msgstr "Địa chỉ cá nhân"
+
+#: src/alertpanel.c:141 src/compose.c:5433 src/main.c:572
+msgid "Notice"
+msgstr "Chú ý"
+
+#: src/alertpanel.c:154 src/main.c:675
+msgid "Warning"
+msgstr "Cảnh báo"
+
+#: src/alertpanel.c:167 src/inc.c:573
+msgid "Error"
+msgstr "Lỗi"
+
+#: src/alertpanel.c:209
+msgid "Creating alert panel dialog...\n"
+msgstr "Tạo hộp thoại thanh báo lỗi...\n"
+
+#: src/alertpanel.c:290
+msgid "Show this message next time"
+msgstr "Hiện thông điệp này vào lần tới"
+
+#: src/colorlabel.c:46
+msgid "Orange"
+msgstr "Cam"
+
+#: src/colorlabel.c:47
+msgid "Red"
+msgstr "Đỏ"
+
+#: src/colorlabel.c:48
+msgid "Pink"
+msgstr "Hồng"
+
+#: src/colorlabel.c:49
+msgid "Sky blue"
+msgstr "Xanh da trời"
+
+#: src/colorlabel.c:50
+msgid "Blue"
+msgstr "Xanh"
+
+#: src/colorlabel.c:51
+msgid "Green"
+msgstr "Xanh lá cây"
+
+#: src/colorlabel.c:52
+msgid "Brown"
+msgstr "Nâu"
+
+#. create sub items. for the menu item activation callback we pass the
+#. * color flag value as data parameter. Also we attach a data pointer
+#. * so we can always get back the SummaryView pointer.
+#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
+msgid "None"
+msgstr "Không"
+
+#: src/compose.c:506
+msgid "/_Add..."
+msgstr "/Thê_m..."
+
+#: src/compose.c:507
+msgid "/_Remove"
+msgstr "/_Xoá bỏ"
+
+#: src/compose.c:509 src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:287
+msgid "/_Properties..."
+msgstr "/Th_uộc tính"
+
+#: src/compose.c:515
+msgid "/_File/_Send"
+msgstr "/_Tập tin/_Gửi"
+
+#: src/compose.c:517
+msgid "/_File/Send _later"
+msgstr "/_Tập tin/Gửi _sau"
+
+#: src/compose.c:520
+msgid "/_File/Save to _draft folder"
+msgstr "/_Tập tin/Lưu vào thư mục _nháp"
+
+#: src/compose.c:522
+msgid "/_File/Save and _keep editing"
+msgstr "/_Tập tin/Lưu và _tiếp tục soạn"
+
+#: src/compose.c:525
+msgid "/_File/_Attach file"
+msgstr "/_Tập tin/Đính _kèm tập tin"
+
+#: src/compose.c:526
+msgid "/_File/_Insert file"
+msgstr "/_Tập tin/_Chèn tập tin"
+
+#: src/compose.c:527
+msgid "/_File/Insert si_gnature"
+msgstr "/_Tập tin/Chèn _chữ kí"
+
+#: src/compose.c:532
+msgid "/_Edit/_Undo"
+msgstr "/_Soạn/_Hoàn tác"
+
+#: src/compose.c:533
+msgid "/_Edit/_Redo"
+msgstr "/_Soạn/Ch_uyển tác"
+
+#: src/compose.c:534 src/compose.c:541 src/mainwindow.c:501
+#: src/messageview.c:147
+msgid "/_Edit/---"
+msgstr "/_Soạn/---"
+
+#: src/compose.c:535
+msgid "/_Edit/Cu_t"
+msgstr "/_Soạn/_Cắt"
+
+#: src/compose.c:536 src/mainwindow.c:498 src/messageview.c:145
+msgid "/_Edit/_Copy"
+msgstr "/_Soạn/_Sao chép"
+
+#: src/compose.c:537
+msgid "/_Edit/_Paste"
+msgstr "/_Soạn/_Dán"
+
+#: src/compose.c:538
+msgid "/_Edit/Paste as _quotation"
+msgstr "/_Soạn/Dán ở dạng t_rích dẫn"
+
+#: src/compose.c:540 src/mainwindow.c:499 src/messageview.c:146
+msgid "/_Edit/Select _all"
+msgstr "/_Soạn/Chọ_n tất cả"
+
+#: src/compose.c:542
+msgid "/_Edit/_Wrap current paragraph"
+msgstr "/_Soạn/_Khuôn dòng đoạn hiện tại"
+
+#: src/compose.c:544
+msgid "/_Edit/Wrap all long _lines"
+msgstr "/_Soạn/Khuôn _mọi dòng dài"
+
+#: src/compose.c:546
+msgid "/_Edit/Aut_o wrapping"
+msgstr "/_Soạn/Tự độ_ng khuôn dòng"
+
+#: src/compose.c:547 src/mainwindow.c:506 src/messageview.c:151
+#: src/summaryview.c:431
+msgid "/_View"
+msgstr "/_Xem"
+
+#: src/compose.c:548
+msgid "/_View/_To"
+msgstr "/_Xem/_Người nhận"
+
+#: src/compose.c:549
+msgid "/_View/_Cc"
+msgstr "/_Xem/_Cc"
+
+#: src/compose.c:550
+msgid "/_View/_Bcc"
+msgstr "/_Xem/_Bcc"
+
+#: src/compose.c:551
+msgid "/_View/_Reply to"
+msgstr "/_Xem/_Hồi âm cho"
+
+#: src/compose.c:552 src/compose.c:554 src/compose.c:556 src/compose.c:558
+#: src/mainwindow.c:524 src/mainwindow.c:527 src/mainwindow.c:554
+#: src/mainwindow.c:578 src/mainwindow.c:671 src/mainwindow.c:675
+#: src/messageview.c:234
+msgid "/_View/---"
+msgstr "/_Xem/---"
+
+#: src/compose.c:553
+msgid "/_View/_Followup to"
+msgstr "/_Xem/Tiế_p sau"
+
+#: src/compose.c:555
+msgid "/_View/R_uler"
+msgstr "/_Xem/_Thước kẻ"
+
+#: src/compose.c:557
+msgid "/_View/_Attachment"
+msgstr "/_Xem/Đí_nh kèm"
+
+#: src/compose.c:564 src/mainwindow.c:585 src/messageview.c:158
+msgid "/_View/Character _encoding"
+msgstr "/_Xem/Mã _kí tự"
+
+#: src/compose.c:565
+msgid "/_View/Character _encoding/_Automatic"
+msgstr "/_Xem/Mã _kí tự/_Tự động"
+
+#: src/compose.c:567 src/compose.c:573 src/compose.c:579 src/compose.c:583
+#: src/compose.c:589 src/compose.c:593 src/compose.c:599 src/compose.c:603
+#: src/compose.c:613 src/compose.c:617 src/compose.c:627 src/compose.c:631
+#: src/mainwindow.c:581 src/mainwindow.c:588 src/messageview.c:154
+msgid "/_View/Character _encoding/---"
+msgstr "/_Xem/Mã _kí tự/---"
+
+#: src/compose.c:569 src/mainwindow.c:589 src/messageview.c:162
+msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
+msgstr "/_Xem/Mã _kí tự/7bit ascii (US-ASC_II)"
+
+#: src/compose.c:571 src/mainwindow.c:591 src/messageview.c:165
+msgid "/_View/Character _encoding/Unicode (_UTF-8)"
+msgstr "/_Xem/Mã _kí tự/Unicode (_UTF-8)"
+
+#: src/compose.c:575 src/mainwindow.c:595 src/messageview.c:168
+msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
+msgstr "/_Xem/Mã _kí tự/Tây Âu (ISO-8859-_1)"
+
+#: src/compose.c:577 src/mainwindow.c:597 src/messageview.c:170
+msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
+msgstr "/_Xem/Mã _kí tự/Đông Âu (ISO-8859-15)"
+
+#: src/compose.c:581 src/mainwindow.c:601 src/messageview.c:173
+msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
+msgstr "/_Xem/Mã _kí tự/Trung Âu (ISO-8859-_2)"
+
+#: src/compose.c:585 src/mainwindow.c:605 src/messageview.c:176
+msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
+msgstr "/_Xem/Mã _kí tự/_Baltic (ISO-8859-13)"
+
+#: src/compose.c:587 src/mainwindow.c:607 src/messageview.c:178
+msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
+msgstr "/_Xem/Mã _kí tự/Baltic (ISO-8859-_4)"
+
+#: src/compose.c:591 src/mainwindow.c:611 src/messageview.c:181
+msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
+msgstr "/_Xem/Mã _kí tự/Hi Lạp (ISO-8859-_7)"
+
+#: src/compose.c:595 src/mainwindow.c:615 src/messageview.c:184
+msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
+msgstr "/_Xem/Mã _kí tự/Do Thái (ISO-8859-_8)"
+
+#: src/compose.c:597 src/mainwindow.c:617 src/messageview.c:186
+msgid "/_View/Character _encoding/Hebrew (Windows-1255)"
+msgstr "/_Xem/Mã _kí tự/Do Thái (Windows-1255)"
+
+#: src/compose.c:601 src/mainwindow.c:621 src/messageview.c:189
+msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
+msgstr "/_Xem/Mã _kí tự/Thổ Nhĩ Kì (ISO-8859-_9)"
+
+#: src/compose.c:605 src/mainwindow.c:625 src/messageview.c:192
+msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
+msgstr "/_Xem/Mã _kí tự/Cyrillic (ISO-8859-_5)"
+
+#: src/compose.c:607 src/mainwindow.c:627 src/messageview.c:194
+msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
+msgstr "/_Xem/Mã _kí tự/Cyrillic (KOI8-_R)"
+
+#: src/compose.c:609 src/mainwindow.c:629 src/messageview.c:196
+msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
+msgstr "/_Xem/Mã _kí tự/Cyrillic (KOI8-U)"
+
+#: src/compose.c:611 src/mainwindow.c:631 src/messageview.c:198
+msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
+msgstr "/_Xem/Mã _kí tự/Cyrillic (Windows-1251)"
+
+#: src/compose.c:615 src/mainwindow.c:635 src/messageview.c:201
+msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
+msgstr "/_Xem/Mã _kí tự/Nhật Bản (ISO-2022-_JP)"
+
+#: src/compose.c:619 src/mainwindow.c:645 src/messageview.c:210
+msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
+msgstr "/_Xem/Mã _kí tự/Hán giản thể (_GB2312)"
+
+#: src/compose.c:621 src/mainwindow.c:647 src/messageview.c:212
+msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
+msgstr "/_Xem/Mã _kí tự/Hán phồn thể (GBK)"
+
+#: src/compose.c:623 src/mainwindow.c:649 src/messageview.c:214
+msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
+msgstr "/_Xem/Mã _kí tự/Hán phồn thể (_Big5)"
+
+#: src/compose.c:625 src/mainwindow.c:651 src/messageview.c:216
+msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
+msgstr "/_Xem/Mã _kí tự/Hán phồn thể (EUC-_TW)"
+
+#: src/compose.c:629 src/mainwindow.c:657 src/messageview.c:221
+msgid "/_View/Character _encoding/Korean (EUC-_KR)"
+msgstr "/_Xem/Mã _kí tự/Triều Tiên (EUC-_KR)"
+
+#: src/compose.c:633 src/mainwindow.c:663 src/messageview.c:226
+msgid "/_View/Character _encoding/Thai (TIS-620)"
+msgstr "/_Xem/Mã _kí tự/Thái (TIS-620)"
+
+#: src/compose.c:635 src/mainwindow.c:665 src/messageview.c:228
+msgid "/_View/Character _encoding/Thai (Windows-874)"
+msgstr "/_Xem/Mã _kí tự/Thái (Windows-874)"
+
+#: src/compose.c:639 src/mainwindow.c:722 src/messageview.c:258
+msgid "/_Tools/_Address book"
+msgstr "/_Công cụ/_Sổ địa chỉ"
+
+#: src/compose.c:640
+msgid "/_Tools/_Template"
+msgstr "/_Công cụ/_Mẫu"
+
+#: src/compose.c:641 src/mainwindow.c:745 src/messageview.c:273
+msgid "/_Tools/Actio_ns"
+msgstr "/_Công cụ/_Hành động"
+
+#: src/compose.c:642 src/compose.c:646 src/compose.c:652 src/mainwindow.c:725
+#: src/mainwindow.c:739 src/mainwindow.c:744 src/mainwindow.c:746
+#: src/mainwindow.c:749 src/mainwindow.c:751 src/messageview.c:261
+#: src/messageview.c:272
+msgid "/_Tools/---"
+msgstr "/_Công cụ/---"
+
+#: src/compose.c:643
+msgid "/_Tools/Edit with e_xternal editor"
+msgstr "/_Công cụ/Soạ_n với chương trình ngoài"
+
+#: src/compose.c:647
+msgid "/_Tools/PGP Si_gn"
+msgstr "/_Công cụ/Chữ _kí PGP"
+
+#: src/compose.c:648
+msgid "/_Tools/PGP _Encrypt"
+msgstr "/_Công cụ/Mã hoá _PGP"
+
+#: src/compose.c:653
+#, fuzzy
+msgid "/_Tools/_Check spell"
+msgstr "/_Công cụ/Chạ_y"
+
+#: src/compose.c:654
+#, fuzzy
+msgid "/_Tools/_Set spell language"
+msgstr "/_Công cụ/_Mẫu"
+
+#: src/compose.c:890
+#, c-format
+msgid "%s: file not exist\n"
+msgstr "%s: tập tin không tồn tại\n"
+
+#: src/compose.c:994 src/compose.c:1065
+msgid "Can't get text part\n"
+msgstr "Không thể lấy phần văn bản\n"
+
+#: src/compose.c:1466
+msgid "Quote mark format error."
+msgstr "Lỗi định dạng đánh dấu trích dẫn."
+
+#: src/compose.c:1478
+msgid "Message reply/forward format error."
+msgstr "Lỗi định dạng trả lời/chuyển tiếp thư."
+
+#: src/compose.c:1877
+#, c-format
+msgid "File %s doesn't exist\n"
+msgstr "Tập tin %s không tồn tại\n"
+
+#: src/compose.c:1881
+#, c-format
+msgid "Can't get file size of %s\n"
+msgstr "Không thể xác định kích tước tập tin của %s\n"
+
+#: src/compose.c:1885
+#, c-format
+msgid "File %s is empty."
+msgstr "%s là tập tin trống."
+
+#: src/compose.c:1889
+#, c-format
+msgid "Can't read %s."
+msgstr "Không thể đọc %s."
+
+#: src/compose.c:1924
+#, c-format
+msgid "Message: %s"
+msgstr "Thư: %s"
+
+#: src/compose.c:1996 src/mimeview.c:565
+msgid "Can't get the part of multipart message."
+msgstr "Không thể lấy thành phần cho thư nhiều thành phần."
+
+#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1943
+msgid "(No Subject)"
+msgstr "(Không tiêu đề)"
+
+#: src/compose.c:2444
+#, fuzzy, c-format
+msgid "%s - Compose%s"
+msgstr "%s - Viết thư%s"
+
+#: src/compose.c:2557
+msgid "Recipient is not specified."
+msgstr "Chưa chỉ định người nhận."
+
+#: src/compose.c:2565
+msgid "Empty subject"
+msgstr "Tiêu đề bị bỏ trống"
+
+#: src/compose.c:2566
+msgid "Subject is empty. Send it anyway?"
+msgstr "Tiêu đề bị bỏ trống. Vẫn gửi đi?"
+
+#: src/compose.c:2628
+msgid "can't get recipient list."
+msgstr "không lấy được danh sách người nhận."
+
+#: src/compose.c:2648
+msgid ""
+"Account for sending mail is not specified.\n"
+"Please select a mail account before sending."
+msgstr ""
+"Chưa xác định tài khoản để gửi thư.\n"
+"Hãy chọn một tài khoản trước khi gửi."
+
+#: src/compose.c:2662 src/send_message.c:299
+#, c-format
+msgid "Error occurred while posting the message to %s ."
+msgstr "Xảy ra lỗi khi gửi thư đến %s ."
+
+#: src/compose.c:2704
+msgid "Can't save the message to outbox."
+msgstr "Không thể lưu thư vào hộp gửi (outbox)."
+
+#: src/compose.c:2742
+#, c-format
+msgid "Could not find any key associated with currently selected key id `%s'."
+msgstr "Không tìm thấy khoá liên quan đến khoá đang chọn với id `%s'."
+
+#: src/compose.c:2839
+#, c-format
+msgid ""
+"Can't convert the character encoding of the message body from %s to %s.\n"
+"\n"
+"Send it as %s anyway?"
+msgstr ""
+"Không thể chuyển mã kí tự của nội dung thư từ %s sang %s.\n"
+"\n"
+"Vẫn gửi ở dạng %s?"
+
+#: src/compose.c:2845
+msgid "Code conversion error"
+msgstr "Lỗi chuyển mã"
+
+#: src/compose.c:2918
+#, c-format
+msgid ""
+"Line %d exceeds the line length limit (998 bytes).\n"
+"The contents of the message might be broken on the way to the delivery.\n"
+"\n"
+"Send it anyway?"
+msgstr ""
+"Dòng %d vượt độ dài quy định (998 byte).\n"
+"Nội dung thư có thể không toàn vẹn khi chuyển đến người nhận.\n"
+"\n"
+"Vẫn gửi đi?"
+
+#: src/compose.c:2922
+msgid "Line length limit"
+msgstr "Giới hạn độ dài của dòng"
+
+#: src/compose.c:3212
+msgid "can't remove the old message\n"
+msgstr "không thể xoá thư cũ\n"
+
+#: src/compose.c:3230
+msgid "queueing message...\n"
+msgstr "đang xếp hàng thư...\n"
+
+#: src/compose.c:3312
+msgid "can't find queue folder\n"
+msgstr "không thấy thư mục đợi\n"
+
+#: src/compose.c:3319
+msgid "can't queue the message\n"
+msgstr "không thể xếp hàng thư\n"
+
+#: src/compose.c:3912
+#, c-format
+msgid "generated Message-ID: %s\n"
+msgstr "đã tạo ID của thư: %s\n"
+
+#: src/compose.c:4025
+msgid "Creating compose window...\n"
+msgstr "Đang tạo cửa sổ soạn thảo...\n"
+
+#: src/compose.c:4076 src/headerview.c:54 src/summary_search.c:214
+msgid "From:"
+msgstr "Người gửi:"
+
+#: src/compose.c:4150
+msgid "PGP Sign"
+msgstr "Chữ kí PGP"
+
+#: src/compose.c:4153
+msgid "PGP Encrypt"
+msgstr "Mã hoá PGP"
+
+#: src/compose.c:4191 src/compose.c:5265
+msgid "MIME type"
+msgstr "Kiểu MIME"
+
+#. S_COL_DATE
+#: src/compose.c:4200 src/mimeview.c:197 src/prefs_filter_edit.c:585
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
+msgid "Size"
+msgstr "Kích thước"
+
+#: src/compose.c:4631 src/mainwindow.c:2254 src/prefs_account_dialog.c:516
+#: src/prefs_common_dialog.c:661
+msgid "Send"
+msgstr "Gửi"
+
+#: src/compose.c:4632
+msgid "Send message"
+msgstr "Gửi thư"
+
+#: src/compose.c:4640
+msgid "Send later"
+msgstr "Gửi sau"
+
+#: src/compose.c:4641
+msgid "Put into queue folder and send later"
+msgstr "Đưa vào thư mục `Đợi gửi' và gửi sau"
+
+#: src/compose.c:4649
+msgid "Draft"
+msgstr "Bản nháp"
+
+#: src/compose.c:4650
+msgid "Save to draft folder"
+msgstr "Gửi vào thư mục nháp"
+
+#: src/compose.c:4660
+msgid "Insert"
+msgstr "Chèn"
+
+#: src/compose.c:4661
+msgid "Insert file"
+msgstr "Chèn tập tin"
+
+#: src/compose.c:4669
+msgid "Attach"
+msgstr "Đính kèm"
+
+#: src/compose.c:4670
+msgid "Attach file"
+msgstr "Đính kèm tập tin"
+
+#. signature
+#: src/compose.c:4680 src/prefs_account_dialog.c:1188
+#: src/prefs_common_dialog.c:954
+msgid "Signature"
+msgstr "Chữ kí"
+
+#: src/compose.c:4681
+msgid "Insert signature"
+msgstr "Chèn chữ kí"
+
+#. editor
+#: src/compose.c:4690 src/prefs_common_dialog.c:992
+#: src/prefs_common_dialog.c:2311
+msgid "Editor"
+msgstr "Trình soạn thảo"
+
+#: src/compose.c:4691
+msgid "Edit with external editor"
+msgstr "Soạn với trình soạn thảo ngoài"
+
+#: src/compose.c:4699
+msgid "Linewrap"
+msgstr "Khuôn dòng"
+
+#: src/compose.c:4700
+msgid "Wrap all long lines"
+msgstr "Khuôn mọi dòng dài"
+
+#: src/compose.c:5161
+msgid "Invalid MIME type."
+msgstr "Kiểu MIME không hợp lệ"
+
+#: src/compose.c:5179
+msgid "File doesn't exist or is empty."
+msgstr "Tập tin không tồn tại hoặc rỗng."
+
+#: src/compose.c:5247
+msgid "Properties"
+msgstr "Thuộc tính"
+
+#: src/compose.c:5267 src/prefs_common_dialog.c:1448
+msgid "Encoding"
+msgstr "Mã hoá"
+
+#: src/compose.c:5290 src/prefs_folder_item.c:203
+msgid "Path"
+msgstr "Đường dẫn"
+
+#: src/compose.c:5291
+msgid "File name"
+msgstr "Tên tập tin"
+
+#: src/compose.c:5384
+#, c-format
+msgid "External editor command line is invalid: `%s'\n"
+msgstr "Dòng lệnh cho trình soạn thảo ngoài không hợp lệ: `%s'\n"
+
+#: src/compose.c:5430
+#, fuzzy, c-format
+msgid ""
+"The external editor is still working.\n"
+"Force terminating the process (pid: %d)?\n"
+msgstr ""
+"Trình soạn thảo ngoài vẫn đang hoạt động.\n"
+"Bắt buộc dừng tiến trình?\n"
+"id của nhóm tiến trình: %d"
+
+#: src/compose.c:5805 src/compose.c:5813 src/compose.c:5819
+msgid "Can't queue the message."
+msgstr "Không thể xếp hàng thông điệp"
+
+#: src/compose.c:5910
+msgid "Select files"
+msgstr "Chọn tập tin"
+
+#: src/compose.c:5932
+msgid "Select file"
+msgstr "Chọn tập tin"
+
+#: src/compose.c:5967
+msgid "Save message"
+msgstr "Lưu thư"
+
+#: src/compose.c:5968
+msgid "This message has been modified. Save it to draft folder?"
+msgstr "Nội dung đã được thay đổi. Lưu vào thư mục nháp?"
+
+#: src/compose.c:5970
+msgid "Close _without saving"
+msgstr "_Không lưu"
+
+#: src/compose.c:6012
+#, c-format
+msgid "Do you want to apply the template `%s' ?"
+msgstr "Bạn có muốn dùng mẫu `%s' ?"
+
+#: src/compose.c:6014
+msgid "Apply template"
+msgstr "Dùng mẫu"
+
+#: src/compose.c:6015
+msgid "_Replace"
+msgstr "_Thay thế"
+
+#: src/compose.c:6015
+msgid "_Insert"
+msgstr "_Chèn"
+
+#. gtk_container_set_border_width(GTK_CONTAINER(window), 8);
+#: src/editaddress.c:182
+msgid "Edit address"
+msgstr "Sửa địa chỉ"
+
+#: src/editaddress.c:326
+msgid "Add New Person"
+msgstr "Thêm người mới"
+
+#: src/editaddress.c:327
+msgid "Edit Person Details"
+msgstr "Soạn thông tin về cá nhân"
+
+#: src/editaddress.c:468
+msgid "An E-Mail address must be supplied."
+msgstr "Phải cung cấp một địa chỉ email."
+
+#: src/editaddress.c:587
+msgid "A Name and Value must be supplied."
+msgstr "Phải cung cấp một Tên và Giá trị."
+
+#. gtk_container_set_border_width(GTK_CONTAINER(window), 0);
+#: src/editaddress.c:645
+msgid "Edit Person Data"
+msgstr "Soạn dữ liệu về cá nhân"
+
+#: src/editaddress.c:744
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#: src/editaddress.c:750 src/editaddress.c:754
+msgid "Last Name"
+msgstr "Họ"
+
+#: src/editaddress.c:751 src/editaddress.c:753
+msgid "First Name"
+msgstr "Tên"
+
+#: src/editaddress.c:756
+msgid "Nick Name"
+msgstr "Biệt danh"
+
+#: src/editaddress.c:793 src/editaddress.c:842 src/editaddress.c:1051
+#: src/editgroup.c:266
+msgid "E-Mail Address"
+msgstr "Địa chỉ email"
+
+#: src/editaddress.c:794 src/editaddress.c:851
+msgid "Alias"
+msgstr "Bí danh"
+
+#. Buttons
+#: src/editaddress.c:878
+msgid "Move Up"
+msgstr "Chuyển lên"
+
+#: src/editaddress.c:881
+msgid "Move Down"
+msgstr "Chuyển xuống"
+
+#: src/editaddress.c:887 src/editaddress.c:1020 src/importldif.c:642
+msgid "Modify"
+msgstr "Thay đổi"
+
+#: src/editaddress.c:893 src/editaddress.c:1026
+msgid "Clear"
+msgstr "Xoá"
+
+#: src/editaddress.c:943 src/editaddress.c:999 src/prefs_customheader.c:203
+msgid "Value"
+msgstr "Giá trị"
+
+#: src/editaddress.c:1050
+msgid "Basic Data"
+msgstr "Dữ liệu cơ bản"
+
+#: src/editaddress.c:1052
+msgid "User Attributes"
+msgstr "Các thuộc tính người dùng"
+
+#: src/editbook.c:120
+msgid "File appears to be Ok."
+msgstr "Tập tin có vẻ ổn"
+
+#: src/editbook.c:123
+msgid "File does not appear to be a valid address book format."
+msgstr "Tập tin có vẻ không đúng định dạng sổ địa chỉ."
+
+#: src/editbook.c:126 src/editjpilot.c:204 src/editvcard.c:108
+msgid "Could not read file."
+msgstr "Không thể đọc tập tin."
+
+#: src/editbook.c:174 src/editbook.c:288
+msgid "Edit Addressbook"
+msgstr "Soạn Sổ địa chỉ"
+
+#: src/editbook.c:203 src/editjpilot.c:278 src/editvcard.c:191
+msgid " Check File "
+msgstr " Kiểm tra tập tin "
+
+#: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/prefs_account_dialog.c:1199
+msgid "File"
+msgstr "Tập tin"
+
+#: src/editbook.c:307
+msgid "Add New Addressbook"
+msgstr "Thêm Sổ địa chỉ mới"
+
+#: src/editgroup.c:113
+msgid "A Group Name must be supplied."
+msgstr "Phải cung cấp một tên nhóm"
+
+#: src/editgroup.c:272
+msgid "Edit Group Data"
+msgstr "Soạn dữ liệu cho nhóm"
+
+#: src/editgroup.c:300
+msgid "Group Name"
+msgstr "Tên nhóm"
+
+#: src/editgroup.c:319
+msgid "Addresses in Group"
+msgstr "Các địa chỉ trong nhóm"
+
+#: src/editgroup.c:321
+msgid " -> "
+msgstr " -> "
+
+#: src/editgroup.c:348
+msgid " <- "
+msgstr " <- "
+
+#: src/editgroup.c:350
+msgid "Available Addresses"
+msgstr "Các địa chỉ hiện có"
+
+#: src/editgroup.c:416
+msgid "Move E-Mail Addresses to or from Group with arrow buttons"
+msgstr "Chuyển địa chỉ email tới hoặc từ nhóm với nút mũi tên"
+
+#: src/editgroup.c:468
+msgid "Edit Group Details"
+msgstr "Soạn thông tin về nhóm"
+
+#: src/editgroup.c:471
+msgid "Add New Group"
+msgstr "Thêm nhóm mới"
+
+#: src/editgroup.c:521
+msgid "Edit folder"
+msgstr "Sửa thư mục"
+
+#: src/editgroup.c:521
+msgid "Input the new name of folder:"
+msgstr "Đặt tên mới cho thư mục:"
+
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1975
+#: src/folderview.c:1981
+msgid "New folder"
+msgstr "Thư mục mới"
+
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1982
+msgid "Input the name of new folder:"
+msgstr "Đặt tên cho thư mục mới:"
+
+#: src/editjpilot.c:201
+msgid "File does not appear to be JPilot format."
+msgstr "Tập tin có vẻ không dùng định dạng JPilot."
+
+#: src/editjpilot.c:213
+msgid "Select JPilot File"
+msgstr "Chọn tập tin JPilot"
+
+#: src/editjpilot.c:249 src/editjpilot.c:381
+msgid "Edit JPilot Entry"
+msgstr "Soạn mục JPilot"
+
+#: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
+#: src/importldif.c:534 src/prefs_account_dialog.c:1691
+#: src/prefs_common_dialog.c:1849
+msgid " ... "
+msgstr " ... "
+
+#: src/editjpilot.c:295
+msgid "Additional e-Mail address item(s)"
+msgstr "Các địa chỉ email bổ sung"
+
+#: src/editjpilot.c:388
+msgid "Add New JPilot Entry"
+msgstr "Thêm mục JPilot mới"
+
+#: src/editldap.c:171
+msgid "Connected successfully to server"
+msgstr "Kết nối thành công tới máy chủ"
+
+#: src/editldap.c:174 src/editldap_basedn.c:299
+msgid "Could not connect to server"
+msgstr "Không thể kết nối tới máy chủ"
+
+#: src/editldap.c:222 src/editldap.c:546
+msgid "Edit LDAP Server"
+msgstr "Thay đổi máy chủ LDAP"
+
+#: src/editldap.c:316 src/editldap_basedn.c:168
+msgid "Hostname"
+msgstr "Tên host"
+
+#: src/editldap.c:325 src/editldap_basedn.c:178
+msgid "Port"
+msgstr "Cổng"
+
+#: src/editldap.c:337
+msgid " Check Server "
+msgstr " Kiểm tra máy chủ "
+
+#: src/editldap.c:342 src/editldap_basedn.c:188
+msgid "Search Base"
+msgstr "Search Base"
+
+#: src/editldap.c:399
+msgid "Search Criteria"
+msgstr "Yêu cầu tìm kiếm"
+
+#: src/editldap.c:406
+msgid " Reset "
+msgstr " Tái lập "
+
+#: src/editldap.c:411
+msgid "Bind DN"
+msgstr ""
+
+#: src/editldap.c:420
+msgid "Bind Password"
+msgstr ""
+
+#: src/editldap.c:430
+msgid "Timeout (secs)"
+msgstr "Hết hạn (giây)"
+
+#: src/editldap.c:444
+msgid "Maximum Entries"
+msgstr "Số mục tối đa"
+
+#: src/editldap.c:471 src/prefs_account_dialog.c:512
+msgid "Basic"
+msgstr "Cơ bản"
+
+#: src/editldap.c:472
+msgid "Extended"
+msgstr "Mở rộng"
+
+#: src/editldap.c:558
+msgid "Add New LDAP Server"
+msgstr "Thêm máy chủ LDAP mới"
+
+#: src/editldap_basedn.c:148
+msgid "Edit LDAP - Select Search Base"
+msgstr "Soạn LDAP - Chọn Search Base"
+
+#: src/editldap_basedn.c:209
+msgid "Available Search Base(s)"
+msgstr "Search Base hiện có"
+
+#: src/editldap_basedn.c:295
+msgid "Could not read Search Base(s) from server - please set manually"
+msgstr "Không thể đọc Search Base từ máy chủ - hãy đặt theo cách thủ công"
+
+#: src/editvcard.c:105
+msgid "File does not appear to be vCard format."
+msgstr "Tập tin có vẻ không dùng định dạng vCard."
+
+#: src/editvcard.c:117
+msgid "Select vCard File"
+msgstr "Chọn tập tin vCard"
+
+#: src/editvcard.c:162 src/editvcard.c:270
+msgid "Edit vCard Entry"
+msgstr "Soạn mục vCard"
+
+#: src/editvcard.c:275
+msgid "Add New vCard Entry"
+msgstr "Thêm mục vCard mới"
+
+#: src/export.c:138
+msgid "Export"
+msgstr "Xuất khẩu"
+
+#: src/export.c:157
+msgid "Specify target folder and mbox file."
+msgstr "Chỉ định thư mục đích và tập tin mbox."
+
+#: src/export.c:167
+msgid "Source dir:"
+msgstr "Thư mục nguồn:"
+
+#: src/export.c:172
+msgid "Exporting file:"
+msgstr "Đang xuất tập tin:"
+
+#: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
+#: src/prefs_account_dialog.c:903
+msgid " Select... "
+msgstr "Chọn... "
+
+#: src/export.c:231
+msgid "Select exporting file"
+msgstr "Chọn tập tin xuất"
+
+#: src/filesel.c:136
+msgid "Save as"
+msgstr "Lưu là"
+
+#: src/filesel.c:142
+msgid "Overwrite"
+msgstr "Ghi đè"
+
+#: src/filesel.c:143
+msgid "Overwrite existing file?"
+msgstr "Ghi đè tập tin có trước?"
+
+#: src/filesel.c:159
+#, fuzzy
+msgid "Select directory"
+msgstr "Chọn thư mục"
+
+#: src/foldersel.c:230
+msgid "Select folder"
+msgstr "Chọn thư mục"
+
+#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
+msgid "Inbox"
+msgstr "Hộp nhận"
+
+#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
+msgid "Sent"
+msgstr "Đã gửi"
+
+#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
+msgid "Queue"
+msgstr "Đợi gửi"
+
+#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
+msgid "Trash"
+msgstr "Thùng rác"
+
+#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
+msgid "Drafts"
+msgstr "Nháp"
+
+#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
+msgid "NewFolder"
+msgstr "Thư mục mới"
+
+#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
+#, c-format
+msgid "`%c' can't be included in folder name."
+msgstr "`%c' không được có trong tên thư mục."
+
+#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
+#, c-format
+msgid "The folder `%s' already exists."
+msgstr "Thư mục `%s' đã có trước."
+
+#: src/foldersel.c:568 src/folderview.c:2008
+#, c-format
+msgid "Can't create the folder `%s'."
+msgstr "Không tạo được thư mục `%s'."
+
+#: src/folderview.c:238 src/folderview.c:256
+msgid "/Create _new folder..."
+msgstr "/Tạo thư mục _mới..."
+
+#: src/folderview.c:239 src/folderview.c:257
+msgid "/_Rename folder..."
+msgstr "/Đổi _tên thư mục..."
+
+#: src/folderview.c:240 src/folderview.c:258
+msgid "/_Move folder..."
+msgstr "/_Di chuyển thư mục..."
+
+#: src/folderview.c:241 src/folderview.c:259
+msgid "/_Delete folder"
+msgstr "/_Xoá thư mục"
+
+#: src/folderview.c:243 src/folderview.c:261
+msgid "/Empty _trash"
+msgstr "/Đổ _rác"
+
+#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:282
+msgid "/_Check for new messages"
+msgstr "/_Kiểm tra thư mới"
+
+#: src/folderview.c:247 src/folderview.c:267
+msgid "/R_ebuild folder tree"
+msgstr "/_Làm lại cây thư mục"
+
+#: src/folderview.c:248 src/folderview.c:268 src/folderview.c:284
+#, fuzzy
+msgid "/_Update summary"
+msgstr "/_Xem/_Cập nhật tóm tắt"
+
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
+msgid "/_Search messages..."
+msgstr "/_Tìm thư..."
+
+#: src/folderview.c:263 src/folderview.c:280
+msgid "/Down_load"
+msgstr "/Tải _về"
+
+#: src/folderview.c:276
+msgid "/Su_bscribe to newsgroup..."
+msgstr "/Đăng kí vào _nhóm tin..."
+
+#: src/folderview.c:278
+msgid "/_Remove newsgroup"
+msgstr "/_Xoá nhóm tin"
+
+#: src/folderview.c:308
+msgid "Creating folder view...\n"
+msgstr "Đang tạo khung thư mục...\n"
+
+#: src/folderview.c:386
+msgid "New"
+msgstr "Mới"
+
+#. S_COL_MARK
+#: src/folderview.c:400 src/prefs_summary_column.c:71
+msgid "Unread"
+msgstr "Chưa đọc"
+
+#: src/folderview.c:414
+msgid "#"
+msgstr "#"
+
+#: src/folderview.c:536
+msgid "Setting folder info...\n"
+msgstr "Thiết lập thông tin thư mục...\n"
+
+#: src/folderview.c:537
+msgid "Setting folder info..."
+msgstr "Thiết lập thông tin thư mục..."
+
+#: src/folderview.c:837 src/mainwindow.c:3319 src/setup.c:80
+#, c-format
+msgid "Scanning folder %s%c%s ..."
+msgstr "Đang quét thư mục %s%c%s ..."
+
+#: src/folderview.c:841 src/mainwindow.c:3324 src/setup.c:85
+#, c-format
+msgid "Scanning folder %s ..."
+msgstr "Đang quét thư mục %s ..."
+
+#: src/folderview.c:883
+msgid "Rebuild folder tree"
+msgstr "Làm lại cây thư mục"
+
+#: src/folderview.c:884
+msgid "The folder tree will be rebuilt. Continue?"
+msgstr "Cây thư mục sẽ được làm lại. Tiếp tục?"
+
+#: src/folderview.c:893
+msgid "Rebuilding folder tree..."
+msgstr "Đang làm lại cây thư mục..."
+
+#: src/folderview.c:900
+msgid "Rebuilding of the folder tree failed."
+msgstr "Việc làm lại cây thư mục thất bại."
+
+#: src/folderview.c:970
+msgid "Checking for new messages in all folders..."
+msgstr "Kiểm tra thư mới trong mọi thư mục..."
+
+#: src/folderview.c:1725
+#, c-format
+msgid "Folder %s is selected\n"
+msgstr "Thư mục %s được chọn\n"
+
+#: src/folderview.c:1880
+#, c-format
+msgid "Downloading messages in %s ..."
+msgstr "Đang tải thư về trong %s ..."
+
+#: src/folderview.c:1915
+#, c-format
+msgid "Error occurred while downloading messages in `%s'."
+msgstr "Có lỗi khi tải thư về trong `%s'."
+
+#: src/folderview.c:1976
+msgid ""
+"Input the name of new folder:\n"
+"(if you want to create a folder to store subfolders,\n"
+" append `/' at the end of the name)"
+msgstr ""
+"Đặt tên cho thư mục mới:\n"
+"(nếu bạn muốn tạo một thư mục để lưu thư mục con,\n"
+" thêm `/' vào cuối tên)"
+
+#: src/folderview.c:2038
+#, c-format
+msgid "Input new name for `%s':"
+msgstr "Đặt tên cho `%s':"
+
+#: src/folderview.c:2039
+msgid "Rename folder"
+msgstr "Đổi tên thư mục"
+
+#: src/folderview.c:2130
+#, c-format
+msgid "Can't move the folder `%s'."
+msgstr "Không thể di chuyển thư mục `%s'."
+
+#: src/folderview.c:2193
+#, c-format
+msgid ""
+"All folders and messages under `%s' will be permanently deleted.\n"
+"Recovery will not be possible.\n"
+"\n"
+"Do you really want to delete?"
+msgstr ""
+"Mọi thư mục và thư trong `%s' sẽ bị xoá vĩnh viễn.\n"
+"Việc khôi phục là không thể.\n"
+"\n"
+"Bạn có thực sự muốn xoá không?"
+
+#: src/folderview.c:2222
+#, c-format
+msgid "Can't remove the folder `%s'."
+msgstr "Không thể xoá thư mục `%s'."
+
+#: src/folderview.c:2256
+msgid "Empty trash"
+msgstr "Đổi rác"
+
+#: src/folderview.c:2257
+#, fuzzy
+msgid "Delete all messages in the trash folder?"
+msgstr "Xoá mọi thư trong thùng rác?"
+
+#: src/folderview.c:2293
+#, c-format
+msgid ""
+"Really remove the mailbox `%s' ?\n"
+"(The messages are NOT deleted from the disk)"
+msgstr ""
+"Thực sự muốn xoá hộp thư `%s' ?\n"
+"(Thư sẽ KHÔNG bị xoá khỏi ổ cứng)"
+
+#: src/folderview.c:2295
+msgid "Remove mailbox"
+msgstr "Xoá hộp thư"
+
+#: src/folderview.c:2341
+#, c-format
+msgid "Really delete IMAP4 account `%s'?"
+msgstr "Thực sự muốn xoá tài khoản IMAP4 `%s'?"
+
+#: src/folderview.c:2342
+msgid "Delete IMAP4 account"
+msgstr "Xoá tài khoản IMAP4"
+
+#: src/folderview.c:2484
+#, c-format
+msgid "Really delete newsgroup `%s'?"
+msgstr "Thực sự muốn xoá nhóm tin `%s'?"
+
+#: src/folderview.c:2485
+msgid "Delete newsgroup"
+msgstr "Xoá nhóm tin"
+
+#: src/folderview.c:2532
+#, c-format
+msgid "Really delete news account `%s'?"
+msgstr "Thực sự muốn xoá tài khoản tin tức `%s'?"
+
+#: src/folderview.c:2533
+msgid "Delete news account"
+msgstr "Xoá tài khoản tin tức"
+
+#: src/headerview.c:56
+msgid "Newsgroups:"
+msgstr "Nhóm tin:"
+
+#: src/headerview.c:57 src/prefs_template.c:180 src/summary_search.c:228
+msgid "Subject:"
+msgstr "Tiêu đề:"
+
+#: src/headerview.c:87
+msgid "Creating header view...\n"
+msgstr "Đang tạo khung xem header...\n"
+
+#: src/headerview.c:180 src/summaryview.c:1946
+msgid "(No From)"
+msgstr "(Không rõ người gửi)"
+
+#: src/imageview.c:55
+msgid "Creating image view...\n"
+msgstr "Đang tạo khung xem ảnh...\n"
+
+#: src/imageview.c:109
+msgid "Can't load the image."
+msgstr "Không thể tải anh."
+
+#: src/import.c:144
+msgid "Import"
+msgstr "Nhập khẩu"
+
+#: src/import.c:163
+msgid "Specify target mbox file and destination folder."
+msgstr "Chỉ định tập tin mbox đích và thư mục đến."
+
+#: src/import.c:173
+msgid "Importing file:"
+msgstr "Tập tin được nhập:"
+
+#: src/import.c:178
+msgid "Destination dir:"
+msgstr "Thư mục đến:"
+
+#: src/import.c:237
+msgid "Select importing file"
+msgstr "Chọn tập tin nhập khẩu"
+
+#: src/importldif.c:125
+msgid "Please specify address book name and file to import."
+msgstr "Hãy chỉ định tên sổ địa chỉ và tập tin để nhập khẩu."
+
+#: src/importldif.c:128
+msgid "Select and rename LDIF field names to import."
+msgstr "Chọn và đổi tên các trường LDIF để nhập khẩu."
+
+#: src/importldif.c:131
+msgid "File imported."
+msgstr "Tập tin đã được nhập."
+
+#: src/importldif.c:320
+msgid "Please select a file."
+msgstr "Hãy chọn một tập tin."
+
+#: src/importldif.c:326
+msgid "Address book name must be supplied."
+msgstr "Phải cung cấp tên sổ địa chỉ."
+
+#: src/importldif.c:341
+msgid "Error reading LDIF fields."
+msgstr "Lỗi khi đọc các trường LDIF."
+
+#: src/importldif.c:364
+msgid "LDIF file imported successfully."
+msgstr "Nhập khẩu thành công tập tin LDIF."
+
+#: src/importldif.c:449
+msgid "Select LDIF File"
+msgstr "Chọn tập tin LDIF"
+
+#: src/importldif.c:525
+msgid "File Name"
+msgstr "Tên tập tin"
+
+#: src/importldif.c:566
+msgid "S"
+msgstr "S"
+
+#: src/importldif.c:567 src/importldif.c:616
+msgid "LDIF Field"
+msgstr "Trường LDIF"
+
+#: src/importldif.c:568
+msgid "Attribute Name"
+msgstr "Tên thuộc tính"
+
+#: src/importldif.c:626
+msgid "Attribute"
+msgstr "Thuộc tính"
+
+#: src/importldif.c:635 src/select-keys.c:342
+msgid "Select"
+msgstr "Chọn"
+
+#: src/importldif.c:688
+msgid "Address Book :"
+msgstr "Sổ địa chỉ:"
+
+#: src/importldif.c:698
+msgid "File Name :"
+msgstr "Tên tập tin:"
+
+#: src/importldif.c:708
+msgid "Records :"
+msgstr "Mảng:"
+
+#: src/importldif.c:736
+msgid "Import LDIF file into Address Book"
+msgstr "Nhập khẩu tập tin LDIF vào sổ địa chỉ"
+
+#. Button panel
+#: src/importldif.c:767
+msgid "Prev"
+msgstr "Trước"
+
+#: src/importldif.c:768 src/mainwindow.c:2350
+msgid "Next"
+msgstr "Tiếp"
+
+#: src/importldif.c:797
+msgid "File Info"
+msgstr "Thông tin tập tin"
+
+#: src/importldif.c:798
+msgid "Attributes"
+msgstr "Thuộc tính"
+
+#: src/importldif.c:799
+msgid "Finish"
+msgstr "Hoàn thành"
+
+#: src/inc.c:157
+#, fuzzy, c-format
+msgid "Sylpheed: %d new messages"
+msgstr "Hoàn tất (%d thư mới)"
+
+#: src/inc.c:161
+#, fuzzy
+msgid "Sylpheed"
+msgstr "Sylpheed cũ"
+
+#: src/inc.c:358
+msgid "Retrieving new messages"
+msgstr "Đang tải về thư mới"
+
+#: src/inc.c:401
+msgid "Standby"
+msgstr "Đợi"
+
+#: src/inc.c:530 src/inc.c:579
+msgid "Cancelled"
+msgstr "Đã bị huỷ bỏ"
+
+#: src/inc.c:541
+msgid "Retrieving"
+msgstr "Đang tải về"
+
+#: src/inc.c:550
+#, c-format
+msgid "Done (%d message(s) (%s) received)"
+msgstr "Xong (%d thư (%s) nhận được)"
+
+#: src/inc.c:554
+msgid "Done (no new messages)"
+msgstr "Xong (không có thư mới)"
+
+#: src/inc.c:560
+msgid "Connection failed"
+msgstr "Kết nối thất bại"
+
+#: src/inc.c:563
+msgid "Auth failed"
+msgstr "Xác thực thất bại"
+
+#: src/inc.c:566
+msgid "Locked"
+msgstr "Đã khoá"
+
+#: src/inc.c:576
+msgid "Timeout"
+msgstr "Hết giờ"
+
+#: src/inc.c:626
+#, c-format
+msgid "Finished (%d new message(s))"
+msgstr "Hoàn tất (%d thư mới)"
+
+#: src/inc.c:629
+msgid "Finished (no new messages)"
+msgstr "Hoàn tất (không có thư mới)"
+
+#: src/inc.c:638
+msgid "Some errors occurred while getting mail."
+msgstr "Xảy ra một số lỗi khi nhận thư."
+
+#: src/inc.c:674
+#, c-format
+msgid "getting new messages of account %s...\n"
+msgstr "đang nhận thư mới của tài khoản %s...\n"
+
+#: src/inc.c:677
+#, c-format
+msgid "%s: Retrieving new messages"
+msgstr "%s: Đang nhận thư mới"
+
+#: src/inc.c:696
+#, c-format
+msgid "Connecting to POP3 server: %s..."
+msgstr "Đang kết nối tới máy chủ POP3: %s..."
+
+#: src/inc.c:705
+#, c-format
+msgid "Can't connect to POP3 server: %s:%d\n"
+msgstr "Không thể kết nối tới máy thủ POP3: %s:%d\n"
+
+#: src/inc.c:784 src/send_message.c:631
+msgid "Authenticating..."
+msgstr "Đang xác thực..."
+
+#: src/inc.c:785
+#, c-format
+msgid "Retrieving messages from %s..."
+msgstr "Đang lấy thư trên %s..."
+
+#: src/inc.c:790
+msgid "Getting the number of new messages (STAT)..."
+msgstr "Đang xác định số lượng thư mới (STAT)..."
+
+#: src/inc.c:794
+msgid "Getting the number of new messages (LAST)..."
+msgstr "Đang xác định số lượng thư mới (LAST)..."
+
+#: src/inc.c:798
+msgid "Getting the number of new messages (UIDL)..."
+msgstr "Đang xác định số lượng thư mới (UIDL)..."
+
+#: src/inc.c:802
+msgid "Getting the size of messages (LIST)..."
+msgstr "Đang xác định kích thước thư (LIST)..."
+
+#: src/inc.c:812
+#, c-format
+msgid "Deleting message %d"
+msgstr "Đang xoá thư %d"
+
+#: src/inc.c:819 src/send_message.c:649
+msgid "Quitting"
+msgstr "Đang thoát"
+
+#: src/inc.c:844
+#, c-format
+msgid "Retrieving message (%d / %d) (%s / %s)"
+msgstr "Đang lấy thư (%d / %d) (%s / %s)"
+
+#: src/inc.c:865
+#, c-format
+msgid "Retrieving (%d message(s) (%s) received)"
+msgstr "Đang lấy (%d thư (%s) đã nhận)"
+
+#: src/inc.c:1093
+msgid "Connection failed."
+msgstr "Kết nối thất bại."
+
+#: src/inc.c:1099
+msgid "Error occurred while processing mail."
+msgstr "Có lỗi khi xử lí thư."
+
+#: src/inc.c:1104
+#, c-format
+msgid ""
+"Error occurred while processing mail:\n"
+"%s"
+msgstr ""
+"Có lỗi khi xử lí thư:\n"
+"%s"
+
+#: src/inc.c:1110
+msgid "No disk space left."
+msgstr "Ổ cứng bị đầy."
+
+#: src/inc.c:1115
+msgid "Can't write file."
+msgstr "Không thể ghi lên tập tin"
+
+#: src/inc.c:1120
+msgid "Socket error."
+msgstr "Lỗi socket."
+
+#. consider EOF right after QUIT successful
+#: src/inc.c:1126 src/send_message.c:584 src/send_message.c:772
+msgid "Connection closed by the remote host."
+msgstr "Kết nối bị ngắt bởi máy từ xa."
+
+#: src/inc.c:1132
+msgid "Mailbox is locked."
+msgstr "Hộp thư bị khoá."
+
+#: src/inc.c:1136
+#, c-format
+msgid ""
+"Mailbox is locked:\n"
+"%s"
+msgstr ""
+"Hộp thư bị khoá:\n"
+"%s"
+
+#: src/inc.c:1142 src/send_message.c:757
+msgid "Authentication failed."
+msgstr "Xác thực thất bại."
+
+#: src/inc.c:1147 src/send_message.c:760
+#, c-format
+msgid ""
+"Authentication failed:\n"
+"%s"
+msgstr ""
+"Xác thực thất bại:\n"
+"%s"
+
+#: src/inc.c:1152 src/send_message.c:776
+msgid "Session timed out."
+msgstr "Phiên làm việc hết giờ."
+
+#: src/inc.c:1188
+msgid "Incorporation cancelled\n"
+msgstr "Sáp nhập bị huỷ bỏ\n"
+
+#: src/inc.c:1271
+#, c-format
+msgid "Getting new messages from %s into %s...\n"
+msgstr "Đang lấy thư từ %s vào %s...\n"
+
+#: src/inputdialog.c:146
+#, c-format
+msgid "Input password for %s on %s:"
+msgstr "Nhập mật khẩu cho %s trên %s:"
+
+#: src/inputdialog.c:148
+msgid "Input password"
+msgstr "Nhập mật khẩu"
+
+#: src/logwindow.c:68
+msgid "Protocol log"
+msgstr "Theo dõi giao thức"
+
+#: src/main.c:192
+msgid "g_thread is not supported by glib.\n"
+msgstr "g_thread không được glib hỗ trợ.\n"
+
+#: src/main.c:361
+#, c-format
+msgid "Usage: %s [OPTION]...\n"
+msgstr "Cách dùng: %s [TUỲ CHỌN]...\n"
+
+#: src/main.c:364
+msgid "  --compose [address]    open composition window"
+msgstr "  --compose [địa chỉ]    mở cửa sổ soạn thảo"
+
+#: src/main.c:365
+msgid ""
+"  --attach file1 [file2]...\n"
+"                         open composition window with specified files\n"
+"                         attached"
+msgstr ""
+"  --attach tập_tin_1 [tập_tin_2]...\n"
+"                         mở cửa sổ soạn thảo với tập tin đính kèm\n"
+"                         đã chỉ định"
+
+#: src/main.c:368
+msgid "  --receive              receive new messages"
+msgstr "  --receive              nhận thư mới"
+
+#: src/main.c:369
+msgid "  --receive-all          receive new messages of all accounts"
+msgstr "  --receive-all          nhận thư mới từ mọi tài khoản"
+
+#: src/main.c:370
+msgid "  --send                 send all queued messages"
+msgstr "  --send                 gửi mọi thư đã xếp hàng"
+
+#: src/main.c:371
+msgid "  --status [folder]...   show the total number of messages"
+msgstr "  --status [thư mục]...   hiện tổng số thư"
+
+#: src/main.c:372
+msgid ""
+"  --status-full [folder]...\n"
+"                         show the status of each folder"
+msgstr ""
+"  --status-full [thư mục]...\n"
+"                         hiện trạng thái của từng thư mục"
+
+#: src/main.c:374
+msgid ""
+"  --configdir dirname    specify directory which stores configuration files"
+msgstr ""
+
+#: src/main.c:375
+#, fuzzy
+msgid "  --exit                 exit Sylpheed"
+msgstr "  --debug                chế độ gỡ lỗi"
+
+#: src/main.c:376
+msgid "  --debug                debug mode"
+msgstr "  --debug                chế độ gỡ lỗi"
+
+#: src/main.c:377
+msgid "  --help                 display this help and exit"
+msgstr "  --help                 hiển thị phần giúp đỡ này và thoát"
+
+#: src/main.c:378
+msgid "  --version              output version information and exit"
+msgstr "  --version              đưa ra thông tin phiên bản và thoát"
+
+#: src/main.c:517
+msgid "Filename encoding"
+msgstr "Mã của tên tập tin"
+
+#: src/main.c:518
+msgid ""
+"The locale encoding is not UTF-8, but the environmental variable "
+"G_FILENAME_ENCODING is not set.\n"
+"If the locale encoding is used for file name or directory name, it will not "
+"work correctly.\n"
+"In that case, you must set the following environmental variable (see README "
+"for detail):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Continue?"
+msgstr ""
+"Mã kí tự bản địa không phải là UTF-8, nhưng biến môi trường "
+"G_FILENAME_ENCODING chưa được đặt.\n"
+"Nếu mã kí tự bản địa được dùng cho tên tập tin hoặc thư mục, nó sẽ làm việc "
+"chính xác.\n"
+"Trong trường hợp đó, bạn phải đặt biến môi trường sau đây (xem README để "
+"biết thêm chi tiết):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Tiếp tục?"
+
+#: src/main.c:573
+msgid "Composing message exists. Really quit?"
+msgstr "Đang viết thư. Bạn thực sự muốn thoát?"
+
+#: src/main.c:584
+msgid "Queued messages"
+msgstr "Các thư đang đợi gửi"
+
+#: src/main.c:585
+msgid "Some unsent messages are queued. Exit now?"
+msgstr "Một số thư chưa gửi đã được xếp hàng. Thoát bây giờ?"
+
+#: src/main.c:676
+msgid ""
+"GnuPG is not installed properly, or its version is too old.\n"
+"OpenPGP support disabled."
+msgstr ""
+"GnuPG không được cài đặt hoàn hảo, hoặc phiên bản quá cũ.\n"
+"Việc hỗ trợ OpenGPG bị cấm."
+
+#. remote command mode
+#: src/main.c:839
+msgid "another Sylpheed is already running.\n"
+msgstr "một tiến trình Sylpheed khác đang chạy.\n"
+
+#: src/main.c:1056
+msgid "Migration of configuration"
+msgstr "Di trú cấu hình"
+
+#: src/main.c:1057
+msgid ""
+"The previous version of configuration found.\n"
+"Do you want to migrate it?"
+msgstr ""
+"Tìm thấy phiên bản trước của cấu hình.\n"
+"Bạn có muốn di trú nó không?"
+
+#: src/mainwindow.c:466
+msgid "/_File/_Folder"
+msgstr "/_Tập tin/_Thư mục"
+
+#: src/mainwindow.c:467
+msgid "/_File/_Folder/Create _new folder..."
+msgstr "/_Tập tin/_Thư mục/_Tạo thư mục mới..."
+
+#: src/mainwindow.c:469
+msgid "/_File/_Folder/_Rename folder..."
+msgstr "/_Tập tin/_Thư mục/Đổi tê_n thư mục..."
+
+#: src/mainwindow.c:470
+msgid "/_File/_Folder/_Move folder..."
+msgstr "/_Tập tin/_Thư mục/_Di chuyển thư mục"
+
+#: src/mainwindow.c:471
+msgid "/_File/_Folder/_Delete folder"
+msgstr "/_Tập tin/_Thư mục/_Xoá thư mục"
+
+#: src/mainwindow.c:472
+msgid "/_File/_Mailbox"
+msgstr "/_Tập tin/_Hộp thư"
+
+#: src/mainwindow.c:473
+msgid "/_File/_Mailbox/Add _mailbox..."
+msgstr "/_Tập tin/_Hộp thư/_Thêm hộp thư..."
+
+#: src/mainwindow.c:474
+msgid "/_File/_Mailbox/_Remove mailbox"
+msgstr "/_Tập tin/_Hộp thư/_Xoá hộp thư"
+
+#: src/mainwindow.c:475 src/mainwindow.c:480
+msgid "/_File/_Mailbox/---"
+msgstr "/_Tập tin/_Hộp thư/---"
+
+#: src/mainwindow.c:476
+msgid "/_File/_Mailbox/_Check for new messages"
+msgstr "/_Tập tin/_Hộp thư/_Kiểm tra thư mới"
+
+#: src/mainwindow.c:478
+msgid "/_File/_Mailbox/Check for new messages in _all mailboxes"
+msgstr "/_Tập tin/_Hộp thư/Kiể_m tra thư mới ở mọi hộp thư"
+
+#: src/mainwindow.c:481
+msgid "/_File/_Mailbox/R_ebuild folder tree"
+msgstr "/_Tập tin/_Hộp thư/_Làm lại cây thư mục"
+
+#: src/mainwindow.c:484
+msgid "/_File/_Import mbox file..."
+msgstr "/_Tập tin/_Nhập khẩu tập tin mbox..."
+
+#: src/mainwindow.c:485
+msgid "/_File/_Export to mbox file..."
+msgstr "/_Tập tin/_Xuất khẩu tập tin mbox..."
+
+#: src/mainwindow.c:487
+msgid "/_File/Empty all _trash"
+msgstr "/_Tập tin/Đổ _rác"
+
+#: src/mainwindow.c:489 src/messageview.c:139
+msgid "/_File/_Save as..."
+msgstr "/_Tập tin/_Lưu là..."
+
+#: src/mainwindow.c:490 src/messageview.c:140
+msgid "/_File/_Print..."
+msgstr "/_Tập tin/I_n..."
+
+#: src/mainwindow.c:492
+msgid "/_File/_Work offline"
+msgstr "/_Tập tin/Làm _việc ngoại tuyến"
+
+#. {N_("/_File/_Close"),		"<alt>W", app_exit_cb, 0, NULL},
+#: src/mainwindow.c:495
+msgid "/_File/E_xit"
+msgstr "/_Tập tin/Th_oát"
+
+#: src/mainwindow.c:500
+msgid "/_Edit/Select _thread"
+msgstr "/_Soạn/_Chọn luồng"
+
+#: src/mainwindow.c:502 src/messageview.c:148
+msgid "/_Edit/_Find in current message..."
+msgstr "/_Soạn/_Tìm trong thư hiện tại..."
+
+#: src/mainwindow.c:504
+msgid "/_Edit/_Search messages..."
+msgstr "/_Soạn/Tìm _kiếm thư..."
+
+#: src/mainwindow.c:507
+msgid "/_View/Show or hi_de"
+msgstr "/_Xem/_Hiện hoặc ẩn"
+
+#: src/mainwindow.c:508
+msgid "/_View/Show or hi_de/_Folder tree"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Cây thư mục"
+
+#: src/mainwindow.c:510
+msgid "/_View/Show or hi_de/_Message view"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Khung xem thư"
+
+#: src/mainwindow.c:512
+msgid "/_View/Show or hi_de/_Toolbar"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Thanh công cụ"
+
+#: src/mainwindow.c:514
+msgid "/_View/Show or hi_de/_Toolbar/Icon _and text"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Thanh công cụ/Biểu tượng _và nhãn"
+
+#: src/mainwindow.c:516
+msgid "/_View/Show or hi_de/_Toolbar/_Icon"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Thanh công cụ/_Biểu tượng"
+
+#: src/mainwindow.c:518
+msgid "/_View/Show or hi_de/_Toolbar/_Text"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Thanh công cụ/_Nhãn"
+
+#: src/mainwindow.c:520
+msgid "/_View/Show or hi_de/_Toolbar/_None"
+msgstr "/_Xem/_Hiện hoặc ẩn/_Thanh công cụ/_Không"
+
+#: src/mainwindow.c:522
+msgid "/_View/Show or hi_de/Status _bar"
+msgstr "/_Xem/_Hiện hoặc ẩn/T_hanh trạng thái"
+
+#: src/mainwindow.c:525
+msgid "/_View/Separate f_older tree"
+msgstr "/_Xem/_Cây thư mục riêng rẽ"
+
+#: src/mainwindow.c:526
+msgid "/_View/Separate _message view"
+msgstr "/_Xem/_Khung xem thư riêng rẽ"
+
+#: src/mainwindow.c:528
+msgid "/_View/_Sort"
+msgstr "/_Xem/_Sắp xếp"
+
+#: src/mainwindow.c:529
+msgid "/_View/_Sort/by _number"
+msgstr "/_Xem/_Sắp xếp/theo _số"
+
+#: src/mainwindow.c:530
+msgid "/_View/_Sort/by s_ize"
+msgstr "/_Xem/_Sắp xếp/theo _kích thước"
+
+#: src/mainwindow.c:531
+msgid "/_View/_Sort/by _date"
+msgstr "/_Xem/_Sắp xếp/th_eo thời gian"
+
+#: src/mainwindow.c:532
+#, fuzzy
+msgid "/_View/_Sort/by t_hread date"
+msgstr "/_Xem/_Sắp xếp/th_eo thời gian"
+
+#: src/mainwindow.c:533
+msgid "/_View/_Sort/by _from"
+msgstr "/_Xem/_Sắp xếp/theo người _gửi"
+
+#: src/mainwindow.c:534
+msgid "/_View/_Sort/by _recipient"
+msgstr "/_Xem/_Sắp xếp/theo người _nhận"
+
+#: src/mainwindow.c:535
+msgid "/_View/_Sort/by _subject"
+msgstr "/_Xem/_Sắp xếp/theo tiê_u đề"
+
+#: src/mainwindow.c:536
+msgid "/_View/_Sort/by _color label"
+msgstr "/_Xem/_Sắp xếp/theo nhãn _màu"
+
+#: src/mainwindow.c:538
+msgid "/_View/_Sort/by _mark"
+msgstr "/_Xem/_Sắp xếp/theo đánh _dấu"
+
+#: src/mainwindow.c:539
+msgid "/_View/_Sort/by _unread"
+msgstr "/_Xem/_Sắp xếp/theo _chưa đọc"
+
+#: src/mainwindow.c:540
+msgid "/_View/_Sort/by a_ttachment"
+msgstr "/_Xem/_Sắp xếp/theo đín_h kèm"
+
+#: src/mainwindow.c:542
+msgid "/_View/_Sort/D_on't sort"
+msgstr "/_Xem/_Sắp xếp/Không sắp _xếp"
+
+#: src/mainwindow.c:543 src/mainwindow.c:546
+msgid "/_View/_Sort/---"
+msgstr "/_Xem/_Sắp xếp/---"
+
+#: src/mainwindow.c:544
+msgid "/_View/_Sort/Ascending"
+msgstr "/_Xem/_Sắp xếp/_Tăng dần"
+
+#: src/mainwindow.c:545
+msgid "/_View/_Sort/Descending"
+msgstr "/_Xem/_Sắp xếp/_Giảm dần"
+
+#: src/mainwindow.c:547
+msgid "/_View/_Sort/_Attract by subject"
+msgstr ""
+
+#: src/mainwindow.c:549
+msgid "/_View/Th_read view"
+msgstr "/_Xem/_Xem theo luồng"
+
+#: src/mainwindow.c:550
+msgid "/_View/E_xpand all threads"
+msgstr "/_Xem/Mở mọi l_uồng"
+
+#: src/mainwindow.c:551
+msgid "/_View/Co_llapse all threads"
+msgstr "/_Xem/Đón_g mọi luồng"
+
+#: src/mainwindow.c:552
+msgid "/_View/Set display _item..."
+msgstr "/_Xem/Chọ_n mục hiển thị..."
+
+#: src/mainwindow.c:555
+msgid "/_View/_Go to"
+msgstr "/_Xem/Đi _tới"
+
+#: src/mainwindow.c:556
+msgid "/_View/_Go to/_Prev message"
+msgstr "/_Xem/Đi _tới/Thư _trước"
+
+#: src/mainwindow.c:557
+msgid "/_View/_Go to/_Next message"
+msgstr "/_Xem/Đi _tới/Thư tiế_p theo"
+
+#: src/mainwindow.c:558 src/mainwindow.c:563 src/mainwindow.c:566
+#: src/mainwindow.c:571 src/mainwindow.c:576
+msgid "/_View/_Go to/---"
+msgstr "/_Xem/Đi _tới/---"
+
+#: src/mainwindow.c:559
+msgid "/_View/_Go to/P_rev unread message"
+msgstr "/_Xem/Đi _tới/Thư trước (_chưa đọc)"
+
+#: src/mainwindow.c:561
+msgid "/_View/_Go to/N_ext unread message"
+msgstr "/_Xem/Đi _tới/Thư tiếp theo (chư_a đọc)"
+
+#: src/mainwindow.c:564
+msgid "/_View/_Go to/Prev ne_w message"
+msgstr "/_Xem/Đi _tới/Thư trước (_mới)"
+
+#: src/mainwindow.c:565
+msgid "/_View/_Go to/Ne_xt new message"
+msgstr "/_Xem/Đi _tới/T_hư tiếp theo (mới)"
+
+#: src/mainwindow.c:567
+msgid "/_View/_Go to/Prev _marked message"
+msgstr "/_Xem/Đi _tới/Thư trước (đánh _dấu)"
+
+#: src/mainwindow.c:569
+msgid "/_View/_Go to/Next m_arked message"
+msgstr "/_Xem/Đi _tới/Thư tiếp the_o (đánh dấu)"
+
+#: src/mainwindow.c:572
+msgid "/_View/_Go to/Prev _labeled message"
+msgstr "/_Xem/Đi _tới/Thư trước (đã _gán nhãn)"
+
+#: src/mainwindow.c:574
+msgid "/_View/_Go to/Next la_beled message"
+msgstr "/_Xem/Đi _tới/Thư tiếp th_eo (đã gán nhãn)"
+
+#: src/mainwindow.c:577
+msgid "/_View/_Go to/Other _folder..."
+msgstr "/_Xem/Đi _tới/Thư mụ_c khác..."
+
+#: src/mainwindow.c:586 src/messageview.c:159
+msgid "/_View/Character _encoding/_Auto detect"
+msgstr "/_Xem/Mã _kí tự/_Tự động xác định"
+
+#: src/mainwindow.c:637 src/messageview.c:203
+msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
+msgstr "/_Xem/Mã _kí tự/Nhật Bản (ISO-2022-JP-2)"
+
+#: src/mainwindow.c:639 src/messageview.c:205
+msgid "/_View/Character _encoding/Japanese (_EUC-JP)"
+msgstr "/_Xem/Mã _kí tự/Nhật Bản (_EUC-JP)"
+
+#: src/mainwindow.c:641 src/messageview.c:207
+msgid "/_View/Character _encoding/Japanese (_Shift__JIS)"
+msgstr "/_Xem/Mã _kí tự/Nhật Bản (_Shift__JIS)"
+
+#: src/mainwindow.c:653 src/messageview.c:218
+msgid "/_View/Character _encoding/Chinese (ISO-2022-_CN)"
+msgstr "/_Xem/Mã _kí tự/Hán (ISO-2022-_CN)"
+
+#: src/mainwindow.c:659 src/messageview.c:223
+msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
+msgstr "/_Xem/Mã _kí tự/Triều Tiên (ISO-2022-KR)"
+
+#: src/mainwindow.c:672 src/summaryview.c:432
+msgid "/_View/Open in new _window"
+msgstr "/_Xem/_Mở trong cửa sổ mới"
+
+#: src/mainwindow.c:673 src/messageview.c:235
+msgid "/_View/Mess_age source"
+msgstr "/_Xem/_Nguồn thư"
+
+#: src/mainwindow.c:674 src/messageview.c:236
+msgid "/_View/Show all _header"
+msgstr "/_Xem/_Hiện mọi header"
+
+#: src/mainwindow.c:676
+msgid "/_View/_Update summary"
+msgstr "/_Xem/_Cập nhật tóm tắt"
+
+#: src/mainwindow.c:678 src/messageview.c:238
+msgid "/_Message"
+msgstr "/_Thư"
+
+#: src/mainwindow.c:679
+msgid "/_Message/Recei_ve"
+msgstr "/_Thư/_Nhận"
+
+#: src/mainwindow.c:680
+msgid "/_Message/Recei_ve/Get from _current account"
+msgstr "/_Thư/_Nhận/_Từ tài khoản mặc định"
+
+#: src/mainwindow.c:682
+msgid "/_Message/Recei_ve/Get from _all accounts"
+msgstr "/_Thư/_Nhận/Từ _mọi tài khoản"
+
+#: src/mainwindow.c:684
+msgid "/_Message/Recei_ve/Cancel receivin_g"
+msgstr "/_Thư/_Nhận/_Huỷ bỏ việc lấy thư"
+
+#: src/mainwindow.c:686
+msgid "/_Message/Recei_ve/---"
+msgstr "/_Thư/_Nhận/---"
+
+#: src/mainwindow.c:687
+msgid "/_Message/_Send queued messages"
+msgstr "/_Thư/_Nhận/_Gửi thư đang xếp hàng"
+
+#: src/mainwindow.c:688 src/mainwindow.c:690 src/mainwindow.c:697
+#: src/mainwindow.c:702 src/mainwindow.c:706 src/mainwindow.c:715
+#: src/mainwindow.c:718 src/messageview.c:241 src/messageview.c:249
+#: src/messageview.c:254
+msgid "/_Message/---"
+msgstr "/_Thư/---"
+
+#: src/mainwindow.c:689 src/messageview.c:239
+msgid "/_Message/Compose _new message"
+msgstr "/_Thư/_Viết thư mới"
+
+#: src/mainwindow.c:691 src/messageview.c:242
+msgid "/_Message/_Reply"
+msgstr "/_Thư/_Hồi âm"
+
+#: src/mainwindow.c:692
+msgid "/_Message/Repl_y to"
+msgstr "/_Thư/Hồi â_m tới"
+
+#: src/mainwindow.c:693 src/messageview.c:243
+msgid "/_Message/Repl_y to/_all"
+msgstr "/_Thư/Hồi â_m tới/_tất cả"
+
+#: src/mainwindow.c:694 src/messageview.c:245
+msgid "/_Message/Repl_y to/_sender"
+msgstr "/_Thư/Hồi â_m tới/_người gửi"
+
+#: src/mainwindow.c:695 src/messageview.c:247
+msgid "/_Message/Repl_y to/mailing _list"
+msgstr "/_Thư/Hồi â_m tới/_hộp thư chung"
+
+#: src/mainwindow.c:698 src/messageview.c:250
+msgid "/_Message/_Forward"
+msgstr "/_Thư/_Chuyển tiếp"
+
+#: src/mainwindow.c:699 src/messageview.c:251
+msgid "/_Message/For_ward as attachment"
+msgstr "/_Thư/Ch_uyển tiếp ở dạng đính kèm"
+
+#: src/mainwindow.c:701 src/messageview.c:253
+msgid "/_Message/Redirec_t"
+msgstr "/_Thư/Chu_yển hướng"
+
+#: src/mainwindow.c:703
+msgid "/_Message/M_ove..."
+msgstr "/_Thư/_Di chuyển..."
+
+#: src/mainwindow.c:704
+msgid "/_Message/_Copy..."
+msgstr "/_Thư/_Sao chép"
+
+#: src/mainwindow.c:705
+msgid "/_Message/_Delete"
+msgstr "/_Thư/_Xoá"
+
+#: src/mainwindow.c:707
+msgid "/_Message/_Mark"
+msgstr "/_Thư/Đánh _dấu"
+
+#: src/mainwindow.c:708
+msgid "/_Message/_Mark/_Mark"
+msgstr "/_Thư/Đánh _dấu/Đánh _dấu"
+
+#: src/mainwindow.c:709
+msgid "/_Message/_Mark/_Unmark"
+msgstr "/_Thư/Đánh _dấu/_Bỏ đánh dấu"
+
+#: src/mainwindow.c:710
+msgid "/_Message/_Mark/---"
+msgstr "/_Thư/Đánh _dấu/---"
+
+#: src/mainwindow.c:711
+msgid "/_Message/_Mark/Mark as unr_ead"
+msgstr "/_Thư/Đánh _dấu/C_hưa đọc"
+
+#: src/mainwindow.c:712
+msgid "/_Message/_Mark/Mark as rea_d"
+msgstr "/_Thư/Đánh _dấu/Đã đọ_c"
+
+#: src/mainwindow.c:714
+msgid "/_Message/_Mark/Mark all _read"
+msgstr "/_Thư/Đánh _dấu/Đã đọc _tất cả"
+
+#: src/mainwindow.c:716
+msgid "/_Message/Set as _junk mail"
+msgstr "/_Thư/Đánh dấu là thư _rác"
+
+#: src/mainwindow.c:717
+msgid "/_Message/Set as not j_unk mail"
+msgstr "/_Thư/Đánh dấu _không là thư rác"
+
+#: src/mainwindow.c:719 src/messageview.c:255
+msgid "/_Message/Re-_edit"
+msgstr "/_Thư/S_oạn lại"
+
+#: src/mainwindow.c:723
+msgid "/_Tools/Add sender to address boo_k..."
+msgstr "/_Công cụ/_Thêm người gửi vào sổ địa chỉ..."
+
+#: src/mainwindow.c:726
+msgid "/_Tools/_Filter all messages in folder"
+msgstr "/_Công cụ/_Lọc mọi thư trong thư mục"
+
+#: src/mainwindow.c:728
+msgid "/_Tools/Filter _selected messages"
+msgstr "/_Công cụ/Lọ_c các thư đã chọn"
+
+#: src/mainwindow.c:730 src/messageview.c:262
+msgid "/_Tools/_Create filter rule"
+msgstr "/_Công cụ/Tạo _quy tắc lọc"
+
+#: src/mainwindow.c:731 src/messageview.c:264
+msgid "/_Tools/_Create filter rule/_Automatically"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/_Tự động"
+
+#: src/mainwindow.c:733 src/messageview.c:266
+msgid "/_Tools/_Create filter rule/by _From"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/theo _Người gửi"
+
+#: src/mainwindow.c:735 src/messageview.c:268
+msgid "/_Tools/_Create filter rule/by _To"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/theo N_gười nhận"
+
+#: src/mainwindow.c:737 src/messageview.c:270
+msgid "/_Tools/_Create filter rule/by _Subject"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/theo Tiê_u đề"
+
+#: src/mainwindow.c:740
+msgid "/_Tools/Filter _junk mails in folder"
+msgstr "/_Công cụ/Lọc _thư rác trong thư mục"
+
+#: src/mainwindow.c:742
+msgid "/_Tools/Filter junk _mails in selected messages"
+msgstr "/_Công cụ/Lọc thư _rác trong các thư đã chọn"
+
+#: src/mainwindow.c:747
+msgid "/_Tools/Delete du_plicated messages"
+msgstr "/_Công cụ/_Xoá thư trùng"
+
+#: src/mainwindow.c:750
+msgid "/_Tools/E_xecute"
+msgstr "/_Công cụ/Chạ_y"
+
+#: src/mainwindow.c:752
+msgid "/_Tools/_Log window"
+msgstr "/_Công cụ/Cửa sổ theo _dõi"
+
+#: src/mainwindow.c:754
+msgid "/_Configuration"
+msgstr "/Cấ_u hình"
+
+#: src/mainwindow.c:755
+msgid "/_Configuration/_Common preferences..."
+msgstr "/Cấ_u hình/_Cấu hình chung..."
+
+#: src/mainwindow.c:757
+msgid "/_Configuration/_Filter setting..."
+msgstr "/Cấ_u hình/_Thiết lập bộ lọc..."
+
+#: src/mainwindow.c:759
+msgid "/_Configuration/_Template..."
+msgstr "/Cấ_u hình/_Mẫu..."
+
+#: src/mainwindow.c:760
+msgid "/_Configuration/_Actions..."
+msgstr "/Cấ_u hình/_Hành động..."
+
+#: src/mainwindow.c:761
+msgid "/_Configuration/---"
+msgstr "/Cấ_u hình/---"
+
+#: src/mainwindow.c:762
+msgid "/_Configuration/_Preferences for current account..."
+msgstr "/Cấ_u hình/Cấ_u hình cho tài khoản mặc định..."
+
+#: src/mainwindow.c:764
+msgid "/_Configuration/Create _new account..."
+msgstr "/Cấ_u hình/Tạ_o tài khoản mới..."
+
+#: src/mainwindow.c:766
+msgid "/_Configuration/_Edit accounts..."
+msgstr "/Cấ_u hình/_Sửa tài khoản..."
+
+#: src/mainwindow.c:768
+msgid "/_Configuration/C_hange current account"
+msgstr "/Cấ_u hình/Đổi tài _khoản mặc định"
+
+#: src/mainwindow.c:772
+msgid "/_Help/_Manual"
+msgstr "/_Hỗ trợ/_Sổ tay hướng dẫn"
+
+#: src/mainwindow.c:773
+msgid "/_Help/_Manual/_English"
+msgstr "/Cấ_u hình/_Sổ tay hướng dẫn/Tiếng _Anh"
+
+#: src/mainwindow.c:774
+msgid "/_Help/_Manual/_Japanese"
+msgstr "/Cấ_u hình/_Sổ tay hướng dẫn/Tiếng _Nhật"
+
+#: src/mainwindow.c:775
+msgid "/_Help/_FAQ"
+msgstr "/Cấ_u hình/_Câu hỏi thường gặp"
+
+#: src/mainwindow.c:776
+msgid "/_Help/_FAQ/_English"
+msgstr "/Cấ_u hình/_Câu hỏi thường gặp/Tiếng _Anh"
+
+#: src/mainwindow.c:777
+msgid "/_Help/_FAQ/_German"
+msgstr "/Cấ_u hình/_Câu hỏi thường gặp/Tiếng Đứ_c"
+
+#: src/mainwindow.c:778
+msgid "/_Help/_FAQ/_Spanish"
+msgstr "/Cấ_u hình/_Câu hỏi thường gặp/Tiếng _Tây Ban Nha"
+
+#: src/mainwindow.c:779
+msgid "/_Help/_FAQ/_French"
+msgstr "/Cấ_u hình/_Câu hỏi thường gặp/Tiếng _Pháp"
+
+#: src/mainwindow.c:780
+msgid "/_Help/_FAQ/_Italian"
+msgstr "/Cấ_u hình/_Câu hỏi thường gặp/_Tiếng Italia"
+
+#: src/mainwindow.c:781
+msgid "/_Help/---"
+msgstr "/Cấ_u hình/---"
+
+#: src/mainwindow.c:824
+msgid "Creating main window...\n"
+msgstr "Đang tạo cửa sổ chính...\n"
+
+#: src/mainwindow.c:990
+#, c-format
+msgid "MainWindow: color allocation %d failed\n"
+msgstr "Cửa sổ chính: việc cấp màu %d thất bại\n"
+
+#: src/mainwindow.c:1074 src/summaryview.c:2088 src/summaryview.c:2173
+#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
+msgid "done.\n"
+msgstr "xong.\n"
+
+#: src/mainwindow.c:1201 src/mainwindow.c:1242 src/mainwindow.c:1270
+msgid "Untitled"
+msgstr "Chưa đặt tên"
+
+#: src/mainwindow.c:1271
+msgid "none"
+msgstr "không"
+
+#: src/mainwindow.c:1324
+#, c-format
+msgid "Changing window separation type from %d to %d\n"
+msgstr "Đổi kiểu vạch phân cách cửa sổ từ %d sang %d\n"
+
+#: src/mainwindow.c:1563
+msgid "Offline"
+msgstr "Ngoại tuyến"
+
+#: src/mainwindow.c:1564
+msgid "You are offline. Go online?"
+msgstr "Bạn đang ngoại tuyến. Chuyển sang trực tuyến?"
+
+#: src/mainwindow.c:1578
+msgid "Empty all trash"
+msgstr "Đổ mọi thùng rác"
+
+#: src/mainwindow.c:1579
+#, fuzzy
+msgid "Delete all messages in trash folders?"
+msgstr "Xoá mọi thư trong thùng rác?"
+
+#: src/mainwindow.c:1607
+msgid "Add mailbox"
+msgstr "Thêm hộp thư"
+
+#: src/mainwindow.c:1608
+#, fuzzy
+msgid ""
+"Specify the location of mailbox.\n"
+"If the existing mailbox is specified, it will be\n"
+"scanned automatically."
+msgstr ""
+"Nhập vị trí của hộp thư.\n"
+"Nếu hộp thư có trước được chỉ định, nó sẽ được\n"
+"tự động quét."
+
+#: src/mainwindow.c:1614 src/setup.c:49
+#, c-format
+msgid "The mailbox `%s' already exists."
+msgstr "Hộp thư `%s' đã có trước."
+
+#: src/mainwindow.c:1619 src/setup.c:56
+msgid "Mailbox"
+msgstr "Hộp thư"
+
+#: src/mainwindow.c:1625 src/setup.c:62
+msgid ""
+"Creation of the mailbox failed.\n"
+"Maybe some files already exist, or you don't have the permission to write "
+"there."
+msgstr ""
+"Việc tạo hộp thư đã thất bại.\n"
+"Có thể một số tập tin đã có trước, hoặc bạn không có quyền ghi lên đó."
+
+#: src/mainwindow.c:2018
+msgid "Sylpheed - Folder View"
+msgstr "Sylpheed - Khung thư mục"
+
+#: src/mainwindow.c:2037
+msgid "Sylpheed - Message View"
+msgstr "Sylpheed - Khung đọc thư"
+
+#: src/mainwindow.c:2189 src/summaryview.c:392
+msgid "/_Reply"
+msgstr "/_Hồi âm"
+
+#: src/mainwindow.c:2190
+msgid "/Reply to _all"
+msgstr "/Hồi âm _tất cả"
+
+#: src/mainwindow.c:2191
+msgid "/Reply to _sender"
+msgstr "/Hồi âm cho người _gửi"
+
+#: src/mainwindow.c:2192
+msgid "/Reply to mailing _list"
+msgstr "/Hồi âm cho _hộp thư chung"
+
+#: src/mainwindow.c:2197 src/summaryview.c:399
+msgid "/_Forward"
+msgstr "/_Chuyển tiếp"
+
+#: src/mainwindow.c:2198 src/summaryview.c:400
+msgid "/For_ward as attachment"
+msgstr "/Ch_uyển tiếp ở dạng đính kèm"
+
+#: src/mainwindow.c:2199 src/summaryview.c:401
+msgid "/Redirec_t"
+msgstr "/Chu_yển hướng"
+
+#: src/mainwindow.c:2235
+msgid "Get"
+msgstr "Lấy"
+
+#: src/mainwindow.c:2236
+msgid "Incorporate new mail"
+msgstr "Sáp nhập thư mới"
+
+#: src/mainwindow.c:2243
+msgid "Get all"
+msgstr "Lấy tất"
+
+#: src/mainwindow.c:2244
+msgid "Incorporate new mail of all accounts"
+msgstr "Sáp nhật thư mới của mọi tài khoản"
+
+#: src/mainwindow.c:2255
+msgid "Send queued message(s)"
+msgstr "Gửi thư đang đợi"
+
+#: src/mainwindow.c:2265 src/prefs_account_dialog.c:518
+#: src/prefs_common_dialog.c:663 src/prefs_folder_item.c:140
+msgid "Compose"
+msgstr "Viết thư"
+
+#: src/mainwindow.c:2266
+msgid "Compose new message"
+msgstr "Viết thư mới"
+
+#: src/mainwindow.c:2274 src/prefs_common_dialog.c:976
+msgid "Reply"
+msgstr "Hồi âm"
+
+#: src/mainwindow.c:2275 src/mainwindow.c:2288
+msgid "Reply to the message"
+msgstr "Hồi âm cho thư"
+
+#: src/mainwindow.c:2292
+msgid "Reply all"
+msgstr "Hồi âm tất cả"
+
+#: src/mainwindow.c:2293
+msgid "Reply to all"
+msgstr "Hồi âm cho tất cả"
+
+#: src/mainwindow.c:2301 src/prefs_filter_edit.c:741
+msgid "Forward"
+msgstr "Chuyển tiếp"
+
+#: src/mainwindow.c:2302 src/mainwindow.c:2315
+msgid "Forward the message"
+msgstr "Chuyển tiếp thư"
+
+#: src/mainwindow.c:2322
+msgid "Delete the message"
+msgstr "Xoá thư"
+
+#: src/mainwindow.c:2330 src/prefs_common_dialog.c:1793
+msgid "Junk"
+msgstr "Rác"
+
+#: src/mainwindow.c:2331
+msgid "Set as junk mail"
+msgstr "Coi là thư rác"
+
+#: src/mainwindow.c:2340
+msgid "Execute"
+msgstr "Chạy"
+
+#: src/mainwindow.c:2341
+msgid "Execute marked process"
+msgstr "Chạy tiến trình đã đánh dấu"
+
+#: src/mainwindow.c:2351
+msgid "Next unread message"
+msgstr "Thư chưa đọc tiếp theo"
+
+#: src/mainwindow.c:2363
+msgid "Prefs"
+msgstr ""
+
+#: src/mainwindow.c:2364
+msgid "Common preferences"
+msgstr "Cấu hình chung"
+
+#: src/mainwindow.c:2372 src/prefs_folder_item.c:288
+#: src/prefs_folder_item.c:299 src/progressdialog.c:128
+msgid "Account"
+msgstr "Tài khoản"
+
+#: src/mainwindow.c:2373
+msgid "Account setting"
+msgstr "Thiết lập tài khoản"
+
+#: src/mainwindow.c:2545
+msgid "You are offline. Click the icon to go online."
+msgstr "Bạn đang ngoại tuyến. Nhấn vào biểu tượng để chuyển sang trực tuyến."
+
+#: src/mainwindow.c:2556
+msgid "You are online. Click the icon to go offline."
+msgstr "Bạn đang trực tuyến. Nhấn vào biểu tượng để chuyển sang ngoại tuyến."
+
+#: src/mainwindow.c:2749
+msgid "Exit"
+msgstr "Thoát"
+
+#: src/mainwindow.c:2749
+msgid "Exit this program?"
+msgstr "Thoát chương trình này?"
+
+#: src/message_search.c:108
+msgid "Find in current message"
+msgstr "Tìm trong thư hiện tại"
+
+#: src/message_search.c:126
+msgid "Find text:"
+msgstr "Tìm văn bản:"
+
+#: src/message_search.c:141 src/summary_search.c:247
+msgid "Case sensitive"
+msgstr "Phân biệt chữ hoa/thường"
+
+#: src/message_search.c:202 src/summary_search.c:385
+msgid "Search failed"
+msgstr "Tìm kiếm thất bại"
+
+#: src/message_search.c:203 src/summary_search.c:386
+msgid "Search string not found."
+msgstr "Không thấy chuỗi cần tìm"
+
+#: src/message_search.c:211
+msgid "Beginning of message reached; continue from end?"
+msgstr "Đã đến đầu thư; tiếp tục từ cuối thư?"
+
+#: src/message_search.c:214
+msgid "End of message reached; continue from beginning?"
+msgstr "Đã đến cuối thư; tiếp tục từ đầu thư?"
+
+#: src/message_search.c:217 src/summary_search.c:396
+msgid "Search finished"
+msgstr "Đã tìm xong"
+
+#: src/messageview.c:259
+msgid "/_Tools/Add sender to address boo_k"
+msgstr "/_Công cụ/Thêm người gửi vào _sổ địa chỉ"
+
+#: src/messageview.c:289
+msgid "Creating message view...\n"
+msgstr "Đang tạo khung xem thư...\n"
+
+#: src/messageview.c:314
+msgid "Text"
+msgstr "Văn bản"
+
+#: src/messageview.c:319
+msgid "Attachments"
+msgstr "Đính kèm"
+
+#: src/messageview.c:369
+msgid "Message View - Sylpheed"
+msgstr ""
+
+#: src/messageview.c:667 src/summaryview.c:3046
+#, c-format
+msgid "Can't save the file `%s'."
+msgstr "Không thể lưu tập tin `%s'."
+
+#: src/messageview.c:726 src/summaryview.c:3069
+msgid "The message will be printed with the following command:"
+msgstr ""
+
+#: src/messageview.c:727 src/summaryview.c:3070
+#, fuzzy
+msgid "(Default print command)"
+msgstr "Lệnh thu thập:"
+
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
+msgid "Print"
+msgstr "In ấn"
+
+#: src/messageview.c:738 src/summaryview.c:3081
+#, c-format
+msgid ""
+"Print command line is invalid:\n"
+"`%s'"
+msgstr ""
+"Lệnh in không hợp lệ:\n"
+"`%s'"
+
+#: src/mimeview.c:128
+msgid "/_Open"
+msgstr "/_Mở"
+
+#: src/mimeview.c:129
+msgid "/Open _with..."
+msgstr "/Mở _với..."
+
+#: src/mimeview.c:130
+msgid "/_Display as text"
+msgstr "/_Hiển thị ở dạng văn bản thuần tuý"
+
+#: src/mimeview.c:131
+msgid "/_Save as..."
+msgstr "/_Lưu là..."
+
+#: src/mimeview.c:132
+#, fuzzy
+msgid "/Save _all..."
+msgstr "/_Lưu là..."
+
+#: src/mimeview.c:135
+msgid "/_Check signature"
+msgstr "/_Kiểm tra chữ kí"
+
+#: src/mimeview.c:160
+msgid "Creating MIME view...\n"
+msgstr "Đang tạo khung xem MIME...\n"
+
+#: src/mimeview.c:189
+msgid "MIME Type"
+msgstr "Kiểu MIME"
+
+#: src/mimeview.c:302
+msgid "Select \"Check signature\" to check"
+msgstr "Chọn \"Kiểm tra chữ kí\" để kiểm tra"
+
+#: src/mimeview.c:623
+msgid "Select an action for the attached file:\n"
+msgstr "Chọn một hành động cho tập tin đính kèm:\n"
+
+#: src/mimeview.c:644
+msgid "Open _with..."
+msgstr "Mở _với..."
+
+#: src/mimeview.c:648
+msgid "_Display as text"
+msgstr "_Hiển thị ở dạng văn bản thuần tuý"
+
+#: src/mimeview.c:652
+msgid "_Save as..."
+msgstr "_Lưu là..."
+
+#: src/mimeview.c:698
+msgid ""
+"This signature has not been checked yet.\n"
+"\n"
+msgstr ""
+"Chữ kí này chưa được kiểm tra.\n"
+"\n"
+
+#: src/mimeview.c:703
+msgid "_Check signature"
+msgstr "_Kiểm tra chữ kí"
+
+#: src/mimeview.c:970 src/mimeview.c:1037 src/mimeview.c:1070
+#: src/mimeview.c:1093
+msgid "Can't save the part of multipart message."
+msgstr "Không thể lưu thành phần của thư nhiều phần."
+
+#: src/mimeview.c:1050
+#, fuzzy
+msgid "Can't save the attachments."
+msgstr "Không thể lưu tập tin `%s'."
+
+#: src/mimeview.c:1103
+msgid "Open with"
+msgstr "Mở với"
+
+#: src/mimeview.c:1104
+#, c-format
+msgid ""
+"Enter the command line to open file:\n"
+"(`%s' will be replaced with file name)"
+msgstr ""
+"Nhập lệnh để mở tập tin:\n"
+"(`%s' sẽ được thay thế bằng tên tập tin)"
+
+#: src/mimeview.c:1142
+msgid "Opening executable file"
+msgstr ""
+
+#: src/mimeview.c:1143
+msgid ""
+"This is an executable file. Opening executable file is restricted for "
+"security.\n"
+"If you want to launch it, save it to somewhere and make sure it is not an "
+"virus or something like a malicious program."
+msgstr ""
+
+#: src/mimeview.c:1179
+#, c-format
+msgid "MIME viewer command line is invalid: `%s'"
+msgstr "Lệnh xem MIME không hợp lệ: `%s'"
+
+#: src/passphrase.c:92
+msgid "Passphrase"
+msgstr "Mật khẩu"
+
+#: src/passphrase.c:243
+msgid "[no user id]"
+msgstr "[không có id người dùng]"
+
+#: src/passphrase.c:251
+#, c-format
+msgid ""
+"%sPlease enter the passphrase for:\n"
+"\n"
+"  %.*s  \n"
+"(%.*s)\n"
+msgstr ""
+"%sHãy nhập mật khẩu cho:\n"
+"\n"
+"  %.*s  \n"
+"(%.*s)\n"
+
+#: src/passphrase.c:255
+msgid ""
+"Bad passphrase! Try again...\n"
+"\n"
+msgstr ""
+"Mật khẩu sai! Thử lại...\n"
+"\n"
+
+#: src/prefs_account_dialog.c:414
+msgid "Opening account preferences window...\n"
+msgstr "Đang mở cửa sổ cấu hình tài khoản...\n"
+
+#: src/prefs_account_dialog.c:447
+#, c-format
+msgid "Account%d"
+msgstr "Tài khoản %d"
+
+#: src/prefs_account_dialog.c:466
+msgid "Preferences for new account"
+msgstr "Cấu hình cho tài khoản mới"
+
+#: src/prefs_account_dialog.c:471
+msgid "Account preferences"
+msgstr "Cấu hình tài khoản"
+
+#: src/prefs_account_dialog.c:494
+msgid "Creating account preferences window...\n"
+msgstr "Đang tạo của sổ cấu hình tài khoản...\n"
+
+#: src/prefs_account_dialog.c:514 src/prefs_common_dialog.c:659
+msgid "Receive"
+msgstr "Nhận"
+
+#: src/prefs_account_dialog.c:521 src/prefs_common_dialog.c:670
+msgid "Privacy"
+msgstr "Riêng tư"
+
+#: src/prefs_account_dialog.c:525
+msgid "SSL"
+msgstr "SSL"
+
+#: src/prefs_account_dialog.c:528 src/prefs_common_dialog.c:2102
+msgid "Advanced"
+msgstr "Nâng cao"
+
+#: src/prefs_account_dialog.c:577
+msgid "Name of this account"
+msgstr "Tên của tài khoản này"
+
+#: src/prefs_account_dialog.c:586
+msgid "Set as default"
+msgstr "Đặt là mặc định"
+
+#: src/prefs_account_dialog.c:590
+msgid "Personal information"
+msgstr "Thông tin cá nhân"
+
+#: src/prefs_account_dialog.c:599
+msgid "Full name"
+msgstr "Tên đầy đủ"
+
+#: src/prefs_account_dialog.c:605
+msgid "Mail address"
+msgstr "Địa chỉ thư"
+
+#: src/prefs_account_dialog.c:611
+msgid "Organization"
+msgstr "Tổ chức"
+
+#: src/prefs_account_dialog.c:635
+msgid "Server information"
+msgstr "Thông tin máy chủ"
+
+#: src/prefs_account_dialog.c:656 src/prefs_account_dialog.c:811
+#: src/prefs_account_dialog.c:1447
+msgid "POP3"
+msgstr "POP3"
+
+#: src/prefs_account_dialog.c:658 src/prefs_account_dialog.c:916
+#: src/prefs_account_dialog.c:1464 src/prefs_account_dialog.c:1639
+msgid "IMAP4"
+msgstr "IMAP4"
+
+#: src/prefs_account_dialog.c:660
+msgid "News (NNTP)"
+msgstr "Tin tức (NNTP)"
+
+#: src/prefs_account_dialog.c:662
+msgid "None (local)"
+msgstr "Không (nội bộ)"
+
+#: src/prefs_account_dialog.c:675
+msgid "This server requires authentication"
+msgstr "Máy chủ này yêu cầu xác thực"
+
+#: src/prefs_account_dialog.c:714
+msgid "News server"
+msgstr "Máy chủ tin tức"
+
+#: src/prefs_account_dialog.c:720
+msgid "Server for receiving"
+msgstr "Máy chủ nhận"
+
+#: src/prefs_account_dialog.c:726
+msgid "SMTP server (send)"
+msgstr "Máy chủ SMTP (gửi)"
+
+#: src/prefs_account_dialog.c:733 src/prefs_account_dialog.c:1108
+msgid "User ID"
+msgstr "ID người dùng"
+
+#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1117
+msgid "Password"
+msgstr "Mật khẩu"
+
+#: src/prefs_account_dialog.c:819
+msgid "Use secure authentication (APOP)"
+msgstr "Dùng xác thực bảo mật (APOP)"
+
+#: src/prefs_account_dialog.c:822
+msgid "Remove messages on server when received"
+msgstr "Xoá thư khỏi máy chủ sau khi nhận"
+
+#: src/prefs_account_dialog.c:833
+msgid "Remove after"
+msgstr "Xoá sau"
+
+#: src/prefs_account_dialog.c:842
+msgid "days"
+msgstr "ngày"
+
+#: src/prefs_account_dialog.c:859
+msgid "(0 days: remove immediately)"
+msgstr "(0 ngày: xoá ngay lập tức)"
+
+#: src/prefs_account_dialog.c:866
+msgid "Download all messages on server"
+msgstr "Tải mọi thư trên máy chủ"
+
+#: src/prefs_account_dialog.c:872
+msgid "Receive size limit"
+msgstr "Giới hạn kích thước khi nhận"
+
+#: src/prefs_account_dialog.c:879 src/prefs_filter_edit.c:643
+#: src/prefs_filter_edit.c:1047
+msgid "KB"
+msgstr "KB"
+
+#: src/prefs_account_dialog.c:886
+msgid "Filter messages on receiving"
+msgstr "Lọc thư khi nhận"
+
+#: src/prefs_account_dialog.c:894
+msgid "Default inbox"
+msgstr "Hộp nhận mặc định"
+
+#: src/prefs_account_dialog.c:914
+msgid "Unfiltered messages will be stored in this folder."
+msgstr "Thư chưa lọc sẽ được lưu vào thư mục này."
+
+#: src/prefs_account_dialog.c:927 src/prefs_account_dialog.c:1078
+msgid "Authentication method"
+msgstr "Phương thức xác thực"
+
+#: src/prefs_account_dialog.c:937 src/prefs_account_dialog.c:1088
+#: src/prefs_common_dialog.c:874 src/prefs_common_dialog.c:2470
+msgid "Automatic"
+msgstr "Tự động"
+
+#: src/prefs_account_dialog.c:943
+msgid "News"
+msgstr "Tin tức"
+
+#: src/prefs_account_dialog.c:955
+msgid "Maximum number of articles to download"
+msgstr "Số bài tải về tối đa"
+
+#: src/prefs_account_dialog.c:972
+msgid "No limit if 0 is specified."
+msgstr "Không giới hạn nếu ghi là 0"
+
+#: src/prefs_account_dialog.c:976
+msgid "`Get all' checks for new messages on this account"
+msgstr "`Lấy tất' sẽ kiểm tra các thư mới của tài khoản này"
+
+#: src/prefs_account_dialog.c:1028 src/prefs_customheader.c:186
+msgid "Header"
+msgstr "Header"
+
+#: src/prefs_account_dialog.c:1035
+msgid "Add Date header field"
+msgstr "Thêm trường Ngày tháng cho header"
+
+#: src/prefs_account_dialog.c:1036
+msgid "Generate Message-ID"
+msgstr "Tạo ID của thư"
+
+#: src/prefs_account_dialog.c:1043
+msgid "Add user-defined header"
+msgstr "Thêm header theo định nghĩa người dùng"
+
+#: src/prefs_account_dialog.c:1045 src/prefs_common_dialog.c:1553
+#: src/prefs_common_dialog.c:1580
+msgid " Edit... "
+msgstr " Soạn... "
+
+#: src/prefs_account_dialog.c:1055
+msgid "Authentication"
+msgstr "Xác thực"
+
+#: src/prefs_account_dialog.c:1063
+msgid "SMTP Authentication (SMTP AUTH)"
+msgstr "Xác thực SMTP (SMTP AUTH)"
+
+#: src/prefs_account_dialog.c:1139
+msgid ""
+"If you leave these entries empty, the same user ID and password as receiving "
+"will be used."
+msgstr ""
+"Nếu bạn bỏ trống các mục này, chương trình sẽ dùng ID người dùng và mật khẩu "
+"này khi nhận."
+
+#: src/prefs_account_dialog.c:1151
+msgid "Authenticate with POP3 before sending"
+msgstr "Xác thực với POP3 trước khi gửi"
+
+#: src/prefs_account_dialog.c:1207
+msgid "Command output"
+msgstr "Đầu ra của lệnh"
+
+#: src/prefs_account_dialog.c:1218 src/prefs_folder_item.c:330
+msgid "Automatically set the following addresses"
+msgstr "Tự động đặt địa chỉ sau"
+
+#: src/prefs_account_dialog.c:1227
+msgid "Cc"
+msgstr "Cc"
+
+#: src/prefs_account_dialog.c:1240
+msgid "Bcc"
+msgstr "Bcc"
+
+#: src/prefs_account_dialog.c:1253
+msgid "Reply-To"
+msgstr "Hồi âm cho"
+
+#: src/prefs_account_dialog.c:1306
+msgid "Sign message by default"
+msgstr "Kí tên theo mặc định"
+
+#: src/prefs_account_dialog.c:1308
+msgid "Encrypt message by default"
+msgstr "Mã hoá thư theo mặc định"
+
+#: src/prefs_account_dialog.c:1310
+msgid "Encrypt when replying to encrypted message"
+msgstr "Mã hoá khi trả lời thư mã hoá"
+
+#: src/prefs_account_dialog.c:1312
+msgid "Use ASCII-armored format for encryption"
+msgstr "Dùng định dạng ASCII-armored để mã hoá"
+
+#: src/prefs_account_dialog.c:1314
+msgid "Use clear text signature"
+msgstr "Dùng chữ kí là văn bản thuần tuý"
+
+#: src/prefs_account_dialog.c:1319
+msgid "Sign key"
+msgstr "Khoá của chữ kí"
+
+#: src/prefs_account_dialog.c:1327
+msgid "Use default GnuPG key"
+msgstr "Dùng khoá GnuPG mặc định"
+
+#: src/prefs_account_dialog.c:1336
+msgid "Select key by your email address"
+msgstr "Chọn khoá theo địa chỉ thư của bạn"
+
+#: src/prefs_account_dialog.c:1345
+msgid "Specify key manually"
+msgstr "Chỉ định khoá theo cách thủ công"
+
+#: src/prefs_account_dialog.c:1361
+msgid "User or key ID:"
+msgstr "Người dùng hoặc ID của khoá:"
+
+#: src/prefs_account_dialog.c:1455 src/prefs_account_dialog.c:1472
+#: src/prefs_account_dialog.c:1488 src/prefs_account_dialog.c:1506
+msgid "Don't use SSL"
+msgstr "Không dùng SSL"
+
+#: src/prefs_account_dialog.c:1458
+msgid "Use SSL for POP3 connection"
+msgstr "Dùng SSL cho kết nối POP3"
+
+#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
+#: src/prefs_account_dialog.c:1512
+msgid "Use STARTTLS command to start SSL session"
+msgstr "Dùng lệnh STARTTLS để khởi động phiên SSL"
+
+#: src/prefs_account_dialog.c:1475
+msgid "Use SSL for IMAP4 connection"
+msgstr "Dùng SSL cho kết nối IMAP4"
+
+#: src/prefs_account_dialog.c:1481
+msgid "NNTP"
+msgstr "NNTP"
+
+#: src/prefs_account_dialog.c:1496
+msgid "Use SSL for NNTP connection"
+msgstr "Dùng SSL cho kết nối NNTP"
+
+#: src/prefs_account_dialog.c:1498
+msgid "Send (SMTP)"
+msgstr "Gửi (SMTP)"
+
+#: src/prefs_account_dialog.c:1509
+msgid "Use SSL for SMTP connection"
+msgstr "Dùng SSL cho kết nối SMTP"
+
+#: src/prefs_account_dialog.c:1520
+msgid "Use non-blocking SSL"
+msgstr "Dùng SSL dạng không chặn"
+
+#: src/prefs_account_dialog.c:1523
+msgid "Turn this off if you have problems in SSL connection."
+msgstr "Tắt nếu bạn có vấn đề với kết nối SSL."
+
+#: src/prefs_account_dialog.c:1609
+msgid "Specify SMTP port"
+msgstr "Chỉ định cổng STMP"
+
+#: src/prefs_account_dialog.c:1615
+msgid "Specify POP3 port"
+msgstr "Chỉ định cổng POP3"
+
+#: src/prefs_account_dialog.c:1621
+msgid "Specify IMAP4 port"
+msgstr "Chỉ định cổng IMAP4"
+
+#: src/prefs_account_dialog.c:1627
+msgid "Specify NNTP port"
+msgstr "Chỉ định cổng NNTP"
+
+#: src/prefs_account_dialog.c:1632
+msgid "Specify domain name"
+msgstr "Chỉ định tên miền"
+
+#: src/prefs_account_dialog.c:1650
+msgid "IMAP server directory"
+msgstr "Thư mục máy chủ IMAP"
+
+#: src/prefs_account_dialog.c:1704
+msgid "Put sent messages in"
+msgstr "Chuyển thư đã gửi vào"
+
+#: src/prefs_account_dialog.c:1706
+msgid "Put draft messages in"
+msgstr "Chuyển thư nháp vào"
+
+#: src/prefs_account_dialog.c:1708
+msgid "Put deleted messages in"
+msgstr "Chuyển thư đã xoá vào"
+
+#: src/prefs_account_dialog.c:1769
+msgid "Account name is not entered."
+msgstr "Tên tài khoản chưa được nhập"
+
+#: src/prefs_account_dialog.c:1773
+msgid "Mail address is not entered."
+msgstr "Địa chỉ thư chưa được nhập"
+
+#: src/prefs_account_dialog.c:1778
+msgid "SMTP server is not entered."
+msgstr "Máy chủ SMTP chưa được nhập"
+
+#: src/prefs_account_dialog.c:1783
+msgid "User ID is not entered."
+msgstr "ID người dùng chưa được nhập"
+
+#: src/prefs_account_dialog.c:1788
+msgid "POP3 server is not entered."
+msgstr "Máy chủ POP3 chưa được nhập"
+
+#: src/prefs_account_dialog.c:1793
+msgid "IMAP4 server is not entered."
+msgstr "Máy chủ IMAP4 chưa được nhập"
+
+#: src/prefs_account_dialog.c:1798
+msgid "NNTP server is not entered."
+msgstr "Máy chủ NNTP chưa được nhập"
+
+#: src/prefs_account_dialog.c:1889
+msgid ""
+"It's not recommended to use the old style ASCII-armored\n"
+"mode for encrypted messages. It doesn't comply with the\n"
+"RFC 3156 - MIME Security with OpenPGP."
+msgstr ""
+"Không khuyến cáo dùng chế độ mã hoá kiểu cũ ASCII-armored\n"
+"Nó không tuân theo RFC 3156 - MIME Security với OpenPGP."
+
+#: src/prefs_actions.c:172
+msgid "Actions configuration"
+msgstr "Cấu hình hành động"
+
+#: src/prefs_actions.c:194
+msgid "Menu name:"
+msgstr "Tên trình đơn"
+
+#: src/prefs_actions.c:203
+msgid "Command line:"
+msgstr "Dòng lệnh:"
+
+#: src/prefs_actions.c:215
+msgid ""
+"Menu name:\n"
+" Use / in menu name to make submenus.\n"
+"Command line:\n"
+" Begin with:\n"
+"   | to send message body or selection to command\n"
+"   > to send user provided text to command\n"
+"   * to send user provided hidden text to command\n"
+" End with:\n"
+"   | to replace message body or selection with command output\n"
+"   > to insert command's output without replacing old text\n"
+"   & to run command asynchronously\n"
+" Use:\n"
+"   %f for message file name\n"
+"   %F for the list of the file names of selected messages\n"
+"   %p for the selected message part\n"
+"   %u for a user provided argument\n"
+"   %h for a user provided hidden argument\n"
+"   %s for the text selection"
+msgstr ""
+"Tên trình đơn:\n"
+" Dùng / trong tên trình đơn để tạo trình đơn con.\n"
+"Dòng lệnh:\n"
+" Bắt đầu bằng:\n"
+"   | để gửi nội dung thư hoặc phần được chọn tới lệnh\n"
+"   > để gửi văn bản người dùng cung cấp tới lệnh\n"
+"   * để gửi văn bản ẩn người dùng cung cấp tới lệnh\n"
+" Kết thúc với:\n"
+"   | để thay thế nội dung thư hoặc phần được chọn với đầu ra của lệnh\n"
+"   > để chèn đầu ra của lệnh mà không thay thế nội dung cũ\n"
+"   & để chạy lệnh theo kiểu không đồng bộ\n"
+" Dùng:\n"
+"   %f cho tên tập tin của thư\n"
+"   %F cho danh sách các tên tập tin của các thư đã chọn\n"
+"   %p cho thành thư đã chọn\n"
+"   %u cho đối số mà người dùng đưa ra\n"
+"   %h cho đối số ẩn mà người dùng đưa ra\n"
+"   %s cho phần văn bản được chọn"
+
+#: src/prefs_actions.c:260
+msgid " Replace "
+msgstr " Thay thế "
+
+#: src/prefs_actions.c:272
+msgid " Syntax help "
+msgstr " Hỗ trợ cú pháp "
+
+#: src/prefs_actions.c:291
+msgid "Registered actions"
+msgstr "Hành động đã đăng kí"
+
+#: src/prefs_actions.c:309 src/prefs_customheader.c:278
+#: src/prefs_display_header.c:286 src/prefs_summary_column.c:285
+msgid "Up"
+msgstr "Lên"
+
+#: src/prefs_actions.c:315 src/prefs_customheader.c:284
+#: src/prefs_display_header.c:292 src/prefs_summary_column.c:289
+msgid "Down"
+msgstr "Xuống"
+
+#: src/prefs_actions.c:422 src/prefs_template.c:317
+msgid "(New)"
+msgstr "Mới"
+
+#: src/prefs_actions.c:468
+msgid "Menu name is not set."
+msgstr "Chưa đặt tên trình đơn."
+
+#: src/prefs_actions.c:473
+msgid "Colon ':' is not allowed in the menu name."
+msgstr "Dấu hai chấm ':' không được phép đưa vào tên trình đơn."
+
+#: src/prefs_actions.c:483
+msgid "Menu name is too long."
+msgstr "Tên trình đơn quá dài."
+
+#: src/prefs_actions.c:492
+msgid "Command line not set."
+msgstr "Chưa đặt lệnh"
+
+#: src/prefs_actions.c:497
+msgid "Menu name and command are too long."
+msgstr "Tên trình đơn và lệnh quá dài"
+
+#: src/prefs_actions.c:502
+#, c-format
+msgid ""
+"The command\n"
+"%s\n"
+"has a syntax error."
+msgstr ""
+"Lệnh\n"
+"%s\n"
+"bị một lỗi cú pháp."
+
+#: src/prefs_actions.c:563
+msgid "Delete action"
+msgstr "Xoá hành động"
+
+#: src/prefs_actions.c:564
+msgid "Do you really want to delete this action?"
+msgstr "Bạn có thực sự muốn xoá hành động này?"
+
+#: src/prefs_common_dialog.c:639
+msgid "Creating common preferences window...\n"
+msgstr "Đang tạo của sổ cấu hình chung...\n"
+
+#: src/prefs_common_dialog.c:643
+msgid "Common Preferences"
+msgstr "Cấu hình chung"
+
+#: src/prefs_common_dialog.c:665
+msgid "Display"
+msgstr "Hiển thị"
+
+#: src/prefs_common_dialog.c:667
+msgid "Junk mail"
+msgstr "Thư rác"
+
+#: src/prefs_common_dialog.c:673
+msgid "Details"
+msgstr ""
+
+#: src/prefs_common_dialog.c:727
+msgid "Auto-check new mail"
+msgstr "Tự động kiểm tra thư mới"
+
+#: src/prefs_common_dialog.c:729 src/prefs_common_dialog.c:1070
+msgid "every"
+msgstr "mỗi"
+
+#: src/prefs_common_dialog.c:741 src/prefs_common_dialog.c:1084
+msgid "minute(s)"
+msgstr "phút"
+
+#: src/prefs_common_dialog.c:750
+msgid "Check new mail on startup"
+msgstr "Kiểm tra thư mới khi chạy chương trình"
+
+#: src/prefs_common_dialog.c:752
+msgid "Update all local folders after incorporation"
+msgstr "Cập nhập mọi thư mục cục bộ sau khi sáp nhập"
+
+#: src/prefs_common_dialog.c:757
+msgid "Execute command when new messages arrived"
+msgstr "Chạy lệnh khi có thư mới"
+
+#: src/prefs_common_dialog.c:769 src/prefs_common_dialog.c:2349
+#: src/prefs_common_dialog.c:2371
+msgid "Command"
+msgstr "Lệnh"
+
+#: src/prefs_common_dialog.c:780
+#, c-format
+msgid "`%d' will be replaced with the number of new messages."
+msgstr "`%d' sẽ được thay thế tương ứng với số thư mới."
+
+#: src/prefs_common_dialog.c:784
+msgid "Incorporate from local spool"
+msgstr "Sáp nhập từ spool cục bộ"
+
+#: src/prefs_common_dialog.c:797
+msgid "Filter on incorporation"
+msgstr "Lọc khi sáp nhập"
+
+#: src/prefs_common_dialog.c:803
+msgid "Spool path"
+msgstr "Đường dẫn spool"
+
+#: src/prefs_common_dialog.c:851
+msgid "Save sent messages to outbox"
+msgstr "Lưu thư đã gửi vào hộp gửi"
+
+#: src/prefs_common_dialog.c:853
+msgid "Apply filter rules to sent messages"
+msgstr "Áp dụng quy tắc lọc cho thư đã gửi"
+
+#: src/prefs_common_dialog.c:860
+msgid "Transfer encoding"
+msgstr "Mã kí tự khi chuyển"
+
+#: src/prefs_common_dialog.c:885
+msgid ""
+"Specify Content-Transfer-Encoding used when message body contains non-ASCII "
+"characters."
+msgstr ""
+"Chỉ định Mã-kí-tự-khi-chuyển-nội-dung sẽ được dùng khi nội dung thư chứa các "
+"kí tự không phải ASCII."
+
+#: src/prefs_common_dialog.c:950 src/prefs_common_dialog.c:1338
+#: src/prefs_folder_item.c:139
+msgid "General"
+msgstr "Chung"
+
+#: src/prefs_common_dialog.c:965
+msgid "Signature separator"
+msgstr "Vạch phân cách chữ kí"
+
+#: src/prefs_common_dialog.c:974
+msgid "Insert automatically"
+msgstr "Chèn tự động"
+
+#: src/prefs_common_dialog.c:984
+msgid "Automatically select account for replies"
+msgstr "Tự động chọn tài khoản để hồi âm"
+
+#: src/prefs_common_dialog.c:986
+msgid "Quote message when replying"
+msgstr "Trích dẫn thư khi hồi âm"
+
+#: src/prefs_common_dialog.c:988
+msgid "Reply button invokes mailing list reply"
+msgstr "Nhấn nút Hồi âm để hồi âm cho hộp thư chung"
+
+#: src/prefs_common_dialog.c:999
+msgid "Automatically launch the external editor"
+msgstr "Tự động chạy trình soạn thảo ngoài"
+
+#: src/prefs_common_dialog.c:1009
+msgid "Undo level"
+msgstr "Mức hoàn tác"
+
+#: src/prefs_common_dialog.c:1029
+msgid "Wrap messages at"
+msgstr "Khuôn dòng thư tại"
+
+#: src/prefs_common_dialog.c:1041
+msgid "characters"
+msgstr "kí tự"
+
+#: src/prefs_common_dialog.c:1051
+msgid "Wrap quotation"
+msgstr "Khuôn dòng phần trích dẫn"
+
+#: src/prefs_common_dialog.c:1057
+msgid "Wrap on input"
+msgstr "Khuôn dòng khi nhập"
+
+#: src/prefs_common_dialog.c:1059
+msgid "Wrap before sending"
+msgstr "Khuôn dòng trước khi gửi"
+
+#: src/prefs_common_dialog.c:1068
+#, fuzzy
+msgid "Auto-save to draft"
+msgstr "Gửi vào thư mục nháp"
+
+#: src/prefs_common_dialog.c:1093
+#, fuzzy
+msgid "Format"
+msgstr "Bình thường"
+
+#: src/prefs_common_dialog.c:1098
+msgid "Spell checking"
+msgstr ""
+
+#. reply
+#: src/prefs_common_dialog.c:1149
+msgid "Reply format"
+msgstr "Định dạng hồi âm"
+
+#: src/prefs_common_dialog.c:1164 src/prefs_common_dialog.c:1206
+msgid "Quotation mark"
+msgstr "Dấu trích dẫn"
+
+#. forward
+#: src/prefs_common_dialog.c:1191
+msgid "Forward format"
+msgstr "Định dạng chuyển tiếp"
+
+#: src/prefs_common_dialog.c:1238
+msgid " Description of symbols "
+msgstr " Giải thích các kí hiệu "
+
+#: src/prefs_common_dialog.c:1267
+msgid "Enable Spell checking"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1279
+#, fuzzy
+msgid "Default language:"
+msgstr "Hộp nhận mặc định"
+
+#: src/prefs_common_dialog.c:1346
+#, fuzzy
+msgid "Text font"
+msgstr "Văn bản"
+
+#. ---- Folder View ----
+#: src/prefs_common_dialog.c:1358
+#, fuzzy
+msgid "Folder View"
+msgstr "Thư mục"
+
+#: src/prefs_common_dialog.c:1366
+msgid "Display unread number next to folder name"
+msgstr "Hiển thị số thư chưa đọc ngay sau tên thư mục"
+
+#: src/prefs_common_dialog.c:1368
+#, fuzzy
+msgid "Display message number columns in the folder view"
+msgstr "Hiển thị số thư chưa đọc ngay sau tên thư mục"
+
+#: src/prefs_common_dialog.c:1377
+msgid "Abbreviate newsgroups longer than"
+msgstr "Viết tắt khi tên nhóm tin dài hơn"
+
+#: src/prefs_common_dialog.c:1392
+msgid "letters"
+msgstr "chữ cái"
+
+#. ---- Summary ----
+#: src/prefs_common_dialog.c:1398
+msgid "Summary View"
+msgstr "Khung xem tóm tắt"
+
+#: src/prefs_common_dialog.c:1407
+msgid "Display recipient on `From' column if sender is yourself"
+msgstr "Hiện người nhận trên cột `Người gửi' nếu người gửi là bạn"
+
+#: src/prefs_common_dialog.c:1409
+msgid "Expand threads"
+msgstr "Mở rộng các luồng thư"
+
+#: src/prefs_common_dialog.c:1417 src/prefs_common_dialog.c:2705
+#: src/prefs_common_dialog.c:2743
+msgid "Date format"
+msgstr "Định dạng thời gian"
+
+#: src/prefs_common_dialog.c:1438
+msgid " Set display item of summary... "
+msgstr " Đặt các mục hiển thị trên bảng tóm tắt... "
+
+#: src/prefs_common_dialog.c:1444
+msgid "Message"
+msgstr "Thư"
+
+#: src/prefs_common_dialog.c:1454
+#, fuzzy
+msgid "Default character encoding"
+msgstr "/_Xem/Mã _kí tự"
+
+#: src/prefs_common_dialog.c:1468
+msgid "This is used when displaying messages with missing character encoding."
+msgstr ""
+
+#: src/prefs_common_dialog.c:1474
+#, fuzzy
+msgid "Outgoing character encoding"
+msgstr "Mã kí tự đầu ra"
+
+#: src/prefs_common_dialog.c:1488
+msgid ""
+"If `Automatic' is selected, the optimal encoding for the current locale will "
+"be used."
+msgstr ""
+"Nếu chọn `Tự động', mã kí tự tối ưu cho thiết lập bản địa hiện tại sẽ được "
+"dùng."
+
+#: src/prefs_common_dialog.c:1549
+msgid "Enable coloration of message"
+msgstr "Cho phép màu sắc trong thư"
+
+#: src/prefs_common_dialog.c:1564
+msgid ""
+"Display multi-byte alphabet and numeric as\n"
+"ASCII character (Japanese only)"
+msgstr ""
+"Hiển thị bảng chữ cái và chữ số đa byte\n"
+"ở dạng kí tự ASCII (chỉ tiếng Nhật)"
+
+#: src/prefs_common_dialog.c:1571
+msgid "Display header pane above message view"
+msgstr "Hiện ô header phía trên khung xem thư"
+
+#: src/prefs_common_dialog.c:1578
+msgid "Display short headers on message view"
+msgstr "Hiện header dạng ngắn gọn trên khung xem thư"
+
+#: src/prefs_common_dialog.c:1590
+msgid "Render HTML messages as text"
+msgstr "Hiển thị HTML ở dạng văn bản thuần tuý"
+
+#: src/prefs_common_dialog.c:1594
+msgid "Display cursor in message view"
+msgstr "Hiển thị con trỏ trong khung xem thư"
+
+#: src/prefs_common_dialog.c:1607
+msgid "Line space"
+msgstr "Khoản cách dòng"
+
+#: src/prefs_common_dialog.c:1621 src/prefs_common_dialog.c:1659
+msgid "pixel(s)"
+msgstr "pixel"
+
+#: src/prefs_common_dialog.c:1626
+msgid "Scroll"
+msgstr "Cuộn"
+
+#: src/prefs_common_dialog.c:1633
+msgid "Half page"
+msgstr "Nửa trang"
+
+#: src/prefs_common_dialog.c:1639
+msgid "Smooth scroll"
+msgstr "Cuộn trơn"
+
+#: src/prefs_common_dialog.c:1645
+msgid "Step"
+msgstr "Bước"
+
+#: src/prefs_common_dialog.c:1665
+msgid "Images"
+msgstr "Hình ảnh"
+
+#: src/prefs_common_dialog.c:1673
+msgid "Resize attached large images to fit in the window"
+msgstr "Đổi kích thước ảnh to cho vừa với cửa sổ"
+
+#: src/prefs_common_dialog.c:1675
+msgid "Display images as inline"
+msgstr "Hiện hình ảnh ngay trên dòng"
+
+#: src/prefs_common_dialog.c:1759
+msgid "Enable Junk mail control"
+msgstr "Cho phép điều khiển thư rác"
+
+#: src/prefs_common_dialog.c:1771
+msgid "Learning command:"
+msgstr "Lệnh thu thập:"
+
+#: src/prefs_common_dialog.c:1780
+#, fuzzy
+msgid "(Select preset)"
+msgstr "Chọn khoá"
+
+#: src/prefs_common_dialog.c:1805
+msgid "Not Junk"
+msgstr "Không phải thư rác"
+
+#: src/prefs_common_dialog.c:1820
+msgid "Classifying command"
+msgstr "Lệnh phân loại"
+
+#: src/prefs_common_dialog.c:1831
+msgid ""
+"To classify junk mails automatically, both junk and not junk mails must be "
+"learned manually to a certain extent."
+msgstr ""
+
+#: src/prefs_common_dialog.c:1841
+msgid "Junk folder"
+msgstr "Thư mục thư rác"
+
+#: src/prefs_common_dialog.c:1859
+msgid "The messages which are set as junk mail will be moved to this folder."
+msgstr "Các thư bị đánh dấu là thư rác sẽ được chuyển tới thư mục này."
+
+#: src/prefs_common_dialog.c:1870
+msgid "Filter messages classified as junk on receiving"
+msgstr "Lọc thư được phân loại là thư rác lúc nhận"
+
+#: src/prefs_common_dialog.c:1873
+#, fuzzy
+msgid "Delete junk mails from server on receiving"
+msgstr "Xoá khỏi máy chủ"
+
+#: src/prefs_common_dialog.c:1877
+msgid "Mark filtered junk mails as read"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1918
+msgid "Automatically check signatures"
+msgstr "Tự động kiểm tra chữ kí"
+
+#: src/prefs_common_dialog.c:1921
+msgid "Show signature check result in a popup window"
+msgstr "Hiện kết quả kiểm tra chữ kí trong cửa sổ popup"
+
+#: src/prefs_common_dialog.c:1924
+msgid "Store passphrase in memory temporarily"
+msgstr "Lưu tạm mật khẩu vào bộ nhớ"
+
+#: src/prefs_common_dialog.c:1939
+msgid "Expired after"
+msgstr "Hết hạn sau"
+
+#: src/prefs_common_dialog.c:1952
+msgid "minute(s) "
+msgstr "phút "
+
+#: src/prefs_common_dialog.c:1966
+msgid "Setting to '0' will store the passphrase for the whole session."
+msgstr "Đặt là '0' để lưu mật khẩu trong suốt phiên làm việc."
+
+#: src/prefs_common_dialog.c:1975
+msgid "Grab input while entering a passphrase"
+msgstr "Bắt (grab) đầu vào khi nhập mật khẩu"
+
+#: src/prefs_common_dialog.c:1980
+msgid "Display warning on startup if GnuPG doesn't work"
+msgstr "Hiển thị cảnh báo lúc khởi động nếu GnuPG không hoạt động"
+
+#: src/prefs_common_dialog.c:2044
+msgid "Always open messages in summary when selected"
+msgstr "Luôn mở thư trong phần tóm tắt khi được chọn"
+
+#: src/prefs_common_dialog.c:2048
+msgid "Open first unread message when entering a folder"
+msgstr "Mở thư chưa đọc đầu tiên khi vào một thư mục"
+
+#: src/prefs_common_dialog.c:2052
+msgid "Only mark message as read when opened in new window"
+msgstr "Chỉ đánh dấu thư là đã đọc khi mở trong cửa sổ mới"
+
+#: src/prefs_common_dialog.c:2056
+msgid "Go to inbox after receiving new mail"
+msgstr "Đi đến hộp nhận sau khi nhận thư mới"
+
+#: src/prefs_common_dialog.c:2064
+msgid "Execute immediately when moving or deleting messages"
+msgstr "Thực thi ngay lập tức khi di chuyển hoặc xoá thư"
+
+#: src/prefs_common_dialog.c:2076
+msgid "Messages will be marked until execution if this is turned off."
+msgstr "Thư sẽ được đánh dấu đến khi thực thi nếu không dùng tuỳ chọn này."
+
+#: src/prefs_common_dialog.c:2081
+msgid "Make the order of buttons comply with GNOME HIG"
+msgstr "Sắp xếp thứ tự các nút tương ứng với GNOME HIG"
+
+#: src/prefs_common_dialog.c:2088
+msgid " Set key bindings... "
+msgstr " Đặt phím tắt... "
+
+#: src/prefs_common_dialog.c:2094 src/select-keys.c:344
+msgid "Other"
+msgstr "Khác"
+
+#: src/prefs_common_dialog.c:2098
+#, fuzzy
+msgid "External commands"
+msgstr "Chạy lệnh"
+
+#: src/prefs_common_dialog.c:2146
+msgid "Receive dialog"
+msgstr "Hộp thoại nhận thư"
+
+#: src/prefs_common_dialog.c:2156
+msgid "Show receive dialog"
+msgstr "Hiện hộp thoại nhận thư"
+
+#: src/prefs_common_dialog.c:2166
+msgid "Always"
+msgstr "Luôn luôn"
+
+#: src/prefs_common_dialog.c:2167
+msgid "Only on manual receiving"
+msgstr "Chỉ khi nhận theo kiểu thủ công"
+
+#: src/prefs_common_dialog.c:2169
+msgid "Never"
+msgstr "Không bao giờ"
+
+#: src/prefs_common_dialog.c:2174
+msgid "Don't popup error dialog on receive error"
+msgstr "Không hiện hộp thoại báo lỗi kiểu popup khi gặp lỗi"
+
+#: src/prefs_common_dialog.c:2177
+msgid "Close receive dialog when finished"
+msgstr "Đóng hộp thoại nhận thư khi hoàn thành"
+
+#: src/prefs_common_dialog.c:2188
+msgid "Add address to destination when double-clicked"
+msgstr "Thêm địa chỉ vào đích đến khi nhấn đúp"
+
+#: src/prefs_common_dialog.c:2190
+msgid "On exit"
+msgstr "Lúc thoát"
+
+#: src/prefs_common_dialog.c:2198
+msgid "Confirm on exit"
+msgstr "Xác nhận khi thoát"
+
+#: src/prefs_common_dialog.c:2205
+msgid "Empty trash on exit"
+msgstr "Đổ rác khi thoát"
+
+#: src/prefs_common_dialog.c:2207
+msgid "Ask before emptying"
+msgstr "Hỏi trước khi đổ rác"
+
+#: src/prefs_common_dialog.c:2211
+msgid "Warn if there are queued messages"
+msgstr "Cảnh báo nếu có thư chờ được gửi"
+
+#: src/prefs_common_dialog.c:2263
+#, c-format
+msgid "External commands (%s will be replaced with file name / URI)"
+msgstr "Lệnh ngoài (%s sẽ được thay thế bằng tên tập tin / URI)"
+
+#: src/prefs_common_dialog.c:2272
+msgid "Web browser"
+msgstr "Trình duyệt"
+
+#: src/prefs_common_dialog.c:2284 src/prefs_common_dialog.c:3767
+#: src/prefs_common_dialog.c:3788
+#, fuzzy
+msgid "(Default browser)"
+msgstr "Hộp nhận mặc định"
+
+#: src/prefs_common_dialog.c:2337
+msgid "Use external program for incorporation"
+msgstr "Dùng chương trình ngoài để sáp nhập"
+
+#: src/prefs_common_dialog.c:2359
+msgid "Use external program for sending"
+msgstr "Dùng chương trình ngoài để gửi"
+
+#: src/prefs_common_dialog.c:2417
+msgid "Enable strict checking of the integrity of summary caches"
+msgstr ""
+"Cho phép kiểm tra nghiêm ngặt về tính toàn vẹn của bộ đệm của bảng tóm tắt"
+
+#: src/prefs_common_dialog.c:2420
+msgid ""
+"Enable this if the contents of folders have the possibility of modification "
+"by other applications.\n"
+"This option will degrade the performance of displaying summary."
+msgstr ""
+"Cho phép nếu nội dung của thư mục có khả năng bị chương trình khác thay "
+"đổi.\n"
+"Tuỳ chọn này sẽ suy giảm hiệu năng của việc hiển thị bảng tóm tắt."
+
+#: src/prefs_common_dialog.c:2427
+msgid "Socket I/O timeout:"
+msgstr "Hết hạn I/O socket"
+
+#: src/prefs_common_dialog.c:2440
+msgid "second(s)"
+msgstr "giây"
+
+#: src/prefs_common_dialog.c:2468
+msgid "Automatic (Recommended)"
+msgstr "Tự động (Khuyến cáo)"
+
+#: src/prefs_common_dialog.c:2473
+msgid "7bit ascii (US-ASCII)"
+msgstr "7bit ascii (US-ASCII)"
+
+#: src/prefs_common_dialog.c:2475
+msgid "Unicode (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/prefs_common_dialog.c:2477
+msgid "Western European (ISO-8859-1)"
+msgstr "Đông Âu (ISO-8859-1)"
+
+#: src/prefs_common_dialog.c:2478
+msgid "Western European (ISO-8859-15)"
+msgstr "Tây Âu (ISO-8859-15)"
+
+#: src/prefs_common_dialog.c:2480
+msgid "Central European (ISO-8859-2)"
+msgstr "Trung Âu (ISO-8859-2)"
+
+#: src/prefs_common_dialog.c:2482
+msgid "Baltic (ISO-8859-13)"
+msgstr "Baltic (ISO-8859-13)"
+
+#: src/prefs_common_dialog.c:2483
+msgid "Baltic (ISO-8859-4)"
+msgstr "Baltic (ISO-8859-4)"
+
+#: src/prefs_common_dialog.c:2485
+msgid "Greek (ISO-8859-7)"
+msgstr "Hi Lạp (ISO-8859-7)"
+
+#: src/prefs_common_dialog.c:2487
+msgid "Hebrew (ISO-8859-8)"
+msgstr "Do Thái (ISO-8859-8)"
+
+#: src/prefs_common_dialog.c:2488
+msgid "Hebrew (Windows-1255)"
+msgstr "Do Thái (Windows-1255)"
+
+#: src/prefs_common_dialog.c:2490
+msgid "Turkish (ISO-8859-9)"
+msgstr "Thổ Nhĩ Kì(ISO-8859-9)"
+
+#: src/prefs_common_dialog.c:2492
+msgid "Cyrillic (ISO-8859-5)"
+msgstr "Cyrillic (ISO-8859-5)"
+
+#: src/prefs_common_dialog.c:2493
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cyrillic (KOI8-R)"
+
+#: src/prefs_common_dialog.c:2494
+msgid "Cyrillic (KOI8-U)"
+msgstr "Cyrillic (KOI8-U)"
+
+#: src/prefs_common_dialog.c:2495
+msgid "Cyrillic (Windows-1251)"
+msgstr "Cyrillic (Windows-1251)"
+
+#: src/prefs_common_dialog.c:2497
+msgid "Japanese (ISO-2022-JP)"
+msgstr "Nhật Bản (ISO-2022-JP)"
+
+#: src/prefs_common_dialog.c:2499
+msgid "Japanese (EUC-JP)"
+msgstr "Nhật Bản (EUC-JP)"
+
+#: src/prefs_common_dialog.c:2500
+msgid "Japanese (Shift_JIS)"
+msgstr "Nhật Bản (Shift_JIS)"
+
+#: src/prefs_common_dialog.c:2503
+msgid "Simplified Chinese (GB2312)"
+msgstr "Hán giản thể (GB2312)"
+
+#: src/prefs_common_dialog.c:2504
+msgid "Simplified Chinese (GBK)"
+msgstr "Hán giản thể (GBK)"
+
+#: src/prefs_common_dialog.c:2505
+msgid "Traditional Chinese (Big5)"
+msgstr "Hán phồn thể (Big5)"
+
+#: src/prefs_common_dialog.c:2507
+msgid "Traditional Chinese (EUC-TW)"
+msgstr "Hán phồn thể (EUC-TW)"
+
+#: src/prefs_common_dialog.c:2508
+msgid "Chinese (ISO-2022-CN)"
+msgstr "Hán (ISO-2022-CN)"
+
+#: src/prefs_common_dialog.c:2511
+msgid "Korean (EUC-KR)"
+msgstr "Triều Tiên (EUC-KR)"
+
+#: src/prefs_common_dialog.c:2513
+msgid "Thai (TIS-620)"
+msgstr "Thái (TIS-620)"
+
+#: src/prefs_common_dialog.c:2514
+msgid "Thai (Windows-874)"
+msgstr "Thái (Windows-874)"
+
+#: src/prefs_common_dialog.c:2681
+msgid "the full abbreviated weekday name"
+msgstr "dạng viết tắt của ngày trong tuần (thứ)"
+
+#: src/prefs_common_dialog.c:2682
+msgid "the full weekday name"
+msgstr "dạng đầy đủ tên ngày trong tuần (thứ)"
+
+#: src/prefs_common_dialog.c:2683
+msgid "the abbreviated month name"
+msgstr "dạng viết tắt của tên tháng"
+
+#: src/prefs_common_dialog.c:2684
+msgid "the full month name"
+msgstr "dạng đầy đủ của tên tháng"
+
+#: src/prefs_common_dialog.c:2685
+msgid "the preferred date and time for the current locale"
+msgstr "định dạng thời gian cho locale hiện tại"
+
+#: src/prefs_common_dialog.c:2686
+msgid "the century number (year/100)"
+msgstr "thế kỉ (năm/100)"
+
+#: src/prefs_common_dialog.c:2687
+msgid "the day of the month as a decimal number"
+msgstr "ngày trong tháng ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2688
+msgid "the hour as a decimal number using a 24-hour clock"
+msgstr "giờ ở dạng số thập phân, dùng dạng 24 giờ"
+
+#: src/prefs_common_dialog.c:2689
+msgid "the hour as a decimal number using a 12-hour clock"
+msgstr "giờ ở dạng số thập phân, dùng dạng 12 giờ"
+
+#: src/prefs_common_dialog.c:2690
+msgid "the day of the year as a decimal number"
+msgstr "ngày trong năm ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2691
+msgid "the month as a decimal number"
+msgstr "tháng ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2692
+msgid "the minute as a decimal number"
+msgstr "phút ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2693
+msgid "either AM or PM"
+msgstr "hoặc là AM hoặc là PM"
+
+#: src/prefs_common_dialog.c:2694
+msgid "the second as a decimal number"
+msgstr "giây ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2695
+msgid "the day of the week as a decimal number"
+msgstr "ngày trong tuần ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2696
+msgid "the preferred date for the current locale"
+msgstr "định dạng ưu tiên cho ngày tháng của locale hiện tại"
+
+#: src/prefs_common_dialog.c:2697
+msgid "the last two digits of a year"
+msgstr "hai số cuối của năm"
+
+#: src/prefs_common_dialog.c:2698
+msgid "the year as a decimal number"
+msgstr "năm ở dạng số thập phân"
+
+#: src/prefs_common_dialog.c:2699
+msgid "the time zone or name or abbreviation"
+msgstr "múi giờ hoặc tên hoặc dạng viết tắt"
+
+#: src/prefs_common_dialog.c:2720
+msgid "Specifier"
+msgstr "Kí hiệu"
+
+#: src/prefs_common_dialog.c:2721
+msgid "Description"
+msgstr "Miêu tả"
+
+#: src/prefs_common_dialog.c:2761
+msgid "Example"
+msgstr "Ví dụ"
+
+#: src/prefs_common_dialog.c:2842
+msgid "Set message colors"
+msgstr "Đặt màu cho thư"
+
+#: src/prefs_common_dialog.c:2850
+msgid "Colors"
+msgstr "Màu sắc"
+
+#: src/prefs_common_dialog.c:2884
+msgid "Quoted Text - First Level"
+msgstr "Nội dung trích dẫn - Cấp 1"
+
+#: src/prefs_common_dialog.c:2890
+msgid "Quoted Text - Second Level"
+msgstr "Nội dung trích dẫn - Cấp 2"
+
+#: src/prefs_common_dialog.c:2896
+msgid "Quoted Text - Third Level"
+msgstr "Nội dung trích dẫn - Cấp 3"
+
+#: src/prefs_common_dialog.c:2902
+msgid "URI link"
+msgstr "Liên kết URI"
+
+#: src/prefs_common_dialog.c:2909
+msgid "Recycle quote colors"
+msgstr "Lặp lại theo vòng"
+
+#: src/prefs_common_dialog.c:2976
+msgid "Pick color for quotation level 1"
+msgstr "Chọn màu cho phần trích dẫn cấp 1"
+
+#: src/prefs_common_dialog.c:2979
+msgid "Pick color for quotation level 2"
+msgstr "Chọn màu cho phần trích dẫn cấp 2"
+
+#: src/prefs_common_dialog.c:2982
+msgid "Pick color for quotation level 3"
+msgstr "Chọn màu cho phần trích dẫn cấp 3"
+
+#: src/prefs_common_dialog.c:2985
+msgid "Pick color for URI"
+msgstr "Chọn màu cho URI"
+
+#: src/prefs_common_dialog.c:3125
+msgid "Description of symbols"
+msgstr "Miêu tả về biểu tượng"
+
+#: src/prefs_common_dialog.c:3181
+msgid ""
+"Date\n"
+"From\n"
+"Full Name of Sender\n"
+"First Name of Sender\n"
+"Initial of Sender\n"
+"Subject\n"
+"To\n"
+"Cc\n"
+"Newsgroups\n"
+"Message-ID"
+msgstr ""
+"Ngày\n"
+"Người gửi\n"
+"Tên đầy đủ của người gửi\n"
+"Tên của người gửi\n"
+"Initial of Sender\n"
+"Tiêu đề\n"
+"Người nhận\n"
+"Cc\n"
+"Nhóm tin\n"
+"ID của thư"
+
+#: src/prefs_common_dialog.c:3194
+msgid "If x is set, displays expr"
+msgstr "Nếu x đã được đặt, hiển thị expr"
+
+#: src/prefs_common_dialog.c:3198
+msgid ""
+"Message body\n"
+"Quoted message body\n"
+"Message body without signature\n"
+"Quoted message body without signature\n"
+"Literal %"
+msgstr ""
+"Nội dung thư\n"
+"Nội dung thư được trích dẫn\n"
+"Nội dung thư không gồm chữ kí\n"
+"Nội dung thư được trích dẫn không gồm chữ kí\n"
+"Literal %"
+
+#: src/prefs_common_dialog.c:3206
+msgid ""
+"Literal backslash\n"
+"Literal question mark\n"
+"Literal opening curly brace\n"
+"Literal closing curly brace"
+msgstr ""
+"Dấu sổ chéo ngược\n"
+"Dấu hỏi\n"
+"Dấu ngoặc nhọn mở\n"
+"Dấu ngoặc nhọn đóng"
+
+#: src/prefs_common_dialog.c:3252
+msgid "Key bindings"
+msgstr "Phím tắt"
+
+#: src/prefs_common_dialog.c:3265
+#, fuzzy
+msgid "Select the preset of key bindings."
+msgstr " Đặt phím tắt... "
+
+#: src/prefs_common_dialog.c:3275 src/prefs_common_dialog.c:3599
+msgid "Default"
+msgstr "Mặc định"
+
+#: src/prefs_common_dialog.c:3278 src/prefs_common_dialog.c:3608
+msgid "Old Sylpheed"
+msgstr "Sylpheed cũ"
+
+#: src/prefs_customheader.c:161
+msgid "Custom header setting"
+msgstr "Thiết lập header tuỳ biến"
+
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1575
+msgid " Delete "
+msgstr " Xoá "
+
+#: src/prefs_customheader.c:257
+msgid "Custom headers"
+msgstr "Các header tuỳ biến"
+
+#: src/prefs_customheader.c:351 src/prefs_display_header.c:529
+msgid "Header name is not set."
+msgstr "Chưa đặt tên header"
+
+#: src/prefs_customheader.c:409
+msgid "Delete header"
+msgstr "Xoá header"
+
+#: src/prefs_customheader.c:410
+msgid "Do you really want to delete this header?"
+msgstr "Bạn có thực sự muốn xoá header này không?"
+
+#: src/prefs_display_header.c:179
+msgid "Creating display header setting window...\n"
+msgstr "Đang tạo cửa sổ hiển thị thiết lập header...\n"
+
+#: src/prefs_display_header.c:203
+msgid "Display header setting"
+msgstr "Hiển thị thiết lập header"
+
+#: src/prefs_display_header.c:223
+msgid "Header name"
+msgstr "Tên header"
+
+#: src/prefs_display_header.c:255
+msgid "Displayed Headers"
+msgstr "Các header đã hiển thị"
+
+#: src/prefs_display_header.c:313
+msgid "Hidden headers"
+msgstr "Các header ẩn"
+
+#: src/prefs_display_header.c:342
+msgid "Show all unspecified headers"
+msgstr "Hiện mọi header chưa chỉ định"
+
+#: src/prefs_display_header.c:369
+msgid "Reading configuration for displaying headers...\n"
+msgstr "Đang đọc cấu hình để hiển thị header...\n"
+
+#: src/prefs_display_header.c:407
+msgid "Writing configuration for displaying headers...\n"
+msgstr "Đang ghi cấu hình để hiển thị header...\n"
+
+#: src/prefs_display_header.c:539
+msgid "This header is already in the list."
+msgstr "Header này đã có trên danh sách."
+
+#: src/prefs_filter.c:212
+msgid "Filter setting"
+msgstr "Thiết lập bộ lọc"
+
+#: src/prefs_filter.c:256
+msgid "Enabled"
+msgstr "Cho phép"
+
+#: src/prefs_filter.c:690
+#, c-format
+msgid "Do you really want to delete the rule '%s'?"
+msgstr "Bạn có thực sự muốn xoá quy tắc '%s' không"
+
+#: src/prefs_filter.c:692
+msgid "Delete rule"
+msgstr "Xoá quy tắc"
+
+#: src/prefs_filter_edit.c:347
+msgid "Filter rule"
+msgstr "Quy tắc lọc"
+
+#: src/prefs_filter_edit.c:381
+msgid "If any of the following condition matches"
+msgstr "Nếu phù hợp với bất kì điều kiện nào dưới đây"
+
+#: src/prefs_filter_edit.c:383
+msgid "If all of the following conditions match"
+msgstr "Nếu phù hợp với tất cả các điều kiện dưới đây"
+
+#: src/prefs_filter_edit.c:404
+msgid "Perform the following actions:"
+msgstr "Thực hiện các thao tác sau:"
+
+#: src/prefs_filter_edit.c:578
+msgid "To or Cc"
+msgstr "Người nhận hoặc Cc"
+
+#: src/prefs_filter_edit.c:579
+msgid "Any header"
+msgstr "Bất kì header nào"
+
+#: src/prefs_filter_edit.c:580
+msgid "Edit header..."
+msgstr "Soạn header..."
+
+#: src/prefs_filter_edit.c:583
+msgid "Message body"
+msgstr "Nội dung thư"
+
+#: src/prefs_filter_edit.c:584
+msgid "Result of command"
+msgstr "Kết quả của lệnh"
+
+#: src/prefs_filter_edit.c:586
+msgid "Age"
+msgstr "Tuổi"
+
+#: src/prefs_filter_edit.c:599
+msgid "contains"
+msgstr "chứa"
+
+#: src/prefs_filter_edit.c:601
+msgid "doesn't contain"
+msgstr "không chứa"
+
+#: src/prefs_filter_edit.c:603
+msgid "is"
+msgstr "là"
+
+#: src/prefs_filter_edit.c:605
+msgid "is not"
+msgstr "không là"
+
+#: src/prefs_filter_edit.c:607
+msgid "match to regex"
+msgstr "khớp với regex"
+
+#: src/prefs_filter_edit.c:609
+msgid "doesn't match to regex"
+msgstr "không khớp với regex"
+
+#: src/prefs_filter_edit.c:619
+msgid "is larger than"
+msgstr "lớn hơn"
+
+#: src/prefs_filter_edit.c:620
+msgid "is smaller than"
+msgstr "nhở hơn"
+
+#: src/prefs_filter_edit.c:629
+msgid "is longer than"
+msgstr "dài hơn"
+
+#: src/prefs_filter_edit.c:630
+msgid "is shorter than"
+msgstr "ngắn hơn"
+
+#: src/prefs_filter_edit.c:729
+msgid "Move to"
+msgstr "Chuyển tới"
+
+#: src/prefs_filter_edit.c:730
+msgid "Copy to"
+msgstr "Chép tới"
+
+#: src/prefs_filter_edit.c:731
+msgid "Don't receive"
+msgstr "Không nhận"
+
+#: src/prefs_filter_edit.c:732
+msgid "Delete from server"
+msgstr "Xoá khỏi máy chủ"
+
+#: src/prefs_filter_edit.c:735
+msgid "Set mark"
+msgstr "Đánh dấu"
+
+#: src/prefs_filter_edit.c:736
+msgid "Set color"
+msgstr "Đặt màu"
+
+#: src/prefs_filter_edit.c:737
+msgid "Mark as read"
+msgstr "Đánh dấu là đã đọc"
+
+#: src/prefs_filter_edit.c:742
+msgid "Forward as attachment"
+msgstr "Chuyển tiếp ở dạng đính kèm"
+
+#: src/prefs_filter_edit.c:743
+msgid "Redirect"
+msgstr "Chuyển hướng"
+
+#: src/prefs_filter_edit.c:747
+msgid "Execute command"
+msgstr "Chạy lệnh"
+
+#: src/prefs_filter_edit.c:750
+msgid "Stop rule evaluation"
+msgstr ""
+
+#: src/prefs_filter_edit.c:756 src/prefs_filter_edit.c:1082
+msgid "folder:"
+msgstr "thư mục:"
+
+#: src/prefs_filter_edit.c:1056
+msgid "day(s)"
+msgstr "ngày"
+
+#: src/prefs_filter_edit.c:1122
+msgid "address:"
+msgstr "địa chỉ:"
+
+#: src/prefs_filter_edit.c:1529
+msgid "Edit header list"
+msgstr "Soạn danh sách header"
+
+#: src/prefs_filter_edit.c:1552
+msgid "Headers"
+msgstr "Header"
+
+#: src/prefs_filter_edit.c:1563
+msgid "Header:"
+msgstr "Header:"
+
+#: src/prefs_filter_edit.c:1679
+msgid "Rule name is not specified."
+msgstr "Chưa đặt tên quy tắc."
+
+#: src/prefs_filter_edit.c:1767 src/prefs_filter_edit.c:1846
+#: src/prefs_filter_edit.c:1854
+msgid "Command is not specified."
+msgstr "Chưa chỉ định lệnh."
+
+#: src/prefs_filter_edit.c:1801
+msgid "Invalid condition exists."
+msgstr "Tồn tại điều kiện không hợp lệ."
+
+#: src/prefs_filter_edit.c:1823 src/prefs_filter_edit.c:1831
+msgid "Destination folder is not specified."
+msgstr "Chưa chỉ định thư mục đích."
+
+#: src/prefs_filter_edit.c:1885
+msgid "Invalid action exists."
+msgstr "Tồn tại hành động không hợp lệ."
+
+#: src/prefs_filter_edit.c:1894
+msgid "Condition not exist."
+msgstr "Điều kiện không tồn tại."
+
+#: src/prefs_filter_edit.c:1896
+msgid "Action not exist."
+msgstr "Hành động không tồn tại."
+
+#: src/prefs_folder_item.c:118
+msgid "Folder properties"
+msgstr "Thuộc tính thư mục"
+
+#: src/prefs_folder_item.c:187
+#, fuzzy
+msgid "Identifier"
+msgstr "Kí hiệu"
+
+#: src/prefs_folder_item.c:219 src/subscribedialog.c:292
+msgid "Type"
+msgstr "Loại"
+
+#: src/prefs_folder_item.c:235
+msgid "Normal"
+msgstr "Bình thường"
+
+#: src/prefs_folder_item.c:248
+msgid "Don't display [...] or (...) at the beginning of subject in summary"
+msgstr "Không hiển thị [...] hoặc (...) ở đầu tiêu đề trong bảng tóm tắt"
+
+#: src/prefs_folder_item.c:250
+msgid "Delete [...] or (...) at the beginning of subject on reply"
+msgstr "Xoá [...] hoặc (...) ở đầu tiêu đề khi hồi âm"
+
+#: src/prefs_folder_item.c:328
+msgid "Apply to subfolders"
+msgstr "Áp dụng cho thư mục con"
+
+#: src/prefs_folder_item.c:353
+msgid "use also on reply"
+msgstr "dùng cho cả lúc hồi âm"
+
+#: src/prefs_folder_item.c:377
+msgid "Reply-To:"
+msgstr "Reply-To:"
+
+#: src/prefs_summary_column.c:70
+msgid "Mark"
+msgstr "Đánh dấu"
+
+#. S_COL_UNREAD
+#: src/prefs_summary_column.c:72
+msgid "Attachment"
+msgstr "Đính kèm"
+
+#. S_COL_MIME
+#: src/prefs_summary_column.c:73 src/summaryview.c:4481
+msgid "Subject"
+msgstr "Tiêu đề"
+
+#. S_COL_SUBJECT
+#: src/prefs_summary_column.c:74 src/summaryview.c:4484
+msgid "From"
+msgstr "Người gửi"
+
+#. S_COL_FROM
+#: src/prefs_summary_column.c:75 src/summaryview.c:4486
+msgid "Date"
+msgstr "Thời gian"
+
+#. S_COL_SIZE
+#: src/prefs_summary_column.c:77
+msgid "Number"
+msgstr "Số"
+
+#: src/prefs_summary_column.c:172
+msgid "Creating summary column setting window...\n"
+msgstr "Đang tạo cửa sổ thiết lập tóm tắt theo cột...\n"
+
+#: src/prefs_summary_column.c:180
+msgid "Summary display item setting"
+msgstr "Thiết lập các mục hiển thị ở phần tóm tắt"
+
+#: src/prefs_summary_column.c:195
+msgid ""
+"Select items to be displayed on the summary view. You can modify\n"
+"the order by using the Up / Down button, or dragging the items."
+msgstr ""
+"Chọn các mục sẽ được hiển thị ở bảng tóm tắt. Bạn có thể thay đổi\n"
+"thứ tự bằng cách dùng nút Lên / Xuống, hoặc kéo thả."
+
+#: src/prefs_summary_column.c:222
+msgid "Available items"
+msgstr "Các mục hiện có"
+
+#: src/prefs_summary_column.c:240
+msgid "  ->  "
+msgstr "  ->  "
+
+#: src/prefs_summary_column.c:244
+msgid "  <-  "
+msgstr "  <-  "
+
+#: src/prefs_summary_column.c:265
+msgid "Displayed items"
+msgstr "Các mục đã hiển thị"
+
+#: src/prefs_summary_column.c:306
+msgid " Revert to default "
+msgstr " Dùng dạng mặc định "
+
+#: src/prefs_template.c:161
+msgid "Template name"
+msgstr "Tên mẫu"
+
+#: src/prefs_template.c:221
+msgid "Register"
+msgstr "Đăng kí"
+
+#: src/prefs_template.c:227
+msgid " Substitute "
+msgstr " Thay thế "
+
+#: src/prefs_template.c:239
+msgid " Symbols "
+msgstr " Biểu tượng "
+
+#: src/prefs_template.c:253
+msgid "Registered templates"
+msgstr "Các mẫu đã đăng kí"
+
+#: src/prefs_template.c:274
+msgid "Templates"
+msgstr "Mẫu"
+
+#: src/prefs_template.c:393
+msgid "Template"
+msgstr "Mẫu"
+
+#: src/prefs_template.c:462
+msgid "Template format error."
+msgstr "Lỗi định dạng mẫu."
+
+#: src/prefs_template.c:538
+msgid "Delete template"
+msgstr "Xoá mẫu"
+
+#: src/prefs_template.c:539
+msgid "Do you really want to delete this template?"
+msgstr "Bạn có thực sự muốn xoá mẫu này không?"
+
+#: src/progressdialog.c:58
+msgid "Creating progress dialog...\n"
+msgstr "Đang tạo hộp thoại tiến trình...\n"
+
+#: src/progressdialog.c:136
+msgid "Status"
+msgstr "Trạng thái"
+
+#: src/rfc2015.c:140
+msgid "Cannot find user ID for this key."
+msgstr "Không tìm thấy ID của người dùng cho khoá này."
+
+#: src/rfc2015.c:151
+#, c-format
+msgid "\t\taka \"%s\"\n"
+msgstr "\t\taka \"%s\"\n"
+
+#: src/rfc2015.c:176
+#, c-format
+msgid "Signature made at %s\n"
+msgstr "Kí lúc %s\n"
+
+#: src/rfc2015.c:298 src/sigstatus.c:266
+msgid "Error verifying the signature"
+msgstr "Lỗi khi xác thực chữ kí"
+
+#: src/select-keys.c:105
+#, c-format
+msgid "Please select key for `%s'"
+msgstr "Hãy chọn khoá cho `%s'"
+
+#: src/select-keys.c:108
+#, c-format
+msgid "Collecting info for `%s' ... %c"
+msgstr "Đang tập hợp thông tin cho `%s' ... %c"
+
+#: src/select-keys.c:291
+msgid "Select Keys"
+msgstr "Chọn khoá"
+
+#: src/select-keys.c:318
+msgid "Key ID"
+msgstr "ID của khoá"
+
+#: src/select-keys.c:321
+msgid "Val"
+msgstr "Giá trị"
+
+#: src/select-keys.c:468
+msgid "Add key"
+msgstr "Thêm khoá"
+
+#: src/select-keys.c:469
+msgid "Enter another user or key ID:"
+msgstr "Thêm người dùng hoặc ID của khoá khác:"
+
+#: src/select-keys.c:485
+msgid "Trust key"
+msgstr "Khoá tin cậy"
+
+#: src/select-keys.c:486
+msgid ""
+"The selected key is not fully trusted.\n"
+"If you choose to encrypt the message with this key you don't\n"
+"know for sure that it will go to the person you mean it to.\n"
+"Do you trust it enough to use it anyway?"
+msgstr ""
+"Khoá đã chọn chưa hoàn toàn tin cậy.\n"
+"Nếu bạn chọn khoá này để mã hoá thư, bạn sẽ không đảm bảo\n"
+"nó sẽ đến được đúng với người mà bạn muốn.\n"
+"Bạn có đủ tin tưởng để dùng nó không?"
+
+#: src/send_message.c:183
+msgid "Queued message header is broken.\n"
+msgstr "Header của thư đang đợi gửi đã bị hỏng.\n"
+
+#: src/send_message.c:402
+#, c-format
+msgid "Sending message using command: %s\n"
+msgstr "Đang gửi thư với lệnh: %s\n"
+
+#: src/send_message.c:411
+#, c-format
+msgid "Can't execute command: %s"
+msgstr "Không chạy được lệnh: %s"
+
+#: src/send_message.c:446
+#, c-format
+msgid "Error occurred while executing command: %s"
+msgstr "Có lỗi khi chạy lệnh: %s"
+
+#: src/send_message.c:552
+msgid "Connecting"
+msgstr "Đang kết nối"
+
+#: src/send_message.c:554
+#, c-format
+msgid "Connecting to SMTP server: %s ..."
+msgstr "Đang kết nối tới máy chủ SMTP: %s ..."
+
+#: src/send_message.c:621
+msgid "Sending HELO..."
+msgstr "Đang gửi HELO..."
+
+#: src/send_message.c:622 src/send_message.c:627 src/send_message.c:632
+msgid "Authenticating"
+msgstr "Đang xác thực"
+
+#: src/send_message.c:623 src/send_message.c:628
+msgid "Sending message..."
+msgstr "Đang gửi thư..."
+
+#: src/send_message.c:626
+msgid "Sending EHLO..."
+msgstr "Đang gửi EHLO..."
+
+#: src/send_message.c:635
+msgid "Sending MAIL FROM..."
+msgstr "Đang gửi MAIL FROM..."
+
+#: src/send_message.c:636 src/send_message.c:640 src/send_message.c:645
+msgid "Sending"
+msgstr "Đang gửi"
+
+#: src/send_message.c:639
+msgid "Sending RCPT TO..."
+msgstr "Đang gửi RCPT TO..."
+
+#: src/send_message.c:644
+msgid "Sending DATA..."
+msgstr "Đang gửi DATA..."
+
+#: src/send_message.c:648
+msgid "Quitting..."
+msgstr "Đang thoát..."
+
+#: src/send_message.c:676
+#, c-format
+msgid "Sending message (%d / %d bytes)"
+msgstr "Đang gửi thư (%d / %d byte)"
+
+#: src/send_message.c:704
+msgid "Sending message"
+msgstr "Đang gửi thư"
+
+#: src/send_message.c:748 src/send_message.c:768
+msgid "Error occurred while sending the message."
+msgstr "Có lỗi khi gửi thư."
+
+#: src/send_message.c:751
+#, c-format
+msgid ""
+"Error occurred while sending the message:\n"
+"%s"
+msgstr ""
+"Có lỗi khi gửi thư:\n"
+"%s"
+
+#: src/setup.c:43
+msgid "Mailbox setting"
+msgstr "Thiết lập hộp thư"
+
+#: src/setup.c:44
+msgid ""
+"Specify the location of mailbox.\n"
+"If you are unsure, just select OK."
+msgstr ""
+
+#: src/sigstatus.c:116
+msgid "Signature check result"
+msgstr "Kết quả kiểm tra chữ kí"
+
+#: src/sigstatus.c:135
+msgid "Checking signature"
+msgstr "Đang kiểm tra chữ kí"
+
+#: src/sigstatus.c:205
+#, c-format
+msgid "%s%s%s from \"%s\""
+msgstr "%s%s%s từ \"%s\""
+
+#: src/sigstatus.c:229
+msgid "No signature found"
+msgstr "Không thấy chữ kí nào"
+
+#: src/sigstatus.c:236
+#, c-format
+msgid "Good signature from \"%s\""
+msgstr "Chữ kí chuẩn từ \"%s\""
+
+#: src/sigstatus.c:237 src/textview.c:661
+msgid "Good signature"
+msgstr "Chữ kí chuẩn"
+
+#: src/sigstatus.c:241
+#, c-format
+msgid "Valid signature but the key for \"%s\" is not trusted"
+msgstr "Chữ kí hợp lệ nhưng khoá ch \"%s\" không tin cậy"
+
+#: src/sigstatus.c:242 src/textview.c:663
+msgid "Valid signature (untrusted key)"
+msgstr "Chữ kí hợp lệ (chưa tin cậy)"
+
+#: src/sigstatus.c:247
+#, c-format
+msgid "Signature valid but expired for \"%s\""
+msgstr "Chữ kí hợp lệ nhưng đã hết hạn cho \"%s\""
+
+#: src/sigstatus.c:248
+msgid "Signature valid but expired"
+msgstr "Chữ kí hợp lệ nhưng đã hết hạn"
+
+#: src/sigstatus.c:251
+#, c-format
+msgid "Signature valid but the signing key for \"%s\" has expired"
+msgstr "Chữ kí hợp lệ nhưng khoá để kí cho \"%s\" đã hết hạn"
+
+#: src/sigstatus.c:252
+msgid "Signature valid but the signing key has expired"
+msgstr "Chữ kí hợp lệ nhưng khoá để kí đã hết hạn"
+
+#: src/sigstatus.c:255
+#, c-format
+msgid "Signature valid but the signing key for \"%s\" has been revoked"
+msgstr "Chữ kí hợp lệ nhưng khoá để kí cho \"%s\" đã bị thu hồi"
+
+#: src/sigstatus.c:256
+msgid "Signature valid but the signing key has been revoked"
+msgstr "Chữ kí hợp lệ nhưng khoá để kí đã bị thu hồi"
+
+#: src/sigstatus.c:259
+#, c-format
+msgid "BAD signature from \"%s\""
+msgstr "Chữ kí GIẢ từ \"%s\""
+
+#: src/sigstatus.c:260 src/textview.c:665
+msgid "BAD signature"
+msgstr "Chữ kí GIẢ"
+
+#: src/sigstatus.c:263
+msgid "No public key to verify the signature"
+msgstr "Không có khoá công cộng nào để xác thực chữ kí"
+
+#: src/sourcewindow.c:62
+msgid "Creating source window...\n"
+msgstr "Đang tạo cửa sổ nguồn...\n"
+
+#: src/sourcewindow.c:66
+msgid "Source of the message"
+msgstr "Nguồn thư"
+
+#: src/sourcewindow.c:137
+#, c-format
+msgid "Displaying the source of %s ...\n"
+msgstr "Đang hiển thị nguồn của %s ...\n"
+
+#: src/sourcewindow.c:139
+#, c-format
+msgid "%s - Source"
+msgstr "%s - Nguồn"
+
+#: src/subscribedialog.c:201
+msgid "Subscribe to newsgroup"
+msgstr "Đăng kí vào nhóm tin"
+
+#: src/subscribedialog.c:217
+msgid "Select newsgroups to subscribe."
+msgstr "Chọm nhóm tin để đăng kí"
+
+#: src/subscribedialog.c:223
+msgid "Find groups:"
+msgstr "Tìm nhóm"
+
+#: src/subscribedialog.c:231
+msgid " Search "
+msgstr " Tìm kiếm "
+
+#: src/subscribedialog.c:281
+msgid "Newsgroup name"
+msgstr "Tên nhóm tin"
+
+#: src/subscribedialog.c:287
+msgid "Messages"
+msgstr "Thư"
+
+#: src/subscribedialog.c:424
+msgid "moderated"
+msgstr "điều hành"
+
+#: src/subscribedialog.c:426
+msgid "readonly"
+msgstr "chỉ đọc"
+
+#: src/subscribedialog.c:428
+msgid "unknown"
+msgstr "không xác định"
+
+#: src/subscribedialog.c:477
+msgid "Can't retrieve newsgroup list."
+msgstr "Không lấy được danh sách nhóm tin"
+
+#: src/subscribedialog.c:511 src/summaryview.c:766
+msgid "Done."
+msgstr "Xong."
+
+#: src/subscribedialog.c:541
+#, c-format
+msgid "%d newsgroups received (%s read)"
+msgstr "Nhận được %d nhóm tin (đã đọc %s)"
+
+#: src/summary_search.c:148
+msgid "Search messages"
+msgstr "Tìm thư"
+
+#: src/summary_search.c:171
+msgid "Match any of the following"
+msgstr "Khớp với bất kì phần nào dưới đây"
+
+#: src/summary_search.c:172
+msgid "Match all of the following"
+msgstr "Khớp với tất cả các phần dưới đây"
+
+#: src/summary_search.c:235
+msgid "Body:"
+msgstr "Nội dung:"
+
+#: src/summary_search.c:263
+msgid "Find all"
+msgstr "Tìm tất cả"
+
+#: src/summary_search.c:392
+msgid "Beginning of list reached; continue from end?"
+msgstr "Đã đến đầu danh sách; tiếp tục từ cuối?"
+
+#: src/summary_search.c:394
+msgid "End of list reached; continue from beginning?"
+msgstr "Đã đến cuối danh sách; tiếp tục từ đầu?"
+
+#: src/summaryview.c:393
+msgid "/Repl_y to"
+msgstr "/Hồi â_m cho"
+
+#: src/summaryview.c:394
+msgid "/Repl_y to/_all"
+msgstr "/Hồi â_m cho/_tất cả"
+
+#: src/summaryview.c:395
+msgid "/Repl_y to/_sender"
+msgstr "/Hồi â_m cho/_người gửi"
+
+#: src/summaryview.c:396
+msgid "/Repl_y to/mailing _list"
+msgstr "/Hồi â_m cho/_hộp thư chung"
+
+#: src/summaryview.c:403
+msgid "/M_ove..."
+msgstr "/_Di chuyển..."
+
+#: src/summaryview.c:404
+msgid "/_Copy..."
+msgstr "/_Sao chép"
+
+#: src/summaryview.c:407
+msgid "/_Mark"
+msgstr "/Đánh _dấu"
+
+#: src/summaryview.c:408
+msgid "/_Mark/_Mark"
+msgstr "/Đánh _dấu/Đánh _dấu"
+
+#: src/summaryview.c:409
+msgid "/_Mark/_Unmark"
+msgstr "/Đánh _dấu/_Bỏ đánh dấu"
+
+#: src/summaryview.c:410
+msgid "/_Mark/---"
+msgstr "/Đánh _dấu/---"
+
+#: src/summaryview.c:411
+msgid "/_Mark/Mark as unr_ead"
+msgstr "/Đánh _dấu/Đá_nh dấu là chưa đọc"
+
+#: src/summaryview.c:412
+msgid "/_Mark/Mark as rea_d"
+msgstr "/Đánh _dấu/Đán_h dấu đã đọc"
+
+#: src/summaryview.c:414
+msgid "/_Mark/Mark all _read"
+msgstr "/Đánh _dấu/Đánh dấ_u đã đọc hết"
+
+#: src/summaryview.c:415
+msgid "/Color la_bel"
+msgstr "/_Nhãn màu"
+
+#: src/summaryview.c:417
+msgid "/Re-_edit"
+msgstr "/S_oạn lại"
+
+#: src/summaryview.c:419
+msgid "/Add sender to address boo_k..."
+msgstr "/_Thêm người gửi vào sổ địa chỉ..."
+
+#: src/summaryview.c:421
+#, fuzzy
+msgid "/Create f_ilter rule"
+msgstr "/_Công cụ/Tạo _quy tắc lọc"
+
+#: src/summaryview.c:422
+#, fuzzy
+msgid "/Create f_ilter rule/_Automatically"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/_Tự động"
+
+#: src/summaryview.c:424
+#, fuzzy
+msgid "/Create f_ilter rule/by _From"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/theo _Người gửi"
+
+#: src/summaryview.c:426
+#, fuzzy
+msgid "/Create f_ilter rule/by _To"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/theo N_gười nhận"
+
+#: src/summaryview.c:428
+#, fuzzy
+msgid "/Create f_ilter rule/by _Subject"
+msgstr "/_Công cụ/Tạo _quy tắc lọc/theo Tiê_u đề"
+
+#: src/summaryview.c:434
+msgid "/_View/_Source"
+msgstr "/_Xem/_Nguồn"
+
+#: src/summaryview.c:435
+msgid "/_View/All _header"
+msgstr "/_Xem/Mọi _header"
+
+#: src/summaryview.c:437
+msgid "/_Print..."
+msgstr "/I_n ấn..."
+
+#: src/summaryview.c:462
+msgid "Creating summary view...\n"
+msgstr "Đang tạo khung xem tóm tắt...\n"
+
+#: src/summaryview.c:627
+msgid "Process mark"
+msgstr "Đánh dấu tiến trình"
+
+#: src/summaryview.c:628
+msgid "Some marks are left. Process it?"
+msgstr "Vẫn còn sót một số dấu. Xử lí chúng?"
+
+#: src/summaryview.c:674
+#, c-format
+msgid "Scanning folder (%s)..."
+msgstr "Đang quét thư mục (%s)..."
+
+#: src/summaryview.c:1187
+msgid "_Search again"
+msgstr "_Tìm lại"
+
+#: src/summaryview.c:1208 src/summaryview.c:1217
+msgid "No more unread messages"
+msgstr "Không có thêm thư chưa đọc"
+
+#: src/summaryview.c:1209
+msgid "No unread message found. Search from the end?"
+msgstr "Không thấy thư nào chưa đọc. Tìm từ dưới lên?"
+
+#: src/summaryview.c:1211
+msgid "No unread messages."
+msgstr "Không có thư nào chưa đọc."
+
+#: src/summaryview.c:1218
+msgid "No unread message found. Go to next folder?"
+msgstr "Không thấy thư nào chưa đọc. Chuyển sang thư mục tiếp theo?"
+
+#: src/summaryview.c:1226 src/summaryview.c:1235
+msgid "No more new messages"
+msgstr "Không có thêm thư mới"
+
+#: src/summaryview.c:1227
+msgid "No new message found. Search from the end?"
+msgstr "Không có thư mới. Tìm từ dưới lên?"
+
+#: src/summaryview.c:1229
+msgid "No new messages."
+msgstr "Không có thư mới."
+
+#: src/summaryview.c:1236
+msgid "No new message found. Go to next folder?"
+msgstr "Không thấy thư mới nào. Tìm trong thư mục tiếp theo?"
+
+#: src/summaryview.c:1244 src/summaryview.c:1253
+msgid "No more marked messages"
+msgstr "Không có thêm thư được đánh dấu"
+
+#: src/summaryview.c:1245
+msgid "No marked message found. Search from the end?"
+msgstr "Không thấy thư nào được đánh dấu. Tìm từ cuối lên?"
+
+#: src/summaryview.c:1247 src/summaryview.c:1256
+msgid "No marked messages."
+msgstr "Không có thư nào được dánh dấu."
+
+#: src/summaryview.c:1254
+msgid "No marked message found. Search from the beginning?"
+msgstr "Không thấy thư nào được đánh dấu. Tìm từ đầu?"
+
+#: src/summaryview.c:1262 src/summaryview.c:1271
+msgid "No more labeled messages"
+msgstr "Không có thêm thư được đánh dấu nào"
+
+#: src/summaryview.c:1263
+msgid "No labeled message found. Search from the end?"
+msgstr "Không thấy nào được gán nhãn. Tìm từ cuối lên?"
+
+#: src/summaryview.c:1265 src/summaryview.c:1274
+msgid "No labeled messages."
+msgstr "Không có thư được gán nhãn."
+
+#: src/summaryview.c:1272
+msgid "No labeled message found. Search from the beginning?"
+msgstr "Không thấy thư nào được gán nhãn. Tìm từ đầu?"
+
+#: src/summaryview.c:1571
+msgid "Attracting messages by subject..."
+msgstr ""
+
+#: src/summaryview.c:1730
+#, c-format
+msgid "%d deleted"
+msgstr "đã xoá %d"
+
+#: src/summaryview.c:1734
+#, c-format
+msgid "%s%d moved"
+msgstr "đã chuyển %s%d"
+
+#: src/summaryview.c:1735 src/summaryview.c:1742
+msgid ", "
+msgstr ", "
+
+#: src/summaryview.c:1740
+#, c-format
+msgid "%s%d copied"
+msgstr "đã chép %s%d"
+
+#: src/summaryview.c:1757
+msgid " item(s) selected"
+msgstr " mục được chọn"
+
+#: src/summaryview.c:1767
+#, c-format
+msgid "%d new, %d unread, %d total (%s)"
+msgstr "%d mới, %d chưa đọc, %d tổng số (%s)"
+
+#: src/summaryview.c:1773
+#, c-format
+msgid "%d new, %d unread, %d total"
+msgstr "%d mới, %d chưa đọc, %d tổng số"
+
+#: src/summaryview.c:1809
+msgid "Sorting summary..."
+msgstr "Đang sắp xếp bảng tóm tắt..."
+
+#: src/summaryview.c:1883
+msgid "(No Date)"
+msgstr "(Không ngày tháng)"
+
+#: src/summaryview.c:2025
+msgid "\tSetting summary from message data..."
+msgstr "\tĐang thiết lập tóm tắt từ dữ liệu thư..."
+
+#: src/summaryview.c:2027
+msgid "Setting summary from message data..."
+msgstr "Đang thiết lập tóm tắt từ dữ liệu thư..."
+
+#: src/summaryview.c:2152
+#, c-format
+msgid "Writing summary cache (%s)..."
+msgstr "Đang ghi bộ đệm cho phần tóm tắt (%s)..."
+
+#: src/summaryview.c:2461
+#, c-format
+msgid "Message %d is marked\n"
+msgstr "Bức thư %d đã được đánh dấu\n"
+
+#: src/summaryview.c:2509
+#, c-format
+msgid "Message %d is marked as being read\n"
+msgstr "Bức thư %d được đánh dấu là đã đọc\n"
+
+#: src/summaryview.c:2593
+#, c-format
+msgid "Message %d is marked as unread\n"
+msgstr "Bức thư %d được đánh dấu là chưa đọc\n"
+
+#: src/summaryview.c:2652
+#, c-format
+msgid "Message %s/%d is set to delete\n"
+msgstr "Bức thư %s/%d được chọn để xoá\n"
+
+#: src/summaryview.c:2670
+msgid "Delete message(s)"
+msgstr "Xoá thư"
+
+#: src/summaryview.c:2671
+msgid "Do you really want to delete message(s) from the trash?"
+msgstr "Bạn có thực sự muốn xoá thư khỏi thùng rác?"
+
+#: src/summaryview.c:2736
+msgid "Deleting duplicated messages..."
+msgstr "Đang xoá thư trùng nhau..."
+
+#: src/summaryview.c:2773
+#, c-format
+msgid "Message %s/%d is unmarked\n"
+msgstr "Thư %s/%d được bỏ đánh đấu\n"
+
+#: src/summaryview.c:2829
+#, c-format
+msgid "Message %d is set to move to %s\n"
+msgstr "Bức thư %d được chọn để chuyển tới %s\n"
+
+#: src/summaryview.c:2846
+msgid "Destination is same as current folder."
+msgstr "Đích đến trùng với thư mục hiện tại."
+
+#: src/summaryview.c:2900
+#, c-format
+msgid "Message %d is set to copy to %s\n"
+msgstr "Bức thư %d được chọn để chép đến %s\n"
+
+#: src/summaryview.c:2917
+msgid "Destination for copy is same as current folder."
+msgstr "Đích đến trùng với thư mục hiện tại"
+
+#: src/summaryview.c:3116
+msgid "Error occurred while processing messages."
+msgstr "Có lỗi khi xử lí thư."
+
+#: src/summaryview.c:3417 src/summaryview.c:3418
+msgid "Building threads..."
+msgstr "Đang tạo luồng..."
+
+#: src/summaryview.c:3560 src/summaryview.c:3561
+msgid "Unthreading..."
+msgstr "Đang rời luồng..."
+
+#: src/summaryview.c:3840 src/summaryview.c:3896
+#, fuzzy, c-format
+msgid "Filtering (%d / %d)..."
+msgstr "Đang lọc..."
+
+#: src/summaryview.c:3945
+msgid "filtering..."
+msgstr "đang lọc..."
+
+#: src/summaryview.c:3946
+msgid "Filtering..."
+msgstr "Đang lọc..."
+
+#: src/summaryview.c:3982
+#, c-format
+msgid "%d message(s) have been filtered."
+msgstr "%d thư đã được lọc."
+
+#: src/summaryview.c:4490
+msgid "No."
+msgstr "Số "
+
+#: src/template.c:168
+#, c-format
+msgid "file %s already exists\n"
+msgstr "tập tin %s đã có trước\n"
+
+#: src/textview.c:247
+msgid "Creating text view...\n"
+msgstr "Đang tạo khung xem văn bản...\n"
+
+#: src/textview.c:774
+msgid "This message can't be displayed.\n"
+msgstr "Không thể hiển thị được thư này.\n"
+
+#: src/textview.c:1906
+msgid "Sa_ve this image as..."
+msgstr "_Lưu hình ảnh này là..."
+
+#: src/textview.c:1922
+msgid "Compose _new message"
+msgstr "Soạn _thư mới"
+
+#: src/textview.c:1924
+msgid "Add to address _book..."
+msgstr "Thêm vào _sổ địa chỉ..."
+
+#: src/textview.c:1926
+msgid "Copy this add_ress"
+msgstr "_Chép địa chỉ này"
+
+#: src/textview.c:1929
+msgid "_Open with Web browser"
+msgstr "_Mở với trình duyệt web"
+
+#: src/textview.c:1931
+msgid "Copy this _link"
+msgstr "Sao chép liên _kết này"
+
+#: src/textview.c:2074
+#, c-format
+msgid ""
+"The real URL (%s) is different from\n"
+"the apparent URL (%s).\n"
+"\n"
+"Open it anyway?"
+msgstr ""
+"URL thực (%s) khác với\n"
+"URL bề ngoài (%s).\n"
+"\n"
+"Vẫn mở nó?"
+
+#: src/textview.c:2079
+msgid "Fake URL warning"
+msgstr "Cảnh báo URL lừa đảo"
+
+#~ msgid " [Edited]"
+#~ msgstr " [Đã sửa]"
+
+#~ msgid "Compose message%s"
+#~ msgstr "Viết thư%s"
+
+#~ msgid "Terminated process group id: %d"
+#~ msgstr "Id của nhóm tiến trình đã dừng: %d"
+
+#~ msgid "Temporary file: %s"
+#~ msgstr "Tậm tin tạm: %s"
+
+#~ msgid "Compose: input from monitoring process\n"
+#~ msgstr "Soạn thảo: nhập từ tiến trình đang giám sát\n"
+
+#~ msgid "Couldn't exec external editor\n"
+#~ msgstr "Không thể chạy trình soạn thảo ngoài\n"
+
+#~ msgid "Couldn't write to file\n"
+#~ msgstr "Không thể ghi vào tập tin\n"
+
+#~ msgid "Pipe read failed\n"
+#~ msgstr "Việc đọc ống nối thất bại\n"
+
+#~ msgid "Empty messages in all trash?"
+#~ msgstr "Xoá thư trong mọi thùng rác?"
+
+#~ msgid ""
+#~ "Enter the print command line:\n"
+#~ "(`%s' will be replaced with file name)"
+#~ msgstr ""
+#~ "Nhập lệnh in:\n"
+#~ "(`%s' sẽ được thay thế bằng tên tập tin)"
+
+#~ msgid "Quote"
+#~ msgstr "Trích dẫn"
+
+#~ msgid "Font"
+#~ msgstr "Phông"
+
+#~ msgid "Translate header name (such as `From:', `Subject:')"
+#~ msgstr "Phiên dịch tên header (như `From:', `Subject:')"
+
+#~ msgid ""
+#~ "Filtered messages will be moved to the junk folder and deleted from the "
+#~ "server."
+#~ msgstr ""
+#~ "Các thư đã lọc sẽ được chuyển tới thư mục thư rác và bị xoá khỏi máy chủ."
+
+#~ msgid "Font selection"
+#~ msgstr "Chọn phông chữ"
+
+#~ msgid ""
+#~ "Select the preset of key bindings.\n"
+#~ "You can also modify each menu's shortcuts by pressing\n"
+#~ "any key(s) when placing the mouse pointer on the item."
+#~ msgstr ""
+#~ "Chọn kiểu phím tắt.\n"
+#~ "Bạn có thể thay đổi phím tắt cho mỗi trình đơn bằng cách\n"
+#~ "nhấn phím khi đặt con trỏ lên mục cần đổi."
+
+#~ msgid ""
+#~ "First, you have to set the location of mailbox.\n"
+#~ "You can use existing mailbox in MH format\n"
+#~ "if you have the one.\n"
+#~ "If you're not sure, just select OK."
+#~ msgstr ""
+#~ "Đầu tiên, bạn phải xác định vị trí của hộp thư.\n"
+#~ "Bạn có thể dùng hộp thư hiện có\n"
+#~ "với định dạng MH (nếu có).\n"
+#~ "Nếu bạn không chắc chắn, chỉ cần chọn OK."
