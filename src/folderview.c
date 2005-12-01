@@ -164,6 +164,10 @@ static void folderview_update_tree_cb	(FolderView	*folderview,
 					 guint		 action,
 					 GtkWidget	*widget);
 
+static void folderview_update_summary_cb(FolderView	*folderview,
+					 guint		 action,
+					 GtkWidget	*widget);
+
 static void folderview_new_folder_cb	(FolderView	*folderview,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -241,6 +245,7 @@ static GtkItemFactoryEntry folderview_mail_popup_entries[] =
 	{N_("/_Check for new messages"),
 					NULL, folderview_update_tree_cb, 0, NULL},
 	{N_("/R_ebuild folder tree"),	NULL, folderview_update_tree_cb, 1, NULL},
+	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/_Properties..."),		NULL, folderview_property_cb, 0, NULL}
@@ -260,6 +265,7 @@ static GtkItemFactoryEntry folderview_imap_popup_entries[] =
 	{N_("/_Check for new messages"),
 					NULL, folderview_update_tree_cb, 0, NULL},
 	{N_("/R_ebuild folder tree"),	NULL, folderview_update_tree_cb, 1, NULL},
+	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/_Properties..."),		NULL, folderview_property_cb, 0, NULL}
@@ -275,6 +281,7 @@ static GtkItemFactoryEntry folderview_news_popup_entries[] =
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Check for new messages"),
 					NULL, folderview_update_tree_cb, 0, NULL},
+	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/_Properties..."),		NULL, folderview_property_cb, 0, NULL}
@@ -1467,6 +1474,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	gboolean empty_trash     = FALSE;
 	gboolean download_msg    = FALSE;
 	gboolean update_tree     = FALSE;
+	gboolean update_summary  = FALSE;
 	gboolean rescan_tree     = FALSE;
 	gboolean remove_tree     = FALSE;
 	gboolean search_folder   = FALSE;
@@ -1492,9 +1500,11 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		if (item->parent == NULL) {
 			update_tree = remove_tree = TRUE;
 		} else {
-			if (gtkut_tree_row_reference_equal(folderview->selected,
-							   folderview->opened))
+			if (gtkut_tree_row_reference_equal
+				(folderview->selected, folderview->opened)) {
+				update_summary = TRUE;
 				search_folder = TRUE;
+			}
 		}
 		if (FOLDER_IS_LOCAL(folder) || FOLDER_TYPE(folder) == F_IMAP) {
 			if (item->parent == NULL)
@@ -1529,6 +1539,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		SET_SENS(mail_factory, "/Empty trash", empty_trash);
 		SET_SENS(mail_factory, "/Check for new messages", update_tree);
 		SET_SENS(mail_factory, "/Rebuild folder tree", rescan_tree);
+		SET_SENS(mail_factory, "/Update summary", update_summary);
 		SET_SENS(mail_factory, "/Search messages...", search_folder);
 		SET_SENS(mail_factory, "/Properties...", folder_property);
 	} else if (FOLDER_TYPE(folder) == F_IMAP) {
@@ -1542,6 +1553,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		SET_SENS(imap_factory, "/Download", download_msg);
 		SET_SENS(imap_factory, "/Check for new messages", update_tree);
 		SET_SENS(imap_factory, "/Rebuild folder tree", rescan_tree);
+		SET_SENS(imap_factory, "/Update summary", update_summary);
 		SET_SENS(imap_factory, "/Search messages...", search_folder);
 		SET_SENS(imap_factory, "/Properties...", folder_property);
 	} else if (FOLDER_TYPE(folder) == F_NEWS) {
@@ -1551,6 +1563,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		SET_SENS(news_factory, "/Remove newsgroup", delete_folder);
 		SET_SENS(news_factory, "/Download", download_msg);
 		SET_SENS(news_factory, "/Check for new messages", update_tree);
+		SET_SENS(news_factory, "/Update summary", update_summary);
 		SET_SENS(news_factory, "/Search messages...", search_folder);
 		SET_SENS(news_factory, "/Properties...", folder_property);
 	} else
@@ -1926,6 +1939,17 @@ static void folderview_update_tree_cb(FolderView *folderview, guint action,
 		folderview_check_new(item->folder);
 	else
 		folderview_rescan_tree(folderview, item->folder);
+}
+
+static void folderview_update_summary_cb(FolderView *folderview, guint action,
+					 GtkWidget *widget)
+{
+	if (!folderview->summaryview->folder_item)
+		return;
+
+	GTK_EVENTS_FLUSH();
+	summary_show(folderview->summaryview,
+		     folderview->summaryview->folder_item, TRUE);
 }
 
 static void folderview_new_folder_cb(FolderView *folderview, guint action,

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-30 15:21+0900\n"
+"POT-Creation-Date: 2005-12-01 16:03+0900\n"
 "PO-Revision-Date: 2005-07-08 21:08+0100\n"
 "Last-Translator: Ricardo Mones <mones@aic.uniovi.es>\n"
 "Language-Team: Ricardo Mones <mones@aic.uniovi.es>\n"
@@ -969,10 +969,10 @@ msgid "/New _Folder"
 msgstr "/Nueva _carpeta"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:238 src/folderview.c:240 src/folderview.c:244
-#: src/folderview.c:255 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:263 src/folderview.c:273 src/folderview.c:275
-#: src/folderview.c:278 src/summaryview.c:398 src/summaryview.c:402
+#: src/folderview.c:242 src/folderview.c:244 src/folderview.c:249
+#: src/folderview.c:260 src/folderview.c:262 src/folderview.c:264
+#: src/folderview.c:269 src/folderview.c:279 src/folderview.c:281
+#: src/folderview.c:285 src/summaryview.c:398 src/summaryview.c:402
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:430 src/summaryview.c:436
 msgid "/---"
@@ -1049,7 +1049,7 @@ msgstr ""
 "¿Quiere borrar la carpeta Y todas las direcciones en «%s»? \n"
 "Si sólo borra la carpeta las direcciones se moverán a la carpeta padre."
 
-#: src/addressbook.c:1674 src/folderview.c:2172
+#: src/addressbook.c:1674 src/folderview.c:2196
 msgid "Delete folder"
 msgstr "Borrar carpeta"
 
@@ -1182,7 +1182,7 @@ msgid "Group"
 msgstr "Grupo"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:348 src/prefs_account_dialog.c:1663
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Carpeta"
 
@@ -1257,7 +1257,7 @@ msgstr "Marrón"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4310
+#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
 msgid "None"
 msgstr "Ninguno"
 
@@ -1269,8 +1269,8 @@ msgstr "/_Añadir"
 msgid "/_Remove"
 msgstr "/_Quitar"
 
-#: src/compose.c:509 src/folderview.c:246 src/folderview.c:265
-#: src/folderview.c:280
+#: src/compose.c:509 src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:287
 msgid "/_Properties..."
 msgstr "/_Propiedades..."
 
@@ -1581,7 +1581,7 @@ msgstr "Mensaje: %s"
 msgid "Can't get the part of multipart message."
 msgstr "No se puede obtener la parte del mensaje multipartes."
 
-#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1941
+#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1943
 msgid "(No Subject)"
 msgstr "(Sin asunto)"
 
@@ -1705,7 +1705,7 @@ msgstr "Tipo MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4200 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4457
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
 msgid "Size"
 msgstr "Tamaño"
 
@@ -2015,12 +2015,12 @@ msgstr "Editar carpeta"
 msgid "Input the new name of folder:"
 msgstr "Nombre de la nueva carpeta:"
 
-#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1951
-#: src/folderview.c:1957
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1975
+#: src/folderview.c:1981
 msgid "New folder"
 msgstr "Nueva carpeta"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1958
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1982
 msgid "Input the name of new folder:"
 msgstr "Nombre de la nueva carpeta:"
 
@@ -2189,160 +2189,165 @@ msgstr "Seleccionar carpeta"
 msgid "Select folder"
 msgstr "Seleccionar carpeta"
 
-#: src/foldersel.c:359 src/folderview.c:1096 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Entrada"
 
-#: src/foldersel.c:363 src/folderview.c:1102 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Enviado"
 
-#: src/foldersel.c:367 src/folderview.c:1108 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Cola"
 
-#: src/foldersel.c:371 src/folderview.c:1114 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Papelera"
 
-#: src/foldersel.c:375 src/folderview.c:1120 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Borradores"
 
-#: src/foldersel.c:542 src/folderview.c:1955 src/folderview.c:1959
+#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
 msgid "NewFolder"
 msgstr "NuevaCarpeta"
 
-#: src/foldersel.c:550 src/folderview.c:1967 src/folderview.c:2023
+#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c' no puede estar en el nombre de la carpeta."
 
-#: src/foldersel.c:560 src/folderview.c:1977 src/folderview.c:2030
+#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "La carpeta «%s» ya existe."
 
-#: src/foldersel.c:568 src/folderview.c:1984
+#: src/foldersel.c:568 src/folderview.c:2008
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "No se puede crear la carpeta «%s»."
 
-#: src/folderview.c:234 src/folderview.c:251
+#: src/folderview.c:238 src/folderview.c:256
 msgid "/Create _new folder..."
 msgstr "/Crear _nueva carpeta..."
 
-#: src/folderview.c:235 src/folderview.c:252
+#: src/folderview.c:239 src/folderview.c:257
 msgid "/_Rename folder..."
 msgstr "/_Renombrar carpeta..."
 
-#: src/folderview.c:236 src/folderview.c:253
+#: src/folderview.c:240 src/folderview.c:258
 msgid "/_Move folder..."
 msgstr "/_Mover carpeta..."
 
-#: src/folderview.c:237 src/folderview.c:254
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Delete folder"
 msgstr "/_Borrar carpeta"
 
-#: src/folderview.c:239 src/folderview.c:256
+#: src/folderview.c:243 src/folderview.c:261
 msgid "/Empty _trash"
 msgstr "/_Vaciar papelera"
 
-#: src/folderview.c:241 src/folderview.c:260 src/folderview.c:276
+#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:282
 msgid "/_Check for new messages"
 msgstr "/_Comprobar si hay mensajes nuevos"
 
-#: src/folderview.c:243 src/folderview.c:262
+#: src/folderview.c:247 src/folderview.c:267
 msgid "/R_ebuild folder tree"
 msgstr "/R_econstruir árbol de carpetas"
 
-#: src/folderview.c:245 src/folderview.c:264 src/folderview.c:279
+#: src/folderview.c:248 src/folderview.c:268 src/folderview.c:284
+#, fuzzy
+msgid "/_Update summary"
+msgstr "/_Ver/Actualizar res_umen"
+
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 msgid "/_Search messages..."
 msgstr "/_Buscar en los mensajes"
 
-#: src/folderview.c:258 src/folderview.c:274
+#: src/folderview.c:263 src/folderview.c:280
 msgid "/Down_load"
 msgstr "/Des_cargar"
 
-#: src/folderview.c:270
+#: src/folderview.c:276
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/_Suscribirse a un grupo..."
 
-#: src/folderview.c:272
+#: src/folderview.c:278
 msgid "/_Remove newsgroup"
 msgstr "/_Eliminar grupo"
 
-#: src/folderview.c:301
+#: src/folderview.c:308
 msgid "Creating folder view...\n"
 msgstr "Creando vista de carpeta...\n"
 
-#: src/folderview.c:379
+#: src/folderview.c:386
 msgid "New"
 msgstr "Nuevos"
 
 #. S_COL_MARK
-#: src/folderview.c:393 src/prefs_summary_column.c:71
+#: src/folderview.c:400 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "No leídos"
 
-#: src/folderview.c:407
+#: src/folderview.c:414
 msgid "#"
 msgstr "Nº"
 
-#: src/folderview.c:529
+#: src/folderview.c:536
 msgid "Setting folder info...\n"
 msgstr "Estableciendo información de carpeta...\n"
 
-#: src/folderview.c:530
+#: src/folderview.c:537
 msgid "Setting folder info..."
 msgstr "Estableciendo información de carpeta..."
 
-#: src/folderview.c:830 src/mainwindow.c:3319 src/setup.c:80
+#: src/folderview.c:837 src/mainwindow.c:3319 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Revisando carpeta %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3324 src/setup.c:85
+#: src/folderview.c:841 src/mainwindow.c:3324 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Revisando carpeta %s ..."
 
-#: src/folderview.c:876
+#: src/folderview.c:883
 msgid "Rebuild folder tree"
 msgstr "Reconstruir árbol de carpetas"
 
-#: src/folderview.c:877
+#: src/folderview.c:884
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Se reconstruirá el árbol de carpetas. ¿Continuar?"
 
-#: src/folderview.c:886
+#: src/folderview.c:893
 msgid "Rebuilding folder tree..."
 msgstr "Reconstruyendo el árbol de carpetas..."
 
-#: src/folderview.c:893
+#: src/folderview.c:900
 msgid "Rebuilding of the folder tree failed."
 msgstr "La reconstrucción del árbol de carpetas falló."
 
-#: src/folderview.c:963
+#: src/folderview.c:970
 msgid "Checking for new messages in all folders..."
 msgstr "Comprobar si hay mensajes nuevos en todas las carpetas..."
 
-#: src/folderview.c:1712
+#: src/folderview.c:1725
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Carpeta %s seleccionada\n"
 
-#: src/folderview.c:1867
+#: src/folderview.c:1880
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Descargando mensajes en %s ..."
 
-#: src/folderview.c:1902
+#: src/folderview.c:1915
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Hubo un error descargando los mensajes en «%s»."
 
-#: src/folderview.c:1952
+#: src/folderview.c:1976
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2352,21 +2357,21 @@ msgstr ""
 "(si quiere crear una carpeta para almacenar subcarpetas,\n"
 " añada `/' al final del nombre)"
 
-#: src/folderview.c:2014
+#: src/folderview.c:2038
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Nuevo nombre para «%s»:"
 
-#: src/folderview.c:2015
+#: src/folderview.c:2039
 msgid "Rename folder"
 msgstr "Renombrar carpeta"
 
-#: src/folderview.c:2106
+#: src/folderview.c:2130
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "No se puede mover la carpeta «%s»."
 
-#: src/folderview.c:2169
+#: src/folderview.c:2193
 #, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2379,21 +2384,21 @@ msgstr ""
 "\n"
 "¿Está seguro de que quiere borrarla?"
 
-#: src/folderview.c:2198
+#: src/folderview.c:2222
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "No se puede eliminar la carpeta «%s»."
 
-#: src/folderview.c:2232
+#: src/folderview.c:2256
 msgid "Empty trash"
 msgstr "Vaciar papelera"
 
-#: src/folderview.c:2233
+#: src/folderview.c:2257
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "¿Vaciar todos los mensajes de la papelera?"
 
-#: src/folderview.c:2269
+#: src/folderview.c:2293
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2402,34 +2407,34 @@ msgstr ""
 "¿Realmente desea eliminar el buzón «%s» ?\n"
 "(Los mensajes NO se borrarán del disco)"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2295
 msgid "Remove mailbox"
 msgstr "Eliminar mailbox"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "¿Eliminar realmente la cuenta IMAP4 «%s»?"
 
-#: src/folderview.c:2318
+#: src/folderview.c:2342
 msgid "Delete IMAP4 account"
 msgstr "Borrar cuenta IMAP4"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2484
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "¿Borrar el grupo de noticias «%s»?"
 
-#: src/folderview.c:2461
+#: src/folderview.c:2485
 msgid "Delete newsgroup"
 msgstr "Borrar grupo de noticias"
 
-#: src/folderview.c:2508
+#: src/folderview.c:2532
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "¿Borrar la cuenta de noticias «%s»?"
 
-#: src/folderview.c:2509
+#: src/folderview.c:2533
 msgid "Delete news account"
 msgstr "Borrar cuenta de noticias"
 
@@ -2445,7 +2450,7 @@ msgstr "Asunto:"
 msgid "Creating header view...\n"
 msgstr "Creando vista de cabeceras...\n"
 
-#: src/headerview.c:180 src/summaryview.c:1944
+#: src/headerview.c:180 src/summaryview.c:1946
 msgid "(No From)"
 msgstr "(Sin remite)"
 
@@ -3493,8 +3498,8 @@ msgstr "Creando ventana principal...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: fallo solicitando color %d\n"
 
-#: src/mainwindow.c:1074 src/summaryview.c:2086 src/summaryview.c:2171
-#: src/summaryview.c:3500 src/summaryview.c:3621 src/summaryview.c:3946
+#: src/mainwindow.c:1074 src/summaryview.c:2088 src/summaryview.c:2173
+#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
 msgid "done.\n"
 msgstr "hecho.\n"
 
@@ -3760,25 +3765,25 @@ msgstr "Adjuntos"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:667 src/summaryview.c:3044
+#: src/messageview.c:667 src/summaryview.c:3046
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "No puedo guardar el fichero «%s»."
 
-#: src/messageview.c:726 src/summaryview.c:3067
+#: src/messageview.c:726 src/summaryview.c:3069
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:727 src/summaryview.c:3068
+#: src/messageview.c:727 src/summaryview.c:3070
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Orden para aprender:"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3070
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
 msgid "Print"
 msgstr "Imprimir"
 
-#: src/messageview.c:738 src/summaryview.c:3079
+#: src/messageview.c:738 src/summaryview.c:3081
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5586,17 +5591,17 @@ msgid "Attachment"
 msgstr "Adjunto"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4450
+#: src/prefs_summary_column.c:73 src/summaryview.c:4481
 msgid "Subject"
 msgstr "Asunto"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4453
+#: src/prefs_summary_column.c:74 src/summaryview.c:4484
 msgid "From"
 msgstr "Desde"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4455
+#: src/prefs_summary_column.c:75 src/summaryview.c:4486
 msgid "Date"
 msgstr "Fecha"
 
@@ -6141,213 +6146,218 @@ msgstr "Queda alguna marca. ¿Procesarla?"
 msgid "Scanning folder (%s)..."
 msgstr "Revisando carpeta (%s)..."
 
-#: src/summaryview.c:1185
+#: src/summaryview.c:1187
 msgid "_Search again"
 msgstr "_Buscar de nuevo"
 
-#: src/summaryview.c:1206 src/summaryview.c:1215
+#: src/summaryview.c:1208 src/summaryview.c:1217
 msgid "No more unread messages"
 msgstr "No hay más mensajes sin leer"
 
-#: src/summaryview.c:1207
+#: src/summaryview.c:1209
 msgid "No unread message found. Search from the end?"
 msgstr "No hay mensajes sin leer. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1211
 msgid "No unread messages."
 msgstr "No hay mensajes sin leer."
 
-#: src/summaryview.c:1216
+#: src/summaryview.c:1218
 msgid "No unread message found. Go to next folder?"
 msgstr "No hay mensajes sin leer. ¿Ir a la carpeta siguiente?"
 
-#: src/summaryview.c:1224 src/summaryview.c:1233
+#: src/summaryview.c:1226 src/summaryview.c:1235
 msgid "No more new messages"
 msgstr "No hay más mensajes nuevos"
 
-#: src/summaryview.c:1225
+#: src/summaryview.c:1227
 msgid "No new message found. Search from the end?"
 msgstr "No hay más mensajes nuevos. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1229
 msgid "No new messages."
 msgstr "No hay mensajes nuevos."
 
-#: src/summaryview.c:1234
+#: src/summaryview.c:1236
 msgid "No new message found. Go to next folder?"
 msgstr "No hay más mensajes nuevos. ¿Ir a la carpeta siguiente?"
 
-#: src/summaryview.c:1242 src/summaryview.c:1251
+#: src/summaryview.c:1244 src/summaryview.c:1253
 msgid "No more marked messages"
 msgstr "No hay más mensajes marcados"
 
-#: src/summaryview.c:1243
+#: src/summaryview.c:1245
 msgid "No marked message found. Search from the end?"
 msgstr "No hay mensajes marcados. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1245 src/summaryview.c:1254
+#: src/summaryview.c:1247 src/summaryview.c:1256
 msgid "No marked messages."
 msgstr "No hay mensajes marcados."
 
-#: src/summaryview.c:1252
+#: src/summaryview.c:1254
 msgid "No marked message found. Search from the beginning?"
 msgstr "No hay mensajes marcados. ¿Buscar desde el principio?"
 
-#: src/summaryview.c:1260 src/summaryview.c:1269
+#: src/summaryview.c:1262 src/summaryview.c:1271
 msgid "No more labeled messages"
 msgstr "No hay más mensajes etiquetados"
 
-#: src/summaryview.c:1261
+#: src/summaryview.c:1263
 msgid "No labeled message found. Search from the end?"
 msgstr "No hay mensajes etiquetados. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1263 src/summaryview.c:1272
+#: src/summaryview.c:1265 src/summaryview.c:1274
 msgid "No labeled messages."
 msgstr "No hay mensajes etiquetados."
 
-#: src/summaryview.c:1270
+#: src/summaryview.c:1272
 msgid "No labeled message found. Search from the beginning?"
 msgstr "No hay mensajes etiquetados. ¿Buscar desde el principio?"
 
-#: src/summaryview.c:1569
+#: src/summaryview.c:1571
 msgid "Attracting messages by subject..."
 msgstr "Agrupando mensajes por asunto..."
 
-#: src/summaryview.c:1728
+#: src/summaryview.c:1730
 #, c-format
 msgid "%d deleted"
 msgstr "%d borrados"
 
-#: src/summaryview.c:1732
+#: src/summaryview.c:1734
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d movidos"
 
-#: src/summaryview.c:1733 src/summaryview.c:1740
+#: src/summaryview.c:1735 src/summaryview.c:1742
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1738
+#: src/summaryview.c:1740
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d copiado"
 
-#: src/summaryview.c:1755
+#: src/summaryview.c:1757
 msgid " item(s) selected"
 msgstr " elemento(s) seleccionados"
 
-#: src/summaryview.c:1765
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d nuevos, %d no leídos, %d totales (%s)"
 
-#: src/summaryview.c:1771
+#: src/summaryview.c:1773
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d nuevos, %d no leídos, %d totales"
 
-#: src/summaryview.c:1807
+#: src/summaryview.c:1809
 msgid "Sorting summary..."
 msgstr "Ordenando cabeceras..."
 
-#: src/summaryview.c:1881
+#: src/summaryview.c:1883
 msgid "(No Date)"
 msgstr "(Sin fecha)"
 
-#: src/summaryview.c:2023
+#: src/summaryview.c:2025
 msgid "\tSetting summary from message data..."
 msgstr "\tExtrayendo cabeceras de los mensajes..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2027
 msgid "Setting summary from message data..."
 msgstr "Resumiendo los mensajes..."
 
-#: src/summaryview.c:2150
+#: src/summaryview.c:2152
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Escribiendo caché resumen (%s)..."
 
-#: src/summaryview.c:2459
+#: src/summaryview.c:2461
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Mensaje %d está marcado\n"
 
-#: src/summaryview.c:2507
+#: src/summaryview.c:2509
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Mensaje %d marcado como leído\n"
 
-#: src/summaryview.c:2591
+#: src/summaryview.c:2593
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Mensaje %d marcado como no leído\n"
 
-#: src/summaryview.c:2650
+#: src/summaryview.c:2652
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Mensaje %s/%d marcado para borrar\n"
 
-#: src/summaryview.c:2668
+#: src/summaryview.c:2670
 msgid "Delete message(s)"
 msgstr "Borrar mensaje(s)"
 
-#: src/summaryview.c:2669
+#: src/summaryview.c:2671
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "¿Quiere realmente borrar el/los mensaje(s) de la papelera?"
 
-#: src/summaryview.c:2734
+#: src/summaryview.c:2736
 msgid "Deleting duplicated messages..."
 msgstr "Borrando mensajes duplicados..."
 
-#: src/summaryview.c:2771
+#: src/summaryview.c:2773
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Mensaje %s/%d desmarcado\n"
 
-#: src/summaryview.c:2827
+#: src/summaryview.c:2829
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Mensaje %d marcado para mover a %s\n"
 
-#: src/summaryview.c:2844
+#: src/summaryview.c:2846
 msgid "Destination is same as current folder."
 msgstr "El destino es el mismo que la carpeta actual."
 
-#: src/summaryview.c:2898
+#: src/summaryview.c:2900
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Mensaje %d marcado para copiar a %s\n"
 
-#: src/summaryview.c:2915
+#: src/summaryview.c:2917
 msgid "Destination for copy is same as current folder."
 msgstr "El destino de la copia es el mismo que la carpeta actual."
 
-#: src/summaryview.c:3114
+#: src/summaryview.c:3116
 msgid "Error occurred while processing messages."
 msgstr "Hubo algún error al procesar los mensajes."
 
-#: src/summaryview.c:3415 src/summaryview.c:3416
+#: src/summaryview.c:3417 src/summaryview.c:3418
 msgid "Building threads..."
 msgstr "Construyendo hilos..."
 
-#: src/summaryview.c:3558 src/summaryview.c:3559
+#: src/summaryview.c:3560 src/summaryview.c:3561
 msgid "Unthreading..."
 msgstr "Deshaciendo hilos..."
 
-#: src/summaryview.c:3922
+#: src/summaryview.c:3840 src/summaryview.c:3896
+#, fuzzy, c-format
+msgid "Filtering (%d / %d)..."
+msgstr "Filtrando..."
+
+#: src/summaryview.c:3945
 msgid "filtering..."
 msgstr "filtrando..."
 
-#: src/summaryview.c:3923
+#: src/summaryview.c:3946
 msgid "Filtering..."
 msgstr "Filtrando..."
 
-#: src/summaryview.c:3953
+#: src/summaryview.c:3982
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "se ha(n) filtrado %d mensaje(s)."
 
-#: src/summaryview.c:4459
+#: src/summaryview.c:4490
 msgid "No."
 msgstr "No."
 

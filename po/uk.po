@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-30 15:21+0900\n"
+"POT-Creation-Date: 2005-12-01 16:03+0900\n"
 "PO-Revision-Date: 2005-10-22 17:21+0300\n"
 "Last-Translator: O.R. Nykyforchyn <nick@pu.if.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -975,10 +975,10 @@ msgid "/New _Folder"
 msgstr "/Нова папка"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:238 src/folderview.c:240 src/folderview.c:244
-#: src/folderview.c:255 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:263 src/folderview.c:273 src/folderview.c:275
-#: src/folderview.c:278 src/summaryview.c:398 src/summaryview.c:402
+#: src/folderview.c:242 src/folderview.c:244 src/folderview.c:249
+#: src/folderview.c:260 src/folderview.c:262 src/folderview.c:264
+#: src/folderview.c:269 src/folderview.c:279 src/folderview.c:281
+#: src/folderview.c:285 src/summaryview.c:398 src/summaryview.c:402
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:430 src/summaryview.c:436
 msgid "/---"
@@ -1055,7 +1055,7 @@ msgstr ""
 "Чи бажаєте Ви видалити папку ТА всі адреси в `%s' ? \n"
 "Якщо видалити тільки папку, адреси буде перенесено в охоплюючу папку."
 
-#: src/addressbook.c:1674 src/folderview.c:2172
+#: src/addressbook.c:1674 src/folderview.c:2196
 msgid "Delete folder"
 msgstr "Видалити папку"
 
@@ -1181,7 +1181,7 @@ msgid "Group"
 msgstr "Група"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:348 src/prefs_account_dialog.c:1663
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Папка"
 
@@ -1256,7 +1256,7 @@ msgstr "Коричневий"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4310
+#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
 msgid "None"
 msgstr "Ніякий"
 
@@ -1268,8 +1268,8 @@ msgstr "/Додати..."
 msgid "/_Remove"
 msgstr "/Видалити"
 
-#: src/compose.c:509 src/folderview.c:246 src/folderview.c:265
-#: src/folderview.c:280
+#: src/compose.c:509 src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:287
 msgid "/_Properties..."
 msgstr "/Властивості..."
 
@@ -1580,7 +1580,7 @@ msgstr "Лист: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Не вдалось отримати одну з частин листа."
 
-#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1941
+#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1943
 msgid "(No Subject)"
 msgstr "(Без теми)"
 
@@ -1702,7 +1702,7 @@ msgstr "тип MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4200 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4457
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
 msgid "Size"
 msgstr "Розмір"
 
@@ -2012,12 +2012,12 @@ msgstr "Редагувати папку"
 msgid "Input the new name of folder:"
 msgstr "Введіть нову назву папки:"
 
-#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1951
-#: src/folderview.c:1957
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1975
+#: src/folderview.c:1981
 msgid "New folder"
 msgstr "Нова папка"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1958
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1982
 msgid "Input the name of new folder:"
 msgstr "Введіть назву нової папки:"
 
@@ -2184,160 +2184,165 @@ msgstr "Обрати папку"
 msgid "Select folder"
 msgstr "Обрати папку"
 
-#: src/foldersel.c:359 src/folderview.c:1096 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Вхідні"
 
-#: src/foldersel.c:363 src/folderview.c:1102 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Відіслані"
 
-#: src/foldersel.c:367 src/folderview.c:1108 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Черга"
 
-#: src/foldersel.c:371 src/folderview.c:1114 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Кошик"
 
-#: src/foldersel.c:375 src/folderview.c:1120 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Чернетки"
 
-#: src/foldersel.c:542 src/folderview.c:1955 src/folderview.c:1959
+#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
 msgid "NewFolder"
 msgstr "НоваПапка"
 
-#: src/foldersel.c:550 src/folderview.c:1967 src/folderview.c:2023
+#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c' не може міститись в назві папки."
 
-#: src/foldersel.c:560 src/folderview.c:1977 src/folderview.c:2030
+#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Папка `%s' вже існує."
 
-#: src/foldersel.c:568 src/folderview.c:1984
+#: src/foldersel.c:568 src/folderview.c:2008
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Не вдалось створити папку `%s'."
 
-#: src/folderview.c:234 src/folderview.c:251
+#: src/folderview.c:238 src/folderview.c:256
 msgid "/Create _new folder..."
 msgstr "/Створити нову папку..."
 
-#: src/folderview.c:235 src/folderview.c:252
+#: src/folderview.c:239 src/folderview.c:257
 msgid "/_Rename folder..."
 msgstr "/Перейменувати папку..."
 
-#: src/folderview.c:236 src/folderview.c:253
+#: src/folderview.c:240 src/folderview.c:258
 msgid "/_Move folder..."
 msgstr "/Перенести папку..."
 
-#: src/folderview.c:237 src/folderview.c:254
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Delete folder"
 msgstr "/Видалити папку"
 
-#: src/folderview.c:239 src/folderview.c:256
+#: src/folderview.c:243 src/folderview.c:261
 msgid "/Empty _trash"
 msgstr "/Спорожнити кошик"
 
-#: src/folderview.c:241 src/folderview.c:260 src/folderview.c:276
+#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:282
 msgid "/_Check for new messages"
 msgstr "/Перевірити за новими листами"
 
-#: src/folderview.c:243 src/folderview.c:262
+#: src/folderview.c:247 src/folderview.c:267
 msgid "/R_ebuild folder tree"
 msgstr "/Перебудувати дерево папок"
 
-#: src/folderview.c:245 src/folderview.c:264 src/folderview.c:279
+#: src/folderview.c:248 src/folderview.c:268 src/folderview.c:284
+#, fuzzy
+msgid "/_Update summary"
+msgstr "/Вигляд/Оновити список"
+
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 msgid "/_Search messages..."
 msgstr "/Шукати листи..."
 
-#: src/folderview.c:258 src/folderview.c:274
+#: src/folderview.c:263 src/folderview.c:280
 msgid "/Down_load"
 msgstr "/Завантажити"
 
-#: src/folderview.c:270
+#: src/folderview.c:276
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Передплатити конференцію"
 
-#: src/folderview.c:272
+#: src/folderview.c:278
 msgid "/_Remove newsgroup"
 msgstr "/Видалити конференцію"
 
-#: src/folderview.c:301
+#: src/folderview.c:308
 msgid "Creating folder view...\n"
 msgstr "Створення області перегляду папок...\n"
 
-#: src/folderview.c:379
+#: src/folderview.c:386
 msgid "New"
 msgstr "Нові"
 
 #. S_COL_MARK
-#: src/folderview.c:393 src/prefs_summary_column.c:71
+#: src/folderview.c:400 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Непрочитані"
 
-#: src/folderview.c:407
+#: src/folderview.c:414
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:529
+#: src/folderview.c:536
 msgid "Setting folder info...\n"
 msgstr "Встановлюємо інформацію папки...\n"
 
-#: src/folderview.c:530
+#: src/folderview.c:537
 msgid "Setting folder info..."
 msgstr "Встановлюємо інформацію папки..."
 
-#: src/folderview.c:830 src/mainwindow.c:3319 src/setup.c:80
+#: src/folderview.c:837 src/mainwindow.c:3319 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Перечитуємо папку %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3324 src/setup.c:85
+#: src/folderview.c:841 src/mainwindow.c:3324 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Перечитуємо папку %s ..."
 
-#: src/folderview.c:876
+#: src/folderview.c:883
 msgid "Rebuild folder tree"
 msgstr "Перебудувати дерево папок"
 
-#: src/folderview.c:877
+#: src/folderview.c:884
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Дерево папок буде перебудовано. Продовжити?"
 
-#: src/folderview.c:886
+#: src/folderview.c:893
 msgid "Rebuilding folder tree..."
 msgstr "Перебудовуємо дерево папок..."
 
-#: src/folderview.c:893
+#: src/folderview.c:900
 msgid "Rebuilding of the folder tree failed."
 msgstr "Не вдалось перебудувати дерево папок."
 
-#: src/folderview.c:963
+#: src/folderview.c:970
 msgid "Checking for new messages in all folders..."
 msgstr "Перевірити за новими листами у всіх папках..."
 
-#: src/folderview.c:1712
+#: src/folderview.c:1725
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Папку %s обрано\n"
 
-#: src/folderview.c:1867
+#: src/folderview.c:1880
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Завантажуємо листи у %s ..."
 
-#: src/folderview.c:1902
+#: src/folderview.c:1915
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Трапилась помилка при завантаженні листів у `%s'."
 
-#: src/folderview.c:1952
+#: src/folderview.c:1976
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2347,21 +2352,21 @@ msgstr ""
 "(якщо бажаєте створити папку, яка містить підпапки,\n"
 " додайте `/' в кінці назви)"
 
-#: src/folderview.c:2014
+#: src/folderview.c:2038
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Введіть нову назву для `%s':"
 
-#: src/folderview.c:2015
+#: src/folderview.c:2039
 msgid "Rename folder"
 msgstr "Перейменувати папку"
 
-#: src/folderview.c:2106
+#: src/folderview.c:2130
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Не вдалось перенести папку `%s'."
 
-#: src/folderview.c:2169
+#: src/folderview.c:2193
 #, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2374,20 +2379,20 @@ msgstr ""
 "\n"
 "Справді бажаєте видалити?"
 
-#: src/folderview.c:2198
+#: src/folderview.c:2222
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Не вдалось видалити папку `%s'."
 
-#: src/folderview.c:2232
+#: src/folderview.c:2256
 msgid "Empty trash"
 msgstr "Спорожнити кошик"
 
-#: src/folderview.c:2233
+#: src/folderview.c:2257
 msgid "Delete all messages in the trash folder?"
 msgstr "Видалити всі листи з кошика?"
 
-#: src/folderview.c:2269
+#: src/folderview.c:2293
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2396,34 +2401,34 @@ msgstr ""
 "Справді видалити скриньку `%s' ?\n"
 "(Листи НЕ видаляються з диска)"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2295
 msgid "Remove mailbox"
 msgstr "Видалити скриньку"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Справді видалити обліковий запис IMAP4 `%s'?"
 
-#: src/folderview.c:2318
+#: src/folderview.c:2342
 msgid "Delete IMAP4 account"
 msgstr "Видалити обліковий запис IMAP4"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2484
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Дійсно видалити конференцію `%s'?"
 
-#: src/folderview.c:2461
+#: src/folderview.c:2485
 msgid "Delete newsgroup"
 msgstr "Видалити конференцію"
 
-#: src/folderview.c:2508
+#: src/folderview.c:2532
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Дійсно видалити обліковий запис конференції `%s'?"
 
-#: src/folderview.c:2509
+#: src/folderview.c:2533
 msgid "Delete news account"
 msgstr "Видалити обліковий запис конференції"
 
@@ -2439,7 +2444,7 @@ msgstr "Тема:"
 msgid "Creating header view...\n"
 msgstr "Створюємо область перегляду заголовка...\n"
 
-#: src/headerview.c:180 src/summaryview.c:1944
+#: src/headerview.c:180 src/summaryview.c:1946
 msgid "(No From)"
 msgstr "(Без відправника)"
 
@@ -3485,8 +3490,8 @@ msgstr "Створюємо головне вікно...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача розміщення кольору %d\n"
 
-#: src/mainwindow.c:1074 src/summaryview.c:2086 src/summaryview.c:2171
-#: src/summaryview.c:3500 src/summaryview.c:3621 src/summaryview.c:3946
+#: src/mainwindow.c:1074 src/summaryview.c:2088 src/summaryview.c:2173
+#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -3750,25 +3755,25 @@ msgstr "Вкладення"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:667 src/summaryview.c:3044
+#: src/messageview.c:667 src/summaryview.c:3046
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не вдалось зберегти файл `%s'."
 
-#: src/messageview.c:726 src/summaryview.c:3067
+#: src/messageview.c:726 src/summaryview.c:3069
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:727 src/summaryview.c:3068
+#: src/messageview.c:727 src/summaryview.c:3070
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Вивчення команди:"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3070
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
 msgid "Print"
 msgstr "Друк"
 
-#: src/messageview.c:738 src/summaryview.c:3079
+#: src/messageview.c:738 src/summaryview.c:3081
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5572,17 +5577,17 @@ msgid "Attachment"
 msgstr "Вкладення"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4450
+#: src/prefs_summary_column.c:73 src/summaryview.c:4481
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4453
+#: src/prefs_summary_column.c:74 src/summaryview.c:4484
 msgid "From"
 msgstr "Від"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4455
+#: src/prefs_summary_column.c:75 src/summaryview.c:4486
 msgid "Date"
 msgstr "Дата"
 
@@ -6120,213 +6125,218 @@ msgstr "Залишились деякі позначки. Опрацювати?"
 msgid "Scanning folder (%s)..."
 msgstr "Перечитуємо папку (%s)..."
 
-#: src/summaryview.c:1185
+#: src/summaryview.c:1187
 msgid "_Search again"
 msgstr "Шукати знову"
 
-#: src/summaryview.c:1206 src/summaryview.c:1215
+#: src/summaryview.c:1208 src/summaryview.c:1217
 msgid "No more unread messages"
 msgstr "Більше немає непрочитаних листів"
 
-#: src/summaryview.c:1207
+#: src/summaryview.c:1209
 msgid "No unread message found. Search from the end?"
 msgstr "Не знайдено непрочитаних листів. Шукати з кінця?"
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1211
 msgid "No unread messages."
 msgstr "Немає непрочитаних листів"
 
-#: src/summaryview.c:1216
+#: src/summaryview.c:1218
 msgid "No unread message found. Go to next folder?"
 msgstr "Не знайдено непрочитаних листів. Перейти до наступної папки?"
 
-#: src/summaryview.c:1224 src/summaryview.c:1233
+#: src/summaryview.c:1226 src/summaryview.c:1235
 msgid "No more new messages"
 msgstr "Більше немає нових листів"
 
-#: src/summaryview.c:1225
+#: src/summaryview.c:1227
 msgid "No new message found. Search from the end?"
 msgstr "Не знайдено нових листів. Шукати з кінця?"
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1229
 msgid "No new messages."
 msgstr "Немає нових листів"
 
-#: src/summaryview.c:1234
+#: src/summaryview.c:1236
 msgid "No new message found. Go to next folder?"
 msgstr "Не знайдено нових листів. Перейти до наступної папки?"
 
-#: src/summaryview.c:1242 src/summaryview.c:1251
+#: src/summaryview.c:1244 src/summaryview.c:1253
 msgid "No more marked messages"
 msgstr "Більше немає позначених листів"
 
-#: src/summaryview.c:1243
+#: src/summaryview.c:1245
 msgid "No marked message found. Search from the end?"
 msgstr "Не знайдено позначених листів. Шукати з кінця?"
 
-#: src/summaryview.c:1245 src/summaryview.c:1254
+#: src/summaryview.c:1247 src/summaryview.c:1256
 msgid "No marked messages."
 msgstr "Немає позначених листів."
 
-#: src/summaryview.c:1252
+#: src/summaryview.c:1254
 msgid "No marked message found. Search from the beginning?"
 msgstr "Не знайдено позначених листів. Шукати з початку?"
 
-#: src/summaryview.c:1260 src/summaryview.c:1269
+#: src/summaryview.c:1262 src/summaryview.c:1271
 msgid "No more labeled messages"
 msgstr "Більше немає виділених листів"
 
-#: src/summaryview.c:1261
+#: src/summaryview.c:1263
 msgid "No labeled message found. Search from the end?"
 msgstr "Не знайдено виділених листів. Шукати з кінця?"
 
-#: src/summaryview.c:1263 src/summaryview.c:1272
+#: src/summaryview.c:1265 src/summaryview.c:1274
 msgid "No labeled messages."
 msgstr "Немає виділених листів"
 
-#: src/summaryview.c:1270
+#: src/summaryview.c:1272
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Не знайдено виділених листів. Шукати з початку?"
 
-#: src/summaryview.c:1569
+#: src/summaryview.c:1571
 msgid "Attracting messages by subject..."
 msgstr "Групування листів за темами..."
 
-#: src/summaryview.c:1728
+#: src/summaryview.c:1730
 #, c-format
 msgid "%d deleted"
 msgstr "%d видалено"
 
-#: src/summaryview.c:1732
+#: src/summaryview.c:1734
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d переміщено"
 
-#: src/summaryview.c:1733 src/summaryview.c:1740
+#: src/summaryview.c:1735 src/summaryview.c:1742
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1738
+#: src/summaryview.c:1740
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d скопійовано"
 
-#: src/summaryview.c:1755
+#: src/summaryview.c:1757
 msgid " item(s) selected"
 msgstr " записів обрано"
 
-#: src/summaryview.c:1765
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d нових, %d непрочитаних, %d загалом (%s)"
 
-#: src/summaryview.c:1771
+#: src/summaryview.c:1773
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d нових, %d непрочитаних, %d загалом"
 
-#: src/summaryview.c:1807
+#: src/summaryview.c:1809
 msgid "Sorting summary..."
 msgstr "Сортуємо список..."
 
-#: src/summaryview.c:1881
+#: src/summaryview.c:1883
 msgid "(No Date)"
 msgstr "(Без дати)"
 
-#: src/summaryview.c:2023
+#: src/summaryview.c:2025
 msgid "\tSetting summary from message data..."
 msgstr "\tФормуємо список з даних листів..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2027
 msgid "Setting summary from message data..."
 msgstr "Формуємо список з даних листів..."
 
-#: src/summaryview.c:2150
+#: src/summaryview.c:2152
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Пишемо кеш списка (%s)..."
 
-#: src/summaryview.c:2459
+#: src/summaryview.c:2461
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Лист %d позначено\n"
 
-#: src/summaryview.c:2507
+#: src/summaryview.c:2509
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Лист %d позначено як прочитаний\n"
 
-#: src/summaryview.c:2591
+#: src/summaryview.c:2593
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Лист %d позначено як непрочитаний\n"
 
-#: src/summaryview.c:2650
+#: src/summaryview.c:2652
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Лист %s/%d призначено до видалення\n"
 
-#: src/summaryview.c:2668
+#: src/summaryview.c:2670
 msgid "Delete message(s)"
 msgstr "Видалити лист(и)"
 
-#: src/summaryview.c:2669
+#: src/summaryview.c:2671
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Справді видалити лист(и) з кошика?"
 
-#: src/summaryview.c:2734
+#: src/summaryview.c:2736
 msgid "Deleting duplicated messages..."
 msgstr "Видаляємо повторювані листи..."
 
-#: src/summaryview.c:2771
+#: src/summaryview.c:2773
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "З листа %s/%d знято позначки\n"
 
-#: src/summaryview.c:2827
+#: src/summaryview.c:2829
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Лист %d призначено до переміщення в %s\n"
 
-#: src/summaryview.c:2844
+#: src/summaryview.c:2846
 msgid "Destination is same as current folder."
 msgstr "Призначення збігається з поточною папкою."
 
-#: src/summaryview.c:2898
+#: src/summaryview.c:2900
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Лист %d призначено до копіювання в %s\n"
 
-#: src/summaryview.c:2915
+#: src/summaryview.c:2917
 msgid "Destination for copy is same as current folder."
 msgstr "Пропонується копіювання з папки в неї ж."
 
-#: src/summaryview.c:3114
+#: src/summaryview.c:3116
 msgid "Error occurred while processing messages."
 msgstr "При обробці пошти трапилась помилка."
 
-#: src/summaryview.c:3415 src/summaryview.c:3416
+#: src/summaryview.c:3417 src/summaryview.c:3418
 msgid "Building threads..."
 msgstr "Будуємо нитки обговорення..."
 
-#: src/summaryview.c:3558 src/summaryview.c:3559
+#: src/summaryview.c:3560 src/summaryview.c:3561
 msgid "Unthreading..."
 msgstr "Скасування ниток обговорення..."
 
-#: src/summaryview.c:3922
+#: src/summaryview.c:3840 src/summaryview.c:3896
+#, fuzzy, c-format
+msgid "Filtering (%d / %d)..."
+msgstr "Фільтрування..."
+
+#: src/summaryview.c:3945
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:3923
+#: src/summaryview.c:3946
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:3953
+#: src/summaryview.c:3982
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."
 
-#: src/summaryview.c:4459
+#: src/summaryview.c:4490
 msgid "No."
 msgstr "Номер"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-30 15:21+0900\n"
+"POT-Creation-Date: 2005-12-01 16:03+0900\n"
 "PO-Revision-Date: 2004-01-22 17:46+0100\n"
 "Last-Translator: Andrej Kacian <andrej@kacian.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -967,10 +967,10 @@ msgid "/New _Folder"
 msgstr "/Nový _Priečinok"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:238 src/folderview.c:240 src/folderview.c:244
-#: src/folderview.c:255 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:263 src/folderview.c:273 src/folderview.c:275
-#: src/folderview.c:278 src/summaryview.c:398 src/summaryview.c:402
+#: src/folderview.c:242 src/folderview.c:244 src/folderview.c:249
+#: src/folderview.c:260 src/folderview.c:262 src/folderview.c:264
+#: src/folderview.c:269 src/folderview.c:279 src/folderview.c:281
+#: src/folderview.c:285 src/summaryview.c:398 src/summaryview.c:402
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:430 src/summaryview.c:436
 msgid "/---"
@@ -1047,7 +1047,7 @@ msgstr ""
 "Naozaj chcete zmazať priečinok A SÚČASNE všetky adresy v %s ?\n"
 "Ak zmažete len priečinok, adresy z neho sa presunú do nadradeného priečinku."
 
-#: src/addressbook.c:1674 src/folderview.c:2172
+#: src/addressbook.c:1674 src/folderview.c:2196
 msgid "Delete folder"
 msgstr "Odstrániť priečinok"
 
@@ -1182,7 +1182,7 @@ msgid "Group"
 msgstr "Skupina"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:348 src/prefs_account_dialog.c:1663
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Priečinok"
 
@@ -1257,7 +1257,7 @@ msgstr "Hnedá"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4310
+#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
 msgid "None"
 msgstr "Žiadna"
 
@@ -1269,8 +1269,8 @@ msgstr "/_Pridať..."
 msgid "/_Remove"
 msgstr "/_Odstrániť"
 
-#: src/compose.c:509 src/folderview.c:246 src/folderview.c:265
-#: src/folderview.c:280
+#: src/compose.c:509 src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:287
 msgid "/_Properties..."
 msgstr "/_Vlastnosti..."
 
@@ -1614,7 +1614,7 @@ msgstr "Správa: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Nedá sa získať časť viacdielnej správy."
 
-#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1941
+#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1943
 msgid "(No Subject)"
 msgstr "(bez predmetu)"
 
@@ -1736,7 +1736,7 @@ msgstr "MIME typ"
 
 #. S_COL_DATE
 #: src/compose.c:4200 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4457
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
 msgid "Size"
 msgstr "Veľkosť"
 
@@ -2052,12 +2052,12 @@ msgstr "Upraviť priečinok"
 msgid "Input the new name of folder:"
 msgstr "Zadajte nový názov priečinka:"
 
-#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1951
-#: src/folderview.c:1957
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1975
+#: src/folderview.c:1981
 msgid "New folder"
 msgstr "Nový priečinok"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1958
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1982
 msgid "Input the name of new folder:"
 msgstr "Zadajte názov nového priečinka:"
 
@@ -2226,163 +2226,168 @@ msgstr "Spoolovací priečinok"
 msgid "Select folder"
 msgstr "Zvoľte priečinok"
 
-#: src/foldersel.c:359 src/folderview.c:1096 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Prijaté"
 
-#: src/foldersel.c:363 src/folderview.c:1102 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Odoslané"
 
-#: src/foldersel.c:367 src/folderview.c:1108 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Na odoslanie"
 
-#: src/foldersel.c:371 src/folderview.c:1114 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Odpadkový kôš"
 
-#: src/foldersel.c:375 src/folderview.c:1120 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Koncepty"
 
-#: src/foldersel.c:542 src/folderview.c:1955 src/folderview.c:1959
+#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
 msgid "NewFolder"
 msgstr "Nový Priečinok"
 
-#: src/foldersel.c:550 src/folderview.c:1967 src/folderview.c:2023
+#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "Názov priečinka nemôže obsahovať `%c'."
 
-#: src/foldersel.c:560 src/folderview.c:1977 src/folderview.c:2030
+#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Priečinok `%s' už existuje."
 
-#: src/foldersel.c:568 src/folderview.c:1984
+#: src/foldersel.c:568 src/folderview.c:2008
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Nedá sa vytvoriť priečinok `%s'."
 
-#: src/folderview.c:234 src/folderview.c:251
+#: src/folderview.c:238 src/folderview.c:256
 msgid "/Create _new folder..."
 msgstr "/Vytvoriť _nový priečinok..."
 
-#: src/folderview.c:235 src/folderview.c:252
+#: src/folderview.c:239 src/folderview.c:257
 msgid "/_Rename folder..."
 msgstr "/_Premenovať priečinok..."
 
-#: src/folderview.c:236 src/folderview.c:253
+#: src/folderview.c:240 src/folderview.c:258
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/_Premenovať priečinok..."
 
-#: src/folderview.c:237 src/folderview.c:254
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Delete folder"
 msgstr "/_Zmazať priečinok"
 
-#: src/folderview.c:239 src/folderview.c:256
+#: src/folderview.c:243 src/folderview.c:261
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Vyprázdniť kôš"
 
-#: src/folderview.c:241 src/folderview.c:260 src/folderview.c:276
+#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:282
 msgid "/_Check for new messages"
 msgstr "/P_rijať nové správy"
 
-#: src/folderview.c:243 src/folderview.c:262
+#: src/folderview.c:247 src/folderview.c:267
 msgid "/R_ebuild folder tree"
 msgstr "/O_bnoviť štruktúru priečinkov"
 
-#: src/folderview.c:245 src/folderview.c:264 src/folderview.c:279
+#: src/folderview.c:248 src/folderview.c:268 src/folderview.c:284
+#, fuzzy
+msgid "/_Update summary"
+msgstr "/_Zobraziť/_Aktualizovať zoznam"
+
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 msgid "/_Search messages..."
 msgstr "/Vy_hľadať v správach..."
 
-#: src/folderview.c:258 src/folderview.c:274
+#: src/folderview.c:263 src/folderview.c:280
 #, fuzzy
 msgid "/Down_load"
 msgstr "Žiadne neprečítané správy."
 
-#: src/folderview.c:270
+#: src/folderview.c:276
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Prih_lásiť sa do diskusnej skupiny"
 
-#: src/folderview.c:272
+#: src/folderview.c:278
 msgid "/_Remove newsgroup"
 msgstr "/Odstrániť _diskusnú skupinu"
 
-#: src/folderview.c:301
+#: src/folderview.c:308
 msgid "Creating folder view...\n"
 msgstr "Vytváram náhľad pre priečinok...\n"
 
-#: src/folderview.c:379
+#: src/folderview.c:386
 msgid "New"
 msgstr "Nový"
 
 #. S_COL_MARK
-#: src/folderview.c:393 src/prefs_summary_column.c:71
+#: src/folderview.c:400 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Neprečítané"
 
-#: src/folderview.c:407
+#: src/folderview.c:414
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:529
+#: src/folderview.c:536
 msgid "Setting folder info...\n"
 msgstr "Nastavujem informácie o priečinku...\n"
 
-#: src/folderview.c:530
+#: src/folderview.c:537
 msgid "Setting folder info..."
 msgstr "Nastavujem informácie o priečinku..."
 
-#: src/folderview.c:830 src/mainwindow.c:3319 src/setup.c:80
+#: src/folderview.c:837 src/mainwindow.c:3319 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Prehľadávam priečinok %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3324 src/setup.c:85
+#: src/folderview.c:841 src/mainwindow.c:3324 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Prehľadávam priečinok %s ..."
 
-#: src/folderview.c:876
+#: src/folderview.c:883
 msgid "Rebuild folder tree"
 msgstr "Obnoviť strom priečinkov"
 
-#: src/folderview.c:877
+#: src/folderview.c:884
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Strom priečinkov bude obnovený. Pokračovať?"
 
-#: src/folderview.c:886
+#: src/folderview.c:893
 msgid "Rebuilding folder tree..."
 msgstr "Obnovujem strom priečinku..."
 
-#: src/folderview.c:893
+#: src/folderview.c:900
 msgid "Rebuilding of the folder tree failed."
 msgstr "Obnova stromu priečinku sa nepodarila."
 
-#: src/folderview.c:963
+#: src/folderview.c:970
 msgid "Checking for new messages in all folders..."
 msgstr "Kontrolujem nové spráby vo všetkých priečinkoch..."
 
-#: src/folderview.c:1712
+#: src/folderview.c:1725
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Priečinok %s je zvolený\n"
 
-#: src/folderview.c:1867
+#: src/folderview.c:1880
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Odosielam správu..."
 
-#: src/folderview.c:1902
+#: src/folderview.c:1915
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Pri odosielaní správy na %s nastala chyba."
 
-#: src/folderview.c:1952
+#: src/folderview.c:1976
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2392,21 +2397,21 @@ msgstr ""
 "(Ak chcete vytvoriť priečinok s ďalšími podzložkami,\n"
 "pridajte na koniec názvu '/')"
 
-#: src/folderview.c:2014
+#: src/folderview.c:2038
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Zadajte nový názov pre `%s':"
 
-#: src/folderview.c:2015
+#: src/folderview.c:2039
 msgid "Rename folder"
 msgstr "Premenovať priečinok"
 
-#: src/folderview.c:2106
+#: src/folderview.c:2130
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Priečinok '%s' sa nedá odstrániť."
 
-#: src/folderview.c:2169
+#: src/folderview.c:2193
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2417,21 +2422,21 @@ msgstr ""
 "Všetky priečinky a správy v `%s' budú odstránené.\n"
 "Naozaj pokračovať?"
 
-#: src/folderview.c:2198
+#: src/folderview.c:2222
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Priečinok '%s' sa nedá odstrániť."
 
-#: src/folderview.c:2232
+#: src/folderview.c:2256
 msgid "Empty trash"
 msgstr "Vyprázdniť kôš"
 
-#: src/folderview.c:2233
+#: src/folderview.c:2257
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Zmazať všetky správy v koši?"
 
-#: src/folderview.c:2269
+#: src/folderview.c:2293
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2440,34 +2445,34 @@ msgstr ""
 "Naozaj chcete odstrániť schránku '%s' ?\n"
 "(Správy NEBUDÚ odstránené z disku)"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2295
 msgid "Remove mailbox"
 msgstr "Odstrániť schránku"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Naozaj chcete odstrániť IMAP4 konto '%s'?"
 
-#: src/folderview.c:2318
+#: src/folderview.c:2342
 msgid "Delete IMAP4 account"
 msgstr "Odstrániť IMAP4 konto"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2484
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Naozaj chcete odstrániť diskusnú skupinu '%s'?"
 
-#: src/folderview.c:2461
+#: src/folderview.c:2485
 msgid "Delete newsgroup"
 msgstr "Odstrániť diskusnú skupinu"
 
-#: src/folderview.c:2508
+#: src/folderview.c:2532
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Naozaj chcede odstrániť news konto '%s'?"
 
-#: src/folderview.c:2509
+#: src/folderview.c:2533
 msgid "Delete news account"
 msgstr "Odstrániť news konto"
 
@@ -2483,7 +2488,7 @@ msgstr "Predmet:"
 msgid "Creating header view...\n"
 msgstr "Vytváram náhľad hlavičky...\n"
 
-#: src/headerview.c:180 src/summaryview.c:1944
+#: src/headerview.c:180 src/summaryview.c:1946
 msgid "(No From)"
 msgstr "(nie je známy odosielateľ)"
 
@@ -3547,8 +3552,8 @@ msgstr "Vytváram hlavné okno...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Hlavné Okno: alokácia farieb %d bola neúspešná\n"
 
-#: src/mainwindow.c:1074 src/summaryview.c:2086 src/summaryview.c:2171
-#: src/summaryview.c:3500 src/summaryview.c:3621 src/summaryview.c:3946
+#: src/mainwindow.c:1074 src/summaryview.c:2088 src/summaryview.c:2173
+#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
 msgid "done.\n"
 msgstr "hotovo.\n"
 
@@ -3819,25 +3824,25 @@ msgstr "Prílohy"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:667 src/summaryview.c:3044
+#: src/messageview.c:667 src/summaryview.c:3046
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Nemôžem uložiť súbor '%s'."
 
-#: src/messageview.c:726 src/summaryview.c:3067
+#: src/messageview.c:726 src/summaryview.c:3069
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:727 src/summaryview.c:3068
+#: src/messageview.c:727 src/summaryview.c:3070
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Vykonať"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3070
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
 msgid "Print"
 msgstr "Tlačiť"
 
-#: src/messageview.c:738 src/summaryview.c:3079
+#: src/messageview.c:738 src/summaryview.c:3081
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5700,17 +5705,17 @@ msgid "Attachment"
 msgstr "Príloha"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4450
+#: src/prefs_summary_column.c:73 src/summaryview.c:4481
 msgid "Subject"
 msgstr "Predmet"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4453
+#: src/prefs_summary_column.c:74 src/summaryview.c:4484
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4455
+#: src/prefs_summary_column.c:75 src/summaryview.c:4486
 msgid "Date"
 msgstr "Dátum"
 
@@ -6251,216 +6256,221 @@ msgstr "Ostali nejaké značky. Spracovať?"
 msgid "Scanning folder (%s)..."
 msgstr "Prehľadávam priečinok (%s)..."
 
-#: src/summaryview.c:1185
+#: src/summaryview.c:1187
 #, fuzzy
 msgid "_Search again"
 msgstr "Hľadať znova"
 
-#: src/summaryview.c:1206 src/summaryview.c:1215
+#: src/summaryview.c:1208 src/summaryview.c:1217
 msgid "No more unread messages"
 msgstr "Žiadne neprečítané správy"
 
-#: src/summaryview.c:1207
+#: src/summaryview.c:1209
 msgid "No unread message found. Search from the end?"
 msgstr "Neboli nájdené žiadne neprečítané správy. Hľadať od konca?"
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1211
 msgid "No unread messages."
 msgstr "Žiadne neprečítané správy."
 
-#: src/summaryview.c:1216
+#: src/summaryview.c:1218
 msgid "No unread message found. Go to next folder?"
 msgstr ""
 "Neboli nájdené žiadne neprečítané správy. Prejsť do ďalšieho priečinku?"
 
-#: src/summaryview.c:1224 src/summaryview.c:1233
+#: src/summaryview.c:1226 src/summaryview.c:1235
 msgid "No more new messages"
 msgstr "Žiadne nové správy"
 
-#: src/summaryview.c:1225
+#: src/summaryview.c:1227
 msgid "No new message found. Search from the end?"
 msgstr "Neboli nájdené žiadne nové správy. Hľadať od konca?"
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1229
 msgid "No new messages."
 msgstr "Žiadne nové správy."
 
-#: src/summaryview.c:1234
+#: src/summaryview.c:1236
 msgid "No new message found. Go to next folder?"
 msgstr "Neboli nájdené žiadne nové správy. Prejsť do ďalšieho priečinku?"
 
-#: src/summaryview.c:1242 src/summaryview.c:1251
+#: src/summaryview.c:1244 src/summaryview.c:1253
 msgid "No more marked messages"
 msgstr "Žiadne označené správy"
 
-#: src/summaryview.c:1243
+#: src/summaryview.c:1245
 msgid "No marked message found. Search from the end?"
 msgstr "Neboli nájdené žiadné označené správy. Hľadať od konca?"
 
-#: src/summaryview.c:1245 src/summaryview.c:1254
+#: src/summaryview.c:1247 src/summaryview.c:1256
 msgid "No marked messages."
 msgstr "Žiadne označené správy."
 
-#: src/summaryview.c:1252
+#: src/summaryview.c:1254
 msgid "No marked message found. Search from the beginning?"
 msgstr "Neboli nájdené žiadné označené správy. Hľadať od začiatku?"
 
-#: src/summaryview.c:1260 src/summaryview.c:1269
+#: src/summaryview.c:1262 src/summaryview.c:1271
 msgid "No more labeled messages"
 msgstr "Žiadne zafarbené správy"
 
-#: src/summaryview.c:1261
+#: src/summaryview.c:1263
 msgid "No labeled message found. Search from the end?"
 msgstr "Neboli nájdené žiadne zafarbené správy. Hľadať od konca?"
 
-#: src/summaryview.c:1263 src/summaryview.c:1272
+#: src/summaryview.c:1265 src/summaryview.c:1274
 msgid "No labeled messages."
 msgstr "Žiadne zafarbené správy."
 
-#: src/summaryview.c:1270
+#: src/summaryview.c:1272
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Neboli nájdené žiadne zafarbené správy. Hľadať od začiatku?"
 
-#: src/summaryview.c:1569
+#: src/summaryview.c:1571
 msgid "Attracting messages by subject..."
 msgstr "Zoskupujem správu podľa názvu..."
 
-#: src/summaryview.c:1728
+#: src/summaryview.c:1730
 #, c-format
 msgid "%d deleted"
 msgstr "%d zmazaných"
 
-#: src/summaryview.c:1732
+#: src/summaryview.c:1734
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d presunutých"
 
-#: src/summaryview.c:1733 src/summaryview.c:1740
+#: src/summaryview.c:1735 src/summaryview.c:1742
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1738
+#: src/summaryview.c:1740
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d skopírovaných"
 
-#: src/summaryview.c:1755
+#: src/summaryview.c:1757
 msgid " item(s) selected"
 msgstr " položiek zvolených"
 
-#: src/summaryview.c:1765
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d novýcvh, %d neprečítaných, %d celkovo (%s)"
 
-#: src/summaryview.c:1771
+#: src/summaryview.c:1773
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d novýcvh, %d neprečítaných, %d celkovo"
 
-#: src/summaryview.c:1807
+#: src/summaryview.c:1809
 msgid "Sorting summary..."
 msgstr "Triedim zoznam správ..."
 
-#: src/summaryview.c:1881
+#: src/summaryview.c:1883
 msgid "(No Date)"
 msgstr "(bez dátumu)"
 
-#: src/summaryview.c:2023
+#: src/summaryview.c:2025
 msgid "\tSetting summary from message data..."
 msgstr "\tVytváram zoznam správ..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2027
 msgid "Setting summary from message data..."
 msgstr "Vytváram zoznam správ..."
 
-#: src/summaryview.c:2150
+#: src/summaryview.c:2152
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Zapisujem stav zoznamu do medzipamäte (%s)..."
 
-#: src/summaryview.c:2459
+#: src/summaryview.c:2461
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Správa %d je označená\n"
 
-#: src/summaryview.c:2507
+#: src/summaryview.c:2509
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Správa %d je označená ako čítaná\n"
 
-#: src/summaryview.c:2591
+#: src/summaryview.c:2593
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Správa %d je označená ako neprečítaná\n"
 
-#: src/summaryview.c:2650
+#: src/summaryview.c:2652
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Správa %s/%d je určená na zmazanie\n"
 
-#: src/summaryview.c:2668
+#: src/summaryview.c:2670
 msgid "Delete message(s)"
 msgstr "Zmazať správy"
 
-#: src/summaryview.c:2669
+#: src/summaryview.c:2671
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Naozaj chcete zmazať správy z koša?"
 
-#: src/summaryview.c:2734
+#: src/summaryview.c:2736
 msgid "Deleting duplicated messages..."
 msgstr "Mažem duplikátne správy..."
 
-#: src/summaryview.c:2771
+#: src/summaryview.c:2773
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Správa %s/%d je odznačená\n"
 
-#: src/summaryview.c:2827
+#: src/summaryview.c:2829
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Správa %d je určená k presunutiu do %s\n"
 
-#: src/summaryview.c:2844
+#: src/summaryview.c:2846
 msgid "Destination is same as current folder."
 msgstr "Cieľ je zhodný s aktuálnym priečinkom."
 
-#: src/summaryview.c:2898
+#: src/summaryview.c:2900
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Správa %d je určená ku kopírovaniu do %s\n"
 
-#: src/summaryview.c:2915
+#: src/summaryview.c:2917
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Cieľ kopírovania je zhodný s aktuálnym priečinkom."
 
-#: src/summaryview.c:3114
+#: src/summaryview.c:3116
 msgid "Error occurred while processing messages."
 msgstr "Pri spracovávaní pošty sa vyskytla chyba."
 
-#: src/summaryview.c:3415 src/summaryview.c:3416
+#: src/summaryview.c:3417 src/summaryview.c:3418
 msgid "Building threads..."
 msgstr "Vytváram vlákna..."
 
-#: src/summaryview.c:3558 src/summaryview.c:3559
+#: src/summaryview.c:3560 src/summaryview.c:3561
 msgid "Unthreading..."
 msgstr "Odstraňujem štruktúru vlákien..."
 
-#: src/summaryview.c:3922
+#: src/summaryview.c:3840 src/summaryview.c:3896
+#, fuzzy, c-format
+msgid "Filtering (%d / %d)..."
+msgstr "Filtrujem..."
+
+#: src/summaryview.c:3945
 msgid "filtering..."
 msgstr "filtrujem..."
 
-#: src/summaryview.c:3923
+#: src/summaryview.c:3946
 msgid "Filtering..."
 msgstr "Filtrujem..."
 
-#: src/summaryview.c:3953
+#: src/summaryview.c:3982
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr ""
 
-#: src/summaryview.c:4459
+#: src/summaryview.c:4490
 msgid "No."
 msgstr "Č."
 

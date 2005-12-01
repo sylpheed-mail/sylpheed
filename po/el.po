@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-30 15:21+0900\n"
+"POT-Creation-Date: 2005-12-01 16:03+0900\n"
 "PO-Revision-Date: 2001-10-08\n"
 "Last-Translator: Michalis Kabrianis <Michalis@bigfoot.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -978,10 +978,10 @@ msgid "/New _Folder"
 msgstr "/Νέος κατάλογος"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:238 src/folderview.c:240 src/folderview.c:244
-#: src/folderview.c:255 src/folderview.c:257 src/folderview.c:259
-#: src/folderview.c:263 src/folderview.c:273 src/folderview.c:275
-#: src/folderview.c:278 src/summaryview.c:398 src/summaryview.c:402
+#: src/folderview.c:242 src/folderview.c:244 src/folderview.c:249
+#: src/folderview.c:260 src/folderview.c:262 src/folderview.c:264
+#: src/folderview.c:269 src/folderview.c:279 src/folderview.c:281
+#: src/folderview.c:285 src/summaryview.c:398 src/summaryview.c:402
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:430 src/summaryview.c:436
 msgid "/---"
@@ -1059,7 +1059,7 @@ msgstr ""
 "Αν διαγράφετε τον κατάλογο μόνο, οι διευθύνσεις θα μετακινηθούν στον από "
 "πάνω κατάλογο"
 
-#: src/addressbook.c:1674 src/folderview.c:2172
+#: src/addressbook.c:1674 src/folderview.c:2196
 msgid "Delete folder"
 msgstr "Διαγραφή καταλόγου"
 
@@ -1186,7 +1186,7 @@ msgid "Group"
 msgstr "ΝέαΟμάδα"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:348 src/prefs_account_dialog.c:1663
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1663
 msgid "Folder"
 msgstr "Κατάλογος"
 
@@ -1263,7 +1263,7 @@ msgstr "Καφέ"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4310
+#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
 msgid "None"
 msgstr "Τέλος"
 
@@ -1275,8 +1275,8 @@ msgstr "/Προσθήκη..."
 msgid "/_Remove"
 msgstr "/Διαγραφή"
 
-#: src/compose.c:509 src/folderview.c:246 src/folderview.c:265
-#: src/folderview.c:280
+#: src/compose.c:509 src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:287
 #, fuzzy
 msgid "/_Properties..."
 msgstr "/Ιδιότητες..."
@@ -1633,7 +1633,7 @@ msgstr "Μήνυμα: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Δεν μπορώ να λάβω το τμήμα του πολυτμηματικού μηνύματος"
 
-#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1941
+#: src/compose.c:2441 src/headerview.c:195 src/summaryview.c:1943
 msgid "(No Subject)"
 msgstr "(Χωρίς Θέμα)"
 
@@ -1753,7 +1753,7 @@ msgstr "τύπος MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4200 src/mimeview.c:197 src/prefs_filter_edit.c:585
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4457
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -2078,12 +2078,12 @@ msgstr "Επεξεργασία καταλόγου"
 msgid "Input the new name of folder:"
 msgstr "Εισάγετε το νέο όνομα του καταλόγου:"
 
-#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1951
-#: src/folderview.c:1957
+#: src/editgroup.c:524 src/foldersel.c:540 src/folderview.c:1975
+#: src/folderview.c:1981
 msgid "New folder"
 msgstr "Νέος κατάλογος"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1958
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:1982
 msgid "Input the name of new folder:"
 msgstr "Εισάγετε το όνομα του νέου καταλόγου:"
 
@@ -2256,173 +2256,178 @@ msgstr "Επιλογή καταλόγου"
 msgid "Select folder"
 msgstr "Επιλογή καταλόγου"
 
-#: src/foldersel.c:359 src/folderview.c:1096 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Εισερχόμενα"
 
-#: src/foldersel.c:363 src/folderview.c:1102 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
 #, fuzzy
 msgid "Sent"
 msgstr "Αποστολή"
 
-#: src/foldersel.c:367 src/folderview.c:1108 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Ουρά"
 
-#: src/foldersel.c:371 src/folderview.c:1114 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Διαγραμμένα"
 
-#: src/foldersel.c:375 src/folderview.c:1120 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
 #, fuzzy
 msgid "Drafts"
 msgstr "Πρόχειρα"
 
-#: src/foldersel.c:542 src/folderview.c:1955 src/folderview.c:1959
+#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
 msgid "NewFolder"
 msgstr "NewFolder"
 
-#: src/foldersel.c:550 src/folderview.c:1967 src/folderview.c:2023
+#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "το `%c' δεν μπορεί να συμπεριλαμβάνεται σε όνομα καταλόγου."
 
-#: src/foldersel.c:560 src/folderview.c:1977 src/folderview.c:2030
+#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Ο κατάλογος `%s' υπάρχει ήδη."
 
-#: src/foldersel.c:568 src/folderview.c:1984
+#: src/foldersel.c:568 src/folderview.c:2008
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "δεν μπορώ να δημιουργήσω τον κατάλογο `%s'."
 
-#: src/folderview.c:234 src/folderview.c:251
+#: src/folderview.c:238 src/folderview.c:256
 msgid "/Create _new folder..."
 msgstr "/Δημιουργία νέου καταλόγου..."
 
-#: src/folderview.c:235 src/folderview.c:252
+#: src/folderview.c:239 src/folderview.c:257
 msgid "/_Rename folder..."
 msgstr "/Μετονομασία καταλόγου..."
 
-#: src/folderview.c:236 src/folderview.c:253
+#: src/folderview.c:240 src/folderview.c:258
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/Μετονομασία καταλόγου..."
 
-#: src/folderview.c:237 src/folderview.c:254
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Delete folder"
 msgstr "/Διαγραφή καταλόγου"
 
-#: src/folderview.c:239 src/folderview.c:256
+#: src/folderview.c:243 src/folderview.c:261
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Άδειασμα διαγραμμένων"
 
-#: src/folderview.c:241 src/folderview.c:260 src/folderview.c:276
+#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:282
 #, fuzzy
 msgid "/_Check for new messages"
 msgstr "Σύνθεση νέου μηνύματος"
 
-#: src/folderview.c:243 src/folderview.c:262
+#: src/folderview.c:247 src/folderview.c:267
 #, fuzzy
 msgid "/R_ebuild folder tree"
 msgstr "/Ενημέρωση δομής καταλόγων"
 
-#: src/folderview.c:245 src/folderview.c:264 src/folderview.c:279
+#: src/folderview.c:248 src/folderview.c:268 src/folderview.c:284
+#, fuzzy
+msgid "/_Update summary"
+msgstr "/Απεικόνιση/Κωδικοσύνολο"
+
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 #, fuzzy
 msgid "/_Search messages..."
 msgstr "\tΑναζήτηση στα απροσπέλαστα μηνύματα... "
 
-#: src/folderview.c:258 src/folderview.c:274
+#: src/folderview.c:263 src/folderview.c:280
 #, fuzzy
 msgid "/Down_load"
 msgstr "Δεν υπάρχουν αδιάβαστα μηνύματα"
 
-#: src/folderview.c:270
+#: src/folderview.c:276
 #, fuzzy
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Συνδρομή σε newsgroup..."
 
-#: src/folderview.c:272
+#: src/folderview.c:278
 msgid "/_Remove newsgroup"
 msgstr "/Διαγραφή newsgroup"
 
-#: src/folderview.c:301
+#: src/folderview.c:308
 msgid "Creating folder view...\n"
 msgstr "Δημιουργώ την απεικόνιση καταλόγων...\n"
 
-#: src/folderview.c:379
+#: src/folderview.c:386
 msgid "New"
 msgstr "Νέα"
 
 #. S_COL_MARK
-#: src/folderview.c:393 src/prefs_summary_column.c:71
+#: src/folderview.c:400 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Αδιάβαστα"
 
-#: src/folderview.c:407
+#: src/folderview.c:414
 msgid "#"
 msgstr "αρ."
 
-#: src/folderview.c:529
+#: src/folderview.c:536
 msgid "Setting folder info...\n"
 msgstr "Θέτω τις πληροφορίες καταλόγων...\n"
 
-#: src/folderview.c:530
+#: src/folderview.c:537
 msgid "Setting folder info..."
 msgstr "Θέτω τις πληροφορίες καταλόγων..."
 
-#: src/folderview.c:830 src/mainwindow.c:3319 src/setup.c:80
+#: src/folderview.c:837 src/mainwindow.c:3319 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Σάρωση καταλόγων %s%c%s ..."
 
-#: src/folderview.c:834 src/mainwindow.c:3324 src/setup.c:85
+#: src/folderview.c:841 src/mainwindow.c:3324 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Σάρωση καταλόγου %s ..."
 
-#: src/folderview.c:876
+#: src/folderview.c:883
 #, fuzzy
 msgid "Rebuild folder tree"
 msgstr "/Ενημέρωση δομής καταλόγων"
 
-#: src/folderview.c:877
+#: src/folderview.c:884
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr ""
 
-#: src/folderview.c:886
+#: src/folderview.c:893
 #, fuzzy
 msgid "Rebuilding folder tree..."
 msgstr "Ενημέρωση της δομής καταλόγων..."
 
-#: src/folderview.c:893
+#: src/folderview.c:900
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "Ενημέρωση της δομής καταλόγων..."
 
-#: src/folderview.c:963
+#: src/folderview.c:970
 #, fuzzy
 msgid "Checking for new messages in all folders..."
 msgstr "Σύνθεση νέου μηνύματος"
 
-#: src/folderview.c:1712
+#: src/folderview.c:1725
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Ο κατάλογος %s είναι επιλεγμένος\n"
 
-#: src/folderview.c:1867
+#: src/folderview.c:1880
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Αποστολή μηνύματος"
 
-#: src/folderview.c:1902
+#: src/folderview.c:1915
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Συνέβη σφάλμα κατά την αποστολή του μηνύματος σε %s ."
 
-#: src/folderview.c:1952
+#: src/folderview.c:1976
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2432,21 +2437,21 @@ msgstr ""
 "(αν θέλετε να δημιουργήσετε ένα κατάλογο για να βάλετε υποκαταλόγους\n"
 " προσθέστε το `/' στο τέλος του ονόματος)"
 
-#: src/folderview.c:2014
+#: src/folderview.c:2038
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Δώστε νέο όνομα για `%s':"
 
-#: src/folderview.c:2015
+#: src/folderview.c:2039
 msgid "Rename folder"
 msgstr "Μετονομασία καταλόγου"
 
-#: src/folderview.c:2106
+#: src/folderview.c:2130
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/folderview.c:2169
+#: src/folderview.c:2193
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2457,21 +2462,21 @@ msgstr ""
 "Όλοι οι κατάλογοι και τα μηνύματα κάτω από το `%s' θα διαγραφούν.\n"
 "Θέλετε πράγματι να διαγραφούν;"
 
-#: src/folderview.c:2198
+#: src/folderview.c:2222
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/folderview.c:2232
+#: src/folderview.c:2256
 msgid "Empty trash"
 msgstr "Άδειασμα διαγραμμένων"
 
-#: src/folderview.c:2233
+#: src/folderview.c:2257
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Να αδειάσω όλα τα διαγραμμένα μηνύματα"
 
-#: src/folderview.c:2269
+#: src/folderview.c:2293
 #, fuzzy, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2480,35 +2485,35 @@ msgstr ""
 "Σίγουρα να διαγραφεί το mailbox `%s' ;\n"
 "(Τα μηνύματα ΔΕΝ σβήνονται από τον δίσκο)"
 
-#: src/folderview.c:2271
+#: src/folderview.c:2295
 #, fuzzy
 msgid "Remove mailbox"
 msgstr "/Διαγραφή mailbox"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Σίγουρα να διαγραφεί ο IMAP4 λογαριασμός `%s';"
 
-#: src/folderview.c:2318
+#: src/folderview.c:2342
 msgid "Delete IMAP4 account"
 msgstr "Διαγραφή λογαριασμού IMAP4"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2484
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Σίγουρα να διαγραφεί το newsgroup `%s';"
 
-#: src/folderview.c:2461
+#: src/folderview.c:2485
 msgid "Delete newsgroup"
 msgstr "Διαγραφή newsgroup"
 
-#: src/folderview.c:2508
+#: src/folderview.c:2532
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Σίγουρα να διαγραφεί ο λογαριασμός news `%s';"
 
-#: src/folderview.c:2509
+#: src/folderview.c:2533
 msgid "Delete news account"
 msgstr "Διαγραφή λογαριασμού news"
 
@@ -2524,7 +2529,7 @@ msgstr "Θέμα:"
 msgid "Creating header view...\n"
 msgstr "Δημιουργώ την απεικόνιση κεφαλίδας...\n"
 
-#: src/headerview.c:180 src/summaryview.c:1944
+#: src/headerview.c:180 src/summaryview.c:1946
 msgid "(No From)"
 msgstr "(Χωρίς αποστολέα)"
 
@@ -3675,8 +3680,8 @@ msgstr "Δημιουργώ το κυρίως παράθυρο...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: η κατανομή χρωμάτων %d απέτυχε\n"
 
-#: src/mainwindow.c:1074 src/summaryview.c:2086 src/summaryview.c:2171
-#: src/summaryview.c:3500 src/summaryview.c:3621 src/summaryview.c:3946
+#: src/mainwindow.c:1074 src/summaryview.c:2088 src/summaryview.c:2173
+#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
 msgid "done.\n"
 msgstr "έγινε.\n"
 
@@ -3958,25 +3963,25 @@ msgstr "Προσάρτηση"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:667 src/summaryview.c:3044
+#: src/messageview.c:667 src/summaryview.c:3046
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/messageview.c:726 src/summaryview.c:3067
+#: src/messageview.c:726 src/summaryview.c:3069
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:727 src/summaryview.c:3068
+#: src/messageview.c:727 src/summaryview.c:3070
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Εκτέλεση"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3070
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: src/messageview.c:738 src/summaryview.c:3079
+#: src/messageview.c:738 src/summaryview.c:3081
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5847,17 +5852,17 @@ msgid "Attachment"
 msgstr "Προσάρτηση"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summaryview.c:4450
+#: src/prefs_summary_column.c:73 src/summaryview.c:4481
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summaryview.c:4453
+#: src/prefs_summary_column.c:74 src/summaryview.c:4484
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summaryview.c:4455
+#: src/prefs_summary_column.c:75 src/summaryview.c:4486
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -6425,222 +6430,227 @@ msgstr "Μερικές σημάνσεις έχουν απομείνει. Να ε
 msgid "Scanning folder (%s)..."
 msgstr "Σάρωση καταλόγου (%s)..."
 
-#: src/summaryview.c:1185
+#: src/summaryview.c:1187
 #, fuzzy
 msgid "_Search again"
 msgstr "Η αναζήτηση απέτυχε"
 
-#: src/summaryview.c:1206 src/summaryview.c:1215
+#: src/summaryview.c:1208 src/summaryview.c:1217
 msgid "No more unread messages"
 msgstr "Δεν υπάρχουν αδιάβαστα μηνύματα"
 
-#: src/summaryview.c:1207
+#: src/summaryview.c:1209
 msgid "No unread message found. Search from the end?"
 msgstr "Δεν βρέθηκαν αδιάβαστα μηνύματα. Να ψάξω από το τέλος;"
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1211
 msgid "No unread messages."
 msgstr "Δεν υπάρχουν αδιάβαστα μηνύματα"
 
-#: src/summaryview.c:1216
+#: src/summaryview.c:1218
 msgid "No unread message found. Go to next folder?"
 msgstr "Δεν βρέθηκαν αδιάβαστα μηνύματα. Να πάω στον επόμενο κατάλογο;"
 
-#: src/summaryview.c:1224 src/summaryview.c:1233
+#: src/summaryview.c:1226 src/summaryview.c:1235
 #, fuzzy
 msgid "No more new messages"
 msgstr "Δεν υπάρχουν αδιάβαστα μηνύματα"
 
-#: src/summaryview.c:1225
+#: src/summaryview.c:1227
 #, fuzzy
 msgid "No new message found. Search from the end?"
 msgstr "Δεν βρέθηκαν αδιάβαστα μηνύματα. Να ψάξω από το τέλος;"
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1229
 #, fuzzy
 msgid "No new messages."
 msgstr "Δεν υπάρχουν αδιάβαστα μηνύματα"
 
-#: src/summaryview.c:1234
+#: src/summaryview.c:1236
 #, fuzzy
 msgid "No new message found. Go to next folder?"
 msgstr "Δεν βρέθηκαν αδιάβαστα μηνύματα. Να πάω στον επόμενο κατάλογο;"
 
-#: src/summaryview.c:1242 src/summaryview.c:1251
+#: src/summaryview.c:1244 src/summaryview.c:1253
 msgid "No more marked messages"
 msgstr "Δεν υπάρχουν άλλα σημειωμένα μηνύματα"
 
-#: src/summaryview.c:1243
+#: src/summaryview.c:1245
 msgid "No marked message found. Search from the end?"
 msgstr "Δεν βρέθηκαν σημειωμένα μηνύματα. Να ψάξω από το τέλος;"
 
-#: src/summaryview.c:1245 src/summaryview.c:1254
+#: src/summaryview.c:1247 src/summaryview.c:1256
 msgid "No marked messages."
 msgstr "Δεν υπάρχουν σημειωμένα μηνύματα."
 
-#: src/summaryview.c:1252
+#: src/summaryview.c:1254
 msgid "No marked message found. Search from the beginning?"
 msgstr "Δεν βρέθηκαν σημειωμένα μηνύματα. Να ψάξω από την αρχή;"
 
-#: src/summaryview.c:1260 src/summaryview.c:1269
+#: src/summaryview.c:1262 src/summaryview.c:1271
 msgid "No more labeled messages"
 msgstr "Δεν υπάρχουν άλλα μηνύματα με ετικέτες"
 
-#: src/summaryview.c:1261
+#: src/summaryview.c:1263
 msgid "No labeled message found. Search from the end?"
 msgstr "Δεν βρέθηκαν μηνύματα με ετικέτες. Να ψάξω από το τέλος;"
 
-#: src/summaryview.c:1263 src/summaryview.c:1272
+#: src/summaryview.c:1265 src/summaryview.c:1274
 msgid "No labeled messages."
 msgstr "Δεν υπάρχουν μηνύματα με ετικέτες."
 
-#: src/summaryview.c:1270
+#: src/summaryview.c:1272
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Δεν βρέθηκαν μηνύματα με ετικέτες. Να ψάξω από την αρχή;"
 
-#: src/summaryview.c:1569
+#: src/summaryview.c:1571
 msgid "Attracting messages by subject..."
 msgstr ""
 
-#: src/summaryview.c:1728
+#: src/summaryview.c:1730
 #, c-format
 msgid "%d deleted"
 msgstr "%d διαγράφηκαν"
 
-#: src/summaryview.c:1732
+#: src/summaryview.c:1734
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d μετακινήθηκαν"
 
-#: src/summaryview.c:1733 src/summaryview.c:1740
+#: src/summaryview.c:1735 src/summaryview.c:1742
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1738
+#: src/summaryview.c:1740
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d αντιγράφηκαν"
 
-#: src/summaryview.c:1755
+#: src/summaryview.c:1757
 msgid " item(s) selected"
 msgstr " μήνυμα(τα) επιλέχθηκε(αν)"
 
-#: src/summaryview.c:1765
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d νέα, %d αδιάβαστα, %d συνολικά (%s)"
 
-#: src/summaryview.c:1771
+#: src/summaryview.c:1773
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d νέα, %d αδιάβαστα, %d συνολικά"
 
-#: src/summaryview.c:1807
+#: src/summaryview.c:1809
 msgid "Sorting summary..."
 msgstr "Περίληψη ταξινόμησης..."
 
-#: src/summaryview.c:1881
+#: src/summaryview.c:1883
 msgid "(No Date)"
 msgstr "(Χωρίς ημερομηνία)"
 
-#: src/summaryview.c:2023
+#: src/summaryview.c:2025
 msgid "\tSetting summary from message data..."
 msgstr "\tΟρισμός περίληψης από τα δεδομένα του μηνύματος..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2027
 msgid "Setting summary from message data..."
 msgstr "Ορισμός περίληψης από τα δεδομένα του μηνύματος..."
 
-#: src/summaryview.c:2150
+#: src/summaryview.c:2152
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr ""
 
-#: src/summaryview.c:2459
+#: src/summaryview.c:2461
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Το μήνυμα %d σημειώθηκε\n"
 
-#: src/summaryview.c:2507
+#: src/summaryview.c:2509
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Το μήνυμα %d σημειώθηκε ως διαβασμένο\n"
 
-#: src/summaryview.c:2591
+#: src/summaryview.c:2593
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Το μήνυμα %d σημειώθηκε ως αδιάβαστο\n"
 
-#: src/summaryview.c:2650
+#: src/summaryview.c:2652
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Το μήνυμα %s/%d έχει οριστεί για διαγραφή\n"
 
-#: src/summaryview.c:2668
+#: src/summaryview.c:2670
 #, fuzzy
 msgid "Delete message(s)"
 msgstr "Διαγραφή μηνύματος"
 
-#: src/summaryview.c:2669
+#: src/summaryview.c:2671
 #, fuzzy
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Θέλετε πράγματι να διαγραφεί αυτή η κεφαλίδα;"
 
-#: src/summaryview.c:2734
+#: src/summaryview.c:2736
 msgid "Deleting duplicated messages..."
 msgstr "Διαγράφω τα διπλά μηνύματα..."
 
-#: src/summaryview.c:2771
+#: src/summaryview.c:2773
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Το μήνυμα %s/%d δεν έχει σημειωθεί\n"
 
-#: src/summaryview.c:2827
+#: src/summaryview.c:2829
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί για μετακίνηση στο %s\n"
 
-#: src/summaryview.c:2844
+#: src/summaryview.c:2846
 msgid "Destination is same as current folder."
 msgstr "Ο προορισμός είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:2898
+#: src/summaryview.c:2900
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί να αντιγραφεί στο %s\n"
 
-#: src/summaryview.c:2915
+#: src/summaryview.c:2917
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Ο προορισμός αντιγραφής είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:3114
+#: src/summaryview.c:3116
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Ένα σφάλμα συνέβη καθώς επεξεργάζομαι το mail."
 
-#: src/summaryview.c:3415 src/summaryview.c:3416
+#: src/summaryview.c:3417 src/summaryview.c:3418
 msgid "Building threads..."
 msgstr "Δημιουργώ τα νήματα..."
 
-#: src/summaryview.c:3558 src/summaryview.c:3559
+#: src/summaryview.c:3560 src/summaryview.c:3561
 msgid "Unthreading..."
 msgstr ""
 
-#: src/summaryview.c:3922
+#: src/summaryview.c:3840 src/summaryview.c:3896
+#, fuzzy, c-format
+msgid "Filtering (%d / %d)..."
+msgstr "Φιλτράρω..."
+
+#: src/summaryview.c:3945
 msgid "filtering..."
 msgstr "φιλτράρω..."
 
-#: src/summaryview.c:3923
+#: src/summaryview.c:3946
 msgid "Filtering..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:3953
+#: src/summaryview.c:3982
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "το μήνυμα %d είναι ήδη στη μνήμη.\n"
 
-#: src/summaryview.c:4459
+#: src/summaryview.c:4490
 msgid "No."
 msgstr "Αρ."
 
