@@ -1276,6 +1276,7 @@ void addrbook_update_address_list( AddressBookFile *book, ItemPerson *person, GL
 				groupEMail = g_list_remove( groupEMail, emailGrp );
 				nodeGrpEM = g_list_next( nodeGrpEM );
 			}
+			group->listEMail = groupEMail;
 
 			/* Move on to next group */
 			nodeGrp = g_list_next( nodeGrp );
@@ -1438,7 +1439,7 @@ void addrbook_update_group_list( AddressBookFile *book, ItemGroup *group, GList 
 	oldData = group->listEMail;
 	group->listEMail = listEMail;
 	mgu_clear_list( oldData );
-	oldData = NULL;
+	g_list_free ( oldData );
 	book->dirtyFlag = TRUE;
 }
 

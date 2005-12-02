@@ -475,6 +475,7 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 	listEMail = addrbook_get_available_email_list( abf, group );
 	edit_group_load_clist( groupeditdlg.clist_avail, listEMail );
 	mgu_clear_list( listEMail );
+	g_list_free( listEMail );
 	listEMail = NULL;
 	gtk_clist_select_row( groupeditdlg.clist_group, 0, 0 );
 	gtk_clist_select_row( groupeditdlg.clist_avail, 0, 0 );
