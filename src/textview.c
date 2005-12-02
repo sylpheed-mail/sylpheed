@@ -667,7 +667,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		else
 			color = "nocheck-signature";
 		gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, buf, -1,
-							 color, NULL);
+							 color, "mimepart",
+							 NULL);
 	} else
 #endif
 	if (mimeinfo->mime_type != MIME_TEXT &&
