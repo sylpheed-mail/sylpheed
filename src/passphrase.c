@@ -48,6 +48,10 @@
 #  include <sys/mman.h>
 #endif
 
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
+
 #include "passphrase.h"
 #include "prefs_common.h"
 #include "manage_window.h"
@@ -181,10 +185,9 @@ passphrase_mbox(const gchar *uid_hint, const gchar *pass_hint, gint prev_bad)
     if (pass_ack) {
         const gchar *entry_text;
         entry_text = gtk_entry_get_text(GTK_ENTRY(pass_entry));
-        if (entry_text) /* Hmmm: Do we really need this? */
-            the_passphrase = g_strdup (entry_text);
+        the_passphrase = g_strdup(entry_text);
     }
-    gtk_widget_destroy (window);
+    gtk_widget_destroy(window);
 
     return the_passphrase;
 }
@@ -270,7 +273,7 @@ static int free_passphrase(gpointer _unused)
 #endif
         g_free(last_pass);
         last_pass = NULL;
-        debug_print("%% passphrase removed");
+        debug_print("%% passphrase removed\n");
     }
     
     return FALSE;
@@ -281,19 +284,33 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
         const char *passphrase_hint, int prev_bad, int fd)
 {
     const char *pass;
+#ifdef G_OS_WIN32
+    HANDLE hd = (HANDLE)fd;
+    DWORD n;
+#endif
 
     if (prefs_common.store_passphrase && last_pass != NULL && !prev_bad) {
+#ifdef G_OS_WIN32
+        WriteFile(hd, last_pass, strlen(last_pass), &n, NULL);
+        WriteFile(hd, "\n", 1, &n, NULL);
+#else
         write(fd, last_pass, strlen(last_pass));
         write(fd, "\n", 1);
+#endif
         return GPG_ERR_NO_ERROR;
     }
     gpgmegtk_set_passphrase_grab (prefs_common.passphrase_grab);
-    debug_print ("%% requesting passphrase for `%s': ", uid_hint);
+    debug_print ("%% requesting passphrase for `%s':\n", uid_hint);
     pass = passphrase_mbox (uid_hint, passphrase_hint, prev_bad);
     gpgmegtk_free_passphrase();
     if (!pass) {
-        debug_print ("%% cancel passphrase entry");
+        debug_print ("%% cancel passphrase entry\n");
+#ifdef G_OS_WIN32
+        WriteFile(hd, "\n", 1, &n, NULL);
+        CloseHandle(hd); /* somehow it will block without this */
+#else
         write(fd, "\n", 1);
+#endif
         return GPG_ERR_CANCELED;
     }
     else {
@@ -301,7 +318,7 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
             last_pass = g_strdup(pass);
 #if HAVE_MLOCK
             if (mlock(last_pass, strlen(last_pass)) == -1)
-                debug_print("%% locking passphrase failed");
+                debug_print("%% locking passphrase failed\n");
 #endif
 
             if (prefs_common.store_passphrase_timeout > 0) {
@@ -309,10 +326,15 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
                                 free_passphrase, NULL);
             }
         }
-        debug_print ("%% sending passphrase");
+        debug_print ("%% sending passphrase\n");
     }
+#ifdef G_OS_WIN32
+    WriteFile(hd, pass, strlen(pass), &n, NULL);
+    WriteFile(hd, "\n", 1, &n, NULL);
+#else
     write(fd, pass, strlen(pass));
     write(fd, "\n", 1);
+#endif
     return GPG_ERR_NO_ERROR;
 }
 
