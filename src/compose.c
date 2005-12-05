@@ -1552,16 +1552,24 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 						  COMPOSE_ENTRY_CC);
 		} else
 			compose_entry_set(compose, 
-				 (compose->replyto && !ignore_replyto)
-				 ? compose->replyto
-				 : msginfo->from ? msginfo->from : "",
-				 COMPOSE_ENTRY_TO);
+					  (compose->replyto && !ignore_replyto)
+					  ? compose->replyto
+					  : msginfo->from ? msginfo->from : "",
+					  COMPOSE_ENTRY_TO);
 	} else {
 		if (ignore_replyto) {
 			compose_entry_set(compose,
 					  msginfo->from ? msginfo->from : "",
 					  COMPOSE_ENTRY_TO);
 		} else {
+			if (to_all) {
+				compose_entry_set
+					(compose, 
+					 (compose->replyto && !ignore_replyto)
+					 ? compose->replyto
+					 : msginfo->from ? msginfo->from : "",
+					 COMPOSE_ENTRY_TO);
+			}
 			compose_entry_set(compose,
 					  compose->followup_to ? compose->followup_to
 					  : compose->newsgroups ? compose->newsgroups
@@ -1593,7 +1601,7 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 		compose_entry_set(compose, "Re: ", COMPOSE_ENTRY_SUBJECT);
 
 	if (!compose->replyto && to_ml && compose->ml_post) return;
-	if (!to_all || compose->account->protocol == A_NNTP) return;
+	if (!to_all) return;
 
 	if (compose->replyto) {
 		Xstrdup_a(replyto, compose->replyto, return);
@@ -1618,12 +1626,14 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 
 	/* remove address on To: and that of current account */
 	for (cur = cc_list; cur != NULL; ) {
+		gchar *addr = (gchar *)cur->data;
 		GSList *next = cur->next;
 
-		if (g_hash_table_lookup(to_table, cur->data) != NULL)
-			cc_list = g_slist_remove(cc_list, cur->data);
-		else
-			g_hash_table_insert(to_table, cur->data, cur);
+		if (g_hash_table_lookup(to_table, addr) != NULL) {
+			cc_list = g_slist_remove(cc_list, addr);
+			g_free(addr);
+		} else
+			g_hash_table_insert(to_table, addr, cur);
 
 		cur = next;
 	}
