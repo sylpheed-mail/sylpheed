@@ -3582,16 +3582,22 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 	gchar *ret = NULL;
 	gchar buf[BUFFSIZE];
 	FILE *fp;
+	FILE *tmp;
+	size_t read_len;
 	GPtrArray *argbuf;
 	gchar *resp_str;
 
 	g_return_val_if_fail(file != NULL, IMAP_ERROR);
 
-	size = get_file_size_as_crlf(file);
 	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
 		return -1;
 	}
+	tmp = canonicalize_file_stream(fp, &size);
+	fclose(fp);
+	if (!tmp)
+		return -1;
+
 	QUOTE_IF_REQUIRED(destfolder_, destfolder);
 	flag_str = imap_get_flag_str(flags);
 	imap_cmd_gen_send(session, "APPEND %s (%s) {%d}",
@@ -3602,30 +3608,31 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 	if (ok != IMAP_SUCCESS || ret[0] != '+' || ret[1] != ' ') {
 		log_warning(_("can't append %s to %s\n"), file, destfolder_);
 		g_free(ret);
-		fclose(fp);
+		fclose(tmp);
 		return IMAP_ERROR;
 	}
 	g_free(ret);
 
 	log_print("IMAP4> %s\n", _("(sending file...)"));
 
-	while (fgets(buf, sizeof(buf), fp) != NULL) {
-		strretchomp(buf);
-		if (sock_puts(SESSION(session)->sock, buf) < 0) {
-			fclose(fp);
+	while ((read_len = fread(buf, 1, sizeof(buf), tmp)) > 0) {
+		if (read_len < sizeof(buf) && ferror(tmp))
+			break;
+		if (sock_write_all(SESSION(session)->sock, buf, read_len) < 0) {
+			fclose(tmp);
 			return -1;
 		}
 	}
 
-	if (ferror(fp)) {
-		FILE_OP_ERROR(file, "fgets");
-		fclose(fp);
+	if (ferror(tmp)) {
+		FILE_OP_ERROR(file, "fread");
+		fclose(tmp);
 		return -1;
 	}
 
 	sock_puts(SESSION(session)->sock, "");
 
-	fclose(fp);
+	fclose(tmp);
 
 	if (new_uid != NULL)
 		*new_uid = 0;

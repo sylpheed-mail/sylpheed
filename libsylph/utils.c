@@ -2665,6 +2665,77 @@ gint canonicalize_file_replace(const gchar *file)
 	return 0;
 }
 
+FILE *canonicalize_file_stream(FILE *src_fp, gint *length)
+{
+	FILE *dest_fp;
+	gchar buf[BUFFSIZE];
+	gint len;
+	gint length_ = 0;
+	gboolean err = FALSE;
+	gboolean last_linebreak = FALSE;
+
+	if ((dest_fp = my_tmpfile()) == NULL)
+		return NULL;
+
+	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
+		gint r = 0;
+
+		len = strlen(buf);
+		if (len == 0) break;
+		last_linebreak = FALSE;
+
+		if (buf[len - 1] != '\n') {
+			last_linebreak = TRUE;
+			r = fputs(buf, dest_fp);
+			length_ += len;
+		} else if (len > 1 && buf[len - 1] == '\n' && buf[len - 2] == '\r') {
+			r = fputs(buf, dest_fp);
+			length_ += len;
+		} else {
+			if (len > 1) {
+				r = fwrite(buf, len - 1, 1, dest_fp);
+				if (r != 1)
+					r = EOF;
+				else
+					length_ += len - 1;
+			}
+			if (r != EOF) {
+				r = fputs("\r\n", dest_fp);
+				length_ += 2;
+			}
+		}
+
+		if (r == EOF) {
+			g_warning("writing to temporary file failed.\n");
+			fclose(dest_fp);
+			return NULL;
+		}
+	}
+
+	if (last_linebreak == TRUE) {
+		if (fputs("\r\n", dest_fp) == EOF)
+			err = TRUE;
+		else
+			length_ += 2;
+	}
+
+	if (ferror(src_fp)) {
+		FILE_OP_ERROR("canonicalize_file_stream", "fgets");
+		err = TRUE;
+	}
+
+	if (err) {
+		fclose(dest_fp);
+		return NULL;
+	}
+
+	if (length)
+		*length = length_;
+
+	rewind(dest_fp);
+	return dest_fp;
+}
+
 gint uncanonicalize_file(const gchar *src, const gchar *dest)
 {
 	FILE *src_fp, *dest_fp;

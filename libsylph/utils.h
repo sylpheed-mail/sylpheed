@@ -415,6 +415,8 @@ gchar *canonicalize_str		(const gchar	*str);
 gint canonicalize_file		(const gchar	*src,
 				 const gchar	*dest);
 gint canonicalize_file_replace	(const gchar	*file);
+FILE *canonicalize_file_stream	(FILE		*fp,
+				 gint		*length);
 gint uncanonicalize_file	(const gchar	*src,
 				 const gchar	*dest);
 gint uncanonicalize_file_replace(const gchar	*file);
