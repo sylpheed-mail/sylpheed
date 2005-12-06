@@ -50,63 +50,6 @@
 #include "alertpanel.h"
 #include "folder.h"
 
-typedef enum
-{
-	PF_COND_HEADER,
-	PF_COND_TO_OR_CC,
-	PF_COND_ANY_HEADER,
-	PF_COND_BODY,
-	PF_COND_CMD_TEST,
-	PF_COND_SIZE,
-	PF_COND_AGE,
-	PF_COND_ACCOUNT,
-	PF_COND_EDIT_HEADER,
-	PF_COND_SEPARATOR,
-	PF_COND_NONE
-} CondMenuType;
-
-typedef enum
-{
-	PF_MATCH_CONTAIN,
-	PF_MATCH_NOT_CONTAIN,
-	PF_MATCH_EQUAL,
-	PF_MATCH_NOT_EQUAL,
-	PF_MATCH_REGEX,
-	PF_MATCH_NOT_REGEX,
-	PF_MATCH_NONE
-} MatchMenuType;
-
-typedef enum
-{
-	PF_SIZE_LARGER,
-	PF_SIZE_SMALLER
-} SizeMatchType;
-
-typedef enum
-{
-	PF_AGE_LONGER,
-	PF_AGE_SHORTER
-} AgeMatchType;
-
-typedef enum
-{
-	PF_ACTION_MOVE,
-	PF_ACTION_COPY,
-	PF_ACTION_NOT_RECEIVE,
-	PF_ACTION_DELETE,
-	PF_ACTION_EXEC,
-	PF_ACTION_EXEC_ASYNC,
-	PF_ACTION_MARK,
-	PF_ACTION_COLOR_LABEL,
-	PF_ACTION_MARK_READ,
-	PF_ACTION_FORWARD,
-	PF_ACTION_FORWARD_AS_ATTACHMENT,
-	PF_ACTION_REDIRECT,
-	PF_ACTION_STOP_EVAL,
-	PF_ACTION_SEPARATOR,
-	PF_ACTION_NONE
-} ActionMenuType;
-
 static struct FilterRuleEditWindow {
 	GtkWidget *window;
 
@@ -140,63 +83,11 @@ static struct FilterEditHeaderListDialog {
 	gboolean ok;
 } edit_header_list_dialog;
 
-typedef struct _CondHBox {
-	GtkWidget *hbox;
-
-	GtkWidget *cond_type_optmenu;
-	GtkWidget *match_type_optmenu;
-	GtkWidget *size_match_optmenu;
-	GtkWidget *age_match_optmenu;
-	GtkWidget *key_entry;
-	GtkWidget *spin_btn;
-	GtkWidget *label;
-
-	GtkWidget *del_btn;
-	GtkWidget *add_btn;
-
-	CondMenuType cur_type;
-	gchar *cur_header_name;
-} CondHBox;
-
-typedef struct _ActionHBox {
-	GtkWidget *hbox;
-
-	GtkWidget *action_type_optmenu;
-	GtkWidget *label;
-	GtkWidget *folder_entry;
-	GtkWidget *cmd_entry;
-	GtkWidget *address_entry;
-	GtkWidget *clabel_optmenu;
-
-	GtkWidget *folder_sel_btn;
-
-	GtkWidget *action_type_menu_items[PF_ACTION_NONE];
-
-	GtkWidget *del_btn;
-	GtkWidget *add_btn;
-} ActionHBox;
-
 static void prefs_filter_edit_create		(void);
 static void prefs_filter_edit_clear		(void);
 static void prefs_filter_edit_rule_to_dialog	(FilterRule	*rule);
 static void prefs_filter_edit_set_header_list	(FilterRule	*rule);
 static void prefs_filter_edit_update_header_list(void);
-
-static CondHBox *prefs_filter_edit_cond_hbox_create	(void);
-static ActionHBox *prefs_filter_edit_action_hbox_create	(void);
-static void prefs_filter_edit_cond_hbox_set		(CondHBox	*hbox,
-							 FilterCond	*cond);
-static void prefs_filter_edit_action_hbox_set		(ActionHBox	*hbox,
-							 FilterAction	*action);
-
-static void prefs_filter_edit_cond_hbox_select	(CondHBox	*hbox,
-						 CondMenuType	 type,
-						 const gchar	*header_name);
-
-static void prefs_filter_edit_set_cond_hbox_widgets	(CondHBox	*hbox,
-							 CondMenuType	 type);
-static void prefs_filter_edit_set_action_hbox_widgets	(ActionHBox	*hbox,
-							 ActionMenuType	 type);
 
 static void prefs_filter_edit_set_action_hbox_menu_sensitive
 						(ActionHBox	*hbox,
@@ -536,7 +427,7 @@ static void prefs_filter_edit_update_header_list(void)
 					     rule_edit_window.rule_hdr_list);
 }
 
-static CondHBox *prefs_filter_edit_cond_hbox_create(void)
+CondHBox *prefs_filter_edit_cond_hbox_create(void)
 {
 	CondHBox *cond_hbox;
 	GtkWidget *hbox;
@@ -684,7 +575,7 @@ static CondHBox *prefs_filter_edit_cond_hbox_create(void)
 	return cond_hbox;
 }
 
-static ActionHBox *prefs_filter_edit_action_hbox_create(void)
+ActionHBox *prefs_filter_edit_action_hbox_create(void)
 {
 	ActionHBox *action_hbox;
 	GtkWidget *hbox;
@@ -824,7 +715,7 @@ static ActionHBox *prefs_filter_edit_action_hbox_create(void)
 	return action_hbox;
 }
 
-static void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
+void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 {
 	GtkOptionMenu *cond_type_optmenu =
 		GTK_OPTION_MENU(hbox->cond_type_optmenu);
@@ -934,8 +825,7 @@ static void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 			(GTK_OPTION_MENU(hbox->age_match_optmenu), age_type);
 }
 
-static void prefs_filter_edit_action_hbox_set(ActionHBox *hbox,
-					      FilterAction *action)
+void prefs_filter_edit_action_hbox_set(ActionHBox *hbox, FilterAction *action)
 {
 	GtkOptionMenu *type_optmenu = GTK_OPTION_MENU(hbox->action_type_optmenu);
 	GtkWidget *menu;
@@ -988,9 +878,8 @@ static void prefs_filter_edit_action_hbox_set(ActionHBox *hbox,
 	prefs_filter_edit_set_action_hbox_widgets(hbox, type);
 }
 
-static void prefs_filter_edit_cond_hbox_select(CondHBox *hbox,
-					       CondMenuType type,
-					       const gchar *header_name)
+void prefs_filter_edit_cond_hbox_select(CondHBox *hbox, CondMenuType type,
+					const gchar *header_name)
 {
 	gint index;
 	GtkOptionMenu *cond_type_optmenu =
@@ -1014,8 +903,7 @@ static void prefs_filter_edit_cond_hbox_select(CondHBox *hbox,
 	gtk_option_menu_set_history(cond_type_optmenu, index);
 }
 
-static void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox,
-						    CondMenuType type)
+void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 {
 	switch (type) {
 	case PF_COND_HEADER:
@@ -1069,8 +957,8 @@ static void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox,
 	}
 }
 
-static void prefs_filter_edit_set_action_hbox_widgets(ActionHBox *hbox,
-						      ActionMenuType type)
+void prefs_filter_edit_set_action_hbox_widgets(ActionHBox *hbox,
+					       ActionMenuType type)
 {
 	GtkOptionMenu *type_optmenu = GTK_OPTION_MENU(hbox->action_type_optmenu);
 	gint index;
