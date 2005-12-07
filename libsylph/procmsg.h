@@ -221,10 +221,16 @@ GSList *procmsg_sort_msg_list		(GSList		*mlist,
 					 FolderSortType	 sort_type);
 gint	procmsg_get_last_num_in_msg_list(GSList		*mlist);
 void	procmsg_msg_list_free		(GSList		*mlist);
+
 void	procmsg_write_cache		(MsgInfo	*msginfo,
 					 FILE		*fp);
 void	procmsg_write_flags		(MsgInfo	*msginfo,
 					 FILE		*fp);
+void	procmsg_write_cache_list	(FolderItem	*item,
+					 GSList		*mlist);
+void	procmsg_write_flags_list	(FolderItem	*item,
+					 GSList		*mlist);
+
 void	procmsg_flush_mark_queue	(FolderItem	*item,
 					 FILE		*fp);
 void	procmsg_add_mark_queue		(FolderItem	*item,
@@ -233,6 +239,7 @@ void	procmsg_add_mark_queue		(FolderItem	*item,
 void	procmsg_add_flags		(FolderItem	*item,
 					 gint		 num,
 					 MsgFlags	 flags);
+
 void	procmsg_get_mark_sum		(FolderItem	*item,
 					 gint		*new,
 					 gint		*unread,
@@ -240,6 +247,7 @@ void	procmsg_get_mark_sum		(FolderItem	*item,
 					 gint		*min,
 					 gint		*max,
 					 gint		 first);
+
 FILE   *procmsg_open_cache_file		(FolderItem	*item,
 					 DataOpenMode	 mode);
 FILE   *procmsg_open_mark_file		(FolderItem	*item,

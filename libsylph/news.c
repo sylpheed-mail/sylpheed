@@ -342,8 +342,18 @@ static GSList *news_get_article_list(Folder *folder, FolderItem *item,
 
 	alist = procmsg_sort_msg_list(alist, item->sort_key, item->sort_type);
 
+	if (item->mark_queue)
+		item->mark_dirty = TRUE;
+
 	debug_print("cache_dirty: %d, mark_dirty: %d\n",
 		    item->cache_dirty, item->mark_dirty);
+
+	if (!item->opened) {
+		if (item->cache_dirty)
+			procmsg_write_cache_list(item, alist);
+		if (item->mark_dirty)
+			procmsg_write_flags_list(item, alist);
+	}
 
 	return alist;
 }

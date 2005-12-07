@@ -489,6 +489,53 @@ void procmsg_write_flags(MsgInfo *msginfo, FILE *fp)
 	WRITE_CACHE_DATA_INT(flags, fp);
 }
 
+void procmsg_write_cache_list(FolderItem *item, GSList *mlist)
+{
+	FILE *fp;
+	GSList *cur;
+
+	g_return_if_fail(item != NULL);
+
+	debug_print("Writing summary cache (%s)\n", item->path);
+
+	fp = procmsg_open_cache_file(item, DATA_WRITE);
+	if (fp == NULL)
+		return;
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		procmsg_write_cache(msginfo, fp);
+	}
+
+	fclose(fp);
+	item->cache_dirty = FALSE;
+}
+
+void procmsg_write_flags_list(FolderItem *item, GSList *mlist)
+{
+	FILE *fp;
+	GSList *cur;
+
+	g_return_if_fail(item != NULL);
+
+	debug_print("Writing summary flags (%s)\n", item->path);
+
+	fp = procmsg_open_mark_file(item, DATA_WRITE);
+	if (fp == NULL)
+		return;
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		procmsg_write_flags(msginfo, fp);
+	}
+
+	if (item->mark_queue)
+		procmsg_flush_mark_queue(item, fp);
+
+	fclose(fp);
+	item->mark_dirty = FALSE;
+}
+
 void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 {
 	MsgInfo *flaginfo;

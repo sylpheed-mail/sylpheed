@@ -1031,8 +1031,10 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 			newlist = imap_get_uncached_messages
 				(session, item, begin, last_uid,
 				 exists - item->total, TRUE);
-			if (newlist)
+			if (newlist) {
 				item->cache_dirty = TRUE;
+				item->mark_dirty = TRUE;
+			}
 			mlist = g_slist_concat(mlist, newlist);
 		}
 	} else {
@@ -1041,6 +1043,7 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 						   TRUE);
 		last_uid = procmsg_get_last_num_in_msg_list(mlist);
 		item->cache_dirty = TRUE;
+		item->mark_dirty = TRUE;
 	}
 
 	item->mtime = uid_validity;
@@ -1049,8 +1052,18 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 
 	item->last_num = last_uid;
 
+	if (item->mark_queue)
+		item->mark_dirty = TRUE;
+
 	debug_print("cache_dirty: %d, mark_dirty: %d\n",
 		    item->cache_dirty, item->mark_dirty);
+
+	if (!item->opened) {
+		if (item->cache_dirty)
+			procmsg_write_cache_list(item, mlist);
+		if (item->mark_dirty)
+			procmsg_write_flags_list(item, mlist);
+	}
 
 catch:
 	return mlist;

@@ -249,11 +249,12 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 		item->cache_dirty = TRUE;
 	}
 
-	item->mtime = cur_mtime;
-
 	procmsg_set_flags(mlist, item);
 
 	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
+
+	if (item->mark_queue)
+		item->mark_dirty = TRUE;
 
 #ifdef MEASURE_TIME
 	g_timer_stop(timer);
@@ -263,6 +264,14 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 #endif
 	debug_print("cache_dirty: %d, mark_dirty: %d\n",
 		    item->cache_dirty, item->mark_dirty);
+
+	if (!item->opened) {
+		item->mtime = cur_mtime;
+		if (item->cache_dirty)
+			procmsg_write_cache_list(item, mlist);
+		if (item->mark_dirty)
+			procmsg_write_flags_list(item, mlist);
+	}
 
 	return mlist;
 }
