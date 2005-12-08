@@ -1046,8 +1046,6 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 		item->mark_dirty = TRUE;
 	}
 
-	item->mtime = uid_validity;
-
 	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
 
 	item->last_num = last_uid;
@@ -1059,6 +1057,7 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 		    item->cache_dirty, item->mark_dirty);
 
 	if (!item->opened) {
+		item->mtime = uid_validity;
 		if (item->cache_dirty)
 			procmsg_write_cache_list(item, mlist);
 		if (item->mark_dirty)
