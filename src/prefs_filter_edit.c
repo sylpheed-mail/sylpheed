@@ -82,8 +82,6 @@ static struct FilterEditHeaderListDialog {
 static void prefs_filter_edit_create		(void);
 static void prefs_filter_edit_clear		(void);
 static void prefs_filter_edit_rule_to_dialog	(FilterRule	*rule);
-static void prefs_filter_edit_set_header_list	(FilterCondEdit	*cond_list,
-						 FilterRule	*rule);
 static void prefs_filter_edit_update_header_list(FilterCondEdit	*cond_list);
 
 static void prefs_filter_edit_set_action_hbox_menu_sensitive
@@ -402,8 +400,8 @@ static void prefs_filter_edit_rule_to_dialog(FilterRule *rule)
 	prefs_filter_edit_add_rule_action(rule);
 }
 
-static void prefs_filter_edit_set_header_list(FilterCondEdit *cond_edit,
-					      FilterRule *rule)
+void prefs_filter_edit_set_header_list(FilterCondEdit *cond_edit,
+				       FilterRule *rule)
 {
 	GSList *list;
 	GSList *rule_hdr_list = NULL;
@@ -1580,6 +1578,194 @@ static void prefs_filter_edit_edit_header_list(FilterCondEdit *cond_edit)
 	edit_header_list_dialog.ok = FALSE;
 }
 
+FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
+						gchar **error_msg)
+{
+	FilterCond *cond = NULL;
+	GtkWidget *cond_type_menuitem;
+	CondMenuType cond_menu_type;
+	MatchMenuType match_menu_type;
+	const gchar *header_name;
+	const gchar *key_str;
+	gint int_value;
+	FilterMatchType match_type = FLT_CONTAIN;
+	FilterMatchFlag match_flag = 0;
+	SizeMatchType size_type;
+	AgeMatchType age_type;
+	gchar *error_msg_ = NULL;
+
+	cond_type_menuitem = gtk_menu_get_active
+		(GTK_MENU(gtk_option_menu_get_menu
+			(GTK_OPTION_MENU(hbox->cond_type_optmenu))));
+	cond_menu_type = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(cond_type_menuitem), MENU_VAL_ID));
+
+	match_menu_type = menu_get_option_menu_active_index
+		(GTK_OPTION_MENU(hbox->match_type_optmenu));
+
+	key_str = gtk_entry_get_text(GTK_ENTRY(hbox->key_entry));
+
+	switch (match_menu_type) {
+	case PF_MATCH_CONTAIN:
+		match_type = FLT_CONTAIN;
+		break;
+	case PF_MATCH_NOT_CONTAIN:
+		match_type = FLT_CONTAIN;
+		match_flag |= FLT_NOT_MATCH;
+		break;
+	case PF_MATCH_EQUAL:
+		match_type = FLT_EQUAL;
+		break;
+	case PF_MATCH_NOT_EQUAL:
+		match_type = FLT_EQUAL;
+		match_flag |= FLT_NOT_MATCH;
+		break;
+	case PF_MATCH_REGEX:
+		match_type = FLT_REGEX;
+		break;
+	case PF_MATCH_NOT_REGEX:
+		match_type = FLT_REGEX;
+		match_flag |= FLT_NOT_MATCH;
+		break;
+	default:
+		break;
+	}
+
+	switch (cond_menu_type) {
+	case PF_COND_HEADER:
+		header_name = g_object_get_data
+			(G_OBJECT(cond_type_menuitem), "header_str");
+		cond = filter_cond_new(FLT_COND_HEADER,
+				       match_type, match_flag,
+				       header_name, key_str);
+		break;
+	case PF_COND_TO_OR_CC:
+		cond = filter_cond_new(FLT_COND_TO_OR_CC, match_type,
+				       match_flag, NULL, key_str);
+		break;
+	case PF_COND_ANY_HEADER:
+		cond = filter_cond_new(FLT_COND_ANY_HEADER, match_type,
+				       match_flag, NULL, key_str);
+		break;
+	case PF_COND_BODY:
+		cond = filter_cond_new(FLT_COND_BODY, match_type,
+				       match_flag, NULL, key_str);
+		break;
+	case PF_COND_CMD_TEST:
+		if (key_str && *key_str)
+			cond = filter_cond_new(FLT_COND_CMD_TEST,
+					       0, 0, NULL, key_str);
+		else
+			error_msg_ = _("Command is not specified.");
+		break;
+	case PF_COND_SIZE:
+		size_type = menu_get_option_menu_active_index
+			 (GTK_OPTION_MENU(hbox->size_match_optmenu));
+		match_flag = size_type == PF_SIZE_LARGER ? 0 : FLT_NOT_MATCH;
+		int_value = gtk_spin_button_get_value_as_int
+			(GTK_SPIN_BUTTON(hbox->spin_btn));
+		cond = filter_cond_new(FLT_COND_SIZE_GREATER,
+				       0, match_flag, NULL, itos(int_value));
+		break;
+	case PF_COND_AGE:
+		age_type = menu_get_option_menu_active_index
+			 (GTK_OPTION_MENU(hbox->age_match_optmenu));
+		match_flag = age_type == PF_AGE_LONGER ? 0 : FLT_NOT_MATCH;
+		int_value = gtk_spin_button_get_value_as_int
+			(GTK_SPIN_BUTTON(hbox->spin_btn));
+		cond = filter_cond_new(FLT_COND_AGE_GREATER,
+				       0, match_flag, NULL, itos(int_value));
+		break;
+	case PF_COND_ACCOUNT:
+	case PF_COND_EDIT_HEADER:
+	default:
+		break;
+	}
+
+	if (error_msg)
+		*error_msg = error_msg_;
+
+	return cond;
+}
+
+FilterAction *prefs_filter_edit_action_hbox_to_action(ActionHBox *hbox,
+						      gchar **error_msg)
+{
+	FilterAction *action = NULL;
+	ActionMenuType action_menu_type;
+	const gchar *str;
+	guint color;
+	gchar *error_msg_ = NULL;
+
+	action_menu_type = prefs_filter_edit_get_action_hbox_type(hbox);
+
+	switch (action_menu_type) {
+	case PF_ACTION_MOVE:
+		str = gtk_entry_get_text(GTK_ENTRY(hbox->folder_entry));
+		if (str && *str)
+			action = filter_action_new(FLT_ACTION_MOVE,
+						   str);
+		else
+			error_msg_ = _("Destination folder is not specified.");
+		break;
+	case PF_ACTION_COPY:
+		str = gtk_entry_get_text(GTK_ENTRY(hbox->folder_entry));
+		if (str && *str)
+			action = filter_action_new(FLT_ACTION_COPY, str);
+		else
+			error_msg_ = _("Destination folder is not specified.");
+		break;
+	case PF_ACTION_NOT_RECEIVE:
+		action = filter_action_new(FLT_ACTION_NOT_RECEIVE, NULL);
+		break;
+	case PF_ACTION_DELETE:
+		action = filter_action_new(FLT_ACTION_DELETE, NULL);
+		break;
+	case PF_ACTION_EXEC:
+		str = gtk_entry_get_text(GTK_ENTRY(hbox->cmd_entry));
+		if (str && *str)
+			action = filter_action_new(FLT_ACTION_EXEC, str);
+		else
+			error_msg_ = _("Command is not specified.");
+		break;
+	case PF_ACTION_EXEC_ASYNC:
+		str = gtk_entry_get_text(GTK_ENTRY(hbox->cmd_entry));
+		if (str && *str)
+			action = filter_action_new(FLT_ACTION_EXEC_ASYNC, str);
+		else
+			error_msg_ = _("Command is not specified.");
+		break;
+	case PF_ACTION_MARK:
+		action = filter_action_new(FLT_ACTION_MARK, NULL);
+		break;
+	case PF_ACTION_COLOR_LABEL:
+		color = colorlabel_get_color_menu_active_item
+			(gtk_option_menu_get_menu
+			 (GTK_OPTION_MENU(hbox->clabel_optmenu)));
+		action = filter_action_new(FLT_ACTION_COLOR_LABEL,
+					   itos(color));
+		break;
+	case PF_ACTION_MARK_READ:
+		action = filter_action_new(FLT_ACTION_MARK_READ, NULL);
+		break;
+	case PF_ACTION_FORWARD:
+	case PF_ACTION_FORWARD_AS_ATTACHMENT:
+	case PF_ACTION_REDIRECT:
+		break;
+	case PF_ACTION_STOP_EVAL:
+		action = filter_action_new(FLT_ACTION_STOP_EVAL, NULL);
+		break;
+	case PF_ACTION_SEPARATOR:
+	default:
+		break;
+	}
+
+	if (error_msg)
+		*error_msg = error_msg_;
+
+	return action;
+}
+
 static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 {
 	FilterRule *rule = NULL;
@@ -1606,111 +1792,9 @@ static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 	for (cur = rule_edit_window.cond_edit.cond_hbox_list; cur != NULL;
 	     cur = cur->next) {
 		CondHBox *hbox = (CondHBox *)cur->data;
-		GtkWidget *cond_type_menuitem;
-		CondMenuType cond_menu_type;
-		MatchMenuType match_menu_type;
-		const gchar *header_name;
-		const gchar *key_str;
-		gint int_value;
-		FilterCond *cond = NULL;
-		FilterMatchType match_type = FLT_CONTAIN;
-		FilterMatchFlag match_flag = 0;
-		SizeMatchType size_type;
-		AgeMatchType age_type;
+		FilterCond *cond;
 
-		cond_type_menuitem = gtk_menu_get_active
-			(GTK_MENU(gtk_option_menu_get_menu
-				(GTK_OPTION_MENU(hbox->cond_type_optmenu))));
-		cond_menu_type = GPOINTER_TO_INT
-			(g_object_get_data
-				(G_OBJECT(cond_type_menuitem), MENU_VAL_ID));
-
-		match_menu_type = menu_get_option_menu_active_index
-			(GTK_OPTION_MENU(hbox->match_type_optmenu));
-
-		key_str = gtk_entry_get_text(GTK_ENTRY(hbox->key_entry));
-
-		switch (match_menu_type) {
-		case PF_MATCH_CONTAIN:
-			match_type = FLT_CONTAIN;
-			break;
-		case PF_MATCH_NOT_CONTAIN:
-			match_type = FLT_CONTAIN;
-			match_flag |= FLT_NOT_MATCH;
-			break;
-		case PF_MATCH_EQUAL:
-			match_type = FLT_EQUAL;
-			break;
-		case PF_MATCH_NOT_EQUAL:
-			match_type = FLT_EQUAL;
-			match_flag |= FLT_NOT_MATCH;
-			break;
-		case PF_MATCH_REGEX:
-			match_type = FLT_REGEX;
-			break;
-		case PF_MATCH_NOT_REGEX:
-			match_type = FLT_REGEX;
-			match_flag |= FLT_NOT_MATCH;
-			break;
-		default:
-			break;
-		}
-
-		switch (cond_menu_type) {
-		case PF_COND_HEADER:
-			header_name = g_object_get_data
-				(G_OBJECT(cond_type_menuitem), "header_str");
-			cond = filter_cond_new(FLT_COND_HEADER,
-					       match_type, match_flag,
-					       header_name, key_str);
-			break;
-		case PF_COND_TO_OR_CC:
-			cond = filter_cond_new(FLT_COND_TO_OR_CC, match_type,
-					       match_flag, NULL, key_str);
-			break;
-		case PF_COND_ANY_HEADER:
-			cond = filter_cond_new(FLT_COND_ANY_HEADER, match_type,
-					       match_flag, NULL, key_str);
-			break;
-		case PF_COND_BODY:
-			cond = filter_cond_new(FLT_COND_BODY, match_type,
-					       match_flag, NULL, key_str);
-			break;
-		case PF_COND_CMD_TEST:
-			if (key_str && *key_str)
-				cond = filter_cond_new(FLT_COND_CMD_TEST,
-						       0, 0, NULL, key_str);
-			else
-				error_msg = _("Command is not specified.");
-			break;
-		case PF_COND_SIZE:
-			size_type = menu_get_option_menu_active_index
-				 (GTK_OPTION_MENU(hbox->size_match_optmenu));
-			match_flag = size_type == PF_SIZE_LARGER
-				? 0 : FLT_NOT_MATCH;
-			int_value = gtk_spin_button_get_value_as_int
-				(GTK_SPIN_BUTTON(hbox->spin_btn));
-			cond = filter_cond_new(FLT_COND_SIZE_GREATER,
-					       0, match_flag, NULL,
-					       itos(int_value));
-			break;
-		case PF_COND_AGE:
-			age_type = menu_get_option_menu_active_index
-				 (GTK_OPTION_MENU(hbox->age_match_optmenu));
-			match_flag = age_type == PF_AGE_LONGER
-				? 0 : FLT_NOT_MATCH;
-			int_value = gtk_spin_button_get_value_as_int
-				(GTK_SPIN_BUTTON(hbox->spin_btn));
-			cond = filter_cond_new(FLT_COND_AGE_GREATER,
-					       0, match_flag, NULL,
-					       itos(int_value));
-			break;
-		case PF_COND_ACCOUNT:
-		case PF_COND_EDIT_HEADER:
-		default:
-			break;
-		}
-
+		cond = prefs_filter_edit_cond_hbox_to_cond(hbox, &error_msg);
 		if (cond)
 			cond_list = g_slist_append(cond_list, cond);
 		else {
@@ -1723,78 +1807,10 @@ static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 	for (cur = rule_edit_window.action_hbox_list; cur != NULL;
 	     cur = cur->next) {
 		ActionHBox *hbox = (ActionHBox *)cur->data;
-		ActionMenuType action_menu_type;
-		const gchar *str;
-		guint color;
-		FilterAction *action = NULL;
+		FilterAction *action;
 
-		action_menu_type = prefs_filter_edit_get_action_hbox_type(hbox);
-
-		switch (action_menu_type) {
-		case PF_ACTION_MOVE:
-			str = gtk_entry_get_text(GTK_ENTRY(hbox->folder_entry));
-			if (str && *str)
-				action = filter_action_new(FLT_ACTION_MOVE,
-							   str);
-			else
-				error_msg = _("Destination folder is not specified.");
-			break;
-		case PF_ACTION_COPY:
-			str = gtk_entry_get_text(GTK_ENTRY(hbox->folder_entry));
-			if (str && *str)
-				action = filter_action_new(FLT_ACTION_COPY,
-							   str);
-			else
-				error_msg = _("Destination folder is not specified.");
-			break;
-		case PF_ACTION_NOT_RECEIVE:
-			action = filter_action_new(FLT_ACTION_NOT_RECEIVE,
-						   NULL);
-			break;
-		case PF_ACTION_DELETE:
-			action = filter_action_new(FLT_ACTION_DELETE, NULL);
-			break;
-		case PF_ACTION_EXEC:
-			str = gtk_entry_get_text(GTK_ENTRY(hbox->cmd_entry));
-			if (str && *str)
-				action = filter_action_new(FLT_ACTION_EXEC,
-							   str);
-			else
-				error_msg = _("Command is not specified.");
-			break;
-		case PF_ACTION_EXEC_ASYNC:
-			str = gtk_entry_get_text(GTK_ENTRY(hbox->cmd_entry));
-			if (str && *str)
-				action = filter_action_new
-					(FLT_ACTION_EXEC_ASYNC, str);
-			else
-				error_msg = _("Command is not specified.");
-			break;
-		case PF_ACTION_MARK:
-			action = filter_action_new(FLT_ACTION_MARK, NULL);
-			break;
-		case PF_ACTION_COLOR_LABEL:
-			color = colorlabel_get_color_menu_active_item
-				(gtk_option_menu_get_menu
-				 (GTK_OPTION_MENU(hbox->clabel_optmenu)));
-			action = filter_action_new(FLT_ACTION_COLOR_LABEL,
-						   itos(color));
-			break;
-		case PF_ACTION_MARK_READ:
-			action = filter_action_new(FLT_ACTION_MARK_READ, NULL);
-			break;
-		case PF_ACTION_FORWARD:
-		case PF_ACTION_FORWARD_AS_ATTACHMENT:
-		case PF_ACTION_REDIRECT:
-			break;
-		case PF_ACTION_STOP_EVAL:
-			action = filter_action_new(FLT_ACTION_STOP_EVAL, NULL);
-			break;
-		case PF_ACTION_SEPARATOR:
-		default:
-			break;
-		}
-
+		action = prefs_filter_edit_action_hbox_to_action(hbox,
+								 &error_msg);
 		if (action)
 			action_list = g_slist_append(action_list, action);
 		else {

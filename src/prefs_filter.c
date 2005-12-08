@@ -86,8 +86,6 @@ static void prefs_filter_set_list_row		(GtkTreeIter	*iter,
 						 FilterRule	*rule,
 						 gboolean	 move_view);
 
-static void prefs_filter_set_header_list	(MsgInfo	*msginfo);
-
 static void prefs_filter_write_user_header_list	(void);
 
 static void prefs_filter_set_list		(void);
@@ -528,7 +526,7 @@ void prefs_filter_set_msg_header_list(MsgInfo *msginfo)
 	}
 }
 
-static void prefs_filter_set_header_list(MsgInfo *msginfo)
+void prefs_filter_set_header_list(MsgInfo *msginfo)
 {
 	GSList *list = NULL;
 	gchar *path;
@@ -563,7 +561,6 @@ static void prefs_filter_set_header_list(MsgInfo *msginfo)
 	g_free(path);
 
 	prefs_filter_set_user_header_list(list);
-
 	prefs_filter_set_msg_header_list(msginfo);
 }
 

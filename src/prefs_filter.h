@@ -36,6 +36,7 @@ GSList *prefs_filter_get_user_header_list	(void);
 
 gchar *prefs_filter_get_msg_header_field	(const gchar	*header_name);
 
+void prefs_filter_set_header_list		(MsgInfo	*msginfo);
 void prefs_filter_set_user_header_list		(GSList		*list);
 void prefs_filter_set_msg_header_list		(MsgInfo	*msginfo);
 

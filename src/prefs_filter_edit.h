@@ -134,6 +134,9 @@ FilterRule *prefs_filter_edit_open	(FilterRule	*rule,
 FilterCondEdit *prefs_filter_edit_cond_edit_create	(void);
 void prefs_filter_edit_clear_cond_edit	(FilterCondEdit	*cond_edit);
 
+void prefs_filter_edit_set_header_list	(FilterCondEdit	*cond_edit,
+					 FilterRule	*rule);
+
 CondHBox *prefs_filter_edit_cond_hbox_create
 					(FilterCondEdit	*cond_edit);
 ActionHBox *prefs_filter_edit_action_hbox_create	(void);
@@ -155,5 +158,8 @@ void prefs_filter_edit_set_action_hbox_widgets	(ActionHBox	*hbox,
 void prefs_filter_edit_insert_cond_hbox		(FilterCondEdit	*cond_edit,
 						 CondHBox	*hbox,
 						 gint		 pos);
+
+FilterCond *prefs_filter_edit_cond_hbox_to_cond	(CondHBox	*hbox,
+						 gchar	       **error_msg);
 
 #endif /* __PREFS_FILTER_EDIT_H__ */
