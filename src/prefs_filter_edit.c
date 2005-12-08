@@ -57,8 +57,7 @@ static struct FilterRuleEditWindow {
 	GtkWidget *bool_op_optmenu;
 
 	GtkWidget *cond_scrolled_win;
-	GtkWidget *cond_vbox;
-	GSList *cond_hbox_list;
+	FilterCondEdit cond_edit;
 
 	GtkWidget *action_scrolled_win;
 	GtkWidget *action_vbox;
@@ -66,9 +65,6 @@ static struct FilterRuleEditWindow {
 
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
-
-	GSList *hdr_list;
-	GSList *rule_hdr_list;
 
 	FilterRule *new_rule;
 	gboolean edit_finished;
@@ -86,8 +82,9 @@ static struct FilterEditHeaderListDialog {
 static void prefs_filter_edit_create		(void);
 static void prefs_filter_edit_clear		(void);
 static void prefs_filter_edit_rule_to_dialog	(FilterRule	*rule);
-static void prefs_filter_edit_set_header_list	(FilterRule	*rule);
-static void prefs_filter_edit_update_header_list(void);
+static void prefs_filter_edit_set_header_list	(FilterCondEdit	*cond_list,
+						 FilterRule	*rule);
+static void prefs_filter_edit_update_header_list(FilterCondEdit	*cond_list);
 
 static void prefs_filter_edit_set_action_hbox_menu_sensitive
 						(ActionHBox	*hbox,
@@ -101,23 +98,25 @@ static void prefs_filter_edit_get_action_hbox_menus_selection
 static ActionMenuType prefs_filter_edit_get_action_hbox_type
 						(ActionHBox	*hbox);
 
-static void prefs_filter_edit_insert_cond_hbox	(CondHBox	*hbox,
-						 gint		 pos);
 static void prefs_filter_edit_insert_action_hbox(ActionHBox	*hbox,
 						 gint		 pos);
-static void prefs_filter_edit_remove_cond_hbox	(CondHBox	*hbox);
+static void prefs_filter_edit_remove_cond_hbox	(FilterCondEdit	*cond_edit,
+						 CondHBox	*hbox);
 static void prefs_filter_edit_remove_action_hbox(ActionHBox	*hbox);
 
-static void prefs_filter_edit_add_rule_cond	(FilterRule	*rule);
+static void prefs_filter_edit_add_rule_cond	(FilterCondEdit	*cond_edit,
+						 FilterRule	*rule);
 static void prefs_filter_edit_add_rule_action	(FilterRule	*rule);
 
 static void prefs_filter_edit_set_cond_header_menu
-						(CondHBox	*hbox);
+						(FilterCondEdit	*cond_edit,
+						 CondHBox	*hbox);
 
 static void prefs_filter_edit_activate_cond_header
-						(const gchar	*header);
+						(FilterCondEdit	*cond_edit,
+						 const gchar	*header);
 
-static void prefs_filter_edit_edit_header_list		(void);
+static void prefs_filter_edit_edit_header_list	(FilterCondEdit	*cond_edit);
 
 static FilterRule *prefs_filter_edit_dialog_to_rule	(void);
 
@@ -164,10 +163,11 @@ FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header)
 
 	manage_window_set_transient(GTK_WINDOW(rule_edit_window.window));
 
-	prefs_filter_edit_set_header_list(rule);
+	prefs_filter_edit_set_header_list(&rule_edit_window.cond_edit, rule);
 	prefs_filter_edit_rule_to_dialog(rule);
 	if (header)
-		prefs_filter_edit_activate_cond_header(header);
+		prefs_filter_edit_activate_cond_header
+			(&rule_edit_window.cond_edit, header);
 	GTK_EVENTS_FLUSH();
 	gtk_widget_show(rule_edit_window.window);
 
@@ -314,7 +314,7 @@ static void prefs_filter_edit_create(void)
 
 	rule_edit_window.bool_op_optmenu = bool_op_optmenu;
 	rule_edit_window.cond_scrolled_win = cond_scrolled_win;
-	rule_edit_window.cond_vbox = cond_vbox;
+	rule_edit_window.cond_edit.cond_vbox = cond_vbox;
 	rule_edit_window.action_scrolled_win = action_scrolled_win;
 	rule_edit_window.action_vbox = action_vbox;
 
@@ -322,23 +322,47 @@ static void prefs_filter_edit_create(void)
 	rule_edit_window.cancel_btn = cancel_btn;
 }
 
+FilterCondEdit *prefs_filter_edit_cond_edit_create(void)
+{
+	FilterCondEdit *cond_edit;
+	GtkWidget *cond_vbox;
+
+	cond_edit = g_new(FilterCondEdit, 1);
+
+	cond_vbox = gtk_vbox_new(FALSE, 2);
+	gtk_widget_show(cond_vbox);
+	gtk_container_set_border_width(GTK_CONTAINER(cond_vbox), 2);
+
+	cond_edit->cond_vbox = cond_vbox;
+	cond_edit->cond_hbox_list = NULL;
+	cond_edit->hdr_list = NULL;
+	cond_edit->rule_hdr_list = NULL;
+
+	return cond_edit;
+}
+
+void prefs_filter_edit_clear_cond_edit(FilterCondEdit *cond_edit)
+{
+	while (cond_edit->cond_hbox_list) {
+		CondHBox *hbox = (CondHBox *)cond_edit->cond_hbox_list->data;
+		prefs_filter_edit_remove_cond_hbox(cond_edit, hbox);
+	}
+
+	g_slist_free(cond_edit->hdr_list);
+	cond_edit->hdr_list = NULL;
+	procheader_header_list_destroy(cond_edit->rule_hdr_list);
+	cond_edit->rule_hdr_list = NULL;
+}
+
 static void prefs_filter_edit_clear(void)
 {
-	while (rule_edit_window.cond_hbox_list) {
-		CondHBox *hbox =
-			(CondHBox *)rule_edit_window.cond_hbox_list->data;
-		prefs_filter_edit_remove_cond_hbox(hbox);
-	}
+	prefs_filter_edit_clear_cond_edit(&rule_edit_window.cond_edit);
+
 	while (rule_edit_window.action_hbox_list) {
 		ActionHBox *hbox =
 			(ActionHBox *)rule_edit_window.action_hbox_list->data;
 		prefs_filter_edit_remove_action_hbox(hbox);
 	}
-
-	g_slist_free(rule_edit_window.hdr_list);
-	rule_edit_window.hdr_list = NULL;
-	procheader_header_list_destroy(rule_edit_window.rule_hdr_list);
-	rule_edit_window.rule_hdr_list = NULL;
 }
 
 static void prefs_filter_edit_rule_to_dialog(FilterRule *rule)
@@ -374,24 +398,25 @@ static void prefs_filter_edit_rule_to_dialog(FilterRule *rule)
 	gtkut_scrolled_window_reset_position
 		(GTK_SCROLLED_WINDOW(rule_edit_window.action_scrolled_win));
 
-	prefs_filter_edit_add_rule_cond(rule);
+	prefs_filter_edit_add_rule_cond(&rule_edit_window.cond_edit, rule);
 	prefs_filter_edit_add_rule_action(rule);
 }
 
-static void prefs_filter_edit_set_header_list(FilterRule *rule)
+static void prefs_filter_edit_set_header_list(FilterCondEdit *cond_edit,
+					      FilterRule *rule)
 {
 	GSList *list;
 	GSList *rule_hdr_list = NULL;
 	GSList *cur;
 	FilterCond *cond;
 
-	g_slist_free(rule_edit_window.hdr_list);
-	rule_edit_window.hdr_list = NULL;
-	procheader_header_list_destroy(rule_edit_window.rule_hdr_list);
-	rule_edit_window.rule_hdr_list = NULL;
+	g_slist_free(cond_edit->hdr_list);
+	cond_edit->hdr_list = NULL;
+	procheader_header_list_destroy(cond_edit->rule_hdr_list);
+	cond_edit->rule_hdr_list = NULL;
 
 	list = prefs_filter_get_header_list();
-	rule_edit_window.hdr_list = list;
+	cond_edit->hdr_list = list;
 
 	if (!rule)
 		return;
@@ -406,28 +431,25 @@ static void prefs_filter_edit_set_header_list(FilterRule *rule)
 				(rule_hdr_list, cond->header_name, NULL);
 	}
 
-	rule_edit_window.rule_hdr_list = rule_hdr_list;
-
-	rule_edit_window.hdr_list =
-		procheader_merge_header_list(list, rule_hdr_list);
+	cond_edit->rule_hdr_list = rule_hdr_list;
+	cond_edit->hdr_list = procheader_merge_header_list(list, rule_hdr_list);
 }
 
-static void prefs_filter_edit_update_header_list(void)
+static void prefs_filter_edit_update_header_list(FilterCondEdit *cond_edit)
 {
 	GSList *list;
 
-	g_slist_free(rule_edit_window.hdr_list);
-	rule_edit_window.hdr_list = NULL;
+	g_slist_free(cond_edit->hdr_list);
+	cond_edit->hdr_list = NULL;
 
 	list = prefs_filter_get_header_list();
-	rule_edit_window.hdr_list = list;
+	cond_edit->hdr_list = list;
 
-	rule_edit_window.hdr_list =
-		procheader_merge_header_list(list,
-					     rule_edit_window.rule_hdr_list);
+	cond_edit->hdr_list =
+		procheader_merge_header_list(list, cond_edit->rule_hdr_list);
 }
 
-CondHBox *prefs_filter_edit_cond_hbox_create(void)
+CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 {
 	CondHBox *cond_hbox;
 	GtkWidget *hbox;
@@ -568,8 +590,9 @@ CondHBox *prefs_filter_edit_cond_hbox_create(void)
 	cond_hbox->add_btn = add_btn;
 	cond_hbox->cur_type = PF_COND_HEADER;
 	cond_hbox->cur_header_name = NULL;
+	cond_hbox->cond_edit = cond_edit;
 
-	prefs_filter_edit_set_cond_header_menu(cond_hbox);
+	prefs_filter_edit_set_cond_header_menu(cond_edit, cond_hbox);
 	gtk_option_menu_set_history(GTK_OPTION_MENU(cond_type_optmenu), 0);
 
 	return cond_hbox;
@@ -791,7 +814,7 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 
 	if (cond_type == PF_COND_HEADER)
 		cond_index = procheader_find_header_list
-			(rule_edit_window.hdr_list, cond->header_name);
+			(hbox->cond_edit->hdr_list, cond->header_name);
 	else
 		cond_index = menu_find_option_menu_index
 			(cond_type_optmenu, GINT_TO_POINTER(cond_type), NULL);
@@ -889,7 +912,7 @@ void prefs_filter_edit_cond_hbox_select(CondHBox *hbox, CondMenuType type,
 	if (type == PF_COND_HEADER) {
 		if (header_name)
 			index = procheader_find_header_list
-				(rule_edit_window.hdr_list, header_name);
+				(hbox->cond_edit->hdr_list, header_name);
 		else
 			index = 0;
 	} else
@@ -1124,28 +1147,30 @@ static ActionMenuType prefs_filter_edit_get_action_hbox_type(ActionHBox *hbox)
 	return type;
 }
 
-static void prefs_filter_edit_insert_cond_hbox(CondHBox *hbox, gint pos)
+void prefs_filter_edit_insert_cond_hbox(FilterCondEdit *cond_edit,
+					CondHBox *hbox, gint pos)
 {
+	g_return_if_fail(cond_edit != NULL);
 	g_return_if_fail(hbox != NULL);
 
-	if (!rule_edit_window.cond_hbox_list) {
+	if (!cond_edit->cond_hbox_list) {
 		gtk_widget_set_sensitive(hbox->del_btn, FALSE);
-	} else if (rule_edit_window.cond_hbox_list &&
-		   !rule_edit_window.cond_hbox_list->next) {
+	} else if (cond_edit->cond_hbox_list &&
+		   !cond_edit->cond_hbox_list->next) {
 		CondHBox *top_hbox =
-			(CondHBox *)rule_edit_window.cond_hbox_list->data;
+			(CondHBox *)cond_edit->cond_hbox_list->data;
 		gtk_widget_set_sensitive(top_hbox->del_btn, TRUE);
 	}
 
-	gtk_box_pack_start(GTK_BOX(rule_edit_window.cond_vbox),
+	gtk_box_pack_start(GTK_BOX(cond_edit->cond_vbox),
 			   hbox->hbox, FALSE, FALSE, 0);
 	if (pos >= 0) {
-		gtk_box_reorder_child(GTK_BOX(rule_edit_window.cond_vbox),
+		gtk_box_reorder_child(GTK_BOX(cond_edit->cond_vbox),
 				      hbox->hbox, pos);
 	}
 
-	rule_edit_window.cond_hbox_list =
-		g_slist_insert(rule_edit_window.cond_hbox_list, hbox, pos);
+	cond_edit->cond_hbox_list =
+		g_slist_insert(cond_edit->cond_hbox_list, hbox, pos);
 }
 
 static void prefs_filter_edit_insert_action_hbox(ActionHBox *hbox, gint pos)
@@ -1172,19 +1197,20 @@ static void prefs_filter_edit_insert_action_hbox(ActionHBox *hbox, gint pos)
 		g_slist_insert(rule_edit_window.action_hbox_list, hbox, pos);
 }
 
-static void prefs_filter_edit_remove_cond_hbox(CondHBox *hbox)
+static void prefs_filter_edit_remove_cond_hbox(FilterCondEdit *cond_edit,
+					       CondHBox *hbox)
 {
+	g_return_if_fail(cond_edit != NULL);
 	g_return_if_fail(hbox != NULL);
-	g_return_if_fail(rule_edit_window.cond_hbox_list != NULL);
+	g_return_if_fail(cond_edit->cond_hbox_list != NULL);
 
-	rule_edit_window.cond_hbox_list =
-		g_slist_remove(rule_edit_window.cond_hbox_list, hbox);
+	cond_edit->cond_hbox_list =
+		g_slist_remove(cond_edit->cond_hbox_list, hbox);
 	gtk_widget_destroy(hbox->hbox);
 	g_free(hbox);
 
-	if (rule_edit_window.cond_hbox_list &&
-	    !rule_edit_window.cond_hbox_list->next) {
-		hbox = (CondHBox *)rule_edit_window.cond_hbox_list->data;
+	if (cond_edit->cond_hbox_list && !cond_edit->cond_hbox_list->next) {
+		hbox = (CondHBox *)cond_edit->cond_hbox_list->data;
 		gtk_widget_set_sensitive(hbox->del_btn, FALSE);
 	}
 }
@@ -1208,25 +1234,26 @@ static void prefs_filter_edit_remove_action_hbox(ActionHBox *hbox)
 	}
 }
 
-static void prefs_filter_edit_add_rule_cond(FilterRule *rule)
+static void prefs_filter_edit_add_rule_cond(FilterCondEdit *cond_edit,
+					    FilterRule *rule)
 {
 	CondHBox *hbox;
 	GSList *cur;
 	FilterCond *cond;
 
 	if (!rule || !rule->cond_list) {
-		hbox = prefs_filter_edit_cond_hbox_create();
+		hbox = prefs_filter_edit_cond_hbox_create(cond_edit);
 		prefs_filter_edit_set_cond_hbox_widgets(hbox, PF_COND_HEADER);
-		prefs_filter_edit_insert_cond_hbox(hbox, -1);
+		prefs_filter_edit_insert_cond_hbox(cond_edit, hbox, -1);
 		return;
 	}
 
 	for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
 		cond = (FilterCond *)cur->data;
 
-		hbox = prefs_filter_edit_cond_hbox_create();
+		hbox = prefs_filter_edit_cond_hbox_create(cond_edit);
 		prefs_filter_edit_cond_hbox_set(hbox, cond);
-		prefs_filter_edit_insert_cond_hbox(hbox, -1);
+		prefs_filter_edit_insert_cond_hbox(cond_edit, hbox, -1);
 	}
 }
 
@@ -1251,7 +1278,8 @@ static void prefs_filter_edit_add_rule_action(FilterRule *rule)
 	}
 }
 
-static void prefs_filter_edit_set_cond_header_menu(CondHBox *hbox)
+static void prefs_filter_edit_set_cond_header_menu(FilterCondEdit *cond_edit,
+						   CondHBox *hbox)
 {
 	GSList *cur;
 	GtkWidget *menu;
@@ -1273,8 +1301,7 @@ static void prefs_filter_edit_set_cond_header_menu(CondHBox *hbox)
 		child = next;
 	}
 
-	for (cur = rule_edit_window.hdr_list; cur != NULL;
-	     cur = cur->next, pos++) {
+	for (cur = cond_edit->hdr_list; cur != NULL; cur = cur->next, pos++) {
 		Header *header = (Header *)cur->data;
 
 		menuitem = gtk_menu_item_new_with_label(header->name);
@@ -1294,7 +1321,8 @@ static void prefs_filter_edit_set_cond_header_menu(CondHBox *hbox)
 			(hbox, hbox->cur_type, hbox->cur_header_name);
 }
 
-static void prefs_filter_edit_activate_cond_header(const gchar *header)
+static void prefs_filter_edit_activate_cond_header(FilterCondEdit *cond_edit,
+						   const gchar *header)
 {
 	gint index;
 	CondHBox *hbox;
@@ -1304,9 +1332,10 @@ static void prefs_filter_edit_activate_cond_header(const gchar *header)
 	gchar *menu_header;
 
 	g_return_if_fail(header != NULL);
-	g_return_if_fail(rule_edit_window.cond_hbox_list != NULL);
+	g_return_if_fail(cond_edit != NULL);
+	g_return_if_fail(cond_edit->cond_hbox_list != NULL);
 
-	hbox = (CondHBox *)rule_edit_window.cond_hbox_list->data;
+	hbox = (CondHBox *)cond_edit->cond_hbox_list->data;
 	menu = gtk_option_menu_get_menu
 		(GTK_OPTION_MENU(hbox->cond_type_optmenu));
 
@@ -1521,7 +1550,7 @@ static GSList *prefs_filter_edit_edit_header_list_dialog_get(void)
 	return list;
 }
 
-static void prefs_filter_edit_edit_header_list(void)
+static void prefs_filter_edit_edit_header_list(FilterCondEdit *cond_edit)
 {
 	GSList *list;
 	GSList *cur;
@@ -1535,11 +1564,11 @@ static void prefs_filter_edit_edit_header_list(void)
 	if (edit_header_list_dialog.ok == TRUE) {
 		list = prefs_filter_edit_edit_header_list_dialog_get();
 		prefs_filter_set_user_header_list(list);
-		prefs_filter_edit_update_header_list();
-		for (cur = rule_edit_window.cond_hbox_list; cur != NULL;
+		prefs_filter_edit_update_header_list(cond_edit);
+		for (cur = cond_edit->cond_hbox_list; cur != NULL;
 		     cur = cur->next) {
 			CondHBox *hbox = (CondHBox *)cur->data;
-			prefs_filter_edit_set_cond_header_menu(hbox);
+			prefs_filter_edit_set_cond_header_menu(cond_edit, hbox);
 		}
 	}
 
@@ -1574,7 +1603,7 @@ static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 	bool_op = GPOINTER_TO_INT
 		(g_object_get_data(G_OBJECT(bool_op_menuitem), MENU_VAL_ID));
 
-	for (cur = rule_edit_window.cond_hbox_list; cur != NULL;
+	for (cur = rule_edit_window.cond_edit.cond_hbox_list; cur != NULL;
 	     cur = cur->next) {
 		CondHBox *hbox = (CondHBox *)cur->data;
 		GtkWidget *cond_type_menuitem;
@@ -1834,13 +1863,14 @@ static void prefs_filter_edit_cancel(void)
 static void prefs_filter_cond_activated_cb(GtkWidget *widget, gpointer data)
 {
 	CondHBox *hbox = (CondHBox *)data;
+	FilterCondEdit *cond_edit = hbox->cond_edit;
 	CondMenuType type;
 
 	type = GPOINTER_TO_INT
 		(g_object_get_data(G_OBJECT(widget), MENU_VAL_ID));
 
 	if (type == PF_COND_EDIT_HEADER) {
-		prefs_filter_edit_edit_header_list();
+		prefs_filter_edit_edit_header_list(cond_edit);
 		prefs_filter_edit_cond_hbox_select
 			(hbox, hbox->cur_type, hbox->cur_header_name);
 	} else {
@@ -1895,23 +1925,24 @@ static void prefs_filter_action_select_dest_cb(GtkWidget *widget, gpointer data)
 static void prefs_filter_cond_del_cb(GtkWidget *widget, gpointer data)
 {
 	CondHBox *hbox = (CondHBox *)data;
+	FilterCondEdit *cond_edit = hbox->cond_edit;
 
-	if (rule_edit_window.cond_hbox_list &&
-	    rule_edit_window.cond_hbox_list->next)
-		prefs_filter_edit_remove_cond_hbox(hbox);
+	if (cond_edit->cond_hbox_list && cond_edit->cond_hbox_list->next)
+		prefs_filter_edit_remove_cond_hbox(cond_edit, hbox);
 }
 
 static void prefs_filter_cond_add_cb(GtkWidget *widget, gpointer data)
 {
 	CondHBox *hbox = (CondHBox *)data;
 	CondHBox *new_hbox;
+	FilterCondEdit *cond_edit = hbox->cond_edit;
 	gint index;
 
-	index = g_slist_index(rule_edit_window.cond_hbox_list, hbox);
+	index = g_slist_index(cond_edit->cond_hbox_list, hbox);
 	g_return_if_fail(index >= 0);
-	new_hbox = prefs_filter_edit_cond_hbox_create();
+	new_hbox = prefs_filter_edit_cond_hbox_create(cond_edit);
 	prefs_filter_edit_set_cond_hbox_widgets(new_hbox, PF_COND_HEADER);
-	prefs_filter_edit_insert_cond_hbox(new_hbox, index + 1);
+	prefs_filter_edit_insert_cond_hbox(cond_edit, new_hbox, index + 1);
 }
 
 static void prefs_filter_action_del_cb(GtkWidget *widget, gpointer data)

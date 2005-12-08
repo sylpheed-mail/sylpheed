@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2005 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,6 +81,14 @@ typedef enum
 	PF_ACTION_NONE
 } ActionMenuType;
 
+typedef struct _FilterCondEdit {
+	GtkWidget *cond_vbox;
+	GSList *cond_hbox_list;
+
+	GSList *hdr_list;
+	GSList *rule_hdr_list;
+} FilterCondEdit;
+
 typedef struct _CondHBox {
 	GtkWidget *hbox;
 
@@ -97,6 +105,8 @@ typedef struct _CondHBox {
 
 	CondMenuType cur_type;
 	gchar *cur_header_name;
+
+	FilterCondEdit *cond_edit;
 } CondHBox;
 
 typedef struct _ActionHBox {
@@ -121,7 +131,11 @@ typedef struct _ActionHBox {
 FilterRule *prefs_filter_edit_open	(FilterRule	*rule,
 					 const gchar	*header);
 
-CondHBox *prefs_filter_edit_cond_hbox_create		(void);
+FilterCondEdit *prefs_filter_edit_cond_edit_create	(void);
+void prefs_filter_edit_clear_cond_edit	(FilterCondEdit	*cond_edit);
+
+CondHBox *prefs_filter_edit_cond_hbox_create
+					(FilterCondEdit	*cond_edit);
 ActionHBox *prefs_filter_edit_action_hbox_create	(void);
 
 void prefs_filter_edit_cond_hbox_set	(CondHBox	*hbox,
@@ -137,5 +151,9 @@ void prefs_filter_edit_set_cond_hbox_widgets	(CondHBox	*hbox,
 						 CondMenuType	 type);
 void prefs_filter_edit_set_action_hbox_widgets	(ActionHBox	*hbox,
 						 ActionMenuType	 type);
+
+void prefs_filter_edit_insert_cond_hbox		(FilterCondEdit	*cond_edit,
+						 CondHBox	*hbox,
+						 gint		 pos);
 
 #endif /* __PREFS_FILTER_EDIT_H__ */
