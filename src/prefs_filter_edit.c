@@ -1579,6 +1579,7 @@ static void prefs_filter_edit_edit_header_list(FilterCondEdit *cond_edit)
 }
 
 FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
+						gboolean case_sens,
 						gchar **error_msg)
 {
 	FilterCond *cond = NULL;
@@ -1630,6 +1631,9 @@ FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
 	default:
 		break;
 	}
+
+	if (case_sens)
+		match_flag |= FLT_CASE_SENS;
 
 	switch (cond_menu_type) {
 	case PF_COND_HEADER:
@@ -1794,7 +1798,8 @@ static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 		CondHBox *hbox = (CondHBox *)cur->data;
 		FilterCond *cond;
 
-		cond = prefs_filter_edit_cond_hbox_to_cond(hbox, &error_msg);
+		cond = prefs_filter_edit_cond_hbox_to_cond(hbox, FALSE,
+							   &error_msg);
 		if (cond)
 			cond_list = g_slist_append(cond_list, cond);
 		else {

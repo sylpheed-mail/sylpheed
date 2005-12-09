@@ -160,6 +160,7 @@ void prefs_filter_edit_insert_cond_hbox		(FilterCondEdit	*cond_edit,
 						 gint		 pos);
 
 FilterCond *prefs_filter_edit_cond_hbox_to_cond	(CondHBox	*hbox,
+						 gboolean	 case_sens,
 						 gchar	       **error_msg);
 
 #endif /* __PREFS_FILTER_EDIT_H__ */
