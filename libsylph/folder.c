@@ -705,14 +705,17 @@ FolderItem *folder_find_item_from_identifier(const gchar *identifier)
 
 	name = p;
 	p = strchr(p, '/');
-	if (!p)
-		return folder_find_item_from_path(identifier);
-	*p = '\0';
-	p++;
+	if (p) {
+		*p = '\0';
+		p++;
+	}
 
 	folder = folder_find_from_name(name, type);
 	if (!folder)
 		return folder_find_item_from_path(identifier);
+
+	if (!p)
+		return FOLDER_ITEM(folder->node->data);
 
 	path = p;
 
