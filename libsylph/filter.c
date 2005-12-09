@@ -440,6 +440,29 @@ static gboolean filter_match_header_cond(FilterCond *cond, GSList *hlist)
 	return matched;
 }
 
+gboolean filter_rule_requires_full_headers(FilterRule *rule)
+{
+	GSList *cur;
+
+	for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
+		FilterCond *cond = (FilterCond *)cur->data;
+		const gchar *name = cond->header_name;
+
+		if (cond->type == FLT_COND_HEADER && name) {
+			if (g_ascii_strcasecmp(name, "Date") != 0 &&
+			    g_ascii_strcasecmp(name, "From") != 0 &&
+			    g_ascii_strcasecmp(name, "To") != 0 &&
+			    g_ascii_strcasecmp(name, "Newsgroups") != 0 &&
+			    g_ascii_strcasecmp(name, "Subject") != 0)
+				return TRUE;
+		} else if (cond->type == FLT_COND_ANY_HEADER ||
+			   cond->type == FLT_COND_TO_OR_CC)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 #define RETURN_IF_TAG_NOT_MATCH(tag_name)			\
 	if (strcmp2(xmlnode->tag->tag, tag_name) != 0) {	\
 		g_warning("tag name != \"" tag_name "\"\n");	\

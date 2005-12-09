@@ -252,6 +252,32 @@ GSList *procheader_get_header_list(FILE *fp)
 	return hlist;
 }
 
+GSList *procheader_get_header_list_from_msginfo(MsgInfo *msginfo)
+{
+	GSList *hlist = NULL;
+
+	g_return_val_if_fail(msginfo != NULL, NULL);
+
+	if (msginfo->subject)
+		hlist = procheader_add_header_list(hlist, "Subject",
+						   msginfo->subject);
+	if (msginfo->from)
+		hlist = procheader_add_header_list(hlist, "From",
+						   msginfo->from);
+	if (msginfo->to)
+		hlist = procheader_add_header_list(hlist, "To", msginfo->to);
+	if (msginfo->cc)
+		hlist = procheader_add_header_list(hlist, "Cc", msginfo->cc);
+	if (msginfo->newsgroups)
+		hlist = procheader_add_header_list(hlist, "Newsgroups",
+						   msginfo->newsgroups);
+	if (msginfo->date)
+		hlist = procheader_add_header_list(hlist, "Date",
+						   msginfo->date);
+
+	return hlist;
+}
+
 GSList *procheader_add_header_list(GSList *hlist, const gchar *header_name,
 				  const gchar *body)
 {

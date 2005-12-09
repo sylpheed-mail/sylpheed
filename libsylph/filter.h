@@ -163,6 +163,8 @@ gboolean filter_match_rule		(FilterRule		*rule,
 					 GSList			*hlist,
 					 FilterInfo		*fltinfo);
 
+gboolean filter_rule_requires_full_headers	(FilterRule	*rule);
+
 /* read / write config */
 GSList *filter_xml_node_to_filter_list	(GNode			*node);
 void filter_read_config			(void);

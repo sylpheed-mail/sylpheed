@@ -52,6 +52,7 @@ gchar *procheader_get_unfolded_line	(gchar		*buf,
 
 GSList *procheader_get_header_list_from_file	(const gchar	*file);
 GSList *procheader_get_header_list		(FILE		*fp);
+GSList *procheader_get_header_list_from_msginfo	(MsgInfo	*msginfo);
 GSList *procheader_add_header_list		(GSList		*hlist,
 						 const gchar	*header_name,
 						 const gchar	*body);
