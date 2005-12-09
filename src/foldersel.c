@@ -209,7 +209,7 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 	if (cancelled || !selected_item)
 		return NULL;
 
-	if (type == FOLDER_SEL_MOVE_FOLDER ||
+	if (type == FOLDER_SEL_ALL || type == FOLDER_SEL_MOVE_FOLDER ||
 	    (selected_item->path && !selected_item->no_select)) {
 		folder_item = selected_item;
 		return folder_item;
@@ -494,7 +494,7 @@ static gboolean foldersel_selected(GtkTreeSelection *selection,
 
 	selected_item = item;
 	if (selected_item &&
-	    (sel_type == FOLDER_SEL_MOVE_FOLDER ||
+	    (sel_type == FOLDER_SEL_ALL || sel_type == FOLDER_SEL_MOVE_FOLDER ||
 	     (selected_item->path && !selected_item->no_select))) {
 		gchar *id;
 		id = folder_item_get_identifier(selected_item);
