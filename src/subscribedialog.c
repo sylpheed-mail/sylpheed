@@ -456,6 +456,7 @@ static gboolean subscribe_create_branch(NewsGroupInfo *ginfo,
 
 static void subscribe_dialog_set_list(const gchar *pattern, gboolean refresh)
 {
+	gchar *pattern_;
 	GSList *cur;
 	GPatternSpec *pspec;
 
@@ -463,11 +464,20 @@ static void subscribe_dialog_set_list(const gchar *pattern, gboolean refresh)
 	locked = TRUE;
 
 	if (!pattern || *pattern == '\0')
-		pattern = "*";
+		pattern_ = g_strdup("*");
+	else if (strchr(pattern, '*') == NULL)
+		pattern_ = g_strconcat("*", pattern, "*", NULL);
+	else
+		pattern_ = g_strdup(pattern);
 
 	if (refresh) {
 		ack = TRUE;
 		subscribe_clear();
+		if (pattern)
+			gtk_entry_set_text(GTK_ENTRY(entry), pattern);
+		gtk_label_set_text(GTK_LABEL(status_label),
+				   _("Getting newsgroup list..."));
+		GTK_EVENTS_FLUSH();
 		recv_set_ui_func(subscribe_recv_func, NULL);
 		group_list = news_get_group_list(news_folder);
 		group_list = g_slist_reverse(group_list);
@@ -475,38 +485,38 @@ static void subscribe_dialog_set_list(const gchar *pattern, gboolean refresh)
 		statusbar_pop_all();
 		if (group_list == NULL && ack == TRUE) {
 			alertpanel_error(_("Can't retrieve newsgroup list."));
+			g_free(pattern_);
 			locked = FALSE;
 			return;
 		}
 	} else {
 		gtk_tree_store_clear(tree_store);
 	}
-	gtk_entry_set_text(GTK_ENTRY(entry), pattern);
 
 	subscribe_hash_init();
 
-	pspec = g_pattern_spec_new(pattern);
+	pspec = g_pattern_spec_new(pattern_);
 
 	for (cur = group_list; cur != NULL ; cur = cur->next) {
 		NewsGroupInfo *ginfo = (NewsGroupInfo *)cur->data;
 		GtkTreeIter iter;
 
+		if (g_slist_find_custom(subscribe_list, ginfo->name,
+					(GCompareFunc)g_ascii_strcasecmp)
+		    != NULL)
+			ginfo->subscribed = TRUE;
+
 		if (g_pattern_match_string(pspec, ginfo->name)) {
-			subscribe_create_branch(ginfo, pattern, &iter);
-			if (g_slist_find_custom
-				(subscribe_list, ginfo->name,
-				 (GCompareFunc)g_ascii_strcasecmp)
-			    != NULL) {
-				ginfo->subscribed = TRUE;
+			subscribe_create_branch(ginfo, pattern_, &iter);
+			if (ginfo->subscribed)
 				gtk_tree_store_set(tree_store, &iter,
 						   SUBSCRIBE_TOGGLE, TRUE, -1);
-			}
 		}
 	}
 
 	g_pattern_spec_free(pspec);
-
 	subscribe_hash_free();
+	g_free(pattern_);
 
 	gtk_label_set_text(GTK_LABEL(status_label), _("Done."));
 
