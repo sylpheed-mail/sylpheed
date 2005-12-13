@@ -189,6 +189,8 @@ static struct Advanced {
 	GtkWidget *sent_folder_entry;
 	GtkWidget *draft_folder_chkbtn;
 	GtkWidget *draft_folder_entry;
+	GtkWidget *queue_folder_chkbtn;
+	GtkWidget *queue_folder_entry;
 	GtkWidget *trash_folder_chkbtn;
 	GtkWidget *trash_folder_entry;
 } advanced;
@@ -369,6 +371,10 @@ static PrefsUIData ui_data[] = {
 	{"set_draft_folder", &advanced.draft_folder_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"draft_folder", &advanced.draft_folder_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"set_queue_folder", &advanced.queue_folder_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"queue_folder", &advanced.queue_folder_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"set_trash_folder", &advanced.trash_folder_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -1570,6 +1576,7 @@ static void prefs_account_advanced_create(void)
 	GtkWidget *imap_frame;
 	GtkWidget *imapdir_label;
 	GtkWidget *imapdir_entry;
+	GtkWidget *desc_label;
 	GtkWidget *folder_frame;
 	GtkWidget *vbox3;
 	GtkWidget *table;
@@ -1577,6 +1584,8 @@ static void prefs_account_advanced_create(void)
 	GtkWidget *sent_folder_entry;
 	GtkWidget *draft_folder_chkbtn;
 	GtkWidget *draft_folder_entry;
+	GtkWidget *queue_folder_chkbtn;
+	GtkWidget *queue_folder_entry;
 	GtkWidget *trash_folder_chkbtn;
 	GtkWidget *trash_folder_entry;
 
@@ -1631,6 +1640,9 @@ static void prefs_account_advanced_create(void)
 	PACK_HBOX (hbox1);
 	PACK_CHECK_BUTTON (hbox1, checkbtn_domain, _("Specify domain name"));
 
+#undef PACK_HBOX
+#undef PACK_PORT_ENTRY
+
 	entry_domain = gtk_entry_new ();
 	gtk_widget_show (entry_domain);
 	gtk_box_pack_start (GTK_BOX (hbox1), entry_domain, TRUE, TRUE, 0);
@@ -1655,8 +1667,9 @@ static void prefs_account_advanced_create(void)
 	gtk_widget_show (imapdir_entry);
 	gtk_box_pack_start (GTK_BOX (hbox1), imapdir_entry, TRUE, TRUE, 0);
 
-#undef PACK_HBOX
-#undef PACK_PORT_ENTRY
+	PACK_SMALL_LABEL
+		(vbox3, desc_label,
+		 _("Only the subfolders of this directory will be displayed."));
 
 	/* special folder setting (maybe these options are redundant) */
 
@@ -1667,7 +1680,7 @@ static void prefs_account_advanced_create(void)
 	gtk_container_add (GTK_CONTAINER (folder_frame), vbox3);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox3), 8);
 
-	table = gtk_table_new (3, 3, FALSE);
+	table = gtk_table_new (4, 3, FALSE);
 	gtk_widget_show (table);
 	gtk_container_add (GTK_CONTAINER (vbox3), table);
 	gtk_table_set_row_spacings (GTK_TABLE (table), VSPACING_NARROW_2);
@@ -1705,8 +1718,10 @@ static void prefs_account_advanced_create(void)
 				sent_folder_chkbtn, sent_folder_entry, 0);
 	SET_CHECK_BTN_AND_ENTRY(_("Put draft messages in"),
 				draft_folder_chkbtn, draft_folder_entry, 1);
+	SET_CHECK_BTN_AND_ENTRY(_("Put queued messages in"),
+				queue_folder_chkbtn, queue_folder_entry, 2);
 	SET_CHECK_BTN_AND_ENTRY(_("Put deleted messages in"),
-				trash_folder_chkbtn, trash_folder_entry, 2);
+				trash_folder_chkbtn, trash_folder_entry, 3);
 
 	advanced.smtpport_chkbtn	= checkbtn_smtpport;
 	advanced.smtpport_entry		= entry_smtpport;
@@ -1729,6 +1744,8 @@ static void prefs_account_advanced_create(void)
 	advanced.sent_folder_entry   = sent_folder_entry;
 	advanced.draft_folder_chkbtn = draft_folder_chkbtn;
 	advanced.draft_folder_entry  = draft_folder_entry;
+	advanced.queue_folder_chkbtn = queue_folder_chkbtn;
+	advanced.queue_folder_entry  = queue_folder_entry;
 	advanced.trash_folder_chkbtn = trash_folder_chkbtn;
 	advanced.trash_folder_entry  = trash_folder_entry;
 }
@@ -1816,9 +1833,18 @@ static void prefs_account_select_folder_cb(GtkWidget *widget, gpointer data)
 
 	item = foldersel_folder_sel(NULL, FOLDER_SEL_COPY, NULL);
 	if (item && item->path) {
+		GtkEntry *entry = GTK_ENTRY(data);
+
+		if (entry == GTK_ENTRY(advanced.queue_folder_entry) &&
+		    item->stype != F_QUEUE) {
+			alertpanel_error
+				(_("Specified folder is not a queue folder."));
+			return;
+		}
+
 		id = folder_item_get_identifier(item);
 		if (id) {
-			gtk_entry_set_text(GTK_ENTRY(data), id);
+			gtk_entry_set_text(entry, id);
 			g_free(id);
 		}
 	}

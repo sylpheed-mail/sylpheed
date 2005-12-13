@@ -118,6 +118,8 @@ static PrefParam param[] = {
 	{"sent_folder", NULL, &tmp_ac_prefs.sent_folder, P_STRING},
 	{"set_draft_folder", "FALSE", &tmp_ac_prefs.set_draft_folder, P_BOOL},
 	{"draft_folder", NULL, &tmp_ac_prefs.draft_folder, P_STRING},
+	{"set_queue_folder", "FALSE", &tmp_ac_prefs.set_queue_folder, P_BOOL},
+	{"queue_folder", NULL, &tmp_ac_prefs.queue_folder, P_STRING},
 	{"set_trash_folder", "FALSE", &tmp_ac_prefs.set_trash_folder, P_BOOL},
 	{"trash_folder", NULL, &tmp_ac_prefs.trash_folder, P_STRING},
 
