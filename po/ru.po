@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-13 18:12+0900\n"
+"POT-Creation-Date: 2005-12-14 15:54+0900\n"
 "PO-Revision-Date: 2004-12-05 17:16+0300\n"
 "Last-Translator: Sergey Vlasov <vsu@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -21,8 +21,8 @@ msgid "Reading all config for each account...\n"
 msgstr "Чтение настроек учетных записей...\n"
 
 #: libsylph/filter.c:894 libsylph/prefs.c:196 libsylph/prefs.c:224
-#: libsylph/prefs.c:269 libsylph/prefs_account.c:213
-#: libsylph/prefs_account.c:227 src/prefs_display_header.c:413
+#: libsylph/prefs.c:269 libsylph/prefs_account.c:215
+#: libsylph/prefs_account.c:229 src/prefs_display_header.c:413
 #: src/prefs_display_header.c:438
 msgid "failed to write configuration to file\n"
 msgstr "ошибка записи настроек в файл\n"
@@ -721,7 +721,7 @@ msgstr ""
 msgid "Name"
 msgstr "Имя"
 
-#: src/account_dialog.c:370 src/prefs_account_dialog.c:652
+#: src/account_dialog.c:370 src/prefs_account_dialog.c:655
 msgid "Protocol"
 msgstr "Протокол"
 
@@ -1049,7 +1049,7 @@ msgstr ""
 "Вы хотите удалить папку \"%s\" и все адреса в ней?\n"
 "Если удалить только папку, адреса будут перемещены в родительскую папку."
 
-#: src/addressbook.c:1674 src/folderview.c:2196
+#: src/addressbook.c:1674 src/folderview.c:2239
 msgid "Delete folder"
 msgstr "Удалить папку"
 
@@ -1183,7 +1183,7 @@ msgid "Group"
 msgstr "Группа"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1676
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1685
 msgid "Folder"
 msgstr "Папка"
 
@@ -1215,7 +1215,7 @@ msgstr "Уведомление"
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: src/alertpanel.c:167 src/inc.c:573
+#: src/alertpanel.c:167 src/inc.c:586
 msgid "Error"
 msgstr "Ошибка"
 
@@ -1733,7 +1733,7 @@ msgstr "Тип MIME"
 msgid "Size"
 msgstr "Размер"
 
-#: src/compose.c:4641 src/mainwindow.c:2254 src/prefs_account_dialog.c:522
+#: src/compose.c:4641 src/mainwindow.c:2254 src/prefs_account_dialog.c:525
 #: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "Отправить"
@@ -1775,7 +1775,7 @@ msgid "Attach file"
 msgstr "Вложить файл"
 
 #. signature
-#: src/compose.c:4690 src/prefs_account_dialog.c:1194
+#: src/compose.c:4690 src/prefs_account_dialog.c:1203
 #: src/prefs_common_dialog.c:954
 msgid "Signature"
 msgstr "Подпись"
@@ -1988,7 +1988,7 @@ msgid " Check File "
 msgstr " Проверить файл "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1205
+#: src/prefs_account_dialog.c:1214
 msgid "File"
 msgstr "Файл"
 
@@ -2044,12 +2044,12 @@ msgstr "Изменить имя папки"
 msgid "Input the new name of folder:"
 msgstr "Введите новое имя папки:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:1975
-#: src/folderview.c:1981
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2018
+#: src/folderview.c:2024
 msgid "New folder"
 msgstr "Новая папка"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:1982
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2025
 msgid "Input the name of new folder:"
 msgstr "Введите имя новой папки:"
 
@@ -2066,7 +2066,7 @@ msgid "Edit JPilot Entry"
 msgstr "Редактирование записи JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534 src/prefs_account_dialog.c:1704
+#: src/importldif.c:534 src/prefs_account_dialog.c:1713
 #: src/prefs_common_dialog.c:1849
 msgid " ... "
 msgstr " ... "
@@ -2131,7 +2131,7 @@ msgstr "Тайм-аут (сек)"
 msgid "Maximum Entries"
 msgstr "Максимальный размер результата"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:518
+#: src/editldap.c:471 src/prefs_account_dialog.c:521
 msgid "Basic"
 msgstr "Основные"
 
@@ -2189,7 +2189,7 @@ msgid "Exporting file:"
 msgstr "Экспортировать в файл:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
-#: src/prefs_account_dialog.c:909
+#: src/prefs_account_dialog.c:914
 msgid " Select... "
 msgstr " Выбор... "
 
@@ -2218,41 +2218,41 @@ msgstr "Выбор папки"
 msgid "Select folder"
 msgstr "Выбор папки"
 
-#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1146 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Входящие"
 
-#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1152 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Отправленные"
 
-#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1158 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Очередь"
 
-#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1164 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Корзина"
 
-#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1170 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Черновики"
 
-#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
+#: src/foldersel.c:542 src/folderview.c:2022 src/folderview.c:2026
 msgid "NewFolder"
 msgstr "НоваяПапка"
 
-#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
+#: src/foldersel.c:550 src/folderview.c:2034 src/folderview.c:2090
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "Символ '%c' не может входить в имя папки."
 
-#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
+#: src/foldersel.c:560 src/folderview.c:2044 src/folderview.c:2097
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Папка '%s' уже существует."
 
-#: src/foldersel.c:568 src/folderview.c:2008
+#: src/foldersel.c:568 src/folderview.c:2051
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Не удалось создать папку '%s'."
@@ -2358,26 +2358,26 @@ msgstr "Перестройка дерева папок..."
 msgid "Rebuilding of the folder tree failed."
 msgstr "Ошибка при перестройке дерева папок."
 
-#: src/folderview.c:970
+#: src/folderview.c:1013
 msgid "Checking for new messages in all folders..."
 msgstr "Проверка новых сообщений во всех папках..."
 
-#: src/folderview.c:1725
+#: src/folderview.c:1768
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Папка %s выбрана\n"
 
-#: src/folderview.c:1880
+#: src/folderview.c:1923
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Загружаются сообщения из %s ..."
 
-#: src/folderview.c:1915
+#: src/folderview.c:1958
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Произошла ошибка при загрузке сообщений из '%s'."
 
-#: src/folderview.c:1976
+#: src/folderview.c:2019
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2387,21 +2387,21 @@ msgstr ""
 "(если вы хотите создать папку для вложенных папок,\n"
 " добавьте '/' в конец имени)"
 
-#: src/folderview.c:2038
+#: src/folderview.c:2081
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Введите новое имя для '%s':"
 
-#: src/folderview.c:2039
+#: src/folderview.c:2082
 msgid "Rename folder"
 msgstr "Переименовать папку"
 
-#: src/folderview.c:2130
+#: src/folderview.c:2173
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Ошибка при удалении папки '%s'."
 
-#: src/folderview.c:2193
+#: src/folderview.c:2236
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2412,21 +2412,21 @@ msgstr ""
 "Все вложенные папки и сообщения из '%s' будут удалены.\n"
 "Вы действительно хотите удалить папку?"
 
-#: src/folderview.c:2222
+#: src/folderview.c:2265
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Ошибка при удалении папки '%s'."
 
-#: src/folderview.c:2256
+#: src/folderview.c:2299
 msgid "Empty trash"
 msgstr "Очистка корзины"
 
-#: src/folderview.c:2257
+#: src/folderview.c:2300
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Удалить все сообщения из корзины?"
 
-#: src/folderview.c:2293
+#: src/folderview.c:2336
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2435,34 +2435,34 @@ msgstr ""
 "Удалить почтовый ящик '%s' ?\n"
 "(Сообщения не будут удалены с диска)"
 
-#: src/folderview.c:2295
+#: src/folderview.c:2338
 msgid "Remove mailbox"
 msgstr "Удалить почтовый ящик"
 
-#: src/folderview.c:2341
+#: src/folderview.c:2384
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Удалить учетную запись IMAP4 '%s'?"
 
-#: src/folderview.c:2342
+#: src/folderview.c:2385
 msgid "Delete IMAP4 account"
 msgstr "Удалить учетную запись IMAP4"
 
-#: src/folderview.c:2484
+#: src/folderview.c:2527
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Удалить группу новостей '%s'?"
 
-#: src/folderview.c:2485
+#: src/folderview.c:2528
 msgid "Delete newsgroup"
 msgstr "Удаление группы новостей"
 
-#: src/folderview.c:2532
+#: src/folderview.c:2575
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Удалить учетную запись новостей '%s'?"
 
-#: src/folderview.c:2533
+#: src/folderview.c:2576
 msgid "Delete news account"
 msgstr "Удалить учетную запись новостей"
 
@@ -2603,143 +2603,143 @@ msgstr "Атрибуты"
 msgid "Finish"
 msgstr "Завершение"
 
-#: src/inc.c:157
+#: src/inc.c:160
 #, fuzzy, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Завершено (новых сообщений: %d)"
 
-#: src/inc.c:161
+#: src/inc.c:164
 #, fuzzy
 msgid "Sylpheed"
 msgstr "Старая Sylpheed"
 
-#: src/inc.c:358
+#: src/inc.c:371
 msgid "Retrieving new messages"
 msgstr "Получение новых сообщений"
 
-#: src/inc.c:401
+#: src/inc.c:414
 msgid "Standby"
 msgstr "Ожидание"
 
-#: src/inc.c:530 src/inc.c:579
+#: src/inc.c:543 src/inc.c:592
 msgid "Cancelled"
 msgstr "Отменена"
 
-#: src/inc.c:541
+#: src/inc.c:554
 msgid "Retrieving"
 msgstr "Получение"
 
-#: src/inc.c:550
+#: src/inc.c:563
 #, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "Выполнено (принято сообщений: %d (%s))"
 
-#: src/inc.c:554
+#: src/inc.c:567
 msgid "Done (no new messages)"
 msgstr "Выполнено (нет новых сообщений)"
 
-#: src/inc.c:560
+#: src/inc.c:573
 msgid "Connection failed"
 msgstr "Ошибка соединения"
 
-#: src/inc.c:563
+#: src/inc.c:576
 msgid "Auth failed"
 msgstr "Неверный пароль"
 
-#: src/inc.c:566
+#: src/inc.c:579
 msgid "Locked"
 msgstr "Занято"
 
-#: src/inc.c:576
+#: src/inc.c:589
 msgid "Timeout"
 msgstr "Нет ответа"
 
-#: src/inc.c:626
+#: src/inc.c:639
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Завершено (новых сообщений: %d)"
 
-#: src/inc.c:629
+#: src/inc.c:642
 msgid "Finished (no new messages)"
 msgstr "Завершено (нет новых сообщений)"
 
-#: src/inc.c:638
+#: src/inc.c:651
 msgid "Some errors occurred while getting mail."
 msgstr "При получении сообщений возникли ошибки."
 
-#: src/inc.c:674
+#: src/inc.c:687
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "получение новых сообщений для учетной записи %s...\n"
 
-#: src/inc.c:677
+#: src/inc.c:690
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Получение новых сообщений"
 
-#: src/inc.c:696
+#: src/inc.c:709
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Соединение с сервером POP3: %s..."
 
-#: src/inc.c:705
+#: src/inc.c:718
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Не удалось соединение с сервером POP3: %s:%d\n"
 
-#: src/inc.c:784 src/send_message.c:631
+#: src/inc.c:797 src/send_message.c:631
 msgid "Authenticating..."
 msgstr "Аутентификация..."
 
-#: src/inc.c:785
+#: src/inc.c:798
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Получение сообщений с %s..."
 
-#: src/inc.c:790
+#: src/inc.c:803
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Получение количества новых сообщений (STAT)..."
 
-#: src/inc.c:794
+#: src/inc.c:807
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Получение количества новых сообщений (LAST)..."
 
-#: src/inc.c:798
+#: src/inc.c:811
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Получение количества новых сообщений (UIDL)..."
 
-#: src/inc.c:802
+#: src/inc.c:815
 msgid "Getting the size of messages (LIST)..."
 msgstr "Получение размера сообщений (LIST)..."
 
-#: src/inc.c:812
+#: src/inc.c:825
 #, c-format
 msgid "Deleting message %d"
 msgstr "Удаление сообщения %d"
 
-#: src/inc.c:819 src/send_message.c:649
+#: src/inc.c:832 src/send_message.c:649
 msgid "Quitting"
 msgstr "Выход"
 
-#: src/inc.c:844
+#: src/inc.c:857
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Получение сообщения (%d / %d) (%s / %s)"
 
-#: src/inc.c:865
+#: src/inc.c:878
 #, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Прием (принято сообщений: %d (%s))"
 
-#: src/inc.c:1093
+#: src/inc.c:1106
 msgid "Connection failed."
 msgstr "Ошибка соединения"
 
-#: src/inc.c:1099
+#: src/inc.c:1112
 msgid "Error occurred while processing mail."
 msgstr "Произошла ошибка при обработке сообщений."
 
-#: src/inc.c:1104
+#: src/inc.c:1117
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2748,28 +2748,28 @@ msgstr ""
 "Произошла ошибка при обработке сообщений:\n"
 "%s"
 
-#: src/inc.c:1110
+#: src/inc.c:1123
 msgid "No disk space left."
 msgstr "Не осталось места на диске."
 
-#: src/inc.c:1115
+#: src/inc.c:1128
 msgid "Can't write file."
 msgstr "Ошибка записи в файл."
 
-#: src/inc.c:1120
+#: src/inc.c:1133
 msgid "Socket error."
 msgstr "Ошибка сокета."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1126 src/send_message.c:584 src/send_message.c:772
+#: src/inc.c:1139 src/send_message.c:584 src/send_message.c:772
 msgid "Connection closed by the remote host."
 msgstr "Сервер закрыл соединение."
 
-#: src/inc.c:1132
+#: src/inc.c:1145
 msgid "Mailbox is locked."
 msgstr "Почтовый ящик занят."
 
-#: src/inc.c:1136
+#: src/inc.c:1149
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2778,11 +2778,11 @@ msgstr ""
 "Почтовый ящик занят:\n"
 "%s"
 
-#: src/inc.c:1142 src/send_message.c:757
+#: src/inc.c:1155 src/send_message.c:757
 msgid "Authentication failed."
 msgstr "Ошибка аутентификации."
 
-#: src/inc.c:1147 src/send_message.c:760
+#: src/inc.c:1160 src/send_message.c:760
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2791,15 +2791,15 @@ msgstr ""
 "Ошибка аутентификации:\n"
 "%s"
 
-#: src/inc.c:1152 src/send_message.c:776
+#: src/inc.c:1165 src/send_message.c:776
 msgid "Session timed out."
 msgstr "Время сеанса истекло."
 
-#: src/inc.c:1188
+#: src/inc.c:1201
 msgid "Incorporation cancelled\n"
 msgstr "Прием сообщений прерван\n"
 
-#: src/inc.c:1271
+#: src/inc.c:1284
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Получение новых сообщений из %s в %s...\n"
@@ -3654,7 +3654,7 @@ msgstr "Получить сообщения со всех учетных зап�
 msgid "Send queued message(s)"
 msgstr "Послать сообщения из очереди"
 
-#: src/mainwindow.c:2265 src/prefs_account_dialog.c:524
+#: src/mainwindow.c:2265 src/prefs_account_dialog.c:527
 #: src/prefs_common_dialog.c:663 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Написать"
@@ -3962,218 +3962,224 @@ msgstr ""
 "Неверно! Повторите...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:420
+#: src/prefs_account_dialog.c:423
 msgid "Opening account preferences window...\n"
 msgstr "Открытие окна настроек учетной записи...\n"
 
-#: src/prefs_account_dialog.c:453
+#: src/prefs_account_dialog.c:456
 #, c-format
 msgid "Account%d"
 msgstr "Учетная запись %d"
 
-#: src/prefs_account_dialog.c:472
+#: src/prefs_account_dialog.c:475
 msgid "Preferences for new account"
 msgstr "Настройки новой учетной записи"
 
-#: src/prefs_account_dialog.c:477
+#: src/prefs_account_dialog.c:480
 msgid "Account preferences"
 msgstr "Настройки учетной записи"
 
-#: src/prefs_account_dialog.c:500
+#: src/prefs_account_dialog.c:503
 msgid "Creating account preferences window...\n"
 msgstr "Создание окна настроек учетной записи...\n"
 
-#: src/prefs_account_dialog.c:520 src/prefs_common_dialog.c:659
+#: src/prefs_account_dialog.c:523 src/prefs_common_dialog.c:659
 msgid "Receive"
 msgstr "Прием"
 
-#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:670
+#: src/prefs_account_dialog.c:530 src/prefs_common_dialog.c:670
 msgid "Privacy"
 msgstr "Защита"
 
-#: src/prefs_account_dialog.c:531
+#: src/prefs_account_dialog.c:534
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:2102
+#: src/prefs_account_dialog.c:537 src/prefs_common_dialog.c:2102
 msgid "Advanced"
 msgstr "Дополнительные"
 
-#: src/prefs_account_dialog.c:583
+#: src/prefs_account_dialog.c:586
 msgid "Name of this account"
 msgstr "Имя учетной записи"
 
-#: src/prefs_account_dialog.c:592
+#: src/prefs_account_dialog.c:595
 msgid "Set as default"
 msgstr "По умолчанию"
 
-#: src/prefs_account_dialog.c:596
+#: src/prefs_account_dialog.c:599
 msgid "Personal information"
 msgstr "Личная информация"
 
-#: src/prefs_account_dialog.c:605
+#: src/prefs_account_dialog.c:608
 msgid "Full name"
 msgstr "Полное имя"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:614
 msgid "Mail address"
 msgstr "Адрес E-Mail"
 
-#: src/prefs_account_dialog.c:617
+#: src/prefs_account_dialog.c:620
 msgid "Organization"
 msgstr "Организация"
 
-#: src/prefs_account_dialog.c:641
+#: src/prefs_account_dialog.c:644
 msgid "Server information"
 msgstr "Сведения о серверах"
 
-#: src/prefs_account_dialog.c:662 src/prefs_account_dialog.c:817
-#: src/prefs_account_dialog.c:1453
+#: src/prefs_account_dialog.c:665 src/prefs_account_dialog.c:821
+#: src/prefs_account_dialog.c:1462
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:664 src/prefs_account_dialog.c:922
-#: src/prefs_account_dialog.c:1470 src/prefs_account_dialog.c:1651
+#: src/prefs_account_dialog.c:667 src/prefs_account_dialog.c:927
+#: src/prefs_account_dialog.c:1479 src/prefs_account_dialog.c:1660
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:666
+#: src/prefs_account_dialog.c:669
 msgid "News (NNTP)"
 msgstr "Новостной (NNTP)"
 
-#: src/prefs_account_dialog.c:668
+#: src/prefs_account_dialog.c:671
 msgid "None (local)"
 msgstr "Нет (локальный)"
 
-#: src/prefs_account_dialog.c:681
+#: src/prefs_account_dialog.c:684
 msgid "This server requires authentication"
 msgstr "Этот сервер требует аутентификации"
 
-#: src/prefs_account_dialog.c:720
+#: src/prefs_account_dialog.c:723
 msgid "News server"
 msgstr "Сервер новостей"
 
-#: src/prefs_account_dialog.c:726
+#: src/prefs_account_dialog.c:729
 msgid "Server for receiving"
 msgstr "Сервер для приема"
 
-#: src/prefs_account_dialog.c:732
+#: src/prefs_account_dialog.c:735
 msgid "SMTP server (send)"
 msgstr "Сервер SMTP (отправка)"
 
-#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1114
+#: src/prefs_account_dialog.c:742 src/prefs_account_dialog.c:1123
 msgid "User ID"
 msgstr "ID пользователя"
 
-#: src/prefs_account_dialog.c:745 src/prefs_account_dialog.c:1123
+#: src/prefs_account_dialog.c:748 src/prefs_account_dialog.c:1132
 msgid "Password"
 msgstr "Пароль"
 
-#: src/prefs_account_dialog.c:825
+#: src/prefs_account_dialog.c:829
 msgid "Use secure authentication (APOP)"
 msgstr "Использовать безопасную аутентификацию (APOP)"
 
-#: src/prefs_account_dialog.c:828
+#: src/prefs_account_dialog.c:832
 msgid "Remove messages on server when received"
 msgstr "Удалять сообщения с сервера после приема"
 
-#: src/prefs_account_dialog.c:839
+#: src/prefs_account_dialog.c:843
 msgid "Remove after"
 msgstr "Удалить через"
 
-#: src/prefs_account_dialog.c:848
+#: src/prefs_account_dialog.c:852
 msgid "days"
 msgstr "дней"
 
-#: src/prefs_account_dialog.c:865
-msgid "(0 days: remove immediately)"
+#: src/prefs_account_dialog.c:869
+#, fuzzy
+msgid "0 days: remove immediately"
 msgstr "(0 дней: удалить немедленно)"
 
-#: src/prefs_account_dialog.c:872
+#: src/prefs_account_dialog.c:877
 msgid "Download all messages on server"
 msgstr "Принимать все сообщения с сервера"
 
-#: src/prefs_account_dialog.c:878
+#: src/prefs_account_dialog.c:883
 msgid "Receive size limit"
 msgstr "Ограничить размер принимаемых сообщений"
 
-#: src/prefs_account_dialog.c:885 src/prefs_filter_edit.c:554
+#: src/prefs_account_dialog.c:890 src/prefs_filter_edit.c:554
 #: src/prefs_filter_edit.c:956
 msgid "KB"
 msgstr "кб"
 
-#: src/prefs_account_dialog.c:892
+#: src/prefs_account_dialog.c:897
 msgid "Filter messages on receiving"
 msgstr "Фильтровать сообщения при приеме"
 
-#: src/prefs_account_dialog.c:900
+#: src/prefs_account_dialog.c:905
 msgid "Default inbox"
 msgstr "Папка для входящих сообщений"
 
-#: src/prefs_account_dialog.c:920
+#: src/prefs_account_dialog.c:925
 #, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "(Неотфильтрованные сообщения будут сохранены в этой папке)"
 
-#: src/prefs_account_dialog.c:933 src/prefs_account_dialog.c:1084
+#: src/prefs_account_dialog.c:938 src/prefs_account_dialog.c:1093
 msgid "Authentication method"
 msgstr "Метод аутентификации"
 
-#: src/prefs_account_dialog.c:943 src/prefs_account_dialog.c:1094
+#: src/prefs_account_dialog.c:948 src/prefs_account_dialog.c:1103
 #: src/prefs_common_dialog.c:874 src/prefs_common_dialog.c:2470
 msgid "Automatic"
 msgstr "Автоматически"
 
-#: src/prefs_account_dialog.c:949
+#: src/prefs_account_dialog.c:955
+#, fuzzy
+msgid "Only check INBOX on receiving"
+msgstr "Только при ручном запуске приема"
+
+#: src/prefs_account_dialog.c:957
 msgid "News"
 msgstr "Новости"
 
-#: src/prefs_account_dialog.c:961
+#: src/prefs_account_dialog.c:969
 #, fuzzy
 msgid "Maximum number of articles to download"
 msgstr ""
 "Наибольшее число статей для загрузки\n"
 "(не ограничено, если указан 0)"
 
-#: src/prefs_account_dialog.c:978
+#: src/prefs_account_dialog.c:986
 #, fuzzy
 msgid "No limit if 0 is specified."
 msgstr "Получатель сообщения не указан."
 
-#: src/prefs_account_dialog.c:982
+#: src/prefs_account_dialog.c:990
 msgid "`Get all' checks for new messages on this account"
 msgstr "Проверять по команде 'Получить все'"
 
-#: src/prefs_account_dialog.c:1034 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1043 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "Заголовок"
 
-#: src/prefs_account_dialog.c:1041
+#: src/prefs_account_dialog.c:1050
 msgid "Add Date header field"
 msgstr "Добавить в заголовок поле Date"
 
-#: src/prefs_account_dialog.c:1042
+#: src/prefs_account_dialog.c:1051
 msgid "Generate Message-ID"
 msgstr "Создавать Message-ID"
 
-#: src/prefs_account_dialog.c:1049
+#: src/prefs_account_dialog.c:1058
 msgid "Add user-defined header"
 msgstr "Добавить дополнительные заголовки"
 
-#: src/prefs_account_dialog.c:1051 src/prefs_common_dialog.c:1553
+#: src/prefs_account_dialog.c:1060 src/prefs_common_dialog.c:1553
 #: src/prefs_common_dialog.c:1580
 msgid " Edit... "
 msgstr " Определить... "
 
-#: src/prefs_account_dialog.c:1061
+#: src/prefs_account_dialog.c:1070
 msgid "Authentication"
 msgstr "Аутентификация"
 
-#: src/prefs_account_dialog.c:1069
+#: src/prefs_account_dialog.c:1078
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "Аутентификация SMTP (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1145
+#: src/prefs_account_dialog.c:1154
 #, fuzzy
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
@@ -4182,191 +4188,191 @@ msgstr ""
 "Если оставить эти поля пустыми, будут использоваться\n"
 "имя пользователя и пароль, заданные для приема почты."
 
-#: src/prefs_account_dialog.c:1157
+#: src/prefs_account_dialog.c:1166
 msgid "Authenticate with POP3 before sending"
 msgstr "Проверка пароля через POP3 перед отправкой"
 
-#: src/prefs_account_dialog.c:1213
+#: src/prefs_account_dialog.c:1222
 msgid "Command output"
 msgstr "Вывод команды"
 
-#: src/prefs_account_dialog.c:1224 src/prefs_folder_item.c:330
+#: src/prefs_account_dialog.c:1233 src/prefs_folder_item.c:330
 msgid "Automatically set the following addresses"
 msgstr "Автоматически устанавливать адреса"
 
-#: src/prefs_account_dialog.c:1233
+#: src/prefs_account_dialog.c:1242
 msgid "Cc"
 msgstr "Копия"
 
-#: src/prefs_account_dialog.c:1246
+#: src/prefs_account_dialog.c:1255
 msgid "Bcc"
 msgstr "Скрытно"
 
-#: src/prefs_account_dialog.c:1259
+#: src/prefs_account_dialog.c:1268
 msgid "Reply-To"
 msgstr "Обратный адрес"
 
-#: src/prefs_account_dialog.c:1312
+#: src/prefs_account_dialog.c:1321
 msgid "Sign message by default"
 msgstr "Подписывать сообщения по умолчанию"
 
-#: src/prefs_account_dialog.c:1314
+#: src/prefs_account_dialog.c:1323
 msgid "Encrypt message by default"
 msgstr "Шифровать сообщения по умолчанию"
 
-#: src/prefs_account_dialog.c:1316
+#: src/prefs_account_dialog.c:1325
 msgid "Encrypt when replying to encrypted message"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1318
+#: src/prefs_account_dialog.c:1327
 msgid "Use ASCII-armored format for encryption"
 msgstr "Использовать ASCII-кодирование при шифровании"
 
-#: src/prefs_account_dialog.c:1320
+#: src/prefs_account_dialog.c:1329
 msgid "Use clear text signature"
 msgstr "Использовать открытую текстовую подпись"
 
-#: src/prefs_account_dialog.c:1325
+#: src/prefs_account_dialog.c:1334
 msgid "Sign key"
 msgstr "Ключ подписи"
 
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1342
 msgid "Use default GnuPG key"
 msgstr "Ключ GnuPG по умолчанию"
 
-#: src/prefs_account_dialog.c:1342
+#: src/prefs_account_dialog.c:1351
 msgid "Select key by your email address"
 msgstr "Ключ для выбранного адреса E-mail"
 
-#: src/prefs_account_dialog.c:1351
+#: src/prefs_account_dialog.c:1360
 msgid "Specify key manually"
 msgstr "Другой ключ"
 
-#: src/prefs_account_dialog.c:1367
+#: src/prefs_account_dialog.c:1376
 msgid "User or key ID:"
 msgstr "ID пользователя ключа:"
 
-#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
-#: src/prefs_account_dialog.c:1494 src/prefs_account_dialog.c:1512
+#: src/prefs_account_dialog.c:1470 src/prefs_account_dialog.c:1487
+#: src/prefs_account_dialog.c:1503 src/prefs_account_dialog.c:1521
 msgid "Don't use SSL"
 msgstr "Не использовать SSL"
 
-#: src/prefs_account_dialog.c:1464
+#: src/prefs_account_dialog.c:1473
 msgid "Use SSL for POP3 connection"
 msgstr "Использовать SSL для соединения POP3"
 
-#: src/prefs_account_dialog.c:1467 src/prefs_account_dialog.c:1484
-#: src/prefs_account_dialog.c:1518
+#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
+#: src/prefs_account_dialog.c:1527
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Использовать команду STARTTLS для начала сеанса SSL"
 
-#: src/prefs_account_dialog.c:1481
+#: src/prefs_account_dialog.c:1490
 msgid "Use SSL for IMAP4 connection"
 msgstr "Использовать SSL для соединения IMAP4"
 
-#: src/prefs_account_dialog.c:1487
+#: src/prefs_account_dialog.c:1496
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1511
 msgid "Use SSL for NNTP connection"
 msgstr "Использовать SSL для соединения NNTP"
 
-#: src/prefs_account_dialog.c:1504
+#: src/prefs_account_dialog.c:1513
 msgid "Send (SMTP)"
 msgstr "Отправка (SMTP)"
 
-#: src/prefs_account_dialog.c:1515
+#: src/prefs_account_dialog.c:1524
 msgid "Use SSL for SMTP connection"
 msgstr "Использовать SSL для соединения SMTP"
 
-#: src/prefs_account_dialog.c:1526
+#: src/prefs_account_dialog.c:1535
 msgid "Use non-blocking SSL"
 msgstr "Использовать неблокирующий режим SSL"
 
-#: src/prefs_account_dialog.c:1529
+#: src/prefs_account_dialog.c:1538
 #, fuzzy
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "(Выключите эту опцию, если возникают проблемы при использовании SSL)"
 
-#: src/prefs_account_dialog.c:1618
+#: src/prefs_account_dialog.c:1627
 msgid "Specify SMTP port"
 msgstr "Порт SMTP"
 
-#: src/prefs_account_dialog.c:1624
+#: src/prefs_account_dialog.c:1633
 msgid "Specify POP3 port"
 msgstr "Порт POP3"
 
-#: src/prefs_account_dialog.c:1630
+#: src/prefs_account_dialog.c:1639
 msgid "Specify IMAP4 port"
 msgstr "Порт IMAP4"
 
-#: src/prefs_account_dialog.c:1636
+#: src/prefs_account_dialog.c:1645
 msgid "Specify NNTP port"
 msgstr "Порт NNTP"
 
-#: src/prefs_account_dialog.c:1641
+#: src/prefs_account_dialog.c:1650
 msgid "Specify domain name"
 msgstr "Имя домена"
 
-#: src/prefs_account_dialog.c:1662
+#: src/prefs_account_dialog.c:1671
 msgid "IMAP server directory"
 msgstr "Каталог сервера IMAP4"
 
-#: src/prefs_account_dialog.c:1672
+#: src/prefs_account_dialog.c:1681
 msgid "Only the subfolders of this directory will be displayed."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1717
+#: src/prefs_account_dialog.c:1726
 msgid "Put sent messages in"
 msgstr "Сохранять отправленные сообщения в"
 
-#: src/prefs_account_dialog.c:1719
+#: src/prefs_account_dialog.c:1728
 msgid "Put draft messages in"
 msgstr "Сохранять черновики в"
 
-#: src/prefs_account_dialog.c:1721
+#: src/prefs_account_dialog.c:1730
 #, fuzzy
 msgid "Put queued messages in"
 msgstr "Сохранять удаленные сообщения в"
 
-#: src/prefs_account_dialog.c:1723
+#: src/prefs_account_dialog.c:1732
 msgid "Put deleted messages in"
 msgstr "Сохранять удаленные сообщения в"
 
-#: src/prefs_account_dialog.c:1786
+#: src/prefs_account_dialog.c:1795
 msgid "Account name is not entered."
 msgstr "Не указано имя учетной записи."
 
-#: src/prefs_account_dialog.c:1790
+#: src/prefs_account_dialog.c:1799
 msgid "Mail address is not entered."
 msgstr "Не указан адрес."
 
-#: src/prefs_account_dialog.c:1795
+#: src/prefs_account_dialog.c:1804
 msgid "SMTP server is not entered."
 msgstr "Не указан сервер SMTP."
 
-#: src/prefs_account_dialog.c:1800
+#: src/prefs_account_dialog.c:1809
 msgid "User ID is not entered."
 msgstr "Не указан идентификатор пользователя."
 
-#: src/prefs_account_dialog.c:1805
+#: src/prefs_account_dialog.c:1814
 msgid "POP3 server is not entered."
 msgstr "Не указан сервер POP3."
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1819
 msgid "IMAP4 server is not entered."
 msgstr "Не указан сервер IMAP4."
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1824
 msgid "NNTP server is not entered."
 msgstr "Не указан сервер NNTP."
 
-#: src/prefs_account_dialog.c:1841
+#: src/prefs_account_dialog.c:1850
 msgid "Specified folder is not a queue folder."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1915
+#: src/prefs_account_dialog.c:1924
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"

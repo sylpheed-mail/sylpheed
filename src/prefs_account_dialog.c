@@ -95,6 +95,7 @@ static struct Receive {
 
 	GtkWidget *imap_frame;
 	GtkWidget *imap_auth_type_optmenu;
+	GtkWidget *imap_check_inbox_chkbtn;
 
 	GtkWidget *nntp_frame;
 	GtkWidget *maxarticle_spinbtn;
@@ -240,8 +241,6 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"password", &basic.pass_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
-	{"inbox", &receive.inbox_entry,
-	 prefs_set_data_from_entry, prefs_set_entry},
 
 	/* Receive */
 	{"use_apop_auth", &receive.use_apop_chkbtn,
@@ -257,6 +256,10 @@ static PrefsUIData ui_data[] = {
 	{"size_limit", &receive.size_limit_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"filter_on_receive", &receive.filter_on_recv_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"inbox", &receive.inbox_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"imap_check_inbox_only", &receive.imap_check_inbox_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"imap_auth_method", &receive.imap_auth_type_optmenu,
 	 prefs_account_imap_auth_type_set_data_from_optmenu,
@@ -800,6 +803,7 @@ static void prefs_account_receive_create(void)
 	GtkWidget *optmenu;
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
+	GtkWidget *imap_check_inbox_chkbtn;
 
 	GtkWidget *nntp_frame;
 	GtkWidget *maxarticle_label;
@@ -862,11 +866,14 @@ static void prefs_account_receive_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
 	gtk_widget_set_size_request (hbox_spc, 12, -1);
 
-	leave_time_label = gtk_label_new (_("(0 days: remove immediately)"));
+	leave_time_label = gtk_label_new (_("0 days: remove immediately"));
 	gtk_widget_show (leave_time_label);
 	gtk_box_pack_start (GTK_BOX (hbox1), leave_time_label, FALSE, FALSE, 0);
+	gtkut_widget_set_small_font_size (leave_time_label);
 
 	SET_TOGGLE_SENSITIVITY (rmmail_chkbtn, hbox1);
+
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
 	PACK_CHECK_BUTTON (vbox2, getall_chkbtn,
 			   _("Download all messages on server"));
@@ -921,7 +928,7 @@ static void prefs_account_receive_create(void)
 
 	PACK_FRAME (vbox1, imap_frame, _("IMAP4"));
 
-	vbox2 = gtk_vbox_new (FALSE, 0);
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
 	gtk_container_add (GTK_CONTAINER (imap_frame), vbox2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
@@ -945,6 +952,9 @@ static void prefs_account_receive_create(void)
 	MENUITEM_ADD (optmenu_menu, menuitem, "CRAM-MD5", IMAP_AUTH_CRAM_MD5);
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu), optmenu_menu);
+
+	PACK_CHECK_BUTTON (vbox2, imap_check_inbox_chkbtn,
+			   _("Only check INBOX on receiving"));
 
 	PACK_FRAME (vbox1, nntp_frame, _("News"));
 
@@ -993,8 +1003,9 @@ static void prefs_account_receive_create(void)
 	receive.inbox_entry           = inbox_entry;
 	receive.inbox_btn             = inbox_btn;
 
-	receive.imap_frame             = imap_frame;
-	receive.imap_auth_type_optmenu = optmenu;
+	receive.imap_frame              = imap_frame;
+	receive.imap_auth_type_optmenu  = optmenu;
+	receive.imap_check_inbox_chkbtn = imap_check_inbox_chkbtn;
 
 	receive.nntp_frame             = nntp_frame;
 	receive.maxarticle_spinbtn     = maxarticle_spinbtn;

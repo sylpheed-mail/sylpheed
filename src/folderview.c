@@ -920,8 +920,7 @@ void folderview_check_new(Folder *folder)
 	model = GTK_TREE_MODEL(folderview->store);
 
 	if (folder && !FOLDER_IS_LOCAL(folder)) {
-		if (!main_window_toggle_online_if_offline
-			(folderview->mainwin))
+		if (!main_window_toggle_online_if_offline(folderview->mainwin))
 			return;
 	}
 
@@ -947,6 +946,50 @@ void folderview_check_new(Folder *folder)
 		}
 		folderview_update_row(folderview, &iter);
 	}
+
+	gtk_widget_set_sensitive(folderview->treeview, TRUE);
+	main_window_unlock(folderview->mainwin);
+	inc_unlock();
+	statusbar_pop_all();
+
+	folder_write_list();
+}
+
+void folderview_check_new_item(FolderItem *item)
+{
+	Folder *folder;
+	FolderView *folderview;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+
+	g_return_if_fail(item != NULL);
+	g_return_if_fail(item->folder != NULL);
+
+	if (!item->path || item->no_select)
+		return;
+
+	folderview = (FolderView *)folderview_list->data;
+	model = GTK_TREE_MODEL(folderview->store);
+
+	folder = item->folder;
+
+	if (!FOLDER_IS_LOCAL(folder)) {
+		if (!main_window_toggle_online_if_offline(folderview->mainwin))
+			return;
+	}
+
+	if (!gtkut_tree_model_find_by_column_data
+		(model, &iter, NULL, COL_FOLDER_ITEM, item))
+		return;
+
+	inc_lock();
+	main_window_lock(folderview->mainwin);
+	gtk_widget_set_sensitive(folderview->treeview, FALSE);
+	GTK_EVENTS_FLUSH();
+
+	folderview_scan_tree_func(folder, item, NULL);
+	folder_item_scan(item);
+	folderview_update_row(folderview, &iter);
 
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
 	main_window_unlock(folderview->mainwin);

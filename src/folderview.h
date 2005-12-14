@@ -93,6 +93,7 @@ gboolean folderview_append_item		(FolderView	*folderview,
 					 gboolean	 expand_parent);
 
 void folderview_check_new		(Folder		*folder);
+void folderview_check_new_item		(FolderItem	*item);
 void folderview_check_new_all		(void);
 
 void folderview_update_item		(FolderItem	*item,

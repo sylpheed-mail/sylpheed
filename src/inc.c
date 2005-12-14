@@ -71,6 +71,9 @@ static GdkPixbuf *ok_pixbuf;
 
 static void inc_finished		(MainWindow		*mainwin,
 					 gint			 new_messages);
+
+static gint inc_remote_account_mail	(MainWindow		*mainwin,
+					 PrefsAccount		*account);
 static gint inc_account_mail_real	(MainWindow		*mainwin,
 					 PrefsAccount		*account);
 
@@ -231,20 +234,36 @@ void inc_mail(MainWindow *mainwin)
 	inc_autocheck_timer_set();
 }
 
+static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
+{
+	FolderItem *item = mainwin->summaryview->folder_item;
+
+	g_return_val_if_fail(account->folder != NULL, 0);
+
+	if (account->protocol == A_IMAP4 && account->imap_check_inbox_only) {
+		FolderItem *inbox = FOLDER(account->folder)->inbox;
+
+		folderview_check_new_item(inbox);
+		if (!prefs_common.scan_all_after_inc && item != NULL &&
+		    inbox == item)
+			folderview_update_item(item, TRUE);
+	} else {
+		folderview_check_new(FOLDER(account->folder));
+		if (!prefs_common.scan_all_after_inc && item != NULL &&
+		    FOLDER(account->folder) == item->folder)
+			folderview_update_item(item, TRUE);
+	}
+
+	return 1;
+}
+
 static gint inc_account_mail_real(MainWindow *mainwin, PrefsAccount *account)
 {
 	IncProgressDialog *inc_dialog;
 	IncSession *session;
 
-	if (account->protocol == A_IMAP4 || account->protocol == A_NNTP) {
-		FolderItem *item = mainwin->summaryview->folder_item;
-
-		folderview_check_new(FOLDER(account->folder));
-		if (!prefs_common.scan_all_after_inc && item != NULL &&
-		    FOLDER(account->folder) == item->folder)
-			folderview_update_item(item, TRUE);
-		return 1;
-	}
+	if (account->protocol == A_IMAP4 || account->protocol == A_NNTP)
+		return inc_remote_account_mail(mainwin, account);
 
 	session = inc_session_new(account);
 	if (!session) return 0;
@@ -307,14 +326,8 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 	for (list = account_get_list(); list != NULL; list = list->next) {
 		PrefsAccount *account = list->data;
 		if ((account->protocol == A_IMAP4 ||
-		     account->protocol == A_NNTP) && account->recv_at_getall) {
-			FolderItem *item = mainwin->summaryview->folder_item;
-
-			folderview_check_new(FOLDER(account->folder));
-			if (!prefs_common.scan_all_after_inc && item != NULL &&
-			    FOLDER(account->folder) == item->folder)
-				folderview_update_item(item, TRUE);
-		}
+		     account->protocol == A_NNTP) && account->recv_at_getall)
+			inc_remote_account_mail(mainwin, account);
 	}
 
 	/* check POP3 accounts */

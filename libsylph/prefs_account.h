@@ -86,14 +86,16 @@ struct _PrefsAccount
 	gboolean rmmail;
 	gint msg_leave_time;
 	gboolean getall;
-	gboolean recv_at_getall;
 	gboolean enable_size_limit;
 	gint size_limit;
 	gboolean filter_on_recv;
 	gchar *inbox;
 
+	gboolean imap_check_inbox_only;
 	gint imap_auth_type;
 	gint max_nntp_articles;
+
+	gboolean recv_at_getall;
 
 	/* Send */
 	gboolean add_date;

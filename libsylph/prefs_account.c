@@ -61,6 +61,8 @@ static PrefParam param[] = {
 	{"enable_size_limit", "FALSE", &tmp_ac_prefs.enable_size_limit, P_BOOL},
 	{"size_limit", "1024", &tmp_ac_prefs.size_limit, P_INT},
 	{"filter_on_receive", "TRUE", &tmp_ac_prefs.filter_on_recv, P_BOOL},
+	{"imap_check_inbox_only", "FALSE", &tmp_ac_prefs.imap_check_inbox_only,
+	 P_BOOL},
 	{"imap_auth_method", "0", &tmp_ac_prefs.imap_auth_type, P_ENUM},
 	{"max_nntp_articles", "300", &tmp_ac_prefs.max_nntp_articles, P_INT},
 	{"receive_at_get_all", "TRUE", &tmp_ac_prefs.recv_at_getall, P_BOOL},

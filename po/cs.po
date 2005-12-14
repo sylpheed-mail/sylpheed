@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-13 18:12+0900\n"
+"POT-Creation-Date: 2005-12-14 15:54+0900\n"
 "PO-Revision-Date: 2003-05-30 13:31GMT+0100\n"
 "Last-Translator: Radek Vybíral <Radek.Vybiral@vsb.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -20,8 +20,8 @@ msgid "Reading all config for each account...\n"
 msgstr "Načítám nastavení pro všechny účty...\n"
 
 #: libsylph/filter.c:894 libsylph/prefs.c:196 libsylph/prefs.c:224
-#: libsylph/prefs.c:269 libsylph/prefs_account.c:213
-#: libsylph/prefs_account.c:227 src/prefs_display_header.c:413
+#: libsylph/prefs.c:269 libsylph/prefs_account.c:215
+#: libsylph/prefs_account.c:229 src/prefs_display_header.c:413
 #: src/prefs_display_header.c:438
 msgid "failed to write configuration to file\n"
 msgstr "Selhání při zápisu konfigurace do souboru\n"
@@ -720,7 +720,7 @@ msgstr ""
 msgid "Name"
 msgstr "Jméno"
 
-#: src/account_dialog.c:370 src/prefs_account_dialog.c:652
+#: src/account_dialog.c:370 src/prefs_account_dialog.c:655
 msgid "Protocol"
 msgstr "Protokol"
 
@@ -1048,7 +1048,7 @@ msgstr ""
 "Chcete smazat složku '%s' A TAKÉ všechny adresy v ní? \n"
 "Pokud smažete pouze složku, adresy budou přesunuty do nadřazené složky."
 
-#: src/addressbook.c:1674 src/folderview.c:2196
+#: src/addressbook.c:1674 src/folderview.c:2239
 msgid "Delete folder"
 msgstr "Smazat složku "
 
@@ -1181,7 +1181,7 @@ msgid "Group"
 msgstr "Skupina"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1676
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1685
 msgid "Folder"
 msgstr "Složka"
 
@@ -1213,7 +1213,7 @@ msgstr "Poznámka"
 msgid "Warning"
 msgstr "Varování"
 
-#: src/alertpanel.c:167 src/inc.c:573
+#: src/alertpanel.c:167 src/inc.c:586
 msgid "Error"
 msgstr "Chyba"
 
@@ -1739,7 +1739,7 @@ msgstr "MIME typ"
 msgid "Size"
 msgstr "Délka"
 
-#: src/compose.c:4641 src/mainwindow.c:2254 src/prefs_account_dialog.c:522
+#: src/compose.c:4641 src/mainwindow.c:2254 src/prefs_account_dialog.c:525
 #: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "Odeslat"
@@ -1781,7 +1781,7 @@ msgid "Attach file"
 msgstr "Připojí soubor"
 
 #. signature
-#: src/compose.c:4690 src/prefs_account_dialog.c:1194
+#: src/compose.c:4690 src/prefs_account_dialog.c:1203
 #: src/prefs_common_dialog.c:954
 msgid "Signature"
 msgstr "Podpis"
@@ -1994,7 +1994,7 @@ msgid " Check File "
 msgstr " Otestovat soubor "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1205
+#: src/prefs_account_dialog.c:1214
 msgid "File"
 msgstr "Soubor"
 
@@ -2051,12 +2051,12 @@ msgstr "Upravit složku"
 msgid "Input the new name of folder:"
 msgstr "Zadejte název složky:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:1975
-#: src/folderview.c:1981
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2018
+#: src/folderview.c:2024
 msgid "New folder"
 msgstr "Nová složka"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:1982
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2025
 msgid "Input the name of new folder:"
 msgstr "Zadejte název složky:"
 
@@ -2073,7 +2073,7 @@ msgid "Edit JPilot Entry"
 msgstr "Upravit JPilot soubor"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534 src/prefs_account_dialog.c:1704
+#: src/importldif.c:534 src/prefs_account_dialog.c:1713
 #: src/prefs_common_dialog.c:1849
 msgid " ... "
 msgstr " ... "
@@ -2138,7 +2138,7 @@ msgstr "Timeout (vteřin)"
 msgid "Maximum Entries"
 msgstr "Maximum položek"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:518
+#: src/editldap.c:471 src/prefs_account_dialog.c:521
 msgid "Basic"
 msgstr "Základní"
 
@@ -2195,7 +2195,7 @@ msgid "Exporting file:"
 msgstr "Exportovaný soubor:"
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
-#: src/prefs_account_dialog.c:909
+#: src/prefs_account_dialog.c:914
 msgid " Select... "
 msgstr " Vybrat... "
 
@@ -2224,41 +2224,41 @@ msgstr "Spool adresář"
 msgid "Select folder"
 msgstr "Vybrat složku"
 
-#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1146 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Doručená pošta"
 
-#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1152 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Odeslaná pošta"
 
-#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1158 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Fronta"
 
-#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1164 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Koš"
 
-#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1170 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Koncepty"
 
-#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
+#: src/foldersel.c:542 src/folderview.c:2022 src/folderview.c:2026
 msgid "NewFolder"
 msgstr "Nová složka"
 
-#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
+#: src/foldersel.c:550 src/folderview.c:2034 src/folderview.c:2090
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "%c nemůže být obsaženo ve jméně složky."
 
-#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
+#: src/foldersel.c:560 src/folderview.c:2044 src/folderview.c:2097
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Složka '%s' už existuje."
 
-#: src/foldersel.c:568 src/folderview.c:2008
+#: src/foldersel.c:568 src/folderview.c:2051
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Nemohu vytvořit složku '%s'."
@@ -2367,26 +2367,26 @@ msgstr "Provádím obnovu stromu složek..."
 msgid "Rebuilding of the folder tree failed."
 msgstr "Provádím obnovu stromu složek..."
 
-#: src/folderview.c:970
+#: src/folderview.c:1013
 msgid "Checking for new messages in all folders..."
 msgstr "Zjišťuji nové zprávy ve všech složkách..."
 
-#: src/folderview.c:1725
+#: src/folderview.c:1768
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Je vybrána složka %s\n"
 
-#: src/folderview.c:1880
+#: src/folderview.c:1923
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Posílám zprávu"
 
-#: src/folderview.c:1915
+#: src/folderview.c:1958
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Vyskytla se chyba při posílání zprávy na %s ."
 
-#: src/folderview.c:1976
+#: src/folderview.c:2019
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2396,21 +2396,21 @@ msgstr ""
 "(Pokud chcete vytvořit složku, která bude mít další\n"
 "podsložky, přidejte nakonec názvu '/')"
 
-#: src/folderview.c:2038
+#: src/folderview.c:2081
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Zadejte nové jméno pro '%s' :"
 
-#: src/folderview.c:2039
+#: src/folderview.c:2082
 msgid "Rename folder"
 msgstr "Přejmenovat složku"
 
-#: src/folderview.c:2130
+#: src/folderview.c:2173
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Nemohu odstranit složku '%s'."
 
-#: src/folderview.c:2193
+#: src/folderview.c:2236
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2421,21 +2421,21 @@ msgstr ""
 "Všechny složky a zprávy v '%s' budou vymazány.\n"
 "Chcete je opravdu smazat ?"
 
-#: src/folderview.c:2222
+#: src/folderview.c:2265
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Nemohu odstranit složku '%s'."
 
-#: src/folderview.c:2256
+#: src/folderview.c:2299
 msgid "Empty trash"
 msgstr "Vyprázdnit koš"
 
-#: src/folderview.c:2257
+#: src/folderview.c:2300
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Vyprázdnit všechny zprávy v koši?"
 
-#: src/folderview.c:2293
+#: src/folderview.c:2336
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2444,34 +2444,34 @@ msgstr ""
 "Opravdu odebrat poštovní schránku '%s'?\n"
 "(Zprávy NEBUDOU smazány z disku)"
 
-#: src/folderview.c:2295
+#: src/folderview.c:2338
 msgid "Remove mailbox"
 msgstr "Odstranit poštovní schránku"
 
-#: src/folderview.c:2341
+#: src/folderview.c:2384
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Opravdu smazat IMAP4 účet '%s'?"
 
-#: src/folderview.c:2342
+#: src/folderview.c:2385
 msgid "Delete IMAP4 account"
 msgstr "Smazat IMAP4 účet"
 
-#: src/folderview.c:2484
+#: src/folderview.c:2527
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Opravdu chcete smazat diskusní skupinu '%s' ?"
 
-#: src/folderview.c:2485
+#: src/folderview.c:2528
 msgid "Delete newsgroup"
 msgstr "Smazat diskusní skupinu"
 
-#: src/folderview.c:2532
+#: src/folderview.c:2575
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Opravdu smazat účet pro diskusní skupinu '%s'?"
 
-#: src/folderview.c:2533
+#: src/folderview.c:2576
 msgid "Delete news account"
 msgstr "Smazat účet pro diskuzní skupinu"
 
@@ -2612,145 +2612,145 @@ msgstr "Atributy"
 msgid "Finish"
 msgstr "Konec"
 
-#: src/inc.c:157
+#: src/inc.c:160
 #, fuzzy, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Dokončeno (%d nová(é) zpráva(y))"
 
-#: src/inc.c:161
+#: src/inc.c:164
 #, fuzzy
 msgid "Sylpheed"
 msgstr "Starý Sylpheed"
 
-#: src/inc.c:358
+#: src/inc.c:371
 msgid "Retrieving new messages"
 msgstr "Načítám nové zprávy"
 
-#: src/inc.c:401
+#: src/inc.c:414
 msgid "Standby"
 msgstr "V pohotovosti"
 
-#: src/inc.c:530 src/inc.c:579
+#: src/inc.c:543 src/inc.c:592
 msgid "Cancelled"
 msgstr "Zrušeno"
 
-#: src/inc.c:541
+#: src/inc.c:554
 msgid "Retrieving"
 msgstr "Načítám"
 
-#: src/inc.c:550
+#: src/inc.c:563
 #, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "Hotovo (%d zpráv(a) (%s) přijato)"
 
-#: src/inc.c:554
+#: src/inc.c:567
 msgid "Done (no new messages)"
 msgstr "Hotovo (Nejsou žádné nové zprávy)"
 
-#: src/inc.c:560
+#: src/inc.c:573
 msgid "Connection failed"
 msgstr "Spojení selhalo"
 
-#: src/inc.c:563
+#: src/inc.c:576
 msgid "Auth failed"
 msgstr "Autentizace selhala"
 
-#: src/inc.c:566
+#: src/inc.c:579
 msgid "Locked"
 msgstr "Zamknuto"
 
-#: src/inc.c:576
+#: src/inc.c:589
 #, fuzzy
 msgid "Timeout"
 msgstr "Timeout (vteřin)"
 
-#: src/inc.c:626
+#: src/inc.c:639
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Dokončeno (%d nová(é) zpráva(y))"
 
-#: src/inc.c:629
+#: src/inc.c:642
 msgid "Finished (no new messages)"
 msgstr "Dokončeno (nejsou nové zprávy)"
 
-#: src/inc.c:638
+#: src/inc.c:651
 msgid "Some errors occurred while getting mail."
 msgstr "Během načítání zpráv se vyskytly chyby."
 
-#: src/inc.c:674
+#: src/inc.c:687
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "Získávám nové zprávy z účtu %s ...\n"
 
-#: src/inc.c:677
+#: src/inc.c:690
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s : Načítám nové zprávy"
 
-#: src/inc.c:696
+#: src/inc.c:709
 #, fuzzy, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Připojuji se na POP3 server: %s ..."
 
-#: src/inc.c:705
+#: src/inc.c:718
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nemohu se spojit s POP3 serverem: %s:%d\n"
 
-#: src/inc.c:784 src/send_message.c:631
+#: src/inc.c:797 src/send_message.c:631
 msgid "Authenticating..."
 msgstr "Autentizuji..."
 
-#: src/inc.c:785
+#: src/inc.c:798
 #, fuzzy, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Získávám zprávy z %s do %s...\n"
 
-#: src/inc.c:790
+#: src/inc.c:803
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Zjišťuji počet nových zpráv (STAT)..."
 
-#: src/inc.c:794
+#: src/inc.c:807
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Zjišťuji počet nových zpráv (LAST)..."
 
-#: src/inc.c:798
+#: src/inc.c:811
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Zjišťuji počet nových zpráv (UIDL)..."
 
-#: src/inc.c:802
+#: src/inc.c:815
 msgid "Getting the size of messages (LIST)..."
 msgstr "Zjišťuji počet zpráv (LIST)..."
 
-#: src/inc.c:812
+#: src/inc.c:825
 #, c-format
 msgid "Deleting message %d"
 msgstr "Vymazávám zprávu %d"
 
-#: src/inc.c:819 src/send_message.c:649
+#: src/inc.c:832 src/send_message.c:649
 msgid "Quitting"
 msgstr "Ukončuji"
 
-#: src/inc.c:844
+#: src/inc.c:857
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Načítám zprávu (%d / %d) (%s / %s)"
 
-#: src/inc.c:865
+#: src/inc.c:878
 #, fuzzy, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Hotovo (%d zpráv(a) (%s) přijato)"
 
-#: src/inc.c:1093
+#: src/inc.c:1106
 #, fuzzy
 msgid "Connection failed."
 msgstr "Spojení selhalo"
 
-#: src/inc.c:1099
+#: src/inc.c:1112
 msgid "Error occurred while processing mail."
 msgstr "Během zpracovávání pošty se vyskytla chyba ."
 
-#: src/inc.c:1104
+#: src/inc.c:1117
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2759,28 +2759,28 @@ msgstr ""
 "Během zpracovávání pošty se vyskytla chyba:\n"
 "%s"
 
-#: src/inc.c:1110
+#: src/inc.c:1123
 msgid "No disk space left."
 msgstr "Nezbylo žádné místo na disku."
 
-#: src/inc.c:1115
+#: src/inc.c:1128
 msgid "Can't write file."
 msgstr "Nemohu zapisovat do souboru."
 
-#: src/inc.c:1120
+#: src/inc.c:1133
 msgid "Socket error."
 msgstr "Chyba soketu."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1126 src/send_message.c:584 src/send_message.c:772
+#: src/inc.c:1139 src/send_message.c:584 src/send_message.c:772
 msgid "Connection closed by the remote host."
 msgstr ""
 
-#: src/inc.c:1132
+#: src/inc.c:1145
 msgid "Mailbox is locked."
 msgstr "Poštovní schránka je zamčena."
 
-#: src/inc.c:1136
+#: src/inc.c:1149
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2789,11 +2789,11 @@ msgstr ""
 "Poštovní schránka je zamčena:\n"
 "%s"
 
-#: src/inc.c:1142 src/send_message.c:757
+#: src/inc.c:1155 src/send_message.c:757
 msgid "Authentication failed."
 msgstr "Autentikace selhala."
 
-#: src/inc.c:1147 src/send_message.c:760
+#: src/inc.c:1160 src/send_message.c:760
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2802,16 +2802,16 @@ msgstr ""
 "Autentikace selhala:\n"
 "%s"
 
-#: src/inc.c:1152 src/send_message.c:776
+#: src/inc.c:1165 src/send_message.c:776
 #, fuzzy
 msgid "Session timed out."
 msgstr "vypršel čas relace\n"
 
-#: src/inc.c:1188
+#: src/inc.c:1201
 msgid "Incorporation cancelled\n"
 msgstr "Začleňování zrušeno\n"
 
-#: src/inc.c:1271
+#: src/inc.c:1284
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Načítám nové zprávy z %s do %s...\n"
@@ -3686,7 +3686,7 @@ msgstr "Začlení novou poštu ze všech účtů"
 msgid "Send queued message(s)"
 msgstr "Odešle pozdrženou zprávu(y)"
 
-#: src/mainwindow.c:2265 src/prefs_account_dialog.c:524
+#: src/mainwindow.c:2265 src/prefs_account_dialog.c:527
 #: src/prefs_common_dialog.c:663 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Napsat"
@@ -3993,219 +3993,224 @@ msgstr ""
 "Špatná passphrase! Zkuste to znovu...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:420
+#: src/prefs_account_dialog.c:423
 msgid "Opening account preferences window...\n"
 msgstr "Otevření okna s nastavením účtu...\n"
 
-#: src/prefs_account_dialog.c:453
+#: src/prefs_account_dialog.c:456
 #, c-format
 msgid "Account%d"
 msgstr "Účet%d"
 
-#: src/prefs_account_dialog.c:472
+#: src/prefs_account_dialog.c:475
 msgid "Preferences for new account"
 msgstr "Nastavení pro nový účet"
 
-#: src/prefs_account_dialog.c:477
+#: src/prefs_account_dialog.c:480
 msgid "Account preferences"
 msgstr "Nastavení účtu"
 
-#: src/prefs_account_dialog.c:500
+#: src/prefs_account_dialog.c:503
 msgid "Creating account preferences window...\n"
 msgstr "Vyvolání okna pro nastavení účtu...\n"
 
-#: src/prefs_account_dialog.c:520 src/prefs_common_dialog.c:659
+#: src/prefs_account_dialog.c:523 src/prefs_common_dialog.c:659
 msgid "Receive"
 msgstr "Příjem"
 
-#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:670
+#: src/prefs_account_dialog.c:530 src/prefs_common_dialog.c:670
 msgid "Privacy"
 msgstr "Soukromí"
 
-#: src/prefs_account_dialog.c:531
+#: src/prefs_account_dialog.c:534
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:2102
+#: src/prefs_account_dialog.c:537 src/prefs_common_dialog.c:2102
 msgid "Advanced"
 msgstr "Rozšíření"
 
-#: src/prefs_account_dialog.c:583
+#: src/prefs_account_dialog.c:586
 msgid "Name of this account"
 msgstr "Název tohoto účtu"
 
-#: src/prefs_account_dialog.c:592
+#: src/prefs_account_dialog.c:595
 msgid "Set as default"
 msgstr "Nastavit jako výchozí"
 
-#: src/prefs_account_dialog.c:596
+#: src/prefs_account_dialog.c:599
 msgid "Personal information"
 msgstr "Osobní informace"
 
-#: src/prefs_account_dialog.c:605
+#: src/prefs_account_dialog.c:608
 msgid "Full name"
 msgstr "Celé jméno"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:614
 msgid "Mail address"
 msgstr "Poštovní adresa"
 
-#: src/prefs_account_dialog.c:617
+#: src/prefs_account_dialog.c:620
 msgid "Organization"
 msgstr "Organizace"
 
-#: src/prefs_account_dialog.c:641
+#: src/prefs_account_dialog.c:644
 msgid "Server information"
 msgstr "Informace o serveru"
 
-#: src/prefs_account_dialog.c:662 src/prefs_account_dialog.c:817
-#: src/prefs_account_dialog.c:1453
+#: src/prefs_account_dialog.c:665 src/prefs_account_dialog.c:821
+#: src/prefs_account_dialog.c:1462
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:664 src/prefs_account_dialog.c:922
-#: src/prefs_account_dialog.c:1470 src/prefs_account_dialog.c:1651
+#: src/prefs_account_dialog.c:667 src/prefs_account_dialog.c:927
+#: src/prefs_account_dialog.c:1479 src/prefs_account_dialog.c:1660
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:666
+#: src/prefs_account_dialog.c:669
 msgid "News (NNTP)"
 msgstr "News (NNTP)"
 
-#: src/prefs_account_dialog.c:668
+#: src/prefs_account_dialog.c:671
 msgid "None (local)"
 msgstr "Žádný (místní)"
 
-#: src/prefs_account_dialog.c:681
+#: src/prefs_account_dialog.c:684
 msgid "This server requires authentication"
 msgstr "Tento server vyžaduje autentizaci"
 
-#: src/prefs_account_dialog.c:720
+#: src/prefs_account_dialog.c:723
 msgid "News server"
 msgstr "News server"
 
-#: src/prefs_account_dialog.c:726
+#: src/prefs_account_dialog.c:729
 msgid "Server for receiving"
 msgstr "Server pro příjem"
 
-#: src/prefs_account_dialog.c:732
+#: src/prefs_account_dialog.c:735
 msgid "SMTP server (send)"
 msgstr "SMTP server (odesílání)"
 
-#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1114
+#: src/prefs_account_dialog.c:742 src/prefs_account_dialog.c:1123
 msgid "User ID"
 msgstr "Uživatelské jméno"
 
-#: src/prefs_account_dialog.c:745 src/prefs_account_dialog.c:1123
+#: src/prefs_account_dialog.c:748 src/prefs_account_dialog.c:1132
 msgid "Password"
 msgstr "Heslo"
 
-#: src/prefs_account_dialog.c:825
+#: src/prefs_account_dialog.c:829
 #, fuzzy
 msgid "Use secure authentication (APOP)"
 msgstr "Tento server vyžaduje autentizaci"
 
-#: src/prefs_account_dialog.c:828
+#: src/prefs_account_dialog.c:832
 msgid "Remove messages on server when received"
 msgstr "Smazat zprávy na serveru po jejich přijmutí"
 
-#: src/prefs_account_dialog.c:839
+#: src/prefs_account_dialog.c:843
 msgid "Remove after"
 msgstr "Odstranit po"
 
-#: src/prefs_account_dialog.c:848
+#: src/prefs_account_dialog.c:852
 msgid "days"
 msgstr "dnech"
 
-#: src/prefs_account_dialog.c:865
-msgid "(0 days: remove immediately)"
+#: src/prefs_account_dialog.c:869
+#, fuzzy
+msgid "0 days: remove immediately"
 msgstr "(0 dnů: odstranit ihned)"
 
-#: src/prefs_account_dialog.c:872
+#: src/prefs_account_dialog.c:877
 msgid "Download all messages on server"
 msgstr "Přijmout všechny zprávy ze serveru"
 
-#: src/prefs_account_dialog.c:878
+#: src/prefs_account_dialog.c:883
 msgid "Receive size limit"
 msgstr "Limit velikosti pro příjem"
 
-#: src/prefs_account_dialog.c:885 src/prefs_filter_edit.c:554
+#: src/prefs_account_dialog.c:890 src/prefs_filter_edit.c:554
 #: src/prefs_filter_edit.c:956
 msgid "KB"
 msgstr "KB"
 
-#: src/prefs_account_dialog.c:892
+#: src/prefs_account_dialog.c:897
 msgid "Filter messages on receiving"
 msgstr "Filtr zpráv pro příjem"
 
-#: src/prefs_account_dialog.c:900
+#: src/prefs_account_dialog.c:905
 msgid "Default inbox"
 msgstr "Výchozí inbox"
 
-#: src/prefs_account_dialog.c:920
+#: src/prefs_account_dialog.c:925
 #, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "(Nefiltrované zprávy budou uloženy v této složce)"
 
-#: src/prefs_account_dialog.c:933 src/prefs_account_dialog.c:1084
+#: src/prefs_account_dialog.c:938 src/prefs_account_dialog.c:1093
 msgid "Authentication method"
 msgstr "Metoda autentizace"
 
-#: src/prefs_account_dialog.c:943 src/prefs_account_dialog.c:1094
+#: src/prefs_account_dialog.c:948 src/prefs_account_dialog.c:1103
 #: src/prefs_common_dialog.c:874 src/prefs_common_dialog.c:2470
 msgid "Automatic"
 msgstr "Automaticky"
 
-#: src/prefs_account_dialog.c:949
+#: src/prefs_account_dialog.c:955
+msgid "Only check INBOX on receiving"
+msgstr ""
+
+#: src/prefs_account_dialog.c:957
 msgid "News"
 msgstr "Diskuzní skupiny"
 
-#: src/prefs_account_dialog.c:961
+#: src/prefs_account_dialog.c:969
 #, fuzzy
 msgid "Maximum number of articles to download"
 msgstr ""
 "Maximální počet příspěvků pro stažení\n"
 "(0 pro neomezený počet)"
 
-#: src/prefs_account_dialog.c:978
+#: src/prefs_account_dialog.c:986
 #, fuzzy
 msgid "No limit if 0 is specified."
 msgstr "Není uveden příjemce."
 
-#: src/prefs_account_dialog.c:982
+#: src/prefs_account_dialog.c:990
 msgid "`Get all' checks for new messages on this account"
 msgstr "Při volbě 'Stáhnout vše' zjistit nové zprávy"
 
-#: src/prefs_account_dialog.c:1034 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1043 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "Záhlaví"
 
-#: src/prefs_account_dialog.c:1041
+#: src/prefs_account_dialog.c:1050
 msgid "Add Date header field"
 msgstr "Přidat do záhlaví pole s datumem"
 
-#: src/prefs_account_dialog.c:1042
+#: src/prefs_account_dialog.c:1051
 msgid "Generate Message-ID"
 msgstr "Generovat číslo zprávy"
 
-#: src/prefs_account_dialog.c:1049
+#: src/prefs_account_dialog.c:1058
 msgid "Add user-defined header"
 msgstr "Přidat uživatelsky definované záhlaví"
 
-#: src/prefs_account_dialog.c:1051 src/prefs_common_dialog.c:1553
+#: src/prefs_account_dialog.c:1060 src/prefs_common_dialog.c:1553
 #: src/prefs_common_dialog.c:1580
 msgid " Edit... "
 msgstr " Upravit..."
 
-#: src/prefs_account_dialog.c:1061
+#: src/prefs_account_dialog.c:1070
 msgid "Authentication"
 msgstr "Autentizace"
 
-#: src/prefs_account_dialog.c:1069
+#: src/prefs_account_dialog.c:1078
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP autentizace (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1145
+#: src/prefs_account_dialog.c:1154
 #, fuzzy
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
@@ -4214,190 +4219,190 @@ msgstr ""
 "Pokud necháte tyto položky prázdné, bude\n"
 "použito stejné jméno uživatele a heslo."
 
-#: src/prefs_account_dialog.c:1157
+#: src/prefs_account_dialog.c:1166
 msgid "Authenticate with POP3 before sending"
 msgstr "Autentizace s POP3 před posláním"
 
-#: src/prefs_account_dialog.c:1213
+#: src/prefs_account_dialog.c:1222
 msgid "Command output"
 msgstr "Výstup příkazu"
 
-#: src/prefs_account_dialog.c:1224 src/prefs_folder_item.c:330
+#: src/prefs_account_dialog.c:1233 src/prefs_folder_item.c:330
 msgid "Automatically set the following addresses"
 msgstr "Automaticky nastavit následující adresy"
 
-#: src/prefs_account_dialog.c:1233
+#: src/prefs_account_dialog.c:1242
 msgid "Cc"
 msgstr "Kopie"
 
-#: src/prefs_account_dialog.c:1246
+#: src/prefs_account_dialog.c:1255
 msgid "Bcc"
 msgstr "Slepá kopie"
 
-#: src/prefs_account_dialog.c:1259
+#: src/prefs_account_dialog.c:1268
 msgid "Reply-To"
 msgstr "Odpovědět komu"
 
-#: src/prefs_account_dialog.c:1312
+#: src/prefs_account_dialog.c:1321
 msgid "Sign message by default"
 msgstr "Vždy přidat podpis"
 
-#: src/prefs_account_dialog.c:1314
+#: src/prefs_account_dialog.c:1323
 msgid "Encrypt message by default"
 msgstr "Vždy zašifrovat zprávu"
 
-#: src/prefs_account_dialog.c:1316
+#: src/prefs_account_dialog.c:1325
 msgid "Encrypt when replying to encrypted message"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1318
+#: src/prefs_account_dialog.c:1327
 msgid "Use ASCII-armored format for encryption"
 msgstr "Použít formát ASCII-armored pro zašifrování"
 
-#: src/prefs_account_dialog.c:1320
+#: src/prefs_account_dialog.c:1329
 msgid "Use clear text signature"
 msgstr "Použít čistý textový podpis"
 
-#: src/prefs_account_dialog.c:1325
+#: src/prefs_account_dialog.c:1334
 msgid "Sign key"
 msgstr "Klíč pro podpis"
 
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1342
 msgid "Use default GnuPG key"
 msgstr "Použít výchozí GnuPG klíč"
 
-#: src/prefs_account_dialog.c:1342
+#: src/prefs_account_dialog.c:1351
 msgid "Select key by your email address"
 msgstr "Vybrat klíč podle email adresy"
 
-#: src/prefs_account_dialog.c:1351
+#: src/prefs_account_dialog.c:1360
 msgid "Specify key manually"
 msgstr "Zadat klíč ručně"
 
-#: src/prefs_account_dialog.c:1367
+#: src/prefs_account_dialog.c:1376
 msgid "User or key ID:"
 msgstr "Uživatel nebo ID klíče:"
 
-#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
-#: src/prefs_account_dialog.c:1494 src/prefs_account_dialog.c:1512
+#: src/prefs_account_dialog.c:1470 src/prefs_account_dialog.c:1487
+#: src/prefs_account_dialog.c:1503 src/prefs_account_dialog.c:1521
 msgid "Don't use SSL"
 msgstr "Nepoužívat SSL"
 
-#: src/prefs_account_dialog.c:1464
+#: src/prefs_account_dialog.c:1473
 msgid "Use SSL for POP3 connection"
 msgstr "Použít SSL pro POP3 spojení"
 
-#: src/prefs_account_dialog.c:1467 src/prefs_account_dialog.c:1484
-#: src/prefs_account_dialog.c:1518
+#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
+#: src/prefs_account_dialog.c:1527
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Použít příkaz STARTTLS pro spuštění SSL relace"
 
-#: src/prefs_account_dialog.c:1481
+#: src/prefs_account_dialog.c:1490
 msgid "Use SSL for IMAP4 connection"
 msgstr "Použít SSL pro IMAP4 spojení"
 
-#: src/prefs_account_dialog.c:1487
+#: src/prefs_account_dialog.c:1496
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1511
 msgid "Use SSL for NNTP connection"
 msgstr "Použít SSL pro NNTP připojení"
 
-#: src/prefs_account_dialog.c:1504
+#: src/prefs_account_dialog.c:1513
 msgid "Send (SMTP)"
 msgstr "Odesílání (SMTP)"
 
-#: src/prefs_account_dialog.c:1515
+#: src/prefs_account_dialog.c:1524
 msgid "Use SSL for SMTP connection"
 msgstr "Použít SSL pro SMTP připojení"
 
-#: src/prefs_account_dialog.c:1526
+#: src/prefs_account_dialog.c:1535
 msgid "Use non-blocking SSL"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1529
+#: src/prefs_account_dialog.c:1538
 msgid "Turn this off if you have problems in SSL connection."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1618
+#: src/prefs_account_dialog.c:1627
 msgid "Specify SMTP port"
 msgstr "Určete SMTP port"
 
-#: src/prefs_account_dialog.c:1624
+#: src/prefs_account_dialog.c:1633
 msgid "Specify POP3 port"
 msgstr "Určete POP3 port"
 
-#: src/prefs_account_dialog.c:1630
+#: src/prefs_account_dialog.c:1639
 msgid "Specify IMAP4 port"
 msgstr "Určete IMAP4 port"
 
-#: src/prefs_account_dialog.c:1636
+#: src/prefs_account_dialog.c:1645
 msgid "Specify NNTP port"
 msgstr "Určete NNTP port"
 
-#: src/prefs_account_dialog.c:1641
+#: src/prefs_account_dialog.c:1650
 msgid "Specify domain name"
 msgstr "Určete název domény"
 
-#: src/prefs_account_dialog.c:1662
+#: src/prefs_account_dialog.c:1671
 msgid "IMAP server directory"
 msgstr "adresář pro IMAP server"
 
-#: src/prefs_account_dialog.c:1672
+#: src/prefs_account_dialog.c:1681
 msgid "Only the subfolders of this directory will be displayed."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1717
+#: src/prefs_account_dialog.c:1726
 msgid "Put sent messages in"
 msgstr "Ukládat odeslané zprávy do"
 
-#: src/prefs_account_dialog.c:1719
+#: src/prefs_account_dialog.c:1728
 msgid "Put draft messages in"
 msgstr "Ukládat koncepty do"
 
-#: src/prefs_account_dialog.c:1721
+#: src/prefs_account_dialog.c:1730
 #, fuzzy
 msgid "Put queued messages in"
 msgstr "Ukládat smazané zprávy do"
 
-#: src/prefs_account_dialog.c:1723
+#: src/prefs_account_dialog.c:1732
 msgid "Put deleted messages in"
 msgstr "Ukládat smazané zprávy do"
 
-#: src/prefs_account_dialog.c:1786
+#: src/prefs_account_dialog.c:1795
 msgid "Account name is not entered."
 msgstr "Nebylo zadáno jméno účtu."
 
-#: src/prefs_account_dialog.c:1790
+#: src/prefs_account_dialog.c:1799
 msgid "Mail address is not entered."
 msgstr "Nebyla zadána poštovní adresa."
 
-#: src/prefs_account_dialog.c:1795
+#: src/prefs_account_dialog.c:1804
 msgid "SMTP server is not entered."
 msgstr "Nebyl zadán SMTP server."
 
-#: src/prefs_account_dialog.c:1800
+#: src/prefs_account_dialog.c:1809
 msgid "User ID is not entered."
 msgstr "Nebylo zadáno uživatelské číslo."
 
-#: src/prefs_account_dialog.c:1805
+#: src/prefs_account_dialog.c:1814
 msgid "POP3 server is not entered."
 msgstr "Nebyl zadán POP3 server."
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1819
 msgid "IMAP4 server is not entered."
 msgstr "Nebyl zadán IMAP4 server."
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1824
 msgid "NNTP server is not entered."
 msgstr "Nebyl zadán NNTP server."
 
-#: src/prefs_account_dialog.c:1841
+#: src/prefs_account_dialog.c:1850
 msgid "Specified folder is not a queue folder."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1915
+#: src/prefs_account_dialog.c:1924
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"

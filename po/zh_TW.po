@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-13 18:12+0900\n"
+"POT-Creation-Date: 2005-12-14 15:54+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -22,8 +22,8 @@ msgid "Reading all config for each account...\n"
 msgstr "讀取所有帳號的設定中...\n"
 
 #: libsylph/filter.c:894 libsylph/prefs.c:196 libsylph/prefs.c:224
-#: libsylph/prefs.c:269 libsylph/prefs_account.c:213
-#: libsylph/prefs_account.c:227 src/prefs_display_header.c:413
+#: libsylph/prefs.c:269 libsylph/prefs_account.c:215
+#: libsylph/prefs_account.c:229 src/prefs_display_header.c:413
 #: src/prefs_display_header.c:438
 msgid "failed to write configuration to file\n"
 msgstr "寫入組態設定時失敗。\n"
@@ -721,7 +721,7 @@ msgstr ""
 msgid "Name"
 msgstr "名稱"
 
-#: src/account_dialog.c:370 src/prefs_account_dialog.c:652
+#: src/account_dialog.c:370 src/prefs_account_dialog.c:655
 msgid "Protocol"
 msgstr "通訊協定"
 
@@ -1047,7 +1047,7 @@ msgstr ""
 "您確定要刪除「%s」資料夾以及裡面所有的地址嗎？\n"
 "如果您選擇只刪除資料夾，裡面的通訊紀錄將移到上一層資料夾中。"
 
-#: src/addressbook.c:1674 src/folderview.c:2196
+#: src/addressbook.c:1674 src/folderview.c:2239
 msgid "Delete folder"
 msgstr "刪除資料夾"
 
@@ -1174,7 +1174,7 @@ msgid "Group"
 msgstr "群組"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1676
+#: src/addressbook.c:3152 src/folderview.c:355 src/prefs_account_dialog.c:1685
 msgid "Folder"
 msgstr "資料夾"
 
@@ -1206,7 +1206,7 @@ msgstr "注意"
 msgid "Warning"
 msgstr "警告"
 
-#: src/alertpanel.c:167 src/inc.c:573
+#: src/alertpanel.c:167 src/inc.c:586
 msgid "Error"
 msgstr "錯誤"
 
@@ -1698,7 +1698,7 @@ msgstr "MIME 型態"
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:4641 src/mainwindow.c:2254 src/prefs_account_dialog.c:522
+#: src/compose.c:4641 src/mainwindow.c:2254 src/prefs_account_dialog.c:525
 #: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "送出"
@@ -1740,7 +1740,7 @@ msgid "Attach file"
 msgstr "附加檔案"
 
 #. signature
-#: src/compose.c:4690 src/prefs_account_dialog.c:1194
+#: src/compose.c:4690 src/prefs_account_dialog.c:1203
 #: src/prefs_common_dialog.c:954
 msgid "Signature"
 msgstr "簽章"
@@ -1948,7 +1948,7 @@ msgid " Check File "
 msgstr " 檢查檔案 "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1205
+#: src/prefs_account_dialog.c:1214
 msgid "File"
 msgstr "檔案"
 
@@ -2004,12 +2004,12 @@ msgstr "編輯資料夾"
 msgid "Input the new name of folder:"
 msgstr "請輸入新的資料夾名稱："
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:1975
-#: src/folderview.c:1981
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2018
+#: src/folderview.c:2024
 msgid "New folder"
 msgstr "新資料夾"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:1982
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2025
 msgid "Input the name of new folder:"
 msgstr "請輸入新資料夾的名稱："
 
@@ -2026,7 +2026,7 @@ msgid "Edit JPilot Entry"
 msgstr "編輯 JPilot 資料"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:534 src/prefs_account_dialog.c:1704
+#: src/importldif.c:534 src/prefs_account_dialog.c:1713
 #: src/prefs_common_dialog.c:1849
 msgid " ... "
 msgstr "..."
@@ -2091,7 +2091,7 @@ msgstr "逾時 (秒)"
 msgid "Maximum Entries"
 msgstr "項目最大值"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:518
+#: src/editldap.c:471 src/prefs_account_dialog.c:521
 msgid "Basic"
 msgstr "基本設定"
 
@@ -2148,7 +2148,7 @@ msgid "Exporting file:"
 msgstr "匯出檔名："
 
 #: src/export.c:185 src/export.c:191 src/import.c:191 src/import.c:197
-#: src/prefs_account_dialog.c:909
+#: src/prefs_account_dialog.c:914
 msgid " Select... "
 msgstr "選擇..."
 
@@ -2176,41 +2176,41 @@ msgstr "選擇目錄"
 msgid "Select folder"
 msgstr "選擇資料夾"
 
-#: src/foldersel.c:359 src/folderview.c:1103 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1146 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "收件夾"
 
-#: src/foldersel.c:363 src/folderview.c:1109 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1152 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "寄件夾"
 
-#: src/foldersel.c:367 src/folderview.c:1115 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1158 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "暫存資料夾"
 
-#: src/foldersel.c:371 src/folderview.c:1121 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1164 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "刪除的郵件"
 
-#: src/foldersel.c:375 src/folderview.c:1127 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1170 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "草稿"
 
-#: src/foldersel.c:542 src/folderview.c:1979 src/folderview.c:1983
+#: src/foldersel.c:542 src/folderview.c:2022 src/folderview.c:2026
 msgid "NewFolder"
 msgstr "新資料夾"
 
-#: src/foldersel.c:550 src/folderview.c:1991 src/folderview.c:2047
+#: src/foldersel.c:550 src/folderview.c:2034 src/folderview.c:2090
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "資料夾名稱中不應含有「%c」這個字元。"
 
-#: src/foldersel.c:560 src/folderview.c:2001 src/folderview.c:2054
+#: src/foldersel.c:560 src/folderview.c:2044 src/folderview.c:2097
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "資料夾「%s」已存在。"
 
-#: src/foldersel.c:568 src/folderview.c:2008
+#: src/foldersel.c:568 src/folderview.c:2051
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "無法建立資料夾「%s」。"
@@ -2315,26 +2315,26 @@ msgstr "重建資料夾結構中..."
 msgid "Rebuilding of the folder tree failed."
 msgstr "重建資料夾結構失敗。"
 
-#: src/folderview.c:970
+#: src/folderview.c:1013
 msgid "Checking for new messages in all folders..."
 msgstr "檢查每個資料夾中的新郵件..."
 
-#: src/folderview.c:1725
+#: src/folderview.c:1768
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "已選取 %s 資料夾\n"
 
-#: src/folderview.c:1880
+#: src/folderview.c:1923
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "從 %s 下載郵件中..."
 
-#: src/folderview.c:1915
+#: src/folderview.c:1958
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "從 %s 下載郵件時出現錯誤。"
 
-#: src/folderview.c:1976
+#: src/folderview.c:2019
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2344,21 +2344,21 @@ msgstr ""
 "（若是資料夾下要有子資料夾，\n"
 "　請在資料夾名稱的後面加上「/'）"
 
-#: src/folderview.c:2038
+#: src/folderview.c:2081
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "請輸入「%s」的新名稱："
 
-#: src/folderview.c:2039
+#: src/folderview.c:2082
 msgid "Rename folder"
 msgstr "重新命名資料夾"
 
-#: src/folderview.c:2130
+#: src/folderview.c:2173
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "無法移動資料夾「%s」。"
 
-#: src/folderview.c:2193
+#: src/folderview.c:2236
 #, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2371,20 +2371,20 @@ msgstr ""
 "\n"
 "您確定要刪除它嗎？"
 
-#: src/folderview.c:2222
+#: src/folderview.c:2265
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "無法移除資料夾「%s」。"
 
-#: src/folderview.c:2256
+#: src/folderview.c:2299
 msgid "Empty trash"
 msgstr "清空刪除的郵件"
 
-#: src/folderview.c:2257
+#: src/folderview.c:2300
 msgid "Delete all messages in the trash folder?"
 msgstr "您確定要清除所有被刪除的郵件？"
 
-#: src/folderview.c:2293
+#: src/folderview.c:2336
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2393,34 +2393,34 @@ msgstr ""
 "確定要移除信箱 %s？\n"
 "注意：信箱中的郵件將不會從硬碟中被刪除。"
 
-#: src/folderview.c:2295
+#: src/folderview.c:2338
 msgid "Remove mailbox"
 msgstr "移除信箱"
 
-#: src/folderview.c:2341
+#: src/folderview.c:2384
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "您確定要刪除 %s 這個 IMAP4 帳號？"
 
-#: src/folderview.c:2342
+#: src/folderview.c:2385
 msgid "Delete IMAP4 account"
 msgstr "刪除 IMAP4 帳號"
 
-#: src/folderview.c:2484
+#: src/folderview.c:2527
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "您確定要刪除新聞群組「%s」嗎？"
 
-#: src/folderview.c:2485
+#: src/folderview.c:2528
 msgid "Delete newsgroup"
 msgstr "刪除新聞群組"
 
-#: src/folderview.c:2532
+#: src/folderview.c:2575
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "您確定要刪除新聞群組帳號「%s」嗎？"
 
-#: src/folderview.c:2533
+#: src/folderview.c:2576
 msgid "Delete news account"
 msgstr "刪除帳號"
 
@@ -2561,142 +2561,142 @@ msgstr "屬性"
 msgid "Finish"
 msgstr "完成"
 
-#: src/inc.c:157
+#: src/inc.c:160
 #, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d 封新郵件"
 
-#: src/inc.c:161
+#: src/inc.c:164
 msgid "Sylpheed"
 msgstr "Sylpheed"
 
-#: src/inc.c:358
+#: src/inc.c:371
 msgid "Retrieving new messages"
 msgstr "取得新郵件中"
 
-#: src/inc.c:401
+#: src/inc.c:414
 msgid "Standby"
 msgstr "等待處理中"
 
-#: src/inc.c:530 src/inc.c:579
+#: src/inc.c:543 src/inc.c:592
 msgid "Cancelled"
 msgstr "取消"
 
-#: src/inc.c:541
+#: src/inc.c:554
 msgid "Retrieving"
 msgstr "讀取中"
 
-#: src/inc.c:550
+#: src/inc.c:563
 #, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "完成 （已接收 %d 封郵件 (%s)）"
 
-#: src/inc.c:554
+#: src/inc.c:567
 msgid "Done (no new messages)"
 msgstr "完成（無新郵件）"
 
-#: src/inc.c:560
+#: src/inc.c:573
 msgid "Connection failed"
 msgstr "連線失敗。"
 
-#: src/inc.c:563
+#: src/inc.c:576
 msgid "Auth failed"
 msgstr "認證失敗"
 
-#: src/inc.c:566
+#: src/inc.c:579
 msgid "Locked"
 msgstr "已鎖定"
 
-#: src/inc.c:576
+#: src/inc.c:589
 msgid "Timeout"
 msgstr "逾時"
 
-#: src/inc.c:626
+#: src/inc.c:639
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "完成（%d 封新郵件）"
 
-#: src/inc.c:629
+#: src/inc.c:642
 msgid "Finished (no new messages)"
 msgstr "完成（無新郵件）"
 
-#: src/inc.c:638
+#: src/inc.c:651
 msgid "Some errors occurred while getting mail."
 msgstr "取得郵件時發生錯誤。"
 
-#: src/inc.c:674
+#: src/inc.c:687
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "取得 %s 的新郵件中, 請稍候...\n"
 
-#: src/inc.c:677
+#: src/inc.c:690
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: 取得新郵件中, 請稍候..."
 
-#: src/inc.c:696
+#: src/inc.c:709
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "連線到 POP3 伺服器 %s 中..."
 
-#: src/inc.c:705
+#: src/inc.c:718
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "無法連線到 POP3 伺服器：%s:%d\n"
 
-#: src/inc.c:784 src/send_message.c:631
+#: src/inc.c:797 src/send_message.c:631
 msgid "Authenticating..."
 msgstr "認證"
 
-#: src/inc.c:785
+#: src/inc.c:798
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "從 %s 中取得郵件中..."
 
-#: src/inc.c:790
+#: src/inc.c:803
 msgid "Getting the number of new messages (STAT)..."
 msgstr "取得新郵件的數量中"
 
-#: src/inc.c:794
+#: src/inc.c:807
 msgid "Getting the number of new messages (LAST)..."
 msgstr "取得新郵件的數量中"
 
-#: src/inc.c:798
+#: src/inc.c:811
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "取得新郵件的數量中"
 
-#: src/inc.c:802
+#: src/inc.c:815
 msgid "Getting the size of messages (LIST)..."
 msgstr "取得新郵件的數量中"
 
-#: src/inc.c:812
+#: src/inc.c:825
 #, c-format
 msgid "Deleting message %d"
 msgstr "刪除第 %d 號郵件"
 
-#: src/inc.c:819 src/send_message.c:649
+#: src/inc.c:832 src/send_message.c:649
 msgid "Quitting"
 msgstr "離開"
 
-#: src/inc.c:844
+#: src/inc.c:857
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "取得新郵件 (%d / %d) (%s / %s)"
 
-#: src/inc.c:865
+#: src/inc.c:878
 #, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "取得新郵件 (共 %d 封新郵件, %s 已接收）"
 
-#: src/inc.c:1093
+#: src/inc.c:1106
 msgid "Connection failed."
 msgstr "連線失敗。"
 
-#: src/inc.c:1099
+#: src/inc.c:1112
 msgid "Error occurred while processing mail."
 msgstr "處理郵件時發生錯誤。"
 
-#: src/inc.c:1104
+#: src/inc.c:1117
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2705,39 +2705,39 @@ msgstr ""
 "處理郵件時發生錯誤：\n"
 "%s"
 
-#: src/inc.c:1110
+#: src/inc.c:1123
 msgid "No disk space left."
 msgstr "磁碟空間已滿。"
 
-#: src/inc.c:1115
+#: src/inc.c:1128
 msgid "Can't write file."
 msgstr "無法寫入檔案。"
 
-#: src/inc.c:1120
+#: src/inc.c:1133
 msgid "Socket error."
 msgstr "Socket 有錯誤"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1126 src/send_message.c:584 src/send_message.c:772
+#: src/inc.c:1139 src/send_message.c:584 src/send_message.c:772
 msgid "Connection closed by the remote host."
 msgstr "遠端主機關閉連線。"
 
-#: src/inc.c:1132
+#: src/inc.c:1145
 msgid "Mailbox is locked."
 msgstr "信箱已被鎖定，可能前一次擷取未完成。"
 
-#: src/inc.c:1136
+#: src/inc.c:1149
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
 msgstr "信箱已被鎖定：%s"
 
-#: src/inc.c:1142 src/send_message.c:757
+#: src/inc.c:1155 src/send_message.c:757
 msgid "Authentication failed."
 msgstr "認證失敗"
 
-#: src/inc.c:1147 src/send_message.c:760
+#: src/inc.c:1160 src/send_message.c:760
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2746,15 +2746,15 @@ msgstr ""
 "認證失敗：\n"
 "%s"
 
-#: src/inc.c:1152 src/send_message.c:776
+#: src/inc.c:1165 src/send_message.c:776
 msgid "Session timed out."
 msgstr "作業逾時"
 
-#: src/inc.c:1188
+#: src/inc.c:1201
 msgid "Incorporation cancelled\n"
 msgstr "動作已取消\n"
 
-#: src/inc.c:1271
+#: src/inc.c:1284
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "從 %s 中取得郵件放入 %s...\n"
@@ -3596,7 +3596,7 @@ msgstr "檢查所有帳號的新郵件"
 msgid "Send queued message(s)"
 msgstr "將暫存資料夾中的郵件送出"
 
-#: src/mainwindow.c:2265 src/prefs_account_dialog.c:524
+#: src/mainwindow.c:2265 src/prefs_account_dialog.c:527
 #: src/prefs_common_dialog.c:663 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "撰寫郵件"
@@ -3900,402 +3900,408 @@ msgstr ""
 "不當的密碼片語! 請再試一次...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:420
+#: src/prefs_account_dialog.c:423
 msgid "Opening account preferences window...\n"
 msgstr "開啟帳號設定的視窗...\n"
 
-#: src/prefs_account_dialog.c:453
+#: src/prefs_account_dialog.c:456
 #, c-format
 msgid "Account%d"
 msgstr "帳號 %d"
 
-#: src/prefs_account_dialog.c:472
+#: src/prefs_account_dialog.c:475
 msgid "Preferences for new account"
 msgstr "新帳號設定"
 
-#: src/prefs_account_dialog.c:477
+#: src/prefs_account_dialog.c:480
 msgid "Account preferences"
 msgstr "帳號設定"
 
-#: src/prefs_account_dialog.c:500
+#: src/prefs_account_dialog.c:503
 msgid "Creating account preferences window...\n"
 msgstr "產生帳號設定的視窗...\n"
 
-#: src/prefs_account_dialog.c:520 src/prefs_common_dialog.c:659
+#: src/prefs_account_dialog.c:523 src/prefs_common_dialog.c:659
 msgid "Receive"
 msgstr "接收設定"
 
-#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:670
+#: src/prefs_account_dialog.c:530 src/prefs_common_dialog.c:670
 msgid "Privacy"
 msgstr "私人資料"
 
-#: src/prefs_account_dialog.c:531
+#: src/prefs_account_dialog.c:534
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:2102
+#: src/prefs_account_dialog.c:537 src/prefs_common_dialog.c:2102
 msgid "Advanced"
 msgstr "進階設定"
 
-#: src/prefs_account_dialog.c:583
+#: src/prefs_account_dialog.c:586
 msgid "Name of this account"
 msgstr "這個帳號的名稱"
 
-#: src/prefs_account_dialog.c:592
+#: src/prefs_account_dialog.c:595
 msgid "Set as default"
 msgstr "設為預設帳號"
 
-#: src/prefs_account_dialog.c:596
+#: src/prefs_account_dialog.c:599
 msgid "Personal information"
 msgstr "個人資訊"
 
-#: src/prefs_account_dialog.c:605
+#: src/prefs_account_dialog.c:608
 msgid "Full name"
 msgstr "全名"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:614
 msgid "Mail address"
 msgstr "電子郵件地址"
 
-#: src/prefs_account_dialog.c:617
+#: src/prefs_account_dialog.c:620
 msgid "Organization"
 msgstr "服務公司/組織"
 
-#: src/prefs_account_dialog.c:641
+#: src/prefs_account_dialog.c:644
 msgid "Server information"
 msgstr "伺服器資訊"
 
-#: src/prefs_account_dialog.c:662 src/prefs_account_dialog.c:817
-#: src/prefs_account_dialog.c:1453
+#: src/prefs_account_dialog.c:665 src/prefs_account_dialog.c:821
+#: src/prefs_account_dialog.c:1462
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:664 src/prefs_account_dialog.c:922
-#: src/prefs_account_dialog.c:1470 src/prefs_account_dialog.c:1651
+#: src/prefs_account_dialog.c:667 src/prefs_account_dialog.c:927
+#: src/prefs_account_dialog.c:1479 src/prefs_account_dialog.c:1660
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:666
+#: src/prefs_account_dialog.c:669
 msgid "News (NNTP)"
 msgstr "新聞 (NNTP)"
 
-#: src/prefs_account_dialog.c:668
+#: src/prefs_account_dialog.c:671
 msgid "None (local)"
 msgstr "無 (local)"
 
-#: src/prefs_account_dialog.c:681
+#: src/prefs_account_dialog.c:684
 msgid "This server requires authentication"
 msgstr "這個伺服器需要認證"
 
-#: src/prefs_account_dialog.c:720
+#: src/prefs_account_dialog.c:723
 msgid "News server"
 msgstr "新聞伺服器"
 
-#: src/prefs_account_dialog.c:726
+#: src/prefs_account_dialog.c:729
 msgid "Server for receiving"
 msgstr "接收郵件伺服器"
 
-#: src/prefs_account_dialog.c:732
+#: src/prefs_account_dialog.c:735
 msgid "SMTP server (send)"
 msgstr "SMTP 郵件伺服器 (發信)"
 
-#: src/prefs_account_dialog.c:739 src/prefs_account_dialog.c:1114
+#: src/prefs_account_dialog.c:742 src/prefs_account_dialog.c:1123
 msgid "User ID"
 msgstr "帳號"
 
-#: src/prefs_account_dialog.c:745 src/prefs_account_dialog.c:1123
+#: src/prefs_account_dialog.c:748 src/prefs_account_dialog.c:1132
 msgid "Password"
 msgstr "密碼"
 
-#: src/prefs_account_dialog.c:825
+#: src/prefs_account_dialog.c:829
 msgid "Use secure authentication (APOP)"
 msgstr "使用安全認證（APOP）"
 
-#: src/prefs_account_dialog.c:828
+#: src/prefs_account_dialog.c:832
 msgid "Remove messages on server when received"
 msgstr "接收郵件時一併從伺服器上移除。"
 
-#: src/prefs_account_dialog.c:839
+#: src/prefs_account_dialog.c:843
 msgid "Remove after"
 msgstr "在幾天後移除："
 
-#: src/prefs_account_dialog.c:848
+#: src/prefs_account_dialog.c:852
 msgid "days"
 msgstr "天"
 
-#: src/prefs_account_dialog.c:865
-msgid "(0 days: remove immediately)"
+#: src/prefs_account_dialog.c:869
+#, fuzzy
+msgid "0 days: remove immediately"
 msgstr "(設為 0 則為立即移除)"
 
-#: src/prefs_account_dialog.c:872
+#: src/prefs_account_dialog.c:877
 msgid "Download all messages on server"
 msgstr "接收伺服器上所有的郵件。"
 
-#: src/prefs_account_dialog.c:878
+#: src/prefs_account_dialog.c:883
 msgid "Receive size limit"
 msgstr "接收郵件大小限制"
 
-#: src/prefs_account_dialog.c:885 src/prefs_filter_edit.c:554
+#: src/prefs_account_dialog.c:890 src/prefs_filter_edit.c:554
 #: src/prefs_filter_edit.c:956
 msgid "KB"
 msgstr "KB"
 
-#: src/prefs_account_dialog.c:892
+#: src/prefs_account_dialog.c:897
 msgid "Filter messages on receiving"
 msgstr "接收郵件時進行過濾"
 
-#: src/prefs_account_dialog.c:900
+#: src/prefs_account_dialog.c:905
 msgid "Default inbox"
 msgstr "預設的收件夾"
 
-#: src/prefs_account_dialog.c:920
+#: src/prefs_account_dialog.c:925
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "未經過濾的郵件將會被存到這個資料夾中。"
 
-#: src/prefs_account_dialog.c:933 src/prefs_account_dialog.c:1084
+#: src/prefs_account_dialog.c:938 src/prefs_account_dialog.c:1093
 msgid "Authentication method"
 msgstr "認證方法"
 
-#: src/prefs_account_dialog.c:943 src/prefs_account_dialog.c:1094
+#: src/prefs_account_dialog.c:948 src/prefs_account_dialog.c:1103
 #: src/prefs_common_dialog.c:874 src/prefs_common_dialog.c:2470
 msgid "Automatic"
 msgstr "自動"
 
-#: src/prefs_account_dialog.c:949
+#: src/prefs_account_dialog.c:955
+#, fuzzy
+msgid "Only check INBOX on receiving"
+msgstr "只在手動收取郵件時顯示"
+
+#: src/prefs_account_dialog.c:957
 msgid "News"
 msgstr "新聞"
 
-#: src/prefs_account_dialog.c:961
+#: src/prefs_account_dialog.c:969
 msgid "Maximum number of articles to download"
 msgstr "一次最多下載文章數量"
 
-#: src/prefs_account_dialog.c:978
+#: src/prefs_account_dialog.c:986
 msgid "No limit if 0 is specified."
 msgstr "設為 0 則不限制數量。"
 
-#: src/prefs_account_dialog.c:982
+#: src/prefs_account_dialog.c:990
 msgid "`Get all' checks for new messages on this account"
 msgstr "「全部檢查」時檢查這個帳號的新郵件"
 
-#: src/prefs_account_dialog.c:1034 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1043 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "郵件標頭設定"
 
-#: src/prefs_account_dialog.c:1041
+#: src/prefs_account_dialog.c:1050
 msgid "Add Date header field"
 msgstr "加入日期"
 
-#: src/prefs_account_dialog.c:1042
+#: src/prefs_account_dialog.c:1051
 msgid "Generate Message-ID"
 msgstr "產生郵件識別碼"
 
-#: src/prefs_account_dialog.c:1049
+#: src/prefs_account_dialog.c:1058
 msgid "Add user-defined header"
 msgstr "加入使用者定義的標頭"
 
-#: src/prefs_account_dialog.c:1051 src/prefs_common_dialog.c:1553
+#: src/prefs_account_dialog.c:1060 src/prefs_common_dialog.c:1553
 #: src/prefs_common_dialog.c:1580
 msgid " Edit... "
 msgstr " 編輯... "
 
-#: src/prefs_account_dialog.c:1061
+#: src/prefs_account_dialog.c:1070
 msgid "Authentication"
 msgstr "認證"
 
-#: src/prefs_account_dialog.c:1069
+#: src/prefs_account_dialog.c:1078
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP 認證 (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1145
+#: src/prefs_account_dialog.c:1154
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
 msgstr "若是此欄空白，將使用接收時的帳號與密碼。"
 
-#: src/prefs_account_dialog.c:1157
+#: src/prefs_account_dialog.c:1166
 msgid "Authenticate with POP3 before sending"
 msgstr "送信前先做 POP3 認證"
 
-#: src/prefs_account_dialog.c:1213
+#: src/prefs_account_dialog.c:1222
 msgid "Command output"
 msgstr "命令輸出"
 
-#: src/prefs_account_dialog.c:1224 src/prefs_folder_item.c:330
+#: src/prefs_account_dialog.c:1233 src/prefs_folder_item.c:330
 msgid "Automatically set the following addresses"
 msgstr "在相關欄位上自動加入下列電子郵件信箱："
 
-#: src/prefs_account_dialog.c:1233
+#: src/prefs_account_dialog.c:1242
 msgid "Cc"
 msgstr "複本"
 
-#: src/prefs_account_dialog.c:1246
+#: src/prefs_account_dialog.c:1255
 msgid "Bcc"
 msgstr "密件複本"
 
-#: src/prefs_account_dialog.c:1259
+#: src/prefs_account_dialog.c:1268
 msgid "Reply-To"
 msgstr "回信地址"
 
-#: src/prefs_account_dialog.c:1312
+#: src/prefs_account_dialog.c:1321
 msgid "Sign message by default"
 msgstr "郵件自動做數位簽章"
 
-#: src/prefs_account_dialog.c:1314
+#: src/prefs_account_dialog.c:1323
 msgid "Encrypt message by default"
 msgstr "郵件自動加密"
 
-#: src/prefs_account_dialog.c:1316
+#: src/prefs_account_dialog.c:1325
 msgid "Encrypt when replying to encrypted message"
 msgstr "回覆加密郵件時也進行加密"
 
-#: src/prefs_account_dialog.c:1318
+#: src/prefs_account_dialog.c:1327
 msgid "Use ASCII-armored format for encryption"
 msgstr "使用 ASCII-armored 格式做加密"
 
-#: src/prefs_account_dialog.c:1320
+#: src/prefs_account_dialog.c:1329
 msgid "Use clear text signature"
 msgstr "使用明碼簽章"
 
-#: src/prefs_account_dialog.c:1325
+#: src/prefs_account_dialog.c:1334
 msgid "Sign key"
 msgstr "簽章金鑰"
 
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1342
 msgid "Use default GnuPG key"
 msgstr "使用預設的 GnuPG 金鑰"
 
-#: src/prefs_account_dialog.c:1342
+#: src/prefs_account_dialog.c:1351
 msgid "Select key by your email address"
 msgstr "根據你的電子郵件地址選擇金鑰"
 
-#: src/prefs_account_dialog.c:1351
+#: src/prefs_account_dialog.c:1360
 msgid "Specify key manually"
 msgstr "手動指定金鑰"
 
-#: src/prefs_account_dialog.c:1367
+#: src/prefs_account_dialog.c:1376
 msgid "User or key ID:"
 msgstr "使用者代號或金鑰的識別碼："
 
-#: src/prefs_account_dialog.c:1461 src/prefs_account_dialog.c:1478
-#: src/prefs_account_dialog.c:1494 src/prefs_account_dialog.c:1512
+#: src/prefs_account_dialog.c:1470 src/prefs_account_dialog.c:1487
+#: src/prefs_account_dialog.c:1503 src/prefs_account_dialog.c:1521
 msgid "Don't use SSL"
 msgstr "不使用 SSL"
 
-#: src/prefs_account_dialog.c:1464
+#: src/prefs_account_dialog.c:1473
 msgid "Use SSL for POP3 connection"
 msgstr "POP3 連線時使用 SSL"
 
-#: src/prefs_account_dialog.c:1467 src/prefs_account_dialog.c:1484
-#: src/prefs_account_dialog.c:1518
+#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
+#: src/prefs_account_dialog.c:1527
 msgid "Use STARTTLS command to start SSL session"
 msgstr "用 STARTTLS 命令來啟動 SSL"
 
-#: src/prefs_account_dialog.c:1481
+#: src/prefs_account_dialog.c:1490
 msgid "Use SSL for IMAP4 connection"
 msgstr "IMAP4 連線時使用 SSL"
 
-#: src/prefs_account_dialog.c:1487
+#: src/prefs_account_dialog.c:1496
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1511
 msgid "Use SSL for NNTP connection"
 msgstr "NNTP 連線時使用 SSL"
 
-#: src/prefs_account_dialog.c:1504
+#: src/prefs_account_dialog.c:1513
 msgid "Send (SMTP)"
 msgstr "送信設定 (SMTP)"
 
-#: src/prefs_account_dialog.c:1515
+#: src/prefs_account_dialog.c:1524
 msgid "Use SSL for SMTP connection"
 msgstr "SMTP 連線時使用 SSL"
 
-#: src/prefs_account_dialog.c:1526
+#: src/prefs_account_dialog.c:1535
 msgid "Use non-blocking SSL"
 msgstr "使用 non-blocking SSL"
 
-#: src/prefs_account_dialog.c:1529
+#: src/prefs_account_dialog.c:1538
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "若您使用 SSL 連線時發生問題，請關閉此選項。"
 
-#: src/prefs_account_dialog.c:1618
+#: src/prefs_account_dialog.c:1627
 msgid "Specify SMTP port"
 msgstr "指定 SMTP 連接埠"
 
-#: src/prefs_account_dialog.c:1624
+#: src/prefs_account_dialog.c:1633
 msgid "Specify POP3 port"
 msgstr "指定 POP3 連接埠"
 
-#: src/prefs_account_dialog.c:1630
+#: src/prefs_account_dialog.c:1639
 msgid "Specify IMAP4 port"
 msgstr "指定 IMAP4 連接埠"
 
-#: src/prefs_account_dialog.c:1636
+#: src/prefs_account_dialog.c:1645
 msgid "Specify NNTP port"
 msgstr "指定 NNTP 連接埠"
 
-#: src/prefs_account_dialog.c:1641
+#: src/prefs_account_dialog.c:1650
 msgid "Specify domain name"
 msgstr "指定網域"
 
-#: src/prefs_account_dialog.c:1662
+#: src/prefs_account_dialog.c:1671
 msgid "IMAP server directory"
 msgstr "IMAP 伺服器目錄"
 
-#: src/prefs_account_dialog.c:1672
+#: src/prefs_account_dialog.c:1681
 msgid "Only the subfolders of this directory will be displayed."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1717
+#: src/prefs_account_dialog.c:1726
 msgid "Put sent messages in"
 msgstr "將已送出之郵件存到"
 
-#: src/prefs_account_dialog.c:1719
+#: src/prefs_account_dialog.c:1728
 msgid "Put draft messages in"
 msgstr "將郵件草稿存到"
 
-#: src/prefs_account_dialog.c:1721
+#: src/prefs_account_dialog.c:1730
 #, fuzzy
 msgid "Put queued messages in"
 msgstr "將刪除郵件存到"
 
-#: src/prefs_account_dialog.c:1723
+#: src/prefs_account_dialog.c:1732
 msgid "Put deleted messages in"
 msgstr "將刪除郵件存到"
 
-#: src/prefs_account_dialog.c:1786
+#: src/prefs_account_dialog.c:1795
 msgid "Account name is not entered."
 msgstr "未輸入帳號名稱。"
 
-#: src/prefs_account_dialog.c:1790
+#: src/prefs_account_dialog.c:1799
 msgid "Mail address is not entered."
 msgstr "未輸入電子郵件信箱。"
 
-#: src/prefs_account_dialog.c:1795
+#: src/prefs_account_dialog.c:1804
 msgid "SMTP server is not entered."
 msgstr "未輸入發送郵件伺服器。"
 
-#: src/prefs_account_dialog.c:1800
+#: src/prefs_account_dialog.c:1809
 msgid "User ID is not entered."
 msgstr "未輸入使用者帳號。"
 
-#: src/prefs_account_dialog.c:1805
+#: src/prefs_account_dialog.c:1814
 msgid "POP3 server is not entered."
 msgstr "未輸入接收郵件伺服器。"
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1819
 msgid "IMAP4 server is not entered."
 msgstr "未輸入接收郵件伺服器。"
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1824
 msgid "NNTP server is not entered."
 msgstr "未輸入新聞伺服器。"
 
-#: src/prefs_account_dialog.c:1841
+#: src/prefs_account_dialog.c:1850
 msgid "Specified folder is not a queue folder."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1915
+#: src/prefs_account_dialog.c:1924
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
