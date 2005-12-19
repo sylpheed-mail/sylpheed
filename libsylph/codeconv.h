@@ -158,6 +158,7 @@ struct _CodeConverter
 #define CS_X_SJIS		"X-SJIS"
 #define CS_ISO_2022_KR		"ISO-2022-KR"
 #define CS_EUC_KR		"EUC-KR"
+#define CS_KS_C_5601_1987	"ks_c_5601-1987"
 #define CS_ISO_2022_CN		"ISO-2022-CN"
 #define CS_EUC_CN		"EUC-CN"
 #define CS_GB2312		"GB2312"

@@ -1271,10 +1271,16 @@ static gchar *conv_noconv(const gchar *inbuf, gint *error)
 static const gchar *
 conv_get_fallback_for_private_encoding(const gchar *encoding)
 {
-	if (encoding && (encoding[0] == 'X' || encoding[0] == 'x') &&
-	    encoding[1] == '-') {
-		if (!g_ascii_strcasecmp(encoding, CS_X_GBK))
-			return CS_GBK;
+	if (encoding) {
+		if ((encoding[0] == 'X' || encoding[0] == 'x') &&
+		    encoding[1] == '-') {
+			if (!g_ascii_strcasecmp(encoding, CS_X_GBK))
+				return CS_GBK;
+		} else if ((encoding[0] == 'K' || encoding[0] == 'k') &&
+			   (encoding[1] == 'S' || encoding[1] == 's')) {
+			if (!g_ascii_strcasecmp(encoding, CS_KS_C_5601_1987))
+				return CS_EUC_KR;
+		}
 	}
 
 	return encoding;
