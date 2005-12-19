@@ -22,10 +22,8 @@
 
 #include <glib.h>
 
-#include "summaryview.h"
 #include "folder.h"
 
-void summary_search	(SummaryView	*summaryview,
-			 FolderItem	*item);
+void summary_search	(FolderItem	*item);
 
 #endif /* __SUMMARY_SEARCH_H__ */

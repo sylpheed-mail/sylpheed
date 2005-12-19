@@ -2762,7 +2762,7 @@ static void search_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		FolderItem *item;
 
 		item = folderview_get_selected_item(mainwin->folderview);
-		summary_search(mainwin->summaryview, item);
+		summary_search(item);
 	} else
 		message_search(mainwin->messageview);
 }

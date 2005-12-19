@@ -2629,7 +2629,7 @@ static void folderview_search_cb(FolderView *folderview, guint action,
 
 	item = folderview_get_selected_item(folderview);
 	if (item)
-		summary_search(folderview->summaryview, item);
+		summary_search(item);
 }
 
 static void folderview_property_cb(FolderView *folderview, guint action,

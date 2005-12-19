@@ -100,8 +100,6 @@ static struct SummarySearchWindow {
 	GtkWidget *save_btn;
 	GtkWidget *close_btn;
 
-	SummaryView *summaryview;
-
 	FilterRule *rule;
 	gboolean requires_full_headers;
 
@@ -169,7 +167,7 @@ static gboolean key_pressed		(GtkWidget	*widget,
 					 gpointer	 data);
 
 
-void summary_search(SummaryView *summaryview, FolderItem *item)
+void summary_search(FolderItem *item)
 {
 	gchar *id;
 
@@ -177,8 +175,6 @@ void summary_search(SummaryView *summaryview, FolderItem *item)
 		summary_search_create();
 	else
 		gtk_widget_hide(search_window.window);
-
-	search_window.summaryview = summaryview;
 
 	if (item) {
 		id = folder_item_get_identifier(item);
@@ -225,6 +221,7 @@ static void summary_search_create(void)
 
 	GtkWidget *status_label;
 
+	GtkWidget *btn_hbox;
 	GtkWidget *hbbox;
 	GtkWidget *save_btn;
 	GtkWidget *close_btn;
@@ -382,20 +379,18 @@ static void summary_search_create(void)
 	gtk_box_pack_start(GTK_BOX(confirm_area), status_label,
 			   FALSE, FALSE, 0);
 
-	hbbox = gtk_hbutton_box_new();
+	btn_hbox = gtk_hbox_new(FALSE, 6);
+	gtk_widget_show(btn_hbox);
+	gtk_box_pack_end(GTK_BOX(confirm_area), btn_hbox, FALSE, FALSE, 0);
+
+	gtkut_stock_button_set_create(&hbbox, &close_btn, GTK_STOCK_CLOSE,
+				      NULL, NULL, NULL, NULL);
 	gtk_widget_show(hbbox);
-	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox), GTK_BUTTONBOX_END);
-	gtk_box_set_spacing(GTK_BOX(hbbox), 6);
-	gtk_box_pack_end(GTK_BOX(confirm_area), hbbox, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(btn_hbox), hbbox, FALSE, FALSE, 0);
 
 	save_btn = gtk_button_new_with_mnemonic(_("_Save as search folder"));
-	gtk_box_pack_start(GTK_BOX(hbbox), save_btn, FALSE, FALSE, 0);
 	gtk_widget_show(save_btn);
-
-	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), close_btn, FALSE, FALSE, 0);
-	gtk_widget_show(close_btn);
+	gtk_box_pack_end(GTK_BOX(btn_hbox), save_btn, FALSE, FALSE, 0);
 
 	g_signal_connect(G_OBJECT(clear_btn), "clicked",
 			 G_CALLBACK(summary_search_clear), NULL);
@@ -878,10 +873,14 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 				      &cancel_btn, GTK_STOCK_CANCEL,
 				      NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(confirm_area), hbbox, FALSE, FALSE, 0);
+	GTK_WIDGET_SET_FLAGS(ok_btn, GTK_CAN_DEFAULT);
+	gtk_widget_grab_default(ok_btn);
 	g_signal_connect(G_OBJECT(ok_btn), "clicked",
 			 G_CALLBACK(summary_search_save_ok), dialog);
 	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
 			 G_CALLBACK(summary_search_save_cancel), dialog);
+
+	gtk_widget_grab_focus(name_entry);
 
 	gtk_widget_show_all(window);
 
@@ -960,35 +959,36 @@ static void summary_search_vfolder_update_rule(FolderItem *item)
 static void summary_search_save(GtkButton *button, gpointer data)
 {
 	SummarySearchSaveDialog *dialog;
+	const gchar *id, *name;
+	FolderItem *parent, *item;
 
 	dialog = summary_search_save_dialog_create();
+	id = gtk_entry_get_text(GTK_ENTRY(search_window.folder_entry));
+	if (id && *id)
+		gtk_entry_set_text(GTK_ENTRY(dialog->folder_entry), id);
 
 	while (!dialog->finished)
 		gtk_main_iteration();
 
-	if (!dialog->cancelled) {
-		const gchar *id, *name;
-		FolderItem *parent, *item;
+	if (dialog->cancelled) {
+		summary_search_save_dialog_destroy(dialog);
+		return;
+	}
 
-		id = gtk_entry_get_text(GTK_ENTRY(dialog->folder_entry));
-		parent = folder_find_item_from_identifier(id);
-		name = gtk_entry_get_text(GTK_ENTRY(dialog->name_entry));
-		if (parent && name && *name) {
-			if (folder_find_child_item_by_name(parent, name)) {
-				alertpanel_error
-					(_("The folder `%s' already exists."),
+	id = gtk_entry_get_text(GTK_ENTRY(dialog->folder_entry));
+	parent = folder_find_item_from_identifier(id);
+	name = gtk_entry_get_text(GTK_ENTRY(dialog->name_entry));
+	if (parent && name && *name) {
+		if (folder_find_child_item_by_name(parent, name)) {
+			alertpanel_error(_("The folder `%s' already exists."),
 					 name);
-			} else {
-				item = summary_search_create_vfolder
-					(parent, name);
-				if (item) {
-					summary_search_vfolder_update_rule
-						(item);
-					folderview_append_item(folderview_get(),
-							       NULL, item,
-							       TRUE);
-					folder_write_list();
-				}
+		} else {
+			item = summary_search_create_vfolder(parent, name);
+			if (item) {
+				summary_search_vfolder_update_rule(item);
+				folderview_append_item(folderview_get(),
+						       NULL, item, TRUE);
+				folder_write_list();
 			}
 		}
 	}
