@@ -304,7 +304,6 @@ gboolean filter_match_rule(FilterRule *rule, MsgInfo *msginfo, GSList *hlist,
 	gboolean matched;
 
 	g_return_val_if_fail(rule->cond_list != NULL, FALSE);
-	g_return_val_if_fail(rule->action_list != NULL, FALSE);
 
 	switch (rule->timing) {
 	case FLT_TIMING_ANY:
@@ -485,6 +484,8 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 	gboolean enabled = TRUE;
 	FilterRule *rule;
 	FilterBoolOp bool_op = FLT_OR;
+	const gchar *target_folder = NULL;
+	gboolean recursive = FALSE;
 	GSList *cond_list = NULL;
 	GSList *action_list = NULL;
 	GNode *child, *cond_child, *action_child;
@@ -558,6 +559,12 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 				type = attr->value;
 			else if (!strcmp(attr->name, "name"))
 				name = attr->value;
+			else if (!strcmp(attr->name, "recursive")) {
+				if (!strcmp(attr->value, "true"))
+					recursive = TRUE;
+				else
+					recursive = FALSE;
+			}
 		}
 
 		if (type) {
@@ -583,6 +590,9 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 			cond_type = FLT_COND_AGE_GREATER;
 		STR_CASE("account-id")
 			cond_type = FLT_COND_ACCOUNT;
+		STR_CASE("target-folder")
+			target_folder = value;
+			continue;
 		STR_CASE_END
 
 		cond = filter_cond_new(cond_type, match_type, match_flag,
@@ -641,10 +651,14 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 		action_list = g_slist_append(action_list, action);
 	}
 
-	if (name && cond_list && action_list) {
+	if (name && cond_list) {
 		rule = filter_rule_new(name, bool_op, cond_list, action_list);
 		rule->timing = timing;
 		rule->enabled = enabled;
+		if (target_folder) {
+			rule->target_folder = g_strdup(target_folder);
+			rule->recursive = recursive;
+		}
 		*fltlist = g_slist_prepend(*fltlist, rule);
 	}
 
@@ -670,17 +684,41 @@ GSList *filter_xml_node_to_filter_list(GNode *node)
 	return fltlist;
 }
 
+GSList *filter_read_file(const gchar *file)
+{
+	GNode *node;
+	GSList *list;
+
+	g_return_val_if_fail(file != NULL, NULL);
+
+	debug_print("Reading %s\n", file);
+
+	if (!is_file_exist(file))
+		return NULL;
+
+	node = xml_parse_file(file);
+	if (!node) {
+		g_warning("Can't parse %s\n", file);
+		return NULL;
+	}
+
+	list = filter_xml_node_to_filter_list(node);
+
+	xml_free_tree(node);
+
+	return list;
+}
+
 void filter_read_config(void)
 {
 	gchar *rcpath;
-	GNode *node;
-	FilterRule *rule;
 
 	debug_print("Reading filter configuration...\n");
 
 	/* remove all previous filter list */
 	while (prefs_common.fltlist != NULL) {
-		rule = (FilterRule *)prefs_common.fltlist->data;
+		FilterRule *rule = (FilterRule *)prefs_common.fltlist->data;
+
 		filter_rule_free(rule);
 		prefs_common.fltlist = g_slist_remove(prefs_common.fltlist,
 						      rule);
@@ -688,22 +726,8 @@ void filter_read_config(void)
 
 	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
 			     NULL);
-	if (!is_file_exist(rcpath)) {
-		g_free(rcpath);
-		return;
-	}
-
-	node = xml_parse_file(rcpath);
-	if (!node) {
-		g_warning("Can't parse %s\n", rcpath);
-		g_free(rcpath);
-		return;
-	}
+	prefs_common.fltlist = filter_read_file(rcpath);
 	g_free(rcpath);
-
-	prefs_common.fltlist = filter_xml_node_to_filter_list(node);
-
-	xml_free_tree(node);
 }
 
 #define NODE_NEW(tag, text) \
@@ -711,26 +735,23 @@ void filter_read_config(void)
 #define ADD_ATTR(name, value) \
 	xml_tag_add_attr(node->tag, xml_attr_new(name, value))
 
-void filter_write_config(void)
+void filter_write_file(GSList *list, const gchar *file)
 {
-	gchar *rcpath;
 	PrefFile *pfile;
 	GSList *cur;
 
-	debug_print("Writing filter configuration...\n");
+	g_return_if_fail(file != NULL);
 
-	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
-			     NULL);
-	if ((pfile = prefs_file_open(rcpath)) == NULL) {
-		g_warning("failed to write filter configuration to file\n");
-		g_free(rcpath);
+	if ((pfile = prefs_file_open(file)) == NULL) {
+		g_warning("failed to write filter configuration to file: %s\n",
+			  file);
 		return;
 	}
 
 	xml_file_put_xml_decl(pfile->fp);
 	fputs("\n<filter>\n", pfile->fp);
 
-	for (cur = prefs_common.fltlist; cur != NULL; cur = cur->next) {
+	for (cur = list; cur != NULL; cur = cur->next) {
 		FilterRule *rule = (FilterRule *)cur->data;
 		GSList *cur_cond;
 		GSList *cur_action;
@@ -820,6 +841,17 @@ void filter_write_config(void)
 			}
 		}
 
+		if (rule->target_folder) {
+			XMLNode *node;
+
+			NODE_NEW("target-folder", rule->target_folder);
+			ADD_ATTR("recursive", rule->recursive
+				 ? "true" : "false");
+			fputs("            ", pfile->fp);
+			xml_file_put_node(pfile->fp, node);
+			xml_free_node(node);
+		}
+
 		fputs("        </condition-list>\n", pfile->fp);
 
 		fputs("        <action-list>\n", pfile->fp);
@@ -888,12 +920,23 @@ void filter_write_config(void)
 
 	fputs("</filter>\n", pfile->fp);
 
-	g_free(rcpath);
-
 	if (prefs_file_close(pfile) < 0) {
-		g_warning(_("failed to write configuration to file\n"));
+		g_warning("failed to write filter configuration to file: %s\n",
+			  file);
 		return;
 	}
+}
+
+void filter_write_config(void)
+{
+	gchar *rcpath;
+
+	debug_print("Writing filter configuration...\n");
+
+	rcpath = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, FILTER_LIST,
+			     NULL);
+	filter_write_file(prefs_common.fltlist, rcpath);
+	g_free(rcpath);
 }
 
 #undef NODE_NEW
@@ -1399,6 +1442,7 @@ void filter_rule_free(FilterRule *rule)
 	if (!rule) return;
 
 	g_free(rule->name);
+	g_free(rule->target_folder);
 
 	filter_cond_list_free(rule->cond_list);
 	filter_action_list_free(rule->action_list);

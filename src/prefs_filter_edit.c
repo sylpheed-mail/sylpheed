@@ -335,6 +335,7 @@ FilterCondEdit *prefs_filter_edit_cond_edit_create(void)
 	cond_edit->cond_hbox_list = NULL;
 	cond_edit->hdr_list = NULL;
 	cond_edit->rule_hdr_list = NULL;
+	cond_edit->add_hbox = NULL;
 
 	return cond_edit;
 }
@@ -1243,6 +1244,8 @@ static void prefs_filter_edit_add_rule_cond(FilterCondEdit *cond_edit,
 		hbox = prefs_filter_edit_cond_hbox_create(cond_edit);
 		prefs_filter_edit_set_cond_hbox_widgets(hbox, PF_COND_HEADER);
 		prefs_filter_edit_insert_cond_hbox(cond_edit, hbox, -1);
+		if (cond_edit->add_hbox)
+			cond_edit->add_hbox(hbox);
 		return;
 	}
 
@@ -1252,6 +1255,8 @@ static void prefs_filter_edit_add_rule_cond(FilterCondEdit *cond_edit,
 		hbox = prefs_filter_edit_cond_hbox_create(cond_edit);
 		prefs_filter_edit_cond_hbox_set(hbox, cond);
 		prefs_filter_edit_insert_cond_hbox(cond_edit, hbox, -1);
+		if (cond_edit->add_hbox)
+			cond_edit->add_hbox(hbox);
 	}
 }
 
@@ -1964,6 +1969,8 @@ static void prefs_filter_cond_add_cb(GtkWidget *widget, gpointer data)
 	new_hbox = prefs_filter_edit_cond_hbox_create(cond_edit);
 	prefs_filter_edit_set_cond_hbox_widgets(new_hbox, PF_COND_HEADER);
 	prefs_filter_edit_insert_cond_hbox(cond_edit, new_hbox, index + 1);
+	if (cond_edit->add_hbox)
+		cond_edit->add_hbox(new_hbox);
 }
 
 static void prefs_filter_action_del_cb(GtkWidget *widget, gpointer data)

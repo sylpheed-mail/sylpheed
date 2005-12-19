@@ -34,6 +34,7 @@
 #include "imap.h"
 #include "news.h"
 #include "mh.h"
+#include "virtual.h"
 #include "utils.h"
 #include "xml.h"
 #include "codeconv.h"
@@ -819,6 +820,7 @@ void folder_set_missing_folders(void)
 		CREATE_FOLDER_IF_NOT_EXIST(draft,  DRAFT_DIR,  F_DRAFT);
 		CREATE_FOLDER_IF_NOT_EXIST(queue,  QUEUE_DIR,  F_QUEUE);
 		CREATE_FOLDER_IF_NOT_EXIST(trash,  TRASH_DIR,  F_TRASH);
+		/* CREATE_FOLDER_IF_NOT_EXIST(junk,   JUNK_DIR,  F_JUNK); */
 	}
 }
 
@@ -953,6 +955,11 @@ GSList *folder_item_get_msg_list(FolderItem *item, gboolean use_cache)
 	g_return_val_if_fail(item != NULL, NULL);
 
 	folder = item->folder;
+
+	if (item->stype == F_VIRTUAL)
+		return virtual_get_class()->get_msg_list(folder, item,
+							 use_cache);
+
 	return folder->klass->get_msg_list(folder, item, use_cache);
 }
 
@@ -1259,6 +1266,12 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 				stype = F_QUEUE;
 			else if (!g_ascii_strcasecmp(attr->value, "trash"))
 				stype = F_TRASH;
+#if 0
+			else if (!g_ascii_strcasecmp(attr->value, "junk"))
+				stype = F_JUNK;
+#endif
+			else if (!g_ascii_strcasecmp(attr->value, "virtual"))
+				stype = F_VIRTUAL;
 		} else if (!strcmp(attr->name, "name"))
 			name = attr->value;
 		else if (!strcmp(attr->name, "path"))
@@ -1358,6 +1371,7 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 	case F_DRAFT:  folder->draft  = item; break;
 	case F_QUEUE:  folder->queue  = item; break;
 	case F_TRASH:  folder->trash  = item; break;
+	/* case F_JUNK:   folder->junk   = item; break; */
 	default:       break;
 	}
 	item->account = account;
@@ -1479,7 +1493,8 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 	static gchar *folder_type_str[] = {"mh", "mbox", "maildir", "imap",
 					   "news", "unknown"};
 	static gchar *folder_item_stype_str[] = {"normal", "inbox", "outbox",
-						 "draft", "queue", "trash"};
+						 "draft", "queue", "trash",
+						 "junk", "virtual"};
 	static gchar *sort_key_str[] = {"none", "number", "size", "date",
 					"thread-date",
 					"from", "subject", "score", "label",

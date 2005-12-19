@@ -133,6 +133,9 @@ struct _FilterRule
 
 	FilterTiming timing;
 	gboolean enabled;
+
+	gchar *target_folder;
+	gboolean recursive;
 };
 
 struct _FilterInfo
@@ -167,7 +170,10 @@ gboolean filter_rule_requires_full_headers	(FilterRule	*rule);
 
 /* read / write config */
 GSList *filter_xml_node_to_filter_list	(GNode			*node);
+GSList *filter_read_file		(const gchar		*file);
 void filter_read_config			(void);
+void filter_write_file			(GSList			*list,
+					 const gchar		*file);
 void filter_write_config		(void);
 
 /* for old filterrc */

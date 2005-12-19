@@ -2758,9 +2758,12 @@ static void app_exit_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 
 static void search_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
-	if (action == 1)
-		summary_search(mainwin->summaryview);
-	else
+	if (action == 1) {
+		FolderItem *item;
+
+		item = folderview_get_selected_item(mainwin->folderview);
+		summary_search(mainwin->summaryview, item);
+	} else
 		message_search(mainwin->messageview);
 }
 

@@ -105,6 +105,7 @@ static GdkPixbuf *folderopen_pixbuf;
 static GdkPixbuf *foldernoselect_pixbuf;
 static GdkPixbuf *draft_pixbuf;
 static GdkPixbuf *trash_pixbuf;
+static GdkPixbuf *virtual_pixbuf;
 
 static void folderview_set_columns	(FolderView	*folderview);
 
@@ -516,6 +517,7 @@ void folderview_init(FolderView *folderview)
 			 &foldernoselect_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DRAFT, &draft_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_TRASH, &trash_pixbuf);
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_GROUP, &virtual_pixbuf);
 }
 
 void folderview_reflect_prefs(FolderView *folderview)
@@ -1170,6 +1172,19 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 				!strcmp2(item->name, DRAFT_DIR) ? _("Drafts") :
 				item->name);
 		break;
+#if 0
+	case F_JUNK:
+		pixbuf = folder_pixbuf;
+		open_pixbuf = folderopen_pixbuf;
+		name = g_strdup(FOLDER_IS_LOCAL(item->folder) &&
+				!strcmp2(item->name, JUNK_DIR) ? _("Junk") :
+				item->name);
+		break;
+#endif
+	case F_VIRTUAL:
+		pixbuf = open_pixbuf = virtual_pixbuf;
+		name = g_strdup(item->name);
+		break;
 	default:
 		if (item->no_select) {
 			pixbuf = open_pixbuf = foldernoselect_pixbuf;
@@ -1540,14 +1555,13 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	if (folderview->mainwin->lock_count == 0) {
 		new_folder = TRUE;
 		folder_property = TRUE;
+		search_folder = TRUE;
 		if (item->parent == NULL) {
 			update_tree = remove_tree = TRUE;
 		} else {
 			if (gtkut_tree_row_reference_equal
-				(folderview->selected, folderview->opened)) {
+				(folderview->selected, folderview->opened))
 				update_summary = TRUE;
-				search_folder = TRUE;
-			}
 		}
 		if (FOLDER_IS_LOCAL(folder) || FOLDER_TYPE(folder) == F_IMAP) {
 			if (item->parent == NULL)
@@ -1561,6 +1575,9 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		} else if (FOLDER_TYPE(folder) == F_NEWS) {
 			if (item->parent != NULL)
 				delete_folder = TRUE;
+		}
+		if (item->stype == F_VIRTUAL) {
+			rename_folder = delete_folder = TRUE;
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||
 		    FOLDER_TYPE(folder) == F_NEWS) {
@@ -2608,7 +2625,11 @@ static void folderview_rm_news_server_cb(FolderView *folderview, guint action,
 static void folderview_search_cb(FolderView *folderview, guint action,
 				 GtkWidget *widget)
 {
-	summary_search(folderview->summaryview);
+	FolderItem *item;
+
+	item = folderview_get_selected_item(folderview);
+	if (item)
+		summary_search(folderview->summaryview, item);
 }
 
 static void folderview_property_cb(FolderView *folderview, guint action,

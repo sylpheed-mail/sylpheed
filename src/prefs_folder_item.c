@@ -561,6 +561,9 @@ static void prefs_folder_item_apply_cb(GtkWidget *widget,
 			prev_item = folder->trash;
 			folder->trash = item;
 			break;
+		default:
+			type = item->stype;
+			break;
 		}
 
 		item->stype = type;

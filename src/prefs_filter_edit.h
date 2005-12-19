@@ -24,6 +24,10 @@
 
 #include "filter.h"
 
+typedef struct _FilterCondEdit	FilterCondEdit;
+typedef struct _CondHBox	CondHBox;
+typedef struct _ActionHBox	ActionHBox;
+
 typedef enum
 {
 	PF_COND_HEADER,
@@ -81,15 +85,18 @@ typedef enum
 	PF_ACTION_NONE
 } ActionMenuType;
 
-typedef struct _FilterCondEdit {
+struct _FilterCondEdit {
 	GtkWidget *cond_vbox;
 	GSList *cond_hbox_list;
 
 	GSList *hdr_list;
 	GSList *rule_hdr_list;
-} FilterCondEdit;
 
-typedef struct _CondHBox {
+	/* callback */
+	void	(*add_hbox)	(CondHBox	*hbox);
+};
+
+struct _CondHBox {
 	GtkWidget *hbox;
 
 	GtkWidget *cond_type_optmenu;
@@ -107,9 +114,9 @@ typedef struct _CondHBox {
 	gchar *cur_header_name;
 
 	FilterCondEdit *cond_edit;
-} CondHBox;
+};
 
-typedef struct _ActionHBox {
+struct _ActionHBox {
 	GtkWidget *hbox;
 
 	GtkWidget *action_type_optmenu;
@@ -125,7 +132,7 @@ typedef struct _ActionHBox {
 
 	GtkWidget *del_btn;
 	GtkWidget *add_btn;
-} ActionHBox;
+};
 
 
 FilterRule *prefs_filter_edit_open	(FilterRule	*rule,

@@ -43,6 +43,7 @@ libsylph_la_SOURCES = \
 	unmime.c unmime.h \
 	utils.c utils.h \
 	uuencode.c uuencode.h \
+	virtual.c virtual.h \
 	xml.c xml.h
 
 libsylph_la_LDFLAGS =

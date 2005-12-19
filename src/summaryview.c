@@ -649,7 +649,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 	buf = NULL;
 	if (!item || !item->path || !item->parent || item->no_select ||
-	    (FOLDER_TYPE(item->folder) == F_MH &&
+	    (FOLDER_TYPE(item->folder) == F_MH && item->stype != F_VIRTUAL &&
 	     ((buf = folder_item_get_path(item)) == NULL ||
 	      change_dir(buf) < 0))) {
 		g_free(buf);

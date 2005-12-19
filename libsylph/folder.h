@@ -79,7 +79,9 @@ typedef enum
 	F_OUTBOX,
 	F_DRAFT,
 	F_QUEUE,
-	F_TRASH
+	F_TRASH,
+	F_JUNK,
+	F_VIRTUAL
 } SpecialFolderItemType;
 
 typedef enum
