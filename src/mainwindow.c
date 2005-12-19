@@ -1447,21 +1447,23 @@ void main_window_get_size(MainWindow *mainwin)
 {
 	GtkAllocation *allocation;
 
-	if (prefs_common.mainwin_maximized)
-		return;
-
 	allocation = &(GTK_WIDGET_PTR(mainwin->summaryview)->allocation);
 
 	if (allocation->width > 1 && allocation->height > 1) {
-		prefs_common.summaryview_width = allocation->width;
+		if (!prefs_common.mainwin_maximized) {
+			prefs_common.summaryview_width = allocation->width;
+			prefs_common.mainview_width = allocation->width;
+		}
 
 		if ((mainwin->type == SEPARATE_NONE ||
 		     mainwin->type == SEPARATE_FOLDER) &&
 		    messageview_is_visible(mainwin->messageview))
 			prefs_common.summaryview_height = allocation->height;
 
-		prefs_common.mainview_width = allocation->width;
 	}
+
+	if (prefs_common.mainwin_maximized)
+		return;
 
 	allocation = &mainwin->window->allocation;
 	if (allocation->width > 1 && allocation->height > 1) {
