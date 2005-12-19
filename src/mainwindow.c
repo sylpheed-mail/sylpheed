@@ -183,6 +183,10 @@ static void message_window_size_allocate_cb	(GtkWidget	*widget,
 						 GtkAllocation	*allocation,
 						 gpointer	 data);
 
+static gboolean main_window_window_state_cb	(GtkWidget		*widget,
+						 GdkEventWindowState	*event,
+						 gpointer		 data);
+
 static void new_folder_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
@@ -994,8 +998,13 @@ MainWindow *main_window_create(SeparateType type)
 
 	main_window_set_widgets(mainwin, type);
 
+	if (prefs_common.mainwin_maximized)
+		gtk_window_maximize(GTK_WINDOW(window));
+
 	g_signal_connect(G_OBJECT(window), "size_allocate",
 			 G_CALLBACK(main_window_size_allocate_cb), mainwin);
+	g_signal_connect(G_OBJECT(window), "window_state_event",
+			 G_CALLBACK(main_window_window_state_cb), mainwin);
 
 	/* set menu items */
 	menuitem = gtk_item_factory_get_item
@@ -1438,6 +1447,9 @@ void main_window_get_size(MainWindow *mainwin)
 {
 	GtkAllocation *allocation;
 
+	if (prefs_common.mainwin_maximized)
+		return;
+
 	allocation = &(GTK_WIDGET_PTR(mainwin->summaryview)->allocation);
 
 	if (allocation->width > 1 && allocation->height > 1) {
@@ -1474,6 +1486,9 @@ void main_window_get_size(MainWindow *mainwin)
 	debug_print("summaryview size: %d x %d\n",
 		    prefs_common.summaryview_width,
 		    prefs_common.summaryview_height);
+	debug_print("mainwin size: %d x %d\n",
+		    prefs_common.mainwin_width,
+		    prefs_common.mainwin_height);
 	debug_print("folderview size: %d x %d\n",
 		    prefs_common.folderview_width,
 		    prefs_common.folderview_height);
@@ -1487,6 +1502,9 @@ void main_window_get_position(MainWindow *mainwin)
 {
 	gint x, y;
 	GtkWidget *window;
+
+	if (prefs_common.mainwin_maximized)
+		return;
 
 	gtkut_widget_get_uposition(mainwin->window, &x, &y);
 
@@ -2650,6 +2668,20 @@ static void message_window_size_allocate_cb(GtkWidget *widget,
 	MainWindow *mainwin = (MainWindow *)data;
 
 	main_window_get_size(mainwin);
+}
+
+static gboolean main_window_window_state_cb(GtkWidget *widget,
+					    GdkEventWindowState *event,
+					    gpointer data)
+{
+	if ((event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
+		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0)
+			prefs_common.mainwin_maximized = TRUE;
+		else
+			prefs_common.mainwin_maximized = FALSE;
+	}
+
+	return FALSE;
 }
 
 static void new_folder_cb(MainWindow *mainwin, guint action,

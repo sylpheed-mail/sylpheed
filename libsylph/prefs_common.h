@@ -147,6 +147,8 @@ struct _PrefsCommon
 	gint msgwin_width;
 	gint msgwin_height;
 
+	gboolean mainwin_maximized;
+
 	gint sourcewin_width;
 	gint sourcewin_height;
 
