@@ -48,6 +48,7 @@
 
 #include "subscribedialog.h"
 #include "manage_window.h"
+#include "mainwindow.h"
 #include "gtkutils.h"
 #include "utils.h"
 #include "news.h"
@@ -156,6 +157,7 @@ GSList *subscribe_dialog(Folder *folder)
 
 	manage_window_focus_out(dialog, NULL, NULL);
 	gtk_widget_hide(dialog);
+	main_window_popup(main_window_get());
 
 	if (ack) {
 		GSList *cur;
