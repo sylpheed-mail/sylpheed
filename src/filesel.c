@@ -89,9 +89,6 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 
 	dialog = filesel_create(title, action);
 
-	change_dir(prev_dir);
-	g_free(prev_dir);
-
 	manage_window_set_transient(GTK_WINDOW(dialog));
 
 	if (file)
@@ -107,6 +104,9 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	}
 
 	gtk_widget_show(dialog);
+
+	change_dir(prev_dir);
+	g_free(prev_dir);
 
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
