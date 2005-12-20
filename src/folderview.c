@@ -120,6 +120,7 @@ static void folderview_append_folder	(FolderView	*folderview,
 
 static void folderview_update_row	(FolderView	*folderview,
 					 GtkTreeIter	*iter);
+static void folderview_update_row_all	(FolderView	*folderview);
 
 static gint folderview_folder_name_compare	(GtkTreeModel	*model,
 						 GtkTreeIter	*a,
@@ -496,6 +497,8 @@ FolderView *folderview_create(void)
 	folderview->news_popup   = news_popup;
 	folderview->news_factory = news_factory;
 
+	folderview->display_folder_unread = prefs_common.display_folder_unread;
+
 	folderview_set_columns(folderview);
 
 	gtk_widget_show_all(scrolledwin);
@@ -523,6 +526,12 @@ void folderview_init(FolderView *folderview)
 void folderview_reflect_prefs(FolderView *folderview)
 {
 	folderview_set_columns(folderview);
+	if (folderview->display_folder_unread !=
+	    prefs_common.display_folder_unread) {
+		folderview->display_folder_unread =
+			prefs_common.display_folder_unread;
+		folderview_update_row_all(folderview);
+	}
 }
 
 FolderView *folderview_get(void)
@@ -1227,13 +1236,13 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 	gtk_tree_path_free(path);
 
 	if (item->stype == F_QUEUE && item->total > 0 &&
-	    prefs_common.display_folder_unread) {
+	    folderview->display_folder_unread) {
 		str = g_strdup_printf("%s (%d%s)", name, item->total,
 				      add_unread_mark ? "+" : "");
 		g_free(name);
 		name = str;
 	} else if ((item->unread > 0 || add_unread_mark) &&
-		   prefs_common.display_folder_unread) {
+		   folderview->display_folder_unread) {
 		if (item->unread > 0)
 			str = g_strdup_printf("%s (%d%s)", name, item->unread,
 					      add_unread_mark ? "+" : "");
@@ -1292,6 +1301,20 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 	if (gtkut_tree_view_find_collapsed_parent
 		(GTK_TREE_VIEW(folderview->treeview), &parent, iter))
 		folderview_update_row(folderview, &parent);
+}
+
+static void folderview_update_row_all(FolderView *folderview)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
+	GtkTreeIter iter;
+	gboolean valid;
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+
+	while (valid) {
+		folderview_update_row(folderview, &iter);
+		valid = gtkut_tree_model_next(model, &iter);
+	}
 }
 
 void folderview_update_item(FolderItem *item, gboolean update_summary)

@@ -53,6 +53,8 @@ struct _FolderView
 	GtkTreeRowReference *opened;
 	GtkTreeRowReference *prev_selected;
 
+	gboolean display_folder_unread;
+
 	gboolean open_folder;
 
 	guint expand_timeout;
