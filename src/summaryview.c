@@ -1956,6 +1956,11 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_FOREGROUND, foreground,
 			   S_COL_BOLD, use_bold,
 			   -1);
+
+	if (subject_s)
+		g_free(subject_s);
+	if (sw_from_s)
+		g_free(sw_from_s);
 }
 
 static void summary_insert_gnode(SummaryView *summaryview, GtkTreeStore *store,
