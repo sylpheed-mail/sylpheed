@@ -2119,9 +2119,29 @@ static gboolean compose_is_itemized(GtkTextBuffer *buffer,
 	}
 
 	clen = g_unichar_to_utf8(wc, ch);
+
+	/* (1), 2) etc. */
+	if ((clen == 1 && ch[0] == '(') || g_unichar_isdigit(wc)) {
+		if (ch[0] == '(')
+			gtk_text_iter_forward_char(&iter);
+
+		while (1) {
+			wc = gtk_text_iter_get_char(&iter);
+			clen = g_unichar_to_utf8(wc, ch);
+			if (g_unichar_isdigit(wc))
+				gtk_text_iter_forward_char(&iter);
+			else if (clen == 1 && ch[0] == ')') {
+				gtk_text_iter_forward_char(&iter);
+				wc = gtk_text_iter_get_char(&iter);
+				if (g_unichar_isspace(wc))
+					return TRUE;
+			} else
+				return FALSE;
+		}
+	}
+
 	if (clen != 1)
 		return FALSE;
-
 	if (!strchr("*-+", ch[0]))
 		return FALSE;
 
