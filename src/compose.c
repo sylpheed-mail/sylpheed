@@ -2120,17 +2120,23 @@ static gboolean compose_is_itemized(GtkTextBuffer *buffer,
 
 	clen = g_unichar_to_utf8(wc, ch);
 
-	/* (1), 2) etc. */
+	/* (1), 2), 3. etc. */
 	if ((clen == 1 && ch[0] == '(') || g_unichar_isdigit(wc)) {
+		gboolean digit_appeared = FALSE;
+
 		if (ch[0] == '(')
 			gtk_text_iter_forward_char(&iter);
 
 		while (1) {
 			wc = gtk_text_iter_get_char(&iter);
 			clen = g_unichar_to_utf8(wc, ch);
-			if (g_unichar_isdigit(wc))
+			if (g_unichar_isdigit(wc)) {
+				digit_appeared = TRUE;
 				gtk_text_iter_forward_char(&iter);
-			else if (clen == 1 && ch[0] == ')') {
+			} else if (clen == 1 &&
+				   (ch[0] == ')' || ch[0] == '.')) {
+				if (!digit_appeared)
+					return FALSE;
 				gtk_text_iter_forward_char(&iter);
 				wc = gtk_text_iter_get_char(&iter);
 				if (g_unichar_isspace(wc))
