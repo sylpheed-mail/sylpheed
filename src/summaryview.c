@@ -1881,13 +1881,12 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 		date_s = msginfo->date;
 	else
 		date_s = _("(No Date)");
-	if (prefs_common.swap_from && msginfo->from && msginfo->to &&
-	    cur_account && cur_account->address) {
+	if (prefs_common.swap_from && msginfo->from && msginfo->to) {
 		gchar *from;
 
 		Xstrdup_a(from, msginfo->from, return);
 		extract_address(from);
-		if (!strcmp(from, cur_account->address))
+		if (account_address_exist(from))
 			sw_from_s = g_strconcat("-->", msginfo->to, NULL);
 	}
 

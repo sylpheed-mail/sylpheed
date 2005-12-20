@@ -42,6 +42,8 @@ PrefsAccount *cur_account;
 
 static GList *account_list = NULL;
 
+GHashTable *address_table;
+
 
 void account_read_config_all(void)
 {
@@ -244,6 +246,24 @@ PrefsAccount *account_find_from_msginfo(MsgInfo *msginfo)
 	return ac;
 }
 
+gboolean account_address_exist(const gchar *address)
+{
+	if (!address_table) {
+		GList *cur;
+
+		address_table = g_hash_table_new(g_str_hash, g_str_equal);
+		for (cur = account_list; cur != NULL; cur = cur->next) {
+			PrefsAccount *ac = (PrefsAccount *)cur->data;
+
+			if (ac->address)
+				g_hash_table_insert(address_table, ac->address,
+						    GINT_TO_POINTER(1));
+		}
+	}
+
+	return (gboolean)g_hash_table_lookup(address_table, address);
+}
+
 void account_foreach(AccountFunc func, gpointer user_data)
 {
 	GList *cur;
@@ -267,6 +287,7 @@ void account_list_free(void)
 void account_append(PrefsAccount *ac_prefs)
 {
 	account_list = g_list_append(account_list, ac_prefs);
+	account_updated();
 }
 
 void account_set_as_default(PrefsAccount *ac_prefs)
@@ -421,5 +442,15 @@ void account_destroy(PrefsAccount *ac_prefs)
 			account_set_as_default(ac_prefs);
 			cur_account = ac_prefs;
 		}
+	}
+
+	account_updated();
+}
+
+void account_updated(void)
+{
+	if (address_table) {
+		g_hash_table_destroy(address_table);
+		address_table = NULL;
 	}
 }

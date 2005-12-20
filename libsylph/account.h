@@ -43,6 +43,8 @@ PrefsAccount *account_find_from_item		(FolderItem	*item);
 PrefsAccount *account_find_from_message_file	(const gchar	*file);
 PrefsAccount *account_find_from_msginfo		(MsgInfo	*msginfo);
 
+gboolean      account_address_exist	(const gchar	*address);
+
 void	      account_foreach		(AccountFunc	 func,
 					 gpointer	 user_data);
 GList	     *account_get_list		(void);
@@ -57,5 +59,7 @@ FolderItem   *account_get_special_folder(PrefsAccount		*ac_prefs,
 					 SpecialFolderItemType	 type);
 
 void	      account_destroy		(PrefsAccount	*ac_prefs);
+
+void	      account_updated		(void);
 
 #endif /* __ACCOUNT_H__ */

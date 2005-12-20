@@ -2440,6 +2440,7 @@ static void folderview_rm_imap_server_cb(FolderView *folderview, guint action,
 	account = item->folder->account;
 	folder_destroy(item->folder);
 	account_destroy(account);
+	account_write_config_all();
 
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (sel_path) {
@@ -2631,6 +2632,7 @@ static void folderview_rm_news_server_cb(FolderView *folderview, guint action,
 	account = item->folder->account;
 	folder_destroy(item->folder);
 	account_destroy(account);
+	account_write_config_all();
 
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (sel_path) {

@@ -224,6 +224,7 @@ void account_open(PrefsAccount *ac_prefs)
 	account_write_config_all();
 	account_set_menu();
 	main_window_reflect_prefs_all();
+	account_updated();
 }
 
 void account_set_missing_folder(void)
