@@ -1601,6 +1601,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		}
 		if (item->stype == F_VIRTUAL) {
 			rename_folder = delete_folder = TRUE;
+			search_folder = FALSE;
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||
 		    FOLDER_TYPE(folder) == F_NEWS) {

@@ -253,6 +253,8 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 		gtk_widget_set_sensitive(optmenu, FALSE);
 		gtk_widget_set_sensitive(vbox2, FALSE);
 	}
+	if (dialog->item->stype == F_VIRTUAL)
+		gtk_widget_set_sensitive(optmenu, FALSE);
 
 	dialog->name_entry = name_entry;
 	dialog->id_label = id_label;
@@ -527,7 +529,7 @@ static void prefs_folder_item_apply_cb(GtkWidget *widget,
 	type = (SpecialFolderItemType)
 		g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID);
 
-	if (item->stype != type) {
+	if (item->stype != type && item->stype != F_VIRTUAL) {
 		switch (type) {
 		case F_NORMAL:
 			break;

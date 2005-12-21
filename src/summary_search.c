@@ -60,6 +60,7 @@
 #include "manage_window.h"
 #include "alertpanel.h"
 #include "foldersel.h"
+#include "statusbar.h"
 #include "procmsg.h"
 #include "procheader.h"
 #include "folder.h"
@@ -176,7 +177,7 @@ void summary_search(FolderItem *item)
 	else
 		gtk_widget_hide(search_window.window);
 
-	if (item) {
+	if (item && item->stype != F_VIRTUAL) {
 		id = folder_item_get_identifier(item);
 		gtk_entry_set_text(GTK_ENTRY(search_window.folder_entry), id);
 		g_free(id);
@@ -515,6 +516,7 @@ static void summary_search_query(void)
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
 			     GTK_STOCK_FIND);
 	gtk_label_set_text(GTK_LABEL(search_window.status_label), _("Done."));
+	statusbar_pop_all();
 
 	if (search_window.cancelled)
 		debug_print("* query search cancelled.\n");
@@ -533,7 +535,7 @@ static void summary_search_folder(FolderItem *item)
 	gint count = 1, total;
 	GTimeVal tv_prev, tv_cur;
 
-	if (!item->path)
+	if (!item->path || item->stype == F_VIRTUAL)
 		return;
 
 	folder_name = g_path_get_basename(item->path);
@@ -729,7 +731,7 @@ static void summary_select_folder(GtkButton *button, gpointer data)
 	gchar *id;
 
 	item = foldersel_folder_sel(NULL, FOLDER_SEL_ALL, NULL);
-	if (!item)
+	if (!item || item->stype == F_VIRTUAL)
 		return;
 
 	id = folder_item_get_identifier(item);
@@ -779,7 +781,7 @@ static void summary_search_save_dialog_select_folder(GtkButton *button,
 	gchar *id;
 
 	item = foldersel_folder_sel(NULL, FOLDER_SEL_ALL, NULL);
-	if (!item)
+	if (!item || item->no_sub || item->stype == F_VIRTUAL)
 		return;
 
 	id = folder_item_get_identifier(item);
@@ -929,6 +931,7 @@ static FolderItem *summary_search_create_vfolder(FolderItem *parent,
 
 	item = folder_item_new(name, path);
 	item->stype = F_VIRTUAL;
+	item->no_sub = TRUE;
 	folder_item_append(parent, item);
 
 	g_free(path);

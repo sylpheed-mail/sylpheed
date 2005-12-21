@@ -768,6 +768,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
 	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
+	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	msginfo->folder->mark_dirty = TRUE;
 	if (MSG_IS_IMAP(msginfo->flags))
 		imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
@@ -859,6 +860,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 		msginfo = (MsgInfo *)cur->data;
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
 		MSG_SET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 		msginfo->folder->mark_dirty = TRUE;
 	}
 	msginfo = (MsgInfo *)mlist->data;

@@ -2271,6 +2271,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		    MSG_IS_UNREAD(msginfo->flags)) {
 			MSG_UNSET_PERM_FLAGS
 				(msginfo->flags, MSG_NEW | MSG_UNREAD);
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 			summaryview->folder_item->mark_dirty = TRUE;
 			if (MSG_IS_IMAP(msginfo->flags))
 				imap_msg_unset_perm_flags
@@ -2450,15 +2451,17 @@ static void summary_mark_row(SummaryView *summaryview, GtkTreeIter *iter)
 	GET_MSG_INFO(msginfo, iter);
 
 	msginfo->to_folder = NULL;
-	if (MSG_IS_DELETED(msginfo->flags))
+	if (MSG_IS_DELETED(msginfo->flags)) {
 		summaryview->deleted--;
+		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
+	}
 	if (MSG_IS_MOVE(msginfo->flags))
 		summaryview->moved--;
 	if (MSG_IS_COPY(msginfo->flags))
 		summaryview->copied--;
-	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
 	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_MARKED);
+	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	summaryview->folder_item->mark_dirty = TRUE;
 	summary_set_row(summaryview, iter, msginfo);
 
@@ -2508,6 +2511,7 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 		summaryview->folder_item->unread--;
 	if (MSG_IS_NEW(msginfo->flags) || MSG_IS_UNREAD(msginfo->flags)) {
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW | MSG_UNREAD);
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 		summaryview->folder_item->mark_dirty = TRUE;
 		summary_set_row(summaryview, iter, msginfo);
 		debug_print(_("Message %d is marked as being read\n"),
@@ -2597,6 +2601,7 @@ static void summary_mark_row_as_unread(SummaryView *summaryview,
 		debug_print(_("Message %d is marked as unread\n"),
 			    msginfo->msgnum);
 	}
+	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	summary_set_row(summaryview, iter, msginfo);
 }
 
@@ -2646,6 +2651,7 @@ static void summary_delete_row(SummaryView *summaryview, GtkTreeIter *iter)
 		summaryview->copied--;
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
 	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
+	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	summaryview->deleted++;
 	summaryview->folder_item->mark_dirty = TRUE;
 
@@ -2771,6 +2777,7 @@ static void summary_unmark_row(SummaryView *summaryview, GtkTreeIter *iter)
 		summaryview->copied--;
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_MARKED | MSG_DELETED);
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
+	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	summaryview->folder_item->mark_dirty = TRUE;
 	summary_set_row(summaryview, iter, msginfo);
 
@@ -2818,9 +2825,11 @@ static void summary_move_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	GET_MSG_INFO(msginfo, iter);
 
 	msginfo->to_folder = to_folder;
-	if (MSG_IS_DELETED(msginfo->flags))
+	if (MSG_IS_DELETED(msginfo->flags)) {
 		summaryview->deleted--;
-	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
+		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+	}
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_COPY);
 	if (!MSG_IS_MOVE(msginfo->flags)) {
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MOVE);
@@ -2889,9 +2898,11 @@ static void summary_copy_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	GET_MSG_INFO(msginfo, iter);
 
 	msginfo->to_folder = to_folder;
-	if (MSG_IS_DELETED(msginfo->flags))
+	if (MSG_IS_DELETED(msginfo->flags)) {
 		summaryview->deleted--;
-	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
+		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+	}
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE);
 	if (!MSG_IS_COPY(msginfo->flags)) {
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_COPY);
@@ -4254,6 +4265,7 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_CLABEL_FLAG_MASK);
 		MSG_SET_COLORLABEL_VALUE(msginfo->flags, labelcolor);
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 		summary_set_row(summaryview, &iter, msginfo);
 	}
 

@@ -88,6 +88,7 @@ typedef guint32 MsgPermFlags;
 #define MSG_IMAP		(1U << 19)
 #define MSG_NEWS		(1U << 20)
 #define MSG_SIGNED		(1U << 21)
+#define MSG_FLAG_CHANGED	(1U << 27)
 #define MSG_CACHED		(1U << 28)
 #define MSG_MIME		(1U << 29)
 #define MSG_INVALID		(1U << 30)

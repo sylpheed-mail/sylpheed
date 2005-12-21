@@ -144,25 +144,42 @@ static GSList *virtual_search_folder(FilterRule *rule, FolderItem *item)
 	GSList *cur;
 	FilterInfo fltinfo;
 	gboolean full_headers;
+	gint count = 1, total;
+	GTimeVal tv_prev, tv_cur;
 
 	g_return_val_if_fail(rule != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item->path != NULL, NULL);
 
 	/* prevent circular reference */
 	if (item->stype == F_VIRTUAL)
 		return NULL;
 
+	g_get_current_time(&tv_prev);
+	status_print(_("Searching %s ..."), item->path);
+
 	mlist = folder_item_get_msg_list(item, TRUE);
+	total = g_slist_length(mlist);
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
-	debug_print("start query search: %s\n", item->path ? item->path : "");
+	debug_print("start query search: %s\n", item->path);
 
 	full_headers = filter_rule_requires_full_headers(rule);
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist;
+
+		g_get_current_time(&tv_cur);
+		if (tv_cur.tv_sec > tv_prev.tv_sec ||
+		    tv_cur.tv_usec - tv_prev.tv_usec >
+		    PROGRESS_UPDATE_INTERVAL * 1000) {
+			status_print(_("Searching %s (%d / %d)..."),
+				     item->path, count, total);
+			tv_prev = tv_cur;
+		}
+		++count;
 
 		fltinfo.flags = msginfo->flags;
 		if (full_headers) {

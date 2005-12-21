@@ -543,6 +543,7 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 		const gchar *type = NULL;
 		const gchar *name = NULL;
 		const gchar *value = NULL;
+		gboolean case_sens = FALSE;
 		FilterCond *cond;
 		FilterCondType cond_type = FLT_COND_HEADER;
 		FilterMatchType match_type = FLT_CONTAIN;
@@ -555,22 +556,28 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 			XMLAttr *attr = (XMLAttr *)list->data;
 
 			if (!attr || !attr->name || !attr->value) continue;
-			if (!strcmp(attr->name, "type"))
+
+			STR_SWITCH(attr->name)
+			STR_CASE_BEGIN("type")
 				type = attr->value;
-			else if (!strcmp(attr->name, "name"))
+			STR_CASE("name")
 				name = attr->value;
-			else if (!strcmp(attr->name, "recursive")) {
+			STR_CASE("case")
+				case_sens = TRUE;
+			STR_CASE("recursive")
 				if (!strcmp(attr->value, "true"))
 					recursive = TRUE;
 				else
 					recursive = FALSE;
-			}
+			STR_CASE_END
 		}
 
 		if (type) {
 			filter_rule_match_type_str_to_enum
 				(type, &match_type, &match_flag);
 		}
+		if (case_sens)
+			match_flag |= FLT_CASE_SENS;
 		value = xmlnode->element;
 
 		STR_SWITCH(xmlnode->tag->tag)
@@ -799,18 +806,26 @@ void filter_write_file(GSList *list, const gchar *file)
 				NODE_NEW("match-header", cond->str_value);
 				ADD_ATTR("type", match_type);
 				ADD_ATTR("name", cond->header_name);
+				if (FLT_IS_CASE_SENS(cond->match_flag))
+					ADD_ATTR("case", "true");
 				break;
 			case FLT_COND_ANY_HEADER:
 				NODE_NEW("match-any-header", cond->str_value);
 				ADD_ATTR("type", match_type);
+				if (FLT_IS_CASE_SENS(cond->match_flag))
+					ADD_ATTR("case", "true");
 				break;
 			case FLT_COND_TO_OR_CC:
 				NODE_NEW("match-to-or-cc", cond->str_value);
 				ADD_ATTR("type", match_type);
+				if (FLT_IS_CASE_SENS(cond->match_flag))
+					ADD_ATTR("case", "true");
 				break;
 			case FLT_COND_BODY:
 				NODE_NEW("match-body-text", cond->str_value);
 				ADD_ATTR("type", match_type);
+				if (FLT_IS_CASE_SENS(cond->match_flag))
+					ADD_ATTR("case", "true");
 				break;
 			case FLT_COND_CMD_TEST:
 				NODE_NEW("command-test", cond->str_value);
