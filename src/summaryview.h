@@ -152,6 +152,8 @@ gboolean summary_is_locked	  (SummaryView		*summaryview);
 
 SummarySelection summary_get_selection_type	(SummaryView	*summaryview);
 GSList *summary_get_selected_msg_list		(SummaryView	*summaryview);
+GSList *summary_get_changed_msg_list		(SummaryView	*summaryview);
+GSList *summary_get_msg_list			(SummaryView	*summaryview);
 
 void summary_select_prev_unread	  (SummaryView		*summaryview);
 void summary_select_next_unread	  (SummaryView		*summaryview);

@@ -130,6 +130,7 @@ typedef guint32 MsgTmpFlags;
 #define MSG_IS_IMAP(msg)		(((msg).tmp_flags & MSG_IMAP) != 0)
 #define MSG_IS_NEWS(msg)		(((msg).tmp_flags & MSG_NEWS) != 0)
 #define MSG_IS_SIGNED(msg)		(((msg).tmp_flags & MSG_SIGNED) != 0)
+#define MSG_IS_FLAG_CHANGED(msg)	(((msg).tmp_flags & MSG_FLAG_CHANGED) != 0)
 #define MSG_IS_CACHED(msg)		(((msg).tmp_flags & MSG_CACHED) != 0)
 #define MSG_IS_MIME(msg)		(((msg).tmp_flags & MSG_MIME) != 0)
 #define MSG_IS_INVALID(msg)		(((msg).tmp_flags & MSG_INVALID) != 0)
@@ -231,6 +232,8 @@ void	procmsg_write_cache_list	(FolderItem	*item,
 					 GSList		*mlist);
 void	procmsg_write_flags_list	(FolderItem	*item,
 					 GSList		*mlist);
+void	procmsg_write_flags_for_multiple_folders
+					(GSList		*mlist);
 
 void	procmsg_flush_mark_queue	(FolderItem	*item,
 					 FILE		*fp);

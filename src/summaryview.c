@@ -918,7 +918,6 @@ GSList *summary_get_selected_msg_list(SummaryView *summaryview)
 
 	rows = summary_get_selected_rows(summaryview);
 	for (cur = rows; cur != NULL; cur = cur->next) {
-		msginfo = NULL;
 		gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)cur->data);
 		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
 		mlist = g_slist_prepend(mlist, msginfo);
@@ -927,6 +926,26 @@ GSList *summary_get_selected_msg_list(SummaryView *summaryview)
 	mlist = g_slist_reverse(mlist);
 
 	return mlist;
+}
+
+GSList *summary_get_changed_msg_list(SummaryView *summaryview)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeIter iter;
+	GSList *mlist = NULL;
+	MsgInfo *msginfo;
+	gboolean valid;
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+
+	while (valid) {
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		if (MSG_IS_FLAG_CHANGED(msginfo->flags))
+			mlist = g_slist_prepend(mlist, msginfo);
+		valid = gtkut_tree_model_next(model, &iter);
+	}
+
+	return g_slist_reverse(mlist);
 }
 
 GSList *summary_get_msg_list(SummaryView *summaryview)
@@ -2142,7 +2161,7 @@ gint summary_write_cache(SummaryView *summaryview)
 	} else
 		fps.cache_fp = NULL;
 
-	if (item->mark_dirty) {
+	if (item->mark_dirty && item->stype != F_VIRTUAL) {
 		fps.mark_fp = procmsg_open_mark_file(item, DATA_WRITE);
 		if (fps.mark_fp == NULL) {
 			if (fps.cache_fp)
@@ -2173,6 +2192,17 @@ gint summary_write_cache(SummaryView *summaryview)
 		fclose(fps.cache_fp);
 	if (fps.mark_fp)
 		fclose(fps.mark_fp);
+
+	if (item->stype == F_VIRTUAL) {
+		GSList *mlist;
+
+		mlist = summary_get_changed_msg_list(summaryview);
+		if (mlist) {
+			procmsg_write_flags_for_multiple_folders(mlist);
+			g_slist_free(mlist);
+			folderview_update_all_updated(FALSE);
+		}
+	}
 
 	debug_print(_("done.\n"));
 
@@ -2267,6 +2297,15 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			summaryview->folder_item->new--;
 		if (MSG_IS_UNREAD(msginfo->flags))
 			summaryview->folder_item->unread--;
+
+		if (summaryview->folder_item->stype == F_VIRTUAL) {
+			if (MSG_IS_NEW(msginfo->flags))
+				msginfo->folder->new--;
+			if (MSG_IS_UNREAD(msginfo->flags))
+				msginfo->folder->unread--;
+			folderview_update_item(msginfo->folder, FALSE);
+		}
+
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
 			MSG_UNSET_PERM_FLAGS
@@ -2509,6 +2548,15 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 		summaryview->folder_item->new--;
 	if (MSG_IS_UNREAD(msginfo->flags))
 		summaryview->folder_item->unread--;
+
+	if (summaryview->folder_item->stype == F_VIRTUAL) {
+		if (MSG_IS_NEW(msginfo->flags))
+			msginfo->folder->new--;
+		if (MSG_IS_UNREAD(msginfo->flags))
+			msginfo->folder->unread--;
+		folderview_update_item(msginfo->folder, FALSE);
+	}
+
 	if (MSG_IS_NEW(msginfo->flags) || MSG_IS_UNREAD(msginfo->flags)) {
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW | MSG_UNREAD);
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
@@ -2598,6 +2646,10 @@ static void summary_mark_row_as_unread(SummaryView *summaryview,
 		MSG_SET_PERM_FLAGS(msginfo->flags, MSG_UNREAD);
 		summaryview->folder_item->unread++;
 		summaryview->folder_item->mark_dirty = TRUE;
+		if (summaryview->folder_item->stype == F_VIRTUAL) {
+			msginfo->folder->unread++;
+			folderview_update_item(msginfo->folder, FALSE);
+		}
 		debug_print(_("Message %d is marked as unread\n"),
 			    msginfo->msgnum);
 	}

@@ -536,6 +536,52 @@ void procmsg_write_flags_list(FolderItem *item, GSList *mlist)
 	item->mark_dirty = FALSE;
 }
 
+static gint cmp_by_item(gconstpointer a, gconstpointer b)
+{
+	const MsgInfo *msginfo1 = a;
+	const MsgInfo *msginfo2 = b;
+
+	if (msginfo1->folder == msginfo2->folder)
+		return msginfo1->msgnum - msginfo2->msgnum;
+
+	return msginfo1->folder - msginfo2->folder;
+}
+
+void procmsg_write_flags_for_multiple_folders(GSList *mlist)
+{
+	GSList *tmp_list, *cur;
+	FolderItem *prev_item = NULL;
+	FILE *fp = NULL;
+
+	if (!mlist)
+		return;
+
+	tmp_list = g_slist_copy(mlist);
+	tmp_list = g_slist_sort(tmp_list, cmp_by_item);
+
+	for (cur = tmp_list; cur != NULL; cur = cur->next) {
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		FolderItem *item = msginfo->folder;
+
+		if (prev_item != item) {
+			if (fp)
+				fclose(fp);
+			fp = procmsg_open_mark_file(item, DATA_APPEND);
+			if (!fp) {
+				g_warning("can't open mark file\n");
+				break;
+			}
+			item->updated = TRUE;
+		}
+		procmsg_write_flags(msginfo, fp);
+		prev_item = item;
+	}
+
+	if (fp)
+		fclose(fp);
+	g_slist_free(tmp_list);
+}
+
 void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 {
 	MsgInfo *flaginfo;
