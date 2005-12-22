@@ -175,7 +175,7 @@ void summary_search(FolderItem *item)
 	if (!search_window.window)
 		summary_search_create();
 	else
-		gtk_widget_hide(search_window.window);
+		gtk_window_present(search_window.window);
 
 	if (item && item->stype != F_VIRTUAL) {
 		id = folder_item_get_identifier(item);

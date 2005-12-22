@@ -2740,12 +2740,14 @@ static void import_mbox_cb(MainWindow *mainwin, guint action,
 			   GtkWidget *widget)
 {
 	import_mbox(mainwin->summaryview->folder_item);
+	main_window_popup(mainwin);
 }
 
 static void export_mbox_cb(MainWindow *mainwin, guint action,
 			   GtkWidget *widget)
 {
 	export_mbox(mainwin->summaryview->folder_item);
+	main_window_popup(mainwin);
 }
 
 static void empty_trash_cb(MainWindow *mainwin, guint action,
