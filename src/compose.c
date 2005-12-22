@@ -2137,14 +2137,20 @@ static gboolean compose_is_itemized(GtkTextBuffer *buffer,
 			if (g_unichar_isdigit(wc)) {
 				digit_appeared = TRUE;
 				gtk_text_iter_forward_char(&iter);
+				if (gtk_text_iter_ends_line(&iter))
+					return FALSE;
 			} else if (clen == 1 &&
 				   (ch[0] == ')' || ch[0] == '.')) {
 				if (!digit_appeared)
 					return FALSE;
 				gtk_text_iter_forward_char(&iter);
+				if (gtk_text_iter_ends_line(&iter))
+					return TRUE;
 				wc = gtk_text_iter_get_char(&iter);
 				if (g_unichar_isspace(wc))
 					return TRUE;
+				else
+					return FALSE;
 			} else
 				return FALSE;
 		}
