@@ -1302,6 +1302,23 @@ void summary_select_by_msgnum(SummaryView *summaryview, guint msgnum)
 		summary_select_row(summaryview, &iter, FALSE, TRUE);
 }
 
+gboolean summary_select_by_msginfo(SummaryView *summaryview, MsgInfo *msginfo)
+{
+	GtkTreeIter iter;
+
+	if (summaryview->folder_item != msginfo->folder)
+		return FALSE;
+
+	if (summary_find_msg_by_msgnum(summaryview, msginfo->msgnum, &iter)) {
+		summary_select_row(summaryview, &iter,
+			   messageview_is_visible(summaryview->messageview),
+			   TRUE);
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 /**
  * summary_select_row:
  * @summaryview: Summary view.

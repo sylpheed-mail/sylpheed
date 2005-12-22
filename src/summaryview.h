@@ -39,6 +39,7 @@ typedef struct _SummaryColumnState	SummaryColumnState;
 #include "compose.h"
 #include "filter.h"
 #include "folder.h"
+#include "procmsg.h"
 
 typedef enum
 {
@@ -165,6 +166,8 @@ void summary_select_prev_labeled  (SummaryView		*summaryview);
 void summary_select_next_labeled  (SummaryView		*summaryview);
 void summary_select_by_msgnum	  (SummaryView		*summaryview,
 				   guint		 msgnum);
+gboolean summary_select_by_msginfo(SummaryView		*summaryview,
+				   MsgInfo		*msginfo);
 void summary_select_row		  (SummaryView		*summaryview,
 				   GtkTreeIter		*iter,
 				   gboolean		 display_msg,

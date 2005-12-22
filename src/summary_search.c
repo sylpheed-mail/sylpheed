@@ -695,8 +695,11 @@ static void row_activated(GtkTreeView *treeview, GtkTreePath *path,
 		return;
 
 	gtk_tree_model_get(model, &iter, COL_MSGINFO, &msginfo, -1);
-	msgview = messageview_create_with_new_window();
-	messageview_show(msgview, msginfo, FALSE);
+	if (!summary_select_by_msginfo(main_window_get()->summaryview,
+				       msginfo)) {
+		msgview = messageview_create_with_new_window();
+		messageview_show(msgview, msginfo, FALSE);
+	}
 }
 
 static gboolean row_selected(GtkTreeSelection *selection,
