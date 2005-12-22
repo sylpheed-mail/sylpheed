@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-20 14:23+0900\n"
+"POT-Creation-Date: 2005-12-22 17:43+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Roger Lindmark <roger.lindmark@bredband.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libsylph/account.c:54
+#: libsylph/account.c:56
 msgid "Reading all config for each account...\n"
 msgstr "Läser all konfiguration för varje konto...\n"
 
@@ -518,16 +518,16 @@ msgstr "Skräppostfilter"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Kodkonvertering misslyckades.\n"
 
-#: libsylph/procmsg.c:582
+#: libsylph/procmsg.c:628
 msgid "can't open mark file\n"
 msgstr "kan inte öppna markeringsfil\n"
 
-#: libsylph/procmsg.c:1035
+#: libsylph/procmsg.c:1081
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "kan inte hämta meddelande %d\n"
 
-#: libsylph/procmsg.c:1290
+#: libsylph/procmsg.c:1336
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Utskriftskommando är felaktigt: \"%s\"\n"
@@ -625,8 +625,8 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2373 src/compose.c:2816 src/compose.c:3079
-#: src/compose.c:3142 src/compose.c:3262
+#: libsylph/utils.c:2373 src/compose.c:2852 src/compose.c:3115
+#: src/compose.c:3178 src/compose.c:3298
 msgid "can't change file mode\n"
 msgstr "kan inte ändra filrättigheter\n"
 
@@ -697,15 +697,15 @@ msgstr ""
 msgid "Opening account edit window...\n"
 msgstr "Öppnar kontoredigeringsfönstret...\n"
 
-#: src/account_dialog.c:287
+#: src/account_dialog.c:288
 msgid "Creating account edit window...\n"
 msgstr "Skapar kontoredigeringsfönster...\n"
 
-#: src/account_dialog.c:292
+#: src/account_dialog.c:293
 msgid "Edit accounts"
 msgstr "Redigera konton"
 
-#: src/account_dialog.c:310
+#: src/account_dialog.c:311
 msgid ""
 "New messages will be checked in this order. Check the boxes\n"
 "on the `G' column to enable message retrieval by `Get all'."
@@ -714,8 +714,8 @@ msgstr ""
 "Markera rutorna i `G'-kolumnen för att aktivera meddelandehämtning\n"
 "via \"Hämta alla\""
 
-#: src/account_dialog.c:365 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4220 src/editaddress.c:200 src/editaddress.c:942
+#: src/account_dialog.c:366 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4256 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:174
@@ -723,32 +723,32 @@ msgstr ""
 msgid "Name"
 msgstr "Namn"
 
-#: src/account_dialog.c:370 src/prefs_account_dialog.c:655
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:655
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: src/account_dialog.c:375
+#: src/account_dialog.c:376
 msgid "Server"
 msgstr "Server"
 
-#: src/account_dialog.c:399 src/prefs_filter.c:324
+#: src/account_dialog.c:400 src/prefs_filter.c:324
 msgid "Edit"
 msgstr "Redigera"
 
-#: src/account_dialog.c:433
+#: src/account_dialog.c:434
 msgid " _Set as default account "
 msgstr " _Använd som förvalt konto "
 
-#: src/account_dialog.c:486
+#: src/account_dialog.c:487
 #, c-format
 msgid "Do you really want to delete the account '%s'?"
 msgstr "Vill du verkligen ta bort kontot '%s'?"
 
-#: src/account_dialog.c:488 src/prefs_filter.c:688
+#: src/account_dialog.c:489 src/prefs_filter.c:688
 msgid "(Untitled)"
 msgstr "(Namnlös)"
 
-#: src/account_dialog.c:489
+#: src/account_dialog.c:490
 msgid "Delete account"
 msgstr "Ta bort konto"
 
@@ -851,7 +851,7 @@ msgstr "Åtgärdens användarargument"
 msgid "Add Address to Book"
 msgstr "Lägg till i adressbok"
 
-#: src/addressadd.c:202 src/compose.c:4720 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4756 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adress"
@@ -969,12 +969,12 @@ msgid "/New _Folder"
 msgstr "/Ny _mapp"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:243 src/folderview.c:245 src/folderview.c:250
-#: src/folderview.c:261 src/folderview.c:263 src/folderview.c:265
-#: src/folderview.c:270 src/folderview.c:280 src/folderview.c:282
-#: src/folderview.c:286 src/summaryview.c:398 src/summaryview.c:402
-#: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
-#: src/summaryview.c:430 src/summaryview.c:436
+#: src/folderview.c:244 src/folderview.c:246 src/folderview.c:251
+#: src/folderview.c:262 src/folderview.c:264 src/folderview.c:266
+#: src/folderview.c:271 src/folderview.c:281 src/folderview.c:283
+#: src/folderview.c:287 src/summaryview.c:399 src/summaryview.c:403
+#: src/summaryview.c:407 src/summaryview.c:417 src/summaryview.c:419
+#: src/summaryview.c:431 src/summaryview.c:437
 msgid "/---"
 msgstr "/---"
 
@@ -983,7 +983,7 @@ msgstr "/---"
 msgid "/_Edit"
 msgstr "/_Redigera"
 
-#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:405
+#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:406
 msgid "/_Delete"
 msgstr "/_Ta bort"
 
@@ -991,7 +991,7 @@ msgstr "/_Ta bort"
 msgid "E-Mail address"
 msgstr "E-postadress"
 
-#: src/addressbook.c:496 src/compose.c:4721 src/prefs_common_dialog.c:2179
+#: src/addressbook.c:496 src/compose.c:4757 src/prefs_common_dialog.c:2179
 msgid "Address book"
 msgstr "Adressbok"
 
@@ -1018,16 +1018,16 @@ msgstr "Lägg till"
 msgid "Lookup"
 msgstr "Slå upp"
 
-#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:338
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:340
 #: src/prefs_template.c:176
 msgid "To:"
 msgstr "Till:"
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:355 src/prefs_template.c:178
+#: src/addressbook.c:650 src/prefs_folder_item.c:357 src/prefs_template.c:178
 msgid "Cc:"
 msgstr "Kopia:"
 
-#: src/addressbook.c:654 src/prefs_folder_item.c:366
+#: src/addressbook.c:654 src/prefs_folder_item.c:368
 msgid "Bcc:"
 msgstr "Dold kopia:"
 
@@ -1050,7 +1050,7 @@ msgstr ""
 "Tar du bara bort mappen, kommer adresserna att flyttas\n"
 "en mapp uppåt i hierarkin."
 
-#: src/addressbook.c:1674 src/folderview.c:2256
+#: src/addressbook.c:1674 src/folderview.c:2280
 msgid "Delete folder"
 msgstr "Ta bort mapp"
 
@@ -1177,8 +1177,8 @@ msgid "Group"
 msgstr "Grupp"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:356 src/prefs_account_dialog.c:1687
-#: src/summary_search.c:366
+#: src/addressbook.c:3152 src/folderview.c:357 src/prefs_account_dialog.c:1687
+#: src/summary_search.c:367
 msgid "Folder"
 msgstr "Mapp"
 
@@ -1202,7 +1202,7 @@ msgstr "Vanlig adress"
 msgid "Personal address"
 msgstr "Privat adress"
 
-#: src/alertpanel.c:141 src/compose.c:5443 src/main.c:572
+#: src/alertpanel.c:141 src/compose.c:5479 src/main.c:572
 msgid "Notice"
 msgstr "Notera"
 
@@ -1253,7 +1253,7 @@ msgstr "Brun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
+#: src/colorlabel.c:280 src/prefs_folder_item.c:317 src/summaryview.c:4427
 msgid "None"
 msgstr "Ingen"
 
@@ -1265,8 +1265,8 @@ msgstr "/_Lägg till..."
 msgid "/_Remove"
 msgstr "/_Ta bort"
 
-#: src/compose.c:509 src/folderview.c:252 src/folderview.c:272
-#: src/folderview.c:288
+#: src/compose.c:509 src/folderview.c:253 src/folderview.c:273
+#: src/folderview.c:289
 msgid "/_Properties..."
 msgstr "/_Egenskaper..."
 
@@ -1344,7 +1344,7 @@ msgid "/_Edit/Aut_o wrapping"
 msgstr "/_Redigera/Automatisk _radbrytning"
 
 #: src/compose.c:547 src/mainwindow.c:510 src/messageview.c:151
-#: src/summaryview.c:431
+#: src/summaryview.c:432
 msgid "/_View"
 msgstr "/_Visa"
 
@@ -1531,79 +1531,79 @@ msgstr "/V_erktyg/Utför _köade åtgärder"
 msgid "/_Tools/_Set spell language"
 msgstr "/V_erktyg/_Mall"
 
-#: src/compose.c:890
+#: src/compose.c:894
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: filen finns inte\n"
 
-#: src/compose.c:994 src/compose.c:1065
+#: src/compose.c:998 src/compose.c:1069
 msgid "Can't get text part\n"
 msgstr "Kan inte läsa textdel\n"
 
-#: src/compose.c:1466
+#: src/compose.c:1470
 msgid "Quote mark format error."
 msgstr "Citationsteckensformatfel."
 
-#: src/compose.c:1478
+#: src/compose.c:1482
 msgid "Message reply/forward format error."
 msgstr "Formatfel vid meddelandesvar eller -vidarebefordran"
 
-#: src/compose.c:1887
+#: src/compose.c:1891
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Filen %s finns inte\n"
 
-#: src/compose.c:1891
+#: src/compose.c:1895
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Kan inte läsa filstorlek på %s\n"
 
-#: src/compose.c:1895
+#: src/compose.c:1899
 #, c-format
 msgid "File %s is empty."
 msgstr "Filen %s är tom."
 
-#: src/compose.c:1899
+#: src/compose.c:1903
 #, c-format
 msgid "Can't read %s."
 msgstr "kan inte läsa %s"
 
-#: src/compose.c:1934
+#: src/compose.c:1938
 #, c-format
 msgid "Message: %s"
 msgstr "Meddelande: %s"
 
-#: src/compose.c:2006 src/mimeview.c:565
+#: src/compose.c:2010 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "Kan inte läsa delen av multipart-meddelandet."
 
-#: src/compose.c:2451 src/headerview.c:195 src/summary_search.c:638
-#: src/summaryview.c:1943
+#: src/compose.c:2487 src/headerview.c:195 src/summary_search.c:640
+#: src/summaryview.c:1979
 msgid "(No Subject)"
 msgstr "(Inget Ämne)"
 
-#: src/compose.c:2454
+#: src/compose.c:2490
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Skriv%s"
 
-#: src/compose.c:2567
+#: src/compose.c:2603
 msgid "Recipient is not specified."
 msgstr "Mottagare är inte angiven."
 
-#: src/compose.c:2575
+#: src/compose.c:2611
 msgid "Empty subject"
 msgstr "Tomt ämne"
 
-#: src/compose.c:2576
+#: src/compose.c:2612
 msgid "Subject is empty. Send it anyway?"
 msgstr "Ämnesraden är tom. Skicka ändå?"
 
-#: src/compose.c:2638
+#: src/compose.c:2674
 msgid "can't get recipient list."
 msgstr "kan inte läsa mottagarlista"
 
-#: src/compose.c:2658
+#: src/compose.c:2694
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1611,22 +1611,22 @@ msgstr ""
 "Konto för att skicka post är inte specificerat.\n"
 "Välj ett e-postkonto innan du skickar."
 
-#: src/compose.c:2672 src/send_message.c:299
+#: src/compose.c:2708 src/send_message.c:299
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Fel uppstod när meddelandet skulle skickas till %s."
 
-#: src/compose.c:2714
+#: src/compose.c:2750
 msgid "Can't save the message to outbox."
 msgstr "Kan inte spara meddelande i kö-mappen."
 
-#: src/compose.c:2752
+#: src/compose.c:2788
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Kunde inte hitta någon nyckel associerad med nu aktiva nyckel-ID \"%s\"."
 
-#: src/compose.c:2849
+#: src/compose.c:2885
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1637,11 +1637,11 @@ msgstr ""
 "\n"
 "Skicka det som %s ändå?"
 
-#: src/compose.c:2855
+#: src/compose.c:2891
 msgid "Code conversion error"
 msgstr "Fel vid konvertering av kod"
 
-#: src/compose.c:2928
+#: src/compose.c:2964
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1654,156 +1654,156 @@ msgstr ""
 "\n"
 "Sänd det ändå?"
 
-#: src/compose.c:2932
+#: src/compose.c:2968
 msgid "Line length limit"
 msgstr "Radlängdsbegränsning"
 
-#: src/compose.c:3222
+#: src/compose.c:3258
 msgid "can't remove the old message\n"
 msgstr "kan inte ta bort det gamla meddelandet\n"
 
-#: src/compose.c:3240
+#: src/compose.c:3276
 msgid "queueing message...\n"
 msgstr "lägger meddelandet i kö...\n"
 
-#: src/compose.c:3322
+#: src/compose.c:3358
 msgid "can't find queue folder\n"
 msgstr "kan inte hitta kömapp\n"
 
-#: src/compose.c:3329
+#: src/compose.c:3365
 msgid "can't queue the message\n"
 msgstr "kan inte lägga meddelandet i kö\n"
 
-#: src/compose.c:3922
+#: src/compose.c:3958
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "skapat Meddelande-ID: %s\n"
 
-#: src/compose.c:4035
+#: src/compose.c:4071
 msgid "Creating compose window...\n"
 msgstr "Skapar skrivfönster...\n"
 
-#: src/compose.c:4086 src/headerview.c:54
+#: src/compose.c:4122 src/headerview.c:54
 msgid "From:"
 msgstr "Från:"
 
-#: src/compose.c:4160
+#: src/compose.c:4196
 msgid "PGP Sign"
 msgstr "PGP Tecken"
 
-#: src/compose.c:4163
+#: src/compose.c:4199
 msgid "PGP Encrypt"
 msgstr "PGP Kryptera"
 
-#: src/compose.c:4201 src/compose.c:5275
+#: src/compose.c:4237 src/compose.c:5311
 msgid "MIME type"
 msgstr "MIME-typ"
 
 #. S_COL_DATE
-#: src/compose.c:4210 src/mimeview.c:197 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
+#: src/compose.c:4246 src/mimeview.c:197 src/prefs_filter_edit.c:497
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4574
 msgid "Size"
 msgstr "Storlek"
 
-#: src/compose.c:4641 src/mainwindow.c:2274 src/prefs_account_dialog.c:525
+#: src/compose.c:4677 src/mainwindow.c:2274 src/prefs_account_dialog.c:525
 #: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "Skicka"
 
-#: src/compose.c:4642
+#: src/compose.c:4678
 msgid "Send message"
 msgstr "Skicka meddelande"
 
-#: src/compose.c:4650
+#: src/compose.c:4686
 msgid "Send later"
 msgstr "Skicka senare"
 
-#: src/compose.c:4651
+#: src/compose.c:4687
 msgid "Put into queue folder and send later"
 msgstr "Placera i kömapp och skicka senare"
 
-#: src/compose.c:4659
+#: src/compose.c:4695
 msgid "Draft"
 msgstr "Utkast"
 
-#: src/compose.c:4660
+#: src/compose.c:4696
 msgid "Save to draft folder"
 msgstr "Spara i utkastsmapp"
 
-#: src/compose.c:4670
+#: src/compose.c:4706
 msgid "Insert"
 msgstr "Infoga"
 
-#: src/compose.c:4671
+#: src/compose.c:4707
 msgid "Insert file"
 msgstr "Infoga fil"
 
-#: src/compose.c:4679
+#: src/compose.c:4715
 msgid "Attach"
 msgstr "Bifoga"
 
-#: src/compose.c:4680
+#: src/compose.c:4716
 msgid "Attach file"
 msgstr "Bifoga fil"
 
 #. signature
-#: src/compose.c:4690 src/prefs_account_dialog.c:1205
+#: src/compose.c:4726 src/prefs_account_dialog.c:1205
 #: src/prefs_common_dialog.c:954
 msgid "Signature"
 msgstr "Signatur"
 
-#: src/compose.c:4691
+#: src/compose.c:4727
 msgid "Insert signature"
 msgstr "Infoga signatur"
 
 #. editor
-#: src/compose.c:4700 src/prefs_common_dialog.c:992
+#: src/compose.c:4736 src/prefs_common_dialog.c:992
 #: src/prefs_common_dialog.c:2311
 msgid "Editor"
 msgstr "Redigerare"
 
-#: src/compose.c:4701
+#: src/compose.c:4737
 msgid "Edit with external editor"
 msgstr "Redigera med extern redigerare"
 
-#: src/compose.c:4709
+#: src/compose.c:4745
 msgid "Linewrap"
 msgstr "Radbrytning"
 
-#: src/compose.c:4710
+#: src/compose.c:4746
 msgid "Wrap all long lines"
 msgstr "Radbryt långa rader"
 
-#: src/compose.c:5171
+#: src/compose.c:5207
 msgid "Invalid MIME type."
 msgstr "Ogiltig MIME-typ"
 
-#: src/compose.c:5189
+#: src/compose.c:5225
 msgid "File doesn't exist or is empty."
 msgstr "Filen finns inte eller är tom."
 
-#: src/compose.c:5257
+#: src/compose.c:5293
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: src/compose.c:5277 src/prefs_common_dialog.c:1448
+#: src/compose.c:5313 src/prefs_common_dialog.c:1448
 msgid "Encoding"
 msgstr "Kodning"
 
-#: src/compose.c:5300 src/prefs_folder_item.c:203
+#: src/compose.c:5336 src/prefs_folder_item.c:203
 msgid "Path"
 msgstr "Sökväg"
 
-#: src/compose.c:5301
+#: src/compose.c:5337
 msgid "File name"
 msgstr "Filnamn"
 
-#: src/compose.c:5394
+#: src/compose.c:5430
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Ogiltig kommandorad för extern redigerare: \"%s\"\n"
 
-#: src/compose.c:5440
+#: src/compose.c:5476
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1813,44 +1813,44 @@ msgstr ""
 "Framtvinga avslutning av processen?\n"
 "processgrupps-id: %d"
 
-#: src/compose.c:5815 src/compose.c:5823 src/compose.c:5829
+#: src/compose.c:5851 src/compose.c:5859 src/compose.c:5865
 msgid "Can't queue the message."
 msgstr "Kan inte lägga meddelandet i kö."
 
-#: src/compose.c:5920
+#: src/compose.c:5956
 msgid "Select files"
 msgstr "Välj filer"
 
-#: src/compose.c:5942
+#: src/compose.c:5978
 msgid "Select file"
 msgstr "Välj fil"
 
-#: src/compose.c:5977
+#: src/compose.c:6013
 msgid "Save message"
 msgstr "Spara meddelande"
 
-#: src/compose.c:5978
+#: src/compose.c:6014
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Detta meddelande har ändrats. Spara det till utkastmappen?"
 
-#: src/compose.c:5980
+#: src/compose.c:6016
 msgid "Close _without saving"
 msgstr "Stäng _utan att spara"
 
-#: src/compose.c:6022
+#: src/compose.c:6058
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Vill du använda mallen \"%s\" ?"
 
-#: src/compose.c:6024
+#: src/compose.c:6060
 msgid "Apply template"
 msgstr "Använd mall"
 
-#: src/compose.c:6025
+#: src/compose.c:6061
 msgid "_Replace"
 msgstr "_Ersätt"
 
-#: src/compose.c:6025
+#: src/compose.c:6061
 msgid "_Insert"
 msgstr "_Infoga"
 
@@ -2011,12 +2011,12 @@ msgstr "Redigera mapp"
 msgid "Input the new name of folder:"
 msgstr "Skriv in det nya namnet på mappen:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2035
-#: src/folderview.c:2041
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2059
+#: src/folderview.c:2065
 msgid "New folder"
 msgstr "Ny mapp"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2042
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2066
 msgid "Input the name of new folder:"
 msgstr "Skriv in namnet på den nya mappen:"
 
@@ -2183,170 +2183,170 @@ msgstr "Välj katalog"
 msgid "Select folder"
 msgstr "Välj mapp"
 
-#: src/foldersel.c:359 src/folderview.c:1148 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1157 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Inkorg"
 
-#: src/foldersel.c:363 src/folderview.c:1154 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1163 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Skickat"
 
-#: src/foldersel.c:367 src/folderview.c:1160 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1169 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Kö"
 
-#: src/foldersel.c:371 src/folderview.c:1166 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1175 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Papperskorg"
 
-#: src/foldersel.c:375 src/folderview.c:1172 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1181 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Utkast"
 
-#: src/foldersel.c:542 src/folderview.c:2039 src/folderview.c:2043
+#: src/foldersel.c:542 src/folderview.c:2063 src/folderview.c:2067
 msgid "NewFolder"
 msgstr "NyMapp"
 
-#: src/foldersel.c:550 src/folderview.c:2051 src/folderview.c:2107
+#: src/foldersel.c:550 src/folderview.c:2075 src/folderview.c:2131
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "\"%c\" får inte finnas i mappnamn."
 
-#: src/foldersel.c:560 src/folderview.c:2061 src/folderview.c:2114
-#: src/summary_search.c:983
+#: src/foldersel.c:560 src/folderview.c:2085 src/folderview.c:2138
+#: src/summary_search.c:989
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Mappen \"%s\" finns redan."
 
-#: src/foldersel.c:568 src/folderview.c:2068
+#: src/foldersel.c:568 src/folderview.c:2092
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Kan inte skapa mappen \"%s\"."
 
-#: src/folderview.c:239 src/folderview.c:257
+#: src/folderview.c:240 src/folderview.c:258
 msgid "/Create _new folder..."
 msgstr "/_Ny mapp..."
 
-#: src/folderview.c:240 src/folderview.c:258
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Rename folder..."
 msgstr "/_Byt namn..."
 
-#: src/folderview.c:241 src/folderview.c:259
+#: src/folderview.c:242 src/folderview.c:260
 msgid "/_Move folder..."
 msgstr "/_Flytta..."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:243 src/folderview.c:261
 msgid "/_Delete folder"
 msgstr "/_Ta bort"
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:245 src/folderview.c:263
 msgid "/Empty _trash"
 msgstr "/Töm _papperskorgen"
 
-#: src/folderview.c:246 src/folderview.c:266 src/folderview.c:283
+#: src/folderview.c:247 src/folderview.c:267 src/folderview.c:284
 msgid "/_Check for new messages"
 msgstr "/Ta emot nya _meddelanden"
 
-#: src/folderview.c:248 src/folderview.c:268
+#: src/folderview.c:249 src/folderview.c:269
 msgid "/R_ebuild folder tree"
 msgstr "/_Uppdatera mappträd"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:285
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 #, fuzzy
 msgid "/_Update summary"
 msgstr "/_Visa/_Uppdatera summering"
 
-#: src/folderview.c:251 src/folderview.c:271 src/folderview.c:287
+#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
 msgid "/_Search messages..."
 msgstr "/_Sök meddelanden..."
 
-#: src/folderview.c:264 src/folderview.c:281
+#: src/folderview.c:265 src/folderview.c:282
 msgid "/Down_load"
 msgstr "/_Hämta"
 
-#: src/folderview.c:277
+#: src/folderview.c:278
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Prenumerera på _diskussionsgrupp"
 
-#: src/folderview.c:279
+#: src/folderview.c:280
 msgid "/_Remove newsgroup"
 msgstr "/T_a bort diskussionsgrupp"
 
-#: src/folderview.c:309
+#: src/folderview.c:310
 msgid "Creating folder view...\n"
 msgstr "Skapar mappvy...\n"
 
-#: src/folderview.c:387
+#: src/folderview.c:388
 msgid "New"
 msgstr "Nya"
 
 #. S_COL_MARK
-#: src/folderview.c:401 src/prefs_summary_column.c:71
+#: src/folderview.c:402 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Olästa"
 
-#: src/folderview.c:415
+#: src/folderview.c:416
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:538
+#: src/folderview.c:547
 msgid "Setting folder info...\n"
 msgstr "Ställer in mappinfo...\n"
 
-#: src/folderview.c:539
+#: src/folderview.c:548
 msgid "Setting folder info..."
 msgstr "Ställer in mappinfo..."
 
-#: src/folderview.c:839 src/mainwindow.c:3356 src/setup.c:80
+#: src/folderview.c:848 src/mainwindow.c:3358 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Söker igenom mapp %s%c%s..."
 
-#: src/folderview.c:843 src/mainwindow.c:3361 src/setup.c:85
+#: src/folderview.c:852 src/mainwindow.c:3363 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Söker igenom mapp %s ..."
 
-#: src/folderview.c:885
+#: src/folderview.c:894
 msgid "Rebuild folder tree"
 msgstr "Uppdatera mappträd"
 
-#: src/folderview.c:886
+#: src/folderview.c:895
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Mappträdet kommer att uppdateras. Fortsätt?"
 
-#: src/folderview.c:895
+#: src/folderview.c:904
 msgid "Rebuilding folder tree..."
 msgstr "Uppdaterar mappträd..."
 
-#: src/folderview.c:902
+#: src/folderview.c:911
 msgid "Rebuilding of the folder tree failed."
 msgstr "Uppdatering av mappträdet misslyckades."
 
-#: src/folderview.c:1015
+#: src/folderview.c:1024
 msgid "Checking for new messages in all folders..."
 msgstr "Letar efter nya meddelanden i alla mappar..."
 
-#: src/folderview.c:1180 src/mainwindow.c:2350 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1189 src/mainwindow.c:2350 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr "Skräp"
 
-#: src/folderview.c:1785
+#: src/folderview.c:1809
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Mappen %s är vald\n"
 
-#: src/folderview.c:1940
+#: src/folderview.c:1964
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Laddar ner meddelanden i %s ..."
 
-#: src/folderview.c:1975
+#: src/folderview.c:1999
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Ett fel uppstod vid nedladdning av meddelanden i \"%s\"."
 
-#: src/folderview.c:2036
+#: src/folderview.c:2060
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2356,21 +2356,21 @@ msgstr ""
 "(om du vill skapa en mapp som skall innehålla undermappar,\n"
 " lägg till \"/\" vid slutet av namnet)"
 
-#: src/folderview.c:2098
+#: src/folderview.c:2122
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Skriv in nytt namn på \"%s\":"
 
-#: src/folderview.c:2099
+#: src/folderview.c:2123
 msgid "Rename folder"
 msgstr "Byt namn på mapp"
 
-#: src/folderview.c:2190
+#: src/folderview.c:2214
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Kan inte flytta mappen \"%s\"."
 
-#: src/folderview.c:2253
+#: src/folderview.c:2277
 #, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2383,20 +2383,20 @@ msgstr ""
 "\n"
 "Vill du verkligen ta bort dem?"
 
-#: src/folderview.c:2282
+#: src/folderview.c:2306
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Kan inte ta bort mappen \"%s\"."
 
-#: src/folderview.c:2316
+#: src/folderview.c:2340
 msgid "Empty trash"
 msgstr "Töm papperskorgen"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 msgid "Delete all messages in the trash folder?"
 msgstr "Ta bort alla meddelanden i papperskorgen?"
 
-#: src/folderview.c:2353
+#: src/folderview.c:2377
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2405,34 +2405,34 @@ msgstr ""
 "Vill du verkligen ta bort brevlådan \"%s\" ?\n"
 "(Meddelandena tas INTE bort från disken)"
 
-#: src/folderview.c:2355
+#: src/folderview.c:2379
 msgid "Remove mailbox"
 msgstr "Ta bort brevlåda"
 
-#: src/folderview.c:2401
+#: src/folderview.c:2425
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Vill du verkligen ta bort IMAP4-kontot \"%s\"?"
 
-#: src/folderview.c:2402
+#: src/folderview.c:2426
 msgid "Delete IMAP4 account"
 msgstr "Ta bort IMAP4-konto"
 
-#: src/folderview.c:2544
+#: src/folderview.c:2569
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Vill du verkligen ta bort diskussionsgrupp \"%s\"?"
 
-#: src/folderview.c:2545
+#: src/folderview.c:2570
 msgid "Delete newsgroup"
 msgstr "Ta bort diskussionsgrupp"
 
-#: src/folderview.c:2592
+#: src/folderview.c:2617
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Vill du verkligen ta bort diskussionsgruppskonto \"%s\"?"
 
-#: src/folderview.c:2593
+#: src/folderview.c:2618
 msgid "Delete news account"
 msgstr "Ta bort diskussionsgruppskonto"
 
@@ -2448,7 +2448,7 @@ msgstr "Ämne:"
 msgid "Creating header view...\n"
 msgstr "Skapar brevhuvudvy...\n"
 
-#: src/headerview.c:180 src/summary_search.c:639 src/summaryview.c:1946
+#: src/headerview.c:180 src/summary_search.c:641 src/summaryview.c:1982
 msgid "(No From)"
 msgstr "(Inget Från)"
 
@@ -3214,7 +3214,7 @@ msgstr "/_Visa/_Teckenkodning/Kinesisk (ISO-2022-_CN)"
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/_Visa/_Teckenkodning/Koreansk (ISO-2022-KR)"
 
-#: src/mainwindow.c:676 src/summaryview.c:432
+#: src/mainwindow.c:676 src/summaryview.c:433
 msgid "/_View/Open in new _window"
 msgstr "/_Visa/_Öppna i nytt fönster"
 
@@ -3494,8 +3494,8 @@ msgstr "Skapar huvudfönster...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Huvudfönster: färgtilldelning %d misslyckades\n"
 
-#: src/mainwindow.c:1083 src/summaryview.c:2088 src/summaryview.c:2173
-#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
+#: src/mainwindow.c:1083 src/summaryview.c:2129 src/summaryview.c:2225
+#: src/summaryview.c:3587 src/summaryview.c:3708 src/summaryview.c:4060
 msgid "done.\n"
 msgstr "färdigt.\n"
 
@@ -3568,7 +3568,7 @@ msgstr "Sylpheed - Mappvy"
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Meddelandevy"
 
-#: src/mainwindow.c:2209 src/summaryview.c:392
+#: src/mainwindow.c:2209 src/summaryview.c:393
 msgid "/_Reply"
 msgstr "/Sva_ra"
 
@@ -3584,15 +3584,15 @@ msgstr "/Svara till av_sändaren"
 msgid "/Reply to mailing _list"
 msgstr "/Svara till e-post_lista"
 
-#: src/mainwindow.c:2217 src/summaryview.c:399
+#: src/mainwindow.c:2217 src/summaryview.c:400
 msgid "/_Forward"
 msgstr "/Vi_darebefordra"
 
-#: src/mainwindow.c:2218 src/summaryview.c:400
+#: src/mainwindow.c:2218 src/summaryview.c:401
 msgid "/For_ward as attachment"
 msgstr "/Vidarebefordra som _bilaga"
 
-#: src/mainwindow.c:2219 src/summaryview.c:401
+#: src/mainwindow.c:2219 src/summaryview.c:402
 msgid "/Redirec_t"
 msgstr "/_Omdirigera"
 
@@ -3677,8 +3677,8 @@ msgstr "Inst."
 msgid "Common preferences"
 msgstr "Allmänna inställningar"
 
-#: src/mainwindow.c:2392 src/prefs_folder_item.c:288
-#: src/prefs_folder_item.c:299 src/progressdialog.c:128
+#: src/mainwindow.c:2392 src/prefs_folder_item.c:290
+#: src/prefs_folder_item.c:301 src/progressdialog.c:128
 msgid "Account"
 msgstr "Konto"
 
@@ -3694,11 +3694,11 @@ msgstr "Du är frånkopplad. Klicka på ikonen för att ansluta."
 msgid "You are online. Click the icon to go offline."
 msgstr "Du är ansluten. Klicka på ikonen för att koppla från."
 
-#: src/mainwindow.c:2783
+#: src/mainwindow.c:2785
 msgid "Exit"
 msgstr "Avsluta"
 
-#: src/mainwindow.c:2783
+#: src/mainwindow.c:2785
 msgid "Exit this program?"
 msgstr "Avsluta detta program?"
 
@@ -3710,7 +3710,7 @@ msgstr "Sök i aktuellt meddelande"
 msgid "Find text:"
 msgstr "Söktext:"
 
-#: src/message_search.c:141 src/summary_search.c:322
+#: src/message_search.c:141 src/summary_search.c:323
 msgid "Case sensitive"
 msgstr "Skiftlägeskänslig"
 
@@ -3754,24 +3754,24 @@ msgstr "Bilagor"
 msgid "Message View - Sylpheed"
 msgstr "Meddelandevy - Sylpheed"
 
-#: src/messageview.c:667 src/summaryview.c:3046
+#: src/messageview.c:667 src/summaryview.c:3131
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Kan inte spara filen \"%s\"."
 
-#: src/messageview.c:726 src/summaryview.c:3069
+#: src/messageview.c:726 src/summaryview.c:3154
 msgid "The message will be printed with the following command:"
 msgstr "Meddelandet kommer att skrivas ut med följande kommando:"
 
-#: src/messageview.c:727 src/summaryview.c:3070
+#: src/messageview.c:727 src/summaryview.c:3155
 msgid "(Default print command)"
 msgstr "(Förvalt utskriftkommando)"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3157
 msgid "Print"
 msgstr "Skriv ut"
 
-#: src/messageview.c:738 src/summaryview.c:3081
+#: src/messageview.c:738 src/summaryview.c:3166
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -4144,7 +4144,7 @@ msgstr "Autentisera med POP3 innan brev skickas"
 msgid "Command output"
 msgstr "Kommandoutdata"
 
-#: src/prefs_account_dialog.c:1235 src/prefs_folder_item.c:330
+#: src/prefs_account_dialog.c:1235 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
 msgstr "Sätt automatiskt följande adresser"
 
@@ -5535,7 +5535,7 @@ msgstr "Destinationsmapp är inte angiven."
 msgid "Rule name is not specified."
 msgstr "Regelnamn är inte angivet."
 
-#: src/prefs_filter_edit.c:1812 src/summary_search.c:465
+#: src/prefs_filter_edit.c:1812 src/summary_search.c:466
 msgid "Invalid condition exists."
 msgstr "Ogiltigt villkor existerar."
 
@@ -5575,15 +5575,15 @@ msgstr "Visa inte [...] eller (...) i början av ärendet i summering"
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Ta bort [...] eller (...) i början av ärendet vid svar"
 
-#: src/prefs_folder_item.c:328
+#: src/prefs_folder_item.c:330
 msgid "Apply to subfolders"
 msgstr "Gäller även undermappar"
 
-#: src/prefs_folder_item.c:353
+#: src/prefs_folder_item.c:355
 msgid "use also on reply"
 msgstr "använd också vid svar"
 
-#: src/prefs_folder_item.c:377
+#: src/prefs_folder_item.c:379
 msgid "Reply-To:"
 msgstr "Svara till:"
 
@@ -5597,20 +5597,20 @@ msgid "Attachment"
 msgstr "Bilaga"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:367
-#: src/summaryview.c:4481
+#: src/prefs_summary_column.c:73 src/summary_search.c:368
+#: src/summaryview.c:4567
 msgid "Subject"
 msgstr "Ärende"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:368
-#: src/summaryview.c:4484
+#: src/prefs_summary_column.c:74 src/summary_search.c:369
+#: src/summaryview.c:4570
 msgid "From"
 msgstr "Från"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:369
-#: src/summaryview.c:4486
+#: src/prefs_summary_column.c:75 src/summary_search.c:370
+#: src/summaryview.c:4572
 msgid "Date"
 msgstr "Datum"
 
@@ -6004,7 +6004,7 @@ msgstr "Kan inte hämta grupplista."
 msgid "Can't retrieve newsgroup list."
 msgstr "Kan inte hämta grupplista."
 
-#: src/subscribedialog.c:523 src/summary_search.c:517 src/summaryview.c:766
+#: src/subscribedialog.c:523 src/summary_search.c:518 src/summaryview.c:767
 msgid "Done."
 msgstr "Färdig."
 
@@ -6013,382 +6013,382 @@ msgstr "Färdig."
 msgid "%d newsgroups received (%s read)"
 msgstr "%d diskussionsgrupper mottagna (%s lästa)"
 
-#: src/summary_search.c:230
+#: src/summary_search.c:231
 msgid "Search messages"
 msgstr "Sök meddelanden"
 
-#: src/summary_search.c:253
+#: src/summary_search.c:254
 msgid "Match any of the following"
 msgstr "Matcha någon av följande"
 
-#: src/summary_search.c:255
+#: src/summary_search.c:256
 msgid "Match all of the following"
 msgstr "Matcha alla av följande"
 
-#: src/summary_search.c:299
+#: src/summary_search.c:300
 #, fuzzy
 msgid "Folder:"
 msgstr "Mapp"
 
-#: src/summary_search.c:317
+#: src/summary_search.c:318
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Sökning misslyckades"
 
-#: src/summary_search.c:391
+#: src/summary_search.c:392
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Spara i utkastsmapp"
 
-#: src/summary_search.c:540
+#: src/summary_search.c:542
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "Söker igenom mapp %s ..."
 
-#: src/summary_search.c:568
+#: src/summary_search.c:570
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtrerar..."
 
-#: src/summary_search.c:647 src/summaryview.c:1883
+#: src/summary_search.c:649 src/summaryview.c:1920
 msgid "(No Date)"
 msgstr "(Inget datum)"
 
-#: src/summary_search.c:826
+#: src/summary_search.c:831
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Spara i utkastsmapp"
 
-#: src/summary_search.c:847
+#: src/summary_search.c:852
 msgid "Location:"
 msgstr ""
 
-#: src/summary_search.c:862
+#: src/summary_search.c:867
 #, fuzzy
 msgid "Folder name:"
 msgstr "Filnamn"
 
-#: src/summaryview.c:393
+#: src/summaryview.c:394
 msgid "/Repl_y to"
 msgstr "/Svar_a till"
 
-#: src/summaryview.c:394
+#: src/summaryview.c:395
 msgid "/Repl_y to/_all"
 msgstr "/_Svara till/_alla"
 
-#: src/summaryview.c:395
+#: src/summaryview.c:396
 msgid "/Repl_y to/_sender"
 msgstr "/_Svara till/av_sändaren"
 
-#: src/summaryview.c:396
+#: src/summaryview.c:397
 msgid "/Repl_y to/mailing _list"
 msgstr "/_Svara till/e-post_lista"
 
-#: src/summaryview.c:403
+#: src/summaryview.c:404
 msgid "/M_ove..."
 msgstr "/_Flytta..."
 
-#: src/summaryview.c:404
+#: src/summaryview.c:405
 msgid "/_Copy..."
 msgstr "/_Kopiera..."
 
-#: src/summaryview.c:407
+#: src/summaryview.c:408
 msgid "/_Mark"
 msgstr "/_Markera"
 
-#: src/summaryview.c:408
+#: src/summaryview.c:409
 msgid "/_Mark/_Mark"
 msgstr "/_Markera/_Markera"
 
-#: src/summaryview.c:409
+#: src/summaryview.c:410
 msgid "/_Mark/_Unmark"
 msgstr "_Markera/_Avmarkera"
 
-#: src/summaryview.c:410
+#: src/summaryview.c:411
 msgid "/_Mark/---"
 msgstr "/_Markera/---"
 
-#: src/summaryview.c:411
+#: src/summaryview.c:412
 msgid "/_Mark/Mark as unr_ead"
 msgstr "/_Markera/Markera som _oläst"
 
-#: src/summaryview.c:412
+#: src/summaryview.c:413
 msgid "/_Mark/Mark as rea_d"
 msgstr "/_Markera/Markera som _läst"
 
-#: src/summaryview.c:414
+#: src/summaryview.c:415
 msgid "/_Mark/Mark all _read"
 msgstr "/_Markera/Markera alla som l_ästa"
 
-#: src/summaryview.c:415
+#: src/summaryview.c:416
 msgid "/Color la_bel"
 msgstr "/F_ärgmarkera"
 
-#: src/summaryview.c:417
+#: src/summaryview.c:418
 msgid "/Re-_edit"
 msgstr "/Redigera _om"
 
-#: src/summaryview.c:419
+#: src/summaryview.c:420
 msgid "/Add sender to address boo_k..."
 msgstr "/_Lägg till avsändaren till adressboken"
 
-#: src/summaryview.c:421
+#: src/summaryview.c:422
 msgid "/Create f_ilter rule"
 msgstr "/_Skapa filterregel"
 
-#: src/summaryview.c:422
+#: src/summaryview.c:423
 msgid "/Create f_ilter rule/_Automatically"
 msgstr "/_Skapa filterregel/_Automatiskt"
 
-#: src/summaryview.c:424
+#: src/summaryview.c:425
 msgid "/Create f_ilter rule/by _From"
 msgstr "/_Skapa filterregel/genom _Från"
 
-#: src/summaryview.c:426
+#: src/summaryview.c:427
 msgid "/Create f_ilter rule/by _To"
 msgstr "/_Skapa filterregel/genom _Till"
 
-#: src/summaryview.c:428
+#: src/summaryview.c:429
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/_Skapa filterregel/genom _Ämne"
 
-#: src/summaryview.c:434
+#: src/summaryview.c:435
 msgid "/_View/_Source"
 msgstr "/_Visa/_Källkod"
 
-#: src/summaryview.c:435
+#: src/summaryview.c:436
 msgid "/_View/All _header"
 msgstr "/_Visa/_Hela brevhuvudet"
 
-#: src/summaryview.c:437
+#: src/summaryview.c:438
 msgid "/_Print..."
 msgstr "/Skriv _ut"
 
-#: src/summaryview.c:462
+#: src/summaryview.c:463
 msgid "Creating summary view...\n"
 msgstr "Skapar summeringsvy...\n"
 
-#: src/summaryview.c:627
+#: src/summaryview.c:628
 msgid "Process mark"
 msgstr "Behandla markering"
 
-#: src/summaryview.c:628
+#: src/summaryview.c:629
 msgid "Some marks are left. Process it?"
 msgstr "Några markeringar finns kvar. Behandla dem?"
 
-#: src/summaryview.c:674
+#: src/summaryview.c:675
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Söker igenom mapp (%s)..."
 
-#: src/summaryview.c:1187
+#: src/summaryview.c:1207
 msgid "_Search again"
 msgstr "_Sök igen"
 
-#: src/summaryview.c:1208 src/summaryview.c:1217
+#: src/summaryview.c:1228 src/summaryview.c:1237
 msgid "No more unread messages"
 msgstr "Inga fler olästa meddelande"
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1229
 msgid "No unread message found. Search from the end?"
 msgstr "Inget oläst meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1211
+#: src/summaryview.c:1231
 msgid "No unread messages."
 msgstr "Inga olästa meddelanden."
 
-#: src/summaryview.c:1218
+#: src/summaryview.c:1238
 msgid "No unread message found. Go to next folder?"
 msgstr "Inget oläst meddelande funnet. Gå till nästa mapp?"
 
-#: src/summaryview.c:1226 src/summaryview.c:1235
+#: src/summaryview.c:1246 src/summaryview.c:1255
 msgid "No more new messages"
 msgstr "Inga fler nya meddelanden"
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1247
 msgid "No new message found. Search from the end?"
 msgstr "Inget nytt meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1229
+#: src/summaryview.c:1249
 msgid "No new messages."
 msgstr "Inga nya meddelanden."
 
-#: src/summaryview.c:1236
+#: src/summaryview.c:1256
 msgid "No new message found. Go to next folder?"
 msgstr "Inget nytt meddelande funnet. Gå till nästa mapp?"
 
-#: src/summaryview.c:1244 src/summaryview.c:1253
+#: src/summaryview.c:1264 src/summaryview.c:1273
 msgid "No more marked messages"
 msgstr "Inga fler markerade meddelanden"
 
-#: src/summaryview.c:1245
+#: src/summaryview.c:1265
 msgid "No marked message found. Search from the end?"
 msgstr "Inget markerat meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1247 src/summaryview.c:1256
+#: src/summaryview.c:1267 src/summaryview.c:1276
 msgid "No marked messages."
 msgstr "Inga markerade meddelanden."
 
-#: src/summaryview.c:1254
+#: src/summaryview.c:1274
 msgid "No marked message found. Search from the beginning?"
 msgstr "Inget markerat meddelande funnet. Sök från början?"
 
-#: src/summaryview.c:1262 src/summaryview.c:1271
+#: src/summaryview.c:1282 src/summaryview.c:1291
 msgid "No more labeled messages"
 msgstr "Inga fler färgade meddelanden"
 
-#: src/summaryview.c:1263
+#: src/summaryview.c:1283
 msgid "No labeled message found. Search from the end?"
 msgstr "Inget färgat meddelande funnet. Sök från slutet?"
 
-#: src/summaryview.c:1265 src/summaryview.c:1274
+#: src/summaryview.c:1285 src/summaryview.c:1294
 msgid "No labeled messages."
 msgstr "Inga färgade meddelanden."
 
-#: src/summaryview.c:1272
+#: src/summaryview.c:1292
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Inget färgat meddelande funnet. Sök från början?"
 
-#: src/summaryview.c:1571
+#: src/summaryview.c:1608
 msgid "Attracting messages by subject..."
 msgstr "Attraherar meddelanden efter ärende..."
 
-#: src/summaryview.c:1730
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d deleted"
 msgstr "%d borttagen"
 
-#: src/summaryview.c:1734
+#: src/summaryview.c:1771
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d flyttad"
 
-#: src/summaryview.c:1735 src/summaryview.c:1742
+#: src/summaryview.c:1772 src/summaryview.c:1779
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1740
+#: src/summaryview.c:1777
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d kopierad"
 
-#: src/summaryview.c:1757
+#: src/summaryview.c:1794
 msgid " item(s) selected"
 msgstr " objekt valda"
 
-#: src/summaryview.c:1767
+#: src/summaryview.c:1804
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d nya, %d olästa, %d totalt (%s)"
 
-#: src/summaryview.c:1773
+#: src/summaryview.c:1810
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d nya, %d olästa, %d totalt"
 
-#: src/summaryview.c:1809
+#: src/summaryview.c:1846
 msgid "Sorting summary..."
 msgstr "Sorterar summering..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2066
 msgid "\tSetting summary from message data..."
 msgstr "\tSkapar summering från meddelandedata..."
 
-#: src/summaryview.c:2027
+#: src/summaryview.c:2068
 msgid "Setting summary from message data..."
 msgstr "Skapar summering från meddelandedata..."
 
-#: src/summaryview.c:2152
+#: src/summaryview.c:2193
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Skriver summeringscache (%s)..."
 
-#: src/summaryview.c:2461
+#: src/summaryview.c:2525
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Meddelande %d är markerat\n"
 
-#: src/summaryview.c:2509
+#: src/summaryview.c:2583
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Meddelande %d är markerat som läst\n"
 
-#: src/summaryview.c:2593
+#: src/summaryview.c:2671
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Meddelande %d är markerat som oläst\n"
 
-#: src/summaryview.c:2652
+#: src/summaryview.c:2732
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Meddelande %s/%d är valt för borttagning\n"
 
-#: src/summaryview.c:2670
+#: src/summaryview.c:2750
 msgid "Delete message(s)"
 msgstr "Ta bort meddelande(n)"
 
-#: src/summaryview.c:2671
+#: src/summaryview.c:2751
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Vill du verkligen tömma papperkorgen?"
 
-#: src/summaryview.c:2736
+#: src/summaryview.c:2816
 msgid "Deleting duplicated messages..."
 msgstr "Tar bort meddelandedubbletter..."
 
-#: src/summaryview.c:2773
+#: src/summaryview.c:2854
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Meddelande %s/%d är avmarkerat\n"
 
-#: src/summaryview.c:2829
+#: src/summaryview.c:2912
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Meddelande %d är valt för att flyttas till %s\n"
 
-#: src/summaryview.c:2846
+#: src/summaryview.c:2929
 msgid "Destination is same as current folder."
 msgstr "Destinationen är samma som aktuell mapp."
 
-#: src/summaryview.c:2900
+#: src/summaryview.c:2985
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Meddelandet %d är valt för att kopieras till %s\n"
 
-#: src/summaryview.c:2917
+#: src/summaryview.c:3002
 msgid "Destination for copy is same as current folder."
 msgstr "Destinationen att kopiera till är samma som aktuell mapp."
 
-#: src/summaryview.c:3116
+#: src/summaryview.c:3201
 msgid "Error occurred while processing messages."
 msgstr "Fel uppstod när meddelanden behandlades."
 
-#: src/summaryview.c:3417 src/summaryview.c:3418
+#: src/summaryview.c:3502 src/summaryview.c:3503
 msgid "Building threads..."
 msgstr "Skapar trådar..."
 
-#: src/summaryview.c:3560 src/summaryview.c:3561
+#: src/summaryview.c:3645 src/summaryview.c:3646
 msgid "Unthreading..."
 msgstr "Avtrådar..."
 
-#: src/summaryview.c:3840 src/summaryview.c:3896
+#: src/summaryview.c:3925 src/summaryview.c:3981
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrerar..."
 
-#: src/summaryview.c:3945
+#: src/summaryview.c:4030
 msgid "filtering..."
 msgstr "filtrerar..."
 
-#: src/summaryview.c:3946
+#: src/summaryview.c:4031
 msgid "Filtering..."
 msgstr "Filtrerar..."
 
-#: src/summaryview.c:3982
+#: src/summaryview.c:4067
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d meddelande(n) har filtrerats."
 
-#: src/summaryview.c:4490
+#: src/summaryview.c:4576
 msgid "No."
 msgstr "Nr."
 

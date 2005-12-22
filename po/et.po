@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-20 14:23+0900\n"
+"POT-Creation-Date: 2005-12-22 17:43+0900\n"
 "PO-Revision-Date: 2002-10-02 09:08+0300\n"
 "Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libsylph/account.c:54
+#: libsylph/account.c:56
 msgid "Reading all config for each account...\n"
 msgstr "Loen kõigi kontode seaded...\n"
 
@@ -521,16 +521,16 @@ msgstr "Kaust"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Koodi muundamine ebaõnnestus.\n"
 
-#: libsylph/procmsg.c:582
+#: libsylph/procmsg.c:628
 msgid "can't open mark file\n"
 msgstr "Ei suuda avada märgifaili\n"
 
-#: libsylph/procmsg.c:1035
+#: libsylph/procmsg.c:1081
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "ei suuda võtta kirja %d\n"
 
-#: libsylph/procmsg.c:1290
+#: libsylph/procmsg.c:1336
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Trükkimise käsurida on vale: %s\n"
@@ -629,8 +629,8 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: libsylph/utils.c:2373 src/compose.c:2816 src/compose.c:3079
-#: src/compose.c:3142 src/compose.c:3262
+#: libsylph/utils.c:2373 src/compose.c:2852 src/compose.c:3115
+#: src/compose.c:3178 src/compose.c:3298
 msgid "can't change file mode\n"
 msgstr "Ei suuda muuta faili omadusi\n"
 
@@ -699,15 +699,15 @@ msgstr ""
 msgid "Opening account edit window...\n"
 msgstr "Avan kontode redigeerimisakna...\n"
 
-#: src/account_dialog.c:287
+#: src/account_dialog.c:288
 msgid "Creating account edit window...\n"
 msgstr "Loon kontode redigeerimisakna...\n"
 
-#: src/account_dialog.c:292
+#: src/account_dialog.c:293
 msgid "Edit accounts"
 msgstr "Kontode redigeerimine"
 
-#: src/account_dialog.c:310
+#: src/account_dialog.c:311
 msgid ""
 "New messages will be checked in this order. Check the boxes\n"
 "on the `G' column to enable message retrieval by `Get all'."
@@ -715,8 +715,8 @@ msgstr ""
 "*Uusi teateid võetakse selles järjekorras. Märgi kastikesed\n"
 "'G' tulbas lubamaks kirjade võtmist kasutades 'Võta kõik'."
 
-#: src/account_dialog.c:365 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4220 src/editaddress.c:200 src/editaddress.c:942
+#: src/account_dialog.c:366 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4256 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:174
@@ -724,34 +724,34 @@ msgstr ""
 msgid "Name"
 msgstr "Nimi"
 
-#: src/account_dialog.c:370 src/prefs_account_dialog.c:655
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:655
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: src/account_dialog.c:375
+#: src/account_dialog.c:376
 msgid "Server"
 msgstr "Server"
 
-#: src/account_dialog.c:399 src/prefs_filter.c:324
+#: src/account_dialog.c:400 src/prefs_filter.c:324
 msgid "Edit"
 msgstr "Redigeeri"
 
-#: src/account_dialog.c:433
+#: src/account_dialog.c:434
 #, fuzzy
 msgid " _Set as default account "
 msgstr " Määra vaikimisi kontoks "
 
-#: src/account_dialog.c:486
+#: src/account_dialog.c:487
 #, fuzzy, c-format
 msgid "Do you really want to delete the account '%s'?"
 msgstr "Kas te tõesti soovite kustutada kontot?"
 
-#: src/account_dialog.c:488 src/prefs_filter.c:688
+#: src/account_dialog.c:489 src/prefs_filter.c:688
 #, fuzzy
 msgid "(Untitled)"
 msgstr "Tiitlita"
 
-#: src/account_dialog.c:489
+#: src/account_dialog.c:490
 msgid "Delete account"
 msgstr "Kustuta konto"
 
@@ -852,7 +852,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Lisa aadress raamatusse"
 
-#: src/addressadd.c:202 src/compose.c:4720 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4756 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Aadress"
@@ -970,12 +970,12 @@ msgid "/New _Folder"
 msgstr "/Uus Kaust"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:243 src/folderview.c:245 src/folderview.c:250
-#: src/folderview.c:261 src/folderview.c:263 src/folderview.c:265
-#: src/folderview.c:270 src/folderview.c:280 src/folderview.c:282
-#: src/folderview.c:286 src/summaryview.c:398 src/summaryview.c:402
-#: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
-#: src/summaryview.c:430 src/summaryview.c:436
+#: src/folderview.c:244 src/folderview.c:246 src/folderview.c:251
+#: src/folderview.c:262 src/folderview.c:264 src/folderview.c:266
+#: src/folderview.c:271 src/folderview.c:281 src/folderview.c:283
+#: src/folderview.c:287 src/summaryview.c:399 src/summaryview.c:403
+#: src/summaryview.c:407 src/summaryview.c:417 src/summaryview.c:419
+#: src/summaryview.c:431 src/summaryview.c:437
 msgid "/---"
 msgstr "/---"
 
@@ -984,7 +984,7 @@ msgstr "/---"
 msgid "/_Edit"
 msgstr "/R_edaktor"
 
-#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:405
+#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:406
 msgid "/_Delete"
 msgstr "/Kustuta"
 
@@ -992,7 +992,7 @@ msgstr "/Kustuta"
 msgid "E-Mail address"
 msgstr "E-Posti aadress"
 
-#: src/addressbook.c:496 src/compose.c:4721 src/prefs_common_dialog.c:2179
+#: src/addressbook.c:496 src/compose.c:4757 src/prefs_common_dialog.c:2179
 msgid "Address book"
 msgstr "Aadressiraamat"
 
@@ -1019,16 +1019,16 @@ msgstr "Lisa"
 msgid "Lookup"
 msgstr "Otsi"
 
-#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:338
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:340
 #: src/prefs_template.c:176
 msgid "To:"
 msgstr "Kellele:"
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:355 src/prefs_template.c:178
+#: src/addressbook.c:650 src/prefs_folder_item.c:357 src/prefs_template.c:178
 msgid "Cc:"
 msgstr "Koopia:"
 
-#: src/addressbook.c:654 src/prefs_folder_item.c:366
+#: src/addressbook.c:654 src/prefs_folder_item.c:368
 msgid "Bcc:"
 msgstr "Pimekoopia:"
 
@@ -1050,7 +1050,7 @@ msgstr ""
 "Kas te soovite kustutada kataloogi `%s' JA kõik aadressid ?\n"
 "Kui kustutate ainult kataloogi, siis aadressid kantakse pealmisse kausta."
 
-#: src/addressbook.c:1674 src/folderview.c:2256
+#: src/addressbook.c:1674 src/folderview.c:2280
 msgid "Delete folder"
 msgstr "Kustuta kaust"
 
@@ -1184,8 +1184,8 @@ msgid "Group"
 msgstr "Grupp"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:356 src/prefs_account_dialog.c:1687
-#: src/summary_search.c:366
+#: src/addressbook.c:3152 src/folderview.c:357 src/prefs_account_dialog.c:1687
+#: src/summary_search.c:367
 msgid "Folder"
 msgstr "Kaust"
 
@@ -1209,7 +1209,7 @@ msgstr "Üldine aadress"
 msgid "Personal address"
 msgstr "Isiklik aadress"
 
-#: src/alertpanel.c:141 src/compose.c:5443 src/main.c:572
+#: src/alertpanel.c:141 src/compose.c:5479 src/main.c:572
 msgid "Notice"
 msgstr "Märkus"
 
@@ -1260,7 +1260,7 @@ msgstr "Pruun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
+#: src/colorlabel.c:280 src/prefs_folder_item.c:317 src/summaryview.c:4427
 msgid "None"
 msgstr "Mittemiski"
 
@@ -1272,8 +1272,8 @@ msgstr "/Lis_a..."
 msgid "/_Remove"
 msgstr "/Eemalda"
 
-#: src/compose.c:509 src/folderview.c:252 src/folderview.c:272
-#: src/folderview.c:288
+#: src/compose.c:509 src/folderview.c:253 src/folderview.c:273
+#: src/folderview.c:289
 #, fuzzy
 msgid "/_Properties..."
 msgstr "/Omadus..."
@@ -1357,7 +1357,7 @@ msgid "/_Edit/Aut_o wrapping"
 msgstr "/R_edaktor/_Kopeeri"
 
 #: src/compose.c:547 src/mainwindow.c:510 src/messageview.c:151
-#: src/summaryview.c:431
+#: src/summaryview.c:432
 msgid "/_View"
 msgstr "/_Vaade"
 
@@ -1572,80 +1572,80 @@ msgstr "/_Tööriist/Käivita"
 msgid "/_Tools/_Set spell language"
 msgstr "/_Tööriist/_Mall"
 
-#: src/compose.c:890
+#: src/compose.c:894
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "faili %s ei leidu\n"
 
-#: src/compose.c:994 src/compose.c:1065
+#: src/compose.c:998 src/compose.c:1069
 msgid "Can't get text part\n"
 msgstr "Ei saa tekstiosa kätte\n"
 
-#: src/compose.c:1466
+#: src/compose.c:1470
 msgid "Quote mark format error."
 msgstr "*Tsitaadimärgi formaadi viga."
 
-#: src/compose.c:1478
+#: src/compose.c:1482
 msgid "Message reply/forward format error."
 msgstr "Kirja vasta/edasta formaadi viga."
 
-#: src/compose.c:1887
+#: src/compose.c:1891
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Faili %s ei leidu\n"
 
-#: src/compose.c:1891
+#: src/compose.c:1895
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Ei saanud failile %s suurust\n"
 
-#: src/compose.c:1895
+#: src/compose.c:1899
 #, c-format
 msgid "File %s is empty."
 msgstr "Fail %s on tühi."
 
-#: src/compose.c:1899
+#: src/compose.c:1903
 #, c-format
 msgid "Can't read %s."
 msgstr "ei suuda lugeda %s-i"
 
-#: src/compose.c:1934
+#: src/compose.c:1938
 #, c-format
 msgid "Message: %s"
 msgstr "Kiri: %s"
 
-#: src/compose.c:2006 src/mimeview.c:565
+#: src/compose.c:2010 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "Ei saa mitmeosalise kirja osa kätte."
 
-#: src/compose.c:2451 src/headerview.c:195 src/summary_search.c:638
-#: src/summaryview.c:1943
+#: src/compose.c:2487 src/headerview.c:195 src/summary_search.c:640
+#: src/summaryview.c:1979
 msgid "(No Subject)"
 msgstr "(Pole pealkirja)"
 
-#: src/compose.c:2454
+#: src/compose.c:2490
 #, fuzzy, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Kirjuta kiri%s"
 
-#: src/compose.c:2567
+#: src/compose.c:2603
 msgid "Recipient is not specified."
 msgstr "Saaja pole määratud."
 
-#: src/compose.c:2575
+#: src/compose.c:2611
 #, fuzzy
 msgid "Empty subject"
 msgstr "Pealkiri"
 
-#: src/compose.c:2576
+#: src/compose.c:2612
 msgid "Subject is empty. Send it anyway?"
 msgstr "Päälkiri on tühi. Kas saadame igal juhul?"
 
-#: src/compose.c:2638
+#: src/compose.c:2674
 msgid "can't get recipient list."
 msgstr "ei leia saajate nimistut."
 
-#: src/compose.c:2658
+#: src/compose.c:2694
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1653,22 +1653,22 @@ msgstr ""
 "Kirja saatmiseks pole määratud kasutajtunnust.\n"
 "Palun vali kirja konto enne saatmist."
 
-#: src/compose.c:2672 src/send_message.c:299
+#: src/compose.c:2708 src/send_message.c:299
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Tekkis viga kirja saatmisel %s-le."
 
-#: src/compose.c:2714
+#: src/compose.c:2750
 msgid "Can't save the message to outbox."
 msgstr "Kirja ei õnnestunud asetada väljunute kausta."
 
-#: src/compose.c:2752
+#: src/compose.c:2788
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Ei suutnud leida ühtki võtit, mis oleks seotud valitud võtmega (id'%s')."
 
-#: src/compose.c:2849
+#: src/compose.c:2885
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1678,12 +1678,12 @@ msgstr ""
 "Ei suuda transleerida kirja tekstikoodi.\n"
 "Kas igatahes saata ?"
 
-#: src/compose.c:2855
+#: src/compose.c:2891
 #, fuzzy
 msgid "Code conversion error"
 msgstr "Aadressiraamatu uuendamise viga"
 
-#: src/compose.c:2928
+#: src/compose.c:2964
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1692,159 +1692,159 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:2932
+#: src/compose.c:2968
 msgid "Line length limit"
 msgstr ""
 
-#: src/compose.c:3222
+#: src/compose.c:3258
 msgid "can't remove the old message\n"
 msgstr "Ei suuda eemaldada vana kirja\n"
 
-#: src/compose.c:3240
+#: src/compose.c:3276
 msgid "queueing message...\n"
 msgstr "Asetan kirja järjekorda...\n"
 
-#: src/compose.c:3322
+#: src/compose.c:3358
 msgid "can't find queue folder\n"
 msgstr "järjekorra kausta ei leidunud\n"
 
-#: src/compose.c:3329
+#: src/compose.c:3365
 msgid "can't queue the message\n"
 msgstr "Ei suutnud kirja järjekorda asetada\n"
 
-#: src/compose.c:3922
+#: src/compose.c:3958
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "Loodud Kirja-ID: %s\n"
 
-#: src/compose.c:4035
+#: src/compose.c:4071
 msgid "Creating compose window...\n"
 msgstr "Loon kirjutamise akent...\n"
 
-#: src/compose.c:4086 src/headerview.c:54
+#: src/compose.c:4122 src/headerview.c:54
 msgid "From:"
 msgstr "Kellelt:"
 
-#: src/compose.c:4160
+#: src/compose.c:4196
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Tööriist/Tegevused"
 
-#: src/compose.c:4163
+#: src/compose.c:4199
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Kiri/Krüpteeri"
 
-#: src/compose.c:4201 src/compose.c:5275
+#: src/compose.c:4237 src/compose.c:5311
 msgid "MIME type"
 msgstr "MIME tüüp"
 
 #. S_COL_DATE
-#: src/compose.c:4210 src/mimeview.c:197 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
+#: src/compose.c:4246 src/mimeview.c:197 src/prefs_filter_edit.c:497
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4574
 msgid "Size"
 msgstr "Suurus"
 
-#: src/compose.c:4641 src/mainwindow.c:2274 src/prefs_account_dialog.c:525
+#: src/compose.c:4677 src/mainwindow.c:2274 src/prefs_account_dialog.c:525
 #: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "Saada"
 
-#: src/compose.c:4642
+#: src/compose.c:4678
 msgid "Send message"
 msgstr "Saada kiri"
 
-#: src/compose.c:4650
+#: src/compose.c:4686
 msgid "Send later"
 msgstr "Hiljem"
 
-#: src/compose.c:4651
+#: src/compose.c:4687
 msgid "Put into queue folder and send later"
 msgstr "Pane järjekorda ja saada hiljem"
 
-#: src/compose.c:4659
+#: src/compose.c:4695
 msgid "Draft"
 msgstr "Mustand"
 
-#: src/compose.c:4660
+#: src/compose.c:4696
 msgid "Save to draft folder"
 msgstr "Salvesta mustandite kausta"
 
-#: src/compose.c:4670
+#: src/compose.c:4706
 msgid "Insert"
 msgstr "Lisa"
 
-#: src/compose.c:4671
+#: src/compose.c:4707
 msgid "Insert file"
 msgstr "Lisa fail"
 
-#: src/compose.c:4679
+#: src/compose.c:4715
 msgid "Attach"
 msgstr "Manusta"
 
-#: src/compose.c:4680
+#: src/compose.c:4716
 msgid "Attach file"
 msgstr "Manusta fail"
 
 #. signature
-#: src/compose.c:4690 src/prefs_account_dialog.c:1205
+#: src/compose.c:4726 src/prefs_account_dialog.c:1205
 #: src/prefs_common_dialog.c:954
 msgid "Signature"
 msgstr "Allkiri"
 
-#: src/compose.c:4691
+#: src/compose.c:4727
 msgid "Insert signature"
 msgstr "Lisa allkiri"
 
 #. editor
-#: src/compose.c:4700 src/prefs_common_dialog.c:992
+#: src/compose.c:4736 src/prefs_common_dialog.c:992
 #: src/prefs_common_dialog.c:2311
 msgid "Editor"
 msgstr "Redaktor"
 
-#: src/compose.c:4701
+#: src/compose.c:4737
 msgid "Edit with external editor"
 msgstr "Redigeeri välise redaktoriga"
 
-#: src/compose.c:4709
+#: src/compose.c:4745
 msgid "Linewrap"
 msgstr "Reaäär"
 
-#: src/compose.c:4710
+#: src/compose.c:4746
 msgid "Wrap all long lines"
 msgstr "Murra kõik pikad read"
 
-#: src/compose.c:5171
+#: src/compose.c:5207
 msgid "Invalid MIME type."
 msgstr "Vale MIME tüüp."
 
-#: src/compose.c:5189
+#: src/compose.c:5225
 msgid "File doesn't exist or is empty."
 msgstr "Faili ei eksisteeri või on see tühi."
 
-#: src/compose.c:5257
+#: src/compose.c:5293
 #, fuzzy
 msgid "Properties"
 msgstr "Omadus"
 
-#: src/compose.c:5277 src/prefs_common_dialog.c:1448
+#: src/compose.c:5313 src/prefs_common_dialog.c:1448
 msgid "Encoding"
 msgstr "Kodeerimine"
 
-#: src/compose.c:5300 src/prefs_folder_item.c:203
+#: src/compose.c:5336 src/prefs_folder_item.c:203
 msgid "Path"
 msgstr "Tee"
 
-#: src/compose.c:5301
+#: src/compose.c:5337
 msgid "File name"
 msgstr "Failinimi"
 
-#: src/compose.c:5394
+#: src/compose.c:5430
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Välise redaktori käsurida on vale: `%s'\n"
 
-#: src/compose.c:5440
+#: src/compose.c:5476
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1854,48 +1854,48 @@ msgstr ""
 "Kas hävitame protsessi?\n"
 "protsessi grupi id: %d"
 
-#: src/compose.c:5815 src/compose.c:5823 src/compose.c:5829
+#: src/compose.c:5851 src/compose.c:5859 src/compose.c:5865
 msgid "Can't queue the message."
 msgstr "Kirja ei õnnestunud järjekorda asetada."
 
-#: src/compose.c:5920
+#: src/compose.c:5956
 #, fuzzy
 msgid "Select files"
 msgstr "Määra fail"
 
-#: src/compose.c:5942
+#: src/compose.c:5978
 msgid "Select file"
 msgstr "Määra fail"
 
-#: src/compose.c:5977
+#: src/compose.c:6013
 #, fuzzy
 msgid "Save message"
 msgstr "Saada kiri"
 
-#: src/compose.c:5978
+#: src/compose.c:6014
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Seda kirja on muudetud. kas kaotame selle?"
 
-#: src/compose.c:5980
+#: src/compose.c:6016
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:6022
+#: src/compose.c:6058
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Kas te tahate seda malli lisada '%s'-e ?"
 
-#: src/compose.c:6024
+#: src/compose.c:6060
 msgid "Apply template"
 msgstr "Lisa mall"
 
-#: src/compose.c:6025
+#: src/compose.c:6061
 #, fuzzy
 msgid "_Replace"
 msgstr "Asenda"
 
-#: src/compose.c:6025
+#: src/compose.c:6061
 #, fuzzy
 msgid "_Insert"
 msgstr "Lisa"
@@ -2057,12 +2057,12 @@ msgstr "Redigeeri kausta"
 msgid "Input the new name of folder:"
 msgstr "Sisesta uus nimi või kaust:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2035
-#: src/folderview.c:2041
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2059
+#: src/folderview.c:2065
 msgid "New folder"
 msgstr "Uus kaust"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2042
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2066
 msgid "Input the name of new folder:"
 msgstr "Sisesta uue kausta nimi:"
 
@@ -2230,177 +2230,177 @@ msgstr "Kirja jada kataloog"
 msgid "Select folder"
 msgstr "Vali kaust"
 
-#: src/foldersel.c:359 src/folderview.c:1148 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1157 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Saabunud"
 
-#: src/foldersel.c:363 src/folderview.c:1154 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1163 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Saadetud"
 
-#: src/foldersel.c:367 src/folderview.c:1160 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1169 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Järjekord"
 
-#: src/foldersel.c:371 src/folderview.c:1166 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1175 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Prügikast"
 
-#: src/foldersel.c:375 src/folderview.c:1172 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1181 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Mustandid"
 
-#: src/foldersel.c:542 src/folderview.c:2039 src/folderview.c:2043
+#: src/foldersel.c:542 src/folderview.c:2063 src/folderview.c:2067
 msgid "NewFolder"
 msgstr "Uus Kaust"
 
-#: src/foldersel.c:550 src/folderview.c:2051 src/folderview.c:2107
+#: src/foldersel.c:550 src/folderview.c:2075 src/folderview.c:2131
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "Sümbol `%c' ei saa olla lisatud kausta nimele."
 
-#: src/foldersel.c:560 src/folderview.c:2061 src/folderview.c:2114
-#: src/summary_search.c:983
+#: src/foldersel.c:560 src/folderview.c:2085 src/folderview.c:2138
+#: src/summary_search.c:989
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Kaust %s on juba olemas."
 
-#: src/foldersel.c:568 src/folderview.c:2068
+#: src/foldersel.c:568 src/folderview.c:2092
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Ei suuda luua kausta %s."
 
-#: src/folderview.c:239 src/folderview.c:257
+#: src/folderview.c:240 src/folderview.c:258
 msgid "/Create _new folder..."
 msgstr "/Loo uus kaust..."
 
-#: src/folderview.c:240 src/folderview.c:258
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Rename folder..."
 msgstr "/Nimeta kaust ümbe_r..."
 
-#: src/folderview.c:241 src/folderview.c:259
+#: src/folderview.c:242 src/folderview.c:260
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/Nimeta kaust ümbe_r..."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:243 src/folderview.c:261
 msgid "/_Delete folder"
 msgstr "/Kustuta kaust"
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:245 src/folderview.c:263
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Tühjenda prügikast"
 
-#: src/folderview.c:246 src/folderview.c:266 src/folderview.c:283
+#: src/folderview.c:247 src/folderview.c:267 src/folderview.c:284
 msgid "/_Check for new messages"
 msgstr "/_Vaata uusi kirju"
 
-#: src/folderview.c:248 src/folderview.c:268
+#: src/folderview.c:249 src/folderview.c:269
 #, fuzzy
 msgid "/R_ebuild folder tree"
 msgstr "/_Uuenda kausta puu"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:285
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 #, fuzzy
 msgid "/_Update summary"
 msgstr "/_Vaade/_Uuenda koond"
 
-#: src/folderview.c:251 src/folderview.c:271 src/folderview.c:287
+#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
 msgid "/_Search messages..."
 msgstr "/_Otsi kirju..."
 
-#: src/folderview.c:264 src/folderview.c:281
+#: src/folderview.c:265 src/folderview.c:282
 #, fuzzy
 msgid "/Down_load"
 msgstr "Kirju mida pole loetud ei ole."
 
-#: src/folderview.c:277
+#: src/folderview.c:278
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Telli uudi_stegrupp..."
 
-#: src/folderview.c:279
+#: src/folderview.c:280
 msgid "/_Remove newsgroup"
 msgstr "/Eemalda uudisteg_rupp"
 
-#: src/folderview.c:309
+#: src/folderview.c:310
 msgid "Creating folder view...\n"
 msgstr "Loon kausta vaate...\n"
 
-#: src/folderview.c:387
+#: src/folderview.c:388
 msgid "New"
 msgstr "Uus"
 
 #. S_COL_MARK
-#: src/folderview.c:401 src/prefs_summary_column.c:71
+#: src/folderview.c:402 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Pole loetud"
 
-#: src/folderview.c:415
+#: src/folderview.c:416
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:538
+#: src/folderview.c:547
 msgid "Setting folder info...\n"
 msgstr "Sean kausta info...\n"
 
-#: src/folderview.c:539
+#: src/folderview.c:548
 msgid "Setting folder info..."
 msgstr "Sean kausta info..."
 
-#: src/folderview.c:839 src/mainwindow.c:3356 src/setup.c:80
+#: src/folderview.c:848 src/mainwindow.c:3358 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Tuhnin kaustas %s%c%s ..."
 
-#: src/folderview.c:843 src/mainwindow.c:3361 src/setup.c:85
+#: src/folderview.c:852 src/mainwindow.c:3363 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Tuhnin kaustas %s ..."
 
-#: src/folderview.c:885
+#: src/folderview.c:894
 #, fuzzy
 msgid "Rebuild folder tree"
 msgstr "Uuenda kausta puu"
 
-#: src/folderview.c:886
+#: src/folderview.c:895
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr ""
 
-#: src/folderview.c:895
+#: src/folderview.c:904
 #, fuzzy
 msgid "Rebuilding folder tree..."
 msgstr "Uuendan kasuta puu..."
 
-#: src/folderview.c:902
+#: src/folderview.c:911
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "Uuendan kasuta puu..."
 
-#: src/folderview.c:1015
+#: src/folderview.c:1024
 msgid "Checking for new messages in all folders..."
 msgstr "Kõigis kaustades otsitakse uusi kirju..."
 
-#: src/folderview.c:1180 src/mainwindow.c:2350 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1189 src/mainwindow.c:2350 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1785
+#: src/folderview.c:1809
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Valitud on kaust %s\n"
 
-#: src/folderview.c:1940
+#: src/folderview.c:1964
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Saadan kirja"
 
-#: src/folderview.c:1975
+#: src/folderview.c:1999
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Tekkis viga kirja saatmisel %s-le."
 
-#: src/folderview.c:2036
+#: src/folderview.c:2060
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2410,21 +2410,21 @@ msgstr ""
 "(kui soovite luua kausta, millesse saaks teisi kaustu lisada,\n"
 " siis lisage / nime lõppu)"
 
-#: src/folderview.c:2098
+#: src/folderview.c:2122
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Sisesta uus nimi %s-le:"
 
-#: src/folderview.c:2099
+#: src/folderview.c:2123
 msgid "Rename folder"
 msgstr "Nimeta kaust ümber"
 
-#: src/folderview.c:2190
+#: src/folderview.c:2214
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Ei suuda kausta %s eemaldada."
 
-#: src/folderview.c:2253
+#: src/folderview.c:2277
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2435,21 +2435,21 @@ msgstr ""
 "Kustutatakse kõik kaustad ja kirjad %s-s.\n"
 "Kas sa tõesti soovid kustutada?"
 
-#: src/folderview.c:2282
+#: src/folderview.c:2306
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Ei suuda kausta %s eemaldada."
 
-#: src/folderview.c:2316
+#: src/folderview.c:2340
 msgid "Empty trash"
 msgstr "Tühjenda prügikast"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Kas eemaldada kõik kirjad prügikastist?"
 
-#: src/folderview.c:2353
+#: src/folderview.c:2377
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2458,34 +2458,34 @@ msgstr ""
 "Kas tõepoolest eemaldada kirjakast %s?\n"
 "(Kirju ei kustutata kettalt)"
 
-#: src/folderview.c:2355
+#: src/folderview.c:2379
 msgid "Remove mailbox"
 msgstr "Eemalda kirjakst"
 
-#: src/folderview.c:2401
+#: src/folderview.c:2425
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Kas tõesti kustutada IMAP4 konto %s?"
 
-#: src/folderview.c:2402
+#: src/folderview.c:2426
 msgid "Delete IMAP4 account"
 msgstr "Kustuta IMAP4 konto"
 
-#: src/folderview.c:2544
+#: src/folderview.c:2569
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Kas tõesti soovite kustutada uudistegruppi %s?"
 
-#: src/folderview.c:2545
+#: src/folderview.c:2570
 msgid "Delete newsgroup"
 msgstr "Kustuta uudistegrupp"
 
-#: src/folderview.c:2592
+#: src/folderview.c:2617
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Kas tõesti kustutda uudistegrupp %s ?"
 
-#: src/folderview.c:2593
+#: src/folderview.c:2618
 msgid "Delete news account"
 msgstr "Kustuta uudistegrupp"
 
@@ -2501,7 +2501,7 @@ msgstr "Pealkiri:"
 msgid "Creating header view...\n"
 msgstr "Loon päise vaadet...\n"
 
-#: src/headerview.c:180 src/summary_search.c:639 src/summaryview.c:1946
+#: src/headerview.c:180 src/summary_search.c:641 src/summaryview.c:1982
 msgid "(No From)"
 msgstr "(Eikelleltki)"
 
@@ -3276,7 +3276,7 @@ msgstr "/_Vaade/_Kooditabel/Hiina (ISO-2022-_CN)"
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/_Vaade/_Kooditabel/Korea (ISO-2022-KR)"
 
-#: src/mainwindow.c:676 src/summaryview.c:432
+#: src/mainwindow.c:676 src/summaryview.c:433
 msgid "/_View/Open in new _window"
 msgstr "/Vaade/Ava uues aknas"
 
@@ -3568,8 +3568,8 @@ msgstr "Loon peamise akna...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "PeaAken: värvi haldamine %d ebaõnnestus\n"
 
-#: src/mainwindow.c:1083 src/summaryview.c:2088 src/summaryview.c:2173
-#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
+#: src/mainwindow.c:1083 src/summaryview.c:2129 src/summaryview.c:2225
+#: src/summaryview.c:3587 src/summaryview.c:3708 src/summaryview.c:4060
 msgid "done.\n"
 msgstr "tehtud.\n"
 
@@ -3644,7 +3644,7 @@ msgstr "Sylpheed - kausta vaade"
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - kirja vaade"
 
-#: src/mainwindow.c:2209 src/summaryview.c:392
+#: src/mainwindow.c:2209 src/summaryview.c:393
 msgid "/_Reply"
 msgstr "/Vastan"
 
@@ -3663,15 +3663,15 @@ msgstr "/Vasta/_saatjale"
 msgid "/Reply to mailing _list"
 msgstr "/Vasta/kirja_listi"
 
-#: src/mainwindow.c:2217 src/summaryview.c:399
+#: src/mainwindow.c:2217 src/summaryview.c:400
 msgid "/_Forward"
 msgstr "/Saadan edasi"
 
-#: src/mainwindow.c:2218 src/summaryview.c:400
+#: src/mainwindow.c:2218 src/summaryview.c:401
 msgid "/For_ward as attachment"
 msgstr "/Saada edasi manusena"
 
-#: src/mainwindow.c:2219 src/summaryview.c:401
+#: src/mainwindow.c:2219 src/summaryview.c:402
 msgid "/Redirec_t"
 msgstr "/Suuna ümber"
 
@@ -3757,8 +3757,8 @@ msgstr "Seaded"
 msgid "Common preferences"
 msgstr "Üldised omaduse"
 
-#: src/mainwindow.c:2392 src/prefs_folder_item.c:288
-#: src/prefs_folder_item.c:299 src/progressdialog.c:128
+#: src/mainwindow.c:2392 src/prefs_folder_item.c:290
+#: src/prefs_folder_item.c:301 src/progressdialog.c:128
 msgid "Account"
 msgstr "Konto"
 
@@ -3774,11 +3774,11 @@ msgstr ""
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2783
+#: src/mainwindow.c:2785
 msgid "Exit"
 msgstr "Välju"
 
-#: src/mainwindow.c:2783
+#: src/mainwindow.c:2785
 msgid "Exit this program?"
 msgstr "Lõpetame programmi töö."
 
@@ -3790,7 +3790,7 @@ msgstr "Avatud kirjast otsiine"
 msgid "Find text:"
 msgstr "Otsi teksti:"
 
-#: src/message_search.c:141 src/summary_search.c:322
+#: src/message_search.c:141 src/summary_search.c:323
 msgid "Case sensitive"
 msgstr "Tõstutundlik"
 
@@ -3834,25 +3834,25 @@ msgstr "Manused"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:667 src/summaryview.c:3046
+#: src/messageview.c:667 src/summaryview.c:3131
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Ei suuda faili '%s' salvestada."
 
-#: src/messageview.c:726 src/summaryview.c:3069
+#: src/messageview.c:726 src/summaryview.c:3154
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:727 src/summaryview.c:3070
+#: src/messageview.c:727 src/summaryview.c:3155
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Käivita"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3157
 msgid "Print"
 msgstr "Trüki"
 
-#: src/messageview.c:738 src/summaryview.c:3081
+#: src/messageview.c:738 src/summaryview.c:3166
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -4233,7 +4233,7 @@ msgstr "Autoriseeri POP3 enne saatmist"
 msgid "Command output"
 msgstr "Käsklus"
 
-#: src/prefs_account_dialog.c:1235 src/prefs_folder_item.c:330
+#: src/prefs_account_dialog.c:1235 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
 msgstr "Säti järgmised aadressid automaatselt"
 
@@ -5666,7 +5666,7 @@ msgstr "Sihtkaust pole määratud."
 msgid "Rule name is not specified."
 msgstr "Saaja pole määratud."
 
-#: src/prefs_filter_edit.c:1812 src/summary_search.c:465
+#: src/prefs_filter_edit.c:1812 src/summary_search.c:466
 msgid "Invalid condition exists."
 msgstr ""
 
@@ -5710,15 +5710,15 @@ msgstr ""
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr ""
 
-#: src/prefs_folder_item.c:328
+#: src/prefs_folder_item.c:330
 msgid "Apply to subfolders"
 msgstr ""
 
-#: src/prefs_folder_item.c:353
+#: src/prefs_folder_item.c:355
 msgid "use also on reply"
 msgstr ""
 
-#: src/prefs_folder_item.c:377
+#: src/prefs_folder_item.c:379
 #, fuzzy
 msgid "Reply-To:"
 msgstr "Vastus saata"
@@ -5733,20 +5733,20 @@ msgid "Attachment"
 msgstr "Manus"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:367
-#: src/summaryview.c:4481
+#: src/prefs_summary_column.c:73 src/summary_search.c:368
+#: src/summaryview.c:4567
 msgid "Subject"
 msgstr "Pealkiri"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:368
-#: src/summaryview.c:4484
+#: src/prefs_summary_column.c:74 src/summary_search.c:369
+#: src/summaryview.c:4570
 msgid "From"
 msgstr "Kellelt"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:369
-#: src/summaryview.c:4486
+#: src/prefs_summary_column.c:75 src/summary_search.c:370
+#: src/summaryview.c:4572
 msgid "Date"
 msgstr "Kuupäev"
 
@@ -6140,7 +6140,7 @@ msgstr "Ei saanud uudistegrupi nimistut."
 msgid "Can't retrieve newsgroup list."
 msgstr "Ei saanud uudistegrupi nimistut."
 
-#: src/subscribedialog.c:523 src/summary_search.c:517 src/summaryview.c:766
+#: src/subscribedialog.c:523 src/summary_search.c:518 src/summaryview.c:767
 msgid "Done."
 msgstr "Tehtud."
 
@@ -6149,388 +6149,388 @@ msgstr "Tehtud."
 msgid "%d newsgroups received (%s read)"
 msgstr "saadi %d uudistegruppi (%s loetud)"
 
-#: src/summary_search.c:230
+#: src/summary_search.c:231
 msgid "Search messages"
 msgstr "Otsi kirju"
 
-#: src/summary_search.c:253
+#: src/summary_search.c:254
 msgid "Match any of the following"
 msgstr ""
 
-#: src/summary_search.c:255
+#: src/summary_search.c:256
 #, fuzzy
 msgid "Match all of the following"
 msgstr "Säti järgmised aadressid automaatselt"
 
-#: src/summary_search.c:299
+#: src/summary_search.c:300
 #, fuzzy
 msgid "Folder:"
 msgstr "Kaust"
 
-#: src/summary_search.c:317
+#: src/summary_search.c:318
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Kataloogist otsimine"
 
-#: src/summary_search.c:391
+#: src/summary_search.c:392
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Kataloogist otsimine"
 
-#: src/summary_search.c:540
+#: src/summary_search.c:542
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "Tuhnin kaustas %s ..."
 
-#: src/summary_search.c:568
+#: src/summary_search.c:570
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtreerin..."
 
-#: src/summary_search.c:647 src/summaryview.c:1883
+#: src/summary_search.c:649 src/summaryview.c:1920
 msgid "(No Date)"
 msgstr "(Kuupäeva pole)"
 
-#: src/summary_search.c:826
+#: src/summary_search.c:831
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Kataloogist otsimine"
 
-#: src/summary_search.c:847
+#: src/summary_search.c:852
 #, fuzzy
 msgid "Location:"
 msgstr "Tsiteerimine"
 
-#: src/summary_search.c:862
+#: src/summary_search.c:867
 #, fuzzy
 msgid "Folder name:"
 msgstr "Failinimi"
 
-#: src/summaryview.c:393
+#: src/summaryview.c:394
 msgid "/Repl_y to"
 msgstr "/Vasta"
 
-#: src/summaryview.c:394
+#: src/summaryview.c:395
 msgid "/Repl_y to/_all"
 msgstr "/Vasta/_kõigile"
 
-#: src/summaryview.c:395
+#: src/summaryview.c:396
 msgid "/Repl_y to/_sender"
 msgstr "/Vasta/_saatjale"
 
-#: src/summaryview.c:396
+#: src/summaryview.c:397
 msgid "/Repl_y to/mailing _list"
 msgstr "/Vasta/kirja_listi"
 
-#: src/summaryview.c:403
+#: src/summaryview.c:404
 msgid "/M_ove..."
 msgstr "/Nihuta..."
 
-#: src/summaryview.c:404
+#: src/summaryview.c:405
 msgid "/_Copy..."
 msgstr "/Kopeeri..."
 
-#: src/summaryview.c:407
+#: src/summaryview.c:408
 msgid "/_Mark"
 msgstr "/Märk"
 
-#: src/summaryview.c:408
+#: src/summaryview.c:409
 msgid "/_Mark/_Mark"
 msgstr "/Märk/Märgi"
 
-#: src/summaryview.c:409
+#: src/summaryview.c:410
 msgid "/_Mark/_Unmark"
 msgstr "/Märk/Eemalda märk"
 
-#: src/summaryview.c:410
+#: src/summaryview.c:411
 msgid "/_Mark/---"
 msgstr "/Märk/---"
 
-#: src/summaryview.c:411
+#: src/summaryview.c:412
 msgid "/_Mark/Mark as unr_ead"
 msgstr "/Märk/Märgi kui mitteloetud"
 
-#: src/summaryview.c:412
+#: src/summaryview.c:413
 msgid "/_Mark/Mark as rea_d"
 msgstr "/Märk/Märgi loetuks"
 
-#: src/summaryview.c:414
+#: src/summaryview.c:415
 msgid "/_Mark/Mark all _read"
 msgstr "/Märk/Märgi kõik loetuks"
 
-#: src/summaryview.c:415
+#: src/summaryview.c:416
 msgid "/Color la_bel"
 msgstr "/Värviline silt"
 
-#: src/summaryview.c:417
+#: src/summaryview.c:418
 msgid "/Re-_edit"
 msgstr "/Kirjutan uuesti"
 
-#: src/summaryview.c:419
+#: src/summaryview.c:420
 #, fuzzy
 msgid "/Add sender to address boo_k..."
 msgstr "/Lisa saatje aadressi raamatusse"
 
-#: src/summaryview.c:421
+#: src/summaryview.c:422
 msgid "/Create f_ilter rule"
 msgstr "/Loo filtri reeglistik"
 
-#: src/summaryview.c:422
+#: src/summaryview.c:423
 msgid "/Create f_ilter rule/_Automatically"
 msgstr "/Loo filtri reeglistik/Automaatselt"
 
-#: src/summaryview.c:424
+#: src/summaryview.c:425
 msgid "/Create f_ilter rule/by _From"
 msgstr "/Loo filtri reeglistik/ kasutades Kellelt"
 
-#: src/summaryview.c:426
+#: src/summaryview.c:427
 msgid "/Create f_ilter rule/by _To"
 msgstr "/Loo filtri reeglistik/kasutades Kellele"
 
-#: src/summaryview.c:428
+#: src/summaryview.c:429
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/Loo filtri reeglistik/ kasutades päälkirja"
 
-#: src/summaryview.c:434
+#: src/summaryview.c:435
 msgid "/_View/_Source"
 msgstr "/Vaade/Lähtekood"
 
-#: src/summaryview.c:435
+#: src/summaryview.c:436
 msgid "/_View/All _header"
 msgstr "/Vaade/Kõik päised"
 
-#: src/summaryview.c:437
+#: src/summaryview.c:438
 msgid "/_Print..."
 msgstr "Trüki..."
 
-#: src/summaryview.c:462
+#: src/summaryview.c:463
 msgid "Creating summary view...\n"
 msgstr "Loon kokkuvõtte vaate...\n"
 
-#: src/summaryview.c:627
+#: src/summaryview.c:628
 msgid "Process mark"
 msgstr "Protsessi märk"
 
-#: src/summaryview.c:628
+#: src/summaryview.c:629
 msgid "Some marks are left. Process it?"
 msgstr "Mõned märgid on jäänud. Protsessime selle?"
 
-#: src/summaryview.c:674
+#: src/summaryview.c:675
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Tuhnin kaustas (%s)..."
 
-#: src/summaryview.c:1187
+#: src/summaryview.c:1207
 #, fuzzy
 msgid "_Search again"
 msgstr "Otsi uuesti"
 
-#: src/summaryview.c:1208 src/summaryview.c:1217
+#: src/summaryview.c:1228 src/summaryview.c:1237
 msgid "No more unread messages"
 msgstr "Pole rohkem kirju, mida pole loetud."
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1229
 msgid "No unread message found. Search from the end?"
 msgstr "Pole rohkem kirju, mida pole loetud. Otsime alates lõpust?"
 
-#: src/summaryview.c:1211
+#: src/summaryview.c:1231
 msgid "No unread messages."
 msgstr "Kirju mida pole loetud ei ole."
 
-#: src/summaryview.c:1218
+#: src/summaryview.c:1238
 msgid "No unread message found. Go to next folder?"
 msgstr "Ei leidunud kirju mida pole loetud. Otsime järgmisest kaustast?"
 
-#: src/summaryview.c:1226 src/summaryview.c:1235
+#: src/summaryview.c:1246 src/summaryview.c:1255
 msgid "No more new messages"
 msgstr "Pole rohkem kirju"
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1247
 msgid "No new message found. Search from the end?"
 msgstr "Pole rohkem uusi kirju. Otsime alates lõpust?"
 
-#: src/summaryview.c:1229
+#: src/summaryview.c:1249
 msgid "No new messages."
 msgstr "Uusi kirju ei ole."
 
-#: src/summaryview.c:1236
+#: src/summaryview.c:1256
 msgid "No new message found. Go to next folder?"
 msgstr "Uusi kirju ei leidu. Otsime järgmisest kaustast?"
 
-#: src/summaryview.c:1244 src/summaryview.c:1253
+#: src/summaryview.c:1264 src/summaryview.c:1273
 msgid "No more marked messages"
 msgstr "Pole Rohkem märgitud kirju"
 
-#: src/summaryview.c:1245
+#: src/summaryview.c:1265
 msgid "No marked message found. Search from the end?"
 msgstr "Märgitud kirju ei leidunud. Kas otsime lõpust?"
 
-#: src/summaryview.c:1247 src/summaryview.c:1256
+#: src/summaryview.c:1267 src/summaryview.c:1276
 msgid "No marked messages."
 msgstr "Märgitud kirju ei ole."
 
-#: src/summaryview.c:1254
+#: src/summaryview.c:1274
 msgid "No marked message found. Search from the beginning?"
 msgstr "Märgitud kirju ei leidunud. Kas otsime algusest?"
 
-#: src/summaryview.c:1262 src/summaryview.c:1271
+#: src/summaryview.c:1282 src/summaryview.c:1291
 msgid "No more labeled messages"
 msgstr "Rohkem sildiga kirju ei ole"
 
-#: src/summaryview.c:1263
+#: src/summaryview.c:1283
 msgid "No labeled message found. Search from the end?"
 msgstr "Rohkem sildiga kirju ei leitud. Kas otsime lõpust?"
 
-#: src/summaryview.c:1265 src/summaryview.c:1274
+#: src/summaryview.c:1285 src/summaryview.c:1294
 msgid "No labeled messages."
 msgstr "Rohkem sildiga kirju ei ole."
 
-#: src/summaryview.c:1272
+#: src/summaryview.c:1292
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Rohkem seildiga kirju ei leitud. Kas otsime algusest?"
 
-#: src/summaryview.c:1571
+#: src/summaryview.c:1608
 msgid "Attracting messages by subject..."
 msgstr "*Võtan kirju päälkirja järgi..."
 
-#: src/summaryview.c:1730
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d deleted"
 msgstr "%d on kustutatud"
 
-#: src/summaryview.c:1734
+#: src/summaryview.c:1771
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d on ülekantud"
 
-#: src/summaryview.c:1735 src/summaryview.c:1742
+#: src/summaryview.c:1772 src/summaryview.c:1779
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1740
+#: src/summaryview.c:1777
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d on kopeeritud"
 
-#: src/summaryview.c:1757
+#: src/summaryview.c:1794
 msgid " item(s) selected"
 msgstr " kirja märgitud"
 
-#: src/summaryview.c:1767
+#: src/summaryview.c:1804
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "uusi %d, mitteloetuid %d, kokku %d (%s)"
 
-#: src/summaryview.c:1773
+#: src/summaryview.c:1810
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "uusi %d, mitteloetuid %d, kokku %d"
 
-#: src/summaryview.c:1809
+#: src/summaryview.c:1846
 msgid "Sorting summary..."
 msgstr "Sorteerin kirjaloendi..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2066
 msgid "\tSetting summary from message data..."
 msgstr "\t sätin kokkuvõtte kirja andmetest..."
 
-#: src/summaryview.c:2027
+#: src/summaryview.c:2068
 msgid "Setting summary from message data..."
 msgstr "Teen kokkuvõtte teadete andmetest..."
 
-#: src/summaryview.c:2152
+#: src/summaryview.c:2193
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "*Kirjutan koondy puvrisse (%s)..."
 
-#: src/summaryview.c:2461
+#: src/summaryview.c:2525
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Kiri %d on märgitud\n"
 
-#: src/summaryview.c:2509
+#: src/summaryview.c:2583
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Kiri %d on märgitud kui läbiloetu\n"
 
-#: src/summaryview.c:2593
+#: src/summaryview.c:2671
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Kiri %d on märgitud kui mitteloetu\n"
 
-#: src/summaryview.c:2652
+#: src/summaryview.c:2732
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Kiri %s/%d on määratud kustutamisele\n"
 
-#: src/summaryview.c:2670
+#: src/summaryview.c:2750
 msgid "Delete message(s)"
 msgstr "Kustuta kirjad"
 
-#: src/summaryview.c:2671
+#: src/summaryview.c:2751
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Kas te tõesti soovite kirju eemaldada prügikastist?"
 
-#: src/summaryview.c:2736
+#: src/summaryview.c:2816
 msgid "Deleting duplicated messages..."
 msgstr "Kustutan duplitseeritud kirju..."
 
-#: src/summaryview.c:2773
+#: src/summaryview.c:2854
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Kiri %s/%d pole märgitud\n"
 
-#: src/summaryview.c:2829
+#: src/summaryview.c:2912
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Kiri %d on määratud ülekandmiseks %s-i\n"
 
-#: src/summaryview.c:2846
+#: src/summaryview.c:2929
 msgid "Destination is same as current folder."
 msgstr "Sihtpunkt on sama mis aktiivne kaust."
 
-#: src/summaryview.c:2900
+#: src/summaryview.c:2985
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Kiri %d on määratud kopeerimisele %s-i\n"
 
-#: src/summaryview.c:2917
+#: src/summaryview.c:3002
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Kopeerimise sihtpunkt on sama mis aktiivne kaust."
 
-#: src/summaryview.c:3116
+#: src/summaryview.c:3201
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/summaryview.c:3417 src/summaryview.c:3418
+#: src/summaryview.c:3502 src/summaryview.c:3503
 msgid "Building threads..."
 msgstr "Loon teemad..."
 
-#: src/summaryview.c:3560 src/summaryview.c:3561
+#: src/summaryview.c:3645 src/summaryview.c:3646
 msgid "Unthreading..."
 msgstr "Eemaldan teemad..."
 
-#: src/summaryview.c:3840 src/summaryview.c:3896
+#: src/summaryview.c:3925 src/summaryview.c:3981
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtreerin..."
 
-#: src/summaryview.c:3945
+#: src/summaryview.c:4030
 msgid "filtering..."
 msgstr "filtreerin..."
 
-#: src/summaryview.c:3946
+#: src/summaryview.c:4031
 msgid "Filtering..."
 msgstr "Filtreerin..."
 
-#: src/summaryview.c:3982
+#: src/summaryview.c:4067
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "kiri %d on juba salvestatud.\n"
 
-#: src/summaryview.c:4490
+#: src/summaryview.c:4576
 msgid "No."
 msgstr "Ei."
 

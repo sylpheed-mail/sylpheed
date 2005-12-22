@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-20 14:23+0900\n"
+"POT-Creation-Date: 2005-12-22 17:43+0900\n"
 "PO-Revision-Date: 2005-06-09 13:51+0300\n"
 "Last-Translator: Vitalijus Valantiejus <vitalijus@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libsylph/account.c:54
+#: libsylph/account.c:56
 msgid "Reading all config for each account...\n"
 msgstr "Skaitoma kiekvienos sąskaitos konfigūracija...\n"
 
@@ -518,16 +518,16 @@ msgstr "Nereikalingo pašto filtras"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Nepavyko konvertuoti kodo.\n"
 
-#: libsylph/procmsg.c:582
+#: libsylph/procmsg.c:628
 msgid "can't open mark file\n"
 msgstr "negali atidaryti žymų bylos\n"
 
-#: libsylph/procmsg.c:1035
+#: libsylph/procmsg.c:1081
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "negaliu gauti žinutės %d\n"
 
-#: libsylph/procmsg.c:1290
+#: libsylph/procmsg.c:1336
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Bloga spausdinimo komanda: „%s“\n"
@@ -625,8 +625,8 @@ msgstr "%.2fMB"
 msgid "%.2fGB"
 msgstr "%.2fGB"
 
-#: libsylph/utils.c:2373 src/compose.c:2816 src/compose.c:3079
-#: src/compose.c:3142 src/compose.c:3262
+#: libsylph/utils.c:2373 src/compose.c:2852 src/compose.c:3115
+#: src/compose.c:3178 src/compose.c:3298
 msgid "can't change file mode\n"
 msgstr "negaliu pakeisti bylos rėžimo\n"
 
@@ -696,15 +696,15 @@ msgstr ""
 msgid "Opening account edit window...\n"
 msgstr "Atveriamas sąskaitos redagavimo langas...\n"
 
-#: src/account_dialog.c:287
+#: src/account_dialog.c:288
 msgid "Creating account edit window...\n"
 msgstr "Sukuriamas sąskaitos redagavimo langas...\n"
 
-#: src/account_dialog.c:292
+#: src/account_dialog.c:293
 msgid "Edit accounts"
 msgstr "Redaguoti sąskaitas"
 
-#: src/account_dialog.c:310
+#: src/account_dialog.c:311
 msgid ""
 "New messages will be checked in this order. Check the boxes\n"
 "on the `G' column to enable message retrieval by `Get all'."
@@ -712,8 +712,8 @@ msgstr ""
 "Naujos žinutės bus tikrinamos šia tvarka. Pažymėkite laukelį\n"
 "skulpelyje „G“ jei norite gauti žinutes pasirinkę „Gauti visus“."
 
-#: src/account_dialog.c:365 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4220 src/editaddress.c:200 src/editaddress.c:942
+#: src/account_dialog.c:366 src/addressadd.c:192 src/addressbook.c:491
+#: src/compose.c:4256 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:174
@@ -721,32 +721,32 @@ msgstr ""
 msgid "Name"
 msgstr "Vardas"
 
-#: src/account_dialog.c:370 src/prefs_account_dialog.c:655
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:655
 msgid "Protocol"
 msgstr "Protokolas"
 
-#: src/account_dialog.c:375
+#: src/account_dialog.c:376
 msgid "Server"
 msgstr "Serveris"
 
-#: src/account_dialog.c:399 src/prefs_filter.c:324
+#: src/account_dialog.c:400 src/prefs_filter.c:324
 msgid "Edit"
 msgstr "Taisyti"
 
-#: src/account_dialog.c:433
+#: src/account_dialog.c:434
 msgid " _Set as default account "
 msgstr " Pažymėti kaip pagrindinę _sąskaitą "
 
-#: src/account_dialog.c:486
+#: src/account_dialog.c:487
 #, c-format
 msgid "Do you really want to delete the account '%s'?"
 msgstr "Ar tikrai norite pašalinti sąskaitą „%s“?"
 
-#: src/account_dialog.c:488 src/prefs_filter.c:688
+#: src/account_dialog.c:489 src/prefs_filter.c:688
 msgid "(Untitled)"
 msgstr "(Bevardis)"
 
-#: src/account_dialog.c:489
+#: src/account_dialog.c:490
 msgid "Delete account"
 msgstr "Pašalinti sąskaitą"
 
@@ -849,7 +849,7 @@ msgstr "Vartotojo veiksmo argumentas"
 msgid "Add Address to Book"
 msgstr "Įdėti adresą į knygą"
 
-#: src/addressadd.c:202 src/compose.c:4720 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4756 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresas"
@@ -967,12 +967,12 @@ msgid "/New _Folder"
 msgstr "/Naujas _katalogas"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:243 src/folderview.c:245 src/folderview.c:250
-#: src/folderview.c:261 src/folderview.c:263 src/folderview.c:265
-#: src/folderview.c:270 src/folderview.c:280 src/folderview.c:282
-#: src/folderview.c:286 src/summaryview.c:398 src/summaryview.c:402
-#: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
-#: src/summaryview.c:430 src/summaryview.c:436
+#: src/folderview.c:244 src/folderview.c:246 src/folderview.c:251
+#: src/folderview.c:262 src/folderview.c:264 src/folderview.c:266
+#: src/folderview.c:271 src/folderview.c:281 src/folderview.c:283
+#: src/folderview.c:287 src/summaryview.c:399 src/summaryview.c:403
+#: src/summaryview.c:407 src/summaryview.c:417 src/summaryview.c:419
+#: src/summaryview.c:431 src/summaryview.c:437
 msgid "/---"
 msgstr "/---"
 
@@ -981,7 +981,7 @@ msgstr "/---"
 msgid "/_Edit"
 msgstr "/_Taisyti"
 
-#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:405
+#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:406
 msgid "/_Delete"
 msgstr "/_Ištrinti"
 
@@ -989,7 +989,7 @@ msgstr "/_Ištrinti"
 msgid "E-Mail address"
 msgstr "El. pašto adresas"
 
-#: src/addressbook.c:496 src/compose.c:4721 src/prefs_common_dialog.c:2179
+#: src/addressbook.c:496 src/compose.c:4757 src/prefs_common_dialog.c:2179
 msgid "Address book"
 msgstr "Adresų knyga"
 
@@ -1016,16 +1016,16 @@ msgstr "Pridėti"
 msgid "Lookup"
 msgstr "Ieškoti"
 
-#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:338
+#: src/addressbook.c:646 src/headerview.c:55 src/prefs_folder_item.c:340
 #: src/prefs_template.c:176
 msgid "To:"
 msgstr "Kam:"
 
-#: src/addressbook.c:650 src/prefs_folder_item.c:355 src/prefs_template.c:178
+#: src/addressbook.c:650 src/prefs_folder_item.c:357 src/prefs_template.c:178
 msgid "Cc:"
 msgstr "Kopija:"
 
-#: src/addressbook.c:654 src/prefs_folder_item.c:366
+#: src/addressbook.c:654 src/prefs_folder_item.c:368
 msgid "Bcc:"
 msgstr "Slapta kopija:"
 
@@ -1047,7 +1047,7 @@ msgstr ""
 "Ar tikrai norite pašalinti katalogą „%s“ ir visus adresus jame? \n"
 "Jei pašalinsite tik katalogą, adresai bus perkelti į aukštesnįjį katalogą."
 
-#: src/addressbook.c:1674 src/folderview.c:2256
+#: src/addressbook.c:1674 src/folderview.c:2280
 msgid "Delete folder"
 msgstr "Ištrinti katalogą"
 
@@ -1175,8 +1175,8 @@ msgid "Group"
 msgstr "Grupė"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:356 src/prefs_account_dialog.c:1687
-#: src/summary_search.c:366
+#: src/addressbook.c:3152 src/folderview.c:357 src/prefs_account_dialog.c:1687
+#: src/summary_search.c:367
 msgid "Folder"
 msgstr "Katalogas"
 
@@ -1200,7 +1200,7 @@ msgstr "Bendras adresas"
 msgid "Personal address"
 msgstr "Asmeninis adresas"
 
-#: src/alertpanel.c:141 src/compose.c:5443 src/main.c:572
+#: src/alertpanel.c:141 src/compose.c:5479 src/main.c:572
 msgid "Notice"
 msgstr "Pranešimas"
 
@@ -1251,7 +1251,7 @@ msgstr "Ruda"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:315 src/summaryview.c:4341
+#: src/colorlabel.c:280 src/prefs_folder_item.c:317 src/summaryview.c:4427
 msgid "None"
 msgstr "Nieko"
 
@@ -1263,8 +1263,8 @@ msgstr "/Pri_dėti..."
 msgid "/_Remove"
 msgstr "/_Pašalinti"
 
-#: src/compose.c:509 src/folderview.c:252 src/folderview.c:272
-#: src/folderview.c:288
+#: src/compose.c:509 src/folderview.c:253 src/folderview.c:273
+#: src/folderview.c:289
 msgid "/_Properties..."
 msgstr "/_Savybės..."
 
@@ -1342,7 +1342,7 @@ msgid "/_Edit/Aut_o wrapping"
 msgstr "/_Taisyti/_Automatiškai laužyti"
 
 #: src/compose.c:547 src/mainwindow.c:510 src/messageview.c:151
-#: src/summaryview.c:431
+#: src/summaryview.c:432
 msgid "/_View"
 msgstr "/_Rodyti"
 
@@ -1529,79 +1529,79 @@ msgstr "/Į_rankiai/Vykdyti"
 msgid "/_Tools/_Set spell language"
 msgstr "/Į_rankiai/_Šablonas"
 
-#: src/compose.c:890
+#: src/compose.c:894
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: byla neegzistuoja\n"
 
-#: src/compose.c:994 src/compose.c:1065
+#: src/compose.c:998 src/compose.c:1069
 msgid "Can't get text part\n"
 msgstr "Negaliu gauti dalies teksto\n"
 
-#: src/compose.c:1466
+#: src/compose.c:1470
 msgid "Quote mark format error."
 msgstr "Formato klaida."
 
-#: src/compose.c:1478
+#: src/compose.c:1482
 msgid "Message reply/forward format error."
 msgstr "Atsakymo/persiuntimo formato klaida."
 
-#: src/compose.c:1887
+#: src/compose.c:1891
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Byla %s neegzistuoja\n"
 
-#: src/compose.c:1891
+#: src/compose.c:1895
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Negaliu gauti bylos „%s“ dydžio\n"
 
-#: src/compose.c:1895
+#: src/compose.c:1899
 #, c-format
 msgid "File %s is empty."
 msgstr "Byla %s yra tuščia"
 
-#: src/compose.c:1899
+#: src/compose.c:1903
 #, c-format
 msgid "Can't read %s."
 msgstr "Negaliu perskaityti %s."
 
-#: src/compose.c:1934
+#: src/compose.c:1938
 #, c-format
 msgid "Message: %s"
 msgstr "Žinutė: %s"
 
-#: src/compose.c:2006 src/mimeview.c:565
+#: src/compose.c:2010 src/mimeview.c:565
 msgid "Can't get the part of multipart message."
 msgstr "Negaliu gauti sudėtinės žinutės dalies"
 
-#: src/compose.c:2451 src/headerview.c:195 src/summary_search.c:638
-#: src/summaryview.c:1943
+#: src/compose.c:2487 src/headerview.c:195 src/summary_search.c:640
+#: src/summaryview.c:1979
 msgid "(No Subject)"
 msgstr "(Nėra temos)"
 
-#: src/compose.c:2454
+#: src/compose.c:2490
 #, fuzzy, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Rašyti laišką%s"
 
-#: src/compose.c:2567
+#: src/compose.c:2603
 msgid "Recipient is not specified."
 msgstr "Nenurodytas gavėjas."
 
-#: src/compose.c:2575
+#: src/compose.c:2611
 msgid "Empty subject"
 msgstr "Nėra temos"
 
-#: src/compose.c:2576
+#: src/compose.c:2612
 msgid "Subject is empty. Send it anyway?"
 msgstr "Nenurodyta laiško tema (subject). Siųsti?"
 
-#: src/compose.c:2638
+#: src/compose.c:2674
 msgid "can't get recipient list."
 msgstr "Negaliu gauti gavėjų sąrašo."
 
-#: src/compose.c:2658
+#: src/compose.c:2694
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1609,21 +1609,21 @@ msgstr ""
 "Nenurodyta sąskaita pašto siuntimui.\n"
 "Prieš siųsdami pažymėkitę norimą sąskaitą."
 
-#: src/compose.c:2672 src/send_message.c:299
+#: src/compose.c:2708 src/send_message.c:299
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Klaida siunčiant žinutę %s ."
 
-#: src/compose.c:2714
+#: src/compose.c:2750
 msgid "Can't save the message to outbox."
 msgstr "Negaliu išsaugoti žinutės „outbox“."
 
-#: src/compose.c:2752
+#: src/compose.c:2788
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Nerandu rakto susieto su pasirinktu rakto ID „%s“."
 
-#: src/compose.c:2849
+#: src/compose.c:2885
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1634,11 +1634,11 @@ msgstr ""
 "\n"
 "Ar siųsti kaip %s?"
 
-#: src/compose.c:2855
+#: src/compose.c:2891
 msgid "Code conversion error"
 msgstr "Kodo konvertavimo klaida"
 
-#: src/compose.c:2928
+#: src/compose.c:2964
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1651,156 +1651,156 @@ msgstr ""
 "\n"
 "Ar tikrai norite ją išsiųsti?"
 
-#: src/compose.c:2932
+#: src/compose.c:2968
 msgid "Line length limit"
 msgstr "Eilutės ilgio limitas"
 
-#: src/compose.c:3222
+#: src/compose.c:3258
 msgid "can't remove the old message\n"
 msgstr "Negaliu pašalinti senos žinutės\n"
 
-#: src/compose.c:3240
+#: src/compose.c:3276
 msgid "queueing message...\n"
 msgstr "Žinutė dedama į eilę\n"
 
-#: src/compose.c:3322
+#: src/compose.c:3358
 msgid "can't find queue folder\n"
 msgstr "Negaliu rasti eilės (queue) katalogo\n"
 
-#: src/compose.c:3329
+#: src/compose.c:3365
 msgid "can't queue the message\n"
 msgstr "Negaliu įdėti žinutės į eilę\n"
 
-#: src/compose.c:3922
+#: src/compose.c:3958
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "sugeneruotas Message-ID: %s\n"
 
-#: src/compose.c:4035
+#: src/compose.c:4071
 msgid "Creating compose window...\n"
 msgstr "Sukuriamas laiško kūrimo langas...\n"
 
-#: src/compose.c:4086 src/headerview.c:54
+#: src/compose.c:4122 src/headerview.c:54
 msgid "From:"
 msgstr "Nuo:"
 
-#: src/compose.c:4160
+#: src/compose.c:4196
 msgid "PGP Sign"
 msgstr "PGP parašas"
 
-#: src/compose.c:4163
+#: src/compose.c:4199
 msgid "PGP Encrypt"
 msgstr "PGP šifravimas"
 
-#: src/compose.c:4201 src/compose.c:5275
+#: src/compose.c:4237 src/compose.c:5311
 msgid "MIME type"
 msgstr "MIME tipas"
 
 #. S_COL_DATE
-#: src/compose.c:4210 src/mimeview.c:197 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4488
+#: src/compose.c:4246 src/mimeview.c:197 src/prefs_filter_edit.c:497
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4574
 msgid "Size"
 msgstr "Dydis"
 
-#: src/compose.c:4641 src/mainwindow.c:2274 src/prefs_account_dialog.c:525
+#: src/compose.c:4677 src/mainwindow.c:2274 src/prefs_account_dialog.c:525
 #: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "Siųsti"
 
-#: src/compose.c:4642
+#: src/compose.c:4678
 msgid "Send message"
 msgstr "Siųsti žinutę"
 
-#: src/compose.c:4650
+#: src/compose.c:4686
 msgid "Send later"
 msgstr "Siųsti vėliau"
 
-#: src/compose.c:4651
+#: src/compose.c:4687
 msgid "Put into queue folder and send later"
 msgstr "Įdėti į eilę ir siųsti vėliau"
 
-#: src/compose.c:4659
+#: src/compose.c:4695
 msgid "Draft"
 msgstr "Juodraštis"
 
-#: src/compose.c:4660
+#: src/compose.c:4696
 msgid "Save to draft folder"
 msgstr "Išsaugoti į juodraščių katalogą"
 
-#: src/compose.c:4670
+#: src/compose.c:4706
 msgid "Insert"
 msgstr "Įterpti"
 
-#: src/compose.c:4671
+#: src/compose.c:4707
 msgid "Insert file"
 msgstr "Įterpti bylą"
 
-#: src/compose.c:4679
+#: src/compose.c:4715
 msgid "Attach"
 msgstr "Prisegti"
 
-#: src/compose.c:4680
+#: src/compose.c:4716
 msgid "Attach file"
 msgstr "Prisegti bylą"
 
 #. signature
-#: src/compose.c:4690 src/prefs_account_dialog.c:1205
+#: src/compose.c:4726 src/prefs_account_dialog.c:1205
 #: src/prefs_common_dialog.c:954
 msgid "Signature"
 msgstr "Parašas"
 
-#: src/compose.c:4691
+#: src/compose.c:4727
 msgid "Insert signature"
 msgstr "Įterpti parašą"
 
 #. editor
-#: src/compose.c:4700 src/prefs_common_dialog.c:992
+#: src/compose.c:4736 src/prefs_common_dialog.c:992
 #: src/prefs_common_dialog.c:2311
 msgid "Editor"
 msgstr "Redaktorius"
 
-#: src/compose.c:4701
+#: src/compose.c:4737
 msgid "Edit with external editor"
 msgstr "Naudoti išorinį redaktorių"
 
-#: src/compose.c:4709
+#: src/compose.c:4745
 msgid "Linewrap"
 msgstr "Eilučių laužymas"
 
-#: src/compose.c:4710
+#: src/compose.c:4746
 msgid "Wrap all long lines"
 msgstr "Laužyti ilgas eilutes"
 
-#: src/compose.c:5171
+#: src/compose.c:5207
 msgid "Invalid MIME type."
 msgstr "Neteisingas MIME tipas"
 
-#: src/compose.c:5189
+#: src/compose.c:5225
 msgid "File doesn't exist or is empty."
 msgstr "Byla neegzistuoja arba yra tuščia."
 
-#: src/compose.c:5257
+#: src/compose.c:5293
 msgid "Properties"
 msgstr "Savybės"
 
-#: src/compose.c:5277 src/prefs_common_dialog.c:1448
+#: src/compose.c:5313 src/prefs_common_dialog.c:1448
 msgid "Encoding"
 msgstr "Koduotė"
 
-#: src/compose.c:5300 src/prefs_folder_item.c:203
+#: src/compose.c:5336 src/prefs_folder_item.c:203
 msgid "Path"
 msgstr "Kelias"
 
-#: src/compose.c:5301
+#: src/compose.c:5337
 msgid "File name"
 msgstr "Bylos vardas"
 
-#: src/compose.c:5394
+#: src/compose.c:5430
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Neteisinga išorinio redaktoriaus komanda: „%s“\n"
 
-#: src/compose.c:5440
+#: src/compose.c:5476
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1810,44 +1810,44 @@ msgstr ""
 "Nutraukti procesą?\n"
 "proceso grupės id: %d"
 
-#: src/compose.c:5815 src/compose.c:5823 src/compose.c:5829
+#: src/compose.c:5851 src/compose.c:5859 src/compose.c:5865
 msgid "Can't queue the message."
 msgstr "Negaliu įdėti žinutės į eilę."
 
-#: src/compose.c:5920
+#: src/compose.c:5956
 msgid "Select files"
 msgstr "Žymėti bylas"
 
-#: src/compose.c:5942
+#: src/compose.c:5978
 msgid "Select file"
 msgstr "Žymėti bylą"
 
-#: src/compose.c:5977
+#: src/compose.c:6013
 msgid "Save message"
 msgstr "Išsaugoti žinutę"
 
-#: src/compose.c:5978
+#: src/compose.c:6014
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Žinutė buvo redaguota. Saugoti „Juodraščiuose“?"
 
-#: src/compose.c:5980
+#: src/compose.c:6016
 msgid "Close _without saving"
 msgstr "Uždaryti _neišsaugant"
 
-#: src/compose.c:6022
+#: src/compose.c:6058
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Ar norite naudoti šabloną „%s“?"
 
-#: src/compose.c:6024
+#: src/compose.c:6060
 msgid "Apply template"
 msgstr "Naudoti šabloną"
 
-#: src/compose.c:6025
+#: src/compose.c:6061
 msgid "_Replace"
 msgstr "_Pakeisti"
 
-#: src/compose.c:6025
+#: src/compose.c:6061
 msgid "_Insert"
 msgstr "Įterpt_i"
 
@@ -2008,12 +2008,12 @@ msgstr "Redaguoti katalogą"
 msgid "Input the new name of folder:"
 msgstr "Įveskite katalogo pavadinimą:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2035
-#: src/folderview.c:2041
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2059
+#: src/folderview.c:2065
 msgid "New folder"
 msgstr "Naujas katalogas"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2042
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2066
 msgid "Input the name of new folder:"
 msgstr "Įveskite naujo katalogo pavadinimą:"
 
@@ -2181,170 +2181,170 @@ msgstr "Pasirinkti katalogą"
 msgid "Select folder"
 msgstr "Pasirinkti katalogą"
 
-#: src/foldersel.c:359 src/folderview.c:1148 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1157 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Gaunami"
 
-#: src/foldersel.c:363 src/folderview.c:1154 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1163 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Išsiųsti"
 
-#: src/foldersel.c:367 src/folderview.c:1160 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1169 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Eilė"
 
-#: src/foldersel.c:371 src/folderview.c:1166 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1175 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Šiukšlinė"
 
-#: src/foldersel.c:375 src/folderview.c:1172 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1181 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Juodraščiai"
 
-#: src/foldersel.c:542 src/folderview.c:2039 src/folderview.c:2043
+#: src/foldersel.c:542 src/folderview.c:2063 src/folderview.c:2067
 msgid "NewFolder"
 msgstr "NaujasKatalodas"
 
-#: src/foldersel.c:550 src/folderview.c:2051 src/folderview.c:2107
+#: src/foldersel.c:550 src/folderview.c:2075 src/folderview.c:2131
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "„%c“ negali būti katalogo pavadinime."
 
-#: src/foldersel.c:560 src/folderview.c:2061 src/folderview.c:2114
-#: src/summary_search.c:983
+#: src/foldersel.c:560 src/folderview.c:2085 src/folderview.c:2138
+#: src/summary_search.c:989
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Katalogas „%s“ egzistuoja."
 
-#: src/foldersel.c:568 src/folderview.c:2068
+#: src/foldersel.c:568 src/folderview.c:2092
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Negaliu sukurti katalogo „%s“."
 
-#: src/folderview.c:239 src/folderview.c:257
+#: src/folderview.c:240 src/folderview.c:258
 msgid "/Create _new folder..."
 msgstr "/Sukurti _naują katalogą..."
 
-#: src/folderview.c:240 src/folderview.c:258
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/_Rename folder..."
 msgstr "/Pe_rvadinti katalogą..."
 
-#: src/folderview.c:241 src/folderview.c:259
+#: src/folderview.c:242 src/folderview.c:260
 msgid "/_Move folder..."
 msgstr "/Per_kelti katalogą..."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:243 src/folderview.c:261
 msgid "/_Delete folder"
 msgstr "/Iš_trinti katalogą"
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:245 src/folderview.c:263
 msgid "/Empty _trash"
 msgstr "/Išvaly_ti šiukšlinę"
 
-#: src/folderview.c:246 src/folderview.c:266 src/folderview.c:283
+#: src/folderview.c:247 src/folderview.c:267 src/folderview.c:284
 msgid "/_Check for new messages"
 msgstr "/_Patikrinti paštą"
 
-#: src/folderview.c:248 src/folderview.c:268
+#: src/folderview.c:249 src/folderview.c:269
 msgid "/R_ebuild folder tree"
 msgstr "/P_erkurti katalogų medį"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:285
+#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
 #, fuzzy
 msgid "/_Update summary"
 msgstr "/_Rodyti/Atna_ujinti santrauką"
 
-#: src/folderview.c:251 src/folderview.c:271 src/folderview.c:287
+#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
 msgid "/_Search messages..."
 msgstr "/I_eškoti žinučių"
 
-#: src/folderview.c:264 src/folderview.c:281
+#: src/folderview.c:265 src/folderview.c:282
 msgid "/Down_load"
 msgstr "/_Atsisiųsti"
 
-#: src/folderview.c:277
+#: src/folderview.c:278
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/_Prisijungti prie naujienų grupės"
 
-#: src/folderview.c:279
+#: src/folderview.c:280
 msgid "/_Remove newsgroup"
 msgstr "/Paša_linti naujienų grupę"
 
-#: src/folderview.c:309
+#: src/folderview.c:310
 msgid "Creating folder view...\n"
 msgstr "Sukuriama katalogų peržiūra...\n"
 
-#: src/folderview.c:387
+#: src/folderview.c:388
 msgid "New"
 msgstr "Nauji"
 
 #. S_COL_MARK
-#: src/folderview.c:401 src/prefs_summary_column.c:71
+#: src/folderview.c:402 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Nesk."
 
-#: src/folderview.c:415
+#: src/folderview.c:416
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:538
+#: src/folderview.c:547
 msgid "Setting folder info...\n"
 msgstr "Nustatoma katalogo informacija...\n"
 
-#: src/folderview.c:539
+#: src/folderview.c:548
 msgid "Setting folder info..."
 msgstr "Nustatoma katalogo informacija..."
 
-#: src/folderview.c:839 src/mainwindow.c:3356 src/setup.c:80
+#: src/folderview.c:848 src/mainwindow.c:3358 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Skanuojamas katalogas “%s%c%s“..."
 
-#: src/folderview.c:843 src/mainwindow.c:3361 src/setup.c:85
+#: src/folderview.c:852 src/mainwindow.c:3363 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Skanuojamas katalogas „%s“..."
 
-#: src/folderview.c:885
+#: src/folderview.c:894
 msgid "Rebuild folder tree"
 msgstr "Perkurti katalogų medį"
 
-#: src/folderview.c:886
+#: src/folderview.c:895
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Bus perkurtas katalogų medis. Tęsti?"
 
-#: src/folderview.c:895
+#: src/folderview.c:904
 msgid "Rebuilding folder tree..."
 msgstr "Perkuriamas katalogų medis..."
 
-#: src/folderview.c:902
+#: src/folderview.c:911
 msgid "Rebuilding of the folder tree failed."
 msgstr "Katalogų medžio perkūrimas nepavyko."
 
-#: src/folderview.c:1015
+#: src/folderview.c:1024
 msgid "Checking for new messages in all folders..."
 msgstr "Tikrinamos naujos žinutės visuose kataloguose..."
 
-#: src/folderview.c:1180 src/mainwindow.c:2350 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1189 src/mainwindow.c:2350 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr "Nereikalingas"
 
-#: src/folderview.c:1785
+#: src/folderview.c:1809
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Pažymėtas katalogas „%s“\n"
 
-#: src/folderview.c:1940
+#: src/folderview.c:1964
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Siunčiamos žinutės („%s“)..."
 
-#: src/folderview.c:1975
+#: src/folderview.c:1999
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Klaida siunčiant žinutes („%s“)."
 
-#: src/folderview.c:2036
+#: src/folderview.c:2060
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2354,21 +2354,21 @@ msgstr ""
 "(jei norite sukurti katalogą talpinti pakatalogiams,\n"
 " pridėkite „/“ prie vardo pabaigos)"
 
-#: src/folderview.c:2098
+#: src/folderview.c:2122
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Įveskite naują „%s“ pavadinimą:"
 
-#: src/folderview.c:2099
+#: src/folderview.c:2123
 msgid "Rename folder"
 msgstr "Pervadinti katalogą"
 
-#: src/folderview.c:2190
+#: src/folderview.c:2214
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Negaliu perkelti katalogo „%s“"
 
-#: src/folderview.c:2253
+#: src/folderview.c:2277
 #, c-format
 msgid ""
 "All folders and messages under `%s' will be permanently deleted.\n"
@@ -2381,21 +2381,21 @@ msgstr ""
 "\n"
 "Ar tikrai norite ištrinti?"
 
-#: src/folderview.c:2282
+#: src/folderview.c:2306
 #, c-format
 msgid "Can't remove the folder `%s'."
 msgstr "Negaliu pašalinti katalogo „%s“"
 
-#: src/folderview.c:2316
+#: src/folderview.c:2340
 msgid "Empty trash"
 msgstr "Išvalyti šiukšlinę"
 
-#: src/folderview.c:2317
+#: src/folderview.c:2341
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Ištrinti visas žinutes šiukšlinėje?"
 
-#: src/folderview.c:2353
+#: src/folderview.c:2377
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2404,34 +2404,34 @@ msgstr ""
 "Ar tikrai pašalinti dėžutę „%s“ ?\n"
 "(žinutės NEBUS ištrintos iš disko)"
 
-#: src/folderview.c:2355
+#: src/folderview.c:2379
 msgid "Remove mailbox"
 msgstr "Pašalinti dėžutę"
 
-#: src/folderview.c:2401
+#: src/folderview.c:2425
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Ar tikrai ištrinti IMAP4 sąskaitą „%s“?"
 
-#: src/folderview.c:2402
+#: src/folderview.c:2426
 msgid "Delete IMAP4 account"
 msgstr "Ištrinti IMAP4 sąskaitą"
 
-#: src/folderview.c:2544
+#: src/folderview.c:2569
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Ar tikrai ištrinti naujienų grupę „%s“?"
 
-#: src/folderview.c:2545
+#: src/folderview.c:2570
 msgid "Delete newsgroup"
 msgstr "Ištrinti naujienų grupę"
 
-#: src/folderview.c:2592
+#: src/folderview.c:2617
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Ar tikrai pašalinti naujienų sąskaitą „%s“?"
 
-#: src/folderview.c:2593
+#: src/folderview.c:2618
 msgid "Delete news account"
 msgstr "Pašalinti naujienų sąskaitą"
 
@@ -2447,7 +2447,7 @@ msgstr "Tema:"
 msgid "Creating header view...\n"
 msgstr "Sukuria antraščių peržiūra...\n"
 
-#: src/headerview.c:180 src/summary_search.c:639 src/summaryview.c:1946
+#: src/headerview.c:180 src/summary_search.c:641 src/summaryview.c:1982
 msgid "(No From)"
 msgstr "(Nėra gavėjo)"
 
@@ -3215,7 +3215,7 @@ msgstr "/_Rodyti/Simbolių ko_duotė/Kinų (ISO-2022-_CN)"
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/_Rodyti/Simbolių ko_duotė/Korėjiečių (ISO-2022-KR)"
 
-#: src/mainwindow.c:676 src/summaryview.c:432
+#: src/mainwindow.c:676 src/summaryview.c:433
 msgid "/_View/Open in new _window"
 msgstr "/_Rodyti/Atverti naujame _lange"
 
@@ -3495,8 +3495,8 @@ msgstr "Kuriamas pagrindinis langas..\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: nepavyko spalvos priskyrimas %d\n"
 
-#: src/mainwindow.c:1083 src/summaryview.c:2088 src/summaryview.c:2173
-#: src/summaryview.c:3502 src/summaryview.c:3623 src/summaryview.c:3975
+#: src/mainwindow.c:1083 src/summaryview.c:2129 src/summaryview.c:2225
+#: src/summaryview.c:3587 src/summaryview.c:3708 src/summaryview.c:4060
 msgid "done.\n"
 msgstr "atlikta.\n"
 
@@ -3571,7 +3571,7 @@ msgstr "Sylpheed - Katalogų peržiūra"
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Žinutės peržiūra"
 
-#: src/mainwindow.c:2209 src/summaryview.c:392
+#: src/mainwindow.c:2209 src/summaryview.c:393
 msgid "/_Reply"
 msgstr "/_Atsakyti"
 
@@ -3587,15 +3587,15 @@ msgstr "/Atsakyti _siuntėjui"
 msgid "/Reply to mailing _list"
 msgstr "/Atsakyti _konferencijai"
 
-#: src/mainwindow.c:2217 src/summaryview.c:399
+#: src/mainwindow.c:2217 src/summaryview.c:400
 msgid "/_Forward"
 msgstr "/_Persiųsti"
 
-#: src/mainwindow.c:2218 src/summaryview.c:400
+#: src/mainwindow.c:2218 src/summaryview.c:401
 msgid "/For_ward as attachment"
 msgstr "/Pe_rsiųsti kaip priedą"
 
-#: src/mainwindow.c:2219 src/summaryview.c:401
+#: src/mainwindow.c:2219 src/summaryview.c:402
 msgid "/Redirec_t"
 msgstr "/Nukreip_ti"
 
@@ -3680,8 +3680,8 @@ msgstr "Nustatymai"
 msgid "Common preferences"
 msgstr "Bendri nustatymai"
 
-#: src/mainwindow.c:2392 src/prefs_folder_item.c:288
-#: src/prefs_folder_item.c:299 src/progressdialog.c:128
+#: src/mainwindow.c:2392 src/prefs_folder_item.c:290
+#: src/prefs_folder_item.c:301 src/progressdialog.c:128
 msgid "Account"
 msgstr "Sąskaita"
 
@@ -3697,11 +3697,11 @@ msgstr "Jūs esate atsijungęs. Spustelkite piktogramą jei norite prisijungti."
 msgid "You are online. Click the icon to go offline."
 msgstr "Jūs esate prisijungęs. Spustelkite piktogramą jei norite atsijungti."
 
-#: src/mainwindow.c:2783
+#: src/mainwindow.c:2785
 msgid "Exit"
 msgstr "Išeiti"
 
-#: src/mainwindow.c:2783
+#: src/mainwindow.c:2785
 msgid "Exit this program?"
 msgstr "Užverti programą?"
 
@@ -3713,7 +3713,7 @@ msgstr "Rasti žinutėje"
 msgid "Find text:"
 msgstr "Rasti tekstą:"
 
-#: src/message_search.c:141 src/summary_search.c:322
+#: src/message_search.c:141 src/summary_search.c:323
 msgid "Case sensitive"
 msgstr "Skirti didžiąsias-mažąsias raides"
 
@@ -3757,25 +3757,25 @@ msgstr "Priedai"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:667 src/summaryview.c:3046
+#: src/messageview.c:667 src/summaryview.c:3131
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Negaliu išsaugoti bylos „%s“."
 
-#: src/messageview.c:726 src/summaryview.c:3069
+#: src/messageview.c:726 src/summaryview.c:3154
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:727 src/summaryview.c:3070
+#: src/messageview.c:727 src/summaryview.c:3155
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Mokymosi komanda"
 
-#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3072
+#: src/messageview.c:729 src/prefs_common_dialog.c:2300 src/summaryview.c:3157
 msgid "Print"
 msgstr "Spausdinti"
 
-#: src/messageview.c:738 src/summaryview.c:3081
+#: src/messageview.c:738 src/summaryview.c:3166
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -4146,7 +4146,7 @@ msgstr "Prieš siunčiant patikrinti autentiškumą su POP3"
 msgid "Command output"
 msgstr "Komandos išvestis"
 
-#: src/prefs_account_dialog.c:1235 src/prefs_folder_item.c:330
+#: src/prefs_account_dialog.c:1235 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
 msgstr "Automatiškai nustatyti sekančius adresus"
 
@@ -5538,7 +5538,7 @@ msgstr "Nenurodytas katalogas."
 msgid "Rule name is not specified."
 msgstr "Nenurodytas taisyklės pavadinimas."
 
-#: src/prefs_filter_edit.c:1812 src/summary_search.c:465
+#: src/prefs_filter_edit.c:1812 src/summary_search.c:466
 msgid "Invalid condition exists."
 msgstr "Egzistuoja neteisinga sąlyga."
 
@@ -5579,15 +5579,15 @@ msgstr "Nerodyti [...] arba (...) temos pradžioje santraukoje"
 msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Atsakant ištrinti [...] arba (...) temos pradžioje"
 
-#: src/prefs_folder_item.c:328
+#: src/prefs_folder_item.c:330
 msgid "Apply to subfolders"
 msgstr "Pritaikyti ir pakatalogiams"
 
-#: src/prefs_folder_item.c:353
+#: src/prefs_folder_item.c:355
 msgid "use also on reply"
 msgstr "naudoti ir atsakant"
 
-#: src/prefs_folder_item.c:377
+#: src/prefs_folder_item.c:379
 msgid "Reply-To:"
 msgstr "Atsakyti kam:"
 
@@ -5601,20 +5601,20 @@ msgid "Attachment"
 msgstr "Priedas"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:367
-#: src/summaryview.c:4481
+#: src/prefs_summary_column.c:73 src/summary_search.c:368
+#: src/summaryview.c:4567
 msgid "Subject"
 msgstr "Tema"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:368
-#: src/summaryview.c:4484
+#: src/prefs_summary_column.c:74 src/summary_search.c:369
+#: src/summaryview.c:4570
 msgid "From"
 msgstr "Siuntėjas"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:369
-#: src/summaryview.c:4486
+#: src/prefs_summary_column.c:75 src/summary_search.c:370
+#: src/summaryview.c:4572
 msgid "Date"
 msgstr "Data"
 
@@ -6009,7 +6009,7 @@ msgstr "Negaliu gauti naujienų grupių sąrašo."
 msgid "Can't retrieve newsgroup list."
 msgstr "Negaliu gauti naujienų grupių sąrašo."
 
-#: src/subscribedialog.c:523 src/summary_search.c:517 src/summaryview.c:766
+#: src/subscribedialog.c:523 src/summary_search.c:518 src/summaryview.c:767
 msgid "Done."
 msgstr "Atlikta."
 
@@ -6018,387 +6018,387 @@ msgstr "Atlikta."
 msgid "%d newsgroups received (%s read)"
 msgstr "Gauta naujienų grupių: %d (%s skaityta)"
 
-#: src/summary_search.c:230
+#: src/summary_search.c:231
 msgid "Search messages"
 msgstr "Ieškoti žinučių"
 
-#: src/summary_search.c:253
+#: src/summary_search.c:254
 msgid "Match any of the following"
 msgstr "Jei teisingas bet kuris"
 
-#: src/summary_search.c:255
+#: src/summary_search.c:256
 msgid "Match all of the following"
 msgstr "Jei teisingi visi"
 
-#: src/summary_search.c:299
+#: src/summary_search.c:300
 #, fuzzy
 msgid "Folder:"
 msgstr "Katalogas"
 
-#: src/summary_search.c:317
+#: src/summary_search.c:318
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Paieška nepavyko"
 
-#: src/summary_search.c:391
+#: src/summary_search.c:392
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Išsaugoti į juodraščių katalogą"
 
-#: src/summary_search.c:540
+#: src/summary_search.c:542
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "Skanuojamas katalogas „%s“..."
 
-#: src/summary_search.c:568
+#: src/summary_search.c:570
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtruojama..."
 
-#: src/summary_search.c:647 src/summaryview.c:1883
+#: src/summary_search.c:649 src/summaryview.c:1920
 msgid "(No Date)"
 msgstr "(Be datos)"
 
-#: src/summary_search.c:826
+#: src/summary_search.c:831
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Išsaugoti į juodraščių katalogą"
 
-#: src/summary_search.c:847
+#: src/summary_search.c:852
 msgid "Location:"
 msgstr ""
 
-#: src/summary_search.c:862
+#: src/summary_search.c:867
 #, fuzzy
 msgid "Folder name:"
 msgstr "Bylos vardas"
 
-#: src/summaryview.c:393
+#: src/summaryview.c:394
 msgid "/Repl_y to"
 msgstr "/Atsak_yti"
 
-#: src/summaryview.c:394
+#: src/summaryview.c:395
 msgid "/Repl_y to/_all"
 msgstr "/Atsak_yti/_visiems"
 
-#: src/summaryview.c:395
+#: src/summaryview.c:396
 msgid "/Repl_y to/_sender"
 msgstr "/Atsak_yti/_siuntėjui"
 
-#: src/summaryview.c:396
+#: src/summaryview.c:397
 msgid "/Repl_y to/mailing _list"
 msgstr "/Atsak_yti/_konferencijai"
 
-#: src/summaryview.c:403
+#: src/summaryview.c:404
 msgid "/M_ove..."
 msgstr "/Per_kelti..."
 
-#: src/summaryview.c:404
+#: src/summaryview.c:405
 msgid "/_Copy..."
 msgstr "/_Kopijuoti..."
 
-#: src/summaryview.c:407
+#: src/summaryview.c:408
 msgid "/_Mark"
 msgstr "/Žy_ma"
 
-#: src/summaryview.c:408
+#: src/summaryview.c:409
 msgid "/_Mark/_Mark"
 msgstr "/Žy_ma/Žy_mėti"
 
-#: src/summaryview.c:409
+#: src/summaryview.c:410
 msgid "/_Mark/_Unmark"
 msgstr "/Žy_ma/_Nežymėti"
 
-#: src/summaryview.c:410
+#: src/summaryview.c:411
 msgid "/_Mark/---"
 msgstr "/Žy_ma/---"
 
-#: src/summaryview.c:411
+#: src/summaryview.c:412
 msgid "/_Mark/Mark as unr_ead"
 msgstr "/Žy_ma/Žymėti n_eskaityta"
 
-#: src/summaryview.c:412
+#: src/summaryview.c:413
 msgid "/_Mark/Mark as rea_d"
 msgstr "/Žy_ma/Žymėti skai_tyta"
 
-#: src/summaryview.c:414
+#: src/summaryview.c:415
 msgid "/_Mark/Mark all _read"
 msgstr "/Žy_ma/Žymėti _visas skaitytomis"
 
-#: src/summaryview.c:415
+#: src/summaryview.c:416
 msgid "/Color la_bel"
 msgstr "/Spa_lva"
 
-#: src/summaryview.c:417
+#: src/summaryview.c:418
 msgid "/Re-_edit"
 msgstr "/R_edaguoti"
 
-#: src/summaryview.c:419
+#: src/summaryview.c:420
 msgid "/Add sender to address boo_k..."
 msgstr "/Pridėti siuntėją į adresų _knygą"
 
-#: src/summaryview.c:421
+#: src/summaryview.c:422
 #, fuzzy
 msgid "/Create f_ilter rule"
 msgstr "/Į_rankiai/Sukurti filtravimo _taisyklę"
 
-#: src/summaryview.c:422
+#: src/summaryview.c:423
 #, fuzzy
 msgid "/Create f_ilter rule/_Automatically"
 msgstr "/Į_rankiai/Sukurti filtravimo _taisyklę/_Automatiškai"
 
-#: src/summaryview.c:424
+#: src/summaryview.c:425
 #, fuzzy
 msgid "/Create f_ilter rule/by _From"
 msgstr "/Į_rankiai/Sukurti filtravimo _taisyklę/pagal _Siuntėją"
 
-#: src/summaryview.c:426
+#: src/summaryview.c:427
 #, fuzzy
 msgid "/Create f_ilter rule/by _To"
 msgstr "/Į_rankiai/Sukurti filtravimo _taisyklę/pagal _Gavėją"
 
-#: src/summaryview.c:428
+#: src/summaryview.c:429
 #, fuzzy
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/Į_rankiai/Sukurti filtravimo _taisyklę/pagal _Temą"
 
-#: src/summaryview.c:434
+#: src/summaryview.c:435
 msgid "/_View/_Source"
 msgstr "/_Rodyti/P_radinis tekstas"
 
-#: src/summaryview.c:435
+#: src/summaryview.c:436
 msgid "/_View/All _header"
 msgstr "/_Rodyti/_Visos antraštės"
 
-#: src/summaryview.c:437
+#: src/summaryview.c:438
 msgid "/_Print..."
 msgstr "/S_pausdinti..."
 
-#: src/summaryview.c:462
+#: src/summaryview.c:463
 msgid "Creating summary view...\n"
 msgstr "Sukuriamas santraukos vaizdas...\n"
 
-#: src/summaryview.c:627
+#: src/summaryview.c:628
 msgid "Process mark"
 msgstr "Vykdyti žymą"
 
-#: src/summaryview.c:628
+#: src/summaryview.c:629
 msgid "Some marks are left. Process it?"
 msgstr "Palikta žymių. Vykdyti jas?"
 
-#: src/summaryview.c:674
+#: src/summaryview.c:675
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Skanuojamas katalogas (%s)..."
 
-#: src/summaryview.c:1187
+#: src/summaryview.c:1207
 msgid "_Search again"
 msgstr "_Ieškoti dar kartą"
 
-#: src/summaryview.c:1208 src/summaryview.c:1217
+#: src/summaryview.c:1228 src/summaryview.c:1237
 msgid "No more unread messages"
 msgstr "Daugiau nėra neskaitytų žinučių."
 
-#: src/summaryview.c:1209
+#: src/summaryview.c:1229
 msgid "No unread message found. Search from the end?"
 msgstr "Nėra neskaitytų žinučių. Ieškoti nuo pabaigos?"
 
-#: src/summaryview.c:1211
+#: src/summaryview.c:1231
 msgid "No unread messages."
 msgstr "Nėra neskaitytų žinučių."
 
-#: src/summaryview.c:1218
+#: src/summaryview.c:1238
 msgid "No unread message found. Go to next folder?"
 msgstr "Nėra neskaitytų žinučių. Eiti į kitą katalogą?"
 
-#: src/summaryview.c:1226 src/summaryview.c:1235
+#: src/summaryview.c:1246 src/summaryview.c:1255
 msgid "No more new messages"
 msgstr "Daugiau nėra naujų žinučių."
 
-#: src/summaryview.c:1227
+#: src/summaryview.c:1247
 msgid "No new message found. Search from the end?"
 msgstr "Nėra naujų žinučių. Ieškoti nuo pabaigos?"
 
-#: src/summaryview.c:1229
+#: src/summaryview.c:1249
 msgid "No new messages."
 msgstr "Nėra naujų žinučių."
 
-#: src/summaryview.c:1236
+#: src/summaryview.c:1256
 msgid "No new message found. Go to next folder?"
 msgstr "Nėra naujų žinučių. Eiti į kitą katalogą?"
 
-#: src/summaryview.c:1244 src/summaryview.c:1253
+#: src/summaryview.c:1264 src/summaryview.c:1273
 msgid "No more marked messages"
 msgstr "Daugiau nėra pažymėtų žinučių"
 
-#: src/summaryview.c:1245
+#: src/summaryview.c:1265
 msgid "No marked message found. Search from the end?"
 msgstr "Nėra pažymėtų žinučių. Ieškoti nuo pabaigos?"
 
-#: src/summaryview.c:1247 src/summaryview.c:1256
+#: src/summaryview.c:1267 src/summaryview.c:1276
 msgid "No marked messages."
 msgstr "Nėra pažymėtų žinučių."
 
-#: src/summaryview.c:1254
+#: src/summaryview.c:1274
 msgid "No marked message found. Search from the beginning?"
 msgstr "Nėra pažymėtų žinučių. Ieškoti nuo pradžios?"
 
-#: src/summaryview.c:1262 src/summaryview.c:1271
+#: src/summaryview.c:1282 src/summaryview.c:1291
 msgid "No more labeled messages"
 msgstr "Daugiau nėra žinučių su etiketėmis"
 
-#: src/summaryview.c:1263
+#: src/summaryview.c:1283
 msgid "No labeled message found. Search from the end?"
 msgstr "Nėra žinučių su etiketėmis. Ieškoti nuo pabaigos?"
 
-#: src/summaryview.c:1265 src/summaryview.c:1274
+#: src/summaryview.c:1285 src/summaryview.c:1294
 msgid "No labeled messages."
 msgstr "Nėra žinučių su etiketėmis."
 
-#: src/summaryview.c:1272
+#: src/summaryview.c:1292
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Nėra žinučių su etiketėmis. Ieškoti nuo pradžios?"
 
-#: src/summaryview.c:1571
+#: src/summaryview.c:1608
 msgid "Attracting messages by subject..."
 msgstr "Žinutės pritraukiamos pagal temą..."
 
-#: src/summaryview.c:1730
+#: src/summaryview.c:1767
 #, c-format
 msgid "%d deleted"
 msgstr "%d ištrinta"
 
-#: src/summaryview.c:1734
+#: src/summaryview.c:1771
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d perkelta"
 
-#: src/summaryview.c:1735 src/summaryview.c:1742
+#: src/summaryview.c:1772 src/summaryview.c:1779
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1740
+#: src/summaryview.c:1777
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d nukopijuota"
 
-#: src/summaryview.c:1757
+#: src/summaryview.c:1794
 msgid " item(s) selected"
 msgstr " objektas(-ai) pažymėti"
 
-#: src/summaryview.c:1767
+#: src/summaryview.c:1804
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "nauji: %d, neskaityti: %d, viso: %d (%s)"
 
-#: src/summaryview.c:1773
+#: src/summaryview.c:1810
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "nauji: %d, neskaityti: %d, viso: %d"
 
-#: src/summaryview.c:1809
+#: src/summaryview.c:1846
 msgid "Sorting summary..."
 msgstr "Rikiuojama santrauka..."
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2066
 msgid "\tSetting summary from message data..."
 msgstr "\tNustatoma santrauka iš žinutės duomenų..."
 
-#: src/summaryview.c:2027
+#: src/summaryview.c:2068
 msgid "Setting summary from message data..."
 msgstr "Nustatoma santrauka iš žinutės duomenų..."
 
-#: src/summaryview.c:2152
+#: src/summaryview.c:2193
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Rašoma santraukos laikinoji atmintis (%s)..."
 
-#: src/summaryview.c:2461
+#: src/summaryview.c:2525
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Žinutė %d pažymėta\n"
 
-#: src/summaryview.c:2509
+#: src/summaryview.c:2583
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Žinutė %d pažymėta skaityta\n"
 
-#: src/summaryview.c:2593
+#: src/summaryview.c:2671
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Žinutė %d pažymėta neskaityta\n"
 
-#: src/summaryview.c:2652
+#: src/summaryview.c:2732
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Žinutė %s/%d pažymėta trinimui\n"
 
-#: src/summaryview.c:2670
+#: src/summaryview.c:2750
 msgid "Delete message(s)"
 msgstr "Ištrinti žinutę(-es)"
 
-#: src/summaryview.c:2671
+#: src/summaryview.c:2751
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Ar tikrai norite ištrinti žinutes iš šiukšlinės?"
 
-#: src/summaryview.c:2736
+#: src/summaryview.c:2816
 msgid "Deleting duplicated messages..."
 msgstr "Trinamos identiškos žinutės..."
 
-#: src/summaryview.c:2773
+#: src/summaryview.c:2854
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Žinutė %s/%d atžymėta\n"
 
-#: src/summaryview.c:2829
+#: src/summaryview.c:2912
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Žinutė %d pažymėta perkėlimui į %s\n"
 
-#: src/summaryview.c:2846
+#: src/summaryview.c:2929
 msgid "Destination is same as current folder."
 msgstr "Paskirtis yra tas pats katalogas."
 
-#: src/summaryview.c:2900
+#: src/summaryview.c:2985
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Žinutė %d pažymėta kopijavimui į %s\n"
 
-#: src/summaryview.c:2917
+#: src/summaryview.c:3002
 msgid "Destination for copy is same as current folder."
 msgstr "Kopijavimo paskirtis yra tas pats katalogas."
 
-#: src/summaryview.c:3116
+#: src/summaryview.c:3201
 msgid "Error occurred while processing messages."
 msgstr "Klaida vykdant operacijas su žinutėmis."
 
-#: src/summaryview.c:3417 src/summaryview.c:3418
+#: src/summaryview.c:3502 src/summaryview.c:3503
 msgid "Building threads..."
 msgstr "Statomos gijos..."
 
-#: src/summaryview.c:3560 src/summaryview.c:3561
+#: src/summaryview.c:3645 src/summaryview.c:3646
 msgid "Unthreading..."
 msgstr "Griaunamos gijos..."
 
-#: src/summaryview.c:3840 src/summaryview.c:3896
+#: src/summaryview.c:3925 src/summaryview.c:3981
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtruojama..."
 
-#: src/summaryview.c:3945
+#: src/summaryview.c:4030
 msgid "filtering..."
 msgstr "filtruojama..."
 
-#: src/summaryview.c:3946
+#: src/summaryview.c:4031
 msgid "Filtering..."
 msgstr "Filtruojama..."
 
-#: src/summaryview.c:3982
+#: src/summaryview.c:4067
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "Filtruota žinučių: %d"
 
-#: src/summaryview.c:4490
+#: src/summaryview.c:4576
 msgid "No."
 msgstr "Nr."
 
