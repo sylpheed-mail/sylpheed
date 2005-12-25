@@ -2118,18 +2118,24 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	g_return_if_fail(item->path != NULL);
 	g_return_if_fail(item->folder != NULL);
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+
 	name = trim_string(item->name, 32);
 	message = g_strdup_printf(_("Input new name for `%s':"), name);
 	new_folder = input_dialog(_("Rename folder"), message,
 				  g_basename(item->path));
 	g_free(message);
 	g_free(name);
-	if (!new_folder) return;
-	AUTORELEASE_STR(new_folder, {g_free(new_folder); return;});
+	if (!new_folder) {
+		gtk_tree_path_free(sel_path);
+		return;
+	}
+	AUTORELEASE_STR(new_folder, {g_free(new_folder); gtk_tree_path_free(sel_path); return;});
 
 	if (strchr(new_folder, G_DIR_SEPARATOR) != NULL) {
 		alertpanel_error(_("`%c' can't be included in folder name."),
 				 G_DIR_SEPARATOR);
+		gtk_tree_path_free(sel_path);
 		return;
 	}
 
@@ -2137,6 +2143,7 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 		name = trim_string(new_folder, 32);
 		alertpanel_error(_("The folder `%s' already exists."), name);
 		g_free(name);
+		gtk_tree_path_free(sel_path);
 		return;
 	}
 
@@ -2146,6 +2153,7 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	if (item->folder->klass->rename_folder(item->folder, item,
 					       new_folder) < 0) {
 		g_free(old_id);
+		gtk_tree_path_free(sel_path);
 		return;
 	}
 
@@ -2156,7 +2164,6 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	g_free(old_id);
 	g_free(new_id);
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (folderview->opened)
 		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	if (sel_path) {
@@ -2197,14 +2204,23 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 	g_return_if_fail(item->path != NULL);
 	g_return_if_fail(item->folder != NULL);
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+	g_return_if_fail(sel_path != NULL);
+
 	new_parent = foldersel_folder_sel(item->folder, FOLDER_SEL_MOVE_FOLDER,
 					  NULL);
-	if (!new_parent)
+	if (!new_parent) {
+		gtk_tree_path_free(sel_path);
 		return;
-	if (new_parent->folder != item->folder)
+	}
+	if (new_parent->folder != item->folder) {
+		gtk_tree_path_free(sel_path);
 		return;
-	if (new_parent == item->parent)
+	}
+	if (new_parent == item->parent) {
+		gtk_tree_path_free(sel_path);
 		return;
+	}
 
 	old_path = g_strdup(item->path);
 	old_id = folder_item_get_identifier(item);
@@ -2214,6 +2230,7 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 		alertpanel_error(_("Can't move the folder `%s'."), item->name);
 		g_free(old_id);
 		g_free(old_path);
+		gtk_tree_path_free(sel_path);
 		return;
 	}
 
@@ -2225,10 +2242,8 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 	g_free(old_id);
 	g_free(old_path);
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (folderview->opened)
 		open_path = gtk_tree_row_reference_get_path(folderview->opened);
-	g_return_if_fail(sel_path != NULL);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store), &iter,
 				sel_path);
 	if (sel_path && open_path &&
@@ -2269,10 +2284,13 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 	g_return_if_fail(item->path != NULL);
 	g_return_if_fail(item->folder != NULL);
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+	g_return_if_fail(sel_path != NULL);
+
 	folder = item->folder;
 
 	name = trim_string(item->name, 32);
-	AUTORELEASE_STR(name, {g_free(name); return;});
+	AUTORELEASE_STR(name, {g_free(name); gtk_tree_path_free(sel_path); return;});
 	message = g_strdup_printf
 		(_("All folders and messages under `%s' will be permanently deleted.\n"
 		   "Recovery will not be possible.\n\n"
@@ -2281,13 +2299,14 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
 				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
-	if (avalue != G_ALERTDEFAULT) return;
+	if (avalue != G_ALERTDEFAULT) {
+		gtk_tree_path_free(sel_path);
+		return;
+	}
 
 	Xstrdup_a(old_path, item->path, return);
 	old_id = folder_item_get_identifier(item);
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
-	g_return_if_fail(sel_path != NULL);
 	if (folderview->opened)
 		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store), &iter,
@@ -2337,16 +2356,19 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 	if (folder->trash != item) return;
 	if (item->stype != F_TRASH) return;
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+
 	if (alertpanel(_("Empty trash"),
 		       _("Delete all messages in the trash folder?"),
-		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT)
+		       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT) {
+		gtk_tree_path_free(sel_path);
 		return;
+	}
 
 	procmsg_empty_trash(folder->trash);
 	statusbar_pop_all();
 	folderview_update_item(folder->trash, TRUE);
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	if (open_path && sel_path &&
 	    gtk_tree_path_compare(open_path, sel_path) == 0)
@@ -2372,6 +2394,8 @@ static void folderview_remove_mailbox_cb(FolderView *folderview, guint action,
 	g_return_if_fail(item->folder != NULL);
 	if (item->parent) return;
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+
 	name = trim_string(item->folder->name, 32);
 	message = g_strdup_printf
 		(_("Really remove the mailbox `%s' ?\n"
@@ -2381,7 +2405,10 @@ static void folderview_remove_mailbox_cb(FolderView *folderview, guint action,
 				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	g_free(name);
-	if (avalue != G_ALERTDEFAULT) return;
+	if (avalue != G_ALERTDEFAULT) {
+		gtk_tree_path_free(sel_path);
+		return;
+	}
 
 	if (folderview->summaryview->folder_item &&
 	    folderview->summaryview->folder_item->folder == item->folder) {
@@ -2391,7 +2418,6 @@ static void folderview_remove_mailbox_cb(FolderView *folderview, guint action,
 	}
 	folder_destroy(item->folder);
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (sel_path) {
 		gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store),
 					&iter, sel_path);
@@ -2421,6 +2447,8 @@ static void folderview_rm_imap_server_cb(FolderView *folderview, guint action,
 	g_return_if_fail(FOLDER_TYPE(item->folder) == F_IMAP);
 	g_return_if_fail(item->folder->account != NULL);
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+
 	name = trim_string(item->folder->name, 32);
 	message = g_strdup_printf(_("Really delete IMAP4 account `%s'?"), name);
 	avalue = alertpanel_full(_("Delete IMAP4 account"), message,
@@ -2429,7 +2457,10 @@ static void folderview_rm_imap_server_cb(FolderView *folderview, guint action,
 	g_free(message);
 	g_free(name);
 
-	if (avalue != G_ALERTDEFAULT) return;
+	if (avalue != G_ALERTDEFAULT) {
+		gtk_tree_path_free(sel_path);
+		return;
+	}
 
 	if (folderview->summaryview->folder_item &&
 	    folderview->summaryview->folder_item->folder == item->folder) {
@@ -2443,7 +2474,6 @@ static void folderview_rm_imap_server_cb(FolderView *folderview, guint action,
 	account_destroy(account);
 	account_write_config_all();
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (sel_path) {
 		gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store),
 					&iter, sel_path);
@@ -2565,6 +2595,9 @@ static void folderview_rm_news_group_cb(FolderView *folderview, guint action,
 	g_return_if_fail(FOLDER_TYPE(item->folder) == F_NEWS);
 	g_return_if_fail(item->folder->account != NULL);
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+	g_return_if_fail(sel_path != NULL);
+
 	name = trim_string_before(item->path, 32);
 	message = g_strdup_printf(_("Really delete newsgroup `%s'?"), name);
 	avalue = alertpanel_full(_("Delete newsgroup"), message,
@@ -2572,10 +2605,11 @@ static void folderview_rm_news_group_cb(FolderView *folderview, guint action,
 				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	g_free(message);
 	g_free(name);
-	if (avalue != G_ALERTDEFAULT) return;
+	if (avalue != G_ALERTDEFAULT) {
+		gtk_tree_path_free(sel_path);
+		return;
+	}
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
-	g_return_if_fail(sel_path != NULL);
 	if (folderview->opened)
 		open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store), &iter,
@@ -2613,6 +2647,8 @@ static void folderview_rm_news_server_cb(FolderView *folderview, guint action,
 	g_return_if_fail(FOLDER_TYPE(item->folder) == F_NEWS);
 	g_return_if_fail(item->folder->account != NULL);
 
+	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
+
 	name = trim_string(item->folder->name, 32);
 	message = g_strdup_printf(_("Really delete news account `%s'?"), name);
 	avalue = alertpanel_full(_("Delete news account"), message,
@@ -2621,7 +2657,10 @@ static void folderview_rm_news_server_cb(FolderView *folderview, guint action,
 	g_free(message);
 	g_free(name);
 
-	if (avalue != G_ALERTDEFAULT) return;
+	if (avalue != G_ALERTDEFAULT) {
+		gtk_tree_path_free(sel_path);
+		return;
+	}
 
 	if (folderview->summaryview->folder_item &&
 	    folderview->summaryview->folder_item->folder == item->folder) {
@@ -2635,7 +2674,6 @@ static void folderview_rm_news_server_cb(FolderView *folderview, guint action,
 	account_destroy(account);
 	account_write_config_all();
 
-	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 	if (sel_path) {
 		gtk_tree_model_get_iter(GTK_TREE_MODEL(folderview->store),
 					&iter, sel_path);
