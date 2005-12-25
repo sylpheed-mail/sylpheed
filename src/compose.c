@@ -1986,7 +1986,8 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 	     child = procmime_mimeinfo_next(child)) {
 		if (child->children || child->mime_type == MIME_MULTIPART)
 			continue;
-		if (!child->filename && !child->name)
+		if (child->mime_type != MIME_MESSAGE_RFC822 &&
+		    !child->filename && !child->name)
 			continue;
 
 		outfile = procmime_get_tmp_file_name(child);
