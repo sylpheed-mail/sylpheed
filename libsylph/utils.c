@@ -1077,7 +1077,7 @@ void subst_null(gchar *str, gint len, gchar subst)
 
 void subst_for_filename(gchar *str)
 {
-	subst_chars(str, " \t\r\n\"'/\\", '_');
+	subst_chars(str, " \t\r\n\"'\\/:;*?<>|", '_');
 }
 
 gchar *get_alt_filename(const gchar *filename, gint count)
@@ -2973,9 +2973,7 @@ gchar *generate_mime_boundary(const gchar *prefix)
 	buf_uniq[i] = '\0';
 
 	get_rfc822_date(buf_date, sizeof(buf_date));
-	subst_char(buf_date, ' ', '_');
-	subst_char(buf_date, ',', '_');
-	subst_char(buf_date, ':', '_');
+	subst_chars(buf_date, " ,:", '_');
 
 	return g_strdup_printf("%s=_%s_%s", prefix ? prefix : "Multipart",
 			       buf_date, buf_uniq);
