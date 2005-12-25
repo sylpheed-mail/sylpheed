@@ -1970,14 +1970,6 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 			   -1);
 }
 
-#define IS_FIRST_PART_TEXT(info) \
-	((info->mime_type == MIME_TEXT || info->mime_type == MIME_TEXT_HTML) || \
-	 (info->mime_type == MIME_MULTIPART && info->content_type && \
-	  !g_ascii_strcasecmp(info->content_type, "multipart/alternative") && \
-	  (info->children && \
-	   (info->children->mime_type == MIME_TEXT || \
-	    info->children->mime_type == MIME_TEXT_HTML))))
-
 static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 {
 	MimeInfo *mimeinfo;
@@ -1988,40 +1980,33 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 	mimeinfo = procmime_scan_message(msginfo);
 	if (!mimeinfo) return;
 
-	/* skip first text (presumably message body) */
-	child = mimeinfo->children;
-	if (!child || IS_FIRST_PART_TEXT(mimeinfo)) {
-		procmime_mimeinfo_free_all(mimeinfo);
-		return;
-	}
-	if (IS_FIRST_PART_TEXT(child))
-		child = child->next;
-
 	infile = procmsg_get_message_file_path(msginfo);
 
-	while (child != NULL) {
-		if (child->children || child->mime_type == MIME_MULTIPART) {
-			child = procmime_mimeinfo_next(child);
+	for (child = mimeinfo; child != NULL;
+	     child = procmime_mimeinfo_next(child)) {
+		if (child->children || child->mime_type == MIME_MULTIPART)
+			continue;
+		if (!child->filename && !child->name)
+			continue;
+
+		outfile = procmime_get_tmp_file_name(child);
+		if (procmime_get_part(outfile, infile, child) < 0) {
+			g_warning(_("Can't get the part of multipart message."));
+			g_free(outfile);
 			continue;
 		}
 
-		outfile = procmime_get_tmp_file_name(child);
-		if (procmime_get_part(outfile, infile, child) < 0)
-			g_warning(_("Can't get the part of multipart message."));
-		else
-			compose_attach_append
-				(compose, outfile,
-				 child->filename ? child->filename : child->name,
-				 child->content_type);
+		compose_attach_append
+			(compose, outfile,
+			 child->filename ? child->filename : child->name,
+			 child->content_type);
 
-		child = child->next;
+		g_free(outfile);
 	}
 
 	g_free(infile);
 	procmime_mimeinfo_free_all(mimeinfo);
 }
-
-#undef IS_FIRST_PART_TEXT
 
 #define INDENT_CHARS	">|#"
 
