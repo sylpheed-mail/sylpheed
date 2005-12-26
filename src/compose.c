@@ -1905,8 +1905,6 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 	}
 	fclose(fp);
 
-	compose_changed_cb(NULL, compose);
-
 	if (!compose->use_attach) {
 		GtkItemFactory *ifactory;
 
@@ -5948,6 +5946,7 @@ static void compose_attach_cb(gpointer data, guint action, GtkWidget *widget)
 
 		utf8_filename = conv_filename_to_utf8(file);
 		compose_attach_append(compose, file, utf8_filename, NULL);
+		compose_changed_cb(NULL, compose);
 		g_free(utf8_filename);
 		g_free(file);
 	}
@@ -6558,6 +6557,7 @@ static void compose_attach_drag_received_cb (GtkWidget		*widget,
 		path = (gchar *)cur->data;
 		filename = conv_filename_to_utf8(path);
 		compose_attach_append(compose, path, filename, content_type);
+		compose_changed_cb(NULL, compose);
 		g_free(filename);
 		g_free(path);
 	}
