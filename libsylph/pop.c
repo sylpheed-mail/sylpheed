@@ -374,6 +374,7 @@ static gint pop3_delete_send(Pop3Session *session)
 
 static gint pop3_delete_recv(Pop3Session *session)
 {
+	session->msg[session->cur_msg].recv_time = RECV_TIME_DELETE;
 	session->msg[session->cur_msg].deleted = TRUE;
 	return PS_SUCCESS;
 }
@@ -518,8 +519,11 @@ gint pop3_write_uidl_list(Pop3Session *session)
 
 	for (n = 1; n <= session->count; n++) {
 		msg = &session->msg[n];
-		if (msg->uidl && msg->received && !msg->deleted)
-			fprintf(fp, "%s\t%ld\n", msg->uidl, msg->recv_time);
+		if (!msg->uidl || !msg->received)
+			continue;
+		if (session->state == POP3_DONE && msg->deleted)
+			continue;
+		fprintf(fp, "%s\t%ld\n", msg->uidl, msg->recv_time);
 	}
 
 	if (fclose(fp) == EOF) FILE_OP_ERROR(path, "fclose");
@@ -791,6 +795,7 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 		}
 		break;
 	case POP3_LOGOUT:
+		pop3_session->state = POP3_DONE;
 		session_disconnect(session);
 		break;
 	case POP3_ERROR:
