@@ -1980,19 +1980,19 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 
 	infile = procmsg_get_message_file_path(msginfo);
 
-	for (child = mimeinfo; child != NULL;
-	     child = procmime_mimeinfo_next(child)) {
+	child = mimeinfo;
+	while (child != NULL) {
 		if (child->children || child->mime_type == MIME_MULTIPART)
-			continue;
+			goto next;
 		if (child->mime_type != MIME_MESSAGE_RFC822 &&
 		    !child->filename && !child->name)
-			continue;
+			goto next;
 
 		outfile = procmime_get_tmp_file_name(child);
 		if (procmime_get_part(outfile, infile, child) < 0) {
 			g_warning(_("Can't get the part of multipart message."));
 			g_free(outfile);
-			continue;
+			goto next;
 		}
 
 		compose_attach_append
@@ -2001,6 +2001,12 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 			 child->content_type);
 
 		g_free(outfile);
+
+next:
+		if (child->mime_type == MIME_MESSAGE_RFC822)
+			child = child->next;
+		else
+			child = procmime_mimeinfo_next(child);
 	}
 
 	g_free(infile);
