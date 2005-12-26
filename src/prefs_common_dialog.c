@@ -2476,6 +2476,10 @@ static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,
 	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Western European (ISO-8859-1)"),  CS_ISO_8859_1);
 	SET_MENUITEM(_("Western European (ISO-8859-15)"), CS_ISO_8859_15);
+	if (!outgoing) {
+		SET_MENUITEM(_("Western European (Windows-1252)"),
+			     CS_WINDOWS_1252);
+	}
 	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Central European (ISO-8859-2)"), CS_ISO_8859_2);
 	SET_MENUITEM(NULL, NULL);

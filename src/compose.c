@@ -622,8 +622,6 @@ static GtkItemFactoryEntry compose_entries[] =
 	 ENC_ACTION(C_GBK)},
 	{N_("/_View/Character _encoding/Traditional Chinese (_Big5)"),
 	 ENC_ACTION(C_BIG5)},
-	{N_("/_View/Character _encoding/Traditional Chinese (EUC-_TW)"),
-	 ENC_ACTION(C_EUC_TW)},
 	{N_("/_View/Character _encoding/---"), NULL, NULL, 0, "<Separator>"},
 
 	{N_("/_View/Character _encoding/Korean (EUC-_KR)"),
