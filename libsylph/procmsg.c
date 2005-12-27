@@ -41,11 +41,6 @@ static GHashTable *procmsg_read_mark_file	(FolderItem	*item);
 static void procmsg_write_mark_file		(FolderItem	*item,
 						 GHashTable	*mark_table);
 
-static FILE *procmsg_open_data_file		(const gchar	*file,
-						 guint		 version,
-						 DataOpenMode	 mode,
-						 gchar		*buf,
-						 size_t		 buf_size);
 static FILE *procmsg_open_cache_file_with_buffer(FolderItem	*item,
 						 DataOpenMode	 mode,
 						 gchar		*buf,
@@ -119,7 +114,7 @@ GHashTable *procmsg_to_folder_hash_table_create(GSList *mlist)
 	return msg_table;
 }
 
-static gint procmsg_read_cache_data_str(FILE *fp, gchar **str)
+gint procmsg_read_cache_data_str(FILE *fp, gchar **str)
 {
 	gchar buf[BUFFSIZE];
 	gint ret = 0;
@@ -154,9 +149,6 @@ static gint procmsg_read_cache_data_str(FILE *fp, gchar **str)
 		}
 	} else
 		ret = -1;
-
-	if (ret < 0)
-		g_warning("Cache data is corrupted\n");
 
 	return ret;
 }
@@ -767,9 +759,8 @@ static void procmsg_write_mark_file(FolderItem *item, GHashTable *mark_table)
 	fclose(fp);
 }
 
-static FILE *procmsg_open_data_file(const gchar *file, guint version,
-				    DataOpenMode mode,
-				    gchar *buf, size_t buf_size)
+FILE *procmsg_open_data_file(const gchar *file, guint version,
+			     DataOpenMode mode, gchar *buf, size_t buf_size)
 {
 	FILE *fp;
 	guint32 data_ver;

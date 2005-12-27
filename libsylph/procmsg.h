@@ -214,6 +214,9 @@ void procmsg_msg_hash_table_append		(GHashTable	*msg_table,
 						 GSList		*mlist);
 GHashTable *procmsg_to_folder_hash_table_create	(GSList		*mlist);
 
+gint procmsg_read_cache_data_str	(FILE		*fp,
+					 gchar	       **str);
+
 GSList *procmsg_read_cache		(FolderItem	*item,
 					 gboolean	 scan_file);
 void	procmsg_set_flags		(GSList		*mlist,
@@ -251,6 +254,12 @@ void	procmsg_get_mark_sum		(FolderItem	*item,
 					 gint		*min,
 					 gint		*max,
 					 gint		 first);
+
+FILE   *procmsg_open_data_file		(const gchar	*file,
+					 guint		 version,
+					 DataOpenMode	 mode,
+					 gchar		*buf,
+					 size_t		 buf_size);
 
 FILE   *procmsg_open_cache_file		(FolderItem	*item,
 					 DataOpenMode	 mode);
