@@ -2,13 +2,13 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Székely Kriszitán <szekelyk@different.hu>, 2001.
 # Zahemszky Gábor <Gabor@Zahemszky.HU>, 2002, 2003, 2004.
-# Németh Tamás <ntomasz@vipmail.hu>, 2005.
+# Németh Tamás <ntomasz@vipmail.hu>, 2005, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-2.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-26 17:22+0900\n"
-"PO-Revision-Date: 2005-07-04 17:05+0200\n"
+"POT-Creation-Date: 2006-01-05 16:37+0900\n"
+"PO-Revision-Date: 2005-12-27 11:05+0100\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: <NONE>\n"
 "MIME-Version: 1.0\n"
@@ -38,29 +38,29 @@ msgid "Can't start TLS session.\n"
 msgstr "Nem lehet TLS menetet indítani.\n"
 
 #: libsylph/imap.c:1107
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %d"
-msgstr "%d üzenet törlése"
+msgstr "%d üzenet töltése"
 
 #: libsylph/imap.c:1224
-#, fuzzy, c-format
+#, c-format
 msgid "Appending messages to %s (%d / %d)"
-msgstr "Üzenet küldése (%d / %d bájt)"
+msgstr "Üzenetek hozzáfűzése ide: %s (%d / %d)"
 
 #: libsylph/imap.c:1316
-#, fuzzy, c-format
+#, c-format
 msgid "Moving messages %s to %s ..."
-msgstr "%s%c%d üzenet másolása %s-ba ...\n"
+msgstr "%s üzenetek áthelyezése ide: %s ..."
 
 #: libsylph/imap.c:1322
-#, fuzzy, c-format
+#, c-format
 msgid "Copying messages %s to %s ..."
-msgstr "%s%c%d üzenet másolása %s-ba ...\n"
+msgstr "%s üzenetek másolása ide: %s ..."
 
 #: libsylph/imap.c:1473
-#, fuzzy, c-format
+#, c-format
 msgid "Removing messages %s"
-msgstr "%s üzeneteinek fogadása..."
+msgstr "%s üzenetek eltávolítása"
 
 #: libsylph/imap.c:1479
 #, c-format
@@ -72,9 +72,9 @@ msgid "can't expunge\n"
 msgstr "nem lehet törölni\n"
 
 #: libsylph/imap.c:1570
-#, fuzzy, c-format
+#, c-format
 msgid "Removing all messages in %s"
-msgstr "%s üzeneteinek fogadása..."
+msgstr "Minden üzenet eltávolítása innen: %s?"
 
 #: libsylph/imap.c:1576
 msgid "can't set deleted flags: 1:*\n"
@@ -125,9 +125,9 @@ msgid "can't get envelope\n"
 msgstr "a borítékot nem lehet megszerezni\n"
 
 #: libsylph/imap.c:2324
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message headers (%d / %d)"
-msgstr "Üzenet küldése (%d / %d bájt)"
+msgstr "Üzenetfejlécek töltése (%d / %d)"
 
 #: libsylph/imap.c:2334
 msgid "error occurred while getting envelope.\n"
@@ -158,9 +158,8 @@ msgid "can't select folder: %s\n"
 msgstr "%s mappa kiválasztása nem sikerült\n"
 
 #: libsylph/imap.c:3125
-#, fuzzy
 msgid "error on imap command: STATUS\n"
-msgstr "hiba az IMAP parancs közben: CLOSE\n"
+msgstr "hiba az IMAP parancs közben: STATUS\n"
 
 #: libsylph/imap.c:3268
 msgid "IMAP4 authentication failed.\n"
@@ -173,7 +172,7 @@ msgstr "IMAP4 bejelentkezés sikertelen.\n"
 #: libsylph/imap.c:3621
 #, c-format
 msgid "can't append %s to %s\n"
-msgstr "%s hozzáfűzése %s-he(oö)z nem sikerült\n"
+msgstr "%s nem fűzhető hozzá ehhez: %s\n"
 
 #: libsylph/imap.c:3628
 msgid "(sending file...)"
@@ -182,12 +181,12 @@ msgstr "(fájl küldése...)"
 #: libsylph/imap.c:3657
 #, c-format
 msgid "can't append message to %s\n"
-msgstr "üzenet hozzáfűzése %s-he(oö)z nem sikerült\n"
+msgstr "üzenet nem fűzhető hozzá ehhez: %s\n"
 
 #: libsylph/imap.c:3689
 #, c-format
 msgid "can't copy %s to %s\n"
-msgstr "%s nem másolható %s-be/ba\n"
+msgstr "%s nem másolható ide: %s\n"
 
 #: libsylph/imap.c:3713
 #, c-format
@@ -205,12 +204,12 @@ msgstr "hiba az IMAP parancs közben: CLOSE\n"
 #: libsylph/imap.c:4007
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
-msgstr "az iconv nem tud UTF-7-ből %s-be/ba konvertálni\n"
+msgstr "az iconv nem tud UTF-7-ből konvertálni ebbe: %s\n"
 
 #: libsylph/imap.c:4037
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
-msgstr "az iconv nem tud %s-t UTF-7-re konvertálni\n"
+msgstr "az iconv nem tudja UTF-7-re konvertálni ezt: %s\n"
 
 #: libsylph/mbox.c:50 libsylph/mbox.c:196
 msgid "can't write to temporary file\n"
@@ -219,7 +218,7 @@ msgstr "nem lehet az ideiglenes fájlba írni\n"
 #: libsylph/mbox.c:69
 #, c-format
 msgid "Getting messages from %s into %s...\n"
-msgstr "Üzenetek fogadása %s-ból %s-ba...\n"
+msgstr "Üzenetek fogadása innen: %s ide: %s...\n"
 
 #: libsylph/mbox.c:79
 msgid "can't read mbox file.\n"
@@ -519,16 +518,16 @@ msgstr "Levélszemét szűrő"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Kód konverziós hiba.\n"
 
-#: libsylph/procmsg.c:628
+#: libsylph/procmsg.c:620
 msgid "can't open mark file\n"
 msgstr "A kijelölt fájl nem nyitható meg\n"
 
-#: libsylph/procmsg.c:1081
+#: libsylph/procmsg.c:1072
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "%d üzenet vétele nem sikerült\n"
 
-#: libsylph/procmsg.c:1336
+#: libsylph/procmsg.c:1327
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Érvénytelen nyomtató parancs: `%s'\n"
@@ -972,10 +971,10 @@ msgid "/New _Folder"
 msgstr "/Ú_j Mappa"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
-#: src/folderview.c:244 src/folderview.c:246 src/folderview.c:251
-#: src/folderview.c:262 src/folderview.c:264 src/folderview.c:266
-#: src/folderview.c:271 src/folderview.c:281 src/folderview.c:283
-#: src/folderview.c:287 src/summaryview.c:399 src/summaryview.c:403
+#: src/folderview.c:245 src/folderview.c:247 src/folderview.c:252
+#: src/folderview.c:263 src/folderview.c:265 src/folderview.c:267
+#: src/folderview.c:272 src/folderview.c:282 src/folderview.c:284
+#: src/folderview.c:288 src/summaryview.c:399 src/summaryview.c:403
 #: src/summaryview.c:407 src/summaryview.c:417 src/summaryview.c:419
 #: src/summaryview.c:431 src/summaryview.c:437
 msgid "/---"
@@ -1052,7 +1051,7 @@ msgstr ""
 "Tényleg törölni szeretné a(z) `%s' mappát ÉS az összes címet benne?\n"
 "Ha csak a mappát törli, a címek átkerülnek a szülő mappába."
 
-#: src/addressbook.c:1674 src/folderview.c:2298
+#: src/addressbook.c:1674 src/folderview.c:2308
 msgid "Delete folder"
 msgstr "Mappa törlése"
 
@@ -1181,7 +1180,7 @@ msgid "Group"
 msgstr "Csoport"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:357 src/prefs_account_dialog.c:1687
+#: src/addressbook.c:3152 src/folderview.c:358 src/prefs_account_dialog.c:1687
 #: src/summary_search.c:367
 msgid "Folder"
 msgstr "Mappa"
@@ -1269,8 +1268,8 @@ msgstr "/_Hozzáadás..."
 msgid "/_Remove"
 msgstr "/_Eltávolítás"
 
-#: src/compose.c:509 src/folderview.c:253 src/folderview.c:273
-#: src/folderview.c:289
+#: src/compose.c:509 src/folderview.c:254 src/folderview.c:274
+#: src/folderview.c:290
 msgid "/_Properties..."
 msgstr "/_Tulajdonságok..."
 
@@ -1522,14 +1521,12 @@ msgid "/_Tools/PGP _Encrypt"
 msgstr "/_Eszközök/PGP _Titkosítás"
 
 #: src/compose.c:651
-#, fuzzy
 msgid "/_Tools/_Check spell"
-msgstr "/_Eszközök/_Futtatás"
+msgstr "/_Eszközök/_Helyesírásellenőrzés"
 
 #: src/compose.c:652
-#, fuzzy
 msgid "/_Tools/_Set spell language"
-msgstr "/_Eszközök/_Sablon"
+msgstr "/_Eszközök/Helyesírás _nyelvi beállítások"
 
 #: src/compose.c:892
 #, c-format
@@ -1583,7 +1580,7 @@ msgid "(No Subject)"
 msgstr "(Nincs Tárgy)"
 
 #: src/compose.c:2478
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Üzenet írása%s"
 
@@ -1804,14 +1801,13 @@ msgid "External editor command line is invalid: `%s'\n"
 msgstr "Külső szerkesztő parancssora érvénytelen: `%s'\n"
 
 #: src/compose.c:5464
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The external editor is still working.\n"
 "Force terminating the process (pid: %d)?\n"
 msgstr ""
 "A külső szerkesztő még dolgozik.\n"
-"Processz kilövése?\n"
-"processz csoport azonosító: %d"
+"A processz kényszerített kilövése (pid: %d)?\n"
 
 #: src/compose.c:5839 src/compose.c:5847 src/compose.c:5853
 msgid "Can't queue the message."
@@ -2011,12 +2007,12 @@ msgstr "Mappa szerkesztése"
 msgid "Input the new name of folder:"
 msgstr "A mappa új neve:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2059
-#: src/folderview.c:2065
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2060
+#: src/folderview.c:2066
 msgid "New folder"
 msgstr "Új mappa"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2066
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2067
 msgid "Input the name of new folder:"
 msgstr "Az új mappa neve:"
 
@@ -2176,178 +2172,176 @@ msgid "Overwrite existing file?"
 msgstr "Létező fájl felülírása?"
 
 #: src/filesel.c:159
-#, fuzzy
 msgid "Select directory"
-msgstr "Mappa választása"
+msgstr "Könyvtár választása"
 
 #: src/foldersel.c:230
 msgid "Select folder"
 msgstr "Mappa választása"
 
-#: src/foldersel.c:359 src/folderview.c:1157 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1158 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Bejövő"
 
-#: src/foldersel.c:363 src/folderview.c:1163 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1164 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Kimenő"
 
-#: src/foldersel.c:367 src/folderview.c:1169 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1170 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Várakozó"
 
-#: src/foldersel.c:371 src/folderview.c:1175 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1176 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Kuka"
 
-#: src/foldersel.c:375 src/folderview.c:1181 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1182 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Vázlatok"
 
-#: src/foldersel.c:542 src/folderview.c:2063 src/folderview.c:2067
+#: src/foldersel.c:542 src/folderview.c:2064 src/folderview.c:2068
 msgid "NewFolder"
 msgstr "Új mappa"
 
-#: src/foldersel.c:550 src/folderview.c:2075 src/folderview.c:2136
+#: src/foldersel.c:550 src/folderview.c:2076 src/folderview.c:2137
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c' nem tehető a mappanévbe."
 
-#: src/foldersel.c:560 src/folderview.c:2085 src/folderview.c:2144
+#: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
 #: src/summary_search.c:989
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "`%s' mappa már létezik."
 
-#: src/foldersel.c:568 src/folderview.c:2092
+#: src/foldersel.c:568 src/folderview.c:2093
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "`%s' nem hozható létre."
 
-#: src/folderview.c:240 src/folderview.c:258
+#: src/folderview.c:241 src/folderview.c:259
 msgid "/Create _new folder..."
 msgstr "/Új _mappa létrehozása..."
 
-#: src/folderview.c:241 src/folderview.c:259
+#: src/folderview.c:242 src/folderview.c:260
 msgid "/_Rename folder..."
 msgstr "/Mappa át_nevezése..."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:243 src/folderview.c:261
 msgid "/_Move folder..."
 msgstr "/Mappa át_helyezése..."
 
-#: src/folderview.c:243 src/folderview.c:261
+#: src/folderview.c:244 src/folderview.c:262
 msgid "/_Delete folder"
 msgstr "/Mappa _törlése"
 
-#: src/folderview.c:245 src/folderview.c:263
+#: src/folderview.c:246 src/folderview.c:264
 msgid "/Empty _trash"
 msgstr "/_Kuka ürítése"
 
-#: src/folderview.c:247 src/folderview.c:267 src/folderview.c:284
+#: src/folderview.c:248 src/folderview.c:268 src/folderview.c:285
 msgid "/_Check for new messages"
 msgstr "/Ú_j üzenetek ellenőrzése"
 
-#: src/folderview.c:249 src/folderview.c:269
+#: src/folderview.c:250 src/folderview.c:270
 msgid "/R_ebuild folder tree"
 msgstr "/_Mappafa újraépítése"
 
-#: src/folderview.c:250 src/folderview.c:270 src/folderview.c:286
-#, fuzzy
+#: src/folderview.c:251 src/folderview.c:271 src/folderview.c:287
 msgid "/_Update summary"
-msgstr "/_Nézet/Ö_sszegzés frissítése"
+msgstr "/Ö_sszegzés frissítése"
 
-#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
+#: src/folderview.c:253 src/folderview.c:273 src/folderview.c:289
 msgid "/_Search messages..."
 msgstr "/Ü_zenetek keresése..."
 
-#: src/folderview.c:265 src/folderview.c:282
+#: src/folderview.c:266 src/folderview.c:283
 msgid "/Down_load"
 msgstr "/Le_töltés"
 
-#: src/folderview.c:278
+#: src/folderview.c:279
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Hírcsoport _előfizetése..."
 
-#: src/folderview.c:280
+#: src/folderview.c:281
 msgid "/_Remove newsgroup"
 msgstr "/Hírcsoport e_ltávolítása"
 
-#: src/folderview.c:310
+#: src/folderview.c:311
 msgid "Creating folder view...\n"
 msgstr "Mappa nézet létrehozása...\n"
 
-#: src/folderview.c:388
+#: src/folderview.c:389
 msgid "New"
 msgstr "Új"
 
 #. S_COL_MARK
-#: src/folderview.c:402 src/prefs_summary_column.c:71
+#: src/folderview.c:403 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Olvasatlan"
 
-#: src/folderview.c:416
+#: src/folderview.c:417
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:547
+#: src/folderview.c:548
 msgid "Setting folder info...\n"
 msgstr "Mappa információ beállítása...\n"
 
-#: src/folderview.c:548
+#: src/folderview.c:549
 msgid "Setting folder info..."
 msgstr "Mappa információ beállítása..."
 
-#: src/folderview.c:848 src/mainwindow.c:3360 src/setup.c:80
+#: src/folderview.c:849 src/mainwindow.c:3360 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "%s%c%s mappa átvizsgálása..."
 
-#: src/folderview.c:852 src/mainwindow.c:3365 src/setup.c:85
+#: src/folderview.c:853 src/mainwindow.c:3365 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "%s mappa átvizsgálása..."
 
-#: src/folderview.c:894
+#: src/folderview.c:895
 msgid "Rebuild folder tree"
 msgstr "Mappafa újraépítése"
 
-#: src/folderview.c:895
+#: src/folderview.c:896
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "A mappafa újra fog épülni. Folytatja?"
 
-#: src/folderview.c:904
+#: src/folderview.c:905
 msgid "Rebuilding folder tree..."
 msgstr "Mappafa újraépítése..."
 
-#: src/folderview.c:911
+#: src/folderview.c:912
 msgid "Rebuilding of the folder tree failed."
 msgstr "Mappafa újraépítése sikertelen."
 
-#: src/folderview.c:1024
+#: src/folderview.c:1025
 msgid "Checking for new messages in all folders..."
 msgstr "Új üzenetek keresése minden mappában..."
 
-#: src/folderview.c:1189 src/mainwindow.c:2352 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1190 src/mainwindow.c:2352 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr "Levélszemét"
 
-#: src/folderview.c:1809
+#: src/folderview.c:1810
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "%s mappa kiválasztva\n"
 
-#: src/folderview.c:1964
+#: src/folderview.c:1965
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Üzenetek letöltése %s mappába ..."
 
-#: src/folderview.c:1999
+#: src/folderview.c:2000
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Hiba lépett fel a(z) %s mappába történő üzenetek letöltése közben."
 
-#: src/folderview.c:2060
+#: src/folderview.c:2061
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2357,24 +2351,37 @@ msgstr ""
 "(Ha egy almappákat tartalmazó mappát szeretne létrehozni,\n"
 "akkor tegyen egy `/' jelet a név végére)"
 
-#: src/folderview.c:2124
+#: src/folderview.c:2125
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Adja meg `%s' új nevét:"
 
-#: src/folderview.c:2125
+#: src/folderview.c:2126
 msgid "Rename folder"
 msgstr "Mappa átnevezése"
 
-#: src/folderview.c:2230
+#: src/folderview.c:2231
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "`%s' mappa nem helyezhető át."
 
-#: src/folderview.c:2295
+#: src/folderview.c:2297
 #, c-format
 msgid ""
-"All folders and messages under `%s' will be permanently deleted.\n"
+"The search folder '%s' will be deleted.\n"
+"The real messages are not deleted.\n"
+"Really delete it?"
+msgstr ""
+
+#: src/folderview.c:2300
+#, fuzzy
+msgid "Delete search folder"
+msgstr "Mappa törlése"
+
+#: src/folderview.c:2305
+#, fuzzy, c-format
+msgid ""
+"All folders and messages under '%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
 "\n"
 "Do you really want to delete?"
@@ -2384,21 +2391,20 @@ msgstr ""
 "\n"
 "Biztosan törölni szeretné?"
 
-#: src/folderview.c:2325
-#, c-format
-msgid "Can't remove the folder `%s'."
+#: src/folderview.c:2337 src/folderview.c:2343
+#, fuzzy, c-format
+msgid "Can't remove the folder '%s'."
 msgstr "`%s' nem távolítható el."
 
-#: src/folderview.c:2361
+#: src/folderview.c:2379
 msgid "Empty trash"
 msgstr "Kuka ürítése"
 
-#: src/folderview.c:2362
-#, fuzzy
+#: src/folderview.c:2380
 msgid "Delete all messages in the trash folder?"
 msgstr "Minden üzenet törlése a kukából?"
 
-#: src/folderview.c:2401
+#: src/folderview.c:2419
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2407,34 +2413,34 @@ msgstr ""
 "Tényleg eltávolítja `%s' postaládát?\n"
 "(Az üzenetek NEM törlődnek a meghajtóról)"
 
-#: src/folderview.c:2403
+#: src/folderview.c:2421
 msgid "Remove mailbox"
 msgstr "Postaláda eltávolítása"
 
-#: src/folderview.c:2453
+#: src/folderview.c:2471
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Tényleg törli a(z) `%s' IMAP4 hozzáférést?"
 
-#: src/folderview.c:2454
+#: src/folderview.c:2472
 msgid "Delete IMAP4 account"
 msgstr "IMAP4 hozzáférés törlése"
 
-#: src/folderview.c:2602
+#: src/folderview.c:2625
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Tényleg törli a(z) `%s' hírcsoportot?"
 
-#: src/folderview.c:2603
+#: src/folderview.c:2626
 msgid "Delete newsgroup"
 msgstr "Hírcsoport törlése"
 
-#: src/folderview.c:2653
+#: src/folderview.c:2676
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Tényleg törli a(z) `%s' hírhozzáférést?"
 
-#: src/folderview.c:2654
+#: src/folderview.c:2677
 msgid "Delete news account"
 msgstr "Hírhozzáférés törlése"
 
@@ -2576,14 +2582,13 @@ msgid "Finish"
 msgstr "Vége"
 
 #: src/inc.c:160
-#, fuzzy, c-format
+#, c-format
 msgid "Sylpheed: %d new messages"
-msgstr "Vége (%d új üzenet)"
+msgstr "Sylpheed: %d új üzenet"
 
 #: src/inc.c:164
-#, fuzzy
 msgid "Sylpheed"
-msgstr "Régi Sylpheed"
+msgstr "Sylpheed"
 
 #: src/inc.c:371
 msgid "Retrieving new messages"
@@ -2840,11 +2845,12 @@ msgstr ""
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
+"  --configdir dirname    azon könyvtár megadása, amelyben a konfigurációs "
+"fájlokat tárolja"
 
 #: src/main.c:375
-#, fuzzy
 msgid "  --exit                 exit Sylpheed"
-msgstr "  --debug                hibakereső üzemmód"
+msgstr "  --exit                kilépés a Sylpheedből"
 
 #: src/main.c:376
 msgid "  --debug                debug mode"
@@ -3073,9 +3079,8 @@ msgid "/_View/_Sort/by _date"
 msgstr "/_Nézet/_Rendezés/_Dátum szerint"
 
 #: src/mainwindow.c:536
-#, fuzzy
 msgid "/_View/_Sort/by t_hread date"
-msgstr "/_Nézet/_Rendezés/_Dátum szerint"
+msgstr "/_Nézet/_Rendezés/_Szál dátuma szerint"
 
 #: src/mainwindow.c:537
 msgid "/_View/_Sort/by _from"
@@ -3199,9 +3204,8 @@ msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/_Nézet/_Karakterkódolás/_Automatikus felismerés"
 
 #: src/mainwindow.c:603 src/messageview.c:172
-#, fuzzy
 msgid "/_View/Character _encoding/Western European (Windows-1252)"
-msgstr "/_Nézet/_Karakterkódolás/Nyugat-Európai (ISO-8859-15)"
+msgstr "/_Nézet/_Karakterkódolás/Nyugat-Európai (Windows-1252)"
 
 #: src/mainwindow.c:643 src/messageview.c:205
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
@@ -3538,7 +3542,6 @@ msgid "Empty all trash"
 msgstr "Kuka ürítése"
 
 #: src/mainwindow.c:1601
-#, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "Minden üzenet törlése a kukából?"
 
@@ -3547,14 +3550,13 @@ msgid "Add mailbox"
 msgstr "Postaláda hozzáadása"
 
 #: src/mainwindow.c:1630
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
-"Kérem a postaláda helyét!\n"
-"Ha már létezik a postaláda, akkor\n"
+"Kérem adja meg a postaláda helyét!\n"
+"Ha létező postaládát ad meg, akkor\n"
 "automatikusan átvizsgálom."
 
 #: src/mainwindow.c:1636 src/setup.c:49
@@ -3768,7 +3770,7 @@ msgstr "Csatolások"
 
 #: src/messageview.c:371
 msgid "Message View - Sylpheed"
-msgstr ""
+msgstr "Üzenetnézet - Sylpheed"
 
 #: src/messageview.c:669 src/summaryview.c:3131
 #, c-format
@@ -3777,12 +3779,11 @@ msgstr "`%s' fájlt nem lehet elmenteni."
 
 #: src/messageview.c:728 src/summaryview.c:3154
 msgid "The message will be printed with the following command:"
-msgstr ""
+msgstr "Az üzenet a következő paranccsal lesz kinyomtatva:"
 
 #: src/messageview.c:729 src/summaryview.c:3155
-#, fuzzy
 msgid "(Default print command)"
-msgstr "Tanítás parancs:"
+msgstr "(Alapértelmezett nyomtatási parancs)"
 
 #: src/messageview.c:731 src/prefs_common_dialog.c:2300 src/summaryview.c:3157
 msgid "Print"
@@ -3814,9 +3815,8 @@ msgid "/_Save as..."
 msgstr "/Menté_s másként..."
 
 #: src/mimeview.c:132
-#, fuzzy
 msgid "/Save _all..."
-msgstr "/Menté_s másként..."
+msgstr "/M_inden mentése..."
 
 #: src/mimeview.c:135
 msgid "/_Check signature"
@@ -3869,9 +3869,8 @@ msgid "Can't save the part of multipart message."
 msgstr "Egy többrészes üzenet egy darabja nem menthető."
 
 #: src/mimeview.c:1050
-#, fuzzy
 msgid "Can't save the attachments."
-msgstr "`%s' fájlt nem lehet elmenteni."
+msgstr "A csatolás(ok)at nem lehet elmenteni."
 
 #: src/mimeview.c:1103
 msgid "Open with"
@@ -3888,7 +3887,7 @@ msgstr ""
 
 #: src/mimeview.c:1142
 msgid "Opening executable file"
-msgstr ""
+msgstr "Futtatható fájl megnyitása"
 
 #: src/mimeview.c:1143
 msgid ""
@@ -3897,6 +3896,10 @@ msgid ""
 "If you want to launch it, save it to somewhere and make sure it is not an "
 "virus or something like a malicious program."
 msgstr ""
+"Ez egy futtatható fájl. A futttható fájlok megnyitása biztonságig okokból "
+"korlátozott.\n"
+"Ha futtatni akarja, mentse el valahová, és győződjön meg róla, hogy nem egy "
+"vírus vagy más kártékony program."
 
 #: src/mimeview.c:1179
 #, c-format
@@ -4056,9 +4059,8 @@ msgid "days"
 msgstr "nap"
 
 #: src/prefs_account_dialog.c:869
-#, fuzzy
 msgid "0 days: remove immediately"
-msgstr "(0 nap: azonnal eltávolítani)"
+msgstr "0 nap: azonnal eltávolítani"
 
 #: src/prefs_account_dialog.c:879
 msgid "Download all messages on server"
@@ -4095,9 +4097,8 @@ msgid "Automatic"
 msgstr "Automatikus"
 
 #: src/prefs_account_dialog.c:957
-#, fuzzy
 msgid "Only check INBOX on receiving"
-msgstr "Csak kézi fogadáskor"
+msgstr "Csak az INBOX ellenőrzése fogadáskor"
 
 #: src/prefs_account_dialog.c:959
 msgid "News"
@@ -4284,7 +4285,7 @@ msgstr "IMAP szerver könyvtár"
 
 #: src/prefs_account_dialog.c:1683
 msgid "Only the subfolders of this directory will be displayed."
-msgstr ""
+msgstr "Csak ezen könyvtár almappái fognak megjelenni."
 
 #: src/prefs_account_dialog.c:1728
 msgid "Put sent messages in"
@@ -4295,9 +4296,8 @@ msgid "Put draft messages in"
 msgstr "Vázlatok elhelyezése"
 
 #: src/prefs_account_dialog.c:1732
-#, fuzzy
 msgid "Put queued messages in"
-msgstr "Törölt üzenetek elhelyezése"
+msgstr "Várakozó üzenetek elhelyezése itt"
 
 #: src/prefs_account_dialog.c:1734
 msgid "Put deleted messages in"
@@ -4333,7 +4333,7 @@ msgstr "Nincs megadott NNTP szerver."
 
 #: src/prefs_account_dialog.c:1852
 msgid "Specified folder is not a queue folder."
-msgstr ""
+msgstr "A megadott mappa nem egy várakozó mappa."
 
 #: src/prefs_account_dialog.c:1926
 msgid ""
@@ -4481,7 +4481,7 @@ msgstr "Levélszemét"
 
 #: src/prefs_common_dialog.c:673
 msgid "Details"
-msgstr ""
+msgstr "Részletek"
 
 #: src/prefs_common_dialog.c:727
 msgid "Auto-check new mail"
@@ -4515,7 +4515,7 @@ msgstr "Parancs"
 #: src/prefs_common_dialog.c:780
 #, c-format
 msgid "`%d' will be replaced with the number of new messages."
-msgstr "`%d' lesz helyettesítve az új üzenetek számával."
+msgstr "A `%d' helyére az új üzenetek száma kerül."
 
 #: src/prefs_common_dialog.c:784
 msgid "Incorporate from local spool"
@@ -4603,18 +4603,16 @@ msgid "Wrap before sending"
 msgstr "Sortördelés küldés előtt"
 
 #: src/prefs_common_dialog.c:1068
-#, fuzzy
 msgid "Auto-save to draft"
-msgstr "Mentés a vázlat mappába"
+msgstr "Automatikus mentés a vázlat mappába"
 
 #: src/prefs_common_dialog.c:1093
-#, fuzzy
 msgid "Format"
-msgstr "Normális"
+msgstr "Formátum"
 
 #: src/prefs_common_dialog.c:1098
 msgid "Spell checking"
-msgstr ""
+msgstr "Helyesírásellenőrzés"
 
 #. reply
 #: src/prefs_common_dialog.c:1149
@@ -4636,32 +4634,28 @@ msgstr " Szimbólumok leírása "
 
 #: src/prefs_common_dialog.c:1267
 msgid "Enable Spell checking"
-msgstr ""
+msgstr "Helyesírásellenőrzés bekapcsolása"
 
 #: src/prefs_common_dialog.c:1279
-#, fuzzy
 msgid "Default language:"
-msgstr "Alapértelmezett bejövő postafiók"
+msgstr "Alapértelmezett nyelv:"
 
 #: src/prefs_common_dialog.c:1346
-#, fuzzy
 msgid "Text font"
-msgstr "Szöveg"
+msgstr "Szöveg betűkészlete"
 
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1358
-#, fuzzy
 msgid "Folder View"
-msgstr "Mappa"
+msgstr "Mappanézet"
 
 #: src/prefs_common_dialog.c:1366
 msgid "Display unread number next to folder name"
 msgstr "Mappanév mellett az olvasatlan levelek számának kijelzése"
 
 #: src/prefs_common_dialog.c:1368
-#, fuzzy
 msgid "Display message number columns in the folder view"
-msgstr "Mappanév mellett az olvasatlan levelek számának kijelzése"
+msgstr "Mappanézetben jelenítse meg az üzenet számainak oszlopát"
 
 #: src/prefs_common_dialog.c:1377
 msgid "Abbreviate newsgroups longer than"
@@ -4698,18 +4692,18 @@ msgid "Message"
 msgstr "Üzenet"
 
 #: src/prefs_common_dialog.c:1454
-#, fuzzy
 msgid "Default character encoding"
-msgstr "/_Nézet/_Karakterkódolás"
+msgstr "Alapértelmezett karakterkódolás"
 
 #: src/prefs_common_dialog.c:1468
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
+"Ezt használja a program olyan üzenetek megjelenítéséhez, amiben nincs "
+"megadva 'character encoding' sor."
 
 #: src/prefs_common_dialog.c:1474
-#, fuzzy
 msgid "Outgoing character encoding"
-msgstr "/_Nézet/_Karakterkódolás"
+msgstr "Kimenő üzenetek karakterkódolása"
 
 #: src/prefs_common_dialog.c:1488
 msgid ""
@@ -4792,9 +4786,8 @@ msgid "Learning command:"
 msgstr "Tanítás parancs:"
 
 #: src/prefs_common_dialog.c:1780
-#, fuzzy
 msgid "(Select preset)"
-msgstr "Kulcs választás"
+msgstr "(Beállítás választás)"
 
 #: src/prefs_common_dialog.c:1805
 msgid "Not Junk"
@@ -4809,6 +4802,8 @@ msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
+"A levélszemét automatikus osztályozásánál, egy bizonyos mértékig kézzel kell "
+"tanítani a levélszemét és a levél válogatását."
 
 #: src/prefs_common_dialog.c:1841
 msgid "Junk folder"
@@ -4825,13 +4820,12 @@ msgid "Filter messages classified as junk on receiving"
 msgstr "A fogadáskor megszűrt üzenetek levélszemétként osztályozva"
 
 #: src/prefs_common_dialog.c:1873
-#, fuzzy
 msgid "Delete junk mails from server on receiving"
-msgstr "Törlés a szerverről"
+msgstr "Levélszemét törlése a szerverről fogadáskor"
 
 #: src/prefs_common_dialog.c:1877
 msgid "Mark filtered junk mails as read"
-msgstr ""
+msgstr "Szűrt jelölés a levélszemétre olvasáskor"
 
 #: src/prefs_common_dialog.c:1918
 msgid "Automatically check signatures"
@@ -4903,9 +4897,8 @@ msgid "Other"
 msgstr "Egyéb"
 
 #: src/prefs_common_dialog.c:2098
-#, fuzzy
 msgid "External commands"
-msgstr "Parancs futtatása"
+msgstr "Külső parancsok"
 
 #: src/prefs_common_dialog.c:2146
 msgid "Receive dialog"
@@ -4970,9 +4963,8 @@ msgstr "Web böngésző"
 
 #: src/prefs_common_dialog.c:2284 src/prefs_common_dialog.c:3771
 #: src/prefs_common_dialog.c:3792
-#, fuzzy
 msgid "(Default browser)"
-msgstr "Alapértelmezett bejövő postafiók"
+msgstr "(Alapértelmezett böngésző)"
 
 #: src/prefs_common_dialog.c:2337
 msgid "Use external program for incorporation"
@@ -5025,9 +5017,8 @@ msgid "Western European (ISO-8859-15)"
 msgstr "Nyugat Európai (ISO-8859-15)"
 
 #: src/prefs_common_dialog.c:2480
-#, fuzzy
 msgid "Western European (Windows-1252)"
-msgstr "Nyugat Európai (ISO-8859-15)"
+msgstr "Nyugat Európai (Windows-1252)"
 
 #: src/prefs_common_dialog.c:2484
 msgid "Central European (ISO-8859-2)"
@@ -5312,9 +5303,8 @@ msgid "Key bindings"
 msgstr "Billentyű hozzárendelések"
 
 #: src/prefs_common_dialog.c:3269
-#, fuzzy
 msgid "Select the preset of key bindings."
-msgstr " Billentyű hozzárendelések... "
+msgstr "Válasszon a beállított billentyű hozzárendelésekből."
 
 #: src/prefs_common_dialog.c:3279 src/prefs_common_dialog.c:3603
 msgid "Default"
@@ -5583,9 +5573,8 @@ msgid "Folder properties"
 msgstr "Mappa tulajdonságai"
 
 #: src/prefs_folder_item.c:187
-#, fuzzy
 msgid "Identifier"
-msgstr "Vezérlőjel"
+msgstr "Azonosító"
 
 #: src/prefs_folder_item.c:219 src/subscribedialog.c:294
 msgid "Type"
@@ -5886,14 +5875,12 @@ msgid "Mailbox setting"
 msgstr "Postaláda beállítások"
 
 #: src/setup.c:44
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If you are unsure, just select OK."
 msgstr ""
-"Kérem a postaláda helyét!\n"
-"Ha már létezik a postaláda, akkor\n"
-"automatikusan átvizsgálom."
+"Kérem adja meg a postaláda helyét!\n"
+"Ha bizonytalan, csak válassza az OK-ot."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -6025,9 +6012,8 @@ msgid "unknown"
 msgstr "ismeretlen"
 
 #: src/subscribedialog.c:481
-#, fuzzy
 msgid "Getting newsgroup list..."
-msgstr "Nem lehet olvasni a hírcsoportok listáját."
+msgstr "Hírcsoport lista letöltése..."
 
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
@@ -6055,47 +6041,42 @@ msgid "Match all of the following"
 msgstr "Minden egyezik a következőkből"
 
 #: src/summary_search.c:300
-#, fuzzy
 msgid "Folder:"
-msgstr "Mappa"
+msgstr "Mappa:"
 
 #: src/summary_search.c:318
-#, fuzzy
 msgid "Search subfolders"
-msgstr "Keresés sikertelen"
+msgstr "Almappák keresése"
 
 #: src/summary_search.c:392
-#, fuzzy
 msgid "_Save as search folder"
-msgstr "Mentés a vázlat mappába"
+msgstr "_Mentés, mint keresési mappa"
 
 #: src/summary_search.c:542
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s ..."
-msgstr "%s mappa átvizsgálása..."
+msgstr "%s keresése..."
 
 #: src/summary_search.c:570
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s (%d / %d)..."
-msgstr "Szűrés..."
+msgstr "%s keresése (%d / %d)..."
 
 #: src/summary_search.c:649 src/summaryview.c:1920
 msgid "(No Date)"
 msgstr "(Nincs Dátum)"
 
 #: src/summary_search.c:831
-#, fuzzy
 msgid "Save as search folder"
-msgstr "Mentés a vázlat mappába"
+msgstr "Mentés, mint keresési mappa"
 
 #: src/summary_search.c:852
 msgid "Location:"
-msgstr ""
+msgstr "Hely:"
 
 #: src/summary_search.c:867
-#, fuzzy
 msgid "Folder name:"
-msgstr "Fájlnév"
+msgstr "Mappanév:"
 
 #: src/summaryview.c:394
 msgid "/Repl_y to"
@@ -6162,29 +6143,24 @@ msgid "/Add sender to address boo_k..."
 msgstr "/Küldő hozzáadása a cím_jegyzékhez..."
 
 #: src/summaryview.c:422
-#, fuzzy
 msgid "/Create f_ilter rule"
-msgstr "/_Eszközök/_Szűrési szabályok"
+msgstr "/Szűrési szabály _létrehozása"
 
 #: src/summaryview.c:423
-#, fuzzy
 msgid "/Create f_ilter rule/_Automatically"
-msgstr "/_Eszközök/_Szűrési szabályok/_Automatikusan"
+msgstr "/_Szűrési szabály _létrehozása/_Automatikusan"
 
 #: src/summaryview.c:425
-#, fuzzy
 msgid "/Create f_ilter rule/by _From"
-msgstr "/_Eszközök/_Szűrési szabályok/_Feladó alapján"
+msgstr "/Szűrési szabály _létrehozása/_Feladó alapján"
 
 #: src/summaryview.c:427
-#, fuzzy
 msgid "/Create f_ilter rule/by _To"
-msgstr "/_Eszközök/_Szűrési szabályok/_Címzett alapján"
+msgstr "/Szűrési szabály létrehozása/_Címzett alapján"
 
 #: src/summaryview.c:429
-#, fuzzy
 msgid "/Create f_ilter rule/by _Subject"
-msgstr "/_Eszközök/_Szűrési szabályok/_Tárgy alapján"
+msgstr "/Szűrési szabály _létrehozása/_Tárgy alapján"
 
 #: src/summaryview.c:435
 msgid "/_View/_Source"
@@ -6405,9 +6381,9 @@ msgid "Unthreading..."
 msgstr "Üzenetfolyam lebontás..."
 
 #: src/summaryview.c:3925 src/summaryview.c:3981
-#, fuzzy, c-format
+#, c-format
 msgid "Filtering (%d / %d)..."
-msgstr "Szűrés..."
+msgstr "Szűrés (%d / %d)..."
 
 #: src/summaryview.c:4030
 msgid "filtering..."
@@ -6478,121 +6454,3 @@ msgstr ""
 #: src/textview.c:2080
 msgid "Fake URL warning"
 msgstr "Hamis URL figyelmeztetés"
-
-#~ msgid "Body:"
-#~ msgstr "Törzs:"
-
-#~ msgid "Find all"
-#~ msgstr "Mindet keres"
-
-#~ msgid "Beginning of list reached; continue from end?"
-#~ msgstr "A lista elejére értem. Folytassam a végéről?"
-
-#~ msgid "End of list reached; continue from beginning?"
-#~ msgstr "A lista végére értem. Folytassam az elejéről?"
-
-#~ msgid "Outgoing encoding"
-#~ msgstr "Kimenők karakterkódolása"
-
-#~ msgid "Quote"
-#~ msgstr "Idézet"
-
-#~ msgid "Font"
-#~ msgstr "Betűkészlet"
-
-#~ msgid " [Edited]"
-#~ msgstr " [Szerkesztett]"
-
-#, fuzzy
-#~ msgid "Fallback encoding"
-#~ msgstr "Fájlnév karakterkódolása"
-
-#~ msgid "Terminated process group id: %d"
-#~ msgstr "A leállított processz csoport azonosítója: %d"
-
-#~ msgid "Temporary file: %s"
-#~ msgstr "Ideiglenes fájl: %s"
-
-#~ msgid "Compose: input from monitoring process\n"
-#~ msgstr "Szerkesztés: bemenet a monitorozó processzből\n"
-
-#~ msgid "Couldn't exec external editor\n"
-#~ msgstr "Külső szerkesztő nem indítható\n"
-
-#~ msgid "Couldn't write to file\n"
-#~ msgstr "Nem lehet a fájlba írni\n"
-
-#~ msgid "Pipe read failed\n"
-#~ msgstr "Hiba történt a csővezeték olvasása közben\n"
-
-#~ msgid ""
-#~ "Filtered messages will be moved to the junk folder and deleted from the "
-#~ "server."
-#~ msgstr ""
-#~ "A megszűrt üzenetek a levélszemét mappába kerülnek át, és a törlésre "
-#~ "kerülnek a szerverről."
-
-#~ msgid ""
-#~ "Enter the print command line:\n"
-#~ "(`%s' will be replaced with file name)"
-#~ msgstr ""
-#~ "Adja meg a nyomtatási parancsot:\n"
-#~ "(`%s' helyére a fájlnév kerül)"
-
-#~ msgid ""
-#~ "First, you have to set the location of mailbox.\n"
-#~ "You can use existing mailbox in MH format\n"
-#~ "if you have the one.\n"
-#~ "If you're not sure, just select OK."
-#~ msgstr ""
-#~ "Először a postaláda helyét kell megadni!\n"
-#~ "Használhat egy létező MH formátumú postaládát is.\n"
-#~ "Ha bizonytalan, válassza az OK-t!"
-
-#~ msgid ""
-#~ "Select the preset of key bindings.\n"
-#~ "You can also modify each menu's shortcuts by pressing\n"
-#~ "any key(s) when placing the mouse pointer on the item."
-#~ msgstr ""
-#~ "Billentyű hozzárendelés előválasztó beállítása.\n"
-#~ "Módosíthatod minden menü gyorsbillentyűjét, ha az egérmutatóval\n"
-#~ "rámutatva megnyomod a kívánt billentyűt."
-
-#~ msgid "Compose message%s"
-#~ msgstr "Üzenet írása%s"
-
-#~ msgid "Translate header name (such as `From:', `Subject:')"
-#~ msgstr "Fejléc fordítása (mint `Feladó:', `Tárgy:')"
-
-#~ msgid "Font selection"
-#~ msgstr "Betűtípus választás"
-
-#~ msgid "Empty messages in all trash?"
-#~ msgstr "Minden üzenet törlése a kukából?"
-
-#~ msgid "Yes"
-#~ msgstr "Igen"
-
-#~ msgid "+No"
-#~ msgstr "+Nem"
-
-#~ msgid "Discard message"
-#~ msgstr "Üzenet elvetése"
-
-#~ msgid "Discard"
-#~ msgstr "Elvet"
-
-#~ msgid "to Draft"
-#~ msgstr "Vázlatok közé"
-
-#~ msgid "can't write headers\n"
-#~ msgstr "fejléc nem írható\n"
-
-#~ msgid "External program"
-#~ msgstr "Külső program"
-
-#~ msgid "Local spool"
-#~ msgstr "Helyi tároló"
-
-#~ msgid "Sending queued message %d failed.\n"
-#~ msgstr "%d üzenet küldése sikertelen a tárolóból.\n"
