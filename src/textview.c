@@ -865,6 +865,18 @@ static gchar *make_uri_string(const gchar *bp, const gchar *ep)
 	return g_strndup(bp, ep - bp);
 }
 
+static gchar *make_http_uri_string(const gchar *bp, const gchar *ep)
+{
+	gchar *tmp;
+	gchar *result;
+
+	tmp = g_strndup(bp, ep - bp);
+	result = g_strconcat("http://", tmp, NULL);
+	g_free(tmp);
+
+	return result;
+}
+
 /* valid mail address characters */
 #define IS_RFC822_CHAR(ch) \
 	(isascii(ch) && \
@@ -983,7 +995,7 @@ static void textview_make_clickable_parts(TextView *textview,
 		{"http://",  strcasestr, get_uri_part,   make_uri_string},
 		{"https://", strcasestr, get_uri_part,   make_uri_string},
 		{"ftp://",   strcasestr, get_uri_part,   make_uri_string},
-		{"www.",     strcasestr, get_uri_part,   make_uri_string},
+		{"www.",     strcasestr, get_uri_part,   make_http_uri_string},
 		{"mailto:",  strcasestr, get_uri_part,   make_uri_string},
 		{"@",        strcasestr, get_email_part, make_email_string}
 	};
