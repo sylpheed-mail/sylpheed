@@ -102,6 +102,9 @@ static gint    virtual_close		(Folder		*folder,
 static gint    virtual_scan_folder	(Folder		*folder,
 					 FolderItem	*item);
 
+static gint    virtual_remove_folder	(Folder		*folder,
+					 FolderItem	*item);
+
 static FolderClass virtual_class =
 {
 	F_VIRTUAL,
@@ -131,7 +134,7 @@ static FolderClass virtual_class =
 	NULL,
 	NULL,
 	NULL,
-	NULL,
+	virtual_remove_folder,
 };
 
 
@@ -526,6 +529,24 @@ static gint virtual_close(Folder *folder, FolderItem *item)
 
 static gint virtual_scan_folder(Folder *folder, FolderItem *item)
 {
-	/* do search */
+	return 0;
+}
+
+static gint virtual_remove_folder(Folder *folder, FolderItem *item)
+{
+	gchar *path;
+
+	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item->stype == F_VIRTUAL, -1);
+
+	path = folder_item_get_path(item);
+	if (remove_dir_recursive(path) < 0) {
+		g_warning("can't remove directory '%s'\n", path);
+		g_free(path);
+		return -1;
+	}
+
+	g_free(path);
+	folder_item_remove(item);
 	return 0;
 }

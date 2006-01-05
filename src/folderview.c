@@ -65,6 +65,7 @@
 #include "account_dialog.h"
 #include "folder.h"
 #include "inc.h"
+#include "virtual.h"
 
 enum
 {
@@ -2291,13 +2292,23 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 
 	name = trim_string(item->name, 32);
 	AUTORELEASE_STR(name, {g_free(name); gtk_tree_path_free(sel_path); return;});
-	message = g_strdup_printf
-		(_("All folders and messages under `%s' will be permanently deleted.\n"
-		   "Recovery will not be possible.\n\n"
-		   "Do you really want to delete?"), name);
-	avalue = alertpanel_full(_("Delete folder"), message,
-				 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
-				 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+	if (item->stype == F_VIRTUAL) {
+		message = g_strdup_printf
+			(_("The search folder '%s' will be deleted.\n"
+			   "The real messages are not deleted.\n"
+			   "Really delete it?"), name);
+		avalue = alertpanel_full(_("Delete search folder"), message,
+					 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+	} else {
+		message = g_strdup_printf
+			(_("All folders and messages under '%s' will be permanently deleted.\n"
+			   "Recovery will not be possible.\n\n"
+			   "Do you really want to delete?"), name);
+		avalue = alertpanel_full(_("Delete folder"), message,
+					 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
+					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+	}
 	g_free(message);
 	if (avalue != G_ALERTDEFAULT) {
 		gtk_tree_path_free(sel_path);
@@ -2321,8 +2332,15 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 	gtk_tree_path_free(open_path);
 	gtk_tree_path_free(sel_path);
 
-	if (folder->klass->remove_folder(folder, item) < 0) {
-		alertpanel_error(_("Can't remove the folder `%s'."), name);
+	if (item->stype == F_VIRTUAL) {
+		if (virtual_get_class()->remove_folder(folder, item) < 0) {
+			alertpanel_error(_("Can't remove the folder '%s'."),
+					 name);
+			g_free(old_id);
+			return;
+		}
+	} else if (folder->klass->remove_folder(folder, item) < 0) {
+		alertpanel_error(_("Can't remove the folder '%s'."), name);
 		g_free(old_id);
 		return;
 	}
@@ -2590,6 +2608,11 @@ static void folderview_rm_news_group_cb(FolderView *folderview, guint action,
 	item = folderview_get_selected_item(folderview);
 	if (!item)
 		return;
+
+	if (item->stype == F_VIRTUAL) {
+		folderview_delete_folder_cb(folderview, 0, widget);
+		return;
+	}
 
 	g_return_if_fail(item->folder != NULL);
 	g_return_if_fail(FOLDER_TYPE(item->folder) == F_NEWS);
