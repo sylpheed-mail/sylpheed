@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-05 16:37+0900\n"
+"POT-Creation-Date: 2006-01-06 18:23+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1047,7 +1047,7 @@ msgstr ""
 "`%s' 内のすべてのフォルダとアドレスを削除してもいいですか?\n"
 "フォルダのみを削除する場合、アドレスは親フォルダに移動します。"
 
-#: src/addressbook.c:1674 src/folderview.c:2308
+#: src/addressbook.c:1674 src/folderview.c:2307
 msgid "Delete folder"
 msgstr "フォルダの削除"
 
@@ -1179,7 +1179,7 @@ msgstr "グループ"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3152 src/folderview.c:358 src/prefs_account_dialog.c:1687
-#: src/summary_search.c:367
+#: src/summary_search.c:370
 msgid "Folder"
 msgstr "フォルダ"
 
@@ -1572,7 +1572,7 @@ msgstr "メッセージ: %s"
 msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
-#: src/compose.c:2475 src/headerview.c:195 src/summary_search.c:640
+#: src/compose.c:2475 src/headerview.c:195 src/summary_search.c:625
 #: src/summaryview.c:1979
 msgid "(No Subject)"
 msgstr "(件名なし)"
@@ -2206,7 +2206,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "フォルダ名に `%c' を含むことはできません。"
 
 #: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
-#: src/summary_search.c:989
+#: src/summary_search.c:985
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "フォルダ `%s' はすでに存在します。"
@@ -2365,19 +2365,17 @@ msgstr "フォルダ `%s' を移動できません。"
 #: src/folderview.c:2297
 #, c-format
 msgid ""
-"The search folder '%s' will be deleted.\n"
-"The real messages are not deleted.\n"
-"Really delete it?"
+"Delete the search folder '%s' ?\n"
+"The real messages are not deleted."
 msgstr ""
-"検索フォルダ '%s' は削除されます。\n"
-"実際のメッセージは削除されません。\n"
-"本当に削除しますか?"
+"検索フォルダ '%s' を削除しますか?\n"
+"実際のメッセージは削除されません。"
 
-#: src/folderview.c:2300
+#: src/folderview.c:2299
 msgid "Delete search folder"
 msgstr "検索フォルダの削除"
 
-#: src/folderview.c:2305
+#: src/folderview.c:2304
 #, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2390,20 +2388,20 @@ msgstr ""
 "\n"
 "本当に削除してもいいですか?"
 
-#: src/folderview.c:2337 src/folderview.c:2343
+#: src/folderview.c:2336 src/folderview.c:2342
 #, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "フォルダ '%s' を削除できません。"
 
-#: src/folderview.c:2379
+#: src/folderview.c:2378
 msgid "Empty trash"
 msgstr "ごみ箱を空にする"
 
-#: src/folderview.c:2380
+#: src/folderview.c:2379
 msgid "Delete all messages in the trash folder?"
 msgstr "ごみ箱の中のメッセージをすべて削除しますか?"
 
-#: src/folderview.c:2419
+#: src/folderview.c:2418
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2412,34 +2410,34 @@ msgstr ""
 "本当にメールボックス `%s' を削除しますか?\n"
 "(メッセージはディスクからは削除されません)"
 
-#: src/folderview.c:2421
+#: src/folderview.c:2420
 msgid "Remove mailbox"
 msgstr "メールボックスの削除"
 
-#: src/folderview.c:2471
+#: src/folderview.c:2470
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "本当にIMAP4アカウント `%s' を削除しますか?"
 
-#: src/folderview.c:2472
+#: src/folderview.c:2471
 msgid "Delete IMAP4 account"
 msgstr "IMAP4アカウントの削除"
 
-#: src/folderview.c:2625
+#: src/folderview.c:2624
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "本当にニュースグループ `%s' を削除しますか?"
 
-#: src/folderview.c:2626
+#: src/folderview.c:2625
 msgid "Delete newsgroup"
 msgstr "ニュースグループの削除"
 
-#: src/folderview.c:2676
+#: src/folderview.c:2675
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "本当にニュースアカウント `%s' を削除しますか?"
 
-#: src/folderview.c:2677
+#: src/folderview.c:2676
 msgid "Delete news account"
 msgstr "ニュースアカウントの削除"
 
@@ -2455,7 +2453,7 @@ msgstr "件名:"
 msgid "Creating header view...\n"
 msgstr "ヘッダビューを作成中...\n"
 
-#: src/headerview.c:180 src/summary_search.c:641 src/summaryview.c:1982
+#: src/headerview.c:180 src/summary_search.c:626 src/summaryview.c:1982
 msgid "(No From)"
 msgstr "(差出人不明)"
 
@@ -3724,7 +3722,7 @@ msgstr "現在のメッセージ内を検索"
 msgid "Find text:"
 msgstr "検索文字列:"
 
-#: src/message_search.c:141 src/summary_search.c:323
+#: src/message_search.c:141 src/summary_search.c:326
 msgid "Case sensitive"
 msgstr "大文字/小文字を区別"
 
@@ -5536,23 +5534,23 @@ msgstr "コマンドが指定されていません。"
 msgid "Destination folder is not specified."
 msgstr "移動先のフォルダが指定されていません。"
 
-#: src/prefs_filter_edit.c:1791
-msgid "Rule name is not specified."
-msgstr "ルール名が指定されていません。"
-
-#: src/prefs_filter_edit.c:1812 src/summary_search.c:466
+#: src/prefs_filter_edit.c:1795
 msgid "Invalid condition exists."
 msgstr "無効な条件が存在します。"
 
-#: src/prefs_filter_edit.c:1828
+#: src/prefs_filter_edit.c:1818
+msgid "Rule name is not specified."
+msgstr "ルール名が指定されていません。"
+
+#: src/prefs_filter_edit.c:1844
 msgid "Invalid action exists."
 msgstr "無効なアクションが存在します。"
 
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1853
 msgid "Condition not exist."
 msgstr "条件が存在しません。"
 
-#: src/prefs_filter_edit.c:1839
+#: src/prefs_filter_edit.c:1855
 msgid "Action not exist."
 msgstr "アクションが存在しません。"
 
@@ -5602,19 +5600,19 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:368
+#: src/prefs_summary_column.c:73 src/summary_search.c:371
 #: src/summaryview.c:4567
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:369
+#: src/prefs_summary_column.c:74 src/summary_search.c:372
 #: src/summaryview.c:4570
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:370
+#: src/prefs_summary_column.c:75 src/summary_search.c:373
 #: src/summaryview.c:4572
 msgid "Date"
 msgstr "日付"
@@ -6007,7 +6005,7 @@ msgstr "ニュースグループリストを取得中..."
 msgid "Can't retrieve newsgroup list."
 msgstr "ニュースグループリストを取得できません。"
 
-#: src/subscribedialog.c:523 src/summary_search.c:518 src/summaryview.c:767
+#: src/subscribedialog.c:523 src/summary_search.c:503 src/summaryview.c:767
 msgid "Done."
 msgstr "完了."
 
@@ -6016,53 +6014,53 @@ msgstr "完了."
 msgid "%d newsgroups received (%s read)"
 msgstr "%d ニュースグループを受信 (%s 受信)"
 
-#: src/summary_search.c:231
+#: src/summary_search.c:234
 msgid "Search messages"
 msgstr "メッセージを検索"
 
-#: src/summary_search.c:254
+#: src/summary_search.c:257
 msgid "Match any of the following"
 msgstr "次の条件のいずれかが該当"
 
-#: src/summary_search.c:256
+#: src/summary_search.c:259
 msgid "Match all of the following"
 msgstr "次の条件のすべてが該当"
 
-#: src/summary_search.c:300
+#: src/summary_search.c:303
 msgid "Folder:"
 msgstr "フォルダ:"
 
-#: src/summary_search.c:318
+#: src/summary_search.c:321
 msgid "Search subfolders"
 msgstr "サブフォルダも検索"
 
-#: src/summary_search.c:392
+#: src/summary_search.c:395
 msgid "_Save as search folder"
 msgstr "検索フォルダとして保存(_S)"
 
-#: src/summary_search.c:542
+#: src/summary_search.c:527
 #, c-format
 msgid "Searching %s ..."
 msgstr "%s を検索中..."
 
-#: src/summary_search.c:570
+#: src/summary_search.c:555
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "%s を検索中 (%d / %d)..."
 
-#: src/summary_search.c:649 src/summaryview.c:1920
+#: src/summary_search.c:634 src/summaryview.c:1920
 msgid "(No Date)"
 msgstr "(日付なし)"
 
-#: src/summary_search.c:831
+#: src/summary_search.c:823
 msgid "Save as search folder"
 msgstr "検索フォルダとして保存"
 
-#: src/summary_search.c:852
+#: src/summary_search.c:844
 msgid "Location:"
 msgstr "場所:"
 
-#: src/summary_search.c:867
+#: src/summary_search.c:859
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
@@ -6403,31 +6401,31 @@ msgstr "テキストビューを作成中...\n"
 msgid "This message can't be displayed.\n"
 msgstr "このメッセージは表示できません。\n"
 
-#: src/textview.c:1907
+#: src/textview.c:1919
 msgid "Sa_ve this image as..."
 msgstr "画像を保存(_V)..."
 
-#: src/textview.c:1923
+#: src/textview.c:1935
 msgid "Compose _new message"
 msgstr "新規メッセージを作成(_N)"
 
-#: src/textview.c:1925
+#: src/textview.c:1937
 msgid "Add to address _book..."
 msgstr "アドレス帳に追加(_B)..."
 
-#: src/textview.c:1927
+#: src/textview.c:1939
 msgid "Copy this add_ress"
 msgstr "アドレスをコピー(_R)"
 
-#: src/textview.c:1930
+#: src/textview.c:1942
 msgid "_Open with Web browser"
 msgstr "Webブラウザで開く(_O)"
 
-#: src/textview.c:1932
+#: src/textview.c:1944
 msgid "Copy this _link"
 msgstr "リンクをコピー(_L)"
 
-#: src/textview.c:2075
+#: src/textview.c:2087
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6440,6 +6438,6 @@ msgstr ""
 "\n"
 "とにかく開きますか?"
 
-#: src/textview.c:2080
+#: src/textview.c:2092
 msgid "Fake URL warning"
 msgstr "偽装URLの警告"

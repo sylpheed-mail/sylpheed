@@ -2294,9 +2294,8 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 	AUTORELEASE_STR(name, {g_free(name); gtk_tree_path_free(sel_path); return;});
 	if (item->stype == F_VIRTUAL) {
 		message = g_strdup_printf
-			(_("The search folder '%s' will be deleted.\n"
-			   "The real messages are not deleted.\n"
-			   "Really delete it?"), name);
+			(_("Delete the search folder '%s' ?\n"
+			   "The real messages are not deleted."), name);
 		avalue = alertpanel_full(_("Delete search folder"), message,
 					 ALERT_WARNING, G_ALERTALTERNATE, FALSE,
 					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);

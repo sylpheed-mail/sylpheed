@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-05 16:37+0900\n"
+"POT-Creation-Date: 2006-01-06 18:23+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -1052,7 +1052,7 @@ msgstr ""
 "Ali res želite izbrisati mapo IN vse naslove v '%s' ? \n"
 "Če izbrišete samo mapo, se bodo vsi naslovi prestavili v starševsko mapo."
 
-#: src/addressbook.c:1674 src/folderview.c:2308
+#: src/addressbook.c:1674 src/folderview.c:2307
 msgid "Delete folder"
 msgstr "Izbriši mapo"
 
@@ -1187,7 +1187,7 @@ msgstr "Skupina"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3152 src/folderview.c:358 src/prefs_account_dialog.c:1687
-#: src/summary_search.c:367
+#: src/summary_search.c:370
 msgid "Folder"
 msgstr "Mapa"
 
@@ -1615,7 +1615,7 @@ msgstr "Sporočilo: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Ne morem dobiti dela večdelnega sporočila."
 
-#: src/compose.c:2475 src/headerview.c:195 src/summary_search.c:640
+#: src/compose.c:2475 src/headerview.c:195 src/summary_search.c:625
 #: src/summaryview.c:1979
 msgid "(No Subject)"
 msgstr "(Brez zadeve)"
@@ -2256,7 +2256,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "Znaka '%c' ne more biti v imenu mape."
 
 #: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
-#: src/summary_search.c:989
+#: src/summary_search.c:985
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Mapa '%s' že obstaja."
@@ -2418,19 +2418,20 @@ msgid "Can't move the folder `%s'."
 msgstr "Ne morem odstraniti mape '%s'"
 
 #: src/folderview.c:2297
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"The search folder '%s' will be deleted.\n"
-"The real messages are not deleted.\n"
-"Really delete it?"
+"Delete the search folder '%s' ?\n"
+"The real messages are not deleted."
 msgstr ""
+"Ali naj res odstranim poštni predal '%s' ?\n"
+"(Sporočila se NE bodo izbrisala z diska)"
 
-#: src/folderview.c:2300
+#: src/folderview.c:2299
 #, fuzzy
 msgid "Delete search folder"
 msgstr "Izbriši mapo"
 
-#: src/folderview.c:2305
+#: src/folderview.c:2304
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2441,21 +2442,21 @@ msgstr ""
 "Vse mape in sporočila pod '%s' bodo izbrisana.\n"
 "Ali jih res želite izbrisati?"
 
-#: src/folderview.c:2337 src/folderview.c:2343
+#: src/folderview.c:2336 src/folderview.c:2342
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Ne morem odstraniti mape '%s'"
 
-#: src/folderview.c:2379
+#: src/folderview.c:2378
 msgid "Empty trash"
 msgstr "Izprazni smetnjak"
 
-#: src/folderview.c:2380
+#: src/folderview.c:2379
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Izbrišem vsa sporočila v smetnjaku?"
 
-#: src/folderview.c:2419
+#: src/folderview.c:2418
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2464,34 +2465,34 @@ msgstr ""
 "Ali naj res odstranim poštni predal '%s' ?\n"
 "(Sporočila se NE bodo izbrisala z diska)"
 
-#: src/folderview.c:2421
+#: src/folderview.c:2420
 msgid "Remove mailbox"
 msgstr "Odstrani poštni predal"
 
-#: src/folderview.c:2471
+#: src/folderview.c:2470
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Ali naj res izbrišem račun IMAP4 '%s'?"
 
-#: src/folderview.c:2472
+#: src/folderview.c:2471
 msgid "Delete IMAP4 account"
 msgstr "Izbriši račun IMAP4"
 
-#: src/folderview.c:2625
+#: src/folderview.c:2624
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Ali naj res izbrišem novičarsko skupino '%s'?"
 
-#: src/folderview.c:2626
+#: src/folderview.c:2625
 msgid "Delete newsgroup"
 msgstr "Izbriši novičarsko skupino"
 
-#: src/folderview.c:2676
+#: src/folderview.c:2675
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Ali naj res izbrišem novičarski račun '%s'?"
 
-#: src/folderview.c:2677
+#: src/folderview.c:2676
 msgid "Delete news account"
 msgstr "Izbriši novičarski račun"
 
@@ -2507,7 +2508,7 @@ msgstr "Zadeva:"
 msgid "Creating header view...\n"
 msgstr "Delam gledanje zaglavja...\n"
 
-#: src/headerview.c:180 src/summary_search.c:641 src/summaryview.c:1982
+#: src/headerview.c:180 src/summary_search.c:626 src/summaryview.c:1982
 msgid "(No From)"
 msgstr "(Brez pošiljatelja)"
 
@@ -3804,7 +3805,7 @@ msgstr "Poišči v trenutnem sporočilu"
 msgid "Find text:"
 msgstr "Poišči besedilo:"
 
-#: src/message_search.c:141 src/summary_search.c:323
+#: src/message_search.c:141 src/summary_search.c:326
 msgid "Case sensitive"
 msgstr "Razlikuj velike in male črke"
 
@@ -5681,25 +5682,25 @@ msgstr "Ukazna vrstica ni nastavljena."
 msgid "Destination folder is not specified."
 msgstr "Cilj ni nastavljen."
 
-#: src/prefs_filter_edit.c:1791
+#: src/prefs_filter_edit.c:1795
+msgid "Invalid condition exists."
+msgstr ""
+
+#: src/prefs_filter_edit.c:1818
 #, fuzzy
 msgid "Rule name is not specified."
 msgstr "Naslovnik ni določen."
 
-#: src/prefs_filter_edit.c:1812 src/summary_search.c:466
-msgid "Invalid condition exists."
-msgstr ""
-
-#: src/prefs_filter_edit.c:1828
+#: src/prefs_filter_edit.c:1844
 msgid "Invalid action exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1853
 #, fuzzy
 msgid "Condition not exist."
 msgstr "Ukazna vrstica ni nastavljena."
 
-#: src/prefs_filter_edit.c:1839
+#: src/prefs_filter_edit.c:1855
 #, fuzzy
 msgid "Action not exist."
 msgstr "%s: datoteka ne obstaja\n"
@@ -5752,19 +5753,19 @@ msgid "Attachment"
 msgstr "Priloga"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:368
+#: src/prefs_summary_column.c:73 src/summary_search.c:371
 #: src/summaryview.c:4567
 msgid "Subject"
 msgstr "Zadeva"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:369
+#: src/prefs_summary_column.c:74 src/summary_search.c:372
 #: src/summaryview.c:4570
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:370
+#: src/prefs_summary_column.c:75 src/summary_search.c:373
 #: src/summaryview.c:4572
 msgid "Date"
 msgstr "Datum"
@@ -6157,7 +6158,7 @@ msgstr "Ne morem potegniti seznama novičarskih skupin."
 msgid "Can't retrieve newsgroup list."
 msgstr "Ne morem potegniti seznama novičarskih skupin."
 
-#: src/subscribedialog.c:523 src/summary_search.c:518 src/summaryview.c:767
+#: src/subscribedialog.c:523 src/summary_search.c:503 src/summaryview.c:767
 msgid "Done."
 msgstr "Opravljeno."
 
@@ -6166,58 +6167,58 @@ msgstr "Opravljeno."
 msgid "%d newsgroups received (%s read)"
 msgstr "%d sprejetih novičarskih skupin (%s prebranih)"
 
-#: src/summary_search.c:231
+#: src/summary_search.c:234
 msgid "Search messages"
 msgstr "Iskanje sporočil"
 
-#: src/summary_search.c:254
+#: src/summary_search.c:257
 msgid "Match any of the following"
 msgstr ""
 
-#: src/summary_search.c:256
+#: src/summary_search.c:259
 #, fuzzy
 msgid "Match all of the following"
 msgstr "Samodejno nastavi sledeče naslove"
 
-#: src/summary_search.c:300
+#: src/summary_search.c:303
 #, fuzzy
 msgid "Folder:"
 msgstr "Mapa"
 
-#: src/summary_search.c:318
+#: src/summary_search.c:321
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Iskanje neuspešno"
 
-#: src/summary_search.c:392
+#: src/summary_search.c:395
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Shrani v imenik Draft"
 
-#: src/summary_search.c:542
+#: src/summary_search.c:527
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "Preiskujem mapo %s ..."
 
-#: src/summary_search.c:570
+#: src/summary_search.c:555
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtriram..."
 
-#: src/summary_search.c:649 src/summaryview.c:1920
+#: src/summary_search.c:634 src/summaryview.c:1920
 msgid "(No Date)"
 msgstr "(Brez datuma)"
 
-#: src/summary_search.c:831
+#: src/summary_search.c:823
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Shrani v imenik Draft"
 
-#: src/summary_search.c:852
+#: src/summary_search.c:844
 msgid "Location:"
 msgstr ""
 
-#: src/summary_search.c:867
+#: src/summary_search.c:859
 #, fuzzy
 msgid "Folder name:"
 msgstr "Ime datoteke"
@@ -6565,36 +6566,36 @@ msgstr "Ustvarjam ogled besedila...\n"
 msgid "This message can't be displayed.\n"
 msgstr "sporočilo ne bo sprejeto\n"
 
-#: src/textview.c:1907
+#: src/textview.c:1919
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/_Shrani kot..."
 
-#: src/textview.c:1923
+#: src/textview.c:1935
 #, fuzzy
 msgid "Compose _new message"
 msgstr "Sestavi novo sporočilo"
 
-#: src/textview.c:1925
+#: src/textview.c:1937
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/Doda_j pošiljatelja v adresar"
 
-#: src/textview.c:1927
+#: src/textview.c:1939
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "Skupni naslov"
 
-#: src/textview.c:1930
+#: src/textview.c:1942
 #, fuzzy
 msgid "_Open with Web browser"
 msgstr "Spletni brskalnik"
 
-#: src/textview.c:1932
+#: src/textview.c:1944
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:2075
+#: src/textview.c:2087
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6603,7 +6604,7 @@ msgid ""
 "Open it anyway?"
 msgstr ""
 
-#: src/textview.c:2080
+#: src/textview.c:2092
 msgid "Fake URL warning"
 msgstr ""
 
