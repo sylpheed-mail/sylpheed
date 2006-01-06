@@ -170,4 +170,7 @@ FilterCond *prefs_filter_edit_cond_hbox_to_cond	(CondHBox	*hbox,
 						 gboolean	 case_sens,
 						 gchar	       **error_msg);
 
+GSList *prefs_filter_edit_cond_edit_to_list	(FilterCondEdit	*cond_edit,
+						 gboolean	 case_sens);
+
 #endif /* __PREFS_FILTER_EDIT_H__ */

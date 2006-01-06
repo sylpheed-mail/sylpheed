@@ -1775,6 +1775,33 @@ FilterAction *prefs_filter_edit_action_hbox_to_action(ActionHBox *hbox,
 	return action;
 }
 
+GSList *prefs_filter_edit_cond_edit_to_list(FilterCondEdit *cond_edit,
+					    gboolean case_sens)
+{
+	GSList *cur;
+	FilterCond *cond;
+	GSList *cond_list = NULL;
+
+	for (cur = cond_edit->cond_hbox_list; cur != NULL; cur = cur->next) {
+		CondHBox *hbox = (CondHBox *)cur->data;
+		gchar *error_msg;
+
+		cond = prefs_filter_edit_cond_hbox_to_cond(hbox, case_sens,
+							   &error_msg);
+		if (cond) {
+			cond_list = g_slist_append(cond_list, cond);
+		} else {
+			if (!error_msg)
+				error_msg = _("Invalid condition exists.");
+			alertpanel_error("%s", error_msg);
+			filter_cond_list_free(cond_list);
+			return NULL;
+		}
+	}
+
+	return cond_list;
+}
+
 static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 {
 	FilterRule *rule = NULL;
@@ -1798,21 +1825,10 @@ static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 	bool_op = GPOINTER_TO_INT
 		(g_object_get_data(G_OBJECT(bool_op_menuitem), MENU_VAL_ID));
 
-	for (cur = rule_edit_window.cond_edit.cond_hbox_list; cur != NULL;
-	     cur = cur->next) {
-		CondHBox *hbox = (CondHBox *)cur->data;
-		FilterCond *cond;
-
-		cond = prefs_filter_edit_cond_hbox_to_cond(hbox, FALSE,
-							   &error_msg);
-		if (cond)
-			cond_list = g_slist_append(cond_list, cond);
-		else {
-			if (!error_msg)
-				error_msg = _("Invalid condition exists.");
-			goto error;
-		}
-	}
+	cond_list = prefs_filter_edit_cond_edit_to_list
+		(&rule_edit_window.cond_edit, FALSE);
+	if (!cond_list)
+		return NULL;
 
 	for (cur = rule_edit_window.action_hbox_list; cur != NULL;
 	     cur = cur->next) {

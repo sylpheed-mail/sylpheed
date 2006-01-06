@@ -433,10 +433,8 @@ static FilterRule *summary_search_dialog_to_rule(const gchar *name,
 	FilterBoolOp bool_op = FLT_OR;
 	gboolean recursive;
 	gboolean case_sens;
-	GSList *cond_list = NULL;
-	FilterCond *cond;
+	GSList *cond_list;
 	FilterRule *rule;
-	GSList *cur;
 
 	id = gtk_entry_get_text(GTK_ENTRY(search_window.folder_entry));
 	item_ = folder_find_item_from_identifier(id);
@@ -452,24 +450,8 @@ static FilterRule *summary_search_dialog_to_rule(const gchar *name,
 	case_sens = gtk_toggle_button_get_active
 		(GTK_TOGGLE_BUTTON(search_window.case_checkbtn));
 
-	for (cur = search_window.cond_edit->cond_hbox_list; cur != NULL;
-	     cur = cur->next) {
-		CondHBox *hbox = (CondHBox *)cur->data;
-		gchar *error_msg;
-
-		cond = prefs_filter_edit_cond_hbox_to_cond(hbox, case_sens,
-							   &error_msg);
-		if (cond) {
-			cond_list = g_slist_append(cond_list, cond);
-		} else {
-			if (!error_msg)
-				error_msg = _("Invalid condition exists.");
-			alertpanel_error("%s", error_msg);
-			filter_cond_list_free(cond_list);
-			return NULL;
-		}
-	}
-
+	cond_list = prefs_filter_edit_cond_edit_to_list(search_window.cond_edit,
+							case_sens);
 	if (!cond_list)
 		return NULL;
 
