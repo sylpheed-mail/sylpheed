@@ -32,6 +32,7 @@ sylpheed_SOURCES = \
 	prefs_summary_column.c prefs_summary_column.h \
 	prefs_template.c prefs_template.h \
 	prefs_actions.c prefs_actions.h \
+	prefs_search_folder.c prefs_search_folder.h \
 	account_dialog.c account_dialog.h \
 	template.c template.h \
 	addressbook.c addressbook.h \

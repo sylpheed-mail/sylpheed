@@ -102,8 +102,6 @@ static void prefs_filter_edit_remove_cond_hbox	(FilterCondEdit	*cond_edit,
 						 CondHBox	*hbox);
 static void prefs_filter_edit_remove_action_hbox(ActionHBox	*hbox);
 
-static void prefs_filter_edit_add_rule_cond	(FilterCondEdit	*cond_edit,
-						 FilterRule	*rule);
 static void prefs_filter_edit_add_rule_action	(FilterRule	*rule);
 
 static void prefs_filter_edit_set_cond_header_menu
@@ -1233,8 +1231,8 @@ static void prefs_filter_edit_remove_action_hbox(ActionHBox *hbox)
 	}
 }
 
-static void prefs_filter_edit_add_rule_cond(FilterCondEdit *cond_edit,
-					    FilterRule *rule)
+void prefs_filter_edit_add_rule_cond(FilterCondEdit *cond_edit,
+				     FilterRule *rule)
 {
 	CondHBox *hbox;
 	GSList *cur;

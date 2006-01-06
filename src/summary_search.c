@@ -49,7 +49,6 @@
 #include <string.h>
 
 #include "summary_search.h"
-#include "prefs_filter_edit.h"
 #include "summaryview.h"
 #include "messageview.h"
 #include "mainwindow.h"

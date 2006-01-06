@@ -60,6 +60,7 @@
 #include "prefs_common.h"
 #include "prefs_account.h"
 #include "prefs_folder_item.h"
+#include "prefs_search_folder.h"
 #include "filter.h"
 #include "account.h"
 #include "account_dialog.h"
@@ -1602,7 +1603,6 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		}
 		if (item->stype == F_VIRTUAL) {
 			rename_folder = delete_folder = TRUE;
-			search_folder = FALSE;
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||
 		    FOLDER_TYPE(folder) == F_NEWS) {
@@ -2714,8 +2714,12 @@ static void folderview_search_cb(FolderView *folderview, guint action,
 	FolderItem *item;
 
 	item = folderview_get_selected_item(folderview);
-	if (item)
-		summary_search(item);
+	if (item) {
+		if (item->stype == F_VIRTUAL)
+			prefs_search_folder_open(item);
+		else
+			summary_search(item);
+	}
 }
 
 static void folderview_property_cb(FolderView *folderview, guint action,
