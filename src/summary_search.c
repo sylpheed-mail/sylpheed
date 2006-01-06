@@ -114,6 +114,9 @@ typedef struct {
 	GtkWidget *folder_entry;
 	GtkWidget *name_entry;
 
+	GtkWidget *ok_btn;
+	GtkWidget *cancel_btn;
+
 	gboolean cancelled;
 	gboolean finished;
 } SummarySearchSaveDialog;
@@ -776,6 +779,13 @@ static void summary_search_save_dialog_select_folder(GtkButton *button,
 	}
 }
 
+static void summary_search_save_activated(GtkEditable *editable, gpointer data)
+{
+	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+
+	gtk_button_clicked(GTK_BUTTON(dialog->ok_btn));
+}
+
 static void summary_search_save_ok(GtkButton *button, gpointer data)
 {
 	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
@@ -851,6 +861,8 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 
 	name_entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(hbox), name_entry, TRUE, TRUE, 0);
+	g_signal_connect(G_OBJECT(name_entry), "activate",
+			 G_CALLBACK(summary_search_save_activated), dialog);
 
 	confirm_area = gtk_hbox_new(FALSE, 12);
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
@@ -874,6 +886,8 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	dialog->window = window;
 	dialog->folder_entry = folder_entry;
 	dialog->name_entry = name_entry;
+	dialog->ok_btn = ok_btn;
+	dialog->cancel_btn = cancel_btn;
 	dialog->cancelled = FALSE;
 	dialog->finished = FALSE;
 

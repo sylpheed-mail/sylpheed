@@ -1730,7 +1730,7 @@ static void summary_status_show(SummaryView *summaryview)
 	gchar *spc;
 	GList *rowlist, *cur;
 	guint n_selected = 0;
-	off_t sel_size = 0;
+	gint64 sel_size = 0;
 	MsgInfo *msginfo;
 
 	if (!summaryview->folder_item) {
