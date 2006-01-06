@@ -174,7 +174,7 @@ guint sinfo_hash(gconstpointer key)
 	h ^= sinfo->msgnum;
 	h ^= (guint)sinfo->size;
 	h ^= (guint)sinfo->mtime;
-	h ^= (guint)sinfo->flags.tmp_flags;
+	/* h ^= (guint)sinfo->flags.tmp_flags; */
 	h ^= (guint)sinfo->flags.perm_flags;
 
 	/* g_print("path: %s, n = %u, hash = %u\n",
@@ -190,7 +190,7 @@ gint sinfo_equal(gconstpointer v, gconstpointer v2)
 
 	return (s1->folder == s2->folder && s1->msgnum == s2->msgnum &&
 		s1->size == s2->size && s1->mtime == s2->mtime &&
-		s1->flags.tmp_flags == s2->flags.tmp_flags &&
+		/* s1->flags.tmp_flags == s2->flags.tmp_flags && */
 		s1->flags.perm_flags == s2->flags.perm_flags);
 }
 
@@ -212,6 +212,7 @@ static GHashTable *virtual_read_search_cache(FolderItem *item)
 	gchar *path, *file;
 	FILE *fp;
 	gchar *id;
+	gint count = 0;
 
 	g_return_val_if_fail(item != NULL, NULL);
 
@@ -257,9 +258,12 @@ static GHashTable *virtual_read_search_cache(FolderItem *item)
 				sinfo->flags = flags;
 				g_hash_table_insert(table, sinfo,
 						    GINT_TO_POINTER(matched));
+				++count;
 			}
 		}
 	}
+
+	debug_print("%d cache items read.\n", count);
 
 	fclose(fp);
 	return table;
@@ -287,7 +291,8 @@ static void virtual_write_search_cache(FILE *fp, FolderItem *item,
 		WRITE_CACHE_DATA_INT(msginfo->msgnum, fp);
 		WRITE_CACHE_DATA_INT(msginfo->size, fp);
 		WRITE_CACHE_DATA_INT(msginfo->mtime, fp);
-		WRITE_CACHE_DATA_INT(msginfo->flags.tmp_flags, fp);
+		WRITE_CACHE_DATA_INT
+			((msginfo->flags.tmp_flags & MSG_CACHED_FLAG_MASK), fp);
 		WRITE_CACHE_DATA_INT(msginfo->flags.perm_flags, fp);
 		WRITE_CACHE_DATA_INT(matched, fp);
 	}
@@ -313,7 +318,7 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 	GSList *cur;
 	FilterInfo fltinfo;
 	gboolean full_headers;
-	gint count = 1, total;
+	gint count = 1, total, ncachehit = 0;
 	GTimeVal tv_prev, tv_cur;
 
 	g_return_val_if_fail(info != NULL, NULL);
@@ -371,10 +376,12 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 				cur->data = NULL;
 				virtual_write_search_cache(info->fp, NULL,
 							   msginfo, matched);
+				++ncachehit;
 				continue;
 			} else if (matched == SCACHE_NOT_MATCHED) {
 				virtual_write_search_cache(info->fp, NULL,
 							   msginfo, matched);
+				++ncachehit;
 				continue;
 			}
 		}
@@ -404,6 +411,8 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 
 		procheader_header_list_destroy(hlist);
 	}
+
+	debug_print("%d cache hits (%d total)\n", ncachehit, total);
 
 	virtual_write_search_cache(info->fp, NULL, NULL, 0);
 	procmsg_msg_list_free(mlist);
@@ -536,7 +545,7 @@ static gint virtual_remove_folder(Folder *folder, FolderItem *item)
 {
 	gchar *path;
 
-	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item != NULL, -1);
 	g_return_val_if_fail(item->stype == F_VIRTUAL, -1);
 
 	path = folder_item_get_path(item);
