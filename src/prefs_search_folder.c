@@ -28,6 +28,7 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkwindow.h>
+#include <gtk/gtkstyle.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkoptionmenu.h>
 #include <gtk/gtkmenuitem.h>
@@ -62,6 +63,8 @@ struct _PrefsSearchFolderDialog
 {
 	PrefsDialog *dialog;
 	FolderItem *item;
+
+	GtkWidget *name_entry;
 
 	GtkWidget *bool_optmenu;
 
@@ -113,7 +116,14 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 {
 	PrefsSearchFolderDialog *new_dialog;
 	PrefsDialog *dialog;
+	gchar *title;
 	GtkWidget *vbox;
+
+	GtkWidget *name_hbox;
+	GtkWidget *name_label;
+	GtkWidget *name_entry;
+	GtkStyle *style;
+
 	GtkWidget *bool_hbox;
 	GtkWidget *bool_optmenu;
 	GtkWidget *bool_menu;
@@ -135,10 +145,12 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 
 	dialog = g_new0(PrefsDialog, 1);
 	prefs_dialog_create(dialog);
+	gtk_widget_hide(dialog->apply_btn);
 
 	gtk_widget_set_size_request(dialog->window, 600, -1);
-	gtk_window_set_title(GTK_WINDOW(dialog->window),
-			     _("Search folder properties"));
+	title = g_strdup_printf(_("%s - Search folder properties"), item->name);
+	gtk_window_set_title(GTK_WINDOW(dialog->window), title);
+	g_free(title);
 	gtk_notebook_set_show_border(GTK_NOTEBOOK(dialog->notebook), FALSE);
 	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(dialog->notebook), FALSE);
 
@@ -154,6 +166,23 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	gtk_widget_show(vbox);
 	gtk_container_add(GTK_CONTAINER(dialog->notebook), vbox);
 
+	name_hbox = gtk_hbox_new(FALSE, 8);
+	gtk_widget_show(name_hbox);
+	gtk_box_pack_start(GTK_BOX(vbox), name_hbox, FALSE, FALSE, 0);
+
+	name_label = gtk_label_new(_("Name:"));
+	gtk_widget_show(name_label);
+	gtk_box_pack_start(GTK_BOX(name_hbox), name_label, FALSE, FALSE, 0);
+
+	name_entry = gtk_entry_new();
+	gtk_widget_show(name_entry);
+	gtk_editable_set_editable(GTK_EDITABLE(name_entry), FALSE);
+	gtk_box_pack_start(GTK_BOX(name_hbox), name_entry, TRUE, TRUE, 0);
+
+	style = gtk_style_copy(gtk_widget_get_style(dialog->window));
+	style->base[GTK_STATE_NORMAL] = style->bg[GTK_STATE_NORMAL];
+	gtk_widget_set_style(name_entry, style);
+	
 	bool_hbox = gtk_hbox_new(FALSE, 12);
 	gtk_widget_show(bool_hbox);
 	gtk_box_pack_start(GTK_BOX(vbox), bool_hbox, FALSE, FALSE, 0);
@@ -181,7 +210,7 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolledwin),
 					      cond_edit->cond_vbox);
 
-	folder_hbox = gtk_hbox_new (FALSE, 8);
+	folder_hbox = gtk_hbox_new(FALSE, 8);
 	gtk_widget_show(folder_hbox);
 	gtk_box_pack_start(GTK_BOX(vbox), folder_hbox, FALSE, FALSE, 0);
 
@@ -222,8 +251,11 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	g_signal_connect(G_OBJECT(dialog->cancel_btn), "clicked",
 			 G_CALLBACK(prefs_search_folder_cancel_cb), new_dialog);
 
+	gtk_widget_grab_focus(dialog->ok_btn);
+
 	new_dialog->dialog = dialog;
 	new_dialog->item = item;
+	new_dialog->name_entry = name_entry;
 	new_dialog->bool_optmenu = bool_optmenu;
 	new_dialog->cond_edit = cond_edit;
 
@@ -255,6 +287,8 @@ static void prefs_search_folder_set_dialog(PrefsSearchFolderDialog *dialog)
 		g_warning("filter rule not found\n");
 		return;
 	}
+
+	gtk_entry_set_text(GTK_ENTRY(dialog->name_entry), dialog->item->name);
 
 	rule = (FilterRule *)flist->data;
 
