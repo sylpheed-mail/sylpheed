@@ -217,9 +217,10 @@ static GHashTable *virtual_read_search_cache(FolderItem *item)
 	g_return_val_if_fail(item != NULL, NULL);
 
 	path = folder_item_get_path(item);
-	file = g_strconcat(path, G_DIR_SEPARATOR_S, "search_cache", NULL);
+	file = g_strconcat(path, G_DIR_SEPARATOR_S, SEARCH_CACHE, NULL);
 	debug_print("reading search cache: %s\n", file);
-	fp = procmsg_open_data_file(file, 1, DATA_READ, NULL, 0);
+	fp = procmsg_open_data_file(file, SEARCH_CACHE_VERSION, DATA_READ,
+				    NULL, 0);
 	g_free(file);
 	g_free(path);
 	if (!fp)
@@ -484,8 +485,9 @@ static GSList *virtual_get_msg_list(Folder *folder, FolderItem *item,
 		info.search_cache_table = NULL;
 
 	path = folder_item_get_path(item);
-	cache_file = g_strconcat(path, G_DIR_SEPARATOR_S, "search_cache", NULL);
-	info.fp = procmsg_open_data_file(cache_file, 1, DATA_WRITE, NULL, 0);
+	cache_file = g_strconcat(path, G_DIR_SEPARATOR_S, SEARCH_CACHE, NULL);
+	info.fp = procmsg_open_data_file(cache_file, SEARCH_CACHE_VERSION,
+					 DATA_WRITE, NULL, 0);
 	g_free(cache_file);
 	g_free(path);
 	if (!info.fp)

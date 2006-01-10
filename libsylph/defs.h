@@ -73,8 +73,10 @@
 #define FOLDER_LIST		"folderlist.xml"
 #define CACHE_FILE		".sylpheed_cache"
 #define MARK_FILE		".sylpheed_mark"
+#define SEARCH_CACHE		"search_cache"
 #define CACHE_VERSION		0x21
 #define MARK_VERSION		2
+#define SEARCH_CACHE_VERSION	1
 
 #ifdef G_OS_WIN32
 #  define REMOTE_CMD_PORT	50215

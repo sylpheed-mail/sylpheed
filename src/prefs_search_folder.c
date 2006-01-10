@@ -85,6 +85,10 @@ static gint prefs_search_folder_key_press_cb
 					  GdkEventKey		  *event,
 					  PrefsSearchFolderDialog *dialog);
 
+static void prefs_search_folder_select_folder
+					 (GtkWidget		  *widget,
+					  PrefsSearchFolderDialog *dialog);
+
 static void prefs_search_folder_ok_cb	 (GtkWidget		  *widget,
 					  PrefsSearchFolderDialog *dialog);
 static void prefs_search_folder_apply_cb (GtkWidget		  *widget,
@@ -149,7 +153,6 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	vbox = gtk_vbox_new(FALSE, 6);
 	gtk_widget_show(vbox);
 	gtk_container_add(GTK_CONTAINER(dialog->notebook), vbox);
-	//gtk_container_set_border_width(GTK_CONTAINER(vbox), VBOX_BORDER);
 
 	bool_hbox = gtk_hbox_new(FALSE, 12);
 	gtk_widget_show(bool_hbox);
@@ -209,6 +212,9 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	gtk_box_pack_start(GTK_BOX(checkbtn_hbox), case_checkbtn,
 			   FALSE, FALSE, 0);
 
+	g_signal_connect(G_OBJECT(folder_btn), "clicked",
+			 G_CALLBACK(prefs_search_folder_select_folder),
+			 new_dialog);
 	g_signal_connect(G_OBJECT(dialog->ok_btn), "clicked",
 			 G_CALLBACK(prefs_search_folder_ok_cb), new_dialog);
 	g_signal_connect(G_OBJECT(dialog->apply_btn), "clicked",
@@ -233,10 +239,11 @@ static void prefs_search_folder_set_dialog(PrefsSearchFolderDialog *dialog)
 {
 	GSList *flist;
 	FilterRule *rule;
+	GSList *cur;
 	gchar *path;
 	gchar *rule_file;
-	FolderItem *target;
 	gint index;
+	gboolean case_sens = FALSE;
 
 	path = folder_item_get_path(dialog->item);
 	rule_file = g_strconcat(path, G_DIR_SEPARATOR_S, "filter.xml", NULL);
@@ -250,7 +257,6 @@ static void prefs_search_folder_set_dialog(PrefsSearchFolderDialog *dialog)
 	}
 
 	rule = (FilterRule *)flist->data;
-	target = folder_find_item_from_identifier(rule->target_folder);
 
 	index = menu_find_option_menu_index
 		(GTK_OPTION_MENU(dialog->bool_optmenu),
@@ -259,6 +265,21 @@ static void prefs_search_folder_set_dialog(PrefsSearchFolderDialog *dialog)
 		index = 0;
 	gtk_option_menu_set_history(GTK_OPTION_MENU(dialog->bool_optmenu),
 				    index);
+
+	gtk_entry_set_text(GTK_ENTRY(dialog->folder_entry),
+			   rule->target_folder);
+	gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON(dialog->subfolder_checkbtn),
+		 rule->recursive);
+	for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
+		FilterCond *cond = (FilterCond *)cur->data;
+		if (FLT_IS_CASE_SENS(cond->match_flag)) {
+			case_sens = TRUE;
+			break;
+		}
+	}
+	gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON(dialog->case_checkbtn), case_sens);
 
 	prefs_filter_set_header_list(NULL);
 	prefs_filter_edit_set_header_list(dialog->cond_edit, rule);
@@ -294,6 +315,23 @@ static gint prefs_search_folder_key_press_cb(GtkWidget *widget,
 	return FALSE;
 }
 
+static void prefs_search_folder_select_folder(GtkWidget *widget,
+					      PrefsSearchFolderDialog *dialog)
+{
+	FolderItem *item;
+	gchar *id;
+
+	item = foldersel_folder_sel(NULL, FOLDER_SEL_ALL, NULL);
+	if (!item || item->stype == F_VIRTUAL)
+		return;
+
+	id = folder_item_get_identifier(item);
+	if (id) {
+		gtk_entry_set_text(GTK_ENTRY(dialog->folder_entry), id);
+		g_free(id);
+	}
+}
+
 static void prefs_search_folder_ok_cb(GtkWidget *widget,
 				      PrefsSearchFolderDialog *dialog)
 {
@@ -304,8 +342,55 @@ static void prefs_search_folder_ok_cb(GtkWidget *widget,
 static void prefs_search_folder_apply_cb(GtkWidget *widget,
 					 PrefsSearchFolderDialog *dialog)
 {
-	// create filter rule
-	// delete search cache
+	const gchar *id;
+	FolderItem *item;
+	FilterBoolOp bool_op;
+	gboolean recursive;
+	gboolean case_sens;
+	GSList *cond_list;
+	FilterRule *rule;
+	GSList list;
+	gchar *file;
+	gchar *path;
+
+	id = gtk_entry_get_text(GTK_ENTRY(dialog->folder_entry));
+	item = folder_find_item_from_identifier(id);
+	if (!item)
+		return;
+
+	bool_op = menu_get_option_menu_active_index
+		(GTK_OPTION_MENU(dialog->bool_optmenu));
+	recursive = gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(dialog->subfolder_checkbtn));
+	case_sens = gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(dialog->case_checkbtn));
+
+	cond_list = prefs_filter_edit_cond_edit_to_list(dialog->cond_edit,
+							case_sens);
+	if (!cond_list)
+		return;
+
+	rule = filter_rule_new(dialog->item->name, bool_op, cond_list, NULL);
+	rule->target_folder = g_strdup(id);
+	rule->recursive = recursive;
+	list.data = rule;
+	list.next = NULL;
+
+	path = folder_item_get_path(dialog->item);
+	file = g_strconcat(path, G_DIR_SEPARATOR_S, FILTER_LIST, NULL);
+	filter_write_file(&list, file);
+	g_free(file);
+	file = g_strconcat(path, G_DIR_SEPARATOR_S, FILTER_LIST, ".bak", NULL);
+	if (is_file_exist(file))
+		g_unlink(file);
+	g_free(file);
+	file = g_strconcat(path, G_DIR_SEPARATOR_S, SEARCH_CACHE, NULL);
+	if (is_file_exist(file))
+		g_unlink(file);
+	g_free(file);
+	g_free(path);
+
+	filter_rule_free(rule);
 }
 
 static void prefs_search_folder_cancel_cb(GtkWidget *widget,
