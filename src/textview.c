@@ -834,7 +834,7 @@ static gboolean get_uri_part(const gchar *start, const gchar *scanpos,
 
 	/* find end point of URI */
 	for (ep_ = scanpos; *ep_ != '\0'; ep_++) {
-		if (!isgraph(*(const guchar *)ep_) ||
+		if (!g_ascii_isgraph(*ep_) ||
 		    !isascii(*(const guchar *)ep_) ||
 		    strchr("()<>{}[]\"", *ep_))
 			break;
@@ -846,11 +846,9 @@ static gboolean get_uri_part(const gchar *start, const gchar *scanpos,
 	 * should pass some URI type to this function and decide on that whether
 	 * to perform punctuation stripping */
 
-#define IS_REAL_PUNCT(ch)	(ispunct(ch) && ((ch) != '/')) 
+#define IS_REAL_PUNCT(ch)	(g_ascii_ispunct(ch) && !strchr("/?=", ch)) 
 
-	for (; ep_ - 1 > scanpos + 1 &&
-	       IS_REAL_PUNCT(*(const guchar *)(ep_ - 1));
-	     ep_--)
+	for (; ep_ - 1 > scanpos + 1 && IS_REAL_PUNCT(*(ep_ - 1)); ep_--)
 		;
 
 #undef IS_REAL_PUNCT
