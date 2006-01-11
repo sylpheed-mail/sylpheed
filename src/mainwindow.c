@@ -71,6 +71,7 @@
 #include "prefs_account.h"
 #include "prefs_summary_column.h"
 #include "prefs_template.h"
+#include "prefs_search_folder.h"
 #include "action.h"
 #include "account.h"
 #include "account_dialog.h"
@@ -2801,7 +2802,10 @@ static void search_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		FolderItem *item;
 
 		item = folderview_get_selected_item(mainwin->folderview);
-		summary_search(item);
+		if (item && item->stype == F_VIRTUAL)
+			prefs_search_folder_open(item);
+		else
+			summary_search(item);
 	} else
 		message_search(mainwin->messageview);
 }
