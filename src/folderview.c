@@ -948,6 +948,7 @@ void folderview_check_new(Folder *folder)
 		gtk_tree_model_get(model, &iter,
 				   COL_FOLDER_ITEM, &item, -1);
 		if (!item || !item->path || !item->folder) continue;
+		if (item->stype == F_VIRTUAL) continue;
 		if (item->no_select) continue;
 		if (folder && folder != item->folder) continue;
 		if (!folder && !FOLDER_IS_LOCAL(item->folder)) continue;
