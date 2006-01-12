@@ -2099,10 +2099,11 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 			summaryview->total_size += msginfo->size;
 		}
 	} else {
+		GSList *rev_mlist;
 		GtkTreeIter iter;
 
-		mlist = g_slist_reverse(mlist);
-		for (cur = mlist; cur != NULL; cur = cur->next) {
+		rev_mlist = g_slist_reverse(g_slist_copy(mlist));
+		for (cur = rev_mlist; cur != NULL; cur = cur->next) {
 			msginfo = (MsgInfo *)cur->data;
 
 			gtk_tree_store_prepend(store, &iter, NULL);
@@ -2112,7 +2113,7 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 				summaryview->deleted++;
 			summaryview->total_size += msginfo->size;
 		}
-		/* mlist = g_slist_reverse(mlist); */
+		g_slist_free(rev_mlist);
 	}
 
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
