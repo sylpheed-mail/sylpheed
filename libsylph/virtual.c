@@ -36,6 +36,7 @@
 
 #include "folder.h"
 #include "virtual.h"
+#include "mh.h"
 #include "procmsg.h"
 #include "procheader.h"
 #include "filter.h"
@@ -102,6 +103,9 @@ static gint    virtual_close		(Folder		*folder,
 static gint    virtual_scan_folder	(Folder		*folder,
 					 FolderItem	*item);
 
+static gint    virtual_rename_folder	(Folder		*folder,
+					 FolderItem	*item,
+					 const gchar	*name);
 static gint    virtual_remove_folder	(Folder		*folder,
 					 FolderItem	*item);
 
@@ -132,7 +136,7 @@ static FolderClass virtual_class =
 	virtual_scan_folder,
 
 	NULL,
-	NULL,
+	virtual_rename_folder,
 	NULL,
 	virtual_remove_folder,
 };
@@ -541,6 +545,15 @@ static gint virtual_close(Folder *folder, FolderItem *item)
 static gint virtual_scan_folder(Folder *folder, FolderItem *item)
 {
 	return 0;
+}
+
+static gint virtual_rename_folder(Folder *folder, FolderItem *item,
+				  const gchar *name)
+{
+	g_return_val_if_fail(item != NULL, -1);
+	g_return_val_if_fail(item->stype == F_VIRTUAL, -1);
+
+	return mh_get_class()->rename_folder(folder, item, name);
 }
 
 static gint virtual_remove_folder(Folder *folder, FolderItem *item)

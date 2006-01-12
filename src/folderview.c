@@ -284,6 +284,8 @@ static GtkItemFactoryEntry folderview_news_popup_entries[] =
 	{N_("/Su_bscribe to newsgroup..."),
 					NULL, folderview_new_news_group_cb, 0, NULL},
 	{N_("/_Remove newsgroup"),	NULL, folderview_rm_news_group_cb, 0, NULL},
+	{N_("/_Rename folder..."),	NULL, folderview_rename_folder_cb, 0, NULL},
+	{N_("/_Delete folder"),		NULL, folderview_delete_folder_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/Down_load"),		NULL, folderview_download_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
@@ -1614,7 +1616,8 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||
 		    FOLDER_TYPE(folder) == F_NEWS) {
-			if (item->parent != NULL && item->no_select == FALSE)
+			if (item->parent != NULL && item->no_select == FALSE &&
+			    item->stype != F_VIRTUAL)
 				download_msg = TRUE;
 		}
 	}
@@ -1665,8 +1668,18 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	SET_SENS(ifactory, "/Search messages...", search_folder);
 	SET_SENS(ifactory, "/Edit search condition...", search_folder);
 	SET_SENS(ifactory, "/Properties...", folder_property);
-	SET_SENS(ifactory, "/Subscribe to newsgroup...", new_folder);
-	SET_SENS(ifactory, "/Remove newsgroup", delete_folder);
+
+	if (FOLDER_TYPE(folder) == F_NEWS) {
+		SET_SENS(ifactory, "/Subscribe to newsgroup...", new_folder);
+		SET_SENS(ifactory, "/Remove newsgroup", delete_folder);
+		SET_VISIBILITY(ifactory, "/Remove newsgroup",
+			       item->stype != F_VIRTUAL);
+		SET_VISIBILITY(ifactory, "/Rename folder...",
+			       item->stype == F_VIRTUAL);
+		SET_VISIBILITY(ifactory, "/Delete folder",
+			       item->stype == F_VIRTUAL);
+	}
+
 	SET_VISIBILITY(ifactory, "/Search messages...",
 		       item->stype != F_VIRTUAL);
 	SET_VISIBILITY(ifactory, "/Edit search condition...",
@@ -2000,6 +2013,8 @@ static void folderview_download_cb(FolderView *folderview, guint action,
 	item = folderview_get_selected_item(folderview);
 	if (!item)
 		return;
+	if (item->stype == F_VIRTUAL)
+		return;
 
 	g_return_if_fail(item->folder != NULL);
 
@@ -2171,8 +2186,19 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	Xstrdup_a(old_path, item->path, {g_free(new_folder); return;});
 	old_id = folder_item_get_identifier(item);
 
-	if (item->folder->klass->rename_folder(item->folder, item,
-					       new_folder) < 0) {
+	if (item->stype == F_VIRTUAL) {
+		if (virtual_get_class()->rename_folder(item->folder, item,
+						       new_folder) < 0) {
+			alertpanel_error(_("Can't rename the folder '%s'."),
+					 item->name);
+			g_free(old_id);
+			gtk_tree_path_free(sel_path);
+			return;
+		}
+	} else if (item->folder->klass->rename_folder(item->folder, item,
+						      new_folder) < 0) {
+		alertpanel_error(_("Can't rename the folder '%s'."),
+				 item->name);
 		g_free(old_id);
 		gtk_tree_path_free(sel_path);
 		return;
@@ -2230,15 +2256,8 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 
 	new_parent = foldersel_folder_sel(item->folder, FOLDER_SEL_MOVE_FOLDER,
 					  NULL);
-	if (!new_parent) {
-		gtk_tree_path_free(sel_path);
-		return;
-	}
-	if (new_parent->folder != item->folder) {
-		gtk_tree_path_free(sel_path);
-		return;
-	}
-	if (new_parent == item->parent) {
+	if (!new_parent || new_parent->folder != item->folder ||
+	    new_parent == item->parent || new_parent->stype == F_VIRTUAL) {
 		gtk_tree_path_free(sel_path);
 		return;
 	}
