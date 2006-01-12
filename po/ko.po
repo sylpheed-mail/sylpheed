@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 15:44+0900\n"
+"POT-Creation-Date: 2006-01-12 16:01+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -960,9 +960,9 @@ msgstr "/새 폴더(_F)"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
 #: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
-#: src/folderview.c:264 src/folderview.c:266 src/folderview.c:268
-#: src/folderview.c:273 src/folderview.c:283 src/folderview.c:285
-#: src/folderview.c:289 src/summaryview.c:399 src/summaryview.c:403
+#: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
+#: src/folderview.c:275 src/folderview.c:287 src/folderview.c:289
+#: src/folderview.c:293 src/summaryview.c:399 src/summaryview.c:403
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:420 src/summaryview.c:432 src/summaryview.c:438
 msgid "/---"
@@ -1040,7 +1040,7 @@ msgstr ""
 "`%s'의 모든 주소와 폴더를 삭제할까요 ? \n"
 "폴더만 지울 경우 주소는 그 상위 폴더로 옮겨집니다."
 
-#: src/addressbook.c:1674 src/folderview.c:2307
+#: src/addressbook.c:1674 src/folderview.c:2327
 msgid "Delete folder"
 msgstr "폴더 삭제"
 
@@ -1168,7 +1168,7 @@ msgid "Group"
 msgstr "그룹"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:359 src/prefs_account_dialog.c:1687
+#: src/addressbook.c:3152 src/folderview.c:365 src/prefs_account_dialog.c:1687
 #: src/summary_search.c:369
 msgid "Folder"
 msgstr "폴더"
@@ -1256,8 +1256,8 @@ msgstr "/추가(_A)..."
 msgid "/_Remove"
 msgstr "/삭제(_R)"
 
-#: src/compose.c:509 src/folderview.c:255 src/folderview.c:275
-#: src/folderview.c:291
+#: src/compose.c:509 src/folderview.c:257 src/folderview.c:279
+#: src/folderview.c:297
 #, fuzzy
 msgid "/_Properties..."
 msgstr "/특성(_P)..."
@@ -2035,12 +2035,12 @@ msgstr "폴더 편집"
 msgid "Input the new name of folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2060
-#: src/folderview.c:2066
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2080
+#: src/folderview.c:2086
 msgid "New folder"
 msgstr "새 폴더"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2067
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2087
 msgid "Input the name of new folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
@@ -2208,174 +2208,178 @@ msgstr "스풀 디렉토리"
 msgid "Select folder"
 msgstr "폴더 선택"
 
-#: src/foldersel.c:359 src/folderview.c:1159 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1166 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "받은 편지함"
 
-#: src/foldersel.c:363 src/folderview.c:1165 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1172 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "발송 편지함"
 
-#: src/foldersel.c:367 src/folderview.c:1171 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1178 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "보낼 편지함"
 
-#: src/foldersel.c:371 src/folderview.c:1177 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1184 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "지운 편지함"
 
-#: src/foldersel.c:375 src/folderview.c:1183 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1190 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "임시 보관함"
 
-#: src/foldersel.c:542 src/folderview.c:2064 src/folderview.c:2068
+#: src/foldersel.c:542 src/folderview.c:2084 src/folderview.c:2088
 msgid "NewFolder"
 msgstr "새 폴더"
 
-#: src/foldersel.c:550 src/folderview.c:2076 src/folderview.c:2137
+#: src/foldersel.c:550 src/folderview.c:2096 src/folderview.c:2157
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c'는 폴더 이름에 포함될 수 없습니다."
 
-#: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
+#: src/foldersel.c:560 src/folderview.c:2106 src/folderview.c:2165
 #: src/summary_search.c:984
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "`%s' 폴더가 이미 존재합니다."
 
-#: src/foldersel.c:568 src/folderview.c:2093
+#: src/foldersel.c:568 src/folderview.c:2113
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "`%s' 폴더를 생성할 수가 없습니다."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:242 src/folderview.c:262
 msgid "/Create _new folder..."
 msgstr "/새 폴더 만들기(_n)..."
 
-#: src/folderview.c:243 src/folderview.c:261
+#: src/folderview.c:243 src/folderview.c:263
 msgid "/_Rename folder..."
 msgstr "/폴더 이름 바꾸기(_R)..."
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:244 src/folderview.c:264
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/폴더 이름 바꾸기(_R)..."
 
-#: src/folderview.c:245 src/folderview.c:263
+#: src/folderview.c:245 src/folderview.c:265
 msgid "/_Delete folder"
 msgstr "/폴더 지우기(_D)"
 
-#: src/folderview.c:247 src/folderview.c:265
+#: src/folderview.c:247 src/folderview.c:267
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:286
+#: src/folderview.c:249 src/folderview.c:271 src/folderview.c:290
 msgid "/_Check for new messages"
 msgstr "/새 메시지 확인(_C)"
 
-#: src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:251 src/folderview.c:273
 msgid "/R_ebuild folder tree"
 msgstr "/폴더 트리 갱신(_e)"
 
-#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
+#: src/folderview.c:252 src/folderview.c:274 src/folderview.c:292
 #, fuzzy
 msgid "/_Update summary"
 msgstr "/보기(_V)/요약 갱신(_U)"
 
-#: src/folderview.c:254 src/folderview.c:274 src/folderview.c:290
+#: src/folderview.c:254 src/folderview.c:276 src/folderview.c:294
 msgid "/_Search messages..."
 msgstr "/메시지 찾기(_S)..."
 
-#: src/folderview.c:267 src/folderview.c:284
+#: src/folderview.c:255 src/folderview.c:277 src/folderview.c:295
+msgid "/Ed_it search condition..."
+msgstr ""
+
+#: src/folderview.c:269 src/folderview.c:288
 #, fuzzy
 msgid "/Down_load"
 msgstr "안 읽은 메시지가 없습니다."
 
-#: src/folderview.c:280
+#: src/folderview.c:284
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/뉴스그룹 구독(_b)..."
 
-#: src/folderview.c:282
+#: src/folderview.c:286
 msgid "/_Remove newsgroup"
 msgstr "/뉴스그룹 삭제(_R)"
 
-#: src/folderview.c:312
+#: src/folderview.c:318
 msgid "Creating folder view...\n"
 msgstr "폴더 뷰를 생성합니다...\n"
 
-#: src/folderview.c:390
+#: src/folderview.c:396
 msgid "New"
 msgstr "새것"
 
 #. S_COL_MARK
-#: src/folderview.c:404 src/prefs_summary_column.c:71
+#: src/folderview.c:410 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "안읽음"
 
-#: src/folderview.c:418
+#: src/folderview.c:424
 msgid "#"
 msgstr "전체"
 
-#: src/folderview.c:549
+#: src/folderview.c:555
 msgid "Setting folder info...\n"
 msgstr "폴더 정보를 설정합니다...\n"
 
-#: src/folderview.c:550
+#: src/folderview.c:556
 msgid "Setting folder info..."
 msgstr "폴더 정보를 설정합니다..."
 
-#: src/folderview.c:850 src/mainwindow.c:3365 src/setup.c:80
+#: src/folderview.c:856 src/mainwindow.c:3365 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "%s%c%s를 스캔합니다..."
 
-#: src/folderview.c:854 src/mainwindow.c:3370 src/setup.c:85
+#: src/folderview.c:860 src/mainwindow.c:3370 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "%s 폴더를 스캔합니다..."
 
-#: src/folderview.c:896
+#: src/folderview.c:902
 msgid "Rebuild folder tree"
 msgstr "폴더 트리 갱신"
 
-#: src/folderview.c:897
+#: src/folderview.c:903
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr ""
 
-#: src/folderview.c:906
+#: src/folderview.c:912
 msgid "Rebuilding folder tree..."
 msgstr "폴더 트리를 갱신합니다..."
 
-#: src/folderview.c:913
+#: src/folderview.c:919
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "폴더 트리를 갱신합니다..."
 
-#: src/folderview.c:1026
+#: src/folderview.c:1033
 msgid "Checking for new messages in all folders..."
 msgstr "모든 폴더의 새로운 메시지를 확인합니다..."
 
-#: src/folderview.c:1191 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1198 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1810
+#: src/folderview.c:1830
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "%s 폴더가 선택되었습니다\n"
 
-#: src/folderview.c:1965
+#: src/folderview.c:1985
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "메시지을 보내는 중"
 
-#: src/folderview.c:2000
+#: src/folderview.c:2020
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
 
-#: src/folderview.c:2061
+#: src/folderview.c:2081
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2385,21 +2389,21 @@ msgstr ""
 "(만일 하위폴더를 저장하기 위한 폴더를 생성하려면,\n"
 "이름의 마지막에 `/'를 추가하세요)"
 
-#: src/folderview.c:2125
+#: src/folderview.c:2145
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "`%s'에대한 새 이름을 넣으세요:"
 
-#: src/folderview.c:2126
+#: src/folderview.c:2146
 msgid "Rename folder"
 msgstr "폴더 이름 변경"
 
-#: src/folderview.c:2231
+#: src/folderview.c:2251
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2297
+#: src/folderview.c:2317
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2408,12 +2412,12 @@ msgstr ""
 "`%s' 메일박스를 정말로 삭제하시겠습니까?\n"
 "(메시지가 디스크로부터 삭제되는것은 아닙니다)"
 
-#: src/folderview.c:2299
+#: src/folderview.c:2319
 #, fuzzy
 msgid "Delete search folder"
 msgstr "폴더 삭제"
 
-#: src/folderview.c:2304
+#: src/folderview.c:2324
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2424,21 +2428,21 @@ msgstr ""
 "`%s'아래에 있는 모든 폴더와 메시지가 삭제될 것입니다.\n"
 "정말로 삭제하시겠습니까?"
 
-#: src/folderview.c:2336 src/folderview.c:2342
+#: src/folderview.c:2356 src/folderview.c:2362
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2378
+#: src/folderview.c:2398
 msgid "Empty trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:2379
+#: src/folderview.c:2399
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/folderview.c:2418
+#: src/folderview.c:2438
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2447,34 +2451,34 @@ msgstr ""
 "`%s' 메일박스를 정말로 삭제하시겠습니까?\n"
 "(메시지가 디스크로부터 삭제되는것은 아닙니다)"
 
-#: src/folderview.c:2420
+#: src/folderview.c:2440
 msgid "Remove mailbox"
 msgstr "메일박스를 제거합니다"
 
-#: src/folderview.c:2470
+#: src/folderview.c:2490
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "정말로 `%s' IMAP4 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2471
+#: src/folderview.c:2491
 msgid "Delete IMAP4 account"
 msgstr "IMAP4 계정 삭제"
 
-#: src/folderview.c:2624
+#: src/folderview.c:2644
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "정말로 `%s' 뉴스그룹을 삭제하시겠습니까?"
 
-#: src/folderview.c:2625
+#: src/folderview.c:2645
 msgid "Delete newsgroup"
 msgstr "뉴스그룹 삭제"
 
-#: src/folderview.c:2675
+#: src/folderview.c:2695
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "정말로 `%s' 뉴스그룹 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2676
+#: src/folderview.c:2696
 msgid "Delete news account"
 msgstr "뉴스그룹 계정 삭제"
 
@@ -5701,9 +5705,9 @@ msgid "Reply-To:"
 msgstr "회신주소:"
 
 #: src/prefs_search_folder.c:151
-#, fuzzy, c-format
-msgid "%s - Search folder properties"
-msgstr "폴더 특성"
+#, c-format
+msgid "%s - Edit search condition"
+msgstr ""
 
 #: src/prefs_search_folder.c:195 src/summary_search.c:256
 msgid "Match any of the following"
@@ -6565,6 +6569,10 @@ msgstr ""
 #: src/textview.c:2090
 msgid "Fake URL warning"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s - Search folder properties"
+#~ msgstr "폴더 특성"
 
 #~ msgid "Body:"
 #~ msgstr "본문:"

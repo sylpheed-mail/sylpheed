@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -252,6 +252,8 @@ static GtkItemFactoryEntry folderview_mail_popup_entries[] =
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
+	{N_("/Ed_it search condition..."),
+					NULL, folderview_search_cb, 0, NULL},
 	{N_("/_Properties..."),		NULL, folderview_property_cb, 0, NULL}
 };
 
@@ -272,6 +274,8 @@ static GtkItemFactoryEntry folderview_imap_popup_entries[] =
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
+	{N_("/Ed_it search condition..."),
+					NULL, folderview_search_cb, 0, NULL},
 	{N_("/_Properties..."),		NULL, folderview_property_cb, 0, NULL}
 };
 
@@ -288,6 +292,8 @@ static GtkItemFactoryEntry folderview_news_popup_entries[] =
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
+	{N_("/Ed_it search condition..."),
+					NULL, folderview_search_cb, 0, NULL},
 	{N_("/_Properties..."),		NULL, folderview_property_cb, 0, NULL}
 };
 
@@ -1549,6 +1555,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	FolderItem *item = NULL;
 	Folder *folder;
 	GtkWidget *popup;
+	GtkItemFactory *ifactory;
 	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
 	GtkTreeIter iter;
 	gboolean new_folder      = FALSE;
@@ -1612,50 +1619,62 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		}
 	}
 
-#define SET_SENS(factory, name, sens) \
-	menu_set_sensitive(folderview->factory, name, sens)
+#define SET_SENS(factory, name, sens)				\
+{								\
+	GtkWidget *widget;					\
+	widget = gtk_item_factory_get_item(factory, name);	\
+	if (widget)						\
+		gtk_widget_set_sensitive(widget, sens);		\
+}
+
+#define SET_VISIBILITY(factory, name, visible)			\
+{								\
+	GtkWidget *widget;					\
+	widget = gtk_item_factory_get_item(factory, name);	\
+	if (widget) {						\
+		if (visible)					\
+			gtk_widget_show(widget);		\
+		else						\
+			gtk_widget_hide(widget);		\
+	}							\
+}
 
 	if (FOLDER_IS_LOCAL(folder)) {
 		popup = folderview->mail_popup;
-		menu_set_insensitive_all(GTK_MENU_SHELL(popup));
-		SET_SENS(mail_factory, "/Create new folder...", new_folder);
-		SET_SENS(mail_factory, "/Rename folder...", rename_folder);
-		SET_SENS(mail_factory, "/Move folder...", move_folder);
-		SET_SENS(mail_factory, "/Delete folder", delete_folder);
-		SET_SENS(mail_factory, "/Empty trash", empty_trash);
-		SET_SENS(mail_factory, "/Check for new messages", update_tree);
-		SET_SENS(mail_factory, "/Rebuild folder tree", rescan_tree);
-		SET_SENS(mail_factory, "/Update summary", update_summary);
-		SET_SENS(mail_factory, "/Search messages...", search_folder);
-		SET_SENS(mail_factory, "/Properties...", folder_property);
+		ifactory = folderview->mail_factory;
 	} else if (FOLDER_TYPE(folder) == F_IMAP) {
 		popup = folderview->imap_popup;
-		menu_set_insensitive_all(GTK_MENU_SHELL(popup));
-		SET_SENS(imap_factory, "/Create new folder...", new_folder);
-		SET_SENS(imap_factory, "/Rename folder...", rename_folder);
-		SET_SENS(imap_factory, "/Move folder...", move_folder);
-		SET_SENS(imap_factory, "/Delete folder", delete_folder);
-		SET_SENS(imap_factory, "/Empty trash", empty_trash);
-		SET_SENS(imap_factory, "/Download", download_msg);
-		SET_SENS(imap_factory, "/Check for new messages", update_tree);
-		SET_SENS(imap_factory, "/Rebuild folder tree", rescan_tree);
-		SET_SENS(imap_factory, "/Update summary", update_summary);
-		SET_SENS(imap_factory, "/Search messages...", search_folder);
-		SET_SENS(imap_factory, "/Properties...", folder_property);
+		ifactory = folderview->imap_factory;
 	} else if (FOLDER_TYPE(folder) == F_NEWS) {
 		popup = folderview->news_popup;
-		menu_set_insensitive_all(GTK_MENU_SHELL(popup));
-		SET_SENS(news_factory, "/Subscribe to newsgroup...", new_folder);
-		SET_SENS(news_factory, "/Remove newsgroup", delete_folder);
-		SET_SENS(news_factory, "/Download", download_msg);
-		SET_SENS(news_factory, "/Check for new messages", update_tree);
-		SET_SENS(news_factory, "/Update summary", update_summary);
-		SET_SENS(news_factory, "/Search messages...", search_folder);
-		SET_SENS(news_factory, "/Properties...", folder_property);
+		ifactory = folderview->news_factory;
 	} else
 		return FALSE;
 
+	menu_set_insensitive_all(GTK_MENU_SHELL(popup));
+
+	SET_SENS(ifactory, "/Create new folder...", new_folder);
+	SET_SENS(ifactory, "/Rename folder...", rename_folder);
+	SET_SENS(ifactory, "/Move folder...", move_folder);
+	SET_SENS(ifactory, "/Delete folder", delete_folder);
+	SET_SENS(ifactory, "/Empty trash", empty_trash);
+	SET_SENS(ifactory, "/Download", download_msg);
+	SET_SENS(ifactory, "/Check for new messages", update_tree);
+	SET_SENS(ifactory, "/Rebuild folder tree", rescan_tree);
+	SET_SENS(ifactory, "/Update summary", update_summary);
+	SET_SENS(ifactory, "/Search messages...", search_folder);
+	SET_SENS(ifactory, "/Edit search condition...", search_folder);
+	SET_SENS(ifactory, "/Properties...", folder_property);
+	SET_SENS(ifactory, "/Subscribe to newsgroup...", new_folder);
+	SET_SENS(ifactory, "/Remove newsgroup", delete_folder);
+	SET_VISIBILITY(ifactory, "/Search messages...",
+		       item->stype != F_VIRTUAL);
+	SET_VISIBILITY(ifactory, "/Edit search condition...",
+		       item->stype == F_VIRTUAL);
+
+
 #undef SET_SENS
+#undef SET_VISIBILITY
 
 	gtk_menu_popup(GTK_MENU(popup), NULL, NULL, NULL, NULL,
 		       event->button, event->time);

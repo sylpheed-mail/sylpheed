@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 15:44+0900\n"
+"POT-Creation-Date: 2006-01-12 16:01+0900\n"
 "PO-Revision-Date: 2003-05-30 13:31GMT+0100\n"
 "Last-Translator: Radek Vybíral <Radek.Vybiral@vsb.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -968,9 +968,9 @@ msgstr "/Nová s_ložka"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
 #: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
-#: src/folderview.c:264 src/folderview.c:266 src/folderview.c:268
-#: src/folderview.c:273 src/folderview.c:283 src/folderview.c:285
-#: src/folderview.c:289 src/summaryview.c:399 src/summaryview.c:403
+#: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
+#: src/folderview.c:275 src/folderview.c:287 src/folderview.c:289
+#: src/folderview.c:293 src/summaryview.c:399 src/summaryview.c:403
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:420 src/summaryview.c:432 src/summaryview.c:438
 msgid "/---"
@@ -1048,7 +1048,7 @@ msgstr ""
 "Chcete smazat složku '%s' A TAKÉ všechny adresy v ní? \n"
 "Pokud smažete pouze složku, adresy budou přesunuty do nadřazené složky."
 
-#: src/addressbook.c:1674 src/folderview.c:2307
+#: src/addressbook.c:1674 src/folderview.c:2327
 msgid "Delete folder"
 msgstr "Smazat složku "
 
@@ -1181,7 +1181,7 @@ msgid "Group"
 msgstr "Skupina"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:359 src/prefs_account_dialog.c:1687
+#: src/addressbook.c:3152 src/folderview.c:365 src/prefs_account_dialog.c:1687
 #: src/summary_search.c:369
 msgid "Folder"
 msgstr "Složka"
@@ -1269,8 +1269,8 @@ msgstr "/_Přidat..."
 msgid "/_Remove"
 msgstr "/_Odstranit"
 
-#: src/compose.c:509 src/folderview.c:255 src/folderview.c:275
-#: src/folderview.c:291
+#: src/compose.c:509 src/folderview.c:257 src/folderview.c:279
+#: src/folderview.c:297
 msgid "/_Properties..."
 msgstr "/_Vlastnosti..."
 
@@ -2048,12 +2048,12 @@ msgstr "Upravit složku"
 msgid "Input the new name of folder:"
 msgstr "Zadejte název složky:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2060
-#: src/folderview.c:2066
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2080
+#: src/folderview.c:2086
 msgid "New folder"
 msgstr "Nová složka"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2067
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2087
 msgid "Input the name of new folder:"
 msgstr "Zadejte název složky:"
 
@@ -2221,174 +2221,178 @@ msgstr "Spool adresář"
 msgid "Select folder"
 msgstr "Vybrat složku"
 
-#: src/foldersel.c:359 src/folderview.c:1159 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1166 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Doručená pošta"
 
-#: src/foldersel.c:363 src/folderview.c:1165 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1172 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "Odeslaná pošta"
 
-#: src/foldersel.c:367 src/folderview.c:1171 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1178 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Fronta"
 
-#: src/foldersel.c:371 src/folderview.c:1177 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1184 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Koš"
 
-#: src/foldersel.c:375 src/folderview.c:1183 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1190 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "Koncepty"
 
-#: src/foldersel.c:542 src/folderview.c:2064 src/folderview.c:2068
+#: src/foldersel.c:542 src/folderview.c:2084 src/folderview.c:2088
 msgid "NewFolder"
 msgstr "Nová složka"
 
-#: src/foldersel.c:550 src/folderview.c:2076 src/folderview.c:2137
+#: src/foldersel.c:550 src/folderview.c:2096 src/folderview.c:2157
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "%c nemůže být obsaženo ve jméně složky."
 
-#: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
+#: src/foldersel.c:560 src/folderview.c:2106 src/folderview.c:2165
 #: src/summary_search.c:984
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Složka '%s' už existuje."
 
-#: src/foldersel.c:568 src/folderview.c:2093
+#: src/foldersel.c:568 src/folderview.c:2113
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Nemohu vytvořit složku '%s'."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:242 src/folderview.c:262
 msgid "/Create _new folder..."
 msgstr "/_Vytvořit novou složku..."
 
-#: src/folderview.c:243 src/folderview.c:261
+#: src/folderview.c:243 src/folderview.c:263
 msgid "/_Rename folder..."
 msgstr "/Přej_menovat složku..."
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:244 src/folderview.c:264
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/Přej_menovat složku..."
 
-#: src/folderview.c:245 src/folderview.c:263
+#: src/folderview.c:245 src/folderview.c:265
 msgid "/_Delete folder"
 msgstr "/_Smazat složku"
 
-#: src/folderview.c:247 src/folderview.c:265
+#: src/folderview.c:247 src/folderview.c:267
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Vyprázdnit koš"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:286
+#: src/folderview.c:249 src/folderview.c:271 src/folderview.c:290
 msgid "/_Check for new messages"
 msgstr "/_Zkontrolovat nové zprávy"
 
-#: src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:251 src/folderview.c:273
 msgid "/R_ebuild folder tree"
 msgstr "/O_bnovit strom složek"
 
-#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
+#: src/folderview.c:252 src/folderview.c:274 src/folderview.c:292
 #, fuzzy
 msgid "/_Update summary"
 msgstr "/Z_obrazit/_Aktualizace souhrnu"
 
-#: src/folderview.c:254 src/folderview.c:274 src/folderview.c:290
+#: src/folderview.c:254 src/folderview.c:276 src/folderview.c:294
 msgid "/_Search messages..."
 msgstr "/Na_jít zprávy..."
 
-#: src/folderview.c:267 src/folderview.c:284
+#: src/folderview.c:255 src/folderview.c:277 src/folderview.c:295
+msgid "/Ed_it search condition..."
+msgstr ""
+
+#: src/folderview.c:269 src/folderview.c:288
 #, fuzzy
 msgid "/Down_load"
 msgstr "Žádné nepřečtené zprávy."
 
-#: src/folderview.c:280
+#: src/folderview.c:284
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Při_hlásit diskusní skupinu..."
 
-#: src/folderview.c:282
+#: src/folderview.c:286
 msgid "/_Remove newsgroup"
 msgstr "/Smazat d_iskusní skupinu"
 
-#: src/folderview.c:312
+#: src/folderview.c:318
 msgid "Creating folder view...\n"
 msgstr "Vytvářím náhled pro složku...\n"
 
-#: src/folderview.c:390
+#: src/folderview.c:396
 msgid "New"
 msgstr "Nová"
 
 #. S_COL_MARK
-#: src/folderview.c:404 src/prefs_summary_column.c:71
+#: src/folderview.c:410 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Nepřečtené"
 
-#: src/folderview.c:418
+#: src/folderview.c:424
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:549
+#: src/folderview.c:555
 msgid "Setting folder info...\n"
 msgstr "Nastavuji informace o složce...\n"
 
-#: src/folderview.c:550
+#: src/folderview.c:556
 msgid "Setting folder info..."
 msgstr "Nastavuji informace o složce..."
 
-#: src/folderview.c:850 src/mainwindow.c:3365 src/setup.c:80
+#: src/folderview.c:856 src/mainwindow.c:3365 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Prohledávám složku %s%c%s ..."
 
-#: src/folderview.c:854 src/mainwindow.c:3370 src/setup.c:85
+#: src/folderview.c:860 src/mainwindow.c:3370 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Prohledávám složku %s ..."
 
-#: src/folderview.c:896
+#: src/folderview.c:902
 msgid "Rebuild folder tree"
 msgstr "Obnovit strom složek"
 
-#: src/folderview.c:897
+#: src/folderview.c:903
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr ""
 
-#: src/folderview.c:906
+#: src/folderview.c:912
 msgid "Rebuilding folder tree..."
 msgstr "Provádím obnovu stromu složek..."
 
-#: src/folderview.c:913
+#: src/folderview.c:919
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "Provádím obnovu stromu složek..."
 
-#: src/folderview.c:1026
+#: src/folderview.c:1033
 msgid "Checking for new messages in all folders..."
 msgstr "Zjišťuji nové zprávy ve všech složkách..."
 
-#: src/folderview.c:1191 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1198 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1810
+#: src/folderview.c:1830
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Je vybrána složka %s\n"
 
-#: src/folderview.c:1965
+#: src/folderview.c:1985
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Posílám zprávu"
 
-#: src/folderview.c:2000
+#: src/folderview.c:2020
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Vyskytla se chyba při posílání zprávy na %s ."
 
-#: src/folderview.c:2061
+#: src/folderview.c:2081
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2398,21 +2402,21 @@ msgstr ""
 "(Pokud chcete vytvořit složku, která bude mít další\n"
 "podsložky, přidejte nakonec názvu '/')"
 
-#: src/folderview.c:2125
+#: src/folderview.c:2145
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Zadejte nové jméno pro '%s' :"
 
-#: src/folderview.c:2126
+#: src/folderview.c:2146
 msgid "Rename folder"
 msgstr "Přejmenovat složku"
 
-#: src/folderview.c:2231
+#: src/folderview.c:2251
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Nemohu odstranit složku '%s'."
 
-#: src/folderview.c:2297
+#: src/folderview.c:2317
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2421,12 +2425,12 @@ msgstr ""
 "Opravdu odebrat poštovní schránku '%s'?\n"
 "(Zprávy NEBUDOU smazány z disku)"
 
-#: src/folderview.c:2299
+#: src/folderview.c:2319
 #, fuzzy
 msgid "Delete search folder"
 msgstr "Smazat složku "
 
-#: src/folderview.c:2304
+#: src/folderview.c:2324
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2437,21 +2441,21 @@ msgstr ""
 "Všechny složky a zprávy v '%s' budou vymazány.\n"
 "Chcete je opravdu smazat ?"
 
-#: src/folderview.c:2336 src/folderview.c:2342
+#: src/folderview.c:2356 src/folderview.c:2362
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Nemohu odstranit složku '%s'."
 
-#: src/folderview.c:2378
+#: src/folderview.c:2398
 msgid "Empty trash"
 msgstr "Vyprázdnit koš"
 
-#: src/folderview.c:2379
+#: src/folderview.c:2399
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Vyprázdnit všechny zprávy v koši?"
 
-#: src/folderview.c:2418
+#: src/folderview.c:2438
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2460,34 +2464,34 @@ msgstr ""
 "Opravdu odebrat poštovní schránku '%s'?\n"
 "(Zprávy NEBUDOU smazány z disku)"
 
-#: src/folderview.c:2420
+#: src/folderview.c:2440
 msgid "Remove mailbox"
 msgstr "Odstranit poštovní schránku"
 
-#: src/folderview.c:2470
+#: src/folderview.c:2490
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Opravdu smazat IMAP4 účet '%s'?"
 
-#: src/folderview.c:2471
+#: src/folderview.c:2491
 msgid "Delete IMAP4 account"
 msgstr "Smazat IMAP4 účet"
 
-#: src/folderview.c:2624
+#: src/folderview.c:2644
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Opravdu chcete smazat diskusní skupinu '%s' ?"
 
-#: src/folderview.c:2625
+#: src/folderview.c:2645
 msgid "Delete newsgroup"
 msgstr "Smazat diskusní skupinu"
 
-#: src/folderview.c:2675
+#: src/folderview.c:2695
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Opravdu smazat účet pro diskusní skupinu '%s'?"
 
-#: src/folderview.c:2676
+#: src/folderview.c:2696
 msgid "Delete news account"
 msgstr "Smazat účet pro diskuzní skupinu"
 
@@ -5749,9 +5753,9 @@ msgid "Reply-To:"
 msgstr "Odpovědět komu:"
 
 #: src/prefs_search_folder.c:151
-#, fuzzy, c-format
-msgid "%s - Search folder properties"
-msgstr "Vlastnosti složky"
+#, c-format
+msgid "%s - Edit search condition"
+msgstr ""
 
 #: src/prefs_search_folder.c:195 src/summary_search.c:256
 msgid "Match any of the following"
@@ -6619,6 +6623,10 @@ msgstr ""
 #: src/textview.c:2090
 msgid "Fake URL warning"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s - Search folder properties"
+#~ msgstr "Vlastnosti složky"
 
 #~ msgid "Body:"
 #~ msgstr "Tělo:"

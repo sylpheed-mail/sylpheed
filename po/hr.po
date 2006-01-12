@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 15:44+0900\n"
+"POT-Creation-Date: 2006-01-12 16:01+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -974,9 +974,9 @@ msgstr "/Novi _spis"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
 #: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
-#: src/folderview.c:264 src/folderview.c:266 src/folderview.c:268
-#: src/folderview.c:273 src/folderview.c:283 src/folderview.c:285
-#: src/folderview.c:289 src/summaryview.c:399 src/summaryview.c:403
+#: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
+#: src/folderview.c:275 src/folderview.c:287 src/folderview.c:289
+#: src/folderview.c:293 src/summaryview.c:399 src/summaryview.c:403
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:420 src/summaryview.c:432 src/summaryview.c:438
 msgid "/---"
@@ -1054,7 +1054,7 @@ msgstr ""
 "Želite li obrisati spis I sve adrese u `%s' ? \n"
 "Ukoliko brišete samo spis, adrese će biti premještene u prethodni spis."
 
-#: src/addressbook.c:1674 src/folderview.c:2307
+#: src/addressbook.c:1674 src/folderview.c:2327
 msgid "Delete folder"
 msgstr "Obriši spis"
 
@@ -1181,7 +1181,7 @@ msgid "Group"
 msgstr "Grupa"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:359 src/prefs_account_dialog.c:1687
+#: src/addressbook.c:3152 src/folderview.c:365 src/prefs_account_dialog.c:1687
 #: src/summary_search.c:369
 msgid "Folder"
 msgstr "Spis"
@@ -1270,8 +1270,8 @@ msgstr "/_Dodaj..."
 msgid "/_Remove"
 msgstr "/_Ukloni"
 
-#: src/compose.c:509 src/folderview.c:255 src/folderview.c:275
-#: src/folderview.c:291
+#: src/compose.c:509 src/folderview.c:257 src/folderview.c:279
+#: src/folderview.c:297
 #, fuzzy
 msgid "/_Properties..."
 msgstr "/_Postavke..."
@@ -2062,12 +2062,12 @@ msgstr "Uredi spis"
 msgid "Input the new name of folder:"
 msgstr "Unesite ime novog spisa:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2060
-#: src/folderview.c:2066
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2080
+#: src/folderview.c:2086
 msgid "New folder"
 msgstr "Novi spis"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2067
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2087
 msgid "Input the name of new folder:"
 msgstr "Unesite ime novog spisa:"
 
@@ -2235,181 +2235,185 @@ msgstr "Spool direktorij"
 msgid "Select folder"
 msgstr "Odaberite spis"
 
-#: src/foldersel.c:359 src/folderview.c:1159 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1166 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "Sandučić"
 
-#: src/foldersel.c:363 src/folderview.c:1165 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1172 src/prefs_folder_item.c:237
 #, fuzzy
 msgid "Sent"
 msgstr "Pošalji"
 
-#: src/foldersel.c:367 src/folderview.c:1171 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1178 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "Odloženo"
 
-#: src/foldersel.c:371 src/folderview.c:1177 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1184 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "Smeće"
 
-#: src/foldersel.c:375 src/folderview.c:1183 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1190 src/prefs_folder_item.c:238
 #, fuzzy
 msgid "Drafts"
 msgstr "Nedovršeno"
 
-#: src/foldersel.c:542 src/folderview.c:2064 src/folderview.c:2068
+#: src/foldersel.c:542 src/folderview.c:2084 src/folderview.c:2088
 msgid "NewFolder"
 msgstr "NoviSpis"
 
-#: src/foldersel.c:550 src/folderview.c:2076 src/folderview.c:2137
+#: src/foldersel.c:550 src/folderview.c:2096 src/folderview.c:2157
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c' ne može biti uključen u ime spisa."
 
-#: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
+#: src/foldersel.c:560 src/folderview.c:2106 src/folderview.c:2165
 #: src/summary_search.c:984
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Spis `%s' već postoji."
 
-#: src/foldersel.c:568 src/folderview.c:2093
+#: src/foldersel.c:568 src/folderview.c:2113
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Ne mogu stvoriti spis `%s'."
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:242 src/folderview.c:262
 msgid "/Create _new folder..."
 msgstr "/Kreiraj _novi spis..."
 
-#: src/folderview.c:243 src/folderview.c:261
+#: src/folderview.c:243 src/folderview.c:263
 msgid "/_Rename folder..."
 msgstr "/_Preimenuj spis..."
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:244 src/folderview.c:264
 #, fuzzy
 msgid "/_Move folder..."
 msgstr "/_Preimenuj spis..."
 
-#: src/folderview.c:245 src/folderview.c:263
+#: src/folderview.c:245 src/folderview.c:265
 msgid "/_Delete folder"
 msgstr "/_Obriši spis"
 
-#: src/folderview.c:247 src/folderview.c:265
+#: src/folderview.c:247 src/folderview.c:267
 #, fuzzy
 msgid "/Empty _trash"
 msgstr "Isprazni smeće"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:286
+#: src/folderview.c:249 src/folderview.c:271 src/folderview.c:290
 #, fuzzy
 msgid "/_Check for new messages"
 msgstr "Kreiranje nove pošte"
 
-#: src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:251 src/folderview.c:273
 #, fuzzy
 msgid "/R_ebuild folder tree"
 msgstr "/O_svježi stablo spisa"
 
-#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
+#: src/folderview.c:252 src/folderview.c:274 src/folderview.c:292
 #, fuzzy
 msgid "/_Update summary"
 msgstr "/_Pregled/_Znakovni standard"
 
-#: src/folderview.c:254 src/folderview.c:274 src/folderview.c:290
+#: src/folderview.c:254 src/folderview.c:276 src/folderview.c:294
 msgid "/_Search messages..."
 msgstr "/_Traži poruka..."
 
-#: src/folderview.c:267 src/folderview.c:284
+#: src/folderview.c:255 src/folderview.c:277 src/folderview.c:295
+msgid "/Ed_it search condition..."
+msgstr ""
+
+#: src/folderview.c:269 src/folderview.c:288
 #, fuzzy
 msgid "/Down_load"
 msgstr "Nema nepročitanih poruka."
 
-#: src/folderview.c:280
+#: src/folderview.c:284
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Pribilježi se na _news grupu..."
 
-#: src/folderview.c:282
+#: src/folderview.c:286
 msgid "/_Remove newsgroup"
 msgstr "/Ukloni news _grupu"
 
-#: src/folderview.c:312
+#: src/folderview.c:318
 msgid "Creating folder view...\n"
 msgstr "Stvaram spisni pregled...\n"
 
-#: src/folderview.c:390
+#: src/folderview.c:396
 msgid "New"
 msgstr "Novo"
 
 #. S_COL_MARK
-#: src/folderview.c:404 src/prefs_summary_column.c:71
+#: src/folderview.c:410 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "Nepročitano"
 
-#: src/folderview.c:418
+#: src/folderview.c:424
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:549
+#: src/folderview.c:555
 msgid "Setting folder info...\n"
 msgstr "Postavljam info spisa...\n"
 
-#: src/folderview.c:550
+#: src/folderview.c:556
 msgid "Setting folder info..."
 msgstr "Postavljam info spisa..."
 
-#: src/folderview.c:850 src/mainwindow.c:3365 src/setup.c:80
+#: src/folderview.c:856 src/mainwindow.c:3365 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Pretražujem spise %s%c%s ..."
 
-#: src/folderview.c:854 src/mainwindow.c:3370 src/setup.c:85
+#: src/folderview.c:860 src/mainwindow.c:3370 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Pretražujem spis %s ..."
 
-#: src/folderview.c:896
+#: src/folderview.c:902
 #, fuzzy
 msgid "Rebuild folder tree"
 msgstr "/O_svježi stablo spisa"
 
-#: src/folderview.c:897
+#: src/folderview.c:903
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr ""
 
-#: src/folderview.c:906
+#: src/folderview.c:912
 #, fuzzy
 msgid "Rebuilding folder tree..."
 msgstr "Osvježavam stablo spisa..."
 
-#: src/folderview.c:913
+#: src/folderview.c:919
 #, fuzzy
 msgid "Rebuilding of the folder tree failed."
 msgstr "Osvježavam stablo spisa..."
 
-#: src/folderview.c:1026
+#: src/folderview.c:1033
 #, fuzzy
 msgid "Checking for new messages in all folders..."
 msgstr "Kreiranje nove pošte"
 
-#: src/folderview.c:1191 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1198 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1810
+#: src/folderview.c:1830
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Spis %s je odabran\n"
 
-#: src/folderview.c:1965
+#: src/folderview.c:1985
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Šaljem poruku"
 
-#: src/folderview.c:2000
+#: src/folderview.c:2020
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Došlo je do greške prilikom slanja poruke %s -u."
 
-#: src/folderview.c:2061
+#: src/folderview.c:2081
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2419,21 +2423,21 @@ msgstr ""
 "(ukoliko želite stvoriti spis za pohranjivanje podspisa,\n"
 "dodajte `/' na kraju imena)"
 
-#: src/folderview.c:2125
+#: src/folderview.c:2145
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Unesite novo ime za `%s':"
 
-#: src/folderview.c:2126
+#: src/folderview.c:2146
 msgid "Rename folder"
 msgstr "Preimenuj spis"
 
-#: src/folderview.c:2231
+#: src/folderview.c:2251
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Ne mogu premjestiti spis `%s'."
 
-#: src/folderview.c:2297
+#: src/folderview.c:2317
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2442,12 +2446,12 @@ msgstr ""
 "Uistinu premjestiti spis `%s' ?\n"
 "(Poruke NEĆE biti obrisane s diska)"
 
-#: src/folderview.c:2299
+#: src/folderview.c:2319
 #, fuzzy
 msgid "Delete search folder"
 msgstr "Obriši spis"
 
-#: src/folderview.c:2304
+#: src/folderview.c:2324
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2458,21 +2462,21 @@ msgstr ""
 "Svi spisi i poruke pod `%s' biti će obrisane.\n"
 "Želite li ih uistinu obrisati?"
 
-#: src/folderview.c:2336 src/folderview.c:2342
+#: src/folderview.c:2356 src/folderview.c:2362
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Ne mogu premjestiti spis `%s'."
 
-#: src/folderview.c:2378
+#: src/folderview.c:2398
 msgid "Empty trash"
 msgstr "Isprazni smeće"
 
-#: src/folderview.c:2379
+#: src/folderview.c:2399
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Isprazniti sve poruke u smeću?"
 
-#: src/folderview.c:2418
+#: src/folderview.c:2438
 #, fuzzy, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2481,35 +2485,35 @@ msgstr ""
 "Uistinu premjestiti spis `%s' ?\n"
 "(Poruke NEĆE biti obrisane s diska)"
 
-#: src/folderview.c:2420
+#: src/folderview.c:2440
 #, fuzzy
 msgid "Remove mailbox"
 msgstr "/_Ukloni sandučić"
 
-#: src/folderview.c:2470
+#: src/folderview.c:2490
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Uistinu obrisati `%s' IMAP4 račun?"
 
-#: src/folderview.c:2471
+#: src/folderview.c:2491
 msgid "Delete IMAP4 account"
 msgstr "Obriši IMAP4 račun"
 
-#: src/folderview.c:2624
+#: src/folderview.c:2644
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Uistinu obrisati `%s' news grupu?"
 
-#: src/folderview.c:2625
+#: src/folderview.c:2645
 msgid "Delete newsgroup"
 msgstr "Obriši news grupu"
 
-#: src/folderview.c:2675
+#: src/folderview.c:2695
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Uistinu obrisati `%s' news račun?"
 
-#: src/folderview.c:2676
+#: src/folderview.c:2696
 msgid "Delete news account"
 msgstr "Obriši news račun"
 
@@ -5845,9 +5849,9 @@ msgid "Reply-To:"
 msgstr "Odvovori-Na"
 
 #: src/prefs_search_folder.c:151
-#, fuzzy, c-format
-msgid "%s - Search folder properties"
-msgstr "Postavke"
+#, c-format
+msgid "%s - Edit search condition"
+msgstr ""
 
 #: src/prefs_search_folder.c:195 src/summary_search.c:256
 msgid "Match any of the following"
@@ -6731,6 +6735,10 @@ msgstr ""
 #: src/textview.c:2090
 msgid "Fake URL warning"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s - Search folder properties"
+#~ msgstr "Postavke"
 
 #~ msgid "Body:"
 #~ msgstr "Tijelo:"

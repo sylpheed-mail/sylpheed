@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 15:44+0900\n"
+"POT-Creation-Date: 2006-01-12 16:01+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -968,9 +968,9 @@ msgstr "/新規フォルダ(_F)"
 
 #: src/addressbook.c:383 src/addressbook.c:393 src/compose.c:508
 #: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
-#: src/folderview.c:264 src/folderview.c:266 src/folderview.c:268
-#: src/folderview.c:273 src/folderview.c:283 src/folderview.c:285
-#: src/folderview.c:289 src/summaryview.c:399 src/summaryview.c:403
+#: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
+#: src/folderview.c:275 src/folderview.c:287 src/folderview.c:289
+#: src/folderview.c:293 src/summaryview.c:399 src/summaryview.c:403
 #: src/summaryview.c:406 src/summaryview.c:416 src/summaryview.c:418
 #: src/summaryview.c:420 src/summaryview.c:432 src/summaryview.c:438
 msgid "/---"
@@ -1048,7 +1048,7 @@ msgstr ""
 "`%s' 内のすべてのフォルダとアドレスを削除してもいいですか?\n"
 "フォルダのみを削除する場合、アドレスは親フォルダに移動します。"
 
-#: src/addressbook.c:1674 src/folderview.c:2307
+#: src/addressbook.c:1674 src/folderview.c:2327
 msgid "Delete folder"
 msgstr "フォルダの削除"
 
@@ -1179,7 +1179,7 @@ msgid "Group"
 msgstr "グループ"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3152 src/folderview.c:359 src/prefs_account_dialog.c:1687
+#: src/addressbook.c:3152 src/folderview.c:365 src/prefs_account_dialog.c:1687
 #: src/summary_search.c:369
 msgid "Folder"
 msgstr "フォルダ"
@@ -1267,8 +1267,8 @@ msgstr "/追加(_A)..."
 msgid "/_Remove"
 msgstr "/削除(_R)"
 
-#: src/compose.c:509 src/folderview.c:255 src/folderview.c:275
-#: src/folderview.c:291
+#: src/compose.c:509 src/folderview.c:257 src/folderview.c:279
+#: src/folderview.c:297
 msgid "/_Properties..."
 msgstr "/プロパティ(_P)..."
 
@@ -2005,12 +2005,12 @@ msgstr "フォルダの編集"
 msgid "Input the new name of folder:"
 msgstr "フォルダの新しい名前を入力してください:"
 
-#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2060
-#: src/folderview.c:2066
+#: src/editgroup.c:525 src/foldersel.c:540 src/folderview.c:2080
+#: src/folderview.c:2086
 msgid "New folder"
 msgstr "新規フォルダ"
 
-#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2067
+#: src/editgroup.c:526 src/foldersel.c:541 src/folderview.c:2087
 msgid "Input the name of new folder:"
 msgstr "新規フォルダの名前を入力してください:"
 
@@ -2177,169 +2177,173 @@ msgstr "ディレクトリの選択"
 msgid "Select folder"
 msgstr "フォルダの選択"
 
-#: src/foldersel.c:359 src/folderview.c:1159 src/prefs_folder_item.c:236
+#: src/foldersel.c:359 src/folderview.c:1166 src/prefs_folder_item.c:236
 msgid "Inbox"
 msgstr "受信箱"
 
-#: src/foldersel.c:363 src/folderview.c:1165 src/prefs_folder_item.c:237
+#: src/foldersel.c:363 src/folderview.c:1172 src/prefs_folder_item.c:237
 msgid "Sent"
 msgstr "送信控"
 
-#: src/foldersel.c:367 src/folderview.c:1171 src/prefs_folder_item.c:239
+#: src/foldersel.c:367 src/folderview.c:1178 src/prefs_folder_item.c:239
 msgid "Queue"
 msgstr "送信待ち"
 
-#: src/foldersel.c:371 src/folderview.c:1177 src/prefs_folder_item.c:240
+#: src/foldersel.c:371 src/folderview.c:1184 src/prefs_folder_item.c:240
 msgid "Trash"
 msgstr "ごみ箱"
 
-#: src/foldersel.c:375 src/folderview.c:1183 src/prefs_folder_item.c:238
+#: src/foldersel.c:375 src/folderview.c:1190 src/prefs_folder_item.c:238
 msgid "Drafts"
 msgstr "草稿"
 
-#: src/foldersel.c:542 src/folderview.c:2064 src/folderview.c:2068
+#: src/foldersel.c:542 src/folderview.c:2084 src/folderview.c:2088
 msgid "NewFolder"
 msgstr "NewFolder"
 
-#: src/foldersel.c:550 src/folderview.c:2076 src/folderview.c:2137
+#: src/foldersel.c:550 src/folderview.c:2096 src/folderview.c:2157
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "フォルダ名に `%c' を含むことはできません。"
 
-#: src/foldersel.c:560 src/folderview.c:2086 src/folderview.c:2145
+#: src/foldersel.c:560 src/folderview.c:2106 src/folderview.c:2165
 #: src/summary_search.c:984
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "フォルダ `%s' はすでに存在します。"
 
-#: src/foldersel.c:568 src/folderview.c:2093
+#: src/foldersel.c:568 src/folderview.c:2113
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "フォルダ `%s' を作成できません。"
 
-#: src/folderview.c:242 src/folderview.c:260
+#: src/folderview.c:242 src/folderview.c:262
 msgid "/Create _new folder..."
 msgstr "/新規フォルダを作成(_N)..."
 
-#: src/folderview.c:243 src/folderview.c:261
+#: src/folderview.c:243 src/folderview.c:263
 msgid "/_Rename folder..."
 msgstr "/フォルダ名を変更(_R)..."
 
-#: src/folderview.c:244 src/folderview.c:262
+#: src/folderview.c:244 src/folderview.c:264
 msgid "/_Move folder..."
 msgstr "/フォルダを移動(_M)..."
 
-#: src/folderview.c:245 src/folderview.c:263
+#: src/folderview.c:245 src/folderview.c:265
 msgid "/_Delete folder"
 msgstr "/フォルダを削除(_D)"
 
-#: src/folderview.c:247 src/folderview.c:265
+#: src/folderview.c:247 src/folderview.c:267
 msgid "/Empty _trash"
 msgstr "/ごみ箱を空にする(_T)"
 
-#: src/folderview.c:249 src/folderview.c:269 src/folderview.c:286
+#: src/folderview.c:249 src/folderview.c:271 src/folderview.c:290
 msgid "/_Check for new messages"
 msgstr "/新着メッセージをチェック(_C)"
 
-#: src/folderview.c:251 src/folderview.c:271
+#: src/folderview.c:251 src/folderview.c:273
 msgid "/R_ebuild folder tree"
 msgstr "/フォルダツリーを再構築(_E)"
 
-#: src/folderview.c:252 src/folderview.c:272 src/folderview.c:288
+#: src/folderview.c:252 src/folderview.c:274 src/folderview.c:292
 msgid "/_Update summary"
 msgstr "/サマリを更新(_U)"
 
-#: src/folderview.c:254 src/folderview.c:274 src/folderview.c:290
+#: src/folderview.c:254 src/folderview.c:276 src/folderview.c:294
 msgid "/_Search messages..."
 msgstr "/メッセージを検索(_S)..."
 
-#: src/folderview.c:267 src/folderview.c:284
+#: src/folderview.c:255 src/folderview.c:277 src/folderview.c:295
+msgid "/Ed_it search condition..."
+msgstr "/検索条件を編集(_I)..."
+
+#: src/folderview.c:269 src/folderview.c:288
 msgid "/Down_load"
 msgstr "/ダウンロード(_L)"
 
-#: src/folderview.c:280
+#: src/folderview.c:284
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/ニュースグループを購読(_B)..."
 
-#: src/folderview.c:282
+#: src/folderview.c:286
 msgid "/_Remove newsgroup"
 msgstr "/ニュースグループを削除(_R)"
 
-#: src/folderview.c:312
+#: src/folderview.c:318
 msgid "Creating folder view...\n"
 msgstr "フォルダビューを作成中...\n"
 
-#: src/folderview.c:390
+#: src/folderview.c:396
 msgid "New"
 msgstr "新着"
 
 #. S_COL_MARK
-#: src/folderview.c:404 src/prefs_summary_column.c:71
+#: src/folderview.c:410 src/prefs_summary_column.c:71
 msgid "Unread"
 msgstr "未読"
 
-#: src/folderview.c:418
+#: src/folderview.c:424
 msgid "#"
 msgstr "総数"
 
-#: src/folderview.c:549
+#: src/folderview.c:555
 msgid "Setting folder info...\n"
 msgstr "フォルダ情報を設定中...\n"
 
-#: src/folderview.c:550
+#: src/folderview.c:556
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:850 src/mainwindow.c:3365 src/setup.c:80
+#: src/folderview.c:856 src/mainwindow.c:3365 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:854 src/mainwindow.c:3370 src/setup.c:85
+#: src/folderview.c:860 src/mainwindow.c:3370 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
 
-#: src/folderview.c:896
+#: src/folderview.c:902
 msgid "Rebuild folder tree"
 msgstr "フォルダツリーの再構築"
 
-#: src/folderview.c:897
+#: src/folderview.c:903
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "フォルダツリーを再構築します。続けますか?"
 
-#: src/folderview.c:906
+#: src/folderview.c:912
 msgid "Rebuilding folder tree..."
 msgstr "フォルダツリーを再構築中..."
 
-#: src/folderview.c:913
+#: src/folderview.c:919
 msgid "Rebuilding of the folder tree failed."
 msgstr "フォルダツリーの再構築に失敗しました。"
 
-#: src/folderview.c:1026
+#: src/folderview.c:1033
 msgid "Checking for new messages in all folders..."
 msgstr "全フォルダの新着メッセージをチェック中..."
 
-#: src/folderview.c:1191 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
+#: src/folderview.c:1198 src/mainwindow.c:2354 src/prefs_common_dialog.c:1793
 msgid "Junk"
 msgstr "迷惑メール"
 
-#: src/folderview.c:1810
+#: src/folderview.c:1830
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "フォルダ %s が選択されました\n"
 
-#: src/folderview.c:1965
+#: src/folderview.c:1985
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "%s 中のメッセージをダウンロード中..."
 
-#: src/folderview.c:2000
+#: src/folderview.c:2020
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "`%s' 中のメッセージのダウンロード中にエラーが発生しました。"
 
-#: src/folderview.c:2061
+#: src/folderview.c:2081
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2349,21 +2353,21 @@ msgstr ""
 "(サブフォルダを格納するフォルダを作成したい場合は、\n"
 " 名前の最後に `/' を追加してください)"
 
-#: src/folderview.c:2125
+#: src/folderview.c:2145
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "`%s' の新しい名前を入力してください:"
 
-#: src/folderview.c:2126
+#: src/folderview.c:2146
 msgid "Rename folder"
 msgstr "フォルダ名の変更"
 
-#: src/folderview.c:2231
+#: src/folderview.c:2251
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "フォルダ `%s' を移動できません。"
 
-#: src/folderview.c:2297
+#: src/folderview.c:2317
 #, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2372,11 +2376,11 @@ msgstr ""
 "検索フォルダ '%s' を削除しますか?\n"
 "実際のメッセージは削除されません。"
 
-#: src/folderview.c:2299
+#: src/folderview.c:2319
 msgid "Delete search folder"
 msgstr "検索フォルダの削除"
 
-#: src/folderview.c:2304
+#: src/folderview.c:2324
 #, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2389,20 +2393,20 @@ msgstr ""
 "\n"
 "本当に削除してもいいですか?"
 
-#: src/folderview.c:2336 src/folderview.c:2342
+#: src/folderview.c:2356 src/folderview.c:2362
 #, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "フォルダ '%s' を削除できません。"
 
-#: src/folderview.c:2378
+#: src/folderview.c:2398
 msgid "Empty trash"
 msgstr "ごみ箱を空にする"
 
-#: src/folderview.c:2379
+#: src/folderview.c:2399
 msgid "Delete all messages in the trash folder?"
 msgstr "ごみ箱の中のメッセージをすべて削除しますか?"
 
-#: src/folderview.c:2418
+#: src/folderview.c:2438
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2411,34 +2415,34 @@ msgstr ""
 "本当にメールボックス `%s' を削除しますか?\n"
 "(メッセージはディスクからは削除されません)"
 
-#: src/folderview.c:2420
+#: src/folderview.c:2440
 msgid "Remove mailbox"
 msgstr "メールボックスの削除"
 
-#: src/folderview.c:2470
+#: src/folderview.c:2490
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "本当にIMAP4アカウント `%s' を削除しますか?"
 
-#: src/folderview.c:2471
+#: src/folderview.c:2491
 msgid "Delete IMAP4 account"
 msgstr "IMAP4アカウントの削除"
 
-#: src/folderview.c:2624
+#: src/folderview.c:2644
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "本当にニュースグループ `%s' を削除しますか?"
 
-#: src/folderview.c:2625
+#: src/folderview.c:2645
 msgid "Delete newsgroup"
 msgstr "ニュースグループの削除"
 
-#: src/folderview.c:2675
+#: src/folderview.c:2695
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "本当にニュースアカウント `%s' を削除しますか?"
 
-#: src/folderview.c:2676
+#: src/folderview.c:2696
 msgid "Delete news account"
 msgstr "ニュースアカウントの削除"
 
@@ -5594,8 +5598,8 @@ msgstr "Reply-To:"
 
 #: src/prefs_search_folder.c:151
 #, c-format
-msgid "%s - Search folder properties"
-msgstr "%s - 検索フォルダのプロパティ"
+msgid "%s - Edit search condition"
+msgstr "%s - 検索条件の編集"
 
 #: src/prefs_search_folder.c:195 src/summary_search.c:256
 msgid "Match any of the following"

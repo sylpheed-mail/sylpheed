@@ -148,7 +148,7 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	gtk_widget_hide(dialog->apply_btn);
 
 	gtk_widget_set_size_request(dialog->window, 600, -1);
-	title = g_strdup_printf(_("%s - Search folder properties"), item->name);
+	title = g_strdup_printf(_("%s - Edit search condition"), item->name);
 	gtk_window_set_title(GTK_WINDOW(dialog->window), title);
 	g_free(title);
 	gtk_notebook_set_show_border(GTK_NOTEBOOK(dialog->notebook), FALSE);
