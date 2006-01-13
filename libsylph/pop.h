@@ -116,11 +116,11 @@ struct _Pop3Session
 	gchar *user;
 	gchar *pass;
 	gint count;
-	gint total_bytes;
+	gint64 total_bytes;
 	gint cur_msg;
 	gint cur_total_num;
-	gint cur_total_bytes;
-	gint cur_total_recv_bytes;
+	gint64 cur_total_bytes;
+	gint64 cur_total_recv_bytes;
 
 	Pop3MsgInfo *msg;
 

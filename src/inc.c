@@ -842,8 +842,8 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 	gchar buf[MSGBUFSIZE];
 	Pop3Session *pop3_session = POP3_SESSION(inc_session->session);
 	gchar *total_size_str;
-	gint cur_total;
-	gint total;
+	gint64 cur_total;
+	gint64 total;
 
 	if (!pop3_session->new_msg_exist) return;
 
@@ -954,7 +954,7 @@ static gint inc_recv_data_progressive(Session *session, guint cur_len,
 	IncSession *inc_session = (IncSession *)data;
 	Pop3Session *pop3_session = POP3_SESSION(session);
 	IncProgressDialog *inc_dialog;
-	gint cur_total;
+	gint64 cur_total;
 
 	g_return_val_if_fail(inc_session != NULL, -1);
 
