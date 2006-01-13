@@ -926,6 +926,8 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_widget_show_all(statusbar);
 
 	tray_icon = trayicon_create(mainwin);
+	if (tray_icon && prefs_common.show_trayicon)
+		gtk_widget_show(tray_icon);
 
 	/* create views */
 	mainwin->folderview  = folderview  = folderview_create();
@@ -1079,6 +1081,8 @@ MainWindow *main_window_create(SeparateType type)
 	mainwin->menu_lock_count = 0;
 	mainwin->cursor_count = 0;
 
+	mainwin->window_hidden = FALSE;
+
 	if (!watch_cursor)
 		watch_cursor = gdk_cursor_new(GDK_WATCH);
 
@@ -1148,47 +1152,47 @@ static void main_window_menu_callback_unblock(MainWindow *mainwin)
 
 void main_window_reflect_prefs_all(void)
 {
-	GList *cur;
 	MainWindow *mainwin;
 
-	for (cur = mainwin_list; cur != NULL; cur = cur->next) {
-		mainwin = (MainWindow *)cur->data;
+	mainwin = main_window_get();
 
-		main_window_show_cur_account(mainwin);
-		main_window_set_menu_sensitive(mainwin);
-		main_window_set_toolbar_sensitive(mainwin);
+	main_window_show_cur_account(mainwin);
+	main_window_set_menu_sensitive(mainwin);
+	main_window_set_toolbar_sensitive(mainwin);
 
-		if (prefs_common.enable_junk)
-			gtk_widget_show(mainwin->junk_btn);
-		else
-			gtk_widget_hide(mainwin->junk_btn);
+	if (prefs_common.enable_junk)
+		gtk_widget_show(mainwin->junk_btn);
+	else
+		gtk_widget_hide(mainwin->junk_btn);
 
-		if (prefs_common.immediate_exec)
-			gtk_widget_hide(mainwin->exec_btn);
-		else
-			gtk_widget_show(mainwin->exec_btn);
+	if (prefs_common.immediate_exec)
+		gtk_widget_hide(mainwin->exec_btn);
+	else
+		gtk_widget_show(mainwin->exec_btn);
 
-		folderview_reflect_prefs(mainwin->folderview);
-
-		headerview_set_visibility(mainwin->messageview->headerview,
-					  prefs_common.display_header_pane);
-
-		textview_reflect_prefs(mainwin->messageview->textview);
-		textview_reflect_prefs(mainwin->messageview->mimeview->textview);
-
-		summary_redisplay_msg(mainwin->summaryview);
+	if (mainwin->tray_icon) {
+		if (prefs_common.show_trayicon)
+			gtk_widget_show(mainwin->tray_icon);
+		else {
+			/* trayicon is automatically restored after this */
+			gtk_widget_destroy(mainwin->tray_icon);
+		}
 	}
+
+	folderview_reflect_prefs(mainwin->folderview);
+
+	headerview_set_visibility(mainwin->messageview->headerview,
+				  prefs_common.display_header_pane);
+
+	textview_reflect_prefs(mainwin->messageview->textview);
+	textview_reflect_prefs(mainwin->messageview->mimeview->textview);
+
+	summary_redisplay_msg(mainwin->summaryview);
 }
 
 void main_window_set_summary_column(void)
 {
-	GList *cur;
-	MainWindow *mainwin;
-
-	for (cur = mainwin_list; cur != NULL; cur = cur->next) {
-		mainwin = (MainWindow *)cur->data;
-		summary_set_column_order(mainwin->summaryview);
-	}
+	summary_set_column_order(main_window_get()->summaryview);
 }
 
 static void main_window_set_account_selector_menu(MainWindow *mainwin,
@@ -1263,14 +1267,11 @@ static void main_window_set_account_receive_menu(MainWindow *mainwin,
 
 void main_window_set_account_menu(GList *account_list)
 {
-	GList *cur;
 	MainWindow *mainwin;
 
-	for (cur = mainwin_list; cur != NULL; cur = cur->next) {
-		mainwin = (MainWindow *)cur->data;
-		main_window_set_account_selector_menu(mainwin, account_list);
-		main_window_set_account_receive_menu(mainwin, account_list);
-	}
+	mainwin = main_window_get();
+	main_window_set_account_selector_menu(mainwin, account_list);
+	main_window_set_account_receive_menu(mainwin, account_list);
 }
 
 static void main_window_show_cur_account(MainWindow *mainwin)
@@ -1658,6 +1659,31 @@ void main_window_add_mailbox(MainWindow *mainwin)
 	folder_set_ui_func(folder, NULL, NULL);
 
 	folderview_set(mainwin->folderview);
+}
+
+void main_window_send_queue(MainWindow *mainwin)
+{
+	GList *list;
+
+	if (!main_window_toggle_online_if_offline(mainwin))
+		return;
+
+	for (list = folder_get_list(); list != NULL; list = list->next) {
+		Folder *folder = list->data;
+
+		if (folder->queue) {
+			gint ret;
+
+			ret = send_message_queue_all(folder->queue,
+						     prefs_common.savemsg,
+						     prefs_common.filter_sent);
+			statusbar_pop_all();
+			if (ret > 0)
+				folder_item_scan(folder->queue);
+		}
+	}
+
+	folderview_update_all_updated(TRUE);
 }
 
 typedef enum
@@ -2680,11 +2706,25 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 					    GdkEventWindowState *event,
 					    gpointer data)
 {
+	MainWindow *mainwin = (MainWindow *)data;
+
 	if ((event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
 		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0)
 			prefs_common.mainwin_maximized = TRUE;
 		else
 			prefs_common.mainwin_maximized = FALSE;
+	}
+	if ((event->changed_mask & GDK_WINDOW_STATE_ICONIFIED) != 0) {
+		if ((event->new_window_state & GDK_WINDOW_STATE_ICONIFIED) != 0)
+			mainwin->window_hidden = TRUE;
+		else
+			mainwin->window_hidden = FALSE;
+	}
+	if ((event->changed_mask & GDK_WINDOW_STATE_WITHDRAWN) != 0) {
+		if ((event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) != 0)
+			mainwin->window_hidden = TRUE;
+		else
+			mainwin->window_hidden = FALSE;
 	}
 
 	return FALSE;
@@ -2942,27 +2982,7 @@ static void inc_cancel_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 
 static void send_queue_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
-	GList *list;
-
-	if (!main_window_toggle_online_if_offline(mainwin))
-		return;
-
-	for (list = folder_get_list(); list != NULL; list = list->next) {
-		Folder *folder = list->data;
-
-		if (folder->queue) {
-			gint ret;
-
-			ret = send_message_queue_all(folder->queue,
-						     prefs_common.savemsg,
-						     prefs_common.filter_sent);
-			statusbar_pop_all();
-			if (ret > 0)
-				folder_item_scan(folder->queue);
-		}
-	}
-
-	folderview_update_all_updated(TRUE);
+	main_window_send_queue(mainwin);
 }
 
 static void compose_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
@@ -3339,10 +3359,9 @@ static void account_selector_menu_cb(GtkMenuItem *menuitem, gpointer data)
 
 static void account_receive_menu_cb(GtkMenuItem *menuitem, gpointer data)
 {
-	MainWindow *mainwin = (MainWindow *)mainwin_list->data;
 	PrefsAccount *account = (PrefsAccount *)data;
 
-	inc_account_mail(mainwin, account);
+	inc_account_mail(main_window_get(), account);
 }
 
 static void manual_open_cb(MainWindow *mainwin, guint action,

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -320,6 +320,8 @@ static PrefParam param[] = {
 #else
 	{"comply_gnome_hig", "TRUE", &prefs_common.comply_gnome_hig, P_BOOL},
 #endif
+
+	{"show_trayicon", "TRUE", &prefs_common.show_trayicon, P_BOOL},
 
 	/* Other */
 	{"receive_dialog_mode", "1", &prefs_common.recv_dialog_mode, P_ENUM},

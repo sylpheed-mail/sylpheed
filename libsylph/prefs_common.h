@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -220,6 +220,7 @@ struct _PrefsCommon
 	gboolean open_inbox_on_inc;
 	gboolean immediate_exec;
 	gboolean comply_gnome_hig;
+	gboolean show_trayicon;
 
 	/* Other */
 	RecvDialogMode recv_dialog_mode;

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@
 #include <gtk/gtkeventbox.h>
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkimage.h>
+#include <gtk/gtkmenu.h>
+#include <gtk/gtkmenuitem.h>
 
 #include "eggtrayicon.h"
 #include "trayicon.h"
@@ -34,6 +36,11 @@
 #include "utils.h"
 #include "eggtrayicon.h"
 #include "stock_pixmap.h"
+#include "menu.h"
+#include "main.h"
+#include "inc.h"
+#include "compose.h"
+#include "about.h"
 
 #ifdef GDK_WINDOWING_X11
 
@@ -41,6 +48,7 @@ static GtkWidget *trayicon;
 static GtkWidget *trayicon_img;
 static GtkWidget *eventbox;
 static GtkTooltips *trayicon_tip;
+static GtkWidget *trayicon_menu;
 
 static void trayicon_button_pressed	(GtkWidget	*widget,
 					 GdkEventButton	*event,
@@ -48,24 +56,68 @@ static void trayicon_button_pressed	(GtkWidget	*widget,
 static void trayicon_destroy_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 
+static void trayicon_inc		(GtkWidget	*widget,
+					 gpointer	 data);
+static void trayicon_inc_all		(GtkWidget	*widget,
+					 gpointer	 data);
+static void trayicon_send		(GtkWidget	*widget,
+					 gpointer	 data);
+static void trayicon_compose		(GtkWidget	*widget,
+					 gpointer	 data);
+static void trayicon_app_exit		(GtkWidget	*widget,
+					 gpointer	 data);
+
 GtkWidget *trayicon_create(MainWindow *mainwin)
 {
+	GtkWidget *menuitem;
+
 	trayicon = GTK_WIDGET(egg_tray_icon_new("Sylpheed"));
 	g_signal_connect(G_OBJECT(trayicon), "destroy",
 			 G_CALLBACK(trayicon_destroy_cb), mainwin);
 
 	eventbox = gtk_event_box_new();
+	gtk_widget_show(eventbox);
 	gtk_container_add(GTK_CONTAINER(trayicon), eventbox);
 	g_signal_connect(G_OBJECT(eventbox), "button_press_event",
 			 G_CALLBACK(trayicon_button_pressed), mainwin);
 	trayicon_img = stock_pixbuf_widget_scale(NULL, STOCK_PIXMAP_SYLPHEED,
 						 24, 24);
+	gtk_widget_show(trayicon_img);
 	gtk_container_add(GTK_CONTAINER(eventbox), trayicon_img);
 
 	trayicon_tip = gtk_tooltips_new();
 	gtk_tooltips_set_tip(trayicon_tip, trayicon, _("Sylpheed"), NULL);
 
-	gtk_widget_show_all(trayicon);
+	if (!trayicon_menu) {
+		trayicon_menu = gtk_menu_new();
+		gtk_widget_show(trayicon_menu);
+		MENUITEM_ADD(trayicon_menu, menuitem,
+			     _("Get from _current account"), 0);
+		g_signal_connect(G_OBJECT(menuitem), "activate",
+				 G_CALLBACK(trayicon_inc), mainwin);
+		MENUITEM_ADD(trayicon_menu, menuitem,
+			     _("Get from _all accounts"), 0);
+		g_signal_connect(G_OBJECT(menuitem), "activate",
+				 G_CALLBACK(trayicon_inc_all), mainwin);
+		MENUITEM_ADD(trayicon_menu, menuitem,
+			     _("_Send queued messages"), 0);
+		g_signal_connect(G_OBJECT(menuitem), "activate",
+				 G_CALLBACK(trayicon_send), mainwin);
+
+		MENUITEM_ADD(trayicon_menu, menuitem, NULL, 0);
+		MENUITEM_ADD(trayicon_menu, menuitem,
+			     _("Compose _new message"), 0);
+		g_signal_connect(G_OBJECT(menuitem), "activate",
+				 G_CALLBACK(trayicon_compose), mainwin);
+
+		MENUITEM_ADD(trayicon_menu, menuitem, NULL, 0);
+		MENUITEM_ADD(trayicon_menu, menuitem, _("_About"), 0);
+		g_signal_connect(G_OBJECT(menuitem), "activate",
+				 G_CALLBACK(about_show), NULL);
+		MENUITEM_ADD(trayicon_menu, menuitem, _("E_xit"), 0);
+		g_signal_connect(G_OBJECT(menuitem), "activate",
+				 G_CALLBACK(trayicon_app_exit), mainwin);
+	}
 
 	return trayicon;
 }
@@ -91,20 +143,66 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				    gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
+	GtkWindow *window = GTK_WINDOW(mainwin->window);
 
-	if (event && event->button == 1)
-		gtk_window_present(GTK_WINDOW(mainwin->window));
+	if (!event)
+		return;
+
+	if (event->button == 1) {
+		if (mainwin->window_hidden) {
+			gtk_window_set_skip_taskbar_hint(window, FALSE);
+			gtk_window_present(window);
+		} else {
+			gtk_window_set_skip_taskbar_hint(window, TRUE);
+			gtk_widget_hide(GTK_WIDGET(window));
+		}
+	} else if (event->button == 3) {
+		gtk_menu_popup(GTK_MENU(trayicon_menu), NULL, NULL, NULL, NULL,
+			       event->button, event->time);
+	}
 }
 
 static gboolean trayicon_restore(gpointer data)
 {
-	trayicon_create((MainWindow *)data);
+	MainWindow *mainwin = (MainWindow *)data;
+
+	mainwin->tray_icon = trayicon_create(mainwin);
 	return FALSE;
 }
 
 static void trayicon_destroy_cb(GtkWidget *widget, gpointer data)
 {
 	g_idle_add(trayicon_restore, data);
+}
+
+static void trayicon_inc(GtkWidget *widget, gpointer data)
+{
+	if (!inc_is_active())
+		inc_mail((MainWindow *)data);
+}
+
+static void trayicon_inc_all(GtkWidget *widget, gpointer data)
+{
+	if (!inc_is_active())
+		inc_all_account_mail((MainWindow *)data, FALSE);
+}
+
+static void trayicon_send(GtkWidget *widget, gpointer data)
+{
+	main_window_send_queue((MainWindow *)data);
+}
+
+static void trayicon_compose(GtkWidget *widget, gpointer data)
+{
+	compose_new(NULL, NULL, NULL, NULL);
+}
+
+static void trayicon_app_exit(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	if (mainwin->lock_count == 0)
+		app_will_exit(FALSE);
 }
 
 #else /* GDK_WINDOWING_X11 */

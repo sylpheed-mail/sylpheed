@@ -118,6 +118,8 @@ struct _MainWindow
 	guint menu_lock_count;
 	guint cursor_count;
 
+	gboolean window_hidden;
+
 	FolderView	*folderview;
 	SummaryView	*summaryview;
 	MessageView	*messageview;
@@ -165,6 +167,7 @@ gboolean main_window_toggle_online_if_offline	(MainWindow	*mainwin);
 void main_window_empty_trash		(MainWindow	*mainwin,
 					 gboolean	 confirm);
 void main_window_add_mailbox		(MainWindow	*mainwin);
+void main_window_send_queue		(MainWindow	*mainwin);
 
 void main_window_set_toolbar_sensitive	(MainWindow	*mainwin);
 void main_window_set_menu_sensitive	(MainWindow	*mainwin);

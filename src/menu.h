@@ -29,20 +29,20 @@
 
 #define MENU_VAL_ID "Sylpheed::Menu::ValueID"
 
-#define MENUITEM_ADD(menu, menuitem, label, data)		 \
-{								 \
-	if (label)						 \
-		menuitem = gtk_menu_item_new_with_label(label);	 \
-	else {							 \
-		menuitem = gtk_menu_item_new();			 \
-		gtk_widget_set_sensitive(menuitem, FALSE);	 \
-	}							 \
-	gtk_widget_show(menuitem);				 \
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);	 \
-	if (data)						 \
-		g_object_set_data(G_OBJECT(menuitem),		 \
-				  MENU_VAL_ID,			 \
-				  GINT_TO_POINTER(data));	 \
+#define MENUITEM_ADD(menu, menuitem, label, data)			 \
+{									 \
+	if (label)							 \
+		menuitem = gtk_menu_item_new_with_mnemonic(label);	 \
+	else {								 \
+		menuitem = gtk_menu_item_new();				 \
+		gtk_widget_set_sensitive(menuitem, FALSE);		 \
+	}								 \
+	gtk_widget_show(menuitem);					 \
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);		 \
+	if (data)							 \
+		g_object_set_data(G_OBJECT(menuitem),			 \
+				  MENU_VAL_ID,				 \
+				  GINT_TO_POINTER(data));		 \
 }
 
 #define menu_set_insensitive_all(menu_shell) \

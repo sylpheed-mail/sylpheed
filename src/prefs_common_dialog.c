@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -187,6 +187,7 @@ static struct Interface {
 	GtkWidget *checkbtn_immedexec;
 #ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
+	GtkWidget *checkbtn_show_trayicon;
 #endif
 } interface;
 
@@ -456,6 +457,8 @@ static PrefsUIData ui_data[] = {
 
 #ifndef G_OS_WIN32
 	{"comply_gnome_hig", &interface.checkbtn_comply_gnome_hig,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"show_trayicon", &interface.checkbtn_show_trayicon,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif
 
@@ -2016,6 +2019,7 @@ static void prefs_details_create(void)
 	GtkWidget *label;
 #ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
+	GtkWidget *checkbtn_show_trayicon;
 #endif
 
 	GtkWidget *button_keybind;
@@ -2077,8 +2081,14 @@ static void prefs_details_create(void)
 			    "if this is turned off."));
 
 #ifndef G_OS_WIN32
-	PACK_CHECK_BUTTON (vbox_tab, checkbtn_comply_gnome_hig,
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), vbox2, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_comply_gnome_hig,
 			   _("Make the order of buttons comply with GNOME HIG"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_show_trayicon,
+			   _("Display tray icon"));
 #endif
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
@@ -2112,6 +2122,7 @@ static void prefs_details_create(void)
 
 #ifndef G_OS_WIN32
 	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
+	interface.checkbtn_show_trayicon = checkbtn_show_trayicon;
 #endif
 }
 
