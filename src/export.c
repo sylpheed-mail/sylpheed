@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,25 +55,31 @@ static GtkWidget *src_button;
 static GtkWidget *file_button;
 static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
+static gboolean export_finished;
 static gboolean export_ack;
 
-static void export_create(void);
-static void export_ok_cb(GtkWidget *widget, gpointer data);
-static void export_cancel_cb(GtkWidget *widget, gpointer data);
-static void export_srcsel_cb(GtkWidget *widget, gpointer data);
-static void export_filesel_cb(GtkWidget *widget, gpointer data);
-static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data);
-static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data);
+static void export_create	(void);
+static void export_ok_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static void export_cancel_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static void export_srcsel_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static void export_filesel_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static gint delete_event	(GtkWidget	*widget,
+				 GdkEventAny	*event,
+				 gpointer	 data);
+static gboolean key_pressed	(GtkWidget	*widget,
+				 GdkEventKey	*event,
+				 gpointer	 data);
 
 gint export_mbox(FolderItem *default_src)
 {
 	gint ok = 0;
 	gchar *src_id = NULL;
 
-	if (!window)
-		export_create();
-	else
-		gtk_widget_show(window);
+	export_create();
 
 	change_dir(get_startup_dir());
 
@@ -83,14 +89,16 @@ gint export_mbox(FolderItem *default_src)
 	if (src_id) {
 		gtk_entry_set_text(GTK_ENTRY(src_entry), src_id);
 		g_free(src_id);
-	} else
-		gtk_entry_set_text(GTK_ENTRY(src_entry), "");
-	gtk_entry_set_text(GTK_ENTRY(file_entry), "");
+	}
 	gtk_widget_grab_focus(file_entry);
 
 	manage_window_set_transient(GTK_WINDOW(window));
 
-	gtk_main();
+	export_finished = FALSE;
+	export_ack = FALSE;
+
+	while (!export_finished)
+		gtk_main_iteration();
 
 	if (export_ack) {
 		const gchar *srcdir, *utf8mbox;
@@ -119,7 +127,10 @@ gint export_mbox(FolderItem *default_src)
 		}
 	}
 
-	gtk_widget_hide(window);
+	gtk_widget_destroy(window);
+	window = NULL;
+	src_entry = file_entry = NULL;
+	src_button = file_button = ok_button = cancel_button = NULL;
 
 	return ok;
 }
@@ -211,16 +222,14 @@ static void export_create(void)
 
 static void export_ok_cb(GtkWidget *widget, gpointer data)
 {
+	export_finished = TRUE;
 	export_ack = TRUE;
-	if (gtk_main_level() > 1)
-		gtk_main_quit();
 }
 
 static void export_cancel_cb(GtkWidget *widget, gpointer data)
 {
+	export_finished = TRUE;
 	export_ack = FALSE;
-	if (gtk_main_level() > 1)
-		gtk_main_quit();
 }
 
 static void export_filesel_cb(GtkWidget *widget, gpointer data)

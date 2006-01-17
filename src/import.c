@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,40 +56,48 @@ static GtkWidget *file_button;
 static GtkWidget *dest_button;
 static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
+static gboolean import_finished;
 static gboolean import_ack;
 
-static void import_create(void);
-static void import_ok_cb(GtkWidget *widget, gpointer data);
-static void import_cancel_cb(GtkWidget *widget, gpointer data);
-static void import_filesel_cb(GtkWidget *widget, gpointer data);
-static void import_destsel_cb(GtkWidget *widget, gpointer data);
-static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data);
-static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data);
+static void import_create	(void);
+static void import_ok_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static void import_cancel_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static void import_filesel_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static void import_destsel_cb	(GtkWidget	*widget,
+				 gpointer	 data);
+static gint delete_event	(GtkWidget	*widget,
+				 GdkEventAny	*event,
+				 gpointer	 data);
+static gboolean key_pressed	(GtkWidget	*widget,
+				 GdkEventKey	*event,
+				 gpointer	 data);
 
 gint import_mbox(FolderItem *default_dest)
 {
 	gint ok = 0;
 	gchar *dest_id = NULL;
 
-	if (!window)
-		import_create();
-	else
-		gtk_widget_show(window);
+	import_create();
 
-	gtk_entry_set_text(GTK_ENTRY(file_entry), "");
 	if (default_dest && default_dest->path)
 		dest_id = folder_item_get_identifier(default_dest);
 
 	if (dest_id) {
 		gtk_entry_set_text(GTK_ENTRY(dest_entry), dest_id);
 		g_free(dest_id);
-	} else
-		gtk_entry_set_text(GTK_ENTRY(dest_entry), "");
+	}
 	gtk_widget_grab_focus(file_entry);
 
 	manage_window_set_transient(GTK_WINDOW(window));
 
-	gtk_main();
+	import_finished = FALSE;
+	import_ack = FALSE;
+
+	while (!import_finished)
+		gtk_main_iteration();
 
 	if (import_ack) {
 		const gchar *utf8filename, *destdir;
@@ -125,7 +133,10 @@ gint import_mbox(FolderItem *default_dest)
 		}
 	}
 
-	gtk_widget_hide(window);
+	gtk_widget_destroy(window);
+	window = NULL;
+	file_entry = dest_entry = NULL;
+	file_button = dest_button = ok_button = cancel_button = NULL;
 
 	return ok;
 }
@@ -217,16 +228,14 @@ static void import_create(void)
 
 static void import_ok_cb(GtkWidget *widget, gpointer data)
 {
+	import_finished = TRUE;
 	import_ack = TRUE;
-	if (gtk_main_level() > 1)
-		gtk_main_quit();
 }
 
 static void import_cancel_cb(GtkWidget *widget, gpointer data)
 {
+	import_finished = TRUE;
 	import_ack = FALSE;
-	if (gtk_main_level() > 1)
-		gtk_main_quit();
 }
 
 static void import_filesel_cb(GtkWidget *widget, gpointer data)
