@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -553,7 +553,7 @@ GSList *news_get_group_list(Folder *folder)
 			return NULL;
 		}
 		if (recv_write_to_file(SESSION(session)->sock, filename) < 0) {
-			log_warning(_("can't retrieve newsgroup list\n"));
+			log_warning("can't retrieve newsgroup list\n");
 			session_destroy(SESSION(session));
 			REMOTE_FOLDER(folder)->session = NULL;
 			g_free(filename);
@@ -576,13 +576,20 @@ GSList *news_get_group_list(Folder *folder)
 		NewsGroupInfo *ginfo;
 
 		p = strchr(p, ' ');
-		if (!p) continue;
+		if (!p) {
+			strretchomp(buf);
+			log_warning("invalid LIST response: %s\n", buf);
+			continue;
+		}
 		*p = '\0';
 		p++;
 		name = buf;
 
-		if (sscanf(p, "%d %d %c", &last_num, &first_num, &type) < 3)
+		if (sscanf(p, "%d %d %c", &last_num, &first_num, &type) < 3) {
+			strretchomp(p);
+			log_warning("invalid LIST response: %s %s\n", name, p);
 			continue;
+		}
 
 		ginfo = news_group_info_new(name, first_num, last_num, type);
 
