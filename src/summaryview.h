@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,11 @@ struct _SummaryColumnState
 struct _SummaryView
 {
 	GtkWidget *vbox;
+
+	GtkWidget *search_hbox;
+	GtkWidget *search_label;
+	GtkWidget *search_entry;
+
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
 
@@ -117,8 +122,15 @@ private:
 	/* table for looking up message-id */
 	GHashTable *msgid_table;
 
+	/* all message list */
+	GSList *all_mlist;
+	/* filtered message list */
+	GSList *flt_mlist;
+
+	gboolean on_filter;
+
 	/* list for moving/deleting messages */
-	GSList *mlist;
+	GSList *tmp_mlist;
 	/* table for updating folder tree */
 	GHashTable *folder_table;
 	/* counter for filtering */

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkversion.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtklabel.h>
+#include <gtk/gtkentry.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
@@ -228,6 +230,12 @@ static GtkWidget *summary_tree_view_create
 					(SummaryView	*summaryview);
 
 /* callback functions */
+static void summary_search_entry_changed(GtkWidget		*entry,
+					 SummaryView		*summaryview);
+static void summary_search_entry_activated
+					(GtkWidget		*entry,
+					 SummaryView		*summaryview);
+
 static gboolean summary_toggle_pressed	(GtkWidget		*eventbox,
 					 GdkEventButton		*event,
 					 SummaryView		*summaryview);
@@ -443,6 +451,9 @@ SummaryView *summary_create(void)
 {
 	SummaryView *summaryview;
 	GtkWidget *vbox;
+	GtkWidget *search_hbox;
+	GtkWidget *search_label;
+	GtkWidget *search_entry;
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
 	GtkTreeStore *store;
@@ -465,6 +476,22 @@ SummaryView *summary_create(void)
 	summaryview = g_new0(SummaryView, 1);
 
 	vbox = gtk_vbox_new(FALSE, 1);
+
+	search_hbox = gtk_hbox_new(FALSE, 4);
+	gtk_container_set_border_width(GTK_CONTAINER(search_hbox), 2);
+	gtk_box_pack_start(GTK_BOX(vbox), search_hbox, FALSE, FALSE, 0);
+
+	search_label = gtk_label_new(_("Search:"));
+	gtk_box_pack_start(GTK_BOX(search_hbox), search_label, FALSE, FALSE, 0);
+
+	search_entry = gtk_entry_new();
+	gtk_widget_set_size_request(search_entry, 200, -1);
+	gtk_box_pack_start(GTK_BOX(search_hbox), search_entry, FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT(search_entry), "changed",
+			 G_CALLBACK(summary_search_entry_changed), summaryview);
+	g_signal_connect(G_OBJECT(search_entry), "activate",
+			 G_CALLBACK(summary_search_entry_activated),
+			 summaryview);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -521,6 +548,9 @@ SummaryView *summary_create(void)
 				      summaryview);
 
 	summaryview->vbox = vbox;
+	summaryview->search_hbox = search_hbox;
+	summaryview->search_label = search_label;
+	summaryview->search_entry = search_entry;
 	summaryview->scrolledwin = scrolledwin;
 	summaryview->treeview = treeview;
 	summaryview->store = store;
@@ -598,7 +628,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
-	GSList *mlist = NULL;
+	GSList *mlist;
 	gchar *buf;
 	gboolean is_refresh;
 	guint selected_msgnum = 0;
@@ -688,11 +718,10 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	/* set tree store and hash table from the msginfo list, and
 	   create the thread */
 	summary_set_tree_model_from_list(summaryview, mlist);
+	summaryview->all_mlist = mlist;
 
 	if (mlist)
 		gtk_widget_grab_focus(GTK_WIDGET(treeview));
-
-	g_slist_free(mlist);
 
 	summary_write_cache(summaryview);
 
@@ -774,25 +803,10 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	return TRUE;
 }
 
-static gboolean summary_free_msginfo_func(GtkTreeModel *model,
-					  GtkTreePath *path, GtkTreeIter *iter,
-					  gpointer data)
-{
-	MsgInfo *msginfo;
-
-	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
-	procmsg_msginfo_free(msginfo);
-
-	return FALSE;
-}
-
 void summary_clear_list(SummaryView *summaryview)
 {
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
 	GtkAdjustment *adj;
-
-	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
-			       summary_free_msginfo_func, NULL);
 
 	if (summaryview->folder_item) {
 		folder_item_close(summaryview->folder_item);
@@ -812,7 +826,7 @@ void summary_clear_list(SummaryView *summaryview)
 
 	summary_msgid_table_destroy(summaryview);
 
-	summaryview->mlist = NULL;
+	summaryview->tmp_mlist = NULL;
 	if (summaryview->folder_table) {
 		g_hash_table_destroy(summaryview->folder_table);
 		summaryview->folder_table = NULL;
@@ -832,6 +846,16 @@ void summary_clear_list(SummaryView *summaryview)
 		g_free(summaryview->drag_list);
 		summaryview->drag_list = NULL;
 	}
+
+	if (summaryview->flt_mlist) {
+		g_slist_free(summaryview->flt_mlist);
+		summaryview->flt_mlist = NULL;
+	}
+	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+	summaryview->on_filter = FALSE;
+
+	procmsg_msg_list_free(summaryview->all_mlist);
+	summaryview->all_mlist = NULL;
 
 	gtk_tree_view_set_model(treeview, NULL);
 	gtk_tree_store_clear(summaryview->store);
@@ -932,19 +956,14 @@ GSList *summary_get_selected_msg_list(SummaryView *summaryview)
 
 GSList *summary_get_changed_msg_list(SummaryView *summaryview)
 {
-	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GtkTreeIter iter;
-	GSList *mlist = NULL;
 	MsgInfo *msginfo;
-	gboolean valid;
+	GSList *mlist = NULL;
+	GSList *cur;
 
-	valid = gtk_tree_model_get_iter_first(model, &iter);
-
-	while (valid) {
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
 		if (MSG_IS_FLAG_CHANGED(msginfo->flags))
 			mlist = g_slist_prepend(mlist, msginfo);
-		valid = gtkut_tree_model_next(model, &iter);
 	}
 
 	return g_slist_reverse(mlist);
@@ -952,21 +971,10 @@ GSList *summary_get_changed_msg_list(SummaryView *summaryview)
 
 GSList *summary_get_msg_list(SummaryView *summaryview)
 {
-	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GtkTreeIter iter;
-	GSList *mlist = NULL;
-	MsgInfo *msginfo;
-	gboolean valid;
-
-	valid = gtk_tree_model_get_iter_first(model, &iter);
-
-	while (valid) {
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
-		mlist = g_slist_prepend(mlist, msginfo);
-		valid = gtkut_tree_model_next(model, &iter);
-	}
-
-	return g_slist_reverse(mlist);
+	if (summaryview->on_filter)
+		return g_slist_copy(summaryview->flt_mlist);
+	else
+		return g_slist_copy(summaryview->all_mlist);
 }
 
 static gboolean summary_msgid_table_create_func(GtkTreeModel *model,
@@ -2138,32 +2146,12 @@ struct wcachefp
 	FILE *mark_fp;
 };
 
-static gboolean summary_write_cache_func(GtkTreeModel *model,
-					 GtkTreePath *path, GtkTreeIter *iter,
-					 gpointer data)
-{
-	struct wcachefp *fps = data;
-	MsgInfo *msginfo;
-
-	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
-
-	if (msginfo->folder->mark_queue != NULL) {
-		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW);
-	}
-
-	if (fps->cache_fp)
-		procmsg_write_cache(msginfo, fps->cache_fp);
-	if (fps->mark_fp)
-		procmsg_write_flags(msginfo, fps->mark_fp);
-
-	return FALSE;
-}
-
 gint summary_write_cache(SummaryView *summaryview)
 {
 	struct wcachefp fps;
 	FolderItem *item;
 	gchar *buf;
+	GSList *cur;
 
 	item = summaryview->folder_item;
 	if (!item || !item->path)
@@ -2200,8 +2188,17 @@ gint summary_write_cache(SummaryView *summaryview)
 		g_free(buf);
 	}
 
-	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
-			       summary_write_cache_func, &fps);
+	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+
+		if (msginfo->folder->mark_queue != NULL) {
+			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW);
+		}
+		if (fps.cache_fp)
+			procmsg_write_cache(msginfo, fps.cache_fp);
+		if (fps.mark_fp)
+			procmsg_write_flags(msginfo, fps.mark_fp);
+	}
 
 	if (item->mark_queue)
 		procmsg_flush_mark_queue(item, fps.mark_fp);
@@ -3284,6 +3281,11 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 		}
 
 		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
+		summaryview->all_mlist = g_slist_remove(summaryview->all_mlist,
+							msginfo);
+		if (summaryview->flt_mlist)
+			summaryview->flt_mlist =
+				g_slist_remove(summaryview->flt_mlist, msginfo);
 		procmsg_msginfo_free(msginfo);
 
 		item->cache_dirty = TRUE;
@@ -3339,8 +3341,8 @@ static gboolean summary_execute_move_func(GtkTreeModel *model,
 		g_hash_table_insert(summaryview->folder_table,
 				    msginfo->to_folder, GINT_TO_POINTER(1));
 
-		summaryview->mlist =
-			g_slist_prepend(summaryview->mlist, msginfo);
+		summaryview->tmp_mlist =
+			g_slist_prepend(summaryview->tmp_mlist, msginfo);
 
 		MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE);
 		summary_set_row(summaryview, iter, msginfo);
@@ -3359,16 +3361,17 @@ static gint summary_execute_move(SummaryView *summaryview)
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store), 
 			       summary_execute_move_func, summaryview);
 
-	if (summaryview->mlist) {
-		summaryview->mlist = g_slist_reverse(summaryview->mlist);
-		val = procmsg_move_messages(summaryview->mlist);
+	if (summaryview->tmp_mlist) {
+		summaryview->tmp_mlist =
+			g_slist_reverse(summaryview->tmp_mlist);
+		val = procmsg_move_messages(summaryview->tmp_mlist);
 
 		folder_item_scan_foreach(summaryview->folder_table);
 		folderview_update_item_foreach(summaryview->folder_table,
 					       FALSE);
 
-		g_slist_free(summaryview->mlist);
-		summaryview->mlist = NULL;
+		g_slist_free(summaryview->tmp_mlist);
+		summaryview->tmp_mlist = NULL;
 	}
 
 	g_hash_table_destroy(summaryview->folder_table);
@@ -3390,8 +3393,8 @@ static gboolean summary_execute_copy_func(GtkTreeModel *model,
 		g_hash_table_insert(summaryview->folder_table,
 				    msginfo->to_folder, GINT_TO_POINTER(1));
 
-		summaryview->mlist =
-			g_slist_prepend(summaryview->mlist, msginfo);
+		summaryview->tmp_mlist =
+			g_slist_prepend(summaryview->tmp_mlist, msginfo);
 
 		MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_COPY);
 		summary_set_row(summaryview, iter, msginfo);
@@ -3410,16 +3413,17 @@ static gint summary_execute_copy(SummaryView *summaryview)
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store), 
 			       summary_execute_copy_func, summaryview);
 
-	if (summaryview->mlist) {
-		summaryview->mlist = g_slist_reverse(summaryview->mlist);
-		val = procmsg_copy_messages(summaryview->mlist);
+	if (summaryview->tmp_mlist) {
+		summaryview->tmp_mlist =
+			g_slist_reverse(summaryview->tmp_mlist);
+		val = procmsg_copy_messages(summaryview->tmp_mlist);
 
 		folder_item_scan_foreach(summaryview->folder_table);
 		folderview_update_item_foreach(summaryview->folder_table,
 					       FALSE);
 
-		g_slist_free(summaryview->mlist);
-		summaryview->mlist = NULL;
+		g_slist_free(summaryview->tmp_mlist);
+		summaryview->tmp_mlist = NULL;
 	}
 
 	g_hash_table_destroy(summaryview->folder_table);
@@ -3438,8 +3442,8 @@ static gboolean summary_execute_delete_func(GtkTreeModel *model,
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
 
 	if (msginfo && MSG_IS_DELETED(msginfo->flags)) {
-		summaryview->mlist =
-			g_slist_prepend(summaryview->mlist, msginfo);
+		summaryview->tmp_mlist =
+			g_slist_prepend(summaryview->tmp_mlist, msginfo);
 	}
 
 	return FALSE;
@@ -3459,17 +3463,17 @@ static gint summary_execute_delete(SummaryView *summaryview)
 	gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store), 
 			       summary_execute_delete_func, summaryview);
 
-	if (!summaryview->mlist) return 0;
+	if (!summaryview->tmp_mlist) return 0;
 
-	summaryview->mlist = g_slist_reverse(summaryview->mlist);
+	summaryview->tmp_mlist = g_slist_reverse(summaryview->tmp_mlist);
 
 	if (summaryview->folder_item != trash)
-		val = folder_item_move_msgs(trash, summaryview->mlist);
+		val = folder_item_move_msgs(trash, summaryview->tmp_mlist);
 	else
-		val = folder_item_remove_msgs(trash, summaryview->mlist);
+		val = folder_item_remove_msgs(trash, summaryview->tmp_mlist);
 
-	g_slist_free(summaryview->mlist);
-	summaryview->mlist = NULL;
+	g_slist_free(summaryview->tmp_mlist);
+	summaryview->tmp_mlist = NULL;
 
 	if (summaryview->folder_item != trash) {
 		folder_item_scan(trash);
@@ -3751,8 +3755,14 @@ static GNode *summary_get_modified_node(SummaryView *summaryview,
 		g_node_insert_after(parent, sibling, node);
 		parent = node;
 		sibling = NULL;
-	} else
+	} else {
+		summaryview->all_mlist = g_slist_remove(summaryview->all_mlist,
+							msginfo);
+		if (summaryview->flt_mlist)
+			summaryview->flt_mlist =
+				g_slist_remove(summaryview->flt_mlist, msginfo);
 		procmsg_msginfo_free(msginfo);
+	}
 
 	valid = gtk_tree_model_iter_children(model, &child, iter);
 
@@ -4678,8 +4688,97 @@ void summary_get_column_order(SummaryView *summaryview)
 	g_list_free(columns);
 }
 
+void summary_qsearch_reset(SummaryView *summaryview)
+{
+	summary_lock(summaryview);
+	main_window_cursor_wait(summaryview->mainwin);
+
+	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
+	gtk_tree_store_clear(summaryview->store);
+	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
+				GTK_TREE_MODEL(summaryview->store));
+	summary_set_tree_model_from_list(summaryview, summaryview->all_mlist);
+
+	main_window_cursor_normal(summaryview->mainwin);
+	summary_unlock(summaryview);
+}
+
+void summary_qsearch(SummaryView *summaryview)
+{
+	const gchar *key;
+	FilterRule *rule;
+	FilterCond *cond;
+	FilterInfo fltinfo;
+	GSList *cond_list = NULL;
+	GSList *flt_mlist = NULL;
+	GSList *cur;
+
+	summaryview->on_filter = FALSE;
+	g_slist_free(summaryview->flt_mlist);
+	summaryview->flt_mlist = NULL;
+
+	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
+	if (!key || *key == '\0') {
+		summary_qsearch_reset(summaryview);
+		return;
+	}
+
+	cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0, "Subject", key);
+	cond_list = g_slist_append(cond_list, cond);
+	cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0, "From", key);
+	cond_list = g_slist_append(cond_list, cond);
+
+	rule = filter_rule_new("Quick search rule", FLT_OR, cond_list, NULL);
+
+	summary_lock(summaryview);
+	main_window_cursor_wait(summaryview->mainwin);
+
+	memset(&fltinfo, 0, sizeof(FilterInfo));
+
+	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		GSList *hlist;
+
+		hlist = procheader_get_header_list_from_msginfo(msginfo);
+		if (!hlist)
+			continue;
+
+		if (filter_match_rule(rule, msginfo, hlist, &fltinfo))
+			flt_mlist = g_slist_prepend(flt_mlist, msginfo);
+
+		procheader_header_list_destroy(hlist);
+	}
+	flt_mlist = g_slist_reverse(flt_mlist);
+
+	filter_rule_free(rule);
+
+	summaryview->on_filter = TRUE;
+	summaryview->flt_mlist = flt_mlist;
+
+	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
+	gtk_tree_store_clear(summaryview->store);
+	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
+				GTK_TREE_MODEL(summaryview->store));
+	summary_set_tree_model_from_list(summaryview, flt_mlist);
+
+	main_window_cursor_normal(summaryview->mainwin);
+	summary_unlock(summaryview);
+}
+
 
 /* callback functions */
+
+static void summary_search_entry_changed(GtkWidget *entry,
+					 SummaryView *summaryview)
+{
+}
+
+static void summary_search_entry_activated(GtkWidget *entry,
+					   SummaryView *summaryview)
+{
+	gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
+	summary_qsearch(summaryview);
+}
 
 static gboolean summary_toggle_pressed(GtkWidget *eventbox,
 				       GdkEventButton *event,

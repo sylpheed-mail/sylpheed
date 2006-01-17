@@ -164,6 +164,10 @@ static void ac_label_button_pressed		(GtkWidget	*widget,
 static void ac_menu_popup_closed		(GtkMenuShell	*menu_shell,
 						 gpointer	 data);
 
+static gboolean main_window_key_pressed		(GtkWidget	*widget,
+						 GdkEventKey	*event,
+						 gpointer	 data);
+
 static gint main_window_close_cb		(GtkWidget	*widget,
 						 GdkEventAny	*event,
 						 gpointer	 data);
@@ -837,6 +841,8 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_window_set_title(GTK_WINDOW(window), PROG_VERSION);
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
 	gtk_window_set_wmclass(GTK_WINDOW(window), "main_window", "Sylpheed");
+	g_signal_connect(G_OBJECT(window), "key_press_event",
+			 G_CALLBACK(main_window_key_pressed), mainwin);
 
 	if (!geometry.min_height) {
 		geometry.min_width = 320;
@@ -2638,6 +2644,49 @@ static void ac_menu_popup_closed(GtkMenuShell *menu_shell, gpointer data)
 	manage_window_focus_in(mainwin->window, NULL, NULL);
 }
 
+static gboolean main_window_key_pressed(GtkWidget *widget, GdkEventKey *event,
+					gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	if (!mainwin)
+		return FALSE;
+
+	if (GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->search_entry)) {
+		/* g_print("keyval: %d, state: %d\n",
+			   event->keyval, event->state); */
+		if ((event->state & (GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
+			return FALSE;
+
+		if (gtk_accel_group_query(mainwin->menu_factory->accel_group,
+					  event->keyval,
+					  event->state & ~GDK_LOCK_MASK,
+					  NULL) != NULL) {
+			gunichar ch;
+
+			ch = gdk_keyval_to_unicode(event->keyval);
+			if (ch != 0) {
+				gchar str[7];
+				gint len;
+				gint pos;
+				GtkEditable *editable;
+
+				editable = GTK_EDITABLE
+					(mainwin->summaryview->search_entry);
+				len = g_unichar_to_utf8(ch, str);
+				gtk_editable_delete_selection(editable);
+				pos = gtk_editable_get_position(editable);
+				gtk_editable_insert_text
+					(editable, str, len, &pos);
+				gtk_editable_set_position(editable, pos);
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
 static gint main_window_close_cb(GtkWidget *widget, GdkEventAny *event,
 				 gpointer data)
 {
@@ -3292,6 +3341,10 @@ static void allsel_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 
 	if (GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->treeview))
 		summary_select_all(mainwin->summaryview);
+	else if (GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->search_entry))
+		gtk_editable_select_region
+			(GTK_EDITABLE(mainwin->summaryview->search_entry),
+			 0, -1);
 	else if (messageview_is_visible(msgview) &&
 		 (GTK_WIDGET_HAS_FOCUS(msgview->textview->text) ||
 		  GTK_WIDGET_HAS_FOCUS(msgview->mimeview->textview->text)))
