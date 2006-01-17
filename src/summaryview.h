@@ -259,4 +259,7 @@ void summary_set_colorlabel	  (SummaryView		*summaryview,
 void summary_set_column_order	  (SummaryView		*summaryview);
 void summary_get_column_order	  (SummaryView		*summaryview);
 
+void summary_qsearch_reset	  (SummaryView		*summaryview);
+void summary_qsearch		  (SummaryView		*summaryview);
+
 #endif /* __SUMMARY_H__ */

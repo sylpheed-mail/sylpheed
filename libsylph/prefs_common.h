@@ -107,6 +107,7 @@ struct _PrefsCommon
 	gboolean bold_unread;
 
 	ToolbarStyle toolbar_style;
+	gboolean show_searchbar;
 	gboolean show_statusbar;
 
 	/* Summary columns visibility, position and size */

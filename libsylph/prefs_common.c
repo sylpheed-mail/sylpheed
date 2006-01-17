@@ -125,6 +125,7 @@ static PrefParam param[] = {
 	{"bold_unread", "TRUE", &prefs_common.bold_unread, P_BOOL},
 
 	{"toolbar_style", "3", &prefs_common.toolbar_style, P_ENUM},
+	{"show_searchbar", "TRUE", &prefs_common.show_searchbar, P_BOOL},
 	{"show_statusbar", "TRUE", &prefs_common.show_statusbar, P_BOOL},
 
 	{"summary_col_show_mark", "TRUE",

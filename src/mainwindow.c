@@ -254,6 +254,9 @@ static void toggle_message_cb	 (MainWindow	*mainwin,
 static void toggle_toolbar_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+static void toggle_searchbar_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
 static void toggle_statusbar_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
@@ -528,6 +531,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, toggle_toolbar_cb, TOOLBAR_TEXT, "/View/Show or hide/Toolbar/Icon and text"},
 	{N_("/_View/Show or hi_de/_Toolbar/_None"),
 						NULL, toggle_toolbar_cb, TOOLBAR_NONE, "/View/Show or hide/Toolbar/Icon and text"},
+	{N_("/_View/Show or hi_de/_Search bar"),
+						NULL, toggle_searchbar_cb, 0, "<ToggleItem>"},
 	{N_("/_View/Show or hi_de/Status _bar"),
 						NULL, toggle_statusbar_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
@@ -1041,6 +1046,12 @@ MainWindow *main_window_create(SeparateType type)
 			(ifactory, "/View/Show or hide/Toolbar/Icon and text");
 	}
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
+
+	gtk_widget_hide(summaryview->search_hbox);
+	menuitem = gtk_item_factory_get_item
+		(ifactory, "/View/Show or hide/Search bar");
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
+				       prefs_common.show_searchbar);
 
 	gtk_widget_hide(mainwin->statusbar);
 	menuitem = gtk_item_factory_get_item
@@ -2971,6 +2982,19 @@ static void toggle_toolbar_cb(MainWindow *mainwin, guint action,
 
 	mainwin->toolbar_style = (ToolbarStyle)action;
 	prefs_common.toolbar_style = (ToolbarStyle)action;
+}
+
+static void toggle_searchbar_cb(MainWindow *mainwin, guint action,
+				GtkWidget *widget)
+{
+	if (GTK_CHECK_MENU_ITEM(widget)->active) {
+		gtk_widget_show(mainwin->summaryview->search_hbox);
+		prefs_common.show_searchbar = TRUE;
+	} else {
+		gtk_widget_hide(mainwin->summaryview->search_hbox);
+		summary_qsearch_reset(mainwin->summaryview);
+		prefs_common.show_searchbar = FALSE;
+	}
 }
 
 static void toggle_statusbar_cb(MainWindow *mainwin, guint action,

@@ -4690,6 +4690,15 @@ void summary_get_column_order(SummaryView *summaryview)
 
 void summary_qsearch_reset(SummaryView *summaryview)
 {
+	if (!summaryview->on_filter)
+		return;
+
+	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+
+	summaryview->on_filter = FALSE;
+	g_slist_free(summaryview->flt_mlist);
+	summaryview->flt_mlist = NULL;
+
 	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
 
@@ -4713,15 +4722,18 @@ void summary_qsearch(SummaryView *summaryview)
 	GSList *flt_mlist = NULL;
 	GSList *cur;
 
-	summaryview->on_filter = FALSE;
-	g_slist_free(summaryview->flt_mlist);
-	summaryview->flt_mlist = NULL;
+	if (!summaryview->all_mlist)
+		return;
 
 	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
 	if (!key || *key == '\0') {
 		summary_qsearch_reset(summaryview);
 		return;
 	}
+
+	summaryview->on_filter = FALSE;
+	g_slist_free(summaryview->flt_mlist);
+	summaryview->flt_mlist = NULL;
 
 	cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0, "Subject", key);
 	cond_list = g_slist_append(cond_list, cond);
