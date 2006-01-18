@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -454,6 +454,7 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	GtkWidget *match_type_optmenu;
 	GtkWidget *size_match_optmenu;
 	GtkWidget *age_match_optmenu;
+	GtkWidget *status_match_optmenu;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GtkWidget *key_entry;
@@ -494,6 +495,12 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	COND_MENUITEM_ADD(_("Result of command"), PF_COND_CMD_TEST);
 	COND_MENUITEM_ADD(_("Size"),              PF_COND_SIZE);
 	COND_MENUITEM_ADD(_("Age"),               PF_COND_AGE);
+
+	MENUITEM_ADD(menu, menuitem, NULL,        PF_COND_SEPARATOR);
+	COND_MENUITEM_ADD(_("Unread"),            PF_COND_UNREAD);
+	COND_MENUITEM_ADD(_("Marked"),            PF_COND_MARK);
+	COND_MENUITEM_ADD(_("Has color label"),   PF_COND_COLOR_LABEL);
+	COND_MENUITEM_ADD(_("Has attachment"),    PF_COND_MIME);
 	/* COND_MENUITEM_ADD(_("Account"),           PF_COND_ACCOUNT); */
 
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(cond_type_optmenu), menu);
@@ -540,6 +547,18 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	MENUITEM_ADD(menu, menuitem, _("is shorter than"), PF_AGE_SHORTER);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(age_match_optmenu), menu);
 
+	status_match_optmenu = gtk_option_menu_new();
+	gtk_widget_show(status_match_optmenu);
+	gtk_box_pack_start(GTK_BOX(hbox), status_match_optmenu,
+			   FALSE, FALSE, 0);
+
+	menu = gtk_menu_new();
+	gtk_widget_show(menu);
+	MENUITEM_ADD(menu, menuitem, _("matches to status"), PF_STATUS_MATCH);
+	MENUITEM_ADD(menu, menuitem, _("doesn't match to status"),
+		     PF_STATUS_NOT_MATCH);
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(status_match_optmenu), menu);
+
 	key_entry = gtk_entry_new();
 	gtk_widget_show(key_entry);
 	gtk_box_pack_start(GTK_BOX(hbox), key_entry, TRUE, TRUE, 0);
@@ -580,6 +599,7 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	cond_hbox->match_type_optmenu = match_type_optmenu;
 	cond_hbox->size_match_optmenu = size_match_optmenu;
 	cond_hbox->age_match_optmenu = age_match_optmenu;
+	cond_hbox->status_match_optmenu = status_match_optmenu;
 	cond_hbox->key_entry = key_entry;
 	cond_hbox->spin_btn = spin_btn;
 	cond_hbox->label = label;
@@ -747,6 +767,7 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 	MatchMenuType match_type = PF_MATCH_NONE;
 	SizeMatchType size_type = PF_SIZE_LARGER;
 	AgeMatchType age_type = PF_AGE_LONGER;
+	StatusMatchType status_type = PF_STATUS_MATCH;
 
 	switch (cond->type) {
 	case FLT_COND_HEADER:
@@ -773,6 +794,14 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 		else
 			age_type = PF_AGE_LONGER;
 		break;
+	case FLT_COND_UNREAD:
+		cond_type = PF_COND_UNREAD; break;
+	case FLT_COND_MARK:
+		cond_type = PF_COND_MARK; break;
+	case FLT_COND_COLOR_LABEL:
+		cond_type = PF_COND_COLOR_LABEL; break;
+	case FLT_COND_MIME:
+		cond_type = PF_COND_MIME; break;
 	case FLT_COND_ACCOUNT:
 		cond_type = PF_COND_ACCOUNT; break;
 	default:
@@ -804,6 +833,15 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 				match_type = PF_MATCH_REGEX;
 			break;
 		}
+		break;
+	case FLT_COND_UNREAD:
+	case FLT_COND_MARK:
+	case FLT_COND_COLOR_LABEL:
+	case FLT_COND_MIME:
+		if (FLT_IS_NOT_MATCH(cond->match_flag))
+			status_type = PF_STATUS_NOT_MATCH;
+		else
+			status_type = PF_STATUS_MATCH;
 		break;
 	default:
 		break;
@@ -843,6 +881,11 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 	else if (cond_type == PF_COND_AGE)
 		gtk_option_menu_set_history
 			(GTK_OPTION_MENU(hbox->age_match_optmenu), age_type);
+	else if (cond_type == PF_COND_UNREAD || cond_type == PF_COND_MARK ||
+		 cond_type == PF_COND_COLOR_LABEL || cond_type == PF_COND_MIME)
+		gtk_option_menu_set_history
+			(GTK_OPTION_MENU(hbox->status_match_optmenu),
+			 status_type);
 }
 
 void prefs_filter_edit_action_hbox_set(ActionHBox *hbox, FilterAction *action)
@@ -933,6 +976,7 @@ void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 		gtk_widget_show(hbox->match_type_optmenu);
 		gtk_widget_hide(hbox->size_match_optmenu);
 		gtk_widget_hide(hbox->age_match_optmenu);
+		gtk_widget_hide(hbox->status_match_optmenu);
 		gtk_widget_show(hbox->key_entry);
 		gtk_widget_hide(hbox->spin_btn);
 		gtk_widget_hide(hbox->label);
@@ -941,6 +985,7 @@ void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 		gtk_widget_hide(hbox->match_type_optmenu);
 		gtk_widget_hide(hbox->size_match_optmenu);
 		gtk_widget_hide(hbox->age_match_optmenu);
+		gtk_widget_hide(hbox->status_match_optmenu);
 		gtk_widget_show(hbox->key_entry);
 		gtk_widget_hide(hbox->spin_btn);
 		gtk_widget_hide(hbox->label);
@@ -949,6 +994,7 @@ void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 		gtk_widget_hide(hbox->match_type_optmenu);
 		gtk_widget_show(hbox->size_match_optmenu);
 		gtk_widget_hide(hbox->age_match_optmenu);
+		gtk_widget_hide(hbox->status_match_optmenu);
 		gtk_widget_hide(hbox->key_entry);
 		gtk_widget_show(hbox->spin_btn);
 		gtk_widget_show(hbox->label);
@@ -958,15 +1004,29 @@ void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 		gtk_widget_hide(hbox->match_type_optmenu);
 		gtk_widget_hide(hbox->size_match_optmenu);
 		gtk_widget_show(hbox->age_match_optmenu);
+		gtk_widget_hide(hbox->status_match_optmenu);
 		gtk_widget_hide(hbox->key_entry);
 		gtk_widget_show(hbox->spin_btn);
 		gtk_widget_show(hbox->label);
 		gtk_label_set_text(GTK_LABEL(hbox->label), _("day(s)"));
 		break;
+	case PF_COND_UNREAD:
+	case PF_COND_MARK:
+	case PF_COND_COLOR_LABEL:
+	case PF_COND_MIME:
+		gtk_widget_hide(hbox->match_type_optmenu);
+		gtk_widget_hide(hbox->size_match_optmenu);
+		gtk_widget_hide(hbox->age_match_optmenu);
+		gtk_widget_show(hbox->status_match_optmenu);
+		gtk_widget_hide(hbox->key_entry);
+		gtk_widget_hide(hbox->spin_btn);
+		gtk_widget_hide(hbox->label);
+		break;
 	case PF_COND_ACCOUNT:
 		gtk_widget_hide(hbox->match_type_optmenu);
 		gtk_widget_hide(hbox->size_match_optmenu);
 		gtk_widget_hide(hbox->age_match_optmenu);
+		gtk_widget_hide(hbox->status_match_optmenu);
 		gtk_widget_hide(hbox->key_entry);
 		/* gtk_widget_show(hbox->account_optmenu); */
 		gtk_widget_hide(hbox->spin_btn);
@@ -1596,6 +1656,7 @@ FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
 	FilterMatchFlag match_flag = 0;
 	SizeMatchType size_type;
 	AgeMatchType age_type;
+	StatusMatchType status_type;
 	gchar *error_msg_ = NULL;
 
 	cond_type_menuitem = gtk_menu_get_active
@@ -1682,6 +1743,34 @@ FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
 			(GTK_SPIN_BUTTON(hbox->spin_btn));
 		cond = filter_cond_new(FLT_COND_AGE_GREATER,
 				       0, match_flag, NULL, itos(int_value));
+		break;
+	case PF_COND_UNREAD:
+		status_type = menu_get_option_menu_active_index
+			(GTK_OPTION_MENU(hbox->status_match_optmenu));
+		match_flag = status_type == PF_STATUS_MATCH ? 0 : FLT_NOT_MATCH;
+		cond = filter_cond_new(FLT_COND_UNREAD, 0, match_flag,
+				       NULL, NULL);
+		break;
+	case PF_COND_MARK:
+		status_type = menu_get_option_menu_active_index
+			(GTK_OPTION_MENU(hbox->status_match_optmenu));
+		match_flag = status_type == PF_STATUS_MATCH ? 0 : FLT_NOT_MATCH;
+		cond = filter_cond_new(FLT_COND_MARK, 0, match_flag,
+				       NULL, NULL);
+		break;
+	case PF_COND_COLOR_LABEL:
+		status_type = menu_get_option_menu_active_index
+			(GTK_OPTION_MENU(hbox->status_match_optmenu));
+		match_flag = status_type == PF_STATUS_MATCH ? 0 : FLT_NOT_MATCH;
+		cond = filter_cond_new(FLT_COND_COLOR_LABEL, 0, match_flag,
+				       NULL, NULL);
+		break;
+	case PF_COND_MIME:
+		status_type = menu_get_option_menu_active_index
+			(GTK_OPTION_MENU(hbox->status_match_optmenu));
+		match_flag = status_type == PF_STATUS_MATCH ? 0 : FLT_NOT_MATCH;
+		cond = filter_cond_new(FLT_COND_MIME, 0, match_flag,
+				       NULL, NULL);
 		break;
 	case PF_COND_ACCOUNT:
 	case PF_COND_EDIT_HEADER:

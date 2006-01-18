@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -47,6 +47,10 @@ typedef enum
 	FLT_COND_CMD_TEST,
 	FLT_COND_SIZE_GREATER,
 	FLT_COND_AGE_GREATER,
+	FLT_COND_UNREAD,
+	FLT_COND_MARK,
+	FLT_COND_COLOR_LABEL,
+	FLT_COND_MIME,
 	FLT_COND_ACCOUNT
 } FilterCondType;
 

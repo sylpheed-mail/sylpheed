@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,10 @@ typedef enum
 	PF_COND_CMD_TEST,
 	PF_COND_SIZE,
 	PF_COND_AGE,
+	PF_COND_UNREAD,
+	PF_COND_MARK,
+	PF_COND_COLOR_LABEL,
+	PF_COND_MIME,
 	PF_COND_ACCOUNT,
 	PF_COND_EDIT_HEADER,
 	PF_COND_SEPARATOR,
@@ -65,6 +69,12 @@ typedef enum
 	PF_AGE_LONGER,
 	PF_AGE_SHORTER
 } AgeMatchType;
+
+typedef enum
+{
+	PF_STATUS_MATCH,
+	PF_STATUS_NOT_MATCH
+} StatusMatchType;
 
 typedef enum
 {
@@ -103,6 +113,7 @@ struct _CondHBox {
 	GtkWidget *match_type_optmenu;
 	GtkWidget *size_match_optmenu;
 	GtkWidget *age_match_optmenu;
+	GtkWidget *status_match_optmenu;
 	GtkWidget *key_entry;
 	GtkWidget *spin_btn;
 	GtkWidget *label;

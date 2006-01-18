@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -376,6 +376,18 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		matched = (time(NULL) - msginfo->date_t >
 				cond->int_value * 24 * 60 * 60);
 		break;
+	case FLT_COND_UNREAD:
+		matched = MSG_IS_UNREAD(msginfo->flags);
+		break;
+	case FLT_COND_MARK:
+		matched = MSG_IS_MARKED(msginfo->flags);
+		break;
+	case FLT_COND_COLOR_LABEL:
+		matched = (MSG_GET_COLORLABEL_VALUE(msginfo->flags) != 0);
+		break;
+	case FLT_COND_MIME:
+		matched = MSG_IS_MIME(msginfo->flags);
+		break;
 	case FLT_COND_ACCOUNT:
 		cond_ac = account_find_from_id(cond->int_value);
 		matched = (cond_ac != NULL && cond_ac == fltinfo->account);
@@ -595,6 +607,14 @@ static gboolean filter_xml_node_func(GNode *node, gpointer data)
 			cond_type = FLT_COND_SIZE_GREATER;
 		STR_CASE("age")
 			cond_type = FLT_COND_AGE_GREATER;
+		STR_CASE("unread")
+			cond_type = FLT_COND_UNREAD;
+		STR_CASE("mark")
+			cond_type = FLT_COND_MARK;
+		STR_CASE("color-label")
+			cond_type = FLT_COND_COLOR_LABEL;
+		STR_CASE("mime")
+			cond_type = FLT_COND_MIME;
 		STR_CASE("account-id")
 			cond_type = FLT_COND_ACCOUNT;
 		STR_CASE("target-folder")
@@ -841,6 +861,30 @@ void filter_write_file(GSList *list, const gchar *file)
 				ADD_ATTR("type",
 					 FLT_IS_NOT_MATCH(cond->match_flag)
 					 ? "lt" : "gt");
+				break;
+			case FLT_COND_UNREAD:
+				NODE_NEW("unread", NULL);
+				ADD_ATTR("type",
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "is-not" : "is");
+				break;
+			case FLT_COND_MARK:
+				NODE_NEW("mark", NULL);
+				ADD_ATTR("type",
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "is-not" : "is");
+				break;
+			case FLT_COND_COLOR_LABEL:
+				NODE_NEW("color-label", NULL);
+				ADD_ATTR("type",
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "is-not" : "is");
+				break;
+			case FLT_COND_MIME:
+				NODE_NEW("mime", NULL);
+				ADD_ATTR("type",
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "is-not" : "is");
 				break;
 			case FLT_COND_ACCOUNT:
 				 NODE_NEW("account-id", itos(cond->int_value));
