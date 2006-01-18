@@ -129,6 +129,8 @@ static GdkPixbuf *clip_pixbuf;
 static GList *summary_get_selected_rows	(SummaryView		*summaryview);
 static void summary_selection_list_free	(SummaryView		*summaryview);
 
+static void summary_update_msg_list	(SummaryView		*summaryview);
+
 static void summary_msgid_table_create	(SummaryView		*summaryview);
 static void summary_msgid_table_destroy	(SummaryView		*summaryview);
 
@@ -977,6 +979,32 @@ GSList *summary_get_msg_list(SummaryView *summaryview)
 		return g_slist_copy(summaryview->all_mlist);
 }
 
+static void summary_update_msg_list(SummaryView *summaryview)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeIter iter;
+	GSList *mlist = NULL;
+	MsgInfo *msginfo;
+	gboolean valid;
+
+	if (summaryview->on_filter)
+		return;
+
+	g_slist_free(summaryview->all_mlist);
+	summaryview->all_mlist = NULL;
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+
+	while (valid) {
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		mlist = g_slist_prepend(mlist, msginfo);
+		valid = gtkut_tree_model_next(model, &iter);
+	}
+
+	summaryview->all_mlist = g_slist_reverse(mlist);
+
+}
+
 static gboolean summary_msgid_table_create_func(GtkTreeModel *model,
 						GtkTreePath *path,
 						GtkTreeIter *iter,
@@ -1690,6 +1718,7 @@ void summary_attract_by_subject(SummaryView *summaryview)
 
 	summaryview->folder_item->cache_dirty = TRUE;
 	summary_selection_list_free(summaryview);
+	summary_update_msg_list(summaryview);
 
 	summary_scroll_to_selected(summaryview, TRUE);
 
@@ -1863,6 +1892,9 @@ void summary_sort(SummaryView *summaryview,
 					     (GtkSortType)sort_type);
 
 	summary_selection_list_free(summaryview);
+	if (summaryview->all_mlist)
+		summary_update_msg_list(summaryview);
+
 	summary_set_menu_sensitive(summaryview);
 
 	summary_scroll_to_selected(summaryview, TRUE);
