@@ -4852,6 +4852,7 @@ void summary_qsearch_reset(SummaryView *summaryview)
 				GTK_TREE_MODEL(summaryview->store));
 	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, summaryview->all_mlist);
+	summary_selection_list_free(summaryview);
 
 	main_window_cursor_normal(summaryview->mainwin);
 	summary_unlock(summaryview);
@@ -4964,6 +4965,7 @@ void summary_qsearch(SummaryView *summaryview)
 				GTK_TREE_MODEL(summaryview->store));
 	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, flt_mlist);
+	summary_selection_list_free(summaryview);
 
 	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
 					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
