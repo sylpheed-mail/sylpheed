@@ -60,6 +60,8 @@ struct _SummaryView
 	GtkWidget *vbox;
 
 	GtkWidget *search_hbox;
+	GtkWidget *filter_optmenu;
+	GtkWidget *filter_menu;
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
 
@@ -126,6 +128,14 @@ private:
 	GSList *all_mlist;
 	/* filtered message list */
 	GSList *flt_mlist;
+
+	gint64 total_flt_msg_size;
+	gint flt_msg_total;
+	gint flt_deleted;
+	gint flt_moved;
+	gint flt_copied;
+	gint flt_new;
+	gint flt_unread;
 
 	gboolean on_filter;
 

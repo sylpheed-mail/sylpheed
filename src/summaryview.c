@@ -25,6 +25,7 @@
 #include <gtk/gtkversion.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtklabel.h>
+#include <gtk/gtkoptionmenu.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreestore.h>
@@ -232,6 +233,9 @@ static GtkWidget *summary_tree_view_create
 					(SummaryView	*summaryview);
 
 /* callback functions */
+static void summary_filter_menu_activated
+					(GtkWidget		*menuitem,
+					 SummaryView		*summaryview);
 static void summary_search_entry_changed(GtkWidget		*entry,
 					 SummaryView		*summaryview);
 static void summary_search_entry_activated
@@ -454,6 +458,9 @@ SummaryView *summary_create(void)
 	SummaryView *summaryview;
 	GtkWidget *vbox;
 	GtkWidget *search_hbox;
+	GtkWidget *filter_optmenu;
+	GtkWidget *filter_menu;
+	GtkWidget *menuitem;
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
 	GtkWidget *scrolledwin;
@@ -482,6 +489,32 @@ SummaryView *summary_create(void)
 	search_hbox = gtk_hbox_new(FALSE, 4);
 	gtk_container_set_border_width(GTK_CONTAINER(search_hbox), 2);
 	gtk_box_pack_start(GTK_BOX(vbox), search_hbox, FALSE, FALSE, 0);
+
+	filter_optmenu = gtk_option_menu_new();
+	gtk_box_pack_start(GTK_BOX(search_hbox), filter_optmenu,
+			   FALSE, FALSE, 0);
+
+#define COND_MENUITEM_ADD(str, action)					\
+{									\
+	MENUITEM_ADD(filter_menu, menuitem, str, action);		\
+	g_signal_connect(G_OBJECT(menuitem), "activate",		\
+			 G_CALLBACK(summary_filter_menu_activated),	\
+			 summaryview);					\
+}
+
+	filter_menu = gtk_menu_new();
+	COND_MENUITEM_ADD(_("All"), 0);
+	COND_MENUITEM_ADD(_("Unread"), FLT_COND_UNREAD);
+	COND_MENUITEM_ADD(_("Marked"), FLT_COND_MARK);
+	COND_MENUITEM_ADD(_("Have color label"), FLT_COND_COLOR_LABEL);
+	COND_MENUITEM_ADD(_("Have attachment"), FLT_COND_MIME);
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(filter_optmenu), filter_menu);
+
+#undef COND_MENUITEM_ADD
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_widget_set_size_request(hbox, 4, -1);
+	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
 
 	search_label = gtk_label_new(_("Search:"));
 	gtk_box_pack_start(GTK_BOX(search_hbox), search_label, FALSE, FALSE, 0);
@@ -551,6 +584,8 @@ SummaryView *summary_create(void)
 
 	summaryview->vbox = vbox;
 	summaryview->search_hbox = search_hbox;
+	summaryview->filter_optmenu = filter_optmenu;
+	summaryview->filter_menu = filter_menu;
 	summaryview->search_label = search_label;
 	summaryview->search_entry = search_entry;
 	summaryview->scrolledwin = scrolledwin;
@@ -853,7 +888,14 @@ void summary_clear_list(SummaryView *summaryview)
 		g_slist_free(summaryview->flt_mlist);
 		summaryview->flt_mlist = NULL;
 	}
+	summaryview->total_flt_msg_size = 0;
+	summaryview->flt_msg_total = 0;
+	summaryview->flt_deleted = summaryview->flt_moved = 0;
+	summaryview->flt_copied = 0;
+	summaryview->flt_new = summaryview->flt_unread = 0;
 	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+	gtk_option_menu_set_history
+		(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
 	summaryview->on_filter = FALSE;
 
 	procmsg_msg_list_free(summaryview->all_mlist);
@@ -1730,17 +1772,16 @@ void summary_attract_by_subject(SummaryView *summaryview)
 
 static void summary_update_status(SummaryView *summaryview)
 {
-	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	GtkTreeIter iter;
-	gboolean valid;
+	GSList *cur;
 	MsgInfo *msginfo;
 	gint64 total_size = 0;
 	gint deleted = 0, moved = 0, copied = 0;
+	gint64 flt_total_size = 0;
+	gint flt_deleted = 0, flt_moved = 0, flt_copied = 0;
+	gint flt_new = 0, flt_unread = 0, flt_total = 0;
 
-	valid = gtk_tree_model_get_iter_first(model, &iter);
-
-	while (valid) {
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
 
 		if (MSG_IS_DELETED(msginfo->flags))
 			deleted++;
@@ -1749,14 +1790,36 @@ static void summary_update_status(SummaryView *summaryview)
 		if (MSG_IS_COPY(msginfo->flags))
 			copied++;
 		total_size += msginfo->size;
+	}
 
-		valid = gtkut_tree_model_next(model, &iter);
+	for (cur = summaryview->flt_mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+
+		if (MSG_IS_DELETED(msginfo->flags))
+			flt_deleted++;
+		if (MSG_IS_MOVE(msginfo->flags))
+			flt_moved++;
+		if (MSG_IS_COPY(msginfo->flags))
+			flt_copied++;
+		if (MSG_IS_NEW(msginfo->flags))
+			flt_new++;
+		if (MSG_IS_UNREAD(msginfo->flags))
+			flt_unread++;
+		flt_total++;
+		flt_total_size += msginfo->size;
 	}
 
 	summaryview->total_size = total_size;
 	summaryview->deleted = deleted;
 	summaryview->moved = moved;
 	summaryview->copied = copied;
+	summaryview->total_flt_msg_size = flt_total_size;
+	summaryview->flt_msg_total = flt_total;
+	summaryview->flt_deleted = flt_deleted;
+	summaryview->flt_moved = flt_moved;
+	summaryview->flt_copied = flt_copied;
+	summaryview->flt_new = flt_new;
+	summaryview->flt_unread = flt_unread;
 }
 
 static void summary_status_show(SummaryView *summaryview)
@@ -1770,6 +1833,9 @@ static void summary_status_show(SummaryView *summaryview)
 	guint n_selected = 0;
 	gint64 sel_size = 0;
 	MsgInfo *msginfo;
+	gint deleted, moved, copied;
+	gint new, unread, total;
+	gint64 total_size;
 
 	if (!summaryview->folder_item) {
 		gtk_label_set(GTK_LABEL(summaryview->statlabel_folder), "");
@@ -1801,25 +1867,32 @@ static void summary_status_show(SummaryView *summaryview)
 	gtk_label_set(GTK_LABEL(summaryview->statlabel_folder), str);
 	g_free(str);
 
-	if (summaryview->deleted)
-		del = g_strdup_printf(_("%d deleted"), summaryview->deleted);
+	if (summaryview->on_filter) {
+		deleted = summaryview->flt_deleted;
+		moved = summaryview->flt_moved;
+		copied = summaryview->flt_copied;
+	} else {
+		deleted = summaryview->deleted;
+		moved = summaryview->moved;
+		copied = summaryview->copied;
+	}
+
+	if (deleted)
+		del = g_strdup_printf(_("%d deleted"), deleted);
 	else
 		del = g_strdup("");
-	if (summaryview->moved)
+	if (moved)
 		mv = g_strdup_printf(_("%s%d moved"),
-				     summaryview->deleted ? _(", ") : "",
-				     summaryview->moved);
+				     deleted ? _(", ") : "", moved);
 	else
 		mv = g_strdup("");
-	if (summaryview->copied)
+	if (copied)
 		cp = g_strdup_printf(_("%s%d copied"),
-				     summaryview->deleted ||
-				     summaryview->moved ? _(", ") : "",
-				     summaryview->copied);
+				     deleted || moved ? _(", ") : "", copied);
 	else
 		cp = g_strdup("");
 
-	if (summaryview->deleted || summaryview->moved || summaryview->copied)
+	if (deleted || moved || copied)
 		spc = "    ";
 	else
 		spc = "";
@@ -1838,17 +1911,25 @@ static void summary_status_show(SummaryView *summaryview)
 	g_free(mv);
 	g_free(cp);
 
+	if (summaryview->on_filter) {
+		new = summaryview->flt_new;
+		unread = summaryview->flt_unread;
+		total = summaryview->flt_msg_total;
+		total_size = summaryview->total_flt_msg_size;
+	} else {
+		new = summaryview->folder_item->new;
+		unread = summaryview->folder_item->unread;
+		total = summaryview->folder_item->total;
+		total_size = summaryview->total_size;
+	}
+
 	if (FOLDER_IS_LOCAL(summaryview->folder_item->folder)) {
 		str = g_strdup_printf(_("%d new, %d unread, %d total (%s)"),
-				      summaryview->folder_item->new,
-				      summaryview->folder_item->unread,
-				      summaryview->folder_item->total,
-				      to_human_readable(summaryview->total_size));
+				      new, unread, total,
+				      to_human_readable(total_size));
 	} else {
 		str = g_strdup_printf(_("%d new, %d unread, %d total"),
-				      summaryview->folder_item->new,
-				      summaryview->folder_item->unread,
-				      summaryview->folder_item->total);
+				      new, unread, total);
 	}
 	gtk_label_set(GTK_LABEL(summaryview->statlabel_msgs), str);
 	g_free(str);
@@ -4725,29 +4806,55 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	if (!summaryview->on_filter)
 		return;
 
+	g_signal_handlers_block_matched(G_OBJECT(summaryview->treeview),
+					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					0, 0, NULL, NULL, summaryview);
+
 	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+	gtk_option_menu_set_history
+		(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
 
 	summaryview->on_filter = FALSE;
 	g_slist_free(summaryview->flt_mlist);
 	summaryview->flt_mlist = NULL;
+	summaryview->total_flt_msg_size = 0;
+	summaryview->flt_msg_total = 0;
+	summaryview->flt_deleted = 0;
+	summaryview->flt_moved = 0;
+	summaryview->flt_copied = 0;
+	summaryview->flt_new = 0;
+	summaryview->flt_unread = 0;
 
 	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
+
+	messageview_clear(summaryview->messageview);
 
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
 	gtk_tree_store_clear(summaryview->store);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
 				GTK_TREE_MODEL(summaryview->store));
+	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, summaryview->all_mlist);
 
 	main_window_cursor_normal(summaryview->mainwin);
 	summary_unlock(summaryview);
+
+	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
+					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					  0, 0, NULL, NULL, summaryview);
+
+	summary_update_status(summaryview);
+	summary_status_show(summaryview);
 }
 
 void summary_qsearch(SummaryView *summaryview)
 {
+	FilterCondType type;
+	GtkWidget *menuitem;
 	const gchar *key;
-	FilterRule *rule;
+	FilterRule *status_rule = NULL;
+	FilterRule *rule = NULL;
 	FilterCond *cond;
 	FilterInfo fltinfo;
 	GSList *cond_list = NULL;
@@ -4757,8 +4864,12 @@ void summary_qsearch(SummaryView *summaryview)
 	if (!summaryview->all_mlist)
 		return;
 
+	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->filter_menu));
+	type = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
+
 	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
-	if (!key || *key == '\0') {
+	if (type == 0 && (!key || *key == '\0')) {
 		summary_qsearch_reset(summaryview);
 		return;
 	}
@@ -4766,16 +4877,37 @@ void summary_qsearch(SummaryView *summaryview)
 	summaryview->on_filter = FALSE;
 	g_slist_free(summaryview->flt_mlist);
 	summaryview->flt_mlist = NULL;
+	summaryview->total_flt_msg_size = 0;
+	summaryview->flt_msg_total = 0;
+	summaryview->flt_deleted = 0;
+	summaryview->flt_moved = 0;
+	summaryview->flt_copied = 0;
+	summaryview->flt_new = 0;
+	summaryview->flt_unread = 0;
 
-	cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0, "Subject", key);
-	cond_list = g_slist_append(cond_list, cond);
-	cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0, "From", key);
-	cond_list = g_slist_append(cond_list, cond);
+	if (type != 0) {
+		cond = filter_cond_new(type, 0, 0, NULL, NULL);
+		cond_list = g_slist_append(cond_list, cond);
+		status_rule = filter_rule_new("Status filter rule", FLT_OR,
+					      cond_list, NULL);
+		cond_list = NULL;
+	}
 
-	rule = filter_rule_new("Quick search rule", FLT_OR, cond_list, NULL);
+	if (key && *key != '\0') {
+		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
+				       "Subject", key);
+		cond_list = g_slist_append(cond_list, cond);
+		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
+				       "From", key);
+		cond_list = g_slist_append(cond_list, cond);
+		rule = filter_rule_new("Quick search rule", FLT_OR, cond_list,
+				       NULL);
+	}
 
 	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
+
+	messageview_clear(summaryview->messageview);
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
@@ -4783,14 +4915,21 @@ void summary_qsearch(SummaryView *summaryview)
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist;
 
-		hlist = procheader_get_header_list_from_msginfo(msginfo);
-		if (!hlist)
-			continue;
+		if (status_rule) {
+			if (!filter_match_rule(status_rule, msginfo, NULL,
+					       &fltinfo))
+				continue;
+		}
 
-		if (filter_match_rule(rule, msginfo, hlist, &fltinfo))
+		if (rule) {
+			hlist = procheader_get_header_list_from_msginfo
+				(msginfo);
+			if (filter_match_rule(rule, msginfo, hlist, &fltinfo))
+				flt_mlist = g_slist_prepend(flt_mlist, msginfo);
+
+			procheader_header_list_destroy(hlist);
+		} else
 			flt_mlist = g_slist_prepend(flt_mlist, msginfo);
-
-		procheader_header_list_destroy(hlist);
 	}
 	flt_mlist = g_slist_reverse(flt_mlist);
 
@@ -4799,18 +4938,35 @@ void summary_qsearch(SummaryView *summaryview)
 	summaryview->on_filter = TRUE;
 	summaryview->flt_mlist = flt_mlist;
 
+	g_signal_handlers_block_matched(G_OBJECT(summaryview->treeview),
+					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					0, 0, NULL, NULL, summaryview);
+
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
 	gtk_tree_store_clear(summaryview->store);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
 				GTK_TREE_MODEL(summaryview->store));
+	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, flt_mlist);
+
+	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
+					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					  0, 0, NULL, NULL, summaryview);
 
 	main_window_cursor_normal(summaryview->mainwin);
 	summary_unlock(summaryview);
+	summary_update_status(summaryview);
+	summary_status_show(summaryview);
 }
 
 
 /* callback functions */
+
+static void summary_filter_menu_activated(GtkWidget *menuitem,
+					  SummaryView *summaryview)
+{
+	summary_qsearch(summaryview);
+}
 
 static void summary_search_entry_changed(GtkWidget *entry,
 					 SummaryView *summaryview)
