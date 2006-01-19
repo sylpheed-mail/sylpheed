@@ -1612,6 +1612,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 				delete_folder = TRUE;
 		}
 		if (item->stype == F_VIRTUAL) {
+			new_folder = FALSE;
 			rename_folder = delete_folder = TRUE;
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||

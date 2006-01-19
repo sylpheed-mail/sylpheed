@@ -49,6 +49,7 @@
 #include "base64.h"
 #include "utils.h"
 #include "prefs_common.h"
+#include "virtual.h"
 
 #define IMAP4_PORT	143
 #if USE_SSL
@@ -1781,9 +1782,14 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 			}
 		}
 		if (!new_item) {
-			debug_print("folder '%s' not found. removing...\n",
-				    old_item->path);
-			folder_item_remove(old_item);
+			if (old_item->stype != F_VIRTUAL) {
+				debug_print("folder '%s' not found. removing...\n", old_item->path);
+				folder_item_remove(old_item);
+			}
+		} else if (old_item->stype == F_VIRTUAL) {
+				debug_print("IMAP4 folder found at the location of virtual folder '%s'. removing virtual folder...\n", old_item->path);
+				virtual_get_class()->remove_folder
+					(folder, old_item);
 		} else {
 			old_item->no_sub = new_item->no_sub;
 			old_item->no_select = new_item->no_select;
