@@ -91,30 +91,32 @@ GtkWidget *trayicon_create(MainWindow *mainwin)
 	if (!trayicon_menu) {
 		trayicon_menu = gtk_menu_new();
 		gtk_widget_show(trayicon_menu);
-		MENUITEM_ADD(trayicon_menu, menuitem,
-			     _("Get from _current account"), 0);
+		MENUITEM_ADD_WITH_MNEMONIC(trayicon_menu, menuitem,
+					   _("Get from _current account"), 0);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(trayicon_inc), mainwin);
-		MENUITEM_ADD(trayicon_menu, menuitem,
-			     _("Get from _all accounts"), 0);
+		MENUITEM_ADD_WITH_MNEMONIC(trayicon_menu, menuitem,
+					   _("Get from _all accounts"), 0);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(trayicon_inc_all), mainwin);
-		MENUITEM_ADD(trayicon_menu, menuitem,
-			     _("_Send queued messages"), 0);
+		MENUITEM_ADD_WITH_MNEMONIC(trayicon_menu, menuitem,
+					   _("_Send queued messages"), 0);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(trayicon_send), mainwin);
 
 		MENUITEM_ADD(trayicon_menu, menuitem, NULL, 0);
-		MENUITEM_ADD(trayicon_menu, menuitem,
-			     _("Compose _new message"), 0);
+		MENUITEM_ADD_WITH_MNEMONIC(trayicon_menu, menuitem,
+					   _("Compose _new message"), 0);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(trayicon_compose), mainwin);
 
 		MENUITEM_ADD(trayicon_menu, menuitem, NULL, 0);
-		MENUITEM_ADD(trayicon_menu, menuitem, _("_About"), 0);
+		MENUITEM_ADD_WITH_MNEMONIC(trayicon_menu, menuitem,
+					   _("_About"), 0);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(about_show), NULL);
-		MENUITEM_ADD(trayicon_menu, menuitem, _("E_xit"), 0);
+		MENUITEM_ADD_WITH_MNEMONIC(trayicon_menu, menuitem,
+					   _("E_xit"), 0);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(trayicon_app_exit), mainwin);
 	}

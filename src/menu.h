@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,22 @@
 #define MENU_VAL_ID "Sylpheed::Menu::ValueID"
 
 #define MENUITEM_ADD(menu, menuitem, label, data)			 \
+{									 \
+	if (label)							 \
+		menuitem = gtk_menu_item_new_with_label(label);		 \
+	else {								 \
+		menuitem = gtk_menu_item_new();				 \
+		gtk_widget_set_sensitive(menuitem, FALSE);		 \
+	}								 \
+	gtk_widget_show(menuitem);					 \
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);		 \
+	if (data)							 \
+		g_object_set_data(G_OBJECT(menuitem),			 \
+				  MENU_VAL_ID,				 \
+				  GINT_TO_POINTER(data));		 \
+}
+
+#define MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, label, data)		 \
 {									 \
 	if (label)							 \
 		menuitem = gtk_menu_item_new_with_mnemonic(label);	 \
