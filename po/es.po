@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-18 18:07+0900\n"
+"POT-Creation-Date: 2006-01-19 15:52+0900\n"
 "PO-Revision-Date: 2005-07-08 21:08+0100\n"
 "Last-Translator: Ricardo Mones <mones@aic.uniovi.es>\n"
 "Language-Team: Ricardo Mones <mones@aic.uniovi.es>\n"
@@ -967,9 +967,9 @@ msgstr "/Nueva _carpeta"
 #: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
 #: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
 #: src/folderview.c:275 src/folderview.c:289 src/folderview.c:291
-#: src/folderview.c:295 src/summaryview.c:409 src/summaryview.c:413
-#: src/summaryview.c:416 src/summaryview.c:426 src/summaryview.c:428
-#: src/summaryview.c:430 src/summaryview.c:442 src/summaryview.c:448
+#: src/folderview.c:295 src/summaryview.c:413 src/summaryview.c:417
+#: src/summaryview.c:420 src/summaryview.c:430 src/summaryview.c:432
+#: src/summaryview.c:434 src/summaryview.c:446 src/summaryview.c:452
 msgid "/---"
 msgstr "/---"
 
@@ -978,7 +978,7 @@ msgstr "/---"
 msgid "/_Edit"
 msgstr "/_Editar"
 
-#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:427
+#: src/addressbook.c:385 src/addressbook.c:395 src/summaryview.c:431
 msgid "/_Delete"
 msgstr "/_Borrar"
 
@@ -1254,7 +1254,7 @@ msgstr "Marrón"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:317 src/summaryview.c:4471
+#: src/colorlabel.c:280 src/prefs_folder_item.c:317 src/summaryview.c:4552
 msgid "None"
 msgstr "Ninguno"
 
@@ -1345,7 +1345,7 @@ msgid "/_Edit/Aut_o wrapping"
 msgstr "/_Editar/Aut_o-recorte"
 
 #: src/compose.c:547 src/mainwindow.c:518 src/messageview.c:151
-#: src/summaryview.c:443
+#: src/summaryview.c:447
 msgid "/_View"
 msgstr "/_Ver"
 
@@ -1575,7 +1575,7 @@ msgid "Can't get the part of multipart message."
 msgstr "No se puede obtener la parte del mensaje multipartes."
 
 #: src/compose.c:2475 src/headerview.c:195 src/summary_search.c:624
-#: src/summaryview.c:2020
+#: src/summaryview.c:2101
 msgid "(No Subject)"
 msgstr "(Sin asunto)"
 
@@ -1699,7 +1699,7 @@ msgstr "Tipo MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4234 src/mimeview.c:197 src/prefs_filter_edit.c:496
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4618
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4699
 msgid "Size"
 msgstr "Tamaño"
 
@@ -2286,7 +2286,7 @@ msgstr "Nuevos"
 
 #. S_COL_MARK
 #: src/folderview.c:412 src/prefs_filter_edit.c:500
-#: src/prefs_summary_column.c:71
+#: src/prefs_summary_column.c:71 src/summaryview.c:507
 msgid "Unread"
 msgstr "No leídos"
 
@@ -2473,7 +2473,7 @@ msgstr "Asunto:"
 msgid "Creating header view...\n"
 msgstr "Creando vista de cabeceras...\n"
 
-#: src/headerview.c:180 src/summary_search.c:625 src/summaryview.c:2023
+#: src/headerview.c:180 src/summary_search.c:625 src/summaryview.c:2104
 msgid "(No From)"
 msgstr "(Sin remite)"
 
@@ -3255,7 +3255,7 @@ msgstr "/_Ver/Codificación de caract_eres/Chino (ISO-2022-_CN)"
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/_Ver/Codificación de caract_eres/Coreano (ISO-2022-KR)"
 
-#: src/mainwindow.c:688 src/summaryview.c:444
+#: src/mainwindow.c:688 src/summaryview.c:448
 msgid "/_View/Open in new _window"
 msgstr "/_Ver/Abrir en una ventana _nueva"
 
@@ -3535,8 +3535,8 @@ msgstr "Creando ventana principal...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: fallo solicitando color %d\n"
 
-#: src/mainwindow.c:1108 src/summaryview.c:2171 src/summaryview.c:2256
-#: src/summaryview.c:3625 src/summaryview.c:3746 src/summaryview.c:4104
+#: src/mainwindow.c:1108 src/summaryview.c:2252 src/summaryview.c:2337
+#: src/summaryview.c:3706 src/summaryview.c:3827 src/summaryview.c:4185
 msgid "done.\n"
 msgstr "hecho.\n"
 
@@ -3612,7 +3612,7 @@ msgstr "Sylpheed - Árbol de carpetas"
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Vista de mensaje"
 
-#: src/mainwindow.c:2256 src/summaryview.c:403
+#: src/mainwindow.c:2256 src/summaryview.c:407
 msgid "/_Reply"
 msgstr "/_Responder"
 
@@ -3628,15 +3628,15 @@ msgstr "/Responder al _remitente"
 msgid "/Reply to mailing _list"
 msgstr "/Responder a la _lista de correo"
 
-#: src/mainwindow.c:2264 src/summaryview.c:410
+#: src/mainwindow.c:2264 src/summaryview.c:414
 msgid "/_Forward"
 msgstr "/_Reenviar"
 
-#: src/mainwindow.c:2265 src/summaryview.c:411
+#: src/mainwindow.c:2265 src/summaryview.c:415
 msgid "/For_ward as attachment"
 msgstr "/Reen_viar como adjunto"
 
-#: src/mainwindow.c:2266 src/summaryview.c:412
+#: src/mainwindow.c:2266 src/summaryview.c:416
 msgid "/Redirec_t"
 msgstr "/Red_irigir"
 
@@ -3799,25 +3799,25 @@ msgstr "Adjuntos"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:669 src/summaryview.c:3162
+#: src/messageview.c:669 src/summaryview.c:3243
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "No puedo guardar el fichero «%s»."
 
-#: src/messageview.c:728 src/summaryview.c:3185
+#: src/messageview.c:728 src/summaryview.c:3266
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:729 src/summaryview.c:3186
+#: src/messageview.c:729 src/summaryview.c:3267
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Orden para aprender:"
 
-#: src/messageview.c:731 src/prefs_common_dialog.c:2311 src/summaryview.c:3188
+#: src/messageview.c:731 src/prefs_common_dialog.c:2311 src/summaryview.c:3269
 msgid "Print"
 msgstr "Imprimir"
 
-#: src/messageview.c:740 src/summaryview.c:3197
+#: src/messageview.c:740 src/summaryview.c:3278
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5470,7 +5470,7 @@ msgstr "Resultado de una orden"
 msgid "Age"
 msgstr "Edad"
 
-#: src/prefs_filter_edit.c:501
+#: src/prefs_filter_edit.c:501 src/summaryview.c:508
 #, fuzzy
 msgid "Marked"
 msgstr "Marca"
@@ -5702,19 +5702,19 @@ msgstr "Adjunto"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:73 src/summary_search.c:370
-#: src/summaryview.c:4611
+#: src/summaryview.c:4692
 msgid "Subject"
 msgstr "Asunto"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:74 src/summary_search.c:371
-#: src/summaryview.c:4614
+#: src/summaryview.c:4695
 msgid "From"
 msgstr "Desde"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:75 src/summary_search.c:372
-#: src/summaryview.c:4616
+#: src/summaryview.c:4697
 msgid "Date"
 msgstr "Fecha"
 
@@ -6109,7 +6109,7 @@ msgstr "No se puede obtener la lista de grupos."
 msgid "Can't retrieve newsgroup list."
 msgstr "No se puede obtener la lista de grupos."
 
-#: src/subscribedialog.c:523 src/summary_search.c:502 src/summaryview.c:799
+#: src/subscribedialog.c:523 src/summary_search.c:502 src/summaryview.c:834
 msgid "Done."
 msgstr "Hecho."
 
@@ -6137,7 +6137,7 @@ msgstr "Revisando carpeta %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtrando..."
 
-#: src/summary_search.c:633 src/summaryview.c:1961
+#: src/summary_search.c:633 src/summaryview.c:2042
 msgid "(No Date)"
 msgstr "(Sin fecha)"
 
@@ -6155,337 +6155,351 @@ msgstr ""
 msgid "Folder name:"
 msgstr "Nombre de fichero"
 
-#: src/summaryview.c:404
+#: src/summaryview.c:408
 msgid "/Repl_y to"
 msgstr "/Respon_der a"
 
-#: src/summaryview.c:405
+#: src/summaryview.c:409
 msgid "/Repl_y to/_all"
 msgstr "/Respon_der a/A _todos"
 
-#: src/summaryview.c:406
+#: src/summaryview.c:410
 msgid "/Repl_y to/_sender"
 msgstr "/Respon_der a/Al _remitente"
 
-#: src/summaryview.c:407
+#: src/summaryview.c:411
 msgid "/Repl_y to/mailing _list"
 msgstr "/Respon_der a/A la _lista de correo"
 
-#: src/summaryview.c:414
+#: src/summaryview.c:418
 msgid "/M_ove..."
 msgstr "/_Mover..."
 
-#: src/summaryview.c:415
+#: src/summaryview.c:419
 msgid "/_Copy..."
 msgstr "/_Copiar..."
 
-#: src/summaryview.c:417
+#: src/summaryview.c:421
 msgid "/_Mark"
 msgstr "/_Marcar"
 
-#: src/summaryview.c:418
+#: src/summaryview.c:422
 msgid "/_Mark/_Mark"
 msgstr "/_Marcar/_Marcar"
 
-#: src/summaryview.c:419
+#: src/summaryview.c:423
 msgid "/_Mark/_Unmark"
 msgstr "/_Marcar/_Desmarcar"
 
-#: src/summaryview.c:420
+#: src/summaryview.c:424
 msgid "/_Mark/---"
 msgstr "/_Marcar/---"
 
-#: src/summaryview.c:421
+#: src/summaryview.c:425
 msgid "/_Mark/Mark as unr_ead"
 msgstr "/_Marcar/Marcar como _no leído"
 
-#: src/summaryview.c:422
+#: src/summaryview.c:426
 msgid "/_Mark/Mark as rea_d"
 msgstr "/_Marcar/Marcar como _leído"
 
-#: src/summaryview.c:424
+#: src/summaryview.c:428
 msgid "/_Mark/Mark all _read"
 msgstr "/_Marcar/Marca_r todos leídos"
 
-#: src/summaryview.c:425
+#: src/summaryview.c:429
 msgid "/Color la_bel"
 msgstr "/E_tiquetar de color"
 
-#: src/summaryview.c:429
+#: src/summaryview.c:433
 msgid "/Re-_edit"
 msgstr "/Re_editar"
 
-#: src/summaryview.c:431
+#: src/summaryview.c:435
 msgid "/Add sender to address boo_k..."
 msgstr "/Añadir _remitente a la agenda..."
 
-#: src/summaryview.c:433
+#: src/summaryview.c:437
 #, fuzzy
 msgid "/Create f_ilter rule"
 msgstr "/_Herramientas/_Crear regla de filtrado"
 
-#: src/summaryview.c:434
+#: src/summaryview.c:438
 #, fuzzy
 msgid "/Create f_ilter rule/_Automatically"
 msgstr "/_Herramientas/_Crear regla de filtrado/_Automáticamente"
 
-#: src/summaryview.c:436
+#: src/summaryview.c:440
 #, fuzzy
 msgid "/Create f_ilter rule/by _From"
 msgstr "/_Herramientas/_Crear regla de filtrado/Basada en _Desde"
 
-#: src/summaryview.c:438
+#: src/summaryview.c:442
 #, fuzzy
 msgid "/Create f_ilter rule/by _To"
 msgstr "/_Herramientas/_Crear regla de filtrado/Basada en _Para"
 
-#: src/summaryview.c:440
+#: src/summaryview.c:444
 #, fuzzy
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/_Herramientas/_Crear regla de filtrado/Basada en el _Asunto"
 
-#: src/summaryview.c:446
+#: src/summaryview.c:450
 msgid "/_View/_Source"
 msgstr "/_Ver/_Fuente"
 
-#: src/summaryview.c:447
+#: src/summaryview.c:451
 msgid "/_View/All _header"
 msgstr "/_Ver/Todas las cabeceras"
 
-#: src/summaryview.c:449
+#: src/summaryview.c:453
 msgid "/_Print..."
 msgstr "/_Imprimir..."
 
-#: src/summaryview.c:477
+#: src/summaryview.c:484
 msgid "Creating summary view...\n"
 msgstr "Creando vista de cabeceras...\n"
 
-#: src/summaryview.c:486
+#: src/summaryview.c:506
+msgid "All"
+msgstr ""
+
+#: src/summaryview.c:509
+#, fuzzy
+msgid "Have color label"
+msgstr "/E_tiquetar de color"
+
+#: src/summaryview.c:510
+#, fuzzy
+msgid "Have attachment"
+msgstr "Adjunto"
+
+#: src/summaryview.c:519
 #, fuzzy
 msgid "Search:"
 msgstr " Buscar "
 
-#: src/summaryview.c:661
+#: src/summaryview.c:696
 msgid "Process mark"
 msgstr "Procesar marcas"
 
-#: src/summaryview.c:662
+#: src/summaryview.c:697
 msgid "Some marks are left. Process it?"
 msgstr "Queda alguna marca. ¿Procesarla?"
 
-#: src/summaryview.c:708
+#: src/summaryview.c:743
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Revisando carpeta (%s)..."
 
-#: src/summaryview.c:1244
+#: src/summaryview.c:1286
 msgid "_Search again"
 msgstr "_Buscar de nuevo"
 
-#: src/summaryview.c:1265 src/summaryview.c:1274
+#: src/summaryview.c:1307 src/summaryview.c:1316
 msgid "No more unread messages"
 msgstr "No hay más mensajes sin leer"
 
-#: src/summaryview.c:1266
+#: src/summaryview.c:1308
 msgid "No unread message found. Search from the end?"
 msgstr "No hay mensajes sin leer. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1268
+#: src/summaryview.c:1310
 msgid "No unread messages."
 msgstr "No hay mensajes sin leer."
 
-#: src/summaryview.c:1275
+#: src/summaryview.c:1317
 msgid "No unread message found. Go to next folder?"
 msgstr "No hay mensajes sin leer. ¿Ir a la carpeta siguiente?"
 
-#: src/summaryview.c:1283 src/summaryview.c:1292
+#: src/summaryview.c:1325 src/summaryview.c:1334
 msgid "No more new messages"
 msgstr "No hay más mensajes nuevos"
 
-#: src/summaryview.c:1284
+#: src/summaryview.c:1326
 msgid "No new message found. Search from the end?"
 msgstr "No hay más mensajes nuevos. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1286
+#: src/summaryview.c:1328
 msgid "No new messages."
 msgstr "No hay mensajes nuevos."
 
-#: src/summaryview.c:1293
+#: src/summaryview.c:1335
 msgid "No new message found. Go to next folder?"
 msgstr "No hay más mensajes nuevos. ¿Ir a la carpeta siguiente?"
 
-#: src/summaryview.c:1301 src/summaryview.c:1310
+#: src/summaryview.c:1343 src/summaryview.c:1352
 msgid "No more marked messages"
 msgstr "No hay más mensajes marcados"
 
-#: src/summaryview.c:1302
+#: src/summaryview.c:1344
 msgid "No marked message found. Search from the end?"
 msgstr "No hay mensajes marcados. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1304 src/summaryview.c:1313
+#: src/summaryview.c:1346 src/summaryview.c:1355
 msgid "No marked messages."
 msgstr "No hay mensajes marcados."
 
-#: src/summaryview.c:1311
+#: src/summaryview.c:1353
 msgid "No marked message found. Search from the beginning?"
 msgstr "No hay mensajes marcados. ¿Buscar desde el principio?"
 
-#: src/summaryview.c:1319 src/summaryview.c:1328
+#: src/summaryview.c:1361 src/summaryview.c:1370
 msgid "No more labeled messages"
 msgstr "No hay más mensajes etiquetados"
 
-#: src/summaryview.c:1320
+#: src/summaryview.c:1362
 msgid "No labeled message found. Search from the end?"
 msgstr "No hay mensajes etiquetados. ¿Buscar desde el final?"
 
-#: src/summaryview.c:1322 src/summaryview.c:1331
+#: src/summaryview.c:1364 src/summaryview.c:1373
 msgid "No labeled messages."
 msgstr "No hay mensajes etiquetados."
 
-#: src/summaryview.c:1329
+#: src/summaryview.c:1371
 msgid "No labeled message found. Search from the beginning?"
 msgstr "No hay mensajes etiquetados. ¿Buscar desde el principio?"
 
-#: src/summaryview.c:1645
+#: src/summaryview.c:1687
 msgid "Attracting messages by subject..."
 msgstr "Agrupando mensajes por asunto..."
 
-#: src/summaryview.c:1805
+#: src/summaryview.c:1881
 #, c-format
 msgid "%d deleted"
 msgstr "%d borrados"
 
-#: src/summaryview.c:1809
+#: src/summaryview.c:1885
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d movidos"
 
-#: src/summaryview.c:1810 src/summaryview.c:1817
+#: src/summaryview.c:1886 src/summaryview.c:1891
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1815
+#: src/summaryview.c:1890
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d copiado"
 
-#: src/summaryview.c:1832
+#: src/summaryview.c:1905
 msgid " item(s) selected"
 msgstr " elemento(s) seleccionados"
 
-#: src/summaryview.c:1842
+#: src/summaryview.c:1927
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d nuevos, %d no leídos, %d totales (%s)"
 
-#: src/summaryview.c:1848
+#: src/summaryview.c:1931
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d nuevos, %d no leídos, %d totales"
 
-#: src/summaryview.c:1884
+#: src/summaryview.c:1965
 msgid "Sorting summary..."
 msgstr "Ordenando cabeceras..."
 
-#: src/summaryview.c:2107
+#: src/summaryview.c:2188
 msgid "\tSetting summary from message data..."
 msgstr "\tExtrayendo cabeceras de los mensajes..."
 
-#: src/summaryview.c:2109
+#: src/summaryview.c:2190
 msgid "Setting summary from message data..."
 msgstr "Resumiendo los mensajes..."
 
-#: src/summaryview.c:2215
+#: src/summaryview.c:2296
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Escribiendo caché resumen (%s)..."
 
-#: src/summaryview.c:2556
+#: src/summaryview.c:2637
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Mensaje %d está marcado\n"
 
-#: src/summaryview.c:2614
+#: src/summaryview.c:2695
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Mensaje %d marcado como leído\n"
 
-#: src/summaryview.c:2702
+#: src/summaryview.c:2783
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Mensaje %d marcado como no leído\n"
 
-#: src/summaryview.c:2763
+#: src/summaryview.c:2844
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Mensaje %s/%d marcado para borrar\n"
 
-#: src/summaryview.c:2781
+#: src/summaryview.c:2862
 msgid "Delete message(s)"
 msgstr "Borrar mensaje(s)"
 
-#: src/summaryview.c:2782
+#: src/summaryview.c:2863
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "¿Quiere realmente borrar el/los mensaje(s) de la papelera?"
 
-#: src/summaryview.c:2847
+#: src/summaryview.c:2928
 msgid "Deleting duplicated messages..."
 msgstr "Borrando mensajes duplicados..."
 
-#: src/summaryview.c:2885
+#: src/summaryview.c:2966
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Mensaje %s/%d desmarcado\n"
 
-#: src/summaryview.c:2943
+#: src/summaryview.c:3024
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Mensaje %d marcado para mover a %s\n"
 
-#: src/summaryview.c:2960
+#: src/summaryview.c:3041
 msgid "Destination is same as current folder."
 msgstr "El destino es el mismo que la carpeta actual."
 
-#: src/summaryview.c:3016
+#: src/summaryview.c:3097
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Mensaje %d marcado para copiar a %s\n"
 
-#: src/summaryview.c:3033
+#: src/summaryview.c:3114
 msgid "Destination for copy is same as current folder."
 msgstr "El destino de la copia es el mismo que la carpeta actual."
 
-#: src/summaryview.c:3232
+#: src/summaryview.c:3313
 msgid "Error occurred while processing messages."
 msgstr "Hubo algún error al procesar los mensajes."
 
-#: src/summaryview.c:3540 src/summaryview.c:3541
+#: src/summaryview.c:3621 src/summaryview.c:3622
 msgid "Building threads..."
 msgstr "Construyendo hilos..."
 
-#: src/summaryview.c:3683 src/summaryview.c:3684
+#: src/summaryview.c:3764 src/summaryview.c:3765
 msgid "Unthreading..."
 msgstr "Deshaciendo hilos..."
 
-#: src/summaryview.c:3969 src/summaryview.c:4025
+#: src/summaryview.c:4050 src/summaryview.c:4106
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrando..."
 
-#: src/summaryview.c:4074
+#: src/summaryview.c:4155
 msgid "filtering..."
 msgstr "filtrando..."
 
-#: src/summaryview.c:4075
+#: src/summaryview.c:4156
 msgid "Filtering..."
 msgstr "Filtrando..."
 
-#: src/summaryview.c:4111
+#: src/summaryview.c:4192
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "se ha(n) filtrado %d mensaje(s)."
 
-#: src/summaryview.c:4620
+#: src/summaryview.c:4701
 msgid "No."
 msgstr "No."
 

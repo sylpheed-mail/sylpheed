@@ -3622,6 +3622,10 @@ void summary_thread_build(SummaryView *summaryview)
 	STATUSBAR_PUSH(summaryview->mainwin, _("Building threads..."));
 	main_window_cursor_wait(summaryview->mainwin);
 
+	g_signal_handlers_block_matched(G_OBJECT(summaryview->treeview),
+					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					0, 0, NULL, NULL, summaryview);
+
 	selected_msg = summary_get_msginfo(summaryview, summaryview->selected);
 	displayed_msg = summary_get_msginfo
 		(summaryview, summaryview->displayed);
@@ -3703,6 +3707,10 @@ void summary_thread_build(SummaryView *summaryview)
 		}
 	}
 
+	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
+					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					  0, 0, NULL, NULL, summaryview);
+
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
 	main_window_cursor_normal(summaryview->mainwin);
@@ -3765,6 +3773,10 @@ void summary_unthread(SummaryView *summaryview)
 	STATUSBAR_PUSH(summaryview->mainwin, _("Unthreading..."));
 	main_window_cursor_wait(summaryview->mainwin);
 
+	g_signal_handlers_block_matched(G_OBJECT(summaryview->treeview),
+					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					0, 0, NULL, NULL, summaryview);
+
 	selected_msg = summary_get_msginfo(summaryview, summaryview->selected);
 	displayed_msg = summary_get_msginfo
 		(summaryview, summaryview->displayed);
@@ -3823,6 +3835,10 @@ void summary_unthread(SummaryView *summaryview)
 			summaryview->displayed = NULL;
 		}
 	}
+
+	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
+					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
+					  0, 0, NULL, NULL, summaryview);
 
 	debug_print(_("done.\n"));
 	STATUSBAR_POP(summaryview->mainwin);
