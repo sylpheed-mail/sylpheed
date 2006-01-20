@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1141,7 +1141,7 @@ static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 #ifdef G_OS_WIN32
 	if (attach_files) {
 		gint i;
-		gchar *utf8file;
+		gchar *file, *utf8file;
 
 		utf8files = g_ptr_array_new();
 		for (i = 0; i < attach_files->len; i++) {
@@ -1155,7 +1155,7 @@ static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 	compose_new(NULL, NULL, utf8addr, utf8files);
 	if (utf8files) {
 		ptr_array_free_strings(utf8files);
-		g_ptr_array_free(utf8files);
+		g_ptr_array_free(utf8files, TRUE);
 	}
 #else
 	compose_new(NULL, NULL, utf8addr, attach_files);
