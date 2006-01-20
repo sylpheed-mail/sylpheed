@@ -27,6 +27,7 @@
 #include <gtk/gtklabel.h>
 #include <gtk/gtkoptionmenu.h>
 #include <gtk/gtkentry.h>
+#include <gtk/gtktooltips.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
@@ -463,6 +464,7 @@ SummaryView *summary_create(void)
 	GtkWidget *menuitem;
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
+	GtkTooltips *search_tip;
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
 	GtkTreeStore *store;
@@ -527,6 +529,10 @@ SummaryView *summary_create(void)
 	g_signal_connect(G_OBJECT(search_entry), "activate",
 			 G_CALLBACK(summary_search_entry_activated),
 			 summaryview);
+
+	search_tip = gtk_tooltips_new();
+	gtk_tooltips_set_tip(search_tip, search_entry,
+			     _("Search for Subject or From"), NULL);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
