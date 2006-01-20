@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -721,8 +721,12 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 		gchar *file;
 
 		for (i = 0; i < attach_files->len; i++) {
+			gchar *utf8file;
+
 			file = g_ptr_array_index(attach_files, i);
-			compose_attach_append(compose, file, file, NULL);
+			utf8file = conv_filename_to_utf8(file);
+			compose_attach_append(compose, file, utf8file, NULL);
+			g_free(utf8file);
 		}
 	}
 

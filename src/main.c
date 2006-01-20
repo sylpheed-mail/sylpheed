@@ -1127,14 +1127,41 @@ static void migrate_old_config(void)
 
 static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 {
-	gchar *addr = NULL;
+	gchar *utf8addr = NULL;
+#ifdef G_OS_WIN32
+	GPtrArray *utf8files = NULL;
+#endif
 
 	if (address) {
-		Xstrdup_a(addr, address, return);
-		g_strstrip(addr);
+		utf8addr = g_locale_to_utf8(address, -1, NULL, NULL, NULL);
+		if (utf8addr)
+			g_strstrip(utf8addr);
 	}
 
-	compose_new(NULL, NULL, addr, attach_files);
+#ifdef G_OS_WIN32
+	if (attach_files) {
+		gint i;
+		gchar *utf8file;
+
+		utf8files = g_ptr_array_new();
+		for (i = 0; i < attach_files->len; i++) {
+			file = g_ptr_array_index(attach_files, i);
+			utf8file = g_locale_to_utf8(file, -1, NULL, NULL, NULL);
+			if (utf8file)
+				g_ptr_array_add(utf8files, utf8file);
+		}
+	}
+
+	compose_new(NULL, NULL, utf8addr, utf8files);
+	if (utf8files) {
+		ptr_array_free_strings(utf8files);
+		g_ptr_array_free(utf8files);
+	}
+#else
+	compose_new(NULL, NULL, utf8addr, attach_files);
+#endif
+
+	g_free(utf8addr);
 }
 
 static void send_queue(void)
