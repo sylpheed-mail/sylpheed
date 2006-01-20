@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -159,9 +159,6 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	GtkWidget *trim_compose_subj_chkbtn;
 	GtkStyle *style;
 
-	style = gtk_style_copy(gtk_widget_get_style(dialog->dialog->window));
-	style->base[GTK_STATE_NORMAL] = style->bg[GTK_STATE_NORMAL];
-
 	vbox = gtk_vbox_new(FALSE, VSPACING);
 	gtk_container_add(GTK_CONTAINER(dialog->dialog->notebook), vbox);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), VBOX_BORDER);
@@ -179,7 +176,9 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	name_entry = gtk_entry_new();
 	gtk_editable_set_editable(GTK_EDITABLE(name_entry), FALSE);
 	gtk_widget_set_size_request(name_entry, 200, -1);
-	gtk_widget_set_style(name_entry, style);
+	style = gtk_widget_get_style(dialog->dialog->window);
+	gtk_widget_modify_base(name_entry, GTK_STATE_NORMAL,
+			       &style->bg[GTK_STATE_NORMAL]);
 	gtk_table_attach(GTK_TABLE(table), name_entry, 1, 2, 0, 1,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			 GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);

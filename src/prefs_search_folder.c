@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,6 +153,7 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	g_free(title);
 	gtk_notebook_set_show_border(GTK_NOTEBOOK(dialog->notebook), FALSE);
 	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(dialog->notebook), FALSE);
+	gtk_widget_realize(dialog->window);
 
 	g_signal_connect(G_OBJECT(dialog->window), "delete_event",
 			 G_CALLBACK(prefs_search_folder_delete_cb), new_dialog);
@@ -179,9 +180,9 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	gtk_editable_set_editable(GTK_EDITABLE(name_entry), FALSE);
 	gtk_box_pack_start(GTK_BOX(name_hbox), name_entry, TRUE, TRUE, 0);
 
-	style = gtk_style_copy(gtk_widget_get_style(dialog->window));
-	style->base[GTK_STATE_NORMAL] = style->bg[GTK_STATE_NORMAL];
-	gtk_widget_set_style(name_entry, style);
+	style = gtk_widget_get_style(dialog->window);
+	gtk_widget_modify_base(name_entry, GTK_STATE_NORMAL,
+			       &style->bg[GTK_STATE_NORMAL]);
 	
 	bool_hbox = gtk_hbox_new(FALSE, 12);
 	gtk_widget_show(bool_hbox);
