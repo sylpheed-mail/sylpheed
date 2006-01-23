@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1341,15 +1341,8 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 
 	dest->updated = TRUE;
 
-	if (remove_source) {
-		ok = imap_remove_msgs_by_seq_set(folder, src, seq_list);
-		if (ok != IMAP_SUCCESS) {
-			imap_seq_set_free(seq_list);
-			return ok;
-		}
-	}
-
 	imap_seq_set_free(seq_list);
+	g_free(destdir);
 
 	for (cur = msglist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
@@ -1358,18 +1351,13 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 			dest->new++;
 		if (MSG_IS_UNREAD(msginfo->flags))
 			dest->unread++;
-
-		if (remove_source) {
-			src->total--;
-			if (MSG_IS_NEW(msginfo->flags))
-				src->new--;
-			if (MSG_IS_UNREAD(msginfo->flags))
-				src->unread--;
-			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_INVALID);
-		}
 	}
 
-	g_free(destdir);
+	if (remove_source) {
+		ok = imap_remove_msgs(folder, src, msglist);
+		if (ok != IMAP_SUCCESS)
+			return ok;
+	}
 
 	if (ok == IMAP_SUCCESS)
 		return 0;
