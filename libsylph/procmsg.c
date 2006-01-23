@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1210,6 +1210,40 @@ void procmsg_empty_all_trash(void)
 		trash = FOLDER(cur->data)->trash;
 		procmsg_empty_trash(trash);
 	}
+}
+
+static gboolean remove_all_cached_messages_func(GNode *node, gpointer data)
+{
+	FolderItem *item;
+	gchar *dir;
+
+	g_return_val_if_fail(node->data != NULL, FALSE);
+
+	item = FOLDER_ITEM(node->data);
+	if (!item->path)
+		return FALSE;
+
+	dir = folder_item_get_path(item);
+	if (is_dir_exist(dir)) {
+		debug_print("removing all cached messages in '%s' ...\n",
+			    item->path);
+		remove_all_numbered_files(dir);
+	}
+	g_free(dir);
+
+	return FALSE;
+}
+
+void procmsg_remove_all_cached_messages(Folder *folder)
+{
+	g_return_if_fail(folder != NULL);
+	g_return_if_fail(FOLDER_IS_REMOTE(folder));
+
+	debug_print("Removing all caches in the mailbox '%s' ...\n",
+		    folder->name);
+
+	g_node_traverse(folder->node, G_PRE_ORDER, G_TRAVERSE_ALL, -1,
+			remove_all_cached_messages_func, NULL);
 }
 
 gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file)

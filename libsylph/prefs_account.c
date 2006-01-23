@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -116,6 +116,8 @@ static PrefParam param[] = {
 	{"set_domain", "FALSE", &tmp_ac_prefs.set_domain, P_BOOL},
 	{"domain", NULL, &tmp_ac_prefs.domain, P_STRING},
 	{"imap_directory", NULL, &tmp_ac_prefs.imap_dir, P_STRING},
+	{"imap_clear_cache_on_exit", "FALSE",
+	 &tmp_ac_prefs.imap_clear_cache_on_exit, P_BOOL},
 	{"set_sent_folder", "FALSE", &tmp_ac_prefs.set_sent_folder, P_BOOL},
 	{"sent_folder", NULL, &tmp_ac_prefs.sent_folder, P_STRING},
 	{"set_draft_folder", "FALSE", &tmp_ac_prefs.set_draft_folder, P_BOOL},

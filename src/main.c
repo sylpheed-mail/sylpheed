@@ -561,6 +561,7 @@ void app_will_exit(gboolean force)
 	MainWindow *mainwin;
 	gchar *filename;
 	static gboolean on_exit = FALSE;
+	GList *cur;
 
 	if (on_exit)
 		return;
@@ -596,6 +597,13 @@ void app_will_exit(gboolean force)
 	if (prefs_common.clean_on_exit)
 		main_window_empty_trash(mainwin,
 					!force && prefs_common.ask_on_clean);
+
+	for (cur = account_get_list(); cur != NULL; cur = cur->next) {
+		PrefsAccount *ac = (PrefsAccount *)cur->data;
+		if (ac->protocol == A_IMAP4 && ac->imap_clear_cache_on_exit &&
+		    ac->folder)
+			procmsg_remove_all_cached_messages(FOLDER(ac->folder));
+	}
 
 	/* save all state before exiting */
 	folder_write_list();

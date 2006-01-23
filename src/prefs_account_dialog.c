@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -185,6 +185,7 @@ static struct Advanced {
 
 	GtkWidget *imap_frame;
 	GtkWidget *imapdir_entry;
+	GtkWidget *clear_cache_chkbtn;
 
 	GtkWidget *sent_folder_chkbtn;
 	GtkWidget *sent_folder_entry;
@@ -367,6 +368,8 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"imap_directory", &advanced.imapdir_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
+	{"imap_clear_cache_on_exit", &advanced.clear_cache_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"set_sent_folder", &advanced.sent_folder_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"sent_folder", &advanced.sent_folder_entry,
@@ -1587,6 +1590,7 @@ static void prefs_account_advanced_create(void)
 	GtkWidget *imap_frame;
 	GtkWidget *imapdir_label;
 	GtkWidget *imapdir_entry;
+	GtkWidget *clear_cache_chkbtn;
 	GtkWidget *desc_label;
 	GtkWidget *folder_frame;
 	GtkWidget *vbox3;
@@ -1682,6 +1686,9 @@ static void prefs_account_advanced_create(void)
 		(vbox3, desc_label,
 		 _("Only the subfolders of this directory will be displayed."));
 
+	PACK_CHECK_BUTTON (vbox3, clear_cache_chkbtn,
+			   _("Clear all message caches on exit"));
+
 	/* special folder setting (maybe these options are redundant) */
 
 	PACK_FRAME (vbox1, folder_frame, _("Folder"));
@@ -1748,8 +1755,9 @@ static void prefs_account_advanced_create(void)
 	advanced.domain_chkbtn		= checkbtn_domain;
 	advanced.domain_entry		= entry_domain;
 
-	advanced.imap_frame             = imap_frame;
-	advanced.imapdir_entry          = imapdir_entry;
+	advanced.imap_frame         = imap_frame;
+	advanced.imapdir_entry      = imapdir_entry;
+	advanced.clear_cache_chkbtn = clear_cache_chkbtn;
 
 	advanced.sent_folder_chkbtn  = sent_folder_chkbtn;
 	advanced.sent_folder_entry   = sent_folder_entry;

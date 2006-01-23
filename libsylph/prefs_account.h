@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -146,6 +146,7 @@ struct _PrefsAccount
 	gchar    *domain;
 
 	gchar *imap_dir;
+	gboolean imap_clear_cache_on_exit;
 
 	gboolean set_sent_folder;
 	gchar *sent_folder;
