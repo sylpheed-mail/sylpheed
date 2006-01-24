@@ -194,8 +194,8 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 	gtk_widget_grab_focus(ok_button);
 	gtk_widget_grab_focus(treeview);
 
-	gtk_widget_show(window);
 	manage_window_set_transient(GTK_WINDOW(window));
+	gtk_widget_show(window);
 
 	cancelled = finished = FALSE;
 
@@ -229,7 +229,8 @@ static void foldersel_create(void)
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("Select folder"));
 	gtk_container_set_border_width(GTK_CONTAINER(window), 4);
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+	gtk_window_set_position(GTK_WINDOW(window),
+				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, FALSE);
 	gtk_window_set_wmclass
