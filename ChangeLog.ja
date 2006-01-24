@@ -1,5 +1,11 @@
 2006-01-24
 
+	* src/alertpanel.c
+	  src/inputdialog.c: gtk_widget_show() の前に transient window を
+	  セット(誤ったウィンドウ位置を修正)。
+
+2006-01-24
+
 	* libsylph/account.c
 	  libsylph/prefs_account.c
 	  src/prefs_account_dialog.c: メモリリークを修正。

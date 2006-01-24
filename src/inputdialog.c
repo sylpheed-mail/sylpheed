@@ -163,6 +163,8 @@ static void input_dialog_create(InputDialogType dialog_type)
 		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 	gtk_window_set_position(GTK_WINDOW(dialog),
 				GTK_WIN_POS_CENTER_ON_PARENT);
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	manage_window_set_transient(GTK_WINDOW(dialog));
 	g_signal_connect(G_OBJECT(dialog), "delete_event",
 			 G_CALLBACK(delete_event), NULL);
 	g_signal_connect(G_OBJECT(dialog), "key_press_event",
@@ -170,8 +172,6 @@ static void input_dialog_create(InputDialogType dialog_type)
 	g_signal_connect(G_OBJECT(dialog), "focus_out_event",
 			 G_CALLBACK(focus_out), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(dialog);
-
-	gtk_widget_realize(dialog);
 
 	vbox = gtk_vbox_new(FALSE, 8);
 	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), vbox);
@@ -226,8 +226,6 @@ static gchar *input_dialog_open(const gchar *title, const gchar *message,
 	gtkut_box_set_reverse_order(GTK_BOX(confirm_area),
 				    !prefs_common.comply_gnome_hig);
 	input_dialog_set(title, message, default_string);
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	manage_window_set_transient(GTK_WINDOW(dialog));
 	gtk_widget_show(dialog);
 
 	ack = fin = FALSE;

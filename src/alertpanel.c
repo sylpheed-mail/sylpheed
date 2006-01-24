@@ -169,8 +169,6 @@ void alertpanel_error(const gchar *format, ...)
 
 static void alertpanel_show(void)
 {
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	manage_window_set_transient(GTK_WINDOW(dialog));
 	value = G_ALERTWAIT;
 
 	inc_lock();
@@ -213,6 +211,8 @@ static void alertpanel_create(const gchar *title,
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, FALSE);
 	gtk_window_set_position(GTK_WINDOW(dialog),
 				GTK_WIN_POS_CENTER_ON_PARENT);
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	manage_window_set_transient(GTK_WINDOW(dialog));
 	gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
 	g_signal_connect(G_OBJECT(dialog), "delete_event",
 			 G_CALLBACK(alertpanel_deleted),
