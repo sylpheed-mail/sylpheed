@@ -1987,6 +1987,9 @@ static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
 		if (child->children || child->mime_type == MIME_MULTIPART)
 			goto next;
 		if (child->mime_type != MIME_MESSAGE_RFC822 &&
+		    child->mime_type != MIME_IMAGE &&
+		    child->mime_type != MIME_AUDIO &&
+		    child->mime_type != MIME_VIDEO &&
 		    !child->filename && !child->name)
 			goto next;
 

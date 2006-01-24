@@ -1033,6 +1033,8 @@ ContentType procmime_scan_mime_type(const gchar *mime_type)
 		type = MIME_IMAGE;
 	else if (!g_ascii_strncasecmp(mime_type, "audio/", 6))
 		type = MIME_AUDIO;
+	else if (!g_ascii_strncasecmp(mime_type, "video/", 6))
+		type = MIME_VIDEO;
 	else if (!g_ascii_strcasecmp(mime_type, "text"))
 		type = MIME_TEXT;
 	else

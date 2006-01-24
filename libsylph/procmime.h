@@ -53,6 +53,7 @@ typedef enum
 	MIME_MULTIPART,
 	MIME_IMAGE,
 	MIME_AUDIO,
+	MIME_VIDEO,
 	MIME_UNKNOWN
 } ContentType;
 
