@@ -1220,7 +1220,7 @@ static gboolean remove_all_cached_messages_func(GNode *node, gpointer data)
 	g_return_val_if_fail(node->data != NULL, FALSE);
 
 	item = FOLDER_ITEM(node->data);
-	if (!item->path)
+	if (!item->path || item->stype == F_VIRTUAL)
 		return FALSE;
 
 	dir = folder_item_get_path(item);
