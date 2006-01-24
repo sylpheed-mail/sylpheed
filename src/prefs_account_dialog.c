@@ -491,7 +491,7 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 	inc_unlock();
 
 	if (cancelled && new_account) {
-		g_free(ac_prefs);
+		prefs_account_free(ac_prefs);
 		return NULL;
 	} else {
 		prefs_account_apply_tmp_prefs(ac_prefs);

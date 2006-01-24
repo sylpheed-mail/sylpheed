@@ -1,5 +1,13 @@
 2006-01-24
 
+	* libsylph/account.c
+	  libsylph/prefs_account.c
+	  src/prefs_account_dialog.c: fixed memory leaks.
+	* libsylph/imap.c: imap_session_connect(): save temporary password.
+	  imap_close(): don't try to connect to server when closing.
+
+2006-01-24
+
 	* libsylph/procsg.c: procmsg_remove_all_cached_messages(): skip
 	  virtual folders.
 

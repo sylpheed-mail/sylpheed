@@ -237,6 +237,10 @@ void prefs_account_free(PrefsAccount *ac_prefs)
 
 	tmp_ac_prefs = *ac_prefs;
 	prefs_free(param);
+
+	if (ac_prefs->tmp_pass)
+		g_free(ac_prefs->tmp_pass);
+	g_free(ac_prefs);
 }
 
 static gint prefs_account_get_new_id(void)

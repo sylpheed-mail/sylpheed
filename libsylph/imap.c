@@ -588,7 +588,7 @@ static gint imap_session_connect(IMAPSession *session)
 {
 	SockInfo *sock;
 	PrefsAccount *account;
-	gchar *pass;
+	const gchar *pass;
 
 	g_return_val_if_fail(session != NULL, IMAP_ERROR);
 
@@ -598,15 +598,18 @@ static gint imap_session_connect(IMAPSession *session)
 		    SESSION(session)->server, SESSION(session)->port);
 
 	pass = account->passwd;
+	if (!pass)
+		pass = account->tmp_pass;
 	if (!pass) {
 		gchar *tmp_pass;
+
 		tmp_pass = input_query_password(account->recv_server,
 						account->userid);
 		if (!tmp_pass)
 			return IMAP_ERROR;
-		Xstrdup_a(pass, tmp_pass,
-			  {g_free(tmp_pass); return IMAP_ERROR;});
-		g_free(tmp_pass);
+
+		account->tmp_pass = tmp_pass;
+		pass = account->tmp_pass;
 	}
 
 #if USE_SSL
@@ -650,6 +653,10 @@ static gint imap_session_connect(IMAPSession *session)
 	if (!session->authenticated &&
 	    imap_auth(session, account->userid, pass, account->imap_auth_type)
 	    != IMAP_SUCCESS) {
+		if (account->tmp_pass) {
+			g_free(account->tmp_pass);
+			account->tmp_pass = NULL;
+		}
 		imap_cmd_logout(session);
 		return IMAP_AUTHFAIL;
 	}
@@ -1598,6 +1605,9 @@ static gint imap_close(Folder *folder, FolderItem *item)
 	g_return_val_if_fail(folder != NULL, -1);
 
 	if (!item->path) return 0;
+
+	if (!REMOTE_FOLDER(folder)->session)
+		return 0;
 
 	session = imap_session_get(folder);
 	if (!session) return -1;

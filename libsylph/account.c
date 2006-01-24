@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -431,10 +431,11 @@ void account_destroy(PrefsAccount *ac_prefs)
 
 	folder_unref_account_all(ac_prefs);
 
-	prefs_account_free(ac_prefs);
 	account_list = g_list_remove(account_list, ac_prefs);
+	if (cur_account == ac_prefs)
+		cur_account = NULL;
+	prefs_account_free(ac_prefs);
 
-	if (cur_account == ac_prefs) cur_account = NULL;
 	if (!cur_account && account_list) {
 		cur_account = account_get_default();
 		if (!cur_account) {
