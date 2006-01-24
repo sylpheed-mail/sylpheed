@@ -4869,6 +4869,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 
 	summary_update_status(summaryview);
 	summary_status_show(summaryview);
+	summary_set_menu_sensitive(summaryview);
+	main_window_set_toolbar_sensitive(summaryview->mainwin);
 }
 
 void summary_qsearch(SummaryView *summaryview)
@@ -4981,6 +4983,8 @@ void summary_qsearch(SummaryView *summaryview)
 	summary_unlock(summaryview);
 	summary_update_status(summaryview);
 	summary_status_show(summaryview);
+	summary_set_menu_sensitive(summaryview);
+	main_window_set_toolbar_sensitive(summaryview->mainwin);
 }
 
 
