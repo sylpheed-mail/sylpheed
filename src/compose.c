@@ -207,6 +207,7 @@ static void compose_reedit_set_entry		(Compose	*compose,
 						 MsgInfo	*msginfo);
 
 static void compose_insert_sig			(Compose	*compose,
+						 gboolean	 append,
 						 gboolean	 replace,
 						 gboolean	 scroll);
 static void compose_enable_sig			(Compose	*compose);
@@ -524,7 +525,9 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/_Attach file"),		"<control>M", compose_attach_cb,      0, NULL},
 	{N_("/_File/_Insert file"),		"<control>I", compose_insert_file_cb, 0, NULL},
+	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/Insert si_gnature"),	"<control>G", compose_insert_sig_cb,  0, NULL},
+	{N_("/_File/A_ppend signature"),	"<shift><control>G", compose_insert_sig_cb,  1, NULL},
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/_Close"),			"<control>W", compose_close_cb, 0, NULL},
 
@@ -687,7 +690,7 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 	undo_block(compose->undostruct);
 
 	if (prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE, FALSE);
+		compose_insert_sig(compose, TRUE, FALSE, FALSE);
 
 	text = GTK_TEXT_VIEW(compose->text);
 	buffer = gtk_text_view_get_buffer(text);
@@ -805,7 +808,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	}
 
 	if (prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE, FALSE);
+		compose_insert_sig(compose, TRUE, FALSE, FALSE);
 
 	if (quote && prefs_common.linewrap_quote)
 		compose_wrap_all(compose);
@@ -935,7 +938,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	}
 
 	if (prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE, FALSE);
+		compose_insert_sig(compose, TRUE, FALSE, FALSE);
 
 	if (prefs_common.linewrap_quote)
 		compose_wrap_all(compose);
@@ -1672,8 +1675,8 @@ static void compose_reedit_set_entry(Compose *compose, MsgInfo *msginfo)
 	compose_entry_set(compose, msginfo->subject, COMPOSE_ENTRY_SUBJECT);
 }
 
-static void compose_insert_sig(Compose *compose, gboolean replace,
-			       gboolean scroll)
+static void compose_insert_sig(Compose *compose, gboolean append,
+			       gboolean replace, gboolean scroll)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 	GtkTextBuffer *buffer;
@@ -1711,13 +1714,24 @@ static void compose_insert_sig(Compose *compose, gboolean replace,
 		}
 	}
 
+	if (scroll) {
+		if (append)
+			gtk_text_buffer_get_end_iter(buffer, &iter);
+		else
+			gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+	}
+
 	sig_str = compose_get_signature_str(compose);
 	if (sig_str) {
 		if (!replace)
 			gtk_text_buffer_insert(buffer, &iter, "\n\n", 2);
+		else if (!gtk_text_iter_starts_line(&iter))
+			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		gtk_text_buffer_insert_with_tags
 			(buffer, &iter, sig_str, -1, compose->sig_tag, NULL);
 		g_free(sig_str);
+		if (scroll)
+			gtk_text_buffer_place_cursor(buffer, &iter);
 	}
 
 	compose->autowrap = prev_autowrap;
@@ -2555,7 +2569,7 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 #endif /* USE_GPGME */
 
 	if (!init && compose->mode != COMPOSE_REDIRECT && prefs_common.auto_sig)
-		compose_insert_sig(compose, TRUE, FALSE);
+		compose_insert_sig(compose, TRUE, TRUE, FALSE);
 }
 
 static gboolean compose_check_for_valid_recipient(Compose *compose)
@@ -4719,7 +4733,7 @@ static GtkWidget *compose_toolbar_create(Compose *compose)
 	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_SIGN);
 	sig_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
 					  _("Signature"),
-					  _("Insert signature"),
+					  _("Append signature"),
 					  "Signature",
 					  icon_wid,
 					  G_CALLBACK(toolbar_sig_cb), compose);
@@ -4995,7 +5009,7 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 	}
 
 	if (replace && parsed_str && prefs_common.auto_sig)
-		compose_insert_sig(compose, FALSE, FALSE);
+		compose_insert_sig(compose, TRUE, FALSE, FALSE);
 
 	if (replace && parsed_str) {
 		gtk_text_buffer_get_start_iter(buffer, &iter);
@@ -5718,7 +5732,7 @@ static void toolbar_sig_cb(GtkWidget *widget, gpointer data)
 {
 	Compose *compose = (Compose *)data;
 
-	compose_insert_sig(compose, TRUE, TRUE);
+	compose_insert_sig(compose, TRUE, TRUE, TRUE);
 }
 
 static void toolbar_ext_editor_cb(GtkWidget *widget, gpointer data)
@@ -5985,7 +5999,7 @@ static void compose_insert_sig_cb(gpointer data, guint action,
 {
 	Compose *compose = (Compose *)data;
 
-	compose_insert_sig(compose, TRUE, TRUE);
+	compose_insert_sig(compose, action, TRUE, TRUE);
 }
 
 static gint compose_delete_cb(GtkWidget *widget, GdkEventAny *event,
