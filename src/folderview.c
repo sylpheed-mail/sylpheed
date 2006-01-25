@@ -1605,8 +1605,10 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 				rename_folder = delete_folder = TRUE;
 				if (folder->klass->move_folder)
 					move_folder = TRUE;
-			} else if (item->stype == F_TRASH)
-				empty_trash = TRUE;
+			} else if (item->stype == F_TRASH) {
+				if (item->total > 0)
+					empty_trash = TRUE;
+			}
 		} else if (FOLDER_TYPE(folder) == F_NEWS) {
 			if (item->parent != NULL)
 				delete_folder = TRUE;

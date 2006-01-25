@@ -287,6 +287,7 @@ FILE   *procmsg_open_message_decrypted	(MsgInfo	*msginfo,
 
 gboolean procmsg_msg_exist		(MsgInfo	*msginfo);
 
+gboolean procmsg_trash_messages_exist	(void);
 void	procmsg_empty_trash		(FolderItem	*trash);
 void	procmsg_empty_all_trash		(void);
 

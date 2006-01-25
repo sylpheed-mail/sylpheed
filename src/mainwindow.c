@@ -1616,6 +1616,9 @@ void main_window_empty_trash(MainWindow *mainwin, gboolean confirm)
 {
 	GList *list;
 
+	if (!procmsg_trash_messages_exist())
+		return;
+
 	if (confirm) {
 		if (alertpanel(_("Empty all trash"),
 			       _("Delete all messages in trash folders?"),

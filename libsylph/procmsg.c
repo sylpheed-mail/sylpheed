@@ -1188,6 +1188,20 @@ gboolean procmsg_msg_exist(MsgInfo *msginfo)
 	return ret;
 }
 
+gboolean procmsg_trash_messages_exist(void)
+{
+	FolderItem *trash;
+	GList *cur;
+
+	for (cur = folder_get_list(); cur != NULL; cur = cur->next) {
+		trash = FOLDER(cur->data)->trash;
+		if (trash && trash->total > 0)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 void procmsg_empty_trash(FolderItem *trash)
 {
 	if (trash && trash->total > 0) {

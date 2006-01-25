@@ -1,5 +1,13 @@
 2006-01-25
 
+	* libsylph/procmsg.[ch]: procmsg_trash_messages_exist(): added.
+	* src/folderview.c: folderview_menu_popup(): don't make 'Empty trash'
+	  active if trashed messages don't exist.
+	  src/mainwindow.c: main_window_empty_trash(): return immediately
+	  when trashed messages don't exist.
+
+2006-01-25
+
 	* src/compose.c: 'File/Insert signature' now inserts signature into
 	  current cursor position. 'File/Append signature' was added for the
 	  previous behavior.
