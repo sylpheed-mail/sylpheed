@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -50,6 +50,8 @@ struct _VirtualSearchInfo {
 	GSList *mlist;
 	GHashTable *search_cache_table;
 	FILE *fp;
+	gboolean requires_full_headers;
+	gboolean exclude_trash;
 };
 
 struct _SearchCacheInfo {
@@ -322,7 +324,6 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 	GSList *mlist;
 	GSList *cur;
 	FilterInfo fltinfo;
-	gboolean full_headers;
 	gint count = 1, total, ncachehit = 0;
 	GTimeVal tv_prev, tv_cur;
 
@@ -344,8 +345,6 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
 	debug_print("start query search: %s\n", item->path);
-
-	full_headers = filter_rule_requires_full_headers(info->rule);
 
 	virtual_write_search_cache(info->fp, item, NULL, 0);
 
@@ -392,7 +391,7 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 		}
 
 		fltinfo.flags = msginfo->flags;
-		if (full_headers) {
+		if (info->requires_full_headers) {
 			gchar *file;
 
 			file = procmsg_get_message_file(msginfo);
@@ -436,6 +435,8 @@ static gboolean virtual_search_recursive_func(GNode *node, gpointer data)
 	item = FOLDER_ITEM(node->data);
 
 	if (!item->path)
+		return FALSE;
+	if (info->exclude_trash && item->stype == F_TRASH)
 		return FALSE;
 
 	mlist = virtual_search_folder(info, item);
@@ -496,6 +497,17 @@ static GSList *virtual_get_msg_list(Folder *folder, FolderItem *item,
 	g_free(path);
 	if (!info.fp)
 		goto finish;
+
+	info.requires_full_headers =
+		filter_rule_requires_full_headers(rule);
+
+	if (rule->recursive) {
+		if (target->stype == F_TRASH)
+			info.exclude_trash = FALSE;
+		else
+			info.exclude_trash = TRUE;
+	} else
+		info.exclude_trash = FALSE;
 
 	if (rule->recursive) {
 		g_node_traverse(target->node, G_PRE_ORDER, G_TRAVERSE_ALL, -1,

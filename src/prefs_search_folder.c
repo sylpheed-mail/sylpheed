@@ -75,10 +75,14 @@ struct _PrefsSearchFolderDialog
 
 	GtkWidget *subfolder_checkbtn;
 	GtkWidget *case_checkbtn;
+
+	gboolean finished;
+	gboolean updated;
 };
 
 static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item);
 static void prefs_search_folder_set_dialog(PrefsSearchFolderDialog *dialog);
+static void prefs_search_folder_destroy	  (PrefsSearchFolderDialog *dialog);
 
 static gint prefs_search_folder_delete_cb(GtkWidget		  *widget,
 					  GdkEventAny		  *event,
@@ -100,16 +104,25 @@ static void prefs_search_folder_cancel_cb(GtkWidget		  *widget,
 					  PrefsSearchFolderDialog *dialog);
 
 
-void prefs_search_folder_open(FolderItem *item)
+gboolean prefs_search_folder_open(FolderItem *item)
 {
 	PrefsSearchFolderDialog *dialog;
+	gboolean updated;
 
-	g_return_if_fail(item != NULL);
+	g_return_val_if_fail(item != NULL, FALSE);
 
 	dialog = prefs_search_folder_create(item);
 	manage_window_set_transient(GTK_WINDOW(dialog->dialog->window));
 	prefs_search_folder_set_dialog(dialog);
 	gtk_widget_show(dialog->dialog->window);
+
+	while (dialog->finished == FALSE)
+		gtk_main_iteration();
+
+	updated = dialog->updated;
+	prefs_search_folder_destroy(dialog);
+
+	return updated;
 }
 
 static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
@@ -265,6 +278,9 @@ static PrefsSearchFolderDialog *prefs_search_folder_create(FolderItem *item)
 	new_dialog->subfolder_checkbtn = subfolder_checkbtn;
 	new_dialog->case_checkbtn = case_checkbtn;
 
+	new_dialog->finished = FALSE;
+	new_dialog->updated = FALSE;
+
 	return new_dialog;
 }
 
@@ -335,7 +351,7 @@ static void prefs_search_folder_destroy(PrefsSearchFolderDialog *dialog)
 static gint prefs_search_folder_delete_cb(GtkWidget *widget, GdkEventAny *event,
 					  PrefsSearchFolderDialog *dialog)
 {
-	prefs_search_folder_destroy(dialog);
+	dialog->finished = TRUE;
 	return TRUE;
 }
 
@@ -371,7 +387,7 @@ static void prefs_search_folder_ok_cb(GtkWidget *widget,
 				      PrefsSearchFolderDialog *dialog)
 {
 	prefs_search_folder_apply_cb(widget, dialog);
-	prefs_search_folder_destroy(dialog);
+	dialog->finished = TRUE;
 }
 
 static void prefs_search_folder_apply_cb(GtkWidget *widget,
@@ -426,10 +442,12 @@ static void prefs_search_folder_apply_cb(GtkWidget *widget,
 	g_free(path);
 
 	filter_rule_free(rule);
+
+	dialog->updated = TRUE;
 }
 
 static void prefs_search_folder_cancel_cb(GtkWidget *widget,
 					  PrefsSearchFolderDialog *dialog)
 {
-	prefs_search_folder_destroy(dialog);
+	dialog->finished = TRUE;
 }

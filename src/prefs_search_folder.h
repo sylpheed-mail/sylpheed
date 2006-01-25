@@ -24,6 +24,6 @@
 
 #include "folder.h"
 
-void prefs_search_folder_open	(FolderItem	*item);
+gboolean prefs_search_folder_open	(FolderItem	*item);
 
 #endif /* __PREFS_SEARCH_FOLDER_H__ */

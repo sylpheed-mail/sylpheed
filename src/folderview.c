@@ -2756,12 +2756,32 @@ static void folderview_search_cb(FolderView *folderview, guint action,
 	FolderItem *item;
 
 	item = folderview_get_selected_item(folderview);
-	if (item) {
-		if (item->stype == F_VIRTUAL)
-			prefs_search_folder_open(item);
-		else
-			summary_search(item);
-	}
+	if (!item)
+		return;
+
+	if (item->stype == F_VIRTUAL) {
+		GtkTreePath *sel_path, *open_path;
+
+		sel_path = gtk_tree_row_reference_get_path
+			(folderview->selected);
+		open_path = gtk_tree_row_reference_get_path(folderview->opened);
+
+		if (prefs_search_folder_open(item)) {
+			if (sel_path && open_path &&
+			    gtk_tree_path_compare(open_path, sel_path) == 0) {
+				GtkTreeRowReference *row;
+				row = gtk_tree_row_reference_copy(folderview->opened);
+				folderview_unselect(folderview);
+				summary_clear_all(folderview->summaryview);
+				folderview_select_row_ref(folderview, row);
+				gtk_tree_row_reference_free(row);
+			}
+		}
+
+		gtk_tree_path_free(open_path);
+		gtk_tree_path_free(sel_path);
+	} else
+		summary_search(item);
 }
 
 static void folderview_property_cb(FolderView *folderview, guint action,

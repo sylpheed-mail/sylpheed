@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,6 +102,8 @@ static struct SummarySearchWindow {
 
 	FilterRule *rule;
 	gboolean requires_full_headers;
+
+	gboolean exclude_trash;
 
 	gboolean on_search;
 	gboolean cancelled;
@@ -481,6 +483,14 @@ static void summary_search_query(void)
 	search_window.requires_full_headers =
 		filter_rule_requires_full_headers(search_window.rule);
 
+	if (search_window.rule->recursive) {
+		if (item->stype == F_TRASH)
+			search_window.exclude_trash = FALSE;
+		else
+			search_window.exclude_trash = TRUE;
+	} else
+		search_window.exclude_trash = FALSE;
+
 	search_window.cancelled = FALSE;
 
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
@@ -496,6 +506,7 @@ static void summary_search_query(void)
 	filter_rule_free(search_window.rule);
 	search_window.rule = NULL;
 	search_window.requires_full_headers = FALSE;
+	search_window.exclude_trash = FALSE;
 
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
 			     GTK_STOCK_FIND);
@@ -599,6 +610,8 @@ static gboolean summary_search_recursive_func(GNode *node, gpointer data)
 	item = FOLDER_ITEM(node->data);
 
 	if (!item->path)
+		return FALSE;
+	if (search_window.exclude_trash && item->stype == F_TRASH)
 		return FALSE;
 
 	summary_search_folder(item);
