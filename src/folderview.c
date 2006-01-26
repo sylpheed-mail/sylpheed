@@ -1764,6 +1764,7 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 
 	switch (event->keyval) {
 	case GDK_Return:
+	case GDK_KP_Enter:
 		if (folderview->selected) {
 			folderview_select_row_ref(folderview,
 						  folderview->selected);
@@ -1771,6 +1772,7 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		return TRUE;
 		break;
 	case GDK_space:
+	case GDK_KP_Space:
 		if (folderview->selected) {
 			if (folderview->opened)
 				opened = gtk_tree_row_reference_get_path

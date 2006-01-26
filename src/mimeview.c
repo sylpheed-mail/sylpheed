@@ -898,6 +898,7 @@ static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 
 	switch (event->keyval) {
 	case GDK_space:
+	case GDK_KP_Space:
 		if (textview_scroll_page(mimeview->textview, mod_pressed))
 			return TRUE;
 
@@ -916,6 +917,7 @@ static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		textview_scroll_page(mimeview->textview, TRUE);
 		return TRUE;
 	case GDK_Return:
+	case GDK_KP_Enter:
 		textview_scroll_one_line(mimeview->textview, mod_pressed);
 		return TRUE;
 	case GDK_t:
@@ -929,6 +931,8 @@ static gint mimeview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		break;
 	case GDK_Left:
 	case GDK_Delete:
+	case GDK_KP_Left:
+	case GDK_KP_Delete:
 		if (summaryview)
 			summary_pass_key_press_event(summaryview, event);
 		break;

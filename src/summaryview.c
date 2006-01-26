@@ -5188,6 +5188,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 
 	switch (event->keyval) {
 	case GDK_Left:		/* Move focus */
+	case GDK_KP_Left:
 		adj = gtk_scrolled_window_get_hadjustment
 			(GTK_SCROLLED_WINDOW(summaryview->scrolledwin));
 		if (adj->lower != adj->value)
@@ -5216,6 +5217,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 
 	switch (event->keyval) {
 	case GDK_space:		/* Page down or go to the next */
+	case GDK_KP_Space:
 		if (summaryview->selected &&
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
@@ -5232,6 +5234,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		textview_scroll_page(textview, TRUE);
 		return TRUE;
 	case GDK_Return:	/* Scroll up/down one line */
+	case GDK_KP_Enter:
 		if (summaryview->selected &&
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
@@ -5240,6 +5243,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			textview_scroll_one_line(textview, mod_pressed);
 		return TRUE;
 	case GDK_Delete:
+	case GDK_KP_Delete:
 		BREAK_ON_MODIFIER_KEY();
 		summary_delete(summaryview);
 		return TRUE;

@@ -1591,8 +1591,18 @@ static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	case GDK_End:
 	case GDK_Control_L:
 	case GDK_Control_R:
+	case GDK_KP_Tab:
+	case GDK_KP_Home:
+	case GDK_KP_Left:
+	case GDK_KP_Up:
+	case GDK_KP_Right:
+	case GDK_KP_Down:
+	case GDK_KP_Page_Up:
+	case GDK_KP_Page_Down:
+	case GDK_KP_End:
 		break;
 	case GDK_space:
+	case GDK_KP_Space:
 		if (summaryview)
 			summary_pass_key_press_event(summaryview, event);
 		else
@@ -1605,11 +1615,13 @@ static gboolean textview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		textview_scroll_page(textview, TRUE);
 		break;
 	case GDK_Return:
+	case GDK_KP_Enter:
 		textview_scroll_one_line
 			(textview, (event->state &
 				    (GDK_SHIFT_MASK|GDK_MOD1_MASK)) != 0);
 		break;
 	case GDK_Delete:
+	case GDK_KP_Delete:
 		if (summaryview)
 			summary_pass_key_press_event(summaryview, event);
 		break;
