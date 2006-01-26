@@ -26,6 +26,7 @@
 #include <sys/types.h>
 #ifdef G_OS_WIN32
 #  include <winsock2.h>
+#  include <ws2tcpip.h>
 #else
 #  if HAVE_SYS_WAIT_H
 #    include <sys/wait.h>
@@ -635,9 +636,27 @@ static gint sock_connect_by_hostname(gint sock, const gchar *hostname,
 }
 
 #else /* INET6 */
+
+#ifdef G_OS_WIN32
+/* MinGW defines gai_strerror() in ws2tcpip.h, but it is not implemented. */
+#undef gai_strerror
+const gchar *gai_strerror(gint errcode)
+{
+	static gchar str[32];
+
+	g_snprintf(str, sizeof(str), "gai errcode: (%d)", errcode);
+	return str;
+}
+#endif
+
 static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 {
-	gint sock = -1, gai_error;
+#ifdef G_OS_WIN32
+	SOCKET sock = INVALID_SOCKET;
+#else
+	gint sock = -1;
+#endif
+	gint gai_error;
 	struct addrinfo hints, *res, *ai;
 	gchar port_str[6];
 
@@ -658,7 +677,11 @@ static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 
 	for (ai = res; ai != NULL; ai = ai->ai_next) {
 		sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
+#ifdef G_OS_WIN32
+		if (sock == INVALID_SOCKET)
+#else
 		if (sock < 0)
+#endif
 			continue;
 
 		if (sock_connect_with_timeout
@@ -688,7 +711,12 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	SockInfo *sockinfo;
 
 #ifdef INET6
+#ifdef G_OS_WIN32
+	if ((sock = sock_connect_by_getaddrinfo(hostname, port))
+	    == INVALID_SOCKET)
+#else
 	if ((sock = sock_connect_by_getaddrinfo(hostname, port)) < 0)
+#endif /* G_OS_WIN32 */
 		return NULL;
 #else
 #ifdef G_OS_WIN32

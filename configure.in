@@ -300,13 +300,24 @@ AC_MSG_CHECKING([whether to use IPv6])
 if test x"$ac_cv_enable_ipv6" = xyes; then
 	AC_MSG_RESULT(yes)
 	AC_MSG_CHECKING([for IPv6 support])
-	AC_CACHE_VAL(ac_cv_ipv6,[
-		AC_TRY_COMPILE([#define INET6
-				#include <sys/types.h>
-				#include <netinet/in.h>],
-			[int x = IPPROTO_IPV6; struct in6_addr a;],
-			ac_cv_ipv6=yes, ac_cv_ipv6=no)
-	])
+	if test "$native_win32" = yes; then
+		AC_CACHE_VAL(ac_cv_ipv6,[
+			AC_TRY_COMPILE([#define INET6
+					#include <sys/types.h>
+					#include <winsock2.h>
+					#include <ws2tcpip.h>],
+				[int x = IPPROTO_IPV6; struct in6_addr a;],
+				ac_cv_ipv6=yes, ac_cv_ipv6=no)
+		])
+	else
+		AC_CACHE_VAL(ac_cv_ipv6,[
+			AC_TRY_COMPILE([#define INET6
+					#include <sys/types.h>
+					#include <netinet/in.h>],
+				[int x = IPPROTO_IPV6; struct in6_addr a;],
+				ac_cv_ipv6=yes, ac_cv_ipv6=no)
+		])
+	fi
 	AC_MSG_RESULT($ac_cv_ipv6)
 	if test $ac_cv_ipv6 = yes; then
 		AC_DEFINE(INET6, 1, Define if you want IPv6 support.)
