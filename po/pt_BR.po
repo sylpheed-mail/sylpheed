@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-25 15:15+0900\n"
+"POT-Creation-Date: 2006-01-25 18:01+0900\n"
 "PO-Revision-Date: 2006-01-05 09:40-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: André Casteliano <digitalcoder@users.sourceforge.net> Isaías "
@@ -525,7 +525,7 @@ msgstr "não foi possível abrir o arquivo de marcas\n"
 msgid "can't fetch message %d\n"
 msgstr "não posso obter mensagem %d\n"
 
-#: libsylph/procmsg.c:1361
+#: libsylph/procmsg.c:1375
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "O comando de impressão é inválido: `%s'\n"
@@ -991,13 +991,13 @@ msgid "Address book"
 msgstr "Catálogo de endereços"
 
 #: src/addressbook.c:596 src/prefs_filter_edit.c:249
-#: src/prefs_search_folder.c:174
+#: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Nome:"
 
 #. Buttons
 #: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
-#: src/editaddress.c:1017 src/mainwindow.c:2388 src/prefs_actions.c:266
+#: src/editaddress.c:1017 src/mainwindow.c:2391 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
 #: src/prefs_template.c:233
 msgid "Delete"
@@ -1045,7 +1045,7 @@ msgstr ""
 "Você quer apagar a pasta E todos os endereços em `%s' ?\n"
 "Caso apague somente a pasta, os endereços serão movidos para a pasta pai."
 
-#: src/addressbook.c:1674 src/folderview.c:2347
+#: src/addressbook.c:1674 src/folderview.c:2349
 msgid "Delete folder"
 msgstr "Apagar pasta"
 
@@ -1179,7 +1179,7 @@ msgstr "Grupo"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3152 src/folderview.c:367 src/prefs_account_dialog.c:1694
-#: src/summary_search.c:369
+#: src/summary_search.c:371
 msgid "Folder"
 msgstr "Pasta"
 
@@ -1577,7 +1577,7 @@ msgstr "Mensagem: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Não foi possível obter alguma(s) parte(s) dessa mensagem."
 
-#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:624
+#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:637
 #: src/summaryview.c:2107
 msgid "(No Subject)"
 msgstr "(Sem assunto)"
@@ -1705,7 +1705,7 @@ msgstr "Tipo MIME"
 msgid "Size"
 msgstr "Tamanho"
 
-#: src/compose.c:4686 src/mainwindow.c:2321 src/prefs_account_dialog.c:528
+#: src/compose.c:4686 src/mainwindow.c:2324 src/prefs_account_dialog.c:528
 #: src/prefs_common_dialog.c:664
 msgid "Send"
 msgstr "Enviar"
@@ -2012,12 +2012,12 @@ msgstr "Editar pasta"
 msgid "Input the new name of folder:"
 msgstr "Nome da nova pasta:"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2096
-#: src/folderview.c:2102
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2098
+#: src/folderview.c:2104
 msgid "New folder"
 msgstr "Nova pasta"
 
-#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2103
+#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2105
 msgid "Input the name of new folder:"
 msgstr "Digite o nome da nova pasta:"
 
@@ -2206,22 +2206,22 @@ msgstr "Lixeira"
 msgid "Drafts"
 msgstr "Rascunhos"
 
-#: src/foldersel.c:543 src/folderview.c:2100 src/folderview.c:2104
+#: src/foldersel.c:543 src/folderview.c:2102 src/folderview.c:2106
 msgid "NewFolder"
 msgstr "NovaPasta"
 
-#: src/foldersel.c:551 src/folderview.c:2112 src/folderview.c:2173
+#: src/foldersel.c:551 src/folderview.c:2114 src/folderview.c:2175
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c' não pode ser usado no nome da pasta."
 
-#: src/foldersel.c:561 src/folderview.c:2122 src/folderview.c:2181
-#: src/summary_search.c:984
+#: src/foldersel.c:561 src/folderview.c:2124 src/folderview.c:2183
+#: src/summary_search.c:997
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "A pasta `%s' já existe."
 
-#: src/foldersel.c:569 src/folderview.c:2129
+#: src/foldersel.c:569 src/folderview.c:2131
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "não foi possível criar a pasta `%s'."
@@ -2304,12 +2304,12 @@ msgstr "Configurando informações da pasta...\n"
 msgid "Setting folder info..."
 msgstr "Configurando informações da pasta..."
 
-#: src/folderview.c:858 src/mainwindow.c:3461 src/setup.c:80
+#: src/folderview.c:858 src/mainwindow.c:3464 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Revisando pasta %s%c%s ..."
 
-#: src/folderview.c:862 src/mainwindow.c:3466 src/setup.c:85
+#: src/folderview.c:862 src/mainwindow.c:3469 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Revisando pasta %s ..."
@@ -2334,26 +2334,26 @@ msgstr "Falha ao tentar reconstruir a árvore de pastas."
 msgid "Checking for new messages in all folders..."
 msgstr "Checar novas mensagens em todas as pastas..."
 
-#: src/folderview.c:1200 src/mainwindow.c:2397 src/prefs_common_dialog.c:1796
+#: src/folderview.c:1200 src/mainwindow.c:2400 src/prefs_common_dialog.c:1796
 msgid "Junk"
 msgstr "Spam"
 
-#: src/folderview.c:1844
+#: src/folderview.c:1846
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Pasta %s selecionada\n"
 
-#: src/folderview.c:1999
+#: src/folderview.c:2001
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Recebendo mensagens em %s ..."
 
-#: src/folderview.c:2036
+#: src/folderview.c:2038
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Erro ao receber mensagens em `%s'."
 
-#: src/folderview.c:2097
+#: src/folderview.c:2099
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2363,26 +2363,26 @@ msgstr ""
 "(se você quer criar uma pasta para armazenar subpastas.\n"
 " adicione `/' no final do nome)"
 
-#: src/folderview.c:2161
+#: src/folderview.c:2163
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Novo nome para `%s':"
 
-#: src/folderview.c:2162
+#: src/folderview.c:2164
 msgid "Rename folder"
 msgstr "Renomear pasta"
 
-#: src/folderview.c:2193 src/folderview.c:2201
+#: src/folderview.c:2195 src/folderview.c:2203
 #, fuzzy, c-format
 msgid "Can't rename the folder '%s'."
 msgstr "Não foi possível excluir a pasta `%s'."
 
-#: src/folderview.c:2271
+#: src/folderview.c:2273
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Não foi possível mover a pasta `%s'."
 
-#: src/folderview.c:2337
+#: src/folderview.c:2339
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2392,11 +2392,11 @@ msgstr ""
 "As mensagens reais não serão apagadas.\n"
 "Deseja apagar a pasta?"
 
-#: src/folderview.c:2339
+#: src/folderview.c:2341
 msgid "Delete search folder"
 msgstr "Apagar pasta de busca"
 
-#: src/folderview.c:2344
+#: src/folderview.c:2346
 #, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2409,20 +2409,20 @@ msgstr ""
 "\n"
 "Quer realmente apagá-las?"
 
-#: src/folderview.c:2376 src/folderview.c:2382
+#: src/folderview.c:2378 src/folderview.c:2384
 #, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Não foi possível excluir a pasta `%s'."
 
-#: src/folderview.c:2418
+#: src/folderview.c:2420
 msgid "Empty trash"
 msgstr "Esvaziar lixeira"
 
-#: src/folderview.c:2419
+#: src/folderview.c:2421
 msgid "Delete all messages in the trash folder?"
 msgstr "Apagar todas as mensagens da lixeira?"
 
-#: src/folderview.c:2458
+#: src/folderview.c:2460
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2431,34 +2431,34 @@ msgstr ""
 "Realmente remover a caixa de correio `%s' ?\n"
 "(As mensagens NÃO são apagadas do disco)"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2462
 msgid "Remove mailbox"
 msgstr "Remover caixa de correio"
 
-#: src/folderview.c:2510
+#: src/folderview.c:2512
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Realmente apagar conta IMAP4 `%s' ?"
 
-#: src/folderview.c:2511
+#: src/folderview.c:2513
 msgid "Delete IMAP4 account"
 msgstr "Apagar conta IMAP4"
 
-#: src/folderview.c:2664
+#: src/folderview.c:2666
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Realmente apagar o grupo de notícias `%s'?"
 
-#: src/folderview.c:2665
+#: src/folderview.c:2667
 msgid "Delete newsgroup"
 msgstr "Apagar grupo de notícias"
 
-#: src/folderview.c:2715
+#: src/folderview.c:2717
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Realmente apagar o grupo de notícias `%s'?"
 
-#: src/folderview.c:2716
+#: src/folderview.c:2718
 msgid "Delete news account"
 msgstr "Apagar conta de grupo de notícias"
 
@@ -2474,7 +2474,7 @@ msgstr "Assunto:"
 msgid "Creating header view...\n"
 msgstr "Criando visualizador de cabeçalhos...\n"
 
-#: src/headerview.c:180 src/summary_search.c:625 src/summaryview.c:2110
+#: src/headerview.c:180 src/summary_search.c:638 src/summaryview.c:2110
 msgid "(No From)"
 msgstr "(Sem remetente)"
 
@@ -2584,7 +2584,7 @@ msgstr "Importar arquivo LDIF para o Livro de Endereços"
 msgid "Prev"
 msgstr "Anterior"
 
-#: src/importldif.c:768 src/mainwindow.c:2417
+#: src/importldif.c:768 src/mainwindow.c:2420
 msgid "Next"
 msgstr "Próxima"
 
@@ -3561,19 +3561,19 @@ msgstr "Desconectado"
 msgid "You are offline. Go online?"
 msgstr "Você está desconectado. Conectar?"
 
-#: src/mainwindow.c:1620
+#: src/mainwindow.c:1623
 msgid "Empty all trash"
 msgstr "Esvaziar lixeira"
 
-#: src/mainwindow.c:1621
+#: src/mainwindow.c:1624
 msgid "Delete all messages in trash folders?"
 msgstr "Apagar todas as mensagens nas lixeiras?"
 
-#: src/mainwindow.c:1649
+#: src/mainwindow.c:1652
 msgid "Add mailbox"
 msgstr "Adicionar caixa de correio"
 
-#: src/mainwindow.c:1650
+#: src/mainwindow.c:1653
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3583,16 +3583,16 @@ msgstr ""
 "Se uma caixa de correio existente for especificada, ela será\n"
 "analisada automaticamente."
 
-#: src/mainwindow.c:1656 src/setup.c:49
+#: src/mainwindow.c:1659 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "A caixa de correio `%s' já existe."
 
-#: src/mainwindow.c:1661 src/setup.c:56
+#: src/mainwindow.c:1664 src/setup.c:56
 msgid "Mailbox"
 msgstr "Correio"
 
-#: src/mainwindow.c:1667 src/setup.c:62
+#: src/mainwindow.c:1670 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3602,145 +3602,145 @@ msgstr ""
 "Talvez alguns arquivos já existam, ou você não tem permissão para escrever "
 "lá."
 
-#: src/mainwindow.c:2085
+#: src/mainwindow.c:2088
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Visão de Pastas"
 
-#: src/mainwindow.c:2104
+#: src/mainwindow.c:2107
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Visão de Mensagens"
 
-#: src/mainwindow.c:2256 src/summaryview.c:408
+#: src/mainwindow.c:2259 src/summaryview.c:408
 msgid "/_Reply"
 msgstr "/_Responder"
 
-#: src/mainwindow.c:2257
+#: src/mainwindow.c:2260
 msgid "/Reply to _all"
 msgstr "/Responder para _todos"
 
-#: src/mainwindow.c:2258
+#: src/mainwindow.c:2261
 msgid "/Reply to _sender"
 msgstr "/Responder para o _remetente"
 
-#: src/mainwindow.c:2259
+#: src/mainwindow.c:2262
 msgid "/Reply to mailing _list"
 msgstr "/Responder para a /_lista"
 
-#: src/mainwindow.c:2264 src/summaryview.c:415
+#: src/mainwindow.c:2267 src/summaryview.c:415
 msgid "/_Forward"
 msgstr "/En_caminhar"
 
-#: src/mainwindow.c:2265 src/summaryview.c:416
+#: src/mainwindow.c:2268 src/summaryview.c:416
 msgid "/For_ward as attachment"
 msgstr "/Encaminhar como ane_xo"
 
-#: src/mainwindow.c:2266 src/summaryview.c:417
+#: src/mainwindow.c:2269 src/summaryview.c:417
 msgid "/Redirec_t"
 msgstr "/Re_direcionar"
 
-#: src/mainwindow.c:2302
+#: src/mainwindow.c:2305
 msgid "Get"
 msgstr "Baixar"
 
-#: src/mainwindow.c:2303
+#: src/mainwindow.c:2306
 msgid "Incorporate new mail"
 msgstr "Incorporar mensagens novas"
 
-#: src/mainwindow.c:2310
+#: src/mainwindow.c:2313
 msgid "Get all"
 msgstr "Baixar tudo"
 
-#: src/mainwindow.c:2311
+#: src/mainwindow.c:2314
 msgid "Incorporate new mail of all accounts"
 msgstr "Incorporar novas mensagens de todas as contas"
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2325
 msgid "Send queued message(s)"
 msgstr "Enviar Mensagem(s) da fila"
 
-#: src/mainwindow.c:2332 src/prefs_account_dialog.c:530
+#: src/mainwindow.c:2335 src/prefs_account_dialog.c:530
 #: src/prefs_common_dialog.c:666 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Escrever"
 
-#: src/mainwindow.c:2333
+#: src/mainwindow.c:2336
 msgid "Compose new message"
 msgstr "Escrever nova mensagem"
 
-#: src/mainwindow.c:2341 src/prefs_common_dialog.c:979
+#: src/mainwindow.c:2344 src/prefs_common_dialog.c:979
 msgid "Reply"
 msgstr "Responder"
 
-#: src/mainwindow.c:2342 src/mainwindow.c:2355
+#: src/mainwindow.c:2345 src/mainwindow.c:2358
 msgid "Reply to the message"
 msgstr "Responder à Mensagem"
 
-#: src/mainwindow.c:2359
+#: src/mainwindow.c:2362
 msgid "Reply all"
 msgstr "Responder todas"
 
-#: src/mainwindow.c:2360
+#: src/mainwindow.c:2363
 msgid "Reply to all"
 msgstr "Responder para todos"
 
-#: src/mainwindow.c:2368 src/prefs_filter_edit.c:672
+#: src/mainwindow.c:2371 src/prefs_filter_edit.c:672
 msgid "Forward"
 msgstr "Encaminhar"
 
-#: src/mainwindow.c:2369 src/mainwindow.c:2382
+#: src/mainwindow.c:2372 src/mainwindow.c:2385
 msgid "Forward the message"
 msgstr "Encaminhar a mensagem"
 
-#: src/mainwindow.c:2389
+#: src/mainwindow.c:2392
 msgid "Delete the message"
 msgstr "Apagar a mensagem"
 
-#: src/mainwindow.c:2398
+#: src/mainwindow.c:2401
 msgid "Set as junk mail"
 msgstr "Marcar como spam"
 
-#: src/mainwindow.c:2407
+#: src/mainwindow.c:2410
 msgid "Execute"
 msgstr "Executar"
 
-#: src/mainwindow.c:2408
+#: src/mainwindow.c:2411
 msgid "Execute marked process"
 msgstr "Executar os processos marcados"
 
-#: src/mainwindow.c:2418
+#: src/mainwindow.c:2421
 msgid "Next unread message"
 msgstr "Próxima mensagem não lida"
 
-#: src/mainwindow.c:2430
+#: src/mainwindow.c:2433
 msgid "Prefs"
 msgstr "Preferências"
 
-#: src/mainwindow.c:2431
+#: src/mainwindow.c:2434
 msgid "Common preferences"
 msgstr "Preferências comuns"
 
-#: src/mainwindow.c:2439 src/prefs_folder_item.c:289
+#: src/mainwindow.c:2442 src/prefs_folder_item.c:289
 #: src/prefs_folder_item.c:300 src/progressdialog.c:128
 msgid "Account"
 msgstr "Conta"
 
-#: src/mainwindow.c:2440
+#: src/mainwindow.c:2443
 msgid "Account setting"
 msgstr "Preferências da conta"
 
-#: src/mainwindow.c:2612
+#: src/mainwindow.c:2615
 msgid "You are offline. Click the icon to go online."
 msgstr "Você está desconectado. Clique no ícone para conectar."
 
-#: src/mainwindow.c:2623
+#: src/mainwindow.c:2626
 msgid "You are online. Click the icon to go offline."
 msgstr "Você está conectado. Clique no ícone para desconectar."
 
-#: src/mainwindow.c:2889
+#: src/mainwindow.c:2892
 msgid "Exit"
 msgstr "Sair"
 
-#: src/mainwindow.c:2889
+#: src/mainwindow.c:2892
 msgid "Exit this program?"
 msgstr "Sair do programa?"
 
@@ -3752,8 +3752,8 @@ msgstr "Encontrar na mensagem atual"
 msgid "Find text:"
 msgstr "Encontrar texto:"
 
-#: src/message_search.c:141 src/prefs_search_folder.c:240
-#: src/summary_search.c:325
+#: src/message_search.c:141 src/prefs_search_folder.c:253
+#: src/summary_search.c:327
 msgid "Case sensitive"
 msgstr "Maiús./minús."
 
@@ -5661,24 +5661,24 @@ msgstr "Usar também ao responder"
 msgid "Reply-To:"
 msgstr "Responder para:"
 
-#: src/prefs_search_folder.c:151
+#: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
 msgstr ""
 
-#: src/prefs_search_folder.c:196 src/summary_search.c:256
+#: src/prefs_search_folder.c:209 src/summary_search.c:258
 msgid "Match any of the following"
 msgstr "Casar qualquer um dos seguintes"
 
-#: src/prefs_search_folder.c:198 src/summary_search.c:258
+#: src/prefs_search_folder.c:211 src/summary_search.c:260
 msgid "Match all of the following"
 msgstr "Casar todos os seguintes"
 
-#: src/prefs_search_folder.c:218 src/summary_search.c:302
+#: src/prefs_search_folder.c:231 src/summary_search.c:304
 msgid "Folder:"
 msgstr "Pasta:"
 
-#: src/prefs_search_folder.c:235 src/summary_search.c:320
+#: src/prefs_search_folder.c:248 src/summary_search.c:322
 msgid "Search subfolders"
 msgstr "Procurar nas sub-pastas"
 
@@ -5692,19 +5692,19 @@ msgid "Attachment"
 msgstr "Anexo"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:370
+#: src/prefs_summary_column.c:73 src/summary_search.c:372
 #: src/summaryview.c:4714
 msgid "Subject"
 msgstr "Assunto"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:371
+#: src/prefs_summary_column.c:74 src/summary_search.c:373
 #: src/summaryview.c:4717
 msgid "From"
 msgstr "De"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:372
+#: src/prefs_summary_column.c:75 src/summary_search.c:374
 #: src/summaryview.c:4719
 msgid "Date"
 msgstr "Data"
@@ -6098,7 +6098,7 @@ msgstr "Recebendo lista de newsgroups..."
 msgid "Can't retrieve newsgroup list."
 msgstr "Não foi possível obter a lista de grupos de notícias."
 
-#: src/subscribedialog.c:523 src/summary_search.c:502 src/summaryview.c:840
+#: src/subscribedialog.c:523 src/summary_search.c:513 src/summaryview.c:840
 msgid "Done."
 msgstr "Feito."
 
@@ -6107,37 +6107,37 @@ msgstr "Feito."
 msgid "%d newsgroups received (%s read)"
 msgstr "%d grupos de notícias recebidos (%s lidos)"
 
-#: src/summary_search.c:233
+#: src/summary_search.c:235
 msgid "Search messages"
 msgstr "Procurar mensagens"
 
-#: src/summary_search.c:394
+#: src/summary_search.c:396
 msgid "_Save as search folder"
 msgstr "_Salvar como pasta de busca"
 
-#: src/summary_search.c:526
+#: src/summary_search.c:537
 #, c-format
 msgid "Searching %s ..."
 msgstr "Procurando %s ..."
 
-#: src/summary_search.c:554
+#: src/summary_search.c:565
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Procurando %s (%d / %d)..."
 
-#: src/summary_search.c:633 src/summaryview.c:2048
+#: src/summary_search.c:646 src/summaryview.c:2048
 msgid "(No Date)"
 msgstr "(Sem data)"
 
-#: src/summary_search.c:822
+#: src/summary_search.c:835
 msgid "Save as search folder"
 msgstr "Salvar como pasta de busca"
 
-#: src/summary_search.c:843
+#: src/summary_search.c:856
 msgid "Location:"
 msgstr "Local:"
 
-#: src/summary_search.c:858
+#: src/summary_search.c:871
 msgid "Folder name:"
 msgstr "Nome da pasta:"
 

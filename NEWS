@@ -1,5 +1,21 @@
 Changes of Sylpheed
 
+* 2.2.0beta6 (development)
+
+    * The cleanup of IMAP4 message caches on exit was implemented.
+    * Cache files in IMAP4 folders are now properly removed on move or delete.
+    * The temporary passwords of IMAP4 accounts are now preserved until exit.
+    * 'File/Insert signature' now inserts signature into current cursor
+      position, and 'File/Append signature' was added for the previous
+      behavior.
+    * Some dialogs are now placed at the center on parent window.
+    * The confirmation dialog for emptying trash is not displayed anymore if
+      messages don't exist in trash folders.
+    * Trash folders are excluded on recursive search.
+    * Locale encoding strings can be passed to --compose and --attach command
+      line option.
+    * Several minor bugs were fixed.
+
 * 2.2.0beta5 (development)
 
     * The quick search was implemented.

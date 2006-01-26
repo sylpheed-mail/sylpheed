@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-25 15:15+0900\n"
+"POT-Creation-Date: 2006-01-25 18:01+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -526,7 +526,7 @@ msgstr "표시 파일을 열수가 없습니다\n"
 msgid "can't fetch message %d\n"
 msgstr "메시지 %d를 가져올 수가 없습니다\n"
 
-#: libsylph/procmsg.c:1361
+#: libsylph/procmsg.c:1375
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "인쇄 명령어가 올바르지않습니다: `%s'\n"
@@ -982,13 +982,13 @@ msgid "Address book"
 msgstr "주소록"
 
 #: src/addressbook.c:596 src/prefs_filter_edit.c:249
-#: src/prefs_search_folder.c:174
+#: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "이름:"
 
 #. Buttons
 #: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
-#: src/editaddress.c:1017 src/mainwindow.c:2388 src/prefs_actions.c:266
+#: src/editaddress.c:1017 src/mainwindow.c:2391 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
 #: src/prefs_template.c:233
 msgid "Delete"
@@ -1036,7 +1036,7 @@ msgstr ""
 "`%s'의 모든 주소와 폴더를 삭제할까요 ? \n"
 "폴더만 지울 경우 주소는 그 상위 폴더로 옮겨집니다."
 
-#: src/addressbook.c:1674 src/folderview.c:2347
+#: src/addressbook.c:1674 src/folderview.c:2349
 msgid "Delete folder"
 msgstr "폴더 삭제"
 
@@ -1165,7 +1165,7 @@ msgstr "그룹"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3152 src/folderview.c:367 src/prefs_account_dialog.c:1694
-#: src/summary_search.c:369
+#: src/summary_search.c:371
 msgid "Folder"
 msgstr "폴더"
 
@@ -1598,7 +1598,7 @@ msgstr "메시지: %s"
 msgid "Can't get the part of multipart message."
 msgstr "multipart 메시지의 부분을 얻을 수가 없습니다."
 
-#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:624
+#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:637
 #: src/summaryview.c:2107
 msgid "(No Subject)"
 msgstr "(제목 없음)"
@@ -1724,7 +1724,7 @@ msgstr "마임 타입"
 msgid "Size"
 msgstr "크기"
 
-#: src/compose.c:4686 src/mainwindow.c:2321 src/prefs_account_dialog.c:528
+#: src/compose.c:4686 src/mainwindow.c:2324 src/prefs_account_dialog.c:528
 #: src/prefs_common_dialog.c:664
 msgid "Send"
 msgstr "메일 발송"
@@ -2037,12 +2037,12 @@ msgstr "폴더 편집"
 msgid "Input the new name of folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2096
-#: src/folderview.c:2102
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2098
+#: src/folderview.c:2104
 msgid "New folder"
 msgstr "새 폴더"
 
-#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2103
+#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2105
 msgid "Input the name of new folder:"
 msgstr "새 폴더의 이름을 넣으세요:"
 
@@ -2230,22 +2230,22 @@ msgstr "지운 편지함"
 msgid "Drafts"
 msgstr "임시 보관함"
 
-#: src/foldersel.c:543 src/folderview.c:2100 src/folderview.c:2104
+#: src/foldersel.c:543 src/folderview.c:2102 src/folderview.c:2106
 msgid "NewFolder"
 msgstr "새 폴더"
 
-#: src/foldersel.c:551 src/folderview.c:2112 src/folderview.c:2173
+#: src/foldersel.c:551 src/folderview.c:2114 src/folderview.c:2175
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "`%c'는 폴더 이름에 포함될 수 없습니다."
 
-#: src/foldersel.c:561 src/folderview.c:2122 src/folderview.c:2181
-#: src/summary_search.c:984
+#: src/foldersel.c:561 src/folderview.c:2124 src/folderview.c:2183
+#: src/summary_search.c:997
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "`%s' 폴더가 이미 존재합니다."
 
-#: src/foldersel.c:569 src/folderview.c:2129
+#: src/foldersel.c:569 src/folderview.c:2131
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "`%s' 폴더를 생성할 수가 없습니다."
@@ -2332,12 +2332,12 @@ msgstr "폴더 정보를 설정합니다...\n"
 msgid "Setting folder info..."
 msgstr "폴더 정보를 설정합니다..."
 
-#: src/folderview.c:858 src/mainwindow.c:3461 src/setup.c:80
+#: src/folderview.c:858 src/mainwindow.c:3464 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "%s%c%s를 스캔합니다..."
 
-#: src/folderview.c:862 src/mainwindow.c:3466 src/setup.c:85
+#: src/folderview.c:862 src/mainwindow.c:3469 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "%s 폴더를 스캔합니다..."
@@ -2363,26 +2363,26 @@ msgstr "폴더 트리를 갱신합니다..."
 msgid "Checking for new messages in all folders..."
 msgstr "모든 폴더의 새로운 메시지를 확인합니다..."
 
-#: src/folderview.c:1200 src/mainwindow.c:2397 src/prefs_common_dialog.c:1796
+#: src/folderview.c:1200 src/mainwindow.c:2400 src/prefs_common_dialog.c:1796
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1844
+#: src/folderview.c:1846
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "%s 폴더가 선택되었습니다\n"
 
-#: src/folderview.c:1999
+#: src/folderview.c:2001
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "메시지을 보내는 중"
 
-#: src/folderview.c:2036
+#: src/folderview.c:2038
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "%s로 메시지를 보내는 중 에러가 발생했습니다."
 
-#: src/folderview.c:2097
+#: src/folderview.c:2099
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2392,26 +2392,26 @@ msgstr ""
 "(만일 하위폴더를 저장하기 위한 폴더를 생성하려면,\n"
 "이름의 마지막에 `/'를 추가하세요)"
 
-#: src/folderview.c:2161
+#: src/folderview.c:2163
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "`%s'에대한 새 이름을 넣으세요:"
 
-#: src/folderview.c:2162
+#: src/folderview.c:2164
 msgid "Rename folder"
 msgstr "폴더 이름 변경"
 
-#: src/folderview.c:2193 src/folderview.c:2201
+#: src/folderview.c:2195 src/folderview.c:2203
 #, fuzzy, c-format
 msgid "Can't rename the folder '%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2271
+#: src/folderview.c:2273
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2337
+#: src/folderview.c:2339
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2420,12 +2420,12 @@ msgstr ""
 "`%s' 메일박스를 정말로 삭제하시겠습니까?\n"
 "(메시지가 디스크로부터 삭제되는것은 아닙니다)"
 
-#: src/folderview.c:2339
+#: src/folderview.c:2341
 #, fuzzy
 msgid "Delete search folder"
 msgstr "폴더 삭제"
 
-#: src/folderview.c:2344
+#: src/folderview.c:2346
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2436,21 +2436,21 @@ msgstr ""
 "`%s'아래에 있는 모든 폴더와 메시지가 삭제될 것입니다.\n"
 "정말로 삭제하시겠습니까?"
 
-#: src/folderview.c:2376 src/folderview.c:2382
+#: src/folderview.c:2378 src/folderview.c:2384
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "`%s' 폴더를 제거할 수가 없습니다."
 
-#: src/folderview.c:2418
+#: src/folderview.c:2420
 msgid "Empty trash"
 msgstr "지운 편지함 비우기"
 
-#: src/folderview.c:2419
+#: src/folderview.c:2421
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/folderview.c:2458
+#: src/folderview.c:2460
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2459,34 +2459,34 @@ msgstr ""
 "`%s' 메일박스를 정말로 삭제하시겠습니까?\n"
 "(메시지가 디스크로부터 삭제되는것은 아닙니다)"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2462
 msgid "Remove mailbox"
 msgstr "메일박스를 제거합니다"
 
-#: src/folderview.c:2510
+#: src/folderview.c:2512
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "정말로 `%s' IMAP4 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2511
+#: src/folderview.c:2513
 msgid "Delete IMAP4 account"
 msgstr "IMAP4 계정 삭제"
 
-#: src/folderview.c:2664
+#: src/folderview.c:2666
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "정말로 `%s' 뉴스그룹을 삭제하시겠습니까?"
 
-#: src/folderview.c:2665
+#: src/folderview.c:2667
 msgid "Delete newsgroup"
 msgstr "뉴스그룹 삭제"
 
-#: src/folderview.c:2715
+#: src/folderview.c:2717
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "정말로 `%s' 뉴스그룹 계정을 삭제하시겠습니까?"
 
-#: src/folderview.c:2716
+#: src/folderview.c:2718
 msgid "Delete news account"
 msgstr "뉴스그룹 계정 삭제"
 
@@ -2502,7 +2502,7 @@ msgstr "제목:"
 msgid "Creating header view...\n"
 msgstr "헤더 뷰를 생성합니다...\n"
 
-#: src/headerview.c:180 src/summary_search.c:625 src/summaryview.c:2110
+#: src/headerview.c:180 src/summary_search.c:638 src/summaryview.c:2110
 msgid "(No From)"
 msgstr "(???)"
 
@@ -2611,7 +2611,7 @@ msgstr "LDIF 파일을 주소록으로 가져오기"
 msgid "Prev"
 msgstr "이전"
 
-#: src/importldif.c:768 src/mainwindow.c:2417
+#: src/importldif.c:768 src/mainwindow.c:2420
 msgid "Next"
 msgstr "다음"
 
@@ -3607,21 +3607,21 @@ msgstr ""
 msgid "You are offline. Go online?"
 msgstr ""
 
-#: src/mainwindow.c:1620
+#: src/mainwindow.c:1623
 #, fuzzy
 msgid "Empty all trash"
 msgstr "지운 편지함 비우기"
 
-#: src/mainwindow.c:1621
+#: src/mainwindow.c:1624
 #, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/mainwindow.c:1649
+#: src/mainwindow.c:1652
 msgid "Add mailbox"
 msgstr "메일박스 추가"
 
-#: src/mainwindow.c:1650
+#: src/mainwindow.c:1653
 #, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
@@ -3632,16 +3632,16 @@ msgstr ""
 "기존의 메일 박스가 지정되면 자동으로\n"
 "스캔될것입니다."
 
-#: src/mainwindow.c:1656 src/setup.c:49
+#: src/mainwindow.c:1659 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "메일 박스 `%s'가 이미 존재합니다."
 
-#: src/mainwindow.c:1661 src/setup.c:56
+#: src/mainwindow.c:1664 src/setup.c:56
 msgid "Mailbox"
 msgstr "메일박스"
 
-#: src/mainwindow.c:1667 src/setup.c:62
+#: src/mainwindow.c:1670 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3650,149 +3650,149 @@ msgstr ""
 "메일박스 생성이 실패했습니다.\n"
 "아마 어떤 파일이 이미 존재하거나 그 곳에 쓰기 권한이 없습니다."
 
-#: src/mainwindow.c:2085
+#: src/mainwindow.c:2088
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 폴더 보기"
 
-#: src/mainwindow.c:2104
+#: src/mainwindow.c:2107
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 메시지 보기"
 
-#: src/mainwindow.c:2256 src/summaryview.c:408
+#: src/mainwindow.c:2259 src/summaryview.c:408
 msgid "/_Reply"
 msgstr "/회신(_R)"
 
-#: src/mainwindow.c:2257
+#: src/mainwindow.c:2260
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2258
+#: src/mainwindow.c:2261
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/회신(_y)/보낸이(_s)"
 
-#: src/mainwindow.c:2259
+#: src/mainwindow.c:2262
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/회신(_y)/메일링리스트(_l)"
 
-#: src/mainwindow.c:2264 src/summaryview.c:415
+#: src/mainwindow.c:2267 src/summaryview.c:415
 msgid "/_Forward"
 msgstr "/전달(_F)"
 
-#: src/mainwindow.c:2265 src/summaryview.c:416
+#: src/mainwindow.c:2268 src/summaryview.c:416
 msgid "/For_ward as attachment"
 msgstr "/첨부로 전달(_w)"
 
-#: src/mainwindow.c:2266 src/summaryview.c:417
+#: src/mainwindow.c:2269 src/summaryview.c:417
 msgid "/Redirec_t"
 msgstr "/Redirec_t"
 
-#: src/mainwindow.c:2302
+#: src/mainwindow.c:2305
 msgid "Get"
 msgstr "받기"
 
-#: src/mainwindow.c:2303
+#: src/mainwindow.c:2306
 msgid "Incorporate new mail"
 msgstr "새 메일을 가져옵니다"
 
-#: src/mainwindow.c:2310
+#: src/mainwindow.c:2313
 msgid "Get all"
 msgstr "전부 받기"
 
-#: src/mainwindow.c:2311
+#: src/mainwindow.c:2314
 msgid "Incorporate new mail of all accounts"
 msgstr "모든 계정에서 새 메일을 가져옵니다"
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2325
 msgid "Send queued message(s)"
 msgstr "임시 보관된 메시지를 보냅니다"
 
-#: src/mainwindow.c:2332 src/prefs_account_dialog.c:530
+#: src/mainwindow.c:2335 src/prefs_account_dialog.c:530
 #: src/prefs_common_dialog.c:666 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "작성"
 
-#: src/mainwindow.c:2333
+#: src/mainwindow.c:2336
 msgid "Compose new message"
 msgstr "새 메시지를 작성합니다"
 
-#: src/mainwindow.c:2341 src/prefs_common_dialog.c:979
+#: src/mainwindow.c:2344 src/prefs_common_dialog.c:979
 msgid "Reply"
 msgstr "회신"
 
-#: src/mainwindow.c:2342 src/mainwindow.c:2355
+#: src/mainwindow.c:2345 src/mainwindow.c:2358
 msgid "Reply to the message"
 msgstr "메시지에 회신을 보냅니다"
 
-#: src/mainwindow.c:2359
+#: src/mainwindow.c:2362
 msgid "Reply all"
 msgstr "전체 회신"
 
-#: src/mainwindow.c:2360
+#: src/mainwindow.c:2363
 msgid "Reply to all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2368 src/prefs_filter_edit.c:672
+#: src/mainwindow.c:2371 src/prefs_filter_edit.c:672
 msgid "Forward"
 msgstr "전달"
 
-#: src/mainwindow.c:2369 src/mainwindow.c:2382
+#: src/mainwindow.c:2372 src/mainwindow.c:2385
 msgid "Forward the message"
 msgstr "메시지를 다른 사람에게 전달합니다"
 
-#: src/mainwindow.c:2389
+#: src/mainwindow.c:2392
 msgid "Delete the message"
 msgstr "메시지를 지웁니다"
 
-#: src/mainwindow.c:2398
+#: src/mainwindow.c:2401
 #, fuzzy
 msgid "Set as junk mail"
 msgstr "기본 계정으로 설정"
 
-#: src/mainwindow.c:2407
+#: src/mainwindow.c:2410
 msgid "Execute"
 msgstr "실행"
 
-#: src/mainwindow.c:2408
+#: src/mainwindow.c:2411
 msgid "Execute marked process"
 msgstr "표시된 프로세스들을 실행합니다"
 
-#: src/mainwindow.c:2418
+#: src/mainwindow.c:2421
 msgid "Next unread message"
 msgstr "다음 안 읽은 메시지를 보여줍니다"
 
-#: src/mainwindow.c:2430
+#: src/mainwindow.c:2433
 msgid "Prefs"
 msgstr "설정"
 
-#: src/mainwindow.c:2431
+#: src/mainwindow.c:2434
 msgid "Common preferences"
 msgstr "기본적인 환경 설정"
 
-#: src/mainwindow.c:2439 src/prefs_folder_item.c:289
+#: src/mainwindow.c:2442 src/prefs_folder_item.c:289
 #: src/prefs_folder_item.c:300 src/progressdialog.c:128
 msgid "Account"
 msgstr "계정"
 
-#: src/mainwindow.c:2440
+#: src/mainwindow.c:2443
 msgid "Account setting"
 msgstr "계정을 설정합니다"
 
-#: src/mainwindow.c:2612
+#: src/mainwindow.c:2615
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2623
+#: src/mainwindow.c:2626
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2889
+#: src/mainwindow.c:2892
 msgid "Exit"
 msgstr "끝내기"
 
-#: src/mainwindow.c:2889
+#: src/mainwindow.c:2892
 msgid "Exit this program?"
 msgstr "이 프로그램을 끝내시겠습니까?"
 
@@ -3804,8 +3804,8 @@ msgstr "현재 메시지에서 찾기"
 msgid "Find text:"
 msgstr "찾을 문자열:"
 
-#: src/message_search.c:141 src/prefs_search_folder.c:240
-#: src/summary_search.c:325
+#: src/message_search.c:141 src/prefs_search_folder.c:253
+#: src/summary_search.c:327
 msgid "Case sensitive"
 msgstr "대소 문자 구별"
 
@@ -5751,26 +5751,26 @@ msgstr "회신시에도 사용"
 msgid "Reply-To:"
 msgstr "회신주소:"
 
-#: src/prefs_search_folder.c:151
+#: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
 msgstr ""
 
-#: src/prefs_search_folder.c:196 src/summary_search.c:256
+#: src/prefs_search_folder.c:209 src/summary_search.c:258
 msgid "Match any of the following"
 msgstr ""
 
-#: src/prefs_search_folder.c:198 src/summary_search.c:258
+#: src/prefs_search_folder.c:211 src/summary_search.c:260
 #, fuzzy
 msgid "Match all of the following"
 msgstr "다음 주소를 자동적으로 정함"
 
-#: src/prefs_search_folder.c:218 src/summary_search.c:302
+#: src/prefs_search_folder.c:231 src/summary_search.c:304
 #, fuzzy
 msgid "Folder:"
 msgstr "폴더"
 
-#: src/prefs_search_folder.c:235 src/summary_search.c:320
+#: src/prefs_search_folder.c:248 src/summary_search.c:322
 #, fuzzy
 msgid "Search subfolders"
 msgstr "찾기 실패"
@@ -5785,19 +5785,19 @@ msgid "Attachment"
 msgstr "첨부"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:370
+#: src/prefs_summary_column.c:73 src/summary_search.c:372
 #: src/summaryview.c:4714
 msgid "Subject"
 msgstr "제목"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:371
+#: src/prefs_summary_column.c:74 src/summary_search.c:373
 #: src/summaryview.c:4717
 msgid "From"
 msgstr "보낸 사람"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:372
+#: src/prefs_summary_column.c:75 src/summary_search.c:374
 #: src/summaryview.c:4719
 msgid "Date"
 msgstr "날짜"
@@ -6187,7 +6187,7 @@ msgstr "뉴스그룹 목록을 얻을 수가 없습니다."
 msgid "Can't retrieve newsgroup list."
 msgstr "뉴스그룹 목록을 얻을 수가 없습니다."
 
-#: src/subscribedialog.c:523 src/summary_search.c:502 src/summaryview.c:840
+#: src/subscribedialog.c:523 src/summary_search.c:513 src/summaryview.c:840
 msgid "Done."
 msgstr "완료."
 
@@ -6196,39 +6196,39 @@ msgstr "완료."
 msgid "%d newsgroups received (%s read)"
 msgstr ""
 
-#: src/summary_search.c:233
+#: src/summary_search.c:235
 msgid "Search messages"
 msgstr "메시지 찾기"
 
-#: src/summary_search.c:394
+#: src/summary_search.c:396
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "임시 보관함에 넣기"
 
-#: src/summary_search.c:526
+#: src/summary_search.c:537
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "%s 폴더를 스캔합니다..."
 
-#: src/summary_search.c:554
+#: src/summary_search.c:565
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "필터링..."
 
-#: src/summary_search.c:633 src/summaryview.c:2048
+#: src/summary_search.c:646 src/summaryview.c:2048
 msgid "(No Date)"
 msgstr "(날짜 없슴)"
 
-#: src/summary_search.c:822
+#: src/summary_search.c:835
 #, fuzzy
 msgid "Save as search folder"
 msgstr "임시 보관함에 넣기"
 
-#: src/summary_search.c:843
+#: src/summary_search.c:856
 msgid "Location:"
 msgstr ""
 
-#: src/summary_search.c:858
+#: src/summary_search.c:871
 #, fuzzy
 msgid "Folder name:"
 msgstr "파일 이름"

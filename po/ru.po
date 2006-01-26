@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.0.0beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-25 15:15+0900\n"
+"POT-Creation-Date: 2006-01-25 18:01+0900\n"
 "PO-Revision-Date: 2004-12-05 17:16+0300\n"
 "Last-Translator: Sergey Vlasov <vsu@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -521,7 +521,7 @@ msgstr "ошибка открытия файла пометок\n"
 msgid "can't fetch message %d\n"
 msgstr "не удалось получить сообщение %d\n"
 
-#: libsylph/procmsg.c:1361
+#: libsylph/procmsg.c:1375
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Неправильная команда печати: '%s'\n"
@@ -991,13 +991,13 @@ msgid "Address book"
 msgstr "Адресная книга"
 
 #: src/addressbook.c:596 src/prefs_filter_edit.c:249
-#: src/prefs_search_folder.c:174
+#: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Имя:"
 
 #. Buttons
 #: src/addressbook.c:628 src/addressbook.c:1680 src/editaddress.c:884
-#: src/editaddress.c:1017 src/mainwindow.c:2388 src/prefs_actions.c:266
+#: src/editaddress.c:1017 src/mainwindow.c:2391 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
 #: src/prefs_template.c:233
 msgid "Delete"
@@ -1045,7 +1045,7 @@ msgstr ""
 "Вы хотите удалить папку \"%s\" и все адреса в ней?\n"
 "Если удалить только папку, адреса будут перемещены в родительскую папку."
 
-#: src/addressbook.c:1674 src/folderview.c:2347
+#: src/addressbook.c:1674 src/folderview.c:2349
 msgid "Delete folder"
 msgstr "Удалить папку"
 
@@ -1180,7 +1180,7 @@ msgstr "Группа"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3152 src/folderview.c:367 src/prefs_account_dialog.c:1694
-#: src/summary_search.c:369
+#: src/summary_search.c:371
 msgid "Folder"
 msgstr "Папка"
 
@@ -1604,7 +1604,7 @@ msgstr "Сообщение: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Ошибка при получении одного из компонентов сообщения."
 
-#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:624
+#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:637
 #: src/summaryview.c:2107
 msgid "(No Subject)"
 msgstr "(Без темы)"
@@ -1731,7 +1731,7 @@ msgstr "Тип MIME"
 msgid "Size"
 msgstr "Размер"
 
-#: src/compose.c:4686 src/mainwindow.c:2321 src/prefs_account_dialog.c:528
+#: src/compose.c:4686 src/mainwindow.c:2324 src/prefs_account_dialog.c:528
 #: src/prefs_common_dialog.c:664
 msgid "Send"
 msgstr "Отправить"
@@ -2043,12 +2043,12 @@ msgstr "Изменить имя папки"
 msgid "Input the new name of folder:"
 msgstr "Введите новое имя папки:"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2096
-#: src/folderview.c:2102
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2098
+#: src/folderview.c:2104
 msgid "New folder"
 msgstr "Новая папка"
 
-#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2103
+#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2105
 msgid "Input the name of new folder:"
 msgstr "Введите имя новой папки:"
 
@@ -2237,22 +2237,22 @@ msgstr "Корзина"
 msgid "Drafts"
 msgstr "Черновики"
 
-#: src/foldersel.c:543 src/folderview.c:2100 src/folderview.c:2104
+#: src/foldersel.c:543 src/folderview.c:2102 src/folderview.c:2106
 msgid "NewFolder"
 msgstr "НоваяПапка"
 
-#: src/foldersel.c:551 src/folderview.c:2112 src/folderview.c:2173
+#: src/foldersel.c:551 src/folderview.c:2114 src/folderview.c:2175
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "Символ '%c' не может входить в имя папки."
 
-#: src/foldersel.c:561 src/folderview.c:2122 src/folderview.c:2181
-#: src/summary_search.c:984
+#: src/foldersel.c:561 src/folderview.c:2124 src/folderview.c:2183
+#: src/summary_search.c:997
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Папка '%s' уже существует."
 
-#: src/foldersel.c:569 src/folderview.c:2129
+#: src/foldersel.c:569 src/folderview.c:2131
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Не удалось создать папку '%s'."
@@ -2337,12 +2337,12 @@ msgstr "Установка информации о папке...\n"
 msgid "Setting folder info..."
 msgstr "Установка информации о папке..."
 
-#: src/folderview.c:858 src/mainwindow.c:3461 src/setup.c:80
+#: src/folderview.c:858 src/mainwindow.c:3464 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Просмотр папки %s%c%s ..."
 
-#: src/folderview.c:862 src/mainwindow.c:3466 src/setup.c:85
+#: src/folderview.c:862 src/mainwindow.c:3469 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Просмотр папки %s ..."
@@ -2367,26 +2367,26 @@ msgstr "Ошибка при перестройке дерева папок."
 msgid "Checking for new messages in all folders..."
 msgstr "Проверка новых сообщений во всех папках..."
 
-#: src/folderview.c:1200 src/mainwindow.c:2397 src/prefs_common_dialog.c:1796
+#: src/folderview.c:1200 src/mainwindow.c:2400 src/prefs_common_dialog.c:1796
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1844
+#: src/folderview.c:1846
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Папка %s выбрана\n"
 
-#: src/folderview.c:1999
+#: src/folderview.c:2001
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Загружаются сообщения из %s ..."
 
-#: src/folderview.c:2036
+#: src/folderview.c:2038
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Произошла ошибка при загрузке сообщений из '%s'."
 
-#: src/folderview.c:2097
+#: src/folderview.c:2099
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2396,26 +2396,26 @@ msgstr ""
 "(если вы хотите создать папку для вложенных папок,\n"
 " добавьте '/' в конец имени)"
 
-#: src/folderview.c:2161
+#: src/folderview.c:2163
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Введите новое имя для '%s':"
 
-#: src/folderview.c:2162
+#: src/folderview.c:2164
 msgid "Rename folder"
 msgstr "Переименовать папку"
 
-#: src/folderview.c:2193 src/folderview.c:2201
+#: src/folderview.c:2195 src/folderview.c:2203
 #, fuzzy, c-format
 msgid "Can't rename the folder '%s'."
 msgstr "Ошибка при удалении папки '%s'."
 
-#: src/folderview.c:2271
+#: src/folderview.c:2273
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Ошибка при удалении папки '%s'."
 
-#: src/folderview.c:2337
+#: src/folderview.c:2339
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2424,12 +2424,12 @@ msgstr ""
 "Удалить почтовый ящик '%s' ?\n"
 "(Сообщения не будут удалены с диска)"
 
-#: src/folderview.c:2339
+#: src/folderview.c:2341
 #, fuzzy
 msgid "Delete search folder"
 msgstr "Удалить папку"
 
-#: src/folderview.c:2344
+#: src/folderview.c:2346
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2440,21 +2440,21 @@ msgstr ""
 "Все вложенные папки и сообщения из '%s' будут удалены.\n"
 "Вы действительно хотите удалить папку?"
 
-#: src/folderview.c:2376 src/folderview.c:2382
+#: src/folderview.c:2378 src/folderview.c:2384
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Ошибка при удалении папки '%s'."
 
-#: src/folderview.c:2418
+#: src/folderview.c:2420
 msgid "Empty trash"
 msgstr "Очистка корзины"
 
-#: src/folderview.c:2419
+#: src/folderview.c:2421
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Удалить все сообщения из корзины?"
 
-#: src/folderview.c:2458
+#: src/folderview.c:2460
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2463,34 +2463,34 @@ msgstr ""
 "Удалить почтовый ящик '%s' ?\n"
 "(Сообщения не будут удалены с диска)"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2462
 msgid "Remove mailbox"
 msgstr "Удалить почтовый ящик"
 
-#: src/folderview.c:2510
+#: src/folderview.c:2512
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Удалить учетную запись IMAP4 '%s'?"
 
-#: src/folderview.c:2511
+#: src/folderview.c:2513
 msgid "Delete IMAP4 account"
 msgstr "Удалить учетную запись IMAP4"
 
-#: src/folderview.c:2664
+#: src/folderview.c:2666
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Удалить группу новостей '%s'?"
 
-#: src/folderview.c:2665
+#: src/folderview.c:2667
 msgid "Delete newsgroup"
 msgstr "Удаление группы новостей"
 
-#: src/folderview.c:2715
+#: src/folderview.c:2717
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Удалить учетную запись новостей '%s'?"
 
-#: src/folderview.c:2716
+#: src/folderview.c:2718
 msgid "Delete news account"
 msgstr "Удалить учетную запись новостей"
 
@@ -2506,7 +2506,7 @@ msgstr "Тема:"
 msgid "Creating header view...\n"
 msgstr "Создание области просмотра заголовков...\n"
 
-#: src/headerview.c:180 src/summary_search.c:625 src/summaryview.c:2110
+#: src/headerview.c:180 src/summary_search.c:638 src/summaryview.c:2110
 msgid "(No From)"
 msgstr "(Без отправителя)"
 
@@ -2615,7 +2615,7 @@ msgstr "Импорт файла LDIF в адресную книгу"
 msgid "Prev"
 msgstr "Назад"
 
-#: src/importldif.c:768 src/mainwindow.c:2417
+#: src/importldif.c:768 src/mainwindow.c:2420
 msgid "Next"
 msgstr "Далее"
 
@@ -3598,20 +3598,20 @@ msgstr "Автономная работа"
 msgid "You are offline. Go online?"
 msgstr "Вы работаете в автономном режиме. Подключиться к сети?"
 
-#: src/mainwindow.c:1620
+#: src/mainwindow.c:1623
 msgid "Empty all trash"
 msgstr "Очистить все корзины"
 
-#: src/mainwindow.c:1621
+#: src/mainwindow.c:1624
 #, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "Удалить все сообщения из корзины?"
 
-#: src/mainwindow.c:1649
+#: src/mainwindow.c:1652
 msgid "Add mailbox"
 msgstr "Добавить почтовый ящик"
 
-#: src/mainwindow.c:1650
+#: src/mainwindow.c:1653
 #, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
@@ -3622,16 +3622,16 @@ msgstr ""
 "Если будет указан существующий ящик, то он\n"
 "будет автоматически прочитан."
 
-#: src/mainwindow.c:1656 src/setup.c:49
+#: src/mainwindow.c:1659 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "Почтовый ящик '%s' уже существует."
 
-#: src/mainwindow.c:1661 src/setup.c:56
+#: src/mainwindow.c:1664 src/setup.c:56
 msgid "Mailbox"
 msgstr "Почтовый ящик"
 
-#: src/mainwindow.c:1667 src/setup.c:62
+#: src/mainwindow.c:1670 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3641,147 +3641,147 @@ msgstr ""
 "Может быть, некоторые файлы уже существуют, или вы не имеете прав на запись "
 "в каталоге."
 
-#: src/mainwindow.c:2085
+#: src/mainwindow.c:2088
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Папки"
 
-#: src/mainwindow.c:2104
+#: src/mainwindow.c:2107
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Сообщение"
 
-#: src/mainwindow.c:2256 src/summaryview.c:408
+#: src/mainwindow.c:2259 src/summaryview.c:408
 msgid "/_Reply"
 msgstr "/Ответить"
 
-#: src/mainwindow.c:2257
+#: src/mainwindow.c:2260
 msgid "/Reply to _all"
 msgstr "/Ответить всем"
 
-#: src/mainwindow.c:2258
+#: src/mainwindow.c:2261
 msgid "/Reply to _sender"
 msgstr "/Ответить отправителю"
 
-#: src/mainwindow.c:2259
+#: src/mainwindow.c:2262
 msgid "/Reply to mailing _list"
 msgstr "/Ответить в список рассылки"
 
-#: src/mainwindow.c:2264 src/summaryview.c:415
+#: src/mainwindow.c:2267 src/summaryview.c:415
 msgid "/_Forward"
 msgstr "/Переслать"
 
-#: src/mainwindow.c:2265 src/summaryview.c:416
+#: src/mainwindow.c:2268 src/summaryview.c:416
 msgid "/For_ward as attachment"
 msgstr "/Переслать как вложение"
 
-#: src/mainwindow.c:2266 src/summaryview.c:417
+#: src/mainwindow.c:2269 src/summaryview.c:417
 msgid "/Redirec_t"
 msgstr "/Перенаправить без изменений"
 
-#: src/mainwindow.c:2302
+#: src/mainwindow.c:2305
 msgid "Get"
 msgstr "Принять"
 
-#: src/mainwindow.c:2303
+#: src/mainwindow.c:2306
 msgid "Incorporate new mail"
 msgstr "Получить новые сообщения"
 
-#: src/mainwindow.c:2310
+#: src/mainwindow.c:2313
 msgid "Get all"
 msgstr "Принять все"
 
-#: src/mainwindow.c:2311
+#: src/mainwindow.c:2314
 msgid "Incorporate new mail of all accounts"
 msgstr "Получить сообщения со всех учетных записей"
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2325
 msgid "Send queued message(s)"
 msgstr "Послать сообщения из очереди"
 
-#: src/mainwindow.c:2332 src/prefs_account_dialog.c:530
+#: src/mainwindow.c:2335 src/prefs_account_dialog.c:530
 #: src/prefs_common_dialog.c:666 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Написать"
 
-#: src/mainwindow.c:2333
+#: src/mainwindow.c:2336
 msgid "Compose new message"
 msgstr "Написать новое сообщение"
 
-#: src/mainwindow.c:2341 src/prefs_common_dialog.c:979
+#: src/mainwindow.c:2344 src/prefs_common_dialog.c:979
 msgid "Reply"
 msgstr "Ответить"
 
-#: src/mainwindow.c:2342 src/mainwindow.c:2355
+#: src/mainwindow.c:2345 src/mainwindow.c:2358
 msgid "Reply to the message"
 msgstr "Ответить на сообщение"
 
-#: src/mainwindow.c:2359
+#: src/mainwindow.c:2362
 msgid "Reply all"
 msgstr "Ответить всем"
 
-#: src/mainwindow.c:2360
+#: src/mainwindow.c:2363
 msgid "Reply to all"
 msgstr "Ответить всем"
 
-#: src/mainwindow.c:2368 src/prefs_filter_edit.c:672
+#: src/mainwindow.c:2371 src/prefs_filter_edit.c:672
 msgid "Forward"
 msgstr "Переслать"
 
-#: src/mainwindow.c:2369 src/mainwindow.c:2382
+#: src/mainwindow.c:2372 src/mainwindow.c:2385
 msgid "Forward the message"
 msgstr "Переслать сообщение"
 
-#: src/mainwindow.c:2389
+#: src/mainwindow.c:2392
 msgid "Delete the message"
 msgstr "Удалить сообщение"
 
-#: src/mainwindow.c:2398
+#: src/mainwindow.c:2401
 #, fuzzy
 msgid "Set as junk mail"
 msgstr "По умолчанию"
 
-#: src/mainwindow.c:2407
+#: src/mainwindow.c:2410
 msgid "Execute"
 msgstr "Выполнить"
 
-#: src/mainwindow.c:2408
+#: src/mainwindow.c:2411
 msgid "Execute marked process"
 msgstr "Выполнить отмеченный процесс"
 
-#: src/mainwindow.c:2418
+#: src/mainwindow.c:2421
 msgid "Next unread message"
 msgstr "Следующее непрочитанное сообщение"
 
-#: src/mainwindow.c:2430
+#: src/mainwindow.c:2433
 msgid "Prefs"
 msgstr "Свойства"
 
-#: src/mainwindow.c:2431
+#: src/mainwindow.c:2434
 msgid "Common preferences"
 msgstr "Общие настройки"
 
-#: src/mainwindow.c:2439 src/prefs_folder_item.c:289
+#: src/mainwindow.c:2442 src/prefs_folder_item.c:289
 #: src/prefs_folder_item.c:300 src/progressdialog.c:128
 msgid "Account"
 msgstr "Учетная запись"
 
-#: src/mainwindow.c:2440
+#: src/mainwindow.c:2443
 msgid "Account setting"
 msgstr "Настройка учетной записи"
 
-#: src/mainwindow.c:2612
+#: src/mainwindow.c:2615
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 "Вы работаете в автономном режиме. Щелкните по значку, чтобы подключиться."
 
-#: src/mainwindow.c:2623
+#: src/mainwindow.c:2626
 msgid "You are online. Click the icon to go offline."
 msgstr "Вы подключены. Щелкните по значку, чтобы работать автономно."
 
-#: src/mainwindow.c:2889
+#: src/mainwindow.c:2892
 msgid "Exit"
 msgstr "Выход"
 
-#: src/mainwindow.c:2889
+#: src/mainwindow.c:2892
 msgid "Exit this program?"
 msgstr "Выйти из программы?"
 
@@ -3793,8 +3793,8 @@ msgstr "Поиск в текущем сообщении"
 msgid "Find text:"
 msgstr "Искать текст:"
 
-#: src/message_search.c:141 src/prefs_search_folder.c:240
-#: src/summary_search.c:325
+#: src/message_search.c:141 src/prefs_search_folder.c:253
+#: src/summary_search.c:327
 msgid "Case sensitive"
 msgstr "Учитывать регистр"
 
@@ -5742,25 +5742,25 @@ msgstr "также использовать при ответе"
 msgid "Reply-To:"
 msgstr "Адрес для ответов:"
 
-#: src/prefs_search_folder.c:151
+#: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
 msgstr ""
 
-#: src/prefs_search_folder.c:196 src/summary_search.c:256
+#: src/prefs_search_folder.c:209 src/summary_search.c:258
 msgid "Match any of the following"
 msgstr "Поиск по любому из полей:"
 
-#: src/prefs_search_folder.c:198 src/summary_search.c:258
+#: src/prefs_search_folder.c:211 src/summary_search.c:260
 msgid "Match all of the following"
 msgstr "Поиск по всем полям:"
 
-#: src/prefs_search_folder.c:218 src/summary_search.c:302
+#: src/prefs_search_folder.c:231 src/summary_search.c:304
 #, fuzzy
 msgid "Folder:"
 msgstr "Папка"
 
-#: src/prefs_search_folder.c:235 src/summary_search.c:320
+#: src/prefs_search_folder.c:248 src/summary_search.c:322
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Поиск не удался"
@@ -5775,19 +5775,19 @@ msgid "Attachment"
 msgstr "Вложение"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:370
+#: src/prefs_summary_column.c:73 src/summary_search.c:372
 #: src/summaryview.c:4714
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:371
+#: src/prefs_summary_column.c:74 src/summary_search.c:373
 #: src/summaryview.c:4717
 msgid "From"
 msgstr "От"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:372
+#: src/prefs_summary_column.c:75 src/summary_search.c:374
 #: src/summaryview.c:4719
 msgid "Date"
 msgstr "Дата"
@@ -6182,7 +6182,7 @@ msgstr "Не удалось получить список групп новос�
 msgid "Can't retrieve newsgroup list."
 msgstr "Не удалось получить список групп новостей."
 
-#: src/subscribedialog.c:523 src/summary_search.c:502 src/summaryview.c:840
+#: src/subscribedialog.c:523 src/summary_search.c:513 src/summaryview.c:840
 msgid "Done."
 msgstr "Выполнено."
 
@@ -6191,39 +6191,39 @@ msgstr "Выполнено."
 msgid "%d newsgroups received (%s read)"
 msgstr "%d групп новостей (%s загружено)"
 
-#: src/summary_search.c:233
+#: src/summary_search.c:235
 msgid "Search messages"
 msgstr "Поиск сообщений"
 
-#: src/summary_search.c:394
+#: src/summary_search.c:396
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Сохранить в папке черновиков"
 
-#: src/summary_search.c:526
+#: src/summary_search.c:537
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "Просмотр папки %s ..."
 
-#: src/summary_search.c:554
+#: src/summary_search.c:565
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Фильтрация..."
 
-#: src/summary_search.c:633 src/summaryview.c:2048
+#: src/summary_search.c:646 src/summaryview.c:2048
 msgid "(No Date)"
 msgstr "(Нет даты)"
 
-#: src/summary_search.c:822
+#: src/summary_search.c:835
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Сохранить в папке черновиков"
 
-#: src/summary_search.c:843
+#: src/summary_search.c:856
 msgid "Location:"
 msgstr ""
 
-#: src/summary_search.c:858
+#: src/summary_search.c:871
 #, fuzzy
 msgid "Folder name:"
 msgstr "Имя файла"
