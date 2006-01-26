@@ -72,7 +72,6 @@ struct _PrefsCommon
 	gint linewrap_len;
 	gboolean linewrap_quote;
 	gboolean autowrap;
-	gboolean linewrap_at_send;
 	gboolean auto_exteditor;
 	gboolean enable_autosave;
 	gint autosave_itv;

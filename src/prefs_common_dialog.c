@@ -93,7 +93,6 @@ static struct Compose {
 	GtkObject *spinbtn_linewrap_adj;
 	GtkWidget *checkbtn_wrapquote;
 	GtkWidget *checkbtn_autowrap;
-	GtkWidget *checkbtn_wrapatsend;
 
 	GtkWidget *checkbtn_autosave;
 	GtkWidget *spinbtn_autosave;
@@ -304,8 +303,6 @@ static PrefsUIData ui_data[] = {
 	{"linewrap_quotation", &compose.checkbtn_wrapquote,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"linewrap_auto", &compose.checkbtn_autowrap,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"linewrap_before_sending", &compose.checkbtn_wrapatsend,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"enable_autosave", &compose.checkbtn_autosave,
@@ -922,7 +919,6 @@ static void prefs_compose_create(void)
 	GtkWidget *spinbtn_linewrap;
 	GtkWidget *checkbtn_wrapquote;
 	GtkWidget *checkbtn_autowrap;
-	GtkWidget *checkbtn_wrapatsend;
 
 	GtkWidget *hbox_autosave;
 	GtkWidget *checkbtn_autosave;
@@ -1058,8 +1054,6 @@ static void prefs_compose_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox4, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON (hbox4, checkbtn_autowrap, _("Wrap on input"));
-	PACK_CHECK_BUTTON
-		(hbox4, checkbtn_wrapatsend, _("Wrap before sending"));
 
 	PACK_VSPACER (vbox2, vbox3, VSPACING_NARROW_2);
 
@@ -1115,7 +1109,6 @@ static void prefs_compose_create(void)
 	compose.spinbtn_linewrap_adj = spinbtn_linewrap_adj;
 	compose.checkbtn_wrapquote   = checkbtn_wrapquote;
 	compose.checkbtn_autowrap    = checkbtn_autowrap;
-	compose.checkbtn_wrapatsend  = checkbtn_wrapatsend;
 
 	compose.checkbtn_autosave    = checkbtn_autosave;
 	compose.spinbtn_autosave     = spinbtn_autosave;

@@ -2670,9 +2670,6 @@ static gint compose_send(Compose *compose)
 			return -1;
 		}
 	} else {
-		if (prefs_common.linewrap_at_send)
-			compose_wrap_all(compose);
-
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
 			compose_unlock(compose);
 			return -1;
@@ -5861,9 +5858,6 @@ static void compose_send_later_cb(gpointer data, guint action,
 			return;
 		}
 	} else {
-		if (prefs_common.linewrap_at_send)
-			compose_wrap_all(compose);
-
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
 			alertpanel_error(_("Can't queue the message."));
 			return;
