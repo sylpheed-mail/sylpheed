@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -413,6 +413,31 @@ gboolean gtkut_tree_model_find_by_column_data(GtkTreeModel *model,
 	}
 
 	return FALSE;
+}
+
+void gtkut_tree_model_foreach(GtkTreeModel *model, GtkTreeIter *start,
+			      GtkTreeModelForeachFunc func, gpointer user_data)
+{
+	gboolean valid = TRUE;
+	GtkTreeIter iter;
+	GtkTreePath *path;
+
+	g_return_if_fail(func != NULL);
+
+	if (!start) {
+		gtk_tree_model_foreach(model, func, user_data);
+		return;
+	}
+
+	path = gtk_tree_model_get_path(model, start);
+	func(model, path, start, user_data);
+	gtk_tree_path_free(path);
+
+	valid = gtk_tree_model_iter_children(model, &iter, start);
+	while (valid) {
+		gtkut_tree_model_foreach(model, &iter, func, user_data);
+		valid = gtk_tree_model_iter_next(model, &iter);
+	}
 }
 
 gboolean gtkut_tree_row_reference_get_iter(GtkTreeModel *model,

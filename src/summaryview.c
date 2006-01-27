@@ -2851,11 +2851,21 @@ static void summary_delete_row(SummaryView *summaryview, GtkTreeIter *iter)
 		    msginfo->folder->path, msginfo->msgnum);
 }
 
+static gboolean summary_delete_foreach_func(GtkTreeModel *model,
+					    GtkTreePath *path,
+					    GtkTreeIter *iter, gpointer data)
+{
+	summary_delete_row((SummaryView *)data, iter);
+	return FALSE;
+}
+
 void summary_delete(SummaryView *summaryview)
 {
 	FolderItem *item = summaryview->folder_item;
 	GList *rows, *cur;
 	GtkTreeIter last_sel, next;
+	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 
 	if (!item || FOLDER_TYPE(item->folder) == F_NEWS) return;
 
@@ -2872,13 +2882,22 @@ void summary_delete(SummaryView *summaryview)
 	}
 
 	rows = summary_get_selected_rows(summaryview);
+	if (!rows)
+		return;
 
 	/* next code sets current row focus right. We need to find a row
 	 * that is not deleted. */
 	for (cur = rows; cur != NULL; cur = cur->next) {
-		gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
-					&last_sel, (GtkTreePath *)cur->data);
-		summary_delete_row(summaryview, &last_sel);
+		GtkTreePath *path = (GtkTreePath *)cur->data;
+
+		gtk_tree_model_get_iter(model, &last_sel, path);
+		if (gtk_tree_model_iter_has_child(model, &last_sel) &&
+		    !gtk_tree_view_row_expanded(treeview, path)) {
+			gtkut_tree_model_foreach
+				(model, &last_sel, summary_delete_foreach_func,
+				 summaryview);
+		} else
+			summary_delete_row(summaryview, &last_sel);
 	}
 
 	if (prefs_common.immediate_exec || item->stype == F_TRASH) {
