@@ -5398,7 +5398,20 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 		summaryview->display_msg = FALSE;
 		if (!gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
-			g_idle_add(summary_display_msg_idle_func, summaryview);
+			if (summaryview->on_button_press) {
+				MsgInfo *msginfo;
+
+				gtk_tree_model_get(model, &iter,
+						   S_COL_MSG_INFO, &msginfo,
+						   -1);
+				if (MSG_IS_MIME(msginfo->flags))
+					g_idle_add
+						(summary_display_msg_idle_func,
+						 summaryview);
+				else
+					summary_display_msg(summaryview, &iter);
+			} else
+				summary_display_msg(summaryview, &iter);
 			return;
 		}
 	}
