@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-25 18:01+0900\n"
+"POT-Creation-Date: 2006-01-27 18:11+0900\n"
 "PO-Revision-Date: 2001-10-08\n"
 "Last-Translator: Michalis Kabrianis <Michalis@bigfoot.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -509,7 +509,7 @@ msgstr "Βρέθηκε %s\n"
 msgid "Configuration is saved.\n"
 msgstr "Οι ρυθμίσεις αποθηκεύτηκαν.\n"
 
-#: libsylph/prefs_common.c:491
+#: libsylph/prefs_common.c:489
 #, fuzzy
 msgid "Junk mail filter"
 msgstr "Κατάλογος"
@@ -628,8 +628,8 @@ msgstr ""
 msgid "%.2fGB"
 msgstr ""
 
-#: libsylph/utils.c:2373 src/compose.c:2861 src/compose.c:3124
-#: src/compose.c:3187 src/compose.c:3307
+#: libsylph/utils.c:2373 src/compose.c:2858 src/compose.c:3121
+#: src/compose.c:3184 src/compose.c:3304
 msgid "can't change file mode\n"
 msgstr "δεν μπορώ να αλλάξω το mode του αρχείου\n"
 
@@ -718,7 +718,7 @@ msgid ""
 msgstr ""
 
 #: src/account_dialog.c:366 src/addressadd.c:192 src/addressbook.c:491
-#: src/compose.c:4265 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4262 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:206 src/prefs_filter.c:259 src/prefs_folder_item.c:171
@@ -851,7 +851,7 @@ msgstr ""
 msgid "Add Address to Book"
 msgstr "Προσθήκη διεύθυνσης στο βιβλίο"
 
-#: src/addressadd.c:202 src/compose.c:4765 src/editaddress.c:201
+#: src/addressadd.c:202 src/compose.c:4762 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Διεύθυνση"
@@ -995,7 +995,7 @@ msgstr "/Διαγραφή"
 msgid "E-Mail address"
 msgstr "Διεύθυνση e-mail"
 
-#: src/addressbook.c:496 src/compose.c:4766 src/prefs_common_dialog.c:2190
+#: src/addressbook.c:496 src/compose.c:4763 src/prefs_common_dialog.c:2183
 msgid "Address book"
 msgstr "Κατάλογος διευθύνσεων"
 
@@ -1055,7 +1055,7 @@ msgstr ""
 "Αν διαγράφετε τον κατάλογο μόνο, οι διευθύνσεις θα μετακινηθούν στον από "
 "πάνω κατάλογο"
 
-#: src/addressbook.c:1674 src/folderview.c:2349
+#: src/addressbook.c:1674 src/folderview.c:2351
 msgid "Delete folder"
 msgstr "Διαγραφή καταλόγου"
 
@@ -1161,7 +1161,7 @@ msgstr "Σφάλμα μετατροπής βιβλίου διευθύνσεων"
 msgid "Addressbook Conversion"
 msgstr "Μετατροπή βιβλίου διευθύνσεων"
 
-#: src/addressbook.c:3072 src/prefs_common_dialog.c:2040
+#: src/addressbook.c:3072 src/prefs_common_dialog.c:2033
 msgid "Interface"
 msgstr "Διεπαφή"
 
@@ -1183,7 +1183,7 @@ msgstr "ΝέαΟμάδα"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3152 src/folderview.c:367 src/prefs_account_dialog.c:1694
-#: src/summary_search.c:371
+#: src/query_search.c:370
 msgid "Folder"
 msgstr "Κατάλογος"
 
@@ -1209,7 +1209,7 @@ msgstr "Κοινές διευθύνσεις"
 msgid "Personal address"
 msgstr "Προσωπικές διευθύνσεις"
 
-#: src/alertpanel.c:141 src/compose.c:5488 src/main.c:573
+#: src/alertpanel.c:141 src/compose.c:5485 src/main.c:573
 msgid "Notice"
 msgstr "Σημείωση"
 
@@ -1260,7 +1260,7 @@ msgstr "Καφέ"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4574
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4593
 msgid "None"
 msgstr "Τέλος"
 
@@ -1630,7 +1630,7 @@ msgstr "Μήνυμα: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Δεν μπορώ να λάβω το τμήμα του πολυτμηματικού μηνύματος"
 
-#: src/compose.c:2496 src/headerview.c:195 src/summary_search.c:637
+#: src/compose.c:2496 src/headerview.c:195 src/query_search.c:636
 #: src/summaryview.c:2107
 msgid "(No Subject)"
 msgstr "(Χωρίς Θέμα)"
@@ -1653,11 +1653,11 @@ msgstr "Θέμα"
 msgid "Subject is empty. Send it anyway?"
 msgstr ""
 
-#: src/compose.c:2683
+#: src/compose.c:2680
 msgid "can't get recipient list."
 msgstr "δεν μπορώ να πάρω την λίστα παραληπτών"
 
-#: src/compose.c:2703
+#: src/compose.c:2700
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1665,21 +1665,21 @@ msgstr ""
 "Ο λογαριασμός για αποστολή μηνύματος δεν έχει οριστεί.\n"
 "Παρακαλώ επιλέξτε ένα λογαριασμό πριν στείλετε."
 
-#: src/compose.c:2717 src/send_message.c:299
+#: src/compose.c:2714 src/send_message.c:299
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Συνέβη σφάλμα κατά την αποστολή του μηνύματος σε %s ."
 
-#: src/compose.c:2759
+#: src/compose.c:2756
 msgid "Can't save the message to outbox."
 msgstr "Δεν μπορώ να αποθηκεύσω το μήνυμα στα εξερχόμενα."
 
-#: src/compose.c:2797
+#: src/compose.c:2794
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 
-#: src/compose.c:2894
+#: src/compose.c:2891
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1687,12 +1687,12 @@ msgid ""
 "Send it as %s anyway?"
 msgstr "Δεν μπορώ να αλλάξω το κωδικοσύνολο του μηνύματος."
 
-#: src/compose.c:2900
+#: src/compose.c:2897
 #, fuzzy
 msgid "Code conversion error"
 msgstr "Σφάλμα μετατροπής βιβλίου διευθύνσεων"
 
-#: src/compose.c:2973
+#: src/compose.c:2970
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1701,166 +1701,166 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:2977
+#: src/compose.c:2974
 msgid "Line length limit"
 msgstr ""
 
-#: src/compose.c:3267
+#: src/compose.c:3264
 msgid "can't remove the old message\n"
 msgstr "δεν μπορώ να αφαιρέσω το παλιό μήνυμα\n"
 
-#: src/compose.c:3285
+#: src/compose.c:3282
 msgid "queueing message...\n"
 msgstr "βάζω το μήνυμα στην ουρά...\n"
 
-#: src/compose.c:3367
+#: src/compose.c:3364
 #, fuzzy
 msgid "can't find queue folder\n"
 msgstr "δεν μπορώ να επιλέξω τον κατάλογο: %s\n"
 
-#: src/compose.c:3374
+#: src/compose.c:3371
 msgid "can't queue the message\n"
 msgstr "δεν μπορώ να βάλω το μήνυμα στην ουρά\n"
 
-#: src/compose.c:3967
+#: src/compose.c:3964
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generated Message-ID: %s\n"
 
-#: src/compose.c:4080
+#: src/compose.c:4077
 msgid "Creating compose window...\n"
 msgstr "Δημιουργώ το παράθυρο σύνθεσης...\n"
 
-#: src/compose.c:4131 src/headerview.c:54
+#: src/compose.c:4128 src/headerview.c:54
 msgid "From:"
 msgstr "Από:"
 
-#: src/compose.c:4205
+#: src/compose.c:4202
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/Εκτέλεση"
 
-#: src/compose.c:4208
+#: src/compose.c:4205
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/Μήνυμα/Κρυπτογράφηση"
 
-#: src/compose.c:4246 src/compose.c:5320
+#: src/compose.c:4243 src/compose.c:5317
 msgid "MIME type"
 msgstr "τύπος MIME"
 
 #. S_COL_DATE
-#: src/compose.c:4255 src/mimeview.c:197 src/prefs_filter_edit.c:496
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4721
+#: src/compose.c:4252 src/mimeview.c:197 src/prefs_filter_edit.c:496
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4740
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: src/compose.c:4686 src/mainwindow.c:2324 src/prefs_account_dialog.c:528
-#: src/prefs_common_dialog.c:664
+#: src/compose.c:4683 src/mainwindow.c:2324 src/prefs_account_dialog.c:528
+#: src/prefs_common_dialog.c:661
 msgid "Send"
 msgstr "Αποστολή"
 
-#: src/compose.c:4687
+#: src/compose.c:4684
 msgid "Send message"
 msgstr "Αποστολή μηνύματος"
 
-#: src/compose.c:4695
+#: src/compose.c:4692
 msgid "Send later"
 msgstr ""
 "Αποστολή\n"
 "αργότερα"
 
-#: src/compose.c:4696
+#: src/compose.c:4693
 msgid "Put into queue folder and send later"
 msgstr "Τοποθέτηση στον κατάλογο ουράς και αποστολή αργότερα"
 
-#: src/compose.c:4704
+#: src/compose.c:4701
 msgid "Draft"
 msgstr "Πρόχειρα"
 
-#: src/compose.c:4705
+#: src/compose.c:4702
 msgid "Save to draft folder"
 msgstr "Αποθήκευση στον κατάλογο προχείρων"
 
-#: src/compose.c:4715
+#: src/compose.c:4712
 msgid "Insert"
 msgstr "Εισαγωγή"
 
-#: src/compose.c:4716
+#: src/compose.c:4713
 msgid "Insert file"
 msgstr "Εισαγωγή αρχείου"
 
-#: src/compose.c:4724
+#: src/compose.c:4721
 msgid "Attach"
 msgstr "Προσάρτηση"
 
-#: src/compose.c:4725
+#: src/compose.c:4722
 msgid "Attach file"
 msgstr "Προσάρτηση αρχείου"
 
 #. signature
-#: src/compose.c:4735 src/prefs_account_dialog.c:1208
-#: src/prefs_common_dialog.c:957
+#: src/compose.c:4732 src/prefs_account_dialog.c:1208
+#: src/prefs_common_dialog.c:953
 msgid "Signature"
 msgstr "Yπογραφή"
 
-#: src/compose.c:4736
+#: src/compose.c:4733
 #, fuzzy
 msgid "Append signature"
 msgstr "Λάθος υπογραφή"
 
 #. editor
-#: src/compose.c:4745 src/prefs_common_dialog.c:995
-#: src/prefs_common_dialog.c:2322
+#: src/compose.c:4742 src/prefs_common_dialog.c:991
+#: src/prefs_common_dialog.c:2315
 msgid "Editor"
 msgstr "Συνθέτης"
 
-#: src/compose.c:4746
+#: src/compose.c:4743
 msgid "Edit with external editor"
 msgstr "Επεξεργασία με εξωτερικό πρόγραμμα"
 
-#: src/compose.c:4754
+#: src/compose.c:4751
 msgid "Linewrap"
 msgstr ""
 "Τύλιξη\n"
 "γραμμής"
 
-#: src/compose.c:4755
+#: src/compose.c:4752
 #, fuzzy
 msgid "Wrap all long lines"
 msgstr "Αναδίπλωση γραμμών"
 
-#: src/compose.c:5216
+#: src/compose.c:5213
 msgid "Invalid MIME type."
 msgstr "Μη έγκυρος τύπος MIME"
 
-#: src/compose.c:5234
+#: src/compose.c:5231
 msgid "File doesn't exist or is empty."
 msgstr "Το αρχείο δεν υπάρχει, ή είναι άδειο."
 
-#: src/compose.c:5302
+#: src/compose.c:5299
 #, fuzzy
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: src/compose.c:5322 src/prefs_common_dialog.c:1451
+#: src/compose.c:5319 src/prefs_common_dialog.c:1444
 msgid "Encoding"
 msgstr "Κωδικοποίηση"
 
-#: src/compose.c:5345 src/prefs_folder_item.c:202
+#: src/compose.c:5342 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Διάδρομος"
 
-#: src/compose.c:5346
+#: src/compose.c:5343
 msgid "File name"
 msgstr "Όνομα αρχείου"
 
-#: src/compose.c:5439
+#: src/compose.c:5436
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Η εντολή για το εξωτερικό πρόγραμμα δεν είναι έγκυρη: `%s'\n"
 
-#: src/compose.c:5485
+#: src/compose.c:5482
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1870,49 +1870,49 @@ msgstr ""
 "Να επιβάλλω τερματισμό της διεργασίας;\n"
 "process group id:  %d"
 
-#: src/compose.c:5860 src/compose.c:5868 src/compose.c:5874
+#: src/compose.c:5857 src/compose.c:5862 src/compose.c:5868
 msgid "Can't queue the message."
 msgstr "Δεν μπορώ να βάλω στην ουρά το μήνυμα."
 
-#: src/compose.c:5965
+#: src/compose.c:5959
 #, fuzzy
 msgid "Select files"
 msgstr "Επιλογή αρχείου"
 
-#: src/compose.c:5988
+#: src/compose.c:5982
 msgid "Select file"
 msgstr "Επιλογή αρχείου"
 
-#: src/compose.c:6023
+#: src/compose.c:6017
 #, fuzzy
 msgid "Save message"
 msgstr "Αποστολή μηνύματος"
 
-#: src/compose.c:6024
+#: src/compose.c:6018
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Αυτό το μήνυμα έχει τροποποιηθεί, να απορριφθεί;"
 
-#: src/compose.c:6026
+#: src/compose.c:6020
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:6068
+#: src/compose.c:6062
 #, fuzzy, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Θέλετε πράγματι να διαγραφεί αυτή η κεφαλίδα;"
 
-#: src/compose.c:6070
+#: src/compose.c:6064
 #, fuzzy
 msgid "Apply template"
 msgstr "Διαγραφή μηνύματος"
 
-#: src/compose.c:6071
+#: src/compose.c:6065
 #, fuzzy
 msgid "_Replace"
 msgstr "Απάντηση"
 
-#: src/compose.c:6071
+#: src/compose.c:6065
 #, fuzzy
 msgid "_Insert"
 msgstr "Εισαγωγή"
@@ -2077,12 +2077,12 @@ msgstr "Επεξεργασία καταλόγου"
 msgid "Input the new name of folder:"
 msgstr "Εισάγετε το νέο όνομα του καταλόγου:"
 
-#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2098
-#: src/folderview.c:2104
+#: src/editgroup.c:525 src/foldersel.c:541 src/folderview.c:2100
+#: src/folderview.c:2106
 msgid "New folder"
 msgstr "Νέος κατάλογος"
 
-#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2105
+#: src/editgroup.c:526 src/foldersel.c:542 src/folderview.c:2107
 msgid "Input the name of new folder:"
 msgstr "Εισάγετε το όνομα του νέου καταλόγου:"
 
@@ -2100,7 +2100,7 @@ msgstr "Επεξεργασία εγγραφής JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
 #: src/importldif.c:534 src/prefs_account_dialog.c:1722
-#: src/prefs_common_dialog.c:1852
+#: src/prefs_common_dialog.c:1845
 msgid " ... "
 msgstr " ... "
 
@@ -2277,22 +2277,22 @@ msgstr "Διαγραμμένα"
 msgid "Drafts"
 msgstr "Πρόχειρα"
 
-#: src/foldersel.c:543 src/folderview.c:2102 src/folderview.c:2106
+#: src/foldersel.c:543 src/folderview.c:2104 src/folderview.c:2108
 msgid "NewFolder"
 msgstr "NewFolder"
 
-#: src/foldersel.c:551 src/folderview.c:2114 src/folderview.c:2175
+#: src/foldersel.c:551 src/folderview.c:2116 src/folderview.c:2177
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "το `%c' δεν μπορεί να συμπεριλαμβάνεται σε όνομα καταλόγου."
 
-#: src/foldersel.c:561 src/folderview.c:2124 src/folderview.c:2183
-#: src/summary_search.c:997
+#: src/foldersel.c:561 src/folderview.c:2126 src/folderview.c:2185
+#: src/query_search.c:995
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Ο κατάλογος `%s' υπάρχει ήδη."
 
-#: src/foldersel.c:569 src/folderview.c:2131
+#: src/foldersel.c:569 src/folderview.c:2133
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "δεν μπορώ να δημιουργήσω τον κατάλογο `%s'."
@@ -2417,26 +2417,26 @@ msgstr "Ενημέρωση της δομής καταλόγων..."
 msgid "Checking for new messages in all folders..."
 msgstr "Σύνθεση νέου μηνύματος"
 
-#: src/folderview.c:1200 src/mainwindow.c:2400 src/prefs_common_dialog.c:1796
+#: src/folderview.c:1200 src/mainwindow.c:2400 src/prefs_common_dialog.c:1789
 msgid "Junk"
 msgstr ""
 
-#: src/folderview.c:1846
+#: src/folderview.c:1848
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Ο κατάλογος %s είναι επιλεγμένος\n"
 
-#: src/folderview.c:2001
+#: src/folderview.c:2003
 #, fuzzy, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Αποστολή μηνύματος"
 
-#: src/folderview.c:2038
+#: src/folderview.c:2040
 #, fuzzy, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Συνέβη σφάλμα κατά την αποστολή του μηνύματος σε %s ."
 
-#: src/folderview.c:2099
+#: src/folderview.c:2101
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2446,26 +2446,26 @@ msgstr ""
 "(αν θέλετε να δημιουργήσετε ένα κατάλογο για να βάλετε υποκαταλόγους\n"
 " προσθέστε το `/' στο τέλος του ονόματος)"
 
-#: src/folderview.c:2163
+#: src/folderview.c:2165
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Δώστε νέο όνομα για `%s':"
 
-#: src/folderview.c:2164
+#: src/folderview.c:2166
 msgid "Rename folder"
 msgstr "Μετονομασία καταλόγου"
 
-#: src/folderview.c:2195 src/folderview.c:2203
+#: src/folderview.c:2197 src/folderview.c:2205
 #, fuzzy, c-format
 msgid "Can't rename the folder '%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/folderview.c:2273
+#: src/folderview.c:2275
 #, fuzzy, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/folderview.c:2339
+#: src/folderview.c:2341
 #, fuzzy, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2474,12 +2474,12 @@ msgstr ""
 "Σίγουρα να διαγραφεί το mailbox `%s' ;\n"
 "(Τα μηνύματα ΔΕΝ σβήνονται από τον δίσκο)"
 
-#: src/folderview.c:2341
+#: src/folderview.c:2343
 #, fuzzy
 msgid "Delete search folder"
 msgstr "Διαγραφή καταλόγου"
 
-#: src/folderview.c:2346
+#: src/folderview.c:2348
 #, fuzzy, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2490,21 +2490,21 @@ msgstr ""
 "Όλοι οι κατάλογοι και τα μηνύματα κάτω από το `%s' θα διαγραφούν.\n"
 "Θέλετε πράγματι να διαγραφούν;"
 
-#: src/folderview.c:2378 src/folderview.c:2384
+#: src/folderview.c:2380 src/folderview.c:2386
 #, fuzzy, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/folderview.c:2420
+#: src/folderview.c:2422
 msgid "Empty trash"
 msgstr "Άδειασμα διαγραμμένων"
 
-#: src/folderview.c:2421
+#: src/folderview.c:2423
 #, fuzzy
 msgid "Delete all messages in the trash folder?"
 msgstr "Να αδειάσω όλα τα διαγραμμένα μηνύματα"
 
-#: src/folderview.c:2460
+#: src/folderview.c:2462
 #, fuzzy, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2513,35 +2513,35 @@ msgstr ""
 "Σίγουρα να διαγραφεί το mailbox `%s' ;\n"
 "(Τα μηνύματα ΔΕΝ σβήνονται από τον δίσκο)"
 
-#: src/folderview.c:2462
+#: src/folderview.c:2464
 #, fuzzy
 msgid "Remove mailbox"
 msgstr "/Διαγραφή mailbox"
 
-#: src/folderview.c:2512
+#: src/folderview.c:2514
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Σίγουρα να διαγραφεί ο IMAP4 λογαριασμός `%s';"
 
-#: src/folderview.c:2513
+#: src/folderview.c:2515
 msgid "Delete IMAP4 account"
 msgstr "Διαγραφή λογαριασμού IMAP4"
 
-#: src/folderview.c:2666
+#: src/folderview.c:2668
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Σίγουρα να διαγραφεί το newsgroup `%s';"
 
-#: src/folderview.c:2667
+#: src/folderview.c:2669
 msgid "Delete newsgroup"
 msgstr "Διαγραφή newsgroup"
 
-#: src/folderview.c:2717
+#: src/folderview.c:2719
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Σίγουρα να διαγραφεί ο λογαριασμός news `%s';"
 
-#: src/folderview.c:2718
+#: src/folderview.c:2720
 msgid "Delete news account"
 msgstr "Διαγραφή λογαριασμού news"
 
@@ -2557,7 +2557,7 @@ msgstr "Θέμα:"
 msgid "Creating header view...\n"
 msgstr "Δημιουργώ την απεικόνιση κεφαλίδας...\n"
 
-#: src/headerview.c:180 src/summary_search.c:638 src/summaryview.c:2110
+#: src/headerview.c:180 src/query_search.c:637 src/summaryview.c:2110
 msgid "(No From)"
 msgstr "(Χωρίς αποστολέα)"
 
@@ -3724,7 +3724,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: η κατανομή χρωμάτων %d απέτυχε\n"
 
 #: src/mainwindow.c:1108 src/summaryview.c:2258 src/summaryview.c:2343
-#: src/summaryview.c:3720 src/summaryview.c:3849 src/summaryview.c:4207
+#: src/summaryview.c:3739 src/summaryview.c:3868 src/summaryview.c:4226
 msgid "done.\n"
 msgstr "έγινε.\n"
 
@@ -3856,7 +3856,7 @@ msgid "Send queued message(s)"
 msgstr "Αποστολή όλων των μηνυμάτων από την ουρά"
 
 #: src/mainwindow.c:2335 src/prefs_account_dialog.c:530
-#: src/prefs_common_dialog.c:666 src/prefs_folder_item.c:140
+#: src/prefs_common_dialog.c:663 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Σύνθεση"
 
@@ -3864,7 +3864,7 @@ msgstr "Σύνθεση"
 msgid "Compose new message"
 msgstr "Σύνθεση νέου μηνύματος"
 
-#: src/mainwindow.c:2344 src/prefs_common_dialog.c:979
+#: src/mainwindow.c:2344 src/prefs_common_dialog.c:975
 msgid "Reply"
 msgstr "Απάντηση"
 
@@ -3955,7 +3955,7 @@ msgid "Find text:"
 msgstr ""
 
 #: src/message_search.c:141 src/prefs_search_folder.c:253
-#: src/summary_search.c:327
+#: src/query_search.c:326
 msgid "Case sensitive"
 msgstr "Διαχωρισμός πεζών/κεφαλαίων"
 
@@ -4003,25 +4003,25 @@ msgstr "Προσάρτηση"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:669 src/summaryview.c:3249
+#: src/messageview.c:669 src/summaryview.c:3268
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/messageview.c:728 src/summaryview.c:3272
+#: src/messageview.c:728 src/summaryview.c:3291
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:729 src/summaryview.c:3273
+#: src/messageview.c:729 src/summaryview.c:3292
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Εκτέλεση"
 
-#: src/messageview.c:731 src/prefs_common_dialog.c:2311 src/summaryview.c:3275
+#: src/messageview.c:731 src/prefs_common_dialog.c:2304 src/summaryview.c:3294
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: src/messageview.c:740 src/summaryview.c:3284
+#: src/messageview.c:740 src/summaryview.c:3303
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -4098,21 +4098,21 @@ msgstr "Αυτή η υπογραφή δεν έχει έλεγχθεί ακόμα
 msgid "_Check signature"
 msgstr "/Έλεγχος υπογραφής"
 
-#: src/mimeview.c:970 src/mimeview.c:1037 src/mimeview.c:1070
-#: src/mimeview.c:1093
+#: src/mimeview.c:974 src/mimeview.c:1041 src/mimeview.c:1074
+#: src/mimeview.c:1097
 msgid "Can't save the part of multipart message."
 msgstr "Δεν μπορώ να αποθηκεύσω το τμήμα του πολυτμηματικού μηνύματος"
 
-#: src/mimeview.c:1050
+#: src/mimeview.c:1054
 #, fuzzy
 msgid "Can't save the attachments."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/mimeview.c:1103
+#: src/mimeview.c:1107
 msgid "Open with"
 msgstr "Άνοιγμα με"
 
-#: src/mimeview.c:1104
+#: src/mimeview.c:1108
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -4121,11 +4121,11 @@ msgstr ""
 "Εισάγετε την γραμμή εντολής για το άνοιγμα του αρχείου:\n"
 "(Το `%s' θα αντικατασταθεί με το όνομα αρχείου)"
 
-#: src/mimeview.c:1142
+#: src/mimeview.c:1146
 msgid "Opening executable file"
 msgstr ""
 
-#: src/mimeview.c:1143
+#: src/mimeview.c:1147
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -4133,7 +4133,7 @@ msgid ""
 "virus or something like a malicious program."
 msgstr ""
 
-#: src/mimeview.c:1179
+#: src/mimeview.c:1183
 #, c-format
 msgid "MIME viewer command line is invalid: `%s'"
 msgstr "Η γραμμή εντολής για απεικόνιση MIME είναι μη έγκυρη: `%s'"
@@ -4142,11 +4142,11 @@ msgstr "Η γραμμή εντολής για απεικόνιση MIME είνα
 msgid "Passphrase"
 msgstr "Κωδική φράση"
 
-#: src/passphrase.c:246
+#: src/passphrase.c:248
 msgid "[no user id]"
 msgstr "[χωρίς user id]"
 
-#: src/passphrase.c:254
+#: src/passphrase.c:256
 #, c-format
 msgid ""
 "%sPlease enter the passphrase for:\n"
@@ -4159,7 +4159,7 @@ msgstr ""
 "  %.*s  \n"
 "(%.*s)\n"
 
-#: src/passphrase.c:258
+#: src/passphrase.c:260
 msgid ""
 "Bad passphrase! Try again...\n"
 "\n"
@@ -4189,11 +4189,11 @@ msgstr "Κοινές Επιλογές"
 msgid "Creating account preferences window...\n"
 msgstr "Δημιουργώ το παράθυρο επιλογών του λογαριασμού...\n"
 
-#: src/prefs_account_dialog.c:526 src/prefs_common_dialog.c:662
+#: src/prefs_account_dialog.c:526 src/prefs_common_dialog.c:659
 msgid "Receive"
 msgstr "Λήψη"
 
-#: src/prefs_account_dialog.c:533 src/prefs_common_dialog.c:673
+#: src/prefs_account_dialog.c:533 src/prefs_common_dialog.c:670
 msgid "Privacy"
 msgstr "Μυστικότητα"
 
@@ -4201,7 +4201,7 @@ msgstr "Μυστικότητα"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:540 src/prefs_common_dialog.c:2112
+#: src/prefs_account_dialog.c:540 src/prefs_common_dialog.c:2105
 msgid "Advanced"
 msgstr "Προχωρημένα"
 
@@ -4334,7 +4334,7 @@ msgid "Authentication method"
 msgstr "Πιστοποίηση"
 
 #: src/prefs_account_dialog.c:953 src/prefs_account_dialog.c:1108
-#: src/prefs_common_dialog.c:877 src/prefs_common_dialog.c:2481
+#: src/prefs_common_dialog.c:874 src/prefs_common_dialog.c:2474
 msgid "Automatic"
 msgstr "Αυτόματη"
 
@@ -4379,8 +4379,8 @@ msgstr "Δημιουργία Message-ID"
 msgid "Add user-defined header"
 msgstr "Προσθήκη κεφαλίδας ορισμένης από τον χρήστη"
 
-#: src/prefs_account_dialog.c:1065 src/prefs_common_dialog.c:1556
-#: src/prefs_common_dialog.c:1583
+#: src/prefs_account_dialog.c:1065 src/prefs_common_dialog.c:1549
+#: src/prefs_common_dialog.c:1576
 msgid " Edit... "
 msgstr "Επεξεργασία..."
 
@@ -4706,830 +4706,826 @@ msgstr "Διαγραφή λογαριασμού"
 msgid "Do you really want to delete this action?"
 msgstr "Θέλετε πράγματι να διαγράψετε αυτό το λογαριασμό;"
 
-#: src/prefs_common_dialog.c:642
+#: src/prefs_common_dialog.c:639
 msgid "Creating common preferences window...\n"
 msgstr "Δημιουργία παραθύρου κοινών επιλογών...\n"
 
-#: src/prefs_common_dialog.c:646
+#: src/prefs_common_dialog.c:643
 msgid "Common Preferences"
 msgstr "Κοινές επιλογές"
 
-#: src/prefs_common_dialog.c:668
+#: src/prefs_common_dialog.c:665
 msgid "Display"
 msgstr "Εμφάνιση"
 
-#: src/prefs_common_dialog.c:670
+#: src/prefs_common_dialog.c:667
 #, fuzzy
 msgid "Junk mail"
 msgstr "Κατάλογος"
 
-#: src/prefs_common_dialog.c:676
+#: src/prefs_common_dialog.c:673
 msgid "Details"
 msgstr ""
 
-#: src/prefs_common_dialog.c:730
+#: src/prefs_common_dialog.c:727
 msgid "Auto-check new mail"
 msgstr "Αυτόματος έλεγχος για νέα mail"
 
-#: src/prefs_common_dialog.c:732 src/prefs_common_dialog.c:1073
+#: src/prefs_common_dialog.c:729 src/prefs_common_dialog.c:1067
 #, fuzzy
 msgid "every"
 msgstr "Ποτέ"
 
-#: src/prefs_common_dialog.c:744 src/prefs_common_dialog.c:1087
+#: src/prefs_common_dialog.c:741 src/prefs_common_dialog.c:1081
 msgid "minute(s)"
 msgstr "λεπτά"
 
-#: src/prefs_common_dialog.c:753
+#: src/prefs_common_dialog.c:750
 msgid "Check new mail on startup"
 msgstr "Έλεγχος για νέο mail στην αρχή"
 
-#: src/prefs_common_dialog.c:755
+#: src/prefs_common_dialog.c:752
 msgid "Update all local folders after incorporation"
 msgstr "Ενημέρωση όλων των τοπικών καταλόγων μετά την λήψη"
 
-#: src/prefs_common_dialog.c:760
+#: src/prefs_common_dialog.c:757
 #, fuzzy
 msgid "Execute command when new messages arrived"
 msgstr "Αυτόματη εκτέλεση για τη μεταφορά και διαγραφή μηνυμάτων"
 
-#: src/prefs_common_dialog.c:772 src/prefs_common_dialog.c:2360
-#: src/prefs_common_dialog.c:2382
+#: src/prefs_common_dialog.c:769 src/prefs_common_dialog.c:2353
+#: src/prefs_common_dialog.c:2375
 msgid "Command"
 msgstr "Εντολή"
 
-#: src/prefs_common_dialog.c:783
+#: src/prefs_common_dialog.c:780
 #, fuzzy, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "Λαμβάνω τον αριθμό των νέων μηνυμάτων (STAT)..."
 
-#: src/prefs_common_dialog.c:787
+#: src/prefs_common_dialog.c:784
 #, fuzzy
 msgid "Incorporate from local spool"
 msgstr "Λήψη νέου mail"
 
-#: src/prefs_common_dialog.c:800
+#: src/prefs_common_dialog.c:797
 msgid "Filter on incorporation"
 msgstr "Φιλτράρισμα κατά τη λήψη"
 
-#: src/prefs_common_dialog.c:806
+#: src/prefs_common_dialog.c:803
 msgid "Spool path"
 msgstr ""
 
-#: src/prefs_common_dialog.c:854
+#: src/prefs_common_dialog.c:851
 msgid "Save sent messages to outbox"
 msgstr "Αποθήκευση σταλμένων μηνυμάτων στο outbox"
 
-#: src/prefs_common_dialog.c:856
+#: src/prefs_common_dialog.c:853
 msgid "Apply filter rules to sent messages"
 msgstr ""
 
-#: src/prefs_common_dialog.c:863
+#: src/prefs_common_dialog.c:860
 #, fuzzy
 msgid "Transfer encoding"
 msgstr "Τύλιξη πριν την αποστολή"
 
-#: src/prefs_common_dialog.c:888
+#: src/prefs_common_dialog.c:885
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
 msgstr ""
 
-#: src/prefs_common_dialog.c:953 src/prefs_common_dialog.c:1341
+#: src/prefs_common_dialog.c:949 src/prefs_common_dialog.c:1334
 #: src/prefs_folder_item.c:139
 msgid "General"
 msgstr ""
 
-#: src/prefs_common_dialog.c:968
+#: src/prefs_common_dialog.c:964
 msgid "Signature separator"
 msgstr "Διαχωρισμός υπογραφής"
 
-#: src/prefs_common_dialog.c:977
+#: src/prefs_common_dialog.c:973
 msgid "Insert automatically"
 msgstr "Αυτόματη εισαγωγή"
 
-#: src/prefs_common_dialog.c:987
+#: src/prefs_common_dialog.c:983
 msgid "Automatically select account for replies"
 msgstr "Αυτόματη επιλογή λογαριασμού για τις απαντήσεις"
 
-#: src/prefs_common_dialog.c:989
+#: src/prefs_common_dialog.c:985
 msgid "Quote message when replying"
 msgstr "Παράθεση του μηνύματος όταν απαντάτε"
 
-#: src/prefs_common_dialog.c:991
+#: src/prefs_common_dialog.c:987
 #, fuzzy
 msgid "Reply button invokes mailing list reply"
 msgstr "/Απάντηση σε όλους"
 
-#: src/prefs_common_dialog.c:1002
+#: src/prefs_common_dialog.c:998
 msgid "Automatically launch the external editor"
 msgstr "Αυτόματη χρήση εξωτερικού προγράμματος επεξεργασίας"
 
-#: src/prefs_common_dialog.c:1012
+#: src/prefs_common_dialog.c:1008
 msgid "Undo level"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1032
+#: src/prefs_common_dialog.c:1028
 msgid "Wrap messages at"
 msgstr "Τύλιξη μηνυμάτων στους"
 
-#: src/prefs_common_dialog.c:1044
+#: src/prefs_common_dialog.c:1040
 msgid "characters"
 msgstr "χαρακτήρες"
 
-#: src/prefs_common_dialog.c:1054
+#: src/prefs_common_dialog.c:1050
 msgid "Wrap quotation"
 msgstr "Τύλιξη παράθεσης"
 
-#: src/prefs_common_dialog.c:1060
+#: src/prefs_common_dialog.c:1056
 #, fuzzy
 msgid "Wrap on input"
 msgstr "Αναδίπλωση γραμμών"
 
-#: src/prefs_common_dialog.c:1062
-msgid "Wrap before sending"
-msgstr "Τύλιξη πριν την αποστολή"
-
-#: src/prefs_common_dialog.c:1071
+#: src/prefs_common_dialog.c:1065
 #, fuzzy
 msgid "Auto-save to draft"
 msgstr "Αποθήκευση στον κατάλογο προχείρων"
 
-#: src/prefs_common_dialog.c:1096
+#: src/prefs_common_dialog.c:1090
 #, fuzzy
 msgid "Format"
 msgstr "Προώθηση"
 
-#: src/prefs_common_dialog.c:1101
+#: src/prefs_common_dialog.c:1095
 msgid "Spell checking"
 msgstr ""
 
 #. reply
-#: src/prefs_common_dialog.c:1152
+#: src/prefs_common_dialog.c:1145
 #, fuzzy
 msgid "Reply format"
 msgstr "Μορφοποίηση ημερομηνίας"
 
-#: src/prefs_common_dialog.c:1167 src/prefs_common_dialog.c:1209
+#: src/prefs_common_dialog.c:1160 src/prefs_common_dialog.c:1202
 msgid "Quotation mark"
 msgstr "Σήμα παράθεσης"
 
 #. forward
-#: src/prefs_common_dialog.c:1194
+#: src/prefs_common_dialog.c:1187
 #, fuzzy
 msgid "Forward format"
 msgstr "Προώθηση"
 
-#: src/prefs_common_dialog.c:1241
+#: src/prefs_common_dialog.c:1234
 msgid " Description of symbols "
 msgstr " Περιγραφή συμβόλων"
 
-#: src/prefs_common_dialog.c:1270
+#: src/prefs_common_dialog.c:1263
 msgid "Enable Spell checking"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1282
+#: src/prefs_common_dialog.c:1275
 #, fuzzy
 msgid "Default language:"
 msgstr "Προκαθορισμένο κλειδί υπογραφής"
 
-#: src/prefs_common_dialog.c:1349
+#: src/prefs_common_dialog.c:1342
 #, fuzzy
 msgid "Text font"
 msgstr "Κείμενο"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1361
+#: src/prefs_common_dialog.c:1354
 #, fuzzy
 msgid "Folder View"
 msgstr "Κατάλογος"
 
-#: src/prefs_common_dialog.c:1369
+#: src/prefs_common_dialog.c:1362
 msgid "Display unread number next to folder name"
 msgstr "Εμφάνιση αριθμού αδιάβαστων δίπλα στο όνομα του καταλόγου"
 
-#: src/prefs_common_dialog.c:1371
+#: src/prefs_common_dialog.c:1364
 #, fuzzy
 msgid "Display message number columns in the folder view"
 msgstr "Εμφάνιση αριθμού αδιάβαστων δίπλα στο όνομα του καταλόγου"
 
-#: src/prefs_common_dialog.c:1380
+#: src/prefs_common_dialog.c:1373
 msgid "Abbreviate newsgroups longer than"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1395
+#: src/prefs_common_dialog.c:1388
 #, fuzzy
 msgid "letters"
 msgstr "Διαγραφή"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1401
+#: src/prefs_common_dialog.c:1394
 msgid "Summary View"
 msgstr "Απεικόνιση Περίληψης"
 
-#: src/prefs_common_dialog.c:1410
+#: src/prefs_common_dialog.c:1403
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr ""
 "Εμφάνιση του παραλήπτη στη στήλη `Αποστολέα' αν ο αποστολέας είστε εσείς"
 
-#: src/prefs_common_dialog.c:1412
+#: src/prefs_common_dialog.c:1405
 #, fuzzy
 msgid "Expand threads"
 msgstr "/Απεικόνιση/Εμφάνιση της πλήρους κεφαλίδας"
 
-#: src/prefs_common_dialog.c:1420 src/prefs_common_dialog.c:2720
-#: src/prefs_common_dialog.c:2758
+#: src/prefs_common_dialog.c:1413 src/prefs_common_dialog.c:2713
+#: src/prefs_common_dialog.c:2751
 msgid "Date format"
 msgstr "Μορφοποίηση ημερομηνίας"
 
-#: src/prefs_common_dialog.c:1441
+#: src/prefs_common_dialog.c:1434
 msgid " Set display item of summary... "
 msgstr " Ορισμός εμφανιζόμενων στοιχείων περίληψης... "
 
-#: src/prefs_common_dialog.c:1447
+#: src/prefs_common_dialog.c:1440
 msgid "Message"
 msgstr "Μήνυμα"
 
-#: src/prefs_common_dialog.c:1457
+#: src/prefs_common_dialog.c:1450
 #, fuzzy
 msgid "Default character encoding"
 msgstr "/Απεικόνιση/Εμφάνιση του πηγαίου"
 
-#: src/prefs_common_dialog.c:1471
+#: src/prefs_common_dialog.c:1464
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1477
+#: src/prefs_common_dialog.c:1470
 #, fuzzy
 msgid "Outgoing character encoding"
 msgstr "/Απεικόνιση/Εμφάνιση του πηγαίου"
 
-#: src/prefs_common_dialog.c:1491
+#: src/prefs_common_dialog.c:1484
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
 "be used."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1552
+#: src/prefs_common_dialog.c:1545
 msgid "Enable coloration of message"
 msgstr "Ενεργοποίηση χρωματισμού των μηνυμάτων"
 
-#: src/prefs_common_dialog.c:1567
+#: src/prefs_common_dialog.c:1560
 #, fuzzy
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
 msgstr "Display 2-byte alphabet and numeric with 1-byte character"
 
-#: src/prefs_common_dialog.c:1574
+#: src/prefs_common_dialog.c:1567
 msgid "Display header pane above message view"
 msgstr "Εμφάνιση τμήματος με την κεφαλίδα πάνω από την προβολή μηνύματος"
 
-#: src/prefs_common_dialog.c:1581
+#: src/prefs_common_dialog.c:1574
 msgid "Display short headers on message view"
 msgstr "Εμφάνιση βραχείας κεφαλίδας στην απεικόνιση μηνύματος"
 
-#: src/prefs_common_dialog.c:1593
+#: src/prefs_common_dialog.c:1586
 msgid "Render HTML messages as text"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1597
+#: src/prefs_common_dialog.c:1590
 #, fuzzy
 msgid "Display cursor in message view"
 msgstr "Εμφάνιση βραχείας κεφαλίδας στην απεικόνιση μηνύματος"
 
-#: src/prefs_common_dialog.c:1610
+#: src/prefs_common_dialog.c:1603
 msgid "Line space"
 msgstr "Διάστημα γραμμών"
 
-#: src/prefs_common_dialog.c:1624 src/prefs_common_dialog.c:1662
+#: src/prefs_common_dialog.c:1617 src/prefs_common_dialog.c:1655
 msgid "pixel(s)"
 msgstr "pixel(s)"
 
-#: src/prefs_common_dialog.c:1629
+#: src/prefs_common_dialog.c:1622
 msgid "Scroll"
 msgstr "Κύλιση"
 
-#: src/prefs_common_dialog.c:1636
+#: src/prefs_common_dialog.c:1629
 msgid "Half page"
 msgstr "Μισή σελίδα"
 
-#: src/prefs_common_dialog.c:1642
+#: src/prefs_common_dialog.c:1635
 msgid "Smooth scroll"
 msgstr "Ομαλή κύλιση"
 
-#: src/prefs_common_dialog.c:1648
+#: src/prefs_common_dialog.c:1641
 msgid "Step"
 msgstr "Κατά βήματα"
 
-#: src/prefs_common_dialog.c:1668
+#: src/prefs_common_dialog.c:1661
 msgid "Images"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1676
+#: src/prefs_common_dialog.c:1669
 msgid "Resize attached large images to fit in the window"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1678
+#: src/prefs_common_dialog.c:1671
 #, fuzzy
 msgid "Display images as inline"
 msgstr "Ορισμός εμφάνισης κεφαλίδας"
 
-#: src/prefs_common_dialog.c:1762
+#: src/prefs_common_dialog.c:1755
 #, fuzzy
 msgid "Enable Junk mail control"
 msgstr "Κατάλογος"
 
-#: src/prefs_common_dialog.c:1774
+#: src/prefs_common_dialog.c:1767
 #, fuzzy
 msgid "Learning command:"
 msgstr "Εκτέλεση"
 
-#: src/prefs_common_dialog.c:1783
+#: src/prefs_common_dialog.c:1776
 #, fuzzy
 msgid "(Select preset)"
 msgstr "Επέλεξε κλειδιά"
 
-#: src/prefs_common_dialog.c:1808
+#: src/prefs_common_dialog.c:1801
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1823
+#: src/prefs_common_dialog.c:1816
 #, fuzzy
 msgid "Classifying command"
 msgstr "Εκτέλεση"
 
-#: src/prefs_common_dialog.c:1834
+#: src/prefs_common_dialog.c:1827
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1844
+#: src/prefs_common_dialog.c:1837
 #, fuzzy
 msgid "Junk folder"
 msgstr "Κατάλογος"
 
-#: src/prefs_common_dialog.c:1862
+#: src/prefs_common_dialog.c:1855
 #, fuzzy
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr ""
 "Άνοιγμα του πρώτου αδιάβαστου μηνύματος κατά τη μετακίνηση σε ένα κατάλογο"
 
-#: src/prefs_common_dialog.c:1873
+#: src/prefs_common_dialog.c:1866
 #, fuzzy
 msgid "Filter messages classified as junk on receiving"
 msgstr "Φιλτράρισμα μηνυμάτων κατά την λήψη"
 
-#: src/prefs_common_dialog.c:1876
+#: src/prefs_common_dialog.c:1869
 #, fuzzy
 msgid "Delete junk mails from server on receiving"
 msgstr "Διαγραφή news server"
 
-#: src/prefs_common_dialog.c:1880
+#: src/prefs_common_dialog.c:1873
 msgid "Mark filtered junk mails as read"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1921
+#: src/prefs_common_dialog.c:1914
 msgid "Automatically check signatures"
 msgstr "Αυτόματος έλεγχος υπογραφών"
 
-#: src/prefs_common_dialog.c:1924
+#: src/prefs_common_dialog.c:1917
 msgid "Show signature check result in a popup window"
 msgstr "Εμφάνιση του αποτελέσματος του ελέγχου σε ξεχωριστό παράθυρο"
 
-#: src/prefs_common_dialog.c:1927
+#: src/prefs_common_dialog.c:1920
 msgid "Store passphrase in memory temporarily"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1942
+#: src/prefs_common_dialog.c:1935
 #, fuzzy
 msgid "Expired after"
 msgstr ""
 "Αποστολή\n"
 "αργότερα"
 
-#: src/prefs_common_dialog.c:1955
+#: src/prefs_common_dialog.c:1948
 #, fuzzy
 msgid "minute(s) "
 msgstr "λεπτά"
 
-#: src/prefs_common_dialog.c:1969
+#: src/prefs_common_dialog.c:1962
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1978
+#: src/prefs_common_dialog.c:1971
 msgid "Grab input while entering a passphrase"
 msgstr "Grab input while entering a passphrase"
 
-#: src/prefs_common_dialog.c:1983
+#: src/prefs_common_dialog.c:1976
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Εμφάνιση ειδοποίησης κατά την εκκίνηση αν το GnuPG δεν λειτουργεί"
 
-#: src/prefs_common_dialog.c:2048
+#: src/prefs_common_dialog.c:2041
 #, fuzzy
 msgid "Always open messages in summary when selected"
 msgstr "ένα μήνυμα δεν θα παραληφθεί\n"
 
-#: src/prefs_common_dialog.c:2052
+#: src/prefs_common_dialog.c:2045
 msgid "Open first unread message when entering a folder"
 msgstr ""
 "Άνοιγμα του πρώτου αδιάβαστου μηνύματος κατά τη μετακίνηση σε ένα κατάλογο"
 
-#: src/prefs_common_dialog.c:2056
+#: src/prefs_common_dialog.c:2049
 #, fuzzy
 msgid "Only mark message as read when opened in new window"
 msgstr "/Μήνυμα/Άνοιγμα σε νέο παράθυρο"
 
-#: src/prefs_common_dialog.c:2060
+#: src/prefs_common_dialog.c:2053
 msgid "Go to inbox after receiving new mail"
 msgstr "Μετακίνηση στον κατάλογο εισερχομένων μετά τη λήψη νέων μηνυμάτων"
 
-#: src/prefs_common_dialog.c:2068
+#: src/prefs_common_dialog.c:2061
 msgid "Execute immediately when moving or deleting messages"
 msgstr "Αυτόματη εκτέλεση για τη μεταφορά και διαγραφή μηνυμάτων"
 
-#: src/prefs_common_dialog.c:2080
+#: src/prefs_common_dialog.c:2073
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr ""
 "(Τα μηνύματα απλά θα σημανθούν μέχρι την εκτέλεση\n"
 "αν αυτό είναι απεπιλεγμένο)"
 
-#: src/prefs_common_dialog.c:2089
+#: src/prefs_common_dialog.c:2082
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2091
+#: src/prefs_common_dialog.c:2084
 #, fuzzy
 msgid "Display tray icon"
 msgstr "Εμφανιζόμενο όνομα"
 
-#: src/prefs_common_dialog.c:2098
+#: src/prefs_common_dialog.c:2091
 #, fuzzy
 msgid " Set key bindings... "
 msgstr "Στέλνω"
 
-#: src/prefs_common_dialog.c:2104 src/select-keys.c:344
+#: src/prefs_common_dialog.c:2097 src/select-keys.c:344
 msgid "Other"
 msgstr "Άλλα"
 
-#: src/prefs_common_dialog.c:2108
+#: src/prefs_common_dialog.c:2101
 #, fuzzy
 msgid "External commands"
 msgstr "Εκτέλεση"
 
-#: src/prefs_common_dialog.c:2157
+#: src/prefs_common_dialog.c:2150
 #, fuzzy
 msgid "Receive dialog"
 msgstr "Εμφάνιση διαλόγου λήψης"
 
-#: src/prefs_common_dialog.c:2167
+#: src/prefs_common_dialog.c:2160
 msgid "Show receive dialog"
 msgstr "Εμφάνιση διαλόγου λήψης"
 
-#: src/prefs_common_dialog.c:2177
+#: src/prefs_common_dialog.c:2170
 msgid "Always"
 msgstr "Πάντα"
 
-#: src/prefs_common_dialog.c:2178
+#: src/prefs_common_dialog.c:2171
 msgid "Only on manual receiving"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2180
+#: src/prefs_common_dialog.c:2173
 msgid "Never"
 msgstr "Ποτέ"
 
-#: src/prefs_common_dialog.c:2185
+#: src/prefs_common_dialog.c:2178
 msgid "Don't popup error dialog on receive error"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2188
+#: src/prefs_common_dialog.c:2181
 #, fuzzy
 msgid "Close receive dialog when finished"
 msgstr "Εμφάνιση διαλόγου λήψης"
 
-#: src/prefs_common_dialog.c:2199
+#: src/prefs_common_dialog.c:2192
 msgid "Add address to destination when double-clicked"
 msgstr "Προσθήκη διεύθυνσης στον προορισμό σε διπλό κλικ"
 
-#: src/prefs_common_dialog.c:2201
+#: src/prefs_common_dialog.c:2194
 msgid "On exit"
 msgstr "Κατά την έξοδο"
 
-#: src/prefs_common_dialog.c:2209
+#: src/prefs_common_dialog.c:2202
 msgid "Confirm on exit"
 msgstr "Επιβεβαίωση εξόδου"
 
-#: src/prefs_common_dialog.c:2216
+#: src/prefs_common_dialog.c:2209
 msgid "Empty trash on exit"
 msgstr "Άδειασμα των διαγραμμένων στην έξοδο"
 
-#: src/prefs_common_dialog.c:2218
+#: src/prefs_common_dialog.c:2211
 msgid "Ask before emptying"
 msgstr "Επιβεβαίωση πριν το άδειασμα"
 
-#: src/prefs_common_dialog.c:2222
+#: src/prefs_common_dialog.c:2215
 msgid "Warn if there are queued messages"
 msgstr "Προειδοποίηση αν υπάρχουν μηνύματα στην ουρά"
 
-#: src/prefs_common_dialog.c:2274
+#: src/prefs_common_dialog.c:2267
 #, fuzzy, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr ""
 "Εξωτερικό πρόγραμμα σύνθεσης (το %s θα αντικατασταθεί με το όνομα αρχείου)"
 
-#: src/prefs_common_dialog.c:2283
+#: src/prefs_common_dialog.c:2276
 msgid "Web browser"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2295 src/prefs_common_dialog.c:3782
-#: src/prefs_common_dialog.c:3803
+#: src/prefs_common_dialog.c:2288 src/prefs_common_dialog.c:3775
+#: src/prefs_common_dialog.c:3796
 #, fuzzy
 msgid "(Default browser)"
 msgstr "Προκαθορισμένο κλειδί υπογραφής"
 
-#: src/prefs_common_dialog.c:2348
+#: src/prefs_common_dialog.c:2341
 msgid "Use external program for incorporation"
 msgstr "Χρήση εξωτερικού προγράμματος για λήψη μηνυμάτων"
 
-#: src/prefs_common_dialog.c:2370
+#: src/prefs_common_dialog.c:2363
 msgid "Use external program for sending"
 msgstr "Χρήση εξωτερικού προγράμματος για αποστολή"
 
-#: src/prefs_common_dialog.c:2428
+#: src/prefs_common_dialog.c:2421
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2431
+#: src/prefs_common_dialog.c:2424
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2438
+#: src/prefs_common_dialog.c:2431
 msgid "Socket I/O timeout:"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2451
+#: src/prefs_common_dialog.c:2444
 msgid "second(s)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2479
+#: src/prefs_common_dialog.c:2472
 msgid "Automatic (Recommended)"
 msgstr "Αυτόματο (Προτεινόμενο)"
 
-#: src/prefs_common_dialog.c:2484
+#: src/prefs_common_dialog.c:2477
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bit ascii (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2486
+#: src/prefs_common_dialog.c:2479
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:2488
+#: src/prefs_common_dialog.c:2481
 msgid "Western European (ISO-8859-1)"
 msgstr "Δυτικής Ευρώπης (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2489
+#: src/prefs_common_dialog.c:2482
 #, fuzzy
 msgid "Western European (ISO-8859-15)"
 msgstr "Δυτικής Ευρώπης (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2491
+#: src/prefs_common_dialog.c:2484
 #, fuzzy
 msgid "Western European (Windows-1252)"
 msgstr "Δυτικής Ευρώπης (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2495
+#: src/prefs_common_dialog.c:2488
 msgid "Central European (ISO-8859-2)"
 msgstr "Κεντρικήs Ευρώπης (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2497
+#: src/prefs_common_dialog.c:2490
 msgid "Baltic (ISO-8859-13)"
 msgstr "Βαλτικής (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2498
+#: src/prefs_common_dialog.c:2491
 msgid "Baltic (ISO-8859-4)"
 msgstr "Βαλτικής (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2500
+#: src/prefs_common_dialog.c:2493
 msgid "Greek (ISO-8859-7)"
 msgstr "Ελληνική (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2502
+#: src/prefs_common_dialog.c:2495
 #, fuzzy
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Ελληνική (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2503
+#: src/prefs_common_dialog.c:2496
 #, fuzzy
 msgid "Hebrew (Windows-1255)"
 msgstr "Κυριλλική (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2505
+#: src/prefs_common_dialog.c:2498
 msgid "Turkish (ISO-8859-9)"
 msgstr "Τουρκική (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2507
+#: src/prefs_common_dialog.c:2500
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Κυριλλική (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2508
+#: src/prefs_common_dialog.c:2501
 msgid "Cyrillic (KOI8-R)"
 msgstr "Κυριλλική (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2509
+#: src/prefs_common_dialog.c:2502
 msgid "Cyrillic (KOI8-U)"
 msgstr "Κυριλλική (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2510
+#: src/prefs_common_dialog.c:2503
 msgid "Cyrillic (Windows-1251)"
 msgstr "Κυριλλική (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2512
+#: src/prefs_common_dialog.c:2505
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Ιαπωνέζικη (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2514
+#: src/prefs_common_dialog.c:2507
 msgid "Japanese (EUC-JP)"
 msgstr "Ιαπωνέζικη (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2515
+#: src/prefs_common_dialog.c:2508
 msgid "Japanese (Shift_JIS)"
 msgstr "Ιαπωνέζικη (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2518
+#: src/prefs_common_dialog.c:2511
 msgid "Simplified Chinese (GB2312)"
 msgstr "Απλοποιημένη Κινεζική (GB2312)"
 
-#: src/prefs_common_dialog.c:2519
+#: src/prefs_common_dialog.c:2512
 #, fuzzy
 msgid "Simplified Chinese (GBK)"
 msgstr "Απλοποιημένη Κινεζική (GB2312)"
 
-#: src/prefs_common_dialog.c:2520
+#: src/prefs_common_dialog.c:2513
 msgid "Traditional Chinese (Big5)"
 msgstr "Παραδοσιακή Κινεζική (Big5)"
 
-#: src/prefs_common_dialog.c:2522
+#: src/prefs_common_dialog.c:2515
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Παραδοσιακή Κινεζική (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2523
+#: src/prefs_common_dialog.c:2516
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Κινεζική (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2526
+#: src/prefs_common_dialog.c:2519
 msgid "Korean (EUC-KR)"
 msgstr "Κορεατική (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2528
+#: src/prefs_common_dialog.c:2521
 msgid "Thai (TIS-620)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2529
+#: src/prefs_common_dialog.c:2522
 msgid "Thai (Windows-874)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2696
+#: src/prefs_common_dialog.c:2689
 msgid "the full abbreviated weekday name"
 msgstr "η συντομογραφία ημέρας της εβδομάδας"
 
-#: src/prefs_common_dialog.c:2697
+#: src/prefs_common_dialog.c:2690
 msgid "the full weekday name"
 msgstr "το πλήρες όνομα της μέρας της εβδομάδας"
 
-#: src/prefs_common_dialog.c:2698
+#: src/prefs_common_dialog.c:2691
 msgid "the abbreviated month name"
 msgstr "η συντομογραφία του μήνα"
 
-#: src/prefs_common_dialog.c:2699
+#: src/prefs_common_dialog.c:2692
 msgid "the full month name"
 msgstr "το πλήρες όνομα του μήνα"
 
-#: src/prefs_common_dialog.c:2700
+#: src/prefs_common_dialog.c:2693
 msgid "the preferred date and time for the current locale"
 msgstr "η προτιμώμενη ημερομηνία και ώρα για το τρέχον locale"
 
-#: src/prefs_common_dialog.c:2701
+#: src/prefs_common_dialog.c:2694
 msgid "the century number (year/100)"
 msgstr "ο αριθμός αιώνα (έτη / 100)"
 
-#: src/prefs_common_dialog.c:2702
+#: src/prefs_common_dialog.c:2695
 msgid "the day of the month as a decimal number"
 msgstr "η μέρα του μήνα ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2703
+#: src/prefs_common_dialog.c:2696
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "η ώρα ως δεκαδικός αριθμός χρησιμοποιώντας 24ωρο ρολόι"
 
-#: src/prefs_common_dialog.c:2704
+#: src/prefs_common_dialog.c:2697
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "η ώρα ως δεκαδικός αριθμός χρησιμοποιώντας 12ωρο ρολόι"
 
-#: src/prefs_common_dialog.c:2705
+#: src/prefs_common_dialog.c:2698
 msgid "the day of the year as a decimal number"
 msgstr "η μέρα του έτους ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2706
+#: src/prefs_common_dialog.c:2699
 msgid "the month as a decimal number"
 msgstr "ο μήνας ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2707
+#: src/prefs_common_dialog.c:2700
 msgid "the minute as a decimal number"
 msgstr "το λεπτό ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2708
+#: src/prefs_common_dialog.c:2701
 msgid "either AM or PM"
 msgstr "είτε ΠΜ ή ΜΜ"
 
-#: src/prefs_common_dialog.c:2709
+#: src/prefs_common_dialog.c:2702
 msgid "the second as a decimal number"
 msgstr "το δευτερόλεπτο ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2710
+#: src/prefs_common_dialog.c:2703
 msgid "the day of the week as a decimal number"
 msgstr "η μέρα της εβδομάδας ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2711
+#: src/prefs_common_dialog.c:2704
 msgid "the preferred date for the current locale"
 msgstr "η προτιμώμενη ημερομηνία για το τρέχον locale"
 
-#: src/prefs_common_dialog.c:2712
+#: src/prefs_common_dialog.c:2705
 msgid "the last two digits of a year"
 msgstr "τα τελευταία δύο ψηφία του έτους"
 
-#: src/prefs_common_dialog.c:2713
+#: src/prefs_common_dialog.c:2706
 msgid "the year as a decimal number"
 msgstr "το έτος ως δεκαδικός αριθμός"
 
-#: src/prefs_common_dialog.c:2714
+#: src/prefs_common_dialog.c:2707
 msgid "the time zone or name or abbreviation"
 msgstr "Η ζώνη ώρας ή όνομα, ή συνμτομογραφία"
 
-#: src/prefs_common_dialog.c:2735
+#: src/prefs_common_dialog.c:2728
 msgid "Specifier"
 msgstr "Προσδιοριστής"
 
-#: src/prefs_common_dialog.c:2736
+#: src/prefs_common_dialog.c:2729
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: src/prefs_common_dialog.c:2776
+#: src/prefs_common_dialog.c:2769
 msgid "Example"
 msgstr "Παράδειγμα"
 
-#: src/prefs_common_dialog.c:2857
+#: src/prefs_common_dialog.c:2850
 msgid "Set message colors"
 msgstr "Όρισμος χρωμάτων μηνύματος"
 
-#: src/prefs_common_dialog.c:2865
+#: src/prefs_common_dialog.c:2858
 msgid "Colors"
 msgstr "Χρώματα"
 
-#: src/prefs_common_dialog.c:2899
+#: src/prefs_common_dialog.c:2892
 msgid "Quoted Text - First Level"
 msgstr "Παρατιθέμενο κείμενο - Πρώτο επίπεδο"
 
-#: src/prefs_common_dialog.c:2905
+#: src/prefs_common_dialog.c:2898
 msgid "Quoted Text - Second Level"
 msgstr "Παρατιθέμενο κείμενο - Δεύτερο επίπεδο"
 
-#: src/prefs_common_dialog.c:2911
+#: src/prefs_common_dialog.c:2904
 msgid "Quoted Text - Third Level"
 msgstr "Παρατιθέμενο κείμενο - Τρίτο επίπεδο"
 
-#: src/prefs_common_dialog.c:2917
+#: src/prefs_common_dialog.c:2910
 msgid "URI link"
 msgstr "Σύνδεσμος URI"
 
-#: src/prefs_common_dialog.c:2924
+#: src/prefs_common_dialog.c:2917
 msgid "Recycle quote colors"
 msgstr "Ανακύκλωση χρωμάτων παράθεσης"
 
-#: src/prefs_common_dialog.c:2991
+#: src/prefs_common_dialog.c:2984
 msgid "Pick color for quotation level 1"
 msgstr "Επιλογή χρώματος πρώτου επιπέδου παράθεσης"
 
-#: src/prefs_common_dialog.c:2994
+#: src/prefs_common_dialog.c:2987
 msgid "Pick color for quotation level 2"
 msgstr "Επιλογή χρώματος δεύτερου επιπέδου παράθεσης"
 
-#: src/prefs_common_dialog.c:2997
+#: src/prefs_common_dialog.c:2990
 msgid "Pick color for quotation level 3"
 msgstr "Επιλογή χρώματος τρίτου επιπέδου παράθεσης"
 
-#: src/prefs_common_dialog.c:3000
+#: src/prefs_common_dialog.c:2993
 msgid "Pick color for URI"
 msgstr "Επιλογή χρώματος για URI"
 
-#: src/prefs_common_dialog.c:3140
+#: src/prefs_common_dialog.c:3133
 msgid "Description of symbols"
 msgstr "Περιγραφή των συμβόλων"
 
-#: src/prefs_common_dialog.c:3196
+#: src/prefs_common_dialog.c:3189
 #, fuzzy
 msgid ""
 "Date\n"
@@ -5554,11 +5550,11 @@ msgstr ""
 "Message-ID\n"
 "%"
 
-#: src/prefs_common_dialog.c:3209
+#: src/prefs_common_dialog.c:3202
 msgid "If x is set, displays expr"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3213
+#: src/prefs_common_dialog.c:3206
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5567,7 +5563,7 @@ msgid ""
 "Literal %"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3221
+#: src/prefs_common_dialog.c:3214
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5575,22 +5571,22 @@ msgid ""
 "Literal closing curly brace"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3267
+#: src/prefs_common_dialog.c:3260
 #, fuzzy
 msgid "Key bindings"
 msgstr "Στέλνω"
 
-#: src/prefs_common_dialog.c:3280
+#: src/prefs_common_dialog.c:3273
 #, fuzzy
 msgid "Select the preset of key bindings."
 msgstr "Στέλνω"
 
-#: src/prefs_common_dialog.c:3290 src/prefs_common_dialog.c:3614
+#: src/prefs_common_dialog.c:3283 src/prefs_common_dialog.c:3607
 #, fuzzy
 msgid "Default"
 msgstr "Προκαθορισμένο κλειδί υπογραφής"
 
-#: src/prefs_common_dialog.c:3293 src/prefs_common_dialog.c:3623
+#: src/prefs_common_dialog.c:3286 src/prefs_common_dialog.c:3616
 msgid "Old Sylpheed"
 msgstr ""
 
@@ -5942,21 +5938,21 @@ msgstr "Απάντηση σε"
 msgid "%s - Edit search condition"
 msgstr ""
 
-#: src/prefs_search_folder.c:209 src/summary_search.c:258
+#: src/prefs_search_folder.c:209 src/query_search.c:257
 msgid "Match any of the following"
 msgstr ""
 
-#: src/prefs_search_folder.c:211 src/summary_search.c:260
+#: src/prefs_search_folder.c:211 src/query_search.c:259
 #, fuzzy
 msgid "Match all of the following"
 msgstr "Αυτόματος ορισμός αυτών των διευθύνσεων"
 
-#: src/prefs_search_folder.c:231 src/summary_search.c:304
+#: src/prefs_search_folder.c:231 src/query_search.c:303
 #, fuzzy
 msgid "Folder:"
 msgstr "Κατάλογος"
 
-#: src/prefs_search_folder.c:248 src/summary_search.c:322
+#: src/prefs_search_folder.c:248 src/query_search.c:321
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Επιλογή καταλόγου"
@@ -5972,20 +5968,17 @@ msgid "Attachment"
 msgstr "Προσάρτηση"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/summary_search.c:372
-#: src/summaryview.c:4714
+#: src/prefs_summary_column.c:73 src/query_search.c:371 src/summaryview.c:4733
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/summary_search.c:373
-#: src/summaryview.c:4717
+#: src/prefs_summary_column.c:74 src/query_search.c:372 src/summaryview.c:4736
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/summary_search.c:374
-#: src/summaryview.c:4719
+#: src/prefs_summary_column.c:75 src/query_search.c:373 src/summaryview.c:4738
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -6085,6 +6078,49 @@ msgstr "Δημιουργώ διάλογο προόδου...\n"
 #: src/progressdialog.c:136
 msgid "Status"
 msgstr "Κατάσταση"
+
+#: src/query_search.c:234
+#, fuzzy
+msgid "Search messages"
+msgstr "\tΑναζήτηση στα απροσπέλαστα μηνύματα... "
+
+#: src/query_search.c:395
+#, fuzzy
+msgid "_Save as search folder"
+msgstr "Επιλογή καταλόγου"
+
+#: src/query_search.c:512 src/subscribedialog.c:523 src/summaryview.c:840
+msgid "Done."
+msgstr "Τέλος"
+
+#: src/query_search.c:536
+#, fuzzy, c-format
+msgid "Searching %s ..."
+msgstr "Σάρωση καταλόγου %s ..."
+
+#: src/query_search.c:564
+#, fuzzy, c-format
+msgid "Searching %s (%d / %d)..."
+msgstr "Φιλτράρω..."
+
+#: src/query_search.c:645 src/summaryview.c:2048
+msgid "(No Date)"
+msgstr "(Χωρίς ημερομηνία)"
+
+#: src/query_search.c:833
+#, fuzzy
+msgid "Save as search folder"
+msgstr "Επιλογή καταλόγου"
+
+#: src/query_search.c:854
+#, fuzzy
+msgid "Location:"
+msgstr "Παράθεση"
+
+#: src/query_search.c:869
+#, fuzzy
+msgid "Folder name:"
+msgstr "Όνομα αρχείου"
 
 #: src/rfc2015.c:140
 msgid "Cannot find user ID for this key."
@@ -6394,53 +6430,10 @@ msgstr "δεν μπορώ να πάρω την λίστα των newsgroup"
 msgid "Can't retrieve newsgroup list."
 msgstr "δεν μπορώ να πάρω την λίστα των newsgroup"
 
-#: src/subscribedialog.c:523 src/summary_search.c:513 src/summaryview.c:840
-msgid "Done."
-msgstr "Τέλος"
-
 #: src/subscribedialog.c:553
 #, c-format
 msgid "%d newsgroups received (%s read)"
 msgstr "%d newsgroups λήφθηκαν (%s διαβασμένα)"
-
-#: src/summary_search.c:235
-#, fuzzy
-msgid "Search messages"
-msgstr "\tΑναζήτηση στα απροσπέλαστα μηνύματα... "
-
-#: src/summary_search.c:396
-#, fuzzy
-msgid "_Save as search folder"
-msgstr "Επιλογή καταλόγου"
-
-#: src/summary_search.c:537
-#, fuzzy, c-format
-msgid "Searching %s ..."
-msgstr "Σάρωση καταλόγου %s ..."
-
-#: src/summary_search.c:565
-#, fuzzy, c-format
-msgid "Searching %s (%d / %d)..."
-msgstr "Φιλτράρω..."
-
-#: src/summary_search.c:646 src/summaryview.c:2048
-msgid "(No Date)"
-msgstr "(Χωρίς ημερομηνία)"
-
-#: src/summary_search.c:835
-#, fuzzy
-msgid "Save as search folder"
-msgstr "Επιλογή καταλόγου"
-
-#: src/summary_search.c:856
-#, fuzzy
-msgid "Location:"
-msgstr "Παράθεση"
-
-#: src/summary_search.c:871
-#, fuzzy
-msgid "Folder name:"
-msgstr "Όνομα αρχείου"
 
 #: src/summaryview.c:409
 #, fuzzy
@@ -6737,76 +6730,76 @@ msgstr "Το μήνυμα %d σημειώθηκε ως αδιάβαστο\n"
 msgid "Message %s/%d is set to delete\n"
 msgstr "Το μήνυμα %s/%d έχει οριστεί για διαγραφή\n"
 
-#: src/summaryview.c:2868
+#: src/summaryview.c:2878
 #, fuzzy
 msgid "Delete message(s)"
 msgstr "Διαγραφή μηνύματος"
 
-#: src/summaryview.c:2869
+#: src/summaryview.c:2879
 #, fuzzy
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Θέλετε πράγματι να διαγραφεί αυτή η κεφαλίδα;"
 
-#: src/summaryview.c:2934
+#: src/summaryview.c:2953
 msgid "Deleting duplicated messages..."
 msgstr "Διαγράφω τα διπλά μηνύματα..."
 
-#: src/summaryview.c:2972
+#: src/summaryview.c:2991
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Το μήνυμα %s/%d δεν έχει σημειωθεί\n"
 
-#: src/summaryview.c:3030
+#: src/summaryview.c:3049
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί για μετακίνηση στο %s\n"
 
-#: src/summaryview.c:3047
+#: src/summaryview.c:3066
 msgid "Destination is same as current folder."
 msgstr "Ο προορισμός είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:3103
+#: src/summaryview.c:3122
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί να αντιγραφεί στο %s\n"
 
-#: src/summaryview.c:3120
+#: src/summaryview.c:3139
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Ο προορισμός αντιγραφής είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:3319
+#: src/summaryview.c:3338
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Ένα σφάλμα συνέβη καθώς επεξεργάζομαι το mail."
 
-#: src/summaryview.c:3627 src/summaryview.c:3628
+#: src/summaryview.c:3646 src/summaryview.c:3647
 msgid "Building threads..."
 msgstr "Δημιουργώ τα νήματα..."
 
-#: src/summaryview.c:3778 src/summaryview.c:3779
+#: src/summaryview.c:3797 src/summaryview.c:3798
 msgid "Unthreading..."
 msgstr ""
 
-#: src/summaryview.c:4072 src/summaryview.c:4128
+#: src/summaryview.c:4091 src/summaryview.c:4147
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:4177
+#: src/summaryview.c:4196
 msgid "filtering..."
 msgstr "φιλτράρω..."
 
-#: src/summaryview.c:4178
+#: src/summaryview.c:4197
 msgid "Filtering..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:4214
+#: src/summaryview.c:4233
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "το μήνυμα %d είναι ήδη στη μνήμη.\n"
 
-#: src/summaryview.c:4723
+#: src/summaryview.c:4742
 msgid "No."
 msgstr "Αρ."
 
@@ -6824,35 +6817,35 @@ msgstr "Δημιουργώ απεικόνιση κειμένου...\n"
 msgid "This message can't be displayed.\n"
 msgstr "ένα μήνυμα δεν θα παραληφθεί\n"
 
-#: src/textview.c:1917
+#: src/textview.c:1929
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/Αποθήκευση ως..."
 
-#: src/textview.c:1933 src/trayicon.c:109
+#: src/textview.c:1945 src/trayicon.c:109
 #, fuzzy
 msgid "Compose _new message"
 msgstr "Σύνθεση νέου μηνύματος"
 
-#: src/textview.c:1935
+#: src/textview.c:1947
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/Προσθήκη αποστολέα στον κατάλογο διευθύνσεων"
 
-#: src/textview.c:1937
+#: src/textview.c:1949
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "Κοινές διευθύνσεις"
 
-#: src/textview.c:1940
+#: src/textview.c:1952
 msgid "_Open with Web browser"
 msgstr ""
 
-#: src/textview.c:1942
+#: src/textview.c:1954
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:2085
+#: src/textview.c:2097
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -6861,7 +6854,7 @@ msgid ""
 "Open it anyway?"
 msgstr ""
 
-#: src/textview.c:2090
+#: src/textview.c:2102
 msgid "Fake URL warning"
 msgstr ""
 
@@ -6889,6 +6882,9 @@ msgstr "Σχετικά"
 #, fuzzy
 msgid "E_xit"
 msgstr "Έξοδος"
+
+#~ msgid "Wrap before sending"
+#~ msgstr "Τύλιξη πριν την αποστολή"
 
 #~ msgid "Insert signature"
 #~ msgstr "Εισαγωγή υπογραφής"
