@@ -45,7 +45,7 @@
 #include "mainwindow.h"
 #include "folderview.h"
 #include "summaryview.h"
-#include "summary_search.h"
+#include "query_search.h"
 #include "inputdialog.h"
 #include "subscribedialog.h"
 #include "foldersel.h"
@@ -2783,7 +2783,7 @@ static void folderview_search_cb(FolderView *folderview, guint action,
 		gtk_tree_path_free(open_path);
 		gtk_tree_path_free(sel_path);
 	} else
-		summary_search(item);
+		query_search(item);
 }
 
 static void folderview_property_cb(FolderView *folderview, guint action,

@@ -17,13 +17,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SUMMARY_SEARCH_H__
-#define __SUMMARY_SEARCH_H__
+#ifndef __QUERY_SEARCH_H__
+#define __QUERY_SEARCH_H__
 
 #include <glib.h>
 
 #include "folder.h"
 
-void summary_search	(FolderItem	*item);
+void query_search	(FolderItem	*item);
 
-#endif /* __SUMMARY_SEARCH_H__ */
+#endif /* __QUERY_SEARCH_H__ */

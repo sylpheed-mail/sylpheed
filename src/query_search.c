@@ -48,7 +48,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "summary_search.h"
+#include "query_search.h"
 #include "summaryview.h"
 #include "messageview.h"
 #include "mainwindow.h"
@@ -77,7 +77,7 @@ enum
 	N_COLS
 };
 
-static struct SummarySearchWindow {
+static struct QuerySearchWindow {
 	GtkWidget *window;
 
 	GtkWidget *bool_optmenu;
@@ -120,24 +120,23 @@ typedef struct {
 
 	gboolean cancelled;
 	gboolean finished;
-} SummarySearchSaveDialog;
+} QuerySearchSaveDialog;
 
-static void summary_search_create	(void);
+static void query_search_create	(void);
 
-static FilterRule *summary_search_dialog_to_rule
-					(const gchar	*name,
-					 FolderItem    **item);
+static FilterRule *query_search_dialog_to_rule	(const gchar	*name,
+						 FolderItem    **item);
 
-static void summary_search_query	(void);
-static void summary_search_folder	(FolderItem	*item);
+static void query_search_query			(void);
+static void query_search_folder			(FolderItem	*item);
 
-static gboolean summary_search_recursive_func	(GNode		*node,
+static gboolean query_search_recursive_func	(GNode		*node,
 						 gpointer	 data);
 
-static void summary_search_append_msg	(MsgInfo	*msginfo);
-static void summary_search_clear_list	(void);
+static void query_search_append_msg	(MsgInfo	*msginfo);
+static void query_search_clear_list	(void);
 
-static void summary_search_hbox_added	(CondHBox	*hbox);
+static void query_search_hbox_added	(CondHBox	*hbox);
 
 static void row_activated		(GtkTreeView		*treeview,
 					 GtkTreePath		*path,
@@ -150,21 +149,21 @@ static gboolean row_selected		(GtkTreeSelection	*selection,
 					 gboolean		 cur_selected,
 					 gpointer		 data);
 
-static void summary_search_clear	(GtkButton	*button,
+static void query_search_clear	(GtkButton	*button,
 					 gpointer	 data);
-static void summary_select_folder	(GtkButton	*button,
+static void query_select_folder	(GtkButton	*button,
 					 gpointer	 data);
-static void summary_search_clicked	(GtkButton	*button,
+static void query_search_clicked	(GtkButton	*button,
 					 gpointer	 data);
-static void summary_search_save		(GtkButton	*button,
+static void query_search_save		(GtkButton	*button,
 					 gpointer	 data);
-static void summary_search_close	(GtkButton	*button,
+static void query_search_close		(GtkButton	*button,
 					 gpointer	 data);
 
-static void summary_search_entry_activated	(GtkWidget	*widget,
-						 gpointer	 data);
+static void query_search_entry_activated(GtkWidget	*widget,
+					 gpointer	 data);
 
-static gint summary_search_deleted	(GtkWidget	*widget,
+static gint query_search_deleted	(GtkWidget	*widget,
 					 GdkEventAny	*event,
 					 gpointer	 data);
 static gboolean key_pressed		(GtkWidget	*widget,
@@ -172,12 +171,12 @@ static gboolean key_pressed		(GtkWidget	*widget,
 					 gpointer	 data);
 
 
-void summary_search(FolderItem *item)
+void query_search(FolderItem *item)
 {
 	gchar *id;
 
 	if (!search_window.window)
-		summary_search_create();
+		query_search_create();
 	else
 		gtk_window_present(GTK_WINDOW(search_window.window));
 
@@ -192,7 +191,7 @@ void summary_search(FolderItem *item)
 	gtk_widget_show(search_window.window);
 }
 
-static void summary_search_create(void)
+static void query_search_create(void)
 {
 	GtkWidget *window;
 	GtkWidget *vbox1;
@@ -237,7 +236,7 @@ static void summary_search_create(void)
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
 	gtk_container_set_border_width(GTK_CONTAINER (window), 8);
 	g_signal_connect(G_OBJECT(window), "delete_event",
-			 G_CALLBACK(summary_search_deleted), NULL);
+			 G_CALLBACK(query_search_deleted), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
@@ -286,7 +285,7 @@ static void summary_search_create(void)
 	gtk_widget_set_size_request(scrolledwin, -1, 120);
 
 	cond_edit = prefs_filter_edit_cond_edit_create();
-	cond_edit->add_hbox = summary_search_hbox_added;
+	cond_edit->add_hbox = query_search_hbox_added;
 	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolledwin),
 					      cond_edit->cond_vbox);
 	prefs_filter_set_header_list(NULL);
@@ -398,15 +397,15 @@ static void summary_search_create(void)
 	gtk_box_pack_end(GTK_BOX(btn_hbox), save_btn, FALSE, FALSE, 0);
 
 	g_signal_connect(G_OBJECT(clear_btn), "clicked",
-			 G_CALLBACK(summary_search_clear), NULL);
+			 G_CALLBACK(query_search_clear), NULL);
 	g_signal_connect(G_OBJECT(folder_btn), "clicked",
-			 G_CALLBACK(summary_select_folder), NULL);
+			 G_CALLBACK(query_select_folder), NULL);
 	g_signal_connect(G_OBJECT(search_btn), "clicked",
-			 G_CALLBACK(summary_search_clicked), NULL);
+			 G_CALLBACK(query_search_clicked), NULL);
 	g_signal_connect(G_OBJECT(save_btn), "clicked",
-			 G_CALLBACK(summary_search_save), NULL);
+			 G_CALLBACK(query_search_save), NULL);
 	g_signal_connect(G_OBJECT(close_btn), "clicked",
-			 G_CALLBACK(summary_search_close), NULL);
+			 G_CALLBACK(query_search_close), NULL);
 
 	search_window.window = window;
 	search_window.bool_optmenu = bool_optmenu;
@@ -429,7 +428,7 @@ static void summary_search_create(void)
 	search_window.close_btn = close_btn;
 }
 
-static FilterRule *summary_search_dialog_to_rule(const gchar *name,
+static FilterRule *query_search_dialog_to_rule(const gchar *name,
 						 FolderItem **item)
 {
 	const gchar *id;
@@ -466,7 +465,7 @@ static FilterRule *summary_search_dialog_to_rule(const gchar *name,
 	return rule;
 }
 
-static void summary_search_query(void)
+static void query_search_query(void)
 {
 	FolderItem *item;
 
@@ -475,7 +474,7 @@ static void summary_search_query(void)
 
 	search_window.on_search = TRUE;
 
-	search_window.rule = summary_search_dialog_to_rule("Query rule", &item);
+	search_window.rule = query_search_dialog_to_rule("Query rule", &item);
 	if (!search_window.rule) {
 		search_window.on_search = FALSE;
 		return;
@@ -495,13 +494,13 @@ static void summary_search_query(void)
 
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
 			     GTK_STOCK_STOP);
-	summary_search_clear_list();
+	query_search_clear_list();
 
 	if (search_window.rule->recursive)
 		g_node_traverse(item->node, G_PRE_ORDER, G_TRAVERSE_ALL, -1,
-				summary_search_recursive_func, NULL);
+				query_search_recursive_func, NULL);
 	else
-		summary_search_folder(item);
+		query_search_folder(item);
 
 	filter_rule_free(search_window.rule);
 	search_window.rule = NULL;
@@ -521,7 +520,7 @@ static void summary_search_query(void)
 	search_window.cancelled = FALSE;
 }
 
-static void summary_search_folder(FolderItem *item)
+static void query_search_folder(FolderItem *item)
 {
 	gchar *folder_name, *str;
 	GSList *mlist;
@@ -590,7 +589,7 @@ static void summary_search_folder(FolderItem *item)
 
 		if (filter_match_rule(search_window.rule, msginfo, hlist,
 				      &fltinfo)) {
-			summary_search_append_msg(msginfo);
+			query_search_append_msg(msginfo);
 			cur->data = NULL;
 		}
 
@@ -601,7 +600,7 @@ static void summary_search_folder(FolderItem *item)
 	g_free(folder_name);
 }
 
-static gboolean summary_search_recursive_func(GNode *node, gpointer data)
+static gboolean query_search_recursive_func(GNode *node, gpointer data)
 {
 	FolderItem *item;
 
@@ -614,7 +613,7 @@ static gboolean summary_search_recursive_func(GNode *node, gpointer data)
 	if (search_window.exclude_trash && item->stype == F_TRASH)
 		return FALSE;
 
-	summary_search_folder(item);
+	query_search_folder(item);
 
 	if (search_window.cancelled)
 		return TRUE;
@@ -622,7 +621,7 @@ static gboolean summary_search_recursive_func(GNode *node, gpointer data)
 	return FALSE;
 }
 
-static void summary_search_append_msg(MsgInfo *msginfo)
+static void query_search_append_msg(MsgInfo *msginfo)
 {
 	GtkListStore *store = search_window.store;
 	GtkTreeIter iter;
@@ -657,7 +656,7 @@ static void summary_search_append_msg(MsgInfo *msginfo)
 	g_free(folder);
 }
 
-static void summary_search_clear_list(void)
+static void query_search_clear_list(void)
 {
 	GtkTreeIter iter;
 	GtkTreeModel *model = GTK_TREE_MODEL(search_window.store);
@@ -674,10 +673,10 @@ static void summary_search_clear_list(void)
 	gtk_list_store_clear(search_window.store);
 }
 
-static void summary_search_hbox_added(CondHBox *hbox)
+static void query_search_hbox_added(CondHBox *hbox)
 {
 	g_signal_connect(hbox->key_entry, "activate",
-			 G_CALLBACK(summary_search_entry_activated), NULL);
+			 G_CALLBACK(query_search_entry_activated), NULL);
 }
 
 static void row_activated(GtkTreeView *treeview, GtkTreePath *path,
@@ -706,7 +705,7 @@ static gboolean row_selected(GtkTreeSelection *selection,
 	return TRUE;
 }
 
-static void summary_search_clear(GtkButton *button, gpointer data)
+static void query_search_clear(GtkButton *button, gpointer data)
 {
 	CondHBox *cond_hbox;
 
@@ -722,10 +721,10 @@ static void summary_search_clear(GtkButton *button, gpointer data)
 
 	gtk_label_set_text(GTK_LABEL(search_window.status_label), "");
 
-	summary_search_clear_list();
+	query_search_clear_list();
 }
 
-static void summary_select_folder(GtkButton *button, gpointer data)
+static void query_select_folder(GtkButton *button, gpointer data)
 {
 	FolderItem *item;
 	gchar *id;
@@ -741,30 +740,29 @@ static void summary_select_folder(GtkButton *button, gpointer data)
 	}
 }
 
-static void summary_search_clicked(GtkButton *button, gpointer data)
+static void query_search_clicked(GtkButton *button, gpointer data)
 {
 	if (search_window.on_search)
 		search_window.cancelled = TRUE;
 	else
-		summary_search_query();
+		query_search_query();
 }
 
-static gint summary_search_save_dialog_deleted(GtkWidget *widget,
-					       GdkEventAny *event,
-					       gpointer data)
+static gint query_search_save_dialog_deleted(GtkWidget *widget,
+					     GdkEventAny *event, gpointer data)
 {
-	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+	QuerySearchSaveDialog *dialog = (QuerySearchSaveDialog *)data;
 
 	dialog->cancelled = TRUE;
 	dialog->finished = TRUE;
 	return TRUE;
 }
 
-static gint summary_search_save_dialog_key_pressed(GtkWidget *widget,
+static gint query_search_save_dialog_key_pressed(GtkWidget *widget,
 						   GdkEventKey *event,
 						   gpointer data)
 {
-	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+	QuerySearchSaveDialog *dialog = (QuerySearchSaveDialog *)data;
 
 	if (event && event->keyval == GDK_Escape) {
 		dialog->cancelled = TRUE;
@@ -773,10 +771,10 @@ static gint summary_search_save_dialog_key_pressed(GtkWidget *widget,
 	return FALSE;
 }
 
-static void summary_search_save_dialog_select_folder(GtkButton *button,
-						     gpointer data)
+static void query_search_save_dialog_select_folder(GtkButton *button,
+						   gpointer data)
 {
-	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+	QuerySearchSaveDialog *dialog = (QuerySearchSaveDialog *)data;
 	FolderItem *item;
 	gchar *id;
 
@@ -791,31 +789,31 @@ static void summary_search_save_dialog_select_folder(GtkButton *button,
 	}
 }
 
-static void summary_search_save_activated(GtkEditable *editable, gpointer data)
+static void query_search_save_activated(GtkEditable *editable, gpointer data)
 {
-	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+	QuerySearchSaveDialog *dialog = (QuerySearchSaveDialog *)data;
 
 	gtk_button_clicked(GTK_BUTTON(dialog->ok_btn));
 }
 
-static void summary_search_save_ok(GtkButton *button, gpointer data)
+static void query_search_save_ok(GtkButton *button, gpointer data)
 {
-	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+	QuerySearchSaveDialog *dialog = (QuerySearchSaveDialog *)data;
 
 	dialog->finished = TRUE;
 }
 
-static void summary_search_save_cancel(GtkButton *button, gpointer data)
+static void query_search_save_cancel(GtkButton *button, gpointer data)
 {
-	SummarySearchSaveDialog *dialog = (SummarySearchSaveDialog *)data;
+	QuerySearchSaveDialog *dialog = (QuerySearchSaveDialog *)data;
 
 	dialog->cancelled = TRUE;
 	dialog->finished = TRUE;
 }
 
-static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
+static QuerySearchSaveDialog *query_search_save_dialog_create(void)
 {
-	SummarySearchSaveDialog *dialog;
+	QuerySearchSaveDialog *dialog;
 	GtkWidget *window;
 	GtkWidget *vbox;
 	GtkWidget *hbox;
@@ -829,7 +827,7 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	GtkWidget *cancel_btn;
 	GtkWidget *ok_btn;
 
-	dialog = g_new0(SummarySearchSaveDialog, 1);
+	dialog = g_new0(QuerySearchSaveDialog, 1);
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("Save as search folder"));
@@ -839,10 +837,10 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, FALSE);
 	g_signal_connect(G_OBJECT(window), "delete_event",
-			 G_CALLBACK(summary_search_save_dialog_deleted),
+			 G_CALLBACK(query_search_save_dialog_deleted),
 			 dialog);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
-			 G_CALLBACK(summary_search_save_dialog_key_pressed),
+			 G_CALLBACK(query_search_save_dialog_key_pressed),
 			 dialog);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 	manage_window_set_transient(GTK_WINDOW(window));
@@ -862,7 +860,7 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	folder_btn = gtk_button_new_with_label("...");
 	gtk_box_pack_start(GTK_BOX(hbox), folder_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(folder_btn), "clicked",
-			 G_CALLBACK(summary_search_save_dialog_select_folder),
+			 G_CALLBACK(query_search_save_dialog_select_folder),
 			 dialog);
 
 	hbox = gtk_hbox_new(FALSE, 8);
@@ -874,7 +872,7 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	name_entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(hbox), name_entry, TRUE, TRUE, 0);
 	g_signal_connect(G_OBJECT(name_entry), "activate",
-			 G_CALLBACK(summary_search_save_activated), dialog);
+			 G_CALLBACK(query_search_save_activated), dialog);
 
 	confirm_area = gtk_hbox_new(FALSE, 12);
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
@@ -887,9 +885,9 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	GTK_WIDGET_SET_FLAGS(ok_btn, GTK_CAN_DEFAULT);
 	gtk_widget_grab_default(ok_btn);
 	g_signal_connect(G_OBJECT(ok_btn), "clicked",
-			 G_CALLBACK(summary_search_save_ok), dialog);
+			 G_CALLBACK(query_search_save_ok), dialog);
 	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
-			 G_CALLBACK(summary_search_save_cancel), dialog);
+			 G_CALLBACK(query_search_save_cancel), dialog);
 
 	gtk_widget_grab_focus(name_entry);
 
@@ -906,14 +904,14 @@ static SummarySearchSaveDialog *summary_search_save_dialog_create(void)
 	return dialog;
 }
 
-static void summary_search_save_dialog_destroy(SummarySearchSaveDialog *dialog)
+static void query_search_save_dialog_destroy(QuerySearchSaveDialog *dialog)
 {
 	gtk_widget_destroy(dialog->window);
 	g_free(dialog);
 }
 
-static FolderItem *summary_search_create_vfolder(FolderItem *parent,
-						 const gchar *name)
+static FolderItem *query_search_create_vfolder(FolderItem *parent,
+					       const gchar *name)
 {
 	gchar *path;
 	gchar *fs_name;
@@ -950,14 +948,14 @@ static FolderItem *summary_search_create_vfolder(FolderItem *parent,
 	return item;
 }
 
-static void summary_search_vfolder_update_rule(FolderItem *item)
+static void query_search_vfolder_update_rule(FolderItem *item)
 {
 	GSList list;
 	FilterRule *rule;
 	gchar *file;
 	gchar *path;
 
-	rule = summary_search_dialog_to_rule(item->name, NULL);
+	rule = query_search_dialog_to_rule(item->name, NULL);
 	list.data = rule;
 	list.next = NULL;
 
@@ -970,13 +968,13 @@ static void summary_search_vfolder_update_rule(FolderItem *item)
 	filter_rule_free(rule);
 }
 
-static void summary_search_save(GtkButton *button, gpointer data)
+static void query_search_save(GtkButton *button, gpointer data)
 {
-	SummarySearchSaveDialog *dialog;
+	QuerySearchSaveDialog *dialog;
 	const gchar *id, *name;
 	FolderItem *parent, *item;
 
-	dialog = summary_search_save_dialog_create();
+	dialog = query_search_save_dialog_create();
 	id = gtk_entry_get_text(GTK_ENTRY(search_window.folder_entry));
 	if (id && *id)
 		gtk_entry_set_text(GTK_ENTRY(dialog->folder_entry), id);
@@ -985,7 +983,7 @@ static void summary_search_save(GtkButton *button, gpointer data)
 		gtk_main_iteration();
 
 	if (dialog->cancelled) {
-		summary_search_save_dialog_destroy(dialog);
+		query_search_save_dialog_destroy(dialog);
 		return;
 	}
 
@@ -997,9 +995,9 @@ static void summary_search_save(GtkButton *button, gpointer data)
 			alertpanel_error(_("The folder `%s' already exists."),
 					 name);
 		} else {
-			item = summary_search_create_vfolder(parent, name);
+			item = query_search_create_vfolder(parent, name);
 			if (item) {
-				summary_search_vfolder_update_rule(item);
+				query_search_vfolder_update_rule(item);
 				folderview_append_item(folderview_get(),
 						       NULL, item, TRUE);
 				folder_write_list();
@@ -1007,23 +1005,23 @@ static void summary_search_save(GtkButton *button, gpointer data)
 		}
 	}
 
-	summary_search_save_dialog_destroy(dialog);
+	query_search_save_dialog_destroy(dialog);
 }
 
-static void summary_search_close(GtkButton *button, gpointer data)
+static void query_search_close(GtkButton *button, gpointer data)
 {
 	if (search_window.on_search)
 		search_window.cancelled = TRUE;
 	gtk_widget_hide(search_window.window);
 }
 
-static void summary_search_entry_activated(GtkWidget *widget, gpointer data)
+static void query_search_entry_activated(GtkWidget *widget, gpointer data)
 {
 	gtk_button_clicked(GTK_BUTTON(search_window.search_btn));
 }
 
-static gint summary_search_deleted(GtkWidget *widget, GdkEventAny *event,
-				   gpointer data)
+static gint query_search_deleted(GtkWidget *widget, GdkEventAny *event,
+				 gpointer data)
 {
 	gtk_button_clicked(GTK_BUTTON(search_window.close_btn));
 	return TRUE;

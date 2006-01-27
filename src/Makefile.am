@@ -13,7 +13,7 @@ sylpheed_SOURCES = \
 	textview.c textview.h \
 	imageview.c imageview.h \
 	mimeview.c mimeview.h \
-	summary_search.c summary_search.h \
+	query_search.c query_search.h \
 	message_search.c message_search.h \
 	colorlabel.c colorlabel.h \
 	action.c action.h \

@@ -50,7 +50,7 @@
 #include "folderview.h"
 #include "foldersel.h"
 #include "summaryview.h"
-#include "summary_search.h"
+#include "query_search.h"
 #include "messageview.h"
 #include "mimeview.h"
 #include "message_search.h"
@@ -2908,7 +2908,7 @@ static void search_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		if (item && item->stype == F_VIRTUAL)
 			prefs_search_folder_open(item);
 		else
-			summary_search(item);
+			query_search(item);
 	} else
 		message_search(mainwin->messageview);
 }
