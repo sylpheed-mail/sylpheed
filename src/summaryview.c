@@ -5338,6 +5338,23 @@ static gboolean summary_select_func(GtkTreeSelection *treeview,
 	return summaryview->can_toggle_selection;
 }
 
+static gboolean summary_display_msg_idle_func(gpointer data)
+{
+	SummaryView *summaryview = (SummaryView *)data;
+	GtkTreePath *path;
+	GtkTreeIter iter;
+
+	path = gtk_tree_row_reference_get_path(summaryview->selected);
+	if (path) {
+		gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
+					&iter, path);
+		g_free(path);
+		summary_display_msg(summaryview, &iter);
+	}
+
+	return FALSE;
+}
+
 static void summary_selection_changed(GtkTreeSelection *selection,
 				      SummaryView *summaryview)
 {
@@ -5381,7 +5398,7 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 		summaryview->display_msg = FALSE;
 		if (!gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
-			summary_display_msg(summaryview, &iter);
+			g_idle_add(summary_display_msg_idle_func, summaryview);
 			return;
 		}
 	}
