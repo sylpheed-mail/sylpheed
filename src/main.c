@@ -908,8 +908,17 @@ static gint prohibit_duplicate_launch(void)
 		}
 	} else if (cmd.exit) {
 		fd_write_all(sock, "exit\n", 5);
-	} else
+	} else {
+#ifdef G_OS_WIN32
+		HWND hwnd;
+
 		fd_write_all(sock, "popup\n", 6);
+		if (fd_read(sock, (gchar *)&hwnd, sizeof(hwnd)) == sizeof(hwnd))
+			SetForegroundWindow(hwnd);
+#else
+		fd_write_all(sock, "popup\n", 6);
+#endif
+	}
 
 	fd_close(sock);
 	return -1;
@@ -972,7 +981,17 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 	fd_gets(sock, buf, sizeof(buf));
 
 	if (!strncmp(buf, "popup", 5)) {
+#ifdef G_OS_WIN32
+		HWND hwnd;
+
+		hwnd = (HWND)gdk_win32_drawable_get_handle
+			(GDK_DRAWABLE(mainwin->window->window));
+		fd_write(sock, (gchar *)&hwnd, sizeof(hwnd));
+		if (mainwin->window_hidden)
+			main_window_popup(mainwin);
+#else
 		main_window_popup(mainwin);
+#endif
 	} else if (!strncmp(buf, "receive_all", 11)) {
 		main_window_popup(mainwin);
 		inc_all_account_mail(mainwin, FALSE);
