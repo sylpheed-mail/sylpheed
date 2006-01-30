@@ -426,6 +426,8 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/_Mark/Mark as unr_ead"),	NULL, summary_mark_as_unread, 0, NULL},
 	{N_("/_Mark/Mark as rea_d"),
 					NULL, summary_mark_as_read, 0, NULL},
+	{N_("/_Mark/Mark _thread as read"),
+					NULL, summary_mark_thread_as_read, 0, NULL},
 	{N_("/_Mark/Mark all _read"),	NULL, summary_mark_all_read, 0, NULL},
 	{N_("/Color la_bel"),		NULL, NULL,		0, NULL},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
@@ -2090,8 +2092,22 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 	if (MSG_IS_MIME(flags))
 		mime_pix = clip_pixbuf;
 
-	if (prefs_common.bold_unread && MSG_IS_UNREAD(flags))
-		use_bold = TRUE;
+	if (prefs_common.bold_unread) {
+		if (MSG_IS_UNREAD(flags))
+			use_bold = TRUE;
+		else if (gtk_tree_model_iter_has_child(GTK_TREE_MODEL(store),
+						       iter)) {
+			GtkTreePath *path;
+
+			path = gtk_tree_model_get_path
+				(GTK_TREE_MODEL(store), iter);
+			if (!gtk_tree_view_row_expanded
+				(GTK_TREE_VIEW(summaryview->treeview), path) &&
+			    summary_have_unread_children(summaryview, iter))
+				use_bold = TRUE;
+			gtk_tree_path_free(path);
+		}
+	}
 
 	color_val = MSG_GET_COLORLABEL_VALUE(flags);
 	if (color_val != 0) {
@@ -2736,6 +2752,93 @@ void summary_mark_as_read(SummaryView *summaryview)
 	summary_status_show(summaryview);
 }
 
+static gboolean prepend_thread_rows_func(GtkTreeModel *model, GtkTreePath *path,
+					 GtkTreeIter *iter, gpointer data)
+{
+	GSList **thr_rows = (GSList **)data;
+	GtkTreePath *top_path;
+
+	top_path = gtk_tree_path_copy(path);
+	*thr_rows = g_slist_prepend(*thr_rows, top_path);
+	return FALSE;
+}
+
+void summary_mark_thread_as_read(SummaryView *summaryview)
+{
+	GList *rows, *cur;
+	GSList *thr_rows = NULL, *top_rows = NULL, *s_cur;
+	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
+	GtkTreeIter iter, parent;
+	GtkTreePath *path, *top_path;
+	GHashTable *row_table;
+	MsgInfo *msginfo;
+	GSList *msglist = NULL;
+	FolderSortKey sort_key = SORT_BY_NONE;
+	FolderSortType sort_type = SORT_ASCENDING;
+
+	SORT_BLOCK(SORT_BY_UNREAD);
+
+	rows = summary_get_selected_rows(summaryview);
+
+	row_table = g_hash_table_new(NULL, NULL);
+
+	for (cur = rows; cur != NULL; cur = cur->next) {
+		path = (GtkTreePath *)cur->data;
+		gtk_tree_model_get_iter(model, &iter, path);
+		while (gtk_tree_model_iter_parent(model, &parent, &iter))
+			iter = parent;
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		if (!g_hash_table_lookup(row_table, msginfo)) {
+			g_hash_table_insert(row_table, msginfo,
+					    GINT_TO_POINTER(1));
+			top_path = gtk_tree_model_get_path(model, &iter);
+			top_rows = g_slist_prepend(top_rows, top_path);
+			gtkut_tree_model_foreach(model, &iter,
+						 prepend_thread_rows_func,
+						 &thr_rows);
+		}
+	}
+	top_rows = g_slist_reverse(top_rows);
+	thr_rows = g_slist_reverse(thr_rows);
+
+	g_hash_table_destroy(row_table);
+
+	for (s_cur = thr_rows; s_cur != NULL; s_cur = s_cur->next) {
+		path = (GtkTreePath *)s_cur->data;
+		gtk_tree_model_get_iter(model, &iter, path);
+		summary_mark_row_as_read(summaryview, &iter);
+		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
+		msglist = g_slist_prepend(msglist, msginfo);
+	}
+
+	if (prefs_common.bold_unread) {
+		for (s_cur = top_rows; s_cur != NULL; s_cur = s_cur->next) {
+			path = (GtkTreePath *)s_cur->data;
+			gtk_tree_model_get_iter(model, &iter, path);
+			if (gtk_tree_model_iter_has_child(model, &iter) &&
+			    !gtk_tree_view_row_expanded(treeview, path) &&
+			    !summary_have_unread_children(summaryview, &iter)) {
+				gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
+						   S_COL_BOLD, FALSE, -1);
+			}
+		}
+	}
+	msglist = g_slist_reverse(msglist);
+
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
+		imap_msg_list_unset_perm_flags(msglist, MSG_NEW | MSG_UNREAD);
+	}
+
+	g_slist_free(msglist);
+	g_slist_free(top_rows);
+	g_slist_free(thr_rows);
+
+	SORT_UNBLOCK(SORT_BY_UNREAD);
+
+	summary_status_show(summaryview);
+}
+
 void summary_mark_all_read(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
@@ -2747,9 +2850,22 @@ void summary_mark_all_read(SummaryView *summaryview)
 	SORT_BLOCK(SORT_BY_UNREAD);
 
 	valid = gtk_tree_model_get_iter_first(model, &iter);
-
 	while (valid) {
 		summary_mark_row_as_read(summaryview, &iter);
+		if (prefs_common.bold_unread) {
+			if (gtk_tree_model_iter_has_child(model, &iter)) {
+				GtkTreePath *path;
+
+				path = gtk_tree_model_get_path(model, &iter);
+				if (!gtk_tree_view_row_expanded
+					(GTK_TREE_VIEW(summaryview->treeview),
+					 path))
+					gtk_tree_store_set
+						(GTK_TREE_STORE(model), &iter,
+						 S_COL_BOLD, FALSE, -1);
+				gtk_tree_path_free(path);
+			}
+		}
 		valid = gtkut_tree_model_next(model, &iter);
 	}
 

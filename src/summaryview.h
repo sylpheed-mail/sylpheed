@@ -254,6 +254,7 @@ void summary_mark		  (SummaryView		*summaryview);
 void summary_unmark		  (SummaryView		*summaryview);
 void summary_mark_as_unread	  (SummaryView		*summaryview);
 void summary_mark_as_read	  (SummaryView		*summaryview);
+void summary_mark_thread_as_read  (SummaryView		*summaryview);
 void summary_mark_all_read	  (SummaryView		*summaryview);
 void summary_add_address	  (SummaryView		*summaryview);
 void summary_select_all		  (SummaryView		*summaryview);
