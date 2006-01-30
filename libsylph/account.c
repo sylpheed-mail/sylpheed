@@ -167,6 +167,19 @@ PrefsAccount *account_find_from_item(FolderItem *item)
 
 	g_return_val_if_fail(item != NULL, NULL);
 
+	ac = account_find_from_item_property(item);
+	if (!ac)
+		ac = item->folder->account;
+
+	return ac;
+}
+
+PrefsAccount *account_find_from_item_property(FolderItem *item)
+{
+	PrefsAccount *ac;
+
+	g_return_val_if_fail(item != NULL, NULL);
+
 	ac = item->account;
 	if (!ac) {
 		FolderItem *cur_item = item->parent;
@@ -178,8 +191,6 @@ PrefsAccount *account_find_from_item(FolderItem *item)
 			cur_item = cur_item->parent;
 		}
 	}
-	if (!ac)
-		ac = item->folder->account;
 
 	return ac;
 }

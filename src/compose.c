@@ -761,14 +761,17 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	if (COMPOSE_QUOTE_MODE(mode) == COMPOSE_WITH_QUOTE)
 		quote = TRUE;
 
-	account = account_find_from_item(msginfo->folder);
+	account = account_find_from_item_property(msginfo->folder);
 	if (!account && msginfo->to && prefs_common.reply_account_autosel) {
 		gchar *to;
 		Xstrdup_a(to, msginfo->to, return);
 		extract_address(to);
 		account = account_find_from_address(to);
 	}
-	if (!account) account = cur_account;
+	if (!account && msginfo->folder->folder)
+		account = msginfo->folder->folder->account;
+	if (!account)
+		account = cur_account;
 	g_return_if_fail(account != NULL);
 
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);

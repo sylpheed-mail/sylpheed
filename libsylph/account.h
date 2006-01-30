@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -40,6 +40,7 @@ PrefsAccount *account_find_from_smtp_server	(const gchar	*address,
 PrefsAccount *account_find_from_address		(const gchar	*address);
 PrefsAccount *account_find_from_id		(gint		 id);
 PrefsAccount *account_find_from_item		(FolderItem	*item);
+PrefsAccount *account_find_from_item_property	(FolderItem	*item);
 PrefsAccount *account_find_from_message_file	(const gchar	*file);
 PrefsAccount *account_find_from_msginfo		(MsgInfo	*msginfo);
 
