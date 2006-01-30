@@ -870,6 +870,7 @@ void summary_clear_list(SummaryView *summaryview)
 	summary_msgid_table_destroy(summaryview);
 
 	summaryview->tmp_mlist = NULL;
+	summaryview->to_folder = NULL;
 	if (summaryview->folder_table) {
 		g_hash_table_destroy(summaryview->folder_table);
 		summaryview->folder_table = NULL;
@@ -3050,9 +3051,20 @@ static void summary_move_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 		    msginfo->msgnum, to_folder->path);
 }
 
+static gboolean summary_move_foreach_func(GtkTreeModel *model,
+					  GtkTreePath *path, GtkTreeIter *iter,
+					  gpointer data)
+{
+	SummaryView *summaryview = (SummaryView *)data;
+
+	summary_move_row_to(summaryview, iter, summaryview->to_folder);
+	return FALSE;
+}
+
 void summary_move_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 {
 	GList *rows, *cur;
+	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
@@ -3072,7 +3084,15 @@ void summary_move_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
-		summary_move_row_to(summaryview, &iter, to_folder);
+		if (gtk_tree_model_iter_has_child(model, &iter) &&
+		    !gtk_tree_view_row_expanded(treeview, path)) {
+			summaryview->to_folder = to_folder;
+			gtkut_tree_model_foreach
+				(model, &iter, summary_move_foreach_func,
+				 summaryview);
+			summaryview->to_folder = NULL;
+		} else
+			summary_move_row_to(summaryview, &iter, to_folder);
 	}
 
 	if (prefs_common.immediate_exec)
@@ -3123,9 +3143,20 @@ static void summary_copy_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 		    msginfo->msgnum, to_folder->path);
 }
 
+static gboolean summary_copy_foreach_func(GtkTreeModel *model,
+					  GtkTreePath *path, GtkTreeIter *iter,
+					  gpointer data)
+{
+	SummaryView *summaryview = (SummaryView *)data;
+
+	summary_copy_row_to(summaryview, iter, summaryview->to_folder);
+	return FALSE;
+}
+
 void summary_copy_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 {
 	GList *rows, *cur;
+	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
@@ -3145,7 +3176,15 @@ void summary_copy_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
 		gtk_tree_model_get_iter(model, &iter, path);
-		summary_copy_row_to(summaryview, &iter, to_folder);
+		if (gtk_tree_model_iter_has_child(model, &iter) &&
+		    !gtk_tree_view_row_expanded(treeview, path)) {
+			summaryview->to_folder = to_folder;
+			gtkut_tree_model_foreach
+				 (model, &iter, summary_copy_foreach_func,
+				  summaryview);
+			summaryview->to_folder = NULL;
+		} else
+			summary_copy_row_to(summaryview, &iter, to_folder);
 	}
 
 	if (prefs_common.immediate_exec)

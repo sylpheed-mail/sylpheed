@@ -141,6 +141,7 @@ private:
 
 	/* list for moving/deleting messages */
 	GSList *tmp_mlist;
+	FolderItem *to_folder;
 	/* table for updating folder tree */
 	GHashTable *folder_table;
 	/* counter for filtering */
