@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -55,6 +55,15 @@
 #endif
 
 #define BUFFSIZE	8192
+
+#ifdef G_OS_WIN32
+#define SockDesc		SOCKET
+#define SOCKET_IS_VALID(s)	((s) != INVALID_SOCKET)
+#else
+#define SockDesc		gint
+#define SOCKET_IS_VALID(s)	((s) >= 0)
+#define INVALID_SOCKET		(-1)
+#endif
 
 typedef gint (*SockAddrFunc)	(GList		*addr_list,
 				 gpointer	 data);
@@ -127,8 +136,8 @@ static gint sock_connect_by_hostname	(gint		 sock,
 					 const gchar	*hostname,
 					 gushort	 port);
 #else
-static gint sock_connect_by_getaddrinfo	(const gchar	*hostname,
-					 gushort	 port);
+static SockDesc sock_connect_by_getaddrinfo	(const gchar	*hostname,
+						 gushort	 port);
 #endif
 
 #ifdef G_OS_UNIX
@@ -186,19 +195,15 @@ gint sock_set_io_timeout(guint sec)
 
 gint fd_connect_inet(gushort port)
 {
-#ifdef G_OS_WIN32
-	SOCKET sock;
-#else
-	gint sock;
-#endif
+	SockDesc sock;
 	struct sockaddr_in addr;
 
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (!SOCKET_IS_VALID(sock)) {
 #ifdef G_OS_WIN32
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		g_warning("fd_connect_inet(): socket() failed: %ld\n",
 			  WSAGetLastError());
 #else
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		perror("fd_connect_inet(): socket");
 #endif
 		return -1;
@@ -219,20 +224,16 @@ gint fd_connect_inet(gushort port)
 
 gint fd_open_inet(gushort port)
 {
-#ifdef G_OS_WIN32
-	SOCKET sock;
-#else
-	gint sock;
-#endif
+	SockDesc sock;
 	struct sockaddr_in addr;
 	gint val;
 
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (!SOCKET_IS_VALID(sock)) {
 #ifdef G_OS_WIN32
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		g_warning("fd_open_inet(): socket() failed: %ld\n",
 			  WSAGetLastError());
 #else
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		perror("fd_open_inet(): socket");
 #endif
 		return -1;
@@ -649,13 +650,9 @@ const gchar *gai_strerror(gint errcode)
 }
 #endif
 
-static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
+static SockDesc sock_connect_by_getaddrinfo(const gchar *hostname, gushort port)
 {
-#ifdef G_OS_WIN32
-	SOCKET sock = INVALID_SOCKET;
-#else
-	gint sock = -1;
-#endif
+	SockDesc sock = INVALID_SOCKET;
 	gint gai_error;
 	struct addrinfo hints, *res, *ai;
 	gchar port_str[6];
@@ -672,16 +669,12 @@ static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 	if ((gai_error = getaddrinfo(hostname, port_str, &hints, &res)) != 0) {
 		fprintf(stderr, "getaddrinfo for %s:%s failed: %s\n",
 			hostname, port_str, gai_strerror(gai_error));
-		return -1;
+		return INVALID_SOCKET;
 	}
 
 	for (ai = res; ai != NULL; ai = ai->ai_next) {
 		sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-#ifdef G_OS_WIN32
-		if (sock == INVALID_SOCKET)
-#else
-		if (sock < 0)
-#endif
+		if (!SOCKET_IS_VALID(sock))
 			continue;
 
 		if (sock_connect_with_timeout
@@ -695,7 +688,7 @@ static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 		freeaddrinfo(res);
 
 	if (ai == NULL)
-		return -1;
+		return INVALID_SOCKET;
 
 	return sock;
 }
@@ -703,27 +696,19 @@ static gint sock_connect_by_getaddrinfo(const gchar *hostname, gushort	port)
 
 SockInfo *sock_connect(const gchar *hostname, gushort port)
 {
-#ifdef G_OS_WIN32
-	SOCKET sock;
-#else
-	gint sock;
-#endif
+	SockDesc sock;
 	SockInfo *sockinfo;
 
 #ifdef INET6
-#ifdef G_OS_WIN32
-	if ((sock = sock_connect_by_getaddrinfo(hostname, port))
-	    == INVALID_SOCKET)
-#else
-	if ((sock = sock_connect_by_getaddrinfo(hostname, port)) < 0)
-#endif /* G_OS_WIN32 */
+	sock = sock_connect_by_getaddrinfo(hostname, port);
+	if (!SOCKET_IS_VALID(sock))
 		return NULL;
 #else
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (!SOCKET_IS_VALID(sock)) {
 #ifdef G_OS_WIN32
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		g_warning("socket() failed: %ld\n", WSAGetLastError());
 #else
-	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		perror("socket");
 #endif /* G_OS_WIN32 */
 		return NULL;
