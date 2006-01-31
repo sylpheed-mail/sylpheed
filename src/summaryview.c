@@ -2831,7 +2831,9 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 	}
 
 	g_slist_free(msglist);
+	g_slist_foreach(top_rows, (GFunc)gtk_tree_path_free, NULL);
 	g_slist_free(top_rows);
+	g_slist_foreach(thr_rows, (GFunc)gtk_tree_path_free, NULL);
 	g_slist_free(thr_rows);
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);

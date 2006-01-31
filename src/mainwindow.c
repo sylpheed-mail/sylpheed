@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -325,6 +325,9 @@ static void mark_as_unread_cb		(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 static void mark_as_read_cb		(MainWindow	*mainwin,
+					 guint		 action,
+					 GtkWidget	*widget);
+static void mark_thread_as_read_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 static void mark_all_read_cb		(MainWindow	*mainwin,
@@ -726,6 +729,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Message/_Mark/Mark as unr_ead"),	"<shift>exclam", mark_as_unread_cb, 0, NULL},
 	{N_("/_Message/_Mark/Mark as rea_d"),
 						NULL, mark_as_read_cb, 0, NULL},
+	{N_("/_Message/_Mark/Mark _thread as read"),
+						NULL, mark_thread_as_read_cb, 0, NULL},
 	{N_("/_Message/_Mark/Mark all _read"),	NULL, mark_all_read_cb, 0, NULL},
 	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Message/_Delete"),		"<control>D", delete_cb, 0, NULL},
@@ -3137,6 +3142,12 @@ static void mark_as_read_cb(MainWindow *mainwin, guint action,
 			    GtkWidget *widget)
 {
 	summary_mark_as_read(mainwin->summaryview);
+}
+
+static void mark_thread_as_read_cb(MainWindow *mainwin, guint action,
+				   GtkWidget *widget)
+{
+	summary_mark_thread_as_read(mainwin->summaryview);
 }
 
 static void mark_all_read_cb(MainWindow *mainwin, guint action,
