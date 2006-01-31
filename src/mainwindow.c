@@ -631,6 +631,12 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	 ENC_ACTION(C_ISO_8859_7)},
 	ENC_SEPARATOR,
 
+	{N_("/_View/Character _encoding/Arabic (ISO-8859-_6)"),
+	 ENC_ACTION(C_ISO_8859_6)},
+	{N_("/_View/Character _encoding/Arabic (Windows-1256)"),
+	 ENC_ACTION(C_CP1256)},
+	ENC_SEPARATOR,
+
 	{N_("/_View/Character _encoding/Hebrew (ISO-8859-_8)"),
 	 ENC_ACTION(C_ISO_8859_8)},
 	{N_("/_View/Character _encoding/Hebrew (Windows-1255)"),

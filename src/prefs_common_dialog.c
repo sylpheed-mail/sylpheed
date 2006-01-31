@@ -2492,6 +2492,9 @@ static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,
 	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Greek (ISO-8859-7)"),		 CS_ISO_8859_7);
 	SET_MENUITEM(NULL, NULL);
+	SET_MENUITEM(_("Arabic (ISO-8859-6)"),		 CS_ISO_8859_6);
+	SET_MENUITEM(_("Arabic (Windows-1256)"),	 CS_WINDOWS_1256);
+	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Hebrew (ISO-8859-8)"),		 CS_ISO_8859_8);
 	SET_MENUITEM(_("Hebrew (Windows-1255)"),	 CS_WINDOWS_1255);
 	SET_MENUITEM(NULL, NULL);
