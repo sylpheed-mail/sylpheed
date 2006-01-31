@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1778,11 +1778,7 @@ static void textview_show_uri(TextView *textview, GtkTextIter *start,
 	STATUSBAR_POP(textview);
 	uri = textview_get_uri(textview, start, end);
 	if (uri) {
-		gchar *trimmed_uri;
-
-		trimmed_uri = trim_string(uri->uri, 60);
-		STATUSBAR_PUSH(textview, trimmed_uri);
-		g_free(trimmed_uri);
+		STATUSBAR_PUSH(textview, uri->uri);
 	}
 }
 

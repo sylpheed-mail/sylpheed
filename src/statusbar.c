@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,12 +51,9 @@ void statusbar_puts(GtkStatusbar *statusbar, const gchar *str)
 {
 	gint cid;
 	gchar *buf;
-	gchar *tmp;
 
-	tmp = g_strdup(str);
-	strretchomp(tmp);
-	buf = trim_string(tmp, 76);
-	g_free(tmp);
+	buf = g_strdup(str);
+	strretchomp(buf);
 
 	cid = gtk_statusbar_get_context_id(statusbar, "Standard Output");
 	gtk_statusbar_pop(statusbar, cid);
