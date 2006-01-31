@@ -218,6 +218,8 @@ static PrefParam param[] = {
 	{"compose_y", "32", &prefs_common.compose_y, P_INT},
 	{"compose_width", "600", &prefs_common.compose_width, P_INT},
 	{"compose_height", "560", &prefs_common.compose_height, P_INT},
+	{"addressbook_width", "620", &prefs_common.addressbook_width, P_INT},
+	{"addressbook_height", "360", &prefs_common.addressbook_height, P_INT},
 
 	/* Message */
 	{"enable_color", "TRUE", &prefs_common.enable_color, P_BOOL},

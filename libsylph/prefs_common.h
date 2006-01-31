@@ -157,6 +157,9 @@ struct _PrefsCommon
 	gint compose_width;
 	gint compose_height;
 
+	gint addressbook_width;
+	gint addressbook_height;
+
 	/* Message */
 	gboolean enable_color;
 	gint quote_level1_col;

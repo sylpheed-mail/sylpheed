@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,8 +104,6 @@ typedef enum
 #define COL_ADDRESS_WIDTH	156
 
 #define COL_FOLDER_WIDTH	170
-#define ADDRESSBOOK_WIDTH	640
-#define ADDRESSBOOK_HEIGHT	360
 
 #define ADDRESSBOOK_MSGBUF_SIZE 2048
 
@@ -294,6 +292,10 @@ static GtkCTreeNode *addressbook_find_group_node (GtkCTreeNode	*parent,
 static gboolean key_pressed			(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 gpointer	 data);
+static void size_allocated			(GtkWidget	*widget,
+						 GtkAllocation	*allocation,
+						 gpointer	 data);
+
 static gint addressbook_list_compare_func	(GtkCList	*clist,
 						 gconstpointer	 ptr1,
 						 gconstpointer	 ptr2);
@@ -494,16 +496,18 @@ static void addressbook_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("Address book"));
-	gtk_widget_set_size_request
-		(window, ADDRESSBOOK_WIDTH, ADDRESSBOOK_HEIGHT);
-	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, TRUE);
 	gtk_window_set_wmclass(GTK_WINDOW(window), "addressbook", "Sylpheed");
+	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, TRUE);
+	gtk_widget_set_size_request(window, prefs_common.addressbook_width,
+				    prefs_common.addressbook_height);
 	gtk_widget_realize(window);
 
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(addressbook_close), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), NULL);
+	g_signal_connect(G_OBJECT(window), "size_allocate",
+			 G_CALLBACK(size_allocated), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 
 	vbox = gtk_vbox_new(FALSE, 0);
@@ -2762,6 +2766,16 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 	if (event && event->keyval == GDK_Escape)
 		addressbook_close();
 	return FALSE;
+}
+
+static void size_allocated(GtkWidget *widget, GtkAllocation *allocation,
+			   gpointer data)
+{
+	if (allocation->width <= 1 || allocation->height <= 1)
+		return;
+
+	prefs_common.addressbook_width = allocation->width;
+	prefs_common.addressbook_height = allocation->height;
 }
 
 /*
