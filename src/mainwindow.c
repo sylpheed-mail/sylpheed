@@ -1828,7 +1828,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[13];
+	} entry[14];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1839,6 +1839,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 	SET_WIDGET_COND(mainwin->get_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->getall_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
+	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
@@ -1853,12 +1854,12 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	SET_WIDGET_COND(mainwin->prefs_btn, M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->account_btn, M_UNLOCKED);
 #endif
-	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
 	SET_WIDGET_COND(mainwin->delete_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE);
 	SET_WIDGET_COND(mainwin->junk_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK);
 	SET_WIDGET_COND(mainwin->exec_btn, M_MSG_EXIST|M_EXEC);
+	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
 	SET_WIDGET_COND(NULL, 0);
 
 #undef SET_WIDGET_COND
@@ -1934,6 +1935,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 						 , M_HAVE_ACCOUNT|M_UNLOCKED},
 		{"/Message/Receive/Cancel receiving"
 						 , M_INC_ACTIVE},
+		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_UNLOCKED},
 
 		{"/Message/Compose new message"  , M_HAVE_ACCOUNT},
 		{"/Message/Reply"                , M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST},
@@ -2307,10 +2309,10 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 	GtkWidget *prefs_btn;
 	GtkWidget *account_btn;
 #endif
-	GtkWidget *next_btn;
 	GtkWidget *delete_btn;
 	GtkWidget *junk_btn;
 	GtkWidget *exec_btn;
+	GtkWidget *next_btn;
 
 	gint n_entries;
 
@@ -2472,21 +2474,21 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 
 	mainwin->get_btn      = get_btn;
 	mainwin->getall_btn   = getall_btn;
+	mainwin->send_btn     = send_btn;
 	mainwin->compose_btn  = compose_btn;
 	mainwin->reply_btn    = reply_btn;
 	mainwin->reply_combo  = reply_combo;
 	mainwin->replyall_btn = replyall_btn;
 	mainwin->fwd_btn      = fwd_btn;
 	mainwin->fwd_combo    = fwd_combo;
-	mainwin->send_btn     = send_btn;
 #if 0
 	mainwin->prefs_btn    = prefs_btn;
 	mainwin->account_btn  = account_btn;
 #endif
-	mainwin->next_btn     = next_btn;
 	mainwin->delete_btn   = delete_btn;
 	mainwin->junk_btn     = junk_btn;
 	mainwin->exec_btn     = exec_btn;
+	mainwin->next_btn     = next_btn;
 
 	gtk_widget_show_all(toolbar);
 
