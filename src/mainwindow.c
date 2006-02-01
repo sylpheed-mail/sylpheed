@@ -1839,7 +1839,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 	SET_WIDGET_COND(mainwin->get_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->getall_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
-	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
+	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
@@ -1935,7 +1935,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 						 , M_HAVE_ACCOUNT|M_UNLOCKED},
 		{"/Message/Receive/Cancel receiving"
 						 , M_INC_ACTIVE},
-		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_UNLOCKED},
+		{"/Message/Send queued messages" , M_HAVE_ACCOUNT},
 
 		{"/Message/Compose new message"  , M_HAVE_ACCOUNT},
 		{"/Message/Reply"                , M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST},
