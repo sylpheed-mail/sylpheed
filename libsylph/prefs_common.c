@@ -191,7 +191,7 @@ static PrefParam param[] = {
 	{"folder_col_total", "32", &prefs_common.folder_col_total, P_INT},
 
 	{"summaryview_width", "600", &prefs_common.summaryview_width, P_INT},
-	{"summaryview_height", "157", &prefs_common.summaryview_height, P_INT},
+	{"summaryview_height", "180", &prefs_common.summaryview_height, P_INT},
 
 	{"main_messagewin_x", "256", &prefs_common.main_msgwin_x, P_INT},
 	{"main_messagewin_y", "210", &prefs_common.main_msgwin_y, P_INT},
