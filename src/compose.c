@@ -645,7 +645,9 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_Tools"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_Tools/_Address book"),	"<shift><control>A", compose_address_cb , 0, NULL},
 	{N_("/_Tools/_Template"),	NULL, NULL, 0, "<Branch>"},
+#ifndef G_OS_WIN32
 	{N_("/_Tools/Actio_ns"),	NULL, NULL, 0, "<Branch>"},
+#endif
 	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/Edit with e_xternal editor"),
 					"<shift><control>X", compose_ext_editor_cb, 0, NULL},
@@ -4548,7 +4550,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		menu_set_sensitive(ifactory, "/Edit/Auto wrapping", FALSE);
 		menu_set_sensitive(ifactory, "/View/Attachment", FALSE);
 		menu_set_sensitive(ifactory, "/Tools/Template", FALSE);
+#ifndef G_OS_WIN32
 		menu_set_sensitive(ifactory, "/Tools/Actions", FALSE);
+#endif
 		menu_set_sensitive(ifactory, "/Tools/Edit with external editor", FALSE);
 #if USE_GPGME
 		menu_set_sensitive(ifactory, "/Tools/PGP Sign", FALSE);
@@ -4581,7 +4585,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose_set_out_encoding(compose);
 	addressbook_set_target_compose(compose);
+#ifndef G_OS_WIN32
 	action_update_compose_menu(ifactory, compose);
+#endif
 	compose_set_template_menu(compose);
 
 #if USE_GTKSPELL

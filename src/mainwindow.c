@@ -448,9 +448,11 @@ static void prefs_filter_open_cb	(MainWindow	*mainwin,
 static void prefs_template_open_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
+#ifndef G_OS_WIN32
 static void prefs_actions_open_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
+#endif
 static void prefs_account_open_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -770,8 +772,10 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Tools/Filter junk _mails in selected messages"),
 						NULL, filter_junk_cb, 1, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
+#ifndef G_OS_WIN32
 	{N_("/_Tools/Actio_ns"),		NULL, NULL, 0, "<Branch>"},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
+#endif
 	{N_("/_Tools/Delete du_plicated messages"),
 						NULL, delete_duplicated_cb,   0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
@@ -785,7 +789,9 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Configuration/_Filter setting..."),
 						NULL, prefs_filter_open_cb, 0, NULL},
 	{N_("/_Configuration/_Template..."),	NULL, prefs_template_open_cb, 0, NULL},
+#ifndef G_OS_WIN32
 	{N_("/_Configuration/_Actions..."),	NULL, prefs_actions_open_cb, 0, NULL},
+#endif
 	{N_("/_Configuration/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Configuration/_Preferences for current account..."),
 						NULL, prefs_account_open_cb, 0, NULL},
@@ -1080,7 +1086,9 @@ MainWindow *main_window_create(SeparateType type)
 	main_window_set_toolbar_sensitive(mainwin);
 
 	/* create actions menu */
+#ifndef G_OS_WIN32
 	action_update_mainwin_menu(ifactory, mainwin);
+#endif
 
 	/* initialize online switch */
 	prefs_common.online_mode = !prefs_common.online_mode;
@@ -1947,7 +1955,9 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/Tools/Create filter rule"           , M_SINGLE_TARGET_EXIST|M_UNLOCKED},
 		{"/Tools/Filter junk mails in folder"  , M_MSG_EXIST|M_EXEC|M_ENABLE_JUNK},
 		{"/Tools/Filter junk mails in selected messages", M_TARGET_EXIST|M_EXEC|M_ENABLE_JUNK},
+#ifndef G_OS_WIN32
 		{"/Tools/Actions"                      , M_TARGET_EXIST|M_UNLOCKED},
+#endif
 		{"/Tools/Execute"                      , M_MSG_EXIST|M_EXEC},
 		{"/Tools/Delete duplicated messages"   , M_MSG_EXIST|M_ALLOW_DELETE},
 
@@ -3425,11 +3435,13 @@ static void prefs_template_open_cb(MainWindow *mainwin, guint action,
 	prefs_template_open();
 }
 
+#ifndef G_OS_WIN32
 static void prefs_actions_open_cb(MainWindow *mainwin, guint action,
 				  GtkWidget *widget)
 {
 	prefs_actions_open(mainwin);
 }
+#endif
 
 static void prefs_account_open_cb(MainWindow *mainwin, guint action,
 				  GtkWidget *widget)

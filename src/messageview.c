@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -276,8 +276,10 @@ static GtkItemFactoryEntry msgview_entries[] =
 					NULL, create_filter_cb, FLT_BY_TO, NULL},
 	{N_("/_Tools/_Create filter rule/by _Subject"),
 					NULL, create_filter_cb, FLT_BY_SUBJECT, NULL},
+#ifndef G_OS_WIN32
 	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/Actio_ns"),	NULL, NULL, 0, "<Branch>"},
+#endif
 
 	{N_("/_Help"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_Help/_About"),		NULL, about_cb, 0, NULL}
@@ -426,7 +428,9 @@ MessageView *messageview_create_with_new_window(void)
 	messageview_init(msgview);
 
 	ifactory = gtk_item_factory_from_widget(menubar);
+#ifndef G_OS_WIN32
 	action_update_msgview_menu(ifactory, msgview);
+#endif
 
 	messageview_list = g_list_append(messageview_list, msgview);
 
