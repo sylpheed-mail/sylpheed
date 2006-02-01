@@ -929,20 +929,21 @@ static void folderview_rescan_tree(FolderView *folderview, Folder *folder)
 	inc_unlock();
 }
 
-void folderview_check_new(Folder *folder)
+gint folderview_check_new(Folder *folder)
 {
 	FolderItem *item;
 	FolderView *folderview;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	gboolean valid;
+	gint prev_new, prev_unread, n_updated = 0;
 
 	folderview = (FolderView *)folderview_list->data;
 	model = GTK_TREE_MODEL(folderview->store);
 
 	if (folder && !FOLDER_IS_LOCAL(folder)) {
 		if (!main_window_toggle_online_if_offline(folderview->mainwin))
-			return;
+			return 0;
 	}
 
 	inc_lock();
@@ -961,12 +962,18 @@ void folderview_check_new(Folder *folder)
 		if (folder && folder != item->folder) continue;
 		if (!folder && !FOLDER_IS_LOCAL(item->folder)) continue;
 
+		prev_new = item->new;
+		prev_unread = item->unread;
 		folderview_scan_tree_func(item->folder, item, NULL);
 		if (folder_item_scan(item) < 0) {
 			if (folder && !FOLDER_IS_LOCAL(folder))
 				break;
 		}
 		folderview_update_row(folderview, &iter);
+		if (prev_unread < item->unread)
+			n_updated += item->unread - prev_unread;
+		else if (prev_new < item->new)
+			n_updated += item->new - prev_new;
 	}
 
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
@@ -975,20 +982,23 @@ void folderview_check_new(Folder *folder)
 	statusbar_pop_all();
 
 	folder_write_list();
+
+	return n_updated;
 }
 
-void folderview_check_new_item(FolderItem *item)
+gint folderview_check_new_item(FolderItem *item)
 {
 	Folder *folder;
 	FolderView *folderview;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
+	gint prev_new, prev_unread, n_updated = 0;
 
-	g_return_if_fail(item != NULL);
-	g_return_if_fail(item->folder != NULL);
+	g_return_val_if_fail(item != NULL, 0);
+	g_return_val_if_fail(item->folder != NULL, 0);
 
 	if (!item->path || item->no_select)
-		return;
+		return 0;
 
 	folderview = (FolderView *)folderview_list->data;
 	model = GTK_TREE_MODEL(folderview->store);
@@ -997,21 +1007,27 @@ void folderview_check_new_item(FolderItem *item)
 
 	if (!FOLDER_IS_LOCAL(folder)) {
 		if (!main_window_toggle_online_if_offline(folderview->mainwin))
-			return;
+			return 0;
 	}
 
 	if (!gtkut_tree_model_find_by_column_data
 		(model, &iter, NULL, COL_FOLDER_ITEM, item))
-		return;
+		return 0;
 
 	inc_lock();
 	main_window_lock(folderview->mainwin);
 	gtk_widget_set_sensitive(folderview->treeview, FALSE);
 	GTK_EVENTS_FLUSH();
 
+	prev_new = item->new;
+	prev_unread = item->unread;
 	folderview_scan_tree_func(folder, item, NULL);
 	folder_item_scan(item);
 	folderview_update_row(folderview, &iter);
+	if (prev_unread < item->unread)
+		n_updated = item->unread - prev_unread;
+	else if (prev_new < item->new)
+		n_updated = item->new - prev_new;
 
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
 	main_window_unlock(folderview->mainwin);
@@ -1019,13 +1035,16 @@ void folderview_check_new_item(FolderItem *item)
 	statusbar_pop_all();
 
 	folder_write_list();
+
+	return n_updated;
 }
 
-void folderview_check_new_all(void)
+gint folderview_check_new_all(void)
 {
 	GList *list;
 	GtkWidget *window;
 	FolderView *folderview;
+	gint n_updated = 0;
 
 	folderview = (FolderView *)folderview_list->data;
 
@@ -1038,12 +1057,14 @@ void folderview_check_new_all(void)
 	for (; list != NULL; list = list->next) {
 		Folder *folder = list->data;
 
-		folderview_check_new(folder);
+		n_updated += folderview_check_new(folder);
 	}
 
 	gtk_widget_destroy(window);
 	main_window_unlock(folderview->mainwin);
 	inc_unlock();
+
+	return n_updated;
 }
 
 static gboolean folderview_search_new_recursive(GtkTreeModel *model,

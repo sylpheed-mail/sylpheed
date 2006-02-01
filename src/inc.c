@@ -152,7 +152,7 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 	debug_print("inc_finished(): %d new message(s)\n", new_messages);
 
 	if (prefs_common.scan_all_after_inc)
-		folderview_check_new(NULL);
+		new_messages += folderview_check_new(NULL);
 
 	if (new_messages > 0) {
 		gchar buf[1024];
@@ -237,24 +237,25 @@ void inc_mail(MainWindow *mainwin)
 static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 {
 	FolderItem *item = mainwin->summaryview->folder_item;
+	gint new_msgs;
 
 	g_return_val_if_fail(account->folder != NULL, 0);
 
 	if (account->protocol == A_IMAP4 && account->imap_check_inbox_only) {
 		FolderItem *inbox = FOLDER(account->folder)->inbox;
 
-		folderview_check_new_item(inbox);
+		new_msgs = folderview_check_new_item(inbox);
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    inbox == item)
 			folderview_update_item(item, TRUE);
 	} else {
-		folderview_check_new(FOLDER(account->folder));
+		new_msgs = folderview_check_new(FOLDER(account->folder));
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    FOLDER(account->folder) == item->folder)
 			folderview_update_item(item, TRUE);
 	}
 
-	return 1;
+	return new_msgs;
 }
 
 static gint inc_account_mail_real(MainWindow *mainwin, PrefsAccount *account)
@@ -327,7 +328,7 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 		PrefsAccount *account = list->data;
 		if ((account->protocol == A_IMAP4 ||
 		     account->protocol == A_NNTP) && account->recv_at_getall)
-			inc_remote_account_mail(mainwin, account);
+			new_msgs += inc_remote_account_mail(mainwin, account);
 	}
 
 	/* check POP3 accounts */
