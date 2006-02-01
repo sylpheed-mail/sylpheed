@@ -3803,7 +3803,7 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 			   &cmd_num, cmd_status) < 2) {
 			ok = IMAP_ERROR;
 		} else if (cmd_num == session->cmd_count &&
-			 !strcmp(cmd_status, "OK")) {
+			   !strcmp(cmd_status, "OK")) {
 			if (argbuf)
 				g_ptr_array_add(argbuf, g_strdup(str->str));
 		} else {
@@ -3843,12 +3843,21 @@ static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 
 static gint imap_cmd_gen_recv(IMAPSession *session, gchar **ret)
 {
-	if (sock_getline(SESSION(session)->sock, ret) < 0)
+	gint len;
+
+	if ((len = sock_getline(SESSION(session)->sock, ret)) < 0)
 		return IMAP_SOCKET;
 
 	strretchomp(*ret);
 
-	log_print("IMAP4< %s\n", *ret);
+	if (len > 1000) {
+		gchar *str;
+
+		str = trim_string(*ret, 1000);
+		log_print("IMAP4< %s\n", str);
+		g_free(str);
+	} else
+		log_print("IMAP4< %s\n", *ret);
 
 	session_set_access_time(SESSION(session));
 
