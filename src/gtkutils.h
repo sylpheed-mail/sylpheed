@@ -203,6 +203,7 @@ void gtkut_text_buffer_insert_with_tag_by_name
 gchar *gtkut_text_view_get_selection	(GtkTextView	*textview);
 
 void gtkut_window_popup			(GtkWidget	*window);
+gboolean gtkut_window_modal_exist	(void);
 
 void gtkut_widget_get_uposition		(GtkWidget	*widget,
 					 gint		*px,

@@ -868,6 +868,26 @@ void gtkut_window_popup(GtkWidget *window)
 	gtk_window_present(GTK_WINDOW(window));
 }
 
+gboolean gtkut_window_modal_exist(void)
+{
+	GList *window_list, *cur;
+	gboolean exist = FALSE;
+
+	window_list = gtk_window_list_toplevels();
+	for (cur = window_list; cur != NULL; cur = cur->next) {
+		GtkWidget *window = GTK_WIDGET(cur->data);
+
+		if (GTK_WIDGET_VISIBLE(window) &&
+		    gtk_window_get_modal(GTK_WINDOW(window))) {
+			exist = TRUE;
+			break;
+		}
+	}
+	g_list_free(window_list);
+
+	return exist;
+}
+
 void gtkut_widget_get_uposition(GtkWidget *widget, gint *px, gint *py)
 {
 	gint x, y;

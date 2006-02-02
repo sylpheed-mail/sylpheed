@@ -117,6 +117,7 @@ struct _MainWindow
 	guint cursor_count;
 
 	gboolean window_hidden;
+	gboolean window_obscured;
 
 	FolderView	*folderview;
 	SummaryView	*summaryview;

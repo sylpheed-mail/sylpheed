@@ -161,7 +161,7 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 			   new_messages);
 		trayicon_set_tooltip(buf);
 	} else {
-		trayicon_set_tooltip(_("Sylpheed"));
+		trayicon_set_tooltip(NULL);
 	}
 
 	if (new_messages <= 0 && !prefs_common.scan_all_after_inc) return;

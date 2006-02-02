@@ -192,6 +192,9 @@ static void message_window_size_allocate_cb	(GtkWidget	*widget,
 static gboolean main_window_window_state_cb	(GtkWidget		*widget,
 						 GdkEventWindowState	*event,
 						 gpointer		 data);
+static gboolean main_window_visibility_notify_cb(GtkWidget		*widget,
+						 GdkEventVisibility	*event,
+						 gpointer		 data);
 
 static void new_folder_cb	 (MainWindow	*mainwin,
 				  guint		 action,
@@ -868,6 +871,7 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_window_set_title(GTK_WINDOW(window), PROG_VERSION);
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
 	gtk_window_set_wmclass(GTK_WINDOW(window), "main_window", "Sylpheed");
+	gtk_widget_add_events(window, GDK_VISIBILITY_NOTIFY_MASK);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(main_window_key_pressed), mainwin);
 
@@ -1044,6 +1048,8 @@ MainWindow *main_window_create(SeparateType type)
 			 G_CALLBACK(main_window_size_allocate_cb), mainwin);
 	g_signal_connect(G_OBJECT(window), "window_state_event",
 			 G_CALLBACK(main_window_window_state_cb), mainwin);
+	g_signal_connect(G_OBJECT(window), "visibility_notify_event",
+			 G_CALLBACK(main_window_visibility_notify_cb), mainwin);
 
 	/* set menu items */
 	menuitem = gtk_item_factory_get_item
@@ -1123,6 +1129,7 @@ MainWindow *main_window_create(SeparateType type)
 	mainwin->cursor_count = 0;
 
 	mainwin->window_hidden = FALSE;
+	mainwin->window_obscured = FALSE;
 
 	if (!watch_cursor)
 		watch_cursor = gdk_cursor_new(GDK_WATCH);
@@ -2794,6 +2801,19 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 		else
 			mainwin->window_hidden = FALSE;
 	}
+
+	return FALSE;
+}
+
+static gboolean main_window_visibility_notify_cb(GtkWidget *widget,
+						 GdkEventVisibility *event,
+						 gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	mainwin->window_obscured =
+		(event->state == GDK_VISIBILITY_FULLY_OBSCURED ||
+		 event->state == GDK_VISIBILITY_PARTIAL) ? TRUE : FALSE;
 
 	return FALSE;
 }
