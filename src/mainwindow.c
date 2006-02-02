@@ -2689,39 +2689,16 @@ static gboolean main_window_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	if (!mainwin)
 		return FALSE;
 
-	if (GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->search_entry)) {
-		/* g_print("keyval: %d, state: %d\n",
-			   event->keyval, event->state); */
-		if ((event->state & (GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
-			return FALSE;
+	if (!GTK_WIDGET_HAS_FOCUS(mainwin->summaryview->search_entry))
+		return FALSE;
 
-		if (gtk_accel_group_query(mainwin->menu_factory->accel_group,
-					  event->keyval,
-					  event->state & ~GDK_LOCK_MASK,
-					  NULL) != NULL) {
-			gunichar ch;
+	/* g_print("keyval: %d, state: %d\n", event->keyval, event->state); */
+	if ((event->state & (GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
+		return FALSE;
 
-			ch = gdk_keyval_to_unicode(event->keyval);
-			if (ch != 0) {
-				gchar str[7];
-				gint len;
-				gint pos;
-				GtkEditable *editable;
+	gtk_window_propagate_key_event(GTK_WINDOW(widget), event);
 
-				editable = GTK_EDITABLE
-					(mainwin->summaryview->search_entry);
-				len = g_unichar_to_utf8(ch, str);
-				gtk_editable_delete_selection(editable);
-				pos = gtk_editable_get_position(editable);
-				gtk_editable_insert_text
-					(editable, str, len, &pos);
-				gtk_editable_set_position(editable, pos);
-				return TRUE;
-			}
-		}
-	}
-
-	return FALSE;
+	return TRUE;
 }
 
 static gint main_window_close_cb(GtkWidget *widget, GdkEventAny *event,
