@@ -2707,6 +2707,9 @@ static gboolean main_window_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	/* g_print("keyval: %d, state: %d\n", event->keyval, event->state); */
 	if ((event->state & (GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
 		return FALSE;
+	if (event->keyval == GDK_Tab || event->keyval == GDK_KP_Tab ||
+	    event->keyval == GDK_ISO_Left_Tab)
+		return FALSE;
 
 	gtk_window_propagate_key_event(GTK_WINDOW(widget), event);
 
