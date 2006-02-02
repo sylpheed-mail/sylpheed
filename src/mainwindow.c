@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gdk/gdkkeysyms.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkversion.h>
 #include <gtk/gtkwindow.h>
@@ -472,6 +473,9 @@ static void manual_open_cb	 (MainWindow	*mainwin,
 static void faq_open_cb		 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+static void help_cmdline_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
 
 static void scan_tree_func	 (Folder	*folder,
 				  FolderItem	*item,
@@ -812,6 +816,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Help/_FAQ/_Spanish"),		NULL, faq_open_cb, MANUAL_LANG_ES, NULL},
 	{N_("/_Help/_FAQ/_French"),		NULL, faq_open_cb, MANUAL_LANG_FR, NULL},
 	{N_("/_Help/_FAQ/_Italian"),		NULL, faq_open_cb, MANUAL_LANG_IT, NULL},
+	{N_("/_Help/_Command line options"),	NULL, help_cmdline_cb, 0, NULL},
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_About"),			NULL, about_show, 0, NULL}
 };
@@ -3461,6 +3466,111 @@ static void manual_open_cb(MainWindow *mainwin, guint action,
 static void faq_open_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
 	faq_open((ManualLang)action);
+}
+
+static void help_cmdline_ok(GtkWidget *button)
+{
+	gtk_widget_destroy(gtk_widget_get_toplevel(button));
+}
+
+static gboolean help_cmdline_key_pressed(GtkWidget *widget, GdkEventKey *event,
+					 gpointer data)
+{
+	if (event && event->keyval == GDK_Escape) {
+		gtk_widget_destroy(widget);
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static gboolean help_cmdline_deleted(GtkWidget *widget, GdkEventAny *event,
+				     gpointer data)
+{
+	return FALSE;
+}
+
+static void help_command_line_show(void)
+{
+	GtkWidget *window;
+	GtkWidget *vbox;
+	GtkWidget *vbox2;
+	GtkWidget *hbox;
+	GtkWidget *label;
+	GtkWidget *hbbox;
+	GtkWidget *ok_btn;
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title(GTK_WINDOW(window), _("Command line options"));
+	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
+	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+
+	vbox = gtk_vbox_new(FALSE, 8);
+	gtk_container_add(GTK_CONTAINER(window), vbox);
+
+	vbox2 = gtk_vbox_new(FALSE, 8);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox2), 8);
+	gtk_box_pack_start(GTK_BOX(vbox), vbox2, FALSE, FALSE, 0);
+
+	label = gtk_label_new(_("Usage: sylpheed [OPTION]..."));
+	gtk_box_pack_start(GTK_BOX(vbox2), label, FALSE, FALSE, 0);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+	hbox = gtk_hbox_new(FALSE, 16);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox, FALSE, FALSE, 0);
+
+	label = gtk_label_new(_("--compose [address]\n"
+				"--attach file1 [file2]...\n"
+				"--receive\n"
+				"--receive-all\n"
+				"--send\n"
+				"--status [folder]...\n"
+				"--status-full [folder]...\n"
+				"--configdir dirname\n"
+				"--exit\n"
+				"--debug\n"
+				"--help\n"
+				"--version"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+	label = gtk_label_new(_("open composition window\n"
+				"open composition window with specified files attached\n"
+				"receive new messages\n"
+				"receive new messages of all accounts\n"
+				"send all queued messages\n"
+				"show the total number of messages\n"
+				"show the status of each folder\n"
+				"specify directory which stores configuration files\n"
+				"exit Sylpheed\n"
+				"debug mode\n"
+				"display this help and exit\n"
+				"output version information and exit"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
+				      NULL, NULL, NULL, NULL);
+	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
+	gtk_widget_grab_default(ok_btn);
+
+	g_signal_connect(G_OBJECT(ok_btn), "clicked",
+			 G_CALLBACK(help_cmdline_ok), NULL);
+	g_signal_connect(G_OBJECT(window), "key_press_event",
+			 G_CALLBACK(help_cmdline_key_pressed), NULL);
+	g_signal_connect(G_OBJECT(window), "delete_event",
+			 G_CALLBACK(help_cmdline_deleted), NULL);
+
+	gtk_widget_show_all(window);
+}
+
+static void help_cmdline_cb(MainWindow *mainwin, guint action,
+			    GtkWidget *widget)
+{
+	help_command_line_show();
 }
 
 static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data)
