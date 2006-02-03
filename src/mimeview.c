@@ -632,7 +632,8 @@ static void mimeview_show_mime_part(MimeView *mimeview, MimeInfo *partinfo)
 		g_snprintf(buf, sizeof(buf), "[%s (%s)]\n\n",
 			   partinfo->content_type,
 			   to_human_readable(partinfo->content_size));
-	gtk_text_buffer_insert(buffer, &iter, buf, -1);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, buf, -1,
+						 "mimepart", NULL);
 
 	vbbox = gtk_vbutton_box_new();
 	gtk_box_set_spacing(GTK_BOX(vbbox), 5);
