@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed User's Manual: 他メール(メール保存形式)からSylpheed(MHフォルダ形式)への移行</TITLE>
+ <TITLE>Sylpheed User's Manual: 迷惑メール対策</TITLE>
  <LINK HREF="sylpheed-14.html" REL=next>
  <LINK HREF="sylpheed-12.html" REL=previous>
  <LINK HREF="sylpheed.html#toc13" REL=contents>
@@ -12,36 +12,46 @@
 <A HREF="sylpheed-12.html">前のページ</A>
 <A HREF="sylpheed.html#toc13">目次へ</A>
 <HR>
-<H2><A NAME="s13">13.</A> <A HREF="sylpheed.html#toc13">他メール(メール保存形式)からSylpheed(MHフォルダ形式)への移行</A></H2>
+<H2><A NAME="s13">13.</A> <A HREF="sylpheed.html#toc13">迷惑メール対策</A></H2>
 
-<H2><A NAME="mbox-import"></A> <A NAME="ss13.1">13.1</A> <A HREF="sylpheed.html#toc13.1">mbox形式のメッセージファイルの取り込み</A>
+<P>Sylpheedは外部コマンドと連携することで、自動的に迷惑メールをフィルタリングすることができます。</P>
+<H2><A NAME="ss13.1">13.1</A> <A HREF="sylpheed.html#toc13.1">迷惑メール対策機能の仕組み</A>
 </H2>
 
-<P>ファイルメニューからmboxファイルをインポートを選択し、
-インポートファイルにはインポートしたいmbox形式のメールボックスを選択します。</P>
-<P>インポート先には選択したメールボックスを展開するフォルダを指定し
-OKを押せばインポートされます。
-mbox形式は、"mbox"というファイルの他にもNetscape Messengerの&nbsp;/nsmailの下のファ
-イル、KMailの&nbsp;/Mail以下のファイル等にも利用されているので、そのファイルを利用
-することで移行できます。</P>
-<P>ただし、KMailは添付ファイルを別ファイルにしてしまう仕様があるらしく、
-添付ファイルがある場合、正しくコンバートすることができません。</P>
-<H2><A NAME="ss13.2">13.2</A> <A HREF="sylpheed.html#toc13.2">Windowsのメーラ(Becky!やAL-Mail, Outlook Express4等)からの移行</A>
+<P>自動的に迷惑メールをフィルタリングするためには、まず学習型の迷惑メール判定プログラムが必要です。
+Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
+<P>Sylpheedは最初に迷惑メールと非迷惑メールをこれらのプログラムに渡して学習させます。学習を繰り返すことでこれらのプログラムはどんどん判定精度が向上していきます。</P>
+<P>十分に学習が済んだら(それぞれ100通程度学習させれば問題ないでしょう)、受信したメールをこれらのプログラムに渡して、それが迷惑メールであるかどうか確認します。
+迷惑メールと判定された場合は、フォルダへの移動やサーバからの削除など、指定したアクションを実行します。</P>
+<P>もし誤判定があった場合は、そのメールを学習させることで判定精度をさらに向上させることができます。</P>
+<H2><A NAME="ss13.2">13.2</A> <A HREF="sylpheed.html#toc13.2">迷惑メール対策機能を有効にする</A>
 </H2>
 
-<P>Windows用フリーソフトウェアである
-<A HREF="http://www.digico-m.com/shin1/">MailExp</A>を利用して
-"標準UNIX From形式のメールボックス"にエクスポートします。
-その後そのファイルを移動しそのファイルを
-<A HREF="#mbox-import">mbox形式としてインポート</A>します。
-MailExpはとても多くのメーラからのインポートが可能です。</P>
-<H2><A NAME="ss13.3">13.3</A> <A HREF="sylpheed.html#toc13.3">Outlook Express 5のdbx形式からの移行</A>
+<P>全般の設定の「迷惑メール」タブの「迷惑メール対策を有効にする」をチェックします。</P>
+<H2><A NAME="ss13.3">13.3</A> <A HREF="sylpheed.html#toc13.3">学習コマンドの設定</A>
 </H2>
 
-<P>Outlook Express 5の形式はMailExpではサポートしていないので
-<A HREF="http://www02.so-net.ne.jp/~home/oe5conv/">OE5Conv</A>を利用して
-mbox形式へエクスポートした後、そのファイルを
-<A HREF="#mbox-import">mbox形式としてインポート</A>します。</P>
+<P>迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています(Windows版の場合はbsfilter)。</P>
+<P>「(プリセットを選択)」と書かれたオプションメニューで、bogofilterとbsfilterの既定の設定を選択することができます。</P>
+<P>通常はそのままで問題ありません。</P>
+<H2><A NAME="ss13.4">13.4</A> <A HREF="sylpheed.html#toc13.4">アクションの設定</A>
+</H2>
+
+<P>迷惑メールと判定された場合にどのような動作を実行するかを指定します。</P>
+
+<H3>迷惑メールフォルダ</H3>
+
+<P>迷惑メールと判定されたメッセージはここで指定したフォルダに振り分けられます。</P>
+
+<H3>受信時に迷惑メールと判定されたメッセージを振り分ける</H3>
+
+<P>受信時に自動的に迷惑メールを振り分けたい場合は、これをチェックします。この振り分けは、通常のフィルタリングの後に実行されます。</P>
+<H3>受信時に迷惑メールをサーバから削除する</H3>
+
+<P>メールをサーバに残す設定にしていた場合でも、強制的に迷惑メールをサーバから削除します。</P>
+<H3>振り分けた迷惑メールを既読にする</H3>
+
+<P>振り分けた迷惑メールの未読フラグを解除します。</P>
 <HR>
 <A HREF="sylpheed-14.html">次のページ</A>
 <A HREF="sylpheed-12.html">前のページ</A>
