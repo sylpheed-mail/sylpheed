@@ -5463,7 +5463,9 @@ static void summary_row_expanded(GtkTreeView *treeview, GtkTreeIter *iter,
 		summary_set_bold_recursive(summaryview, iter);
 
 	/* workaround for last row expand problem */
-#if !GTK_CHECK_VERSION(2, 8, 0)
+#if GTK_CHECK_VERSION(2, 8, 0)
+	gtk_widget_queue_resize(GTK_WIDGET(treeview));
+#else
 	g_object_set(treeview, "fixed-height-mode", FALSE, NULL);
 	gtk_widget_queue_resize(GTK_WIDGET(treeview));
 	g_object_set(treeview, "fixed-height-mode", TRUE, NULL);
