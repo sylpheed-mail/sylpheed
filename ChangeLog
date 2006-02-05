@@ -1,3 +1,10 @@
+2006-02-05
+
+	* libsylph/pop.c: pop3_getrange_stat_recv(): fixed non-portable format
+	  string ("%Ld" is not defined in *BSD, including Mac OS X). This
+	  fixes wrong status display at receiving on *BSD systems.
+	* libsylph/utils.c: to_human_readable(): disabled translation.
+
 2006-02-03
 
 	* src/summaryview.c: summary_row_expanded(): re-enabled workaround

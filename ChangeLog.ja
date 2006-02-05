@@ -1,3 +1,10 @@
+2006-02-05
+
+	* libsylph/pop.c: pop3_getrange_stat_recv(): 移植性のないフォーマット
+	  文字列を修正("%Ld" は Mac OS X を含む *BSD では未定義)。これによって
+	  *BSD システムで受信時のステータス表示がおかしくなるのを修正。
+	* libsylph/utils.c: to_human_readable(): 翻訳を無効にした。
+
 2006-02-03
 
 	* src/summaryview.c: summary_row_expanded(): workaround を GTK+ 2.8

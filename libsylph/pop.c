@@ -187,7 +187,7 @@ static gint pop3_getrange_stat_send(Pop3Session *session)
 
 static gint pop3_getrange_stat_recv(Pop3Session *session, const gchar *msg)
 {
-	if (sscanf(msg, "%d %Ld", &session->count, &session->total_bytes) != 2) {
+	if (sscanf(msg, "%d %lld", &session->count, &session->total_bytes) != 2) {
 		log_warning(_("POP3 protocol error\n"));
 		session->error_val = PS_PROTOCOL;
 		return -1;
