@@ -521,10 +521,12 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 		     PF_MATCH_EQUAL);
 	MENUITEM_ADD(menu, menuitem, _("is not"),
 		     PF_MATCH_NOT_EQUAL);
+#ifndef G_OS_WIN32
 	MENUITEM_ADD(menu, menuitem, _("match to regex"),
 		     PF_MATCH_REGEX);
 	MENUITEM_ADD(menu, menuitem, _("doesn't match to regex"),
 		     PF_MATCH_NOT_REGEX);
+#endif
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(match_type_optmenu), menu);
 
 	size_match_optmenu = gtk_option_menu_new();
