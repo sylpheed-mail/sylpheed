@@ -356,10 +356,12 @@ static gchar *mh_get_new_msg_filename(FolderItem *dest)
 	newmsginfo.flags = fl;						\
 	if (dest->stype == F_OUTBOX ||					\
 	    dest->stype == F_QUEUE  ||					\
-	    dest->stype == F_DRAFT  ||					\
-	    dest->stype == F_TRASH)					\
+	    dest->stype == F_DRAFT) {					\
 		MSG_UNSET_PERM_FLAGS(newmsginfo.flags,			\
 				     MSG_NEW|MSG_UNREAD|MSG_DELETED);	\
+	} else if (dest->stype == F_TRASH) {				\
+		MSG_UNSET_PERM_FLAGS(newmsginfo.flags, MSG_DELETED);	\
+	}								\
 									\
 	if (fp)								\
 		procmsg_write_flags(&newmsginfo, fp);			\

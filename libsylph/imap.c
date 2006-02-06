@@ -1221,8 +1221,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 
 		if (dest->stype == F_OUTBOX ||
 		    dest->stype == F_QUEUE  ||
-		    dest->stype == F_DRAFT  ||
-		    dest->stype == F_TRASH)
+		    dest->stype == F_DRAFT)
 			iflags |= IMAP_FLAG_SEEN;
 
 		g_get_current_time(&tv_cur);
