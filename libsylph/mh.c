@@ -737,8 +737,13 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 				gboolean count_sum)
 {
 	gchar *path;
+#ifdef G_OS_WIN32
+	GDir *dir;
+	const gchar *dir_name;
+#else
 	DIR *dp;
 	struct dirent *d;
+#endif
 	gint max = 0;
 	gint num;
 	gint n_msg = 0;
@@ -755,14 +760,31 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	}
 	g_free(path);
 
+#ifdef G_OS_WIN32
+	if ((dir = g_dir_open(".", 0, NULL)) == NULL) {
+		g_warning("failed to open directory\n");
+#else
 	if ((dp = opendir(".")) == NULL) {
 		FILE_OP_ERROR(item->path, "opendir");
+#endif
 		return -1;
 	}
 
 	if (folder->ui_func)
 		folder->ui_func(folder, item, folder->ui_func_data);
 
+#ifdef G_OS_WIN32
+	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+		if ((num = to_number(dir_name)) > 0 &&
+		    g_file_test(dir_name, G_FILE_TEST_IS_REGULAR)) {
+			n_msg++;
+			if (max < num)
+				max = num;
+		}
+	}
+
+	g_dir_close(dir);
+#else
 	while ((d = readdir(dp)) != NULL) {
 		if ((num = to_number(d->d_name)) > 0 &&
 		    dirent_is_regular_file(d)) {
@@ -773,6 +795,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	}
 
 	closedir(dp);
+#endif
 
 	if (n_msg == 0)
 		item->new = item->unread = item->total = 0;
@@ -1095,8 +1118,8 @@ static time_t mh_get_mtime(FolderItem *item)
 static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 {
 	gchar *path;
-	DIR *dp;
-	struct dirent *d;
+	GDir *dp;
+	const gchar *dir_name;
 	GSList *newlist = NULL;
 	GSList *last = NULL;
 	MsgInfo *msginfo;
@@ -1113,7 +1136,7 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 	}
 	g_free(path);
 
-	if ((dp = opendir(".")) == NULL) {
+	if ((dp = g_dir_open(".", 0, NULL)) == NULL) {
 		FILE_OP_ERROR(item->path, "opendir");
 		return NULL;
 	}
@@ -1121,8 +1144,8 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 	debug_print("Searching uncached messages...\n");
 
 	if (msg_table) {
-		while ((d = readdir(dp)) != NULL) {
-			if ((num = to_number(d->d_name)) <= 0) continue;
+		while ((dir_name = g_dir_read_name(dp)) != NULL) {
+			if ((num = to_number(dir_name)) <= 0) continue;
 
 			msginfo = g_hash_table_lookup
 				(msg_table, GUINT_TO_POINTER(num));
@@ -1131,7 +1154,7 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 				MSG_SET_TMP_FLAGS(msginfo->flags, MSG_CACHED);
 			} else {
 				/* not found in the cache (uncached message) */
-				msginfo = mh_parse_msg(d->d_name, item);
+				msginfo = mh_parse_msg(dir_name, item);
 				if (!msginfo) continue;
 
 				if (!newlist)
@@ -1146,10 +1169,10 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 		}
 	} else {
 		/* discard all previous cache */
-		while ((d = readdir(dp)) != NULL) {
-			if (to_number(d->d_name) <= 0) continue;
+		while ((dir_name = g_dir_read_name(dp)) != NULL) {
+			if (to_number(dir_name) <= 0) continue;
 
-			msginfo = mh_parse_msg(d->d_name, item);
+			msginfo = mh_parse_msg(dir_name, item);
 			if (!msginfo) continue;
 
 			if (!newlist)
@@ -1162,7 +1185,7 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 		}
 	}
 
-	closedir(dp);
+	g_dir_close(dp);
 
 	if (n_newmsg)
 		debug_print("%d uncached message(s) found.\n", n_newmsg);
