@@ -67,6 +67,8 @@ static GList *messageview_list = NULL;
 
 static void messageview_change_view_type(MessageView		*messageview,
 					 MessageType		 type);
+static void messageview_set_menu_state	(MessageView		*messageview);
+
 static gint messageview_delete_cb	(GtkWidget		*widget,
 					 GdkEventAny		*event,
 					 MessageView		*messageview);
@@ -423,6 +425,8 @@ MessageView *messageview_create_with_new_window(void)
 	msgview->window = window;
 	msgview->window_vbox = window_vbox;
 	msgview->body_vbox = body_vbox;
+	msgview->menubar = menubar;
+	msgview->menu_locked = FALSE;
 	msgview->visible = TRUE;
 
 	messageview_init(msgview);
@@ -503,6 +507,9 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 		procmime_mimeinfo_free_all(mimeinfo);
 	}
 
+	if (messageview->new_window)
+		messageview_set_menu_state(messageview);
+
 	g_free(file);
 
 	return 0;
@@ -530,6 +537,20 @@ static void messageview_change_view_type(MessageView *messageview,
 		return;
 
 	messageview->type = type;
+}
+
+static void messageview_set_menu_state(MessageView *messageview)
+{
+	GtkItemFactory *ifactory;
+	GtkWidget *menuitem;
+
+	messageview->menu_locked = TRUE;
+	ifactory = gtk_item_factory_from_widget(messageview->menubar);
+	menuitem = gtk_item_factory_get_widget
+		(ifactory, "/View/Show all header");
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
+				       messageview->textview->show_all_headers);
+	messageview->menu_locked = FALSE;
 }
 
 void messageview_clear(MessageView *messageview)
@@ -809,6 +830,8 @@ static void show_all_header_cb(gpointer data, guint action, GtkWidget *widget)
 	MsgInfo *msginfo = messageview->msginfo;
 
 	if (!msginfo) return;
+	if (messageview->menu_locked) return;
+
 	messageview->msginfo = NULL;
 	messageview_show(messageview, msginfo,
 			 GTK_CHECK_MENU_ITEM(widget)->active);
