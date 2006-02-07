@@ -1,5 +1,11 @@
 2006-02-07
 
+	* src/tryaicon.c: trayicon_button_pressed(): 常に前面にあるウィンドウ
+	  によって隠れている場合の対処として強制的に obscured フラグを降ろす
+	  ようにした。
+
+2006-02-07
+
 	* src/compose.c: compose_exec_ext_editor(): 外部エディタの実行に失敗
 	  した後 UI が無効になっていた問題を修正(M.Suzuki さん thanks)。
 

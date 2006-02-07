@@ -166,6 +166,8 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		if (mainwin->window_hidden || mainwin->window_obscured) {
 			gtk_window_set_skip_taskbar_hint(window, FALSE);
 			gtk_window_present(window);
+			/* window may be obscured by always-on-top windows */
+			mainwin->window_obscured = FALSE;
 		} else {
 			gtk_window_iconify(window);
 			gtk_window_set_skip_taskbar_hint(window, TRUE);
