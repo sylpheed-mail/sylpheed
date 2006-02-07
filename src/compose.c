@@ -5440,8 +5440,6 @@ static void compose_exec_ext_editor(Compose *compose)
 	}
 #endif
 
-	compose_set_ext_editor_sensitive(compose, FALSE);
-
 	if (prefs_common.ext_editor_cmd &&
 	    (p = strchr(prefs_common.ext_editor_cmd, '%')) &&
 	    *(p + 1) == 's' && !strchr(p + 2, '%')) {
@@ -5463,6 +5461,8 @@ static void compose_exec_ext_editor(Compose *compose)
 		g_free(tmp);
 		return;
 	}
+
+	compose_set_ext_editor_sensitive(compose, FALSE);
 
 	debug_print("compose_exec_ext_editor(): pid: %d file: %s\n", pid, tmp);
 
