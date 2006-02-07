@@ -3491,6 +3491,8 @@ static void faq_open_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	faq_open((ManualLang)action);
 }
 
+static GtkWidget *help_cmdline_window;
+
 static void help_cmdline_ok(GtkWidget *button)
 {
 	gtk_widget_destroy(gtk_widget_get_toplevel(button));
@@ -3512,6 +3514,11 @@ static gboolean help_cmdline_deleted(GtkWidget *widget, GdkEventAny *event,
 	return FALSE;
 }
 
+static void help_cmdline_destroyed(GtkWidget *widget, gpointer data)
+{
+	help_cmdline_window = NULL;
+}
+
 static void help_command_line_show(void)
 {
 	GtkWidget *window;
@@ -3522,11 +3529,17 @@ static void help_command_line_show(void)
 	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 
+	if (help_cmdline_window) {
+		gtk_window_present(GTK_WINDOW(help_cmdline_window));
+		return;
+	}
+
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("Command line options"));
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+	help_cmdline_window = window;
 
 	vbox = gtk_vbox_new(FALSE, 8);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
@@ -3586,6 +3599,8 @@ static void help_command_line_show(void)
 			 G_CALLBACK(help_cmdline_key_pressed), NULL);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(help_cmdline_deleted), NULL);
+	g_signal_connect(G_OBJECT(window), "destroy",
+			 G_CALLBACK(help_cmdline_destroyed), NULL);
 
 	gtk_widget_show_all(window);
 }
