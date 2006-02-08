@@ -1276,6 +1276,8 @@ conv_get_fallback_for_private_encoding(const gchar *encoding)
 		    encoding[1] == '-') {
 			if (!g_ascii_strcasecmp(encoding, CS_X_GBK))
 				return CS_GBK;
+			else if (!g_ascii_strcasecmp(encoding, CS_X_SJIS))
+				return CS_SHIFT_JIS;
 		} else if ((encoding[0] == 'K' || encoding[0] == 'k') &&
 			   (encoding[1] == 'S' || encoding[1] == 's')) {
 			if (!g_ascii_strcasecmp(encoding, CS_KS_C_5601_1987))
