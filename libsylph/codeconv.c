@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1841,7 +1841,9 @@ CharSet conv_get_locale_charset(void)
 	static CharSet cur_charset = -1;
 	const gchar *cur_locale;
 	const gchar *p;
+#ifndef G_OS_WIN32
 	gint i;
+#endif
 
 	if (cur_charset != -1)
 		return cur_charset;
@@ -1862,6 +1864,11 @@ CharSet conv_get_locale_charset(void)
 		return cur_charset;
 	}
 
+#ifdef G_OS_WIN32
+	cur_charset = conv_get_charset_from_str(conv_get_locale_charset_str());
+
+	return cur_charset;
+#else
 	for (i = 0; i < sizeof(locale_table) / sizeof(locale_table[0]); i++) {
 		const gchar *p;
 
@@ -1884,14 +1891,23 @@ CharSet conv_get_locale_charset(void)
 
 	cur_charset = C_AUTO;
 	return cur_charset;
+#endif
 }
 
 const gchar *conv_get_locale_charset_str(void)
 {
 	static const gchar *codeset = NULL;
 
-	if (!codeset)
+	if (!codeset) {
+#ifdef G_OS_WIN32
+		g_get_charset(&codeset);
+		if (!strcmp(codeset, CS_US_ASCII) ||
+		    !strcmp(codeset, CS_ANSI_X3_4_1968))
+			codeset = CS_INTERNAL;
+#else
 		codeset = conv_get_charset_str(conv_get_locale_charset());
+#endif
+	}
 
 	return codeset ? codeset : CS_INTERNAL;
 }

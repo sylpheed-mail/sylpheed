@@ -1,3 +1,12 @@
+2006-02-08
+
+	* libsylph/codeconv.c:
+	  conv_get_locale_charset()
+	  conv_get_locale_charset_str(): use GLib API on Win32 (fixes wrong
+	  encoding returned).
+	  src/rfc2015.c: sig_status_full(): use g_locale_to_utf8() for locale
+	  to UTF-8 conversion.
+
 2006-02-07
 
 	* src/mainwindow.c: made the help window of command line options

@@ -172,7 +172,10 @@ static gchar *sig_status_full(gpgme_ctx_t ctx, gpgme_verify_result_t result)
 			ctime_val = localtime(&created);
 			my_strftime(ctime_str, sizeof (ctime_str), "%c",
 			            ctime_val);
-			ctime_str_utf8 = conv_localetodisp(ctime_str, NULL);
+			ctime_str_utf8 = g_locale_to_utf8(ctime_str, -1,
+							  NULL, NULL, NULL);
+			if (!ctime_str_utf8)
+				ctime_str_utf8 = g_strdup(ctime_str);
 			g_string_sprintfa(str, _("Signature made at %s\n"),
 			                  ctime_str_utf8);
 			g_free(ctime_str_utf8);

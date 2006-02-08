@@ -1,3 +1,12 @@
+2006-02-08
+
+	* libsylph/codeconv.c:
+	  conv_get_locale_charset()
+	  conv_get_locale_charset_str(): Win32 では GLib API を使用するように
+	  した(誤ったエンコーディングが返るのを修正)。
+	  src/rfc2015.c: sig_status_full(): ロケールから UTF-8 への変換に
+	  g_locale_to_utf8() を使用。
+
 2006-02-07
 
 	* src/mainwindow.c: コマンドラインオプションのヘルプウィンドウを
