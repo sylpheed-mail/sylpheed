@@ -3147,6 +3147,8 @@ static void summary_move_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	MsgInfo *msginfo;
 
 	g_return_if_fail(to_folder != NULL);
+	if (to_folder->stype == F_QUEUE || to_folder->stype == F_VIRTUAL)
+		return;
 
 	GET_MSG_INFO(msginfo, iter);
 
@@ -3188,7 +3190,11 @@ void summary_move_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 
 	if (!to_folder) return;
 	if (!summaryview->folder_item ||
-	    FOLDER_TYPE(summaryview->folder_item->folder) == F_NEWS) return;
+	    FOLDER_TYPE(summaryview->folder_item->folder) == F_NEWS)
+		return;
+	if (summaryview->folder_item->stype == F_QUEUE ||
+	    to_folder->stype == F_QUEUE || to_folder->stype == F_VIRTUAL)
+		return;
 
 	if (summary_is_locked(summaryview)) return;
 
@@ -3239,6 +3245,8 @@ static void summary_copy_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	MsgInfo *msginfo;
 
 	g_return_if_fail(to_folder != NULL);
+	if (to_folder->stype == F_QUEUE || to_folder->stype == F_VIRTUAL)
+		return;
 
 	GET_MSG_INFO(msginfo, iter);
 
@@ -3280,6 +3288,9 @@ void summary_copy_selected_to(SummaryView *summaryview, FolderItem *to_folder)
 
 	if (!to_folder) return;
 	if (!summaryview->folder_item) return;
+	if (summaryview->folder_item->stype == F_QUEUE ||
+	    to_folder->stype == F_QUEUE || to_folder->stype == F_VIRTUAL)
+		return;
 
 	if (summary_is_locked(summaryview)) return;
 

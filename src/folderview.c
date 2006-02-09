@@ -2886,7 +2886,9 @@ static gboolean folderview_drag_motion_cb(GtkWidget      *widget,
 		gtk_tree_model_get_iter(model, &iter, path);
 		gtk_tree_model_get(model, &iter, COL_FOLDER_ITEM, &item, -1);
 		src_item = folderview->summaryview->folder_item;
-		if (src_item && src_item != item)
+		if (src_item && src_item != item &&
+		    src_item->stype != F_QUEUE && item->stype != F_QUEUE &&
+		    item->stype != F_VIRTUAL)
 			acceptable = FOLDER_ITEM_CAN_ADD(item);
 	} else
 		remove_auto_expand_timeout(folderview);
@@ -2982,7 +2984,9 @@ static void folderview_drag_received_cb(GtkWidget        *widget,
 	gtk_tree_model_get(model, &iter, COL_FOLDER_ITEM, &item, -1);
 	src_item = folderview->summaryview->folder_item;
 
-	if (FOLDER_ITEM_CAN_ADD(item) && src_item && src_item != item) {
+	if (FOLDER_ITEM_CAN_ADD(item) && src_item && src_item != item &&
+	    src_item->stype != F_QUEUE && item->stype != F_QUEUE &&
+	    item->stype != F_VIRTUAL) {
 		if ((context->actions & GDK_ACTION_MOVE) != 0 &&
 		    FOLDER_ITEM_CAN_ADD(src_item)) {
 			summary_move_selected_to(folderview->summaryview, item);
