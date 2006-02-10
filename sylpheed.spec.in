@@ -9,12 +9,15 @@ Release: %{rel}
 Source: http://sylpheed.good-day.net/sylpheed/%{name}-%{ver}.tar.gz
 License: GPL
 URL: http://sylpheed.good-day.net/
-Requires: gtk+ >= 2.4.0
+Requires: gtk2 >= 2.4.0
 Group: Applications/Internet
 Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 Buildroot: %{_tmppath}/%{name}-root
 
 %changelog
+* Thu Feb 10 2006 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- changed Requires: package name from gtk+ to gtk2.
+
 * Tue Jun 7 2005 Paul Dickson <paul@permanentmail.com>
 - replaced "Copyright:" with "License:"
 - if environmental variable SYLPHEED_REL_DIST is set, assign that to rel (1.FC4,2.FC4, etc)
@@ -106,7 +109,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS COPYING COPYING.LIB ChangeLog ChangeLog.ja ChangeLog-1.0 ChangeLog-1.0.ja README README.ja INSTALL INSTALL.ja NEWS NEWS-1.0 LICENSE TODO TODO.ja
+%doc AUTHORS COPYING COPYING.LIB ChangeLog ChangeLog.ja ChangeLog-1.0 ChangeLog-1.0.ja README README.ja INSTALL INSTALL.ja NEWS NEWS-1.0 NEWS-2.0 LICENSE TODO TODO.ja
 %{_bindir}/%{name}
 %{_datadir}/locale/*/LC_MESSAGES/%{name}.mo
 %{_datadir}/%{name}/faq/*/*
