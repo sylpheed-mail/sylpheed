@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-09 11:35+0900\n"
+"POT-Creation-Date: 2006-02-13 11:31+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1226,7 +1226,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4750
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4761
 msgid "None"
 msgstr "無"
 
@@ -1684,7 +1684,7 @@ msgstr "MIME 型態"
 
 #. S_COL_DATE
 #: src/compose.c:4263 src/mimeview.c:197 src/prefs_filter_edit.c:496
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4897
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4908
 msgid "Size"
 msgstr "大小"
 
@@ -3515,7 +3515,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "主視窗：顏色 %d 配置失敗。\n"
 
 #: src/mainwindow.c:1139 src/summaryview.c:2275 src/summaryview.c:2360
-#: src/summaryview.c:3896 src/summaryview.c:4025 src/summaryview.c:4383
+#: src/summaryview.c:3907 src/summaryview.c:4036 src/summaryview.c:4394
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -3817,25 +3817,25 @@ msgstr "附加檔"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:699 src/summaryview.c:3425
+#: src/messageview.c:699 src/summaryview.c:3436
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案「%s」。"
 
-#: src/messageview.c:758 src/summaryview.c:3448
+#: src/messageview.c:758 src/summaryview.c:3459
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:759 src/summaryview.c:3449
+#: src/messageview.c:759 src/summaryview.c:3460
 #, fuzzy
 msgid "(Default print command)"
 msgstr "正在學習命令:"
 
-#: src/messageview.c:761 src/prefs_common_dialog.c:2304 src/summaryview.c:3451
+#: src/messageview.c:761 src/prefs_common_dialog.c:2304 src/summaryview.c:3462
 msgid "Print"
 msgstr "列印"
 
-#: src/messageview.c:770 src/summaryview.c:3460
+#: src/messageview.c:770 src/summaryview.c:3471
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5715,17 +5715,17 @@ msgid "Attachment"
 msgstr "附加檔案"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/query_search.c:371 src/summaryview.c:4890
+#: src/prefs_summary_column.c:73 src/query_search.c:371 src/summaryview.c:4901
 msgid "Subject"
 msgstr "主旨"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/query_search.c:372 src/summaryview.c:4893
+#: src/prefs_summary_column.c:74 src/query_search.c:372 src/summaryview.c:4904
 msgid "From"
 msgstr "來源"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/query_search.c:373 src/summaryview.c:4895
+#: src/prefs_summary_column.c:75 src/query_search.c:373 src/summaryview.c:4906
 msgid "Date"
 msgstr "日期"
 
@@ -6464,55 +6464,55 @@ msgstr "刪除重覆的郵件..."
 msgid "Message %s/%d is unmarked\n"
 msgstr "郵件 %s/%d 已消除標記\n"
 
-#: src/summaryview.c:3168
+#: src/summaryview.c:3170
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "郵件 %d 已設定移動到 %s\n"
 
-#: src/summaryview.c:3196
+#: src/summaryview.c:3202
 msgid "Destination is same as current folder."
 msgstr "目標資料夾與來源資料夾相同。"
 
-#: src/summaryview.c:3260
+#: src/summaryview.c:3268
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "郵件 %d 已設定複製到 %s\n"
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3299
 msgid "Destination for copy is same as current folder."
 msgstr "郵件無法複製到同一個資料夾內。"
 
-#: src/summaryview.c:3495
+#: src/summaryview.c:3506
 msgid "Error occurred while processing messages."
 msgstr "處理郵件時發生錯誤。"
 
-#: src/summaryview.c:3803 src/summaryview.c:3804
+#: src/summaryview.c:3814 src/summaryview.c:3815
 msgid "Building threads..."
 msgstr "產生郵件串列中..."
 
-#: src/summaryview.c:3954 src/summaryview.c:3955
+#: src/summaryview.c:3965 src/summaryview.c:3966
 msgid "Unthreading..."
 msgstr "解除郵件串列中..."
 
-#: src/summaryview.c:4248 src/summaryview.c:4304
+#: src/summaryview.c:4259 src/summaryview.c:4315
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4353
+#: src/summaryview.c:4364
 msgid "filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4354
+#: src/summaryview.c:4365
 msgid "Filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4390
+#: src/summaryview.c:4401
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已過濾 %d 封郵件"
 
-#: src/summaryview.c:4899
+#: src/summaryview.c:4910
 msgid "No."
 msgstr "No."
 

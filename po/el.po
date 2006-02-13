@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-09 11:35+0900\n"
+"POT-Creation-Date: 2006-02-13 11:31+0900\n"
 "PO-Revision-Date: 2001-10-08\n"
 "Last-Translator: Michalis Kabrianis <Michalis@bigfoot.com>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -1240,7 +1240,7 @@ msgstr "Καφέ"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4750
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4761
 msgid "None"
 msgstr "Τέλος"
 
@@ -1742,7 +1742,7 @@ msgstr "τύπος MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4263 src/mimeview.c:197 src/prefs_filter_edit.c:496
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4897
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4908
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -3721,7 +3721,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: η κατανομή χρωμάτων %d απέτυχε\n"
 
 #: src/mainwindow.c:1139 src/summaryview.c:2275 src/summaryview.c:2360
-#: src/summaryview.c:3896 src/summaryview.c:4025 src/summaryview.c:4383
+#: src/summaryview.c:3907 src/summaryview.c:4036 src/summaryview.c:4394
 msgid "done.\n"
 msgstr "έγινε.\n"
 
@@ -4042,25 +4042,25 @@ msgstr "Προσάρτηση"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:699 src/summaryview.c:3425
+#: src/messageview.c:699 src/summaryview.c:3436
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Δεν μπορώ να διαγράψω τον κατάλογο `%s'."
 
-#: src/messageview.c:758 src/summaryview.c:3448
+#: src/messageview.c:758 src/summaryview.c:3459
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:759 src/summaryview.c:3449
+#: src/messageview.c:759 src/summaryview.c:3460
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Εκτέλεση"
 
-#: src/messageview.c:761 src/prefs_common_dialog.c:2304 src/summaryview.c:3451
+#: src/messageview.c:761 src/prefs_common_dialog.c:2304 src/summaryview.c:3462
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: src/messageview.c:770 src/summaryview.c:3460
+#: src/messageview.c:770 src/summaryview.c:3471
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6017,17 +6017,17 @@ msgid "Attachment"
 msgstr "Προσάρτηση"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/query_search.c:371 src/summaryview.c:4890
+#: src/prefs_summary_column.c:73 src/query_search.c:371 src/summaryview.c:4901
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/query_search.c:372 src/summaryview.c:4893
+#: src/prefs_summary_column.c:74 src/query_search.c:372 src/summaryview.c:4904
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/query_search.c:373 src/summaryview.c:4895
+#: src/prefs_summary_column.c:75 src/query_search.c:373 src/summaryview.c:4906
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -6803,57 +6803,57 @@ msgstr "Διαγράφω τα διπλά μηνύματα..."
 msgid "Message %s/%d is unmarked\n"
 msgstr "Το μήνυμα %s/%d δεν έχει σημειωθεί\n"
 
-#: src/summaryview.c:3168
+#: src/summaryview.c:3170
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί για μετακίνηση στο %s\n"
 
-#: src/summaryview.c:3196
+#: src/summaryview.c:3202
 msgid "Destination is same as current folder."
 msgstr "Ο προορισμός είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:3260
+#: src/summaryview.c:3268
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Το μήνυμα %d έχει οριστεί να αντιγραφεί στο %s\n"
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3299
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Ο προορισμός αντιγραφής είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:3495
+#: src/summaryview.c:3506
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Ένα σφάλμα συνέβη καθώς επεξεργάζομαι το mail."
 
-#: src/summaryview.c:3803 src/summaryview.c:3804
+#: src/summaryview.c:3814 src/summaryview.c:3815
 msgid "Building threads..."
 msgstr "Δημιουργώ τα νήματα..."
 
-#: src/summaryview.c:3954 src/summaryview.c:3955
+#: src/summaryview.c:3965 src/summaryview.c:3966
 msgid "Unthreading..."
 msgstr ""
 
-#: src/summaryview.c:4248 src/summaryview.c:4304
+#: src/summaryview.c:4259 src/summaryview.c:4315
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:4353
+#: src/summaryview.c:4364
 msgid "filtering..."
 msgstr "φιλτράρω..."
 
-#: src/summaryview.c:4354
+#: src/summaryview.c:4365
 msgid "Filtering..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:4390
+#: src/summaryview.c:4401
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "το μήνυμα %d είναι ήδη στη μνήμη.\n"
 
-#: src/summaryview.c:4899
+#: src/summaryview.c:4910
 msgid "No."
 msgstr "Αρ."
 
