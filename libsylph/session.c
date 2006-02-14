@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -512,6 +512,8 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 	if (session->read_buf_len == 0) {
 		gint read_len;
 
+		if (!sock_has_read_data(session->sock))
+			return TRUE;
 		read_len = sock_read(session->sock, session->read_buf,
 				     SESSION_BUFFSIZE - 1);
 
@@ -598,6 +600,8 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 	if (session->read_buf_len == 0) {
 		gint read_len;
 
+		if (!sock_has_read_data(session->sock))
+			return TRUE;
 		read_len = sock_read(session->sock, session->read_buf,
 				     SESSION_BUFFSIZE);
 
@@ -709,6 +713,8 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 	session_set_timeout(session, session->timeout_interval);
 
 	if (session->read_buf_len == 0) {
+		if (!sock_has_read_data(session->sock))
+			return TRUE;
 		read_len = sock_read(session->sock, session->read_buf_p,
 				     READ_BUF_LEFT());
 

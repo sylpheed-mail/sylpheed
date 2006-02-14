@@ -398,6 +398,27 @@ gboolean sock_is_nonblocking_mode(SockInfo *sock)
 	return is_nonblocking_mode(sock->sock);
 }
 
+gboolean sock_has_read_data(SockInfo *sock)
+{
+#ifdef G_OS_WIN32
+	gulong val;
+
+#if USE_SSL
+	if (sock->ssl)
+		return TRUE;
+#endif
+	if (ioctlsocket(sock->sock, FIONREAD, &val) < 0)
+		return TRUE;
+
+	if (val == 0)
+		return FALSE;
+	else
+		return TRUE;
+#else
+	return TRUE;
+#endif
+}
+
 
 static gboolean sock_prepare(GSource *source, gint *timeout)
 {

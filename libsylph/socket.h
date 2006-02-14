@@ -75,6 +75,8 @@ gint sock_set_io_timeout		(guint sec);
 gint sock_set_nonblocking_mode		(SockInfo *sock, gboolean nonblock);
 gboolean sock_is_nonblocking_mode	(SockInfo *sock);
 
+gboolean sock_has_read_data		(SockInfo *sock);
+
 guint sock_add_watch			(SockInfo *sock, GIOCondition condition,
 					 SockFunc func, gpointer data);
 
