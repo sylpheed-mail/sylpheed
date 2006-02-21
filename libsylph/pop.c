@@ -464,12 +464,15 @@ GHashTable *pop3_get_uidl_table(PrefsAccount *ac_prefs)
 	gchar uidl[POPBUFSIZE];
 	time_t recv_time;
 	time_t now;
+	gchar *uid;
 
 	table = g_hash_table_new(g_str_hash, g_str_equal);
 
+	uid = uriencode_for_filename(ac_prefs->userid);
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
 			   UIDL_DIR, G_DIR_SEPARATOR_S, ac_prefs->recv_server,
-			   "-", ac_prefs->userid, NULL);
+			   "-", uid, NULL);
+	g_free(uid);
 	if ((fp = g_fopen(path, "rb")) == NULL) {
 		if (ENOENT != errno) FILE_OP_ERROR(path, "fopen");
 		g_free(path);
@@ -504,13 +507,16 @@ gint pop3_write_uidl_list(Pop3Session *session)
 	FILE *fp;
 	Pop3MsgInfo *msg;
 	gint n;
+	gchar *uid;
 
 	if (!session->uidl_is_valid) return 0;
 
+	uid = uriencode_for_filename(session->ac_prefs->userid);
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
-			   "uidl", G_DIR_SEPARATOR_S,
+			   UIDL_DIR, G_DIR_SEPARATOR_S,
 			   session->ac_prefs->recv_server,
-			   "-", session->ac_prefs->userid, NULL);
+			   "-", uid, NULL);
+	g_free(uid);
 	if ((fp = g_fopen(path, "wb")) == NULL) {
 		FILE_OP_ERROR(path, "fopen");
 		g_free(path);

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -346,6 +346,7 @@ gint get_uri_len			(const gchar	*str);
 void decode_uri				(gchar		*decoded_uri,
 					 const gchar	*encoded_uri);
 gchar *encode_uri			(const gchar	*filename);
+gchar *uriencode_for_filename		(const gchar	*filename);
 gint scan_mailto_url			(const gchar	*mailto,
 					 gchar	       **to,
 					 gchar	       **cc,

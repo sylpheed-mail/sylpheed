@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1532,6 +1532,14 @@ GList *uri_list_extract_filenames(const gchar *uri_list)
 	} \
 }
 
+#define INT_TO_HEX(hex, val)		\
+{					\
+	if ((val) < 10)			\
+		hex = '0' + (val);	\
+	else				\
+		hex = 'a' + (val) - 10;	\
+}
+
 /* Converts two-digit hexadecimal to decimal. Used for unescaping escaped
  * characters.
  */
@@ -1543,6 +1551,16 @@ static gint axtoi(const gchar *hex_str)
 	HEX_TO_INT(lo, hex_str[1]);
 
 	return (hi << 4) + lo;
+}
+
+static void get_hex_str(gchar *out, guchar ch)
+{
+	gchar hex;
+
+	INT_TO_HEX(hex, ch >> 4);
+	*out++ = hex;
+	INT_TO_HEX(hex, ch & 0x0f);
+	*out++ = hex;
 }
 
 gboolean is_uri_string(const gchar *str)
@@ -1620,6 +1638,26 @@ gchar *encode_uri(const gchar *filename)
 		uri = g_strconcat("file://", filename, NULL);
 
 	return uri;
+}
+
+gchar *uriencode_for_filename(const gchar *filename)
+{
+	const gchar *p = filename;
+	gchar *enc, *outp;
+
+	outp = enc = g_malloc(strlen(filename) * 3 + 1);
+
+	for (p = filename; *p != '\0'; p++) {
+		if (strchr("\t\r\n\"'\\/:;*?<>|", *p)) {
+			*outp++ = '%';
+			get_hex_str(outp, *p);
+			outp += 2;
+		} else
+			*outp++ = *p;
+	}
+
+	*outp = '\0';
+	return enc;
 }
 
 gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
