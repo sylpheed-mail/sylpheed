@@ -875,13 +875,15 @@ gchar *folder_get_path(Folder *folder)
 			path = path_;
 		}
 	} else if (FOLDER_TYPE(folder) == F_IMAP) {
+		gchar *uid;
+
 		g_return_val_if_fail(folder->account != NULL, NULL);
+		uid = uriencode_for_filename(folder->account->userid);
 		path = g_strconcat(get_imap_cache_dir(),
 				   G_DIR_SEPARATOR_S,
 				   folder->account->recv_server,
-				   G_DIR_SEPARATOR_S,
-				   folder->account->userid,
-				   NULL);
+				   G_DIR_SEPARATOR_S, uid, NULL);
+		g_free(uid);
 	} else if (FOLDER_TYPE(folder) == F_NEWS) {
 		g_return_val_if_fail(folder->account != NULL, NULL);
 		path = g_strconcat(get_news_cache_dir(),

@@ -1713,7 +1713,7 @@ static void prefs_junk_preset_activated(GtkMenuItem *menuitem, gpointer data)
 {
 	gint i;
 
-	i = (gint)g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID);
+	i = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
 	if (i > 0) {
 		i--;
 		gtk_entry_set_text(GTK_ENTRY(junk.entry_junk_learncmd),
