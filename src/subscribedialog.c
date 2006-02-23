@@ -408,7 +408,7 @@ static gboolean subscribe_create_branch(NewsGroupInfo *ginfo,
 {
 	GtkTreeIter iter_;
 	GtkTreeIter parent;
-	gchar *name = (gchar *)ginfo->name;
+	const gchar *name = ginfo->name;
 	gchar *parent_name;
 	gint count;
 	const gchar *count_str;
@@ -442,7 +442,7 @@ static gboolean subscribe_create_branch(NewsGroupInfo *ginfo,
 	}
 
 	gtk_tree_store_set(tree_store, &iter_,
-			   SUBSCRIBE_NAME, ginfo->name,
+			   SUBSCRIBE_NAME, name,
 			   SUBSCRIBE_NUM, count_str,
 			   SUBSCRIBE_TYPE, type_str,
 			   SUBSCRIBE_INFO, ginfo,
@@ -502,6 +502,9 @@ static void subscribe_dialog_set_list(const gchar *pattern, gboolean refresh)
 	for (cur = group_list; cur != NULL ; cur = cur->next) {
 		NewsGroupInfo *ginfo = (NewsGroupInfo *)cur->data;
 		GtkTreeIter iter;
+
+		if (!ginfo->name || !is_ascii_str(ginfo->name))
+			continue;
 
 		if (g_slist_find_custom(subscribe_list, ginfo->name,
 					(GCompareFunc)g_ascii_strcasecmp)
