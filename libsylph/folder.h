@@ -154,7 +154,7 @@ struct _FolderClass
 	GSList * (*get_msg_list)	(Folder		*folder,
 					 FolderItem	*item,
 					 gboolean	 use_cache);
-	/* return value is locale charset */
+	/* return value is filename encoding */
 	gchar *  (*fetch_msg)		(Folder		*folder,
 					 FolderItem	*item,
 					 gint		 num);
@@ -354,7 +354,7 @@ FolderItem *folder_get_default_trash	(void);
 void folder_set_missing_folders		(void);
 void folder_unref_account_all		(PrefsAccount	*account);
 
-/* return value is locale encoded file name */
+/* return value is filename encoding */
 gchar *folder_get_path			(Folder		*folder);
 gchar *folder_item_get_path		(FolderItem	*item);
 
@@ -362,7 +362,7 @@ gint   folder_item_scan			(FolderItem	*item);
 void   folder_item_scan_foreach		(GHashTable	*table);
 GSList *folder_item_get_msg_list	(FolderItem	*item,
 					 gboolean	 use_cache);
-/* return value is locale charset */
+/* return value is filename encoding */
 gchar *folder_item_fetch_msg		(FolderItem	*item,
 					 gint		 num);
 gint   folder_item_fetch_all_msg	(FolderItem	*item);
@@ -389,9 +389,11 @@ gint   folder_item_remove_msg		(FolderItem	*item,
 gint   folder_item_remove_msgs		(FolderItem	*item,
 					 GSList		*msglist);
 gint   folder_item_remove_all_msg	(FolderItem	*item);
+
 gboolean folder_item_is_msg_changed	(FolderItem	*item,
 					 MsgInfo	*msginfo);
-/* return value is locale chaset */
+
+/* return value is filename encoding */
 gchar *folder_item_get_cache_file	(FolderItem	*item);
 gchar *folder_item_get_mark_file	(FolderItem	*item);
 
