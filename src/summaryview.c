@@ -5043,6 +5043,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	gtk_tree_store_clear(summaryview->store);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
 				GTK_TREE_MODEL(summaryview->store));
+	gtkut_tree_sortable_unset_sort_column_id
+		 (GTK_TREE_SORTABLE(summaryview->store));
 	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, summaryview->all_mlist);
 	summary_selection_list_free(summaryview);
@@ -5158,6 +5160,8 @@ void summary_qsearch(SummaryView *summaryview)
 	gtk_tree_store_clear(summaryview->store);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
 				GTK_TREE_MODEL(summaryview->store));
+	gtkut_tree_sortable_unset_sort_column_id
+		 (GTK_TREE_SORTABLE(summaryview->store));
 	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, flt_mlist);
 	summary_selection_list_free(summaryview);

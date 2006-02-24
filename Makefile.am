@@ -3,6 +3,7 @@ SUBDIRS = ac libsylph src po manual faq
 EXTRA_DIST = config.rpath  \
 	ChangeLog.ja \
 	INSTALL.ja \
+	README.es \
 	README.ja \
 	TODO.ja \
 	ChangeLog-1.0 \
