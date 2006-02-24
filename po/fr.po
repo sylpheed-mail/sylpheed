@@ -8,14 +8,14 @@
 # Updated 2002-01-07 by : Melvin Hadasht <melvin.hadasht@free.fr>
 # Updated 2002-04-20 by : François Barrière <barriere.francois@libertyrsurf.fr>
 # Updated by : P`tit Lu <ptitlu@ptitlu.org>
-# Nicolas Boos <nicolas.boos@wanadoo.fr>, 2003,2004,2005.
+# Nicolas Boos <nicolas.boos@wanadoo.fr>, 2003,2004,2005,2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-13 11:31+0900\n"
-"PO-Revision-Date: 2005-08-08 23:57+0100\n"
+"POT-Creation-Date: 2006-02-24 17:54+0900\n"
+"PO-Revision-Date: 2006-02-23 00:32+0100\n"
 "Last-Translator: Nicolas Boos <nicolas.boos@wanadoo.fr>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,29 +45,29 @@ msgid "Can't start TLS session.\n"
 msgstr "Impossible d'initier la session TLS.\n"
 
 #: libsylph/imap.c:1115
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %d"
-msgstr "Suppression du message %d"
+msgstr "Réception du message %d"
 
 #: libsylph/imap.c:1231
-#, fuzzy, c-format
+#, c-format
 msgid "Appending messages to %s (%d / %d)"
-msgstr "Envoi du message (%d / %d octets)"
+msgstr "Ajout des messages à %s (%d / %d)"
 
 #: libsylph/imap.c:1323
-#, fuzzy, c-format
+#, c-format
 msgid "Moving messages %s to %s ..."
-msgstr "Copie du message %s%c%d vers %s ...\n"
+msgstr "Déplacement des messages de %s vers %s ..."
 
 #: libsylph/imap.c:1329
-#, fuzzy, c-format
+#, c-format
 msgid "Copying messages %s to %s ..."
-msgstr "Copie du message %s%c%d vers %s ...\n"
+msgstr "Copie des messages de %s vers %s ..."
 
 #: libsylph/imap.c:1468
-#, fuzzy, c-format
+#, c-format
 msgid "Removing messages %s"
-msgstr "Réception des messages de %s..."
+msgstr "Effacement des messages %s"
 
 #: libsylph/imap.c:1474
 #, c-format
@@ -79,9 +79,9 @@ msgid "can't expunge\n"
 msgstr "impossible de purger\n"
 
 #: libsylph/imap.c:1565
-#, fuzzy, c-format
+#, c-format
 msgid "Removing all messages in %s"
-msgstr "Réception des messages de %s..."
+msgstr "Effacement de tous les messages dans %s"
 
 #: libsylph/imap.c:1571
 msgid "can't set deleted flags: 1:*\n"
@@ -132,9 +132,9 @@ msgid "can't get envelope\n"
 msgstr "Impossible de faire une enveloppe\n"
 
 #: libsylph/imap.c:2327
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message headers (%d / %d)"
-msgstr "Envoi du message (%d / %d octets)"
+msgstr "Réception des en-têtes de message (%d / %d)"
 
 #: libsylph/imap.c:2337
 msgid "error occurred while getting envelope.\n"
@@ -165,9 +165,8 @@ msgid "can't select folder: %s\n"
 msgstr "Impossible de sélectionner le dossier : %s\n"
 
 #: libsylph/imap.c:3128
-#, fuzzy
 msgid "error on imap command: STATUS\n"
-msgstr "erreur avec la commande IMAP : CLOSE\n"
+msgstr "erreur avec la commande IMAP : STATUS\n"
 
 #: libsylph/imap.c:3271
 msgid "IMAP4 authentication failed.\n"
@@ -466,41 +465,41 @@ msgstr "Erreur de protocole POP3\n"
 msgid "invalid UIDL response: %s\n"
 msgstr "réponse UIDL invalide : %s\n"
 
-#: libsylph/pop.c:617
+#: libsylph/pop.c:623
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Suppression du message expiré %d\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Message ignoré %d (%d octets)\n"
 
-#: libsylph/pop.c:656
+#: libsylph/pop.c:662
 msgid "mailbox is locked\n"
 msgstr "La boîte aux lettres est verrouillée\n"
 
-#: libsylph/pop.c:659
+#: libsylph/pop.c:665
 msgid "session timeout\n"
 msgstr "dépassement du délai de réponse (timeout) de la session\n"
 
-#: libsylph/pop.c:665 libsylph/smtp.c:561
+#: libsylph/pop.c:671 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "échec lors de l'ouverture de la session TLS\n"
 
 #
-#: libsylph/pop.c:672 libsylph/smtp.c:496
+#: libsylph/pop.c:678 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
-msgstr "Erreur lors de l'authorisation\n"
+msgstr "une erreur est survenue pendant la phase d'authentification\n"
 
-#: libsylph/pop.c:677
+#: libsylph/pop.c:683
 msgid "command not supported\n"
 msgstr "commande non supportée\n"
 
 #
-#: libsylph/pop.c:681
+#: libsylph/pop.c:687
 msgid "error occurred on POP3 session\n"
-msgstr "Une erreur est survenue pendant la session POP3\n"
+msgstr "une erreur est survenue pendant la session POP3\n"
 
 #: libsylph/prefs.c:196 libsylph/prefs.c:224 libsylph/prefs.c:269
 #: libsylph/prefs_account.c:217 libsylph/prefs_account.c:231
@@ -613,12 +612,12 @@ msgstr "  Sujet : %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Délivré par : %s\n"
 
-#: libsylph/utils.c:2373 src/compose.c:2869 src/compose.c:3132
+#: libsylph/utils.c:2411 src/compose.c:2869 src/compose.c:3132
 #: src/compose.c:3195 src/compose.c:3315
 msgid "can't change file mode\n"
 msgstr "impossible de modifier les droits d'accès du fichier\n"
 
-#: libsylph/utils.c:2380 libsylph/utils.c:2504
+#: libsylph/utils.c:2418 libsylph/utils.c:2542
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "L'écriture dans %s a échoué.\n"
@@ -1294,9 +1293,8 @@ msgid "/_File/Insert si_gnature"
 msgstr "/_Fichier/Insérer la si_gnature"
 
 #: src/compose.c:530
-#, fuzzy
 msgid "/_File/A_ppend signature"
-msgstr "/_Fichier/Insérer la si_gnature"
+msgstr "/_Fichier/_Ajouter la signature"
 
 #: src/compose.c:535
 msgid "/_Edit/_Undo"
@@ -1432,14 +1430,12 @@ msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/_Affichage/_Jeu de caractères/Grec (ISO-8859-_7)"
 
 #: src/compose.c:598 src/mainwindow.c:643 src/messageview.c:188
-#, fuzzy
 msgid "/_View/Character _encoding/Arabic (ISO-8859-_6)"
-msgstr "/_Affichage/_Jeu de caractères/Europe du Nord (ISO-8859-_4)"
+msgstr "/_Affichage/_Jeu de caractères/Arabe (ISO-8859-_6)"
 
 #: src/compose.c:600 src/mainwindow.c:645 src/messageview.c:190
-#, fuzzy
 msgid "/_View/Character _encoding/Arabic (Windows-1256)"
-msgstr "/_Affichage/_Jeu de caractères/Cyrillique (Windows-1251)"
+msgstr "/_Affichage/_Jeu de caractères/Arabe (Windows-1256)"
 
 #: src/compose.c:604 src/mainwindow.c:649 src/messageview.c:193
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
@@ -1529,14 +1525,12 @@ msgid "/_Tools/PGP _Encrypt"
 msgstr "/_Outils/_Chiffrer"
 
 #: src/compose.c:662
-#, fuzzy
 msgid "/_Tools/_Check spell"
-msgstr "/_Outils/E_xécuter"
+msgstr "/_Outils/_Vérifier l'orthographe"
 
 #: src/compose.c:663
-#, fuzzy
 msgid "/_Tools/_Set spell language"
-msgstr "/_Outils/_Modèle"
+msgstr "/_Outils/_Définir la langue du message"
 
 #: src/compose.c:910
 #, c-format
@@ -1592,9 +1586,9 @@ msgid "(No Subject)"
 msgstr "(Pas de sujet)"
 
 #: src/compose.c:2510
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Compose%s"
-msgstr "%s - Composition d'un message%s"
+msgstr "%s - Composition%s"
 
 #: src/compose.c:2623
 msgid "Recipient is not specified."
@@ -1761,9 +1755,8 @@ msgid "Signature"
 msgstr "Signature"
 
 #: src/compose.c:4748
-#, fuzzy
 msgid "Append signature"
-msgstr "MAUVAISE signature"
+msgstr "Ajouter la signature"
 
 #. editor
 #: src/compose.c:4757 src/prefs_common_dialog.c:991
@@ -1813,14 +1806,13 @@ msgid "External editor command line is invalid: `%s'\n"
 msgstr "La ligne de commande pour l'éditeur externe est invalide : « %s »\n"
 
 #: src/compose.c:5497
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The external editor is still working.\n"
 "Force terminating the process (pid: %d)?\n"
 msgstr ""
 "L'éditeur externe est encore ouvert.\n"
-"Forcer sa fermeture ?\n"
-"id de traitement de groupe: %d"
+"Forcer sa fermeture (id de traitement de groupe : %d) ?\n"
 
 #: src/compose.c:5872 src/compose.c:5877 src/compose.c:5883
 msgid "Can't queue the message."
@@ -2189,9 +2181,8 @@ msgid "Overwrite existing file?"
 msgstr "Remplacer le fichier existant ?"
 
 #: src/filesel.c:159
-#, fuzzy
 msgid "Select directory"
-msgstr "Choix d'un dossier"
+msgstr "Sélectionnez un dossier"
 
 #: src/foldersel.c:230
 msgid "Select folder"
@@ -2266,9 +2257,8 @@ msgid "/R_ebuild folder tree"
 msgstr "/Reconstruire l'_arborescence"
 
 #: src/folderview.c:252 src/folderview.c:274 src/folderview.c:294
-#, fuzzy
 msgid "/_Update summary"
-msgstr "/_Affichage/Mettre à jo_ur le résumé des messages"
+msgstr "/Mettre à jo_ur le résumé des messages"
 
 #: src/folderview.c:254 src/folderview.c:276 src/folderview.c:296
 msgid "/_Search messages..."
@@ -2276,7 +2266,7 @@ msgstr "/Rechercher dans le _dossier..."
 
 #: src/folderview.c:255 src/folderview.c:277 src/folderview.c:297
 msgid "/Ed_it search condition..."
-msgstr ""
+msgstr "/Mod_ifier le motif de recherche..."
 
 #: src/folderview.c:269 src/folderview.c:290
 msgid "/Down_load"
@@ -2386,9 +2376,9 @@ msgid "Rename folder"
 msgstr "Changement de nom de dossier"
 
 #: src/folderview.c:2218 src/folderview.c:2226
-#, fuzzy, c-format
+#, c-format
 msgid "Can't rename the folder '%s'."
-msgstr "Impossible de supprimer le dossier « %s »."
+msgstr "Impossible de renommer le dossier « %s »."
 
 #: src/folderview.c:2296
 #, c-format
@@ -2396,21 +2386,20 @@ msgid "Can't move the folder `%s'."
 msgstr "Impossible de déplacer le dossier « %s »."
 
 #: src/folderview.c:2362
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
 "The real messages are not deleted."
 msgstr ""
-"Ne plus utiliser la boîte aux lettres « %s » (les\n"
-"messages existants ne seront PAS effacés du disque) ?"
+"Effacer le dossier de tri « %s » ?\n"
+"Les messages existants ne seront PAS effacés du disque."
 
 #: src/folderview.c:2364
-#, fuzzy
 msgid "Delete search folder"
-msgstr "Suppression de dossier"
+msgstr "Effacer le dossier de tri"
 
 #: src/folderview.c:2369
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
@@ -2418,21 +2407,22 @@ msgid ""
 "Do you really want to delete?"
 msgstr ""
 "Tous les dossiers et messages sous « %s » vont être définitivement effacés.\n"
+"Il n'y aura pas de récupération possible.\n"
+"\n"
 "Voulez-vous vraiment les effacer ?"
 
 #: src/folderview.c:2401 src/folderview.c:2407
-#, fuzzy, c-format
+#, c-format
 msgid "Can't remove the folder '%s'."
-msgstr "Impossible de supprimer le dossier « %s »."
+msgstr "Impossible d'effacer le dossier « %s »."
 
 #: src/folderview.c:2443
 msgid "Empty trash"
 msgstr "Vider la corbeille"
 
 #: src/folderview.c:2444
-#, fuzzy
 msgid "Delete all messages in the trash folder?"
-msgstr "Supprimer tous les messages dans la corbeille ?"
+msgstr "Effacer tous les messages dans la corbeille ?"
 
 #: src/folderview.c:2483
 #, c-format
@@ -2614,9 +2604,9 @@ msgid "Finish"
 msgstr "Terminé"
 
 #: src/inc.c:160
-#, fuzzy, c-format
+#, c-format
 msgid "Sylpheed: %d new messages"
-msgstr "Terminé - %d nouveau(x) message(s)"
+msgstr "Sylpheed : %d nouveau(x) message(s)"
 
 #: src/inc.c:372
 msgid "Retrieving new messages"
@@ -2875,11 +2865,12 @@ msgstr ""
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
+"  --configdir dossier    indiquer le dossier contenant les fichiers de "
+"configuration"
 
 #: src/main.c:375
-#, fuzzy
 msgid "  --exit                 exit Sylpheed"
-msgstr "  --debug                afficher les informations de mise au point"
+msgstr "  --exit                 quitter Sylpheed"
 
 #: src/main.c:376
 msgid "  --debug                debug mode"
@@ -3087,9 +3078,8 @@ msgstr ""
 "/_Affichage/Affic_her ou masquer/Barre d'_outils/_Pas de barre d'outils"
 
 #: src/mainwindow.c:546
-#, fuzzy
 msgid "/_View/Show or hi_de/_Search bar"
-msgstr "/_Affichage/Affic_her ou masquer/_Barre d'état"
+msgstr "/_Affichage/Affic_her ou masquer/_Barre de recherche"
 
 #: src/mainwindow.c:548
 msgid "/_View/Show or hi_de/Status _bar"
@@ -3120,9 +3110,8 @@ msgid "/_View/_Sort/by _date"
 msgstr "/_Affichage/_Trier/Trier par _date"
 
 #: src/mainwindow.c:558
-#, fuzzy
 msgid "/_View/_Sort/by t_hread date"
-msgstr "/_Affichage/_Trier/Trier par _date"
+msgstr "/_Affichage/_Trier/Trier par date (en_filades)"
 
 #: src/mainwindow.c:559
 msgid "/_View/_Sort/by _from"
@@ -3246,9 +3235,8 @@ msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/_Affichage/_Jeu de caractères/Détection _automatique"
 
 #: src/mainwindow.c:625 src/messageview.c:174
-#, fuzzy
 msgid "/_View/Character _encoding/Western European (Windows-1252)"
-msgstr "/_Affichage/_Jeu de caractères/Europe occidentale (ISO-8859-15)"
+msgstr "/_Affichage/_Jeu de caractères/Europe occidentale (Windows-1252)"
 
 #: src/mainwindow.c:671 src/messageview.c:212
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
@@ -3394,9 +3382,8 @@ msgid "/_Message/_Mark/Mark as rea_d"
 msgstr "/_Message/_Marque/Marquer comme _lu"
 
 #: src/mainwindow.c:747
-#, fuzzy
 msgid "/_Message/_Mark/Mark _thread as read"
-msgstr "/_Message/_Marque/Marquer comme _lu"
+msgstr "/_Message/_Marque/Marquer l'en_filade comme lue"
 
 #: src/mainwindow.c:749
 msgid "/_Message/_Mark/Mark all _read"
@@ -3547,9 +3534,8 @@ msgid "/_Help/_FAQ/_Italian"
 msgstr "/A_ide/_Foire Aux Questions (FAQ)/_Italien"
 
 #: src/mainwindow.c:822
-#, fuzzy
 msgid "/_Help/_Command line options"
-msgstr "La commande n'a pas été définie."
+msgstr "/A_ide/_Options de ligne de commande"
 
 #: src/mainwindow.c:823
 msgid "/_Help/---"
@@ -3595,9 +3581,8 @@ msgid "Empty all trash"
 msgstr "Vider toutes les corbeilles"
 
 #: src/mainwindow.c:1655
-#, fuzzy
 msgid "Delete all messages in trash folders?"
-msgstr "Supprimer tous les messages dans la corbeille ?"
+msgstr "Effacer tous les messages des corbeilles ?"
 
 #: src/mainwindow.c:1683
 msgid "Add mailbox"
@@ -3610,7 +3595,7 @@ msgid ""
 "If the existing mailbox is specified, it will be\n"
 "scanned automatically."
 msgstr ""
-"Saisissez le nom de la nouvelle boîte aux lettres. Si elle\n"
+"Saisissez l'emplacement de la nouvelle boîte aux lettres. Si elle\n"
 "existe déjà, elle sera automatiquement analysée."
 
 #: src/mainwindow.c:1690 src/setup.c:49
@@ -3775,14 +3760,12 @@ msgid "Exit this program?"
 msgstr "Quitter Sylpheed ?"
 
 #: src/mainwindow.c:3538
-#, fuzzy
 msgid "Command line options"
-msgstr "La commande n'a pas été définie."
+msgstr "Options de la ligne de commande"
 
 #: src/mainwindow.c:3551
-#, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
-msgstr "Utilisation : %s [OPTION]...\n"
+msgstr "Utilisation : sylpheed [OPTION]..."
 
 #: src/mainwindow.c:3559
 msgid ""
@@ -3799,6 +3782,18 @@ msgid ""
 "--help\n"
 "--version"
 msgstr ""
+"--compose [adresse]\n"
+"--attach fichier1 [fichier2]...\n"
+"--receive\n"
+"--receive-all\n"
+"--send\n"
+"--status [dossier]...\n"
+"--status-full [dossier]...\n"
+"--configdir dossier\n"
+"--exit\n"
+"--debug\n"
+"--help\n"
+"--version"
 
 #: src/mainwindow.c:3575
 msgid ""
@@ -3815,6 +3810,19 @@ msgid ""
 "display this help and exit\n"
 "output version information and exit"
 msgstr ""
+"ouvrir une fenêtre de composition de message\n"
+"ouvrir une fenêtre de composition de message avec comme pièce(s) jointe(s) le"
+"(s) fichier(s) spécifié(s)\n"
+"récupérer les nouveaux messages\n"
+"récupérer les nouveaux messages de tous les comptes\n"
+"envoyer les messages en attente\n"
+"afficher le nombre total de messages\n"
+"afficher l'état de chaque dossier\n"
+"indiquer le dossier contenant les fichiers de configuration\n"
+"quitter Sylpheed\n"
+"afficher les informations de mise au point\n"
+"afficher l'aide-mémoire\n"
+"afficher les informations de version"
 
 #: src/message_search.c:108
 msgid "Find in current message"
@@ -3867,7 +3875,7 @@ msgstr "Pièces jointes"
 
 #: src/messageview.c:380
 msgid "Message View - Sylpheed"
-msgstr ""
+msgstr "Fenêtre des messages - Sylpheed"
 
 #: src/messageview.c:699 src/summaryview.c:3436
 #, c-format
@@ -3876,12 +3884,11 @@ msgstr "Impossible d'enregistrer le fichier « %s »."
 
 #: src/messageview.c:758 src/summaryview.c:3459
 msgid "The message will be printed with the following command:"
-msgstr ""
+msgstr "Le message sera imprimer à l'aide de la commande suivante :"
 
 #: src/messageview.c:759 src/summaryview.c:3460
-#, fuzzy
 msgid "(Default print command)"
-msgstr "Commande d'apprentissage :"
+msgstr "(Commande d'impression par défaut)"
 
 #: src/messageview.c:761 src/prefs_common_dialog.c:2304 src/summaryview.c:3462
 msgid "Print"
@@ -3913,9 +3920,8 @@ msgid "/_Save as..."
 msgstr "/Enregistrer so_us..."
 
 #: src/mimeview.c:132
-#, fuzzy
 msgid "/Save _all..."
-msgstr "/Enregistrer so_us..."
+msgstr "/_Tout enregistrer..."
 
 #: src/mimeview.c:135
 msgid "/_Check signature"
@@ -3967,9 +3973,8 @@ msgid "Can't save the part of multipart message."
 msgstr "Impossible d'enregistrer une pièce d'un message multipart"
 
 #: src/mimeview.c:1055
-#, fuzzy
 msgid "Can't save the attachments."
-msgstr "Impossible d'enregistrer le fichier « %s »."
+msgstr "Impossible d'enregistrer les pièces jointes."
 
 #: src/mimeview.c:1108
 msgid "Open with"
@@ -3986,7 +3991,7 @@ msgstr ""
 
 #: src/mimeview.c:1147
 msgid "Opening executable file"
-msgstr ""
+msgstr "Ouverture du fichier exécutable"
 
 #: src/mimeview.c:1148
 msgid ""
@@ -3995,6 +4000,10 @@ msgid ""
 "If you want to launch it, save it to somewhere and make sure it is not an "
 "virus or something like a malicious program."
 msgstr ""
+"Ceci est un fichier exécutable. L'ouverture de ce type de fichiers est "
+"restreint pour des raisons de sécurité.\n"
+"Vous pouvez l'enregistrer quelque part pour le lancer vous-même, mais prenez "
+"les précautions d'usage (anti-virus, etc.)."
 
 #: src/mimeview.c:1184
 #, c-format
@@ -4154,9 +4163,8 @@ msgid "days"
 msgstr "jours"
 
 #: src/prefs_account_dialog.c:872
-#, fuzzy
 msgid "0 days: remove immediately"
-msgstr "(0 jours : supprimer immédiatement)"
+msgstr "0 jours : effacer immédiatement"
 
 #: src/prefs_account_dialog.c:882
 msgid "Download all messages on server"
@@ -4193,9 +4201,8 @@ msgid "Automatic"
 msgstr "Automatique"
 
 #: src/prefs_account_dialog.c:960
-#, fuzzy
 msgid "Only check INBOX on receiving"
-msgstr "Seulement lors d'une relève manuelle du courrier"
+msgstr "Vérifier seulement INBOX lors de la réception"
 
 #: src/prefs_account_dialog.c:962
 msgid "News"
@@ -4382,12 +4389,11 @@ msgstr "Répertoire IMAP4"
 
 #: src/prefs_account_dialog.c:1687
 msgid "Only the subfolders of this directory will be displayed."
-msgstr ""
+msgstr "Seuls les sous-dossiers de ce dossier seront affichés."
 
 #: src/prefs_account_dialog.c:1690
-#, fuzzy
 msgid "Clear all message caches on exit"
-msgstr "Réception de tous les messages sur le serveur"
+msgstr "Nettoyer les caches de message en quittant"
 
 #: src/prefs_account_dialog.c:1735
 msgid "Put sent messages in"
@@ -4398,9 +4404,8 @@ msgid "Put draft messages in"
 msgstr "Placer les brouillons dans"
 
 #: src/prefs_account_dialog.c:1739
-#, fuzzy
 msgid "Put queued messages in"
-msgstr "Placer les messages supprimés dans"
+msgstr "Placer les messages en attente d'envoi dans"
 
 #: src/prefs_account_dialog.c:1741
 msgid "Put deleted messages in"
@@ -4436,7 +4441,7 @@ msgstr "Serveur NNTP non indiqué."
 
 #: src/prefs_account_dialog.c:1860
 msgid "Specified folder is not a queue folder."
-msgstr ""
+msgstr "Le dossier indiqué n'est pas une file d'attente."
 
 #: src/prefs_account_dialog.c:1934
 msgid ""
@@ -4584,7 +4589,7 @@ msgstr "Courrier indésirable"
 
 #: src/prefs_common_dialog.c:673
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: src/prefs_common_dialog.c:727
 msgid "Auto-check new mail"
@@ -4702,18 +4707,16 @@ msgid "Wrap on input"
 msgstr "Justification automatique"
 
 #: src/prefs_common_dialog.c:1065
-#, fuzzy
 msgid "Auto-save to draft"
-msgstr "Enregistrer dans le dossier brouillon"
+msgstr "Enregistrer automatiquement dans le dossier des brouillons"
 
 #: src/prefs_common_dialog.c:1090
-#, fuzzy
 msgid "Format"
-msgstr "Normal"
+msgstr "Citation"
 
 #: src/prefs_common_dialog.c:1095
 msgid "Spell checking"
-msgstr ""
+msgstr "Orthographe"
 
 #. reply
 #: src/prefs_common_dialog.c:1145
@@ -4735,32 +4738,29 @@ msgstr " Description des symboles "
 
 #: src/prefs_common_dialog.c:1263
 msgid "Enable Spell checking"
-msgstr ""
+msgstr "Activer le vérificateur d'orthographe"
 
 #: src/prefs_common_dialog.c:1275
-#, fuzzy
 msgid "Default language:"
-msgstr "Boîte de réception par défaut"
+msgstr "Langue par défaut :"
 
 #: src/prefs_common_dialog.c:1342
-#, fuzzy
 msgid "Text font"
-msgstr "Texte"
+msgstr "Police du texte"
 
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1354
-#, fuzzy
 msgid "Folder View"
-msgstr "Dossier"
+msgstr "Fenêtre des dossiers"
 
 #: src/prefs_common_dialog.c:1362
 msgid "Display unread number next to folder name"
 msgstr "Afficher le nombre de messages non lus près du nom de dossier"
 
 #: src/prefs_common_dialog.c:1364
-#, fuzzy
 msgid "Display message number columns in the folder view"
-msgstr "Afficher le nombre de messages non lus près du nom de dossier"
+msgstr ""
+"Afficher les statistiques sur les messages dans la fenêtre des dossiers"
 
 #: src/prefs_common_dialog.c:1373
 msgid "Abbreviate newsgroups longer than"
@@ -4799,18 +4799,17 @@ msgid "Message"
 msgstr "Message"
 
 #: src/prefs_common_dialog.c:1450
-#, fuzzy
 msgid "Default character encoding"
-msgstr "/_Affichage/_Jeu de caractères"
+msgstr "Jeu de caractères par défaut"
 
 #: src/prefs_common_dialog.c:1464
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
+"Ceci est utilisé pour l'affichage de messages sans jeu de caractères associé."
 
 #: src/prefs_common_dialog.c:1470
-#, fuzzy
 msgid "Outgoing character encoding"
-msgstr "/_Affichage/_Jeu de caractères"
+msgstr "Jeu de caractères pour l'envoi"
 
 #: src/prefs_common_dialog.c:1484
 msgid ""
@@ -4893,9 +4892,8 @@ msgid "Learning command:"
 msgstr "Commande d'apprentissage :"
 
 #: src/prefs_common_dialog.c:1776
-#, fuzzy
 msgid "(Select preset)"
-msgstr "Sélection de clés"
+msgstr "(Sélectionnez le pré-réglage)"
 
 #: src/prefs_common_dialog.c:1801
 msgid "Not Junk"
@@ -4910,6 +4908,9 @@ msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
+"Une certaine période de temps d'apprentissage est nécessaire pour pouvoir "
+"faire automatiquement le tri entre courriers normaux et courriers "
+"indésirables."
 
 #: src/prefs_common_dialog.c:1837
 msgid "Junk folder"
@@ -4925,13 +4926,12 @@ msgid "Filter messages classified as junk on receiving"
 msgstr "Tri des messages détectés comme indésirables à la réception"
 
 #: src/prefs_common_dialog.c:1869
-#, fuzzy
 msgid "Delete junk mails from server on receiving"
-msgstr "Effacer du serveur"
+msgstr "Effacer les courriers indésirables du serveur lors de la réception"
 
 #: src/prefs_common_dialog.c:1873
 msgid "Mark filtered junk mails as read"
-msgstr ""
+msgstr "Marquer les courriers indésirables comme lus"
 
 #: src/prefs_common_dialog.c:1914
 msgid "Automatically check signatures"
@@ -4997,9 +4997,8 @@ msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "Mettre les boutons en conformité avec les « HIG » GNOME"
 
 #: src/prefs_common_dialog.c:2084
-#, fuzzy
 msgid "Display tray icon"
-msgstr "Nom affiché"
+msgstr "Afficher une icône dans la zone de notification"
 
 #: src/prefs_common_dialog.c:2091
 msgid " Set key bindings... "
@@ -5010,9 +5009,8 @@ msgid "Other"
 msgstr "Autres"
 
 #: src/prefs_common_dialog.c:2101
-#, fuzzy
 msgid "External commands"
-msgstr "Exécuter la commande"
+msgstr "Commande externes"
 
 #: src/prefs_common_dialog.c:2150
 msgid "Receive dialog"
@@ -5077,9 +5075,8 @@ msgstr "Navigateur web"
 
 #: src/prefs_common_dialog.c:2288 src/prefs_common_dialog.c:3778
 #: src/prefs_common_dialog.c:3799
-#, fuzzy
 msgid "(Default browser)"
-msgstr "Boîte de réception par défaut"
+msgstr "(Navigateur Web par défaut)"
 
 #: src/prefs_common_dialog.c:2341
 msgid "Use external program for incorporation"
@@ -5132,9 +5129,8 @@ msgid "Western European (ISO-8859-15)"
 msgstr "Europe occidentale (ISO-8859-15)"
 
 #: src/prefs_common_dialog.c:2484
-#, fuzzy
 msgid "Western European (Windows-1252)"
-msgstr "Europe occidentale (ISO-8859-15)"
+msgstr "Europe occidentale (Windows-1252)"
 
 #: src/prefs_common_dialog.c:2488
 msgid "Central European (ISO-8859-2)"
@@ -5153,14 +5149,12 @@ msgid "Greek (ISO-8859-7)"
 msgstr "Grec (ISO-8859-7)"
 
 #: src/prefs_common_dialog.c:2495
-#, fuzzy
 msgid "Arabic (ISO-8859-6)"
-msgstr "Europe du Nord (ISO-8859-4)"
+msgstr "Arabe (ISO-8859-6)"
 
 #: src/prefs_common_dialog.c:2496
-#, fuzzy
 msgid "Arabic (Windows-1256)"
-msgstr "Cyrillique (Windows-1251)"
+msgstr "Arabe (Windows-1256)"
 
 #: src/prefs_common_dialog.c:2498
 msgid "Hebrew (ISO-8859-8)"
@@ -5429,9 +5423,8 @@ msgid "Key bindings"
 msgstr "Raccourcis clavier"
 
 #: src/prefs_common_dialog.c:3276
-#, fuzzy
 msgid "Select the preset of key bindings."
-msgstr " Choisir les raccourcis clavier... "
+msgstr "Choisissez les raccourcis clavier."
 
 #: src/prefs_common_dialog.c:3286 src/prefs_common_dialog.c:3610
 msgid "Default"
@@ -5559,19 +5552,16 @@ msgid "Age"
 msgstr "Age"
 
 #: src/prefs_filter_edit.c:501 src/summaryview.c:512
-#, fuzzy
 msgid "Marked"
-msgstr "Marque"
+msgstr "Marqué"
 
 #: src/prefs_filter_edit.c:502
-#, fuzzy
 msgid "Has color label"
-msgstr "/Co_lorer"
+msgstr "Avec coloration"
 
 #: src/prefs_filter_edit.c:503
-#, fuzzy
 msgid "Has attachment"
-msgstr "Pièces jointes"
+msgstr "Avec pièce(s) jointe(s)"
 
 #: src/prefs_filter_edit.c:516
 msgid "contains"
@@ -5615,12 +5605,11 @@ msgstr "est plus court que"
 
 #: src/prefs_filter_edit.c:559
 msgid "matches to status"
-msgstr ""
+msgstr "vérifie l'état"
 
 #: src/prefs_filter_edit.c:560
-#, fuzzy
 msgid "doesn't match to status"
-msgstr "ne vérifie pas l'expression régulière"
+msgstr "ne vérifie pas l'état"
 
 #: src/prefs_filter_edit.c:662
 msgid "Move to"
@@ -5724,9 +5713,8 @@ msgid "Folder properties"
 msgstr "Propriétés du dossier"
 
 #: src/prefs_folder_item.c:186
-#, fuzzy
 msgid "Identifier"
-msgstr "Code"
+msgstr "Identifiant"
 
 #: src/prefs_folder_item.c:218 src/subscribedialog.c:294
 msgid "Type"
@@ -5759,7 +5747,7 @@ msgstr "Répondre à :"
 #: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
-msgstr ""
+msgstr "%s - Modifier le motif de recherche"
 
 #: src/prefs_search_folder.c:209 src/query_search.c:257
 msgid "Match any of the following"
@@ -5770,14 +5758,12 @@ msgid "Match all of the following"
 msgstr "Si toutes les conditions suivantes sont remplies"
 
 #: src/prefs_search_folder.c:231 src/query_search.c:303
-#, fuzzy
 msgid "Folder:"
-msgstr "Dossier"
+msgstr "Dossier :"
 
 #: src/prefs_search_folder.c:248 src/query_search.c:321
-#, fuzzy
 msgid "Search subfolders"
-msgstr "La recherche a échoué"
+msgstr "Rechercher dans les sous-dossiers"
 
 #: src/prefs_summary_column.c:70
 msgid "Mark"
@@ -5898,41 +5884,38 @@ msgid "Search messages"
 msgstr "Recherche dans le dossier"
 
 #: src/query_search.c:395
-#, fuzzy
 msgid "_Save as search folder"
-msgstr "Enregistrer dans le dossier brouillon"
+msgstr "_Enregistrer en tant que dossier de tri"
 
-#: src/query_search.c:512 src/subscribedialog.c:523 src/summaryview.c:842
+#: src/query_search.c:512 src/subscribedialog.c:526 src/summaryview.c:842
 msgid "Done."
 msgstr "Terminé."
 
 #: src/query_search.c:536
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s ..."
-msgstr "Analyse du dossier %s ..."
+msgstr "Recherche %s ..."
 
 #: src/query_search.c:564
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s (%d / %d)..."
-msgstr "Tri en cours..."
+msgstr "Recherche %s (%d / %d)..."
 
 #: src/query_search.c:645 src/summaryview.c:2051
 msgid "(No Date)"
 msgstr "(aucune date)"
 
 #: src/query_search.c:833
-#, fuzzy
 msgid "Save as search folder"
-msgstr "Enregistrer dans le dossier brouillon"
+msgstr "Enregistrer en tant que dossier de tri"
 
 #: src/query_search.c:854
 msgid "Location:"
-msgstr ""
+msgstr "Emplacement :"
 
 #: src/query_search.c:869
-#, fuzzy
 msgid "Folder name:"
-msgstr "Nom du fichier"
+msgstr "Nom du dossier :"
 
 #: src/rfc2015.c:140
 msgid "Cannot find user ID for this key."
@@ -6089,13 +6072,12 @@ msgid "Mailbox setting"
 msgstr "Paramètres de la boîte aux lettres"
 
 #: src/setup.c:44
-#, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
 "If you are unsure, just select OK."
 msgstr ""
-"Saisissez le nom de la nouvelle boîte aux lettres. Si elle\n"
-"existe déjà, elle sera automatiquement analysée."
+"Saisissez le nom de la boîte aux lettres. Si vous\n"
+"ne savez pas quoi mettre, appuyez directement sur OK."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -6229,15 +6211,14 @@ msgid "unknown"
 msgstr "inconnu"
 
 #: src/subscribedialog.c:481
-#, fuzzy
 msgid "Getting newsgroup list..."
-msgstr "Impossible d'obtenir la liste des groupes de discussion."
+msgstr "Récupération de la liste des groupes de discussion..."
 
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
 msgstr "Impossible d'obtenir la liste des groupes de discussion."
 
-#: src/subscribedialog.c:553
+#: src/subscribedialog.c:556
 #, c-format
 msgid "%d newsgroups received (%s read)"
 msgstr "%d groupes de discussion reçus (%s lu)"
@@ -6291,9 +6272,8 @@ msgid "/_Mark/Mark as rea_d"
 msgstr "/_Marquer/Marquer comme _lu"
 
 #: src/summaryview.c:429
-#, fuzzy
 msgid "/_Mark/Mark _thread as read"
-msgstr "/_Marquer/Marquer comme _lu"
+msgstr "/_Marquer/Marquer le _fil comme lu"
 
 #: src/summaryview.c:431
 msgid "/_Mark/Mark all _read"
@@ -6312,29 +6292,24 @@ msgid "/Add sender to address boo_k..."
 msgstr "_Ajouter l'expéditeur au carnet d'adresses..."
 
 #: src/summaryview.c:440
-#, fuzzy
 msgid "/Create f_ilter rule"
-msgstr "/_Outils/Créer une règle de f_iltrage"
+msgstr "/Créer une règle de f_iltrage"
 
 #: src/summaryview.c:441
-#, fuzzy
 msgid "/Create f_ilter rule/_Automatically"
-msgstr "/_Outils/Créer une règle de f_iltrage/automatiq_uement"
+msgstr "/Créer une règle de f_iltrage/automatiq_uement"
 
 #: src/summaryview.c:443
-#, fuzzy
 msgid "/Create f_ilter rule/by _From"
-msgstr "/_Outils/Créer une règle de f_iltrage/basée sur l'_expéditeur"
+msgstr "/Créer une règle de f_iltrage/basée sur l'_expéditeur"
 
 #: src/summaryview.c:445
-#, fuzzy
 msgid "/Create f_ilter rule/by _To"
-msgstr "/_Outils/Créer une règle de f_iltrage/basée sur le(s) _destinataire(s)"
+msgstr "/Créer une règle de f_iltrage/basée sur le(s) _destinataire(s)"
 
 #: src/summaryview.c:447
-#, fuzzy
 msgid "/Create f_ilter rule/by _Subject"
-msgstr "/_Outils/Créer une règle de f_iltrage/basée sur le _sujet"
+msgstr "/Créer une règle de f_iltrage/basée sur le _sujet"
 
 #: src/summaryview.c:453
 msgid "/_View/_Source"
@@ -6354,26 +6329,23 @@ msgstr "Création de la vue de l'index...\n"
 
 #: src/summaryview.c:510
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #: src/summaryview.c:513
-#, fuzzy
 msgid "Have color label"
-msgstr "/Co_lorer"
+msgstr "Avec coloration"
 
 #: src/summaryview.c:514
-#, fuzzy
 msgid "Have attachment"
-msgstr "Pièces jointes"
+msgstr "Avec pièce(s) jointe(s)"
 
 #: src/summaryview.c:523
-#, fuzzy
 msgid "Search:"
-msgstr " Rechercher "
+msgstr "Rechercher :"
 
 #: src/summaryview.c:537
 msgid "Search for Subject or From"
-msgstr ""
+msgstr "Recherche dans les sujets ou expéditeurs"
 
 #: src/summaryview.c:704
 msgid "Process mark"
@@ -6580,9 +6552,9 @@ msgid "Unthreading..."
 msgstr "Suppression des threads..."
 
 #: src/summaryview.c:4259 src/summaryview.c:4315
-#, fuzzy, c-format
+#, c-format
 msgid "Filtering (%d / %d)..."
-msgstr "Tri en cours..."
+msgstr "Filtrage (%d / %d)..."
 
 #: src/summaryview.c:4364
 msgid "filtering..."
@@ -6655,34 +6627,28 @@ msgid "Fake URL warning"
 msgstr "Localisateur (URL) suspect"
 
 #: src/trayicon.c:100
-#, fuzzy
 msgid "Get from _current account"
-msgstr "/_Message/Réce_ptionner/le courrier du _compte courant"
+msgstr "Réceptionner le courrier du _compte courant"
 
 #: src/trayicon.c:104
-#, fuzzy
 msgid "Get from _all accounts"
-msgstr "/_Message/Réce_ptionner/le courrier de _tous les comptes"
+msgstr "Réceptionner le courrier de _tous les comptes"
 
 #: src/trayicon.c:108
-#, fuzzy
 msgid "_Send queued messages"
-msgstr "Envoyer les messages en attente"
+msgstr "_Envoyer les messages en attente"
 
 #: src/trayicon.c:120
-#, fuzzy
 msgid "_About"
-msgstr "À propos"
+msgstr "À _propos"
 
 #: src/trayicon.c:124
-#, fuzzy
 msgid "E_xit"
-msgstr "Quitter"
+msgstr "_Quitter"
 
 #: src/trayicon.c:139
-#, fuzzy
 msgid "Sylpheed"
-msgstr "Ancien Sylpheed"
+msgstr "Sylpheed"
 
 #~ msgid "%dB"
 #~ msgstr "%d o"
