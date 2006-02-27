@@ -3274,8 +3274,49 @@ gchar *file_read_stream_to_str(FILE *fp)
 	return str;
 }
 
+#if defined(G_OS_WIN32) && !GLIB_CHECK_VERSION(2, 8, 2)
+static gchar **argv_utf8_to_locale(gchar **argv)
+{
+	gint argc = 0, i;
+	gchar **cp_argv;
+
+	while (argv[argc] != NULL)
+		argc++;
+
+	cp_argv = g_new(gchar *, argc + 1);
+
+	for (i = 0; i < argc; i++) {
+		cp_argv[i] = g_locale_from_utf8(argv[i], -1, NULL, NULL, NULL);
+		if (cp_argv[i] == NULL) {
+			g_warning("Failed to convert from UTF-8 to locale encoding: %s\n", argv[i]);
+			g_strfreev(cp_argv);
+			return NULL;
+		}
+	}
+	cp_argv[i] = NULL;
+
+	return cp_argv;
+}
+#endif
+
 gint execute_async(gchar *const argv[])
 {
+#if defined(G_OS_WIN32) && !GLIB_CHECK_VERSION(2, 8, 2)
+	gchar **cp_argv;
+
+	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
+
+	cp_argv = argv_utf8_to_locale((gchar **)argv);
+	if (!cp_argv)
+		return -1;
+	if (g_spawn_async(NULL, cp_argv, NULL, G_SPAWN_SEARCH_PATH,
+			  NULL, NULL, NULL, NULL) == FALSE) {
+		g_warning("Can't execute command: %s\n", argv[0]);
+		g_strfreev(cp_argv);
+		return -1;
+	}
+	g_strfreev(cp_argv);
+#else
 	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
 
 	if (g_spawn_async(NULL, (gchar **)argv, NULL, G_SPAWN_SEARCH_PATH,
@@ -3283,6 +3324,7 @@ gint execute_async(gchar *const argv[])
 		g_warning("Can't execute command: %s\n", argv[0]);
 		return -1;
 	}
+#endif
 
 	return 0;
 }
@@ -3290,10 +3332,27 @@ gint execute_async(gchar *const argv[])
 gint execute_sync(gchar *const argv[])
 {
 	gint status;
+#if defined(G_OS_WIN32) && !GLIB_CHECK_VERSION(2, 8, 2)
+	gchar **cp_argv;
+#endif
 
 	g_return_val_if_fail(argv != NULL && argv[0] != NULL, -1);
 
 #ifdef G_OS_WIN32
+#if !GLIB_CHECK_VERSION(2, 8, 2)
+	cp_argv = argv_utf8_to_locale((gchar **)argv);
+	if (!cp_argv)
+		return -1;
+	if (g_spawn_sync(NULL, cp_argv, NULL,
+			 G_SPAWN_SEARCH_PATH | G_SPAWN_CHILD_INHERITS_STDIN |
+			 G_SPAWN_LEAVE_DESCRIPTORS_OPEN,
+			 NULL, NULL, NULL, NULL, &status, NULL) == FALSE) {
+		g_warning("Can't execute command: %s\n", argv[0]);
+		g_strfreev(cp_argv);
+		return -1;
+	}
+	g_strfreev(cp_argv);
+#else /* !GLIB_CHECK_VERSION */
 	if (g_spawn_sync(NULL, (gchar **)argv, NULL,
 			 G_SPAWN_SEARCH_PATH | G_SPAWN_CHILD_INHERITS_STDIN |
 			 G_SPAWN_LEAVE_DESCRIPTORS_OPEN,
@@ -3301,9 +3360,10 @@ gint execute_sync(gchar *const argv[])
 		g_warning("Can't execute command: %s\n", argv[0]);
 		return -1;
 	}
+#endif /* !GLIB_CHECK_VERSION */
 
 	return status;
-#else
+#else /* G_OS_WIN32 */
 	if (g_spawn_sync(NULL, (gchar **)argv, NULL, G_SPAWN_SEARCH_PATH,
 			 NULL, NULL, NULL, NULL, &status, NULL) == FALSE) {
 		g_warning("Can't execute command: %s\n", argv[0]);
@@ -3314,7 +3374,7 @@ gint execute_sync(gchar *const argv[])
 		return WEXITSTATUS(status);
 	else
 		return -1;
-#endif
+#endif /* G_OS_WIN32 */
 }
 
 gint execute_command_line(const gchar *cmdline, gboolean async)
