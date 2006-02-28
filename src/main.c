@@ -89,6 +89,7 @@
 
 #ifdef G_OS_WIN32
 #  include <windows.h>
+#  include <fcntl.h>
 #endif
 
 #include "version.h"
@@ -264,14 +265,46 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+static void init_console(void)
+{
+#ifdef G_OS_WIN32
+	gint fd;
+	FILE *fp;
+
+	if (!AllocConsole()) {
+		g_warning("AllocConsole() failed\n");
+		return;
+	}
+
+	fd = _open_osfhandle((glong)GetStdHandle(STD_OUTPUT_HANDLE), _O_TEXT);
+	_dup2(fd, 1);
+	fp = _fdopen(fd, "w");
+	*stdout = *fp;
+	setvbuf(stdout, NULL, _IONBF, 0);
+	fd = _open_osfhandle((glong)GetStdHandle(STD_ERROR_HANDLE), _O_TEXT);
+	_dup2(fd, 2);
+	fp = _fdopen(fd, "w");
+	*stderr = *fp;
+	setvbuf(stderr, NULL, _IONBF, 0);
+#endif
+}
+
+static void cleanup_console(void)
+{
+#ifdef G_OS_WIN32
+	FreeConsole();
+#endif
+}
+
 static void parse_cmd_opt(int argc, char *argv[])
 {
 	gint i;
 
 	for (i = 1; i < argc; i++) {
-		if (!strncmp(argv[i], "--debug", 7))
+		if (!strncmp(argv[i], "--debug", 7)) {
+			init_console();
 			set_debug_mode(TRUE);
-		else if (!strncmp(argv[i], "--receive-all", 13))
+		} else if (!strncmp(argv[i], "--receive-all", 13))
 			cmd.receive_all = TRUE;
 		else if (!strncmp(argv[i], "--receive", 9))
 			cmd.receive = TRUE;
@@ -358,6 +391,8 @@ static void parse_cmd_opt(int argc, char *argv[])
 		} else if (!strncmp(argv[i], "--exit", 6)) {
 			cmd.exit = TRUE;
 		} else if (!strncmp(argv[i], "--help", 6)) {
+			init_console();
+
 			g_print(_("Usage: %s [OPTION]...\n"),
 				g_basename(argv[0]));
 
@@ -377,6 +412,13 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print("%s\n", _("  --help                 display this help and exit"));
 			g_print("%s\n", _("  --version              output version information and exit"));
 
+#ifdef G_OS_WIN32
+			g_print("\n");
+			g_print(_("Press any key..."));
+			_getch();
+#endif
+
+			cleanup_console();
 			exit(1);
 		}
 	}
@@ -632,6 +674,7 @@ void app_will_exit(gboolean force)
 	ssl_done();
 #endif
 
+	cleanup_console();
 	sock_cleanup();
 
 	if (gtk_main_level() > 0)
