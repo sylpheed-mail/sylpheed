@@ -29,6 +29,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "alertpanel.h"
+#include "mainwindow.h"
 #include "manage_window.h"
 #include "utils.h"
 #include "gtkutils.h"
@@ -169,9 +170,24 @@ void alertpanel_error(const gchar *format, ...)
 
 static void alertpanel_show(void)
 {
+	gint x, y, w, h, sx, sy;
 	value = G_ALERTWAIT;
 
 	inc_lock();
+
+	sx = gdk_screen_width();
+	sy = gdk_screen_height();
+	gdk_window_get_origin(dialog->window, &x, &y);
+	w = dialog->allocation.width;
+	h = dialog->allocation.height;
+	if (x < 0 || y < 0 || x + w > sx || y + h > sy) {
+		debug_print("sx, sy,  x, y,  w, h = %d, %d,  %d, %d,  %d, %d\n",
+			    sx, sy, x, y, w, h);
+		debug_print("alert dialog position out of range\n");
+		gtk_window_set_position(GTK_WINDOW(dialog),
+					GTK_WIN_POS_CENTER_ALWAYS);
+	}
+
 	while ((value & G_ALERT_VALUE_MASK) == G_ALERTWAIT)
 		gtk_main_iteration();
 
