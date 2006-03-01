@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-24 17:54+0900\n"
+"POT-Creation-Date: 2006-03-01 17:48+0900\n"
 "PO-Revision-Date: 2004-01-22 17:46+0100\n"
 "Last-Translator: Andrej Kacian <andrej@kacian.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -319,7 +319,7 @@ msgstr "Kopírujem správu %s%c%d do %s ...\n"
 msgid "Last number in dir %s = %d\n"
 msgstr "Posledné číslo v priečinku %s = %d\n"
 
-#: libsylph/mh.c:867 libsylph/mh.c:880 src/main.c:146
+#: libsylph/mh.c:867 libsylph/mh.c:880 src/main.c:147
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -1183,23 +1183,23 @@ msgstr "Spoločná adresa"
 msgid "Personal address"
 msgstr "Súkromná adresa"
 
-#: src/alertpanel.c:141 src/compose.c:5500 src/main.c:573
+#: src/alertpanel.c:142 src/compose.c:5500 src/main.c:621
 msgid "Notice"
 msgstr "Upozornenie"
 
-#: src/alertpanel.c:154 src/main.c:683
+#: src/alertpanel.c:155 src/main.c:732
 msgid "Warning"
 msgstr "Varovanie"
 
-#: src/alertpanel.c:167 src/inc.c:587
+#: src/alertpanel.c:168 src/inc.c:587
 msgid "Error"
 msgstr "Chyba"
 
-#: src/alertpanel.c:207
+#: src/alertpanel.c:223
 msgid "Creating alert panel dialog...\n"
 msgstr "Vytváram dialóg pre varovania...\n"
 
-#: src/alertpanel.c:291
+#: src/alertpanel.c:307
 msgid "Show this message next time"
 msgstr "Zobraziť túto správu nabudúce"
 
@@ -2843,20 +2843,20 @@ msgstr "Zadajte heslo"
 msgid "Protocol log"
 msgstr "Záznam protokolu"
 
-#: src/main.c:192
+#: src/main.c:193
 msgid "g_thread is not supported by glib.\n"
 msgstr "glib nepodporuje g_thread.\n"
 
-#: src/main.c:361
+#: src/main.c:402
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Použitie: %s [VOĽBY]...\n"
 
-#: src/main.c:364
+#: src/main.c:405
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresa]    otvorí okno pre písanie novej správy"
 
-#: src/main.c:365
+#: src/main.c:406
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2867,23 +2867,23 @@ msgstr ""
 "uvedenými\n"
 "                         súbormi"
 
-#: src/main.c:368
+#: src/main.c:409
 msgid "  --receive              receive new messages"
 msgstr "  --receive              prijme nové správy"
 
-#: src/main.c:369
+#: src/main.c:410
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          prijme nové správy pre všetky kontá"
 
-#: src/main.c:370
+#: src/main.c:411
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 pošle všetky správy vo výstupnej fronte"
 
-#: src/main.c:371
+#: src/main.c:412
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [priečinok]...   zobrazí celkový počet správ"
 
-#: src/main.c:372
+#: src/main.c:413
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2891,35 +2891,42 @@ msgstr ""
 "  --status-full [priečinok]...\n"
 "                        zobrazí stav jednotlivých priečinkov"
 
-#: src/main.c:374
+#: src/main.c:415
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:375
+#: src/main.c:416
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                ladiaci mód"
 
-#: src/main.c:376
+#: src/main.c:417
 msgid "  --debug                debug mode"
 msgstr "  --debug                ladiaci mód"
 
-#: src/main.c:377
+#: src/main.c:418
 msgid "  --help                 display this help and exit"
 msgstr "  --help                zobrazí túto nápovedu a ukončí program"
 
-#: src/main.c:378
+#: src/main.c:419
 msgid "  --version              output version information and exit"
 msgstr ""
 "  --version                zobrazí informácie o verzii a ukončí program"
 
-#: src/main.c:517
+#: src/main.c:423
+#, fuzzy
+msgid "Press any key..."
+msgstr ""
+"alebo stlačte klávesu 'y'.\n"
+"\n"
+
+#: src/main.c:565
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Výstupné kódovanie znakov"
 
-#: src/main.c:518
+#: src/main.c:566
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2933,19 +2940,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:574
+#: src/main.c:622
 msgid "Composing message exists. Really quit?"
 msgstr "Máte rozpísanú správu. Naozaj ukončiť?"
 
-#: src/main.c:585
+#: src/main.c:633
 msgid "Queued messages"
 msgstr "Správy vo fronte"
 
-#: src/main.c:586
+#: src/main.c:634
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Vo fronte sú neodoslané správy. Ukončiť program?"
 
-#: src/main.c:684
+#: src/main.c:733
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2954,16 +2961,16 @@ msgstr ""
 "Podpora OpenPGP je vypnutá."
 
 #. remote command mode
-#: src/main.c:847
+#: src/main.c:896
 msgid "another Sylpheed is already running.\n"
 msgstr "už beží iná kópia Sylpheedu.\n"
 
-#: src/main.c:1083
+#: src/main.c:1132
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Nastavenie akcií"
 
-#: src/main.c:1084
+#: src/main.c:1133
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6981,13 +6988,6 @@ msgstr "Starší Sylpheed"
 
 #~ msgid "right click and select `Save as...', "
 #~ msgstr "pravým tlačítkom myši a vyberte 'Uložiť ako...', "
-
-#~ msgid ""
-#~ "or press `y' key.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "alebo stlačte klávesu 'y'.\n"
-#~ "\n"
 
 #~ msgid "To display this part as a text message, select "
 #~ msgstr "Pre zobrazenie tejto časti v podobe textovej správy, vyberte "
