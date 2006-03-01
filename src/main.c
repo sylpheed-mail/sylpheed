@@ -270,6 +270,10 @@ static void init_console(void)
 #ifdef G_OS_WIN32
 	gint fd;
 	FILE *fp;
+	static gboolean init_console_done = FALSE;
+
+	if (init_console_done)
+		return;
 
 	if (!AllocConsole()) {
 		g_warning("AllocConsole() failed\n");
@@ -286,6 +290,8 @@ static void init_console(void)
 	fp = _fdopen(fd, "w");
 	*stderr = *fp;
 	setvbuf(stderr, NULL, _IONBF, 0);
+
+	init_console_done = TRUE;
 #endif
 }
 
