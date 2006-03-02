@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,28 +62,40 @@ static struct MessageSearchWindow {
 
 static void message_search_create	(void);
 static void message_search_execute	(gboolean	 backward);
+static void message_search_close	(void);
 
 static void message_search_prev_clicked	(GtkButton	*button,
 					 gpointer	 data);
 static void message_search_next_clicked	(GtkButton	*button,
 					 gpointer	 data);
+static void close_clicked		(GtkButton	*button,
+					 gpointer	 data);
 static void body_activated		(void);
+static gboolean window_deleted		(GtkWidget	*widget,
+					 GdkEventAny	*event,
+					 gpointer	 data);
 static gboolean key_pressed		(GtkWidget	*widget,
 					 GdkEventKey	*event,
+					 gpointer	 data);
+
+static void view_destroyed		(GtkWidget	*widget,
 					 gpointer	 data);
 
 void message_search(MessageView *messageview)
 {
 	if (!search_window.window)
 		message_search_create();
-	else
-		gtk_widget_hide(search_window.window);
 
 	search_window.messageview = messageview;
+	g_signal_handlers_disconnect_by_func(GTK_WIDGET_PTR(messageview),
+					     view_destroyed, messageview);
+	g_signal_connect(G_OBJECT(GTK_WIDGET_PTR(messageview)), "destroy",
+			 G_CALLBACK(view_destroyed), messageview);
 
 	gtk_widget_grab_focus(search_window.next_btn);
 	gtk_widget_grab_focus(search_window.body_entry);
 	gtk_widget_show(search_window.window);
+	gtk_window_present(GTK_WINDOW(search_window.window));
 }
 
 static void message_search_create(void)
@@ -110,7 +122,7 @@ static void message_search_create(void)
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
 	gtk_container_set_border_width (GTK_CONTAINER (window), 8);
 	g_signal_connect(G_OBJECT(window), "delete_event",
-			 G_CALLBACK(gtk_widget_hide_on_delete), NULL);
+			 G_CALLBACK(window_deleted), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
@@ -156,11 +168,8 @@ static void message_search_create(void)
 			 G_CALLBACK(message_search_prev_clicked), NULL);
 	g_signal_connect(G_OBJECT(next_btn), "clicked",
 			 G_CALLBACK(message_search_next_clicked), NULL);
-	g_signal_connect_closure
-		(G_OBJECT(close_btn), "clicked",
-		 g_cclosure_new_swap(G_CALLBACK(gtk_widget_hide),
-				     window, NULL),
-		 FALSE);
+	g_signal_connect(G_OBJECT(close_btn), "clicked",
+			 G_CALLBACK(close_clicked), NULL);
 
 	search_window.window = window;
 	search_window.body_entry = body_entry;
@@ -226,6 +235,12 @@ static void message_search_execute(gboolean backward)
 	}
 }
 
+static void message_search_close(void)
+{
+	search_window.messageview = NULL;
+	gtk_widget_hide(search_window.window);
+}
+
 static void message_search_prev_clicked(GtkButton *button, gpointer data)
 {
 	message_search_execute(TRUE);
@@ -236,15 +251,33 @@ static void message_search_next_clicked(GtkButton *button, gpointer data)
 	message_search_execute(FALSE);
 }
 
+static void close_clicked(GtkButton *button, gpointer data)
+{
+	message_search_close();
+}
+
 static void body_activated(void)
 {
 	gtk_button_clicked(GTK_BUTTON(search_window.next_btn));
+}
+
+static gboolean window_deleted(GtkWidget *widget, GdkEventAny *event,
+			       gpointer data)
+{
+	message_search_close();
+	return TRUE;
 }
 
 static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 			    gpointer data)
 {
 	if (event && event->keyval == GDK_Escape)
-		gtk_widget_hide(search_window.window);
+		message_search_close();
 	return FALSE;
+}
+
+static void view_destroyed(GtkWidget *widget, gpointer data)
+{
+	if ((MessageView *)data == search_window.messageview)
+		message_search_close();
 }
