@@ -2159,14 +2159,22 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 	separator = imap_get_path_separator(IMAP_FOLDER(folder), item->path);
 	if (new_parent) {
 		if (name) {
-			newpath = g_strconcat(new_parent->path,
-					      G_DIR_SEPARATOR_S, name, NULL);
+			if (new_parent->path)
+				newpath = g_strconcat(new_parent->path,
+						      G_DIR_SEPARATOR_S, name,
+						      NULL);
+			else
+				newpath = g_strdup(name);
 		} else {
 			gchar *name_;
 
 			name_ = g_path_get_basename(item->path);
-			newpath = g_strconcat(new_parent->path,
-					      G_DIR_SEPARATOR_S, name_, NULL);
+			if (new_parent->path)
+				newpath = g_strconcat(new_parent->path,
+						      G_DIR_SEPARATOR_S, name_,
+						      NULL);
+			else
+				newpath = g_strdup(name_);
 			AUTORELEASE_STR(name_, );
 			name = name_;
 		}
