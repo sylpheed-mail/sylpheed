@@ -359,7 +359,7 @@ static GtkItemFactoryEntry addressbook_entries[] =
 	{N_("/_Address/_Delete"),	NULL,		addressbook_delete_address_cb,  0, NULL},
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _LDIF file"), NULL,		addressbook_import_ldif_cb,	0, NULL},
-	{N_("/_Help"),			NULL,		NULL, 0, "<LastBranch>"},
+	{N_("/_Help"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Help/_About"),		NULL,		about_show, 0, NULL}
 };
 
@@ -500,6 +500,8 @@ static void addressbook_create(void)
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, TRUE);
 	gtk_widget_set_size_request(window, prefs_common.addressbook_width,
 				    prefs_common.addressbook_height);
+	gtk_window_move(GTK_WINDOW(window), prefs_common.addressbook_x,
+			prefs_common.addressbook_y);
 	gtk_widget_realize(window);
 
 	g_signal_connect(G_OBJECT(window), "delete_event",
@@ -744,6 +746,9 @@ static void addressbook_create(void)
 
 static gint addressbook_close(void)
 {
+	gtkut_widget_get_uposition(addrbook.window,
+				   &prefs_common.addressbook_x,
+				   &prefs_common.addressbook_y);
 	gtk_widget_hide(addrbook.window);
 	addressbook_export_to_file();
 	return TRUE;
