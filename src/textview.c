@@ -2082,7 +2082,7 @@ static gboolean textview_uri_security_check(TextView *textview, RemoteURI *uri)
 
 		uri_path = get_uri_path(uri->uri);
 		visible_uri_path = get_uri_path(visible_str);
-		if (strcmp(uri_path, visible_uri_path) != 0)
+		if (path_cmp(uri_path, visible_uri_path) != 0)
 			retval = FALSE;
 	}
 
