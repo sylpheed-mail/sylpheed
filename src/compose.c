@@ -2516,16 +2516,19 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 				   gboolean init)
 {
 	GtkItemFactory *ifactory;
+	PrefsAccount *prev_account;
 
 	g_return_if_fail(account != NULL);
 
+	prev_account = compose->account;
 	compose->account = account;
 
 	compose_set_title(compose);
 
 	ifactory = gtk_item_factory_from_widget(compose->menubar);
 
-	if (account->protocol == A_NNTP) {
+	if (account->protocol == A_NNTP &&
+	    (init || prev_account->protocol != A_NNTP)) {
 		gtk_widget_show(compose->newsgroups_hbox);
 		gtk_widget_show(compose->newsgroups_entry);
 		gtk_table_set_row_spacing(GTK_TABLE(compose->table), 2, 4);
@@ -2534,9 +2537,9 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 		menu_set_active(ifactory, "/View/To", FALSE);
 		menu_set_sensitive(ifactory, "/View/To", TRUE);
 		menu_set_active(ifactory, "/View/Cc", FALSE);
-		menu_set_sensitive(ifactory, "/View/Cc", TRUE);
 		menu_set_sensitive(ifactory, "/View/Followup to", TRUE);
-	} else {
+	} else if (account->protocol != A_NNTP &&
+		   (init || prev_account->protocol == A_NNTP)) {
 		gtk_widget_hide(compose->newsgroups_hbox);
 		gtk_widget_hide(compose->newsgroups_entry);
 		gtk_table_set_row_spacing(GTK_TABLE(compose->table), 2, 0);
@@ -2546,7 +2549,6 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 		menu_set_active(ifactory, "/View/To", TRUE);
 		menu_set_sensitive(ifactory, "/View/To", FALSE);
 		menu_set_active(ifactory, "/View/Cc", TRUE);
-		menu_set_sensitive(ifactory, "/View/Cc", FALSE);
 		menu_set_active(ifactory, "/View/Followup to", FALSE);
 		menu_set_sensitive(ifactory, "/View/Followup to", FALSE);
 	}
