@@ -682,8 +682,8 @@ static GtkTargetEntry compose_drag_types[] =
 };
 
 
-void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
-		 GPtrArray *attach_files)
+Compose *compose_new(PrefsAccount *account, FolderItem *item,
+		     const gchar *mailto, GPtrArray *attach_files)
 {
 	Compose *compose;
 	GtkTextView *text;
@@ -691,7 +691,7 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 	GtkTextIter iter;
 
 	if (!account) account = cur_account;
-	g_return_if_fail(account != NULL);
+	g_return_val_if_fail(account != NULL, NULL);
 
 	compose = compose_create(account, COMPOSE_NEW);
 
@@ -752,6 +752,8 @@ void compose_new(PrefsAccount *account, FolderItem *item, const gchar *mailto,
 				      autosave_timeout, compose);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
+
+	return compose;
 }
 
 void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
@@ -6344,9 +6346,6 @@ static void compose_toggle_to_cb(gpointer data, guint action,
 		gtk_widget_queue_resize(compose->table_vbox);
 		compose->use_to = FALSE;
 	}
-
-	if (addressbook_get_target_compose() == compose)
-		addressbook_set_target_compose(compose);
 }
 
 static void compose_toggle_cc_cb(gpointer data, guint action,
@@ -6366,9 +6365,6 @@ static void compose_toggle_cc_cb(gpointer data, guint action,
 		gtk_widget_queue_resize(compose->table_vbox);
 		compose->use_cc = FALSE;
 	}
-
-	if (addressbook_get_target_compose() == compose)
-		addressbook_set_target_compose(compose);
 }
 
 static void compose_toggle_bcc_cb(gpointer data, guint action,
@@ -6388,9 +6384,6 @@ static void compose_toggle_bcc_cb(gpointer data, guint action,
 		gtk_widget_queue_resize(compose->table_vbox);
 		compose->use_bcc = FALSE;
 	}
-
-	if (addressbook_get_target_compose() == compose)
-		addressbook_set_target_compose(compose);
 }
 
 static void compose_toggle_replyto_cb(gpointer data, guint action,

@@ -147,7 +147,6 @@ static GList *_addressBookTypeList_ = NULL;
 
 static void addressbook_create			(void);
 static gint addressbook_close			(void);
-static void addressbook_button_set_sensitive	(void);
 
 /* callback functions */
 static void addressbook_del_clicked		(GtkButton	*button,
@@ -416,8 +415,6 @@ void addressbook_open(Compose *target)
 void addressbook_set_target_compose(Compose *target)
 {
 	addrbook.target_compose = target;
-
-	addressbook_button_set_sensitive();
 }
 
 Compose *addressbook_get_target_compose(void)
@@ -787,26 +784,6 @@ static void addressbook_ds_show_message( AddressDataSource *ds ) {
 	addressbook_status_show( addressbook_msgbuf );
 }
 
-static void addressbook_button_set_sensitive(void)
-{
-	gboolean to_sens  = FALSE;
-	gboolean cc_sens  = FALSE;
-	gboolean bcc_sens = FALSE;
-
-	if (!addrbook.window) return;
-
-	if (addrbook.target_compose) {
-		to_sens = TRUE;
-		cc_sens = TRUE;
-		if (addrbook.target_compose->use_bcc)
-			bcc_sens = TRUE;
-	}
-
-	gtk_widget_set_sensitive(addrbook.to_btn, to_sens);
-	gtk_widget_set_sensitive(addrbook.cc_btn, cc_sens);
-	gtk_widget_set_sensitive(addrbook.bcc_btn, bcc_sens);
-}
-
 /*
 * Delete one or more objects from address list.
 */
@@ -985,10 +962,17 @@ gchar *addressbook_format_address( AddressObject * obj ) {
 static void addressbook_to_clicked(GtkButton *button, gpointer data)
 {
 	GList *node = _addressListSelection_;
-	if (!addrbook.target_compose) return;
+
+	if (!addrbook.target_compose) {
+		addrbook.target_compose = compose_new(NULL, NULL, NULL, NULL);
+		if (!addrbook.target_compose)
+			return;
+	}
+
 	while( node ) {
 		AddressObject *obj = node->data;
 		Compose *compose = addrbook.target_compose;
+
 		node = g_list_next( node );
 		if( obj->type == ADDR_ITEM_PERSON || obj->type == ADDR_ITEM_EMAIL ) {
 			gchar *addr = addressbook_format_address( obj );
