@@ -1783,6 +1783,7 @@ static void compose_enable_sig(Compose *compose)
 
 static gchar *compose_get_signature_str(Compose *compose)
 {
+	gchar *sig_path;
 	gchar *sig_body = NULL;
 	gchar *sig_str = NULL;
 	gchar *utf8_sig_str = NULL;
@@ -1791,26 +1792,40 @@ static gchar *compose_get_signature_str(Compose *compose)
 
 	if (!compose->account->sig_path)
 		return NULL;
+	if (g_path_is_absolute(compose->account->sig_path) ||
+	    compose->account->sig_type == SIG_COMMAND)
+		sig_path = g_strdup(compose->account->sig_path);
+	else {
+#ifdef G_OS_WIN32
+		sig_path = g_strconcat(get_rc_dir(),
+#else
+		sig_path = g_strconcat(get_home_dir(),
+#endif
+				       G_DIR_SEPARATOR_S,
+				       compose->account->sig_path, NULL);
+	}
 
 	if (compose->account->sig_type == SIG_FILE) {
-		if (!is_file_or_fifo_exist(compose->account->sig_path)) {
+		if (!is_file_or_fifo_exist(sig_path)) {
 			debug_print("can't open signature file: %s\n",
-				    compose->account->sig_path);
+				    sig_path);
+			g_free(sig_path);
 			return NULL;
 		}
 	}
 
 	if (compose->account->sig_type == SIG_COMMAND)
-		sig_body = get_command_output(compose->account->sig_path);
+		sig_body = get_command_output(sig_path);
 	else {
 		gchar *tmp;
 
-		tmp = file_read_to_str(compose->account->sig_path);
+		tmp = file_read_to_str(sig_path);
 		if (!tmp)
 			return NULL;
 		sig_body = normalize_newlines(tmp);
 		g_free(tmp);
 	}
+	g_free(sig_path);
 
 	if (prefs_common.sig_sep) {
 		sig_str = g_strconcat(prefs_common.sig_sep, "\n", sig_body,
