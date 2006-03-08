@@ -1125,18 +1125,12 @@ static void mimeview_open_with(MimeView *mimeview)
 static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 			       const gchar *cmdline)
 {
-	static gchar *default_image_cmdline = "display '%s'";
-	static gchar *default_audio_cmdline = "play '%s'";
-	static gchar *default_html_cmdline = DEFAULT_BROWSER_CMD;
-	static gchar *mime_cmdline = "metamail -d -b -x -c %s '%s'";
-	gchar buf[1024];
-	gchar m_buf[1024];
-	const gchar *cmd;
-	const gchar *def_cmd;
+	const gchar *cmd = NULL;
 	const gchar *p;
+	gchar *cmdbuf;
 
-#ifdef G_OS_WIN32
 	if (!cmdline) {
+#ifdef G_OS_WIN32
 		DWORD dwtype;
 
 		if (g_file_test(filename, G_FILE_TEST_IS_EXECUTABLE) ||
@@ -1153,42 +1147,29 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 		}
 		execute_open_file(filename, partinfo->content_type);
 		return;
-	}
+#else
+		if (MIME_IMAGE == partinfo->mime_type)
+			cmd = prefs_common.mime_image_viewer;
+		else if (MIME_AUDIO == partinfo->mime_type)
+			cmd = prefs_common.mime_audio_player;
+		else if (MIME_TEXT_HTML == partinfo->mime_type)
+			cmd = prefs_common.uri_cmd;
+		if (!cmd) {
+			procmime_execute_open_file
+				(filename, partinfo->content_type);
+			return;
+		}
 #endif
-	if (cmdline) {
+	} else
 		cmd = cmdline;
-		def_cmd = NULL;
-	} else if (MIME_APPLICATION_OCTET_STREAM == partinfo->mime_type) {
-		return;
-	} else if (MIME_IMAGE == partinfo->mime_type) {
-		cmd = prefs_common.mime_image_viewer;
-		def_cmd = default_image_cmdline;
-	} else if (MIME_AUDIO == partinfo->mime_type) {
-		cmd = prefs_common.mime_audio_player;
-		def_cmd = default_audio_cmdline;
-	} else if (MIME_TEXT_HTML == partinfo->mime_type) {
-		cmd = prefs_common.uri_cmd;
-		def_cmd = default_html_cmdline;
-	} else {
-		g_snprintf(m_buf, sizeof(m_buf), mime_cmdline,
-			   partinfo->content_type, "%s");
-		cmd = m_buf;
-		def_cmd = NULL;
-	}
 
 	if (cmd && (p = strchr(cmd, '%')) && *(p + 1) == 's' &&
-	    !strchr(p + 2, '%'))
-		g_snprintf(buf, sizeof(buf), cmd, filename);
-	else {
-		if (cmd)
-			g_warning(_("MIME viewer command line is invalid: `%s'"), cmd);
-		if (def_cmd)
-			g_snprintf(buf, sizeof(buf), def_cmd, filename);
-		else
-			return;
-	}
-
-	execute_command_line(buf, TRUE);
+	    !strchr(p + 2, '%')) {
+		cmdbuf = g_strdup_printf(cmd, filename);
+		execute_command_line(cmdbuf, TRUE);
+		g_free(cmdbuf);
+	} else if (cmd)
+		g_warning("MIME viewer command line is invalid: '%s'", cmd);
 }
 
 #if USE_GPGME

@@ -259,11 +259,13 @@ static PrefParam param[] = {
 	{"show_other_header", "FALSE", &prefs_common.show_other_header, P_BOOL},
 
 	/* MIME viewer */
-	{"mime_image_viewer", "display '%s'", &prefs_common.mime_image_viewer,
-	 P_STRING},
-	{"mime_audio_player", "play '%s'", &prefs_common.mime_audio_player,
-	 P_STRING},
+	{"mime_image_viewer", NULL, &prefs_common.mime_image_viewer, P_STRING},
+	{"mime_audio_player", NULL, &prefs_common.mime_audio_player, P_STRING},
+#ifdef G_OS_WIN32
+	{"mime_open_command", "notepad '%s'", &prefs_common.mime_open_cmd,
+#else
 	{"mime_open_command", "gedit '%s'", &prefs_common.mime_open_cmd,
+#endif
 	 P_STRING},
 
 	/* Junk mail */

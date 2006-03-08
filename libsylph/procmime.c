@@ -1195,6 +1195,105 @@ static GList *procmime_get_mime_type_list(const gchar *file)
 	return list;
 }
 
+static GList *mailcap_list = NULL;
+
+static GList *procmime_parse_mailcap(const gchar *file)
+{
+	GList *list = NULL;
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+	MailCap *mailcap;
+
+	if ((fp = g_fopen(file, "rb")) == NULL) return NULL;
+
+	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		gint i;
+		gchar *p;
+		gchar **strv;
+
+		p = strchr(buf, '#');
+		if (p) *p = '\0';
+		g_strstrip(buf);
+
+		strv = strsplit_with_quote(buf, ";", 0);
+		if (!strv)
+			continue;
+
+		for (i = 0; strv[i] != NULL; ++i)
+			g_strstrip(strv[i]);
+
+		if (!strv[0] || *strv[0] == '\0' ||
+		    !strv[1] || *strv[1] == '\0') {
+			g_strfreev(strv);
+			continue;
+		}
+
+		mailcap = g_new(MailCap, 1);
+		mailcap->mime_type = g_strdup(strv[0]);
+		mailcap->cmdline_fmt = g_strdup(strv[1]);
+		mailcap->needs_terminal = FALSE;
+
+		for (i = 0; strv[i] != NULL; ++i) {
+			if (strcmp(strv[i], "needsterminal") == 0)
+				mailcap->needs_terminal = TRUE;
+		}
+
+		g_strfreev(strv);
+
+		list = g_list_append(list, mailcap);
+	}
+
+	return list;
+}
+
+gint procmime_execute_open_file(const gchar *file, const gchar *mime_type)
+{
+	gchar *mime_type_ = NULL;
+	GList *cur;
+	MailCap *mailcap;
+	gchar *cmdline, *p;
+	gint ret = -1;
+
+	g_return_val_if_fail(file != NULL, -1);
+
+	if (!mime_type ||
+	    g_ascii_strcasecmp(mime_type, "application/octet-stream") == 0) {
+		gchar *tmp;
+		tmp = procmime_get_mime_type(file);
+		if (!tmp)
+			return -1;
+		mime_type_ = g_ascii_strdown(tmp, -1);
+		g_free(tmp);
+	} else
+		mime_type_ = g_ascii_strdown(mime_type, -1);
+
+	if (!mailcap_list)
+		mailcap_list = procmime_parse_mailcap("/etc/mailcap");
+
+	for (cur = mailcap_list; cur != NULL; cur = cur->next) {
+		mailcap = (MailCap *)cur->data;
+
+		if (!g_pattern_match_simple(mailcap->mime_type, mime_type_))
+			continue;
+		if (mailcap->needs_terminal)
+			continue;
+
+		if ((p = strchr(mailcap->cmdline_fmt, '%')) &&
+		    *(p + 1) == 's' && !strchr(p + 2, '%'))
+			cmdline = g_strdup_printf(mailcap->cmdline_fmt, file);
+		else
+			cmdline = g_strconcat(mailcap->cmdline_fmt, " \"", file,
+					      "\"", NULL);
+		ret = execute_command_line(cmdline, TRUE);
+		g_free(cmdline);
+		break;
+	}
+
+	g_free(mime_type_);
+
+	return ret;
+}
+
 EncodingType procmime_get_encoding_for_charset(const gchar *charset)
 {
 	if (!charset)

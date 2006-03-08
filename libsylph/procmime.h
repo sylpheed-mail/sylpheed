@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,6 +28,7 @@
 #include <stdio.h>
 
 typedef struct _MimeType	MimeType;
+typedef struct _MailCap		MailCap;
 typedef struct _MimeInfo	MimeInfo;
 
 #include "procmsg.h"
@@ -63,6 +64,13 @@ struct _MimeType
 	gchar *sub_type;
 
 	gchar *extension;
+};
+
+struct _MailCap
+{
+	gchar *mime_type;
+	gchar *cmdline_fmt;
+	gboolean needs_terminal;
 };
 
 /*
@@ -182,6 +190,9 @@ gchar *procmime_get_tmp_file_name	(MimeInfo	*mimeinfo);
 
 ContentType procmime_scan_mime_type	(const gchar	*mime_type);
 gchar *procmime_get_mime_type		(const gchar	*filename);
+
+gint procmime_execute_open_file		(const gchar	*file,
+					 const gchar	*mime_type);
 
 EncodingType procmime_get_encoding_for_charset	(const gchar	*charset);
 EncodingType procmime_get_encoding_for_text_file(const gchar	*file);
