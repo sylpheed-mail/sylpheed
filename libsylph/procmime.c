@@ -1102,10 +1102,9 @@ static GHashTable *procmime_get_mime_type_table(void)
 #else
 		mime_type_list =
 			procmime_get_mime_type_list(SYSCONFDIR "/mime.types");
-		if (!mime_type_list) {
-			list = procmime_get_mime_type_list("/etc/mime.types");
-			mime_type_list = g_list_concat(mime_type_list, list);
-		}
+		if (!mime_type_list)
+			mime_type_list =
+				procmime_get_mime_type_list("/etc/mime.types");
 #endif
 		dir = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
 				  "mime.types", NULL);
@@ -1253,6 +1252,7 @@ gint procmime_execute_open_file(const gchar *file, const gchar *mime_type)
 	MailCap *mailcap;
 	gchar *cmdline, *p;
 	gint ret = -1;
+	static gboolean mailcap_list_init = FALSE;
 
 	g_return_val_if_fail(file != NULL, -1);
 
@@ -1267,8 +1267,28 @@ gint procmime_execute_open_file(const gchar *file, const gchar *mime_type)
 	} else
 		mime_type_ = g_ascii_strdown(mime_type, -1);
 
-	if (!mailcap_list)
-		mailcap_list = procmime_parse_mailcap("/etc/mailcap");
+	if (!mailcap_list_init && !mailcap_list) {
+		GList *list;
+		gchar *path;
+
+		path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "mailcap",
+				  NULL);
+		mailcap_list = procmime_parse_mailcap(path);
+		g_free(path);
+#ifdef G_OS_WIN32
+		path = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S "etc"
+				   G_DIR_SEPARATOR_S "mailcap", NULL);
+		list = procmime_parse_mailcap(path);
+		g_free(path);
+#else
+		list = procmime_parse_mailcap(SYSCONFDIR "/mailcap");
+		if (!list)
+			list = procmime_parse_mailcap("/etc/mailcap");
+#endif
+		mailcap_list = g_list_concat(mailcap_list, list);
+
+		mailcap_list_init = TRUE;
+	}
 
 	for (cur = mailcap_list; cur != NULL; cur = cur->next) {
 		mailcap = (MailCap *)cur->data;
