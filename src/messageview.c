@@ -748,7 +748,6 @@ static void print_cb(gpointer data, guint action, GtkWidget *widget)
 	MessageView *messageview = (MessageView *)data;
 	const gchar *cmdline;
 	gchar *msg;
-	gchar *p;
 
 	if (!messageview->msginfo) return;
 
@@ -765,8 +764,7 @@ static void print_cb(gpointer data, guint action, GtkWidget *widget)
 	}
 	g_free(msg);
 
-	if (cmdline && (!(p = strchr(cmdline, '%')) || *(p + 1) != 's' ||
-			strchr(p + 2, '%'))) {
+	if (cmdline && str_find_format_times(cmdline, 's') != 1) {
 		alertpanel_error(_("Print command line is invalid:\n`%s'"),
 				 cmdline);
 		return;

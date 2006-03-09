@@ -1126,8 +1126,7 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 			       const gchar *cmdline)
 {
 	const gchar *cmd = NULL;
-	const gchar *p;
-	gchar *cmdbuf;
+	gchar buf[BUFFSIZE];
 
 	if (!cmdline) {
 #ifdef G_OS_WIN32
@@ -1155,16 +1154,28 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 		else if (MIME_TEXT_HTML == partinfo->mime_type)
 			cmd = prefs_common.uri_cmd;
 		if (!cmd) {
-			procmime_execute_open_file
-				(filename, partinfo->content_type);
-			return;
+			if (prefs_common.mime_cmd) {
+				if (str_find_format_times
+					(prefs_common.mime_cmd, 's') == 2) {
+					g_snprintf(buf, sizeof(buf),
+						   prefs_common.mime_cmd,
+						   partinfo->content_type,
+						   "%s");
+					cmd = buf;
+				} else
+					cmd = prefs_common.mime_cmd;
+			} else {
+				procmime_execute_open_file
+					(filename, partinfo->content_type);
+				return;
+			}
 		}
 #endif
 	} else
 		cmd = cmdline;
 
-	if (cmd && (p = strchr(cmd, '%')) && *(p + 1) == 's' &&
-	    !strchr(p + 2, '%')) {
+	if (cmd && str_find_format_times(cmd, 's') == 1) {
+		gchar *cmdbuf;
 		cmdbuf = g_strdup_printf(cmd, filename);
 		execute_command_line(cmdbuf, TRUE);
 		g_free(cmdbuf);

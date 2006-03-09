@@ -1289,7 +1289,6 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 	GPtrArray *headers;
 	gint i;
 	gchar buf[1024];
-	gchar *p;
 
 	g_return_if_fail(msginfo != NULL);
 
@@ -1367,8 +1366,7 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 	}
 #endif
 
-	if (cmdline && (p = strchr(cmdline, '%')) && *(p + 1) == 's' &&
-	    !strchr(p + 2, '%'))
+	if (cmdline && str_find_format_times(cmdline, 's') == 1)
 		g_snprintf(buf, sizeof(buf) - 1, cmdline, prtmp);
 	else {
 		if (cmdline) {

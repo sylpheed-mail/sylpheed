@@ -3448,7 +3448,6 @@ void summary_print(SummaryView *summaryview)
 	GSList *mlist, *cur;
 	const gchar *cmdline;
 	gchar *msg;
-	gchar *p;
 
 	if (gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
 		return;
@@ -3466,8 +3465,7 @@ void summary_print(SummaryView *summaryview)
 	}
 	g_free(msg);
 
-	if (cmdline && (!(p = strchr(cmdline, '%')) || *(p + 1) != 's' ||
-			strchr(p + 2, '%'))) {
+	if (cmdline && str_find_format_times(cmdline, 's') != 1) {
 		alertpanel_error(_("Print command line is invalid:\n`%s'"),
 				 cmdline);
 		return;

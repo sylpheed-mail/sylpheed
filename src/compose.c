@@ -5440,7 +5440,6 @@ static void compose_exec_ext_editor(Compose *compose)
 	GPid pid;
 	static gchar *def_cmd = "emacs %s";
 	gchar buf[1024];
-	gchar *p;
 	gchar **cmdline;
 
 	tmp = g_strdup_printf("%s%ctmpmsg-%p.txt", get_tmp_dir(),
@@ -5460,10 +5459,9 @@ static void compose_exec_ext_editor(Compose *compose)
 #endif
 
 	if (prefs_common.ext_editor_cmd &&
-	    (p = strchr(prefs_common.ext_editor_cmd, '%')) &&
-	    *(p + 1) == 's' && !strchr(p + 2, '%')) {
+	    str_find_format_times(prefs_common.ext_editor_cmd, 's') == 1)
 		g_snprintf(buf, sizeof(buf), prefs_common.ext_editor_cmd, tmp);
-	} else {
+	else {
 		if (prefs_common.ext_editor_cmd)
 			g_warning(_("External editor command line is invalid: `%s'\n"),
 				  prefs_common.ext_editor_cmd);

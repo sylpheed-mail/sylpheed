@@ -267,6 +267,7 @@ static PrefParam param[] = {
 	{"mime_open_command", "gedit '%s'", &prefs_common.mime_open_cmd,
 #endif
 	 P_STRING},
+	{"mime_command", NULL, &prefs_common.mime_cmd, P_STRING},
 
 	/* Junk mail */
 	{"enable_junk", "FALSE", &prefs_common.enable_junk, P_BOOL},

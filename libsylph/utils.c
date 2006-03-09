@@ -444,6 +444,25 @@ gboolean str_has_suffix_case(const gchar *str, const gchar *suffix)
 	return (g_ascii_strcasecmp(str + (len - s_len), suffix) == 0);
 }
 
+gint str_find_format_times(const gchar *haystack, gchar ch)
+{
+	gint n = 0;
+	const gchar *p = haystack;
+
+	while ((p = strchr(p, '%')) != NULL) {
+		++p;
+		if (*p == '%') {
+			++p;
+		} else if (*p == ch) {
+			++p;
+			++n;
+		} else
+			return -1;
+	}
+
+	return n;
+}
+
 /* Examine if next block is non-ASCII string */
 gboolean is_next_nonascii(const gchar *s)
 {
@@ -3382,7 +3401,15 @@ gint execute_command_line(const gchar *cmdline, gboolean async)
 	gchar **argv;
 	gint ret;
 
-	debug_print("execute_command_line(): executing: %s\n", cmdline);
+	if (debug_mode) {
+		gchar *utf8_cmdline;
+
+		utf8_cmdline = g_filename_to_utf8
+			(cmdline, -1, NULL, NULL, NULL);
+		debug_print("execute_command_line(): executing: %s\n",
+			    utf8_cmdline ? utf8_cmdline : cmdline);
+		g_free(utf8_cmdline);
+	}
 
 	argv = strsplit_with_quote(cmdline, " ", 0);
 
@@ -3490,7 +3517,6 @@ gchar *get_command_output(const gchar *cmdline)
 gint open_uri(const gchar *uri, const gchar *cmdline)
 {
 	gchar buf[BUFFSIZE];
-	gchar *p;
 
 	g_return_val_if_fail(uri != NULL, -1);
 
@@ -3499,9 +3525,7 @@ gint open_uri(const gchar *uri, const gchar *cmdline)
 		return execute_open_file(uri, NULL);
 #endif
 
-	if (cmdline &&
-	    (p = strchr(cmdline, '%')) && *(p + 1) == 's' &&
-	    !strchr(p + 2, '%'))
+	if (cmdline && str_find_format_times(cmdline, 's') == 1)
 		g_snprintf(buf, sizeof(buf), cmdline, uri);
 	else {
 		if (cmdline)

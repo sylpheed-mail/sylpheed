@@ -182,10 +182,9 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 	    prefs_common.enable_newmsg_notify &&
 	    prefs_common.newmsg_notify_cmd) {
 		gchar buf[1024];
-		gchar *p;
 
-		if ((p = strchr(prefs_common.newmsg_notify_cmd, '%')) &&
-		    *(p + 1) == 'd' && !strchr(p + 2, '%'))
+		if (str_find_format_times
+			(prefs_common.newmsg_notify_cmd, 'd') == 1)
 			g_snprintf(buf, sizeof(buf),
 				   prefs_common.newmsg_notify_cmd,
 				   new_messages);

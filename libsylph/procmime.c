@@ -1250,7 +1250,7 @@ gint procmime_execute_open_file(const gchar *file, const gchar *mime_type)
 	gchar *mime_type_ = NULL;
 	GList *cur;
 	MailCap *mailcap;
-	gchar *cmdline, *p;
+	gchar *cmdline;
 	gint ret = -1;
 	static gboolean mailcap_list_init = FALSE;
 
@@ -1298,8 +1298,7 @@ gint procmime_execute_open_file(const gchar *file, const gchar *mime_type)
 		if (mailcap->needs_terminal)
 			continue;
 
-		if ((p = strchr(mailcap->cmdline_fmt, '%')) &&
-		    *(p + 1) == 's' && !strchr(p + 2, '%'))
+		if (str_find_format_times(mailcap->cmdline_fmt, 's') == 1)
 			cmdline = g_strdup_printf(mailcap->cmdline_fmt, file);
 		else
 			cmdline = g_strconcat(mailcap->cmdline_fmt, " \"", file,

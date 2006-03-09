@@ -195,6 +195,7 @@ struct _PrefsCommon
 	gchar *mime_image_viewer;
 	gchar *mime_audio_player;
 	gchar *mime_open_cmd;
+	gchar *mime_cmd;
 
 	GList *mime_open_cmd_history;
 

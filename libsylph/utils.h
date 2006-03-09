@@ -237,6 +237,9 @@ gchar *strncpy2		(gchar		*dest,
 gboolean str_has_suffix_case	(const gchar	*str,
 				 const gchar	*suffix);
 
+gint str_find_format_times	(const gchar	*haystack,
+				 gchar		 ch);
+
 gboolean is_next_nonascii	(const gchar	*s);
 gint get_next_word_len		(const gchar	*s);
 
