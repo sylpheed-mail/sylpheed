@@ -1281,6 +1281,12 @@ gint procmime_execute_open_file(const gchar *file, const gchar *mime_type)
 		list = procmime_parse_mailcap(path);
 		g_free(path);
 #else
+		if (!mailcap_list) {
+			path = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
+					   ".mailcap", NULL);
+			mailcap_list = procmime_parse_mailcap(path);
+			g_free(path);
+		}
 		list = procmime_parse_mailcap(SYSCONFDIR "/mailcap");
 		if (!list)
 			list = procmime_parse_mailcap("/etc/mailcap");
