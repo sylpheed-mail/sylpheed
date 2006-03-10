@@ -170,6 +170,23 @@ static gboolean key_pressed		(GtkWidget	*widget,
 					 GdkEventKey	*event,
 					 gpointer	 data);
 
+static gint query_search_cmp_by_folder	(GtkTreeModel	*model,
+					 GtkTreeIter	*a,
+					 GtkTreeIter	*b,
+					 gpointer	 data);
+static gint query_search_cmp_by_subject	(GtkTreeModel	*model,
+					 GtkTreeIter	*a,
+					 GtkTreeIter	*b,
+					 gpointer	 data);
+static gint query_search_cmp_by_from	(GtkTreeModel	*model,
+					 GtkTreeIter	*a,
+					 GtkTreeIter	*b,
+					 gpointer	 data);
+static gint query_search_cmp_by_date	(GtkTreeModel	*model,
+					 GtkTreeIter	*a,
+					 GtkTreeIter	*b,
+					 gpointer	 data);
+
 
 void query_search(FolderItem *item)
 {
@@ -346,6 +363,16 @@ static void query_search_create(void)
 	g_signal_connect(G_OBJECT(treeview), "row-activated",
 			 G_CALLBACK(row_activated), NULL);
 
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_FOLDER,
+					query_search_cmp_by_folder, NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_SUBJECT,
+					query_search_cmp_by_subject,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_FROM,
+					query_search_cmp_by_from, NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_DATE,
+					query_search_cmp_by_date, NULL, NULL);
+
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
 	gtk_tree_selection_set_select_function(selection, row_selected,
@@ -364,6 +391,7 @@ static void query_search_create(void)
 			(column, GTK_TREE_VIEW_COLUMN_FIXED);		\
 		gtk_tree_view_column_set_fixed_width(column, width);	\
 	}								\
+	gtk_tree_view_column_set_sort_column_id(column, col);		\
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);	\
 }
 
@@ -492,6 +520,7 @@ static void query_search_query(void)
 
 	search_window.cancelled = FALSE;
 
+	gtk_widget_set_sensitive(search_window.clear_btn, FALSE);
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
 			     GTK_STOCK_STOP);
 	query_search_clear_list();
@@ -507,6 +536,7 @@ static void query_search_query(void)
 	search_window.requires_full_headers = FALSE;
 	search_window.exclude_trash = FALSE;
 
+	gtk_widget_set_sensitive(search_window.clear_btn, TRUE);
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
 			     GTK_STOCK_FIND);
 	gtk_label_set_text(GTK_LABEL(search_window.status_label), _("Done."));
@@ -662,6 +692,9 @@ static void query_search_clear_list(void)
 	GtkTreeModel *model = GTK_TREE_MODEL(search_window.store);
 	MsgInfo *msginfo;
 
+	gtkut_tree_sortable_unset_sort_column_id
+		(GTK_TREE_SORTABLE(search_window.store));
+
 	if (!gtk_tree_model_get_iter_first(model, &iter))
 		return;
 
@@ -708,6 +741,9 @@ static gboolean row_selected(GtkTreeSelection *selection,
 static void query_search_clear(GtkButton *button, gpointer data)
 {
 	CondHBox *cond_hbox;
+
+	if (search_window.on_search)
+		return;
 
 	prefs_filter_edit_clear_cond_edit(search_window.cond_edit);
 	prefs_filter_set_header_list(NULL);
@@ -1039,4 +1075,83 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 		return TRUE;
 	}
 	return FALSE;
+}
+
+static gint query_search_cmp_by_folder(GtkTreeModel *model,
+				       GtkTreeIter *a, GtkTreeIter *b,
+				       gpointer data)
+{
+	gchar *folder_a = NULL, *folder_b = NULL;
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, COL_FOLDER, &folder_a, COL_MSGINFO,
+			   &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_FOLDER, &folder_b, COL_MSGINFO,
+			   &msginfo_b, -1);
+
+	if (!folder_a || !folder_b || !msginfo_a || !msginfo_b)
+		return 0;
+
+	ret = g_ascii_strcasecmp(folder_a, folder_b);
+	return (ret != 0) ? ret : (msginfo_a->date_t - msginfo_b->date_t);
+}
+
+static gint query_search_cmp_by_subject(GtkTreeModel *model,
+					GtkTreeIter *a, GtkTreeIter *b,
+					gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, COL_MSGINFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_MSGINFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	if (!msginfo_a->subject)
+		return -(msginfo_b->subject != NULL);
+	if (!msginfo_b->subject)
+		return (msginfo_a->subject != NULL);
+
+	ret = subject_compare_for_sort(msginfo_a->subject, msginfo_b->subject);
+	return (ret != 0) ? ret : (msginfo_a->date_t - msginfo_b->date_t);
+}
+
+static gint query_search_cmp_by_from(GtkTreeModel *model,
+				     GtkTreeIter *a, GtkTreeIter *b,
+				     gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, COL_MSGINFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_MSGINFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	if (!msginfo_a->fromname)
+		return -(msginfo_b->fromname != NULL);
+	if (!msginfo_b->fromname)
+		return (msginfo_a->fromname != NULL);
+
+	ret = g_ascii_strcasecmp(msginfo_a->fromname, msginfo_b->fromname);
+	return (ret != 0) ? ret : (msginfo_a->date_t - msginfo_b->date_t);
+}
+
+static gint query_search_cmp_by_date(GtkTreeModel *model,
+				     GtkTreeIter *a, GtkTreeIter *b,
+				     gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+
+	gtk_tree_model_get(model, a, COL_MSGINFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_MSGINFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	return msginfo_a->date_t - msginfo_b->date_t;
 }
