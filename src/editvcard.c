@@ -205,9 +205,9 @@ static void addressbook_edit_vcard_create( gboolean *cancelled ) {
 
 	/* Status line */
 	hsbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, BORDER_WIDTH);
+	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, 0);
 	statusbar = gtk_statusbar_new();
-	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, BORDER_WIDTH);
+	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
 
 	/* Button panel */
 	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
