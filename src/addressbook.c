@@ -334,27 +334,27 @@ static void addressbook_import_ldif_cb		(void);
 
 static GtkItemFactoryEntry addressbook_entries[] =
 {
-	{N_("/_File"),			NULL,		NULL, 0, "<Branch>"},
-	{N_("/_File/New _Book"),	"<alt>B",	addressbook_new_book_cb,        0, NULL},
-	{N_("/_File/New _vCard"),	"<alt>D",	addressbook_new_vcard_cb,       0, NULL},
+	{N_("/_File"),			NULL,	NULL, 0, "<Branch>"},
+	{N_("/_File/New _Book"),	NULL,	addressbook_new_book_cb,        0, NULL},
+	{N_("/_File/New _vCard"),	NULL,	addressbook_new_vcard_cb,       0, NULL},
 #ifdef USE_JPILOT
-	{N_("/_File/New _JPilot"),	"<alt>J",	addressbook_new_jpilot_cb,      0, NULL},
+	{N_("/_File/New _JPilot"),	NULL,	addressbook_new_jpilot_cb,      0, NULL},
 #endif
 #ifdef USE_LDAP
-	{N_("/_File/New _Server"),	"<alt>S",	addressbook_new_ldap_cb,        0, NULL},
+	{N_("/_File/New _LDAP Server"),	NULL,	addressbook_new_ldap_cb,        0, NULL},
 #endif
 	{N_("/_File/---"),		NULL,		NULL, 0, "<Separator>"},
 	{N_("/_File/_Edit"),		NULL,		addressbook_treenode_edit_cb,   0, NULL},
 	{N_("/_File/_Delete"),		NULL,		addressbook_treenode_delete_cb, 0, NULL},
 	{N_("/_File/---"),		NULL,		NULL, 0, "<Separator>"},
-	{N_("/_File/_Save"),		"<alt>S",	addressbook_file_save_cb,       0, NULL},
-	{N_("/_File/_Close"),		"<alt>W",	close_cb, 0, NULL},
+	{N_("/_File/_Save"),		"<control>S",	addressbook_file_save_cb,       0, NULL},
+	{N_("/_File/_Close"),		"<control>W",	close_cb, 0, NULL},
 	{N_("/_Address"),		NULL,		NULL, 0, "<Branch>"},
-	{N_("/_Address/New _Address"),	"<alt>N",	addressbook_new_address_cb,     0, NULL},
-	{N_("/_Address/New _Group"),	"<alt>G",	addressbook_new_group_cb,       0, NULL},
-	{N_("/_Address/New _Folder"),	"<alt>R",	addressbook_new_folder_cb,      0, NULL},
+	{N_("/_Address/New _Address"),	"<control>N",	addressbook_new_address_cb,     0, NULL},
+	{N_("/_Address/New _Group"),	"<control>G",	addressbook_new_group_cb,       0, NULL},
+	{N_("/_Address/New _Folder"),	"<control>F",	addressbook_new_folder_cb,      0, NULL},
 	{N_("/_Address/---"),		NULL,		NULL, 0, "<Separator>"},
-	{N_("/_Address/_Edit"),		"<alt>Return",	addressbook_edit_address_cb,    0, NULL},
+	{N_("/_Address/_Edit"),		"<control>Return",	addressbook_edit_address_cb,    0, NULL},
 	{N_("/_Address/_Delete"),	NULL,		addressbook_delete_address_cb,  0, NULL},
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _LDIF file"), NULL,		addressbook_import_ldif_cb,	0, NULL},
@@ -365,9 +365,9 @@ static GtkItemFactoryEntry addressbook_entries[] =
 /* New options to be added. */
 /*
 	{N_("/_Edit"),			NULL,		NULL, 0, "<Branch>"},
-	{N_("/_Edit/C_ut"),		"<ctl>X",	NULL,				0, NULL},
-	{N_("/_Edit/_Copy"),		"<ctl>C",	NULL,                           0, NULL},
-	{N_("/_Edit/_Paste"),		"<ctl>V",	NULL,                           0, NULL},
+	{N_("/_Edit/C_ut"),		"<control>X",	NULL,				0, NULL},
+	{N_("/_Edit/_Copy"),		"<control>C",	NULL,                           0, NULL},
+	{N_("/_Edit/_Paste"),		"<control>V",	NULL,                           0, NULL},
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _Mozilla"),	NULL,           NULL,				0, NULL},
 	{N_("/_Tools/Import _vCard"),	NULL,           NULL,				0, NULL},
@@ -404,10 +404,10 @@ void addressbook_open(Compose *target)
 		addressbook_load_tree();
 		gtk_ctree_select(GTK_CTREE(addrbook.ctree),
 				 GTK_CTREE_NODE(GTK_CLIST(addrbook.ctree)->row_list));
-	} else
-		gtk_widget_hide(addrbook.window);
+		gtk_widget_show_all(addrbook.window);
+	} 
 
-	gtk_widget_show_all(addrbook.window);
+	gtk_window_present(GTK_WINDOW(addrbook.window));
 
 	addressbook_set_target_compose(target);
 }
@@ -454,6 +454,7 @@ static void addressbook_create(void)
 	GtkWidget *window;
 	GtkWidget *vbox;
 	GtkWidget *menubar;
+	GtkWidget *spc_hbox;
 	GtkWidget *vbox2;
 	GtkWidget *ctree_swin;
 	GtkWidget *ctree;
@@ -519,8 +520,11 @@ static void addressbook_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, TRUE, 0);
 	menu_factory = gtk_item_factory_from_widget(menubar);
 
+	spc_hbox = gtk_hbox_new(FALSE, 0);
+	gtk_widget_set_size_request(spc_hbox, -1, BORDER_WIDTH);
+	gtk_box_pack_start(GTK_BOX(vbox), spc_hbox, FALSE, FALSE, 0);
+
 	vbox2 = gtk_vbox_new(FALSE, 4);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox2), BORDER_WIDTH);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox2, TRUE, TRUE, 0);
 
 	ctree_swin = gtk_scrolled_window_new(NULL, NULL);
@@ -618,14 +622,15 @@ static void addressbook_create(void)
 
 	/* Status bar */
 	hsbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, BORDER_WIDTH);
+	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, 0);
 	statusbar = gtk_statusbar_new();
-	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, BORDER_WIDTH);
+	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
 
 	/* Button panel */
 	hbbox = gtk_hbutton_box_new();
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox), GTK_BUTTONBOX_END);
-	gtk_box_set_spacing(GTK_BOX(hbbox), 2);
+	gtk_box_set_spacing(GTK_BOX(hbbox), 4);
+	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 4);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 
 	del_btn = gtk_button_new_with_label(_("Delete"));
