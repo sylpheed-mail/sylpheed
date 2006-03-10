@@ -3448,6 +3448,7 @@ void summary_print(SummaryView *summaryview)
 	GSList *mlist, *cur;
 	const gchar *cmdline;
 	gchar *msg;
+	gboolean all_headers;
 
 	if (gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
 		return;
@@ -3471,11 +3472,13 @@ void summary_print(SummaryView *summaryview)
 		return;
 	}
 
+	all_headers = summaryview->messageview->textview->show_all_headers;
+
 	mlist = summary_get_selected_msg_list(summaryview);
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
 		if (msginfo)
-			procmsg_print_message(msginfo, cmdline);
+			procmsg_print_message(msginfo, cmdline, all_headers);
 	}
 	g_slist_free(mlist);
 }

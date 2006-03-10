@@ -297,7 +297,8 @@ void	procmsg_remove_all_cached_messages
 gint	procmsg_save_to_outbox		(FolderItem	*outbox,
 					 const gchar	*file);
 void	procmsg_print_message		(MsgInfo	*msginfo,
-					 const gchar	*cmdline);
+					 const gchar	*cmdline,
+					 gboolean	 all_headers);
 
 MsgInfo *procmsg_msginfo_copy		(MsgInfo	*msginfo);
 MsgInfo *procmsg_msginfo_get_full_info	(MsgInfo	*msginfo);

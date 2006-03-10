@@ -1280,7 +1280,8 @@ gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file)
 	return 0;
 }
 
-void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
+void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
+			   gboolean all_headers)
 {
 	static const gchar *def_cmd = "lpr %s";
 	static guint id = 0;
@@ -1315,7 +1316,11 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline)
 		return;
 	}
 
-	headers = procheader_get_header_array_for_display(msgfp, NULL);
+	if (all_headers)
+		headers = procheader_get_header_array_asis(msgfp, NULL);
+	else
+		headers = procheader_get_header_array_for_display(msgfp, NULL);
+
 	fclose(msgfp);
 
 	for (i = 0; i < headers->len; i++) {
