@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1269,6 +1269,14 @@ static gboolean mh_remove_missing_folder_items_func(GNode *node, gpointer data)
 
 	item = FOLDER_ITEM(node->data);
 
+#if 0
+	if (item->path && strchr(item->path, '/')) {
+		debug_print("folder '%s' includes Unix path separator. removing...\n", item->path);
+		folder_item_remove(item);
+		return FALSE;
+	}
+#endif
+
 	path = folder_item_get_path(item);
 	if (!is_dir_exist(path)) {
 		debug_print("folder '%s' not found. removing...\n", path);
@@ -1402,7 +1410,11 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			node = item->node;
 			for (node = node->children; node != NULL; node = node->next) {
 				FolderItem *cur_item = FOLDER_ITEM(node->data);
+#ifdef G_OS_WIN32
+				if (!path_cmp(cur_item->path, utf8entry)) {
+#else
 				if (!strcmp2(cur_item->path, utf8entry)) {
+#endif
 					new_item = cur_item;
 					break;
 				}
