@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -379,105 +379,345 @@ void procmime_scan_content_type(MimeInfo *mimeinfo, const gchar *content_type)
 		mimeinfo->mime_type = MIME_TEXT;
 }
 
+typedef struct
+{
+	gchar *name;
+	gchar *value;
+} MimeParam;
+
+typedef struct
+{
+	gchar *hvalue;
+	GSList *plist;
+} MimeParams;
+
+static gchar *procmime_find_parameter_delimiter(const gchar *param,
+						const gchar **eq)
+{
+	register const gchar *p = param;
+	gboolean quoted = FALSE;
+	const gchar *delim = NULL;
+
+	while (*p) {
+		if (*p == '=')
+			break;
+		else if (*p == ';' || g_ascii_isspace(*p)) {
+			delim = p;
+			break;
+		}
+		++p;
+	}
+	if (*p != '=') {
+		*eq = NULL;
+		return (gchar *)delim;
+	}
+	*eq = p;
+
+	++p;
+	if (*p == '"') {
+		quoted = TRUE;
+		++p;
+	}
+
+	while (*p) {
+		if (quoted == TRUE) {
+			if (*p == '"')
+				quoted = FALSE;
+		} else if (*p == ';' || g_ascii_isspace(*p)) {
+			delim = p;
+			break;
+		}
+		++p;
+	}
+
+	return (gchar *)delim;
+}
+
+static gchar *procmime_convert_value(const gchar *value, const gchar *charset)
+{
+	if (charset) {
+		gchar *utf8_value;
+
+		utf8_value = conv_codeset_strdup(value, charset, CS_INTERNAL);
+		if (utf8_value)
+			return utf8_value;
+	}
+
+	return g_strdup(value);
+}
+
+static MimeParams *procmime_parse_mime_parameter(const gchar *str)
+{
+	gchar *hvalue;
+	gchar *param, *name, *value;
+	gchar *charset = NULL, *lang = NULL;
+	const gchar *p, *delim;
+	gint count, prev_count;
+	gchar *cont_name;
+	gchar *cont_value;
+	MimeParam *mparam;
+	MimeParams *mparams;
+	GSList *plist = NULL;
+
+	if ((p = strchr(str, ';')))
+		hvalue = g_strndup(str, p - str);
+	else
+		hvalue = g_strdup(str);
+
+	g_strstrip(hvalue);
+
+	mparams = g_new(MimeParams, 1);
+	mparams->hvalue = hvalue;
+	mparams->plist = NULL;
+
+	if (!p)
+		return mparams;
+	++p;
+	count = prev_count = -1;
+	cont_name = cont_value = NULL;
+
+	for (;;) {
+		gboolean encoded = FALSE;
+		gchar *begin;
+		gchar *dec_value;
+		const gchar *eq;
+		gchar *ast = NULL;
+
+		while (*p == ';' || g_ascii_isspace(*p))
+			++p;
+		if (*p == '\0')
+			break;
+
+		delim = procmime_find_parameter_delimiter(p, &eq);
+		if (!eq)
+			break;
+		if (delim)
+			param = g_strndup(p, delim - p);
+		else
+			param = g_strdup(p);
+
+		name = g_strndup(p, eq - p);
+		if (*name != '*' && (ast = strchr(name, '*'))) {
+			const gchar *next = ast + 1;
+
+			if (*next == '\0') {
+				encoded = TRUE;
+			} else if (g_ascii_isdigit(*next)) {
+				count = atoi(next);
+				while (g_ascii_isdigit(*next))
+					++next;
+				if (*next == '*')
+					encoded = TRUE;
+				if (prev_count + 1 != count) {
+					g_warning("procmime_parse_mime_parameter(): invalid count: %s\n", str);
+					g_free(name);
+					g_free(param);
+					break;
+				}
+			} else {
+				g_warning("procmime_parse_mime_parameter(): invalid name: %s\n", str);
+				g_free(name);
+				g_free(param);
+				break;
+			}
+
+			*ast = '\0';
+		}
+
+		value = g_strdup(param + (eq - p) + 1);
+		if (*value == '"')
+			extract_quote(value, '"');
+
+		begin = value;
+
+		if (encoded) {
+			gchar *sq1, *sq2;
+
+			if ((sq1 = strchr(value, '\''))) {
+				if (sq1 > value) {
+					if (charset)
+						g_free(charset);
+					charset = g_strndup(value, sq1 - value);
+				}
+				if ((sq2 = strchr(sq1 + 1, '\''))) {
+					if (sq2 > sq1 + 1) {
+						if (lang)
+							g_free(lang);
+						lang = g_strndup(sq1 + 1,
+								 sq2 - sq1 - 1);
+					}
+					begin = sq2 + 1;
+				}
+			}
+		}
+
+#define CONCAT_CONT_VALUE(s)				\
+{							\
+	if (cont_value) {				\
+		gchar *tmp;				\
+		tmp = g_strconcat(cont_value, s, NULL);	\
+		g_free(cont_value);			\
+		cont_value = tmp;			\
+	} else						\
+		cont_value = g_strdup(s);		\
+}
+
+		if (count >= 0) {
+			if (count > 0 && cont_name) {
+				if (strcmp(cont_name, name) != 0) {
+					g_warning("procmime_parse_mime_parameter(): mismatch parameter name: %s\n", str);
+					g_free(name);
+					g_free(value);
+					g_free(param);
+					break;
+				}
+			} else
+				cont_name = g_strdup(name);
+
+			if (encoded) {
+				dec_value = g_malloc(strlen(begin) + 1);
+				decode_uri(dec_value, begin);
+				CONCAT_CONT_VALUE(dec_value);
+				g_free(dec_value);
+			} else {
+				CONCAT_CONT_VALUE(begin);
+			}
+		}
+
+#undef CONCAT_CONT_VALUE
+
+		if (count == -1 && cont_name && cont_value) {
+			mparam = g_new(MimeParam, 1);
+			mparam->name = cont_name;
+			cont_name = NULL;
+			mparam->value = procmime_convert_value
+				(cont_value, charset);
+			g_free(cont_value);
+			cont_value = NULL;
+			plist = g_slist_prepend(plist, mparam);
+		}
+
+		if (count == -1) {
+			mparam = g_new(MimeParam, 1);
+			mparam->name = name;
+			if (encoded) {
+				dec_value = g_malloc(strlen(begin) + 1);
+				decode_uri(dec_value, begin);
+				mparam->value = procmime_convert_value
+					(dec_value, charset);
+				g_free(dec_value);
+			} else {
+				if (!ast &&
+				    (!g_ascii_strcasecmp(name, "name") ||
+				     !g_ascii_strcasecmp(name, "filename")))
+					mparam->value =
+						conv_unmime_header(begin, NULL);
+				else
+					mparam->value = g_strdup(begin);
+			}
+			name = NULL;
+			plist = g_slist_prepend(plist, mparam);
+		}
+
+		g_free(name);
+		g_free(value);
+		g_free(param);
+
+		prev_count = count;
+		count = -1;
+
+		if (delim)
+			p = delim + 1;
+		else
+			break;
+	}
+
+	if (cont_name && cont_value) {
+		mparam = g_new(MimeParam, 1);
+		mparam->name = cont_name;
+		cont_name = NULL;
+		mparam->value = procmime_convert_value(cont_value, charset);
+		plist = g_slist_prepend(plist, mparam);
+	}
+
+	g_free(cont_name);
+	g_free(cont_value);
+	g_free(lang);
+	g_free(charset);
+
+	plist = g_slist_reverse(plist);
+	mparams->plist = plist;
+
+	return mparams;
+}
+
+static void procmime_mime_params_free(MimeParams *mparams)
+{
+	GSList *cur;
+
+	if (!mparams)
+		return;
+
+	g_free(mparams->hvalue);
+	for (cur = mparams->plist; cur != NULL; cur = cur->next) {
+		MimeParam *mparam = (MimeParam *)cur->data;
+		g_free(mparam->name);
+		g_free(mparam->value);
+		g_free(mparam);
+	}
+	g_slist_free(mparams->plist);
+	g_free(mparams);
+}
+
 void procmime_scan_content_type_str(const gchar *content_type,
 				    gchar **mime_type, gchar **charset,
 				    gchar **name, gchar **boundary)
 {
-	gchar *delim, *p;
-	gchar *buf;
+	MimeParams *mparams;
+	GSList *cur;
 
-	Xstrdup_a(buf, content_type, return);
+	mparams = procmime_parse_mime_parameter(content_type);
 
-	if ((delim = strchr(buf, ';'))) *delim = '\0';
 	if (mime_type)
-		*mime_type = g_strdup(g_strstrip(buf));
+		*mime_type = g_strdup(mparams->hvalue);
 
-	if (!delim) return;
-	p = delim + 1;
-
-	for (;;) {
-		gchar *eq;
-		gchar *attr, *value;
-
-		if ((delim = strchr(p, ';'))) *delim = '\0';
-
-		if (!(eq = strchr(p, '='))) break;
-
-		*eq = '\0';
-		attr = p;
-		g_strstrip(attr);
-		value = eq + 1;
-		g_strstrip(value);
-
-		if (*value == '"')
-			extract_quote(value, '"');
-		else {
-			eliminate_parenthesis(value, '(', ')');
-			g_strstrip(value);
+	for (cur = mparams->plist; cur != NULL; cur = cur->next) {
+		MimeParam *param = (MimeParam *)cur->data;
+		if (charset && !g_ascii_strcasecmp(param->name, "charset")) {
+			*charset = g_strdup(param->value);
+			charset = NULL;
+		} else if (name && !g_ascii_strcasecmp(param->name, "name")) {
+			*name = g_strdup(param->value);
+			name = NULL;
+		} else if (boundary &&
+			   !g_ascii_strcasecmp(param->name, "boundary")) {
+			*boundary = g_strdup(param->value);
+			boundary = NULL;
 		}
-
-		if (*value) {
-			if (charset && !g_ascii_strcasecmp(attr, "charset"))
-				*charset = g_strdup(value);
-			else if (name && !g_ascii_strcasecmp(attr, "name"))
-				*name = conv_unmime_header(value, NULL);
-			else if (boundary &&
-				 !g_ascii_strcasecmp(attr, "boundary"))
-				*boundary = g_strdup(value);
-		}
-
-		if (!delim) break;
-		p = delim + 1;
 	}
+
+	procmime_mime_params_free(mparams);
 }
 
 void procmime_scan_content_disposition(MimeInfo *mimeinfo,
 				       const gchar *content_disposition)
 {
-	gchar *delim, *p, *dispos;
-	gchar *buf;
+	MimeParams *mparams;
+	GSList *cur;
 
-	Xstrdup_a(buf, content_disposition, return);
+	mparams = procmime_parse_mime_parameter(content_disposition);
 
-	if ((delim = strchr(buf, ';'))) *delim = '\0';
-	mimeinfo->content_disposition = dispos = g_strdup(g_strstrip(buf));
+	mimeinfo->content_disposition = g_strdup(mparams->hvalue);
 
-	if (!delim) return;
-	p = delim + 1;
-
-	for (;;) {
-		gchar *eq;
-		gchar *attr, *value;
-
-		if ((delim = strchr(p, ';'))) *delim = '\0';
-
-		if (!(eq = strchr(p, '='))) break;
-
-		*eq = '\0';
-		attr = p;
-		g_strstrip(attr);
-		value = eq + 1;
-		g_strstrip(value);
-
-		if (*value == '"')
-			extract_quote(value, '"');
-		else {
-			eliminate_parenthesis(value, '(', ')');
-			g_strstrip(value);
+	for (cur = mparams->plist; cur != NULL; cur = cur->next) {
+		MimeParam *param = (MimeParam *)cur->data;
+		if (!g_ascii_strcasecmp(param->name, "filename")) {
+			mimeinfo->filename = g_strdup(param->value);
+			break;
 		}
-
-		if (*value) {
-			if (!g_ascii_strcasecmp(attr, "filename")) {
-				g_free(mimeinfo->filename);
-				mimeinfo->filename =
-					conv_unmime_header(value, NULL);
-				break;
-			}
-		}
-
-		if (!delim) break;
-		p = delim + 1;
 	}
+
+	procmime_mime_params_free(mparams);
 }
 
 enum
