@@ -269,6 +269,10 @@ static void compose_convert_header		(Compose	*compose,
 						 gint		 header_len,
 						 gboolean	 addr_field,
 						 const gchar	*encoding);
+static gchar *compose_convert_filename		(Compose	*compose,
+						 const gchar	*src,
+						 const gchar	*param_name,
+						 const gchar	*encoding);
 static void compose_generate_msgid		(Compose	*compose,
 						 gchar		*buf,
 						 gint		 len);
@@ -3427,7 +3431,6 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 	gboolean valid;
 	AttachInfo *ainfo;
 	FILE *attach_fp;
-	gchar filename[BUFFSIZE];
 	gint len;
 	EncodingType encoding;
 
@@ -3453,14 +3456,35 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 			    encoding == ENC_BASE64)
 				encoding = ENC_8BIT;
 		} else {
-			compose_convert_header(compose,
-					       filename, sizeof(filename),
-					       ainfo->name, 12, FALSE, charset);
-			fprintf(fp, "Content-Type: %s;\n"
-				    " name=\"%s\"\n",
-				ainfo->content_type, filename);
-			fprintf(fp, "Content-Disposition: attachment;\n"
-				    " filename=\"%s\"\n", filename);
+			if (prefs_common.mime_fencoding_method ==
+			    FENC_RFC2231) {
+				gchar *param;
+
+				param = compose_convert_filename
+					(compose, ainfo->name, "name", charset);
+				fprintf(fp, "Content-Type: %s;\n"
+					    "%s\n",
+					ainfo->content_type, param);
+				g_free(param);
+				param = compose_convert_filename
+					(compose, ainfo->name, "filename",
+					 charset);
+				fprintf(fp, "Content-Disposition: attachment;\n"
+					    "%s\n", param);
+				g_free(param);
+			} else {
+				gchar filename[BUFFSIZE];
+
+				compose_convert_header(compose, filename,
+						       sizeof(filename),
+						       ainfo->name, 12, FALSE,
+						       charset);
+				fprintf(fp, "Content-Type: %s;\n"
+					    " name=\"%s\"\n",
+					ainfo->content_type, filename);
+				fprintf(fp, "Content-Disposition: attachment;\n"
+					    " filename=\"%s\"\n", filename);
+			}
 
 #if USE_GPGME
 			/* force encoding to protect trailing spaces */
@@ -3963,6 +3987,22 @@ static void compose_convert_header(Compose *compose, gchar *dest, gint len,
 	conv_encode_header(dest, len, src_, header_len, addr_field, encoding);
 
 	g_free(src_);
+}
+
+static gchar *compose_convert_filename(Compose *compose, const gchar *src,
+				       const gchar *param_name,
+				       const gchar *encoding)
+{
+	gchar *str;
+
+	g_return_val_if_fail(src != NULL, NULL);
+
+	if (!encoding)
+		encoding = conv_get_charset_str(compose->out_encoding);
+
+	str = conv_encode_filename(src, param_name, encoding);
+
+	return str;
 }
 
 static void compose_generate_msgid(Compose *compose, gchar *buf, gint len)

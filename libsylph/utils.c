@@ -1629,8 +1629,8 @@ void decode_uri(gchar *decoded_uri, const gchar *encoded_uri)
 	while (*enc) {
 		if (*enc == '%') {
 			enc++;
-			if (isxdigit((guchar)enc[0]) &&
-			    isxdigit((guchar)enc[1])) {
+			if (g_ascii_isxdigit((guchar)enc[0]) &&
+			    g_ascii_isxdigit((guchar)enc[1])) {
 				*dec = axtoi(enc);
 				dec++;
 				enc += 2;
@@ -1643,6 +1643,26 @@ void decode_uri(gchar *decoded_uri, const gchar *encoded_uri)
 			dec++;
 			enc++;
 		}
+	}
+
+	*dec = '\0';
+}
+
+void decode_xdigit_encoded_str(gchar *decoded, const gchar *encoded)
+{
+	gchar *dec = decoded;
+	const gchar *enc = encoded;
+
+	while (*enc) {
+		if (*enc == '%') {
+			enc++;
+			if (g_ascii_isxdigit((guchar)enc[0]) &&
+			    g_ascii_isxdigit((guchar)enc[1])) {
+				*dec++ = axtoi(enc);
+				enc += 2;
+			}
+		} else
+			*dec++ = *enc++;
 	}
 
 	*dec = '\0';

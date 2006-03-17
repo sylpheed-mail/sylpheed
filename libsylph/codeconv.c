@@ -2271,6 +2271,117 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 
 #undef LBREAK_IF_REQUIRED
 
+#define INT_TO_HEX_UPPER(outp, val)		\
+{						\
+	if ((val) < 10)				\
+		*outp = '0' + (val);		\
+	else					\
+		*outp = 'A' + (val) - 10;	\
+}
+
+#define IS_ESCAPE_CHAR(c)					\
+	(c < 0x20 || c > 0x7f ||				\
+	 strchr("\t \r\n*'%!#$&~`,{}|()<>@,;:\\\"/[]?=", c))
+
+static gchar *encode_rfc2231_filename(const gchar *str)
+{
+	const gchar *p;
+	gchar *out;
+	gchar *outp;
+
+	outp = out = g_malloc(strlen(str) * 3 + 1);
+
+	for (p = str; *p != '\0'; ++p) {
+		guchar ch = *(guchar *)p;
+
+		if (IS_ESCAPE_CHAR(ch)) {
+			*outp++ = '%';
+			INT_TO_HEX_UPPER(outp, ch >> 4);
+			++outp;
+			INT_TO_HEX_UPPER(outp, ch & 0x0f);
+			++outp;
+		} else
+			*outp++ = ch;
+	}
+
+	*outp = '\0';
+	return out;
+}
+
+gchar *conv_encode_filename(const gchar *src, const gchar *param_name,
+			    const gchar *out_encoding)
+{
+	gint name_len, max_linelen;
+	gchar *out_str, *enc_str;
+	gchar cur_param[80];
+	GString *string;
+	gint count = 0;
+	gint cur_left_len;
+	gchar *p;
+
+	g_return_val_if_fail(src != NULL, NULL);
+	g_return_val_if_fail(param_name != NULL, NULL);
+
+	if (is_ascii_str(src))
+		return g_strdup_printf(" %s=\"%s\"", param_name, src);
+
+	name_len = strlen(param_name);
+	max_linelen = MAX_LINELEN - name_len - 3;
+
+	if (!out_encoding)
+		out_encoding = conv_get_outgoing_charset_str();
+	if (!strcmp(out_encoding, CS_US_ASCII))
+		out_encoding = CS_ISO_8859_1;
+
+	out_str = conv_codeset_strdup(src, CS_INTERNAL, out_encoding);
+	if (!out_str)
+		return NULL;
+	enc_str = encode_rfc2231_filename(out_str);
+	g_free(out_str);
+
+	if (strlen(enc_str) <= max_linelen) {
+		gchar *ret;
+		ret = g_strdup_printf(" %s*=%s''%s",
+				      param_name, out_encoding, enc_str);
+		g_free(enc_str);
+		return ret;
+	}
+
+	string = g_string_new(NULL);
+	g_string_printf(string, " %s*0*=%s''", param_name, out_encoding);
+	cur_left_len = MAX_LINELEN - string->len;
+
+	p = enc_str;
+
+	while (*p != '\0') {
+		if ((*p == '%' && cur_left_len < 4) ||
+		    (*p != '%' && cur_left_len < 2)) {
+			gint len;
+
+			g_string_append(string, ";\n");
+			++count;
+			len = g_snprintf(cur_param, sizeof(cur_param),
+					 " %s*%d*=", param_name, count);
+			g_string_append(string, cur_param);
+			cur_left_len = MAX_LINELEN - len;
+		}
+
+		if (*p == '%') {
+			g_string_append_len(string, p, 3);
+			p += 3;
+			cur_left_len -= 3;
+		} else {
+			g_string_append_c(string, *p);
+			++p;
+			--cur_left_len;
+		}
+	}
+
+	g_free(enc_str);
+
+	return g_string_free(string, FALSE);
+}
+
 gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 {
 	FILE *src_fp, *dest_fp;

@@ -44,6 +44,12 @@ typedef enum {
 	CTE_8BIT
 } TransferEncodingMethod;
 
+typedef enum {
+	FENC_MIME,
+	FENC_RFC2231,
+	FENC_NONE
+} MIMEFilenameEncodingMethod;
+
 struct _PrefsCommon
 {
 	/* Receive */
@@ -62,6 +68,7 @@ struct _PrefsCommon
 	gboolean savemsg;
 	gboolean filter_sent;
 	TransferEncodingMethod encoding_method;
+	MIMEFilenameEncodingMethod mime_fencoding_method;
 
 	gboolean allow_jisx0201_kana;
 

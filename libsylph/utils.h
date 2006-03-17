@@ -348,6 +348,8 @@ gchar *get_uri_path			(const gchar	*uri);
 gint get_uri_len			(const gchar	*str);
 void decode_uri				(gchar		*decoded_uri,
 					 const gchar	*encoded_uri);
+void decode_xdigit_encoded_str		(gchar		*decoded,
+					 const gchar	*encoded);
 gchar *encode_uri			(const gchar	*filename);
 gchar *uriencode_for_filename		(const gchar	*filename);
 gint scan_mailto_url			(const gchar	*mailto,

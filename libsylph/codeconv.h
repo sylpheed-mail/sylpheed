@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -229,6 +229,9 @@ void conv_encode_header			(gchar		*dest,
 					 const gchar	*src,
 					 gint		 header_len,
 					 gboolean	 addr_field,
+					 const gchar	*out_encoding);
+gchar *conv_encode_filename		(const gchar	*src,
+					 const gchar	*param_name,
 					 const gchar	*out_encoding);
 
 gint conv_copy_file			(const gchar	*src,

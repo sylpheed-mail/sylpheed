@@ -576,7 +576,7 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 
 			if (encoded) {
 				dec_value = g_malloc(strlen(begin) + 1);
-				decode_uri(dec_value, begin);
+				decode_xdigit_encoded_str(dec_value, begin);
 				CONCAT_CONT_VALUE(dec_value);
 				g_free(dec_value);
 			} else {
@@ -602,7 +602,7 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 			mparam->name = name;
 			if (encoded) {
 				dec_value = g_malloc(strlen(begin) + 1);
-				decode_uri(dec_value, begin);
+				decode_xdigit_encoded_str(dec_value, begin);
 				mparam->value = procmime_convert_value
 					(dec_value, charset);
 				g_free(dec_value);

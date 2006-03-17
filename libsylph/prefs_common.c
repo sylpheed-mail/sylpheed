@@ -57,6 +57,8 @@ static PrefParam param[] = {
 	{"filter_sent_message", "FALSE", &prefs_common.filter_sent, P_BOOL},
 
 	{"encoding_method", "0", &prefs_common.encoding_method, P_ENUM},
+	{"mime_filename_encoding_method", "0",
+	 &prefs_common.mime_fencoding_method, P_ENUM},
 
 	{"allow_jisx0201_kana", "FALSE", &prefs_common.allow_jisx0201_kana,
 	 P_BOOL},
