@@ -80,6 +80,7 @@ static struct Send {
 	GtkWidget *checkbtn_filter_sent;
 
 	GtkWidget *optmenu_encoding_method;
+	GtkWidget *optmenu_mime_fencoding_method;
 } p_send;
 
 static struct Compose {
@@ -243,9 +244,6 @@ static GtkWidget *color_dialog;
 
 static void prefs_common_charset_set_data_from_optmenu	   (PrefParam *pparam);
 static void prefs_common_charset_set_optmenu		   (PrefParam *pparam);
-static void prefs_common_encoding_set_data_from_optmenu    (PrefParam *pparam);
-static void prefs_common_encoding_set_optmenu		   (PrefParam *pparam);
-static void prefs_common_recv_dialog_set_data_from_optmenu (PrefParam *pparam);
 static void prefs_common_recv_dialog_set_optmenu	   (PrefParam *pparam);
 static void prefs_common_uri_set_data_from_entry	   (PrefParam *pparam);
 static void prefs_common_uri_set_entry			   (PrefParam *pparam);
@@ -281,8 +279,9 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"encoding_method", &p_send.optmenu_encoding_method,
-	 prefs_common_encoding_set_data_from_optmenu,
-	 prefs_common_encoding_set_optmenu},
+	 prefs_set_data_from_optmenu, prefs_set_optmenu},
+	{"mime_filename_encoding_method", &p_send.optmenu_mime_fencoding_method,
+	 prefs_set_data_from_optmenu, prefs_set_optmenu},
 
 	/* {"allow_jisx0201_kana", NULL, NULL, NULL}, */
 
@@ -461,8 +460,7 @@ static PrefsUIData ui_data[] = {
 
 	/* Other */
 	{"receive_dialog_mode", &other.optmenu_recvdialog,
-	 prefs_common_recv_dialog_set_data_from_optmenu,
-	 prefs_common_recv_dialog_set_optmenu},
+	 prefs_set_data_from_optmenu, prefs_common_recv_dialog_set_optmenu},
 	{"no_receive_error_panel", &other.checkbtn_no_recv_err_panel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"close_receive_dialog", &other.checkbtn_close_recv_dialog,
@@ -835,8 +833,11 @@ static void prefs_send_create(void)
 	GtkWidget *optmenu_trencoding;
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
+	GtkWidget *optmenu_fencoding;
 	GtkWidget *label_encoding;
 	GtkWidget *label_encoding_desc;
+	GtkWidget *label_fencoding;
+	GtkWidget *label_fencoding_desc;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -876,8 +877,6 @@ static void prefs_send_create(void)
 	SET_MENUITEM("quoted-printable", CTE_QUOTED_PRINTABLE);
 	SET_MENUITEM("8bit",		 CTE_8BIT);
 
-#undef SET_MENUITEM
-
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_trencoding),
 				  optmenu_menu);
 
@@ -885,10 +884,41 @@ static void prefs_send_create(void)
 			  _("Specify Content-Transfer-Encoding used when "
 			    "message body contains non-ASCII characters."));
 
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
+
+	label_fencoding = gtk_label_new (_("MIME filename encoding"));
+	gtk_widget_show (label_fencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_fencoding, FALSE, FALSE, 0);
+
+	optmenu_fencoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_fencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_fencoding,
+			    FALSE, FALSE, 0);
+
+	optmenu_menu = gtk_menu_new ();
+
+	SET_MENUITEM(_("MIME header"), FENC_MIME);
+	SET_MENUITEM(_("RFC 2231"), FENC_RFC2231);
+
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_fencoding),
+				  optmenu_menu);
+
+#undef SET_MENUITEM
+
+	PACK_SMALL_LABEL
+		(vbox1, label_fencoding_desc,
+		 _("Specify encoding method for MIME filename with "
+		   "non-ASCII characters.\n"
+		   "MIME header: most popular, but violates RFC 2047\n"
+		   "RFC 2231: conforms to standard, but not popular"));
+
 	p_send.checkbtn_savemsg     = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 
 	p_send.optmenu_encoding_method = optmenu_trencoding;
+	p_send.optmenu_mime_fencoding_method = optmenu_fencoding;
 }
 
 static void prefs_compose_create(void)
@@ -3671,63 +3701,6 @@ static void prefs_common_charset_set_optmenu(PrefParam *pparam)
 	}
 }
 
-static void prefs_common_encoding_set_data_from_optmenu(PrefParam *pparam)
-{
-	PrefsUIData *ui_data;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-
-	ui_data = (PrefsUIData *)pparam->ui_data;
-	g_return_if_fail(ui_data != NULL);
-	g_return_if_fail(*ui_data->widget != NULL);
-
-	menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(*ui_data->widget));
-	menuitem = gtk_menu_get_active(GTK_MENU(menu));
-	*((TransferEncodingMethod *)pparam->data) = GPOINTER_TO_INT
-		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
-}
-
-static void prefs_common_encoding_set_optmenu(PrefParam *pparam)
-{
-	PrefsUIData *ui_data;
-	TransferEncodingMethod method =
-		*((TransferEncodingMethod *)pparam->data);
-	GtkOptionMenu *optmenu;
-	gint index;
-
-	ui_data = (PrefsUIData *)pparam->ui_data;
-	g_return_if_fail(ui_data != NULL);
-	g_return_if_fail(*ui_data->widget != NULL);
-
-	optmenu = GTK_OPTION_MENU(*ui_data->widget);
-	g_return_if_fail(optmenu != NULL);
-
-	index = menu_find_option_menu_index(optmenu, GINT_TO_POINTER(method),
-					    NULL);
-	if (index >= 0)
-		gtk_option_menu_set_history(optmenu, index);
-	else {
-		gtk_option_menu_set_history(optmenu, 0);
-		prefs_common_encoding_set_data_from_optmenu(pparam);
-	}
-}
-
-static void prefs_common_recv_dialog_set_data_from_optmenu(PrefParam *pparam)
-{
-	PrefsUIData *ui_data;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-
-	ui_data = (PrefsUIData *)pparam->ui_data;
-	g_return_if_fail(ui_data != NULL);
-	g_return_if_fail(*ui_data->widget != NULL);
-
-	menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(*ui_data->widget));
-	menuitem = gtk_menu_get_active(GTK_MENU(menu));
-	*((RecvDialogMode *)pparam->data) = GPOINTER_TO_INT
-		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
-}
-
 static void prefs_common_recv_dialog_set_optmenu(PrefParam *pparam)
 {
 	PrefsUIData *ui_data;
@@ -3750,7 +3723,7 @@ static void prefs_common_recv_dialog_set_optmenu(PrefParam *pparam)
 		gtk_option_menu_set_history(optmenu, index);
 	else {
 		gtk_option_menu_set_history(optmenu, 0);
-		prefs_common_recv_dialog_set_data_from_optmenu(pparam);
+		prefs_set_data_from_optmenu(pparam);
 	}
 
 	menu = gtk_option_menu_get_menu(optmenu);

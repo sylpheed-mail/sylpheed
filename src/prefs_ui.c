@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 
 #include "prefs.h"
 #include "prefs_ui.h"
+#include "menu.h"
 #include "codeconv.h"
 #include "utils.h"
 #include "gtkutils.h"
@@ -510,5 +511,45 @@ void prefs_set_fontbtn(PrefParam *pparam)
 	default:
 		g_warning("Invalid PrefType for GtkFontButton widget: %d\n",
 			  pparam->type);
+	}
+}
+
+void prefs_set_data_from_optmenu(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(*ui_data->widget));
+	menuitem = gtk_menu_get_active(GTK_MENU(menu));
+	*((DummyEnum *)pparam->data) = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
+}
+
+void prefs_set_optmenu(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	DummyEnum val = *((DummyEnum *)pparam->data);
+	GtkOptionMenu *optmenu;
+	gint index;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	optmenu = GTK_OPTION_MENU(*ui_data->widget);
+	g_return_if_fail(optmenu != NULL);
+
+	index = menu_find_option_menu_index(optmenu, GINT_TO_POINTER(val),
+					    NULL);
+	if (index >= 0)
+		gtk_option_menu_set_history(optmenu, index);
+	else {
+		gtk_option_menu_set_history(optmenu, 0);
+		prefs_set_data_from_optmenu(pparam);
 	}
 }
