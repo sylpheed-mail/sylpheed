@@ -3415,7 +3415,7 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 		{"<Main>/View/Go to/Other folder...",		"G"},
 		{"<Main>/View/Open in new window",		"<control><alt>N"},
 		{"<Main>/View/View source",			"<control>U"},
-		{"<Main>/View/Show all header",			"<control>H"},
+		{"<Main>/View/Show all headers",		"<control>H"},
 		{"<Main>/View/Update",				"<control><alt>U"},
 
 		{"<Main>/Message/Receive/Get new mail",			"<control>I"},
@@ -3463,7 +3463,7 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 		{"<Main>/View/Go to/Other folder...",		"G"},
 		{"<Main>/View/Open in new window",		"<control><alt>N"},
 		{"<Main>/View/View source",			"<control>U"},
-		{"<Main>/View/Show all header",			"<shift>H"},
+		{"<Main>/View/Show all headers",		"<shift>H"},
 		{"<Main>/View/Update",				"<shift>S"},
 
 		{"<Main>/Message/Receive/Get new mail",			"<control>I"},
@@ -3511,7 +3511,7 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 		{"<Main>/View/Go to/Other folder...",		"C"},
 		{"<Main>/View/Open in new window",		"<control><alt>N"},
 		{"<Main>/View/View source",			"<control>U"},
-		{"<Main>/View/Show all header",			"<control>H"},
+		{"<Main>/View/Show all headers",		"<control>H"},
 		{"<Main>/View/Update",				"<control><alt>U"},
 
 		{"<Main>/Message/Receive/Get new mail",			"<control>I"},
@@ -3559,7 +3559,7 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 		{"<Main>/View/Go to/Other folder...",		"<alt>G"},
 		{"<Main>/View/Open in new window",		"<shift><control>N"},
 		{"<Main>/View/View source",			"<control>U"},
-		{"<Main>/View/Show all header",			"<control>H"},
+		{"<Main>/View/Show all headers",		"<control>H"},
 		{"<Main>/View/Update",				"<alt>U"},
 
 		{"<Main>/Message/Receive/Get new mail",			"<alt>I"},
@@ -3607,7 +3607,7 @@ static void prefs_keybind_apply_clicked(GtkWidget *widget)
 		{"<Main>/View/Go to/Other folder...",		""},
 		{"<Main>/View/Open in new window",		""},
 		{"<Main>/View/View source",			""},
-		{"<Main>/View/Show all header",			""},
+		{"<Main>/View/Show all headers",		""},
 		{"<Main>/View/Update",				""},
 
 		{"<Main>/Message/Receive/Get new mail",			""},
