@@ -242,6 +242,8 @@ static void summary_search_entry_changed(GtkWidget		*entry,
 static void summary_search_entry_activated
 					(GtkWidget		*entry,
 					 SummaryView		*summaryview);
+static void summary_search_clear_clicked(GtkWidget		*button,
+					 SummaryView		*summaryview);
 
 static gboolean summary_toggle_pressed	(GtkWidget		*eventbox,
 					 GdkEventButton		*event,
@@ -467,6 +469,9 @@ SummaryView *summary_create(void)
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
 	GtkTooltips *search_tip;
+	GtkWidget *search_vbox;
+	GtkWidget *search_clear_btn;
+	GtkWidget *image;
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
 	GtkTreeStore *store;
@@ -490,7 +495,7 @@ SummaryView *summary_create(void)
 
 	vbox = gtk_vbox_new(FALSE, 1);
 
-	search_hbox = gtk_hbox_new(FALSE, 4);
+	search_hbox = gtk_hbox_new(FALSE, 0);
 	gtk_container_set_border_width(GTK_CONTAINER(search_hbox), 2);
 	gtk_box_pack_start(GTK_BOX(vbox), search_hbox, FALSE, FALSE, 0);
 
@@ -517,11 +522,15 @@ SummaryView *summary_create(void)
 #undef COND_MENUITEM_ADD
 
 	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_widget_set_size_request(hbox, 4, -1);
+	gtk_widget_set_size_request(hbox, 8, -1);
 	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
 
 	search_label = gtk_label_new(_("Search:"));
 	gtk_box_pack_start(GTK_BOX(search_hbox), search_label, FALSE, FALSE, 0);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_widget_set_size_request(hbox, 4, -1);
+	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
 
 	search_entry = gtk_entry_new();
 	gtk_widget_set_size_request(search_entry, 200, -1);
@@ -535,6 +544,25 @@ SummaryView *summary_create(void)
 	search_tip = gtk_tooltips_new();
 	gtk_tooltips_set_tip(search_tip, search_entry,
 			     _("Search for Subject or From"), NULL);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_widget_set_size_request(hbox, 2, -1);
+	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
+
+	search_vbox = gtk_vbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(search_hbox), search_vbox, FALSE, FALSE, 0);
+
+	search_clear_btn = gtk_button_new();
+	gtk_button_set_relief(GTK_BUTTON(search_clear_btn), GTK_RELIEF_NONE);
+	gtk_widget_set_size_request(search_clear_btn, 20, 20);
+	image = gtk_image_new_from_stock(GTK_STOCK_CLOSE,
+					 GTK_ICON_SIZE_MENU);
+	gtk_container_add(GTK_CONTAINER(search_clear_btn), image);
+	GTK_WIDGET_UNSET_FLAGS(search_clear_btn, GTK_CAN_FOCUS);
+	gtk_box_pack_start(GTK_BOX(search_vbox), search_clear_btn,
+			   TRUE, FALSE, 0);
+	g_signal_connect(G_OBJECT(search_clear_btn), "clicked",
+			 G_CALLBACK(summary_search_clear_clicked), summaryview);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -596,6 +624,7 @@ SummaryView *summary_create(void)
 	summaryview->filter_menu = filter_menu;
 	summaryview->search_label = search_label;
 	summaryview->search_entry = search_entry;
+	summaryview->search_clear_btn = search_clear_btn;
 	summaryview->scrolledwin = scrolledwin;
 	summaryview->treeview = treeview;
 	summaryview->store = store;
@@ -619,6 +648,7 @@ SummaryView *summary_create(void)
 	summaryview->reedit_separator = GTK_WIDGET(child->next->data);
 
 	gtk_widget_show_all(vbox);
+	gtk_widget_hide(search_clear_btn);
 
 	return summaryview;
 }
@@ -5063,6 +5093,12 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	main_window_set_toolbar_sensitive(summaryview->mainwin);
 }
 
+void summary_qsearch_clear_entry(SummaryView *summaryview)
+{
+	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+	summary_qsearch(summaryview);
+}
+
 void summary_qsearch(SummaryView *summaryview)
 {
 	FilterCondType type;
@@ -5191,6 +5227,13 @@ static void summary_filter_menu_activated(GtkWidget *menuitem,
 static void summary_search_entry_changed(GtkWidget *entry,
 					 SummaryView *summaryview)
 {
+	const gchar *text;
+
+	text = gtk_entry_get_text(GTK_ENTRY(entry));
+	if (text && *text != '\0')
+		gtk_widget_show(summaryview->search_clear_btn);
+	else
+		gtk_widget_hide(summaryview->search_clear_btn);
 }
 
 static void summary_search_entry_activated(GtkWidget *entry,
@@ -5198,6 +5241,12 @@ static void summary_search_entry_activated(GtkWidget *entry,
 {
 	gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
 	summary_qsearch(summaryview);
+}
+
+static void summary_search_clear_clicked(GtkWidget *button,
+					 SummaryView *summaryview)
+{
+	summary_qsearch_clear_entry(summaryview);
 }
 
 static gboolean summary_toggle_pressed(GtkWidget *eventbox,

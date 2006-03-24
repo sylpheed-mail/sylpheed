@@ -64,6 +64,7 @@ struct _SummaryView
 	GtkWidget *filter_menu;
 	GtkWidget *search_label;
 	GtkWidget *search_entry;
+	GtkWidget *search_clear_btn;
 
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
@@ -272,6 +273,7 @@ void summary_set_column_order	  (SummaryView		*summaryview);
 void summary_get_column_order	  (SummaryView		*summaryview);
 
 void summary_qsearch_reset	  (SummaryView		*summaryview);
+void summary_qsearch_clear_entry  (SummaryView		*summaryview);
 void summary_qsearch		  (SummaryView		*summaryview);
 
 #endif /* __SUMMARY_H__ */
