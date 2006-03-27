@@ -900,7 +900,7 @@ static void prefs_send_create(void)
 	optmenu_menu = gtk_menu_new ();
 
 	SET_MENUITEM(_("MIME header"), FENC_MIME);
-	SET_MENUITEM(_("RFC 2231"), FENC_RFC2231);
+	SET_MENUITEM("RFC 2231", FENC_RFC2231);
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_fencoding),
 				  optmenu_menu);
