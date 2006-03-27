@@ -1079,7 +1079,7 @@ void subst_chars(gchar *str, gchar *orig, gchar subst)
 	while (*p) {
 		if (strchr(orig, *p) != NULL)
 			*p = subst;
-		p++;
+		++p;
 	}
 }
 
@@ -1090,7 +1090,18 @@ void subst_null(gchar *str, gint len, gchar subst)
 	while (len--) {
 		if (*p == '\0')
 			*p = subst;
-		p++;
+		++p;
+	}
+}
+
+void subst_control(gchar *str, gchar subst)
+{
+	register gchar *p = str;
+
+	while (*p) {
+		if (g_ascii_iscntrl(*p))
+			*p = subst;
+		++p;
 	}
 }
 

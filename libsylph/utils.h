@@ -296,6 +296,7 @@ GSList *newsgroup_list_append		(GSList		*group_list,
 GList *add_history			(GList		*list,
 					 const gchar	*str);
 
+/* modify string */
 void remove_return			(gchar		*str);
 void remove_space			(gchar		*str);
 void unfold_line			(gchar		*str);
@@ -307,6 +308,8 @@ void subst_chars			(gchar		*str,
 					 gchar		 subst);
 void subst_null				(gchar		*str,
 					 gint		 len,
+					 gchar		 subst);
+void subst_control			(gchar		*str,
 					 gchar		 subst);
 void subst_for_filename			(gchar		*str);
 

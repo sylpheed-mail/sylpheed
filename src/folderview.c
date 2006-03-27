@@ -333,7 +333,7 @@ FolderView *folderview_create(void)
 	store = gtk_tree_store_new(N_COLS, G_TYPE_STRING, G_TYPE_STRING,
 				   G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER,
 				   GDK_TYPE_PIXBUF, GDK_TYPE_PIXBUF,
-				   GDK_TYPE_COLOR, G_TYPE_BOOLEAN);
+				   GDK_TYPE_COLOR, G_TYPE_INT);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
 					COL_FOLDER_NAME,
 					folderview_folder_name_compare,
@@ -383,9 +383,8 @@ FolderView *folderview_create(void)
 	gtk_tree_view_column_set_attributes(column, renderer,
 					    "text", COL_FOLDER_NAME,
 					    "foreground-gdk", COL_FOREGROUND,
-					    "weight-set", COL_BOLD,
+					    "weight", COL_BOLD,
 					    NULL);
-	g_object_set(G_OBJECT(renderer), "weight", PANGO_WEIGHT_BOLD, NULL);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview), column);
@@ -1176,7 +1175,8 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 	gchar *name, *str;
 	gchar new_s[11], unread_s[11], total_s[11];
 	gboolean add_unread_mark;
-	gboolean use_bold, use_color;
+	gboolean use_color;
+	PangoWeight weight = PANGO_WEIGHT_NORMAL;
 	GdkColor *foreground = NULL;
 
 	gtk_tree_model_get(model, iter, COL_FOLDER_ITEM, &item, -1);
@@ -1296,13 +1296,16 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 
 	if (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
 	    item->stype == F_TRASH) {
-		use_bold = use_color = FALSE;
+		use_color = FALSE;
 	} else if (item->stype == F_QUEUE) {
 		/* highlight queue folder if there are any messages */
-		use_bold = use_color = (item->total > 0);
+		use_color = (item->total > 0);
+		if (item->total > 0)
+			weight = PANGO_WEIGHT_BOLD;
 	} else {
 		/* if unread messages exist, print with bold font */
-		use_bold = (item->unread > 0) || add_unread_mark;
+		if ((item->unread > 0) || add_unread_mark)
+			weight = PANGO_WEIGHT_BOLD;
 		/* if new messages exist, print with colored letter */
 		use_color =
 			(item->new > 0) ||
@@ -1324,7 +1327,7 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 			   COL_PIXBUF, pixbuf,
 			   COL_PIXBUF_OPEN, open_pixbuf,
 			   COL_FOREGROUND, foreground,
-			   COL_BOLD, use_bold,
+			   COL_BOLD, weight,
 			   -1);
 	g_free(name);
 

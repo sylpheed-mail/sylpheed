@@ -2061,7 +2061,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 	GdkPixbuf *unread_pix = NULL;
 	GdkPixbuf *mime_pix = NULL;
 	GdkColor *foreground = NULL;
-	gboolean use_bold = FALSE;
+	PangoWeight weight = PANGO_WEIGHT_NORMAL;
 	MsgFlags flags;
 	GdkColor color;
 	gint color_val;
@@ -2124,7 +2124,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 
 	if (prefs_common.bold_unread) {
 		if (MSG_IS_UNREAD(flags))
-			use_bold = TRUE;
+			weight = PANGO_WEIGHT_BOLD;
 		else if (gtk_tree_model_iter_has_child(GTK_TREE_MODEL(store),
 						       iter)) {
 			GtkTreePath *path;
@@ -2134,7 +2134,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			if (!gtk_tree_view_row_expanded
 				(GTK_TREE_VIEW(summaryview->treeview), path) &&
 			    summary_have_unread_children(summaryview, iter))
-				use_bold = TRUE;
+				weight = PANGO_WEIGHT_BOLD;
 			gtk_tree_path_free(path);
 		}
 	}
@@ -2165,7 +2165,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_TO, NULL,
 
 			   S_COL_FOREGROUND, foreground,
-			   S_COL_BOLD, use_bold,
+			   S_COL_BOLD, weight,
 			   -1);
 
 	if (subject_s)
@@ -2259,7 +2259,8 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 			    prefs_common.bold_unread &&
 			    summary_have_unread_children(summaryview, &iter)) {
 				gtk_tree_store_set(store, &iter,
-						   S_COL_BOLD, TRUE, -1);
+						   S_COL_BOLD,
+						   PANGO_WEIGHT_BOLD, -1);
 			}
 		}
 
@@ -2850,7 +2851,8 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 			    !gtk_tree_view_row_expanded(treeview, path) &&
 			    !summary_have_unread_children(summaryview, &iter)) {
 				gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
-						   S_COL_BOLD, FALSE, -1);
+						   S_COL_BOLD,
+						   PANGO_WEIGHT_NORMAL, -1);
 			}
 		}
 	}
@@ -2894,7 +2896,8 @@ void summary_mark_all_read(SummaryView *summaryview)
 					 path))
 					gtk_tree_store_set
 						(GTK_TREE_STORE(model), &iter,
-						 S_COL_BOLD, FALSE, -1);
+						 S_COL_BOLD,
+						 PANGO_WEIGHT_NORMAL, -1);
 				gtk_tree_path_free(path);
 			}
 		}
@@ -4844,7 +4847,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 				   G_TYPE_UINT,
 				   G_TYPE_POINTER,
 				   GDK_TYPE_COLOR,
-				   G_TYPE_BOOLEAN);
+				   G_TYPE_INT);
 
 #define SET_SORT(col, func)						\
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),	\
@@ -4890,12 +4893,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 			(column, renderer,				\
 			 # type, col,					\
 			 "foreground-gdk", S_COL_FOREGROUND,		\
-			 "weight-set", S_COL_BOLD,			\
+			 "weight", S_COL_BOLD,				\
 			 NULL);						\
-		gtk_cell_renderer_text_set_fixed_height_from_font	\
-			(GTK_CELL_RENDERER_TEXT(renderer), 1);		\
-		g_object_set(G_OBJECT(renderer),			\
-			     "weight", PANGO_WEIGHT_BOLD, NULL);	\
 		gtk_tree_view_column_set_resizable(column, TRUE);	\
 	}								\
 	gtk_tree_view_column_set_alignment(column, align);		\
@@ -5509,7 +5508,7 @@ static void summary_set_bold_recursive(SummaryView *summaryview,
 	GET_MSG_INFO(msginfo, iter);
 	if (!MSG_IS_UNREAD(msginfo->flags)) {
 		gtk_tree_store_set(summaryview->store, iter,
-				   S_COL_BOLD, FALSE, -1);
+				   S_COL_BOLD, PANGO_WEIGHT_NORMAL, -1);
 	}
 
 	valid = gtk_tree_model_iter_children(model, &child, iter);
@@ -5542,8 +5541,8 @@ static void summary_row_collapsed(GtkTreeView *treeview, GtkTreeIter *iter,
 {
 	if (prefs_common.bold_unread &&
 	    summary_have_unread_children(summaryview, iter)) {
-		gtk_tree_store_set(summaryview->store, iter, S_COL_BOLD, TRUE,
-				   -1);
+		gtk_tree_store_set(summaryview->store, iter,
+				   S_COL_BOLD, PANGO_WEIGHT_BOLD, -1);
 	}
 }
 

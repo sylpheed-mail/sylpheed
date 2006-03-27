@@ -687,19 +687,23 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 
 	if (from) {
 		msginfo->from = conv_unmime_header(from, charset);
+		subst_control(msginfo->from, ' ');
 		msginfo->fromname = procheader_get_fromname(msginfo->from);
 		g_free(from);
 	}
 	if (to) {
 		msginfo->to = conv_unmime_header(to, charset);
+		subst_control(msginfo->to, ' ');
 		g_free(to);
 	}
 	if (subject) {
 		msginfo->subject = conv_unmime_header(subject, charset);
+		subst_control(msginfo->subject, ' ');
 		g_free(subject);
 	}
 	if (cc) {
 		msginfo->cc = conv_unmime_header(cc, charset);
+		subst_control(msginfo->cc, ' ');
 		g_free(cc);
 	}
 
