@@ -2477,15 +2477,19 @@ static void summary_display_msg_full(SummaryView *summaryview,
 
 	if (val == 0 &&
 	    (new_window || !prefs_common.mark_as_read_on_new_window)) {
-		if (MSG_IS_NEW(msginfo->flags))
+		if (MSG_IS_NEW(msginfo->flags) &&
+		    summaryview->folder_item->new > 0)
 			summaryview->folder_item->new--;
-		if (MSG_IS_UNREAD(msginfo->flags))
+		if (MSG_IS_UNREAD(msginfo->flags) &&
+		    summaryview->folder_item->unread > 0)
 			summaryview->folder_item->unread--;
 
 		if (summaryview->folder_item->stype == F_VIRTUAL) {
-			if (MSG_IS_NEW(msginfo->flags))
+			if (MSG_IS_NEW(msginfo->flags) &&
+			    msginfo->folder->new > 0)
 				msginfo->folder->new--;
-			if (MSG_IS_UNREAD(msginfo->flags))
+			if (MSG_IS_UNREAD(msginfo->flags) &&
+			    msginfo->folder->unread > 0)
 				msginfo->folder->unread--;
 			folderview_update_item(msginfo->folder, FALSE);
 		}
@@ -2728,15 +2732,17 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 
 	GET_MSG_INFO(msginfo, iter);
 
-	if (MSG_IS_NEW(msginfo->flags))
+	if (MSG_IS_NEW(msginfo->flags) && summaryview->folder_item->new > 0)
 		summaryview->folder_item->new--;
-	if (MSG_IS_UNREAD(msginfo->flags))
+	if (MSG_IS_UNREAD(msginfo->flags) &&
+	    summaryview->folder_item->unread > 0)
 		summaryview->folder_item->unread--;
 
 	if (summaryview->folder_item->stype == F_VIRTUAL) {
-		if (MSG_IS_NEW(msginfo->flags))
+		if (MSG_IS_NEW(msginfo->flags) && msginfo->folder->new > 0)
 			msginfo->folder->new--;
-		if (MSG_IS_UNREAD(msginfo->flags))
+		if (MSG_IS_UNREAD(msginfo->flags) &&
+		    msginfo->folder->unread > 0)
 			msginfo->folder->unread--;
 		folderview_update_item(msginfo->folder, FALSE);
 	}
