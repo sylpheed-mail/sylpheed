@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed 2.1.8\n"
+"Project-Id-Version: Sylpheed 2.2.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-27 19:30+0900\n"
-"PO-Revision-Date: 2006-02-02 23:48+0300\n"
+"POT-Creation-Date: 2006-05-09 21:26+0900\n"
+"PO-Revision-Date: 2006-04-13 00:34+0300\n"
 "Last-Translator: O.R. Nykyforchyn <nick@pu.if.ua>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -864,9 +864,8 @@ msgid "/_File/New _JPilot"
 msgstr "/Файл/Новий JPilot"
 
 #: src/addressbook.c:344
-#, fuzzy
 msgid "/_File/New _LDAP Server"
-msgstr "/Файл/Новий сервер"
+msgstr "/Файл/Новий сервер LDAP"
 
 #: src/addressbook.c:346 src/addressbook.c:349 src/compose.c:524
 #: src/compose.c:529 src/compose.c:532 src/compose.c:535 src/mainwindow.c:507
@@ -1234,7 +1233,7 @@ msgstr "Коричневий"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4795
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4801
 msgid "None"
 msgstr "Ніякий"
 
@@ -1280,9 +1279,8 @@ msgid "/_File/Insert si_gnature"
 msgstr "/Файл/Вставити підпис"
 
 #: src/compose.c:534
-#, fuzzy
 msgid "/_File/A_ppend signature"
-msgstr "/Файл/Вставити підпис"
+msgstr "/Файл/Приєднати підпис"
 
 #: src/compose.c:539
 msgid "/_Edit/_Undo"
@@ -1418,14 +1416,12 @@ msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/Вигляд/Кодова таблиця/Грецька (ISO-8859-_7)"
 
 #: src/compose.c:602 src/mainwindow.c:643 src/messageview.c:188
-#, fuzzy
 msgid "/_View/Character _encoding/Arabic (ISO-8859-_6)"
-msgstr "/Вигляд/Кодова таблиця/Балтійська (ISO-8859-_4)"
+msgstr "/Вигляд/Кодова таблиця/Арабська (ISO-8859-_6)"
 
 #: src/compose.c:604 src/mainwindow.c:645 src/messageview.c:190
-#, fuzzy
 msgid "/_View/Character _encoding/Arabic (Windows-1256)"
-msgstr "/Вигляд/Кодова таблиця/Кирилиця (_Windows-1251)"
+msgstr "/Вигляд/Кодова таблиця/Арабська (Windows-1256)"
 
 #: src/compose.c:608 src/mainwindow.c:649 src/messageview.c:193
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
@@ -1691,7 +1687,7 @@ msgstr "тип MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4322 src/mimeview.c:197 src/prefs_filter_edit.c:496
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4938
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4944
 msgid "Size"
 msgstr "Розмір"
 
@@ -1743,9 +1739,8 @@ msgid "Signature"
 msgstr "Підпис"
 
 #: src/compose.c:4807
-#, fuzzy
 msgid "Append signature"
-msgstr "ПОГАНИЙ підпис"
+msgstr "Приєднати підпис"
 
 #. editor
 #: src/compose.c:4816 src/prefs_common_dialog.c:1021
@@ -2242,9 +2237,8 @@ msgid "/R_ebuild folder tree"
 msgstr "/Перебудувати дерево папок"
 
 #: src/folderview.c:252 src/folderview.c:274 src/folderview.c:294
-#, fuzzy
 msgid "/_Update summary"
-msgstr "/Вигляд/Оновити список"
+msgstr "/Оновити список"
 
 #: src/folderview.c:254 src/folderview.c:276 src/folderview.c:296
 msgid "/_Search messages..."
@@ -2252,7 +2246,7 @@ msgstr "/Шукати листи..."
 
 #: src/folderview.c:255 src/folderview.c:277 src/folderview.c:297
 msgid "/Ed_it search condition..."
-msgstr ""
+msgstr "/Редагувати умови пошуку..."
 
 #: src/folderview.c:269 src/folderview.c:290
 msgid "/Down_load"
@@ -2361,9 +2355,9 @@ msgid "Rename folder"
 msgstr "Перейменувати папку"
 
 #: src/folderview.c:2221 src/folderview.c:2229
-#, fuzzy, c-format
+#, c-format
 msgid "Can't rename the folder '%s'."
-msgstr "Не вдалось створити папку `%s'."
+msgstr "Не вдалось перейменувати папку `%s'."
 
 #: src/folderview.c:2299
 #, c-format
@@ -2371,21 +2365,20 @@ msgid "Can't move the folder `%s'."
 msgstr "Не вдалось перенести папку `%s'."
 
 #: src/folderview.c:2365
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
 "The real messages are not deleted."
 msgstr ""
-"Справді видалити скриньку `%s' ?\n"
-"(Листи НЕ видаляються з диска)"
+"Справді видалити папку пошуку `%s' ?\n"
+"(Листи НЕ видаляються з диска.)"
 
 #: src/folderview.c:2367
-#, fuzzy
 msgid "Delete search folder"
-msgstr "Видалити папку"
+msgstr "Видалити папку пошуку"
 
 #: src/folderview.c:2372
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
@@ -2398,7 +2391,7 @@ msgstr ""
 "Справді бажаєте видалити?"
 
 #: src/folderview.c:2404 src/folderview.c:2410
-#, fuzzy, c-format
+#, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Не вдалось видалити папку `%s'."
 
@@ -2866,7 +2859,7 @@ msgstr "  --version              видати інформацію про вер
 
 #: src/main.c:423
 msgid "Press any key..."
-msgstr ""
+msgstr "Натисніть яку-небудь кнопку..."
 
 #: src/main.c:565
 msgid "Filename encoding"
@@ -3055,9 +3048,8 @@ msgid "/_View/Show or hi_de/_Toolbar/_None"
 msgstr "/Вигляд/Показати чи приховати/Панель інструментів/Немає"
 
 #: src/mainwindow.c:546
-#, fuzzy
 msgid "/_View/Show or hi_de/_Search bar"
-msgstr "/Вигляд/Показати чи приховати/Панель стану"
+msgstr "/Вигляд/Показати чи приховати/Панель пошуку"
 
 #: src/mainwindow.c:548
 msgid "/_View/Show or hi_de/Status _bar"
@@ -3213,9 +3205,8 @@ msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/Вигляд/Кодова таблиця/_Aвтовизначення"
 
 #: src/mainwindow.c:625 src/messageview.c:174
-#, fuzzy
 msgid "/_View/Character _encoding/Western European (Windows-1252)"
-msgstr "/Вигляд/Кодова таблиця/Західноєвропейська (ISO-8859-15)"
+msgstr "/Вигляд/Кодова таблиця/Західноєвропейська (Windows-1252)"
 
 #: src/mainwindow.c:671 src/messageview.c:212
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
@@ -3250,9 +3241,8 @@ msgid "/_View/Mess_age source"
 msgstr "/Вигляд/Вихідний текст листа"
 
 #: src/mainwindow.c:708 src/messageview.c:245
-#, fuzzy
 msgid "/_View/Show all _headers"
-msgstr "/Вигляд/Показати весь заголовок"
+msgstr "/Вигляд/Показати всі заголовки"
 
 #: src/mainwindow.c:710
 msgid "/_View/_Update summary"
@@ -3362,9 +3352,8 @@ msgid "/_Message/_Mark/Mark as rea_d"
 msgstr "/Лист/Позначка/Позначити як прочитаний"
 
 #: src/mainwindow.c:747
-#, fuzzy
 msgid "/_Message/_Mark/Mark _thread as read"
-msgstr "/Лист/Позначка/Позначити як прочитаний"
+msgstr "/Лист/Позначка/Позначити нитку як прочитану"
 
 #: src/mainwindow.c:749
 msgid "/_Message/_Mark/Mark all _read"
@@ -3515,9 +3504,8 @@ msgid "/_Help/_FAQ/_Italian"
 msgstr "/Довідка/FAQ/Італійський"
 
 #: src/mainwindow.c:822
-#, fuzzy
 msgid "/_Help/_Command line options"
-msgstr "Не задано командний рядок."
+msgstr "/Довідка/Опції командного рядка"
 
 #: src/mainwindow.c:823
 msgid "/_Help/---"
@@ -3533,7 +3521,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача розміщення кольору %d\n"
 
 #: src/mainwindow.c:1139 src/summaryview.c:2306 src/summaryview.c:2391
-#: src/summaryview.c:3941 src/summaryview.c:4070 src/summaryview.c:4428
+#: src/summaryview.c:3947 src/summaryview.c:4076 src/summaryview.c:4434
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -3742,14 +3730,12 @@ msgid "Exit this program?"
 msgstr "Вийти з цієї програми?"
 
 #: src/mainwindow.c:3538
-#, fuzzy
 msgid "Command line options"
-msgstr "Не задано командний рядок."
+msgstr "Опції командного рядка"
 
 #: src/mainwindow.c:3551
-#, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
-msgstr "Вживання: %s [ОПЦІЇ]...\n"
+msgstr "Вживання: sylpheed [ОПЦІЇ]..."
 
 #: src/mainwindow.c:3559
 msgid ""
@@ -3766,6 +3752,18 @@ msgid ""
 "--help\n"
 "--version"
 msgstr ""
+"--compose [address]\n"
+"--attach file1 [file2]...\n"
+"--receive\n"
+"--receive-all\n"
+"--send\n"
+"--status [folder]...\n"
+"--status-full [folder]...\n"
+"--configdir dirname\n"
+"--exit\n"
+"--debug\n"
+"--help\n"
+"--version"
 
 #: src/mainwindow.c:3575
 msgid ""
@@ -3782,6 +3780,17 @@ msgid ""
 "display this help and exit\n"
 "output version information and exit"
 msgstr ""
+"відкрити вікно створення листа\n"
+"відкрити вікно створення листа з приєднанням вказаних файлів\n"
+"отримати нові листи\n"
+"отримати нові листи для всіх записів\n"
+"відіслати всі відкладені листи\n"
+"показати загальну кількість листівnпоказати стан кожної папки\n"
+"показати папку з файлами налаштувань\n"
+"вийти з Sylpheed\n"
+"debug mode\n"
+"показати цю довідку і вийти\n"
+"показати інформацію про версію і вийти"
 
 #: src/message_search.c:120
 msgid "Find in current message"
@@ -3836,24 +3845,24 @@ msgstr "Вкладення"
 msgid "Message View - Sylpheed"
 msgstr "Зміст листа - Sylpheed"
 
-#: src/messageview.c:700 src/summaryview.c:3469
+#: src/messageview.c:700 src/summaryview.c:3475
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не вдалось зберегти файл `%s'."
 
-#: src/messageview.c:758 src/summaryview.c:3492
+#: src/messageview.c:758 src/summaryview.c:3498
 msgid "The message will be printed with the following command:"
 msgstr "Лист буде надруковано наступною командою:"
 
-#: src/messageview.c:759 src/summaryview.c:3493
+#: src/messageview.c:759 src/summaryview.c:3499
 msgid "(Default print command)"
 msgstr "(Команда друку за замовчуванням)"
 
-#: src/messageview.c:761 src/prefs_common_dialog.c:2334 src/summaryview.c:3495
+#: src/messageview.c:761 src/prefs_common_dialog.c:2334 src/summaryview.c:3501
 msgid "Print"
 msgstr "Друк"
 
-#: src/messageview.c:769 src/summaryview.c:3503
+#: src/messageview.c:769 src/summaryview.c:3509
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -4117,9 +4126,8 @@ msgid "days"
 msgstr "днів"
 
 #: src/prefs_account_dialog.c:872
-#, fuzzy
 msgid "0 days: remove immediately"
-msgstr "(0 днів - видаляти негайно)"
+msgstr "0 днів - видаляти негайно"
 
 #: src/prefs_account_dialog.c:882
 msgid "Download all messages on server"
@@ -4156,9 +4164,8 @@ msgid "Automatic"
 msgstr "Автоматично"
 
 #: src/prefs_account_dialog.c:960
-#, fuzzy
 msgid "Only check INBOX on receiving"
-msgstr "Тільки при ручному отриманні"
+msgstr "При отриманні тільки перевіряти INBOX"
 
 #: src/prefs_account_dialog.c:962
 msgid "News"
@@ -4345,12 +4352,11 @@ msgstr "Каталог сервера IMAP"
 
 #: src/prefs_account_dialog.c:1687
 msgid "Only the subfolders of this directory will be displayed."
-msgstr ""
+msgstr "Буде показано тільки підпапки цього каталога."
 
 #: src/prefs_account_dialog.c:1690
-#, fuzzy
 msgid "Clear all message caches on exit"
-msgstr "Завантажити всі листи на сервері"
+msgstr "При виході очищати всі кеші повідомлень"
 
 #: src/prefs_account_dialog.c:1735
 msgid "Put sent messages in"
@@ -4361,7 +4367,6 @@ msgid "Put draft messages in"
 msgstr "Зберігати чернетки листів в"
 
 #: src/prefs_account_dialog.c:1739
-#, fuzzy
 msgid "Put queued messages in"
 msgstr "Зберігати видалені листи в"
 
@@ -4399,7 +4404,7 @@ msgstr "Не вказано сервер NNTP."
 
 #: src/prefs_account_dialog.c:1860
 msgid "Specified folder is not a queue folder."
-msgstr ""
+msgstr "Вказана папка не є папкою черги."
 
 #: src/prefs_account_dialog.c:1934
 msgid ""
@@ -4615,14 +4620,12 @@ msgstr ""
 "ASCII символи."
 
 #: src/prefs_common_dialog.c:891
-#, fuzzy
 msgid "MIME filename encoding"
-msgstr "Кодова таблиця для імен файлів"
+msgstr "Кодування MIME для імен файлів"
 
 #: src/prefs_common_dialog.c:902
-#, fuzzy
 msgid "MIME header"
-msgstr "Кодова таблиця для імен файлів"
+msgstr "Заголовок MIME"
 
 #: src/prefs_common_dialog.c:912
 msgid ""
@@ -4630,6 +4633,9 @@ msgid ""
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
+"Оберіть метод кодування для імен файлів з не-ASCII символами.\n"
+"Заголовок MIME: найпопулярніший, але порушує RFC 2047\n"
+"RFC 2231: відповідає стандарту, але непопулярний"
 
 #: src/prefs_common_dialog.c:979 src/prefs_common_dialog.c:1364
 #: src/prefs_folder_item.c:139
@@ -4859,7 +4865,7 @@ msgstr "Ввімкнути контроль мотлоху"
 
 #: src/prefs_common_dialog.c:1797
 msgid "Learning command:"
-msgstr "Вивчення команди:"
+msgstr "Навчання команди:"
 
 #: src/prefs_common_dialog.c:1806
 msgid "(Select preset)"
@@ -4871,7 +4877,7 @@ msgstr "Не мотлох"
 
 #: src/prefs_common_dialog.c:1846
 msgid "Classifying command"
-msgstr "Класифікувати команду"
+msgstr "Класифікуюча команда"
 
 #: src/prefs_common_dialog.c:1857
 msgid ""
@@ -4962,9 +4968,8 @@ msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "Узгоджувати порядок кнопок з GNOME HIG"
 
 #: src/prefs_common_dialog.c:2114
-#, fuzzy
 msgid "Display tray icon"
-msgstr "Ім'я для списку"
+msgstr "Показати іконку панелі"
 
 #: src/prefs_common_dialog.c:2121
 msgid " Set key bindings... "
@@ -5094,9 +5099,8 @@ msgid "Western European (ISO-8859-15)"
 msgstr "Західноєвропейська (ISO-8859-15)"
 
 #: src/prefs_common_dialog.c:2514
-#, fuzzy
 msgid "Western European (Windows-1252)"
-msgstr "Західноєвропейська (ISO-8859-15)"
+msgstr "Західноєвропейська (Windows-1252)"
 
 #: src/prefs_common_dialog.c:2518
 msgid "Central European (ISO-8859-2)"
@@ -5115,14 +5119,12 @@ msgid "Greek (ISO-8859-7)"
 msgstr "Грецька (ISO-8859-7)"
 
 #: src/prefs_common_dialog.c:2525
-#, fuzzy
 msgid "Arabic (ISO-8859-6)"
-msgstr "Балтійська (ISO-8859-4)"
+msgstr "Арабська (ISO-8859-6)"
 
 #: src/prefs_common_dialog.c:2526
-#, fuzzy
 msgid "Arabic (Windows-1256)"
-msgstr "Кирилиця (Windows-1251)"
+msgstr "Арабська (Windows-1256)"
 
 #: src/prefs_common_dialog.c:2528
 msgid "Hebrew (ISO-8859-8)"
@@ -5520,19 +5522,16 @@ msgid "Age"
 msgstr "Давність"
 
 #: src/prefs_filter_edit.c:501 src/summaryview.c:517
-#, fuzzy
 msgid "Marked"
-msgstr "Позначка"
+msgstr "Відзначені"
 
 #: src/prefs_filter_edit.c:502
-#, fuzzy
 msgid "Has color label"
-msgstr "/Кольорова позначка"
+msgstr "Має кольорову позначку"
 
 #: src/prefs_filter_edit.c:503
-#, fuzzy
 msgid "Has attachment"
-msgstr "Вкладення"
+msgstr "Має вкладення"
 
 #: src/prefs_filter_edit.c:516
 msgid "contains"
@@ -5576,12 +5575,11 @@ msgstr "коротше, ніж"
 
 #: src/prefs_filter_edit.c:559
 msgid "matches to status"
-msgstr ""
+msgstr "відповідає стану"
 
 #: src/prefs_filter_edit.c:560
-#, fuzzy
 msgid "doesn't match to status"
-msgstr "не відповідає регулярному виразу"
+msgstr "не відповідає стану"
 
 #: src/prefs_filter_edit.c:662
 msgid "Move to"
@@ -5719,7 +5717,7 @@ msgstr "Зворотня:"
 #: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
-msgstr ""
+msgstr "%s - Редагувати умови пошуку"
 
 #: src/prefs_search_folder.c:209 src/query_search.c:274
 msgid "Match any of the following"
@@ -5730,14 +5728,12 @@ msgid "Match all of the following"
 msgstr "Якщо виконано всі умови"
 
 #: src/prefs_search_folder.c:231 src/query_search.c:320
-#, fuzzy
 msgid "Folder:"
-msgstr "Папка"
+msgstr "Папка:"
 
 #: src/prefs_search_folder.c:248 src/query_search.c:338
-#, fuzzy
 msgid "Search subfolders"
-msgstr "Невдача пошуку"
+msgstr "Шукати в підпапках"
 
 #: src/prefs_summary_column.c:70
 msgid "Mark"
@@ -5749,17 +5745,17 @@ msgid "Attachment"
 msgstr "Вкладення"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/query_search.c:399 src/summaryview.c:4931
+#: src/prefs_summary_column.c:73 src/query_search.c:399 src/summaryview.c:4937
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/query_search.c:400 src/summaryview.c:4934
+#: src/prefs_summary_column.c:74 src/query_search.c:400 src/summaryview.c:4940
 msgid "From"
 msgstr "Від"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:4936
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:4942
 msgid "Date"
 msgstr "Дата"
 
@@ -5857,41 +5853,38 @@ msgid "Search messages"
 msgstr "Шукати повідомлення"
 
 #: src/query_search.c:423
-#, fuzzy
 msgid "_Save as search folder"
-msgstr "Зберегти в папці чернеток"
+msgstr "Зберегти як папку пошуку"
 
 #: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:872
 msgid "Done."
 msgstr "Виконано."
 
 #: src/query_search.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s ..."
-msgstr "Перечитуємо папку %s ..."
+msgstr "Шукаємо %s ..."
 
 #: src/query_search.c:594
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s (%d / %d)..."
-msgstr "Посилаємо лист (%d / %d байтів)"
+msgstr "Шукаємо %s (%d / %d)..."
 
 #: src/query_search.c:675 src/summaryview.c:2081
 msgid "(No Date)"
 msgstr "(Без дати)"
 
 #: src/query_search.c:869
-#, fuzzy
 msgid "Save as search folder"
-msgstr "Зберегти в папці чернеток"
+msgstr "Зберегти як папку пошуку"
 
 #: src/query_search.c:890
 msgid "Location:"
-msgstr ""
+msgstr "Розташування:"
 
 #: src/query_search.c:905
-#, fuzzy
 msgid "Folder name:"
-msgstr "Ім'я файлу"
+msgstr "Ім'я папки:"
 
 #: src/rfc2015.c:140
 msgid "Cannot find user ID for this key."
@@ -6185,9 +6178,8 @@ msgid "unknown"
 msgstr "невідомо"
 
 #: src/subscribedialog.c:481
-#, fuzzy
 msgid "Getting newsgroup list..."
-msgstr "Не вдалось отримати список конференцій"
+msgstr "Отримання списку конференцій..."
 
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
@@ -6247,9 +6239,8 @@ msgid "/_Mark/Mark as rea_d"
 msgstr "/Позначити/Позначити як прочитане"
 
 #: src/summaryview.c:431
-#, fuzzy
 msgid "/_Mark/Mark _thread as read"
-msgstr "/Позначити/Позначити як прочитане"
+msgstr "/Позначити/Позначити нитку як прочитану"
 
 #: src/summaryview.c:433
 msgid "/_Mark/Mark all _read"
@@ -6305,26 +6296,23 @@ msgstr "Створюємо область перегляду списка...\n"
 
 #: src/summaryview.c:515
 msgid "All"
-msgstr ""
+msgstr "Всі"
 
 #: src/summaryview.c:518
-#, fuzzy
 msgid "Have color label"
-msgstr "/Кольорова позначка"
+msgstr "Мають кольорову позначку"
 
 #: src/summaryview.c:519
-#, fuzzy
 msgid "Have attachment"
-msgstr "Вкладення"
+msgstr "Мають вкладення"
 
 #: src/summaryview.c:528
-#, fuzzy
 msgid "Search:"
-msgstr " Пошук "
+msgstr "Пошук:"
 
 #: src/summaryview.c:546
 msgid "Search for Subject or From"
-msgstr ""
+msgstr "Пошук за полем `Тема' або `Від'"
 
 #: src/summaryview.c:734
 msgid "Process mark"
@@ -6461,92 +6449,92 @@ msgstr "Формуємо список з даних листів..."
 msgid "Writing summary cache (%s)..."
 msgstr "Пишемо кеш списка (%s)..."
 
-#: src/summaryview.c:2691
+#: src/summaryview.c:2695
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Лист %d позначено\n"
 
-#: src/summaryview.c:2749
+#: src/summaryview.c:2755
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Лист %d позначено як прочитаний\n"
 
-#: src/summaryview.c:2941
+#: src/summaryview.c:2947
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Лист %d позначено як непрочитаний\n"
 
-#: src/summaryview.c:3002
+#: src/summaryview.c:3008
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Лист %s/%d призначено до видалення\n"
 
-#: src/summaryview.c:3030
+#: src/summaryview.c:3036
 msgid "Delete message(s)"
 msgstr "Видалити лист(и)"
 
-#: src/summaryview.c:3031
+#: src/summaryview.c:3037
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Справді видалити лист(и) з кошика?"
 
-#: src/summaryview.c:3105
+#: src/summaryview.c:3111
 msgid "Deleting duplicated messages..."
 msgstr "Видаляємо повторювані листи..."
 
-#: src/summaryview.c:3143
+#: src/summaryview.c:3149
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "З листа %s/%d знято позначки\n"
 
-#: src/summaryview.c:3203
+#: src/summaryview.c:3209
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Лист %d призначено до переміщення в %s\n"
 
-#: src/summaryview.c:3235
+#: src/summaryview.c:3241
 msgid "Destination is same as current folder."
 msgstr "Призначення збігається з поточною папкою."
 
-#: src/summaryview.c:3301
+#: src/summaryview.c:3307
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Лист %d призначено до копіювання в %s\n"
 
-#: src/summaryview.c:3332
+#: src/summaryview.c:3338
 msgid "Destination for copy is same as current folder."
 msgstr "Пропонується копіювання з папки в неї ж."
 
-#: src/summaryview.c:3540
+#: src/summaryview.c:3546
 msgid "Error occurred while processing messages."
 msgstr "При обробці пошти трапилась помилка."
 
-#: src/summaryview.c:3848 src/summaryview.c:3849
+#: src/summaryview.c:3854 src/summaryview.c:3855
 msgid "Building threads..."
 msgstr "Будуємо нитки обговорення..."
 
-#: src/summaryview.c:3999 src/summaryview.c:4000
+#: src/summaryview.c:4005 src/summaryview.c:4006
 msgid "Unthreading..."
 msgstr "Скасування ниток обговорення..."
 
-#: src/summaryview.c:4293 src/summaryview.c:4349
-#, fuzzy, c-format
+#: src/summaryview.c:4299 src/summaryview.c:4355
+#, c-format
 msgid "Filtering (%d / %d)..."
-msgstr "Фільтрування..."
+msgstr "Фільтрування (%d / %d)..."
 
-#: src/summaryview.c:4398
+#: src/summaryview.c:4404
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:4399
+#: src/summaryview.c:4405
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:4435
+#: src/summaryview.c:4441
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."
 
-#: src/summaryview.c:4940
+#: src/summaryview.c:4946
 msgid "No."
 msgstr "Номер"
 
@@ -6605,27 +6593,22 @@ msgid "Fake URL warning"
 msgstr "Попередження: підміна URL"
 
 #: src/trayicon.c:100
-#, fuzzy
 msgid "Get from _current account"
-msgstr "/Лист/Отримати/Для поточного запису"
+msgstr "Отримати для поточного запису"
 
 #: src/trayicon.c:104
-#, fuzzy
 msgid "Get from _all accounts"
-msgstr "/Лист/Отримати/Для всіх записів"
+msgstr "Отримати для всіх записів"
 
 #: src/trayicon.c:108
-#, fuzzy
 msgid "_Send queued messages"
 msgstr "Відіслати лист(и) з черги"
 
 #: src/trayicon.c:120
-#, fuzzy
 msgid "_About"
 msgstr "Про програму"
 
 #: src/trayicon.c:124
-#, fuzzy
 msgid "E_xit"
 msgstr "Вихід"
 
