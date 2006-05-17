@@ -587,7 +587,7 @@ static gchar *conv_sjistojis(const gchar *inbuf, gint *error)
 	gint error_ = 0;
 	guint idx;
  
-	outbuf = g_malloc(strlen(inbuf) * 3 + 4);
+	outbuf = g_malloc(strlen(inbuf) * 5 + 4);
 	out = (guchar *)outbuf;
 
 	while (*in != '\0') {
@@ -614,7 +614,6 @@ static gchar *conv_sjistojis(const gchar *inbuf, gint *error)
 		} else if (issjishwkana(*in)) {
 			if (prefs_common.allow_jisx0201_kana) {
 				HW_IN();
-				in++;
 				*out++ = *in++ & 0x7f;
 			} else {
 				guchar jis_ch[2];
@@ -629,10 +628,10 @@ static gchar *conv_sjistojis(const gchar *inbuf, gint *error)
 						(jis_ch,
 						 *in, '\0');
 				if (len == 0)
-					in += 2;
+					in++;
 				else {
 					K_IN();
-					in += len * 2;
+					in += len;
 					*out++ = jis_ch[0];
 					*out++ = jis_ch[1];
 				}

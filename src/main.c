@@ -188,7 +188,8 @@ int main(int argc, char *argv[])
 	gtk_widget_set_default_visual(gdk_rgb_get_visual());
 
 #if USE_THREADS || USE_LDAP
-	g_thread_init(NULL);
+	if (!g_thread_supported())
+		g_thread_init(NULL);
 	if (!g_thread_supported())
 		g_error(_("g_thread is not supported by glib.\n"));
 #endif
