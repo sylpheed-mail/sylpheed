@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,7 +259,7 @@ static void foldersel_create(void)
 					GDK_TYPE_PIXBUF,
 					GDK_TYPE_PIXBUF,
 					GDK_TYPE_COLOR,
-					G_TYPE_BOOLEAN);
+					G_TYPE_INT);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(tree_store),
 					FOLDERSEL_FOLDERNAME,
 					foldersel_folder_name_compare,
@@ -300,9 +300,8 @@ static void foldersel_create(void)
 		(column, renderer,
 		 "text", FOLDERSEL_FOLDERNAME,
 		 "foreground-gdk", FOLDERSEL_FOREGROUND,
-		 "weight-set", FOLDERSEL_BOLD,
+		 "weight", FOLDERSEL_BOLD,
 		 NULL);
-	g_object_set(G_OBJECT(renderer), "weight", PANGO_WEIGHT_BOLD, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
@@ -346,7 +345,8 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 {
 	gchar *name;
 	GdkPixbuf *pixbuf, *pixbuf_open;
-	gboolean use_bold, use_color;
+	gboolean use_color;
+	PangoWeight weight = PANGO_WEIGHT_NORMAL;
 	GdkColor *foreground = NULL;
 	static GdkColor color_noselect = {0, COLOR_DIM, COLOR_DIM, COLOR_DIM};
 	static GdkColor color_new = {0, (guint16)55000, 15000, 15000};
@@ -406,12 +406,15 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 
 	if (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
 	    item->stype == F_TRASH) {
-		use_bold = use_color = FALSE;
+		use_color = FALSE;
 	} else if (item->stype == F_QUEUE) {
-		use_bold = use_color = (item->total > 0);
+		use_color = (item->total > 0);
+		if (item->total > 0)
+			weight = PANGO_WEIGHT_BOLD;
 	} else {
-		use_bold = (item->unread > 0);
 		use_color = (item->new > 0);
+		if (item->unread > 0)
+			weight = PANGO_WEIGHT_BOLD;
 	}
 
 	if (item->no_select)
@@ -427,7 +430,7 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 			   FOLDERSEL_PIXBUF, pixbuf,
 			   FOLDERSEL_PIXBUF_OPEN, pixbuf_open,
 			   FOLDERSEL_FOREGROUND, foreground,
-			   FOLDERSEL_BOLD, use_bold,
+			   FOLDERSEL_BOLD, weight,
 			   -1);
 	g_free(name);
 }
