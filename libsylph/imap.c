@@ -1918,7 +1918,7 @@ static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
 
 		buf[0] = '\0';
 		while (*p == ' ') p++;
-		if (*p == '{' || *p == '"')
+		if ((*p == '~' && *(p + 1) == '{') || *p == '{' || *p == '"')
 			p = imap_parse_atom(session, p, buf, sizeof(buf), str);
 		else
 			strncpy2(buf, p, sizeof(buf));
@@ -2703,6 +2703,9 @@ static gchar *imap_parse_atom(IMAPSession *session, gchar *src,
 		while (g_ascii_isspace(*cur_pos)) cur_pos++;
 	}
 
+	if (*cur_pos == '~' && *(cur_pos + 1) == '{')
+		cur_pos++;
+
 	if (!strncmp(cur_pos, "NIL", 3)) {
 		*dest = '\0';
 		cur_pos += 3;
@@ -2761,6 +2764,8 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 	g_return_val_if_fail(str != NULL, cur_pos);
 
 	while (g_ascii_isspace(*cur_pos)) cur_pos++;
+	if (*cur_pos == '~' && *(cur_pos + 1) == '{')
+		cur_pos++;
 
 	g_return_val_if_fail(*cur_pos == '{', cur_pos);
 
