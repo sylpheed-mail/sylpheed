@@ -561,6 +561,8 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 		(session, send_send_data_progressive, dialog);
 	session_set_send_data_notify(session, send_send_data_finished, dialog);
 
+	session_set_timeout(session, prefs_common.io_timeout_secs * 1000);
+
 	if (session_connect(session, ac_prefs->smtp_server, port) < 0) {
 		session_destroy(session);
 		send_progress_dialog_destroy(dialog);
