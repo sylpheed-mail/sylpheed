@@ -1187,7 +1187,7 @@ static void textview_write_link(TextView *textview, const gchar *str,
 		gtk_text_buffer_insert(buffer, &iter, buf, bufp - buf);
 
 	r_uri = g_new(RemoteURI, 1);
-	r_uri->uri = g_strdup(uri);
+	r_uri->uri = g_strstrip(g_strdup(uri));
 	r_uri->filename = NULL;
 	r_uri->start = gtk_text_iter_get_offset(&iter);
 	gtk_text_buffer_insert_with_tags_by_name
