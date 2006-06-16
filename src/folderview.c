@@ -1626,10 +1626,13 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		if (item->parent == NULL) {
 			update_tree = remove_tree = TRUE;
 		} else {
+			if (FOLDER_TYPE(folder) != F_IMAP)
+				mark_all_read = TRUE;
 			if (gtkut_tree_row_reference_equal
-				(folderview->selected, folderview->opened))
+				(folderview->selected, folderview->opened)) {
 				update_summary = TRUE;
-			mark_all_read = TRUE;
+				mark_all_read = TRUE;
+			}
 		}
 		if (FOLDER_IS_LOCAL(folder) || FOLDER_TYPE(folder) == F_IMAP) {
 			if (item->parent == NULL)
