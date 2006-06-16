@@ -221,6 +221,7 @@ GSList *procmsg_read_cache		(FolderItem	*item,
 					 gboolean	 scan_file);
 void	procmsg_set_flags		(GSList		*mlist,
 					 FolderItem	*item);
+void	procmsg_mark_all_read		(FolderItem	*item);
 GSList *procmsg_sort_msg_list		(GSList		*mlist,
 					 FolderSortKey	 sort_key,
 					 FolderSortType	 sort_type);

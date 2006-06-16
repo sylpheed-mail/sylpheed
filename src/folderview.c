@@ -172,6 +172,10 @@ static void folderview_update_summary_cb(FolderView	*folderview,
 					 guint		 action,
 					 GtkWidget	*widget);
 
+static void folderview_mark_all_read_cb	(FolderView	*folderview,
+					 guint		 action,
+					 GtkWidget	*widget);
+
 static void folderview_new_folder_cb	(FolderView	*folderview,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -250,6 +254,7 @@ static GtkItemFactoryEntry folderview_mail_popup_entries[] =
 					NULL, folderview_update_tree_cb, 0, NULL},
 	{N_("/R_ebuild folder tree"),	NULL, folderview_update_tree_cb, 1, NULL},
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
+	{N_("/Mar_k all read"),		NULL, folderview_mark_all_read_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/Ed_it search condition..."),
@@ -272,6 +277,7 @@ static GtkItemFactoryEntry folderview_imap_popup_entries[] =
 					NULL, folderview_update_tree_cb, 0, NULL},
 	{N_("/R_ebuild folder tree"),	NULL, folderview_update_tree_cb, 1, NULL},
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
+	{N_("/Mar_k all read"),		NULL, folderview_mark_all_read_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/Ed_it search condition..."),
@@ -292,6 +298,7 @@ static GtkItemFactoryEntry folderview_news_popup_entries[] =
 	{N_("/_Check for new messages"),
 					NULL, folderview_update_tree_cb, 0, NULL},
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
+	{N_("/Mar_k all read"),		NULL, folderview_mark_all_read_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/Ed_it search condition..."),
@@ -1592,6 +1599,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	gboolean download_msg    = FALSE;
 	gboolean update_tree     = FALSE;
 	gboolean update_summary  = FALSE;
+	gboolean mark_all_read   = FALSE;
 	gboolean rescan_tree     = FALSE;
 	gboolean remove_tree     = FALSE;
 	gboolean search_folder   = FALSE;
@@ -1621,6 +1629,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 			if (gtkut_tree_row_reference_equal
 				(folderview->selected, folderview->opened))
 				update_summary = TRUE;
+			mark_all_read = TRUE;
 		}
 		if (FOLDER_IS_LOCAL(folder) || FOLDER_TYPE(folder) == F_IMAP) {
 			if (item->parent == NULL)
@@ -1692,6 +1701,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	SET_SENS(ifactory, "/Check for new messages", update_tree);
 	SET_SENS(ifactory, "/Rebuild folder tree", rescan_tree);
 	SET_SENS(ifactory, "/Update summary", update_summary);
+	SET_SENS(ifactory, "/Mark all read", mark_all_read);
 	SET_SENS(ifactory, "/Search messages...", search_folder);
 	SET_SENS(ifactory, "/Edit search condition...", search_folder);
 	SET_SENS(ifactory, "/Properties...", folder_property);
@@ -2099,6 +2109,23 @@ static void folderview_update_summary_cb(FolderView *folderview, guint action,
 	GTK_EVENTS_FLUSH();
 	summary_show(folderview->summaryview,
 		     folderview->summaryview->folder_item, TRUE);
+}
+
+static void folderview_mark_all_read_cb(FolderView *folderview, guint action,
+					GtkWidget *widget)
+{
+	FolderItem *item;
+
+	item = folderview_get_selected_item(folderview);
+	if (!item)
+		return;
+
+	if (item == folderview->summaryview->folder_item)
+		summary_mark_all_read(folderview->summaryview);
+	else {
+		procmsg_mark_all_read(item);
+		folderview_update_item(item, FALSE);
+	}
 }
 
 static void folderview_new_folder_cb(FolderView *folderview, guint action,

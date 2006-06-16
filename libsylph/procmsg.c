@@ -380,6 +380,40 @@ void procmsg_set_flags(GSList *mlist, FolderItem *item)
 	g_hash_table_destroy(mark_table);
 }
 
+static void mark_all_read_func(gpointer key, gpointer value, gpointer data)
+{
+	MSG_UNSET_PERM_FLAGS(*((MsgFlags *)value), MSG_NEW|MSG_UNREAD);
+}
+
+void procmsg_mark_all_read(FolderItem *item)
+{
+	GHashTable *mark_table;
+
+	debug_print("Marking all messages as read\n");
+
+	mark_table = procmsg_read_mark_file(item);
+	if (mark_table) {
+		g_hash_table_foreach(mark_table, mark_all_read_func, NULL);
+		procmsg_write_mark_file(item, mark_table);
+		hash_free_value_mem(mark_table);
+		g_hash_table_destroy(mark_table);
+	}
+
+	if (item->mark_queue) {
+		GSList *cur;
+		MsgInfo *msginfo;
+
+		for (cur = item->mark_queue; cur != NULL; cur = cur->next) {
+			msginfo = (MsgInfo *)cur->data;
+			MSG_UNSET_PERM_FLAGS
+				(msginfo->flags, MSG_NEW|MSG_UNREAD);
+		}
+		item->mark_dirty = TRUE;
+	}
+
+	item->new = item->unread = 0;
+}
+
 static FolderSortType cmp_func_sort_type;
 
 GSList *procmsg_sort_msg_list(GSList *mlist, FolderSortKey sort_key,

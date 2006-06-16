@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-09 16:52+0900\n"
+"POT-Creation-Date: 2006-06-16 16:49+0900\n"
 "PO-Revision-Date: 2006-04-17 02:04+0200\n"
 "Last-Translator: Cristian Secară <cristi@secarica.ro>\n"
 "Language-Team: \n"
@@ -524,16 +524,16 @@ msgstr "Filtru spam"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): conversia codului a eşuat.\n"
 
-#: libsylph/procmsg.c:620
+#: libsylph/procmsg.c:654
 msgid "can't open mark file\n"
 msgstr "nu se poate deschide fişierul de marcaj\n"
 
-#: libsylph/procmsg.c:1072
+#: libsylph/procmsg.c:1106
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "nu se poate verifica mesajul %d\n"
 
-#: libsylph/procmsg.c:1378
+#: libsylph/procmsg.c:1412
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Linia de comandă pentru imprimare este invalidă: '%s'\n"
@@ -965,10 +965,10 @@ msgid "/New _Folder"
 msgstr "/_Folder nou"
 
 #: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:513
-#: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
-#: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
-#: src/folderview.c:275 src/folderview.c:289 src/folderview.c:291
-#: src/folderview.c:295 src/summaryview.c:416 src/summaryview.c:420
+#: src/folderview.c:250 src/folderview.c:252 src/folderview.c:258
+#: src/folderview.c:271 src/folderview.c:273 src/folderview.c:275
+#: src/folderview.c:281 src/folderview.c:295 src/folderview.c:297
+#: src/folderview.c:302 src/summaryview.c:416 src/summaryview.c:420
 #: src/summaryview.c:423 src/summaryview.c:435 src/summaryview.c:437
 #: src/summaryview.c:439 src/summaryview.c:451 src/summaryview.c:457
 msgid "/---"
@@ -1048,7 +1048,7 @@ msgstr ""
 "Doriţi să ştergeţi folderul ŞI toate adresele din '%s' ?\n"
 "Dacă ştergeţi doar folderul, adresele vor fi mutate în folderul părinte."
 
-#: src/addressbook.c:1672 src/folderview.c:2375
+#: src/addressbook.c:1672 src/folderview.c:2402
 msgid "Delete folder"
 msgstr "Ştergere folder"
 
@@ -1181,7 +1181,7 @@ msgid "Group"
 msgstr "Grupă"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3160 src/folderview.c:367 src/prefs_account_dialog.c:1694
+#: src/addressbook.c:3160 src/folderview.c:374 src/prefs_account_dialog.c:1694
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "Folder"
@@ -1270,8 +1270,8 @@ msgstr "/_Adăugă..."
 msgid "/_Remove"
 msgstr "/Şte_rge"
 
-#: src/compose.c:514 src/folderview.c:257 src/folderview.c:279
-#: src/folderview.c:299
+#: src/compose.c:514 src/folderview.c:262 src/folderview.c:285
+#: src/folderview.c:306
 msgid "/_Properties..."
 msgstr "/_Proprietăţi..."
 
@@ -2028,12 +2028,12 @@ msgstr "Editează folder"
 msgid "Input the new name of folder:"
 msgstr "Introduceţi noul nume al folderului:"
 
-#: src/editgroup.c:524 src/foldersel.c:544 src/folderview.c:2124
-#: src/folderview.c:2130
+#: src/editgroup.c:524 src/foldersel.c:544 src/folderview.c:2151
+#: src/folderview.c:2157
 msgid "New folder"
 msgstr "Folder nou"
 
-#: src/editgroup.c:525 src/foldersel.c:545 src/folderview.c:2131
+#: src/editgroup.c:525 src/foldersel.c:545 src/folderview.c:2158
 msgid "Input the name of new folder:"
 msgstr "Introduceţi numele noului folder:"
 
@@ -2204,174 +2204,179 @@ msgstr "Selectează director"
 msgid "Select folder"
 msgstr "Selectează folder"
 
-#: src/foldersel.c:360 src/folderview.c:1189 src/prefs_folder_item.c:235
+#: src/foldersel.c:360 src/folderview.c:1196 src/prefs_folder_item.c:235
 msgid "Inbox"
 msgstr "Primite (Inbox)"
 
-#: src/foldersel.c:364 src/folderview.c:1195 src/prefs_folder_item.c:236
+#: src/foldersel.c:364 src/folderview.c:1202 src/prefs_folder_item.c:236
 msgid "Sent"
 msgstr "Trimise"
 
-#: src/foldersel.c:368 src/folderview.c:1201 src/prefs_folder_item.c:238
+#: src/foldersel.c:368 src/folderview.c:1208 src/prefs_folder_item.c:238
 msgid "Queue"
 msgstr "Coadă"
 
-#: src/foldersel.c:372 src/folderview.c:1207 src/prefs_folder_item.c:239
+#: src/foldersel.c:372 src/folderview.c:1214 src/prefs_folder_item.c:239
 msgid "Trash"
 msgstr "Gunoi"
 
-#: src/foldersel.c:376 src/folderview.c:1213 src/prefs_folder_item.c:237
+#: src/foldersel.c:376 src/folderview.c:1220 src/prefs_folder_item.c:237
 msgid "Drafts"
 msgstr "Ciorne"
 
-#: src/foldersel.c:546 src/folderview.c:2128 src/folderview.c:2132
+#: src/foldersel.c:546 src/folderview.c:2155 src/folderview.c:2159
 msgid "NewFolder"
 msgstr "Folder nou"
 
-#: src/foldersel.c:554 src/folderview.c:2140 src/folderview.c:2201
+#: src/foldersel.c:554 src/folderview.c:2167 src/folderview.c:2228
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "'%c' nu poate fi inclus în numele folderului."
 
-#: src/foldersel.c:564 src/folderview.c:2150 src/folderview.c:2209
+#: src/foldersel.c:564 src/folderview.c:2177 src/folderview.c:2236
 #: src/query_search.c:1031
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Folderul '%s' există deja."
 
-#: src/foldersel.c:572 src/folderview.c:2157
+#: src/foldersel.c:572 src/folderview.c:2184
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Folderul '%s' nu a putut fi creat."
 
-#: src/folderview.c:242 src/folderview.c:262
+#: src/folderview.c:246 src/folderview.c:267
 msgid "/Create _new folder..."
 msgstr "/Crează folder _nou..."
 
-#: src/folderview.c:243 src/folderview.c:263 src/folderview.c:287
+#: src/folderview.c:247 src/folderview.c:268 src/folderview.c:293
 msgid "/_Rename folder..."
 msgstr "/_Redenumeşte folder..."
 
-#: src/folderview.c:244 src/folderview.c:264
+#: src/folderview.c:248 src/folderview.c:269
 msgid "/_Move folder..."
 msgstr "/_Mută folder..."
 
-#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:288
+#: src/folderview.c:249 src/folderview.c:270 src/folderview.c:294
 msgid "/_Delete folder"
 msgstr "/Şterge fol_der"
 
-#: src/folderview.c:247 src/folderview.c:267
+#: src/folderview.c:251 src/folderview.c:272
 msgid "/Empty _trash"
 msgstr "/Goleş_te gunoiul"
 
-#: src/folderview.c:249 src/folderview.c:271 src/folderview.c:292
+#: src/folderview.c:253 src/folderview.c:276 src/folderview.c:298
 msgid "/_Check for new messages"
 msgstr "/Verifi_că pentru mesaje noi"
 
-#: src/folderview.c:251 src/folderview.c:273
+#: src/folderview.c:255 src/folderview.c:278
 msgid "/R_ebuild folder tree"
 msgstr "/R_econstruieşte arbore folder"
 
-#: src/folderview.c:252 src/folderview.c:274 src/folderview.c:294
+#: src/folderview.c:256 src/folderview.c:279 src/folderview.c:300
 msgid "/_Update summary"
 msgstr "/Sumar act_ualizare"
 
-#: src/folderview.c:254 src/folderview.c:276 src/folderview.c:296
+#: src/folderview.c:257 src/folderview.c:280 src/folderview.c:301
+#, fuzzy
+msgid "/Mar_k all read"
+msgstr "Marchează ca citit"
+
+#: src/folderview.c:259 src/folderview.c:282 src/folderview.c:303
 msgid "/_Search messages..."
 msgstr "/Caută me_saje..."
 
-#: src/folderview.c:255 src/folderview.c:277 src/folderview.c:297
+#: src/folderview.c:260 src/folderview.c:283 src/folderview.c:304
 msgid "/Ed_it search condition..."
 msgstr "/Ed_itează condiţia de căutare..."
 
-#: src/folderview.c:269 src/folderview.c:290
+#: src/folderview.c:274 src/folderview.c:296
 msgid "/Down_load"
 msgstr "/Desc_arcă"
 
-#: src/folderview.c:284
+#: src/folderview.c:290
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/Su_bscrie la newsgroup..."
 
-#: src/folderview.c:286
+#: src/folderview.c:292
 msgid "/_Remove newsgroup"
 msgstr "/Şte_rge newsgroup"
 
-#: src/folderview.c:320
+#: src/folderview.c:327
 msgid "Creating folder view...\n"
 msgstr "Creare vizualizare folder...\n"
 
-#: src/folderview.c:397
+#: src/folderview.c:404
 msgid "New"
 msgstr "Nou"
 
 #. S_COL_MARK
-#: src/folderview.c:411 src/prefs_filter_edit.c:500
+#: src/folderview.c:418 src/prefs_filter_edit.c:500
 #: src/prefs_summary_column.c:71 src/summaryview.c:516
 msgid "Unread"
 msgstr "Necitit"
 
-#: src/folderview.c:425
+#: src/folderview.c:432
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:556
+#: src/folderview.c:563
 msgid "Setting folder info...\n"
 msgstr "Setare informaţii folder...\n"
 
-#: src/folderview.c:557
+#: src/folderview.c:564
 msgid "Setting folder info..."
 msgstr "Setare informaţii folder..."
 
-#: src/folderview.c:857 src/mainwindow.c:3620 src/setup.c:80
+#: src/folderview.c:864 src/mainwindow.c:3620 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Scanare folder %s%c%s ..."
 
-#: src/folderview.c:861 src/mainwindow.c:3625 src/setup.c:85
+#: src/folderview.c:868 src/mainwindow.c:3625 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Scanare folder %s ..."
 
-#: src/folderview.c:903
+#: src/folderview.c:910
 msgid "Rebuild folder tree"
 msgstr "Reconstruieşte arbore foldere"
 
-#: src/folderview.c:904
+#: src/folderview.c:911
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Arborele de foldere va fi reconstruit. Continui ?"
 
-#: src/folderview.c:913
+#: src/folderview.c:920
 msgid "Rebuilding folder tree..."
 msgstr "Reconstrucţie arbore foler..."
 
-#: src/folderview.c:920
+#: src/folderview.c:927
 msgid "Rebuilding of the folder tree failed."
 msgstr "Reconstrucţia arborelui de foldere a eşuat."
 
-#: src/folderview.c:1053
+#: src/folderview.c:1060
 msgid "Checking for new messages in all folders..."
 msgstr "Verifică pentru mesaje noi în toate folderele..."
 
-#: src/folderview.c:1221 src/mainwindow.c:2435 src/prefs_common_dialog.c:1819
+#: src/folderview.c:1228 src/mainwindow.c:2435 src/prefs_common_dialog.c:1819
 msgid "Junk"
 msgstr "Spam"
 
-#: src/folderview.c:1872
+#: src/folderview.c:1882
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Este selectat folderul %s\n"
 
-#: src/folderview.c:2027
+#: src/folderview.c:2037
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Descărcare mesaje în %s..."
 
-#: src/folderview.c:2064
+#: src/folderview.c:2074
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "A avut loc o eroare în timpul descărcării mesajelor în '%s' ."
 
-#: src/folderview.c:2125
+#: src/folderview.c:2152
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2381,26 +2386,26 @@ msgstr ""
 "(dacă doriţi să creaţi un folder care să conţină subfoldere,\n"
 " adăugaţi '/' la sfârşitul numelui)"
 
-#: src/folderview.c:2189
+#: src/folderview.c:2216
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Introduceţi noul nume pentru '%s':"
 
-#: src/folderview.c:2190
+#: src/folderview.c:2217
 msgid "Rename folder"
 msgstr "Redenumeşte folder"
 
-#: src/folderview.c:2221 src/folderview.c:2229
+#: src/folderview.c:2248 src/folderview.c:2256
 #, c-format
 msgid "Can't rename the folder '%s'."
 msgstr "Nu se poate redenumi folderul '%s'"
 
-#: src/folderview.c:2299
+#: src/folderview.c:2326
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Nu se poate muta folderul '%s'"
 
-#: src/folderview.c:2365
+#: src/folderview.c:2392
 #, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2409,11 +2414,11 @@ msgstr ""
 "Ştergeţi folderul de căutare '%s' ?\n"
 "Mesajele reale NU sunt şterse de pe disc."
 
-#: src/folderview.c:2367
+#: src/folderview.c:2394
 msgid "Delete search folder"
 msgstr "Şterge folderul pentru căutare"
 
-#: src/folderview.c:2372
+#: src/folderview.c:2399
 #, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2426,23 +2431,23 @@ msgstr ""
 "\n"
 "Chiar doriţi să ştergeţi ?"
 
-#: src/folderview.c:2404 src/folderview.c:2410
+#: src/folderview.c:2431 src/folderview.c:2437
 #, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Nu se poate şterge folderul '%s'."
 
 # hm ? nu merge goleşte gunoiul cu fraza următoare, sau trebuie reformulată fraza următoare
-#: src/folderview.c:2446
+#: src/folderview.c:2473
 msgid "Empty trash"
 msgstr "Golire gunoi"
 
-#: src/folderview.c:2447
+#: src/folderview.c:2474
 msgid "Delete all messages in the trash folder?"
 msgstr "Ştergeţi toate mesajele din containerul de gunoi ?"
 
 # sau ştergeţi ?
 # sau retrageţi ?
-#: src/folderview.c:2486
+#: src/folderview.c:2513
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2451,34 +2456,34 @@ msgstr ""
 "Chiar ştergeţi căsuţa poştală '%s' ?\n"
 "(Mesajele NU sunt şterse de pe disc)"
 
-#: src/folderview.c:2488
+#: src/folderview.c:2515
 msgid "Remove mailbox"
 msgstr "Şterge căsuţa poştală"
 
-#: src/folderview.c:2538
+#: src/folderview.c:2565
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Sigur ştergeţi contul IMAP4 '%s'?"
 
-#: src/folderview.c:2539
+#: src/folderview.c:2566
 msgid "Delete IMAP4 account"
 msgstr "Şterge cont IMAP4"
 
-#: src/folderview.c:2692
+#: src/folderview.c:2719
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Sigur ştergeţi newsgroup-ul '%s' ?"
 
-#: src/folderview.c:2693
+#: src/folderview.c:2720
 msgid "Delete newsgroup"
 msgstr "Şterge newsgroup"
 
-#: src/folderview.c:2743
+#: src/folderview.c:2770
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Sigur ştergeţi contul de ştiri '%s' ?"
 
-#: src/folderview.c:2744
+#: src/folderview.c:2771
 msgid "Delete news account"
 msgstr "Şterge cont de ştiri"
 

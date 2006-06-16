@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-09 16:52+0900\n"
+"POT-Creation-Date: 2006-06-16 16:49+0900\n"
 "PO-Revision-Date: 2005-06-09 13:51+0300\n"
 "Last-Translator: Vitalijus Valantiejus <vitalijus@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -513,16 +513,16 @@ msgstr "Nereikalingo pašto filtras"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Nepavyko konvertuoti kodo.\n"
 
-#: libsylph/procmsg.c:620
+#: libsylph/procmsg.c:654
 msgid "can't open mark file\n"
 msgstr "negali atidaryti žymų bylos\n"
 
-#: libsylph/procmsg.c:1072
+#: libsylph/procmsg.c:1106
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "negaliu gauti laiško %d\n"
 
-#: libsylph/procmsg.c:1378
+#: libsylph/procmsg.c:1412
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "Bloga spausdinimo komanda: „%s“\n"
@@ -943,10 +943,10 @@ msgid "/New _Folder"
 msgstr "/Naujas _katalogas"
 
 #: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:513
-#: src/folderview.c:246 src/folderview.c:248 src/folderview.c:253
-#: src/folderview.c:266 src/folderview.c:268 src/folderview.c:270
-#: src/folderview.c:275 src/folderview.c:289 src/folderview.c:291
-#: src/folderview.c:295 src/summaryview.c:416 src/summaryview.c:420
+#: src/folderview.c:250 src/folderview.c:252 src/folderview.c:258
+#: src/folderview.c:271 src/folderview.c:273 src/folderview.c:275
+#: src/folderview.c:281 src/folderview.c:295 src/folderview.c:297
+#: src/folderview.c:302 src/summaryview.c:416 src/summaryview.c:420
 #: src/summaryview.c:423 src/summaryview.c:435 src/summaryview.c:437
 #: src/summaryview.c:439 src/summaryview.c:451 src/summaryview.c:457
 msgid "/---"
@@ -1024,7 +1024,7 @@ msgstr ""
 "Ar tikrai norite pašalinti katalogą „%s“ ir visus adresus jame? \n"
 "Jei pašalinsite tik katalogą, adresai bus perkelti į aukštesnįjį katalogą."
 
-#: src/addressbook.c:1672 src/folderview.c:2375
+#: src/addressbook.c:1672 src/folderview.c:2402
 msgid "Delete folder"
 msgstr "Ištrinti katalogą"
 
@@ -1152,7 +1152,7 @@ msgid "Group"
 msgstr "Grupė"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3160 src/folderview.c:367 src/prefs_account_dialog.c:1694
+#: src/addressbook.c:3160 src/folderview.c:374 src/prefs_account_dialog.c:1694
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "Katalogas"
@@ -1240,8 +1240,8 @@ msgstr "/Pri_dėti..."
 msgid "/_Remove"
 msgstr "/_Pašalinti"
 
-#: src/compose.c:514 src/folderview.c:257 src/folderview.c:279
-#: src/folderview.c:299
+#: src/compose.c:514 src/folderview.c:262 src/folderview.c:285
+#: src/folderview.c:306
 msgid "/_Properties..."
 msgstr "/_Savybės..."
 
@@ -1991,12 +1991,12 @@ msgstr "Redaguoti katalogą"
 msgid "Input the new name of folder:"
 msgstr "Įveskite katalogo pavadinimą:"
 
-#: src/editgroup.c:524 src/foldersel.c:544 src/folderview.c:2124
-#: src/folderview.c:2130
+#: src/editgroup.c:524 src/foldersel.c:544 src/folderview.c:2151
+#: src/folderview.c:2157
 msgid "New folder"
 msgstr "Naujas katalogas"
 
-#: src/editgroup.c:525 src/foldersel.c:545 src/folderview.c:2131
+#: src/editgroup.c:525 src/foldersel.c:545 src/folderview.c:2158
 msgid "Input the name of new folder:"
 msgstr "Įveskite naujo katalogo pavadinimą:"
 
@@ -2163,174 +2163,179 @@ msgstr "Pasirinkti katalogą"
 msgid "Select folder"
 msgstr "Pasirinkti katalogą"
 
-#: src/foldersel.c:360 src/folderview.c:1189 src/prefs_folder_item.c:235
+#: src/foldersel.c:360 src/folderview.c:1196 src/prefs_folder_item.c:235
 msgid "Inbox"
 msgstr "Gauti"
 
-#: src/foldersel.c:364 src/folderview.c:1195 src/prefs_folder_item.c:236
+#: src/foldersel.c:364 src/folderview.c:1202 src/prefs_folder_item.c:236
 msgid "Sent"
 msgstr "Išsiųsti"
 
-#: src/foldersel.c:368 src/folderview.c:1201 src/prefs_folder_item.c:238
+#: src/foldersel.c:368 src/folderview.c:1208 src/prefs_folder_item.c:238
 msgid "Queue"
 msgstr "Eilė"
 
-#: src/foldersel.c:372 src/folderview.c:1207 src/prefs_folder_item.c:239
+#: src/foldersel.c:372 src/folderview.c:1214 src/prefs_folder_item.c:239
 msgid "Trash"
 msgstr "Šiukšlinė"
 
-#: src/foldersel.c:376 src/folderview.c:1213 src/prefs_folder_item.c:237
+#: src/foldersel.c:376 src/folderview.c:1220 src/prefs_folder_item.c:237
 msgid "Drafts"
 msgstr "Juodraščiai"
 
-#: src/foldersel.c:546 src/folderview.c:2128 src/folderview.c:2132
+#: src/foldersel.c:546 src/folderview.c:2155 src/folderview.c:2159
 msgid "NewFolder"
 msgstr "NaujasKatalodas"
 
-#: src/foldersel.c:554 src/folderview.c:2140 src/folderview.c:2201
+#: src/foldersel.c:554 src/folderview.c:2167 src/folderview.c:2228
 #, c-format
 msgid "`%c' can't be included in folder name."
 msgstr "„%c“ negali būti katalogo pavadinime."
 
-#: src/foldersel.c:564 src/folderview.c:2150 src/folderview.c:2209
+#: src/foldersel.c:564 src/folderview.c:2177 src/folderview.c:2236
 #: src/query_search.c:1031
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Katalogas „%s“ egzistuoja."
 
-#: src/foldersel.c:572 src/folderview.c:2157
+#: src/foldersel.c:572 src/folderview.c:2184
 #, c-format
 msgid "Can't create the folder `%s'."
 msgstr "Negaliu sukurti katalogo „%s“."
 
-#: src/folderview.c:242 src/folderview.c:262
+#: src/folderview.c:246 src/folderview.c:267
 msgid "/Create _new folder..."
 msgstr "/Sukurti _naują katalogą..."
 
-#: src/folderview.c:243 src/folderview.c:263 src/folderview.c:287
+#: src/folderview.c:247 src/folderview.c:268 src/folderview.c:293
 msgid "/_Rename folder..."
 msgstr "/Pe_rvadinti katalogą..."
 
-#: src/folderview.c:244 src/folderview.c:264
+#: src/folderview.c:248 src/folderview.c:269
 msgid "/_Move folder..."
 msgstr "/Per_kelti katalogą..."
 
-#: src/folderview.c:245 src/folderview.c:265 src/folderview.c:288
+#: src/folderview.c:249 src/folderview.c:270 src/folderview.c:294
 msgid "/_Delete folder"
 msgstr "/Iš_trinti katalogą"
 
-#: src/folderview.c:247 src/folderview.c:267
+#: src/folderview.c:251 src/folderview.c:272
 msgid "/Empty _trash"
 msgstr "/Išvaly_ti šiukšlinę"
 
-#: src/folderview.c:249 src/folderview.c:271 src/folderview.c:292
+#: src/folderview.c:253 src/folderview.c:276 src/folderview.c:298
 msgid "/_Check for new messages"
 msgstr "/_Patikrinti paštą"
 
-#: src/folderview.c:251 src/folderview.c:273
+#: src/folderview.c:255 src/folderview.c:278
 msgid "/R_ebuild folder tree"
 msgstr "/P_erkurti katalogų medį"
 
-#: src/folderview.c:252 src/folderview.c:274 src/folderview.c:294
+#: src/folderview.c:256 src/folderview.c:279 src/folderview.c:300
 msgid "/_Update summary"
 msgstr "/Atna_ujinti santrauką"
 
-#: src/folderview.c:254 src/folderview.c:276 src/folderview.c:296
+#: src/folderview.c:257 src/folderview.c:280 src/folderview.c:301
+#, fuzzy
+msgid "/Mar_k all read"
+msgstr "Pažymėti skaityta"
+
+#: src/folderview.c:259 src/folderview.c:282 src/folderview.c:303
 msgid "/_Search messages..."
 msgstr "/I_eškoti laiškų"
 
-#: src/folderview.c:255 src/folderview.c:277 src/folderview.c:297
+#: src/folderview.c:260 src/folderview.c:283 src/folderview.c:304
 msgid "/Ed_it search condition..."
 msgstr "/Ke_isti paieškos kriterijus..."
 
-#: src/folderview.c:269 src/folderview.c:290
+#: src/folderview.c:274 src/folderview.c:296
 msgid "/Down_load"
 msgstr "/_Atsisiųsti"
 
-#: src/folderview.c:284
+#: src/folderview.c:290
 msgid "/Su_bscribe to newsgroup..."
 msgstr "/_Prisijungti prie naujienų grupės"
 
-#: src/folderview.c:286
+#: src/folderview.c:292
 msgid "/_Remove newsgroup"
 msgstr "/Paša_linti naujienų grupę"
 
-#: src/folderview.c:320
+#: src/folderview.c:327
 msgid "Creating folder view...\n"
 msgstr "Sukuriama katalogų peržiūra...\n"
 
-#: src/folderview.c:397
+#: src/folderview.c:404
 msgid "New"
 msgstr "Nauji"
 
 #. S_COL_MARK
-#: src/folderview.c:411 src/prefs_filter_edit.c:500
+#: src/folderview.c:418 src/prefs_filter_edit.c:500
 #: src/prefs_summary_column.c:71 src/summaryview.c:516
 msgid "Unread"
 msgstr "Neskaityti"
 
-#: src/folderview.c:425
+#: src/folderview.c:432
 msgid "#"
 msgstr "#"
 
-#: src/folderview.c:556
+#: src/folderview.c:563
 msgid "Setting folder info...\n"
 msgstr "Nustatoma katalogo informacija...\n"
 
-#: src/folderview.c:557
+#: src/folderview.c:564
 msgid "Setting folder info..."
 msgstr "Nustatoma katalogo informacija..."
 
-#: src/folderview.c:857 src/mainwindow.c:3620 src/setup.c:80
+#: src/folderview.c:864 src/mainwindow.c:3620 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Skanuojamas katalogas “%s%c%s“..."
 
-#: src/folderview.c:861 src/mainwindow.c:3625 src/setup.c:85
+#: src/folderview.c:868 src/mainwindow.c:3625 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Skanuojamas katalogas „%s“..."
 
-#: src/folderview.c:903
+#: src/folderview.c:910
 msgid "Rebuild folder tree"
 msgstr "Perkurti katalogų medį"
 
-#: src/folderview.c:904
+#: src/folderview.c:911
 msgid "The folder tree will be rebuilt. Continue?"
 msgstr "Bus perkurtas katalogų medis. Tęsti?"
 
-#: src/folderview.c:913
+#: src/folderview.c:920
 msgid "Rebuilding folder tree..."
 msgstr "Perkuriamas katalogų medis..."
 
-#: src/folderview.c:920
+#: src/folderview.c:927
 msgid "Rebuilding of the folder tree failed."
 msgstr "Katalogų medžio perkūrimas nepavyko."
 
-#: src/folderview.c:1053
+#: src/folderview.c:1060
 msgid "Checking for new messages in all folders..."
 msgstr "Tikrinami nauji laiškai visuose kataloguose..."
 
-#: src/folderview.c:1221 src/mainwindow.c:2435 src/prefs_common_dialog.c:1819
+#: src/folderview.c:1228 src/mainwindow.c:2435 src/prefs_common_dialog.c:1819
 msgid "Junk"
 msgstr "Nereikalingas"
 
-#: src/folderview.c:1872
+#: src/folderview.c:1882
 #, c-format
 msgid "Folder %s is selected\n"
 msgstr "Pažymėtas katalogas „%s“\n"
 
-#: src/folderview.c:2027
+#: src/folderview.c:2037
 #, c-format
 msgid "Downloading messages in %s ..."
 msgstr "Gaunami laiškai („%s“)..."
 
-#: src/folderview.c:2064
+#: src/folderview.c:2074
 #, c-format
 msgid "Error occurred while downloading messages in `%s'."
 msgstr "Klaida gaunant laiškus („%s“)."
 
-#: src/folderview.c:2125
+#: src/folderview.c:2152
 msgid ""
 "Input the name of new folder:\n"
 "(if you want to create a folder to store subfolders,\n"
@@ -2340,26 +2345,26 @@ msgstr ""
 "(jei norite sukurti katalogą talpinti pakatalogiams,\n"
 " pridėkite „/“ prie vardo pabaigos)"
 
-#: src/folderview.c:2189
+#: src/folderview.c:2216
 #, c-format
 msgid "Input new name for `%s':"
 msgstr "Įveskite naują „%s“ pavadinimą:"
 
-#: src/folderview.c:2190
+#: src/folderview.c:2217
 msgid "Rename folder"
 msgstr "Pervadinti katalogą"
 
-#: src/folderview.c:2221 src/folderview.c:2229
+#: src/folderview.c:2248 src/folderview.c:2256
 #, c-format
 msgid "Can't rename the folder '%s'."
 msgstr "Negaliu pervadinti katalogo „%s“"
 
-#: src/folderview.c:2299
+#: src/folderview.c:2326
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "Negaliu perkelti katalogo „%s“"
 
-#: src/folderview.c:2365
+#: src/folderview.c:2392
 #, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2368,11 +2373,11 @@ msgstr ""
 "Ištrinti paieškos katalogą „%s“ ?\n"
 "Tikri laiškai nebus trinami."
 
-#: src/folderview.c:2367
+#: src/folderview.c:2394
 msgid "Delete search folder"
 msgstr "Ištrinti paieškos katalogą"
 
-#: src/folderview.c:2372
+#: src/folderview.c:2399
 #, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2385,20 +2390,20 @@ msgstr ""
 "\n"
 "Ar tikrai norite ištrinti?"
 
-#: src/folderview.c:2404 src/folderview.c:2410
+#: src/folderview.c:2431 src/folderview.c:2437
 #, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "Negaliu pašalinti katalogo „%s“"
 
-#: src/folderview.c:2446
+#: src/folderview.c:2473
 msgid "Empty trash"
 msgstr "Išvalyti šiukšlinę"
 
-#: src/folderview.c:2447
+#: src/folderview.c:2474
 msgid "Delete all messages in the trash folder?"
 msgstr "Ištrinti visus laiškus šiukšlinėje?"
 
-#: src/folderview.c:2486
+#: src/folderview.c:2513
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2407,34 +2412,34 @@ msgstr ""
 "Ar tikrai pašalinti dėžutę „%s“ ?\n"
 "(laiškai NEBUS ištrinti iš disko)"
 
-#: src/folderview.c:2488
+#: src/folderview.c:2515
 msgid "Remove mailbox"
 msgstr "Pašalinti dėžutę"
 
-#: src/folderview.c:2538
+#: src/folderview.c:2565
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Ar tikrai ištrinti IMAP4 sąskaitą „%s“?"
 
-#: src/folderview.c:2539
+#: src/folderview.c:2566
 msgid "Delete IMAP4 account"
 msgstr "Ištrinti IMAP4 sąskaitą"
 
-#: src/folderview.c:2692
+#: src/folderview.c:2719
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Ar tikrai ištrinti naujienų grupę „%s“?"
 
-#: src/folderview.c:2693
+#: src/folderview.c:2720
 msgid "Delete newsgroup"
 msgstr "Ištrinti naujienų grupę"
 
-#: src/folderview.c:2743
+#: src/folderview.c:2770
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Ar tikrai pašalinti naujienų sąskaitą „%s“?"
 
-#: src/folderview.c:2744
+#: src/folderview.c:2771
 msgid "Delete news account"
 msgstr "Pašalinti naujienų sąskaitą"
 
