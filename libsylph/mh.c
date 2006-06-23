@@ -32,6 +32,10 @@
 #include <string.h>
 #include <errno.h>
 
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
+
 #undef MEASURE_TIME
 
 #include "folder.h"
@@ -740,8 +744,9 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 {
 	gchar *path;
 #ifdef G_OS_WIN32
-	GDir *dir;
-	const gchar *dir_name;
+	WIN32_FIND_DATAW wfd;
+	HANDLE hfind;
+	gchar *dir_name;
 #else
 	DIR *dp;
 	struct dirent *d;
@@ -763,7 +768,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	g_free(path);
 
 #ifdef G_OS_WIN32
-	if ((dir = g_dir_open(".", 0, NULL)) == NULL) {
+	if ((hfind = FindFirstFileW(L"*", &wfd)) == INVALID_HANDLE_VALUE) {
 		g_warning("failed to open directory\n");
 #else
 	if ((dp = opendir(".")) == NULL) {
@@ -776,16 +781,23 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 		folder->ui_func(folder, item, folder->ui_func_data);
 
 #ifdef G_OS_WIN32
-	while ((dir_name = g_dir_read_name(dir)) != NULL) {
-		if ((num = to_number(dir_name)) > 0 &&
-		    g_file_test(dir_name, G_FILE_TEST_IS_REGULAR)) {
-			n_msg++;
-			if (max < num)
-				max = num;
+	do {
+		if ((wfd.dwFileAttributes &
+		     (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE)) == 0) {
+			dir_name = g_utf16_to_utf8(wfd.cFileName, -1,
+						   NULL, NULL, NULL);
+			if (dir_name) {
+				if ((num = to_number(dir_name)) > 0) {
+					n_msg++;
+					if (max < num)
+						max = num;
+				}
+				g_free(dir_name);
+			}
 		}
-	}
+	} while (FindNextFileW(hfind, &wfd));
 
-	g_dir_close(dir);
+	FindClose(hfind);
 #else
 	while ((d = readdir(dp)) != NULL) {
 		if ((num = to_number(d->d_name)) > 0 &&
@@ -821,7 +833,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	item->updated = TRUE;
 	item->mtime = 0;
 
-	debug_print(_("Last number in dir %s = %d\n"), item->path, max);
+	debug_print("Last number in dir %s = %d\n", item->path, max);
 	item->last_num = max;
 
 	return 0;
