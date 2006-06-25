@@ -739,14 +739,66 @@ static gint mh_close(Folder *folder, FolderItem *item)
 	return 0;
 }
 
+#ifdef G_OS_WIN32
+struct wfddata {
+	WIN32_FIND_DATAA wfda;
+	WIN32_FIND_DATAW wfdw;
+	DWORD file_attr;
+	gchar *file_name;
+};
+
+static HANDLE find_first_file(struct wfddata *wfd)
+{
+	HANDLE hfind;
+
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		hfind = FindFirstFileW(L"*", &wfd->wfdw);
+		if (hfind != INVALID_HANDLE_VALUE) {
+			wfd->file_attr = wfd->wfdw.dwFileAttributes;
+			wfd->file_name = g_utf16_to_utf8(wfd->wfdw.cFileName, -1,
+							 NULL, NULL, NULL);
+		}
+	} else {
+		hfind = FindFirstFileA("*", &wfd->wfda);
+		if (hfind != INVALID_HANDLE_VALUE) {
+			wfd->file_attr = wfd->wfda.dwFileAttributes;
+			wfd->file_name = g_strdup(wfd->wfda.cFileName);
+		}
+	}
+
+	return hfind;
+}
+
+static BOOL find_next_file(HANDLE hfind, struct wfddata *wfd)
+{
+	BOOL retval;
+
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		retval = FindNextFileW(hfind, &wfd->wfdw);
+		if (retval) {
+			wfd->file_attr = wfd->wfdw.dwFileAttributes;
+			wfd->file_name = g_utf16_to_utf8(wfd->wfdw.cFileName, -1,
+							 NULL, NULL, NULL);
+		}
+	} else {
+		retval = FindNextFileA(hfind, &wfd->wfda);
+		if (retval) {
+			wfd->file_attr = wfd->wfda.dwFileAttributes;
+			wfd->file_name = g_strdup(wfd->wfda.cFileName);
+		}
+	}
+
+	return retval;
+}
+#endif
+
 static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 				gboolean count_sum)
 {
 	gchar *path;
 #ifdef G_OS_WIN32
-	WIN32_FIND_DATAW wfd;
+	struct wfddata wfd;
 	HANDLE hfind;
-	gchar *dir_name;
 #else
 	DIR *dp;
 	struct dirent *d;
@@ -768,7 +820,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	g_free(path);
 
 #ifdef G_OS_WIN32
-	if ((hfind = FindFirstFileW(L"*", &wfd)) == INVALID_HANDLE_VALUE) {
+	if ((hfind = find_first_file(&wfd)) == INVALID_HANDLE_VALUE) {
 		g_warning("failed to open directory\n");
 #else
 	if ((dp = opendir(".")) == NULL) {
@@ -782,20 +834,22 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 
 #ifdef G_OS_WIN32
 	do {
-		if ((wfd.dwFileAttributes &
+		if ((wfd.file_attr &
 		     (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_DEVICE)) == 0) {
-			dir_name = g_utf16_to_utf8(wfd.cFileName, -1,
-						   NULL, NULL, NULL);
-			if (dir_name) {
-				if ((num = to_number(dir_name)) > 0) {
+			if (wfd.file_name) {
+				if ((num = to_number(wfd.file_name)) > 0) {
 					n_msg++;
 					if (max < num)
 						max = num;
 				}
-				g_free(dir_name);
 			}
 		}
-	} while (FindNextFileW(hfind, &wfd));
+
+		if (wfd.file_name) {
+			g_free(wfd.file_name);
+			wfd.file_name = NULL;
+		}
+	} while (find_next_file(hfind, &wfd));
 
 	FindClose(hfind);
 #else

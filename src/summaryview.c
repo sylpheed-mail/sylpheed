@@ -3712,7 +3712,6 @@ static gint summary_execute_move(SummaryView *summaryview)
 			g_slist_reverse(summaryview->tmp_mlist);
 		val = procmsg_move_messages(summaryview->tmp_mlist);
 
-		folder_item_scan_foreach(summaryview->folder_table);
 		folderview_update_item_foreach(summaryview->folder_table,
 					       FALSE);
 
@@ -3764,7 +3763,6 @@ static gint summary_execute_copy(SummaryView *summaryview)
 			g_slist_reverse(summaryview->tmp_mlist);
 		val = procmsg_copy_messages(summaryview->tmp_mlist);
 
-		folder_item_scan_foreach(summaryview->folder_table);
 		folderview_update_item_foreach(summaryview->folder_table,
 					       FALSE);
 
