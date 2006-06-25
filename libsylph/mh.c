@@ -747,22 +747,53 @@ struct wfddata {
 	gchar *file_name;
 };
 
-static HANDLE find_first_file(struct wfddata *wfd)
+static HANDLE find_first_file(const gchar *path, struct wfddata *wfd)
 {
 	HANDLE hfind;
 
 	if (G_WIN32_HAVE_WIDECHAR_API()) {
-		hfind = FindFirstFileW(L"*", &wfd->wfdw);
+		if (path) {
+			gchar *wildcard_path;
+			wchar_t *wpath;
+
+			wildcard_path = g_strconcat(path, "\\*", NULL);
+			wpath = g_utf8_to_utf16(wildcard_path, -1,
+						NULL, NULL, NULL);
+			if (wpath) {
+				hfind = FindFirstFileW(wpath, &wfd->wfdw);
+				g_free(wpath);
+			} else
+				hfind = INVALID_HANDLE_VALUE;
+			g_free(wildcard_path);
+		} else
+			hfind = FindFirstFileW(L"*", &wfd->wfdw);
+
 		if (hfind != INVALID_HANDLE_VALUE) {
 			wfd->file_attr = wfd->wfdw.dwFileAttributes;
 			wfd->file_name = g_utf16_to_utf8(wfd->wfdw.cFileName, -1,
 							 NULL, NULL, NULL);
 		}
 	} else {
-		hfind = FindFirstFileA("*", &wfd->wfda);
+		if (path) {
+			gchar *wildcard_path;
+			gchar *cp_path;
+
+			wildcard_path = g_strconcat(path, "\\*", NULL);
+			cp_path = g_locale_from_utf8(wildcard_path, -1,
+						     NULL, NULL, NULL);
+			if (cp_path) {
+				hfind = FindFirstFileA(cp_path, &wfd->wfda);
+				g_free(cp_path);
+			} else
+				hfind = INVALID_HANDLE_VALUE;
+			g_free(wildcard_path);
+		} else
+			hfind = FindFirstFileA("*", &wfd->wfda);
+
 		if (hfind != INVALID_HANDLE_VALUE) {
 			wfd->file_attr = wfd->wfda.dwFileAttributes;
-			wfd->file_name = g_strdup(wfd->wfda.cFileName);
+			wfd->file_name = g_locale_to_utf8(wfd->wfda.cFileName,
+							  -1, NULL, NULL, NULL);
 		}
 	}
 
@@ -784,7 +815,8 @@ static BOOL find_next_file(HANDLE hfind, struct wfddata *wfd)
 		retval = FindNextFileA(hfind, &wfd->wfda);
 		if (retval) {
 			wfd->file_attr = wfd->wfda.dwFileAttributes;
-			wfd->file_name = g_strdup(wfd->wfda.cFileName);
+			wfd->file_name = g_locale_to_utf8(wfd->wfda.cFileName,
+							  -1, NULL, NULL, NULL);
 		}
 	}
 
@@ -820,7 +852,7 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 	g_free(path);
 
 #ifdef G_OS_WIN32
-	if ((hfind = find_first_file(&wfd)) == INVALID_HANDLE_VALUE) {
+	if ((hfind = find_first_file(NULL, &wfd)) == INVALID_HANDLE_VALUE) {
 		g_warning("failed to open directory\n");
 #else
 	if ((dp = opendir(".")) == NULL) {
@@ -1367,13 +1399,14 @@ static void mh_scan_tree_recursive(FolderItem *item)
 {
 	Folder *folder;
 #ifdef G_OS_WIN32
-	GDir *dir;
+	struct wfddata wfd;
+	HANDLE hfind;
 #else
 	DIR *dp;
 	struct dirent *d;
+	struct stat s;
 #endif
 	const gchar *dir_name;
-	struct stat s;
 	gchar *fs_path;
 	gchar *entry;
 	gchar *utf8entry;
@@ -1383,6 +1416,9 @@ static void mh_scan_tree_recursive(FolderItem *item)
 	g_return_if_fail(item != NULL);
 	g_return_if_fail(item->folder != NULL);
 
+	if (item->stype == F_VIRTUAL)
+		return;
+
 	folder = item->folder;
 
 	fs_path = item->path ?
@@ -1391,8 +1427,8 @@ static void mh_scan_tree_recursive(FolderItem *item)
 	if (!fs_path)
 		fs_path = g_strdup(item->path);
 #ifdef G_OS_WIN32
-	dir = g_dir_open(fs_path, 0, NULL);
-	if (!dir) {
+	hfind = find_first_file(fs_path, &wfd);
+	if (hfind == INVALID_HANDLE_VALUE) {
 		g_warning("failed to open directory: %s\n", fs_path);
 		g_free(fs_path);
 		return;
@@ -1414,16 +1450,24 @@ static void mh_scan_tree_recursive(FolderItem *item)
 		folder->ui_func(folder, item, folder->ui_func_data);
 
 #ifdef G_OS_WIN32
-	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+	do {
+		if (!wfd.file_name) continue;
+		if (wfd.file_name[0] == '.') {
+			g_free(wfd.file_name);
+			wfd.file_name = NULL;
+			continue;
+		}
+		dir_name = utf8name = wfd.file_name;
+		wfd.file_name = NULL;
 #else
 	while ((d = readdir(dp)) != NULL) {
 		dir_name = d->d_name;
-#endif
 		if (dir_name[0] == '.') continue;
 
 		utf8name = g_filename_to_utf8(dir_name, -1, NULL, NULL, NULL);
 		if (!utf8name)
 			utf8name = g_strdup(dir_name);
+#endif
 
 		if (item->path)
 			utf8entry = g_strconcat(item->path, G_DIR_SEPARATOR_S,
@@ -1435,26 +1479,21 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			entry = g_strdup(utf8entry);
 
 		if (
-#if !defined(G_OS_WIN32) && defined(HAVE_DIRENT_D_TYPE)
+#ifdef G_OS_WIN32
+			(wfd.file_attr & FILE_ATTRIBUTE_DIRECTORY) != 0
+#else
+#if HAVE_DIRENT_D_TYPE
 			d->d_type == DT_DIR ||
 			(d->d_type == DT_UNKNOWN &&
 #endif
 			g_stat(entry, &s) == 0 && S_ISDIR(s.st_mode)
-#if !defined(G_OS_WIN32) && defined(HAVE_DIRENT_D_TYPE)
+#if HAVE_DIRENT_D_TYPE
 			)
 #endif
+#endif /* G_OS_WIN32 */
 		   ) {
 			FolderItem *new_item = NULL;
 			GNode *node;
-
-#if 0
-			if (mh_is_maildir(entry)) {
-				g_free(entry);
-				g_free(utf8entry);
-				g_free(utf8name);
-				continue;
-			}
-#endif
 
 #ifndef G_OS_WIN32
 			if (g_utf8_validate(utf8name, -1, NULL) == FALSE) {
@@ -1521,10 +1560,14 @@ static void mh_scan_tree_recursive(FolderItem *item)
 		g_free(entry);
 		g_free(utf8entry);
 		g_free(utf8name);
+#ifdef G_OS_WIN32
+	} while (find_next_file(hfind, &wfd));
+#else
 	}
+#endif
 
 #ifdef G_OS_WIN32
-	g_dir_close(dir);
+	FindClose(hfind);
 #else
 	closedir(dp);
 #endif
