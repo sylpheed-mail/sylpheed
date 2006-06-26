@@ -1,3 +1,20 @@
+2006-06-25
+
+	* libsylph/mh.c: mh_scan_tree_recursive(): win32: 性能を向上。
+	  仮想フォルダをスキャンしないようにした。
+
+2006-06-25
+
+	* src/summaryview.c: summary_execute_move(), summary_execute_copy():
+	  冗長なフォルダスキャンを削除。
+	* libsylph/mh.c: mh_scan_folder_full(): win32: 非 Unicode プラット
+	  フォームに対応(未テスト)。
+
+2006-06-23
+
+	* libsylph/mh.c: mh_scan_folder_full(): win32: ディレクトリのスキャン
+	  を FindFirstFile() / FindNextFile() を用いて最適化。
+
 2006-06-16
 
 	* src/folderview.c: folderview_menu_popup(): IMAP4 の場合選択された
