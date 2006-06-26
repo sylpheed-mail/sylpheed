@@ -623,6 +623,19 @@ void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path,
 	gtk_tree_view_scroll_to_point(treeview, dest_x, dest_y);
 }
 
+void gtkut_tree_view_fast_clear(GtkTreeView *treeview, GtkTreeStore *store)
+{
+#if GTK_CHECK_VERSION(2, 8, 0)
+	gtk_tree_store_clear(store);
+#else
+	/* this is faster than above, but it seems to trigger crashes in
+	   GTK+ 2.8.x */
+	gtk_tree_view_set_model(treeview, NULL);
+	gtk_tree_store_clear(store);
+	gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
+#endif
+}
+
 void gtkut_combo_set_items(GtkCombo *combo, const gchar *str1, ...)
 {
 	va_list args;

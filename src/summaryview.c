@@ -940,9 +940,7 @@ void summary_clear_list(SummaryView *summaryview)
 	procmsg_msg_list_free(summaryview->all_mlist);
 	summaryview->all_mlist = NULL;
 
-	gtk_tree_view_set_model(treeview, NULL);
-	gtk_tree_store_clear(summaryview->store);
-	gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(summaryview->store));
+	gtkut_tree_view_fast_clear(treeview, summaryview->store);
 
 	/* ensure that the "value-changed" signal is always emitted */
 	adj = gtk_tree_view_get_vadjustment(treeview);
@@ -5073,10 +5071,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 
 	messageview_clear(summaryview->messageview);
 
-	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
-	gtk_tree_store_clear(summaryview->store);
-	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
-				GTK_TREE_MODEL(summaryview->store));
+	gtkut_tree_view_fast_clear(GTK_TREE_VIEW(summaryview->treeview),
+				   summaryview->store);
 	gtkut_tree_sortable_unset_sort_column_id
 		 (GTK_TREE_SORTABLE(summaryview->store));
 	summaryview->total_size = 0;
@@ -5196,10 +5192,8 @@ void summary_qsearch(SummaryView *summaryview)
 					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
 					0, 0, NULL, NULL, summaryview);
 
-	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview), NULL);
-	gtk_tree_store_clear(summaryview->store);
-	gtk_tree_view_set_model(GTK_TREE_VIEW(summaryview->treeview),
-				GTK_TREE_MODEL(summaryview->store));
+	gtkut_tree_view_fast_clear(GTK_TREE_VIEW(summaryview->treeview),
+				   summaryview->store);
 	gtkut_tree_sortable_unset_sort_column_id
 		 (GTK_TREE_SORTABLE(summaryview->store));
 	summaryview->total_size = 0;

@@ -32,6 +32,7 @@
 #include <gtk/gtkeditable.h>
 #include <gtk/gtkctree.h>
 #include <gtk/gtktreemodel.h>
+#include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
 #include <gtk/gtkcombo.h>
 #include <gtk/gtkscrolledwindow.h>
@@ -162,6 +163,9 @@ void gtkut_tree_view_vertical_autoscroll(GtkTreeView	*treeview);
 void gtkut_tree_view_scroll_to_cell	(GtkTreeView	*treeview,
 					 GtkTreePath	*path,
 					 gboolean	 align_center);
+
+void gtkut_tree_view_fast_clear		(GtkTreeView	*treeview,
+					 GtkTreeStore	*store);
 
 void gtkut_combo_set_items		(GtkCombo	*combo,
 					 const gchar	*str1, ...);
