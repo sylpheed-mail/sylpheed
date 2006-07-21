@@ -4390,7 +4390,6 @@ static void summary_filter_real(SummaryView *summaryview,
 {
 	GList *rows;
 
-	if (!prefs_common.fltlist) return;
 	if (!summaryview->folder_item) return;
 
 	summary_lock(summaryview);
@@ -4445,7 +4444,9 @@ static void summary_filter_real(SummaryView *summaryview,
 
 void summary_filter(SummaryView *summaryview, gboolean selected_only)
 {
-	summary_filter_real(summaryview, summary_filter_func, selected_only);
+	if (prefs_common.fltlist)
+		summary_filter_real(summaryview, summary_filter_func,
+				    selected_only);
 }
 
 void summary_filter_junk(SummaryView *summaryview, gboolean selected_only)
