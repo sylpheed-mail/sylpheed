@@ -88,6 +88,9 @@ struct _SummaryView
 
 	GtkWidget *reedit_menuitem;
 	GtkWidget *reedit_separator;
+	GtkWidget *junk_menuitem;
+	GtkWidget *nojunk_menuitem;
+	GtkWidget *junk_separator;
 
 	GtkWidget *window;
 

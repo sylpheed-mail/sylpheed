@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-21 00:30+0900\n"
+"POT-Creation-Date: 2006-07-24 17:36+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -936,7 +936,8 @@ msgstr "/새 폴더(_F)"
 #: src/folderview.c:281 src/folderview.c:295 src/folderview.c:297
 #: src/folderview.c:302 src/summaryview.c:416 src/summaryview.c:420
 #: src/summaryview.c:423 src/summaryview.c:435 src/summaryview.c:437
-#: src/summaryview.c:439 src/summaryview.c:451 src/summaryview.c:457
+#: src/summaryview.c:440 src/summaryview.c:442 src/summaryview.c:454
+#: src/summaryview.c:460
 msgid "/---"
 msgstr "/---"
 
@@ -1216,7 +1217,7 @@ msgstr "갈색"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4797
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4824
 msgid "None"
 msgstr "없음"
 
@@ -1318,7 +1319,7 @@ msgid "/_Edit/Aut_o wrapping"
 msgstr "/편집(_E)/복사(_C)"
 
 #: src/compose.c:554 src/mainwindow.c:530 src/messageview.c:153
-#: src/summaryview.c:452
+#: src/summaryview.c:455
 msgid "/_View"
 msgstr "/보기(_V)"
 
@@ -1586,7 +1587,7 @@ msgid "Can't get the part of multipart message."
 msgstr "multipart 메시지의 부분을 얻을 수가 없습니다."
 
 #: src/compose.c:2528 src/headerview.c:195 src/query_search.c:666
-#: src/summaryview.c:2152
+#: src/summaryview.c:2178
 msgid "(No Subject)"
 msgstr "(제목 없음)"
 
@@ -1707,7 +1708,7 @@ msgstr "마임 타입"
 
 #. S_COL_DATE
 #: src/compose.c:4322 src/mimeview.c:197 src/prefs_filter_edit.c:496
-#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4940
+#: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:4967
 msgid "Size"
 msgstr "크기"
 
@@ -2308,7 +2309,7 @@ msgstr "새것"
 
 #. S_COL_MARK
 #: src/folderview.c:418 src/prefs_filter_edit.c:500
-#: src/prefs_summary_column.c:71 src/summaryview.c:516
+#: src/prefs_summary_column.c:71 src/summaryview.c:519
 msgid "Unread"
 msgstr "안읽음"
 
@@ -2494,7 +2495,7 @@ msgstr "제목:"
 msgid "Creating header view...\n"
 msgstr "헤더 뷰를 생성합니다...\n"
 
-#: src/headerview.c:180 src/query_search.c:667 src/summaryview.c:2155
+#: src/headerview.c:180 src/query_search.c:667 src/summaryview.c:2181
 msgid "(No From)"
 msgstr "(???)"
 
@@ -3280,7 +3281,7 @@ msgstr "/보기(_V)/문자셋(_C)/Chinese (ISO-2022-_CN)"
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/보기(_V)/문자셋(_C)/한국 (ISO-2022-KR)"
 
-#: src/mainwindow.c:706 src/summaryview.c:453
+#: src/mainwindow.c:706 src/summaryview.c:456
 msgid "/_View/Open in new _window"
 msgstr "/보기(_V)/새 창으로 열기(_w)"
 
@@ -3583,8 +3584,8 @@ msgstr "새 창을 만듭니다...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "메인 창: 색 할당 %d 실패\n"
 
-#: src/mainwindow.c:1139 src/summaryview.c:2304 src/summaryview.c:2389
-#: src/summaryview.c:3943 src/summaryview.c:4072 src/summaryview.c:4430
+#: src/mainwindow.c:1139 src/summaryview.c:2330 src/summaryview.c:2415
+#: src/summaryview.c:3969 src/summaryview.c:4098 src/summaryview.c:4455
 msgid "done.\n"
 msgstr "마침.\n"
 
@@ -3893,25 +3894,25 @@ msgstr "첨부"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:700 src/summaryview.c:3473
+#: src/messageview.c:700 src/summaryview.c:3499
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "`%s' 파일을 저장할 수가 없습니다."
 
-#: src/messageview.c:758 src/summaryview.c:3496
+#: src/messageview.c:758 src/summaryview.c:3522
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/messageview.c:759 src/summaryview.c:3497
+#: src/messageview.c:759 src/summaryview.c:3523
 #, fuzzy
 msgid "(Default print command)"
 msgstr "실행"
 
-#: src/messageview.c:761 src/prefs_common_dialog.c:2334 src/summaryview.c:3499
+#: src/messageview.c:761 src/prefs_common_dialog.c:2334 src/summaryview.c:3525
 msgid "Print"
 msgstr "인쇄"
 
-#: src/messageview.c:769 src/summaryview.c:3507
+#: src/messageview.c:769 src/summaryview.c:3533
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -5594,7 +5595,7 @@ msgstr ""
 msgid "Age"
 msgstr ""
 
-#: src/prefs_filter_edit.c:501 src/summaryview.c:517
+#: src/prefs_filter_edit.c:501 src/summaryview.c:520
 #, fuzzy
 msgid "Marked"
 msgstr "표시"
@@ -5847,17 +5848,17 @@ msgid "Attachment"
 msgstr "첨부"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:73 src/query_search.c:399 src/summaryview.c:4933
+#: src/prefs_summary_column.c:73 src/query_search.c:399 src/summaryview.c:4960
 msgid "Subject"
 msgstr "제목"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:74 src/query_search.c:400 src/summaryview.c:4936
+#: src/prefs_summary_column.c:74 src/query_search.c:400 src/summaryview.c:4963
 msgid "From"
 msgstr "보낸 사람"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:4938
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:4965
 msgid "Date"
 msgstr "날짜"
 
@@ -5957,7 +5958,7 @@ msgstr "메시지 찾기"
 msgid "_Save as search folder"
 msgstr "임시 보관함에 넣기"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:872
+#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:884
 msgid "Done."
 msgstr "완료."
 
@@ -5971,7 +5972,7 @@ msgstr "%s 폴더를 스캔합니다..."
 msgid "Searching %s (%d / %d)..."
 msgstr "필터링..."
 
-#: src/query_search.c:675 src/summaryview.c:2079
+#: src/query_search.c:675 src/summaryview.c:2105
 msgid "(No Date)"
 msgstr "(날짜 없슴)"
 
@@ -6354,297 +6355,307 @@ msgid "/Color la_bel"
 msgstr "/색 라벨(_b)"
 
 #: src/summaryview.c:438
+#, fuzzy
+msgid "/Set as _junk mail"
+msgstr "기본 계정으로 설정"
+
+#: src/summaryview.c:439
+#, fuzzy
+msgid "/Set as not j_unk mail"
+msgstr "기본 계정으로 설정"
+
+#: src/summaryview.c:441
 msgid "/Re-_edit"
 msgstr "/다시 편집(_e)"
 
-#: src/summaryview.c:440
+#: src/summaryview.c:443
 #, fuzzy
 msgid "/Add sender to address boo_k..."
 msgstr "/주소록에 보낸이 추가(_k)"
 
-#: src/summaryview.c:442
+#: src/summaryview.c:445
 msgid "/Create f_ilter rule"
 msgstr "/필터 규칙 생성(_i)"
 
-#: src/summaryview.c:443
+#: src/summaryview.c:446
 msgid "/Create f_ilter rule/_Automatically"
 msgstr "/필터 규칙 생성(_i)/자동(_A)"
 
-#: src/summaryview.c:445
+#: src/summaryview.c:448
 msgid "/Create f_ilter rule/by _From"
 msgstr "/필터 규칙 생성(_i)/보낸이로(_F)"
 
-#: src/summaryview.c:447
+#: src/summaryview.c:450
 msgid "/Create f_ilter rule/by _To"
 msgstr "/필터 규칙 생성(_i)/받는이로(_T)"
 
-#: src/summaryview.c:449
+#: src/summaryview.c:452
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/필터 규칙 생성(_i)/제목으로(_S)"
 
-#: src/summaryview.c:455
+#: src/summaryview.c:458
 msgid "/_View/_Source"
 msgstr "/보기(_V)/소스(_S)"
 
-#: src/summaryview.c:456
+#: src/summaryview.c:459
 msgid "/_View/All _header"
 msgstr "/보기(_V)/모든 헤더(_h)"
 
-#: src/summaryview.c:458
+#: src/summaryview.c:461
 msgid "/_Print..."
 msgstr "/인쇄(_)..."
 
-#: src/summaryview.c:493
+#: src/summaryview.c:496
 msgid "Creating summary view...\n"
 msgstr "요약 창을 생성합니다...\n"
 
-#: src/summaryview.c:515
+#: src/summaryview.c:518
 msgid "All"
 msgstr ""
 
-#: src/summaryview.c:518
+#: src/summaryview.c:521
 #, fuzzy
 msgid "Have color label"
 msgstr "/색 라벨(_b)"
 
-#: src/summaryview.c:519
+#: src/summaryview.c:522
 #, fuzzy
 msgid "Have attachment"
 msgstr "첨부"
 
-#: src/summaryview.c:528
+#: src/summaryview.c:531
 #, fuzzy
 msgid "Search:"
 msgstr "찾기"
 
-#: src/summaryview.c:546
+#: src/summaryview.c:549
 msgid "Search for Subject or From"
 msgstr ""
 
-#: src/summaryview.c:734
+#: src/summaryview.c:746
 msgid "Process mark"
 msgstr "표시 처리"
 
-#: src/summaryview.c:735
+#: src/summaryview.c:747
 msgid "Some marks are left. Process it?"
 msgstr "표시가 여전히 남아있습니다. 그것들을 처리할까요?"
 
-#: src/summaryview.c:781
+#: src/summaryview.c:793
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "폴더(%s)를 스캔..."
 
-#: src/summaryview.c:1323
+#: src/summaryview.c:1349
 #, fuzzy
 msgid "_Search again"
 msgstr "다시 찾기"
 
-#: src/summaryview.c:1344 src/summaryview.c:1353
+#: src/summaryview.c:1370 src/summaryview.c:1379
 msgid "No more unread messages"
 msgstr "안 읽은 메시지가 없슴 "
 
-#: src/summaryview.c:1345
+#: src/summaryview.c:1371
 msgid "No unread message found. Search from the end?"
 msgstr "안 읽은 메시지가 없습니다. 끝에서 부터 찾을까요?"
 
-#: src/summaryview.c:1347
+#: src/summaryview.c:1373
 msgid "No unread messages."
 msgstr "안 읽은 메시지가 없습니다."
 
-#: src/summaryview.c:1354
+#: src/summaryview.c:1380
 msgid "No unread message found. Go to next folder?"
 msgstr "안 읽은 메시지가 없습니다. 다음 폴더로 갈까요?"
 
-#: src/summaryview.c:1362 src/summaryview.c:1371
+#: src/summaryview.c:1388 src/summaryview.c:1397
 msgid "No more new messages"
 msgstr "새 메시지가 없습니다."
 
-#: src/summaryview.c:1363
+#: src/summaryview.c:1389
 msgid "No new message found. Search from the end?"
 msgstr "새 메시지가 없습니다. 끝에서 부터 찾을까요?"
 
-#: src/summaryview.c:1365
+#: src/summaryview.c:1391
 msgid "No new messages."
 msgstr "새 메시지가 없습니다."
 
-#: src/summaryview.c:1372
+#: src/summaryview.c:1398
 msgid "No new message found. Go to next folder?"
 msgstr "새 메시지가 없습니다. 다음 폴더로 갈까요?"
 
-#: src/summaryview.c:1380 src/summaryview.c:1389
+#: src/summaryview.c:1406 src/summaryview.c:1415
 msgid "No more marked messages"
 msgstr "표시된 메시지가 없습니다"
 
-#: src/summaryview.c:1381
+#: src/summaryview.c:1407
 msgid "No marked message found. Search from the end?"
 msgstr "표시된 메시지가 없습니다. 끝에서 부터 찾을까요?"
 
-#: src/summaryview.c:1383 src/summaryview.c:1392
+#: src/summaryview.c:1409 src/summaryview.c:1418
 msgid "No marked messages."
 msgstr "표시된 메시지가 없습니다."
 
-#: src/summaryview.c:1390
+#: src/summaryview.c:1416
 msgid "No marked message found. Search from the beginning?"
 msgstr "표시된 메시지가 없습니다. 다음 폴더로 갈까요?"
 
-#: src/summaryview.c:1398 src/summaryview.c:1407
+#: src/summaryview.c:1424 src/summaryview.c:1433
 msgid "No more labeled messages"
 msgstr "꼬리표있는 메시지가 없습니다"
 
-#: src/summaryview.c:1399
+#: src/summaryview.c:1425
 msgid "No labeled message found. Search from the end?"
 msgstr "꼬리표있는 메시지가 없습니다. 끝에서 부터 찾을까요?"
 
-#: src/summaryview.c:1401 src/summaryview.c:1410
+#: src/summaryview.c:1427 src/summaryview.c:1436
 msgid "No labeled messages."
 msgstr "꼬리표있는 메시지가 없습니다."
 
-#: src/summaryview.c:1408
+#: src/summaryview.c:1434
 msgid "No labeled message found. Search from the beginning?"
 msgstr "꼬리표있는 메시지가 없습니다. 처음부터 찾을까요?"
 
-#: src/summaryview.c:1724
+#: src/summaryview.c:1750
 msgid "Attracting messages by subject..."
 msgstr ""
 
-#: src/summaryview.c:1918
+#: src/summaryview.c:1944
 #, c-format
 msgid "%d deleted"
 msgstr "%d개 삭제됨"
 
-#: src/summaryview.c:1922
+#: src/summaryview.c:1948
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d개 이동"
 
-#: src/summaryview.c:1923 src/summaryview.c:1928
+#: src/summaryview.c:1949 src/summaryview.c:1954
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:1927
+#: src/summaryview.c:1953
 #, c-format
 msgid "%s%d copied"
 msgstr ""
 
-#: src/summaryview.c:1942
+#: src/summaryview.c:1968
 msgid " item(s) selected"
 msgstr " 아이템 선택"
 
-#: src/summaryview.c:1964
+#: src/summaryview.c:1990
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d 새 메시지, %d 안 읽음, %d개 메시지(%s)"
 
-#: src/summaryview.c:1968
+#: src/summaryview.c:1994
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d 새 메시지, %d 안 읽음, %d개 메시지"
 
-#: src/summaryview.c:2002
+#: src/summaryview.c:2028
 msgid "Sorting summary..."
 msgstr "요약을 정렬합니다..."
 
-#: src/summaryview.c:2239
+#: src/summaryview.c:2265
 msgid "\tSetting summary from message data..."
 msgstr "\t메시지 데이타로부터 요약을 만듭니다..."
 
-#: src/summaryview.c:2241
+#: src/summaryview.c:2267
 msgid "Setting summary from message data..."
 msgstr "메시지 데이타로부터 요약을 만듭니다..."
 
-#: src/summaryview.c:2348
+#: src/summaryview.c:2374
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "요약 캐쉬 (%s)를 씁니다..."
 
-#: src/summaryview.c:2693
+#: src/summaryview.c:2719
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "메시지 %d가 표시되었습니다\n"
 
-#: src/summaryview.c:2753
+#: src/summaryview.c:2779
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "메시지 %d가 읽은 것으로 표시되었습니다\n"
 
-#: src/summaryview.c:2945
+#: src/summaryview.c:2971
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "메시지 %d가 읽지않은 것으로 표시되었습니다\n"
 
-#: src/summaryview.c:3006
+#: src/summaryview.c:3032
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "메시지 %s/%d가 지울것으로 표시되었습니다\n"
 
-#: src/summaryview.c:3034
+#: src/summaryview.c:3060
 msgid "Delete message(s)"
 msgstr "메시지를 지웁니다"
 
-#: src/summaryview.c:3035
+#: src/summaryview.c:3061
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "정말로 이 메시지를 휴지통에서 삭제하시겠습니까?"
 
-#: src/summaryview.c:3109
+#: src/summaryview.c:3135
 msgid "Deleting duplicated messages..."
 msgstr "중복된 메시지를 지웁니다..."
 
-#: src/summaryview.c:3147
+#: src/summaryview.c:3173
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "메시지 %s/%d의 표시를 지웠습니다\n"
 
-#: src/summaryview.c:3207
+#: src/summaryview.c:3233
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "메시지 %d가 %s로 이동하도록 했습니다\n"
 
-#: src/summaryview.c:3239
+#: src/summaryview.c:3265
 msgid "Destination is same as current folder."
 msgstr "도착지가 현재 폴더와 같습니다"
 
-#: src/summaryview.c:3305
+#: src/summaryview.c:3331
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr ""
 
-#: src/summaryview.c:3336
+#: src/summaryview.c:3362
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "복사할 대상이 현재 폴더와 같습니다."
 
-#: src/summaryview.c:3544
+#: src/summaryview.c:3570
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/summaryview.c:3850 src/summaryview.c:3851
+#: src/summaryview.c:3876 src/summaryview.c:3877
 msgid "Building threads..."
 msgstr "쓰레드를 만듭니다..."
 
-#: src/summaryview.c:4001 src/summaryview.c:4002
+#: src/summaryview.c:4027 src/summaryview.c:4028
 msgid "Unthreading..."
 msgstr "쓰레드를 없앱니다..."
 
-#: src/summaryview.c:4295 src/summaryview.c:4351
+#: src/summaryview.c:4321 src/summaryview.c:4377
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "필터링..."
 
-#: src/summaryview.c:4400
+#: src/summaryview.c:4425
 msgid "filtering..."
 msgstr "필터링..."
 
-#: src/summaryview.c:4401
+#: src/summaryview.c:4426
 msgid "Filtering..."
 msgstr "필터링..."
 
-#: src/summaryview.c:4437
+#: src/summaryview.c:4462
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "메시지 %d는 이미 캐쉬되었습니다.\n"
 
-#: src/summaryview.c:4942
+#: src/summaryview.c:4969
 msgid "No."
 msgstr "번호"
 

@@ -435,6 +435,9 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/_Delete"),		NULL, summary_delete,	0, NULL},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
+	{N_("/Set as _junk mail"),	NULL, summary_junk,	0, NULL},
+	{N_("/Set as not j_unk mail"),	NULL, summary_not_junk,	0, NULL},
+	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/Re-_edit"),		NULL, summary_reedit,   0, NULL},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/Add sender to address boo_k..."),
@@ -646,6 +649,15 @@ SummaryView *summary_create(void)
 	child = g_list_find(GTK_MENU_SHELL(popupmenu)->children,
 			    summaryview->reedit_menuitem);
 	summaryview->reedit_separator = GTK_WIDGET(child->next->data);
+
+	summaryview->junk_menuitem =
+		gtk_item_factory_get_widget(popupfactory, "/Set as junk mail");
+	summaryview->nojunk_menuitem =
+		gtk_item_factory_get_widget(popupfactory,
+					    "/Set as not junk mail");
+	child = g_list_find(GTK_MENU_SHELL(popupmenu)->children,
+			    summaryview->nojunk_menuitem);
+	summaryview->junk_separator = GTK_WIDGET(child->next->data);
 
 	gtk_widget_show_all(vbox);
 	gtk_widget_hide(search_clear_btn);
@@ -1178,6 +1190,20 @@ static void summary_set_menu_sensitive(SummaryView *summaryview)
 	menu_set_sensitive(ifactory, "/Mark/Mark as unread", TRUE);
 	menu_set_sensitive(ifactory, "/Mark/Mark as read",   TRUE);
 	menu_set_sensitive(ifactory, "/Mark/Mark all read",  TRUE);
+
+	if (prefs_common.enable_junk) {
+		gtk_widget_show(summaryview->junk_menuitem);
+		gtk_widget_show(summaryview->nojunk_menuitem);
+		gtk_widget_show(summaryview->junk_separator);
+		menu_set_sensitive(ifactory, "/Set as junk mail", TRUE);
+		menu_set_sensitive(ifactory, "/Set as not junk mail", TRUE);
+	} else {
+		gtk_widget_hide(summaryview->junk_menuitem);
+		gtk_widget_hide(summaryview->nojunk_menuitem);
+		gtk_widget_hide(summaryview->junk_separator);
+		menu_set_sensitive(ifactory, "/Set as junk mail", FALSE);
+		menu_set_sensitive(ifactory, "/Set as not junk mail", FALSE);
+	}
 
 	menu_set_sensitive(ifactory, "/Color label", TRUE);
 
