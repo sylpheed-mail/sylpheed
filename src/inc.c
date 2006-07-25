@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1054,11 +1054,18 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	fltinfo->flags.perm_flags = MSG_NEW|MSG_UNREAD;
 	fltinfo->flags.tmp_flags = MSG_RECEIVED;
 
-	if (session->ac_prefs->filter_on_recv)
+	if (prefs_common.enable_junk &&
+	    prefs_common.filter_junk_on_recv &&
+	    prefs_common.filter_junk_before)
+		filter_apply(prefs_common.junk_fltlist, file, fltinfo);
+
+	if (!fltinfo->drop_done && session->ac_prefs->filter_on_recv)
 		filter_apply(prefs_common.fltlist, file, fltinfo);
+
 	if (!fltinfo->drop_done) {
 		if (prefs_common.enable_junk &&
-		    prefs_common.filter_junk_on_recv)
+		    prefs_common.filter_junk_on_recv &&
+		    !prefs_common.filter_junk_before)
 			filter_apply(prefs_common.junk_fltlist, file, fltinfo);
 	}
 

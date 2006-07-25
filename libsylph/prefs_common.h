@@ -213,6 +213,7 @@ struct _PrefsCommon
 	gchar *junk_classify_cmd;
 	gchar *junk_folder;
 	gboolean filter_junk_on_recv;
+	gboolean filter_junk_before;
 	gboolean delete_junk_on_recv;
 	gboolean mark_junk_as_read;
 

@@ -291,6 +291,8 @@ static PrefParam param[] = {
 	{"junk_folder", NULL, &prefs_common.junk_folder, P_STRING},
 	{"filter_junk_on_receive", "FALSE", &prefs_common.filter_junk_on_recv,
 	 P_BOOL},
+	{"filter_junk_before", "FALSE", &prefs_common.filter_junk_before,
+	 P_BOOL},
 	{"delete_junk_on_receive", "TRUE", &prefs_common.delete_junk_on_recv,
 	 P_BOOL},
 	{"mark_junk_as_read", "FALSE", &prefs_common.mark_junk_as_read, P_BOOL},

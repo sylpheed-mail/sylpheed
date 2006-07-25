@@ -161,6 +161,7 @@ static struct JunkMail {
 	GtkWidget *entry_classify_cmd;
 	GtkWidget *entry_junkfolder;
 	GtkWidget *chkbtn_filter_on_recv;
+	GtkWidget *chkbtn_filter_before;
 	GtkWidget *chkbtn_delete_on_recv;
 	GtkWidget *chkbtn_mark_as_read;
 } junk;
@@ -412,6 +413,8 @@ static PrefsUIData ui_data[] = {
 	{"junk_folder", &junk.entry_junkfolder,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"filter_junk_on_receive", &junk.chkbtn_filter_on_recv,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"filter_junk_before", &junk.chkbtn_filter_before,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"delete_junk_on_receive", &junk.chkbtn_delete_on_recv,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -1773,6 +1776,7 @@ static void prefs_junk_create(void)
 	GtkWidget *entry_junkfolder;
 	GtkWidget *btn_folder;
 	GtkWidget *chkbtn_filter_on_recv;
+	GtkWidget *chkbtn_filter_before;
 	GtkWidget *chkbtn_delete_on_recv;
 	GtkWidget *chkbtn_mark_as_read;
 
@@ -1895,8 +1899,12 @@ static void prefs_junk_create(void)
 		(vbox3, chkbtn_filter_on_recv,
 		 _("Filter messages classified as junk on receiving"));
 	PACK_CHECK_BUTTON
+		(vbox3, chkbtn_filter_before,
+		 _("Filter junk mails before normal filtering"));
+	PACK_CHECK_BUTTON
 		(vbox3, chkbtn_delete_on_recv,
 		 _("Delete junk mails from server on receiving"));
+	SET_TOGGLE_SENSITIVITY (chkbtn_filter_on_recv, chkbtn_filter_before);
 	SET_TOGGLE_SENSITIVITY (chkbtn_filter_on_recv, chkbtn_delete_on_recv);
 
 	PACK_CHECK_BUTTON (vbox3, chkbtn_mark_as_read,
@@ -1908,6 +1916,7 @@ static void prefs_junk_create(void)
 	junk.entry_classify_cmd    = entry_classify_cmd;
 	junk.entry_junkfolder      = entry_junkfolder;
 	junk.chkbtn_filter_on_recv = chkbtn_filter_on_recv;
+	junk.chkbtn_filter_before  = chkbtn_filter_before;
 	junk.chkbtn_delete_on_recv = chkbtn_delete_on_recv;
 	junk.chkbtn_mark_as_read   = chkbtn_mark_as_read;
 }
