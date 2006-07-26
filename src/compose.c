@@ -1629,40 +1629,44 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 	if (!compose->replyto && to_ml && compose->ml_post) return;
 	if (!to_all) return;
 
-	if (compose->replyto) {
-		Xstrdup_a(replyto, compose->replyto, return);
-		extract_address(replyto);
-	}
-	if (msginfo->from) {
-		Xstrdup_a(from, msginfo->from, return);
-		extract_address(from);
-	}
-
-	if (replyto && from)
-		cc_list = address_list_append(cc_list, from);
-	cc_list = address_list_append(cc_list, msginfo->to);
-	cc_list = address_list_append(cc_list, compose->cc);
+	if (compose->replyto && msginfo->from)
+		cc_list = address_list_append_orig(cc_list, msginfo->from);
+	cc_list = address_list_append_orig(cc_list, msginfo->to);
+	cc_list = address_list_append_orig(cc_list, compose->cc);
 
 	to_table = g_hash_table_new(g_str_hash, g_str_equal);
-	if (replyto)
+	if (compose->replyto) {
+		replyto = g_strdup(compose->replyto);
+		extract_address(replyto);
 		g_hash_table_insert(to_table, replyto, GINT_TO_POINTER(1));
+	} else if (msginfo->from) {
+		from = g_strdup(msginfo->from);
+		extract_address(from);
+		g_hash_table_insert(to_table, from, GINT_TO_POINTER(1));
+	}
 	if (compose->account)
-		g_hash_table_insert(to_table, compose->account->address,
+		g_hash_table_insert(to_table,
+				    g_strdup(compose->account->address),
 				    GINT_TO_POINTER(1));
 
-	/* remove address on To: and that of current account */
+	/* remove duplicate addresses */
 	for (cur = cc_list; cur != NULL; ) {
 		gchar *addr = (gchar *)cur->data;
 		GSList *next = cur->next;
+		gchar *addr_;
 
-		if (g_hash_table_lookup(to_table, addr) != NULL) {
+		addr_ = g_strdup(addr);
+		extract_address(addr_);
+		if (g_hash_table_lookup(to_table, addr_) != NULL) {
 			cc_list = g_slist_remove(cc_list, addr);
+			g_free(addr_);
 			g_free(addr);
 		} else
-			g_hash_table_insert(to_table, addr, cur);
+			g_hash_table_insert(to_table, addr_, cur);
 
 		cur = next;
 	}
+	hash_free_strings(to_table);
 	g_hash_table_destroy(to_table);
 
 	if (cc_list) {
