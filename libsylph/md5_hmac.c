@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -130,4 +130,5 @@ md5_hex_hmac(gchar *hexdigest,
 	md5 = md5_hmac_get(text, text_len, key, key_len);
 	s_gnet_md5_copy_string(md5, hexdigest);
 	hexdigest[S_GNET_MD5_HASH_LENGTH * 2] = '\0';
+	s_gnet_md5_delete(md5);
 }
