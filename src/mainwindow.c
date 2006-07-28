@@ -634,6 +634,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	 ENC_ACTION(C_ISO_8859_13)},
 	{N_("/_View/Character _encoding/Baltic (ISO-8859-_4)"),
 	 ENC_ACTION(C_ISO_8859_4)},
+	{N_("/_View/Character _encoding/Baltic (Windows-1257)"),
+	 ENC_ACTION(C_WINDOWS_1257)},
 	ENC_SEPARATOR,
 
 	{N_("/_View/Character _encoding/Greek (ISO-8859-_7)"),

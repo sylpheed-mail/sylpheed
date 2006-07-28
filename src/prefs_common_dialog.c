@@ -2528,6 +2528,7 @@ static void prefs_common_set_encoding_optmenu(GtkOptionMenu *optmenu,
 	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Baltic (ISO-8859-13)"),		 CS_ISO_8859_13);
 	SET_MENUITEM(_("Baltic (ISO-8859-4)"),		 CS_ISO_8859_4);
+	SET_MENUITEM(_("Baltic (Windows-1257)"),	 CS_WINDOWS_1257);
 	SET_MENUITEM(NULL, NULL);
 	SET_MENUITEM(_("Greek (ISO-8859-7)"),		 CS_ISO_8859_7);
 	SET_MENUITEM(NULL, NULL);
