@@ -129,9 +129,13 @@ static void sig_status_for_key(GString *str, gpgme_ctx_t ctx,
 {
 	gpgme_key_t key;
 	gpgme_user_id_t user;
+	gpgme_error_t err;
 
-	gpgme_get_key(ctx, sig->fpr, &key, 0);
-	if (key == NULL || key->uids->uid == NULL) {
+	err = gpgme_get_key(ctx, sig->fpr, &key, 0);
+	if (err || key == NULL || key->uids->uid == NULL) {
+		if (err)
+			debug_print("gpgme_get_key failed: %s\n",
+				    gpgme_strerror(err));
 		g_string_sprintfa(str, "%s\n",
 		                  gpgmegtk_sig_status_to_string (sig, FALSE));
 		if ((sig->fpr != NULL) && (*(sig->fpr) != '\0'))
