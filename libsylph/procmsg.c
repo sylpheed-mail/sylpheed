@@ -1238,7 +1238,12 @@ gboolean procmsg_trash_messages_exist(void)
 
 void procmsg_empty_trash(FolderItem *trash)
 {
-	if (trash && trash->total > 0) {
+	if (!trash)
+		return;
+
+	g_return_if_fail(trash->stype == F_TRASH);
+
+	if (trash->total > 0) {
 		debug_print("Emptying messages in %s ...\n", trash->path);
 
 		folder_item_remove_all_msg(trash);

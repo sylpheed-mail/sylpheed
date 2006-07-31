@@ -1659,6 +1659,21 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 			    item->stype != F_VIRTUAL)
 				download_msg = TRUE;
 		}
+	} else {
+		search_folder = TRUE;
+		if (item->parent) {
+			if (FOLDER_TYPE(folder) != F_IMAP)
+				mark_all_read = TRUE;
+			if (gtkut_tree_row_reference_equal
+				(folderview->selected, folderview->opened)) {
+				update_summary = TRUE;
+				mark_all_read = TRUE;
+			}
+			if (item->stype == F_TRASH) {
+				if (item->total > 0)
+					empty_trash = TRUE;
+			}
+		}
 	}
 
 #define SET_SENS(factory, name, sens)				\
