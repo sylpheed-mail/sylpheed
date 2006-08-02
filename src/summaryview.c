@@ -4342,6 +4342,8 @@ static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
 
 	if (msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
 		msginfo->flags = fltinfo->flags;
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+		summaryview->folder_item->mark_dirty = TRUE;
 		summary_set_row(summaryview, iter, msginfo);
 		if (MSG_IS_IMAP(msginfo->flags)) {
 			if (fltinfo->actions[FLT_ACTION_MARK])
@@ -4392,6 +4394,8 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	if (msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
 		msginfo->flags = fltinfo->flags;
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+		summaryview->folder_item->mark_dirty = TRUE;
 		summary_set_row(summaryview, iter, msginfo);
 		if (MSG_IS_IMAP(msginfo->flags)) {
 			if (fltinfo->actions[FLT_ACTION_MARK_READ])
