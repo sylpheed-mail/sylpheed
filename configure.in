@@ -222,6 +222,7 @@ if test $ac_cv_enable_ssl = yes; then
 	else
 		dnl If pkg-config fails, run compile/link test.
 		AC_MSG_CHECKING([if openssl is available])
+		ac_save_LIBS="$LIBS"
 		if test "$native_win32" = yes; then
 			LIBS="$LIBS -lssl32 -leay32"
 		else
