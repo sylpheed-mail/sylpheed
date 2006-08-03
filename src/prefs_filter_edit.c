@@ -521,7 +521,7 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 		     PF_MATCH_EQUAL);
 	MENUITEM_ADD(menu, menuitem, _("is not"),
 		     PF_MATCH_NOT_EQUAL);
-#ifndef G_OS_WIN32
+#if defined(USE_ONIGURUMA) || defined(HAVE_REGCOMP)
 	MENUITEM_ADD(menu, menuitem, _("match to regex"),
 		     PF_MATCH_REGEX);
 	MENUITEM_ADD(menu, menuitem, _("doesn't match to regex"),

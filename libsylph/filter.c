@@ -29,7 +29,9 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#if HAVE_REGEX_H
+#if USE_ONIGURUMA
+#  include <onigposix.h>
+#elif HAVE_REGEX_H
 #  include <regex.h>
 #endif
 #include <time.h>
@@ -276,20 +278,21 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 
 static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 {
-#if HAVE_REGEX_H && HAVE_REGCOMP
+#if defined(USE_ONIGURUMA) || defined(HAVE_REGCOMP)
 	gint ret = 0;
 	regex_t preg;
-	regmatch_t pmatch[1];
 
-	ret = regcomp(&preg, needle, REG_EXTENDED|REG_ICASE);
-	if (ret != 0) return FALSE;
+#if USE_ONIGURUMA
+	reg_set_encoding(REG_POSIX_ENCODING_UTF8);
+#endif
+	ret = regcomp(&preg, needle, REG_ICASE|REG_EXTENDED);
+	if (ret != 0)
+		return FALSE;
 
-	ret = regexec(&preg, haystack, 1, pmatch, 0);
+	ret = regexec(&preg, haystack, 0, NULL, 0);
 	regfree(&preg);
 
-	if (ret == REG_NOMATCH) return FALSE;
-
-	if (pmatch[0].rm_so != -1)
+	if (ret == 0)
 		return TRUE;
 	else
 #endif

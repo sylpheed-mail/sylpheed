@@ -165,6 +165,9 @@ static void about_create(void)
 #if USE_GTKSPELL
 		   " GtkSpell"
 #endif
+#if USE_ONIGURUMA
+		   " Oniguruma"
+#endif
 	"");
 
 	label = gtk_label_new(buf);
