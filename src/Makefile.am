@@ -96,7 +96,8 @@ BUILT_SOURCES = \
 EXTRA_DIST = \
 	quote_fmt_parse.h \
 	sylpheed-marshal.list \
-	version.h.in
+	version.h.in \
+	sylpheed.rc.in
 
 INCLUDES = \
 	-DG_LOG_DOMAIN=\"Sylpheed\" \
@@ -108,8 +109,8 @@ INCLUDES = \
 
 if HAVE_WINDRES
 SYLPHEED_RES = sylpheed.res
-sylpheed.rc:
-	echo "SYLPHEED ICON icons/sylpheed.ico" >$@
+#sylpheed.rc:
+#	echo "SYLPHEED ICON icons/sylpheed.ico" >$@
 sylpheed.res: sylpheed.rc
 	$(WINDRES) $< -O coff -o $@
 else
