@@ -282,21 +282,17 @@ AC_ARG_ENABLE(oniguruma,
 AC_MSG_CHECKING([whether to use Oniguruma])
 if test "$ac_cv_enable_oniguruma" = yes; then
 	AC_MSG_RESULT(yes)
-	AC_CHECK_HEADERS(oniguruma.h onigposix.h,
-			 [ AC_DEFINE(USE_ONIGURUMA, 1, Define if you want to use Oniguruma.) ],
-			 [ ac_cv_enable_oniguruma=no ])
-
-	if test "$ac_cv_enable_oniguruma" = yes; then
-		AC_CHECK_LIB(onig, onig_new,
-			     [ ac_cv_enable_oniguruma=yes ],
-			     [ ac_cv_enable_oniguruma=no ])
-	fi
-
-	AC_MSG_CHECKING([whether oniguruma is available])
-	AC_MSG_RESULT($ac_cv_enable_oniguruma)
-
-	if test "$ac_cv_enable_oniguruma" = yes; then
-		LIBS="$LIBS -lonig"
+	AC_MSG_CHECKING([whether Oniguruma is available])
+        dnl AC_CHECK_PROG(ONIG_CONFIG, onig-config, onig-config)
+	ONIG_CONFIG=onig-config
+	if $ONIG_CONFIG --version; then
+		AC_MSG_RESULT(yes)
+		CFLAGS="$CFLAGS `$ONIG_CONFIG --cflags`"
+		LIBS="$LIBS `$ONIG_CONFIG --libs`"
+		AC_DEFINE(USE_ONIGURUMA, 1, Define if you want to use Oniguruma.)
+	else
+		AC_MSG_RESULT(no)
+		ac_cv_enable_oniguruma=no
 	fi
 else
 	AC_MSG_RESULT(no)
