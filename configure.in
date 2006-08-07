@@ -285,7 +285,8 @@ if test "$ac_cv_enable_oniguruma" = yes; then
 	AC_MSG_CHECKING([whether Oniguruma is available])
         dnl AC_CHECK_PROG(ONIG_CONFIG, onig-config, onig-config)
 	ONIG_CONFIG=onig-config
-	if $ONIG_CONFIG --version; then
+	ONIG_VERSION=`$ONIG_CONFIG --version 2>/dev/null`
+	if test "x$ONIG_VERSION" != "x"; then
 		AC_MSG_RESULT(yes)
 		CFLAGS="$CFLAGS `$ONIG_CONFIG --cflags`"
 		LIBS="$LIBS `$ONIG_CONFIG --libs`"
