@@ -2467,6 +2467,56 @@ gint conv_copy_dir(const gchar *src, const gchar *dest, const gchar *encoding)
 	return 0;
 }
 
+CharSet conv_check_file_encoding(const gchar *file)
+{
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+	CharSet enc;
+	const gchar *enc_str;
+	gboolean is_locale = TRUE, is_utf8 = TRUE;
+
+	g_return_val_if_fail(file != NULL, C_AUTO);
+
+	enc = conv_get_locale_charset();
+	enc_str = conv_get_locale_charset_str();
+	if (enc == C_UTF_8)
+		is_locale = FALSE;
+
+	if ((fp = g_fopen(file, "rb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		return C_AUTO;
+	}
+
+	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		gchar *str;
+		gint error = 0;
+
+		if (is_locale) {
+			str = conv_codeset_strdup_full(buf, enc_str,
+						       CS_INTERNAL, &error);
+			if (!str || error != 0)
+				is_locale = FALSE;
+			g_free(str);
+		}
+
+		if (is_utf8 && g_utf8_validate(buf, -1, NULL) == FALSE) {
+			is_utf8 = FALSE;
+		}
+
+		if (!is_locale && !is_utf8)
+			break;
+	}
+
+	fclose(fp);
+
+	if (is_locale)
+		return enc;
+	else if (is_utf8)
+		return C_UTF_8;
+	else
+		return C_AUTO;
+}
+
 gchar *conv_filename_from_utf8(const gchar *utf8_file)
 {
 	gchar *fs_file;

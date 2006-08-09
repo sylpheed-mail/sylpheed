@@ -1875,8 +1875,11 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 	gint len;
 	FILE *fp;
 	gboolean prev_autowrap;
+	CharSet enc;
 
 	g_return_if_fail(file != NULL);
+
+	enc = conv_check_file_encoding(file);
 
 	if ((fp = g_fopen(file, "rb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
@@ -1896,15 +1899,19 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 		gchar *str;
 		gint error = 0;
 
-		str = conv_codeset_strdup_full(buf, cur_encoding, CS_INTERNAL,
-					       &error);
-		if (!str || error != 0) {
-			if (g_utf8_validate(buf, -1, NULL) == TRUE) {
-				g_free(str);
-				str = g_strdup(buf);
+		if (enc == C_UTF_8) {
+			str = g_strdup(buf);
+		} else {
+			str = conv_codeset_strdup_full(buf, cur_encoding,
+						       CS_INTERNAL, &error);
+			if (!str || error != 0) {
+				if (g_utf8_validate(buf, -1, NULL) == TRUE) {
+					g_free(str);
+					str = g_strdup(buf);
+				}
 			}
+			if (!str) continue;
 		}
-		if (!str) continue;
 
 		/* strip <CR> if DOS/Windows file,
 		   replace <CR> with <LF> if Macintosh file. */
