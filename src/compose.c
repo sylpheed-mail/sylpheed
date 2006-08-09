@@ -5661,6 +5661,7 @@ static void compose_set_ext_editor_sensitive(Compose *compose,
 			   sensitive);
 	menu_set_sensitive(ifactory, "/File/Insert file", sensitive);
 	menu_set_sensitive(ifactory, "/File/Insert signature", sensitive);
+	menu_set_sensitive(ifactory, "/File/Append signature", sensitive);
 	menu_set_sensitive(ifactory, "/Edit/Wrap current paragraph", sensitive);
 	menu_set_sensitive(ifactory, "/Edit/Wrap all long lines", sensitive);
 	menu_set_sensitive(ifactory, "/Tools/Edit with external editor",
