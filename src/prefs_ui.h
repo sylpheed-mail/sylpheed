@@ -141,10 +141,19 @@ struct _PrefsDialog
 			 G_CALLBACK(prefs_button_toggled), targetwid); \
 }
 
+#define SET_TOGGLE_SENSITIVITY_REV(togglewid, targetwid) \
+{ \
+	gtk_widget_set_sensitive(targetwid, TRUE); \
+	g_signal_connect(G_OBJECT(togglewid), "toggled", \
+			 G_CALLBACK(prefs_button_toggled_rev), targetwid); \
+}
+
 void prefs_dialog_create	(PrefsDialog	*dialog);
 void prefs_dialog_destroy	(PrefsDialog	*dialog);
 
 void prefs_button_toggled	(GtkToggleButton	*toggle_btn,
+				 GtkWidget		*widget);
+void prefs_button_toggled_rev	(GtkToggleButton	*toggle_btn,
 				 GtkWidget		*widget);
 
 void prefs_register_ui		(PrefParam	*param,

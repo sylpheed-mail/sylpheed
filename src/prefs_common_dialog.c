@@ -2083,6 +2083,9 @@ static void prefs_details_create(void)
 		(vbox2, checkbtn_openunread,
 		 _("Open first unread message when entering a folder"));
 
+	SET_TOGGLE_SENSITIVITY_REV
+		(checkbtn_always_show_msg, checkbtn_openunread);
+
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_mark_as_read_on_newwin,
 		 _("Only mark message as read when opened in new window"));
