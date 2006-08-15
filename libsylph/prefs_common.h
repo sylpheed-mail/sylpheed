@@ -267,6 +267,7 @@ struct _PrefsCommon
 	/* Filtering */
 	GSList *fltlist;
 	GSList *junk_fltlist;
+	GSList *manual_junk_fltlist;
 
 	/* Actions */
 	GSList *actions_list;

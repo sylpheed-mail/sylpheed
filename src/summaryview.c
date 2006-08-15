@@ -4384,7 +4384,8 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	fltinfo = filter_info_new();
 	fltinfo->flags = msginfo->flags;
-	filter_apply_msginfo(prefs_common.junk_fltlist, msginfo, fltinfo);
+	filter_apply_msginfo(prefs_common.manual_junk_fltlist,
+			     msginfo, fltinfo);
 
 	if (fltinfo->actions[FLT_ACTION_MOVE] ||
 	    fltinfo->actions[FLT_ACTION_COPY] ||
@@ -4481,7 +4482,7 @@ void summary_filter(SummaryView *summaryview, gboolean selected_only)
 
 void summary_filter_junk(SummaryView *summaryview, gboolean selected_only)
 {
-	if (prefs_common.junk_fltlist)
+	if (prefs_common.manual_junk_fltlist)
 		summary_filter_real(summaryview, summary_filter_junk_func,
 				    selected_only);
 }

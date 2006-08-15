@@ -462,25 +462,17 @@ void prefs_common_write_config(void)
 	g_free(path);
 }
 
-void prefs_common_junk_filter_list_set(void)
+static FilterRule *prefs_common_junk_filter_rule_create(gboolean is_manual)
 {
 	FilterRule *rule;
 	FilterCond *cond;
 	FilterAction *action;
 	GSList *cond_list = NULL, *action_list = NULL;
 
-	if (prefs_common.junk_fltlist) {
-		filter_rule_list_free(prefs_common.junk_fltlist);
-		prefs_common.junk_fltlist = NULL;
-	}
-
-	if (!prefs_common.junk_classify_cmd || !prefs_common.junk_folder)
-		return;
-
 	cond = filter_cond_new(FLT_COND_CMD_TEST, 0, 0, NULL,
 			       prefs_common.junk_classify_cmd);
 	cond_list = g_slist_append(NULL, cond);
-	if (prefs_common.delete_junk_on_recv) {
+	if (prefs_common.delete_junk_on_recv && !is_manual) {
 		action = filter_action_new(FLT_ACTION_COPY,
 					   prefs_common.junk_folder);
 		action_list = g_slist_append(NULL, action);
@@ -497,8 +489,35 @@ void prefs_common_junk_filter_list_set(void)
 		action_list = g_slist_append(action_list, action);
 	}
 
-	rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
-			       cond_list, action_list);
+	if (is_manual)
+		rule = filter_rule_new(_("Junk mail filter (manual)"), FLT_OR,
+	 			       cond_list, action_list);
+	else
+		rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
+				       cond_list, action_list);
 
+	return rule;
+}
+
+void prefs_common_junk_filter_list_set(void)
+{
+	FilterRule *rule;
+
+	if (prefs_common.junk_fltlist) {
+		filter_rule_list_free(prefs_common.junk_fltlist);
+		prefs_common.junk_fltlist = NULL;
+	}
+	if (prefs_common.manual_junk_fltlist) {
+		filter_rule_list_free(prefs_common.manual_junk_fltlist);
+		prefs_common.manual_junk_fltlist = NULL;
+	}
+
+	if (!prefs_common.junk_classify_cmd || !prefs_common.junk_folder)
+		return;
+
+	rule = prefs_common_junk_filter_rule_create(FALSE);
 	prefs_common.junk_fltlist = g_slist_append(NULL, rule);
+
+	rule = prefs_common_junk_filter_rule_create(TRUE);
+	prefs_common.manual_junk_fltlist = g_slist_append(NULL, rule);
 }
