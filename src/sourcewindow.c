@@ -47,6 +47,9 @@ static gboolean key_pressed		(GtkWidget	*widget,
 					 GdkEventKey	*event,
 					 SourceWindow	*sourcewin);
 
+static void adj_value_changed		(GtkAdjustment	*adj,
+					 SourceWindow	*sourcewin);
+
 static void source_window_init()
 {
 }
@@ -96,6 +99,10 @@ SourceWindow *source_window_create(void)
 	gtk_container_add(GTK_CONTAINER(scrolledwin), text);
 	gtk_widget_show(text);
 
+	g_signal_connect(G_OBJECT(GTK_TEXT_VIEW(text)->vadjustment),
+			 "value-changed",
+			 G_CALLBACK(adj_value_changed), sourcewin);
+
 	sourcewin->window = window;
 	sourcewin->scrolledwin = scrolledwin;
 	sourcewin->text = text;
@@ -122,6 +129,8 @@ void source_window_show_msg(SourceWindow *sourcewin, MsgInfo *msginfo)
 	gchar *title;
 	FILE *fp;
 	gchar buf[BUFFSIZE];
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
 
 	g_return_if_fail(msginfo != NULL);
 
@@ -145,6 +154,10 @@ void source_window_show_msg(SourceWindow *sourcewin, MsgInfo *msginfo)
 		source_window_append(sourcewin, buf);
 
 	fclose(fp);
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(sourcewin->text));
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+	gtk_text_buffer_place_cursor(buffer, &iter);
 }
 
 void source_window_append(SourceWindow *sourcewin, const gchar *str)
@@ -186,4 +199,14 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 		return TRUE;
 	}
 	return FALSE;
+}
+
+static void adj_value_changed(GtkAdjustment *adj, SourceWindow *sourcewin)
+{
+	GtkTextBuffer *buffer;
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(sourcewin->text));
+	if (gtk_text_buffer_get_selection_bounds(buffer, NULL, NULL))
+		return;
+	gtk_text_view_place_cursor_onscreen(GTK_TEXT_VIEW(sourcewin->text));
 }
