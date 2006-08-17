@@ -142,12 +142,13 @@ static void sig_status_for_key(GString *str, gpgme_ctx_t ctx,
 			g_string_sprintfa
 				(str, "Key fingerprint: %s\n", sig->fpr);
 		g_string_append(str, _("Cannot find user ID for this key."));
+		g_string_append(str, "\n");
 		return;
 	}
 	user = key->uids;
 	g_string_sprintfa
 		(str, gpgmegtk_sig_status_to_string (sig, TRUE), user->uid);
-	g_string_append (str, "\n");
+	g_string_append(str, "\n");
 
 	user = user->next;
 	while (user) {
@@ -367,6 +368,8 @@ static gpgme_data_t pgp_decrypt(MimeInfo *partinfo, FILE *fp)
 	gpgme_error_t err;
 	gpgme_data_t cipher = NULL, plain = NULL;
 	struct passphrase_cb_info_s info;
+	gpgme_verify_result_t verifyresult = NULL;
+	const gchar *result = NULL;
 
 	memset(&info, 0, sizeof info);
 
@@ -395,18 +398,38 @@ static gpgme_data_t pgp_decrypt(MimeInfo *partinfo, FILE *fp)
 		gpgme_set_passphrase_cb(ctx, gpgmegtk_passphrase_cb, &info);
 	}
 
-	err = gpgme_op_decrypt(ctx, cipher, plain);
+	err = gpgme_op_decrypt_verify(ctx, cipher, plain);
 
-leave:
-	gpgme_data_release(cipher);
 	if (err) {
 		gpgmegtk_free_passphrase();
 		debug_print("decryption failed: %s\n", gpgme_strerror(err));
 		gpgme_data_release(plain);
 		plain = NULL;
-	} else
-		debug_print("** decryption succeeded\n");
+		goto leave;
+	}
 
+	debug_print("** decryption succeeded\n");
+
+	verifyresult = gpgme_op_verify_result(ctx);
+	if (verifyresult && verifyresult->signatures) {
+		g_free(partinfo->sigstatus_full);
+		partinfo->sigstatus_full = sig_status_full(ctx, verifyresult);
+		result = gpgmegtk_sig_status_to_string(verifyresult->signatures,
+						       FALSE);
+		g_free(partinfo->sigstatus);
+		partinfo->sigstatus = g_strdup(result);
+		debug_print("full status: %s\n", partinfo->sigstatus_full);
+		debug_print("verification status: %s\n", result);
+		if (prefs_common.gpg_signature_popup) {
+			GpgmegtkSigStatus statuswindow;
+			statuswindow = gpgmegtk_sig_status_create();
+			gpgmegtk_sig_status_update(statuswindow, ctx);
+			gpgmegtk_sig_status_destroy(statuswindow);
+		}
+	}
+
+leave:
+	gpgme_data_release(cipher);
 	gpgme_release(ctx);
 	return plain;
 }
@@ -685,6 +708,11 @@ void rfc2015_decrypt_message(MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
 		            gpgme_strerror(gpgme_error_from_errno(errno)));
 	}
 
+	if (partinfo->sigstatus) {
+		mimeinfo->sigstatus = g_strdup(partinfo->sigstatus);
+		mimeinfo->sigstatus_full = g_strdup(partinfo->sigstatus_full);
+	}
+
 	fclose(dstfp);
 	procmime_mimeinfo_free_all(tmpinfo);
 
@@ -724,8 +752,17 @@ FILE *rfc2015_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
 		rfc2015_decrypt_message(msginfo, mimeinfo_, fp);
 		if (msginfo->plaintext_file &&
 		    !msginfo->decryption_failed) {
+			gchar *sigstatus = NULL, *sigstatus_full = NULL;
+
 			fclose(fp);
+			if (mimeinfo_->sigstatus) {
+				sigstatus = mimeinfo_->sigstatus;
+				mimeinfo_->sigstatus = NULL;
+				sigstatus_full = mimeinfo_->sigstatus_full;
+				mimeinfo_->sigstatus_full = NULL;
+			}
 			procmime_mimeinfo_free_all(mimeinfo_);
+
 			if ((fp = procmsg_open_message(msginfo)) == NULL)
 				return NULL;
 			mimeinfo_ = procmime_scan_mime_header(fp);
@@ -733,6 +770,8 @@ FILE *rfc2015_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
 				fclose(fp);
 				return NULL;
 			}
+			mimeinfo_->sigstatus = sigstatus;
+			mimeinfo_->sigstatus_full = sigstatus_full;
 		} else {
 			if (fseek(fp, fpos, SEEK_SET) < 0)
 				perror("fseek");

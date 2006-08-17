@@ -147,6 +147,10 @@ static GdkCursor *regular_cursor = NULL;
 static void textview_add_part		(TextView	*textview,
 					 MimeInfo	*mimeinfo,
 					 FILE		*fp);
+#if USE_GPGME
+static void textview_add_sig_part	(TextView	*textview,
+					 MimeInfo	*mimeinfo);
+#endif
 static void textview_add_parts		(TextView	*textview,
 					 MimeInfo	*mimeinfo,
 					 FILE		*fp);
@@ -473,6 +477,10 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 	}
 
 	textview_add_parts(textview, mimeinfo, fp);
+#if USE_GPGME
+	if (mimeinfo->sigstatus)
+		textview_add_sig_part(textview, mimeinfo);
+#endif
 
 	fclose(fp);
 
@@ -639,11 +647,12 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	}
 
 #if USE_GPGME
-	if (mimeinfo->sigstatus)
-		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
-			   mimeinfo->content_type, mimeinfo->sigstatus);
-	else
+	if (mimeinfo->parent && mimeinfo->sigstatus) {
+		textview_add_sig_part(textview, mimeinfo);
+		return;
+	}
 #endif
+
 	if (mimeinfo->filename || mimeinfo->name)
 		g_snprintf(buf, sizeof(buf), "\n[%s  %s (%s)]\n",
 			   mimeinfo->filename ? mimeinfo->filename :
@@ -655,22 +664,6 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			   mimeinfo->content_type,
 			   to_human_readable(mimeinfo->content_size));
 
-#if USE_GPGME
-	if (mimeinfo->sigstatus) {
-		const gchar *color;
-		if (!strcmp(mimeinfo->sigstatus, _("Good signature")))
-			color = "good-signature";
-		else if (!strcmp(mimeinfo->sigstatus, _("Valid signature (untrusted key)")))
-			color = "untrusted-signature";
-		else if (!strcmp(mimeinfo->sigstatus, _("BAD signature")))
-			color = "bad-signature";
-		else
-			color = "nocheck-signature";
-		gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, buf, -1,
-							 color, "mimepart",
-							 NULL);
-	} else
-#endif
 	if (mimeinfo->mime_type != MIME_TEXT &&
 	    mimeinfo->mime_type != MIME_TEXT_HTML) {
 		gtk_text_buffer_insert_with_tags_by_name
@@ -738,6 +731,45 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		textview_write_body(textview, mimeinfo, fp, charset);
 	}
 }
+
+#if USE_GPGME
+static void textview_add_sig_part(TextView *textview, MimeInfo *mimeinfo)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
+	GtkTextBuffer *buffer;
+	GtkTextIter iter;
+	gchar buf[BUFFSIZE];
+	const gchar *color;
+
+	if (!mimeinfo->sigstatus)
+		return;
+
+	if (mimeinfo->parent)
+		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
+			   mimeinfo->content_type, mimeinfo->sigstatus);
+	else
+		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
+			   "signature", mimeinfo->sigstatus);
+
+	if (!strcmp(mimeinfo->sigstatus, _("Good signature")))
+		color = "good-signature";
+	else if (!strcmp(mimeinfo->sigstatus, _("Valid signature (untrusted key)")))
+		color = "untrusted-signature";
+	else if (!strcmp(mimeinfo->sigstatus, _("BAD signature")))
+		color = "bad-signature";
+	else
+		color = "nocheck-signature";
+
+	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_buffer_get_end_iter(buffer, &iter);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, buf, -1,
+						 color, "mimepart", NULL);
+	if (mimeinfo->sigstatus_full)
+		gtk_text_buffer_insert_with_tags_by_name
+			(buffer, &iter, mimeinfo->sigstatus_full, -1,
+			 "mimepart", NULL);
+}
+#endif
 
 static void textview_add_parts(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 {
