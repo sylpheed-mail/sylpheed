@@ -1078,8 +1078,8 @@ gchar *procmsg_get_message_file_path(MsgInfo *msginfo)
 
 	g_return_val_if_fail(msginfo != NULL, NULL);
 
-	if (msginfo->plaintext_file)
-		file = g_strdup(msginfo->plaintext_file);
+	if (msginfo->encinfo && msginfo->encinfo->plaintext_file)
+		file = g_strdup(msginfo->encinfo->plaintext_file);
 	else if (msginfo->file_path)
 		return g_strdup(msginfo->file_path);
 	else {
@@ -1473,8 +1473,13 @@ MsgInfo *procmsg_msginfo_copy(MsgInfo *msginfo)
 
 	MEMBDUP(file_path);
 
-	MEMBDUP(plaintext_file);
-	MEMBCOPY(decryption_failed);
+	if (msginfo->encinfo) {
+		newmsginfo->encinfo = g_new0(MsgEncryptInfo, 1);
+		MEMBDUP(encinfo->plaintext_file);
+		MEMBDUP(encinfo->sigstatus);
+		MEMBDUP(encinfo->sigstatus_full);
+		MEMBCOPY(encinfo->decryption_failed);
+	}
 
 	return newmsginfo;
 }
@@ -1504,8 +1509,17 @@ MsgInfo *procmsg_msginfo_get_full_info(MsgInfo *msginfo)
 
 	full_msginfo->file_path = g_strdup(msginfo->file_path);
 
-	full_msginfo->plaintext_file = g_strdup(msginfo->plaintext_file);
-	full_msginfo->decryption_failed = msginfo->decryption_failed;
+	if (msginfo->encinfo) {
+		full_msginfo->encinfo = g_new0(MsgEncryptInfo, 1);
+		full_msginfo->encinfo->plaintext_file =
+			g_strdup(msginfo->encinfo->plaintext_file);
+		full_msginfo->encinfo->sigstatus =
+			g_strdup(msginfo->encinfo->sigstatus);
+		full_msginfo->encinfo->sigstatus_full =
+			g_strdup(msginfo->encinfo->sigstatus_full);
+		full_msginfo->encinfo->decryption_failed =
+			msginfo->encinfo->decryption_failed;
+	}
 
 	return full_msginfo;
 }
@@ -1549,7 +1563,12 @@ void procmsg_msginfo_free(MsgInfo *msginfo)
 
 	g_free(msginfo->file_path);
 
-	g_free(msginfo->plaintext_file);
+	if (msginfo->encinfo) {
+		g_free(msginfo->encinfo->plaintext_file);
+		g_free(msginfo->encinfo->sigstatus);
+		g_free(msginfo->encinfo->sigstatus_full);
+		g_free(msginfo->encinfo);
+	}
 
 	g_free(msginfo);
 }

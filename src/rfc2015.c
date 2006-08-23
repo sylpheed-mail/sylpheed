@@ -362,7 +362,7 @@ static gchar *copy_gpgmedata_to_temp(GpgmeData data, guint *length)
 }
 #endif
 
-static gpgme_data_t pgp_decrypt(MimeInfo *partinfo, FILE *fp)
+static gpgme_data_t pgp_decrypt(MsgInfo *msginfo, MimeInfo *partinfo, FILE *fp)
 {
 	gpgme_ctx_t ctx = NULL;
 	gpgme_error_t err;
@@ -400,11 +400,14 @@ static gpgme_data_t pgp_decrypt(MimeInfo *partinfo, FILE *fp)
 
 	err = gpgme_op_decrypt_verify(ctx, cipher, plain);
 
+	msginfo->encinfo = g_new0(MsgEncryptInfo, 1);
+
 	if (err) {
 		gpgmegtk_free_passphrase();
 		debug_print("decryption failed: %s\n", gpgme_strerror(err));
 		gpgme_data_release(plain);
 		plain = NULL;
+		msginfo->encinfo->decryption_failed = TRUE;
 		goto leave;
 	}
 
@@ -412,14 +415,14 @@ static gpgme_data_t pgp_decrypt(MimeInfo *partinfo, FILE *fp)
 
 	verifyresult = gpgme_op_verify_result(ctx);
 	if (verifyresult && verifyresult->signatures) {
-		g_free(partinfo->sigstatus_full);
-		partinfo->sigstatus_full = sig_status_full(ctx, verifyresult);
 		result = gpgmegtk_sig_status_to_string(verifyresult->signatures,
 						       FALSE);
-		g_free(partinfo->sigstatus);
-		partinfo->sigstatus = g_strdup(result);
-		debug_print("full status: %s\n", partinfo->sigstatus_full);
+		msginfo->encinfo->sigstatus = g_strdup(result);
+		msginfo->encinfo->sigstatus_full =
+			sig_status_full(ctx, verifyresult);
 		debug_print("verification status: %s\n", result);
+		debug_print("full status: %s\n",
+			    msginfo->encinfo->sigstatus_full);
 		if (prefs_common.gpg_signature_popup) {
 			GpgmegtkSigStatus statuswindow;
 			statuswindow = gpgmegtk_sig_status_create();
@@ -427,6 +430,7 @@ static gpgme_data_t pgp_decrypt(MimeInfo *partinfo, FILE *fp)
 			gpgmegtk_sig_status_destroy(statuswindow);
 		}
 	}
+
 
 leave:
 	gpgme_data_release(cipher);
@@ -602,7 +606,8 @@ static gint headerp(gchar *p, gchar **names)
 #define DECRYPTION_ABORT() \
 { \
 	procmime_mimeinfo_free_all(tmpinfo); \
-	msginfo->decryption_failed = 1; \
+	if (msginfo->encinfo) \
+		msginfo->encinfo->decryption_failed = TRUE; \
 	return; \
 }
 
@@ -658,7 +663,7 @@ void rfc2015_decrypt_message(MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
 
 	debug_print("** yep, it is pgp encrypted\n");
 
-	plain = pgp_decrypt(partinfo, fp);
+	plain = pgp_decrypt(msginfo, partinfo, fp);
 	if (!plain) {
 		DECRYPTION_ABORT();
 	}
@@ -708,16 +713,10 @@ void rfc2015_decrypt_message(MsgInfo *msginfo, MimeInfo *mimeinfo, FILE *fp)
 		            gpgme_strerror(gpgme_error_from_errno(errno)));
 	}
 
-	if (partinfo->sigstatus) {
-		mimeinfo->sigstatus = g_strdup(partinfo->sigstatus);
-		mimeinfo->sigstatus_full = g_strdup(partinfo->sigstatus_full);
-	}
-
 	fclose(dstfp);
 	procmime_mimeinfo_free_all(tmpinfo);
 
-	msginfo->plaintext_file = fname;
-	msginfo->decryption_failed = 0;
+	msginfo->encinfo->plaintext_file = fname;
 }
 
 #undef DECRYPTION_ABORT
@@ -746,21 +745,15 @@ FILE *rfc2015_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
 	}
 
 	if (MSG_IS_ENCRYPTED(msginfo->flags) &&
-	    !msginfo->plaintext_file &&
-	    !msginfo->decryption_failed) {
+	    (!msginfo->encinfo ||
+	     (!msginfo->encinfo->plaintext_file &&
+	      !msginfo->encinfo->decryption_failed))) {
 		fpos = ftell(fp);
 		rfc2015_decrypt_message(msginfo, mimeinfo_, fp);
-		if (msginfo->plaintext_file &&
-		    !msginfo->decryption_failed) {
-			gchar *sigstatus = NULL, *sigstatus_full = NULL;
-
+		if (msginfo->encinfo &&
+		    msginfo->encinfo->plaintext_file &&
+		    !msginfo->encinfo->decryption_failed) {
 			fclose(fp);
-			if (mimeinfo_->sigstatus) {
-				sigstatus = mimeinfo_->sigstatus;
-				mimeinfo_->sigstatus = NULL;
-				sigstatus_full = mimeinfo_->sigstatus_full;
-				mimeinfo_->sigstatus_full = NULL;
-			}
 			procmime_mimeinfo_free_all(mimeinfo_);
 
 			if ((fp = procmsg_open_message(msginfo)) == NULL)
@@ -770,8 +763,6 @@ FILE *rfc2015_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
 				fclose(fp);
 				return NULL;
 			}
-			mimeinfo_->sigstatus = sigstatus;
-			mimeinfo_->sigstatus_full = sigstatus_full;
 		} else {
 			if (fseek(fp, fpos, SEEK_SET) < 0)
 				perror("fseek");

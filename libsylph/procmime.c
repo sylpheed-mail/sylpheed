@@ -68,7 +68,6 @@ void procmime_mimeinfo_free_all(MimeInfo *mimeinfo)
 		g_free(mimeinfo->content_disposition);
 		g_free(mimeinfo->filename);
 
-		g_free(mimeinfo->plaintextfile);
 		g_free(mimeinfo->sigstatus);
 		g_free(mimeinfo->sigstatus_full);
 

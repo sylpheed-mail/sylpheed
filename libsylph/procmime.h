@@ -118,7 +118,6 @@ struct _MimeInfo
 	MimeInfo *children;
 
 	MimeInfo *plaintext;
-	gchar *plaintextfile;
 	gchar *sigstatus;
 	gchar *sigstatus_full;
 

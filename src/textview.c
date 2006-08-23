@@ -478,8 +478,9 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 
 	textview_add_parts(textview, mimeinfo, fp);
 #if USE_GPGME
-	if (mimeinfo->sigstatus)
-		textview_add_sig_part(textview, mimeinfo);
+	if (textview->messageview->msginfo->encinfo &&
+	    textview->messageview->msginfo->encinfo->sigstatus)
+		textview_add_sig_part(textview, NULL);
 #endif
 
 	fclose(fp);
@@ -740,22 +741,32 @@ static void textview_add_sig_part(TextView *textview, MimeInfo *mimeinfo)
 	GtkTextIter iter;
 	gchar buf[BUFFSIZE];
 	const gchar *color;
+	const gchar *sigstatus;
+	const gchar *sigstatus_full;
+	const gchar *type;
 
-	if (!mimeinfo->sigstatus)
+	if (mimeinfo) {
+		sigstatus = mimeinfo->sigstatus;
+		sigstatus_full = mimeinfo->sigstatus_full;
+		type = mimeinfo->content_type;
+	} else if (textview->messageview->msginfo->encinfo) {
+		sigstatus = textview->messageview->msginfo->encinfo->sigstatus;
+		sigstatus_full =
+			textview->messageview->msginfo->encinfo->sigstatus_full;
+		type = "signature";
+	} else
 		return;
 
-	if (mimeinfo->parent)
-		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
-			   mimeinfo->content_type, mimeinfo->sigstatus);
-	else
-		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
-			   "signature", mimeinfo->sigstatus);
+	if (!sigstatus)
+		return;
 
-	if (!strcmp(mimeinfo->sigstatus, _("Good signature")))
+	g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n", type, sigstatus);
+
+	if (!strcmp(sigstatus, _("Good signature")))
 		color = "good-signature";
-	else if (!strcmp(mimeinfo->sigstatus, _("Valid signature (untrusted key)")))
+	else if (!strcmp(sigstatus, _("Valid signature (untrusted key)")))
 		color = "untrusted-signature";
-	else if (!strcmp(mimeinfo->sigstatus, _("BAD signature")))
+	else if (!strcmp(sigstatus, _("BAD signature")))
 		color = "bad-signature";
 	else
 		color = "nocheck-signature";
@@ -764,10 +775,9 @@ static void textview_add_sig_part(TextView *textview, MimeInfo *mimeinfo)
 	gtk_text_buffer_get_end_iter(buffer, &iter);
 	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, buf, -1,
 						 color, "mimepart", NULL);
-	if (mimeinfo->sigstatus_full)
+	if (sigstatus_full)
 		gtk_text_buffer_insert_with_tags_by_name
-			(buffer, &iter, mimeinfo->sigstatus_full, -1,
-			 "mimepart", NULL);
+			(buffer, &iter, sigstatus_full, -1, "mimepart", NULL);
 }
 #endif
 

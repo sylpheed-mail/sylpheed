@@ -33,6 +33,7 @@
 typedef struct _MsgInfo		MsgInfo;
 typedef struct _MsgFlags	MsgFlags;
 typedef struct _MsgFileInfo	MsgFileInfo;
+typedef struct _MsgEncryptInfo	MsgEncryptInfo;
 
 #include "folder.h"
 #include "procmime.h"
@@ -195,15 +196,22 @@ struct _MsgInfo
 	/* used only for temporary messages */
 	gchar *file_path;
 
-	/* used only for encrypted messages */
-	gchar *plaintext_file;
-	guint decryption_failed : 1;
+	/* used only for encrypted (and signed) messages */
+	MsgEncryptInfo *encinfo;
 };
 
 struct _MsgFileInfo
 {
 	gchar *file;
 	MsgFlags *flags;
+};
+
+struct _MsgEncryptInfo
+{
+	gchar *plaintext_file;
+	gchar *sigstatus;
+	gchar *sigstatus_full;
+	gboolean decryption_failed;
 };
 
 typedef FILE * (*DecryptMessageFunc)		(MsgInfo	*msginfo,

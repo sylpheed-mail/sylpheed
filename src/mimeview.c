@@ -520,19 +520,10 @@ static void mimeview_show_message_part(MimeView *mimeview, MimeInfo *partinfo)
 {
 	FILE *fp;
 	const gchar *fname;
-#if USE_GPGME
-	MimeInfo *pi;
-#endif
 
 	if (!partinfo) return;
 
-#if USE_GPGME
-	for (pi = partinfo; pi && !pi->plaintextfile ; pi = pi->parent)
-		;
-	fname = pi ? pi->plaintextfile : mimeview->file;
-#else
 	fname = mimeview->file;
-#endif /* USE_GPGME */
 	if (!fname) return;
 
 	if ((fp = g_fopen(fname, "rb")) == NULL) {
