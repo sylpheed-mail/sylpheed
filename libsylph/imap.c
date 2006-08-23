@@ -511,7 +511,11 @@ static gint imap_auth(IMAPSession *session, const gchar *user,
 	switch (type) {
 	case 0:
 		if (imap_has_capability(session, "AUTH=CRAM-MD5"))
-			ok = imap_cmd_authenticate(session, user, pass, type);
+			ok = imap_cmd_authenticate(session, user, pass,
+						   IMAP_AUTH_CRAM_MD5);
+		else if (imap_has_capability(session, "AUTH=PLAIN"))
+			ok = imap_cmd_authenticate(session, user, pass,
+						   IMAP_AUTH_PLAIN);
 		else if (nologin)
 			log_print(_("IMAP4 server disables LOGIN.\n"));
 		else
@@ -524,6 +528,7 @@ static gint imap_auth(IMAPSession *session, const gchar *user,
 			ok = imap_cmd_login(session, user, pass);
 		break;
 	case IMAP_AUTH_CRAM_MD5:
+	case IMAP_AUTH_PLAIN:
 		ok = imap_cmd_authenticate(session, user, pass, type);
 		break;
 	default:
@@ -3237,34 +3242,49 @@ catch:
 
 #undef THROW
 
-static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
-				  const gchar *pass, IMAPAuthType type)
+static gint imap_cmd_auth_plain(IMAPSession *session, const gchar *user,
+				const gchar *pass)
 {
-	gchar *auth_type;
+	gchar *p;
+	gchar *response;
+	gchar *response64;
 	gint ok;
-	gchar *buf = NULL;
+
+	p = response = g_malloc(strlen(user) * 2 + 2 + strlen(pass) + 1);
+	strcpy(p, user);
+	p += strlen(user) + 1;
+	strcpy(p, user);
+	p += strlen(user) + 1;
+	strcpy(p, pass);
+	p += strlen(pass);
+
+	response64 = g_malloc((p - response) * 2 + 1);
+	base64_encode(response64, (guchar *)response, p - response);
+	g_free(response);
+
+	log_print("IMAP4> ****************\n");
+	sock_puts(SESSION(session)->sock, response64);
+	ok = imap_cmd_ok(session, NULL);
+	if (ok != IMAP_SUCCESS)
+		log_warning(_("IMAP4 authentication failed.\n"));
+	g_free(response64);
+
+	return ok;
+}
+
+static gint imap_cmd_auth_cram_md5(IMAPSession *session, const gchar *user,
+				   const gchar *pass, const gchar *challenge64)
+{
 	gchar *challenge;
 	gint challenge_len;
 	gchar hexdigest[33];
 	gchar *response;
 	gchar *response64;
+	gint ok;
 
-	g_return_val_if_fail((type == 0 || type == IMAP_AUTH_CRAM_MD5),
-			     IMAP_ERROR);
-
-	auth_type = "CRAM-MD5";
-
-	imap_cmd_gen_send(session, "AUTHENTICATE %s", auth_type);
-	ok = imap_cmd_gen_recv(session, &buf);
-	if (ok != IMAP_SUCCESS || buf[0] != '+' || buf[1] != ' ') {
-		g_free(buf);
-		return IMAP_ERROR;
-	}
-
-	challenge = g_malloc(strlen(buf + 2) + 1);
-	challenge_len = base64_decode((guchar *)challenge, buf + 2, -1);
+	challenge = g_malloc(strlen(challenge64 + 2) + 1);
+	challenge_len = base64_decode((guchar *)challenge, challenge64 + 2, -1);
 	challenge[challenge_len] = '\0';
-	g_free(buf);
 	log_print("IMAP< [Decoded: %s]\n", challenge);
 
 	md5_hex_hmac(hexdigest, (guchar *)challenge, challenge_len,
@@ -3282,6 +3302,38 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 	ok = imap_cmd_ok(session, NULL);
 	if (ok != IMAP_SUCCESS)
 		log_warning(_("IMAP4 authentication failed.\n"));
+
+	return ok;
+}
+
+static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
+				  const gchar *pass, IMAPAuthType type)
+{
+	gchar *auth_type;
+	gint ok;
+	gchar *buf = NULL;
+
+	g_return_val_if_fail((type == 0 || type == IMAP_AUTH_CRAM_MD5 ||
+			      type == IMAP_AUTH_PLAIN), IMAP_ERROR);
+
+	if (type == IMAP_AUTH_PLAIN)
+		auth_type = "PLAIN";
+	else
+		auth_type = "CRAM-MD5";
+
+	imap_cmd_gen_send(session, "AUTHENTICATE %s", auth_type);
+	ok = imap_cmd_gen_recv(session, &buf);
+	if (ok != IMAP_SUCCESS || buf[0] != '+' || buf[1] != ' ') {
+		g_free(buf);
+		return IMAP_ERROR;
+	}
+
+	if (type == IMAP_AUTH_PLAIN)
+		ok = imap_cmd_auth_plain(session, user, pass);
+	else
+		ok = imap_cmd_auth_cram_md5(session, user, pass, buf);
+
+	g_free(buf);
 
 	return ok;
 }

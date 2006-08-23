@@ -952,6 +952,7 @@ static void prefs_account_receive_create(void)
 
 	MENUITEM_ADD (optmenu_menu, menuitem, _("Automatic"), 0);
 	MENUITEM_ADD (optmenu_menu, menuitem, "LOGIN", IMAP_AUTH_LOGIN);
+	MENUITEM_ADD (optmenu_menu, menuitem, "PLAIN", IMAP_AUTH_PLAIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "CRAM-MD5", IMAP_AUTH_CRAM_MD5);
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu), optmenu_menu);
@@ -2016,8 +2017,11 @@ static void prefs_account_imap_auth_type_set_optmenu(PrefParam *pparam)
 	case IMAP_AUTH_LOGIN:
 		gtk_option_menu_set_history(optmenu, 1);
 		break;
-	case IMAP_AUTH_CRAM_MD5:
+	case IMAP_AUTH_PLAIN:
 		gtk_option_menu_set_history(optmenu, 2);
+		break;
+	case IMAP_AUTH_CRAM_MD5:
+		gtk_option_menu_set_history(optmenu, 3);
 		break;
 	case 0:
 	default:

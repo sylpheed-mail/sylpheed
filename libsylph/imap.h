@@ -43,7 +43,8 @@ typedef struct _IMAPNameSpace	IMAPNameSpace;
 typedef enum
 {
 	IMAP_AUTH_LOGIN		= 1 << 0,
-	IMAP_AUTH_CRAM_MD5	= 1 << 1
+	IMAP_AUTH_CRAM_MD5	= 1 << 1,
+	IMAP_AUTH_PLAIN		= 1 << 2
 } IMAPAuthType;
 
 struct _IMAPFolder
