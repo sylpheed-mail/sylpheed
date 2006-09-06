@@ -22,7 +22,7 @@
 #define __EGG_TRAY_ICON_H__
 
 #include <gtk/gtkplug.h>
-#include <gtk/gtk.h>
+#include <gtk/gtkversion.h>
 
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
@@ -61,8 +61,10 @@ struct _EggTrayIconClass
 
 GType        egg_tray_icon_get_type       (void);
 
+#if GTK_CHECK_VERSION(2,1,0)
 EggTrayIcon *egg_tray_icon_new_for_screen (GdkScreen   *screen,
 					   const gchar *name);
+#endif
 
 EggTrayIcon *egg_tray_icon_new            (const gchar *name);
 
