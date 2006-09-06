@@ -1,5 +1,10 @@
 2006-09-06
 
+	* libsylph/socket.c: retry waitpid() when it is interrupted
+	  (thanks to Stefaan).
+
+2006-09-06
+
 	* src/action.c: free_children(): wait for processes when they still
 	  exist.
 	  Kill/wait child pid instead of pgid (thanks to Stefaan A Eeckels).

@@ -941,6 +941,23 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 	return 0;
 }
 
+static gint sock_kill_process(pid_t pid)
+{
+	pid_t ret = (pid_t)-1;
+
+	kill(pid, SIGKILL);
+
+	while (ret == (pid_t)-1) {
+		if ((ret = waitpid(pid, NULL, 0)) != pid) {
+			perror("sock_kill_process(): waitpid");
+			if (ret == (pid_t)-1 && errno != EINTR)
+				break;
+		}
+	}
+
+	return (gint)pid;
+}
+
 /* asynchronous DNS lookup */
 
 static gboolean sock_get_address_info_async_cb(GIOChannel *source,
@@ -1001,8 +1018,7 @@ static gboolean sock_get_address_info_async_cb(GIOChannel *source,
 	g_io_channel_shutdown(source, FALSE, NULL);
 	g_io_channel_unref(source);
 
-	kill(lookup_data->child_pid, SIGKILL);
-	waitpid(lookup_data->child_pid, NULL, 0);
+	sock_kill_process(lookup_data->child_pid);
 
 	lookup_data->func(addr_list, lookup_data->data);
 
@@ -1138,10 +1154,8 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 		g_io_channel_unref(lookup_data->channel);
 	}
 
-	if (lookup_data->child_pid > 0) {
-		kill(lookup_data->child_pid, SIGKILL);
-		waitpid(lookup_data->child_pid, NULL, 0);
-	}
+	if (lookup_data->child_pid > 0)
+		sock_kill_process(lookup_data->child_pid);
 
 	g_free(lookup_data->hostname);
 	g_free(lookup_data);

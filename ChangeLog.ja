@@ -1,5 +1,10 @@
 2006-09-06
 
+	* libsylph/socket.c: waitpid() が割り込まれた場合は再試行するように
+	  した(Stefaan さん thanks)。
+
+2006-09-06
+
 	* src/action.c: free_children(): プロセスが残っている場合は wait
 	  するようにした。
 	  pgid でなく pid を kill/wait するようにした(Stefaan A Eeckels さん
