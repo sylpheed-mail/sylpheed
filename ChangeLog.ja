@@ -1,5 +1,12 @@
 2006-09-06
 
+	* src/action.c: free_children(): プロセスが残っている場合は wait
+	  するようにした。
+	  pgid でなく pid を kill/wait するようにした(Stefaan A Eeckels さん
+	  thanks)。
+
+2006-09-06
+
 	* src/eggtrayicon.[ch]: eggtrayicon のソースを更新し、アイコンの
 	  透過を追加(Fryderyk Dziarmagowski さん thanks)。
 

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto & The Sylpheed Claws Team
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto & The Sylpheed Claws Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -863,8 +863,8 @@ static void kill_children_cb(GtkWidget *widget, gpointer data)
 
 	for (cur = children->list; cur; cur = cur->next) {
 		child_info = (ChildInfo *)(cur->data);
-		debug_print("Killing child group id %d\n", child_info->pid);
-		if (child_info->pid && kill(-child_info->pid, SIGTERM) < 0)
+		debug_print("Killing child: %d\n", child_info->pid);
+		if (child_info->pid && kill(child_info->pid, SIGTERM) < 0)
 			perror("kill");
 	}
 #endif /* G_OS_UNIX */
@@ -979,6 +979,14 @@ static void free_children(Children *children)
 	g_free(children->action);
 	while (children->list != NULL) {
 		child_info = (ChildInfo *)children->list->data;
+#ifdef G_OS_UNIX
+		if (child_info->pid != 0) {
+			if (waitpid(child_info->pid, NULL, 0)
+			    != child_info->pid) {
+				perror("waitpid (free_children)");
+			}
+		}
+#endif
 		g_free(child_info->cmd);
 		g_string_free(child_info->output, TRUE);
 		children->list = g_slist_remove(children->list, child_info);
@@ -1166,7 +1174,7 @@ static void catch_status(gpointer data, gint source, GdkInputCondition cond)
 	debug_print("Child returned %c\n", buf);
 
 #ifdef G_OS_UNIX
-	waitpid(-child_info->pid, NULL, 0);
+	waitpid(child_info->pid, NULL, 0);
 #endif
 	childinfo_close_pipes(child_info);
 	child_info->pid = 0;
