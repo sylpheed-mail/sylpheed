@@ -169,7 +169,7 @@ struct _MsgFlags
 struct _MsgInfo
 {
 	guint  msgnum;
-	off_t  size;
+	gsize  size;
 	time_t mtime;
 	time_t date_t;
 

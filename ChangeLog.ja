@@ -1,5 +1,11 @@
 2006-09-06
 
+	* libsylph/procmsg.h: MsgInfo
+          src/compose.h: AttachInfo: コンパイル時にサイズが変わる可能性が
+	  あるため off_t を使用しないようにした。
+
+2006-09-06
+
 	* libsylph/socket.c: waitpid() が割り込まれた場合は再試行するように
 	  した(Stefaan さん thanks)。
 

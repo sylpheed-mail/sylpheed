@@ -1,5 +1,11 @@
 2006-09-06
 
+	* libsylph/procmsg.h: MsgInfo
+	  src/compose.h: AttachInfo: don't use off_t because it's size may
+	  change between compile time.
+
+2006-09-06
+
 	* libsylph/socket.c: retry waitpid() when it is interrupted
 	  (thanks to Stefaan).
 
