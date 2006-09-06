@@ -222,7 +222,7 @@ Información
 
 Puede comprobar la versión más reciente e información sobre Sylpheed en:
 
-	http://sylpheed.good-day.net/
+	http://sylpheed.sraoss.jp/
 
 Existe también un manual de Sylpheed escrito por
 Yoichi Imai <yoichi@silver-forest.com> en:
@@ -242,7 +242,7 @@ Puede obtener el código fuente más reciente del repositorio Subversion.
 
 Vaya a un directorio apropiado y con el comando:
 
-	svn checkout svn://sylpheed.good-day.net/sylpheed
+	svn checkout svn://sylpheed.sraoss.jp/sylpheed/trunk
 
 se creará el árbol de las fuentes con nombre «sylpheed» bajo el directorio
 actual.
