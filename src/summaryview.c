@@ -455,8 +455,8 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/_View"),			NULL, NULL,		0, "<Branch>"},
 	{N_("/_View/Open in new _window"),
 					NULL, summary_open_msg,	0, NULL},
-	{N_("/_View/_Source"),		NULL, summary_view_source, 0, NULL},
-	{N_("/_View/All _header"),	NULL, summary_show_all_header_cb, 0, "<ToggleItem>"},
+	{N_("/_View/Mess_age source"),	NULL, summary_view_source, 0, NULL},
+	{N_("/_View/All _headers"),	NULL, summary_show_all_header_cb, 0, "<ToggleItem>"},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/_Print..."),		NULL, summary_print,	0, NULL}
 };
@@ -1221,13 +1221,13 @@ static void summary_set_menu_sensitive(SummaryView *summaryview)
 
 	menu_set_sensitive(ifactory, "/View", sens);
 	menu_set_sensitive(ifactory, "/View/Open in new window", sens);
-	menu_set_sensitive(ifactory, "/View/Source", sens);
-	menu_set_sensitive(ifactory, "/View/All header", sens);
+	menu_set_sensitive(ifactory, "/View/Message source", sens);
+	menu_set_sensitive(ifactory, "/View/All headers", sens);
 
 	menu_set_sensitive(ifactory, "/Print...",   TRUE);
 
 	summary_lock(summaryview);
-	menuitem = gtk_item_factory_get_widget(ifactory, "/View/All header");
+	menuitem = gtk_item_factory_get_widget(ifactory, "/View/All headers");
 	gtk_check_menu_item_set_active
 		(GTK_CHECK_MENU_ITEM(menuitem),
 		 summaryview->messageview->textview->show_all_headers);

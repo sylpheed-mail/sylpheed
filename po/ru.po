@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-23 14:32+0900\n"
+"POT-Creation-Date: 2006-09-06 17:22+0900\n"
 "PO-Revision-Date: 2006-06-09 14:30+0400\n"
 "Last-Translator: Sergey Vlasov <vsu@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -752,7 +752,7 @@ msgstr ""
 "Выбранное действие не может быть выполнено в окне создания сообщения,\n"
 "так как команда для этого действия содержит %%f, %%F или %%p."
 
-#: src/action.c:708
+#: src/action.c:709
 #, c-format
 msgid ""
 "Command could not be started. Pipe creation failed.\n"
@@ -762,7 +762,7 @@ msgstr ""
 "%s"
 
 #. Fork error
-#: src/action.c:796
+#: src/action.c:797
 #, c-format
 msgid ""
 "Could not fork to execute the following command:\n"
@@ -773,29 +773,29 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: src/action.c:1024
+#: src/action.c:1033
 #, c-format
 msgid "--- Running: %s\n"
 msgstr "--- Выполняется: %s\n"
 
-#: src/action.c:1028
+#: src/action.c:1037
 #, c-format
 msgid "--- Ended: %s\n"
 msgstr "--- Завершено: %s\n"
 
-#: src/action.c:1060
+#: src/action.c:1069
 msgid "Action's input/output"
 msgstr "Ввод/вывод действия"
 
-#: src/action.c:1120
+#: src/action.c:1129
 msgid " Send "
 msgstr " Отправить "
 
-#: src/action.c:1131
+#: src/action.c:1140
 msgid "Abort"
 msgstr "Прервать"
 
-#: src/action.c:1304
+#: src/action.c:1313
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -806,11 +806,11 @@ msgstr ""
 "(он будет подставлен вместо \"%%h\"):\n"
 "  %s"
 
-#: src/action.c:1309
+#: src/action.c:1318
 msgid "Action's hidden user argument"
 msgstr "Скрытый параметр действия"
 
-#: src/action.c:1313
+#: src/action.c:1322
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -821,7 +821,7 @@ msgstr ""
 "(он будет подставлен вместо \"%%u\"):\n"
 "  %s"
 
-#: src/action.c:1318
+#: src/action.c:1327
 msgid "Action's user argument"
 msgstr "Пользовательский параметр действия"
 
@@ -3254,13 +3254,14 @@ msgstr "/Вид/Кодировка/Корейская (ISO-2022-KR)"
 msgid "/_View/Open in new _window"
 msgstr "/Вид/Открыть в новом окне"
 
-#: src/mainwindow.c:709 src/messageview.c:246
+#: src/mainwindow.c:709 src/messageview.c:246 src/summaryview.c:458
 msgid "/_View/Mess_age source"
 msgstr "/Вид/Показать исходный текст"
 
-#: src/mainwindow.c:710 src/messageview.c:247
-msgid "/_View/Show all _headers"
-msgstr "/Вид/Показать все заголовки"
+#: src/mainwindow.c:710 src/messageview.c:247 src/summaryview.c:459
+#, fuzzy
+msgid "/_View/All _headers"
+msgstr "/Вид/Все заголовки"
 
 #: src/mainwindow.c:712
 msgid "/_View/_Update summary"
@@ -6326,14 +6327,6 @@ msgstr "/Создать правило фильтрации/По получат�
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/Создать правило фильтрации/По теме"
 
-#: src/summaryview.c:458
-msgid "/_View/_Source"
-msgstr "/Вид/Исходный текст"
-
-#: src/summaryview.c:459
-msgid "/_View/All _header"
-msgstr "/Вид/Все заголовки"
-
 #: src/summaryview.c:461
 msgid "/_Print..."
 msgstr "/Печать..."
@@ -6663,6 +6656,12 @@ msgstr "Выход"
 #: src/trayicon.c:139
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "/_View/Show all _headers"
+#~ msgstr "/Вид/Показать все заголовки"
+
+#~ msgid "/_View/_Source"
+#~ msgstr "/Вид/Исходный текст"
 
 #~ msgid "Last number in dir %s = %d\n"
 #~ msgstr "Последний номер в каталоге %s = %d\n"

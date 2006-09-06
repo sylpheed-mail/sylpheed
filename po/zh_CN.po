@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-23 14:32+0900\n"
+"POT-Creation-Date: 2006-09-06 17:22+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -744,7 +744,7 @@ msgstr ""
 "选择的动作不能在撰写窗口使用，\n"
 "因为它包括 %%f, %%F or %%p 。"
 
-#: src/action.c:708
+#: src/action.c:709
 #, c-format
 msgid ""
 "Command could not be started. Pipe creation failed.\n"
@@ -754,7 +754,7 @@ msgstr ""
 "%s"
 
 #. Fork error
-#: src/action.c:796
+#: src/action.c:797
 #, c-format
 msgid ""
 "Could not fork to execute the following command:\n"
@@ -765,29 +765,29 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: src/action.c:1024
+#: src/action.c:1033
 #, c-format
 msgid "--- Running: %s\n"
 msgstr "--- 正在运行：%s\n"
 
-#: src/action.c:1028
+#: src/action.c:1037
 #, c-format
 msgid "--- Ended: %s\n"
 msgstr "--- 结束：%s\n"
 
-#: src/action.c:1060
+#: src/action.c:1069
 msgid "Action's input/output"
 msgstr "动作的输入/输出"
 
-#: src/action.c:1120
+#: src/action.c:1129
 msgid " Send "
 msgstr " 发送 "
 
-#: src/action.c:1131
+#: src/action.c:1140
 msgid "Abort"
 msgstr "终止"
 
-#: src/action.c:1304
+#: src/action.c:1313
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -798,11 +798,11 @@ msgstr ""
 "(“%%h”将被替换为参数)\n"
 "  %s"
 
-#: src/action.c:1309
+#: src/action.c:1318
 msgid "Action's hidden user argument"
 msgstr "参数的用户隐藏参数"
 
-#: src/action.c:1313
+#: src/action.c:1322
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -813,7 +813,7 @@ msgstr ""
 "(“%%u”将被替换为参数)\n"
 "  %s"
 
-#: src/action.c:1318
+#: src/action.c:1327
 msgid "Action's user argument"
 msgstr "动作的用户参数"
 
@@ -3251,14 +3251,14 @@ msgstr "/查看(_V)/字符编码(_E)/朝鲜语 (ISO-2022-KR)"
 msgid "/_View/Open in new _window"
 msgstr "/查看(_V)/在新窗口中打开(_W)"
 
-#: src/mainwindow.c:709 src/messageview.c:246
+#: src/mainwindow.c:709 src/messageview.c:246 src/summaryview.c:458
 msgid "/_View/Mess_age source"
 msgstr "/查看(_V)/邮件源文件(_A)"
 
-#: src/mainwindow.c:710 src/messageview.c:247
+#: src/mainwindow.c:710 src/messageview.c:247 src/summaryview.c:459
 #, fuzzy
-msgid "/_View/Show all _headers"
-msgstr "/查看(_V)/显示所有邮件头(_H)"
+msgid "/_View/All _headers"
+msgstr "/查看(_V)/所有标题(_H)"
 
 #: src/mainwindow.c:712
 msgid "/_View/_Update summary"
@@ -6344,14 +6344,6 @@ msgstr "/创建过滤规则(_i)/按收件人(_T)"
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/创建过滤规则(_i)/按主题(_S)"
 
-#: src/summaryview.c:458
-msgid "/_View/_Source"
-msgstr "/查看(_V)/原文(_S)"
-
-#: src/summaryview.c:459
-msgid "/_View/All _header"
-msgstr "/查看(_V)/所有标题(_H)"
-
 #: src/summaryview.c:461
 msgid "/_Print..."
 msgstr "/打印(_P)..."
@@ -6694,6 +6686,13 @@ msgstr "退出"
 #, fuzzy
 msgid "Sylpheed"
 msgstr "旧式的Sylpheed"
+
+#, fuzzy
+#~ msgid "/_View/Show all _headers"
+#~ msgstr "/查看(_V)/显示所有邮件头(_H)"
+
+#~ msgid "/_View/_Source"
+#~ msgstr "/查看(_V)/原文(_S)"
 
 #~ msgid "Last number in dir %s = %d\n"
 #~ msgstr "目录 %s 的最后一个序号 = %d\n"

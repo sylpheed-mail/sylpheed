@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-23 14:32+0900\n"
+"POT-Creation-Date: 2006-09-06 17:22+0900\n"
 "PO-Revision-Date: 2006-07-30 17:35+0100\n"
 "Last-Translator: Enrico Troeger <enrico.troeger@uvena.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -753,7 +753,7 @@ msgstr ""
 "Die erstellte Aktion kann nicht im Verfassen-Fenster benutzt werden,\n"
 "weil sie %%f, %%F oder %%p beinhaltet."
 
-#: src/action.c:708
+#: src/action.c:709
 #, c-format
 msgid ""
 "Command could not be started. Pipe creation failed.\n"
@@ -763,7 +763,7 @@ msgstr ""
 "%s"
 
 #. Fork error
-#: src/action.c:796
+#: src/action.c:797
 #, c-format
 msgid ""
 "Could not fork to execute the following command:\n"
@@ -774,29 +774,29 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: src/action.c:1024
+#: src/action.c:1033
 #, c-format
 msgid "--- Running: %s\n"
 msgstr "--- Laufen: %s\n"
 
-#: src/action.c:1028
+#: src/action.c:1037
 #, c-format
 msgid "--- Ended: %s\n"
 msgstr "--- Beendet: %s\n"
 
-#: src/action.c:1060
+#: src/action.c:1069
 msgid "Action's input/output"
 msgstr "Aktionen Ein-/Ausgabe"
 
-#: src/action.c:1120
+#: src/action.c:1129
 msgid " Send "
 msgstr " Senden "
 
-#: src/action.c:1131
+#: src/action.c:1140
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: src/action.c:1304
+#: src/action.c:1313
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -807,11 +807,11 @@ msgstr ""
 "('%%h' wird durch den Parameter ersetzt)\n"
 "  %s"
 
-#: src/action.c:1309
+#: src/action.c:1318
 msgid "Action's hidden user argument"
 msgstr "Aktionen verstecken den Parameter"
 
-#: src/action.c:1313
+#: src/action.c:1322
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -822,7 +822,7 @@ msgstr ""
 "('%%u' wird durch den Parameter ersetzt)\n"
 "  %s"
 
-#: src/action.c:1318
+#: src/action.c:1327
 msgid "Action's user argument"
 msgstr "Aktionen Benutzer-Parameter"
 
@@ -3255,13 +3255,14 @@ msgstr "/_Ansicht/_Zeichensatz/Koreanisch (ISO-2022-KR)"
 msgid "/_View/Open in new _window"
 msgstr "/_Ansicht/Öffnen in _neuem Fenster"
 
-#: src/mainwindow.c:709 src/messageview.c:246
+#: src/mainwindow.c:709 src/messageview.c:246 src/summaryview.c:458
 msgid "/_View/Mess_age source"
 msgstr "/_Ansicht/Nachrichten_quelle"
 
-#: src/mainwindow.c:710 src/messageview.c:247
-msgid "/_View/Show all _headers"
-msgstr "/_Ansicht/Zeige alle _Kopfzeilen"
+#: src/mainwindow.c:710 src/messageview.c:247 src/summaryview.c:459
+#, fuzzy
+msgid "/_View/All _headers"
+msgstr "/_Ansicht/Alle _Kopfzeilen"
 
 #: src/mainwindow.c:712
 msgid "/_View/_Update summary"
@@ -6341,14 +6342,6 @@ msgstr "/Filter _erstellen/nach A_n"
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/Filter _erstellen/nach _Betreff"
 
-#: src/summaryview.c:458
-msgid "/_View/_Source"
-msgstr "/_Ansicht/_Quellen"
-
-#: src/summaryview.c:459
-msgid "/_View/All _header"
-msgstr "/_Ansicht/Alle _Kopfzeilen"
-
 #: src/summaryview.c:461
 msgid "/_Print..."
 msgstr "/_Drucken..."
@@ -6678,6 +6671,12 @@ msgstr "Be_enden"
 #: src/trayicon.c:139
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "/_View/Show all _headers"
+#~ msgstr "/_Ansicht/Zeige alle _Kopfzeilen"
+
+#~ msgid "/_View/_Source"
+#~ msgstr "/_Ansicht/_Quellen"
 
 #~ msgid "Last number in dir %s = %d\n"
 #~ msgstr "Letzte Nummer im Verzeichnis %s = %d\n"

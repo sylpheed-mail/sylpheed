@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-23 14:32+0900\n"
+"POT-Creation-Date: 2006-09-06 17:22+0900\n"
 "PO-Revision-Date: 2006-04-30 01:11+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -755,7 +755,7 @@ msgstr ""
 "De geselecteerde actie kan niet gebruikt worden in het venster\n"
 "'bericht opstellen' omdat het %%f, %%F of %%p bevat."
 
-#: src/action.c:708
+#: src/action.c:709
 #, c-format
 msgid ""
 "Command could not be started. Pipe creation failed.\n"
@@ -765,7 +765,7 @@ msgstr ""
 "%s"
 
 #. Fork error
-#: src/action.c:796
+#: src/action.c:797
 #, c-format
 msgid ""
 "Could not fork to execute the following command:\n"
@@ -776,29 +776,29 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: src/action.c:1024
+#: src/action.c:1033
 #, c-format
 msgid "--- Running: %s\n"
 msgstr "--- Actief: %s\n"
 
-#: src/action.c:1028
+#: src/action.c:1037
 #, c-format
 msgid "--- Ended: %s\n"
 msgstr "--- Klaar: %s\n"
 
-#: src/action.c:1060
+#: src/action.c:1069
 msgid "Action's input/output"
 msgstr "Acties invoer/uitvoer"
 
-#: src/action.c:1120
+#: src/action.c:1129
 msgid " Send "
 msgstr " Verzenden"
 
-#: src/action.c:1131
+#: src/action.c:1140
 msgid "Abort"
 msgstr "Afbreken"
 
-#: src/action.c:1304
+#: src/action.c:1313
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -809,11 +809,11 @@ msgstr ""
 "('%%h' zal vervangen worden door het argument)\n"
 "  %s"
 
-#: src/action.c:1309
+#: src/action.c:1318
 msgid "Action's hidden user argument"
 msgstr "Verborgen gebruikersargumenten voor actie"
 
-#: src/action.c:1313
+#: src/action.c:1322
 #, c-format
 msgid ""
 "Enter the argument for the following action:\n"
@@ -824,7 +824,7 @@ msgstr ""
 "('%%u' zal vervangen worden door het argument)\n"
 "  %s"
 
-#: src/action.c:1318
+#: src/action.c:1327
 msgid "Action's user argument"
 msgstr "Gebruikersargumenten voor actie"
 
@@ -3262,13 +3262,14 @@ msgstr "/Beel_d/_Tekstcodering/Koreaans (ISO-2022-KR)"
 msgid "/_View/Open in new _window"
 msgstr "/Beel_d/In _nieuw venster openen"
 
-#: src/mainwindow.c:709 src/messageview.c:246
+#: src/mainwindow.c:709 src/messageview.c:246 src/summaryview.c:458
 msgid "/_View/Mess_age source"
 msgstr "/Beel_d/_Broncode weergeven"
 
-#: src/mainwindow.c:710 src/messageview.c:247
-msgid "/_View/Show all _headers"
-msgstr "/Beel_d/Vo_lledige koptekst"
+#: src/mainwindow.c:710 src/messageview.c:247 src/summaryview.c:459
+#, fuzzy
+msgid "/_View/All _headers"
+msgstr "/Beel_d/Vo_lledige header"
 
 #: src/mainwindow.c:712
 msgid "/_View/_Update summary"
@@ -6340,14 +6341,6 @@ msgstr "/F_ilterregel aanmaken/op _Geadresseerde"
 msgid "/Create f_ilter rule/by _Subject"
 msgstr "/F_ilterregel aanmaken/op _Onderwerp"
 
-#: src/summaryview.c:458
-msgid "/_View/_Source"
-msgstr "/Beel_d/Bekijk broncode"
-
-#: src/summaryview.c:459
-msgid "/_View/All _header"
-msgstr "/Beel_d/Vo_lledige header"
-
 #: src/summaryview.c:461
 msgid "/_Print..."
 msgstr "/Afdrukken..."
@@ -6678,6 +6671,12 @@ msgstr "A_fsluiten"
 #: src/trayicon.c:139
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "/_View/Show all _headers"
+#~ msgstr "/Beel_d/Vo_lledige koptekst"
+
+#~ msgid "/_View/_Source"
+#~ msgstr "/Beel_d/Bekijk broncode"
 
 #~ msgid "Last number in dir %s = %d\n"
 #~ msgstr "Laatste nummer in map %s = %d\n"

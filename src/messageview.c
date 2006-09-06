@@ -244,7 +244,7 @@ static GtkItemFactoryEntry msgview_entries[] =
 
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/Mess_age source"),	NULL, view_source_cb, 0, NULL},
-	{N_("/_View/Show all _headers"),
+	{N_("/_View/All _headers"),
 					NULL, show_all_header_cb, 0, "<ToggleItem>"},
 
 	{N_("/_Message"),		NULL, NULL, 0, "<Branch>"},
@@ -550,7 +550,7 @@ static void messageview_set_menu_state(MessageView *messageview)
 	messageview->menu_locked = TRUE;
 	ifactory = gtk_item_factory_from_widget(messageview->menubar);
 	menuitem = gtk_item_factory_get_widget
-		(ifactory, "/View/Show all headers");
+		(ifactory, "/View/All headers");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
 				       messageview->textview->show_all_headers);
 	messageview->menu_locked = FALSE;

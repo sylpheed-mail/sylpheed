@@ -707,7 +707,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/Open in new _window"),	"<control><alt>N", open_msg_cb, 0, NULL},
 	{N_("/_View/Mess_age source"),		"<control>U", view_source_cb, 0, NULL},
-	{N_("/_View/Show all _headers"),	"<control>H", show_all_header_cb, 0, "<ToggleItem>"},
+	{N_("/_View/All _headers"),	"<control>H", show_all_header_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/_Update summary"),		"<control><alt>U", update_summary_cb,  0, NULL},
 
@@ -1940,7 +1940,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/View/Go to/Prev labeled message", M_MSG_EXIST},
 		{"/View/Go to/Next labeled message", M_MSG_EXIST},
 		{"/View/Open in new window"        , M_SINGLE_TARGET_EXIST},
-		{"/View/Show all headers"          , M_SINGLE_TARGET_EXIST},
+		{"/View/All headers"          , M_SINGLE_TARGET_EXIST},
 		{"/View/Message source"            , M_SINGLE_TARGET_EXIST},
 
 		{"/Message/Receive/Get from current account"
@@ -2067,7 +2067,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 				   (item != NULL));
 	}
 
-	SET_CHECK_MENU_ACTIVE("/View/Show all headers",
+	SET_CHECK_MENU_ACTIVE("/View/All headers",
 			      mainwin->messageview->textview->show_all_headers);
 	SET_CHECK_MENU_ACTIVE("/View/Thread view", (state & M_THREADED) != 0);
 
