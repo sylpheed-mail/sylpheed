@@ -38,7 +38,8 @@
 #define	LDIF_TAG_COMMONNAME "cn"
 #define	LDIF_TAG_FIRSTNAME  "givenname"
 #define	LDIF_TAG_LASTNAME   "sn"
-#define LDIF_TAG_NICKNAME   "xmozillanickname"
+#define LDIF_TAG_NICKNAME   "mozillanickname"
+#define LDIF_TAG_XNICKNAME  "xmozillanickname"
 #define	LDIF_TAG_EMAIL      "mail"
 
 #define	LDIF_SEP_TAG        ':'

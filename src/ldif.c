@@ -32,6 +32,7 @@
 #include "addrcache.h"
 
 #include "base64.h"
+#include "codeconv.h"
 #include "utils.h"
 
 /*
@@ -384,6 +385,7 @@ static void ldif_build_items( LdifFile *ldifFile, Ldif_ParsedRec *rec, AddressCa
 	gint iLen = 0, iLenT = 0;
 	ItemPerson *person;
 	ItemEMail *email;
+	gboolean familyFirst = FALSE;
 
 	nodeAddress = rec->listAddress;
 	if( nodeAddress == NULL ) return;
@@ -408,22 +410,45 @@ static void ldif_build_items( LdifFile *ldifFile, Ldif_ParsedRec *rec, AddressCa
 	if( rec->listLName ) {
 		lastName = rec->listLName->data;
 	}
-
-	if( firstName ) {
-		if( lastName ) {
-			fullName = g_strdup_printf( "%s %s", firstName, lastName );
-		}
-		else {
-			fullName = g_strdup_printf( "%s", firstName );
-		}
+	if( rec->listCName ) {
+		fullName = g_strdup((gchar *)rec->listCName->data);
 	}
-	else {
-		if( lastName ) {
-			fullName = g_strdup_printf( "%s", lastName );
+
+	familyFirst = conv_is_ja_locale();
+
+	if( fullName == NULL ) {
+		if( familyFirst ) {
+			if( lastName ) {
+				if( firstName ) {
+					fullName = g_strdup_printf( "%s %s", lastName, firstName );
+				}
+				else {
+					fullName = g_strdup_printf( "%s", lastName );
+				}
+			}
+			else {
+				if( firstName ) {
+					fullName = g_strdup_printf( "%s", firstName );
+				}
+			}
+		} else {
+			if( firstName ) {
+				if( lastName ) {
+					fullName = g_strdup_printf( "%s %s", firstName, lastName );
+				}
+				else {
+					fullName = g_strdup_printf( "%s", firstName );
+				}
+			}
+			else {
+				if( lastName ) {
+					fullName = g_strdup_printf( "%s", lastName );
+				}
+			}
 		}
 	}
 	if( fullName ) {
-		g_strchug( fullName ); g_strchomp( fullName );
+		g_strstrip( fullName );
 	}
 
 	if( rec->listNName ) {
@@ -511,7 +536,8 @@ static void ldif_add_value( Ldif_ParsedRec *rec, gchar *tagName, gchar *tagValue
 	else if( g_ascii_strcasecmp( nm, LDIF_TAG_LASTNAME ) == 0 ) {
 		rec->listLName = g_slist_append( rec->listLName, val );
 	}
-	else if( g_ascii_strcasecmp( nm, LDIF_TAG_NICKNAME ) == 0 ) {
+	else if( g_ascii_strcasecmp( nm, LDIF_TAG_NICKNAME ) == 0 ||
+	         g_ascii_strcasecmp( nm, LDIF_TAG_XNICKNAME ) == 0 ) {
 		rec->listNName = g_slist_append( rec->listNName, val );
 	}
 	else if( g_ascii_strcasecmp( nm, LDIF_TAG_EMAIL ) == 0 ) {
@@ -598,20 +624,42 @@ static void ldif_dump_b64( gchar *buf ) {
 	gchar outBuf[8192];
 	gint len;
 
-	printf( "base-64 : inbuf : %s\n", buf );
+	g_print( "base-64 : inbuf : %s\n", buf );
 	decoder = base64_decoder_new();
 	len = base64_decoder_decode( decoder, buf, outBuf );
 	if (len < 0) {
-		printf( "base-64 : Bad BASE64 content\n" );
+		g_print( "base-64 : Bad BASE64 content\n" );
 	}
 	else {
 		outBuf[len] = '\0';
-		printf( "base-64 : %d : %s\n\n", len, outBuf );
+		g_print( "base-64 : %d : %s\n\n", len, outBuf );
 	}
 	base64_decoder_free( decoder );
 	decoder = NULL;
 }
 #endif
+
+static gchar *ldif_conv_base64( gchar *buf ) {
+	gchar *outbuf;
+	gint len;
+
+	outbuf = g_malloc(strlen(buf) + 1);
+	len = base64_decode(outbuf, buf, -1);
+	outbuf[len] = '\0';
+	if (g_utf8_validate(outbuf, -1, NULL))
+		return outbuf;
+	else {
+		gchar *utf8str;
+
+		if (conv_is_ja_locale())
+			utf8str = conv_codeset_strdup(outbuf, NULL, NULL);
+		else
+			utf8str = conv_localetodisp(outbuf, NULL);
+
+		g_free(outbuf);
+		return utf8str;
+	}
+}
 
 /*
 * Read file data into address cache.
@@ -663,11 +711,12 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 				fullValue = mgu_list_coalesce( listValue );
 
 				/* Base-64 encoded data */
-				/*
 				if( last64 ) {
-					ldif_dump_b64( fullValue );
+					gchar *decValue;
+					decValue = ldif_conv_base64( fullValue );
+					g_free( fullValue );
+					fullValue = decValue;
 				}
-				*/
 
 				ldif_add_value( rec, lastTag, fullValue, hashField );
 				/* ldif_print_record( rec, stdout ); */
@@ -700,11 +749,12 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 							/* Save data */
 							fullValue = mgu_list_coalesce( listValue );
 							/* Base-64 encoded data */
-							/*
 							if( last64 ) {
-								ldif_dump_b64( fullValue );
+								gchar *decValue;
+								decValue = ldif_conv_base64( fullValue );
+								g_free( fullValue );
+								fullValue = decValue;
 							}
-							*/
 
 							ldif_add_value( rec, lastTag, fullValue, hashField );
 							g_free( lastTag );
