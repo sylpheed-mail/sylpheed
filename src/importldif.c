@@ -367,6 +367,7 @@ static void imp_ldif_finish_show() {
 		sMsg = mgu_error2string( _ldifFile_->retVal );
 	}
 	imp_ldif_status_show( sMsg );
+	gtk_button_set_label(GTK_BUTTON(impldif_dlg.btnCancel), GTK_STOCK_CLOSE);
 	gtk_widget_grab_focus(impldif_dlg.btnCancel);
 }
 
@@ -819,6 +820,7 @@ AddressBookFile *addressbook_imp_ldif( AddressIndex *addrIndex ) {
 	gtk_notebook_set_current_page( GTK_NOTEBOOK(impldif_dlg.notebook), PAGE_FILE_INFO );
 	gtk_widget_set_sensitive( impldif_dlg.btnPrev, FALSE );
 	gtk_widget_set_sensitive( impldif_dlg.btnNext, TRUE );
+	gtk_button_set_label( GTK_BUTTON(impldif_dlg.btnCancel), GTK_STOCK_CANCEL );
 	stock_pixmap_gdk( impldif_dlg.window, STOCK_PIXMAP_MARK,
 			  &markxpm, &markxpmmask );
 	imp_ldif_message();

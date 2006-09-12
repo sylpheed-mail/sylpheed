@@ -229,30 +229,14 @@ static void ldif_close_file( LdifFile *ldifFile ) {
 */
 static gchar *ldif_get_line( LdifFile *ldifFile ) {
 	gchar buf[ LDIFBUFSIZE ];
-	gint ch;
-	gint i = 0;
 
 	if( feof( ldifFile->file ) )
 		return NULL;
 
-	while( i < LDIFBUFSIZE - 1 ) {
-		ch = fgetc( ldifFile->file );
-		if( ch == '\0' || ch == EOF ) {
-			if( i == 0 )
-				return NULL;
-			break;
-		}
-#if HAVE_DOSISH_SYSTEM
-#else
-		if( ch == '\r' )
-			continue;
-#endif
-		if( ch == '\n' )
-			break;
-		buf[i] = ch;
-		i++;
-	}
-	buf[i] = '\0';
+	if( fgets( buf, sizeof( buf ), ldifFile->file ) == NULL )
+		return NULL;
+
+	strretchomp( buf );
 
 	/* Return a copy of buffer */
 	return g_strdup( buf );
@@ -669,7 +653,7 @@ static gchar *ldif_conv_base64( gchar *buf ) {
 */
 static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 	gchar *tagName = NULL, *tagValue = NULL;
-	gchar *lastTag = NULL, *fullValue = NULL;
+	gchar *lastTag = NULL;
 	GSList *listValue = NULL;
 	gboolean flagEOF = FALSE, flagEOR = FALSE;
 	gboolean flag64 = FALSE, last64 = FALSE;
@@ -688,7 +672,7 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 	fseek( ldifFile->file, 0L, SEEK_SET );
 
 	while( ! flagEOF ) {
-		gchar *line =  ldif_get_line( ldifFile );
+		gchar *line = ldif_get_line( ldifFile );
 
 		posCur = ftell( ldifFile->file );
 		if( ldifFile->cbProgress ) {
@@ -707,6 +691,8 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 		if( flagEOR ) {
 			/* EOR, Output address data */
 			if( lastTag ) {
+				gchar *fullValue;
+
 				/* Save record */
 				fullValue = mgu_list_coalesce( listValue );
 
@@ -722,6 +708,7 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 				/* ldif_print_record( rec, stdout ); */
 				ldif_build_items( ldifFile, rec, cache );
 				ldif_clear_rec( rec );
+				g_free( fullValue );
 				g_free( lastTag );
 				mgu_free_list( listValue );
 				lastTag = NULL;
@@ -746,6 +733,8 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 					tagValue = ldif_get_tagvalue( line );
 					if( tagValue ) {
 						if( lastTag ) {
+							gchar *fullValue;
+
 							/* Save data */
 							fullValue = mgu_list_coalesce( listValue );
 							/* Base-64 encoded data */
@@ -757,6 +746,7 @@ static void ldif_read_file( LdifFile *ldifFile, AddressCache *cache ) {
 							}
 
 							ldif_add_value( rec, lastTag, fullValue, hashField );
+							g_free( fullValue );
 							g_free( lastTag );
 							mgu_free_list( listValue );
 							lastTag = NULL;
