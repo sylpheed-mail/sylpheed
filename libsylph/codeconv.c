@@ -108,6 +108,10 @@ typedef enum
 #define isutf8_3_2(c) \
 	(((c) & 0xc0) == 0x80)
 
+#define isutf8bom(s) \
+	(((*(s)) & 0xff) == 0xef && ((*(s + 1)) & 0xff) == 0xbb && \
+	 ((*(s + 2)) & 0xff) == 0xbf)
+
 #define K_IN()				\
 	if (state != JIS_KANJI) {	\
 		*out++ = ESC;		\
@@ -831,6 +835,12 @@ static gchar *conv_anytoutf8(const gchar *inbuf, gint *error)
 		return conv_sjistoutf8(inbuf, error);
 	case C_EUC_JP:
 		return conv_euctoutf8(inbuf, error);
+	case C_UTF_8:
+		if (error)
+			*error = 0;
+		if (isutf8bom(inbuf))
+			inbuf += 3;
+		return g_strdup(inbuf);
 	default:
 		if (error)
 			*error = 0;
@@ -864,6 +874,8 @@ static gchar *conv_utf8tosjis(const gchar *inbuf, gint *error)
 		}
 	}
 
+	if (isutf8bom(inbuf))
+		inbuf += 3;
 	return conv_iconv_strdup_with_cd(inbuf, cd, error);
 }
 
@@ -893,6 +905,8 @@ static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error)
 		}
 	}
 
+	if (isutf8bom(inbuf))
+		inbuf += 3;
 	return conv_iconv_strdup_with_cd(inbuf, cd, error);
 }
 
@@ -1217,6 +1231,8 @@ gchar *conv_utf8todisp(const gchar *inbuf, gint *error)
 	if (g_utf8_validate(inbuf, -1, NULL) == TRUE) {
 		if (error)
 			*error = 0;
+		if (isutf8bom(inbuf))
+			inbuf += 3;
 		return g_strdup(inbuf);
 	} else
 		return conv_ustodisp(inbuf, error);

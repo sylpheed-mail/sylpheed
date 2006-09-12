@@ -1900,7 +1900,7 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 		gint error = 0;
 
 		if (enc == C_UTF_8) {
-			str = g_strdup(buf);
+			str = conv_utf8todisp(buf, NULL);
 		} else {
 			str = conv_codeset_strdup_full(buf, cur_encoding,
 						       CS_INTERNAL, &error);
