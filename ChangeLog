@@ -1,5 +1,12 @@
 2006-09-13
 
+	* libsylph/procmsg.c: procmsg_read_cache(): fixed crash when reading
+	  a corrupted cache data.
+	* libsylph/session.c: session_read_data_as_file_cb(): fflush buffer
+	  and check error before rewind().
+
+2006-09-13
+
 	* libsylph/procmime.c: procmime_decode_content(): fflush temporary
 	  file and check errors.
 

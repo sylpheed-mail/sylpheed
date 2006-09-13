@@ -839,6 +839,13 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 	}
 	session->read_data_pos += write_len;
 
+	if (fflush(session->read_data_fp) == EOF) {
+		perror("fflush");
+		g_warning("session_read_data_as_file_cb: "
+			  "writing data to file failed\n");
+		session->state = SESSION_ERROR;
+		return FALSE;
+	}
 	rewind(session->read_data_fp);
 
 	/* callback */

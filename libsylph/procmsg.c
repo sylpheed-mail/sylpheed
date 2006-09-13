@@ -156,10 +156,11 @@ gint procmsg_read_cache_data_str(FILE *fp, gchar **str)
 #define READ_CACHE_DATA(data, fp)				\
 {								\
 	if (procmsg_read_cache_data_str(fp, &data) < 0) {	\
+		g_warning("Cache data is corrupted\n");		\
 		procmsg_msginfo_free(msginfo);			\
 		procmsg_msg_list_free(mlist);			\
-		mlist = NULL;					\
-		break;						\
+		fclose(fp);					\
+		return NULL;					\
 	}							\
 }
 
@@ -171,8 +172,8 @@ gint procmsg_read_cache_data_str(FILE *fp, gchar **str)
 		g_warning("Cache data is corrupted\n");		\
 		procmsg_msginfo_free(msginfo);			\
 		procmsg_msg_list_free(mlist);			\
-		mlist = NULL;					\
-		break;						\
+		fclose(fp);					\
+		return NULL;					\
 	} else							\
 		n = idata;					\
 }
