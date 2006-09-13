@@ -798,7 +798,7 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 			     DataOpenMode mode, gchar *buf, size_t buf_size)
 {
 	FILE *fp;
-	guint32 data_ver;
+	guint32 data_ver = 0;
 
 	g_return_val_if_fail(file != NULL, NULL);
 
