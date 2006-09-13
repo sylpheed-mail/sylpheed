@@ -829,6 +829,12 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		}
 
 		if (normalize_lbreak) {
+			if (fflush(tmpfp) == EOF) {
+				perror("fflush");
+				fclose(tmpfp);
+				if (tmp_file) fclose(outfp);
+				return NULL;
+			}
 			rewind(tmpfp);
 			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
 #ifdef G_OS_WIN32
@@ -872,6 +878,12 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		base64_decoder_free(decoder);
 
 		if (normalize_lbreak) {
+			if (fflush(tmpfp) == EOF) {
+				perror("fflush");
+				fclose(tmpfp);
+				if (tmp_file) fclose(outfp);
+				return NULL;
+			}
 			rewind(tmpfp);
 			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
 #ifdef G_OS_WIN32
@@ -922,6 +934,14 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 			} else
 				fputs(buf, outfp);
 		}
+	}
+
+	if (fflush(outfp) == EOF)
+		perror("fflush");
+	if (ferror(outfp) != 0) {
+		g_warning("procmime_decode_content(): Can't write to temporary file\n");
+		if (tmp_file) fclose(outfp);
+		return NULL;
 	}
 
 	if (tmp_file) rewind(outfp);
