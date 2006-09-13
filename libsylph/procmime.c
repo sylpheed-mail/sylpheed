@@ -989,7 +989,11 @@ gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
 	while (fgets(buf, sizeof(buf), infp) != NULL)
 		if (buf[0] == '\r' || buf[0] == '\n') break;
 
-	procmime_decode_content(outfp, infp, mimeinfo);
+	if (procmime_decode_content(outfp, infp, mimeinfo) == NULL) {
+		fclose(outfp);
+		g_unlink(outfile);
+		return -1;
+	}
 
 	if (fclose(outfp) == EOF) {
 		FILE_OP_ERROR(outfile, "fclose");
