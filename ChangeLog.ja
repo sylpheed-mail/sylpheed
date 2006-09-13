@@ -1,5 +1,11 @@
 2006-09-13
 
+	* libsylph/utils.c
+	  libsylph/procmime.c: エラーチェックを確実にするために rewind() の
+	  前にストリームを fflush() するようにした。
+
+2006-09-13
+
 	* libsylph/procmsg.c: procmsg_read_cache(): 壊れたキャッシュデータを
 	  読んだときにクラッシュするのを修正。
         * libsylph/session.c: session_read_data_as_file_cb(): rewind() の前に

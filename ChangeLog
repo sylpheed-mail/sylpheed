@@ -1,5 +1,11 @@
 2006-09-13
 
+	* libsylph/utils.c
+	  libsylph/procmime.c: fflush() stream before rewind() to ensure
+	  error checking.
+
+2006-09-13
+
 	* libsylph/procmsg.c: procmsg_read_cache(): fixed crash when reading
 	  a corrupted cache data.
 	* libsylph/session.c: session_read_data_as_file_cb(): fflush buffer

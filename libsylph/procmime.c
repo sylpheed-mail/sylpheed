@@ -1119,6 +1119,11 @@ FILE *procmime_get_text_content(MimeInfo *mimeinfo, FILE *infp,
 		g_warning(_("procmime_get_text_content(): Code conversion failed.\n"));
 
 	fclose(tmpfp);
+	if (fflush(outfp) == EOF) {
+		perror("fflush");
+		fclose(outfp);
+		return NULL;
+	}
 	rewind(outfp);
 
 	return outfp;

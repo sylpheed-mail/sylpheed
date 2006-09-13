@@ -2811,6 +2811,10 @@ FILE *canonicalize_file_stream(FILE *src_fp, gint *length)
 		FILE_OP_ERROR("canonicalize_file_stream", "fgets");
 		err = TRUE;
 	}
+	if (fflush(dest_fp) == EOF) {
+		FILE_OP_ERROR("canonicalize_file_stream", "fflush");
+		err = TRUE;
+	}
 
 	if (err) {
 		fclose(dest_fp);
@@ -2965,6 +2969,11 @@ FILE *get_outgoing_rfc2822_file(FILE *fp)
 			goto file_error;
 		if (fputs("\r\n", outfp) == EOF)
 			goto file_error;
+	}
+
+	if (fflush(outfp) == EOF) {
+		FILE_OP_ERROR("get_outgoing_rfc2822_file", "fflush");
+		goto file_error;
 	}
 
 	rewind(outfp);
@@ -3231,6 +3240,11 @@ FILE *str_open_as_stream(const gchar *str)
 
 	if (fwrite(str, len, 1, fp) != 1) {
 		FILE_OP_ERROR("str_open_as_stream", "fwrite");
+		fclose(fp);
+		return NULL;
+	}
+	if (fflush(fp) == EOF) {
+		FILE_OP_ERROR("str_open_as_stream", "fflush");
 		fclose(fp);
 		return NULL;
 	}
