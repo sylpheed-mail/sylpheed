@@ -89,14 +89,12 @@ static GdkColor emphasis_color = {
 	(gushort)0xcfff
 };
 
-#if 0
 static GdkColor error_color = {
 	(gulong)0,
 	(gushort)0xefff,
 	(gushort)0,
 	(gushort)0
 };
-#endif
 
 #if USE_GPGME
 static GdkColor good_sig_color = {
@@ -364,6 +362,9 @@ static void textview_create_tags(TextView *textview)
 
 	gtk_text_buffer_create_tag(buffer, "emphasis",
 				   "foreground-gdk", &emphasis_color,
+				   NULL);
+	gtk_text_buffer_create_tag(buffer, "error",
+				   "foreground-gdk", &error_color,
 				   NULL);
 #if USE_GPGME
 	gtk_text_buffer_create_tag(buffer, "good-signature",
@@ -803,18 +804,22 @@ static void textview_add_parts(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	}
 }
 
-void textview_show_error(TextView *textview)
+static void textview_write_error(TextView *textview, const gchar *msg)
 {
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
+	gtk_text_buffer_get_end_iter(buffer, &iter);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, msg, -1,
+						 "error", NULL);
+}
+
+void textview_show_error(TextView *textview)
+{
 	textview_set_font(textview, NULL);
 	textview_clear(textview);
-
-	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview->text));
-	gtk_text_buffer_get_start_iter(buffer, &iter);
-	gtk_text_buffer_insert(buffer, &iter,
-			       _("This message can't be displayed.\n"), -1);
+	textview_write_error(textview, _("This message can't be displayed.\n"));
 }
 
 static void textview_write_body(TextView *textview, MimeInfo *mimeinfo,
@@ -835,6 +840,11 @@ static void textview_write_body(TextView *textview, MimeInfo *mimeinfo,
 			while (fgets(buf, sizeof(buf), tmpfp) != NULL)
 				textview_write_line(textview, buf, conv);
 		fclose(tmpfp);
+	} else {
+		textview_write_error
+			(textview,
+			 _("The body text couldn't be displayed because "
+			   "writing to temporary file failed.\n"));
 	}
 
 	conv_code_converter_destroy(conv);
