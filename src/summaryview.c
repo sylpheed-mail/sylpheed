@@ -890,6 +890,22 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	return TRUE;
 }
 
+static void summary_unset_sort_column_id(SummaryView *summaryview)
+{
+	gint id;
+	GtkSortType order;
+
+	if (gtk_tree_sortable_get_sort_column_id
+		(GTK_TREE_SORTABLE(summaryview->store), &id, &order)) {
+		GtkTreeViewColumn *column = summaryview->columns[id];
+		column->sort_column_id = -1;
+		gtk_tree_view_column_set_sort_indicator(column, FALSE);
+	}
+
+	gtkut_tree_sortable_unset_sort_column_id
+		(GTK_TREE_SORTABLE(summaryview->store));
+}
+
 void summary_clear_list(SummaryView *summaryview)
 {
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
@@ -958,8 +974,7 @@ void summary_clear_list(SummaryView *summaryview)
 	adj = gtk_tree_view_get_vadjustment(treeview);
 	adj->value = 0.0;
 
-	gtkut_tree_sortable_unset_sort_column_id
-		(GTK_TREE_SORTABLE(summaryview->store));
+	summary_unset_sort_column_id(summaryview);
 }
 
 void summary_clear_all(SummaryView *summaryview)
@@ -2005,7 +2020,8 @@ void summary_sort(SummaryView *summaryview,
 {
 	FolderItem *item = summaryview->folder_item;
 	GtkTreeSortable *sortable = GTK_TREE_SORTABLE(summaryview->store);
-	SummaryColumnType col_type;
+	SummaryColumnType col_type, prev_col_type;
+	GtkTreeViewColumn *column;
 
 	g_return_if_fail(sort_key >= SORT_BY_NONE && sort_key <= SORT_BY_TO);
 
@@ -2015,11 +2031,12 @@ void summary_sort(SummaryView *summaryview,
 		item->cache_dirty = TRUE;
 
 	col_type = sort_key_to_col[sort_key];
+	prev_col_type = sort_key_to_col[item->sort_key];
 
 	if (col_type == -1) {
 		item->sort_key = SORT_BY_NONE;
 		item->sort_type = SORT_ASCENDING;
-		gtkut_tree_sortable_unset_sort_column_id(sortable);
+		summary_unset_sort_column_id(summaryview);
 		summary_set_menu_sensitive(summaryview);
 		return;
 	}
@@ -2034,6 +2051,20 @@ void summary_sort(SummaryView *summaryview,
 
 	gtk_tree_sortable_set_sort_column_id(sortable, col_type,
 					     (GtkSortType)sort_type);
+
+	if (prev_col_type != -1 && col_type != prev_col_type) {
+		column = summaryview->columns[prev_col_type];
+		column->sort_column_id = -1;
+		gtk_tree_view_column_set_sort_indicator(column, FALSE);
+	}
+	if (col_type != S_COL_MARK && col_type != S_COL_UNREAD &&
+	    col_type != S_COL_MIME) {
+		column = summaryview->columns[col_type];
+		column->sort_column_id = col_type;
+		gtk_tree_view_column_set_sort_indicator(column, TRUE);
+		gtk_tree_view_column_set_sort_order(column,
+						    (GtkSortType)sort_type);
+	}
 
 	summary_selection_list_free(summaryview);
 	if (summaryview->all_mlist)
@@ -4666,9 +4697,8 @@ void summary_reply(SummaryView *summaryview, ComposeMode mode)
 		}
 	}
 
-	if (!COMPOSE_QUOTE_MODE(mode))
-		mode |= prefs_common.reply_with_quote
-			? COMPOSE_WITH_QUOTE : COMPOSE_WITHOUT_QUOTE;
+	if (prefs_common.reply_with_quote)
+		mode |= COMPOSE_WITH_QUOTE;
 
 	switch (COMPOSE_MODE(mode)) {
 	case COMPOSE_REPLY:
@@ -4936,7 +4966,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 		(column, GTK_TREE_VIEW_COLUMN_FIXED);			\
 	gtk_tree_view_column_set_fixed_width(column, width);		\
 	gtk_tree_view_column_set_min_width(column, 8);			\
-	gtk_tree_view_column_set_sort_column_id(column, col);		\
+	gtk_tree_view_column_set_clickable(column, TRUE);		\
+	/* gtk_tree_view_column_set_sort_column_id(column, col); */	\
 	gtk_tree_view_column_set_reorderable(column, TRUE);		\
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);	\
 	g_signal_connect(G_OBJECT(column->button), "clicked",		\
@@ -5105,8 +5136,7 @@ void summary_qsearch_reset(SummaryView *summaryview)
 
 	gtkut_tree_view_fast_clear(GTK_TREE_VIEW(summaryview->treeview),
 				   summaryview->store);
-	gtkut_tree_sortable_unset_sort_column_id
-		 (GTK_TREE_SORTABLE(summaryview->store));
+	summary_unset_sort_column_id(summaryview);
 	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, summaryview->all_mlist);
 	summary_selection_list_free(summaryview);
@@ -5226,8 +5256,7 @@ void summary_qsearch(SummaryView *summaryview)
 
 	gtkut_tree_view_fast_clear(GTK_TREE_VIEW(summaryview->treeview),
 				   summaryview->store);
-	gtkut_tree_sortable_unset_sort_column_id
-		 (GTK_TREE_SORTABLE(summaryview->store));
+	summary_unset_sort_column_id(summaryview);
 	summaryview->total_size = 0;
 	summary_set_tree_model_from_list(summaryview, flt_mlist);
 	summary_selection_list_free(summaryview);
