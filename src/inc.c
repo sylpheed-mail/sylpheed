@@ -714,6 +714,8 @@ static IncState inc_pop3_session_do(IncSession *session)
 	session_set_timeout(SESSION(pop3_session),
 			    prefs_common.io_timeout_secs * 1000);
 
+	GTK_EVENTS_FLUSH();
+
 	if (session_connect(SESSION(pop3_session), server, port) < 0) {
 		log_warning(_("Can't connect to POP3 server: %s:%d\n"),
 			    server, port);
