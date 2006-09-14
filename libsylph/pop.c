@@ -35,6 +35,7 @@
 
 #include "pop.h"
 #include "md5.h"
+#include "prefs.h"
 #include "prefs_account.h"
 #include "utils.h"
 #include "recv.h"
@@ -504,7 +505,7 @@ GHashTable *pop3_get_uidl_table(PrefsAccount *ac_prefs)
 gint pop3_write_uidl_list(Pop3Session *session)
 {
 	gchar *path;
-	FILE *fp;
+	PrefFile *pfile;
 	Pop3MsgInfo *msg;
 	gint n;
 	gchar *uid;
@@ -517,8 +518,7 @@ gint pop3_write_uidl_list(Pop3Session *session)
 			   session->ac_prefs->recv_server,
 			   "-", uid, NULL);
 	g_free(uid);
-	if ((fp = g_fopen(path, "wb")) == NULL) {
-		FILE_OP_ERROR(path, "fopen");
+	if ((pfile = prefs_file_open(path)) == NULL) {
 		g_free(path);
 		return -1;
 	}
@@ -529,10 +529,12 @@ gint pop3_write_uidl_list(Pop3Session *session)
 			continue;
 		if (session->state == POP3_DONE && msg->deleted)
 			continue;
-		fprintf(fp, "%s\t%ld\n", msg->uidl, msg->recv_time);
+		fprintf(pfile->fp, "%s\t%ld\n", msg->uidl, msg->recv_time);
 	}
 
-	if (fclose(fp) == EOF) FILE_OP_ERROR(path, "fclose");
+	if (prefs_file_close(pfile) < 0)
+		g_warning("%s: failed to write UIDL list.\n", path);
+
 	g_free(path);
 
 	return 0;
