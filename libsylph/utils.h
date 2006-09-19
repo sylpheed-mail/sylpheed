@@ -431,6 +431,7 @@ gint uncanonicalize_file	(const gchar	*src,
 gint uncanonicalize_file_replace(const gchar	*file);
 
 gchar *normalize_newlines	(const gchar	*str);
+gchar *strchomp_all		(const gchar	*str);
 
 FILE *get_outgoing_rfc2822_file	(FILE		*fp);
 gchar *get_outgoing_rfc2822_str	(FILE		*fp);

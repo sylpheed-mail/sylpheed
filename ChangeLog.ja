@@ -1,5 +1,12 @@
 2006-09-19
 
+	* libsylph/utils.[ch]
+	  src/compose.c: compose_write_to_file(): 他 MUA との互換性のため、
+	  PGP/MIME で署名する場合は quoted-printable の代わりに行末の空白を
+	  除去するようにした。
+
+2006-09-19
+
 	* src/compose.c: compose_write_to_file(): 暗号化の前に Bcc の宛先を
 	  チェックするようにした。
 

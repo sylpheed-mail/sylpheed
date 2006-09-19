@@ -2976,13 +2976,19 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	buf = canon_buf;
 
 #if USE_GPGME
-	/* force encoding to protect trailing spaces */
+	/* chomp all trailing spaces */
 	if (rfc2015_is_available() && !is_draft &&
 	    compose->use_signing && !compose->account->clearsign) {
+		gchar *tmp;
+		tmp = strchomp_all(buf);
+		g_free(buf);
+		buf = tmp;
+#if 0
 		if (encoding == ENC_7BIT)
 			encoding = ENC_QUOTED_PRINTABLE;
 		else if (encoding == ENC_8BIT)
 			encoding = ENC_BASE64;
+#endif
 	}
 
 	if (rfc2015_is_available() && !is_draft &&

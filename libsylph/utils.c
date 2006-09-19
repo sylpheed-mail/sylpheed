@@ -2920,6 +2920,45 @@ gchar *normalize_newlines(const gchar *str)
 	return out;
 }
 
+gchar *strchomp_all(const gchar *str)
+{
+	const gchar *p = str;
+	const gchar *newline, *last;
+	gchar *out, *outp;
+
+	out = outp = g_malloc(strlen(str) + 1);
+	while (*p != '\0') {
+		newline = strchr(p, '\n');
+		if (newline) {
+			for (last = newline;
+			     p < last && g_ascii_isspace(*(last - 1)); --last)
+				;
+			strncpy(outp, p, last - p);
+			outp += last - p;
+
+			if (p < newline && *(newline - 1) == '\r') {
+				strncpy(outp, newline - 1, 2);
+				outp += 2;
+			} else {
+				*outp++ = *newline;
+			}
+
+			p = newline + 1;
+		} else {
+			for (last = p + strlen(p);
+			     p < last && g_ascii_isspace(*(last - 1)); --last)
+				;
+			strncpy(outp, p, last - p);
+			outp += last - p;
+			break;
+		}
+	}
+
+	*outp = '\0';
+
+	return out;
+}
+
 FILE *get_outgoing_rfc2822_file(FILE *fp)
 {
 	gchar buf[BUFFSIZE];

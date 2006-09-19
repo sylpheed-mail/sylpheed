@@ -1,5 +1,12 @@
 2006-09-19
 
+	* libsylph/utils.[ch]
+	  src/compose.c: compose_write_to_file(): chomp all trailing spaces
+	  when signing with PGP/MIME instead of using quoted-printable for
+	  compatibility with other MUAs.
+
+2006-09-19
+
 	* src/compose.c: compose_write_to_file(): check Bcc recipients before
 	  encryption.
 
