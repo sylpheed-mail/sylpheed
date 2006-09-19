@@ -3136,6 +3136,29 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	}
 	if (compose->use_encryption) {
+		if (compose->use_bcc) {
+			const gchar *text;
+			gchar *bcc;
+			AlertValue aval;
+
+			text = gtk_entry_get_text
+				(GTK_ENTRY(compose->bcc_entry));
+			Xstrdup_a(bcc, text, { g_unlink(file); return -1; });
+			g_strstrip(bcc);
+			if (*bcc != '\0') {
+				aval = alertpanel_full
+					(_("Encrypting with Bcc"),
+					 _("This message has Bcc recipients. If this message is encrypted, all Bcc recipients will be visible by examing the encryption key list, leading to loss of confidentiality.\n"
+					   "\n"
+					   "Send it anyway?"),
+					 ALERT_WARNING, G_ALERTDEFAULT, FALSE,
+					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+				if (aval != G_ALERTDEFAULT) {
+					g_unlink(file);
+					return -1;
+				}
+			}
+		}
 		if (rfc2015_encrypt(file, compose->to_list,
 				    compose->account->ascii_armored) < 0) {
 			g_unlink(file);
