@@ -5139,6 +5139,8 @@ static void compose_destroy(Compose *compose)
 	GtkTreeIter iter;
 	gboolean valid;
 	AttachInfo *ainfo;
+	GtkTextBuffer *buffer;
+	GtkClipboard *clipboard;
 
 	compose_list = g_list_remove(compose_list, compose);
 
@@ -5199,6 +5201,10 @@ static void compose_destroy(Compose *compose)
 	if (!gtk_widget_get_parent(compose->paned))
 		gtk_widget_destroy(compose->paned);
 	gtk_widget_destroy(compose->popupmenu);
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(compose->text));
+	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
+	gtk_text_buffer_remove_selection_clipboard(buffer, clipboard);
 
 	gtk_widget_destroy(compose->window);
 

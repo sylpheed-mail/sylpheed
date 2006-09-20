@@ -1,3 +1,10 @@
+2006-09-20
+
+	* src/compose.c: compose_destroy()
+	  src/textview/c: textview_destroy(): 解放する前に selection クリップ
+	  ボードを取り除くようにした(選択状態でウィンドウを閉じると GTK+ 2.10
+	  でクラッシュするのを修正)。
+
 2006-09-19
 
 	* libsylph/utils.[ch]
