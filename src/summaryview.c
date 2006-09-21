@@ -2291,8 +2291,6 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 	MsgInfo *msginfo;
 	GSList *cur;
 
-	if (!mlist) return;
-
 	debug_print(_("\tSetting summary from message data..."));
 	STATUSBAR_PUSH(summaryview->mainwin,
 		       _("Setting summary from message data..."));
