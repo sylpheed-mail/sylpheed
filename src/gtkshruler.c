@@ -19,7 +19,7 @@
  */
  
 /* I derived this class from hruler. S in HRuler could be read as
- * Sylpheed (sylpheed.good-day.net), but also [S]ettable HRuler.
+ * Sylpheed (sylpheed.sraoss.jp), but also [S]ettable HRuler.
  * I basically ripped apart the draw_ticks member of HRuler; it
  * now draws the ticks at ruler->max_size. so gtk_ruler_set_range's
  * last parameter has the distance between two ticks (which is
