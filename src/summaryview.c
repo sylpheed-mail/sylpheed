@@ -896,7 +896,8 @@ static void summary_unset_sort_column_id(SummaryView *summaryview)
 	GtkSortType order;
 
 	if (gtk_tree_sortable_get_sort_column_id
-		(GTK_TREE_SORTABLE(summaryview->store), &id, &order)) {
+		(GTK_TREE_SORTABLE(summaryview->store), &id, &order) &&
+	    id < N_SUMMARY_VISIBLE_COLS) {
 		GtkTreeViewColumn *column = summaryview->columns[id];
 		column->sort_column_id = -1;
 		gtk_tree_view_column_set_sort_indicator(column, FALSE);
@@ -2052,13 +2053,14 @@ void summary_sort(SummaryView *summaryview,
 	gtk_tree_sortable_set_sort_column_id(sortable, col_type,
 					     (GtkSortType)sort_type);
 
-	if (prev_col_type != -1 && col_type != prev_col_type) {
+	if (prev_col_type != -1 && col_type != prev_col_type &&
+	    prev_col_type < N_SUMMARY_VISIBLE_COLS) {
 		column = summaryview->columns[prev_col_type];
 		column->sort_column_id = -1;
 		gtk_tree_view_column_set_sort_indicator(column, FALSE);
 	}
 	if (col_type != S_COL_MARK && col_type != S_COL_UNREAD &&
-	    col_type != S_COL_MIME) {
+	    col_type != S_COL_MIME && col_type < N_SUMMARY_VISIBLE_COLS) {
 		column = summaryview->columns[col_type];
 		column->sort_column_id = col_type;
 		gtk_tree_view_column_set_sort_indicator(column, TRUE);
