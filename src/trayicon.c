@@ -331,7 +331,7 @@ static void trayicon_app_exit(GtkWidget *widget, gpointer data)
 
 #else /* GTK_CHECK_VERSION(2, 10, 0) || defined(GDK_WINDOWING_X11) */
 
-GtkWidget *trayicon_create(MainWindow *mainwin)
+TrayIcon *trayicon_create(MainWindow *mainwin)
 {
 	return NULL;
 }
@@ -341,6 +341,14 @@ void trayicon_set_tooltip(const gchar *text)
 }
 
 void trayicon_set_stock_icon(StockPixmap icon)
+{
+}
+
+void trayicon_show(TrayIcon *tray_icon)
+{
+}
+
+void trayicon_destroy(TrayIcon *tray_icon)
 {
 }
 
