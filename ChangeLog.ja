@@ -1,5 +1,17 @@
 2006-09-26
 
+	* libsylph/prefs_common.[ch]
+	  src/trayicon.[ch]
+	  src/prefs_common_dialog.c
+	  src/mainwindow.c: GtkStatusIcon を使用して Win32 でトレイアイコンを
+	  実装。
+	  トレイアイコンの左クリックでウィンドウを表示するだけにした。
+	  「このプログラムについて」メニューを削除。
+	  「Sylpheedを表示」メニューを追加。
+	  「最小化時にトレイアイコンに格納する」オプションを追加。
+
+2006-09-26
+
 	* libsylph/session.[ch]: win32: GLib >= 2.8.x でステートマシンが
 	  フリーズする問題に対処。
 	  session_read_data_as_file_cb(): 予期せず idle 関数が呼ばれるのを

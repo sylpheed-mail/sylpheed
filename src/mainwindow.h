@@ -33,6 +33,7 @@ typedef struct _MainWindow	MainWindow;
 #include "headerview.h"
 #include "messageview.h"
 #include "logwindow.h"
+#include "trayicon.h"
 #include "gtkutils.h"
 
 typedef enum
@@ -102,7 +103,7 @@ struct _MainWindow
 	GtkWidget *ac_label;
 	GtkWidget *ac_menu;
 
-	GtkWidget *tray_icon;
+	TrayIcon *tray_icon;
 
 	/* context IDs for status bar */
 	gint mainwin_cid;

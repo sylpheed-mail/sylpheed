@@ -332,6 +332,7 @@ static PrefParam param[] = {
 #endif
 
 	{"show_trayicon", "TRUE", &prefs_common.show_trayicon, P_BOOL},
+	{"minimize_to_tray", "FALSE", &prefs_common.minimize_to_tray, P_BOOL},
 
 	/* Other */
 	{"receive_dialog_mode", "1", &prefs_common.recv_dialog_mode, P_ENUM},

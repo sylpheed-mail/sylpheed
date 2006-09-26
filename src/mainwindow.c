@@ -849,7 +849,7 @@ MainWindow *main_window_create(SeparateType type)
 	GtkWidget *ac_button;
 	GtkWidget *ac_label;
 
-	GtkWidget *tray_icon;
+	TrayIcon *tray_icon;
 
 	FolderView *folderview;
 	SummaryView *summaryview;
@@ -966,7 +966,7 @@ MainWindow *main_window_create(SeparateType type)
 
 	tray_icon = trayicon_create(mainwin);
 	if (tray_icon && prefs_common.show_trayicon)
-		gtk_widget_show(tray_icon);
+		trayicon_show(tray_icon);
 
 	/* create views */
 	mainwin->folderview  = folderview  = folderview_create();
@@ -1222,10 +1222,10 @@ void main_window_reflect_prefs_all(void)
 
 	if (mainwin->tray_icon) {
 		if (prefs_common.show_trayicon)
-			gtk_widget_show(mainwin->tray_icon);
+			trayicon_show(mainwin->tray_icon);
 		else {
 			/* trayicon is automatically restored after this */
-			gtk_widget_destroy(mainwin->tray_icon);
+			trayicon_destroy(mainwin->tray_icon);
 		}
 	}
 
@@ -2806,6 +2806,10 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 		else
 			mainwin->window_hidden = FALSE;
 	}
+
+	if (mainwin->window_hidden &&
+	    prefs_common.show_trayicon && prefs_common.minimize_to_tray)
+		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), TRUE);
 
 	return FALSE;
 }

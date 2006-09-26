@@ -235,6 +235,7 @@ struct _PrefsCommon
 	gboolean immediate_exec;
 	gboolean comply_gnome_hig;
 	gboolean show_trayicon;
+	gboolean minimize_to_tray;
 
 	/* Other */
 	RecvDialogMode recv_dialog_mode;

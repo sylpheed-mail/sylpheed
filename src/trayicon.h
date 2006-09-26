@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,28 @@
 
 #include <glib.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtkversion.h>
+
+#if GTK_CHECK_VERSION(2, 10, 0)
+#  include <gtk/gtkstatusicon.h>
+#endif
+
+typedef struct _TrayIcon	TrayIcon;
 
 #include "mainwindow.h"
 #include "stock_pixmap.h"
 
-GtkWidget *trayicon_create	(MainWindow	*mainwin);
+struct _TrayIcon
+{
+#if GTK_CHECK_VERSION(2, 10, 0)
+	GtkStatusIcon *status_icon;
+#else
+	GtkWidget *widget;
+#endif
+};
+
+TrayIcon *trayicon_create	(MainWindow	*mainwin);
+void trayicon_destroy		(TrayIcon	*tray_icon);
 void trayicon_set_tooltip	(const gchar	*text);
 void trayicon_set_stock_icon	(StockPixmap	 icon);
 

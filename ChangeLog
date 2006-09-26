@@ -1,5 +1,16 @@
 2006-09-26
 
+	* libsylph/prefs_common.[ch]
+	  src/trayicon.[ch]
+	  src/prefs_common_dialog.c
+	  src/mainwindow.c: implemented tray icon in Win32 using GtkStatusIcon.
+	  Just present window with left click of the tray icon.
+	  Removed 'About' menu.
+	  Added 'Display Sylpheed' menu.
+	  Added 'Minimize to tray icon' option.
+
+2006-09-26
+
 	* libsylph/session.[ch]: win32: made workaround for state machine
 	  freeze problem in GLib >= 2.8.x.
 	  session_read_data_as_file_cb(): reset Session::read_buf_len to
