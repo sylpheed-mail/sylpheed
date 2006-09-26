@@ -1,3 +1,10 @@
+2006-09-26
+
+	* libsylph/session.[ch]: win32: made workaround for state machine
+	  freeze problem in GLib >= 2.8.x.
+	  session_read_data_as_file_cb(): reset Session::read_buf_len to
+	  prevent the unexpected call of idle functions.
+
 2006-09-22
 
 	* version 2.2.9

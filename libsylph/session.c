@@ -41,6 +41,10 @@ static gint session_close		(Session	*session);
 
 static gboolean session_timeout_cb	(gpointer	 data);
 
+#ifdef G_OS_WIN32
+static gboolean session_ping_cb		(gpointer	 data);
+#endif
+
 static gboolean session_recv_msg_idle_cb	(gpointer	 data);
 static gboolean session_recv_data_idle_cb	(gpointer	 data);
 
@@ -106,6 +110,8 @@ void session_init(Session *session)
 
 	session->timeout_tag = 0;
 	session->timeout_interval = 0;
+
+	session->ping_tag = 0;
 
 	session->data = NULL;
 }
@@ -175,6 +181,10 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 	session->io_tag = sock_add_watch(session->sock, G_IO_IN,
 					 session_read_msg_cb,
 					 session);
+
+#ifdef G_OS_WIN32
+	session->ping_tag = g_timeout_add(1000, session_ping_cb, session);
+#endif
 
 	return 0;
 }
@@ -247,6 +257,20 @@ static gboolean session_timeout_cb(gpointer data)
 	return FALSE;
 }
 
+#ifdef G_OS_WIN32
+/* hack for state machine freeze problem in GLib >= 2.8.x */
+static gboolean session_ping_cb(gpointer data)
+{
+	Session *session = SESSION(data);
+	SockInfo *sock = session->sock;
+
+	if (session->io_tag > 0 && sock && sock->callback)
+		sock->callback(sock, sock->condition, sock->data);
+
+	return TRUE;
+}
+#endif
+
 void session_set_recv_message_notify(Session *session,
 				     RecvMsgNotify notify_func, gpointer data)
 {
@@ -299,6 +323,13 @@ static gint session_close(Session *session)
 #endif
 
 	session_set_timeout(session, 0);
+
+#ifdef G_OS_WIN32
+	if (session->ping_tag > 0) {
+		g_source_remove(session->ping_tag);
+		session->ping_tag = 0;
+	}
+#endif
 
 	if (session->io_tag > 0) {
 		g_source_remove(session->io_tag);
@@ -848,6 +879,10 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 	}
 	rewind(session->read_data_fp);
 
+	session->preread_len = 0;
+	session->read_buf_len = 0;
+	session->read_buf_p = session->read_buf;
+
 	/* callback */
 	ret = session->recv_data_as_file_finished
 		(session, session->read_data_fp, session->read_data_pos);
@@ -859,9 +894,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 				  session->recv_data_notify_data);
 
 	session->read_data_pos = 0;
-	session->preread_len = 0;
-	session->read_buf_len = 0;
-	session->read_buf_p = session->read_buf;
 
 	if (ret < 0)
 		session->state = SESSION_ERROR;

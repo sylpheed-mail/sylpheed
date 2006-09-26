@@ -1,3 +1,10 @@
+2006-09-26
+
+	* libsylph/session.[ch]: win32: GLib >= 2.8.x でステートマシンが
+	  フリーズする問題に対処。
+	  session_read_data_as_file_cb(): 予期せず idle 関数が呼ばれるのを
+	  防ぐために Session::read_buf_len をリセットするようにした。
+
 2006-09-22
 
 	* version 2.2.9
