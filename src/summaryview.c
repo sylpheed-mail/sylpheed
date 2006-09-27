@@ -113,9 +113,15 @@
 	if (sort_key == key)					\
 		summary_sort(summaryview, sort_key, sort_type);
 
-#define SUMMARY_COL_MARK_WIDTH		21
-#define SUMMARY_COL_UNREAD_WIDTH	24
-#define SUMMARY_COL_MIME_WIDTH		17
+#ifdef G_OS_WIN32
+#  define SUMMARY_COL_MARK_WIDTH	23
+#  define SUMMARY_COL_UNREAD_WIDTH	26
+#  define SUMMARY_COL_MIME_WIDTH	19
+#else
+#  define SUMMARY_COL_MARK_WIDTH	21
+#  define SUMMARY_COL_UNREAD_WIDTH	24
+#  define SUMMARY_COL_MIME_WIDTH	17
+#endif
 
 static GdkPixbuf *mark_pixbuf;
 static GdkPixbuf *deleted_pixbuf;
