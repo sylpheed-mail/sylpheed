@@ -163,30 +163,6 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 
 #if GTK_CHECK_VERSION(2, 10, 0)
 
-void trayicon_set_tooltip(const gchar *text)
-{
-	if (text) {
-		default_tooltip = FALSE;
-		gtk_status_icon_set_tooltip(trayicon.status_icon, text);
-	} else if (!default_tooltip) {
-		default_tooltip = TRUE;
-		gtk_status_icon_set_tooltip(trayicon.status_icon,
-					    _("Sylpheed"));
-	}
-}
-
-void trayicon_set_stock_icon(StockPixmap icon)
-{
-	GdkPixbuf *pixbuf;
-	GdkPixbuf *scaled_pixbuf;
-
-	stock_pixbuf_gdk(NULL, icon, &pixbuf);
-	scaled_pixbuf = gdk_pixbuf_scale_simple(pixbuf, 24, 24,
-						GDK_INTERP_HYPER);
-	gtk_status_icon_set_from_pixbuf(trayicon.status_icon, scaled_pixbuf);
-	g_object_unref(scaled_pixbuf);
-}
-
 void trayicon_show(TrayIcon *tray_icon)
 {
 	gtk_status_icon_set_visible(trayicon.status_icon, TRUE);
@@ -199,6 +175,48 @@ void trayicon_destroy(TrayIcon *tray_icon)
 	tray_icon->status_icon = NULL;
 #endif
 	gtk_status_icon_set_visible(tray_icon->status_icon, FALSE);
+}
+
+void trayicon_set_tooltip(const gchar *text)
+{
+	if (text) {
+		default_tooltip = FALSE;
+		gtk_status_icon_set_tooltip(trayicon.status_icon, text);
+	} else if (!default_tooltip) {
+		default_tooltip = TRUE;
+		gtk_status_icon_set_tooltip(trayicon.status_icon,
+					    _("Sylpheed"));
+	}
+}
+
+static guint notify_tag = 0;
+
+gboolean notify_timeout_cb(gpointer data)
+{
+	gtk_status_icon_set_blinking(trayicon.status_icon, FALSE);
+	notify_tag = 0;
+	return FALSE;
+}
+
+void trayicon_set_notify(gboolean enabled)
+{
+	if (enabled && notify_tag == 0) {
+		gtk_status_icon_set_blinking(trayicon.status_icon, enabled);
+		notify_tag = g_timeout_add(5000, notify_timeout_cb, NULL);
+	} else if (!enabled && notify_tag > 0)
+		g_source_remove(notify_tag);
+}
+
+void trayicon_set_stock_icon(StockPixmap icon)
+{
+	GdkPixbuf *pixbuf;
+	GdkPixbuf *scaled_pixbuf;
+
+	stock_pixbuf_gdk(NULL, icon, &pixbuf);
+	scaled_pixbuf = gdk_pixbuf_scale_simple(pixbuf, 24, 24,
+						GDK_INTERP_HYPER);
+	gtk_status_icon_set_from_pixbuf(trayicon.status_icon, scaled_pixbuf);
+	g_object_unref(scaled_pixbuf);
 }
 
 static void trayicon_activated(GtkStatusIcon *status_icon, gpointer data)
@@ -219,6 +237,17 @@ static void trayicon_popup_menu_cb(GtkStatusIcon *status_icon, guint button,
 
 #else
 
+void trayicon_show(TrayIcon *tray_icon)
+{
+	gtk_widget_show(tray_icon->widget);
+};
+
+void trayicon_destroy(TrayIcon *tray_icon)
+{
+	gtk_widget_destroy(tray_icon->widget);
+	tray_icon->widget = NULL;
+}
+
 void trayicon_set_tooltip(const gchar *text)
 {
 	if (text) {
@@ -232,6 +261,10 @@ void trayicon_set_tooltip(const gchar *text)
 	}
 }
 
+void trayicon_set_notify(gboolean enabled)
+{
+}
+
 void trayicon_set_stock_icon(StockPixmap icon)
 {
 	GdkPixbuf *pixbuf;
@@ -242,17 +275,6 @@ void trayicon_set_stock_icon(StockPixmap icon)
 						GDK_INTERP_HYPER);
 	gtk_image_set_from_pixbuf(GTK_IMAGE(trayicon_img), scaled_pixbuf);
 	g_object_unref(scaled_pixbuf);
-}
-
-void trayicon_show(TrayIcon *tray_icon)
-{
-	gtk_widget_show(tray_icon->widget);
-};
-
-void trayicon_destroy(TrayIcon *tray_icon)
-{
-	gtk_widget_destroy(tray_icon->widget);
-	tray_icon->widget = NULL;
 }
 
 static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
@@ -336,19 +358,23 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 	return NULL;
 }
 
-void trayicon_set_tooltip(const gchar *text)
-{
-}
-
-void trayicon_set_stock_icon(StockPixmap icon)
-{
-}
-
 void trayicon_show(TrayIcon *tray_icon)
 {
 }
 
 void trayicon_destroy(TrayIcon *tray_icon)
+{
+}
+
+void trayicon_set_tooltip(const gchar *text)
+{
+}
+
+void trayicon_set_notify(gboolean enabled)
+{
+}
+
+void trayicon_set_stock_icon(StockPixmap icon)
 {
 }
 

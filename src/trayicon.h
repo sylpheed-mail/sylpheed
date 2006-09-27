@@ -43,8 +43,10 @@ struct _TrayIcon
 };
 
 TrayIcon *trayicon_create	(MainWindow	*mainwin);
+void trayicon_show		(TrayIcon	*tray_icon);
 void trayicon_destroy		(TrayIcon	*tray_icon);
 void trayicon_set_tooltip	(const gchar	*text);
+void trayicon_set_notify	(gboolean	 enabled);
 void trayicon_set_stock_icon	(StockPixmap	 icon);
 
 #endif /* __TRAYICON_H__ */
