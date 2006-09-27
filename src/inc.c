@@ -160,8 +160,10 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 		g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"),
 			   new_messages);
 		trayicon_set_tooltip(buf);
+		trayicon_set_notify(TRUE);
 	} else {
 		trayicon_set_tooltip(NULL);
+		trayicon_set_notify(FALSE);
 	}
 
 	if (new_messages <= 0 && !prefs_common.scan_all_after_inc) return;
