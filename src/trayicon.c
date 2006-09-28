@@ -42,6 +42,7 @@
 #include "main.h"
 #include "inc.h"
 #include "compose.h"
+#include "gtkutils.h"
 
 #if GTK_CHECK_VERSION(2, 10, 0) || defined(GDK_WINDOWING_X11)
 
@@ -76,6 +77,8 @@ static void trayicon_destroy_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 
 #endif
+
+static void trayicon_window_present	(GtkWindow	*window);
 
 static void trayicon_present		(GtkWidget	*widget,
 					 gpointer	 data);
@@ -222,10 +225,8 @@ void trayicon_set_stock_icon(StockPixmap icon)
 static void trayicon_activated(GtkStatusIcon *status_icon, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
-	GtkWindow *window = GTK_WINDOW(mainwin->window);
 
-	gtk_window_set_skip_taskbar_hint(window, FALSE);
-	gtk_window_present(window);
+	trayicon_window_present(GTK_WINDOW(mainwin->window));
 }
 
 static void trayicon_popup_menu_cb(GtkStatusIcon *status_icon, guint button,
@@ -281,15 +282,13 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				    gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
-	GtkWindow *window = GTK_WINDOW(mainwin->window);
 
 	if (!event)
 		return;
 
-	if (event->button == 1) {
-		gtk_window_set_skip_taskbar_hint(window, FALSE);
-		gtk_window_present(window);
-	} else if (event->button == 3) {
+	if (event->button == 1)
+		trayicon_window_present(GTK_WINDOW(mainwin->window));
+	else if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(trayicon_menu), NULL, NULL, NULL, NULL,
 			       event->button, event->time);
 	}
@@ -310,13 +309,17 @@ static void trayicon_destroy_cb(GtkWidget *widget, gpointer data)
 
 #endif
 
+static void trayicon_window_present(GtkWindow *window)
+{
+	gtk_window_set_skip_taskbar_hint(window, FALSE);
+	gtk_window_present(window);
+}
+
 static void trayicon_present(GtkWidget *widget, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
-	GtkWindow *window = GTK_WINDOW(mainwin->window);
 
-	gtk_window_set_skip_taskbar_hint(window, FALSE);
-	gtk_window_present(window);
+	trayicon_window_present(GTK_WINDOW(mainwin->window));
 }
 
 static void trayicon_inc(GtkWidget *widget, gpointer data)
