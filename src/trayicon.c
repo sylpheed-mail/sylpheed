@@ -100,7 +100,11 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 #if GTK_CHECK_VERSION(2, 10, 0)
 	GdkPixbuf *pixbuf;
 
+#ifdef G_OS_WIN32
+	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED_SMALL, &pixbuf);
+#else
 	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED, &pixbuf);
+#endif
 	trayicon.status_icon = gtk_status_icon_new_from_pixbuf(pixbuf);
 
 	g_signal_connect(G_OBJECT(trayicon.status_icon), "activate",

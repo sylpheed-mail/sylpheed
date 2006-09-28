@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@
 #include "icons/stock_spam.h"
 #include "icons/stock_hand-signed.h"
 #include "icons/stock_sylpheed.h"
+#include "icons/stock_sylpheed_16.h"
 #include "icons/sylpheed-logo.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
@@ -135,6 +136,7 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24},
 	{NULL, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24},
 	{NULL, NULL, NULL, NULL, stock_sylpheed, sizeof(stock_sylpheed), NULL, 0},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_16, sizeof(stock_sylpheed_16), NULL, 0},
 	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 };
 
