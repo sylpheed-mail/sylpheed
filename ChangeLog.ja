@@ -4,6 +4,12 @@
 
 2006-09-28
 
+	* libsylph/ssl.c: ssl_init_socket_with_method(): SSL_connect() が
+	  SSL_ERROR_WANT_READ または SSL_ERROR_WANT_WRITE で失敗したら
+	  再試行するようにした。
+
+2006-09-28
+
 	* src/trayicon.[ch]: trayicon_hide(): 追加。
 	  src/mainwindow.c: trayicon_destroy() の代わりに trayicon_hide() を
 	  呼ぶようにした。

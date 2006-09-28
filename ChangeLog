@@ -4,6 +4,11 @@
 
 2006-09-28
 
+	* libsylph/ssl.c: ssl_init_socket_with_method(): retry SSL_connect()
+	  if it fails with SSL_ERROR_WANT_READ or SSL_ERROR_WANT_WRITE.
+
+2006-09-28
+
 	* src/trayicon.[ch]: trayicon_hide(): added.
 	* src/mainwindow.c: call trayicon_hide() instead of trayicon_destroy().
 	* src/main.c: app_will_exit(): call trayicon_destroy().

@@ -93,7 +93,7 @@ gboolean ssl_init_socket(SockInfo *sockinfo)
 gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 {
 	X509 *server_cert;
-	gint ret;
+	gint err, ret;
 
 	switch (method) {
 	case SSL_METHOD_SSLv23:
@@ -122,9 +122,15 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 	}
 
 	SSL_set_fd(sockinfo->ssl, sockinfo->sock);
-	if ((ret = SSL_connect(sockinfo->ssl)) == -1) {
-		g_warning(_("SSL connect failed (%s)\n"),
-			  ERR_error_string(ERR_get_error(), NULL));
+	while ((ret = SSL_connect(sockinfo->ssl)) != 1) {
+		err = SSL_get_error(sockinfo->ssl, ret);
+		if (err == SSL_ERROR_WANT_READ || err == SSL_ERROR_WANT_WRITE) {
+			g_usleep(100000);
+			g_warning("SSL_connect(): try again\n");
+			continue;
+		}
+		g_warning("SSL_connect() failed with error %d, ret = %d (%s)\n",
+			  err, ret, ERR_error_string(ERR_get_error(), NULL));
 		return FALSE;
 	}
 
