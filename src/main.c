@@ -79,6 +79,7 @@
 #include "gtkutils.h"
 #include "socket.h"
 #include "stock_pixmap.h"
+#include "trayicon.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -653,6 +654,8 @@ void app_will_exit(gboolean force)
 		    ac->folder)
 			procmsg_remove_all_cached_messages(FOLDER(ac->folder));
 	}
+
+	trayicon_destroy(mainwin->tray_icon);
 
 	/* save all state before exiting */
 	folder_write_list();

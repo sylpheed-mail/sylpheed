@@ -1,5 +1,12 @@
 2006-09-28
 
+	* src/trayicon.[ch]: trayicon_hide(): 追加。
+	  src/mainwindow.c: trayicon_destroy() の代わりに trayicon_hide() を
+	  呼ぶようにした。
+	* src/main.c: app_will_exit(): trayicon_destroy() を呼ぶようにした。
+
+2006-09-28
+
 	* src/trayicon.c: Windows のシステムトレイに16x16のアイコンを使用。
 	* src/icons/stock_sylpheed_16.png
 	  src/icons/Makefile.am

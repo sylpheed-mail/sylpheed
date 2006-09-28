@@ -44,6 +44,7 @@ struct _TrayIcon
 
 TrayIcon *trayicon_create	(MainWindow	*mainwin);
 void trayicon_show		(TrayIcon	*tray_icon);
+void trayicon_hide		(TrayIcon	*tray_icon);
 void trayicon_destroy		(TrayIcon	*tray_icon);
 void trayicon_set_tooltip	(const gchar	*text);
 void trayicon_set_notify	(gboolean	 enabled);

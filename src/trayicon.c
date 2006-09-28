@@ -172,16 +172,18 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 
 void trayicon_show(TrayIcon *tray_icon)
 {
-	gtk_status_icon_set_visible(trayicon.status_icon, TRUE);
+	gtk_status_icon_set_visible(tray_icon->status_icon, TRUE);
 };
+
+void trayicon_hide(TrayIcon *tray_icon)
+{
+	gtk_status_icon_set_visible(tray_icon->status_icon, FALSE);
+}
 
 void trayicon_destroy(TrayIcon *tray_icon)
 {
-#if 0
 	g_object_unref(tray_icon->status_icon);
 	tray_icon->status_icon = NULL;
-#endif
-	gtk_status_icon_set_visible(tray_icon->status_icon, FALSE);
 }
 
 void trayicon_set_tooltip(const gchar *text)
@@ -247,8 +249,17 @@ void trayicon_show(TrayIcon *tray_icon)
 	gtk_widget_show(tray_icon->widget);
 };
 
+void trayicon_hide(TrayIcon *tray_icon)
+{
+	gtk_widget_destroy(tray_icon->widget);
+	tray_icon->widget = NULL;
+}
+
 void trayicon_destroy(TrayIcon *tray_icon)
 {
+	g_signal_handlers_disconnect_by_func(G_OBJECT(trayicon->widget),
+					     G_CALLBACK(trayicon_destroy_cb),
+					     mainwin);
 	gtk_widget_destroy(tray_icon->widget);
 	tray_icon->widget = NULL;
 }
@@ -366,6 +377,10 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 }
 
 void trayicon_show(TrayIcon *tray_icon)
+{
+}
+
+void trayicon_hide(TrayIcon *tray_icon)
 {
 }
 

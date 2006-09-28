@@ -1,5 +1,11 @@
 2006-09-28
 
+	* src/trayicon.[ch]: trayicon_hide(): added.
+	* src/mainwindow.c: call trayicon_hide() instead of trayicon_destroy().
+	* src/main.c: app_will_exit(): call trayicon_destroy().
+
+2006-09-28
+
 	* src/trayicon.c: use 16x16 icon for Windows system tray.
 	* src/icons/stock_sylpheed_16.png
 	  src/icons/Makefile.am

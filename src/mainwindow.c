@@ -1224,8 +1224,8 @@ void main_window_reflect_prefs_all(void)
 		if (prefs_common.show_trayicon)
 			trayicon_show(mainwin->tray_icon);
 		else {
-			/* trayicon is automatically restored after this */
-			trayicon_destroy(mainwin->tray_icon);
+			/* trayicon is automatically replaced by new one */
+			trayicon_hide(mainwin->tray_icon);
 		}
 	}
 
