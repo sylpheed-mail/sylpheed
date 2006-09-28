@@ -5,11 +5,23 @@ Changes of Sylpheed
     * GtkStatusIcon is used for the tray icon if available.
     * When GtkStatusIcon is used, the tray icon blinks for 5 seconds when new
       mails arrive.
-    * The left click on the tray icon now only brings the main window in front.
     * The option 'Minimize to tray icon' was added.
+    * The left click on the tray icon now only brings the main window in front.
     * Win32: The tray icon was implemented.
+    * Win32: The SSL connection problem was fixed.
     * Win32: The included libraries (GLib, GTK+, Pango) were updated to the
-      latest version. Many issues were fixed by that.
+      latest version. This introduces the following improvements:
+      - The performance of network communication at receiving and sending
+        was improved.
+      - The appearance of the UI became more native-like.
+      - The scrolling speed of the summary view with cursor keys was improved.
+      - The broken display of the text view when it was partially hidden was
+        fixed.
+      - The position of color labels menu in the search dialog is correct now.
+      - The problem that GTK+ strings became untranslated after the popup of
+        context menu on GtkTextView was fixed.
+      - The crash that occurred on startup if a font with non-ascii name was
+        specified for system font was fixed.
 
 * 2.2.9 (stable)
 
