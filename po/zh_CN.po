@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-28 11:42+0900\n"
+"POT-Creation-Date: 2006-09-28 15:17+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -314,7 +314,7 @@ msgstr "源文件夹与目的文件夹是同一个。\n"
 msgid "Copying message %s%c%d to %s ...\n"
 msgstr "正在复制邮件 %s%c%d 到 %s ...\n"
 
-#: libsylph/mh.c:965 libsylph/mh.c:978 src/main.c:147
+#: libsylph/mh.c:965 libsylph/mh.c:978 src/main.c:148
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -573,27 +573,22 @@ msgstr "不知道的SSL方法 *程序错误*\n"
 msgid "Error creating ssl context\n"
 msgstr "创建SSL上下文时发生错误\n"
 
-#: libsylph/ssl.c:126
-#, c-format
-msgid "SSL connect failed (%s)\n"
-msgstr "SSL连接失败(%s)\n"
-
 #. Get the cipher
-#: libsylph/ssl.c:133
+#: libsylph/ssl.c:139
 #, c-format
 msgid "SSL connection using %s\n"
 msgstr "使用 %s 的SSL连接\n"
 
-#: libsylph/ssl.c:142
+#: libsylph/ssl.c:148
 msgid "Server certificate:\n"
 msgstr "服务器证书：\n"
 
-#: libsylph/ssl.c:145
+#: libsylph/ssl.c:151
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  标题：%s\n"
 
-#: libsylph/ssl.c:150
+#: libsylph/ssl.c:156
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  签发者：%s\n"
@@ -1173,11 +1168,11 @@ msgstr "公用地址"
 msgid "Personal address"
 msgstr "个人地址"
 
-#: src/alertpanel.c:142 src/compose.c:5605 src/main.c:622
+#: src/alertpanel.c:142 src/compose.c:5605 src/main.c:623
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:155 src/main.c:733
+#: src/alertpanel.c:155 src/main.c:736
 msgid "Warning"
 msgstr "警告"
 
@@ -2819,20 +2814,20 @@ msgstr "输入密码"
 msgid "Protocol log"
 msgstr "协议记录"
 
-#: src/main.c:194
+#: src/main.c:195
 msgid "g_thread is not supported by glib.\n"
 msgstr "glib 不支持 g_thread。\n"
 
-#: src/main.c:403
+#: src/main.c:404
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "用法：%s [OPTION]...\n"
 
-#: src/main.c:406
+#: src/main.c:407
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    打开撰写窗口"
 
-#: src/main.c:407
+#: src/main.c:408
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2841,23 +2836,23 @@ msgstr ""
 "  --attach 文件1 [文件2]...\n"
 "                         打开撰写窗口并添加指定的附件"
 
-#: src/main.c:410
+#: src/main.c:411
 msgid "  --receive              receive new messages"
 msgstr "  --receive              接收新邮件"
 
-#: src/main.c:411
+#: src/main.c:412
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          接收所有帐号的新邮件"
 
-#: src/main.c:412
+#: src/main.c:413
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 发送队列中的邮件"
 
-#: src/main.c:413
+#: src/main.c:414
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [文件夹]...   显示邮件总数"
 
-#: src/main.c:414
+#: src/main.c:415
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2865,41 +2860,41 @@ msgstr ""
 "  --status-full [文件夹]...\n"
 "                         显示每个文件夹的状态"
 
-#: src/main.c:416
+#: src/main.c:417
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:417
+#: src/main.c:418
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                调试模式"
 
-#: src/main.c:418
+#: src/main.c:419
 msgid "  --debug                debug mode"
 msgstr "  --debug                调试模式"
 
-#: src/main.c:419
+#: src/main.c:420
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 显示该帮助并退出"
 
-#: src/main.c:420
+#: src/main.c:421
 msgid "  --version              output version information and exit"
 msgstr "  --version              输出版本信息并退出"
 
-#: src/main.c:424
+#: src/main.c:425
 #, fuzzy
 msgid "Press any key..."
 msgstr ""
 "或按下“y”键。\n"
 "\n"
 
-#: src/main.c:566
+#: src/main.c:567
 #, fuzzy
 msgid "Filename encoding"
 msgstr "发送时使用的字符编码"
 
-#: src/main.c:567
+#: src/main.c:568
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2913,19 +2908,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:623
+#: src/main.c:624
 msgid "Composing message exists. Really quit?"
 msgstr "正在撰写邮件。真的要退出吗？"
 
-#: src/main.c:634
+#: src/main.c:635
 msgid "Queued messages"
 msgstr "队列中的邮件"
 
-#: src/main.c:635
+#: src/main.c:636
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "一些未发送的信件被放入队列。现在退出吗？"
 
-#: src/main.c:734
+#: src/main.c:737
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2934,15 +2929,15 @@ msgstr ""
 "已禁用 OpenPGP 支持。"
 
 #. remote command mode
-#: src/main.c:897
+#: src/main.c:900
 msgid "another Sylpheed is already running.\n"
 msgstr "另外一个 Sylpheed 正在运行。\n"
 
-#: src/main.c:1133
+#: src/main.c:1136
 msgid "Migration of configuration"
 msgstr "正在迁移配置"
 
-#: src/main.c:1134
+#: src/main.c:1137
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6705,10 +6700,13 @@ msgstr "发送队列中的邮件"
 msgid "E_xit"
 msgstr "退出"
 
-#: src/trayicon.c:195 src/trayicon.c:265
+#: src/trayicon.c:197 src/trayicon.c:276
 #, fuzzy
 msgid "Sylpheed"
 msgstr "旧式的Sylpheed"
+
+#~ msgid "SSL connect failed (%s)\n"
+#~ msgstr "SSL连接失败(%s)\n"
 
 #, fuzzy
 #~ msgid "_About"

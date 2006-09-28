@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-28 11:42+0900\n"
+"POT-Creation-Date: 2006-09-28 15:17+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -310,7 +310,7 @@ msgstr "移動元フォルダが移動先と同一です。\n"
 msgid "Copying message %s%c%d to %s ...\n"
 msgstr "メッセージ %s%c%d を %s にコピーしています...\n"
 
-#: libsylph/mh.c:965 libsylph/mh.c:978 src/main.c:147
+#: libsylph/mh.c:965 libsylph/mh.c:978 src/main.c:148
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -574,27 +574,22 @@ msgstr "未知の SSL メソッド *PROGRAM BUG*\n"
 msgid "Error creating ssl context\n"
 msgstr "ssl コンテキスト生成中にエラー発生\n"
 
-#: libsylph/ssl.c:126
-#, c-format
-msgid "SSL connect failed (%s)\n"
-msgstr "SSL の接続に失敗しました (%s)\n"
-
 #. Get the cipher
-#: libsylph/ssl.c:133
+#: libsylph/ssl.c:139
 #, c-format
 msgid "SSL connection using %s\n"
 msgstr "%s を用いて SSL 接続\n"
 
-#: libsylph/ssl.c:142
+#: libsylph/ssl.c:148
 msgid "Server certificate:\n"
 msgstr "サーバ証明書:\n"
 
-#: libsylph/ssl.c:145
+#: libsylph/ssl.c:151
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  Subject: %s\n"
 
-#: libsylph/ssl.c:150
+#: libsylph/ssl.c:156
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
@@ -1181,11 +1176,11 @@ msgstr "共有アドレス"
 msgid "Personal address"
 msgstr "個人用アドレス"
 
-#: src/alertpanel.c:142 src/compose.c:5605 src/main.c:622
+#: src/alertpanel.c:142 src/compose.c:5605 src/main.c:623
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:155 src/main.c:733
+#: src/alertpanel.c:155 src/main.c:736
 msgid "Warning"
 msgstr "警告"
 
@@ -2814,20 +2809,20 @@ msgstr "パスワードの入力"
 msgid "Protocol log"
 msgstr "プロトコルログ"
 
-#: src/main.c:194
+#: src/main.c:195
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread は glib によってサポートされていません。\n"
 
-#: src/main.c:403
+#: src/main.c:404
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "使用法: %s [オプション]...\n"
 
-#: src/main.c:406
+#: src/main.c:407
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    メッセージ作成ウィンドウを開く"
 
-#: src/main.c:407
+#: src/main.c:408
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2837,23 +2832,23 @@ msgstr ""
 "                         指定したファイルを添付してメッセージ作成\n"
 "                         ウィンドウを開く"
 
-#: src/main.c:410
+#: src/main.c:411
 msgid "  --receive              receive new messages"
 msgstr "  --receive              新着メッセージを受信する"
 
-#: src/main.c:411
+#: src/main.c:412
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          全アカウントの新着メッセージを受信する"
 
-#: src/main.c:412
+#: src/main.c:413
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送信待機中のメッセージをすべて送信する"
 
-#: src/main.c:413
+#: src/main.c:414
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [folder]...   メッセージの総数を表示する"
 
-#: src/main.c:414
+#: src/main.c:415
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2861,36 +2856,36 @@ msgstr ""
 "  --status-full [folder]...\n"
 "                         各フォルダの状態を表示する"
 
-#: src/main.c:416
+#: src/main.c:417
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr "  --configdir dirname    設定ファイルを格納するディレクトリを指定する"
 
-#: src/main.c:417
+#: src/main.c:418
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 Sylpheed を終了する"
 
-#: src/main.c:418
+#: src/main.c:419
 msgid "  --debug                debug mode"
 msgstr "  --debug                デバッグモード"
 
-#: src/main.c:419
+#: src/main.c:420
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 このヘルプを表示して終了する"
 
-#: src/main.c:420
+#: src/main.c:421
 msgid "  --version              output version information and exit"
 msgstr "  --version              バージョン情報を出力して終了する"
 
-#: src/main.c:424
+#: src/main.c:425
 msgid "Press any key..."
 msgstr "何かキーを押してください..."
 
-#: src/main.c:566
+#: src/main.c:567
 msgid "Filename encoding"
 msgstr "ファイル名エンコーディング"
 
-#: src/main.c:567
+#: src/main.c:568
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2913,19 +2908,19 @@ msgstr ""
 "\n"
 "続行しますか?"
 
-#: src/main.c:623
+#: src/main.c:624
 msgid "Composing message exists. Really quit?"
 msgstr "作成中のメッセージが存在します。本当に終了しますか?"
 
-#: src/main.c:634
+#: src/main.c:635
 msgid "Queued messages"
 msgstr "送信待機中のメッセージ"
 
-#: src/main.c:635
+#: src/main.c:636
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "送信待機中の未送信メッセージがあります。終了しますか?"
 
-#: src/main.c:734
+#: src/main.c:737
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2934,15 +2929,15 @@ msgstr ""
 "OpenPGP サポートは無効です。"
 
 #. remote command mode
-#: src/main.c:897
+#: src/main.c:900
 msgid "another Sylpheed is already running.\n"
 msgstr "別の Sylpheed がすでに起動しています。\n"
 
-#: src/main.c:1133
+#: src/main.c:1136
 msgid "Migration of configuration"
 msgstr "設定の移行"
 
-#: src/main.c:1134
+#: src/main.c:1137
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6657,6 +6652,6 @@ msgstr "送信待機中のメッセージを送信(_S)"
 msgid "E_xit"
 msgstr "終了(_X)"
 
-#: src/trayicon.c:195 src/trayicon.c:265
+#: src/trayicon.c:197 src/trayicon.c:276
 msgid "Sylpheed"
 msgstr "Sylpheed"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-28 11:42+0900\n"
+"POT-Creation-Date: 2006-09-28 15:17+0900\n"
 "PO-Revision-Date: 2003-05-30 13:31GMT+0100\n"
 "Last-Translator: Radek Vybíral <Radek.Vybiral@vsb.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -315,7 +315,7 @@ msgstr "zdrojová složka je stejná jako cílová.\n"
 msgid "Copying message %s%c%d to %s ...\n"
 msgstr "Kopíruji zprávu %s%c%d do %s...\n"
 
-#: libsylph/mh.c:965 libsylph/mh.c:978 src/main.c:147
+#: libsylph/mh.c:965 libsylph/mh.c:978 src/main.c:148
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -575,27 +575,22 @@ msgstr "Neznámá SSL metoda *PROGRAM BUG*\n"
 msgid "Error creating ssl context\n"
 msgstr "Chyba při vytváření ssl kontextu\n"
 
-#: libsylph/ssl.c:126
-#, c-format
-msgid "SSL connect failed (%s)\n"
-msgstr "SSL spojení selhalo (%s)\n"
-
 #. Get the cipher
-#: libsylph/ssl.c:133
+#: libsylph/ssl.c:139
 #, c-format
 msgid "SSL connection using %s\n"
 msgstr "SSL spojení používá %s\n"
 
-#: libsylph/ssl.c:142
+#: libsylph/ssl.c:148
 msgid "Server certificate:\n"
 msgstr "Certifikát serveru:\n"
 
-#: libsylph/ssl.c:145
+#: libsylph/ssl.c:151
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  Předmět: %s\n"
 
-#: libsylph/ssl.c:150
+#: libsylph/ssl.c:156
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  Vydavatel: %s\n"
@@ -1185,11 +1180,11 @@ msgstr "Společná adresa"
 msgid "Personal address"
 msgstr "Osobní adresa"
 
-#: src/alertpanel.c:142 src/compose.c:5605 src/main.c:622
+#: src/alertpanel.c:142 src/compose.c:5605 src/main.c:623
 msgid "Notice"
 msgstr "Poznámka"
 
-#: src/alertpanel.c:155 src/main.c:733
+#: src/alertpanel.c:155 src/main.c:736
 msgid "Warning"
 msgstr "Varování"
 
@@ -2869,20 +2864,20 @@ msgstr "Zadejte heslo"
 msgid "Protocol log"
 msgstr "Záznamový protokol"
 
-#: src/main.c:194
+#: src/main.c:195
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread není v glib podporován.\n"
 
-#: src/main.c:403
+#: src/main.c:404
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Použití: %s [VOLBY]...\n"
 
-#: src/main.c:406
+#: src/main.c:407
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresa]     otevře okno pro psaní nové zprávy"
 
-#: src/main.c:407
+#: src/main.c:408
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2892,65 +2887,65 @@ msgstr ""
 "                           otevře okno pro psaní zprávy s připojeným\n"
 "                           souborem(y)"
 
-#: src/main.c:410
+#: src/main.c:411
 msgid "  --receive              receive new messages"
 msgstr "  --receive             načte nové zprávy"
 
-#: src/main.c:411
+#: src/main.c:412
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          načte všechny nové zprávy ze všech účtů"
 
-#: src/main.c:412
+#: src/main.c:413
 msgid "  --send                 send all queued messages"
 msgstr "  --send              pošle všechny pozdržené zprávy"
 
-#: src/main.c:413
+#: src/main.c:414
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status             vypíše celkový počet zpráv"
 
-#: src/main.c:414
+#: src/main.c:415
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status             vypíše celkový počet zpráv"
 
-#: src/main.c:416
+#: src/main.c:417
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:417
+#: src/main.c:418
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug              režim trasování"
 
-#: src/main.c:418
+#: src/main.c:419
 msgid "  --debug                debug mode"
 msgstr "  --debug              režim trasování"
 
-#: src/main.c:419
+#: src/main.c:420
 msgid "  --help                 display this help and exit"
 msgstr "  --help            vypíše tento text a skončí"
 
-#: src/main.c:420
+#: src/main.c:421
 msgid "  --version              output version information and exit"
 msgstr "  --version             vypíše informace o verzi a skončí"
 
-#: src/main.c:424
+#: src/main.c:425
 #, fuzzy
 msgid "Press any key..."
 msgstr ""
 "nebo stiskněte klávesu 'y'.\n"
 "\n"
 
-#: src/main.c:566
+#: src/main.c:567
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Výstupní znaková sada"
 
-#: src/main.c:567
+#: src/main.c:568
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2964,19 +2959,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:623
+#: src/main.c:624
 msgid "Composing message exists. Really quit?"
 msgstr "Právě se vytváří zpráva. Opravdu skončit?"
 
-#: src/main.c:634
+#: src/main.c:635
 msgid "Queued messages"
 msgstr "Pozdržené zprávy"
 
-#: src/main.c:635
+#: src/main.c:636
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Ve frontě jsou neodeslaně zprávy. Skončit nyní?"
 
-#: src/main.c:734
+#: src/main.c:737
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2985,16 +2980,16 @@ msgstr ""
 "Podpora pro OpenPGP je zakázána."
 
 #. remote command mode
-#: src/main.c:897
+#: src/main.c:900
 msgid "another Sylpheed is already running.\n"
 msgstr "aplikace Sylpheed je již spuštěna.\n"
 
-#: src/main.c:1133
+#: src/main.c:1136
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Nastavení akcí"
 
-#: src/main.c:1134
+#: src/main.c:1137
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6833,10 +6828,13 @@ msgstr "Odešle pozdrženou zprávu(y)"
 msgid "E_xit"
 msgstr "Ukončení programu"
 
-#: src/trayicon.c:195 src/trayicon.c:265
+#: src/trayicon.c:197 src/trayicon.c:276
 #, fuzzy
 msgid "Sylpheed"
 msgstr "Starý Sylpheed"
+
+#~ msgid "SSL connect failed (%s)\n"
+#~ msgstr "SSL spojení selhalo (%s)\n"
 
 #, fuzzy
 #~ msgid "_About"
