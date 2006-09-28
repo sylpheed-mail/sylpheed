@@ -257,9 +257,9 @@ void trayicon_hide(TrayIcon *tray_icon)
 
 void trayicon_destroy(TrayIcon *tray_icon)
 {
-	g_signal_handlers_disconnect_by_func(G_OBJECT(trayicon->widget),
+	g_signal_handlers_disconnect_by_func(G_OBJECT(tray_icon->widget),
 					     G_CALLBACK(trayicon_destroy_cb),
-					     mainwin);
+					     main_window_get());
 	gtk_widget_destroy(tray_icon->widget);
 	tray_icon->widget = NULL;
 }
