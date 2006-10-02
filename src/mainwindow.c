@@ -1560,7 +1560,7 @@ void main_window_get_position(MainWindow *mainwin)
 	gint x, y;
 	GtkWidget *window;
 
-	if (prefs_common.mainwin_maximized)
+	if (prefs_common.mainwin_maximized || mainwin->window_hidden)
 		return;
 
 	gtkut_widget_get_uposition(mainwin->window, &x, &y);
