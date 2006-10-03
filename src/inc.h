@@ -74,6 +74,7 @@ struct _IncSession
 	GHashTable *tmp_folder_table;	/* for progressive update */
 
 	gint64 cur_total_bytes;
+	gint new_msgs;
 
 	gpointer data;
 };

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -629,10 +629,12 @@ static Pop3State pop3_lookup_next(Pop3Session *session)
 			return POP3_DELETE;
 		}
 
-		if (size_limit_over)
+		if (size_limit_over && !msg->received) {
 			log_print
 				(_("POP3: Skipping message %d (%d bytes)\n"),
 				  session->cur_msg, size);
+			session->skipped_num++;
+		}
 
 		if (size == 0 || msg->received || size_limit_over) {
 			session->cur_total_bytes += size;

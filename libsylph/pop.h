@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -121,6 +121,7 @@ struct _Pop3Session
 	gint cur_total_num;
 	gint64 cur_total_bytes;
 	gint64 cur_total_recv_bytes;
+	gint skipped_num;
 
 	Pop3MsgInfo *msg;
 

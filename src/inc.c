@@ -462,8 +462,13 @@ static IncSession *inc_session_new(PrefsAccount *account)
 	session_set_recv_data_notify(session->session,
 				     inc_recv_data_finished, session);
 
+	session->inc_state = INC_SUCCESS;
+
 	session->folder_table = g_hash_table_new(NULL, NULL);
 	session->tmp_folder_table = g_hash_table_new(NULL, NULL);
+
+	session->cur_total_bytes = 0;
+	session->new_msgs = 0;
 
 	return session;
 }
@@ -597,7 +602,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 			break;
 		}
 
-		new_msgs += pop3_session->cur_total_num;
+		new_msgs += session->new_msgs;
 
 		if (!prefs_common.scan_all_after_inc) {
 			folder_item_scan_foreach(session->folder_table);
@@ -1098,8 +1103,11 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		val = DROP_DONT_RECEIVE;
 	else if (fltinfo->actions[FLT_ACTION_DELETE] == TRUE)
 		val = DROP_DELETE;
-	else
+	else {
 		val = DROP_OK;
+		if (fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
+			inc_session->new_msgs++;
+	}
 
 	filter_info_free(fltinfo);
 
