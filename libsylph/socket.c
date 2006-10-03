@@ -1177,6 +1177,22 @@ gint sock_printf(SockInfo *sock, const gchar *format, ...)
 	return sock_write_all(sock, buf, strlen(buf));
 }
 
+#ifdef G_OS_WIN32
+static void sock_set_errno_from_last_error(void)
+{
+	gint err;
+
+	errno = 0;
+	switch ((err = WSAGetLastError())) {
+	case WSAEWOULDBLOCK:
+		errno = EAGAIN;
+		break;
+	default:
+		break;
+	}
+}
+#endif
+
 gint sock_read(SockInfo *sock, gchar *buf, gint len)
 {
 	g_return_val_if_fail(sock != NULL, -1);
@@ -1190,12 +1206,12 @@ gint sock_read(SockInfo *sock, gchar *buf, gint len)
 
 gint fd_read(gint fd, gchar *buf, gint len)
 {
+#ifdef G_OS_WIN32
+	return fd_recv(fd, buf, len, 0);
+#else
 	if (fd_check_io(fd, G_IO_IN) < 0)
 		return -1;
 
-#ifdef G_OS_WIN32
-	return recv(fd, buf, len, 0);
-#else
 	return read(fd, buf, len);
 #endif
 }
@@ -1243,11 +1259,19 @@ gint sock_write(SockInfo *sock, const gchar *buf, gint len)
 
 gint fd_write(gint fd, const gchar *buf, gint len)
 {
+#ifdef G_OS_WIN32
+	gint ret;
+#endif
 	if (fd_check_io(fd, G_IO_OUT) < 0)
 		return -1;
 
 #ifdef G_OS_WIN32
-	return send(fd, buf, len, 0);
+	ret = send(fd, buf, len, 0);
+	if (ret == SOCKET_ERROR) {
+		g_warning("fd_write() failed: %ld\n", WSAGetLastError());
+		sock_set_errno_from_last_error();
+	}
+	return ret;
 #else
 	return write(fd, buf, len);
 #endif
@@ -1320,10 +1344,22 @@ gint ssl_write_all(SSL *ssl, const gchar *buf, gint len)
 
 gint fd_recv(gint fd, gchar *buf, gint len, gint flags)
 {
+#ifdef G_OS_WIN32
+	gint ret;
+#endif
 	if (fd_check_io(fd, G_IO_IN) < 0)
 		return -1;
 
+#ifdef G_OS_WIN32
+	ret = recv(fd, buf, len, flags);
+	if (ret == SOCKET_ERROR) {
+		g_warning("fd_recv() failed: %ld\n", WSAGetLastError());
+		sock_set_errno_from_last_error();
+	}
+	return ret;
+#else
 	return recv(fd, buf, len, flags);
+#endif
 }
 
 gint fd_gets(gint fd, gchar *buf, gint len)

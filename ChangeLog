@@ -1,5 +1,10 @@
 2006-10-03
 
+	* libsylph/socket.c: win32: fd_read(), fd_write(): if recv() or send()
+	  fail with WSAEWOULDBLOCK, set errno to EAGAIN.
+
+2006-10-03
+
 	* src/inc.[ch]: exclude messages marked as read when counting new
 	  messages.
 	* libsylph/pop.[ch]: count messages skipped by size limit.

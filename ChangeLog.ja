@@ -1,5 +1,11 @@
 2006-10-03
 
+	* libsylph/socket.c: win32: fd_read(), fd_write(): recv() あるいは
+	  send() が WSAEWOULDBLOCK で失敗する場合は errno を EAGAIN に設定
+	  するようにした。
+
+2006-10-03
+
 	* src/inc.[ch]: 新着メッセージをカウントするときは既読になった
 	  メッセージを除外するようにした。
 	* libsylph/pop.[ch]: サイズ制限によりスキップされたメッセージ数を
