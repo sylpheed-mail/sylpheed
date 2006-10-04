@@ -1045,6 +1045,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	FilterInfo *fltinfo;
 	IncSession *inc_session = (IncSession *)(SESSION(session)->data);
 	gint val;
+	gboolean is_junk = FALSE;
 
 	g_return_val_if_fail(inc_session != NULL, DROP_ERROR);
 
@@ -1065,8 +1066,11 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 
 	if (prefs_common.enable_junk &&
 	    prefs_common.filter_junk_on_recv &&
-	    prefs_common.filter_junk_before)
+	    prefs_common.filter_junk_before) {
 		filter_apply(prefs_common.junk_fltlist, file, fltinfo);
+		if (fltinfo->drop_done)
+			is_junk = TRUE;
+	}
 
 	if (!fltinfo->drop_done && session->ac_prefs->filter_on_recv)
 		filter_apply(prefs_common.fltlist, file, fltinfo);
@@ -1074,8 +1078,11 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	if (!fltinfo->drop_done) {
 		if (prefs_common.enable_junk &&
 		    prefs_common.filter_junk_on_recv &&
-		    !prefs_common.filter_junk_before)
+		    !prefs_common.filter_junk_before) {
 			filter_apply(prefs_common.junk_fltlist, file, fltinfo);
+			if (fltinfo->drop_done)
+				is_junk = TRUE;
+		}
 	}
 
 	if (!fltinfo->drop_done) {
@@ -1105,7 +1112,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		val = DROP_DELETE;
 	else {
 		val = DROP_OK;
-		if (fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
+		if (!is_junk && fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
 			inc_session->new_msgs++;
 	}
 
