@@ -347,7 +347,19 @@ gint fd_accept(gint sock)
 
 static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 {
-#ifdef G_OS_UNIX
+#ifdef G_OS_WIN32
+	gulong val = nonblock ? 1 : 0;
+
+	if (!nonblock)
+		WSAEventSelect(fd, NULL, 0);
+	if (ioctlsocket(fd, FIONBIO, &val) == SOCKET_ERROR) {
+		g_warning("set_nonblocking_mode(): ioctlsocket() failed: %ld\n", WSAGetLastError());
+		return -1;
+	}
+	debug_print("set nonblocking mode to %d\n", nonblock);
+
+	return 0;
+#else
 	gint flags;
 
 	flags = fcntl(fd, F_GETFL, 0);
@@ -362,16 +374,20 @@ static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 		flags &= ~O_NONBLOCK;
 
 	return fcntl(fd, F_SETFL, flags);
-#else
-	return -1;
 #endif
 }
 
 gint sock_set_nonblocking_mode(SockInfo *sock, gboolean nonblock)
 {
+	gint ret;
+
 	g_return_val_if_fail(sock != NULL, -1);
 
-	return set_nonblocking_mode(sock->sock, nonblock);
+	ret = set_nonblocking_mode(sock->sock, nonblock);
+	if (ret == 0)
+		sock->nonblock = nonblock;
+
+	return ret;
 }
 
 static gboolean is_nonblocking_mode(gint fd)
@@ -395,7 +411,11 @@ gboolean sock_is_nonblocking_mode(SockInfo *sock)
 {
 	g_return_val_if_fail(sock != NULL, FALSE);
 
+#ifdef G_OS_WIN32
+	return sock->nonblock;
+#else
 	return is_nonblocking_mode(sock->sock);
+#endif
 }
 
 gboolean sock_has_read_data(SockInfo *sock)
@@ -748,6 +768,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	sockinfo->hostname = g_strdup(hostname);
 	sockinfo->port = port;
 	sockinfo->state = CONN_ESTABLISHED;
+	sockinfo->nonblock = FALSE;
 
 	g_usleep(100000);
 
@@ -805,6 +826,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	sockinfo->hostname = g_strdup(conn_data->hostname);
 	sockinfo->port = conn_data->port;
 	sockinfo->state = CONN_ESTABLISHED;
+	sockinfo->nonblock = TRUE;
 
 	conn_data->func(sockinfo, conn_data->data);
 

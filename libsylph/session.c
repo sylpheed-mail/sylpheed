@@ -173,9 +173,9 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 	}
 #endif
 
-	sock_set_nonblocking_mode(sock, session->nonblocking);
-
 	debug_print("session (%p): connected\n", session);
+
+	sock_set_nonblocking_mode(sock, session->nonblocking);
 
 	session->state = SESSION_RECV;
 	session->io_tag = sock_add_watch(session->sock, G_IO_IN,
@@ -353,8 +353,7 @@ gint session_start_tls(Session *session)
 
 	nb_mode = sock_is_nonblocking_mode(session->sock);
 
-	if (nb_mode)
-		sock_set_nonblocking_mode(session->sock, FALSE);
+	sock_set_nonblocking_mode(session->sock, FALSE);
 
 	if (!ssl_init_socket_with_method(session->sock, SSL_METHOD_TLSv1)) {
 		g_warning("can't start TLS session.\n");
@@ -363,8 +362,7 @@ gint session_start_tls(Session *session)
 		return -1;
 	}
 
-	if (nb_mode)
-		sock_set_nonblocking_mode(session->sock, session->nonblocking);
+	sock_set_nonblocking_mode(session->sock, session->nonblocking);
 
 	return 0;
 }

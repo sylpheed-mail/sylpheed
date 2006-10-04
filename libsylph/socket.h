@@ -61,6 +61,7 @@ struct _SockInfo
 	gchar *hostname;
 	gushort port;
 	ConnectionState state;
+	gboolean nonblock;
 	gpointer data;
 
 	SockFunc callback;
