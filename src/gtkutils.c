@@ -878,6 +878,7 @@ void gtkut_window_popup(GtkWidget *window)
 	if (new_x != x || new_y != y)
 		gdk_window_move(window->window, new_x, new_y);
 
+	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), FALSE);
 	gtk_window_present(GTK_WINDOW(window));
 }
 

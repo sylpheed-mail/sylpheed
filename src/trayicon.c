@@ -78,8 +78,6 @@ static void trayicon_destroy_cb		(GtkWidget	*widget,
 
 #endif
 
-static void trayicon_window_present	(GtkWindow	*window);
-
 static void trayicon_present		(GtkWidget	*widget,
 					 gpointer	 data);
 static void trayicon_inc		(GtkWidget	*widget,
@@ -232,7 +230,7 @@ static void trayicon_activated(GtkStatusIcon *status_icon, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
-	trayicon_window_present(GTK_WINDOW(mainwin->window));
+	main_window_popup(mainwin);
 }
 
 static void trayicon_popup_menu_cb(GtkStatusIcon *status_icon, guint button,
@@ -302,7 +300,7 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		return;
 
 	if (event->button == 1)
-		trayicon_window_present(GTK_WINDOW(mainwin->window));
+		main_window_popup(mainwin);
 	else if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(trayicon_menu), NULL, NULL, NULL, NULL,
 			       event->button, event->time);
@@ -324,17 +322,11 @@ static void trayicon_destroy_cb(GtkWidget *widget, gpointer data)
 
 #endif
 
-static void trayicon_window_present(GtkWindow *window)
-{
-	gtk_window_set_skip_taskbar_hint(window, FALSE);
-	gtk_window_present(window);
-}
-
 static void trayicon_present(GtkWidget *widget, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
-	trayicon_window_present(GTK_WINDOW(mainwin->window));
+	main_window_popup(mainwin);
 }
 
 static void trayicon_inc(GtkWidget *widget, gpointer data)
