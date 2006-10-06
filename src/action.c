@@ -581,7 +581,9 @@ static gboolean execute_actions(gchar *action, GSList *msg_list,
 			gtk_text_buffer_get_iter_at_offset
 				(textbuf, &start_iter, body_pos);
 			gtk_text_buffer_get_end_iter(textbuf, &end_iter);
-			gtk_text_buffer_place_cursor(textbuf, &start_iter);
+			if (!(action_type & ACTION_INSERT))
+				gtk_text_buffer_place_cursor
+					(textbuf, &start_iter);
 		}
 		msg_str = gtk_text_buffer_get_text
 			(textbuf, &start_iter, &end_iter, FALSE);
