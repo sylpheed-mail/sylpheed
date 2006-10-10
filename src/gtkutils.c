@@ -625,7 +625,7 @@ void gtkut_tree_view_scroll_to_cell(GtkTreeView *treeview, GtkTreePath *path,
 
 void gtkut_tree_view_fast_clear(GtkTreeView *treeview, GtkTreeStore *store)
 {
-#if GTK_CHECK_VERSION(2, 8, 0)
+#if GTK_CHECK_VERSION(2, 8, 0) && !GTK_CHECK_VERSION(2, 10, 0)
 	gtk_tree_store_clear(store);
 #else
 	/* this is faster than above, but it seems to trigger crashes in
