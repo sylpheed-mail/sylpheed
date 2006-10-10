@@ -230,6 +230,7 @@ static void alertpanel_create(const gchar *title,
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 	manage_window_set_transient(GTK_WINDOW(dialog));
 	gtk_dialog_set_has_separator(GTK_DIALOG(dialog), FALSE);
+	gtk_widget_realize(dialog);
 	g_signal_connect(G_OBJECT(dialog), "delete_event",
 			 G_CALLBACK(alertpanel_deleted),
 			 (gpointer)G_ALERTCANCEL);
@@ -297,6 +298,16 @@ static void alertpanel_create(const gchar *title,
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	GTK_WIDGET_UNSET_FLAGS(label, GTK_CAN_FOCUS);
+#ifdef G_OS_WIN32
+	{
+		GtkStyle *style;
+		style = gtk_widget_get_style(dialog);
+		gtk_widget_modify_base(label, GTK_STATE_ACTIVE,
+				       &style->base[GTK_STATE_SELECTED]);
+		gtk_widget_modify_text(label, GTK_STATE_ACTIVE,
+				       &style->text[GTK_STATE_SELECTED]);
+	}
+#endif
 
 	if (can_disable) {
 		hbox = gtk_hbox_new(FALSE, 0);

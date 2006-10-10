@@ -144,6 +144,9 @@ HeaderView *headerview_create(void)
 void headerview_init(HeaderView *headerview)
 {
 	static PangoFontDescription *boldfont = NULL;
+#ifdef G_OS_WIN32
+	GtkStyle *style;
+#endif
 
 	if (!boldfont) {
 		boldfont = pango_font_description_new();
@@ -156,6 +159,22 @@ void headerview_init(HeaderView *headerview)
 		gtk_widget_modify_font(headerview->ng_header_label, boldfont);
 		gtk_widget_modify_font(headerview->subject_header_label, boldfont);
 	}
+
+#ifdef G_OS_WIN32
+#define SET_LABEL_STYLE(label)						\
+	style = gtk_widget_get_style(label);				\
+	gtk_widget_modify_base(label, GTK_STATE_ACTIVE,			\
+			       &style->base[GTK_STATE_SELECTED]);	\
+	gtk_widget_modify_text(label, GTK_STATE_ACTIVE,			\
+			       &style->text[GTK_STATE_SELECTED]);
+
+	SET_LABEL_STYLE(headerview->from_body_label);
+	SET_LABEL_STYLE(headerview->to_body_label);
+	SET_LABEL_STYLE(headerview->ng_body_label);
+	SET_LABEL_STYLE(headerview->subject_body_label);
+
+#undef SET_LABEL_STYLE
+#endif
 
 	headerview_clear(headerview);
 	headerview_set_visibility(headerview, prefs_common.display_header_pane);
