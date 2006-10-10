@@ -222,7 +222,12 @@ int main(int argc, char *argv[])
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
 
 	gtkut_widget_init();
+
+#ifdef G_OS_WIN32
+	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED_SMALL, &icon);
+#else
 	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED, &icon);
+#endif
 	gtk_window_set_default_icon(icon);
 
 	mainwin = main_window_create
