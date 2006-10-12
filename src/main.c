@@ -167,6 +167,7 @@ int main(int argc, char *argv[])
 	MainWindow *mainwin;
 	FolderView *folderview;
 	GdkPixbuf *icon;
+	GList *iconlist = NULL;
 
 	app_init();
 	parse_cmd_opt(argc, argv);
@@ -224,11 +225,16 @@ int main(int argc, char *argv[])
 	gtkut_widget_init();
 
 #ifdef G_OS_WIN32
+	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED_32, &icon);
+	iconlist = g_list_append(iconlist, icon);
 	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED_SMALL, &icon);
+	iconlist = g_list_append(iconlist, icon);
+	gtk_window_set_default_icon_list(iconlist);
+	g_list_free(iconlist);
 #else
 	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED, &icon);
-#endif
 	gtk_window_set_default_icon(icon);
+#endif
 
 	mainwin = main_window_create
 		(prefs_common.sep_folder | prefs_common.sep_msg << 1);
