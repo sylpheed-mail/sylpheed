@@ -374,6 +374,7 @@ MessageView *messageview_create_with_new_window(void)
 	GtkWidget *window;
 	GtkWidget *window_vbox;
 	GtkWidget *body_vbox;
+	GtkWidget *vspacer;
 	GtkWidget *menubar;
 	GtkItemFactory *ifactory;
 	GtkWidget *statusbar;
@@ -408,8 +409,11 @@ MessageView *messageview_create_with_new_window(void)
 #endif
 	gtk_box_pack_start(GTK_BOX(window_vbox), menubar, FALSE, TRUE, 0);
 
+	vspacer = gtk_vbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(window_vbox), vspacer, FALSE, TRUE,
+			   BORDER_WIDTH);
+
 	body_vbox = gtk_vbox_new(FALSE, BORDER_WIDTH);
-	gtk_container_set_border_width(GTK_CONTAINER(body_vbox), BORDER_WIDTH);
 	gtk_box_pack_start(GTK_BOX(window_vbox), body_vbox, TRUE, TRUE, 0);
 
 	gtk_box_pack_start(GTK_BOX(body_vbox), GTK_WIDGET_PTR(msgview),
