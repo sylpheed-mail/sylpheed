@@ -939,7 +939,7 @@ MainWindow *main_window_create(SeparateType type)
 	online_switch = gtk_button_new();
 	gtk_button_set_relief(GTK_BUTTON(online_switch), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS(online_switch, GTK_CAN_FOCUS);
-	gtk_widget_set_size_request(online_switch, 32, 18);
+	gtk_widget_set_size_request(online_switch, 34, 18);
 	gtk_container_add(GTK_CONTAINER(online_switch), online_hbox);
 	g_signal_connect(G_OBJECT(online_switch), "clicked",
 			 G_CALLBACK(online_switch_clicked), mainwin);
