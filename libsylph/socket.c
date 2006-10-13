@@ -111,6 +111,7 @@ struct _SockSource {
 static guint io_timeout = 60;
 
 static GList *sock_connect_data_list = NULL;
+static GList *sock_list = NULL;
 
 static gboolean sock_prepare		(GSource	*source,
 					 gint		*timeout);
@@ -125,6 +126,8 @@ GSourceFuncs sock_watch_funcs = {
 	sock_dispatch,
 	NULL
 };
+
+static SockInfo *sock_find_from_fd	(gint	fd);
 
 static gint sock_connect_with_timeout	(gint			 sock,
 					 const struct sockaddr	*serv_addr,
@@ -345,17 +348,36 @@ gint fd_accept(gint sock)
 	return accept(sock, (struct sockaddr *)&caddr, &caddr_len);
 }
 
+
+static SockInfo *sock_find_from_fd(gint fd)
+{
+	GList *cur;
+
+	for (cur = sock_list; cur != NULL; cur = cur->next) {
+		if (((SockInfo *)cur->data)->sock == fd)
+			return (SockInfo *)cur->data;
+	}
+
+	return NULL;
+}
+
 static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 {
 #ifdef G_OS_WIN32
 	gulong val = nonblock ? 1 : 0;
+	SockInfo *sock;
 
 	if (!nonblock)
 		WSAEventSelect(fd, NULL, 0);
 	if (ioctlsocket(fd, FIONBIO, &val) == SOCKET_ERROR) {
-		g_warning("set_nonblocking_mode(): ioctlsocket() failed: %ld\n", WSAGetLastError());
+		g_warning("set_nonblocking_mode(): ioctlsocket() failed: %ld\n",
+			  WSAGetLastError());
 		return -1;
 	}
+
+	sock = sock_find_from_fd(fd);
+	if (sock)
+		sock->nonblock = nonblock;
 	debug_print("set nonblocking mode to %d\n", nonblock);
 
 	return 0;
@@ -392,7 +414,15 @@ gint sock_set_nonblocking_mode(SockInfo *sock, gboolean nonblock)
 
 static gboolean is_nonblocking_mode(gint fd)
 {
-#ifdef G_OS_UNIX
+#ifdef G_OS_WIN32
+	SockInfo *sock;
+
+	sock = sock_find_from_fd(fd);
+	if (sock)
+		return sock->nonblock;
+
+	return FALSE;
+#else
 	gint flags;
 
 	flags = fcntl(fd, F_GETFL, 0);
@@ -402,8 +432,6 @@ static gboolean is_nonblocking_mode(gint fd)
 	}
 
 	return ((flags & O_NONBLOCK) != 0);
-#else
-	return FALSE;
 #endif
 }
 
@@ -427,8 +455,11 @@ gboolean sock_has_read_data(SockInfo *sock)
 	if (sock->ssl)
 		return TRUE;
 #endif
-	if (ioctlsocket(sock->sock, FIONREAD, &val) < 0)
+	if (ioctlsocket(sock->sock, FIONREAD, &val) < 0) {
+		g_warning("sock_has_read_data(): ioctlsocket() failed: %ld\n",
+			  WSAGetLastError());
 		return TRUE;
+	}
 
 	if (val == 0)
 		return FALSE;
@@ -770,6 +801,8 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	sockinfo->state = CONN_ESTABLISHED;
 	sockinfo->nonblock = FALSE;
 
+	sock_list = g_list_prepend(sock_list, sockinfo);
+
 	g_usleep(100000);
 
 	return sockinfo;
@@ -827,6 +860,8 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	sockinfo->port = conn_data->port;
 	sockinfo->state = CONN_ESTABLISHED;
 	sockinfo->nonblock = TRUE;
+
+	sock_list = g_list_prepend(sock_list, sockinfo);
 
 	conn_data->func(sockinfo, conn_data->data);
 
@@ -1200,16 +1235,15 @@ gint sock_printf(SockInfo *sock, const gchar *format, ...)
 }
 
 #ifdef G_OS_WIN32
-static void sock_set_errno_from_last_error(void)
+static void sock_set_errno_from_last_error(gint error)
 {
-	gint err;
-
-	errno = 0;
-	switch ((err = WSAGetLastError())) {
+	switch (error) {
 	case WSAEWOULDBLOCK:
 		errno = EAGAIN;
 		break;
 	default:
+		debug_print("last error = %d\n", error);
+		errno = 0;
 		break;
 	}
 }
@@ -1290,8 +1324,12 @@ gint fd_write(gint fd, const gchar *buf, gint len)
 #ifdef G_OS_WIN32
 	ret = send(fd, buf, len, 0);
 	if (ret == SOCKET_ERROR) {
-		g_warning("fd_write() failed: %ld\n", WSAGetLastError());
-		sock_set_errno_from_last_error();
+		gint err;
+		err = WSAGetLastError();
+		sock_set_errno_from_last_error(err);
+		if (err != WSAEWOULDBLOCK)
+			g_warning("fd_write() failed with %d (errno = %d)\n",
+				  err, errno);
 	}
 	return ret;
 #else
@@ -1375,8 +1413,12 @@ gint fd_recv(gint fd, gchar *buf, gint len, gint flags)
 #ifdef G_OS_WIN32
 	ret = recv(fd, buf, len, flags);
 	if (ret == SOCKET_ERROR) {
-		g_warning("fd_recv() failed: %ld\n", WSAGetLastError());
-		sock_set_errno_from_last_error();
+		gint err;
+		err = WSAGetLastError();
+		sock_set_errno_from_last_error(err);
+		if (err != WSAEWOULDBLOCK)
+			g_warning("fd_recv(): failed with %d (errno = %d)\n",
+				  err, errno);
 	}
 	return ret;
 #else
@@ -1558,6 +1600,8 @@ gint sock_peek(SockInfo *sock, gchar *buf, gint len)
 
 gint sock_close(SockInfo *sock)
 {
+	GList *cur;
+
 	if (!sock)
 		return 0;
 
@@ -1569,6 +1613,13 @@ gint sock_close(SockInfo *sock)
 	if (sock->sock_ch) {
 		g_io_channel_shutdown(sock->sock_ch, FALSE, NULL);
 		g_io_channel_unref(sock->sock_ch);
+	}
+
+	for (cur = sock_list; cur != NULL; cur = cur->next) {
+		if ((SockInfo *)cur->data == sock) {
+			sock_list = g_list_remove(sock_list, sock);
+			break;
+		}
 	}
 
 	g_free(sock->hostname);

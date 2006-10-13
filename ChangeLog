@@ -1,3 +1,11 @@
+2006-10-13
+
+	* libsylph/socket.c: win32: properly handle WSAEWOULDBLOCK.
+	  is_nonblocking_mode(): implemented by saving SockInfo list.
+	* libsylph/session.c: win32: session_ping_cb(): only dispatch if no
+	  event occurs for more than one second.
+	  Don't use sock_has_read_data() anymore.
+
 2006-10-12
 
 	* src/messageview.c: removed the border.

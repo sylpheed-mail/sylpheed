@@ -264,8 +264,22 @@ static gboolean session_ping_cb(gpointer data)
 	Session *session = SESSION(data);
 	SockInfo *sock = session->sock;
 
-	if (session->io_tag > 0 && sock && sock->callback)
-		sock->callback(sock, sock->condition, sock->data);
+	if (session->io_tag > 0 && sock && sock->callback) {
+		GTimeVal tv_cur, tv_result;
+
+		g_get_current_time(&tv_cur);
+		tv_result.tv_sec = tv_cur.tv_sec - session->tv_prev.tv_sec;
+		tv_result.tv_usec = tv_cur.tv_usec - session->tv_prev.tv_usec;
+		if (tv_result.tv_usec < 0) {
+			tv_result.tv_sec--;
+			tv_result.tv_usec += G_USEC_PER_SEC;
+		}
+		if (tv_result.tv_sec * G_USEC_PER_SEC + tv_result.tv_usec >
+		    G_USEC_PER_SEC) {
+			debug_print("state machine freeze for 1 second detected, forcing dispatch.\n");
+			sock->callback(sock, sock->condition, sock->data);
+		}
+	}
 
 	return TRUE;
 }
@@ -541,8 +555,6 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 	if (session->read_buf_len == 0) {
 		gint read_len;
 
-		if (!sock_has_read_data(session->sock))
-			return TRUE;
 		read_len = sock_read(session->sock, session->read_buf,
 				     SESSION_BUFFSIZE - 1);
 
@@ -557,7 +569,7 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 			case EAGAIN:
 				return TRUE;
 			default:
-				g_warning("sock_read: %s\n", g_strerror(errno));
+				g_warning("%s: sock_read: %s\n", G_STRFUNC, g_strerror(errno));
 				session->state = SESSION_ERROR;
 				return FALSE;
 			}
@@ -629,8 +641,6 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 	if (session->read_buf_len == 0) {
 		gint read_len;
 
-		if (!sock_has_read_data(session->sock))
-			return TRUE;
 		read_len = sock_read(session->sock, session->read_buf,
 				     SESSION_BUFFSIZE);
 
@@ -645,7 +655,7 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 			case EAGAIN:
 				return TRUE;
 			default:
-				g_warning("sock_read: %s\n", g_strerror(errno));
+				g_warning("%s: sock_read: %s\n", G_STRFUNC, g_strerror(errno));
 				session->state = SESSION_ERROR;
 				return FALSE;
 			}
@@ -742,8 +752,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 	session_set_timeout(session, session->timeout_interval);
 
 	if (session->read_buf_len == 0) {
-		if (!sock_has_read_data(session->sock))
-			return TRUE;
 		read_len = sock_read(session->sock, session->read_buf_p,
 				     READ_BUF_LEFT());
 
@@ -758,7 +766,7 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 			case EAGAIN:
 				return TRUE;
 			default:
-				g_warning("sock_read: %s\n", g_strerror(errno));
+				g_warning("%s: sock_read: %s\n", G_STRFUNC, g_strerror(errno));
 				session->state = SESSION_ERROR;
 				return FALSE;
 			}

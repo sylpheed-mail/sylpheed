@@ -1,3 +1,11 @@
+2006-10-13
+
+	* libsylph/socket.c: win32: WSAEWOULDBLOCK を正しく処理するようにした。
+	  is_nonblocking_mode(): SockInfo のリストを保持することで実装。
+	* libsylph/session.c: win32: session_ping_cb(): 1秒以上イベントが発生
+	  しなかった場合のみ発行するようにした。
+	  sock_has_read_data() を使わないようにした。
+
 2006-10-12
 
 	* src/messageview.c: 境界を除去。
