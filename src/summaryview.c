@@ -903,7 +903,7 @@ static void summary_unset_sort_column_id(SummaryView *summaryview)
 
 	if (gtk_tree_sortable_get_sort_column_id
 		(GTK_TREE_SORTABLE(summaryview->store), &id, &order) &&
-	    id < N_SUMMARY_VISIBLE_COLS) {
+	    id >= 0 && id < N_SUMMARY_VISIBLE_COLS) {
 		GtkTreeViewColumn *column = summaryview->columns[id];
 		column->sort_column_id = -1;
 		gtk_tree_view_column_set_sort_indicator(column, FALSE);
