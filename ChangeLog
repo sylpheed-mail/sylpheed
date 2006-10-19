@@ -1,5 +1,11 @@
 2006-10-19
 
+	* libsylph/codeconv.c: conv_get_code_conv_func(): added JIS-SJIS and
+	  UTF-8 to SJIS conversion (fixes character corruption on printing
+	  when environment-dependent characters are used in win32).
+
+2006-10-19
+
 	* src/summaryview.c: summary_unset_sort_column_id(): fixed crash when
 	  using GTK+ 2.4.x.
 

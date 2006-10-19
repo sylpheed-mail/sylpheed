@@ -1,5 +1,11 @@
 2006-10-19
 
+	* libsylph/codeconv.c: conv_get_code_conv_func(): JIS-SJIS と UTF-8 から
+	  SJIS への変換を追加(環境依存文字が使われていると win32 で印刷時に
+	  文字化けを起こす問題を修正)。
+
+2006-10-19
+
 	* src/summaryview.c: summary_unset_sort_column_id(): GTK+ 2.4.x 使用時
 	  にクラッシュするバグを修正。
 

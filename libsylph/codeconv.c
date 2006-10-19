@@ -1400,12 +1400,20 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_encoding,
 			code_conv = conv_jistodisp;
 		else if (dest_charset == C_EUC_JP)
 			code_conv = conv_jistoeuc;
+		else if (dest_charset == C_SHIFT_JIS ||
+			 dest_charset == C_CP932)
+			code_conv = conv_jistosjis;
 		else if (dest_charset == C_UTF_8)
 			code_conv = conv_jistoutf8;
 		break;
 	case C_SHIFT_JIS:
+	case C_CP932:
 		if (dest_charset == C_AUTO)
 			code_conv = conv_sjistodisp;
+		else if (dest_charset == C_ISO_2022_JP   ||
+			 dest_charset == C_ISO_2022_JP_2 ||
+			 dest_charset == C_ISO_2022_JP_3)
+			code_conv = conv_sjistojis;
 		else if (dest_charset == C_EUC_JP)
 			code_conv = conv_sjistoeuc;
 		else if (dest_charset == C_UTF_8)
@@ -1428,6 +1436,9 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_encoding,
 			 dest_charset == C_ISO_2022_JP_2 ||
 			 dest_charset == C_ISO_2022_JP_3)
 			code_conv = conv_utf8tojis;
+		else if (dest_charset == C_SHIFT_JIS ||
+			 dest_charset == C_CP932)
+			code_conv = conv_utf8tosjis;
 		break;
 	default:
 		break;
