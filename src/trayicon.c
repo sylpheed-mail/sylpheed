@@ -210,8 +210,10 @@ void trayicon_set_notify(gboolean enabled)
 	if (enabled && notify_tag == 0) {
 		gtk_status_icon_set_blinking(trayicon.status_icon, enabled);
 		notify_tag = g_timeout_add(5000, notify_timeout_cb, NULL);
-	} else if (!enabled && notify_tag > 0)
+	} else if (!enabled && notify_tag > 0) {
 		g_source_remove(notify_tag);
+		notify_timeout_cb(NULL);
+	}
 }
 
 void trayicon_set_stock_icon(StockPixmap icon)
