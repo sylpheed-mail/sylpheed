@@ -86,7 +86,8 @@ gint inc_account_mail		(MainWindow	*mainwin,
 				 PrefsAccount	*account);
 void inc_all_account_mail	(MainWindow	*mainwin,
 				 gboolean	 autocheck);
-void inc_progress_update	(Pop3Session	*session);
+
+gint inc_pop_before_smtp	(PrefsAccount	*account);
 
 gboolean inc_is_active		(void);
 

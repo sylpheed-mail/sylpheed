@@ -361,6 +361,45 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 	inc_autocheck_timer_set();
 }
 
+gint inc_pop_before_smtp(PrefsAccount *account)
+{
+	MainWindow *mainwin;
+	IncProgressDialog *inc_dialog;
+	IncSession *session;
+
+	if (inc_lock_count) return -1;
+
+	mainwin = main_window_get();
+
+	if (!main_window_toggle_online_if_offline(mainwin))
+		return -1;
+
+	inc_autocheck_timer_remove();
+	main_window_lock(mainwin);
+
+	session = inc_session_new(account);
+	if (!session) return -1;
+	POP3_SESSION(session->session)->auth_only = TRUE;
+
+	inc_dialog = inc_progress_dialog_create(FALSE);
+	gtk_window_set_title(GTK_WINDOW(inc_dialog->dialog->window),
+			     _("Authenticating with POP3"));
+	inc_dialog->queue_list = g_list_append(inc_dialog->queue_list, session);
+	inc_dialog->mainwin = mainwin;
+	inc_progress_dialog_set_list(inc_dialog);
+	inc_dialog->show_dialog = TRUE;
+
+	main_window_set_toolbar_sensitive(mainwin);
+	main_window_set_menu_sensitive(mainwin);
+
+	inc_start(inc_dialog);
+
+	main_window_unlock(mainwin);
+	inc_autocheck_timer_set();
+
+	return 0;
+}
+
 static IncProgressDialog *inc_progress_dialog_create(gboolean autocheck)
 {
 	IncProgressDialog *dialog;
@@ -694,8 +733,12 @@ static IncState inc_pop3_session_do(IncSession *session)
 	debug_print(_("getting new messages of account %s...\n"),
 		    pop3_session->ac_prefs->account_name);
 
-	buf = g_strdup_printf(_("%s: Retrieving new messages"),
-			      pop3_session->ac_prefs->recv_server);
+	if (pop3_session->auth_only)
+		buf = g_strdup_printf(_("%s: Authenticating with POP3"),
+				      pop3_session->ac_prefs->recv_server);
+	else
+		buf = g_strdup_printf(_("%s: Retrieving new messages"),
+				      pop3_session->ac_prefs->recv_server);
 	gtk_window_set_title(GTK_WINDOW(inc_dialog->dialog->window), buf);
 	g_free(buf);
 

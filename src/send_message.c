@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@
 #include "manage_window.h"
 #include "socket.h"
 #include "utils.h"
+#include "inc.h"
 
 #define SMTP_PORT	25
 #if USE_SSL
@@ -544,6 +545,13 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 #else
 	port = ac_prefs->set_smtpport ? ac_prefs->smtpport : SMTP_PORT;
 #endif
+
+	if (ac_prefs->pop_before_smtp && ac_prefs->protocol == A_POP3) {
+		if (inc_pop_before_smtp(ac_prefs) < 0) {
+			session_destroy(session);
+			return -1;
+		}
+	}
 
 	dialog = send_progress_dialog_create();
 	dialog->session = session;

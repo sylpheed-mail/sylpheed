@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 13:05+0900\n"
+"POT-Creation-Date: 2006-10-30 15:44+0900\n"
 "PO-Revision-Date: 2006-10-24 19:06+0200\n"
 "Last-Translator: Cristian Secară <cristi@secarica.ro>\n"
 "Language-Team: \n"
@@ -704,7 +704,7 @@ msgstr ""
 msgid "Name"
 msgstr "Nume"
 
-#: src/account_dialog.c:371 src/prefs_account_dialog.c:658
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:659
 msgid "Protocol"
 msgstr "Protocol"
 
@@ -1176,7 +1176,7 @@ msgid "Group"
 msgstr "Grupă"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3160 src/folderview.c:377 src/prefs_account_dialog.c:1695
+#: src/addressbook.c:3160 src/folderview.c:377 src/prefs_account_dialog.c:1693
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "Folder"
@@ -1209,7 +1209,7 @@ msgstr "Notificare"
 msgid "Warning"
 msgstr "Avertisment"
 
-#: src/alertpanel.c:168 src/inc.c:593
+#: src/alertpanel.c:168 src/inc.c:632
 msgid "Error"
 msgstr "Eroare"
 
@@ -1624,7 +1624,7 @@ msgstr ""
 "Contul pentru trimitere mail nu a fost specificat.\n"
 "Vă rugăm să selectați un cont înainte de a trimite."
 
-#: src/compose.c:2761 src/send_message.c:299
+#: src/compose.c:2761 src/send_message.c:300
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "A avut loc o eroare în timpul trimiterii mesajului pe %s ."
@@ -1738,7 +1738,7 @@ msgid "Size"
 msgstr "Dimensiune"
 
 # obs: comun și pentru butonul din toolbar și pentru tab-ul din common preferences și edit accounts
-#: src/compose.c:4799 src/mainwindow.c:2366 src/prefs_account_dialog.c:528
+#: src/compose.c:4799 src/mainwindow.c:2366 src/prefs_account_dialog.c:529
 #: src/prefs_common_dialog.c:665
 msgid "Send"
 msgstr "Trimite"
@@ -1781,7 +1781,7 @@ msgid "Attach file"
 msgstr "Atașează fișier"
 
 #. signature
-#: src/compose.c:4848 src/prefs_account_dialog.c:1209
+#: src/compose.c:4848 src/prefs_account_dialog.c:1207
 #: src/prefs_common_dialog.c:989
 msgid "Signature"
 msgstr "Semnătură"
@@ -1988,7 +1988,7 @@ msgid " Check File "
 msgstr " Verifică fișier "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1220
+#: src/prefs_account_dialog.c:1218
 msgid "File"
 msgstr "Fișier"
 
@@ -2067,7 +2067,7 @@ msgid "Edit JPilot Entry"
 msgstr "Editează înregistrare JPilot"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:535 src/prefs_account_dialog.c:1723
+#: src/importldif.c:535 src/prefs_account_dialog.c:1721
 #: src/prefs_common_dialog.c:1882
 msgid " ... "
 msgstr " ... "
@@ -2133,7 +2133,7 @@ msgstr "Expirare de timp (secunde)"
 msgid "Maximum Entries"
 msgstr "Număr maxim de înregistrări"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:524
+#: src/editldap.c:471 src/prefs_account_dialog.c:525
 msgid "Basic"
 msgstr "De bază"
 
@@ -2191,7 +2191,7 @@ msgid "Exporting file:"
 msgstr "Exportare fișier:"
 
 #: src/export.c:196 src/export.c:202 src/import.c:202 src/import.c:208
-#: src/prefs_account_dialog.c:919
+#: src/prefs_account_dialog.c:920
 msgid " Select... "
 msgstr " Selectează... "
 
@@ -2652,134 +2652,144 @@ msgstr "Terminat"
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d mesaje noi"
 
-#: src/inc.c:373
+#: src/inc.c:386
+#, fuzzy
+msgid "Authenticating with POP3"
+msgstr "Autentificare"
+
+#: src/inc.c:412
 msgid "Retrieving new messages"
 msgstr "Recepționare mesaje noi"
 
-#: src/inc.c:416
+#: src/inc.c:455
 msgid "Standby"
 msgstr "Așteptare"
 
-#: src/inc.c:550 src/inc.c:599
+#: src/inc.c:589 src/inc.c:638
 msgid "Cancelled"
 msgstr "Anulat"
 
-#: src/inc.c:561
+#: src/inc.c:600
 msgid "Retrieving"
 msgstr "Recepționare"
 
-#: src/inc.c:570
+#: src/inc.c:609
 #, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "Gata (%d mesaj(e) (%s) primit(e))"
 
-#: src/inc.c:574
+#: src/inc.c:613
 msgid "Done (no new messages)"
 msgstr "Gata (nu există mesaje noi)"
 
-#: src/inc.c:580
+#: src/inc.c:619
 msgid "Connection failed"
 msgstr "Conexiunea a eșuat"
 
-#: src/inc.c:583
+#: src/inc.c:622
 msgid "Auth failed"
 msgstr "Autentificarea a eșuat"
 
-#: src/inc.c:586
+#: src/inc.c:625
 msgid "Locked"
 msgstr "Blocat"
 
-#: src/inc.c:596
+#: src/inc.c:635
 msgid "Timeout"
 msgstr "Timp expirat"
 
-#: src/inc.c:646
+#: src/inc.c:685
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Terminat (%d noi mesaj(e))"
 
-#: src/inc.c:649
+#: src/inc.c:688
 msgid "Finished (no new messages)"
 msgstr "Terminat (nu există mesaje noi)"
 
-#: src/inc.c:658
+#: src/inc.c:697
 msgid "Some errors occurred while getting mail."
 msgstr "Au avut loc unele erori în timpul obținerii mail-ului."
 
-#: src/inc.c:694
+#: src/inc.c:733
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "obținere mesaje noi pentru contul %s...\n"
 
-#: src/inc.c:697
+#: src/inc.c:737
+#, fuzzy, c-format
+msgid "%s: Authenticating with POP3"
+msgstr "Autentificare"
+
+#: src/inc.c:740
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: recepționare mesaje noi"
 
-#: src/inc.c:716
+#: src/inc.c:759
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Conectare la serverul POP3: %s ..."
 
-#: src/inc.c:727
+#: src/inc.c:770
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nu se poate efectua conexiunea la serverul POP3: %s:%d\n"
 
-#: src/inc.c:806 src/send_message.c:633
+#: src/inc.c:849 src/send_message.c:641
 msgid "Authenticating..."
 msgstr "Autentificare..."
 
-#: src/inc.c:807
+#: src/inc.c:850
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Recepționare mesaje de la %s..."
 
-#: src/inc.c:812
+#: src/inc.c:855
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Obținerea numărului de mesaje noi (STAT)..."
 
-#: src/inc.c:816
+#: src/inc.c:859
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Obținerea numărului de mesaje noi (LAST)..."
 
-#: src/inc.c:820
+#: src/inc.c:863
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Obținerea numărului de mesaje noi (UIDL)..."
 
-#: src/inc.c:824
+#: src/inc.c:867
 msgid "Getting the size of messages (LIST)..."
 msgstr "Obținerea dimensiunii mesajelor (LIST)..."
 
-#: src/inc.c:834
+#: src/inc.c:877
 #, c-format
 msgid "Deleting message %d"
 msgstr "Ștergere mesaje %d"
 
 # hm ?
-#: src/inc.c:841 src/send_message.c:651
+#: src/inc.c:884 src/send_message.c:659
 msgid "Quitting"
 msgstr "Închidere conexiune"
 
-#: src/inc.c:866
+#: src/inc.c:909
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Recepționare mesaj (%d / %d) (%s / %s)"
 
-#: src/inc.c:887
+#: src/inc.c:930
 #, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Recepționare (%d mesaj(e) (%s) primit(e))"
 
-#: src/inc.c:1132
+#: src/inc.c:1175
 msgid "Connection failed."
 msgstr "Conexiunea a eșuat"
 
-#: src/inc.c:1138
+#: src/inc.c:1181
 msgid "Error occurred while processing mail."
 msgstr "A avut loc o eroare în timpul procesării mail-ului."
 
-#: src/inc.c:1143
+#: src/inc.c:1186
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2788,28 +2798,28 @@ msgstr ""
 "A avut loc o eroare în timpul procesării mail-ului.\n"
 "%s"
 
-#: src/inc.c:1149
+#: src/inc.c:1192
 msgid "No disk space left."
 msgstr "Nu mai este spațiu pe disc."
 
-#: src/inc.c:1154
+#: src/inc.c:1197
 msgid "Can't write file."
 msgstr "Nu se poate scrie fișierul."
 
-#: src/inc.c:1159
+#: src/inc.c:1202
 msgid "Socket error."
 msgstr "Eroare socket."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1165 src/send_message.c:586 src/send_message.c:774
+#: src/inc.c:1208 src/send_message.c:594 src/send_message.c:782
 msgid "Connection closed by the remote host."
 msgstr "Conexiune închisă de serverul de la distanță."
 
-#: src/inc.c:1171
+#: src/inc.c:1214
 msgid "Mailbox is locked."
 msgstr "Căsuța poștală este blocată"
 
-#: src/inc.c:1175
+#: src/inc.c:1218
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2818,11 +2828,11 @@ msgstr ""
 "Căsuța poștală este blocată:\n"
 "%s"
 
-#: src/inc.c:1181 src/send_message.c:759
+#: src/inc.c:1224 src/send_message.c:767
 msgid "Authentication failed."
 msgstr "Autentificare eșuată."
 
-#: src/inc.c:1186 src/send_message.c:762
+#: src/inc.c:1229 src/send_message.c:770
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2831,16 +2841,16 @@ msgstr ""
 "Autentificare eșuată:\n"
 "%s"
 
-#: src/inc.c:1191 src/send_message.c:778
+#: src/inc.c:1234 src/send_message.c:786
 msgid "Session timed out."
 msgstr "Timpul sesiunii a expirat."
 
 # ???
-#: src/inc.c:1227
+#: src/inc.c:1270
 msgid "Incorporation cancelled\n"
 msgstr "Încorporare anulată\n"
 
-#: src/inc.c:1310
+#: src/inc.c:1353
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Obținere mesaje noi de la %s în %s...\n"
@@ -3732,7 +3742,7 @@ msgid "Send queued message(s)"
 msgstr "Trimite eventualele mesaje din coada de așteptare"
 
 # obs: comun și pentru butonul din toolbar și pentru tab-ul din common preferences și edit accounts
-#: src/mainwindow.c:2377 src/prefs_account_dialog.c:530
+#: src/mainwindow.c:2377 src/prefs_account_dialog.c:531
 #: src/prefs_common_dialog.c:667 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Compune"
@@ -4101,221 +4111,221 @@ msgstr ""
 "Frază secretă incorectă ! Încearcă din nou...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:426
+#: src/prefs_account_dialog.c:427
 msgid "Opening account preferences window...\n"
 msgstr "Deschidere fereastră de configurație cont...\n"
 
-#: src/prefs_account_dialog.c:459
+#: src/prefs_account_dialog.c:460
 #, c-format
 msgid "Account%d"
 msgstr "Cont%d"
 
-#: src/prefs_account_dialog.c:478
+#: src/prefs_account_dialog.c:479
 msgid "Preferences for new account"
 msgstr "Preferințe pentru noul cont"
 
-#: src/prefs_account_dialog.c:483
+#: src/prefs_account_dialog.c:484
 msgid "Account preferences"
 msgstr "Preferințe cont"
 
-#: src/prefs_account_dialog.c:506
+#: src/prefs_account_dialog.c:507
 msgid "Creating account preferences window...\n"
 msgstr "Creare fereastră de preferințe cont...\n"
 
 # obs: tab-ul din common preferences și edit accounts
-#: src/prefs_account_dialog.c:526 src/prefs_common_dialog.c:663
+#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:663
 msgid "Receive"
 msgstr "Primire"
 
-#: src/prefs_account_dialog.c:533 src/prefs_common_dialog.c:674
+#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:674
 msgid "Privacy"
 msgstr "Intimitate"
 
-#: src/prefs_account_dialog.c:537
+#: src/prefs_account_dialog.c:538
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:540 src/prefs_common_dialog.c:2155
+#: src/prefs_account_dialog.c:541 src/prefs_common_dialog.c:2155
 msgid "Advanced"
 msgstr "Avansat"
 
-#: src/prefs_account_dialog.c:589
+#: src/prefs_account_dialog.c:590
 msgid "Name of this account"
 msgstr "Numele contului"
 
-#: src/prefs_account_dialog.c:598
+#: src/prefs_account_dialog.c:599
 msgid "Set as default"
 msgstr "Stabilește ca implicit"
 
-#: src/prefs_account_dialog.c:602
+#: src/prefs_account_dialog.c:603
 msgid "Personal information"
 msgstr "Informatii personale"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:612
 msgid "Full name"
 msgstr "Nume complet"
 
-#: src/prefs_account_dialog.c:617
+#: src/prefs_account_dialog.c:618
 msgid "Mail address"
 msgstr "Adresa de mail"
 
-#: src/prefs_account_dialog.c:623
+#: src/prefs_account_dialog.c:624
 msgid "Organization"
 msgstr "Organizație"
 
-#: src/prefs_account_dialog.c:647
+#: src/prefs_account_dialog.c:648
 msgid "Server information"
 msgstr "Informatii despre server"
 
-#: src/prefs_account_dialog.c:668 src/prefs_account_dialog.c:824
-#: src/prefs_account_dialog.c:1468
+#: src/prefs_account_dialog.c:669 src/prefs_account_dialog.c:825
+#: src/prefs_account_dialog.c:1466
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:670 src/prefs_account_dialog.c:932
-#: src/prefs_account_dialog.c:1485 src/prefs_account_dialog.c:1667
+#: src/prefs_account_dialog.c:671 src/prefs_account_dialog.c:933
+#: src/prefs_account_dialog.c:1483 src/prefs_account_dialog.c:1665
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:672
+#: src/prefs_account_dialog.c:673
 msgid "News (NNTP)"
 msgstr "News (NNTP)"
 
-#: src/prefs_account_dialog.c:674
+#: src/prefs_account_dialog.c:675
 msgid "None (local)"
 msgstr "Nimic (local)"
 
-#: src/prefs_account_dialog.c:687
+#: src/prefs_account_dialog.c:688
 msgid "This server requires authentication"
 msgstr "Serverul necesită autentificare."
 
-#: src/prefs_account_dialog.c:726
+#: src/prefs_account_dialog.c:727
 msgid "News server"
 msgstr "Server news"
 
-#: src/prefs_account_dialog.c:732
+#: src/prefs_account_dialog.c:733
 msgid "Server for receiving"
 msgstr "Server pentru primire"
 
-#: src/prefs_account_dialog.c:738
+#: src/prefs_account_dialog.c:739
 msgid "SMTP server (send)"
 msgstr "Server SMTP (trimitere)"
 
-#: src/prefs_account_dialog.c:745 src/prefs_account_dialog.c:1129
+#: src/prefs_account_dialog.c:746 src/prefs_account_dialog.c:1130
 msgid "User ID"
 msgstr "Utilizator"
 
-#: src/prefs_account_dialog.c:751 src/prefs_account_dialog.c:1138
+#: src/prefs_account_dialog.c:752 src/prefs_account_dialog.c:1139
 msgid "Password"
 msgstr "Parolă"
 
-#: src/prefs_account_dialog.c:832
+#: src/prefs_account_dialog.c:833
 msgid "Use secure authentication (APOP)"
 msgstr "Folosește autentificare securizată (APOP)"
 
-#: src/prefs_account_dialog.c:835
+#: src/prefs_account_dialog.c:836
 msgid "Remove messages on server when received"
 msgstr "Șterge mesajele de pe server la primire"
 
-#: src/prefs_account_dialog.c:846
+#: src/prefs_account_dialog.c:847
 msgid "Remove after"
 msgstr "Șterge după"
 
-#: src/prefs_account_dialog.c:855
+#: src/prefs_account_dialog.c:856
 msgid "days"
 msgstr "zile"
 
-#: src/prefs_account_dialog.c:872
+#: src/prefs_account_dialog.c:873
 msgid "0 days: remove immediately"
 msgstr "0 zile: șterge imediat"
 
 # hm ? sau pe server ?
-#: src/prefs_account_dialog.c:882
+#: src/prefs_account_dialog.c:883
 msgid "Download all messages on server"
 msgstr "Descarcă toate mesajele de pe server"
 
-#: src/prefs_account_dialog.c:888
+#: src/prefs_account_dialog.c:889
 msgid "Receive size limit"
 msgstr "Limită dimensiune pentru primire"
 
-#: src/prefs_account_dialog.c:895 src/prefs_filter_edit.c:574
+#: src/prefs_account_dialog.c:896 src/prefs_filter_edit.c:574
 #: src/prefs_filter_edit.c:1003
 msgid "KB"
 msgstr "KB"
 
-#: src/prefs_account_dialog.c:902
+#: src/prefs_account_dialog.c:903
 msgid "Filter messages on receiving"
 msgstr "Filtrează mesajele la primire"
 
-#: src/prefs_account_dialog.c:910
+#: src/prefs_account_dialog.c:911
 msgid "Default inbox"
 msgstr "Inbox-ul implicit"
 
-#: src/prefs_account_dialog.c:930
+#: src/prefs_account_dialog.c:931
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "Mesajele nefiltrate vor fi stocate în acest folder."
 
-#: src/prefs_account_dialog.c:943 src/prefs_account_dialog.c:1099
+#: src/prefs_account_dialog.c:944 src/prefs_account_dialog.c:1100
 msgid "Authentication method"
 msgstr "Metodă de autentificare"
 
-#: src/prefs_account_dialog.c:953 src/prefs_account_dialog.c:1109
+#: src/prefs_account_dialog.c:954 src/prefs_account_dialog.c:1110
 #: src/prefs_common_dialog.c:881 src/prefs_common_dialog.c:2525
 msgid "Automatic"
 msgstr "Automat"
 
-#: src/prefs_account_dialog.c:961
+#: src/prefs_account_dialog.c:962
 msgid "Only check INBOX on receiving"
 msgstr "Verifică doar INBOX la primire"
 
 # !!! netradus !!!
-#: src/prefs_account_dialog.c:963
+#: src/prefs_account_dialog.c:964
 msgid "News"
 msgstr "News"
 
-#: src/prefs_account_dialog.c:975
+#: src/prefs_account_dialog.c:976
 msgid "Maximum number of articles to download"
 msgstr "Număr maxim de articole pentru descărcare"
 
-#: src/prefs_account_dialog.c:992
+#: src/prefs_account_dialog.c:993
 msgid "No limit if 0 is specified."
 msgstr "Fără limită dacă este specificat 0"
 
-#: src/prefs_account_dialog.c:996
+#: src/prefs_account_dialog.c:997
 msgid "`Get all' checks for new messages on this account"
 msgstr "'Verifică tot' verifică eventuale mesaje noi (și) pentru acest cont"
 
 # !!! netradus !!!
-#: src/prefs_account_dialog.c:1049 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1050 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "Header"
 
-#: src/prefs_account_dialog.c:1056
+#: src/prefs_account_dialog.c:1057
 msgid "Add Date header field"
 msgstr "Adaugă câmp Dată"
 
-#: src/prefs_account_dialog.c:1057
+#: src/prefs_account_dialog.c:1058
 msgid "Generate Message-ID"
 msgstr "Generează Message-ID"
 
-#: src/prefs_account_dialog.c:1064
+#: src/prefs_account_dialog.c:1065
 msgid "Add user-defined header"
 msgstr "Adaugă câmpuri definite de utilizator"
 
-#: src/prefs_account_dialog.c:1066 src/prefs_common_dialog.c:1585
+#: src/prefs_account_dialog.c:1067 src/prefs_common_dialog.c:1585
 #: src/prefs_common_dialog.c:1612
 msgid " Edit... "
 msgstr " Editare... "
 
-#: src/prefs_account_dialog.c:1076
+#: src/prefs_account_dialog.c:1077
 msgid "Authentication"
 msgstr "Autentificare"
 
-#: src/prefs_account_dialog.c:1084
+#: src/prefs_account_dialog.c:1085
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "Autentificare SMTP (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1160
+#: src/prefs_account_dialog.c:1161
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
@@ -4327,192 +4337,192 @@ msgstr ""
 msgid "Authenticate with POP3 before sending"
 msgstr "Autentifică cu POP3 înainte de a trimite"
 
-#: src/prefs_account_dialog.c:1228
+#: src/prefs_account_dialog.c:1226
 msgid "Command output"
 msgstr "Rezultat commandă"
 
-#: src/prefs_account_dialog.c:1239 src/prefs_folder_item.c:331
+#: src/prefs_account_dialog.c:1237 src/prefs_folder_item.c:331
 msgid "Automatically set the following addresses"
 msgstr "Stabilire în mod automat a următoarelor câmpuri de adrese"
 
-#: src/prefs_account_dialog.c:1248
+#: src/prefs_account_dialog.c:1246
 msgid "Cc"
 msgstr "Cc"
 
-#: src/prefs_account_dialog.c:1261
+#: src/prefs_account_dialog.c:1259
 msgid "Bcc"
 msgstr "Bcc"
 
-#: src/prefs_account_dialog.c:1274
+#: src/prefs_account_dialog.c:1272
 msgid "Reply-To"
 msgstr "Reply-To"
 
-#: src/prefs_account_dialog.c:1327
+#: src/prefs_account_dialog.c:1325
 msgid "Sign message by default"
 msgstr "Semnează mesajele în mod implicit"
 
-#: src/prefs_account_dialog.c:1329
+#: src/prefs_account_dialog.c:1327
 msgid "Encrypt message by default"
 msgstr "Criptează mesajele în mod implicit"
 
-#: src/prefs_account_dialog.c:1331
+#: src/prefs_account_dialog.c:1329
 msgid "Encrypt when replying to encrypted message"
 msgstr "Criptează răspunsul la un mesaj criptat"
 
 # !!! lăsat netradus !!!
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1331
 msgid "Use ASCII-armored format for encryption"
 msgstr "Folosește formatul de criptare ASCII-armored"
 
-#: src/prefs_account_dialog.c:1335
+#: src/prefs_account_dialog.c:1333
 msgid "Use clear text signature"
 msgstr "Folosește semnătură în text clar"
 
-#: src/prefs_account_dialog.c:1340
+#: src/prefs_account_dialog.c:1338
 msgid "Sign key"
 msgstr "Semnează cheia"
 
-#: src/prefs_account_dialog.c:1348
+#: src/prefs_account_dialog.c:1346
 msgid "Use default GnuPG key"
 msgstr "Folosește cheia implicită GnuPG"
 
-#: src/prefs_account_dialog.c:1357
+#: src/prefs_account_dialog.c:1355
 msgid "Select key by your email address"
 msgstr "Selectează cheia după adresa dumneavoastră de e-mail"
 
-#: src/prefs_account_dialog.c:1366
+#: src/prefs_account_dialog.c:1364
 msgid "Specify key manually"
 msgstr "Specifică manual cheia"
 
-#: src/prefs_account_dialog.c:1382
+#: src/prefs_account_dialog.c:1380
 msgid "User or key ID:"
 msgstr "ID utilizator sau cheie"
 
-#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
-#: src/prefs_account_dialog.c:1509 src/prefs_account_dialog.c:1527
+#: src/prefs_account_dialog.c:1474 src/prefs_account_dialog.c:1491
+#: src/prefs_account_dialog.c:1507 src/prefs_account_dialog.c:1525
 msgid "Don't use SSL"
 msgstr "Nu utiliza SSL"
 
-#: src/prefs_account_dialog.c:1479
+#: src/prefs_account_dialog.c:1477
 msgid "Use SSL for POP3 connection"
 msgstr "Folosește SSL pentru conexiunea POP3"
 
-#: src/prefs_account_dialog.c:1482 src/prefs_account_dialog.c:1499
-#: src/prefs_account_dialog.c:1533
+#: src/prefs_account_dialog.c:1480 src/prefs_account_dialog.c:1497
+#: src/prefs_account_dialog.c:1531
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Folosește comanda STARTTLS pentru a porni sesiunea SSL"
 
-#: src/prefs_account_dialog.c:1496
+#: src/prefs_account_dialog.c:1494
 msgid "Use SSL for IMAP4 connection"
 msgstr "Folosește SSL pentru conexiunea IMAP4"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1500
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1517
+#: src/prefs_account_dialog.c:1515
 msgid "Use SSL for NNTP connection"
 msgstr "Folosește SSL pentru conexiunea NNTP"
 
-#: src/prefs_account_dialog.c:1519
+#: src/prefs_account_dialog.c:1517
 msgid "Send (SMTP)"
 msgstr "Trimite (SMTP)"
 
-#: src/prefs_account_dialog.c:1530
+#: src/prefs_account_dialog.c:1528
 msgid "Use SSL for SMTP connection"
 msgstr "Folosește SSL pentru conexiunea SMTP"
 
 # hm ? sau fără blocare ?
-#: src/prefs_account_dialog.c:1541
+#: src/prefs_account_dialog.c:1539
 msgid "Use non-blocking SSL"
 msgstr "Folosește SSL non-blocking"
 
-#: src/prefs_account_dialog.c:1544
+#: src/prefs_account_dialog.c:1542
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "Deselectați aici dacă aveți probleme cu conexiunea SSL."
 
-#: src/prefs_account_dialog.c:1634
+#: src/prefs_account_dialog.c:1632
 msgid "Specify SMTP port"
 msgstr "Port SMTP"
 
-#: src/prefs_account_dialog.c:1640
+#: src/prefs_account_dialog.c:1638
 msgid "Specify POP3 port"
 msgstr "Port POP3"
 
-#: src/prefs_account_dialog.c:1646
+#: src/prefs_account_dialog.c:1644
 msgid "Specify IMAP4 port"
 msgstr "Specifică port IMAP4"
 
-#: src/prefs_account_dialog.c:1652
+#: src/prefs_account_dialog.c:1650
 msgid "Specify NNTP port"
 msgstr "Specifică port NNTP"
 
-#: src/prefs_account_dialog.c:1657
+#: src/prefs_account_dialog.c:1655
 msgid "Specify domain name"
 msgstr "Nume domeniu"
 
-#: src/prefs_account_dialog.c:1678
+#: src/prefs_account_dialog.c:1676
 msgid "IMAP server directory"
 msgstr "Director server IMAP"
 
-#: src/prefs_account_dialog.c:1688
+#: src/prefs_account_dialog.c:1686
 msgid "Only the subfolders of this directory will be displayed."
 msgstr "Vor fi afișate numai subfolderele acestui director."
 
 # hm ?
-#: src/prefs_account_dialog.c:1691
+#: src/prefs_account_dialog.c:1689
 msgid "Clear all message caches on exit"
 msgstr "Șterge la ieșire toate mesajele din cache"
 
-#: src/prefs_account_dialog.c:1736
+#: src/prefs_account_dialog.c:1734
 msgid "Put sent messages in"
 msgstr "Salvează mesajele trimise în"
 
-#: src/prefs_account_dialog.c:1738
+#: src/prefs_account_dialog.c:1736
 msgid "Put draft messages in"
 msgstr "Pune ciorna în"
 
-#: src/prefs_account_dialog.c:1740
+#: src/prefs_account_dialog.c:1738
 msgid "Put queued messages in"
 msgstr "Pune mesajele de la coadă în"
 
-#: src/prefs_account_dialog.c:1742
+#: src/prefs_account_dialog.c:1740
 msgid "Put deleted messages in"
 msgstr "Pune mesajele șterse în"
 
-#: src/prefs_account_dialog.c:1806
+#: src/prefs_account_dialog.c:1804
 msgid "Account name is not entered."
 msgstr "Nu este introdus numele contului."
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1808
 msgid "Mail address is not entered."
 msgstr "Adresa de mail nu a fost introdusă."
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1813
 msgid "SMTP server is not entered."
 msgstr "Serverul SMTP nu a fost introdus."
 
-#: src/prefs_account_dialog.c:1820
+#: src/prefs_account_dialog.c:1818
 msgid "User ID is not entered."
 msgstr "Numele de utilizator nu a fost introdus."
 
-#: src/prefs_account_dialog.c:1825
+#: src/prefs_account_dialog.c:1823
 msgid "POP3 server is not entered."
 msgstr "Serverul POP3 nu a fost introdus."
 
-#: src/prefs_account_dialog.c:1830
+#: src/prefs_account_dialog.c:1828
 msgid "IMAP4 server is not entered."
 msgstr "Serverul IMAP4 nu a fost introdus."
 
-#: src/prefs_account_dialog.c:1835
+#: src/prefs_account_dialog.c:1833
 msgid "NNTP server is not entered."
 msgstr "Serverul NNTP nu a fost introdus."
 
-#: src/prefs_account_dialog.c:1861
+#: src/prefs_account_dialog.c:1859
 msgid "Specified folder is not a queue folder."
 msgstr "Folderul specificat nu este folder de coadă."
 
-#: src/prefs_account_dialog.c:1935
+#: src/prefs_account_dialog.c:1933
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -6101,85 +6111,85 @@ msgstr ""
 "că va ajunge la persoana la care intenționați să ajungă.\n"
 "Îi acordați suficientă încredere încât să o folosiți oricum ?"
 
-#: src/send_message.c:183
+#: src/send_message.c:184
 msgid "Queued message header is broken.\n"
 msgstr "Header-ul mesajului din coada de așteptare este invalid.\n"
 
-#: src/send_message.c:402
+#: src/send_message.c:403
 #, c-format
 msgid "Sending message using command: %s\n"
 msgstr "Trimitere mesaj utilizând comanda: %s\n"
 
-#: src/send_message.c:411
+#: src/send_message.c:412
 #, c-format
 msgid "Can't execute command: %s"
 msgstr "Nu se poate executa comanda: %s"
 
-#: src/send_message.c:446
+#: src/send_message.c:447
 #, c-format
 msgid "Error occurred while executing command: %s"
 msgstr "A avut loc o eroare în timpul executării comenzii: %s"
 
-#: src/send_message.c:552
+#: src/send_message.c:560
 msgid "Connecting"
 msgstr "Conectare"
 
-#: src/send_message.c:554
+#: src/send_message.c:562
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Conectare la serverul SMTP: %s ..."
 
-#: src/send_message.c:623
+#: src/send_message.c:631
 msgid "Sending HELO..."
 msgstr "Trimitere HELO..."
 
-#: src/send_message.c:624 src/send_message.c:629 src/send_message.c:634
+#: src/send_message.c:632 src/send_message.c:637 src/send_message.c:642
 msgid "Authenticating"
 msgstr "Autentificare"
 
-#: src/send_message.c:625 src/send_message.c:630
+#: src/send_message.c:633 src/send_message.c:638
 msgid "Sending message..."
 msgstr "Trimitere mesaj..."
 
-#: src/send_message.c:628
+#: src/send_message.c:636
 msgid "Sending EHLO..."
 msgstr "Trimitere HELO"
 
-#: src/send_message.c:637
+#: src/send_message.c:645
 msgid "Sending MAIL FROM..."
 msgstr "Trimitere MAIL FROM..."
 
-#: src/send_message.c:638 src/send_message.c:642 src/send_message.c:647
+#: src/send_message.c:646 src/send_message.c:650 src/send_message.c:655
 msgid "Sending"
 msgstr "Trimitere"
 
-#: src/send_message.c:641
+#: src/send_message.c:649
 msgid "Sending RCPT TO..."
 msgstr "Trimitere RCPT TO..."
 
-#: src/send_message.c:646
+#: src/send_message.c:654
 msgid "Sending DATA..."
 msgstr "Trimitere DATA..."
 
-#: src/send_message.c:650
+#: src/send_message.c:658
 msgid "Quitting..."
 msgstr "Părăsire..."
 
-#: src/send_message.c:678
+#: src/send_message.c:686
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Trimitere mesaj (%d / %d octeți)"
 
 # hm ? asta este o înștiințare sau o comandă ?
-#: src/send_message.c:706
+#: src/send_message.c:714
 msgid "Sending message"
 msgstr "Trimitere mesaj"
 
-#: src/send_message.c:750 src/send_message.c:770
+#: src/send_message.c:758 src/send_message.c:778
 msgid "Error occurred while sending the message."
 msgstr "A avut loc o eroare în timpul trimiterii mesajului."
 
-#: src/send_message.c:753
+#: src/send_message.c:761
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 13:05+0900\n"
+"POT-Creation-Date: 2006-10-30 15:44+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -700,7 +700,7 @@ msgstr ""
 msgid "Name"
 msgstr "Ime"
 
-#: src/account_dialog.c:371 src/prefs_account_dialog.c:658
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:659
 msgid "Protocol"
 msgstr "Protokol"
 
@@ -1155,7 +1155,7 @@ msgid "Group"
 msgstr "Grupa"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3160 src/folderview.c:377 src/prefs_account_dialog.c:1695
+#: src/addressbook.c:3160 src/folderview.c:377 src/prefs_account_dialog.c:1693
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "Spis"
@@ -1189,7 +1189,7 @@ msgstr "Obavijest"
 msgid "Warning"
 msgstr "Upozorenje"
 
-#: src/alertpanel.c:168 src/inc.c:593
+#: src/alertpanel.c:168 src/inc.c:632
 msgid "Error"
 msgstr "Greška"
 
@@ -1653,7 +1653,7 @@ msgstr ""
 "Račun za slanje pošte nije definiran.\n"
 "Molim, odaberite račun prije slanja."
 
-#: src/compose.c:2761 src/send_message.c:299
+#: src/compose.c:2761 src/send_message.c:300
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Došlo je do greške prilikom slanja poruke %s -u."
@@ -1756,7 +1756,7 @@ msgstr "MIME tip"
 msgid "Size"
 msgstr "Veličina"
 
-#: src/compose.c:4799 src/mainwindow.c:2366 src/prefs_account_dialog.c:528
+#: src/compose.c:4799 src/mainwindow.c:2366 src/prefs_account_dialog.c:529
 #: src/prefs_common_dialog.c:665
 msgid "Send"
 msgstr "Pošalji"
@@ -1798,7 +1798,7 @@ msgid "Attach file"
 msgstr "Priloži datoteku"
 
 #. signature
-#: src/compose.c:4848 src/prefs_account_dialog.c:1209
+#: src/compose.c:4848 src/prefs_account_dialog.c:1207
 #: src/prefs_common_dialog.c:989
 msgid "Signature"
 msgstr "Potpis"
@@ -2015,7 +2015,7 @@ msgid " Check File "
 msgstr " Provjeri datoteku "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1220
+#: src/prefs_account_dialog.c:1218
 msgid "File"
 msgstr "Datoteka"
 
@@ -2093,7 +2093,7 @@ msgid "Edit JPilot Entry"
 msgstr "Uredite JPilot unos"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:535 src/prefs_account_dialog.c:1723
+#: src/importldif.c:535 src/prefs_account_dialog.c:1721
 #: src/prefs_common_dialog.c:1882
 msgid " ... "
 msgstr " ... "
@@ -2158,7 +2158,7 @@ msgstr "Timeout (sek)"
 msgid "Maximum Entries"
 msgstr "Max. Unos"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:524
+#: src/editldap.c:471 src/prefs_account_dialog.c:525
 msgid "Basic"
 msgstr "Osnovno"
 
@@ -2215,7 +2215,7 @@ msgid "Exporting file:"
 msgstr "Iznosim datoteku:"
 
 #: src/export.c:196 src/export.c:202 src/import.c:202 src/import.c:208
-#: src/prefs_account_dialog.c:919
+#: src/prefs_account_dialog.c:920
 msgid " Select... "
 msgstr " Odaberite... "
 
@@ -2691,197 +2691,207 @@ msgstr ""
 msgid "Sylpheed: %d new messages"
 msgstr "\t%d novih poruka\n"
 
-#: src/inc.c:373
+#: src/inc.c:386
+#, fuzzy
+msgid "Authenticating with POP3"
+msgstr "Autorizacija"
+
+#: src/inc.c:412
 msgid "Retrieving new messages"
 msgstr "Primam nove poruke"
 
-#: src/inc.c:416
+#: src/inc.c:455
 msgid "Standby"
 msgstr "Standby"
 
-#: src/inc.c:550 src/inc.c:599
+#: src/inc.c:589 src/inc.c:638
 msgid "Cancelled"
 msgstr "Otkazano"
 
-#: src/inc.c:561
+#: src/inc.c:600
 msgid "Retrieving"
 msgstr "Primam"
 
-#: src/inc.c:570
+#: src/inc.c:609
 #, fuzzy, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "Ukloni poruke sa poslužitelja nakon primanja"
 
-#: src/inc.c:574
+#: src/inc.c:613
 #, fuzzy
 msgid "Done (no new messages)"
 msgstr "Nema nepročitanih poruka"
 
-#: src/inc.c:580
+#: src/inc.c:619
 msgid "Connection failed"
 msgstr "Veza nije uspjela"
 
-#: src/inc.c:583
+#: src/inc.c:622
 msgid "Auth failed"
 msgstr "Identifikacija nije uspjela"
 
-#: src/inc.c:586
+#: src/inc.c:625
 msgid "Locked"
 msgstr ""
 
-#: src/inc.c:596
+#: src/inc.c:635
 #, fuzzy
 msgid "Timeout"
 msgstr "Timeout (sek)"
 
-#: src/inc.c:646
+#: src/inc.c:685
 #, fuzzy, c-format
 msgid "Finished (%d new message(s))"
 msgstr "\t%d novih poruka\n"
 
-#: src/inc.c:649
+#: src/inc.c:688
 #, fuzzy
 msgid "Finished (no new messages)"
 msgstr "Nema nepročitanih poruka"
 
-#: src/inc.c:658
+#: src/inc.c:697
 #, fuzzy
 msgid "Some errors occurred while getting mail."
 msgstr "Došlo je do grešaka prilikom primanja pošte."
 
-#: src/inc.c:694
+#: src/inc.c:733
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "primam nove poruke s računa %s...\n"
 
-#: src/inc.c:697
+#: src/inc.c:737
+#, fuzzy, c-format
+msgid "%s: Authenticating with POP3"
+msgstr "Autorizacija"
+
+#: src/inc.c:740
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Primam nove poruke"
 
-#: src/inc.c:716
+#: src/inc.c:759
 #, fuzzy, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Povezujem se na POP3 poslužitelj: %s ..."
 
-#: src/inc.c:727
+#: src/inc.c:770
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ne mogu se povezati na POP3 poslužitelj: %s:%d\n"
 
-#: src/inc.c:806 src/send_message.c:633
+#: src/inc.c:849 src/send_message.c:641
 msgid "Authenticating..."
 msgstr "Prijavljujem se..."
 
-#: src/inc.c:807
+#: src/inc.c:850
 #, fuzzy, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Primam poruke sa %s u %s...\n"
 
-#: src/inc.c:812
+#: src/inc.c:855
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Primam broj novih poruka (STAT)..."
 
-#: src/inc.c:816
+#: src/inc.c:859
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Primam broj novih poruka (LAST)..."
 
-#: src/inc.c:820
+#: src/inc.c:863
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Primam broj novih poruka (UIDL)..."
 
-#: src/inc.c:824
+#: src/inc.c:867
 msgid "Getting the size of messages (LIST)..."
 msgstr "Primam veličinu poruka (LIST)..."
 
-#: src/inc.c:834
+#: src/inc.c:877
 #, fuzzy, c-format
 msgid "Deleting message %d"
 msgstr "Brišem poruke"
 
-#: src/inc.c:841 src/send_message.c:651
+#: src/inc.c:884 src/send_message.c:659
 msgid "Quitting"
 msgstr "Izlazim"
 
-#: src/inc.c:866
+#: src/inc.c:909
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Primam poruke (%d / %d) (%s / %s)"
 
-#: src/inc.c:887
+#: src/inc.c:930
 #, fuzzy, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Ukloni poruke sa poslužitelja nakon primanja"
 
-#: src/inc.c:1132
+#: src/inc.c:1175
 #, fuzzy
 msgid "Connection failed."
 msgstr "Veza nije uspjela"
 
-#: src/inc.c:1138
+#: src/inc.c:1181
 msgid "Error occurred while processing mail."
 msgstr "Došlo je do greške pri radu s poštom."
 
-#: src/inc.c:1143
+#: src/inc.c:1186
 #, fuzzy, c-format
 msgid ""
 "Error occurred while processing mail:\n"
 "%s"
 msgstr "Došlo je do greške pri radu s poštom."
 
-#: src/inc.c:1149
+#: src/inc.c:1192
 msgid "No disk space left."
 msgstr "Nema više mjesta na disku."
 
-#: src/inc.c:1154
+#: src/inc.c:1197
 #, fuzzy
 msgid "Can't write file."
 msgstr "Ne mogu pisati u datoteku.\n"
 
-#: src/inc.c:1159
+#: src/inc.c:1202
 #, fuzzy
 msgid "Socket error."
 msgstr "protokol greška\n"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1165 src/send_message.c:586 src/send_message.c:774
+#: src/inc.c:1208 src/send_message.c:594 src/send_message.c:782
 msgid "Connection closed by the remote host."
 msgstr ""
 
-#: src/inc.c:1171
+#: src/inc.c:1214
 #, fuzzy
 msgid "Mailbox is locked."
 msgstr "Postavke sandučića"
 
-#: src/inc.c:1175
+#: src/inc.c:1218
 #, fuzzy, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
 msgstr "Postavke sandučića"
 
-#: src/inc.c:1181 src/send_message.c:759
+#: src/inc.c:1224 src/send_message.c:767
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Autorizacija"
 
-#: src/inc.c:1186 src/send_message.c:762
+#: src/inc.c:1229 src/send_message.c:770
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Autorizacija"
 
-#: src/inc.c:1191 src/send_message.c:778
+#: src/inc.c:1234 src/send_message.c:786
 msgid "Session timed out."
 msgstr ""
 
-#: src/inc.c:1227
+#: src/inc.c:1270
 #, fuzzy
 msgid "Incorporation cancelled\n"
 msgstr "Prima novu poštu"
 
-#: src/inc.c:1310
+#: src/inc.c:1353
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Primam nove poruke s %s u %s...\n"
@@ -3857,7 +3867,7 @@ msgstr "Prima novu poštu sa svih računa"
 msgid "Send queued message(s)"
 msgstr "Šalje odložene poruke"
 
-#: src/mainwindow.c:2377 src/prefs_account_dialog.c:530
+#: src/mainwindow.c:2377 src/prefs_account_dialog.c:531
 #: src/prefs_common_dialog.c:667 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Kreiraj"
@@ -4201,228 +4211,228 @@ msgstr ""
 "Pogrešna lozinka! Pokušajte ponovo...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:426
+#: src/prefs_account_dialog.c:427
 msgid "Opening account preferences window...\n"
 msgstr "Otvaram prozor za postavke računa...\n"
 
-#: src/prefs_account_dialog.c:459
+#: src/prefs_account_dialog.c:460
 #, c-format
 msgid "Account%d"
 msgstr "Račun%d"
 
-#: src/prefs_account_dialog.c:478
+#: src/prefs_account_dialog.c:479
 msgid "Preferences for new account"
 msgstr "Postavke za novi račun"
 
-#: src/prefs_account_dialog.c:483
+#: src/prefs_account_dialog.c:484
 msgid "Account preferences"
 msgstr "Postavke računa"
 
-#: src/prefs_account_dialog.c:506
+#: src/prefs_account_dialog.c:507
 msgid "Creating account preferences window...\n"
 msgstr "Kreiram prozor za postvake računa...\n"
 
-#: src/prefs_account_dialog.c:526 src/prefs_common_dialog.c:663
+#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:663
 msgid "Receive"
 msgstr "Primanje"
 
-#: src/prefs_account_dialog.c:533 src/prefs_common_dialog.c:674
+#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:674
 msgid "Privacy"
 msgstr "Privatnost"
 
-#: src/prefs_account_dialog.c:537
+#: src/prefs_account_dialog.c:538
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:540 src/prefs_common_dialog.c:2155
+#: src/prefs_account_dialog.c:541 src/prefs_common_dialog.c:2155
 msgid "Advanced"
 msgstr "Napredno"
 
-#: src/prefs_account_dialog.c:589
+#: src/prefs_account_dialog.c:590
 msgid "Name of this account"
 msgstr "Ime ovog računa"
 
-#: src/prefs_account_dialog.c:598
+#: src/prefs_account_dialog.c:599
 msgid "Set as default"
 msgstr "Postavi kao uobičajeni"
 
-#: src/prefs_account_dialog.c:602
+#: src/prefs_account_dialog.c:603
 msgid "Personal information"
 msgstr "Osobne informacije"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:612
 msgid "Full name"
 msgstr "Puno ime"
 
-#: src/prefs_account_dialog.c:617
+#: src/prefs_account_dialog.c:618
 msgid "Mail address"
 msgstr "E-mail adresa"
 
-#: src/prefs_account_dialog.c:623
+#: src/prefs_account_dialog.c:624
 msgid "Organization"
 msgstr "Organizacija"
 
-#: src/prefs_account_dialog.c:647
+#: src/prefs_account_dialog.c:648
 msgid "Server information"
 msgstr "Informacije o poslužitelju"
 
-#: src/prefs_account_dialog.c:668 src/prefs_account_dialog.c:824
-#: src/prefs_account_dialog.c:1468
+#: src/prefs_account_dialog.c:669 src/prefs_account_dialog.c:825
+#: src/prefs_account_dialog.c:1466
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:670 src/prefs_account_dialog.c:932
-#: src/prefs_account_dialog.c:1485 src/prefs_account_dialog.c:1667
+#: src/prefs_account_dialog.c:671 src/prefs_account_dialog.c:933
+#: src/prefs_account_dialog.c:1483 src/prefs_account_dialog.c:1665
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:672
+#: src/prefs_account_dialog.c:673
 msgid "News (NNTP)"
 msgstr "News (NNTP)"
 
-#: src/prefs_account_dialog.c:674
+#: src/prefs_account_dialog.c:675
 msgid "None (local)"
 msgstr "Ništa (lokalno)"
 
-#: src/prefs_account_dialog.c:687
+#: src/prefs_account_dialog.c:688
 msgid "This server requires authentication"
 msgstr "Ovaj server zahtijeva autorizaciju"
 
-#: src/prefs_account_dialog.c:726
+#: src/prefs_account_dialog.c:727
 msgid "News server"
 msgstr "News poslužitelj"
 
-#: src/prefs_account_dialog.c:732
+#: src/prefs_account_dialog.c:733
 msgid "Server for receiving"
 msgstr "Poslužitelj za primanje"
 
-#: src/prefs_account_dialog.c:738
+#: src/prefs_account_dialog.c:739
 msgid "SMTP server (send)"
 msgstr "SMTP poslužitelj (slanje)"
 
-#: src/prefs_account_dialog.c:745 src/prefs_account_dialog.c:1129
+#: src/prefs_account_dialog.c:746 src/prefs_account_dialog.c:1130
 msgid "User ID"
 msgstr "ID korisnika"
 
-#: src/prefs_account_dialog.c:751 src/prefs_account_dialog.c:1138
+#: src/prefs_account_dialog.c:752 src/prefs_account_dialog.c:1139
 msgid "Password"
 msgstr "Lozinka"
 
-#: src/prefs_account_dialog.c:832
+#: src/prefs_account_dialog.c:833
 #, fuzzy
 msgid "Use secure authentication (APOP)"
 msgstr "Ovaj server zahtijeva autorizaciju"
 
-#: src/prefs_account_dialog.c:835
+#: src/prefs_account_dialog.c:836
 msgid "Remove messages on server when received"
 msgstr "Ukloni poruke sa poslužitelja nakon primanja"
 
-#: src/prefs_account_dialog.c:846
+#: src/prefs_account_dialog.c:847
 #, fuzzy
 msgid "Remove after"
 msgstr "Ukloni spis"
 
-#: src/prefs_account_dialog.c:855
+#: src/prefs_account_dialog.c:856
 #, fuzzy
 msgid "days"
 msgstr "Uvijek"
 
-#: src/prefs_account_dialog.c:872
+#: src/prefs_account_dialog.c:873
 msgid "0 days: remove immediately"
 msgstr ""
 
-#: src/prefs_account_dialog.c:882
+#: src/prefs_account_dialog.c:883
 msgid "Download all messages on server"
 msgstr "Primi sve poruke sa poslužitelja"
 
-#: src/prefs_account_dialog.c:888
+#: src/prefs_account_dialog.c:889
 #, fuzzy
 msgid "Receive size limit"
 msgstr "Prikaži dijalog primanja"
 
-#: src/prefs_account_dialog.c:895 src/prefs_filter_edit.c:574
+#: src/prefs_account_dialog.c:896 src/prefs_filter_edit.c:574
 #: src/prefs_filter_edit.c:1003
 msgid "KB"
 msgstr ""
 
-#: src/prefs_account_dialog.c:902
+#: src/prefs_account_dialog.c:903
 msgid "Filter messages on receiving"
 msgstr "Filtriraj poruke pri primanju"
 
-#: src/prefs_account_dialog.c:910
+#: src/prefs_account_dialog.c:911
 msgid "Default inbox"
 msgstr "Uobičajeni sandučić"
 
-#: src/prefs_account_dialog.c:930
+#: src/prefs_account_dialog.c:931
 #, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "(Nefiltrirane poruke biti će spremljene u ovaj spis)"
 
-#: src/prefs_account_dialog.c:943 src/prefs_account_dialog.c:1099
+#: src/prefs_account_dialog.c:944 src/prefs_account_dialog.c:1100
 #, fuzzy
 msgid "Authentication method"
 msgstr "Autorizacija"
 
-#: src/prefs_account_dialog.c:953 src/prefs_account_dialog.c:1109
+#: src/prefs_account_dialog.c:954 src/prefs_account_dialog.c:1110
 #: src/prefs_common_dialog.c:881 src/prefs_common_dialog.c:2525
 msgid "Automatic"
 msgstr ""
 
-#: src/prefs_account_dialog.c:961
+#: src/prefs_account_dialog.c:962
 msgid "Only check INBOX on receiving"
 msgstr ""
 
-#: src/prefs_account_dialog.c:963
+#: src/prefs_account_dialog.c:964
 msgid "News"
 msgstr "News"
 
-#: src/prefs_account_dialog.c:975
+#: src/prefs_account_dialog.c:976
 #, fuzzy
 msgid "Maximum number of articles to download"
 msgstr ""
 "Maksimalni broj članaka za skidanje\n"
 "(0 je za neograničeno)"
 
-#: src/prefs_account_dialog.c:992
+#: src/prefs_account_dialog.c:993
 #, fuzzy
 msgid "No limit if 0 is specified."
 msgstr "Nije upisan primatelj."
 
-#: src/prefs_account_dialog.c:996
+#: src/prefs_account_dialog.c:997
 #, fuzzy
 msgid "`Get all' checks for new messages on this account"
 msgstr "`Primi sve' uzima poštu s ovog računa"
 
-#: src/prefs_account_dialog.c:1049 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1050 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "Zaglavlje"
 
-#: src/prefs_account_dialog.c:1056
+#: src/prefs_account_dialog.c:1057
 msgid "Add Date header field"
 msgstr "Dodaj polje Datum u zaglavlje"
 
-#: src/prefs_account_dialog.c:1057
+#: src/prefs_account_dialog.c:1058
 msgid "Generate Message-ID"
 msgstr "Generiraj ID poruke"
 
-#: src/prefs_account_dialog.c:1064
+#: src/prefs_account_dialog.c:1065
 msgid "Add user-defined header"
 msgstr "Dodatna zaglavlja"
 
-#: src/prefs_account_dialog.c:1066 src/prefs_common_dialog.c:1585
+#: src/prefs_account_dialog.c:1067 src/prefs_common_dialog.c:1585
 #: src/prefs_common_dialog.c:1612
 msgid " Edit... "
 msgstr " Uredi... "
 
-#: src/prefs_account_dialog.c:1076
+#: src/prefs_account_dialog.c:1077
 msgid "Authentication"
 msgstr "Autorizacija"
 
-#: src/prefs_account_dialog.c:1084
+#: src/prefs_account_dialog.c:1085
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP autorizacija (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1160
+#: src/prefs_account_dialog.c:1161
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
@@ -4432,198 +4442,198 @@ msgstr ""
 msgid "Authenticate with POP3 before sending"
 msgstr "Autoriziraj s POP3 prije slanja"
 
-#: src/prefs_account_dialog.c:1228
+#: src/prefs_account_dialog.c:1226
 #, fuzzy
 msgid "Command output"
 msgstr "Naredba"
 
-#: src/prefs_account_dialog.c:1239 src/prefs_folder_item.c:331
+#: src/prefs_account_dialog.c:1237 src/prefs_folder_item.c:331
 msgid "Automatically set the following addresses"
 msgstr "Automatski postavi slijedeće adrese"
 
-#: src/prefs_account_dialog.c:1248
+#: src/prefs_account_dialog.c:1246
 msgid "Cc"
 msgstr "Cc"
 
-#: src/prefs_account_dialog.c:1261
+#: src/prefs_account_dialog.c:1259
 msgid "Bcc"
 msgstr "Bcc"
 
-#: src/prefs_account_dialog.c:1274
+#: src/prefs_account_dialog.c:1272
 msgid "Reply-To"
 msgstr "Odvovori-Na"
 
-#: src/prefs_account_dialog.c:1327
+#: src/prefs_account_dialog.c:1325
 msgid "Sign message by default"
 msgstr "Uvijek potpiši poruke"
 
-#: src/prefs_account_dialog.c:1329
+#: src/prefs_account_dialog.c:1327
 msgid "Encrypt message by default"
 msgstr "Uvijek kriptiraj poruke"
 
-#: src/prefs_account_dialog.c:1331
+#: src/prefs_account_dialog.c:1329
 msgid "Encrypt when replying to encrypted message"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1331
 msgid "Use ASCII-armored format for encryption"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1335
+#: src/prefs_account_dialog.c:1333
 #, fuzzy
 msgid "Use clear text signature"
 msgstr "Unesi potpis"
 
-#: src/prefs_account_dialog.c:1340
+#: src/prefs_account_dialog.c:1338
 msgid "Sign key"
 msgstr "Ključ potpisa"
 
-#: src/prefs_account_dialog.c:1348
+#: src/prefs_account_dialog.c:1346
 msgid "Use default GnuPG key"
 msgstr "Koristi uobičajeni GnuPG ključ"
 
-#: src/prefs_account_dialog.c:1357
+#: src/prefs_account_dialog.c:1355
 msgid "Select key by your email address"
 msgstr "Odaberi ključ po e-mail adresi"
 
-#: src/prefs_account_dialog.c:1366
+#: src/prefs_account_dialog.c:1364
 msgid "Specify key manually"
 msgstr "Neki drugi ključ"
 
-#: src/prefs_account_dialog.c:1382
+#: src/prefs_account_dialog.c:1380
 msgid "User or key ID:"
 msgstr "ID ključa ili korisnika:"
 
-#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
-#: src/prefs_account_dialog.c:1509 src/prefs_account_dialog.c:1527
+#: src/prefs_account_dialog.c:1474 src/prefs_account_dialog.c:1491
+#: src/prefs_account_dialog.c:1507 src/prefs_account_dialog.c:1525
 msgid "Don't use SSL"
 msgstr "Ne koristi SSL"
 
-#: src/prefs_account_dialog.c:1479
+#: src/prefs_account_dialog.c:1477
 msgid "Use SSL for POP3 connection"
 msgstr "Koristi SSL za POP3 veze"
 
-#: src/prefs_account_dialog.c:1482 src/prefs_account_dialog.c:1499
-#: src/prefs_account_dialog.c:1533
+#: src/prefs_account_dialog.c:1480 src/prefs_account_dialog.c:1497
+#: src/prefs_account_dialog.c:1531
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Korsiti STARTTLS naredbu za pokretanje SSL-a"
 
-#: src/prefs_account_dialog.c:1496
+#: src/prefs_account_dialog.c:1494
 msgid "Use SSL for IMAP4 connection"
 msgstr "Koristi SSL za IMAP4 veze"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1500
 msgid "NNTP"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1517
+#: src/prefs_account_dialog.c:1515
 #, fuzzy
 msgid "Use SSL for NNTP connection"
 msgstr "Koristi SSL za SMTP veze"
 
-#: src/prefs_account_dialog.c:1519
+#: src/prefs_account_dialog.c:1517
 msgid "Send (SMTP)"
 msgstr "Slanje (SMTP)"
 
-#: src/prefs_account_dialog.c:1530
+#: src/prefs_account_dialog.c:1528
 msgid "Use SSL for SMTP connection"
 msgstr "Koristi SSL za SMTP veze"
 
-#: src/prefs_account_dialog.c:1541
+#: src/prefs_account_dialog.c:1539
 msgid "Use non-blocking SSL"
 msgstr ""
 
-#: src/prefs_account_dialog.c:1544
+#: src/prefs_account_dialog.c:1542
 msgid "Turn this off if you have problems in SSL connection."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1634
+#: src/prefs_account_dialog.c:1632
 msgid "Specify SMTP port"
 msgstr "Specificirani SMTP port"
 
-#: src/prefs_account_dialog.c:1640
+#: src/prefs_account_dialog.c:1638
 msgid "Specify POP3 port"
 msgstr "Specificirani POP3 port"
 
-#: src/prefs_account_dialog.c:1646
+#: src/prefs_account_dialog.c:1644
 msgid "Specify IMAP4 port"
 msgstr "Specificirani IMAP4 port"
 
-#: src/prefs_account_dialog.c:1652
+#: src/prefs_account_dialog.c:1650
 msgid "Specify NNTP port"
 msgstr "Specificirani NNTP port"
 
-#: src/prefs_account_dialog.c:1657
+#: src/prefs_account_dialog.c:1655
 msgid "Specify domain name"
 msgstr "Specificirano ime domene"
 
-#: src/prefs_account_dialog.c:1678
+#: src/prefs_account_dialog.c:1676
 msgid "IMAP server directory"
 msgstr "Direktorij IMAP poslužitelja"
 
-#: src/prefs_account_dialog.c:1688
+#: src/prefs_account_dialog.c:1686
 msgid "Only the subfolders of this directory will be displayed."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1691
+#: src/prefs_account_dialog.c:1689
 #, fuzzy
 msgid "Clear all message caches on exit"
 msgstr "Primi sve poruke sa poslužitelja"
 
-#: src/prefs_account_dialog.c:1736
+#: src/prefs_account_dialog.c:1734
 #, fuzzy
 msgid "Put sent messages in"
 msgstr "Spremi poslane poruke u poslano"
 
-#: src/prefs_account_dialog.c:1738
+#: src/prefs_account_dialog.c:1736
 #, fuzzy
 msgid "Put draft messages in"
 msgstr "Sažmi poruke na"
 
-#: src/prefs_account_dialog.c:1740
+#: src/prefs_account_dialog.c:1738
 #, fuzzy
 msgid "Put queued messages in"
 msgstr "Obriši poruku/e"
 
-#: src/prefs_account_dialog.c:1742
+#: src/prefs_account_dialog.c:1740
 #, fuzzy
 msgid "Put deleted messages in"
 msgstr "Obriši poruku/e"
 
-#: src/prefs_account_dialog.c:1806
+#: src/prefs_account_dialog.c:1804
 #, fuzzy
 msgid "Account name is not entered."
 msgstr "E-mail adresa nije upisana."
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1808
 msgid "Mail address is not entered."
 msgstr "E-mail adresa nije upisana."
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1813
 msgid "SMTP server is not entered."
 msgstr "SMTP poslužitelj nije upisan."
 
-#: src/prefs_account_dialog.c:1820
+#: src/prefs_account_dialog.c:1818
 msgid "User ID is not entered."
 msgstr "ID korisnika nije upisan."
 
-#: src/prefs_account_dialog.c:1825
+#: src/prefs_account_dialog.c:1823
 msgid "POP3 server is not entered."
 msgstr "POP3 poslužitelj nije upisan."
 
-#: src/prefs_account_dialog.c:1830
+#: src/prefs_account_dialog.c:1828
 msgid "IMAP4 server is not entered."
 msgstr "IMAP4 poslužitelj nije upisan."
 
-#: src/prefs_account_dialog.c:1835
+#: src/prefs_account_dialog.c:1833
 msgid "NNTP server is not entered."
 msgstr "NNTP poslužitelj nije upisan."
 
-#: src/prefs_account_dialog.c:1861
+#: src/prefs_account_dialog.c:1859
 msgid "Specified folder is not a queue folder."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1935
+#: src/prefs_account_dialog.c:1933
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -6236,88 +6246,88 @@ msgid ""
 "Do you trust it enough to use it anyway?"
 msgstr ""
 
-#: src/send_message.c:183
+#: src/send_message.c:184
 msgid "Queued message header is broken.\n"
 msgstr "Zaglavlje odložene poruke je loše.\n"
 
-#: src/send_message.c:402
+#: src/send_message.c:403
 #, fuzzy, c-format
 msgid "Sending message using command: %s\n"
 msgstr "Šaljem poruku (%d / %d bytea)"
 
-#: src/send_message.c:411
+#: src/send_message.c:412
 #, fuzzy, c-format
 msgid "Can't execute command: %s"
 msgstr "Ne mogu izvršiti vanjsku naredbu: %s\n"
 
-#: src/send_message.c:446
+#: src/send_message.c:447
 #, fuzzy, c-format
 msgid "Error occurred while executing command: %s"
 msgstr "Došlo je do greške pri radu s poštom."
 
-#: src/send_message.c:552
+#: src/send_message.c:560
 msgid "Connecting"
 msgstr "Povezujem se"
 
-#: src/send_message.c:554
+#: src/send_message.c:562
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Spajam se na SMTP poslužitelj: %s ..."
 
-#: src/send_message.c:623
+#: src/send_message.c:631
 #, fuzzy
 msgid "Sending HELO..."
 msgstr "Šaljem MAIL FROM..."
 
-#: src/send_message.c:624 src/send_message.c:629 src/send_message.c:634
+#: src/send_message.c:632 src/send_message.c:637 src/send_message.c:642
 #, fuzzy
 msgid "Authenticating"
 msgstr "Autorizacija"
 
-#: src/send_message.c:625 src/send_message.c:630
+#: src/send_message.c:633 src/send_message.c:638
 #, fuzzy
 msgid "Sending message..."
 msgstr "Šaljem poruku"
 
-#: src/send_message.c:628
+#: src/send_message.c:636
 #, fuzzy
 msgid "Sending EHLO..."
 msgstr "Šaljem MAIL FROM..."
 
-#: src/send_message.c:637
+#: src/send_message.c:645
 msgid "Sending MAIL FROM..."
 msgstr "Šaljem MAIL FROM..."
 
-#: src/send_message.c:638 src/send_message.c:642 src/send_message.c:647
+#: src/send_message.c:646 src/send_message.c:650 src/send_message.c:655
 msgid "Sending"
 msgstr "Šaljem"
 
-#: src/send_message.c:641
+#: src/send_message.c:649
 msgid "Sending RCPT TO..."
 msgstr "Šaljem RCPT TO..."
 
-#: src/send_message.c:646
+#: src/send_message.c:654
 msgid "Sending DATA..."
 msgstr "Šaljem DATA..."
 
-#: src/send_message.c:650
+#: src/send_message.c:658
 msgid "Quitting..."
 msgstr "Završavam..."
 
-#: src/send_message.c:678
+#: src/send_message.c:686
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Šaljem poruku (%d / %d bytea)"
 
-#: src/send_message.c:706
+#: src/send_message.c:714
 msgid "Sending message"
 msgstr "Šaljem poruku"
 
-#: src/send_message.c:750 src/send_message.c:770
+#: src/send_message.c:758 src/send_message.c:778
 msgid "Error occurred while sending the message."
 msgstr "Došlo je do greške prilikom slanja poruke."
 
-#: src/send_message.c:753
+#: src/send_message.c:761
 #, fuzzy, c-format
 msgid ""
 "Error occurred while sending the message:\n"

@@ -127,6 +127,8 @@ struct _Pop3Session
 
 	GHashTable *uidl_table;
 
+	gboolean auth_only;
+
 	gboolean new_msg_exist;
 	gboolean uidl_is_valid;
 

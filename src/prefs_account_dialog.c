@@ -114,7 +114,7 @@ static struct Send {
 	GtkWidget *smtp_auth_type_optmenu;
 	GtkWidget *smtp_uid_entry;
 	GtkWidget *smtp_pass_entry;
-	/* GtkWidget *pop_bfr_smtp_chkbtn; */
+	GtkWidget *pop_bfr_smtp_chkbtn;
 } p_send;
 
 static struct Compose {
@@ -287,7 +287,8 @@ static PrefsUIData ui_data[] = {
 	{"smtp_password", &p_send.smtp_pass_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 
-	/* {"pop_before_smtp", NULL, NULL, NULL}, */
+	{"pop_before_smtp", &p_send.pop_bfr_smtp_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Compose */
 	{"signature_type", &compose.sigfile_radiobtn,
@@ -1039,7 +1040,7 @@ static void prefs_account_send_create(void)
 	GtkWidget *smtp_uid_entry;
 	GtkWidget *smtp_pass_entry;
 	GtkWidget *vbox_spc;
-	/* GtkWidget *pop_bfr_smtp_chkbtn; */
+	GtkWidget *pop_bfr_smtp_chkbtn;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -1167,11 +1168,8 @@ static void prefs_account_send_create(void)
 
 	SET_TOGGLE_SENSITIVITY (smtp_auth_chkbtn, vbox4);
 
-#if 0
 	PACK_CHECK_BUTTON (vbox3, pop_bfr_smtp_chkbtn,
 		_("Authenticate with POP3 before sending"));
-	gtk_widget_set_sensitive(pop_bfr_smtp_chkbtn, FALSE);
-#endif
 
 	p_send.date_chkbtn      = date_chkbtn;
 	p_send.msgid_chkbtn     = msgid_chkbtn;
@@ -1181,7 +1179,7 @@ static void prefs_account_send_create(void)
 	p_send.smtp_auth_type_optmenu = optmenu;
 	p_send.smtp_uid_entry         = smtp_uid_entry;
 	p_send.smtp_pass_entry        = smtp_pass_entry;
-	/* p_send.pop_bfr_smtp_chkbtn    = pop_bfr_smtp_chkbtn; */
+	p_send.pop_bfr_smtp_chkbtn    = pop_bfr_smtp_chkbtn;
 }
 
 static void prefs_account_compose_create(void)

@@ -758,7 +758,10 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 		break;
 	case POP3_GETAUTH_PASS:
 	case POP3_GETAUTH_APOP:
-		pop3_getrange_stat_send(pop3_session);
+		if (pop3_session->auth_only)
+			pop3_logout_send(pop3_session);
+		else
+			pop3_getrange_stat_send(pop3_session);
 		break;
 	case POP3_GETRANGE_STAT:
 		if (pop3_getrange_stat_recv(pop3_session, body) < 0)

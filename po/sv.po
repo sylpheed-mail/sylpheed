@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 13:05+0900\n"
+"POT-Creation-Date: 2006-10-30 15:44+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Roger Lindmark <roger.lindmark@bredband.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -694,7 +694,7 @@ msgstr ""
 msgid "Name"
 msgstr "Namn"
 
-#: src/account_dialog.c:371 src/prefs_account_dialog.c:658
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:659
 msgid "Protocol"
 msgstr "Protokoll"
 
@@ -1152,7 +1152,7 @@ msgid "Group"
 msgstr "Grupp"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3160 src/folderview.c:377 src/prefs_account_dialog.c:1695
+#: src/addressbook.c:3160 src/folderview.c:377 src/prefs_account_dialog.c:1693
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "Mapp"
@@ -1185,7 +1185,7 @@ msgstr "Notera"
 msgid "Warning"
 msgstr "Varning"
 
-#: src/alertpanel.c:168 src/inc.c:593
+#: src/alertpanel.c:168 src/inc.c:632
 msgid "Error"
 msgstr "Fel"
 
@@ -1603,7 +1603,7 @@ msgstr ""
 "Konto för att skicka post är inte specificerat.\n"
 "Välj ett e-postkonto innan du skickar."
 
-#: src/compose.c:2761 src/send_message.c:299
+#: src/compose.c:2761 src/send_message.c:300
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Fel uppstod när meddelandet skulle skickas till %s."
@@ -1710,7 +1710,7 @@ msgstr "MIME-typ"
 msgid "Size"
 msgstr "Storlek"
 
-#: src/compose.c:4799 src/mainwindow.c:2366 src/prefs_account_dialog.c:528
+#: src/compose.c:4799 src/mainwindow.c:2366 src/prefs_account_dialog.c:529
 #: src/prefs_common_dialog.c:665
 msgid "Send"
 msgstr "Skicka"
@@ -1752,7 +1752,7 @@ msgid "Attach file"
 msgstr "Bifoga fil"
 
 #. signature
-#: src/compose.c:4848 src/prefs_account_dialog.c:1209
+#: src/compose.c:4848 src/prefs_account_dialog.c:1207
 #: src/prefs_common_dialog.c:989
 msgid "Signature"
 msgstr "Signatur"
@@ -1961,7 +1961,7 @@ msgid " Check File "
 msgstr " Kontrollera fil "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1220
+#: src/prefs_account_dialog.c:1218
 msgid "File"
 msgstr "Fil"
 
@@ -2039,7 +2039,7 @@ msgid "Edit JPilot Entry"
 msgstr "Redigera JPilot-post"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:535 src/prefs_account_dialog.c:1723
+#: src/importldif.c:535 src/prefs_account_dialog.c:1721
 #: src/prefs_common_dialog.c:1882
 msgid " ... "
 msgstr " ... "
@@ -2104,7 +2104,7 @@ msgstr "Väntetid (sek)"
 msgid "Maximum Entries"
 msgstr "Maximalt antal poster"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:524
+#: src/editldap.c:471 src/prefs_account_dialog.c:525
 msgid "Basic"
 msgstr "Grundläggande"
 
@@ -2161,7 +2161,7 @@ msgid "Exporting file:"
 msgstr "Exporterar fil:"
 
 #: src/export.c:196 src/export.c:202 src/import.c:202 src/import.c:208
-#: src/prefs_account_dialog.c:919
+#: src/prefs_account_dialog.c:920
 msgid " Select... "
 msgstr " Välj... "
 
@@ -2613,133 +2613,143 @@ msgstr "Avsluta"
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d nya meddelanden"
 
-#: src/inc.c:373
+#: src/inc.c:386
+#, fuzzy
+msgid "Authenticating with POP3"
+msgstr "Autentiserar"
+
+#: src/inc.c:412
 msgid "Retrieving new messages"
 msgstr "Hämtar nya meddelanden"
 
-#: src/inc.c:416
+#: src/inc.c:455
 msgid "Standby"
 msgstr "Vänta"
 
-#: src/inc.c:550 src/inc.c:599
+#: src/inc.c:589 src/inc.c:638
 msgid "Cancelled"
 msgstr "Avbruten"
 
-#: src/inc.c:561
+#: src/inc.c:600
 msgid "Retrieving"
 msgstr "Hämtar"
 
-#: src/inc.c:570
+#: src/inc.c:609
 #, c-format
 msgid "Done (%d message(s) (%s) received)"
 msgstr "Färdig (%d meddelande(n) (%s) mottagna)"
 
-#: src/inc.c:574
+#: src/inc.c:613
 msgid "Done (no new messages)"
 msgstr "Färdig (inga nya meddelanden)"
 
-#: src/inc.c:580
+#: src/inc.c:619
 msgid "Connection failed"
 msgstr "Förbindelse misslyckades"
 
-#: src/inc.c:583
+#: src/inc.c:622
 msgid "Auth failed"
 msgstr "Autentisering misslyckades"
 
-#: src/inc.c:586
+#: src/inc.c:625
 msgid "Locked"
 msgstr "Låst"
 
-#: src/inc.c:596
+#: src/inc.c:635
 msgid "Timeout"
 msgstr "Slut på väntetid"
 
-#: src/inc.c:646
+#: src/inc.c:685
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Avslutad (%d nya meddelanden)"
 
-#: src/inc.c:649
+#: src/inc.c:688
 msgid "Finished (no new messages)"
 msgstr "Avslutad (inga nya meddelanden)"
 
-#: src/inc.c:658
+#: src/inc.c:697
 msgid "Some errors occurred while getting mail."
 msgstr "Fel uppstod vid hämtning av post."
 
-#: src/inc.c:694
+#: src/inc.c:733
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "hämtar nya meddelanden från kontot %s...\n"
 
-#: src/inc.c:697
+#: src/inc.c:737
+#, fuzzy, c-format
+msgid "%s: Authenticating with POP3"
+msgstr "Autentiserar"
+
+#: src/inc.c:740
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Hämtar nya meddelanden"
 
-#: src/inc.c:716
+#: src/inc.c:759
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Ansluter till POP3-server: %s ..."
 
-#: src/inc.c:727
+#: src/inc.c:770
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Kan inte ansluta till POP3-server: %s:%d\n"
 
-#: src/inc.c:806 src/send_message.c:633
+#: src/inc.c:849 src/send_message.c:641
 msgid "Authenticating..."
 msgstr "Autentiserar..."
 
-#: src/inc.c:807
+#: src/inc.c:850
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Hämtar meddelanden från %s..."
 
-#: src/inc.c:812
+#: src/inc.c:855
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Tar emot meddelandenas antal (STAT)..."
 
-#: src/inc.c:816
+#: src/inc.c:859
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Tar emot meddelandenas antal (LAST)..."
 
-#: src/inc.c:820
+#: src/inc.c:863
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Tar emot meddelandenas antal (UIDL)..."
 
-#: src/inc.c:824
+#: src/inc.c:867
 msgid "Getting the size of messages (LIST)..."
 msgstr "Tar emot meddelandenas storlek (LIST)..."
 
-#: src/inc.c:834
+#: src/inc.c:877
 #, c-format
 msgid "Deleting message %d"
 msgstr "Tar bort meddelande %d"
 
-#: src/inc.c:841 src/send_message.c:651
+#: src/inc.c:884 src/send_message.c:659
 msgid "Quitting"
 msgstr "Avslutar"
 
-#: src/inc.c:866
+#: src/inc.c:909
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Tar emot meddelande (%d / %d) (%s / %s)"
 
-#: src/inc.c:887
+#: src/inc.c:930
 #, c-format
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Hämtar (%d meddelande(n) (%s) mottagna)"
 
-#: src/inc.c:1132
+#: src/inc.c:1175
 msgid "Connection failed."
 msgstr "Förbindelse misslyckades."
 
-#: src/inc.c:1138
+#: src/inc.c:1181
 msgid "Error occurred while processing mail."
 msgstr "Fel uppstod när e-posten behandlades."
 
-#: src/inc.c:1143
+#: src/inc.c:1186
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2748,28 +2758,28 @@ msgstr ""
 "Fel uppstod när e-posten behandlades:\n"
 "%s"
 
-#: src/inc.c:1149
+#: src/inc.c:1192
 msgid "No disk space left."
 msgstr "Inget diskutrymme kvar."
 
-#: src/inc.c:1154
+#: src/inc.c:1197
 msgid "Can't write file."
 msgstr "Kan inte skriva fil."
 
-#: src/inc.c:1159
+#: src/inc.c:1202
 msgid "Socket error."
 msgstr "Fel på uttag (socket)."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1165 src/send_message.c:586 src/send_message.c:774
+#: src/inc.c:1208 src/send_message.c:594 src/send_message.c:782
 msgid "Connection closed by the remote host."
 msgstr "Anslutningen stängdes av fjärrvärden."
 
-#: src/inc.c:1171
+#: src/inc.c:1214
 msgid "Mailbox is locked."
 msgstr "Brevlådan är låst."
 
-#: src/inc.c:1175
+#: src/inc.c:1218
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2778,11 +2788,11 @@ msgstr ""
 "Brevlådan är låst:\n"
 "%s"
 
-#: src/inc.c:1181 src/send_message.c:759
+#: src/inc.c:1224 src/send_message.c:767
 msgid "Authentication failed."
 msgstr "Autentisering misslyckades."
 
-#: src/inc.c:1186 src/send_message.c:762
+#: src/inc.c:1229 src/send_message.c:770
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2791,15 +2801,15 @@ msgstr ""
 "Autentisering misslyckades:\n"
 "%s"
 
-#: src/inc.c:1191 src/send_message.c:778
+#: src/inc.c:1234 src/send_message.c:786
 msgid "Session timed out."
 msgstr "Sessionens väntetid tog slut."
 
-#: src/inc.c:1227
+#: src/inc.c:1270
 msgid "Incorporation cancelled\n"
 msgstr "Inkorporering avbruten\n"
 
-#: src/inc.c:1310
+#: src/inc.c:1353
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Hämtar nya meddelanden från %s till %s...\n"
@@ -3679,7 +3689,7 @@ msgstr "Hämta ny post från alla konton"
 msgid "Send queued message(s)"
 msgstr "Skicka köade meddelanden"
 
-#: src/mainwindow.c:2377 src/prefs_account_dialog.c:530
+#: src/mainwindow.c:2377 src/prefs_account_dialog.c:531
 #: src/prefs_common_dialog.c:667 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "Skriv"
@@ -4017,219 +4027,219 @@ msgstr ""
 "Fel lösenfras! Försök igen...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:426
+#: src/prefs_account_dialog.c:427
 msgid "Opening account preferences window...\n"
 msgstr "Öppnar fönster för kontoinställningar...\n"
 
-#: src/prefs_account_dialog.c:459
+#: src/prefs_account_dialog.c:460
 #, c-format
 msgid "Account%d"
 msgstr "Konto%d"
 
-#: src/prefs_account_dialog.c:478
+#: src/prefs_account_dialog.c:479
 msgid "Preferences for new account"
 msgstr "Inställningar för nytt konto"
 
-#: src/prefs_account_dialog.c:483
+#: src/prefs_account_dialog.c:484
 msgid "Account preferences"
 msgstr "Kontoinställningar"
 
-#: src/prefs_account_dialog.c:506
+#: src/prefs_account_dialog.c:507
 msgid "Creating account preferences window...\n"
 msgstr "Skapar fönster för kontoinställningar...\n"
 
-#: src/prefs_account_dialog.c:526 src/prefs_common_dialog.c:663
+#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:663
 msgid "Receive"
 msgstr "Ta emot"
 
-#: src/prefs_account_dialog.c:533 src/prefs_common_dialog.c:674
+#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:674
 msgid "Privacy"
 msgstr "Integritet"
 
-#: src/prefs_account_dialog.c:537
+#: src/prefs_account_dialog.c:538
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:540 src/prefs_common_dialog.c:2155
+#: src/prefs_account_dialog.c:541 src/prefs_common_dialog.c:2155
 msgid "Advanced"
 msgstr "Avancerat"
 
-#: src/prefs_account_dialog.c:589
+#: src/prefs_account_dialog.c:590
 msgid "Name of this account"
 msgstr "Detta kontos namn"
 
-#: src/prefs_account_dialog.c:598
+#: src/prefs_account_dialog.c:599
 msgid "Set as default"
 msgstr "Använd som förvalt konto"
 
-#: src/prefs_account_dialog.c:602
+#: src/prefs_account_dialog.c:603
 msgid "Personal information"
 msgstr "Personlig information"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:612
 msgid "Full name"
 msgstr "Fullst. namn"
 
-#: src/prefs_account_dialog.c:617
+#: src/prefs_account_dialog.c:618
 msgid "Mail address"
 msgstr "E-postadress"
 
-#: src/prefs_account_dialog.c:623
+#: src/prefs_account_dialog.c:624
 msgid "Organization"
 msgstr "Organisation"
 
-#: src/prefs_account_dialog.c:647
+#: src/prefs_account_dialog.c:648
 msgid "Server information"
 msgstr "Serverinformation"
 
-#: src/prefs_account_dialog.c:668 src/prefs_account_dialog.c:824
-#: src/prefs_account_dialog.c:1468
+#: src/prefs_account_dialog.c:669 src/prefs_account_dialog.c:825
+#: src/prefs_account_dialog.c:1466
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:670 src/prefs_account_dialog.c:932
-#: src/prefs_account_dialog.c:1485 src/prefs_account_dialog.c:1667
+#: src/prefs_account_dialog.c:671 src/prefs_account_dialog.c:933
+#: src/prefs_account_dialog.c:1483 src/prefs_account_dialog.c:1665
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:672
+#: src/prefs_account_dialog.c:673
 msgid "News (NNTP)"
 msgstr "Diskussionsgrupper (NNTP)"
 
-#: src/prefs_account_dialog.c:674
+#: src/prefs_account_dialog.c:675
 msgid "None (local)"
 msgstr "Inget (lokalt)"
 
-#: src/prefs_account_dialog.c:687
+#: src/prefs_account_dialog.c:688
 msgid "This server requires authentication"
 msgstr "Denna server kräver autentisering"
 
-#: src/prefs_account_dialog.c:726
+#: src/prefs_account_dialog.c:727
 msgid "News server"
 msgstr "Diskussionsgruppsserver"
 
-#: src/prefs_account_dialog.c:732
+#: src/prefs_account_dialog.c:733
 msgid "Server for receiving"
 msgstr "Server för mottagning"
 
-#: src/prefs_account_dialog.c:738
+#: src/prefs_account_dialog.c:739
 msgid "SMTP server (send)"
 msgstr "Server att skicka med (SMTP)"
 
-#: src/prefs_account_dialog.c:745 src/prefs_account_dialog.c:1129
+#: src/prefs_account_dialog.c:746 src/prefs_account_dialog.c:1130
 msgid "User ID"
 msgstr "Användar-ID"
 
-#: src/prefs_account_dialog.c:751 src/prefs_account_dialog.c:1138
+#: src/prefs_account_dialog.c:752 src/prefs_account_dialog.c:1139
 msgid "Password"
 msgstr "Lösenord"
 
-#: src/prefs_account_dialog.c:832
+#: src/prefs_account_dialog.c:833
 msgid "Use secure authentication (APOP)"
 msgstr "Använd säker autentisering (APOP)"
 
-#: src/prefs_account_dialog.c:835
+#: src/prefs_account_dialog.c:836
 msgid "Remove messages on server when received"
 msgstr "Ta bort meddelanden på server när de mottagits"
 
-#: src/prefs_account_dialog.c:846
+#: src/prefs_account_dialog.c:847
 msgid "Remove after"
 msgstr "Ta bort efter"
 
-#: src/prefs_account_dialog.c:855
+#: src/prefs_account_dialog.c:856
 msgid "days"
 msgstr "dagar"
 
-#: src/prefs_account_dialog.c:872
+#: src/prefs_account_dialog.c:873
 #, fuzzy
 msgid "0 days: remove immediately"
 msgstr "(0 dagar: ta bort direkt)"
 
-#: src/prefs_account_dialog.c:882
+#: src/prefs_account_dialog.c:883
 msgid "Download all messages on server"
 msgstr "Hämta alla meddelanden från server"
 
-#: src/prefs_account_dialog.c:888
+#: src/prefs_account_dialog.c:889
 msgid "Receive size limit"
 msgstr "Gräns för mottagningsstorlek"
 
-#: src/prefs_account_dialog.c:895 src/prefs_filter_edit.c:574
+#: src/prefs_account_dialog.c:896 src/prefs_filter_edit.c:574
 #: src/prefs_filter_edit.c:1003
 msgid "KB"
 msgstr "KB"
 
-#: src/prefs_account_dialog.c:902
+#: src/prefs_account_dialog.c:903
 msgid "Filter messages on receiving"
 msgstr "Filtrera meddelanden vid mottagning"
 
-#: src/prefs_account_dialog.c:910
+#: src/prefs_account_dialog.c:911
 msgid "Default inbox"
 msgstr "Förvald inkorg"
 
-#: src/prefs_account_dialog.c:930
+#: src/prefs_account_dialog.c:931
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "Ofiltrerade meddelanden kommer att lagras i denna mapp"
 
-#: src/prefs_account_dialog.c:943 src/prefs_account_dialog.c:1099
+#: src/prefs_account_dialog.c:944 src/prefs_account_dialog.c:1100
 msgid "Authentication method"
 msgstr "Autentiseringsmetod"
 
-#: src/prefs_account_dialog.c:953 src/prefs_account_dialog.c:1109
+#: src/prefs_account_dialog.c:954 src/prefs_account_dialog.c:1110
 #: src/prefs_common_dialog.c:881 src/prefs_common_dialog.c:2525
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: src/prefs_account_dialog.c:961
+#: src/prefs_account_dialog.c:962
 #, fuzzy
 msgid "Only check INBOX on receiving"
 msgstr "Bara vid manuell mottagning"
 
-#: src/prefs_account_dialog.c:963
+#: src/prefs_account_dialog.c:964
 msgid "News"
 msgstr "Diskussionsgrupper"
 
-#: src/prefs_account_dialog.c:975
+#: src/prefs_account_dialog.c:976
 msgid "Maximum number of articles to download"
 msgstr "Maximalt antal inlägg att hämta"
 
-#: src/prefs_account_dialog.c:992
+#: src/prefs_account_dialog.c:993
 msgid "No limit if 0 is specified."
 msgstr "Ingen begränsning om 0 är angivet."
 
-#: src/prefs_account_dialog.c:996
+#: src/prefs_account_dialog.c:997
 msgid "`Get all' checks for new messages on this account"
 msgstr "\"Hämta allt\" hämtar post på detta konto"
 
-#: src/prefs_account_dialog.c:1049 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1050 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "Brevhuvud"
 
-#: src/prefs_account_dialog.c:1056
+#: src/prefs_account_dialog.c:1057
 msgid "Add Date header field"
 msgstr "Lägg till datumfält i brevhuvud"
 
-#: src/prefs_account_dialog.c:1057
+#: src/prefs_account_dialog.c:1058
 msgid "Generate Message-ID"
 msgstr "Skapa Meddelande-ID"
 
-#: src/prefs_account_dialog.c:1064
+#: src/prefs_account_dialog.c:1065
 msgid "Add user-defined header"
 msgstr "Lägg till användardefinierat brevhuvud"
 
-#: src/prefs_account_dialog.c:1066 src/prefs_common_dialog.c:1585
+#: src/prefs_account_dialog.c:1067 src/prefs_common_dialog.c:1585
 #: src/prefs_common_dialog.c:1612
 msgid " Edit... "
 msgstr "Redigera..."
 
-#: src/prefs_account_dialog.c:1076
+#: src/prefs_account_dialog.c:1077
 msgid "Authentication"
 msgstr "Autentisering"
 
-#: src/prefs_account_dialog.c:1084
+#: src/prefs_account_dialog.c:1085
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP-Autentisering (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1160
+#: src/prefs_account_dialog.c:1161
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
@@ -4241,191 +4251,191 @@ msgstr ""
 msgid "Authenticate with POP3 before sending"
 msgstr "Autentisera med POP3 innan brev skickas"
 
-#: src/prefs_account_dialog.c:1228
+#: src/prefs_account_dialog.c:1226
 msgid "Command output"
 msgstr "Kommandoutdata"
 
-#: src/prefs_account_dialog.c:1239 src/prefs_folder_item.c:331
+#: src/prefs_account_dialog.c:1237 src/prefs_folder_item.c:331
 msgid "Automatically set the following addresses"
 msgstr "Sätt automatiskt följande adresser"
 
-#: src/prefs_account_dialog.c:1248
+#: src/prefs_account_dialog.c:1246
 msgid "Cc"
 msgstr "Kopia"
 
-#: src/prefs_account_dialog.c:1261
+#: src/prefs_account_dialog.c:1259
 msgid "Bcc"
 msgstr "Dold kopia"
 
-#: src/prefs_account_dialog.c:1274
+#: src/prefs_account_dialog.c:1272
 msgid "Reply-To"
 msgstr "Svara till"
 
-#: src/prefs_account_dialog.c:1327
+#: src/prefs_account_dialog.c:1325
 msgid "Sign message by default"
 msgstr "Signera alla meddelanden"
 
-#: src/prefs_account_dialog.c:1329
+#: src/prefs_account_dialog.c:1327
 msgid "Encrypt message by default"
 msgstr "Kryptera alla meddelanden"
 
-#: src/prefs_account_dialog.c:1331
+#: src/prefs_account_dialog.c:1329
 msgid "Encrypt when replying to encrypted message"
 msgstr "Kryptera vid svar på krypterat meddelande"
 
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1331
 msgid "Use ASCII-armored format for encryption"
 msgstr "Använd ASCII-pansar för kryptering"
 
-#: src/prefs_account_dialog.c:1335
+#: src/prefs_account_dialog.c:1333
 msgid "Use clear text signature"
 msgstr "Använd klartextsignatur"
 
-#: src/prefs_account_dialog.c:1340
+#: src/prefs_account_dialog.c:1338
 msgid "Sign key"
 msgstr "Signaturnyckel"
 
-#: src/prefs_account_dialog.c:1348
+#: src/prefs_account_dialog.c:1346
 msgid "Use default GnuPG key"
 msgstr "Använd förvald GnuPG-nyckel"
 
-#: src/prefs_account_dialog.c:1357
+#: src/prefs_account_dialog.c:1355
 msgid "Select key by your email address"
 msgstr "Välj nyckel genom din e-postadress"
 
-#: src/prefs_account_dialog.c:1366
+#: src/prefs_account_dialog.c:1364
 msgid "Specify key manually"
 msgstr "Ange nyckel manuellt"
 
-#: src/prefs_account_dialog.c:1382
+#: src/prefs_account_dialog.c:1380
 msgid "User or key ID:"
 msgstr "Användar- eller nyckel-ID:"
 
-#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
-#: src/prefs_account_dialog.c:1509 src/prefs_account_dialog.c:1527
+#: src/prefs_account_dialog.c:1474 src/prefs_account_dialog.c:1491
+#: src/prefs_account_dialog.c:1507 src/prefs_account_dialog.c:1525
 msgid "Don't use SSL"
 msgstr "Använd inte SSL"
 
-#: src/prefs_account_dialog.c:1479
+#: src/prefs_account_dialog.c:1477
 msgid "Use SSL for POP3 connection"
 msgstr "Använd SSL för POP3-förbindelse"
 
-#: src/prefs_account_dialog.c:1482 src/prefs_account_dialog.c:1499
-#: src/prefs_account_dialog.c:1533
+#: src/prefs_account_dialog.c:1480 src/prefs_account_dialog.c:1497
+#: src/prefs_account_dialog.c:1531
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Använd STARTTLS-kommando för att starta SSL-session"
 
-#: src/prefs_account_dialog.c:1496
+#: src/prefs_account_dialog.c:1494
 msgid "Use SSL for IMAP4 connection"
 msgstr "Använd SSL för IMAP4-förbindelse"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1500
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1517
+#: src/prefs_account_dialog.c:1515
 msgid "Use SSL for NNTP connection"
 msgstr "Använd SSL för NNTP-förbindelse"
 
-#: src/prefs_account_dialog.c:1519
+#: src/prefs_account_dialog.c:1517
 msgid "Send (SMTP)"
 msgstr "Skicka (SMTP)"
 
-#: src/prefs_account_dialog.c:1530
+#: src/prefs_account_dialog.c:1528
 msgid "Use SSL for SMTP connection"
 msgstr "Använd SSL för SMTP-förbindelse"
 
-#: src/prefs_account_dialog.c:1541
+#: src/prefs_account_dialog.c:1539
 msgid "Use non-blocking SSL"
 msgstr "Använd icke-blockerande SSL"
 
-#: src/prefs_account_dialog.c:1544
+#: src/prefs_account_dialog.c:1542
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "Slå av detta om du har problem med SSL-förbindelsen"
 
-#: src/prefs_account_dialog.c:1634
+#: src/prefs_account_dialog.c:1632
 msgid "Specify SMTP port"
 msgstr "Ange SMTP-port"
 
-#: src/prefs_account_dialog.c:1640
+#: src/prefs_account_dialog.c:1638
 msgid "Specify POP3 port"
 msgstr "Ange POP3-port"
 
-#: src/prefs_account_dialog.c:1646
+#: src/prefs_account_dialog.c:1644
 msgid "Specify IMAP4 port"
 msgstr "Ange IMAP4-port"
 
-#: src/prefs_account_dialog.c:1652
+#: src/prefs_account_dialog.c:1650
 msgid "Specify NNTP port"
 msgstr "Ange NNTP-port"
 
-#: src/prefs_account_dialog.c:1657
+#: src/prefs_account_dialog.c:1655
 msgid "Specify domain name"
 msgstr "Ange domännamn"
 
-#: src/prefs_account_dialog.c:1678
+#: src/prefs_account_dialog.c:1676
 msgid "IMAP server directory"
 msgstr "IMAP-servermapp"
 
-#: src/prefs_account_dialog.c:1688
+#: src/prefs_account_dialog.c:1686
 msgid "Only the subfolders of this directory will be displayed."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1691
+#: src/prefs_account_dialog.c:1689
 #, fuzzy
 msgid "Clear all message caches on exit"
 msgstr "Hämta alla meddelanden från server"
 
-#: src/prefs_account_dialog.c:1736
+#: src/prefs_account_dialog.c:1734
 msgid "Put sent messages in"
 msgstr "Lägg skickade meddelanden i"
 
-#: src/prefs_account_dialog.c:1738
+#: src/prefs_account_dialog.c:1736
 msgid "Put draft messages in"
 msgstr "Lägg utkast i"
 
-#: src/prefs_account_dialog.c:1740
+#: src/prefs_account_dialog.c:1738
 #, fuzzy
 msgid "Put queued messages in"
 msgstr "Lägg borttagna meddelanden i"
 
-#: src/prefs_account_dialog.c:1742
+#: src/prefs_account_dialog.c:1740
 msgid "Put deleted messages in"
 msgstr "Lägg borttagna meddelanden i"
 
-#: src/prefs_account_dialog.c:1806
+#: src/prefs_account_dialog.c:1804
 msgid "Account name is not entered."
 msgstr "Kontonamn har inte angivits."
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1808
 msgid "Mail address is not entered."
 msgstr "E-postadress har inte angivits."
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1813
 msgid "SMTP server is not entered."
 msgstr "SMTP-server har inte angivits."
 
-#: src/prefs_account_dialog.c:1820
+#: src/prefs_account_dialog.c:1818
 msgid "User ID is not entered."
 msgstr "Användar-ID har inte angivits."
 
-#: src/prefs_account_dialog.c:1825
+#: src/prefs_account_dialog.c:1823
 msgid "POP3 server is not entered."
 msgstr "POP3-server har inte angivits."
 
-#: src/prefs_account_dialog.c:1830
+#: src/prefs_account_dialog.c:1828
 msgid "IMAP4 server is not entered."
 msgstr "IMAP4-server har inte angivits."
 
-#: src/prefs_account_dialog.c:1835
+#: src/prefs_account_dialog.c:1833
 msgid "NNTP server is not entered."
 msgstr "NNTP-server har inte angivits."
 
-#: src/prefs_account_dialog.c:1861
+#: src/prefs_account_dialog.c:1859
 msgid "Specified folder is not a queue folder."
 msgstr ""
 
-#: src/prefs_account_dialog.c:1935
+#: src/prefs_account_dialog.c:1933
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -6006,84 +6016,84 @@ msgstr ""
 "med säkerhet att den kommer att gå till den person du avser.\n"
 "Litar du på den tillräckligt för att använda den ändå?"
 
-#: src/send_message.c:183
+#: src/send_message.c:184
 msgid "Queued message header is broken.\n"
 msgstr "Brevhuvud i köat meddelande är trasigt.\n"
 
-#: src/send_message.c:402
+#: src/send_message.c:403
 #, c-format
 msgid "Sending message using command: %s\n"
 msgstr "Skickar meddelande med kommando: %s\n"
 
-#: src/send_message.c:411
+#: src/send_message.c:412
 #, c-format
 msgid "Can't execute command: %s"
 msgstr "Kan inte köra kommando: %s"
 
-#: src/send_message.c:446
+#: src/send_message.c:447
 #, c-format
 msgid "Error occurred while executing command: %s"
 msgstr "Fel uppstod vid körning av kommando: %s"
 
-#: src/send_message.c:552
+#: src/send_message.c:560
 msgid "Connecting"
 msgstr "Upprättar förbindelse"
 
-#: src/send_message.c:554
+#: src/send_message.c:562
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Upprättar förbindelse med SMTP-server: %s ..."
 
-#: src/send_message.c:623
+#: src/send_message.c:631
 msgid "Sending HELO..."
 msgstr "Skickar HELO..."
 
-#: src/send_message.c:624 src/send_message.c:629 src/send_message.c:634
+#: src/send_message.c:632 src/send_message.c:637 src/send_message.c:642
 msgid "Authenticating"
 msgstr "Autentiserar"
 
-#: src/send_message.c:625 src/send_message.c:630
+#: src/send_message.c:633 src/send_message.c:638
 msgid "Sending message..."
 msgstr "Skickar meddelande..."
 
-#: src/send_message.c:628
+#: src/send_message.c:636
 msgid "Sending EHLO..."
 msgstr "Skickar EHLO..."
 
-#: src/send_message.c:637
+#: src/send_message.c:645
 msgid "Sending MAIL FROM..."
 msgstr "Skickar MAIL FROM..."
 
-#: src/send_message.c:638 src/send_message.c:642 src/send_message.c:647
+#: src/send_message.c:646 src/send_message.c:650 src/send_message.c:655
 msgid "Sending"
 msgstr "Skickar"
 
-#: src/send_message.c:641
+#: src/send_message.c:649
 msgid "Sending RCPT TO..."
 msgstr "Skickar RCPT TO..."
 
-#: src/send_message.c:646
+#: src/send_message.c:654
 msgid "Sending DATA..."
 msgstr "Skickar DATA..."
 
-#: src/send_message.c:650
+#: src/send_message.c:658
 msgid "Quitting..."
 msgstr "Avslutar..."
 
-#: src/send_message.c:678
+#: src/send_message.c:686
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Skickar meddelande (%d / %d byte)"
 
-#: src/send_message.c:706
+#: src/send_message.c:714
 msgid "Sending message"
 msgstr "Skickar meddelande"
 
-#: src/send_message.c:750 src/send_message.c:770
+#: src/send_message.c:758 src/send_message.c:778
 msgid "Error occurred while sending the message."
 msgstr "Fel uppstod när meddelandet skickades."
 
-#: src/send_message.c:753
+#: src/send_message.c:761
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
