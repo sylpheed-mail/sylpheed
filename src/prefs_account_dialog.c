@@ -1168,6 +1168,8 @@ static void prefs_account_send_create(void)
 
 	SET_TOGGLE_SENSITIVITY (smtp_auth_chkbtn, vbox4);
 
+	PACK_VSPACER(vbox3, vbox_spc, VSPACING_NARROW_2);
+
 	PACK_CHECK_BUTTON (vbox3, pop_bfr_smtp_chkbtn,
 		_("Authenticate with POP3 before sending"));
 
@@ -2115,11 +2117,15 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_show(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, TRUE);
 
+		gtk_widget_set_sensitive(p_send.pop_bfr_smtp_chkbtn, FALSE);
+
 		if (!tmp_ac_prefs->account_name) {
 			gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 FALSE);
 		}
+
+		gtk_widget_set_sensitive(p_send.pop_bfr_smtp_chkbtn, FALSE);
 
 #if USE_SSL
 		gtk_widget_hide(ssl.pop_frame);
@@ -2157,6 +2163,8 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 				 TRUE);
 		}
 
+		gtk_widget_set_sensitive(p_send.pop_bfr_smtp_chkbtn, FALSE);
+
 #if USE_SSL
 		gtk_widget_hide(ssl.pop_frame);
 		gtk_widget_hide(ssl.imap_frame);
@@ -2192,6 +2200,8 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 FALSE);
 		}
+
+		gtk_widget_set_sensitive(p_send.pop_bfr_smtp_chkbtn, FALSE);
 
 #if USE_SSL
 		gtk_widget_hide(ssl.pop_frame);
@@ -2229,6 +2239,8 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 TRUE);
 		}
+
+		gtk_widget_set_sensitive(p_send.pop_bfr_smtp_chkbtn, TRUE);
 
 #if USE_SSL
 		gtk_widget_show(ssl.pop_frame);
