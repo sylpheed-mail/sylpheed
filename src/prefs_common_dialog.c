@@ -185,6 +185,7 @@ static struct Interface {
 	GtkWidget *checkbtn_openunread;
 	GtkWidget *checkbtn_mark_as_read_on_newwin;
 	GtkWidget *checkbtn_openinbox;
+	GtkWidget *checkbtn_openinbox_startup;
 	GtkWidget *checkbtn_immedexec;
 #ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
@@ -451,6 +452,8 @@ static PrefsUIData ui_data[] = {
 	 &interface.checkbtn_mark_as_read_on_newwin,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"open_inbox_on_inc", &interface.checkbtn_openinbox,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"open_inbox_on_startup", &interface.checkbtn_openinbox_startup,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"immediate_execution", &interface.checkbtn_immedexec,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -2048,6 +2051,7 @@ static void prefs_details_create(void)
 	GtkWidget *checkbtn_openunread;
 	GtkWidget *checkbtn_mark_as_read_on_newwin;
 	GtkWidget *checkbtn_openinbox;
+	GtkWidget *checkbtn_openinbox_startup;
 	GtkWidget *checkbtn_immedexec;
 	GtkWidget *hbox1;
 	GtkWidget *hbox_spc;
@@ -2085,7 +2089,7 @@ static void prefs_details_create(void)
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_openunread,
-		 _("Open first unread message when entering a folder"));
+		 _("Open first unread message when a folder is opened"));
 
 	SET_TOGGLE_SENSITIVITY_REV
 		(checkbtn_always_show_msg, checkbtn_openunread);
@@ -2096,7 +2100,9 @@ static void prefs_details_create(void)
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_openinbox,
-		 _("Go to inbox after receiving new mail"));
+		 _("Open inbox after receiving new mail"));
+	PACK_CHECK_BUTTON
+		(vbox2, checkbtn_openinbox_startup, _("Open inbox on startup"));
 
 	vbox3 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox3);
@@ -2161,6 +2167,7 @@ static void prefs_details_create(void)
 	interface.checkbtn_mark_as_read_on_newwin
 					     = checkbtn_mark_as_read_on_newwin;
 	interface.checkbtn_openinbox         = checkbtn_openinbox;
+	interface.checkbtn_openinbox_startup = checkbtn_openinbox_startup;
 	interface.checkbtn_immedexec         = checkbtn_immedexec;
 
 #ifndef G_OS_WIN32

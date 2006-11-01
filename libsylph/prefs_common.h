@@ -232,6 +232,7 @@ struct _PrefsCommon
 	gboolean open_unread_on_enter;
 	gboolean mark_as_read_on_new_window;
 	gboolean open_inbox_on_inc;
+	gboolean open_inbox_on_startup;
 	gboolean immediate_exec;
 	gboolean comply_gnome_hig;
 	gboolean show_trayicon;

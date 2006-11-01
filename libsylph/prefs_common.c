@@ -323,6 +323,8 @@ static PrefParam param[] = {
 	{"mark_as_read_on_new_window", "FALSE",
 	 &prefs_common.mark_as_read_on_new_window, P_BOOL},
 	{"open_inbox_on_inc", "FALSE", &prefs_common.open_inbox_on_inc, P_BOOL},
+	{"open_inbox_on_startup", "FALSE", &prefs_common.open_inbox_on_startup,
+	 P_BOOL},
 	{"immediate_execution", "TRUE", &prefs_common.immediate_exec, P_BOOL},
 
 #ifdef G_OS_WIN32

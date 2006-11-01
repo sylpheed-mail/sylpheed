@@ -1108,6 +1108,14 @@ static void remote_command_exec(void)
 
 	mainwin = main_window_get();
 
+	if (prefs_common.open_inbox_on_startup) {
+		FolderItem *item;
+		item = cur_account && cur_account->inbox
+			? folder_find_item_from_identifier(cur_account->inbox)
+			: folder_get_default_inbox();
+		folderview_select(mainwin->folderview, item);
+	}
+
 	if (cmd.receive_all)
 		inc_all_account_mail(mainwin, FALSE);
 	else if (prefs_common.chk_on_startup)
