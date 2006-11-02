@@ -2100,7 +2100,7 @@ static void prefs_details_create(void)
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_remember_lastsel,
-		 _("Remember last selcted message"));
+		 _("Remember last selected message"));
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_mark_as_read_on_newwin,
