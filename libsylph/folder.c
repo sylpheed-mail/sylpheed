@@ -188,6 +188,7 @@ FolderItem *folder_item_new(const gchar *name, const gchar *path)
 	item->auto_bcc = NULL;
 	item->auto_replyto = NULL;
 	item->mark_queue = NULL;
+	item->last_selected = 0;
 	item->data = NULL;
 
 	return item;

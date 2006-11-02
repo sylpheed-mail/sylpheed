@@ -290,6 +290,8 @@ struct _FolderItem
 
 	GSList *mark_queue;
 
+	guint last_selected;
+
 	gpointer data;
 };
 

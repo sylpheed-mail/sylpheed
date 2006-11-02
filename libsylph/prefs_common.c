@@ -320,6 +320,8 @@ static PrefParam param[] = {
 	 &prefs_common.always_show_msg, P_BOOL},
 	{"open_unread_on_enter", "FALSE", &prefs_common.open_unread_on_enter,
 	 P_BOOL},
+	{"remember_last_selected", "FALSE",
+	 &prefs_common.remember_last_selected, P_BOOL},
 	{"mark_as_read_on_new_window", "FALSE",
 	 &prefs_common.mark_as_read_on_new_window, P_BOOL},
 	{"open_inbox_on_inc", "FALSE", &prefs_common.open_inbox_on_inc, P_BOOL},

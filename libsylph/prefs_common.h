@@ -230,6 +230,7 @@ struct _PrefsCommon
 	gboolean sep_msg;
 	gboolean always_show_msg;
 	gboolean open_unread_on_enter;
+	gboolean remember_last_selected;
 	gboolean mark_as_read_on_new_window;
 	gboolean open_inbox_on_inc;
 	gboolean open_inbox_on_startup;

@@ -183,6 +183,7 @@ static struct Privacy {
 static struct Interface {
 	GtkWidget *checkbtn_always_show_msg;
 	GtkWidget *checkbtn_openunread;
+	GtkWidget *checkbtn_remember_lastsel;
 	GtkWidget *checkbtn_mark_as_read_on_newwin;
 	GtkWidget *checkbtn_openinbox;
 	GtkWidget *checkbtn_openinbox_startup;
@@ -447,6 +448,8 @@ static PrefsUIData ui_data[] = {
 	 &interface.checkbtn_always_show_msg,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"open_unread_on_enter", &interface.checkbtn_openunread,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"remember_last_selected", &interface.checkbtn_remember_lastsel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"mark_as_read_on_new_window",
 	 &interface.checkbtn_mark_as_read_on_newwin,
@@ -2049,6 +2052,7 @@ static void prefs_details_create(void)
 	GtkWidget *vbox3;
 	GtkWidget *checkbtn_always_show_msg;
 	GtkWidget *checkbtn_openunread;
+	GtkWidget *checkbtn_remember_lastsel;
 	GtkWidget *checkbtn_mark_as_read_on_newwin;
 	GtkWidget *checkbtn_openinbox;
 	GtkWidget *checkbtn_openinbox_startup;
@@ -2093,6 +2097,10 @@ static void prefs_details_create(void)
 
 	SET_TOGGLE_SENSITIVITY_REV
 		(checkbtn_always_show_msg, checkbtn_openunread);
+
+	PACK_CHECK_BUTTON
+		(vbox2, checkbtn_remember_lastsel,
+		 _("Remember last selcted message"));
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_mark_as_read_on_newwin,
@@ -2164,6 +2172,7 @@ static void prefs_details_create(void)
 
 	interface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
 	interface.checkbtn_openunread        = checkbtn_openunread;
+	interface.checkbtn_remember_lastsel  = checkbtn_remember_lastsel;
 	interface.checkbtn_mark_as_read_on_newwin
 					     = checkbtn_mark_as_read_on_newwin;
 	interface.checkbtn_openinbox         = checkbtn_openinbox;

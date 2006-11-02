@@ -727,6 +727,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	guint selected_msgnum = 0;
 	guint displayed_msgnum = 0;
 	gboolean moved;
+	gboolean selection_done = FALSE;
 
 	if (summary_is_locked(summaryview)) return FALSE;
 
@@ -737,11 +738,18 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 	is_refresh = (item == summaryview->folder_item &&
 		      update_cache == FALSE) ? TRUE : FALSE;
-	if (is_refresh) {
-		selected_msgnum = summary_get_msgnum(summaryview,
-						     summaryview->selected);
-		displayed_msgnum = summary_get_msgnum(summaryview,
-						      summaryview->displayed);
+	selected_msgnum = summary_get_msgnum(summaryview,
+					     summaryview->selected);
+	displayed_msgnum = summary_get_msgnum(summaryview,
+					      summaryview->displayed);
+	if (summaryview->folder_item)
+		summaryview->folder_item->last_selected = selected_msgnum;
+	if (!is_refresh) {
+		if (item)
+			selected_msgnum = item->last_selected;
+		else
+			selected_msgnum = 0;
+		displayed_msgnum = 0;
 	}
 
 	/* process the marks if any */
@@ -856,7 +864,17 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				summary_scroll_to_selected(summaryview, TRUE);
 			}
 		}
-	} else {
+		selection_done = TRUE;
+	} else if (prefs_common.remember_last_selected) {
+		summary_unlock(summaryview);
+		summary_select_by_msgnum(summaryview, selected_msgnum);
+		summary_lock(summaryview);
+
+		if (summaryview->selected)
+			selection_done = TRUE;
+	}
+
+	if (!selection_done) {
 		/* select first unread message */
 		if (summary_find_next_flagged_msg(summaryview, &iter, NULL,
 						  MSG_UNREAD, FALSE)) {
