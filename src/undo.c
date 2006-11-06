@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2001 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -423,6 +423,8 @@ void undo_undo(UndoMain *undostruct)
 		break;
 	}
 
+	gtk_widget_queue_draw(GTK_WIDGET(textview));
+
 	undostruct->change_state_func(undostruct,
 				      UNDO_STATE_UNCHANGED, UNDO_STATE_TRUE,
 				      undostruct->change_state_data);
@@ -512,6 +514,8 @@ void undo_redo(UndoMain *undostruct)
 		g_assert_not_reached();
 		break;
 	}
+
+	gtk_widget_queue_draw(GTK_WIDGET(textview));
 
 	undostruct->change_state_func(undostruct,
 				      UNDO_STATE_TRUE, UNDO_STATE_UNCHANGED, 
