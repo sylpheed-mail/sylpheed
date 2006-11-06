@@ -1,3 +1,14 @@
+2006-11-06
+
+	* libsylph/procmsg.c: procmsg_print_message(): fixed a crash when
+	  printing a message with empty Subject, From, and To (thanks to
+	  Jonathan Woithe).
+	* libsylph/codeconv.c:
+	  conv_convert()
+	  conv_codeset_strdup_full()
+	  conv_iconv_strdup_with_cd(): return NULL if input string is NULL
+	  (fixes crashes with NULL strings).
+
 2006-11-02
 
 	* libsylph/folder.[ch]

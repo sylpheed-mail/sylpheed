@@ -1,3 +1,14 @@
+2006-11-06
+
+	* libsylph/procmsg.c: procmsg_print_message(): 空の Subject, From, To
+	  があるメッセージを印刷するとクラッシュするバグを修正 (Jonathan
+	  Woithe さん thanks)。
+	* libsylph/codeconv.c:
+	  conv_convert()
+	  conv_codeset_strdup_full()
+	  conv_iconv_strdup_with_cd(): 入力文字列が NULL の場合 NULL を返す
+	  ようにした(NULL 文字列によるクラッシュを修正).
+
 2006-11-02
 
 	* libsylph/folder.[ch]

@@ -1387,11 +1387,16 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 				body++;
 		}
 
-		locale_str = conv_codeset_strdup
-			(body, CS_INTERNAL, conv_get_locale_charset_str());
-		fprintf(prfp, "%s: %s\n", hdr->name,
-			locale_str ? locale_str : body);
-		g_free(locale_str);
+		if (body && *body != '\0') {
+			locale_str = conv_codeset_strdup
+				(body, CS_INTERNAL,
+				 conv_get_locale_charset_str());
+			fprintf(prfp, "%s: %s\n", hdr->name,
+				locale_str ? locale_str : body);
+			g_free(locale_str);
+		} else {
+			fprintf(prfp, "%s: (none)\n", hdr->name);
+		}
 	}
 
 	procheader_header_array_destroy(headers);

@@ -1328,7 +1328,9 @@ void conv_code_converter_destroy(CodeConverter *conv)
 
 gchar *conv_convert(CodeConverter *conv, const gchar *inbuf)
 {
-	if (conv->code_conv_func != conv_noconv)
+	if (!inbuf)
+		return NULL;
+	else if (conv->code_conv_func != conv_noconv)
 		return conv->code_conv_func(inbuf, NULL);
 	else
 		return conv_iconv_strdup
@@ -1341,6 +1343,12 @@ gchar *conv_codeset_strdup_full(const gchar *inbuf,
 				gint *error)
 {
 	CodeConvFunc conv_func;
+
+	if (!inbuf) {
+		if (error)
+			*error = 0;
+		return NULL;
+	}
 
 	src_encoding = conv_get_fallback_for_private_encoding(src_encoding);
 
@@ -1485,6 +1493,12 @@ gchar *conv_iconv_strdup_with_cd(const gchar *inbuf, iconv_t cd, gint *error)
 	size_t n_conv;
 	size_t len;
 	gint error_ = 0;
+
+	if (!inbuf) {
+		if (error)
+			*error = 0;
+		return NULL;
+	}
 
 	inbuf_p = inbuf;
 	in_size = strlen(inbuf);
