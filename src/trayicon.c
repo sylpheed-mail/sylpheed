@@ -47,12 +47,23 @@
 #if GTK_CHECK_VERSION(2, 10, 0) || defined(GDK_WINDOWING_X11)
 
 #if GTK_CHECK_VERSION(2, 10, 0)
-
 #include <gtk/gtkstatusicon.h>
+#endif
+
+#ifdef G_OS_WIN32
+#define TRAYICON_IMAGE		STOCK_PIXMAP_SYLPHEED_SMALL
+#define TRAYICON_NEW_IMAGE	STOCK_PIXMAP_SYLPHEED_NEWMAIL_SMALL
+#else
+#define TRAYICON_IMAGE		STOCK_PIXMAP_SYLPHEED
+#define TRAYICON_NEW_IMAGE	STOCK_PIXMAP_SYLPHEED_NEWMAIL
+#endif
 
 static TrayIcon trayicon;
 static GtkWidget *trayicon_menu;
+static gboolean on_notify = FALSE;
 static gboolean default_tooltip = FALSE;
+
+#if GTK_CHECK_VERSION(2, 10, 0)
 
 static void trayicon_activated		(GtkStatusIcon	*status_icon,
 					 gpointer	 data);
@@ -63,12 +74,9 @@ static void trayicon_popup_menu_cb	(GtkStatusIcon	*status_icon,
 
 #else
 
-static TrayIcon trayicon;
 static GtkWidget *trayicon_img;
 static GtkWidget *eventbox;
 static GtkTooltips *trayicon_tip;
-static GtkWidget *trayicon_menu;
-static gboolean default_tooltip = FALSE;
 
 static void trayicon_button_pressed	(GtkWidget	*widget,
 					 GdkEventButton	*event,
@@ -98,11 +106,7 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 #if GTK_CHECK_VERSION(2, 10, 0)
 	GdkPixbuf *pixbuf;
 
-#ifdef G_OS_WIN32
-	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED_SMALL, &pixbuf);
-#else
-	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED, &pixbuf);
-#endif
+	stock_pixbuf_gdk(NULL, TRAYICON_IMAGE, &pixbuf);
 	trayicon.status_icon = gtk_status_icon_new_from_pixbuf(pixbuf);
 
 	g_signal_connect(G_OBJECT(trayicon.status_icon), "activate",
@@ -119,13 +123,13 @@ TrayIcon *trayicon_create(MainWindow *mainwin)
 	gtk_container_add(GTK_CONTAINER(trayicon.widget), eventbox);
 	g_signal_connect(G_OBJECT(eventbox), "button_press_event",
 			 G_CALLBACK(trayicon_button_pressed), mainwin);
-	trayicon_img = stock_pixbuf_widget_scale(NULL, STOCK_PIXMAP_SYLPHEED,
-						 24, 24);
+	trayicon_img = stock_pixbuf_widget_scale(NULL, TRAYICON_IMAGE, 24, 24);
 	gtk_widget_show(trayicon_img);
 	gtk_container_add(GTK_CONTAINER(eventbox), trayicon_img);
 
 	trayicon_tip = gtk_tooltips_new();
 #endif
+	on_notify = FALSE;
 	default_tooltip = FALSE;
 	trayicon_set_tooltip(NULL);
 
@@ -207,6 +211,18 @@ gboolean notify_timeout_cb(gpointer data)
 
 void trayicon_set_notify(gboolean enabled)
 {
+	GdkPixbuf *pixbuf;
+
+	if (enabled && !on_notify) {
+		stock_pixbuf_gdk(NULL, TRAYICON_NEW_IMAGE, &pixbuf);
+		gtk_status_icon_set_from_pixbuf(trayicon.status_icon, pixbuf);
+		on_notify = TRUE;
+	} else if (!enabled && on_notify) {
+		stock_pixbuf_gdk(NULL, TRAYICON_IMAGE, &pixbuf);
+		gtk_status_icon_set_from_pixbuf(trayicon.status_icon, pixbuf);
+		on_notify = FALSE;
+	}
+
 	if (enabled && notify_tag == 0) {
 		gtk_status_icon_set_blinking(trayicon.status_icon, enabled);
 		notify_tag = g_timeout_add(5000, notify_timeout_cb, NULL);

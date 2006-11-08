@@ -73,6 +73,8 @@
 #include "icons/stock_sylpheed.h"
 #include "icons/stock_sylpheed_16.h"
 #include "icons/stock_sylpheed_32.h"
+#include "icons/stock_sylpheed_newmail.h"
+#include "icons/stock_sylpheed_newmail_16.h"
 #include "icons/sylpheed-logo.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
@@ -139,6 +141,8 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, stock_sylpheed, sizeof(stock_sylpheed), NULL, 0},
 	{NULL, NULL, NULL, NULL, stock_sylpheed_16, sizeof(stock_sylpheed_16), NULL, 0},
 	{NULL, NULL, NULL, NULL, stock_sylpheed_32, sizeof(stock_sylpheed_32), NULL, 0},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail, sizeof(stock_sylpheed_newmail), NULL, 0},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail_16, sizeof(stock_sylpheed_newmail_16), NULL, 0},
 	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 };
 
