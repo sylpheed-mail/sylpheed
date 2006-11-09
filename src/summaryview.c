@@ -77,6 +77,7 @@
 #include "alertpanel.h"
 #include "inputdialog.h"
 #include "statusbar.h"
+#include "trayicon.h"
 #include "filter.h"
 #include "folder.h"
 #include "colorlabel.h"
@@ -2575,6 +2576,10 @@ static void summary_display_msg_full(SummaryView *summaryview,
 
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
+			if (MSG_IS_NEW(msginfo->flags)) {
+				trayicon_set_tooltip(NULL);
+				trayicon_set_notify(FALSE);
+			}
 			MSG_UNSET_PERM_FLAGS
 				(msginfo->flags, MSG_NEW | MSG_UNREAD);
 			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
@@ -2827,6 +2832,10 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 	}
 
 	if (MSG_IS_NEW(msginfo->flags) || MSG_IS_UNREAD(msginfo->flags)) {
+		if (MSG_IS_NEW(msginfo->flags)) {
+			trayicon_set_tooltip(NULL);
+			trayicon_set_notify(FALSE);
+		}
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW | MSG_UNREAD);
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 		summaryview->folder_item->mark_dirty = TRUE;

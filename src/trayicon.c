@@ -36,7 +36,6 @@
 #include "mainwindow.h"
 #include "utils.h"
 #include "gtkutils.h"
-#include "eggtrayicon.h"
 #include "stock_pixmap.h"
 #include "menu.h"
 #include "main.h"
