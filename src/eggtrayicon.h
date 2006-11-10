@@ -21,10 +21,11 @@
 #ifndef __EGG_TRAY_ICON_H__
 #define __EGG_TRAY_ICON_H__
 
-#include <gtk/gtkplug.h>
+#include <gdkconfig.h>
 #include <gtk/gtkversion.h>
 
-#ifdef GDK_WINDOWING_X11
+#if !GTK_CHECK_VERSION(2, 10, 0) && defined(GDK_WINDOWING_X11)
+#include <gtk/gtkplug.h>
 #include <gdk/gdkx.h>
 
 G_BEGIN_DECLS

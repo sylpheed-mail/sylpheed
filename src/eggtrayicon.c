@@ -20,12 +20,12 @@
 /* Added WINDOWING ifdef  2005-07-09 by Yoichi Imai <yoichi@silver-forest.com> */
 
 #include <config.h>
-#include <string.h>
-#include <libintl.h>
 
 #include "eggtrayicon.h"
 
-#ifdef GDK_WINDOWING_X11
+#if !GTK_CHECK_VERSION(2, 10, 0) && defined(GDK_WINDOWING_X11)
+#include <string.h>
+#include <libintl.h>
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
 
