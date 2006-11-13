@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999,2000 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,8 @@ struct _HeaderView
 	GtkWidget *from_body_label;
 	GtkWidget *to_header_label;
 	GtkWidget *to_body_label;
+	GtkWidget *cc_header_label;
+	GtkWidget *cc_body_label;
 	GtkWidget *ng_header_label;
 	GtkWidget *ng_body_label;
 	GtkWidget *subject_header_label;

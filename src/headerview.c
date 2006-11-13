@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@
 #if 0
 	_("From:");
 	_("To:");
+	_("Cc:");
 	_("Newsgroups:");
 	_("Subject:");
 #endif
@@ -79,6 +80,8 @@ HeaderView *headerview_create(void)
 	GtkWidget *from_body_label;
 	GtkWidget *to_header_label;
 	GtkWidget *to_body_label;
+	GtkWidget *cc_header_label;
+	GtkWidget *cc_body_label;
 	GtkWidget *ng_header_label;
 	GtkWidget *ng_body_label;
 	GtkWidget *subject_header_label;
@@ -101,6 +104,8 @@ HeaderView *headerview_create(void)
 	from_body_label      = gtk_label_new("");
 	to_header_label      = gtk_label_new(TR("To:"));
 	to_body_label        = gtk_label_new("");
+	cc_header_label      = gtk_label_new(TR("Cc:"));
+	cc_body_label        = gtk_label_new("");
 	ng_header_label      = gtk_label_new(TR("Newsgroups:"));
 	ng_body_label        = gtk_label_new("");
 	subject_header_label = gtk_label_new(TR("Subject:"));
@@ -108,11 +113,13 @@ HeaderView *headerview_create(void)
 
 	gtk_label_set_selectable(GTK_LABEL(from_body_label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(to_body_label), TRUE);
+	gtk_label_set_selectable(GTK_LABEL(cc_body_label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(ng_body_label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(subject_body_label), TRUE);
 
 	GTK_WIDGET_UNSET_FLAGS(from_body_label, GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS(to_body_label, GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS(cc_body_label, GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS(ng_body_label, GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS(subject_body_label, GTK_CAN_FOCUS);
 
@@ -120,6 +127,8 @@ HeaderView *headerview_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox1), from_body_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), to_header_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), to_body_label, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox1), cc_header_label, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox1), cc_body_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), ng_header_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), ng_body_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox2), subject_header_label, FALSE, FALSE, 0);
@@ -130,6 +139,8 @@ HeaderView *headerview_create(void)
 	headerview->from_body_label      = from_body_label;
 	headerview->to_header_label      = to_header_label;
 	headerview->to_body_label        = to_body_label;
+	headerview->cc_header_label      = cc_header_label;
+	headerview->cc_body_label        = cc_body_label;
 	headerview->ng_header_label      = ng_header_label;
 	headerview->ng_body_label        = ng_body_label;
 	headerview->subject_header_label = subject_header_label;
@@ -156,6 +167,7 @@ void headerview_init(HeaderView *headerview)
 	if (boldfont) {
 		gtk_widget_modify_font(headerview->from_header_label, boldfont);
 		gtk_widget_modify_font(headerview->to_header_label, boldfont);
+		gtk_widget_modify_font(headerview->cc_header_label, boldfont);
 		gtk_widget_modify_font(headerview->ng_header_label, boldfont);
 		gtk_widget_modify_font(headerview->subject_header_label, boldfont);
 	}
@@ -170,6 +182,7 @@ void headerview_init(HeaderView *headerview)
 
 	SET_LABEL_STYLE(headerview->from_body_label);
 	SET_LABEL_STYLE(headerview->to_body_label);
+	SET_LABEL_STYLE(headerview->cc_body_label);
 	SET_LABEL_STYLE(headerview->ng_body_label);
 	SET_LABEL_STYLE(headerview->subject_body_label);
 
@@ -202,6 +215,12 @@ void headerview_show(HeaderView *headerview, MsgInfo *msginfo)
 				   msginfo->to);
 		gtk_widget_show(headerview->to_header_label);
 		gtk_widget_show(headerview->to_body_label);
+	}
+	if (msginfo->cc) {
+		gtk_label_set_text(GTK_LABEL(headerview->cc_body_label),
+				   msginfo->cc);
+		gtk_widget_show(headerview->cc_header_label);
+		gtk_widget_show(headerview->cc_body_label);
 	}
 	if (msginfo->newsgroups) {
 		gtk_label_set_text(GTK_LABEL(headerview->ng_body_label),
@@ -271,10 +290,13 @@ void headerview_clear(HeaderView *headerview)
 {
 	gtk_label_set_text(GTK_LABEL(headerview->from_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->to_body_label), "");
+	gtk_label_set_text(GTK_LABEL(headerview->cc_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->ng_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->subject_body_label), "");
 	gtk_widget_hide(headerview->to_header_label);
 	gtk_widget_hide(headerview->to_body_label);
+	gtk_widget_hide(headerview->cc_header_label);
+	gtk_widget_hide(headerview->cc_body_label);
 	gtk_widget_hide(headerview->ng_header_label);
 	gtk_widget_hide(headerview->ng_body_label);
 
