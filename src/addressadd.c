@@ -38,7 +38,6 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtkstatusbar.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkhseparator.h>
 #include <gtk/gtkstock.h>
@@ -66,8 +65,6 @@ static struct _AddressAdd_dlg {
 	GtkWidget *tree_folder;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
-	GtkWidget *statusbar;
-	gint status_cid;
 	FolderInfo *fiSelected;
 } addressadd_dlg;
 
@@ -90,18 +87,6 @@ static void addressadd_free_folderinfo( FolderInfo *fi ) {
 	fi->book   = NULL;
 	fi->folder = NULL;
 	g_free( fi );
-}
-
-/*
-* Edit functions.
-*/
-static void addressadd_status_show( gchar *msg ) {
-	if( addressadd_dlg.statusbar != NULL ) {
-		gtk_statusbar_pop( GTK_STATUSBAR(addressadd_dlg.statusbar), addressadd_dlg.status_cid );
-		if( msg ) {
-			gtk_statusbar_push( GTK_STATUSBAR(addressadd_dlg.statusbar), addressadd_dlg.status_cid, msg );
-		}
-	}
 }
 
 static gint addressadd_delete_event( GtkWidget *widget, GdkEventAny *event, gboolean *cancelled ) {
@@ -162,8 +147,6 @@ static void addressadd_create( void ) {
 	GtkWidget *hsep;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
-	GtkWidget *hsbox;
-	GtkWidget *statusbar;
 	gint top;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -240,12 +223,6 @@ static void addressadd_create( void ) {
 	gtk_ctree_set_indent( GTK_CTREE(tree_folder), CTREE_INDENT );
 	gtk_clist_set_auto_sort( GTK_CLIST(tree_folder), TRUE );
 
-	/* Status line */
-	hsbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, 0);
-	statusbar = gtk_statusbar_new();
-	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
-
 	/* Button panel */
 	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
 				      &cancel_btn, GTK_STOCK_CANCEL,
@@ -266,8 +243,6 @@ static void addressadd_create( void ) {
 	g_signal_connect(G_OBJECT(tree_folder), "button_press_event",
 			 G_CALLBACK(addressadd_tree_button), NULL);
 
-	gtk_widget_show_all(vbox);
-
 	addressadd_dlg.window        = window;
 	addressadd_dlg.label_name    = label_name;
 	addressadd_dlg.label_address = label_addr;
@@ -275,10 +250,8 @@ static void addressadd_create( void ) {
 	addressadd_dlg.tree_folder   = tree_folder;
 	addressadd_dlg.ok_btn        = ok_btn;
 	addressadd_dlg.cancel_btn    = cancel_btn;
-	addressadd_dlg.statusbar     = statusbar;
-	addressadd_dlg.status_cid    = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Address Add" );
 
-	gtk_widget_show_all( vbox );
+	gtk_widget_show_all(vbox);
 
 	stock_pixmap_gdk( window, STOCK_PIXMAP_BOOK, &bookXpm, &bookXpmMask );
 	stock_pixmap_gdk( window, STOCK_PIXMAP_DIR_OPEN,
@@ -373,7 +346,6 @@ gboolean addressadd_selection( AddressIndex *addrIndex, const gchar *name, const
 	gtk_widget_show(addressadd_dlg.window);
 
 	addressadd_dlg.fiSelected = NULL;
-	addressadd_status_show( "" );
 	addressadd_load_data( addrIndex );
 	gtk_clist_select_row( GTK_CLIST( addressadd_dlg.tree_folder ), 0, 0 );
 	gtk_widget_show(addressadd_dlg.window);
