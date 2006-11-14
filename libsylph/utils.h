@@ -368,6 +368,7 @@ void set_rc_dir				(const gchar	*dir);
 /* return static strings */
 const gchar *get_startup_dir		(void);
 const gchar *get_home_dir		(void);
+const gchar *get_document_dir		(void);
 const gchar *get_rc_dir			(void);
 const gchar *get_old_rc_dir		(void);
 const gchar *get_mail_base_dir		(void);

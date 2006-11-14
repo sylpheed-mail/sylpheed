@@ -46,6 +46,7 @@
 #  include <wchar.h>
 #  include <direct.h>
 #  include <io.h>
+#  include <shlobj.h>
 #endif
 
 #include "utils.h"
@@ -1829,6 +1830,40 @@ const gchar *get_home_dir(void)
 	return home_dir;
 #else
 	return g_get_home_dir();
+#endif
+}
+
+const gchar *get_document_dir(void)
+{
+#ifdef G_OS_WIN32
+	static const gchar *document_dir = NULL;
+	HRESULT hr;
+
+	if (!document_dir) {
+		if (G_WIN32_HAVE_WIDECHAR_API()) {
+			wchar_t path[MAX_PATH + 1];
+			hr = SHGetFolderPathW(NULL, CSIDL_PERSONAL, NULL, 0,
+					      path);
+			if (hr == S_OK) {
+				document_dir = g_utf16_to_utf8
+					(path, -1, NULL, NULL, NULL);
+			}
+		} else {
+			gchar path[MAX_PATH + 1];
+			hr = SHGetFolderPathA(NULL, CSIDL_PERSONAL, NULL, 0,
+					      path);
+			if (hr == S_OK) {
+				document_dir = g_locale_to_utf8
+					(path, -1, NULL, NULL, NULL);
+			}
+		}
+		if (!document_dir)
+			document_dir = get_home_dir();
+	}
+
+	return document_dir;
+#else
+	return get_home_dir();
 #endif
 }
 
