@@ -42,10 +42,12 @@
 #  include <libpisock/pi-args.h>
 #  include <libpisock/pi-appinfo.h>
 #  include <libpisock/pi-address.h>
+#  include <libpisock/pi-version.h>
 #else
 #  include <pi-args.h>
 #  include <pi-appinfo.h>
 #  include <pi-address.h>
+#  include <pi-version.h>
 #endif
 
 #include "mgutils.h"
@@ -1009,10 +1011,22 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 	struct AddressAppInfo *ai;
 	gchar **firstName = NULL;
 	gchar **lastName = NULL;
+#if (PILOT_LINK_MAJOR > 11)
+	pi_buffer_t *RecordBuffer;
+#endif /* PILOT_LINK_0_12 */
 
 	/* Retrieve address */
+#if (PILOT_LINK_MAJOR < 12)
 	num = unpack_Address( & addr, buf->buf, buf->size );
 	if( num > 0 ) {
+#else /* PILOT_LINK_0_12 */
+	RecordBuffer = pi_buffer_new(buf->size);
+	memcpy(RecordBuffer->data, buf->buf, buf->size);
+	RecordBuffer->used = buf->size;
+	num = unpack_Address( & addr, RecordBuffer, address_v1 );
+	pi_buffer_free(RecordBuffer);
+	if (num != -1) {
+#endif
 		addrEnt = addr.entry;
 		attrib = buf->attrib;
 		unique_id = buf->unique_id;
