@@ -4386,6 +4386,9 @@ static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
 			   summaryview->flt_count, summaryview->flt_total);
 		STATUSBAR_POP(summaryview->mainwin);
 		STATUSBAR_PUSH(summaryview->mainwin, msg);
+		if ((summaryview->flt_count % 500) == 0) {
+			GTK_EVENTS_FLUSH();
+		}
 	}
 
 	fltinfo = filter_info_new();
@@ -4444,6 +4447,9 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 			   summaryview->flt_count, summaryview->flt_total);
 		STATUSBAR_POP(summaryview->mainwin);
 		STATUSBAR_PUSH(summaryview->mainwin, msg);
+		if ((summaryview->flt_count % 500) == 0) {
+			GTK_EVENTS_FLUSH();
+		}
 	}
 
 	fltinfo = filter_info_new();
@@ -4494,6 +4500,7 @@ static void summary_filter_real(SummaryView *summaryview,
 	debug_print(_("filtering..."));
 	STATUSBAR_PUSH(summaryview->mainwin, _("Filtering..."));
 	main_window_cursor_wait(summaryview->mainwin);
+	GTK_EVENTS_FLUSH();
 
 	summaryview->filtered = 0;
 	summaryview->flt_count = 0;
