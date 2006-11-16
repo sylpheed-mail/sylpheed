@@ -940,7 +940,7 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_button_set_relief(GTK_BUTTON(online_switch), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS(online_switch, GTK_CAN_FOCUS);
 #ifdef G_OS_WIN32
-	gtk_widget_set_size_request(online_switch, 34, 18);
+	gtk_widget_set_size_request(online_switch, 34, 20);
 #else
 	gtk_widget_set_size_request(online_switch, 34, 24);
 #endif
