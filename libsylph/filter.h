@@ -192,7 +192,7 @@ FilterCond *filter_cond_new		(FilterCondType		 type,
 					 FilterMatchType	 match_type,
 					 FilterMatchFlag	 match_flag,
 					 const gchar		*header,
-					 const gchar		*body);
+					 const gchar		*value);
 FilterAction *filter_action_new		(FilterActionType	 type,
 					 const gchar		*str);
 FilterInfo *filter_info_new		(void);

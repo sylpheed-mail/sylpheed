@@ -391,6 +391,11 @@ static PrefParam param[] = {
 };
 
 
+PrefsCommon *prefs_common_get(void)
+{
+	return &prefs_common;
+}
+
 PrefParam *prefs_common_get_params(void)
 {
 	return param;

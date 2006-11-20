@@ -409,6 +409,7 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 	FILE *msg_fp;
 	FILE *mbox_fp;
 	gchar buf[BUFFSIZE];
+	PrefsAccount *cur_ac;
 
 	g_return_val_if_fail(src != NULL, -1);
 	g_return_val_if_fail(src->folder != NULL, -1);
@@ -421,6 +422,8 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 		FILE_OP_ERROR(mbox, "fopen");
 		return -1;
 	}
+
+	cur_ac = account_get_current_account();
 
 	mlist = folder_item_get_msg_list(src, TRUE);
 
@@ -435,8 +438,8 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 
 		strncpy2(buf,
 			 msginfo->from ? msginfo->from :
-			 cur_account && cur_account->address ?
-			 cur_account->address : "unknown",
+			 cur_ac && cur_ac->address ?
+			 cur_ac->address : "unknown",
 			 sizeof(buf));
 		extract_address(buf);
 

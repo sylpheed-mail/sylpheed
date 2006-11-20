@@ -281,6 +281,8 @@ struct _PrefsCommon
 
 extern PrefsCommon prefs_common;
 
+PrefsCommon *prefs_common_get		(void);
+
 PrefParam *prefs_common_get_params	(void);
 
 void prefs_common_read_config		(void);

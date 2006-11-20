@@ -35,6 +35,8 @@ extern PrefsAccount *cur_account;
 void	      account_read_config_all	(void);
 void	      account_write_config_all	(void);
 
+PrefsAccount *account_get_current_account	(void);
+
 PrefsAccount *account_find_from_smtp_server	(const gchar	*address,
 						 const gchar	*smtp_server);
 PrefsAccount *account_find_from_address		(const gchar	*address);

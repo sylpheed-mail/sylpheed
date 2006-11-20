@@ -134,8 +134,10 @@ void procmime_mimeinfo_free_all		(MimeInfo	*mimeinfo);
 
 MimeInfo *procmime_mimeinfo_insert	(MimeInfo	*parent,
 					 MimeInfo	*mimeinfo);
+#if 0
 void procmime_mimeinfo_replace		(MimeInfo	*old,
 					 MimeInfo	*new);
+#endif
 
 MimeInfo *procmime_mimeinfo_next	(MimeInfo	*mimeinfo);
 

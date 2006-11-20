@@ -103,6 +103,11 @@ void account_write_config_all(void)
 	prefs_account_write_config_all(account_list);
 }
 
+PrefsAccount *account_get_current_account(void)
+{
+	return cur_account;
+}
+
 PrefsAccount *account_find_from_smtp_server(const gchar *address,
 					    const gchar *smtp_server)
 {

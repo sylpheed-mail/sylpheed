@@ -100,6 +100,7 @@ MimeInfo *procmime_mimeinfo_insert(MimeInfo *parent, MimeInfo *mimeinfo)
 	return mimeinfo;
 }
 
+#if 0
 void procmime_mimeinfo_replace(MimeInfo *old, MimeInfo *new)
 {
 	MimeInfo *parent = old->parent;
@@ -125,6 +126,7 @@ void procmime_mimeinfo_replace(MimeInfo *old, MimeInfo *new)
 		child = new;
 	}
 }
+#endif
 
 MimeInfo *procmime_mimeinfo_next(MimeInfo *mimeinfo)
 {
