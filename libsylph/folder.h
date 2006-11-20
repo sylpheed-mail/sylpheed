@@ -309,6 +309,9 @@ void        folder_destroy		(Folder		*folder);
 void        folder_local_folder_destroy	(LocalFolder	*lfolder);
 void        folder_remote_folder_destroy(RemoteFolder	*rfolder);
 
+gint        folder_scan_tree		(Folder		*folder);
+gint        folder_create_tree		(Folder		*folder);
+
 FolderItem *folder_item_new		(const gchar	*name,
 					 const gchar	*path);
 void        folder_item_append		(FolderItem	*parent,

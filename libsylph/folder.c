@@ -140,19 +140,21 @@ void folder_remote_folder_destroy(RemoteFolder *rfolder)
 		session_destroy(rfolder->session);
 }
 
-#if 0
-Folder *mbox_folder_new(const gchar *name, const gchar *path)
+gint folder_scan_tree(Folder *folder)
 {
-	/* not yet implemented */
-	return NULL;
+	g_return_val_if_fail(folder != NULL, -1);
+	g_return_val_if_fail(folder->klass->scan_tree != NULL, -1);
+
+	return folder->klass->scan_tree(folder);
 }
 
-Folder *maildir_folder_new(const gchar *name, const gchar *path)
+gint folder_create_tree(Folder *folder)
 {
-	/* not yet implemented */
-	return NULL;
+	g_return_val_if_fail(folder != NULL, -1);
+	g_return_val_if_fail(folder->klass->create_tree != NULL, -1);
+
+	return folder->klass->create_tree(folder);
 }
-#endif
 
 FolderItem *folder_item_new(const gchar *name, const gchar *path)
 {
@@ -810,7 +812,7 @@ void folder_set_missing_folders(void)
 		    folder->queue && folder->trash)
 			continue;
 
-		if (folder->klass->create_tree(folder) < 0) {
+		if (folder_create_tree(folder) < 0) {
 			g_warning("%s: can't create the folder tree.\n",
 				  LOCAL_FOLDER(folder)->rootpath);
 			continue;
