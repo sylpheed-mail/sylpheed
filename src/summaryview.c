@@ -2576,10 +2576,6 @@ static void summary_display_msg_full(SummaryView *summaryview,
 
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
-			if (MSG_IS_NEW(msginfo->flags)) {
-				trayicon_set_tooltip(NULL);
-				trayicon_set_notify(FALSE);
-			}
 			MSG_UNSET_PERM_FLAGS
 				(msginfo->flags, MSG_NEW | MSG_UNREAD);
 			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
@@ -2610,6 +2606,9 @@ static void summary_display_msg_full(SummaryView *summaryview,
 
 	summary_set_menu_sensitive(summaryview);
 	main_window_set_toolbar_sensitive(summaryview->mainwin);
+
+	trayicon_set_tooltip(NULL);
+	trayicon_set_notify(FALSE);
 
 	statusbar_pop_all();
 
@@ -2832,10 +2831,6 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 	}
 
 	if (MSG_IS_NEW(msginfo->flags) || MSG_IS_UNREAD(msginfo->flags)) {
-		if (MSG_IS_NEW(msginfo->flags)) {
-			trayicon_set_tooltip(NULL);
-			trayicon_set_notify(FALSE);
-		}
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW | MSG_UNREAD);
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 		summaryview->folder_item->mark_dirty = TRUE;
@@ -2874,6 +2869,8 @@ void summary_mark_as_read(SummaryView *summaryview)
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
 
+	trayicon_set_tooltip(NULL);
+	trayicon_set_notify(FALSE);
 	summary_status_show(summaryview);
 }
 
@@ -2964,6 +2961,8 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
 
+	trayicon_set_tooltip(NULL);
+	trayicon_set_notify(FALSE);
 	summary_status_show(summaryview);
 }
 
@@ -3007,6 +3006,8 @@ void summary_mark_all_read(SummaryView *summaryview)
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
 
+	trayicon_set_tooltip(NULL);
+	trayicon_set_notify(FALSE);
 	summary_status_show(summaryview);
 }
 
@@ -5427,6 +5428,8 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 				if (MSG_IS_IMAP(msginfo->flags))
 					imap_msg_unset_perm_flags
 						(msginfo, MSG_NEW | MSG_UNREAD);
+				trayicon_set_tooltip(NULL);
+				trayicon_set_notify(FALSE);
 				summary_status_show(summaryview);
 			} else if (!MSG_IS_REPLIED(msginfo->flags) &&
 				   !MSG_IS_FORWARDED(msginfo->flags)) {

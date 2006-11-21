@@ -57,6 +57,7 @@
 #include "procmsg.h"
 #include "utils.h"
 #include "gtkutils.h"
+#include "trayicon.h"
 #include "prefs_common.h"
 #include "prefs_account.h"
 #include "prefs_folder_item.h"
@@ -2146,6 +2147,8 @@ static void folderview_mark_all_read_cb(FolderView *folderview, guint action,
 	else {
 		procmsg_mark_all_read(item);
 		folderview_update_item(item, FALSE);
+		trayicon_set_tooltip(NULL);
+		trayicon_set_notify(FALSE);
 	}
 }
 
@@ -2501,6 +2504,8 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 	procmsg_empty_trash(folder->trash);
 	statusbar_pop_all();
 	folderview_update_item(folder->trash, TRUE);
+	trayicon_set_tooltip(NULL);
+	trayicon_set_notify(FALSE);
 
 	open_path = gtk_tree_row_reference_get_path(folderview->opened);
 	if (open_path && sel_path &&

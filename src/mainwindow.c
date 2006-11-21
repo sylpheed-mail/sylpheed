@@ -1668,6 +1668,8 @@ void main_window_empty_trash(MainWindow *mainwin, gboolean confirm)
 
 	procmsg_empty_all_trash();
 	statusbar_pop_all();
+	trayicon_set_tooltip(NULL);
+	trayicon_set_notify(FALSE);
 
 	for (list = folder_get_list(); list != NULL; list = list->next) {
 		Folder *folder;
