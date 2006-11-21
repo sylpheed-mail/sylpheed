@@ -55,6 +55,8 @@ struct _SockInfo
 	gint sock;
 #if USE_SSL
 	SSL *ssl;
+#else
+	gpointer ssl;
 #endif
 	GIOChannel *sock_ch;
 

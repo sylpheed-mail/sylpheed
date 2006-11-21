@@ -3273,6 +3273,8 @@ FILE *my_tmpfile(void)
 	tmpdir = get_tmp_dir();
 	tmplen = strlen(tmpdir);
 	progname = g_get_prgname();
+	if (!progname)
+		progname = "sylph";
 	proglen = strlen(progname);
 	Xalloca(fname, tmplen + 1 + proglen + sizeof(suffix),
 		return tmpfile());

@@ -614,7 +614,9 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 	g_string_truncate(session->read_msg_buf, 0);
 
 	ret = session->recv_msg(session, msg);
-	session->recv_msg_notify(session, msg, session->recv_msg_notify_data);
+	if (session->recv_msg_notify)
+		session->recv_msg_notify(session, msg,
+					 session->recv_msg_notify_data);
 
 	g_free(msg);
 
@@ -698,9 +700,10 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
 		    tv_cur.tv_usec - session->tv_prev.tv_usec >
 		    UI_REFRESH_INTERVAL) {
-			session->recv_data_progressive_notify
-				(session, data_buf->len, 0,
-				 session->recv_data_progressive_notify_data);
+			if (session->recv_data_progressive_notify)
+				session->recv_data_progressive_notify
+					(session, data_buf->len, 0,
+					 session->recv_data_progressive_notify_data);
 			g_get_current_time(&session->tv_prev);
 		}
 		return TRUE;
@@ -720,8 +723,9 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 
 	g_byte_array_set_size(data_buf, 0);
 
-	session->recv_data_notify(session, data_len,
-				  session->recv_data_notify_data);
+	if (session->recv_data_notify)
+		session->recv_data_notify(session, data_len,
+					  session->recv_data_notify_data);
 
 	if (ret < 0)
 		session->state = SESSION_ERROR;
@@ -851,9 +855,10 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
 		    tv_cur.tv_usec - session->tv_prev.tv_usec >
 		    UI_REFRESH_INTERVAL) {
-			session->recv_data_progressive_notify
-				(session, session->read_data_pos, 0,
-				 session->recv_data_progressive_notify_data);
+			if (session->recv_data_progressive_notify)
+				session->recv_data_progressive_notify
+					(session, session->read_data_pos, 0,
+					 session->recv_data_progressive_notify_data);
 			g_get_current_time(&session->tv_prev);
 		}
 
@@ -896,8 +901,9 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 	fclose(session->read_data_fp);
 	session->read_data_fp = NULL;
 
-	session->recv_data_notify(session, session->read_data_pos,
-				  session->recv_data_notify_data);
+	if (session->recv_data_notify)
+		session->recv_data_notify(session, session->read_data_pos,
+					  session->recv_data_notify_data);
 
 	session->read_data_pos = 0;
 
@@ -1059,10 +1065,12 @@ static gboolean session_write_data_cb(SockInfo *source,
 		    tv_cur.tv_usec - session->tv_prev.tv_usec >
 		    UI_REFRESH_INTERVAL) {
 			session_set_timeout(session, session->timeout_interval);
-			session->send_data_progressive_notify
-				(session,
-				 session->write_data_pos, write_data_len,
-				 session->send_data_progressive_notify_data);
+			if (session->send_data_progressive_notify)
+				session->send_data_progressive_notify
+					(session,
+					 session->write_data_pos,
+					 write_data_len,
+					 session->send_data_progressive_notify_data);
 			g_get_current_time(&session->tv_prev);
 		}
 		return TRUE;
@@ -1075,8 +1083,9 @@ static gboolean session_write_data_cb(SockInfo *source,
 
 	/* callback */
 	ret = session->send_data_finished(session, write_data_len);
-	session->send_data_notify(session, write_data_len,
-				  session->send_data_notify_data);
+	if (session->send_data_notify)
+		session->send_data_notify(session, write_data_len,
+					  session->send_data_notify_data);
 
 	return FALSE;
 }

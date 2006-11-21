@@ -65,6 +65,13 @@ typedef enum
 	SESSION_MSG_UNKNOWN
 } SessionMsgType;
 
+#ifndef USE_SSL
+typedef enum
+{
+	SSL_NONE
+} SSLType;
+#endif
+
 typedef gint (*RecvMsgNotify)			(Session	*session,
 						 const gchar	*msg,
 						 gpointer	 user_data);
@@ -92,9 +99,7 @@ struct _Session
 	gchar *server;
 	gushort port;
 
-#if USE_SSL
 	SSLType ssl_type;
-#endif
 
 	gboolean nonblocking;
 

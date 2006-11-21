@@ -89,9 +89,7 @@ struct _SMTPSession
 
 	SMTPState state;
 
-#if USE_SSL
 	gboolean tls_init_done;
-#endif
 
 	gchar *hostname;
 
