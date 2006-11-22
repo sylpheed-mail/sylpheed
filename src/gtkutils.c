@@ -880,6 +880,10 @@ void gtkut_window_popup(GtkWidget *window)
 
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), FALSE);
 	gtk_window_present(GTK_WINDOW(window));
+#ifdef G_OS_WIN32
+	/* ensure that the window is displayed at the top */
+	gdk_window_show(window->window);
+#endif
 }
 
 gboolean gtkut_window_modal_exist(void)
