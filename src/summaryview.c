@@ -78,6 +78,7 @@
 #include "inputdialog.h"
 #include "statusbar.h"
 #include "trayicon.h"
+#include "printing.h"
 #include "filter.h"
 #include "folder.h"
 #include "colorlabel.h"
@@ -3577,9 +3578,21 @@ void summary_print(SummaryView *summaryview)
 	const gchar *cmdline;
 	gchar *msg;
 	gboolean all_headers;
+	gboolean use_print_cmd = FALSE;
 
 	if (gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
 		return;
+
+	all_headers = summaryview->messageview->textview->show_all_headers;
+
+#if GTK_CHECK_VERSION(2, 10, 0)
+	if (!use_print_cmd) {
+		mlist = summary_get_selected_msg_list(summaryview);
+		printing_print_messages(mlist, all_headers);
+		g_slist_free(mlist);
+		return;
+	}
+#endif
 
 	cmdline = prefs_common.print_cmd;
 
@@ -3599,8 +3612,6 @@ void summary_print(SummaryView *summaryview)
 				 cmdline);
 		return;
 	}
-
-	all_headers = summaryview->messageview->textview->show_all_headers;
 
 	mlist = summary_get_selected_msg_list(summaryview);
 	for (cur = mlist; cur != NULL; cur = cur->next) {
