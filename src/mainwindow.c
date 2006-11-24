@@ -3483,7 +3483,7 @@ static void new_account_cb(MainWindow *mainwin, guint action,
 static void account_selector_menu_cb(GtkMenuItem *menuitem, gpointer data)
 {
 	cur_account = (PrefsAccount *)data;
-	main_window_reflect_prefs_all();
+	main_window_show_cur_account(main_window_get());
 }
 
 static void account_receive_menu_cb(GtkMenuItem *menuitem, gpointer data)
