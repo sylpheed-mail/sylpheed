@@ -103,7 +103,7 @@ gint nntp_post			(NNTPSession	*session,
 				 FILE		*fp);
 gint nntp_newgroups		(NNTPSession	*session);
 gint nntp_newnews		(NNTPSession	*session);
-gint nntp_mode			(NNTPSession	*sessio,
+gint nntp_mode			(NNTPSession	*session,
 				 gboolean	 stream);
 
 #endif /* __NNTP_H__ */
