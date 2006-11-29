@@ -367,16 +367,18 @@ static PrefParam param[] = {
 #endif
 	 P_STRING},
 #ifdef G_OS_WIN32
-	{"print_command", NULL, &prefs_common.print_cmd, P_STRING},
-#else
-	{"print_command", "lpr %s", &prefs_common.print_cmd, P_STRING},
-#endif
-#ifdef G_OS_WIN32
 	{"ext_editor_command", "notepad '%s'", &prefs_common.ext_editor_cmd,
 #else
 	{"ext_editor_command", "gedit %s", &prefs_common.ext_editor_cmd,
 #endif
 	 P_STRING},
+
+	{"use_print_command", "FALSE", &prefs_common.use_print_cmd, P_BOOL},
+#ifdef G_OS_WIN32
+	{"print_command", NULL, &prefs_common.print_cmd, P_STRING},
+#else
+	{"print_command", "lpr %s", &prefs_common.print_cmd, P_STRING},
+#endif
 
 	{"use_ext_inc", "FALSE", &prefs_common.use_extinc, P_BOOL},
 	{"ext_inc_path", DEFAULT_INC_PATH, &prefs_common.extinc_cmd, P_STRING},

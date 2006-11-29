@@ -211,9 +211,11 @@ static struct Other {
 static struct Extcmd {
 	GtkWidget *uri_combo;
 	GtkWidget *uri_entry;
-	GtkWidget *printcmd_entry;
 	GtkWidget *exteditor_combo;
 	GtkWidget *exteditor_entry;
+
+	GtkWidget *checkbtn_printcmd;
+	GtkWidget *printcmd_entry;
 
 	GtkWidget *checkbtn_incext;
 	GtkWidget *entry_incext;
@@ -499,9 +501,12 @@ static PrefsUIData ui_data[] = {
 	/* External commands */
 	{"uri_open_command", &extcmd.uri_entry,
 	 prefs_common_uri_set_data_from_entry, prefs_common_uri_set_entry},
-	{"print_command", &extcmd.printcmd_entry,
-	 prefs_set_data_from_entry, prefs_set_entry},
 	{"ext_editor_command", &extcmd.exteditor_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+
+	{"use_print_command", &extcmd.checkbtn_printcmd,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"print_command", &extcmd.printcmd_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 #ifndef G_OS_WIN32
@@ -2316,12 +2321,15 @@ static GtkWidget *prefs_extcmd_create(void)
 	GtkWidget *uri_combo;
 	GtkWidget *uri_entry;
 
-	GtkWidget *printcmd_label;
-	GtkWidget *printcmd_entry;
-
 	GtkWidget *exteditor_label;
 	GtkWidget *exteditor_combo;
 	GtkWidget *exteditor_entry;
+
+	GtkWidget *frame_printcmd;
+	GtkWidget *vbox_printcmd;
+	GtkWidget *checkbtn_printcmd;
+	GtkWidget *printcmd_label;
+	GtkWidget *printcmd_entry;
 
 #ifndef G_OS_WIN32
 	GtkWidget *vbox2;
@@ -2342,7 +2350,7 @@ static GtkWidget *prefs_extcmd_create(void)
 	PACK_FRAME(vbox1, ext_frame,
 		   _("External commands (%s will be replaced with file name / URI)"));
 
-	ext_table = gtk_table_new (3, 2, FALSE);
+	ext_table = gtk_table_new (2, 2, FALSE);
 	gtk_widget_show (ext_table);
 	gtk_container_add (GTK_CONTAINER (ext_frame), ext_table);
 	gtk_container_set_border_width (GTK_CONTAINER (ext_table), 8);
@@ -2377,26 +2385,15 @@ static GtkWidget *prefs_extcmd_create(void)
 			       NULL);
 	uri_entry = GTK_COMBO (uri_combo)->entry;
 
-	printcmd_label = gtk_label_new (_("Print"));
-	gtk_widget_show (printcmd_label);
-	gtk_table_attach (GTK_TABLE (ext_table), printcmd_label, 0, 1, 1, 2,
-			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_misc_set_alignment (GTK_MISC (printcmd_label), 1, 0.5);
-
-	printcmd_entry = gtk_entry_new ();
-	gtk_widget_show (printcmd_entry);
-	gtk_table_attach (GTK_TABLE (ext_table), printcmd_entry, 1, 2, 1, 2,
-			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
-
 	exteditor_label = gtk_label_new (_("Editor"));
 	gtk_widget_show (exteditor_label);
-	gtk_table_attach (GTK_TABLE (ext_table), exteditor_label, 0, 1, 2, 3,
+	gtk_table_attach (GTK_TABLE (ext_table), exteditor_label, 0, 1, 1, 2,
 			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 	gtk_misc_set_alignment (GTK_MISC (exteditor_label), 1, 0.5);
 
 	exteditor_combo = gtk_combo_new ();
 	gtk_widget_show (exteditor_combo);
-	gtk_table_attach (GTK_TABLE (ext_table), exteditor_combo, 1, 2, 2, 3,
+	gtk_table_attach (GTK_TABLE (ext_table), exteditor_combo, 1, 2, 1, 2,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtkut_combo_set_items (GTK_COMBO (exteditor_combo),
 #ifdef G_OS_WIN32
@@ -2411,6 +2408,27 @@ static GtkWidget *prefs_extcmd_create(void)
 #endif
 			       NULL);
 	exteditor_entry = GTK_COMBO (exteditor_combo)->entry;
+
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_printcmd, checkbtn_printcmd,
+				     _("Use external program for printing"));
+
+	vbox_printcmd = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox_printcmd);
+	gtk_container_add (GTK_CONTAINER (frame_printcmd), vbox_printcmd);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_printcmd), 8);
+	SET_TOGGLE_SENSITIVITY (checkbtn_printcmd, vbox_printcmd);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_printcmd), hbox1, FALSE, FALSE, 0);
+
+	printcmd_label = gtk_label_new (_("Command"));
+	gtk_widget_show (printcmd_label);
+	gtk_box_pack_start (GTK_BOX (hbox1), printcmd_label, FALSE, FALSE, 0);
+
+	printcmd_entry = gtk_entry_new ();
+	gtk_widget_show (printcmd_entry);
+	gtk_box_pack_start (GTK_BOX (hbox1), printcmd_entry, TRUE, TRUE, 0);
 
 #ifndef G_OS_WIN32
 	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, frame_incext, checkbtn_incext,
@@ -2458,6 +2476,7 @@ static GtkWidget *prefs_extcmd_create(void)
 
 	extcmd.uri_combo = uri_combo;
 	extcmd.uri_entry = uri_entry;
+	extcmd.checkbtn_printcmd = checkbtn_printcmd;
 	extcmd.printcmd_entry = printcmd_entry;
 
 	extcmd.exteditor_combo = exteditor_combo;

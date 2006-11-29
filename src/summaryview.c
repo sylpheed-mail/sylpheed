@@ -3578,7 +3578,6 @@ void summary_print(SummaryView *summaryview)
 	const gchar *cmdline;
 	gchar *msg;
 	gboolean all_headers;
-	gboolean use_print_cmd = FALSE;
 
 	if (gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
 		return;
@@ -3586,7 +3585,7 @@ void summary_print(SummaryView *summaryview)
 	all_headers = summaryview->messageview->textview->show_all_headers;
 
 #if GTK_CHECK_VERSION(2, 10, 0)
-	if (!use_print_cmd) {
+	if (!prefs_common.use_print_cmd) {
 		mlist = summary_get_selected_msg_list(summaryview);
 		printing_print_messages(mlist, all_headers);
 		g_slist_free(mlist);

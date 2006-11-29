@@ -257,8 +257,10 @@ struct _PrefsCommon
 
 	/* External commands */
 	gchar *uri_cmd;
-	gchar *print_cmd;
 	gchar *ext_editor_cmd;
+
+	gboolean use_print_cmd;
+	gchar *print_cmd;
 
 	gboolean use_extinc;
 	gchar *extinc_cmd;
