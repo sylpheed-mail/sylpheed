@@ -84,6 +84,8 @@ struct _PrefsCommon
 	gint autosave_itv;
 	gboolean reply_account_autosel;
 	gboolean default_reply_list;
+	gboolean inherit_recipient_on_self_reply;
+
 	gboolean show_ruler;
 
 	/* Quote */

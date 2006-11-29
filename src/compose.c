@@ -1578,12 +1578,23 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 			    !address_equal(compose->replyto, compose->ml_post))
 				compose_entry_set(compose, compose->replyto,
 						  COMPOSE_ENTRY_CC);
-		} else
+		} else if (prefs_common.inherit_recipient_on_self_reply &&
+			   address_equal(compose->account->address,
+					 msginfo->from)) {
+			compose_entry_set(compose, msginfo->to,
+					  COMPOSE_ENTRY_TO);
+			if (to_all) {
+				compose_entry_set(compose, compose->cc,
+						  COMPOSE_ENTRY_CC);
+				to_all = FALSE;
+			}
+		} else {
 			compose_entry_set(compose, 
 					  (compose->replyto && !ignore_replyto)
 					  ? compose->replyto
 					  : msginfo->from ? msginfo->from : "",
 					  COMPOSE_ENTRY_TO);
+		}
 	} else {
 		if (ignore_replyto) {
 			compose_entry_set(compose,

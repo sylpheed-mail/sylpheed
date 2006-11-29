@@ -102,6 +102,7 @@ static struct Compose {
 	GtkWidget *checkbtn_reply_account_autosel;
 	GtkWidget *checkbtn_quote;
 	GtkWidget *checkbtn_default_reply_list;
+	GtkWidget *checkbtn_inherit_recipient_on_self_reply;
 } compose;
 
 static struct Quote {
@@ -319,6 +320,9 @@ static PrefsUIData ui_data[] = {
 	 &compose.checkbtn_reply_account_autosel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"default_reply_list", &compose.checkbtn_default_reply_list,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"inherit_recipient_on_self_reply",
+	 &compose.checkbtn_inherit_recipient_on_self_reply,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* {"show_ruler", NULL, NULL, NULL}, */
@@ -973,6 +977,7 @@ static void prefs_compose_create(void)
 	GtkWidget *checkbtn_reply_account_autosel;
 	GtkWidget *checkbtn_quote;
 	GtkWidget *checkbtn_default_reply_list;
+	GtkWidget *checkbtn_inherit_recipient_on_self_reply;
 
 	GtkWidget *quote_wid;
 #if USE_GTKSPELL
@@ -1027,6 +1032,8 @@ static void prefs_compose_create(void)
 			   _("Quote message when replying"));
 	PACK_CHECK_BUTTON (vbox2, checkbtn_default_reply_list,
 			   _("Reply button invokes mailing list reply"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_inherit_recipient_on_self_reply,
+			   _("Inherit recipients on reply to self messages"));
 
 	/* editor */
 
@@ -1160,6 +1167,8 @@ static void prefs_compose_create(void)
 	compose.checkbtn_reply_account_autosel =
 		checkbtn_reply_account_autosel;
 	compose.checkbtn_default_reply_list = checkbtn_default_reply_list;
+	compose.checkbtn_inherit_recipient_on_self_reply =
+		checkbtn_inherit_recipient_on_self_reply;
 }
 
 static GtkWidget *prefs_quote_create(void)

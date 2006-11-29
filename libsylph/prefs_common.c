@@ -83,6 +83,8 @@ static PrefParam param[] = {
 	 &prefs_common.reply_account_autosel, P_BOOL},
 	{"default_reply_list", "TRUE", &prefs_common.default_reply_list,
 	 P_BOOL},
+	{"inherit_recipient_on_self_reply", "FALSE",
+	 &prefs_common.inherit_recipient_on_self_reply, P_BOOL},
 
 	{"show_ruler", "TRUE", &prefs_common.show_ruler, P_BOOL},
 
