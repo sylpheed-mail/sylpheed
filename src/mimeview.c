@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@
 #include "textview.h"
 #include "imageview.h"
 #include "procmime.h"
+#include "procheader.h"
 #include "summaryview.h"
 #include "menu.h"
 #include "filesel.h"
@@ -129,7 +130,8 @@ static GtkItemFactoryEntry mimeview_popup_entries[] =
 	{N_("/Open _with..."),	  NULL, mimeview_open_with,	  0, NULL},
 	{N_("/_Display as text"), NULL, mimeview_display_as_text, 0, NULL},
 	{N_("/_Save as..."),	  NULL, mimeview_save_as,	  0, NULL},
-	{N_("/Save _all..."),	  NULL, mimeview_save_all,	  0, NULL}
+	{N_("/Save _all..."),	  NULL, mimeview_save_all,	  0, NULL},
+	{N_("/_Print..."),	  NULL, mimeview_print,		  0, NULL}
 #if USE_GPGME
         ,
         {N_("/_Check signature"), NULL, mimeview_check_signature, 0, NULL}
@@ -843,6 +845,15 @@ static gint mimeview_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		else
 			menu_set_sensitive(mimeview->popupfactory,
 					   "/Open", TRUE);
+
+		if (partinfo && (partinfo->mime_type == MIME_TEXT ||
+				 partinfo->mime_type == MIME_TEXT_HTML ||
+				 partinfo->mime_type == MIME_MESSAGE_RFC822))
+			menu_set_sensitive(mimeview->popupfactory,
+					   "/Print...", TRUE);
+		else
+			menu_set_sensitive(mimeview->popupfactory,
+					   "/Print...", FALSE);
 #if USE_GPGME
 		menu_set_sensitive(mimeview->popupfactory,
 				   "/Check signature",
@@ -1046,6 +1057,42 @@ void mimeview_save_all(MimeView *mimeview)
 		alertpanel_error(_("Can't save the attachments."));
 
 	g_free(dir);
+}
+
+void mimeview_print(MimeView *mimeview)
+{
+	MimeInfo *partinfo;
+
+	if (!mimeview->opened) return;
+	if (!mimeview->file) return;
+
+	partinfo = mimeview_get_selected_part(mimeview);
+	g_return_if_fail(partinfo != NULL);
+
+	if (partinfo->mime_type == MIME_MESSAGE_RFC822) {
+		gchar *filename;
+		MsgInfo *msginfo;
+		MsgFlags flags = {0, 0};
+
+		filename = procmime_get_tmp_file_name(partinfo);
+		if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
+			alertpanel_error
+				(_("Can't save the part of multipart message."));
+			g_free(filename);
+			return;
+		}
+
+		msginfo = procheader_parse_file(filename, flags, TRUE);
+		msginfo->file_path = filename;
+		filename = NULL;
+		printing_print_message
+			(msginfo, mimeview->textview->show_all_headers);
+		procmsg_msginfo_free(msginfo);
+	} else if (partinfo->mime_type == MIME_TEXT ||
+		   partinfo->mime_type == MIME_TEXT_HTML) {
+		printing_print_message_part(mimeview->messageview->msginfo,
+					    partinfo);
+	}
 }
 
 static void mimeview_launch(MimeView *mimeview)

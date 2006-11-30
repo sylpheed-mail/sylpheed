@@ -50,6 +50,7 @@
 #include "alertpanel.h"
 #include "inputdialog.h"
 #include "manage_window.h"
+#include "printing.h"
 #include "procmsg.h"
 #include "procheader.h"
 #include "procmime.h"
@@ -753,32 +754,11 @@ static void save_as_cb(gpointer data, guint action, GtkWidget *widget)
 static void print_cb(gpointer data, guint action, GtkWidget *widget)
 {
 	MessageView *messageview = (MessageView *)data;
-	const gchar *cmdline;
-	gchar *msg;
 
 	if (!messageview->msginfo) return;
 
-	cmdline = prefs_common.print_cmd;
-
-	msg = g_strconcat
-		(_("The message will be printed with the following command:"),
-		 "\n\n", cmdline ? cmdline : _("(Default print command)"),
-		 NULL);
-	if (alertpanel(_("Print"), msg, GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
-	    != G_ALERTDEFAULT) {
-		g_free(msg);
-		return;
-	}
-	g_free(msg);
-
-	if (cmdline && str_find_format_times(cmdline, 's') != 1) {
-		alertpanel_error(_("Print command line is invalid:\n`%s'"),
-				 cmdline);
-		return;
-	}
-
-	procmsg_print_message(messageview->msginfo, cmdline,
-			      messageview->textview->show_all_headers);
+	printing_print_message(messageview->msginfo,
+			       messageview->textview->show_all_headers);
 }
 
 static void close_cb(gpointer data, guint action, GtkWidget *widget)

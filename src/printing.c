@@ -24,10 +24,11 @@
 #include "defs.h"
 #include "printing.h"
 
-#if GTK_CHECK_VERSION(2, 10, 0)
 #include <glib.h>
 #include <glib/gi18n.h>
+#if GTK_CHECK_VERSION(2, 10, 0)
 #include <gtk/gtkprintoperation.h>
+#endif
 
 #include <stdio.h>
 
@@ -35,10 +36,13 @@
 #include "procmsg.h"
 #include "procheader.h"
 #include "prefs_common.h"
+#include "alertpanel.h"
 
+#if GTK_CHECK_VERSION(2, 10, 0)
 typedef struct
 {
 	GSList *mlist;
+	GSList *cur;
 	gboolean all_headers;
 } PrintData;
 
@@ -71,8 +75,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 
 	debug_print("draw_page: %d\n", page_nr);
 
-	msginfo = (MsgInfo *)print_data->mlist->data;
-	g_return_if_fail(msginfo != NULL);
+	msginfo = (MsgInfo *)print_data->cur->data;
 
 	if ((fp = procmsg_open_message(msginfo)) == NULL)
 		return;
@@ -167,35 +170,113 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	g_object_unref(layout);
 }
 
-gint printing_print_messages(GSList *mlist, gboolean all_headers)
+gint printing_print_messages_gtk(GSList *mlist, gboolean all_headers)
 {
+	static GtkPrintSettings *settings = NULL;
 	GtkPrintOperation *op;
 	GtkPrintOperationResult res;
 	PrintData *print_data;
+	GSList *cur;
+
+	g_return_val_if_fail(mlist != NULL, -1);
 
 	debug_print("printing start\n");
 
 	print_data = g_new0(PrintData, 1);
 	print_data->mlist = mlist;
+	print_data->cur = mlist;
 	print_data->all_headers = all_headers;
 
 	op = gtk_print_operation_new();
+
+	gtk_print_operation_set_unit(op, GTK_UNIT_POINTS);
 
 	g_signal_connect(op, "begin-print", G_CALLBACK(begin_print),
 			 print_data);
 	g_signal_connect(op, "draw-page", G_CALLBACK(draw_page), print_data);
 
-	gtk_print_operation_set_unit(op, GTK_UNIT_POINTS);
+	if (settings)
+		gtk_print_operation_set_print_settings(op, settings);
 
 	res = gtk_print_operation_run
 		(op, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
 		 GTK_WINDOW(main_window_get()->window), NULL);
 
-	g_object_unref(op);
+	if (res == GTK_PRINT_OPERATION_RESULT_APPLY) {
+		g_print("save settings\n");
+		if (settings)
+			g_object_unref(settings);
+		settings = g_object_ref
+			(gtk_print_operation_get_print_settings(op));
+	}
 
+	g_object_unref(op);
 	g_free(print_data);
 
 	debug_print("printing finished\n");
+
+	return 0;
 }
 
-#endif
+#endif /* GTK_CHECK_VERSION(2, 10, 0) */
+
+gint printing_print_messages_with_command(GSList *mlist, gboolean all_headers,
+					  const gchar *cmdline)
+{
+	MsgInfo *msginfo;
+	GSList *cur;
+	gchar *msg;
+
+	g_return_val_if_fail(mlist != NULL, -1);
+
+	msg = g_strconcat
+		(_("The message will be printed with the following command:"),
+		 "\n\n", cmdline ? cmdline : _("(Default print command)"),
+		 NULL);
+	if (alertpanel(_("Print"), msg, GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
+	    != G_ALERTDEFAULT) {
+		g_free(msg);
+		return 0;
+	}
+	g_free(msg);
+
+	if (cmdline && str_find_format_times(cmdline, 's') != 1) {
+		alertpanel_error(_("Print command line is invalid:\n`%s'"),
+				 cmdline);
+		return -1;
+	}
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+		if (msginfo)
+			procmsg_print_message(msginfo, cmdline, all_headers);
+	}
+
+	return 0;
+}
+
+gint printing_print_messages(GSList *mlist, gboolean all_headers)
+{
+#if GTK_CHECK_VERSION(2, 10, 0)
+	if (!prefs_common.use_print_cmd)
+		return printing_print_messages_gtk(mlist, all_headers);
+	else
+#endif /* GTK_CHECK_VERSION(2, 10, 0) */
+		return printing_print_messages_with_command
+			(mlist, all_headers, prefs_common.print_cmd);
+}
+
+gint printing_print_message(MsgInfo *msginfo, gboolean all_headers)
+{
+	GSList mlist;
+
+	mlist.data = msginfo;
+	mlist.next = NULL;
+	return printing_print_messages(&mlist, all_headers);
+}
+
+gint printing_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo)
+{
+	procmsg_print_message_part(msginfo, partinfo, prefs_common.print_cmd,
+				   FALSE);
+}

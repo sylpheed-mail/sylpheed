@@ -22,12 +22,25 @@
 
 #include <gtk/gtkversion.h>
 
-#if GTK_CHECK_VERSION(2, 10, 0)
 #include <glib.h>
 
-gint printing_print_messages	(GSList		*mlist,
-				 gboolean	 all_headers);
+#include "procmsg.h"
+#include "procmime.h"
 
+#if GTK_CHECK_VERSION(2, 10, 0)
+gint printing_print_messages_gtk		(GSList		*mlist,
+						 gboolean	 all_headers);
 #endif
+
+gint printing_print_messages_with_command	(GSList		*mlist,
+						 gboolean	 all_headers,
+						 const gchar	*cmdline);
+
+gint printing_print_messages			(GSList		*mlist,
+						 gboolean	 all_headers);
+gint printing_print_message			(MsgInfo	*msginfo,
+						 gboolean	 all_headers);
+gint printing_print_message_part		(MsgInfo	*msginfo,
+						 MimeInfo	*partinfo);
 
 #endif /* __PRINTING_H__ */

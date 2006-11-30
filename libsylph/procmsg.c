@@ -1320,16 +1320,52 @@ gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file)
 	return 0;
 }
 
+static guint print_id = 0;
+
+static gint print_command_exec(const gchar *file, const gchar *cmdline)
+{
+	static const gchar *def_cmd = "lpr %s";
+	gchar buf[1024];
+
+#ifdef G_OS_WIN32
+	if (canonicalize_file_replace(file) < 0)
+		return -1;
+#endif
+
+	if (cmdline && str_find_format_times(cmdline, 's') == 1)
+		g_snprintf(buf, sizeof(buf) - 1, cmdline, file);
+	else {
+		if (cmdline) {
+			g_warning(_("Print command line is invalid: `%s'\n"),
+				  cmdline);
+			return -1;
+		}
+
+#ifdef G_OS_WIN32
+		execute_print_file(file);
+		return 0;
+#else
+		g_snprintf(buf, sizeof(buf) - 1, def_cmd, file);
+#endif
+	}
+
+	g_strchomp(buf);
+	if (buf[strlen(buf) - 1] != '&')
+		strcat(buf, "&");
+
+	system(buf);
+
+	return 0;
+}
+
 void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 			   gboolean all_headers)
 {
-	static const gchar *def_cmd = "lpr %s";
-	static guint id = 0;
 	gchar *prtmp;
 	FILE *msgfp, *tmpfp, *prfp;
 	GPtrArray *headers;
 	gint i;
-	gchar buf[1024];
+	gchar buf[BUFFSIZE];
 
 	g_return_if_fail(msginfo != NULL);
 
@@ -1340,7 +1376,8 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 	}
 
 	prtmp = g_strdup_printf("%s%cprinttmp-%08x.txt",
-				get_mime_tmp_dir(), G_DIR_SEPARATOR, id++);
+				get_mime_tmp_dir(), G_DIR_SEPARATOR,
+				print_id++);
 
 	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
 		FILE_OP_ERROR(prtmp, "fopen");
@@ -1409,37 +1446,48 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 	fclose(prfp);
 	fclose(tmpfp);
 
-#ifdef G_OS_WIN32
-	if (canonicalize_file_replace(prtmp) < 0) {
-		g_free(prtmp);
-		return;
-	}
-#endif
-
-	if (cmdline && str_find_format_times(cmdline, 's') == 1)
-		g_snprintf(buf, sizeof(buf) - 1, cmdline, prtmp);
-	else {
-		if (cmdline) {
-			g_warning(_("Print command line is invalid: `%s'\n"),
-				  cmdline);
-			g_free(prtmp);
-			return;
-		}
-
-#ifdef G_OS_WIN32
-		execute_print_file(prtmp);
-		g_free(prtmp);
-		return;
-#else
-		g_snprintf(buf, sizeof(buf) - 1, def_cmd, prtmp);
-#endif
-	}
+	print_command_exec(prtmp, cmdline);
 
 	g_free(prtmp);
+}
 
-	g_strchomp(buf);
-	if (buf[strlen(buf) - 1] != '&') strcat(buf, "&");
-	system(buf);
+void procmsg_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo,
+				const gchar *cmdline, gboolean all_headers)
+{
+	FILE *msgfp, *tmpfp, *prfp;
+	gchar *prtmp;
+	gchar buf[BUFFSIZE];
+
+	if ((msgfp = procmsg_open_message(msginfo)) == NULL) {
+		return;
+	}
+
+	if ((tmpfp = procmime_get_text_content
+		(partinfo, msgfp, conv_get_locale_charset_str())) == NULL) {
+		fclose(msgfp);
+		return;
+	}
+	fclose(msgfp);
+
+	prtmp = g_strdup_printf("%s%cprinttmp-%08x.txt",
+				get_mime_tmp_dir(), G_DIR_SEPARATOR,
+				print_id++);
+	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
+		FILE_OP_ERROR(prtmp, "fopen");
+		g_free(prtmp);
+		fclose(tmpfp);
+		return;
+	}
+
+	while (fgets(buf, sizeof(buf), tmpfp) != NULL)
+		fputs(buf, prfp);
+
+	fclose(prfp);
+	fclose(tmpfp);
+
+	print_command_exec(prtmp, cmdline);
+
+	g_free(prtmp);
 }
 
 MsgInfo *procmsg_msginfo_copy(MsgInfo *msginfo)

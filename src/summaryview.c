@@ -3575,49 +3575,14 @@ void summary_print(SummaryView *summaryview)
 {
 	MsgInfo *msginfo;
 	GSList *mlist, *cur;
-	const gchar *cmdline;
 	gchar *msg;
 	gboolean all_headers;
 
-	if (gtk_tree_selection_count_selected_rows(summaryview->selection) == 0)
-		return;
-
 	all_headers = summaryview->messageview->textview->show_all_headers;
-
-#if GTK_CHECK_VERSION(2, 10, 0)
-	if (!prefs_common.use_print_cmd) {
-		mlist = summary_get_selected_msg_list(summaryview);
-		printing_print_messages(mlist, all_headers);
-		g_slist_free(mlist);
-		return;
-	}
-#endif
-
-	cmdline = prefs_common.print_cmd;
-
-	msg = g_strconcat
-		(_("The message will be printed with the following command:"),
-		 "\n\n", cmdline ? cmdline : _("(Default print command)"),
-		 NULL);
-	if (alertpanel(_("Print"), msg, GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
-	    != G_ALERTDEFAULT) {
-		g_free(msg);
-		return;
-	}
-	g_free(msg);
-
-	if (cmdline && str_find_format_times(cmdline, 's') != 1) {
-		alertpanel_error(_("Print command line is invalid:\n`%s'"),
-				 cmdline);
-		return;
-	}
-
 	mlist = summary_get_selected_msg_list(summaryview);
-	for (cur = mlist; cur != NULL; cur = cur->next) {
-		msginfo = (MsgInfo *)cur->data;
-		if (msginfo)
-			procmsg_print_message(msginfo, cmdline, all_headers);
-	}
+	if (!mlist)
+		return;
+	printing_print_messages(mlist, all_headers);
 	g_slist_free(mlist);
 }
 
