@@ -39,46 +39,29 @@
 #include "alertpanel.h"
 
 #if GTK_CHECK_VERSION(2, 10, 0)
+
+#define SPACING	2.0
+
 typedef struct
 {
 	GSList *mlist;
 	GSList *cur;
+	gint *n_pages;
 	gboolean all_headers;
 } PrintData;
 
-static void begin_print(GtkPrintOperation *operation, GtkPrintContext *context,
-			gpointer data)
-{
-	PrintData *print_data = data;
 
-	debug_print("begin_print\n");
-	/* count pages */
-	gtk_print_operation_set_n_pages(operation, 1);
-}
-
-static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
-		      gint page_nr, gpointer data)
+static gint layout_set_headers(PangoLayout *layout, MsgInfo *msginfo,
+			       PrintData *print_data)
 {
-	cairo_t *cr;
-	PangoLayout *layout;
-	gdouble width, text_height;
-	gdouble font_size = 12.0;
-	gint layout_w, layout_h;
-	PangoFontDescription *desc;
-	PrintData *print_data = data;
-	MsgInfo *msginfo;
 	FILE *fp;
 	GPtrArray *headers;
 	GString *str;
 	gint i;
-	gchar buf[BUFFSIZE];
-
-	debug_print("draw_page: %d\n", page_nr);
-
-	msginfo = (MsgInfo *)print_data->cur->data;
+	PangoFontDescription *desc;
 
 	if ((fp = procmsg_open_message(msginfo)) == NULL)
-		return;
+		return -1;
 
 	if (print_data->all_headers)
 		headers = procheader_get_header_array_asis(fp, NULL);
@@ -86,27 +69,6 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 		headers = procheader_get_header_array_for_display(fp, NULL);
 
 	fclose(fp);
-
-	cr = gtk_print_context_get_cairo_context(context);
-	width = gtk_print_context_get_width(context);
-
-#if 0
-	cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
-	cairo_rectangle(cr, 0, 0, width, font_size * 5);
-	cairo_fill(cr);
-#endif
-
-	cairo_set_source_rgb(cr, 0, 0, 0);
-
-	layout = gtk_print_context_create_pango_layout(context);
-
-	//desc = pango_font_description_from_string(prefs_common.textfont);
-	desc = gtkut_get_default_font_desc();
-	pango_font_description_set_size(desc, font_size * PANGO_SCALE);
-	pango_layout_set_font_description(layout, desc);
-	pango_font_description_free(desc);
-
-	cairo_move_to(cr, 0, 0);
 
 	str = g_string_new(NULL);
 
@@ -139,12 +101,157 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 		g_string_append(str, text);
 	}
 
-	procheader_header_array_destroy(headers);
+	desc = gtkut_get_default_font_desc();
+	pango_font_description_set_size(desc, 12.0 * PANGO_SCALE);
+	pango_layout_set_font_description(layout, desc);
+	pango_font_description_free(desc);
 
 	pango_layout_set_markup(layout, str->str, -1);
 	g_string_free(str, TRUE);
+	procheader_header_array_destroy(headers);
+
+	return 0;
+}
+
+static gint message_get_body_lines(MsgInfo *msginfo, PangoLayout *layout)
+{
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+	gint lines = 0;
+
+	if ((fp = procmime_get_first_text_content(msginfo, NULL)) == NULL) {
+		g_warning("Can't get text part\n");
+		return -1;
+	}
+
+	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		strretchomp(buf);
+		pango_layout_set_text(layout, buf, -1);
+		lines += pango_layout_get_line_count(layout);
+	}
+
+	g_print("lines = %d\n", lines);
+	return lines;
+}
+
+static gint message_count_page(MsgInfo *msginfo, GtkPrintContext *context,
+			       PrintData *print_data)
+{
+	cairo_t *cr;
+	gdouble width, height, line_h, hdr_h, body_h;
+	PangoLayout *layout;
+	PangoFontDescription *desc;
+	gint layout_h;
+	gint lines_per_page, lines_left, body_lines;
+	gint n_pages = 1;
+
+	cr = gtk_print_context_get_cairo_context(context);
+	width = gtk_print_context_get_width(context);
+	height = gtk_print_context_get_height(context);
+	g_print("w = %g, h = %g\n", width, height);
+
+	layout = gtk_print_context_create_pango_layout(context);
+	pango_layout_set_width(layout, width * PANGO_SCALE);
+	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
+	pango_layout_set_spacing(layout, SPACING * PANGO_SCALE);
+
+	layout_set_headers(layout, msginfo, print_data);
+	pango_layout_get_size(layout, NULL, &layout_h);
+	hdr_h = (gdouble)layout_h / PANGO_SCALE;
+	body_h = height - hdr_h;
+
+	desc = pango_font_description_from_string(prefs_common_get()->textfont);
+	pango_font_description_set_size(desc, 12.0 * PANGO_SCALE);
+	pango_layout_set_font_description(layout, desc);
+	pango_font_description_free(desc);
+
+	pango_layout_set_text(layout, "Test", -1);
+	pango_layout_get_size(layout, NULL, &layout_h);
+	line_h = (gdouble)layout_h / PANGO_SCALE + SPACING;
+	lines_per_page = height / line_h;
+	lines_left = body_h / line_h;
+
+	g_print("layout_h = %d, line_h = %g, lines = %d\n", layout_h, line_h, lines_per_page);
+	g_print("hdr_h = %g, body_h = %g, lines_left = %d\n", hdr_h, body_h, lines_left);
+
+	body_lines = message_get_body_lines(msginfo, layout);
+
+	g_object_unref(layout);
+
+	if (body_lines > lines_left) {
+		n_pages += (body_lines - lines_left) / lines_per_page;
+		if (((body_lines - lines_left) % lines_per_page) != 0)
+			n_pages++;
+	}
+	g_print("n_pages = %d\n", n_pages);
+
+	return n_pages;
+}
+
+static void begin_print(GtkPrintOperation *operation, GtkPrintContext *context,
+			gpointer data)
+{
+	PrintData *print_data = data;
+	GSList *cur;
+	gint n_pages = 0;
+	gint i;
+
+	debug_print("begin_print\n");
+
+	for (cur = print_data->mlist, i = 0; cur != NULL;
+	     cur = cur->next, ++i) {
+		print_data->n_pages[i] =
+			message_count_page((MsgInfo *)cur->data, context,
+					   print_data);
+		n_pages += print_data->n_pages[i];
+	}
+
+	gtk_print_operation_set_n_pages(operation, n_pages);
+}
+
+static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
+		      gint page_nr, gpointer data)
+{
+	cairo_t *cr;
+	PangoLayout *layout;
+	gdouble width, text_height;
+	gdouble font_size = 12.0;
+	gint layout_w, layout_h;
+	PangoFontDescription *desc;
+	PrintData *print_data = data;
+	MsgInfo *msginfo;
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+
+	debug_print("draw_page: %d\n", page_nr);
+
+	msginfo = (MsgInfo *)print_data->cur->data;
+
+	cr = gtk_print_context_get_cairo_context(context);
+	width = gtk_print_context_get_width(context);
+
+#if 0
+	cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
+	cairo_rectangle(cr, 0, 0, width, font_size * 5);
+	cairo_fill(cr);
+#endif
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+
+	layout = gtk_print_context_create_pango_layout(context);
+	pango_layout_set_width(layout, width * PANGO_SCALE);
+	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
+	pango_layout_set_spacing(layout, SPACING * PANGO_SCALE);
+
+	if (layout_set_headers(layout, msginfo, print_data) < 0) {
+		g_object_unref(layout);
+		return;
+	}
+
+	cairo_move_to(cr, 0, 0);
 	pango_cairo_show_layout(cr, layout);
 	pango_layout_get_size(layout, &layout_w, &layout_h);
+	g_print("size = %d\n", layout_h);
 	cairo_rel_move_to(cr, 0, (double)layout_h / PANGO_SCALE);
 
 	if ((fp = procmime_get_first_text_content(msginfo, NULL)) == NULL) {
@@ -160,9 +267,12 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	pango_font_description_free(desc);
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		strretchomp(buf);
 		pango_layout_set_text(layout, buf, -1);
 		pango_cairo_show_layout(cr, layout);
-		cairo_rel_move_to(cr, 0, font_size);
+		pango_layout_get_size(layout, NULL, &layout_h);
+		cairo_rel_move_to(cr, 0,
+				  (double)layout_h / PANGO_SCALE + SPACING);
 	}
 
 	fclose(fp);
@@ -185,6 +295,7 @@ gint printing_print_messages_gtk(GSList *mlist, gboolean all_headers)
 	print_data = g_new0(PrintData, 1);
 	print_data->mlist = mlist;
 	print_data->cur = mlist;
+	print_data->n_pages = g_new0(gint, g_slist_length(mlist));
 	print_data->all_headers = all_headers;
 
 	op = gtk_print_operation_new();
