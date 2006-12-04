@@ -220,14 +220,9 @@ gint printing_print_messages_gtk(GSList *mlist, gboolean all_headers)
 
 #endif /* GTK_CHECK_VERSION(2, 10, 0) */
 
-gint printing_print_messages_with_command(GSList *mlist, gboolean all_headers,
-					  const gchar *cmdline)
+static gint check_command_line(const gchar *cmdline)
 {
-	MsgInfo *msginfo;
-	GSList *cur;
 	gchar *msg;
-
-	g_return_val_if_fail(mlist != NULL, -1);
 
 	msg = g_strconcat
 		(_("The message will be printed with the following command:"),
@@ -236,7 +231,7 @@ gint printing_print_messages_with_command(GSList *mlist, gboolean all_headers,
 	if (alertpanel(_("Print"), msg, GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL)
 	    != G_ALERTDEFAULT) {
 		g_free(msg);
-		return 0;
+		return -2;
 	}
 	g_free(msg);
 
@@ -245,6 +240,20 @@ gint printing_print_messages_with_command(GSList *mlist, gboolean all_headers,
 				 cmdline);
 		return -1;
 	}
+
+	return 0;
+}
+
+gint printing_print_messages_with_command(GSList *mlist, gboolean all_headers,
+					  const gchar *cmdline)
+{
+	MsgInfo *msginfo;
+	GSList *cur;
+
+	g_return_val_if_fail(mlist != NULL, -1);
+
+	if (check_command_line(cmdline) < 0)
+		return -1;
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
@@ -277,6 +286,9 @@ gint printing_print_message(MsgInfo *msginfo, gboolean all_headers)
 
 gint printing_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo)
 {
+	if (check_command_line(prefs_common.print_cmd) < 0)
+		return -1;
 	procmsg_print_message_part(msginfo, partinfo, prefs_common.print_cmd,
 				   FALSE);
+	return 0;
 }
