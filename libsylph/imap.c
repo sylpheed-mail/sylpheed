@@ -2331,7 +2331,7 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	str = g_string_new(NULL);
 
 	for (;;) {
-		if (exists > 0) {
+		if (exists > 0 && count <= exists) {
 			g_get_current_time(&tv_cur);
 			if (tv_cur.tv_sec > tv_prev.tv_sec ||
 			    tv_cur.tv_usec - tv_prev.tv_usec >
