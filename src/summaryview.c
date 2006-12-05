@@ -4362,7 +4362,7 @@ static gboolean summary_filter_func(GtkTreeModel *model, GtkTreePath *path,
 			   summaryview->flt_count, summaryview->flt_total);
 		STATUSBAR_POP(summaryview->mainwin);
 		STATUSBAR_PUSH(summaryview->mainwin, msg);
-		if ((summaryview->flt_count % 500) == 0) {
+		if ((summaryview->flt_count % 100) == 0) {
 			GTK_EVENTS_FLUSH();
 		}
 	}
@@ -4423,7 +4423,7 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 			   summaryview->flt_count, summaryview->flt_total);
 		STATUSBAR_POP(summaryview->mainwin);
 		STATUSBAR_PUSH(summaryview->mainwin, msg);
-		if ((summaryview->flt_count % 500) == 0) {
+		if ((summaryview->flt_count % 100) == 0) {
 			GTK_EVENTS_FLUSH();
 		}
 	}
