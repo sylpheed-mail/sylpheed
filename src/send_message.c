@@ -688,6 +688,9 @@ static gint send_send_data_progressive(Session *session, guint cur_len,
 	progress_dialog_set_label(dialog->dialog, buf);
 	progress_dialog_set_percentage
 		(dialog->dialog, (gfloat)cur_len / (gfloat)total_len);
+#ifdef G_OS_WIN32
+	GTK_EVENTS_FLUSH();
+#endif
 
 	return 0;
 }
