@@ -366,6 +366,16 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	}
 	g_print("count = %d\n", count);
 
+	desc = gtkut_get_default_font_desc();
+	pango_font_description_set_size(desc, 12.0 * PANGO_SCALE);
+	pango_layout_set_font_description(layout, desc);
+	pango_font_description_free(desc);
+	g_snprintf(buf, sizeof(buf), "- %d -", pinfo->page_nr_per_msg + 1);
+	pango_layout_set_text(layout, buf, -1);
+	pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
+	cairo_move_to(cr, 0, height);
+	pango_cairo_show_layout(cr, layout);
+
 	g_object_unref(layout);
 }
 
@@ -414,7 +424,7 @@ gint printing_print_messages_gtk(GSList *mlist, gboolean all_headers)
 	}
 
 	g_object_unref(op);
-	for (i = 0; i < print_data->n_pages; i++) {
+	for (i = 0; i < print_data->pages->len; i++) {
 		PageInfo *pinfo;
 		pinfo = g_ptr_array_index(print_data->pages, i);
 		g_free(pinfo);
