@@ -1,5 +1,28 @@
 Changes of Sylpheed
 
+* 2.3.0beta6 (development)
+
+    * The new printing function was implemented.
+      - Each page is now rendered by Cairo.
+      - The native print dialog is used.
+      - Page number is printed for each page.
+      - The option "Use external program for printing" was added.
+      - The printing of MIME part was implemented.
+    * Cc: was added to the header view.
+    * The option "Inherit recipients on reply to self messages" was added.
+    * Pilot-link (libpisock) 0.12 was supported.
+    * The window position and the layout of the 'Add Address' dialog was
+      modified.
+    * The default directory of the file selection dialog was changed
+      (in Win32, 'My Documents' is used. In Unix, the home directory is used).
+    * The UI is now updated periodically on manual filtering.
+    * The new mail notification on the tray icon is reset when any message
+      is read now.
+    * Win32: The bug that the window was sometimes not displayed at the top
+      when the tray icon was clicked was fixed.
+    * Win32: The issue that the progress dialog was not updated while sending
+      large messages was fixed.
+
 * 2.3.0beta5 (development)
 
     * When new mails arrive, the tray icon is changed, and it will be kept
