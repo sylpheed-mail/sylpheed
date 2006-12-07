@@ -437,6 +437,26 @@ void textview_reflect_prefs(TextView *textview)
 					 prefs_common.textview_cursor_visible);
 }
 
+static const gchar *textview_get_src_encoding(TextView *textview,
+					      MimeInfo *mimeinfo)
+{
+	const gchar *charset;
+
+	if (textview->messageview->forced_charset)
+		charset = textview->messageview->forced_charset;
+	else if (!textview->messageview->new_window &&
+		 prefs_common.force_charset)
+		charset = prefs_common.force_charset;
+	else if (mimeinfo->charset)
+		charset = mimeinfo->charset;
+	else if (prefs_common.default_encoding)
+		charset = prefs_common.default_encoding;
+	else
+		charset = NULL;
+
+	return charset;
+}
+
 void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 			   const gchar *file)
 {
@@ -445,7 +465,7 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 	GtkTextMark *mark;
 	GtkTextIter iter;
 	FILE *fp;
-	const gchar *charset = NULL;
+	const gchar *charset;
 	GPtrArray *headers = NULL;
 
 	buffer = gtk_text_view_get_buffer(text);
@@ -455,15 +475,7 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 		return;
 	}
 
-	if (textview->messageview->forced_charset)
-		charset = textview->messageview->forced_charset;
-	else if (prefs_common.force_charset)
-		charset = prefs_common.force_charset;
-	else if (mimeinfo->charset)
-		charset = mimeinfo->charset;
-	else if (prefs_common.default_encoding)
-		charset = prefs_common.default_encoding;
-
+	charset = textview_get_src_encoding(textview, mimeinfo);
 	textview_set_font(textview, charset);
 	textview_clear(textview);
 
@@ -496,7 +508,7 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	gchar buf[BUFFSIZE];
 	const gchar *boundary = NULL;
 	gint boundary_len = 0;
-	const gchar *charset = NULL;
+	const gchar *charset;
 	GPtrArray *headers = NULL;
 	gboolean is_rfc822_part = FALSE;
 	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
@@ -518,14 +530,7 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		boundary_len = strlen(boundary);
 	}
 
-	if (textview->messageview->forced_charset)
-		charset = textview->messageview->forced_charset;
-	else if (prefs_common.force_charset)
-		charset = prefs_common.force_charset;
-	else if (mimeinfo->charset)
-		charset = mimeinfo->charset;
-	else if (prefs_common.default_encoding)
-		charset = prefs_common.default_encoding;
+	charset = textview_get_src_encoding(textview, mimeinfo);
 
 	if (!boundary && mimeinfo->mime_type == MIME_TEXT) {
 		if (fseek(fp, mimeinfo->fpos, SEEK_SET) < 0)
@@ -605,7 +610,7 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	gchar buf[BUFFSIZE];
 	const gchar *boundary = NULL;
 	gint boundary_len = 0;
-	const gchar *charset = NULL;
+	const gchar *charset;
 	GPtrArray *headers = NULL;
 
 	g_return_if_fail(mimeinfo != NULL);
@@ -629,14 +634,7 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	while (fgets(buf, sizeof(buf), fp) != NULL)
 		if (buf[0] == '\r' || buf[0] == '\n') break;
 
-	if (textview->messageview->forced_charset)
-		charset = textview->messageview->forced_charset;
-	else if (prefs_common.force_charset)
-		charset = prefs_common.force_charset;
-	else if (mimeinfo->charset)
-		charset = mimeinfo->charset;
-	else if (prefs_common.default_encoding)
-		charset = prefs_common.default_encoding;
+	charset = textview_get_src_encoding(textview, mimeinfo);
 
 	if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
 		headers = textview_scan_header(textview, fp, charset);

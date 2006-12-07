@@ -70,6 +70,9 @@ static void messageview_change_view_type(MessageView		*messageview,
 					 MessageType		 type);
 static void messageview_set_menu_state	(MessageView		*messageview);
 
+static void messageview_set_encoding_menu
+					(MessageView		*messageview);
+
 static gint messageview_delete_cb	(GtkWidget		*widget,
 					 GdkEventAny		*event,
 					 MessageView		*messageview);
@@ -427,8 +430,6 @@ MessageView *messageview_create_with_new_window(void)
 	msgview->statusbar_cid = gtk_statusbar_get_context_id
 		(GTK_STATUSBAR(statusbar), "Message View");
 
-	gtk_widget_show_all(window);
-
 	msgview->new_window = TRUE;
 	msgview->window = window;
 	msgview->window_vbox = window_vbox;
@@ -437,7 +438,11 @@ MessageView *messageview_create_with_new_window(void)
 	msgview->menu_locked = FALSE;
 	msgview->visible = TRUE;
 
+	gtk_widget_show_all(window);
+
 	messageview_init(msgview);
+
+	messageview_set_encoding_menu(msgview);
 
 	ifactory = gtk_item_factory_from_widget(menubar);
 #ifndef G_OS_WIN32
@@ -559,6 +564,41 @@ static void messageview_set_menu_state(MessageView *messageview)
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
 				       messageview->textview->show_all_headers);
 	messageview->menu_locked = FALSE;
+}
+
+static void messageview_set_encoding_menu(MessageView *messageview)
+{
+	GtkItemFactoryEntry *entry;
+	GtkItemFactory *ifactory;
+	CharSet encoding;
+	gchar *path, *p, *q;
+	GtkWidget *item;
+
+	encoding = conv_get_charset_from_str(prefs_common.force_charset);
+	ifactory = gtk_item_factory_from_widget(messageview->menubar);
+
+	for (entry = msgview_entries; entry->callback != view_source_cb;
+	     entry++) {
+		if (entry->callback == set_charset_cb &&
+		    (CharSet)entry->callback_action == encoding) {
+			p = q = path = g_strdup(entry->path);
+			while (*p) {
+				if (*p == '_') {
+					if (p[1] == '_') {
+						p++;
+						*q++ = '_';
+					}
+				} else
+					*q++ = *p;
+				p++;
+			}
+			*q = '\0';
+			item = gtk_item_factory_get_item(ifactory, path);
+			gtk_widget_activate(item);
+			g_free(path);
+			break;
+		}
+	}
 }
 
 void messageview_clear(MessageView *messageview)
@@ -794,7 +834,9 @@ static void set_charset_cb(gpointer data, guint action, GtkWidget *widget)
 		charset = conv_get_charset_str((CharSet)action);
 		g_free(messageview->forced_charset);
 		messageview->forced_charset = g_strdup(charset);
-		messageview_show(messageview, messageview->msginfo, FALSE);
+		if (messageview->msginfo)
+			messageview_show(messageview, messageview->msginfo,
+					 FALSE);
 	}
 }
 
@@ -852,6 +894,7 @@ static void reply_cb(gpointer data, guint action, GtkWidget *widget)
 	MsgInfo *msginfo;
 	gchar *text = NULL;
 	ComposeMode mode = (ComposeMode)action;
+	gchar *prev_force_charset;
 
 	msginfo = messageview->msginfo;
 	mlist = g_slist_append(NULL, msginfo);
@@ -866,6 +909,9 @@ static void reply_cb(gpointer data, guint action, GtkWidget *widget)
 	if (!COMPOSE_QUOTE_MODE(mode))
 		mode |= prefs_common.reply_with_quote
 			? COMPOSE_WITH_QUOTE : COMPOSE_WITHOUT_QUOTE;
+
+	prev_force_charset = prefs_common.force_charset;
+	prefs_common.force_charset = messageview->forced_charset;
 
 	switch (COMPOSE_MODE(mode)) {
 	case COMPOSE_REPLY:
@@ -887,6 +933,8 @@ static void reply_cb(gpointer data, guint action, GtkWidget *widget)
 		g_warning("messageview.c: reply_cb(): invalid mode: %d\n",
 			  mode);
 	}
+
+	prefs_common.force_charset = prev_force_charset;
 
 	/* summary_set_marks_selected(summaryview); */
 	g_free(text);
