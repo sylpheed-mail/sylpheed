@@ -880,7 +880,7 @@ static void prefs_account_receive_create(void)
 	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
 	PACK_CHECK_BUTTON (vbox2, getall_chkbtn,
-			   _("Download all messages on server"));
+			   _("Download all messages (including already received) on server"));
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
