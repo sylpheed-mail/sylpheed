@@ -78,9 +78,10 @@ static PrefParam param[] = {
 	{"pop_before_smtp", "FALSE", &tmp_ac_prefs.pop_before_smtp, P_BOOL},
 
 	/* Compose */
-	{"signature_type", "0", &tmp_ac_prefs.sig_type, P_ENUM},
+	{"signature_type", "2", &tmp_ac_prefs.sig_type, P_ENUM},
 	{"signature_path", "~" G_DIR_SEPARATOR_S DEFAULT_SIGNATURE,
 	 &tmp_ac_prefs.sig_path, P_STRING},
+	{"signature_text", NULL, &tmp_ac_prefs.sig_text, P_STRING},
 	{"set_autocc", "FALSE", &tmp_ac_prefs.set_autocc, P_BOOL},
 	{"auto_cc", NULL, &tmp_ac_prefs.auto_cc, P_STRING},
 	{"set_autobcc", "FALSE", &tmp_ac_prefs.set_autobcc, P_BOOL},

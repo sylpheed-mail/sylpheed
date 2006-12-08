@@ -118,7 +118,8 @@ static struct Send {
 } p_send;
 
 static struct Compose {
-	GtkWidget *sigfile_radiobtn;
+	GtkWidget *sig_radiobtn;
+	GtkWidget *sig_text;
 	GtkWidget *sigpath_entry;
 
 	GtkWidget *autocc_chkbtn;
@@ -291,11 +292,13 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Compose */
-	{"signature_type", &compose.sigfile_radiobtn,
+	{"signature_type", &compose.sig_radiobtn,
 	 prefs_account_enum_set_data_from_radiobtn,
 	 prefs_account_enum_set_radiobtn},
 	{"signature_path", &compose.sigpath_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
+	{"signature_text", &compose.sig_text,
+	 prefs_set_data_from_text, prefs_set_text},
 	{"set_autocc", &compose.autocc_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"auto_cc", &compose.autocc_entry,
@@ -1188,6 +1191,9 @@ static void prefs_account_compose_create(void)
 {
 	GtkWidget *vbox1;
 	GtkWidget *sig_vbox;
+	GtkWidget *sig_radiobtn;
+	GtkWidget *sigtext_scrwin;
+	GtkWidget *sig_text;
 	GtkWidget *sig_hbox;
 	GtkWidget *sigfile_radiobtn;
 	GtkWidget *sigcmd_radiobtn;
@@ -1213,11 +1219,34 @@ static void prefs_account_compose_create(void)
 	gtk_container_add (GTK_CONTAINER (frame), sig_vbox);
 	gtk_container_set_border_width (GTK_CONTAINER (sig_vbox), 8);
 
+	sig_radiobtn = gtk_radio_button_new_with_label
+		(NULL, _("Direct input"));
+	gtk_widget_show (sig_radiobtn);
+	gtk_box_pack_start (GTK_BOX (sig_vbox), sig_radiobtn, FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (sig_radiobtn), MENU_VAL_ID,
+			   GINT_TO_POINTER (SIG_DIRECT));
+
+	sigtext_scrwin = gtk_scrolled_window_new (NULL, NULL);
+	gtk_widget_show (sigtext_scrwin);
+	gtk_box_pack_start (GTK_BOX (sig_vbox), sigtext_scrwin, TRUE, TRUE, 0);
+	gtk_scrolled_window_set_policy
+		(GTK_SCROLLED_WINDOW (sigtext_scrwin),
+		 GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type
+		(GTK_SCROLLED_WINDOW (sigtext_scrwin), GTK_SHADOW_IN);
+
+	sig_text = gtk_text_view_new ();
+	gtk_widget_show (sig_text);
+	gtk_container_add (GTK_CONTAINER (sigtext_scrwin), sig_text);
+	gtk_text_view_set_editable (GTK_TEXT_VIEW (sig_text), TRUE);
+	gtk_widget_set_size_request(sig_text, -1, 60);
+
 	sig_hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (sig_hbox);
 	gtk_box_pack_start (GTK_BOX (sig_vbox), sig_hbox, FALSE, FALSE, 0);
 
-	sigfile_radiobtn = gtk_radio_button_new_with_label (NULL, _("File"));
+	sigfile_radiobtn = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON(sig_radiobtn), _("File"));
 	gtk_widget_show (sigfile_radiobtn);
 	gtk_box_pack_start (GTK_BOX (sig_hbox), sigfile_radiobtn,
 			    FALSE, FALSE, 0);
@@ -1225,7 +1254,7 @@ static void prefs_account_compose_create(void)
 			   GINT_TO_POINTER (SIG_FILE));
 
 	sigcmd_radiobtn = gtk_radio_button_new_with_label_from_widget
-		(GTK_RADIO_BUTTON(sigfile_radiobtn), _("Command output"));
+		(GTK_RADIO_BUTTON(sig_radiobtn), _("Command output"));
 	gtk_widget_show (sigcmd_radiobtn);
 	gtk_box_pack_start (GTK_BOX (sig_hbox), sigcmd_radiobtn,
 			    FALSE, FALSE, 0);
@@ -1236,7 +1265,17 @@ static void prefs_account_compose_create(void)
 	gtk_widget_show (sigpath_entry);
 	gtk_box_pack_start (GTK_BOX (sig_vbox), sigpath_entry, TRUE, TRUE, 0);
 
-	PACK_FRAME (vbox1, frame, _("Automatically set the following addresses"));
+	SET_TOGGLE_SENSITIVITY (sig_radiobtn, sig_text);
+	SET_TOGGLE_SENSITIVITY (sigfile_radiobtn, sigpath_entry);
+	SET_TOGGLE_SENSITIVITY (sigcmd_radiobtn, sigpath_entry);
+	SET_TOGGLE_SENSITIVITY_REV (sig_radiobtn, sigpath_entry);
+	SET_TOGGLE_SENSITIVITY_REV (sigfile_radiobtn, sig_text);
+	SET_TOGGLE_SENSITIVITY_REV (sigcmd_radiobtn, sig_text);
+	gtk_widget_set_sensitive (sig_text, TRUE);
+	gtk_widget_set_sensitive (sigpath_entry, FALSE);
+
+	PACK_FRAME (vbox1, frame,
+		    _("Automatically set the following addresses"));
 
 	table =  gtk_table_new (3, 2, FALSE);
 	gtk_widget_show (table);
@@ -1285,8 +1324,9 @@ static void prefs_account_compose_create(void)
 	SET_TOGGLE_SENSITIVITY (autoreplyto_chkbtn, autoreplyto_entry);
 
 
-	compose.sigfile_radiobtn = sigfile_radiobtn;
-	compose.sigpath_entry    = sigpath_entry;
+	compose.sig_radiobtn  = sig_radiobtn;
+	compose.sig_text      = sig_text;
+	compose.sigpath_entry = sigpath_entry;
 
 	compose.autocc_chkbtn      = autocc_chkbtn;
 	compose.autocc_entry       = autocc_entry;

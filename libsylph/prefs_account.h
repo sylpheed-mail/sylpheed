@@ -116,6 +116,7 @@ struct _PrefsAccount
 	/* Compose */
 	SigType sig_type;
 	gchar *sig_path;
+	gchar *sig_text;
 	gboolean  set_autocc;
 	gchar    *auto_cc;
 	gboolean  set_autobcc;

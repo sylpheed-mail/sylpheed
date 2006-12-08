@@ -1811,8 +1811,36 @@ static gchar *compose_get_signature_str(Compose *compose)
 
 	g_return_val_if_fail(compose->account != NULL, NULL);
 
+	if (compose->account->sig_type == SIG_DIRECT) {
+		gchar *p, *sp;
+
+		if (!compose->account->sig_text)
+			return NULL;
+
+		sp = compose->account->sig_text;
+		p = sig_body = g_malloc(strlen(compose->account->sig_text) + 1);
+		while (*sp) {
+			if (*sp == '\\' && *(sp + 1) == 'n') {
+				*p++ = '\n';
+				sp += 2;
+			} else
+				*p++ = *sp++;
+		}
+		*p = '\0';
+
+		if (prefs_common.sig_sep) {
+			utf8_sig_str = g_strconcat(prefs_common.sig_sep, "\n",
+						   sig_body, NULL);
+			g_free(sig_body);
+		} else
+			utf8_sig_str = sig_body;
+
+		return utf8_sig_str;
+	}
+
 	if (!compose->account->sig_path)
 		return NULL;
+
 	if (g_path_is_absolute(compose->account->sig_path) ||
 	    compose->account->sig_type == SIG_COMMAND)
 		sig_path = g_strdup(compose->account->sig_path);

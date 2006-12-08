@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-07 16:10+0900\n"
+"POT-Creation-Date: 2006-12-08 18:27+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -486,7 +486,7 @@ msgid "error occurred on POP3 session\n"
 msgstr "POP3 セッション中にエラーが発生しました\n"
 
 #: libsylph/prefs.c:196 libsylph/prefs.c:224 libsylph/prefs.c:269
-#: libsylph/prefs_account.c:217 libsylph/prefs_account.c:231
+#: libsylph/prefs_account.c:218 libsylph/prefs_account.c:232
 #: src/prefs_display_header.c:413 src/prefs_display_header.c:438
 msgid "failed to write configuration to file\n"
 msgstr "設定のファイルへの書き込みに失敗しました\n"
@@ -594,8 +594,8 @@ msgstr "  Subject: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
 
-#: libsylph/utils.c:2496 src/compose.c:2916 src/compose.c:3208
-#: src/compose.c:3271 src/compose.c:3391
+#: libsylph/utils.c:2496 src/compose.c:2944 src/compose.c:3236
+#: src/compose.c:3299 src/compose.c:3419
 msgid "can't change file mode\n"
 msgstr "ファイルモードを変更できません\n"
 
@@ -683,7 +683,7 @@ msgstr ""
 "の取得を有効にするには、「G」カラムのボックスをチェックしてください。"
 
 #: src/account_dialog.c:366 src/addressadd.c:177 src/addressbook.c:491
-#: src/compose.c:4385 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4413 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:208 src/prefs_filter.c:259 src/prefs_folder_item.c:171
@@ -691,7 +691,7 @@ msgstr ""
 msgid "Name"
 msgstr "名前"
 
-#: src/account_dialog.c:371 src/prefs_account_dialog.c:659
+#: src/account_dialog.c:371 src/prefs_account_dialog.c:662
 msgid "Protocol"
 msgstr "プロトコル"
 
@@ -819,7 +819,7 @@ msgstr "アクションのユーザ引数"
 msgid "Add Address to Book"
 msgstr "アドレスをアドレス帳に追加"
 
-#: src/addressadd.c:187 src/compose.c:4889 src/editaddress.c:201
+#: src/addressadd.c:187 src/compose.c:4917 src/editaddress.c:201
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "アドレス"
@@ -961,7 +961,7 @@ msgstr "/削除(_D)"
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:496 src/compose.c:4890 src/prefs_common_dialog.c:2264
+#: src/addressbook.c:496 src/compose.c:4918 src/prefs_common_dialog.c:2264
 msgid "Address book"
 msgstr "アドレス帳"
 
@@ -1152,7 +1152,7 @@ msgid "Group"
 msgstr "グループ"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3160 src/folderview.c:378 src/prefs_account_dialog.c:1695
+#: src/addressbook.c:3160 src/folderview.c:378 src/prefs_account_dialog.c:1735
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "フォルダ"
@@ -1177,7 +1177,7 @@ msgstr "共有アドレス"
 msgid "Personal address"
 msgstr "個人用アドレス"
 
-#: src/alertpanel.c:142 src/compose.c:5616 src/main.c:634
+#: src/alertpanel.c:142 src/compose.c:5644 src/main.c:634
 msgid "Notice"
 msgstr "注意"
 
@@ -1534,62 +1534,62 @@ msgstr "引用符の書式が不正です。"
 msgid "Message reply/forward format error."
 msgstr "メッセージの返信/転送の書式が不正です。"
 
-#: src/compose.c:1963
+#: src/compose.c:1991
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "ファイル %s は存在しません\n"
 
-#: src/compose.c:1967
+#: src/compose.c:1995
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "ファイル %s のサイズを取得できません\n"
 
-#: src/compose.c:1971
+#: src/compose.c:1999
 #, c-format
 msgid "File %s is empty."
 msgstr "ファイル %s は空です。"
 
-#: src/compose.c:1975
+#: src/compose.c:2003
 #, c-format
 msgid "Can't read %s."
 msgstr "%s を読み込めません。"
 
-#: src/compose.c:2008
+#: src/compose.c:2036
 #, c-format
 msgid "Message: %s"
 msgstr "メッセージ: %s"
 
-#: src/compose.c:2068 src/mimeview.c:558
+#: src/compose.c:2096 src/mimeview.c:558
 msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
-#: src/compose.c:2552 src/headerview.c:233 src/query_search.c:666
+#: src/compose.c:2580 src/headerview.c:233 src/query_search.c:666
 #: src/summaryview.c:2237
 msgid "(No Subject)"
 msgstr "(件名なし)"
 
-#: src/compose.c:2555
+#: src/compose.c:2583
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - 作成%s"
 
-#: src/compose.c:2670
+#: src/compose.c:2698
 msgid "Recipient is not specified."
 msgstr "宛先が指定されていません。"
 
-#: src/compose.c:2678
+#: src/compose.c:2706
 msgid "Empty subject"
 msgstr "空の件名"
 
-#: src/compose.c:2679
+#: src/compose.c:2707
 msgid "Subject is empty. Send it anyway?"
 msgstr "件名が空です。とにかく送信しますか?"
 
-#: src/compose.c:2738
+#: src/compose.c:2766
 msgid "can't get recipient list."
 msgstr "送信先のリストを取得できません。"
 
-#: src/compose.c:2758
+#: src/compose.c:2786
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1597,21 +1597,21 @@ msgstr ""
 "メールを送信するためのアカウントが指定されていません。\n"
 "送信する前にメールアカウントを選択してください。"
 
-#: src/compose.c:2772 src/send_message.c:300
+#: src/compose.c:2800 src/send_message.c:300
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "メッセージを %s にポストする途中にエラーが発生しました。"
 
-#: src/compose.c:2814
+#: src/compose.c:2842
 msgid "Can't save the message to outbox."
 msgstr "メッセージを送信控に保存できません。"
 
-#: src/compose.c:2852
+#: src/compose.c:2880
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "現在選択されている鍵ID `%s' に対応する鍵が見つかりませんでした。"
 
-#: src/compose.c:2949
+#: src/compose.c:2977
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1622,11 +1622,11 @@ msgstr ""
 "\n"
 "%s のままとにかく送信しますか?"
 
-#: src/compose.c:2955
+#: src/compose.c:2983
 msgid "Code conversion error"
 msgstr "文字コード変換エラー"
 
-#: src/compose.c:3034
+#: src/compose.c:3062
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1639,15 +1639,15 @@ msgstr ""
 "\n"
 "とにかく送信しますか?"
 
-#: src/compose.c:3038
+#: src/compose.c:3066
 msgid "Line length limit"
 msgstr "行の長さの制限"
 
-#: src/compose.c:3167
+#: src/compose.c:3195
 msgid "Encrypting with Bcc"
 msgstr "Bcc を伴う暗号化"
 
-#: src/compose.c:3168
+#: src/compose.c:3196
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1661,152 +1661,152 @@ msgstr ""
 "\n"
 "とにかく送信しますか?"
 
-#: src/compose.c:3351
+#: src/compose.c:3379
 msgid "can't remove the old message\n"
 msgstr "古いメッセージを削除できません\n"
 
-#: src/compose.c:3369
+#: src/compose.c:3397
 msgid "queueing message...\n"
 msgstr "メッセージを送信待ちに入れています...\n"
 
-#: src/compose.c:3451
+#: src/compose.c:3479
 msgid "can't find queue folder\n"
 msgstr "送信待ちフォルダが見つかりません\n"
 
-#: src/compose.c:3458
+#: src/compose.c:3486
 msgid "can't queue the message\n"
 msgstr "メッセージを送信待機できません\n"
 
-#: src/compose.c:4087
+#: src/compose.c:4115
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "生成されたメッセージID: %s\n"
 
-#: src/compose.c:4200
+#: src/compose.c:4228
 msgid "Creating compose window...\n"
 msgstr "メッセージ作成ウィンドウを作成中...\n"
 
-#: src/compose.c:4251 src/headerview.c:54
+#: src/compose.c:4279 src/headerview.c:54
 msgid "From:"
 msgstr "差出人:"
 
-#: src/compose.c:4325
+#: src/compose.c:4353
 msgid "PGP Sign"
 msgstr "PGP署名"
 
-#: src/compose.c:4328
+#: src/compose.c:4356
 msgid "PGP Encrypt"
 msgstr "PGP暗号化"
 
-#: src/compose.c:4366 src/compose.c:5450
+#: src/compose.c:4394 src/compose.c:5478
 msgid "MIME type"
 msgstr "MIME タイプ"
 
 #. S_COL_DATE
-#: src/compose.c:4375 src/mimeview.c:199 src/prefs_filter_edit.c:496
+#: src/compose.c:4403 src/mimeview.c:199 src/prefs_filter_edit.c:496
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:5019
 msgid "Size"
 msgstr "サイズ"
 
-#: src/compose.c:4810 src/mainwindow.c:2368 src/prefs_account_dialog.c:529
+#: src/compose.c:4838 src/mainwindow.c:2368 src/prefs_account_dialog.c:532
 #: src/prefs_common_dialog.c:680
 msgid "Send"
 msgstr "送信"
 
-#: src/compose.c:4811
+#: src/compose.c:4839
 msgid "Send message"
 msgstr "メッセージを送信"
 
-#: src/compose.c:4819
+#: src/compose.c:4847
 msgid "Send later"
 msgstr "後で送信"
 
-#: src/compose.c:4820
+#: src/compose.c:4848
 msgid "Put into queue folder and send later"
 msgstr "送信待ちフォルダに入れて後で送信"
 
-#: src/compose.c:4828
+#: src/compose.c:4856
 msgid "Draft"
 msgstr "草稿"
 
-#: src/compose.c:4829
+#: src/compose.c:4857
 msgid "Save to draft folder"
 msgstr "草稿フォルダに保存"
 
-#: src/compose.c:4839
+#: src/compose.c:4867
 msgid "Insert"
 msgstr "挿入"
 
-#: src/compose.c:4840
+#: src/compose.c:4868
 msgid "Insert file"
 msgstr "ファイルを挿入"
 
-#: src/compose.c:4848
+#: src/compose.c:4876
 msgid "Attach"
 msgstr "添付"
 
-#: src/compose.c:4849
+#: src/compose.c:4877
 msgid "Attach file"
 msgstr "ファイルを添付"
 
 #. signature
-#: src/compose.c:4859 src/prefs_account_dialog.c:1209
+#: src/compose.c:4887 src/prefs_account_dialog.c:1215
 #: src/prefs_common_dialog.c:1005
 msgid "Signature"
 msgstr "署名"
 
-#: src/compose.c:4860
+#: src/compose.c:4888
 msgid "Append signature"
 msgstr "署名を追加"
 
 #. editor
-#: src/compose.c:4869 src/prefs_common_dialog.c:1045
+#: src/compose.c:4897 src/prefs_common_dialog.c:1045
 #: src/prefs_common_dialog.c:2388
 msgid "Editor"
 msgstr "エディタ"
 
-#: src/compose.c:4870
+#: src/compose.c:4898
 msgid "Edit with external editor"
 msgstr "外部エディタで編集"
 
-#: src/compose.c:4878
+#: src/compose.c:4906
 msgid "Linewrap"
 msgstr "整形"
 
-#: src/compose.c:4879
+#: src/compose.c:4907
 msgid "Wrap all long lines"
 msgstr "すべての長い行を折り返す"
 
-#: src/compose.c:5346
+#: src/compose.c:5374
 msgid "Invalid MIME type."
 msgstr "無効な MIME タイプです。"
 
-#: src/compose.c:5364
+#: src/compose.c:5392
 msgid "File doesn't exist or is empty."
 msgstr "ファイルが存在しないかまたは空です。"
 
-#: src/compose.c:5432
+#: src/compose.c:5460
 msgid "Properties"
 msgstr "プロパティ"
 
-#: src/compose.c:5452 src/prefs_common_dialog.c:1500
+#: src/compose.c:5480 src/prefs_common_dialog.c:1500
 msgid "Encoding"
 msgstr "エンコーディング"
 
-#: src/compose.c:5475 src/prefs_folder_item.c:202
+#: src/compose.c:5503 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "パス"
 
-#: src/compose.c:5476
+#: src/compose.c:5504
 msgid "File name"
 msgstr "ファイル名"
 
-#: src/compose.c:5565
+#: src/compose.c:5593
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外部エディタのコマンドラインが無効です: `%s'\n"
 
-#: src/compose.c:5613
+#: src/compose.c:5641
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1815,44 +1815,44 @@ msgstr ""
 "外部エディタが動作中です。\n"
 "プロセスを強制終了しますか(pid: %d)?\n"
 
-#: src/compose.c:5989 src/compose.c:5994 src/compose.c:6000
+#: src/compose.c:6017 src/compose.c:6022 src/compose.c:6028
 msgid "Can't queue the message."
 msgstr "メッセージを送信待機できません。"
 
-#: src/compose.c:6091
+#: src/compose.c:6119
 msgid "Select files"
 msgstr "ファイルの選択"
 
-#: src/compose.c:6114
+#: src/compose.c:6142
 msgid "Select file"
 msgstr "ファイルの選択"
 
-#: src/compose.c:6149
+#: src/compose.c:6177
 msgid "Save message"
 msgstr "メッセージの保存"
 
-#: src/compose.c:6150
+#: src/compose.c:6178
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "このメッセージは変更されています。草稿に保存しますか?"
 
-#: src/compose.c:6152
+#: src/compose.c:6180
 msgid "Close _without saving"
 msgstr "保存せずに閉じる(_W)"
 
-#: src/compose.c:6194
+#: src/compose.c:6222
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "テンプレート `%s' を適用しますか?"
 
-#: src/compose.c:6196
+#: src/compose.c:6224
 msgid "Apply template"
 msgstr "テンプレートの適用"
 
-#: src/compose.c:6197
+#: src/compose.c:6225
 msgid "_Replace"
 msgstr "置換(_R)"
 
-#: src/compose.c:6197
+#: src/compose.c:6225
 msgid "_Insert"
 msgstr "挿入(_I)"
 
@@ -1957,7 +1957,7 @@ msgid " Check File "
 msgstr " ファイルをチェック "
 
 #: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
-#: src/prefs_account_dialog.c:1220
+#: src/prefs_account_dialog.c:1249
 msgid "File"
 msgstr "ファイル"
 
@@ -2035,7 +2035,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilotエントリを編集"
 
 #: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:535 src/prefs_account_dialog.c:1723
+#: src/importldif.c:535 src/prefs_account_dialog.c:1763
 #: src/prefs_common_dialog.c:1902
 msgid " ... "
 msgstr " ... "
@@ -2100,7 +2100,7 @@ msgstr "タイムアウト(秒)"
 msgid "Maximum Entries"
 msgstr "最大エントリ数"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:525
+#: src/editldap.c:471 src/prefs_account_dialog.c:528
 msgid "Basic"
 msgstr "基本"
 
@@ -2157,7 +2157,7 @@ msgid "Exporting file:"
 msgstr "エクスポートファイル:"
 
 #: src/export.c:196 src/export.c:202 src/import.c:202 src/import.c:208
-#: src/prefs_account_dialog.c:920
+#: src/prefs_account_dialog.c:923
 msgid " Select... "
 msgstr " 選択... "
 
@@ -3672,7 +3672,7 @@ msgstr "全アカウントの新着メールの取込"
 msgid "Send queued message(s)"
 msgstr "送信待機中のメッセージを送信する"
 
-#: src/mainwindow.c:2379 src/prefs_account_dialog.c:531
+#: src/mainwindow.c:2379 src/prefs_account_dialog.c:534
 #: src/prefs_common_dialog.c:682 src/prefs_folder_item.c:140
 msgid "Compose"
 msgstr "作成"
@@ -4015,410 +4015,414 @@ msgstr ""
 "不正なパスフレーズです! 再入力して下さい...\n"
 "\n"
 
-#: src/prefs_account_dialog.c:427
+#: src/prefs_account_dialog.c:430
 msgid "Opening account preferences window...\n"
 msgstr "アカウントプリファレンスウィンドウを開いています...\n"
 
-#: src/prefs_account_dialog.c:460
+#: src/prefs_account_dialog.c:463
 #, c-format
 msgid "Account%d"
 msgstr "Account%d"
 
-#: src/prefs_account_dialog.c:479
+#: src/prefs_account_dialog.c:482
 msgid "Preferences for new account"
 msgstr "新規アカウントの設定"
 
-#: src/prefs_account_dialog.c:484
+#: src/prefs_account_dialog.c:487
 msgid "Account preferences"
 msgstr "アカウントの設定"
 
-#: src/prefs_account_dialog.c:507
+#: src/prefs_account_dialog.c:510
 msgid "Creating account preferences window...\n"
 msgstr "アカウントプリファレンスウィンドウを作成中...\n"
 
-#: src/prefs_account_dialog.c:527 src/prefs_common_dialog.c:678
+#: src/prefs_account_dialog.c:530 src/prefs_common_dialog.c:678
 msgid "Receive"
 msgstr "受信"
 
-#: src/prefs_account_dialog.c:534 src/prefs_common_dialog.c:689
+#: src/prefs_account_dialog.c:537 src/prefs_common_dialog.c:689
 msgid "Privacy"
 msgstr "個人情報"
 
-#: src/prefs_account_dialog.c:538
+#: src/prefs_account_dialog.c:541
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:541 src/prefs_common_dialog.c:2183
+#: src/prefs_account_dialog.c:544 src/prefs_common_dialog.c:2183
 msgid "Advanced"
 msgstr "高度な設定"
 
-#: src/prefs_account_dialog.c:590
+#: src/prefs_account_dialog.c:593
 msgid "Name of this account"
 msgstr "このアカウントの名称"
 
-#: src/prefs_account_dialog.c:599
+#: src/prefs_account_dialog.c:602
 msgid "Set as default"
 msgstr "通常使用"
 
-#: src/prefs_account_dialog.c:603
+#: src/prefs_account_dialog.c:606
 msgid "Personal information"
 msgstr "個人情報"
 
-#: src/prefs_account_dialog.c:612
+#: src/prefs_account_dialog.c:615
 msgid "Full name"
 msgstr "名前"
 
-#: src/prefs_account_dialog.c:618
+#: src/prefs_account_dialog.c:621
 msgid "Mail address"
 msgstr "メールアドレス"
 
-#: src/prefs_account_dialog.c:624
+#: src/prefs_account_dialog.c:627
 msgid "Organization"
 msgstr "組織"
 
-#: src/prefs_account_dialog.c:648
+#: src/prefs_account_dialog.c:651
 msgid "Server information"
 msgstr "サーバ情報"
 
-#: src/prefs_account_dialog.c:669 src/prefs_account_dialog.c:825
-#: src/prefs_account_dialog.c:1468
+#: src/prefs_account_dialog.c:672 src/prefs_account_dialog.c:828
+#: src/prefs_account_dialog.c:1508
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:671 src/prefs_account_dialog.c:933
-#: src/prefs_account_dialog.c:1485 src/prefs_account_dialog.c:1667
+#: src/prefs_account_dialog.c:674 src/prefs_account_dialog.c:936
+#: src/prefs_account_dialog.c:1525 src/prefs_account_dialog.c:1707
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:673
+#: src/prefs_account_dialog.c:676
 msgid "News (NNTP)"
 msgstr "ニュース (NNTP)"
 
-#: src/prefs_account_dialog.c:675
+#: src/prefs_account_dialog.c:678
 msgid "None (local)"
 msgstr "なし (ローカル)"
 
-#: src/prefs_account_dialog.c:688
+#: src/prefs_account_dialog.c:691
 msgid "This server requires authentication"
 msgstr "このサーバは認証が必要"
 
-#: src/prefs_account_dialog.c:727
+#: src/prefs_account_dialog.c:730
 msgid "News server"
 msgstr "ニュースサーバ"
 
-#: src/prefs_account_dialog.c:733
+#: src/prefs_account_dialog.c:736
 msgid "Server for receiving"
 msgstr "受信用サーバ"
 
-#: src/prefs_account_dialog.c:739
+#: src/prefs_account_dialog.c:742
 msgid "SMTP server (send)"
 msgstr "SMTPサーバ (送信)"
 
-#: src/prefs_account_dialog.c:746 src/prefs_account_dialog.c:1130
+#: src/prefs_account_dialog.c:749 src/prefs_account_dialog.c:1133
 msgid "User ID"
 msgstr "ユーザID"
 
-#: src/prefs_account_dialog.c:752 src/prefs_account_dialog.c:1139
+#: src/prefs_account_dialog.c:755 src/prefs_account_dialog.c:1142
 msgid "Password"
 msgstr "パスワード"
 
-#: src/prefs_account_dialog.c:833
+#: src/prefs_account_dialog.c:836
 msgid "Use secure authentication (APOP)"
 msgstr "安全な認証方式を使用する (APOP)"
 
-#: src/prefs_account_dialog.c:836
+#: src/prefs_account_dialog.c:839
 msgid "Remove messages on server when received"
 msgstr "受信時にサーバ上のメッセージを削除する"
 
-#: src/prefs_account_dialog.c:847
+#: src/prefs_account_dialog.c:850
 msgid "Remove after"
 msgstr "メッセージを"
 
-#: src/prefs_account_dialog.c:856
+#: src/prefs_account_dialog.c:859
 msgid "days"
 msgstr "日後に削除"
 
-#: src/prefs_account_dialog.c:873
+#: src/prefs_account_dialog.c:876
 msgid "0 days: remove immediately"
 msgstr "0日: 即座に削除"
 
-#: src/prefs_account_dialog.c:883
+#: src/prefs_account_dialog.c:886
 msgid "Download all messages (including already received) on server"
 msgstr "受信済みも含めてサーバ上のすべてのメッセージを受信する"
 
-#: src/prefs_account_dialog.c:889
+#: src/prefs_account_dialog.c:892
 msgid "Receive size limit"
 msgstr "受信サイズ制限"
 
-#: src/prefs_account_dialog.c:896 src/prefs_filter_edit.c:574
+#: src/prefs_account_dialog.c:899 src/prefs_filter_edit.c:574
 #: src/prefs_filter_edit.c:1003
 msgid "KB"
 msgstr "KB"
 
-#: src/prefs_account_dialog.c:903
+#: src/prefs_account_dialog.c:906
 msgid "Filter messages on receiving"
 msgstr "受信時にメッセージを振り分ける"
 
-#: src/prefs_account_dialog.c:911
+#: src/prefs_account_dialog.c:914
 msgid "Default inbox"
 msgstr "標準の受信箱"
 
-#: src/prefs_account_dialog.c:931
+#: src/prefs_account_dialog.c:934
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "振り分けられなかったメッセージはこのフォルダに格納されます。"
 
-#: src/prefs_account_dialog.c:944 src/prefs_account_dialog.c:1100
+#: src/prefs_account_dialog.c:947 src/prefs_account_dialog.c:1103
 msgid "Authentication method"
 msgstr "認証方式"
 
-#: src/prefs_account_dialog.c:954 src/prefs_account_dialog.c:1110
+#: src/prefs_account_dialog.c:957 src/prefs_account_dialog.c:1113
 #: src/prefs_common_dialog.c:896 src/prefs_common_dialog.c:2569
 msgid "Automatic"
 msgstr "自動"
 
-#: src/prefs_account_dialog.c:962
+#: src/prefs_account_dialog.c:965
 msgid "Only check INBOX on receiving"
 msgstr "受信時に受信箱(INBOX)のみチェックする"
 
-#: src/prefs_account_dialog.c:964
+#: src/prefs_account_dialog.c:967
 msgid "News"
 msgstr "ニュース"
 
-#: src/prefs_account_dialog.c:976
+#: src/prefs_account_dialog.c:979
 msgid "Maximum number of articles to download"
 msgstr "ダウンロードする記事数の上限"
 
-#: src/prefs_account_dialog.c:993
+#: src/prefs_account_dialog.c:996
 msgid "No limit if 0 is specified."
 msgstr "0を指定すると無制限になります。"
 
-#: src/prefs_account_dialog.c:997
+#: src/prefs_account_dialog.c:1000
 msgid "`Get all' checks for new messages on this account"
 msgstr "「全受信」でこのアカウントの新着メッセージをチェックする"
 
-#: src/prefs_account_dialog.c:1050 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1053 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "ヘッダ"
 
-#: src/prefs_account_dialog.c:1057
+#: src/prefs_account_dialog.c:1060
 msgid "Add Date header field"
 msgstr "Dateヘッダフィールドを付ける"
 
-#: src/prefs_account_dialog.c:1058
+#: src/prefs_account_dialog.c:1061
 msgid "Generate Message-ID"
 msgstr "メッセージIDを生成する"
 
-#: src/prefs_account_dialog.c:1065
+#: src/prefs_account_dialog.c:1068
 msgid "Add user-defined header"
 msgstr "ユーザ定義のヘッダを追加する"
 
-#: src/prefs_account_dialog.c:1067 src/prefs_common_dialog.c:1605
+#: src/prefs_account_dialog.c:1070 src/prefs_common_dialog.c:1605
 #: src/prefs_common_dialog.c:1632
 msgid " Edit... "
 msgstr " 編集... "
 
-#: src/prefs_account_dialog.c:1077
+#: src/prefs_account_dialog.c:1080
 msgid "Authentication"
 msgstr "認証"
 
-#: src/prefs_account_dialog.c:1085
+#: src/prefs_account_dialog.c:1088
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP認証 (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1161
+#: src/prefs_account_dialog.c:1164
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
 msgstr ""
 "このエントリが空のときは、受信時と同じユーザIDとパスワードが使用されます。"
 
-#: src/prefs_account_dialog.c:1174
+#: src/prefs_account_dialog.c:1177
 msgid "Authenticate with POP3 before sending"
 msgstr "送信前にPOP3認証を行う"
 
-#: src/prefs_account_dialog.c:1228
+#: src/prefs_account_dialog.c:1223
+msgid "Direct input"
+msgstr "直接入力"
+
+#: src/prefs_account_dialog.c:1257
 msgid "Command output"
 msgstr "コマンドの出力"
 
-#: src/prefs_account_dialog.c:1239 src/prefs_folder_item.c:331
+#: src/prefs_account_dialog.c:1278 src/prefs_folder_item.c:331
 msgid "Automatically set the following addresses"
 msgstr "以下のアドレスを自動指定"
 
-#: src/prefs_account_dialog.c:1248
+#: src/prefs_account_dialog.c:1287
 msgid "Cc"
 msgstr "Cc"
 
-#: src/prefs_account_dialog.c:1261
+#: src/prefs_account_dialog.c:1300
 msgid "Bcc"
 msgstr "Bcc"
 
-#: src/prefs_account_dialog.c:1274
+#: src/prefs_account_dialog.c:1313
 msgid "Reply-To"
 msgstr "Reply-To"
 
-#: src/prefs_account_dialog.c:1327
+#: src/prefs_account_dialog.c:1367
 msgid "Sign message by default"
 msgstr "標準でメッセージに署名する"
 
-#: src/prefs_account_dialog.c:1329
+#: src/prefs_account_dialog.c:1369
 msgid "Encrypt message by default"
 msgstr "標準でメッセージを暗号化する"
 
-#: src/prefs_account_dialog.c:1331
+#: src/prefs_account_dialog.c:1371
 msgid "Encrypt when replying to encrypted message"
 msgstr "暗号化されたメッセージに返信した場合は暗号化する"
 
-#: src/prefs_account_dialog.c:1333
+#: src/prefs_account_dialog.c:1373
 msgid "Use ASCII-armored format for encryption"
 msgstr "暗号化にASCII包装形式を使用する"
 
-#: src/prefs_account_dialog.c:1335
+#: src/prefs_account_dialog.c:1375
 msgid "Use clear text signature"
 msgstr "クリアテキスト署名を使用する"
 
-#: src/prefs_account_dialog.c:1340
+#: src/prefs_account_dialog.c:1380
 msgid "Sign key"
 msgstr "署名鍵"
 
-#: src/prefs_account_dialog.c:1348
+#: src/prefs_account_dialog.c:1388
 msgid "Use default GnuPG key"
 msgstr "標準のGnuPG鍵を使用する"
 
-#: src/prefs_account_dialog.c:1357
+#: src/prefs_account_dialog.c:1397
 msgid "Select key by your email address"
 msgstr "自分の電子メールアドレスで鍵を選択する"
 
-#: src/prefs_account_dialog.c:1366
+#: src/prefs_account_dialog.c:1406
 msgid "Specify key manually"
 msgstr "鍵を手動で指定する"
 
-#: src/prefs_account_dialog.c:1382
+#: src/prefs_account_dialog.c:1422
 msgid "User or key ID:"
 msgstr "ユーザまたは鍵ID:"
 
-#: src/prefs_account_dialog.c:1476 src/prefs_account_dialog.c:1493
-#: src/prefs_account_dialog.c:1509 src/prefs_account_dialog.c:1527
+#: src/prefs_account_dialog.c:1516 src/prefs_account_dialog.c:1533
+#: src/prefs_account_dialog.c:1549 src/prefs_account_dialog.c:1567
 msgid "Don't use SSL"
 msgstr "SSLを使用しない"
 
-#: src/prefs_account_dialog.c:1479
+#: src/prefs_account_dialog.c:1519
 msgid "Use SSL for POP3 connection"
 msgstr "POP3の接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1482 src/prefs_account_dialog.c:1499
-#: src/prefs_account_dialog.c:1533
+#: src/prefs_account_dialog.c:1522 src/prefs_account_dialog.c:1539
+#: src/prefs_account_dialog.c:1573
 msgid "Use STARTTLS command to start SSL session"
 msgstr "SSLセッションの開始にSTARTTLSコマンドを使用"
 
-#: src/prefs_account_dialog.c:1496
+#: src/prefs_account_dialog.c:1536
 msgid "Use SSL for IMAP4 connection"
 msgstr "IMAP4の接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1502
+#: src/prefs_account_dialog.c:1542
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1517
+#: src/prefs_account_dialog.c:1557
 msgid "Use SSL for NNTP connection"
 msgstr "NNTPの接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1519
+#: src/prefs_account_dialog.c:1559
 msgid "Send (SMTP)"
 msgstr "送信 (SMTP)"
 
-#: src/prefs_account_dialog.c:1530
+#: src/prefs_account_dialog.c:1570
 msgid "Use SSL for SMTP connection"
 msgstr "SMTPの接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1541
+#: src/prefs_account_dialog.c:1581
 msgid "Use non-blocking SSL"
 msgstr "非ブロッキングSSLを使用する"
 
-#: src/prefs_account_dialog.c:1544
+#: src/prefs_account_dialog.c:1584
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "SSLの接続に問題が生じる場合はオフにしてください。"
 
-#: src/prefs_account_dialog.c:1634
+#: src/prefs_account_dialog.c:1674
 msgid "Specify SMTP port"
 msgstr "SMTPポートを指定"
 
-#: src/prefs_account_dialog.c:1640
+#: src/prefs_account_dialog.c:1680
 msgid "Specify POP3 port"
 msgstr "POP3ポートを指定"
 
-#: src/prefs_account_dialog.c:1646
+#: src/prefs_account_dialog.c:1686
 msgid "Specify IMAP4 port"
 msgstr "IMAP4ポートを指定"
 
-#: src/prefs_account_dialog.c:1652
+#: src/prefs_account_dialog.c:1692
 msgid "Specify NNTP port"
 msgstr "NNTPポートを指定"
 
-#: src/prefs_account_dialog.c:1657
+#: src/prefs_account_dialog.c:1697
 msgid "Specify domain name"
 msgstr "ドメイン名を指定"
 
-#: src/prefs_account_dialog.c:1678
+#: src/prefs_account_dialog.c:1718
 msgid "IMAP server directory"
 msgstr "IMAPサーバディレクトリ"
 
-#: src/prefs_account_dialog.c:1688
+#: src/prefs_account_dialog.c:1728
 msgid "Only the subfolders of this directory will be displayed."
 msgstr "このディレクトリのサブフォルダのみが表示されます。"
 
-#: src/prefs_account_dialog.c:1691
+#: src/prefs_account_dialog.c:1731
 msgid "Clear all message caches on exit"
 msgstr "終了時にすべてのメッセージのキャッシュをクリアする"
 
-#: src/prefs_account_dialog.c:1736
+#: src/prefs_account_dialog.c:1776
 msgid "Put sent messages in"
 msgstr "送信控フォルダの場所"
 
-#: src/prefs_account_dialog.c:1738
+#: src/prefs_account_dialog.c:1778
 msgid "Put draft messages in"
 msgstr "草稿フォルダの場所"
 
-#: src/prefs_account_dialog.c:1740
+#: src/prefs_account_dialog.c:1780
 msgid "Put queued messages in"
 msgstr "送信待ちフォルダの場所"
 
-#: src/prefs_account_dialog.c:1742
+#: src/prefs_account_dialog.c:1782
 msgid "Put deleted messages in"
 msgstr "ごみ箱フォルダの場所"
 
-#: src/prefs_account_dialog.c:1806
+#: src/prefs_account_dialog.c:1846
 msgid "Account name is not entered."
 msgstr "アカウント名が入力されていません。"
 
-#: src/prefs_account_dialog.c:1810
+#: src/prefs_account_dialog.c:1850
 msgid "Mail address is not entered."
 msgstr "メールアドレスが入力されていません。"
 
-#: src/prefs_account_dialog.c:1815
+#: src/prefs_account_dialog.c:1855
 msgid "SMTP server is not entered."
 msgstr "SMTPサーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1820
+#: src/prefs_account_dialog.c:1860
 msgid "User ID is not entered."
 msgstr "ユーザIDが入力されていません。"
 
-#: src/prefs_account_dialog.c:1825
+#: src/prefs_account_dialog.c:1865
 msgid "POP3 server is not entered."
 msgstr "POP3サーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1830
+#: src/prefs_account_dialog.c:1870
 msgid "IMAP4 server is not entered."
 msgstr "IMAP4サーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1835
+#: src/prefs_account_dialog.c:1875
 msgid "NNTP server is not entered."
 msgstr "NNTPサーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1861
+#: src/prefs_account_dialog.c:1901
 msgid "Specified folder is not a queue folder."
 msgstr "指定したフォルダは送信待ちフォルダではありません。"
 
-#: src/prefs_account_dialog.c:1935
+#: src/prefs_account_dialog.c:1975
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -5881,19 +5885,19 @@ msgstr "テンプレートの削除"
 msgid "Do you really want to delete this template?"
 msgstr "本当にこのテンプレートを削除してもいいですか?"
 
-#: src/printing.c:449
+#: src/printing.c:450
 msgid "The message will be printed with the following command:"
 msgstr "メッセージを以下のコマンドで印刷します:"
 
-#: src/printing.c:450
+#: src/printing.c:451
 msgid "(Default print command)"
 msgstr "(既定の印刷コマンド)"
 
-#: src/printing.c:452
+#: src/printing.c:453
 msgid "Print"
 msgstr "印刷"
 
-#: src/printing.c:460
+#: src/printing.c:461
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
