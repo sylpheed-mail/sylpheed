@@ -69,6 +69,7 @@ static gint layout_set_headers(PangoLayout *layout, MsgInfo *msginfo,
 	GString *str;
 	gint i;
 	PangoFontDescription *desc;
+	gint size;
 
 	if ((fp = procmsg_open_message(msginfo)) == NULL)
 		return -1;
@@ -116,8 +117,12 @@ static gint layout_set_headers(PangoLayout *layout, MsgInfo *msginfo,
 		g_free(text);
 	}
 
+	desc = pango_font_description_from_string(prefs_common_get()->textfont);
+	size = pango_font_description_get_size(desc);
+	g_print("size = %d (%g)\n", size, (gdouble)size / PANGO_SCALE);
+	pango_font_description_free(desc);
 	desc = gtkut_get_default_font_desc();
-	pango_font_description_set_size(desc, 12.0 * PANGO_SCALE);
+	pango_font_description_set_size(desc, size);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 
@@ -181,7 +186,6 @@ static gint message_count_page(MsgInfo *msginfo, GtkPrintContext *context,
 
 	pango_layout_set_attributes(layout, NULL);
 	desc = pango_font_description_from_string(prefs_common_get()->textfont);
-	pango_font_description_set_size(desc, 12.0 * PANGO_SCALE);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 
@@ -252,7 +256,6 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	cairo_t *cr;
 	PangoLayout *layout;
 	gdouble width, height;
-	gdouble font_size = 12.0;
 	gint layout_h;
 	PangoFontDescription *desc;
 	gchar buf[BUFFSIZE];
@@ -312,7 +315,6 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 
 	pango_layout_set_attributes(layout, NULL);
 	desc = pango_font_description_from_string(prefs_common_get()->textfont);
-	pango_font_description_set_size(desc, font_size * PANGO_SCALE);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 
@@ -367,7 +369,6 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	g_print("count = %d\n", count);
 
 	desc = gtkut_get_default_font_desc();
-	pango_font_description_set_size(desc, 12.0 * PANGO_SCALE);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 	g_snprintf(buf, sizeof(buf), "- %d -", pinfo->page_nr_per_msg + 1);
