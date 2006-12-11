@@ -1267,7 +1267,7 @@ static void prefs_account_compose_create(void)
 	gtk_widget_show (sig_text);
 	gtk_container_add (GTK_CONTAINER (sigtext_scrwin), sig_text);
 	gtk_text_view_set_editable (GTK_TEXT_VIEW (sig_text), TRUE);
-	gtk_widget_set_size_request(sig_text, -1, 60);
+	gtk_widget_set_size_request(sig_text, DEFAULT_ENTRY_WIDTH, 60);
 
 	sig_hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (sig_hbox);

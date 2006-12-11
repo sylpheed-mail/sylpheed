@@ -1236,7 +1236,7 @@ static GtkWidget *prefs_quote_create(void)
 	gtk_widget_show (text_quotefmt);
 	gtk_container_add(GTK_CONTAINER(scrolledwin_quotefmt), text_quotefmt);
 	gtk_text_view_set_editable (GTK_TEXT_VIEW (text_quotefmt), TRUE);
-	gtk_widget_set_size_request(text_quotefmt, -1, 60);
+	gtk_widget_set_size_request(text_quotefmt, DEFAULT_ENTRY_WIDTH, 60);
 
 	/* forward */
 
@@ -1280,7 +1280,7 @@ static GtkWidget *prefs_quote_create(void)
 	gtk_container_add(GTK_CONTAINER(scrolledwin_quotefmt),
 			  text_fw_quotefmt);
 	gtk_text_view_set_editable (GTK_TEXT_VIEW (text_fw_quotefmt), TRUE);
-	gtk_widget_set_size_request (text_fw_quotefmt, -1, 60);
+	gtk_widget_set_size_request (text_fw_quotefmt, DEFAULT_ENTRY_WIDTH, 60);
 
 	hbox1 = gtk_hbox_new (FALSE, 32);
 	gtk_widget_show (hbox1);
