@@ -54,6 +54,7 @@
 #include "imap.h"
 
 static gboolean cancelled;
+static gboolean new_account;
 static PrefsDialog dialog;
 
 static struct Basic {
@@ -120,6 +121,7 @@ static struct Send {
 static struct Compose {
 	GtkWidget *sig_radiobtn;
 	GtkWidget *sig_text;
+	GtkTextBuffer *sig_buffer;
 	GtkWidget *sigpath_entry;
 
 	GtkWidget *autocc_chkbtn;
@@ -128,6 +130,8 @@ static struct Compose {
 	GtkWidget *autobcc_entry;
 	GtkWidget *autoreplyto_chkbtn;
 	GtkWidget *autoreplyto_entry;
+
+	gboolean sig_modified;
 } compose;
 
 #if USE_GPGME
@@ -411,6 +415,11 @@ static void prefs_account_select_folder_cb	(GtkWidget	*widget,
 						 gpointer	 data);
 static void prefs_account_edit_custom_header	(void);
 
+static void prefs_account_name_entry_changed_cb	(GtkWidget	*widget,
+						 gpointer	 data);
+static void prefs_account_sig_changed_cb	(GtkWidget	*widget,
+						 gpointer	 data);
+
 static gint prefs_account_deleted		(GtkWidget	*widget,
 						 GdkEventAny	*event,
 						 gpointer	 data);
@@ -424,7 +433,6 @@ static void prefs_account_cancel		(void);
 
 PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 {
-	gboolean new_account = FALSE;
 	static gboolean ui_registered = FALSE;
 
 	debug_print(_("Opening account preferences window...\n"));
@@ -432,6 +440,8 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 	inc_lock();
 
 	cancelled = FALSE;
+	new_account = FALSE;
+	compose.sig_modified = FALSE;
 
 	if (!ui_registered) {
 		prefs_register_ui(prefs_account_get_params(), ui_data);
@@ -459,10 +469,17 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 		PrefsAccount *def_ac;
 		gchar *buf;
 
+		g_signal_handlers_block_by_func
+			(G_OBJECT(compose.sig_buffer),
+			 G_CALLBACK(prefs_account_sig_changed_cb), NULL);
+
+		compose.sig_modified = TRUE;
 		prefs_set_dialog_to_default(prefs_account_get_params());
 		buf = g_strdup_printf(_("Account%d"), ac_prefs->account_id);
 		gtk_entry_set_text(GTK_ENTRY(basic.acname_entry), buf);
 		g_free(buf);
+		compose.sig_modified = FALSE;
+
 		def_ac = account_get_default();
 		if (def_ac) {
 			gtk_entry_set_text(GTK_ENTRY(basic.name_entry),
@@ -481,6 +498,10 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 		gtk_window_set_title(GTK_WINDOW(dialog.window),
 				     _("Preferences for new account"));
 		gtk_widget_hide(dialog.apply_btn);
+
+		g_signal_handlers_unblock_by_func
+			(G_OBJECT(compose.sig_buffer),
+			 G_CALLBACK(prefs_account_sig_changed_cb), NULL);
 	} else {
 		prefs_set_dialog(prefs_account_get_params());
 		gtk_window_set_title(GTK_WINDOW(dialog.window),
@@ -542,6 +563,13 @@ static void prefs_account_create(void)
 #endif /* USE_SSL */
 	prefs_account_advanced_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"), page++);
+
+	g_signal_connect(G_OBJECT(basic.name_entry), "changed",
+			 G_CALLBACK(prefs_account_name_entry_changed_cb), NULL);
+	g_signal_connect(G_OBJECT(basic.addr_entry), "changed",
+			 G_CALLBACK(prefs_account_name_entry_changed_cb), NULL);
+	g_signal_connect(G_OBJECT(compose.sig_buffer), "changed",
+			 G_CALLBACK(prefs_account_sig_changed_cb), NULL);
 }
 
 #define SET_ACTIVATE(menuitem) \
@@ -1323,10 +1351,11 @@ static void prefs_account_compose_create(void)
 
 	SET_TOGGLE_SENSITIVITY (autoreplyto_chkbtn, autoreplyto_entry);
 
-
 	compose.sig_radiobtn  = sig_radiobtn;
 	compose.sig_text      = sig_text;
 	compose.sigpath_entry = sigpath_entry;
+
+	compose.sig_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(sig_text));
 
 	compose.autocc_chkbtn      = autocc_chkbtn;
 	compose.autocc_entry       = autocc_entry;
@@ -1915,6 +1944,42 @@ static void prefs_account_edit_custom_header(void)
 	prefs_custom_header_open(prefs_account_get_tmp_prefs());
 }
 
+static void prefs_account_name_entry_changed_cb(GtkWidget *widget,
+						gpointer data)
+{
+	PrefsAccount *tmp_ac_prefs;
+
+	tmp_ac_prefs = prefs_account_get_tmp_prefs();
+
+	if (new_account && !compose.sig_modified) {
+		gchar *sig;
+		GtkTextIter iter;
+
+		g_signal_handlers_block_by_func
+			(G_OBJECT(compose.sig_buffer),
+			 G_CALLBACK(prefs_account_sig_changed_cb), NULL);
+
+		sig = g_strdup_printf
+			("%s <%s>\n",
+			 gtk_entry_get_text(GTK_ENTRY(basic.name_entry)),
+			 gtk_entry_get_text(GTK_ENTRY(basic.addr_entry)));
+		gtk_text_buffer_set_text(compose.sig_buffer, "", 0);
+		gtk_text_buffer_get_start_iter(compose.sig_buffer, &iter);
+		gtk_text_buffer_insert(compose.sig_buffer, &iter, sig, -1);
+		g_free(sig);
+
+		g_signal_handlers_unblock_by_func
+			(G_OBJECT(compose.sig_buffer),
+			 G_CALLBACK(prefs_account_sig_changed_cb), NULL);
+
+	}
+}
+
+static void prefs_account_sig_changed_cb(GtkWidget *widget, gpointer data)
+{
+	compose.sig_modified = TRUE;
+}
+
 static void prefs_account_enum_set_data_from_radiobtn(PrefParam *pparam)
 {
 	PrefsUIData *ui_data;
@@ -2159,7 +2224,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 
 		gtk_widget_set_sensitive(p_send.pop_bfr_smtp_chkbtn, FALSE);
 
-		if (!tmp_ac_prefs->account_name) {
+		if (new_account) {
 			gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 FALSE);
@@ -2197,7 +2262,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_hide(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, FALSE);
 
-		if (!tmp_ac_prefs->account_name) {
+		if (new_account) {
 			gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 TRUE);
@@ -2235,7 +2300,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_hide(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, TRUE);
 
-		if (!tmp_ac_prefs->account_name) {
+		if (new_account) {
 			gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 FALSE);
@@ -2274,7 +2339,7 @@ static void prefs_account_protocol_activated(GtkMenuItem *menuitem)
 		gtk_widget_hide(receive.nntp_frame);
 		gtk_widget_set_sensitive(receive.recvatgetall_chkbtn, TRUE);
 
-		if (!tmp_ac_prefs->account_name) {
+		if (new_account) {
 			gtk_toggle_button_set_active
 				(GTK_TOGGLE_BUTTON(receive.recvatgetall_chkbtn),
 				 TRUE);
