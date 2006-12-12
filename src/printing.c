@@ -65,8 +65,12 @@ typedef struct
 	MsgPrintInfo *msgs;
 	GPtrArray *pages;
 	gint n_pages;
+
+	MimeInfo *partinfo;
+
 	gdouble line_h;
 	gint lines_per_page;
+
 	gboolean all_headers;
 } PrintData;
 
@@ -159,7 +163,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 			       PrintData *print_data)
 {
 	cairo_t *cr;
-	gdouble width, height, line_h, hdr_h, body_h;
+	gdouble width, height, line_h, hdr_h = 0.0, body_h;
 	PangoLayout *layout;
 	PangoFontDescription *desc;
 	gint layout_h;
@@ -181,14 +185,16 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
 	pango_layout_set_spacing(layout, SPACING * PANGO_SCALE);
 
-	if (get_header_data(mpinfo, print_data) < 0) {
-		g_object_unref(layout);
-		return 0;
-	}
-	layout_set_headers(layout, mpinfo, print_data);
+	if (!print_data->partinfo) {
+		if (get_header_data(mpinfo, print_data) < 0) {
+			g_object_unref(layout);
+			return 0;
+		}
+		layout_set_headers(layout, mpinfo, print_data);
 
-	pango_layout_get_size(layout, NULL, &layout_h);
-	hdr_h = (gdouble)layout_h / PANGO_SCALE;
+		pango_layout_get_size(layout, NULL, &layout_h);
+		hdr_h = (gdouble)layout_h / PANGO_SCALE;
+	}
 
 	pango_layout_set_attributes(layout, NULL);
 	desc = pango_font_description_from_string(prefs_common_get()->textfont);
@@ -209,8 +215,18 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	g_print("layout_h = %d, line_h = %g, lines_per_page = %d\n", layout_h, line_h, lines_per_page);
 	g_print("hdr_h = %g, body_h = %g, lines_left = %d\n", hdr_h, body_h, lines_left);
 
-	if ((fp = procmime_get_first_text_content(mpinfo->msginfo, NULL))
-	    == NULL) {
+	if (print_data->partinfo) {
+		FILE *msgfp;
+
+		if ((msgfp = procmsg_open_message(mpinfo->msginfo)) == NULL)
+			return -1;
+		fp = procmime_get_text_content(print_data->partinfo, msgfp,
+					       NULL);
+		fclose(msgfp);
+	} else {
+		fp = procmime_get_first_text_content(mpinfo->msginfo, NULL);
+	}
+	if (!fp) {
 		g_warning("Can't get text part\n");
 		return -1;
 	}
@@ -324,7 +340,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
 	pango_layout_set_spacing(layout, SPACING * PANGO_SCALE);
 
-	if (pinfo->page_nr_per_msg == 0) {
+	if (pinfo->page_nr_per_msg == 0 && mpinfo->hdr_data) {
 		if (layout_set_headers(layout, mpinfo, print_data) < 0) {
 			g_object_unref(layout);
 			return;
@@ -396,7 +412,8 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	g_object_unref(layout);
 }
 
-gint printing_print_messages_gtk(GSList *mlist, gboolean all_headers)
+gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
+				 gboolean all_headers)
 {
 	static GtkPrintSettings *settings = NULL;
 	GtkPrintOperation *op;
@@ -418,6 +435,7 @@ gint printing_print_messages_gtk(GSList *mlist, gboolean all_headers)
 	}
 	print_data->pages = g_ptr_array_new();
 	print_data->n_pages = 0;
+	print_data->partinfo = partinfo;
 	print_data->line_h = 0.0;
 	print_data->all_headers = all_headers;
 
@@ -513,7 +531,7 @@ gint printing_print_messages(GSList *mlist, gboolean all_headers)
 {
 #if GTK_CHECK_VERSION(2, 10, 0)
 	if (!prefs_common.use_print_cmd)
-		return printing_print_messages_gtk(mlist, all_headers);
+		return printing_print_messages_gtk(mlist, NULL, all_headers);
 	else
 #endif /* GTK_CHECK_VERSION(2, 10, 0) */
 		return printing_print_messages_with_command
@@ -531,6 +549,15 @@ gint printing_print_message(MsgInfo *msginfo, gboolean all_headers)
 
 gint printing_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo)
 {
+#if GTK_CHECK_VERSION(2, 10, 0)
+	if (!prefs_common.use_print_cmd) {
+		GSList mlist;
+
+		mlist.data = msginfo;
+		mlist.next = NULL;
+		return printing_print_messages_gtk(&mlist, partinfo, FALSE);
+	}
+#endif /* GTK_CHECK_VERSION(2, 10, 0) */
 	if (check_command_line(prefs_common.print_cmd) < 0)
 		return -1;
 	procmsg_print_message_part(msginfo, partinfo, prefs_common.print_cmd,

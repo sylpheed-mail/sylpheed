@@ -29,6 +29,7 @@
 
 #if GTK_CHECK_VERSION(2, 10, 0)
 gint printing_print_messages_gtk		(GSList		*mlist,
+						 MimeInfo	*partinfo,
 						 gboolean	 all_headers);
 #endif
 
