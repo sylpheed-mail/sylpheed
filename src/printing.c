@@ -315,6 +315,9 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	gchar buf[BUFFSIZE];
 	gint count = 0;
 
+	if (page_nr >= print_data->n_pages)
+		return;
+
 	pinfo = g_ptr_array_index(print_data->pages, page_nr);
 	mpinfo = pinfo->mpinfo;
 	msginfo = mpinfo->msginfo;
