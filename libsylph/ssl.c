@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,8 +31,13 @@
 #include "utils.h"
 #include "ssl.h"
 
-static SSL_CTX *ssl_ctx_SSLv23;
-static SSL_CTX *ssl_ctx_TLSv1;
+static SSL_CTX *ssl_ctx_SSLv23 = NULL;
+static SSL_CTX *ssl_ctx_TLSv1 = NULL;
+
+static GSList *trust_list = NULL;
+static GSList *reject_list = NULL;
+
+static SSLVerifyFunc verify_ui_func = NULL;
 
 void ssl_init(void)
 {
@@ -76,18 +81,39 @@ void ssl_init(void)
 
 void ssl_done(void)
 {
+	GSList *cur;
+
+	for (cur = trust_list; cur != NULL; cur = cur->next)
+		X509_free((X509 *)cur->data);
+	g_slist_free(trust_list);
+	trust_list = NULL;
+	for (cur = reject_list; cur != NULL; cur = cur->next)
+		X509_free((X509 *)cur->data);
+	g_slist_free(reject_list);
+	reject_list = NULL;
+
 	if (ssl_ctx_SSLv23) {
 		SSL_CTX_free(ssl_ctx_SSLv23);
+		ssl_ctx_SSLv23 = NULL;
 	}
 
 	if (ssl_ctx_TLSv1) {
 		SSL_CTX_free(ssl_ctx_TLSv1);
+		ssl_ctx_TLSv1 = NULL;
 	}
 }
 
 gboolean ssl_init_socket(SockInfo *sockinfo)
 {
 	return ssl_init_socket_with_method(sockinfo, SSL_METHOD_SSLv23);
+}
+
+static gint x509_cmp_func(gconstpointer a, gconstpointer b)
+{
+	const X509 *xa = a;
+	const X509 *xb = b;
+
+	return X509_issuer_and_serial_cmp(xa, xb);
 }
 
 gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
@@ -158,14 +184,55 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 		}
 
 		verify_result = SSL_get_verify_result(sockinfo->ssl);
-		if (verify_result == X509_V_OK)
+		if (verify_result == X509_V_OK) {
 			debug_print("SSL verify OK\n");
-		else
-			g_warning("%s: SSL certificate verify failed (%ld: %s)\n",
-				  sockinfo->hostname, verify_result,
-				  X509_verify_cert_error_string(verify_result));
+			X509_free(server_cert);
+			return TRUE;
+		} else if (g_slist_find_custom(trust_list, server_cert,
+					     x509_cmp_func)) {
+			log_message("SSL certificate of %s previously accepted\n", sockinfo->hostname);
+			X509_free(server_cert);
+			return TRUE;
+		} else if (g_slist_find_custom(reject_list, server_cert,
+					       x509_cmp_func)) {
+			log_message("SSL certificate of %s previously rejected\n", sockinfo->hostname);
+			X509_free(server_cert);
+			return FALSE;
+		}
+
+		g_warning("%s: SSL certificate verify failed (%ld: %s)\n",
+			  sockinfo->hostname, verify_result,
+			  X509_verify_cert_error_string(verify_result));
+
+		if (verify_ui_func) {
+			gint res;
+
+			res = verify_ui_func(sockinfo, sockinfo->hostname,
+					     server_cert, verify_result);
+			/* 0: accept 1: temporarily accept -1: reject */
+			if (res < 0) {
+				debug_print("SSL certificate of %s rejected\n",
+					    sockinfo->hostname);
+				reject_list = g_slist_prepend
+					(reject_list, X509_dup(server_cert));
+				X509_free(server_cert);
+				return FALSE;
+			} else if (res > 0) {
+				debug_print("Temporarily accept SSL certificate of %s\n", sockinfo->hostname);
+				trust_list = g_slist_prepend
+					(trust_list, X509_dup(server_cert));
+			} else {
+				debug_print("Permanently accept SSL certificate of %s\n", sockinfo->hostname);
+				trust_list = g_slist_prepend
+					(trust_list, X509_dup(server_cert));
+			}
+		}
 
 		X509_free(server_cert);
+	} else {
+		g_warning("%s: couldn't get SSL certificate\n",
+			  sockinfo->hostname);
+		return FALSE;
 	}
 
 	return TRUE;
@@ -176,6 +243,11 @@ void ssl_done_socket(SockInfo *sockinfo)
 	if (sockinfo->ssl) {
 		SSL_free(sockinfo->ssl);
 	}
+}
+
+void ssl_set_verify_func(SSLVerifyFunc func)
+{
+	verify_ui_func = func;
 }
 
 #endif /* USE_SSL */

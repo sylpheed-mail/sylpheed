@@ -86,6 +86,7 @@
 #endif
 #if USE_SSL
 #  include "ssl.h"
+#  include "sslmanager.h"
 #endif
 
 #ifdef G_OS_WIN32
@@ -208,6 +209,9 @@ int main(int argc, char *argv[])
 	set_ui_update_func(gtkut_events_flush);
 	set_progress_func(main_window_progress_show);
 	set_input_query_password_func(input_dialog_query_password);
+#if USE_SSL
+	ssl_set_verify_func(ssl_manager_verify_cert);
+#endif
 
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 

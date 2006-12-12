@@ -83,6 +83,7 @@ sylpheed_SOURCES = \
 	eggtrayicon.c eggtrayicon.h \
 	trayicon.c trayicon.h \
 	printing.c printing.h \
+	sslmanager.c sslmanager.h \
 	quote_fmt_lex.l quote_fmt_lex.h \
 	quote_fmt_parse.y quote_fmt.h \
 	sylpheed-marshal.c sylpheed-marshal.h

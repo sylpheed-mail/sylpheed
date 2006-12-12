@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -46,12 +46,19 @@ typedef enum {
 	SSL_STARTTLS
 } SSLType;
 
+typedef gint (*SSLVerifyFunc)		(SockInfo	*sockinfo,
+					 const gchar	*hostname,
+					 X509		*server_cert,
+					 glong		 verify_result);
+
 void ssl_init				(void);
 void ssl_done				(void);
 gboolean ssl_init_socket		(SockInfo	*sockinfo);
 gboolean ssl_init_socket_with_method	(SockInfo	*sockinfo,
 					 SSLMethod	 method);
 void ssl_done_socket			(SockInfo	*sockinfo);
+
+void ssl_set_verify_func		(SSLVerifyFunc	 func);
 
 #endif /* USE_SSL */
 
