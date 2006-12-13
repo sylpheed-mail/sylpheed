@@ -83,6 +83,7 @@
 #include "statusbar.h"
 #include "inputdialog.h"
 #include "trayicon.h"
+#include "printing.h"
 #include "utils.h"
 #include "gtkutils.h"
 #include "codeconv.h"
@@ -235,6 +236,11 @@ static void empty_trash_cb	 (MainWindow	*mainwin,
 static void save_as_cb		 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+#if GTK_CHECK_VERSION(2, 10, 0)
+static void page_setup_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
+#endif
 static void print_cb		 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
@@ -511,6 +517,10 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_File/Empty all _trash"),		NULL, empty_trash_cb, 0, NULL},
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/_Save as..."),		"<control>S", save_as_cb, 0, NULL},
+	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
+#if GTK_CHECK_VERSION(2, 10, 0)
+	{N_("/_File/Page set_up..."),		NULL, page_setup_cb, 0, NULL},
+#endif
 	{N_("/_File/_Print..."),		NULL, print_cb, 0, NULL},
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/_Work offline"),		NULL, toggle_offline_cb, 0, "<ToggleItem>"},
@@ -2914,6 +2924,13 @@ static void save_as_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	else
 		summary_save_as(mainwin->summaryview);
 }
+
+#if GTK_CHECK_VERSION(2, 10, 0)
+static void page_setup_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
+{
+	printing_page_setup_gtk();
+}
+#endif
 
 static void print_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {

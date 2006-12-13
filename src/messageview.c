@@ -89,6 +89,11 @@ static gboolean key_pressed		(GtkWidget		*widget,
 static void save_as_cb			(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
+#if GTK_CHECK_VERSION(2, 10, 0)
+static void page_setup_cb		(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+#endif
 static void print_cb			(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -143,6 +148,10 @@ static GtkItemFactoryEntry msgview_entries[] =
 {
 	{N_("/_File"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_File/_Save as..."),	NULL, save_as_cb, 0, NULL},
+	{N_("/_File/---"),		NULL, NULL, 0, "<Separator>"},
+#if GTK_CHECK_VERSION(2, 10, 0)
+	{N_("/_File/Page set_up..."),	NULL, page_setup_cb, 0, NULL},
+#endif
 	{N_("/_File/_Print..."),	NULL, print_cb, 0, NULL},
 	{N_("/_File/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/_Close"),		NULL, close_cb, 0, NULL},
@@ -790,6 +799,13 @@ static void save_as_cb(gpointer data, guint action, GtkWidget *widget)
 	MessageView *messageview = (MessageView *)data;
 	messageview_save_as(messageview);
 }
+
+#if GTK_CHECK_VERSION(2, 10, 0)
+static void page_setup_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	printing_page_setup_gtk();
+}
+#endif
 
 static void print_cb(gpointer data, guint action, GtkWidget *widget)
 {

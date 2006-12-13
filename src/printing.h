@@ -31,6 +31,8 @@
 gint printing_print_messages_gtk		(GSList		*mlist,
 						 MimeInfo	*partinfo,
 						 gboolean	 all_headers);
+
+void printing_page_setup_gtk			(void);
 #endif
 
 gint printing_print_messages_with_command	(GSList		*mlist,

@@ -74,6 +74,8 @@ typedef struct
 	gboolean all_headers;
 } PrintData;
 
+static GtkPrintSettings *settings = NULL;
+static GtkPageSetup *page_setup = NULL;
 
 static gint get_header_data(MsgPrintInfo *mpinfo, PrintData *print_data)
 {
@@ -418,7 +420,6 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 				 gboolean all_headers)
 {
-	static GtkPrintSettings *settings = NULL;
 	GtkPrintOperation *op;
 	GtkPrintOperationResult res;
 	PrintData *print_data;
@@ -452,6 +453,8 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 
 	if (settings)
 		gtk_print_operation_set_print_settings(op, settings);
+	if (page_setup)
+		gtk_print_operation_set_default_page_setup(op, page_setup);
 
 	res = gtk_print_operation_run
 		(op, GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
@@ -482,6 +485,22 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 	debug_print("printing finished\n");
 
 	return 0;
+}
+
+void printing_page_setup_gtk(void)
+{
+	GtkPageSetup *new_page_setup;
+
+	if (settings == NULL)
+		settings = gtk_print_settings_new();
+
+	new_page_setup = gtk_print_run_page_setup_dialog
+		(GTK_WINDOW(main_window_get()->window), page_setup, settings);
+
+	if (page_setup)
+		g_object_unref(page_setup);
+
+	page_setup = new_page_setup;
 }
 
 #endif /* GTK_CHECK_VERSION(2, 10, 0) */
