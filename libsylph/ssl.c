@@ -48,11 +48,25 @@ void ssl_init(void)
 
 	certs_dir = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "certs", NULL);
 	if (!is_dir_exist(certs_dir)) {
-		debug_print("%s doesn't exist, or not a directory.\n",
+		debug_print("ssl_init(): %s doesn't exist, or not a directory.\n",
 			    certs_dir);
 		g_free(certs_dir);
-		certs_dir = NULL;
+#ifdef G_OS_WIN32
+		certs_dir = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S
+					"etc" G_DIR_SEPARATOR_S
+					"ssl" G_DIR_SEPARATOR_S "certs", NULL);
+#else
+		certs_dir = g_strdup("/etc/ssl/certs");
+#endif
+		if (!is_dir_exist(certs_dir)) {
+			debug_print("ssl_init(): %s doesn't exist, or not a directory.\n",
+				    certs_dir);
+			g_free(certs_dir);
+			certs_dir = NULL;
+		}
 	}
+	if (certs_dir)
+		debug_print("ssl_init(): certs dir %s found.\n", certs_dir);
 
 	ssl_ctx_SSLv23 = SSL_CTX_new(SSLv23_client_method());
 	if (ssl_ctx_SSLv23 == NULL) {

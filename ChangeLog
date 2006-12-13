@@ -1,5 +1,11 @@
 2006-12-13
 
+	* libsylph/ssl.c: ssl_init(): read /etc/ssl/certs if exist.
+	* src/main.c: call sock_init() and ssl_init() after parse_cmd_opt()
+	  for debug option.
+
+2006-12-13
+
 	* src/compose.c: compose_reedit(): place cursor at the top of the
 	  text. Set the default focus to To or Subject entry if they're empty.
 

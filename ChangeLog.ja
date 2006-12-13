@@ -1,5 +1,12 @@
 2006-12-13
 
+	* libsylph/ssl.c: ssl_init(): /etc/ssl/certs が存在すれば読み込む
+	  ようにした。
+	* src/main.c: parse_cmd_opt() の後に sock_init() と ssl_init() を
+	  呼ぶようにした(デバッグオプションのため)。
+
+2006-12-13
+
 	* src/compose.c: compose_reedit(): カーソルをテキストの先頭に配置
 	  するようにした。 To または Subject が空の場合はそれらのエントリに
 	  デフォルトでフォーカスするようにした。

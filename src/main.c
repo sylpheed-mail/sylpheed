@@ -173,6 +173,11 @@ int main(int argc, char *argv[])
 	app_init();
 	parse_cmd_opt(argc, argv);
 
+	sock_init();
+#if USE_SSL
+	ssl_init();
+#endif
+
 	/* check and create (unix domain) socket for remote operation */
 	lock_socket = prohibit_duplicate_launch();
 	if (lock_socket < 0) return 0;
@@ -524,11 +529,6 @@ static void app_init(void)
 	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
 	textdomain(PACKAGE);
 
-	sock_init();
-#if USE_SSL
-	ssl_init();
-#endif
-
 #ifdef G_OS_UNIX
 	/* ignore SIGPIPE signal for preventing sudden death of program */
 	signal(SIGPIPE, SIG_IGN);
@@ -698,7 +698,6 @@ void app_will_exit(gboolean force)
 #if USE_SSL
 	ssl_done();
 #endif
-
 	cleanup_console();
 	sock_cleanup();
 
