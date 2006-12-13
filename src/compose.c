@@ -1056,6 +1056,8 @@ void compose_reedit(MsgInfo *msginfo)
 	GtkTextIter iter;
 	FILE *fp;
 	gchar buf[BUFFSIZE];
+	const gchar *str;
+	GtkWidget *focus_widget = NULL;
 
 	g_return_if_fail(msginfo != NULL);
 	g_return_if_fail(msginfo->folder != NULL);
@@ -1105,7 +1107,27 @@ void compose_reedit(MsgInfo *msginfo)
 	}
 	compose_attach_parts(compose, msginfo);
 
-	gtk_widget_grab_focus(compose->text);
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+	gtk_text_buffer_place_cursor(buffer, &iter);
+
+	if (account->protocol != A_NNTP) {
+		str = gtk_entry_get_text(GTK_ENTRY(compose->to_entry));
+		if (!str || *str == '\0')
+			focus_widget = compose->to_entry;
+	} else {
+		str = gtk_entry_get_text(GTK_ENTRY(compose->newsgroups_entry));
+		if (!str || *str == '\0')
+			focus_widget = compose->newsgroups_entry;
+	}
+	if (!focus_widget) {
+		str = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
+		if (!str || *str == '\0')
+			focus_widget = compose->subject_entry;
+	}
+	if (focus_widget)
+		gtk_widget_grab_focus(focus_widget);
+	else
+		gtk_widget_grab_focus(compose->text);
 
 	undo_unblock(compose->undostruct);
 
