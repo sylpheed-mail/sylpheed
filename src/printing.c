@@ -149,7 +149,6 @@ static gint layout_set_headers(PangoLayout *layout, MsgPrintInfo *mpinfo,
 
 	desc = pango_font_description_from_string(prefs_common_get()->textfont);
 	size = pango_font_description_get_size(desc);
-	g_print("size = %d (%g)\n", size, (gdouble)size / PANGO_SCALE);
 	pango_font_description_free(desc);
 	desc = gtkut_get_default_font_desc();
 	pango_font_description_set_size(desc, size);
@@ -207,9 +206,9 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	pango_layout_get_size(layout, NULL, &layout_h);
 	line_h = (gdouble)layout_h / PANGO_SCALE + SPACING;
 	print_data->line_h = line_h;
-	lines_per_page = height / line_h;
+	lines_per_page = (height - line_h) / line_h;
 	print_data->lines_per_page = lines_per_page;
-	body_h = height - hdr_h;
+	body_h = height - hdr_h - line_h;
 	if (body_h < 0)
 		body_h = 0.0;
 	lines_left = body_h / line_h;
@@ -314,6 +313,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	gdouble width, height;
 	gint layout_h;
 	PangoFontDescription *desc;
+	gint font_size;
 	gchar buf[BUFFSIZE];
 	gint count = 0;
 
@@ -358,6 +358,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 
 	pango_layout_set_attributes(layout, NULL);
 	desc = pango_font_description_from_string(prefs_common_get()->textfont);
+	font_size = pango_font_description_get_size(desc);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 
@@ -406,12 +407,13 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	g_print("count = %d\n", count);
 
 	desc = gtkut_get_default_font_desc();
+	pango_font_description_set_size(desc, font_size);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 	g_snprintf(buf, sizeof(buf), "- %d -", pinfo->page_nr_per_msg + 1);
 	pango_layout_set_text(layout, buf, -1);
 	pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
-	cairo_move_to(cr, 0, height);
+	cairo_move_to(cr, 0, height - (gdouble)font_size / PANGO_SCALE);
 	pango_cairo_show_layout(cr, layout);
 
 	g_object_unref(layout);
