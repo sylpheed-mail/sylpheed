@@ -37,6 +37,7 @@
 #include "ssl.h"
 #include "sslmanager.h"
 #include "manage_window.h"
+#include "prefs_common.h"
 
 gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 			     X509 *server_cert, glong verify_result)
@@ -134,10 +135,16 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	}
 #endif
 
-	gtk_dialog_add_buttons(GTK_DIALOG(dialog),
-			       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			       GTK_STOCK_OK, GTK_RESPONSE_OK,
-			       NULL);
+	if (prefs_common.comply_gnome_hig)
+		gtk_dialog_add_buttons(GTK_DIALOG(dialog),
+				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				       GTK_STOCK_OK, GTK_RESPONSE_OK,
+				       NULL);
+	else
+		gtk_dialog_add_buttons(GTK_DIALOG(dialog),
+				       GTK_STOCK_OK, GTK_RESPONSE_OK,
+				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				       NULL);
 	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
 
 	gtk_widget_show_all(dialog);
