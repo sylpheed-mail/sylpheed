@@ -35,7 +35,9 @@
 #  include <sys/un.h>
 #  include <netinet/in.h>
 #  include <arpa/inet.h>
+#  include <resolv.h>
 #  include <netdb.h>
+#  include <sys/stat.h>
 #endif /* G_OS_WIN32 */
 #include <unistd.h>
 #include <stdio.h>
@@ -621,6 +623,21 @@ static gint sock_connect_with_timeout(gint sock,
 	return ret;
 }
 
+static void resolver_init(void)
+{
+#ifdef G_OS_UNIX
+	static time_t resolv_conf_mtime = 0;
+	struct stat s;
+
+	if (g_stat("/etc/resolv.conf", &s) == 0 &&
+	    s.st_mtime != resolv_conf_mtime) {
+		debug_print("Reloading /etc/resolv.conf\n");
+		resolv_conf_mtime = s.st_mtime;
+		res_init();
+	}
+#endif
+}
+
 struct hostent *my_gethostbyname(const gchar *hostname)
 {
 	struct hostent *hp;
@@ -684,6 +701,8 @@ static gint sock_connect_by_hostname(gint sock, const gchar *hostname,
 	struct hostent *hp;
 	struct sockaddr_in ad;
 
+	resolver_init();
+
 	memset(&ad, 0, sizeof(ad));
 	ad.sin_family = AF_INET;
 	ad.sin_port = htons(port);
@@ -728,6 +747,8 @@ static SockDesc sock_connect_by_getaddrinfo(const gchar *hostname, gushort port)
 	gint gai_error;
 	struct addrinfo hints, *res, *ai;
 	gchar port_str[6];
+
+	resolver_init();
 
 	memset(&hints, 0, sizeof(hints));
 	/* hints.ai_flags = AI_CANONNAME; */
@@ -1093,6 +1114,8 @@ static SockLookupData *sock_get_address_info_async(const gchar *hostname,
 	SockLookupData *lookup_data = NULL;
 	gint pipe_fds[2];
 	pid_t pid;
+
+	resolver_init();
 
 	if (pipe(pipe_fds) < 0) {
 		perror("pipe");
