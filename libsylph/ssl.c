@@ -127,7 +127,7 @@ static gint x509_cmp_func(gconstpointer a, gconstpointer b)
 	const X509 *xa = a;
 	const X509 *xb = b;
 
-	return X509_issuer_and_serial_cmp(xa, xb);
+	return X509_cmp(xa, xb);
 }
 
 gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
