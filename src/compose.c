@@ -5160,8 +5160,14 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 		compose_entry_set(compose, tmpl->to, COMPOSE_ENTRY_TO);
 	if (tmpl->cc && *tmpl->cc != '\0')
 		compose_entry_set(compose, tmpl->cc, COMPOSE_ENTRY_CC);
+	if (tmpl->bcc && *tmpl->bcc != '\0')
+		compose_entry_set(compose, tmpl->bcc, COMPOSE_ENTRY_BCC);
+	if (tmpl->replyto && *tmpl->replyto != '\0')
+		compose_entry_set(compose, tmpl->replyto,
+				  COMPOSE_ENTRY_REPLY_TO);
 	if (tmpl->subject && *tmpl->subject != '\0')
-		compose_entry_set(compose, tmpl->subject, COMPOSE_ENTRY_SUBJECT);
+		compose_entry_set(compose, tmpl->subject,
+				  COMPOSE_ENTRY_SUBJECT);
 
 	if (replace)
 		gtk_text_buffer_set_text(buffer, "", 0);

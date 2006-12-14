@@ -1,7 +1,7 @@
 /*
  * Sylpheed templates subsystem 
  * Copyright (C) 2001 Alexander Barinov
- * Copyright (C) 2001-2005 Hiroyuki Yamamoto
+ * Copyright (C) 2001-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ static struct Templates {
 	GtkWidget *entry_name;
 	GtkWidget *entry_to;
 	GtkWidget *entry_cc;
+	GtkWidget *entry_bcc;
+	GtkWidget *entry_replyto;
 	GtkWidget *entry_subject;
 	GtkWidget *text_value;
 	GtkWidget *confirm_area;
@@ -117,6 +119,8 @@ static void prefs_template_window_create(void)
 	GtkWidget       *table;
 	GtkWidget         *entry_to;
 	GtkWidget         *entry_cc;
+	GtkWidget         *entry_bcc;
+	GtkWidget         *entry_replyto;
 	GtkWidget         *entry_subject;
 	GtkWidget       *scroll2;
 	GtkWidget         *text_value;
@@ -141,7 +145,7 @@ static void prefs_template_window_create(void)
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, FALSE);
-	gtk_window_set_default_size(GTK_WINDOW(window), 400, -1);
+	//gtk_window_set_default_size(GTK_WINDOW(window), 400, -1);
 
 	/* vpaned to separate template settings from templates list */
 	vpaned = gtk_vpaned_new();
@@ -167,7 +171,7 @@ static void prefs_template_window_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox1), entry_name, TRUE, TRUE, 0);
 
 	/* table for headers */
-	table = gtk_table_new(3, 2, FALSE);
+	table = gtk_table_new(5, 2, FALSE);
 	gtk_widget_show(table);
 	gtk_box_pack_start(GTK_BOX(vbox1), table, FALSE, FALSE, 0);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 4);
@@ -177,7 +181,11 @@ static void prefs_template_window_create(void)
 	address_completion_register_entry(GTK_ENTRY(entry_to));
 	ADD_ENTRY(entry_cc, _("Cc:"), 1);
 	address_completion_register_entry(GTK_ENTRY(entry_cc));
-	ADD_ENTRY(entry_subject, _("Subject:"), 2);
+	ADD_ENTRY(entry_bcc, _("Bcc:"), 2);
+	address_completion_register_entry(GTK_ENTRY(entry_bcc));
+	ADD_ENTRY(entry_replyto, _("Reply-To:"), 3);
+	address_completion_register_entry(GTK_ENTRY(entry_replyto));
+	ADD_ENTRY(entry_subject, _("Subject:"), 4);
 
 #undef ADD_ENTRY
 
@@ -185,7 +193,7 @@ static void prefs_template_window_create(void)
 	scroll2 = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_show(scroll2);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll2),
-				       GTK_POLICY_AUTOMATIC,
+				       GTK_POLICY_NEVER,
 				       GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll2),
 					    GTK_SHADOW_IN);
@@ -193,10 +201,9 @@ static void prefs_template_window_create(void)
 
 	text_value = gtk_text_view_new();
 	gtk_widget_show(text_value);
-	gtk_widget_set_size_request(text_value, -1, 120);
+	gtk_widget_set_size_request(text_value, 360, 120);
 	gtk_container_add(GTK_CONTAINER(scroll2), text_value);
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text_value), TRUE);
-	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_value), GTK_WRAP_WORD);
 
 	/* vbox for buttons and templates list */
 	vbox2 = gtk_vbox_new(FALSE, 6);
@@ -290,6 +297,8 @@ static void prefs_template_window_create(void)
 	templates.entry_name = entry_name;
 	templates.entry_to = entry_to;
 	templates.entry_cc = entry_cc;
+	templates.entry_bcc = entry_bcc;
+	templates.entry_replyto = entry_replyto;
 	templates.entry_subject = entry_subject;
 	templates.text_value = text_value;
 	templates.confirm_area = confirm_area;
@@ -394,6 +403,8 @@ static void prefs_template_select_cb(GtkCList *clist, gint row, gint column,
 	tmpl_def.subject = "";
 	tmpl_def.to = "";
 	tmpl_def.cc = "";
+	tmpl_def.bcc = "";
+	tmpl_def.replyto = "";
 	tmpl_def.value = "";
 
 	if (!(tmpl = gtk_clist_get_row_data(clist, row)))
@@ -404,6 +415,10 @@ static void prefs_template_select_cb(GtkCList *clist, gint row, gint column,
 			   tmpl->to ? tmpl->to : "");
 	gtk_entry_set_text(GTK_ENTRY(templates.entry_cc),
 			   tmpl->cc ? tmpl->cc : "");
+	gtk_entry_set_text(GTK_ENTRY(templates.entry_bcc),
+			   tmpl->bcc ? tmpl->bcc : "");
+	gtk_entry_set_text(GTK_ENTRY(templates.entry_replyto),
+			   tmpl->replyto ? tmpl->replyto : "");
 	gtk_entry_set_text(GTK_ENTRY(templates.entry_subject),
 			   tmpl->subject ? tmpl->subject : "");
 
@@ -438,6 +453,8 @@ static gint prefs_template_clist_set_row(gint row)
 	gchar *name;
 	gchar *to;
 	gchar *cc;
+	gchar *bcc;
+	gchar *replyto;
 	gchar *subject;
 	gchar *value;
 	gchar *title[1];
@@ -446,7 +463,7 @@ static gint prefs_template_clist_set_row(gint row)
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(templates.text_value));
 	gtk_text_buffer_get_start_iter(buffer, &start);
-	gtk_text_buffer_get_iter_at_offset(buffer, &end, -1); // end_iter?
+	gtk_text_buffer_get_end_iter(buffer, &end);
 	value = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
 
 	if (value && *value != '\0') {
@@ -467,24 +484,34 @@ static gint prefs_template_clist_set_row(gint row)
 
 	name = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_name),
 				      0, -1);
-	subject = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_subject),
-					 0, -1);
 	to = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_to), 0, -1);
 	cc = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_cc), 0, -1);
+	bcc = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_bcc), 0, -1);
+	replyto = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_replyto),
+					 0, -1);
+	subject = gtk_editable_get_chars(GTK_EDITABLE(templates.entry_subject),
+					 0, -1);
 
-	if (subject && *subject == '\0') {
-		g_free(subject);
-		subject = NULL;
+#define NULLIFY_IF_EMPTY(val)		\
+	if (val && *val == '\0') {	\
+		g_free(val);		\
+		val = NULL;		\
 	}
-	if (to && *to == '\0') {
-		g_free(to);
-		to = NULL;
-	}
+
+	NULLIFY_IF_EMPTY(to);
+	NULLIFY_IF_EMPTY(cc);
+	NULLIFY_IF_EMPTY(bcc);
+	NULLIFY_IF_EMPTY(replyto);
+	NULLIFY_IF_EMPTY(subject);
+
+#undef NULLIFY_IF_EMPTY
 
 	tmpl = g_new(Template, 1);
 	tmpl->name = name;
 	tmpl->to = to;
 	tmpl->cc = cc;
+	tmpl->bcc = bcc;
+	tmpl->replyto = replyto;
 	tmpl->subject = subject;
 	tmpl->value = value;
 

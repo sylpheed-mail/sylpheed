@@ -1,7 +1,7 @@
 /*
  * Sylpheed templates subsystem 
  * Copyright (C) 2001 Alexander Barinov
- * Copyright (C) 2001-2005 Hiroyuki Yamamoto
+ * Copyright (C) 2001-2006 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ static Template *template_load(gchar *filename)
 	tmpl->name = NULL;
 	tmpl->to = NULL;
 	tmpl->cc = NULL;
+	tmpl->bcc = NULL;
+	tmpl->replyto = NULL;
 	tmpl->subject = NULL;
 	tmpl->value = NULL;
 
@@ -60,6 +62,10 @@ static Template *template_load(gchar *filename)
 			tmpl->to = g_strdup(g_strstrip(buf + 3));
 		else if (!g_ascii_strncasecmp(buf, "Cc:", 3))
 			tmpl->cc = g_strdup(g_strstrip(buf + 3));
+		else if (!g_ascii_strncasecmp(buf, "Bcc:", 3))
+			tmpl->bcc = g_strdup(g_strstrip(buf + 4));
+		else if (!g_ascii_strncasecmp(buf, "Reply-To:", 9))
+			tmpl->replyto = g_strdup(g_strstrip(buf + 9));
 		else if (!g_ascii_strncasecmp(buf, "Subject:", 8))
 			tmpl->subject = g_strdup(g_strstrip(buf + 8));
 	}
@@ -194,6 +200,10 @@ void template_write_config(GSList *tmpl_list)
 			fprintf(fp, "To: %s\n", tmpl->to);
 		if (tmpl->cc && *tmpl->cc != '\0')
 			fprintf(fp, "Cc: %s\n", tmpl->cc);
+		if (tmpl->bcc && *tmpl->bcc != '\0')
+			fprintf(fp, "Bcc: %s\n", tmpl->bcc);
+		if (tmpl->replyto && *tmpl->replyto != '\0')
+			fprintf(fp, "Reply-To: %s\n", tmpl->replyto);
 		if (tmpl->subject && *tmpl->subject != '\0')
 			fprintf(fp, "Subject: %s\n", tmpl->subject);
 		fputs("\n", fp);
