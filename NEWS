@@ -9,10 +9,13 @@ Changes of Sylpheed
     * The option to input signature directly was added to the account
       preferences.
     * Signature is automatically generated when creating a new account.
-    * '/etc/ssl/certs' is read if exist.
+    * Bcc: and Reply-To: were added to the template.
+    * '/etc/ssl/certs' directory is used for SSL certificate verification if
+      exist.
     * When SSL certificate cannot be verified, the confirmation dialog is now
       displayed.
-    * Cursor is now placed at the top of the text on reediting messages.
+    * Cursor is now placed at the top of the text (alternatively To or Subject
+      entry if they are empty) when reediting messages.
     * Unix: Resolver is now reinitialized if '/etc/resolv.conf' is modified,
 
 * 2.3.0beta6 (development)
