@@ -39,9 +39,33 @@ static GSList *reject_list = NULL;
 
 static SSLVerifyFunc verify_ui_func = NULL;
 
+static gchar *find_certs_file(const gchar *certs_dir)
+{
+	gchar *certs_file;
+
+#define LOOK_FOR(crt)							   \
+{									   \
+	certs_file = g_strconcat(certs_dir, G_DIR_SEPARATOR_S, crt, NULL); \
+	debug_print("looking for %s\n", certs_file);			   \
+	if (is_file_exist(certs_file))					   \
+		return certs_file;					   \
+	g_free(certs_file);						   \
+}
+
+	if (certs_dir) {
+		LOOK_FOR("ca-certificates.crt");
+		LOOK_FOR("ca-bundle.crt");
+		LOOK_FOR("certs.crt");
+	}
+
+#undef LOOK_FOR
+
+	return NULL;
+}
+
 void ssl_init(void)
 {
-	gchar *certs_dir;
+	gchar *certs_file = NULL, *certs_dir;
 
 	SSL_library_init();
 	SSL_load_error_strings();
@@ -68,13 +92,43 @@ void ssl_init(void)
 	if (certs_dir)
 		debug_print("ssl_init(): certs dir %s found.\n", certs_dir);
 
+	certs_file = find_certs_file(get_rc_dir());
+
+	if (certs_dir && !certs_file)
+		certs_file = find_certs_file(certs_dir);
+
+	if (!certs_file) {
+#ifdef G_OS_WIN32
+		certs_dir = g_strconcat(get_startup_dir(),
+					G_DIR_SEPARATOR_S "etc"
+					G_DIR_SEPARATOR_S "ssl", NULL);
+		certs_file = find_certs_file(certs_dir);
+		g_free(certs_dir);
+		certs_dir = NULL;
+		if (!certs_file) {
+			certs_dir = g_strconcat(get_startup_dir(),
+						G_DIR_SEPARATOR_S "etc", NULL);
+			certs_file = find_certs_file(certs_dir);
+			g_free(certs_dir);
+			certs_dir = NULL;
+		}
+#else
+		certs_file = find_certs_file("/etc/ssl");
+		if (!certs_file)
+			certs_file = find_certs_file("/etc");
+#endif
+	}
+
+	if (certs_file)
+		debug_print("ssl_init(): certs file %s found.\n", certs_file);
+
 	ssl_ctx_SSLv23 = SSL_CTX_new(SSLv23_client_method());
 	if (ssl_ctx_SSLv23 == NULL) {
 		debug_print(_("SSLv23 not available\n"));
 	} else {
 		debug_print(_("SSLv23 available\n"));
 		if (certs_dir &&
-		    !SSL_CTX_load_verify_locations(ssl_ctx_SSLv23, NULL,
+		    !SSL_CTX_load_verify_locations(ssl_ctx_SSLv23, certs_file,
 						   certs_dir))
 			g_warning("SSLv23 SSL_CTX_load_verify_locations failed.\n");
 	}
@@ -85,7 +139,7 @@ void ssl_init(void)
 	} else {
 		debug_print(_("TLSv1 available\n"));
 		if (certs_dir &&
-		    !SSL_CTX_load_verify_locations(ssl_ctx_TLSv1, NULL,
+		    !SSL_CTX_load_verify_locations(ssl_ctx_TLSv1, certs_file,
 						   certs_dir))
 			g_warning("TLSv1 SSL_CTX_load_verify_locations failed.\n");
 	}
@@ -227,8 +281,10 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 			if (res < 0) {
 				debug_print("SSL certificate of %s rejected\n",
 					    sockinfo->hostname);
+#if 0
 				reject_list = g_slist_prepend
 					(reject_list, X509_dup(server_cert));
+#endif
 				X509_free(server_cert);
 				return FALSE;
 			} else if (res > 0) {
@@ -237,6 +293,7 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 					(trust_list, X509_dup(server_cert));
 			} else {
 				debug_print("Permanently accept SSL certificate of %s\n", sockinfo->hostname);
+				/* TODO: save server cert */
 				trust_list = g_slist_prepend
 					(trust_list, X509_dup(server_cert));
 			}
