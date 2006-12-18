@@ -1,5 +1,10 @@
 2006-12-18
 
+	* libsylph/ssl.c: ssl_init(): call SSL_CTX_load_verify_locations()
+	  also when only certs_file exists.
+
+2006-12-18
+
 	* libsylph/ssl.c: ssl_init(): look for CA certificates bundle file
 	  in multiple location.
 	  ssl_init_socket_with_method(): disabled reject list (for now).

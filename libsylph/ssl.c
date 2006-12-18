@@ -127,7 +127,7 @@ void ssl_init(void)
 		debug_print(_("SSLv23 not available\n"));
 	} else {
 		debug_print(_("SSLv23 available\n"));
-		if (certs_dir &&
+		if ((certs_file || certs_dir) &&
 		    !SSL_CTX_load_verify_locations(ssl_ctx_SSLv23, certs_file,
 						   certs_dir))
 			g_warning("SSLv23 SSL_CTX_load_verify_locations failed.\n");
@@ -138,7 +138,7 @@ void ssl_init(void)
 		debug_print(_("TLSv1 not available\n"));
 	} else {
 		debug_print(_("TLSv1 available\n"));
-		if (certs_dir &&
+		if ((certs_file || certs_dir) &&
 		    !SSL_CTX_load_verify_locations(ssl_ctx_TLSv1, certs_file,
 						   certs_dir))
 			g_warning("TLSv1 SSL_CTX_load_verify_locations failed.\n");

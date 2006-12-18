@@ -1,5 +1,10 @@
 2006-12-18
 
+	* libsylph/ssl.c: ssl_init(): certs_file のみ存在するばあいでも
+	  SSL_CTX_load_verify_locations() を呼ぶようにした。
+
+2006-12-18
+
 	* libsylph/ssl.c: ssl_init(): CA 証明書のバンドルファイルを複数の
 	  場所から探すようにした。
 	  ssl_init_socket_with_method(): 拒否リストを(今のところ)無効にした。
