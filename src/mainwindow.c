@@ -2099,14 +2099,18 @@ void main_window_popup(MainWindow *mainwin)
 
 	switch (mainwin->type) {
 	case SEPARATE_FOLDER:
-		gtkut_window_popup(mainwin->win.sep_folder.folderwin);
+		if (prefs_common.folderview_visible)
+			gtkut_window_popup(mainwin->win.sep_folder.folderwin);
 		break;
 	case SEPARATE_MESSAGE:
-		gtkut_window_popup(mainwin->win.sep_message.messagewin);
+		if (messageview_is_visible(mainwin->messageview))
+			gtkut_window_popup(mainwin->win.sep_message.messagewin);
 		break;
 	case SEPARATE_BOTH:
-		gtkut_window_popup(mainwin->win.sep_both.folderwin);
-		gtkut_window_popup(mainwin->win.sep_both.messagewin);
+		if (prefs_common.folderview_visible)
+			gtkut_window_popup(mainwin->win.sep_both.folderwin);
+		if (messageview_is_visible(mainwin->messageview))
+			gtkut_window_popup(mainwin->win.sep_both.messagewin);
 		break;
 	default:
 		break;
