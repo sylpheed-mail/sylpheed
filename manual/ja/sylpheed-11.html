@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed User's Manual: アドレス帳</TITLE>
+ <TITLE>Sylpheed User's Manual: 印刷</TITLE>
  <LINK HREF="sylpheed-12.html" REL=next>
  <LINK HREF="sylpheed-10.html" REL=previous>
  <LINK HREF="sylpheed.html#toc11" REL=contents>
@@ -12,65 +12,21 @@
 <A HREF="sylpheed-10.html">前のページ</A>
 <A HREF="sylpheed.html#toc11">目次へ</A>
 <HR>
-<H2><A NAME="s11">11.</A> <A HREF="sylpheed.html#toc11">アドレス帳</A></H2>
+<H2><A NAME="s11">11.</A> <A HREF="sylpheed.html#toc11">印刷</A></H2>
 
-<P>アドレス帳は、メニューの「ツール＞アドレス帳」、メッセージ作成ウィンドウのツールバーの「アドレス」ボタンなどによって起動できます。</P>
-<H2><A NAME="ss11.1">11.1</A> <A HREF="sylpheed.html#toc11.1">アドレスの登録・削除</A>
+<P>GTK+ 2.10以降を使用している場合は、内蔵の印刷機能が利用できます。GTK+が2.10未満の場合、または印刷に外部コマンドを使用する設定にしている場合は外部コマンドを利用して印刷を行います(ページ設定やプリンタの選択などは行えません)。</P>
+<H2><A NAME="ss11.1">11.1</A> <A HREF="sylpheed.html#toc11.1">ページ設定</A>
 </H2>
 
-<P>アドレス帳を開いた後、アドレスを登録したいフォルダを「共有アドレス」や
-「個人用アドレス」などが書かれたリストの中から選択します。
-その後、
-<UL>
-<LI>メニューより「アドレス＞新規アドレス」</LI>
-<LI>追加ボタンを押す</LI>
-<LI>アドレス表示部分の
-<A HREF="sylpheed-6.html#context-menu">コンテキストメニュー</A>より「新規アドレス」</LI>
-</UL>
-
-のいずれかを行うことで追加
-<A HREF="sylpheed-6.html#dialog">ダイアログ</A>が現れるので、それぞれの項目を入力した後OKを押せば登録されます。</P>
-<P>また登録されたアドレスを選択後、
-<UL>
-<LI>メニューより「アドレス＞編集」</LI>
-<LI>
-<A HREF="sylpheed-6.html#context-menu">コンテキストメニュー</A>より「編集」</LI>
-<LI>編集ボタンを押す</LI>
-</UL>
-
-のいずれかを行えば編集ダイアログを表示でき、OKを押せば更新されます。</P>
-<P>同じく登録されたアドレスを選択後、
-<UL>
-<LI>メニューより「アドレス＞削除」</LI>
-<LI>
-<A HREF="sylpheed-6.html#context-menu">コンテキストメニュー</A>より「削除」</LI>
-<LI>削除ボタンを押す</LI>
-</UL>
-
-のいずれかを行えばアドレス帳からそのアドレスを削除することができます。</P>
-<H2><A NAME="ss11.2">11.2</A> <A HREF="sylpheed.html#toc11.2">フォルダとグループ</A>
+<P>メニューの「ファイル＞ページ設定...」を選択することでページ設定が行えます。ここでは用紙のサイズや向き、マージンなどを選択することができます(選択可能な項目はプラットフォームによって異なります)。</P>
+<H2><A NAME="ss11.2">11.2</A> <A HREF="sylpheed.html#toc11.2">印刷</A>
 </H2>
 
-
-
-
-
-<H2><A NAME="address-combo"></A> <A NAME="ss11.3">11.3</A> <A HREF="sylpheed.html#toc11.3">メッセージ作成ウィンドウとの連携</A>
-</H2>
-
-<P>
-<A HREF="sylpheed-10.html#message-create">メッセージの作成</A>画面で、
-<UL>
-<LI>メニューで「ツール＞アドレス帳」</LI>
-<LI>ツールバーの「アドレス」ボタンをクリック</LI>
-</UL>
-
-することでアドレス帳画面を出すことができ、
-そこでアドレスやグループを選択して「宛先:」, 「Cc:」, 「Bcc:」ボタンを押せば
-それぞれ宛先, Cc, Bccにアドレスが追加されます。</P>
-<P>複数選択してボタンを押して同時にたくさん追加することも可能ですし、
-一度アドレスを入力した後、また別のアドレスを選択してボタンを押せば
-前に追加したアドレスの次に選択したアドレスが追加されます。</P>
+<P>メニューの「ファイル＞印刷...」、またはサマリビューの
+<A HREF="sylpheed-6.html#context-menu">コンテキストメニュー</A>より「印刷...」を選択することでメッセージを印刷することができます。また、メッセージビューの「添付」タブからテキストの添付ファイルの
+<A HREF="sylpheed-6.html#context-menu">コンテキストメニュー</A>より「印刷...」を選択することで、添付ファイルを印刷することができます。</P>
+<P>印刷ダイアログでは、出力するプリンタや印刷するページの指定などが行えます(選択可能な項目はプラットフォームによって異なります)。</P>
+<P>印刷に使用するフォントとそのサイズについては表示に使用しているものが使用されます。</P>
 <HR>
 <A HREF="sylpheed-12.html">次のページ</A>
 <A HREF="sylpheed-10.html">前のページ</A>

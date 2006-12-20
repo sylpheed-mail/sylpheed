@@ -15,6 +15,7 @@ manualdata_DATA = \
      sylpheed-20.html \
      sylpheed-21.html \
      sylpheed-22.html \
+     sylpheed-23.html \
      sylpheed-2.html \
      sylpheed-3.html \
      sylpheed-4.html \
