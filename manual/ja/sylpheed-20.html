@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed User's Manual: 情報</TITLE>
+ <TITLE>Sylpheed User's Manual: FAQ</TITLE>
  <LINK HREF="sylpheed-21.html" REL=next>
  <LINK HREF="sylpheed-19.html" REL=previous>
  <LINK HREF="sylpheed.html#toc20" REL=contents>
@@ -12,106 +12,52 @@
 <A HREF="sylpheed-19.html">前のページ</A>
 <A HREF="sylpheed.html#toc20">目次へ</A>
 <HR>
-<H2><A NAME="s20">20.</A> <A HREF="sylpheed.html#toc20">情報</A></H2>
+<H2><A NAME="s20">20.</A> <A HREF="sylpheed.html#toc20">FAQ</A></H2>
 
 
-<H2><A NAME="ss20.1">20.1</A> <A HREF="sylpheed.html#toc20.1">Sylpheed 関連サイト</A>
+<H2><A NAME="ss20.1">20.1</A> <A HREF="sylpheed.html#toc20.1">ニュースのメッセージ未読情報について</A>
 </H2>
 
+<P>Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょうか?</P>
 
-<H3>Sylpheed オフィシャルWebサイト</H3>
-
-<P>Sylpheed オフィシャルWebサイトの場所は、
-<A HREF="http://sylpheed.good-day.net/">http://sylpheed.good-day.net/</A>
-です。</P>
-<H3>Sylpheed 最新版入手先</H3>
-
-<P>
-<A HREF="http://sylpheed.good-day.net/sylpheed/">http://sylpheed.good-day.net/sylpheed/</A>から入手できます。</P>
-
-<H3>rpmの入手先</H3>
-
-<P>
-<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A></P>
-<P>でほとんどのRedHat Package Manager(rpm)を利用したLinux Distributionに対応できると思われる
-rpmがあります。
-それぞれのDistribution用のものが用意されている場合でこれを利用してもほとんど問題ないでしょう。
-多分最新です。</P>
-
-<H3>nightly build rpm</H3>
-
-<P>
-<A HREF="http://sylpheed.good-day.net/sylpheed/">http://sylpheed.good-day.net/sylpheed/</A>より
-cvs repositryから毎日0:00に取り出したものを上記rpmと同条件で
-自動的にビルドしたものを入手できます。
-ただし、cvs repositryから取り出したもので、
-確認もしてないのでちゃんと動作するとは限りません。</P>
-
-<H3>Debian Packageの入手先</H3>
-
-<P>woody以降にはnon-USセクションに入っています。</P>
-<H3>FreeBSD portsの入手先</H3>
-
-<H2><A NAME="Sylpheed-ML"></A> <A NAME="ss20.2">20.2</A> <A HREF="sylpheed.html#toc20.2">メーリングリスト</A>
+<P>A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
+ニュースグループごとに未読情報は変わって来てしまいます。</P>
+<H2><A NAME="ss20.2">20.2</A> <A HREF="sylpheed.html#toc20.2">メニューなどのフォント変更について</A>
 </H2>
 
-<P>Sylpheed に関する全般的な話題を扱うメーリングリストです。日本語
-(
-<A HREF="sylpheed-jp@sraoss.jp">sylpheed-jp@sraoss.jp</A>) と
-英語 (
-<A HREF="sylpheed@sraoss.jp">sylpheed@sraoss.jp</A>) の2種類があります。</P>
-<P>また、リリースアナウンス専用の ML として sylpheed-announce ML (
-<A HREF="sylpheed-announce@sraoss.jp">sylpheed-announce@sraoss.jp</A>) があります。</P>
+<P>Q. メッセージ本文のフォントは
+<A HREF="sylpheed-18.html#font-config">全般の設定から変更</A>
+できましたが、サマリやメニューなどのフォントは変更できないのでしょうか?</P>
 
-<H3>参加方法</H3>
-
-<P>
-<A HREF="http://www.sraoss.jp/mailman/listinfo/">http://www.sraoss.jp/mailman/listinfo/</A> から入会したいメーリングリストを選択します。その後は指示に従ってください。</P>
-<P>投稿先は 
-<A HREF="sylpheed-jp@sraoss.jp">sylpheed-jp@sraoss.jp</A> です。</P>
-
-<H3>退会方法</H3>
-
-<P>上記のページから退会処理ができます。</P>
-<P>過去ログも上記のページから参照できます。
-以前の過去ログは
-<A HREF="http://www.tmtm.org/sylpheed/ml/">http://www.tmtm.org/sylpheed/ml/</A>から入手できます。</P>
-<H2><A NAME="ss20.3">20.3</A> <A HREF="sylpheed.html#toc20.3">Anonymous CVS</A>
-</H2>
-
-<P>Sylpheedの開発にはCVSが利用されています。
-CVSの説明に関しては、
-<A HREF="http://kahori.com/j-cvsbook/">http://kahori.com/j-cvsbook/</A>などのサイトや書籍を参考にしてください。</P>
-<P>CVSから最新のSylpheedを入手するには,
-環境変数CVSROOTに:pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheedをセットします。
-(cvsの-dオプションで直接指定する場合は必要ありません)
+<P>A. 可能です。$HOME/.sylpheed-2.0/gtkrcファイルを作成し、内容を以下のように記述してください。
 <PRE>
-csh系:
-        setenv CVSROOT :pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed
-sh系(bashなど):
-        export CVSROOT=':pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed'
+gtk-font-name = "Kochi Gothic 12"
 </PRE>
 </P>
-<P>その後、
-<PRE>
-$ cvs login
-CVS password: [enter]
-</PRE>
+<H2><A NAME="ss20.3">20.3</A> <A HREF="sylpheed.html#toc20.3">ショートカットキーのキーバインドの変更</A>
+</H2>
 
-でログインします。passwordは無しです。</P>
-<P>適当なディレクトリに移動し、
-<PRE>
-$ cvs -z3 checkout sylpheed
-</PRE>
+<P>Q. ショートカットキーのキーバインドの変更はできますか?</P>
 
-でカレントディレクトリ以下にsylpheedというソースツリーが作成されます。</P>
-<P>最新のソースツリーにアップデートするには、
-<PRE>
-$ cvs -z3 update
-</PRE>
+<P>A. メニューに設定されている項目に関しては可能です。
+メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、
+割り当てられます。Backspaceキーを押せば、消すことができます。
+変更は保存されます。</P>
+<H2><A NAME="ss20.4">20.4</A> <A HREF="sylpheed.html#toc20.4">返信マークについて</A>
+</H2>
 
-を実行してください。</P>
+<P>Q. 返信をやめたのに返信マークが残ってしまいます。消えないのでしょうか。</P>
+<P>A. 現在の仕様では消えません。一度メッセージを未読にしてから読んだことにすることで消すことはできます。</P>
+<H2><A NAME="ss20.5">20.5</A> <A HREF="sylpheed.html#toc20.5">サマリビューの下に表示される画像について</A>
+</H2>
 
+<P>Q. ヘッダが表示されている部分に小さな画像が表示されていますが、これは何でしょうか。
+また、どのようにしたら挿入できるのでしょうか。</P>
+<P>A. これは、X-Faceといいます。
+<A HREF="sylpheed-8.html#Account-Config">アカウントの設定</A>のユーザ定義ヘッダで、
+X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。</P>
+<P>
+<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。</P>
 <HR>
 <A HREF="sylpheed-21.html">次のページ</A>
 <A HREF="sylpheed-19.html">前のページ</A>
