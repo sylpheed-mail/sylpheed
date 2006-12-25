@@ -3156,9 +3156,32 @@ gint change_file_mode_rw(FILE *fp, const gchar *file)
 	DWORD attr;
 	BOOL retval;
 
-	attr = GetFileAttributes(file);
-	retval = SetFileAttributes
-		(file, attr & ~(FILE_ATTRIBUTE_READONLY|FILE_ATTRIBUTE_HIDDEN));
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		wchar_t *wpath;
+
+		wpath = g_utf8_to_utf16(file, -1, NULL, NULL, NULL);
+		if (wpath == NULL)
+			return -1;
+
+		attr = GetFileAttributesW(wpath);
+		retval = SetFileAttributesW
+			(wpath, attr & ~(FILE_ATTRIBUTE_READONLY|FILE_ATTRIBUTE_HIDDEN));
+
+		g_free(wpath);
+	} else {
+		gchar *cp_path;
+
+		cp_path = g_locale_from_utf8(file, -1, NULL, NULL, NULL);
+		if (cp_path == NULL)
+			return -1;
+
+		attr = GetFileAttributesA(cp_path);
+		retval = SetFileAttributesA
+			(cp_path, attr & ~(FILE_ATTRIBUTE_READONLY|FILE_ATTRIBUTE_HIDDEN));
+
+		g_free(cp_path);
+	}
+
 	if (retval)
 		return 0;
 	else
