@@ -56,6 +56,8 @@
 #  include "ssl.h"
 #endif
 
+#include "utils.h"
+
 #define BUFFSIZE	8192
 
 #ifdef G_OS_WIN32
