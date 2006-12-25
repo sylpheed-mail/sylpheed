@@ -3168,9 +3168,8 @@ gint change_file_mode_rw(FILE *fp, const gchar *file)
 	if (fp)
 		return fchmod(fileno(fp), S_IRUSR|S_IWUSR);
 	else
-#else
-		return g_chmod(file, S_IRUSR|S_IWUSR);
 #endif
+		return g_chmod(file, S_IRUSR|S_IWUSR);
 #endif
 }
 
