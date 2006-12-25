@@ -3152,10 +3152,25 @@ gchar *generate_mime_boundary(const gchar *prefix)
 
 gint change_file_mode_rw(FILE *fp, const gchar *file)
 {
-#if HAVE_FCHMOD
-	return fchmod(fileno(fp), S_IRUSR|S_IWUSR);
+#ifdef G_OS_WIN32
+	DWORD attr;
+	BOOL retval;
+
+	attr = GetFileAttributes(file);
+	retval = SetFileAttributes
+		(file, attr & ~(FILE_ATTRIBUTE_READONLY|FILE_ATTRIBUTE_HIDDEN));
+	if (retval)
+		return 0;
+	else
+		return -1;
 #else
-	return g_chmod(file, S_IRUSR|S_IWUSR);
+#if HAVE_FCHMOD
+	if (fp)
+		return fchmod(fileno(fp), S_IRUSR|S_IWUSR);
+	else
+#else
+		return g_chmod(file, S_IRUSR|S_IWUSR);
+#endif
 #endif
 }
 

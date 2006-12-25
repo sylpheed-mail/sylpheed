@@ -23,6 +23,7 @@
 #include <glib/gi18n.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #include "utils.h"
 #include "procmsg.h"
@@ -789,7 +790,8 @@ static void procmsg_write_mark_file(FolderItem *item, GHashTable *mark_table)
 {
 	FILE *fp;
 
-	fp = procmsg_open_mark_file(item, DATA_WRITE);
+	if ((fp = procmsg_open_mark_file(item, DATA_WRITE)) == NULL)
+		return;
 	g_hash_table_foreach(mark_table, write_mark_func, fp);
 	fclose(fp);
 }
@@ -804,8 +806,16 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 
 	if (mode == DATA_WRITE) {
 		if ((fp = g_fopen(file, "wb")) == NULL) {
-			FILE_OP_ERROR(file, "fopen");
-			return NULL;
+			if (errno == EACCES) {
+				change_file_mode_rw(NULL, file);
+				if ((fp = g_fopen(file, "wb")) == NULL) {
+					FILE_OP_ERROR(file, "fopen");
+					return NULL;
+				}
+			} else {
+				FILE_OP_ERROR(file, "fopen");
+				return NULL;
+			}
 		}
 		if (change_file_mode_rw(fp, file) < 0)
 			FILE_OP_ERROR(file, "chmod");
@@ -815,9 +825,16 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 	}
 
 	/* check version */
-	if ((fp = g_fopen(file, "rb")) == NULL)
-		debug_print("Mark/Cache file '%s' not found\n", file);
-	else {
+	if ((fp = g_fopen(file, "rb")) == NULL) {
+		if (errno == EACCES) {
+			change_file_mode_rw(NULL, file);
+			if ((fp = g_fopen(file, "rb")) == NULL) {
+				FILE_OP_ERROR(file, "fopen");
+			}
+		} else {
+			debug_print("Mark/Cache file '%s' not found\n", file);
+		}
+	} else {
 		if (buf && buf_size > 0)
 			setvbuf(fp, buf, _IOFBF, buf_size);
 		if (fread(&data_ver, sizeof(data_ver), 1, fp) != 1 ||
@@ -835,8 +852,16 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 	if (fp) {
 		/* reopen with append mode */
 		fclose(fp);
-		if ((fp = g_fopen(file, "ab")) == NULL)
-			FILE_OP_ERROR(file, "fopen");
+		if ((fp = g_fopen(file, "ab")) == NULL) {
+			if (errno == EACCES) {
+				change_file_mode_rw(NULL, file);
+				if ((fp = g_fopen(file, "ab")) == NULL) {
+					FILE_OP_ERROR(file, "fopen");
+				}
+			} else {
+				FILE_OP_ERROR(file, "fopen");
+			}
+		}
 	} else {
 		/* open with overwrite mode if mark file doesn't exist or
 		   version is different */
