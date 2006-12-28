@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2006 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -204,8 +204,23 @@ gint proc_mbox(FolderItem *dest, const gchar *mbox, GHashTable *folder_table)
 		fltinfo->flags.perm_flags = MSG_NEW|MSG_UNREAD;
 		fltinfo->flags.tmp_flags = MSG_RECEIVED;
 
-		if (folder_table)
+		if (folder_table && prefs_common.enable_junk &&
+		    prefs_common.filter_junk_on_recv &&
+		    prefs_common.filter_junk_before) {
+			filter_apply(prefs_common.junk_fltlist, tmp_file,
+				     fltinfo);
+		}
+
+		if (!fltinfo->drop_done && folder_table)
 			filter_apply(prefs_common.fltlist, tmp_file, fltinfo);
+
+		if (!fltinfo->drop_done &&
+		    folder_table && prefs_common.enable_junk &&
+		    prefs_common.filter_junk_on_recv &&
+		    !prefs_common.filter_junk_before) {
+			filter_apply(prefs_common.junk_fltlist, tmp_file,
+				     fltinfo);
+		}
 
 		if (fltinfo->actions[FLT_ACTION_MOVE] == FALSE &&
 		    fltinfo->actions[FLT_ACTION_DELETE] == FALSE) {
