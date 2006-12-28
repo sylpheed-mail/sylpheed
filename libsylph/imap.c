@@ -3608,10 +3608,11 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	if (ok != IMAP_SUCCESS)
 		return ok;
 
-#define RETURN_ERROR_IF_FAIL(cond)	\
-	if (!(cond)) {			\
-		g_free(buf);		\
-		return IMAP_ERROR;	\
+#define RETURN_ERROR_IF_FAIL(cond)		 \
+	if (!(cond)) {				 \
+		g_free(buf);			 \
+		ok = imap_cmd_ok(session, NULL); \
+		return IMAP_ERROR;		 \
 	}
 
 	cur_pos = strchr(buf, '{');
