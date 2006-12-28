@@ -5596,6 +5596,7 @@ static void compose_exec_ext_editor(Compose *compose)
 	static gchar *def_cmd = "emacs %s";
 	gchar buf[1024];
 	gchar **cmdline;
+	GError *error = NULL;
 
 	tmp = g_strdup_printf("%s%ctmpmsg-%p.txt", get_tmp_dir(),
 			      G_DIR_SEPARATOR, compose);
@@ -5627,12 +5628,19 @@ static void compose_exec_ext_editor(Compose *compose)
 
 	if (g_spawn_async(NULL, cmdline, NULL,
 			  G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH,
-			  NULL, NULL, &pid, NULL) == FALSE) {
-		g_warning("Couldn't execute external editor\n");
+			  NULL, NULL, &pid, &error) == FALSE) {
+		g_warning("Couldn't execute external editor: %s\n", buf);
+		if (error) {
+			g_warning("g_spawn_async(): %s\n", error->message);
+			g_error_free(error);
+		}
+		g_strfreev(cmdline);
 		g_unlink(tmp);
 		g_free(tmp);
 		return;
 	}
+
+	g_strfreev(cmdline);
 
 	compose_set_ext_editor_sensitive(compose, FALSE);
 
