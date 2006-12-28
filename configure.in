@@ -299,7 +299,11 @@ else
 	AC_MSG_RESULT(no)
 fi
 
+dnl check additional libraries
 AC_CHECK_LIB(xpg4, setlocale)
+AC_CHECK_LIB(resolv, res_init)
+AC_CHECK_LIB(socket, bind)
+AC_CHECK_LIB(nsl, gethostbyname)
 
 dnl for GThread support (currently disabled)
 dnl AC_ARG_ENABLE(threads,
