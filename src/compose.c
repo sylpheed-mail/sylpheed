@@ -4243,7 +4243,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gint n_entries;
 	gint count = 0;
 
+#ifndef G_OS_WIN32
 	static GdkGeometry geometry;
+#endif
 
 	g_return_val_if_fail(account != NULL, NULL);
 
@@ -4261,12 +4263,14 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		gtk_window_move(GTK_WINDOW(window), prefs_common.compose_x,
 				prefs_common.compose_y);
 
+#ifndef G_OS_WIN32
 	if (!geometry.max_width) {
 		geometry.max_width = gdk_screen_width();
 		geometry.max_height = gdk_screen_height();
 	}
 	gtk_window_set_geometry_hints(GTK_WINDOW(window), NULL,
 				      &geometry, GDK_HINT_MAX_SIZE);
+#endif
 
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(compose_delete_cb), compose);
