@@ -240,6 +240,7 @@ struct _PrefsCommon
 	gboolean comply_gnome_hig;
 	gboolean show_trayicon;
 	gboolean minimize_to_tray;
+	gboolean toggle_window_on_trayicon_click;
 
 	/* Other */
 	RecvDialogMode recv_dialog_mode;

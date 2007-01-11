@@ -339,6 +339,12 @@ static PrefParam param[] = {
 
 	{"show_trayicon", "TRUE", &prefs_common.show_trayicon, P_BOOL},
 	{"minimize_to_tray", "FALSE", &prefs_common.minimize_to_tray, P_BOOL},
+#ifdef G_OS_WIN32
+	{"toggle_window_on_trayicon_click", "FALSE",
+#else
+	{"toggle_window_on_trayicon_click", "TRUE",
+#endif
+	 &prefs_common.toggle_window_on_trayicon_click, P_BOOL},
 
 	/* Other */
 	{"receive_dialog_mode", "1", &prefs_common.recv_dialog_mode, P_ENUM},

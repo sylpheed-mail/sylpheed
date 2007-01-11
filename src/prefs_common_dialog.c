@@ -194,6 +194,7 @@ static struct Interface {
 #endif
 	GtkWidget *checkbtn_show_trayicon;
 	GtkWidget *checkbtn_minimize_to_tray;
+	GtkWidget *checkbtn_tray_toggle_window;
 } interface;
 
 static struct Other {
@@ -474,6 +475,9 @@ static PrefsUIData ui_data[] = {
 	{"show_trayicon", &interface.checkbtn_show_trayicon,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"minimize_to_tray", &interface.checkbtn_minimize_to_tray,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"toggle_window_on_trayicon_click",
+	 &interface.checkbtn_tray_toggle_window,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Other */
@@ -2079,6 +2083,7 @@ static void prefs_details_create(void)
 #endif
 	GtkWidget *checkbtn_show_trayicon;
 	GtkWidget *checkbtn_minimize_to_tray;
+	GtkWidget *checkbtn_tray_toggle_window;
 
 	GtkWidget *button_keybind;
 
@@ -2159,8 +2164,12 @@ static void prefs_details_create(void)
 			   _("Display tray icon"));
 	PACK_CHECK_BUTTON (vbox2, checkbtn_minimize_to_tray,
 			   _("Minimize to tray icon"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_tray_toggle_window,
+			   _("Toggle window on trayicon click"));
 	SET_TOGGLE_SENSITIVITY (checkbtn_show_trayicon,
 				checkbtn_minimize_to_tray);
+	SET_TOGGLE_SENSITIVITY (checkbtn_show_trayicon,
+				checkbtn_tray_toggle_window);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
@@ -2196,8 +2205,9 @@ static void prefs_details_create(void)
 #ifndef G_OS_WIN32
 	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
 #endif
-	interface.checkbtn_show_trayicon     = checkbtn_show_trayicon;
-	interface.checkbtn_minimize_to_tray  = checkbtn_minimize_to_tray;
+	interface.checkbtn_show_trayicon      = checkbtn_show_trayicon;
+	interface.checkbtn_minimize_to_tray   = checkbtn_minimize_to_tray;
+	interface.checkbtn_tray_toggle_window = checkbtn_tray_toggle_window;
 }
 
 static GtkWidget *prefs_other_create(void)

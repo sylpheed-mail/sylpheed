@@ -41,7 +41,7 @@
 #include "main.h"
 #include "inc.h"
 #include "compose.h"
-#include "gtkutils.h"
+#include "prefs_common.h"
 
 #if GTK_CHECK_VERSION(2, 10, 0) || defined(GDK_WINDOWING_X11)
 
@@ -241,7 +241,11 @@ static void trayicon_activated(GtkStatusIcon *status_icon, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
-	main_window_popup(mainwin);
+	if (prefs_common.toggle_window_on_trayicon_click &&
+	    gtk_window_is_active(GTK_WINDOW(mainwin->window)))
+		gtk_window_iconify(GTK_WINDOW(mainwin->window));
+	else
+		main_window_popup(mainwin);
 }
 
 static void trayicon_popup_menu_cb(GtkStatusIcon *status_icon, guint button,
@@ -317,9 +321,13 @@ static void trayicon_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	if (!event)
 		return;
 
-	if (event->button == 1)
-		main_window_popup(mainwin);
-	else if (event->button == 3) {
+	if (event->button == 1) {
+		if (prefs_common.toggle_window_on_trayicon_click &&
+		    gtk_window_is_active(GTK_WINDOW(mainwin->window)))
+			gtk_window_iconify(GTK_WINDOW(mainwin->window));
+		else
+			main_window_popup(mainwin);
+	} else if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(trayicon_menu), NULL, NULL, NULL, NULL,
 			       event->button, event->time);
 	}
