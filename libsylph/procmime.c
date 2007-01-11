@@ -402,7 +402,7 @@ static gchar *procmime_find_parameter_delimiter(const gchar *param,
 	while (*p) {
 		if (*p == '=')
 			break;
-		else if (*p == ';' || g_ascii_isspace(*p)) {
+		else if (*p == ';' || *p == '\r' || *p == '\n') {
 			delim = p;
 			break;
 		}
@@ -415,6 +415,8 @@ static gchar *procmime_find_parameter_delimiter(const gchar *param,
 	*eq = p;
 
 	++p;
+	while (g_ascii_isspace(*p))
+		++p;
 	if (*p == '"') {
 		quoted = TRUE;
 		++p;
@@ -424,7 +426,7 @@ static gchar *procmime_find_parameter_delimiter(const gchar *param,
 		if (quoted == TRUE) {
 			if (*p == '"')
 				quoted = FALSE;
-		} else if (*p == ';' || g_ascii_isspace(*p)) {
+		} else if (*p == ';' || *p == '\r' || *p == '\n') {
 			delim = p;
 			break;
 		}
@@ -498,6 +500,7 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 			param = g_strdup(p);
 
 		name = g_strndup(p, eq - p);
+		g_strchomp(name);
 		if (*name != '*' && (ast = strchr(name, '*'))) {
 			const gchar *next = ast + 1;
 
@@ -526,6 +529,7 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 		}
 
 		value = g_strdup(param + (eq - p) + 1);
+		g_strstrip(value);
 		if (*value == '"')
 			extract_quote(value, '"');
 
