@@ -2175,6 +2175,8 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 	left = MAX_LINELEN - header_len;
 
 	while (*srcp) {
+		gboolean in_quote = FALSE;
+
 		LBREAK_IF_REQUIRED(left <= 0, TRUE);
 
 		while (g_ascii_isspace(*srcp)) {
@@ -2219,13 +2221,18 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 			gboolean cont = FALSE;
 
 			while (*p != '\0') {
-				if (g_ascii_isspace(*p) &&
-				    !is_next_nonascii(p + 1))
-					break;
-				/* don't include parentheses in encoded
-				   strings */
-				if (addr_field && (*p == '(' || *p == ')'))
-					break;
+				if (*p == '"')
+					in_quote ^= TRUE;
+				else if (!in_quote) {
+					if (g_ascii_isspace(*p) &&
+					    !is_next_nonascii(p + 1))
+						break;
+					/* don't include parentheses in encoded
+					   strings */
+					if (addr_field &&
+					    (*p == '(' || *p == ')'))
+						break;
+				}
 
 				mb_len = g_utf8_skip[*(guchar *)p];
 

@@ -468,13 +468,19 @@ gint str_find_format_times(const gchar *haystack, gchar ch)
 gboolean is_next_nonascii(const gchar *s)
 {
 	const gchar *p;
+	gboolean in_quote = FALSE;
 
 	/* skip head space */
 	for (p = s; *p != '\0' && g_ascii_isspace(*p); p++)
 		;
-	for (; *p != '\0' && !g_ascii_isspace(*p); p++) {
-		if (*(guchar *)p > 127 || *(guchar *)p < 32)
+	while (*p != '\0') {
+		if (!in_quote && g_ascii_isspace(*p))
+			break;
+		if (*p == '"')
+			in_quote ^= TRUE;
+		else if (*(guchar *)p > 127 || *(guchar *)p < 32)
 			return TRUE;
+		++p;
 	}
 
 	return FALSE;
@@ -482,12 +488,19 @@ gboolean is_next_nonascii(const gchar *s)
 
 gint get_next_word_len(const gchar *s)
 {
+	const gchar *p = s;
 	gint len = 0;
+	gboolean in_quote = FALSE;
 
-	for (; *s != '\0' && !g_ascii_isspace(*s); s++, len++)
-		;
+	while (*p != '\0') {
+		if (!in_quote && g_ascii_isspace(*p))
+			break;
+		if (*p == '"')
+			in_quote ^= TRUE;
+		++p;
+	}
 
-	return len;
+	return p - s;
 }
 
 /* compare subjects */
