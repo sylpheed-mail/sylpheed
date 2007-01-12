@@ -291,6 +291,8 @@ static void account_edit_create(void)
 	gtk_widget_set_size_request (window, 500, 320);
 	gtk_container_set_border_width (GTK_CONTAINER (window), 8);
 	gtk_window_set_title (GTK_WINDOW (window), _("Edit accounts"));
+	gtk_window_set_position (GTK_WINDOW (window),
+				 GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal (GTK_WINDOW (window), TRUE);
 	g_signal_connect (G_OBJECT (window), "delete_event",
 			  G_CALLBACK (account_delete_event), NULL);
