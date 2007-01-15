@@ -1996,7 +1996,6 @@ gchar *get_tmp_file(void)
 
 const gchar *get_domain_name(void)
 {
-#ifdef G_OS_UNIX
 	static gchar *domain_name = NULL;
 
 	if (!domain_name) {
@@ -2017,12 +2016,14 @@ const gchar *get_domain_name(void)
 		}
 
 		debug_print("domain name = %s\n", domain_name);
+		if (is_next_nonascii(domain_name)) {
+			g_warning("invalid domain name: %s\n", domain_name);
+			g_free(domain_name);
+			domain_name = "unknown";
+		}
 	}
 
 	return domain_name;
-#else
-	return "unknown";
-#endif
 }
 
 off_t get_file_size(const gchar *file)
