@@ -1829,6 +1829,28 @@ const gchar *get_startup_dir(void)
 	return startup_dir;
 }
 
+#ifdef G_OS_WIN32
+static gchar *get_win32_special_folder_path(gint nfolder)
+{
+	gchar *folder = NULL;
+	HRESULT hr;
+
+	if (G_WIN32_HAVE_WIDECHAR_API()) {
+		wchar_t path[MAX_PATH + 1];
+		hr = SHGetFolderPathW(NULL, nfolder, NULL, 0, path);
+		if (hr == S_OK)
+			folder = g_utf16_to_utf8(path, -1, NULL, NULL, NULL);
+	} else {
+		gchar path[MAX_PATH + 1];
+		hr = SHGetFolderPathA(NULL, nfolder, NULL, 0, path);
+		if (hr == S_OK)
+			folder = g_locale_to_utf8(path, -1, NULL, NULL, NULL);
+	}
+
+	return folder;
+}
+#endif
+
 const gchar *get_home_dir(void)
 {
 #ifdef G_OS_WIN32
@@ -1853,23 +1875,7 @@ const gchar *get_document_dir(void)
 	HRESULT hr;
 
 	if (!document_dir) {
-		if (G_WIN32_HAVE_WIDECHAR_API()) {
-			wchar_t path[MAX_PATH + 1];
-			hr = SHGetFolderPathW(NULL, CSIDL_PERSONAL, NULL, 0,
-					      path);
-			if (hr == S_OK) {
-				document_dir = g_utf16_to_utf8
-					(path, -1, NULL, NULL, NULL);
-			}
-		} else {
-			gchar path[MAX_PATH + 1];
-			hr = SHGetFolderPathA(NULL, CSIDL_PERSONAL, NULL, 0,
-					      path);
-			if (hr == S_OK) {
-				document_dir = g_locale_to_utf8
-					(path, -1, NULL, NULL, NULL);
-			}
-		}
+		document_dir = get_win32_special_folder_path(CSIDL_PERSONAL);
 		if (!document_dir)
 			document_dir = get_home_dir();
 	}
@@ -1884,15 +1890,16 @@ const gchar *get_rc_dir(void)
 {
 	if (!rc_dir) {
 #ifdef G_OS_WIN32
-		const gchar *appdata;
+		gchar *appdata;
 
-		appdata = g_getenv("APPDATA");
+		appdata = get_win32_special_folder_path(CSIDL_APPDATA);
 		if (appdata)
 			rc_dir = g_strconcat(appdata, G_DIR_SEPARATOR_S,
 					     RC_DIR, NULL);
 		else
 			rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
 					     RC_DIR, NULL);
+		g_free(appdata);
 #else
 		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
 				     RC_DIR, NULL);
