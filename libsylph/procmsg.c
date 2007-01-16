@@ -834,7 +834,9 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 		} else {
 			debug_print("Mark/Cache file '%s' not found\n", file);
 		}
-	} else {
+	}
+
+	if (fp) {
 		if (buf && buf_size > 0)
 			setvbuf(fp, buf, _IOFBF, buf_size);
 		if (fread(&data_ver, sizeof(data_ver), 1, fp) != 1 ||
