@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -100,6 +100,8 @@ gint filter_apply_msginfo(GSList *fltlist, MsgInfo *msginfo,
 	if (!fltlist) return 0;
 
 	file = procmsg_get_message_file(msginfo);
+	if (!file)
+		return -1;
 	hlist = procheader_get_header_list_from_file(file);
 	if (!hlist) {
 		g_free(file);
@@ -367,6 +369,8 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		break;
 	case FLT_COND_CMD_TEST:
 		file = procmsg_get_message_file(msginfo);
+		if (!file)
+			return FALSE;
 		cmdline = g_strconcat(cond->str_value, " \"", file, "\"", NULL);
 		matched = (execute_command_line(cmdline, FALSE) == 0);
 		g_free(cmdline);

@@ -882,6 +882,8 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 	session = imap_session_get(folder);
 
 	if (!session) {
+		if (uncached_only)
+			return NULL;
 		mlist = procmsg_read_cache(item, FALSE);
 		item->last_num = procmsg_get_last_num_in_msg_list(mlist);
 		procmsg_set_flags(mlist, item);
