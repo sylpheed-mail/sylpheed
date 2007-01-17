@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -92,7 +92,9 @@ struct _PrefsAccount
 	gchar *inbox;
 
 	gboolean imap_check_inbox_only;
+	gboolean imap_filter_inbox_on_recv;
 	gint imap_auth_type;
+
 	gint max_nntp_articles;
 
 	gboolean recv_at_getall;

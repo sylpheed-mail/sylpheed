@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -56,6 +56,8 @@ static void     mh_folder_destroy	(Folder		*folder);
 static GSList  *mh_get_msg_list		(Folder		*folder,
 					 FolderItem	*item,
 					 gboolean	 use_cache);
+static GSList  *mh_get_uncached_msg_list(Folder		*folder,
+					 FolderItem	*item);
 static gchar   *mh_fetch_msg		(Folder		*folder,
 					 FolderItem	*item,
 					 gint		 num);
@@ -143,6 +145,7 @@ static FolderClass mh_class =
 	mh_create_tree,
 
 	mh_get_msg_list,
+	mh_get_uncached_msg_list,
 	mh_fetch_msg,
 	mh_get_msginfo,
 	mh_add_msg,
@@ -191,12 +194,13 @@ static void mh_folder_init(Folder *folder, const gchar *name, const gchar *path)
 	folder_local_folder_init(folder, name, path);
 }
 
-static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
-			       gboolean use_cache)
+static GSList *mh_get_msg_list_full(Folder *folder, FolderItem *item,
+				    gboolean use_cache, gboolean uncached_only)
 {
 	GSList *mlist;
 	GHashTable *msg_table;
 	time_t cur_mtime;
+	GSList *newlist = NULL;
 #ifdef MEASURE_TIME
 	GTimer *timer;
 #endif
@@ -218,7 +222,7 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 				item->cache_dirty = TRUE;
 		}
 	} else if (use_cache) {
-		GSList *newlist, *cur, *next;
+		GSList *cur, *next;
 		gboolean strict_cache_check = prefs_common.strict_cache_check;
 
 		if (item->stype == F_QUEUE || item->stype == F_DRAFT)
@@ -251,6 +255,7 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 	} else {
 		mlist = mh_get_uncached_msgs(NULL, item);
 		item->cache_dirty = TRUE;
+		newlist = mlist;
 	}
 
 	procmsg_set_flags(mlist, item);
@@ -277,7 +282,38 @@ static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
 			procmsg_write_flags_list(item, mlist);
 	}
 
+	if (uncached_only) {
+		GSList *cur;
+
+		if (newlist == NULL) {
+			procmsg_msg_list_free(mlist);
+			return NULL;
+		}
+		if (mlist == newlist)
+			return newlist;
+		for (cur = mlist; cur != NULL; cur = cur->next) {
+			if (cur->next == newlist) {
+				cur->next = NULL;
+				procmsg_msg_list_free(mlist);
+				return newlist;
+			}
+		}
+		procmsg_msg_list_free(mlist);
+		return NULL;
+	}
+
 	return mlist;
+}
+
+static GSList *mh_get_msg_list(Folder *folder, FolderItem *item,
+			       gboolean use_cache)
+{
+	return mh_get_msg_list_full(folder, item, use_cache, FALSE);
+}
+
+static GSList *mh_get_uncached_msg_list(Folder *folder, FolderItem *item)
+{
+	return mh_get_msg_list_full(folder, item, TRUE, TRUE);
 }
 
 static gchar *mh_fetch_msg(Folder *folder, FolderItem *item, gint num)

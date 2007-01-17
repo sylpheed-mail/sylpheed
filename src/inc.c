@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -241,8 +241,49 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 {
 	FolderItem *item = mainwin->summaryview->folder_item;
 	gint new_msgs;
+	gboolean update_summary = FALSE;
 
 	g_return_val_if_fail(account->folder != NULL, 0);
+
+	if (account->protocol == A_IMAP4 &&
+	    account->imap_filter_inbox_on_recv) {
+		FolderItem *inbox = FOLDER(account->folder)->inbox;
+		GSList *mlist, *cur;
+		FilterInfo *fltinfo;
+		gint n_filtered = 0;
+
+		debug_print("inc_remote_account_mail(): filtering IMAP4 INBOX\n");
+		mlist = folder_item_get_uncached_msg_list(inbox);
+		debug_print("inc_remote_account_mail(): uncached messages: %d\n", g_slist_length(mlist));
+
+		for (cur = mlist; cur != NULL; cur = cur->next) {
+			MsgInfo *msginfo = (MsgInfo *)cur->data;
+
+			fltinfo = filter_info_new();
+			fltinfo->account = account;
+			fltinfo->flags = msginfo->flags;
+			filter_apply_msginfo(prefs_common.fltlist,
+					     msginfo, fltinfo);
+			if (fltinfo->actions[FLT_ACTION_MOVE] &&
+			    fltinfo->move_dest)
+				folder_item_move_msg
+					(fltinfo->move_dest, msginfo);
+			else if (fltinfo->actions[FLT_ACTION_DELETE])
+				folder_item_remove_msg(inbox, msginfo);
+			if (fltinfo->drop_done)
+				++n_filtered;
+
+			filter_info_free(fltinfo);
+		}
+
+		procmsg_msg_list_free(mlist);
+
+		debug_print("inc_remote_account_mail(): %d message(s) filtered\n", n_filtered);
+
+		if (!prefs_common.scan_all_after_inc && item != NULL &&
+		    inbox == item)
+			update_summary = TRUE;
+	}
 
 	if (account->protocol == A_IMAP4 && account->imap_check_inbox_only) {
 		FolderItem *inbox = FOLDER(account->folder)->inbox;
@@ -250,13 +291,17 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 		new_msgs = folderview_check_new_item(inbox);
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    inbox == item)
-			folderview_update_item(item, TRUE);
+			update_summary = TRUE;
 	} else {
 		new_msgs = folderview_check_new(FOLDER(account->folder));
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    FOLDER(account->folder) == item->folder)
-			folderview_update_item(item, TRUE);
+			update_summary = TRUE;
 	}
+
+	if (update_summary)
+		folderview_update_item(item, TRUE);
+	folderview_update_all_updated(FALSE);
 
 	return new_msgs;
 }

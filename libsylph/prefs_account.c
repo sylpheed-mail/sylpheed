@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -63,6 +63,8 @@ static PrefParam param[] = {
 	{"filter_on_receive", "TRUE", &tmp_ac_prefs.filter_on_recv, P_BOOL},
 	{"imap_check_inbox_only", "FALSE", &tmp_ac_prefs.imap_check_inbox_only,
 	 P_BOOL},
+	{"imap_filter_inbox_on_receive", "FALSE",
+	 &tmp_ac_prefs.imap_filter_inbox_on_recv, P_BOOL},
 	{"imap_auth_method", "0", &tmp_ac_prefs.imap_auth_type, P_ENUM},
 	{"max_nntp_articles", "300", &tmp_ac_prefs.max_nntp_articles, P_INT},
 	{"receive_at_get_all", "TRUE", &tmp_ac_prefs.recv_at_getall, P_BOOL},

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -100,6 +100,9 @@ static gint imap_fetch_flags		(IMAPSession	*session,
 static GSList *imap_get_msg_list	(Folder		*folder,
 					 FolderItem	*item,
 					 gboolean	 use_cache);
+static GSList *imap_get_uncached_msg_list
+					(Folder		*folder,
+					 FolderItem	*item);
 static gchar *imap_fetch_msg		(Folder		*folder,
 					 FolderItem	*item,
 					 gint		 uid);
@@ -381,6 +384,7 @@ static FolderClass imap_class =
 	imap_create_tree,
 
 	imap_get_msg_list,
+	imap_get_uncached_msg_list,
 	imap_fetch_msg,
 	imap_get_msginfo,
 	imap_add_msg,
@@ -857,14 +861,16 @@ static gint imap_fetch_flags(IMAPSession *session, GArray **uids,
 	return ok;
 }
 
-static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
-				 gboolean use_cache)
+static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
+				      gboolean use_cache,
+				      gboolean uncached_only)
 {
 	GSList *mlist = NULL;
 	IMAPSession *session;
 	gint ok, exists = 0, recent = 0, unseen = 0;
 	guint32 uid_validity = 0;
 	guint32 first_uid = 0, last_uid = 0;
+	GSList *newlist = NULL;
 
 	g_return_val_if_fail(folder != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
@@ -1040,7 +1046,6 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 		}
 
 		if (begin > 0 && begin <= last_uid) {
-			GSList *newlist;
 			newlist = imap_get_uncached_messages
 				(session, item, begin, last_uid,
 				 exists - item->total, TRUE);
@@ -1057,6 +1062,7 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 		last_uid = procmsg_get_last_num_in_msg_list(mlist);
 		item->cache_dirty = TRUE;
 		item->mark_dirty = TRUE;
+		newlist = mlist;
 	}
 
 	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
@@ -1078,10 +1084,41 @@ static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
 	}
 
 catch:
+	if (uncached_only) {
+		GSList *cur;
+
+		if (newlist == NULL) {
+			procmsg_msg_list_free(mlist);
+			return NULL;
+		}
+		if (mlist == newlist)
+			return newlist;
+		for (cur = mlist; cur != NULL; cur = cur->next) {
+			if (cur->next == newlist) {
+				cur->next = NULL;
+				procmsg_msg_list_free(mlist);
+				return newlist;
+			}
+		}
+		procmsg_msg_list_free(mlist);
+		return NULL;
+	}
+
 	return mlist;
 }
 
 #undef THROW
+
+static GSList *imap_get_msg_list(Folder *folder, FolderItem *item,
+				 gboolean use_cache)
+{
+	return imap_get_msg_list_full(folder, item, use_cache, FALSE);
+}
+
+static GSList *imap_get_uncached_msg_list(Folder *folder, FolderItem *item)
+{
+	return imap_get_msg_list_full(folder, item, TRUE, TRUE);
+}
 
 static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 {

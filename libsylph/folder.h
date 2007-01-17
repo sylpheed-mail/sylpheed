@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -154,6 +154,9 @@ struct _FolderClass
 	GSList * (*get_msg_list)	(Folder		*folder,
 					 FolderItem	*item,
 					 gboolean	 use_cache);
+	GSList * (*get_uncached_msg_list)
+					(Folder		*folder,
+					 FolderItem	*item);
 	/* return value is filename encoding */
 	gchar *  (*fetch_msg)		(Folder		*folder,
 					 FolderItem	*item,
@@ -367,6 +370,8 @@ gint   folder_item_scan			(FolderItem	*item);
 void   folder_item_scan_foreach		(GHashTable	*table);
 GSList *folder_item_get_msg_list	(FolderItem	*item,
 					 gboolean	 use_cache);
+GSList *folder_item_get_uncached_msg_list
+					(FolderItem	*item);
 /* return value is filename encoding */
 gchar *folder_item_fetch_msg		(FolderItem	*item,
 					 gint		 num);

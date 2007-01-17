@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -966,6 +966,22 @@ GSList *folder_item_get_msg_list(FolderItem *item, gboolean use_cache)
 							 use_cache);
 
 	return folder->klass->get_msg_list(folder, item, use_cache);
+}
+
+GSList *folder_item_get_uncached_msg_list(FolderItem *item)
+{
+	Folder *folder;
+
+	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item->folder->klass->get_uncached_msg_list != NULL,
+			     NULL);
+
+	folder = item->folder;
+
+	if (item->stype == F_VIRTUAL)
+		return NULL;
+
+	return folder->klass->get_uncached_msg_list(folder, item);
 }
 
 gchar *folder_item_fetch_msg(FolderItem *item, gint num)
