@@ -2145,7 +2145,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 			gint header_len, gboolean addr_field,
 			const gchar *out_encoding)
 {
-	const gchar *cur_encoding;
+	const gchar *src_encoding;
 	gint mimestr_len;
 	gchar *mimesep_enc;
 	gint left;
@@ -2163,14 +2163,14 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 		mimesep_enc = "?Q?";
 	}
 
-	cur_encoding = CS_INTERNAL;
+	src_encoding = CS_INTERNAL;
 	if (!out_encoding)
 		out_encoding = conv_get_outgoing_charset_str();
 	if (!strcmp(out_encoding, CS_US_ASCII))
 		out_encoding = CS_ISO_8859_1;
 
-	mimestr_len = strlen(MIMESEP_BEGIN) + strlen(out_encoding) +
-		strlen(mimesep_enc) + strlen(MIMESEP_END);
+	mimestr_len = strlen(MIMESEP_BEGIN) + strlen(mimesep_enc) +
+		strlen(MIMESEP_END);
 
 	left = MAX_LINELEN - header_len;
 
@@ -2215,9 +2215,11 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 			gchar *out_str;
 			gchar *enc_str;
 			const gchar *p = srcp;
+			const gchar *block_encoding = out_encoding;
 			gint out_str_len;
 			gint out_enc_str_len;
 			gint mime_block_len;
+			gint error = 0;
 			gboolean cont = FALSE;
 
 			while (*p != '\0') {
@@ -2237,12 +2239,13 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 				mb_len = g_utf8_skip[*(guchar *)p];
 
 				Xstrndup_a(part_str, srcp, cur_len + mb_len, );
-				out_str = conv_codeset_strdup
-					(part_str, cur_encoding, out_encoding);
-				if (!out_str) {
-					g_warning("conv_encode_header(): code conversion failed\n");
-					conv_unreadable_8bit(part_str);
+				out_str = conv_codeset_strdup_full
+					(part_str, src_encoding, block_encoding,
+					 &error);
+				if (!out_str || error != 0) {
+					g_warning("conv_encode_header(): code conversion failed. Keeping UTF-8.\n");
 					out_str = g_strdup(part_str);
+					block_encoding = CS_UTF_8;
 				}
 				out_str_len = strlen(out_str);
 
@@ -2255,7 +2258,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 
 				g_free(out_str);
 
-				if (mimestr_len + out_enc_str_len <= left) {
+				if (mimestr_len + strlen(block_encoding) + out_enc_str_len <= left) {
 					cur_len += mb_len;
 					p += mb_len;
 				} else if (cur_len == 0) {
@@ -2269,12 +2272,14 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 
 			if (cur_len > 0) {
 				Xstrndup_a(part_str, srcp, cur_len, );
-				out_str = conv_codeset_strdup
-					(part_str, cur_encoding, out_encoding);
-				if (!out_str) {
+				error = 0;
+				out_str = conv_codeset_strdup_full
+					(part_str, src_encoding, block_encoding,
+					 &error);
+				if (!out_str || error != 0) {
 					g_warning("conv_encode_header(): code conversion failed\n");
-					conv_unreadable_8bit(part_str);
 					out_str = g_strdup(part_str);
+					block_encoding = CS_UTF_8;
 				}
 				out_str_len = strlen(out_str);
 
@@ -2296,10 +2301,13 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 				g_free(out_str);
 
 				/* output MIME-encoded string block */
-				mime_block_len = mimestr_len + strlen(enc_str);
+				mime_block_len = mimestr_len +
+					strlen(block_encoding) +
+					strlen(enc_str);
 				g_snprintf(destp, mime_block_len + 1,
 					   MIMESEP_BEGIN "%s%s%s" MIMESEP_END,
-					   out_encoding, mimesep_enc, enc_str);
+					   block_encoding, mimesep_enc,
+					   enc_str);
 				destp += mime_block_len;
 				srcp += cur_len;
 
