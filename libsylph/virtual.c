@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -122,6 +122,7 @@ static FolderClass virtual_class =
 	NULL,
 
 	virtual_get_msg_list,
+	NULL,
 	virtual_fetch_msg,
 	virtual_get_msginfo,
 	NULL,
