@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,7 @@ static struct Receive {
 	GtkWidget *imap_frame;
 	GtkWidget *imap_auth_type_optmenu;
 	GtkWidget *imap_check_inbox_chkbtn;
+	GtkWidget *imap_filter_inbox_chkbtn;
 
 	GtkWidget *nntp_frame;
 	GtkWidget *maxarticle_spinbtn;
@@ -266,6 +267,8 @@ static PrefsUIData ui_data[] = {
 	{"inbox", &receive.inbox_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"imap_check_inbox_only", &receive.imap_check_inbox_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"imap_filter_inbox_on_receive", &receive.imap_filter_inbox_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"imap_auth_method", &receive.imap_auth_type_optmenu,
 	 prefs_account_imap_auth_type_set_data_from_optmenu,
@@ -839,6 +842,7 @@ static void prefs_account_receive_create(void)
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
 	GtkWidget *imap_check_inbox_chkbtn;
+	GtkWidget *imap_filter_inbox_chkbtn;
 
 	GtkWidget *nntp_frame;
 	GtkWidget *maxarticle_label;
@@ -991,6 +995,8 @@ static void prefs_account_receive_create(void)
 
 	PACK_CHECK_BUTTON (vbox2, imap_check_inbox_chkbtn,
 			   _("Only check INBOX on receiving"));
+	PACK_CHECK_BUTTON (vbox2, imap_filter_inbox_chkbtn,
+			   _("Filter new messages in INBOX on receiving"));
 
 	PACK_FRAME (vbox1, nntp_frame, _("News"));
 
@@ -1039,9 +1045,10 @@ static void prefs_account_receive_create(void)
 	receive.inbox_entry           = inbox_entry;
 	receive.inbox_btn             = inbox_btn;
 
-	receive.imap_frame              = imap_frame;
-	receive.imap_auth_type_optmenu  = optmenu;
-	receive.imap_check_inbox_chkbtn = imap_check_inbox_chkbtn;
+	receive.imap_frame               = imap_frame;
+	receive.imap_auth_type_optmenu   = optmenu;
+	receive.imap_check_inbox_chkbtn  = imap_check_inbox_chkbtn;
+	receive.imap_filter_inbox_chkbtn = imap_filter_inbox_chkbtn;
 
 	receive.nntp_frame             = nntp_frame;
 	receive.maxarticle_spinbtn     = maxarticle_spinbtn;
