@@ -1,3 +1,15 @@
+2007-01-18
+
+	* src/textview.c: textview_clear(): gtk_text_view_validate_onscreen()
+	  内での assertion 失敗を回避。
+
+2007-01-17
+
+	* libsylph/filter.c: filter_apply_msginfo(): procmsg_get_message_file()
+	  が失敗したらすぐに戻るようにした。
+	* libsylph/imap.c: imap_get_msg_list_full(): uncached_only の場合は
+	  NULL を返すようにした。
+
 2007-01-17
 
 	* libsylph/virtual.c: virtual class 構造体を修正。

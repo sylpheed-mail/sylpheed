@@ -1256,6 +1256,10 @@ void textview_clear(TextView *textview)
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_set_text(buffer, "", -1);
 
+	/* workaround for the assertion failure in
+	   gtk_text_view_validate_onscreen() */
+	text->vadjustment->value = 0.0;
+
 	STATUSBAR_POP(textview);
 	textview_uri_list_remove_all(textview->uri_list);
 	textview->uri_list = NULL;
