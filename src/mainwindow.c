@@ -2462,6 +2462,8 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 					   G_CALLBACK(toolbar_junk_cb),
 					   mainwin);
 
+	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+
 	icon_wid = gtk_image_new_from_stock(GTK_STOCK_EXECUTE,
 					    GTK_ICON_SIZE_LARGE_TOOLBAR);
 	exec_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
