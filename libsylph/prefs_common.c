@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -129,6 +129,11 @@ static PrefParam param[] = {
 	{"toolbar_style", "3", &prefs_common.toolbar_style, P_ENUM},
 	{"show_searchbar", "TRUE", &prefs_common.show_searchbar, P_BOOL},
 	{"show_statusbar", "TRUE", &prefs_common.show_statusbar, P_BOOL},
+
+	{"main_toolbar_setting", NULL, &prefs_common.main_toolbar_setting,
+	 P_STRING},
+	{"compose_toolbar_setting", NULL,
+	 &prefs_common.compose_toolbar_setting, P_STRING},
 
 	{"summary_col_show_mark", "TRUE",
 	 &prefs_common.summary_col_visible[S_COL_MARK], P_BOOL},

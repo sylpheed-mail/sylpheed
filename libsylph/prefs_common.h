@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -117,6 +117,9 @@ struct _PrefsCommon
 	ToolbarStyle toolbar_style;
 	gboolean show_searchbar;
 	gboolean show_statusbar;
+
+	gchar *main_toolbar_setting;
+	gchar *compose_toolbar_setting;
 
 	/* Summary columns visibility, position and size */
 	gboolean summary_col_visible[N_SUMMARY_COLS];

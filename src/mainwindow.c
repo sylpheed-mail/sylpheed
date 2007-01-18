@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1225,15 +1225,19 @@ void main_window_reflect_prefs_all(void)
 	main_window_set_menu_sensitive(mainwin);
 	main_window_set_toolbar_sensitive(mainwin);
 
-	if (prefs_common.enable_junk)
-		gtk_widget_show(mainwin->junk_btn);
-	else
-		gtk_widget_hide(mainwin->junk_btn);
+	if (mainwin->junk_btn) {
+		if (prefs_common.enable_junk)
+			gtk_widget_show(mainwin->junk_btn);
+		else
+			gtk_widget_hide(mainwin->junk_btn);
+	}
 
-	if (prefs_common.immediate_exec)
-		gtk_widget_hide(mainwin->exec_btn);
-	else
-		gtk_widget_show(mainwin->exec_btn);
+	if (mainwin->exec_btn) {
+		if (prefs_common.immediate_exec)
+			gtk_widget_hide(mainwin->exec_btn);
+		else
+			gtk_widget_show(mainwin->exec_btn);
+	}
 
 	if (mainwin->tray_icon) {
 		if (prefs_common.show_trayicon)
@@ -1854,12 +1858,13 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 {
 	SensitiveCond state;
 	gboolean sensitive;
+	gint n;
 	gint i = 0;
 
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[14];
+	} entry[13];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1874,32 +1879,32 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
-	SET_WIDGET_COND(GTK_WIDGET_PTR(mainwin->reply_combo),
+	SET_WIDGET_COND(mainwin->reply_combo ?
+			GTK_WIDGET_PTR(mainwin->reply_combo) : NULL,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
 	SET_WIDGET_COND(mainwin->replyall_btn,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
 	SET_WIDGET_COND(mainwin->fwd_btn, M_HAVE_ACCOUNT|M_TARGET_EXIST);
-	SET_WIDGET_COND(GTK_WIDGET_PTR(mainwin->fwd_combo),
+	SET_WIDGET_COND(mainwin->fwd_combo ? GTK_WIDGET_PTR(mainwin->fwd_combo)
+			: NULL,
 			M_HAVE_ACCOUNT|M_TARGET_EXIST);
-#if 0
-	SET_WIDGET_COND(mainwin->prefs_btn, M_UNLOCKED);
-	SET_WIDGET_COND(mainwin->account_btn, M_UNLOCKED);
-#endif
 	SET_WIDGET_COND(mainwin->delete_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE);
 	SET_WIDGET_COND(mainwin->junk_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK);
 	SET_WIDGET_COND(mainwin->exec_btn, M_MSG_EXIST|M_EXEC);
 	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
-	SET_WIDGET_COND(NULL, 0);
 
 #undef SET_WIDGET_COND
 
 	state = main_window_get_current_state(mainwin);
 
-	for (i = 0; entry[i].widget != NULL; i++) {
-		sensitive = ((entry[i].cond & state) == entry[i].cond);
-		gtk_widget_set_sensitive(entry[i].widget, sensitive);
+	n = sizeof(entry) / sizeof(entry[0]);
+	for (i = 0; i < n; i++) {
+		if (entry[i].widget) {
+			sensitive = ((entry[i].cond & state) == entry[i].cond);
+			gtk_widget_set_sensitive(entry[i].widget, sensitive);
+		}
 	}
 }
 
@@ -2327,29 +2332,46 @@ static GtkItemFactoryEntry forward_entries[] =
 	{N_("/Redirec_t"),		NULL, reply_cb, COMPOSE_REDIRECT, NULL}
 };
 
+typedef struct _ToolbarItem	ToolbarItem;
+
+struct _ToolbarItem
+{
+	gchar *id;
+	gchar *label;
+	gchar *tooltip;
+	StockPixmap icon;
+	void (*callback) (GtkWidget *widget, gpointer data);
+	gpointer data;
+};
+
+static ToolbarItem items[] =
+{
+	{"get",		N_("Get"),	N_("Incorporate new mail"),			 STOCK_PIXMAP_MAIL_RECEIVE,	toolbar_inc_cb},
+	{"get-all",	N_("Get all"),	N_("Incorporate new mail of all accounts"),	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	toolbar_inc_all_cb},
+	{"send-queue",	N_("Send"),	N_("Send queued message(s)"),			 STOCK_PIXMAP_MAIL_SEND,	toolbar_send_cb},
+	{"compose",	N_("Compose"),	N_("Compose new message"),			 STOCK_PIXMAP_MAIL_COMPOSE,	toolbar_compose_cb},
+	{"reply",	N_("Reply"),	N_("Reply to the message"),			 STOCK_PIXMAP_MAIL_REPLY,	toolbar_reply_cb},
+	{"reply-all",	N_("Reply all"), N_("Reply to all"),				 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, toolbar_reply_to_all_cb},
+	{"forward",	N_("Forward"),	N_("Forward the message"),			 STOCK_PIXMAP_MAIL_FORWARD,	toolbar_forward_cb},
+	{"delete",	N_("Delete"),	N_("Delete the message"),			 STOCK_PIXMAP_DELETE,		toolbar_delete_cb},
+	{"junk",	N_("Junk"),	N_("Set as junk mail"),				 STOCK_PIXMAP_SPAM,		toolbar_junk_cb},
+	{"execute",	N_("Execute"),	N_("Execute marked process"),			 -1,				toolbar_exec_cb},
+	{"next",	N_("Next"),	N_("Next unread message"),			 -1,				toolbar_next_unread_cb},
+
+	{NULL, NULL, NULL, -1, NULL}
+};
+
 static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 {
 	GtkWidget *toolbar;
 	GtkWidget *icon_wid;
-	GtkWidget *get_btn;
-	GtkWidget *getall_btn;
-	GtkWidget *send_btn;
-	GtkWidget *compose_btn;
-	GtkWidget *reply_btn;
-	ComboButton *reply_combo;
-	GtkWidget *replyall_btn;
-	GtkWidget *fwd_btn;
-	ComboButton *fwd_combo;
-#if 0
-	GtkWidget *prefs_btn;
-	GtkWidget *account_btn;
-#endif
-	GtkWidget *delete_btn;
-	GtkWidget *junk_btn;
-	GtkWidget *exec_btn;
-	GtkWidget *next_btn;
-
+	GtkWidget *button;
+	ComboButton *combo;
 	gint n_entries;
+	const gchar *setting = "get,get-all,separator,send-queue,separator,compose,reply,reply-all,forward,separator,delete,junk,separator,execute,next";
+	gchar **array;
+	gint i;
+	ToolbarItem *item;
 
 	toolbar = gtk_toolbar_new();
 	gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
@@ -2358,174 +2380,94 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
 				  GTK_ICON_SIZE_LARGE_TOOLBAR);
 
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_RECEIVE);
-	get_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					  _("Get"),
-					  _("Incorporate new mail"),
-					  "Get",
-					  icon_wid,
-					  G_CALLBACK(toolbar_inc_cb),
-					  mainwin);
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_RECEIVE_ALL);
-	getall_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					     _("Get all"),
-					     _("Incorporate new mail of all accounts"),
-					     "Get all",
-					     icon_wid,
-					     G_CALLBACK(toolbar_inc_all_cb),
-					     mainwin);
+	items[0].data = &mainwin->get_btn;
+	items[1].data = &mainwin->getall_btn;
+	items[2].data = &mainwin->send_btn;
+	items[3].data = &mainwin->compose_btn;
+	items[4].data = &mainwin->reply_btn;
+	items[5].data = &mainwin->replyall_btn;
+	items[6].data = &mainwin->fwd_btn;
+	items[7].data = &mainwin->delete_btn;
+	items[8].data = &mainwin->junk_btn;
+	items[9].data = &mainwin->exec_btn;
+	items[10].data = &mainwin->next_btn;
+	for (i = 0; i <= 10; i++)
+		*(GtkWidget **)items[i].data = NULL;
+	mainwin->reply_combo = NULL;
+	mainwin->fwd_combo = NULL;
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+	if (prefs_common.main_toolbar_setting &&
+	    *prefs_common.main_toolbar_setting != '\0')
+		setting = prefs_common.main_toolbar_setting;
+	array = g_strsplit(setting, ",", 0);
 
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_SEND);
-	send_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					   _("Send"),
-					   _("Send queued message(s)"),
-					   "Send",
-					   icon_wid,
-					   G_CALLBACK(toolbar_send_cb),
-					   mainwin);
+	for (i = 0; array[i] != NULL; i++) {
+		gchar *id = array[i];
 
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+		g_strstrip(id);
+		g_print("id: %s\n", id);
 
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_COMPOSE);
-	compose_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					      _("Compose"),
-					      _("Compose new message"),
-					      "New",
-					      icon_wid,
-					      G_CALLBACK(toolbar_compose_cb),
-					      mainwin);
+		if (!strcmp(id, "separator")) {
+			gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+			continue;
+		}
 
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_REPLY);
-	reply_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					    _("Reply"),
-					    _("Reply to the message"),
-					    "Reply",
-					    icon_wid,
-					    G_CALLBACK(toolbar_reply_cb),
-					    mainwin);
+		for (item = items; item->id != NULL; item++) {
+			if (!strcmp(id, item->id))
+				break;
+		}
+		if (!item->id)
+			continue;
 
-	n_entries = sizeof(reply_entries) / sizeof(reply_entries[0]);
-	reply_combo = gtkut_combo_button_create(reply_btn,
-						reply_entries, n_entries,
-						"<Reply>", mainwin);
-	gtk_button_set_relief(GTK_BUTTON(reply_combo->arrow), GTK_RELIEF_NONE);
-	gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
-				  GTK_WIDGET_PTR(reply_combo),
-				  _("Reply to the message"), "Reply");
+		if (!strcmp(id, "execute")) {
+			icon_wid = gtk_image_new_from_stock
+				(GTK_STOCK_EXECUTE,
+				 GTK_ICON_SIZE_LARGE_TOOLBAR);
+		} else if (!strcmp(id, "next")) {
+			icon_wid = gtk_image_new_from_stock
+				(GTK_STOCK_GO_DOWN,
+				 GTK_ICON_SIZE_LARGE_TOOLBAR);
+		} else
+			icon_wid = stock_pixbuf_widget(NULL, item->icon);
+		button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
+						 gettext(item->label),
+						 gettext(item->tooltip),
+						 item->id, icon_wid,
+						 G_CALLBACK(item->callback),
+						 mainwin);
 
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_REPLY_TO_ALL);
-	replyall_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					       _("Reply all"),
-					       _("Reply to all"),
-					       "Reply to all",
-					       icon_wid,
-					       G_CALLBACK(toolbar_reply_to_all_cb),
-					       mainwin);
+		if (!strcmp(id, "reply")) {
+			n_entries = sizeof(reply_entries) /
+				sizeof(reply_entries[0]);
+			combo = gtkut_combo_button_create
+				(button, reply_entries, n_entries, "<Reply>",
+				 mainwin);
+			gtk_button_set_relief(GTK_BUTTON(combo->arrow),
+					      GTK_RELIEF_NONE);
+			gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
+						  GTK_WIDGET_PTR(combo),
+						  gettext(item->tooltip),
+						  item->id);
+			mainwin->reply_combo = combo;
+		} else if (!strcmp(id, "forward")) {
+			n_entries = sizeof(forward_entries) /
+				sizeof(forward_entries[0]);
+			combo = gtkut_combo_button_create
+				(button, forward_entries, n_entries,
+				 "<Forward>", mainwin);
+			gtk_button_set_relief(GTK_BUTTON(combo->arrow),
+					      GTK_RELIEF_NONE);
+			gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
+						  GTK_WIDGET_PTR(combo),
+						  gettext(item->tooltip),
+						  item->id);
+			mainwin->fwd_combo = combo;
+		}
 
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_MAIL_FORWARD);
-	fwd_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					  _("Forward"),
-					  _("Forward the message"),
-					  "Fwd",
-					  icon_wid,
-					  G_CALLBACK(toolbar_forward_cb),
-					  mainwin);
+		*(GtkWidget **)item->data = button;
+	}
 
-	n_entries = sizeof(forward_entries) / sizeof(forward_entries[0]);
-	fwd_combo = gtkut_combo_button_create(fwd_btn,
-					      forward_entries, n_entries,
-					      "<Forward>", mainwin);
-	gtk_button_set_relief(GTK_BUTTON(fwd_combo->arrow), GTK_RELIEF_NONE);
-	gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
-				  GTK_WIDGET_PTR(fwd_combo),
-				  _("Forward the message"), "Fwd");
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_DELETE);
-	delete_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					  _("Delete"),
-					  _("Delete the message"),
-					  "Delete",
-					  icon_wid,
-					  G_CALLBACK(toolbar_delete_cb),
-					  mainwin);
-
-	icon_wid = stock_pixbuf_widget(NULL, STOCK_PIXMAP_SPAM);
-	junk_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					   _("Junk"),
-					   _("Set as junk mail"),
-					   "Junk",
-					   icon_wid,
-					   G_CALLBACK(toolbar_junk_cb),
-					   mainwin);
-
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	icon_wid = gtk_image_new_from_stock(GTK_STOCK_EXECUTE,
-					    GTK_ICON_SIZE_LARGE_TOOLBAR);
-	exec_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					   _("Execute"),
-					   _("Execute marked process"),
-					   "Execute",
-					   icon_wid,
-					   G_CALLBACK(toolbar_exec_cb),
-					   mainwin);
-
-	icon_wid = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,
-					    GTK_ICON_SIZE_LARGE_TOOLBAR);
-	next_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					   _("Next"),
-					   _("Next unread message"),
-					   "Next unread",
-					   icon_wid,
-					   G_CALLBACK(toolbar_next_unread_cb),
-					   mainwin);
-
-#if 0
-	gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-
-	icon_wid = gtk_image_new_from_stock(GTK_STOCK_PREFERENCES,
-					    GTK_ICON_SIZE_LARGE_TOOLBAR);
-	prefs_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					    _("Prefs"),
-					    _("Common preferences"),
-					    "Prefs",
-					    icon_wid,
-					    G_CALLBACK(toolbar_prefs_cb),
-					    mainwin);
-	icon_wid = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,
-					    GTK_ICON_SIZE_LARGE_TOOLBAR);
-	account_btn = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-					      _("Account"),
-					      _("Account setting"),
-					      "Account",
-					      icon_wid,
-					      G_CALLBACK(toolbar_account_cb),
-					      mainwin);
-	g_signal_connect(G_OBJECT(account_btn), "button_press_event",
-			 G_CALLBACK(toolbar_account_button_pressed), mainwin);
-#endif
-
-	mainwin->get_btn      = get_btn;
-	mainwin->getall_btn   = getall_btn;
-	mainwin->send_btn     = send_btn;
-	mainwin->compose_btn  = compose_btn;
-	mainwin->reply_btn    = reply_btn;
-	mainwin->reply_combo  = reply_combo;
-	mainwin->replyall_btn = replyall_btn;
-	mainwin->fwd_btn      = fwd_btn;
-	mainwin->fwd_combo    = fwd_combo;
-#if 0
-	mainwin->prefs_btn    = prefs_btn;
-	mainwin->account_btn  = account_btn;
-#endif
-	mainwin->delete_btn   = delete_btn;
-	mainwin->junk_btn     = junk_btn;
-	mainwin->exec_btn     = exec_btn;
-	mainwin->next_btn     = next_btn;
+	g_strfreev(array);
 
 	gtk_widget_show_all(toolbar);
 
