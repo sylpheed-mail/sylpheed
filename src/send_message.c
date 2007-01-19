@@ -477,6 +477,8 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 		ac_prefs->set_domain ? g_strdup(ac_prefs->domain) : NULL;
 
 	if (ac_prefs->use_smtp_auth) {
+		inc_lock();
+
 		smtp_session->forced_auth_type = ac_prefs->smtp_auth_type;
 
 		if (ac_prefs->smtp_userid) {
@@ -515,6 +517,8 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 					g_strdup(smtp_session->pass);
 			}
 		}
+
+		inc_unlock();
 	} else {
 		smtp_session->user = NULL;
 		smtp_session->pass = NULL;
@@ -571,9 +575,12 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 
 	session_set_timeout(session, prefs_common.io_timeout_secs * 1000);
 
+	inc_lock();
+
 	if (session_connect(session, ac_prefs->smtp_server, port) < 0) {
 		session_destroy(session);
 		send_progress_dialog_destroy(dialog);
+		inc_unlock();
 		return -1;
 	}
 
@@ -610,6 +617,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 
 	session_destroy(session);
 	send_progress_dialog_destroy(dialog);
+	inc_unlock();
 
 	return ret;
 }
