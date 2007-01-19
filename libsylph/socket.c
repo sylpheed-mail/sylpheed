@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -676,6 +676,21 @@ struct hostent *my_gethostbyname(const gchar *hostname)
 	return hp;
 }
 
+static void sock_set_buffer_size(gint sock)
+{
+#ifdef G_OS_WIN32
+	gint val = 32768;
+	guint len = sizeof(val);
+
+	setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *)&val, len);
+	setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *)&val, len);
+	getsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *)&val, &len);
+	debug_print("SO_SNDBUF = %d\n", val);
+	getsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *)&val, &len);
+	debug_print("SO_RCVBUF = %d\n", val);
+#endif
+}
+
 #ifndef INET6
 static gint my_inet_aton(const gchar *hostname, struct in_addr *inp)
 {
@@ -771,6 +786,7 @@ static SockDesc sock_connect_by_getaddrinfo(const gchar *hostname, gushort port)
 		sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
 		if (!SOCKET_IS_VALID(sock))
 			continue;
+		sock_set_buffer_size(sock);
 
 		if (sock_connect_with_timeout
 			(sock, ai->ai_addr, ai->ai_addrlen, io_timeout) == 0)
@@ -808,6 +824,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 #endif /* G_OS_WIN32 */
 		return NULL;
 	}
+	sock_set_buffer_size(sock);
 
 	if (sock_connect_by_hostname(sock, hostname, port) < 0) {
 		if (errno != 0) perror("connect");
@@ -990,6 +1007,7 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 			continue;
 		}
 
+		sock_set_buffer_size(sock);
 		set_nonblocking_mode(sock, TRUE);
 
 		if (connect(sock, addr_data->addr, addr_data->addr_len) < 0) {

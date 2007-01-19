@@ -956,9 +956,11 @@ static gint session_write_buf(Session *session)
 	return 0;
 }
 
+#define WRITE_DATA_BUFFSIZE	8192
+
 static gint session_write_data(Session *session)
 {
-	gchar buf[SESSION_BUFFSIZE];
+	gchar buf[WRITE_DATA_BUFFSIZE];
 	gint write_len;
 	gint to_write_len;
 
@@ -967,7 +969,7 @@ static gint session_write_data(Session *session)
 	g_return_val_if_fail(session->write_data_len > 0, -1);
 
 	to_write_len = session->write_data_len - session->write_data_pos;
-	to_write_len = MIN(to_write_len, SESSION_BUFFSIZE);
+	to_write_len = MIN(to_write_len, WRITE_DATA_BUFFSIZE);
 	if (fread(buf, to_write_len, 1, session->write_data_fp) < 1) {
 		g_warning("session_write_data: reading data from file failed\n");
 		session->state = SESSION_ERROR;
