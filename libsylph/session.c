@@ -276,8 +276,13 @@ static gboolean session_ping_cb(gpointer data)
 		}
 		if (tv_result.tv_sec * G_USEC_PER_SEC + tv_result.tv_usec >
 		    G_USEC_PER_SEC) {
+			SockFlags save_flags;
+
 			debug_print("state machine freeze for 1 second detected, forcing dispatch.\n");
+			save_flags = sock->flags;
+			SOCK_UNSET_FLAGS(sock->flags, SOCK_CHECK_IO);
 			sock->callback(sock, sock->condition, sock->data);
+			sock->flags = save_flags;
 		}
 	}
 

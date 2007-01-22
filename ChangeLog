@@ -1,3 +1,10 @@
+2007-01-22
+
+	* libsylph/session.c: session_ping_cb(): prohibit blocking here.
+	  libsylph/socket.[ch]: added SockFlags as a member of SockInfo.
+	  fd_check_io(): select() sockets if SOCK_CHECK_IO flag is up even if
+	  in non-blocking mode (prevents WSAEWOULDBLOCK in Win32).
+
 2007-01-19
 
 	* libsylph/session.c

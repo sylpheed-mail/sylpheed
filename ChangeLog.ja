@@ -1,3 +1,11 @@
+2007-01-22
+
+	* libsylph/session.c: session_ping_cb(): ここではブロッキングを回避。
+	  libsylph/socket.[ch]: SockInfo のメンバに SockFlags を追加。
+	  fd_check_io(): 非ブロッキングモードでも SOCK_CHECK_IO フラグが立って
+	  いたらソケットを select() するようにした(Win32 で WSAEWOULDBLOCK
+	  を回避)。
+
 2007-01-19
 
 	* libsylph/session.c

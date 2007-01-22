@@ -380,8 +380,13 @@ static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 	}
 
 	sock = sock_find_from_fd(fd);
-	if (sock)
-		sock->nonblock = nonblock;
+	if (sock) {
+		if (nonblock) {
+			SOCK_SET_FLAGS(sock->flags, SOCK_NONBLOCK);
+		} else {
+			SOCK_UNSET_FLAGS(sock->flags, SOCK_NONBLOCK);
+		}
+	}
 	debug_print("set nonblocking mode to %d\n", nonblock);
 
 	return 0;
@@ -410,8 +415,13 @@ gint sock_set_nonblocking_mode(SockInfo *sock, gboolean nonblock)
 	g_return_val_if_fail(sock != NULL, -1);
 
 	ret = set_nonblocking_mode(sock->sock, nonblock);
-	if (ret == 0)
-		sock->nonblock = nonblock;
+	if (ret == 0) {
+		if (nonblock) {
+			SOCK_SET_FLAGS(sock->flags, SOCK_NONBLOCK);
+		} else {
+			SOCK_UNSET_FLAGS(sock->flags, SOCK_NONBLOCK);
+		}
+	}
 
 	return ret;
 }
@@ -422,8 +432,9 @@ static gboolean is_nonblocking_mode(gint fd)
 	SockInfo *sock;
 
 	sock = sock_find_from_fd(fd);
-	if (sock)
-		return sock->nonblock;
+	if (sock) {
+		return SOCK_IS_NONBLOCK(sock->flags);
+	}
 
 	return FALSE;
 #else
@@ -444,7 +455,7 @@ gboolean sock_is_nonblocking_mode(SockInfo *sock)
 	g_return_val_if_fail(sock != NULL, FALSE);
 
 #ifdef G_OS_WIN32
-	return sock->nonblock;
+	return SOCK_IS_NONBLOCK(sock->flags);
 #else
 	return is_nonblocking_mode(sock->sock);
 #endif
@@ -560,8 +571,10 @@ static gint fd_check_io(gint fd, GIOCondition cond)
 {
 	struct timeval timeout;
 	fd_set fds;
+	SockInfo *sock;
 
-	if (is_nonblocking_mode(fd))
+	sock = sock_find_from_fd(fd);
+	if (sock && !SOCK_IS_CHECK_IO(sock->flags))
 		return 0;
 
 	timeout.tv_sec  = io_timeout;
@@ -679,15 +692,27 @@ struct hostent *my_gethostbyname(const gchar *hostname)
 static void sock_set_buffer_size(gint sock)
 {
 #ifdef G_OS_WIN32
-	gint val = 32768;
+	gint val;
 	guint len = sizeof(val);
 
-	setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *)&val, len);
-	setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *)&val, len);
+#define SOCK_BUFFSIZE	32768
+
+	getsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *)&val, &len);
+	if (val < SOCK_BUFFSIZE) {
+		val = SOCK_BUFFSIZE;
+		setsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *)&val, len);
+	}
+	getsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *)&val, &len);
+	if (val < SOCK_BUFFSIZE) {
+		val = SOCK_BUFFSIZE;
+		setsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *)&val, len);
+	}
 	getsockopt(sock, SOL_SOCKET, SO_SNDBUF, (char *)&val, &len);
 	debug_print("SO_SNDBUF = %d\n", val);
 	getsockopt(sock, SOL_SOCKET, SO_RCVBUF, (char *)&val, &len);
 	debug_print("SO_RCVBUF = %d\n", val);
+
+#undef SOCK_BUFFSIZE
 #endif
 }
 
@@ -839,7 +864,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	sockinfo->hostname = g_strdup(hostname);
 	sockinfo->port = port;
 	sockinfo->state = CONN_ESTABLISHED;
-	sockinfo->nonblock = FALSE;
+	sockinfo->flags = SOCK_CHECK_IO;
 
 	sock_list = g_list_prepend(sock_list, sockinfo);
 
@@ -899,7 +924,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	sockinfo->hostname = g_strdup(conn_data->hostname);
 	sockinfo->port = conn_data->port;
 	sockinfo->state = CONN_ESTABLISHED;
-	sockinfo->nonblock = TRUE;
+	sockinfo->flags = SOCK_NONBLOCK;
 
 	sock_list = g_list_prepend(sock_list, sockinfo);
 
