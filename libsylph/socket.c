@@ -247,7 +247,8 @@ gint fd_open_inet(gushort port)
 	}
 
 	val = 1;
-	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) < 0) {
+	if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *)&val,
+		       sizeof(val)) < 0) {
 		perror("setsockopt");
 		fd_close(sock);
 		return -1;
