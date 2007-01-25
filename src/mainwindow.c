@@ -73,6 +73,7 @@
 #include "prefs_summary_column.h"
 #include "prefs_template.h"
 #include "prefs_search_folder.h"
+#include "prefs_toolbar.h"
 #include "action.h"
 #include "account.h"
 #include "account_dialog.h"
@@ -119,6 +120,9 @@ static void main_window_show_cur_account	(MainWindow	*mainwin);
 static void main_window_set_widgets		(MainWindow	*mainwin,
 						 SeparateType	 type);
 static GtkWidget *main_window_toolbar_create	(MainWindow	*mainwin);
+static GtkWidget *main_window_toolbar_create_from_list
+						(MainWindow	*mainwin,
+						 GList		*item_list);
 
 /* callback functions */
 static void toolbar_inc_cb		(GtkWidget	*widget,
@@ -147,20 +151,13 @@ static void toolbar_exec_cb		(GtkWidget	*widget,
 static void toolbar_next_unread_cb	(GtkWidget	*widget,
 					 gpointer	 data);
 
-#if 0
-static void toolbar_prefs_cb		(GtkWidget	*widget,
+static gboolean toolbar_button_pressed	(GtkWidget	*widget,
+					 GdkEventButton	*event,
 					 gpointer	 data);
-static void toolbar_account_cb		(GtkWidget	*widget,
-					 gpointer	 data);
-
-static void toolbar_account_button_pressed	(GtkWidget	*widget,
-						 GdkEventButton	*event,
-						 gpointer	 data);
-#endif
 
 static void online_switch_clicked		(GtkWidget	*widget,
 						 gpointer	 data);
-static void ac_label_button_pressed		(GtkWidget	*widget,
+static gboolean ac_label_button_pressed		(GtkWidget	*widget,
 						 GdkEventButton	*event,
 						 gpointer	 data);
 static void ac_menu_popup_closed		(GtkMenuShell	*menu_shell,
@@ -268,6 +265,9 @@ static void toggle_searchbar_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
 static void toggle_statusbar_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
+static void toolbar_customize_cb (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
 static void separate_widget_cb	 (MainWindow	*mainwin,
@@ -557,6 +557,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, toggle_searchbar_cb, 0, "<ToggleItem>"},
 	{N_("/_View/Show or hi_de/Status _bar"),
 						NULL, toggle_statusbar_cb, 0, "<ToggleItem>"},
+	{N_("/_View/_Customize toolbar..."),	NULL, toolbar_customize_cb, 0, NULL},
 	{N_("/_View/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/Separate f_older tree"),	NULL, separate_widget_cb, SEPARATE_FOLDER, "<ToggleItem>"},
 	{N_("/_View/Separate _message view"),	NULL, separate_widget_cb, SEPARATE_MESSAGE, "<ToggleItem>"},
@@ -2332,46 +2333,63 @@ static GtkItemFactoryEntry forward_entries[] =
 	{N_("/Redirec_t"),		NULL, reply_cb, COMPOSE_REDIRECT, NULL}
 };
 
-typedef struct _ToolbarItem	ToolbarItem;
-
-struct _ToolbarItem
+static PrefsToolbarItem items[] =
 {
-	gchar *id;
-	gchar *label;
-	gchar *tooltip;
-	StockPixmap icon;
-	void (*callback) (GtkWidget *widget, gpointer data);
-	gpointer data;
-};
+	{T_GET,		N_("Incorporate new mail"),
+	 STOCK_PIXMAP_MAIL_RECEIVE,	toolbar_inc_cb},
+	{T_GET_ALL,	N_("Incorporate new mail of all accounts"),
+	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	toolbar_inc_all_cb},
+	{T_SEND_QUEUE,	N_("Send queued message(s)"),
+	 STOCK_PIXMAP_MAIL_SEND,	toolbar_send_cb},
+	{T_COMPOSE,	N_("Compose new message"),
+	 STOCK_PIXMAP_MAIL_COMPOSE,	toolbar_compose_cb},
+	{T_REPLY,	N_("Reply to the message"),
+	 STOCK_PIXMAP_MAIL_REPLY,	toolbar_reply_cb},
+	{T_REPLY_ALL,	N_("Reply to all"),
+	 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, toolbar_reply_to_all_cb},
+	{T_FORWARD,	N_("Forward the message"),
+	 STOCK_PIXMAP_MAIL_FORWARD,	toolbar_forward_cb},
+	{T_DELETE,	N_("Delete the message"),
+	 STOCK_PIXMAP_DELETE,		toolbar_delete_cb},
+	{T_JUNK,	N_("Set as junk mail"),
+	 STOCK_PIXMAP_SPAM,		toolbar_junk_cb},
+	{T_EXECUTE,	N_("Execute marked process"),
+	 -1,				toolbar_exec_cb},
+	{T_NEXT,	N_("Next unread message"),
+	 -1,				toolbar_next_unread_cb},
 
-static ToolbarItem items[] =
-{
-	{"get",		N_("Get"),	N_("Incorporate new mail"),			 STOCK_PIXMAP_MAIL_RECEIVE,	toolbar_inc_cb},
-	{"get-all",	N_("Get all"),	N_("Incorporate new mail of all accounts"),	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	toolbar_inc_all_cb},
-	{"send-queue",	N_("Send"),	N_("Send queued message(s)"),			 STOCK_PIXMAP_MAIL_SEND,	toolbar_send_cb},
-	{"compose",	N_("Compose"),	N_("Compose new message"),			 STOCK_PIXMAP_MAIL_COMPOSE,	toolbar_compose_cb},
-	{"reply",	N_("Reply"),	N_("Reply to the message"),			 STOCK_PIXMAP_MAIL_REPLY,	toolbar_reply_cb},
-	{"reply-all",	N_("Reply all"), N_("Reply to all"),				 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, toolbar_reply_to_all_cb},
-	{"forward",	N_("Forward"),	N_("Forward the message"),			 STOCK_PIXMAP_MAIL_FORWARD,	toolbar_forward_cb},
-	{"delete",	N_("Delete"),	N_("Delete the message"),			 STOCK_PIXMAP_DELETE,		toolbar_delete_cb},
-	{"junk",	N_("Junk"),	N_("Set as junk mail"),				 STOCK_PIXMAP_SPAM,		toolbar_junk_cb},
-	{"execute",	N_("Execute"),	N_("Execute marked process"),			 -1,				toolbar_exec_cb},
-	{"next",	N_("Next"),	N_("Next unread message"),			 -1,				toolbar_next_unread_cb},
-
-	{NULL, NULL, NULL, -1, NULL}
+	{-1, NULL, -1, NULL}
 };
 
 static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
+{
+	GtkWidget *toolbar;
+	const gchar *setting;
+	GList *item_list;
+
+	if (prefs_common.main_toolbar_setting &&
+	    *prefs_common.main_toolbar_setting != '\0')
+		setting = prefs_common.main_toolbar_setting;
+	else
+		setting = prefs_toolbar_get_default_setting_name_list();
+
+	item_list = prefs_toolbar_get_item_list_from_name_list(setting);
+	toolbar = main_window_toolbar_create_from_list(mainwin, item_list);
+	g_list_free(item_list);
+
+	return toolbar;
+}
+
+static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
+						       GList *item_list)
 {
 	GtkWidget *toolbar;
 	GtkWidget *icon_wid;
 	GtkWidget *button;
 	ComboButton *combo;
 	gint n_entries;
-	const gchar *setting = "get,get-all,separator,send-queue,separator,compose,reply,reply-all,forward,separator,delete,junk,separator,execute,next";
-	gchar **array;
 	gint i;
-	ToolbarItem *item;
+	GList *cur;
 
 	toolbar = gtk_toolbar_new();
 	gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
@@ -2379,6 +2397,8 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
 	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
 				  GTK_ICON_SIZE_LARGE_TOOLBAR);
+	g_signal_connect(G_OBJECT(toolbar), "button_press_event",
+			 G_CALLBACK(toolbar_button_pressed), mainwin);
 
 	items[0].data = &mainwin->get_btn;
 	items[1].data = &mainwin->getall_btn;
@@ -2396,47 +2416,44 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 	mainwin->reply_combo = NULL;
 	mainwin->fwd_combo = NULL;
 
-	if (prefs_common.main_toolbar_setting &&
-	    *prefs_common.main_toolbar_setting != '\0')
-		setting = prefs_common.main_toolbar_setting;
-	array = g_strsplit(setting, ",", 0);
+	for (cur = item_list; cur != NULL; cur = cur->next) {
+		const PrefsDisplayItem *ditem = cur->data;
+		PrefsToolbarItem *item;
 
-	for (i = 0; array[i] != NULL; i++) {
-		gchar *id = array[i];
-
-		g_strstrip(id);
-		g_print("id: %s\n", id);
-
-		if (!strcmp(id, "separator")) {
+		if (ditem->id == T_SEPARATOR) {
 			gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 			continue;
 		}
 
-		for (item = items; item->id != NULL; item++) {
-			if (!strcmp(id, item->id))
+		for (item = items; item->id != -1; item++) {
+			if (ditem->id == item->id)
 				break;
 		}
-		if (!item->id)
+		if (item->id == -1)
 			continue;
 
-		if (!strcmp(id, "execute")) {
+		if (ditem->id == T_EXECUTE) {
 			icon_wid = gtk_image_new_from_stock
 				(GTK_STOCK_EXECUTE,
 				 GTK_ICON_SIZE_LARGE_TOOLBAR);
-		} else if (!strcmp(id, "next")) {
+		} else if (ditem->id == T_NEXT) {
 			icon_wid = gtk_image_new_from_stock
 				(GTK_STOCK_GO_DOWN,
 				 GTK_ICON_SIZE_LARGE_TOOLBAR);
 		} else
 			icon_wid = stock_pixbuf_widget(NULL, item->icon);
+
 		button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-						 gettext(item->label),
+						 gettext(ditem->label),
 						 gettext(item->tooltip),
-						 item->id, icon_wid,
+						 ditem->name, icon_wid,
 						 G_CALLBACK(item->callback),
 						 mainwin);
 
-		if (!strcmp(id, "reply")) {
+		g_signal_connect(G_OBJECT(button), "button_press_event",
+				 G_CALLBACK(toolbar_button_pressed), mainwin);
+
+		if (ditem->id == T_REPLY) {
 			n_entries = sizeof(reply_entries) /
 				sizeof(reply_entries[0]);
 			combo = gtkut_combo_button_create
@@ -2447,9 +2464,9 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 			gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
 						  GTK_WIDGET_PTR(combo),
 						  gettext(item->tooltip),
-						  item->id);
+						  ditem->name);
 			mainwin->reply_combo = combo;
-		} else if (!strcmp(id, "forward")) {
+		} else if (ditem->id == T_FORWARD) {
 			n_entries = sizeof(forward_entries) /
 				sizeof(forward_entries[0]);
 			combo = gtkut_combo_button_create
@@ -2460,14 +2477,12 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 			gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
 						  GTK_WIDGET_PTR(combo),
 						  gettext(item->tooltip),
-						  item->id);
+						  ditem->name);
 			mainwin->fwd_combo = combo;
 		}
 
 		*(GtkWidget **)item->data = button;
 	}
-
-	g_strfreev(array);
 
 	gtk_widget_show_all(toolbar);
 
@@ -2567,38 +2582,66 @@ static void toolbar_next_unread_cb	(GtkWidget	*widget,
 	next_unread_cb(mainwin, 0, NULL);
 }
 
-#if 0
-static void toolbar_prefs_cb	(GtkWidget	*widget,
-				 gpointer	 data)
-{
-	prefs_common_open();
-}
-
-static void toolbar_account_cb	(GtkWidget	*widget,
-				 gpointer	 data)
+static void toolbar_customize(GtkWidget *widget, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
+	gint *visible_items;
+	GList *item_list = NULL;
+	GtkWidget *toolbar;
+	gint ret;
+	const gchar *setting;
 
-	prefs_account_open_cb(mainwin, 0, NULL);
+	if (prefs_common.main_toolbar_setting &&
+	    *prefs_common.main_toolbar_setting != '\0')
+		setting = prefs_common.main_toolbar_setting;
+	else
+		setting = prefs_toolbar_get_default_setting_name_list();
+	visible_items = prefs_toolbar_get_id_list_from_name_list(setting);
+	ret = prefs_toolbar_open(visible_items, &item_list);
+	g_free(visible_items);
+
+	if (ret == 0) {
+		gtk_widget_destroy(mainwin->toolbar);
+		toolbar = main_window_toolbar_create_from_list(mainwin,
+							       item_list);
+		gtk_widget_set_size_request(toolbar, 300, -1);
+		gtk_box_pack_start(GTK_BOX(mainwin->vbox), toolbar,
+				   FALSE, FALSE, 0);
+		gtk_box_reorder_child(GTK_BOX(mainwin->vbox), toolbar, 1);
+		mainwin->toolbar = toolbar;
+		main_window_set_toolbar_sensitive(mainwin);
+		g_free(prefs_common.main_toolbar_setting);
+		prefs_common.main_toolbar_setting =
+			prefs_toolbar_get_name_list_from_item_list(item_list);
+		g_list_free(item_list);
+	}
 }
 
-static void toolbar_account_button_pressed(GtkWidget *widget,
-					   GdkEventButton *event,
-					   gpointer data)
+static gboolean toolbar_button_pressed(GtkWidget *widget, GdkEventButton *event,
+				       gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
 
-	if (!event) return;
-	if (event->button != 3) return;
+	if (!event) return FALSE;
+	if (event->button != 3) return FALSE;
 
-	gtk_button_set_relief(GTK_BUTTON(widget), GTK_RELIEF_NORMAL);
-	g_object_set_data(G_OBJECT(mainwin->ac_menu), "menu_button", widget);
+	menu = gtk_menu_new();
+	gtk_widget_show(menu);
 
-	gtk_menu_popup(GTK_MENU(mainwin->ac_menu), NULL, NULL,
-		       menu_button_position, widget,
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Customize toolbar..."),
+				   0);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(toolbar_customize), mainwin);
+	g_signal_connect(G_OBJECT(menu), "selection_done",
+			 G_CALLBACK(gtk_widget_destroy), NULL);
+
+	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
 		       event->button, event->time);
+
+	return TRUE;
 }
-#endif
 
 static void online_switch_clicked(GtkWidget *widget, gpointer data)
 {
@@ -2633,12 +2676,12 @@ static void online_switch_clicked(GtkWidget *widget, gpointer data)
 	}
 }
 
-static void ac_label_button_pressed(GtkWidget *widget, GdkEventButton *event,
-				    gpointer data)
+static gboolean ac_label_button_pressed(GtkWidget *widget,
+					GdkEventButton *event, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
-	if (!event) return;
+	if (!event) return FALSE;
 
 	gtk_button_set_relief(GTK_BUTTON(widget), GTK_RELIEF_NORMAL);
 	g_object_set_data(G_OBJECT(mainwin->ac_menu), "menu_button", widget);
@@ -2646,6 +2689,8 @@ static void ac_label_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	gtk_menu_popup(GTK_MENU(mainwin->ac_menu), NULL, NULL,
 		       menu_button_position, widget,
 		       event->button, event->time);
+
+	return TRUE;
 }
 
 static void ac_menu_popup_closed(GtkMenuShell *menu_shell, gpointer data)
@@ -3016,6 +3061,12 @@ static void toggle_statusbar_cb(MainWindow *mainwin, guint action,
 		gtk_widget_hide(mainwin->statusbar);
 		prefs_common.show_statusbar = FALSE;
 	}
+}
+
+static void toolbar_customize_cb(MainWindow *mainwin, guint action,
+				 GtkWidget *widget)
+{
+	toolbar_customize(widget, mainwin);
 }
 
 static void separate_widget_cb(MainWindow *mainwin, guint action,

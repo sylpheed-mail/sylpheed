@@ -27,12 +27,14 @@ sylpheed_SOURCES = \
 	prefs_filter_edit.c prefs_filter_edit.h \
 	prefs_account_dialog.c prefs_account_dialog.h \
 	prefs_folder_item.c prefs_folder_item.h \
+	prefs_display_items.c prefs_display_items.h \
 	prefs_display_header.c prefs_display_header.h \
 	prefs_customheader.c prefs_customheader.h \
 	prefs_summary_column.c prefs_summary_column.h \
 	prefs_template.c prefs_template.h \
 	prefs_actions.c prefs_actions.h \
 	prefs_search_folder.c prefs_search_folder.h \
+	prefs_toolbar.c prefs_toolbar.h \
 	account_dialog.c account_dialog.h \
 	template.c template.h \
 	addressbook.c addressbook.h \
