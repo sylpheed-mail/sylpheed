@@ -1093,6 +1093,7 @@ MainWindow *main_window_create(SeparateType type)
 	case TOOLBAR_BOTH:
 		menuitem = gtk_item_factory_get_item
 			(ifactory, "/View/Show or hide/Toolbar/Icon and text");
+		break;
 	}
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
 
@@ -1116,6 +1117,7 @@ MainWindow *main_window_create(SeparateType type)
 	mainwin->ac_menu = ac_menu;
 
 	main_window_set_toolbar_sensitive(mainwin);
+	main_window_set_toolbar_button_visibility(mainwin);
 
 	/* create actions menu */
 #ifndef G_OS_WIN32
@@ -1901,6 +1903,24 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 static void main_window_set_toolbar_button_visibility(MainWindow *mainwin)
 {
+	GtkToolbarStyle style;
+
+	if (prefs_common.toolbar_style == TOOLBAR_NONE)
+		style = -1;
+	else if (prefs_common.toolbar_style == TOOLBAR_ICON)
+		style = GTK_TOOLBAR_ICONS;
+	else if (prefs_common.toolbar_style == TOOLBAR_TEXT)
+		style = GTK_TOOLBAR_TEXT;
+	else if (prefs_common.toolbar_style == TOOLBAR_BOTH)
+		style = GTK_TOOLBAR_BOTH;
+
+	if (style != -1) {
+		gtk_toolbar_set_style(GTK_TOOLBAR(mainwin->toolbar), style);
+		gtk_widget_show(mainwin->toolbar);
+		gtk_widget_queue_resize(mainwin->toolbar);
+	} else
+		gtk_widget_hide(mainwin->toolbar);
+
 	if (mainwin->junk_btn) {
 		if (prefs_common.enable_junk)
 			gtk_widget_show(mainwin->junk_btn);
@@ -3020,30 +3040,10 @@ static void toggle_message_cb(MainWindow *mainwin, guint action,
 static void toggle_toolbar_cb(MainWindow *mainwin, guint action,
 			      GtkWidget *widget)
 {
-	switch ((ToolbarStyle)action) {
-	case TOOLBAR_NONE:
-		gtk_widget_hide(mainwin->toolbar);
-	case TOOLBAR_ICON:
-		gtk_toolbar_set_style(GTK_TOOLBAR(mainwin->toolbar),
-				      GTK_TOOLBAR_ICONS);
-		break;
-	case TOOLBAR_TEXT:
-		gtk_toolbar_set_style(GTK_TOOLBAR(mainwin->toolbar),
-				      GTK_TOOLBAR_TEXT);
-		break;
-	case TOOLBAR_BOTH:
-		gtk_toolbar_set_style(GTK_TOOLBAR(mainwin->toolbar),
-				      GTK_TOOLBAR_BOTH);
-		break;
-	}
-
-	if (action != TOOLBAR_NONE) {
-		gtk_widget_show(mainwin->toolbar);
-		gtk_widget_queue_resize(mainwin->toolbar);
-	}
-
 	mainwin->toolbar_style = (ToolbarStyle)action;
 	prefs_common.toolbar_style = (ToolbarStyle)action;
+
+	main_window_set_toolbar_button_visibility(mainwin);
 }
 
 static void toggle_searchbar_cb(MainWindow *mainwin, guint action,

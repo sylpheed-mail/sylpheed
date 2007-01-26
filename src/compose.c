@@ -170,10 +170,14 @@ static Compose *compose_find_window_by_target	(MsgInfo	*msginfo);
 static gboolean compose_window_exist		(gint		 x,
 						 gint		 y);
 static void compose_connect_changed_callbacks	(Compose	*compose);
+
 static GtkWidget *compose_toolbar_create	(Compose	*compose);
 static GtkWidget *compose_toolbar_create_from_list
 						(Compose	*compose,
 						 GList		*item_list);
+static void compose_set_toolbar_button_visibility
+						(Compose	*compose);
+
 static GtkWidget *compose_account_option_menu_create
 						(Compose	*compose,
 						 GtkWidget	*hbox);
@@ -4588,21 +4592,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 		gtk_widget_hide(misc_hbox);
 #endif
 
-	switch (prefs_common.toolbar_style) {
-	case TOOLBAR_NONE:
-		gtk_widget_hide(toolbar);
-		break;
-	case TOOLBAR_ICON:
-		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-		break;
-	case TOOLBAR_TEXT:
-		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_TEXT);
-		break;
-	case TOOLBAR_BOTH:
-		gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
-		break;
-	}
-
 	undostruct = undo_init(text);
 	undo_set_change_state_func(undostruct, &compose_undo_state_changed,
 				   menubar);
@@ -4712,6 +4701,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->exteditor_tag  = 0;
 
 	compose->autosave_tag = 0;
+
+	compose_set_toolbar_button_visibility(compose);
 
 	compose_select_account(compose, account, TRUE);
 
@@ -4960,6 +4951,27 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 	gtk_widget_show_all(toolbar);
 
 	return toolbar;
+}
+
+static void compose_set_toolbar_button_visibility(Compose *compose)
+{
+	GtkToolbarStyle style;
+
+	if (prefs_common.toolbar_style == TOOLBAR_NONE)
+		style = -1;
+	else if (prefs_common.toolbar_style == TOOLBAR_ICON)
+		style = GTK_TOOLBAR_ICONS;
+	else if (prefs_common.toolbar_style == TOOLBAR_TEXT)
+		style = GTK_TOOLBAR_TEXT;
+	else if (prefs_common.toolbar_style == TOOLBAR_BOTH)
+		style = GTK_TOOLBAR_BOTH;
+
+	if (style != -1) {
+		gtk_toolbar_set_style(GTK_TOOLBAR(compose->toolbar), style);
+		gtk_widget_show(compose->toolbar);
+		gtk_widget_queue_resize(compose->toolbar);
+	} else
+		gtk_widget_hide(compose->toolbar);
 }
 
 static GtkWidget *compose_account_option_menu_create(Compose *compose,
@@ -5977,6 +5989,7 @@ static void toolbar_customize(GtkWidget *widget, gpointer data)
 				   FALSE, FALSE, 0);
 		gtk_box_reorder_child(GTK_BOX(compose->vbox), toolbar, 1);
 		compose->toolbar = toolbar;
+		compose_set_toolbar_button_visibility(compose);
 		g_free(prefs_common.compose_toolbar_setting);
 		prefs_common.compose_toolbar_setting =
 			prefs_toolbar_get_name_list_from_item_list(item_list);
