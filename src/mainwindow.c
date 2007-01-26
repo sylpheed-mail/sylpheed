@@ -117,6 +117,9 @@ static void main_window_menu_callback_unblock	(MainWindow	*mainwin);
 
 static void main_window_show_cur_account	(MainWindow	*mainwin);
 
+static void main_window_set_toolbar_button_visibility
+						(MainWindow	*mainwin);
+
 static void main_window_set_widgets		(MainWindow	*mainwin,
 						 SeparateType	 type);
 static GtkWidget *main_window_toolbar_create	(MainWindow	*mainwin);
@@ -1225,20 +1228,7 @@ void main_window_reflect_prefs_all(void)
 	main_window_show_cur_account(mainwin);
 	main_window_set_menu_sensitive(mainwin);
 	main_window_set_toolbar_sensitive(mainwin);
-
-	if (mainwin->junk_btn) {
-		if (prefs_common.enable_junk)
-			gtk_widget_show(mainwin->junk_btn);
-		else
-			gtk_widget_hide(mainwin->junk_btn);
-	}
-
-	if (mainwin->exec_btn) {
-		if (prefs_common.immediate_exec)
-			gtk_widget_hide(mainwin->exec_btn);
-		else
-			gtk_widget_show(mainwin->exec_btn);
-	}
+	main_window_set_toolbar_button_visibility(mainwin);
 
 	if (mainwin->tray_icon) {
 		if (prefs_common.show_trayicon)
@@ -1906,6 +1896,23 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 			sensitive = ((entry[i].cond & state) == entry[i].cond);
 			gtk_widget_set_sensitive(entry[i].widget, sensitive);
 		}
+	}
+}
+
+static void main_window_set_toolbar_button_visibility(MainWindow *mainwin)
+{
+	if (mainwin->junk_btn) {
+		if (prefs_common.enable_junk)
+			gtk_widget_show(mainwin->junk_btn);
+		else
+			gtk_widget_hide(mainwin->junk_btn);
+	}
+
+	if (mainwin->exec_btn) {
+		if (prefs_common.immediate_exec)
+			gtk_widget_hide(mainwin->exec_btn);
+		else
+			gtk_widget_show(mainwin->exec_btn);
 	}
 }
 
@@ -2610,6 +2617,7 @@ static void toolbar_customize(GtkWidget *widget, gpointer data)
 		gtk_box_reorder_child(GTK_BOX(mainwin->vbox), toolbar, 1);
 		mainwin->toolbar = toolbar;
 		main_window_set_toolbar_sensitive(mainwin);
+		main_window_set_toolbar_button_visibility(mainwin);
 		g_free(prefs_common.main_toolbar_setting);
 		prefs_common.main_toolbar_setting =
 			prefs_toolbar_get_name_list_from_item_list(item_list);

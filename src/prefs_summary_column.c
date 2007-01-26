@@ -173,7 +173,8 @@ static void prefs_summary_column_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+	gtk_window_set_position(GTK_WINDOW(window),
+				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
 	gtk_window_set_title(GTK_WINDOW(window),

@@ -39,6 +39,8 @@ struct _PrefsDisplayItemsDialog
 {
 	GtkWidget *window;
 
+	GtkWidget *label;
+
 	GtkWidget *stock_clist;
 	GtkWidget *shown_clist;
 

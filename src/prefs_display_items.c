@@ -106,7 +106,8 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+	gtk_window_set_position(GTK_WINDOW(window),
+				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
 	gtk_window_set_title(GTK_WINDOW(window), _("Display items setting"));
@@ -253,6 +254,7 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 			 G_CALLBACK(prefs_display_items_cancel), dialog);
 
 	dialog->window       = window;
+	dialog->label        = label;
 	dialog->stock_clist  = stock_clist;
 	dialog->shown_clist  = shown_clist;
 	dialog->add_btn      = add_btn;
@@ -267,8 +269,6 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 				    !prefs_common.comply_gnome_hig);
 	manage_window_set_transient(GTK_WINDOW(dialog->window));
 	gtk_widget_grab_focus(dialog->ok_btn);
-
-	gtk_widget_show(dialog->window);
 
 	dialog->finished = FALSE;
 	dialog->cancelled = FALSE;

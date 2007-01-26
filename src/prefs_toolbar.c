@@ -25,6 +25,8 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gtk/gtkwindow.h>
+#include <gtk/gtklabel.h>
 
 #include "prefs_toolbar.h"
 #include "prefs_display_items.h"
@@ -134,6 +136,11 @@ gint prefs_toolbar_open(ToolbarType type, gint *visible_items,
 	gint ret = 0;
 
 	dialog = prefs_display_items_dialog_create();
+	gtk_window_set_title(GTK_WINDOW(dialog->window),
+			     _("Customize toolbar"));
+	gtk_label_set_text(GTK_LABEL(dialog->label),
+			   _("Select items to be displayed on the toolbar. You can modify\n"
+			     "the order by using the Up / Down button, or dragging the items."));
 
 	switch (type) {
 	case TOOLBAR_MAIN:
@@ -152,6 +159,8 @@ gint prefs_toolbar_open(ToolbarType type, gint *visible_items,
 	}
 
 	prefs_display_items_dialog_set_visible(dialog, visible_items);
+
+	gtk_widget_show(dialog->window);
 
 	while (dialog->finished == FALSE)
 		gtk_main_iteration();
