@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-25 18:18+0900\n"
+"POT-Creation-Date: 2007-01-26 15:37+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -596,8 +596,8 @@ msgstr "  Emne: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Afsender: %s\n"
 
-#: libsylph/utils.c:2517 src/compose.c:2966 src/compose.c:3258
-#: src/compose.c:3321 src/compose.c:3441
+#: libsylph/utils.c:2517 src/compose.c:2981 src/compose.c:3273
+#: src/compose.c:3336 src/compose.c:3456
 msgid "can't change file mode\n"
 msgstr "kan ikke ændre fil mode\n"
 
@@ -683,7 +683,7 @@ msgstr ""
 "`G'-kolonnen, for at aktivere hentning via `hent alle'."
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:491
-#: src/compose.c:4439 src/editaddress.c:200 src/editaddress.c:942
+#: src/compose.c:4454 src/editaddress.c:200 src/editaddress.c:942
 #: src/editaddress.c:990 src/editbook.c:196 src/editgroup.c:265
 #: src/editjpilot.c:271 src/editldap.c:307 src/editvcard.c:184
 #: src/mimeview.c:208 src/prefs_filter.c:259 src/prefs_folder_item.c:171
@@ -821,7 +821,7 @@ msgstr "Handlingens bruger parameter"
 msgid "Add Address to Book"
 msgstr "Tilføj adresse i adressebog"
 
-#: src/addressadd.c:187 src/compose.c:4943 src/editaddress.c:201
+#: src/addressadd.c:187 src/editaddress.c:201 src/prefs_toolbar.c:57
 #: src/select-keys.c:320
 msgid "Address"
 msgstr "Adresse"
@@ -835,7 +835,7 @@ msgstr "Kommentar"
 msgid "Select Address Book Folder"
 msgstr "Vælg adressebog mappe"
 
-#: src/addressbook.c:337 src/compose.c:519 src/mainwindow.c:495
+#: src/addressbook.c:337 src/compose.c:531 src/mainwindow.c:498
 #: src/messageview.c:149
 msgid "/_File"
 msgstr "/_Filer"
@@ -857,10 +857,10 @@ msgstr "/_Filer/Ny _JPilot"
 msgid "/_File/New _LDAP Server"
 msgstr "/_Filer/Ny _server"
 
-#: src/addressbook.c:346 src/addressbook.c:349 src/compose.c:524
-#: src/compose.c:529 src/compose.c:532 src/compose.c:535 src/mainwindow.c:513
-#: src/mainwindow.c:516 src/mainwindow.c:518 src/mainwindow.c:520
-#: src/mainwindow.c:525 src/mainwindow.c:527 src/messageview.c:151
+#: src/addressbook.c:346 src/addressbook.c:349 src/compose.c:536
+#: src/compose.c:541 src/compose.c:544 src/compose.c:547 src/mainwindow.c:516
+#: src/mainwindow.c:519 src/mainwindow.c:521 src/mainwindow.c:523
+#: src/mainwindow.c:528 src/mainwindow.c:530 src/messageview.c:151
 #: src/messageview.c:156
 msgid "/_File/---"
 msgstr "/_Filer/---"
@@ -877,7 +877,7 @@ msgstr "/_Filer/_Slet"
 msgid "/_File/_Save"
 msgstr "/_Filer/_Gem"
 
-#: src/addressbook.c:351 src/compose.c:536 src/messageview.c:157
+#: src/addressbook.c:351 src/compose.c:548 src/messageview.c:157
 msgid "/_File/_Close"
 msgstr "/_Filer/_Luk"
 
@@ -909,7 +909,7 @@ msgstr "/_Adresse/_Redigér"
 msgid "/_Address/_Delete"
 msgstr "/_Adresse/_Slet"
 
-#: src/addressbook.c:359 src/compose.c:651 src/mainwindow.c:771
+#: src/addressbook.c:359 src/compose.c:666 src/mainwindow.c:774
 #: src/messageview.c:282
 msgid "/_Tools"
 msgstr "/_Funktioner"
@@ -918,12 +918,12 @@ msgstr "/_Funktioner"
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Funktioner/Importer _LDIF-Fil"
 
-#: src/addressbook.c:361 src/compose.c:672 src/mainwindow.c:825
+#: src/addressbook.c:361 src/compose.c:687 src/mainwindow.c:828
 #: src/messageview.c:302
 msgid "/_Help"
 msgstr "/_Hjælp"
 
-#: src/addressbook.c:362 src/compose.c:673 src/mainwindow.c:837
+#: src/addressbook.c:362 src/compose.c:688 src/mainwindow.c:840
 #: src/messageview.c:303
 msgid "/_Help/_About"
 msgstr "/_Hjælp/_Om"
@@ -940,7 +940,7 @@ msgstr "/Ny _gruppe"
 msgid "/New _Folder"
 msgstr "/Ny _mappe"
 
-#: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:513
+#: src/addressbook.c:384 src/addressbook.c:394 src/compose.c:525
 #: src/folderview.c:251 src/folderview.c:253 src/folderview.c:258
 #: src/folderview.c:260 src/folderview.c:273 src/folderview.c:275
 #: src/folderview.c:277 src/folderview.c:282 src/folderview.c:284
@@ -952,8 +952,8 @@ msgstr "/Ny _mappe"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:385 src/addressbook.c:395 src/compose.c:538
-#: src/mainwindow.c:531 src/messageview.c:159
+#: src/addressbook.c:385 src/addressbook.c:395 src/compose.c:550
+#: src/mainwindow.c:534 src/messageview.c:159
 msgid "/_Edit"
 msgstr "/_Redigér"
 
@@ -965,7 +965,7 @@ msgstr "/_Slet"
 msgid "E-Mail address"
 msgstr "E-post adresse"
 
-#: src/addressbook.c:496 src/compose.c:4944 src/prefs_common_dialog.c:2274
+#: src/addressbook.c:496 src/compose.c:4874 src/prefs_common_dialog.c:2274
 msgid "Address book"
 msgstr "Adressebog"
 
@@ -978,7 +978,7 @@ msgstr "Navn:"
 #: src/addressbook.c:636 src/addressbook.c:1678 src/editaddress.c:884
 #: src/editaddress.c:1017 src/prefs_actions.c:266
 #: src/prefs_display_header.c:279 src/prefs_display_header.c:334
-#: src/prefs_template.c:239 src/prefs_toolbar.c:42
+#: src/prefs_template.c:239 src/prefs_toolbar.c:44
 msgid "Delete"
 msgstr "Slet"
 
@@ -1234,403 +1234,408 @@ msgstr "Brun"
 msgid "None"
 msgstr "Ingen"
 
-#: src/compose.c:511
+#: src/compose.c:523
 msgid "/_Add..."
 msgstr "/_Tilføj..."
 
-#: src/compose.c:512
+#: src/compose.c:524
 msgid "/_Remove"
 msgstr "/_Fjern"
 
-#: src/compose.c:514 src/folderview.c:264 src/folderview.c:288
+#: src/compose.c:526 src/folderview.c:264 src/folderview.c:288
 #: src/folderview.c:310
 msgid "/_Properties..."
 msgstr "/_Egenskaber..."
 
-#: src/compose.c:520
+#: src/compose.c:532
 #, fuzzy
 msgid "/_File/_Send"
 msgstr "/_Filer/_Gem"
 
-#: src/compose.c:522
+#: src/compose.c:534
 #, fuzzy
 msgid "/_File/Send _later"
 msgstr "/_Meddelelse/_Send senere"
 
-#: src/compose.c:525
+#: src/compose.c:537
 #, fuzzy
 msgid "/_File/Save to _draft folder"
 msgstr "/_Meddelelse/Gem i _kladde mappe"
 
-#: src/compose.c:527
+#: src/compose.c:539
 #, fuzzy
 msgid "/_File/Save and _keep editing"
 msgstr "/_Meddelelse/_Send senere"
 
-#: src/compose.c:530
+#: src/compose.c:542
 msgid "/_File/_Attach file"
 msgstr "/_Filer/_Vedhæft fil"
 
-#: src/compose.c:531
+#: src/compose.c:543
 msgid "/_File/_Insert file"
 msgstr "/_Filer/_Indsæt fil"
 
-#: src/compose.c:533
+#: src/compose.c:545
 msgid "/_File/Insert si_gnature"
 msgstr "/_Filer/Tilføj _underskrift"
 
-#: src/compose.c:534
+#: src/compose.c:546
 #, fuzzy
 msgid "/_File/A_ppend signature"
 msgstr "/_Filer/Tilføj _underskrift"
 
-#: src/compose.c:539
+#: src/compose.c:551
 msgid "/_Edit/_Undo"
 msgstr "/_Redigér/_Fortryd"
 
-#: src/compose.c:540
+#: src/compose.c:552
 msgid "/_Edit/_Redo"
 msgstr "/_Redigér/_Gentag"
 
-#: src/compose.c:541 src/compose.c:548 src/mainwindow.c:535
+#: src/compose.c:553 src/compose.c:560 src/mainwindow.c:538
 #: src/messageview.c:162
 msgid "/_Edit/---"
 msgstr "/_Redigér/---"
 
-#: src/compose.c:542
+#: src/compose.c:554
 msgid "/_Edit/Cu_t"
 msgstr "/_Redigér/_Klip"
 
-#: src/compose.c:543 src/mainwindow.c:532 src/messageview.c:160
+#: src/compose.c:555 src/mainwindow.c:535 src/messageview.c:160
 msgid "/_Edit/_Copy"
 msgstr "/_Redigér/K_opiere"
 
-#: src/compose.c:544
+#: src/compose.c:556
 msgid "/_Edit/_Paste"
 msgstr "/_Redigér/_Sæt ind"
 
-#: src/compose.c:545
+#: src/compose.c:557
 msgid "/_Edit/Paste as _quotation"
 msgstr "/_Redigér/_Sæt ind som citat"
 
-#: src/compose.c:547 src/mainwindow.c:533 src/messageview.c:161
+#: src/compose.c:559 src/mainwindow.c:536 src/messageview.c:161
 msgid "/_Edit/Select _all"
 msgstr "/_Redigér/Markér _alle"
 
-#: src/compose.c:549
+#: src/compose.c:561
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/_Redigér/Formater a_ktuelt afsnit"
 
-#: src/compose.c:551
+#: src/compose.c:563
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/_Redigér/Formater _alle lange linier"
 
-#: src/compose.c:553
+#: src/compose.c:565
 #, fuzzy
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/_Redigér/K_opiere"
 
-#: src/compose.c:554 src/mainwindow.c:540 src/messageview.c:166
+#: src/compose.c:566 src/mainwindow.c:543 src/messageview.c:166
 #: src/summaryview.c:463
 msgid "/_View"
 msgstr "/_Vis"
 
-#: src/compose.c:555
+#: src/compose.c:567
 msgid "/_View/_To"
 msgstr "/_Vis/_Til"
 
-#: src/compose.c:556
+#: src/compose.c:568
 msgid "/_View/_Cc"
 msgstr "/_Vis/_Cc"
 
-#: src/compose.c:557
+#: src/compose.c:569
 msgid "/_View/_Bcc"
 msgstr "/_Vis/_Bcc"
 
-#: src/compose.c:558
+#: src/compose.c:570
 msgid "/_View/_Reply to"
 msgstr "/_Vis/_Svar til"
 
-#: src/compose.c:559 src/compose.c:561 src/compose.c:563 src/compose.c:565
-#: src/mainwindow.c:561 src/mainwindow.c:564 src/mainwindow.c:591
-#: src/mainwindow.c:615 src/mainwindow.c:718 src/mainwindow.c:722
-#: src/messageview.c:258
+#: src/compose.c:571 src/compose.c:573 src/compose.c:575 src/compose.c:577
+#: src/compose.c:580 src/mainwindow.c:564 src/mainwindow.c:567
+#: src/mainwindow.c:594 src/mainwindow.c:618 src/mainwindow.c:721
+#: src/mainwindow.c:725 src/messageview.c:258
 msgid "/_View/---"
 msgstr "/_Vis/---"
 
-#: src/compose.c:560
+#: src/compose.c:572
 msgid "/_View/_Followup to"
 msgstr "/_Vis/_Followup to"
 
-#: src/compose.c:562
+#: src/compose.c:574
 msgid "/_View/R_uler"
 msgstr "/_Vis/_Linieal"
 
-#: src/compose.c:564
+#: src/compose.c:576
 msgid "/_View/_Attachment"
 msgstr "/_Vis/_Vedhæft"
 
-#: src/compose.c:571 src/mainwindow.c:622 src/messageview.c:173
+#: src/compose.c:578
+#, fuzzy
+msgid "/_View/Cu_stomize toolbar..."
+msgstr "/_Vis/_Gå til/Anden _mappe..."
+
+#: src/compose.c:586 src/mainwindow.c:625 src/messageview.c:173
 #, fuzzy
 msgid "/_View/Character _encoding"
 msgstr "/_Vis/_Sortere/Faldende"
 
-#: src/compose.c:572
+#: src/compose.c:587
 msgid "/_View/Character _encoding/_Automatic"
 msgstr ""
 
-#: src/compose.c:574 src/compose.c:580 src/compose.c:586 src/compose.c:590
-#: src/compose.c:598 src/compose.c:602 src/compose.c:608 src/compose.c:614
-#: src/compose.c:618 src/compose.c:628 src/compose.c:632 src/compose.c:640
-#: src/compose.c:644 src/mainwindow.c:618 src/mainwindow.c:625
+#: src/compose.c:589 src/compose.c:595 src/compose.c:601 src/compose.c:605
+#: src/compose.c:613 src/compose.c:617 src/compose.c:623 src/compose.c:629
+#: src/compose.c:633 src/compose.c:643 src/compose.c:647 src/compose.c:655
+#: src/compose.c:659 src/mainwindow.c:621 src/mainwindow.c:628
 #: src/messageview.c:169
 #, fuzzy
 msgid "/_View/Character _encoding/---"
 msgstr "/_Vis/_Sortere/Faldende"
 
-#: src/compose.c:576 src/mainwindow.c:626 src/messageview.c:177
+#: src/compose.c:591 src/mainwindow.c:629 src/messageview.c:177
 #, fuzzy
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/_Vis/_Tegnsæt/7bit ascii (US-ASC_II)"
 
-#: src/compose.c:578 src/mainwindow.c:628 src/messageview.c:180
+#: src/compose.c:593 src/mainwindow.c:631 src/messageview.c:180
 #, fuzzy
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/_Vis/_Tegnsæt/Unicode (_UTF-8)"
 
-#: src/compose.c:582 src/mainwindow.c:632 src/messageview.c:183
+#: src/compose.c:597 src/mainwindow.c:635 src/messageview.c:183
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/_Vis/_Tegnsæt/Western European (ISO-8859-_1)"
 
-#: src/compose.c:584 src/mainwindow.c:634 src/messageview.c:185
+#: src/compose.c:599 src/mainwindow.c:637 src/messageview.c:185
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/_Vis/_Tegnsæt/Western European (ISO-8859-_15)"
 
-#: src/compose.c:588 src/mainwindow.c:640 src/messageview.c:190
+#: src/compose.c:603 src/mainwindow.c:643 src/messageview.c:190
 #, fuzzy
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/_Vis/_Tegnsæt/Central European (ISO-8859-_2)"
 
-#: src/compose.c:592 src/mainwindow.c:644 src/messageview.c:193
+#: src/compose.c:607 src/mainwindow.c:647 src/messageview.c:193
 #, fuzzy
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/_Vis/_Tegnsæt/_Baltic (ISO-8859-13)"
 
-#: src/compose.c:594 src/mainwindow.c:646 src/messageview.c:195
+#: src/compose.c:609 src/mainwindow.c:649 src/messageview.c:195
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/_Vis/_Tegnsæt/Baltic (ISO-8859-_4)"
 
-#: src/compose.c:596 src/mainwindow.c:648 src/messageview.c:197
+#: src/compose.c:611 src/mainwindow.c:651 src/messageview.c:197
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (Windows-1257)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (Windows-1251)"
 
-#: src/compose.c:600 src/mainwindow.c:652 src/messageview.c:200
+#: src/compose.c:615 src/mainwindow.c:655 src/messageview.c:200
 #, fuzzy
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/_Vis/_Tegnsæt/Greek (ISO-8859-_7)"
 
-#: src/compose.c:604 src/mainwindow.c:656 src/messageview.c:203
+#: src/compose.c:619 src/mainwindow.c:659 src/messageview.c:203
 #, fuzzy
 msgid "/_View/Character _encoding/Arabic (ISO-8859-_6)"
 msgstr "/_Vis/_Tegnsæt/Baltic (ISO-8859-_4)"
 
-#: src/compose.c:606 src/mainwindow.c:658 src/messageview.c:205
+#: src/compose.c:621 src/mainwindow.c:661 src/messageview.c:205
 #, fuzzy
 msgid "/_View/Character _encoding/Arabic (Windows-1256)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (Windows-1251)"
 
-#: src/compose.c:610 src/mainwindow.c:662 src/messageview.c:208
+#: src/compose.c:625 src/mainwindow.c:665 src/messageview.c:208
 #, fuzzy
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
 msgstr "/_Vis/_Tegnsæt/Greek (ISO-8859-_7)"
 
-#: src/compose.c:612 src/mainwindow.c:664 src/messageview.c:210
+#: src/compose.c:627 src/mainwindow.c:667 src/messageview.c:210
 #, fuzzy
 msgid "/_View/Character _encoding/Hebrew (Windows-1255)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (Windows-1251)"
 
-#: src/compose.c:616 src/mainwindow.c:668 src/messageview.c:213
+#: src/compose.c:631 src/mainwindow.c:671 src/messageview.c:213
 #, fuzzy
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/_Vis/_Tegnsæt/Turkish (ISO-8859-_9)"
 
-#: src/compose.c:620 src/mainwindow.c:672 src/messageview.c:216
+#: src/compose.c:635 src/mainwindow.c:675 src/messageview.c:216
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (ISO-8859-_5)"
 
-#: src/compose.c:622 src/mainwindow.c:674 src/messageview.c:218
+#: src/compose.c:637 src/mainwindow.c:677 src/messageview.c:218
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (KOI8-_R)"
 
-#: src/compose.c:624 src/mainwindow.c:676 src/messageview.c:220
+#: src/compose.c:639 src/mainwindow.c:679 src/messageview.c:220
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (KOI8-_R)"
 
-#: src/compose.c:626 src/mainwindow.c:678 src/messageview.c:222
+#: src/compose.c:641 src/mainwindow.c:681 src/messageview.c:222
 #, fuzzy
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/_Vis/_Tegnsæt/Cyrillic (Windows-1251)"
 
-#: src/compose.c:630 src/mainwindow.c:682 src/messageview.c:225
+#: src/compose.c:645 src/mainwindow.c:685 src/messageview.c:225
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/_Vis/_Tegnsæt/Japanese (ISO-2022-_JP)"
 
-#: src/compose.c:634 src/mainwindow.c:692 src/messageview.c:234
+#: src/compose.c:649 src/mainwindow.c:695 src/messageview.c:234
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/_Vis/_Tegnsæt/Simplified Chinese (_GB2312)"
 
-#: src/compose.c:636 src/mainwindow.c:694 src/messageview.c:236
+#: src/compose.c:651 src/mainwindow.c:697 src/messageview.c:236
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/_Vis/_Tegnsæt/Simplified Chinese (_GB2312)"
 
-#: src/compose.c:638 src/mainwindow.c:696 src/messageview.c:238
+#: src/compose.c:653 src/mainwindow.c:699 src/messageview.c:238
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/_Vis/_Tegnsæt/Traditional Chinese (_Big5)"
 
-#: src/compose.c:642 src/mainwindow.c:704 src/messageview.c:245
+#: src/compose.c:657 src/mainwindow.c:707 src/messageview.c:245
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/_Vis/_Tegnsæt/Korean (EUC-_KR)"
 
-#: src/compose.c:646 src/mainwindow.c:710 src/messageview.c:250
+#: src/compose.c:661 src/mainwindow.c:713 src/messageview.c:250
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/_Vis/_Tegnsæt/Thai (TIS-620)"
 
-#: src/compose.c:648 src/mainwindow.c:712 src/messageview.c:252
+#: src/compose.c:663 src/mainwindow.c:715 src/messageview.c:252
 #, fuzzy
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/_Vis/_Tegnsæt/Thai (Windows-874)"
 
-#: src/compose.c:652 src/mainwindow.c:772 src/messageview.c:283
+#: src/compose.c:667 src/mainwindow.c:775 src/messageview.c:283
 msgid "/_Tools/_Address book"
 msgstr "/_Funktioner/_Adressebog"
 
-#: src/compose.c:653
+#: src/compose.c:668
 msgid "/_Tools/_Template"
 msgstr "/_Funktioner/_Skabelon"
 
-#: src/compose.c:655 src/mainwindow.c:796 src/messageview.c:299
+#: src/compose.c:670 src/mainwindow.c:799 src/messageview.c:299
 msgid "/_Tools/Actio_ns"
 msgstr "/_Funktioner/_Handlinger"
 
-#: src/compose.c:657 src/compose.c:661 src/compose.c:667 src/mainwindow.c:775
-#: src/mainwindow.c:789 src/mainwindow.c:794 src/mainwindow.c:797
-#: src/mainwindow.c:801 src/mainwindow.c:803 src/messageview.c:286
+#: src/compose.c:672 src/compose.c:676 src/compose.c:682 src/mainwindow.c:778
+#: src/mainwindow.c:792 src/mainwindow.c:797 src/mainwindow.c:800
+#: src/mainwindow.c:804 src/mainwindow.c:806 src/messageview.c:286
 #: src/messageview.c:298
 msgid "/_Tools/---"
 msgstr "/_Funktioner/---"
 
-#: src/compose.c:658
+#: src/compose.c:673
 #, fuzzy
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/_Redigér/Redigér med e_kstern editor"
 
-#: src/compose.c:662
+#: src/compose.c:677
 #, fuzzy
 msgid "/_Tools/PGP Si_gn"
 msgstr "/_Funktioner/_Handlinger"
 
-#: src/compose.c:663
+#: src/compose.c:678
 #, fuzzy
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/_Meddelelse/_Kryptere"
 
-#: src/compose.c:668
+#: src/compose.c:683
 #, fuzzy
 msgid "/_Tools/_Check spell"
 msgstr "/_Funktioner/_Udfør"
 
-#: src/compose.c:669
+#: src/compose.c:684
 #, fuzzy
 msgid "/_Tools/_Set spell language"
 msgstr "/_Funktioner/_Skabelon"
 
-#: src/compose.c:918
+#: src/compose.c:933
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: fil findes ikke\n"
 
-#: src/compose.c:1022 src/compose.c:1095
+#: src/compose.c:1037 src/compose.c:1110
 msgid "Can't get text part\n"
 msgstr "Kan ikke læse tekst afsnit\n"
 
-#: src/compose.c:1516
+#: src/compose.c:1531
 msgid "Quote mark format error."
 msgstr "Citat markérings format fejl."
 
-#: src/compose.c:1528
+#: src/compose.c:1543
 msgid "Message reply/forward format error."
 msgstr "Meddelelses svar / videresend fejl."
 
-#: src/compose.c:2013
+#: src/compose.c:2028
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Filen %s findes ikke\n"
 
-#: src/compose.c:2017
+#: src/compose.c:2032
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Kan ikke læse størrelse på %s\n"
 
-#: src/compose.c:2021
+#: src/compose.c:2036
 #, c-format
 msgid "File %s is empty."
 msgstr "Filen %s er tom."
 
-#: src/compose.c:2025
+#: src/compose.c:2040
 #, c-format
 msgid "Can't read %s."
 msgstr "kan ikke læse %s"
 
-#: src/compose.c:2058
+#: src/compose.c:2073
 #, c-format
 msgid "Message: %s"
 msgstr "Meddelelse: %s"
 
-#: src/compose.c:2118 src/mimeview.c:558
+#: src/compose.c:2133 src/mimeview.c:558
 msgid "Can't get the part of multipart message."
 msgstr "Kan ikke hente del af multipart meddelese."
 
-#: src/compose.c:2602 src/headerview.c:233 src/query_search.c:666
+#: src/compose.c:2617 src/headerview.c:233 src/query_search.c:666
 #: src/summaryview.c:2237
 msgid "(No Subject)"
 msgstr "(Intet emne)"
 
-#: src/compose.c:2605
+#: src/compose.c:2620
 #, fuzzy, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Ny meddelelse%s"
 
-#: src/compose.c:2720
+#: src/compose.c:2735
 msgid "Recipient is not specified."
 msgstr "Mangler modtager"
 
-#: src/compose.c:2728
+#: src/compose.c:2743
 #, fuzzy
 msgid "Empty subject"
 msgstr "Emne"
 
-#: src/compose.c:2729
+#: src/compose.c:2744
 msgid "Subject is empty. Send it anyway?"
 msgstr "Emne er tom. Send alligevel?"
 
-#: src/compose.c:2788
+#: src/compose.c:2803
 msgid "can't get recipient list."
 msgstr "Kan ikke åbne modtager liste."
 
-#: src/compose.c:2808
+#: src/compose.c:2823
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1638,21 +1643,21 @@ msgstr ""
 "Konto til afsendelse af e-post er ikke valgt.\n"
 "Vælg konto før afsendelse er mulig."
 
-#: src/compose.c:2822 src/send_message.c:300
+#: src/compose.c:2837 src/send_message.c:300
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Fejl ved afsendelse af meddelelse til %s ."
 
-#: src/compose.c:2864
+#: src/compose.c:2879
 msgid "Can't save the message to outbox."
 msgstr "Kan ikke gemme meddelelse i Sendt"
 
-#: src/compose.c:2902
+#: src/compose.c:2917
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Kunne ikke funde nøgle til den valgte nøgle id `%s'."
 
-#: src/compose.c:2999
+#: src/compose.c:3014
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1663,12 +1668,12 @@ msgstr ""
 "%s til %s.\n"
 "Send den alligevel?"
 
-#: src/compose.c:3005
+#: src/compose.c:3020
 #, fuzzy
 msgid "Code conversion error"
 msgstr "Adressebog konverterings fejl"
 
-#: src/compose.c:3084
+#: src/compose.c:3099
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1677,15 +1682,15 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:3088
+#: src/compose.c:3103
 msgid "Line length limit"
 msgstr ""
 
-#: src/compose.c:3217
+#: src/compose.c:3232
 msgid "Encrypting with Bcc"
 msgstr ""
 
-#: src/compose.c:3218
+#: src/compose.c:3233
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1694,122 +1699,85 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:3401
+#: src/compose.c:3416
 msgid "can't remove the old message\n"
 msgstr "kan ikke slette gammel meddelelse\n"
 
-#: src/compose.c:3419
+#: src/compose.c:3434
 msgid "queueing message...\n"
 msgstr "meddelelse i kø...\n"
 
-#: src/compose.c:3501
+#: src/compose.c:3516
 msgid "can't find queue folder\n"
 msgstr "kan ikke vælge mappe %s\n"
 
-#: src/compose.c:3508
+#: src/compose.c:3523
 msgid "can't queue the message\n"
 msgstr "meddelelse kan ikke lægges i kø\n"
 
-#: src/compose.c:4137
+#: src/compose.c:4152
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "genereret meddelelses ID: %s\n"
 
-#: src/compose.c:4252
+#: src/compose.c:4267
 msgid "Creating compose window...\n"
 msgstr "Opretter instastnings vindue...\n"
 
-#: src/compose.c:4305 src/headerview.c:54
+#: src/compose.c:4320 src/headerview.c:54
 msgid "From:"
 msgstr "Fra:"
 
-#: src/compose.c:4379
+#: src/compose.c:4394
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Funktioner/_Handlinger"
 
-#: src/compose.c:4382
+#: src/compose.c:4397
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Meddelelse/_Kryptere"
 
-#: src/compose.c:4420 src/compose.c:5510
+#: src/compose.c:4435 src/compose.c:5510
 msgid "MIME type"
 msgstr "MIME type"
 
 #. S_COL_DATE
-#: src/compose.c:4429 src/mimeview.c:199 src/prefs_filter_edit.c:496
+#: src/compose.c:4444 src/mimeview.c:199 src/prefs_filter_edit.c:496
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:5019
 msgid "Size"
 msgstr "Størrelse"
 
-#: src/compose.c:4864 src/prefs_account_dialog.c:556
-#: src/prefs_common_dialog.c:684 src/prefs_toolbar.c:37
-msgid "Send"
-msgstr "Send"
-
-#: src/compose.c:4865
+#: src/compose.c:4858
 msgid "Send message"
 msgstr "Sende meddelelse"
 
-#: src/compose.c:4873
-msgid "Send later"
-msgstr "Send senere"
-
-#: src/compose.c:4874
+#: src/compose.c:4860
 msgid "Put into queue folder and send later"
 msgstr "Læg i kø og send senere"
 
-#: src/compose.c:4882
-msgid "Draft"
-msgstr "Kladde"
-
-#: src/compose.c:4883
+#: src/compose.c:4862
 msgid "Save to draft folder"
 msgstr "Gem i Kladde"
 
-#: src/compose.c:4893
-msgid "Insert"
-msgstr "Indæst"
-
-#: src/compose.c:4894
+#: src/compose.c:4864
 msgid "Insert file"
 msgstr "Insæt fil"
 
-#: src/compose.c:4902
-msgid "Attach"
-msgstr "Vedhæft"
-
-#: src/compose.c:4903
+#: src/compose.c:4866
 msgid "Attach file"
 msgstr "Vedhæft fil"
 
-#. signature
-#: src/compose.c:4913 src/prefs_account_dialog.c:1250
-#: src/prefs_common_dialog.c:1009
-msgid "Signature"
-msgstr "Underskrift"
-
-#: src/compose.c:4914
+#: src/compose.c:4868
 #, fuzzy
 msgid "Append signature"
 msgstr "DÅRLIG underskrift"
 
-#. editor
-#: src/compose.c:4923 src/prefs_common_dialog.c:1049
-#: src/prefs_common_dialog.c:2398
-msgid "Editor"
-msgstr "Editor"
-
-#: src/compose.c:4924
+#: src/compose.c:4870
 msgid "Edit with external editor"
 msgstr "Redigér med ekstern Editor"
 
-#: src/compose.c:4932
-msgid "Linewrap"
-msgstr "Linie deling"
-
-#: src/compose.c:4933
+#: src/compose.c:4872
 msgid "Wrap all long lines"
 msgstr "/_Redigér/Formater _alle lange linier"
 
@@ -1852,48 +1820,52 @@ msgstr ""
 "Afbryde?\n"
 "ID: %d"
 
-#: src/compose.c:6057 src/compose.c:6062 src/compose.c:6068
+#: src/compose.c:6000 src/mainwindow.c:2641
+msgid "_Customize toolbar..."
+msgstr ""
+
+#: src/compose.c:6116 src/compose.c:6121 src/compose.c:6127
 msgid "Can't queue the message."
 msgstr "Meddelelse kan ikke lægges i kø."
 
-#: src/compose.c:6159
+#: src/compose.c:6218
 #, fuzzy
 msgid "Select files"
 msgstr "Vælg fil"
 
-#: src/compose.c:6182
+#: src/compose.c:6241
 msgid "Select file"
 msgstr "Vælg fil"
 
-#: src/compose.c:6217
+#: src/compose.c:6276
 #, fuzzy
 msgid "Save message"
 msgstr "Sende meddelelse"
 
-#: src/compose.c:6218
+#: src/compose.c:6277
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Denne meddelelse er ændret. Slet?"
 
-#: src/compose.c:6220
+#: src/compose.c:6279
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:6262
+#: src/compose.c:6321
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Vil du benytte skabelon `%s' ?"
 
-#: src/compose.c:6264
+#: src/compose.c:6323
 msgid "Apply template"
 msgstr "Benyt skabelon"
 
-#: src/compose.c:6265
+#: src/compose.c:6324
 #, fuzzy
 msgid "_Replace"
 msgstr "Erstat"
 
-#: src/compose.c:6265
+#: src/compose.c:6324
 #, fuzzy
 msgid "_Insert"
 msgstr "Indæst"
@@ -2355,12 +2327,12 @@ msgstr "Indtast mappe information...\n"
 msgid "Setting folder info..."
 msgstr "Indtast mappe information..."
 
-#: src/folderview.c:868 src/mainwindow.c:3649 src/setup.c:80
+#: src/folderview.c:868 src/mainwindow.c:3657 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Gennemsøger mappe %s%c%s ..."
 
-#: src/folderview.c:872 src/mainwindow.c:3654 src/setup.c:85
+#: src/folderview.c:872 src/mainwindow.c:3662 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Gennemsøger mappe %s ..."
@@ -2386,7 +2358,7 @@ msgstr "Gendanner mappe træ..."
 msgid "Checking for new messages in all folders..."
 msgstr "Henter nye meddelelser i alle mapper..."
 
-#: src/folderview.c:1232 src/prefs_common_dialog.c:1850 src/prefs_toolbar.c:43
+#: src/folderview.c:1232 src/prefs_common_dialog.c:1850 src/prefs_toolbar.c:45
 msgid "Junk"
 msgstr ""
 
@@ -2634,7 +2606,7 @@ msgstr "Importer LDIF fil til adressebog"
 msgid "Prev"
 msgstr "Forrige"
 
-#: src/importldif.c:769 src/prefs_toolbar.c:45
+#: src/importldif.c:769 src/prefs_toolbar.c:47
 msgid "Next"
 msgstr "Næste"
 
@@ -3007,687 +2979,687 @@ msgid ""
 "Do you want to migrate it?"
 msgstr ""
 
-#: src/mainwindow.c:496
+#: src/mainwindow.c:499
 msgid "/_File/_Folder"
 msgstr "/_Filer/_Mappe"
 
-#: src/mainwindow.c:497
+#: src/mainwindow.c:500
 msgid "/_File/_Folder/Create _new folder..."
 msgstr "/_Filer/_Mappe/Opret _ny mappe..."
 
-#: src/mainwindow.c:499
+#: src/mainwindow.c:502
 msgid "/_File/_Folder/_Rename folder..."
 msgstr "/_Filer/_Mappe/_Omdøb mappe..."
 
-#: src/mainwindow.c:500
+#: src/mainwindow.c:503
 #, fuzzy
 msgid "/_File/_Folder/_Move folder..."
 msgstr "/_Filer/_Mappe/_Omdøb mappe..."
 
-#: src/mainwindow.c:501
+#: src/mainwindow.c:504
 msgid "/_File/_Folder/_Delete folder"
 msgstr "/_Filer/_Mappe/_Slet mappe"
 
-#: src/mainwindow.c:502
+#: src/mainwindow.c:505
 #, fuzzy
 msgid "/_File/_Mailbox"
 msgstr "/_Filer/_Tilføj mailbox..."
 
-#: src/mainwindow.c:503
+#: src/mainwindow.c:506
 #, fuzzy
 msgid "/_File/_Mailbox/Add _mailbox..."
 msgstr "/_Filer/_Tilføj mailbox..."
 
-#: src/mainwindow.c:504
+#: src/mainwindow.c:507
 #, fuzzy
 msgid "/_File/_Mailbox/_Remove mailbox"
 msgstr "/Slet _mappe"
 
-#: src/mainwindow.c:505 src/mainwindow.c:510
+#: src/mainwindow.c:508 src/mainwindow.c:513
 #, fuzzy
 msgid "/_File/_Mailbox/---"
 msgstr "/_Filer/_Mappe/---"
 
-#: src/mainwindow.c:506
+#: src/mainwindow.c:509
 #, fuzzy
 msgid "/_File/_Mailbox/_Check for new messages"
 msgstr "_Hent nye meddelelser"
 
-#: src/mainwindow.c:508
+#: src/mainwindow.c:511
 #, fuzzy
 msgid "/_File/_Mailbox/Check for new messages in _all mailboxes"
 msgstr "/_Filer/_Mappe/_Hent nye meddelelser i alle mapper"
 
-#: src/mainwindow.c:511
+#: src/mainwindow.c:514
 #, fuzzy
 msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/G_endan mappe træ"
 
-#: src/mainwindow.c:514
+#: src/mainwindow.c:517
 msgid "/_File/_Import mbox file..."
 msgstr "/_Filer/_Importere mbox fil..."
 
-#: src/mainwindow.c:515
+#: src/mainwindow.c:518
 msgid "/_File/_Export to mbox file..."
 msgstr "/_Filer/_Eksportere mbox fil..."
 
-#: src/mainwindow.c:517
+#: src/mainwindow.c:520
 #, fuzzy
 msgid "/_File/Empty all _trash"
 msgstr "/_Filer/_Tøm slettet post"
 
-#: src/mainwindow.c:519 src/messageview.c:150
+#: src/mainwindow.c:522 src/messageview.c:150
 msgid "/_File/_Save as..."
 msgstr "/_Filer/_Gem som..."
 
-#: src/mainwindow.c:522 src/messageview.c:153
+#: src/mainwindow.c:525 src/messageview.c:153
 #, fuzzy
 msgid "/_File/Page set_up..."
 msgstr "/_Filer/_Gem som..."
 
-#: src/mainwindow.c:524 src/messageview.c:155
+#: src/mainwindow.c:527 src/messageview.c:155
 msgid "/_File/_Print..."
 msgstr "/_Filer/_Udskriv..."
 
-#: src/mainwindow.c:526
+#: src/mainwindow.c:529
 #, fuzzy
 msgid "/_File/_Work offline"
 msgstr "/_Filer/_Indsæt fil"
 
 #. {N_("/_File/_Close"),		"<alt>W", app_exit_cb, 0, NULL},
-#: src/mainwindow.c:529
+#: src/mainwindow.c:532
 msgid "/_File/E_xit"
 msgstr "/_Filer/_Afslut"
 
-#: src/mainwindow.c:534
+#: src/mainwindow.c:537
 msgid "/_Edit/Select _thread"
 msgstr "/_Redigér/Markér _tråd"
 
-#: src/mainwindow.c:536 src/messageview.c:163
+#: src/mainwindow.c:539 src/messageview.c:163
 msgid "/_Edit/_Find in current message..."
 msgstr "/_Redigér/_Søg i aktuel meddelelse"
 
-#: src/mainwindow.c:538
+#: src/mainwindow.c:541
 msgid "/_Edit/_Search messages..."
 msgstr "/_Søg meddelelser..."
 
-#: src/mainwindow.c:541
+#: src/mainwindow.c:544
 msgid "/_View/Show or hi_de"
 msgstr "/_Vis/_Vis eller skjul"
 
-#: src/mainwindow.c:542
+#: src/mainwindow.c:545
 msgid "/_View/Show or hi_de/_Folder tree"
 msgstr "/_Vis/_Vis eller skjul/_Mappe træ"
 
-#: src/mainwindow.c:544
+#: src/mainwindow.c:547
 msgid "/_View/Show or hi_de/_Message view"
 msgstr "/_Vis/_Vis eller skjul/_Besked"
 
-#: src/mainwindow.c:546
+#: src/mainwindow.c:549
 msgid "/_View/Show or hi_de/_Toolbar"
 msgstr "/_Vis/_Vis eller skjul/_Værktøjslinie"
 
-#: src/mainwindow.c:548
+#: src/mainwindow.c:551
 msgid "/_View/Show or hi_de/_Toolbar/Icon _and text"
 msgstr "/_Vis/_Vis eller skjul/_Værktøjslinie/Ikon _og tekst"
 
-#: src/mainwindow.c:550
+#: src/mainwindow.c:553
 msgid "/_View/Show or hi_de/_Toolbar/_Icon"
 msgstr "/_Vis/_Vis eller skjul/_Værktøjslinie/_Ikon"
 
-#: src/mainwindow.c:552
+#: src/mainwindow.c:555
 msgid "/_View/Show or hi_de/_Toolbar/_Text"
 msgstr "/_Vis/_Vis eller skjul/_Værktøjslinie/_Tekst"
 
-#: src/mainwindow.c:554
+#: src/mainwindow.c:557
 msgid "/_View/Show or hi_de/_Toolbar/_None"
 msgstr "/_Vis/_Vis eller skjul/_Værktøjslinie/_Ingen"
 
-#: src/mainwindow.c:556
+#: src/mainwindow.c:559
 #, fuzzy
 msgid "/_View/Show or hi_de/_Search bar"
 msgstr "/_Vis/_Vis eller skjul/_Status linie"
 
-#: src/mainwindow.c:558
+#: src/mainwindow.c:561
 msgid "/_View/Show or hi_de/Status _bar"
 msgstr "/_Vis/_Vis eller skjul/_Status linie"
 
-#: src/mainwindow.c:560
+#: src/mainwindow.c:563
 #, fuzzy
 msgid "/_View/_Customize toolbar..."
 msgstr "/_Vis/_Gå til/Anden _mappe..."
 
-#: src/mainwindow.c:562
+#: src/mainwindow.c:565
 msgid "/_View/Separate f_older tree"
 msgstr "/_Vis/_Seperat mappe træ"
 
-#: src/mainwindow.c:563
+#: src/mainwindow.c:566
 #, fuzzy
 msgid "/_View/Separate _message view"
 msgstr "/_Vis/Seperat m_eddelelses vindue"
 
-#: src/mainwindow.c:565
+#: src/mainwindow.c:568
 msgid "/_View/_Sort"
 msgstr "/_Vis/_Sortere"
 
-#: src/mainwindow.c:566
+#: src/mainwindow.c:569
 msgid "/_View/_Sort/by _number"
 msgstr "/_Vis/_Sortere/_Nummer orden"
 
-#: src/mainwindow.c:567
+#: src/mainwindow.c:570
 msgid "/_View/_Sort/by s_ize"
 msgstr "/_Vis/_Sortere/_Størrelses orden"
 
-#: src/mainwindow.c:568
+#: src/mainwindow.c:571
 msgid "/_View/_Sort/by _date"
 msgstr "/_Vis/_Sortere/_Dato orden"
 
-#: src/mainwindow.c:569
+#: src/mainwindow.c:572
 #, fuzzy
 msgid "/_View/_Sort/by t_hread date"
 msgstr "/_Vis/_Sortere/_Dato orden"
 
-#: src/mainwindow.c:570
+#: src/mainwindow.c:573
 msgid "/_View/_Sort/by _from"
 msgstr "/_Vis/_Sortere/_Fra orden"
 
-#: src/mainwindow.c:571
+#: src/mainwindow.c:574
 msgid "/_View/_Sort/by _recipient"
 msgstr "/_Vis/_Sortere/Efter _modtager"
 
-#: src/mainwindow.c:572
+#: src/mainwindow.c:575
 msgid "/_View/_Sort/by _subject"
 msgstr "/_Vis/_Sortere/_Emne orden"
 
-#: src/mainwindow.c:573
+#: src/mainwindow.c:576
 msgid "/_View/_Sort/by _color label"
 msgstr "/_Vis/_Sortere/_Farvet label orden"
 
-#: src/mainwindow.c:575
+#: src/mainwindow.c:578
 msgid "/_View/_Sort/by _mark"
 msgstr "/_Vis/_Sortere/_Markéret orden"
 
-#: src/mainwindow.c:576
+#: src/mainwindow.c:579
 msgid "/_View/_Sort/by _unread"
 msgstr "/_Vis/_Sortere/_Ulæst orden"
 
-#: src/mainwindow.c:577
+#: src/mainwindow.c:580
 msgid "/_View/_Sort/by a_ttachment"
 msgstr "/_Vis/_Sortere/_Vedhæft orden"
 
-#: src/mainwindow.c:579
+#: src/mainwindow.c:582
 msgid "/_View/_Sort/D_on't sort"
 msgstr "/_Vis/_Sortere/Sorter _ikke"
 
-#: src/mainwindow.c:580 src/mainwindow.c:583
+#: src/mainwindow.c:583 src/mainwindow.c:586
 msgid "/_View/_Sort/---"
 msgstr "/_Vis/_Sortere/---"
 
-#: src/mainwindow.c:581
+#: src/mainwindow.c:584
 msgid "/_View/_Sort/Ascending"
 msgstr "/_Vis/_Sortere/Stigende"
 
-#: src/mainwindow.c:582
+#: src/mainwindow.c:585
 msgid "/_View/_Sort/Descending"
 msgstr "/_Vis/_Sortere/Faldende"
 
-#: src/mainwindow.c:584
+#: src/mainwindow.c:587
 msgid "/_View/_Sort/_Attract by subject"
 msgstr "/_Vis/_Sortere/_Emne orden"
 
-#: src/mainwindow.c:586
+#: src/mainwindow.c:589
 msgid "/_View/Th_read view"
 msgstr "/_Vis/_Trådet"
 
-#: src/mainwindow.c:587
+#: src/mainwindow.c:590
 msgid "/_View/E_xpand all threads"
 msgstr "_Vis/Åbn tråde"
 
-#: src/mainwindow.c:588
+#: src/mainwindow.c:591
 msgid "/_View/Co_llapse all threads"
 msgstr "/_Vis/_Saml alle tråde"
 
-#: src/mainwindow.c:589
+#: src/mainwindow.c:592
 msgid "/_View/Set display _item..."
 msgstr "/_Vis/_Sæt visning ..."
 
-#: src/mainwindow.c:592
+#: src/mainwindow.c:595
 msgid "/_View/_Go to"
 msgstr "/_Vis/_Gå til"
 
-#: src/mainwindow.c:593
+#: src/mainwindow.c:596
 msgid "/_View/_Go to/_Prev message"
 msgstr "/_Vis/_Gå til/_Forrige meddelelse"
 
-#: src/mainwindow.c:594
+#: src/mainwindow.c:597
 msgid "/_View/_Go to/_Next message"
 msgstr "/_Vis/_Gå til/_Næste meddelelse"
 
-#: src/mainwindow.c:595 src/mainwindow.c:600 src/mainwindow.c:603
-#: src/mainwindow.c:608 src/mainwindow.c:613
+#: src/mainwindow.c:598 src/mainwindow.c:603 src/mainwindow.c:606
+#: src/mainwindow.c:611 src/mainwindow.c:616
 msgid "/_View/_Go to/---"
 msgstr "/_Vis/_Gå til/---"
 
-#: src/mainwindow.c:596
+#: src/mainwindow.c:599
 msgid "/_View/_Go to/P_rev unread message"
 msgstr "/Vis/_Gå til/Forrige ulæste meddelelse"
 
-#: src/mainwindow.c:598
+#: src/mainwindow.c:601
 msgid "/_View/_Go to/N_ext unread message"
 msgstr "/_Vis/_Gå til/Næste ulæste meddelelse"
 
-#: src/mainwindow.c:601
+#: src/mainwindow.c:604
 msgid "/_View/_Go to/Prev ne_w message"
 msgstr "/_Vis/_Gå til/_Forrige nye meddelelse"
 
-#: src/mainwindow.c:602
+#: src/mainwindow.c:605
 msgid "/_View/_Go to/Ne_xt new message"
 msgstr "/_Vis/_Gå til/_Næste nye meddelelse"
 
-#: src/mainwindow.c:604
+#: src/mainwindow.c:607
 msgid "/_View/_Go to/Prev _marked message"
 msgstr "/_Vis/_Gå til/Forrige _markéret meddelelse"
 
-#: src/mainwindow.c:606
+#: src/mainwindow.c:609
 msgid "/_View/_Go to/Next m_arked message"
 msgstr "/_Vis/_Gå til/Næste  _markéret meddelelse"
 
-#: src/mainwindow.c:609
+#: src/mainwindow.c:612
 msgid "/_View/_Go to/Prev _labeled message"
 msgstr "/_Vis/_Gå til/Forrige _label meddelelse"
 
-#: src/mainwindow.c:611
+#: src/mainwindow.c:614
 msgid "/_View/_Go to/Next la_beled message"
 msgstr "/_Vis/_Gå til/Næste _label meddelelse"
 
-#: src/mainwindow.c:614
+#: src/mainwindow.c:617
 msgid "/_View/_Go to/Other _folder..."
 msgstr "/_Vis/_Gå til/Anden _mappe..."
 
-#: src/mainwindow.c:623 src/messageview.c:174
+#: src/mainwindow.c:626 src/messageview.c:174
 #, fuzzy
 msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/_Vis/_Tegnsæt/_Automatisk"
 
-#: src/mainwindow.c:636 src/messageview.c:187
+#: src/mainwindow.c:639 src/messageview.c:187
 #, fuzzy
 msgid "/_View/Character _encoding/Western European (Windows-1252)"
 msgstr "/_Vis/_Tegnsæt/Western European (ISO-8859-_15)"
 
-#: src/mainwindow.c:684 src/messageview.c:227
+#: src/mainwindow.c:687 src/messageview.c:227
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
 msgstr "/_Vis/_TegnsætJapanese (ISO-2022-JP-2)"
 
-#: src/mainwindow.c:686 src/messageview.c:229
+#: src/mainwindow.c:689 src/messageview.c:229
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (_EUC-JP)"
 msgstr "/_Vis/_Tegnsæt/Japanese (_EUC-JP)"
 
-#: src/mainwindow.c:688 src/messageview.c:231
+#: src/mainwindow.c:691 src/messageview.c:231
 #, fuzzy
 msgid "/_View/Character _encoding/Japanese (_Shift__JIS)"
 msgstr "/_Vis//_Tegnsæt/Japanese (_Shift_JIS)"
 
-#: src/mainwindow.c:698 src/messageview.c:240
+#: src/mainwindow.c:701 src/messageview.c:240
 #, fuzzy
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/_Vis/_Tegnsæt/Traditional Chinese (EUC-_TW)"
 
-#: src/mainwindow.c:700 src/messageview.c:242
+#: src/mainwindow.c:703 src/messageview.c:242
 #, fuzzy
 msgid "/_View/Character _encoding/Chinese (ISO-2022-_CN)"
 msgstr "/_Vis/_Tegnsæt/Chinese (ISO-2022-_CN)"
 
-#: src/mainwindow.c:706 src/messageview.c:247
+#: src/mainwindow.c:709 src/messageview.c:247
 #, fuzzy
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/_Vis/_Tegnsæt/Korean (ISO-2022-KR)"
 
-#: src/mainwindow.c:719 src/summaryview.c:464
+#: src/mainwindow.c:722 src/summaryview.c:464
 msgid "/_View/Open in new _window"
 msgstr "/_Vis/Åbn i nyt vindue"
 
-#: src/mainwindow.c:720 src/messageview.c:259 src/summaryview.c:466
+#: src/mainwindow.c:723 src/messageview.c:259 src/summaryview.c:466
 msgid "/_View/Mess_age source"
 msgstr "/_Vis/_Kilde"
 
-#: src/mainwindow.c:721 src/messageview.c:260 src/summaryview.c:467
+#: src/mainwindow.c:724 src/messageview.c:260 src/summaryview.c:467
 #, fuzzy
 msgid "/_View/All _headers"
 msgstr "/_Vis/Alle _hoveder"
 
-#: src/mainwindow.c:723
+#: src/mainwindow.c:726
 msgid "/_View/_Update summary"
 msgstr "/_Vis/_Opdatér oversigt"
 
-#: src/mainwindow.c:725 src/messageview.c:263
+#: src/mainwindow.c:728 src/messageview.c:263
 msgid "/_Message"
 msgstr "/_Meddelelse"
 
-#: src/mainwindow.c:726
+#: src/mainwindow.c:729
 #, fuzzy
 msgid "/_Message/Recei_ve"
 msgstr "/_Meddelelse/Redigér _igen"
 
-#: src/mainwindow.c:727
+#: src/mainwindow.c:730
 #, fuzzy
 msgid "/_Message/Recei_ve/Get from _current account"
 msgstr "/_Meddelelse/Hent fra _alle konti"
 
-#: src/mainwindow.c:729
+#: src/mainwindow.c:732
 #, fuzzy
 msgid "/_Message/Recei_ve/Get from _all accounts"
 msgstr "/_Meddelelse/Hent fra _alle konti"
 
-#: src/mainwindow.c:731
+#: src/mainwindow.c:734
 #, fuzzy
 msgid "/_Message/Recei_ve/Cancel receivin_g"
 msgstr "/_Meddelelse/_Afbryd afsendelse"
 
-#: src/mainwindow.c:733
+#: src/mainwindow.c:736
 #, fuzzy
 msgid "/_Message/Recei_ve/---"
 msgstr "/_Meddelelse/Redigér _igen"
 
-#: src/mainwindow.c:734
+#: src/mainwindow.c:737
 msgid "/_Message/_Send queued messages"
 msgstr "/_Meddelelse/Send meddelelser i _kø"
 
-#: src/mainwindow.c:735 src/mainwindow.c:737 src/mainwindow.c:744
-#: src/mainwindow.c:749 src/mainwindow.c:752 src/mainwindow.c:763
-#: src/mainwindow.c:765 src/mainwindow.c:768 src/messageview.c:266
+#: src/mainwindow.c:738 src/mainwindow.c:740 src/mainwindow.c:747
+#: src/mainwindow.c:752 src/mainwindow.c:755 src/mainwindow.c:766
+#: src/mainwindow.c:768 src/mainwindow.c:771 src/messageview.c:266
 #: src/messageview.c:274 src/messageview.c:279
 msgid "/_Message/---"
 msgstr "/_Meddelelse/---"
 
-#: src/mainwindow.c:736 src/messageview.c:264
+#: src/mainwindow.c:739 src/messageview.c:264
 msgid "/_Message/Compose _new message"
 msgstr "/_Meddelelse/Opret _ny meddelelse"
 
-#: src/mainwindow.c:738 src/messageview.c:267
+#: src/mainwindow.c:741 src/messageview.c:267
 msgid "/_Message/_Reply"
 msgstr "/_Meddelelse/_Besvar"
 
-#: src/mainwindow.c:739
+#: src/mainwindow.c:742
 msgid "/_Message/Repl_y to"
 msgstr "/_Meddelelse/_Svar til"
 
-#: src/mainwindow.c:740 src/messageview.c:268
+#: src/mainwindow.c:743 src/messageview.c:268
 msgid "/_Message/Repl_y to/_all"
 msgstr "/_Meddelelse/_Svar til/A_lle"
 
-#: src/mainwindow.c:741 src/messageview.c:270
+#: src/mainwindow.c:744 src/messageview.c:270
 msgid "/_Message/Repl_y to/_sender"
 msgstr "/_Meddelelse/_Svar til/Af_sender"
 
-#: src/mainwindow.c:742 src/messageview.c:272
+#: src/mainwindow.c:745 src/messageview.c:272
 msgid "/_Message/Repl_y to/mailing _list"
 msgstr "/_Meddelelse/_Svar til/_Alle"
 
-#: src/mainwindow.c:745 src/messageview.c:275
+#: src/mainwindow.c:748 src/messageview.c:275
 msgid "/_Message/_Forward"
 msgstr "/_Meddelelse/_Videresend"
 
-#: src/mainwindow.c:746 src/messageview.c:276
+#: src/mainwindow.c:749 src/messageview.c:276
 msgid "/_Message/For_ward as attachment"
 msgstr "/_Meddelelse/Videresend som _vedhæftet"
 
-#: src/mainwindow.c:748 src/messageview.c:278
+#: src/mainwindow.c:751 src/messageview.c:278
 msgid "/_Message/Redirec_t"
 msgstr "/_Meddelelse/_Omdirigér"
 
-#: src/mainwindow.c:750
+#: src/mainwindow.c:753
 msgid "/_Message/M_ove..."
 msgstr "/_Meddelelse/_Flyt..."
 
-#: src/mainwindow.c:751
+#: src/mainwindow.c:754
 msgid "/_Message/_Copy..."
 msgstr "/_Meddelelse/_Kopiere..."
 
-#: src/mainwindow.c:753
+#: src/mainwindow.c:756
 msgid "/_Message/_Mark"
 msgstr "/_Meddelelse/_Markér"
 
-#: src/mainwindow.c:754
+#: src/mainwindow.c:757
 msgid "/_Message/_Mark/_Mark"
 msgstr "/_Meddelelse/_Markér/_Markér"
 
-#: src/mainwindow.c:755
+#: src/mainwindow.c:758
 msgid "/_Message/_Mark/_Unmark"
 msgstr "/_Meddelelse/_Markér/_Slet markéring"
 
-#: src/mainwindow.c:756
+#: src/mainwindow.c:759
 msgid "/_Message/_Mark/---"
 msgstr "/_Meddelelse/_Markér/---"
 
-#: src/mainwindow.c:757
+#: src/mainwindow.c:760
 msgid "/_Message/_Mark/Mark as unr_ead"
 msgstr "/_Meddelelse/_Markér/Som ulæst"
 
-#: src/mainwindow.c:758
+#: src/mainwindow.c:761
 msgid "/_Message/_Mark/Mark as rea_d"
 msgstr "/_Meddelelse/_Markér/Som læst"
 
-#: src/mainwindow.c:760
+#: src/mainwindow.c:763
 #, fuzzy
 msgid "/_Message/_Mark/Mark _thread as read"
 msgstr "/_Meddelelse/_Markér/Som læst"
 
-#: src/mainwindow.c:762
+#: src/mainwindow.c:765
 msgid "/_Message/_Mark/Mark all _read"
 msgstr "/_Meddelelse/_Markér/Alle som læst"
 
-#: src/mainwindow.c:764
+#: src/mainwindow.c:767
 msgid "/_Message/_Delete"
 msgstr "/_Meddelelse/_Slet"
 
-#: src/mainwindow.c:766
+#: src/mainwindow.c:769
 #, fuzzy
 msgid "/_Message/Set as _junk mail"
 msgstr "/_Meddelelse/Hent _ny post"
 
-#: src/mainwindow.c:767
+#: src/mainwindow.c:770
 #, fuzzy
 msgid "/_Message/Set as not j_unk mail"
 msgstr "/_Meddelelse/Hent _ny post"
 
-#: src/mainwindow.c:769 src/messageview.c:280
+#: src/mainwindow.c:772 src/messageview.c:280
 msgid "/_Message/Re-_edit"
 msgstr "/_Meddelelse/Redigér _igen"
 
-#: src/mainwindow.c:773
+#: src/mainwindow.c:776
 #, fuzzy
 msgid "/_Tools/Add sender to address boo_k..."
 msgstr "/_Funktioner/Tilføj afsender til adressebog"
 
-#: src/mainwindow.c:776
+#: src/mainwindow.c:779
 #, fuzzy
 msgid "/_Tools/_Filter all messages in folder"
 msgstr "/_Funktioner/_Filtrere meddelelse"
 
-#: src/mainwindow.c:778
+#: src/mainwindow.c:781
 #, fuzzy
 msgid "/_Tools/Filter _selected messages"
 msgstr "/_Funktioner/_Filtrere meddelelse"
 
-#: src/mainwindow.c:780 src/messageview.c:287
+#: src/mainwindow.c:783 src/messageview.c:287
 msgid "/_Tools/_Create filter rule"
 msgstr "/_Funktioner/_Opret filter"
 
-#: src/mainwindow.c:781 src/messageview.c:289
+#: src/mainwindow.c:784 src/messageview.c:289
 msgid "/_Tools/_Create filter rule/_Automatically"
 msgstr "/_Funktioner/_Opret filter/_Automatisk"
 
-#: src/mainwindow.c:783 src/messageview.c:291
+#: src/mainwindow.c:786 src/messageview.c:291
 msgid "/_Tools/_Create filter rule/by _From"
 msgstr "/_Funktioner/_Opret filter/Efter _Fra"
 
-#: src/mainwindow.c:785 src/messageview.c:293
+#: src/mainwindow.c:788 src/messageview.c:293
 msgid "/_Tools/_Create filter rule/by _To"
 msgstr "/_Funktioner/_Opret filter/Efter _Til"
 
-#: src/mainwindow.c:787 src/messageview.c:295
+#: src/mainwindow.c:790 src/messageview.c:295
 msgid "/_Tools/_Create filter rule/by _Subject"
 msgstr "/_Funktioner/_Opret filter/Efter _Emne"
 
-#: src/mainwindow.c:790
+#: src/mainwindow.c:793
 #, fuzzy
 msgid "/_Tools/Filter _junk mails in folder"
 msgstr "/_Funktioner/_Filtrere meddelelse"
 
-#: src/mainwindow.c:792
+#: src/mainwindow.c:795
 #, fuzzy
 msgid "/_Tools/Filter junk _mails in selected messages"
 msgstr "/_Funktioner/_Filtrere meddelelse"
 
-#: src/mainwindow.c:799
+#: src/mainwindow.c:802
 msgid "/_Tools/Delete du_plicated messages"
 msgstr "/_Meddelelse/Slet alle du_blikerede meddelelser"
 
-#: src/mainwindow.c:802
+#: src/mainwindow.c:805
 msgid "/_Tools/E_xecute"
 msgstr "/_Funktioner/_Udfør"
 
-#: src/mainwindow.c:804
+#: src/mainwindow.c:807
 msgid "/_Tools/_Log window"
 msgstr "/Funktioner/_Logbog vindue"
 
-#: src/mainwindow.c:806
+#: src/mainwindow.c:809
 msgid "/_Configuration"
 msgstr "/_Opsæt"
 
-#: src/mainwindow.c:807
+#: src/mainwindow.c:810
 msgid "/_Configuration/_Common preferences..."
 msgstr "/_Opsæt/Generelt _opsæt..."
 
-#: src/mainwindow.c:809
+#: src/mainwindow.c:812
 msgid "/_Configuration/_Filter setting..."
 msgstr "/_Opsæt/_Filter opsæt..."
 
-#: src/mainwindow.c:811
+#: src/mainwindow.c:814
 msgid "/_Configuration/_Template..."
 msgstr "/_Opsæt/_Skabelon..."
 
-#: src/mainwindow.c:813
+#: src/mainwindow.c:816
 msgid "/_Configuration/_Actions..."
 msgstr "/_Opsæt/_Handlinger..."
 
-#: src/mainwindow.c:815
+#: src/mainwindow.c:818
 msgid "/_Configuration/---"
 msgstr "/_Opsæt/---"
 
-#: src/mainwindow.c:816
+#: src/mainwindow.c:819
 msgid "/_Configuration/_Preferences for current account..."
 msgstr "/_Opsæt/_Den aktuelle konto..."
 
-#: src/mainwindow.c:818
+#: src/mainwindow.c:821
 msgid "/_Configuration/Create _new account..."
 msgstr "/_Opsæt/_Opret ny konto..."
 
-#: src/mainwindow.c:820
+#: src/mainwindow.c:823
 msgid "/_Configuration/_Edit accounts..."
 msgstr "/_Opsæt/_Redigér konti..."
 
-#: src/mainwindow.c:822
+#: src/mainwindow.c:825
 msgid "/_Configuration/C_hange current account"
 msgstr "/_Opsæt/_Skift aktuel konto..."
 
-#: src/mainwindow.c:826
+#: src/mainwindow.c:829
 msgid "/_Help/_Manual"
 msgstr "/_Hjælp/_Vejledning"
 
-#: src/mainwindow.c:827
+#: src/mainwindow.c:830
 msgid "/_Help/_Manual/_English"
 msgstr "/_Hilfe/_Vejledning/_Engelsk"
 
-#: src/mainwindow.c:828
+#: src/mainwindow.c:831
 msgid "/_Help/_Manual/_Japanese"
 msgstr "/_Hilfe/_Vejledning/_Japansk"
 
-#: src/mainwindow.c:829
+#: src/mainwindow.c:832
 msgid "/_Help/_FAQ"
 msgstr "/_Hjælp/_OSS"
 
-#: src/mainwindow.c:830
+#: src/mainwindow.c:833
 msgid "/_Help/_FAQ/_English"
 msgstr "/_Hjælp/_OSS/_Engelsk"
 
-#: src/mainwindow.c:831
+#: src/mainwindow.c:834
 msgid "/_Help/_FAQ/_German"
 msgstr "/_Hjælp/_OSS/_Tysk"
 
-#: src/mainwindow.c:832
+#: src/mainwindow.c:835
 msgid "/_Help/_FAQ/_Spanish"
 msgstr "/_Hjælp/_OSS/_Spansk"
 
-#: src/mainwindow.c:833
+#: src/mainwindow.c:836
 msgid "/_Help/_FAQ/_French"
 msgstr "/_Hjælp/_OSS/_Fransk"
 
-#: src/mainwindow.c:834
+#: src/mainwindow.c:837
 msgid "/_Help/_FAQ/_Italian"
 msgstr "/_Hjælp/_OSS/_Italiensk"
 
-#: src/mainwindow.c:835
+#: src/mainwindow.c:838
 #, fuzzy
 msgid "/_Help/_Command line options"
 msgstr "Kommando linie ikke opsat."
 
-#: src/mainwindow.c:836
+#: src/mainwindow.c:839
 msgid "/_Help/---"
 msgstr "/_Hjælp/---"
 
-#: src/mainwindow.c:879
+#: src/mainwindow.c:882
 msgid "Creating main window...\n"
 msgstr "Opretter hoved vindue...\n"
 
-#: src/mainwindow.c:1055
+#: src/mainwindow.c:1058
 #, c-format
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "HovedVindue: fejl i farve %d\n"
 
-#: src/mainwindow.c:1157 src/summaryview.c:2387 src/summaryview.c:2472
+#: src/mainwindow.c:1160 src/summaryview.c:2387 src/summaryview.c:2472
 #: src/summaryview.c:4009 src/summaryview.c:4138 src/summaryview.c:4507
 msgid "done.\n"
 msgstr "Afsluttet.\n"
 
-#: src/mainwindow.c:1288 src/mainwindow.c:1329 src/mainwindow.c:1354
+#: src/mainwindow.c:1278 src/mainwindow.c:1319 src/mainwindow.c:1344
 msgid "Untitled"
 msgstr "Uden titel"
 
-#: src/mainwindow.c:1355
+#: src/mainwindow.c:1345
 msgid "none"
 msgstr "ingen"
 
-#: src/mainwindow.c:1408
+#: src/mainwindow.c:1398
 #, c-format
 msgid "Changing window separation type from %d to %d\n"
 msgstr "Ændre vindue adskillelse type fra %d til %d\n"
 
-#: src/mainwindow.c:1658
+#: src/mainwindow.c:1648
 msgid "Offline"
 msgstr ""
 
-#: src/mainwindow.c:1659
+#: src/mainwindow.c:1649
 msgid "You are offline. Go online?"
 msgstr ""
 
-#: src/mainwindow.c:1676
+#: src/mainwindow.c:1666
 #, fuzzy
 msgid "Empty all trash"
 msgstr "Tøm Slettet"
 
-#: src/mainwindow.c:1677
+#: src/mainwindow.c:1667
 #, fuzzy
 msgid "Delete all messages in trash folders?"
 msgstr "Slet alle meddelelser i Slettet?"
 
-#: src/mainwindow.c:1707
+#: src/mainwindow.c:1697
 msgid "Add mailbox"
 msgstr "Ny mailbox"
 
-#: src/mainwindow.c:1708
+#: src/mainwindow.c:1698
 #, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
@@ -3698,16 +3670,16 @@ msgstr ""
 "Hvis den eksisterende mailbox angives, vil den blive\n"
 "gennemsøgt automatisk."
 
-#: src/mainwindow.c:1714 src/setup.c:49
+#: src/mainwindow.c:1704 src/setup.c:49
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "Mailbox `%s' eksisterer allerede."
 
-#: src/mainwindow.c:1719 src/setup.c:56
+#: src/mainwindow.c:1709 src/setup.c:56
 msgid "Mailbox"
 msgstr "Mailbox"
 
-#: src/mainwindow.c:1725 src/setup.c:62
+#: src/mainwindow.c:1715 src/setup.c:62
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3716,121 +3688,117 @@ msgstr ""
 "Fejl i oprettelse af mailbox.\n"
 "Måske findes filerne allerede eller du har ikke skrive rettighedder."
 
-#: src/mainwindow.c:2152
+#: src/mainwindow.c:2159
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - Mappe visning"
 
-#: src/mainwindow.c:2171
+#: src/mainwindow.c:2178
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - Meddelelses visning"
 
-#: src/mainwindow.c:2323 src/summaryview.c:418
+#: src/mainwindow.c:2330 src/summaryview.c:418
 msgid "/_Reply"
 msgstr "/_Svar"
 
-#: src/mainwindow.c:2324
+#: src/mainwindow.c:2331
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "Svar til alle"
 
-#: src/mainwindow.c:2325
+#: src/mainwindow.c:2332
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/_Svar til/_Afsender"
 
-#: src/mainwindow.c:2326
+#: src/mainwindow.c:2333
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/_Svar til/_Mail liste"
 
-#: src/mainwindow.c:2331 src/summaryview.c:425
+#: src/mainwindow.c:2338 src/summaryview.c:425
 msgid "/_Forward"
 msgstr "/_Videresend"
 
-#: src/mainwindow.c:2332 src/summaryview.c:426
+#: src/mainwindow.c:2339 src/summaryview.c:426
 msgid "/For_ward as attachment"
 msgstr "/Videresend som _vedhæftet"
 
-#: src/mainwindow.c:2333 src/summaryview.c:427
+#: src/mainwindow.c:2340 src/summaryview.c:427
 msgid "/Redirec_t"
 msgstr "/_Omdirigér"
 
-#: src/mainwindow.c:2338
+#: src/mainwindow.c:2345
 msgid "Incorporate new mail"
 msgstr "Hent ny post"
 
-#: src/mainwindow.c:2340
+#: src/mainwindow.c:2347
 msgid "Incorporate new mail of all accounts"
 msgstr "Hent ny post fra alle konti"
 
-#: src/mainwindow.c:2342
+#: src/mainwindow.c:2349
 msgid "Send queued message(s)"
 msgstr "Sender meddelelse(r) i kø"
 
-#: src/mainwindow.c:2344
+#: src/mainwindow.c:2351
 msgid "Compose new message"
 msgstr "Opret ny meddelelse"
 
-#: src/mainwindow.c:2346
+#: src/mainwindow.c:2353
 msgid "Reply to the message"
 msgstr "Besvar meddelelse"
 
-#: src/mainwindow.c:2348
+#: src/mainwindow.c:2355
 msgid "Reply to all"
 msgstr "Svar til alle"
 
-#: src/mainwindow.c:2350
+#: src/mainwindow.c:2357
 msgid "Forward the message"
 msgstr "Videresend meddelelse"
 
-#: src/mainwindow.c:2352
+#: src/mainwindow.c:2359
 msgid "Delete the message"
 msgstr "Slet meddelelse"
 
-#: src/mainwindow.c:2354
+#: src/mainwindow.c:2361
 #, fuzzy
 msgid "Set as junk mail"
 msgstr "Standard konto"
 
-#: src/mainwindow.c:2356
+#: src/mainwindow.c:2363
 msgid "Execute marked process"
 msgstr "Udfør markéret process"
 
-#: src/mainwindow.c:2358
+#: src/mainwindow.c:2365
 msgid "Next unread message"
 msgstr "Næste ulæste"
 
-#: src/mainwindow.c:2633
-msgid "_Customize toolbar..."
-msgstr ""
-
-#: src/mainwindow.c:2660
+#: src/mainwindow.c:2668
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2671
+#: src/mainwindow.c:2679
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:2943
+#: src/mainwindow.c:2951
 msgid "Exit"
 msgstr "Afslut"
 
-#: src/mainwindow.c:2943
+#: src/mainwindow.c:2951
 msgid "Exit this program?"
 msgstr "Afslut program?"
 
-#: src/mainwindow.c:3567
+#: src/mainwindow.c:3575
 #, fuzzy
 msgid "Command line options"
 msgstr "Kommando linie ikke opsat."
 
-#: src/mainwindow.c:3580
+#: src/mainwindow.c:3588
 #, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "Bruges som: %s [OPTION]...\n"
 
-#: src/mainwindow.c:3588
+#: src/mainwindow.c:3596
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3846,7 +3814,7 @@ msgid ""
 "--version"
 msgstr ""
 
-#: src/mainwindow.c:3604
+#: src/mainwindow.c:3612
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -4081,8 +4049,13 @@ msgstr "Opretter konto egenskaber...\n"
 msgid "Receive"
 msgstr "Modtag"
 
+#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:684
+#: src/prefs_toolbar.c:39 src/prefs_toolbar.c:49
+msgid "Send"
+msgstr "Send"
+
 #: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:686
-#: src/prefs_folder_item.c:140 src/prefs_toolbar.c:38
+#: src/prefs_folder_item.c:140 src/prefs_toolbar.c:40
 msgid "Compose"
 msgstr "Opret"
 
@@ -4294,6 +4267,12 @@ msgstr ""
 #: src/prefs_account_dialog.c:1212
 msgid "Authenticate with POP3 before sending"
 msgstr "Godkend med POP3 før afsendelse"
+
+#. signature
+#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1009
+#: src/prefs_toolbar.c:54
+msgid "Signature"
+msgstr "Underskrift"
 
 #: src/prefs_account_dialog.c:1258
 msgid "Direct input"
@@ -4559,14 +4538,14 @@ msgid "Registered actions"
 msgstr "Registrerede handlinger"
 
 #: src/prefs_actions.c:309 src/prefs_customheader.c:278
-#: src/prefs_display_header.c:286 src/prefs_display_items.c:215
-#: src/prefs_summary_column.c:285
+#: src/prefs_display_header.c:286 src/prefs_display_items.c:216
+#: src/prefs_summary_column.c:286
 msgid "Up"
 msgstr "Op"
 
 #: src/prefs_actions.c:315 src/prefs_customheader.c:284
-#: src/prefs_display_header.c:292 src/prefs_display_items.c:219
-#: src/prefs_summary_column.c:289
+#: src/prefs_display_header.c:292 src/prefs_display_items.c:220
+#: src/prefs_summary_column.c:290
 msgid "Down"
 msgstr "Ned"
 
@@ -4733,7 +4712,7 @@ msgstr "Underskriftsdeling"
 msgid "Insert automatically"
 msgstr "Tilføj automatisk"
 
-#: src/prefs_common_dialog.c:1031 src/prefs_toolbar.c:39
+#: src/prefs_common_dialog.c:1031 src/prefs_toolbar.c:41
 msgid "Reply"
 msgstr "Besvar"
 
@@ -4752,6 +4731,12 @@ msgstr "Svar knap starter svar til mail liste"
 #: src/prefs_common_dialog.c:1045
 msgid "Inherit recipients on reply to self messages"
 msgstr ""
+
+#. editor
+#: src/prefs_common_dialog.c:1049 src/prefs_common_dialog.c:2398
+#: src/prefs_toolbar.c:55
+msgid "Editor"
+msgstr "Editor"
 
 #: src/prefs_common_dialog.c:1056
 msgid "Automatically launch the external editor"
@@ -5621,28 +5606,28 @@ msgstr "Gem hoved konfiguration...\n"
 msgid "This header is already in the list."
 msgstr "Denne hoved linie er allerede på listen."
 
-#: src/prefs_display_items.c:112
+#: src/prefs_display_items.c:113
 #, fuzzy
 msgid "Display items setting"
 msgstr "Hoved opsæt"
 
-#: src/prefs_display_items.c:152 src/prefs_summary_column.c:222
+#: src/prefs_display_items.c:153 src/prefs_summary_column.c:223
 msgid "Available items"
 msgstr "Mulige oplysninger"
 
-#: src/prefs_display_items.c:170 src/prefs_summary_column.c:240
+#: src/prefs_display_items.c:171 src/prefs_summary_column.c:241
 msgid "  ->  "
 msgstr "  ->  "
 
-#: src/prefs_display_items.c:174 src/prefs_summary_column.c:244
+#: src/prefs_display_items.c:175 src/prefs_summary_column.c:245
 msgid "  <-  "
 msgstr "  <-  "
 
-#: src/prefs_display_items.c:195 src/prefs_summary_column.c:265
+#: src/prefs_display_items.c:196 src/prefs_summary_column.c:266
 msgid "Displayed items"
 msgstr "Viste oplysninger"
 
-#: src/prefs_display_items.c:236 src/prefs_summary_column.c:306
+#: src/prefs_display_items.c:237 src/prefs_summary_column.c:307
 msgid " Revert to default "
 msgstr " Standard indstilling "
 
@@ -5806,7 +5791,7 @@ msgstr "Angiv meddelelses farve"
 msgid "Mark as read"
 msgstr "/_Markér/_Læst"
 
-#: src/prefs_filter_edit.c:674 src/prefs_toolbar.c:41
+#: src/prefs_filter_edit.c:674 src/prefs_toolbar.c:43
 msgid "Forward"
 msgstr "Videresend"
 
@@ -5992,11 +5977,11 @@ msgstr "Nummer"
 msgid "Creating summary column setting window...\n"
 msgstr "Opretter Mappeninhalt-Spalten-opsæt-Fenster\n"
 
-#: src/prefs_summary_column.c:180
+#: src/prefs_summary_column.c:181
 msgid "Summary display item setting"
 msgstr "Opsæt oversigt"
 
-#: src/prefs_summary_column.c:195
+#: src/prefs_summary_column.c:196
 msgid ""
 "Select items to be displayed on the summary view. You can modify\n"
 "the order by using the Up / Down button, or dragging the items."
@@ -6044,26 +6029,60 @@ msgstr "Slet Skabelon"
 msgid "Do you really want to delete this template?"
 msgstr "Vil du virkelig slette denne Skabelon?"
 
-#: src/prefs_toolbar.c:34
+#: src/prefs_toolbar.c:36
 #, fuzzy
 msgid "Separator"
 msgstr "Operations tegn"
 
-#: src/prefs_toolbar.c:35
+#: src/prefs_toolbar.c:37
 msgid "Get"
 msgstr "Hent"
 
-#: src/prefs_toolbar.c:36
+#: src/prefs_toolbar.c:38
 msgid "Get all"
 msgstr "Hent alt"
 
-#: src/prefs_toolbar.c:40
+#: src/prefs_toolbar.c:42
 msgid "Reply all"
 msgstr "Besvar alle"
 
-#: src/prefs_toolbar.c:44
+#: src/prefs_toolbar.c:46
 msgid "Execute"
 msgstr "Udfør"
+
+#: src/prefs_toolbar.c:50
+msgid "Send later"
+msgstr "Send senere"
+
+#: src/prefs_toolbar.c:51
+msgid "Draft"
+msgstr "Kladde"
+
+#: src/prefs_toolbar.c:52
+msgid "Insert"
+msgstr "Indæst"
+
+#: src/prefs_toolbar.c:53
+msgid "Attach"
+msgstr "Vedhæft"
+
+#: src/prefs_toolbar.c:56
+msgid "Linewrap"
+msgstr "Linie deling"
+
+#: src/prefs_toolbar.c:140
+#, fuzzy
+msgid "Customize toolbar"
+msgstr "/_Vis/_Gå til/Anden _mappe..."
+
+#: src/prefs_toolbar.c:142
+#, fuzzy
+msgid ""
+"Select items to be displayed on the toolbar. You can modify\n"
+"the order by using the Up / Down button, or dragging the items."
+msgstr ""
+"Vælg de oplysninger, der skal vises i oversigts vindue. Du kan ændre\n"
+"rækkefølgen ved at benytte Op / Ned knapperne eller ved at trække med musen."
 
 #: src/printing.c:515
 msgid "The message will be printed with the following command:"
