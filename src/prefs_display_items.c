@@ -281,6 +281,8 @@ void prefs_display_items_dialog_destroy(PrefsDisplayItemsDialog *dialog)
 	if (!dialog)
 		return;
 
+	if (dialog->available_items)
+		g_list_free(dialog->available_items);
 	if (dialog->visible_items)
 		g_list_free(dialog->visible_items);
 	gtk_widget_destroy(dialog->window);
@@ -291,18 +293,16 @@ static void prefs_display_items_update_available
 	(PrefsDisplayItemsDialog *dialog)
 {
 	GtkCList *stock_clist = GTK_CLIST(dialog->stock_clist);
-	gint i;
+	GList *cur;
 
 	g_return_if_fail(dialog->available_items != NULL);
 
 	gtk_clist_clear(stock_clist);
 
-	for (i = 0; dialog->available_items[i].name != NULL; i++) {
-		PrefsDisplayItem *item;
+	for (cur = dialog->available_items; cur != NULL; cur = cur->next) {
+		PrefsDisplayItem *item = cur->data;
 		gint row;
 		gchar *name;
-
-		item = &dialog->available_items[i];
 
 		if (item->allow_multiple || item->in_use == FALSE) {
 			name = gettext(item->label);
@@ -310,13 +310,37 @@ static void prefs_display_items_update_available
 			gtk_clist_set_row_data(stock_clist, row, item);
 		}
 	}
+}
 
+static PrefsDisplayItem *prefs_display_items_get_item_from_id
+	(PrefsDisplayItemsDialog *dialog, gint id)
+{
+	gint i;
+
+	for (i = 0; dialog->all_items[i].id != -1; i++) {
+		if (id == dialog->all_items[i].id)
+			return (PrefsDisplayItem *)&dialog->all_items[i];
+	}
+
+	return NULL;
 }
 
 void prefs_display_items_dialog_set_available(PrefsDisplayItemsDialog *dialog,
-					      PrefsDisplayItem *items)
+					      PrefsDisplayItem *all_items,
+					      const gint *ids)
 {
-	dialog->available_items = items;
+	gint i;
+	GList *list = NULL;
+
+	dialog->all_items = all_items;
+	for (i = 0; ids[i] != -1; i++) {
+		PrefsDisplayItem *item;
+
+		item = prefs_display_items_get_item_from_id(dialog, ids[i]);
+		if (item)
+			list = g_list_append(list, item);
+	}
+	dialog->available_items = list;
 	prefs_display_items_update_available(dialog);
 }
 
@@ -331,6 +355,8 @@ void prefs_display_items_dialog_set_visible(PrefsDisplayItemsDialog *dialog,
 					    const gint *ids)
 {
 	GtkCList *shown_clist = GTK_CLIST(dialog->shown_clist);
+	GList *cur;
+	PrefsDisplayItem *item;
 	gint i;
 
 	g_return_if_fail(dialog->available_items != NULL);
@@ -346,19 +372,19 @@ void prefs_display_items_dialog_set_visible(PrefsDisplayItemsDialog *dialog,
 		dialog->visible_items = NULL;
 	}
 
-	for (i = 0; dialog->available_items[i].name != NULL; i++) {
-		dialog->available_items[i].in_use = FALSE;
+	for (cur = dialog->available_items; cur != NULL; cur = cur->next) {
+		item = cur->data;
+		item->in_use = FALSE;
 	}
 
 	for (i = 0; ids[i] != -1; i++) {
-		PrefsDisplayItem *item;
 		gint row;
 		gint id = ids[i];
 		gchar *name;
 
-		item = &dialog->available_items[id];
+		item = prefs_display_items_get_item_from_id(dialog, id);
 
-		g_return_if_fail(id == item->id);
+		g_return_if_fail(item != NULL);
 		g_return_if_fail(item->allow_multiple || item->in_use == FALSE);
 
 		item->in_use = TRUE;
@@ -393,14 +419,13 @@ static void prefs_display_items_add(GtkWidget *widget, gpointer data)
 	if (!shown_clist->selection)
 		row = 0;
 	else
-		row = GPOINTER_TO_INT(shown_clist->selection->data) + 1;
+		row = GPOINTER_TO_INT(shown_clist->selection->data);
 
 	item->in_use = TRUE;
 
 	name = gettext(item->label);
 	row = gtk_clist_insert(shown_clist, row, (gchar **)&name);
 	gtk_clist_set_row_data(shown_clist, row, item);
-	gtk_clist_select_row(shown_clist, row, -1);
 }
 
 static void prefs_display_items_remove(GtkWidget *widget, gpointer data)

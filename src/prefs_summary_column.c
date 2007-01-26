@@ -450,12 +450,11 @@ static void prefs_summary_column_add(void)
 	if (!shown_clist->selection)
 		row = 0;
 	else
-		row = GPOINTER_TO_INT(shown_clist->selection->data) + 1;
+		row = GPOINTER_TO_INT(shown_clist->selection->data);
 
 	name = gettext(col_name[type]);
 	row = gtk_clist_insert(shown_clist, row, (gchar **)&name);
 	gtk_clist_set_row_data(shown_clist, row, GINT_TO_POINTER(type));
-	gtk_clist_select_row(shown_clist, row, -1);
 }
 
 static void prefs_summary_column_remove(void)

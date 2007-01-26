@@ -53,7 +53,8 @@ struct _PrefsDisplayItemsDialog
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 
-	PrefsDisplayItem *available_items;
+	const PrefsDisplayItem *all_items;
+	GList *available_items;
 	const gint *default_visible_ids;
 	GList *visible_items;
 
@@ -63,8 +64,10 @@ struct _PrefsDisplayItemsDialog
 
 PrefsDisplayItemsDialog *prefs_display_items_dialog_create	(void);
 
-void prefs_display_items_dialog_set_available (PrefsDisplayItemsDialog *dialog,
-					       PrefsDisplayItem        *items);
+void prefs_display_items_dialog_set_available
+					(PrefsDisplayItemsDialog *dialog,
+					 PrefsDisplayItem        *all_items,
+					 const gint		 *ids);
 void prefs_display_items_dialog_set_default_visible
 					(PrefsDisplayItemsDialog *dialog,
 					 const gint		 *ids);

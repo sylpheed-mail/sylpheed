@@ -29,7 +29,7 @@
 #include "prefs_toolbar.h"
 #include "prefs_display_items.h"
 
-static PrefsDisplayItem available_items[] =
+static PrefsDisplayItem all_items[] =
 {
 	{T_SEPARATOR,	"separator",	N_("Separator"),	TRUE, FALSE},
 	{T_GET,		"get",		N_("Get"),		FALSE, FALSE},
@@ -43,10 +43,53 @@ static PrefsDisplayItem available_items[] =
 	{T_JUNK,	"junk",		N_("Junk"),		FALSE, FALSE},
 	{T_EXECUTE,	"execute",	N_("Execute"),		FALSE, FALSE},
 	{T_NEXT,	"next",		N_("Next"),		FALSE, FALSE},
+
+	{T_SEND,	"send",		N_("Send"),		FALSE, FALSE},
+	{T_SEND_LATER,	"send-later",	N_("Send later"),	FALSE, FALSE},
+	{T_DRAFT,	"draft",	N_("Draft"),		FALSE, FALSE},
+	{T_INSERT_FILE,	"insert-file",	N_("Insert"),		FALSE, FALSE},
+	{T_ATTACH_FILE,	"attach-file",	N_("Attach"),		FALSE, FALSE},
+	{T_SIGNATURE,	"signature",	N_("Signature"),	FALSE, FALSE},
+	{T_EDITOR,	"editor",	N_("Editor"),		FALSE, FALSE},
+	{T_LINEWRAP,	"linewrap",	N_("Linewrap"),		FALSE, FALSE},
+	{T_ADDRESS_BOOK,"address-book",	N_("Address"),		FALSE, FALSE},
+
 	{-1,		NULL,		NULL,			FALSE, FALSE}
 };
 
-static gint default_items[] =
+static gint main_available_items[] =
+{
+	T_SEPARATOR,
+	T_GET,
+	T_GET_ALL,
+	T_SEND_QUEUE,
+	T_COMPOSE,
+	T_REPLY,
+	T_REPLY_ALL,
+	T_FORWARD,
+	T_DELETE,
+	T_JUNK,
+	T_EXECUTE,
+	T_NEXT,
+	-1
+};
+
+static gint compose_available_items[] =
+{
+	T_SEPARATOR,
+	T_SEND,
+	T_SEND_LATER,
+	T_DRAFT,
+	T_INSERT_FILE,
+	T_ATTACH_FILE,
+	T_SIGNATURE,
+	T_EDITOR,
+	T_LINEWRAP,
+	T_ADDRESS_BOOK,
+	-1
+};
+
+static gint default_main_items[] =
 {
 	T_GET,
 	T_GET_ALL,
@@ -65,15 +108,49 @@ static gint default_items[] =
 	-1
 };
 
-gint prefs_toolbar_open(gint *visible_items, GList **item_list)
+static gint default_compose_items[] =
+{
+	T_SEND,
+	T_SEND_LATER,
+	T_DRAFT,
+	T_SEPARATOR,
+	T_INSERT_FILE,
+	T_ATTACH_FILE,
+	T_SEPARATOR,
+	T_SIGNATURE,
+	T_SEPARATOR,
+	T_EDITOR,
+	T_LINEWRAP,
+	T_SEPARATOR,
+	T_ADDRESS_BOOK,
+	-1
+};
+
+gint prefs_toolbar_open(ToolbarType type, gint *visible_items,
+			GList **item_list)
 {
 	PrefsDisplayItemsDialog *dialog;
 	GList *list;
 	gint ret = 0;
 
 	dialog = prefs_display_items_dialog_create();
-	prefs_display_items_dialog_set_available(dialog, available_items);
-	prefs_display_items_dialog_set_default_visible(dialog, default_items);
+
+	switch (type) {
+	case TOOLBAR_MAIN:
+		prefs_display_items_dialog_set_available
+			(dialog, all_items, main_available_items);
+		prefs_display_items_dialog_set_default_visible
+			(dialog, default_main_items);
+		break;
+	case TOOLBAR_COMPOSE:
+	default:
+		prefs_display_items_dialog_set_available
+			(dialog, all_items, compose_available_items);
+		prefs_display_items_dialog_set_default_visible
+			(dialog, default_compose_items);
+		break;
+	}
+
 	prefs_display_items_dialog_set_visible(dialog, visible_items);
 
 	while (dialog->finished == FALSE)
@@ -97,9 +174,9 @@ const PrefsDisplayItem *prefs_toolbar_get_item_from_name(const gchar *name)
 {
 	gint i;
 
-	for (i = 0; available_items[i].id != -1; i++) {
-		if (!strcmp(name, available_items[i].name))
-			return &available_items[i];
+	for (i = 0; all_items[i].id != -1; i++) {
+		if (!strcmp(name, all_items[i].name))
+			return &all_items[i];
 	}
 
 	return NULL;
@@ -109,9 +186,9 @@ const PrefsDisplayItem *prefs_toolbar_get_item_from_id(gint id)
 {
 	gint i;
 
-	for (i = 0; available_items[i].id != -1; i++) {
-		if (id == available_items[i].id)
-			return &available_items[i];
+	for (i = 0; all_items[i].id != -1; i++) {
+		if (id == all_items[i].id)
+			return &all_items[i];
 	}
 
 	return NULL;
@@ -185,7 +262,7 @@ gchar *prefs_toolbar_get_name_list_from_item_list(GList *item_list)
 	return g_string_free(str, FALSE);
 }
 
-const gchar *prefs_toolbar_get_default_setting_name_list(void)
+const gchar *prefs_toolbar_get_default_main_setting_name_list(void)
 {
 	GString *str;
 	gint i;
@@ -196,13 +273,40 @@ const gchar *prefs_toolbar_get_default_setting_name_list(void)
 
 	str = g_string_new(NULL);
 
-	for (i = 0; default_items[i] != -1; i++) {
+	for (i = 0; default_main_items[i] != -1; i++) {
 		const PrefsDisplayItem *item;
 
-		item = prefs_toolbar_get_item_from_id(default_items[i]);
+		item = prefs_toolbar_get_item_from_id(default_main_items[i]);
 		if (item) {
 			g_string_append(str, item->name);
-			if (default_items[i + 1] != -1)
+			if (default_main_items[i + 1] != -1)
+				g_string_append_c(str, ',');
+		}
+	}
+
+	default_name_list = g_string_free(str, FALSE);
+
+	return default_name_list;
+}
+
+const gchar *prefs_toolbar_get_default_compose_setting_name_list(void)
+{
+	GString *str;
+	gint i;
+	static gchar *default_name_list = NULL;
+
+	if (default_name_list)
+		return default_name_list;
+
+	str = g_string_new(NULL);
+
+	for (i = 0; default_compose_items[i] != -1; i++) {
+		const PrefsDisplayItem *item;
+
+		item = prefs_toolbar_get_item_from_id(default_compose_items[i]);
+		if (item) {
+			g_string_append(str, item->name);
+			if (default_compose_items[i + 1] != -1)
 				g_string_append_c(str, ',');
 		}
 	}

@@ -2371,7 +2371,7 @@ static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
 	    *prefs_common.main_toolbar_setting != '\0')
 		setting = prefs_common.main_toolbar_setting;
 	else
-		setting = prefs_toolbar_get_default_setting_name_list();
+		setting = prefs_toolbar_get_default_main_setting_name_list();
 
 	item_list = prefs_toolbar_get_item_list_from_name_list(setting);
 	toolbar = main_window_toolbar_create_from_list(mainwin, item_list);
@@ -2595,9 +2595,9 @@ static void toolbar_customize(GtkWidget *widget, gpointer data)
 	    *prefs_common.main_toolbar_setting != '\0')
 		setting = prefs_common.main_toolbar_setting;
 	else
-		setting = prefs_toolbar_get_default_setting_name_list();
+		setting = prefs_toolbar_get_default_main_setting_name_list();
 	visible_items = prefs_toolbar_get_id_list_from_name_list(setting);
-	ret = prefs_toolbar_open(visible_items, &item_list);
+	ret = prefs_toolbar_open(TOOLBAR_MAIN, visible_items, &item_list);
 	g_free(visible_items);
 
 	if (ret == 0) {
