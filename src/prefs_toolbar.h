@@ -50,6 +50,11 @@ typedef enum
 	T_JUNK,
 	T_EXECUTE,
 	T_NEXT,
+	T_PREV,
+	T_ADDRESS_BOOK,
+	T_PRINT,
+	T_COMMON_PREFS,
+	T_ACCOUNT_PREFS,
 
 	/* Compose */
 	T_SEND,
@@ -59,8 +64,7 @@ typedef enum
 	T_ATTACH_FILE,
 	T_SIGNATURE,
 	T_EDITOR,
-	T_LINEWRAP,
-	T_ADDRESS_BOOK
+	T_LINEWRAP
 } ToolbarItems;
 
 struct _PrefsToolbarItem

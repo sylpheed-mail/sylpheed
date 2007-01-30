@@ -45,6 +45,12 @@ static PrefsDisplayItem all_items[] =
 	{T_JUNK,	"junk",		N_("Junk"),		FALSE, FALSE},
 	{T_EXECUTE,	"execute",	N_("Execute"),		FALSE, FALSE},
 	{T_NEXT,	"next",		N_("Next"),		FALSE, FALSE},
+	{T_PREV,	"prev",		N_("Prev"),		FALSE, FALSE},
+	{T_ADDRESS_BOOK,"address-book",	N_("Address"),		FALSE, FALSE},
+	{T_PRINT,	"print",	N_("Print"),		FALSE, FALSE},
+	{T_COMMON_PREFS,"common-prefs",	N_("Prefs"),		FALSE, FALSE},
+	{T_ACCOUNT_PREFS,
+			"account-prefs",N_("Account"),		FALSE, FALSE},
 
 	{T_SEND,	"send",		N_("Send"),		FALSE, FALSE},
 	{T_SEND_LATER,	"send-later",	N_("Send later"),	FALSE, FALSE},
@@ -54,7 +60,6 @@ static PrefsDisplayItem all_items[] =
 	{T_SIGNATURE,	"signature",	N_("Signature"),	FALSE, FALSE},
 	{T_EDITOR,	"editor",	N_("Editor"),		FALSE, FALSE},
 	{T_LINEWRAP,	"linewrap",	N_("Linewrap"),		FALSE, FALSE},
-	{T_ADDRESS_BOOK,"address-book",	N_("Address"),		FALSE, FALSE},
 
 	{-1,		NULL,		NULL,			FALSE, FALSE}
 };
@@ -73,6 +78,11 @@ static gint main_available_items[] =
 	T_JUNK,
 	T_EXECUTE,
 	T_NEXT,
+	T_PREV,
+	T_ADDRESS_BOOK,
+	T_PRINT,
+	T_COMMON_PREFS,
+	T_ACCOUNT_PREFS,
 	-1
 };
 

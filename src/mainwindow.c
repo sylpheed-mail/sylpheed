@@ -153,6 +153,16 @@ static void toolbar_exec_cb		(GtkWidget	*widget,
 
 static void toolbar_next_unread_cb	(GtkWidget	*widget,
 					 gpointer	 data);
+static void toolbar_prev_unread_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_address_cb		(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_print_cb		(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_prefs_common_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_prefs_account_cb	(GtkWidget	*widget,
+					 gpointer	 data);
 
 static gboolean toolbar_button_pressed	(GtkWidget	*widget,
 					 GdkEventButton	*event,
@@ -1857,7 +1867,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[13];
+	} entry[17];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1887,6 +1897,10 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 			M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK);
 	SET_WIDGET_COND(mainwin->exec_btn, M_MSG_EXIST|M_EXEC);
 	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
+	SET_WIDGET_COND(mainwin->prev_btn, M_MSG_EXIST);
+	SET_WIDGET_COND(mainwin->print_btn, M_TARGET_EXIST);
+	SET_WIDGET_COND(mainwin->prefs_common_btn, M_UNLOCKED);
+	SET_WIDGET_COND(mainwin->prefs_account_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 
 #undef SET_WIDGET_COND
 
@@ -2386,6 +2400,16 @@ static PrefsToolbarItem items[] =
 	 -1,		GTK_STOCK_EXECUTE,	toolbar_exec_cb},
 	{T_NEXT,	N_("Next unread message"),
 	 -1,		GTK_STOCK_GO_DOWN,	toolbar_next_unread_cb},
+	{T_PREV,	N_("Previous unread message"),
+	 -1,		GTK_STOCK_GO_UP,	toolbar_prev_unread_cb},
+	{T_ADDRESS_BOOK,	N_("Address book"),
+	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	toolbar_address_cb},
+	{T_PRINT,	N_("Print message"),
+	 -1,		GTK_STOCK_PRINT,	toolbar_print_cb},
+	{T_COMMON_PREFS,	N_("Common preferences"),
+	 -1,		GTK_STOCK_PREFERENCES,	toolbar_prefs_common_cb},
+	{T_ACCOUNT_PREFS,	N_("Account preferences"),
+	 -1,		GTK_STOCK_PREFERENCES,	toolbar_prefs_account_cb},
 
 	{-1, NULL, -1, NULL, NULL}
 };
@@ -2440,7 +2464,12 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	items[8].data = &mainwin->junk_btn;
 	items[9].data = &mainwin->exec_btn;
 	items[10].data = &mainwin->next_btn;
-	for (i = 0; i <= 10; i++)
+	items[11].data = &mainwin->prev_btn;
+	items[12].data = &mainwin->address_btn;
+	items[13].data = &mainwin->print_btn;
+	items[14].data = &mainwin->prefs_common_btn;
+	items[15].data = &mainwin->prefs_account_btn;
+	for (i = 0; i <= 15; i++)
 		*(GtkWidget **)items[i].data = NULL;
 	mainwin->reply_combo = NULL;
 	mainwin->fwd_combo = NULL;
@@ -2604,6 +2633,41 @@ static void toolbar_next_unread_cb	(GtkWidget	*widget,
 	MainWindow *mainwin = (MainWindow *)data;
 
 	next_unread_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_prev_unread_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	prev_unread_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_address_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	addressbook_open_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_print_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	print_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_prefs_common_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	prefs_common_open_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_prefs_account_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	prefs_account_open_cb(mainwin, 0, NULL);
 }
 
 static void toolbar_customize(GtkWidget *widget, gpointer data)
