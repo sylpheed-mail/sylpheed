@@ -1520,7 +1520,7 @@ static void mh_scan_tree_recursive(FolderItem *item)
 #else
 #if HAVE_DIRENT_D_TYPE
 			d->d_type == DT_DIR ||
-			(d->d_type == DT_UNKNOWN &&
+			((d->d_type == DT_UNKNOWN || d->d_type == DT_LNK) &&
 #endif
 			g_stat(entry, &s) == 0 && S_ISDIR(s.st_mode)
 #if HAVE_DIRENT_D_TYPE

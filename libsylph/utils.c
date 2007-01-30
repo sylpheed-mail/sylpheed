@@ -2425,8 +2425,15 @@ static gint remove_dir_recursive_real(const gchar *dir)
 	g_free(prev_dir);
 
 	if (g_rmdir(dir) < 0) {
-		FILE_OP_ERROR(dir, "rmdir");
-		return -1;
+		if (ENOTDIR == errno) {
+			if (g_unlink(dir) < 0) {
+				FILE_OP_ERROR(dir, "unlink");
+				return -1;
+			}
+		} else {
+			FILE_OP_ERROR(dir, "rmdir");
+			return -1;
+		}
 	}
 
 	return 0;

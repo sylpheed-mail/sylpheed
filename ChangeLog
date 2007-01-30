@@ -1,5 +1,11 @@
 2007-01-30
 
+	* libsylph/mh.c: mh_scan_tree_recursive(): also scan symbolic links.
+	* libsylph/utils.c: remove_dir_recursive_real(): if rmdir() fails,
+	  try unlink() for symbolic links.
+
+2007-01-30
+
 	* src/mainwindow.[ch]
 	  src/prefs_toolbar.[ch]: added new toolbar items.
 

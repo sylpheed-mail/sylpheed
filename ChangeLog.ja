@@ -1,5 +1,12 @@
 2007-01-30
 
+	* libsylph/mh.c: mh_scan_tree_recursive(): シンボリックリンクも
+	  スキャンするようにした。
+	* libsylph/utils.c: remove_dir_recursive_real(): rmdir() が失敗した
+	  場合は unlink() を試すようにした(シンボリックリンクの対策)。
+
+2007-01-30
+
 	* src/mainwindow.[ch]
 	  src/prefs_toolbar.[ch]: ツールバーの項目を新規に追加。
 
