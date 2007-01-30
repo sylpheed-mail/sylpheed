@@ -1921,6 +1921,7 @@ static void main_window_set_toolbar_button_visibility(MainWindow *mainwin)
 	} else
 		gtk_widget_hide(mainwin->toolbar);
 
+#if 0
 	if (mainwin->junk_btn) {
 		if (prefs_common.enable_junk)
 			gtk_widget_show(mainwin->junk_btn);
@@ -1934,6 +1935,7 @@ static void main_window_set_toolbar_button_visibility(MainWindow *mainwin)
 		else
 			gtk_widget_show(mainwin->exec_btn);
 	}
+#endif
 }
 
 void main_window_set_menu_sensitive(MainWindow *mainwin)
@@ -2363,29 +2365,29 @@ static GtkItemFactoryEntry forward_entries[] =
 static PrefsToolbarItem items[] =
 {
 	{T_GET,		N_("Incorporate new mail"),
-	 STOCK_PIXMAP_MAIL_RECEIVE,	toolbar_inc_cb},
+	 STOCK_PIXMAP_MAIL_RECEIVE,	NULL,	toolbar_inc_cb},
 	{T_GET_ALL,	N_("Incorporate new mail of all accounts"),
-	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	toolbar_inc_all_cb},
+	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL,	toolbar_inc_all_cb},
 	{T_SEND_QUEUE,	N_("Send queued message(s)"),
-	 STOCK_PIXMAP_MAIL_SEND,	toolbar_send_cb},
+	 STOCK_PIXMAP_MAIL_SEND,	NULL,	toolbar_send_cb},
 	{T_COMPOSE,	N_("Compose new message"),
-	 STOCK_PIXMAP_MAIL_COMPOSE,	toolbar_compose_cb},
+	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	toolbar_compose_cb},
 	{T_REPLY,	N_("Reply to the message"),
-	 STOCK_PIXMAP_MAIL_REPLY,	toolbar_reply_cb},
+	 STOCK_PIXMAP_MAIL_REPLY,	NULL,	toolbar_reply_cb},
 	{T_REPLY_ALL,	N_("Reply to all"),
-	 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, toolbar_reply_to_all_cb},
+	 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, NULL,	toolbar_reply_to_all_cb},
 	{T_FORWARD,	N_("Forward the message"),
-	 STOCK_PIXMAP_MAIL_FORWARD,	toolbar_forward_cb},
+	 STOCK_PIXMAP_MAIL_FORWARD,	NULL,	toolbar_forward_cb},
 	{T_DELETE,	N_("Delete the message"),
-	 STOCK_PIXMAP_DELETE,		toolbar_delete_cb},
+	 STOCK_PIXMAP_DELETE,		NULL,	toolbar_delete_cb},
 	{T_JUNK,	N_("Set as junk mail"),
-	 STOCK_PIXMAP_SPAM,		toolbar_junk_cb},
+	 STOCK_PIXMAP_SPAM,		NULL,	toolbar_junk_cb},
 	{T_EXECUTE,	N_("Execute marked process"),
-	 -1,				toolbar_exec_cb},
+	 -1,		GTK_STOCK_EXECUTE,	toolbar_exec_cb},
 	{T_NEXT,	N_("Next unread message"),
-	 -1,				toolbar_next_unread_cb},
+	 -1,		GTK_STOCK_GO_DOWN,	toolbar_next_unread_cb},
 
-	{-1, NULL, -1, NULL}
+	{-1, NULL, -1, NULL, NULL}
 };
 
 static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
@@ -2459,14 +2461,9 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 		if (item->id == -1)
 			continue;
 
-		if (ditem->id == T_EXECUTE) {
+		if (item->stock_id) {
 			icon_wid = gtk_image_new_from_stock
-				(GTK_STOCK_EXECUTE,
-				 GTK_ICON_SIZE_LARGE_TOOLBAR);
-		} else if (ditem->id == T_NEXT) {
-			icon_wid = gtk_image_new_from_stock
-				(GTK_STOCK_GO_DOWN,
-				 GTK_ICON_SIZE_LARGE_TOOLBAR);
+				(item->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
 		} else
 			icon_wid = stock_pixbuf_widget(NULL, item->icon);
 
