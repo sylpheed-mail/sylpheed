@@ -73,6 +73,7 @@ struct _PrefsToolbarItem
 	gchar *tooltip;
 	StockPixmap icon;
 	const gchar *stock_id;
+	gboolean is_important;
 	void (*callback) (GtkWidget *widget, gpointer data);
 	gpointer data;
 };

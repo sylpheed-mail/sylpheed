@@ -4855,23 +4855,23 @@ static void compose_connect_changed_callbacks(Compose *compose)
 static PrefsToolbarItem items[] =
 {
 	{T_SEND,	N_("Send message"),
-	 STOCK_PIXMAP_MAIL_SEND,	NULL,	toolbar_send_cb},
+	 STOCK_PIXMAP_MAIL_SEND,	NULL,	TRUE, toolbar_send_cb},
 	{T_SEND_LATER,	N_("Put into queue folder and send later"),
-	 STOCK_PIXMAP_MAIL_SEND_QUEUE,	NULL,	toolbar_send_later_cb},
+	 STOCK_PIXMAP_MAIL_SEND_QUEUE,	NULL,	TRUE, toolbar_send_later_cb},
 	{T_DRAFT,	N_("Save to draft folder"),
-	 STOCK_PIXMAP_MAIL,		NULL,	toolbar_draft_cb},
+	 STOCK_PIXMAP_MAIL,		NULL,	TRUE, toolbar_draft_cb},
 	{T_INSERT_FILE,	N_("Insert file"),
-	 STOCK_PIXMAP_INSERT_FILE,	NULL,	toolbar_insert_cb},
+	 STOCK_PIXMAP_INSERT_FILE,	NULL,	FALSE, toolbar_insert_cb},
 	{T_ATTACH_FILE,	N_("Attach file"),
-	 STOCK_PIXMAP_MAIL_ATTACH,	NULL,	toolbar_attach_cb},
+	 STOCK_PIXMAP_MAIL_ATTACH,	NULL,	FALSE, toolbar_attach_cb},
 	{T_SIGNATURE,	N_("Append signature"),
-	 STOCK_PIXMAP_SIGN,		NULL,	toolbar_sig_cb},
+	 STOCK_PIXMAP_SIGN,		NULL,	FALSE, toolbar_sig_cb},
 	{T_EDITOR,	N_("Edit with external editor"),
-	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	toolbar_ext_editor_cb},
+	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	FALSE, toolbar_ext_editor_cb},
 	{T_LINEWRAP,	N_("Wrap all long lines"),
-	 STOCK_PIXMAP_LINEWRAP,		NULL,	toolbar_linewrap_cb},
+	 STOCK_PIXMAP_LINEWRAP,		NULL,	FALSE, toolbar_linewrap_cb},
 	{T_ADDRESS_BOOK,	N_("Address book"),
-	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	toolbar_address_cb},
+	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	FALSE, toolbar_address_cb},
 
 	{-1, NULL, -1, NULL, NULL}
 };
@@ -4957,6 +4957,7 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 				   &width, NULL);
 		gtk_tool_item_set_homogeneous
 			(toolitem, width < 52 ? TRUE : FALSE);
+		gtk_tool_item_set_is_important(toolitem, item->is_important);
 
 		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolitem, -1);
 
@@ -4986,6 +4987,8 @@ static void compose_set_toolbar_button_visibility(Compose *compose)
 		style = GTK_TOOLBAR_TEXT;
 	else if (prefs_common.toolbar_style == TOOLBAR_BOTH)
 		style = GTK_TOOLBAR_BOTH;
+	else if (prefs_common.toolbar_style == TOOLBAR_BOTH_HORIZ)
+		style = GTK_TOOLBAR_BOTH_HORIZ;
 
 	if (style != -1) {
 		gtk_toolbar_set_style(GTK_TOOLBAR(compose->toolbar), style);

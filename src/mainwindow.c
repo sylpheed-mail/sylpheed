@@ -563,6 +563,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, NULL, 0, "<Branch>"},
 	{N_("/_View/Show or hi_de/_Toolbar/Icon _and text"),
 						NULL, toggle_toolbar_cb, TOOLBAR_BOTH, "<RadioItem>"},
+	{N_("/_View/Show or hi_de/_Toolbar/Text at the _right of icon"),
+						NULL, toggle_toolbar_cb, TOOLBAR_BOTH_HORIZ, "/View/Show or hide/Toolbar/Icon and text"},
 	{N_("/_View/Show or hi_de/_Toolbar/_Icon"),
 						NULL, toggle_toolbar_cb, TOOLBAR_ICON, "/View/Show or hide/Toolbar/Icon and text"},
 	{N_("/_View/Show or hi_de/_Toolbar/_Text"),
@@ -1106,6 +1108,10 @@ MainWindow *main_window_create(SeparateType type)
 	case TOOLBAR_BOTH:
 		menuitem = gtk_item_factory_get_item
 			(ifactory, "/View/Show or hide/Toolbar/Icon and text");
+		break;
+	case TOOLBAR_BOTH_HORIZ:
+		menuitem = gtk_item_factory_get_item
+			(ifactory, "/View/Show or hide/Toolbar/Text at the right of icon");
 		break;
 	}
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
@@ -1930,6 +1936,8 @@ static void main_window_set_toolbar_button_visibility(MainWindow *mainwin)
 		style = GTK_TOOLBAR_TEXT;
 	else if (prefs_common.toolbar_style == TOOLBAR_BOTH)
 		style = GTK_TOOLBAR_BOTH;
+	else if (prefs_common.toolbar_style == TOOLBAR_BOTH_HORIZ)
+		style = GTK_TOOLBAR_BOTH_HORIZ;
 
 	if (style != -1) {
 		gtk_toolbar_set_style(GTK_TOOLBAR(mainwin->toolbar), style);
@@ -2382,39 +2390,39 @@ static GtkItemFactoryEntry forward_entries[] =
 static PrefsToolbarItem items[] =
 {
 	{T_GET,		N_("Incorporate new mail"),
-	 STOCK_PIXMAP_MAIL_RECEIVE,	NULL,	toolbar_inc_cb},
+	 STOCK_PIXMAP_MAIL_RECEIVE,	NULL,	TRUE, toolbar_inc_cb},
 	{T_GET_ALL,	N_("Incorporate new mail of all accounts"),
-	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL,	toolbar_inc_all_cb},
+	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL,	TRUE, toolbar_inc_all_cb},
 	{T_SEND_QUEUE,	N_("Send queued message(s)"),
-	 STOCK_PIXMAP_MAIL_SEND,	NULL,	toolbar_send_cb},
+	 STOCK_PIXMAP_MAIL_SEND,	NULL,	TRUE, toolbar_send_cb},
 	{T_COMPOSE,	N_("Compose new message"),
-	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	toolbar_compose_cb},
+	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	TRUE, toolbar_compose_cb},
 	{T_REPLY,	N_("Reply to the message"),
-	 STOCK_PIXMAP_MAIL_REPLY,	NULL,	toolbar_reply_cb},
+	 STOCK_PIXMAP_MAIL_REPLY,	NULL,	TRUE, toolbar_reply_cb},
 	{T_REPLY_ALL,	N_("Reply to all"),
-	 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, NULL,	toolbar_reply_to_all_cb},
+	 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, NULL,	TRUE, toolbar_reply_to_all_cb},
 	{T_FORWARD,	N_("Forward the message"),
-	 STOCK_PIXMAP_MAIL_FORWARD,	NULL,	toolbar_forward_cb},
+	 STOCK_PIXMAP_MAIL_FORWARD,	NULL,	TRUE, toolbar_forward_cb},
 	{T_DELETE,	N_("Delete the message"),
-	 STOCK_PIXMAP_DELETE,		NULL,	toolbar_delete_cb},
+	 STOCK_PIXMAP_DELETE,		NULL,	FALSE, toolbar_delete_cb},
 	{T_JUNK,	N_("Set as junk mail"),
-	 STOCK_PIXMAP_SPAM,		NULL,	toolbar_junk_cb},
+	 STOCK_PIXMAP_SPAM,		NULL,	TRUE, toolbar_junk_cb},
 	{T_EXECUTE,	N_("Execute marked process"),
-	 -1,		GTK_STOCK_EXECUTE,	toolbar_exec_cb},
+	 -1,		GTK_STOCK_EXECUTE,	FALSE, toolbar_exec_cb},
 	{T_NEXT,	N_("Next unread message"),
-	 -1,		GTK_STOCK_GO_DOWN,	toolbar_next_unread_cb},
+	 -1,		GTK_STOCK_GO_DOWN,	FALSE, toolbar_next_unread_cb},
 	{T_PREV,	N_("Previous unread message"),
-	 -1,		GTK_STOCK_GO_UP,	toolbar_prev_unread_cb},
+	 -1,		GTK_STOCK_GO_UP,	FALSE, toolbar_prev_unread_cb},
 	{T_ADDRESS_BOOK,	N_("Address book"),
-	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	toolbar_address_cb},
+	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	FALSE, toolbar_address_cb},
 	{T_PRINT,	N_("Print message"),
-	 -1,		GTK_STOCK_PRINT,	toolbar_print_cb},
+	 -1,		GTK_STOCK_PRINT,	FALSE, toolbar_print_cb},
 	{T_COMMON_PREFS,	N_("Common preferences"),
-	 -1,		GTK_STOCK_PREFERENCES,	toolbar_prefs_common_cb},
+	 -1,		GTK_STOCK_PREFERENCES,	FALSE, toolbar_prefs_common_cb},
 	{T_ACCOUNT_PREFS,	N_("Account preferences"),
-	 -1,		GTK_STOCK_PREFERENCES,	toolbar_prefs_account_cb},
+	 -1,		GTK_STOCK_PREFERENCES,	FALSE, toolbar_prefs_account_cb},
 
-	{-1, NULL, -1, NULL, NULL}
+	{-1, NULL, -1, NULL, FALSE, NULL}
 };
 
 static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
@@ -2510,6 +2518,7 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 				   &width, NULL);
 		gtk_tool_item_set_homogeneous
 			(toolitem, width < 52 ? TRUE : FALSE);
+		gtk_tool_item_set_is_important(toolitem, item->is_important);
 
 		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolitem, -1);
 

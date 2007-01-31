@@ -25,7 +25,8 @@ typedef enum
 	TOOLBAR_NONE,
 	TOOLBAR_ICON,
 	TOOLBAR_TEXT,
-	TOOLBAR_BOTH
+	TOOLBAR_BOTH,
+	TOOLBAR_BOTH_HORIZ
 } ToolbarStyle;
 
 typedef enum
