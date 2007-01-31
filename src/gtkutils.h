@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,10 @@ struct _ComboButton
 #define GTKUT_CTREE_REFRESH(clist) \
 	GTK_CLIST_GET_CLASS(clist)->refresh(clist)
 
+gboolean gtkut_get_str_size		(GtkWidget	*widget,
+					 const gchar	*str,
+					 gint		*width,
+					 gint		*height);
 gboolean gtkut_get_font_size		(GtkWidget	*widget,
 					 gint		*width,
 					 gint		*height);

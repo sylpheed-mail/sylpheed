@@ -195,7 +195,6 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 	gint scr_width, scr_height;
 
 	g_return_if_fail(x != NULL && y != NULL);
-	g_return_if_fail(GTK_IS_BUTTON(user_data));
 
 	button = GTK_WIDGET(user_data);
 

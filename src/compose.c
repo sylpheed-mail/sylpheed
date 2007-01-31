@@ -50,6 +50,9 @@
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkcontainer.h>
 #include <gtk/gtktoolbar.h>
+#include <gtk/gtktoolitem.h>
+#include <gtk/gtktoolbutton.h>
+#include <gtk/gtkseparatortoolitem.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkhbox.h>
 #include <gtk/gtklabel.h>
@@ -4736,11 +4739,16 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 				   FALSE);
 #endif
 
-		gtk_widget_set_sensitive(compose->insert_btn, FALSE);
-		gtk_widget_set_sensitive(compose->attach_btn, FALSE);
-		gtk_widget_set_sensitive(compose->sig_btn, FALSE);
-		gtk_widget_set_sensitive(compose->exteditor_btn, FALSE);
-		gtk_widget_set_sensitive(compose->linewrap_btn, FALSE);
+		if (compose->insert_btn)
+			gtk_widget_set_sensitive(compose->insert_btn, FALSE);
+		if (compose->attach_btn)
+			gtk_widget_set_sensitive(compose->attach_btn, FALSE);
+		if (compose->sig_btn)
+			gtk_widget_set_sensitive(compose->sig_btn, FALSE);
+		if (compose->exteditor_btn)
+			gtk_widget_set_sensitive(compose->exteditor_btn, FALSE);
+		if (compose->linewrap_btn)
+			gtk_widget_set_sensitive(compose->linewrap_btn, FALSE);
 
 		/* gtk_widget_set_sensitive(compose->attach_toggle, FALSE); */
 
@@ -4892,7 +4900,7 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 {
 	GtkWidget *toolbar;
 	GtkWidget *icon_wid;
-	GtkWidget *button;
+	GtkToolItem *toolitem;
 	gint i;
 	GList *cur;
 
@@ -4900,8 +4908,6 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 	gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
-	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
-				  GTK_ICON_SIZE_LARGE_TOOLBAR);
 	g_signal_connect(G_OBJECT(toolbar), "button_press_event",
 			 G_CALLBACK(toolbar_button_pressed), compose);
 
@@ -4920,9 +4926,12 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 	for (cur = item_list; cur != NULL; cur = cur->next) {
 		const PrefsDisplayItem *ditem = cur->data;
 		PrefsToolbarItem *item;
+		GtkTooltips *tips;
+		gint width;
 
 		if (ditem->id == T_SEPARATOR) {
-			gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+			toolitem = gtk_separator_tool_item_new();
+			gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolitem, -1);
 			continue;
 		}
 
@@ -4933,19 +4942,31 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 		if (item->id == -1)
 			continue;
 
-		icon_wid = stock_pixbuf_widget(NULL, item->icon);
+		if (item->stock_id) {
+			icon_wid = gtk_image_new_from_stock
+				(item->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
+		} else
+			icon_wid = stock_pixbuf_widget(NULL, item->icon);
 
-		button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-						 gettext(ditem->label),
-						 gettext(item->tooltip),
-						 ditem->name, icon_wid,
-						 G_CALLBACK(item->callback),
-						 compose);
+		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
+		tips = gtk_tooltips_new();
+		gtk_tool_item_set_tooltip(toolitem, tips,
+					  gettext(item->tooltip), ditem->name);
 
-		g_signal_connect(G_OBJECT(button), "button_press_event",
+		gtkut_get_str_size(GTK_WIDGET(toolitem), gettext(ditem->label),
+				   &width, NULL);
+		gtk_tool_item_set_homogeneous
+			(toolitem, width < 52 ? TRUE : FALSE);
+
+		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolitem, -1);
+
+		g_signal_connect(G_OBJECT(toolitem), "clicked",
+				 G_CALLBACK(item->callback), compose);
+		g_signal_connect(G_OBJECT(GTK_BIN(toolitem)->child),
+				 "button_press_event",
 				 G_CALLBACK(toolbar_button_pressed), compose);
 
-		*(GtkWidget **)item->data = button;
+		*(GtkWidget **)item->data = GTK_WIDGET(toolitem);
 	}
 
 	gtk_widget_show_all(toolbar);
@@ -5793,14 +5814,20 @@ static void compose_set_ext_editor_sensitive(Compose *compose,
 	menu_set_sensitive(ifactory, "/Tools/Edit with external editor",
 			   sensitive);
 
-	gtk_widget_set_sensitive(compose->text,          sensitive);
-	gtk_widget_set_sensitive(compose->send_btn,      sensitive);
-	gtk_widget_set_sensitive(compose->sendl_btn,     sensitive);
-	gtk_widget_set_sensitive(compose->draft_btn,     sensitive);
-	gtk_widget_set_sensitive(compose->insert_btn,    sensitive);
-	gtk_widget_set_sensitive(compose->sig_btn,       sensitive);
-	gtk_widget_set_sensitive(compose->exteditor_btn, sensitive);
-	gtk_widget_set_sensitive(compose->linewrap_btn,  sensitive);
+#define SET_SENS(w) \
+	if (compose->w) \
+		gtk_widget_set_sensitive(compose->w, sensitive);
+
+	SET_SENS(text);
+	SET_SENS(send_btn);
+	SET_SENS(sendl_btn);
+	SET_SENS(draft_btn);
+	SET_SENS(insert_btn);
+	SET_SENS(sig_btn);
+	SET_SENS(exteditor_btn);
+	SET_SENS(linewrap_btn);
+
+#undef SET_SENS
 }
 
 /**

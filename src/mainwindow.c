@@ -39,6 +39,9 @@
 #include <gtk/gtkmenu.h>
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtktoolbar.h>
+#include <gtk/gtktoolitem.h>
+#include <gtk/gtktoolbutton.h>
+#include <gtk/gtkseparatortoolitem.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkarrow.h>
@@ -2438,7 +2441,8 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 {
 	GtkWidget *toolbar;
 	GtkWidget *icon_wid;
-	GtkWidget *button;
+	GtkToolItem *toolitem;
+	GtkToolItem *comboitem;
 	ComboButton *combo;
 	gint n_entries;
 	gint i;
@@ -2448,8 +2452,6 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
 				    GTK_ORIENTATION_HORIZONTAL);
 	gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_BOTH);
-	gtk_toolbar_set_icon_size(GTK_TOOLBAR(toolbar),
-				  GTK_ICON_SIZE_LARGE_TOOLBAR);
 	g_signal_connect(G_OBJECT(toolbar), "button_press_event",
 			 G_CALLBACK(toolbar_button_pressed), mainwin);
 
@@ -2477,9 +2479,12 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	for (cur = item_list; cur != NULL; cur = cur->next) {
 		const PrefsDisplayItem *ditem = cur->data;
 		PrefsToolbarItem *item;
+		GtkTooltips *tips;
+		gint width;
 
 		if (ditem->id == T_SEPARATOR) {
-			gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
+			toolitem = gtk_separator_tool_item_new();
+			gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolitem, -1);
 			continue;
 		}
 
@@ -2496,45 +2501,70 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 		} else
 			icon_wid = stock_pixbuf_widget(NULL, item->icon);
 
-		button = gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-						 gettext(ditem->label),
-						 gettext(item->tooltip),
-						 ditem->name, icon_wid,
-						 G_CALLBACK(item->callback),
-						 mainwin);
+		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
+		tips = gtk_tooltips_new();
+		gtk_tool_item_set_tooltip(toolitem, tips,
+					  gettext(item->tooltip), ditem->name);
 
-		g_signal_connect(G_OBJECT(button), "button_press_event",
+		gtkut_get_str_size(GTK_WIDGET(toolitem), gettext(ditem->label),
+				   &width, NULL);
+		gtk_tool_item_set_homogeneous
+			(toolitem, width < 52 ? TRUE : FALSE);
+
+		gtk_toolbar_insert(GTK_TOOLBAR(toolbar), toolitem, -1);
+
+		g_signal_connect(G_OBJECT(toolitem), "clicked",
+				 G_CALLBACK(item->callback), mainwin);
+		g_signal_connect(G_OBJECT(GTK_BIN(toolitem)->child),
+				 "button_press_event",
 				 G_CALLBACK(toolbar_button_pressed), mainwin);
 
 		if (ditem->id == T_REPLY) {
 			n_entries = sizeof(reply_entries) /
 				sizeof(reply_entries[0]);
 			combo = gtkut_combo_button_create
-				(button, reply_entries, n_entries, "<Reply>",
-				 mainwin);
+				(GTK_WIDGET(toolitem),
+				 reply_entries, n_entries, "<Reply>", mainwin);
 			gtk_button_set_relief(GTK_BUTTON(combo->arrow),
 					      GTK_RELIEF_NONE);
-			gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
-						  GTK_WIDGET_PTR(combo),
+
+			comboitem = gtk_tool_item_new();
+			gtk_tool_item_set_homogeneous(comboitem, FALSE);
+			gtk_container_add(GTK_CONTAINER(comboitem),
+					  GTK_WIDGET_PTR(combo));
+			tips = gtk_tooltips_new();
+			gtk_tool_item_set_tooltip(comboitem, tips,
 						  gettext(item->tooltip),
 						  ditem->name);
+
+			gtk_toolbar_insert(GTK_TOOLBAR(toolbar), comboitem, -1);
+
 			mainwin->reply_combo = combo;
 		} else if (ditem->id == T_FORWARD) {
 			n_entries = sizeof(forward_entries) /
 				sizeof(forward_entries[0]);
 			combo = gtkut_combo_button_create
-				(button, forward_entries, n_entries,
-				 "<Forward>", mainwin);
+				(GTK_WIDGET(toolitem),
+				 forward_entries, n_entries, "<Forward>",
+				 mainwin);
 			gtk_button_set_relief(GTK_BUTTON(combo->arrow),
 					      GTK_RELIEF_NONE);
-			gtk_toolbar_append_widget(GTK_TOOLBAR(toolbar),
-						  GTK_WIDGET_PTR(combo),
+
+			comboitem = gtk_tool_item_new();
+			gtk_tool_item_set_homogeneous(comboitem, FALSE);
+			gtk_container_add(GTK_CONTAINER(comboitem),
+					  GTK_WIDGET_PTR(combo));
+			tips = gtk_tooltips_new();
+			gtk_tool_item_set_tooltip(comboitem, tips,
 						  gettext(item->tooltip),
 						  ditem->name);
+
+			gtk_toolbar_insert(GTK_TOOLBAR(toolbar), comboitem, -1);
+
 			mainwin->fwd_combo = combo;
 		}
 
-		*(GtkWidget **)item->data = button;
+		*(GtkWidget **)item->data = GTK_WIDGET(toolitem);
 	}
 
 	gtk_widget_show_all(toolbar);

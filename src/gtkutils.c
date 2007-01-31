@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,21 +47,31 @@
 #include "codeconv.h"
 #include "menu.h"
 
-gboolean gtkut_get_font_size(GtkWidget *widget, gint *width, gint *height)
+gboolean gtkut_get_str_size(GtkWidget *widget, const gchar *str,
+			    gint *width, gint *height)
 {
 	PangoLayout *layout;
-	const gchar *str = "Abcdef";
 
 	g_return_val_if_fail(GTK_IS_WIDGET(widget), FALSE);
 
 	layout = gtk_widget_create_pango_layout(widget, str);
 	g_return_val_if_fail(layout, FALSE);
 	pango_layout_get_pixel_size(layout, width, height);
-	if (width)
-		*width = *width / g_utf8_strlen(str, -1);
 	g_object_unref(layout);
 
 	return TRUE;
+}
+
+gboolean gtkut_get_font_size(GtkWidget *widget, gint *width, gint *height)
+{
+	const gchar *str = "Abcdef";
+	gboolean ret;
+
+	ret = gtkut_get_str_size(widget, str, width, height);
+	if (ret && width)
+		*width = *width / g_utf8_strlen(str, -1);
+
+	return ret;
 }
 
 PangoFontDescription *gtkut_get_default_font_desc(void)
@@ -262,10 +272,12 @@ ComboButton *gtkut_combo_button_create(GtkWidget *button,
 
 	g_signal_connect(G_OBJECT(combo->button), "size_request",
 			 G_CALLBACK(combo_button_size_request), combo);
+#if 0
 	g_signal_connect(G_OBJECT(combo->button), "enter",
 			 G_CALLBACK(combo_button_enter), combo);
 	g_signal_connect(G_OBJECT(combo->button), "leave",
 			 G_CALLBACK(combo_button_leave), combo);
+#endif
 	g_signal_connect(G_OBJECT(combo->arrow), "enter",
 			 G_CALLBACK(combo_button_enter), combo);
 	g_signal_connect(G_OBJECT(combo->arrow), "leave",
