@@ -815,7 +815,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Tools/Delete du_plicated messages"),
 						NULL, delete_duplicated_cb,   0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
-	{N_("/_Tools/E_xecute"),		"X", execute_summary_cb, 0, NULL},
+	{N_("/_Tools/E_xecute marked process"),	"X", execute_summary_cb, 0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/_Log window"),		"<shift><control>L", log_window_show_cb, 0, NULL},
 
@@ -2043,7 +2043,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 #ifndef G_OS_WIN32
 		{"/Tools/Actions"                      , M_TARGET_EXIST|M_UNLOCKED},
 #endif
-		{"/Tools/Execute"                      , M_MSG_EXIST|M_EXEC},
+		{"/Tools/Execute marked process"       , M_MSG_EXIST|M_EXEC},
 		{"/Tools/Delete duplicated messages"   , M_MSG_EXIST|M_ALLOW_DELETE},
 
 		{"/Configuration", M_UNLOCKED},

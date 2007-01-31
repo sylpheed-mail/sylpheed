@@ -1400,9 +1400,9 @@ static void prefs_account_privacy_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON (vbox2, default_sign_chkbtn,
-			   _("Sign message by default"));
+			   _("PGP sign message by default"));
 	PACK_CHECK_BUTTON (vbox2, default_encrypt_chkbtn,
-			   _("Encrypt message by default"));
+			   _("PGP encrypt message by default"));
 	PACK_CHECK_BUTTON (vbox2, encrypt_reply_chkbtn,
 			   _("Encrypt when replying to encrypted message"));
 	PACK_CHECK_BUTTON (vbox2, ascii_armored_chkbtn,
