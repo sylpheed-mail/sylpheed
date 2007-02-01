@@ -2948,6 +2948,8 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 	if (mainwin->window_hidden &&
 	    prefs_common.show_trayicon && prefs_common.minimize_to_tray)
 		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), TRUE);
+	else if (!mainwin->window_hidden)
+		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), FALSE);
 
 	return FALSE;
 }
