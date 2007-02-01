@@ -38,7 +38,7 @@ static PrefsDisplayItem all_items[] =
 	 NULL,	0, NULL, TRUE, FALSE},
 	{T_GET,		"get",		N_("Get"),
 	 N_("Incorporate new mail"),
-	 STOCK_PIXMAP_MAIL_SEND, NULL, FALSE, FALSE},
+	 STOCK_PIXMAP_MAIL_RECEIVE, NULL, FALSE, FALSE},
 	{T_GET_ALL,	"get-all",	N_("Get all"),
 	 N_("Incorporate new mail of all accounts"),
 	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL, FALSE, FALSE},
