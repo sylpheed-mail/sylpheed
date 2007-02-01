@@ -26,11 +26,16 @@
 typedef struct _PrefsDisplayItem	PrefsDisplayItem;
 typedef struct _PrefsDisplayItemsDialog	PrefsDisplayItemsDialog;
 
+#include "stock_pixmap.h"
+
 struct _PrefsDisplayItem
 {
 	gint id;
 	gchar *name;
 	gchar *label;
+	gchar *description;
+	StockPixmap icon;
+	const gchar *stock_id;
 	gboolean allow_multiple;
 	gboolean in_use;
 };

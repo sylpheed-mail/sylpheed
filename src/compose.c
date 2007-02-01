@@ -101,10 +101,12 @@
 #include "news.h"
 #include "customheader.h"
 #include "prefs_common.h"
+#include "prefs_common_dialog.h"
 #include "prefs_account.h"
 #include "prefs_toolbar.h"
 #include "action.h"
 #include "account.h"
+#include "account_dialog.h"
 #include "filesel.h"
 #include "procheader.h"
 #include "procmime.h"
@@ -344,6 +346,10 @@ static void toolbar_ext_editor_cb	(GtkWidget	*widget,
 static void toolbar_linewrap_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_address_cb		(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_prefs_common_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_prefs_account_cb	(GtkWidget	*widget,
 					 gpointer	 data);
 
 static gboolean toolbar_button_pressed	(GtkWidget	*widget,
@@ -4854,26 +4860,19 @@ static void compose_connect_changed_callbacks(Compose *compose)
 
 static PrefsToolbarItem items[] =
 {
-	{T_SEND,	N_("Send message"),
-	 STOCK_PIXMAP_MAIL_SEND,	NULL,	TRUE, toolbar_send_cb},
-	{T_SEND_LATER,	N_("Put into queue folder and send later"),
-	 STOCK_PIXMAP_MAIL_SEND_QUEUE,	NULL,	TRUE, toolbar_send_later_cb},
-	{T_DRAFT,	N_("Save to draft folder"),
-	 STOCK_PIXMAP_MAIL,		NULL,	TRUE, toolbar_draft_cb},
-	{T_INSERT_FILE,	N_("Insert file"),
-	 STOCK_PIXMAP_INSERT_FILE,	NULL,	FALSE, toolbar_insert_cb},
-	{T_ATTACH_FILE,	N_("Attach file"),
-	 STOCK_PIXMAP_MAIL_ATTACH,	NULL,	FALSE, toolbar_attach_cb},
-	{T_SIGNATURE,	N_("Append signature"),
-	 STOCK_PIXMAP_SIGN,		NULL,	FALSE, toolbar_sig_cb},
-	{T_EDITOR,	N_("Edit with external editor"),
-	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	FALSE, toolbar_ext_editor_cb},
-	{T_LINEWRAP,	N_("Wrap all long lines"),
-	 STOCK_PIXMAP_LINEWRAP,		NULL,	FALSE, toolbar_linewrap_cb},
-	{T_ADDRESS_BOOK,	N_("Address book"),
-	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	FALSE, toolbar_address_cb},
+	{T_SEND,		TRUE, toolbar_send_cb},
+	{T_SEND_LATER,		TRUE, toolbar_send_later_cb},
+	{T_DRAFT,		TRUE, toolbar_draft_cb},
+	{T_INSERT_FILE,		FALSE, toolbar_insert_cb},
+	{T_ATTACH_FILE,		FALSE, toolbar_attach_cb},
+	{T_SIGNATURE,		FALSE, toolbar_sig_cb},
+	{T_EDITOR,		FALSE, toolbar_ext_editor_cb},
+	{T_LINEWRAP,		FALSE, toolbar_linewrap_cb},
+	{T_ADDRESS_BOOK,	FALSE, toolbar_address_cb},
+	{T_COMMON_PREFS,	FALSE, toolbar_prefs_common_cb},
+	{T_ACCOUNT_PREFS,	FALSE, toolbar_prefs_account_cb},
 
-	{-1, NULL, -1, NULL, NULL}
+	{-1, FALSE, NULL}
 };
 
 static GtkWidget *compose_toolbar_create(Compose *compose)
@@ -4920,7 +4919,9 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 	items[6].data = &compose->exteditor_btn;
 	items[7].data = &compose->linewrap_btn;
 	items[8].data = &compose->addrbook_btn;
-	for (i = 0; i <= 8; i++)
+	items[9].data = &compose->prefs_common_btn;
+	items[10].data = &compose->prefs_account_btn;
+	for (i = 0; i <= 10; i++)
 		*(GtkWidget **)items[i].data = NULL;
 
 	for (cur = item_list; cur != NULL; cur = cur->next) {
@@ -4942,16 +4943,19 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 		if (item->id == -1)
 			continue;
 
-		if (item->stock_id) {
+		if (ditem->stock_id) {
 			icon_wid = gtk_image_new_from_stock
-				(item->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
+				(ditem->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
 		} else
-			icon_wid = stock_pixbuf_widget(NULL, item->icon);
+			icon_wid = stock_pixbuf_widget(NULL, ditem->icon);
 
 		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
-		tips = gtk_tooltips_new();
-		gtk_tool_item_set_tooltip(toolitem, tips,
-					  gettext(item->tooltip), ditem->name);
+		if (ditem->description) {
+			tips = gtk_tooltips_new();
+			gtk_tool_item_set_tooltip(toolitem, tips,
+						  gettext(ditem->description),
+						  ditem->name);
+		}
 
 		gtkut_get_str_size(GTK_WIDGET(toolitem), gettext(ditem->label),
 				   &width, NULL);
@@ -5991,6 +5995,16 @@ static void toolbar_linewrap_cb(GtkWidget *widget, gpointer data)
 static void toolbar_address_cb(GtkWidget *widget, gpointer data)
 {
 	compose_address_cb(data, 0, NULL);
+}
+
+static void toolbar_prefs_common_cb(GtkWidget *widget, gpointer data)
+{
+	prefs_common_open();
+}
+
+static void toolbar_prefs_account_cb(GtkWidget *widget, gpointer data)
+{
+	account_open(cur_account);
 }
 
 static void toolbar_customize(GtkWidget *widget, gpointer data)

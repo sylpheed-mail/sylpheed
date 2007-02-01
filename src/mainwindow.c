@@ -2394,40 +2394,24 @@ static GtkItemFactoryEntry forward_entries[] =
 
 static PrefsToolbarItem items[] =
 {
-	{T_GET,		N_("Incorporate new mail"),
-	 STOCK_PIXMAP_MAIL_RECEIVE,	NULL,	TRUE, toolbar_inc_cb},
-	{T_GET_ALL,	N_("Incorporate new mail of all accounts"),
-	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL,	TRUE, toolbar_inc_all_cb},
-	{T_SEND_QUEUE,	N_("Send queued message(s)"),
-	 STOCK_PIXMAP_MAIL_SEND,	NULL,	TRUE, toolbar_send_cb},
-	{T_COMPOSE,	N_("Compose new message"),
-	 STOCK_PIXMAP_MAIL_COMPOSE,	NULL,	TRUE, toolbar_compose_cb},
-	{T_REPLY,	N_("Reply to the message"),
-	 STOCK_PIXMAP_MAIL_REPLY,	NULL,	TRUE, toolbar_reply_cb},
-	{T_REPLY_ALL,	N_("Reply to all"),
-	 STOCK_PIXMAP_MAIL_REPLY_TO_ALL, NULL,	TRUE, toolbar_reply_to_all_cb},
-	{T_FORWARD,	N_("Forward the message"),
-	 STOCK_PIXMAP_MAIL_FORWARD,	NULL,	TRUE, toolbar_forward_cb},
-	{T_DELETE,	N_("Delete the message"),
-	 STOCK_PIXMAP_DELETE,		NULL,	FALSE, toolbar_delete_cb},
-	{T_JUNK,	N_("Set as junk mail"),
-	 STOCK_PIXMAP_SPAM,		NULL,	TRUE, toolbar_junk_cb},
-	{T_EXECUTE,	N_("Execute marked process"),
-	 -1,		GTK_STOCK_EXECUTE,	FALSE, toolbar_exec_cb},
-	{T_NEXT,	N_("Next unread message"),
-	 -1,		GTK_STOCK_GO_DOWN,	FALSE, toolbar_next_unread_cb},
-	{T_PREV,	N_("Previous unread message"),
-	 -1,		GTK_STOCK_GO_UP,	FALSE, toolbar_prev_unread_cb},
-	{T_ADDRESS_BOOK,	N_("Address book"),
-	 STOCK_PIXMAP_ADDRESS_BOOK,	NULL,	FALSE, toolbar_address_cb},
-	{T_PRINT,	N_("Print message"),
-	 -1,		GTK_STOCK_PRINT,	FALSE, toolbar_print_cb},
-	{T_COMMON_PREFS,	N_("Common preferences"),
-	 -1,		GTK_STOCK_PREFERENCES,	FALSE, toolbar_prefs_common_cb},
-	{T_ACCOUNT_PREFS,	N_("Account preferences"),
-	 -1,		GTK_STOCK_PREFERENCES,	FALSE, toolbar_prefs_account_cb},
+	{T_GET,			TRUE,	toolbar_inc_cb},
+	{T_GET_ALL,		TRUE,	toolbar_inc_all_cb},
+	{T_SEND_QUEUE,		TRUE,	toolbar_send_cb},
+	{T_COMPOSE,		TRUE,	toolbar_compose_cb},
+	{T_REPLY,		TRUE,	toolbar_reply_cb},
+	{T_REPLY_ALL,		TRUE,	toolbar_reply_to_all_cb},
+	{T_FORWARD,		TRUE,	toolbar_forward_cb},
+	{T_DELETE,		FALSE,	toolbar_delete_cb},
+	{T_JUNK,		TRUE,	toolbar_junk_cb},
+	{T_NEXT,		FALSE,	toolbar_next_unread_cb},
+	{T_PREV,		FALSE,	toolbar_prev_unread_cb},
+	{T_PRINT,		FALSE,	toolbar_print_cb},
+	{T_ADDRESS_BOOK,	FALSE,	toolbar_address_cb},
+	{T_EXECUTE,		FALSE,	toolbar_exec_cb},
+	{T_COMMON_PREFS,	FALSE,	toolbar_prefs_common_cb},
+	{T_ACCOUNT_PREFS,	FALSE,	toolbar_prefs_account_cb},
 
-	{-1, NULL, -1, NULL, FALSE, NULL}
+	{-1, FALSE, NULL}
 };
 
 static GtkWidget *main_window_toolbar_create(MainWindow *mainwin)
@@ -2477,11 +2461,11 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	items[6].data = &mainwin->fwd_btn;
 	items[7].data = &mainwin->delete_btn;
 	items[8].data = &mainwin->junk_btn;
-	items[9].data = &mainwin->exec_btn;
-	items[10].data = &mainwin->next_btn;
-	items[11].data = &mainwin->prev_btn;
+	items[9].data = &mainwin->next_btn;
+	items[10].data = &mainwin->prev_btn;
+	items[11].data = &mainwin->print_btn;
 	items[12].data = &mainwin->address_btn;
-	items[13].data = &mainwin->print_btn;
+	items[13].data = &mainwin->exec_btn;
 	items[14].data = &mainwin->prefs_common_btn;
 	items[15].data = &mainwin->prefs_account_btn;
 	for (i = 0; i <= 15; i++)
@@ -2508,16 +2492,19 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 		if (item->id == -1)
 			continue;
 
-		if (item->stock_id) {
+		if (ditem->stock_id) {
 			icon_wid = gtk_image_new_from_stock
-				(item->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
+				(ditem->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
 		} else
-			icon_wid = stock_pixbuf_widget(NULL, item->icon);
+			icon_wid = stock_pixbuf_widget(NULL, ditem->icon);
 
 		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
-		tips = gtk_tooltips_new();
-		gtk_tool_item_set_tooltip(toolitem, tips,
-					  gettext(item->tooltip), ditem->name);
+		if (ditem->description) {
+			tips = gtk_tooltips_new();
+			gtk_tool_item_set_tooltip(toolitem, tips,
+						  gettext(ditem->description),
+						  ditem->name);
+		}
 
 		gtkut_get_str_size(GTK_WIDGET(toolitem), gettext(ditem->label),
 				   &width, NULL);
@@ -2546,10 +2533,13 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 			gtk_tool_item_set_homogeneous(comboitem, FALSE);
 			gtk_container_add(GTK_CONTAINER(comboitem),
 					  GTK_WIDGET_PTR(combo));
-			tips = gtk_tooltips_new();
-			gtk_tool_item_set_tooltip(comboitem, tips,
-						  gettext(item->tooltip),
-						  ditem->name);
+			if (ditem->description) {
+				tips = gtk_tooltips_new();
+				gtk_tool_item_set_tooltip
+					(comboitem, tips,
+					 gettext(ditem->description),
+					 ditem->name);
+			}
 
 			gtk_toolbar_insert(GTK_TOOLBAR(toolbar), comboitem, -1);
 
@@ -2568,10 +2558,13 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 			gtk_tool_item_set_homogeneous(comboitem, FALSE);
 			gtk_container_add(GTK_CONTAINER(comboitem),
 					  GTK_WIDGET_PTR(combo));
-			tips = gtk_tooltips_new();
-			gtk_tool_item_set_tooltip(comboitem, tips,
-						  gettext(item->tooltip),
-						  ditem->name);
+			if (ditem->description) {
+				tips = gtk_tooltips_new();
+				gtk_tool_item_set_tooltip
+					(comboitem, tips,
+					 gettext(ditem->description),
+					 ditem->name);
+			}
 
 			gtk_toolbar_insert(GTK_TOOLBAR(toolbar), comboitem, -1);
 

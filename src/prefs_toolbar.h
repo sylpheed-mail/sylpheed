@@ -26,7 +26,6 @@
 typedef struct _PrefsToolbarItem	PrefsToolbarItem;
 
 #include "prefs_display_items.h"
-#include "stock_pixmap.h"
 
 typedef enum
 {
@@ -70,9 +69,6 @@ typedef enum
 struct _PrefsToolbarItem
 {
 	gint id;
-	gchar *tooltip;
-	StockPixmap icon;
-	const gchar *stock_id;
 	gboolean is_important;
 	void (*callback) (GtkWidget *widget, gpointer data);
 	gpointer data;
