@@ -2054,7 +2054,12 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/Tools/Execute marked process"       , M_MSG_EXIST|M_EXEC},
 		{"/Tools/Delete duplicated messages"   , M_MSG_EXIST|M_ALLOW_DELETE},
 
-		{"/Configuration", M_UNLOCKED},
+		{"/Configuration/Common preferences...", M_UNLOCKED},
+		{"/Configuration/Filter setting...", M_UNLOCKED},
+		{"/Configuration/Preferences for current account...", M_UNLOCKED},
+		{"/Configuration/Create new account...", M_UNLOCKED},
+		{"/Configuration/Edit accounts...", M_UNLOCKED},
+		{"/Configuration/Change current account", M_UNLOCKED},
 
 		{NULL, 0}
 	};
