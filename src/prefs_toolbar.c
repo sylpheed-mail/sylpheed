@@ -34,7 +34,7 @@
 
 static PrefsDisplayItem all_items[] =
 {
-	{T_SEPARATOR,	"separator",	N_("Separator"),
+	{T_SEPARATOR,	"separator",	N_("---- Separator ----"),
 	 NULL,	0, NULL, TRUE, FALSE},
 	{T_GET,		"get",		N_("Get"),
 	 N_("Incorporate new mail"),
@@ -208,7 +208,7 @@ gint prefs_toolbar_open(ToolbarType type, gint *visible_items,
 			     _("Customize toolbar"));
 	gtk_label_set_text(GTK_LABEL(dialog->label),
 			   _("Select items to be displayed on the toolbar. You can modify\n"
-			     "the order by using the Up / Down button, or dragging the items."));
+			     "the order by using the Up / Down button."));
 
 	switch (type) {
 	case TOOLBAR_MAIN:

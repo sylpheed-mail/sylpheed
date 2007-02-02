@@ -194,7 +194,7 @@ static void prefs_summary_column_create(void)
 
 	label = gtk_label_new
 		(_("Select items to be displayed on the summary view. You can modify\n"
-		   "the order by using the Up / Down button, or dragging the items."));
+		   "the order by using the Up / Down button."));
 	gtk_widget_show(label);
 	gtk_box_pack_start(GTK_BOX(label_hbox), label, FALSE, FALSE, 4);
 	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
@@ -269,8 +269,10 @@ static void prefs_summary_column_create(void)
 	gtk_container_add(GTK_CONTAINER(scrolledwin), shown_clist);
 	gtk_clist_set_selection_mode(GTK_CLIST(shown_clist),
 				     GTK_SELECTION_BROWSE);
+#if 0
 	gtk_clist_set_reorderable(GTK_CLIST(shown_clist), TRUE);
 	gtk_clist_set_use_drag_icons(GTK_CLIST(shown_clist), FALSE);
+#endif
 	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(shown_clist)->column[0].button,
 			       GTK_CAN_FOCUS);
 

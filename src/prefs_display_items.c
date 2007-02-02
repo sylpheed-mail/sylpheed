@@ -43,6 +43,8 @@
 #include "gtkutils.h"
 #include "utils.h"
 
+static void prefs_display_items_set_sensitive(PrefsDisplayItemsDialog *dialog);
+
 /* callback functions */
 static void prefs_display_items_add	(GtkWidget	*widget,
 					 gpointer	 data);
@@ -61,6 +63,16 @@ static void prefs_display_items_ok	(GtkWidget	*widget,
 					 gpointer	 data);
 static void prefs_display_items_cancel	(GtkWidget	*widget,
 					 gpointer	 data);
+
+static void prefs_display_items_shown_select_row(GtkWidget	*widget,
+						 gint		 row,
+						 gint		 column,
+						 GdkEventButton	*event,
+						 gpointer	 data);
+static void prefs_display_items_shown_row_move	(GtkWidget	*widget,
+						 gint		 row,
+						 gint		 column,
+						 gpointer	 data);
 
 static gint prefs_display_items_delete_event	(GtkWidget	*widget,
 						 GdkEventAny	*event,
@@ -199,10 +211,19 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 	gtk_container_add(GTK_CONTAINER(scrolledwin), shown_clist);
 	gtk_clist_set_selection_mode(GTK_CLIST(shown_clist),
 				     GTK_SELECTION_BROWSE);
+#if 0
 	gtk_clist_set_reorderable(GTK_CLIST(shown_clist), TRUE);
 	gtk_clist_set_use_drag_icons(GTK_CLIST(shown_clist), FALSE);
+#endif
 	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(shown_clist)->column[0].button,
 			       GTK_CAN_FOCUS);
+
+	g_signal_connect(G_OBJECT(shown_clist), "select-row",
+			 G_CALLBACK(prefs_display_items_shown_select_row),
+			 dialog);
+	g_signal_connect_after(G_OBJECT(shown_clist), "row-move",
+			       G_CALLBACK(prefs_display_items_shown_row_move),
+			       dialog);
 
 	/* up/down button */
 	btn_vbox = gtk_vbox_new(FALSE, 0);
@@ -358,6 +379,8 @@ void prefs_display_items_dialog_set_visible(PrefsDisplayItemsDialog *dialog,
 	GList *cur;
 	PrefsDisplayItem *item;
 	gint i;
+	gint row;
+	gchar *name;
 
 	g_return_if_fail(dialog->available_items != NULL);
 
@@ -378,9 +401,7 @@ void prefs_display_items_dialog_set_visible(PrefsDisplayItemsDialog *dialog,
 	}
 
 	for (i = 0; ids[i] != -1; i++) {
-		gint row;
 		gint id = ids[i];
-		gchar *name;
 
 		item = prefs_display_items_get_item_from_id(dialog, id);
 
@@ -394,7 +415,44 @@ void prefs_display_items_dialog_set_visible(PrefsDisplayItemsDialog *dialog,
 		gtk_clist_set_row_data(shown_clist, row, item);
 	}
 
+	name = "--------";
+	row = gtk_clist_append(shown_clist, (gchar **)&name);
+	gtk_widget_ensure_style(GTK_WIDGET(shown_clist));
+	gtk_clist_set_foreground
+		(shown_clist, row,
+		 &GTK_WIDGET(shown_clist)->style->text[GTK_STATE_INSENSITIVE]);
+
 	prefs_display_items_update_available(dialog);
+	prefs_display_items_set_sensitive(dialog);
+	gtk_clist_moveto(shown_clist, 0, 0, 0, 0);
+}
+
+static void prefs_display_items_set_sensitive(PrefsDisplayItemsDialog *dialog)
+{
+	GtkCList *clist = GTK_CLIST(dialog->shown_clist);
+	gint row;
+
+	if (!clist->selection) return;
+
+	row = GPOINTER_TO_INT(clist->selection->data);
+
+	if (gtk_clist_get_row_data(clist, row))
+		gtk_widget_set_sensitive(dialog->remove_btn, TRUE);
+	else
+		gtk_widget_set_sensitive(dialog->remove_btn, FALSE);
+
+	if (row > 0 && row < clist->rows - 1)
+		gtk_widget_set_sensitive(dialog->up_btn, TRUE);
+	else
+		gtk_widget_set_sensitive(dialog->up_btn, FALSE);
+
+	if (row >= 0 && row < clist->rows - 2)
+		gtk_widget_set_sensitive(dialog->down_btn, TRUE);
+	else
+		gtk_widget_set_sensitive(dialog->down_btn, FALSE);
+
+	if (gtk_clist_row_is_visible(clist, row) != GTK_VISIBILITY_FULL)
+		gtk_clist_moveto(clist, row, 0, 0.5, 0);
 }
 
 static void prefs_display_items_add(GtkWidget *widget, gpointer data)
@@ -426,6 +484,8 @@ static void prefs_display_items_add(GtkWidget *widget, gpointer data)
 	name = gettext(item->label);
 	row = gtk_clist_insert(shown_clist, row, (gchar **)&name);
 	gtk_clist_set_row_data(shown_clist, row, item);
+
+	prefs_display_items_set_sensitive(dialog);
 }
 
 static void prefs_display_items_remove(GtkWidget *widget, gpointer data)
@@ -441,6 +501,8 @@ static void prefs_display_items_remove(GtkWidget *widget, gpointer data)
 
 	row = GPOINTER_TO_INT(shown_clist->selection->data);
 	item = (PrefsDisplayItem *)gtk_clist_get_row_data(shown_clist, row);
+	if (!item)
+		return;
 	gtk_clist_remove(shown_clist, row);
 	if (shown_clist->rows == row)
 		gtk_clist_select_row(shown_clist, row - 1, -1);
@@ -449,6 +511,8 @@ static void prefs_display_items_remove(GtkWidget *widget, gpointer data)
 		item->in_use = FALSE;
 		prefs_display_items_update_available(dialog);
 	}
+
+	prefs_display_items_set_sensitive(dialog);
 }
 
 static void prefs_display_items_up(GtkWidget *widget, gpointer data)
@@ -460,7 +524,7 @@ static void prefs_display_items_up(GtkWidget *widget, gpointer data)
 	if (!shown_clist->selection) return;
 
 	row = GPOINTER_TO_INT(shown_clist->selection->data);
-	if (row > 0)
+	if (row > 0 && row < shown_clist->rows - 1)
 		gtk_clist_row_move(shown_clist, row, row - 1);
 }
 
@@ -473,7 +537,7 @@ static void prefs_display_items_down(GtkWidget *widget, gpointer data)
 	if (!shown_clist->selection) return;
 
 	row = GPOINTER_TO_INT(shown_clist->selection->data);
-	if (row >= 0 && row < shown_clist->rows - 1)
+	if (row >= 0 && row < shown_clist->rows - 2)
 		gtk_clist_row_move(shown_clist, row, row + 1);
 }
 
@@ -494,7 +558,8 @@ static void prefs_display_items_ok(GtkWidget *widget, gpointer data)
 
 	for (row = 0; row < shown_clist->rows; row++) {
 		item = gtk_clist_get_row_data(shown_clist, row);
-		list = g_list_append(list, item);
+		if (item)
+			list = g_list_append(list, item);
 	}
 
 	dialog->visible_items = list;
@@ -507,6 +572,27 @@ static void prefs_display_items_cancel(GtkWidget *widget, gpointer data)
 
 	dialog->finished = TRUE;
 	dialog->cancelled = TRUE;
+}
+
+static void prefs_display_items_shown_select_row(GtkWidget	*widget,
+						 gint		 row,
+						 gint		 column,
+						 GdkEventButton	*event,
+						 gpointer	 data)
+{
+	PrefsDisplayItemsDialog *dialog = data;
+
+	prefs_display_items_set_sensitive(dialog);
+}
+
+static void prefs_display_items_shown_row_move	(GtkWidget	*widget,
+						 gint		 row,
+						 gint		 column,
+						 gpointer	 data)
+{
+	PrefsDisplayItemsDialog *dialog = data;
+
+	prefs_display_items_set_sensitive(dialog);
 }
 
 static gint prefs_display_items_delete_event(GtkWidget *widget,
