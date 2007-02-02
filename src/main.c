@@ -1289,4 +1289,6 @@ static void send_queue(void)
 	}
 
 	folderview_update_all_updated(TRUE);
+	main_window_set_menu_sensitive(main_window_get());
+	main_window_set_toolbar_sensitive(main_window_get());
 }

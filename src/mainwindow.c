@@ -1770,6 +1770,8 @@ void main_window_send_queue(MainWindow *mainwin)
 	}
 
 	folderview_update_all_updated(TRUE);
+	main_window_set_menu_sensitive(mainwin);
+	main_window_set_toolbar_sensitive(mainwin);
 }
 
 typedef enum
@@ -1786,6 +1788,7 @@ typedef enum
 	M_ALLOW_DELETE	      = 1 << 9,
 	M_INC_ACTIVE	      = 1 << 10,
 	M_ENABLE_JUNK	      = 1 << 11,
+	M_HAVE_QUEUED_MSG     = 1 << 12,
 
 	M_FOLDER_NEWOK	      = 1 << 17,
 	M_FOLDER_RENOK	      = 1 << 18,
@@ -1802,6 +1805,7 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 {
 	SensitiveCond state = 0;
 	SummarySelection selection;
+	GList *list;
 	FolderItem *item = mainwin->summaryview->folder_item;
 
 	selection = summary_get_selection_type(mainwin->summaryview);
@@ -1837,6 +1841,14 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 
 	if (prefs_common.enable_junk)
 		state |= M_ENABLE_JUNK;
+
+	for (list = folder_get_list(); list != NULL; list = list->next) {
+		Folder *folder = list->data;
+		if (folder->queue && folder->queue->total > 0) {
+			state |= M_HAVE_QUEUED_MSG;
+			break;
+		}
+	}
 
 	item = folderview_get_selected_item(mainwin->folderview);
 	if (item) {
@@ -1887,7 +1899,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 	SET_WIDGET_COND(mainwin->get_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->getall_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
-	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT);
+	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG);
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
@@ -2026,7 +2038,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 						 , M_HAVE_ACCOUNT|M_UNLOCKED},
 		{"/Message/Receive/Cancel receiving"
 						 , M_INC_ACTIVE},
-		{"/Message/Send queued messages" , M_HAVE_ACCOUNT},
+		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG},
 
 		{"/Message/Compose new message"  , M_HAVE_ACCOUNT},
 		{"/Message/Reply"                , M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST},

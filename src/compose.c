@@ -3551,6 +3551,9 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	folder_item_scan(queue);
 	folderview_update_item(queue, TRUE);
 
+	main_window_set_menu_sensitive(main_window_get());
+	main_window_set_toolbar_sensitive(main_window_get());
+
 	return 0;
 }
 
