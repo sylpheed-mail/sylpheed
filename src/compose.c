@@ -589,7 +589,7 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_View/_Attachment"),	NULL, compose_toggle_attach_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/Cu_stomize toolbar..."),
-					NULL, compose_customize_toolbar_cb, 0, "<ToggleItem>"},
+					NULL, compose_customize_toolbar_cb, 0, NULL},
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
 
 #define ENC_ACTION(action) \
