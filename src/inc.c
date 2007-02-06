@@ -1400,25 +1400,22 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 	debug_print(_("Getting new messages from %s into %s...\n"),
 		    mbox, dest->path);
 
-	if (prefs_common.filter_on_inc)
-		folder_table = g_hash_table_new(NULL, NULL);
-	msgs = proc_mbox(dest, tmp_mbox, folder_table);
+	folder_table = g_hash_table_new(NULL, NULL);
+
+	msgs = proc_mbox_full(dest, tmp_mbox, folder_table,
+			      prefs_common.filter_on_inc);
 
 	g_unlink(tmp_mbox);
 	if (msgs >= 0) empty_mbox(mbox);
 	unlock_mbox(mbox, lockfd, LOCK_FLOCK);
 
-	if (folder_table) {
-		if (!prefs_common.scan_all_after_inc) {
-			folder_item_scan_foreach(folder_table);
-			folderview_update_item_foreach
-				(folder_table, !prefs_common.open_inbox_on_inc);
-		}
-		g_hash_table_destroy(folder_table);
-	} else if (!prefs_common.scan_all_after_inc) {
-		folder_item_scan(dest);
-		folderview_update_item(dest, TRUE);
+	if (!prefs_common.scan_all_after_inc) {
+		folder_item_scan_foreach(folder_table);
+		folderview_update_item_foreach
+			(folder_table, !prefs_common.open_inbox_on_inc);
 	}
+
+	g_hash_table_destroy(folder_table);
 
 	return msgs;
 }

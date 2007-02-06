@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -32,6 +32,11 @@ typedef enum {
 gint proc_mbox		(FolderItem	*dest,
 			 const gchar	*mbox,
 			 GHashTable	*folder_table);
+gint proc_mbox_full	(FolderItem	*dest,
+			 const gchar	*mbox,
+			 GHashTable	*folder_table,
+			 gboolean	 apply_filter);
+
 gint lock_mbox		(const gchar	*base,
 			 LockType	 type);
 gint unlock_mbox	(const gchar	*base,
