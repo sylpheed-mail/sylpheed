@@ -151,6 +151,8 @@ static void toolbar_delete_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_junk_cb		(GtkWidget	*widget,
 					 gpointer	 data);
+static void toolbar_notjunk_cb		(GtkWidget	*widget,
+					 gpointer	 data);
 static void toolbar_exec_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 
@@ -159,6 +161,8 @@ static void toolbar_next_unread_cb	(GtkWidget	*widget,
 static void toolbar_prev_unread_cb	(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_address_cb		(GtkWidget	*widget,
+					 gpointer	 data);
+static void toolbar_search_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_print_cb		(GtkWidget	*widget,
 					 gpointer	 data);
@@ -1888,7 +1892,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[17];
+	} entry[18];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1915,6 +1919,8 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	SET_WIDGET_COND(mainwin->delete_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE);
 	SET_WIDGET_COND(mainwin->junk_btn,
+			M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK);
+	SET_WIDGET_COND(mainwin->notjunk_btn,
 			M_TARGET_EXIST|M_ALLOW_DELETE|M_ENABLE_JUNK);
 	SET_WIDGET_COND(mainwin->exec_btn, M_MSG_EXIST|M_EXEC);
 	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
@@ -2415,8 +2421,10 @@ static PrefsToolbarItem items[] =
 	{T_FORWARD,		TRUE,	toolbar_forward_cb},
 	{T_DELETE,		FALSE,	toolbar_delete_cb},
 	{T_JUNK,		TRUE,	toolbar_junk_cb},
+	{T_NOTJUNK,		FALSE,	toolbar_notjunk_cb},
 	{T_NEXT,		FALSE,	toolbar_next_unread_cb},
 	{T_PREV,		FALSE,	toolbar_prev_unread_cb},
+	{T_SEARCH,		FALSE,	toolbar_search_cb},
 	{T_PRINT,		FALSE,	toolbar_print_cb},
 	{T_ADDRESS_BOOK,	FALSE,	toolbar_address_cb},
 	{T_EXECUTE,		FALSE,	toolbar_exec_cb},
@@ -2473,14 +2481,16 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	items[6].data = &mainwin->fwd_btn;
 	items[7].data = &mainwin->delete_btn;
 	items[8].data = &mainwin->junk_btn;
-	items[9].data = &mainwin->next_btn;
-	items[10].data = &mainwin->prev_btn;
-	items[11].data = &mainwin->print_btn;
-	items[12].data = &mainwin->address_btn;
-	items[13].data = &mainwin->exec_btn;
-	items[14].data = &mainwin->prefs_common_btn;
-	items[15].data = &mainwin->prefs_account_btn;
-	for (i = 0; i <= 15; i++)
+	items[9].data = &mainwin->notjunk_btn;
+	items[10].data = &mainwin->next_btn;
+	items[11].data = &mainwin->prev_btn;
+	items[12].data = &mainwin->search_btn;
+	items[13].data = &mainwin->print_btn;
+	items[14].data = &mainwin->address_btn;
+	items[15].data = &mainwin->exec_btn;
+	items[16].data = &mainwin->prefs_common_btn;
+	items[17].data = &mainwin->prefs_account_btn;
+	for (i = 0; i <= 17; i++)
 		*(GtkWidget **)items[i].data = NULL;
 	mainwin->reply_combo = NULL;
 	mainwin->fwd_combo = NULL;
@@ -2668,6 +2678,14 @@ static void toolbar_junk_cb	(GtkWidget	*widget,
 	summary_junk(mainwin->summaryview);
 }
 
+static void toolbar_notjunk_cb	(GtkWidget	*widget,
+				 gpointer	 data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	summary_not_junk(mainwin->summaryview);
+}
+
 static void toolbar_exec_cb	(GtkWidget	*widget,
 				 gpointer	 data)
 {
@@ -2696,6 +2714,13 @@ static void toolbar_address_cb(GtkWidget *widget, gpointer data)
 	MainWindow *mainwin = (MainWindow *)data;
 
 	addressbook_open_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_search_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	search_cb(mainwin, 1, NULL);
 }
 
 static void toolbar_print_cb(GtkWidget *widget, gpointer data)

@@ -87,10 +87,12 @@ struct _MainWindow
 	ComboButton *fwd_combo;
 	GtkWidget *delete_btn;
 	GtkWidget *junk_btn;
+	GtkWidget *notjunk_btn;
 	GtkWidget *exec_btn;
 	GtkWidget *next_btn;
 	GtkWidget *prev_btn;
 	GtkWidget *address_btn;
+	GtkWidget *search_btn;
 	GtkWidget *print_btn;
 	GtkWidget *prefs_common_btn;
 	GtkWidget *prefs_account_btn;
