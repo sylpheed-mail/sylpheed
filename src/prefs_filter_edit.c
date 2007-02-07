@@ -431,6 +431,7 @@ void prefs_filter_edit_set_header_list(FilterCondEdit *cond_edit,
 	cond_edit->rule_hdr_list = rule_hdr_list;
 	cond_edit->hdr_list = procheader_merge_header_list_dup(list,
 							       rule_hdr_list);
+	procheader_header_list_destroy(list);
 }
 
 static void prefs_filter_edit_update_header_list(FilterCondEdit *cond_edit)
