@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -292,6 +292,19 @@ GSList *procheader_add_header_list(GSList *hlist, const gchar *header_name,
 	return g_slist_append(hlist, header);
 }
 
+GSList *procheader_copy_header_list(GSList *hlist)
+{
+	GSList *newlist = NULL, *cur;
+
+	for (cur = hlist; cur != NULL; cur = cur->next) {
+		Header *header = (Header *)cur->data;
+		newlist = procheader_add_header_list(newlist, header->name,
+						     header->body);
+	}
+
+	return newlist;
+}
+
 GSList *procheader_merge_header_list(GSList *hlist1, GSList *hlist2)
 {
 	GSList *cur;
@@ -303,6 +316,22 @@ GSList *procheader_merge_header_list(GSList *hlist1, GSList *hlist2)
 	}
 
 	return hlist1;
+}
+
+GSList *procheader_merge_header_list_dup(GSList *hlist1, GSList *hlist2)
+{
+	GSList *list, *cur;
+
+	list = procheader_copy_header_list(hlist1);
+
+	for (cur = hlist2; cur != NULL; cur = cur->next) {
+		Header *header = (Header *)cur->data;
+		if (procheader_find_header_list(list, header->name) < 0)
+			list = procheader_add_header_list(list, header->name,
+							  header->body);
+	}
+
+	return list;
 }
 
 gint procheader_find_header_list(GSList *hlist, const gchar *header_name)

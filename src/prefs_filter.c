@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,8 +85,6 @@ static void prefs_filter_set_dialog		(void);
 static void prefs_filter_set_list_row		(GtkTreeIter	*iter,
 						 FilterRule	*rule,
 						 gboolean	 move_view);
-
-static void prefs_filter_write_user_header_list	(void);
 
 static void prefs_filter_set_list		(void);
 
@@ -431,7 +429,8 @@ static void prefs_filter_set_list_row(GtkTreeIter *iter, FilterRule *rule,
 									  \
 		if (!g_hash_table_lookup(table, header->name)) {	  \
 			g_hash_table_insert(table, header->name, header); \
-			list = g_slist_append(list, header);		  \
+			list = procheader_add_header_list		  \
+				(list, header->name, header->body);	  \
 		}							  \
 	}
 
@@ -564,7 +563,7 @@ void prefs_filter_set_header_list(MsgInfo *msginfo)
 	prefs_filter_set_msg_header_list(msginfo);
 }
 
-static void prefs_filter_write_user_header_list(void)
+void prefs_filter_write_user_header_list(void)
 {
 	gchar *path;
 	PrefFile *pfile;
@@ -822,7 +821,6 @@ static gboolean prefs_filter_key_pressed(GtkWidget *widget, GdkEventKey *event,
 static void prefs_filter_close(void)
 {
 	prefs_filter_set_msg_header_list(NULL);
-	prefs_filter_write_user_header_list();
 	prefs_filter_set_list();
 	filter_write_config();
 	gtk_widget_hide(rule_list_window.window);

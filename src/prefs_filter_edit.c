@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -345,7 +345,7 @@ void prefs_filter_edit_clear_cond_edit(FilterCondEdit *cond_edit)
 		prefs_filter_edit_remove_cond_hbox(cond_edit, hbox);
 	}
 
-	g_slist_free(cond_edit->hdr_list);
+	procheader_header_list_destroy(cond_edit->hdr_list);
 	cond_edit->hdr_list = NULL;
 	procheader_header_list_destroy(cond_edit->rule_hdr_list);
 	cond_edit->rule_hdr_list = NULL;
@@ -407,7 +407,7 @@ void prefs_filter_edit_set_header_list(FilterCondEdit *cond_edit,
 	GSList *cur;
 	FilterCond *cond;
 
-	g_slist_free(cond_edit->hdr_list);
+	procheader_header_list_destroy(cond_edit->hdr_list);
 	cond_edit->hdr_list = NULL;
 	procheader_header_list_destroy(cond_edit->rule_hdr_list);
 	cond_edit->rule_hdr_list = NULL;
@@ -429,21 +429,21 @@ void prefs_filter_edit_set_header_list(FilterCondEdit *cond_edit,
 	}
 
 	cond_edit->rule_hdr_list = rule_hdr_list;
-	cond_edit->hdr_list = procheader_merge_header_list(list, rule_hdr_list);
+	cond_edit->hdr_list = procheader_merge_header_list_dup(list,
+							       rule_hdr_list);
 }
 
 static void prefs_filter_edit_update_header_list(FilterCondEdit *cond_edit)
 {
 	GSList *list;
 
-	g_slist_free(cond_edit->hdr_list);
+	procheader_header_list_destroy(cond_edit->hdr_list);
 	cond_edit->hdr_list = NULL;
 
 	list = prefs_filter_get_header_list();
-	cond_edit->hdr_list = list;
-
-	cond_edit->hdr_list =
-		procheader_merge_header_list(list, cond_edit->rule_hdr_list);
+	cond_edit->hdr_list = procheader_merge_header_list_dup
+		(list, cond_edit->rule_hdr_list);
+	procheader_header_list_destroy(list);
 }
 
 CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
@@ -1633,6 +1633,7 @@ static void prefs_filter_edit_edit_header_list(FilterCondEdit *cond_edit)
 			CondHBox *hbox = (CondHBox *)cur->data;
 			prefs_filter_edit_set_cond_header_menu(cond_edit, hbox);
 		}
+		prefs_filter_write_user_header_list();
 	}
 
 	gtk_widget_destroy(edit_header_list_dialog.window);

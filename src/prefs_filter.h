@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,5 +39,7 @@ gchar *prefs_filter_get_msg_header_field	(const gchar	*header_name);
 void prefs_filter_set_header_list		(MsgInfo	*msginfo);
 void prefs_filter_set_user_header_list		(GSList		*list);
 void prefs_filter_set_msg_header_list		(MsgInfo	*msginfo);
+
+void prefs_filter_write_user_header_list	(void);
 
 #endif /* __PREFS_FILTER_H__ */

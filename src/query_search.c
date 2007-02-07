@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,9 +149,9 @@ static gboolean row_selected		(GtkTreeSelection	*selection,
 					 gboolean		 cur_selected,
 					 gpointer		 data);
 
-static void query_search_clear	(GtkButton	*button,
+static void query_search_clear		(GtkButton	*button,
 					 gpointer	 data);
-static void query_select_folder	(GtkButton	*button,
+static void query_select_folder		(GtkButton	*button,
 					 gpointer	 data);
 static void query_search_clicked	(GtkButton	*button,
 					 gpointer	 data);

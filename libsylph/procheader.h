@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -56,7 +56,10 @@ GSList *procheader_get_header_list_from_msginfo	(MsgInfo	*msginfo);
 GSList *procheader_add_header_list		(GSList		*hlist,
 						 const gchar	*header_name,
 						 const gchar	*body);
+GSList *procheader_copy_header_list		(GSList		*hlist);
 GSList *procheader_merge_header_list		(GSList		*hlist1,
+						 GSList		*hlist2);
+GSList *procheader_merge_header_list_dup	(GSList		*hlist1,
 						 GSList		*hlist2);
 gint procheader_find_header_list		(GSList		*hlist,
 						 const gchar	*header_name);
