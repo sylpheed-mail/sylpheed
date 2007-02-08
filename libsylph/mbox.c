@@ -59,11 +59,14 @@
 gint proc_mbox(FolderItem *dest, const gchar *mbox, GHashTable *folder_table)
 {
 	return proc_mbox_full(dest, mbox, folder_table,
-			      folder_table ? TRUE : FALSE);
+			      folder_table ? TRUE : FALSE,
+			      folder_table && prefs_common.enable_junk &&
+			      prefs_common.filter_junk_on_recv ? TRUE : FALSE);
 }
 
 gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
-		    GHashTable *folder_table, gboolean apply_filter)
+		    GHashTable *folder_table, gboolean apply_filter,
+		    gboolean filter_junk)
 {
 	FILE *mbox_fp;
 	gchar buf[MSGBUFSIZE], from_line[MSGBUFSIZE];
@@ -211,8 +214,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		fltinfo->flags.perm_flags = MSG_NEW|MSG_UNREAD;
 		fltinfo->flags.tmp_flags = MSG_RECEIVED;
 
-		if (prefs_common.enable_junk &&
-		    prefs_common.filter_junk_on_recv &&
+		if (filter_junk && prefs_common.enable_junk &&
 		    prefs_common.filter_junk_before) {
 			filter_apply(prefs_common.junk_fltlist, tmp_file,
 				     fltinfo);
@@ -222,8 +224,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 			filter_apply(prefs_common.fltlist, tmp_file, fltinfo);
 
 		if (!fltinfo->drop_done &&
-		    prefs_common.enable_junk &&
-		    prefs_common.filter_junk_on_recv &&
+		    filter_junk && prefs_common.enable_junk &&
 		    !prefs_common.filter_junk_before) {
 			filter_apply(prefs_common.junk_fltlist, tmp_file,
 				     fltinfo);

@@ -1403,7 +1403,9 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 	folder_table = g_hash_table_new(NULL, NULL);
 
 	msgs = proc_mbox_full(dest, tmp_mbox, folder_table,
-			      prefs_common.filter_on_inc);
+			      prefs_common.filter_on_inc,
+			      prefs_common.enable_junk &&
+			      prefs_common.filter_junk_on_recv);
 
 	g_unlink(tmp_mbox);
 	if (msgs >= 0) empty_mbox(mbox);

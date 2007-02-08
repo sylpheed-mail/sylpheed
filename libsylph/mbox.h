@@ -35,7 +35,8 @@ gint proc_mbox		(FolderItem	*dest,
 gint proc_mbox_full	(FolderItem	*dest,
 			 const gchar	*mbox,
 			 GHashTable	*folder_table,
-			 gboolean	 apply_filter);
+			 gboolean	 apply_filter,
+			 gboolean	 filter_junk);
 
 gint lock_mbox		(const gchar	*base,
 			 LockType	 type);
