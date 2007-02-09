@@ -167,11 +167,13 @@ static gint edit_group_clist_add_email( GtkCList *clist, ItemEMail *email ) {
 
 static void edit_group_load_clist( GtkCList *clist, GList *listEMail ) {
 	GList *node = listEMail;
+	gtk_clist_freeze( clist );
 	while( node ) {
 		ItemEMail *email = node->data;
 		edit_group_clist_add_email( clist, email );
 		node = g_list_next( node );
 	}
+	gtk_clist_thaw( clist );
 }
 
 static void edit_group_group_selected( GtkCList *clist, gint row, gint column, GdkEvent *event, gpointer data ) {
@@ -189,6 +191,7 @@ static gint edit_group_move_email( GtkCList *clist_from, GtkCList *clist_to, gin
 		gtk_clist_remove( clist_from, row );
 		rrow = edit_group_clist_add_email( clist_to, email );
 		gtk_clist_select_row( clist_to, rrow, 0 );
+		gtkut_clist_set_focus_row( clist_to, rrow );
 	}
 	return rrow;
 }
@@ -477,7 +480,9 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 	g_list_free( listEMail );
 	listEMail = NULL;
 	gtk_clist_select_row( groupeditdlg.clist_group, 0, 0 );
+	gtkut_clist_set_focus_row( groupeditdlg.clist_group, 0 );
 	gtk_clist_select_row( groupeditdlg.clist_avail, 0, 0 );
+	gtkut_clist_set_focus_row( groupeditdlg.clist_avail, 0 );
 
 	edit_group_status_show( _edit_group_dfl_message_ );
 

@@ -1128,7 +1128,7 @@ static void addressbook_menuitem_set_sensitive(void) {
 	menu_set_sensitive( addrbook.menu_factory, "/Edit/Paste",  canPaste );
 
 	/* Popup menu */
-	menu_set_sensitive( addrbook.tree_factory, "/New Address", canEditAddress );
+	menu_set_sensitive( addrbook.tree_factory, "/New Address", canAdd );
 	menu_set_sensitive( addrbook.tree_factory, "/New Folder", canAdd );
 	menu_set_sensitive( addrbook.tree_factory, "/New Group", canAdd );
 	menu_set_sensitive( addrbook.tree_factory, "/Edit", canEditTree );
