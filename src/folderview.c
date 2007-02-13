@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -951,7 +951,7 @@ gint folderview_check_new(Folder *folder)
 	folderview = (FolderView *)folderview_list->data;
 	model = GTK_TREE_MODEL(folderview->store);
 
-	if (folder && !FOLDER_IS_LOCAL(folder)) {
+	if (folder && FOLDER_IS_REMOTE(folder)) {
 		if (!main_window_toggle_online_if_offline(folderview->mainwin))
 			return 0;
 	}
@@ -970,13 +970,14 @@ gint folderview_check_new(Folder *folder)
 		if (item->stype == F_VIRTUAL) continue;
 		if (item->no_select) continue;
 		if (folder && folder != item->folder) continue;
-		if (!folder && !FOLDER_IS_LOCAL(item->folder)) continue;
+		if (!folder && FOLDER_IS_REMOTE(item->folder)) continue;
 
 		prev_new = item->new;
 		prev_unread = item->unread;
 		folderview_scan_tree_func(item->folder, item, NULL);
 		if (folder_item_scan(item) < 0) {
-			if (folder && !FOLDER_IS_LOCAL(folder))
+			if (folder && FOLDER_IS_REMOTE(folder) &&
+			    REMOTE_FOLDER(folder)->session == NULL)
 				break;
 		}
 		folderview_update_row(folderview, &iter);
