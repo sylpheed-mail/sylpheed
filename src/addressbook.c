@@ -141,7 +141,7 @@ static GList *_addressIFaceSelection_ = NULL;
 #define ADDRESSBOOK_IFACE_SELECTION "1/y,3/y,4/y,2/n"
 
 /* Address clipboard */
-static AddressObject *clipObj = NULL;
+static GList *_clipObjectList_ = NULL;
 
 static AddressBook_win addrbook;
 
@@ -875,8 +875,9 @@ static void addressbook_del_clicked(GtkButton *button, gpointer data)
 			}
 			else if( aio->type == ADDR_ITEM_PERSON ) {
 				ItemPerson *item = ( ItemPerson * ) aio;
-				if( item == ( ItemPerson * )clipObj )
-					clipObj = NULL;
+				if( _clipObjectList_ ) {
+					_clipObjectList_ = g_list_remove( _clipObjectList_, item );
+				}
 				item = addrbook_remove_person( abf, item );
 				if( item ) {
 					addritem_free_item_person( item );
@@ -1102,8 +1103,18 @@ static void addressbook_menuitem_set_sensitive(void) {
 	canDelete = canEditAddress;
 	if( GTK_CLIST(addrbook.clist)->selection &&
 	    GTK_CLIST(addrbook.clist)->selection->next ) canEditAddress = FALSE;
-	if( obj && obj->type == ADDR_ITEM_PERSON ) canCopy = TRUE;
-	if( clipObj && canAdd ) canPaste = TRUE;
+	if( _addressListSelection_ ) {
+		GList *cur;
+		AddressObject *item;
+		for( cur = _addressListSelection_; cur != NULL; cur = cur->next ) {
+			item = cur->data;
+			if( item->type == ADDR_ITEM_PERSON ) {
+				canCopy = TRUE;
+				break;
+			}
+		}
+	}
+	if( _clipObjectList_ && canAdd ) canPaste = TRUE;
 
 	/* Enable add */
 	menu_set_sensitive( addrbook.menu_factory, "/Address/New Address", canAdd );
@@ -1294,7 +1305,6 @@ static void addressbook_list_row_selected( GtkCTree *clist, GtkCTreeNode *node, 
 	addrbook.listSelected = node;
 	obj = gtk_ctree_node_get_row_data( clist, node );
 	if( obj != NULL ) {
-		g_print( "list select: %d : '%s'\n", obj->type, obj->name );
 		addressbook_list_select_add( obj );
 	}
 
@@ -1306,7 +1316,6 @@ static void addressbook_list_row_unselected( GtkCTree *ctree, GtkCTreeNode *node
 
 	obj = gtk_ctree_node_get_row_data( ctree, node );
 	if( obj != NULL ) {
-		g_print( "list unselect: %d : '%s'\n", obj->type, obj->name );
 		addressbook_list_select_remove( obj );
 	}
 
@@ -1882,16 +1891,20 @@ static void addressbook_copy_address_cb(gpointer data, guint action,
 {
 	GtkCTree *clist = GTK_CTREE( addrbook.clist );
 	AddressObject *obj;
+	GList *node;
 
-	if( addrbook.listSelected == NULL ) return;
-	obj = gtk_ctree_node_get_row_data( clist, addrbook.listSelected );
-	g_return_if_fail(obj != NULL);
+	if ( _addressListSelection_ == NULL ) return;
 
-	if( obj->type == ADDR_ITEM_PERSON ) {
-		clipObj = obj;
-	}
-	else {
-		return;
+	g_list_free( _clipObjectList_ );
+	_clipObjectList_ = NULL;
+
+	node = _addressListSelection_;
+	while( node ) {
+		obj = node->data;
+		if( obj->type == ADDR_ITEM_PERSON ) {
+			_clipObjectList_ = g_list_append( _clipObjectList_, obj );
+		}
+		node = g_list_next( node );
 	}
 
 	addressbook_menuitem_set_sensitive();
@@ -1908,9 +1921,9 @@ static void addressbook_paste_address_cb(gpointer data, guint action,
 	ItemFolder *folder = NULL;
 	ItemPerson *clipPerson, *person;
 	GList *cur;
+	GList *node;
 
-	if (!clipObj) return;
-	if (clipObj->type != ADDR_ITEM_PERSON) return;
+	if (!_clipObjectList_) return;
 
 	pobj = gtk_ctree_node_get_row_data( ctree, addrbook.treeSelected );
 	if( pobj->type == ADDR_ITEM_FOLDER )
@@ -1926,19 +1939,26 @@ static void addressbook_paste_address_cb(gpointer data, guint action,
 	abf = ds->rawDataSource;
 	if( abf == NULL ) return;
 
-	clipPerson = (ItemPerson *)clipObj;
-	person = addrbook_add_address_list(abf, folder, NULL);
-	ADDRITEM_NAME(person) = g_strdup(ADDRITEM_NAME(clipPerson));
-	person->firstName = g_strdup(clipPerson->firstName);
-	person->lastName = g_strdup(clipPerson->lastName);
-	person->nickName = g_strdup(clipPerson->nickName);
-	for (cur = clipPerson->listEMail; cur != NULL; cur = cur->next) {
-		ItemEMail *email = cur->data;
-		addritem_person_add_email(person, addritem_copy_item_email(email));
-	}
-	for (cur = clipPerson->listAttrib; cur != NULL; cur = cur->next) {
-		UserAttribute *attr = cur->data;
-		addritem_person_add_attribute(person, addritem_copy_attribute(attr));
+	node = _clipObjectList_;
+	while( node ) {
+		obj = node->data;
+		node = g_list_next( node );
+		if( obj->type != ADDR_ITEM_PERSON ) continue;
+		clipPerson = (ItemPerson *)obj;
+
+		person = addrbook_add_address_list(abf, folder, NULL);
+		ADDRITEM_NAME(person) = g_strdup(ADDRITEM_NAME(clipPerson));
+		person->firstName = g_strdup(clipPerson->firstName);
+		person->lastName = g_strdup(clipPerson->lastName);
+		person->nickName = g_strdup(clipPerson->nickName);
+		for (cur = clipPerson->listEMail; cur != NULL; cur = cur->next) {
+			ItemEMail *email = cur->data;
+			addritem_person_add_email(person, addritem_copy_item_email(email));
+		}
+		for (cur = clipPerson->listAttrib; cur != NULL; cur = cur->next) {
+			UserAttribute *attr = cur->data;
+			addritem_person_add_attribute(person, addritem_copy_attribute(attr));
+		}
 	}
 
 	if (addrbook.treeSelected == addrbook.opened) {
