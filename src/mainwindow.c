@@ -1538,7 +1538,6 @@ void main_window_get_size(MainWindow *mainwin)
 	GtkAllocation *allocation;
 
 	allocation = &(GTK_WIDGET_PTR(mainwin->summaryview)->allocation);
-
 	if (allocation->width > 1 && allocation->height > 1) {
 		if (!prefs_common.mainwin_maximized) {
 			prefs_common.summaryview_width = allocation->width;
@@ -1552,8 +1551,12 @@ void main_window_get_size(MainWindow *mainwin)
 
 	}
 
-	if (prefs_common.mainwin_maximized)
+	if (prefs_common.mainwin_maximized) {
+		allocation = &(GTK_WIDGET_PTR(mainwin->folderview)->allocation);
+		if (allocation->width > 1 && allocation->height > 1)
+			prefs_common.folderview_width  = allocation->width;
 		return;
+	}
 
 	allocation = &mainwin->window->allocation;
 	if (allocation->width > 1 && allocation->height > 1) {
