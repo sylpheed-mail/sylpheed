@@ -151,6 +151,8 @@ static GList *_addressBookTypeList_ = NULL;
 static void addressbook_create			(void);
 static gint addressbook_close			(void);
 
+static void addressbook_menuitem_set_sensitive	(void);
+
 /* callback functions */
 static void addressbook_del_clicked		(GtkButton	*button,
 						 gpointer	 data);
@@ -368,7 +370,7 @@ static GtkItemFactoryEntry addressbook_entries[] =
 	{N_("/_Address/New _Folder"),	"<control>F",	addressbook_new_folder_cb,      0, NULL},
 	{N_("/_Address/---"),		NULL,		NULL, 0, "<Separator>"},
 	{N_("/_Address/_Edit"),		"<control>Return",	addressbook_edit_address_cb,    0, NULL},
-	{N_("/_Address/_Delete"),	NULL,		addressbook_delete_address_cb,  0, NULL},
+	{N_("/_Address/_Delete"),	"Delete",	addressbook_delete_address_cb,  0, NULL},
 
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _LDIF file"), NULL,		addressbook_import_ldif_cb,	0, NULL},
@@ -422,6 +424,7 @@ void addressbook_open(Compose *target)
 		addressbook_load_tree();
 		gtk_ctree_select(GTK_CTREE(addrbook.ctree),
 				 GTK_CTREE_NODE(GTK_CLIST(addrbook.ctree)->row_list));
+		addressbook_menuitem_set_sensitive();
 		gtk_widget_show_all(addrbook.window);
 	} 
 
@@ -898,19 +901,14 @@ static void addressbook_del_clicked(GtkButton *button, gpointer data)
 	else if( pobj->type == ADDR_ITEM_GROUP ) {
 		/* Items inside groups */
 		GList *node;
+		ItemGroup *group = ADAPTER_GROUP(pobj)->itemGroup;
 		node = _addressListSelection_;
 		while( node ) {
 			AddrItemObject *aio = node->data;
 			node = g_list_next( node );
 			if( aio->type == ADDR_ITEM_EMAIL ) {
 				ItemEMail *item = ( ItemEMail * ) aio;
-				ItemPerson *person = ( ItemPerson * ) ADDRITEM_PARENT(item);
-				item = addrbook_person_remove_email( abf, person, item );
-				if( item ) {
-					addritem_print_item_email( item, stdout );
-					addritem_free_item_email( item );
-					item = NULL;
-				}
+				item = addrbook_group_remove_email( abf, group, item );
 			}
 		}
 		addressbook_list_select_clear();
@@ -1047,8 +1045,6 @@ static void addressbook_menuitem_set_sensitive(void) {
 	AddressInterface *iface = NULL;
 	AddressObject *pobj = NULL;
 	AddressObject *obj = NULL;
-
-	g_print("addressbook_menuitem_set_sensitive\n");
 
 	addressbook_menubar_set_sensitive( FALSE );
 	menu_set_insensitive_all(GTK_MENU_SHELL(addrbook.tree_popup));

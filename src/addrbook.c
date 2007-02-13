@@ -264,7 +264,17 @@ ItemEMail *addrbook_person_remove_email( AddressBookFile *book, ItemPerson *pers
 	g_return_val_if_fail( book != NULL, NULL );
 
 	item = addrcache_person_remove_email( book->addressCache, person, email );
-	if( item ); book->dirtyFlag = TRUE;
+	if( item ) book->dirtyFlag = TRUE;
+	return item;
+}
+
+ItemEMail *addrbook_group_remove_email( AddressBookFile *book, ItemGroup *group, ItemEMail *email ) {
+	ItemEMail *item;
+
+	g_return_val_if_fail( book != NULL, NULL );
+
+	item = addritem_group_remove_email( group, email );
+	if( item ) book->dirtyFlag = TRUE;
 	return item;
 }
 

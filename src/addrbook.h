@@ -75,6 +75,8 @@ ItemPerson *addrbook_remove_person	( AddressBookFile *book, ItemPerson *person )
 ItemGroup *addrbook_remove_group	( AddressBookFile *book, ItemGroup *group );
 ItemEMail *addrbook_person_remove_email	( AddressBookFile *book, ItemPerson *person,
 					  ItemEMail *email );
+ItemEMail *addrbook_group_remove_email	( AddressBookFile *book, ItemGroup *group,
+					  ItemEMail *email );
 
 gint addrbook_read_data			( AddressBookFile *book );
 gint addrbook_save_data			( AddressBookFile *book );
