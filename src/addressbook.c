@@ -717,7 +717,6 @@ static void addressbook_create(void)
 					interfacexpm, interfacexpmmask,
 					interfacexpm, interfacexpmmask,
 					FALSE, FALSE );
-			menu_set_sensitive( menu_factory, atci->menuCommand, adapter->haveLibrary );
 			gtk_ctree_node_set_row_data( GTK_CTREE(ctree), adapter->treeNode, adapter );
 		}
 	}
@@ -1015,30 +1014,12 @@ static void addressbook_to_clicked(GtkButton *button, gpointer data)
 	}
 }
 
-static void addressbook_menubar_set_sensitive( gboolean sensitive ) {
-	menu_set_sensitive( addrbook.menu_factory, "/File/New Book",    sensitive );
-	menu_set_sensitive( addrbook.menu_factory, "/File/New vCard",  sensitive );
-#ifdef USE_JPILOT
-	menu_set_sensitive( addrbook.menu_factory, "/File/New JPilot", sensitive );
-#endif
-#ifdef USE_LDAP
-	menu_set_sensitive( addrbook.menu_factory, "/File/New LDAP Server",  sensitive );
-#endif
-	menu_set_sensitive( addrbook.menu_factory, "/File/Edit",        sensitive );
-	menu_set_sensitive( addrbook.menu_factory, "/File/Delete",      sensitive );
-
-	menu_set_sensitive( addrbook.menu_factory, "/Address/New Address", sensitive );
-	menu_set_sensitive( addrbook.menu_factory, "/Address/New Group",   sensitive );
-	menu_set_sensitive( addrbook.menu_factory, "/Address/New Folder",  sensitive );
-	gtk_widget_set_sensitive( addrbook.reg_btn, sensitive );
-	gtk_widget_set_sensitive( addrbook.del_btn, sensitive );
-}
-
 static void addressbook_menuitem_set_sensitive(void) {
 	gboolean canAdd = FALSE;
 	gboolean canEditTree = TRUE;
 	gboolean canEditAddress = FALSE;
 	gboolean canDelete = FALSE;
+	gboolean canLookup = FALSE;
 	gboolean canCopy = FALSE;
 	gboolean canPaste = FALSE;
 	AddressTypeControlItem *atci = NULL;
@@ -1047,7 +1028,14 @@ static void addressbook_menuitem_set_sensitive(void) {
 	AddressObject *pobj = NULL;
 	AddressObject *obj = NULL;
 
-	addressbook_menubar_set_sensitive( FALSE );
+	menu_set_sensitive( addrbook.menu_factory, "/File/New Book", FALSE );
+	menu_set_sensitive( addrbook.menu_factory, "/File/New vCard", FALSE );
+#ifdef USE_JPILOT
+	menu_set_sensitive( addrbook.menu_factory, "/File/New JPilot", FALSE );
+#endif
+#ifdef USE_LDAP
+	menu_set_sensitive( addrbook.menu_factory, "/File/New LDAP Server", FALSE );
+#endif
 	menu_set_insensitive_all(GTK_MENU_SHELL(addrbook.tree_popup));
 	menu_set_insensitive_all( GTK_MENU_SHELL(addrbook.list_popup) );
 
@@ -1079,6 +1067,12 @@ static void addressbook_menuitem_set_sensitive(void) {
 		if( ! iface->haveLibrary ) {
 			canAdd = canEditAddress = FALSE;
 		}
+#ifdef USE_LDAP
+		if( ads->subType == ADDR_LDAP &&
+		    iface->haveLibrary && ds->rawDataSource ) {
+			canLookup = TRUE;
+		}
+#endif
 	}
 	else if( pobj->type == ADDR_ITEM_FOLDER ) {
 		ds = addressbook_find_datasource( addrbook.treeSelected );
@@ -1149,6 +1143,7 @@ static void addressbook_menuitem_set_sensitive(void) {
 	/* Buttons */
 	gtk_widget_set_sensitive( addrbook.reg_btn, canAdd );
 	gtk_widget_set_sensitive( addrbook.del_btn, canDelete );
+	gtk_widget_set_sensitive( addrbook.lup_btn, canLookup );
 }
 
 static void addressbook_tree_selected(GtkCTree *ctree, GtkCTreeNode *node,
