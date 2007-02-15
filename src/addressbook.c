@@ -3514,7 +3514,7 @@ gboolean addressbook_load_completion( gint (*callBackFunc) ( const gchar *, cons
 					/* Have mail */
 					sFriendly = sName;
 					sAddress = email->address;
-					if( sAddress || *sAddress != '\0' ) {
+					if( sAddress && *sAddress != '\0' ) {
 						sAlias = ADDRITEM_NAME(email);
 						if( sAlias && *sAlias != '\0' ) {
 							sFriendly = sAlias;
