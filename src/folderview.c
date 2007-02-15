@@ -405,7 +405,9 @@ FolderView *folderview_create(void)
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
-		(_("New"), renderer, "text", COL_NEW, NULL);
+		(_("New"), renderer, "text", COL_NEW,
+		 "foreground-gdk", COL_FOREGROUND,
+		 "weight", COL_BOLD, NULL);
 	gtk_tree_view_column_set_alignment(column, 1.0);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
@@ -419,7 +421,9 @@ FolderView *folderview_create(void)
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
-		(_("Unread"), renderer, "text", COL_UNREAD, NULL);
+		(_("Unread"), renderer, "text", COL_UNREAD,
+		 "foreground-gdk", COL_FOREGROUND,
+		 "weight", COL_BOLD, NULL);
 	gtk_tree_view_column_set_alignment(column, 1.0);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
@@ -433,7 +437,9 @@ FolderView *folderview_create(void)
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "xalign", 1.0, "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
-		(_("#"), renderer, "text", COL_TOTAL, NULL);
+		(_("Total"), renderer, "text", COL_TOTAL,
+		 "foreground-gdk", COL_FOREGROUND,
+		 "weight", COL_BOLD, NULL);
 	gtk_tree_view_column_set_alignment(column, 1.0);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
