@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,171 +117,6 @@ typedef enum {
 #define PAGE_EMAIL             1
 #define PAGE_ATTRIBUTES        2
 
-#if 0
-#define SET_LABEL_AND_ENTRY(str, entry, top) \
-{ \
-	label = gtk_label_new(str); \
-	gtk_table_attach(GTK_TABLE(table), label, 0, 1, top, (top + 1), \
-			 GTK_FILL, 0, 0, 0); \
-	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5); \
- \
-	entry = gtk_entry_new(); \
-	gtk_table_attach(GTK_TABLE(table), entry, 1, 2, top, (top + 1), \
-			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0); \
-}
-
-static void edit_address_ok(GtkWidget *widget, gboolean *cancelled)
-{
-	*cancelled = FALSE;
-	gtk_main_quit();
-}
-
-static void edit_address_cancel(GtkWidget *widget, gboolean *cancelled)
-{
-	*cancelled = TRUE;
-	gtk_main_quit();
-}
-
-static gint edit_address_delete_event(GtkWidget *widget, GdkEventAny *event,
-				      gboolean *cancelled)
-{
-	*cancelled = TRUE;
-	gtk_main_quit();
-
-	return TRUE;
-}
-
-static gboolean edit_address_key_pressed(GtkWidget *widget, GdkEventKey *event,
-					 gboolean *cancelled)
-{
-	if (event && event->keyval == GDK_Escape) {
-		*cancelled = TRUE;
-		gtk_main_quit();
-	}
-	return FALSE;
-}
-
-static void addressbook_edit_address_create(gboolean *cancelled)
-{
-	GtkWidget *window;
-	GtkWidget *vbox;
-	GtkWidget *table;
-	GtkWidget *label;
-	GtkWidget *name_entry;
-	GtkWidget *addr_entry;
-	GtkWidget *rem_entry;
-	GtkWidget *hbbox;
-	GtkWidget *ok_btn;
-	GtkWidget *cancel_btn;
-
-	debug_print("Creating edit_address window...\n");
-
-	window = gtk_window_new(GTK_WINDOW_DIALOG);
-	gtk_widget_set_size_request(window, 400, -1);
-	/* gtk_container_set_border_width(GTK_CONTAINER(window), 8); */
-	gtk_window_set_title(GTK_WINDOW(window), _("Edit address"));
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-	gtk_window_set_modal(GTK_WINDOW(window), TRUE);	
-	g_signal_connect(G_OBJECT(window), "delete_event",
-			 G_CALLBACK(edit_address_delete_event),
-			 cancelled);
-	g_signal_connect(G_OBJECT(window), "key_press_event",
-			 G_CALLBACK(edit_address_key_pressed),
-			 cancelled);
-
-	vbox = gtk_vbox_new(FALSE, 8);
-	gtk_container_add(GTK_CONTAINER(window), vbox);
-
-	table = gtk_table_new(3, 2, FALSE);
-	gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-	gtk_table_set_row_spacings(GTK_TABLE(table), 8);
-	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
-
-	SET_LABEL_AND_ENTRY(_("Name"),    name_entry, 0);
-	SET_LABEL_AND_ENTRY(_("Address"), addr_entry, 1);
-	SET_LABEL_AND_ENTRY(_("Remarks"), rem_entry,  2);
-
-	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
-				      &cancel_btn, GTK_STOCK_CANCEL,
-				      NULL, NULL);
-	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
-	gtk_widget_grab_default(ok_btn);
-
-	g_signal_connect(G_OBJECT(ok_btn), "clicked",
-			 G_CALLBACK(edit_address_ok), cancelled);
-	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
-			 G_CALLBACK(edit_address_cancel), cancelled);
-
-	gtk_widget_show_all(vbox);
-
-	addredit.window     = window;
-	addredit.name_entry = name_entry;
-	addredit.addr_entry = addr_entry;
-	addredit.rem_entry  = rem_entry;
-	addredit.ok_btn     = ok_btn;
-	addredit.cancel_btn = cancel_btn;
-}
-
-AddressItem *addressbook_edit_address(AddressItem *item)
-{
-	static gboolean cancelled;
-	const gchar *str;
-
-	if (!addredit.window)
-		addressbook_edit_address_create(&cancelled);
-	gtk_widget_grab_focus(addredit.ok_btn);
-	gtk_widget_grab_focus(addredit.name_entry);
-	gtk_widget_show(addredit.window);
-	manage_window_set_transient(GTK_WINDOW(addredit.window));
-
-	gtk_entry_set_text(GTK_ENTRY(addredit.name_entry), "");
-	gtk_entry_set_text(GTK_ENTRY(addredit.addr_entry), "");
-	gtk_entry_set_text(GTK_ENTRY(addredit.rem_entry),  "");
-
-	if (item) {
-		if (ADDRESS_OBJECT_NAME(item))
-			gtk_entry_set_text(GTK_ENTRY(addredit.name_entry),
-					   ADDRESS_OBJECT_NAME(item));
-		if (item->address)
-			gtk_entry_set_text(GTK_ENTRY(addredit.addr_entry),
-					   item->address);
-		if (item->remarks)
-			gtk_entry_set_text(GTK_ENTRY(addredit.rem_entry),
-					   item->remarks);
-	}
-
-	gtk_main();
-	gtk_widget_hide(addredit.window);
-	if (cancelled == TRUE) return NULL;
-
-	str = gtk_entry_get_text(GTK_ENTRY(addredit.name_entry));
-	if (*str == '\0') return NULL;
-
-	if (!item) {
-		item = mgu_create_address();
-		ADDRESS_OBJECT_TYPE(item) = ADDR_ITEM;
-	}
-
-	g_free(ADDRESS_OBJECT_NAME(item));
-	ADDRESS_OBJECT_NAME(item) = g_strdup(str);
-
-	str = gtk_entry_get_text(GTK_ENTRY(addredit.addr_entry));
-	g_free(item->address);
-	if (*str == '\0')
-		item->address = NULL;
-	else
-		item->address = g_strdup(str);
-
-	str = gtk_entry_get_text(GTK_ENTRY(addredit.rem_entry));
-	g_free(item->remarks);
-	if (*str == '\0')
-		item->remarks = NULL;
-	else
-		item->remarks = g_strdup(str);
-
-	return item;
-}
-#endif /* 0 */
 
 static void edit_person_status_show( gchar *msg ) {
 	if( personeditdlg.statusbar != NULL ) {
@@ -641,10 +476,10 @@ static void addressbook_edit_person_dialog_create( gboolean *cancelled ) {
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_set_size_request(window, EDITPERSON_WIDTH, EDITPERSON_HEIGHT );
-	/* gtk_container_set_border_width(GTK_CONTAINER(window), 0); */
 	gtk_window_set_title(GTK_WINDOW(window), _("Edit Person Data"));
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);	
+	gtk_widget_realize(window);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(edit_person_delete_event),
 			 cancelled);
@@ -653,7 +488,6 @@ static void addressbook_edit_person_dialog_create( gboolean *cancelled ) {
 			 cancelled);
 
 	vbox = gtk_vbox_new(FALSE, 4);
-	/* gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER_WIDTH); */
 	gtk_widget_show(vbox);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
@@ -1050,7 +884,7 @@ static void addressbook_edit_person_create( gboolean *cancelled ) {
 	addressbook_edit_person_page_basic( PAGE_BASIC, _( "Basic Data" ) );
 	addressbook_edit_person_page_email( PAGE_EMAIL, _( "E-Mail Address" ) );
 	addressbook_edit_person_page_attrib( PAGE_ATTRIBUTES, _( "User Attributes" ) );
-	gtk_widget_show_all( personeditdlg.window );
+	//gtk_widget_show_all( personeditdlg.window );
 }
 
 /*
@@ -1104,8 +938,8 @@ ItemPerson *addressbook_edit_person( AddressBookFile *abf, ItemFolder *parent, I
 				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(personeditdlg.ok_btn);
 	gtk_widget_grab_focus(personeditdlg.entry_name);
-	gtk_widget_show(personeditdlg.window);
 	manage_window_set_transient(GTK_WINDOW(personeditdlg.window));
+	gtk_widget_show(personeditdlg.window);
 
 	/* Clear all fields */
 	personeditdlg.rowIndEMail = -1;
