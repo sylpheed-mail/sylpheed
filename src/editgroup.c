@@ -51,7 +51,7 @@
 #define ADDRESSBOOK_GUESS_FOLDER_NAME	"NewFolder"
 #define ADDRESSBOOK_GUESS_GROUP_NAME	"NewGroup"
 
-#define EDITGROUP_WIDTH      580
+#define EDITGROUP_WIDTH      600
 #define EDITGROUP_HEIGHT     340
 
 typedef enum {
@@ -74,8 +74,8 @@ static struct _GroupEdit_dlg {
 
 	/* Basic data tab */
 	GtkWidget *entry_name;
-	GtkCList *clist_group;
 	GtkCList *clist_avail;
+	GtkCList *clist_group;
 
 	GHashTable *hashEMail;
 	gint rowIndGroup;
@@ -240,6 +240,7 @@ static gint edit_group_list_compare_func( GtkCList *clist, gconstpointer ptr1, g
 static void addressbook_edit_group_create( gboolean *cancelled ) {
 	GtkWidget *window;
 	GtkWidget *vbox;
+	GtkWidget *vbox1;
 	GtkWidget *hbbox;
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
@@ -253,13 +254,16 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	GtkWidget *hboxl;
 	GtkWidget *vboxl;
 	GtkWidget *hboxh;
+	GtkWidget *vboxb;
+	GtkWidget *vboxb1;
+	GtkWidget *hboxb;
 
 	GtkWidget *clist_swin;
-	GtkWidget *clist_group;
 	GtkWidget *clist_avail;
+	GtkWidget *clist_group;
 
-	GtkWidget *buttonGroup;
-	GtkWidget *buttonAvail;
+	GtkWidget *button_add;
+	GtkWidget *button_remove;
 	gint top;
 
 	gchar *titles[ GROUP_N_COLS ];
@@ -270,11 +274,11 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	titles[ GROUP_COL_REMARKS ] = _("Remarks");
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request(window, EDITGROUP_WIDTH, EDITGROUP_HEIGHT );
-	gtk_container_set_border_width(GTK_CONTAINER(window), 0);
+	gtk_widget_set_size_request(window, EDITGROUP_WIDTH, EDITGROUP_HEIGHT);
 	gtk_window_set_title(GTK_WINDOW(window), _("Edit Group Data"));
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);	
+	gtk_widget_realize(window);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(edit_group_delete_event),
 			 cancelled);
@@ -282,18 +286,20 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 			 G_CALLBACK(edit_group_key_pressed),
 			 cancelled);
 
-	vbox = gtk_vbox_new( FALSE, 6 );
-	gtk_widget_show( vbox );
+	vbox = gtk_vbox_new( FALSE, 4 );
 	gtk_container_add( GTK_CONTAINER( window ), vbox );
+
+	vbox1 = gtk_vbox_new( FALSE, 10 );
+	gtk_box_pack_start(GTK_BOX(vbox), vbox1, TRUE, TRUE, 0);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox1), 6);
 
 	/* Group area */
 	hboxg = gtk_hbox_new( FALSE, 0 );
-	gtk_box_pack_start(GTK_BOX(vbox), hboxg, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox1), hboxg, FALSE, FALSE, 0);
 
 	/* Data entry area */
 	table = gtk_table_new( 1, 2, FALSE);
 	gtk_box_pack_start(GTK_BOX(hboxg), table, TRUE, TRUE, 0);
-	gtk_container_set_border_width( GTK_CONTAINER(table), 4 );
 	gtk_table_set_row_spacings(GTK_TABLE(table), 0);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 4);
 
@@ -307,48 +313,15 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	gtk_table_attach(GTK_TABLE(table), entry_name, 1, 2, top, (top + 1), GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
 
 	/* List area */
-	hboxl = gtk_hbox_new( FALSE, 6 );
-	gtk_container_set_border_width( GTK_CONTAINER(hboxl), 8 );
-	gtk_box_pack_start(GTK_BOX(vbox), hboxl, TRUE, TRUE, 0);
-
-	/* Group list */
-	vboxl = gtk_vbox_new( FALSE, 0 );
-	gtk_box_pack_start(GTK_BOX(hboxl), vboxl, TRUE, TRUE, 0);
-
-	hboxh = gtk_hbox_new( FALSE, 0 );
-	gtk_container_set_border_width( GTK_CONTAINER(hboxh), 4 );
-	gtk_box_pack_start(GTK_BOX(vboxl), hboxh, FALSE, FALSE, 0);
-	label = gtk_label_new(_("Addresses in Group"));
-	gtk_box_pack_start(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
-	buttonAvail = gtk_button_new_with_label( _( " -> " ) );
-	gtk_box_pack_end(GTK_BOX(hboxh), buttonAvail, FALSE, FALSE, 0);
-
-	clist_swin = gtk_scrolled_window_new( NULL, NULL );
-	gtk_box_pack_start(GTK_BOX(vboxl), clist_swin, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(clist_swin),
-				       GTK_POLICY_AUTOMATIC,
-				       GTK_POLICY_ALWAYS);
-
-	clist_group = gtk_clist_new_with_titles( GROUP_N_COLS, titles );
-	gtk_container_add( GTK_CONTAINER(clist_swin), clist_group );
-	gtk_clist_set_selection_mode( GTK_CLIST(clist_group), GTK_SELECTION_BROWSE );
-	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_NAME, GROUP_COL_WIDTH_NAME );
-	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_EMAIL, GROUP_COL_WIDTH_EMAIL );
-	gtk_clist_set_compare_func( GTK_CLIST(clist_group), edit_group_list_compare_func );
-	gtk_clist_set_auto_sort( GTK_CLIST(clist_group), TRUE );
-
-	for( i = 0; i < GROUP_N_COLS; i++ )
-		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_group)->column[i].button, GTK_CAN_FOCUS);
+	hboxl = gtk_hbox_new( FALSE, 8 );
+	gtk_box_pack_start(GTK_BOX(vbox1), hboxl, TRUE, TRUE, 0);
 
 	/* Available list */
-	vboxl = gtk_vbox_new( FALSE, 0 );
+	vboxl = gtk_vbox_new( FALSE, 4 );
 	gtk_box_pack_start(GTK_BOX(hboxl), vboxl, TRUE, TRUE, 0);
 
 	hboxh = gtk_hbox_new( FALSE, 0 );
-	gtk_container_set_border_width( GTK_CONTAINER(hboxh), 4 );
 	gtk_box_pack_start(GTK_BOX(vboxl), hboxh, FALSE, FALSE, 0);
-	buttonGroup = gtk_button_new_with_label( _( " <- " ) );
-	gtk_box_pack_start(GTK_BOX(hboxh), buttonGroup, FALSE, FALSE, 0);
 	label = gtk_label_new(_("Available Addresses"));
 	gtk_box_pack_end(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
 
@@ -369,23 +342,65 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	for( i = 0; i < GROUP_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_avail)->column[i].button, GTK_CAN_FOCUS);
 
-	/* Status line */
-	hsbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, 0);
-	statusbar = gtk_statusbar_new();
-	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
+	/* Add/Remove button */
+	vboxb = gtk_vbox_new( FALSE, 0 );
+	gtk_box_pack_start(GTK_BOX(hboxl), vboxb, FALSE, FALSE, 0);
+
+	vboxb1 = gtk_vbox_new( FALSE, 8 );
+	gtk_box_pack_start(GTK_BOX(vboxb), vboxb1, TRUE, FALSE, 0);
+
+	button_add = gtk_button_new_with_label( _( "  ->  " ) );
+	gtk_box_pack_start(GTK_BOX(vboxb1), button_add, FALSE, FALSE, 0);
+
+	button_remove = gtk_button_new_with_label( _( "  <-  " ) );
+	gtk_box_pack_start(GTK_BOX(vboxb1), button_remove, FALSE, FALSE, 0);
+
+	/* Group list */
+	vboxl = gtk_vbox_new( FALSE, 4 );
+	gtk_box_pack_start(GTK_BOX(hboxl), vboxl, TRUE, TRUE, 0);
+
+	hboxh = gtk_hbox_new( FALSE, 0 );
+	gtk_box_pack_start(GTK_BOX(vboxl), hboxh, FALSE, FALSE, 0);
+	label = gtk_label_new(_("Addresses in Group"));
+	gtk_box_pack_start(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
+
+	clist_swin = gtk_scrolled_window_new( NULL, NULL );
+	gtk_box_pack_start(GTK_BOX(vboxl), clist_swin, TRUE, TRUE, 0);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(clist_swin),
+				       GTK_POLICY_AUTOMATIC,
+				       GTK_POLICY_ALWAYS);
+
+	clist_group = gtk_clist_new_with_titles( GROUP_N_COLS, titles );
+	gtk_container_add( GTK_CONTAINER(clist_swin), clist_group );
+	gtk_clist_set_selection_mode( GTK_CLIST(clist_group), GTK_SELECTION_BROWSE );
+	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_NAME, GROUP_COL_WIDTH_NAME );
+	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_EMAIL, GROUP_COL_WIDTH_EMAIL );
+	gtk_clist_set_compare_func( GTK_CLIST(clist_group), edit_group_list_compare_func );
+	gtk_clist_set_auto_sort( GTK_CLIST(clist_group), TRUE );
+
+	for( i = 0; i < GROUP_N_COLS; i++ )
+		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_group)->column[i].button, GTK_CAN_FOCUS);
 
 	/* Button panel */
+	hboxb = gtk_hbox_new(FALSE, 8);
+	gtk_box_pack_start(GTK_BOX(vbox1), hboxb, FALSE, FALSE, 0);
+
 	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
 				      &cancel_btn, GTK_STOCK_CANCEL,
 				      NULL, NULL);
-	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(hboxb), hbbox, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_btn);
 
 	g_signal_connect(G_OBJECT(ok_btn), "clicked",
 			 G_CALLBACK(edit_group_ok), cancelled);
 	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
 			 G_CALLBACK(edit_group_cancel), cancelled);
+
+	/* Status line */
+	hsbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(vbox), hsbox, FALSE, FALSE, 0);
+	statusbar = gtk_statusbar_new();
+	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
 
 	gtk_widget_show_all(vbox);
 
@@ -394,9 +409,9 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 			 G_CALLBACK( edit_group_group_selected), NULL);
 	g_signal_connect(G_OBJECT(clist_avail), "select_row",
 			 G_CALLBACK( edit_group_avail_selected), NULL);
-	g_signal_connect(G_OBJECT(buttonGroup), "clicked",
+	g_signal_connect(G_OBJECT(button_add), "clicked",
 			 G_CALLBACK( edit_group_to_group ), NULL);
-	g_signal_connect(G_OBJECT(buttonAvail), "clicked",
+	g_signal_connect(G_OBJECT(button_remove), "clicked",
 			 G_CALLBACK( edit_group_to_avail ), NULL);
 	g_signal_connect(G_OBJECT(clist_avail), "button_press_event",
 			 G_CALLBACK(edit_group_list_avail_button), NULL);
@@ -453,8 +468,8 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 				    !prefs_common.comply_gnome_hig);
 	gtk_widget_grab_focus(groupeditdlg.ok_btn);
 	gtk_widget_grab_focus(groupeditdlg.entry_name);
-	gtk_widget_show(groupeditdlg.window);
 	manage_window_set_transient(GTK_WINDOW(groupeditdlg.window));
+	gtk_widget_show(groupeditdlg.window);
 
 	/* Clear all fields */
 	groupeditdlg.rowIndGroup = -1;
