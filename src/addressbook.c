@@ -162,6 +162,8 @@ static void addressbook_to_clicked		(GtkButton	*button,
 						 gpointer	 data);
 static void addressbook_lup_clicked		(GtkButton	*button,
 						 gpointer	data);
+static void addressbook_close_clicked		(GtkButton	*button,
+						 gpointer	data);
 
 static void addressbook_tree_selected		(GtkCTree	*ctree,
 						 GtkCTreeNode	*node,
@@ -488,13 +490,16 @@ static void addressbook_create(void)
 	GtkWidget *entry;
 	GtkWidget *statusbar;
 	GtkWidget *hbbox;
+	GtkWidget *hbbox1;
+	GtkWidget *hbbox2;
 	GtkWidget *hsbox;
-	GtkWidget *del_btn;
-	GtkWidget *reg_btn;
-	GtkWidget *lup_btn;
 	GtkWidget *to_btn;
 	GtkWidget *cc_btn;
 	GtkWidget *bcc_btn;
+	GtkWidget *del_btn;
+	GtkWidget *reg_btn;
+	GtkWidget *lup_btn;
+	GtkWidget *close_btn;
 	GtkWidget *tree_popup;
 	GtkWidget *list_popup;
 	GtkItemFactory *tree_factory;
@@ -516,8 +521,10 @@ static void addressbook_create(void)
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("Address book"));
 	gtk_window_set_wmclass(GTK_WINDOW(window), "addressbook", "Sylpheed");
-	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, TRUE);
-	gtk_widget_set_size_request(window, prefs_common.addressbook_width,
+	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
+	gtk_widget_set_size_request(window, 620, 360);
+	gtk_window_set_default_size(GTK_WINDOW(window),
+				    prefs_common.addressbook_width,
 				    prefs_common.addressbook_height);
 	gtk_window_move(GTK_WINDOW(window), prefs_common.addressbook_x,
 			prefs_common.addressbook_y);
@@ -645,42 +652,29 @@ static void addressbook_create(void)
 	statusbar = gtk_statusbar_new();
 	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
 
-	/* Button panel */
-	hbbox = gtk_hbutton_box_new();
-	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox), GTK_BUTTONBOX_END);
-	gtk_box_set_spacing(GTK_BOX(hbbox), 4);
-	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 4);
+	hbbox = gtk_hbox_new(FALSE, 4);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 
-	del_btn = gtk_button_new_with_label(_("Delete"));
-	GTK_WIDGET_SET_FLAGS(del_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), del_btn, TRUE, TRUE, 0);
-	reg_btn = gtk_button_new_with_label(_("Add"));
-	GTK_WIDGET_SET_FLAGS(reg_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), reg_btn, TRUE, TRUE, 0);
-	lup_btn = gtk_button_new_with_label(_("Lookup"));
-	GTK_WIDGET_SET_FLAGS(lup_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), lup_btn, TRUE, TRUE, 0);
-
-	g_signal_connect(G_OBJECT(del_btn), "clicked",
-			 G_CALLBACK(addressbook_del_clicked), NULL);
-	g_signal_connect(G_OBJECT(reg_btn), "clicked",
-			 G_CALLBACK(addressbook_reg_clicked), NULL);
-	g_signal_connect(G_OBJECT(lup_btn), "clicked",
-			 G_CALLBACK(addressbook_lup_clicked), NULL);
+	/* Button panel */
+	hbbox1 = gtk_hbutton_box_new();
+	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox1), GTK_BUTTONBOX_END);
+	gtk_box_set_spacing(GTK_BOX(hbbox1), 4);
+	gtk_container_set_border_width(GTK_CONTAINER(hbbox1), 4);
+	gtk_button_box_set_child_size(GTK_BUTTON_BOX(hbbox1), 64, -1);
+	gtk_box_pack_end(GTK_BOX(hbbox), hbbox1, FALSE, FALSE, 0);
 
 	to_btn = gtk_button_new_with_label
 		(prefs_common.trans_hdr ? _("To:") : "To:");
 	GTK_WIDGET_SET_FLAGS(to_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), to_btn, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbbox1), to_btn, TRUE, TRUE, 0);
 	cc_btn = gtk_button_new_with_label
 		(prefs_common.trans_hdr ? _("Cc:") : "Cc:");
 	GTK_WIDGET_SET_FLAGS(cc_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), cc_btn, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbbox1), cc_btn, TRUE, TRUE, 0);
 	bcc_btn = gtk_button_new_with_label
 		(prefs_common.trans_hdr ? _("Bcc:") : "Bcc:");
 	GTK_WIDGET_SET_FLAGS(bcc_btn, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(hbbox), bcc_btn, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbbox1), bcc_btn, TRUE, TRUE, 0);
 
 	g_signal_connect(G_OBJECT(to_btn), "clicked",
 			 G_CALLBACK(addressbook_to_clicked),
@@ -691,6 +685,37 @@ static void addressbook_create(void)
 	g_signal_connect(G_OBJECT(bcc_btn), "clicked",
 			 G_CALLBACK(addressbook_to_clicked),
 			 GINT_TO_POINTER(COMPOSE_ENTRY_BCC));
+
+	hbbox2 = gtk_hbutton_box_new();
+	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox2), GTK_BUTTONBOX_END);
+	gtk_box_set_spacing(GTK_BOX(hbbox2), 4);
+	gtk_container_set_border_width(GTK_CONTAINER(hbbox2), 4);
+	gtk_button_box_set_child_size(GTK_BUTTON_BOX(hbbox2), 64, -1);
+	gtk_box_pack_end(GTK_BOX(hbbox), hbbox2, TRUE, TRUE, 0);
+
+	del_btn = gtk_button_new_with_label(_("Delete"));
+	GTK_WIDGET_SET_FLAGS(del_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(hbbox2), del_btn, TRUE, TRUE, 0);
+	reg_btn = gtk_button_new_with_label(_("Add"));
+	GTK_WIDGET_SET_FLAGS(reg_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(hbbox2), reg_btn, TRUE, TRUE, 0);
+	lup_btn = gtk_button_new_with_label(_("Lookup"));
+	GTK_WIDGET_SET_FLAGS(lup_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(hbbox2), lup_btn, TRUE, TRUE, 0);
+	close_btn = gtk_button_new_with_mnemonic(_("_Close"));
+	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
+	gtk_box_pack_start(GTK_BOX(hbbox2), close_btn, TRUE, TRUE, 0);
+	gtk_button_box_set_child_secondary(GTK_BUTTON_BOX(hbbox2), close_btn,
+					   TRUE);
+
+	g_signal_connect(G_OBJECT(del_btn), "clicked",
+			 G_CALLBACK(addressbook_del_clicked), NULL);
+	g_signal_connect(G_OBJECT(reg_btn), "clicked",
+			 G_CALLBACK(addressbook_reg_clicked), NULL);
+	g_signal_connect(G_OBJECT(lup_btn), "clicked",
+			 G_CALLBACK(addressbook_lup_clicked), NULL);
+	g_signal_connect(G_OBJECT(close_btn), "clicked",
+			 G_CALLBACK(addressbook_close_clicked), NULL);
 
 	/* Build icons for interface */
 	stock_pixmap_gdk( window, STOCK_PIXMAP_INTERFACE,
@@ -745,12 +770,13 @@ static void addressbook_create(void)
 	addrbook.statusbar = statusbar;
 	addrbook.status_cid = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Addressbook Window" );
 
-	addrbook.del_btn = del_btn;
-	addrbook.reg_btn = reg_btn;
-	addrbook.lup_btn = lup_btn;
 	addrbook.to_btn  = to_btn;
 	addrbook.cc_btn  = cc_btn;
 	addrbook.bcc_btn = bcc_btn;
+	addrbook.del_btn = del_btn;
+	addrbook.reg_btn = reg_btn;
+	addrbook.lup_btn = lup_btn;
+	addrbook.close_btn = close_btn;
 
 	addrbook.tree_popup   = tree_popup;
 	addrbook.list_popup   = list_popup;
@@ -3085,6 +3111,11 @@ static void addressbook_lup_clicked( GtkButton *button, gpointer data ) {
 	}
 
 	g_free( sLookup );
+}
+
+static void addressbook_close_clicked(GtkButton	*button, gpointer data)
+{
+	addressbook_close();
 }
 
 /* **********************************************************************

@@ -65,12 +65,13 @@ struct _AddressBook_win
 	GtkWidget *entry;
 	GtkWidget *statusbar;
 
-	GtkWidget *del_btn;
-	GtkWidget *reg_btn;
-	GtkWidget *lup_btn;
 	GtkWidget *to_btn;
 	GtkWidget *cc_btn;
 	GtkWidget *bcc_btn;
+	GtkWidget *del_btn;
+	GtkWidget *reg_btn;
+	GtkWidget *lup_btn;
+	GtkWidget *close_btn;
 
 	GtkWidget *tree_popup;
 	GtkWidget *list_popup;
