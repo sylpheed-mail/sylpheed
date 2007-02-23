@@ -555,8 +555,6 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 
 	g_return_val_if_fail(condition == G_IO_IN, FALSE);
 
-	session_set_timeout(session, session->timeout_interval);
-
 	if (session->read_buf_len == 0) {
 		gint read_len;
 
@@ -582,6 +580,8 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 
 		session->read_buf_len = read_len;
 	}
+
+	session_set_timeout(session, session->timeout_interval);
 
 	if ((newline = memchr(session->read_buf_p, '\n', session->read_buf_len))
 		!= NULL)
@@ -643,8 +643,6 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 
 	g_return_val_if_fail(condition == G_IO_IN, FALSE);
 
-	session_set_timeout(session, session->timeout_interval);
-
 	if (session->read_buf_len == 0) {
 		gint read_len;
 
@@ -670,6 +668,8 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 
 		session->read_buf_len = read_len;
 	}
+
+	session_set_timeout(session, session->timeout_interval);
 
 	data_buf = session->read_data_buf;
 	terminator_len = strlen(session->read_data_terminator);
@@ -758,8 +758,6 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 
 	g_return_val_if_fail(condition == G_IO_IN, FALSE);
 
-	session_set_timeout(session, session->timeout_interval);
-
 	if (session->read_buf_len == 0) {
 		read_len = sock_read(session->sock, session->read_buf_p,
 				     READ_BUF_LEFT());
@@ -783,6 +781,8 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 
 		session->read_buf_len = read_len;
 	}
+
+	session_set_timeout(session, session->timeout_interval);
 
 	terminator_len = strlen(session->read_data_terminator);
 
