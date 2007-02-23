@@ -240,7 +240,7 @@ void inc_mail(MainWindow *mainwin)
 static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 {
 	FolderItem *item = mainwin->summaryview->folder_item;
-	gint new_msgs;
+	gint new_msgs = 0;
 	gboolean update_summary = FALSE;
 
 	g_return_val_if_fail(account->folder != NULL, 0);
@@ -265,10 +265,17 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			filter_apply_msginfo(prefs_common.fltlist,
 					     msginfo, fltinfo);
 			if (fltinfo->actions[FLT_ACTION_MOVE] &&
-			    fltinfo->move_dest)
+			    fltinfo->move_dest) {
 				folder_item_move_msg
 					(fltinfo->move_dest, msginfo);
-			else if (fltinfo->actions[FLT_ACTION_DELETE])
+				if (account->imap_check_inbox_only ||
+				    fltinfo->move_dest->folder !=
+				    inbox->folder) {
+					if (MSG_IS_NEW(fltinfo->flags) ||
+					    MSG_IS_UNREAD(fltinfo->flags))
+						++new_msgs;
+				}
+			} else if (fltinfo->actions[FLT_ACTION_DELETE])
 				folder_item_remove_msg(inbox, msginfo);
 			if (fltinfo->drop_done)
 				++n_filtered;
@@ -288,12 +295,12 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	if (account->protocol == A_IMAP4 && account->imap_check_inbox_only) {
 		FolderItem *inbox = FOLDER(account->folder)->inbox;
 
-		new_msgs = folderview_check_new_item(inbox);
+		new_msgs += folderview_check_new_item(inbox);
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    inbox == item)
 			update_summary = TRUE;
 	} else {
-		new_msgs = folderview_check_new(FOLDER(account->folder));
+		new_msgs += folderview_check_new(FOLDER(account->folder));
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    FOLDER(account->folder) == item->folder)
 			update_summary = TRUE;
