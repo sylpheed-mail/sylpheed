@@ -168,6 +168,8 @@ static gchar *sig_status_full(gpgme_ctx_t ctx, gpgme_verify_result_t result)
 	gchar *ctime_str_utf8;
 	gchar *retval;
 
+	g_return_val_if_fail(result != NULL, NULL);
+
 	str = g_string_new("");
 
 	sig = result->signatures;

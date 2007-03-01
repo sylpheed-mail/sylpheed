@@ -190,6 +190,9 @@ void gpgmegtk_sig_status_update(GpgmegtkSigStatus hd, gpgme_ctx_t ctx)
 	if (!hd || !hd->running || !ctx)
 		return;
 	result = gpgme_op_verify_result(ctx);
+	if (!result)
+		return;
+
 	sig = result->signatures;
 	while (sig) {
 		gchar *tmp;
