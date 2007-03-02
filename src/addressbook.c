@@ -628,8 +628,10 @@ static void addressbook_create(void)
 	hbox = gtk_hbox_new(FALSE, 4);
 	gtk_box_pack_start(GTK_BOX(clist_vbox), hbox, FALSE, FALSE, 0);
 
+#if 0
 	label = gtk_label_new(_("Name:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+#endif
 
 	entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);

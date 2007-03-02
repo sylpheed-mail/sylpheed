@@ -932,15 +932,17 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	clear_completion_cache();
 
 	/* make sure anything we typed comes in the edit box */
-	tmp_event.type       = event->type;
-	tmp_event.window     = entry->window;
-	tmp_event.send_event = TRUE;
-	tmp_event.time       = event->time;
-	tmp_event.state      = event->state;
-	tmp_event.keyval     = event->keyval;
-	tmp_event.length     = event->length;
-	tmp_event.string     = event->string;
-	gtk_widget_event(entry, (GdkEvent *)&tmp_event);
+	if (event->length > 0 && event->keyval != GDK_Escape) {
+		tmp_event.type       = event->type;
+		tmp_event.window     = entry->window;
+		tmp_event.send_event = TRUE;
+		tmp_event.time       = event->time;
+		tmp_event.state      = event->state;
+		tmp_event.keyval     = event->keyval;
+		tmp_event.length     = event->length;
+		tmp_event.string     = event->string;
+		gtk_widget_event(entry, (GdkEvent *)&tmp_event);
+	}
 
 	/* and close the completion window */
 	gtk_widget_destroy(*completion_window);
