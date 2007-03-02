@@ -37,6 +37,7 @@
 #include "procheader.h"
 #include "prefs_common.h"
 #include "alertpanel.h"
+#include "utils.h"
 
 #if GTK_CHECK_VERSION(2, 10, 0)
 
@@ -426,11 +427,15 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 	GtkPrintOperationResult res;
 	PrintData *print_data;
 	GSList *cur;
+	gchar *prev_dir;
 	gint i;
 
 	g_return_val_if_fail(mlist != NULL, -1);
 
 	debug_print("printing start\n");
+
+	prev_dir = g_get_current_dir();
+	change_dir(get_document_dir());
 
 	print_data = g_new0(PrintData, 1);
 	print_data->mlist = mlist;
@@ -483,6 +488,9 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 			fclose(print_data->msgs[i].fp);
 	}
 	g_free(print_data);
+
+	change_dir(prev_dir);
+	g_free(prev_dir);
 
 	debug_print("printing finished\n");
 
