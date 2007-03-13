@@ -4967,6 +4967,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	g_object_set(renderer, "xalign", align, "ypad", 0, NULL);	\
 	column = gtk_tree_view_column_new_with_attributes		\
 		(title, renderer, # type , col, NULL);			\
+	g_object_set_data(G_OBJECT(column), "column_id",		\
+			  GINT_TO_POINTER(col));			\
 	summaryview->columns[col] = column;				\
 	if (text_attr) {						\
 		gtk_tree_view_column_set_attributes			\
@@ -5106,7 +5108,13 @@ void summary_get_column_order(SummaryView *summaryview)
 	for (cur = columns; cur != NULL && pos < N_SUMMARY_VISIBLE_COLS;
 	     cur = cur->next, pos++) {
 		column = (GtkTreeViewColumn *)cur->data;
-		type = gtk_tree_view_column_get_sort_column_id(column);
+		type = GPOINTER_TO_INT
+			(g_object_get_data(G_OBJECT(column), "column_id"));
+		if (type < 0 || type >= N_SUMMARY_VISIBLE_COLS) {
+			g_warning("summary_get_column_order: "
+				  "invalid type: %d\n", type);
+			break;
+		}
 		visible = gtk_tree_view_column_get_visible(column);
 		summaryview->col_state[pos].type = type;
 		summaryview->col_state[pos].visible = visible;
