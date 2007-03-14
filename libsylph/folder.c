@@ -1295,9 +1295,12 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 				stype = F_VIRTUAL;
 		} else if (!strcmp(attr->name, "name"))
 			name = attr->value;
-		else if (!strcmp(attr->name, "path"))
+		else if (!strcmp(attr->name, "path")) {
+#ifdef G_OS_WIN32
+			subst_char(attr->value, G_DIR_SEPARATOR, '/');
+#endif
 			path = attr->value;
-		else if (!strcmp(attr->name, "mtime"))
+		} else if (!strcmp(attr->name, "mtime"))
 			mtime = strtoul(attr->value, NULL, 10);
 		else if (!strcmp(attr->name, "new"))
 			new = atoi(attr->value);

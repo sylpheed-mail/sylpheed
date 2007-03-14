@@ -1068,9 +1068,9 @@ static FolderItem *mh_create_folder(Folder *folder, FolderItem *parent,
 
 	g_free(fullpath);
 
+	/* path is a logical folder path */
 	if (parent->path)
-		path = g_strconcat(parent->path, G_DIR_SEPARATOR_S, name,
-				   NULL);
+		path = g_strconcat(parent->path, "/", name, NULL);
 	else
 		path = g_strdup(name);
 	new_item = folder_item_new(name, path);
