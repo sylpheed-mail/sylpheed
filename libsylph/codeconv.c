@@ -2263,9 +2263,13 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 					p += mb_len;
 				} else if (cur_len == 0) {
 					LBREAK_IF_REQUIRED(1, FALSE);
+					if (*p == '"')
+						in_quote ^= TRUE;
 					continue;
 				} else {
 					cont = TRUE;
+					if (*p == '"')
+						in_quote ^= TRUE;
 					break;
 				}
 			}
