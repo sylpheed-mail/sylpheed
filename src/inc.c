@@ -262,8 +262,27 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			fltinfo = filter_info_new();
 			fltinfo->account = account;
 			fltinfo->flags = msginfo->flags;
-			filter_apply_msginfo(prefs_common.fltlist,
-					     msginfo, fltinfo);
+
+			if (prefs_common.enable_junk &&
+			    prefs_common.filter_junk_on_recv &&
+			    prefs_common.filter_junk_before) {
+				filter_apply_msginfo(prefs_common.junk_fltlist,
+						     msginfo, fltinfo);
+			}
+
+			if (!fltinfo->drop_done) {
+				filter_apply_msginfo(prefs_common.fltlist,
+						     msginfo, fltinfo);
+			}
+
+			if (!fltinfo->drop_done &&
+			    prefs_common.enable_junk &&
+			    prefs_common.filter_junk_on_recv &&
+			    !prefs_common.filter_junk_before) {
+				filter_apply_msginfo(prefs_common.junk_fltlist,
+						     msginfo, fltinfo);
+			}
+
 			if (fltinfo->actions[FLT_ACTION_MOVE] &&
 			    fltinfo->move_dest) {
 				folder_item_move_msg
