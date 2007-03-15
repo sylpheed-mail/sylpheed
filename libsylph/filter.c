@@ -216,8 +216,13 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 					copy_to_self = TRUE;
 				else {
 					if (action->type == FLT_ACTION_COPY) {
+						MsgFlags save_flags;
+
+						save_flags = msginfo->flags;
+						msginfo->flags = fltinfo->flags;
 						val = folder_item_copy_msg
 							(dest_folder, msginfo);
+						msginfo->flags = save_flags;
 						if (val == -1)
 							return -1;
 					}

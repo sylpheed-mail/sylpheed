@@ -266,8 +266,9 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			if (prefs_common.enable_junk &&
 			    prefs_common.filter_junk_on_recv &&
 			    prefs_common.filter_junk_before) {
-				filter_apply_msginfo(prefs_common.junk_fltlist,
-						     msginfo, fltinfo);
+				filter_apply_msginfo
+					(prefs_common.manual_junk_fltlist,
+					 msginfo, fltinfo);
 			}
 
 			if (!fltinfo->drop_done) {
@@ -279,8 +280,21 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			    prefs_common.enable_junk &&
 			    prefs_common.filter_junk_on_recv &&
 			    !prefs_common.filter_junk_before) {
-				filter_apply_msginfo(prefs_common.junk_fltlist,
-						     msginfo, fltinfo);
+				filter_apply_msginfo
+					(prefs_common.manual_junk_fltlist,
+					 msginfo, fltinfo);
+			}
+
+			if (msginfo->flags.perm_flags !=
+			    fltinfo->flags.perm_flags) {
+				msginfo->flags = fltinfo->flags;
+				inbox->mark_dirty = TRUE;
+				if (fltinfo->actions[FLT_ACTION_MARK])
+					imap_msg_set_perm_flags
+						(msginfo, MSG_MARKED);
+				if (fltinfo->actions[FLT_ACTION_MARK_READ])
+					imap_msg_unset_perm_flags
+						(msginfo, MSG_NEW|MSG_UNREAD);
 			}
 
 			if (fltinfo->actions[FLT_ACTION_MOVE] &&
