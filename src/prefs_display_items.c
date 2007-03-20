@@ -470,6 +470,7 @@ static void prefs_display_items_add(GtkWidget *widget, gpointer data)
 	item = (PrefsDisplayItem *)gtk_clist_get_row_data(stock_clist, row);
 	if (!item->allow_multiple) {
 		gtk_clist_remove(stock_clist, row);
+		gtk_widget_queue_resize(GTK_WIDGET(stock_clist));
 		if (stock_clist->rows == row)
 			gtk_clist_select_row(stock_clist, row - 1, -1);
 	}
@@ -504,6 +505,7 @@ static void prefs_display_items_remove(GtkWidget *widget, gpointer data)
 	if (!item)
 		return;
 	gtk_clist_remove(shown_clist, row);
+	gtk_widget_queue_resize(GTK_WIDGET(shown_clist));
 	if (shown_clist->rows == row)
 		gtk_clist_select_row(shown_clist, row - 1, -1);
 
