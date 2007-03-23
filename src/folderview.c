@@ -902,7 +902,7 @@ static GtkWidget *label_window_create(const gchar *str)
 	gtk_container_add(GTK_CONTAINER(window), label);
 	gtk_widget_show(label);
 
-	gtk_widget_show_now(window);
+	gtk_widget_show(window);
 
 	return window;
 }
