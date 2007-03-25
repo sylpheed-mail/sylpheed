@@ -489,6 +489,8 @@ static void app_init(void)
 	DISABLE_DIGIT_LOCALE("LC_MESSAGES");
 
 #undef DISABLE_DIGIT_LOCALE
+
+	g_unsetenv("LANGUAGE");
 #endif
 
 	setlocale(LC_ALL, "");
