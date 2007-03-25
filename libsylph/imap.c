@@ -1067,7 +1067,9 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 		newlist = mlist;
 	}
 
-	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
+	if (!uncached_only)
+		mlist = procmsg_sort_msg_list(mlist, item->sort_key,
+					      item->sort_type);
 
 	item->last_num = last_uid;
 

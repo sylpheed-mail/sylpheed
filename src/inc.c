@@ -310,6 +310,10 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 				}
 			} else if (fltinfo->actions[FLT_ACTION_DELETE])
 				folder_item_remove_msg(inbox, msginfo);
+			else if (MSG_IS_NEW(msginfo->flags) ||
+				 MSG_IS_UNREAD(msginfo->flags))
+				++new_msgs;
+
 			if (fltinfo->drop_done)
 				++n_filtered;
 
@@ -318,7 +322,8 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 
 		procmsg_msg_list_free(mlist);
 
-		debug_print("inc_remote_account_mail(): %d message(s) filtered\n", n_filtered);
+		debug_print("inc_remote_account_mail(): INBOX: %d new, %d filtered\n",
+			    new_msgs, n_filtered);
 
 		if (!prefs_common.scan_all_after_inc && item != NULL &&
 		    inbox == item)

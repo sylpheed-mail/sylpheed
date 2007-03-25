@@ -260,7 +260,9 @@ static GSList *mh_get_msg_list_full(Folder *folder, FolderItem *item,
 
 	procmsg_set_flags(mlist, item);
 
-	mlist = procmsg_sort_msg_list(mlist, item->sort_key, item->sort_type);
+	if (!uncached_only)
+		mlist = procmsg_sort_msg_list(mlist, item->sort_key,
+					      item->sort_type);
 
 	if (item->mark_queue)
 		item->mark_dirty = TRUE;

@@ -1,5 +1,12 @@
 2007-03-25
 
+	* libsylph/imap.c
+	  libsylph/mh.c: fixed get_msg_list() with uncached_only flag.
+	* src/inc.c: inc_remote_account_mail(): fixed a bug that messages which
+	  were not filtered were not counted as new messages.
+
+2007-03-25
+
 	* src/main.c: app_init(): win32: disabled LANGUAGE (fixes incorrect
 	  language selection).
 

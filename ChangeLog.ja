@@ -1,5 +1,13 @@
 2007-03-25
 
+	* libsylph/imap.c
+	  libsylph/mh.c: get_msg_list() で uncached_only フラグが付いた場合を
+	  修正。
+	* src/inc.c: inc_remote_account_mail(): フィルタされなかったメッセージ
+	  が新着メッセージとカウントされなかったバグを修正。
+
+2007-03-25
+
 	* src/main.c: app_init(): win32: LANGUAGE を無効にした(言語選択を
 	  誤るのを修正)。
 
