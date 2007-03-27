@@ -263,6 +263,7 @@ static void prefs_custom_header_create(void)
 				      GTK_SELECTION_BROWSE);
 	gtk_clist_set_reorderable (GTK_CLIST (customhdr_clist), TRUE);
 	gtk_clist_set_use_drag_icons (GTK_CLIST (customhdr_clist), FALSE);
+	gtkut_clist_set_redraw (GTK_CLIST (customhdr_clist));
 	GTK_WIDGET_UNSET_FLAGS (GTK_CLIST (customhdr_clist)->column[0].button,
 				GTK_CAN_FOCUS);
 	g_signal_connect (G_OBJECT (customhdr_clist), "select_row",

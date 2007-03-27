@@ -122,6 +122,7 @@ void gtkut_ctree_set_focus_row		(GtkCTree	*ctree,
 					 GtkCTreeNode	*node);
 void gtkut_clist_set_focus_row		(GtkCList	*clist,
 					 gint		 row);
+void gtkut_clist_set_redraw		(GtkCList	*clist);
 
 /* TreeView functions */
 

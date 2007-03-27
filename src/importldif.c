@@ -598,6 +598,7 @@ static void imp_ldif_page_fields( gint pageNum, gchar *pageLbl ) {
 			GTK_CLIST(clist_field), FIELD_COL_FIELD, FIELDS_COL_WIDTH_FIELD );
 	gtk_clist_set_column_width(
 			GTK_CLIST(clist_field), FIELD_COL_ATTRIB, FIELDS_COL_WIDTH_ATTRIB );
+	gtkut_clist_set_redraw( GTK_CLIST(clist_field) );
 
 	for( i = 0; i < FIELDS_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_field)->column[i].button, GTK_CAN_FOCUS);

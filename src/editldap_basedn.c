@@ -208,6 +208,7 @@ static void edit_ldap_bdn_create(void) {
 	gtk_clist_column_titles_show( GTK_CLIST(basedn_list) );
 	gtk_clist_set_column_title( GTK_CLIST(basedn_list), 0, _( "Available Search Base(s)" ) );
 	gtk_clist_set_selection_mode(GTK_CLIST(basedn_list), GTK_SELECTION_BROWSE);
+	gtkut_clist_set_redraw( GTK_CLIST(basedn_list) );
 
 	/* Status line */
 	hsbox = gtk_hbox_new(FALSE, 0);

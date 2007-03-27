@@ -170,6 +170,7 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 				     GTK_SELECTION_BROWSE);
 	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(stock_clist)->column[0].button,
 			       GTK_CAN_FOCUS);
+	gtkut_clist_set_redraw(GTK_CLIST(stock_clist));
 
 	/* add/remove button */
 	btn_vbox = gtk_vbox_new(FALSE, 0);
@@ -217,6 +218,7 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 #endif
 	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(shown_clist)->column[0].button,
 			       GTK_CAN_FOCUS);
+	gtkut_clist_set_redraw(GTK_CLIST(shown_clist));
 
 	g_signal_connect(G_OBJECT(shown_clist), "select-row",
 			 G_CALLBACK(prefs_display_items_shown_select_row),
@@ -470,7 +472,6 @@ static void prefs_display_items_add(GtkWidget *widget, gpointer data)
 	item = (PrefsDisplayItem *)gtk_clist_get_row_data(stock_clist, row);
 	if (!item->allow_multiple) {
 		gtk_clist_remove(stock_clist, row);
-		gtk_widget_queue_resize(GTK_WIDGET(stock_clist));
 		if (stock_clist->rows == row)
 			gtk_clist_select_row(stock_clist, row - 1, -1);
 	}
@@ -505,7 +506,6 @@ static void prefs_display_items_remove(GtkWidget *widget, gpointer data)
 	if (!item)
 		return;
 	gtk_clist_remove(shown_clist, row);
-	gtk_widget_queue_resize(GTK_WIDGET(shown_clist));
 	if (shown_clist->rows == row)
 		gtk_clist_select_row(shown_clist, row - 1, -1);
 

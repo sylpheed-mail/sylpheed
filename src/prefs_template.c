@@ -264,6 +264,7 @@ static void prefs_template_window_create(void)
 	gtk_clist_set_column_width(GTK_CLIST(clist_tmpls), 0, 80);
 	gtk_clist_set_selection_mode(GTK_CLIST(clist_tmpls),
 				     GTK_SELECTION_BROWSE);
+	gtkut_clist_set_redraw(GTK_CLIST(clist_tmpls));
 	GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_tmpls)->column[0].button,
 			       GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT (clist_tmpls), "select_row",

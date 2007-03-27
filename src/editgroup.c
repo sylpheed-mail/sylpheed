@@ -338,6 +338,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	gtk_clist_set_column_width( GTK_CLIST(clist_avail), GROUP_COL_EMAIL, GROUP_COL_WIDTH_EMAIL );
 	gtk_clist_set_compare_func( GTK_CLIST(clist_avail), edit_group_list_compare_func );
 	gtk_clist_set_auto_sort( GTK_CLIST(clist_avail), TRUE );
+	gtkut_clist_set_redraw( GTK_CLIST(clist_avail) );
 
 	for( i = 0; i < GROUP_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_avail)->column[i].button, GTK_CAN_FOCUS);
@@ -377,6 +378,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_EMAIL, GROUP_COL_WIDTH_EMAIL );
 	gtk_clist_set_compare_func( GTK_CLIST(clist_group), edit_group_list_compare_func );
 	gtk_clist_set_auto_sort( GTK_CLIST(clist_group), TRUE );
+	gtkut_clist_set_redraw( GTK_CLIST(clist_group) );
 
 	for( i = 0; i < GROUP_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_group)->column[i].button, GTK_CAN_FOCUS);

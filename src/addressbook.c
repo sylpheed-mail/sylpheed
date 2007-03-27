@@ -572,6 +572,7 @@ static void addressbook_create(void)
 	gtk_ctree_set_indent(GTK_CTREE(ctree), CTREE_INDENT);
 	gtk_clist_set_compare_func(GTK_CLIST(ctree),
 				   addressbook_list_compare_func);
+	gtkut_clist_set_redraw(GTK_CLIST(ctree));
 
 	g_signal_connect(G_OBJECT(ctree), "tree_select_row",
 			 G_CALLBACK(addressbook_tree_selected), NULL);
@@ -603,6 +604,7 @@ static void addressbook_create(void)
 				   COL_ADDRESS_WIDTH);
 	gtk_clist_set_compare_func(GTK_CLIST(clist),
 				   addressbook_list_compare_func);
+	gtkut_clist_set_redraw(GTK_CLIST(clist));
 
 	for (i = 0; i < N_COLS; i++)
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist)->column[i].button,

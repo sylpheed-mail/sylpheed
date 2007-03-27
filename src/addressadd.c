@@ -222,6 +222,7 @@ static void addressadd_create( void ) {
 	gtk_ctree_set_expander_style( GTK_CTREE(tree_folder), GTK_CTREE_EXPANDER_SQUARE );
 	gtk_ctree_set_indent( GTK_CTREE(tree_folder), CTREE_INDENT );
 	gtk_clist_set_auto_sort( GTK_CLIST(tree_folder), TRUE );
+	gtkut_clist_set_redraw( GTK_CLIST(tree_folder) );
 
 	/* Button panel */
 	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,

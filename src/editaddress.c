@@ -660,6 +660,7 @@ void addressbook_edit_person_page_email( gint pageNum, gchar *pageLbl ) {
 	gtk_clist_set_selection_mode( GTK_CLIST(clist), GTK_SELECTION_BROWSE );
 	gtk_clist_set_column_width( GTK_CLIST(clist), EMAIL_COL_EMAIL, EMAIL_COL_WIDTH_EMAIL );
 	gtk_clist_set_column_width( GTK_CLIST(clist), EMAIL_COL_ALIAS, EMAIL_COL_WIDTH_ALIAS );
+	gtkut_clist_set_redraw( GTK_CLIST(clist) );
 
 	for( i = 0; i < EMAIL_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist)->column[i].button, GTK_CAN_FOCUS);
@@ -808,6 +809,7 @@ void addressbook_edit_person_page_attrib( gint pageNum, gchar *pageLbl ) {
 	gtk_clist_set_selection_mode( GTK_CLIST(clist), GTK_SELECTION_BROWSE );
 	gtk_clist_set_column_width( GTK_CLIST(clist), ATTRIB_COL_NAME, ATTRIB_COL_WIDTH_NAME );
 	gtk_clist_set_column_width( GTK_CLIST(clist), ATTRIB_COL_VALUE, ATTRIB_COL_WIDTH_VALUE );
+	gtkut_clist_set_redraw( GTK_CLIST(clist) );
 
 	for( i = 0; i < ATTRIB_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist)->column[i].button, GTK_CAN_FOCUS);

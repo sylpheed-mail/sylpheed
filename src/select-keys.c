@@ -328,6 +328,7 @@ create_dialog (struct select_keys_s *sk)
     gtk_clist_set_column_width (GTK_CLIST(clist), COL_EMAIL,    130);
     gtk_clist_set_column_width (GTK_CLIST(clist), COL_VALIDITY,  20);
     gtk_clist_set_selection_mode (GTK_CLIST(clist), GTK_SELECTION_BROWSE);
+    gtkut_clist_set_redraw (GTK_CLIST(clist));
     g_signal_connect (G_OBJECT(GTK_CLIST(clist)->column[COL_NAME].button),
 		      "clicked",
                       G_CALLBACK(sort_keys_name), sk);

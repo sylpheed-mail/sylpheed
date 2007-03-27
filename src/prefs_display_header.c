@@ -260,6 +260,7 @@ static void prefs_display_header_create(void)
 				      GTK_SELECTION_BROWSE);
 	gtk_clist_set_reorderable (GTK_CLIST (headers_clist), TRUE);
 	gtk_clist_set_use_drag_icons (GTK_CLIST (headers_clist), FALSE);
+	gtkut_clist_set_redraw (GTK_CLIST (headers_clist));
 	GTK_WIDGET_UNSET_FLAGS (GTK_CLIST (headers_clist)->column[0].button,
 				GTK_CAN_FOCUS);
 	g_signal_connect_after
@@ -318,6 +319,7 @@ static void prefs_display_header_create(void)
 	gtk_clist_set_selection_mode (GTK_CLIST (hidden_headers_clist),
 				      GTK_SELECTION_BROWSE);
 	gtk_clist_set_auto_sort(GTK_CLIST (hidden_headers_clist), TRUE);
+	gtkut_clist_set_redraw (GTK_CLIST (hidden_headers_clist));
 	GTK_WIDGET_UNSET_FLAGS (GTK_CLIST (hidden_headers_clist)->
 				column[0].button, GTK_CAN_FOCUS);
 

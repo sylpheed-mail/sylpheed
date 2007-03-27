@@ -310,6 +310,25 @@ void gtkut_clist_set_focus_row(GtkCList *clist, gint row)
 	GTKUT_CTREE_REFRESH(clist);
 }
 
+#ifdef G_OS_WIN32
+static void vadjustment_changed(GtkAdjustment *adj, gpointer data)
+{
+	GtkWidget *widget = GTK_WIDGET(data);
+
+	gtk_widget_queue_draw(widget);
+}
+#endif
+
+void gtkut_clist_set_redraw(GtkCList *clist)
+{
+#ifdef G_OS_WIN32
+	if (clist->vadjustment) {
+		g_signal_connect(G_OBJECT(clist->vadjustment), "changed",
+				 G_CALLBACK(vadjustment_changed), clist);
+	}
+#endif
+}
+
 gboolean gtkut_tree_model_next(GtkTreeModel *model, GtkTreeIter *iter)
 {
 	GtkTreeIter iter_, parent;
