@@ -489,7 +489,19 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
 	}
 
+#if USE_GPGME
+	if (textview->messageview->msginfo->encinfo &&
+	    textview->messageview->msginfo->encinfo->decryption_failed) {
+		gtk_text_buffer_get_end_iter(buffer, &iter);
+		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+		gtk_text_buffer_insert_with_tags_by_name
+			(buffer, &iter, _("This message is encrypted, but its decryption failed.\n"),
+			 -1, "error", "mimepart", NULL);
+	}
+#endif
+
 	textview_add_parts(textview, mimeinfo, fp);
+
 #if USE_GPGME
 	if (textview->messageview->msginfo->encinfo &&
 	    textview->messageview->msginfo->encinfo->sigstatus)
