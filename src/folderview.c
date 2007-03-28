@@ -711,6 +711,7 @@ void folderview_select_next_unread(FolderView *folderview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
 	GtkTreeIter iter, next;
+	gboolean remember_last;
 
 	if (folderview->opened) {
 		GtkTreePath *path;
@@ -725,7 +726,10 @@ void folderview_select_next_unread(FolderView *folderview)
 			return;
 	}
 	if (folderview_find_next_unread(model, &next, &iter)) {
+		remember_last = prefs_common.remember_last_selected;
+		prefs_common.remember_last_selected = FALSE;
 		folderview_select_row(folderview, &next);
+		prefs_common.remember_last_selected = remember_last;
 		return;
 	}
 
@@ -733,8 +737,12 @@ void folderview_select_next_unread(FolderView *folderview)
 		return;
 
 	/* search again from the first row */
-	if (folderview_find_next_unread(model, &next, NULL))
+	if (folderview_find_next_unread(model, &next, NULL)) {
+		remember_last = prefs_common.remember_last_selected;
+		prefs_common.remember_last_selected = FALSE;
 		folderview_select_row(folderview, &next);
+		prefs_common.remember_last_selected = remember_last;
+	}
 }
 
 FolderItem *folderview_get_selected_item(FolderView *folderview)
