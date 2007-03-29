@@ -705,6 +705,8 @@ void app_will_exit(gboolean force)
 
 	if (gtk_main_level() > 0)
 		gtk_main_quit();
+
+	exit(0);
 }
 
 #if 0
@@ -1101,6 +1103,7 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 		g_free(status);
 		if (folders) g_ptr_array_free(folders, TRUE);
 	} else if (!strncmp(buf, "exit", 4)) {
+		fd_close(sock);
 		app_will_exit(TRUE);
 	}
 
@@ -1153,7 +1156,6 @@ static void remote_command_exec(void)
 	}
 	if (cmd.exit) {
 		app_will_exit(TRUE);
-		exit(0);
 	}
 }
 
