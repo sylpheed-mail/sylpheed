@@ -1063,10 +1063,12 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 #endif
 	} else if (!strncmp(buf, "receive_all", 11)) {
 		main_window_popup(mainwin);
-		inc_all_account_mail(mainwin, FALSE);
+		if (!gtkut_window_modal_exist())
+			inc_all_account_mail(mainwin, FALSE);
 	} else if (!strncmp(buf, "receive", 7)) {
 		main_window_popup(mainwin);
-		inc_mail(mainwin);
+		if (!gtkut_window_modal_exist())
+			inc_mail(mainwin);
 	} else if (!strncmp(buf, "compose_attach", 14)) {
 		GPtrArray *files;
 		gchar *mailto;
@@ -1121,22 +1123,26 @@ static void remote_command_exec(void)
 		folderview_select(mainwin->folderview, item);
 	}
 
-	if (cmd.receive_all)
-		inc_all_account_mail(mainwin, FALSE);
-	else if (prefs_common.chk_on_startup)
-		inc_all_account_mail(mainwin, TRUE);
-	else if (cmd.receive)
-		inc_mail(mainwin);
+	if (!gtkut_window_modal_exist()) {
+		if (cmd.receive_all)
+			inc_all_account_mail(mainwin, FALSE);
+		else if (prefs_common.chk_on_startup)
+			inc_all_account_mail(mainwin, TRUE);
+		else if (cmd.receive)
+			inc_mail(mainwin);
 
-	if (cmd.compose)
-		open_compose_new(cmd.compose_mailto, cmd.attach_files);
+		if (cmd.compose)
+			open_compose_new(cmd.compose_mailto, cmd.attach_files);
+
+		if (cmd.send)
+			send_queue();
+	}
+
 	if (cmd.attach_files) {
 		ptr_array_free_strings(cmd.attach_files);
 		g_ptr_array_free(cmd.attach_files, TRUE);
 		cmd.attach_files = NULL;
 	}
-	if (cmd.send)
-		send_queue();
 	if (cmd.status_folders) {
 		g_ptr_array_free(cmd.status_folders, TRUE);
 		cmd.status_folders = NULL;
@@ -1236,6 +1242,9 @@ static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 	GPtrArray *utf8files = NULL;
 #endif
 
+	if (gtkut_window_modal_exist())
+		return;
+
 	if (address) {
 		utf8addr = g_locale_to_utf8(address, -1, NULL, NULL, NULL);
 		if (utf8addr)
@@ -1272,6 +1281,8 @@ static void send_queue(void)
 {
 	GList *list;
 
+	if (gtkut_window_modal_exist())
+		return;
 	if (!main_window_toggle_online_if_offline(main_window_get()))
 		return;
 

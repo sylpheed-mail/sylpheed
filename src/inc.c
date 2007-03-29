@@ -204,6 +204,7 @@ void inc_mail(MainWindow *mainwin)
 	gint new_msgs = 0;
 
 	if (inc_lock_count) return;
+	if (inc_is_active()) return;
 
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return;
@@ -378,6 +379,7 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	gint new_msgs;
 
 	if (inc_lock_count) return 0;
+	if (inc_is_active()) return 0;
 
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return 0;
@@ -402,6 +404,7 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 	gint new_msgs = 0;
 
 	if (inc_lock_count) return;
+	if (inc_is_active()) return;
 
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return;
