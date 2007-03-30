@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1725,7 +1725,7 @@ gchar *uriencode_for_filename(const gchar *filename)
 }
 
 gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
-		     gchar **subject, gchar **body)
+		     gchar **subject, gchar **inreplyto, gchar **body)
 {
 	gchar *tmp_mailto;
 	gchar *p;
@@ -1741,8 +1741,10 @@ gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 		p++;
 	}
 
-	if (to && !*to)
-		*to = g_strdup(tmp_mailto);
+	if (to && !*to) {
+		*to = g_malloc(strlen(tmp_mailto) + 1);
+		decode_uri(*to, tmp_mailto);
+	}
 
 	while (p) {
 		gchar *field, *value;
@@ -1765,13 +1767,19 @@ gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 		if (*value == '\0') continue;
 
 		if (cc && !*cc && !g_ascii_strcasecmp(field, "cc")) {
-			*cc = g_strdup(value);
+			*cc = g_malloc(strlen(value) + 1);
+			decode_uri(*cc, value);
 		} else if (bcc && !*bcc && !g_ascii_strcasecmp(field, "bcc")) {
-			*bcc = g_strdup(value);
+			*bcc = g_malloc(strlen(value) + 1);
+			decode_uri(*bcc, value);
 		} else if (subject && !*subject &&
 			   !g_ascii_strcasecmp(field, "subject")) {
 			*subject = g_malloc(strlen(value) + 1);
 			decode_uri(*subject, value);
+		} else if (inreplyto && !*inreplyto &&
+			   !g_ascii_strcasecmp(field, "in-reply-to")) {
+			*inreplyto = g_malloc(strlen(value) + 1);
+			decode_uri(*inreplyto, value);
 		} else if (body && !*body &&
 			   !g_ascii_strcasecmp(field, "body")) {
 			*body = g_malloc(strlen(value) + 1);

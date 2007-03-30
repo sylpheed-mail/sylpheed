@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -360,6 +360,7 @@ gint scan_mailto_url			(const gchar	*mailto,
 					 gchar	       **cc,
 					 gchar	       **bcc,
 					 gchar	       **subject,
+					 gchar	       **inreplyto,
 					 gchar	       **body);
 
 void set_startup_dir			(void);

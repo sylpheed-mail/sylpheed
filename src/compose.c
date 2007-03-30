@@ -1277,9 +1277,10 @@ static void compose_entries_set(Compose *compose, const gchar *mailto)
 	gchar *to = NULL;
 	gchar *cc = NULL;
 	gchar *subject = NULL;
+	gchar *inreplyto = NULL;
 	gchar *body = NULL;
 
-	scan_mailto_url(mailto, &to, &cc, NULL, &subject, &body);
+	scan_mailto_url(mailto, &to, &cc, NULL, &subject, &inreplyto, &body);
 
 	if (to)
 		compose_entry_set(compose, to, COMPOSE_ENTRY_TO);
@@ -1287,6 +1288,12 @@ static void compose_entries_set(Compose *compose, const gchar *mailto)
 		compose_entry_set(compose, cc, COMPOSE_ENTRY_CC);
 	if (subject)
 		compose_entry_set(compose, subject, COMPOSE_ENTRY_SUBJECT);
+	if (inreplyto) {
+		if (strchr(inreplyto, '<'))
+			extract_parenthesis(inreplyto, '<', '>');
+		remove_space(inreplyto);
+		compose->inreplyto = g_strdup(inreplyto);
+	}
 	if (body) {
 		GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 		GtkTextBuffer *buffer;
@@ -1311,6 +1318,7 @@ static void compose_entries_set(Compose *compose, const gchar *mailto)
 	g_free(to);
 	g_free(cc);
 	g_free(subject);
+	g_free(inreplyto);
 	g_free(body);
 }
 
@@ -1424,7 +1432,7 @@ static gint compose_parse_header(Compose *compose, MsgInfo *msginfo)
 		extract_address(hentry[H_LIST_POST].body);
 		if (hentry[H_LIST_POST].body[0] != '\0') {
 			scan_mailto_url(hentry[H_LIST_POST].body,
-					&to, NULL, NULL, NULL, NULL);
+					&to, NULL, NULL, NULL, NULL, NULL);
 			if (to) {
 				g_free(compose->ml_post);
 				compose->ml_post = to;
