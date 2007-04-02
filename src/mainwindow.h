@@ -94,6 +94,7 @@ struct _MainWindow
 	GtkWidget *address_btn;
 	GtkWidget *search_btn;
 	GtkWidget *print_btn;
+	GtkWidget *stop_btn;
 	GtkWidget *prefs_common_btn;
 	GtkWidget *prefs_account_btn;
 

@@ -166,6 +166,8 @@ static void toolbar_search_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_print_cb		(GtkWidget	*widget,
 					 gpointer	 data);
+static void toolbar_stop_cb		(GtkWidget	*widget,
+					 gpointer	 data);
 static void toolbar_prefs_common_cb	(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_prefs_account_cb	(GtkWidget	*widget,
@@ -307,7 +309,7 @@ static void inc_mail_cb			(MainWindow	*mainwin,
 static void inc_all_account_mail_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
-static void inc_cancel_cb		(MainWindow	*mainwin,
+static void inc_stop_cb			(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 
@@ -750,8 +752,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						"<control>I",	inc_mail_cb, 0, NULL},
 	{N_("/_Message/Recei_ve/Get from _all accounts"),
 						"<shift><control>I", inc_all_account_mail_cb, 0, NULL},
-	{N_("/_Message/Recei_ve/Cancel receivin_g"),
-						NULL, inc_cancel_cb, 0, NULL},
+	{N_("/_Message/Recei_ve/Stop receivin_g"),
+						NULL, inc_stop_cb, 0, NULL},
 	{N_("/_Message/Recei_ve/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Message/_Send queued messages"), NULL, send_queue_cb, 0, NULL},
 	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
@@ -1895,7 +1897,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[18];
+	} entry[19];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1929,6 +1931,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	SET_WIDGET_COND(mainwin->next_btn, M_MSG_EXIST);
 	SET_WIDGET_COND(mainwin->prev_btn, M_MSG_EXIST);
 	SET_WIDGET_COND(mainwin->print_btn, M_TARGET_EXIST);
+	SET_WIDGET_COND(mainwin->stop_btn, M_INC_ACTIVE);
 	SET_WIDGET_COND(mainwin->prefs_common_btn, M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->prefs_account_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 
@@ -2045,7 +2048,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 						 , M_HAVE_ACCOUNT|M_UNLOCKED},
 		{"/Message/Receive/Get from all accounts"
 						 , M_HAVE_ACCOUNT|M_UNLOCKED},
-		{"/Message/Receive/Cancel receiving"
+		{"/Message/Receive/Stop receiving"
 						 , M_INC_ACTIVE},
 		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG},
 
@@ -2429,6 +2432,7 @@ static PrefsToolbarItem items[] =
 	{T_PREV,		FALSE,	toolbar_prev_unread_cb},
 	{T_SEARCH,		FALSE,	toolbar_search_cb},
 	{T_PRINT,		FALSE,	toolbar_print_cb},
+	{T_STOP,		FALSE,	toolbar_stop_cb},
 	{T_ADDRESS_BOOK,	FALSE,	toolbar_address_cb},
 	{T_EXECUTE,		FALSE,	toolbar_exec_cb},
 	{T_COMMON_PREFS,	FALSE,	toolbar_prefs_common_cb},
@@ -2489,11 +2493,12 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	items[11].data = &mainwin->prev_btn;
 	items[12].data = &mainwin->search_btn;
 	items[13].data = &mainwin->print_btn;
-	items[14].data = &mainwin->address_btn;
-	items[15].data = &mainwin->exec_btn;
-	items[16].data = &mainwin->prefs_common_btn;
-	items[17].data = &mainwin->prefs_account_btn;
-	for (i = 0; i <= 17; i++)
+	items[14].data = &mainwin->stop_btn;
+	items[15].data = &mainwin->address_btn;
+	items[16].data = &mainwin->exec_btn;
+	items[17].data = &mainwin->prefs_common_btn;
+	items[18].data = &mainwin->prefs_account_btn;
+	for (i = 0; i <= 18; i++)
 		*(GtkWidget **)items[i].data = NULL;
 	mainwin->reply_combo = NULL;
 	mainwin->fwd_combo = NULL;
@@ -2731,6 +2736,13 @@ static void toolbar_print_cb(GtkWidget *widget, gpointer data)
 	MainWindow *mainwin = (MainWindow *)data;
 
 	print_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_stop_cb(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	inc_stop_cb(mainwin, 0, NULL);
 }
 
 static void toolbar_prefs_common_cb(GtkWidget *widget, gpointer data)
@@ -3256,7 +3268,7 @@ static void inc_all_account_mail_cb(MainWindow *mainwin, guint action,
 	inc_all_account_mail(mainwin, FALSE);
 }
 
-static void inc_cancel_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
+static void inc_stop_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
 	inc_cancel_all();
 }
