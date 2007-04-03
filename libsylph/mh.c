@@ -547,9 +547,8 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 			g_warning(_("the src folder is identical to the dest.\n"));
 			continue;
 		}
-		debug_print("Moving message %s%c%d to %s ...\n",
-			    src->path, G_DIR_SEPARATOR, msginfo->msgnum,
-			    dest->path);
+		debug_print("Moving message %s/%d to %s ...\n",
+			    src->path, msginfo->msgnum, dest->path);
 
 		destfile = mh_get_new_msg_filename(dest);
 		if (!destfile) break;
@@ -669,9 +668,8 @@ static gint mh_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 			g_warning(_("the src folder is identical to the dest.\n"));
 			continue;
 		}
-		debug_print(_("Copying message %s%c%d to %s ...\n"),
-			    msginfo->folder->path, G_DIR_SEPARATOR,
-			    msginfo->msgnum, dest->path);
+		debug_print(_("Copying message %s/%d to %s ...\n"),
+			    msginfo->folder->path, msginfo->msgnum, dest->path);
 
 		destfile = mh_get_new_msg_filename(dest);
 		if (!destfile) break;
@@ -1173,17 +1171,15 @@ static gint mh_move_folder_real(Folder *folder, FolderItem *item,
 		g_node_append(new_parent->node, item->node);
 		item->parent = new_parent;
 		if (new_parent->path != NULL) {
-			newpath = g_strconcat(new_parent->path,
-					      G_DIR_SEPARATOR_S, utf8_name,
+			newpath = g_strconcat(new_parent->path, "/", utf8_name,
 					      NULL);
 			g_free(utf8_name);
 		} else
 			newpath = utf8_name;
 	} else {
-		if (strchr(item->path, G_DIR_SEPARATOR) != NULL) {
+		if (strchr(item->path, '/') != NULL) {
 			dirname = g_dirname(item->path);
-			newpath = g_strconcat(dirname, G_DIR_SEPARATOR_S,
-					      utf8_name, NULL);
+			newpath = g_strconcat(dirname, "/", utf8_name, NULL);
 			g_free(dirname);
 			g_free(utf8_name);
 		} else
@@ -1507,14 +1503,17 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			utf8name = g_strdup(dir_name);
 #endif
 
-		if (item->path)
-			utf8entry = g_strconcat(item->path, G_DIR_SEPARATOR_S,
-						utf8name, NULL);
-		else
+		if (item->path) {
+			utf8entry = g_strconcat(item->path, "/", utf8name,
+						NULL);
+		} else
 			utf8entry = g_strdup(utf8name);
 		entry = g_filename_from_utf8(utf8entry, -1, NULL, NULL, NULL);
 		if (!entry)
 			entry = g_strdup(utf8entry);
+#ifdef G_OS_WIN32
+		subst_char(entry, '/', G_DIR_SEPARATOR);
+#endif
 
 		if (
 #ifdef G_OS_WIN32
@@ -1553,17 +1552,14 @@ static void mh_scan_tree_recursive(FolderItem *item)
 			node = item->node;
 			for (node = node->children; node != NULL; node = node->next) {
 				FolderItem *cur_item = FOLDER_ITEM(node->data);
-#ifdef G_OS_WIN32
-				if (!path_cmp(cur_item->path, utf8entry)) {
-#else
 				if (!strcmp2(cur_item->path, utf8entry)) {
-#endif
 					new_item = cur_item;
 					break;
 				}
 			}
 			if (!new_item) {
-				debug_print("new folder '%s' found.\n", entry);
+				debug_print("new folder '%s' found.\n",
+					    utf8entry);
 				new_item = folder_item_new(utf8name, utf8entry);
 				folder_item_append(item, new_item);
 			}
@@ -1644,12 +1640,11 @@ static gboolean mh_rename_folder_func(GNode *node, gpointer data)
 	}
 
 	base = item->path + oldpathlen;
-	while (*base == G_DIR_SEPARATOR) base++;
+	while (*base == '/') base++;
 	if (*base == '\0')
 		new_itempath = g_strdup(newpath);
 	else
-		new_itempath = g_strconcat(newpath, G_DIR_SEPARATOR_S, base,
-					   NULL);
+		new_itempath = g_strconcat(newpath, "/", base, NULL);
 	g_free(item->path);
 	item->path = new_itempath;
 

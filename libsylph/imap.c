@@ -1368,15 +1368,13 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 		if (remove_source) {
 			status_print(_("Moving messages %s to %s ..."),
 				     seq_set, dest->path);
-			debug_print("Moving message %s%c[%s] to %s ...\n",
-				    src->path, G_DIR_SEPARATOR,
-				    seq_set, dest->path);
+			debug_print("Moving message %s/[%s] to %s ...\n",
+				    src->path, seq_set, dest->path);
 		} else {
 			status_print(_("Copying messages %s to %s ..."),
 				     seq_set, dest->path);
-			debug_print("Copying message %s%c[%s] to %s ...\n",
-				    src->path, G_DIR_SEPARATOR,
-				    seq_set, dest->path);
+			debug_print("Copying message %s/[%s] to %s ...\n",
+				    src->path, seq_set, dest->path);
 		}
 		progress_show(count, total);
 		ui_update();
@@ -2207,8 +2205,7 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 		if (name) {
 			if (new_parent->path)
 				newpath = g_strconcat(new_parent->path,
-						      G_DIR_SEPARATOR_S, name,
-						      NULL);
+						      "/", name, NULL);
 			else
 				newpath = g_strdup(name);
 		} else {
@@ -2217,20 +2214,18 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 			name_ = g_path_get_basename(item->path);
 			if (new_parent->path)
 				newpath = g_strconcat(new_parent->path,
-						      G_DIR_SEPARATOR_S, name_,
-						      NULL);
+						      "/", name_, NULL);
 			else
 				newpath = g_strdup(name_);
 			AUTORELEASE_STR(name_, );
 			name = name_;
 		}
 	} else {
-		if (strchr(item->path, G_DIR_SEPARATOR)) {
+		if (strchr(item->path, '/')) {
 			gchar *dirpath;
 
 			dirpath = g_dirname(item->path);
-			newpath = g_strconcat(dirpath, G_DIR_SEPARATOR_S, name,
-					      NULL);
+			newpath = g_strconcat(dirpath, "/", name, NULL);
 			g_free(dirpath);
 		} else
 			newpath = g_strdup(name);
@@ -4390,12 +4385,11 @@ static gboolean imap_rename_folder_func(GNode *node, gpointer data)
 	}
 
 	base = item->path + oldpathlen;
-	while (*base == G_DIR_SEPARATOR) base++;
+	while (*base == '/') base++;
 	if (*base == '\0')
 		new_itempath = g_strdup(newpath);
 	else
-		new_itempath = g_strconcat(newpath, G_DIR_SEPARATOR_S, base,
-					   NULL);
+		new_itempath = g_strconcat(newpath, "/", base, NULL);
 	g_free(item->path);
 	item->path = new_itempath;
 

@@ -673,9 +673,6 @@ gchar *folder_item_get_identifier(FolderItem *item)
 
 	folder_id = folder_get_identifier(item->folder);
 	id = g_strconcat(folder_id, "/", item->path, NULL);
-#ifdef G_OS_WIN32
-	subst_char(id, G_DIR_SEPARATOR, '/');
-#endif
 	g_free(folder_id);
 
 	return id;
