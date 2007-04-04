@@ -633,6 +633,11 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		GList *next = qlist->next;
 
 		session = qlist->data;
+		if (session->inc_state == INC_CANCEL) {
+			qlist = next;
+			continue;
+		}
+
 		pop3_session = POP3_SESSION(session->session); 
 		pop3_session->user = g_strdup(pop3_session->ac_prefs->userid);
 		if (pop3_session->ac_prefs->passwd)
@@ -680,7 +685,8 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		session = inc_dialog->queue_list->data;
 		pop3_session = POP3_SESSION(session->session);
 
-		if (pop3_session->pass == NULL) {
+		if (session->inc_state == INC_CANCEL ||
+		    pop3_session->pass == NULL) {
 			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"));
 			inc_session_destroy(session);
 			inc_dialog->queue_list =
@@ -1347,9 +1353,10 @@ static void inc_put_error(IncState istate, const gchar *msg)
 	}
 }
 
-static void inc_cancel(IncProgressDialog *dialog)
+static void inc_cancel(IncProgressDialog *dialog, gboolean cancel_all)
 {
 	IncSession *session;
+	GList *list;
 
 	g_return_if_fail(dialog != NULL);
 
@@ -1358,16 +1365,30 @@ static void inc_cancel(IncProgressDialog *dialog)
 		return;
 	}
 
-	session = dialog->queue_list->data;
-
-	session->inc_state = INC_CANCEL;
+	for (list = dialog->queue_list; list != NULL; list = list->next) {
+		session = list->data;
+		session->inc_state = INC_CANCEL;
+		if (!cancel_all)
+			break;
+	}
 
 	log_message(_("Incorporation cancelled\n"));
 }
 
 gboolean inc_is_active(void)
 {
-	return (inc_dialog_list != NULL);
+	GList *cur;
+
+	if (inc_dialog_list == NULL)
+		return FALSE;
+
+	for (cur = inc_dialog_list; cur != NULL; cur = cur->next) {
+		IncProgressDialog *dialog = cur->data;
+		if (dialog->queue_list)
+			return TRUE;
+	}
+
+	return FALSE;
 }
 
 void inc_cancel_all(void)
@@ -1375,12 +1396,12 @@ void inc_cancel_all(void)
 	GList *cur;
 
 	for (cur = inc_dialog_list; cur != NULL; cur = cur->next)
-		inc_cancel((IncProgressDialog *)cur->data);
+		inc_cancel((IncProgressDialog *)cur->data, TRUE);
 }
 
 static void inc_cancel_cb(GtkWidget *widget, gpointer data)
 {
-	inc_cancel((IncProgressDialog *)data);
+	inc_cancel((IncProgressDialog *)data, FALSE);
 }
 
 static gint inc_dialog_delete_cb(GtkWidget *widget, GdkEventAny *event,
