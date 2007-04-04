@@ -40,6 +40,8 @@
 #include "utils.h"
 #include "prefs_common.h"
 
+#define MAX_MIME_LEVEL	64
+
 static GHashTable *procmime_get_mime_type_table	(void);
 static GList *procmime_get_mime_type_list	(const gchar *file);
 
@@ -205,7 +207,7 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 	gchar *p;
 	gchar *boundary;
 	gint boundary_len = 0;
-	gchar buf[BUFFSIZE];
+	gchar *buf;
 	glong fpos, prev_fpos;
 
 	g_return_if_fail(mimeinfo != NULL);
@@ -218,15 +220,20 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 	}
 	g_return_if_fail(fp != NULL);
 
+	buf = g_malloc(BUFFSIZE);
+
 	boundary = mimeinfo->boundary;
 
 	if (boundary) {
 		boundary_len = strlen(boundary);
 
 		/* look for first boundary */
-		while ((p = fgets(buf, sizeof(buf), fp)) != NULL)
+		while ((p = fgets(buf, BUFFSIZE, fp)) != NULL)
 			if (IS_BOUNDARY(buf, boundary, boundary_len)) break;
-		if (!p) return;
+		if (!p) {
+			g_free(buf);
+			return;
+		}
 	} else if (mimeinfo->parent && mimeinfo->parent->boundary) {
 		boundary = mimeinfo->parent->boundary;
 		boundary_len = strlen(boundary);
@@ -234,8 +241,11 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 	if ((fpos = ftell(fp)) < 0) {
 		perror("ftell");
+		g_free(buf);
 		return;
 	}
+
+	debug_print("level = %d\n", mimeinfo->level);
 
 	for (;;) {
 		MimeInfo *partinfo;
@@ -256,7 +266,8 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 			mimeinfo->sub = sub = procmime_scan_mime_header(fp);
 			if (!sub) break;
 
-			debug_print("message/rfc822 part found\n");
+			debug_print("message/rfc822 part (content-type: %s)\n",
+				    sub->content_type);
 			sub->level = mimeinfo->level + 1;
 			sub->parent = mimeinfo->parent;
 			sub->main = mimeinfo;
@@ -276,14 +287,14 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 		if (partinfo->mime_type == MIME_MULTIPART ||
 		    partinfo->mime_type == MIME_MESSAGE_RFC822) {
-			if (partinfo->level < 8)
+			if (partinfo->level < MAX_MIME_LEVEL)
 				procmime_scan_multipart_message(partinfo, fp);
 		}
 
 		/* look for next boundary */
 		buf[0] = '\0';
 		is_base64 = partinfo->encoding_type == ENC_BASE64;
-		while ((p = fgets(buf, sizeof(buf), fp)) != NULL) {
+		while ((p = fgets(buf, BUFFSIZE, fp)) != NULL) {
 			if (IS_BOUNDARY(buf, boundary, boundary_len)) {
 				if (buf[2 + boundary_len]     == '-' &&
 				    buf[2 + boundary_len + 1] == '-')
@@ -334,6 +345,8 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 		if (eom) break;
 	}
+
+	g_free(buf);
 }
 
 void procmime_scan_encoding(MimeInfo *mimeinfo, const gchar *encoding)

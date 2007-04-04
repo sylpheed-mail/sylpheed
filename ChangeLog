@@ -1,5 +1,11 @@
 2007-04-04
 
+	* libsylph/procmime.c: procmime_scan_multipart_message(): use heap
+	  memory instead of stack for read buffer, and increased the max
+	  recursion level to 64.
+
+2007-04-04
+
 	* src/inc.c: inc_is_active(): also check for session queue.
 	  inc_cancel_all(): really cancel all sessions.
 

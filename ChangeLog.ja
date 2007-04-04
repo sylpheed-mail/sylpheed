@@ -1,5 +1,11 @@
 2007-04-04
 
+	* libsylph/procmime.c: procmime_scan_multipart_message(): 読み込み
+	  バッファにスタックでなくヒープメモリを使用するようにし、再帰
+	  レベルの上限を64に上げた。
+
+2007-04-04
+
 	* src/inc.c: inc_is_active(): セッションキューもチェックする
 	  ようにした。
 	  inc_cancel_all(): 本当にすべてのセッションをキャンセルする
