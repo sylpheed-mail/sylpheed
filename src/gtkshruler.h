@@ -1,5 +1,6 @@
 /* GTKSHRuler
  * Copyright (C) 2000-2004 Alfons Hoogervorst & The Sylpheed Claws Team
+ * Copyright (C) 2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -41,6 +42,8 @@ typedef struct _GtkSHRulerClass   GtkSHRulerClass;
 struct _GtkSHRuler
 {
 	GtkHRuler ruler;
+
+	gint start_pos;
 };
 
 struct _GtkSHRulerClass
@@ -51,6 +54,11 @@ struct _GtkSHRulerClass
 
 GType      gtk_shruler_get_type (void);
 GtkWidget* gtk_shruler_new      (void);
+
+void       gtk_shruler_set_start_pos	(GtkSHRuler *ruler,
+					 gint        pos);
+gint       gtk_shruler_get_start_pos	(GtkSHRuler *ruler);
+
 void       gtk_shruler_set_pos  (GtkSHRuler *ruler,
 				 gfloat      pos);
 

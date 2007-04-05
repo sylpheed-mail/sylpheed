@@ -165,6 +165,8 @@ typedef enum
 
 #define MAX_REFERENCES_LEN	999
 
+#define TEXTVIEW_MARGIN		6
+
 static GdkColor quote_color = {0, 0, 0, 0xbfff};
 
 static GList *compose_list = NULL;
@@ -4510,8 +4512,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	ruler = gtk_shruler_new();
 	gtk_ruler_set_range(GTK_RULER(ruler), 0.0, 100.0, 1.0, 100.0);
-	gtk_box_pack_start(GTK_BOX(ruler_hbox), ruler, TRUE, TRUE,
-			   BORDER_WIDTH);
+	gtk_shruler_set_start_pos(GTK_SHRULER(ruler),
+				  BORDER_WIDTH + TEXTVIEW_MARGIN);
+	gtk_box_pack_start(GTK_BOX(ruler_hbox), ruler, TRUE, TRUE, 0);
 
 	/* text widget */
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
@@ -4528,6 +4531,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text));
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), TRUE);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text), GTK_WRAP_WORD);
+	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(text), TEXTVIEW_MARGIN);
+	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(text), TEXTVIEW_MARGIN);
 	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_add_selection_clipboard(buffer, clipboard);
 	sig_tag = gtk_text_buffer_create_tag(buffer, "signature", NULL);

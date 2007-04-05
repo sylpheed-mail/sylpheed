@@ -1,6 +1,7 @@
 /* GtkSHRuler
  *
- *  Copyright (C) 2000-2005 Alfons Hoogervorst & The Sylpheed Claws Team
+ * Copyright (C) 2000-2005 Alfons Hoogervorst & The Sylpheed Claws Team
+ * Copyright (C) 2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -105,6 +106,7 @@ gtk_shruler_init (GtkSHRuler * shruler)
 	widget = GTK_WIDGET (shruler);
 	widget->requisition.width = widget->style->xthickness * 2 + 1;
 	widget->requisition.height = widget->style->ythickness * 2 + RULER_HEIGHT;
+	shruler->start_pos = 0;
 }
 
 
@@ -112,6 +114,22 @@ GtkWidget*
 gtk_shruler_new(void)
 {
 	return GTK_WIDGET( g_object_new( gtk_shruler_get_type(), NULL ) );
+}
+
+void
+gtk_shruler_set_start_pos(GtkSHRuler *ruler, gint pos)
+{
+	g_return_if_fail (GTK_IS_SHRULER (ruler));
+
+	ruler->start_pos = pos;
+}
+
+gint
+gtk_shruler_get_start_pos(GtkSHRuler *ruler)
+{
+	g_return_if_fail (GTK_IS_SHRULER (ruler));
+
+	return ruler->start_pos;
 }
 
 static void
@@ -159,27 +177,27 @@ gtk_shruler_draw_ticks(GtkRuler *ruler)
 	/* assume ruler->max_size has the char width */
 	/* i is increment of char_width,  pos is label number
 	 * y position is based on height of widget itself */
-	for ( i = 0, pos = 0; i < widget->allocation.width - xthickness; i += ruler->max_size, pos++ ) {	
+	for ( pos = GTK_SHRULER(ruler)->start_pos, i = 0; pos < widget->allocation.width - xthickness; pos += ruler->max_size, i++ ) {	
 		gint length = height / 8;
 	
-		if ( pos % 10 == 0 ) length = ( 2 * height / 3 );
-		else if ( pos % 5 == 0 ) length = ( height / 3 );
+		if ( i % 10 == 0 ) length = ( 2 * height / 3 );
+		else if ( i % 5 == 0 ) length = ( height / 3 );
 		
 		gdk_draw_line(ruler->backing_store, gc,
-			      i, height + ythickness,
-			      i, height - length);			
+			      pos, height + ythickness,
+			      pos, height - length);			
 		
-		if ( pos % 10 == 0 ) {
+		if ( i % 10 == 0 ) {
 			gchar buf[8];
 			PangoLayout *layout;
 
 			/* draw label */
-			g_snprintf(buf, sizeof buf, "%d", pos);
+			g_snprintf(buf, sizeof buf, "%d", i);
 
 			layout = gtk_widget_create_pango_layout
 				(GTK_WIDGET(ruler), buf);
 
-			gdk_draw_layout(ruler->backing_store, gc, i + 2,
+			gdk_draw_layout(ruler->backing_store, gc, pos + 2,
 					0, layout);
 
 			g_object_unref(layout);
