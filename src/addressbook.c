@@ -78,6 +78,7 @@
 #include "editbook.h"
 #include "ldif.h"
 #include "importldif.h"
+#include "importcsv.h"
 
 #ifdef USE_JPILOT
 #include "jpilot.h"
@@ -343,6 +344,7 @@ static void addressbook_list_select_add		(AddressObject *obj);
 static void addressbook_list_select_remove	(AddressObject *obj);
 
 static void addressbook_import_ldif_cb		(void);
+static void addressbook_import_csv_cb		(void);
 
 static GtkItemFactoryEntry addressbook_entries[] =
 {
@@ -376,6 +378,7 @@ static GtkItemFactoryEntry addressbook_entries[] =
 
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _LDIF file"), NULL,		addressbook_import_ldif_cb,	0, NULL},
+	{N_("/_Tools/Import _CSV file"), NULL,		addressbook_import_csv_cb,	0, NULL},
 
 	{N_("/_Help"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Help/_About"),		NULL,		about_show, 0, NULL}
@@ -3587,6 +3590,36 @@ static void addressbook_import_ldif_cb() {
 	if ( !adapter || !adapter->treeNode ) return;
 
 	abf = addressbook_imp_ldif( _addressIndex_ );
+	if ( !abf ) return;
+
+	ds = addrindex_index_add_datasource( _addressIndex_, ADDR_IF_BOOK, abf );
+	ads = addressbook_create_ds_adapter( ds, ADDR_BOOK, NULL );
+	addressbook_ads_set_name( ads, abf->name );
+	newNode = addressbook_add_object( adapter->treeNode, ADDRESS_OBJECT(ads) );
+	if ( newNode ) {
+		addrbook.treeSelected = NULL;
+		gtk_ctree_select( GTK_CTREE(addrbook.ctree), newNode );
+		addrbook.treeSelected = newNode;
+	}
+
+	/* Notify address completion */
+	invalidate_address_completion();
+}
+
+/*
+* Import CSV file.
+*/
+static void addressbook_import_csv_cb() {
+	AddressDataSource *ds = NULL;
+	AdapterDSource *ads = NULL;
+	AddressBookFile *abf = NULL;
+	AdapterInterface *adapter;
+	GtkCTreeNode *newNode;
+
+	adapter = addrbookctl_find_interface( ADDR_IF_BOOK );
+	if ( !adapter || !adapter->treeNode ) return;
+
+	abf = addressbook_imp_csv( _addressIndex_ );
 	if ( !abf ) return;
 
 	ds = addrindex_index_add_datasource( _addressIndex_, ADDR_IF_BOOK, abf );

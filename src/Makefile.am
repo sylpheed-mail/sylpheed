@@ -48,6 +48,7 @@ sylpheed_SOURCES = \
 	vcard.c vcard.h \
 	ldif.c ldif.h \
 	importldif.c importldif.h \
+	importcsv.c importcsv.h \
 	jpilot.c jpilot.h \
 	syldap.c syldap.h \
 	editbook.c editbook.h \
