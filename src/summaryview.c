@@ -397,6 +397,30 @@ static FolderSortKey col_to_sort_key[] = {
 	SORT_BY_NUMBER,
 };
 
+typedef enum
+{
+	QS_ALL,
+	QS_UNREAD,
+	QS_MARK,
+	QS_CLABEL,
+	QS_MIME,
+	QS_W1DAY,
+	QS_RECENT5
+} QSearchCondType;
+
+static const struct {
+	QSearchCondType type;
+	FilterCondType ftype;
+} qsearch_cond_types[] = {
+	{QS_ALL,	-1},
+	{QS_UNREAD,	FLT_COND_UNREAD},
+	{QS_MARK,	FLT_COND_MARK},
+	{QS_CLABEL,	FLT_COND_COLOR_LABEL},
+	{QS_MIME,	FLT_COND_MIME},
+	{QS_W1DAY,	-1},
+	{QS_RECENT5,	-1}
+};
+
 enum
 {
 	DRAG_TYPE_TEXT,
@@ -523,11 +547,14 @@ SummaryView *summary_create(void)
 }
 
 	filter_menu = gtk_menu_new();
-	COND_MENUITEM_ADD(_("All"), 0);
-	COND_MENUITEM_ADD(_("Unread"), FLT_COND_UNREAD);
-	COND_MENUITEM_ADD(_("Marked"), FLT_COND_MARK);
-	COND_MENUITEM_ADD(_("Have color label"), FLT_COND_COLOR_LABEL);
-	COND_MENUITEM_ADD(_("Have attachment"), FLT_COND_MIME);
+	COND_MENUITEM_ADD(_("All"), QS_ALL);
+	COND_MENUITEM_ADD(_("Unread"), QS_UNREAD);
+	COND_MENUITEM_ADD(_("Marked"), QS_MARK);
+	COND_MENUITEM_ADD(_("Have color label"), QS_CLABEL);
+	COND_MENUITEM_ADD(_("Have attachment"), QS_MIME);
+	MENUITEM_ADD(filter_menu, menuitem, NULL, 0);
+	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
+	COND_MENUITEM_ADD(_("Recent 5 days"), QS_RECENT5);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(filter_optmenu), filter_menu);
 
 #undef COND_MENUITEM_ADD
@@ -5186,7 +5213,8 @@ void summary_qsearch_clear_entry(SummaryView *summaryview)
 
 void summary_qsearch(SummaryView *summaryview)
 {
-	FilterCondType type;
+	QSearchCondType type;
+	FilterCondType ftype;
 	GtkWidget *menuitem;
 	const gchar *key;
 	FilterRule *status_rule = NULL;
@@ -5205,7 +5233,7 @@ void summary_qsearch(SummaryView *summaryview)
 		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
 
 	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
-	if (type == 0 && (!key || *key == '\0')) {
+	if (type == QS_ALL && (!key || *key == '\0')) {
 		summary_qsearch_reset(summaryview);
 		return;
 	}
@@ -5221,13 +5249,37 @@ void summary_qsearch(SummaryView *summaryview)
 	summaryview->flt_new = 0;
 	summaryview->flt_unread = 0;
 
-	if (type != 0) {
-		cond = filter_cond_new(type, 0, 0, NULL, NULL);
+	switch (type) {
+	case QS_UNREAD:
+	case QS_MARK:
+	case QS_CLABEL:
+	case QS_MIME:
+		ftype = qsearch_cond_types[type].ftype;
+		cond = filter_cond_new(ftype, 0, 0, NULL, NULL);
 		cond_list = g_slist_append(cond_list, cond);
 		status_rule = filter_rule_new("Status filter rule", FLT_OR,
 					      cond_list, NULL);
-		cond_list = NULL;
+		break;
+	case QS_W1DAY:
+		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
+				       NULL, "1");
+		cond_list = g_slist_append(cond_list, cond);
+		status_rule = filter_rule_new("Status filter rule", FLT_OR,
+					      cond_list, NULL);
+		break;
+	case QS_RECENT5:
+		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
+				       NULL, "5");
+		cond_list = g_slist_append(cond_list, cond);
+		status_rule = filter_rule_new("Status filter rule", FLT_OR,
+					      cond_list, NULL);
+		break;
+	QS_ALL:
+	default:
+		break;
 	}
+
+	cond_list = NULL;
 
 	if (key && *key != '\0') {
 		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
@@ -5270,6 +5322,7 @@ void summary_qsearch(SummaryView *summaryview)
 	flt_mlist = g_slist_reverse(flt_mlist);
 
 	filter_rule_free(rule);
+	filter_rule_free(status_rule);
 
 	summaryview->on_filter = TRUE;
 	summaryview->flt_mlist = flt_mlist;
