@@ -1214,6 +1214,14 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		filter_apply(prefs_common.junk_fltlist, file, fltinfo);
 		if (fltinfo->drop_done)
 			is_junk = TRUE;
+		else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
+			alertpanel_error
+				(_("Execution of the junk filter command failed.\n"
+				   "Please check the junk mail control setting."));
+			filter_info_free(fltinfo);
+			inc_session->inc_state = INC_ERROR;
+			return DROP_ERROR;
+		}
 	}
 
 	if (!fltinfo->drop_done && session->ac_prefs->filter_on_recv)
@@ -1226,6 +1234,14 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 			filter_apply(prefs_common.junk_fltlist, file, fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
+			else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
+				alertpanel_error
+					(_("Execution of the junk filter command failed.\n"
+					   "Please check the junk mail control setting."));
+				filter_info_free(fltinfo);
+				inc_session->inc_state = INC_ERROR;
+				return DROP_ERROR;
+			}
 		}
 	}
 

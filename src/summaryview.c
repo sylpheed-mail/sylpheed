@@ -4465,6 +4465,14 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 	    fltinfo->actions[FLT_ACTION_DELETE] ||
 	    fltinfo->actions[FLT_ACTION_MARK_READ])
 		summaryview->filtered++;
+	else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
+		if (summaryview->flt_count == 1) {
+			alertpanel_error
+				(_("Execution of the junk filter command failed.\n"
+				   "Please check the junk mail control setting."));
+		}
+		return TRUE;
+	}
 
 	if (msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
 		msginfo->flags = fltinfo->flags;

@@ -97,6 +97,8 @@ gint filter_apply_msginfo(GSList *fltlist, MsgInfo *msginfo,
 	g_return_val_if_fail(msginfo != NULL, -1);
 	g_return_val_if_fail(fltinfo != NULL, -1);
 
+	fltinfo->error = FLT_ERROR_OK;
+
 	if (!fltlist) return 0;
 
 	file = procmsg_get_message_file(msginfo);
@@ -109,12 +111,18 @@ gint filter_apply_msginfo(GSList *fltlist, MsgInfo *msginfo,
 	}
 
 	for (cur = fltlist; cur != NULL; cur = cur->next) {
+		gboolean matched;
+
 		rule = (FilterRule *)cur->data;
 		if (!rule->enabled) continue;
-		if (filter_match_rule(rule, msginfo, hlist, fltinfo)) {
+		matched = filter_match_rule(rule, msginfo, hlist, fltinfo);
+		if (fltinfo->error != FLT_ERROR_OK) {
+			g_warning("filter_match_rule() returned error (code: %d)\n", fltinfo->error);
+		}
+		if (matched) {
 			ret = filter_action_exec(rule, msginfo, file, fltinfo);
 			if (ret < 0) {
-				g_warning("filter_action_exec() returned error\n");
+				g_warning("filter_action_exec() returned error (code: %d)\n", fltinfo->error);
 				break;
 			}
 			if (fltinfo->drop_done == TRUE ||
@@ -202,6 +210,7 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 			if (!dest_folder) {
 				g_warning("dest folder '%s' not found\n",
 					  action->str_value);
+				fltinfo->error = FLT_ERROR_ERROR;
 				return -1;
 			}
 			debug_print("filter_action_exec(): %s: dest_folder = %s\n",
@@ -223,16 +232,20 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 						val = folder_item_copy_msg
 							(dest_folder, msginfo);
 						msginfo->flags = save_flags;
-						if (val == -1)
+						if (val == -1) {
+							fltinfo->error = FLT_ERROR_ERROR;
 							return -1;
+						}
 					}
 					fltinfo->actions[action->type] = TRUE;
 				}
 			} else {
 				if (folder_item_add_msg(dest_folder, file,
 							&fltinfo->flags,
-							FALSE) < 0)
+							FALSE) < 0) {
+					fltinfo->error = FLT_ERROR_ERROR;
 					return -1;
+				}
 				fltinfo->actions[action->type] = TRUE;
 			}
 
@@ -358,6 +371,7 @@ gboolean filter_match_rule(FilterRule *rule, MsgInfo *msginfo, GSList *hlist,
 static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 				  GSList *hlist, FilterInfo *fltinfo)
 {
+	gint ret;
 	gboolean matched = FALSE;
 	gchar *file;
 	gchar *cmdline;
@@ -377,7 +391,10 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		if (!file)
 			return FALSE;
 		cmdline = g_strconcat(cond->str_value, " \"", file, "\"", NULL);
-		matched = (execute_command_line(cmdline, FALSE) == 0);
+		ret = execute_command_line(cmdline, FALSE);
+		matched = (ret == 0);
+		if (ret == -1)
+			fltinfo->error = FLT_ERROR_EXEC_FAILED;
 		g_free(cmdline);
 		g_free(file);
 		break;
@@ -407,6 +424,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 	default:
 		g_warning("filter_match_cond(): unknown condition: %d\n",
 			  cond->type);
+		fltinfo->error = FLT_ERROR_ERROR;
 		return FALSE;
 	}
 
@@ -1259,6 +1277,7 @@ FilterInfo *filter_info_new(void)
 	fltinfo->dest_list = NULL;
 	fltinfo->move_dest = NULL;
 	fltinfo->drop_done = FALSE;
+	fltinfo->error = FLT_ERROR_OK;
 
 	return fltinfo;
 }

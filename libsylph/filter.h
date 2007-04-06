@@ -100,6 +100,13 @@ typedef enum
 	FLT_BY_SUBJECT
 } FilterCreateType;
 
+typedef enum
+{
+	FLT_ERROR_OK,
+	FLT_ERROR_ERROR,
+	FLT_ERROR_EXEC_FAILED
+} FilterErrorValue;
+
 #define FLT_IS_NOT_MATCH(flag)	((flag & FLT_NOT_MATCH) != 0)
 #define FLT_IS_CASE_SENS(flag)	((flag & FLT_CASE_SENS) != 0)
 
@@ -151,6 +158,8 @@ struct _FilterInfo
 	GSList *dest_list;
 	FolderItem *move_dest;
 	gboolean drop_done;
+
+	FilterErrorValue error;
 };
 
 gint filter_apply			(GSList			*fltlist,
