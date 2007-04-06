@@ -4512,8 +4512,6 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	ruler = gtk_shruler_new();
 	gtk_ruler_set_range(GTK_RULER(ruler), 0.0, 100.0, 1.0, 100.0);
-	gtk_shruler_set_start_pos(GTK_SHRULER(ruler),
-				  BORDER_WIDTH + TEXTVIEW_MARGIN);
 	gtk_box_pack_start(GTK_BOX(ruler_hbox), ruler, TRUE, TRUE, 0);
 
 	/* text widget */
@@ -4537,6 +4535,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_text_buffer_add_selection_clipboard(buffer, clipboard);
 	sig_tag = gtk_text_buffer_create_tag(buffer, "signature", NULL);
 	gtk_container_add(GTK_CONTAINER(scrolledwin), text);
+
+	gtk_shruler_set_start_pos(GTK_SHRULER(ruler),
+				  text->style->xthickness + TEXTVIEW_MARGIN);
 
 	g_signal_connect(G_OBJECT(text), "grab_focus",
 			 G_CALLBACK(compose_grab_focus_cb), compose);
