@@ -202,6 +202,7 @@ static void imp_csv_load_fields( gchar *sFile ) {
 			str = conv_localetodisp(buf, NULL);
 		g_print("%s\n", str);
 		strv = g_strsplit(str, ",", 0);
+
 		for (i = 0; strv[i] != NULL; i++) {
 			text[ FIELD_COL_SELECT ] = "";
 			text[ FIELD_COL_FIELD  ] = strv[i];
@@ -209,8 +210,8 @@ static void imp_csv_load_fields( gchar *sFile ) {
 				i < N_CSV_ATTRIB ? gettext(imp_csv_attrib[i].name) : "";
 			gtk_clist_append( clist, text );
 		}
-		g_free(str);
 		g_strfreev(strv);
+		g_free(str);
 		break;
 	}
 
@@ -232,6 +233,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	gchar buf[BUFFSIZE];
 	gint i;
 	gchar **strv;
+	CharSet enc;
 	gchar *firstName = NULL;
 	gchar *lastName = NULL;
 	gchar *fullName = NULL;
@@ -246,14 +248,22 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	addrcache_clear( cache );
 	cache->dataRead = FALSE;
 
+	enc = conv_check_file_encoding(csvFile);
+
 	if ((fp = g_fopen(csvFile, "rb")) == NULL) {
 		return;
 	}
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
+		gchar *str;
+
 		strretchomp(buf);
-		g_print("%s\n", buf);
-		strv = g_strsplit(buf, ",", 0);
+		if (enc == C_UTF_8)
+			str = g_strdup(buf);
+		else
+			str = conv_localetodisp(buf, NULL);
+		g_print("%s\n", str);
+		strv = g_strsplit(str, ",", 0);
 
 		for (i = 0; strv[i] != NULL; i++) {
 			if (i == imp_csv_attrib[ATTR_FIRST_NAME].col)
@@ -285,6 +295,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 
 		firstName = lastName = fullName = nickName = address = NULL;
 		g_strfreev(strv);
+		g_free(str);
 
 		count++;
 	}
