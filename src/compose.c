@@ -582,9 +582,9 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_View/_To"),		NULL, compose_toggle_to_cb     , 0, "<ToggleItem>"},
 	{N_("/_View/_Cc"),		NULL, compose_toggle_cc_cb     , 0, "<ToggleItem>"},
 	{N_("/_View/_Bcc"),		NULL, compose_toggle_bcc_cb    , 0, "<ToggleItem>"},
-	{N_("/_View/_Reply to"),	NULL, compose_toggle_replyto_cb, 0, "<ToggleItem>"},
+	{N_("/_View/_Reply-To"),	NULL, compose_toggle_replyto_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
-	{N_("/_View/_Followup to"),	NULL, compose_toggle_followupto_cb, 0, "<ToggleItem>"},
+	{N_("/_View/_Followup-To"),	NULL, compose_toggle_followupto_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_View/R_uler"),		NULL, compose_toggle_ruler_cb, 0, "<ToggleItem>"},
 	{N_("/_View/---"),		NULL, NULL, 0, "<Separator>"},
@@ -1191,10 +1191,10 @@ static void compose_entry_show(Compose *compose, ComposeEntryType type)
 		menu_set_active(ifactory, "/View/Bcc", TRUE);
 		break;
 	case COMPOSE_ENTRY_REPLY_TO:
-		menu_set_active(ifactory, "/View/Reply to", TRUE);
+		menu_set_active(ifactory, "/View/Reply-To", TRUE);
 		break;
 	case COMPOSE_ENTRY_FOLLOWUP_TO:
-		menu_set_active(ifactory, "/View/Followup to", TRUE);
+		menu_set_active(ifactory, "/View/Followup-To", TRUE);
 		break;
 	case COMPOSE_ENTRY_TO:
 		menu_set_active(ifactory, "/View/To", TRUE);
@@ -2670,7 +2670,7 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 		menu_set_active(ifactory, "/View/To", FALSE);
 		menu_set_sensitive(ifactory, "/View/To", TRUE);
 		menu_set_active(ifactory, "/View/Cc", FALSE);
-		menu_set_sensitive(ifactory, "/View/Followup to", TRUE);
+		menu_set_sensitive(ifactory, "/View/Followup-To", TRUE);
 	} else if (account->protocol != A_NNTP &&
 		   (init || prev_account->protocol == A_NNTP)) {
 		gtk_widget_hide(compose->newsgroups_hbox);
@@ -2682,8 +2682,8 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 		menu_set_active(ifactory, "/View/To", TRUE);
 		menu_set_sensitive(ifactory, "/View/To", FALSE);
 		menu_set_active(ifactory, "/View/Cc", TRUE);
-		menu_set_active(ifactory, "/View/Followup to", FALSE);
-		menu_set_sensitive(ifactory, "/View/Followup to", FALSE);
+		menu_set_active(ifactory, "/View/Followup-To", FALSE);
+		menu_set_sensitive(ifactory, "/View/Followup-To", FALSE);
 	}
 
 	if (account->set_autocc) {
