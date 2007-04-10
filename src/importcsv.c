@@ -107,6 +107,7 @@ typedef enum {
 	ATTR_DISPLAY_NAME,
 	ATTR_NICK_NAME,
 	ATTR_EMAIL_ADDRESS,
+	ATTR_REMARKS,
 
 	N_CSV_ATTRIB
 } ImpCSVAttribIndex;
@@ -121,7 +122,8 @@ static struct _ImpCSVAttrib {
 	{N_("Last Name"),	NULL, 1, TRUE},
 	{N_("Display Name"),	NULL, 2, TRUE},
 	{N_("Nick Name"),	NULL, 3, TRUE},
-	{N_("E-Mail Address"),	NULL, 4, TRUE}
+	{N_("E-Mail Address"),	NULL, 4, TRUE},
+	{N_("Remarks"),		NULL, 5, TRUE}
 };
 
 static AddressBookFile *_importedBook_;
@@ -270,7 +272,7 @@ static void imp_csv_field_list_up( GtkWidget *button, gpointer data ) {
 	if (!clist->selection) return;
 
 	row = GPOINTER_TO_INT( clist->selection->data );
-	if (row > 0 && row < clist->rows - 1 ) {
+	if ( row > 0 && row < clist->rows ) {
 		gtk_clist_freeze( clist );
 
 		src_attr = gtk_clist_get_row_data( clist, row );
@@ -308,7 +310,7 @@ static void imp_csv_field_list_down( GtkWidget *button, gpointer data ) {
 	if (!clist->selection) return;
 
 	row = GPOINTER_TO_INT( clist->selection->data );
-	if (row >= 0 && row < clist->rows - 2 ) {
+	if ( row >= 0 && row < clist->rows - 1 ) {
 		gtk_clist_freeze( clist );
 
 		src_attr = gtk_clist_get_row_data( clist, row );
@@ -346,6 +348,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	gchar *fullName = NULL;
 	gchar *nickName = NULL;
 	gchar *address = NULL;
+	gchar *remarks = NULL;
 	ItemPerson *person;
 	ItemEMail *email;
 	gint count = 0;
@@ -390,6 +393,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 		fullName  = imp_csv_attrib[ATTR_DISPLAY_NAME].value;
 		nickName  = imp_csv_attrib[ATTR_NICK_NAME].value;
 		address   = imp_csv_attrib[ATTR_EMAIL_ADDRESS].value;
+		remarks   = imp_csv_attrib[ATTR_REMARKS].value;
 
 		if (!fullName && !firstName && !lastName && address)
 			fullName = address;
@@ -405,6 +409,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 		if (address) {
 			email = addritem_create_item_email();
 			addritem_email_set_address( email, address );
+			addritem_email_set_remarks( email, remarks );
 			addrcache_id_email( cache, email );
 			addrcache_person_add_email( cache, person, email );
 		}
