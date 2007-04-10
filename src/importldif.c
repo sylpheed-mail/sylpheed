@@ -37,6 +37,7 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkhbbox.h>
 #include <gtk/gtkcheckbutton.h>
 #include <gtk/gtktogglebutton.h>
 #include <gtk/gtkstatusbar.h>
@@ -424,13 +425,10 @@ static void imp_ldif_cancel( GtkWidget *widget, gpointer data ) {
 }
 
 static void imp_ldif_file_select( void ) {
-	gchar *sFile;
 	gchar *sSelFile;
 
-	sFile = gtk_editable_get_chars( GTK_EDITABLE(impldif_dlg.file_entry), 0, -1 );
-	sSelFile = filesel_select_file( _("Select LDIF File"), sFile,
+	sSelFile = filesel_select_file( _("Select LDIF File"), NULL,
 					GTK_FILE_CHOOSER_ACTION_OPEN );
-	g_free( sFile );
 	if ( sSelFile ) {
 		gchar *sUTF8File;
 		sUTF8File = conv_filename_to_utf8( sSelFile );
@@ -735,9 +733,12 @@ static void imp_ldif_dialog_create() {
 	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
 
 	/* Button panel */
-	gtkut_stock_button_set_create(&hbbox, &btnPrev, _("Prev"),
-				      &btnNext, _("Next"),
+	gtkut_stock_button_set_create(&hbbox, &btnNext, _("Next"),
+				      &btnPrev, _("Prev"),
 				      &btnCancel, GTK_STOCK_CANCEL);
+	gtk_button_box_set_child_secondary(GTK_BUTTON_BOX(hbbox), btnCancel,
+					   TRUE);
+	gtkut_box_set_reverse_order(GTK_BOX(hbbox), FALSE);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 2);
 	gtk_widget_grab_default(btnNext);

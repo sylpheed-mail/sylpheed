@@ -79,7 +79,7 @@ typedef enum {
 	FIELD_COL_ATTRIB  = 2
 } ImpCSV_FieldColPos;
 
-static struct _ImpCSV_Dlg {
+static struct _ImpCSVDlg {
 	GtkWidget *window;
 	GtkWidget *notebook;
 	GtkWidget *file_entry;
@@ -113,14 +113,15 @@ typedef enum {
 
 static struct _ImpCSVAttrib {
 	gchar *name;
+	gchar *value;
 	gint col;
 	gboolean enabled;
 } imp_csv_attrib[] = {
-	{N_("First Name"),	0, TRUE},
-	{N_("Last Name"),	1, TRUE},
-	{N_("Display Name"),	2, TRUE},
-	{N_("Nick Name"),	3, TRUE},
-	{N_("E-Mail Address"),	4, TRUE}
+	{N_("First Name"),	NULL, 0, TRUE},
+	{N_("Last Name"),	NULL, 1, TRUE},
+	{N_("Display Name"),	NULL, 2, TRUE},
+	{N_("Nick Name"),	NULL, 3, TRUE},
+	{N_("E-Mail Address"),	NULL, 4, TRUE}
 };
 
 static AddressBookFile *_importedBook_;
@@ -197,13 +198,13 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 		guint fields_len;
 		guint data_len = 0;
 		guint len;
+		gint row;
 
 		strretchomp(buf);
 		if (enc == C_UTF_8)
 			str = g_strdup(buf);
 		else
 			str = conv_localetodisp(buf, NULL);
-		g_print("%s\n", str);
 		strv = g_strsplit(str, ",", 0);
 		fields_len = sizeof(imp_csv_attrib) / sizeof(imp_csv_attrib[0]);
 		while (strv[data_len])
@@ -221,7 +222,13 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 					gettext(imp_csv_attrib[i].name);
 			else
 				text[ FIELD_COL_ATTRIB ] = "";
-			gtk_clist_append( clist, text );
+			row = gtk_clist_append(clist, text);
+			if (i < fields_len) {
+				imp_csv_attrib[i].value = NULL;
+				imp_csv_attrib[i].col = row;
+				gtk_clist_set_row_data
+					(clist, row, &imp_csv_attrib[i]);
+			}
 		}
 		g_strfreev(strv);
 		g_free(str);
@@ -239,12 +246,89 @@ static gboolean imp_csv_field_list_toggle( GtkCList *clist, GdkEventButton *even
 	return FALSE;
 }
 
+static void imp_csv_field_list_up( GtkWidget *button, gpointer data ) {
+	GtkCList *clist = GTK_CLIST(impcsv_dlg.clist_field);
+	gchar *text;
+	gint row;
+	struct _ImpCSVAttrib *src_attr;
+	struct _ImpCSVAttrib *dest_attr;
+	gchar *src_text;
+	gchar *dest_text;
+
+	if (!clist->selection) return;
+
+	row = GPOINTER_TO_INT( clist->selection->data );
+	if (row > 0 && row < clist->rows - 1 ) {
+		gtk_clist_freeze( clist );
+
+		src_attr = gtk_clist_get_row_data( clist, row );
+		dest_attr = gtk_clist_get_row_data( clist, row - 1 );
+
+		gtk_clist_row_move( clist, row, row - 1 );
+
+		gtk_clist_get_text( clist, row, FIELD_COL_FIELD, &text );
+		src_text = g_strdup( text );
+		gtk_clist_get_text( clist, row - 1, FIELD_COL_FIELD, &text );
+		dest_text = g_strdup( text );
+		gtk_clist_set_text( clist, row - 1, FIELD_COL_FIELD, src_text );
+		gtk_clist_set_text( clist, row, FIELD_COL_FIELD, dest_text );
+		g_free( dest_text );
+		g_free( src_text );
+
+		if ( src_attr )
+			src_attr->col = row - 1;
+		if ( dest_attr )
+			dest_attr->col = row;
+
+		gtk_clist_thaw( clist );
+	}
+}
+
+static void imp_csv_field_list_down( GtkWidget *button, gpointer data ) {
+	GtkCList *clist = GTK_CLIST(impcsv_dlg.clist_field);
+	gchar *text;
+	gint row;
+	struct _ImpCSVAttrib *src_attr;
+	struct _ImpCSVAttrib *dest_attr;
+	gchar *src_text;
+	gchar *dest_text;
+
+	if (!clist->selection) return;
+
+	row = GPOINTER_TO_INT( clist->selection->data );
+	if (row >= 0 && row < clist->rows - 2 ) {
+		gtk_clist_freeze( clist );
+
+		src_attr = gtk_clist_get_row_data( clist, row );
+		dest_attr = gtk_clist_get_row_data( clist, row + 1 );
+
+		gtk_clist_row_move( clist, row, row + 1 );
+
+		gtk_clist_get_text( clist, row, FIELD_COL_FIELD, &text );
+		src_text = g_strdup( text );
+		gtk_clist_get_text( clist, row + 1, FIELD_COL_FIELD, &text );
+		dest_text = g_strdup( text );
+		gtk_clist_set_text( clist, row + 1, FIELD_COL_FIELD, src_text );
+		gtk_clist_set_text( clist, row, FIELD_COL_FIELD, dest_text );
+		g_free( dest_text );
+		g_free( src_text );
+
+		if ( src_attr )
+			src_attr->col = row + 1;
+		if ( dest_attr )
+			dest_attr->col = row;
+
+		gtk_clist_thaw( clist );
+	}
+}
+
 static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	FILE *fp;
 	gchar buf[BUFFSIZE];
 	gint i;
 	gchar **strv;
 	CharSet enc;
+	guint fields_len;
 	gchar *firstName = NULL;
 	gchar *lastName = NULL;
 	gchar *fullName = NULL;
@@ -265,29 +349,38 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 		return;
 	}
 
+	fields_len = sizeof(imp_csv_attrib) / sizeof(imp_csv_attrib[0]);
+
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
+		guint col, cols = 0;
 
 		strretchomp(buf);
 		if (enc == C_UTF_8)
 			str = g_strdup(buf);
 		else
 			str = conv_localetodisp(buf, NULL);
-		g_print("%s\n", str);
 		strv = g_strsplit(str, ",", 0);
+		while (strv[cols])
+			++cols;
 
-		for (i = 0; strv[i] != NULL; i++) {
-			if (i == imp_csv_attrib[ATTR_FIRST_NAME].col)
-				firstName = strv[i];
-			else if (i == imp_csv_attrib[ATTR_LAST_NAME].col)
-				lastName = strv[i];
-			else if (i == imp_csv_attrib[ATTR_DISPLAY_NAME].col)
-				fullName = strv[i];
-			else if (i == imp_csv_attrib[ATTR_NICK_NAME].col)
-				nickName = strv[i];
-			else if (i == imp_csv_attrib[ATTR_EMAIL_ADDRESS].col)
-				address = strv[i];
+		for (i = 0; i < fields_len; i++) {
+			if (!imp_csv_attrib[i].enabled)
+				continue;
+			col = imp_csv_attrib[i].col;
+			if (col >= cols || !*strv[col])
+				continue;
+			imp_csv_attrib[i].value = strv[col];
 		}
+
+		firstName = imp_csv_attrib[ATTR_FIRST_NAME].value;
+		lastName  = imp_csv_attrib[ATTR_LAST_NAME].value;
+		fullName  = imp_csv_attrib[ATTR_DISPLAY_NAME].value;
+		nickName  = imp_csv_attrib[ATTR_NICK_NAME].value;
+		address   = imp_csv_attrib[ATTR_EMAIL_ADDRESS].value;
+
+		if (!fullName && !firstName && !lastName && address)
+			fullName = address;
 
 		person = addritem_create_item_person();
 		addritem_person_set_common_name( person, fullName);
@@ -297,14 +390,15 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 		addrcache_id_person( cache, person );
 		addrcache_add_person( cache, person );
 
-		if (address && *address) {
+		if (address) {
 			email = addritem_create_item_email();
 			addritem_email_set_address( email, address );
 			addrcache_id_email( cache, email );
 			addrcache_person_add_email( cache, person, email );
 		}
 
-		firstName = lastName = fullName = nickName = address = NULL;
+		for (i = 0; i < fields_len; i++)
+			imp_csv_attrib[i].value = NULL;
 		g_strfreev(strv);
 		g_free(str);
 
@@ -481,13 +575,10 @@ static void imp_csv_cancel( GtkWidget *widget, gpointer data ) {
 }
 
 static void imp_csv_file_select( void ) {
-	gchar *sFile;
 	gchar *sSelFile;
 
-	sFile = gtk_editable_get_chars( GTK_EDITABLE(impcsv_dlg.file_entry), 0, -1 );
-	sSelFile = filesel_select_file( _("Select CSV File"), sFile,
+	sSelFile = filesel_select_file( _("Select CSV File"), NULL,
 				        GTK_FILE_CHOOSER_ACTION_OPEN );
-	g_free( sFile );
 	if (sSelFile) {
 		gchar *sUTF8File;
 		sUTF8File = conv_filename_to_utf8( sSelFile );
@@ -574,12 +665,16 @@ static void imp_csv_page_file( gint pageNum, gchar *pageLbl ) {
 
 static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 	GtkWidget *vbox;
-	GtkWidget *vboxt;
+	GtkWidget *hbox;
 
-	GtkWidget *table;
 	GtkWidget *label;
 	GtkWidget *clist_swin;
 	GtkWidget *clist_field;
+
+	GtkWidget *btn_vbox;
+	GtkWidget *btn_vbox1;
+	GtkWidget *up_btn;
+	GtkWidget *down_btn;
 
 	gchar *titles[ FIELDS_N_COLS ];
 	gint i;
@@ -599,11 +694,11 @@ static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 		gtk_notebook_get_nth_page(GTK_NOTEBOOK( impcsv_dlg.notebook ), pageNum ),
 		label );
 
-	vboxt = gtk_vbox_new( FALSE, 4 );
-	gtk_container_add( GTK_CONTAINER( vbox ), vboxt );
+	hbox = gtk_hbox_new( FALSE, 4 );
+	gtk_box_pack_start( GTK_BOX( vbox ), hbox, TRUE, TRUE, 0 );
 
 	clist_swin = gtk_scrolled_window_new( NULL, NULL );
-	gtk_container_add( GTK_CONTAINER(vboxt), clist_swin );
+	gtk_box_pack_start( GTK_BOX(hbox), clist_swin, TRUE, TRUE, 0 );
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(clist_swin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_ALWAYS);
@@ -622,12 +717,28 @@ static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 	for( i = 0; i < FIELDS_N_COLS; i++ )
 		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_field)->column[i].button, GTK_CAN_FOCUS);
 
+	btn_vbox = gtk_vbox_new( FALSE, 0 );
+	gtk_box_pack_start( GTK_BOX( hbox ), btn_vbox, FALSE, FALSE, 0 );
+	gtk_container_set_border_width( GTK_CONTAINER (btn_vbox), 4 );
+
+	btn_vbox1 = gtk_vbox_new( FALSE, 8 );
+	gtk_box_pack_start( GTK_BOX( btn_vbox ), btn_vbox1, TRUE, FALSE, 0 );
+
+	up_btn = gtk_button_new_with_label( _("Up") );
+	gtk_box_pack_start( GTK_BOX( btn_vbox1 ), up_btn, FALSE, FALSE, 0 );
+	down_btn = gtk_button_new_with_label( _("Down") );
+	gtk_box_pack_start( GTK_BOX( btn_vbox1 ), down_btn, FALSE, FALSE, 0 );
+
 	gtk_widget_show_all(vbox);
 
 	g_signal_connect( G_OBJECT(clist_field), "select_row",
 			  G_CALLBACK(imp_csv_field_list_selected), NULL );
 	g_signal_connect( G_OBJECT(clist_field), "button_press_event",
 			  G_CALLBACK(imp_csv_field_list_toggle), NULL );
+	g_signal_connect( G_OBJECT(up_btn), "clicked",
+			  G_CALLBACK(imp_csv_field_list_up), NULL );
+	g_signal_connect( G_OBJECT(down_btn), "clicked",
+			  G_CALLBACK(imp_csv_field_list_down), NULL );
 
 	impcsv_dlg.clist_field  = clist_field;
 }
