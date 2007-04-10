@@ -65,8 +65,8 @@
 #define PAGE_ATTRIBUTES            1
 #define PAGE_FINISH                2
 
-#define IMPORTCSV_WIDTH           380
-#define IMPORTCSV_HEIGHT          300
+#define IMPORTCSV_WIDTH           420
+#define IMPORTCSV_HEIGHT          320
 
 #define FIELDS_N_COLS              3
 #define FIELDS_COL_WIDTH_SELECT    10
@@ -228,6 +228,8 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 				imp_csv_attrib[i].col = row;
 				gtk_clist_set_row_data
 					(clist, row, &imp_csv_attrib[i]);
+				if (imp_csv_attrib[i].enabled)
+					gtk_clist_set_pixmap(clist, row, FIELD_COL_SELECT, markxpm, markxpmmask);
 			}
 		}
 		g_strfreev(strv);
@@ -239,11 +241,21 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 	return TRUE;
 }
 
-static void imp_csv_field_list_selected( GtkCList *clist, gint row, gint column ) {
-}
+static void imp_csv_field_list_selected( GtkCList *clist, gint row, gint column, GdkEvent *event ) {
+	if (event && event->type == GDK_2BUTTON_PRESS)
+		return;
 
-static gboolean imp_csv_field_list_toggle( GtkCList *clist, GdkEventButton *event, gpointer data ) {
-	return FALSE;
+	if (column == FIELD_COL_SELECT) {
+		struct _ImpCSVAttrib *attr;
+		attr = gtk_clist_get_row_data( clist, row );
+		if (attr) {
+			attr->enabled ^= TRUE;
+			if (attr->enabled)
+				gtk_clist_set_pixmap(clist, row, FIELD_COL_SELECT, markxpm, markxpmmask);
+			else
+				gtk_clist_set_text(clist, row, FIELD_COL_SELECT, "");
+		}
+	}
 }
 
 static void imp_csv_field_list_up( GtkWidget *button, gpointer data ) {
@@ -681,7 +693,7 @@ static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 
 	titles[ FIELD_COL_SELECT ] = _("S");
 	titles[ FIELD_COL_FIELD  ] = _("CSV Field");
-	titles[ FIELD_COL_ATTRIB ] = _("Attribute Name");
+	titles[ FIELD_COL_ATTRIB ] = _("Address Book Field");
 
 	vbox = gtk_vbox_new(FALSE, 8);
 	gtk_container_add( GTK_CONTAINER( impcsv_dlg.notebook ), vbox );
@@ -733,8 +745,6 @@ static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 
 	g_signal_connect( G_OBJECT(clist_field), "select_row",
 			  G_CALLBACK(imp_csv_field_list_selected), NULL );
-	g_signal_connect( G_OBJECT(clist_field), "button_press_event",
-			  G_CALLBACK(imp_csv_field_list_toggle), NULL );
 	g_signal_connect( G_OBJECT(up_btn), "clicked",
 			  G_CALLBACK(imp_csv_field_list_up), NULL );
 	g_signal_connect( G_OBJECT(down_btn), "clicked",
