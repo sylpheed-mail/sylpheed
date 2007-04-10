@@ -53,6 +53,7 @@
 #include "manage_window.h"
 #include "mgutils.h"
 #include "ldif.h"
+#include "codeconv.h"
 #include "utils.h"
 
 #define IMPORTLDIF_GUESS_NAME "LDIF Import"
@@ -428,7 +429,10 @@ static void imp_ldif_file_select( void ) {
 					GTK_FILE_CHOOSER_ACTION_OPEN );
 	g_free( sFile );
 	if ( sSelFile ) {
-		gtk_entry_set_text( GTK_ENTRY(impldif_dlg.file_entry), sSelFile );
+		gchar *sUTF8File;
+		sUTF8File = conv_filename_to_utf8( sSelFile );
+		gtk_entry_set_text( GTK_ENTRY(impldif_dlg.file_entry), sUTF8File );
+		g_free( sUTF8File );
 		g_free( sSelFile );
 	}
 }

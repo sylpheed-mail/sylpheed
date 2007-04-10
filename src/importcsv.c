@@ -56,6 +56,7 @@
 #include "manage_window.h"
 #include "mgutils.h"
 #include "importcsv.h"
+#include "codeconv.h"
 #include "utils.h"
 
 #define IMPORTCSV_GUESS_NAME "CSV Import"
@@ -476,7 +477,10 @@ static void imp_csv_file_select( void ) {
 				        GTK_FILE_CHOOSER_ACTION_OPEN );
 	g_free( sFile );
 	if (sSelFile) {
-		gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.file_entry), sSelFile );
+		gchar *sUTF8File;
+		sUTF8File = conv_filename_to_utf8( sSelFile );
+		gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.file_entry), sUTF8File );
+		g_free( sUTF8File );
 		g_free( sSelFile );
 	}
 }
