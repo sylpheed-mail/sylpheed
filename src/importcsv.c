@@ -227,9 +227,6 @@ static gboolean imp_csv_field_list_toggle( GtkCList *clist, GdkEventButton *even
 	return FALSE;
 }
 
-static void imp_csv_modify_pressed( GtkWidget *widget, gpointer data ) {
-}
-
 static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	FILE *fp;
 	gchar buf[BUFFSIZE];
@@ -383,11 +380,14 @@ static gboolean imp_csv_file_move() {
 	}
 
 	if( ! errFlag ) {
-		if ( ! imp_csv_load_fields( sFile ) ) {
+		gchar *sFSFile;
+		sFSFile = conv_filename_from_utf8( sFile );
+		if ( ! imp_csv_load_fields( sFSFile ) ) {
 			sMsg = _( "Error reading CSV fields." );
 		} else {
 			retVal = TRUE;
 		}
+		g_free( sFSFile );
 	}
 	imp_csv_status_show( sMsg );
 

@@ -329,8 +329,11 @@ static gboolean imp_ldif_file_move() {
 	}
 
 	if( ! errFlag ) {
+		gchar *sFSFile;
 		/* Read attribute list */
-		ldif_set_file( _ldifFile_, sFile );
+		sFSFile = conv_filename_from_utf8( sFile );
+		ldif_set_file( _ldifFile_, sFSFile );
+		g_free( sFSFile );
 		if( ldif_read_tags( _ldifFile_ ) == MGU_SUCCESS ) {
 			/* Load fields */
 			/* ldif_print_file( _ldifFile_, stdout ); */
