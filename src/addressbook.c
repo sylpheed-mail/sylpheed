@@ -1679,6 +1679,14 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 		/* Remove data source. */
 		if( addrindex_index_remove_datasource( _addressIndex_, ds ) ) {
 			addressbook_free_child_adapters( node );
+			abf = addressbook_get_book_file();
+			if( abf ) {
+				gchar *bookFile;
+				bookFile = g_strconcat( abf->path, G_DIR_SEPARATOR_S, abf->fileName, NULL );
+				debug_print("removing %s\n", bookFile);
+				g_unlink( bookFile );
+				g_free( bookFile );
+			}
 			remFlag = TRUE;
 		}
 	}
@@ -3590,6 +3598,7 @@ static void addressbook_import_ldif_cb() {
 	if ( !adapter || !adapter->treeNode ) return;
 
 	abf = addressbook_imp_ldif( _addressIndex_ );
+	gtk_window_present( GTK_WINDOW(addrbook.window) );
 	if ( !abf ) return;
 
 	ds = addrindex_index_add_datasource( _addressIndex_, ADDR_IF_BOOK, abf );
@@ -3620,6 +3629,7 @@ static void addressbook_import_csv_cb() {
 	if ( !adapter || !adapter->treeNode ) return;
 
 	abf = addressbook_imp_csv( _addressIndex_ );
+	gtk_window_present( GTK_WINDOW(addrbook.window) );
 	if ( !abf ) return;
 
 	ds = addrindex_index_add_datasource( _addressIndex_, ADDR_IF_BOOK, abf );

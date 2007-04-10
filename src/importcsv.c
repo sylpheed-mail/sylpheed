@@ -175,9 +175,6 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 	GtkCList *clist = GTK_CLIST(impcsv_dlg.clist_field);
 	FILE *fp;
 	gchar buf[BUFFSIZE];
-	gchar *text[ FIELDS_N_COLS ];
-	gint i;
-	gchar **strv;
 	CharSet enc;
 
 	g_return_val_if_fail(sFile != NULL, FALSE);
@@ -192,8 +189,14 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 		return FALSE;
 	}
 
-	while (fgets(buf, sizeof(buf), fp) != NULL) {
+	if (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
+		gchar **strv;
+		gchar *text[ FIELDS_N_COLS ];
+		gint i;
+		guint fields_len;
+		guint data_len = 0;
+		guint len;
 
 		strretchomp(buf);
 		if (enc == C_UTF_8)
@@ -202,17 +205,26 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 			str = conv_localetodisp(buf, NULL);
 		g_print("%s\n", str);
 		strv = g_strsplit(str, ",", 0);
+		fields_len = sizeof(imp_csv_attrib) / sizeof(imp_csv_attrib[0]);
+		while (strv[data_len])
+			++data_len;
+		len = MAX(fields_len, data_len);
 
-		for (i = 0; strv[i] != NULL; i++) {
+		for (i = 0; i < len; i++) {
 			text[ FIELD_COL_SELECT ] = "";
-			text[ FIELD_COL_FIELD  ] = strv[i];
-			text[ FIELD_COL_ATTRIB ] =
-				i < N_CSV_ATTRIB ? gettext(imp_csv_attrib[i].name) : "";
+			if (i < data_len)
+				text[ FIELD_COL_FIELD  ] = strv[i];
+			else
+				text[ FIELD_COL_FIELD  ] = "";
+			if (i < fields_len)
+				text[ FIELD_COL_ATTRIB ] =
+					gettext(imp_csv_attrib[i].name);
+			else
+				text[ FIELD_COL_ATTRIB ] = "";
 			gtk_clist_append( clist, text );
 		}
 		g_strfreev(strv);
 		g_free(str);
-		break;
 	}
 
 	fclose(fp);
