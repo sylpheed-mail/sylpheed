@@ -830,7 +830,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Configuration"),			NULL, NULL, 0, "<Branch>"},
 	{N_("/_Configuration/_Common preferences..."),
 						NULL, prefs_common_open_cb, 0, NULL},
-	{N_("/_Configuration/_Filter setting..."),
+	{N_("/_Configuration/_Filter settings..."),
 						NULL, prefs_filter_open_cb, 0, NULL},
 	{N_("/_Configuration/_Template..."),	NULL, prefs_template_open_cb, 0, NULL},
 #ifndef G_OS_WIN32
@@ -2079,7 +2079,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/Tools/Delete duplicated messages"   , M_MSG_EXIST|M_ALLOW_DELETE},
 
 		{"/Configuration/Common preferences...", M_UNLOCKED},
-		{"/Configuration/Filter setting...", M_UNLOCKED},
+		{"/Configuration/Filter settings...", M_UNLOCKED},
 		{"/Configuration/Preferences for current account...", M_UNLOCKED},
 		{"/Configuration/Create new account...", M_UNLOCKED},
 		{"/Configuration/Edit accounts...", M_UNLOCKED},

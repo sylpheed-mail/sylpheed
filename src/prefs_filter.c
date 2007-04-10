@@ -205,7 +205,7 @@ static void prefs_filter_create(void)
 	gtk_widget_grab_default(close_btn);
 
 	gtk_window_set_title(GTK_WINDOW(window),
-			     _("Filter setting"));
+			     _("Filter settings"));
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(prefs_filter_deleted), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
