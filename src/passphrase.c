@@ -39,7 +39,6 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtkfilesel.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkstock.h>
 #include <string.h>

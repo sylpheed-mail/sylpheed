@@ -41,12 +41,12 @@
 #include <gtk/gtktogglebutton.h>
 #include <gtk/gtkstatusbar.h>
 #include <gtk/gtknotebook.h>
-#include <gtk/gtkfilesel.h>
 #include <gtk/gtkstock.h>
 
 #include "addrbook.h"
 #include "addressbook.h"
 #include "addressitem.h"
+#include "filesel.h"
 #include "gtkutils.h"
 #include "stock_pixmap.h"
 #include "prefs_common.h"
@@ -99,7 +99,6 @@ static struct _ImpLdif_Dlg {
 	gboolean  cancelled;
 } impldif_dlg;
 
-static struct _AddressFileSelection _imp_ldif_file_selector_;
 static AddressBookFile *_importedBook_;
 static AddressIndex *_imp_addressIndex_;
 static LdifFile *_ldifFile_ = NULL;
@@ -420,55 +419,18 @@ static void imp_ldif_cancel( GtkWidget *widget, gpointer data ) {
 	gtk_main_quit();
 }
 
-static void imp_ldif_file_ok( GtkWidget *widget, gpointer data ) {
-	const gchar *sFile;
-	AddressFileSelection *afs;
-	GtkWidget *fileSel;
-
-	afs = ( AddressFileSelection * ) data;
-	fileSel = afs->fileSelector;
-	sFile = gtk_file_selection_get_filename( GTK_FILE_SELECTION(fileSel) );
-
-	afs->cancelled = FALSE;
-	gtk_entry_set_text( GTK_ENTRY(impldif_dlg.file_entry), sFile );
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	gtk_widget_grab_focus( impldif_dlg.file_entry );
-}
-
-static void imp_ldif_file_cancel( GtkWidget *widget, gpointer data ) {
-	AddressFileSelection *afs = ( AddressFileSelection * ) data;
-	afs->cancelled = TRUE;
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	gtk_widget_grab_focus( impldif_dlg.file_entry );
-}
-
-static void imp_ldif_file_select_create( AddressFileSelection *afs ) {
-	GtkWidget *fileSelector;
-
-	fileSelector = gtk_file_selection_new( _("Select LDIF File") );
-	gtk_file_selection_hide_fileop_buttons( GTK_FILE_SELECTION(fileSelector) );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->ok_button),
-			  "clicked", G_CALLBACK (imp_ldif_file_ok), ( gpointer ) afs );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->cancel_button),
-			  "clicked", G_CALLBACK (imp_ldif_file_cancel), ( gpointer ) afs );
-	afs->fileSelector = fileSelector;
-	afs->cancelled = TRUE;
-}
-
 static void imp_ldif_file_select( void ) {
 	gchar *sFile;
-	if( ! _imp_ldif_file_selector_.fileSelector )
-		imp_ldif_file_select_create( & _imp_ldif_file_selector_ );
+	gchar *sSelFile;
 
 	sFile = gtk_editable_get_chars( GTK_EDITABLE(impldif_dlg.file_entry), 0, -1 );
-	gtk_file_selection_set_filename(
-		GTK_FILE_SELECTION( _imp_ldif_file_selector_.fileSelector ),
-		sFile );
+	sSelFile = filesel_select_file( _("Select LDIF File"), sFile,
+					GTK_FILE_CHOOSER_ACTION_OPEN );
 	g_free( sFile );
-	gtk_widget_show( _imp_ldif_file_selector_.fileSelector );
-	gtk_grab_add( _imp_ldif_file_selector_.fileSelector );
+	if ( sSelFile ) {
+		gtk_entry_set_text( GTK_ENTRY(impldif_dlg.file_entry), sSelFile );
+		g_free( sSelFile );
+	}
 }
 
 static gint imp_ldif_delete_event( GtkWidget *widget, GdkEventAny *event, gpointer data ) {

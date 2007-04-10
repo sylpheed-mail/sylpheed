@@ -45,7 +45,6 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkstatusbar.h>
 #include <gtk/gtkcheckbutton.h>
-#include <gtk/gtkfilesel.h>
 
 #include "addressbook.h"
 #include "prefs_common.h"

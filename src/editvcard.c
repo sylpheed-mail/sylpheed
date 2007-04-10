@@ -38,7 +38,6 @@
 #include <gtk/gtktable.h>
 #include <gtk/gtkbutton.h>
 #include <gtk/gtkstatusbar.h>
-#include <gtk/gtkfilesel.h>
 #include <gtk/gtkhseparator.h>
 #include <gtk/gtkstock.h>
 

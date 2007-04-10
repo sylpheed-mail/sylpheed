@@ -42,7 +42,6 @@
 #include <gtk/gtktogglebutton.h>
 #include <gtk/gtkstatusbar.h>
 #include <gtk/gtknotebook.h>
-#include <gtk/gtkfilesel.h>
 #include <gtk/gtkstock.h>
 
 #include <stdio.h>
@@ -50,6 +49,7 @@
 #include "addrbook.h"
 #include "addressbook.h"
 #include "addressitem.h"
+#include "filesel.h"
 #include "gtkutils.h"
 #include "stock_pixmap.h"
 #include "prefs_common.h"
@@ -122,7 +122,6 @@ static struct _ImpCSVAttrib {
 	{N_("E-Mail Address"),	4, TRUE}
 };
 
-static struct _AddressFileSelection _imp_csv_file_selector_;
 static AddressBookFile *_importedBook_;
 static AddressIndex *_imp_addressIndex_;
 static gint importCount = 0;
@@ -171,7 +170,7 @@ static gchar *imp_csv_guess_file( AddressBookFile *abf ) {
 	return newFile;
 }
 
-static void imp_csv_load_fields( gchar *sFile ) {
+static gboolean imp_csv_load_fields( gchar *sFile ) {
 	GtkCList *clist = GTK_CLIST(impcsv_dlg.clist_field);
 	FILE *fp;
 	gchar buf[BUFFSIZE];
@@ -180,7 +179,7 @@ static void imp_csv_load_fields( gchar *sFile ) {
 	gchar **strv;
 	CharSet enc;
 
-	g_return_if_fail(sFile != NULL);
+	g_return_val_if_fail(sFile != NULL, FALSE);
 
 	impcsv_dlg.rowIndSelect = -1;
 	impcsv_dlg.rowCount = 0;
@@ -189,7 +188,7 @@ static void imp_csv_load_fields( gchar *sFile ) {
 	enc = conv_check_file_encoding(sFile);
 
 	if ((fp = g_fopen(sFile, "rb")) == NULL) {
-		return;
+		return FALSE;
 	}
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
@@ -216,6 +215,8 @@ static void imp_csv_load_fields( gchar *sFile ) {
 	}
 
 	fclose(fp);
+
+	return TRUE;
 }
 
 static void imp_csv_field_list_selected( GtkCList *clist, gint row, gint column ) {
@@ -381,8 +382,11 @@ static gboolean imp_csv_file_move() {
 	}
 
 	if( ! errFlag ) {
-		imp_csv_load_fields( sFile );
-		retVal = TRUE;
+		if ( ! imp_csv_load_fields( sFile ) ) {
+			sMsg = _( "Error reading CSV fields." );
+		} else {
+			retVal = TRUE;
+		}
 	}
 	imp_csv_status_show( sMsg );
 
@@ -463,55 +467,18 @@ static void imp_csv_cancel( GtkWidget *widget, gpointer data ) {
 	gtk_main_quit();
 }
 
-static void imp_csv_file_ok( GtkWidget *widget, gpointer data ) {
-	const gchar *sFile;
-	AddressFileSelection *afs;
-	GtkWidget *fileSel;
-
-	afs = ( AddressFileSelection * ) data;
-	fileSel = afs->fileSelector;
-	sFile = gtk_file_selection_get_filename( GTK_FILE_SELECTION(fileSel) );
-
-	afs->cancelled = FALSE;
-	gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.file_entry), sFile );
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	gtk_widget_grab_focus( impcsv_dlg.file_entry );
-}
-
-static void imp_csv_file_cancel( GtkWidget *widget, gpointer data ) {
-	AddressFileSelection *afs = ( AddressFileSelection * ) data;
-	afs->cancelled = TRUE;
-	gtk_widget_hide( afs->fileSelector );
-	gtk_grab_remove( afs->fileSelector );
-	gtk_widget_grab_focus( impcsv_dlg.file_entry );
-}
-
-static void imp_csv_file_select_create( AddressFileSelection *afs ) {
-	GtkWidget *fileSelector;
-
-	fileSelector = gtk_file_selection_new( _("Select CSV File") );
-	gtk_file_selection_hide_fileop_buttons( GTK_FILE_SELECTION(fileSelector) );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->ok_button),
-			  "clicked", G_CALLBACK (imp_csv_file_ok), ( gpointer ) afs );
-	g_signal_connect( G_OBJECT (GTK_FILE_SELECTION(fileSelector)->cancel_button),
-			  "clicked", G_CALLBACK (imp_csv_file_cancel), ( gpointer ) afs );
-	afs->fileSelector = fileSelector;
-	afs->cancelled = TRUE;
-}
-
 static void imp_csv_file_select( void ) {
 	gchar *sFile;
-	if( ! _imp_csv_file_selector_.fileSelector )
-		imp_csv_file_select_create( & _imp_csv_file_selector_ );
+	gchar *sSelFile;
 
 	sFile = gtk_editable_get_chars( GTK_EDITABLE(impcsv_dlg.file_entry), 0, -1 );
-	gtk_file_selection_set_filename(
-		GTK_FILE_SELECTION( _imp_csv_file_selector_.fileSelector ),
-		sFile );
+	sSelFile = filesel_select_file( _("Select CSV File"), sFile,
+				        GTK_FILE_CHOOSER_ACTION_OPEN );
 	g_free( sFile );
-	gtk_widget_show( _imp_csv_file_selector_.fileSelector );
-	gtk_grab_add( _imp_csv_file_selector_.fileSelector );
+	if (sSelFile) {
+		gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.file_entry), sSelFile );
+		g_free( sSelFile );
+	}
 }
 
 static gint imp_csv_delete_event( GtkWidget *widget, GdkEventAny *event, gpointer data ) {
