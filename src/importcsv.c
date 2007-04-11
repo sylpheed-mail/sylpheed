@@ -213,6 +213,8 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 			++data_len;
 		len = MAX(fields_len, data_len);
 
+		gtk_clist_freeze(clist);
+
 		for (i = 0; i < len; i++) {
 			text[ FIELD_COL_SELECT ] = "";
 			if (i < data_len)
@@ -234,6 +236,10 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 					gtk_clist_set_pixmap(clist, row, FIELD_COL_SELECT, markxpm, markxpmmask);
 			}
 		}
+
+		gtk_clist_thaw(clist);
+		gtk_widget_queue_resize(GTK_WIDGET(clist));
+
 		g_strfreev(strv);
 		g_free(str);
 	}
