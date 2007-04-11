@@ -574,6 +574,9 @@ static void query_search_folder(FolderItem *item)
 		return;
 	}
 
+	if (item->opened)
+		summary_write_cache(main_window_get()->summaryview);
+
 	mlist = folder_item_get_msg_list(item, TRUE);
 	total = g_slist_length(mlist);
 
