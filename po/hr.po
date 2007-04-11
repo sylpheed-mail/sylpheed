@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-10 11:34+0900\n"
+"POT-Creation-Date: 2007-04-11 11:59+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -693,8 +693,8 @@ msgstr ""
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:520
 #: src/compose.c:4480 src/editaddress.c:777 src/editaddress.c:826
-#: src/editbook.c:196 src/editgroup.c:272 src/editjpilot.c:271
-#: src/editldap.c:307 src/editvcard.c:184 src/mimeview.c:208
+#: src/editbook.c:196 src/editgroup.c:272 src/editjpilot.c:270
+#: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:208
 #: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:319
 msgid "Name"
 msgstr "Ime"
@@ -829,7 +829,7 @@ msgid "Address"
 msgstr "Adresa"
 
 #: src/addressadd.c:197 src/addressbook.c:522 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:274
+#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:126
 msgid "Remarks"
 msgstr "Bilješke"
 
@@ -1076,19 +1076,19 @@ msgstr "Spis i adrese"
 msgid "Really delete `%s' ?"
 msgstr "Uistinu obrisati `%s' ?"
 
-#: src/addressbook.c:2438 src/addressbook.c:2571
+#: src/addressbook.c:2446 src/addressbook.c:2579
 msgid "New user, could not save index file."
 msgstr "Novi korisnik, ne mogu spretmiti index datoteku."
 
-#: src/addressbook.c:2442 src/addressbook.c:2575
+#: src/addressbook.c:2450 src/addressbook.c:2583
 msgid "New user, could not save address book files."
 msgstr "Novi korisnik, ne mogu spremiti datoteke adresara."
 
-#: src/addressbook.c:2452 src/addressbook.c:2585
+#: src/addressbook.c:2460 src/addressbook.c:2593
 msgid "Old address book converted successfully."
 msgstr "Stari adresar uspješno unešen."
 
-#: src/addressbook.c:2457
+#: src/addressbook.c:2465
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1096,7 +1096,7 @@ msgstr ""
 "Stari adresar ne može biti unešen,\n"
 "ne mogu spremiti novu index datoteku adresara."
 
-#: src/addressbook.c:2470
+#: src/addressbook.c:2478
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1104,7 +1104,7 @@ msgstr ""
 "Ne mogu unjeti adesar,\n"
 "ali sam kreirao nove prazne datoteke adresara."
 
-#: src/addressbook.c:2476
+#: src/addressbook.c:2484
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1112,7 +1112,7 @@ msgstr ""
 "Ne mogu unjeti adresar,\n"
 "ne mogu kreirati nove datoteke adresara."
 
-#: src/addressbook.c:2481
+#: src/addressbook.c:2489
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1120,85 +1120,85 @@ msgstr ""
 "Ne mogu unjeti adresar,\n"
 "i ne mogu stvoriti nove datoteke adresara."
 
-#: src/addressbook.c:2488
+#: src/addressbook.c:2496
 msgid "Addressbook conversion error"
 msgstr "Greška pri unosu adresara"
 
-#: src/addressbook.c:2492
+#: src/addressbook.c:2500
 msgid "Addressbook conversion"
 msgstr "Unos adresara"
 
-#: src/addressbook.c:2527
+#: src/addressbook.c:2535
 msgid "Addressbook Error"
 msgstr "Greška adresara"
 
-#: src/addressbook.c:2528 src/addressbook.c:2628
+#: src/addressbook.c:2536 src/addressbook.c:2636
 msgid "Could not read address index"
 msgstr "Ne mogu čitati index adresara"
 
-#: src/addressbook.c:2590
+#: src/addressbook.c:2598
 msgid "Old address book converted, could not save new address index file"
 msgstr "Stari adresar unešen, ne mogu spremiti index datoteke novih adresa"
 
-#: src/addressbook.c:2604
+#: src/addressbook.c:2612
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr "Ne mogu unjeti adresar, kreiram prazne datoteke novog adresara."
 
-#: src/addressbook.c:2610
+#: src/addressbook.c:2618
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr "Ne mogu unjeti adresar, ne mogu kreirati nove datoteke adresara."
 
-#: src/addressbook.c:2616
+#: src/addressbook.c:2624
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr "Ne mogu unjeti adresar i ne mogu kreirati nove datoteke adresara."
 
-#: src/addressbook.c:2634
+#: src/addressbook.c:2642
 msgid "Addressbook Conversion Error"
 msgstr "Greška pri unosu adresara"
 
-#: src/addressbook.c:2640
+#: src/addressbook.c:2648
 msgid "Addressbook Conversion"
 msgstr "Unos adresara"
 
-#: src/addressbook.c:3160 src/prefs_common_dialog.c:2103
+#: src/addressbook.c:3168 src/prefs_common_dialog.c:2103
 msgid "Interface"
 msgstr "Sučelje"
 
-#: src/addressbook.c:3176 src/importldif.c:515
+#: src/addressbook.c:3184 src/importcsv.c:655 src/importldif.c:482
 msgid "Address Book"
 msgstr "Adresar"
 
-#: src/addressbook.c:3192
+#: src/addressbook.c:3200
 msgid "Person"
 msgstr "Osoba"
 
-#: src/addressbook.c:3208
+#: src/addressbook.c:3216
 msgid "EMail Address"
 msgstr "E-mail adresa"
 
-#: src/addressbook.c:3224
+#: src/addressbook.c:3232
 msgid "Group"
 msgstr "Grupa"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:3240 src/folderview.c:378 src/prefs_account_dialog.c:1771
+#: src/addressbook.c:3248 src/folderview.c:378 src/prefs_account_dialog.c:1771
 #: src/query_search.c:398
 msgid "Folder"
 msgstr "Spis"
 
-#: src/addressbook.c:3256
+#: src/addressbook.c:3264
 msgid "vCard"
 msgstr "V-kartica"
 
-#: src/addressbook.c:3272 src/addressbook.c:3288
+#: src/addressbook.c:3280 src/addressbook.c:3296
 #, fuzzy
 msgid "JPilot"
 msgstr "J-Pilot"
 
-#: src/addressbook.c:3304
+#: src/addressbook.c:3312
 msgid "LDAP Server"
 msgstr "LDAP Poslužitelj"
 
@@ -1893,24 +1893,24 @@ msgstr "Ime i iznos moraju biti upisani."
 msgid "Edit Person Data"
 msgstr "Uredi osobne podatke"
 
-#: src/editaddress.c:578
+#: src/editaddress.c:578 src/importcsv.c:123
 msgid "Display Name"
 msgstr "Prikaz imena"
 
-#: src/editaddress.c:584 src/editaddress.c:588
+#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
 msgid "Last Name"
 msgstr "Prezime"
 
-#: src/editaddress.c:585 src/editaddress.c:587
+#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
 msgid "First Name"
 msgstr "Ime"
 
-#: src/editaddress.c:590
+#: src/editaddress.c:590 src/importcsv.c:124
 msgid "Nick Name"
 msgstr "Nadimak"
 
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:273
+#: src/editgroup.c:273 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "E-mail adresa"
 
@@ -1927,7 +1927,7 @@ msgstr "Pomakni gore"
 msgid "Move Down"
 msgstr "Pomakni dolje"
 
-#: src/editaddress.c:722 src/editaddress.c:856 src/importldif.c:644
+#: src/editaddress.c:722 src/editaddress.c:856 src/importldif.c:611
 msgid "Modify"
 msgstr "Promjeni"
 
@@ -1955,7 +1955,7 @@ msgstr "Datoteka je U redu"
 msgid "File does not appear to be a valid address book format."
 msgstr "Datoteka nije u formatu adresara."
 
-#: src/editbook.c:126 src/editjpilot.c:204 src/editvcard.c:108
+#: src/editbook.c:126 src/editjpilot.c:203 src/editvcard.c:107
 msgid "Could not read file."
 msgstr "Ne mogu čitati datoteku."
 
@@ -1963,11 +1963,11 @@ msgstr "Ne mogu čitati datoteku."
 msgid "Edit Addressbook"
 msgstr "Uredi adresar"
 
-#: src/editbook.c:203 src/editjpilot.c:278 src/editvcard.c:191
+#: src/editbook.c:203 src/editjpilot.c:277 src/editvcard.c:190
 msgid " Check File "
 msgstr " Provjeri datoteku "
 
-#: src/editbook.c:208 src/editjpilot.c:283 src/editvcard.c:196
+#: src/editbook.c:208 src/editjpilot.c:282 src/editvcard.c:195
 #: src/prefs_account_dialog.c:1284
 msgid "File"
 msgstr "Datoteka"
@@ -2035,29 +2035,29 @@ msgstr "Novi spis"
 msgid "Input the name of new folder:"
 msgstr "Unesite ime novog spisa:"
 
-#: src/editjpilot.c:201
+#: src/editjpilot.c:200
 msgid "File does not appear to be JPilot format."
 msgstr "Datoteka nije JPilot formata."
 
-#: src/editjpilot.c:213
+#: src/editjpilot.c:212
 msgid "Select JPilot File"
 msgstr "Odaberite JPilot datoteku"
 
-#: src/editjpilot.c:249 src/editjpilot.c:381
+#: src/editjpilot.c:248 src/editjpilot.c:380
 msgid "Edit JPilot Entry"
 msgstr "Uredite JPilot unos"
 
-#: src/editjpilot.c:290 src/editldap.c:349 src/editvcard.c:203
-#: src/importldif.c:535 src/prefs_account_dialog.c:1799
+#: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
+#: src/importcsv.c:675 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
 
-#: src/editjpilot.c:295
+#: src/editjpilot.c:294
 msgid "Additional e-Mail address item(s)"
 msgstr "Dodatne pojedinosti e-Mail adrese"
 
-#: src/editjpilot.c:388
+#: src/editjpilot.c:387
 msgid "Add New JPilot Entry"
 msgstr "Dodajte novi JPilot unos"
 
@@ -2137,44 +2137,44 @@ msgstr "Dostupne Baze"
 msgid "Could not read Search Base(s) from server - please set manually"
 msgstr "Ne mogu čitati Baze Potrage sa servera - molim postavite ručno"
 
-#: src/editvcard.c:105
+#: src/editvcard.c:104
 msgid "File does not appear to be vCard format."
 msgstr "Datoteka nije V-kartica formata."
 
-#: src/editvcard.c:117
+#: src/editvcard.c:116
 msgid "Select vCard File"
 msgstr "Odaberite V-kartica datoteku"
 
-#: src/editvcard.c:162 src/editvcard.c:270
+#: src/editvcard.c:161 src/editvcard.c:269
 msgid "Edit vCard Entry"
 msgstr "Uredite V-kartica unose"
 
-#: src/editvcard.c:275
+#: src/editvcard.c:274
 msgid "Add New vCard Entry"
 msgstr "Dodaj Novi V-kartica Unos"
 
-#: src/export.c:149
+#: src/export.c:148
 msgid "Export"
 msgstr "Iznesi"
 
-#: src/export.c:168
+#: src/export.c:167
 msgid "Specify target folder and mbox file."
 msgstr "Odredite ciljani spis i mbox datoteku."
 
-#: src/export.c:178
+#: src/export.c:177
 msgid "Source dir:"
 msgstr "Izvorni dir:"
 
-#: src/export.c:183
+#: src/export.c:182
 msgid "Exporting file:"
 msgstr "Iznosim datoteku:"
 
-#: src/export.c:196 src/export.c:202 src/import.c:202 src/import.c:208
+#: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Odaberite... "
 
-#: src/export.c:240
+#: src/export.c:239
 msgid "Select exporting file"
 msgstr "Odaberite datoteku za iznošenje"
 
@@ -2516,130 +2516,185 @@ msgstr "Kreiram pregled slika...\n"
 msgid "Can't load the image."
 msgstr "Ne mogu prikazati sliku."
 
-#: src/import.c:155
+#: src/import.c:154
 msgid "Import"
 msgstr "Uvezi"
 
-#: src/import.c:174
+#: src/import.c:173
 msgid "Specify target mbox file and destination folder."
 msgstr "Odredite ciljanu mbox datoteku i destinacijski spis."
 
-#: src/import.c:184
+#: src/import.c:183
 msgid "Importing file:"
 msgstr "Uvozim datoteku:"
 
-#: src/import.c:189
+#: src/import.c:188
 msgid "Destination dir:"
 msgstr "Destinacijski dir:"
 
-#: src/import.c:246
+#: src/import.c:245
 msgid "Select importing file"
 msgstr "Odaberite datoteku za uvoz"
 
-#: src/importldif.c:125
+#: src/importcsv.c:152 src/importldif.c:126
 msgid "Please specify address book name and file to import."
 msgstr ""
 
-#: src/importldif.c:128
-msgid "Select and rename LDIF field names to import."
+#: src/importcsv.c:155
+msgid "Select and reorder CSV field names to import."
 msgstr ""
 
-#: src/importldif.c:131
+#: src/importcsv.c:158 src/importldif.c:132
 #, fuzzy
 msgid "File imported."
 msgstr "Ime datoteke"
 
-#: src/importldif.c:320
+#: src/importcsv.c:500 src/importldif.c:321
 msgid "Please select a file."
 msgstr "Molim, odaberite datoteku."
 
-#: src/importldif.c:326
+#: src/importcsv.c:506 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "Ime adresara mora biti unešeno."
 
-#: src/importldif.c:341
+#: src/importcsv.c:515
 #, fuzzy
-msgid "Error reading LDIF fields."
+msgid "Error reading CSV fields."
 msgstr "Greška pri unosu LDIF datoteke."
 
-#: src/importldif.c:364
+#: src/importcsv.c:541
 #, fuzzy
-msgid "LDIF file imported successfully."
+msgid "CSV file imported successfully."
 msgstr "Stari adresar uspješno unešen."
 
-#: src/importldif.c:450
-msgid "Select LDIF File"
-msgstr "Odaberite LDIF datoteku"
+#: src/importcsv.c:603
+#, fuzzy
+msgid "Select CSV File"
+msgstr "Odaberite V-kartica datoteku"
 
-#: src/importldif.c:526
+#: src/importcsv.c:666 src/importldif.c:493
 #, fuzzy
 msgid "File Name"
 msgstr "Ime datoteke"
 
-#: src/importldif.c:567
+#: src/importcsv.c:705 src/importldif.c:534
 msgid "S"
 msgstr ""
 
-#: src/importldif.c:568 src/importldif.c:618
+#: src/importcsv.c:706
 #, fuzzy
-msgid "LDIF Field"
+msgid "CSV Field"
 msgstr "Odaberite LDIF datoteku"
 
-#: src/importldif.c:569
+#: src/importcsv.c:707
 #, fuzzy
-msgid "Attribute Name"
-msgstr "Atributi korisnika"
+msgid "Address Book Field"
+msgstr "Adresar"
 
-#: src/importldif.c:628
-#, fuzzy
-msgid "Attribute"
-msgstr "Atributi korisnika"
+#: src/importcsv.c:724
+msgid "Reorder address book fields with the Up and Down button."
+msgstr ""
 
-#: src/importldif.c:637 src/select-keys.c:343
-msgid "Select"
-msgstr "Odaberi"
+#: src/importcsv.c:759 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/prefs_display_header.c:287 src/prefs_display_items.c:239
+#: src/prefs_summary_column.c:290
+msgid "Up"
+msgstr "Gore"
 
-#: src/importldif.c:690
+#: src/importcsv.c:761 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/prefs_display_header.c:293 src/prefs_display_items.c:243
+#: src/prefs_summary_column.c:294
+msgid "Down"
+msgstr "Dolje"
+
+#: src/importcsv.c:803 src/importldif.c:657
 #, fuzzy
 msgid "Address Book :"
 msgstr "Adresar"
 
-#: src/importldif.c:700
+#: src/importcsv.c:813 src/importldif.c:667
 #, fuzzy
 msgid "File Name :"
 msgstr "Ime datoteke"
 
-#: src/importldif.c:710
+#: src/importcsv.c:823 src/importldif.c:677
 msgid "Records :"
 msgstr ""
 
-#: src/importldif.c:738
-msgid "Import LDIF file into Address Book"
+#: src/importcsv.c:851
+#, fuzzy
+msgid "Import CSV file into Address Book"
 msgstr "Unesi LDIF datoteku u Adresar"
 
 #. Button panel
-#: src/importldif.c:769 src/prefs_toolbar.c:72
+#: src/importcsv.c:882 src/importldif.c:736 src/prefs_toolbar.c:69
+msgid "Next"
+msgstr "Slijedeća"
+
+#: src/importcsv.c:883 src/importldif.c:737 src/prefs_toolbar.c:72
 #, fuzzy
 msgid "Prev"
 msgstr "Postav"
 
-#: src/importldif.c:770 src/prefs_toolbar.c:69
-msgid "Next"
-msgstr "Slijedeća"
-
-#: src/importldif.c:799
+#: src/importcsv.c:915 src/importldif.c:769
 #, fuzzy
 msgid "File Info"
 msgstr "Ime datoteke"
 
-#: src/importldif.c:800
+#: src/importcsv.c:916
+#, fuzzy
+msgid "Fields"
+msgstr "Odaberite LDIF datoteku"
+
+#: src/importcsv.c:917 src/importldif.c:771
+msgid "Finish"
+msgstr ""
+
+#: src/importldif.c:129
+msgid "Select and rename LDIF field names to import."
+msgstr ""
+
+#: src/importldif.c:345
+#, fuzzy
+msgid "Error reading LDIF fields."
+msgstr "Greška pri unosu LDIF datoteke."
+
+#: src/importldif.c:368
+#, fuzzy
+msgid "LDIF file imported successfully."
+msgstr "Stari adresar uspješno unešen."
+
+#: src/importldif.c:430
+msgid "Select LDIF File"
+msgstr "Odaberite LDIF datoteku"
+
+#: src/importldif.c:535 src/importldif.c:585
+#, fuzzy
+msgid "LDIF Field"
+msgstr "Odaberite LDIF datoteku"
+
+#: src/importldif.c:536
+#, fuzzy
+msgid "Attribute Name"
+msgstr "Atributi korisnika"
+
+#: src/importldif.c:595
+#, fuzzy
+msgid "Attribute"
+msgstr "Atributi korisnika"
+
+#: src/importldif.c:604 src/select-keys.c:343
+msgid "Select"
+msgstr "Odaberi"
+
+#: src/importldif.c:705
+msgid "Import LDIF file into Address Book"
+msgstr "Unesi LDIF datoteku u Adresar"
+
+#: src/importldif.c:770
 #, fuzzy
 msgid "Attributes"
 msgstr "Atributi korisnika"
-
-#: src/importldif.c:801
-msgid "Finish"
-msgstr ""
 
 #: src/inc.c:160
 #, fuzzy, c-format
@@ -2815,7 +2870,7 @@ msgid "Socket error."
 msgstr "protokol greška\n"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1325 src/send_message.c:601 src/send_message.c:793
+#: src/inc.c:1325 src/send_message.c:601 src/send_message.c:794
 msgid "Connection closed by the remote host."
 msgstr ""
 
@@ -2831,28 +2886,28 @@ msgid ""
 "%s"
 msgstr "Postavke sandučića"
 
-#: src/inc.c:1341 src/send_message.c:778
+#: src/inc.c:1341 src/send_message.c:779
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Autorizacija"
 
-#: src/inc.c:1346 src/send_message.c:781
+#: src/inc.c:1346 src/send_message.c:782
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Autorizacija"
 
-#: src/inc.c:1351 src/send_message.c:797
+#: src/inc.c:1351 src/send_message.c:798
 msgid "Session timed out."
 msgstr ""
 
-#: src/inc.c:1391
+#: src/inc.c:1392
 #, fuzzy
 msgid "Incorporation cancelled\n"
 msgstr "Prima novu poštu"
 
-#: src/inc.c:1485
+#: src/inc.c:1486
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Primam nove poruke s %s u %s...\n"
@@ -4049,15 +4104,15 @@ msgid ""
 "virus or something like a malicious program."
 msgstr ""
 
-#: src/passphrase.c:96
+#: src/passphrase.c:95
 msgid "Passphrase"
 msgstr "Lozinka"
 
-#: src/passphrase.c:248
+#: src/passphrase.c:247
 msgid "[no user id]"
 msgstr "[nema ID korinika]"
 
-#: src/passphrase.c:256
+#: src/passphrase.c:255
 #, c-format
 msgid ""
 "%sPlease enter the passphrase for:\n"
@@ -4070,7 +4125,7 @@ msgstr ""
 "  %.*s  \n"
 "(%.*s)\n"
 
-#: src/passphrase.c:260
+#: src/passphrase.c:259
 msgid ""
 "Bad passphrase! Try again...\n"
 "\n"
@@ -4585,18 +4640,6 @@ msgstr ""
 #, fuzzy
 msgid "Registered actions"
 msgstr "Registrirani obrasci"
-
-#: src/prefs_actions.c:310 src/prefs_customheader.c:279
-#: src/prefs_display_header.c:287 src/prefs_display_items.c:239
-#: src/prefs_summary_column.c:290
-msgid "Up"
-msgstr "Gore"
-
-#: src/prefs_actions.c:316 src/prefs_customheader.c:285
-#: src/prefs_display_header.c:293 src/prefs_display_items.c:243
-#: src/prefs_summary_column.c:294
-msgid "Down"
-msgstr "Dolje"
 
 #: src/prefs_actions.c:423 src/prefs_template.c:326
 msgid "(New)"
@@ -6462,11 +6505,11 @@ msgstr "Šaljem poruku (%d / %d bytea)"
 msgid "Sending message"
 msgstr "Šaljem poruku"
 
-#: src/send_message.c:769 src/send_message.c:789
+#: src/send_message.c:770 src/send_message.c:790
 msgid "Error occurred while sending the message."
 msgstr "Došlo je do greške prilikom slanja poruke."
 
-#: src/send_message.c:772
+#: src/send_message.c:773
 #, fuzzy, c-format
 msgid ""
 "Error occurred while sending the message:\n"

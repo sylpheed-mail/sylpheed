@@ -405,10 +405,10 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 			fullName = address;
 
 		person = addritem_create_item_person();
-		addritem_person_set_common_name( person, fullName);
-		addritem_person_set_first_name( person, firstName);
-		addritem_person_set_last_name( person, lastName);
-		addritem_person_set_nick_name( person, nickName);
+		addritem_person_set_common_name( person, fullName );
+		addritem_person_set_first_name( person, firstName );
+		addritem_person_set_last_name( person, lastName );
+		addritem_person_set_nick_name( person, nickName );
 		addrcache_id_person( cache, person );
 		addrcache_add_person( cache, person );
 
@@ -716,6 +716,15 @@ static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 		GTK_NOTEBOOK( impcsv_dlg.notebook ),
 		gtk_notebook_get_nth_page(GTK_NOTEBOOK( impcsv_dlg.notebook ), pageNum ),
 		label );
+
+	hbox = gtk_hbox_new( FALSE, 0 );
+	gtk_box_pack_start( GTK_BOX( vbox ), hbox, FALSE, FALSE, 4 );
+
+	label = gtk_label_new
+		( _("Reorder address book fields with the Up and Down button.") );
+	gtk_box_pack_start( GTK_BOX( hbox ), label, FALSE, FALSE, 0 );
+	gtk_label_set_justify( GTK_LABEL( label ), GTK_JUSTIFY_LEFT );
+	gtk_label_set_line_wrap( GTK_LABEL( label ), TRUE );
 
 	hbox = gtk_hbox_new( FALSE, 4 );
 	gtk_box_pack_start( GTK_BOX( vbox ), hbox, TRUE, TRUE, 0 );
