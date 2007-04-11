@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.9.8 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 15:02+0900\n"
+"POT-Creation-Date: 2007-04-11 16:47+0900\n"
 "PO-Revision-Date: 2005-03-05 18:57+0100\n"
 "Last-Translator: Wit Wilinski <madman at linux dot bydg dot org>\n"
 "Language-Team: POLISH <pl@li.org>\n"
@@ -1167,7 +1167,7 @@ msgstr "Konwersja książki adresowej"
 msgid "Interface"
 msgstr "Interfejs"
 
-#: src/addressbook.c:3184 src/importcsv.c:669 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:677 src/importldif.c:482
 msgid "Address Book"
 msgstr "Książka adresowa"
 
@@ -2001,7 +2001,7 @@ msgid "Edit JPilot Entry"
 msgstr "Edytuj wpis JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:689 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:697 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
@@ -2131,19 +2131,20 @@ msgstr " Wybierz... "
 msgid "Select exporting file"
 msgstr "Wybierz plik eksportu"
 
-#: src/filesel.c:136
+#: src/filesel.c:153
 msgid "Save as"
 msgstr "Zapisz jako"
 
-#: src/filesel.c:142
-msgid "Overwrite"
-msgstr "Nadpisz"
-
-#: src/filesel.c:143
-msgid "Overwrite existing file?"
+#: src/filesel.c:160 src/filesel.c:274
+#, fuzzy
+msgid "Overwrite existing file"
 msgstr "Czy nadpisać istniejący plik?"
 
-#: src/filesel.c:159
+#: src/filesel.c:161 src/filesel.c:275
+msgid "The file already exists. Do you want to replace it?"
+msgstr ""
+
+#: src/filesel.c:178
 #, fuzzy
 msgid "Select directory"
 msgstr "Wybierz katalog"
@@ -2491,107 +2492,107 @@ msgstr "Wybierz i zmień nazwy pól LDIF do importu."
 msgid "File imported."
 msgstr "Plik zaimportowano."
 
-#: src/importcsv.c:511 src/importldif.c:321
+#: src/importcsv.c:519 src/importldif.c:321
 msgid "Please select a file."
 msgstr "Wybierz plik."
 
-#: src/importcsv.c:517 src/importldif.c:327
+#: src/importcsv.c:525 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "Należy podać nazwę książki adresowej."
 
-#: src/importcsv.c:526
+#: src/importcsv.c:534
 #, fuzzy
 msgid "Error reading CSV fields."
 msgstr "Błąd przy odczycie pól LDIF."
 
-#: src/importcsv.c:552
+#: src/importcsv.c:560
 #, fuzzy
 msgid "CSV file imported successfully."
 msgstr "Plik LDIF został pomyślnie zaimportowany."
 
-#: src/importcsv.c:614
+#: src/importcsv.c:622
 #, fuzzy
 msgid "Select CSV File"
 msgstr "Wybierz plik VCard"
 
-#: src/importcsv.c:680 src/importldif.c:493
+#: src/importcsv.c:688 src/importldif.c:493
 msgid "File Name"
 msgstr "Nazwa pliku"
 
-#: src/importcsv.c:698
+#: src/importcsv.c:706
 msgid "Comma-separated"
 msgstr ""
 
-#: src/importcsv.c:702
+#: src/importcsv.c:710
 msgid "Tab-separated"
 msgstr ""
 
-#: src/importcsv.c:733 src/importldif.c:534
+#: src/importcsv.c:741 src/importldif.c:534
 msgid "S"
 msgstr "S"
 
-#: src/importcsv.c:734
+#: src/importcsv.c:742
 #, fuzzy
 msgid "CSV Field"
 msgstr "Pole LDIF"
 
-#: src/importcsv.c:735
+#: src/importcsv.c:743
 #, fuzzy
 msgid "Address Book Field"
 msgstr "Książka adresowa :"
 
-#: src/importcsv.c:752
+#: src/importcsv.c:760
 msgid "Reorder address book fields with the Up and Down button."
 msgstr ""
 
-#: src/importcsv.c:787 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:795 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "W górę"
 
-#: src/importcsv.c:789 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:797 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "W dół"
 
-#: src/importcsv.c:831 src/importldif.c:657
+#: src/importcsv.c:839 src/importldif.c:657
 msgid "Address Book :"
 msgstr "Książka adresowa :"
 
-#: src/importcsv.c:841 src/importldif.c:667
+#: src/importcsv.c:849 src/importldif.c:667
 msgid "File Name :"
 msgstr "Nazwa pliku :"
 
-#: src/importcsv.c:852 src/importldif.c:677
+#: src/importcsv.c:860 src/importldif.c:677
 msgid "Records :"
 msgstr "Rekordy :"
 
-#: src/importcsv.c:880
+#: src/importcsv.c:888
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "Importuj plik LDIF do książki adresowej"
 
 #. Button panel
-#: src/importcsv.c:911 src/importldif.c:736 src/prefs_toolbar.c:69
+#: src/importcsv.c:920 src/importldif.c:737 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "Następna"
 
-#: src/importcsv.c:912 src/importldif.c:737 src/prefs_toolbar.c:72
+#: src/importcsv.c:921 src/importldif.c:738 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "Poprzednia"
 
-#: src/importcsv.c:944 src/importldif.c:769
+#: src/importcsv.c:953 src/importldif.c:770
 msgid "File Info"
 msgstr "Informacja o pliku"
 
-#: src/importcsv.c:945
+#: src/importcsv.c:954
 #, fuzzy
 msgid "Fields"
 msgstr "Pole LDIF"
 
-#: src/importcsv.c:946 src/importldif.c:771
+#: src/importcsv.c:955 src/importldif.c:772
 msgid "Finish"
 msgstr "Koniec"
 
@@ -2631,7 +2632,7 @@ msgstr "Wybierz"
 msgid "Import LDIF file into Address Book"
 msgstr "Importuj plik LDIF do książki adresowej"
 
-#: src/importldif.c:770
+#: src/importldif.c:771
 msgid "Attributes"
 msgstr "Atrybuty"
 
@@ -6957,6 +6958,9 @@ msgstr "Koniec programu"
 #, fuzzy
 msgid "Sylpheed"
 msgstr "Dawny Sylpheed"
+
+#~ msgid "Overwrite"
+#~ msgstr "Nadpisz"
 
 #~ msgid "Edit address"
 #~ msgstr "Edytuj adres"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 2.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 15:02+0900\n"
+"POT-Creation-Date: 2007-04-11 16:47+0900\n"
 "PO-Revision-Date: 2007-01-05 13:58+0300\n"
 "Last-Translator: O.R. Nykyforchyn <nick@pu.if.ua>\n"
 "Language-Team: Ukrainian\n"
@@ -1165,7 +1165,7 @@ msgstr "Конвертування адресної книги"
 msgid "Interface"
 msgstr "Інтерфейс"
 
-#: src/addressbook.c:3184 src/importcsv.c:669 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:677 src/importldif.c:482
 msgid "Address Book"
 msgstr "Адресна книга"
 
@@ -1995,7 +1995,7 @@ msgid "Edit JPilot Entry"
 msgstr "Редагувати запис JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:689 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:697 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
@@ -2125,19 +2125,20 @@ msgstr " Обрати... "
 msgid "Select exporting file"
 msgstr "Оберіть файл для експорту"
 
-#: src/filesel.c:136
+#: src/filesel.c:153
 msgid "Save as"
 msgstr "Зберегти як"
 
-#: src/filesel.c:142
-msgid "Overwrite"
-msgstr "Переписати"
-
-#: src/filesel.c:143
-msgid "Overwrite existing file?"
+#: src/filesel.c:160 src/filesel.c:274
+#, fuzzy
+msgid "Overwrite existing file"
 msgstr "Писати поверх існуючого файла?"
 
-#: src/filesel.c:159
+#: src/filesel.c:161 src/filesel.c:275
+msgid "The file already exists. Do you want to replace it?"
+msgstr ""
+
+#: src/filesel.c:178
 msgid "Select directory"
 msgstr "Обрати папку"
 
@@ -2481,107 +2482,107 @@ msgstr "Виберіть поля LDIF для імпорту і вкажіть �
 msgid "File imported."
 msgstr "Файл імпортовано."
 
-#: src/importcsv.c:511 src/importldif.c:321
+#: src/importcsv.c:519 src/importldif.c:321
 msgid "Please select a file."
 msgstr "Оберіть, будь-ласка, файл."
 
-#: src/importcsv.c:517 src/importldif.c:327
+#: src/importcsv.c:525 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "Потрібно вказати назву адресної книги."
 
-#: src/importcsv.c:526
+#: src/importcsv.c:534
 #, fuzzy
 msgid "Error reading CSV fields."
 msgstr "Помилка при читанні полів LDIF."
 
-#: src/importcsv.c:552
+#: src/importcsv.c:560
 #, fuzzy
 msgid "CSV file imported successfully."
 msgstr "Успішно імпортовано файл LDIF."
 
-#: src/importcsv.c:614
+#: src/importcsv.c:622
 #, fuzzy
 msgid "Select CSV File"
 msgstr "Оберіть файл vCard"
 
-#: src/importcsv.c:680 src/importldif.c:493
+#: src/importcsv.c:688 src/importldif.c:493
 msgid "File Name"
 msgstr "Назва файла"
 
-#: src/importcsv.c:698
+#: src/importcsv.c:706
 msgid "Comma-separated"
 msgstr ""
 
-#: src/importcsv.c:702
+#: src/importcsv.c:710
 msgid "Tab-separated"
 msgstr ""
 
-#: src/importcsv.c:733 src/importldif.c:534
+#: src/importcsv.c:741 src/importldif.c:534
 msgid "S"
 msgstr "S"
 
-#: src/importcsv.c:734
+#: src/importcsv.c:742
 #, fuzzy
 msgid "CSV Field"
 msgstr "Поле LDIF"
 
-#: src/importcsv.c:735
+#: src/importcsv.c:743
 #, fuzzy
 msgid "Address Book Field"
 msgstr "Адресна книга :"
 
-#: src/importcsv.c:752
+#: src/importcsv.c:760
 msgid "Reorder address book fields with the Up and Down button."
 msgstr ""
 
-#: src/importcsv.c:787 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:795 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "Вгору"
 
-#: src/importcsv.c:789 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:797 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "Вниз"
 
-#: src/importcsv.c:831 src/importldif.c:657
+#: src/importcsv.c:839 src/importldif.c:657
 msgid "Address Book :"
 msgstr "Адресна книга :"
 
-#: src/importcsv.c:841 src/importldif.c:667
+#: src/importcsv.c:849 src/importldif.c:667
 msgid "File Name :"
 msgstr "Назва файла :"
 
-#: src/importcsv.c:852 src/importldif.c:677
+#: src/importcsv.c:860 src/importldif.c:677
 msgid "Records :"
 msgstr "Записи :"
 
-#: src/importcsv.c:880
+#: src/importcsv.c:888
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "Імпортувати файл LDIF в адресну книгу"
 
 #. Button panel
-#: src/importcsv.c:911 src/importldif.c:736 src/prefs_toolbar.c:69
+#: src/importcsv.c:920 src/importldif.c:737 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "Далі"
 
-#: src/importcsv.c:912 src/importldif.c:737 src/prefs_toolbar.c:72
+#: src/importcsv.c:921 src/importldif.c:738 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "Назад"
 
-#: src/importcsv.c:944 src/importldif.c:769
+#: src/importcsv.c:953 src/importldif.c:770
 msgid "File Info"
 msgstr "Інформація про файл"
 
-#: src/importcsv.c:945
+#: src/importcsv.c:954
 #, fuzzy
 msgid "Fields"
 msgstr "Поле LDIF"
 
-#: src/importcsv.c:946 src/importldif.c:771
+#: src/importcsv.c:955 src/importldif.c:772
 msgid "Finish"
 msgstr "Закінчити"
 
@@ -2621,7 +2622,7 @@ msgstr "Обрати"
 msgid "Import LDIF file into Address Book"
 msgstr "Імпортувати файл LDIF в адресну книгу"
 
-#: src/importldif.c:770
+#: src/importldif.c:771
 msgid "Attributes"
 msgstr "Атрибути"
 
@@ -6887,6 +6888,9 @@ msgstr "Вихід"
 #: src/trayicon.c:198 src/trayicon.c:289
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "Overwrite"
+#~ msgstr "Переписати"
 
 #~ msgid "Edit address"
 #~ msgstr "Редагувати адресу"

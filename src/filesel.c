@@ -159,7 +159,7 @@ gchar *filesel_save_as(const gchar *file)
 
 		aval = alertpanel(_("Overwrite existing file"),
 				  _("The file already exists. Do you want to replace it?"),
-				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
+				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (G_ALERTDEFAULT != aval) {
 			g_free(filename);
 			filename = NULL;
@@ -273,7 +273,7 @@ static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 
 		aval = alertpanel(_("Overwrite existing file"),
 				  _("The file already exists. Do you want to replace it?"),
-				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
+				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 		if (G_ALERTDEFAULT == aval)
 			ret = GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME;
 		else

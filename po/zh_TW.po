@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 15:02+0900\n"
+"POT-Creation-Date: 2007-04-11 16:47+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1160,7 +1160,7 @@ msgstr "通訊錄格式轉換"
 msgid "Interface"
 msgstr "介面"
 
-#: src/addressbook.c:3184 src/importcsv.c:669 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:677 src/importldif.c:482
 msgid "Address Book"
 msgstr "通訊錄"
 
@@ -1991,7 +1991,7 @@ msgid "Edit JPilot Entry"
 msgstr "編輯 JPilot 資料"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:689 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:697 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr "..."
@@ -2121,19 +2121,20 @@ msgstr "選擇..."
 msgid "Select exporting file"
 msgstr "選擇匯出檔案："
 
-#: src/filesel.c:136
+#: src/filesel.c:153
 msgid "Save as"
 msgstr "另存新檔"
 
-#: src/filesel.c:142
-msgid "Overwrite"
-msgstr "覆寫"
-
-#: src/filesel.c:143
-msgid "Overwrite existing file?"
+#: src/filesel.c:160 src/filesel.c:274
+#, fuzzy
+msgid "Overwrite existing file"
 msgstr "您要取代已存在的檔案嗎？"
 
-#: src/filesel.c:159
+#: src/filesel.c:161 src/filesel.c:275
+msgid "The file already exists. Do you want to replace it?"
+msgstr ""
+
+#: src/filesel.c:178
 msgid "Select directory"
 msgstr "選擇目錄"
 
@@ -2480,107 +2481,107 @@ msgstr "請選擇要匯入的 LDIF 欄位名稱並改名"
 msgid "File imported."
 msgstr "檔案已匯入"
 
-#: src/importcsv.c:511 src/importldif.c:321
+#: src/importcsv.c:519 src/importldif.c:321
 msgid "Please select a file."
 msgstr "請選擇檔案："
 
-#: src/importcsv.c:517 src/importldif.c:327
+#: src/importcsv.c:525 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "未指定通訊錄名稱"
 
-#: src/importcsv.c:526
+#: src/importcsv.c:534
 #, fuzzy
 msgid "Error reading CSV fields."
 msgstr "匯入 LDIF 欄位錯誤"
 
-#: src/importcsv.c:552
+#: src/importcsv.c:560
 #, fuzzy
 msgid "CSV file imported successfully."
 msgstr "LDIF 檔案匯入完成。"
 
-#: src/importcsv.c:614
+#: src/importcsv.c:622
 #, fuzzy
 msgid "Select CSV File"
 msgstr "選擇 vCard 檔案"
 
-#: src/importcsv.c:680 src/importldif.c:493
+#: src/importcsv.c:688 src/importldif.c:493
 msgid "File Name"
 msgstr "檔名"
 
-#: src/importcsv.c:698
+#: src/importcsv.c:706
 msgid "Comma-separated"
 msgstr ""
 
-#: src/importcsv.c:702
+#: src/importcsv.c:710
 msgid "Tab-separated"
 msgstr ""
 
-#: src/importcsv.c:733 src/importldif.c:534
+#: src/importcsv.c:741 src/importldif.c:534
 msgid "S"
 msgstr "S"
 
-#: src/importcsv.c:734
+#: src/importcsv.c:742
 #, fuzzy
 msgid "CSV Field"
 msgstr "LDIF 欄位"
 
-#: src/importcsv.c:735
+#: src/importcsv.c:743
 #, fuzzy
 msgid "Address Book Field"
 msgstr "通訊錄："
 
-#: src/importcsv.c:752
+#: src/importcsv.c:760
 msgid "Reorder address book fields with the Up and Down button."
 msgstr ""
 
-#: src/importcsv.c:787 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:795 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "向上"
 
-#: src/importcsv.c:789 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:797 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "向下"
 
-#: src/importcsv.c:831 src/importldif.c:657
+#: src/importcsv.c:839 src/importldif.c:657
 msgid "Address Book :"
 msgstr "通訊錄："
 
-#: src/importcsv.c:841 src/importldif.c:667
+#: src/importcsv.c:849 src/importldif.c:667
 msgid "File Name :"
 msgstr "檔名："
 
-#: src/importcsv.c:852 src/importldif.c:677
+#: src/importcsv.c:860 src/importldif.c:677
 msgid "Records :"
 msgstr "紀錄："
 
-#: src/importcsv.c:880
+#: src/importcsv.c:888
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "將 LDIF 檔匯入通訊錄"
 
 #. Button panel
-#: src/importcsv.c:911 src/importldif.c:736 src/prefs_toolbar.c:69
+#: src/importcsv.c:920 src/importldif.c:737 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "下一封"
 
-#: src/importcsv.c:912 src/importldif.c:737 src/prefs_toolbar.c:72
+#: src/importcsv.c:921 src/importldif.c:738 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "前一封"
 
-#: src/importcsv.c:944 src/importldif.c:769
+#: src/importcsv.c:953 src/importldif.c:770
 msgid "File Info"
 msgstr "檔案資訊"
 
-#: src/importcsv.c:945
+#: src/importcsv.c:954
 #, fuzzy
 msgid "Fields"
 msgstr "LDIF 欄位"
 
-#: src/importcsv.c:946 src/importldif.c:771
+#: src/importcsv.c:955 src/importldif.c:772
 msgid "Finish"
 msgstr "完成"
 
@@ -2620,7 +2621,7 @@ msgstr "選擇"
 msgid "Import LDIF file into Address Book"
 msgstr "將 LDIF 檔匯入通訊錄"
 
-#: src/importldif.c:770
+#: src/importldif.c:771
 msgid "Attributes"
 msgstr "屬性"
 
@@ -6888,6 +6889,9 @@ msgstr "離開"
 #: src/trayicon.c:198 src/trayicon.c:289
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "Overwrite"
+#~ msgstr "覆寫"
 
 #~ msgid "Edit address"
 #~ msgstr "編輯通訊紀錄"
