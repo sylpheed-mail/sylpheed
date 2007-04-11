@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 11:59+0900\n"
+"POT-Creation-Date: 2007-04-11 15:02+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -605,13 +605,13 @@ msgstr "  Θέμα: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Εκδότης: %s\n"
 
-#: libsylph/utils.c:2532 src/compose.c:3004 src/compose.c:3296
+#: libsylph/utils.c:2603 src/compose.c:3004 src/compose.c:3296
 #: src/compose.c:3359 src/compose.c:3479
 #, fuzzy
 msgid "can't change file mode\n"
 msgstr "Η αλλαγή της κατάστασης του `%s' απέτυχε"
 
-#: libsylph/utils.c:2539 libsylph/utils.c:2663
+#: libsylph/utils.c:2610 libsylph/utils.c:2734
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "η εγγραφή στο %s απέτυχε.\n"
@@ -838,7 +838,7 @@ msgid "Address"
 msgstr "Διεύθυνση"
 
 #: src/addressadd.c:197 src/addressbook.c:522 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:126
+#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:130
 msgid "Remarks"
 msgstr "Σχόλια"
 
@@ -1184,7 +1184,7 @@ msgstr "Μετατροπή του ευρετηρίου διευθύνσεων"
 msgid "Interface"
 msgstr "Διεπαφή"
 
-#: src/addressbook.c:3184 src/importcsv.c:655 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:669 src/importldif.c:482
 msgid "Address Book"
 msgstr "Ευρετήριο διευθύνσεων"
 
@@ -1868,24 +1868,24 @@ msgstr "Πρέπει να προσδιοριστεί όνομα και τιμή.
 msgid "Edit Person Data"
 msgstr "Επεξεργασία δεδομένων"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/importcsv.c:127
 msgid "Display Name"
 msgstr "Εμφανιζόμενο όνομα"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:126
 msgid "Last Name"
 msgstr "Επώνυμο"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:125
 msgid "First Name"
 msgstr "Όνομα"
 
-#: src/editaddress.c:590 src/importcsv.c:124
+#: src/editaddress.c:590 src/importcsv.c:128
 msgid "Nick Name"
 msgstr "Ψευδώνυμο"
 
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:273 src/importcsv.c:125
+#: src/editgroup.c:273 src/importcsv.c:129
 msgid "E-Mail Address"
 msgstr "Διεύθυνση ηλεκτρονικής αλληλογραφίας"
 
@@ -2023,7 +2023,7 @@ msgid "Edit JPilot Entry"
 msgstr "Επεξεργασία εγγραφής JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:675 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:689 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
@@ -2501,113 +2501,121 @@ msgstr "Κατάλογος προορισμού:"
 msgid "Select importing file"
 msgstr "Επέλεξε αρχείο εισαγωγής"
 
-#: src/importcsv.c:152 src/importldif.c:126
+#: src/importcsv.c:156 src/importldif.c:126
 msgid "Please specify address book name and file to import."
 msgstr ""
 "Παρακαλώ προσδιορίστε όνομα ευρετηρίου διευθύνσεων και αρχείο για εισαγωγή."
 
-#: src/importcsv.c:155
+#: src/importcsv.c:159
 #, fuzzy
 msgid "Select and reorder CSV field names to import."
 msgstr "Επιλέξτε και μετονομάστε τα πεδία LDIF που θα εισάγετε."
 
-#: src/importcsv.c:158 src/importldif.c:132
+#: src/importcsv.c:162 src/importldif.c:132
 msgid "File imported."
 msgstr "Το αρχείο εισήχθη."
 
-#: src/importcsv.c:500 src/importldif.c:321
+#: src/importcsv.c:511 src/importldif.c:321
 msgid "Please select a file."
 msgstr "Παρακαλώ επιλέξτε ένα αρχείο."
 
-#: src/importcsv.c:506 src/importldif.c:327
+#: src/importcsv.c:517 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "Πρέπει να δώσετε όνομα ευρετηρίου διευθύνσεων."
 
-#: src/importcsv.c:515
+#: src/importcsv.c:526
 #, fuzzy
 msgid "Error reading CSV fields."
 msgstr "Σφάλμα κατά την ανάγνωση των πεδίων LDIF."
 
-#: src/importcsv.c:541
+#: src/importcsv.c:552
 #, fuzzy
 msgid "CSV file imported successfully."
 msgstr "Το αρχείο LDIF εισήχθη επιτυχώς."
 
-#: src/importcsv.c:603
+#: src/importcsv.c:614
 #, fuzzy
 msgid "Select CSV File"
 msgstr "Επιλογή αρχείου vCard"
 
-#: src/importcsv.c:666 src/importldif.c:493
+#: src/importcsv.c:680 src/importldif.c:493
 msgid "File Name"
 msgstr "Όνομα αρχείου"
 
-#: src/importcsv.c:705 src/importldif.c:534
+#: src/importcsv.c:698
+msgid "Comma-separated"
+msgstr ""
+
+#: src/importcsv.c:702
+msgid "Tab-separated"
+msgstr ""
+
+#: src/importcsv.c:733 src/importldif.c:534
 msgid "S"
 msgstr "Ε"
 
-#: src/importcsv.c:706
+#: src/importcsv.c:734
 #, fuzzy
 msgid "CSV Field"
 msgstr "Πεδίο LDIF"
 
-#: src/importcsv.c:707
+#: src/importcsv.c:735
 #, fuzzy
 msgid "Address Book Field"
 msgstr "Ευρετήριο διευθύνσεων :"
 
-#: src/importcsv.c:724
+#: src/importcsv.c:752
 msgid "Reorder address book fields with the Up and Down button."
 msgstr ""
 
-#: src/importcsv.c:759 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:787 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "Πάνω"
 
-#: src/importcsv.c:761 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:789 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "Κάτω"
 
-#: src/importcsv.c:803 src/importldif.c:657
+#: src/importcsv.c:831 src/importldif.c:657
 msgid "Address Book :"
 msgstr "Ευρετήριο διευθύνσεων :"
 
-#: src/importcsv.c:813 src/importldif.c:667
+#: src/importcsv.c:841 src/importldif.c:667
 msgid "File Name :"
 msgstr "Όνομα αρχείου :"
 
-#: src/importcsv.c:823 src/importldif.c:677
+#: src/importcsv.c:852 src/importldif.c:677
 msgid "Records :"
 msgstr "Εγγραφές :"
 
-#: src/importcsv.c:851
+#: src/importcsv.c:880
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "Εισαγωγή αρχείου LDIF στο ευρετήριο διευθύνσεων"
 
 #. Button panel
-#: src/importcsv.c:882 src/importldif.c:736 src/prefs_toolbar.c:69
+#: src/importcsv.c:911 src/importldif.c:736 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "Επόμενο"
 
-#: src/importcsv.c:883 src/importldif.c:737 src/prefs_toolbar.c:72
+#: src/importcsv.c:912 src/importldif.c:737 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "Προηγ"
 
-#: src/importcsv.c:915 src/importldif.c:769
+#: src/importcsv.c:944 src/importldif.c:769
 msgid "File Info"
 msgstr "Πληροφορίες αρχείου"
 
-#: src/importcsv.c:916
+#: src/importcsv.c:945
 #, fuzzy
 msgid "Fields"
 msgstr "Πεδίο LDIF"
 
-#: src/importcsv.c:917 src/importldif.c:771
+#: src/importcsv.c:946 src/importldif.c:771
 msgid "Finish"
 msgstr "Τέλος"
 

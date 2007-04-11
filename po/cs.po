@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 11:59+0900\n"
+"POT-Creation-Date: 2007-04-11 15:02+0900\n"
 "PO-Revision-Date: 2007-04-03 01:05+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -599,12 +599,12 @@ msgstr "  Předmět: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Vydavatel: %s\n"
 
-#: libsylph/utils.c:2532 src/compose.c:3004 src/compose.c:3296
+#: libsylph/utils.c:2603 src/compose.c:3004 src/compose.c:3296
 #: src/compose.c:3359 src/compose.c:3479
 msgid "can't change file mode\n"
 msgstr "nelze změnit práva souboru\n"
 
-#: libsylph/utils.c:2539 libsylph/utils.c:2663
+#: libsylph/utils.c:2610 libsylph/utils.c:2734
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "neúspěšný zápis do %s.\n"
@@ -827,7 +827,7 @@ msgid "Address"
 msgstr "Adresa"
 
 #: src/addressadd.c:197 src/addressbook.c:522 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:126
+#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:130
 msgid "Remarks"
 msgstr "Poznámky"
 
@@ -1160,7 +1160,7 @@ msgstr "Konverze adresáře"
 msgid "Interface"
 msgstr "Rozhraní"
 
-#: src/addressbook.c:3184 src/importcsv.c:655 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:669 src/importldif.c:482
 msgid "Address Book"
 msgstr "Adresář"
 
@@ -1835,24 +1835,24 @@ msgstr "Nebylo zadáno jméno a hodnota."
 msgid "Edit Person Data"
 msgstr "Upravit data o osobě"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/importcsv.c:127
 msgid "Display Name"
 msgstr "Zobrazené jméno"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:126
 msgid "Last Name"
 msgstr "Příjmení"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:125
 msgid "First Name"
 msgstr "Křestní jméno"
 
-#: src/editaddress.c:590 src/importcsv.c:124
+#: src/editaddress.c:590 src/importcsv.c:128
 msgid "Nick Name"
 msgstr "Přezdívka"
 
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:273 src/importcsv.c:125
+#: src/editgroup.c:273 src/importcsv.c:129
 msgid "E-Mail Address"
 msgstr "E-mailová adresa"
 
@@ -1991,7 +1991,7 @@ msgid "Edit JPilot Entry"
 msgstr "Upravit záznam JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:675 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:689 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
@@ -2464,112 +2464,120 @@ msgstr "Cílová složka:"
 msgid "Select importing file"
 msgstr "Vybrat soubor k importu"
 
-#: src/importcsv.c:152 src/importldif.c:126
+#: src/importcsv.c:156 src/importldif.c:126
 msgid "Please specify address book name and file to import."
 msgstr "Zadejte prosím název adresáře a soubor k importu."
 
-#: src/importcsv.c:155
+#: src/importcsv.c:159
 #, fuzzy
 msgid "Select and reorder CSV field names to import."
 msgstr "Vyberte a přejmenujte názvy polí LDIF k importu."
 
-#: src/importcsv.c:158 src/importldif.c:132
+#: src/importcsv.c:162 src/importldif.c:132
 msgid "File imported."
 msgstr "Soubor importován."
 
-#: src/importcsv.c:500 src/importldif.c:321
+#: src/importcsv.c:511 src/importldif.c:321
 msgid "Please select a file."
 msgstr "Vyberte prosím soubor."
 
-#: src/importcsv.c:506 src/importldif.c:327
+#: src/importcsv.c:517 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "Musí být zadán název adresáře."
 
-#: src/importcsv.c:515
+#: src/importcsv.c:526
 #, fuzzy
 msgid "Error reading CSV fields."
 msgstr "Chyba při čtení položek LDIF."
 
-#: src/importcsv.c:541
+#: src/importcsv.c:552
 #, fuzzy
 msgid "CSV file imported successfully."
 msgstr "Import souboru LDIF byl úspěšný."
 
-#: src/importcsv.c:603
+#: src/importcsv.c:614
 #, fuzzy
 msgid "Select CSV File"
 msgstr "Vybrat soubor vCard"
 
-#: src/importcsv.c:666 src/importldif.c:493
+#: src/importcsv.c:680 src/importldif.c:493
 msgid "File Name"
 msgstr "Název souboru"
 
-#: src/importcsv.c:705 src/importldif.c:534
+#: src/importcsv.c:698
+msgid "Comma-separated"
+msgstr ""
+
+#: src/importcsv.c:702
+msgid "Tab-separated"
+msgstr ""
+
+#: src/importcsv.c:733 src/importldif.c:534
 msgid "S"
 msgstr "S"
 
-#: src/importcsv.c:706
+#: src/importcsv.c:734
 #, fuzzy
 msgid "CSV Field"
 msgstr "Položky LDIF"
 
-#: src/importcsv.c:707
+#: src/importcsv.c:735
 #, fuzzy
 msgid "Address Book Field"
 msgstr "Adresář:"
 
-#: src/importcsv.c:724
+#: src/importcsv.c:752
 msgid "Reorder address book fields with the Up and Down button."
 msgstr ""
 
-#: src/importcsv.c:759 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:787 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "Nahoru"
 
-#: src/importcsv.c:761 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:789 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "Dolů"
 
-#: src/importcsv.c:803 src/importldif.c:657
+#: src/importcsv.c:831 src/importldif.c:657
 msgid "Address Book :"
 msgstr "Adresář:"
 
-#: src/importcsv.c:813 src/importldif.c:667
+#: src/importcsv.c:841 src/importldif.c:667
 msgid "File Name :"
 msgstr "Název souboru:"
 
-#: src/importcsv.c:823 src/importldif.c:677
+#: src/importcsv.c:852 src/importldif.c:677
 msgid "Records :"
 msgstr "Záznamů:"
 
-#: src/importcsv.c:851
+#: src/importcsv.c:880
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "Importovat soubor LDIF do adresáře"
 
 #. Button panel
-#: src/importcsv.c:882 src/importldif.c:736 src/prefs_toolbar.c:69
+#: src/importcsv.c:911 src/importldif.c:736 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "Následující"
 
-#: src/importcsv.c:883 src/importldif.c:737 src/prefs_toolbar.c:72
+#: src/importcsv.c:912 src/importldif.c:737 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "Předchozí"
 
-#: src/importcsv.c:915 src/importldif.c:769
+#: src/importcsv.c:944 src/importldif.c:769
 msgid "File Info"
 msgstr "Informace o souboru"
 
-#: src/importcsv.c:916
+#: src/importcsv.c:945
 #, fuzzy
 msgid "Fields"
 msgstr "Položky LDIF"
 
-#: src/importcsv.c:917 src/importldif.c:771
+#: src/importcsv.c:946 src/importldif.c:771
 msgid "Finish"
 msgstr "Dokončit"
 

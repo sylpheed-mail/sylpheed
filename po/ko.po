@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 11:59+0900\n"
+"POT-Creation-Date: 2007-04-11 15:02+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -600,12 +600,12 @@ msgstr "  제목: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  발행인: %s\n"
 
-#: libsylph/utils.c:2532 src/compose.c:3004 src/compose.c:3296
+#: libsylph/utils.c:2603 src/compose.c:3004 src/compose.c:3296
 #: src/compose.c:3359 src/compose.c:3479
 msgid "can't change file mode\n"
 msgstr "파일 모드를 바꿀수가 없습니다\n"
 
-#: libsylph/utils.c:2539 libsylph/utils.c:2663
+#: libsylph/utils.c:2610 libsylph/utils.c:2734
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s로 쓰기가 실패했습니다.\n"
@@ -816,7 +816,7 @@ msgid "Address"
 msgstr "주소"
 
 #: src/addressadd.c:197 src/addressbook.c:522 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:126
+#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:130
 msgid "Remarks"
 msgstr "메모"
 
@@ -1154,7 +1154,7 @@ msgstr "주소록 변환"
 msgid "Interface"
 msgstr "인터페이스"
 
-#: src/addressbook.c:3184 src/importcsv.c:655 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:669 src/importldif.c:482
 msgid "Address Book"
 msgstr "주소록"
 
@@ -1869,24 +1869,24 @@ msgstr "이름과 값이 지정되지 않았습니다."
 msgid "Edit Person Data"
 msgstr "인물 자료 편집"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/importcsv.c:127
 msgid "Display Name"
 msgstr "표시 명"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:126
 msgid "Last Name"
 msgstr "마지막 이름"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:125
 msgid "First Name"
 msgstr "처음 이름"
 
-#: src/editaddress.c:590 src/importcsv.c:124
+#: src/editaddress.c:590 src/importcsv.c:128
 msgid "Nick Name"
 msgstr "가명"
 
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:273 src/importcsv.c:125
+#: src/editgroup.c:273 src/importcsv.c:129
 msgid "E-Mail Address"
 msgstr "이메일 주소"
 
@@ -2024,7 +2024,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilot 항목 편집"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:675 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:689 src/importldif.c:502 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
@@ -2504,112 +2504,120 @@ msgstr "저장할 폴더:"
 msgid "Select importing file"
 msgstr "불러올 파일을 선택"
 
-#: src/importcsv.c:152 src/importldif.c:126
+#: src/importcsv.c:156 src/importldif.c:126
 msgid "Please specify address book name and file to import."
 msgstr "가져올 주소록 이름과 파일을 지정하세요."
 
-#: src/importcsv.c:155
+#: src/importcsv.c:159
 #, fuzzy
 msgid "Select and reorder CSV field names to import."
 msgstr "가져올 LDIF 항목을 선택하고 바꾸세요."
 
-#: src/importcsv.c:158 src/importldif.c:132
+#: src/importcsv.c:162 src/importldif.c:132
 msgid "File imported."
 msgstr "파일을 가져왔습니다."
 
-#: src/importcsv.c:500 src/importldif.c:321
+#: src/importcsv.c:511 src/importldif.c:321
 msgid "Please select a file."
 msgstr "파일을 선택하세요."
 
-#: src/importcsv.c:506 src/importldif.c:327
+#: src/importcsv.c:517 src/importldif.c:327
 msgid "Address book name must be supplied."
 msgstr "주소록 이름이 지정되지않았습니다."
 
-#: src/importcsv.c:515
+#: src/importcsv.c:526
 #, fuzzy
 msgid "Error reading CSV fields."
 msgstr "LDIF field를 읽다가 에러가 발생했습니다."
 
-#: src/importcsv.c:541
+#: src/importcsv.c:552
 #, fuzzy
 msgid "CSV file imported successfully."
 msgstr "LDIF 파일을 성공적으로 가져왔습니다."
 
-#: src/importcsv.c:603
+#: src/importcsv.c:614
 #, fuzzy
 msgid "Select CSV File"
 msgstr "vCard 파일 선택"
 
-#: src/importcsv.c:666 src/importldif.c:493
+#: src/importcsv.c:680 src/importldif.c:493
 msgid "File Name"
 msgstr "파일 이름"
 
-#: src/importcsv.c:705 src/importldif.c:534
+#: src/importcsv.c:698
+msgid "Comma-separated"
+msgstr ""
+
+#: src/importcsv.c:702
+msgid "Tab-separated"
+msgstr ""
+
+#: src/importcsv.c:733 src/importldif.c:534
 msgid "S"
 msgstr "S"
 
-#: src/importcsv.c:706
+#: src/importcsv.c:734
 #, fuzzy
 msgid "CSV Field"
 msgstr "LDIF Field"
 
-#: src/importcsv.c:707
+#: src/importcsv.c:735
 #, fuzzy
 msgid "Address Book Field"
 msgstr "주소록 :"
 
-#: src/importcsv.c:724
+#: src/importcsv.c:752
 msgid "Reorder address book fields with the Up and Down button."
 msgstr ""
 
-#: src/importcsv.c:759 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:787 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "위로"
 
-#: src/importcsv.c:761 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:789 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "아래로"
 
-#: src/importcsv.c:803 src/importldif.c:657
+#: src/importcsv.c:831 src/importldif.c:657
 msgid "Address Book :"
 msgstr "주소록 :"
 
-#: src/importcsv.c:813 src/importldif.c:667
+#: src/importcsv.c:841 src/importldif.c:667
 msgid "File Name :"
 msgstr "파일 이름 :"
 
-#: src/importcsv.c:823 src/importldif.c:677
+#: src/importcsv.c:852 src/importldif.c:677
 msgid "Records :"
 msgstr ""
 
-#: src/importcsv.c:851
+#: src/importcsv.c:880
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "LDIF 파일을 주소록으로 가져오기"
 
 #. Button panel
-#: src/importcsv.c:882 src/importldif.c:736 src/prefs_toolbar.c:69
+#: src/importcsv.c:911 src/importldif.c:736 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "다음"
 
-#: src/importcsv.c:883 src/importldif.c:737 src/prefs_toolbar.c:72
+#: src/importcsv.c:912 src/importldif.c:737 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "이전"
 
-#: src/importcsv.c:915 src/importldif.c:769
+#: src/importcsv.c:944 src/importldif.c:769
 msgid "File Info"
 msgstr "파일 정보"
 
-#: src/importcsv.c:916
+#: src/importcsv.c:945
 #, fuzzy
 msgid "Fields"
 msgstr "LDIF Field"
 
-#: src/importcsv.c:917 src/importldif.c:771
+#: src/importcsv.c:946 src/importldif.c:771
 msgid "Finish"
 msgstr ""
 
