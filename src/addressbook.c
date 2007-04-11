@@ -3608,6 +3608,7 @@ static void addressbook_import_ldif_cb() {
 	if ( newNode ) {
 		addrbook.treeSelected = NULL;
 		gtk_ctree_select( GTK_CTREE(addrbook.ctree), newNode );
+		gtkut_ctree_set_focus_row( GTK_CTREE(addrbook.ctree), newNode );
 		addrbook.treeSelected = newNode;
 	}
 
@@ -3639,6 +3640,7 @@ static void addressbook_import_csv_cb() {
 	if ( newNode ) {
 		addrbook.treeSelected = NULL;
 		gtk_ctree_select( GTK_CTREE(addrbook.ctree), newNode );
+		gtkut_ctree_set_focus_row( GTK_CTREE(addrbook.ctree), newNode );
 		addrbook.treeSelected = newNode;
 	}
 
