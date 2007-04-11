@@ -1020,7 +1020,7 @@ GList *add_history(GList *list, const gchar *str)
 		last = g_list_last(list);
 		if (last) {
 			g_free(last->data);
-			g_list_remove(list, last->data);
+			list = g_list_remove(list, last->data);
 		}
 	}
 
@@ -1355,7 +1355,6 @@ gchar **strsplit_parenthesis(const gchar *str, gchar op, gchar cl,
 	str_array = g_new(gchar*, n);
 
 	i = n - 1;
-
 	str_array[i--] = NULL;
 	for (slist = string_list; slist; slist = slist->next)
 		str_array[i--] = slist->data;
@@ -1415,7 +1414,79 @@ gchar **strsplit_with_quote(const gchar *str, const gchar *delim,
 	str_array = g_new(gchar*, n);
 
 	i = n - 1;
+	str_array[i--] = NULL;
+	for (slist = string_list; slist; slist = slist->next)
+		str_array[i--] = slist->data;
 
+	g_slist_free(string_list);
+
+	return str_array;
+}
+
+gchar **strsplit_csv(const gchar *str, gchar delim, gint max_tokens)
+{
+	GSList *string_list = NULL, *slist;
+	gchar **str_array, *s, *new_str;
+	gchar *tmp, *tmpp, *p;
+	guint i, n = 1, len;
+
+	g_return_val_if_fail(str != NULL, NULL);
+
+	if (max_tokens < 1)
+		max_tokens = G_MAXINT;
+
+	s = strchr_with_skip_quote(str, '"', delim);
+	if (s) {
+		do {
+			len = s - str;
+			tmpp = tmp = g_strndup(str, len);
+
+			if (tmp[0] == '"' && tmp[len - 1] == tmp[0]) {
+				tmp[len - 1] = '\0';
+				++tmpp;
+				p = new_str = g_malloc(len - 1);
+				while (*tmpp) {
+					if (*tmpp == '"' && *(tmpp + 1) == '"')
+						++tmpp;
+					*p++ = *tmpp++;
+				}
+				*p = '\0';
+				g_free(tmp);
+			} else
+				new_str = tmp;
+
+			string_list = g_slist_prepend(string_list, new_str);
+			n++;
+			str = s + 1;
+			s = strchr_with_skip_quote(str, '"', delim);
+		} while (--max_tokens && s);
+	}
+
+	if (*str) {
+		len = strlen(str);
+		tmpp = tmp = g_strdup(str);
+
+		if (tmp[0] == '"' && tmp[len - 1] == tmp[0]) {
+			tmp[len - 1] = '\0';
+			++tmpp;
+			p = new_str = g_malloc(len - 1);
+			while (*tmpp) {
+				if (*tmpp == '"' && *(tmpp + 1) == '"')
+					++tmpp;
+				*p++ = *tmpp++;
+			}
+			*p = '\0';
+			g_free(tmp);
+		} else
+			new_str = tmp;
+
+		string_list = g_slist_prepend(string_list, new_str);
+		n++;
+	}
+
+	str_array = g_new(gchar*, n);
+
+	i = n - 1;
 	str_array[i--] = NULL;
 	for (slist = string_list; slist; slist = slist->next)
 		str_array[i--] = slist->data;

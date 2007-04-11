@@ -337,6 +337,9 @@ gchar **strsplit_parenthesis		(const gchar	*str,
 gchar **strsplit_with_quote		(const gchar	*str,
 					 const gchar	*delim,
 					 gint		 max_tokens);
+gchar **strsplit_csv			(const gchar	*str,
+					 gchar		 delim,
+					 gint		 max_tokens);
 
 gchar *get_abbrev_newsgroup_name	(const gchar	*group,
 					 gint		 len);

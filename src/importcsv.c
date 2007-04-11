@@ -207,7 +207,7 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 			str = g_strdup(buf);
 		else
 			str = conv_localetodisp(buf, NULL);
-		strv = g_strsplit(str, ",", 0);
+		strv = strsplit_csv(str, ',', 0);
 		fields_len = sizeof(imp_csv_attrib) / sizeof(imp_csv_attrib[0]);
 		while (strv[data_len])
 			++data_len;
@@ -381,7 +381,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 			str = g_strdup(buf);
 		else
 			str = conv_localetodisp(buf, NULL);
-		strv = g_strsplit(str, ",", 0);
+		strv = strsplit_csv(str, ',', 0);
 		while (strv[cols])
 			++cols;
 
