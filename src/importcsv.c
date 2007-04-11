@@ -37,6 +37,7 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtktable.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkradiobutton.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkcheckbutton.h>
 #include <gtk/gtktogglebutton.h>
@@ -84,6 +85,8 @@ static struct _ImpCSVDlg {
 	GtkWidget *notebook;
 	GtkWidget *file_entry;
 	GtkWidget *name_entry;
+	GtkWidget *comma_radiobtn;
+	GtkWidget *tab_radiobtn;
 	GtkWidget *clist_field;
 	GtkWidget *check_select;
 	GtkWidget *labelBook;
@@ -98,6 +101,7 @@ static struct _ImpCSVDlg {
 	gint      rowCount;
 	gchar     *nameBook;
 	gchar     *fileName;
+	gchar     delimiter;
 	gboolean  cancelled;
 } impcsv_dlg;
 
@@ -207,7 +211,7 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 			str = g_strdup(buf);
 		else
 			str = conv_localetodisp(buf, NULL);
-		strv = strsplit_csv(str, ',', 0);
+		strv = strsplit_csv(str, impcsv_dlg.delimiter, 0);
 		fields_len = sizeof(imp_csv_attrib) / sizeof(imp_csv_attrib[0]);
 		while (strv[data_len])
 			++data_len;
@@ -381,7 +385,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 			str = g_strdup(buf);
 		else
 			str = conv_localetodisp(buf, NULL);
-		strv = strsplit_csv(str, ',', 0);
+		strv = strsplit_csv(str, impcsv_dlg.delimiter, 0);
 		while (strv[cols])
 			++cols;
 
@@ -495,6 +499,13 @@ static gboolean imp_csv_file_move() {
 
 	gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.file_entry), sFile );
 	gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.name_entry), sName );
+
+	if (gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(impcsv_dlg.comma_radiobtn))) {
+		impcsv_dlg.delimiter = ',';
+	} else {
+		impcsv_dlg.delimiter = '\t';
+	}
 
 	if( *sFile == '\0'|| strlen( sFile ) < 1 ) {
 		sMsg = _( "Please select a file." );
@@ -630,11 +641,14 @@ static void imp_csv_page_file( gint pageNum, gchar *pageLbl ) {
 	GtkWidget *file_entry;
 	GtkWidget *name_entry;
 	GtkWidget *file_btn;
+	GtkWidget *hbox;
+	GtkWidget *comma_radiobtn;
+	GtkWidget *tab_radiobtn;
 	gint top;
 
-	vbox = gtk_vbox_new(FALSE, 8);
+	vbox = gtk_vbox_new(FALSE, 4);
 	gtk_container_add( GTK_CONTAINER( impcsv_dlg.notebook ), vbox );
-	gtk_container_set_border_width( GTK_CONTAINER (vbox), BORDER_WIDTH );
+	gtk_container_set_border_width( GTK_CONTAINER (vbox), 4 );
 
 	label = gtk_label_new( pageLbl );
 	gtk_widget_show( label );
@@ -646,9 +660,9 @@ static void imp_csv_page_file( gint pageNum, gchar *pageLbl ) {
 
 	table = gtk_table_new(2, 3, FALSE);
 	gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-	gtk_container_set_border_width( GTK_CONTAINER(table), 8 );
+	gtk_container_set_border_width( GTK_CONTAINER(table), 6 );
 	gtk_table_set_row_spacings(GTK_TABLE(table), 8);
-	gtk_table_set_col_spacings(GTK_TABLE(table), 8 );
+	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
 
 	/* First row */
 	top = 0;
@@ -672,9 +686,21 @@ static void imp_csv_page_file( gint pageNum, gchar *pageLbl ) {
 	gtk_table_attach(GTK_TABLE(table), file_entry, 1, 2, top, (top + 1),
 		GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
 
-	file_btn = gtk_button_new_with_label( _(" ... "));
+	file_btn = gtk_button_new_with_label(_(" ... "));
 	gtk_table_attach(GTK_TABLE(table), file_btn, 2, 3, top, (top + 1),
 		GTK_FILL, 0, 3, 0);
+
+	hbox = gtk_hbox_new(FALSE, 8);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_container_set_border_width( GTK_CONTAINER (hbox), 4 );
+
+	comma_radiobtn = gtk_radio_button_new_with_label
+		(NULL, _("Comma-separated"));
+	gtk_box_pack_start(GTK_BOX(hbox), comma_radiobtn, FALSE, FALSE, 0);
+
+	tab_radiobtn = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON(comma_radiobtn), _("Tab-separated"));
+	gtk_box_pack_start(GTK_BOX(hbox), tab_radiobtn, FALSE, FALSE, 0);
 
 	gtk_widget_show_all(vbox);
 
@@ -684,6 +710,8 @@ static void imp_csv_page_file( gint pageNum, gchar *pageLbl ) {
 
 	impcsv_dlg.file_entry = file_entry;
 	impcsv_dlg.name_entry = name_entry;
+	impcsv_dlg.comma_radiobtn = comma_radiobtn;
+	impcsv_dlg.tab_radiobtn = tab_radiobtn;
 }
 
 static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
@@ -887,7 +915,7 @@ static void imp_csv_dialog_create() {
 					   TRUE);
 	gtkut_box_set_reverse_order(GTK_BOX(hbbox), FALSE);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 2);
+	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 4);
 	gtk_widget_grab_default(btnNext);
 
 	/* Button handlers */
@@ -932,6 +960,7 @@ AddressBookFile *addressbook_imp_csv( AddressIndex *addrIndex ) {
 
 	gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.name_entry), IMPORTCSV_GUESS_NAME );
 	gtk_entry_set_text( GTK_ENTRY(impcsv_dlg.file_entry), "" );
+	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(impcsv_dlg.comma_radiobtn), TRUE );
 	gtk_clist_clear( GTK_CLIST(impcsv_dlg.clist_field) );
 	gtk_notebook_set_current_page( GTK_NOTEBOOK(impcsv_dlg.notebook), PAGE_FILE_INFO );
 	gtk_widget_set_sensitive( impcsv_dlg.btnPrev, FALSE );
@@ -948,6 +977,7 @@ AddressBookFile *addressbook_imp_csv( AddressIndex *addrIndex ) {
 	g_free( impcsv_dlg.fileName );
 	impcsv_dlg.nameBook = NULL;
 	impcsv_dlg.fileName = NULL;
+	impcsv_dlg.delimiter = ',';
 	importCount = 0;
 
 	gtk_main();
