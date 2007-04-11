@@ -1384,6 +1384,7 @@ static void inc_cancel(IncProgressDialog *dialog, gboolean cancel_all)
 	for (list = dialog->queue_list; list != NULL; list = list->next) {
 		session = list->data;
 		session->inc_state = INC_CANCEL;
+		session_disconnect(session->session);
 		if (!cancel_all)
 			break;
 	}

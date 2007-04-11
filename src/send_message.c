@@ -753,6 +753,7 @@ static void send_cancel_button_cb(GtkWidget *widget, gpointer data)
 	SendProgressDialog *dialog = (SendProgressDialog *)data;
 
 	dialog->cancelled = TRUE;
+	session_disconnect(dialog->session);
 }
 
 static void send_put_error(Session *session)
