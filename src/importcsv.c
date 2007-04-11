@@ -305,6 +305,10 @@ static void imp_csv_field_list_up( GtkWidget *button, gpointer data ) {
 			dest_attr->col = row;
 
 		gtk_clist_thaw( clist );
+
+		if (gtk_clist_row_is_visible(clist, row - 1)
+			!= GTK_VISIBILITY_FULL)
+			gtk_clist_moveto(clist, row - 1, 0, 0.5, 0);
 	}
 }
 
@@ -343,6 +347,10 @@ static void imp_csv_field_list_down( GtkWidget *button, gpointer data ) {
 			dest_attr->col = row;
 
 		gtk_clist_thaw( clist );
+
+		if (gtk_clist_row_is_visible(clist, row + 1)
+			!= GTK_VISIBILITY_FULL)
+			gtk_clist_moveto(clist, row + 1, 0, 0.5, 0);
 	}
 }
 
