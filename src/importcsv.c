@@ -706,7 +706,7 @@ static void imp_csv_page_fields( gint pageNum, gchar *pageLbl ) {
 	titles[ FIELD_COL_FIELD  ] = _("CSV Field");
 	titles[ FIELD_COL_ATTRIB ] = _("Address Book Field");
 
-	vbox = gtk_vbox_new(FALSE, 8);
+	vbox = gtk_vbox_new(FALSE, 4);
 	gtk_container_add( GTK_CONTAINER( impcsv_dlg.notebook ), vbox );
 	gtk_container_set_border_width( GTK_CONTAINER (vbox), 4 );
 
@@ -817,6 +817,7 @@ static void imp_csv_page_finish( gint pageNum, gchar *pageLbl ) {
 	labelFile = gtk_label_new("");
 	gtk_table_attach(GTK_TABLE(table), labelFile, 1, 2, top, (top + 1), GTK_FILL, 0, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(labelFile), 0, 0.5);
+	gtk_label_set_line_wrap(GTK_LABEL(labelFile), TRUE);
 
 	/* Third row */
 	top++;
