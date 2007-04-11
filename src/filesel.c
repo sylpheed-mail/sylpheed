@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,12 @@ static GtkWidget *filesel_create	(const gchar		*title,
 static void filesel_save_expander_set_expanded	   (GtkWidget	*dialog,
 						    gboolean	 expanded);
 static gboolean filesel_save_expander_get_expanded (GtkWidget	*dialog);
+
+#if GTK_CHECK_VERSION(2, 8, 0)
+static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
+					(GtkFileChooser		*chooser,
+					 gpointer		 data);
+#endif
 
 gchar *filesel_select_file(const gchar *title, const gchar *file,
 			   GtkFileChooserAction action)
@@ -108,6 +114,9 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	if (action == GTK_FILE_CHOOSER_ACTION_SAVE) {
 		gtk_file_chooser_set_do_overwrite_confirmation
 			(GTK_FILE_CHOOSER(dialog), TRUE);
+		g_signal_connect(GTK_FILE_CHOOSER(dialog), "confirm-overwrite",
+				 G_CALLBACK(filesel_confirm_overwrite_cb),
+				 NULL);
 	}
 #endif
 
@@ -148,8 +157,8 @@ gchar *filesel_save_as(const gchar *file)
 	if (filename && is_file_exist(filename)) {
 		AlertValue aval;
 
-		aval = alertpanel(_("Overwrite"),
-				  _("Overwrite existing file?"),
+		aval = alertpanel(_("Overwrite existing file"),
+				  _("The file already exists. Do you want to replace it?"),
 				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
 		if (G_ALERTDEFAULT != aval) {
 			g_free(filename);
@@ -247,3 +256,32 @@ static gboolean filesel_save_expander_get_expanded(GtkWidget *dialog)
 	else
 		return FALSE;
 }
+
+#if GTK_CHECK_VERSION(2, 8, 0)
+static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
+					(GtkFileChooser		*chooser,
+					 gpointer		 data)
+{
+	gchar *filename;
+	GtkFileChooserConfirmation ret =
+		GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME;
+
+	filename = gtk_file_chooser_get_filename(chooser);
+
+	if (filename && is_file_exist(filename)) {
+		AlertValue aval;
+
+		aval = alertpanel(_("Overwrite existing file"),
+				  _("The file already exists. Do you want to replace it?"),
+				  GTK_STOCK_OK, GTK_STOCK_CANCEL, NULL);
+		if (G_ALERTDEFAULT == aval)
+			ret = GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME;
+		else
+			ret = GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN;
+	}
+
+	g_free(filename);
+
+	return ret;
+}
+#endif
