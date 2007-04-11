@@ -709,6 +709,7 @@ static void imp_ldif_dialog_create() {
 			 G_CALLBACK(imp_ldif_delete_event), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(imp_ldif_key_pressed), NULL);
+	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 
 	vbox = gtk_vbox_new(FALSE, 4);
 	gtk_widget_show(vbox);
@@ -779,7 +780,6 @@ AddressBookFile *addressbook_imp_ldif( AddressIndex *addrIndex ) {
 	if( ! impldif_dlg.window )
 		imp_ldif_create();
 	impldif_dlg.cancelled = FALSE;
-	gtk_widget_show(impldif_dlg.window);
 	manage_window_set_transient(GTK_WINDOW(impldif_dlg.window));
 	gtk_widget_grab_default(impldif_dlg.btnNext);
 
@@ -805,6 +805,9 @@ AddressBookFile *addressbook_imp_ldif( AddressIndex *addrIndex ) {
 	impldif_dlg.fileName = NULL;
 
 	_ldifFile_ = ldif_create();
+
+	gtk_widget_show(impldif_dlg.window);
+
 	gtk_main();
 	gtk_widget_hide(impldif_dlg.window);
 	ldif_free( _ldifFile_ );

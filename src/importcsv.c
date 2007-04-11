@@ -892,6 +892,7 @@ static void imp_csv_dialog_create() {
 			 G_CALLBACK(imp_csv_delete_event), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(imp_csv_key_pressed), NULL);
+	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 
 	vbox = gtk_vbox_new(FALSE, 4);
 	gtk_widget_show(vbox);
@@ -962,7 +963,6 @@ AddressBookFile *addressbook_imp_csv( AddressIndex *addrIndex ) {
 	if( ! impcsv_dlg.window )
 		imp_csv_create();
 	impcsv_dlg.cancelled = FALSE;
-	gtk_widget_show(impcsv_dlg.window);
 	manage_window_set_transient(GTK_WINDOW(impcsv_dlg.window));
 	gtk_widget_grab_default(impcsv_dlg.btnNext);
 
@@ -987,6 +987,8 @@ AddressBookFile *addressbook_imp_csv( AddressIndex *addrIndex ) {
 	impcsv_dlg.fileName = NULL;
 	impcsv_dlg.delimiter = ',';
 	importCount = 0;
+
+	gtk_widget_show(impcsv_dlg.window);
 
 	gtk_main();
 	gtk_widget_hide(impcsv_dlg.window);
