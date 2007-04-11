@@ -20,6 +20,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <gtk/gtkversion.h>
 #include <gtk/gtkfilechooserdialog.h>
 #include <gtk/gtkexpander.h>
 #include <gtk/gtkstock.h>
@@ -103,6 +104,13 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 			(dialog, save_expander_expanded);
 	}
 
+#if GTK_CHECK_VERSION(2, 8, 0)
+	if (action == GTK_FILE_CHOOSER_ACTION_SAVE) {
+		gtk_file_chooser_set_do_overwrite_confirmation
+			(GTK_FILE_CHOOSER(dialog), TRUE);
+	}
+#endif
+
 	gtk_widget_show(dialog);
 
 	change_dir(prev_dir);
@@ -136,6 +144,7 @@ gchar *filesel_save_as(const gchar *file)
 	filename = filesel_select_file(_("Save as"), file,
 				       GTK_FILE_CHOOSER_ACTION_SAVE);
 
+#if !GTK_CHECK_VERSION(2, 8, 0)
 	if (filename && is_file_exist(filename)) {
 		AlertValue aval;
 
@@ -147,6 +156,7 @@ gchar *filesel_save_as(const gchar *file)
 			filename = NULL;
 		}
 	}
+#endif
 
 	return filename;
 }
