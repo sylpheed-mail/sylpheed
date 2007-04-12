@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -91,7 +91,8 @@ typedef enum
 	C_TIS_620,
 	C_WINDOWS_874,
 	C_GEORGIAN_PS,
-	C_TCVN5712_1
+	C_TCVN5712_1,
+	C_ISO_8859_16
 } CharSet;
 
 typedef gchar *(*CodeConvFunc) (const gchar *inbuf, gint *error);
@@ -171,6 +172,7 @@ struct _CodeConverter
 #define CS_WINDOWS_874		"Windows-874"
 #define CS_GEORGIAN_PS		"GEORGIAN-PS"
 #define CS_TCVN5712_1		"TCVN5712-1"
+#define CS_ISO_8859_16		"ISO-8859-16"
 
 #define C_INTERNAL		C_UTF_8
 #define CS_INTERNAL		CS_UTF_8
