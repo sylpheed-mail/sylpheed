@@ -129,6 +129,9 @@ static GtkWidget *main_window_toolbar_create	(MainWindow	*mainwin);
 static GtkWidget *main_window_toolbar_create_from_list
 						(MainWindow	*mainwin,
 						 GList		*item_list);
+static void main_window_toolbar_toggle_menu_set_active
+						(MainWindow	*mainwin,
+						 ToolbarStyle	 style);
 
 /* callback functions */
 static void toolbar_inc_cb		(GtkWidget	*widget,
@@ -1098,29 +1101,8 @@ MainWindow *main_window_create(SeparateType type)
 		(ifactory, "/View/Character encoding/Auto detect");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
 
-	switch (prefs_common.toolbar_style) {
-	case TOOLBAR_NONE:
-		menuitem = gtk_item_factory_get_item
-			(ifactory, "/View/Show or hide/Toolbar/None");
-		break;
-	case TOOLBAR_ICON:
-		menuitem = gtk_item_factory_get_item
-			(ifactory, "/View/Show or hide/Toolbar/Icon");
-		break;
-	case TOOLBAR_TEXT:
-		menuitem = gtk_item_factory_get_item
-			(ifactory, "/View/Show or hide/Toolbar/Text");
-		break;
-	case TOOLBAR_BOTH:
-		menuitem = gtk_item_factory_get_item
-			(ifactory, "/View/Show or hide/Toolbar/Icon and text");
-		break;
-	case TOOLBAR_BOTH_HORIZ:
-		menuitem = gtk_item_factory_get_item
-			(ifactory, "/View/Show or hide/Toolbar/Text at the right of icon");
-		break;
-	}
-	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
+	main_window_toolbar_toggle_menu_set_active
+		(mainwin, prefs_common.toolbar_style);
 
 	gtk_widget_hide(summaryview->search_hbox);
 	menuitem = gtk_item_factory_get_item
@@ -2609,6 +2591,40 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	return toolbar;
 }
 
+static void main_window_toolbar_toggle_menu_set_active(MainWindow *mainwin,
+						       ToolbarStyle style)
+{
+	GtkWidget *menuitem = NULL;
+	GtkItemFactory *ifactory = mainwin->menu_factory;
+
+	switch (style) {
+	case TOOLBAR_NONE:
+		menuitem = gtk_item_factory_get_item
+			(ifactory, "/View/Show or hide/Toolbar/None");
+		break;
+	case TOOLBAR_ICON:
+		menuitem = gtk_item_factory_get_item
+			(ifactory, "/View/Show or hide/Toolbar/Icon");
+		break;
+	case TOOLBAR_TEXT:
+		menuitem = gtk_item_factory_get_item
+			(ifactory, "/View/Show or hide/Toolbar/Text");
+		break;
+	case TOOLBAR_BOTH:
+		menuitem = gtk_item_factory_get_item
+			(ifactory, "/View/Show or hide/Toolbar/Icon and text");
+		break;
+	case TOOLBAR_BOTH_HORIZ:
+		menuitem = gtk_item_factory_get_item
+			(ifactory, "/View/Show or hide/Toolbar/Text at the right of icon");
+		break;
+	}
+
+	if (menuitem)
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
+					       TRUE);
+}
+
 /* callback functions */
 
 static void toolbar_inc_cb	(GtkWidget	*widget,
@@ -2759,6 +2775,18 @@ static void toolbar_prefs_account_cb(GtkWidget *widget, gpointer data)
 	prefs_account_open_cb(mainwin, 0, NULL);
 }
 
+static void toolbar_toggle(GtkWidget *widget, gpointer data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+	ToolbarStyle style;
+
+	if (!gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget)))
+		return;
+
+	style = (ToolbarStyle)g_object_get_data(G_OBJECT(widget), MENU_VAL_ID);
+	main_window_toolbar_toggle_menu_set_active(mainwin, style);
+}
+
 static void toolbar_customize(GtkWidget *widget, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
@@ -2808,10 +2836,28 @@ static gboolean toolbar_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	menu = gtk_menu_new();
 	gtk_widget_show(menu);
 
+#define SET_TOOLBAR_MENU(text, style, widget)				\
+{									\
+	MENUITEM_ADD_RADIO(menu, menuitem, widget, text, style);	\
+	if (prefs_common.toolbar_style == style)			\
+		gtk_check_menu_item_set_active				\
+			(GTK_CHECK_MENU_ITEM(menuitem), TRUE);		\
+	g_signal_connect(G_OBJECT(menuitem), "activate",		\
+			 G_CALLBACK(toolbar_toggle), mainwin);		\
+}
+
+	SET_TOOLBAR_MENU(_("Icon _and text"), TOOLBAR_BOTH, NULL);
+	SET_TOOLBAR_MENU(_("Text at the _right of icon"), TOOLBAR_BOTH_HORIZ,
+			 menuitem);
+	SET_TOOLBAR_MENU(_("_Icon"), TOOLBAR_ICON, menuitem);
+	SET_TOOLBAR_MENU(_("_Text"), TOOLBAR_TEXT, menuitem);
+	SET_TOOLBAR_MENU(_("_None"), TOOLBAR_NONE, menuitem);
+	MENUITEM_ADD(menu, menuitem, NULL, NULL);
 	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Customize toolbar..."),
 				   0);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
 			 G_CALLBACK(toolbar_customize), mainwin);
+
 	g_signal_connect(G_OBJECT(menu), "selection_done",
 			 G_CALLBACK(gtk_widget_destroy), NULL);
 
