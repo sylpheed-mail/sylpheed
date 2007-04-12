@@ -17,10 +17,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * Edit VCard address book data.
- */
-
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -97,7 +93,6 @@ static struct _ImpCSVDlg {
 	GtkWidget *btnCancel;
 	GtkWidget *statusbar;
 	gint      status_cid;
-	gint      rowIndSelect;
 	gint      rowCount;
 	gchar     *nameBook;
 	gchar     *fileName;
@@ -186,7 +181,6 @@ static gboolean imp_csv_load_fields( gchar *sFile ) {
 
 	g_return_val_if_fail(sFile != NULL, FALSE);
 
-	impcsv_dlg.rowIndSelect = -1;
 	impcsv_dlg.rowCount = 0;
 	gtk_clist_clear( clist );
 
@@ -979,7 +973,6 @@ AddressBookFile *addressbook_imp_csv( AddressIndex *addrIndex ) {
 	imp_csv_message();
 	gtk_widget_grab_focus(impcsv_dlg.file_entry);
 
-	impcsv_dlg.rowIndSelect = -1;
 	impcsv_dlg.rowCount = 0;
 	g_free( impcsv_dlg.nameBook );
 	g_free( impcsv_dlg.fileName );
