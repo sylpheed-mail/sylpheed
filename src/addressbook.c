@@ -775,7 +775,7 @@ static void addressbook_create(void)
 	addrbook.clist   = clist;
 	addrbook.entry   = entry;
 	addrbook.statusbar = statusbar;
-	addrbook.status_cid = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Addressbook Window" );
+	addrbook.status_cid = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Address Book Window" );
 
 	addrbook.to_btn  = to_btn;
 	addrbook.cc_btn  = cc_btn;
@@ -2493,11 +2493,11 @@ static gboolean addressbook_convert( AddressIndex *addrIndex ) {
 	}
 	if( errFlag ) {
 		debug_print( "Error\n%s\n", msg );
-		alertpanel( _( "Addressbook conversion error" ), msg, GTK_STOCK_CLOSE, NULL, NULL );
+		alertpanel( _( "Address book conversion error" ), msg, GTK_STOCK_CLOSE, NULL, NULL );
 	}
 	else if( msg ) {
 		debug_print( "Warning\n%s\n", msg );
-		alertpanel( _( "Addressbook conversion" ), msg, GTK_STOCK_CLOSE, NULL, NULL );
+		alertpanel( _( "Address book conversion" ), msg, GTK_STOCK_CLOSE, NULL, NULL );
 	}
 
 	return retVal;
@@ -2532,7 +2532,7 @@ void addressbook_read_file( void ) {
 		/* Error reading address book */
 		debug_print( "Could not read address index.\n" );
 		addrindex_print_index( addrIndex, stdout );
-		alertpanel( _( "Addressbook Error" ),
+		alertpanel( _( "Address Book Error" ),
 			    _( "Could not read address index" ),
 			    GTK_STOCK_CLOSE, NULL, NULL );
 	}
@@ -2639,13 +2639,13 @@ void addressbook_read_file_old( void ) {
 
 	if( errFlag ) {
 		debug_print( "Error\n%s\n", msg );
-		alertpanel( _( "Addressbook Conversion Error" ), msg,
+		alertpanel( _( "Address Book Conversion Error" ), msg,
 			    GTK_STOCK_CLOSE, NULL, NULL );
 	}
 	else {
 		if( msg ) {
 			debug_print( "Warning\n%s\n", msg );
-			alertpanel( _( "Addressbook Conversion" ), msg,
+			alertpanel( _( "Address Book Conversion" ), msg,
 				    GTK_STOCK_CLOSE, NULL, NULL );
 		}
 	}

@@ -171,7 +171,7 @@ static void addressbook_edit_book_create( gboolean *cancelled ) {
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_set_size_request(window, 450, -1);
 	gtk_container_set_border_width( GTK_CONTAINER(window), 0 );
-	gtk_window_set_title(GTK_WINDOW(window), _("Edit Addressbook"));
+	gtk_window_set_title(GTK_WINDOW(window), _("Edit Address Book"));
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);	
 	g_signal_connect(G_OBJECT(window), "delete_event",
@@ -255,7 +255,7 @@ static void addressbook_edit_book_create( gboolean *cancelled ) {
 	addrbookedit_dlg.check_btn  = check_btn;
 	/* addrbookedit_dlg.file_btn   = file_btn; */
 	addrbookedit_dlg.statusbar  = statusbar;
-	addrbookedit_dlg.status_cid = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Edit Addressbook Dialog" );
+	addrbookedit_dlg.status_cid = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Edit Address Book Dialog" );
 }
 
 AdapterDSource *addressbook_edit_book( AddressIndex *addrIndex, AdapterDSource *ads ) {
@@ -285,7 +285,7 @@ AdapterDSource *addressbook_edit_book( AddressIndex *addrIndex, AdapterDSource *
 			gtk_entry_set_text(GTK_ENTRY(addrbookedit_dlg.name_entry), abf->name);
 		if( abf->fileName )
 			gtk_label_set_text(GTK_LABEL(addrbookedit_dlg.file_label), abf->fileName);
-		gtk_window_set_title( GTK_WINDOW(addrbookedit_dlg.window), _("Edit Addressbook"));
+		gtk_window_set_title( GTK_WINDOW(addrbookedit_dlg.window), _("Edit Address Book"));
 		edit_book_enable_buttons( TRUE );
 	}
 	else {
@@ -304,7 +304,7 @@ AdapterDSource *addressbook_edit_book( AddressIndex *addrIndex, AdapterDSource *
 		g_free( newFile );
 
 		gtk_entry_set_text( GTK_ENTRY(addrbookedit_dlg.name_entry), ADDRESSBOOK_GUESS_BOOK );
-		gtk_window_set_title( GTK_WINDOW(addrbookedit_dlg.window), _("Add New Addressbook") );
+		gtk_window_set_title( GTK_WINDOW(addrbookedit_dlg.window), _("Add New Address Book") );
 		edit_book_enable_buttons( FALSE );
 	}
 
