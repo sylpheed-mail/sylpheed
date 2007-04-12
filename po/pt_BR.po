@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 16:47+0900\n"
-"PO-Revision-Date: 2007-03-01 15:01-0300\n"
+"POT-Creation-Date: 2007-04-12 11:07+0900\n"
+"PO-Revision-Date: 2007-04-11 13:49-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -314,9 +314,9 @@ msgid "the src folder is identical to the dest.\n"
 msgstr "pastas de origem e destino são idênticas.\n"
 
 #: libsylph/mh.c:671
-#, fuzzy, c-format
+#, c-format
 msgid "Copying message %s/%d to %s ...\n"
-msgstr "Copiando mensagem %s%c%d para %s ...\n"
+msgstr "Copiando mensagem %s/%d para %s ...\n"
 
 #: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:149
 #, c-format
@@ -830,7 +830,7 @@ msgid "Address"
 msgstr "Endereço"
 
 #: src/addressadd.c:197 src/addressbook.c:522 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:130
+#: src/editaddress.c:695 src/editgroup.c:274 src/importcsv.c:125
 msgid "Remarks"
 msgstr "Notas"
 
@@ -935,9 +935,8 @@ msgid "/_Tools/Import _LDIF file"
 msgstr "/_Ferramentas/Importar arquivo _LDIF"
 
 #: src/addressbook.c:381
-#, fuzzy
 msgid "/_Tools/Import _CSV file"
-msgstr "/_Ferramentas/Importar arquivo _LDIF"
+msgstr "/_Ferramentas/Importar arquivo _CSV"
 
 #: src/addressbook.c:383 src/compose.c:702 src/mainwindow.c:849
 #: src/messageview.c:302
@@ -1076,7 +1075,8 @@ msgstr "Novo usuário, não foi possível salvar arquivo de índice."
 
 #: src/addressbook.c:2450 src/addressbook.c:2583
 msgid "New user, could not save address book files."
-msgstr "Novo usuário, não foi possível salvar arquivos de livro de endereços."
+msgstr ""
+"Novo usuário, não foi possível salvar arquivos do catálogo de endereços."
 
 #: src/addressbook.c:2460 src/addressbook.c:2593
 msgid "Old address book converted successfully."
@@ -1115,15 +1115,18 @@ msgstr ""
 "nem criar arquivos novos para o catálogo de endereços."
 
 #: src/addressbook.c:2496
-msgid "Addressbook conversion error"
+#, fuzzy
+msgid "Address book conversion error"
 msgstr "Erro convertendo catálogo de endereços"
 
 #: src/addressbook.c:2500
-msgid "Addressbook conversion"
+#, fuzzy
+msgid "Address book conversion"
 msgstr "Conversão do catálogo de endereços"
 
 #: src/addressbook.c:2535
-msgid "Addressbook Error"
+#, fuzzy
+msgid "Address Book Error"
 msgstr "Erro no Catálogo de Endereços"
 
 #: src/addressbook.c:2536 src/addressbook.c:2636
@@ -1133,8 +1136,8 @@ msgstr "Não foi possível ler o índice do endereço"
 #: src/addressbook.c:2598
 msgid "Old address book converted, could not save new address index file"
 msgstr ""
-"Catálogo de endereços antigo convertido, não foi possível salvar o arquivo "
-"de indíce do novo endereço"
+"Catálogo de endereços antigo convertido, mas não foi possível salvar o "
+"arquivo de indíce do novo"
 
 #: src/addressbook.c:2612
 msgid ""
@@ -1158,18 +1161,20 @@ msgstr ""
 "arquivos novos para o catálogo de endereços."
 
 #: src/addressbook.c:2642
-msgid "Addressbook Conversion Error"
+#, fuzzy
+msgid "Address Book Conversion Error"
 msgstr "Erro na conversão do catálogo de endereços"
 
 #: src/addressbook.c:2648
-msgid "Addressbook Conversion"
+#, fuzzy
+msgid "Address Book Conversion"
 msgstr "Conversão do Catálogo de Endereços"
 
 #: src/addressbook.c:3168 src/prefs_common_dialog.c:2103
 msgid "Interface"
 msgstr "Interface"
 
-#: src/addressbook.c:3184 src/importcsv.c:677 src/importldif.c:482
+#: src/addressbook.c:3184 src/importcsv.c:671 src/importldif.c:478
 msgid "Address Book"
 msgstr "Catálogo de Endereços"
 
@@ -1366,9 +1371,8 @@ msgid "/_View/_Bcc"
 msgstr "/E_xibir/_Cco"
 
 #: src/compose.c:585
-#, fuzzy
 msgid "/_View/_Reply-To"
-msgstr "/E_xibir/_Responder para"
+msgstr "/E_xibir/_Reply-To"
 
 #: src/compose.c:586 src/compose.c:588 src/compose.c:590 src/compose.c:592
 #: src/compose.c:595 src/mainwindow.c:585 src/mainwindow.c:588
@@ -1378,9 +1382,8 @@ msgid "/_View/---"
 msgstr "/E_xibir/---"
 
 #: src/compose.c:587
-#, fuzzy
 msgid "/_View/_Followup-To"
-msgstr "/E_xibir/_Seguir respondendo"
+msgstr "/E_xibir/_Followup-To"
 
 #: src/compose.c:589
 msgid "/_View/R_uler"
@@ -1595,7 +1598,7 @@ msgstr "Mensagem: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Não foi possível obter alguma(s) parte(s) dessa mensagem."
 
-#: src/compose.c:2640 src/headerview.c:233 src/query_search.c:666
+#: src/compose.c:2640 src/headerview.c:233 src/query_search.c:669
 #: src/summaryview.c:2264
 msgid "(No Subject)"
 msgstr "(Sem assunto)"
@@ -1844,24 +1847,24 @@ msgstr "Um Nome e um Valor devem ser informados"
 msgid "Edit Person Data"
 msgstr "Editar dados pessoais"
 
-#: src/editaddress.c:578 src/importcsv.c:127
+#: src/editaddress.c:578 src/importcsv.c:122
 msgid "Display Name"
 msgstr "Exibir Nome"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:126
+#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:121
 msgid "Last Name"
 msgstr "Último Nome"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:125
+#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:120
 msgid "First Name"
 msgstr "Primeiro Nome"
 
-#: src/editaddress.c:590 src/importcsv.c:128
+#: src/editaddress.c:590 src/importcsv.c:123
 msgid "Nick Name"
 msgstr "Apelido"
 
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:273 src/importcsv.c:129
+#: src/editgroup.c:273 src/importcsv.c:124
 msgid "E-Mail Address"
 msgstr "Endereço de e-mail"
 
@@ -1878,7 +1881,7 @@ msgstr "Mover para cima"
 msgid "Move Down"
 msgstr "Mover para Baixo"
 
-#: src/editaddress.c:722 src/editaddress.c:856 src/importldif.c:611
+#: src/editaddress.c:722 src/editaddress.c:856 src/importldif.c:607
 msgid "Modify"
 msgstr "Modificar"
 
@@ -1911,7 +1914,8 @@ msgid "Could not read file."
 msgstr "Não foi possível ler o arquivo"
 
 #: src/editbook.c:174 src/editbook.c:288
-msgid "Edit Addressbook"
+#, fuzzy
+msgid "Edit Address Book"
 msgstr "Editar Catálogo de Endereços"
 
 #: src/editbook.c:203 src/editjpilot.c:277 src/editvcard.c:190
@@ -1924,7 +1928,8 @@ msgid "File"
 msgstr "Arquivo"
 
 #: src/editbook.c:307
-msgid "Add New Addressbook"
+#, fuzzy
+msgid "Add New Address Book"
 msgstr "Adicionar Novo Catálogo de endereços"
 
 #: src/editgroup.c:113
@@ -2000,7 +2005,7 @@ msgid "Edit JPilot Entry"
 msgstr "Editar entrada JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:697 src/importldif.c:502 src/prefs_account_dialog.c:1799
+#: src/importcsv.c:691 src/importldif.c:498 src/prefs_account_dialog.c:1799
 #: src/prefs_common_dialog.c:1906
 msgid " ... "
 msgstr " ... "
@@ -2137,13 +2142,12 @@ msgid "Save as"
 msgstr "Salvar como"
 
 #: src/filesel.c:160 src/filesel.c:274
-#, fuzzy
 msgid "Overwrite existing file"
-msgstr "Sobrescrever o arquivo existente?"
+msgstr "Sobrescrever arquivo existente"
 
 #: src/filesel.c:161 src/filesel.c:275
 msgid "The file already exists. Do you want to replace it?"
-msgstr ""
+msgstr "O arquivo já existe. Deseja substituí-lo?"
 
 #: src/filesel.c:178
 msgid "Select directory"
@@ -2183,7 +2187,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "`%c' não pode ser usado no nome da pasta."
 
 #: src/foldersel.c:566 src/folderview.c:2216 src/folderview.c:2275
-#: src/query_search.c:1031
+#: src/query_search.c:1034
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "A pasta `%s' já existe."
@@ -2444,7 +2448,7 @@ msgstr "Assunto:"
 msgid "Creating header view...\n"
 msgstr "Criando visualizador de cabeçalhos...\n"
 
-#: src/headerview.c:212 src/query_search.c:667 src/summaryview.c:2267
+#: src/headerview.c:212 src/query_search.c:670 src/summaryview.c:2267
 msgid "(No From)"
 msgstr "(Sem remetente)"
 
@@ -2476,161 +2480,154 @@ msgstr "Diretório de destino:"
 msgid "Select importing file"
 msgstr "Selecionar arquivo a importar"
 
-#: src/importcsv.c:156 src/importldif.c:126
+#: src/importcsv.c:151 src/importldif.c:122
 msgid "Please specify address book name and file to import."
 msgstr ""
-"Por favor especifique o nome do livro de endereços e o arquivo para importar."
+"Por favor especifique o nome do catálogo de endereços e o arquivo para "
+"importar."
 
-#: src/importcsv.c:159
-#, fuzzy
+#: src/importcsv.c:154
 msgid "Select and reorder CSV field names to import."
-msgstr "Selecione e renomeie os nomes dos campos LDIF para importar."
+msgstr "Selecione e reordene os campos CSV para importar."
 
-#: src/importcsv.c:162 src/importldif.c:132
+#: src/importcsv.c:157 src/importldif.c:128
 msgid "File imported."
 msgstr "Arquivo importado."
 
-#: src/importcsv.c:519 src/importldif.c:321
+#: src/importcsv.c:513 src/importldif.c:317
 msgid "Please select a file."
 msgstr "Por favor selecione um arquivo."
 
-#: src/importcsv.c:525 src/importldif.c:327
+#: src/importcsv.c:519 src/importldif.c:323
 msgid "Address book name must be supplied."
-msgstr "Um nome deve ser informado para o Livro de Endereços."
+msgstr "Um nome deve ser informado para o Catálogo de Endereços."
 
-#: src/importcsv.c:534
-#, fuzzy
+#: src/importcsv.c:528
 msgid "Error reading CSV fields."
-msgstr "Erro lendo campos do LDIF."
+msgstr "Erro lendo campos CSV."
 
-#: src/importcsv.c:560
-#, fuzzy
+#: src/importcsv.c:554
 msgid "CSV file imported successfully."
-msgstr "Arquivo LDIF importado com sucesso."
+msgstr "Arquivo CSV importado com sucesso."
 
-#: src/importcsv.c:622
-#, fuzzy
+#: src/importcsv.c:616
 msgid "Select CSV File"
-msgstr "Selecionar Arquivo vCard"
+msgstr "Selecionar Arquivo CSV"
 
-#: src/importcsv.c:688 src/importldif.c:493
+#: src/importcsv.c:682 src/importldif.c:489
 msgid "File Name"
 msgstr "Nome do arquivo"
 
-#: src/importcsv.c:706
+#: src/importcsv.c:700
 msgid "Comma-separated"
-msgstr ""
+msgstr "Separados por vírgula"
 
-#: src/importcsv.c:710
+#: src/importcsv.c:704
 msgid "Tab-separated"
-msgstr ""
+msgstr "Separados por tabulação"
 
-#: src/importcsv.c:741 src/importldif.c:534
+#: src/importcsv.c:735 src/importldif.c:530
 msgid "S"
 msgstr "S"
 
-#: src/importcsv.c:742
-#, fuzzy
+#: src/importcsv.c:736
 msgid "CSV Field"
-msgstr "Campo LDIF"
+msgstr "Campo CSV"
 
-#: src/importcsv.c:743
-#, fuzzy
+#: src/importcsv.c:737
 msgid "Address Book Field"
-msgstr "Livro de Endereços :"
+msgstr "Campo do Catálogo de Endereços"
 
-#: src/importcsv.c:760
+#: src/importcsv.c:754
 msgid "Reorder address book fields with the Up and Down button."
-msgstr ""
+msgstr "Reordene os campos do catálogo de endereços com as setas Cima/Baixo"
 
-#: src/importcsv.c:795 src/prefs_actions.c:310 src/prefs_customheader.c:279
+#: src/importcsv.c:789 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
 #: src/prefs_summary_column.c:290
 msgid "Up"
 msgstr "Acima"
 
-#: src/importcsv.c:797 src/prefs_actions.c:316 src/prefs_customheader.c:285
+#: src/importcsv.c:791 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:243
 #: src/prefs_summary_column.c:294
 msgid "Down"
 msgstr "Abaixo"
 
-#: src/importcsv.c:839 src/importldif.c:657
+#: src/importcsv.c:833 src/importldif.c:653
 msgid "Address Book :"
-msgstr "Livro de Endereços :"
+msgstr "Catálogo de Endereços :"
 
-#: src/importcsv.c:849 src/importldif.c:667
+#: src/importcsv.c:843 src/importldif.c:663
 msgid "File Name :"
 msgstr "Nome do arquivo :"
 
-#: src/importcsv.c:860 src/importldif.c:677
+#: src/importcsv.c:854 src/importldif.c:673
 msgid "Records :"
 msgstr "Registros :"
 
-#: src/importcsv.c:888
-#, fuzzy
+#: src/importcsv.c:882
 msgid "Import CSV file into Address Book"
-msgstr "Importar arquivo LDIF para o Livro de Endereços"
+msgstr "Importar arquivo CSV para o Catálogo de Endereços"
 
 #. Button panel
-#: src/importcsv.c:920 src/importldif.c:737 src/prefs_toolbar.c:69
+#: src/importcsv.c:914 src/importldif.c:733 src/prefs_toolbar.c:69
 msgid "Next"
 msgstr "Próxima"
 
-#: src/importcsv.c:921 src/importldif.c:738 src/prefs_toolbar.c:72
+#: src/importcsv.c:915 src/importldif.c:734 src/prefs_toolbar.c:72
 msgid "Prev"
 msgstr "Anterior"
 
-#: src/importcsv.c:953 src/importldif.c:770
+#: src/importcsv.c:947 src/importldif.c:766
 msgid "File Info"
 msgstr "Informação do Arquivo"
 
-#: src/importcsv.c:954
-#, fuzzy
+#: src/importcsv.c:948
 msgid "Fields"
-msgstr "Campo LDIF"
+msgstr "Campos"
 
-#: src/importcsv.c:955 src/importldif.c:772
+#: src/importcsv.c:949 src/importldif.c:768
 msgid "Finish"
 msgstr "Terminar"
 
-#: src/importldif.c:129
+#: src/importldif.c:125
 msgid "Select and rename LDIF field names to import."
 msgstr "Selecione e renomeie os nomes dos campos LDIF para importar."
 
-#: src/importldif.c:345
+#: src/importldif.c:341
 msgid "Error reading LDIF fields."
 msgstr "Erro lendo campos do LDIF."
 
-#: src/importldif.c:368
+#: src/importldif.c:364
 msgid "LDIF file imported successfully."
 msgstr "Arquivo LDIF importado com sucesso."
 
-#: src/importldif.c:430
+#: src/importldif.c:426
 msgid "Select LDIF File"
 msgstr "Selecione arquivo LDIF"
 
-#: src/importldif.c:535 src/importldif.c:585
+#: src/importldif.c:531 src/importldif.c:581
 msgid "LDIF Field"
 msgstr "Campo LDIF"
 
-#: src/importldif.c:536
+#: src/importldif.c:532
 msgid "Attribute Name"
 msgstr "Nome do Atributo"
 
-#: src/importldif.c:595
+#: src/importldif.c:591
 msgid "Attribute"
 msgstr "Atributo"
 
-#: src/importldif.c:604 src/select-keys.c:343
+#: src/importldif.c:600 src/select-keys.c:343
 msgid "Select"
 msgstr "Selecione"
 
-#: src/importldif.c:705
+#: src/importldif.c:701
 msgid "Import LDIF file into Address Book"
-msgstr "Importar arquivo LDIF para o Livro de Endereços"
+msgstr "Importar arquivo LDIF para o Catálogo de Endereços"
 
-#: src/importldif.c:771
+#: src/importldif.c:767
 msgid "Attributes"
 msgstr "Atributos"
 
@@ -2771,6 +2768,8 @@ msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
+"Execução do filtro de spam falhou.\n"
+"Por favor verifique as definições do filtro de spam."
 
 #: src/inc.c:1292
 msgid "Connection failed."
@@ -3348,9 +3347,8 @@ msgid "/_Message/Recei_ve/Get from _all accounts"
 msgstr "/_Mensagem/_Receber/Receber de _todas as contas"
 
 #: src/mainwindow.c:755
-#, fuzzy
 msgid "/_Message/Recei_ve/Stop receivin_g"
-msgstr "/_Mensagem/_Receber/_Cancelar recebimento"
+msgstr "/_Mensagem/_Receber/_Parar recebimento"
 
 #: src/mainwindow.c:757
 msgid "/_Message/Recei_ve/---"
@@ -3520,9 +3518,8 @@ msgid "/_Configuration/_Common preferences..."
 msgstr "/_Configuração/_Preferências comuns..."
 
 #: src/mainwindow.c:833
-#, fuzzy
 msgid "/_Configuration/_Filter settings..."
-msgstr "/_Configuração/Configuração de _filtros..."
+msgstr "/_Configuração/_Filtros..."
 
 #: src/mainwindow.c:835
 msgid "/_Configuration/_Template..."
@@ -3823,7 +3820,7 @@ msgstr "Procura concluída"
 
 #: src/messageview.c:284
 msgid "/_Tools/Add sender to address boo_k"
-msgstr "/_Ferramentas/Adicionar remetente ao Livro de _Endereços"
+msgstr "/_Ferramentas/Adicionar remetente ao Catálogo de _Endereços"
 
 #: src/messageview.c:316
 msgid "Creating message view...\n"
@@ -5523,7 +5520,6 @@ msgid " Revert to default "
 msgstr " Voltar ao padrão "
 
 #: src/prefs_filter.c:208
-#, fuzzy
 msgid "Filter settings"
 msgstr "Configuração de filtros"
 
@@ -5973,14 +5969,12 @@ msgid "Print message"
 msgstr "Imprimir mensagem"
 
 #: src/prefs_toolbar.c:81
-#, fuzzy
 msgid "Stop"
-msgstr "Passo"
+msgstr "Parar"
 
 #: src/prefs_toolbar.c:82
-#, fuzzy
 msgid "Stop receiving"
-msgstr "Servidor de recepção"
+msgstr "Parar recebimento"
 
 #: src/prefs_toolbar.c:87
 msgid "Execute"
@@ -6100,24 +6094,24 @@ msgstr "Feito."
 msgid "Searching %s ..."
 msgstr "Procurando %s ..."
 
-#: src/query_search.c:594
+#: src/query_search.c:597
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Procurando %s (%d / %d)..."
 
-#: src/query_search.c:675 src/summaryview.c:2191
+#: src/query_search.c:678 src/summaryview.c:2191
 msgid "(No Date)"
 msgstr "(Sem data)"
 
-#: src/query_search.c:869
+#: src/query_search.c:872
 msgid "Save as search folder"
 msgstr "Salvar como pasta de busca"
 
-#: src/query_search.c:890
+#: src/query_search.c:893
 msgid "Location:"
 msgstr "Local:"
 
-#: src/query_search.c:905
+#: src/query_search.c:908
 msgid "Folder name:"
 msgstr "Nome da pasta:"
 
@@ -6564,11 +6558,11 @@ msgstr "Possuem anexo"
 
 #: src/summaryview.c:556
 msgid "Within 1 day"
-msgstr ""
+msgstr "Dentro de 1 dia"
 
 #: src/summaryview.c:557
 msgid "Recent 5 days"
-msgstr ""
+msgstr "Últimos 5 dias"
 
 #: src/summaryview.c:566
 msgid "Search:"
@@ -6813,7 +6807,7 @@ msgstr "Criando visualização do texto...\n"
 
 #: src/textview.c:498
 msgid "This message is encrypted, but its decryption failed.\n"
-msgstr ""
+msgstr "Esta mensagem está encriptada, mas a decriptação falhou.\n"
 
 #: src/textview.c:832
 msgid "This message can't be displayed.\n"
