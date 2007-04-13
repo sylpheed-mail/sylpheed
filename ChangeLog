@@ -1,3 +1,12 @@
+2007-04-13
+
+	* libsylph/utils.c: file_exist(): use g_file_test() if allow_fifo is
+	  FALSE (optimization in win32).
+	  rename_force(): win32: don't use workaround in recent version of GLib
+	  since its g_rename() now atomically overwrites the destination file.
+	  move_file(): use is_file_entry_exist() instead of is_file_exist() in
+	  non-overwrite mode.
+
 2007-04-12
 
 	* version 2.4.0beta8

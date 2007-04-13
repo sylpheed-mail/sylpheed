@@ -2179,18 +2179,21 @@ off_t get_left_file_size(FILE *fp)
 
 gboolean file_exist(const gchar *file, gboolean allow_fifo)
 {
-	struct stat s;
-
 	if (file == NULL)
 		return FALSE;
 
-	if (g_stat(file, &s) < 0) {
-		if (ENOENT != errno) FILE_OP_ERROR(file, "stat");
-		return FALSE;
-	}
+	if (allow_fifo) {
+		struct stat s;
 
-	if (S_ISREG(s.st_mode) || (allow_fifo && S_ISFIFO(s.st_mode)))
-		return TRUE;
+		if (g_stat(file, &s) < 0) {
+			if (ENOENT != errno) FILE_OP_ERROR(file, "stat");
+			return FALSE;
+		}
+		if (S_ISREG(s.st_mode) || S_ISFIFO(s.st_mode))
+			return TRUE;
+	} else {
+		return g_file_test(file, G_FILE_TEST_IS_REGULAR);
+	}
 
 	return FALSE;
 }
@@ -2552,7 +2555,7 @@ leave:
 
 gint rename_force(const gchar *oldpath, const gchar *newpath)
 {
-#ifndef G_OS_UNIX
+#if !defined(G_OS_UNIX) && !GLIB_CHECK_VERSION(2, 9, 1)
 	if (!is_file_entry_exist(oldpath)) {
 		errno = ENOENT;
 		return -1;
@@ -2682,7 +2685,7 @@ gint copy_dir(const gchar *src, const gchar *dest)
 
 gint move_file(const gchar *src, const gchar *dest, gboolean overwrite)
 {
-	if (overwrite == FALSE && is_file_exist(dest)) {
+	if (overwrite == FALSE && is_file_entry_exist(dest)) {
 		g_warning("move_file(): file %s already exists.", dest);
 		return -1;
 	}

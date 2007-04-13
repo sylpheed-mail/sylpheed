@@ -1,3 +1,13 @@
+2007-04-13
+
+	* libsylph/utils.c: file_exist(): allow_fifo が FALSE の場合は
+	  g_file_test() を使用(win32 の最適化)。
+	  rename_force(): win32: 最近のバージョンの GLib では g_rename() は
+	  アトミックに移動先ファイルを上書きするため、 workaround を行わない
+	  ようにした。
+	  move_file(): 非上書きモードでは is_file_exist() ではなく
+	  is_file_entry_exist() を使用するようにした。
+
 2007-04-12
 
 	* version 2.4.0beta8
