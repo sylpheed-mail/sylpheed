@@ -1,5 +1,9 @@
 2007-04-13
 
+	* libsylph/utils.c: copy_file(): read() / write() を使用して最適化。
+
+2007-04-13
+
 	* libsylph/utils.c: file_exist(): allow_fifo が FALSE の場合は
 	  g_file_test() を使用(win32 の最適化)。
 	  rename_force(): win32: 最近のバージョンの GLib では g_rename() は

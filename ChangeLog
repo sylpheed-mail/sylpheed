@@ -1,5 +1,9 @@
 2007-04-13
 
+	* libsylph/utils.c: copy_file(): optimized using read() / write().
+
+2007-04-13
+
 	* libsylph/utils.c: file_exist(): use g_file_test() if allow_fifo is
 	  FALSE (optimization in win32).
 	  rename_force(): win32: don't use workaround in recent version of GLib

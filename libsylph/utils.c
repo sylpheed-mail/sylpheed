@@ -2570,29 +2570,37 @@ gint rename_force(const gchar *oldpath, const gchar *newpath)
 
 gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 {
-	FILE *src_fp, *dest_fp;
+	gint srcfd, destfd;
 	gint n_read;
-	gchar buf[BUFSIZ];
+	gchar buf[BUFFSIZE];
 	gchar *dest_bak = NULL;
 	gboolean err = FALSE;
 
-	if ((src_fp = g_fopen(src, "rb")) == NULL) {
-		FILE_OP_ERROR(src, "fopen");
+#ifdef G_OS_WIN32
+	if ((srcfd = g_open(src, O_RDONLY | O_BINARY, 0600)) < 0) {
+#else
+	if ((srcfd = g_open(src, O_RDONLY, 0600)) < 0) {
+#endif
+		FILE_OP_ERROR(src, "open");
 		return -1;
 	}
 	if (is_file_exist(dest)) {
 		dest_bak = g_strconcat(dest, ".bak", NULL);
 		if (rename_force(dest, dest_bak) < 0) {
 			FILE_OP_ERROR(dest, "rename");
-			fclose(src_fp);
+			close(srcfd);
 			g_free(dest_bak);
 			return -1;
 		}
 	}
 
-	if ((dest_fp = g_fopen(dest, "wb")) == NULL) {
-		FILE_OP_ERROR(dest, "fopen");
-		fclose(src_fp);
+#ifdef G_OS_WIN32
+	if ((destfd = g_open(dest, O_WRONLY | O_CREAT | O_BINARY, 0600)) < 0) {
+#else
+	if ((destfd = g_open(dest, O_WRONLY | O_CREAT, 0600)) < 0) {
+#endif
+		FILE_OP_ERROR(dest, "open");
+		close(srcfd);
 		if (dest_bak) {
 			if (rename_force(dest_bak, dest) < 0)
 				FILE_OP_ERROR(dest_bak, "rename");
@@ -2601,37 +2609,33 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 		return -1;
 	}
 
-	if (change_file_mode_rw(dest_fp, dest) < 0) {
-		FILE_OP_ERROR(dest, "chmod");
-		g_warning(_("can't change file mode\n"));
-	}
+	while ((n_read = read(srcfd, buf, sizeof(buf))) > 0) {
+		gchar *p = buf;
+		const gchar *endp = buf + n_read;
+		gint n_write;
 
-	while ((n_read = fread(buf, sizeof(gchar), sizeof(buf), src_fp)) > 0) {
-		if (n_read < sizeof(buf) && ferror(src_fp))
-			break;
-		if (fwrite(buf, n_read, 1, dest_fp) < 1) {
-			g_warning(_("writing to %s failed.\n"), dest);
-			fclose(dest_fp);
-			fclose(src_fp);
-			g_unlink(dest);
-			if (dest_bak) {
-				if (rename_force(dest_bak, dest) < 0)
-					FILE_OP_ERROR(dest_bak, "rename");
-				g_free(dest_bak);
+		while (p < endp) {
+			if ((n_write = write(destfd, p, endp - p)) < 0) {
+				g_warning(_("writing to %s failed.\n"), dest);
+				close(destfd);
+				close(srcfd);
+				g_unlink(dest);
+				if (dest_bak) {
+					if (rename_force(dest_bak, dest) < 0)
+						FILE_OP_ERROR(dest_bak, "rename");
+					g_free(dest_bak);
+				}
+				return -1;
 			}
-			return -1;
+			p += n_write;
 		}
 	}
 
-	if (ferror(src_fp)) {
-		FILE_OP_ERROR(src, "fread");
+	if (close(destfd) < 0) {
+		FILE_OP_ERROR(dest, "close");
 		err = TRUE;
 	}
-	fclose(src_fp);
-	if (fclose(dest_fp) == EOF) {
-		FILE_OP_ERROR(dest, "fclose");
-		err = TRUE;
-	}
+	close(srcfd);
 
 	if (err) {
 		g_unlink(dest);
