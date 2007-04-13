@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -554,7 +554,7 @@ SummaryView *summary_create(void)
 	COND_MENUITEM_ADD(_("Have attachment"), QS_MIME);
 	MENUITEM_ADD(filter_menu, menuitem, NULL, 0);
 	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
-	COND_MENUITEM_ADD(_("Recent 5 days"), QS_RECENT5);
+	COND_MENUITEM_ADD(_("Last 5 days"), QS_RECENT5);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(filter_optmenu), filter_menu);
 
 #undef COND_MENUITEM_ADD
