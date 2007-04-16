@@ -93,6 +93,8 @@ PangoFontDescription *gtkut_get_default_font_desc
 					(void);
 void gtkut_widget_set_small_font_size	(GtkWidget	*widget);
 
+gboolean gtkut_font_can_load		(const gchar	*str);
+
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);
 

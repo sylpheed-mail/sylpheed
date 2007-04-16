@@ -42,6 +42,10 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+#ifdef G_OS_WIN32
+#  include <pango/pangowin32.h>
+#endif
+
 #include "gtkutils.h"
 #include "utils.h"
 #include "codeconv.h"
@@ -104,6 +108,32 @@ void gtkut_widget_set_small_font_size(GtkWidget *widget)
 	pango_font_description_set_size(font_desc, size * PANGO_SCALE_SMALL);
 	gtk_widget_modify_font(widget, font_desc);
 	pango_font_description_free(font_desc);
+}
+
+gboolean gtkut_font_can_load(const gchar *str)
+{
+#ifdef G_OS_WIN32
+	PangoFontDescription *desc;
+	PangoContext *context;
+	PangoFont *font;
+	gboolean can_load = FALSE;
+
+	desc = pango_font_description_from_string(str);
+	if (desc) {
+		context = pango_win32_get_context();
+		font = pango_context_load_font(context, desc);
+		if (font) {
+			can_load = TRUE;
+			g_object_unref(font);
+		}
+		g_object_unref(context);
+		pango_font_description_free(desc);
+	}
+
+	return can_load;
+#else
+	return FALSE;
+#endif
 }
 
 void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)

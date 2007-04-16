@@ -426,15 +426,6 @@ void prefs_common_read_config(void)
 
 	prefs_read_config(param, "Common", path, NULL);
 
-#ifdef G_OS_WIN32
-	if (!is_file_exist(path)) {
-		if (conv_is_ja_locale()) {
-			g_free(prefs_common.textfont);
-			prefs_common.textfont = g_strdup("MS Gothic 12");
-		}
-	}
-#endif
-
 	g_free(path);
 
 	prefs_common.online_mode = TRUE;
