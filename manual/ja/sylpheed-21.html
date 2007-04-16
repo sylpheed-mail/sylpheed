@@ -22,12 +22,12 @@
 <H3>Sylpheed オフィシャルWebサイト</H3>
 
 <P>Sylpheed オフィシャルWebサイトの場所は、
-<A HREF="http://sylpheed.good-day.net/">http://sylpheed.good-day.net/</A>
+<A HREF="http://sylpheed.sraoss.jp/">http://sylpheed.sraoss.jp/</A>
 です。</P>
 <H3>Sylpheed 最新版入手先</H3>
 
 <P>
-<A HREF="http://sylpheed.good-day.net/sylpheed/">http://sylpheed.good-day.net/sylpheed/</A>から入手できます。</P>
+<A HREF="http://sylpheed.sraoss.jp/sylpheed/">http://sylpheed.sraoss.jp/sylpheed/</A>から入手できます。</P>
 
 <H3>rpmの入手先</H3>
 
@@ -37,20 +37,6 @@
 rpmがあります。
 それぞれのDistribution用のものが用意されている場合でこれを利用してもほとんど問題ないでしょう。
 多分最新です。</P>
-
-<H3>nightly build rpm</H3>
-
-<P>
-<A HREF="http://sylpheed.good-day.net/sylpheed/">http://sylpheed.good-day.net/sylpheed/</A>より
-cvs repositryから毎日0:00に取り出したものを上記rpmと同条件で
-自動的にビルドしたものを入手できます。
-ただし、cvs repositryから取り出したもので、
-確認もしてないのでちゃんと動作するとは限りません。</P>
-
-<H3>Debian Packageの入手先</H3>
-
-<P>woody以降にはnon-USセクションに入っています。</P>
-<H3>FreeBSD portsの入手先</H3>
 
 <H2><A NAME="Sylpheed-ML"></A> <A NAME="ss21.2">21.2</A> <A HREF="sylpheed.html#toc21.2">メーリングリスト</A>
 </H2>
@@ -76,41 +62,34 @@ cvs repositryから毎日0:00に取り出したものを上記rpmと同条件で
 <P>過去ログも上記のページから参照できます。
 以前の過去ログは
 <A HREF="http://www.tmtm.org/sylpheed/ml/">http://www.tmtm.org/sylpheed/ml/</A>から入手できます。</P>
-<H2><A NAME="ss21.3">21.3</A> <A HREF="sylpheed.html#toc21.3">Anonymous CVS</A>
+<H2><A NAME="ss21.3">21.3</A> <A HREF="sylpheed.html#toc21.3">Anonymous SVN</A>
 </H2>
 
-<P>Sylpheedの開発にはCVSが利用されています。
-CVSの説明に関しては、
-<A HREF="http://kahori.com/j-cvsbook/">http://kahori.com/j-cvsbook/</A>などのサイトや書籍を参考にしてください。</P>
-<P>CVSから最新のSylpheedを入手するには,
-環境変数CVSROOTに:pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheedをセットします。
-(cvsの-dオプションで直接指定する場合は必要ありません)
+<P>Sylpheedの開発はSVNを利用して行われています。
+SVNの説明に関しては、
+<A HREF="http://subversion.bluegate.org/doc/book.html">http://subversion.bluegate.org/doc/book.html</A>などのサイトや書籍を参考にしてください。</P>
+<P>SVNから最新のSylpheedを入手するには、subversion をインストールし、svn://sylpheed.sraoss.jp/sylpheed にアクセスしてください。
 <PRE>
-csh系:
-        setenv CVSROOT :pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed
-sh系(bashなど):
-        export CVSROOT=':pserver:anonymous@sylpheed.good-day.net:/cvsroot/sylpheed'
+$ mkdir svn
+$ cd svn
+$ svn checkout svn://sylpheed.sraoss.jp/sylpheed/trunk sylpheed
 </PRE>
+
+でカレントディレクトリ以下にtrunkのソースツリーが作成されます。</P>
+<P>リポジトリの sylpheed ディレクトリ以下は次のように分かれています。
+<UL>
+<LI>trunk/ メインのツリー</LI>
+<LI>branches/ 各種実験用ブランチ</LI>
+<LI>tags/ リリースタグを付けたブランチ</LI>
+</UL>
 </P>
-<P>その後、
+<P>最新のソースツリーにアップデートするには、対象となるディレクトリで
 <PRE>
-$ cvs login
-CVS password: [enter]
-</PRE>
-
-でログインします。passwordは無しです。</P>
-<P>適当なディレクトリに移動し、
-<PRE>
-$ cvs -z3 checkout sylpheed
-</PRE>
-
-でカレントディレクトリ以下にsylpheedというソースツリーが作成されます。</P>
-<P>最新のソースツリーにアップデートするには、
-<PRE>
-$ cvs -z3 update
+$ svn update
 </PRE>
 
 を実行してください。</P>
+<P>Subversion ツリーには自動生成されるファイルは入っていないので、そのままでは ./configure できません。コンパイルするには、通常必要なものの他に autoconf, automake, libtool, gettext などがインストールされている必要があります。インストールされていれば、 ./autogen.sh で必要なファイルが自動生成されます。</P>
 
 <HR>
 <A HREF="sylpheed-22.html">次のページ</A>
