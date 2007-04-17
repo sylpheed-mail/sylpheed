@@ -681,22 +681,43 @@ ItemGroup *addrcache_remove_group( AddressCache *cache, ItemGroup *group ) {
 }
 
 /*
-* Remove person's email address from all groups in folder.
+* Remove person's email addresses from all groups.
 */
-static void addrcache_foldergrp_rem_person( ItemFolder *folder, ItemPerson *person ) {
-	GList *nodeGrp = folder->listGroup;
+static void addrcache_allgrp_rem_person_vis( gpointer key, gpointer value, gpointer data ) {
+	AddrItemObject *obj = ( AddrItemObject * ) value;
+	ItemPerson *person = ( ItemPerson * ) data;
 
-	while( nodeGrp ) {
-		ItemGroup *group = nodeGrp->data;
+	if ( !person ) return;
+
+	if( ADDRITEM_TYPE(obj) == ITEMTYPE_GROUP ) {
+		ItemGroup *group = ( ItemGroup * ) obj;
 		if( group ) {
 			/* Remove each email address that belongs to the person from the list */
 			GList *node = person->listEMail;
+			debug_print("removing email in person %p (%s) from group %p (%s)\n", person, ADDRITEM_NAME(person), group, ADDRITEM_NAME(group));
 			while( node ) {
 				group->listEMail = g_list_remove( group->listEMail, node->data );
 				node = g_list_next( node );
 			}
 		}
-		nodeGrp = g_list_next( nodeGrp );
+	}
+}
+
+/*
+* Remove email from group item hash table visitor function.
+*/
+static void addrcache_allgrp_rem_email_vis( gpointer key, gpointer value, gpointer data ) {
+	AddrItemObject *obj = ( AddrItemObject * ) value;
+	ItemEMail *email = ( ItemEMail * ) data;
+
+	if( !email ) return;
+	if( ADDRITEM_TYPE(obj) == ITEMTYPE_GROUP ) {
+		ItemGroup *group = ( ItemGroup * ) value;
+		if( group ) {
+			debug_print("removing email %p (%s) from group %p (%s)\n", email, email->address, group, ADDRITEM_NAME(group));
+			/* Remove each email address that belongs to the person from the list */
+			group->listEMail = g_list_remove( group->listEMail, email );
+		}
 	}
 }
 
@@ -716,6 +737,9 @@ ItemPerson *addrcache_remove_person_id( AddressCache *cache, const gchar *uid ) 
 	obj = ( AddrItemObject * ) g_hash_table_lookup( cache->itemHash, uid );
 	if( obj ) {
 		if( ADDRITEM_TYPE(obj) == ITEMTYPE_PERSON ) {
+			ItemEMail *email;
+			GList *list;
+
 			/* Remove person's email addresses from all groups where */
 			/* referenced and from hash table. */
 			ItemPerson *person = ( ItemPerson * ) obj;
@@ -723,7 +747,7 @@ ItemPerson *addrcache_remove_person_id( AddressCache *cache, const gchar *uid ) 
 			if( ! parent ) parent = cache->rootFolder;
 			/* Remove emails from groups, remove from parent's list */
 			/* and hash table */
-			addrcache_foldergrp_rem_person( parent, person );
+			g_hash_table_foreach( cache->itemHash, addrcache_allgrp_rem_person_vis, person );
 			parent->listPerson = g_list_remove( parent->listPerson, person );
 			g_hash_table_remove( cache->itemHash, uid );
 			return person;
@@ -748,11 +772,14 @@ ItemPerson *addrcache_remove_person( AddressCache *cache, ItemPerson *person ) {
 		obj = ( AddrItemObject * ) g_hash_table_lookup( cache->itemHash, uid );
 		if( obj ) {
 			if( ADDRITEM_TYPE(obj) == ITEMTYPE_PERSON ) {
+				ItemEMail *email;
+				GList *list;
+
 				/* Remove person's email addresses from all groups where */
 				/* referenced and from hash table. */
 				ItemFolder *parent = ( ItemFolder * ) ADDRITEM_PARENT(person);
 				if( ! parent ) parent = cache->rootFolder;
-				addrcache_foldergrp_rem_person( parent, person );
+				g_hash_table_foreach( cache->itemHash, addrcache_allgrp_rem_person_vis, person );
 				parent->listPerson = g_list_remove( parent->listPerson, person );
 				g_hash_table_remove( cache->itemHash, uid );
 				return person;
@@ -760,23 +787,6 @@ ItemPerson *addrcache_remove_person( AddressCache *cache, ItemPerson *person ) {
 		}
 	}
 	return NULL;
-}
-
-/*
-* Remove email from group item hash table visitor function.
-*/
-static void addrcache_allgrp_rem_email_vis( gpointer key, gpointer value, gpointer data ) {
-	AddrItemObject *obj = ( AddrItemObject * ) value;
-	ItemEMail *email = ( ItemEMail * ) data;
-
-	if( !email ) return;
-	if( ADDRITEM_TYPE(obj) == ITEMTYPE_GROUP ) {
-		ItemGroup *group = ( ItemGroup * ) value;
-		if( group ) {
-			/* Remove each email address that belongs to the person from the list */
-			group->listEMail = g_list_remove( group->listEMail, email );
-		}
-	}
 }
 
 /*

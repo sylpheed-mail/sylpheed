@@ -2053,6 +2053,10 @@ static void addressbook_load_group( GtkCTree *clist, ItemGroup *itemGroup ) {
 		if( ! email ) continue;
 
 		person = ( ItemPerson * ) ADDRITEM_PARENT(email);
+		if( ! person ) {
+			g_warning("email %p (%s) don't have parent\n", email, email->address);
+			continue;
+		}
 		str = addressbook_format_item_clist( person, email );
 		if( str ) {
 			text[COL_NAME] = str;

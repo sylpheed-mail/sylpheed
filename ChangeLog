@@ -1,5 +1,11 @@
 2007-04-17
 
+	* src/addrcache.c
+	  src/addressbook.c: fixed a crash bug that if a person was removed
+	  and its e-mail address was referenced by a group in another folder.
+
+2007-04-17
+
 	* libsylph/session.[ch]: remove idle callback on close, and check
 	  GSource in the callback (possibly fixes crashes on cancellation).
 
