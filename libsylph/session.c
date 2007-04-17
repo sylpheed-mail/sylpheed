@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -111,6 +111,7 @@ void session_init(Session *session)
 	session->timeout_tag = 0;
 	session->timeout_interval = 0;
 
+	session->idle_tag = 0;
 	session->ping_tag = 0;
 
 	session->data = NULL;
@@ -343,6 +344,11 @@ static gint session_close(Session *session)
 
 	session_set_timeout(session, 0);
 
+	if (session->idle_tag > 0) {
+		g_source_remove(session->idle_tag);
+		session->idle_tag = 0;
+	}
+
 #ifdef G_OS_WIN32
 	if (session->ping_tag > 0) {
 		g_source_remove(session->ping_tag);
@@ -418,7 +424,8 @@ gint session_recv_msg(Session *session)
 	session->state = SESSION_RECV;
 
 	if (session->read_buf_len > 0)
-		g_idle_add(session_recv_msg_idle_cb, session);
+		session->idle_tag = g_idle_add(session_recv_msg_idle_cb,
+					       session);
 	else
 		session->io_tag = sock_add_watch(session->sock, G_IO_IN,
 						 session_read_msg_cb, session);
@@ -431,6 +438,12 @@ static gboolean session_recv_msg_idle_cb(gpointer data)
 	Session *session = SESSION(data);
 	gboolean ret;
 
+#if GLIB_CHECK_VERSION(2, 12, 0)
+	if (g_source_is_destroyed(g_main_current_source()))
+		return FALSE;
+#endif
+
+	session->idle_tag = 0;
 	ret = session_read_msg_cb(session->sock, G_IO_IN, session);
 
 	if (ret == TRUE)
@@ -478,7 +491,8 @@ gint session_recv_data(Session *session, guint size, const gchar *terminator)
 	g_get_current_time(&session->tv_prev);
 
 	if (session->read_buf_len > 0)
-		g_idle_add(session_recv_data_idle_cb, session);
+		session->idle_tag = g_idle_add(session_recv_data_idle_cb,
+					       session);
 	else
 		session->io_tag = sock_add_watch(session->sock, G_IO_IN,
 						 session_read_data_cb, session);
@@ -491,6 +505,12 @@ static gboolean session_recv_data_idle_cb(gpointer data)
 	Session *session = SESSION(data);
 	gboolean ret;
 
+#if GLIB_CHECK_VERSION(2, 12, 0)
+	if (g_source_is_destroyed(g_main_current_source()))
+		return FALSE;
+#endif
+
+	session->idle_tag = 0;
 	ret = session_read_data_cb(session->sock, G_IO_IN, session);
 
 	if (ret == TRUE)
@@ -519,7 +539,8 @@ gint session_recv_data_as_file(Session *session, guint size,
 	}
 
 	if (session->read_buf_len > 0)
-		g_idle_add(session_recv_data_as_file_idle_cb, session);
+		session->idle_tag =
+			g_idle_add(session_recv_data_as_file_idle_cb, session);
 	else
 		session->io_tag = sock_add_watch(session->sock, G_IO_IN,
 						 session_read_data_as_file_cb,
@@ -533,6 +554,12 @@ static gboolean session_recv_data_as_file_idle_cb(gpointer data)
 	Session *session = SESSION(data);
 	gboolean ret;
 
+#if GLIB_CHECK_VERSION(2, 12, 0)
+	if (g_source_is_destroyed(g_main_current_source()))
+		return FALSE;
+#endif
+
+	session->idle_tag = 0;
 	ret = session_read_data_as_file_cb(session->sock, G_IO_IN, session);
 
 	if (ret == TRUE)
