@@ -4139,7 +4139,7 @@ void log_print(const gchar *format, ...)
 	g_vsnprintf(buf + TIME_LEN, BUFFSIZE, format, args);
 	va_end(args);
 
-	if (debug_mode) fputs(buf, stdout);
+	if (debug_mode) g_print("%s", buf);
 	log_print_ui_func(buf);
 	if (log_fp) {
 		fputs(buf, log_fp);

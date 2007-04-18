@@ -50,7 +50,8 @@ gchar *recv_bytes(SockInfo *sock, glong size)
 	do {
 		gint read_count;
 
-		read_count = sock_read(sock, buf + count, size - count);
+		read_count = sock_read(sock, buf + count,
+				       MIN(BUFFSIZE, size - count));
 		if (read_count <= 0) {
 			g_free(buf);
 			return NULL;

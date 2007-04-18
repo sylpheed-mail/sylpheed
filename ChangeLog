@@ -1,6 +1,14 @@
 2007-04-18
 
-	* src/printing.c: message_count_page(): a workaround for the crach
+	* libsylph/recv.c: recv_bytes(): restrict the buffer size up to
+	  BUFFSIZE (fixes crashes when trying to fetch >64KB messages on IMAP4
+	  via FreeCap on Win32).
+	* libsylph/utils.c: log_print(): use g_print() instead of fputs()
+	  when output to stdout to display UTF-8 correctly.
+
+2007-04-18
+
+	* src/printing.c: message_count_page(): a workaround for the crash
 	  which seems to occur on Fedora Core.
 
 2007-04-17
