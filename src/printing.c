@@ -205,6 +205,10 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 
 	pango_layout_set_text(layout, "Test", -1);
 	pango_layout_get_size(layout, NULL, &layout_h);
+	if (layout_h <= 0) {
+		g_warning("invalid layout_h (%d) ! falling back to default height (%d)\n", layout_h, 12 * PANGO_SCALE);
+		layout_h = 12 * PANGO_SCALE;
+	}
 	line_h = (gdouble)layout_h / PANGO_SCALE + SPACING;
 	print_data->line_h = line_h;
 	lines_per_page = (height - line_h) / line_h;
