@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 15:39+0900\n"
+"POT-Creation-Date: 2007-04-19 13:44+0900\n"
 "PO-Revision-Date: 2006-12-02 13:12+0100\n"
 "Last-Translator: Ricardo Mones <ricardo@mones.org>\n"
 "Language-Team: Ricardo Mones <ricardo@mones.org>\n"
@@ -442,46 +442,51 @@ msgstr "No se encontró en el saludo la marca temporal APOP necesaria\n"
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Error de sintaxis en la marca temporal del saludo\n"
 
-#: libsylph/pop.c:192 libsylph/pop.c:219
+#: libsylph/pop.c:170
+#, fuzzy
+msgid "Invalid timestamp in greeting\n"
+msgstr "No se encontró en el saludo la marca temporal APOP necesaria\n"
+
+#: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
 msgstr "Error del protocolo POP3\n"
 
-#: libsylph/pop.c:264
+#: libsylph/pop.c:270
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "respuesta UIDL no válida: %s\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Borrando el mensaje caducado %d\n"
 
-#: libsylph/pop.c:634
+#: libsylph/pop.c:640
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Ignorando mensaje %d (%d bytes)\n"
 
-#: libsylph/pop.c:667
+#: libsylph/pop.c:673
 msgid "mailbox is locked\n"
 msgstr "el buzón está bloqueado\n"
 
-#: libsylph/pop.c:670
+#: libsylph/pop.c:676
 msgid "session timeout\n"
 msgstr "tiempo de espera agotado para la sesión\n"
 
-#: libsylph/pop.c:676 libsylph/smtp.c:561
+#: libsylph/pop.c:682 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "no puedo iniciar la sesión TLS\n"
 
-#: libsylph/pop.c:683 libsylph/smtp.c:496
+#: libsylph/pop.c:689 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "hubo algún error en la autentificación\n"
 
-#: libsylph/pop.c:688
+#: libsylph/pop.c:694
 msgid "command not supported\n"
 msgstr "mandato no soportado\n"
 
-#: libsylph/pop.c:692
+#: libsylph/pop.c:698
 msgid "error occurred on POP3 session\n"
 msgstr "hubo algún error en la sesión POP3\n"
 
@@ -1776,48 +1781,48 @@ msgstr ""
 "El editor externo aún esta activo.\n"
 "¿Forzar la finalización del proceso (pid: %d)?\n"
 
-#: src/compose.c:6074 src/mainwindow.c:2856
+#: src/compose.c:6075 src/mainwindow.c:2857
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6190 src/compose.c:6195 src/compose.c:6201
+#: src/compose.c:6191 src/compose.c:6196 src/compose.c:6202
 msgid "Can't queue the message."
 msgstr "El mensaje no se puede poner en la cola."
 
-#: src/compose.c:6292
+#: src/compose.c:6293
 msgid "Select files"
 msgstr "Seleccionar ficheros"
 
-#: src/compose.c:6315
+#: src/compose.c:6316
 msgid "Select file"
 msgstr "Seleccionar fichero"
 
-#: src/compose.c:6350
+#: src/compose.c:6351
 msgid "Save message"
 msgstr "Guardar mensaje"
 
-#: src/compose.c:6351
+#: src/compose.c:6352
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Este mensaje ha sido modificado. ¿Guardarlo en la carpeta Borradores?"
 
-#: src/compose.c:6353
+#: src/compose.c:6354
 msgid "Close _without saving"
 msgstr "Cerrar _sin guardar"
 
-#: src/compose.c:6395
+#: src/compose.c:6396
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "¿Quiere aplicar la plantilla «%s»?"
 
-#: src/compose.c:6397
+#: src/compose.c:6398
 msgid "Apply template"
 msgstr "Aplicar plantilla"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Replace"
 msgstr "_Reemplazar"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Insert"
 msgstr "_Insertar"
 
@@ -2273,12 +2278,12 @@ msgstr "Estableciendo la información de la carpeta...\n"
 msgid "Setting folder info..."
 msgstr "Estableciendo la información de la carpeta..."
 
-#: src/folderview.c:882 src/mainwindow.c:3855 src/setup.c:80
+#: src/folderview.c:882 src/mainwindow.c:3856 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Revisando carpeta %s%c%s ..."
 
-#: src/folderview.c:886 src/mainwindow.c:3860 src/setup.c:85
+#: src/folderview.c:886 src/mainwindow.c:3861 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Revisando carpeta %s ..."
@@ -3710,54 +3715,54 @@ msgstr "/Reen_viar como adjunto"
 msgid "/Redirec_t"
 msgstr "/Red_irigir"
 
-#: src/mainwindow.c:2849
+#: src/mainwindow.c:2850
 msgid "Icon _and text"
 msgstr ""
 
-#: src/mainwindow.c:2850
+#: src/mainwindow.c:2851
 #, fuzzy
 msgid "Text at the _right of icon"
 msgstr "/_Ver/Mostrar u o_cultar/_Herramientas/_Iconos"
 
-#: src/mainwindow.c:2852
+#: src/mainwindow.c:2853
 msgid "_Icon"
 msgstr ""
 
-#: src/mainwindow.c:2853
+#: src/mainwindow.c:2854
 #, fuzzy
 msgid "_Text"
 msgstr "Texto"
 
-#: src/mainwindow.c:2854
+#: src/mainwindow.c:2855
 #, fuzzy
 msgid "_None"
 msgstr "Ninguno"
 
-#: src/mainwindow.c:2884
+#: src/mainwindow.c:2885
 msgid "You are offline. Click the icon to go online."
 msgstr "Esta desconectado. Haga click en el icono para conectar."
 
-#: src/mainwindow.c:2895
+#: src/mainwindow.c:2896
 msgid "You are online. Click the icon to go offline."
 msgstr "Esta conectado. Haga click en el icono para desconectar."
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit"
 msgstr "Salir"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit this program?"
 msgstr "¿Salir del programa?"
 
-#: src/mainwindow.c:3773
+#: src/mainwindow.c:3774
 msgid "Command line options"
 msgstr "Opciones de línea de ordenes"
 
-#: src/mainwindow.c:3786
+#: src/mainwindow.c:3787
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "Uso: sylpheed [OPCIÓN]..."
 
-#: src/mainwindow.c:3794
+#: src/mainwindow.c:3795
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3785,7 +3790,7 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"

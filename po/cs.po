@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 15:39+0900\n"
-"PO-Revision-Date: 2007-04-03 01:05+0200\n"
+"POT-Creation-Date: 2007-04-19 13:44+0900\n"
+"PO-Revision-Date: 2007-04-18 22:01+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -243,12 +243,12 @@ msgid "can't open temporary file\n"
 msgstr "nelze otevřít dočasný soubor\n"
 
 #: libsylph/mbox.c:171
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "unescaped From found:\n"
 "%s"
 msgstr ""
-"nalezeno nezměněné záhlaví From:\n"
+"nalezeno nekódované záhlaví From:\n"
 "%s"
 
 #: libsylph/mbox.c:273
@@ -311,9 +311,9 @@ msgid "the src folder is identical to the dest.\n"
 msgstr "zdrojová složka je stejná jako cílová.\n"
 
 #: libsylph/mh.c:671
-#, fuzzy, c-format
+#, c-format
 msgid "Copying message %s/%d to %s ...\n"
-msgstr "Kopírování zprávy %s%c%d do %s...\n"
+msgstr "Kopírování zprávy %s/%d do %s...\n"
 
 #: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:149
 #, c-format
@@ -447,46 +447,51 @@ msgstr "V pozdravu nebyla nalezena časová značka APOP\n"
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Chyba syntaxe časové značky při pozdravu\n"
 
-#: libsylph/pop.c:192 libsylph/pop.c:219
+#: libsylph/pop.c:170
+#, fuzzy
+msgid "Invalid timestamp in greeting\n"
+msgstr "V pozdravu nebyla nalezena časová značka APOP\n"
+
+#: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
 msgstr "Chyba protokolu POP3\n"
 
-#: libsylph/pop.c:264
+#: libsylph/pop.c:270
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "neplatná odpověď UIDL: %s\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Vymazávání staré zprávy %d\n"
 
-#: libsylph/pop.c:634
+#: libsylph/pop.c:640
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Přeskakuje se zpráva %d (bajtů %d)\n"
 
-#: libsylph/pop.c:667
+#: libsylph/pop.c:673
 msgid "mailbox is locked\n"
 msgstr "poštovní schránka je zamčena\n"
 
-#: libsylph/pop.c:670
+#: libsylph/pop.c:676
 msgid "session timeout\n"
 msgstr "vypršel čas relace\n"
 
-#: libsylph/pop.c:676 libsylph/smtp.c:561
+#: libsylph/pop.c:682 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "nelze spustit relaci TLS\n"
 
-#: libsylph/pop.c:683 libsylph/smtp.c:496
+#: libsylph/pop.c:689 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "vyskytla se chyba v autentizaci\n"
 
-#: libsylph/pop.c:688
+#: libsylph/pop.c:694
 msgid "command not supported\n"
 msgstr "příkaz není podporován\n"
 
-#: libsylph/pop.c:692
+#: libsylph/pop.c:698
 msgid "error occurred on POP3 session\n"
 msgstr "v relaci POP3 se vyskytla chyba\n"
 
@@ -927,9 +932,8 @@ msgid "/_Tools/Import _LDIF file"
 msgstr "/_Nástroje/Importovat soubor _LDIF"
 
 #: src/addressbook.c:381
-#, fuzzy
 msgid "/_Tools/Import _CSV file"
-msgstr "/_Nástroje/Importovat soubor _LDIF"
+msgstr "/_Nástroje/Importovat soubor _CSV"
 
 #: src/addressbook.c:383 src/compose.c:702 src/mainwindow.c:852
 #: src/messageview.c:302
@@ -1107,17 +1111,14 @@ msgstr ""
 "a vytvořit nové soubory adresáře."
 
 #: src/addressbook.c:2500
-#, fuzzy
 msgid "Address book conversion error"
 msgstr "Chyba při konverzi adresáře"
 
 #: src/addressbook.c:2504
-#, fuzzy
 msgid "Address book conversion"
 msgstr "Konverze adresáře"
 
 #: src/addressbook.c:2539
-#, fuzzy
 msgid "Address Book Error"
 msgstr "Chyba v adresáři"
 
@@ -1147,12 +1148,10 @@ msgid ""
 msgstr "Nelze provést konverzi adresáře a vytvořit nové soubory adresáře."
 
 #: src/addressbook.c:2646
-#, fuzzy
 msgid "Address Book Conversion Error"
 msgstr "Chyba při konverzi adresáře"
 
 #: src/addressbook.c:2652
-#, fuzzy
 msgid "Address Book Conversion"
 msgstr "Konverze adresáře"
 
@@ -1357,7 +1356,6 @@ msgid "/_View/_Bcc"
 msgstr "/Z_obrazit/S_krytá kopie"
 
 #: src/compose.c:585
-#, fuzzy
 msgid "/_View/_Reply-To"
 msgstr "/Z_obrazit/Odpovědi z_aslat na"
 
@@ -1369,7 +1367,6 @@ msgid "/_View/---"
 msgstr "/Z_obrazit/---"
 
 #: src/compose.c:587
-#, fuzzy
 msgid "/_View/_Followup-To"
 msgstr "/Z_obrazit/Odpovědi _vystavit na"
 
@@ -1774,48 +1771,48 @@ msgstr ""
 "Externí editor stále pracuje.\n"
 "Vynutit přerušení procesu (číslo procesu: %d)?\n"
 
-#: src/compose.c:6074 src/mainwindow.c:2856
+#: src/compose.c:6075 src/mainwindow.c:2857
 msgid "_Customize toolbar..."
 msgstr "_Upravit nástrojovou lištu..."
 
-#: src/compose.c:6190 src/compose.c:6195 src/compose.c:6201
+#: src/compose.c:6191 src/compose.c:6196 src/compose.c:6202
 msgid "Can't queue the message."
 msgstr "Zprávu nelze zařadit."
 
-#: src/compose.c:6292
+#: src/compose.c:6293
 msgid "Select files"
 msgstr "Vybrat soubory"
 
-#: src/compose.c:6315
+#: src/compose.c:6316
 msgid "Select file"
 msgstr "Vybrat soubor"
 
-#: src/compose.c:6350
+#: src/compose.c:6351
 msgid "Save message"
 msgstr "Uložit zprávu"
 
-#: src/compose.c:6351
+#: src/compose.c:6352
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Obsah zprávy se změnil. Uložit do složky konceptů?"
 
-#: src/compose.c:6353
+#: src/compose.c:6354
 msgid "Close _without saving"
 msgstr "Zavřít _bez uložení"
 
-#: src/compose.c:6395
+#: src/compose.c:6396
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Opravdu chcete použít šablonu \"%s\"?"
 
-#: src/compose.c:6397
+#: src/compose.c:6398
 msgid "Apply template"
 msgstr "Přidat šablonu"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Replace"
 msgstr "Nahradit"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Insert"
 msgstr "Vložit"
 
@@ -1906,7 +1903,6 @@ msgid "Could not read file."
 msgstr "Nelze načíst soubor."
 
 #: src/editbook.c:174 src/editbook.c:288
-#, fuzzy
 msgid "Edit Address Book"
 msgstr "Upravit adresář"
 
@@ -1920,7 +1916,6 @@ msgid "File"
 msgstr "Soubor"
 
 #: src/editbook.c:307
-#, fuzzy
 msgid "Add New Address Book"
 msgstr "Přidat nový adresář"
 
@@ -2132,13 +2127,12 @@ msgid "Save as"
 msgstr "Uložit jako"
 
 #: src/filesel.c:160 src/filesel.c:274
-#, fuzzy
 msgid "Overwrite existing file"
-msgstr "Přepsat existující soubor?"
+msgstr "Přepsat existující soubor"
 
 #: src/filesel.c:161 src/filesel.c:275
 msgid "The file already exists. Do you want to replace it?"
-msgstr ""
+msgstr "Soubor již existuje. Chcete ho nahradit?"
 
 #: src/filesel.c:178
 msgid "Select directory"
@@ -2250,7 +2244,7 @@ msgstr "Vytváří se strom složek...\n"
 
 #: src/folderview.c:408
 msgid "New"
-msgstr "Nová"
+msgstr "Nové"
 
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:501
@@ -2270,12 +2264,12 @@ msgstr "Nastavování informace o složce...\n"
 msgid "Setting folder info..."
 msgstr "Nastavování informace o složce..."
 
-#: src/folderview.c:882 src/mainwindow.c:3855 src/setup.c:80
+#: src/folderview.c:882 src/mainwindow.c:3856 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Prohledává se složka %s%c%s ..."
 
-#: src/folderview.c:886 src/mainwindow.c:3860 src/setup.c:85
+#: src/folderview.c:886 src/mainwindow.c:3861 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Prohledává se složka %s ..."
@@ -2476,9 +2470,8 @@ msgid "Please specify address book name and file to import."
 msgstr "Zadejte prosím název adresáře a soubor k importu."
 
 #: src/importcsv.c:154
-#, fuzzy
 msgid "Select and reorder CSV field names to import."
-msgstr "Vyberte a přejmenujte názvy polí LDIF k importu."
+msgstr "Vyberte a přejmenujte názvy polí CSV k importu."
 
 #: src/importcsv.c:157 src/importldif.c:128
 msgid "File imported."
@@ -2493,19 +2486,16 @@ msgid "Address book name must be supplied."
 msgstr "Musí být zadán název adresáře."
 
 #: src/importcsv.c:528
-#, fuzzy
 msgid "Error reading CSV fields."
-msgstr "Chyba při čtení položek LDIF."
+msgstr "Chyba při čtení polí CSV."
 
 #: src/importcsv.c:554
-#, fuzzy
 msgid "CSV file imported successfully."
-msgstr "Import souboru LDIF byl úspěšný."
+msgstr "Import souboru CSV byl úspěšný."
 
 #: src/importcsv.c:616
-#, fuzzy
 msgid "Select CSV File"
-msgstr "Vybrat soubor vCard"
+msgstr "Vybrat soubor CSV"
 
 #: src/importcsv.c:682 src/importldif.c:489
 msgid "File Name"
@@ -2513,29 +2503,27 @@ msgstr "Název souboru"
 
 #: src/importcsv.c:700
 msgid "Comma-separated"
-msgstr ""
+msgstr "Oddělený čárkou"
 
 #: src/importcsv.c:704
 msgid "Tab-separated"
-msgstr ""
+msgstr "Oddělený tabulátorem"
 
 #: src/importcsv.c:735 src/importldif.c:530
 msgid "S"
 msgstr "S"
 
 #: src/importcsv.c:736
-#, fuzzy
 msgid "CSV Field"
-msgstr "Položky LDIF"
+msgstr "Pole CSV"
 
 #: src/importcsv.c:737
-#, fuzzy
 msgid "Address Book Field"
-msgstr "Adresář:"
+msgstr "Pole adresáře"
 
 #: src/importcsv.c:754
 msgid "Reorder address book fields with the Up and Down button."
-msgstr ""
+msgstr "Pole adresáře lze přeskupit pomocí tlačítek \"Nahoru\" a \"Dolů\"."
 
 #: src/importcsv.c:789 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
@@ -2562,9 +2550,8 @@ msgid "Records :"
 msgstr "Záznamů:"
 
 #: src/importcsv.c:882
-#, fuzzy
 msgid "Import CSV file into Address Book"
-msgstr "Importovat soubor LDIF do adresáře"
+msgstr "Importovat soubor CSV do adresáře"
 
 #. Button panel
 #: src/importcsv.c:914 src/importldif.c:733 src/prefs_toolbar.c:69
@@ -2580,9 +2567,8 @@ msgid "File Info"
 msgstr "Informace o souboru"
 
 #: src/importcsv.c:948
-#, fuzzy
 msgid "Fields"
-msgstr "Položky LDIF"
+msgstr "Pole"
 
 #: src/importcsv.c:949 src/importldif.c:768
 msgid "Finish"
@@ -2594,7 +2580,7 @@ msgstr "Vyberte a přejmenujte názvy polí LDIF k importu."
 
 #: src/importldif.c:341
 msgid "Error reading LDIF fields."
-msgstr "Chyba při čtení položek LDIF."
+msgstr "Chyba při čtení polí LDIF."
 
 #: src/importldif.c:364
 msgid "LDIF file imported successfully."
@@ -2606,7 +2592,7 @@ msgstr "Vyberte soubor LDIF"
 
 #: src/importldif.c:531 src/importldif.c:581
 msgid "LDIF Field"
-msgstr "Položky LDIF"
+msgstr "Pole LDIF"
 
 #: src/importldif.c:532
 msgid "Attribute Name"
@@ -2765,6 +2751,8 @@ msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
+"Vykonání příkazu k filtrování nevyžádané pošty selhalo.\n"
+"Zkontrolujte prosím nastavení kontroly nevyžádané pošty."
 
 #: src/inc.c:1292
 msgid "Connection failed."
@@ -2793,7 +2781,7 @@ msgstr "Nelze zapisovat do souboru."
 
 #: src/inc.c:1319
 msgid "Socket error."
-msgstr "Chyba socketu."
+msgstr "Chyba zásuvky."
 
 #. consider EOF right after QUIT successful
 #: src/inc.c:1325 src/send_message.c:601 src/send_message.c:794
@@ -3345,9 +3333,8 @@ msgid "/_Message/Recei_ve/Get from _all accounts"
 msgstr "/_Zpráva/Přijmo_ut/Přijmout z_e všech účtů"
 
 #: src/mainwindow.c:758
-#, fuzzy
 msgid "/_Message/Recei_ve/Stop receivin_g"
-msgstr "/_Zpráva/Přijmo_ut/Přerušit pří_jem zpráv"
+msgstr "/_Zpráva/Přijmo_ut/Zastavit pří_jem zpráv"
 
 #: src/mainwindow.c:760
 msgid "/_Message/Recei_ve/---"
@@ -3517,7 +3504,6 @@ msgid "/_Configuration/_Common preferences..."
 msgstr "/Nastav_ení/_Společná nastavení..."
 
 #: src/mainwindow.c:836
-#, fuzzy
 msgid "/_Configuration/_Filter settings..."
 msgstr "/Nastav_ení/Nastavení _filtrů..."
 
@@ -3706,55 +3692,51 @@ msgstr "/Předat dál _jako přílohu"
 msgid "/Redirec_t"
 msgstr "/Přes_měrovat"
 
-#: src/mainwindow.c:2849
-msgid "Icon _and text"
-msgstr ""
-
 #: src/mainwindow.c:2850
-#, fuzzy
-msgid "Text at the _right of icon"
-msgstr ""
-"/Z_obrazit/Zobrazit nebo s_krýt/_Nástrojová lišta/Text naprav_o od ikon"
+msgid "Icon _and text"
+msgstr "Ikony _a text"
 
-#: src/mainwindow.c:2852
-msgid "_Icon"
-msgstr ""
+#: src/mainwindow.c:2851
+msgid "Text at the _right of icon"
+msgstr "Text naprav_o od ikon"
 
 #: src/mainwindow.c:2853
-#, fuzzy
-msgid "_Text"
-msgstr "Text"
+msgid "_Icon"
+msgstr "_Ikony"
 
 #: src/mainwindow.c:2854
-#, fuzzy
-msgid "_None"
-msgstr "Nespecifikováno"
+msgid "_Text"
+msgstr "_Text"
 
-#: src/mainwindow.c:2884
+#: src/mainwindow.c:2855
+msgid "_None"
+msgstr "_Nezobrazovat"
+
+#: src/mainwindow.c:2885
 msgid "You are offline. Click the icon to go online."
 msgstr "Jste v režimu offline. Klepnutím na ikonu přejdete do režimu online."
 
-#: src/mainwindow.c:2895
+#: src/mainwindow.c:2896
 msgid "You are online. Click the icon to go offline."
 msgstr "Jste v režimu online. Klepnutím na ikonu přejdete do režimu offline."
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit"
 msgstr "Ukončit"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit this program?"
 msgstr "Opravdu ukončit Sylpheed?"
 
-#: src/mainwindow.c:3773
+#: src/mainwindow.c:3774
 msgid "Command line options"
 msgstr "Přepínače příkazové řádky"
 
-#: src/mainwindow.c:3786
+#: src/mainwindow.c:3787
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "Použití: sylpheed [VOLBY]..."
 
-#: src/mainwindow.c:3794
+#: src/mainwindow.c:3795
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3782,7 +3764,7 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -4604,7 +4586,7 @@ msgstr "`%d' bude nahrazeno počtem nových zpráv."
 
 #: src/prefs_common_dialog.c:807
 msgid "Incorporate from local spool"
-msgstr "Začlenit z místního SPOOL"
+msgstr "Začlenit z místního proměnlivého úložiště"
 
 #: src/prefs_common_dialog.c:820
 msgid "Filter on incorporation"
@@ -4612,7 +4594,7 @@ msgstr "Filtrovat při začlenění"
 
 #: src/prefs_common_dialog.c:826
 msgid "Spool path"
-msgstr "Cesta ke SPOOL"
+msgstr "Cesta k proměnlivému úložišti"
 
 #: src/prefs_common_dialog.c:877
 msgid "Save sent messages to outbox"
@@ -4781,7 +4763,7 @@ msgstr "znaků"
 #. ---- Summary ----
 #: src/prefs_common_dialog.c:1454
 msgid "Summary View"
-msgstr "Souhrnný pohled"
+msgstr "Souhrn zpráv"
 
 #: src/prefs_common_dialog.c:1463
 msgid "Display recipient on `From' column if sender is yourself"
@@ -4966,9 +4948,8 @@ msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "Nastavení na \"0\" uloží heslo (frázi) během celé relace."
 
 #: src/prefs_common_dialog.c:2037
-#, fuzzy
 msgid "Grab input while entering a passphrase"
-msgstr "Uchopit vkládané při zadávání hesla (fráze)"
+msgstr "Blokovat vstup při zadávání hesla (fráze)"
 
 #: src/prefs_common_dialog.c:2042
 msgid "Display warning on startup if GnuPG doesn't work"
@@ -5122,12 +5103,13 @@ msgid ""
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
-"Použijte tuto volbu, pokud mohou jiné aplikace měnit obsah složek.\n"
-"Tato volba sníží rychlost zobrazování souhrnů."
+"Použijte tuto volbu, pokud je možné, že jiné aplikace budou měnit obsah "
+"složek.\n"
+"Tato volba sníží rychlost zobrazování souhrnu."
 
 #: src/prefs_common_dialog.c:2536
 msgid "Socket I/O timeout:"
-msgstr "Čas vypršení V/V operací se socketem:"
+msgstr "Čas vypršení V/V operací se zásuvkou:"
 
 #: src/prefs_common_dialog.c:2549
 msgid "second(s)"
@@ -5540,7 +5522,6 @@ msgid " Revert to default "
 msgstr " Výchozí "
 
 #: src/prefs_filter.c:208
-#, fuzzy
 msgid "Filter settings"
 msgstr "Nastavení filtrů"
 
@@ -5862,8 +5843,8 @@ msgid ""
 "Select items to be displayed on the summary view. You can modify\n"
 "the order by using the Up / Down button."
 msgstr ""
-"Vyberte položky, které chcete zobrazit v souhrnném pohledu. Pořadí\n"
-"můžete změnit pomocí tlačítek \"Nahoru\" nebo \"Dolů\"."
+"Vyberte položky, které chcete zobrazit v souhrnu zpráv. Pořadí\n"
+"lze změnit pomocí tlačítek \"Nahoru\" a \"Dolů\"."
 
 #: src/prefs_template.c:164
 msgid "Template name"
@@ -5990,14 +5971,12 @@ msgid "Print message"
 msgstr "Vytiskne zprávu"
 
 #: src/prefs_toolbar.c:81
-#, fuzzy
 msgid "Stop"
-msgstr "Krok"
+msgstr "Zastavit"
 
 #: src/prefs_toolbar.c:82
-#, fuzzy
 msgid "Stop receiving"
-msgstr "Server pro příjem"
+msgstr "Zastaví příjem zpráv"
 
 #: src/prefs_toolbar.c:87
 msgid "Execute"
@@ -6077,7 +6056,7 @@ msgid ""
 "the order by using the Up / Down button."
 msgstr ""
 "Vyberte položky, které chcete zobrazit na nástrojové liště. Pořadí\n"
-"můžete změnit pomocí tlačítek \"Nahoru\" nebo \"Dolů\"."
+"lze změnit pomocí tlačítek \"Nahoru\" a \"Dolů\"."
 
 #: src/printing.c:527
 msgid "The message will be printed with the following command:"
@@ -6565,7 +6544,7 @@ msgstr "/_Vytvořit filtr/Podle _předmětu"
 
 #: src/summaryview.c:528
 msgid "Creating summary view...\n"
-msgstr "Vytváří se souhrnné zobrazení...\n"
+msgstr "Vytváří se souhrn zpráv...\n"
 
 #: src/summaryview.c:550
 msgid "All"
@@ -6581,12 +6560,11 @@ msgstr "S přílohou"
 
 #: src/summaryview.c:556
 msgid "Within 1 day"
-msgstr ""
+msgstr "Za den"
 
 #: src/summaryview.c:557
-#, fuzzy
 msgid "Last 5 days"
-msgstr "Příjmení"
+msgstr "Za posledních pět dnů"
 
 #: src/summaryview.c:566
 msgid "Search:"
@@ -6831,7 +6809,7 @@ msgstr "Vytváří se zobrazení textu...\n"
 
 #: src/textview.c:498
 msgid "This message is encrypted, but its decryption failed.\n"
-msgstr ""
+msgstr "Tato zpráva je šifrovaná, ale nepodařilo se ji dešifrovat.\n"
 
 #: src/textview.c:832
 msgid "This message can't be displayed.\n"
@@ -6909,6 +6887,3 @@ msgstr "Ukonči_t"
 #: src/trayicon.c:198 src/trayicon.c:289
 msgid "Sylpheed"
 msgstr "Sylpheed"
-
-#~ msgid "Overwrite"
-#~ msgstr "Přepsat"

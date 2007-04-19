@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 15:39+0900\n"
+"POT-Creation-Date: 2007-04-19 13:44+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -442,46 +442,50 @@ msgstr "必要なAPOPタイムスタンプが応答メッセージにありま�
 msgid "Timestamp syntax error in greeting\n"
 msgstr "応答メッセージのタイムスタンプの文法エラー\n"
 
-#: libsylph/pop.c:192 libsylph/pop.c:219
+#: libsylph/pop.c:170
+msgid "Invalid timestamp in greeting\n"
+msgstr "応答メッセージ中のAPOPタイムスタンプが不正です\n"
+
+#: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
 msgstr "POP3 プロトコルエラー\n"
 
-#: libsylph/pop.c:264
+#: libsylph/pop.c:270
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "無効な UIDL 応答です: %s\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: 期限切れのメッセージ %d を削除します\n"
 
-#: libsylph/pop.c:634
+#: libsylph/pop.c:640
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: メッセージ %d をスキップします (%d bytes)\n"
 
-#: libsylph/pop.c:667
+#: libsylph/pop.c:673
 msgid "mailbox is locked\n"
 msgstr "メールボックスはロックされています\n"
 
-#: libsylph/pop.c:670
+#: libsylph/pop.c:676
 msgid "session timeout\n"
 msgstr "セッションがタイムアウトしました\n"
 
-#: libsylph/pop.c:676 libsylph/smtp.c:561
+#: libsylph/pop.c:682 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "TLS セッションを開始できません\n"
 
-#: libsylph/pop.c:683 libsylph/smtp.c:496
+#: libsylph/pop.c:689 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "認証中にエラーが発生しました\n"
 
-#: libsylph/pop.c:688
+#: libsylph/pop.c:694
 msgid "command not supported\n"
 msgstr "コマンドがサポートされていません\n"
 
-#: libsylph/pop.c:692
+#: libsylph/pop.c:698
 msgid "error occurred on POP3 session\n"
 msgstr "POP3 セッション中にエラーが発生しました\n"
 
@@ -1765,48 +1769,48 @@ msgstr ""
 "外部エディタが動作中です。\n"
 "プロセスを強制終了しますか(pid: %d)?\n"
 
-#: src/compose.c:6074 src/mainwindow.c:2856
+#: src/compose.c:6075 src/mainwindow.c:2857
 msgid "_Customize toolbar..."
 msgstr "ツールバーをカスタマイズ(_C)..."
 
-#: src/compose.c:6190 src/compose.c:6195 src/compose.c:6201
+#: src/compose.c:6191 src/compose.c:6196 src/compose.c:6202
 msgid "Can't queue the message."
 msgstr "メッセージを送信待機できません。"
 
-#: src/compose.c:6292
+#: src/compose.c:6293
 msgid "Select files"
 msgstr "ファイルの選択"
 
-#: src/compose.c:6315
+#: src/compose.c:6316
 msgid "Select file"
 msgstr "ファイルの選択"
 
-#: src/compose.c:6350
+#: src/compose.c:6351
 msgid "Save message"
 msgstr "メッセージの保存"
 
-#: src/compose.c:6351
+#: src/compose.c:6352
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "このメッセージは変更されています。草稿に保存しますか?"
 
-#: src/compose.c:6353
+#: src/compose.c:6354
 msgid "Close _without saving"
 msgstr "保存せずに閉じる(_W)"
 
-#: src/compose.c:6395
+#: src/compose.c:6396
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "テンプレート `%s' を適用しますか?"
 
-#: src/compose.c:6397
+#: src/compose.c:6398
 msgid "Apply template"
 msgstr "テンプレートの適用"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Replace"
 msgstr "置換(_R)"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Insert"
 msgstr "挿入(_I)"
 
@@ -2257,12 +2261,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:882 src/mainwindow.c:3855 src/setup.c:80
+#: src/folderview.c:882 src/mainwindow.c:3856 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:886 src/mainwindow.c:3860 src/setup.c:85
+#: src/folderview.c:886 src/mainwindow.c:3861 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -3678,51 +3682,51 @@ msgstr "/添付として転送(_W)"
 msgid "/Redirec_t"
 msgstr "/手を加えずに転送(_T)"
 
-#: src/mainwindow.c:2849
+#: src/mainwindow.c:2850
 msgid "Icon _and text"
 msgstr "アイコンと文字(_A)"
 
-#: src/mainwindow.c:2850
+#: src/mainwindow.c:2851
 msgid "Text at the _right of icon"
 msgstr "アイコンの右に文字(_R)"
 
-#: src/mainwindow.c:2852
+#: src/mainwindow.c:2853
 msgid "_Icon"
 msgstr "アイコン(_I)"
 
-#: src/mainwindow.c:2853
+#: src/mainwindow.c:2854
 msgid "_Text"
 msgstr "文字(_T)"
 
-#: src/mainwindow.c:2854
+#: src/mainwindow.c:2855
 msgid "_None"
 msgstr "非表示(_N)"
 
-#: src/mainwindow.c:2884
+#: src/mainwindow.c:2885
 msgid "You are offline. Click the icon to go online."
 msgstr "現在オフラインです。アイコンをクリックするとオンラインになります。"
 
-#: src/mainwindow.c:2895
+#: src/mainwindow.c:2896
 msgid "You are online. Click the icon to go offline."
 msgstr "現在オンラインです。アイコンをクリックするとオフラインになります。"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit"
 msgstr "終了"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit this program?"
 msgstr "このプログラムを終了しますか?"
 
-#: src/mainwindow.c:3773
+#: src/mainwindow.c:3774
 msgid "Command line options"
 msgstr "コマンドラインオプション"
 
-#: src/mainwindow.c:3786
+#: src/mainwindow.c:3787
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "使用法: sylpheed [オプション]..."
 
-#: src/mainwindow.c:3794
+#: src/mainwindow.c:3795
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3750,7 +3754,7 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"

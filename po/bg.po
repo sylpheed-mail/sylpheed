@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.9.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 15:39+0900\n"
+"POT-Creation-Date: 2007-04-19 13:44+0900\n"
 "PO-Revision-Date: 2004-01-09 02:06+0200\n"
 "Last-Translator: Pavel Pyuter <pavel@unix-bg.org>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -438,46 +438,51 @@ msgstr "Не е намерен необходим APOP времеви отпеч
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Синтактична грешка във времевия отпечатък в поздрава\n"
 
-#: libsylph/pop.c:192 libsylph/pop.c:219
+#: libsylph/pop.c:170
+#, fuzzy
+msgid "Invalid timestamp in greeting\n"
+msgstr "Не е намерен необходим APOP времеви отпечатък в поздрава\n"
+
+#: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
 msgstr "POP3 протоколна грешка\n"
 
-#: libsylph/pop.c:264
+#: libsylph/pop.c:270
 #, fuzzy, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "невалиден xover ред: %s\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Изтриване на съобщениe с изтекъл срок %d\n"
 
-#: libsylph/pop.c:634
+#: libsylph/pop.c:640
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Прескачане на съобщение %d (%d байта)\n"
 
-#: libsylph/pop.c:667
+#: libsylph/pop.c:673
 msgid "mailbox is locked\n"
 msgstr "пощенската кутия е заключена\n"
 
-#: libsylph/pop.c:670
+#: libsylph/pop.c:676
 msgid "session timeout\n"
 msgstr "сесията е просрочена\n"
 
-#: libsylph/pop.c:676 libsylph/smtp.c:561
+#: libsylph/pop.c:682 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "не може да се стартира TLS сесия\n"
 
-#: libsylph/pop.c:683 libsylph/smtp.c:496
+#: libsylph/pop.c:689 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "грешка при удостоверяване\n"
 
-#: libsylph/pop.c:688
+#: libsylph/pop.c:694
 msgid "command not supported\n"
 msgstr "командата не се поддържа\n"
 
-#: libsylph/pop.c:692
+#: libsylph/pop.c:698
 msgid "error occurred on POP3 session\n"
 msgstr "грешка при POP3 сесията\n"
 
@@ -1814,52 +1819,52 @@ msgstr ""
 "Желаете ли принудително прекратяване на процеса?\n"
 "process group id: %d"
 
-#: src/compose.c:6074 src/mainwindow.c:2856
+#: src/compose.c:6075 src/mainwindow.c:2857
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6190 src/compose.c:6195 src/compose.c:6201
+#: src/compose.c:6191 src/compose.c:6196 src/compose.c:6202
 msgid "Can't queue the message."
 msgstr "Не може да се нареди съобщението на опашката."
 
-#: src/compose.c:6292
+#: src/compose.c:6293
 #, fuzzy
 msgid "Select files"
 msgstr "Избор на файл"
 
-#: src/compose.c:6315
+#: src/compose.c:6316
 msgid "Select file"
 msgstr "Избор на файл"
 
-#: src/compose.c:6350
+#: src/compose.c:6351
 #, fuzzy
 msgid "Save message"
 msgstr "Изпращане на съобщение"
 
-#: src/compose.c:6351
+#: src/compose.c:6352
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Съобщението беше променено. Изоставяне?"
 
-#: src/compose.c:6353
+#: src/compose.c:6354
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:6395
+#: src/compose.c:6396
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Желаете ли да приложите шаблонът `%s' ?"
 
-#: src/compose.c:6397
+#: src/compose.c:6398
 msgid "Apply template"
 msgstr "Прилагане на шаблон"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 #, fuzzy
 msgid "_Replace"
 msgstr "Заменяне"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 #, fuzzy
 msgid "_Insert"
 msgstr "Вмъкване"
@@ -2320,12 +2325,12 @@ msgstr "Установяване информация за папка...\n"
 msgid "Setting folder info..."
 msgstr "Установяване информация за папка..."
 
-#: src/folderview.c:882 src/mainwindow.c:3855 src/setup.c:80
+#: src/folderview.c:882 src/mainwindow.c:3856 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Сканиране на папка %s%c%s ..."
 
-#: src/folderview.c:886 src/mainwindow.c:3860 src/setup.c:85
+#: src/folderview.c:886 src/mainwindow.c:3861 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Сканиране на папка %s ..."
@@ -3792,56 +3797,56 @@ msgstr "/Пр_епращане като притурка"
 msgid "/Redirec_t"
 msgstr "/П_ренасочване"
 
-#: src/mainwindow.c:2849
+#: src/mainwindow.c:2850
 msgid "Icon _and text"
 msgstr ""
 
-#: src/mainwindow.c:2850
+#: src/mainwindow.c:2851
 #, fuzzy
 msgid "Text at the _right of icon"
 msgstr "/_Изглед/Показване или _скриване/_Лента/_Икони"
 
-#: src/mainwindow.c:2852
+#: src/mainwindow.c:2853
 msgid "_Icon"
 msgstr ""
 
-#: src/mainwindow.c:2853
+#: src/mainwindow.c:2854
 #, fuzzy
 msgid "_Text"
 msgstr "Текст"
 
-#: src/mainwindow.c:2854
+#: src/mainwindow.c:2855
 #, fuzzy
 msgid "_None"
 msgstr "Никой"
 
-#: src/mainwindow.c:2884
+#: src/mainwindow.c:2885
 msgid "You are offline. Click the icon to go online."
 msgstr "Работите без достъп до мрежа. Щракнете иконата за да включите мрежата."
 
-#: src/mainwindow.c:2895
+#: src/mainwindow.c:2896
 msgid "You are online. Click the icon to go offline."
 msgstr "Работите с достъп до мрежа. Щракнете иконата за да изключите мрежата."
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit"
 msgstr "Изход"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit this program?"
 msgstr "Желаете ли изход от програмата?"
 
-#: src/mainwindow.c:3773
+#: src/mainwindow.c:3774
 #, fuzzy
 msgid "Command line options"
 msgstr "Не е въведен команден ред."
 
-#: src/mainwindow.c:3786
+#: src/mainwindow.c:3787
 #, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "Употреба: %s [ОПЦИЯ]...\n"
 
-#: src/mainwindow.c:3794
+#: src/mainwindow.c:3795
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3857,7 +3862,7 @@ msgid ""
 "--version"
 msgstr ""
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"

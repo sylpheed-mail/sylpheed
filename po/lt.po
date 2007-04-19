@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 15:39+0900\n"
+"POT-Creation-Date: 2007-04-19 13:44+0900\n"
 "PO-Revision-Date: 2005-06-09 13:51+0300\n"
 "Last-Translator: Vitalijus Valantiejus <vitalijus@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -442,46 +442,51 @@ msgstr "Reikalinga APOP žyma nerasta pasisveikinime\n"
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Sintaksės klaida pasisveikinime\n"
 
-#: libsylph/pop.c:192 libsylph/pop.c:219
+#: libsylph/pop.c:170
+#, fuzzy
+msgid "Invalid timestamp in greeting\n"
+msgstr "Reikalinga APOP žyma nerasta pasisveikinime\n"
+
+#: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
 msgstr "POP3 protokolo klaida\n"
 
-#: libsylph/pop.c:264
+#: libsylph/pop.c:270
 #, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "blogas UIDL atsakymas: %s\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Trinamas senas laiškas %d\n"
 
-#: libsylph/pop.c:634
+#: libsylph/pop.c:640
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: praleidžiamas laiškas %d (%d B)\n"
 
-#: libsylph/pop.c:667
+#: libsylph/pop.c:673
 msgid "mailbox is locked\n"
 msgstr "dėžutė užrakinta\n"
 
-#: libsylph/pop.c:670
+#: libsylph/pop.c:676
 msgid "session timeout\n"
 msgstr "baigėsi sesijai skirtas laikas\n"
 
-#: libsylph/pop.c:676 libsylph/smtp.c:561
+#: libsylph/pop.c:682 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "negaliu pradėti TLS sesijos\n"
 
-#: libsylph/pop.c:683 libsylph/smtp.c:496
+#: libsylph/pop.c:689 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "klaida tikrinant autentiškumą\n"
 
-#: libsylph/pop.c:688
+#: libsylph/pop.c:694
 msgid "command not supported\n"
 msgstr "komanda nepalaikoma\n"
 
-#: libsylph/pop.c:692
+#: libsylph/pop.c:698
 msgid "error occurred on POP3 session\n"
 msgstr "klaida POP3 sesijoje\n"
 
@@ -1771,48 +1776,48 @@ msgstr ""
 "Išorinis redaktorius vis dar veikia.\n"
 "Nutraukti procesą? (pid: %d)\n"
 
-#: src/compose.c:6074 src/mainwindow.c:2856
+#: src/compose.c:6075 src/mainwindow.c:2857
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6190 src/compose.c:6195 src/compose.c:6201
+#: src/compose.c:6191 src/compose.c:6196 src/compose.c:6202
 msgid "Can't queue the message."
 msgstr "Negaliu įdėti laiško į eilę."
 
-#: src/compose.c:6292
+#: src/compose.c:6293
 msgid "Select files"
 msgstr "Žymėti failus"
 
-#: src/compose.c:6315
+#: src/compose.c:6316
 msgid "Select file"
 msgstr "Žymėti failą"
 
-#: src/compose.c:6350
+#: src/compose.c:6351
 msgid "Save message"
 msgstr "Išsaugoti laišką"
 
-#: src/compose.c:6351
+#: src/compose.c:6352
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Laiškas buvo redaguotas. Saugoti „Juodraščiuose“?"
 
-#: src/compose.c:6353
+#: src/compose.c:6354
 msgid "Close _without saving"
 msgstr "Uždaryti _neišsaugant"
 
-#: src/compose.c:6395
+#: src/compose.c:6396
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Ar norite naudoti šabloną „%s“?"
 
-#: src/compose.c:6397
+#: src/compose.c:6398
 msgid "Apply template"
 msgstr "Naudoti šabloną"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Replace"
 msgstr "_Pakeisti"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 msgid "_Insert"
 msgstr "Įterpt_i"
 
@@ -2266,12 +2271,12 @@ msgstr "Nustatoma katalogo informacija...\n"
 msgid "Setting folder info..."
 msgstr "Nustatoma katalogo informacija..."
 
-#: src/folderview.c:882 src/mainwindow.c:3855 src/setup.c:80
+#: src/folderview.c:882 src/mainwindow.c:3856 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Skanuojamas katalogas “%s%c%s“..."
 
-#: src/folderview.c:886 src/mainwindow.c:3860 src/setup.c:85
+#: src/folderview.c:886 src/mainwindow.c:3861 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Skanuojamas katalogas „%s“..."
@@ -3702,54 +3707,54 @@ msgstr "/Pe_rsiųsti kaip priedą"
 msgid "/Redirec_t"
 msgstr "/Nukreip_ti"
 
-#: src/mainwindow.c:2849
+#: src/mainwindow.c:2850
 msgid "Icon _and text"
 msgstr ""
 
-#: src/mainwindow.c:2850
+#: src/mainwindow.c:2851
 #, fuzzy
 msgid "Text at the _right of icon"
 msgstr "/Ro_dymas/Ro_dyti arba paslėpti/Į_rankių juosta/P_iktogramos"
 
-#: src/mainwindow.c:2852
+#: src/mainwindow.c:2853
 msgid "_Icon"
 msgstr ""
 
-#: src/mainwindow.c:2853
+#: src/mainwindow.c:2854
 #, fuzzy
 msgid "_Text"
 msgstr "Tekstas"
 
-#: src/mainwindow.c:2854
+#: src/mainwindow.c:2855
 #, fuzzy
 msgid "_None"
 msgstr "Nieko"
 
-#: src/mainwindow.c:2884
+#: src/mainwindow.c:2885
 msgid "You are offline. Click the icon to go online."
 msgstr "Jūs esate atsijungęs. Spustelkite piktogramą jei norite prisijungti."
 
-#: src/mainwindow.c:2895
+#: src/mainwindow.c:2896
 msgid "You are online. Click the icon to go offline."
 msgstr "Jūs esate prisijungęs. Spustelkite piktogramą jei norite atsijungti."
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit"
 msgstr "Išeiti"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit this program?"
 msgstr "Užverti programą?"
 
-#: src/mainwindow.c:3773
+#: src/mainwindow.c:3774
 msgid "Command line options"
 msgstr "Komandinės eilutės parametrai"
 
-#: src/mainwindow.c:3786
+#: src/mainwindow.c:3787
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "Naudojimas: sylpheed [PARAMETRAI]..."
 
-#: src/mainwindow.c:3794
+#: src/mainwindow.c:3795
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3777,7 +3782,7 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"

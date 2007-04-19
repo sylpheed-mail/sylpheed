@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 15:39+0900\n"
+"POT-Creation-Date: 2007-04-19 13:44+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -440,47 +440,52 @@ msgstr "Nødvendig APOP tid blev ikke fundet i velkomst\n"
 msgid "Timestamp syntax error in greeting\n"
 msgstr "Tid syntax fejl i velkomst\n"
 
-#: libsylph/pop.c:192 libsylph/pop.c:219
+#: libsylph/pop.c:170
+#, fuzzy
+msgid "Invalid timestamp in greeting\n"
+msgstr "Nødvendig APOP tid blev ikke fundet i velkomst\n"
+
+#: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
 msgstr "POP3 protokol fejl\n"
 
-#: libsylph/pop.c:264
+#: libsylph/pop.c:270
 #, fuzzy, c-format
 msgid "invalid UIDL response: %s\n"
 msgstr "ugyldig XOVER linie: %s\n"
 
-#: libsylph/pop.c:625
+#: libsylph/pop.c:631
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Sletter udløben meddelelse %d\n"
 
-#: libsylph/pop.c:634
+#: libsylph/pop.c:640
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Sender meddelelse (%d / %d bytes)\n"
 
-#: libsylph/pop.c:667
+#: libsylph/pop.c:673
 msgid "mailbox is locked\n"
 msgstr "postkasse er låst\n"
 
-#: libsylph/pop.c:670
+#: libsylph/pop.c:676
 msgid "session timeout\n"
 msgstr "tid udløbet\n"
 
-#: libsylph/pop.c:676 libsylph/smtp.c:561
+#: libsylph/pop.c:682 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "kan ikke starte TLS session\n"
 
-#: libsylph/pop.c:683 libsylph/smtp.c:496
+#: libsylph/pop.c:689 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "fejl ved godkendelse\n"
 
-#: libsylph/pop.c:688
+#: libsylph/pop.c:694
 #, fuzzy
 msgid "command not supported\n"
 msgstr "Kommando tekst"
 
-#: libsylph/pop.c:692
+#: libsylph/pop.c:698
 #, fuzzy
 msgid "error occurred on POP3 session\n"
 msgstr "fejl under POP3 session\n"
@@ -1812,52 +1817,52 @@ msgstr ""
 "Afbryde?\n"
 "ID: %d"
 
-#: src/compose.c:6074 src/mainwindow.c:2856
+#: src/compose.c:6075 src/mainwindow.c:2857
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6190 src/compose.c:6195 src/compose.c:6201
+#: src/compose.c:6191 src/compose.c:6196 src/compose.c:6202
 msgid "Can't queue the message."
 msgstr "Meddelelse kan ikke lægges i kø."
 
-#: src/compose.c:6292
+#: src/compose.c:6293
 #, fuzzy
 msgid "Select files"
 msgstr "Vælg fil"
 
-#: src/compose.c:6315
+#: src/compose.c:6316
 msgid "Select file"
 msgstr "Vælg fil"
 
-#: src/compose.c:6350
+#: src/compose.c:6351
 #, fuzzy
 msgid "Save message"
 msgstr "Sende meddelelse"
 
-#: src/compose.c:6351
+#: src/compose.c:6352
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Denne meddelelse er ændret. Slet?"
 
-#: src/compose.c:6353
+#: src/compose.c:6354
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:6395
+#: src/compose.c:6396
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Vil du benytte skabelon `%s' ?"
 
-#: src/compose.c:6397
+#: src/compose.c:6398
 msgid "Apply template"
 msgstr "Benyt skabelon"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 #, fuzzy
 msgid "_Replace"
 msgstr "Erstat"
 
-#: src/compose.c:6398
+#: src/compose.c:6399
 #, fuzzy
 msgid "_Insert"
 msgstr "Indæst"
@@ -2318,12 +2323,12 @@ msgstr "Indtast mappe information...\n"
 msgid "Setting folder info..."
 msgstr "Indtast mappe information..."
 
-#: src/folderview.c:882 src/mainwindow.c:3855 src/setup.c:80
+#: src/folderview.c:882 src/mainwindow.c:3856 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Gennemsøger mappe %s%c%s ..."
 
-#: src/folderview.c:886 src/mainwindow.c:3860 src/setup.c:85
+#: src/folderview.c:886 src/mainwindow.c:3861 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Gennemsøger mappe %s ..."
@@ -3795,56 +3800,56 @@ msgstr "/Videresend som _vedhæftet"
 msgid "/Redirec_t"
 msgstr "/_Omdirigér"
 
-#: src/mainwindow.c:2849
+#: src/mainwindow.c:2850
 msgid "Icon _and text"
 msgstr ""
 
-#: src/mainwindow.c:2850
+#: src/mainwindow.c:2851
 #, fuzzy
 msgid "Text at the _right of icon"
 msgstr "/_Vis/_Vis eller skjul/_Værktøjslinie/_Ikon"
 
-#: src/mainwindow.c:2852
+#: src/mainwindow.c:2853
 msgid "_Icon"
 msgstr ""
 
-#: src/mainwindow.c:2853
+#: src/mainwindow.c:2854
 #, fuzzy
 msgid "_Text"
 msgstr "Tekst"
 
-#: src/mainwindow.c:2854
+#: src/mainwindow.c:2855
 #, fuzzy
 msgid "_None"
 msgstr "Ingen"
 
-#: src/mainwindow.c:2884
+#: src/mainwindow.c:2885
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:2895
+#: src/mainwindow.c:2896
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit"
 msgstr "Afslut"
 
-#: src/mainwindow.c:3169
+#: src/mainwindow.c:3170
 msgid "Exit this program?"
 msgstr "Afslut program?"
 
-#: src/mainwindow.c:3773
+#: src/mainwindow.c:3774
 #, fuzzy
 msgid "Command line options"
 msgstr "Kommando linie ikke opsat."
 
-#: src/mainwindow.c:3786
+#: src/mainwindow.c:3787
 #, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "Bruges som: %s [OPTION]...\n"
 
-#: src/mainwindow.c:3794
+#: src/mainwindow.c:3795
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3860,7 +3865,7 @@ msgid ""
 "--version"
 msgstr ""
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
