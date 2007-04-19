@@ -2820,6 +2820,7 @@ static void toolbar_customize(GtkWidget *widget, gpointer data)
 		prefs_common.main_toolbar_setting =
 			prefs_toolbar_get_name_list_from_item_list(item_list);
 		g_list_free(item_list);
+		prefs_common_write_config();
 	}
 }
 
