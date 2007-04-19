@@ -1,5 +1,12 @@
 2007-04-19
 
+	* libsylph/pop.c:
+	  pop3_getauth_apop_send()
+	  pop3_session_recv_msg(): 不正な APOP タイムスタンプをチェックする
+	  ようにし(CVE-2007-1558)、関数の戻り値をチェックするようにした。
+
+2007-04-19
+
 	* src/mainwindow.c: toolbar_customize()
 	  src/compose.c: toolbar_customize(): ツールバーのカスタマイズの後
 	  設定ファイルを書き出すようにした。

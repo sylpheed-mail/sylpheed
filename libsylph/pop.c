@@ -166,6 +166,12 @@ static gint pop3_getauth_apop_send(Pop3Session *session)
 
 	*(end + 1) = '\0';
 
+	if (!is_ascii_str(start) || strchr(start, '@') == NULL) {
+		log_warning(_("Invalid timestamp in greeting\n"));
+		session->error_val = PS_PROTOCOL;
+		return -1;
+	}
+
 	apop_str = g_strconcat(start, session->pass, NULL);
 	md5 = s_gnet_md5_new((guchar *)apop_str, strlen(apop_str));
 	md5sum = s_gnet_md5_get_string(md5);
@@ -707,7 +713,7 @@ static Pop3ErrorValue pop3_ok(Pop3Session *session, const gchar *msg)
 static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 {
 	Pop3Session *pop3_session = POP3_SESSION(session);
-	Pop3ErrorValue val = PS_SUCCESS;
+	gint val = PS_SUCCESS;
 	const gchar *body;
 
 	body = msg;
@@ -732,76 +738,77 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 	switch (pop3_session->state) {
 	case POP3_READY:
 	case POP3_GREETING:
-		pop3_greeting_recv(pop3_session, body);
+		val = pop3_greeting_recv(pop3_session, body);
 #if USE_SSL
 		if (pop3_session->ac_prefs->ssl_pop == SSL_STARTTLS)
-			pop3_stls_send(pop3_session);
+			val = pop3_stls_send(pop3_session);
 		else
 #endif
 		if (pop3_session->ac_prefs->use_apop_auth)
-			pop3_getauth_apop_send(pop3_session);
+			val = pop3_getauth_apop_send(pop3_session);
 		else
-			pop3_getauth_user_send(pop3_session);
+			val = pop3_getauth_user_send(pop3_session);
 		break;
 #if USE_SSL
 	case POP3_STLS:
-		if (pop3_stls_recv(pop3_session) != PS_SUCCESS)
+		if ((val = pop3_stls_recv(pop3_session)) != PS_SUCCESS)
 			return -1;
 		if (pop3_session->ac_prefs->use_apop_auth)
-			pop3_getauth_apop_send(pop3_session);
+			val = pop3_getauth_apop_send(pop3_session);
 		else
-			pop3_getauth_user_send(pop3_session);
+			val = pop3_getauth_user_send(pop3_session);
 		break;
 #endif
 	case POP3_GETAUTH_USER:
-		pop3_getauth_pass_send(pop3_session);
+		val = pop3_getauth_pass_send(pop3_session);
 		break;
 	case POP3_GETAUTH_PASS:
 	case POP3_GETAUTH_APOP:
 		if (pop3_session->auth_only)
-			pop3_logout_send(pop3_session);
+			val = pop3_logout_send(pop3_session);
 		else
-			pop3_getrange_stat_send(pop3_session);
+			val = pop3_getrange_stat_send(pop3_session);
 		break;
 	case POP3_GETRANGE_STAT:
-		if (pop3_getrange_stat_recv(pop3_session, body) < 0)
+		if ((val = pop3_getrange_stat_recv(pop3_session, body)) < 0)
 			return -1;
 		if (pop3_session->count > 0)
-			pop3_getrange_uidl_send(pop3_session);
+			val = pop3_getrange_uidl_send(pop3_session);
 		else
-			pop3_logout_send(pop3_session);
+			val = pop3_logout_send(pop3_session);
 		break;
 	case POP3_GETRANGE_LAST:
 		if (val == PS_NOTSUPPORTED)
 			pop3_session->error_val = PS_SUCCESS;
-		else if (pop3_getrange_last_recv(pop3_session, body) < 0)
+		else if ((val = pop3_getrange_last_recv
+				(pop3_session, body)) < 0)
 			return -1;
 		if (pop3_session->cur_msg > 0)
-			pop3_getsize_list_send(pop3_session);
+			val = pop3_getsize_list_send(pop3_session);
 		else
-			pop3_logout_send(pop3_session);
+			val = pop3_logout_send(pop3_session);
 		break;
 	case POP3_GETRANGE_UIDL:
 		if (val == PS_NOTSUPPORTED) {
 			pop3_session->error_val = PS_SUCCESS;
-			pop3_getrange_last_send(pop3_session);
+			val = pop3_getrange_last_send(pop3_session);
 		} else {
 			pop3_session->state = POP3_GETRANGE_UIDL_RECV;
-			session_recv_data(session, 0, ".\r\n");
+			val = session_recv_data(session, 0, ".\r\n");
 		}
 		break;
 	case POP3_GETSIZE_LIST:
 		pop3_session->state = POP3_GETSIZE_LIST_RECV;
-		session_recv_data(session, 0, ".\r\n");
+		val = session_recv_data(session, 0, ".\r\n");
 		break;
 	case POP3_RETR:
 		pop3_session->state = POP3_RETR_RECV;
-		session_recv_data_as_file(session, 0, ".\r\n");
+		val = session_recv_data_as_file(session, 0, ".\r\n");
 		break;
 	case POP3_DELETE:
-		pop3_delete_recv(pop3_session);
+		val = pop3_delete_recv(pop3_session);
 		if (pop3_session->cur_msg == pop3_session->count)
-			pop3_logout_send(pop3_session);
+			val = pop3_logout_send(pop3_session);
 		else {
 			pop3_session->cur_msg++;
 			if (pop3_lookup_next(pop3_session) == POP3_ERROR)
@@ -817,7 +824,10 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 		return -1;
 	}
 
-	return 0;
+	if (val == PS_SUCCESS)
+		return 0;
+	else
+		return -1;
 }
 
 static gint pop3_session_recv_data_finished(Session *session, guchar *data,
