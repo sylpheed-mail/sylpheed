@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -244,12 +244,12 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 
 		if ((str = X509_NAME_oneline(X509_get_subject_name(server_cert), 0, 0)) != NULL) {
 			debug_print(_("  Subject: %s\n"), str);
-			g_free(str);
+			OPENSSL_free(str);
 		}
 
 		if ((str = X509_NAME_oneline(X509_get_issuer_name(server_cert), 0, 0)) != NULL) {
 			debug_print(_("  Issuer: %s\n"), str);
-			g_free(str);
+			OPENSSL_free(str);
 		}
 
 		verify_result = SSL_get_verify_result(sockinfo->ssl);

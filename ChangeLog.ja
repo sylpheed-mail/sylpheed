@@ -1,3 +1,11 @@
+2007-04-23
+
+	* libsylph/ssl.c
+	  src/sslmanager.c: OpenSSL によって確保された文字列に対して g_free()
+	  でなく OPENSSL_free() を使用するようにした(MSVCR71.DLL にリンクした
+	  OpenSSL DLL を使用した場合にクラッシュする問題を修正。岡村さん
+	  thanks)。
+
 2007-04-20
 
 	* version 2.4.0

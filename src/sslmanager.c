@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,8 +71,10 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 		 hostname, X509_verify_cert_error_string(verify_result),
 		 subject ? subject : "(unknown)",
 		 issuer ? issuer : "(unknown)");
-	g_free(issuer);
-	g_free(subject);
+	if (issuer)
+		OPENSSL_free(issuer);
+	if (subject)
+		OPENSSL_free(subject);
 
 	dialog = gtk_dialog_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), title);
