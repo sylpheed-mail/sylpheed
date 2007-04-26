@@ -3516,13 +3516,13 @@ gboolean addressbook_add_contact( const gchar *name, const gchar *address, const
 *                     to be loaded.
 * Return: TRUE if data loaded, FALSE if address index not loaded.
 */
-gboolean addressbook_load_completion( gint (*callBackFunc) ( const gchar *, const gchar * ) ) {
+gboolean addressbook_load_completion( gint (*callBackFunc) ( const gchar *, const gchar *, const gchar * ) ) {
 	/* AddressInterface *interface; */
 	AddressDataSource *ds;
 	GList *nodeIf, *nodeDS;
 	GList *listP, *nodeP;
 	GList *nodeM;
-	gchar *sName, *sAddress, *sAlias, *sFriendly;
+	gchar *sName, *sAddress, *sAlias, *sNickName;
 
 	debug_print( "addressbook_load_completion\n" );
 
@@ -3548,25 +3548,26 @@ gboolean addressbook_load_completion( gint (*callBackFunc) ( const gchar *, cons
 				nodeM = person->listEMail;
 
 				/* Figure out name to use */
-				sName = person->nickName;
+				sName = ADDRITEM_NAME(person);
+				sNickName = person->nickName;
 				if( sName == NULL || *sName == '\0' ) {
-					sName = ADDRITEM_NAME(person);
+					if (sNickName)
+						sName = sNickName;
 				}
 
 				/* Process each E-Mail address */
 				while( nodeM ) {
 					ItemEMail *email = nodeM->data;
 					/* Have mail */
-					sFriendly = sName;
 					sAddress = email->address;
 					if( sAddress && *sAddress != '\0' ) {
 						sAlias = ADDRITEM_NAME(email);
 						if( sAlias && *sAlias != '\0' ) {
-							sFriendly = sAlias;
+							( callBackFunc ) ( sName, sAddress, sAlias );
+						} else {
+							( callBackFunc ) ( sName, sAddress, sNickName );
 						}
-						( callBackFunc ) ( sFriendly, sAddress );
 					}
-
 					nodeM = g_list_next( nodeM );
 				}
 				nodeP = g_list_next( nodeP );

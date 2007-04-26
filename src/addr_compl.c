@@ -79,19 +79,19 @@ typedef struct
 
 /*******************************************************************************/
 
-static gint	    g_ref_count;	/* list ref count */
-static GList 	   *g_completion_list;	/* list of strings to be checked */
-static GList 	   *g_address_list;	/* address storage */
-static GCompletion *g_completion;	/* completion object */
+static gint	    ref_count;		/* list ref count */
+static GList 	   *completion_list;	/* list of strings to be checked */
+static GList 	   *address_list;	/* address storage */
+static GCompletion *completion;		/* completion object */
 
 /* To allow for continuing completion we have to keep track of the state
  * using the following variables. No need to create a context object. */
 
-static gint	    g_completion_count;		/* nr of addresses incl. the prefix */
-static gint	    g_completion_next;		/* next prev address */
-static GSList	   *g_completion_addresses;	/* unique addresses found in the
+static gint	    completion_count;		/* nr of addresses incl. the prefix */
+static gint	    completion_next;		/* next prev address */
+static GSList	   *completion_addresses;	/* unique addresses found in the
 						   completion cache. */
-static gchar	   *g_completion_prefix;	/* last prefix. (this is cached here
+static gchar	   *completion_prefix;		/* last prefix. (this is cached here
 						 * because the prefix passed to g_completion
 						 * is g_strdown()'ed */
 
@@ -109,67 +109,102 @@ static gchar *completion_func(gpointer data)
 
 static void init_all(void)
 {
-	g_completion = g_completion_new(completion_func);
-	g_return_if_fail(g_completion != NULL);
+	completion = g_completion_new(completion_func);
+	g_return_if_fail(completion != NULL);
 }
 
 static void free_all(void)
 {
 	GList *walk;
-	
-	walk = g_list_first(g_completion_list);
+
+	walk = g_list_first(completion_list);
 	for (; walk != NULL; walk = g_list_next(walk)) {
 		completion_entry *ce = (completion_entry *) walk->data;
 		g_free(ce->string);
-		g_free(walk->data);
+		g_free(ce);
 	}
-	g_list_free(g_completion_list);
-	g_completion_list = NULL;
-	
-	walk = g_address_list;
+	g_list_free(completion_list);
+	completion_list = NULL;
+
+	walk = address_list;
 	for (; walk != NULL; walk = g_list_next(walk)) {
 		address_entry *ae = (address_entry *) walk->data;
 		g_free(ae->name);
 		g_free(ae->address);
-		g_free(walk->data);
+		g_free(ae);
 	}
-	g_list_free(g_address_list);
-	g_address_list = NULL;
-	
-	g_completion_free(g_completion);
-	g_completion = NULL;
+	g_list_free(address_list);
+	address_list = NULL;
+
+	g_completion_free(completion);
+	completion = NULL;
+}
+
+static gint address_entry_find_func(gconstpointer a, gconstpointer b)
+{
+	const address_entry *ae1 = a;
+	const address_entry *ae2 = b;
+	gint val;
+
+	if (!a || !b)
+		return -1;
+
+	val = strcmp(ae1->name, ae2->name);
+	if (val != 0)
+		return val;
+	val = strcmp(ae1->address, ae2->address);
+	if (val != 0)
+		return val;
+
+	return 0;
 }
 
 /* add_address() - adds address to the completion list. this function looks
  * complicated, but it's only allocation checks.
  */
-static gint add_address(const gchar *name, const gchar *address)
+static gint add_address(const gchar *name, const gchar *address, const gchar *nickname)
 {
 	address_entry    *ae;
 	completion_entry *ce1;
 	completion_entry *ce2;
+	completion_entry *ce3 = NULL;
+	GList            *found;
 
 	if (!name || !address) return -1;
 
-	ae = g_new0(address_entry, 1);
 	ce1 = g_new0(completion_entry, 1),
 	ce2 = g_new0(completion_entry, 1);
+	if (nickname)
+		ce3 = g_new0(completion_entry, 1);
 
-	g_return_val_if_fail(ae != NULL, -1);
-	g_return_val_if_fail(ce1 != NULL && ce2 != NULL, -1);	
-
+	ae = g_new0(address_entry, 1);
 	ae->name    = g_strdup(name);
 	ae->address = g_strdup(address);		
+	if ((found = g_list_find_custom(address_list, ae,
+					address_entry_find_func))) {
+		g_free(ae->name);
+		g_free(ae->address);
+		g_free(ae);
+		ae = (address_entry *)found->data;
+	} else
+		address_list = g_list_append(address_list, ae);
 
 	/* GCompletion list is case sensitive */
 	ce1->string = g_utf8_strdown(name, -1);
 	ce2->string = g_utf8_strdown(address, -1);
+	if (ce3 && nickname)
+		ce3->string = g_utf8_strdown(nickname, -1);
 
 	ce1->ref = ce2->ref = ae;
+	if (ce3)
+		ce3->ref = ae;
 
-	g_completion_list = g_list_append(g_completion_list, ce1);
-	g_completion_list = g_list_append(g_completion_list, ce2);
-	g_address_list 	  = g_list_append(g_address_list,    ae);
+	debug_print("adding %s <%s>\n", ae->name, ae->address);
+
+	completion_list = g_list_append(completion_list, ce1);
+	completion_list = g_list_append(completion_list, ce2);
+	if (ce3)
+		completion_list = g_list_append(completion_list, ce3);
 
 	return 0;
 }
@@ -186,18 +221,18 @@ static void read_address_book(void) {
 gint start_address_completion(void)
 {
 	clear_completion_cache();
-	if (!g_ref_count) {
+	if (!ref_count) {
 		init_all();
 		/* open the address book */
 		read_address_book();
 		/* merge the completion entry list into g_completion */
-		if (g_completion_list)
-			g_completion_add_items(g_completion, g_completion_list);
+		if (completion_list)
+			g_completion_add_items(completion, completion_list);
 	}
-	g_ref_count++;
-	debug_print("start_address_completion ref count %d\n", g_ref_count);
+	ref_count++;
+	debug_print("start_address_completion ref count %d\n", ref_count);
 
-	return g_list_length(g_completion_list);
+	return g_list_length(completion_list);
 }
 
 /* get_address_from_edit() - returns a possible address (or a part)
@@ -270,6 +305,36 @@ void replace_address_in_edit(GtkEntry *entry, const gchar *newtext,
 	gtk_editable_set_position(GTK_EDITABLE(entry), -1);
 }
 
+#if 0
+static gint insert_address_func(gconstpointer a, gconstpointer b)
+{
+	const address_entry *ae1 = a;
+	const address_entry *ae2 = b;
+	gchar *s1, *s2;
+	gint val;
+
+	if (!a || !b)
+		return -1;
+
+	s1 = g_utf8_casefold(ae1->address, -1);
+	s2 = g_utf8_casefold(ae2->address, -1);
+	val = g_utf8_collate(s1, s2);
+	g_free(s2);
+	g_free(s1);
+	if (val != 0)
+		return val;
+	s1 = g_utf8_casefold(ae1->name, -1);
+	s2 = g_utf8_casefold(ae2->name, -1);
+	val = g_utf8_collate(s1, s2);
+	g_free(s2);
+	g_free(s1);
+	if (val != 0)
+		return val;
+
+	return 0;
+}
+#endif
+
 /* complete_address() - tries to complete an addres, and returns the
  * number of addresses found. use get_complete_address() to get one.
  * returns zero if no match was found, otherwise the number of addresses,
@@ -285,11 +350,11 @@ guint complete_address(const gchar *str)
 	g_return_val_if_fail(str != NULL, 0);
 
 	clear_completion_cache();
-	g_completion_prefix = g_strdup(str);
+	completion_prefix = g_strdup(str);
 
 	/* g_completion is case sensitive */
 	d = g_utf8_strdown(str, -1);
-	result = g_completion_complete(g_completion, d, NULL);
+	result = g_completion_complete(completion, d, NULL);
 
 	count = g_list_length(result);
 	if (count) {
@@ -298,22 +363,27 @@ guint complete_address(const gchar *str)
 		     result != NULL;
 		     result = g_list_next(result)) {
 			ce = (completion_entry *)(result->data);
-			if (NULL == g_slist_find(g_completion_addresses,
+			if (NULL == g_slist_find(completion_addresses,
 						 ce->ref)) {
 				cpl++;
-				g_completion_addresses =
-					g_slist_append(g_completion_addresses,
+				completion_addresses =
+					g_slist_append(completion_addresses,
 						       ce->ref);
+#if 0
+					g_slist_insert_sorted
+						(completion_addresses, ce->ref,
+						 insert_address_func);
+#endif
 			}
 		}
 		count = cpl + 1;	/* index 0 is the original prefix */
-		g_completion_next = 1;	/* we start at the first completed one */
+		completion_next = 1;	/* we start at the first completed one */
 	} else {
-		g_free(g_completion_prefix);
-		g_completion_prefix = NULL;
+		g_free(completion_prefix);
+		completion_prefix = NULL;
 	}
 
-	g_completion_count = count;
+	completion_count = count;
 
 	g_free(d);
 
@@ -328,13 +398,13 @@ gchar *get_complete_address(gint index)
 	const address_entry *p;
 	gchar *address = NULL;
 
-	if (index < g_completion_count) {
+	if (index < completion_count) {
 		if (index == 0)
-			address = g_strdup(g_completion_prefix);
+			address = g_strdup(completion_prefix);
 		else {
 			/* get something from the unique addresses */
 			p = (address_entry *)g_slist_nth_data
-				(g_completion_addresses, index - 1);
+				(completion_addresses, index - 1);
 			if (p != NULL) {
 				if (!p->name || p->name[0] == '\0')
 					address = g_strdup_printf(p->address);
@@ -357,10 +427,10 @@ gchar *get_next_complete_address(void)
 	if (is_completion_pending()) {
 		gchar *res;
 
-		res = get_complete_address(g_completion_next);
-		g_completion_next += 1;
-		if (g_completion_next >= g_completion_count)
-			g_completion_next = 0;
+		res = get_complete_address(completion_next);
+		completion_next += 1;
+		if (completion_next >= completion_count)
+			completion_next = 0;
 
 		return res;
 	} else
@@ -370,15 +440,15 @@ gchar *get_next_complete_address(void)
 gchar *get_prev_complete_address(void)
 {
 	if (is_completion_pending()) {
-		int n = g_completion_next - 2;
+		int n = completion_next - 2;
 
 		/* real previous */
-		n = (n + (g_completion_count * 5)) % g_completion_count;
+		n = (n + (completion_count * 5)) % completion_count;
 
 		/* real next */
-		g_completion_next = n + 1;
-		if (g_completion_next >=  g_completion_count)
-			g_completion_next = 0;
+		completion_next = n + 1;
+		if (completion_next >=  completion_count)
+			completion_next = 0;
 		return get_complete_address(n);
 	} else
 		return NULL;
@@ -387,7 +457,7 @@ gchar *get_prev_complete_address(void)
 guint get_completion_count(void)
 {
 	if (is_completion_pending())
-		return g_completion_count;
+		return completion_count;
 	else
 		return 0;
 }
@@ -396,15 +466,15 @@ guint get_completion_count(void)
 void clear_completion_cache(void)
 {
 	if (is_completion_pending()) {
-		if (g_completion_prefix)
-			g_free(g_completion_prefix);
+		if (completion_prefix)
+			g_free(completion_prefix);
 
-		if (g_completion_addresses) {
-			g_slist_free(g_completion_addresses);
-			g_completion_addresses = NULL;
+		if (completion_addresses) {
+			g_slist_free(completion_addresses);
+			completion_addresses = NULL;
 		}
 
-		g_completion_count = g_completion_next = 0;
+		completion_count = completion_next = 0;
 	}
 }
 
@@ -412,7 +482,7 @@ gboolean is_completion_pending(void)
 {
 	/* check if completion pending, i.e. we might satisfy a request for the next
 	 * or previous address */
-	 return g_completion_count;
+	 return completion_count;
 }
 
 /* invalidate_address_completion() - should be called if address book
@@ -420,30 +490,30 @@ gboolean is_completion_pending(void)
  */
 gint invalidate_address_completion(void)
 {
-	if (g_ref_count) {
+	if (ref_count) {
 		/* simply the same as start_address_completion() */
 		debug_print("Invalidation request for address completion\n");
 		free_all();
 		init_all();
 		read_address_book();
-		if (g_completion_list)
-			g_completion_add_items(g_completion, g_completion_list);
+		if (completion_list)
+			g_completion_add_items(completion, completion_list);
 		clear_completion_cache();
 	}
 
-	return g_list_length(g_completion_list);
+	return g_list_length(completion_list);
 }
 
 gint end_address_completion(void)
 {
 	clear_completion_cache();
 
-	if (0 == --g_ref_count)
+	if (0 == --ref_count)
 		free_all();
 
-	debug_print("end_address_completion ref count %d\n", g_ref_count);
+	debug_print("end_address_completion ref count %d\n", ref_count);
 
-	return g_ref_count; 
+	return ref_count; 
 }
 
 
@@ -483,7 +553,7 @@ static gboolean completion_window_key_press
 
 static void completion_window_advance_to_row(GtkCList *clist, gint row)
 {
-	g_return_if_fail(row < g_completion_count);
+	g_return_if_fail(row < completion_count);
 	gtk_clist_select_row(clist, row, 0);
 }
 
@@ -496,8 +566,8 @@ static void completion_window_advance_selection(GtkCList *clist, gboolean forwar
 
 	row = GPOINTER_TO_INT(clist->selection->data);
 
-	row = forward ? (row + 1) % g_completion_count :
-			(row - 1) < 0 ? g_completion_count - 1 : row - 1;
+	row = forward ? (row + 1) % completion_count :
+			(row - 1) < 0 ? completion_count - 1 : row - 1;
 
 	gtk_clist_freeze(clist);
 	completion_window_advance_to_row(clist, row);					

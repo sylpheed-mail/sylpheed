@@ -1,5 +1,13 @@
 2007-04-26
 
+	* src/addressbook.c: addressbook_load_completion(): added nickname to
+	  the callback argument for completion only. Give priority to display
+	  name rather than nickname.
+	* src/addr_compl.c: removed g_ prefix from non-glib symbols. Removed
+	  duplicated candidates.
+
+2007-04-26
+
 	* src/main.c: win32: disable autocheck timer while suspending to
 	  prevent network error on resume.
 
