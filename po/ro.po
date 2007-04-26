@@ -1,12 +1,12 @@
-# Copyright (C) 2000 - 2006 Free Software Foundation, Inc.
-# Cristian Secară <cristi AT secarica DOT ro>, 2006.
+# Copyright (C) 2000 - 2007 Free Software Foundation, Inc.
+# Cristian Secară <cristi AT secarica DOT ro>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-19 13:44+0900\n"
-"PO-Revision-Date: 2007-04-19 19:17+0200\n"
+"POT-Creation-Date: 2007-04-26 17:43+0900\n"
+"PO-Revision-Date: 2007-04-22 14:50+0200\n"
 "Last-Translator: Cristian Secară <cristi@secarica.ro>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -318,7 +318,7 @@ msgstr "folderul sursă este identic cu cel destinație.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Copiere mesaj %s/%d în %s ...\n"
 
-#: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:149
+#: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:153
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -442,20 +442,17 @@ msgstr "A apărut o eroare în timpul trimiterii\n"
 msgid "Error occurred while sending command\n"
 msgstr "A apărut o eroare în timpul trimiterii comenzii\n"
 
-# hm ? greting ?
 #: libsylph/pop.c:155
 msgid "Required APOP timestamp not found in greeting\n"
-msgstr "Nu s-a găsit în salut marcajul de timp APOP necesar \n"
+msgstr "Nu s-a găsit marca de timp APOP necesară în salutul serverului\n"
 
 #: libsylph/pop.c:162
 msgid "Timestamp syntax error in greeting\n"
-msgstr "Eroare de sintaxă timestamp\n"
+msgstr "Eroare de sintaxă în marca de timp a salutului serverului\n"
 
-# hm ? greting ?
 #: libsylph/pop.c:170
-#, fuzzy
 msgid "Invalid timestamp in greeting\n"
-msgstr "Nu s-a găsit în salut marcajul de timp APOP necesar \n"
+msgstr "Marcă de timp invalidă în salutul serverului\n"
 
 #: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
@@ -1227,11 +1224,11 @@ msgstr "Adrese comune:"
 msgid "Personal address"
 msgstr "Adrese personale:"
 
-#: src/alertpanel.c:142 src/compose.c:5741 src/main.c:668
+#: src/alertpanel.c:142 src/compose.c:5741 src/main.c:676
 msgid "Notice"
 msgstr "Notificare"
 
-#: src/alertpanel.c:155 src/main.c:782
+#: src/alertpanel.c:155 src/main.c:790
 msgid "Warning"
 msgstr "Avertisment"
 
@@ -2219,7 +2216,7 @@ msgstr "Folderul '%s' nu a putut fi creat."
 
 #: src/folderview.c:247 src/folderview.c:269
 msgid "/Create _new folder..."
-msgstr "/Crează folder _nou..."
+msgstr "/Crează un folder _nou..."
 
 #: src/folderview.c:248 src/folderview.c:270 src/folderview.c:296
 msgid "/_Rename folder..."
@@ -2886,20 +2883,20 @@ msgstr "Introduceți parola"
 msgid "Protocol log"
 msgstr "Log protocol"
 
-#: src/main.c:202
+#: src/main.c:206
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread nu este suportat de glib.\n"
 
-#: src/main.c:452
+#: src/main.c:460
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Utilizare: %s [OPȚIUNE]...\n"
 
-#: src/main.c:455
+#: src/main.c:463
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    deschide fereastra de compoziție"
 
-#: src/main.c:456
+#: src/main.c:464
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2910,23 +2907,23 @@ msgstr ""
 "specificate\n"
 "                         atașate"
 
-#: src/main.c:459
+#: src/main.c:467
 msgid "  --receive              receive new messages"
 msgstr "  --receive              primește mesaje noi"
 
-#: src/main.c:460
+#: src/main.c:468
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          primește mesaje noi pentru toate conturile"
 
-#: src/main.c:461
+#: src/main.c:469
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 trimite toate mesajele din coada de așteptare"
 
-#: src/main.c:462
+#: src/main.c:470
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [folder]...   arată numărul total de mesaje"
 
-#: src/main.c:463
+#: src/main.c:471
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2934,38 +2931,38 @@ msgstr ""
 "  --status-full [folder]...\n"
 "                         arată starea fiecărui folder"
 
-#: src/main.c:465
+#: src/main.c:473
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 "  --configdir dirname    specifică directorul care conține fișierele de "
 "configurare"
 
-#: src/main.c:466
+#: src/main.c:474
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 ieșire Sylpheed"
 
-#: src/main.c:467
+#: src/main.c:475
 msgid "  --debug                debug mode"
 msgstr "  --debug                mod debug"
 
-#: src/main.c:468
+#: src/main.c:476
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 afișază acest ajutor și ieși"
 
-#: src/main.c:469
+#: src/main.c:477
 msgid "  --version              output version information and exit"
 msgstr "  --version              afișază versiunea și ieși"
 
-#: src/main.c:473
+#: src/main.c:481
 msgid "Press any key..."
 msgstr "Apăsați orice tastă..."
 
-#: src/main.c:612
+#: src/main.c:620
 msgid "Filename encoding"
 msgstr "Codare nume fișier"
 
-#: src/main.c:613
+#: src/main.c:621
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2989,21 +2986,21 @@ msgstr ""
 "\n"
 "Continuați ?"
 
-#: src/main.c:669
+#: src/main.c:677
 msgid "Composing message exists. Really quit?"
 msgstr ""
 "Există cel puțin un mesaj în curs de compunere.\n"
 "Sigur doriți să ieșiți ?"
 
-#: src/main.c:680
+#: src/main.c:688
 msgid "Queued messages"
 msgstr "Mesaje în coada de așteptare"
 
-#: src/main.c:681
+#: src/main.c:689
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Există mesaje netrimise în coada de așteptare. Ieșiți acum ?"
 
-#: src/main.c:783
+#: src/main.c:791
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3012,15 +3009,15 @@ msgstr ""
 "Suportul pentru OpenPGP a fost dezactivat."
 
 #. remote command mode
-#: src/main.c:946
+#: src/main.c:1000
 msgid "another Sylpheed is already running.\n"
 msgstr "rulează deja o altă sesiune Sylpheed.\n"
 
-#: src/main.c:1196
+#: src/main.c:1250
 msgid "Migration of configuration"
 msgstr "Migrarea configurației"
 
-#: src/main.c:1197
+#: src/main.c:1251
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3034,7 +3031,7 @@ msgstr "/_Fișier/_Folder"
 
 #: src/mainwindow.c:522
 msgid "/_File/_Folder/Create _new folder..."
-msgstr "/_Fișier/_Folder/Crează folder _nou..."
+msgstr "/_Fișier/_Folder/Crează un folder _nou..."
 
 #: src/mainwindow.c:524
 msgid "/_File/_Folder/_Rename folder..."
