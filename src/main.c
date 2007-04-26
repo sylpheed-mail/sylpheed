@@ -91,6 +91,7 @@
 
 #ifdef G_OS_WIN32
 #  include <windows.h>
+#  include <pbt.h>
 #  include <fcntl.h>
 #endif
 
@@ -125,6 +126,9 @@ static void parse_gtkrc_files		(void);
 static void setup_rc_dir		(void);
 static void check_gpg			(void);
 static void set_log_handlers		(gboolean	 enable);
+#ifdef G_OS_WIN32
+static void process_win32_message	(void);
+#endif
 
 static gchar *get_socket_name		(void);
 static gint prohibit_duplicate_launch	(void);
@@ -286,6 +290,10 @@ int main(int argc, char *argv[])
 	}
 
 	set_log_handlers(TRUE);
+
+#ifdef G_OS_WIN32
+	process_win32_message();
+#endif
 
 	account_read_config_all();
 	account_set_menu();
@@ -890,6 +898,52 @@ static void set_log_handlers(gboolean enable)
 	}
 #endif
 }
+
+#ifdef G_OS_WIN32
+static LRESULT CALLBACK
+wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+{
+	if (message == WM_POWERBROADCAST) {
+		debug_print("WM_POWERBROADCAST received: wparam = %d\n",
+			    wparam);
+		if (wparam == PBT_APMSUSPEND || wparam == PBT_APMSTANDBY) {
+			debug_print("suspend now\n");
+			inc_autocheck_timer_remove();
+		} else if (wparam == PBT_APMRESUMESUSPEND ||
+			   wparam == PBT_APMRESUMESTANDBY) {
+			debug_print("resume now\n");
+			inc_autocheck_timer_set();
+		}
+	}
+
+	return DefWindowProc(hwnd, message, wparam, lparam);
+}
+
+static void process_win32_message(void)
+{
+	WNDCLASS wclass;
+	static HWND hwnd = NULL;
+	ATOM klass;
+	HINSTANCE hmodule = GetModuleHandle(NULL);
+
+	if (hwnd)
+		return;
+
+	memset(&wclass, 0, sizeof(WNDCLASS));
+	wclass.lpszClassName = "sylpheed-observer";
+	wclass.lpfnWndProc   = wndproc;
+	wclass.hInstance     = hmodule;
+
+	klass = RegisterClass(&wclass);
+	if (!klass)
+		return;
+
+	hwnd = CreateWindow(MAKEINTRESOURCE(klass), NULL, WS_POPUP,
+			    0, 0, 1, 1, NULL, NULL, hmodule, NULL);
+	if (!hwnd)
+		UnregisterClass(MAKEINTRESOURCE(klass), hmodule);
+}
+#endif
 
 static gchar *get_socket_name(void)
 {
