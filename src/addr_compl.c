@@ -165,17 +165,18 @@ static gint address_entry_find_func(gconstpointer a, gconstpointer b)
 static gint add_address(const gchar *name, const gchar *address, const gchar *nickname)
 {
 	address_entry    *ae;
-	completion_entry *ce1;
-	completion_entry *ce2;
-	completion_entry *ce3 = NULL;
+	completion_entry *name_ce = NULL;
+	completion_entry *nick_ce = NULL;
+	completion_entry *addr_ce;
 	GList            *found;
 
-	if (!name || !address) return -1;
+	if (!address) return -1;
 
-	ce1 = g_new0(completion_entry, 1),
-	ce2 = g_new0(completion_entry, 1);
-	if (nickname)
-		ce3 = g_new0(completion_entry, 1);
+	if (name && *name)
+		name_ce = g_new0(completion_entry, 1);
+	if (nickname && *nickname)
+		nick_ce = g_new0(completion_entry, 1);
+	addr_ce = g_new0(completion_entry, 1);
 
 	ae = g_new0(address_entry, 1);
 	ae->name    = g_strdup(name);
@@ -190,21 +191,23 @@ static gint add_address(const gchar *name, const gchar *address, const gchar *ni
 		address_list = g_list_append(address_list, ae);
 
 	/* GCompletion list is case sensitive */
-	ce1->string = g_utf8_strdown(name, -1);
-	ce2->string = g_utf8_strdown(address, -1);
-	if (ce3 && nickname)
-		ce3->string = g_utf8_strdown(nickname, -1);
+	if (name_ce)
+		name_ce->string = g_utf8_strdown(name, -1);
+	if (nick_ce)
+		nick_ce->string = g_utf8_strdown(nickname, -1);
+	addr_ce->string = g_utf8_strdown(address, -1);
 
-	ce1->ref = ce2->ref = ae;
-	if (ce3)
-		ce3->ref = ae;
+	if (name_ce)
+		name_ce->ref = ae;
+	if (nick_ce)
+		nick_ce->ref = ae;
+	addr_ce->ref = ae;
 
-	debug_print("adding %s <%s>\n", ae->name, ae->address);
-
-	completion_list = g_list_append(completion_list, ce1);
-	completion_list = g_list_append(completion_list, ce2);
-	if (ce3)
-		completion_list = g_list_append(completion_list, ce3);
+	if (name_ce)
+		completion_list = g_list_append(completion_list, name_ce);
+	if (nick_ce)
+		completion_list = g_list_append(completion_list, nick_ce);
+	completion_list = g_list_append(completion_list, addr_ce);
 
 	return 0;
 }
@@ -624,6 +627,26 @@ static void completion_window_apply_selection(GtkCList *clist, GtkEntry *entry)
 	replace_address_in_edit(entry, text, cursor_pos);
 }
 
+static void completion_window_apply_selection_address_only(GtkCList *clist, GtkEntry *entry)
+{
+	gchar *address = NULL;
+	address_entry *ae;
+	gint   cursor_pos, row;
+
+	g_return_if_fail(clist != NULL);
+	g_return_if_fail(entry != NULL);
+	g_return_if_fail(clist->selection != NULL);
+
+	row = GPOINTER_TO_INT(clist->selection->data);
+
+	ae = (address_entry *)g_slist_nth_data(completion_addresses, row - 1);
+	if (ae && ae->address) {
+		address = get_address_from_edit(entry, &cursor_pos);
+		g_free(address);
+		replace_address_in_edit(entry, ae->address, cursor_pos);
+	}
+}
+
 /* should be called when creating the main window containing address
  * completion entries */
 void address_completion_start(GtkWidget *mainwindow)
@@ -713,11 +736,7 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 			 * reported by the system. */
 			ev->keyval = GDK_AudibleBell_Enable;
 			ev->state &= ~GDK_SHIFT_MASK;
-			//gtk_signal_emit_stop_by_name(G_OBJECT(entry),
-			//			     "key_press_event");
-			return TRUE; //
-		} else {
-			/* old behaviour */
+			return TRUE;
 		}
 	} else if (ev->keyval == GDK_Shift_L
 		|| ev->keyval == GDK_Shift_R
@@ -974,6 +993,11 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 
 	/* look for presses that accept the selection */
 	if (event->keyval == GDK_Return || event->keyval == GDK_space) {
+		/* insert address only if shift or control is pressed */
+		if (event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK)) {
+			completion_window_apply_selection_address_only
+				(GTK_CLIST(clist), GTK_ENTRY(entry));
+		}
 		clear_completion_cache();
 		gtk_widget_destroy(*completion_window);
 		*completion_window = NULL;
