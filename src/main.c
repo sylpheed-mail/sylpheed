@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,6 +116,9 @@ static struct RemoteCmd {
 	GPtrArray *status_full_folders;
 	gboolean configdir;
 	gboolean exit;
+#ifdef G_OS_WIN32
+	gushort ipcport;
+#endif
 } cmd;
 
 static void parse_cmd_opt		(int		 argc,
@@ -360,6 +363,42 @@ static void cleanup_console(void)
 #endif
 }
 
+#ifdef G_OS_WIN32
+static void read_ini_file(void)
+{
+	static gushort ipcport = REMOTE_CMD_PORT;
+	static gchar *confdir = NULL;
+
+	static PrefParam param[] = {
+		{"ipcport", "50215", &ipcport, P_USHORT},
+		{"configdir", NULL, &confdir, P_STRING},
+
+		{NULL, NULL, NULL, P_OTHER}
+	};
+
+	gchar *file;
+
+	file = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "sylpheed.ini",
+			   NULL);
+	if (!is_file_exist(file)) {
+		g_free(file);
+		return;
+	}
+
+	prefs_read_config(param, "Sylpheed", file,
+			  conv_get_locale_charset_str());
+	g_free(file);
+
+	cmd.ipcport = ipcport;
+	if (confdir) {
+		set_rc_dir(confdir);
+		g_free(confdir);
+		confdir = NULL;
+		cmd.configdir = TRUE;
+	}
+}
+#endif
+
 static void parse_cmd_opt(int argc, char *argv[])
 {
 	gint i;
@@ -452,6 +491,13 @@ static void parse_cmd_opt(int argc, char *argv[])
 				cmd.configdir = TRUE;
 				i++;
 			}
+#ifdef G_OS_WIN32
+		} else if (!strncmp(argv[i], "--ipcport", 9)) {
+			if (argv[i + 1]) {
+				cmd.ipcport = atoi(argv[i + 1]);
+				i++;
+			}
+#endif
 		} else if (!strncmp(argv[i], "--exit", 6)) {
 			cmd.exit = TRUE;
 		} else if (!strncmp(argv[i], "--help", 6)) {
@@ -471,6 +517,9 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print("%s\n", _("  --status-full [folder]...\n"
 				"                         show the status of each folder"));
 			g_print("%s\n", _("  --configdir dirname    specify directory which stores configuration files"));
+#ifdef G_OS_WIN32
+			g_print("%s\n", _("  --ipcport portnum      specify port for IPC remote commands"));
+#endif
 			g_print("%s\n", _("  --exit                 exit Sylpheed"));
 			g_print("%s\n", _("  --debug                debug mode"));
 			g_print("%s\n", _("  --help                 display this help and exit"));
@@ -570,6 +619,10 @@ static void app_init(void)
 #ifdef G_OS_UNIX
 	/* ignore SIGPIPE signal for preventing sudden death of program */
 	signal(SIGPIPE, SIG_IGN);
+#endif
+
+#ifdef G_OS_WIN32
+	read_ini_file();
 #endif
 }
 
@@ -975,13 +1028,13 @@ static gint prohibit_duplicate_launch(void)
 		return -1;
 	}
 	if (GetLastError() != ERROR_ALREADY_EXISTS) {
-		sock = fd_open_inet(REMOTE_CMD_PORT);
+		sock = fd_open_inet(cmd.ipcport ? cmd.ipcport : REMOTE_CMD_PORT);
 		if (sock < 0)
 			return 0;
 		return sock;
 	}
 
-	sock = fd_connect_inet(REMOTE_CMD_PORT);
+	sock = fd_connect_inet(cmd.ipcport ? cmd.ipcport : REMOTE_CMD_PORT);
 	if (sock < 0)
 		return -1;
 #else
