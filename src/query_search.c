@@ -973,7 +973,7 @@ static FolderItem *query_search_create_vfolder(FolderItem *parent,
 	}
 
 	if (parent->path)
-		path = g_strconcat(parent->path, G_DIR_SEPARATOR_S, name, NULL);
+		path = g_strconcat(parent->path, "/", name, NULL);
 	else
 		path = g_strdup(name);
 
