@@ -1,5 +1,18 @@
 Changes of Sylpheed
 
+* 2.4.1 (stable)
+
+    * If shift or control key is pressed on address completion, only address
+      string is inserted now.
+    * When completing addresses, display name is used rather than nickname.
+    * Win32: The sylpheed.ini file is read on startup if exist, and
+      '--ipcport' option was also added.
+    * Win32: The autocheck timer is disabled while suspending to prevent
+      network error on resuming.
+    * Win32: OpenSSL library was replaced with self-compiled DLLs.
+    * Win32: A bug that the folder path separator was not processed correctly
+      when creating and renaming search folders was fixed.
+
 * 2.4.0 (stable)
 
     * Invalid APOP timestamp is rejected now (CVE-2007-1558).

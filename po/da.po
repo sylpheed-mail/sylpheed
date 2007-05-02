@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 17:43+0900\n"
+"POT-Creation-Date: 2007-05-02 14:20+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -314,7 +314,7 @@ msgstr "fra og til mappe er ens.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Kopierer meddelelse %s%c%d til %s ...\n"
 
-#: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:153
+#: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:156
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -1211,11 +1211,11 @@ msgstr "Normale adresser"
 msgid "Personal address"
 msgstr "Personlige adresser"
 
-#: src/alertpanel.c:142 src/compose.c:5741 src/main.c:676
+#: src/alertpanel.c:142 src/compose.c:5741 src/main.c:729
 msgid "Notice"
 msgstr "Note"
 
-#: src/alertpanel.c:155 src/main.c:790
+#: src/alertpanel.c:155 src/main.c:843
 msgid "Warning"
 msgstr "Advarsel"
 
@@ -2914,20 +2914,20 @@ msgstr "Indtast adgangskode"
 msgid "Protocol log"
 msgstr "Protokol log"
 
-#: src/main.c:206
+#: src/main.c:209
 msgid "g_thread is not supported by glib.\n"
 msgstr "g_thread er ikke understøttet i glib.\n"
 
-#: src/main.c:460
+#: src/main.c:506
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Bruges som: %s [OPTION]...\n"
 
-#: src/main.c:463
+#: src/main.c:509
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresse]    åbner nyt meddelelses vindue"
 
-#: src/main.c:464
+#: src/main.c:510
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2937,23 +2937,23 @@ msgstr ""
 "                         åbn ny meddelelse med disse filer vedhæftet\n"
 "                         ."
 
-#: src/main.c:467
+#: src/main.c:513
 msgid "  --receive              receive new messages"
 msgstr "  --receive              modtager nye meddelelser"
 
-#: src/main.c:468
+#: src/main.c:514
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          modtager nye meddelelser fra alle konti"
 
-#: src/main.c:469
+#: src/main.c:515
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 send alle meddelelser i kø"
 
-#: src/main.c:470
+#: src/main.c:516
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mappe]...   viser antal meddelelser"
 
-#: src/main.c:471
+#: src/main.c:517
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2961,41 +2961,45 @@ msgstr ""
 "  --status-full [mappe]...\n"
 "                         viser status for hver mappe"
 
-#: src/main.c:473
+#: src/main.c:519
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:474
+#: src/main.c:521
+msgid "  --ipcport portnum      specify port for IPC remote commands"
+msgstr ""
+
+#: src/main.c:523
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:475
+#: src/main.c:524
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:476
+#: src/main.c:525
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 viser denne hjælp"
 
-#: src/main.c:477
+#: src/main.c:526
 msgid "  --version              output version information and exit"
 msgstr "  --version              viser version og afslutter"
 
-#: src/main.c:481
+#: src/main.c:530
 #, fuzzy
 msgid "Press any key..."
 msgstr ""
 "eller tast `y'.\n"
 "\n"
 
-#: src/main.c:620
+#: src/main.c:673
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Udgående tegnsæt"
 
-#: src/main.c:621
+#: src/main.c:674
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3009,19 +3013,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:677
+#: src/main.c:730
 msgid "Composing message exists. Really quit?"
 msgstr "Du er ved at skrive ny meddelelse. Virklig afslutte?"
 
-#: src/main.c:688
+#: src/main.c:741
 msgid "Queued messages"
 msgstr "Meddeleser i kø"
 
-#: src/main.c:689
+#: src/main.c:742
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Nogle usendte meddelelser i kø. Afslut nu?"
 
-#: src/main.c:791
+#: src/main.c:844
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3030,16 +3034,16 @@ msgstr ""
 "OpenPGP ikke mulig."
 
 #. remote command mode
-#: src/main.c:1000
+#: src/main.c:1053
 msgid "another Sylpheed is already running.\n"
 msgstr "sylpheed kører allerede.\n"
 
-#: src/main.c:1250
+#: src/main.c:1303
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Handlingsopsæt"
 
-#: src/main.c:1251
+#: src/main.c:1304
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

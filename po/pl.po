@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 1.9.8 \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 17:43+0900\n"
+"POT-Creation-Date: 2007-05-02 14:20+0900\n"
 "PO-Revision-Date: 2005-03-05 18:57+0100\n"
 "Last-Translator: Wit Wilinski <madman at linux dot bydg dot org>\n"
 "Language-Team: POLISH <pl@li.org>\n"
@@ -310,7 +310,7 @@ msgstr "katalog źródłowy jest taki sam jak docelowy.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Kopiowanie wiadomości %s%c%d do %s ...\n"
 
-#: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:153
+#: libsylph/mh.c:1001 libsylph/mh.c:1014 src/main.c:156
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -1214,11 +1214,11 @@ msgstr "Wspólny adres:"
 msgid "Personal address"
 msgstr "Osobisty adres:"
 
-#: src/alertpanel.c:142 src/compose.c:5741 src/main.c:676
+#: src/alertpanel.c:142 src/compose.c:5741 src/main.c:729
 msgid "Notice"
 msgstr "Notatka"
 
-#: src/alertpanel.c:155 src/main.c:790
+#: src/alertpanel.c:155 src/main.c:843
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
@@ -2872,20 +2872,20 @@ msgstr "Wprowadź hasło"
 msgid "Protocol log"
 msgstr "Dziennik protokołu"
 
-#: src/main.c:206
+#: src/main.c:209
 msgid "g_thread is not supported by glib.\n"
 msgstr "Bibltioteka glib nie obsługuje wywołania g_thread.\n"
 
-#: src/main.c:460
+#: src/main.c:506
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Użycie: %s [OPCJE]...\n"
 
-#: src/main.c:463
+#: src/main.c:509
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adres]      otwiera okno tworzenia wiadomości"
 
-#: src/main.c:464
+#: src/main.c:510
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -2895,23 +2895,23 @@ msgstr ""
 "                         otwiera okno tworzenia wiadomości z plikami,\n"
 "                         które mają zostać dołączone"
 
-#: src/main.c:467
+#: src/main.c:513
 msgid "  --receive              receive new messages"
 msgstr "  --receive              odbiera nowe wiadomości"
 
-#: src/main.c:468
+#: src/main.c:514
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          odbiera nowe wiadomości dla wszystkich kont"
 
-#: src/main.c:469
+#: src/main.c:515
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 wysyła wszystkie skolejkowane wiadomości"
 
-#: src/main.c:470
+#: src/main.c:516
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [katalog]...    pokazuje łączną liczbę wiadomości"
 
-#: src/main.c:471
+#: src/main.c:517
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -2919,39 +2919,43 @@ msgstr ""
 "  --status-full [katalog]...\n"
 "                         pokazuje łączną liczbę wiadomości"
 
-#: src/main.c:473
+#: src/main.c:519
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:474
+#: src/main.c:521
+msgid "  --ipcport portnum      specify port for IPC remote commands"
+msgstr ""
+
+#: src/main.c:523
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                tryb debugowania"
 
-#: src/main.c:475
+#: src/main.c:524
 msgid "  --debug                debug mode"
 msgstr "  --debug                tryb debugowania"
 
-#: src/main.c:476
+#: src/main.c:525
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 wyświetla tę pomoc i wychodzi"
 
-#: src/main.c:477
+#: src/main.c:526
 msgid "  --version              output version information and exit"
 msgstr ""
 "  --version              wyświetla informację o wersji i kończy działanie"
 
-#: src/main.c:481
+#: src/main.c:530
 msgid "Press any key..."
 msgstr ""
 
-#: src/main.c:620
+#: src/main.c:673
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Kodowanie wyjściowe"
 
-#: src/main.c:621
+#: src/main.c:674
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -2965,19 +2969,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:677
+#: src/main.c:730
 msgid "Composing message exists. Really quit?"
 msgstr "Tworzenie nowej wiadomości. Czy zakończyć?"
 
-#: src/main.c:688
+#: src/main.c:741
 msgid "Queued messages"
 msgstr "Skolejkowane wiadomości"
 
-#: src/main.c:689
+#: src/main.c:742
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Niektóre niewysłane wiadomości zostały skolejkowane. Czy wyjść?"
 
-#: src/main.c:791
+#: src/main.c:844
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -2986,15 +2990,15 @@ msgstr ""
 "wersja jest zbyt stara. Obsługa OpenPGP została wyłączona."
 
 #. remote command mode
-#: src/main.c:1000
+#: src/main.c:1053
 msgid "another Sylpheed is already running.\n"
 msgstr "Jest już uruchomiona kopia programu Sylpheed.\n"
 
-#: src/main.c:1250
+#: src/main.c:1303
 msgid "Migration of configuration"
 msgstr "Migracja ustawień"
 
-#: src/main.c:1251
+#: src/main.c:1304
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
