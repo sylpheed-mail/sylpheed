@@ -2099,7 +2099,7 @@ static void folderview_download_cb(FolderView *folderview, guint action,
 		gchar *name, *msg;
 
 		name = trim_string(item->name, 32);
-		msg = g_strdup_printf("Download all messages under '%s' ?",
+		msg = g_strdup_printf(_("Download all messages under '%s' ?"),
 				      name);
 		g_free(name);
 		if (alertpanel(_("Download all messages"), msg,
