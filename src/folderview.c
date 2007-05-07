@@ -1674,7 +1674,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||
 		    FOLDER_TYPE(folder) == F_NEWS) {
-			if (item->parent != NULL && item->no_select == FALSE &&
+			if (item->no_select == FALSE &&
 			    item->stype != F_VIRTUAL)
 				download_msg = TRUE;
 		}
@@ -2085,6 +2085,7 @@ static void folderview_download_cb(FolderView *folderview, guint action,
 {
 	MainWindow *mainwin = folderview->mainwin;
 	FolderItem *item;
+	gint ret = 0;
 
 	item = folderview_get_selected_item(folderview);
 	if (!item)
@@ -2093,6 +2094,22 @@ static void folderview_download_cb(FolderView *folderview, guint action,
 		return;
 
 	g_return_if_fail(item->folder != NULL);
+
+	if (item->parent == NULL) {
+		gchar *name, *msg;
+
+		name = trim_string(item->name, 32);
+		msg = g_strdup_printf("Download all messages under '%s' ?",
+				      name);
+		g_free(name);
+		if (alertpanel(_("Download all messages"), msg,
+			       GTK_STOCK_YES, GTK_STOCK_NO, NULL)
+		    != G_ALERTDEFAULT) {
+			g_free(msg);
+			return;
+		}
+		g_free(msg);
+	}
 
 	if (!main_window_toggle_online_if_offline(folderview->mainwin))
 		return;
@@ -2104,13 +2121,40 @@ static void folderview_download_cb(FolderView *folderview, guint action,
 	main_window_progress_on(mainwin);
 	GTK_EVENTS_FLUSH();
 	folder_set_ui_func(item->folder, folderview_download_func, NULL);
-	if (folder_item_fetch_all_msg(item) < 0) {
+
+	if (item->parent == NULL) {
+		GtkTreeModel *model = GTK_TREE_MODEL(folderview->store);
+		GtkTreeIter iter;
+		gboolean valid;
+		FolderItem *cur_item;
+
+		valid = gtkut_tree_model_find_by_column_data
+			(model, &iter, NULL, COL_FOLDER_ITEM, item);
+		while ((valid = gtkut_tree_model_next(model, &iter)) == TRUE) {
+			cur_item = NULL;
+			gtk_tree_model_get(model, &iter, COL_FOLDER_ITEM,
+					   &cur_item, -1);
+			if (!cur_item || cur_item->folder != item->folder)
+				break;
+			if (!cur_item->no_select &&
+			    cur_item->stype != F_VIRTUAL &&
+			    cur_item->stype != F_TRASH) {
+				ret = folder_item_fetch_all_msg(cur_item);
+				if (ret < 0)
+					break;
+			}
+		}
+	} else
+		ret = folder_item_fetch_all_msg(item);
+
+	if (ret < 0) {
 		gchar *name;
 
 		name = trim_string(item->name, 32);
 		alertpanel_error(_("Error occurred while downloading messages in `%s'."), name);
 		g_free(name);
 	}
+
 	folder_set_ui_func(item->folder, NULL, NULL);
 	main_window_progress_off(mainwin);
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
