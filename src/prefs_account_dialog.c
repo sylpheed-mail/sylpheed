@@ -1505,6 +1505,58 @@ static void prefs_account_privacy_create(void)
 	CREATE_RADIO_BUTTON(box, btn3, btn1, btn3_label, btn3_data);	\
 }
 
+static void pop_ssltunnel_toggled(GtkToggleButton *button, gpointer data)
+{
+	if (gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(advanced.popport_chkbtn)))
+		return;
+
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_entry_set_text(GTK_ENTRY(advanced.popport_entry), "995");
+	} else {
+		gtk_entry_set_text(GTK_ENTRY(advanced.popport_entry), "110");
+	}
+}
+
+static void imap_ssltunnel_toggled(GtkToggleButton *button, gpointer data)
+{
+	if (gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(advanced.imapport_chkbtn)))
+		return;
+
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_entry_set_text(GTK_ENTRY(advanced.imapport_entry), "993");
+	} else {
+		gtk_entry_set_text(GTK_ENTRY(advanced.imapport_entry), "143");
+	}
+}
+
+static void nntp_ssltunnel_toggled(GtkToggleButton *button, gpointer data)
+{
+	if (gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(advanced.nntpport_chkbtn)))
+		return;
+
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_entry_set_text(GTK_ENTRY(advanced.nntpport_entry), "563");
+	} else {
+		gtk_entry_set_text(GTK_ENTRY(advanced.nntpport_entry), "119");
+	}
+}
+
+static void smtp_ssltunnel_toggled(GtkToggleButton *button, gpointer data)
+{
+	if (gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(advanced.smtpport_chkbtn)))
+		return;
+
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_entry_set_text(GTK_ENTRY(advanced.smtpport_entry), "465");
+	} else {
+		gtk_entry_set_text(GTK_ENTRY(advanced.smtpport_entry), "25");
+	}
+}
+
 static void prefs_account_ssl_create(void)
 {
 	GtkWidget *vbox1;
@@ -1558,6 +1610,9 @@ static void prefs_account_ssl_create(void)
 			     _("Use STARTTLS command to start SSL session"),
 			     SSL_STARTTLS);
 
+	g_signal_connect(G_OBJECT(pop_ssltunnel_radiobtn), "toggled",
+			 G_CALLBACK(pop_ssltunnel_toggled), NULL);
+
 	PACK_FRAME (vbox1, imap_frame, _("IMAP4"));
 	vbox3 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox3);
@@ -1574,6 +1629,9 @@ static void prefs_account_ssl_create(void)
 			     imap_starttls_radiobtn,
 			     _("Use STARTTLS command to start SSL session"),
 			     SSL_STARTTLS);
+
+	g_signal_connect(G_OBJECT(imap_ssltunnel_radiobtn), "toggled",
+			 G_CALLBACK(imap_ssltunnel_toggled), NULL);
 
 	PACK_FRAME (vbox1, nntp_frame, _("NNTP"));
 	vbox4 = gtk_vbox_new (FALSE, 0);
@@ -1592,6 +1650,9 @@ static void prefs_account_ssl_create(void)
 	CREATE_RADIO_BUTTON(vbox4, nntp_ssltunnel_radiobtn, nntp_nossl_radiobtn,
 			    _("Use SSL for NNTP connection"), SSL_TUNNEL);
 
+	g_signal_connect(G_OBJECT(nntp_ssltunnel_radiobtn), "toggled",
+			 G_CALLBACK(nntp_ssltunnel_toggled), NULL);
+
 	PACK_FRAME (vbox1, send_frame, _("Send (SMTP)"));
 	vbox5 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox5);
@@ -1608,6 +1669,9 @@ static void prefs_account_ssl_create(void)
 			     smtp_starttls_radiobtn,
 			     _("Use STARTTLS command to start SSL session"),
 			     SSL_STARTTLS);
+
+	g_signal_connect(G_OBJECT(smtp_ssltunnel_radiobtn), "toggled",
+			 G_CALLBACK(smtp_ssltunnel_toggled), NULL);
 
 	vbox6 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox6);
