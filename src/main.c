@@ -114,6 +114,7 @@ static struct RemoteCmd {
 	gboolean status_full;
 	GPtrArray *status_folders;
 	GPtrArray *status_full_folders;
+	gchar *open_msg;
 	gboolean configdir;
 	gboolean exit;
 #ifdef G_OS_WIN32
@@ -469,6 +470,14 @@ static void parse_cmd_opt(int argc, char *argv[])
 						g_strdup(p));
 				i++;
 				p = argv[i + 1];
+			}
+		} else if (!strncmp(argv[i], "--open", 6)) {
+			const gchar *p = argv[i + 1];
+
+			if (p && *p != '\0' && *p != '-') {
+				cmd.open_msg = g_locale_to_utf8
+					(p, -1, NULL, NULL, NULL);
+				i++;
 			}
 		} else if (!strncmp(argv[i], "--configdir", 11)) {
 			const gchar *p = argv[i + 1];
@@ -1112,6 +1121,12 @@ static gint prohibit_duplicate_launch(void)
 			if (!strncmp(buf, ".\n", 2)) break;
 			fputs(buf, stdout);
 		}
+	} else if (cmd.open_msg) {
+		gchar *str;
+
+		str = g_strdup_printf("open %s\n", cmd.open_msg);
+		fd_write_all(sock, str, strlen(str));
+		g_free(str);
 	} else if (cmd.exit) {
 		fd_write_all(sock, "exit\n", 5);
 	} else {
@@ -1237,6 +1252,37 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 		fd_write_all(sock, ".\n", 2);
 		g_free(status);
 		if (folders) g_ptr_array_free(folders, TRUE);
+	} else if (!strncmp(buf, "open", 4)) {
+		gchar *path;
+		gchar *id;
+		gchar *msg;
+		gint num;
+		FolderItem *item;
+		MsgInfo *msginfo;
+		MessageView *msgview;
+
+		strretchomp(buf);
+		if (strlen(buf) < 6 || buf[4] != ' ') {
+			fd_close(sock);
+			return TRUE;
+		}
+
+		path = buf + 5;
+		id = g_path_get_dirname(path);
+		msg = g_path_get_basename(path);
+		num = to_number(msg);
+		item = folder_find_item_from_identifier(id);
+		debug_print("open folder id: %s (msg %d)\n", id, num);
+		if (num > 0 && item) {
+			msginfo = folder_item_get_msginfo(item, num);
+			if (msginfo) {
+				msgview = messageview_create_with_new_window();
+				messageview_show(msgview, msginfo, FALSE);
+			} else
+				debug_print("message %d not found\n", num);
+		}
+		g_free(msg);
+		g_free(id);
 	} else if (!strncmp(buf, "exit", 4)) {
 		fd_close(sock);
 		app_will_exit(TRUE);

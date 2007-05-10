@@ -331,7 +331,8 @@ static gchar *mh_fetch_msg(Folder *folder, FolderItem *item, gint num)
 		if (item->last_num < 0) return NULL;
 	}
 
-	g_return_val_if_fail(num <= item->last_num, NULL);
+	if (num > item->last_num)
+		return NULL;
 
 	path = folder_item_get_path(item);
 	file = g_strconcat(path, G_DIR_SEPARATOR_S, itos(num), NULL);
