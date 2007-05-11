@@ -125,6 +125,17 @@
 #  define SUMMARY_COL_MIME_WIDTH	17
 #endif
 
+typedef enum
+{
+	QS_ALL,
+	QS_UNREAD,
+	QS_MARK,
+	QS_CLABEL,
+	QS_MIME,
+	QS_W1DAY,
+	QS_LAST5
+} QSearchCondType;
+
 static GdkPixbuf *mark_pixbuf;
 static GdkPixbuf *deleted_pixbuf;
 
@@ -240,6 +251,10 @@ static void summary_colorlabel_menu_create
 
 static GtkWidget *summary_tree_view_create
 					(SummaryView	*summaryview);
+
+static GSList *summary_qsearch_filter	(SummaryView	*summaryview,
+					 QSearchCondType type,
+					 const gchar	*key);
 
 /* callback functions */
 static void summary_filter_menu_activated
@@ -397,17 +412,6 @@ static FolderSortKey col_to_sort_key[] = {
 	SORT_BY_NUMBER,
 };
 
-typedef enum
-{
-	QS_ALL,
-	QS_UNREAD,
-	QS_MARK,
-	QS_CLABEL,
-	QS_MIME,
-	QS_W1DAY,
-	QS_RECENT5
-} QSearchCondType;
-
 static const struct {
 	QSearchCondType type;
 	FilterCondType ftype;
@@ -418,7 +422,7 @@ static const struct {
 	{QS_CLABEL,	FLT_COND_COLOR_LABEL},
 	{QS_MIME,	FLT_COND_MIME},
 	{QS_W1DAY,	-1},
-	{QS_RECENT5,	-1}
+	{QS_LAST5,	-1}
 };
 
 enum
@@ -554,7 +558,7 @@ SummaryView *summary_create(void)
 	COND_MENUITEM_ADD(_("Have attachment"), QS_MIME);
 	MENUITEM_ADD(filter_menu, menuitem, NULL, 0);
 	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
-	COND_MENUITEM_ADD(_("Last 5 days"), QS_RECENT5);
+	COND_MENUITEM_ADD(_("Last 5 days"), QS_LAST5);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(filter_optmenu), filter_menu);
 
 #undef COND_MENUITEM_ADD
@@ -818,6 +822,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		debug_print("empty folder\n\n");
 		summary_clear_all(summaryview);
 		summaryview->folder_item = item;
+		if (item)
+			item->qsearch_cond_type = QS_ALL;
 		summary_unlock(summaryview);
 		inc_unlock();
 		return TRUE;
@@ -847,8 +853,32 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 	/* set tree store and hash table from the msginfo list, and
 	   create the thread */
-	summary_set_tree_model_from_list(summaryview, mlist);
 	summaryview->all_mlist = mlist;
+	if (prefs_common.persist_qsearch_filter &&
+	    item->qsearch_cond_type > QS_ALL) {
+		gint index;
+		QSearchCondType type = item->qsearch_cond_type;
+
+		index = menu_find_option_menu_index
+			(GTK_OPTION_MENU(summaryview->filter_optmenu),
+			 GINT_TO_POINTER(type), NULL);
+		if (index > 0) {
+			gtk_option_menu_set_history
+                		(GTK_OPTION_MENU(summaryview->filter_optmenu),
+				 index);
+			summaryview->flt_mlist =
+				summary_qsearch_filter(summaryview, type, NULL);
+			summaryview->on_filter = TRUE;
+			summary_set_tree_model_from_list
+				(summaryview, summaryview->flt_mlist);
+		} else {
+			item->qsearch_cond_type = QS_ALL;
+			summary_set_tree_model_from_list(summaryview, mlist);
+		}
+	} else {
+		item->qsearch_cond_type = QS_ALL;
+		summary_set_tree_model_from_list(summaryview, mlist);
+	}
 
 	if (mlist)
 		gtk_widget_grab_focus(GTK_WIDGET(treeview));
@@ -5219,12 +5249,10 @@ void summary_qsearch_clear_entry(SummaryView *summaryview)
 	summary_qsearch(summaryview);
 }
 
-void summary_qsearch(SummaryView *summaryview)
+static GSList *summary_qsearch_filter(SummaryView *summaryview,
+				      QSearchCondType type, const gchar *key)
 {
-	QSearchCondType type;
 	FilterCondType ftype;
-	GtkWidget *menuitem;
-	const gchar *key;
 	FilterRule *status_rule = NULL;
 	FilterRule *rule = NULL;
 	FilterCond *cond;
@@ -5234,28 +5262,7 @@ void summary_qsearch(SummaryView *summaryview)
 	GSList *cur;
 
 	if (!summaryview->all_mlist)
-		return;
-
-	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->filter_menu));
-	type = GPOINTER_TO_INT
-		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
-
-	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
-	if (type == QS_ALL && (!key || *key == '\0')) {
-		summary_qsearch_reset(summaryview);
-		return;
-	}
-
-	summaryview->on_filter = FALSE;
-	g_slist_free(summaryview->flt_mlist);
-	summaryview->flt_mlist = NULL;
-	summaryview->total_flt_msg_size = 0;
-	summaryview->flt_msg_total = 0;
-	summaryview->flt_deleted = 0;
-	summaryview->flt_moved = 0;
-	summaryview->flt_copied = 0;
-	summaryview->flt_new = 0;
-	summaryview->flt_unread = 0;
+		return NULL;
 
 	switch (type) {
 	case QS_UNREAD:
@@ -5275,7 +5282,7 @@ void summary_qsearch(SummaryView *summaryview)
 		status_rule = filter_rule_new("Status filter rule", FLT_OR,
 					      cond_list, NULL);
 		break;
-	case QS_RECENT5:
+	case QS_LAST5:
 		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
 				       NULL, "5");
 		cond_list = g_slist_append(cond_list, cond);
@@ -5299,11 +5306,6 @@ void summary_qsearch(SummaryView *summaryview)
 		rule = filter_rule_new("Quick search rule", FLT_OR, cond_list,
 				       NULL);
 	}
-
-	summary_lock(summaryview);
-	main_window_cursor_wait(summaryview->mainwin);
-
-	messageview_clear(summaryview->messageview);
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
@@ -5332,6 +5334,48 @@ void summary_qsearch(SummaryView *summaryview)
 	filter_rule_free(rule);
 	filter_rule_free(status_rule);
 
+	return flt_mlist;
+}
+
+void summary_qsearch(SummaryView *summaryview)
+{
+	QSearchCondType type;
+	FilterCondType ftype;
+	GtkWidget *menuitem;
+	const gchar *key;
+	GSList *flt_mlist;
+
+	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->filter_menu));
+	type = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
+	summaryview->folder_item->qsearch_cond_type = type;
+
+	if (!summaryview->all_mlist)
+		return;
+
+	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
+	if (type == QS_ALL && (!key || *key == '\0')) {
+		summary_qsearch_reset(summaryview);
+		return;
+	}
+
+	summaryview->on_filter = FALSE;
+	g_slist_free(summaryview->flt_mlist);
+	summaryview->flt_mlist = NULL;
+	summaryview->total_flt_msg_size = 0;
+	summaryview->flt_msg_total = 0;
+	summaryview->flt_deleted = 0;
+	summaryview->flt_moved = 0;
+	summaryview->flt_copied = 0;
+	summaryview->flt_new = 0;
+	summaryview->flt_unread = 0;
+
+	summary_lock(summaryview);
+	main_window_cursor_wait(summaryview->mainwin);
+
+	messageview_clear(summaryview->messageview);
+
+	flt_mlist = summary_qsearch_filter(summaryview, type, key);
 	summaryview->on_filter = TRUE;
 	summaryview->flt_mlist = flt_mlist;
 

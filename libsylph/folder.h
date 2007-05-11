@@ -294,6 +294,7 @@ struct _FolderItem
 	GSList *mark_queue;
 
 	guint last_selected;
+	gint qsearch_cond_type;
 
 	gpointer data;
 };

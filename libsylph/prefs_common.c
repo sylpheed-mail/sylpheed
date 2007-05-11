@@ -126,6 +126,9 @@ static PrefParam param[] = {
 	{"enable_rules_hint", "TRUE", &prefs_common.enable_rules_hint, P_BOOL},
 	{"bold_unread", "TRUE", &prefs_common.bold_unread, P_BOOL},
 
+	{"persist_qsearch_filter", "TRUE", &prefs_common.persist_qsearch_filter,
+	 P_BOOL},
+
 	{"toolbar_style", "4", &prefs_common.toolbar_style, P_ENUM},
 	{"show_searchbar", "TRUE", &prefs_common.show_searchbar, P_BOOL},
 	{"show_statusbar", "TRUE", &prefs_common.show_statusbar, P_BOOL},

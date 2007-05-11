@@ -114,6 +114,8 @@ struct _PrefsCommon
 	gboolean enable_rules_hint;
 	gboolean bold_unread;
 
+	gboolean persist_qsearch_filter;
+
 	ToolbarStyle toolbar_style;
 	gboolean show_searchbar;
 	gboolean show_statusbar;
