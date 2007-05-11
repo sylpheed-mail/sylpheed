@@ -1872,7 +1872,7 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 {
 	SensitiveCond state;
-	gboolean sensitive;
+	gboolean sensitive, prev_sensitive;
 	gint n;
 	gint i = 0;
 
@@ -1924,8 +1924,18 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	n = sizeof(entry) / sizeof(entry[0]);
 	for (i = 0; i < n; i++) {
 		if (entry[i].widget) {
+			prev_sensitive =
+				GTK_WIDGET_IS_SENSITIVE(entry[i].widget);
 			sensitive = ((entry[i].cond & state) == entry[i].cond);
-			gtk_widget_set_sensitive(entry[i].widget, sensitive);
+			if (prev_sensitive != sensitive) {
+				/* workaround for GTK+ bug (#56070) */
+				if (!prev_sensitive)
+					gtk_widget_hide(entry[i].widget);
+				gtk_widget_set_sensitive(entry[i].widget,
+							 sensitive);
+				if (!prev_sensitive)
+					gtk_widget_show(entry[i].widget);
+			}
 		}
 	}
 }
