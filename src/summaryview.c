@@ -871,6 +871,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 			summaryview->on_filter = TRUE;
 			summary_set_tree_model_from_list
 				(summaryview, summaryview->flt_mlist);
+			summary_update_status(summaryview);
 		} else {
 			item->qsearch_cond_type = QS_ALL;
 			summary_set_tree_model_from_list(summaryview, mlist);
