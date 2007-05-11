@@ -1251,6 +1251,7 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 		 threaded = TRUE, ac_apply_sub = FALSE;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+	gboolean qsearch_cond_type = 0;
 	gint new = 0, unread = 0, total = 0;
 	time_t mtime = 0;
 	gboolean use_auto_to_on_reply = FALSE;
@@ -1346,6 +1347,21 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 				sort_type = SORT_ASCENDING;
 			else
 				sort_type = SORT_DESCENDING;
+		} else if (!strcmp(attr->name, "qsearch_cond")) {
+			if (!strcmp(attr->value, "all"))
+				qsearch_cond_type = 0;
+			else if (!strcmp(attr->value, "unread"))
+				qsearch_cond_type = 1;
+			else if (!strcmp(attr->value, "mark"))
+				qsearch_cond_type = 2;
+			else if (!strcmp(attr->value, "clabel"))
+				qsearch_cond_type = 3;
+			else if (!strcmp(attr->value, "mime"))
+				qsearch_cond_type = 4;
+			else if (!strcmp(attr->value, "w1day"))
+				qsearch_cond_type = 5;
+			else if (!strcmp(attr->value, "last5"))
+				qsearch_cond_type = 6;
 		} else if (!strcmp(attr->name, "account_id")) {
 			account = account_find_from_id(atoi(attr->value));
 			if (!account) g_warning("account_id: %s not found\n",
@@ -1405,6 +1421,7 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 	item->auto_replyto = auto_replyto;
 	item->trim_summary_subject = trim_summary_subject;
 	item->trim_compose_subject = trim_compose_subject;
+	item->qsearch_cond_type = qsearch_cond_type;
 	node->data = item;
 	xml_free_node(xmlnode);
 
@@ -1521,6 +1538,8 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 					"thread-date",
 					"from", "subject", "score", "label",
 					"mark", "unread", "mime", "to"};
+	static gchar *qsearch_cond_str[] = {"all", "unread", "mark", "clabel",
+					    "mime", "w1day", "last5"};
 
 	g_return_if_fail(node != NULL);
 	g_return_if_fail(fp != NULL);
@@ -1577,6 +1596,11 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 				fprintf(fp, " sort_type=\"ascending\"");
 			else
 				fprintf(fp, " sort_type=\"descending\"");
+		}
+		if (item->qsearch_cond_type > 0 &&
+		    item->qsearch_cond_type < 7) {
+			fprintf(fp, " qsearch_cond=\"%s\"",
+				qsearch_cond_str[item->qsearch_cond_type]);
 		}
 
 		fprintf(fp,
