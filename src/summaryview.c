@@ -147,6 +147,9 @@ static GdkPixbuf *forwarded_pixbuf;
 
 static GdkPixbuf *clip_pixbuf;
 
+static void summary_clear_list_full	(SummaryView		*summaryview,
+					 gboolean		 is_refresh);
+
 static GList *summary_get_selected_rows	(SummaryView		*summaryview);
 static void summary_selection_list_free	(SummaryView		*summaryview);
 
@@ -193,6 +196,10 @@ static gboolean summary_find_msg_by_msgnum
 					(SummaryView		*summaryview,
 					 guint			 msgnum,
 					 GtkTreeIter		*found);
+
+static void summary_update_display_state(SummaryView		*summaryview,
+					 guint			 disp_msgnum,
+					 guint			 sel_msgnum);
 
 static void summary_update_status	(SummaryView		*summaryview);
 
@@ -761,6 +768,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	guint displayed_msgnum = 0;
 	gboolean moved;
 	gboolean selection_done = FALSE;
+	gboolean do_qsearch = FALSE;
+	const gchar *key = NULL;
 
 	if (summary_is_locked(summaryview)) return FALSE;
 
@@ -811,7 +820,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 	folderview_set_opened_item(summaryview->folderview, item);
 
-	summary_clear_list(summaryview);
+	summary_clear_list_full(summaryview, is_refresh);
 
 	buf = NULL;
 	if (!item || !item->path || !item->parent || item->no_select ||
@@ -854,8 +863,21 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	/* set tree store and hash table from the msginfo list, and
 	   create the thread */
 	summaryview->all_mlist = mlist;
-	if (prefs_common.persist_qsearch_filter &&
-	    item->qsearch_cond_type > QS_ALL) {
+
+	if (prefs_common.persist_qsearch_filter || is_refresh) {
+		if (item->qsearch_cond_type > QS_ALL)
+			do_qsearch = TRUE;
+		if (is_refresh) {
+			key = gtk_entry_get_text
+				(GTK_ENTRY(summaryview->search_entry));
+			if (key && *key != '\0')
+				do_qsearch = TRUE;
+			else
+				key = NULL;
+		}
+	}
+
+	if (do_qsearch) {
 		gint index;
 		QSearchCondType type = item->qsearch_cond_type;
 
@@ -866,8 +888,16 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 			gtk_option_menu_set_history
                 		(GTK_OPTION_MENU(summaryview->filter_optmenu),
 				 index);
+		} else {
+			gtk_option_menu_set_history
+                		(GTK_OPTION_MENU(summaryview->filter_optmenu),
+				 0);
+			type = QS_ALL;
+		}
+
+		if (type > QS_ALL || key) {
 			summaryview->flt_mlist =
-				summary_qsearch_filter(summaryview, type, NULL);
+				summary_qsearch_filter(summaryview, type, key);
 			summaryview->on_filter = TRUE;
 			summary_set_tree_model_from_list
 				(summaryview, summaryview->flt_mlist);
@@ -893,19 +923,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 					  0, 0, NULL, NULL, summaryview);
 
 	if (is_refresh) {
-		if (summary_find_msg_by_msgnum(summaryview, displayed_msgnum,
-					       &iter)) {
-			GtkTreePath *path;
-
-			path = gtk_tree_model_get_path(model, &iter);
-			gtk_tree_row_reference_free(summaryview->displayed);
-			summaryview->displayed =
-				gtk_tree_row_reference_new(model, path);
-			gtk_tree_path_free(path);
-		} else
-			messageview_clear(summaryview->messageview);
-
-		summary_select_by_msgnum(summaryview, selected_msgnum);
+		summary_update_display_state(summaryview, displayed_msgnum,
+					     selected_msgnum);
 
 		if (!summaryview->selected) {
 			/* no selected message - select first unread
@@ -993,6 +1012,12 @@ static void summary_unset_sort_column_id(SummaryView *summaryview)
 
 void summary_clear_list(SummaryView *summaryview)
 {
+	summary_clear_list_full(summaryview, FALSE);
+}
+
+static void summary_clear_list_full(SummaryView *summaryview,
+				    gboolean is_refresh)
+{
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
 	GtkAdjustment *adj;
 
@@ -1045,9 +1070,11 @@ void summary_clear_list(SummaryView *summaryview)
 	summaryview->flt_deleted = summaryview->flt_moved = 0;
 	summaryview->flt_copied = 0;
 	summaryview->flt_new = summaryview->flt_unread = 0;
-	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
-	gtk_option_menu_set_history
-		(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
+	if (!is_refresh) {
+		gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+		gtk_option_menu_set_history
+			(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
+	}
 	summaryview->on_filter = FALSE;
 
 	procmsg_msg_list_free(summaryview->all_mlist);
@@ -1798,6 +1825,26 @@ static gboolean summary_find_msg_by_msgnum(SummaryView *summaryview,
 	}
 
 	return FALSE;
+}
+
+static void summary_update_display_state(SummaryView *summaryview,
+					 guint disp_msgnum, guint sel_msgnum)
+{
+	GtkTreeIter iter;
+
+	if (summary_find_msg_by_msgnum(summaryview, disp_msgnum, &iter)) {
+		GtkTreePath *path;
+		GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+
+		path = gtk_tree_model_get_path(model, &iter);
+		gtk_tree_row_reference_free(summaryview->displayed);
+		summaryview->displayed =
+			gtk_tree_row_reference_new(model, path);
+		gtk_tree_path_free(path);
+	} else
+		messageview_clear(summaryview->messageview);
+
+	summary_select_by_msgnum(summaryview, sel_msgnum);
 }
 
 static guint attract_hash_func(gconstpointer key)
@@ -4176,7 +4223,7 @@ void summary_unthread(SummaryView *summaryview)
 	    !gtk_tree_row_reference_valid(summaryview->displayed)) {
 		if (displayed_msg &&
 		    gtkut_tree_model_find_by_column_data
-			 (model, &iter, NULL, S_COL_MSG_INFO, displayed_msg)) {
+			(model, &iter, NULL, S_COL_MSG_INFO, displayed_msg)) {
 			path = gtk_tree_model_get_path(model, &iter);
 			gtk_tree_row_reference_free(summaryview->displayed);
 			summaryview->displayed =
@@ -5197,6 +5244,9 @@ void summary_get_column_order(SummaryView *summaryview)
 
 void summary_qsearch_reset(SummaryView *summaryview)
 {
+	guint selected_msgnum = 0;
+	guint displayed_msgnum = 0;
+
 	if (!summaryview->on_filter)
 		return;
 
@@ -5207,6 +5257,11 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
 	gtk_option_menu_set_history
 		(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
+
+	selected_msgnum = summary_get_msgnum(summaryview,
+					     summaryview->selected);
+	displayed_msgnum = summary_get_msgnum(summaryview,
+					      summaryview->displayed);
 
 	summaryview->on_filter = FALSE;
 	g_slist_free(summaryview->flt_mlist);
@@ -5222,8 +5277,6 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
 
-	messageview_clear(summaryview->messageview);
-
 	gtkut_tree_view_fast_clear(GTK_TREE_VIEW(summaryview->treeview),
 				   summaryview->store);
 	summary_unset_sort_column_id(summaryview);
@@ -5237,6 +5290,9 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
 					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
 					  0, 0, NULL, NULL, summaryview);
+
+	summary_update_display_state(summaryview, displayed_msgnum,
+				     selected_msgnum);
 
 	summary_update_status(summaryview);
 	summary_status_show(summaryview);
@@ -5345,6 +5401,8 @@ void summary_qsearch(SummaryView *summaryview)
 	GtkWidget *menuitem;
 	const gchar *key;
 	GSList *flt_mlist;
+	guint selected_msgnum = 0;
+	guint displayed_msgnum = 0;
 
 	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->filter_menu));
 	type = GPOINTER_TO_INT
@@ -5360,6 +5418,11 @@ void summary_qsearch(SummaryView *summaryview)
 		return;
 	}
 
+	selected_msgnum = summary_get_msgnum(summaryview,
+					     summaryview->selected);
+	displayed_msgnum = summary_get_msgnum(summaryview,
+					      summaryview->displayed);
+
 	summaryview->on_filter = FALSE;
 	g_slist_free(summaryview->flt_mlist);
 	summaryview->flt_mlist = NULL;
@@ -5373,8 +5436,6 @@ void summary_qsearch(SummaryView *summaryview)
 
 	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
-
-	messageview_clear(summaryview->messageview);
 
 	flt_mlist = summary_qsearch_filter(summaryview, type, key);
 	summaryview->on_filter = TRUE;
@@ -5394,6 +5455,9 @@ void summary_qsearch(SummaryView *summaryview)
 	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
 					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
 					  0, 0, NULL, NULL, summaryview);
+
+	summary_update_display_state(summaryview, displayed_msgnum,
+				     selected_msgnum);
 
 	main_window_cursor_normal(summaryview->mainwin);
 	summary_unlock(summaryview);
