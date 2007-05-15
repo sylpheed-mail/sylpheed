@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -197,6 +197,7 @@ gint procmime_execute_open_file		(const gchar	*file,
 
 EncodingType procmime_get_encoding_for_charset	(const gchar	*charset);
 EncodingType procmime_get_encoding_for_text_file(const gchar	*file);
+EncodingType procmime_get_encoding_for_str	(const gchar	*str);
 const gchar *procmime_get_encoding_str		(EncodingType	 encoding);
 
 #endif /* __PROCMIME_H__ */

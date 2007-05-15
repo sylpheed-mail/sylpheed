@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1656,6 +1656,41 @@ EncodingType procmime_get_encoding_for_text_file(const gchar *file)
 		octet_percentage = 0.0;
 
 	debug_print("procmime_get_encoding_for_text_file(): "
+		    "8bit chars: %d / %d (%f%%)\n", octet_chars, total_len,
+		    100.0 * octet_percentage);
+
+	if (octet_percentage > 0.20) {
+		debug_print("using BASE64\n");
+		return ENC_BASE64;
+	} else if (octet_chars > 0) {
+		debug_print("using quoted-printable\n");
+		return ENC_QUOTED_PRINTABLE;
+	} else {
+		debug_print("using 7bit\n");
+		return ENC_7BIT;
+	}
+}
+
+EncodingType procmime_get_encoding_for_str(const gchar *str)
+{
+	const guchar *p;
+	size_t octet_chars = 0;
+	size_t total_len = 0;
+	gfloat octet_percentage;
+
+	total_len = strlen(str);
+
+	for (p = str; *p != '\0'; ++p) {
+		if (*p & 0x80)
+			++octet_chars;
+	}
+
+	if (total_len > 0)
+		octet_percentage = (gfloat)octet_chars / (gfloat)total_len;
+	else
+		octet_percentage = 0.0;
+
+	debug_print("procmime_get_encoding_for_str(): "
 		    "8bit chars: %d / %d (%f%%)\n", octet_chars, total_len,
 		    100.0 * octet_percentage);
 

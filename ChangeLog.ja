@@ -1,3 +1,10 @@
+2007-05-15
+
+	* libsylph/procmime.[ch]: procmime_get_encoding_for_str(): 追加。
+	* src/compose.c: compose_write_to_file(): 本文の文字コードが
+	  ISO-2022-JP の場合のみ行末の空白を削除するようにした。その他の
+	  場合は quoted-printable または base64 を使用。
+
 2007-05-14
 
 	* src/summaryview.c: クイック検索のキーがリフレッシュ時に保持される
