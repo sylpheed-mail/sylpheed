@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -182,6 +182,8 @@ SummarySelection summary_get_selection_type	(SummaryView	*summaryview);
 GSList *summary_get_selected_msg_list		(SummaryView	*summaryview);
 GSList *summary_get_changed_msg_list		(SummaryView	*summaryview);
 GSList *summary_get_msg_list			(SummaryView	*summaryview);
+GSList *summary_get_flagged_msg_list		(SummaryView	*summaryview,
+						 MsgPermFlags	 flags);
 
 void summary_select_prev_unread	  (SummaryView		*summaryview);
 void summary_select_next_unread	  (SummaryView		*summaryview);

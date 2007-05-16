@@ -1197,6 +1197,27 @@ GSList *summary_get_msg_list(SummaryView *summaryview)
 		return g_slist_copy(summaryview->all_mlist);
 }
 
+GSList *summary_get_flagged_msg_list(SummaryView *summaryview,
+				     MsgPermFlags flags)
+{
+	MsgInfo *msginfo;
+	GSList *list, *cur;
+	GSList *mlist = NULL;
+
+	if (summaryview->on_filter)
+		list = summaryview->flt_mlist;
+	else
+		list = summaryview->all_mlist;
+
+	for (cur = list; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+		if ((msginfo->flags.perm_flags & flags) != 0)
+			mlist = g_slist_prepend(mlist, msginfo);
+	}
+
+	return g_slist_reverse(mlist);
+}
+
 static void summary_update_msg_list(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
@@ -3082,6 +3103,14 @@ void summary_mark_all_read(SummaryView *summaryview)
 
 	SORT_BLOCK(SORT_BY_UNREAD);
 
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
+		GSList *msglist;
+		msglist = summary_get_flagged_msg_list(summaryview,
+						       MSG_NEW | MSG_UNREAD);
+		imap_msg_list_unset_perm_flags(msglist, MSG_NEW | MSG_UNREAD);
+		g_slist_free(msglist);
+	}
+
 	valid = gtk_tree_model_get_iter_first(model, &iter);
 	while (valid) {
 		summary_mark_row_as_read(summaryview, &iter);
@@ -3101,13 +3130,6 @@ void summary_mark_all_read(SummaryView *summaryview)
 			}
 		}
 		valid = gtkut_tree_model_next(model, &iter);
-	}
-
-	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
-		GSList *msglist;
-		msglist = summary_get_msg_list(summaryview);
-		imap_msg_list_unset_perm_flags(msglist, MSG_NEW | MSG_UNREAD);
-		g_slist_free(msglist);
 	}
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
