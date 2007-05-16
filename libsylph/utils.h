@@ -257,6 +257,9 @@ void eliminate_parenthesis		(gchar		*str,
 void extract_parenthesis		(gchar		*str,
 					 gchar		 op,
 					 gchar		 cl);
+void extract_parenthesis_with_escape	(gchar		*str,
+					 gchar		 op,
+					 gchar		 cl);
 
 void extract_parenthesis_with_skip_quote	(gchar		*str,
 						 gchar		 quote_chr,
@@ -266,6 +269,8 @@ void extract_parenthesis_with_skip_quote	(gchar		*str,
 void eliminate_quote			(gchar		*str,
 					 gchar		 quote_chr);
 void extract_quote			(gchar		*str,
+					 gchar		 quote_chr);
+void extract_quote_with_escape		(gchar		*str,
 					 gchar		 quote_chr);
 void eliminate_address_comment		(gchar		*str);
 gchar *strchr_with_skip_quote		(const gchar	*str,

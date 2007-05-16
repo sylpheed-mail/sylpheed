@@ -752,7 +752,7 @@ gchar *procheader_get_fromname(const gchar *str)
 	Xstrdup_a(tmp, str, return NULL);
 
 	if (*tmp == '\"') {
-		extract_quote(tmp, '\"');
+		extract_quote_with_escape(tmp, '\"');
 		g_strstrip(tmp);
 	} else if (strchr(tmp, '<')) {
 		eliminate_parenthesis(tmp, '<', '>');
@@ -763,7 +763,7 @@ gchar *procheader_get_fromname(const gchar *str)
 			g_strstrip(tmp);
 		}
 	} else if (strchr(tmp, '(')) {
-		extract_parenthesis(tmp, '(', ')');
+		extract_parenthesis_with_escape(tmp, '(', ')');
 		g_strstrip(tmp);
 	}
 
