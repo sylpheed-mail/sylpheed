@@ -1,5 +1,23 @@
 Changes of Sylpheed
 
+* 2.4.2 (stable)
+
+    * The recursive download of remote folders were enabled.
+    * SSL ports in Advanced tab of the account prefs dialog are now
+      automatically set when SSL is enabled.
+    * The '--open' command line option which open messages in new window was
+      added.
+    * The quick search condition for each folder now persists between sessions.
+    * The selection now persists when the quick search condition is updated.
+    * Quoted-printable or base64 encoding is now forced on PGP/MIME signing
+      instead of stripping trailing spaces (except for the case of ISO-2022-JP
+      encoding).
+    * The quoted-pair in From header is now processed correctly when displaying
+      its name.
+    * The performance of 'Mark all read' on IMAP folders was improved.
+    * Unix: the problem that 'Get' and 'Get all' button could not be clicked
+      after receiving while mouse pointer was over the buttons was fixed.
+
 * 2.4.1 (stable)
 
     * If shift or control key is pressed on address completion, only address
