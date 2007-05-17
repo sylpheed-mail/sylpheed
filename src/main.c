@@ -526,6 +526,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print("%s\n", _("  --status [folder]...   show the total number of messages"));
 			g_print("%s\n", _("  --status-full [folder]...\n"
 				"                         show the status of each folder"));
+			g_print("%s\n", _("  --open folderid/msgnum open message in new window"));
 			g_print("%s\n", _("  --configdir dirname    specify directory which stores configuration files"));
 #ifdef G_OS_WIN32
 			g_print("%s\n", _("  --ipcport portnum      specify port for IPC remote commands"));
