@@ -663,7 +663,6 @@ void extract_parenthesis_with_escape(gchar *str, gchar op, gchar cl)
 		if (destp > str)
 			*destp++ = ' ';
 		++srcp;
-		//memmove(destp, srcp + 1, strlen(srcp));
 		in_brace = 1;
 		while (*srcp) {
 			if (*srcp == op)

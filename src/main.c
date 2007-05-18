@@ -1468,6 +1468,7 @@ static void open_message(const gchar *path)
 		if (msginfo) {
 			msgview = messageview_create_with_new_window();
 			messageview_show(msgview, msginfo, FALSE);
+			procmsg_msginfo_free(msginfo);
 		} else
 			debug_print("message %d not found\n", num);
 	}
