@@ -363,6 +363,7 @@ void decode_xdigit_encoded_str		(gchar		*decoded,
 					 const gchar	*encoded);
 gchar *encode_uri			(const gchar	*filename);
 gchar *uriencode_for_filename		(const gchar	*filename);
+gchar *uriencode_for_mailto		(const gchar	*mailto);
 gint scan_mailto_url			(const gchar	*mailto,
 					 gchar	       **to,
 					 gchar	       **cc,

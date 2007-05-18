@@ -1002,11 +1002,13 @@ static gchar *make_email_string(const gchar *bp, const gchar *ep)
 {
 	/* returns a mailto: URI; mailto: is also used to detect the
 	 * uri type later on in the button_pressed signal handler */
-	gchar *tmp;
+	gchar *tmp, *enc;
 	gchar *result;
 
 	tmp = g_strndup(bp, ep - bp);
-	result = g_strconcat("mailto:", tmp, NULL);
+	enc = uriencode_for_mailto(tmp);
+	result = g_strconcat("mailto:", enc, NULL);
+	g_free(enc);
 	g_free(tmp);
 
 	return result;
@@ -2056,26 +2058,29 @@ static void textview_popup_menu_activate_add_address_cb(GtkMenuItem *menuitem,
 							gpointer data)
 {
 	RemoteURI *uri = (RemoteURI *)data;
-	const gchar *addr;
+	gchar *addr;
 
 	g_return_if_fail(uri != NULL);
 
 	if (!uri->uri)
 		return;
 
-	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7))
-		addr = uri->uri + 7;
-	else
-		addr = uri->uri;
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
+		addr = g_malloc(strlen(uri->uri + 7) + 1);
+		decode_uri(addr, uri->uri + 7);
+	} else
+		addr = g_strdup(uri->uri);
 
 	addressbook_add_contact(addr, addr, NULL);
+
+	g_free(addr);
 }
 
 static void textview_popup_menu_activate_copy_cb(GtkMenuItem *menuitem,
 						 gpointer data)
 {
 	RemoteURI *uri = (RemoteURI *)data;
-	const gchar *uri_string;
+	gchar *uri_string;
 	GtkClipboard *clipboard;
 
 	g_return_if_fail(uri != NULL);
@@ -2083,15 +2088,18 @@ static void textview_popup_menu_activate_copy_cb(GtkMenuItem *menuitem,
 	if (!uri->uri)
 		return;
 
-	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7))
-		uri_string = uri->uri + 7;
-	else
-		uri_string = uri->uri;
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
+		uri_string = g_malloc(strlen(uri->uri + 7) + 1);
+		decode_uri(uri_string, uri->uri + 7);
+	} else
+		uri_string = g_strdup(uri->uri);
 
 	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gtk_clipboard_set_text(clipboard, uri_string, -1);
 	clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	gtk_clipboard_set_text(clipboard, uri_string, -1);
+
+	g_free(uri_string);
 }
 
 static void textview_popup_menu_activate_image_cb(GtkMenuItem *menuitem,

@@ -1845,6 +1845,26 @@ gchar *uriencode_for_filename(const gchar *filename)
 	return enc;
 }
 
+gchar *uriencode_for_mailto(const gchar *mailto)
+{
+	const gchar *p = mailto;
+	gchar *enc, *outp;
+
+	outp = enc = g_malloc(strlen(mailto) * 3 + 1);
+
+	for (p = mailto; *p != '\0'; p++) {
+		if (*p == '+') {
+			*outp++ = '%';
+			get_hex_str(outp, *p);
+			outp += 2;
+		} else
+			*outp++ = *p;
+	}
+
+	*outp = '\0';
+	return enc;
+}
+
 gint scan_mailto_url(const gchar *mailto, gchar **to, gchar **cc, gchar **bcc,
 		     gchar **subject, gchar **inreplyto, gchar **body)
 {
