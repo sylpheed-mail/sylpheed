@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-05-18 12:54+0900\n"
-"PO-Revision-Date: 2007-02-17 19:22+0100\n"
+"PO-Revision-Date: 2007-05-19 10:30+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: HUNGARIAN <NONE>\n"
 "MIME-Version: 1.0\n"
@@ -307,9 +307,9 @@ msgid "the src folder is identical to the dest.\n"
 msgstr "A forrás- és célmappa azonos.\n"
 
 #: libsylph/mh.c:672
-#, fuzzy, c-format
+#, c-format
 msgid "Copying message %s/%d to %s ...\n"
-msgstr "%s%c%d levél másolása ide: %s ...\n"
+msgstr "%s/%d levél másolása ide: %s ...\n"
 
 #: libsylph/mh.c:1002 libsylph/mh.c:1015 src/main.c:158
 #, c-format
@@ -444,9 +444,8 @@ msgid "Timestamp syntax error in greeting\n"
 msgstr "Időpecsét szintaktikai hiba az üdvözletben\n"
 
 #: libsylph/pop.c:170
-#, fuzzy
 msgid "Invalid timestamp in greeting\n"
-msgstr "A szükséges APOP időpecsét nem található az üdvözletben\n"
+msgstr "Az időpecsét érvénytelen az üdvözletben\n"
 
 #: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
@@ -932,9 +931,8 @@ msgid "/_Tools/Import _LDIF file"
 msgstr "/_Eszközök/_LDIF fájl importálása"
 
 #: src/addressbook.c:381
-#, fuzzy
 msgid "/_Tools/Import _CSV file"
-msgstr "/_Eszközök/_LDIF fájl importálása"
+msgstr "/_Eszközök/_CSV fájl importálása"
 
 #: src/addressbook.c:383 src/compose.c:702 src/mainwindow.c:852
 #: src/messageview.c:302
@@ -1112,17 +1110,14 @@ msgstr ""
 "és nem sikerült az új címjegyzék létrehozása sem."
 
 #: src/addressbook.c:2500
-#, fuzzy
 msgid "Address book conversion error"
 msgstr "Címjegyzék konvertálási hiba"
 
 #: src/addressbook.c:2504
-#, fuzzy
 msgid "Address book conversion"
 msgstr "Címjegyzék konvertálása"
 
 #: src/addressbook.c:2539
-#, fuzzy
 msgid "Address Book Error"
 msgstr "Címjegyzék hiba"
 
@@ -1154,14 +1149,12 @@ msgstr ""
 "Nem konvertálható a címjegyzék, és nem hozható létre új címjegyzék sem."
 
 #: src/addressbook.c:2646
-#, fuzzy
 msgid "Address Book Conversion Error"
-msgstr "Címjegyzék konverziós hiba"
+msgstr "Címjegyzék konvertálási hiba"
 
 #: src/addressbook.c:2652
-#, fuzzy
 msgid "Address Book Conversion"
-msgstr "Címjegyzék konverzió"
+msgstr "Címjegyzék konvertálása"
 
 #: src/addressbook.c:3172 src/prefs_common_dialog.c:2103
 msgid "Interface"
@@ -1364,9 +1357,8 @@ msgid "/_View/_Bcc"
 msgstr "/_Nézet/_Titkos másolat"
 
 #: src/compose.c:585
-#, fuzzy
 msgid "/_View/_Reply-To"
-msgstr "/_Nézet/_Válasz"
+msgstr "/_Nézet/_Válaszcím"
 
 #: src/compose.c:586 src/compose.c:588 src/compose.c:590 src/compose.c:592
 #: src/compose.c:595 src/mainwindow.c:588 src/mainwindow.c:591
@@ -1376,9 +1368,8 @@ msgid "/_View/---"
 msgstr "/_Nézet/---"
 
 #: src/compose.c:587
-#, fuzzy
 msgid "/_View/_Followup-To"
-msgstr "/_Nézet/_Nyomkövetés"
+msgstr "/_Nézet/Vá_laszcikk-cím"
 
 #: src/compose.c:589
 msgid "/_View/R_uler"
@@ -1914,7 +1905,6 @@ msgid "Could not read file."
 msgstr "A fájl nem olvasható."
 
 #: src/editbook.c:174 src/editbook.c:288
-#, fuzzy
 msgid "Edit Address Book"
 msgstr "Címjegyzék szerkesztése"
 
@@ -1928,7 +1918,6 @@ msgid "File"
 msgstr "Fájl"
 
 #: src/editbook.c:307
-#, fuzzy
 msgid "Add New Address Book"
 msgstr "Új címjegyzék hozzáadása"
 
@@ -2139,13 +2128,12 @@ msgid "Save as"
 msgstr "Mentés másként"
 
 #: src/filesel.c:160 src/filesel.c:274
-#, fuzzy
 msgid "Overwrite existing file"
-msgstr "Létező fájl felülírása?"
+msgstr "Létező fájl felülírása"
 
 #: src/filesel.c:161 src/filesel.c:275
 msgid "The file already exists. Do you want to replace it?"
-msgstr ""
+msgstr "A fájl már létezik. Biztos benne, hogy lecseréli?"
 
 #: src/filesel.c:178
 msgid "Select directory"
@@ -2322,14 +2310,13 @@ msgid "Downloading messages in %s ..."
 msgstr "Levelek letöltése a(z) %s mappába ..."
 
 #: src/folderview.c:2102
-#, fuzzy, c-format
+#, c-format
 msgid "Download all messages under '%s' ?"
-msgstr "Levelek letöltése a(z) %s mappába ..."
+msgstr "Összes levél letöltése a(z) %s mappába?"
 
 #: src/folderview.c:2105
-#, fuzzy
 msgid "Download all messages"
-msgstr "Levelek letöltése a(z) %s mappába ..."
+msgstr "Összes levél letöltése"
 
 #: src/folderview.c:2154
 #, c-format
@@ -2493,9 +2480,8 @@ msgid "Please specify address book name and file to import."
 msgstr "Adja meg a címjegyzék mappa és fájl nevét az importáláshoz."
 
 #: src/importcsv.c:154
-#, fuzzy
 msgid "Select and reorder CSV field names to import."
-msgstr "LDIF mezőnevek kiválasztása és átnevezése az importhoz."
+msgstr "CSV mezőnevek kiválasztása és átnevezése az importhoz."
 
 #: src/importcsv.c:157 src/importldif.c:128
 msgid "File imported."
@@ -2510,19 +2496,16 @@ msgid "Address book name must be supplied."
 msgstr "Címjegyzék nevet meg kell adnia."
 
 #: src/importcsv.c:528
-#, fuzzy
 msgid "Error reading CSV fields."
-msgstr "Hiba az LDIF mezők olvasásakor."
+msgstr "Hiba a CSV mezők olvasásakor."
 
 #: src/importcsv.c:554
-#, fuzzy
 msgid "CSV file imported successfully."
-msgstr "LDIF fájl importálása sikerült."
+msgstr "CSV fájl importálása sikerült."
 
 #: src/importcsv.c:616
-#, fuzzy
 msgid "Select CSV File"
-msgstr "vCard fájl kiválasztása"
+msgstr "CSV fájl kiválasztása"
 
 #: src/importcsv.c:682 src/importldif.c:489
 msgid "File Name"
@@ -2530,29 +2513,27 @@ msgstr "Fájlnév"
 
 #: src/importcsv.c:700
 msgid "Comma-separated"
-msgstr ""
+msgstr "Vessző-elválasztó"
 
 #: src/importcsv.c:704
 msgid "Tab-separated"
-msgstr ""
+msgstr "Tab-elválasztó"
 
 #: src/importcsv.c:735 src/importldif.c:530
 msgid "S"
 msgstr "S"
 
 #: src/importcsv.c:736
-#, fuzzy
 msgid "CSV Field"
-msgstr "LDIF mező"
+msgstr "CSV mező"
 
 #: src/importcsv.c:737
-#, fuzzy
 msgid "Address Book Field"
-msgstr "Címjegyzék:"
+msgstr "Címjegyzék mező"
 
 #: src/importcsv.c:754
 msgid "Reorder address book fields with the Up and Down button."
-msgstr ""
+msgstr "Címjegyzék mezőinek átrendezése a Fel Le gombokkal."
 
 #: src/importcsv.c:789 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:239
@@ -2579,9 +2560,8 @@ msgid "Records :"
 msgstr "Rekordok:"
 
 #: src/importcsv.c:882
-#, fuzzy
 msgid "Import CSV file into Address Book"
-msgstr "LDIF fájl importálása a címjegyzékbe"
+msgstr "CSV fájl importálása a címjegyzékbe"
 
 #. Button panel
 #: src/importcsv.c:914 src/importldif.c:733 src/prefs_toolbar.c:69
@@ -2597,9 +2577,8 @@ msgid "File Info"
 msgstr "Fájl információ"
 
 #: src/importcsv.c:948
-#, fuzzy
 msgid "Fields"
-msgstr "LDIF mező"
+msgstr "Mezők"
 
 #: src/importcsv.c:949 src/importldif.c:768
 msgid "Finish"
@@ -2782,6 +2761,8 @@ msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
+"A levélszemét szűréshez használt parancs futtatása nem sikerült.\n"
+"Ellenőrizze a levélszemét szűrők beállításait."
 
 #: src/inc.c:1292
 msgid "Connection failed."
@@ -2918,7 +2899,7 @@ msgstr ""
 
 #: src/main.c:529
 msgid "  --open folderid/msgnum open message in new window"
-msgstr ""
+msgstr "  --open folderid/msgnum  levél megnyitása új ablakban"
 
 #: src/main.c:530
 msgid ""
@@ -2928,7 +2909,7 @@ msgstr ""
 
 #: src/main.c:532
 msgid "  --ipcport portnum      specify port for IPC remote commands"
-msgstr ""
+msgstr "  --ipcport portszám      IPC távoli parancsok portjának megadása"
 
 #: src/main.c:534
 msgid "  --exit                 exit Sylpheed"
@@ -3366,9 +3347,8 @@ msgid "/_Message/Recei_ve/Get from _all accounts"
 msgstr "/_Levél/Fog_adás/_Minden hozzáférésről"
 
 #: src/mainwindow.c:758
-#, fuzzy
 msgid "/_Message/Recei_ve/Stop receivin_g"
-msgstr "/_Levél/Fo_gadás/Fogadás me_gszakítása"
+msgstr "/_Levél/Fo_gadás/Fogadás leá_llítása"
 
 #: src/mainwindow.c:760
 msgid "/_Message/Recei_ve/---"
@@ -3538,7 +3518,6 @@ msgid "/_Configuration/_Common preferences..."
 msgstr "/_Beállítások/Általános _beállítások..."
 
 #: src/mainwindow.c:836
-#, fuzzy
 msgid "/_Configuration/_Filter settings..."
 msgstr "/_Beállítások/_Szűrő beállítások..."
 
@@ -3727,26 +3706,23 @@ msgstr "/Átirányí_t"
 
 #: src/mainwindow.c:2860
 msgid "Icon _and text"
-msgstr ""
+msgstr "Ikon é_s szöveg"
 
 #: src/mainwindow.c:2861
-#, fuzzy
 msgid "Text at the _right of icon"
-msgstr "/_Nézet/_Megjelenít vagy elrejt/_Eszközsáv/_Szöveg az ikontól jobbra"
+msgstr "Szöveg az ikontól _jobbra"
 
 #: src/mainwindow.c:2863
 msgid "_Icon"
-msgstr ""
+msgstr "_Ikon"
 
 #: src/mainwindow.c:2864
-#, fuzzy
 msgid "_Text"
-msgstr "Szöveg"
+msgstr "S_zöveg"
 
 #: src/mainwindow.c:2865
-#, fuzzy
 msgid "_None"
-msgstr "Semmi"
+msgstr "S_emmi"
 
 #: src/mainwindow.c:2895
 msgid "You are offline. Click the icon to go online."
@@ -3774,7 +3750,6 @@ msgid "Usage: sylpheed [OPTION]..."
 msgstr "Használat: sylpheed [OPCIÓ]..."
 
 #: src/mainwindow.c:3805
-#, fuzzy
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3797,6 +3772,7 @@ msgstr ""
 "--send\n"
 "--status [mappa]...\n"
 "--status-full [mappa]...\n"
+"--open mappaazonosító/levélszám\n"
 "--configdir könyvtárnév\n"
 "--exit\n"
 "--debug\n"
@@ -3804,7 +3780,6 @@ msgstr ""
 "--version"
 
 #: src/mainwindow.c:3822
-#, fuzzy
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -3827,6 +3802,7 @@ msgstr ""
 "összes eltárolt levél elküldése\n"
 "megjeleníti a mappa leveleinek számát\n"
 "megjeleníti minden egyes mappa leveleinek számát\n"
+"levél megnyitása új ablakban\n"
 "egy könyvtár megadása, ahol a konfigurációs fájl van\n"
 "kilépés a Sylpheedből\n"
 "hibakereső üzemmód\n"
@@ -5570,7 +5546,6 @@ msgid " Revert to default "
 msgstr " Alapértelmezettre visszaállít"
 
 #: src/prefs_filter.c:208
-#, fuzzy
 msgid "Filter settings"
 msgstr "Szűrő beállítások"
 
@@ -6020,14 +5995,12 @@ msgid "Print message"
 msgstr "Levél nyomtatása"
 
 #: src/prefs_toolbar.c:81
-#, fuzzy
 msgid "Stop"
-msgstr "Lépés"
+msgstr "Leállít"
 
 #: src/prefs_toolbar.c:82
-#, fuzzy
 msgid "Stop receiving"
-msgstr "Szerver a fogadáshoz"
+msgstr "Fogadás leállítása"
 
 #: src/prefs_toolbar.c:87
 msgid "Execute"
@@ -6611,12 +6584,11 @@ msgstr "Van csatolmánya"
 
 #: src/summaryview.c:567
 msgid "Within 1 day"
-msgstr ""
+msgstr "1 napon belüli"
 
 #: src/summaryview.c:568
-#, fuzzy
 msgid "Last 5 days"
-msgstr "Vezetéknév"
+msgstr "Elmúlt 5 napi"
 
 #: src/summaryview.c:577
 msgid "Search:"
@@ -6861,7 +6833,7 @@ msgstr "Szövegnézet létrehozása...\n"
 
 #: src/textview.c:498
 msgid "This message is encrypted, but its decryption failed.\n"
-msgstr ""
+msgstr "A levél titkosított, és nem sikerült visszafejteni.\n"
 
 #: src/textview.c:832
 msgid "This message can't be displayed.\n"
