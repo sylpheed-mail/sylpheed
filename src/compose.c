@@ -5703,6 +5703,13 @@ static void compose_exec_ext_editor(Compose *compose)
 		g_free(tmp);
 		return;
 	}
+	if (pid == 0) {
+		g_warning("Couldn't get PID of external editor\n");
+		g_strfreev(cmdline);
+		g_unlink(tmp);
+		g_free(tmp);
+		return;
+	}
 
 	g_strfreev(cmdline);
 
