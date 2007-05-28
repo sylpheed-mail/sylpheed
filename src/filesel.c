@@ -31,6 +31,7 @@
 #include "alertpanel.h"
 #include "utils.h"
 #include "prefs_common.h"
+#include "inc.h"
 
 static GSList *filesel_select_file_full	(const gchar		*title,
 					 const gchar		*file,
@@ -125,6 +126,8 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 	change_dir(prev_dir);
 	g_free(prev_dir);
 
+	inc_lock();
+
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
 		if (list) {
@@ -135,6 +138,8 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 					(path_table, g_strdup(title), cwd);
 		}
 	}
+
+	inc_unlock();
 
 	if (action == GTK_FILE_CHOOSER_ACTION_SAVE)
 		save_expander_expanded =
