@@ -272,6 +272,10 @@ static void summary_search_entry_changed(GtkWidget		*entry,
 static void summary_search_entry_activated
 					(GtkWidget		*entry,
 					 SummaryView		*summaryview);
+static gboolean summary_search_entry_key_pressed
+					(GtkWidget		*treeview,
+					 GdkEventKey		*event,
+					 SummaryView		*summaryview);
 static void summary_search_clear_clicked(GtkWidget		*button,
 					 SummaryView		*summaryview);
 
@@ -588,6 +592,9 @@ SummaryView *summary_create(void)
 			 G_CALLBACK(summary_search_entry_changed), summaryview);
 	g_signal_connect(G_OBJECT(search_entry), "activate",
 			 G_CALLBACK(summary_search_entry_activated),
+			 summaryview);
+	g_signal_connect(G_OBJECT(search_entry), "key_press_event",
+			 G_CALLBACK(summary_search_entry_key_pressed),
 			 summaryview);
 
 	search_tip = gtk_tooltips_new();
@@ -5515,6 +5522,17 @@ static void summary_search_entry_activated(GtkWidget *entry,
 {
 	gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
 	summary_qsearch(summaryview);
+}
+
+static gboolean summary_search_entry_key_pressed(GtkWidget *treeview,
+						 GdkEventKey *event,
+						 SummaryView *summaryview)
+{
+	if (event && event->keyval == GDK_Escape) {
+		summary_qsearch_clear_entry(summaryview);
+		return TRUE;
+	}
+	return FALSE;
 }
 
 static void summary_search_clear_clicked(GtkWidget *button,
