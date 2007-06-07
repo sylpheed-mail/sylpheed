@@ -265,6 +265,9 @@ static gboolean session_ping_cb(gpointer data)
 	Session *session = SESSION(data);
 	SockInfo *sock = session->sock;
 
+	if (!session_is_connected(session))
+		return FALSE;
+
 	if (session->io_tag > 0 && sock && sock->callback) {
 		GTimeVal tv_cur, tv_result;
 
