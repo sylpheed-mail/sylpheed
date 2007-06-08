@@ -1866,6 +1866,7 @@ static gchar *compose_get_signature_str(Compose *compose)
 {
 	gchar *sig_path;
 	gchar *sig_body = NULL;
+	gchar *utf8_sig_body = NULL;
 	gchar *sig_str = NULL;
 	gchar *utf8_sig_str = NULL;
 
@@ -1936,28 +1937,31 @@ static gchar *compose_get_signature_str(Compose *compose)
 	}
 	g_free(sig_path);
 
-	if (prefs_common.sig_sep) {
-		sig_str = g_strconcat(prefs_common.sig_sep, "\n", sig_body,
-				      NULL);
-		g_free(sig_body);
-	} else
-		sig_str = sig_body;
-
-	if (sig_str) {
+	if (sig_body) {
 		gint error = 0;
 
-		utf8_sig_str = conv_codeset_strdup_full
-			(sig_str, conv_get_locale_charset_str(),
+		utf8_sig_body = conv_codeset_strdup_full
+			(sig_body, conv_get_locale_charset_str(),
 			 CS_INTERNAL, &error);
-		if (!utf8_sig_str || error != 0) {
-			if (g_utf8_validate(sig_str, -1, NULL) == TRUE) {
-				g_free(utf8_sig_str);
-				utf8_sig_str = sig_str;
-			} else
-				g_free(sig_str);
-		} else
-			g_free(sig_str);
+		if (!utf8_sig_body || error != 0) {
+			if (g_utf8_validate(sig_body, -1, NULL) == TRUE) {
+				g_free(utf8_sig_body);
+				utf8_sig_body = conv_utf8todisp(sig_body, NULL);
+			}
+		} else {
+			g_free(sig_body);
+			sig_body = utf8_sig_body;
+			utf8_sig_body = conv_utf8todisp(sig_body, NULL);
+		}
+		g_free(sig_body);
 	}
+
+	if (prefs_common.sig_sep) {
+		utf8_sig_str = g_strconcat(prefs_common.sig_sep, "\n",
+					   utf8_sig_body, NULL);
+		g_free(utf8_sig_body);
+	} else
+		utf8_sig_str = utf8_sig_body;
 
 	return utf8_sig_str;
 }
