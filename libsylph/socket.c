@@ -568,6 +568,23 @@ guint sock_add_watch(SockInfo *sock, GIOCondition condition, SockFunc func,
 	return g_io_add_watch(sock->sock_ch, condition, sock_watch_cb, sock);
 }
 
+guint sock_add_watch_poll(SockInfo *sock, GIOCondition condition, SockFunc func,
+			  gpointer data)
+{
+	GSource *source;
+
+	sock->callback = func;
+	sock->condition = condition;
+	sock->data = data;
+
+	source = g_source_new(&sock_watch_funcs, sizeof(SockSource));
+	((SockSource *)source)->sock = sock;
+	g_source_set_priority(source, G_PRIORITY_DEFAULT);
+	g_source_set_can_recurse(source, FALSE);
+
+	return g_source_attach(source, NULL);
+}
+
 static gint fd_check_io(gint fd, GIOCondition cond)
 {
 	struct timeval timeout;

@@ -1,3 +1,10 @@
+2007-06-11
+
+	* libsylph/socket.[ch]: sock_add_watch_poll() を追加。
+	* libsylph/session.c: win32: データの送信中はブロッキングソケットを
+	  使用するようにした(ダイアルアップ接続で送信中にSMTPが停止する問題
+	  を修正)。
+
 2007-06-08
 
 	* src/compose.c: compose_get_signature_str(): BOM 付き UTF-8 に対応。

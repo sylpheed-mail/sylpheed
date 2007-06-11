@@ -471,12 +471,22 @@ gint session_send_data(Session *session, FILE *data_fp, guint size)
 	session->write_data_len = size;
 	g_get_current_time(&session->tv_prev);
 
+#ifdef G_OS_WIN32
+	sock_set_nonblocking_mode(session->sock, FALSE);
+#endif
+
 	ret = session_write_data_cb(session->sock, G_IO_OUT, session);
 
 	if (ret == TRUE)
+#ifdef G_OS_WIN32
+		session->io_tag = sock_add_watch_poll(session->sock, G_IO_OUT,
+						      session_write_data_cb,
+						      session);
+#else
 		session->io_tag = sock_add_watch(session->sock, G_IO_OUT,
 						 session_write_data_cb,
 						 session);
+#endif
 	else if (session->state == SESSION_ERROR)
 		return -1;
 
@@ -993,7 +1003,7 @@ static gint session_write_buf(Session *session)
 
 #define WRITE_DATA_BUFFSIZE	8192
 
-static gint session_write_data(Session *session)
+static gint session_write_data(Session *session, gint *nwritten)
 {
 	gchar buf[WRITE_DATA_BUFFSIZE];
 	gint write_len;
@@ -1021,9 +1031,12 @@ static gint session_write_data(Session *session)
 		default:
 			g_warning("sock_write: %s\n", g_strerror(errno));
 			session->state = SESSION_ERROR;
+			*nwritten = write_len;
 			return -1;
 		}
 	}
+
+	*nwritten = write_len;
 
 	/* incomplete write */
 	if (session->write_data_pos + write_len < session->write_data_len) {
@@ -1080,6 +1093,7 @@ static gboolean session_write_data_cb(SockInfo *source,
 {
 	Session *session = SESSION(data);
 	guint write_data_len;
+	gint write_len;
 	gint ret;
 
 	g_return_val_if_fail(condition == G_IO_OUT, FALSE);
@@ -1089,7 +1103,7 @@ static gboolean session_write_data_cb(SockInfo *source,
 
 	write_data_len = session->write_data_len;
 
-	ret = session_write_data(session);
+	ret = session_write_data(session, &write_len);
 
 	if (ret < 0) {
 		session->state = SESSION_ERROR;
@@ -1123,6 +1137,10 @@ static gboolean session_write_data_cb(SockInfo *source,
 	if (session->send_data_notify)
 		session->send_data_notify(session, write_data_len,
 					  session->send_data_notify_data);
+
+#ifdef G_OS_WIN32
+	sock_set_nonblocking_mode(session->sock, session->nonblocking);
+#endif
 
 	return FALSE;
 }

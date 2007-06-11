@@ -93,6 +93,8 @@ gboolean sock_has_read_data		(SockInfo *sock);
 
 guint sock_add_watch			(SockInfo *sock, GIOCondition condition,
 					 SockFunc func, gpointer data);
+guint sock_add_watch_poll		(SockInfo *sock, GIOCondition condition,
+					 SockFunc func, gpointer data);
 
 struct hostent *my_gethostbyname	(const gchar *hostname);
 
