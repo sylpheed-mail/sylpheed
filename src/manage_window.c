@@ -84,8 +84,11 @@ void manage_window_set_transient(GtkWindow *window)
 	/* debug_print("manage_window_set_transient(): window = %p, focus_window = %p\n",
 		    window, focus_window); */
 
-	if (window && focus_window)
+	if (window && focus_window) {
+		if (!gtk_window_is_active(GTK_WINDOW(focus_window)))
+			gtkut_window_popup(focus_window);
 		gtk_window_set_transient_for(window, GTK_WINDOW(focus_window));
+	}
 }
 
 GtkWidget *manage_window_get_focus_window(void)
