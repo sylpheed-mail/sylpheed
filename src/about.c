@@ -244,6 +244,9 @@ static void about_create(void)
 		  "Foundation, Inc., 59 Temple Place - Suite 330, Boston, "
 		  "MA 02111-1307, USA."), -1);
 
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+	gtk_text_buffer_place_cursor(buffer, &iter);
+
 	gtkut_stock_button_set_create(&confirm_area, &ok_button, GTK_STOCK_OK,
 				      NULL, NULL, NULL, NULL);
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
