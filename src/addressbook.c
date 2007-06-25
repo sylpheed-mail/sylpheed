@@ -978,7 +978,7 @@ gchar *addressbook_format_address( AddressObject * obj ) {
 					name = ADDRITEM_NAME(person);
 				}
 			}
-			else if( ADDRITEM_NAME(person) ) {
+			else if( person && ADDRITEM_NAME(person) ) {
 				name = ADDRITEM_NAME(person);
 			}
 			else {
