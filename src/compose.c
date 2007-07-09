@@ -820,14 +820,6 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		account = cur_account;
 	g_return_if_fail(account != NULL);
 
-	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
-	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
-	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
-	if (item)
-		item->mark_dirty = TRUE;
-	if (MSG_IS_IMAP(msginfo->flags))
-		imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
-
 	compose = compose_create(account, COMPOSE_REPLY);
 
 	compose->replyinfo = procmsg_msginfo_get_full_info(msginfo);
@@ -2788,6 +2780,52 @@ void compose_unlock(Compose *compose)
 		compose->lock_count--;
 }
 
+static gint compose_set_reply_flag(Compose *compose)
+{
+	MsgInfo *msginfo;
+	MsgInfo *replyinfo;
+	SummaryView *summaryview;
+
+	g_return_val_if_fail(compose->replyinfo != NULL, -1);
+	g_return_val_if_fail(compose->replyinfo->folder != NULL, -1);
+
+	replyinfo = compose->replyinfo;
+
+	summaryview = main_window_get()->summaryview;
+	if (summaryview->folder_item == replyinfo->folder) {
+		msginfo = summary_get_msginfo_by_msgnum
+			(summaryview, replyinfo->msgnum);
+		if (msginfo) {
+			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
+			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+			if (MSG_IS_IMAP(msginfo->flags))
+				imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
+			if (msginfo->folder)
+				msginfo->folder->mark_dirty = TRUE;
+			summary_update_by_msgnum
+				(summaryview, msginfo->msgnum);
+		}
+	} else {
+		msginfo = procmsg_get_msginfo
+			(replyinfo->folder, replyinfo->msgnum);
+
+		if (msginfo) {
+			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
+			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+			if (MSG_IS_IMAP(msginfo->flags))
+				imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
+			if (msginfo->folder)
+				msginfo->folder->mark_dirty = TRUE;
+			procmsg_add_flags(msginfo->folder,
+					  msginfo->msgnum,
+					  msginfo->flags);
+			procmsg_msginfo_free(msginfo);
+		}
+	}
+}
+
 static gint compose_send(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
@@ -2876,6 +2914,10 @@ static gint compose_send(Compose *compose)
 				folderview_update_item
 					(compose->targetinfo->folder, TRUE);
 		}
+
+		if (compose->replyinfo)
+			compose_set_reply_flag(compose);
+
 		/* save message to outbox */
 		if (prefs_common.savemsg) {
 			FolderItem *outbox;

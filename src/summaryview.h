@@ -185,6 +185,9 @@ GSList *summary_get_msg_list			(SummaryView	*summaryview);
 GSList *summary_get_flagged_msg_list		(SummaryView	*summaryview,
 						 MsgPermFlags	 flags);
 
+MsgInfo *summary_get_msginfo_by_msgnum		(SummaryView	*summaryview,
+						 guint		 msgnum);
+
 void summary_select_prev_unread	  (SummaryView		*summaryview);
 void summary_select_next_unread	  (SummaryView		*summaryview);
 void summary_select_prev_new	  (SummaryView		*summaryview);
@@ -197,6 +200,7 @@ void summary_select_by_msgnum	  (SummaryView		*summaryview,
 				   guint		 msgnum);
 gboolean summary_select_by_msginfo(SummaryView		*summaryview,
 				   MsgInfo		*msginfo);
+
 void summary_select_row		  (SummaryView		*summaryview,
 				   GtkTreeIter		*iter,
 				   gboolean		 display_msg,
@@ -247,6 +251,8 @@ gboolean summary_step		  (SummaryView		*summaryview,
 void summary_toggle_view	  (SummaryView		*summaryview);
 
 void summary_update_selected_rows (SummaryView		*summaryview);
+void summary_update_by_msgnum	  (SummaryView		*summaryview,
+				   guint		 msgnum);
 
 void summary_move_selected_to	  (SummaryView		*summaryview,
 				   FolderItem		*to_folder);

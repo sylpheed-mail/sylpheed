@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -308,6 +308,9 @@ gint	procmsg_save_to_outbox		(FolderItem	*outbox,
 void	procmsg_print_message		(MsgInfo	*msginfo,
 					 const gchar	*cmdline,
 					 gboolean	 all_headers);
+
+MsgInfo *procmsg_get_msginfo		(FolderItem	*item,
+					 gint		 num);
 
 MsgInfo *procmsg_msginfo_copy		(MsgInfo	*msginfo);
 MsgInfo *procmsg_msginfo_get_full_info	(MsgInfo	*msginfo);

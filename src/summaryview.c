@@ -1616,6 +1616,17 @@ gboolean summary_select_by_msginfo(SummaryView *summaryview, MsgInfo *msginfo)
 	return FALSE;
 }
 
+MsgInfo *summary_get_msginfo_by_msgnum(SummaryView *summaryview, guint msgnum)
+{
+	GtkTreeIter iter;
+	MsgInfo *msginfo = NULL;
+
+	if (summary_find_msg_by_msgnum(summaryview, msgnum, &iter))
+		GET_MSG_INFO(msginfo, &iter);
+
+	return msginfo;
+}
+
 /**
  * summary_select_row:
  * @summaryview: Summary view.
@@ -2886,6 +2897,14 @@ void summary_update_selected_rows(SummaryView *summaryview)
 		gtk_tree_model_get_iter(model, &iter, path);
 		summary_set_row(summaryview, &iter, NULL);
 	}
+}
+
+void summary_update_by_msgnum(SummaryView *summaryview, guint msgnum)
+{
+	GtkTreeIter iter;
+
+	if (summary_find_msg_by_msgnum(summaryview, msgnum, &iter))
+		summary_set_row(summaryview, &iter, NULL);
 }
 
 static void summary_mark_row(SummaryView *summaryview, GtkTreeIter *iter)

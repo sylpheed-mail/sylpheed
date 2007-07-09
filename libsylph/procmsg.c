@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1515,6 +1515,84 @@ void procmsg_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo,
 	print_command_exec(prtmp, cmdline);
 
 	g_free(prtmp);
+}
+
+static gboolean procmsg_get_flags(FolderItem *item, gint num,
+				  MsgPermFlags *flags)
+{
+	FILE *fp;
+	guint32 idata;
+	gint read_num;
+	MsgPermFlags perm_flags;
+	gboolean found = FALSE;
+	GSList *cur;
+
+	if ((fp = procmsg_open_mark_file(item, DATA_READ)) == NULL)
+		return FALSE;
+
+	while (fread(&idata, sizeof(idata), 1, fp) == 1) {
+		read_num = idata;
+		if (fread(&idata, sizeof(idata), 1, fp) != 1)
+			break;
+		perm_flags = idata;
+		if (read_num == num) {
+			*flags = perm_flags;
+			found = TRUE;
+			break;
+		}
+	}
+
+	fclose(fp);
+	if (found)
+		return TRUE;
+
+	for (cur = item->mark_queue; cur != NULL; cur = cur->next) {
+		MsgInfo *msginfo = (MsgInfo *)cur->data;
+
+		if (msginfo->msgnum == num) {
+			*flags = msginfo->flags.perm_flags;
+			found = TRUE;
+			break;
+		}
+	}
+
+	return found;
+}
+
+MsgInfo *procmsg_get_msginfo(FolderItem *item, gint num)
+{
+	MsgInfo *msginfo;
+	FolderType type;
+
+	g_return_if_fail(item->folder != NULL);
+
+	msginfo = folder_item_get_msginfo(item, num);
+	if (!msginfo)
+		return NULL;
+
+	type = FOLDER_TYPE(item->folder);
+	if (type == F_MH || type == F_IMAP) {
+		if (item->stype == F_QUEUE) {
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_QUEUED);
+		} else if (item->stype == F_DRAFT) {
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_DRAFT);
+		}
+	}
+	if (type == F_IMAP) {
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_IMAP);
+	} else if (type == F_NEWS) {
+		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_NEWS);
+	}
+
+	if (type == F_MH || type == F_NEWS) {
+		MsgPermFlags flags = 0;
+		if (procmsg_get_flags(item, num, &flags)) {
+			g_print("set msg %d's flag\n", num);
+			msginfo->flags.perm_flags = flags;
+		}
+	}
+
+	return msginfo;
 }
 
 MsgInfo *procmsg_msginfo_copy(MsgInfo *msginfo)
