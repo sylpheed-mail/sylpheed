@@ -142,6 +142,7 @@ struct _Compose
 
 	MsgInfo *targetinfo;
 	MsgInfo *replyinfo;
+	GSList *forward_mlist;
 
 	gchar	*replyto;
 	gchar	*cc;

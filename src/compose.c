@@ -903,19 +903,16 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	if (!account) account = cur_account;
 	g_return_if_fail(account != NULL);
 
+	compose = compose_create(account, COMPOSE_FORWARD);
+
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
-		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
-		MSG_SET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
-		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
-		if (item)
-			item->mark_dirty = TRUE;
+		msginfo = procmsg_msginfo_get_full_info(msginfo);
+		if (!msginfo)
+			msginfo = procmsg_msginfo_copy(msginfo);
+		compose->forward_mlist = g_slist_append(compose->forward_mlist,
+							msginfo);
 	}
-	msginfo = (MsgInfo *)mlist->data;
-	if (MSG_IS_IMAP(msginfo->flags))
-		imap_msg_list_unset_perm_flags(mlist, MSG_REPLIED);
-
-	compose = compose_create(account, COMPOSE_FORWARD);
 
 	undo_block(compose->undostruct);
 
@@ -2809,7 +2806,6 @@ static gint compose_set_reply_flag(Compose *compose)
 	} else {
 		msginfo = procmsg_get_msginfo
 			(replyinfo->folder, replyinfo->msgnum);
-
 		if (msginfo) {
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
 			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
@@ -2824,6 +2820,67 @@ static gint compose_set_reply_flag(Compose *compose)
 			procmsg_msginfo_free(msginfo);
 		}
 	}
+
+	return 0;
+}
+
+static gint compose_set_forward_flags(Compose *compose)
+{
+	MsgInfo *msginfo;
+	MsgInfo *fwinfo;
+	GSList *cur;
+	SummaryView *summaryview;
+
+	g_return_val_if_fail(compose->forward_mlist != NULL, -1);
+
+	summaryview = main_window_get()->summaryview;
+
+	for (cur = compose->forward_mlist; cur != NULL; cur = cur->next) {
+		fwinfo = (MsgInfo *)cur->data;
+		if (!fwinfo->folder)
+			return -1;
+
+		if (summaryview->folder_item == fwinfo->folder) {
+			msginfo = summary_get_msginfo_by_msgnum
+				(summaryview, fwinfo->msgnum);
+			if (msginfo) {
+				MSG_UNSET_PERM_FLAGS(msginfo->flags,
+						     MSG_REPLIED);
+				MSG_SET_PERM_FLAGS(msginfo->flags,
+						   MSG_FORWARDED);
+				MSG_SET_TMP_FLAGS(msginfo->flags,
+						  MSG_FLAG_CHANGED);
+				if (msginfo->folder)
+					msginfo->folder->mark_dirty = TRUE;
+				summary_update_by_msgnum
+					(summaryview, msginfo->msgnum);
+			}
+		} else {
+			msginfo = procmsg_get_msginfo
+				(fwinfo->folder, fwinfo->msgnum);
+			if (msginfo) {
+				MSG_UNSET_PERM_FLAGS(msginfo->flags,
+						     MSG_REPLIED);
+				MSG_SET_PERM_FLAGS(msginfo->flags,
+						   MSG_FORWARDED);
+				MSG_SET_TMP_FLAGS(msginfo->flags,
+						  MSG_FLAG_CHANGED);
+				if (msginfo->folder)
+					msginfo->folder->mark_dirty = TRUE;
+				procmsg_add_flags(msginfo->folder,
+						  msginfo->msgnum,
+						  msginfo->flags);
+				procmsg_msginfo_free(msginfo);
+			}
+		}
+	}
+
+	fwinfo = (MsgInfo *)compose->forward_mlist->data;
+	if (MSG_IS_IMAP(fwinfo->flags))
+		imap_msg_list_unset_perm_flags(compose->forward_mlist,
+					       MSG_REPLIED);
+
+	return 0;
 }
 
 static gint compose_send(Compose *compose)
@@ -2917,6 +2974,8 @@ static gint compose_send(Compose *compose)
 
 		if (compose->replyinfo)
 			compose_set_reply_flag(compose);
+		else if (compose->forward_mlist)
+			compose_set_forward_flags(compose);
 
 		/* save message to outbox */
 		if (prefs_common.savemsg) {
@@ -4730,8 +4789,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->mode = mode;
 
-	compose->targetinfo = NULL;
-	compose->replyinfo  = NULL;
+	compose->targetinfo    = NULL;
+	compose->replyinfo     = NULL;
+	compose->forward_mlist = NULL;
 
 	compose->replyto     = NULL;
 	compose->cc	     = NULL;
@@ -5339,7 +5399,7 @@ static void compose_destroy(Compose *compose)
 
 	procmsg_msginfo_free(compose->targetinfo);
 	procmsg_msginfo_free(compose->replyinfo);
-
+	procmsg_msg_list_free(compose->forward_mlist);
 	g_free(compose->replyto);
 	g_free(compose->cc);
 	g_free(compose->bcc);
