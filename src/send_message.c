@@ -54,6 +54,8 @@
 #include "socket.h"
 #include "utils.h"
 #include "inc.h"
+#include "mainwindow.h"
+#include "summaryview.h"
 
 #define SMTP_PORT	25
 #if USE_SSL
@@ -68,6 +70,10 @@ struct _SendProgressDialog
 	Session *session;
 	gboolean cancelled;
 };
+
+static gint send_message_set_reply_flag	(QueueInfo		*qinfo);
+static gint send_message_set_forward_flags
+					(QueueInfo		*qinfo);
 
 static gint send_message_local		(const gchar		*command,
 					 FILE			*fp);
@@ -126,7 +132,9 @@ enum
 	Q_SENDER     = 0,
 	Q_SMTPSERVER = 1,
 	Q_RECIPIENTS = 2,
-	Q_ACCOUNT_ID = 3
+	Q_ACCOUNT_ID = 3,
+	Q_REPLY_TARGET = 4,
+	Q_FORWARD_TARGETS = 5
 };
 
 QueueInfo *send_get_queue_info(const gchar *file)
@@ -135,11 +143,20 @@ QueueInfo *send_get_queue_info(const gchar *file)
 				       {"SSV:", NULL, FALSE},
 				       {"R:",   NULL, FALSE},
 				       {"AID:", NULL, FALSE},
+				       {"REP:", NULL, FALSE},
+				       {"FWD:", NULL, FALSE},
 				       {NULL,   NULL, FALSE}};
 	FILE *fp;
 	gchar buf[BUFFSIZE];
 	gint hnum;
 	QueueInfo *qinfo;
+	gchar *id;
+	gchar *msg;
+	gint num;
+	FolderItem *item;
+	MsgInfo *msginfo;
+	gchar **paths;
+	gint i;
 
 	g_return_val_if_fail(file != NULL, NULL);
 
@@ -171,6 +188,34 @@ QueueInfo *send_get_queue_info(const gchar *file)
 			break;
 		case Q_ACCOUNT_ID:
 			qinfo->ac = account_find_from_id(atoi(p));
+			break;
+		case Q_REPLY_TARGET:
+			id = g_path_get_dirname(p);
+			msg = g_path_get_basename(p);
+			num = to_number(msg);
+			item = folder_find_item_from_identifier(id);
+			g_print("folder id: %s (msg %d)\n", id, num);
+			if (num > 0 && item) {
+				qinfo->replyinfo =
+					procmsg_get_msginfo(item, num);
+			}
+			break;
+		case Q_FORWARD_TARGETS:
+			paths = g_strsplit(p, "\n", 0);
+			for (i = 0; paths[i] != NULL; i++) {
+				g_strstrip(paths[i]);
+				id = g_path_get_dirname(paths[i]);
+				msg = g_path_get_basename(paths[i]);
+				num = to_number(msg);
+				item = folder_find_item_from_identifier(id);
+				g_print("folder id: %s (msg %d)\n", id, num);
+				if (num > 0 && item) {
+					msginfo = procmsg_get_msginfo(item, num);
+					if (msginfo)
+						qinfo->forward_mlist = g_slist_append(qinfo->forward_mlist, msginfo);
+				}
+			}
+			g_strfreev(paths);
 			break;
 		default:
 			break;
@@ -238,6 +283,8 @@ void send_queue_info_free(QueueInfo *qinfo)
 	g_slist_free(qinfo->to_list);
 	g_free(qinfo->from);
 	g_free(qinfo->server);
+	procmsg_msginfo_free(qinfo->replyinfo);
+	procmsg_msg_list_free(qinfo->forward_mlist);
 	if (qinfo->fp)
 		fclose(qinfo->fp);
 	g_free(qinfo);
@@ -340,6 +387,11 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 			continue;
 		}
 
+		if (qinfo->replyinfo)
+			send_message_set_reply_flag(qinfo);
+		else if (qinfo->forward_mlist)
+			send_message_set_forward_flags(qinfo);
+
 		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
 			   get_rc_dir(), G_DIR_SEPARATOR, g_random_int());
 
@@ -386,6 +438,107 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 	queue->mtime = 0;
 
 	return ret;
+}
+
+static gint send_message_set_reply_flag(QueueInfo *qinfo)
+{
+	MsgInfo *msginfo;
+	MsgInfo *replyinfo;
+	SummaryView *summaryview;
+
+	g_return_val_if_fail(qinfo->replyinfo != NULL, -1);
+	g_return_val_if_fail(qinfo->replyinfo->folder != NULL, -1);
+
+	replyinfo = qinfo->replyinfo;
+
+	summaryview = main_window_get()->summaryview;
+	if (summaryview->folder_item == replyinfo->folder) {
+		msginfo = summary_get_msginfo_by_msgnum
+			(summaryview, replyinfo->msgnum);
+		if (msginfo) {
+			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
+			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+			if (MSG_IS_IMAP(msginfo->flags))
+				imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
+			if (msginfo->folder)
+				msginfo->folder->mark_dirty = TRUE;
+			summary_update_by_msgnum(summaryview, msginfo->msgnum);
+                }
+	} else {
+		msginfo = replyinfo;
+		if (msginfo) {
+			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
+			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
+			if (MSG_IS_IMAP(msginfo->flags))
+				imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
+			if (msginfo->folder)
+				msginfo->folder->mark_dirty = TRUE;
+			procmsg_add_flags(msginfo->folder, msginfo->msgnum,
+					  msginfo->flags);
+			
+                }
+	}
+
+	return 0;
+}
+
+static gint send_message_set_forward_flags(QueueInfo *qinfo)
+{
+	MsgInfo *msginfo;
+	MsgInfo *fwinfo;
+	GSList *cur;
+	SummaryView *summaryview;
+
+	g_return_val_if_fail(qinfo->forward_mlist != NULL, -1);
+
+	summaryview = main_window_get()->summaryview;
+
+	for (cur = qinfo->forward_mlist; cur != NULL; cur = cur->next) {
+		fwinfo = (MsgInfo *)cur->data;
+		if (!fwinfo->folder)
+			return -1;
+
+		if (summaryview->folder_item == fwinfo->folder) {
+			msginfo = summary_get_msginfo_by_msgnum
+				(summaryview, fwinfo->msgnum);
+			if (msginfo) {
+				MSG_UNSET_PERM_FLAGS(msginfo->flags,
+						     MSG_REPLIED);
+				MSG_SET_PERM_FLAGS(msginfo->flags,
+						   MSG_FORWARDED);
+				MSG_SET_TMP_FLAGS(msginfo->flags,
+						  MSG_FLAG_CHANGED);
+				if (msginfo->folder)
+					msginfo->folder->mark_dirty = TRUE;
+				summary_update_by_msgnum
+					(summaryview, msginfo->msgnum);
+			}
+		} else {
+			msginfo = fwinfo;
+			if (msginfo) {
+				MSG_UNSET_PERM_FLAGS(msginfo->flags,
+						     MSG_REPLIED);
+				MSG_SET_PERM_FLAGS(msginfo->flags,
+						   MSG_FORWARDED);
+				MSG_SET_TMP_FLAGS(msginfo->flags,
+						  MSG_FLAG_CHANGED);
+				if (msginfo->folder)
+					msginfo->folder->mark_dirty = TRUE;
+				procmsg_add_flags(msginfo->folder,
+						  msginfo->msgnum,
+						  msginfo->flags);
+			}
+		}
+	}
+
+	fwinfo = (MsgInfo *)qinfo->forward_mlist->data;
+	if (MSG_IS_IMAP(fwinfo->flags))
+		imap_msg_list_unset_perm_flags(qinfo->forward_mlist,
+					       MSG_REPLIED);
+
+	return 0;
 }
 
 static gint send_message_local(const gchar *command, FILE *fp)

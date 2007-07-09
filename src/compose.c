@@ -3621,6 +3621,31 @@ static gint compose_queue(Compose *compose, const gchar *file)
 		fprintf(fp, "R:\n");
 	/* Sylpheed account ID */
 	fprintf(fp, "AID:%d\n", compose->account->account_id);
+	/* Reply target */
+	if (compose->replyinfo) {
+		gchar *id;
+		id = folder_item_get_identifier(compose->replyinfo->folder);
+		if (id) {
+			fprintf(fp, "REP:%s/%u\n",
+				id, compose->replyinfo->msgnum);
+			g_free(id);
+		}
+	}
+	/* Forward target */
+	if (compose->forward_mlist) {
+		gchar *id;
+		MsgInfo *fwinfo = (MsgInfo *)compose->forward_mlist->data;
+		id = folder_item_get_identifier(fwinfo->folder);
+		if (id) {
+			fprintf(fp, "FWD:%s/%u\n", id, fwinfo->msgnum);
+			for (cur = compose->forward_mlist->next; cur != NULL;
+			     cur = cur->next) {
+				fwinfo = (MsgInfo *)cur->data;
+				fprintf(fp, " %s/%u\n", id, fwinfo->msgnum);
+			}
+			g_free(id);
+		}
+	}
 	fprintf(fp, "\n");
 
 	while (fgets(buf, sizeof(buf), src_fp) != NULL) {

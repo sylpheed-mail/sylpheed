@@ -27,6 +27,7 @@ typedef struct _QueueInfo	QueueInfo;
 
 #include "prefs_account.h"
 #include "folder.h"
+#include "procmsg.h"
 
 struct _QueueInfo
 {
@@ -34,6 +35,8 @@ struct _QueueInfo
 	gchar *server;
 	GSList *to_list;
 	PrefsAccount *ac;
+	MsgInfo *replyinfo;
+	GSList *forward_mlist;
 	FILE *fp;
 };
 
