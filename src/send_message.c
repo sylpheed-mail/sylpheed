@@ -199,6 +199,8 @@ QueueInfo *send_get_queue_info(const gchar *file)
 				qinfo->replyinfo =
 					procmsg_get_msginfo(item, num);
 			}
+			g_free(msg);
+			g_free(id);
 			break;
 		case Q_FORWARD_TARGETS:
 			paths = g_strsplit(p, "\n", 0);
@@ -214,6 +216,8 @@ QueueInfo *send_get_queue_info(const gchar *file)
 					if (msginfo)
 						qinfo->forward_mlist = g_slist_append(qinfo->forward_mlist, msginfo);
 				}
+				g_free(msg);
+				g_free(id);
 			}
 			g_strfreev(paths);
 			break;

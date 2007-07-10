@@ -208,6 +208,8 @@ static gint compose_parse_header		(Compose	*compose,
 						 MsgInfo	*msginfo);
 static gchar *compose_parse_references		(const gchar	*ref,
 						 const gchar	*msgid);
+static gint compose_parse_source_msg		(Compose	*compose,
+						 MsgInfo	*msginfo);
 
 static gchar *compose_quote_fmt			(Compose	*compose,
 						 MsgInfo	*msginfo,
@@ -1100,6 +1102,7 @@ void compose_reedit(MsgInfo *msginfo)
 	compose->targetinfo = procmsg_msginfo_copy(msginfo);
 
 	if (compose_parse_header(compose, msginfo) < 0) return;
+	compose_parse_source_msg(compose, msginfo);
 
 	undo_block(compose->undostruct);
 
@@ -1513,6 +1516,90 @@ static gchar *compose_parse_references(const gchar *ref, const gchar *msgid)
 	g_string_free(new_ref, FALSE);
 
 	return new_ref_str;
+}
+
+static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
+{
+	static HeaderEntry hentry[] = {{"X-Sylpheed-Reply:", NULL, FALSE},
+				       {"X-Sylpheed-Forward:", NULL, FALSE},
+				       {"REP:", NULL, FALSE},
+				       {"FWD:", NULL, FALSE},
+				       {NULL, NULL, FALSE}};
+
+	enum
+	{
+		H_X_SYLPHEED_REPLY = 0,
+		H_X_SYLPHEED_FORWARD = 1,
+		H_REP = 2,
+		H_FWD = 3
+	};
+
+	gchar *file;
+	FILE *fp;
+	gchar *str;
+	gchar buf[BUFFSIZE];
+	gint hnum;
+	gchar *id;
+	gchar *msg;
+	gint num;
+	gchar **paths;
+	gint i;
+	FolderItem *item;
+
+	g_return_val_if_fail(msginfo != NULL, -1);
+
+	file = procmsg_get_message_file(msginfo);
+
+	if ((fp = g_fopen(file, "rb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		return -1;
+	}
+
+	while ((hnum = procheader_get_one_field(buf, sizeof(buf), fp, hentry))
+	       != -1) {
+		str = buf + strlen(hentry[hnum].name);
+		while (g_ascii_isspace(*str))
+			++str;
+		if ((hnum == H_X_SYLPHEED_REPLY || hnum == H_REP) &&
+		    !compose->replyto) {
+			id = g_path_get_dirname(str);
+			msg = g_path_get_basename(str);
+			num = to_number(msg);
+			item = folder_find_item_from_identifier(id);
+			g_print("folder id: %s (msg %d)\n", id, num);
+			if (num > 0 && item) {
+				compose->replyinfo =
+					folder_item_get_msginfo(item, num);
+			}
+			g_free(msg);
+			g_free(id);
+		} else if (hnum == H_X_SYLPHEED_FORWARD || hnum == H_FWD) {
+			paths = g_strsplit(str, "\n", 0);
+			for (i = 0; paths[i] != NULL; i++) {
+				g_strstrip(paths[i]);
+				id = g_path_get_dirname(paths[i]);
+				msg = g_path_get_basename(paths[i]);
+				num = to_number(msg);
+				item = folder_find_item_from_identifier(id);
+				g_print("folder id: %s (msg %d)\n", id, num);
+				if (num > 0 && item) {
+					MsgInfo *msginfo;
+					msginfo = folder_item_get_msginfo
+						(item, num);
+					if (msginfo)
+						compose->forward_mlist = g_slist_append(compose->forward_mlist, msginfo);
+				}
+				g_free(msg);
+				g_free(id);
+			}
+			g_strfreev(paths);
+		}
+	}
+
+	fclose(fp);
+	g_free(file);
+
+	return 0;
 }
 
 static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
@@ -4099,10 +4186,39 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 			procmime_get_encoding_str(encoding));
 	}
 
-	/* X-Sylpheed header */
-	if (is_draft)
+	/* X-Sylpheed headers */
+	if (is_draft) {
+		gchar *id;
+
 		fprintf(fp, "X-Sylpheed-Account-Id: %d\n",
 			compose->account->account_id);
+		if (compose->replyinfo) {
+			id = folder_item_get_identifier
+				(compose->replyinfo->folder);
+			if (id) {
+				fprintf(fp, "X-Sylpheed-Reply: %s/%u\n",
+					id, compose->replyinfo->msgnum);
+				g_free(id);
+			}
+		} else if (compose->forward_mlist) {
+			MsgInfo *fwinfo =
+				(MsgInfo *)compose->forward_mlist->data;
+			GSList *cur;
+
+			id = folder_item_get_identifier(fwinfo->folder);
+			if (id) {
+				fprintf(fp, "X-Sylpheed-Forward: %s/%u\n",
+					id, fwinfo->msgnum);
+				for (cur = compose->forward_mlist->next;
+				     cur != NULL; cur = cur->next) {
+					fwinfo = (MsgInfo *)cur->data;
+					fprintf(fp, " %s/%u\n",
+						id, fwinfo->msgnum);
+				}
+				g_free(id);
+			}
+		}
+	}
 
 	/* separator between header and body */
 	fputs("\n", fp);
