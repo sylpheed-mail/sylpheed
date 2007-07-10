@@ -56,6 +56,8 @@ struct _MimeView
 
 	GtkWidget *popupmenu;
 	GtkItemFactory *popupfactory;
+	GtkWidget *reply_separator;
+	GtkWidget *reply_menuitem;
 
 	GtkTreePath *opened;
 

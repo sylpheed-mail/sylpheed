@@ -798,25 +798,26 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		   const gchar *body)
 {
 	Compose *compose;
-	PrefsAccount *account;
+	PrefsAccount *account = NULL;
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 	gboolean quote = FALSE;
 
 	g_return_if_fail(msginfo != NULL);
-	g_return_if_fail(msginfo->folder != NULL);
+	//g_return_if_fail(msginfo->folder != NULL);
 
 	if (COMPOSE_QUOTE_MODE(mode) == COMPOSE_WITH_QUOTE)
 		quote = TRUE;
 
-	account = account_find_from_item_property(msginfo->folder);
+	if (msginfo->folder)
+		account = account_find_from_item_property(msginfo->folder);
 	if (!account && msginfo->to && prefs_common.reply_account_autosel) {
 		gchar *to;
 		Xstrdup_a(to, msginfo->to, return);
 		extract_address(to);
 		account = account_find_from_address(to);
 	}
-	if (!account && msginfo->folder->folder)
+	if (!account && msginfo->folder && msginfo->folder->folder)
 		account = msginfo->folder->folder->account;
 	if (!account)
 		account = cur_account;
@@ -889,7 +890,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 		     const gchar *body)
 {
 	Compose *compose;
-	PrefsAccount *account;
+	PrefsAccount *account = NULL;
 	GtkTextView *text;
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
@@ -899,9 +900,10 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	g_return_if_fail(mlist != NULL);
 
 	msginfo = (MsgInfo *)mlist->data;
-	g_return_if_fail(msginfo->folder != NULL);
+	//g_return_if_fail(msginfo->folder != NULL);
 
-	account = account_find_from_item(msginfo->folder);
+	if (msginfo->folder)
+		account = account_find_from_item(msginfo->folder);
 	if (!account) account = cur_account;
 	g_return_if_fail(account != NULL);
 
@@ -2871,7 +2873,9 @@ static gint compose_set_reply_flag(Compose *compose)
 	SummaryView *summaryview;
 
 	g_return_val_if_fail(compose->replyinfo != NULL, -1);
-	g_return_val_if_fail(compose->replyinfo->folder != NULL, -1);
+
+	if (!compose->replyinfo->folder)
+		return -1;
 
 	replyinfo = compose->replyinfo;
 
@@ -3709,7 +3713,7 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	/* Sylpheed account ID */
 	fprintf(fp, "AID:%d\n", compose->account->account_id);
 	/* Reply target */
-	if (compose->replyinfo) {
+	if (compose->replyinfo && compose->replyinfo->folder) {
 		gchar *id;
 		id = folder_item_get_identifier(compose->replyinfo->folder);
 		if (id) {

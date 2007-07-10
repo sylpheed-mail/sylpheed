@@ -451,7 +451,9 @@ static gint send_message_set_reply_flag(QueueInfo *qinfo)
 	SummaryView *summaryview;
 
 	g_return_val_if_fail(qinfo->replyinfo != NULL, -1);
-	g_return_val_if_fail(qinfo->replyinfo->folder != NULL, -1);
+
+	if (!qinfo->replyinfo->folder)
+		return -1;
 
 	replyinfo = qinfo->replyinfo;
 

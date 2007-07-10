@@ -265,102 +265,90 @@ special:
 	}
 	| SHOW_MESSAGE
 	{
-		if (msginfo->folder || body) {
-			gchar buf[BUFFSIZE];
-			FILE *fp;
+		gchar buf[BUFFSIZE];
+		FILE *fp;
 
-			if (body)
-				fp = str_open_as_stream(body);
-			else
-				fp = procmime_get_first_text_content
-					(msginfo, NULL);
+		if (body)
+			fp = str_open_as_stream(body);
+		else
+			fp = procmime_get_first_text_content(msginfo, NULL);
 
-			if (fp == NULL)
-				g_warning("Can't get text part\n");
-			else {
-				while (fgets(buf, sizeof(buf), fp) != NULL) {
-					strcrchomp(buf);
-					INSERT(buf);
-				}
-				fclose(fp);
+		if (fp == NULL)
+			g_warning("Can't get text part\n");
+		else {
+			while (fgets(buf, sizeof(buf), fp) != NULL) {
+				strcrchomp(buf);
+				INSERT(buf);
 			}
+			fclose(fp);
 		}
 	}
 	| SHOW_QUOTED_MESSAGE
 	{
-		if (msginfo->folder || body) {
-			gchar buf[BUFFSIZE];
-			FILE *fp;
+		gchar buf[BUFFSIZE];
+		FILE *fp;
 
-			if (body)
-				fp = str_open_as_stream(body);
-			else
-				fp = procmime_get_first_text_content
-					(msginfo, NULL);
+		if (body)
+			fp = str_open_as_stream(body);
+		else
+			fp = procmime_get_first_text_content(msginfo, NULL);
 
-			if (fp == NULL)
-				g_warning("Can't get text part\n");
-			else {
-				while (fgets(buf, sizeof(buf), fp) != NULL) {
-					strcrchomp(buf);
-					if (quote_str)
-						INSERT(quote_str);
-					INSERT(buf);
-				}
-				fclose(fp);
+		if (fp == NULL)
+			g_warning("Can't get text part\n");
+		else {
+			while (fgets(buf, sizeof(buf), fp) != NULL) {
+				strcrchomp(buf);
+				if (quote_str)
+					INSERT(quote_str);
+				INSERT(buf);
 			}
+			fclose(fp);
 		}
 	}
 	| SHOW_MESSAGE_NO_SIGNATURE
 	{
-		if (msginfo->folder || body) {
-			gchar buf[BUFFSIZE];
-			FILE *fp;
+		gchar buf[BUFFSIZE];
+		FILE *fp;
 
-			if (body)
-				fp = str_open_as_stream(body);
-			else
-				fp = procmime_get_first_text_content
-					(msginfo, NULL);
+		if (body)
+			fp = str_open_as_stream(body);
+		else
+			fp = procmime_get_first_text_content(msginfo, NULL);
 
-			if (fp == NULL)
-				g_warning("Can't get text part\n");
-			else {
-				while (fgets(buf, sizeof(buf), fp) != NULL) {
-					strcrchomp(buf);
-					if (strncmp(buf, "-- \n", 4) == 0)
-						break;
-					INSERT(buf);
-				}
-				fclose(fp);
+		if (fp == NULL)
+			g_warning("Can't get text part\n");
+		else {
+			while (fgets(buf, sizeof(buf), fp) != NULL) {
+				strcrchomp(buf);
+				if (strncmp(buf, "-- \n", 4) == 0)
+					break;
+				INSERT(buf);
 			}
+			fclose(fp);
 		}
 	}
 	| SHOW_QUOTED_MESSAGE_NO_SIGNATURE
 	{
-		if (msginfo->folder || body) {
-			gchar buf[BUFFSIZE];
-			FILE *fp;
+		gchar buf[BUFFSIZE];
+		FILE *fp;
 
-			if (body)
-				fp = str_open_as_stream(body);
-			else
-				fp = procmime_get_first_text_content
-					(msginfo, NULL);
+		if (body)
+			fp = str_open_as_stream(body);
+		else
+			fp = procmime_get_first_text_content(msginfo, NULL);
 
-			if (fp == NULL)
-				g_warning("Can't get text part\n");
-			else {
-				while (fgets(buf, sizeof(buf), fp) != NULL) {
-					strcrchomp(buf);
-					if (strncmp(buf, "-- \n", 4) == 0)
-						break;
-					if (quote_str)
-						INSERT(quote_str);
-					INSERT(buf);
-				}
-				fclose(fp);
+		if (fp == NULL)
+			g_warning("Can't get text part\n");
+		else {
+			while (fgets(buf, sizeof(buf), fp) != NULL) {
+				strcrchomp(buf);
+				if (strncmp(buf, "-- \n", 4) == 0)
+					break;
+				if (quote_str)
+					INSERT(quote_str);
+				INSERT(buf);
 			}
+			fclose(fp);
 		}
 	}
 	| SHOW_BACKSLASH
