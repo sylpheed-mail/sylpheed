@@ -233,8 +233,8 @@ static void addressbook_edit_book_create( gboolean *cancelled ) {
 	hsep = gtk_hseparator_new();
 	gtk_box_pack_end(GTK_BOX(vbox), hsep, FALSE, FALSE, 0);
 
-	g_signal_connect(G_OBJECT(name_entry), "focus_in_event",
-			 G_CALLBACK(edit_book_name_focus), NULL );
+	/* g_signal_connect(G_OBJECT(name_entry), "focus_in_event",
+			 G_CALLBACK(edit_book_name_focus), NULL ); */
 	g_signal_connect(G_OBJECT(ok_btn), "clicked",
 			 G_CALLBACK(edit_book_ok), cancelled);
 	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
