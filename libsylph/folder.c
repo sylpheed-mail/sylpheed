@@ -728,6 +728,24 @@ FolderItem *folder_find_item_from_identifier(const gchar *identifier)
 	return d[1];
 }
 
+FolderItem *folder_find_item_and_num_from_id(const gchar *identifier, gint *num)
+{
+	gchar *id;
+	gchar *msg;
+	FolderItem *item;
+
+	g_return_val_if_fail(identifier != NULL, NULL);
+
+	id = g_path_get_dirname(identifier);
+	msg = g_path_get_basename(identifier);
+	item = folder_find_item_from_identifier(id);
+	*num = to_number(msg);
+	g_free(msg);
+	g_free(id);
+
+	return item;
+}
+
 Folder *folder_get_default_folder(void)
 {
 	return folder_list ? FOLDER(folder_list->data) : NULL;

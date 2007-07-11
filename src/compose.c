@@ -1541,8 +1541,6 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 	gchar *str;
 	gchar buf[BUFFSIZE];
 	gint hnum;
-	gchar *id;
-	gchar *msg;
 	gint num;
 	gchar **paths;
 	gint i;
@@ -1564,35 +1562,24 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 			++str;
 		if ((hnum == H_X_SYLPHEED_REPLY || hnum == H_REP) &&
 		    !compose->replyto) {
-			id = g_path_get_dirname(str);
-			msg = g_path_get_basename(str);
-			num = to_number(msg);
-			item = folder_find_item_from_identifier(id);
-			g_print("folder id: %s (msg %d)\n", id, num);
-			if (num > 0 && item) {
+			item = folder_find_item_and_num_from_id(str, &num);
+			if (item && num > 0) {
 				compose->replyinfo =
 					folder_item_get_msginfo(item, num);
 			}
-			g_free(msg);
-			g_free(id);
 		} else if (hnum == H_X_SYLPHEED_FORWARD || hnum == H_FWD) {
 			paths = g_strsplit(str, "\n", 0);
 			for (i = 0; paths[i] != NULL; i++) {
 				g_strstrip(paths[i]);
-				id = g_path_get_dirname(paths[i]);
-				msg = g_path_get_basename(paths[i]);
-				num = to_number(msg);
-				item = folder_find_item_from_identifier(id);
-				g_print("folder id: %s (msg %d)\n", id, num);
-				if (num > 0 && item) {
+				item = folder_find_item_and_num_from_id
+					(paths[i], &num);
+				if (item && num > 0) {
 					MsgInfo *msginfo;
 					msginfo = folder_item_get_msginfo
 						(item, num);
 					if (msginfo)
 						compose->forward_mlist = g_slist_append(compose->forward_mlist, msginfo);
 				}
-				g_free(msg);
-				g_free(id);
 			}
 			g_strfreev(paths);
 		}

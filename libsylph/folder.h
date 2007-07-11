@@ -352,6 +352,8 @@ FolderItem *folder_find_child_item_by_name	(FolderItem	*item,
 gchar      *folder_get_identifier		(Folder		*folder);
 gchar      *folder_item_get_identifier		(FolderItem	*item);
 FolderItem *folder_find_item_from_identifier	(const gchar	*identifier);
+FolderItem *folder_find_item_and_num_from_id	(const gchar	*identifier,
+						 gint		*num);
 
 Folder     *folder_get_default_folder	(void);
 FolderItem *folder_get_default_inbox	(void);

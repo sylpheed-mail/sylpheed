@@ -150,8 +150,6 @@ QueueInfo *send_get_queue_info(const gchar *file)
 	gchar buf[BUFFSIZE];
 	gint hnum;
 	QueueInfo *qinfo;
-	gchar *id;
-	gchar *msg;
 	gint num;
 	FolderItem *item;
 	MsgInfo *msginfo;
@@ -190,34 +188,23 @@ QueueInfo *send_get_queue_info(const gchar *file)
 			qinfo->ac = account_find_from_id(atoi(p));
 			break;
 		case Q_REPLY_TARGET:
-			id = g_path_get_dirname(p);
-			msg = g_path_get_basename(p);
-			num = to_number(msg);
-			item = folder_find_item_from_identifier(id);
-			g_print("folder id: %s (msg %d)\n", id, num);
-			if (num > 0 && item) {
+			item = folder_find_item_and_num_from_id(p, &num);
+			if (item && num > 0) {
 				qinfo->replyinfo =
 					procmsg_get_msginfo(item, num);
 			}
-			g_free(msg);
-			g_free(id);
 			break;
 		case Q_FORWARD_TARGETS:
 			paths = g_strsplit(p, "\n", 0);
 			for (i = 0; paths[i] != NULL; i++) {
 				g_strstrip(paths[i]);
-				id = g_path_get_dirname(paths[i]);
-				msg = g_path_get_basename(paths[i]);
-				num = to_number(msg);
-				item = folder_find_item_from_identifier(id);
-				g_print("folder id: %s (msg %d)\n", id, num);
-				if (num > 0 && item) {
+				item = folder_find_item_and_num_from_id
+					(paths[i], &num);
+				if (item && num > 0) {
 					msginfo = procmsg_get_msginfo(item, num);
 					if (msginfo)
 						qinfo->forward_mlist = g_slist_append(qinfo->forward_mlist, msginfo);
 				}
-				g_free(msg);
-				g_free(id);
 			}
 			g_strfreev(paths);
 			break;
