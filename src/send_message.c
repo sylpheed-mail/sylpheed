@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,10 +70,6 @@ struct _SendProgressDialog
 	Session *session;
 	gboolean cancelled;
 };
-
-static gint send_message_set_reply_flag	(QueueInfo		*qinfo);
-static gint send_message_set_forward_flags
-					(QueueInfo		*qinfo);
 
 static gint send_message_local		(const gchar		*command,
 					 FILE			*fp);
@@ -150,11 +146,6 @@ QueueInfo *send_get_queue_info(const gchar *file)
 	gchar buf[BUFFSIZE];
 	gint hnum;
 	QueueInfo *qinfo;
-	gint num;
-	FolderItem *item;
-	MsgInfo *msginfo;
-	gchar **paths;
-	gint i;
 
 	g_return_val_if_fail(file != NULL, NULL);
 
@@ -188,25 +179,10 @@ QueueInfo *send_get_queue_info(const gchar *file)
 			qinfo->ac = account_find_from_id(atoi(p));
 			break;
 		case Q_REPLY_TARGET:
-			item = folder_find_item_and_num_from_id(p, &num);
-			if (item && num > 0) {
-				qinfo->replyinfo =
-					procmsg_get_msginfo(item, num);
-			}
+			qinfo->reply_target = g_strdup(p);
 			break;
 		case Q_FORWARD_TARGETS:
-			paths = g_strsplit(p, "\n", 0);
-			for (i = 0; paths[i] != NULL; i++) {
-				g_strstrip(paths[i]);
-				item = folder_find_item_and_num_from_id
-					(paths[i], &num);
-				if (item && num > 0) {
-					msginfo = procmsg_get_msginfo(item, num);
-					if (msginfo)
-						qinfo->forward_mlist = g_slist_append(qinfo->forward_mlist, msginfo);
-				}
-			}
-			g_strfreev(paths);
+			qinfo->forward_targets = g_strdup(p);
 			break;
 		default:
 			break;
@@ -274,8 +250,8 @@ void send_queue_info_free(QueueInfo *qinfo)
 	g_slist_free(qinfo->to_list);
 	g_free(qinfo->from);
 	g_free(qinfo->server);
-	procmsg_msginfo_free(qinfo->replyinfo);
-	procmsg_msg_list_free(qinfo->forward_mlist);
+	g_free(qinfo->reply_target);
+	g_free(qinfo->forward_targets);
 	if (qinfo->fp)
 		fclose(qinfo->fp);
 	g_free(qinfo);
@@ -378,10 +354,10 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 			continue;
 		}
 
-		if (qinfo->replyinfo)
-			send_message_set_reply_flag(qinfo);
-		else if (qinfo->forward_mlist)
-			send_message_set_forward_flags(qinfo);
+		if (qinfo->reply_target)
+			send_message_set_reply_flag(qinfo->reply_target);
+		else if (qinfo->forward_targets)
+			send_message_set_forward_flags(qinfo->forward_targets);
 
 		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
 			   get_rc_dir(), G_DIR_SEPARATOR, g_random_int());
@@ -431,23 +407,23 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 	return ret;
 }
 
-static gint send_message_set_reply_flag(QueueInfo *qinfo)
+gint send_message_set_reply_flag(const gchar *target)
 {
+	FolderItem *item;
+	gint num;
 	MsgInfo *msginfo;
-	MsgInfo *replyinfo;
 	SummaryView *summaryview;
 
-	g_return_val_if_fail(qinfo->replyinfo != NULL, -1);
-
-	if (!qinfo->replyinfo->folder)
-		return -1;
-
-	replyinfo = qinfo->replyinfo;
+	g_return_val_if_fail(target != NULL, -1);
 
 	summaryview = main_window_get()->summaryview;
-	if (summaryview->folder_item == replyinfo->folder) {
-		msginfo = summary_get_msginfo_by_msgnum
-			(summaryview, replyinfo->msgnum);
+
+	item = folder_find_item_and_num_from_id(target, &num);
+	if (!item || num <= 0)
+		return -1;
+
+	if (summaryview->folder_item == item) {
+		msginfo = summary_get_msginfo_by_msgnum(summaryview, num);
 		if (msginfo) {
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
 			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
@@ -459,7 +435,7 @@ static gint send_message_set_reply_flag(QueueInfo *qinfo)
 			summary_update_by_msgnum(summaryview, msginfo->msgnum);
                 }
 	} else {
-		msginfo = replyinfo;
+		msginfo = procmsg_get_msginfo(item, num);
 		if (msginfo) {
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
 			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
@@ -470,32 +446,39 @@ static gint send_message_set_reply_flag(QueueInfo *qinfo)
 				msginfo->folder->mark_dirty = TRUE;
 			procmsg_add_flags(msginfo->folder, msginfo->msgnum,
 					  msginfo->flags);
-			
+			procmsg_msginfo_free(msginfo);
                 }
 	}
 
 	return 0;
 }
 
-static gint send_message_set_forward_flags(QueueInfo *qinfo)
+gint send_message_set_forward_flags(const gchar *targets)
 {
+	FolderItem *item;
+	gint num;
 	MsgInfo *msginfo;
-	MsgInfo *fwinfo;
-	GSList *cur;
 	SummaryView *summaryview;
+	gchar **paths;
+	gint i;
+	GSList *mlist = NULL;
 
-	g_return_val_if_fail(qinfo->forward_mlist != NULL, -1);
+	g_return_val_if_fail(targets != NULL, -1);
 
 	summaryview = main_window_get()->summaryview;
 
-	for (cur = qinfo->forward_mlist; cur != NULL; cur = cur->next) {
-		fwinfo = (MsgInfo *)cur->data;
-		if (!fwinfo->folder)
-			return -1;
+	paths = g_strsplit(targets, "\n", 0);
 
-		if (summaryview->folder_item == fwinfo->folder) {
-			msginfo = summary_get_msginfo_by_msgnum
-				(summaryview, fwinfo->msgnum);
+	for (i = 0; paths[i] != NULL; i++) {
+		g_strstrip(paths[i]);
+
+		item = folder_find_item_and_num_from_id(paths[i], &num);
+		if (!item || num <= 0)
+			continue;
+
+		if (summaryview->folder_item == item) {
+			msginfo = summary_get_msginfo_by_msgnum(summaryview,
+								num);
 			if (msginfo) {
 				MSG_UNSET_PERM_FLAGS(msginfo->flags,
 						     MSG_REPLIED);
@@ -507,9 +490,10 @@ static gint send_message_set_forward_flags(QueueInfo *qinfo)
 					msginfo->folder->mark_dirty = TRUE;
 				summary_update_by_msgnum
 					(summaryview, msginfo->msgnum);
+				msginfo = procmsg_msginfo_copy(msginfo);
 			}
 		} else {
-			msginfo = fwinfo;
+			msginfo = procmsg_get_msginfo(item, num);
 			if (msginfo) {
 				MSG_UNSET_PERM_FLAGS(msginfo->flags,
 						     MSG_REPLIED);
@@ -524,12 +508,19 @@ static gint send_message_set_forward_flags(QueueInfo *qinfo)
 						  msginfo->flags);
 			}
 		}
+
+		if (msginfo)
+			mlist = g_slist_append(mlist, msginfo);
 	}
 
-	fwinfo = (MsgInfo *)qinfo->forward_mlist->data;
-	if (MSG_IS_IMAP(fwinfo->flags))
-		imap_msg_list_unset_perm_flags(qinfo->forward_mlist,
-					       MSG_REPLIED);
+	if (mlist) {
+		msginfo = (MsgInfo *)mlist->data;
+		if (MSG_IS_IMAP(msginfo->flags))
+			imap_msg_list_unset_perm_flags(mlist, MSG_REPLIED);
+	}
+
+	procmsg_msg_list_free(mlist);
+	g_strfreev(paths);
 
 	return 0;
 }

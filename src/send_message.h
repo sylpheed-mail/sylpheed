@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ struct _QueueInfo
 	gchar *server;
 	GSList *to_list;
 	PrefsAccount *ac;
-	MsgInfo *replyinfo;
-	GSList *forward_mlist;
+	gchar *reply_target;
+	gchar *forward_targets;
 	FILE *fp;
 };
 
@@ -52,5 +52,8 @@ gint send_message_queue		(QueueInfo	*qinfo);
 gint send_message_queue_all	(FolderItem	*queue,
 				 gboolean	 save_msgs,
 				 gboolean	 filter_msgs);
+
+gint send_message_set_reply_flag	(const gchar	*reply_target);
+gint send_message_set_forward_flags	(const gchar	*forward_targets);
 
 #endif /* __SEND_H__ */

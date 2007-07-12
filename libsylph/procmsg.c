@@ -1586,10 +1586,8 @@ MsgInfo *procmsg_get_msginfo(FolderItem *item, gint num)
 
 	if (type == F_MH || type == F_NEWS) {
 		MsgPermFlags flags = 0;
-		if (procmsg_get_flags(item, num, &flags)) {
-			g_print("set msg %d's flag\n", num);
+		if (procmsg_get_flags(item, num, &flags))
 			msginfo->flags.perm_flags = flags;
-		}
 	}
 
 	return msginfo;

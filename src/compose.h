@@ -141,8 +141,8 @@ struct _Compose
 	ComposeMode mode;
 
 	MsgInfo *targetinfo;
-	MsgInfo *replyinfo;
-	GSList *forward_mlist;
+	gchar *reply_target;
+	gchar *forward_targets;
 
 	gchar	*replyto;
 	gchar	*cc;

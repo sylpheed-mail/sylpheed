@@ -799,12 +799,12 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 {
 	Compose *compose;
 	PrefsAccount *account = NULL;
+	MsgInfo *replyinfo;
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 	gboolean quote = FALSE;
 
 	g_return_if_fail(msginfo != NULL);
-	//g_return_if_fail(msginfo->folder != NULL);
 
 	if (COMPOSE_QUOTE_MODE(mode) == COMPOSE_WITH_QUOTE)
 		quote = TRUE;
@@ -825,9 +825,18 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 
 	compose = compose_create(account, COMPOSE_REPLY);
 
-	compose->replyinfo = procmsg_msginfo_get_full_info(msginfo);
-	if (!compose->replyinfo)
-		compose->replyinfo = procmsg_msginfo_copy(msginfo);
+	replyinfo = procmsg_msginfo_get_full_info(msginfo);
+	if (!replyinfo)
+		replyinfo = procmsg_msginfo_copy(msginfo);
+	if (msginfo->folder) {
+		gchar *id;
+		id = folder_item_get_identifier(msginfo->folder);
+		if (id) {
+			compose->reply_target = g_strdup_printf
+				("%s/%u", id, msginfo->msgnum);
+			g_free(id);
+		}
+	}
 
 	if (compose_parse_header(compose, msginfo) < 0) return;
 
@@ -846,7 +855,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		else
 			qmark = "> ";
 
-		quote_str = compose_quote_fmt(compose, compose->replyinfo,
+		quote_str = compose_quote_fmt(compose, replyinfo,
 					      prefs_common.quotefmt,
 					      qmark, body);
 	}
@@ -870,7 +879,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 
 #if USE_GPGME
 	if (rfc2015_is_available() && account->encrypt_reply &&
-	    MSG_IS_ENCRYPTED(compose->replyinfo->flags)) {
+	    MSG_IS_ENCRYPTED(replyinfo->flags)) {
 		GtkItemFactory *ifactory;
 
 		ifactory = gtk_item_factory_from_widget(compose->menubar);
@@ -896,11 +905,11 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	GtkTextIter iter;
 	GSList *cur;
 	MsgInfo *msginfo;
+	GString *forward_targets;
 
 	g_return_if_fail(mlist != NULL);
 
 	msginfo = (MsgInfo *)mlist->data;
-	//g_return_if_fail(msginfo->folder != NULL);
 
 	if (msginfo->folder)
 		account = account_find_from_item(msginfo->folder);
@@ -909,14 +918,27 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 
 	compose = compose_create(account, COMPOSE_FORWARD);
 
+	forward_targets = g_string_new("");
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
-		msginfo = procmsg_msginfo_get_full_info(msginfo);
-		if (!msginfo)
-			msginfo = procmsg_msginfo_copy(msginfo);
-		compose->forward_mlist = g_slist_append(compose->forward_mlist,
-							msginfo);
+		if (msginfo->folder) {
+			gchar *id;
+			id = folder_item_get_identifier(msginfo->folder);
+			if (id) {
+				if (forward_targets->len > 0)
+					g_string_append(forward_targets,
+							"\n ");
+				g_string_append_printf(forward_targets, "%s/%u",
+						       id, msginfo->msgnum);
+				g_free(id);
+			}
+		}
 	}
+	if (forward_targets->len > 0)
+		compose->forward_targets = g_string_free(forward_targets,
+							 FALSE);
+	else
+		g_string_free(forward_targets, TRUE);
 
 	undo_block(compose->undostruct);
 
@@ -1541,10 +1563,6 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 	gchar *str;
 	gchar buf[BUFFSIZE];
 	gint hnum;
-	gint num;
-	gchar **paths;
-	gint i;
-	FolderItem *item;
 
 	g_return_val_if_fail(msginfo != NULL, -1);
 
@@ -1562,26 +1580,9 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 			++str;
 		if ((hnum == H_X_SYLPHEED_REPLY || hnum == H_REP) &&
 		    !compose->replyto) {
-			item = folder_find_item_and_num_from_id(str, &num);
-			if (item && num > 0) {
-				compose->replyinfo =
-					folder_item_get_msginfo(item, num);
-			}
+			compose->reply_target = g_strdup(str);
 		} else if (hnum == H_X_SYLPHEED_FORWARD || hnum == H_FWD) {
-			paths = g_strsplit(str, "\n", 0);
-			for (i = 0; paths[i] != NULL; i++) {
-				g_strstrip(paths[i]);
-				item = folder_find_item_and_num_from_id
-					(paths[i], &num);
-				if (item && num > 0) {
-					MsgInfo *msginfo;
-					msginfo = folder_item_get_msginfo
-						(item, num);
-					if (msginfo)
-						compose->forward_mlist = g_slist_append(compose->forward_mlist, msginfo);
-				}
-			}
-			g_strfreev(paths);
+			compose->forward_targets = g_strdup(str);
 		}
 	}
 
@@ -2853,114 +2854,6 @@ void compose_unlock(Compose *compose)
 		compose->lock_count--;
 }
 
-static gint compose_set_reply_flag(Compose *compose)
-{
-	MsgInfo *msginfo;
-	MsgInfo *replyinfo;
-	SummaryView *summaryview;
-
-	g_return_val_if_fail(compose->replyinfo != NULL, -1);
-
-	if (!compose->replyinfo->folder)
-		return -1;
-
-	replyinfo = compose->replyinfo;
-
-	summaryview = main_window_get()->summaryview;
-	if (summaryview->folder_item == replyinfo->folder) {
-		msginfo = summary_get_msginfo_by_msgnum
-			(summaryview, replyinfo->msgnum);
-		if (msginfo) {
-			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
-			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
-			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
-			if (MSG_IS_IMAP(msginfo->flags))
-				imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
-			if (msginfo->folder)
-				msginfo->folder->mark_dirty = TRUE;
-			summary_update_by_msgnum
-				(summaryview, msginfo->msgnum);
-		}
-	} else {
-		msginfo = procmsg_get_msginfo
-			(replyinfo->folder, replyinfo->msgnum);
-		if (msginfo) {
-			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
-			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
-			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
-			if (MSG_IS_IMAP(msginfo->flags))
-				imap_msg_set_perm_flags(msginfo, MSG_REPLIED);
-			if (msginfo->folder)
-				msginfo->folder->mark_dirty = TRUE;
-			procmsg_add_flags(msginfo->folder,
-					  msginfo->msgnum,
-					  msginfo->flags);
-			procmsg_msginfo_free(msginfo);
-		}
-	}
-
-	return 0;
-}
-
-static gint compose_set_forward_flags(Compose *compose)
-{
-	MsgInfo *msginfo;
-	MsgInfo *fwinfo;
-	GSList *cur;
-	SummaryView *summaryview;
-
-	g_return_val_if_fail(compose->forward_mlist != NULL, -1);
-
-	summaryview = main_window_get()->summaryview;
-
-	for (cur = compose->forward_mlist; cur != NULL; cur = cur->next) {
-		fwinfo = (MsgInfo *)cur->data;
-		if (!fwinfo->folder)
-			return -1;
-
-		if (summaryview->folder_item == fwinfo->folder) {
-			msginfo = summary_get_msginfo_by_msgnum
-				(summaryview, fwinfo->msgnum);
-			if (msginfo) {
-				MSG_UNSET_PERM_FLAGS(msginfo->flags,
-						     MSG_REPLIED);
-				MSG_SET_PERM_FLAGS(msginfo->flags,
-						   MSG_FORWARDED);
-				MSG_SET_TMP_FLAGS(msginfo->flags,
-						  MSG_FLAG_CHANGED);
-				if (msginfo->folder)
-					msginfo->folder->mark_dirty = TRUE;
-				summary_update_by_msgnum
-					(summaryview, msginfo->msgnum);
-			}
-		} else {
-			msginfo = procmsg_get_msginfo
-				(fwinfo->folder, fwinfo->msgnum);
-			if (msginfo) {
-				MSG_UNSET_PERM_FLAGS(msginfo->flags,
-						     MSG_REPLIED);
-				MSG_SET_PERM_FLAGS(msginfo->flags,
-						   MSG_FORWARDED);
-				MSG_SET_TMP_FLAGS(msginfo->flags,
-						  MSG_FLAG_CHANGED);
-				if (msginfo->folder)
-					msginfo->folder->mark_dirty = TRUE;
-				procmsg_add_flags(msginfo->folder,
-						  msginfo->msgnum,
-						  msginfo->flags);
-				procmsg_msginfo_free(msginfo);
-			}
-		}
-	}
-
-	fwinfo = (MsgInfo *)compose->forward_mlist->data;
-	if (MSG_IS_IMAP(fwinfo->flags))
-		imap_msg_list_unset_perm_flags(compose->forward_mlist,
-					       MSG_REPLIED);
-
-	return 0;
-}
-
 static gint compose_send(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
@@ -3050,10 +2943,11 @@ static gint compose_send(Compose *compose)
 					(compose->targetinfo->folder, TRUE);
 		}
 
-		if (compose->replyinfo)
-			compose_set_reply_flag(compose);
-		else if (compose->forward_mlist)
-			compose_set_forward_flags(compose);
+		if (compose->reply_target)
+			send_message_set_reply_flag(compose->reply_target);
+		else if (compose->forward_targets)
+			send_message_set_forward_flags
+				(compose->forward_targets);
 
 		/* save message to outbox */
 		if (prefs_common.savemsg) {
@@ -3700,30 +3594,11 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	/* Sylpheed account ID */
 	fprintf(fp, "AID:%d\n", compose->account->account_id);
 	/* Reply target */
-	if (compose->replyinfo && compose->replyinfo->folder) {
-		gchar *id;
-		id = folder_item_get_identifier(compose->replyinfo->folder);
-		if (id) {
-			fprintf(fp, "REP:%s/%u\n",
-				id, compose->replyinfo->msgnum);
-			g_free(id);
-		}
-	}
+	if (compose->reply_target)
+		fprintf(fp, "REP:%s\n", compose->reply_target);
 	/* Forward target */
-	if (compose->forward_mlist) {
-		gchar *id;
-		MsgInfo *fwinfo = (MsgInfo *)compose->forward_mlist->data;
-		id = folder_item_get_identifier(fwinfo->folder);
-		if (id) {
-			fprintf(fp, "FWD:%s/%u\n", id, fwinfo->msgnum);
-			for (cur = compose->forward_mlist->next; cur != NULL;
-			     cur = cur->next) {
-				fwinfo = (MsgInfo *)cur->data;
-				fprintf(fp, " %s/%u\n", id, fwinfo->msgnum);
-			}
-			g_free(id);
-		}
-	}
+	if (compose->forward_targets)
+		fprintf(fp, "FWD:%s\n", compose->forward_targets);
 	fprintf(fp, "\n");
 
 	while (fgets(buf, sizeof(buf), src_fp) != NULL) {
@@ -4183,32 +4058,12 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 
 		fprintf(fp, "X-Sylpheed-Account-Id: %d\n",
 			compose->account->account_id);
-		if (compose->replyinfo) {
-			id = folder_item_get_identifier
-				(compose->replyinfo->folder);
-			if (id) {
-				fprintf(fp, "X-Sylpheed-Reply: %s/%u\n",
-					id, compose->replyinfo->msgnum);
-				g_free(id);
-			}
-		} else if (compose->forward_mlist) {
-			MsgInfo *fwinfo =
-				(MsgInfo *)compose->forward_mlist->data;
-			GSList *cur;
-
-			id = folder_item_get_identifier(fwinfo->folder);
-			if (id) {
-				fprintf(fp, "X-Sylpheed-Forward: %s/%u\n",
-					id, fwinfo->msgnum);
-				for (cur = compose->forward_mlist->next;
-				     cur != NULL; cur = cur->next) {
-					fwinfo = (MsgInfo *)cur->data;
-					fprintf(fp, " %s/%u\n",
-						id, fwinfo->msgnum);
-				}
-				g_free(id);
-			}
-		}
+		if (compose->reply_target)
+			fprintf(fp, "X-Sylpheed-Reply: %s\n",
+				compose->reply_target);
+		else if (compose->forward_targets)
+			fprintf(fp, "X-Sylpheed-Forward: %s\n",
+				compose->forward_targets);
 	}
 
 	/* separator between header and body */
@@ -4921,9 +4776,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->mode = mode;
 
-	compose->targetinfo    = NULL;
-	compose->replyinfo     = NULL;
-	compose->forward_mlist = NULL;
+	compose->targetinfo      = NULL;
+	compose->reply_target    = NULL;
+	compose->forward_targets = NULL;
 
 	compose->replyto     = NULL;
 	compose->cc	     = NULL;
@@ -5477,17 +5332,26 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 
-	if (compose->replyinfo == NULL) {
+	if (compose->reply_target == NULL) {
 		parsed_str = compose_quote_fmt(compose, NULL, tmpl->value,
 					       NULL, NULL);
 	} else {
+		FolderItem *item;
+		gint num;
+		MsgInfo *msginfo = NULL;
+
 		if (prefs_common.quotemark && *prefs_common.quotemark)
 			qmark = prefs_common.quotemark;
 		else
 			qmark = "> ";
 
-		parsed_str = compose_quote_fmt(compose, compose->replyinfo,
+		item = folder_find_item_and_num_from_id(compose->reply_target,
+							&num);
+		if (item && num > 0)
+			msginfo = folder_item_get_msginfo(item, num);
+		parsed_str = compose_quote_fmt(compose, msginfo,
 					       tmpl->value, qmark, NULL);
+		procmsg_msginfo_free(msginfo);
 	}
 
 	if (replace && parsed_str && prefs_common.auto_sig)
@@ -5530,8 +5394,8 @@ static void compose_destroy(Compose *compose)
 	g_slist_free(compose->newsgroup_list);
 
 	procmsg_msginfo_free(compose->targetinfo);
-	procmsg_msginfo_free(compose->replyinfo);
-	procmsg_msg_list_free(compose->forward_mlist);
+	g_free(compose->reply_target);
+	g_free(compose->forward_targets);
 	g_free(compose->replyto);
 	g_free(compose->cc);
 	g_free(compose->bcc);
