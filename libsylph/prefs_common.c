@@ -540,3 +540,36 @@ void prefs_common_junk_filter_list_set(void)
 	rule = prefs_common_junk_filter_rule_create(TRUE);
 	prefs_common.manual_junk_fltlist = g_slist_append(NULL, rule);
 }
+
+void prefs_common_junk_folder_rename_path(const gchar *old_path,
+					  const gchar *new_path)
+{
+	gint len;
+	gchar *base;
+	gchar *dest_path;
+
+	g_return_if_fail(old_path != NULL);
+	g_return_if_fail(new_path != NULL);
+
+	if (!prefs_common.junk_folder)
+		return;
+
+	len = strlen(prefs_common.junk_folder);
+
+	if (!strncmp(old_path, prefs_common.junk_folder, len)) {
+		base = prefs_common.junk_folder + len;
+		if (*base != '/' && *base != '\0')
+			return;
+		while (*base == '/') base++;
+		if (*base == '\0')
+			dest_path = g_strdup(new_path);
+		else
+			dest_path = g_strconcat(new_path, "/", base, NULL);
+		debug_print("prefs_common_junk_folder_rename_path(): "
+			    "renaming %s -> %s\n", prefs_common.junk_folder,
+			    dest_path);
+		g_free(prefs_common.junk_folder);
+		prefs_common.junk_folder = dest_path;
+		prefs_common_junk_filter_list_set();
+	}
+}

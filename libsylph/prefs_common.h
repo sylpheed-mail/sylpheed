@@ -298,6 +298,8 @@ PrefParam *prefs_common_get_params	(void);
 void prefs_common_read_config		(void);
 void prefs_common_write_config		(void);
 
-void prefs_common_junk_filter_list_set	(void);
+void prefs_common_junk_filter_list_set		(void);
+void prefs_common_junk_folder_rename_path	(const gchar	*old_path,
+						 const gchar	*new_path);
 
 #endif /* __PREFS_COMMON_H__ */

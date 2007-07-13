@@ -2343,10 +2343,13 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 		return;
 	}
 
-	if (folder_get_default_folder() == item->folder)
+	if (folder_get_default_folder() == item->folder) {
 		filter_list_rename_path(old_path, item->path);
+		prefs_common_junk_folder_rename_path(old_path, item->path);
+	}
 	new_id = folder_item_get_identifier(item);
 	filter_list_rename_path(old_id, new_id);
+	prefs_common_junk_folder_rename_path(old_id, new_id);
 	g_free(old_id);
 	g_free(new_id);
 
@@ -2413,10 +2416,13 @@ static void folderview_move_folder_cb(FolderView *folderview, guint action,
 		return;
 	}
 
-	if (folder_get_default_folder() == item->folder)
+	if (folder_get_default_folder() == item->folder) {
 		filter_list_rename_path(old_path, item->path);
+		prefs_common_junk_folder_rename_path(old_path, item->path);
+	}
 	new_id = folder_item_get_identifier(item);
 	filter_list_rename_path(old_id, new_id);
+	prefs_common_junk_folder_rename_path(old_id, new_id);
 	g_free(new_id);
 	g_free(old_id);
 	g_free(old_path);
