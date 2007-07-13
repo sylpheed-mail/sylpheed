@@ -1303,15 +1303,14 @@ void filter_rule_rename_dest_path(FilterRule *rule, const gchar *old_path,
 		if (action->str_value &&
 		    !strncmp(old_path, action->str_value, oldpathlen)) {
 			base = action->str_value + oldpathlen;
-			if (*base != G_DIR_SEPARATOR && *base != '\0')
+			if (*base != '/' && *base != '\0')
 				continue;
-			while (*base == G_DIR_SEPARATOR) base++;
+			while (*base == '/') base++;
 			if (*base == '\0')
 				dest_path = g_strdup(new_path);
 			else
-				dest_path = g_strconcat(new_path,
-							G_DIR_SEPARATOR_S,
-							base, NULL);
+				dest_path = g_strconcat(new_path, "/", base,
+							NULL);
 			debug_print("filter_rule_rename_dest_path(): "
 				    "renaming %s -> %s\n",
 				    action->str_value, dest_path);
@@ -1340,7 +1339,7 @@ void filter_rule_delete_action_by_dest_path(FilterRule *rule, const gchar *path)
 
 		if (action->str_value &&
 		    !strncmp(path, action->str_value, pathlen) &&
-		    (action->str_value[pathlen] == G_DIR_SEPARATOR ||
+		    (action->str_value[pathlen] == '/' ||
 		     action->str_value[pathlen] == '\0')) {
 			debug_print("filter_rule_delete_action_by_dest_path(): "
 				    "deleting %s\n", action->str_value);
