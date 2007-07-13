@@ -554,7 +554,7 @@ void prefs_common_junk_folder_rename_path(const gchar *old_path,
 	if (!prefs_common.junk_folder)
 		return;
 
-	len = strlen(prefs_common.junk_folder);
+	len = strlen(old_path);
 
 	if (!strncmp(old_path, prefs_common.junk_folder, len)) {
 		base = prefs_common.junk_folder + len;
