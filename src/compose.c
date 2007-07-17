@@ -2944,7 +2944,8 @@ static gint compose_send(Compose *compose)
 		}
 
 		if (compose->reply_target)
-			send_message_set_reply_flag(compose->reply_target);
+			send_message_set_reply_flag(compose->reply_target,
+						    compose->inreplyto);
 		else if (compose->forward_targets)
 			send_message_set_forward_flags
 				(compose->forward_targets);

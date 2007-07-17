@@ -53,7 +53,8 @@ gint send_message_queue_all	(FolderItem	*queue,
 				 gboolean	 save_msgs,
 				 gboolean	 filter_msgs);
 
-gint send_message_set_reply_flag	(const gchar	*reply_target);
+gint send_message_set_reply_flag	(const gchar	*reply_target,
+					 const gchar	*msgid);
 gint send_message_set_forward_flags	(const gchar	*forward_targets);
 
 #endif /* __SEND_H__ */

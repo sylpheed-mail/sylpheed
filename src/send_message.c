@@ -355,7 +355,8 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 		}
 
 		if (qinfo->reply_target)
-			send_message_set_reply_flag(qinfo->reply_target);
+			send_message_set_reply_flag(qinfo->reply_target,
+						    msginfo->inreplyto);
 		else if (qinfo->forward_targets)
 			send_message_set_forward_flags(qinfo->forward_targets);
 
@@ -407,7 +408,7 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 	return ret;
 }
 
-gint send_message_set_reply_flag(const gchar *target)
+gint send_message_set_reply_flag(const gchar *target, const gchar *msgid)
 {
 	FolderItem *item;
 	gint num;
@@ -415,6 +416,9 @@ gint send_message_set_reply_flag(const gchar *target)
 	SummaryView *summaryview;
 
 	g_return_val_if_fail(target != NULL, -1);
+
+	debug_print("send_message_set_reply_flag(): "
+		    "setting reply flag to: %s\n", target);
 
 	summaryview = main_window_get()->summaryview;
 
@@ -425,6 +429,11 @@ gint send_message_set_reply_flag(const gchar *target)
 	if (summaryview->folder_item == item) {
 		msginfo = summary_get_msginfo_by_msgnum(summaryview, num);
 		if (msginfo) {
+			if (msgid && strcmp2(msgid, msginfo->msgid) != 0) {
+				debug_print("send_message_set_reply_flag(): "
+					    "message-id mismatch\n");
+				return -1;
+			}
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
 			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
 			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
@@ -437,6 +446,12 @@ gint send_message_set_reply_flag(const gchar *target)
 	} else {
 		msginfo = procmsg_get_msginfo(item, num);
 		if (msginfo) {
+			if (msgid && strcmp2(msgid, msginfo->msgid) != 0) {
+				debug_print("send_message_set_reply_flag(): "
+					    "message-id mismatch\n");
+				procmsg_msginfo_free(msginfo);
+				return -1;
+			}
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_FORWARDED);
 			MSG_SET_PERM_FLAGS(msginfo->flags, MSG_REPLIED);
 			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
@@ -464,6 +479,9 @@ gint send_message_set_forward_flags(const gchar *targets)
 	GSList *mlist = NULL;
 
 	g_return_val_if_fail(targets != NULL, -1);
+
+	debug_print("send_message_set_forward_flags(): "
+		    "setting forward flags to: %s\n", targets);
 
 	summaryview = main_window_get()->summaryview;
 
