@@ -1290,6 +1290,7 @@ static void mimeview_reply(MimeView *mimeview, guint action)
 	else
 		compose_reply(msginfo, NULL, mode, NULL);
 
+	g_unlink(msginfo->file_path);
 	procmsg_msginfo_free(msginfo);
 }
 
