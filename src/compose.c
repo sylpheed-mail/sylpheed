@@ -1579,9 +1579,10 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		while (g_ascii_isspace(*str))
 			++str;
 		if ((hnum == H_X_SYLPHEED_REPLY || hnum == H_REP) &&
-		    !compose->replyto) {
+		    !compose->reply_target) {
 			compose->reply_target = g_strdup(str);
-		} else if (hnum == H_X_SYLPHEED_FORWARD || hnum == H_FWD) {
+		} else if ((hnum == H_X_SYLPHEED_FORWARD || hnum == H_FWD) &&
+			   !compose->forward_targets) {
 			compose->forward_targets = g_strdup(str);
 		}
 	}
