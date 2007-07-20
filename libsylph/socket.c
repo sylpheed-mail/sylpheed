@@ -1363,6 +1363,8 @@ gint ssl_read(SSL *ssl, gchar *buf, gint len)
 {
 	gint err, ret;
 
+	errno = 0;
+
 	if (SSL_pending(ssl) == 0) {
 		if (fd_check_io(SSL_get_rfd(ssl), G_IO_IN) < 0)
 			return -1;
@@ -1383,6 +1385,9 @@ gint ssl_read(SSL *ssl, gchar *buf, gint len)
 		g_warning("SSL_read() returned error %d, ret = %d\n", err, ret);
 		if (ret == 0)
 			return 0;
+#ifdef G_OS_WIN32
+		errno = EIO;
+#endif
 		return -1;
 	}
 }

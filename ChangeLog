@@ -1,3 +1,10 @@
+2007-07-20
+
+	* libsylph/socket.c: ssl_read(); win32: set errno to EIO to avoid
+	  random error message.
+	* src/send_message.c: send_message_smtp(): ignore errors right after
+	  QUIT (workaround for Gmail SMTP server).
+
 2007-07-18
 
 	* src/compose.c: compose_parse_source_msg(): fixed wrong null check.

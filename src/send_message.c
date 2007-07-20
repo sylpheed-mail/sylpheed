@@ -755,6 +755,11 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 		/* consider EOF right after QUIT successful */
 		log_warning("%s\n", _("Connection closed by the remote host."));
 		ret = 0;
+	} else if (session->state == SESSION_ERROR &&
+		   SMTP_SESSION(session)->state == SMTP_QUIT) {
+		/* ignore errors right after QUIT */
+		log_warning("%s\n", _("Error occurred after QUIT command (ignored)"));
+		ret = 0;
 	} else if (session->state == SESSION_ERROR ||
 		   session->state == SESSION_EOF ||
 		   session->state == SESSION_TIMEOUT ||

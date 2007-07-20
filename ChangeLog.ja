@@ -1,3 +1,10 @@
+2007-07-20
+
+	* libsylph/socket.c: ssl_read(); win32: 不規則なエラーメッセージを
+	  避けるために errno を EIO に設定するようにした。
+	* src/send_message.c: send_message_smtp(): QUIT 直後のエラーを無視する
+	  ようにした(Gmail の SMTP サーバへの対策)。
+
 2007-07-18
 
 	* src/compose.c: compose_parse_source_msg(): 誤ったnullチェックを修正。
