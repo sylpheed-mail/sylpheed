@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-11 15:39+0900\n"
+"POT-Creation-Date: 2007-07-20 15:25+0900\n"
 "PO-Revision-Date: 2007-05-19 10:30+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: HUNGARIAN <NONE>\n"
@@ -685,7 +685,7 @@ msgstr ""
 "funkció bekapcsolásához tegyen pipát a 'G' oszlopban levő négyzetbe!"
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:520
-#: src/compose.c:4720 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:4579 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:196 src/editgroup.c:272 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:225
 #: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:319
@@ -1049,7 +1049,7 @@ msgstr ""
 "Tényleg törölni szeretné a(z) `%s' mappát ÉS az összes címet benne?\n"
 "Ha csak a mappát törli, a címek átkerülnek a szülő mappába."
 
-#: src/addressbook.c:1666 src/folderview.c:2485
+#: src/addressbook.c:1666 src/folderview.c:2491
 msgid "Delete folder"
 msgstr "Mappa törlése"
 
@@ -1203,7 +1203,7 @@ msgstr "Általános cím"
 msgid "Personal address"
 msgstr "Személyes cím"
 
-#: src/alertpanel.c:142 src/compose.c:5989 src/main.c:740
+#: src/alertpanel.c:142 src/compose.c:5857 src/main.c:740
 msgid "Notice"
 msgstr "Megjegyzés"
 
@@ -1539,79 +1539,79 @@ msgstr "/_Eszközök/_Helyesírásellenőrzés"
 msgid "/_Tools/_Set spell language"
 msgstr "/_Eszközök/Helyesírás _nyelvi beállítások"
 
-#: src/compose.c:941
+#: src/compose.c:965
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s: fájl nem létezik\n"
 
-#: src/compose.c:1045 src/compose.c:1119
+#: src/compose.c:1069 src/compose.c:1143
 msgid "Can't get text part\n"
 msgstr "Nem tudtam olvasni a szövegrészt\n"
 
-#: src/compose.c:1619
+#: src/compose.c:1623
 msgid "Quote mark format error."
 msgstr "Idézet jelölés formátum hiba."
 
-#: src/compose.c:1631
+#: src/compose.c:1635
 msgid "Message reply/forward format error."
 msgstr "Levél válasz/továbbítás formátumhiba."
 
-#: src/compose.c:2120
+#: src/compose.c:2124
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "%s fájl nem létezik\n"
 
-#: src/compose.c:2124
+#: src/compose.c:2128
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "%s mérete nem határozható meg\n"
 
-#: src/compose.c:2128
+#: src/compose.c:2132
 #, c-format
 msgid "File %s is empty."
 msgstr "A(z) %s fájl üres."
 
-#: src/compose.c:2132
+#: src/compose.c:2136
 #, c-format
 msgid "Can't read %s."
 msgstr "%s nem olvasható."
 
-#: src/compose.c:2165
+#: src/compose.c:2169
 #, c-format
 msgid "Message: %s"
 msgstr "Levél: %s"
 
-#: src/compose.c:2225 src/mimeview.c:582
+#: src/compose.c:2229 src/mimeview.c:582
 msgid "Can't get the part of multipart message."
 msgstr "Egy több részes levél egy darabja nem hozzáférhető."
 
-#: src/compose.c:2709 src/headerview.c:233 src/query_search.c:669
+#: src/compose.c:2713 src/headerview.c:233 src/query_search.c:669
 #: src/summaryview.c:2381
 msgid "(No Subject)"
 msgstr "(Nincs Tárgy)"
 
-#: src/compose.c:2712
+#: src/compose.c:2716
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Levél írása%s"
 
-#: src/compose.c:2827
+#: src/compose.c:2831
 msgid "Recipient is not specified."
 msgstr "Nincs címzett megadva."
 
-#: src/compose.c:2835
+#: src/compose.c:2839
 msgid "Empty subject"
 msgstr "Nincs tárgy"
 
-#: src/compose.c:2836
+#: src/compose.c:2840
 msgid "Subject is empty. Send it anyway?"
 msgstr "A levél tárgya üres. Ennek ellenére elküldi?"
 
-#: src/compose.c:3003
+#: src/compose.c:2899
 msgid "can't get recipient list."
 msgstr "címzett lista nem hozzáférhető."
 
-#: src/compose.c:3023
+#: src/compose.c:2919
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1619,26 +1619,26 @@ msgstr ""
 "Nincs megadva hozzáférés a levél küldéshez.\n"
 "Válasszon ki egy hozzáférést küldés előtt!"
 
-#: src/compose.c:3037 src/send_message.c:338
+#: src/compose.c:2933 src/send_message.c:314
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Hiba lépett fel a %s-nak/nek küldendő levél küldésekor."
 
-#: src/compose.c:3085
+#: src/compose.c:2983
 msgid "Can't save the message to outbox."
 msgstr "A levél nem menthető a kimenő mappába."
 
-#: src/compose.c:3123
+#: src/compose.c:3021
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Nem találtam hozzárendelt kulcsot a kiválasztott kulcs azonosítóhoz `%s'."
 
-#: src/compose.c:3187 src/compose.c:3482 src/compose.c:3545 src/compose.c:3665
+#: src/compose.c:3085 src/compose.c:3380 src/compose.c:3443 src/compose.c:3563
 msgid "can't change file mode\n"
 msgstr "fájl módja nem változtatható\n"
 
-#: src/compose.c:3220
+#: src/compose.c:3118
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1649,11 +1649,11 @@ msgstr ""
 "\n"
 "Ennek ellenére elküldi, mint %s?"
 
-#: src/compose.c:3226
+#: src/compose.c:3124
 msgid "Code conversion error"
 msgstr "Kód konvertálási hiba"
 
-#: src/compose.c:3308
+#: src/compose.c:3206
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1666,15 +1666,15 @@ msgstr ""
 "\n"
 "Ennek ellenére elküldi?"
 
-#: src/compose.c:3312
+#: src/compose.c:3210
 msgid "Line length limit"
 msgstr "Sorhossz határ"
 
-#: src/compose.c:3441
+#: src/compose.c:3339
 msgid "Encrypting with Bcc"
 msgstr "Titkos másolat(ok) titkosítása"
 
-#: src/compose.c:3442
+#: src/compose.c:3340
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1689,83 +1689,83 @@ msgstr ""
 "\n"
 "Ennek ellenére elküldi?"
 
-#: src/compose.c:3625
+#: src/compose.c:3523
 msgid "can't remove the old message\n"
 msgstr "a régi levelet nem lehet törölni\n"
 
-#: src/compose.c:3643
+#: src/compose.c:3541
 msgid "queueing message...\n"
 msgstr "levél Várakozó sorba rakása...\n"
 
-#: src/compose.c:3750
+#: src/compose.c:3629
 msgid "can't find queue folder\n"
 msgstr "nem található a Várakozó sor mappája\n"
 
-#: src/compose.c:3757
+#: src/compose.c:3636
 msgid "can't queue the message\n"
 msgstr "A levelet nem sikerült a Várakozó sorba rakni\n"
 
-#: src/compose.c:4418
+#: src/compose.c:4277
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generált Message-ID: %s\n"
 
-#: src/compose.c:4533
+#: src/compose.c:4392
 msgid "Creating compose window...\n"
 msgstr "Szerkesztőablak létrehozása...\n"
 
-#: src/compose.c:4586 src/headerview.c:54
+#: src/compose.c:4445 src/headerview.c:54
 msgid "From:"
 msgstr "Feladó:"
 
-#: src/compose.c:4660
+#: src/compose.c:4519
 msgid "PGP Sign"
 msgstr "PGP Aláírás"
 
-#: src/compose.c:4663
+#: src/compose.c:4522
 msgid "PGP Encrypt"
 msgstr "PGP Titkosítás"
 
-#: src/compose.c:4701 src/compose.c:5808
+#: src/compose.c:4560 src/compose.c:5676
 msgid "MIME type"
 msgstr "MIME típus"
 
 #. S_COL_DATE
-#: src/compose.c:4710 src/mimeview.c:216 src/prefs_filter_edit.c:497
+#: src/compose.c:4569 src/mimeview.c:216 src/prefs_filter_edit.c:497
 #: src/prefs_summary_column.c:76 src/select-keys.c:317 src/summaryview.c:5182
 msgid "Size"
 msgstr "Méret"
 
-#: src/compose.c:5704
+#: src/compose.c:5572
 msgid "Invalid MIME type."
 msgstr "Érvénytelen MIME típus."
 
-#: src/compose.c:5722
+#: src/compose.c:5590
 msgid "File doesn't exist or is empty."
 msgstr "A fájl nem létezik vagy üres."
 
-#: src/compose.c:5790
+#: src/compose.c:5658
 msgid "Properties"
 msgstr "Tulajdonságok"
 
-#: src/compose.c:5810 src/prefs_common_dialog.c:1504
+#: src/compose.c:5678 src/prefs_common_dialog.c:1504
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: src/compose.c:5833 src/prefs_folder_item.c:202
+#: src/compose.c:5701 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Elérési út"
 
-#: src/compose.c:5834
+#: src/compose.c:5702
 msgid "File name"
 msgstr "Fájlnév"
 
-#: src/compose.c:5924
+#: src/compose.c:5792
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Külső szerkesztő parancssora érvénytelen: `%s'\n"
 
-#: src/compose.c:5986
+#: src/compose.c:5854
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1774,48 +1774,48 @@ msgstr ""
 "A külső szerkesztő még dolgozik.\n"
 "A processz kényszerített kilövése (pid: %d)?\n"
 
-#: src/compose.c:6323 src/mainwindow.c:2867
+#: src/compose.c:6191 src/mainwindow.c:2867
 msgid "_Customize toolbar..."
 msgstr "Eszközs_áv testreszabása..."
 
-#: src/compose.c:6439 src/compose.c:6444 src/compose.c:6450
+#: src/compose.c:6307 src/compose.c:6312 src/compose.c:6318
 msgid "Can't queue the message."
 msgstr "A levelet nem sikerült a Várakozó sorba rakni"
 
-#: src/compose.c:6541
+#: src/compose.c:6409
 msgid "Select files"
 msgstr "Fájlok választása"
 
-#: src/compose.c:6564
+#: src/compose.c:6432
 msgid "Select file"
 msgstr "Fájl választás"
 
-#: src/compose.c:6599
+#: src/compose.c:6467
 msgid "Save message"
 msgstr "Levél mentése"
 
-#: src/compose.c:6600
+#: src/compose.c:6468
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "A levél megváltozott. Menti a Vázlatok mappába?"
 
-#: src/compose.c:6602
+#: src/compose.c:6470
 msgid "Close _without saving"
 msgstr "Bezárás mentés _nélkül"
 
-#: src/compose.c:6644
+#: src/compose.c:6512
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Tényleg alkalmazni szeretné a(z) `%s' sablont?"
 
-#: src/compose.c:6646
+#: src/compose.c:6514
 msgid "Apply template"
 msgstr "Sablon alkalmazása"
 
-#: src/compose.c:6647
+#: src/compose.c:6515
 msgid "_Replace"
 msgstr "_Helyettesít"
 
-#: src/compose.c:6647
+#: src/compose.c:6515
 msgid "_Insert"
 msgstr "_Beszúrás"
 
@@ -2348,12 +2348,12 @@ msgstr "Mappa átnevezése"
 msgid "Can't rename the folder '%s'."
 msgstr "`%s' mappa nem nevezhető át."
 
-#: src/folderview.c:2409
+#: src/folderview.c:2412
 #, c-format
 msgid "Can't move the folder `%s'."
 msgstr "`%s' mappa nem helyezhető át."
 
-#: src/folderview.c:2475
+#: src/folderview.c:2481
 #, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
@@ -2362,11 +2362,11 @@ msgstr ""
 "A(z) `%s' keresési mappa törlése?\n"
 "Az eredeti levelek nem törlődnek."
 
-#: src/folderview.c:2477
+#: src/folderview.c:2483
 msgid "Delete search folder"
 msgstr "Keresési mappa törlése"
 
-#: src/folderview.c:2482
+#: src/folderview.c:2488
 #, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
@@ -2379,20 +2379,20 @@ msgstr ""
 "\n"
 "Biztosan törölni szeretné?"
 
-#: src/folderview.c:2514 src/folderview.c:2520
+#: src/folderview.c:2520 src/folderview.c:2526
 #, c-format
 msgid "Can't remove the folder '%s'."
 msgstr "`%s' mappa nem távolítható el."
 
-#: src/folderview.c:2556
+#: src/folderview.c:2562
 msgid "Empty trash"
 msgstr "Kuka ürítése"
 
-#: src/folderview.c:2557
+#: src/folderview.c:2563
 msgid "Delete all messages in the trash folder?"
 msgstr "Minden levél törlése a kukából?"
 
-#: src/folderview.c:2598
+#: src/folderview.c:2604
 #, c-format
 msgid ""
 "Really remove the mailbox `%s' ?\n"
@@ -2401,34 +2401,34 @@ msgstr ""
 "Tényleg eltávolítja `%s' postaládát?\n"
 "(A levelek NEM törlődnek a meghajtóról)"
 
-#: src/folderview.c:2600
+#: src/folderview.c:2606
 msgid "Remove mailbox"
 msgstr "Postaláda eltávolítása"
 
-#: src/folderview.c:2650
+#: src/folderview.c:2656
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
 msgstr "Tényleg törli a(z) `%s' IMAP4 hozzáférést?"
 
-#: src/folderview.c:2651
+#: src/folderview.c:2657
 msgid "Delete IMAP4 account"
 msgstr "IMAP4 hozzáférés törlése"
 
-#: src/folderview.c:2804
+#: src/folderview.c:2810
 #, c-format
 msgid "Really delete newsgroup `%s'?"
 msgstr "Tényleg törli a(z) `%s' hírcsoportot?"
 
-#: src/folderview.c:2805
+#: src/folderview.c:2811
 msgid "Delete newsgroup"
 msgstr "Hírcsoport törlése"
 
-#: src/folderview.c:2855
+#: src/folderview.c:2861
 #, c-format
 msgid "Really delete news account `%s'?"
 msgstr "Tényleg törli a(z) `%s' hírhozzáférést?"
 
-#: src/folderview.c:2856
+#: src/folderview.c:2862
 msgid "Delete news account"
 msgstr "Hírhozzáférés törlése"
 
@@ -2713,7 +2713,7 @@ msgstr "Kapcsolódás a(z) %s POP3 szerverhez ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nem sikerült kapcsolódni a POP3 szerverhez: %s:%d\n"
 
-#: src/inc.c:950 src/send_message.c:795
+#: src/inc.c:950 src/send_message.c:809
 msgid "Authenticating..."
 msgstr "Azonosítás..."
 
@@ -2743,7 +2743,7 @@ msgstr "Új levelek méretének megszerzése (LIST)..."
 msgid "Deleting message %d"
 msgstr "%d levél törlése"
 
-#: src/inc.c:985 src/send_message.c:813
+#: src/inc.c:985 src/send_message.c:827
 msgid "Quitting"
 msgstr "Kilépés"
 
@@ -2795,7 +2795,7 @@ msgid "Socket error."
 msgstr "Socket hiba."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1325 src/send_message.c:747 src/send_message.c:940
+#: src/inc.c:1325 src/send_message.c:756 src/send_message.c:954
 msgid "Connection closed by the remote host."
 msgstr "A távoli fél bezárta a kapcsolatot."
 
@@ -2812,11 +2812,11 @@ msgstr ""
 "A postafiók zárolt:\n"
 "%s"
 
-#: src/inc.c:1341 src/send_message.c:925
+#: src/inc.c:1341 src/send_message.c:939
 msgid "Authentication failed."
 msgstr "Az azonosítás nem sikerült."
 
-#: src/inc.c:1346 src/send_message.c:928
+#: src/inc.c:1346 src/send_message.c:942
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2825,7 +2825,7 @@ msgstr ""
 "Az azonosítás nem sikerült:\n"
 "%s"
 
-#: src/inc.c:1351 src/send_message.c:944
+#: src/inc.c:1351 src/send_message.c:958
 msgid "Session timed out."
 msgstr "Menet időtúllépése."
 
@@ -6226,84 +6226,90 @@ msgstr ""
 "tudhatja biztosan, hogy ahhoz a személyhez jut el, akinek szánta.\n"
 "Ennek ellenére megbízik annyira ebben a kulcsban, hogy használja?"
 
-#: src/send_message.c:220
+#: src/send_message.c:196
 msgid "Queued message header is broken.\n"
 msgstr "A várakozó levél fejléce sérült.\n"
 
-#: src/send_message.c:549
+#: src/send_message.c:558
 #, c-format
 msgid "Sending message using command: %s\n"
 msgstr "Levélküldésre használt parancs: %s\n"
 
-#: src/send_message.c:558
+#: src/send_message.c:567
 #, c-format
 msgid "Can't execute command: %s"
 msgstr "A parancs nem futtatható: %s"
 
-#: src/send_message.c:593
+#: src/send_message.c:602
 #, c-format
 msgid "Error occurred while executing command: %s"
 msgstr "Hiba történt a parancs futtatása közben: %s"
 
-#: src/send_message.c:710
+#: src/send_message.c:719
 msgid "Connecting"
 msgstr "Kapcsolódás"
 
-#: src/send_message.c:712
+#: src/send_message.c:721
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Kapcsolódás %s SMTP szerverhez..."
 
-#: src/send_message.c:785
+#. ignore errors right after QUIT
+#: src/send_message.c:761
+#, fuzzy
+msgid "Error occurred after QUIT command (ignored)"
+msgstr "Hiba történt parancsküldés közben\n"
+
+#: src/send_message.c:799
 msgid "Sending HELO..."
 msgstr "HELO küldése..."
 
-#: src/send_message.c:786 src/send_message.c:791 src/send_message.c:796
+#: src/send_message.c:800 src/send_message.c:805 src/send_message.c:810
 msgid "Authenticating"
 msgstr "Azonosítás"
 
-#: src/send_message.c:787 src/send_message.c:792
+#: src/send_message.c:801 src/send_message.c:806
 msgid "Sending message..."
 msgstr "Levél küldése ..."
 
-#: src/send_message.c:790
+#: src/send_message.c:804
 msgid "Sending EHLO..."
 msgstr "EHLO küldése..."
 
-#: src/send_message.c:799
+#: src/send_message.c:813
 msgid "Sending MAIL FROM..."
 msgstr "MAIL FROM küldése..."
 
-#: src/send_message.c:800 src/send_message.c:804 src/send_message.c:809
+#: src/send_message.c:814 src/send_message.c:818 src/send_message.c:823
 msgid "Sending"
 msgstr "Küldés"
 
-#: src/send_message.c:803
+#: src/send_message.c:817
 msgid "Sending RCPT TO..."
 msgstr "RCPT TO küldése..."
 
-#: src/send_message.c:808
+#: src/send_message.c:822
 msgid "Sending DATA..."
 msgstr "DATA küldése..."
 
-#: src/send_message.c:812
+#: src/send_message.c:826
 msgid "Quitting..."
 msgstr "Kilépés..."
 
-#: src/send_message.c:840
+#: src/send_message.c:854
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Levél küldése (%d / %d bájt)"
 
-#: src/send_message.c:871
+#: src/send_message.c:885
 msgid "Sending message"
 msgstr "Levél küldése"
 
-#: src/send_message.c:916 src/send_message.c:936
+#: src/send_message.c:930 src/send_message.c:950
 msgid "Error occurred while sending the message."
 msgstr "Hiba történt a levélküldés közben."
 
-#: src/send_message.c:919
+#: src/send_message.c:933
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"

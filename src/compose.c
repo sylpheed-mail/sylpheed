@@ -887,6 +887,8 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	}
 #endif
 
+	procmsg_msginfo_free(replyinfo);
+
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
 			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
