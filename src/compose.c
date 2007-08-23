@@ -2393,6 +2393,12 @@ static gboolean compose_is_itemized(GtkTextBuffer *buffer,
 	wc = gtk_text_iter_get_char(&iter);
 	if (g_unichar_isspace(wc))
 		return TRUE;
+	else if (ch[0] == '-') {
+		/* -- */
+		clen = g_unichar_to_utf8(wc, ch);
+		if (clen == 1 && ch[0] == '-')
+			return TRUE;
+	}
 
 	return FALSE;
 }
