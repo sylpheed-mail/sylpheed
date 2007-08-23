@@ -1364,7 +1364,7 @@ static void inc_put_error(IncState istate, const gchar *msg)
 			log_warning("%s\n", log_msg);
 	}
 	if (err_msg) {
-		alertpanel_error(err_msg);
+		alertpanel_error("%s", err_msg);
 		g_free(err_msg);
 	}
 }
