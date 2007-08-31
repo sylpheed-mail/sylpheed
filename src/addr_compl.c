@@ -410,7 +410,7 @@ gchar *get_complete_address(gint index)
 				(completion_addresses, index - 1);
 			if (p != NULL) {
 				if (!p->name || p->name[0] == '\0')
-					address = g_strdup_printf(p->address);
+					address = g_strdup(p->address);
 				else if (p->name[0] != '"' &&
 					 strpbrk(p->name, ",.[]<>") != NULL)
 					address = g_strdup_printf
