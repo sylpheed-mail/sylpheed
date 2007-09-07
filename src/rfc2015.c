@@ -864,8 +864,7 @@ leave:
  * Encrypt the file by extracting all recipients and finding the
  * encryption keys for all of them.  The file content is then replaced
  * by the encrypted one.  */
-gint rfc2015_encrypt(const gchar *file, GSList *recp_list,
-		     gboolean ascii_armored)
+gint rfc2015_encrypt(const gchar *file, GSList *recp_list)
 {
 	FILE *fp = NULL;
 	gchar buf[BUFFSIZE];
@@ -1022,27 +1021,20 @@ gint rfc2015_encrypt(const gchar *file, GSList *recp_list,
 	if (!mime_version_seen)
 		fputs("MIME-Version: 1\r\n", fp);
 
-	if (ascii_armored) {
-		fprintf(fp,
-		        "Content-Type: text/plain; charset=US-ASCII\r\n"
-		        "Content-Transfer-Encoding: 7bit\r\n"
-		        "\r\n");
-	} else {
-		fprintf(fp,
-		        "Content-Type: multipart/encrypted;"
-		        " protocol=\"application/pgp-encrypted\";\r\n"
-		        " boundary=\"%s\"\r\n"
-		        "\r\n"
-		        "--%s\r\n"
-		        "Content-Type: application/pgp-encrypted\r\n"
-		        "\r\n"
-		        "Version: 1\r\n"
-		        "\r\n"
-		        "--%s\r\n"
-		        "Content-Type: application/octet-stream\r\n"
-		        "\r\n",
-		        boundary, boundary, boundary);
-	}
+	fprintf(fp,
+	        "Content-Type: multipart/encrypted;"
+	        " protocol=\"application/pgp-encrypted\";\r\n"
+	        " boundary=\"%s\"\r\n"
+	        "\r\n"
+	        "--%s\r\n"
+	        "Content-Type: application/pgp-encrypted\r\n"
+	        "\r\n"
+	        "Version: 1\r\n"
+	        "\r\n"
+	        "--%s\r\n"
+	        "Content-Type: application/octet-stream\r\n"
+	        "\r\n",
+	        boundary, boundary, boundary);
 
 	/* append the encrypted stuff */
 	err = (gpgme_data_seek(cipher, 0 , SEEK_SET) == -1) ?
@@ -1068,12 +1060,10 @@ gint rfc2015_encrypt(const gchar *file, GSList *recp_list,
 	}
 
 	/* and the final boundary */
-	if (!ascii_armored) {
-		fprintf(fp,
-		        "\r\n"
-		        "--%s--\r\n",
-		        boundary);
-	}
+	fprintf(fp,
+	        "\r\n"
+	        "--%s--\r\n",
+	        boundary);
 	fflush(fp);
 	if (ferror(fp)) {
 		FILE_OP_ERROR(file, "fwrite");
@@ -1100,6 +1090,118 @@ failure:
 	}
 	g_free(boundary);
 	return -1; /* error */
+}
+
+gint rfc2015_encrypt_armored(const gchar *file, GSList *recp_list)
+{
+	FILE *fp = NULL;
+	gchar buf[BUFFSIZE];
+	gint i;
+	gpgme_error_t err;
+	gpgme_data_t plain = NULL;
+	gpgme_data_t cipher = NULL;
+	gpgme_key_t *kset = NULL;
+	ssize_t bytesRW = 0;
+
+	kset = gpgmegtk_recipient_selection(recp_list);
+	if (!kset) {
+		debug_print("error creating recipient list\n");
+		goto failure;
+	}
+
+	/* Open the source file */
+	if ((fp = g_fopen(file, "rb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		goto failure;
+	}
+
+	err = gpgme_data_new(&plain);
+	if (err) {
+		g_warning("gpgme_data_new failed: %s\n", gpgme_strerror(err));
+		goto failure;
+	}
+
+	while (bytesRW != -1 && fgets(buf, sizeof(buf), fp)) {
+		bytesRW = gpgme_data_write(plain, buf, strlen(buf));
+	}
+	if (ferror(fp)) {
+		FILE_OP_ERROR(file, "fgets");
+		goto failure;
+	}
+	if (bytesRW == -1) {
+		debug_print("gpgme_data_write failed: %s\n",
+			    gpgme_strerror(gpgme_error_from_errno(errno)));
+		goto failure;
+	}
+
+	cipher = pgp_encrypt(plain, kset);
+	gpgme_data_release(plain);
+	plain = NULL;
+	i = 0;
+	while (kset[i] != NULL) {
+		gpgme_key_unref(kset[i]);
+		i++;
+	}
+	g_free(kset);
+	kset = NULL;
+	if (!cipher)
+		goto failure;
+
+	if (fclose(fp)) {
+		FILE_OP_ERROR(file, "fclose");
+		goto failure;
+	}
+	if ((fp = g_fopen(file, "wb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		goto failure;
+	}
+
+	err = (gpgme_data_seek(cipher, 0 , SEEK_SET) == -1) ?
+		gpgme_error_from_errno(errno) : 0;
+	if (err) {
+		debug_print("** gpgme_data_seek on cipher failed: %s\n",
+			    gpgme_strerror(err));
+		debug_print("gpgme_data_seek failed: %s\n",
+			    gpgme_strerror(err));
+		goto failure;
+	}
+
+	bytesRW = gpgme_data_read(cipher, buf, sizeof(buf));
+	while (bytesRW > 0) {
+		fwrite(buf, bytesRW, 1, fp);
+		bytesRW = gpgme_data_read(cipher, buf, sizeof(buf));
+	}
+
+	if (bytesRW != 0) {
+		debug_print("** gpgme_data_read failed: %s\n",
+			    gpgme_strerror(gpgme_error_from_errno(errno)));
+		goto failure;
+	}
+
+	fflush(fp);
+	if (ferror(fp)) {
+		FILE_OP_ERROR(file, "fwrite");
+		goto failure;
+	}
+	fclose(fp);
+	gpgme_data_release(cipher);
+	return 0;
+
+failure:
+	if (fp)
+		fclose(fp);
+	gpgme_data_release(plain);
+	gpgme_data_release(cipher);
+	if (kset != NULL) {
+		i = 0;
+		while (kset[i] != NULL) {
+			gpgme_key_unref(kset[i]);
+			i++;
+		}
+		g_free(kset);
+	}
+
+	return -1;
 }
 
 /*
@@ -1178,6 +1280,81 @@ leave:
 	return sig;
 }
 
+/*
+ * plain contains an entire mime object.  Encrypt and sign it and return an
+ * GpgmeData object with the encrypted and signed version of it or NULL in
+ * case of error.
+ * micalg returns the micalg information about the signature.
+ */
+static gpgme_data_t pgp_encrypt_sign(gpgme_data_t plain, gpgme_key_t kset[],
+				     GSList *key_list, gchar **micalg)
+{
+	GSList *p;
+	gpgme_ctx_t ctx = NULL;
+	gpgme_error_t err;
+	gpgme_data_t cipher = NULL;
+	gpgme_sign_result_t result = NULL;
+	struct passphrase_cb_info_s info;
+
+	*micalg = NULL;
+	memset(&info, 0, sizeof info);
+
+	err = gpgme_new(&ctx);
+	if (err)
+		goto leave;
+	err = gpgme_data_new(&cipher);
+	if (err)
+		goto leave;
+
+	if (!g_getenv("GPG_AGENT_INFO")) {
+		info.c = ctx;
+		gpgme_set_passphrase_cb(ctx, gpgmegtk_passphrase_cb, &info);
+	}
+	gpgme_set_textmode(ctx, 1);
+	gpgme_set_armor(ctx, 1);
+	gpgme_signers_clear(ctx);
+	for (p = key_list; p != NULL; p = p->next) {
+		err = gpgme_signers_add(ctx, (gpgme_key_t) p->data);
+		if (err)
+			goto leave;
+	}
+	for (p = key_list; p != NULL; p = p->next)
+		gpgme_key_unref((gpgme_key_t) p->data);
+	g_slist_free(key_list);
+
+	err = (gpgme_data_seek(plain, 0, SEEK_SET) == -1) ?
+		gpgme_error_from_errno(errno) : 0;
+	if (!err) {
+		err = gpgme_op_encrypt_sign(ctx, kset, GPGME_ENCRYPT_ALWAYS_TRUST, plain, cipher);
+	}
+	if (!err) {
+		result = gpgme_op_sign_result(ctx);
+		if (result && result->signatures) {
+			if (gpgme_get_protocol(ctx) == GPGME_PROTOCOL_OpenPGP) {
+				*micalg = g_strdup_printf
+					("PGP-%s", gpgme_hash_algo_name(result->signatures->hash_algo));
+			} else {
+				*micalg = g_strdup(gpgme_hash_algo_name(result->signatures->hash_algo));
+			}
+		} else {
+			/* can't get result (maybe no signing key?) */
+			err = GPG_ERR_USER_1;
+		}
+	}
+
+leave:
+	if (err) {
+		gpgmegtk_free_passphrase();
+		g_warning("pgp_sign(): encryption and signing failed: %s\n", gpgme_strerror(err));
+		gpgme_data_release(cipher);
+		cipher = NULL;
+	} else {
+		debug_print("encryption and signing succeeded\n");
+	}
+
+	gpgme_release(ctx);
+	return cipher;
+}
 
 /*
  * Sign the file and replace its content with the signed one.
@@ -1480,6 +1657,107 @@ failure:
 		fclose(fp);
 	gpgme_data_release(text);
 	gpgme_data_release(sigdata);
+	return -1;
+}
+
+gint rfc2015_encrypt_sign_armored(const gchar *file, GSList *recp_list,
+				  GSList *key_list)
+{
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+	gint i;
+	gpgme_error_t err;
+	gpgme_data_t plain = NULL;
+	gpgme_data_t cipher = NULL;
+	gpgme_key_t *kset = NULL;
+	ssize_t bytesRW = 0;
+	gchar *micalg = NULL;
+
+	kset = gpgmegtk_recipient_selection(recp_list);
+	if (!kset) {
+		debug_print("error creating recipient list\n");
+		goto failure;
+	}
+
+	if ((fp = g_fopen(file, "rb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		goto failure;
+	}
+
+	err = gpgme_data_new(&plain);
+	if (err) {
+		debug_print("gpgme_data_new failed: %s\n", gpgme_strerror(err));
+		goto failure;
+	}
+
+	while ((bytesRW != -1) && fgets(buf, sizeof(buf), fp)) {
+		bytesRW = gpgme_data_write(plain, buf, strlen(buf));
+	}
+	if (ferror(fp)) {
+		FILE_OP_ERROR(file, "fgets");
+		goto failure;
+	}
+	if (bytesRW == -1) {
+		debug_print("gpgme_data_write failed: %s\n",
+		            gpgme_strerror(gpgme_error_from_errno(errno)));
+		goto failure;
+	}
+
+	cipher = pgp_encrypt_sign(plain, kset, key_list, &micalg);
+	if (micalg)
+		g_free(micalg);
+	if (!cipher)
+		goto failure;
+
+	if (fclose(fp) == EOF) {
+		FILE_OP_ERROR(file, "fclose");
+		fp = NULL;
+		goto failure;
+	}
+	if ((fp = g_fopen(file, "wb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		goto failure;
+	}
+
+	err = (gpgme_data_seek(cipher, 0, SEEK_SET) == -1) ?
+		gpgme_error_from_errno(errno) : 0;
+	if (err) {
+		debug_print("gpgme_data_seek on cipher failed: %s\n",
+		            gpgme_strerror(err));
+		goto failure;
+	}
+
+	bytesRW = gpgme_data_read(cipher, buf, BUFFSIZE);
+	while (bytesRW > 0) {
+		fwrite(buf, bytesRW, 1, fp);
+		bytesRW = gpgme_data_read(cipher, buf, BUFFSIZE);
+	}
+	if (bytesRW != 0) {
+		debug_print("gpgme_data_read failed: %s\n",
+		            gpgme_strerror(gpgme_error_from_errno(errno)));
+		goto failure;
+	}
+
+	if (fclose(fp) == EOF) {
+		FILE_OP_ERROR(file, "fclose");
+		fp = NULL;
+		goto failure;
+	}
+	gpgme_data_release(plain);
+	gpgme_data_release(cipher);
+	for (i = 0; kset[i] != NULL; i++)
+		gpgme_key_unref(kset[i]);
+	return 0;
+
+failure:
+	if (fp)
+		fclose(fp);
+	gpgme_data_release(plain);
+	gpgme_data_release(cipher);
+	if (kset != NULL) {
+		for (i = 0; kset[i] != NULL; i++)
+			gpgme_key_unref(kset[i]);
+	}
 	return -1;
 }
 

@@ -3061,6 +3061,66 @@ static gint compose_clearsign_text(Compose *compose, gchar **text)
 
 	return 0;
 }
+
+static gint compose_encrypt_armored(Compose *compose, gchar **text)
+{
+	gchar *tmp_file;
+
+	tmp_file = get_tmp_file();
+	if (str_write_to_file(*text, tmp_file) < 0) {
+		g_free(tmp_file);
+		return -1;
+	}
+
+	if (rfc2015_encrypt_armored(tmp_file, compose->to_list) < 0) {
+		g_unlink(tmp_file);
+		g_free(tmp_file);
+		return -1;
+	}
+
+	g_free(*text);
+	*text = file_read_to_str(tmp_file);
+	g_unlink(tmp_file);
+	g_free(tmp_file);
+	if (*text == NULL)
+		return -1;
+
+	return 0;
+}
+
+static gint compose_encrypt_sign_armored(Compose *compose, gchar **text)
+{
+	GSList *key_list;
+	gchar *tmp_file;
+
+	tmp_file = get_tmp_file();
+	if (str_write_to_file(*text, tmp_file) < 0) {
+		g_free(tmp_file);
+		return -1;
+	}
+
+	if (compose_create_signers_list(compose, &key_list) < 0) {
+		g_unlink(tmp_file);
+		g_free(tmp_file);
+		return -1;
+	}
+
+	if (rfc2015_encrypt_sign_armored
+		(tmp_file, compose->to_list, key_list) < 0) {
+		g_unlink(tmp_file);
+		g_free(tmp_file);
+		return -1;
+	}
+
+	g_free(*text);
+	*text = file_read_to_str(tmp_file);
+	g_unlink(tmp_file);
+	g_free(tmp_file);
+	if (*text == NULL)
+		return -1;
+
+	return 0;
+}
 #endif /* USE_GPGME */
 
 static gint compose_write_to_file(Compose *compose, const gchar *file,
@@ -3079,6 +3139,10 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	const gchar *src_charset = CS_INTERNAL;
 	EncodingType encoding;
 	gint line;
+#if USE_GPGME
+	gboolean use_pgpmime_encryption = FALSE;
+	gboolean use_pgpmime_signing = FALSE;
+#endif
 
 	if ((fp = g_fopen(file, "wb")) == NULL) {
 		FILE_OP_ERROR(file, "fopen");
@@ -3162,9 +3226,17 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	buf = canon_buf;
 
 #if USE_GPGME
+	if (compose->use_signing && !compose->account->clearsign)
+		use_pgpmime_signing = TRUE;
+	if (compose->use_encryption && compose->account->ascii_armored) {
+		use_pgpmime_encryption = FALSE;
+		use_pgpmime_signing = FALSE;
+	}
+	if (compose->use_encryption && !compose->account->ascii_armored)
+		use_pgpmime_encryption = TRUE;
+
 	/* protect trailing spaces */
-	if (rfc2015_is_available() && !is_draft &&
-	    compose->use_signing && !compose->account->clearsign) {
+	if (rfc2015_is_available() && !is_draft && use_pgpmime_signing) {
 		if (encoding == ENC_7BIT) {
 			if (!g_ascii_strcasecmp(body_charset, CS_ISO_2022_JP)) {
 				gchar *tmp;
@@ -3180,18 +3252,33 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	}
 
-	if (rfc2015_is_available() && !is_draft &&
-	    compose->use_signing && compose->account->clearsign) {
-		/* MIME encoding doesn't fit with cleartext signature */
-		if (encoding == ENC_QUOTED_PRINTABLE || encoding == ENC_BASE64)
-			encoding = ENC_8BIT;
+	if (rfc2015_is_available() && !is_draft) {
+		gint ret;
 
-		if (compose_clearsign_text(compose, &buf) < 0) {
-			g_warning("clearsign failed\n");
-			fclose(fp);
-			g_unlink(file);
-			g_free(buf);
-			return -1;
+		if (compose->use_encryption && compose->account->ascii_armored) {
+			if (compose->use_signing)
+				ret = compose_encrypt_sign_armored(compose, &buf);
+			else
+				ret = compose_encrypt_armored(compose, &buf);
+			if (ret < 0) {
+				g_warning("ascii-armored encryption failed\n");
+				fclose(fp);
+				g_unlink(file);
+				g_free(buf);
+				return -1;
+			}
+		} else if (compose->use_signing && compose->account->clearsign) {
+			/* MIME encoding doesn't fit with cleartext signature */
+			if (encoding == ENC_QUOTED_PRINTABLE || encoding == ENC_BASE64)
+				encoding = ENC_8BIT;
+
+			if (compose_clearsign_text(compose, &buf) < 0) {
+				g_warning("clearsign failed\n");
+				fclose(fp);
+				g_unlink(file);
+				g_free(buf);
+				return -1;
+			}
 		}
 	}
 #endif
@@ -3251,8 +3338,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		fprintf(fp, "Content-Type: text/plain; charset=%s\n",
 			body_charset);
 #if USE_GPGME
-		if (rfc2015_is_available() &&
-		    compose->use_signing && !compose->account->clearsign)
+		if (rfc2015_is_available() && use_pgpmime_signing)
 			fprintf(fp, "Content-Disposition: inline\n");
 #endif
 		fprintf(fp, "Content-Transfer-Encoding: %s\n",
@@ -3313,15 +3399,14 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		return 0;
 	}
 
-	if ((compose->use_signing && !compose->account->clearsign) ||
-	    compose->use_encryption) {
+	if (use_pgpmime_signing || use_pgpmime_encryption) {
 		if (canonicalize_file_replace(file) < 0) {
 			g_unlink(file);
 			return -1;
 		}
 	}
 
-	if (compose->use_signing && !compose->account->clearsign) {
+	if (use_pgpmime_signing) {
 		GSList *key_list;
 
 		if (compose_create_signers_list(compose, &key_list) < 0 ||
@@ -3330,7 +3415,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			return -1;
 		}
 	}
-	if (compose->use_encryption) {
+	if (use_pgpmime_encryption) {
 		if (compose->use_bcc) {
 			const gchar *text;
 			gchar *bcc;
@@ -3354,8 +3439,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 				}
 			}
 		}
-		if (rfc2015_encrypt(file, compose->to_list,
-				    compose->account->ascii_armored) < 0) {
+		if (rfc2015_encrypt(file, compose->to_list) < 0) {
 			g_unlink(file);
 			return -1;
 		}

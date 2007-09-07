@@ -49,11 +49,15 @@ FILE *rfc2015_open_message_decrypted	(MsgInfo	*msginfo,
 
 GSList *rfc2015_create_signers_list	(const gchar	*keyid);
 gint rfc2015_encrypt			(const gchar	*file,
-					 GSList		*recp_list,
-					 gboolean	 ascii_armored);
+					 GSList		*recp_list);
+gint rfc2015_encrypt_armored		(const gchar	*file,
+					 GSList		*recp_list);
 gint rfc2015_sign			(const gchar	*file,
 					 GSList		*key_list);
 gint rfc2015_clearsign			(const gchar	*file,
+					 GSList		*key_list);
+gint rfc2015_encrypt_sign_armored	(const gchar	*file,
+					 GSList		*recp_list,
 					 GSList		*key_list);
 
 #endif /* __RFC2015_H__ */
