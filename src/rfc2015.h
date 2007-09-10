@@ -56,6 +56,9 @@ gint rfc2015_sign			(const gchar	*file,
 					 GSList		*key_list);
 gint rfc2015_clearsign			(const gchar	*file,
 					 GSList		*key_list);
+gint rfc2015_encrypt_sign		(const gchar	*file,
+					 GSList		*recp_list,
+					 GSList		*key_list);
 gint rfc2015_encrypt_sign_armored	(const gchar	*file,
 					 GSList		*recp_list,
 					 GSList		*key_list);

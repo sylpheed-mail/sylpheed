@@ -3406,7 +3406,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	}
 
-	if (use_pgpmime_signing) {
+	if (use_pgpmime_signing && !use_pgpmime_encryption) {
 		GSList *key_list;
 
 		if (compose_create_signers_list(compose, &key_list) < 0 ||
@@ -3414,8 +3414,9 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			g_unlink(file);
 			return -1;
 		}
-	}
-	if (use_pgpmime_encryption) {
+	} else if (use_pgpmime_encryption) {
+		GSList *key_list;
+
 		if (compose->use_bcc) {
 			const gchar *text;
 			gchar *bcc;
@@ -3439,7 +3440,15 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 				}
 			}
 		}
-		if (rfc2015_encrypt(file, compose->to_list) < 0) {
+		if (use_pgpmime_signing) {
+			if (compose_create_signers_list
+				(compose, &key_list) < 0 ||
+			    rfc2015_encrypt_sign(file, compose->to_list,
+						 key_list) < 0) {
+				g_unlink(file);
+				return -1;
+			}
+		} else if (rfc2015_encrypt(file, compose->to_list) < 0) {
 			g_unlink(file);
 			return -1;
 		}
