@@ -22,9 +22,10 @@
 
 #include "summaryview.h"
 
-void prefs_summary_column_open(void);
+void prefs_summary_column_open(gboolean sent_folder);
 
-SummaryColumnState *prefs_summary_column_get_config(void);
-void prefs_summary_column_set_config(SummaryColumnState *state);
+SummaryColumnState *prefs_summary_column_get_config(gboolean sent_folder);
+void prefs_summary_column_set_config(SummaryColumnState *state,
+				     gboolean sent_folder);
 
 #endif /* __PREFS_SUMMARY_COLUMN_H__ */

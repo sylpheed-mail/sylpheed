@@ -62,6 +62,11 @@ typedef struct _FolderItem	FolderItem;
 		  FOLDER_TYPE(FOLDER_ITEM(obj)->folder) == F_IMAP) &&	\
 		 !FOLDER_ITEM(obj)->no_select)
 
+#define FOLDER_ITEM_IS_SENT_FOLDER(obj)	((obj) &&			\
+					 ((obj)->stype == F_OUTBOX ||	\
+					  (obj)->stype == F_DRAFT ||	\
+					  (obj)->stype == F_QUEUE))
+
 typedef enum
 {
 	F_MH,

@@ -1820,9 +1820,7 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 	if (selection == SUMMARY_SELECTED_SINGLE)
 		state |= M_SINGLE_TARGET_EXIST;
 	if (selection == SUMMARY_SELECTED_SINGLE &&
-	    (item &&
-	     (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
-	      item->stype == F_QUEUE)))
+	    FOLDER_ITEM_IS_SENT_FOLDER(item))
 		state |= M_ALLOW_REEDIT;
 	if (cur_account)
 		state |= M_HAVE_ACCOUNT;
@@ -3487,7 +3485,8 @@ static void collapse_threads_cb(MainWindow *mainwin, guint action,
 static void set_display_item_cb(MainWindow *mainwin, guint action,
 				GtkWidget *widget)
 {
-	prefs_summary_column_open();
+	prefs_summary_column_open
+		(FOLDER_ITEM_IS_SENT_FOLDER(mainwin->summaryview->folder_item));
 }
 
 static void sort_summary_cb(MainWindow *mainwin, guint action,

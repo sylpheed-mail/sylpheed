@@ -421,6 +421,7 @@ static FolderSortKey col_to_sort_key[] = {
 	SORT_BY_DATE,
 	SORT_BY_SIZE,
 	SORT_BY_NUMBER,
+	SORT_BY_TO
 };
 
 static const struct {
@@ -776,6 +777,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	gboolean moved;
 	gboolean selection_done = FALSE;
 	gboolean do_qsearch = FALSE;
+	gboolean set_column_order_required = FALSE;
 	const gchar *key = NULL;
 
 	if (summary_is_locked(summaryview)) return FALSE;
@@ -825,6 +827,10 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	} else
 		summary_write_cache(summaryview);
 
+	if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item) !=
+	    FOLDER_ITEM_IS_SENT_FOLDER(item))
+		set_column_order_required = TRUE;
+
 	folderview_set_opened_item(summaryview->folderview, item);
 
 	summary_clear_list_full(summaryview, is_refresh);
@@ -840,6 +846,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		summaryview->folder_item = item;
 		if (item)
 			item->qsearch_cond_type = QS_ALL;
+		if (set_column_order_required)
+			summary_set_column_order(summaryview);
 		summary_unlock(summaryview);
 		inc_unlock();
 		return TRUE;
@@ -850,6 +858,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		messageview_clear(summaryview->messageview);
 
 	summaryview->folder_item = item;
+	if (set_column_order_required)
+		summary_set_column_order(summaryview);
 
 	g_signal_handlers_block_matched(G_OBJECT(treeview),
 					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
@@ -1308,10 +1318,7 @@ static void summary_set_menu_sensitive(SummaryView *summaryview)
 
 	main_window_set_menu_sensitive(summaryview->mainwin);
 
-	if (summaryview->folder_item &&
-	    (summaryview->folder_item->stype == F_OUTBOX ||
-	     summaryview->folder_item->stype == F_DRAFT  ||
-	     summaryview->folder_item->stype == F_QUEUE)) {
+	if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item)) {
 		gtk_widget_show(summaryview->reedit_menuitem);
 		gtk_widget_show(summaryview->reedit_separator);
 		menu_set_sensitive(ifactory, "/Re-edit", sens);
@@ -2385,11 +2392,11 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_DATE, date_s,
 			   S_COL_SIZE, to_human_readable(msginfo->size),
 			   S_COL_NUMBER, msginfo->msgnum,
+			   S_COL_TO, msginfo->to ? msginfo->to : "",
 
 			   S_COL_MSG_INFO, msginfo,
 
 			   S_COL_LABEL, color_val,
-			   S_COL_TO, NULL,
 
 			   S_COL_FOREGROUND, foreground,
 			   S_COL_BOLD, weight,
@@ -2801,9 +2808,7 @@ static void summary_activate_selected(SummaryView *summaryview)
 	if (!summaryview->folder_item)
 		return;
 
-	if (summaryview->folder_item->stype == F_OUTBOX ||
-	    summaryview->folder_item->stype == F_DRAFT  ||
-	    summaryview->folder_item->stype == F_QUEUE)
+	if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item))
 		summary_reedit(summaryview);
 	else
 		summary_open_msg(summaryview);
@@ -2836,10 +2841,7 @@ void summary_reedit(SummaryView *summaryview)
 	MsgInfo *msginfo;
 
 	if (!summaryview->selected) return;
-	if (!summaryview->folder_item) return;
-	if (summaryview->folder_item->stype != F_OUTBOX &&
-	    summaryview->folder_item->stype != F_DRAFT  &&
-	    summaryview->folder_item->stype != F_QUEUE) return;
+	if (!FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item)) return;
 
 	if (gtkut_tree_row_reference_get_iter
 		(GTK_TREE_MODEL(summaryview->store),
@@ -5083,10 +5085,13 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 				   G_TYPE_STRING,
 				   G_TYPE_STRING,
 				   G_TYPE_UINT,
+				   G_TYPE_STRING,
+
 				   G_TYPE_POINTER,
+
 				   G_TYPE_INT,
 				   G_TYPE_UINT,
-				   G_TYPE_POINTER,
+
 				   GDK_TYPE_COLOR,
 				   G_TYPE_INT);
 
@@ -5102,9 +5107,9 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	SET_SORT(S_COL_DATE, summary_cmp_by_date);
 	SET_SORT(S_COL_SIZE, summary_cmp_by_size);
 	SET_SORT(S_COL_NUMBER, summary_cmp_by_num);
+	SET_SORT(S_COL_TO, summary_cmp_by_to);
 	SET_SORT(S_COL_LABEL, summary_cmp_by_label);
 	SET_SORT(S_COL_TDATE, summary_cmp_by_thread_date);
-	SET_SORT(S_COL_TO, summary_cmp_by_to);
 
 #undef SET_SORT
 
@@ -5183,6 +5188,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 		   prefs_common.summary_col_size[S_COL_SIZE], 1.0);
 	ADD_COLUMN(_("No."), text, S_COL_NUMBER, TRUE,
 		   prefs_common.summary_col_size[S_COL_NUMBER], 1.0);
+	ADD_COLUMN(_("To"), text, S_COL_TO, TRUE,
+		   prefs_common.summary_col_size[S_COL_TO], 0.0);
 
 #undef ADD_COLUMN
 
@@ -5231,7 +5238,8 @@ void summary_set_column_order(SummaryView *summaryview)
 	g_signal_handlers_block_by_func(summaryview->treeview,
 					summary_columns_changed, summaryview);
 
-	col_state = prefs_summary_column_get_config();
+	col_state = prefs_summary_column_get_config
+		(FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item));
 
 	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++) {
 		summaryview->col_state[pos] = col_state[pos];
@@ -5285,7 +5293,9 @@ void summary_get_column_order(SummaryView *summaryview)
 			    pos, type, visible);
 	}
 
-	prefs_summary_column_set_config(summaryview->col_state);
+	prefs_summary_column_set_config
+		(summaryview->col_state,
+		 FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item));
 
 	g_list_free(columns);
 }

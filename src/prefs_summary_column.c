@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2007 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,8 @@ static struct _SummaryColumnDialog
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 
+	gboolean sent_folder;
+
 	gboolean finished;
 } summary_col;
 
@@ -74,7 +76,8 @@ static const gchar *const col_name[N_SUMMARY_VISIBLE_COLS] = {
 	N_("From"),		/* S_COL_FROM    */
 	N_("Date"),		/* S_COL_DATE    */
 	N_("Size"),		/* S_COL_SIZE    */
-	N_("Number")		/* S_COL_NUMBER  */
+	N_("Number"),		/* S_COL_NUMBER  */
+	N_("To")		/* S_COL_TO      */
 };
 
 static SummaryColumnState default_state[N_SUMMARY_VISIBLE_COLS] = {
@@ -85,7 +88,20 @@ static SummaryColumnState default_state[N_SUMMARY_VISIBLE_COLS] = {
 	{ S_COL_FROM   , TRUE  },
 	{ S_COL_DATE   , TRUE  },
 	{ S_COL_SIZE   , TRUE  },
-	{ S_COL_NUMBER , FALSE }
+	{ S_COL_NUMBER , FALSE },
+	{ S_COL_TO     , FALSE }
+};
+
+static SummaryColumnState default_sent_state[N_SUMMARY_VISIBLE_COLS] = {
+	{ S_COL_MARK   , TRUE  },
+	{ S_COL_UNREAD , TRUE  },
+	{ S_COL_MIME   , TRUE  },
+	{ S_COL_SUBJECT, TRUE  },
+	{ S_COL_TO     , TRUE  },
+	{ S_COL_DATE   , TRUE  },
+	{ S_COL_SIZE   , TRUE  },
+	{ S_COL_NUMBER , FALSE },
+	{ S_COL_FROM   , FALSE }
 };
 
 static void prefs_summary_column_create	(void);
@@ -112,12 +128,12 @@ static gboolean prefs_summary_column_key_pressed(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 gpointer	 data);
 
-void prefs_summary_column_open(void)
+void prefs_summary_column_open(gboolean sent_folder)
 {
 	inc_lock();
 
-	if (!summary_col.window)
-		prefs_summary_column_create();
+	prefs_summary_column_create();
+	summary_col.sent_folder = sent_folder;
 
 	gtkut_box_set_reverse_order(GTK_BOX(summary_col.confirm_area),
 				    !prefs_common.comply_gnome_hig);
@@ -132,7 +148,8 @@ void prefs_summary_column_open(void)
 	while (summary_col.finished == FALSE)
 		gtk_main_iteration();
 
-	gtk_widget_hide(summary_col.window);
+	gtk_widget_destroy(summary_col.window);
+	summary_col.window = NULL;
 	main_window_popup(main_window_get());
 
 	inc_unlock();
@@ -338,40 +355,68 @@ static void prefs_summary_column_create(void)
 	summary_col.cancel_btn   = cancel_btn;
 }
 
-SummaryColumnState *prefs_summary_column_get_config(void)
+SummaryColumnState *prefs_summary_column_get_config(gboolean sent_folder)
 {
 	static SummaryColumnState state[N_SUMMARY_VISIBLE_COLS];
 	SummaryColumnType type;
+	gboolean *col_visible;
+	gint *col_pos;
+	SummaryColumnState *def_state;
 	gint pos;
+
+	debug_print("prefs_summary_column_get_config(): "
+		    "getting %s folder setting\n",
+		    sent_folder ? "sent" : "normal");
+
+	if (sent_folder) {
+		col_visible = prefs_common.summary_sent_col_visible;
+		col_pos = prefs_common.summary_sent_col_pos;
+		def_state = default_sent_state;
+	} else {
+		col_visible = prefs_common.summary_col_visible;
+		col_pos = prefs_common.summary_col_pos;
+		def_state = default_state;
+	}
 
 	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++)
 		state[pos].type = -1;
 
 	for (type = 0; type < N_SUMMARY_VISIBLE_COLS; type++) {
-		pos = prefs_common.summary_col_pos[type];
+		pos = col_pos[type];
 		if (pos < 0 || pos >= N_SUMMARY_VISIBLE_COLS ||
 		    state[pos].type != -1) {
 			g_warning("Wrong column position\n");
-			prefs_summary_column_set_config(default_state);
-			return default_state;
+			prefs_summary_column_set_config(def_state, sent_folder);
+			return def_state;
 		}
 
 		state[pos].type = type;
-		state[pos].visible = prefs_common.summary_col_visible[type];
+		state[pos].visible = col_visible[type];
 	}
 
 	return state;
 }
 
-void prefs_summary_column_set_config(SummaryColumnState *state)
+void prefs_summary_column_set_config(SummaryColumnState *state,
+				     gboolean sent_folder)
 {
 	SummaryColumnType type;
+	gboolean *col_visible;
+	gint *col_pos;
 	gint pos;
+
+	if (sent_folder) {
+		col_visible = prefs_common.summary_sent_col_visible;
+		col_pos = prefs_common.summary_sent_col_pos;
+	} else {
+		col_visible = prefs_common.summary_col_visible;
+		col_pos = prefs_common.summary_col_pos;
+	}
 
 	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++) {
 		type = state[pos].type;
-		prefs_common.summary_col_visible[type] = state[pos].visible;
-		prefs_common.summary_col_pos[type] = pos;
+		col_visible[type] = state[pos].visible;
+		col_pos[type] = pos;
 	}
 }
 
@@ -387,7 +432,8 @@ static void prefs_summary_column_set_dialog(SummaryColumnState *state)
 	gtk_clist_clear(shown_clist);
 
 	if (!state)
-		state = prefs_summary_column_get_config();
+		state = prefs_summary_column_get_config
+			(summary_col.sent_folder);
 
 	for (pos = 0; pos < N_SUMMARY_VISIBLE_COLS; pos++) {
 		gint row;
@@ -432,7 +478,7 @@ static void prefs_summary_column_set_view(void)
 		state[pos + row].visible = TRUE;
 	}
 
-	prefs_summary_column_set_config(state);
+	prefs_summary_column_set_config(state, summary_col.sent_folder);
 	main_window_set_summary_column();
 }
 
@@ -515,7 +561,10 @@ static void prefs_summary_column_down(void)
 
 static void prefs_summary_column_set_to_default(void)
 {
-	prefs_summary_column_set_dialog(default_state);
+	if (summary_col.sent_folder)
+		prefs_summary_column_set_dialog(default_sent_state);
+	else
+		prefs_summary_column_set_dialog(default_state);
 }
 
 static void prefs_summary_column_ok(void)

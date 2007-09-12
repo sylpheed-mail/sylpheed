@@ -126,6 +126,8 @@ struct _PrefsCommon
 	/* Summary columns visibility, position and size */
 	gboolean summary_col_visible[N_SUMMARY_COLS];
 	gint summary_col_pos[N_SUMMARY_COLS];
+	gboolean summary_sent_col_visible[N_SUMMARY_COLS];
+	gint summary_sent_col_pos[N_SUMMARY_COLS];
 	gint summary_col_size[N_SUMMARY_COLS];
 
 	/* Widget visibility, position and size */
