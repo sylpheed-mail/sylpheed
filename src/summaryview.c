@@ -6252,9 +6252,36 @@ static gint func_name(GtkTreeModel *model,				\
 }
 
 CMP_FUNC_DEF(summary_cmp_by_from, fromname)
-CMP_FUNC_DEF(summary_cmp_by_to, to);
 
 #undef CMP_FUNC_DEF
+
+static gint summary_cmp_by_to(GtkTreeModel *model,
+				   GtkTreeIter *a, GtkTreeIter *b,
+				   gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gchar *to_a = NULL, *to_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, S_COL_MSG_INFO, &msginfo_a,
+			   S_COL_TO, &to_a, -1);
+	gtk_tree_model_get(model, b, S_COL_MSG_INFO, &msginfo_b,
+			   S_COL_TO, &to_b, -1);
+
+	if (!msginfo_a || !msginfo_b) {
+		g_free(to_b);
+		g_free(to_a);
+		return 0;
+	}
+
+	ret = g_ascii_strcasecmp(to_a ? to_a : "", to_b ? to_b : "");
+
+	g_free(to_b);
+	g_free(to_a);
+
+	return (ret != 0) ? ret :
+		(msginfo_a->date_t - msginfo_b->date_t);
+}
 
 static gint summary_cmp_by_subject(GtkTreeModel *model,
 				   GtkTreeIter *a, GtkTreeIter *b,
