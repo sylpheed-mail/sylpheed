@@ -2291,6 +2291,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 	const gchar *date_s;
 	gchar *sw_from_s = NULL;
 	gchar *subject_s = NULL;
+	gchar *to_s = NULL;
 	GdkPixbuf *mark_pix = NULL;
 	GdkPixbuf *unread_pix = NULL;
 	GdkPixbuf *mime_pix = NULL;
@@ -2328,6 +2329,9 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			trim_subject(subject_s);
 		}
 	}
+
+	if (msginfo->to)
+		to_s = procheader_get_toname(msginfo->to);
 
 	flags = msginfo->flags;
 
@@ -2392,7 +2396,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_DATE, date_s,
 			   S_COL_SIZE, to_human_readable(msginfo->size),
 			   S_COL_NUMBER, msginfo->msgnum,
-			   S_COL_TO, msginfo->to ? msginfo->to : "",
+			   S_COL_TO, to_s ? to_s : "",
 
 			   S_COL_MSG_INFO, msginfo,
 
@@ -2402,6 +2406,8 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_BOLD, weight,
 			   -1);
 
+	if (to_s)
+		g_free(to_s);
 	if (subject_s)
 		g_free(subject_s);
 	if (sw_from_s)

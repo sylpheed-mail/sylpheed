@@ -775,6 +775,31 @@ gchar *procheader_get_fromname(const gchar *str)
 	return name;
 }
 
+gchar *procheader_get_toname(const gchar *str)
+{
+	GSList *addr_list, *cur;
+	GString *toname;
+	gchar *name;
+
+	if (strchr(str, ',') == NULL)
+		return procheader_get_fromname(str);
+
+	addr_list = address_list_append_orig(NULL, str);
+	toname = g_string_new(NULL);
+
+	for (cur = addr_list; cur != NULL; cur = cur->next) {
+		name = procheader_get_fromname((gchar *)cur->data);
+		g_string_append(toname, name);
+		g_free(name);
+		if (cur->next)
+			g_string_append(toname, ", ");
+	}
+
+	slist_free_strings(addr_list);
+
+	return g_string_free(toname, FALSE);
+}
+
 static gint procheader_scan_date_string(const gchar *str,
 					gchar *weekday, gint *day,
 					gchar *month, gint *year,

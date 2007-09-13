@@ -89,6 +89,7 @@ MsgInfo *procheader_parse_stream	(FILE		*fp,
 					 gboolean	 full);
 
 gchar *procheader_get_fromname		(const gchar	*str);
+gchar *procheader_get_toname		(const gchar	*str);
 
 time_t procheader_date_parse		(gchar		*dest,
 					 const gchar	*src,
