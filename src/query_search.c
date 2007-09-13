@@ -582,6 +582,8 @@ static void query_search_folder(FolderItem *item)
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
+	procmsg_set_auto_decrypt_message(FALSE);
+
 	debug_print("requires_full_headers: %d\n",
 		    search_window.requires_full_headers);
 	debug_print("start query search: %s\n", item->path ? item->path : "");
@@ -628,6 +630,8 @@ static void query_search_folder(FolderItem *item)
 
 		procheader_header_list_destroy(hlist);
 	}
+
+	procmsg_set_auto_decrypt_message(TRUE);
 
 	procmsg_msg_list_free(mlist);
 	g_free(folder_name);

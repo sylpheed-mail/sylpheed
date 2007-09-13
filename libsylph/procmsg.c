@@ -1214,17 +1214,23 @@ FILE *procmsg_open_message(MsgInfo *msginfo)
 }
 
 static DecryptMessageFunc decrypt_message_func = NULL;
+static gboolean auto_decrypt = TRUE;
 
 void procmsg_set_decrypt_message_func(DecryptMessageFunc func)
 {
 	decrypt_message_func = func;
 }
 
+void procmsg_set_auto_decrypt_message(gboolean enabled)
+{
+	auto_decrypt = enabled;
+}
+
 FILE *procmsg_open_message_decrypted(MsgInfo *msginfo, MimeInfo **mimeinfo)
 {
 	FILE *fp;
 
-	if (decrypt_message_func)
+	if (decrypt_message_func && auto_decrypt)
 		return decrypt_message_func(msginfo, mimeinfo);
 
 	*mimeinfo = NULL;

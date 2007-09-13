@@ -291,6 +291,7 @@ void	procmsg_message_file_list_free	(GSList		*file_list);
 FILE   *procmsg_open_message		(MsgInfo	*msginfo);
 
 void procmsg_set_decrypt_message_func	(DecryptMessageFunc	 func);
+void procmsg_set_auto_decrypt_message	(gboolean	 enabled);
 FILE   *procmsg_open_message_decrypted	(MsgInfo	*msginfo,
 					 MimeInfo      **mimeinfo);
 

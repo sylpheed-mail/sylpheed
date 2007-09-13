@@ -844,6 +844,7 @@ static void check_gpg(void)
 
 		procmsg_set_decrypt_message_func
 			(rfc2015_open_message_decrypted);
+		procmsg_set_auto_decrypt_message(TRUE);
 	} else {
 		rfc2015_disable_all();
 
