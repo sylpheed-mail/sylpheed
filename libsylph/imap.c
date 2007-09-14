@@ -2131,6 +2131,7 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 	gchar separator;
 	gchar *new_name;
 	const gchar *p;
+	gboolean no_sub = FALSE, no_select = FALSE;
 	gint ok;
 
 	g_return_val_if_fail(folder != NULL, NULL);
@@ -2186,10 +2187,13 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 			str = g_ptr_array_index(argbuf, i);
 			if (!strncmp(str, "LIST ", 5)) {
 				exist = TRUE;
+				if (strcasestr(str + 5, "\\Noinferiors"))
+					no_sub = TRUE;
+				if (strcasestr(str + 5, "\\Noselect"))
+					no_select = TRUE;
 				break;
 			}
 		}
-		g_ptr_array_free(argbuf, TRUE);
 
 		if (!exist) {
 			ok = imap_cmd_create(session, imap_path);
@@ -2199,10 +2203,37 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 				g_free(dirpath);
 				return NULL;
 			}
+
+			g_ptr_array_free(argbuf, TRUE);
+			argbuf = g_ptr_array_new();
+			ok = imap_cmd_list(session, NULL, imap_path, argbuf);
+			if (ok != IMAP_SUCCESS) {
+				log_warning("LIST failed\n");
+				g_free(imap_path);
+				g_free(dirpath);
+				g_ptr_array_free(argbuf, TRUE);
+				return NULL;
+			}
+
+			for (i = 0; i < argbuf->len; i++) {
+				gchar *str;
+				str = g_ptr_array_index(argbuf, i);
+				if (!strncmp(str, "LIST ", 5)) {
+					if (strcasestr(str + 5, "\\Noinferiors"))
+						no_sub = TRUE;
+					if (strcasestr(str + 5, "\\Noselect"))
+						no_select = TRUE;
+					break;
+				}
+			}
 		}
+
+		g_ptr_array_free(argbuf, TRUE);
 	}
 
 	new_item = folder_item_new(new_name, dirpath);
+	new_item->no_sub = no_sub;
+	new_item->no_select = no_select;
 	folder_item_append(parent, new_item);
 	g_free(imap_path);
 	g_free(dirpath);
