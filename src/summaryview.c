@@ -2715,9 +2715,11 @@ static void summary_display_msg_full(SummaryView *summaryview,
 
 	if (val == 0 &&
 	    (new_window || !prefs_common.mark_as_read_on_new_window)) {
-		if (MSG_IS_NEW(msginfo->flags) &&
-		    summaryview->folder_item->new > 0)
-			summaryview->folder_item->new--;
+		if (MSG_IS_NEW(msginfo->flags)) {
+			if (summaryview->folder_item->new > 0)
+				summaryview->folder_item->new--;
+			inc_block_notify(TRUE);
+		}
 		if (MSG_IS_UNREAD(msginfo->flags) &&
 		    summaryview->folder_item->unread > 0)
 			summaryview->folder_item->unread--;
@@ -2976,8 +2978,11 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 
 	GET_MSG_INFO(msginfo, iter);
 
-	if (MSG_IS_NEW(msginfo->flags) && summaryview->folder_item->new > 0)
-		summaryview->folder_item->new--;
+	if (MSG_IS_NEW(msginfo->flags)) {
+		if (summaryview->folder_item->new > 0)
+			summaryview->folder_item->new--;
+		inc_block_notify(TRUE);
+	}
 	if (MSG_IS_UNREAD(msginfo->flags) &&
 	    summaryview->folder_item->unread > 0)
 		summaryview->folder_item->unread--;

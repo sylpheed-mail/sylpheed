@@ -90,6 +90,7 @@ void inc_all_account_mail	(MainWindow	*mainwin,
 gint inc_pop_before_smtp	(PrefsAccount	*account);
 
 gboolean inc_is_active		(void);
+void inc_block_notify		(gboolean	 notify);
 
 void inc_cancel_all		(void);
 

@@ -62,6 +62,7 @@
 static GList *inc_dialog_list = NULL;
 
 static guint inc_lock_count = 0;
+static gboolean block_notify = FALSE;
 
 static GdkPixbuf *current_pixbuf;
 static GdkPixbuf *error_pixbuf;
@@ -154,19 +155,16 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 	if (prefs_common.scan_all_after_inc)
 		new_messages += folderview_check_new(NULL);
 
-	if (new_messages > 0) {
+	if (new_messages > 0 && !block_notify) {
 		gchar buf[1024];
 
 		g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"),
 			   new_messages);
 		trayicon_set_tooltip(buf);
 		trayicon_set_notify(TRUE);
-	} else {
-#if 0
-		trayicon_set_tooltip(NULL);
-		trayicon_set_notify(FALSE);
-#endif
 	}
+
+	inc_block_notify(FALSE);
 
 	if (new_messages <= 0 && !prefs_common.scan_all_after_inc) return;
 
@@ -1406,6 +1404,14 @@ gboolean inc_is_active(void)
 	}
 
 	return FALSE;
+}
+
+void inc_block_notify(gboolean block)
+{
+	if (!block)
+		block_notify = FALSE;
+	else if (inc_is_active())
+		block_notify = TRUE;
 }
 
 void inc_cancel_all(void)
