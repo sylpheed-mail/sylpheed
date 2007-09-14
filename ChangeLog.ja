@@ -1,5 +1,13 @@
 2007-09-14
 
+	* libsylph/folder.[ch]: folder_item_copy(): 新規。 FolderItem 構造体
+	  を複製する。
+	* libsylph/imap.c: imap_scan_tree(): フォルダリストを取得するとき
+	  'LIST "" "%"' コマンドの代わりに 'LIST "" "*"' コマンドを使用する
+	  ようにした。
+
+2007-09-14
+
 	* src/inc.[ch]
 	  src/summaryview.c: 受信時に新着メッセージが読まれたら新着通知を
 	  ブロックするようにした。

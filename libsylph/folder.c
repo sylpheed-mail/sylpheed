@@ -209,6 +209,47 @@ void folder_item_append(FolderItem *parent, FolderItem *item)
 	item->node = g_node_append_data(parent->node, item);
 }
 
+FolderItem *folder_item_copy(FolderItem *item)
+{
+	FolderItem *new_item;
+
+	new_item = g_new0(FolderItem, 1);
+
+	new_item->stype = item->stype;
+	new_item->name = g_strdup(item->name);
+	new_item->path = g_strdup(item->path);
+	new_item->mtime = item->mtime;
+	new_item->new = item->new;
+	new_item->unread = item->unread;
+	new_item->total = item->total;
+	new_item->unmarked_num = item->unmarked_num;
+	new_item->last_num = item->last_num;
+	new_item->no_sub = item->no_sub;
+	new_item->no_select = item->no_select;
+	new_item->collapsed = item->collapsed;
+	new_item->threaded = item->threaded;
+	new_item->opened = item->opened;
+	new_item->updated = item->updated;
+	new_item->cache_dirty = item->cache_dirty;
+	new_item->mark_dirty = item->mark_dirty;
+	new_item->node = item->node;
+	new_item->parent = item->parent;
+	new_item->folder = item->folder;
+	new_item->account = item->account;
+	new_item->ac_apply_sub = item->ac_apply_sub;
+	new_item->auto_to = g_strdup(item->auto_to);
+	new_item->use_auto_to_on_reply = item->use_auto_to_on_reply;
+	new_item->auto_cc = g_strdup(item->auto_cc);
+	new_item->auto_bcc = g_strdup(item->auto_bcc);
+	new_item->auto_replyto = g_strdup(item->auto_replyto);
+	new_item->mark_queue = item->mark_queue;
+	new_item->last_selected = item->last_selected;
+	new_item->qsearch_cond_type = item->qsearch_cond_type;
+	new_item->data = item->data;
+
+	return new_item;
+}
+
 static gboolean folder_item_remove_func(GNode *node, gpointer data)
 {
 	FolderItem *item = FOLDER_ITEM(node->data);

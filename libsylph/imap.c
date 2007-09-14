@@ -176,10 +176,15 @@ static gint imap_auth			(IMAPSession	*session,
 					 IMAPAuthType	 type);
 
 static gint imap_scan_tree_recursive	(IMAPSession	*session,
+					 FolderItem	*item,
+					 GSList		*item_list);
+static GSList *imap_get_folder_list	(IMAPSession	*session,
 					 FolderItem	*item);
 static GSList *imap_parse_list		(IMAPSession	*session,
 					 const gchar	*real_path,
 					 gchar		*separator);
+static GSList *imap_get_part_folder_list(GSList		*item_list,
+					 FolderItem	*item);
 
 static void imap_create_missing_folders	(Folder			*folder);
 static FolderItem *imap_create_special_folder
@@ -1702,6 +1707,7 @@ static gint imap_scan_tree(Folder *folder)
 	FolderItem *item = NULL;
 	IMAPSession *session;
 	gchar *root_folder = NULL;
+	GSList *item_list, *cur;
 
 	g_return_val_if_fail(folder != NULL, -1);
 	g_return_val_if_fail(folder->account != NULL, -1);
@@ -1757,56 +1763,33 @@ static gint imap_scan_tree(Folder *folder)
 		folder->node = item->node = g_node_new(item);
 	}
 
-	imap_scan_tree_recursive(session, FOLDER_ITEM(folder->node->data));
+	item_list = imap_get_folder_list(session, item);
+	imap_scan_tree_recursive(session, item, item_list);
 	imap_create_missing_folders(folder);
+
+	for (cur = item_list; cur != NULL; cur = cur->next)
+		folder_item_destroy(FOLDER_ITEM(cur->data));
+	g_slist_free(item_list);
 
 	return 0;
 }
 
-static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
+static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item,
+				     GSList *item_list)
 {
 	Folder *folder;
 	IMAPFolder *imapfolder;
 	FolderItem *new_item;
-	GSList *item_list, *cur;
+	GSList *part_list, *cur;
 	GNode *node;
-	gchar *real_path;
-	gchar *wildcard_path;
-	gchar separator;
-	gchar wildcard[3];
 
 	g_return_val_if_fail(item != NULL, -1);
 	g_return_val_if_fail(item->folder != NULL, -1);
 	g_return_val_if_fail(item->no_sub == FALSE, -1);
 
 	folder = item->folder;
-	imapfolder = IMAP_FOLDER(folder);
 
-	separator = imap_get_path_separator(imapfolder, item->path);
-
-	if (folder->ui_func)
-		folder->ui_func(folder, item, folder->ui_func_data);
-
-	if (item->path) {
-		wildcard[0] = separator;
-		wildcard[1] = '%';
-		wildcard[2] = '\0';
-		real_path = imap_get_real_path(imapfolder, item->path);
-	} else {
-		wildcard[0] = '%';
-		wildcard[1] = '\0';
-		real_path = g_strdup("");
-	}
-
-	Xstrcat_a(wildcard_path, real_path, wildcard,
-		  {g_free(real_path); return IMAP_ERROR;});
-	QUOTE_IF_REQUIRED(wildcard_path, wildcard_path);
-
-	imap_cmd_gen_send(session, "LIST \"\" %s", wildcard_path);
-
-	strtailchomp(real_path, separator);
-	item_list = imap_parse_list(session, real_path, NULL);
-	g_free(real_path);
+	part_list = imap_get_part_folder_list(item_list, item);
 
 	node = item->node->children;
 	while (node != NULL) {
@@ -1815,7 +1798,7 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 
 		new_item = NULL;
 
-		for (cur = item_list; cur != NULL; cur = cur->next) {
+		for (cur = part_list; cur != NULL; cur = cur->next) {
 			FolderItem *cur_item = FOLDER_ITEM(cur->data);
 			if (!strcmp2(old_item->path, cur_item->path)) {
 				new_item = cur_item;
@@ -1848,7 +1831,7 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 		node = next;
 	}
 
-	for (cur = item_list; cur != NULL; cur = cur->next) {
+	for (cur = part_list; cur != NULL; cur = cur->next) {
 		FolderItem *cur_item = FOLDER_ITEM(cur->data);
 		new_item = NULL;
 		for (node = item->node->children; node != NULL;
@@ -1856,13 +1839,12 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 			if (!strcmp2(FOLDER_ITEM(node->data)->path,
 				     cur_item->path)) {
 				new_item = FOLDER_ITEM(node->data);
-				folder_item_destroy(cur_item);
 				cur_item = NULL;
 				break;
 			}
 		}
 		if (!new_item) {
-			new_item = cur_item;
+			new_item = folder_item_copy(cur_item);
 			debug_print("new folder '%s' found.\n", new_item->path);
 			folder_item_append(item, new_item);
 		}
@@ -1899,12 +1881,48 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item)
 			imap_scan_folder(folder, new_item);
 #endif
 		if (new_item->no_sub == FALSE)
-			imap_scan_tree_recursive(session, new_item);
+			imap_scan_tree_recursive(session, new_item, item_list);
 	}
 
-	g_slist_free(item_list);
+	g_slist_free(part_list);
 
 	return IMAP_SUCCESS;
+}
+
+static GSList *imap_get_folder_list(IMAPSession *session, FolderItem *item)
+{
+	Folder *folder;
+	IMAPFolder *imapfolder;
+	gchar *real_path;
+	gchar *wildcard_path;
+	gchar separator;
+	gchar wildcard[3];
+	GSList *item_list;
+
+	folder = item->folder;
+	imapfolder = IMAP_FOLDER(folder);
+
+	separator = imap_get_path_separator(imapfolder, item->path);
+
+	if (folder->ui_func)
+		folder->ui_func(folder, item, folder->ui_func_data);
+
+	if (item->path) {
+		real_path = imap_get_real_path(imapfolder, item->path);
+		strtailchomp(real_path, separator);
+		wildcard_path = g_strdup_printf("%s%c*", real_path, separator);
+	} else {
+		real_path = g_strdup("");
+		wildcard_path = g_strdup("*");
+	}
+
+	imap_cmd_gen_send(session, "LIST \"\" \"%s\"", wildcard_path);
+
+	item_list = imap_parse_list(session, real_path, NULL);
+	g_free(real_path);
+	g_free(wildcard_path);
+
+	return item_list;
 }
 
 static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
@@ -1984,7 +2002,7 @@ static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
 		    strcasestr(flags, "\\Noselect") != NULL)
 			new_item->no_select = TRUE;
 
-		item_list = g_slist_append(item_list, new_item);
+		item_list = g_slist_prepend(item_list, new_item);
 
 		debug_print("folder '%s' found.\n", loc_path);
 		g_free(loc_path);
@@ -1993,7 +2011,48 @@ static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
 
 	g_string_free(str, TRUE);
 
+	item_list = g_slist_reverse(item_list);
 	return item_list;
+}
+
+static GSList *imap_get_part_folder_list(GSList *item_list, FolderItem *item)
+{
+	FolderItem *cur_item;
+	GSList *part_list = NULL, *cur;
+	gint len;
+
+	if (!item->path) {
+		debug_print("imap_get_part_folder_list(): get root folders\n");
+		for (cur = item_list; cur != NULL; cur = cur->next) {
+			cur_item = FOLDER_ITEM(cur->data);
+
+			if (!strchr(cur_item->path, '/')) {
+				part_list = g_slist_prepend(part_list,
+							    cur_item);
+				debug_print("append '%s'\n", cur_item->path);
+			}
+		}
+		part_list = g_slist_reverse(part_list);
+		return part_list;
+	}
+
+	len = strlen(item->path);
+	debug_print("imap_get_part_folder_list(): get folders under '%s'\n",
+		    item->path);
+
+	for (cur = item_list; cur != NULL; cur = cur->next) {
+		cur_item = FOLDER_ITEM(cur->data);
+
+		if (!strncmp(cur_item->path, item->path, len) &&
+		    cur_item->path[len] == '/' &&
+		    !strchr(cur_item->path + len + 1, '/')) {
+			part_list = g_slist_prepend(part_list, cur_item);
+			debug_print("append '%s'\n", cur_item->path);
+		}
+	}
+
+	part_list = g_slist_reverse(part_list);
+	return part_list;
 }
 
 static gint imap_create_tree(Folder *folder)

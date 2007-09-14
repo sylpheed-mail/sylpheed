@@ -1,5 +1,12 @@
 2007-09-14
 
+	* libsylph/folder.[ch]: folder_item_copy(): new. It duplicates
+	  FolderItem struct.
+	* libsylph/imap.c: imap_scan_tree(): use 'LIST "" "*"' command
+	  instead of 'LIST "" "%"' to obtain folder list.
+
+2007-09-14
+
 	* src/inc.[ch]
 	  src/summaryview.c: block notify if a new message is read on
 	  receiving.

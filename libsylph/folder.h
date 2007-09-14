@@ -325,6 +325,7 @@ FolderItem *folder_item_new		(const gchar	*name,
 					 const gchar	*path);
 void        folder_item_append		(FolderItem	*parent,
 					 FolderItem	*item);
+FolderItem *folder_item_copy		(FolderItem	*item);
 void        folder_item_remove		(FolderItem	*item);
 void        folder_item_remove_children	(FolderItem	*item);
 void        folder_item_destroy		(FolderItem	*item);
