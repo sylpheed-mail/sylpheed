@@ -1,5 +1,25 @@
 Changes of Sylpheed
 
+* 2.4.6 (stable)
+
+    * The 'To' column was added to the summary view.
+    * In send folders (Sent, Draft, and Queue), the To folder will be
+      displayed by default.
+    * The display column setting of send folders became independent from
+      normal folders.
+    * The ascii-armored PGP encryption was fixed.
+    * The combined method is used now when both PGP encryption and PGP signing
+      are specified.
+    * The PGP passphrase dialog was disabled on query search.
+    * The new message notify will be blocked when a new message is read on
+      receiving.
+    * 'LIST "" "*"' command is used instead of 'LIST "" "%"' to obtain folder
+      list from IMAP4 server.
+    * The bug that noinferior and noselect flags were ignored until rebuilding
+      folder tree when a new folder was created on IMAP4 server was fixed.
+    * If attached files become nonexistent on sending, error dialog will be
+      displayed and the sending will abort.
+
 * 2.4.5 (stable)
 
     * The vulnerability that may be exploited by malicious POP3 server was
