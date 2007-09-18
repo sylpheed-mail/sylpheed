@@ -267,7 +267,7 @@ static gint compose_redirect_write_to_file	(Compose	*compose,
 static gint compose_remove_reedit_target	(Compose	*compose);
 static gint compose_queue			(Compose	*compose,
 						 const gchar	*file);
-static void compose_write_attach		(Compose	*compose,
+static gint compose_write_attach		(Compose	*compose,
 						 FILE		*fp,
 						 const gchar	*charset);
 static gint compose_write_headers		(Compose	*compose,
@@ -3384,8 +3384,13 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	g_free(buf);
 
 	if (compose->use_attach &&
-	    gtk_tree_model_iter_n_children(model, NULL) > 0)
-		compose_write_attach(compose, fp, out_charset);
+	    gtk_tree_model_iter_n_children(model, NULL) > 0) {
+		if (compose_write_attach(compose, fp, out_charset) < 0) {
+			fclose(fp);
+			g_unlink(file);
+			return -1;
+		}
+	}
 
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(file, "fclose");
@@ -3756,7 +3761,7 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	return 0;
 }
 
-static void compose_write_attach(Compose *compose, FILE *fp,
+static gint compose_write_attach(Compose *compose, FILE *fp,
 				 const gchar *charset)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
@@ -3771,9 +3776,18 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 	     valid = gtk_tree_model_iter_next(model, &iter)) {
 		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
 
+		if (!is_file_exist(ainfo->file)) {
+			alertpanel_error(_("File %s doesn't exist."),
+					 ainfo->file);
+			return -1;
+		}
+		if (get_file_size(ainfo->file) <= 0) {
+			alertpanel_error(_("File %s is empty."), ainfo->file);
+			return -1;
+		}
 		if ((attach_fp = g_fopen(ainfo->file, "rb")) == NULL) {
-			g_warning("Can't open file %s\n", ainfo->file);
-			continue;
+			alertpanel_error(_("Can't open file %s."), ainfo->file);
+			return -1;
 		}
 
 		fprintf(fp, "\n--%s\n", compose->boundary);
@@ -3849,14 +3863,14 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 				if (canonicalize_file(ainfo->file, tmp_file) < 0) {
 					g_free(tmp_file);
 					fclose(attach_fp);
-					continue;
+					return -1;
 				}
 				if ((tmp_fp = g_fopen(tmp_file, "rb")) == NULL) {
 					FILE_OP_ERROR(tmp_file, "fopen");
 					g_unlink(tmp_file);
 					g_free(tmp_file);
 					fclose(attach_fp);
-					continue;
+					return -1;
 				}
 			}
 
@@ -3899,6 +3913,7 @@ static void compose_write_attach(Compose *compose, FILE *fp,
 	}
 
 	fprintf(fp, "\n--%s--\n", compose->boundary);
+	return 0;
 }
 
 #define QUOTE_IF_REQUIRED(out, str)			\
