@@ -110,6 +110,8 @@ gint filter_apply_msginfo(GSList *fltlist, MsgInfo *msginfo,
 		return 0;
 	}
 
+	procmsg_set_auto_decrypt_message(FALSE);
+
 	for (cur = fltlist; cur != NULL; cur = cur->next) {
 		gboolean matched;
 
@@ -130,6 +132,8 @@ gint filter_apply_msginfo(GSList *fltlist, MsgInfo *msginfo,
 				break;
 		}
 	}
+
+	procmsg_set_auto_decrypt_message(TRUE);
 
 	procheader_header_list_destroy(hlist);
 	g_free(file);
