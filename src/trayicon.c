@@ -210,8 +210,6 @@ gboolean notify_timeout_cb(gpointer data)
 
 void trayicon_set_notify(gboolean enabled)
 {
-	GdkPixbuf *pixbuf;
-
 	if (enabled && !on_notify) {
 		trayicon_set_stock_icon(TRAYICON_NEW_IMAGE);
 		on_notify = TRUE;

@@ -373,7 +373,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	enc = conv_check_file_encoding(csvFile);
 
 	if ((fp = g_fopen(csvFile, "rb")) == NULL) {
-		return;
+		return MGU_OPEN_FILE;
 	}
 
 	fields_len = sizeof(imp_csv_attrib) / sizeof(imp_csv_attrib[0]);

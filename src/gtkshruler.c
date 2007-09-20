@@ -127,7 +127,7 @@ gtk_shruler_set_start_pos(GtkSHRuler *ruler, gint pos)
 gint
 gtk_shruler_get_start_pos(GtkSHRuler *ruler)
 {
-	g_return_if_fail (GTK_IS_SHRULER (ruler));
+	g_return_val_if_fail (GTK_IS_SHRULER (ruler), 0);
 
 	return ruler->start_pos;
 }

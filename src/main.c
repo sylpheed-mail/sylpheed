@@ -177,7 +177,9 @@ int main(int argc, char *argv[])
 	MainWindow *mainwin;
 	FolderView *folderview;
 	GdkPixbuf *icon;
+#ifdef G_OS_WIN32
 	GList *iconlist = NULL;
+#endif
 
 	app_init();
 	parse_cmd_opt(argc, argv);

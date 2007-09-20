@@ -40,6 +40,7 @@
 #include "ssl.h"
 #include "smtp.h"
 #include "news.h"
+#include "imap.h"
 #include "prefs_common.h"
 #include "prefs_account.h"
 #include "procheader.h"

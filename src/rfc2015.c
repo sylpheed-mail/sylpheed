@@ -1881,7 +1881,7 @@ failure:
 gint rfc2015_encrypt_sign_armored(const gchar *file, GSList *recp_list,
 				  GSList *key_list)
 {
-	FILE *fp;
+	FILE *fp = NULL;
 	gchar buf[BUFFSIZE];
 	gint i;
 	gpgme_error_t err;

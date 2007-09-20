@@ -170,7 +170,6 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	PangoFontDescription *desc;
 	gint layout_h;
 	gint lines_per_page, lines_left;
-	gint body_lines = 0;
 	gint n_pages = 1;
 	PageInfo *pinfo;
 	gint i;
@@ -290,8 +289,6 @@ static void begin_print(GtkPrintOperation *operation, GtkPrintContext *context,
 			gpointer data)
 {
 	PrintData *print_data = data;
-	GSList *cur;
-	MsgInfo *msginfo;
 	gint n_pages = 0;
 	gint i;
 
@@ -379,7 +376,6 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 		PangoLayoutIter *iter;
 		PangoLayoutLine *layout_line;
 		gint baseline;
-		gint y0, y1;
 		gdouble x, y;
 
 		if (fgets(buf, sizeof(buf), mpinfo->fp) == NULL)

@@ -309,6 +309,10 @@ gint	procmsg_save_to_outbox		(FolderItem	*outbox,
 void	procmsg_print_message		(MsgInfo	*msginfo,
 					 const gchar	*cmdline,
 					 gboolean	 all_headers);
+void	procmsg_print_message_part	(MsgInfo	*msginfo,
+					 MimeInfo	*partinfo,
+					 const gchar	*cmdline,
+					 gboolean	 all_headers);
 
 MsgInfo *procmsg_get_msginfo		(FolderItem	*item,
 					 gint		 num);

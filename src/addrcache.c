@@ -737,9 +737,6 @@ ItemPerson *addrcache_remove_person_id( AddressCache *cache, const gchar *uid ) 
 	obj = ( AddrItemObject * ) g_hash_table_lookup( cache->itemHash, uid );
 	if( obj ) {
 		if( ADDRITEM_TYPE(obj) == ITEMTYPE_PERSON ) {
-			ItemEMail *email;
-			GList *list;
-
 			/* Remove person's email addresses from all groups where */
 			/* referenced and from hash table. */
 			ItemPerson *person = ( ItemPerson * ) obj;
@@ -772,9 +769,6 @@ ItemPerson *addrcache_remove_person( AddressCache *cache, ItemPerson *person ) {
 		obj = ( AddrItemObject * ) g_hash_table_lookup( cache->itemHash, uid );
 		if( obj ) {
 			if( ADDRITEM_TYPE(obj) == ITEMTYPE_PERSON ) {
-				ItemEMail *email;
-				GList *list;
-
 				/* Remove person's email addresses from all groups where */
 				/* referenced and from hash table. */
 				ItemFolder *parent = ( ItemFolder * ) ADDRITEM_PARENT(person);

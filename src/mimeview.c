@@ -55,6 +55,7 @@
 #include "summaryview.h"
 #include "menu.h"
 #include "compose.h"
+#include "printing.h"
 #include "filesel.h"
 #include "alertpanel.h"
 #include "inputdialog.h"

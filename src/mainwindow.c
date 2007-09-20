@@ -1940,7 +1940,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 static void main_window_set_toolbar_button_visibility(MainWindow *mainwin)
 {
-	GtkToolbarStyle style;
+	GtkToolbarStyle style = GTK_TOOLBAR_BOTH_HORIZ;
 
 	if (prefs_common.toolbar_style == TOOLBAR_NONE)
 		style = -1;

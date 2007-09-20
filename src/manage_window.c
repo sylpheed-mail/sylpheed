@@ -23,6 +23,7 @@
 
 #include "manage_window.h"
 #include "utils.h"
+#include "gtkutils.h"
 
 static GtkWidget *focus_window;
 

@@ -1936,7 +1936,6 @@ static gchar *compose_get_signature_str(Compose *compose)
 	gchar *sig_path;
 	gchar *sig_body = NULL;
 	gchar *utf8_sig_body = NULL;
-	gchar *sig_str = NULL;
 	gchar *utf8_sig_str = NULL;
 
 	g_return_val_if_fail(compose->account != NULL, NULL);
@@ -4172,8 +4171,6 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 
 	/* X-Sylpheed headers */
 	if (is_draft) {
-		gchar *id;
-
 		fprintf(fp, "X-Sylpheed-Account-Id: %d\n",
 			compose->account->account_id);
 		if (compose->reply_target)
@@ -5212,7 +5209,7 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 
 static void compose_set_toolbar_button_visibility(Compose *compose)
 {
-	GtkToolbarStyle style;
+	GtkToolbarStyle style = GTK_TOOLBAR_BOTH_HORIZ;
 
 	if (prefs_common.toolbar_style == TOOLBAR_NONE)
 		style = -1;

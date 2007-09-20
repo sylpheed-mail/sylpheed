@@ -628,7 +628,7 @@ static gchar *ldif_conv_base64( gchar *buf ) {
 	gint len;
 
 	outbuf = g_malloc(strlen(buf) + 1);
-	len = base64_decode(outbuf, buf, -1);
+	len = base64_decode((guchar *)outbuf, buf, -1);
 	outbuf[len] = '\0';
 	if (g_utf8_validate(outbuf, -1, NULL))
 		return outbuf;

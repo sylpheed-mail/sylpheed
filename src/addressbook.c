@@ -489,7 +489,6 @@ static void addressbook_create(void)
 	GtkWidget *clist;
 	GtkWidget *paned;
 	GtkWidget *hbox;
-	GtkWidget *label;
 	GtkWidget *entry;
 	GtkWidget *statusbar;
 	GtkWidget *hbbox;
@@ -1376,11 +1375,6 @@ static gboolean addressbook_tree_button_pressed(GtkWidget *ctree,
 {
 	GtkCList *clist = GTK_CLIST(ctree);
 	gint row, column;
-	AddressObject *obj = NULL;
-	/* GtkCTreeNode *node; */
-	AdapterDSource *ads = NULL;
-	AddressInterface *iface = NULL;
-	AddressDataSource *ds = NULL;
 
 	if( ! event ) return FALSE;
 /* */
@@ -1925,7 +1919,6 @@ static void addressbook_delete_address_cb(gpointer data, guint action,
 static void addressbook_copy_address_cb(gpointer data, guint action,
 					GtkWidget *widget)
 {
-	GtkCTree *clist = GTK_CTREE( addrbook.clist );
 	AddressObject *obj;
 	GList *node;
 
@@ -1949,7 +1942,6 @@ static void addressbook_copy_address_cb(gpointer data, guint action,
 static void addressbook_paste_address_cb(gpointer data, guint action,
 					 GtkWidget *widget)
 {
-	GtkCTree *clist = GTK_CTREE( addrbook.clist );
 	GtkCTree *ctree = GTK_CTREE( addrbook.ctree );
 	AddressObject *obj = NULL, *pobj = NULL;
 	AddressDataSource *ds = NULL;

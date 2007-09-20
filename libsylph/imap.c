@@ -1778,7 +1778,6 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item,
 				     GSList *item_list)
 {
 	Folder *folder;
-	IMAPFolder *imapfolder;
 	FolderItem *new_item;
 	GSList *part_list, *cur;
 	GNode *node;
@@ -1896,7 +1895,6 @@ static GSList *imap_get_folder_list(IMAPSession *session, FolderItem *item)
 	gchar *real_path;
 	gchar *wildcard_path;
 	gchar separator;
-	gchar wildcard[3];
 	GSList *item_list;
 
 	folder = item->folder;

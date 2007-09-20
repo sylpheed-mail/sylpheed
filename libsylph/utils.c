@@ -489,7 +489,6 @@ gboolean is_next_nonascii(const gchar *s)
 gint get_next_word_len(const gchar *s)
 {
 	const gchar *p = s;
-	gint len = 0;
 	gboolean in_quote = FALSE;
 
 	while (*p != '\0') {

@@ -133,9 +133,11 @@ static void edit_book_enable_buttons( gboolean enable ) {
 	/* gtk_widget_set_sensitive( addrbookedit_dlg.file_btn, enable ); */
 }
 
+#if 0
 static void edit_book_name_focus( GtkWidget *widget, GdkEventFocus *event, gpointer data) {
 	edit_book_status_show( "" );
 }
+#endif
 
 static gchar *edit_book_guess_file( AddressBookFile *abf ) {
 	gchar *newFile = NULL;

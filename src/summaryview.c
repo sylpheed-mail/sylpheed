@@ -767,7 +767,6 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		      gboolean update_cache)
 {
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
-	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 	GSList *mlist;
 	gchar *buf;
@@ -3739,9 +3738,7 @@ void summary_save_as(SummaryView *summaryview)
 
 void summary_print(SummaryView *summaryview)
 {
-	MsgInfo *msginfo;
-	GSList *mlist, *cur;
-	gchar *msg;
+	GSList *mlist;
 	gboolean all_headers;
 
 	all_headers = summaryview->messageview->textview->show_all_headers;
@@ -5415,7 +5412,7 @@ static GSList *summary_qsearch_filter(SummaryView *summaryview,
 		status_rule = filter_rule_new("Status filter rule", FLT_OR,
 					      cond_list, NULL);
 		break;
-	QS_ALL:
+	case QS_ALL:
 	default:
 		break;
 	}
@@ -5466,7 +5463,6 @@ static GSList *summary_qsearch_filter(SummaryView *summaryview,
 void summary_qsearch(SummaryView *summaryview)
 {
 	QSearchCondType type;
-	FilterCondType ftype;
 	GtkWidget *menuitem;
 	const gchar *key;
 	GSList *flt_mlist;

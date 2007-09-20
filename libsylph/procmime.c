@@ -1680,7 +1680,7 @@ EncodingType procmime_get_encoding_for_str(const gchar *str)
 
 	total_len = strlen(str);
 
-	for (p = str; *p != '\0'; ++p) {
+	for (p = (const guchar *)str; *p != '\0'; ++p) {
 		if (*p & 0x80)
 			++octet_chars;
 	}

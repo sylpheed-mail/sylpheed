@@ -25,9 +25,11 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtkmain.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkstock.h>
+
+#include <string.h>
 
 #include "prefs_toolbar.h"
 #include "prefs_display_items.h"

@@ -493,11 +493,9 @@ static void prefs_display_items_add(GtkWidget *widget, gpointer data)
 static void prefs_display_items_remove(GtkWidget *widget, gpointer data)
 {
 	PrefsDisplayItemsDialog *dialog = data;
-	GtkCList *stock_clist = GTK_CLIST(dialog->stock_clist);
 	GtkCList *shown_clist = GTK_CLIST(dialog->shown_clist);
 	PrefsDisplayItem *item;
 	gint row;
-	gchar *name;
 
 	if (!shown_clist->selection) return;
 

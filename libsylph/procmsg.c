@@ -1570,7 +1570,7 @@ MsgInfo *procmsg_get_msginfo(FolderItem *item, gint num)
 	MsgInfo *msginfo;
 	FolderType type;
 
-	g_return_if_fail(item->folder != NULL);
+	g_return_val_if_fail(item->folder != NULL, NULL);
 
 	msginfo = folder_item_get_msginfo(item, num);
 	if (!msginfo)
