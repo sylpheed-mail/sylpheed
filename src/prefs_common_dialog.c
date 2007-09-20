@@ -615,6 +615,8 @@ static gboolean prefs_keybind_key_pressed	(GtkWidget	*widget,
 static void prefs_keybind_cancel		(void);
 static void prefs_keybind_apply_clicked		(GtkWidget	*widget);
 
+static void prefs_common_dispitem_clicked	(void);
+
 static void prefs_common_select_folder_cb	(GtkWidget	*widget,
 						 gpointer	 data);
 
@@ -1495,7 +1497,7 @@ static void prefs_display_create(void)
 	gtk_widget_show (button_dispitem);
 	gtk_box_pack_start (GTK_BOX (hbox1), button_dispitem, FALSE, TRUE, 0);
 	g_signal_connect (G_OBJECT (button_dispitem), "clicked",
-			  G_CALLBACK (prefs_summary_column_open), NULL);
+			  G_CALLBACK (prefs_common_dispitem_clicked), NULL);
 
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Message"));
 	msg_wid = prefs_message_create();
@@ -3849,6 +3851,12 @@ static void prefs_common_uri_set_entry(PrefParam *pparam)
 	} else {
 		g_warning("Invalid type for URI setting\n");
 	}
+}
+
+static void prefs_common_dispitem_clicked(void)
+{
+	prefs_summary_column_open(FOLDER_ITEM_IS_SENT_FOLDER
+		(main_window_get()->summaryview->folder_item));
 }
 
 static void prefs_common_select_folder_cb(GtkWidget *widget, gpointer data)
