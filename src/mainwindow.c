@@ -1403,11 +1403,15 @@ void main_window_separation_change(MainWindow *mainwin, SeparateType type)
 	GtkWidget *folder_wid  = GTK_WIDGET_PTR(mainwin->folderview);
 	GtkWidget *summary_wid = GTK_WIDGET_PTR(mainwin->summaryview);
 	GtkWidget *message_wid = GTK_WIDGET_PTR(mainwin->messageview);
+	GtkWidget *focus_widget;
 
 	debug_print(_("Changing window separation type from %d to %d\n"),
 		    mainwin->type, type);
 
 	if (mainwin->type == type) return;
+
+	/* keep previous focus */
+	focus_widget = gtk_window_get_focus(GTK_WINDOW(mainwin->window));
 
 	/* remove widgets from those containers */
 	gtk_widget_ref(folder_wid);
@@ -1442,6 +1446,8 @@ void main_window_separation_change(MainWindow *mainwin, SeparateType type)
 	gtk_widget_hide(mainwin->window);
 	main_window_set_widgets(mainwin, type);
 	gtk_widget_show(mainwin->window);
+	if (focus_widget)
+		gtk_widget_grab_focus(focus_widget);
 
 	gtk_widget_unref(folder_wid);
 	gtk_widget_unref(summary_wid);
