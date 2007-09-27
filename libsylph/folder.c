@@ -335,8 +335,10 @@ gint folder_item_compare(FolderItem *item_a, FolderItem *item_b)
 
 	/* if both a and b are special folders, sort them according to
 	 * their types (which is in-order). Note that this assumes that
-	 * there are no multiple folders of a special type. */
-	if (item_a->stype != F_NORMAL && item_b->stype != F_NORMAL)
+	 * there are no multiple folders of a special type. As a special
+	 * case, two virtual folders are compared like normal ones. */
+	if (item_a->stype != F_NORMAL && item_b->stype != F_NORMAL &&
+	    (item_a->stype != F_VIRTUAL || item_b->stype != F_VIRTUAL))
 		return item_a->stype - item_b->stype;
 
 	 /* if b is normal folder, and a is not, b is smaller (ends up
