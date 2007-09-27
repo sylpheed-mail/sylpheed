@@ -75,7 +75,6 @@ struct _SummaryView
 
 	GtkWidget *hseparator;
 	GtkWidget *hbox;
-	GtkWidget *hbox_l;
 	GtkWidget *statlabel_folder;
 	GtkWidget *statlabel_select;
 	GtkWidget *statlabel_msgs;

@@ -529,11 +529,9 @@ SummaryView *summary_create(void)
 	GtkTreeSelection *selection;
 	GtkWidget *hseparator;
 	GtkWidget *hbox;
-	GtkWidget *hbox_l;
 	GtkWidget *statlabel_folder;
 	GtkWidget *statlabel_select;
 	GtkWidget *statlabel_msgs;
-	GtkWidget *hbox_spc;
 	GtkWidget *toggle_eventbox;
 	GtkWidget *toggle_arrow;
 	GtkWidget *popupmenu;
@@ -646,13 +644,10 @@ SummaryView *summary_create(void)
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
-	hbox_l = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(hbox), hbox_l, TRUE, TRUE, 0);
-
 	statlabel_folder = gtk_label_new("");
-	gtk_box_pack_start(GTK_BOX(hbox_l), statlabel_folder, FALSE, FALSE, 2);
+	gtk_box_pack_start(GTK_BOX(hbox), statlabel_folder, FALSE, FALSE, 2);
 	statlabel_select = gtk_label_new("");
-	gtk_box_pack_start(GTK_BOX(hbox_l), statlabel_select, FALSE, FALSE, 12);
+	gtk_box_pack_start(GTK_BOX(hbox), statlabel_select, FALSE, FALSE, 12);
 
 	/* toggle view button */
 	toggle_eventbox = gtk_event_box_new();
@@ -663,10 +658,12 @@ SummaryView *summary_create(void)
 			 G_CALLBACK(summary_toggle_pressed), summaryview);
 
 	statlabel_msgs = gtk_label_new("");
-	gtk_box_pack_end(GTK_BOX(hbox), statlabel_msgs, FALSE, FALSE, 4);
-
-	hbox_spc = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_end(GTK_BOX(hbox), hbox_spc, FALSE, FALSE, 6);
+	gtk_misc_set_alignment(GTK_MISC(statlabel_msgs), 1, 0.5);
+#if GTK_CHECK_VERSION(2, 6, 0)
+	gtk_label_set_ellipsize(GTK_LABEL(statlabel_msgs),
+				PANGO_ELLIPSIZE_START);
+#endif
+	gtk_box_pack_start(GTK_BOX(hbox), statlabel_msgs, TRUE, TRUE, 2);
 
 	/* create popup menu */
 	n_entries = sizeof(summary_popup_entries) /
@@ -688,7 +685,6 @@ SummaryView *summary_create(void)
 	summaryview->selection = selection;
 	summaryview->hseparator = hseparator;
 	summaryview->hbox = hbox;
-	summaryview->hbox_l = hbox_l;
 	summaryview->statlabel_folder = statlabel_folder;
 	summaryview->statlabel_select = statlabel_select;
 	summaryview->statlabel_msgs = statlabel_msgs;
@@ -751,10 +747,10 @@ void summary_init(SummaryView *summaryview)
 	gtk_widget_modify_font(summaryview->statlabel_msgs, font_desc);
 	pango_font_description_free(font_desc);
 
-	pixmap = stock_pixbuf_widget(summaryview->hbox_l,
+	pixmap = stock_pixbuf_widget(summaryview->hbox,
 				     STOCK_PIXMAP_DIR_OPEN);
-	gtk_box_pack_start(GTK_BOX(summaryview->hbox_l), pixmap, FALSE, FALSE, 4);
-	gtk_box_reorder_child(GTK_BOX(summaryview->hbox_l), pixmap, 0);
+	gtk_box_pack_start(GTK_BOX(summaryview->hbox), pixmap, FALSE, FALSE, 4);
+	gtk_box_reorder_child(GTK_BOX(summaryview->hbox), pixmap, 0);
 	gtk_widget_show(pixmap);
 
 	summary_clear_list(summaryview);
