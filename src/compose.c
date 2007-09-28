@@ -3252,32 +3252,13 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	}
 
 	if (rfc2015_is_available() && !is_draft) {
-		gint ret;
-
-		if (compose->use_encryption && compose->account->ascii_armored) {
-			if (compose->use_signing)
-				ret = compose_encrypt_sign_armored(compose, &buf);
-			else
-				ret = compose_encrypt_armored(compose, &buf);
-			if (ret < 0) {
-				g_warning("ascii-armored encryption failed\n");
-				fclose(fp);
-				g_unlink(file);
-				g_free(buf);
-				return -1;
-			}
-		} else if (compose->use_signing && compose->account->clearsign) {
+		if ((compose->use_encryption &&
+		     compose->account->ascii_armored) ||
+		    (compose->use_signing && compose->account->clearsign)) {
 			/* MIME encoding doesn't fit with cleartext signature */
 			if (encoding == ENC_QUOTED_PRINTABLE || encoding == ENC_BASE64)
 				encoding = ENC_8BIT;
 
-			if (compose_clearsign_text(compose, &buf) < 0) {
-				g_warning("clearsign failed\n");
-				fclose(fp);
-				g_unlink(file);
-				g_free(buf);
-				return -1;
-			}
 		}
 	}
 #endif
@@ -3321,6 +3302,35 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		g_free(buf);
 		return -1;
 	}
+
+#if USE_GPGME
+	/* do ascii-armor encryption and/or clearsign */
+	if (rfc2015_is_available() && !is_draft) {
+		gint ret;
+
+		if (compose->use_encryption && compose->account->ascii_armored) {
+			if (compose->use_signing)
+				ret = compose_encrypt_sign_armored(compose, &buf);
+			else
+				ret = compose_encrypt_armored(compose, &buf);
+			if (ret < 0) {
+				g_warning("ascii-armored encryption failed\n");
+				fclose(fp);
+				g_unlink(file);
+				g_free(buf);
+				return -1;
+			}
+		} else if (compose->use_signing && compose->account->clearsign) {
+			if (compose_clearsign_text(compose, &buf) < 0) {
+				g_warning("clearsign failed\n");
+				fclose(fp);
+				g_unlink(file);
+				g_free(buf);
+				return -1;
+			}
+		}
+	}
+#endif
 
 	if (compose->use_attach &&
 	    gtk_tree_model_iter_n_children(model, NULL) > 0) {

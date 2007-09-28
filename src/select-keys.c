@@ -101,6 +101,8 @@ update_progress (struct select_keys_s *sk, int running, const char *pattern)
     static int windmill[] = { '-', '\\', '|', '/' };
     char *buf;
 
+    if (!pattern)
+	pattern = "";
     if (!running)
         buf = g_strdup_printf (_("Please select key for `%s'"), 
                                pattern);
