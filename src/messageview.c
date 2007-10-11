@@ -567,11 +567,19 @@ static void messageview_set_menu_state(MessageView *messageview)
 	GtkWidget *menuitem;
 
 	messageview->menu_locked = TRUE;
+
 	ifactory = gtk_item_factory_from_widget(messageview->menubar);
 	menuitem = gtk_item_factory_get_widget
 		(ifactory, "/View/All headers");
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
 				       messageview->textview->show_all_headers);
+
+	if (messageview->msginfo &&
+	    FOLDER_ITEM_IS_SENT_FOLDER(messageview->msginfo->folder))
+		menu_set_sensitive(ifactory, "/Message/Re-edit", TRUE);
+	else
+		menu_set_sensitive(ifactory, "/Message/Re-edit", FALSE);
+
 	messageview->menu_locked = FALSE;
 }
 
