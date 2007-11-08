@@ -398,18 +398,21 @@ gpointer my_memmem(gconstpointer haystack, size_t haystacklen,
 	const gchar *haystack_ = (const gchar *)haystack;
 	const gchar *needle_ = (const gchar *)needle;
 	const gchar *haystack_cur = (const gchar *)haystack;
+	size_t haystack_left = haystacklen;
 
 	if (needlelen == 1)
 		return memchr(haystack_, *needle_, haystacklen);
 
-	while ((haystack_cur = memchr(haystack_cur, *needle_, haystacklen))
+	while ((haystack_cur = memchr(haystack_cur, *needle_, haystack_left))
 	       != NULL) {
 		if (haystacklen - (haystack_cur - haystack_) < needlelen)
 			break;
 		if (memcmp(haystack_cur + 1, needle_ + 1, needlelen - 1) == 0)
 			return (gpointer)haystack_cur;
-		else
+		else {
 			haystack_cur++;
+			haystack_left = haystacklen - (haystack_cur - haystack_);
+		}
 	}
 
 	return NULL;
