@@ -2160,19 +2160,21 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 
 	g_return_if_fail(g_utf8_validate(src, -1, NULL) == TRUE);
 
-	if (MB_CUR_MAX > 1) {
-		use_base64 = TRUE;
-		mimesep_enc = "?B?";
-	} else {
-		use_base64 = FALSE;
-		mimesep_enc = "?Q?";
-	}
-
 	src_encoding = CS_INTERNAL;
 	if (!out_encoding)
 		out_encoding = conv_get_outgoing_charset_str();
 	if (!strcmp(out_encoding, CS_US_ASCII))
 		out_encoding = CS_ISO_8859_1;
+
+	if (!g_ascii_strncasecmp(out_encoding, "ISO-8859-", 9) ||
+	    !g_ascii_strncasecmp(out_encoding, "KOI8-", 5) ||
+	    !g_ascii_strncasecmp(out_encoding, "Windows-", 8)) {
+		use_base64 = FALSE;
+		mimesep_enc = "?Q?";
+	} else {
+		use_base64 = TRUE;
+		mimesep_enc = "?B?";
+	}
 
 	mimestr_len = strlen(MIMESEP_BEGIN) + strlen(mimesep_enc) +
 		strlen(MIMESEP_END);
