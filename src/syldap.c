@@ -637,7 +637,7 @@ gint syldap_search( SyldapServer *ldapServer ) {
 
 /* syldap_display_search_results() - updates the ui. this function is called from the
  * main thread (the thread running the GTK event loop). */
-static gint syldap_display_search_results(SyldapServer *ldapServer)
+static gboolean syldap_display_search_results(SyldapServer *ldapServer)
 {
 	/* NOTE: when this function is called the accompanying thread should
 	 * already be terminated. */
@@ -646,7 +646,7 @@ static gint syldap_display_search_results(SyldapServer *ldapServer)
 	/* FIXME:  match should know whether to free this SyldapServer stuff. */
 	g_free(ldapServer->thread);
 	ldapServer->thread = NULL;
-	return TRUE;
+	return FALSE;
 }
 
 /* ============================================================================================ */
