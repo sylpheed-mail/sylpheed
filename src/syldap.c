@@ -602,10 +602,10 @@ gint syldap_search( SyldapServer *ldapServer ) {
 			if( g_ascii_strcasecmp( attribute, SYLDAP_ATTR_DN ) == 0 ) {
 				listDN = syldap_add_single_value( ld, e, attribute );
 			}
-		}
 
-		/* Free memory used to store attribute */
-		ldap_memfree( attribute );
+			/* Free memory used to store attribute */
+			ldap_memfree( attribute );
+		}
 
 		/* Format and add items to cache */
 		syldap_build_items_fl( ldapServer, listAddress, listFirst, listLast );
@@ -821,8 +821,8 @@ GList *syldap_read_basedn_s( const gchar *host, const gint port, const gchar *bi
 					}
 					ldap_value_free( vals );
 				}
+				ldap_memfree( attribute );
 			}
-			ldap_memfree( attribute );
 			if( ber != NULL ) {
 				ber_free( ber, 0 );
 			}
@@ -863,8 +863,8 @@ GList *syldap_read_basedn_s( const gchar *host, const gint port, const gchar *bi
 						}
 						ldap_value_free( vals );
 					}
+					ldap_memfree( attribute );
 				}
-				ldap_memfree( attribute );
 				if( ber != NULL ) {
 					ber_free( ber, 0 );
 				}
@@ -950,8 +950,8 @@ GList *syldap_read_basedn( SyldapServer *ldapServer ) {
 					}
 					ldap_value_free( vals );
 				}
+				ldap_memfree( attribute );
 			}
-			ldap_memfree( attribute );
 			if( ber != NULL ) {
 				ber_free( ber, 0 );
 			}
@@ -994,8 +994,8 @@ GList *syldap_read_basedn( SyldapServer *ldapServer ) {
 						}
 						ldap_value_free( vals );
 					}
+					ldap_memfree( attribute );
 				}
-				ldap_memfree( attribute );
 				if( ber != NULL ) {
 					ber_free( ber, 0 );
 				}
