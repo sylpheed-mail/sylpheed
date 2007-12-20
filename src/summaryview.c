@@ -945,7 +945,10 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				(summaryview, &iter, NULL, MSG_UNREAD, FALSE)) {
 				summary_select_row(summaryview, &iter,
 						   FALSE, TRUE);
-			} else if (item->total > 0) {
+			} else if ((summaryview->on_filter &&
+				    summaryview->flt_msg_total > 1) ||
+				   (!summaryview->on_filter &&
+				    item->total > 1)) {
 				g_signal_emit_by_name
 					(treeview, "move-cursor",
 					 GTK_MOVEMENT_BUFFER_ENDS,
@@ -953,6 +956,11 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 					 -1 : 1, &moved);
 				GTK_EVENTS_FLUSH();
 				summary_scroll_to_selected(summaryview, TRUE);
+			} else if (gtk_tree_model_get_iter_first
+					(GTK_TREE_MODEL(summaryview->store),
+					 &iter)) {
+				summary_select_row(summaryview, &iter,
+						   FALSE, TRUE);
 			}
 		}
 		selection_done = TRUE;
@@ -980,11 +988,20 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 						   FALSE, TRUE);
 		} else {
 			summary_unlock(summaryview);
-			g_signal_emit_by_name
-				(treeview, "move-cursor",
-				 GTK_MOVEMENT_BUFFER_ENDS,
-				 item->sort_type == SORT_DESCENDING ?
-				 -1 : 1, &moved);
+			if ((summaryview->on_filter &&
+			     summaryview->flt_msg_total > 1) ||
+			    (!summaryview->on_filter && item->total > 1)) {
+				g_signal_emit_by_name
+					(treeview, "move-cursor",
+					 GTK_MOVEMENT_BUFFER_ENDS,
+					 item->sort_type == SORT_DESCENDING ?
+					 -1 : 1, &moved);
+			} else if (gtk_tree_model_get_iter_first
+					(GTK_TREE_MODEL(summaryview->store),
+					 &iter)) {
+				summary_select_row(summaryview, &iter,
+						   FALSE, TRUE);
+			}
 			summary_lock(summaryview);
 			GTK_EVENTS_FLUSH();
 			summary_scroll_to_selected(summaryview, TRUE);
