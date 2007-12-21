@@ -1,3 +1,8 @@
+2007-12-21
+
+	* src/main.c: wndproc(): win32: call app_will_exit() when WM_ENDSESSION
+	  is received (fixes folder tree state not saved etc.).
+
 2007-12-20
 
 	* src/summaryview.c: summary_show(): fixed beep on folders with one
@@ -193,7 +198,7 @@
 
 2007-07-20
 
-	* libsylph/socket.c: ssl_read(); win32: set errno to EIO to avoid
+	* libsylph/socket.c: ssl_read(): win32: set errno to EIO to avoid
 	  random error message.
 	* src/send_message.c: send_message_smtp(): ignore errors right after
 	  QUIT (workaround for Gmail SMTP server).

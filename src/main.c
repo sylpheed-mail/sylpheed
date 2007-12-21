@@ -970,7 +970,8 @@ static void set_log_handlers(gboolean enable)
 static LRESULT CALLBACK
 wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
-	if (message == WM_POWERBROADCAST) {
+	switch (message) {
+	case WM_POWERBROADCAST:
 		debug_print("WM_POWERBROADCAST received: wparam = %d\n",
 			    wparam);
 		if (wparam == PBT_APMSUSPEND || wparam == PBT_APMSTANDBY) {
@@ -981,6 +982,15 @@ wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 			debug_print("resume now\n");
 			inc_autocheck_timer_set();
 		}
+		break;
+	case WM_ENDSESSION:
+		if (wparam == 1) {
+			log_print("WM_ENDSESSION received: system is quitting\n");
+			app_will_exit(TRUE);
+		}
+		break;
+	default:
+		break;
 	}
 
 	return DefWindowProc(hwnd, message, wparam, lparam);
