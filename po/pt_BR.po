@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-03 17:32+0900\n"
+"POT-Creation-Date: 2007-12-21 10:59+0900\n"
 "PO-Revision-Date: 2007-07-20 09:44-0300\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
@@ -606,7 +606,7 @@ msgstr "  Assunto: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "Emissor: %s\n"
 
-#: libsylph/utils.c:2687 libsylph/utils.c:2809
+#: libsylph/utils.c:2690 libsylph/utils.c:2812
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "erro ao gravar em %s.\n"
@@ -1262,7 +1262,7 @@ msgstr "Marrom"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5042
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5059
 msgid "None"
 msgstr "Nenhuma"
 
@@ -1594,7 +1594,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Não foi possível obter alguma(s) parte(s) dessa mensagem."
 
 #: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
-#: src/summaryview.c:2387
+#: src/summaryview.c:2404
 msgid "(No Subject)"
 msgstr "(Sem assunto)"
 
@@ -1749,7 +1749,7 @@ msgstr "Tipo MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4690 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5191
+#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5208
 msgid "Size"
 msgstr "Tamanho"
 
@@ -2464,7 +2464,7 @@ msgstr "Assunto:"
 msgid "Creating header view...\n"
 msgstr "Criando visualizador de cabeçalhos...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2390
+#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2407
 msgid "(No From)"
 msgstr "(Sem remetente)"
 
@@ -2779,7 +2779,7 @@ msgstr "Baixando mensagem (%d / %d) (%s / %s)"
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Recebendo (%d mensagem(ns) (%s) recebido)"
 
-#: src/inc.c:1218 src/inc.c:1238 src/summaryview.c:4603
+#: src/inc.c:1218 src/inc.c:1238 src/summaryview.c:4620
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3626,8 +3626,8 @@ msgstr "Criando janela principal...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: falhou ao alocar cores %d\n"
 
-#: src/mainwindow.c:1169 src/summaryview.c:2539 src/summaryview.c:2624
-#: src/summaryview.c:4168 src/summaryview.c:4297 src/summaryview.c:4674
+#: src/mainwindow.c:1169 src/summaryview.c:2556 src/summaryview.c:2641
+#: src/summaryview.c:4185 src/summaryview.c:4314 src/summaryview.c:4691
 msgid "done.\n"
 msgstr "Pronto.\n"
 
@@ -3886,7 +3886,7 @@ msgstr "Anexos"
 msgid "Message View - Sylpheed"
 msgstr "Visualização da Mensagem - Sylpheed"
 
-#: src/messageview.c:756 src/summaryview.c:3726
+#: src/messageview.c:764 src/summaryview.c:3743
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Não foi possível salvar arquivo `%s'."
@@ -5873,17 +5873,17 @@ msgid "Attachment"
 msgstr "Anexo"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5184
+#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5201
 msgid "Subject"
 msgstr "Assunto"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5187
+#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5204
 msgid "From"
 msgstr "De"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5189
+#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5206
 msgid "Date"
 msgstr "Data"
 
@@ -5893,7 +5893,7 @@ msgid "Number"
 msgstr "Número"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:80 src/summaryview.c:5195
+#: src/prefs_summary_column.c:80 src/summaryview.c:5212
 msgid "To"
 msgstr "Para"
 
@@ -6154,7 +6154,7 @@ msgstr "Status"
 msgid "_Save as search folder"
 msgstr "_Salvar como pasta de busca"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:999
+#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:1016
 msgid "Done."
 msgstr "Feito."
 
@@ -6168,7 +6168,7 @@ msgstr "Procurando %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Procurando %s (%d / %d)..."
 
-#: src/query_search.c:682 src/summaryview.c:2311
+#: src/query_search.c:682 src/summaryview.c:2328
 msgid "(No Date)"
 msgstr "(Sem data)"
 
@@ -6659,214 +6659,214 @@ msgstr "Algumas marcas foram deixadas. Processá-las?"
 msgid "Scanning folder (%s)..."
 msgstr "Revisando pasta (%s)..."
 
-#: src/summaryview.c:1506
+#: src/summaryview.c:1523
 msgid "_Search again"
 msgstr "Procurar _novamente"
 
-#: src/summaryview.c:1527 src/summaryview.c:1536
+#: src/summaryview.c:1544 src/summaryview.c:1553
 msgid "No more unread messages"
 msgstr "Não há mais mensagens não lidas"
 
-#: src/summaryview.c:1528
+#: src/summaryview.c:1545
 msgid "No unread message found. Search from the end?"
 msgstr "Nenhuma mensagens não lidas encontrada. Procurar a partir do fim?"
 
-#: src/summaryview.c:1530
+#: src/summaryview.c:1547
 msgid "No unread messages."
 msgstr "Não há mensagens não lidas."
 
-#: src/summaryview.c:1537
+#: src/summaryview.c:1554
 msgid "No unread message found. Go to next folder?"
 msgstr "Não há mensagens não lidas. Ir para a próxima pasta?"
 
-#: src/summaryview.c:1545 src/summaryview.c:1554
+#: src/summaryview.c:1562 src/summaryview.c:1571
 msgid "No more new messages"
 msgstr "Não há mais mensagens novas"
 
-#: src/summaryview.c:1546
+#: src/summaryview.c:1563
 msgid "No new message found. Search from the end?"
 msgstr "Nenhuma mensagens nova encontrada. Procurar a partir do fim?"
 
-#: src/summaryview.c:1548
+#: src/summaryview.c:1565
 msgid "No new messages."
 msgstr "Não há mensagens novas."
 
-#: src/summaryview.c:1555
+#: src/summaryview.c:1572
 msgid "No new message found. Go to next folder?"
 msgstr "Não há mensagens novas. Ir para a próxima pasta?"
 
-#: src/summaryview.c:1563 src/summaryview.c:1572
+#: src/summaryview.c:1580 src/summaryview.c:1589
 msgid "No more marked messages"
 msgstr "Não há mais mensagens marcadas"
 
-#: src/summaryview.c:1564
+#: src/summaryview.c:1581
 msgid "No marked message found. Search from the end?"
 msgstr "Não foram encontradas mensagens marcadas. Procurar a partir do fim?"
 
-#: src/summaryview.c:1566 src/summaryview.c:1575
+#: src/summaryview.c:1583 src/summaryview.c:1592
 msgid "No marked messages."
 msgstr "Não há mensagens marcadas"
 
-#: src/summaryview.c:1573
+#: src/summaryview.c:1590
 msgid "No marked message found. Search from the beginning?"
 msgstr "Não foram encontradas mensagens marcadas. Procurar a partir do início?"
 
-#: src/summaryview.c:1581 src/summaryview.c:1590
+#: src/summaryview.c:1598 src/summaryview.c:1607
 msgid "No more labeled messages"
 msgstr "Não há mais mensagens etiquetadas"
 
-#: src/summaryview.c:1582
+#: src/summaryview.c:1599
 msgid "No labeled message found. Search from the end?"
 msgstr "Não foram encontradas mensagens etiquetadas. Procurar a partir do fim?"
 
-#: src/summaryview.c:1584 src/summaryview.c:1593
+#: src/summaryview.c:1601 src/summaryview.c:1610
 msgid "No labeled messages."
 msgstr "Não há mensagens etiquetadas."
 
-#: src/summaryview.c:1591
+#: src/summaryview.c:1608
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Nenhuma mensagem não lida encontrada. Procurar do início ?"
 
-#: src/summaryview.c:1938
+#: src/summaryview.c:1955
 msgid "Attracting messages by subject..."
 msgstr "Agrupando mensagens por assunto..."
 
-#: src/summaryview.c:2132
+#: src/summaryview.c:2149
 #, c-format
 msgid "%d deleted"
 msgstr "%d apagadas"
 
-#: src/summaryview.c:2136
+#: src/summaryview.c:2153
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d movidas"
 
-#: src/summaryview.c:2137 src/summaryview.c:2142
+#: src/summaryview.c:2154 src/summaryview.c:2159
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2141
+#: src/summaryview.c:2158
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d copiadas"
 
-#: src/summaryview.c:2156
+#: src/summaryview.c:2173
 msgid " item(s) selected"
 msgstr " item(ns) selecionado(s)"
 
-#: src/summaryview.c:2178
+#: src/summaryview.c:2195
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d novas, %d não lidas, %d  no total (%s)"
 
-#: src/summaryview.c:2182
+#: src/summaryview.c:2199
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d novas, %d não lidas, %d no total"
 
-#: src/summaryview.c:2218
+#: src/summaryview.c:2235
 msgid "Sorting summary..."
 msgstr "Ordenando resumos..."
 
-#: src/summaryview.c:2474
+#: src/summaryview.c:2491
 msgid "\tSetting summary from message data..."
 msgstr "\tConfigurando resumo a partir dos dados das mensagens..."
 
-#: src/summaryview.c:2476
+#: src/summaryview.c:2493
 msgid "Setting summary from message data..."
 msgstr "Configurando resumo a partir dos dados das mensgens..."
 
-#: src/summaryview.c:2583
+#: src/summaryview.c:2600
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Gravando cache de resumo (%s)..."
 
-#: src/summaryview.c:2936
+#: src/summaryview.c:2953
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Mensagem %d marcada\n"
 
-#: src/summaryview.c:2999
+#: src/summaryview.c:3016
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Mensagem %d marcada como sendo lida\n"
 
-#: src/summaryview.c:3198
+#: src/summaryview.c:3215
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Mensagem %d marcada como não lida\n"
 
-#: src/summaryview.c:3259
+#: src/summaryview.c:3276
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Mensagem %s/%d marcada para deleção\n"
 
-#: src/summaryview.c:3287
+#: src/summaryview.c:3304
 msgid "Delete message(s)"
 msgstr "Apagar a(s) mensagem(s)"
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3305
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Quer realmente apagar a(s) mensagem(s) da lixeira?"
 
-#: src/summaryview.c:3362
+#: src/summaryview.c:3379
 msgid "Deleting duplicated messages..."
 msgstr "Apagando mensagens duplicadas..."
 
-#: src/summaryview.c:3400
+#: src/summaryview.c:3417
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Mensagem %s/%d está desmarcada\n"
 
-#: src/summaryview.c:3460
+#: src/summaryview.c:3477
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Mensagem %d marcada para ser movida para %s\n"
 
-#: src/summaryview.c:3492
+#: src/summaryview.c:3509
 msgid "Destination is same as current folder."
 msgstr "O destino é o mesmo que a pasta atual."
 
-#: src/summaryview.c:3558
+#: src/summaryview.c:3575
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Mensagem %d está marcada para ser copiada para %s\n"
 
-#: src/summaryview.c:3589
+#: src/summaryview.c:3606
 msgid "Destination for copy is same as current folder."
 msgstr "O destino para cópia é o mesmo que a pasta atual."
 
-#: src/summaryview.c:3769
+#: src/summaryview.c:3786
 msgid "Error occurred while processing messages."
 msgstr "Erro ao processar mensagens."
 
-#: src/summaryview.c:4075 src/summaryview.c:4076
+#: src/summaryview.c:4092 src/summaryview.c:4093
 msgid "Building threads..."
 msgstr "Construindo a hierarquia..."
 
-#: src/summaryview.c:4226 src/summaryview.c:4227
+#: src/summaryview.c:4243 src/summaryview.c:4244
 msgid "Unthreading..."
 msgstr "Desfazendo a hierarquia..."
 
-#: src/summaryview.c:4520 src/summaryview.c:4581
+#: src/summaryview.c:4537 src/summaryview.c:4598
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrando (%d / %d)..."
 
-#: src/summaryview.c:4643
+#: src/summaryview.c:4660
 msgid "filtering..."
 msgstr "filtrando..."
 
-#: src/summaryview.c:4644
+#: src/summaryview.c:4661
 msgid "Filtering..."
 msgstr "Filtrando..."
 
-#: src/summaryview.c:4681
+#: src/summaryview.c:4698
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d mensagem(ns) foram filtradas."
 
-#: src/summaryview.c:5193
+#: src/summaryview.c:5210
 msgid "No."
 msgstr "Nº"
 

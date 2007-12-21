@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 2.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-03 17:32+0900\n"
+"POT-Creation-Date: 2007-12-21 10:59+0900\n"
 "PO-Revision-Date: 2007-01-05 13:58+0300\n"
 "Last-Translator: O.R. Nykyforchyn <nick@pu.if.ua>\n"
 "Language-Team: Ukrainian\n"
@@ -607,7 +607,7 @@ msgstr "  Суб'єкт:  %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Видав: %s\n"
 
-#: libsylph/utils.c:2687 libsylph/utils.c:2809
+#: libsylph/utils.c:2690 libsylph/utils.c:2812
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "Невдача запису в %s.\n"
@@ -1264,7 +1264,7 @@ msgstr "Коричневий"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5042
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5059
 msgid "None"
 msgstr "Ніякий"
 
@@ -1599,7 +1599,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Не вдалось отримати одну з частин листа."
 
 #: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
-#: src/summaryview.c:2387
+#: src/summaryview.c:2404
 msgid "(No Subject)"
 msgstr "(Без теми)"
 
@@ -1753,7 +1753,7 @@ msgstr "тип MIME"
 
 #. S_COL_DATE
 #: src/compose.c:4690 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5191
+#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5208
 msgid "Size"
 msgstr "Розмір"
 
@@ -2469,7 +2469,7 @@ msgstr "Тема:"
 msgid "Creating header view...\n"
 msgstr "Створюємо область перегляду заголовка...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2390
+#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2407
 msgid "(No From)"
 msgstr "(Без відправника)"
 
@@ -2790,7 +2790,7 @@ msgstr "Отримуємо лист (%d / %d) (%s / %s)"
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Отримуємо лист (%d лист(ів) (%s) отримано)"
 
-#: src/inc.c:1218 src/inc.c:1238 src/summaryview.c:4603
+#: src/inc.c:1218 src/inc.c:1238 src/summaryview.c:4620
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3638,8 +3638,8 @@ msgstr "Створюємо головне вікно...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача розміщення кольору %d\n"
 
-#: src/mainwindow.c:1169 src/summaryview.c:2539 src/summaryview.c:2624
-#: src/summaryview.c:4168 src/summaryview.c:4297 src/summaryview.c:4674
+#: src/mainwindow.c:1169 src/summaryview.c:2556 src/summaryview.c:2641
+#: src/summaryview.c:4185 src/summaryview.c:4314 src/summaryview.c:4691
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -3900,7 +3900,7 @@ msgstr "Вкладення"
 msgid "Message View - Sylpheed"
 msgstr "Зміст листа - Sylpheed"
 
-#: src/messageview.c:756 src/summaryview.c:3726
+#: src/messageview.c:764 src/summaryview.c:3743
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не вдалось зберегти файл `%s'."
@@ -5889,17 +5889,17 @@ msgid "Attachment"
 msgstr "Вкладення"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5184
+#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5201
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5187
+#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5204
 msgid "From"
 msgstr "Від"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5189
+#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5206
 msgid "Date"
 msgstr "Дата"
 
@@ -5909,7 +5909,7 @@ msgid "Number"
 msgstr "Номер"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:80 src/summaryview.c:5195
+#: src/prefs_summary_column.c:80 src/summaryview.c:5212
 #, fuzzy
 msgid "To"
 msgstr "Кому:"
@@ -6182,7 +6182,7 @@ msgstr "Стан"
 msgid "_Save as search folder"
 msgstr "Зберегти як папку пошуку"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:999
+#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:1016
 msgid "Done."
 msgstr "Виконано."
 
@@ -6196,7 +6196,7 @@ msgstr "Шукаємо %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Шукаємо %s (%d / %d)..."
 
-#: src/query_search.c:682 src/summaryview.c:2311
+#: src/query_search.c:682 src/summaryview.c:2328
 msgid "(No Date)"
 msgstr "(Без дати)"
 
@@ -6689,214 +6689,214 @@ msgstr "Залишились деякі позначки. Опрацювати?"
 msgid "Scanning folder (%s)..."
 msgstr "Перечитуємо папку (%s)..."
 
-#: src/summaryview.c:1506
+#: src/summaryview.c:1523
 msgid "_Search again"
 msgstr "Шукати знову"
 
-#: src/summaryview.c:1527 src/summaryview.c:1536
+#: src/summaryview.c:1544 src/summaryview.c:1553
 msgid "No more unread messages"
 msgstr "Більше немає непрочитаних листів"
 
-#: src/summaryview.c:1528
+#: src/summaryview.c:1545
 msgid "No unread message found. Search from the end?"
 msgstr "Не знайдено непрочитаних листів. Шукати з кінця?"
 
-#: src/summaryview.c:1530
+#: src/summaryview.c:1547
 msgid "No unread messages."
 msgstr "Немає непрочитаних листів"
 
-#: src/summaryview.c:1537
+#: src/summaryview.c:1554
 msgid "No unread message found. Go to next folder?"
 msgstr "Не знайдено непрочитаних листів. Перейти до наступної папки?"
 
-#: src/summaryview.c:1545 src/summaryview.c:1554
+#: src/summaryview.c:1562 src/summaryview.c:1571
 msgid "No more new messages"
 msgstr "Більше немає нових листів"
 
-#: src/summaryview.c:1546
+#: src/summaryview.c:1563
 msgid "No new message found. Search from the end?"
 msgstr "Не знайдено нових листів. Шукати з кінця?"
 
-#: src/summaryview.c:1548
+#: src/summaryview.c:1565
 msgid "No new messages."
 msgstr "Немає нових листів"
 
-#: src/summaryview.c:1555
+#: src/summaryview.c:1572
 msgid "No new message found. Go to next folder?"
 msgstr "Не знайдено нових листів. Перейти до наступної папки?"
 
-#: src/summaryview.c:1563 src/summaryview.c:1572
+#: src/summaryview.c:1580 src/summaryview.c:1589
 msgid "No more marked messages"
 msgstr "Більше немає позначених листів"
 
-#: src/summaryview.c:1564
+#: src/summaryview.c:1581
 msgid "No marked message found. Search from the end?"
 msgstr "Не знайдено позначених листів. Шукати з кінця?"
 
-#: src/summaryview.c:1566 src/summaryview.c:1575
+#: src/summaryview.c:1583 src/summaryview.c:1592
 msgid "No marked messages."
 msgstr "Немає позначених листів."
 
-#: src/summaryview.c:1573
+#: src/summaryview.c:1590
 msgid "No marked message found. Search from the beginning?"
 msgstr "Не знайдено позначених листів. Шукати з початку?"
 
-#: src/summaryview.c:1581 src/summaryview.c:1590
+#: src/summaryview.c:1598 src/summaryview.c:1607
 msgid "No more labeled messages"
 msgstr "Більше немає виділених листів"
 
-#: src/summaryview.c:1582
+#: src/summaryview.c:1599
 msgid "No labeled message found. Search from the end?"
 msgstr "Не знайдено виділених листів. Шукати з кінця?"
 
-#: src/summaryview.c:1584 src/summaryview.c:1593
+#: src/summaryview.c:1601 src/summaryview.c:1610
 msgid "No labeled messages."
 msgstr "Немає виділених листів"
 
-#: src/summaryview.c:1591
+#: src/summaryview.c:1608
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Не знайдено виділених листів. Шукати з початку?"
 
-#: src/summaryview.c:1938
+#: src/summaryview.c:1955
 msgid "Attracting messages by subject..."
 msgstr "Групування листів за темами..."
 
-#: src/summaryview.c:2132
+#: src/summaryview.c:2149
 #, c-format
 msgid "%d deleted"
 msgstr "%d видалено"
 
-#: src/summaryview.c:2136
+#: src/summaryview.c:2153
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d переміщено"
 
-#: src/summaryview.c:2137 src/summaryview.c:2142
+#: src/summaryview.c:2154 src/summaryview.c:2159
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2141
+#: src/summaryview.c:2158
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d скопійовано"
 
-#: src/summaryview.c:2156
+#: src/summaryview.c:2173
 msgid " item(s) selected"
 msgstr " записів обрано"
 
-#: src/summaryview.c:2178
+#: src/summaryview.c:2195
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d нових, %d непрочитаних, %d загалом (%s)"
 
-#: src/summaryview.c:2182
+#: src/summaryview.c:2199
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d нових, %d непрочитаних, %d загалом"
 
-#: src/summaryview.c:2218
+#: src/summaryview.c:2235
 msgid "Sorting summary..."
 msgstr "Сортуємо список..."
 
-#: src/summaryview.c:2474
+#: src/summaryview.c:2491
 msgid "\tSetting summary from message data..."
 msgstr "\tФормуємо список з даних листів..."
 
-#: src/summaryview.c:2476
+#: src/summaryview.c:2493
 msgid "Setting summary from message data..."
 msgstr "Формуємо список з даних листів..."
 
-#: src/summaryview.c:2583
+#: src/summaryview.c:2600
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Пишемо кеш списка (%s)..."
 
-#: src/summaryview.c:2936
+#: src/summaryview.c:2953
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Лист %d позначено\n"
 
-#: src/summaryview.c:2999
+#: src/summaryview.c:3016
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Лист %d позначено як прочитаний\n"
 
-#: src/summaryview.c:3198
+#: src/summaryview.c:3215
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Лист %d позначено як непрочитаний\n"
 
-#: src/summaryview.c:3259
+#: src/summaryview.c:3276
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Лист %s/%d призначено до видалення\n"
 
-#: src/summaryview.c:3287
+#: src/summaryview.c:3304
 msgid "Delete message(s)"
 msgstr "Видалити лист(и)"
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3305
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Справді видалити лист(и) з кошика?"
 
-#: src/summaryview.c:3362
+#: src/summaryview.c:3379
 msgid "Deleting duplicated messages..."
 msgstr "Видаляємо повторювані листи..."
 
-#: src/summaryview.c:3400
+#: src/summaryview.c:3417
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "З листа %s/%d знято позначки\n"
 
-#: src/summaryview.c:3460
+#: src/summaryview.c:3477
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Лист %d призначено до переміщення в %s\n"
 
-#: src/summaryview.c:3492
+#: src/summaryview.c:3509
 msgid "Destination is same as current folder."
 msgstr "Призначення збігається з поточною папкою."
 
-#: src/summaryview.c:3558
+#: src/summaryview.c:3575
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Лист %d призначено до копіювання в %s\n"
 
-#: src/summaryview.c:3589
+#: src/summaryview.c:3606
 msgid "Destination for copy is same as current folder."
 msgstr "Пропонується копіювання з папки в неї ж."
 
-#: src/summaryview.c:3769
+#: src/summaryview.c:3786
 msgid "Error occurred while processing messages."
 msgstr "При обробці пошти трапилась помилка."
 
-#: src/summaryview.c:4075 src/summaryview.c:4076
+#: src/summaryview.c:4092 src/summaryview.c:4093
 msgid "Building threads..."
 msgstr "Будуємо нитки обговорення..."
 
-#: src/summaryview.c:4226 src/summaryview.c:4227
+#: src/summaryview.c:4243 src/summaryview.c:4244
 msgid "Unthreading..."
 msgstr "Скасування ниток обговорення..."
 
-#: src/summaryview.c:4520 src/summaryview.c:4581
+#: src/summaryview.c:4537 src/summaryview.c:4598
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Фільтрування (%d / %d)..."
 
-#: src/summaryview.c:4643
+#: src/summaryview.c:4660
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:4644
+#: src/summaryview.c:4661
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:4681
+#: src/summaryview.c:4698
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."
 
-#: src/summaryview.c:5193
+#: src/summaryview.c:5210
 msgid "No."
 msgstr "Номер"
 

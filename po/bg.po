@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.9.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-03 17:32+0900\n"
+"POT-Creation-Date: 2007-12-21 10:59+0900\n"
 "PO-Revision-Date: 2004-01-09 02:06+0200\n"
 "Last-Translator: Pavel Pyuter <pavel@unix-bg.org>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -597,7 +597,7 @@ msgstr "  Субект: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Издател: %s\n"
 
-#: libsylph/utils.c:2687 libsylph/utils.c:2809
+#: libsylph/utils.c:2690 libsylph/utils.c:2812
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "записът в %s се провали.\n"
@@ -1265,7 +1265,7 @@ msgstr "Кафяв"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5042
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5059
 msgid "None"
 msgstr "Никой"
 
@@ -1638,7 +1638,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Не може да се намери част от multipart съобщение."
 
 #: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
-#: src/summaryview.c:2387
+#: src/summaryview.c:2404
 msgid "(No Subject)"
 msgstr "(Няма Тема)"
 
@@ -1787,7 +1787,7 @@ msgstr "MIME тип"
 
 #. S_COL_DATE
 #: src/compose.c:4690 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5191
+#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5208
 msgid "Size"
 msgstr "Размер"
 
@@ -2515,7 +2515,7 @@ msgstr "Тема:"
 msgid "Creating header view...\n"
 msgstr "Създаване изглед на заглавните блокове...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2390
+#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2407
 msgid "(No From)"
 msgstr "(Няма От)"
 
@@ -2838,7 +2838,7 @@ msgstr "Получаване на съобшение (%d / %d) (%s / %s)"
 msgid "Retrieving (%d message(s) (%s) received)"
 msgstr "Получаване (%d съобщения (%s) получени)"
 
-#: src/inc.c:1218 src/inc.c:1238 src/summaryview.c:4603
+#: src/inc.c:1218 src/inc.c:1238 src/summaryview.c:4620
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3718,8 +3718,8 @@ msgstr "Създаване на главен прозорец...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr ""
 
-#: src/mainwindow.c:1169 src/summaryview.c:2539 src/summaryview.c:2624
-#: src/summaryview.c:4168 src/summaryview.c:4297 src/summaryview.c:4674
+#: src/mainwindow.c:1169 src/summaryview.c:2556 src/summaryview.c:2641
+#: src/summaryview.c:4185 src/summaryview.c:4314 src/summaryview.c:4691
 msgid "done.\n"
 msgstr "готово.\n"
 
@@ -3962,7 +3962,7 @@ msgstr "Притурки"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:756 src/summaryview.c:3726
+#: src/messageview.c:764 src/summaryview.c:3743
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не може да се запази файлът `%s'."
@@ -6041,17 +6041,17 @@ msgid "Attachment"
 msgstr "Притурка"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5184
+#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5201
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5187
+#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5204
 msgid "From"
 msgstr "Подател"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5189
+#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5206
 msgid "Date"
 msgstr "Дата"
 
@@ -6061,7 +6061,7 @@ msgid "Number"
 msgstr "Номер"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:80 src/summaryview.c:5195
+#: src/prefs_summary_column.c:80 src/summaryview.c:5212
 #, fuzzy
 msgid "To"
 msgstr "До:"
@@ -6339,7 +6339,7 @@ msgstr "Статус"
 msgid "_Save as search folder"
 msgstr "Запазване в папката с чернови"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:999
+#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:1016
 msgid "Done."
 msgstr "Изпълнено."
 
@@ -6353,7 +6353,7 @@ msgstr "Сканиране на папка %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Филтриране..."
 
-#: src/query_search.c:682 src/summaryview.c:2311
+#: src/query_search.c:682 src/summaryview.c:2328
 msgid "(No Date)"
 msgstr "(Няма Дата)"
 
@@ -6848,216 +6848,216 @@ msgstr "Има останали маркери. Желаете ли да се о
 msgid "Scanning folder (%s)..."
 msgstr "Сканиране на папка (%s)..."
 
-#: src/summaryview.c:1506
+#: src/summaryview.c:1523
 #, fuzzy
 msgid "_Search again"
 msgstr "Търсене отново"
 
-#: src/summaryview.c:1527 src/summaryview.c:1536
+#: src/summaryview.c:1544 src/summaryview.c:1553
 msgid "No more unread messages"
 msgstr "Няма повече непрочетени съобщения"
 
-#: src/summaryview.c:1528
+#: src/summaryview.c:1545
 msgid "No unread message found. Search from the end?"
 msgstr "Не е намерено непрочетено съобщение. Търсене от края?"
 
-#: src/summaryview.c:1530
+#: src/summaryview.c:1547
 msgid "No unread messages."
 msgstr "Няма непрочетени съобщения."
 
-#: src/summaryview.c:1537
+#: src/summaryview.c:1554
 msgid "No unread message found. Go to next folder?"
 msgstr "Не е намерено непрочетено съобщение. Търсене в следващата папка?"
 
-#: src/summaryview.c:1545 src/summaryview.c:1554
+#: src/summaryview.c:1562 src/summaryview.c:1571
 msgid "No more new messages"
 msgstr "Няма повече нови съобщения"
 
-#: src/summaryview.c:1546
+#: src/summaryview.c:1563
 msgid "No new message found. Search from the end?"
 msgstr "Не е намерено ново съобщение. Търсене от края?"
 
-#: src/summaryview.c:1548
+#: src/summaryview.c:1565
 msgid "No new messages."
 msgstr "Няма нови съобщения."
 
-#: src/summaryview.c:1555
+#: src/summaryview.c:1572
 msgid "No new message found. Go to next folder?"
 msgstr "Не е намерено ново съобщение. Търсене в следващата папка?"
 
-#: src/summaryview.c:1563 src/summaryview.c:1572
+#: src/summaryview.c:1580 src/summaryview.c:1589
 msgid "No more marked messages"
 msgstr "Няма повече маркирани съобщения"
 
-#: src/summaryview.c:1564
+#: src/summaryview.c:1581
 msgid "No marked message found. Search from the end?"
 msgstr "Не е намерено маркирано съобщение. Търсене от края?"
 
-#: src/summaryview.c:1566 src/summaryview.c:1575
+#: src/summaryview.c:1583 src/summaryview.c:1592
 msgid "No marked messages."
 msgstr "Няма маркирани съобщения."
 
-#: src/summaryview.c:1573
+#: src/summaryview.c:1590
 msgid "No marked message found. Search from the beginning?"
 msgstr "Не е намерено маркирано съобщение. Търсене от началото?"
 
-#: src/summaryview.c:1581 src/summaryview.c:1590
+#: src/summaryview.c:1598 src/summaryview.c:1607
 msgid "No more labeled messages"
 msgstr "Няма повече съобщения с етикет"
 
-#: src/summaryview.c:1582
+#: src/summaryview.c:1599
 msgid "No labeled message found. Search from the end?"
 msgstr "Не е намерено съобщение с етикет. Търсене от края?"
 
-#: src/summaryview.c:1584 src/summaryview.c:1593
+#: src/summaryview.c:1601 src/summaryview.c:1610
 msgid "No labeled messages."
 msgstr "Няма съобщения с етикет"
 
-#: src/summaryview.c:1591
+#: src/summaryview.c:1608
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Не е намерено съобщение с етикет. Търсене от началото?"
 
-#: src/summaryview.c:1938
+#: src/summaryview.c:1955
 msgid "Attracting messages by subject..."
 msgstr "Събиране на съобщения по тема..."
 
-#: src/summaryview.c:2132
+#: src/summaryview.c:2149
 #, c-format
 msgid "%d deleted"
 msgstr "%d изтрити"
 
-#: src/summaryview.c:2136
+#: src/summaryview.c:2153
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d преместени"
 
-#: src/summaryview.c:2137 src/summaryview.c:2142
+#: src/summaryview.c:2154 src/summaryview.c:2159
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2141
+#: src/summaryview.c:2158
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d копирани"
 
-#: src/summaryview.c:2156
+#: src/summaryview.c:2173
 msgid " item(s) selected"
 msgstr "избран(и)"
 
-#: src/summaryview.c:2178
+#: src/summaryview.c:2195
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d нови, %d непрочетени, %d общо (%s)"
 
-#: src/summaryview.c:2182
+#: src/summaryview.c:2199
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d нови, %d непрочетени, %d общо"
 
-#: src/summaryview.c:2218
+#: src/summaryview.c:2235
 msgid "Sorting summary..."
 msgstr "Сортиране на извадката..."
 
-#: src/summaryview.c:2474
+#: src/summaryview.c:2491
 msgid "\tSetting summary from message data..."
 msgstr "\tСъставяне на извадката от данните на съобщенията..."
 
-#: src/summaryview.c:2476
+#: src/summaryview.c:2493
 msgid "Setting summary from message data..."
 msgstr "Съставяне на извадката от данните на съобщенията..."
 
-#: src/summaryview.c:2583
+#: src/summaryview.c:2600
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Записване на кеша на извадката (%s)..."
 
-#: src/summaryview.c:2936
+#: src/summaryview.c:2953
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Съобщение %d е маркирано\n"
 
-#: src/summaryview.c:2999
+#: src/summaryview.c:3016
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Съобщение %d е маркирано като прочетено\n"
 
-#: src/summaryview.c:3198
+#: src/summaryview.c:3215
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Съобщение %d е маркирано като непрочетено\n"
 
-#: src/summaryview.c:3259
+#: src/summaryview.c:3276
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Съобщение %s/%d е определено за изтриване\n"
 
-#: src/summaryview.c:3287
+#: src/summaryview.c:3304
 msgid "Delete message(s)"
 msgstr "Изтриване на съобщение(я)"
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3305
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Наистина ли желаете да изтриете съобщенията от кошчето?"
 
-#: src/summaryview.c:3362
+#: src/summaryview.c:3379
 msgid "Deleting duplicated messages..."
 msgstr "Изтриване на повтарящи се съобщения..."
 
-#: src/summaryview.c:3400
+#: src/summaryview.c:3417
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Съобщение %s/%d е размаркирано\n"
 
-#: src/summaryview.c:3460
+#: src/summaryview.c:3477
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Съобщение %d е определено за местене в %s\n"
 
-#: src/summaryview.c:3492
+#: src/summaryview.c:3509
 msgid "Destination is same as current folder."
 msgstr "Назначението е същото като текущата папка."
 
-#: src/summaryview.c:3558
+#: src/summaryview.c:3575
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Съобщение %d е определено за копиране в %s\n"
 
-#: src/summaryview.c:3589
+#: src/summaryview.c:3606
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Назначението за копиране е същото като текущата папка."
 
-#: src/summaryview.c:3769
+#: src/summaryview.c:3786
 msgid "Error occurred while processing messages."
 msgstr "Възникна грешка при обработка на съобщенията."
 
-#: src/summaryview.c:4075 src/summaryview.c:4076
+#: src/summaryview.c:4092 src/summaryview.c:4093
 msgid "Building threads..."
 msgstr "Изграждане на нишките..."
 
-#: src/summaryview.c:4226 src/summaryview.c:4227
+#: src/summaryview.c:4243 src/summaryview.c:4244
 msgid "Unthreading..."
 msgstr "Махане на нишките..."
 
-#: src/summaryview.c:4520 src/summaryview.c:4581
+#: src/summaryview.c:4537 src/summaryview.c:4598
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Филтриране..."
 
-#: src/summaryview.c:4643
+#: src/summaryview.c:4660
 msgid "filtering..."
 msgstr "филтриране..."
 
-#: src/summaryview.c:4644
+#: src/summaryview.c:4661
 msgid "Filtering..."
 msgstr "Филтриране..."
 
-#: src/summaryview.c:4681
+#: src/summaryview.c:4698
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr ""
 
-#: src/summaryview.c:5193
+#: src/summaryview.c:5210
 msgid "No."
 msgstr "No."
 
