@@ -112,10 +112,8 @@ INCLUDES = \
 	-I$(includedir) \
 	-I$(top_srcdir)/libsylph
 
-if HAVE_WINDRES
+if NATIVE_WIN32
 SYLPHEED_RES = sylpheed.res
-#sylpheed.rc:
-#	echo "SYLPHEED ICON icons/sylpheed.ico" >$@
 sylpheed.res: sylpheed.rc
 	$(WINDRES) $< -O coff -o $@
 else

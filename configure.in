@@ -56,9 +56,6 @@ AM_PROG_LEX
 AC_PROG_YACC
 AM_PROG_LIBTOOL
 
-AC_CHECK_PROG(WINDRES, windres, windres)
-AM_CONDITIONAL(HAVE_WINDRES, test x"$WINDRES" != x)
-
 SYLPHEED_ACLOCAL_INCLUDE(ac)
 
 native_win32=no
@@ -71,8 +68,11 @@ case "$target" in
 	native_win32=yes
 	CFLAGS="$CFLAGS -mms-bitfields -mwindows"
 	LIBS="$LIBS -lws2_32"
+	AC_CHECK_PROG(WINDRES, windres, windres)
 	;;
 esac
+
+AM_CONDITIONAL(NATIVE_WIN32, test "$native_win32" = "yes")
 
 dnl Checks for libraries.
 AM_PATH_GLIB_2_0(2.4.0,, AC_MSG_ERROR(Test for GLib failed. See the 'INSTALL' for help.))
