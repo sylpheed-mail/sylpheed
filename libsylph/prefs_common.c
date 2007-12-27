@@ -295,6 +295,8 @@ static PrefParam param[] = {
 	 P_BOOL},
 	{"display_header", "TRUE", &prefs_common.display_header, P_BOOL},
 	{"render_html", "TRUE", &prefs_common.render_html, P_BOOL},
+	{"html_only_as_attach", "FALSE", &prefs_common.html_only_as_attach,
+	 P_BOOL},
 	{"line_space", "2", &prefs_common.line_space, P_INT},
 
 	{"textview_cursor_visible", "FALSE",

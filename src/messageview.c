@@ -520,7 +520,8 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 	textview_set_all_headers(messageview->mimeview->textview, all_headers);
 
 	if (mimeinfo->mime_type != MIME_TEXT &&
-	    mimeinfo->mime_type != MIME_TEXT_HTML) {
+	    (prefs_common.html_only_as_attach ||
+	     mimeinfo->mime_type != MIME_TEXT_HTML)) {
 		messageview_change_view_type(messageview, MVIEW_MIME);
 		mimeview_show_message(messageview->mimeview, mimeinfo, file);
 	} else {

@@ -191,6 +191,7 @@ struct _PrefsCommon
 	gboolean display_header;
 	gint line_space;
 	gboolean render_html;
+	gboolean html_only_as_attach;
 	gboolean textview_cursor_visible;
 	gboolean enable_smooth_scroll;
 	gint scroll_step;
