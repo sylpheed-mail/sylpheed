@@ -36,6 +36,7 @@ typedef struct _SummaryColumnState	SummaryColumnState;
 #include "folderview.h"
 #include "headerview.h"
 #include "messageview.h"
+#include "quick_search.h"
 #include "compose.h"
 #include "filter.h"
 #include "folder.h"
@@ -58,13 +59,6 @@ struct _SummaryColumnState
 struct _SummaryView
 {
 	GtkWidget *vbox;
-
-	GtkWidget *search_hbox;
-	GtkWidget *filter_optmenu;
-	GtkWidget *filter_menu;
-	GtkWidget *search_label;
-	GtkWidget *search_entry;
-	GtkWidget *search_clear_btn;
 
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
@@ -112,6 +106,7 @@ struct _SummaryView
 	FolderView  *folderview;
 	HeaderView  *headerview;
 	MessageView *messageview;
+	QuickSearch *qsearch;
 
 	FolderItem *folder_item;
 

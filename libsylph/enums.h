@@ -31,6 +31,15 @@ typedef enum
 
 typedef enum
 {
+	LAYOUT_NORMAL,
+	LAYOUT_VERTICAL,
+	LAYOUT_VERTICAL_DOUBLE,
+	LAYOUT_WIDE_MESSAGE,
+	LAYOUT_WIDE_SUMMARY
+} LayoutType;
+
+typedef enum
+{
 	S_COL_MARK,
 	S_COL_UNREAD,
 	S_COL_MIME,

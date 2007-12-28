@@ -138,6 +138,8 @@ static PrefParam param[] = {
 	{"compose_toolbar_setting", NULL,
 	 &prefs_common.compose_toolbar_setting, P_STRING},
 
+	{"layout_type", "0", &prefs_common.layout_type, P_ENUM},
+
 	{"summary_col_show_mark", "TRUE",
 	 &prefs_common.summary_col_visible[S_COL_MARK], P_BOOL},
 	{"summary_col_show_unread", "TRUE",
@@ -248,11 +250,16 @@ static PrefParam param[] = {
 
 	{"summaryview_width", "600", &prefs_common.summaryview_width, P_INT},
 	{"summaryview_height", "180", &prefs_common.summaryview_height, P_INT},
+	{"summaryview_vwidth", "300", &prefs_common.summaryview_vwidth, P_INT},
+	{"summaryview_vheight", "600", &prefs_common.summaryview_vheight,
+	 P_INT},
 
 	{"main_messagewin_x", "256", &prefs_common.main_msgwin_x, P_INT},
 	{"main_messagewin_y", "210", &prefs_common.main_msgwin_y, P_INT},
 	{"messageview_width", "600", &prefs_common.msgview_width, P_INT},
 	{"messageview_height", "300", &prefs_common.msgview_height, P_INT},
+	{"messageview_vwidth", "300", &prefs_common.msgview_vwidth, P_INT},
+	{"messageview_vheight", "600", &prefs_common.msgview_vheight, P_INT},
 	{"messageview_visible", "TRUE", &prefs_common.msgview_visible, P_BOOL},
 
 	{"mainview_x", "64", &prefs_common.mainview_x, P_INT},

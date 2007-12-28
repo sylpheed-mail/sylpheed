@@ -123,6 +123,8 @@ struct _PrefsCommon
 	gchar *main_toolbar_setting;
 	gchar *compose_toolbar_setting;
 
+	LayoutType layout_type;
+
 	/* Summary columns visibility, position and size */
 	gboolean summary_col_visible[N_SUMMARY_COLS];
 	gint summary_col_pos[N_SUMMARY_COLS];
@@ -144,11 +146,15 @@ struct _PrefsCommon
 
 	gint summaryview_width;
 	gint summaryview_height;
+	gint summaryview_vwidth;
+	gint summaryview_vheight;
 
 	gint main_msgwin_x;
 	gint main_msgwin_y;
 	gint msgview_width;
 	gint msgview_height;
+	gint msgview_vwidth;
+	gint msgview_vheight;
 	gboolean msgview_visible;
 
 	gint mainview_x;

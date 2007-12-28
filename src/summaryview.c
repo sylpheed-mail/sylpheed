@@ -125,17 +125,6 @@
 #  define SUMMARY_COL_MIME_WIDTH	17
 #endif
 
-typedef enum
-{
-	QS_ALL,
-	QS_UNREAD,
-	QS_MARK,
-	QS_CLABEL,
-	QS_MIME,
-	QS_W1DAY,
-	QS_LAST5
-} QSearchCondType;
-
 static GdkPixbuf *mark_pixbuf;
 static GdkPixbuf *deleted_pixbuf;
 
@@ -259,26 +248,7 @@ static void summary_colorlabel_menu_create
 static GtkWidget *summary_tree_view_create
 					(SummaryView	*summaryview);
 
-static GSList *summary_qsearch_filter	(SummaryView	*summaryview,
-					 QSearchCondType type,
-					 const gchar	*key);
-
 /* callback functions */
-static void summary_filter_menu_activated
-					(GtkWidget		*menuitem,
-					 SummaryView		*summaryview);
-static void summary_search_entry_changed(GtkWidget		*entry,
-					 SummaryView		*summaryview);
-static void summary_search_entry_activated
-					(GtkWidget		*entry,
-					 SummaryView		*summaryview);
-static gboolean summary_search_entry_key_pressed
-					(GtkWidget		*treeview,
-					 GdkEventKey		*event,
-					 SummaryView		*summaryview);
-static void summary_search_clear_clicked(GtkWidget		*button,
-					 SummaryView		*summaryview);
-
 static gboolean summary_toggle_pressed	(GtkWidget		*eventbox,
 					 GdkEventButton		*event,
 					 SummaryView		*summaryview);
@@ -424,19 +394,6 @@ static FolderSortKey col_to_sort_key[] = {
 	SORT_BY_TO
 };
 
-static const struct {
-	QSearchCondType type;
-	FilterCondType ftype;
-} qsearch_cond_types[] = {
-	{QS_ALL,	-1},
-	{QS_UNREAD,	FLT_COND_UNREAD},
-	{QS_MARK,	FLT_COND_MARK},
-	{QS_CLABEL,	FLT_COND_COLOR_LABEL},
-	{QS_MIME,	FLT_COND_MIME},
-	{QS_W1DAY,	-1},
-	{QS_LAST5,	-1}
-};
-
 enum
 {
 	DRAG_TYPE_TEXT,
@@ -513,16 +470,6 @@ SummaryView *summary_create(void)
 {
 	SummaryView *summaryview;
 	GtkWidget *vbox;
-	GtkWidget *search_hbox;
-	GtkWidget *filter_optmenu;
-	GtkWidget *filter_menu;
-	GtkWidget *menuitem;
-	GtkWidget *search_label;
-	GtkWidget *search_entry;
-	GtkTooltips *search_tip;
-	GtkWidget *search_vbox;
-	GtkWidget *search_clear_btn;
-	GtkWidget *image;
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
 	GtkTreeStore *store;
@@ -543,81 +490,6 @@ SummaryView *summary_create(void)
 	summaryview = g_new0(SummaryView, 1);
 
 	vbox = gtk_vbox_new(FALSE, 1);
-
-	search_hbox = gtk_hbox_new(FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER(search_hbox), 2);
-	gtk_box_pack_start(GTK_BOX(vbox), search_hbox, FALSE, FALSE, 0);
-
-	filter_optmenu = gtk_option_menu_new();
-	gtk_box_pack_start(GTK_BOX(search_hbox), filter_optmenu,
-			   FALSE, FALSE, 0);
-
-#define COND_MENUITEM_ADD(str, action)					\
-{									\
-	MENUITEM_ADD(filter_menu, menuitem, str, action);		\
-	g_signal_connect(G_OBJECT(menuitem), "activate",		\
-			 G_CALLBACK(summary_filter_menu_activated),	\
-			 summaryview);					\
-}
-
-	filter_menu = gtk_menu_new();
-	COND_MENUITEM_ADD(_("All"), QS_ALL);
-	COND_MENUITEM_ADD(_("Unread"), QS_UNREAD);
-	COND_MENUITEM_ADD(_("Marked"), QS_MARK);
-	COND_MENUITEM_ADD(_("Have color label"), QS_CLABEL);
-	COND_MENUITEM_ADD(_("Have attachment"), QS_MIME);
-	MENUITEM_ADD(filter_menu, menuitem, NULL, 0);
-	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
-	COND_MENUITEM_ADD(_("Last 5 days"), QS_LAST5);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(filter_optmenu), filter_menu);
-
-#undef COND_MENUITEM_ADD
-
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_widget_set_size_request(hbox, 8, -1);
-	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
-
-	search_label = gtk_label_new(_("Search:"));
-	gtk_box_pack_start(GTK_BOX(search_hbox), search_label, FALSE, FALSE, 0);
-
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_widget_set_size_request(hbox, 4, -1);
-	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
-
-	search_entry = gtk_entry_new();
-	gtk_widget_set_size_request(search_entry, 200, -1);
-	gtk_box_pack_start(GTK_BOX(search_hbox), search_entry, FALSE, FALSE, 0);
-	g_signal_connect(G_OBJECT(search_entry), "changed",
-			 G_CALLBACK(summary_search_entry_changed), summaryview);
-	g_signal_connect(G_OBJECT(search_entry), "activate",
-			 G_CALLBACK(summary_search_entry_activated),
-			 summaryview);
-	g_signal_connect(G_OBJECT(search_entry), "key_press_event",
-			 G_CALLBACK(summary_search_entry_key_pressed),
-			 summaryview);
-
-	search_tip = gtk_tooltips_new();
-	gtk_tooltips_set_tip(search_tip, search_entry,
-			     _("Search for Subject or From"), NULL);
-
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_widget_set_size_request(hbox, 2, -1);
-	gtk_box_pack_start(GTK_BOX(search_hbox), hbox, FALSE, FALSE, 0);
-
-	search_vbox = gtk_vbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(search_hbox), search_vbox, FALSE, FALSE, 0);
-
-	search_clear_btn = gtk_button_new();
-	gtk_button_set_relief(GTK_BUTTON(search_clear_btn), GTK_RELIEF_NONE);
-	gtk_widget_set_size_request(search_clear_btn, 20, 20);
-	image = gtk_image_new_from_stock(GTK_STOCK_CLOSE,
-					 GTK_ICON_SIZE_MENU);
-	gtk_container_add(GTK_CONTAINER(search_clear_btn), image);
-	GTK_WIDGET_UNSET_FLAGS(search_clear_btn, GTK_CAN_FOCUS);
-	gtk_box_pack_start(GTK_BOX(search_vbox), search_clear_btn,
-			   TRUE, FALSE, 0);
-	g_signal_connect(G_OBJECT(search_clear_btn), "clicked",
-			 G_CALLBACK(summary_search_clear_clicked), summaryview);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -673,12 +545,6 @@ SummaryView *summary_create(void)
 				      summaryview);
 
 	summaryview->vbox = vbox;
-	summaryview->search_hbox = search_hbox;
-	summaryview->filter_optmenu = filter_optmenu;
-	summaryview->filter_menu = filter_menu;
-	summaryview->search_label = search_label;
-	summaryview->search_entry = search_entry;
-	summaryview->search_clear_btn = search_clear_btn;
 	summaryview->scrolledwin = scrolledwin;
 	summaryview->treeview = treeview;
 	summaryview->store = store;
@@ -710,7 +576,6 @@ SummaryView *summary_create(void)
 	summaryview->junk_separator = GTK_WIDGET(child->next->data);
 
 	gtk_widget_show_all(vbox);
-	gtk_widget_hide(search_clear_btn);
 
 	return summaryview;
 }
@@ -881,7 +746,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 			do_qsearch = TRUE;
 		if (is_refresh) {
 			key = gtk_entry_get_text
-				(GTK_ENTRY(summaryview->search_entry));
+				(GTK_ENTRY(summaryview->qsearch->entry));
 			if (key && *key != '\0')
 				do_qsearch = TRUE;
 			else
@@ -894,22 +759,23 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		QSearchCondType type = item->qsearch_cond_type;
 
 		index = menu_find_option_menu_index
-			(GTK_OPTION_MENU(summaryview->filter_optmenu),
+			(GTK_OPTION_MENU(summaryview->qsearch->optmenu),
 			 GINT_TO_POINTER(type), NULL);
 		if (index > 0) {
 			gtk_option_menu_set_history
-                		(GTK_OPTION_MENU(summaryview->filter_optmenu),
+                		(GTK_OPTION_MENU(summaryview->qsearch->optmenu),
 				 index);
 		} else {
 			gtk_option_menu_set_history
-                		(GTK_OPTION_MENU(summaryview->filter_optmenu),
+                		(GTK_OPTION_MENU(summaryview->qsearch->optmenu),
 				 0);
 			type = QS_ALL;
 		}
 
 		if (type > QS_ALL || key) {
 			summaryview->flt_mlist =
-				summary_qsearch_filter(summaryview, type, key);
+				quick_search_filter(summaryview->qsearch,
+						    type, key);
 			summaryview->on_filter = TRUE;
 			summary_set_tree_model_from_list
 				(summaryview, summaryview->flt_mlist);
@@ -1100,9 +966,9 @@ static void summary_clear_list_full(SummaryView *summaryview,
 	summaryview->flt_copied = 0;
 	summaryview->flt_new = summaryview->flt_unread = 0;
 	if (!is_refresh) {
-		gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+		quick_search_clear_entry(summaryview->qsearch);
 		gtk_option_menu_set_history
-			(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
+			(GTK_OPTION_MENU(summaryview->qsearch->optmenu), 0);
 	}
 	summaryview->on_filter = FALSE;
 
@@ -5333,9 +5199,9 @@ void summary_qsearch_reset(SummaryView *summaryview)
 					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
 					0, 0, NULL, NULL, summaryview);
 
-	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+	quick_search_clear_entry(summaryview->qsearch);
 	gtk_option_menu_set_history
-		(GTK_OPTION_MENU(summaryview->filter_optmenu), 0);
+		(GTK_OPTION_MENU(summaryview->qsearch->optmenu), 0);
 
 	selected_msgnum = summary_get_msgnum(summaryview,
 					     summaryview->selected);
@@ -5381,96 +5247,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 
 void summary_qsearch_clear_entry(SummaryView *summaryview)
 {
-	gtk_entry_set_text(GTK_ENTRY(summaryview->search_entry), "");
+	quick_search_clear_entry(summaryview->qsearch);
 	summary_qsearch(summaryview);
-}
-
-static GSList *summary_qsearch_filter(SummaryView *summaryview,
-				      QSearchCondType type, const gchar *key)
-{
-	FilterCondType ftype;
-	FilterRule *status_rule = NULL;
-	FilterRule *rule = NULL;
-	FilterCond *cond;
-	FilterInfo fltinfo;
-	GSList *cond_list = NULL;
-	GSList *flt_mlist = NULL;
-	GSList *cur;
-
-	if (!summaryview->all_mlist)
-		return NULL;
-
-	switch (type) {
-	case QS_UNREAD:
-	case QS_MARK:
-	case QS_CLABEL:
-	case QS_MIME:
-		ftype = qsearch_cond_types[type].ftype;
-		cond = filter_cond_new(ftype, 0, 0, NULL, NULL);
-		cond_list = g_slist_append(cond_list, cond);
-		status_rule = filter_rule_new("Status filter rule", FLT_OR,
-					      cond_list, NULL);
-		break;
-	case QS_W1DAY:
-		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
-				       NULL, "1");
-		cond_list = g_slist_append(cond_list, cond);
-		status_rule = filter_rule_new("Status filter rule", FLT_OR,
-					      cond_list, NULL);
-		break;
-	case QS_LAST5:
-		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
-				       NULL, "5");
-		cond_list = g_slist_append(cond_list, cond);
-		status_rule = filter_rule_new("Status filter rule", FLT_OR,
-					      cond_list, NULL);
-		break;
-	case QS_ALL:
-	default:
-		break;
-	}
-
-	cond_list = NULL;
-
-	if (key && *key != '\0') {
-		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
-				       "Subject", key);
-		cond_list = g_slist_append(cond_list, cond);
-		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
-				       "From", key);
-		cond_list = g_slist_append(cond_list, cond);
-		rule = filter_rule_new("Quick search rule", FLT_OR, cond_list,
-				       NULL);
-	}
-
-	memset(&fltinfo, 0, sizeof(FilterInfo));
-
-	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
-		MsgInfo *msginfo = (MsgInfo *)cur->data;
-		GSList *hlist;
-
-		if (status_rule) {
-			if (!filter_match_rule(status_rule, msginfo, NULL,
-					       &fltinfo))
-				continue;
-		}
-
-		if (rule) {
-			hlist = procheader_get_header_list_from_msginfo
-				(msginfo);
-			if (filter_match_rule(rule, msginfo, hlist, &fltinfo))
-				flt_mlist = g_slist_prepend(flt_mlist, msginfo);
-
-			procheader_header_list_destroy(hlist);
-		} else
-			flt_mlist = g_slist_prepend(flt_mlist, msginfo);
-	}
-	flt_mlist = g_slist_reverse(flt_mlist);
-
-	filter_rule_free(rule);
-	filter_rule_free(status_rule);
-
-	return flt_mlist;
 }
 
 void summary_qsearch(SummaryView *summaryview)
@@ -5482,7 +5260,7 @@ void summary_qsearch(SummaryView *summaryview)
 	guint selected_msgnum = 0;
 	guint displayed_msgnum = 0;
 
-	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->filter_menu));
+	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->qsearch->menu));
 	type = GPOINTER_TO_INT
 		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
 	summaryview->folder_item->qsearch_cond_type = type;
@@ -5490,7 +5268,7 @@ void summary_qsearch(SummaryView *summaryview)
 	if (!summaryview->all_mlist)
 		return;
 
-	key = gtk_entry_get_text(GTK_ENTRY(summaryview->search_entry));
+	key = gtk_entry_get_text(GTK_ENTRY(summaryview->qsearch->entry));
 	if (type == QS_ALL && (!key || *key == '\0')) {
 		summary_qsearch_reset(summaryview);
 		return;
@@ -5515,7 +5293,7 @@ void summary_qsearch(SummaryView *summaryview)
 	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
 
-	flt_mlist = summary_qsearch_filter(summaryview, type, key);
+	flt_mlist = quick_search_filter(summaryview->qsearch, type, key);
 	summaryview->on_filter = TRUE;
 	summaryview->flt_mlist = flt_mlist;
 
@@ -5547,48 +5325,6 @@ void summary_qsearch(SummaryView *summaryview)
 
 
 /* callback functions */
-
-static void summary_filter_menu_activated(GtkWidget *menuitem,
-					  SummaryView *summaryview)
-{
-	summary_qsearch(summaryview);
-}
-
-static void summary_search_entry_changed(GtkWidget *entry,
-					 SummaryView *summaryview)
-{
-	const gchar *text;
-
-	text = gtk_entry_get_text(GTK_ENTRY(entry));
-	if (text && *text != '\0')
-		gtk_widget_show(summaryview->search_clear_btn);
-	else
-		gtk_widget_hide(summaryview->search_clear_btn);
-}
-
-static void summary_search_entry_activated(GtkWidget *entry,
-					   SummaryView *summaryview)
-{
-	gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
-	summary_qsearch(summaryview);
-}
-
-static gboolean summary_search_entry_key_pressed(GtkWidget *treeview,
-						 GdkEventKey *event,
-						 SummaryView *summaryview)
-{
-	if (event && event->keyval == GDK_Escape) {
-		summary_qsearch_clear_entry(summaryview);
-		return TRUE;
-	}
-	return FALSE;
-}
-
-static void summary_search_clear_clicked(GtkWidget *button,
-					 SummaryView *summaryview)
-{
-	summary_qsearch_clear_entry(summaryview);
-}
 
 static gboolean summary_toggle_pressed(GtkWidget *eventbox,
 				       GdkEventButton *event,

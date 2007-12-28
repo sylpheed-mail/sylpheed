@@ -151,7 +151,8 @@ MainWindow *main_window_get		(void);
 GtkWidget *main_window_get_folder_window	(MainWindow	*mainwin);
 GtkWidget *main_window_get_message_window	(MainWindow	*mainwin);
 
-void main_window_separation_change	(MainWindow	*mainwin,
+void main_window_change_layout		(MainWindow	*mainwin,
+					 LayoutType	 layout,
 					 SeparateType	 type);
 
 void main_window_toggle_message_view	(MainWindow	*mainwin);
