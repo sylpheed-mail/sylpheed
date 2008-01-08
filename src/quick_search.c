@@ -87,8 +87,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 {									\
 	MENUITEM_ADD(menu, menuitem, str, action);			\
 	g_signal_connect(G_OBJECT(menuitem), "activate",		\
-			 G_CALLBACK(menu_activated),			\
-			 summaryview);					\
+			 G_CALLBACK(menu_activated), qsearch);		\
 }
 
 	menu = gtk_menu_new();
