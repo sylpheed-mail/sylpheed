@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,6 +35,7 @@ static SSL_CTX *ssl_ctx_SSLv23 = NULL;
 static SSL_CTX *ssl_ctx_TLSv1 = NULL;
 
 static GSList *trust_list = NULL;
+static GSList *tmp_trust_list = NULL;
 static GSList *reject_list = NULL;
 
 static SSLVerifyFunc verify_ui_func = NULL;
@@ -66,7 +67,8 @@ static gchar *find_certs_file(const gchar *certs_dir)
 
 void ssl_init(void)
 {
-	gchar *certs_file = NULL, *certs_dir;
+	gchar *certs_file, *certs_dir;
+	FILE *fp;
 
 	SSL_library_init();
 	SSL_load_error_strings();
@@ -146,16 +148,49 @@ void ssl_init(void)
 	}
 
 	g_free(certs_dir);
+	g_free(certs_file);
+
+	certs_file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "trust.crt",
+				 NULL);
+	if ((fp = g_fopen(certs_file, "rb")) != NULL) {
+		X509 *cert;
+
+		debug_print("ssl_init(): reading trust.crt\n");
+
+		while ((cert = PEM_read_X509(fp, NULL, NULL, NULL)) != NULL)
+			trust_list = g_slist_append(trust_list, cert);
+		fclose(fp);
+	}
+	g_free(certs_file);
 }
 
 void ssl_done(void)
 {
+	gchar *trust_file;
 	GSList *cur;
+	FILE *fp;
 
-	for (cur = trust_list; cur != NULL; cur = cur->next)
+	if (trust_list) {
+		trust_file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S,
+					 "trust.crt", NULL);
+		if ((fp = g_fopen(trust_file, "wb")) == NULL) {
+			FILE_OP_ERROR(trust_file, "fopen");
+		}
+		for (cur = trust_list; cur != NULL; cur = cur->next) {
+			if (fp && !PEM_write_X509(fp, (X509 *)cur->data))
+				g_warning("can't write X509 to PEM file: %s",
+					  trust_file);
+			X509_free((X509 *)cur->data);
+		}
+		fclose(fp);
+		g_free(trust_file);
+		g_slist_free(trust_list);
+		trust_list = NULL;
+	}
+	for (cur = tmp_trust_list; cur != NULL; cur = cur->next)
 		X509_free((X509 *)cur->data);
-	g_slist_free(trust_list);
-	trust_list = NULL;
+	g_slist_free(tmp_trust_list);
+	tmp_trust_list = NULL;
 	for (cur = reject_list; cur != NULL; cur = cur->next)
 		X509_free((X509 *)cur->data);
 	g_slist_free(reject_list);
@@ -258,7 +293,9 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 			X509_free(server_cert);
 			return TRUE;
 		} else if (g_slist_find_custom(trust_list, server_cert,
-					     x509_cmp_func)) {
+					       x509_cmp_func) ||
+			   g_slist_find_custom(tmp_trust_list, server_cert,
+					       x509_cmp_func)) {
 			log_message("SSL certificate of %s previously accepted\n", sockinfo->hostname);
 			X509_free(server_cert);
 			return TRUE;
@@ -290,11 +327,10 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 				return FALSE;
 			} else if (res > 0) {
 				debug_print("Temporarily accept SSL certificate of %s\n", sockinfo->hostname);
-				trust_list = g_slist_prepend
-					(trust_list, X509_dup(server_cert));
+				tmp_trust_list = g_slist_prepend
+					(tmp_trust_list, X509_dup(server_cert));
 			} else {
 				debug_print("Permanently accept SSL certificate of %s\n", sockinfo->hostname);
-				/* TODO: save server cert */
 				trust_list = g_slist_prepend
 					(trust_list, X509_dup(server_cert));
 			}

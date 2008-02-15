@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,13 +139,15 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 
 	if (prefs_common.comply_gnome_hig)
 		gtk_dialog_add_buttons(GTK_DIALOG(dialog),
-				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				       GTK_STOCK_OK, GTK_RESPONSE_OK,
+				       _("_Reject"), GTK_RESPONSE_REJECT,
+				       _("_Temporarily accept"), GTK_RESPONSE_OK,
+				       _("Always _accept"), GTK_RESPONSE_ACCEPT,
 				       NULL);
 	else
 		gtk_dialog_add_buttons(GTK_DIALOG(dialog),
-				       GTK_STOCK_OK, GTK_RESPONSE_OK,
-				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				       _("Always _accept"), GTK_RESPONSE_ACCEPT,
+				       _("_Temporarily accept"), GTK_RESPONSE_OK,
+				       _("_Reject"), GTK_RESPONSE_REJECT,
 				       NULL);
 	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
 
@@ -155,9 +157,11 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	gtk_widget_destroy(dialog);
 
 	switch (result) {
+	case GTK_RESPONSE_ACCEPT:
+		return 0;
 	case GTK_RESPONSE_OK:
 		return 1;
-	case GTK_RESPONSE_CANCEL:
+	case GTK_RESPONSE_REJECT:
 	default:
 		break;
 	}
