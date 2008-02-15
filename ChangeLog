@@ -1,5 +1,12 @@
 2008-02-15
 
+	* libsylph/socket.c:
+	  sock_connect_async_cb()
+	  sock_connect_address_list_async(): also watch for G_IO_ERR and
+	  G_IO_HUP (fixes busy loop when connection is immediately refused).
+
+2008-02-15
+
 	* libsylph/ssl.c
 	  src/sslmanager.c: added the feature to save SSL peer certificate
 	  and always accept it.

@@ -1,5 +1,12 @@
 2008-02-15
 
+	* libsylph/socket.c:
+	  sock_connect_async_cb()
+	  sock_connect_address_list_async(): G_IO_ERR と G_IO_HUP も見る
+	  ようにした(接続が即座に拒否された場合ビジーループになるのを修正)。
+
+2008-02-15
+
 	* libsylph/ssl.c
 	  src/sslmanager.c: SSL 証明書を保存し、常に受け入れる機能を追加。
 
