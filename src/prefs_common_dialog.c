@@ -584,6 +584,9 @@ static gboolean prefs_quote_description_key_pressed
 						(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 gpointer	 data);
+static gboolean prefs_quote_description_deleted	(GtkWidget	*widget,
+						 GdkEventAny	*event,
+						 gpointer	 data);
 
 static void prefs_quote_colors_dialog		(void);
 static void prefs_quote_colors_dialog_create	(void);
@@ -3348,7 +3351,7 @@ static void prefs_quote_description_create(void)
 		(G_OBJECT(quote_desc_win), "key_press_event",
 		 G_CALLBACK(prefs_quote_description_key_pressed), NULL);
 	g_signal_connect(G_OBJECT(quote_desc_win), "delete_event",
-			 G_CALLBACK(gtk_main_quit), NULL);
+			 G_CALLBACK(prefs_quote_description_deleted), NULL);
 
 	gtk_widget_show_all(vbox);
 }
@@ -3360,6 +3363,14 @@ static gboolean prefs_quote_description_key_pressed(GtkWidget *widget,
 	if (event && event->keyval == GDK_Escape)
 		gtk_main_quit();
 	return FALSE;
+}
+
+static gboolean prefs_quote_description_deleted(GtkWidget *widget,
+						GdkEventAny *event,
+						gpointer data)
+{
+	gtk_main_quit();
+	return TRUE;
 }
 
 static void prefs_keybind_select(void)
