@@ -2596,11 +2596,17 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		if (MSG_IS_NEW(msginfo->flags)) {
 			if (summaryview->folder_item->new > 0)
 				summaryview->folder_item->new--;
+			if (summaryview->on_filter && summaryview->flt_new > 0)
+				summaryview->flt_new--;
 			inc_block_notify(TRUE);
 		}
-		if (MSG_IS_UNREAD(msginfo->flags) &&
-		    summaryview->folder_item->unread > 0)
-			summaryview->folder_item->unread--;
+		if (MSG_IS_UNREAD(msginfo->flags)) {
+			if (summaryview->folder_item->unread > 0)
+				summaryview->folder_item->unread--;
+			if (summaryview->on_filter &&
+			    summaryview->flt_unread > 0)
+				summaryview->flt_unread--;
+		}
 
 		if (summaryview->folder_item->stype == F_VIRTUAL) {
 			if (MSG_IS_NEW(msginfo->flags) &&
@@ -2859,11 +2865,16 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 	if (MSG_IS_NEW(msginfo->flags)) {
 		if (summaryview->folder_item->new > 0)
 			summaryview->folder_item->new--;
+		if (summaryview->on_filter && summaryview->flt_new > 0)
+			summaryview->flt_new--;
 		inc_block_notify(TRUE);
 	}
-	if (MSG_IS_UNREAD(msginfo->flags) &&
-	    summaryview->folder_item->unread > 0)
-		summaryview->folder_item->unread--;
+	if (MSG_IS_UNREAD(msginfo->flags)) {
+		if (summaryview->folder_item->unread > 0)
+			summaryview->folder_item->unread--;
+		if (summaryview->on_filter && summaryview->flt_unread > 0)
+			summaryview->flt_unread--;
+	}
 
 	if (summaryview->folder_item->stype == F_VIRTUAL) {
 		if (MSG_IS_NEW(msginfo->flags) && msginfo->folder->new > 0)
@@ -3073,6 +3084,8 @@ static void summary_mark_row_as_unread(SummaryView *summaryview,
 	if (!MSG_IS_UNREAD(msginfo->flags)) {
 		MSG_SET_PERM_FLAGS(msginfo->flags, MSG_UNREAD);
 		summaryview->folder_item->unread++;
+		if (summaryview->on_filter)
+			summaryview->flt_unread++;
 		summaryview->folder_item->mark_dirty = TRUE;
 		if (summaryview->folder_item->stype == F_VIRTUAL) {
 			msginfo->folder->unread++;
