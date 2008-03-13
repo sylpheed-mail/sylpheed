@@ -276,14 +276,10 @@ gchar *get_address_from_edit(GtkEntry *entry, gint *start_pos)
 	if (g_utf8_strlen(p, -1) == 0)
 		return NULL;
 
-#define IS_VALID_CHAR(x) \
-	(g_ascii_isalnum(x) || (x) == '"' || (x) == '<' || ((guchar)(x) > 0x7f))
-
 	/* now scan back until we hit a valid character */
-	for (; *p && !IS_VALID_CHAR(*p); p = g_utf8_next_char(p))
+	for (; *p && (*p == ',' || g_ascii_isspace(*p));
+	     p = g_utf8_next_char(p))
 		;
-
-#undef IS_VALID_CHAR
 
 	if (g_utf8_strlen(p, -1) == 0)
 		return NULL;
@@ -412,7 +408,7 @@ gchar *get_complete_address(gint index)
 				if (!p->name || p->name[0] == '\0')
 					address = g_strdup(p->address);
 				else if (p->name[0] != '"' &&
-					 strpbrk(p->name, ",.[]<>") != NULL)
+					 strpbrk(p->name, "(),.:;<>@[]") != NULL)
 					address = g_strdup_printf
 						("\"%s\" <%s>", p->name, p->address);
 				else
