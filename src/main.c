@@ -434,7 +434,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 			while (p && *p != '\0' && *p != '-') {
 				if (!cmd.attach_files)
 					cmd.attach_files = g_ptr_array_new();
-				if (*p != G_DIR_SEPARATOR)
+				if (!g_path_is_absolute(p))
 					file = g_strconcat(get_startup_dir(),
 							   G_DIR_SEPARATOR_S,
 							   p, NULL);
