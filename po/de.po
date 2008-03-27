@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-29 13:27+0900\n"
+"POT-Creation-Date: 2008-03-27 18:02+0900\n"
 "PO-Revision-Date: 2007-09-29 23:16+0100\n"
 "Last-Translator: Joo Martin <debian@joomart.de>\n"
 "Language-Team: de\n"
@@ -1182,7 +1182,7 @@ msgstr "Gruppe"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3244 src/folderview.c:378 src/prefs_account_dialog.c:1835
-#: src/query_search.c:398
+#: src/query_search.c:400
 msgid "Folder"
 msgstr "Ablage"
 
@@ -1588,7 +1588,7 @@ msgstr "Nachricht: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Kann einen Teil einer mehrteiligen Nachricht nicht bekommen."
 
-#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
+#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:687
 #: src/summaryview.c:2270
 msgid "(No Subject)"
 msgstr "(Kein Betreff)"
@@ -2185,7 +2185,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "'%c' kann nicht in den Ablagenamen integriert werden."
 
 #: src/foldersel.c:566 src/folderview.c:2260 src/folderview.c:2319
-#: src/query_search.c:1038
+#: src/query_search.c:1052
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Die Ablage '%s' existiert bereits."
@@ -2261,7 +2261,7 @@ msgstr "Neu"
 
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:501
-#: src/prefs_summary_column.c:73 src/quick_search.c:95
+#: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Ungelesen"
 
@@ -2455,7 +2455,7 @@ msgstr "Betreff:"
 msgid "Creating header view...\n"
 msgstr "Erzeuge Kopfzeilenansicht...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2273
+#: src/headerview.c:212 src/query_search.c:688 src/summaryview.c:2273
 msgid "(No From)"
 msgstr "(Kein Von)"
 
@@ -3840,7 +3840,7 @@ msgid "Find text:"
 msgstr "Text suchen:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:343
+#: src/query_search.c:345
 msgid "Case sensitive"
 msgstr "Groß-/Kleinschreibung"
 
@@ -5651,7 +5651,7 @@ msgstr "Ergebnis des Befehls"
 msgid "Age"
 msgstr "Alter"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:96
+#: src/prefs_filter_edit.c:502 src/quick_search.c:97
 msgid "Marked"
 msgstr "Markiert"
 
@@ -5860,19 +5860,19 @@ msgstr "Antwort an:"
 msgid "%s - Edit search condition"
 msgstr "%s - Suchbedingungen bearbeiten"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:274
+#: src/prefs_search_folder.c:209 src/query_search.c:276
 msgid "Match any of the following"
 msgstr "Wenn eine der folgenden Bedingungen zutrifft"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:276
+#: src/prefs_search_folder.c:211 src/query_search.c:278
 msgid "Match all of the following"
 msgstr "Wenn alle der folgenden Bedingungen zutreffen"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:320
+#: src/prefs_search_folder.c:231 src/query_search.c:322
 msgid "Folder:"
 msgstr "Ablage:"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:338
+#: src/prefs_search_folder.c:248 src/query_search.c:340
 msgid "Search subfolders"
 msgstr "Suche Unterablagen"
 
@@ -5886,17 +5886,17 @@ msgid "Attachment"
 msgstr "Anhang"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5080
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:5080
 msgid "Subject"
 msgstr "Betreff"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5083
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/summaryview.c:5083
 msgid "From"
 msgstr "Von"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5085
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/summaryview.c:5085
 msgid "Date"
 msgstr "Datum"
 
@@ -6039,7 +6039,7 @@ msgstr "Vorherige ungelesene Nachricht"
 msgid "Search"
 msgstr "Suchen"
 
-#: src/prefs_toolbar.c:78 src/query_search.c:251
+#: src/prefs_toolbar.c:78 src/query_search.c:253
 msgid "Search messages"
 msgstr "Suche Nachrichten"
 
@@ -6164,65 +6164,76 @@ msgstr "Erstelle Fortschrittsdialog...\n"
 msgid "Status"
 msgstr "Status"
 
-#: src/query_search.c:423
+#: src/query_search.c:425
 msgid "_Save as search folder"
 msgstr "_Speichern in Suchablage"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:882
-msgid "Done."
-msgstr "Fertig."
+#: src/query_search.c:547
+#, fuzzy
+msgid "Message not found."
+msgstr "%d Nachrichten gefunden.\n"
 
-#: src/query_search.c:566
+#: src/query_search.c:549
+#, fuzzy
+msgid "1 message found."
+msgstr "%d Nachrichten gefunden.\n"
+
+#: src/query_search.c:551
+#, fuzzy, c-format
+msgid "%d messages found."
+msgstr "%d Nachrichten gefunden.\n"
+
+#: src/query_search.c:579
 #, c-format
 msgid "Searching %s ..."
 msgstr "Suche %s ..."
 
-#: src/query_search.c:599
+#: src/query_search.c:612
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Suche %s (%d / %d)..."
 
-#: src/query_search.c:682 src/summaryview.c:2194
+#: src/query_search.c:696 src/summaryview.c:2194
 msgid "(No Date)"
 msgstr "(Kein Datum)"
 
-#: src/query_search.c:876
+#: src/query_search.c:890
 msgid "Save as search folder"
 msgstr "Speichern in Suchablage"
 
-#: src/query_search.c:897
+#: src/query_search.c:911
 msgid "Location:"
 msgstr "Speicherort:"
 
-#: src/query_search.c:912
+#: src/query_search.c:926
 msgid "Folder name:"
 msgstr "Ablage Name:"
 
-#: src/quick_search.c:94
+#: src/quick_search.c:95
 msgid "All"
 msgstr "Alle"
 
-#: src/quick_search.c:97
+#: src/quick_search.c:98
 msgid "Have color label"
 msgstr "Hat Farbetikett"
 
-#: src/quick_search.c:98
+#: src/quick_search.c:99
 msgid "Have attachment"
 msgstr "Hat Anhang"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:101
 msgid "Within 1 day"
 msgstr "Innerhalb eines Tages"
 
-#: src/quick_search.c:101
+#: src/quick_search.c:102
 msgid "Last 5 days"
 msgstr "Vergangene 5 Tage"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Search:"
 msgstr "Suchen:"
 
-#: src/quick_search.c:128
+#: src/quick_search.c:129
 msgid "Search for Subject or From"
 msgstr "Suche nach Betreff oder Absender"
 
@@ -6580,6 +6591,10 @@ msgstr "Hole Newsgroup-Liste..."
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
 msgstr "Kann die Newsgroup-Liste nicht empfangen."
+
+#: src/subscribedialog.c:526 src/summaryview.c:882
+msgid "Done."
+msgstr "Fertig."
 
 #: src/subscribedialog.c:556
 #, c-format

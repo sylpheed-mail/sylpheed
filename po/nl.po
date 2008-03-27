@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-29 13:27+0900\n"
+"POT-Creation-Date: 2008-03-27 18:02+0900\n"
 "PO-Revision-Date: 2006-04-30 01:11+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -1196,7 +1196,7 @@ msgstr "Groep"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3244 src/folderview.c:378 src/prefs_account_dialog.c:1835
-#: src/query_search.c:398
+#: src/query_search.c:400
 msgid "Folder"
 msgstr "Accounts"
 
@@ -1606,7 +1606,7 @@ msgstr "Bericht: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Ik kan het deel van een meerdelig bericht niet ophalen."
 
-#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
+#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:687
 #: src/summaryview.c:2270
 msgid "(No Subject)"
 msgstr "(Geen onderwerp)"
@@ -2203,7 +2203,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "'%c' mag niet in de naam van een map."
 
 #: src/foldersel.c:566 src/folderview.c:2260 src/folderview.c:2319
-#: src/query_search.c:1038
+#: src/query_search.c:1052
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "De map '%s' bestaat al."
@@ -2280,7 +2280,7 @@ msgstr "Nieuw"
 
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:501
-#: src/prefs_summary_column.c:73 src/quick_search.c:95
+#: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Ongelezen"
 
@@ -2475,7 +2475,7 @@ msgstr "Onderwerp:"
 msgid "Creating header view...\n"
 msgstr "Header view wordt aangemaakt...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2273
+#: src/headerview.c:212 src/query_search.c:688 src/summaryview.c:2273
 msgid "(No From)"
 msgstr "(Geen afzender)"
 
@@ -3885,7 +3885,7 @@ msgid "Find text:"
 msgstr "Zoek naar:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:343
+#: src/query_search.c:345
 msgid "Case sensitive"
 msgstr "Hoofdlettergevoelig"
 
@@ -5705,7 +5705,7 @@ msgstr "Resultaat van opdracht"
 msgid "Age"
 msgstr "Leeftijd"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:96
+#: src/prefs_filter_edit.c:502 src/quick_search.c:97
 msgid "Marked"
 msgstr "Gemarkeerd"
 
@@ -5915,19 +5915,19 @@ msgstr "Antwoord-Aan:"
 msgid "%s - Edit search condition"
 msgstr "%s - Zoekopdracht bewerken"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:274
+#: src/prefs_search_folder.c:209 src/query_search.c:276
 msgid "Match any of the following"
 msgstr "Overeenkomt met een van de volgende"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:276
+#: src/prefs_search_folder.c:211 src/query_search.c:278
 msgid "Match all of the following"
 msgstr "Overeenkomt met alle van de volgende"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:320
+#: src/prefs_search_folder.c:231 src/query_search.c:322
 msgid "Folder:"
 msgstr "Map:"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:338
+#: src/prefs_search_folder.c:248 src/query_search.c:340
 msgid "Search subfolders"
 msgstr "Submappen doorzoeken"
 
@@ -5941,17 +5941,17 @@ msgid "Attachment"
 msgstr "Bijlage"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5080
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:5080
 msgid "Subject"
 msgstr "Onderwerp"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5083
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/summaryview.c:5083
 msgid "From"
 msgstr "Afzender"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5085
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/summaryview.c:5085
 msgid "Date"
 msgstr "Datum"
 
@@ -6101,7 +6101,7 @@ msgstr "Volgende ongelezen"
 msgid "Search"
 msgstr "Zoeken:"
 
-#: src/prefs_toolbar.c:78 src/query_search.c:251
+#: src/prefs_toolbar.c:78 src/query_search.c:253
 msgid "Search messages"
 msgstr "Berichten doorzoeken"
 
@@ -6232,66 +6232,77 @@ msgstr "Voortgangsdialoogvenster wordt gemaakt...\n"
 msgid "Status"
 msgstr "Status"
 
-#: src/query_search.c:423
+#: src/query_search.c:425
 msgid "_Save as search folder"
 msgstr "Opslaan als _zoekmap"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:882
-msgid "Done."
-msgstr "Klaar."
+#: src/query_search.c:547
+#, fuzzy
+msgid "Message not found."
+msgstr "%d berichten gevonden\n"
 
-#: src/query_search.c:566
+#: src/query_search.c:549
+#, fuzzy
+msgid "1 message found."
+msgstr "%d berichten gevonden\n"
+
+#: src/query_search.c:551
+#, fuzzy, c-format
+msgid "%d messages found."
+msgstr "%d berichten gevonden\n"
+
+#: src/query_search.c:579
 #, c-format
 msgid "Searching %s ..."
 msgstr "Doorzoeken van %s ..."
 
-#: src/query_search.c:599
+#: src/query_search.c:612
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Doorzoeken van %s (%d / %d)..."
 
-#: src/query_search.c:682 src/summaryview.c:2194
+#: src/query_search.c:696 src/summaryview.c:2194
 msgid "(No Date)"
 msgstr "(Geen datum)"
 
-#: src/query_search.c:876
+#: src/query_search.c:890
 msgid "Save as search folder"
 msgstr "Opslaan als zoekmap"
 
-#: src/query_search.c:897
+#: src/query_search.c:911
 msgid "Location:"
 msgstr "Locatie:"
 
-#: src/query_search.c:912
+#: src/query_search.c:926
 msgid "Folder name:"
 msgstr "mapnaam:"
 
-#: src/quick_search.c:94
+#: src/quick_search.c:95
 msgid "All"
 msgstr "Alles"
 
-#: src/quick_search.c:97
+#: src/quick_search.c:98
 msgid "Have color label"
 msgstr "Heeft kleurlabel"
 
-#: src/quick_search.c:98
+#: src/quick_search.c:99
 msgid "Have attachment"
 msgstr "Heeft bijlage"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:101
 msgid "Within 1 day"
 msgstr ""
 
-#: src/quick_search.c:101
+#: src/quick_search.c:102
 #, fuzzy
 msgid "Last 5 days"
 msgstr "Achternaam"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Search:"
 msgstr "Zoeken:"
 
-#: src/quick_search.c:128
+#: src/quick_search.c:129
 msgid "Search for Subject or From"
 msgstr "Zoeken op onderwerp of afzender"
 
@@ -6630,6 +6641,10 @@ msgstr "Lijst avn nieuwsgroepen wordt opgehaald..."
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
 msgstr "Kan geen nieuwsgroep opvragen."
+
+#: src/subscribedialog.c:526 src/summaryview.c:882
+msgid "Done."
+msgstr "Klaar."
 
 #: src/subscribedialog.c:556
 #, c-format

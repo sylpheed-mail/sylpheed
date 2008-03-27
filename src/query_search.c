@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,6 +104,8 @@ static struct QuerySearchWindow {
 	gboolean requires_full_headers;
 
 	gboolean exclude_trash;
+
+	gint n_found;
 
 	gboolean on_search;
 	gboolean cancelled;
@@ -496,6 +498,7 @@ static FilterRule *query_search_dialog_to_rule(const gchar *name,
 static void query_search_query(void)
 {
 	FolderItem *item;
+	gchar *msg;
 
 	if (search_window.on_search)
 		return;
@@ -518,6 +521,7 @@ static void query_search_query(void)
 	} else
 		search_window.exclude_trash = FALSE;
 
+	search_window.n_found = 0;
 	search_window.cancelled = FALSE;
 
 	gtk_widget_set_sensitive(search_window.clear_btn, FALSE);
@@ -539,13 +543,22 @@ static void query_search_query(void)
 	gtk_widget_set_sensitive(search_window.clear_btn, TRUE);
 	gtk_button_set_label(GTK_BUTTON(search_window.search_btn),
 			     GTK_STOCK_FIND);
-	gtk_label_set_text(GTK_LABEL(search_window.status_label), _("Done."));
+	if (search_window.n_found == 0)
+		msg = g_strdup_printf(_("Message not found."));
+	else if (search_window.n_found == 1)
+		msg = g_strdup_printf(_("1 message found."));
+	else
+		msg = g_strdup_printf(_("%d messages found."),
+				      search_window.n_found);
+	gtk_label_set_text(GTK_LABEL(search_window.status_label), msg);
+	g_free(msg);
 	statusbar_pop_all();
 
 	if (search_window.cancelled)
 		debug_print("* query search cancelled.\n");
 	debug_print("query search finished.\n");
 
+	search_window.n_found = 0;
 	search_window.on_search = FALSE;
 	search_window.cancelled = FALSE;
 }
@@ -626,6 +639,7 @@ static void query_search_folder(FolderItem *item)
 				      &fltinfo)) {
 			query_search_append_msg(msginfo);
 			cur->data = NULL;
+			search_window.n_found++;
 		}
 
 		procheader_header_list_destroy(hlist);

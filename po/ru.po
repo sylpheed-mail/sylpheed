@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-29 13:27+0900\n"
+"POT-Creation-Date: 2008-03-27 18:02+0900\n"
 "PO-Revision-Date: 2007-07-22 12:53+0400\n"
 "Last-Translator: Andrey Markelov <andrey@markelov.net>\n"
 "Language-Team: Russian <Project-Id-Version: gtranslato>\n"
@@ -1182,7 +1182,7 @@ msgstr "Группа"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3244 src/folderview.c:378 src/prefs_account_dialog.c:1835
-#: src/query_search.c:398
+#: src/query_search.c:400
 msgid "Folder"
 msgstr "Папка"
 
@@ -1588,7 +1588,7 @@ msgstr "Сообщение: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Ошибка при получении одного из компонентов сообщения."
 
-#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
+#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:687
 #: src/summaryview.c:2270
 msgid "(No Subject)"
 msgstr "(Без темы)"
@@ -2186,7 +2186,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "Символ \"%c\" не может входить в имя папки."
 
 #: src/foldersel.c:566 src/folderview.c:2260 src/folderview.c:2319
-#: src/query_search.c:1038
+#: src/query_search.c:1052
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Папка \"%s\" уже существует."
@@ -2262,7 +2262,7 @@ msgstr "Новые"
 
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:501
-#: src/prefs_summary_column.c:73 src/quick_search.c:95
+#: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Не прочитано"
 
@@ -2456,7 +2456,7 @@ msgstr "Тема:"
 msgid "Creating header view...\n"
 msgstr "Создание области просмотра заголовков...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2273
+#: src/headerview.c:212 src/query_search.c:688 src/summaryview.c:2273
 msgid "(No From)"
 msgstr "(Без отправителя)"
 
@@ -3841,7 +3841,7 @@ msgid "Find text:"
 msgstr "Искать текст:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:343
+#: src/query_search.c:345
 msgid "Case sensitive"
 msgstr "Учитывать регистр"
 
@@ -5644,7 +5644,7 @@ msgstr "Результат команды"
 msgid "Age"
 msgstr "Возраст сообщения"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:96
+#: src/prefs_filter_edit.c:502 src/quick_search.c:97
 msgid "Marked"
 msgstr "Помечено"
 
@@ -5851,19 +5851,19 @@ msgstr "Адрес для ответов:"
 msgid "%s - Edit search condition"
 msgstr "%s - Изменение условия поиска"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:274
+#: src/prefs_search_folder.c:209 src/query_search.c:276
 msgid "Match any of the following"
 msgstr "Искать совпадения по любому из полей"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:276
+#: src/prefs_search_folder.c:211 src/query_search.c:278
 msgid "Match all of the following"
 msgstr "Искать совпадения по всем полям"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:320
+#: src/prefs_search_folder.c:231 src/query_search.c:322
 msgid "Folder:"
 msgstr "Папка:"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:338
+#: src/prefs_search_folder.c:248 src/query_search.c:340
 msgid "Search subfolders"
 msgstr "Искать во вложенных папках"
 
@@ -5877,17 +5877,17 @@ msgid "Attachment"
 msgstr "Вложение"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5080
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:5080
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5083
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/summaryview.c:5083
 msgid "From"
 msgstr "От"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5085
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/summaryview.c:5085
 msgid "Date"
 msgstr "Дата"
 
@@ -6030,7 +6030,7 @@ msgstr "Предыдущее непрочитанное сообщение"
 msgid "Search"
 msgstr "Поиск"
 
-#: src/prefs_toolbar.c:78 src/query_search.c:251
+#: src/prefs_toolbar.c:78 src/query_search.c:253
 msgid "Search messages"
 msgstr "Поиск сообщений"
 
@@ -6155,65 +6155,76 @@ msgstr "Создание диалогового окна прогресса...\n
 msgid "Status"
 msgstr "Состояние"
 
-#: src/query_search.c:423
+#: src/query_search.c:425
 msgid "_Save as search folder"
 msgstr "Сохранить как папку поиска"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:882
-msgid "Done."
-msgstr "Выполнено."
+#: src/query_search.c:547
+#, fuzzy
+msgid "Message not found."
+msgstr "найдено %d сообщений.\n"
 
-#: src/query_search.c:566
+#: src/query_search.c:549
+#, fuzzy
+msgid "1 message found."
+msgstr "найдено %d сообщений.\n"
+
+#: src/query_search.c:551
+#, fuzzy, c-format
+msgid "%d messages found."
+msgstr "найдено %d сообщений.\n"
+
+#: src/query_search.c:579
 #, c-format
 msgid "Searching %s ..."
 msgstr "Поиск в папке \"%s\"..."
 
-#: src/query_search.c:599
+#: src/query_search.c:612
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Поиск в папке \"%s\" (%d / %d)..."
 
-#: src/query_search.c:682 src/summaryview.c:2194
+#: src/query_search.c:696 src/summaryview.c:2194
 msgid "(No Date)"
 msgstr "(Нет даты)"
 
-#: src/query_search.c:876
+#: src/query_search.c:890
 msgid "Save as search folder"
 msgstr "Сохранить как папку поиска"
 
-#: src/query_search.c:897
+#: src/query_search.c:911
 msgid "Location:"
 msgstr "Размещение:"
 
-#: src/query_search.c:912
+#: src/query_search.c:926
 msgid "Folder name:"
 msgstr "Имя папки:"
 
-#: src/quick_search.c:94
+#: src/quick_search.c:95
 msgid "All"
 msgstr "Все сообщения"
 
-#: src/quick_search.c:97
+#: src/quick_search.c:98
 msgid "Have color label"
 msgstr "Выделенные цветом"
 
-#: src/quick_search.c:98
+#: src/quick_search.c:99
 msgid "Have attachment"
 msgstr "С вложениями"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:101
 msgid "Within 1 day"
 msgstr "1 день"
 
-#: src/quick_search.c:101
+#: src/quick_search.c:102
 msgid "Last 5 days"
 msgstr "Последние 5 дней"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Search:"
 msgstr "Поиск:"
 
-#: src/quick_search.c:128
+#: src/quick_search.c:129
 msgid "Search for Subject or From"
 msgstr "Поиск по теме или отправителю"
 
@@ -6559,6 +6570,10 @@ msgstr "Получение списка групп новостей..."
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
 msgstr "Не удалось получить список групп новостей."
+
+#: src/subscribedialog.c:526 src/summaryview.c:882
+msgid "Done."
+msgstr "Выполнено."
 
 #: src/subscribedialog.c:556
 #, c-format

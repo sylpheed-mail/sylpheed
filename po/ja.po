@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-29 13:27+0900\n"
+"POT-Creation-Date: 2008-03-27 18:02+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1177,7 +1177,7 @@ msgstr "グループ"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3244 src/folderview.c:378 src/prefs_account_dialog.c:1835
-#: src/query_search.c:398
+#: src/query_search.c:400
 msgid "Folder"
 msgstr "フォルダ"
 
@@ -1583,7 +1583,7 @@ msgstr "メッセージ: %s"
 msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
-#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
+#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:687
 #: src/summaryview.c:2270
 msgid "(No Subject)"
 msgstr "(件名なし)"
@@ -2180,7 +2180,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "フォルダ名に `%c' を含むことはできません。"
 
 #: src/foldersel.c:566 src/folderview.c:2260 src/folderview.c:2319
-#: src/query_search.c:1038
+#: src/query_search.c:1052
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "フォルダ `%s' はすでに存在します。"
@@ -2256,7 +2256,7 @@ msgstr "新着"
 
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:501
-#: src/prefs_summary_column.c:73 src/quick_search.c:95
+#: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "未読"
 
@@ -2450,7 +2450,7 @@ msgstr "件名:"
 msgid "Creating header view...\n"
 msgstr "ヘッダビューを作成中...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2273
+#: src/headerview.c:212 src/query_search.c:688 src/summaryview.c:2273
 msgid "(No From)"
 msgstr "(差出人不明)"
 
@@ -3830,7 +3830,7 @@ msgid "Find text:"
 msgstr "検索文字列:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:343
+#: src/query_search.c:345
 msgid "Case sensitive"
 msgstr "大文字/小文字を区別"
 
@@ -5625,7 +5625,7 @@ msgstr "コマンドの実行結果"
 msgid "Age"
 msgstr "経過日数"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:96
+#: src/prefs_filter_edit.c:502 src/quick_search.c:97
 msgid "Marked"
 msgstr "マーク付き"
 
@@ -5832,19 +5832,19 @@ msgstr "Reply-To:"
 msgid "%s - Edit search condition"
 msgstr "%s - 検索条件の編集"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:274
+#: src/prefs_search_folder.c:209 src/query_search.c:276
 msgid "Match any of the following"
 msgstr "次の条件のいずれかが該当"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:276
+#: src/prefs_search_folder.c:211 src/query_search.c:278
 msgid "Match all of the following"
 msgstr "次の条件のすべてが該当"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:320
+#: src/prefs_search_folder.c:231 src/query_search.c:322
 msgid "Folder:"
 msgstr "フォルダ:"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:338
+#: src/prefs_search_folder.c:248 src/query_search.c:340
 msgid "Search subfolders"
 msgstr "サブフォルダも検索"
 
@@ -5858,17 +5858,17 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5080
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:5080
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5083
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/summaryview.c:5083
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5085
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/summaryview.c:5085
 msgid "Date"
 msgstr "日付"
 
@@ -6010,7 +6010,7 @@ msgstr "前の未読メッセージ"
 msgid "Search"
 msgstr "検索"
 
-#: src/prefs_toolbar.c:78 src/query_search.c:251
+#: src/prefs_toolbar.c:78 src/query_search.c:253
 msgid "Search messages"
 msgstr "メッセージを検索"
 
@@ -6135,65 +6135,74 @@ msgstr "進行状況ダイアログを作成中...\n"
 msgid "Status"
 msgstr "状態"
 
-#: src/query_search.c:423
+#: src/query_search.c:425
 msgid "_Save as search folder"
 msgstr "検索フォルダとして保存(_S)"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:882
-msgid "Done."
-msgstr "完了."
+#: src/query_search.c:547
+msgid "Message not found."
+msgstr "メッセージが見つかりませんでした。"
 
-#: src/query_search.c:566
+#: src/query_search.c:549
+msgid "1 message found."
+msgstr "1 通のメッセージが見つかりました。"
+
+#: src/query_search.c:551
+#, c-format
+msgid "%d messages found."
+msgstr "%d 通のメッセージが見つかりました。"
+
+#: src/query_search.c:579
 #, c-format
 msgid "Searching %s ..."
 msgstr "%s を検索中..."
 
-#: src/query_search.c:599
+#: src/query_search.c:612
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "%s を検索中 (%d / %d)..."
 
-#: src/query_search.c:682 src/summaryview.c:2194
+#: src/query_search.c:696 src/summaryview.c:2194
 msgid "(No Date)"
 msgstr "(日付なし)"
 
-#: src/query_search.c:876
+#: src/query_search.c:890
 msgid "Save as search folder"
 msgstr "検索フォルダとして保存"
 
-#: src/query_search.c:897
+#: src/query_search.c:911
 msgid "Location:"
 msgstr "場所:"
 
-#: src/query_search.c:912
+#: src/query_search.c:926
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
-#: src/quick_search.c:94
+#: src/quick_search.c:95
 msgid "All"
 msgstr "すべて"
 
-#: src/quick_search.c:97
+#: src/quick_search.c:98
 msgid "Have color label"
 msgstr "カラーラベル付き"
 
-#: src/quick_search.c:98
+#: src/quick_search.c:99
 msgid "Have attachment"
 msgstr "添付ファイル付き"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:101
 msgid "Within 1 day"
 msgstr "1日以内"
 
-#: src/quick_search.c:101
+#: src/quick_search.c:102
 msgid "Last 5 days"
 msgstr "最近5日間"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Search:"
 msgstr "検索:"
 
-#: src/quick_search.c:128
+#: src/quick_search.c:129
 msgid "Search for Subject or From"
 msgstr "件名または差出人を検索"
 
@@ -6537,6 +6546,10 @@ msgstr "ニュースグループリストを取得中..."
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
 msgstr "ニュースグループリストを取得できません。"
+
+#: src/subscribedialog.c:526 src/summaryview.c:882
+msgid "Done."
+msgstr "完了."
 
 #: src/subscribedialog.c:556
 #, c-format

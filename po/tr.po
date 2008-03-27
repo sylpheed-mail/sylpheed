@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-29 13:27+0900\n"
+"POT-Creation-Date: 2008-03-27 18:02+0900\n"
 "PO-Revision-Date: 2004-12-03 11:44+0200\n"
 "Last-Translator: Arman Aksoy <armish@linux-sevenler.org>\n"
 "Language-Team:  <gnome-turk@gnome.org>\n"
@@ -1193,7 +1193,7 @@ msgstr "Grup"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:3244 src/folderview.c:378 src/prefs_account_dialog.c:1835
-#: src/query_search.c:398
+#: src/query_search.c:400
 msgid "Folder"
 msgstr "Dizin"
 
@@ -1632,7 +1632,7 @@ msgstr "İleti: %s"
 msgid "Can't get the part of multipart message."
 msgstr "Çok parçalı mesajın bir kısmı alınamadı"
 
-#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:673
+#: src/compose.c:2718 src/headerview.c:233 src/query_search.c:687
 #: src/summaryview.c:2270
 msgid "(No Subject)"
 msgstr "(Konu yok)"
@@ -2235,7 +2235,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "`%c' bir dizin adı içinde olamaz."
 
 #: src/foldersel.c:566 src/folderview.c:2260 src/folderview.c:2319
-#: src/query_search.c:1038
+#: src/query_search.c:1052
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "`%s' dizini zaten var."
@@ -2314,7 +2314,7 @@ msgstr "Yeni"
 
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:501
-#: src/prefs_summary_column.c:73 src/quick_search.c:95
+#: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Okunmamış"
 
@@ -2509,7 +2509,7 @@ msgstr "Konu:"
 msgid "Creating header view...\n"
 msgstr "Başlık görünümü oluşturuluyor...\n"
 
-#: src/headerview.c:212 src/query_search.c:674 src/summaryview.c:2273
+#: src/headerview.c:212 src/query_search.c:688 src/summaryview.c:2273
 msgid "(No From)"
 msgstr "(Kimden satırı yok)"
 
@@ -3899,7 +3899,7 @@ msgid "Find text:"
 msgstr "Metni bul:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:343
+#: src/query_search.c:345
 msgid "Case sensitive"
 msgstr "Durum duyarlılığı"
 
@@ -5759,7 +5759,7 @@ msgstr "Komut sonucu"
 msgid "Age"
 msgstr "Yaş"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:96
+#: src/prefs_filter_edit.c:502 src/quick_search.c:97
 #, fuzzy
 msgid "Marked"
 msgstr "İşaretle"
@@ -5972,20 +5972,20 @@ msgstr "Yanıtla:"
 msgid "%s - Edit search condition"
 msgstr ""
 
-#: src/prefs_search_folder.c:209 src/query_search.c:274
+#: src/prefs_search_folder.c:209 src/query_search.c:276
 msgid "Match any of the following"
 msgstr "Aşağıdaki herhangi bir kural eşleşirse"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:276
+#: src/prefs_search_folder.c:211 src/query_search.c:278
 msgid "Match all of the following"
 msgstr "Aşağıdaki tüm koşullar eşleşirse"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:320
+#: src/prefs_search_folder.c:231 src/query_search.c:322
 #, fuzzy
 msgid "Folder:"
 msgstr "Dizin"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:338
+#: src/prefs_search_folder.c:248 src/query_search.c:340
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Aramada hata oluştu"
@@ -6000,17 +6000,17 @@ msgid "Attachment"
 msgstr "Ek"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:399 src/summaryview.c:5080
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/summaryview.c:5080
 msgid "Subject"
 msgstr "Konu"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:400 src/summaryview.c:5083
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/summaryview.c:5083
 msgid "From"
 msgstr "Kimden"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:401 src/summaryview.c:5085
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/summaryview.c:5085
 msgid "Date"
 msgstr "Tarih"
 
@@ -6159,7 +6159,7 @@ msgstr "Sonraki okunmamış ileti"
 msgid "Search"
 msgstr "Ara"
 
-#: src/prefs_toolbar.c:78 src/query_search.c:251
+#: src/prefs_toolbar.c:78 src/query_search.c:253
 msgid "Search messages"
 msgstr "İletilerde ara"
 
@@ -6291,72 +6291,83 @@ msgstr "İşlem durum penceresi oluşturuluyor...\n"
 msgid "Status"
 msgstr "Durum"
 
-#: src/query_search.c:423
+#: src/query_search.c:425
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Taslak dizinine kaydet"
 
-#: src/query_search.c:542 src/subscribedialog.c:526 src/summaryview.c:882
-msgid "Done."
-msgstr "Tamamlandı."
+#: src/query_search.c:547
+#, fuzzy
+msgid "Message not found."
+msgstr "%d ileti bulundu.\n"
 
-#: src/query_search.c:566
+#: src/query_search.c:549
+#, fuzzy
+msgid "1 message found."
+msgstr "%d ileti bulundu.\n"
+
+#: src/query_search.c:551
+#, fuzzy, c-format
+msgid "%d messages found."
+msgstr "%d ileti bulundu.\n"
+
+#: src/query_search.c:579
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "%s dizini taranıyor..."
 
-#: src/query_search.c:599
+#: src/query_search.c:612
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtreleniyor..."
 
-#: src/query_search.c:682 src/summaryview.c:2194
+#: src/query_search.c:696 src/summaryview.c:2194
 msgid "(No Date)"
 msgstr "(Tarih Yok)"
 
-#: src/query_search.c:876
+#: src/query_search.c:890
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Taslak dizinine kaydet"
 
-#: src/query_search.c:897
+#: src/query_search.c:911
 msgid "Location:"
 msgstr ""
 
-#: src/query_search.c:912
+#: src/query_search.c:926
 #, fuzzy
 msgid "Folder name:"
 msgstr "Dosya adı"
 
-#: src/quick_search.c:94
+#: src/quick_search.c:95
 msgid "All"
 msgstr ""
 
-#: src/quick_search.c:97
+#: src/quick_search.c:98
 #, fuzzy
 msgid "Have color label"
 msgstr "/_Renk etiketi"
 
-#: src/quick_search.c:98
+#: src/quick_search.c:99
 #, fuzzy
 msgid "Have attachment"
 msgstr "Ek"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:101
 msgid "Within 1 day"
 msgstr ""
 
-#: src/quick_search.c:101
+#: src/quick_search.c:102
 #, fuzzy
 msgid "Last 5 days"
 msgstr "Soyadı"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 #, fuzzy
 msgid "Search:"
 msgstr "Ara"
 
-#: src/quick_search.c:128
+#: src/quick_search.c:129
 msgid "Search for Subject or From"
 msgstr ""
 
@@ -6696,6 +6707,10 @@ msgstr "Haber grubu listesi alınamadı."
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
 msgstr "Haber grubu listesi alınamadı."
+
+#: src/subscribedialog.c:526 src/summaryview.c:882
+msgid "Done."
+msgstr "Tamamlandı."
 
 #: src/subscribedialog.c:556
 #, c-format
