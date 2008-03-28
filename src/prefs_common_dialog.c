@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,6 +81,9 @@ static struct Send {
 
 	GtkWidget *optmenu_encoding_method;
 	GtkWidget *optmenu_mime_fencoding_method;
+
+	GtkWidget *checkbtn_check_attach;
+	GtkWidget *entry_check_attach_str;
 } p_send;
 
 static struct Compose {
@@ -291,6 +294,10 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_optmenu, prefs_set_optmenu},
 	{"mime_filename_encoding_method", &p_send.optmenu_mime_fencoding_method,
 	 prefs_set_data_from_optmenu, prefs_set_optmenu},
+	{"check_attach", &p_send.checkbtn_check_attach,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"check_attach_str", &p_send.entry_check_attach_str,
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	/* {"allow_jisx0201_kana", NULL, NULL, NULL}, */
 
@@ -871,6 +878,9 @@ static void prefs_send_create(void)
 	GtkWidget *label_encoding_desc;
 	GtkWidget *label_fencoding;
 	GtkWidget *label_fencoding_desc;
+	GtkWidget *label;
+	GtkWidget *checkbtn_check_attach;
+	GtkWidget *entry_check_attach_str;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -947,11 +957,32 @@ static void prefs_send_create(void)
 		   "MIME header: most popular, but violates RFC 2047\n"
 		   "RFC 2231: conforms to standard, but not popular"));
 
+	PACK_CHECK_BUTTON (vbox1, checkbtn_check_attach,
+			   _("Confirm attachments when the following strings (comma-separated) are found in the message body"));
+	gtk_label_set_line_wrap(GTK_LABEL(GTK_BIN(checkbtn_check_attach)->child), TRUE);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
+
+	entry_check_attach_str = gtk_entry_new ();
+	gtk_widget_show (entry_check_attach_str);
+	gtk_box_pack_start (GTK_BOX (hbox1), entry_check_attach_str,
+			    TRUE, TRUE, 0);
+	label = gtk_label_new (_("(Ex: attach)"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+
+	SET_TOGGLE_SENSITIVITY(checkbtn_check_attach, entry_check_attach_str);
+
 	p_send.checkbtn_savemsg     = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 
 	p_send.optmenu_encoding_method = optmenu_trencoding;
 	p_send.optmenu_mime_fencoding_method = optmenu_fencoding;
+
+	p_send.checkbtn_check_attach = checkbtn_check_attach;
+	p_send.entry_check_attach_str = entry_check_attach_str;
 }
 
 static void prefs_compose_create(void)

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -59,6 +59,8 @@ static PrefParam param[] = {
 	{"encoding_method", "0", &prefs_common.encoding_method, P_ENUM},
 	{"mime_filename_encoding_method", "0",
 	 &prefs_common.mime_fencoding_method, P_ENUM},
+	{"check_attach", "FALSE", &prefs_common.check_attach, P_BOOL},
+	{"check_attach_str", NULL, &prefs_common.check_attach_str, P_STRING},
 
 	{"allow_jisx0201_kana", "FALSE", &prefs_common.allow_jisx0201_kana,
 	 P_BOOL},

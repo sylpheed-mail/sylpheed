@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -255,6 +255,7 @@ static void compose_select_account		(Compose	*compose,
 static gboolean compose_check_for_valid_recipient
 						(Compose	*compose);
 static gboolean compose_check_entries		(Compose	*compose);
+static gboolean compose_check_attachments	(Compose	*compose);
 
 static gint compose_send			(Compose	*compose);
 static gint compose_write_to_file		(Compose	*compose,
@@ -2851,6 +2852,55 @@ static gboolean compose_check_entries(Compose *compose)
 	return TRUE;
 }
 
+static gboolean compose_check_attachments(Compose *compose)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
+	GtkTextBuffer *buffer;
+	GtkTextIter iter, pos;
+	gchar **strv;
+	gint i;
+	gboolean attach_found = FALSE;
+
+	if (!prefs_common.check_attach)
+		return TRUE;
+	if (!prefs_common.check_attach_str)
+		return TRUE;
+
+	if (compose->use_attach &&
+	    gtk_tree_model_iter_n_children
+		(GTK_TREE_MODEL(compose->attach_store), NULL) > 0)
+		return TRUE;
+
+	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+
+	strv = g_strsplit(prefs_common.check_attach_str, ",", -1);
+	for (i = 0; strv[i] != NULL; i++) {
+		g_strstrip(strv[i]);
+		if (strv[i][0] == '\0')
+			continue;
+		if (gtkut_text_buffer_find(buffer, &iter, strv[i], FALSE,
+					   &pos)) {
+			attach_found = TRUE;
+			break;
+		}
+	}
+
+	g_strfreev(strv);
+
+	if (attach_found) {
+		AlertValue aval;
+
+		aval = alertpanel(_("Attachment is missing"),
+				  _("There is no attachment. Send it without attachments?"),
+				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+		if (aval != G_ALERTDEFAULT)
+			return FALSE;
+	}
+
+	return TRUE;
+}
+
 void compose_lock(Compose *compose)
 {
 	compose->lock_count++;
@@ -2875,6 +2925,10 @@ static gint compose_send(Compose *compose)
 	compose_lock(compose);
 
 	if (compose_check_entries(compose) == FALSE) {
+		compose_unlock(compose);
+		return 1;
+	}
+	if (compose_check_attachments(compose) == FALSE) {
 		compose_unlock(compose);
 		return 1;
 	}
@@ -6409,6 +6463,8 @@ static void compose_send_later_cb(gpointer data, guint action,
 	gchar tmp[MAXPATHLEN + 1];
 
 	if (compose_check_entries(compose) == FALSE)
+		return;
+	if (compose_check_attachments(compose) == FALSE)
 		return;
 
 	queue = account_get_special_folder(compose->account, F_QUEUE);

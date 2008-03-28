@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -69,6 +69,9 @@ struct _PrefsCommon
 	gboolean filter_sent;
 	TransferEncodingMethod encoding_method;
 	MIMEFilenameEncodingMethod mime_fencoding_method;
+
+	gboolean check_attach;
+	gchar *check_attach_str;
 
 	gboolean allow_jisx0201_kana;
 
