@@ -5694,8 +5694,7 @@ static void compose_attach_property(Compose *compose)
 	g_list_foreach(rows, (GFunc)gtk_tree_path_free, NULL);
 	g_list_free(rows);
 
-	if (!attach_prop.window)
-		compose_attach_property_create(&cancelled);
+	compose_attach_property_create(&cancelled);
 	gtk_widget_grab_focus(attach_prop.ok_btn);
 	gtk_widget_show(attach_prop.window);
 	manage_window_set_transient(GTK_WINDOW(attach_prop.window));
@@ -5729,10 +5728,8 @@ static void compose_attach_property(Compose *compose)
 		cancelled = FALSE;
 		gtk_main();
 
-		if (cancelled == TRUE) {
-			gtk_widget_hide(attach_prop.window);
+		if (cancelled == TRUE)
 			break;
-		}
 
 		entry_text = gtk_entry_get_text
 			(GTK_ENTRY(attach_prop.mimetype_entry));
@@ -5790,10 +5787,11 @@ static void compose_attach_property(Compose *compose)
 				   COL_SIZE, to_human_readable(ainfo->size),
 				   COL_NAME, ainfo->name,
 				   -1);
-
-		gtk_widget_hide(attach_prop.window);
 		break;
 	}
+
+	gtk_widget_destroy(attach_prop.window);
+	memset(&attach_prop, 0, sizeof(attach_prop));
 }
 
 #define SET_LABEL_AND_ENTRY(str, entry, top) \
@@ -5825,7 +5823,7 @@ static void compose_attach_property_create(gboolean *cancelled)
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 
-	debug_print("Creating attach_property window...\n");
+	debug_print("Creating attach property window...\n");
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_set_size_request(window, 480, -1);
