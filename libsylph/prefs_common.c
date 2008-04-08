@@ -61,6 +61,7 @@ static PrefParam param[] = {
 	 &prefs_common.mime_fencoding_method, P_ENUM},
 	{"check_attach", "FALSE", &prefs_common.check_attach, P_BOOL},
 	{"check_attach_str", NULL, &prefs_common.check_attach_str, P_STRING},
+	{"check_recipients", "FALSE", &prefs_common.check_recipients, P_BOOL},
 
 	{"allow_jisx0201_kana", "FALSE", &prefs_common.allow_jisx0201_kana,
 	 P_BOOL},

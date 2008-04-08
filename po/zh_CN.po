@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-28 16:05+0900\n"
+"POT-Creation-Date: 2008-04-08 16:14+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -502,12 +502,12 @@ msgstr "发现 %s\n"
 msgid "Configuration is saved.\n"
 msgstr "配置已经保存。\n"
 
-#: libsylph/prefs_common.c:567
+#: libsylph/prefs_common.c:568
 #, fuzzy
 msgid "Junk mail filter (manual)"
 msgstr "文件夹："
 
-#: libsylph/prefs_common.c:570
+#: libsylph/prefs_common.c:571
 #, fuzzy
 msgid "Junk mail filter"
 msgstr "文件夹："
@@ -678,7 +678,7 @@ msgstr ""
 "时会检查新邮件。"
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:519
-#: src/compose.c:4754 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:5011 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:272 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:321
@@ -815,7 +815,8 @@ msgstr "动作的用户参数"
 msgid "Add Address to Book"
 msgstr "将地址添加到地址簿"
 
-#: src/addressadd.c:187 src/prefs_toolbar.c:86 src/select-keys.c:322
+#: src/addressadd.c:187 src/compose.c:3125 src/prefs_toolbar.c:86
+#: src/select-keys.c:322
 msgid "Address"
 msgstr "地址"
 
@@ -828,7 +829,7 @@ msgstr "注释"
 msgid "Select Address Book Folder"
 msgstr "选择地址簿文件夹"
 
-#: src/addressbook.c:351 src/compose.c:549 src/mainwindow.c:525
+#: src/addressbook.c:351 src/compose.c:552 src/mainwindow.c:525
 #: src/messageview.c:149
 msgid "/_File"
 msgstr "/文件(_F)"
@@ -850,8 +851,8 @@ msgstr "/文件(_F)/新建 JPilot(_J)"
 msgid "/_File/New _LDAP Server"
 msgstr "/文件(_F)/新建服务器(_S)"
 
-#: src/addressbook.c:360 src/addressbook.c:363 src/compose.c:554
-#: src/compose.c:559 src/compose.c:562 src/compose.c:565 src/mainwindow.c:543
+#: src/addressbook.c:360 src/addressbook.c:363 src/compose.c:557
+#: src/compose.c:562 src/compose.c:565 src/compose.c:568 src/mainwindow.c:543
 #: src/mainwindow.c:546 src/mainwindow.c:548 src/mainwindow.c:550
 #: src/mainwindow.c:555 src/mainwindow.c:557 src/messageview.c:151
 #: src/messageview.c:156
@@ -870,21 +871,21 @@ msgstr "/文件(_F)/删除(_D)"
 msgid "/_File/_Save"
 msgstr "/文件(_F)/保存(_S)"
 
-#: src/addressbook.c:365 src/compose.c:566 src/messageview.c:157
+#: src/addressbook.c:365 src/compose.c:569 src/messageview.c:157
 msgid "/_File/_Close"
 msgstr "/文件(_F)/关闭(_C)"
 
 #: src/addressbook.c:367 src/addressbook.c:407 src/addressbook.c:417
-#: src/compose.c:568 src/mainwindow.c:561 src/messageview.c:159
+#: src/compose.c:571 src/mainwindow.c:561 src/messageview.c:159
 msgid "/_Edit"
 msgstr "/编辑(_E)"
 
-#: src/addressbook.c:368 src/compose.c:573 src/mainwindow.c:562
+#: src/addressbook.c:368 src/compose.c:576 src/mainwindow.c:562
 #: src/messageview.c:160
 msgid "/_Edit/_Copy"
 msgstr "/编辑(_E)/复制(_C)"
 
-#: src/addressbook.c:369 src/compose.c:574
+#: src/addressbook.c:369 src/compose.c:577
 msgid "/_Edit/_Paste"
 msgstr "/编辑(_E)/粘贴(_P)"
 
@@ -916,7 +917,7 @@ msgstr "/地址(_A)/编辑(_E)"
 msgid "/_Address/_Delete"
 msgstr "/地址(_A)/删除(_D)"
 
-#: src/addressbook.c:379 src/compose.c:684 src/mainwindow.c:806
+#: src/addressbook.c:379 src/compose.c:687 src/mainwindow.c:806
 #: src/messageview.c:282
 msgid "/_Tools"
 msgstr "/工具(_T)"
@@ -930,12 +931,12 @@ msgstr "/工具(_T)/导入LDIF文件(_L)"
 msgid "/_Tools/Import _CSV file"
 msgstr "/工具(_T)/导入LDIF文件(_L)"
 
-#: src/addressbook.c:383 src/compose.c:705 src/mainwindow.c:860
+#: src/addressbook.c:383 src/compose.c:708 src/mainwindow.c:860
 #: src/messageview.c:302
 msgid "/_Help"
 msgstr "/帮助(_H)"
 
-#: src/addressbook.c:384 src/compose.c:706 src/mainwindow.c:872
+#: src/addressbook.c:384 src/compose.c:709 src/mainwindow.c:872
 #: src/messageview.c:303
 msgid "/_Help/_About"
 msgstr "/帮助(_H)/关于(_A)"
@@ -953,7 +954,7 @@ msgid "/New _Folder"
 msgstr "/新建文件夹(_F)"
 
 #: src/addressbook.c:406 src/addressbook.c:416 src/addressbook.c:419
-#: src/compose.c:543 src/folderview.c:251 src/folderview.c:253
+#: src/compose.c:546 src/folderview.c:251 src/folderview.c:253
 #: src/folderview.c:258 src/folderview.c:260 src/folderview.c:273
 #: src/folderview.c:275 src/folderview.c:277 src/folderview.c:282
 #: src/folderview.c:284 src/folderview.c:298 src/folderview.c:300
@@ -983,7 +984,7 @@ msgstr "/编辑(_E)/粘贴(_P)"
 msgid "E-Mail address"
 msgstr "电子邮件地址"
 
-#: src/addressbook.c:524 src/prefs_common_dialog.c:2317 src/prefs_toolbar.c:87
+#: src/addressbook.c:524 src/prefs_common_dialog.c:2325 src/prefs_toolbar.c:87
 msgid "Address book"
 msgstr "地址簿"
 
@@ -992,17 +993,18 @@ msgstr "地址簿"
 msgid "Name:"
 msgstr "姓名："
 
-#: src/addressbook.c:673 src/headerview.c:55 src/prefs_folder_item.c:339
-#: src/prefs_template.c:179
+#: src/addressbook.c:673 src/compose.c:3073 src/headerview.c:55
+#: src/prefs_folder_item.c:339 src/prefs_template.c:179
 msgid "To:"
 msgstr "收件人："
 
-#: src/addressbook.c:677 src/headerview.c:56 src/prefs_folder_item.c:356
-#: src/prefs_template.c:181
+#: src/addressbook.c:677 src/compose.c:3089 src/headerview.c:56
+#: src/prefs_folder_item.c:356 src/prefs_template.c:181
 msgid "Cc:"
 msgstr "抄送："
 
-#: src/addressbook.c:681 src/prefs_folder_item.c:367 src/prefs_template.c:183
+#: src/addressbook.c:681 src/compose.c:3105 src/prefs_folder_item.c:367
+#: src/prefs_template.c:183
 msgid "Bcc:"
 msgstr "密件抄送："
 
@@ -1157,7 +1159,7 @@ msgstr "地址簿转换错误"
 msgid "Address Book Conversion"
 msgstr "地址簿转换"
 
-#: src/addressbook.c:3164 src/prefs_common_dialog.c:2146
+#: src/addressbook.c:3164 src/prefs_common_dialog.c:2154
 msgid "Interface"
 msgstr "界面"
 
@@ -1203,7 +1205,7 @@ msgstr "公用地址"
 msgid "Personal address"
 msgstr "个人地址"
 
-#: src/alertpanel.c:142 src/compose.c:6032 src/main.c:742
+#: src/alertpanel.c:142 src/compose.c:6287 src/main.c:742
 msgid "Notice"
 msgstr "注意"
 
@@ -1258,382 +1260,404 @@ msgstr "棕色"
 msgid "None"
 msgstr "没有"
 
-#: src/compose.c:541
+#: src/compose.c:544
 msgid "/_Add..."
 msgstr "/添加(_A)..."
 
-#: src/compose.c:542
+#: src/compose.c:545
 msgid "/_Remove"
 msgstr "/删除(_R)"
 
-#: src/compose.c:544 src/folderview.c:264 src/folderview.c:288
+#: src/compose.c:547 src/folderview.c:264 src/folderview.c:288
 #: src/folderview.c:310
 msgid "/_Properties..."
 msgstr "/属性(_P)..."
 
-#: src/compose.c:550
+#: src/compose.c:553
 msgid "/_File/_Send"
 msgstr "/文件(_F)/发送(_S)"
 
-#: src/compose.c:552
+#: src/compose.c:555
 msgid "/_File/Send _later"
 msgstr "/文件(_F)/以后发送(_L)"
 
-#: src/compose.c:555
+#: src/compose.c:558
 msgid "/_File/Save to _draft folder"
 msgstr "/文件(_F)/保存到草稿夹(_D)"
 
-#: src/compose.c:557
+#: src/compose.c:560
 msgid "/_File/Save and _keep editing"
 msgstr "/文件(_F)/保存并继续编辑(_K)"
 
-#: src/compose.c:560
+#: src/compose.c:563
 msgid "/_File/_Attach file"
 msgstr "/文件(_F)/添加附件(_A)"
 
-#: src/compose.c:561
+#: src/compose.c:564
 msgid "/_File/_Insert file"
 msgstr "/文件(_F)/插入文件(_I)"
 
-#: src/compose.c:563
+#: src/compose.c:566
 msgid "/_File/Insert si_gnature"
 msgstr "/文件(_F)/插入签名(_G)"
 
-#: src/compose.c:564
+#: src/compose.c:567
 #, fuzzy
 msgid "/_File/A_ppend signature"
 msgstr "/文件(_F)/插入签名(_G)"
 
-#: src/compose.c:569
+#: src/compose.c:572
 msgid "/_Edit/_Undo"
 msgstr "/编辑(_E)/撤销(_U)"
 
-#: src/compose.c:570
+#: src/compose.c:573
 msgid "/_Edit/_Redo"
 msgstr "/编辑(_E)/重复(_R)"
 
-#: src/compose.c:571 src/compose.c:578 src/mainwindow.c:565
+#: src/compose.c:574 src/compose.c:581 src/mainwindow.c:565
 #: src/messageview.c:162
 msgid "/_Edit/---"
 msgstr "/编辑(_E)/---"
 
-#: src/compose.c:572
+#: src/compose.c:575
 msgid "/_Edit/Cu_t"
 msgstr "/编辑(_E)/剪切(_T)"
 
-#: src/compose.c:575
+#: src/compose.c:578
 msgid "/_Edit/Paste as _quotation"
 msgstr "/编辑(_E)/作为引文粘贴(_Q)"
 
-#: src/compose.c:577 src/mainwindow.c:563 src/messageview.c:161
+#: src/compose.c:580 src/mainwindow.c:563 src/messageview.c:161
 msgid "/_Edit/Select _all"
 msgstr "/编辑(_E)/全选(_A)"
 
-#: src/compose.c:579
+#: src/compose.c:582
 msgid "/_Edit/_Wrap current paragraph"
 msgstr "/编辑(_E)/当前段落折行(_W)"
 
-#: src/compose.c:581
+#: src/compose.c:584
 msgid "/_Edit/Wrap all long _lines"
 msgstr "/编辑(_E)/所有长行折行(_L)"
 
-#: src/compose.c:583
+#: src/compose.c:586
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/编辑(_E)/自动折行(_O)"
 
-#: src/compose.c:584 src/mainwindow.c:570 src/messageview.c:166
+#: src/compose.c:587 src/mainwindow.c:570 src/messageview.c:166
 #: src/summaryview.c:460
 msgid "/_View"
 msgstr "/查看(_V)"
 
-#: src/compose.c:585
+#: src/compose.c:588
 msgid "/_View/_To"
 msgstr "/查看(_V)/收件人(_T)"
 
-#: src/compose.c:586
+#: src/compose.c:589
 msgid "/_View/_Cc"
 msgstr "/查看(_V)/抄送(_C)"
 
-#: src/compose.c:587
+#: src/compose.c:590
 msgid "/_View/_Bcc"
 msgstr "/查看(_V)/密件抄送(_B)"
 
-#: src/compose.c:588
+#: src/compose.c:591
 #, fuzzy
 msgid "/_View/_Reply-To"
 msgstr "/查看(_V)/回复至(_R)"
 
-#: src/compose.c:589 src/compose.c:591 src/compose.c:593 src/compose.c:595
-#: src/compose.c:598 src/mainwindow.c:593 src/mainwindow.c:599
+#: src/compose.c:592 src/compose.c:594 src/compose.c:596 src/compose.c:598
+#: src/compose.c:601 src/mainwindow.c:593 src/mainwindow.c:599
 #: src/mainwindow.c:626 src/mainwindow.c:650 src/mainwindow.c:753
 #: src/mainwindow.c:757 src/messageview.c:258
 msgid "/_View/---"
 msgstr "/查看(_V)/---"
 
-#: src/compose.c:590
+#: src/compose.c:593
 #, fuzzy
 msgid "/_View/_Followup-To"
 msgstr "/查看(_V)/跟贴(_F)"
 
-#: src/compose.c:592
+#: src/compose.c:595
 msgid "/_View/R_uler"
 msgstr "/查看(_V)/标尺(_U)"
 
-#: src/compose.c:594
+#: src/compose.c:597
 msgid "/_View/_Attachment"
 msgstr "/查看(_V)/附件(_A)"
 
-#: src/compose.c:596
+#: src/compose.c:599
 #, fuzzy
 msgid "/_View/Cu_stomize toolbar..."
 msgstr "/查看(_V)/转到(_G)/其它文件夹(_F)..."
 
-#: src/compose.c:604 src/mainwindow.c:657 src/messageview.c:173
+#: src/compose.c:607 src/mainwindow.c:657 src/messageview.c:173
 msgid "/_View/Character _encoding"
 msgstr "/查看(_V)/字符编码(_E)"
 
-#: src/compose.c:605
+#: src/compose.c:608
 msgid "/_View/Character _encoding/_Automatic"
 msgstr "/查看(_V)/字符编码(_E)/自动(_A)"
 
-#: src/compose.c:607 src/compose.c:613 src/compose.c:619 src/compose.c:623
-#: src/compose.c:631 src/compose.c:635 src/compose.c:641 src/compose.c:647
-#: src/compose.c:651 src/compose.c:661 src/compose.c:665 src/compose.c:673
-#: src/compose.c:677 src/mainwindow.c:653 src/mainwindow.c:660
+#: src/compose.c:610 src/compose.c:616 src/compose.c:622 src/compose.c:626
+#: src/compose.c:634 src/compose.c:638 src/compose.c:644 src/compose.c:650
+#: src/compose.c:654 src/compose.c:664 src/compose.c:668 src/compose.c:676
+#: src/compose.c:680 src/mainwindow.c:653 src/mainwindow.c:660
 #: src/messageview.c:169
 msgid "/_View/Character _encoding/---"
 msgstr "/查看(_V)/字符编码(_E)/---"
 
-#: src/compose.c:609 src/mainwindow.c:661 src/messageview.c:177
+#: src/compose.c:612 src/mainwindow.c:661 src/messageview.c:177
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/查看(_V)/字符编码(_E)/7位 ASCII (US-ASC_II)"
 
-#: src/compose.c:611 src/mainwindow.c:663 src/messageview.c:180
+#: src/compose.c:614 src/mainwindow.c:663 src/messageview.c:180
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/查看(_V)/字符编码(_E)/Unicode (_UTF-8)"
 
-#: src/compose.c:615 src/mainwindow.c:667 src/messageview.c:183
+#: src/compose.c:618 src/mainwindow.c:667 src/messageview.c:183
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/查看(_V)/字符编码(_E)/西欧 (ISO-8859-_1)"
 
-#: src/compose.c:617 src/mainwindow.c:669 src/messageview.c:185
+#: src/compose.c:620 src/mainwindow.c:669 src/messageview.c:185
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/查看(_V)/字符编码(_E)/西欧 (ISO-8859-15)"
 
-#: src/compose.c:621 src/mainwindow.c:675 src/messageview.c:190
+#: src/compose.c:624 src/mainwindow.c:675 src/messageview.c:190
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/查看(_V)/字符编码(_E)/中欧 (ISO-8859-_2)"
 
-#: src/compose.c:625 src/mainwindow.c:679 src/messageview.c:193
+#: src/compose.c:628 src/mainwindow.c:679 src/messageview.c:193
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/查看(_V)/字符编码(_E)/波罗的语 (ISO-8859-13)"
 
-#: src/compose.c:627 src/mainwindow.c:681 src/messageview.c:195
+#: src/compose.c:630 src/mainwindow.c:681 src/messageview.c:195
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/查看(_V)/字符编码(_E)/波罗的语 (ISO-8859-_4)"
 
-#: src/compose.c:629 src/mainwindow.c:683 src/messageview.c:197
+#: src/compose.c:632 src/mainwindow.c:683 src/messageview.c:197
 #, fuzzy
 msgid "/_View/Character _encoding/Baltic (Windows-1257)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (Windows-1251)"
 
-#: src/compose.c:633 src/mainwindow.c:687 src/messageview.c:200
+#: src/compose.c:636 src/mainwindow.c:687 src/messageview.c:200
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/查看(_V)/字符编码(_E)/希腊语 (ISO-8859-_7)"
 
-#: src/compose.c:637 src/mainwindow.c:691 src/messageview.c:203
+#: src/compose.c:640 src/mainwindow.c:691 src/messageview.c:203
 #, fuzzy
 msgid "/_View/Character _encoding/Arabic (ISO-8859-_6)"
 msgstr "/查看(_V)/字符编码(_E)/波罗的语 (ISO-8859-_4)"
 
-#: src/compose.c:639 src/mainwindow.c:693 src/messageview.c:205
+#: src/compose.c:642 src/mainwindow.c:693 src/messageview.c:205
 #, fuzzy
 msgid "/_View/Character _encoding/Arabic (Windows-1256)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (Windows-1251)"
 
-#: src/compose.c:643 src/mainwindow.c:697 src/messageview.c:208
+#: src/compose.c:646 src/mainwindow.c:697 src/messageview.c:208
 #, fuzzy
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
 msgstr "/查看(_V)/字符编码(_E)/希腊语 (ISO-8859-_7)"
 
-#: src/compose.c:645 src/mainwindow.c:699 src/messageview.c:210
+#: src/compose.c:648 src/mainwindow.c:699 src/messageview.c:210
 #, fuzzy
 msgid "/_View/Character _encoding/Hebrew (Windows-1255)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (Windows-1251)"
 
-#: src/compose.c:649 src/mainwindow.c:703 src/messageview.c:213
+#: src/compose.c:652 src/mainwindow.c:703 src/messageview.c:213
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/查看(_V)/字符编码(_E)/土耳其语 (ISO-8859-_9)"
 
-#: src/compose.c:653 src/mainwindow.c:707 src/messageview.c:216
+#: src/compose.c:656 src/mainwindow.c:707 src/messageview.c:216
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (ISO-8859-_5)"
 
-#: src/compose.c:655 src/mainwindow.c:709 src/messageview.c:218
+#: src/compose.c:658 src/mainwindow.c:709 src/messageview.c:218
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (KOI8-_R)"
 
-#: src/compose.c:657 src/mainwindow.c:711 src/messageview.c:220
+#: src/compose.c:660 src/mainwindow.c:711 src/messageview.c:220
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (KOI8-U)"
 
-#: src/compose.c:659 src/mainwindow.c:713 src/messageview.c:222
+#: src/compose.c:662 src/mainwindow.c:713 src/messageview.c:222
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/查看(_V)/字符编码(_E)/斯拉夫语 (Windows-1251)"
 
-#: src/compose.c:663 src/mainwindow.c:717 src/messageview.c:225
+#: src/compose.c:666 src/mainwindow.c:717 src/messageview.c:225
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/查看(_V)/字符编码(_E)/日语 (ISO-2022-_JP)"
 
-#: src/compose.c:667 src/mainwindow.c:727 src/messageview.c:234
+#: src/compose.c:670 src/mainwindow.c:727 src/messageview.c:234
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/查看(_V)/字符编码(_E)/简体中文 (_GB2312)"
 
-#: src/compose.c:669 src/mainwindow.c:729 src/messageview.c:236
+#: src/compose.c:672 src/mainwindow.c:729 src/messageview.c:236
 #, fuzzy
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/查看(_V)/字符编码(_E)/简体中文 (_GB2312)"
 
-#: src/compose.c:671 src/mainwindow.c:731 src/messageview.c:238
+#: src/compose.c:674 src/mainwindow.c:731 src/messageview.c:238
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/查看(_V)/字符编码(_E)/繁体中文 (_Big5)"
 
-#: src/compose.c:675 src/mainwindow.c:739 src/messageview.c:245
+#: src/compose.c:678 src/mainwindow.c:739 src/messageview.c:245
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/查看(_V)/字符编码(_E)/朝鲜语 (EUC-_KR)"
 
-#: src/compose.c:679 src/mainwindow.c:745 src/messageview.c:250
+#: src/compose.c:682 src/mainwindow.c:745 src/messageview.c:250
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/查看(_V)/字符编码(_E)/泰国语 (TIS-620)"
 
-#: src/compose.c:681 src/mainwindow.c:747 src/messageview.c:252
+#: src/compose.c:684 src/mainwindow.c:747 src/messageview.c:252
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/查看(_V)/字符编码(_E)/泰国语 (Windows-874)"
 
-#: src/compose.c:685 src/mainwindow.c:807 src/messageview.c:283
+#: src/compose.c:688 src/mainwindow.c:807 src/messageview.c:283
 msgid "/_Tools/_Address book"
 msgstr "/工具(_T)/地址簿(_A)"
 
-#: src/compose.c:686
+#: src/compose.c:689
 msgid "/_Tools/_Template"
 msgstr "/工具(_T)/模板(_T)"
 
-#: src/compose.c:688 src/mainwindow.c:831 src/messageview.c:299
+#: src/compose.c:691 src/mainwindow.c:831 src/messageview.c:299
 msgid "/_Tools/Actio_ns"
 msgstr "/工具(_T)/动作(_N)"
 
-#: src/compose.c:690 src/compose.c:694 src/compose.c:700 src/mainwindow.c:810
+#: src/compose.c:693 src/compose.c:697 src/compose.c:703 src/mainwindow.c:810
 #: src/mainwindow.c:824 src/mainwindow.c:829 src/mainwindow.c:832
 #: src/mainwindow.c:836 src/mainwindow.c:838 src/messageview.c:286
 #: src/messageview.c:298
 msgid "/_Tools/---"
 msgstr "/工具(_T)/---"
 
-#: src/compose.c:691
+#: src/compose.c:694
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/工具(_T)/用外部编辑器编辑(_X)"
 
-#: src/compose.c:695
+#: src/compose.c:698
 msgid "/_Tools/PGP Si_gn"
 msgstr "/工具(_T)/PGP 签名(_G)"
 
-#: src/compose.c:696
+#: src/compose.c:699
 msgid "/_Tools/PGP _Encrypt"
 msgstr "/工具(_T)/PGP 加密(_E)"
 
-#: src/compose.c:701
+#: src/compose.c:704
 #, fuzzy
 msgid "/_Tools/_Check spell"
 msgstr "/工具(_T)/执行(_X)"
 
-#: src/compose.c:702
+#: src/compose.c:705
 #, fuzzy
 msgid "/_Tools/_Set spell language"
 msgstr "/工具(_T)/模板(_T)"
 
-#: src/compose.c:966
+#: src/compose.c:969
 #, c-format
 msgid "%s: file not exist\n"
 msgstr "%s：文件不存在\n"
 
-#: src/compose.c:1070 src/compose.c:1144
+#: src/compose.c:1073 src/compose.c:1147
 msgid "Can't get text part\n"
 msgstr "无法得到文本分块\n"
 
-#: src/compose.c:1624
+#: src/compose.c:1627
 msgid "Quote mark format error."
 msgstr "引文标记格式错误。"
 
-#: src/compose.c:1636
+#: src/compose.c:1639
 msgid "Message reply/forward format error."
 msgstr "邮件回复/转发格式错误。"
 
-#: src/compose.c:2124
+#: src/compose.c:2127
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "文件 %s 不存在\n"
 
-#: src/compose.c:2128
+#: src/compose.c:2131
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "无法获得文件 %s 的大小\n"
 
-#: src/compose.c:2132 src/compose.c:3848
+#: src/compose.c:2135 src/compose.c:4105
 #, c-format
 msgid "File %s is empty."
 msgstr "文件 %s 是空的。"
 
-#: src/compose.c:2136
+#: src/compose.c:2139
 #, c-format
 msgid "Can't read %s."
 msgstr "无法读取 %s。"
 
-#: src/compose.c:2169
+#: src/compose.c:2172
 #, c-format
 msgid "Message: %s"
 msgstr "邮件：%s"
 
-#: src/compose.c:2229 src/mimeview.c:583
+#: src/compose.c:2232 src/mimeview.c:583
 msgid "Can't get the part of multipart message."
 msgstr "无法获得分块邮件的分块。"
 
-#: src/compose.c:2719 src/headerview.c:233 src/query_search.c:687
+#: src/compose.c:2722 src/headerview.c:233 src/query_search.c:687
 #: src/summaryview.c:2270
 msgid "(No Subject)"
 msgstr "(没有主题)"
 
-#: src/compose.c:2722
+#: src/compose.c:2725
 #, fuzzy, c-format
 msgid "%s - Compose%s"
 msgstr "%s - 撰写邮件%s"
 
-#: src/compose.c:2837
+#: src/compose.c:2840
 msgid "Recipient is not specified."
 msgstr "没有指定收件人。"
 
-#: src/compose.c:2845
+#: src/compose.c:2848
 #, fuzzy
 msgid "Empty subject"
 msgstr "主题"
 
-#: src/compose.c:2846
+#: src/compose.c:2849
 msgid "Subject is empty. Send it anyway?"
 msgstr "主题是空的。还要发送吗？"
 
-#: src/compose.c:2894
+#: src/compose.c:2897
 #, fuzzy
 msgid "Attachment is missing"
 msgstr "附件"
 
-#: src/compose.c:2895
+#: src/compose.c:2898
 msgid "There is no attachment. Send it without attachments?"
 msgstr ""
 
-#: src/compose.c:2958
+#: src/compose.c:2968 src/compose.c:2993
+msgid "Check recipients"
+msgstr ""
+
+#: src/compose.c:3013
+#, fuzzy
+msgid "Really send this mail to the following addresses?"
+msgstr "自动设置以下地址"
+
+#: src/compose.c:3026 src/compose.c:4877 src/headerview.c:54
+msgid "From:"
+msgstr "发件人："
+
+#: src/compose.c:3044 src/headerview.c:58 src/prefs_template.c:187
+msgid "Subject:"
+msgstr "标题："
+
+#: src/compose.c:3130
+#, fuzzy
+msgid "_Send"
+msgstr "发送"
+
+#: src/compose.c:3215
 msgid "can't get recipient list."
 msgstr "无法获得收件人列表。"
 
-#: src/compose.c:2978
+#: src/compose.c:3235
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1641,25 +1665,25 @@ msgstr ""
 "没有指定发送邮件要用的帐号。\n"
 "请在发送前选择一个邮件帐号。"
 
-#: src/compose.c:2992 src/send_message.c:315
+#: src/compose.c:3249 src/send_message.c:315
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "发送邮件到 %s 时发生错误。"
 
-#: src/compose.c:3042
+#: src/compose.c:3299
 msgid "Can't save the message to outbox."
 msgstr "无法将该邮件保存到发件箱。"
 
-#: src/compose.c:3080
+#: src/compose.c:3337
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "无法找到和当前选中的密钥标识“%s”相联系的钥匙。"
 
-#: src/compose.c:3208 src/compose.c:3547 src/compose.c:3610 src/compose.c:3730
+#: src/compose.c:3465 src/compose.c:3804 src/compose.c:3867 src/compose.c:3987
 msgid "can't change file mode\n"
 msgstr "无法改变文件属性\n"
 
-#: src/compose.c:3241
+#: src/compose.c:3498
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1669,12 +1693,12 @@ msgstr ""
 "无法将邮件的字符编码从 %s 转换到 %s。\n"
 "仍然用 %s 发送吗？"
 
-#: src/compose.c:3247
+#: src/compose.c:3504
 #, fuzzy
 msgid "Code conversion error"
 msgstr "地址簿转换错误"
 
-#: src/compose.c:3333
+#: src/compose.c:3590
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1683,15 +1707,15 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:3337
+#: src/compose.c:3594
 msgid "Line length limit"
 msgstr ""
 
-#: src/compose.c:3499
+#: src/compose.c:3756
 msgid "Encrypting with Bcc"
 msgstr ""
 
-#: src/compose.c:3500
+#: src/compose.c:3757
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1700,95 +1724,91 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:3690
+#: src/compose.c:3947
 msgid "can't remove the old message\n"
 msgstr "无法删除旧邮件\n"
 
-#: src/compose.c:3708
+#: src/compose.c:3965
 msgid "queueing message...\n"
 msgstr "正在排队邮件...\n"
 
-#: src/compose.c:3796
+#: src/compose.c:4053
 msgid "can't find queue folder\n"
 msgstr "无法找到队列文件夹：%s\n"
 
-#: src/compose.c:3803
+#: src/compose.c:4060
 msgid "can't queue the message\n"
 msgstr "无法排队该邮件\n"
 
-#: src/compose.c:3843
+#: src/compose.c:4100
 #, fuzzy, c-format
 msgid "File %s doesn't exist."
 msgstr "文件 %s 不存在\n"
 
-#: src/compose.c:3852
+#: src/compose.c:4109
 #, fuzzy, c-format
 msgid "Can't open file %s."
 msgstr "无法打开文件 %s\n"
 
-#: src/compose.c:4452
+#: src/compose.c:4709
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "生成邮件标识号：%s\n"
 
-#: src/compose.c:4567
+#: src/compose.c:4824
 msgid "Creating compose window...\n"
 msgstr "正在创建撰写窗口...\n"
 
-#: src/compose.c:4620 src/headerview.c:54
-msgid "From:"
-msgstr "发件人："
-
-#: src/compose.c:4694
+#: src/compose.c:4951
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/工具(_T)/PGP 签名(_G)"
 
-#: src/compose.c:4697
+#: src/compose.c:4954
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/工具(_T)/PGP 加密(_E)"
 
-#: src/compose.c:4735 src/compose.c:5851
+#: src/compose.c:4992 src/compose.c:6106
 msgid "MIME type"
 msgstr "MIME 类型"
 
 #. S_COL_DATE
-#: src/compose.c:4744 src/mimeview.c:217 src/prefs_filter_edit.c:497
+#: src/compose.c:5001 src/mimeview.c:217 src/prefs_filter_edit.c:497
 #: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5087
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:5747
+#: src/compose.c:6001
 msgid "Invalid MIME type."
 msgstr "无效的MIME类型。"
 
-#: src/compose.c:5765
+#: src/compose.c:6019
 msgid "File doesn't exist or is empty."
 msgstr "文件不存在或为空。"
 
-#: src/compose.c:5833
+#: src/compose.c:6088
 msgid "Properties"
 msgstr "属性"
 
-#: src/compose.c:5853 src/prefs_common_dialog.c:1543
+#: src/compose.c:6108 src/prefs_common_dialog.c:1551
 msgid "Encoding"
 msgstr "编码方式"
 
-#: src/compose.c:5876 src/prefs_folder_item.c:202
+#: src/compose.c:6131 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "路径"
 
-#: src/compose.c:5877
+#: src/compose.c:6132
 msgid "File name"
 msgstr "文件名"
 
-#: src/compose.c:5967
+#: src/compose.c:6222
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外部编辑器命令行无效：“%s”\n"
 
-#: src/compose.c:6029
+#: src/compose.c:6284
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1798,51 +1818,51 @@ msgstr ""
 "强制结束程序？\n"
 "程序组标识号：%d"
 
-#: src/compose.c:6366 src/mainwindow.c:2976
+#: src/compose.c:6621 src/mainwindow.c:2976
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6484 src/compose.c:6489 src/compose.c:6495
+#: src/compose.c:6741 src/compose.c:6746 src/compose.c:6752
 msgid "Can't queue the message."
 msgstr "无法将该邮件排队。"
 
-#: src/compose.c:6586
+#: src/compose.c:6843
 msgid "Select files"
 msgstr "选择文件"
 
-#: src/compose.c:6609
+#: src/compose.c:6866
 msgid "Select file"
 msgstr "选择文件"
 
-#: src/compose.c:6644
+#: src/compose.c:6901
 #, fuzzy
 msgid "Save message"
 msgstr "立即发送邮件"
 
-#: src/compose.c:6645
+#: src/compose.c:6902
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "该邮件已修改。丢弃它？"
 
-#: src/compose.c:6647
+#: src/compose.c:6904
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:6689
+#: src/compose.c:6946
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "您要使用模板“%s”吗？"
 
-#: src/compose.c:6691
+#: src/compose.c:6948
 msgid "Apply template"
 msgstr "使用模板"
 
-#: src/compose.c:6692
+#: src/compose.c:6949
 #, fuzzy
 msgid "_Replace"
 msgstr "替换"
 
-#: src/compose.c:6692
+#: src/compose.c:6949
 #, fuzzy
 msgid "_Insert"
 msgstr "插入"
@@ -2025,7 +2045,7 @@ msgstr "编辑 JPilot 项"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:691 src/importldif.c:498 src/prefs_account_dialog.c:1863
-#: src/prefs_common_dialog.c:1949
+#: src/prefs_common_dialog.c:1957
 msgid " ... "
 msgstr " ... "
 
@@ -2331,7 +2351,7 @@ msgstr "重建文件夹树失败。"
 msgid "Checking for new messages in all folders..."
 msgstr "正在检查所有文件夹中的新邮件..."
 
-#: src/folderview.c:1247 src/prefs_common_dialog.c:1893 src/prefs_toolbar.c:65
+#: src/folderview.c:1247 src/prefs_common_dialog.c:1901 src/prefs_toolbar.c:65
 msgid "Junk"
 msgstr ""
 
@@ -2471,10 +2491,6 @@ msgstr "删除新闻组帐号"
 #: src/headerview.c:57
 msgid "Newsgroups:"
 msgstr "新闻组："
-
-#: src/headerview.c:58 src/prefs_template.c:187
-msgid "Subject:"
-msgstr "标题："
 
 #: src/headerview.c:90
 msgid "Creating header view...\n"
@@ -4084,21 +4100,21 @@ msgstr "帐号首选项"
 msgid "Creating account preferences window...\n"
 msgstr "正在创建帐号首选项窗口...\n"
 
-#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:697
+#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:700
 msgid "Receive"
 msgstr "接收"
 
-#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:699
+#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:702
 #: src/prefs_toolbar.c:47 src/prefs_toolbar.c:99
 msgid "Send"
 msgstr "发送"
 
-#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:701
+#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:704
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:50
 msgid "Compose"
 msgstr "撰写"
 
-#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:708
+#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:711
 msgid "Privacy"
 msgstr "隐私"
 
@@ -4106,7 +4122,7 @@ msgstr "隐私"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2235
+#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2243
 msgid "Advanced"
 msgstr "高级"
 
@@ -4233,7 +4249,7 @@ msgid "Authentication method"
 msgstr "验证方法"
 
 #: src/prefs_account_dialog.c:989 src/prefs_account_dialog.c:1148
-#: src/prefs_common_dialog.c:918 src/prefs_common_dialog.c:2622
+#: src/prefs_common_dialog.c:922 src/prefs_common_dialog.c:2630
 msgid "Automatic"
 msgstr "自动"
 
@@ -4283,8 +4299,8 @@ msgstr "生成邮件标识"
 msgid "Add user-defined header"
 msgstr "添加用户定义的头域"
 
-#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1649
-#: src/prefs_common_dialog.c:1676
+#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1657
+#: src/prefs_common_dialog.c:1684
 msgid " Edit... "
 msgstr " 编辑... "
 
@@ -4307,7 +4323,7 @@ msgid "Authenticate with POP3 before sending"
 msgstr "发送前用POP3验证"
 
 #. signature
-#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1048
+#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1056
 #: src/prefs_toolbar.c:114
 msgid "Signature"
 msgstr "签名"
@@ -4619,303 +4635,308 @@ msgstr "删除动作"
 msgid "Do you really want to delete this action?"
 msgstr "您真的要删除该动作吗？"
 
-#: src/prefs_common_dialog.c:677
+#: src/prefs_common_dialog.c:680
 msgid "Creating common preferences window...\n"
 msgstr "正在创建通用首选项窗口...\n"
 
-#: src/prefs_common_dialog.c:681
+#: src/prefs_common_dialog.c:684
 msgid "Common Preferences"
 msgstr "通用首选项"
 
-#: src/prefs_common_dialog.c:703
+#: src/prefs_common_dialog.c:706
 msgid "Display"
 msgstr "显示"
 
-#: src/prefs_common_dialog.c:705
+#: src/prefs_common_dialog.c:708
 #, fuzzy
 msgid "Junk mail"
 msgstr "文件夹："
 
-#: src/prefs_common_dialog.c:711
+#: src/prefs_common_dialog.c:714
 msgid "Details"
 msgstr ""
 
-#: src/prefs_common_dialog.c:765
+#: src/prefs_common_dialog.c:768
 msgid "Auto-check new mail"
 msgstr "自动检查新邮件"
 
-#: src/prefs_common_dialog.c:767 src/prefs_common_dialog.c:1164
+#: src/prefs_common_dialog.c:770 src/prefs_common_dialog.c:1172
 msgid "every"
 msgstr "每"
 
-#: src/prefs_common_dialog.c:779 src/prefs_common_dialog.c:1178
+#: src/prefs_common_dialog.c:782 src/prefs_common_dialog.c:1186
 msgid "minute(s)"
 msgstr "分钟"
 
-#: src/prefs_common_dialog.c:788
+#: src/prefs_common_dialog.c:791
 msgid "Check new mail on startup"
 msgstr "启动时检查新邮件"
 
-#: src/prefs_common_dialog.c:790
+#: src/prefs_common_dialog.c:793
 msgid "Update all local folders after incorporation"
 msgstr "合并邮件后更新所有的本地文件夹"
 
-#: src/prefs_common_dialog.c:795
+#: src/prefs_common_dialog.c:798
 #, fuzzy
 msgid "Execute command when new messages arrived"
 msgstr "当移动或删除邮件时立即执行"
 
-#: src/prefs_common_dialog.c:807 src/prefs_common_dialog.c:2478
-#: src/prefs_common_dialog.c:2500 src/prefs_common_dialog.c:2522
+#: src/prefs_common_dialog.c:810 src/prefs_common_dialog.c:2486
+#: src/prefs_common_dialog.c:2508 src/prefs_common_dialog.c:2530
 msgid "Command"
 msgstr "命令"
 
-#: src/prefs_common_dialog.c:818
+#: src/prefs_common_dialog.c:821
 #, fuzzy, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "正在获取新邮件数量(STAT)..."
 
-#: src/prefs_common_dialog.c:822
+#: src/prefs_common_dialog.c:825
 #, fuzzy
 msgid "Incorporate from local spool"
 msgstr "从邮件池合并邮件"
 
-#: src/prefs_common_dialog.c:835
+#: src/prefs_common_dialog.c:838
 msgid "Filter on incorporation"
 msgstr "合并邮件时进行过滤"
 
-#: src/prefs_common_dialog.c:841
+#: src/prefs_common_dialog.c:844
 msgid "Spool path"
 msgstr "邮件池路径"
 
-#: src/prefs_common_dialog.c:895
+#: src/prefs_common_dialog.c:899
 msgid "Save sent messages to outbox"
 msgstr "将已发出的邮件保存在发件箱"
 
-#: src/prefs_common_dialog.c:897
+#: src/prefs_common_dialog.c:901
 msgid "Apply filter rules to sent messages"
 msgstr ""
 
-#: src/prefs_common_dialog.c:904
+#: src/prefs_common_dialog.c:908
 msgid "Transfer encoding"
 msgstr "传输编码"
 
-#: src/prefs_common_dialog.c:927
+#: src/prefs_common_dialog.c:931
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
 msgstr "指定当邮件内容包含非 ASCII 字符时使用的 Content-Transfer-Encoding。"
 
-#: src/prefs_common_dialog.c:934
+#: src/prefs_common_dialog.c:938
 #, fuzzy
 msgid "MIME filename encoding"
 msgstr "发送时使用的字符编码"
 
-#: src/prefs_common_dialog.c:945
+#: src/prefs_common_dialog.c:949
 #, fuzzy
 msgid "MIME header"
 msgstr "发送时使用的字符编码"
 
-#: src/prefs_common_dialog.c:955
+#: src/prefs_common_dialog.c:959
 msgid ""
 "Specify encoding method for MIME filename with non-ASCII characters.\n"
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
 
-#: src/prefs_common_dialog.c:961
+#: src/prefs_common_dialog.c:965
 msgid ""
 "Confirm attachments when the following strings (comma-separated) are found "
 "in the message body"
 msgstr ""
 
-#: src/prefs_common_dialog.c:972
+#: src/prefs_common_dialog.c:976
 msgid "(Ex: attach)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1044 src/prefs_common_dialog.c:1433
+#: src/prefs_common_dialog.c:983
+#, fuzzy
+msgid "Confirm recipients before sending"
+msgstr "发送前折行"
+
+#: src/prefs_common_dialog.c:1052 src/prefs_common_dialog.c:1441
 #: src/prefs_folder_item.c:139
 msgid "General"
 msgstr "常规"
 
-#: src/prefs_common_dialog.c:1059
+#: src/prefs_common_dialog.c:1067
 msgid "Signature separator"
 msgstr "签名分隔符"
 
-#: src/prefs_common_dialog.c:1068
+#: src/prefs_common_dialog.c:1076
 msgid "Insert automatically"
 msgstr "自动插入"
 
-#: src/prefs_common_dialog.c:1070 src/prefs_toolbar.c:53
+#: src/prefs_common_dialog.c:1078 src/prefs_toolbar.c:53
 msgid "Reply"
 msgstr "回复"
 
-#: src/prefs_common_dialog.c:1078
+#: src/prefs_common_dialog.c:1086
 msgid "Automatically select account for replies"
 msgstr "自动选择回复用的帐号"
 
-#: src/prefs_common_dialog.c:1080
+#: src/prefs_common_dialog.c:1088
 msgid "Quote message when replying"
 msgstr "回复时引用原文"
 
-#: src/prefs_common_dialog.c:1082
+#: src/prefs_common_dialog.c:1090
 msgid "Reply button invokes mailing list reply"
 msgstr "回复按钮会回复到邮件列表"
 
-#: src/prefs_common_dialog.c:1084
+#: src/prefs_common_dialog.c:1092
 msgid "Inherit recipients on reply to self messages"
 msgstr ""
 
 #. editor
-#: src/prefs_common_dialog.c:1088 src/prefs_common_dialog.c:2441
+#: src/prefs_common_dialog.c:1096 src/prefs_common_dialog.c:2449
 #: src/prefs_toolbar.c:117
 msgid "Editor"
 msgstr "编辑器"
 
-#: src/prefs_common_dialog.c:1095
+#: src/prefs_common_dialog.c:1103
 msgid "Automatically launch the external editor"
 msgstr "自动启动外部编辑器"
 
-#: src/prefs_common_dialog.c:1105
+#: src/prefs_common_dialog.c:1113
 msgid "Undo level"
 msgstr "撤销次数"
 
-#: src/prefs_common_dialog.c:1125
+#: src/prefs_common_dialog.c:1133
 msgid "Wrap messages at"
 msgstr "邮件折行于第"
 
-#: src/prefs_common_dialog.c:1137
+#: src/prefs_common_dialog.c:1145
 msgid "characters"
 msgstr "个字符"
 
-#: src/prefs_common_dialog.c:1147
+#: src/prefs_common_dialog.c:1155
 msgid "Wrap quotation"
 msgstr "引文折行"
 
-#: src/prefs_common_dialog.c:1153
+#: src/prefs_common_dialog.c:1161
 msgid "Wrap on input"
 msgstr "输入时折行"
 
-#: src/prefs_common_dialog.c:1162
+#: src/prefs_common_dialog.c:1170
 #, fuzzy
 msgid "Auto-save to draft"
 msgstr "保存到草稿文件夹"
 
-#: src/prefs_common_dialog.c:1187
+#: src/prefs_common_dialog.c:1195
 #, fuzzy
 msgid "Format"
 msgstr "普通"
 
-#: src/prefs_common_dialog.c:1192
+#: src/prefs_common_dialog.c:1200
 msgid "Spell checking"
 msgstr ""
 
 #. reply
-#: src/prefs_common_dialog.c:1244
+#: src/prefs_common_dialog.c:1252
 msgid "Reply format"
 msgstr "回复格式"
 
-#: src/prefs_common_dialog.c:1259 src/prefs_common_dialog.c:1301
+#: src/prefs_common_dialog.c:1267 src/prefs_common_dialog.c:1309
 msgid "Quotation mark"
 msgstr "引文符号"
 
 #. forward
-#: src/prefs_common_dialog.c:1286
+#: src/prefs_common_dialog.c:1294
 msgid "Forward format"
 msgstr "转发格式"
 
-#: src/prefs_common_dialog.c:1333
+#: src/prefs_common_dialog.c:1341
 msgid " Description of symbols "
 msgstr " 符号描述 "
 
-#: src/prefs_common_dialog.c:1362
+#: src/prefs_common_dialog.c:1370
 msgid "Enable Spell checking"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1374
+#: src/prefs_common_dialog.c:1382
 #, fuzzy
 msgid "Default language:"
 msgstr "默认收件箱"
 
-#: src/prefs_common_dialog.c:1441
+#: src/prefs_common_dialog.c:1449
 #, fuzzy
 msgid "Text font"
 msgstr "文本"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1453
+#: src/prefs_common_dialog.c:1461
 #, fuzzy
 msgid "Folder View"
 msgstr "文件夹"
 
-#: src/prefs_common_dialog.c:1461
+#: src/prefs_common_dialog.c:1469
 msgid "Display unread number next to folder name"
 msgstr "在文件夹名后显示未读邮件的数量"
 
-#: src/prefs_common_dialog.c:1463
+#: src/prefs_common_dialog.c:1471
 #, fuzzy
 msgid "Display message number columns in the folder view"
 msgstr "在文件夹名后显示未读邮件的数量"
 
-#: src/prefs_common_dialog.c:1472
+#: src/prefs_common_dialog.c:1480
 msgid "Abbreviate newsgroups longer than"
 msgstr "缩写新闻组长于"
 
-#: src/prefs_common_dialog.c:1487
+#: src/prefs_common_dialog.c:1495
 msgid "letters"
 msgstr "信件"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1493
+#: src/prefs_common_dialog.c:1501
 msgid "Summary View"
 msgstr "摘要视图"
 
-#: src/prefs_common_dialog.c:1502
+#: src/prefs_common_dialog.c:1510
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "如果发件人是您自己，“发件人”栏中显示的是收件人"
 
-#: src/prefs_common_dialog.c:1504
+#: src/prefs_common_dialog.c:1512
 msgid "Expand threads"
 msgstr "展开线索"
 
-#: src/prefs_common_dialog.c:1512 src/prefs_common_dialog.c:2865
-#: src/prefs_common_dialog.c:2903
+#: src/prefs_common_dialog.c:1520 src/prefs_common_dialog.c:2873
+#: src/prefs_common_dialog.c:2911
 msgid "Date format"
 msgstr "日期格式"
 
-#: src/prefs_common_dialog.c:1533
+#: src/prefs_common_dialog.c:1541
 msgid " Set display item of summary... "
 msgstr " 设置摘要中显示的项... "
 
-#: src/prefs_common_dialog.c:1539
+#: src/prefs_common_dialog.c:1547
 msgid "Message"
 msgstr "邮件"
 
-#: src/prefs_common_dialog.c:1549
+#: src/prefs_common_dialog.c:1557
 #, fuzzy
 msgid "Default character encoding"
 msgstr "/查看(_V)/字符编码(_E)"
 
-#: src/prefs_common_dialog.c:1563
+#: src/prefs_common_dialog.c:1571
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1569
+#: src/prefs_common_dialog.c:1577
 #, fuzzy
 msgid "Outgoing character encoding"
 msgstr "/查看(_V)/字符编码(_E)"
 
-#: src/prefs_common_dialog.c:1583
+#: src/prefs_common_dialog.c:1591
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
 "be used."
 msgstr "如果选择“自动”，将使用最适合当前区域设置的编码方式。"
 
-#: src/prefs_common_dialog.c:1645
+#: src/prefs_common_dialog.c:1653
 msgid "Enable coloration of message"
 msgstr "启用邮件的颜色表示"
 
-#: src/prefs_common_dialog.c:1660
+#: src/prefs_common_dialog.c:1668
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
@@ -4923,589 +4944,589 @@ msgstr ""
 "用单字节字符显示多字节字母和数字\n"
 "(仅适用于日语)"
 
-#: src/prefs_common_dialog.c:1667
+#: src/prefs_common_dialog.c:1675
 msgid "Display header pane above message view"
 msgstr "在邮件视图之上显示邮件头面板"
 
-#: src/prefs_common_dialog.c:1674
+#: src/prefs_common_dialog.c:1682
 msgid "Display short headers on message view"
 msgstr "在邮件视图中显示简短的邮件头"
 
-#: src/prefs_common_dialog.c:1686
+#: src/prefs_common_dialog.c:1694
 msgid "Render HTML messages as text"
 msgstr "将HTML内容显示为文本"
 
-#: src/prefs_common_dialog.c:1688
+#: src/prefs_common_dialog.c:1696
 #, fuzzy
 msgid "Treat HTML only messages as attachment"
 msgstr "将HTML内容显示为文本"
 
-#: src/prefs_common_dialog.c:1692
+#: src/prefs_common_dialog.c:1700
 #, fuzzy
 msgid "Display cursor in message view"
 msgstr "在邮件视图中显示简短的邮件头"
 
-#: src/prefs_common_dialog.c:1705
+#: src/prefs_common_dialog.c:1713
 msgid "Line space"
 msgstr "邮件内容行间距"
 
-#: src/prefs_common_dialog.c:1719 src/prefs_common_dialog.c:1757
+#: src/prefs_common_dialog.c:1727 src/prefs_common_dialog.c:1765
 msgid "pixel(s)"
 msgstr "个像素"
 
-#: src/prefs_common_dialog.c:1724
+#: src/prefs_common_dialog.c:1732
 msgid "Scroll"
 msgstr "滚动"
 
-#: src/prefs_common_dialog.c:1731
+#: src/prefs_common_dialog.c:1739
 msgid "Half page"
 msgstr "半页滚动"
 
-#: src/prefs_common_dialog.c:1737
+#: src/prefs_common_dialog.c:1745
 msgid "Smooth scroll"
 msgstr "平滑滚动"
 
-#: src/prefs_common_dialog.c:1743
+#: src/prefs_common_dialog.c:1751
 msgid "Step"
 msgstr "每次滚动"
 
-#: src/prefs_common_dialog.c:1763
+#: src/prefs_common_dialog.c:1771
 msgid "Images"
 msgstr "图像"
 
-#: src/prefs_common_dialog.c:1771
+#: src/prefs_common_dialog.c:1779
 msgid "Resize attached large images to fit in the window"
 msgstr "将附件中的图像缩放至适合窗口大小"
 
-#: src/prefs_common_dialog.c:1773
+#: src/prefs_common_dialog.c:1781
 msgid "Display images as inline"
 msgstr "嵌入显示图像"
 
-#: src/prefs_common_dialog.c:1859
+#: src/prefs_common_dialog.c:1867
 #, fuzzy
 msgid "Enable Junk mail control"
 msgstr "文件夹："
 
-#: src/prefs_common_dialog.c:1871
+#: src/prefs_common_dialog.c:1879
 #, fuzzy
 msgid "Learning command:"
 msgstr "执行命令"
 
-#: src/prefs_common_dialog.c:1880
+#: src/prefs_common_dialog.c:1888
 #, fuzzy
 msgid "(Select preset)"
 msgstr "选择密钥"
 
-#: src/prefs_common_dialog.c:1905
+#: src/prefs_common_dialog.c:1913
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1920
+#: src/prefs_common_dialog.c:1928
 #, fuzzy
 msgid "Classifying command"
 msgstr "执行命令"
 
-#: src/prefs_common_dialog.c:1931
+#: src/prefs_common_dialog.c:1939
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1941
+#: src/prefs_common_dialog.c:1949
 #, fuzzy
 msgid "Junk folder"
 msgstr "文件夹："
 
-#: src/prefs_common_dialog.c:1959
+#: src/prefs_common_dialog.c:1967
 #, fuzzy
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr "(没有过滤的邮件会保存在该文件夹中)"
 
-#: src/prefs_common_dialog.c:1970
+#: src/prefs_common_dialog.c:1978
 #, fuzzy
 msgid "Filter messages classified as junk on receiving"
 msgstr "在接收邮件时进行过滤"
 
-#: src/prefs_common_dialog.c:1973
+#: src/prefs_common_dialog.c:1981
 #, fuzzy
 msgid "Filter junk mails before normal filtering"
 msgstr "从服务器上删除"
 
-#: src/prefs_common_dialog.c:1976
+#: src/prefs_common_dialog.c:1984
 #, fuzzy
 msgid "Delete junk mails from server on receiving"
 msgstr "从服务器上删除"
 
-#: src/prefs_common_dialog.c:1981
+#: src/prefs_common_dialog.c:1989
 msgid "Mark filtered junk mails as read"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2023
+#: src/prefs_common_dialog.c:2031
 msgid "Automatically check signatures"
 msgstr "自动检查签名"
 
-#: src/prefs_common_dialog.c:2026
+#: src/prefs_common_dialog.c:2034
 msgid "Show signature check result in a popup window"
 msgstr "在弹出窗口中显示签名检查结果"
 
-#: src/prefs_common_dialog.c:2029
+#: src/prefs_common_dialog.c:2037
 msgid "Store passphrase in memory temporarily"
 msgstr "将口令串临时存放在内存中"
 
-#: src/prefs_common_dialog.c:2044
+#: src/prefs_common_dialog.c:2052
 msgid "Expired after"
 msgstr "过期时间"
 
-#: src/prefs_common_dialog.c:2057
+#: src/prefs_common_dialog.c:2065
 msgid "minute(s) "
 msgstr "分钟后"
 
-#: src/prefs_common_dialog.c:2071
+#: src/prefs_common_dialog.c:2079
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "设置为“0”将在整个会话过程中储存口令串"
 
-#: src/prefs_common_dialog.c:2080
+#: src/prefs_common_dialog.c:2088
 msgid "Grab input while entering a passphrase"
 msgstr "输入口令串时捕获输入(更安全)"
 
-#: src/prefs_common_dialog.c:2085
+#: src/prefs_common_dialog.c:2093
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "如果 GnuPG 无法工作，在启动时显示警告"
 
-#: src/prefs_common_dialog.c:2154
+#: src/prefs_common_dialog.c:2162
 msgid "Always open messages in summary when selected"
 msgstr "在摘要窗口中选择邮件时打开邮件"
 
-#: src/prefs_common_dialog.c:2158
+#: src/prefs_common_dialog.c:2166
 #, fuzzy
 msgid "Open first unread message when a folder is opened"
 msgstr "进入文件夹时打开第一个未读的邮件"
 
-#: src/prefs_common_dialog.c:2165
+#: src/prefs_common_dialog.c:2173
 #, fuzzy
 msgid "Remember last selected message"
 msgstr "没有找到用颜色标注过的邮件"
 
-#: src/prefs_common_dialog.c:2169
+#: src/prefs_common_dialog.c:2177
 msgid "Only mark message as read when opened in new window"
 msgstr "仅在新窗口中打开邮件时标记邮件为已读"
 
-#: src/prefs_common_dialog.c:2173
+#: src/prefs_common_dialog.c:2181
 #, fuzzy
 msgid "Open inbox after receiving new mail"
 msgstr "收到新邮件时转到收件箱"
 
-#: src/prefs_common_dialog.c:2175
+#: src/prefs_common_dialog.c:2183
 #, fuzzy
 msgid "Open inbox on startup"
 msgstr "启动时检查新邮件"
 
-#: src/prefs_common_dialog.c:2183
+#: src/prefs_common_dialog.c:2191
 msgid "Execute immediately when moving or deleting messages"
 msgstr "当移动或删除邮件时立即执行"
 
-#: src/prefs_common_dialog.c:2195
+#: src/prefs_common_dialog.c:2203
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "如果该选项关闭，标记邮件直到完成执行。"
 
-#: src/prefs_common_dialog.c:2204
+#: src/prefs_common_dialog.c:2212
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2207
+#: src/prefs_common_dialog.c:2215
 #, fuzzy
 msgid "Display tray icon"
 msgstr "显示姓名"
 
-#: src/prefs_common_dialog.c:2209
+#: src/prefs_common_dialog.c:2217
 msgid "Minimize to tray icon"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2211
+#: src/prefs_common_dialog.c:2219
 msgid "Toggle window on trayicon click"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2221
+#: src/prefs_common_dialog.c:2229
 msgid " Set key bindings... "
 msgstr " 设置键盘关联... "
 
-#: src/prefs_common_dialog.c:2227 src/select-keys.c:347
+#: src/prefs_common_dialog.c:2235 src/select-keys.c:347
 msgid "Other"
 msgstr "其它"
 
-#: src/prefs_common_dialog.c:2231
+#: src/prefs_common_dialog.c:2239
 #, fuzzy
 msgid "External commands"
 msgstr "执行命令"
 
-#: src/prefs_common_dialog.c:2284
+#: src/prefs_common_dialog.c:2292
 msgid "Receive dialog"
 msgstr "收对话框"
 
-#: src/prefs_common_dialog.c:2294
+#: src/prefs_common_dialog.c:2302
 msgid "Show receive dialog"
 msgstr "显示接收对话框"
 
-#: src/prefs_common_dialog.c:2304
+#: src/prefs_common_dialog.c:2312
 msgid "Always"
 msgstr "总是"
 
-#: src/prefs_common_dialog.c:2305
+#: src/prefs_common_dialog.c:2313
 msgid "Only on manual receiving"
 msgstr "仅在手工接收时"
 
-#: src/prefs_common_dialog.c:2307
+#: src/prefs_common_dialog.c:2315
 msgid "Never"
 msgstr "从不"
 
-#: src/prefs_common_dialog.c:2312
+#: src/prefs_common_dialog.c:2320
 msgid "Don't popup error dialog on receive error"
 msgstr "在接收错误时不弹出错误对话框"
 
-#: src/prefs_common_dialog.c:2315
+#: src/prefs_common_dialog.c:2323
 msgid "Close receive dialog when finished"
 msgstr "完成后关闭接收对话框"
 
-#: src/prefs_common_dialog.c:2326
+#: src/prefs_common_dialog.c:2334
 msgid "Add address to destination when double-clicked"
 msgstr "双击时将地址添加为收件人"
 
-#: src/prefs_common_dialog.c:2328
+#: src/prefs_common_dialog.c:2336
 msgid "On exit"
 msgstr "退出程序时"
 
-#: src/prefs_common_dialog.c:2336
+#: src/prefs_common_dialog.c:2344
 msgid "Confirm on exit"
 msgstr "退出时进行确认"
 
-#: src/prefs_common_dialog.c:2343
+#: src/prefs_common_dialog.c:2351
 msgid "Empty trash on exit"
 msgstr "退出时清空废件箱"
 
-#: src/prefs_common_dialog.c:2345
+#: src/prefs_common_dialog.c:2353
 msgid "Ask before emptying"
 msgstr "在清空前询问"
 
-#: src/prefs_common_dialog.c:2349
+#: src/prefs_common_dialog.c:2357
 msgid "Warn if there are queued messages"
 msgstr "如果队列中有邮件就发出警告"
 
-#: src/prefs_common_dialog.c:2404
+#: src/prefs_common_dialog.c:2412
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "外部命令 (%s 将被替换为文件名或URI)"
 
-#: src/prefs_common_dialog.c:2413
+#: src/prefs_common_dialog.c:2421
 msgid "Web browser"
 msgstr "网页浏览器"
 
-#: src/prefs_common_dialog.c:2425 src/prefs_common_dialog.c:3878
-#: src/prefs_common_dialog.c:3899
+#: src/prefs_common_dialog.c:2433 src/prefs_common_dialog.c:3886
+#: src/prefs_common_dialog.c:3907
 #, fuzzy
 msgid "(Default browser)"
 msgstr "默认收件箱"
 
-#: src/prefs_common_dialog.c:2466
+#: src/prefs_common_dialog.c:2474
 #, fuzzy
 msgid "Use external program for printing"
 msgstr "使用外部程序发送"
 
-#: src/prefs_common_dialog.c:2488
+#: src/prefs_common_dialog.c:2496
 msgid "Use external program for incorporation"
 msgstr "使用外部程序合并邮件"
 
-#: src/prefs_common_dialog.c:2510
+#: src/prefs_common_dialog.c:2518
 msgid "Use external program for sending"
 msgstr "使用外部程序发送"
 
-#: src/prefs_common_dialog.c:2569
+#: src/prefs_common_dialog.c:2577
 #, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "正在写摘要缓存(%s)..."
 
-#: src/prefs_common_dialog.c:2572
+#: src/prefs_common_dialog.c:2580
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2579
+#: src/prefs_common_dialog.c:2587
 msgid "Socket I/O timeout:"
 msgstr "套接字 I/O 超时："
 
-#: src/prefs_common_dialog.c:2592
+#: src/prefs_common_dialog.c:2600
 msgid "second(s)"
 msgstr "秒"
 
-#: src/prefs_common_dialog.c:2620
+#: src/prefs_common_dialog.c:2628
 msgid "Automatic (Recommended)"
 msgstr "自动 (建议使用)"
 
-#: src/prefs_common_dialog.c:2625
+#: src/prefs_common_dialog.c:2633
 msgid "7bit ascii (US-ASCII)"
 msgstr "7位 ASCII (US-ASCII) "
 
-#: src/prefs_common_dialog.c:2627
+#: src/prefs_common_dialog.c:2635
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:2629
+#: src/prefs_common_dialog.c:2637
 msgid "Western European (ISO-8859-1)"
 msgstr "西欧 (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2630
+#: src/prefs_common_dialog.c:2638
 msgid "Western European (ISO-8859-15)"
 msgstr "西欧 (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2632
+#: src/prefs_common_dialog.c:2640
 #, fuzzy
 msgid "Western European (Windows-1252)"
 msgstr "西欧 (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2636
+#: src/prefs_common_dialog.c:2644
 msgid "Central European (ISO-8859-2)"
 msgstr "中欧 (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2638
+#: src/prefs_common_dialog.c:2646
 msgid "Baltic (ISO-8859-13)"
 msgstr "波罗的语 (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2639
+#: src/prefs_common_dialog.c:2647
 msgid "Baltic (ISO-8859-4)"
 msgstr "波罗的语 (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2640
+#: src/prefs_common_dialog.c:2648
 #, fuzzy
 msgid "Baltic (Windows-1257)"
 msgstr "斯拉夫语 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2642
+#: src/prefs_common_dialog.c:2650
 msgid "Greek (ISO-8859-7)"
 msgstr "希腊语 (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2644
+#: src/prefs_common_dialog.c:2652
 #, fuzzy
 msgid "Arabic (ISO-8859-6)"
 msgstr "波罗的语 (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2645
+#: src/prefs_common_dialog.c:2653
 #, fuzzy
 msgid "Arabic (Windows-1256)"
 msgstr "斯拉夫语 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2647
+#: src/prefs_common_dialog.c:2655
 #, fuzzy
 msgid "Hebrew (ISO-8859-8)"
 msgstr "希腊语 (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2648
+#: src/prefs_common_dialog.c:2656
 #, fuzzy
 msgid "Hebrew (Windows-1255)"
 msgstr "斯拉夫语 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2650
+#: src/prefs_common_dialog.c:2658
 msgid "Turkish (ISO-8859-9)"
 msgstr "土耳其语 (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2652
+#: src/prefs_common_dialog.c:2660
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "斯拉夫语 (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2653
+#: src/prefs_common_dialog.c:2661
 msgid "Cyrillic (KOI8-R)"
 msgstr "斯拉夫语 (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2654
+#: src/prefs_common_dialog.c:2662
 msgid "Cyrillic (KOI8-U)"
 msgstr "斯拉夫语 (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2655
+#: src/prefs_common_dialog.c:2663
 msgid "Cyrillic (Windows-1251)"
 msgstr "斯拉夫语 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2657
+#: src/prefs_common_dialog.c:2665
 msgid "Japanese (ISO-2022-JP)"
 msgstr "日语 (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2659
+#: src/prefs_common_dialog.c:2667
 msgid "Japanese (EUC-JP)"
 msgstr "日语 (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2660
+#: src/prefs_common_dialog.c:2668
 msgid "Japanese (Shift_JIS)"
 msgstr "日语 (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2663
+#: src/prefs_common_dialog.c:2671
 msgid "Simplified Chinese (GB2312)"
 msgstr "简体中文 (GB2312)"
 
-#: src/prefs_common_dialog.c:2664
+#: src/prefs_common_dialog.c:2672
 #, fuzzy
 msgid "Simplified Chinese (GBK)"
 msgstr "简体中文 (GB2312)"
 
-#: src/prefs_common_dialog.c:2665
+#: src/prefs_common_dialog.c:2673
 msgid "Traditional Chinese (Big5)"
 msgstr "繁体中文 (Big5)"
 
-#: src/prefs_common_dialog.c:2667
+#: src/prefs_common_dialog.c:2675
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "繁体中文 (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2668
+#: src/prefs_common_dialog.c:2676
 msgid "Chinese (ISO-2022-CN)"
 msgstr "中文 (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2671
+#: src/prefs_common_dialog.c:2679
 msgid "Korean (EUC-KR)"
 msgstr "朝鲜文 (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2673
+#: src/prefs_common_dialog.c:2681
 msgid "Thai (TIS-620)"
 msgstr "泰文 (TIS-620)"
 
-#: src/prefs_common_dialog.c:2674
+#: src/prefs_common_dialog.c:2682
 msgid "Thai (Windows-874)"
 msgstr "泰文 (Windows-874)"
 
-#: src/prefs_common_dialog.c:2841
+#: src/prefs_common_dialog.c:2849
 msgid "the full abbreviated weekday name"
 msgstr "缩写的星期名"
 
-#: src/prefs_common_dialog.c:2842
+#: src/prefs_common_dialog.c:2850
 msgid "the full weekday name"
 msgstr "完整的星期名"
 
-#: src/prefs_common_dialog.c:2843
+#: src/prefs_common_dialog.c:2851
 msgid "the abbreviated month name"
 msgstr "缩写的月份名"
 
-#: src/prefs_common_dialog.c:2844
+#: src/prefs_common_dialog.c:2852
 msgid "the full month name"
 msgstr "完整的月份名"
 
-#: src/prefs_common_dialog.c:2845
+#: src/prefs_common_dialog.c:2853
 msgid "the preferred date and time for the current locale"
 msgstr "当前区域设置首选的日期和时间格式"
 
-#: src/prefs_common_dialog.c:2846
+#: src/prefs_common_dialog.c:2854
 msgid "the century number (year/100)"
 msgstr "世纪(年份/100)"
 
-#: src/prefs_common_dialog.c:2847
+#: src/prefs_common_dialog.c:2855
 msgid "the day of the month as a decimal number"
 msgstr "十进制表示的月中的天数"
 
-#: src/prefs_common_dialog.c:2848
+#: src/prefs_common_dialog.c:2856
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "24小时时钟的十进制小时"
 
-#: src/prefs_common_dialog.c:2849
+#: src/prefs_common_dialog.c:2857
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "12小时时钟的十进制小时"
 
-#: src/prefs_common_dialog.c:2850
+#: src/prefs_common_dialog.c:2858
 msgid "the day of the year as a decimal number"
 msgstr "十进制表示的一年中的天数"
 
-#: src/prefs_common_dialog.c:2851
+#: src/prefs_common_dialog.c:2859
 msgid "the month as a decimal number"
 msgstr "十进制表示的月份"
 
-#: src/prefs_common_dialog.c:2852
+#: src/prefs_common_dialog.c:2860
 msgid "the minute as a decimal number"
 msgstr "十进制表示的天数"
 
-#: src/prefs_common_dialog.c:2853
+#: src/prefs_common_dialog.c:2861
 msgid "either AM or PM"
 msgstr "AM或PM"
 
-#: src/prefs_common_dialog.c:2854
+#: src/prefs_common_dialog.c:2862
 msgid "the second as a decimal number"
 msgstr "十进制表示的秒"
 
-#: src/prefs_common_dialog.c:2855
+#: src/prefs_common_dialog.c:2863
 msgid "the day of the week as a decimal number"
 msgstr "十进制表示的星期中的天数"
 
-#: src/prefs_common_dialog.c:2856
+#: src/prefs_common_dialog.c:2864
 msgid "the preferred date for the current locale"
 msgstr "当前区域设置的首选日期格式"
 
-#: src/prefs_common_dialog.c:2857
+#: src/prefs_common_dialog.c:2865
 msgid "the last two digits of a year"
 msgstr "年份的最后两个数字"
 
-#: src/prefs_common_dialog.c:2858
+#: src/prefs_common_dialog.c:2866
 msgid "the year as a decimal number"
 msgstr "十进制的年份"
 
-#: src/prefs_common_dialog.c:2859
+#: src/prefs_common_dialog.c:2867
 msgid "the time zone or name or abbreviation"
 msgstr "时区、名字或缩写"
 
-#: src/prefs_common_dialog.c:2880
+#: src/prefs_common_dialog.c:2888
 msgid "Specifier"
 msgstr "说明符"
 
-#: src/prefs_common_dialog.c:2881
+#: src/prefs_common_dialog.c:2889
 msgid "Description"
 msgstr "描述"
 
-#: src/prefs_common_dialog.c:2921
+#: src/prefs_common_dialog.c:2929
 msgid "Example"
 msgstr "示例"
 
-#: src/prefs_common_dialog.c:3002
+#: src/prefs_common_dialog.c:3010
 msgid "Set message colors"
 msgstr "设置邮件颜色"
 
-#: src/prefs_common_dialog.c:3010
+#: src/prefs_common_dialog.c:3018
 msgid "Colors"
 msgstr "颜色"
 
-#: src/prefs_common_dialog.c:3044
+#: src/prefs_common_dialog.c:3052
 msgid "Quoted Text - First Level"
 msgstr "引文－第一级"
 
-#: src/prefs_common_dialog.c:3050
+#: src/prefs_common_dialog.c:3058
 msgid "Quoted Text - Second Level"
 msgstr "引文－第二级"
 
-#: src/prefs_common_dialog.c:3056
+#: src/prefs_common_dialog.c:3064
 msgid "Quoted Text - Third Level"
 msgstr "引文－第三级"
 
-#: src/prefs_common_dialog.c:3062
+#: src/prefs_common_dialog.c:3070
 msgid "URI link"
 msgstr "URI 链接"
 
-#: src/prefs_common_dialog.c:3069
+#: src/prefs_common_dialog.c:3077
 msgid "Recycle quote colors"
 msgstr "循环使用引文颜色"
 
-#: src/prefs_common_dialog.c:3136
+#: src/prefs_common_dialog.c:3144
 msgid "Pick color for quotation level 1"
 msgstr "选择引文级别 1 的颜色"
 
-#: src/prefs_common_dialog.c:3139
+#: src/prefs_common_dialog.c:3147
 msgid "Pick color for quotation level 2"
 msgstr "选择引文级别 2 的颜色"
 
-#: src/prefs_common_dialog.c:3142
+#: src/prefs_common_dialog.c:3150
 msgid "Pick color for quotation level 3"
 msgstr "选择引文级别 3 的颜色"
 
-#: src/prefs_common_dialog.c:3145
+#: src/prefs_common_dialog.c:3153
 msgid "Pick color for URI"
 msgstr "选择URI的颜色"
 
-#: src/prefs_common_dialog.c:3285
+#: src/prefs_common_dialog.c:3293
 msgid "Description of symbols"
 msgstr "符号的描述"
 
-#: src/prefs_common_dialog.c:3341
+#: src/prefs_common_dialog.c:3349
 msgid ""
 "Date\n"
 "From\n"
@@ -5529,11 +5550,11 @@ msgstr ""
 "新闻组\n"
 "邮件标识号"
 
-#: src/prefs_common_dialog.c:3354
+#: src/prefs_common_dialog.c:3362
 msgid "If x is set, displays expr"
 msgstr "如果 x 设置了值则显示 expr"
 
-#: src/prefs_common_dialog.c:3358
+#: src/prefs_common_dialog.c:3366
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5547,7 +5568,7 @@ msgstr ""
 "没有签名的引文内容\n"
 "%"
 
-#: src/prefs_common_dialog.c:3366
+#: src/prefs_common_dialog.c:3374
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5559,20 +5580,20 @@ msgstr ""
 "左括号\n"
 "右括号"
 
-#: src/prefs_common_dialog.c:3420
+#: src/prefs_common_dialog.c:3428
 msgid "Key bindings"
 msgstr "键盘关联"
 
-#: src/prefs_common_dialog.c:3433
+#: src/prefs_common_dialog.c:3441
 #, fuzzy
 msgid "Select the preset of key bindings."
 msgstr " 设置键盘关联... "
 
-#: src/prefs_common_dialog.c:3443 src/prefs_common_dialog.c:3767
+#: src/prefs_common_dialog.c:3451 src/prefs_common_dialog.c:3775
 msgid "Default"
 msgstr "默认"
 
-#: src/prefs_common_dialog.c:3446 src/prefs_common_dialog.c:3776
+#: src/prefs_common_dialog.c:3454 src/prefs_common_dialog.c:3784
 msgid "Old Sylpheed"
 msgstr "旧式的Sylpheed"
 
@@ -7159,9 +7180,6 @@ msgstr "旧式的Sylpheed"
 
 #~ msgid "%.2fGB"
 #~ msgstr "%.2fGB"
-
-#~ msgid "Wrap before sending"
-#~ msgstr "发送前折行"
 
 #~ msgid "Insert signature"
 #~ msgstr "插入签名"

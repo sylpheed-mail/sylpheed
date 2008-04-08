@@ -84,6 +84,7 @@ static struct Send {
 
 	GtkWidget *checkbtn_check_attach;
 	GtkWidget *entry_check_attach_str;
+	GtkWidget *checkbtn_check_recp;
 } p_send;
 
 static struct Compose {
@@ -298,6 +299,8 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"check_attach_str", &p_send.entry_check_attach_str,
 	 prefs_set_data_from_entry, prefs_set_entry},
+	{"check_recipients", &p_send.checkbtn_check_recp,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* {"allow_jisx0201_kana", NULL, NULL, NULL}, */
 
@@ -881,6 +884,7 @@ static void prefs_send_create(void)
 	GtkWidget *label;
 	GtkWidget *checkbtn_check_attach;
 	GtkWidget *entry_check_attach_str;
+	GtkWidget *checkbtn_check_recp;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -975,6 +979,9 @@ static void prefs_send_create(void)
 
 	SET_TOGGLE_SENSITIVITY(checkbtn_check_attach, entry_check_attach_str);
 
+	PACK_CHECK_BUTTON (vbox1, checkbtn_check_recp,
+			   _("Confirm recipients before sending"));
+
 	p_send.checkbtn_savemsg     = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 
@@ -983,6 +990,7 @@ static void prefs_send_create(void)
 
 	p_send.checkbtn_check_attach = checkbtn_check_attach;
 	p_send.entry_check_attach_str = entry_check_attach_str;
+	p_send.checkbtn_check_recp = checkbtn_check_recp;
 }
 
 static void prefs_compose_create(void)

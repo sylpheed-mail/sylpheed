@@ -62,6 +62,8 @@
 #include <gtk/gtkdnd.h>
 #include <gtk/gtkclipboard.h>
 #include <gtk/gtkstock.h>
+#include <gtk/gtkdialog.h>
+#include <gtk/gtkimage.h>
 #include <pango/pango-break.h>
 
 #if USE_GTKSPELL
@@ -256,6 +258,7 @@ static gboolean compose_check_for_valid_recipient
 						(Compose	*compose);
 static gboolean compose_check_entries		(Compose	*compose);
 static gboolean compose_check_attachments	(Compose	*compose);
+static gboolean compose_check_recipients	(Compose	*compose);
 
 static gint compose_send			(Compose	*compose);
 static gint compose_write_to_file		(Compose	*compose,
@@ -2901,6 +2904,256 @@ static gboolean compose_check_attachments(Compose *compose)
 	return TRUE;
 }
 
+static gint check_recp_delete_event(GtkWidget *widget, GdkEventAny *event,
+				    gint *state)
+{
+	*state = GTK_RESPONSE_CANCEL;
+	return TRUE;
+}
+
+static gboolean check_recp_key_pressed(GtkWidget *widget, GdkEventKey *event,
+				       gint *state)
+{
+	if (event && event->keyval == GDK_Escape) {
+		*state = GTK_RESPONSE_CANCEL;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static void check_recp_ok(GtkWidget *widget, gint *state)
+{
+	*state = GTK_RESPONSE_OK;
+}
+
+static void check_recp_cancel(GtkWidget *widget, gint *state)
+{
+	*state = GTK_RESPONSE_CANCEL;
+}
+
+static gboolean compose_check_recipients(Compose *compose)
+{
+	GtkWidget *window;
+	GtkWidget *vbox;
+	GtkWidget *hbox;
+	GtkWidget *image;
+	GtkWidget *vbox2;
+	GtkWidget *label;
+	GtkWidget *table;
+	GtkWidget *entry;
+	gchar buf[1024];
+	const gchar *text;
+	GtkWidget *scrwin;
+	GtkWidget *treeview;
+	GtkTreeStore *store;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
+	GtkTreeIter iter, parent;
+	GtkWidget *hbbox;
+	GtkWidget *ok_btn;
+	GtkWidget *cancel_btn;
+	static PangoFontDescription *font_desc;
+
+	GSList *cur, *to_list = NULL;
+	gint state = 0;
+ 
+	g_return_val_if_fail(compose->account != NULL, FALSE);
+	g_return_val_if_fail(compose->account->address != NULL, FALSE);
+
+	if (!prefs_common.check_recipients)
+		return TRUE;
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
+	gtk_window_set_title(GTK_WINDOW(window), _("Check recipients"));
+	gtk_window_set_position(GTK_WINDOW(window),
+				GTK_WIN_POS_CENTER_ON_PARENT);
+	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
+	gtk_widget_set_size_request(window, 480, -1);
+	g_signal_connect(G_OBJECT(window), "delete_event",
+			 G_CALLBACK(check_recp_delete_event), &state);
+	g_signal_connect(G_OBJECT(window), "key_press_event",
+			 G_CALLBACK(check_recp_key_pressed), &state);
+
+	vbox = gtk_vbox_new(FALSE, 8);
+	gtk_container_add(GTK_CONTAINER(window), vbox);
+
+	hbox = gtk_hbox_new(FALSE, 12);
+	gtk_container_set_border_width(GTK_CONTAINER(hbox), 12);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+	image = gtk_image_new_from_stock
+		(GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG);
+	gtk_misc_set_alignment(GTK_MISC(image), 0.5, 0.0);
+	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
+
+	vbox2 = gtk_vbox_new(FALSE, 12);
+	gtk_box_pack_start(GTK_BOX(hbox), vbox2, TRUE, TRUE, 0);
+
+	label = gtk_label_new(_("Check recipients"));
+	gtk_box_pack_start(GTK_BOX(vbox2), label, TRUE, TRUE, 0);
+	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
+        gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+
+	if (!font_desc) {
+		gint size;
+
+		size = pango_font_description_get_size
+			(label->style->font_desc);
+		font_desc = pango_font_description_new();
+		pango_font_description_set_weight
+			(font_desc, PANGO_WEIGHT_BOLD);
+		pango_font_description_set_size
+			(font_desc, size * PANGO_SCALE_LARGE);
+	}
+	if (font_desc)
+		gtk_widget_modify_font(label, font_desc);
+
+	label = gtk_label_new
+		(_("Really send this mail to the following addresses?"));
+	gtk_box_pack_start(GTK_BOX(vbox2), label, TRUE, TRUE, 0);
+	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
+	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
+	GTK_WIDGET_UNSET_FLAGS(label, GTK_CAN_FOCUS);
+
+	table = gtk_table_new(2, 2, FALSE);
+	gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
+	gtk_table_set_row_spacings(GTK_TABLE(table), 4);
+	gtk_table_set_col_spacings(GTK_TABLE(table), 4);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	label = gtk_label_new(prefs_common.trans_hdr ? _("From:")
+			      : "From:");
+	gtk_box_pack_end(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_table_attach(GTK_TABLE(table), hbox, 0, 1, 0, 1,
+                         GTK_FILL, 0, 2, 0);
+	entry = gtk_entry_new();
+	gtk_entry_set_max_length(GTK_ENTRY(entry), MAX_ENTRY_LENGTH);
+	gtk_table_attach_defaults
+                (GTK_TABLE(table), entry, 1, 2, 0, 1);
+
+	if (compose->account->name && *compose->account->name) {
+		g_snprintf(buf, sizeof(buf), "%s <%s>",
+			   compose->account->name, compose->account->address);
+		gtk_entry_set_text(GTK_ENTRY(entry), buf);
+	} else
+		gtk_entry_set_text(GTK_ENTRY(entry), compose->account->address);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	label = gtk_label_new(prefs_common.trans_hdr ? _("Subject:")
+			      : "Subject:");
+	gtk_box_pack_end(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_table_attach(GTK_TABLE(table), hbox, 0, 1, 1, 2,
+                         GTK_FILL, 0, 2, 0);
+	entry = gtk_entry_new();
+	gtk_entry_set_max_length(GTK_ENTRY(entry), MAX_ENTRY_LENGTH);
+	gtk_table_attach_defaults
+                (GTK_TABLE(table), entry, 1, 2, 1, 2);
+
+	text = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
+	gtk_entry_set_text(GTK_ENTRY(entry), text);
+
+	scrwin = gtk_scrolled_window_new(NULL, NULL);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrwin),
+				       GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrwin),
+					    GTK_SHADOW_IN);
+	gtk_widget_set_size_request(scrwin, -1, 180);
+	gtk_box_pack_start(GTK_BOX(vbox), scrwin, TRUE, TRUE, 0);
+
+	store = gtk_tree_store_new(1, G_TYPE_STRING);
+	if (compose->use_to) {
+		text = gtk_entry_get_text(GTK_ENTRY(compose->to_entry));
+		to_list = address_list_append_orig(NULL, text);
+		if (to_list) {
+			gtk_tree_store_append(store, &parent, NULL);
+			gtk_tree_store_set(store, &parent, 0,
+					   prefs_common.trans_hdr ?
+					   _("To:") : "To:", -1);
+			for (cur = to_list; cur != NULL; cur = cur->next) {
+				gtk_tree_store_append(store, &iter, &parent);
+				gtk_tree_store_set(store, &iter, 0,
+						   (gchar *)cur->data, -1);
+			}
+			slist_free_strings(to_list);
+		}
+	}
+	if (compose->use_cc) {
+		text = gtk_entry_get_text(GTK_ENTRY(compose->cc_entry));
+		to_list = address_list_append_orig(NULL, text);
+		if (to_list) {
+			gtk_tree_store_append(store, &parent, NULL);
+			gtk_tree_store_set(store, &parent, 0,
+					   prefs_common.trans_hdr ?
+					   _("Cc:") : "Cc:", -1);
+			for (cur = to_list; cur != NULL; cur = cur->next) {
+				gtk_tree_store_append(store, &iter, &parent);
+				gtk_tree_store_set(store, &iter, 0,
+						   (gchar *)cur->data, -1);
+			}
+			slist_free_strings(to_list);
+		}
+	}
+	if (compose->use_bcc) {
+		text = gtk_entry_get_text(GTK_ENTRY(compose->bcc_entry));
+		to_list = address_list_append_orig(NULL, text);
+		if (to_list) {
+			gtk_tree_store_append(store, &parent, NULL);
+			gtk_tree_store_set(store, &parent, 0,
+					   prefs_common.trans_hdr ?
+					   _("Bcc:") : "Bcc:", -1);
+			for (cur = to_list; cur != NULL; cur = cur->next) {
+				gtk_tree_store_append(store, &iter, &parent);
+				gtk_tree_store_set(store, &iter, 0,
+						   (gchar *)cur->data, -1);
+			}
+			slist_free_strings(to_list);
+		}
+	}
+
+	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+
+	gtk_container_add(GTK_CONTAINER(scrwin), treeview);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Address"), renderer, "text", 0, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	gtk_tree_view_expand_all(GTK_TREE_VIEW(treeview));
+
+	gtkut_stock_button_set_create(&hbbox, &ok_btn, _("_Send"),
+				      &cancel_btn, GTK_STOCK_CANCEL,
+				      NULL, NULL);
+        gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
+        gtk_widget_grab_default(ok_btn);
+	gtk_widget_grab_focus(ok_btn);
+
+	g_signal_connect(G_OBJECT(ok_btn), "clicked",
+			 G_CALLBACK(check_recp_ok), &state);
+	g_signal_connect(G_OBJECT(cancel_btn), "clicked",
+			 G_CALLBACK(check_recp_cancel), &state);
+
+	manage_window_set_transient(GTK_WINDOW(window));
+
+	gtk_widget_show_all(window);
+
+	while (state == 0)
+		gtk_main_iteration();
+
+	gtk_widget_destroy(window);
+
+	if (state == GTK_RESPONSE_OK)
+		return TRUE;
+
+	return FALSE;
+}
+
 void compose_lock(Compose *compose)
 {
 	compose->lock_count++;
@@ -2929,6 +3182,10 @@ static gint compose_send(Compose *compose)
 		return 1;
 	}
 	if (compose_check_attachments(compose) == FALSE) {
+		compose_unlock(compose);
+		return 1;
+	}
+	if (compose_check_recipients(compose) == FALSE) {
 		compose_unlock(compose);
 		return 1;
 	}
@@ -6463,6 +6720,8 @@ static void compose_send_later_cb(gpointer data, guint action,
 	if (compose_check_entries(compose) == FALSE)
 		return;
 	if (compose_check_attachments(compose) == FALSE)
+		return;
+	if (compose_check_recipients(compose) == FALSE)
 		return;
 
 	queue = account_get_special_folder(compose->account, F_QUEUE);
