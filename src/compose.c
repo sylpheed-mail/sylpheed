@@ -3087,6 +3087,7 @@ static gboolean compose_check_recipients(Compose *compose)
 						   (gchar *)cur->data, -1);
 			}
 			slist_free_strings(to_list);
+			g_slist_free(to_list);
 		}
 	}
 	if (compose->use_cc) {
@@ -3103,6 +3104,7 @@ static gboolean compose_check_recipients(Compose *compose)
 						   (gchar *)cur->data, -1);
 			}
 			slist_free_strings(to_list);
+			g_slist_free(to_list);
 		}
 	}
 	if (compose->use_bcc) {
@@ -3119,6 +3121,7 @@ static gboolean compose_check_recipients(Compose *compose)
 						   (gchar *)cur->data, -1);
 			}
 			slist_free_strings(to_list);
+			g_slist_free(to_list);
 		}
 	}
 
