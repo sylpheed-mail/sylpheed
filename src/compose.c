@@ -2953,6 +2953,7 @@ static gboolean compose_check_recipients(Compose *compose)
 	GtkWidget *ok_btn;
 	GtkWidget *cancel_btn;
 	static PangoFontDescription *font_desc;
+	GtkStyle *style;
 
 	GSList *cur, *to_list = NULL;
 	gint state = 0;
@@ -2970,6 +2971,7 @@ static gboolean compose_check_recipients(Compose *compose)
 				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_widget_set_size_request(window, 480, -1);
+	gtk_widget_realize(window);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(check_recp_delete_event), &state);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
@@ -3030,6 +3032,10 @@ static gboolean compose_check_recipients(Compose *compose)
                          GTK_FILL, 0, 2, 0);
 	entry = gtk_entry_new();
 	gtk_entry_set_max_length(GTK_ENTRY(entry), MAX_ENTRY_LENGTH);
+	gtk_editable_set_editable(GTK_EDITABLE(entry), FALSE);
+	style = gtk_widget_get_style(window);
+	gtk_widget_modify_base(entry, GTK_STATE_NORMAL,
+			       &style->bg[GTK_STATE_NORMAL]);
 	gtk_table_attach_defaults
                 (GTK_TABLE(table), entry, 1, 2, 0, 1);
 
@@ -3048,6 +3054,10 @@ static gboolean compose_check_recipients(Compose *compose)
                          GTK_FILL, 0, 2, 0);
 	entry = gtk_entry_new();
 	gtk_entry_set_max_length(GTK_ENTRY(entry), MAX_ENTRY_LENGTH);
+	gtk_editable_set_editable(GTK_EDITABLE(entry), FALSE);
+	style = gtk_widget_get_style(window);
+	gtk_widget_modify_base(entry, GTK_STATE_NORMAL,
+			       &style->bg[GTK_STATE_NORMAL]);
 	gtk_table_attach_defaults
                 (GTK_TABLE(table), entry, 1, 2, 1, 2);
 
