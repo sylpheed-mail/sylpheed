@@ -127,7 +127,7 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 					      session);
 	if (session->conn_id < 0) {
 		g_warning("can't connect to server.");
-		session_close(session);
+		session->state = SESSION_ERROR;
 		return -1;
 	}
 
@@ -141,7 +141,7 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 	sock = sock_connect(server, port);
 	if (sock == NULL) {
 		g_warning("can't connect to server.");
-		session_close(session);
+		session->state = SESSION_ERROR;
 		return -1;
 	}
 

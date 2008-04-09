@@ -734,6 +734,9 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 	inc_lock();
 
 	if (session_connect(session, ac_prefs->smtp_server, port) < 0) {
+		manage_window_focus_in(dialog->dialog->window, NULL, NULL);
+		send_put_error(session);
+		manage_window_focus_out(dialog->dialog->window, NULL, NULL);
 		session_destroy(session);
 		send_progress_dialog_destroy(dialog);
 		inc_unlock();
@@ -947,9 +950,14 @@ static void send_put_error(Session *session)
 	default:
 		switch (session->state) {
 		case SESSION_ERROR:
-			log_msg =
-				_("Error occurred while sending the message.");
-			err_msg = g_strdup(log_msg);
+			if (SMTP_SESSION(session)->state == SMTP_READY) {
+				log_msg = _("Can't connect to SMTP server.");
+				err_msg = g_strdup_printf
+					(_("Can't connect to SMTP server: %s:%d"), session->server, session->port);
+			} else {
+				log_msg = _("Error occurred while sending the message.");
+				err_msg = g_strdup(log_msg);
+			}
 			break;
 		case SESSION_EOF:
 			log_msg = _("Connection closed by the remote host.");
