@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,6 +179,8 @@ void gtkut_combo_set_items		(GtkCombo	*combo,
 
 gchar *gtkut_editable_get_selection	(GtkEditable	*editable);
 void gtkut_editable_disable_im		(GtkEditable	*editable);
+
+void gtkut_entry_strip_text		(GtkEntry	*entry);
 
 void gtkut_container_remove		(GtkContainer	*container,
 					 GtkWidget	*widget);

@@ -1942,6 +1942,11 @@ static gint prefs_account_apply(void)
 	protocol = GPOINTER_TO_INT
 		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
 
+	gtkut_entry_strip_text(GTK_ENTRY(basic.addr_entry));
+	gtkut_entry_strip_text(GTK_ENTRY(basic.smtpserv_entry));
+	gtkut_entry_strip_text(GTK_ENTRY(basic.recvserv_entry));
+	gtkut_entry_strip_text(GTK_ENTRY(basic.nntpserv_entry));
+
 	if (*gtk_entry_get_text(GTK_ENTRY(basic.acname_entry)) == '\0') {
 		alertpanel_error(_("Account name is not entered."));
 		return -1;
