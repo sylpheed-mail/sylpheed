@@ -566,6 +566,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Edit/_Find in current message..."),
 						"<control>F", search_cb, 0, NULL},
 	{N_("/_Edit/_Search messages..."),	"<shift><control>F", search_cb, 1, NULL},
+	{N_("/_Edit/_Quick search"),		"<shift><control>S", search_cb, 2, NULL},
 
 	{N_("/_View"),				NULL, NULL, 0, "<Branch>"},
 	{N_("/_View/Show or hi_de"),		NULL, NULL, 0, "<Branch>"},
@@ -3306,6 +3307,17 @@ static void search_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 			prefs_search_folder_open(item);
 		else
 			query_search(item);
+	} else if (action == 2) {
+		if (!prefs_common.show_searchbar) {
+			GtkWidget *menuitem;
+
+			menuitem = gtk_item_factory_get_item
+				(mainwin->menu_factory,
+				 "/View/Show or hide/Search bar");
+			gtk_check_menu_item_set_active
+				(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
+		}
+		gtk_widget_grab_focus(mainwin->summaryview->qsearch->entry);
 	} else
 		message_search(mainwin->messageview);
 }

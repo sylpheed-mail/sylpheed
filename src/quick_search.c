@@ -220,6 +220,11 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
 				       "From", key);
 		cond_list = g_slist_append(cond_list, cond);
+		if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item)) {
+			cond = filter_cond_new(FLT_COND_TO_OR_CC, FLT_CONTAIN,
+					       0, NULL, key);
+			cond_list = g_slist_append(cond_list, cond);
+		}
 		rule = filter_rule_new("Quick search rule", FLT_OR, cond_list,
 				       NULL);
 	}
