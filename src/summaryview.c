@@ -741,7 +741,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	   create the thread */
 	summaryview->all_mlist = mlist;
 
-	if (prefs_common.persist_qsearch_filter || is_refresh) {
+	if (prefs_common.show_searchbar &&
+	    (prefs_common.persist_qsearch_filter || is_refresh)) {
 		if (item->qsearch_cond_type > QS_ALL)
 			do_qsearch = TRUE;
 		if (is_refresh) {
@@ -5215,6 +5216,7 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	quick_search_clear_entry(summaryview->qsearch);
 	gtk_option_menu_set_history
 		(GTK_OPTION_MENU(summaryview->qsearch->optmenu), 0);
+	summaryview->folder_item->qsearch_cond_type = QS_ALL;
 
 	selected_msgnum = summary_get_msgnum(summaryview,
 					     summaryview->selected);
