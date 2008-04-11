@@ -38,6 +38,7 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktextview.h>
 #include <gtk/gtkitemfactory.h>
+#include <gtk/gtkentry.h>
 #include <gtk/gtkstock.h>
 
 #include <stdlib.h>
