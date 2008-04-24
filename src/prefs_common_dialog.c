@@ -85,6 +85,7 @@ static struct Send {
 	GtkWidget *checkbtn_check_attach;
 	GtkWidget *entry_check_attach_str;
 	GtkWidget *checkbtn_check_recp;
+	GtkWidget *entry_check_recp_excl;
 } p_send;
 
 static struct Compose {
@@ -301,6 +302,8 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"check_recipients", &p_send.checkbtn_check_recp,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"check_recp_exclude", &p_send.entry_check_recp_excl,
+	 prefs_set_data_from_entry, prefs_set_entry},
 
 	/* {"allow_jisx0201_kana", NULL, NULL, NULL}, */
 
@@ -885,6 +888,7 @@ static void prefs_send_create(void)
 	GtkWidget *checkbtn_check_attach;
 	GtkWidget *entry_check_attach_str;
 	GtkWidget *checkbtn_check_recp;
+	GtkWidget *entry_check_recp_excl;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -961,13 +965,17 @@ static void prefs_send_create(void)
 		   "MIME header: most popular, but violates RFC 2047\n"
 		   "RFC 2231: conforms to standard, but not popular"));
 
-	PACK_CHECK_BUTTON (vbox1, checkbtn_check_attach,
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_check_attach,
 			   _("Notify for missing attachments when the following strings (comma-separated) are found in the message body"));
 	gtk_label_set_line_wrap(GTK_LABEL(GTK_BIN(checkbtn_check_attach)->child), TRUE);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
 
 	entry_check_attach_str = gtk_entry_new ();
 	gtk_widget_show (entry_check_attach_str);
@@ -979,8 +987,27 @@ static void prefs_send_create(void)
 
 	SET_TOGGLE_SENSITIVITY(checkbtn_check_attach, entry_check_attach_str);
 
-	PACK_CHECK_BUTTON (vbox1, checkbtn_check_recp,
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_check_recp,
 			   _("Confirm recipients before sending"));
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+	label = gtk_label_new
+		(_("Excluded addresses/domains (comma-separated):"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+
+	entry_check_recp_excl = gtk_entry_new ();
+	gtk_widget_show (entry_check_recp_excl);
+	gtk_box_pack_start (GTK_BOX (vbox2), entry_check_recp_excl,
+                            FALSE, FALSE, 0);
+
+	SET_TOGGLE_SENSITIVITY(checkbtn_check_recp, entry_check_recp_excl);
 
 	p_send.checkbtn_savemsg     = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
@@ -991,6 +1018,7 @@ static void prefs_send_create(void)
 	p_send.checkbtn_check_attach = checkbtn_check_attach;
 	p_send.entry_check_attach_str = entry_check_attach_str;
 	p_send.checkbtn_check_recp = checkbtn_check_recp;
+	p_send.entry_check_recp_excl = entry_check_recp_excl;
 }
 
 static void prefs_compose_create(void)

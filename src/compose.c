@@ -2972,12 +2972,58 @@ static gboolean compose_check_recipients(Compose *compose)
 	GtkStyle *style;
 
 	GSList *cur, *to_list = NULL;
+	gboolean check_recp = FALSE;
 	gint state = 0;
  
 	g_return_val_if_fail(compose->account != NULL, FALSE);
 	g_return_val_if_fail(compose->account->address != NULL, FALSE);
 
 	if (!prefs_common.check_recipients)
+		return TRUE;
+
+	if (prefs_common.check_recp_exclude) {
+		gchar **strv;
+		gint i;
+
+		strv = g_strsplit(prefs_common.check_recp_exclude, ",", -1);
+		for (i = 0; strv[i] != NULL; i++)
+			g_strstrip(strv[i]);
+
+		if (compose->use_to) {
+			text = gtk_entry_get_text(GTK_ENTRY(compose->to_entry));
+			to_list = address_list_append_orig(NULL, text);
+		}
+		if (compose->use_cc) {
+			text = gtk_entry_get_text(GTK_ENTRY(compose->cc_entry));
+			to_list = address_list_append_orig(to_list, text);
+		}
+		if (compose->use_bcc) {
+			text = gtk_entry_get_text(GTK_ENTRY(compose->bcc_entry));
+			to_list = address_list_append_orig(to_list, text);
+		}
+
+		for (cur = to_list; cur != NULL; cur = cur->next) {
+			for (i = 0; strv[i] != NULL; i++) {
+				if (strv[i][0] == '\0')
+					continue;
+				if (strcasestr((gchar *)cur->data, strv[i]))
+					break;
+			}
+			if (!strv[i]) {
+				/* not found in exclude list */
+				check_recp = TRUE;
+				break;
+			}
+		}
+
+		slist_free_strings(to_list);
+		g_slist_free(to_list);
+		to_list = NULL;
+		g_strfreev(strv);
+	} else
+		check_recp = TRUE;
+
+	if (!check_recp)
 		return TRUE;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);

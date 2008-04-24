@@ -73,6 +73,7 @@ struct _PrefsCommon
 	gboolean check_attach;
 	gchar *check_attach_str;
 	gboolean check_recipients;
+	gchar *check_recp_exclude;
 
 	gboolean allow_jisx0201_kana;
 
