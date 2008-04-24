@@ -962,7 +962,7 @@ static void prefs_send_create(void)
 		   "RFC 2231: conforms to standard, but not popular"));
 
 	PACK_CHECK_BUTTON (vbox1, checkbtn_check_attach,
-			   _("Confirm attachments when the following strings (comma-separated) are found in the message body"));
+			   _("Notify for missing attachments when the following strings (comma-separated) are found in the message body"));
 	gtk_label_set_line_wrap(GTK_LABEL(GTK_BIN(checkbtn_check_attach)->child), TRUE);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);

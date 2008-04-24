@@ -2859,10 +2859,12 @@ static gboolean compose_check_attachments(Compose *compose)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(compose->text);
 	GtkTextBuffer *buffer;
-	GtkTextIter iter, pos;
+	GtkTextIter iter, line_end;
+	gchar *line;
 	gchar **strv;
 	gint i;
 	gboolean attach_found = FALSE;
+	gboolean valid = TRUE;
 
 	if (!prefs_common.check_attach)
 		return TRUE;
@@ -2876,17 +2878,31 @@ static gboolean compose_check_attachments(Compose *compose)
 
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_get_start_iter(buffer, &iter);
+	line_end = iter;
 
 	strv = g_strsplit(prefs_common.check_attach_str, ",", -1);
-	for (i = 0; strv[i] != NULL; i++) {
+	for (i = 0; strv[i] != NULL; i++)
 		g_strstrip(strv[i]);
-		if (strv[i][0] == '\0')
+
+	while (valid) {
+		valid = gtk_text_iter_forward_to_line_end(&line_end);
+		line = gtk_text_buffer_get_text(buffer, &iter, &line_end,
+						FALSE);
+		iter = line_end;
+		if (get_quote_level(line) != -1)
 			continue;
-		if (gtkut_text_buffer_find(buffer, &iter, strv[i], FALSE,
-					   &pos)) {
-			attach_found = TRUE;
-			break;
+
+		for (i = 0; strv[i] != NULL; i++) {
+			if (strv[i][0] == '\0')
+				continue;
+			if (strcasestr(line, strv[i])) {
+				attach_found = TRUE;
+				valid = FALSE;
+				break;
+			}
 		}
+
+		g_free(line);
 	}
 
 	g_strfreev(strv);
