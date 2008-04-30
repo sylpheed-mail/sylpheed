@@ -34,3 +34,11 @@ release: distdir
 	-rm -rf $(distdir)
 
 ACLOCAL_AMFLAGS = -I m4
+
+install-data-local:
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/pixmaps; \
+	$(INSTALL_DATA) $(srcdir)/sylpheed-64x64.png $(DESTDIR)$(datadir)/pixmaps/sylpheed.png;
+
+desktop_DATA = sylpheed.desktop
+desktopdir = $(datadir)/applications
