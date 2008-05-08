@@ -192,6 +192,8 @@ struct _Compose
 	guint autosave_tag;
 
 	guint lock_count;
+
+	gboolean window_maximized;
 };
 
 struct _AttachInfo

@@ -420,6 +420,10 @@ static gint compose_delete_cb		(GtkWidget	*widget,
 					 GdkEventAny	*event,
 					 gpointer	 data);
 
+static gint compose_window_state_cb	(GtkWidget		*widget,
+					 GdkEventWindowState	*event,
+					 gpointer		 data);
+
 static void compose_undo_cb		(Compose	*compose);
 static void compose_redo_cb		(Compose	*compose);
 static void compose_cut_cb		(Compose	*compose);
@@ -5335,9 +5339,17 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->autosave_tag = 0;
 
+	compose->window_maximized = prefs_common.compose_maximized;
+
 	compose_set_toolbar_button_visibility(compose);
 
 	compose_select_account(compose, account, TRUE);
+
+	if (prefs_common.compose_maximized)
+		gtk_window_maximize(GTK_WINDOW(window));
+
+	g_signal_connect(G_OBJECT(window), "window_state_event",
+			 G_CALLBACK(compose_window_state_cb), compose);
 
 	menu_set_active(ifactory, "/Edit/Auto wrapping", prefs_common.autowrap);
 	menu_set_active(ifactory, "/View/Ruler", prefs_common.show_ruler);
@@ -5937,10 +5949,16 @@ static void compose_destroy(Compose *compose)
 	if (addressbook_get_target_compose() == compose)
 		addressbook_set_target_compose(NULL);
 
-	gtkut_widget_get_uposition(compose->window, &prefs_common.compose_x,
-				   &prefs_common.compose_y);
-	prefs_common.compose_width = compose->scrolledwin->allocation.width;
-	prefs_common.compose_height = compose->window->allocation.height;
+	prefs_common.compose_maximized = compose->window_maximized;
+	if (!prefs_common.compose_maximized) {
+		gtkut_widget_get_uposition(compose->window,
+					   &prefs_common.compose_x,
+					   &prefs_common.compose_y);
+		prefs_common.compose_width =
+			compose->scrolledwin->allocation.width;
+		prefs_common.compose_height =
+			compose->window->allocation.height;
+	}
 
 	if (!gtk_widget_get_parent(compose->paned))
 		gtk_widget_destroy(compose->paned);
@@ -6960,6 +6978,22 @@ static gint compose_delete_cb(GtkWidget *widget, GdkEventAny *event,
 {
 	compose_close_cb(data, 0, NULL);
 	return TRUE;
+}
+
+static gint compose_window_state_cb(GtkWidget *widget,
+				    GdkEventWindowState *event,
+				    gpointer data)
+{
+	Compose *compose = (Compose *)data;
+
+	if ((event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
+		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0)
+			compose->window_maximized = TRUE;
+		else
+			compose->window_maximized = FALSE;
+	}
+
+	return FALSE;
 }
 
 static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)

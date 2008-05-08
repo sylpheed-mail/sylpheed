@@ -282,10 +282,14 @@ static PrefParam param[] = {
 
 	{"sourcewin_width", "600", &prefs_common.sourcewin_width, P_INT},
 	{"sourcewin_height", "500", &prefs_common.sourcewin_height, P_INT},
+
 	{"compose_x", "32", &prefs_common.compose_x, P_INT},
 	{"compose_y", "32", &prefs_common.compose_y, P_INT},
 	{"compose_width", "600", &prefs_common.compose_width, P_INT},
 	{"compose_height", "560", &prefs_common.compose_height, P_INT},
+
+	{"compose_maximized", "FALSE", &prefs_common.compose_maximized, P_BOOL},
+
 	{"addressbook_x", "32", &prefs_common.addressbook_x, P_INT},
 	{"addressbook_y", "32", &prefs_common.addressbook_y, P_INT},
 	{"addressbook_width", "620", &prefs_common.addressbook_width, P_INT},

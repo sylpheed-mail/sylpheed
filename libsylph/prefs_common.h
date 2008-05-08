@@ -184,6 +184,8 @@ struct _PrefsCommon
 	gint compose_width;
 	gint compose_height;
 
+	gboolean compose_maximized;
+
 	gint addressbook_x;
 	gint addressbook_y;
 	gint addressbook_width;
