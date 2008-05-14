@@ -2578,17 +2578,18 @@ static void summary_display_msg_full(SummaryView *summaryview,
 		val = messageview_show(msgview, msginfo, all_headers);
 	} else {
 		MessageView *msgview = summaryview->messageview;
+		gboolean prev_mimeview;
 
 		if (!messageview_is_visible(msgview)) {
 			main_window_toggle_message_view(summaryview->mainwin);
 			GTK_EVENTS_FLUSH();
 		}
+		prev_mimeview =
+			messageview_get_selected_mime_part(msgview) != NULL;
+
 		val = messageview_show(msgview, msginfo, all_headers);
-		if (msgview->type == MVIEW_TEXT ||
-		    (msgview->type == MVIEW_MIME &&
-		     (msgview->mimeview->opened == NULL ||
-		      gtk_notebook_get_current_page
-			(GTK_NOTEBOOK(msgview->notebook)) == 0)))
+		if (prev_mimeview &&
+		    !messageview_get_selected_mime_part(msgview))
 			gtk_widget_grab_focus(summaryview->treeview);
 	}
 
