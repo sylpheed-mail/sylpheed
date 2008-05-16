@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-16 11:38+0900\n"
+"POT-Creation-Date: 2008-05-16 18:23+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -683,10 +683,10 @@ msgstr ""
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:519
-#: src/compose.c:5090 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:5106 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:272 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
-#: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:321
+#: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:322
 msgid "Name"
 msgstr "名稱"
 
@@ -819,7 +819,7 @@ msgid "Add Address to Book"
 msgstr "將地址加入通訊錄"
 
 #: src/addressadd.c:187 src/compose.c:3204 src/prefs_toolbar.c:86
-#: src/select-keys.c:322
+#: src/select-keys.c:323
 msgid "Address"
 msgstr "地址"
 
@@ -1210,7 +1210,7 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:142 src/compose.c:6380 src/main.c:742
+#: src/alertpanel.c:142 src/compose.c:6396 src/main.c:742
 msgid "Notice"
 msgstr "注意"
 
@@ -1582,7 +1582,7 @@ msgstr "檔案 %s 不存在\n"
 msgid "Can't get file size of %s\n"
 msgstr "無法取得檔案 %s 的大小\n"
 
-#: src/compose.c:2139 src/compose.c:4184
+#: src/compose.c:2139 src/compose.c:4200
 #, c-format
 msgid "File %s is empty."
 msgstr "檔案 %s 是空的。"
@@ -1641,7 +1641,7 @@ msgstr ""
 msgid "Really send this mail to the following addresses?"
 msgstr "在相關欄位上自動加入下列電子郵件信箱："
 
-#: src/compose.c:3094 src/compose.c:4956 src/headerview.c:54
+#: src/compose.c:3094 src/compose.c:4972 src/headerview.c:54
 msgid "From:"
 msgstr "來源："
 
@@ -1680,11 +1680,26 @@ msgstr "無法將郵件送至寄件夾中。"
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "無法找到任何與目前選取之金鑰「%s」相關的金鑰。"
 
-#: src/compose.c:3544 src/compose.c:3883 src/compose.c:3946 src/compose.c:4066
+#: src/compose.c:3443 src/compose.c:3828
+#, fuzzy
+msgid "Can't sign the message."
+msgstr "無法放進暫存資料夾。"
+
+#: src/compose.c:3470 src/compose.c:3871
+#, fuzzy
+msgid "Can't encrypt the message."
+msgstr "無法放進暫存資料夾。"
+
+#: src/compose.c:3505 src/compose.c:3866
+#, fuzzy
+msgid "Can't encrypt or sign the message."
+msgstr "無法放進暫存資料夾。"
+
+#: src/compose.c:3551 src/compose.c:3899 src/compose.c:3962 src/compose.c:4082
 msgid "can't change file mode\n"
 msgstr "無法改變檔案型態\n"
 
-#: src/compose.c:3577
+#: src/compose.c:3584
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1694,11 +1709,11 @@ msgstr ""
 "無法將郵件內文的編碼設定由 %s 轉換為 %s。\n"
 "仍舊要以 %s 傳送嗎？"
 
-#: src/compose.c:3583
+#: src/compose.c:3590
 msgid "Code conversion error"
 msgstr "轉換編碼時發生錯誤"
 
-#: src/compose.c:3669
+#: src/compose.c:3676
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1711,15 +1726,15 @@ msgstr ""
 "\n"
 "無論如何都要傳送嗎？"
 
-#: src/compose.c:3673
+#: src/compose.c:3680
 msgid "Line length limit"
 msgstr "列長度限制"
 
-#: src/compose.c:3835
+#: src/compose.c:3846
 msgid "Encrypting with Bcc"
 msgstr ""
 
-#: src/compose.c:3836
+#: src/compose.c:3847
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1728,89 +1743,89 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:4026
+#: src/compose.c:4042
 msgid "can't remove the old message\n"
 msgstr "無法移除原有的舊郵件\n"
 
-#: src/compose.c:4044
+#: src/compose.c:4060
 msgid "queueing message...\n"
 msgstr "送進暫存資料夾中...\n"
 
-#: src/compose.c:4132
+#: src/compose.c:4148
 msgid "can't find queue folder\n"
 msgstr "找不到暫存資料夾\n"
 
-#: src/compose.c:4139
+#: src/compose.c:4155
 msgid "can't queue the message\n"
 msgstr "無法放進暫存資料夾\n"
 
-#: src/compose.c:4179
+#: src/compose.c:4195
 #, fuzzy, c-format
 msgid "File %s doesn't exist."
 msgstr "檔案 %s 不存在\n"
 
-#: src/compose.c:4188
+#: src/compose.c:4204
 #, fuzzy, c-format
 msgid "Can't open file %s."
 msgstr "無法開啟標記的檔案。\n"
 
-#: src/compose.c:4788
+#: src/compose.c:4804
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "產生郵件的編號：%s\n"
 
-#: src/compose.c:4903
+#: src/compose.c:4919
 msgid "Creating compose window...\n"
 msgstr "正在建立編寫視窗...\n"
 
-#: src/compose.c:5030
+#: src/compose.c:5046
 msgid "PGP Sign"
 msgstr "PGP 簽章"
 
-#: src/compose.c:5033
+#: src/compose.c:5049
 msgid "PGP Encrypt"
 msgstr "PGP 加密"
 
-#: src/compose.c:5071 src/compose.c:6199
+#: src/compose.c:5087 src/compose.c:6215
 msgid "MIME type"
 msgstr "MIME 型態"
 
 #. S_COL_DATE
-#: src/compose.c:5080 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5089
+#: src/compose.c:5096 src/mimeview.c:217 src/prefs_filter_edit.c:497
+#: src/prefs_summary_column.c:78 src/select-keys.c:320 src/summaryview.c:5089
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:6094
+#: src/compose.c:6110
 msgid "Invalid MIME type."
 msgstr "不合法的 MIME 型態。"
 
-#: src/compose.c:6112
+#: src/compose.c:6128
 msgid "File doesn't exist or is empty."
 msgstr "檔案不存在或者是空的。"
 
-#: src/compose.c:6181
+#: src/compose.c:6197
 msgid "Properties"
 msgstr "內容"
 
-#: src/compose.c:6201 src/prefs_common_dialog.c:1579
+#: src/compose.c:6217 src/prefs_common_dialog.c:1579
 msgid "Encoding"
 msgstr "編碼"
 
-#: src/compose.c:6224 src/prefs_folder_item.c:202
+#: src/compose.c:6240 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "路徑"
 
-#: src/compose.c:6225
+#: src/compose.c:6241
 msgid "File name"
 msgstr "檔名"
 
-#: src/compose.c:6315
+#: src/compose.c:6331
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外部編輯器的命令是錯誤的：「%s」\n"
 
-#: src/compose.c:6377
+#: src/compose.c:6393
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1820,48 +1835,48 @@ msgstr ""
 "要強迫結束該行程嗎？\n"
 "行程的群組代碼是：%d"
 
-#: src/compose.c:6714 src/mainwindow.c:2977
+#: src/compose.c:6730 src/mainwindow.c:2977
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6834 src/compose.c:6839 src/compose.c:6845
+#: src/compose.c:6850 src/compose.c:6855 src/compose.c:6861
 msgid "Can't queue the message."
 msgstr "無法放進暫存資料夾。"
 
-#: src/compose.c:6936
+#: src/compose.c:6952
 msgid "Select files"
 msgstr "選擇檔案"
 
-#: src/compose.c:6959
+#: src/compose.c:6975
 msgid "Select file"
 msgstr "選擇檔案"
 
-#: src/compose.c:7010
+#: src/compose.c:7026
 msgid "Save message"
 msgstr "儲存郵件"
 
-#: src/compose.c:7011
+#: src/compose.c:7027
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "郵件已被修改過。將它儲存到草稿資料夾嗎？"
 
-#: src/compose.c:7013
+#: src/compose.c:7029
 msgid "Close _without saving"
 msgstr "關閉但不儲存(_W)"
 
-#: src/compose.c:7055
+#: src/compose.c:7071
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "您確定要套用「%s」這個郵件樣板嗎？"
 
-#: src/compose.c:7057
+#: src/compose.c:7073
 msgid "Apply template"
 msgstr "套用郵件樣板"
 
-#: src/compose.c:7058
+#: src/compose.c:7074
 msgid "_Replace"
 msgstr "置換(_R)"
 
-#: src/compose.c:7058
+#: src/compose.c:7074
 msgid "_Insert"
 msgstr "插入(_I)"
 
@@ -2670,7 +2685,7 @@ msgstr "屬性名"
 msgid "Attribute"
 msgstr "屬性"
 
-#: src/importldif.c:600 src/select-keys.c:345
+#: src/importldif.c:600 src/select-keys.c:346
 msgid "Select"
 msgstr "選擇"
 
@@ -5127,7 +5142,7 @@ msgstr ""
 msgid " Set key bindings... "
 msgstr "設定熱鍵..."
 
-#: src/prefs_common_dialog.c:2263 src/select-keys.c:347
+#: src/prefs_common_dialog.c:2263 src/select-keys.c:348
 msgid "Other"
 msgstr "其他"
 
@@ -6347,27 +6362,27 @@ msgstr "收集「%s」的資訊中 ... %c"
 msgid "Select Keys"
 msgstr "選擇金鑰"
 
-#: src/select-keys.c:320
+#: src/select-keys.c:321
 msgid "Key ID"
 msgstr "金鑰識別碼"
 
-#: src/select-keys.c:323
+#: src/select-keys.c:324
 msgid "Val"
 msgstr "值"
 
-#: src/select-keys.c:471
+#: src/select-keys.c:473
 msgid "Add key"
 msgstr "新增金鑰"
 
-#: src/select-keys.c:472
+#: src/select-keys.c:474
 msgid "Enter another user or key ID:"
 msgstr "請輸入其他的使用者或金鑰識別碼:"
 
-#: src/select-keys.c:488
+#: src/select-keys.c:490
 msgid "Trust key"
 msgstr "信任金鑰"
 
-#: src/select-keys.c:489
+#: src/select-keys.c:491
 msgid ""
 "The selected key is not fully trusted.\n"
 "If you choose to encrypt the message with this key you don't\n"
@@ -7089,6 +7104,10 @@ msgstr "離開"
 #: src/trayicon.c:198 src/trayicon.c:287
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#, fuzzy
+#~ msgid "Can't sign the message"
+#~ msgstr "無法放進暫存資料夾。"
 
 #~ msgid "Changing window separation type from %d to %d\n"
 #~ msgstr "正在變更視窗分割類型由 %d 到 %d\n"

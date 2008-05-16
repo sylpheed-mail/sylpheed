@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-16 11:38+0900\n"
+"POT-Creation-Date: 2008-05-16 18:23+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -696,10 +696,10 @@ msgstr ""
 "όλων'."
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:519
-#: src/compose.c:5090 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:5106 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:272 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
-#: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:321
+#: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:322
 msgid "Name"
 msgstr "Όνομα"
 
@@ -833,7 +833,7 @@ msgid "Add Address to Book"
 msgstr "Προσθήκη διεύθυνσης στο ευρετήριο"
 
 #: src/addressadd.c:187 src/compose.c:3204 src/prefs_toolbar.c:86
-#: src/select-keys.c:322
+#: src/select-keys.c:323
 msgid "Address"
 msgstr "Διεύθυνση"
 
@@ -1235,7 +1235,7 @@ msgstr "Κοινές διευθύνσεις"
 msgid "Personal address"
 msgstr "Προσωπικές διευθύνσεις"
 
-#: src/alertpanel.c:142 src/compose.c:6380 src/main.c:742
+#: src/alertpanel.c:142 src/compose.c:6396 src/main.c:742
 msgid "Notice"
 msgstr "Σημείωση"
 
@@ -1601,7 +1601,7 @@ msgstr "Το αρχείο %s δεν υπάρχει\n"
 msgid "Can't get file size of %s\n"
 msgstr "Δεν είναι δυνατή η λήψη του μεγέθους του %s\n"
 
-#: src/compose.c:2139 src/compose.c:4184
+#: src/compose.c:2139 src/compose.c:4200
 #, c-format
 msgid "File %s is empty."
 msgstr "Το αρχείο %s είναι κενό."
@@ -1660,7 +1660,7 @@ msgstr ""
 msgid "Really send this mail to the following addresses?"
 msgstr "Αυτόματος ορισμός αυτών των διευθύνσεων"
 
-#: src/compose.c:3094 src/compose.c:4956 src/headerview.c:54
+#: src/compose.c:3094 src/compose.c:4972 src/headerview.c:54
 msgid "From:"
 msgstr "Από:"
 
@@ -1701,12 +1701,27 @@ msgstr ""
 "Δεν ήταν δυνατή η εύρεση του κλειδιού που σχετίζεται με το επιλεγμένο "
 "αναγνωριστικό `%s'."
 
-#: src/compose.c:3544 src/compose.c:3883 src/compose.c:3946 src/compose.c:4066
+#: src/compose.c:3443 src/compose.c:3828
+#, fuzzy
+msgid "Can't sign the message."
+msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
+
+#: src/compose.c:3470 src/compose.c:3871
+#, fuzzy
+msgid "Can't encrypt the message."
+msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
+
+#: src/compose.c:3505 src/compose.c:3866
+#, fuzzy
+msgid "Can't encrypt or sign the message."
+msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
+
+#: src/compose.c:3551 src/compose.c:3899 src/compose.c:3962 src/compose.c:4082
 #, fuzzy
 msgid "can't change file mode\n"
 msgstr "Η αλλαγή της κατάστασης του `%s' απέτυχε"
 
-#: src/compose.c:3577
+#: src/compose.c:3584
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1717,11 +1732,11 @@ msgstr ""
 "του μηνύματος στο προσδιορισμένο σύνολο %s.\n"
 "Να αποσταλεί ως %s;"
 
-#: src/compose.c:3583
+#: src/compose.c:3590
 msgid "Code conversion error"
 msgstr "Σφάλμα μετατροπής κώδικα"
 
-#: src/compose.c:3669
+#: src/compose.c:3676
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1734,15 +1749,15 @@ msgstr ""
 "\n"
 "Να γίνει αποστολή;"
 
-#: src/compose.c:3673
+#: src/compose.c:3680
 msgid "Line length limit"
 msgstr "Όριο μήκους γραμμής"
 
-#: src/compose.c:3835
+#: src/compose.c:3846
 msgid "Encrypting with Bcc"
 msgstr "Κρυπτογράφηση στους κρυφούς παραλήπτες"
 
-#: src/compose.c:3836
+#: src/compose.c:3847
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1756,92 +1771,92 @@ msgstr ""
 "\n"
 "Να γίνει η αποστολή;"
 
-#: src/compose.c:4026
+#: src/compose.c:4042
 msgid "can't remove the old message\n"
 msgstr "Δεν είναι δυνατή η διαγραφή του παλιού μηνύματος\n"
 
-#: src/compose.c:4044
+#: src/compose.c:4060
 msgid "queueing message...\n"
 msgstr "προσθήκη στην ουρά...\n"
 
-#: src/compose.c:4132
+#: src/compose.c:4148
 #, fuzzy
 msgid "can't find queue folder\n"
 msgstr "Δεν είναι δυνατή η εύρεση του πηγαίου φακέλου."
 
-#: src/compose.c:4139
+#: src/compose.c:4155
 msgid "can't queue the message\n"
 msgstr "δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά\n"
 
-#: src/compose.c:4179
+#: src/compose.c:4195
 #, fuzzy, c-format
 msgid "File %s doesn't exist."
 msgstr "Το αρχείο %s δεν υπάρχει\n"
 
-#: src/compose.c:4188
+#: src/compose.c:4204
 #, fuzzy, c-format
 msgid "Can't open file %s."
 msgstr "Δεν είναι δυνατή η σημείωση του αρχείου.\n"
 
-#: src/compose.c:4788
+#: src/compose.c:4804
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr ""
 
-#: src/compose.c:4903
+#: src/compose.c:4919
 msgid "Creating compose window...\n"
 msgstr "Δημιουργία παραθύρου σύνθεσης...\n"
 
-#: src/compose.c:5030
+#: src/compose.c:5046
 msgid "PGP Sign"
 msgstr "Υπογραφή PGP"
 
-#: src/compose.c:5033
+#: src/compose.c:5049
 msgid "PGP Encrypt"
 msgstr "Κρυπτογράφηση PGP"
 
-#: src/compose.c:5071 src/compose.c:6199
+#: src/compose.c:5087 src/compose.c:6215
 msgid "MIME type"
 msgstr "τύπος MIME"
 
 #. S_COL_DATE
-#: src/compose.c:5080 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5089
+#: src/compose.c:5096 src/mimeview.c:217 src/prefs_filter_edit.c:497
+#: src/prefs_summary_column.c:78 src/select-keys.c:320 src/summaryview.c:5089
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: src/compose.c:6094
+#: src/compose.c:6110
 msgid "Invalid MIME type."
 msgstr "Μη έγκυρος τύπος MIME"
 
-#: src/compose.c:6112
+#: src/compose.c:6128
 msgid "File doesn't exist or is empty."
 msgstr "Το αρχείο δεν υπάρχει ή είναι άδειο."
 
-#: src/compose.c:6181
+#: src/compose.c:6197
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: src/compose.c:6201 src/prefs_common_dialog.c:1579
+#: src/compose.c:6217 src/prefs_common_dialog.c:1579
 msgid "Encoding"
 msgstr "Κωδικοποίηση"
 
-#: src/compose.c:6224 src/prefs_folder_item.c:202
+#: src/compose.c:6240 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Διαδρομή"
 
-#: src/compose.c:6225
+#: src/compose.c:6241
 msgid "File name"
 msgstr "Όνομα αρχείου"
 
-#: src/compose.c:6315
+#: src/compose.c:6331
 #, fuzzy, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr ""
 "Η εντολή εκτύπωσης είναι άκυρη:\n"
 "'%s'"
 
-#: src/compose.c:6377
+#: src/compose.c:6393
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1851,49 +1866,49 @@ msgstr ""
 "Να επιβάλω τερματισμό της διεργασίας;\n"
 "process group id: %d"
 
-#: src/compose.c:6714 src/mainwindow.c:2977
+#: src/compose.c:6730 src/mainwindow.c:2977
 msgid "_Customize toolbar..."
 msgstr "Προσαρμο_γή εργαλειοθήκης..."
 
-#: src/compose.c:6834 src/compose.c:6839 src/compose.c:6845
+#: src/compose.c:6850 src/compose.c:6855 src/compose.c:6861
 msgid "Can't queue the message."
 msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
 
-#: src/compose.c:6936
+#: src/compose.c:6952
 msgid "Select files"
 msgstr "Επιλογή αρχείων"
 
-#: src/compose.c:6959
+#: src/compose.c:6975
 msgid "Select file"
 msgstr "Επιλογή αρχείου"
 
-#: src/compose.c:7010
+#: src/compose.c:7026
 msgid "Save message"
 msgstr "Αποθήκευση μηνύματος"
 
-#: src/compose.c:7011
+#: src/compose.c:7027
 msgid "This message has been modified. Save it to draft folder?"
 msgstr ""
 "Αυτό το μήνυμα έχει τροποποιηθεί. Θέλετε να το αποθηκεύσετε στα πρόχειρα;"
 
-#: src/compose.c:7013
+#: src/compose.c:7029
 msgid "Close _without saving"
 msgstr "Κλείσιμο _χωρίς αποθήκευση"
 
-#: src/compose.c:7055
+#: src/compose.c:7071
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Θέλετε να εφαρμόσετε το πρότυπο '%s' ;"
 
-#: src/compose.c:7057
+#: src/compose.c:7073
 msgid "Apply template"
 msgstr "Εφαρμογή προτύπου"
 
-#: src/compose.c:7058
+#: src/compose.c:7074
 msgid "_Replace"
 msgstr "_Αντικατάσταση"
 
-#: src/compose.c:7058
+#: src/compose.c:7074
 msgid "_Insert"
 msgstr "_Εισαγωγή"
 
@@ -2705,7 +2720,7 @@ msgstr "Όνομα γνωρίσματος"
 msgid "Attribute"
 msgstr "Γνώρισμα"
 
-#: src/importldif.c:600 src/select-keys.c:345
+#: src/importldif.c:600 src/select-keys.c:346
 msgid "Select"
 msgstr "Επιλογή"
 
@@ -5195,7 +5210,7 @@ msgstr ""
 msgid " Set key bindings... "
 msgstr " Ορισμός συντομεύσεων πληκτρολογίου... "
 
-#: src/prefs_common_dialog.c:2263 src/select-keys.c:347
+#: src/prefs_common_dialog.c:2263 src/select-keys.c:348
 msgid "Other"
 msgstr "Άλλα"
 
@@ -6387,27 +6402,27 @@ msgstr "Συλλογή πληροφοριών για το '%s' ... %c"
 msgid "Select Keys"
 msgstr "Επέλεξε κλειδιά"
 
-#: src/select-keys.c:320
+#: src/select-keys.c:321
 msgid "Key ID"
 msgstr "Key ID"
 
-#: src/select-keys.c:323
+#: src/select-keys.c:324
 msgid "Val"
 msgstr "Τιμή"
 
-#: src/select-keys.c:471
+#: src/select-keys.c:473
 msgid "Add key"
 msgstr "Προσθήκη κλειδιού"
 
-#: src/select-keys.c:472
+#: src/select-keys.c:474
 msgid "Enter another user or key ID:"
 msgstr "Εισαγωγή άλλου χρήστη ή key ID:"
 
-#: src/select-keys.c:488
+#: src/select-keys.c:490
 msgid "Trust key"
 msgstr "Εμπιστοσύνη κλειδιού"
 
-#: src/select-keys.c:489
+#: src/select-keys.c:491
 msgid ""
 "The selected key is not fully trusted.\n"
 "If you choose to encrypt the message with this key you don't\n"
@@ -7129,6 +7144,10 @@ msgstr "Έ_ξοδος"
 #: src/trayicon.c:198 src/trayicon.c:287
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#, fuzzy
+#~ msgid "Can't sign the message"
+#~ msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
 
 #~ msgid "Overwrite"
 #~ msgstr "Εγγραφή από πάνω"

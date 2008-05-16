@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-16 11:38+0900\n"
+"POT-Creation-Date: 2008-05-16 18:23+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -689,10 +689,10 @@ msgstr ""
 "v stolpcu `G', da omogočite pobiranje sporočil z ukazom `Poberi vsa'."
 
 #: src/account_dialog.c:368 src/addressadd.c:177 src/addressbook.c:519
-#: src/compose.c:5090 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:5106 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:272 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
-#: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:321
+#: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:322
 msgid "Name"
 msgstr "Ime"
 
@@ -825,7 +825,7 @@ msgid "Add Address to Book"
 msgstr "Dodaj naslov v adresar"
 
 #: src/addressadd.c:187 src/compose.c:3204 src/prefs_toolbar.c:86
-#: src/select-keys.c:322
+#: src/select-keys.c:323
 msgid "Address"
 msgstr "Naslov"
 
@@ -1223,7 +1223,7 @@ msgstr "Skupni naslov"
 msgid "Personal address"
 msgstr "Osebni naslov"
 
-#: src/alertpanel.c:142 src/compose.c:6380 src/main.c:742
+#: src/alertpanel.c:142 src/compose.c:6396 src/main.c:742
 msgid "Notice"
 msgstr "Opomba"
 
@@ -1628,7 +1628,7 @@ msgstr "Datoteka %s ne obstaja\n"
 msgid "Can't get file size of %s\n"
 msgstr "Ne morem dobiti velikosti datoteke %s\n"
 
-#: src/compose.c:2139 src/compose.c:4184
+#: src/compose.c:2139 src/compose.c:4200
 #, c-format
 msgid "File %s is empty."
 msgstr "Datoteka %s je prazna."
@@ -1688,7 +1688,7 @@ msgstr ""
 msgid "Really send this mail to the following addresses?"
 msgstr "Samodejno nastavi sledeče naslove"
 
-#: src/compose.c:3094 src/compose.c:4956 src/headerview.c:54
+#: src/compose.c:3094 src/compose.c:4972 src/headerview.c:54
 msgid "From:"
 msgstr "Pošiljatelj:"
 
@@ -1727,11 +1727,26 @@ msgstr "Ne morem shraniti sporočila v imenik Outbox."
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Ne najdem tipke, ki bi bila povezana z identifikatorjem tipke `%s'."
 
-#: src/compose.c:3544 src/compose.c:3883 src/compose.c:3946 src/compose.c:4066
+#: src/compose.c:3443 src/compose.c:3828
+#, fuzzy
+msgid "Can't sign the message."
+msgstr "Ne morem preložiti pošiljanja sporočila."
+
+#: src/compose.c:3470 src/compose.c:3871
+#, fuzzy
+msgid "Can't encrypt the message."
+msgstr "Ne morem preložiti pošiljanja sporočila."
+
+#: src/compose.c:3505 src/compose.c:3866
+#, fuzzy
+msgid "Can't encrypt or sign the message."
+msgstr "Ne morem preložiti pošiljanja sporočila."
+
+#: src/compose.c:3551 src/compose.c:3899 src/compose.c:3962 src/compose.c:4082
 msgid "can't change file mode\n"
 msgstr "Ne morem spremeniti pravic do dostopa do datoteke\n"
 
-#: src/compose.c:3577
+#: src/compose.c:3584
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1741,12 +1756,12 @@ msgstr ""
 "Ne morem pretvoriti nabora znakov sporočila.\n"
 "Naj ga kljub temu pošljem?"
 
-#: src/compose.c:3583
+#: src/compose.c:3590
 #, fuzzy
 msgid "Code conversion error"
 msgstr "Napaka pri pretvorbi imenika naslovov"
 
-#: src/compose.c:3669
+#: src/compose.c:3676
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1755,15 +1770,15 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:3673
+#: src/compose.c:3680
 msgid "Line length limit"
 msgstr ""
 
-#: src/compose.c:3835
+#: src/compose.c:3846
 msgid "Encrypting with Bcc"
 msgstr ""
 
-#: src/compose.c:3836
+#: src/compose.c:3847
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1772,92 +1787,92 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:4026
+#: src/compose.c:4042
 msgid "can't remove the old message\n"
 msgstr "ne morem odstraniti starega sporočila\n"
 
-#: src/compose.c:4044
+#: src/compose.c:4060
 msgid "queueing message...\n"
 msgstr "prestavljam sporočilo v mapo Čakajoče...\n"
 
-#: src/compose.c:4132
+#: src/compose.c:4148
 msgid "can't find queue folder\n"
 msgstr "ne najdem mape s čakajočimi sporočili\n"
 
-#: src/compose.c:4139
+#: src/compose.c:4155
 msgid "can't queue the message\n"
 msgstr "ne morem preložiti sporočila\n"
 
-#: src/compose.c:4179
+#: src/compose.c:4195
 #, fuzzy, c-format
 msgid "File %s doesn't exist."
 msgstr "Datoteka %s ne obstaja\n"
 
-#: src/compose.c:4188
+#: src/compose.c:4204
 #, fuzzy, c-format
 msgid "Can't open file %s."
 msgstr "Ne morem odpreti datoteke %s\n"
 
-#: src/compose.c:4788
+#: src/compose.c:4804
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generiran Message-ID: %s\n"
 
-#: src/compose.c:4903
+#: src/compose.c:4919
 msgid "Creating compose window...\n"
 msgstr "Odpiram okno za sestavljanje sporočila...\n"
 
-#: src/compose.c:5030
+#: src/compose.c:5046
 #, fuzzy
 msgid "PGP Sign"
 msgstr "/_Orodja/Deja_nja"
 
-#: src/compose.c:5033
+#: src/compose.c:5049
 #, fuzzy
 msgid "PGP Encrypt"
 msgstr "/_Sporočilo/_Enkripcija"
 
-#: src/compose.c:5071 src/compose.c:6199
+#: src/compose.c:5087 src/compose.c:6215
 msgid "MIME type"
 msgstr "Tip MIME"
 
 #. S_COL_DATE
-#: src/compose.c:5080 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/select-keys.c:319 src/summaryview.c:5089
+#: src/compose.c:5096 src/mimeview.c:217 src/prefs_filter_edit.c:497
+#: src/prefs_summary_column.c:78 src/select-keys.c:320 src/summaryview.c:5089
 msgid "Size"
 msgstr "Velikost"
 
-#: src/compose.c:6094
+#: src/compose.c:6110
 msgid "Invalid MIME type."
 msgstr "Napačen tip MIME"
 
-#: src/compose.c:6112
+#: src/compose.c:6128
 msgid "File doesn't exist or is empty."
 msgstr "Datoteka ne obstaja ali pa je prazna."
 
-#: src/compose.c:6181
+#: src/compose.c:6197
 #, fuzzy
 msgid "Properties"
 msgstr "Lastnost"
 
-#: src/compose.c:6201 src/prefs_common_dialog.c:1579
+#: src/compose.c:6217 src/prefs_common_dialog.c:1579
 msgid "Encoding"
 msgstr "Nabor znakov"
 
-#: src/compose.c:6224 src/prefs_folder_item.c:202
+#: src/compose.c:6240 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Pot"
 
-#: src/compose.c:6225
+#: src/compose.c:6241
 msgid "File name"
 msgstr "Ime datoteke"
 
-#: src/compose.c:6315
+#: src/compose.c:6331
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Ukazna vrstica za zunanji urejevalnik je neveljavna: '%s'\n"
 
-#: src/compose.c:6377
+#: src/compose.c:6393
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1867,52 +1882,52 @@ msgstr ""
 "Ali naj ga prisilim k prekinitvi?\n"
 "Št. skupine procesov: %d"
 
-#: src/compose.c:6714 src/mainwindow.c:2977
+#: src/compose.c:6730 src/mainwindow.c:2977
 msgid "_Customize toolbar..."
 msgstr ""
 
-#: src/compose.c:6834 src/compose.c:6839 src/compose.c:6845
+#: src/compose.c:6850 src/compose.c:6855 src/compose.c:6861
 msgid "Can't queue the message."
 msgstr "Ne morem preložiti pošiljanja sporočila."
 
-#: src/compose.c:6936
+#: src/compose.c:6952
 #, fuzzy
 msgid "Select files"
 msgstr "Izberi datoteko"
 
-#: src/compose.c:6959
+#: src/compose.c:6975
 msgid "Select file"
 msgstr "Izberi datoteko"
 
-#: src/compose.c:7010
+#: src/compose.c:7026
 #, fuzzy
 msgid "Save message"
 msgstr "Pošlji sporočilo"
 
-#: src/compose.c:7011
+#: src/compose.c:7027
 #, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "To sporočilo je bilo spremenjeno. Naj ga zavržem?"
 
-#: src/compose.c:7013
+#: src/compose.c:7029
 msgid "Close _without saving"
 msgstr ""
 
-#: src/compose.c:7055
+#: src/compose.c:7071
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Ali želite uporabiti predlogo `%s' ?"
 
-#: src/compose.c:7057
+#: src/compose.c:7073
 msgid "Apply template"
 msgstr "Uporabi predlogo"
 
-#: src/compose.c:7058
+#: src/compose.c:7074
 #, fuzzy
 msgid "_Replace"
 msgstr "Zamenjaj"
 
-#: src/compose.c:7058
+#: src/compose.c:7074
 #, fuzzy
 msgid "_Insert"
 msgstr "Vstavi"
@@ -2726,7 +2741,7 @@ msgstr "Ime atributa"
 msgid "Attribute"
 msgstr "Atribut"
 
-#: src/importldif.c:600 src/select-keys.c:345
+#: src/importldif.c:600 src/select-keys.c:346
 msgid "Select"
 msgstr "Izberi"
 
@@ -5255,7 +5270,7 @@ msgstr ""
 msgid " Set key bindings... "
 msgstr " Nastavi povezave na tipke... "
 
-#: src/prefs_common_dialog.c:2263 src/select-keys.c:347
+#: src/prefs_common_dialog.c:2263 src/select-keys.c:348
 msgid "Other"
 msgstr "Ostalo"
 
@@ -6507,27 +6522,27 @@ msgstr "Zbiram informacije za `%s' ... %c"
 msgid "Select Keys"
 msgstr "Izberite ključ"
 
-#: src/select-keys.c:320
+#: src/select-keys.c:321
 msgid "Key ID"
 msgstr "ID ključa"
 
-#: src/select-keys.c:323
+#: src/select-keys.c:324
 msgid "Val"
 msgstr "Vrednost"
 
-#: src/select-keys.c:471
+#: src/select-keys.c:473
 msgid "Add key"
 msgstr "Dodaj ključ"
 
-#: src/select-keys.c:472
+#: src/select-keys.c:474
 msgid "Enter another user or key ID:"
 msgstr "Vnesite novega uporabnika ali identifikator ključa:"
 
-#: src/select-keys.c:488
+#: src/select-keys.c:490
 msgid "Trust key"
 msgstr ""
 
-#: src/select-keys.c:489
+#: src/select-keys.c:491
 msgid ""
 "The selected key is not fully trusted.\n"
 "If you choose to encrypt the message with this key you don't\n"
@@ -7258,6 +7273,10 @@ msgstr "Končaj"
 #, fuzzy
 msgid "Sylpheed"
 msgstr "Stari Sylpheed"
+
+#, fuzzy
+#~ msgid "Can't sign the message"
+#~ msgstr "Ne morem preložiti pošiljanja sporočila."
 
 #~ msgid "Changing window separation type from %d to %d\n"
 #~ msgstr "Spreminjam tip ločevanja oken z %d na %d\n"

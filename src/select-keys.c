@@ -291,6 +291,7 @@ create_dialog (struct select_keys_s *sk)
     gtk_widget_set_size_request (window, 520, 280);
     gtk_container_set_border_width (GTK_CONTAINER (window), 8);
     gtk_window_set_title (GTK_WINDOW (window), _("Select Keys"));
+    gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
     gtk_window_set_modal (GTK_WINDOW (window), TRUE);
     g_signal_connect (G_OBJECT (window), "delete_event",
                       G_CALLBACK (delete_event_cb), sk);
@@ -347,6 +348,7 @@ create_dialog (struct select_keys_s *sk)
                                    &other_btn,  _("Other"));
     gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
     gtk_widget_grab_default (select_btn);
+    gtk_widget_grab_focus (select_btn);
 
     g_signal_connect (G_OBJECT (select_btn), "clicked",
                       G_CALLBACK (select_btn_cb), sk);

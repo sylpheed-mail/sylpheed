@@ -3434,8 +3434,13 @@ static gint compose_clearsign_text(Compose *compose, gchar **text)
 		return -1;
 	}
 
-	if (compose_create_signers_list(compose, &key_list) < 0 ||
-	    rfc2015_clearsign(tmp_file, key_list) < 0) {
+	if (compose_create_signers_list(compose, &key_list) < 0) {
+		g_unlink(tmp_file);
+		g_free(tmp_file);
+		return -1;
+	}
+	if (rfc2015_clearsign(tmp_file, key_list) < 0) {
+		alertpanel_error(_("Can't sign the message."));
 		g_unlink(tmp_file);
 		g_free(tmp_file);
 		return -1;
@@ -3462,6 +3467,7 @@ static gint compose_encrypt_armored(Compose *compose, gchar **text)
 	}
 
 	if (rfc2015_encrypt_armored(tmp_file, compose->to_list) < 0) {
+		alertpanel_error(_("Can't encrypt the message."));
 		g_unlink(tmp_file);
 		g_free(tmp_file);
 		return -1;
@@ -3496,6 +3502,7 @@ static gint compose_encrypt_sign_armored(Compose *compose, gchar **text)
 
 	if (rfc2015_encrypt_sign_armored
 		(tmp_file, compose->to_list, key_list) < 0) {
+		alertpanel_error(_("Can't encrypt or sign the message."));
 		g_unlink(tmp_file);
 		g_free(tmp_file);
 		return -1;
@@ -3813,8 +3820,12 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 	if (use_pgpmime_signing && !use_pgpmime_encryption) {
 		GSList *key_list;
 
-		if (compose_create_signers_list(compose, &key_list) < 0 ||
-		    rfc2015_sign(file, key_list) < 0) {
+		if (compose_create_signers_list(compose, &key_list) < 0) {
+			g_unlink(file);
+			return -1;
+		}
+		if (rfc2015_sign(file, key_list) < 0) {
+			alertpanel_error(_("Can't sign the message."));
 			g_unlink(file);
 			return -1;
 		}
@@ -3846,13 +3857,18 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 		if (use_pgpmime_signing) {
 			if (compose_create_signers_list
-				(compose, &key_list) < 0 ||
-			    rfc2015_encrypt_sign(file, compose->to_list,
+				(compose, &key_list) < 0) {
+				g_unlink(file);
+				return -1;
+			}
+			if (rfc2015_encrypt_sign(file, compose->to_list,
 						 key_list) < 0) {
+				alertpanel_error(_("Can't encrypt or sign the message."));
 				g_unlink(file);
 				return -1;
 			}
 		} else if (rfc2015_encrypt(file, compose->to_list) < 0) {
+			alertpanel_error(_("Can't encrypt the message."));
 			g_unlink(file);
 			return -1;
 		}
