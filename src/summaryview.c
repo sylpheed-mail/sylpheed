@@ -5667,7 +5667,7 @@ static gboolean summary_display_msg_idle_func(gpointer data)
 	if (path) {
 		gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
 					&iter, path);
-		g_free(path);
+		gtk_tree_path_free(path);
 		summary_display_msg(summaryview, &iter);
 	}
 
