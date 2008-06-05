@@ -1898,7 +1898,7 @@ CharSet conv_get_locale_charset(void)
 		return cur_charset;
 	}
 
-	if (strcasestr(cur_locale, "UTF-8")) {
+	if (strcasestr(cur_locale, "UTF-8") || strcasestr(cur_locale, "utf8")) {
 		cur_charset = C_UTF_8;
 		return cur_charset;
 	}
