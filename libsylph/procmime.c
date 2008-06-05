@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -358,15 +358,15 @@ void procmime_scan_encoding(MimeInfo *mimeinfo, const gchar *encoding)
 	g_free(mimeinfo->encoding);
 
 	mimeinfo->encoding = g_strdup(g_strstrip(buf));
-	if (!g_ascii_strcasecmp(buf, "7bit"))
+	if (!g_ascii_strncasecmp(buf, "7bit", 4))
 		mimeinfo->encoding_type = ENC_7BIT;
-	else if (!g_ascii_strcasecmp(buf, "8bit"))
+	else if (!g_ascii_strncasecmp(buf, "8bit", 4))
 		mimeinfo->encoding_type = ENC_8BIT;
-	else if (!g_ascii_strcasecmp(buf, "quoted-printable"))
+	else if (!g_ascii_strncasecmp(buf, "quoted-printable", 16))
 		mimeinfo->encoding_type = ENC_QUOTED_PRINTABLE;
-	else if (!g_ascii_strcasecmp(buf, "base64"))
+	else if (!g_ascii_strncasecmp(buf, "base64", 6))
 		mimeinfo->encoding_type = ENC_BASE64;
-	else if (!g_ascii_strcasecmp(buf, "x-uuencode"))
+	else if (!g_ascii_strncasecmp(buf, "x-uuencode", 10))
 		mimeinfo->encoding_type = ENC_X_UUENCODE;
 	else
 		mimeinfo->encoding_type = ENC_UNKNOWN;
