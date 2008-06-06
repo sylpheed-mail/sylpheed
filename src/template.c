@@ -37,7 +37,6 @@ static Template *template_load(gchar *filename)
 	Template *tmpl;
 	FILE *fp;
 	gchar buf[BUFFSIZE];
-	gint bytes_read;
 
 	if ((fp = g_fopen(filename, "rb")) == NULL) {
 		FILE_OP_ERROR(filename, "fopen");
@@ -76,15 +75,13 @@ static Template *template_load(gchar *filename)
 		return NULL;
 	}
 
-	if ((bytes_read = fread(buf, 1, sizeof(buf), fp)) == 0) {
-		if (ferror(fp)) {
-			FILE_OP_ERROR(filename, "fread");
-			template_free(tmpl);
-			return NULL;
-		}
+	tmpl->value = file_read_stream_to_str(fp);
+	if (!tmpl->value) {
+		g_warning("cannot read template body\n");
+		template_free(tmpl);
+		return NULL;
 	}
 	fclose(fp);
-	tmpl->value = g_strndup(buf, bytes_read);
 
 	return tmpl;
 }
