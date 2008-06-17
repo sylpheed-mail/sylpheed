@@ -9,7 +9,7 @@
 # Updated by : P`tit Lu <ptitlu@ptitlu.org>
 # Nicolas Boos <nicolas.boos@wanadoo.fr>, 2003,2004,2005,2006.
 # Nicolas Boos <nicolas.boos@wanadoo.fr>, 2006.
-# Updated by tvY <mr.somewhere@yahoo.fr> 2006,2007.
+# tvY <mr.somewhere@yahoo.fr> 2006,2007,2008.
 # 
 # 
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-06-06 14:59+0900\n"
-"PO-Revision-Date: 2007-04-19 16:12+0200\n"
+"PO-Revision-Date: 2008-06-06 13:42+0200\n"
 "Last-Translator: tvY <mr.somewhere@yahoo.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -455,9 +455,8 @@ msgid "Timestamp syntax error in greeting\n"
 msgstr "Erreur de syntaxe du 'timestamp' dans la bannière\n"
 
 #: libsylph/pop.c:170
-#, fuzzy
 msgid "Invalid timestamp in greeting\n"
-msgstr "Le 'timestamp' APOP n'a pas été reçu\n"
+msgstr "'Timestamp' invalide dans la bannière\n"
 
 #: libsylph/pop.c:198 libsylph/pop.c:225
 msgid "POP3 protocol error\n"
@@ -1629,22 +1628,20 @@ msgid "Subject is empty. Send it anyway?"
 msgstr "Le sujet est vide. Envoyer malgré cela ?"
 
 #: src/compose.c:2917
-#, fuzzy
 msgid "Attachment is missing"
-msgstr "Pièces jointes"
+msgstr "Pièce jointe absente"
 
 #: src/compose.c:2918
 msgid "There is no attachment. Send it without attachments?"
-msgstr ""
+msgstr "Il n'y a pas de pièce jointe. Envoyer sans pièce jointe?"
 
 #: src/compose.c:3035 src/compose.c:3061
 msgid "Check recipients"
-msgstr ""
+msgstr "Vérification des destinataires"
 
 #: src/compose.c:3081
-#, fuzzy
 msgid "Really send this mail to the following addresses?"
-msgstr "Définition automatique des adresses suivantes"
+msgstr "Vraiment envoyer ce courrier aux adresses suivantes?"
 
 #: src/compose.c:3094 src/compose.c:4972 src/headerview.c:54
 msgid "From:"
@@ -1655,9 +1652,8 @@ msgid "Subject:"
 msgstr "Sujet :"
 
 #: src/compose.c:3209
-#, fuzzy
 msgid "_Send"
-msgstr "Envoyer"
+msgstr "_Envoyer"
 
 #: src/compose.c:3294
 msgid "can't get recipient list."
@@ -1686,19 +1682,16 @@ msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Impossible de trouver une touche associée au code (de touche) « %s »."
 
 #: src/compose.c:3443 src/compose.c:3828
-#, fuzzy
 msgid "Can't sign the message."
-msgstr "Impossible de mettre ce message dans la file d'attente."
+msgstr "Impossible de signer le message."
 
 #: src/compose.c:3470 src/compose.c:3871
-#, fuzzy
 msgid "Can't encrypt the message."
-msgstr "Impossible de mettre ce message dans la file d'attente."
+msgstr "Impossible de crypter le message."
 
 #: src/compose.c:3505 src/compose.c:3866
-#, fuzzy
 msgid "Can't encrypt or sign the message."
-msgstr "Impossible de mettre ce message dans la file d'attente."
+msgstr "Impossible de crypter ou signer le message."
 
 #: src/compose.c:3551 src/compose.c:3899 src/compose.c:3962 src/compose.c:4082
 msgid "can't change file mode\n"
@@ -1771,14 +1764,14 @@ msgid "can't queue the message\n"
 msgstr "Impossible de mettre ce message dans la file d'attente\n"
 
 #: src/compose.c:4195
-#, fuzzy, c-format
+#, c-format
 msgid "File %s doesn't exist."
-msgstr "Le fichier %s n'existe pas\n"
+msgstr "Le fichier %s n'existe pas."
 
 #: src/compose.c:4204
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file %s."
-msgstr "Impossible d'ouvrir le fichier des marques.\n"
+msgstr "Impossible d'ouvrir le fichier %s"
 
 #: src/compose.c:4804
 #, c-format
@@ -2387,14 +2380,13 @@ msgid "Downloading messages in %s ..."
 msgstr "Téléchargement des messages dans %s ..."
 
 #: src/folderview.c:2102
-#, fuzzy, c-format
+#, c-format
 msgid "Download all messages under '%s' ?"
-msgstr "Téléchargement des messages dans %s ..."
+msgstr "Téléchargement de tous les messages dans '%s' ?"
 
 #: src/folderview.c:2105
-#, fuzzy
 msgid "Download all messages"
-msgstr "Téléchargement des messages dans %s ..."
+msgstr "Téléchargement de tous les messages"
 
 #: src/folderview.c:2154
 #, c-format
@@ -2980,6 +2972,8 @@ msgstr ""
 #: src/main.c:531
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
+"  --open [id dossier]/[numéro du message] ouvrir le message dans une "
+"nouvelle fenêtre"
 
 #: src/main.c:532
 msgid ""
@@ -2991,6 +2985,7 @@ msgstr ""
 #: src/main.c:534
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
+"··--ipcport·portnum······spécifier le port pour les commandes IPC distantes"
 
 #: src/main.c:536
 msgid "  --exit                 exit Sylpheed"
@@ -3177,9 +3172,8 @@ msgid "/_Edit/_Search messages..."
 msgstr "/É_dition/Rechercher dans le _dossier..."
 
 #: src/mainwindow.c:569
-#, fuzzy
 msgid "/_Edit/_Quick search"
-msgstr "/É_dition/Co_ller"
+msgstr "/É_dition/_Recherche rapide"
 
 #: src/mainwindow.c:572
 msgid "/_View/Show or hi_de"
@@ -3232,18 +3226,16 @@ msgid "/_View/_Customize toolbar..."
 msgstr "/_Affichage/Personnaliser la _barre d'outils..."
 
 #: src/mainwindow.c:595
-#, fuzzy
 msgid "/_View/Layou_t"
-msgstr "/_Affichage/_Trier"
+msgstr "/_Affichage/Disp_osition"
 
 #: src/mainwindow.c:596
-#, fuzzy
 msgid "/_View/Layou_t/_Normal"
-msgstr "/_Affichage/_Trier/Trier par e_xpéditeur"
+msgstr "/_Affichage/Disp_osition/_Normale"
 
 #: src/mainwindow.c:597
 msgid "/_View/Layou_t/_Vertical"
-msgstr ""
+msgstr "/_Affichage/Disp_osition/_Verticale"
 
 #: src/mainwindow.c:598
 msgid "/_View/Separate f_older tree"
@@ -3424,7 +3416,7 @@ msgstr "/_Affichage/_Jeu de caractères/Coréen (ISO-2022-KR)"
 
 #: src/mainwindow.c:755 src/summaryview.c:461
 msgid "/_View/Open in new _window"
-msgstr "/_Affichage/_Ouvrir dans une nouvelle fenêtre"
+msgstr "/_Affichage/Ouv_rir dans une nouvelle fenêtre"
 
 #: src/mainwindow.c:756 src/messageview.c:259 src/summaryview.c:463
 msgid "/_View/Mess_age source"
@@ -3695,7 +3687,7 @@ msgstr "/A_ide/_Foire Aux Questions (FAQ)/_Italien"
 
 #: src/mainwindow.c:871
 msgid "/_Help/_Command line options"
-msgstr "/A_ide/_Options de ligne de commande"
+msgstr "/A_ide/_Options de la ligne de commande"
 
 #: src/mainwindow.c:872
 msgid "/_Help/---"
@@ -3852,7 +3844,6 @@ msgid "Usage: sylpheed [OPTION]..."
 msgstr "Utilisation : sylpheed [OPTION]..."
 
 #: src/mainwindow.c:3936
-#, fuzzy
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3875,6 +3866,7 @@ msgstr ""
 "--send\n"
 "--status [dossier]...\n"
 "--status-full [dossier]...\n"
+"--open [id dossier]/[numéro du message]\n"
 "--configdir dossier\n"
 "--exit\n"
 "--debug\n"
@@ -3882,7 +3874,6 @@ msgstr ""
 "--version"
 
 #: src/mainwindow.c:3953
-#, fuzzy
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -3899,18 +3890,19 @@ msgid ""
 "output version information and exit"
 msgstr ""
 "ouvrir une fenêtre de composition de message\n"
-"ouvrir une fenêtre de composition de message avec comme pièce(s) jointe(s) le"
-"(s) fichier(s) spécifié(s)\n"
+"ouvrir une fenêtre de composition de message en joignant les(s) fichier(s) "
+"spécifié(s)\n"
 "récupérer les nouveaux messages\n"
 "récupérer les nouveaux messages de tous les comptes\n"
 "envoyer les messages en attente\n"
 "afficher le nombre total de messages\n"
 "afficher l'état de chaque dossier\n"
+"ouvrir le message dans une nouvelle fenêtre\n"
 "indiquer le dossier contenant les fichiers de configuration\n"
 "quitter Sylpheed\n"
 "afficher les informations de mise au point\n"
-"afficher l'aide-mémoire\n"
-"afficher les informations de version"
+"afficher l'aide-mémoire et quitter\n"
+"afficher les informations de version et quitter"
 
 #: src/message_search.c:120
 msgid "Find in current message"
@@ -3995,22 +3987,18 @@ msgid "/_Print..."
 msgstr "/Im_primer..."
 
 #: src/mimeview.c:143
-#, fuzzy
 msgid "/_Reply/_Reply"
-msgstr "/_Affichage/_Répondre à"
+msgstr "/_Répondre/_Répondre"
 
 #: src/mimeview.c:144
-#, fuzzy
 msgid "/_Reply/Reply to _all"
 msgstr "/Répondre à _tous"
 
 #: src/mimeview.c:146
-#, fuzzy
 msgid "/_Reply/Reply to _sender"
 msgstr "/Répondre à l'_expéditeur"
 
 #: src/mimeview.c:148
-#, fuzzy
 msgid "/_Reply/Reply to mailing _list"
 msgstr "/Répondre à la _liste"
 
@@ -4784,18 +4772,20 @@ msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
+"Avertir si pièces jointes absentes quand les chaînes de caractères suivantes "
+"(séparées par des virgules) sont trouvées dans le texte du message"
 
 #: src/prefs_common_dialog.c:984
 msgid "(Ex: attach)"
-msgstr ""
+msgstr "(Ex : joindre)"
 
 #: src/prefs_common_dialog.c:995
 msgid "Confirm recipients before sending"
-msgstr ""
+msgstr "Confirmer les destinataires avant envoi"
 
 #: src/prefs_common_dialog.c:1001
 msgid "Excluded addresses/domains (comma-separated):"
-msgstr ""
+msgstr "Exclure les adresses/domaines (séparés par des virgules)"
 
 #: src/prefs_common_dialog.c:1080 src/prefs_common_dialog.c:1469
 #: src/prefs_folder_item.c:139
@@ -5000,9 +4990,8 @@ msgid "Render HTML messages as text"
 msgstr "Afficher les messages HTML comme du texte"
 
 #: src/prefs_common_dialog.c:1724
-#, fuzzy
 msgid "Treat HTML only messages as attachment"
-msgstr "Afficher les messages HTML comme du texte"
+msgstr "Considérer les messages en HTML pure comme une pièce jointe"
 
 #: src/prefs_common_dialog.c:1728
 msgid "Display cursor in message view"
@@ -6010,9 +5999,8 @@ msgstr "Numéro"
 
 #. S_COL_NUMBER
 #: src/prefs_summary_column.c:80 src/summaryview.c:5093
-#, fuzzy
 msgid "To"
-msgstr "À :"
+msgstr "À"
 
 #: src/prefs_summary_column.c:189
 msgid "Creating summary column setting window...\n"
@@ -6274,19 +6262,17 @@ msgid "_Save as search folder"
 msgstr "_Enregistrer en tant que dossier de tri"
 
 #: src/query_search.c:547
-#, fuzzy
 msgid "Message not found."
-msgstr "%d messages trouvés.\n"
+msgstr "Message non trouvé"
 
 #: src/query_search.c:549
-#, fuzzy
 msgid "1 message found."
-msgstr "%d messages trouvés.\n"
+msgstr "1 message trouvé"
 
 #: src/query_search.c:551
-#, fuzzy, c-format
+#, c-format
 msgid "%d messages found."
-msgstr "%d messages trouvés.\n"
+msgstr "%d messages trouvés"
 
 #: src/query_search.c:579
 #, c-format
@@ -6436,9 +6422,8 @@ msgstr "Connection au serveur SMTP : %s ..."
 
 #. ignore errors right after QUIT
 #: src/send_message.c:765
-#, fuzzy
 msgid "Error occurred after QUIT command (ignored)"
-msgstr "Une erreur est survenue pendant l'envoi de la commande\n"
+msgstr "Une erreur (ignorée) est survenue après la commade 'Quit'"
 
 #: src/send_message.c:803
 msgid "Sending HELO..."
@@ -6499,14 +6484,13 @@ msgstr ""
 "%s"
 
 #: src/send_message.c:954
-#, fuzzy
 msgid "Can't connect to SMTP server."
-msgstr "Impossible de se connecter au serveur NNTP : %s:%d\n"
+msgstr "Impossible de se connecter au serveur SMTP "
 
 #: src/send_message.c:956
-#, fuzzy, c-format
+#, c-format
 msgid "Can't connect to SMTP server: %s:%d"
-msgstr "Impossible de se connecter au serveur NNTP : %s:%d\n"
+msgstr "Impossible de se connecter au serveur SMTP : %s:%d"
 
 #: src/setup.c:43
 msgid "Mailbox setting"
@@ -6642,18 +6626,16 @@ msgstr ""
 "Accepter ce certificat?"
 
 #: src/sslmanager.c:142 src/sslmanager.c:150
-#, fuzzy
 msgid "_Reject"
-msgstr "Rediriger"
+msgstr "_Rejeter"
 
 #: src/sslmanager.c:143 src/sslmanager.c:149
 msgid "_Temporarily accept"
-msgstr ""
+msgstr "Accepter _Temporairement"
 
 #: src/sslmanager.c:144 src/sslmanager.c:148
-#, fuzzy
 msgid "Always _accept"
-msgstr "Toujours"
+msgstr "Toujours _accepter"
 
 #: src/subscribedialog.c:203
 msgid "Subscribe to newsgroup"
