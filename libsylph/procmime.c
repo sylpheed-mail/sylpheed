@@ -782,9 +782,11 @@ MimeInfo *procmime_scan_mime_header(FILE *fp)
 	}
 
 	if (mimeinfo->mime_type == MIME_APPLICATION_OCTET_STREAM &&
-	    mimeinfo->name) {
+	    (mimeinfo->filename || mimeinfo->name)) {
 		const gchar *type;
-		type = procmime_get_mime_type(mimeinfo->name);
+		type = procmime_get_mime_type
+			(mimeinfo->filename ? mimeinfo->filename
+			 : mimeinfo->name);
 		if (type)
 			mimeinfo->mime_type = procmime_scan_mime_type(type);
 	}
