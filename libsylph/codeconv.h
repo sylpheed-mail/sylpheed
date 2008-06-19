@@ -95,6 +95,13 @@ typedef enum
 	C_ISO_8859_16
 } CharSet;
 
+typedef enum
+{
+	C_AD_BY_LOCALE,
+	C_AD_NEVER,
+	C_AD_JAPANESE
+} ConvADType;
+
 typedef gchar *(*CodeConvFunc) (const gchar *inbuf, gint *error);
 
 struct _CodeConverter
@@ -223,6 +230,9 @@ gboolean conv_is_multibyte_encoding		(CharSet	 encoding);
 
 const gchar *conv_get_current_locale		(void);
 gboolean conv_is_ja_locale			(void);
+
+void conv_set_autodetect_type			(ConvADType	 type);
+ConvADType conv_get_autodetect_type		(void);
 
 gchar *conv_unmime_header		(const gchar	*str,
 					 const gchar	*default_encoding);

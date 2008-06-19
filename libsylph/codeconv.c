@@ -154,6 +154,8 @@ typedef enum
 		state = JIS_UDC;	\
 	}
 
+static ConvADType conv_ad_type = C_AD_BY_LOCALE;
+
 static gchar *conv_jistoeuc(const gchar *inbuf, gint *error);
 static gchar *conv_jistosjis(const gchar *inbuf, gint *error);
 static gchar *conv_euctojis(const gchar *inbuf, gint *error);
@@ -1373,7 +1375,8 @@ CodeConvFunc conv_get_code_conv_func(const gchar *src_encoding,
 
 	/* auto detection mode */
 	if (!src_encoding && !dest_encoding) {
-		if (conv_is_ja_locale())
+		if (conv_ad_type == C_AD_JAPANESE ||
+		    (conv_ad_type == C_AD_BY_LOCALE && conv_is_ja_locale()))
 			return conv_anytodisp;
 		else
 			return conv_noconv;
@@ -2087,6 +2090,16 @@ gboolean conv_is_ja_locale(void)
 	return is_ja_locale != 0;
 }
 
+void conv_set_autodetect_type(ConvADType type)
+{
+	conv_ad_type = type;
+}
+
+ConvADType conv_get_autodetect_type(void)
+{
+	return conv_ad_type;
+}
+
 gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 {
 	gchar *buf;
@@ -2105,7 +2118,8 @@ gchar *conv_unmime_header(const gchar *str, const gchar *default_encoding)
 		}
 	}
 
-	if (conv_is_ja_locale())
+	if (conv_ad_type == C_AD_JAPANESE ||
+	    (conv_ad_type == C_AD_BY_LOCALE && conv_is_ja_locale()))
 		buf = conv_anytodisp(str, NULL);
 	else
 		buf = conv_localetodisp(str, NULL);
