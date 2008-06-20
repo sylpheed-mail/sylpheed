@@ -130,9 +130,7 @@ static void parse_gtkrc_files		(void);
 static void setup_rc_dir		(void);
 static void check_gpg			(void);
 static void set_log_handlers		(gboolean	 enable);
-#ifdef G_OS_WIN32
-static void process_win32_message	(void);
-#endif
+static void register_system_events	(void);
 
 static gchar *get_socket_name		(void);
 static gint prohibit_duplicate_launch	(void);
@@ -298,9 +296,7 @@ int main(int argc, char *argv[])
 
 	set_log_handlers(TRUE);
 
-#ifdef G_OS_WIN32
-	process_win32_message();
-#endif
+	register_system_events();
 
 	account_read_config_all();
 	account_set_menu();
@@ -628,11 +624,6 @@ static void app_init(void)
 
 	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
 	textdomain(PACKAGE);
-
-#ifdef G_OS_UNIX
-	/* ignore SIGPIPE signal for preventing sudden death of program */
-	signal(SIGPIPE, SIG_IGN);
-#endif
 
 #ifdef G_OS_WIN32
 	read_ini_file();
@@ -996,7 +987,7 @@ wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 	return DefWindowProc(hwnd, message, wparam, lparam);
 }
 
-static void process_win32_message(void)
+static void register_system_events(void)
 {
 	WNDCLASS wclass;
 	static HWND hwnd = NULL;
@@ -1019,6 +1010,37 @@ static void process_win32_message(void)
 			    0, 0, 1, 1, NULL, NULL, hmodule, NULL);
 	if (!hwnd)
 		UnregisterClass(MAKEINTRESOURCE(klass), hmodule);
+}
+#else /* G_OS_WIN32 */
+static void sig_handler(gint signum)
+{
+	debug_print("signal %d received\n", signum);
+
+	switch (signum) {
+	case SIGHUP:
+	case SIGINT:
+	case SIGTERM:
+	case SIGQUIT:
+		app_will_exit(TRUE);
+		break;
+	default:
+		break;
+	}
+}
+
+static void register_system_events(void)
+{
+	struct sigaction sa;
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = sig_handler;
+	sa.sa_flags = SA_RESTART;
+
+	sigaction(SIGHUP, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGTERM, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGPIPE, &sa, NULL);
 }
 #endif
 
