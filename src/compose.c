@@ -69,7 +69,11 @@
 #if USE_GTKSPELL
 #  include <gtk/gtkradiomenuitem.h>
 #  include <gtkspell/gtkspell.h>
+#if USE_ENCHANT
+#  include <enchant/enchant.h>
+#else
 #  include <aspell.h>
+#endif
 #endif
 
 #include <stdio.h>
@@ -5732,6 +5736,34 @@ static void compose_set_out_encoding(Compose *compose)
 }
 
 #if USE_GTKSPELL
+#if USE_ENCHANT
+static void ench_dict_desc_cb(const char *const lang_tag,
+			      const char *const provider_name,
+			      const char *const provider_desc,
+			      const char *const provider_file,
+			      void *user_data)
+{
+	GSList **dict_list = (GSList **)user_data;
+	*dict_list = g_slist_append(*dict_list, g_strdup((gchar*)lang_tag));
+}
+
+static void compose_set_spell_lang_menu(Compose *compose)
+{
+	EnchantBroker *eb;
+	GSList *dict_list = NULL, *menu_list = NULL, *cur;
+	GtkWidget *menu;
+	gboolean lang_set = FALSE;
+
+	eb = enchant_broker_init();
+	enchant_broker_list_dicts(eb, ench_dict_desc_cb, &dict_list);
+	enchant_broker_free(eb);
+
+	for (cur = dict_list; cur != NULL; cur = cur->next) {
+		if (compose->spell_lang != NULL &&
+		    g_ascii_strcasecmp(compose->spell_lang, cur->data) == 0)
+		lang_set = TRUE;
+	}
+#else  /* !USE_ENCHANT */
 static void compose_set_spell_lang_menu(Compose *compose)
 {
 	AspellConfig *config;
@@ -5754,6 +5786,7 @@ static void compose_set_spell_lang_menu(Compose *compose)
 			lang_set = TRUE;
 	}
 	delete_aspell_dict_info_enumeration(dels);
+#endif /* USE_ENCHANT */
 
 	menu = gtk_menu_new();
 
@@ -5782,10 +5815,15 @@ static void compose_set_spell_lang_menu(Compose *compose)
 				(GTK_CHECK_MENU_ITEM(item), TRUE);
 	}
 
+#if USE_ENCHANT
+	slist_free_strings(dict_list);
+#endif
+	g_slist_free(dict_list);
+
 	gtk_widget_show(menu);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(compose->spell_menu), menu);
 }
-#endif
+#endif /* USE_GTKSPELL */
 
 static void compose_set_template_menu(Compose *compose)
 {

@@ -266,6 +266,11 @@ if test "$ac_cv_enable_gtkspell" = yes; then
 		AC_MSG_RESULT(yes)
 		CFLAGS="$CFLAGS `$PKG_CONFIG --cflags gtkspell-2.0`"
 		LIBS="$LIBS `$PKG_CONFIG --libs gtkspell-2.0`"
+		if $PKG_CONFIG --atleast-version 2.0.13 gtkspell-2.0 ; then
+			AC_DEFINE(USE_ENCHANT, 1, Use Enchant with GtkSpell)
+		elif $PKG_CONFIG --atleast-version 2.0.12 gtkspell-2.0 ; then
+			LIBS="$LIBS -laspell"
+		fi
 		AC_DEFINE(USE_GTKSPELL, 1, Use GtkSpell in editor)
 	else
 		AC_MSG_RESULT(no)
