@@ -99,7 +99,9 @@
 
 gchar *prog_version;
 
+#ifdef G_OS_WIN32
 static gboolean init_console_done = FALSE;
+#endif
 
 static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
