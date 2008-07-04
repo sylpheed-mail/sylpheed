@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,8 @@
 #include "version.h"
 
 gchar *prog_version;
+
+static gboolean init_console_done = FALSE;
 
 static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
@@ -296,8 +298,6 @@ int main(int argc, char *argv[])
 
 	set_log_handlers(TRUE);
 
-	register_system_events();
-
 	account_read_config_all();
 	account_set_menu();
 	main_window_reflect_prefs_all();
@@ -317,6 +317,8 @@ int main(int argc, char *argv[])
 
 	addressbook_read_file();
 
+	register_system_events();
+
 	inc_autocheck_timer_init(mainwin);
 
 	remote_command_exec();
@@ -331,7 +333,6 @@ static void init_console(void)
 #ifdef G_OS_WIN32
 	gint fd;
 	FILE *fp;
-	static gboolean init_console_done = FALSE;
 
 	if (init_console_done)
 		return;
@@ -958,6 +959,15 @@ static void set_log_handlers(gboolean enable)
 }
 
 #ifdef G_OS_WIN32
+static BOOL WINAPI
+ctrl_handler(DWORD dwctrltype)
+{
+	log_print("ctrl_handler: received %d\n", dwctrltype);
+	app_will_exit(TRUE);
+
+	return TRUE;
+}
+
 static LRESULT CALLBACK
 wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
@@ -991,11 +1001,24 @@ static void register_system_events(void)
 {
 	WNDCLASS wclass;
 	static HWND hwnd = NULL;
+	static BOOL ctrl_handler_set = FALSE;
 	ATOM klass;
 	HINSTANCE hmodule = GetModuleHandle(NULL);
 
 	if (hwnd)
 		return;
+	if (ctrl_handler_set)
+		return;
+
+	if (init_console_done) {
+		debug_print("register_system_events(): SetConsoleCtrlHandler\n");
+		ctrl_handler_set = SetConsoleCtrlHandler(ctrl_handler, TRUE);
+		if (!ctrl_handler_set)
+			g_warning("SetConsoleCtrlHandler() failed\n");
+		return;
+	}
+
+	debug_print("register_system_events(): RegisterClass\n");
 
 	memset(&wclass, 0, sizeof(WNDCLASS));
 	wclass.lpszClassName = "sylpheed-observer";
