@@ -1007,18 +1007,15 @@ static void register_system_events(void)
 	ATOM klass;
 	HINSTANCE hmodule = GetModuleHandle(NULL);
 
-	if (hwnd)
-		return;
-	if (ctrl_handler_set)
-		return;
-
-	if (init_console_done) {
+	if (init_console_done && !ctrl_handler_set) {
 		debug_print("register_system_events(): SetConsoleCtrlHandler\n");
 		ctrl_handler_set = SetConsoleCtrlHandler(ctrl_handler, TRUE);
 		if (!ctrl_handler_set)
 			g_warning("SetConsoleCtrlHandler() failed\n");
-		return;
 	}
+
+	if (hwnd)
+		return;
 
 	debug_print("register_system_events(): RegisterClass\n");
 
