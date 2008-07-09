@@ -1,3 +1,9 @@
+2008-07-09
+
+	* libsylph/imap.c: imap_get_folder_list(): add intermediate folders
+	  because some IMAP servers don't return \NoSelect parent folders
+	  at 'LIST "" "*"'.
+
 2008-07-04
 
 	* src/main.c: win32: handle window messages even if console is

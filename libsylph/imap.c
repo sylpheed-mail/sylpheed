@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -183,6 +183,8 @@ static GSList *imap_get_folder_list	(IMAPSession	*session,
 static GSList *imap_parse_list		(IMAPSession	*session,
 					 const gchar	*real_path,
 					 gchar		*separator);
+static GSList *imap_add_inter_folders	(GSList		*item_list,
+					 const gchar	*root_path);
 static GSList *imap_get_part_folder_list(GSList		*item_list,
 					 FolderItem	*item);
 
@@ -1917,6 +1919,7 @@ static GSList *imap_get_folder_list(IMAPSession *session, FolderItem *item)
 	imap_cmd_gen_send(session, "LIST \"\" \"%s\"", wildcard_path);
 
 	item_list = imap_parse_list(session, real_path, NULL);
+	item_list = imap_add_inter_folders(item_list, item->path);
 	g_free(real_path);
 	g_free(wildcard_path);
 
@@ -2010,6 +2013,80 @@ static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
 	g_string_free(str, TRUE);
 
 	item_list = g_slist_reverse(item_list);
+	return item_list;
+}
+
+static GSList *imap_add_inter_folders(GSList *item_list, const gchar *root_path)
+{
+	FolderItem *item;
+	GSList *cur;
+	GSList *add_list = NULL;
+	GHashTable *exist;
+	const gchar *p;
+	gint root_path_len = 0;
+
+	if (root_path)
+		root_path_len = strlen(root_path);
+
+	exist = g_hash_table_new(g_str_hash, g_str_equal);
+
+	for (cur = item_list; cur != NULL; cur = cur->next) {
+		item = FOLDER_ITEM(cur->data);
+
+		if (root_path_len > 0 &&
+		    strncmp(root_path, item->path, root_path_len) != 0)
+			continue;
+		p = item->path + root_path_len;
+		while (*p == '/') p++;
+		if (*p == '\0') continue;
+		g_hash_table_insert(exist, (gpointer)p, GINT_TO_POINTER(1));
+	}
+
+	for (cur = item_list; cur != NULL; cur = cur->next) {
+		const gchar *q, *r;
+		gchar *parent, *full_parent;
+		FolderItem *new_item;
+
+		item = FOLDER_ITEM(cur->data);
+
+		if (root_path_len > 0 &&
+		    strncmp(root_path, item->path, root_path_len) != 0)
+			continue;
+		p = item->path + root_path_len;
+		while (*p == '/') p++;
+		if (*p == '\0') continue;
+
+		q = p;
+		while ((q = strchr(q, '/')) != NULL) {
+			parent = g_strndup(p, q - p);
+			if (!g_hash_table_lookup(exist, parent)) {
+				if (root_path_len > 0)
+					full_parent = g_strconcat
+						(root_path, "/", parent, NULL);
+				else
+					full_parent = g_strdup(parent);
+				new_item = folder_item_new(g_basename(parent),
+							   full_parent);
+				new_item->no_select = TRUE;
+				add_list = g_slist_prepend(add_list, new_item);
+				r = new_item->path + root_path_len;
+				while (*r == '/') r++;
+				g_hash_table_insert(exist, (gpointer)r,
+						    GINT_TO_POINTER(1));
+				debug_print("intermediate folder '%s' added\n",
+					    full_parent);
+				g_free(full_parent);
+			}
+			g_free(parent);
+			while (*q == '/') q++;
+		}
+	}
+
+	g_hash_table_destroy(exist);
+
+	add_list = g_slist_reverse(add_list);
+	item_list = g_slist_concat(item_list, add_list);
+
 	return item_list;
 }
 
