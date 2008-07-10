@@ -2037,6 +2037,7 @@ static GSList *imap_add_inter_folders(GSList *item_list, const gchar *root_path)
 		    strncmp(root_path, item->path, root_path_len) != 0)
 			continue;
 		p = item->path + root_path_len;
+		if (root_path_len > 0 && *p != '/') continue;
 		while (*p == '/') p++;
 		if (*p == '\0') continue;
 		g_hash_table_insert(exist, (gpointer)p, GINT_TO_POINTER(1));
@@ -2053,6 +2054,7 @@ static GSList *imap_add_inter_folders(GSList *item_list, const gchar *root_path)
 		    strncmp(root_path, item->path, root_path_len) != 0)
 			continue;
 		p = item->path + root_path_len;
+		if (root_path_len > 0 && *p != '/') continue;
 		while (*p == '/') p++;
 		if (*p == '\0') continue;
 
