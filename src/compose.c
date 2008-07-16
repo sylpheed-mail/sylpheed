@@ -5814,9 +5814,12 @@ static void compose_set_spell_lang_menu(Compose *compose)
 		g_object_set_data(G_OBJECT(item), "spell-lang", dict);
 		gtk_widget_show(item);
 
-		if (!lang_set && g_ascii_strcasecmp("en", dict) == 0)
+		if (!lang_set && g_ascii_strcasecmp("en", dict) == 0) {
+			g_free(compose->spell_lang);
+			compose->spell_lang = g_strdup("en");
 			gtk_check_menu_item_set_active
 				(GTK_CHECK_MENU_ITEM(item), TRUE);
+		}
 	}
 
 	gtk_widget_show(menu);
