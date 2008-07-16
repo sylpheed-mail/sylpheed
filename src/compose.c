@@ -5300,6 +5300,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->check_spell = prefs_common.check_spell;
 	compose->spell_lang  = g_strdup(prefs_common.spell_lang);
 	compose->spell_menu  = spell_menu;
+	compose->dict_list   = NULL;
 #endif /* USE_GTKSPELL */
 
 	compose->focused_editable = NULL;
@@ -5760,8 +5761,9 @@ static void compose_set_spell_lang_menu(Compose *compose)
 
 	for (cur = dict_list; cur != NULL; cur = cur->next) {
 		if (compose->spell_lang != NULL &&
-		    g_ascii_strcasecmp(compose->spell_lang, cur->data) == 0)
-		lang_set = TRUE;
+		    g_ascii_strcasecmp(compose->spell_lang,
+				       (gchar *)cur->data) == 0)
+			lang_set = TRUE;
 	}
 #else  /* !USE_ENCHANT */
 static void compose_set_spell_lang_menu(Compose *compose)
@@ -5780,13 +5782,15 @@ static void compose_set_spell_lang_menu(Compose *compose)
 
 	dels = aspell_dict_info_list_elements(dlist);
 	while ((entry = aspell_dict_info_enumeration_next(dels)) != 0) {
-		dict_list = g_slist_append(dict_list, (gchar *)entry->name);
+		dict_list = g_slist_append(dict_list, g_strdup(entry->name));
 		if (compose->spell_lang != NULL &&
 		    g_ascii_strcasecmp(compose->spell_lang, entry->name) == 0)
 			lang_set = TRUE;
 	}
 	delete_aspell_dict_info_enumeration(dels);
 #endif /* USE_ENCHANT */
+
+	compose->dict_list = dict_list;
 
 	menu = gtk_menu_new();
 
@@ -5814,11 +5818,6 @@ static void compose_set_spell_lang_menu(Compose *compose)
 			gtk_check_menu_item_set_active
 				(GTK_CHECK_MENU_ITEM(item), TRUE);
 	}
-
-#if USE_ENCHANT
-	slist_free_strings(dict_list);
-#endif
-	g_slist_free(dict_list);
 
 	gtk_widget_show(menu);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(compose->spell_menu), menu);
@@ -5962,6 +5961,8 @@ static void compose_destroy(Compose *compose)
 	address_completion_end(compose->window);
 
 #if USE_GTKSPELL
+	slist_free_strings(compose->dict_list);
+	g_slist_free(compose->dict_list);
 	g_free(compose->spell_lang);
 #endif
 
@@ -7543,7 +7544,8 @@ static void compose_toggle_spell_cb(gpointer data, guint action,
 	GtkSpell *speller;
 
 	if (GTK_CHECK_MENU_ITEM(widget)->active) {
-		debug_print("Spell checking enabled\n");
+		debug_print("Spell checking enabled: %s\n",
+			    compose->spell_lang ? compose->spell_lang : "(none)");
 		speller = gtkspell_new_attach(GTK_TEXT_VIEW(compose->text),
 					      compose->spell_lang, NULL);
 		compose->check_spell = TRUE;

@@ -133,9 +133,10 @@ struct _Compose
 	GtkWidget *tmpl_menu;
 
 #if USE_GTKSPELL
-        GtkWidget *spell_menu;
-        gchar     *spell_lang;
-        gboolean   check_spell;
+	GtkWidget *spell_menu;
+	gchar     *spell_lang;
+	gboolean   check_spell;
+	GSList    *dict_list;
 #endif
 
 	ComposeMode mode;
