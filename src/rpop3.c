@@ -116,12 +116,14 @@ gint pop3_retr_send              (Pop3Session *session);
 gint pop3_retr_recv              (Pop3Session *session,
                                   FILE        *fp,
                                   guint        len);
-gint pop3_delete_send            (Pop3Session *session);
-gint pop3_delete_recv            (Pop3Session *session);
 gint pop3_logout_send            (Pop3Session *session);
 
 void pop3_gen_send               (Pop3Session    *session,
                                   const gchar    *format, ...);
+
+gint pop3_write_msg_to_file	(const gchar	*file,
+				 FILE		*src_fp,
+				 guint		 len);
 
 Pop3ErrorValue pop3_ok		(Pop3Session	*session,
 				 const gchar	*msg);
@@ -135,6 +137,12 @@ static gint rpop3_top_send	(Pop3Session	*session);
 static gint rpop3_top_recv	(Pop3Session	*session,
 				 FILE		*fp,
 				 guint		 len);
+static gint rpop3_retr_send	(Pop3Session	*session);
+static gint rpop3_retr_recv	(Pop3Session	*session,
+				 FILE		*fp,
+				 guint		 len);
+static gint rpop3_delete_send	(Pop3Session	*session);
+static gint rpop3_delete_recv	(Pop3Session	*session);
 
 static gint rpop3_session_recv_msg		(Session	*session,
 						 const gchar	*msg);
@@ -152,6 +160,11 @@ static gint window_deleted	(GtkWidget	*widget,
 static gboolean key_pressed	(GtkWidget	*widget,
 				 GdkEventKey	*event,
 				 gpointer	 data);
+
+static void rpop3_row_activated	(GtkTreeView		*treeview,
+				 GtkTreePath		*path,
+				 GtkTreeViewColumn	*column,
+				 gpointer		 data);
 
 static void rpop3_open		(GtkButton	*button,
 				 gpointer	 data);
@@ -266,29 +279,32 @@ static void rpop3_window_create(PrefsAccount *account)
 
 	gtk_container_add(GTK_CONTAINER(scrwin), treeview);
 
-#define APPEND_COLUMN(label, col, width)                                \
-{                                                                       \
-        renderer = gtk_cell_renderer_text_new();                        \
-        column = gtk_tree_view_column_new_with_attributes               \
-                (label, renderer, "text", col,				\
-		 "strikethrough", COL_DELETED, NULL);                   \
-        gtk_tree_view_column_set_resizable(column, TRUE);               \
-        if (width) {                                                    \
-                gtk_tree_view_column_set_sizing                         \
-                        (column, GTK_TREE_VIEW_COLUMN_FIXED);           \
-                gtk_tree_view_column_set_fixed_width(column, width);    \
-        }                                                               \
-        gtk_tree_view_column_set_sort_column_id(column, col);           \
-        gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);   \
+#define APPEND_COLUMN(label, col, width)				\
+{									\
+        renderer = gtk_cell_renderer_text_new();			\
+        column = gtk_tree_view_column_new_with_attributes		\
+		(label, renderer, "text", col,				\
+		 "strikethrough", COL_DELETED, NULL);			\
+	gtk_tree_view_column_set_resizable(column, TRUE);		\
+        if (width) {							\
+                gtk_tree_view_column_set_sizing				\
+                        (column, GTK_TREE_VIEW_COLUMN_FIXED);		\
+                gtk_tree_view_column_set_fixed_width(column, width);	\
+	}								\
+	gtk_tree_view_column_set_sort_column_id(column, col);		\
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);	\
 }
 
         APPEND_COLUMN(_("No."), COL_NUMBER, 0);
         APPEND_COLUMN(_("Subject"), COL_SUBJECT, 200);
-        APPEND_COLUMN(_("From"), COL_FROM, 160);
-        APPEND_COLUMN(_("Date"), COL_DATE, 140);
+        APPEND_COLUMN(_("From"), COL_FROM, 152);
+        APPEND_COLUMN(_("Date"), COL_DATE, 0);
         APPEND_COLUMN(_("Size"), COL_SIZE, 0);
 
 	gtk_widget_show_all(scrwin);
+
+	g_signal_connect(G_OBJECT(treeview), "row-activated",
+			 G_CALLBACK(rpop3_row_activated), NULL);
 
 	hbox = gtk_hbox_new(FALSE, 8);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -424,6 +440,50 @@ static gint rpop3_top_recv(Pop3Session *session, FILE *fp, guint len)
 
 	rpop3_status_label_set(_("Retrieving message headers (%d / %d)"),
 			       session->cur_msg, session->count);
+
+	return PS_SUCCESS;
+}
+
+static gint rpop3_retr_send(Pop3Session *session)
+{
+	session->state = POP3_RETR;
+	pop3_gen_send(session, "RETR %d", session->cur_msg);
+	return PS_SUCCESS;
+}
+
+static void msgview_destroy_cb(GtkWidget *widget, gpointer data)
+{
+	gchar *file = (gchar *)data;
+
+	if (file) {
+		debug_print("msgview_destroy_cb(): removing temporary file: %s\n", file);
+		g_unlink(file);
+		g_free(file);
+	}
+}
+
+static gint rpop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
+{
+	gchar *file;
+	MsgInfo *msginfo;
+	MsgFlags flags = {0, 0};
+	MessageView *msgview;
+
+	file = get_tmp_file();
+	if (pop3_write_msg_to_file(file, fp, len) < 0) {
+		g_free(file);
+		session->error_val = PS_IOERR;
+		return -1;
+	}
+
+	msginfo = procheader_parse_file(file, flags, FALSE);
+	msginfo->file_path = g_strdup(file);
+
+	msgview = messageview_create_with_new_window();
+	messageview_show(msgview, msginfo, FALSE);
+
+	g_signal_connect(G_OBJECT(msgview->window), "destroy",
+			 G_CALLBACK(msgview_destroy_cb), file);
 
 	return PS_SUCCESS;
 }
@@ -624,8 +684,11 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 
         switch (pop3_session->state) {
 	case POP3_RETR_RECV:
-        	if (pop3_retr_recv(pop3_session, fp, len) < 0)
+        	if (rpop3_retr_recv(pop3_session, fp, len) < 0)
                 	return -1;
+		rpop3_status_label_set(_("Opened message %d"),
+				       pop3_session->cur_msg);
+		pop3_session->state = POP3_IDLE;
 		break;
 	case POP3_TOP_RECV:
 		if (rpop3_top_recv(pop3_session, fp, len) == PS_SUCCESS) {
@@ -667,8 +730,45 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 	return FALSE;
 }
 
+static void rpop3_row_activated(GtkTreeView *treeview, GtkTreePath *path,
+				GtkTreeViewColumn *column, gpointer data)
+{
+	gtk_button_clicked(GTK_BUTTON(rpop3_window.open_btn));
+}
+
 static void rpop3_open(GtkButton *button, gpointer data)
 {
+	GtkTreeModel *model = GTK_TREE_MODEL(rpop3_window.store);
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GList *rows, *cur;
+	gint num;
+	gboolean deleted;
+
+	if (rpop3_window.session->state != POP3_IDLE)
+		return;
+
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW(rpop3_window.treeview));
+
+	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+
+	for (cur = rows; cur != NULL; cur = cur->next) {
+		gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)cur->data);
+		gtk_tree_model_get(model, &iter, COL_NUMBER, &num,
+				   COL_DELETED, &deleted, -1);
+		if (!deleted) {
+			debug_print("rpop3_open(): opening message %d\n", num);
+			rpop3_status_label_set(_("Retrieving message %d ..."),
+					       num);
+			rpop3_window.session->cur_msg = num;
+			rpop3_retr_send(rpop3_window.session);
+			break;
+		}
+	}
+
+	g_list_foreach(rows, (GFunc)gtk_tree_path_free, NULL);
+	g_list_free(rows);
 }
 
 static void rpop3_delete(GtkButton *button, gpointer data)

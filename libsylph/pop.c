@@ -76,9 +76,9 @@ void pop3_gen_send		(Pop3Session	*session,
 
 static void pop3_session_destroy	(Session	*session);
 
-static gint pop3_write_msg_to_file	(const gchar	*file,
-					 FILE		*src_fp,
-					 guint		 len);
+gint pop3_write_msg_to_file	(const gchar	*file,
+				 FILE		*src_fp,
+				 guint		 len);
 
 static Pop3State pop3_lookup_next	(Pop3Session	*session);
 
@@ -561,7 +561,7 @@ gint pop3_write_uidl_list(Pop3Session *session)
 	return 0;
 }
 
-static gint pop3_write_msg_to_file(const gchar *file, FILE *src_fp, guint len)
+gint pop3_write_msg_to_file(const gchar *file, FILE *src_fp, guint len)
 {
 	FILE *fp;
 	gchar buf[BUFFSIZE];
