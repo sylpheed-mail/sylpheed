@@ -44,7 +44,6 @@
 #include "account.h"
 #include "procmsg.h"
 #include "socket.h"
-#include "ssl.h"
 #include "pop.h"
 #include "recv.h"
 #include "mbox.h"
@@ -638,14 +637,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		}
 
 		pop3_session = POP3_SESSION(session->session); 
-		pop3_session->user = g_strdup(pop3_session->ac_prefs->userid);
-		if (pop3_session->ac_prefs->passwd)
-			pop3_session->pass =
-				g_strdup(pop3_session->ac_prefs->passwd);
-		else if (pop3_session->ac_prefs->tmp_pass)
-			pop3_session->pass =
-				g_strdup(pop3_session->ac_prefs->tmp_pass);
-		else {
+		if (!pop3_session->pass) {
 			gchar *pass;
 
 			if (inc_dialog->show_dialog)
@@ -826,8 +818,6 @@ static IncState inc_pop3_session_do(IncSession *session)
 {
 	Pop3Session *pop3_session = POP3_SESSION(session->session);
 	IncProgressDialog *inc_dialog = (IncProgressDialog *)session->data;
-	gchar *server;
-	gushort port;
 	gchar *buf;
 
 	debug_print(_("getting new messages of account %s...\n"),
@@ -842,21 +832,8 @@ static IncState inc_pop3_session_do(IncSession *session)
 	gtk_window_set_title(GTK_WINDOW(inc_dialog->dialog->window), buf);
 	g_free(buf);
 
-	server = pop3_session->ac_prefs->recv_server;
-#if USE_SSL
-	port = pop3_session->ac_prefs->set_popport ?
-		pop3_session->ac_prefs->popport :
-		pop3_session->ac_prefs->ssl_pop == SSL_TUNNEL ? 995 : 110;
-	SESSION(pop3_session)->ssl_type = pop3_session->ac_prefs->ssl_pop;
-	if (pop3_session->ac_prefs->ssl_pop != SSL_NONE)
-		SESSION(pop3_session)->nonblocking =
-			pop3_session->ac_prefs->use_nonblocking_ssl;
-#else
-	port = pop3_session->ac_prefs->set_popport ?
-		pop3_session->ac_prefs->popport : 110;
-#endif
-
-	buf = g_strdup_printf(_("Connecting to POP3 server: %s..."), server);
+	buf = g_strdup_printf(_("Connecting to POP3 server: %s..."),
+			      pop3_session->ac_prefs->recv_server);
 	log_message("%s\n", buf);
 	progress_dialog_set_label(inc_dialog->dialog, buf);
 	g_free(buf);
@@ -866,9 +843,12 @@ static IncState inc_pop3_session_do(IncSession *session)
 
 	GTK_EVENTS_FLUSH();
 
-	if (session_connect(SESSION(pop3_session), server, port) < 0) {
+	if (session_connect(SESSION(pop3_session),
+			    SESSION(pop3_session)->server,
+			    SESSION(pop3_session)->port) < 0) {
 		log_warning(_("Can't connect to POP3 server: %s:%d\n"),
-			    server, port);
+			    SESSION(pop3_session)->server,
+			    SESSION(pop3_session)->port);
 		session->inc_state = INC_CONNECT_ERROR;
 		statusbar_pop_all();
 		return INC_CONNECT_ERROR;

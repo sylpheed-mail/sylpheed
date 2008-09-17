@@ -76,6 +76,7 @@ sylpheed_SOURCES = \
 	gtkutils.c gtkutils.h \
 	send_message.c send_message.h \
 	inc.c inc.h \
+	rpop3.c rpop3.h \
 	import.c import.h \
 	export.c export.h \
 	rfc2015.c rfc2015.h \

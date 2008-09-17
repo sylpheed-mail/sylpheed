@@ -40,39 +40,39 @@
 #include "utils.h"
 #include "recv.h"
 
-static gint pop3_greeting_recv		(Pop3Session *session,
-					 const gchar *msg);
-static gint pop3_getauth_user_send	(Pop3Session *session);
-static gint pop3_getauth_pass_send	(Pop3Session *session);
-static gint pop3_getauth_apop_send	(Pop3Session *session);
+gint pop3_greeting_recv		(Pop3Session *session,
+				 const gchar *msg);
+gint pop3_getauth_user_send	(Pop3Session *session);
+gint pop3_getauth_pass_send	(Pop3Session *session);
+gint pop3_getauth_apop_send	(Pop3Session *session);
 #if USE_SSL
-static gint pop3_stls_send		(Pop3Session *session);
-static gint pop3_stls_recv		(Pop3Session *session);
+gint pop3_stls_send		(Pop3Session *session);
+gint pop3_stls_recv		(Pop3Session *session);
 #endif
-static gint pop3_getrange_stat_send	(Pop3Session *session);
-static gint pop3_getrange_stat_recv	(Pop3Session *session,
-					 const gchar *msg);
-static gint pop3_getrange_last_send	(Pop3Session *session);
-static gint pop3_getrange_last_recv	(Pop3Session *session,
-					 const gchar *msg);
-static gint pop3_getrange_uidl_send	(Pop3Session *session);
-static gint pop3_getrange_uidl_recv	(Pop3Session *session,
-					 const gchar *data,
-					 guint        len);
-static gint pop3_getsize_list_send	(Pop3Session *session);
-static gint pop3_getsize_list_recv	(Pop3Session *session,
-					 const gchar *data,
-					 guint        len);
-static gint pop3_retr_send		(Pop3Session *session);
-static gint pop3_retr_recv		(Pop3Session *session,
-					 FILE	     *fp,
-					 guint        len);
-static gint pop3_delete_send		(Pop3Session *session);
-static gint pop3_delete_recv		(Pop3Session *session);
-static gint pop3_logout_send		(Pop3Session *session);
+gint pop3_getrange_stat_send	(Pop3Session *session);
+gint pop3_getrange_stat_recv	(Pop3Session *session,
+				 const gchar *msg);
+gint pop3_getrange_last_send	(Pop3Session *session);
+gint pop3_getrange_last_recv	(Pop3Session *session,
+				 const gchar *msg);
+gint pop3_getrange_uidl_send	(Pop3Session *session);
+gint pop3_getrange_uidl_recv	(Pop3Session *session,
+				 const gchar *data,
+				 guint        len);
+gint pop3_getsize_list_send	(Pop3Session *session);
+gint pop3_getsize_list_recv	(Pop3Session *session,
+				 const gchar *data,
+				 guint        len);
+gint pop3_retr_send		(Pop3Session *session);
+gint pop3_retr_recv		(Pop3Session *session,
+				 FILE	     *fp,
+				 guint        len);
+gint pop3_delete_send		(Pop3Session *session);
+gint pop3_delete_recv		(Pop3Session *session);
+gint pop3_logout_send		(Pop3Session *session);
 
-static void pop3_gen_send		(Pop3Session	*session,
-					 const gchar	*format, ...);
+void pop3_gen_send		(Pop3Session	*session,
+				 const gchar	*format, ...);
 
 static void pop3_session_destroy	(Session	*session);
 
@@ -81,8 +81,9 @@ static gint pop3_write_msg_to_file	(const gchar	*file,
 					 guint		 len);
 
 static Pop3State pop3_lookup_next	(Pop3Session	*session);
-static Pop3ErrorValue pop3_ok		(Pop3Session	*session,
-					 const gchar	*msg);
+
+Pop3ErrorValue pop3_ok		(Pop3Session	*session,
+				 const gchar	*msg);
 
 static gint pop3_session_recv_msg		(Session	*session,
 						 const gchar	*msg);
@@ -95,7 +96,7 @@ static gint pop3_session_recv_data_as_file_finished
 						 guint		 len);
 
 
-static gint pop3_greeting_recv(Pop3Session *session, const gchar *msg)
+gint pop3_greeting_recv(Pop3Session *session, const gchar *msg)
 {
 	session->state = POP3_GREETING;
 
@@ -104,14 +105,14 @@ static gint pop3_greeting_recv(Pop3Session *session, const gchar *msg)
 }
 
 #if USE_SSL
-static gint pop3_stls_send(Pop3Session *session)
+gint pop3_stls_send(Pop3Session *session)
 {
 	session->state = POP3_STLS;
 	pop3_gen_send(session, "STLS");
 	return PS_SUCCESS;
 }
 
-static gint pop3_stls_recv(Pop3Session *session)
+gint pop3_stls_recv(Pop3Session *session)
 {
 	if (session_start_tls(SESSION(session)) < 0) {
 		session->error_val = PS_SOCKET;
@@ -121,7 +122,7 @@ static gint pop3_stls_recv(Pop3Session *session)
 }
 #endif /* USE_SSL */
 
-static gint pop3_getauth_user_send(Pop3Session *session)
+gint pop3_getauth_user_send(Pop3Session *session)
 {
 	g_return_val_if_fail(session->user != NULL, -1);
 
@@ -130,7 +131,7 @@ static gint pop3_getauth_user_send(Pop3Session *session)
 	return PS_SUCCESS;
 }
 
-static gint pop3_getauth_pass_send(Pop3Session *session)
+gint pop3_getauth_pass_send(Pop3Session *session)
 {
 	g_return_val_if_fail(session->pass != NULL, -1);
 
@@ -139,7 +140,7 @@ static gint pop3_getauth_pass_send(Pop3Session *session)
 	return PS_SUCCESS;
 }
 
-static gint pop3_getauth_apop_send(Pop3Session *session)
+gint pop3_getauth_apop_send(Pop3Session *session)
 {
 	gchar *start, *end;
 	gchar *apop_str;
@@ -185,14 +186,14 @@ static gint pop3_getauth_apop_send(Pop3Session *session)
 	return PS_SUCCESS;
 }
 
-static gint pop3_getrange_stat_send(Pop3Session *session)
+gint pop3_getrange_stat_send(Pop3Session *session)
 {
 	session->state = POP3_GETRANGE_STAT;
 	pop3_gen_send(session, "STAT");
 	return PS_SUCCESS;
 }
 
-static gint pop3_getrange_stat_recv(Pop3Session *session, const gchar *msg)
+gint pop3_getrange_stat_recv(Pop3Session *session, const gchar *msg)
 {
 	if (sscanf(msg, "%d %lld", &session->count, &session->total_bytes) != 2) {
 		log_warning(_("POP3 protocol error\n"));
@@ -210,14 +211,14 @@ static gint pop3_getrange_stat_recv(Pop3Session *session, const gchar *msg)
 	return PS_SUCCESS;
 }
 
-static gint pop3_getrange_last_send(Pop3Session *session)
+gint pop3_getrange_last_send(Pop3Session *session)
 {
 	session->state = POP3_GETRANGE_LAST;
 	pop3_gen_send(session, "LAST");
 	return PS_SUCCESS;
 }
 
-static gint pop3_getrange_last_recv(Pop3Session *session, const gchar *msg)
+gint pop3_getrange_last_recv(Pop3Session *session, const gchar *msg)
 {
 	gint last;
 
@@ -236,15 +237,14 @@ static gint pop3_getrange_last_recv(Pop3Session *session, const gchar *msg)
 	return PS_SUCCESS;
 }
 
-static gint pop3_getrange_uidl_send(Pop3Session *session)
+gint pop3_getrange_uidl_send(Pop3Session *session)
 {
 	session->state = POP3_GETRANGE_UIDL;
 	pop3_gen_send(session, "UIDL");
 	return PS_SUCCESS;
 }
 
-static gint pop3_getrange_uidl_recv(Pop3Session *session, const gchar *data,
-				    guint len)
+gint pop3_getrange_uidl_recv(Pop3Session *session, const gchar *data, guint len)
 {
 	gchar id[IDLEN + 1];
 	gchar buf[POPBUFSIZE];
@@ -291,15 +291,14 @@ static gint pop3_getrange_uidl_recv(Pop3Session *session, const gchar *data,
 	return PS_SUCCESS;
 }
 
-static gint pop3_getsize_list_send(Pop3Session *session)
+gint pop3_getsize_list_send(Pop3Session *session)
 {
 	session->state = POP3_GETSIZE_LIST;
 	pop3_gen_send(session, "LIST");
 	return PS_SUCCESS;
 }
 
-static gint pop3_getsize_list_recv(Pop3Session *session, const gchar *data,
-				   guint len)
+gint pop3_getsize_list_recv(Pop3Session *session, const gchar *data, guint len)
 {
 	gchar buf[POPBUFSIZE];
 	gint buf_len;
@@ -332,14 +331,14 @@ static gint pop3_getsize_list_recv(Pop3Session *session, const gchar *data,
 	return PS_SUCCESS;
 }
 
-static gint pop3_retr_send(Pop3Session *session)
+gint pop3_retr_send(Pop3Session *session)
 {
 	session->state = POP3_RETR;
 	pop3_gen_send(session, "RETR %d", session->cur_msg);
 	return PS_SUCCESS;
 }
 
-static gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
+gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 {
 	gchar *file;
 	gint drop_ok;
@@ -372,28 +371,28 @@ static gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 	return PS_SUCCESS;
 }
 
-static gint pop3_delete_send(Pop3Session *session)
+gint pop3_delete_send(Pop3Session *session)
 {
 	session->state = POP3_DELETE;
 	pop3_gen_send(session, "DELE %d", session->cur_msg);
 	return PS_SUCCESS;
 }
 
-static gint pop3_delete_recv(Pop3Session *session)
+gint pop3_delete_recv(Pop3Session *session)
 {
 	session->msg[session->cur_msg].recv_time = RECV_TIME_DELETE;
 	session->msg[session->cur_msg].deleted = TRUE;
 	return PS_SUCCESS;
 }
 
-static gint pop3_logout_send(Pop3Session *session)
+gint pop3_logout_send(Pop3Session *session)
 {
 	session->state = POP3_LOGOUT;
 	pop3_gen_send(session, "QUIT");
 	return PS_SUCCESS;
 }
 
-static void pop3_gen_send(Pop3Session *session, const gchar *format, ...)
+void pop3_gen_send(Pop3Session *session, const gchar *format, ...)
 {
 	gchar buf[POPBUFSIZE + 1];
 	va_list args;
@@ -436,6 +435,22 @@ Session *pop3_session_new(PrefsAccount *account)
 	session->current_time = time(NULL);
 	session->error_val = PS_SUCCESS;
 	session->error_msg = NULL;
+
+	session->user = g_strdup(account->userid);
+	session->pass = account->passwd ? g_strdup(account->passwd) :
+		account->tmp_pass ? g_strdup(account->tmp_pass) : NULL;
+
+	SESSION(session)->server = g_strdup(account->recv_server);
+
+#if USE_SSL
+	SESSION(session)->port = account->set_popport ?
+		account->popport : account->ssl_pop == SSL_TUNNEL ? 995 : 110;
+	SESSION(session)->ssl_type = account->ssl_pop;
+	if (account->ssl_pop != SSL_NONE)
+		SESSION(session)->nonblocking = account->use_nonblocking_ssl;
+#else
+        SESSION(session)->port = account->set_popport ? account->popport : 110;
+#endif
 
 	return SESSION(session);
 }
@@ -657,7 +672,7 @@ static Pop3State pop3_lookup_next(Pop3Session *session)
 	return POP3_RETR;
 }
 
-static Pop3ErrorValue pop3_ok(Pop3Session *session, const gchar *msg)
+Pop3ErrorValue pop3_ok(Pop3Session *session, const gchar *msg)
 {
 	Pop3ErrorValue ok;
 

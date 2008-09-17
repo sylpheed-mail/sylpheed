@@ -64,6 +64,7 @@
 #include "stock_pixmap.h"
 #include "folder.h"
 #include "inc.h"
+#include "rpop3.h"
 #include "compose.h"
 #include "procmsg.h"
 #include "send_message.h"
@@ -318,6 +319,10 @@ static void inc_all_account_mail_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 static void inc_stop_cb			(MainWindow	*mainwin,
+					 guint		 action,
+					 GtkWidget	*widget);
+
+static void rpop3_cb			(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
 
@@ -766,6 +771,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						"<shift><control>I", inc_all_account_mail_cb, 0, NULL},
 	{N_("/_Message/Recei_ve/Stop receivin_g"),
 						NULL, inc_stop_cb, 0, NULL},
+	{N_("/_Message/Recei_ve/_Remote mailbox..."),
+						NULL, rpop3_cb, 0, NULL},
 	{N_("/_Message/Recei_ve/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Message/_Send queued messages"), NULL, send_queue_cb, 0, NULL},
 	{N_("/_Message/---"),			NULL, NULL, 0, "<Separator>"},
@@ -3458,6 +3465,11 @@ static void inc_all_account_mail_cb(MainWindow *mainwin, guint action,
 static void inc_stop_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 {
 	inc_cancel_all();
+}
+
+static void rpop3_cb(MainWindow	*mainwin, guint action, GtkWidget *widget)
+{
+	rpop3_account(cur_account);
 }
 
 static void send_queue_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
