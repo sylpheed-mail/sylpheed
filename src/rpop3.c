@@ -51,6 +51,7 @@
 #include "gtkutils.h"
 #include "manage_window.h"
 #include "alertpanel.h"
+#include "prefs_common.h"
 
 #define POP3_TOP	(N_POP3_STATE + 1000)
 #define POP3_TOP_RECV	(N_POP3_STATE + 1001)
@@ -211,6 +212,8 @@ gint rpop3_account(PrefsAccount *account)
 		}
 	}
 
+	session_set_timeout(session, prefs_common.io_timeout_secs * 1000);
+
 	ret = rpop3_start(session);
 
 	while (!rpop3_window.finished)
@@ -350,17 +353,61 @@ static gint rpop3_start(Session *session)
 {
 	g_return_val_if_fail(session != NULL, -1);
 
-	rpop3_status_label_set(_("Connecting to %s:%d"),
+	rpop3_status_label_set(_("Connecting to %s:%d ..."),
 			       session->server, session->port);
 
 	if (session_connect(session, session->server, session->port) < 0) {
-		log_warning(_("Can't connect to POP3 server: %s:%d\n"),
-			    session->server, session->port);
+		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		alertpanel_error(_("Can't connect to POP3 server: %s:%d"),
+				 session->server, session->port);
 		return -1;
 	}
 
 	while (session_is_connected(session))
 		gtk_main_iteration();
+
+	switch (POP3_SESSION(session)->error_val) {
+	case PS_AUTHFAIL:
+		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		if (POP3_SESSION(session)->error_msg)
+			alertpanel_error(_("Authentication failed:\n%s"),
+					 POP3_SESSION(session)->error_msg);
+		else
+			alertpanel_error(_("Authentication failed."));
+		return -1;
+	case PS_SUCCESS:
+		break;
+	default:
+		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		if (POP3_SESSION(session)->error_msg)
+			alertpanel_error
+				(_("Error occurred during POP3 session:\n%s"),
+				 POP3_SESSION(session)->error_msg);
+		else
+			alertpanel_error(_("Error occurred during POP3 session."));
+		return -1;
+	}
+
+	switch (session->state) {
+	case SESSION_EOF:
+		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		alertpanel_error(_("Connection closed by the remote host."));
+		return -1;
+	case SESSION_TIMEOUT:
+		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		alertpanel_error(_("Session timed out."));
+		return -1;
+	case SESSION_ERROR:
+		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		if (POP3_SESSION(session)->state == POP3_READY)
+			alertpanel_error(_("Can't connect to POP3 server: %s:%d"),
+					 session->server, session->port);
+		else
+			alertpanel_error(_("Error occurred during POP3 session."));
+		return -1;
+	default:
+		break;
+	}
 
 	return 0;
 }
