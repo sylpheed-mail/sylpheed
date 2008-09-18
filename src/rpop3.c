@@ -42,10 +42,12 @@
 
 #include "rpop3.h"
 #include "mainwindow.h"
+#include "folderview.h"
 #include "prefs_account.h"
 #include "pop.h"
 #include "procheader.h"
 #include "procmsg.h"
+#include "folder.h"
 #include "inc.h"
 #include "utils.h"
 #include "gtkutils.h"
@@ -77,6 +79,7 @@ static struct RPop3Window {
 
 	GtkWidget *status_label;
 
+	GtkWidget *recv_btn;
 	GtkWidget *open_btn;
 	GtkWidget *delete_btn;
 	GtkWidget *close_btn;
@@ -86,6 +89,8 @@ static struct RPop3Window {
 	gboolean finished;
 	GArray *delete_array;
 	gint delete_cur;
+	GArray *recv_array;
+	gint recv_cur;
 } rpop3_window;
 
 static void rpop3_window_create	(PrefsAccount	*account);
@@ -167,6 +172,8 @@ static void rpop3_row_activated	(GtkTreeView		*treeview,
 				 GtkTreeViewColumn	*column,
 				 gpointer		 data);
 
+static void rpop3_recv		(GtkButton	*button,
+				 gpointer	 data);
 static void rpop3_open		(GtkButton	*button,
 				 gpointer	 data);
 static void rpop3_delete	(GtkButton	*button,
@@ -242,6 +249,7 @@ static void rpop3_window_create(PrefsAccount *account)
 	GtkWidget *hbox;
 	GtkWidget *status_label;
 	GtkWidget *hbbox;
+	GtkWidget *recv_btn;
 	GtkWidget *open_btn;
 	GtkWidget *delete_btn;
 	GtkWidget *close_btn;
@@ -320,6 +328,10 @@ static void rpop3_window_create(PrefsAccount *account)
 	gtk_box_set_spacing(GTK_BOX(hbbox), 6);
 	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
 
+	recv_btn = gtk_button_new_with_mnemonic(_("_Get"));
+	gtk_box_pack_start(GTK_BOX(hbbox), recv_btn, FALSE, FALSE, 0);
+	gtk_widget_set_sensitive(recv_btn, FALSE);
+
 	open_btn = gtk_button_new_from_stock(GTK_STOCK_OPEN);
 	gtk_box_pack_start(GTK_BOX(hbbox), open_btn, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(open_btn, FALSE);
@@ -331,6 +343,8 @@ static void rpop3_window_create(PrefsAccount *account)
 	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
 	gtk_box_pack_start(GTK_BOX(hbbox), close_btn, FALSE, FALSE, 0);
 
+	g_signal_connect(G_OBJECT(recv_btn), "clicked",
+			 G_CALLBACK(rpop3_recv), NULL);
 	g_signal_connect(G_OBJECT(open_btn), "clicked",
 			 G_CALLBACK(rpop3_open), NULL);
 	g_signal_connect(G_OBJECT(delete_btn), "clicked",
@@ -344,6 +358,7 @@ static void rpop3_window_create(PrefsAccount *account)
 	rpop3_window.treeview = treeview;
 	rpop3_window.store = store;
 	rpop3_window.status_label = status_label;
+	rpop3_window.recv_btn = recv_btn;
 	rpop3_window.open_btn = open_btn;
 	rpop3_window.delete_btn = delete_btn;
 	rpop3_window.close_btn = close_btn;
@@ -493,6 +508,12 @@ static gint rpop3_top_recv(Pop3Session *session, FILE *fp, guint len)
 
 static gint rpop3_retr_send(Pop3Session *session)
 {
+	if (rpop3_window.recv_array) {
+		g_return_val_if_fail(rpop3_window.recv_cur < rpop3_window.recv_array->len, -1);
+		session->cur_msg = g_array_index(rpop3_window.recv_array, gint,
+						 rpop3_window.recv_cur);
+	}
+
 	session->state = POP3_RETR;
 	pop3_gen_send(session, "RETR %d", session->cur_msg);
 	return PS_SUCCESS;
@@ -503,7 +524,7 @@ static void msgview_destroy_cb(GtkWidget *widget, gpointer data)
 	gchar *file = (gchar *)data;
 
 	if (file) {
-		debug_print("msgview_destroy_cb(): removing temporary file: %s\n", file);
+		debug_print("msgview_destroy_cb: removing temporary file: %s\n", file);
 		g_unlink(file);
 		g_free(file);
 	}
@@ -521,6 +542,33 @@ static gint rpop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 		g_free(file);
 		session->error_val = PS_IOERR;
 		return -1;
+	}
+
+	if (rpop3_window.recv_array) {
+		FolderItem *inbox;
+
+		if (session->ac_prefs->inbox) {
+			inbox = folder_find_item_from_identifier
+				(session->ac_prefs->inbox);
+			if (!inbox)
+				inbox = folder_get_default_inbox();
+		} else
+			inbox = folder_get_default_inbox();
+		if (!inbox) {
+			session->error_val = PS_IOERR;
+			return -1;
+		}
+
+		if (folder_item_add_msg(inbox, file, NULL, FALSE) < 0) {
+			session->error_val = PS_IOERR;
+			return -1;
+		}
+		if (rpop3_window.recv_cur + 1 == rpop3_window.recv_array->len)
+			folderview_update_item(inbox, TRUE);
+		else
+			folderview_update_item(inbox, FALSE);
+
+		return PS_SUCCESS;
 	}
 
 	msginfo = procheader_parse_file(file, flags, FALSE);
@@ -733,9 +781,23 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 	case POP3_RETR_RECV:
         	if (rpop3_retr_recv(pop3_session, fp, len) < 0)
                 	return -1;
-		rpop3_status_label_set(_("Opened message %d"),
-				       pop3_session->cur_msg);
-		pop3_session->state = POP3_IDLE;
+		if (rpop3_window.recv_array) {
+			if (rpop3_window.recv_cur + 1 < rpop3_window.recv_array->len) {
+				rpop3_window.recv_cur++;
+				if (rpop3_retr_send(pop3_session) < 0)
+					return -1;
+			} else {
+				rpop3_status_label_set(_("Retrieved %d messages"), rpop3_window.recv_cur + 1);
+				g_array_free(rpop3_window.recv_array, TRUE);
+				rpop3_window.recv_array = NULL;
+				rpop3_window.recv_cur = 0;
+				pop3_session->state = POP3_IDLE;
+			}
+		} else {
+			rpop3_status_label_set(_("Opened message %d"),
+					       pop3_session->cur_msg);
+			pop3_session->state = POP3_IDLE;
+		}
 		break;
 	case POP3_TOP_RECV:
 		if (rpop3_top_recv(pop3_session, fp, len) == PS_SUCCESS) {
@@ -748,6 +810,8 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 				rpop3_status_label_set
 					(_("Retrieved %d message headers"),
 					 pop3_session->count);
+				gtk_widget_set_sensitive
+					(rpop3_window.recv_btn, TRUE);
 				gtk_widget_set_sensitive
 					(rpop3_window.open_btn, TRUE);
 				gtk_widget_set_sensitive
@@ -783,6 +847,47 @@ static void rpop3_row_activated(GtkTreeView *treeview, GtkTreePath *path,
 	gtk_button_clicked(GTK_BUTTON(rpop3_window.open_btn));
 }
 
+static void rpop3_recv(GtkButton *button, gpointer data)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(rpop3_window.store);
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GList *rows, *cur;
+	gint num;
+	gboolean deleted;
+	GArray *array;
+
+	if (rpop3_window.session->state != POP3_IDLE)
+		return;
+
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW(rpop3_window.treeview));
+
+	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+	array = g_array_sized_new(FALSE, FALSE, sizeof(gint),
+				  g_list_length(rows));
+
+	for (cur = rows; cur != NULL; cur = cur->next) {
+		gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)cur->data);
+		gtk_tree_model_get(model, &iter, COL_NUMBER, &num,
+				   COL_DELETED, &deleted, -1);
+		if (!deleted) {
+			debug_print("rpop3_recv: recieving message %d\n", num);
+			g_array_append_val(array, num);
+		}
+	}
+
+	g_list_foreach(rows, (GFunc)gtk_tree_path_free, NULL);
+	g_list_free(rows);
+
+	if (array->len > 0) {
+		rpop3_window.recv_array = array;
+		rpop3_window.recv_cur = 0;
+		rpop3_retr_send(rpop3_window.session);
+	} else
+		g_array_free(array, TRUE);
+}
+
 static void rpop3_open(GtkButton *button, gpointer data)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(rpop3_window.store);
@@ -805,7 +910,7 @@ static void rpop3_open(GtkButton *button, gpointer data)
 		gtk_tree_model_get(model, &iter, COL_NUMBER, &num,
 				   COL_DELETED, &deleted, -1);
 		if (!deleted) {
-			debug_print("rpop3_open(): opening message %d\n", num);
+			debug_print("rpop3_open: opening message %d\n", num);
 			rpop3_status_label_set(_("Retrieving message %d ..."),
 					       num);
 			rpop3_window.session->cur_msg = num;
@@ -865,7 +970,6 @@ static void rpop3_delete(GtkButton *button, gpointer data)
 	if (array->len > 0) {
 		rpop3_window.delete_array = array;
 		rpop3_window.delete_cur = 0;
-
 		rpop3_delete_send(rpop3_window.session);
 	} else
 		g_array_free(array, TRUE);
