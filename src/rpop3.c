@@ -378,11 +378,15 @@ static gint rpop3_start(Session *session)
 		return -1;
 	}
 
-	while (session_is_connected(session))
+	while (session_is_connected(session)) {
+		if (session->state == SESSION_READY && rpop3_window.cancelled)
+			break;
 		gtk_main_iteration();
+	}
 
 	switch (POP3_SESSION(session)->error_val) {
 	case PS_AUTHFAIL:
+		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
 		if (POP3_SESSION(session)->error_msg)
 			alertpanel_error(_("Authentication failed:\n%s"),
@@ -393,6 +397,7 @@ static gint rpop3_start(Session *session)
 	case PS_SUCCESS:
 		break;
 	default:
+		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
 		if (POP3_SESSION(session)->error_msg)
 			alertpanel_error
@@ -405,14 +410,17 @@ static gint rpop3_start(Session *session)
 
 	switch (session->state) {
 	case SESSION_EOF:
+		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
 		alertpanel_error(_("Connection closed by the remote host."));
 		return -1;
 	case SESSION_TIMEOUT:
+		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
 		alertpanel_error(_("Session timed out."));
 		return -1;
 	case SESSION_ERROR:
+		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
 		if (POP3_SESSION(session)->state == POP3_READY)
 			alertpanel_error(_("Can't connect to POP3 server: %s:%d"),
@@ -420,7 +428,14 @@ static gint rpop3_start(Session *session)
 		else
 			alertpanel_error(_("Error occurred during POP3 session."));
 		return -1;
+	case SESSION_READY:
+		session_disconnect(session);
+		debug_print("Session cancelled.\n");
+		return -1;
+	case SESSION_DISCONNECTED:
+		break;
 	default:
+		session_disconnect(session);
 		break;
 	}
 
