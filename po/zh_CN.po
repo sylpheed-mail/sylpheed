@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-18 17:19+0900\n"
+"POT-Creation-Date: 2008-09-19 15:53+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -1600,7 +1600,7 @@ msgid "Can't get the part of multipart message."
 msgstr "无法获得分块邮件的分块。"
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:495 src/summaryview.c:2271
+#: src/rpop3.c:519 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(没有主题)"
 
@@ -1790,7 +1790,7 @@ msgstr "MIME 类型"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:313 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "大小"
@@ -2512,7 +2512,7 @@ msgstr "新闻组："
 msgid "Creating header view...\n"
 msgstr "正在创建标题视图...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:496
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(没有发件人)"
@@ -2791,7 +2791,7 @@ msgstr "正在连接POP3服务器：%s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "无法连接POP3服务器：%s:%d\n"
 
-#: src/inc.c:929 src/rpop3.c:650 src/send_message.c:813
+#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "正在验证..."
 
@@ -2871,7 +2871,7 @@ msgid "Socket error."
 msgstr "Socket错误。"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:415 src/send_message.c:760
+#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
 #: src/send_message.c:963
 msgid "Connection closed by the remote host."
 msgstr "远程主机关闭了连接。"
@@ -2889,11 +2889,11 @@ msgstr ""
 "信箱被锁住：\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:395 src/send_message.c:943
+#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
 msgid "Authentication failed."
 msgstr "验证失败。"
 
-#: src/inc.c:1325 src/rpop3.c:392 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2902,7 +2902,7 @@ msgstr ""
 "验证失败：\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:420 src/send_message.c:967
+#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
 msgid "Session timed out."
 msgstr "会话超时。"
 
@@ -6005,19 +6005,19 @@ msgid "Attachment"
 msgstr "附件"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:310
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "主题"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:311
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "发件人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:312
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "日期"
@@ -6329,7 +6329,7 @@ msgstr "正在扫描文件夹 %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "正在过滤..."
 
-#: src/query_search.c:696 src/rpop3.c:504 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(没有日期)"
 
@@ -6397,88 +6397,88 @@ msgstr "签名创建于 %s\n"
 msgid "Error verifying the signature"
 msgstr "验证签名时发生错误"
 
-#: src/rpop3.c:259
+#: src/rpop3.c:267
 #, fuzzy, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "删除邮箱"
 
-#: src/rpop3.c:309 src/summaryview.c:5091
+#: src/rpop3.c:317 src/summaryview.c:5091
 msgid "No."
 msgstr "No."
 
-#: src/rpop3.c:331
+#: src/rpop3.c:339
 #, fuzzy
 msgid "_Get"
 msgstr "接收"
 
-#: src/rpop3.c:371
+#: src/rpop3.c:388
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "正在连接SMTP服务器：%s ..."
 
-#: src/rpop3.c:376 src/rpop3.c:426
+#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "无法连接POP3服务器：%s:%d\n"
 
-#: src/rpop3.c:404
+#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#, fuzzy
+msgid "Error occurred during POP3 session."
+msgstr "POP3 会话发生错误\n"
+
+#: src/rpop3.c:424
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "POP3 会话发生错误\n"
 
-#: src/rpop3.c:407 src/rpop3.c:429
-#, fuzzy
-msgid "Error occurred during POP3 session."
-msgstr "POP3 会话发生错误\n"
-
-#: src/rpop3.c:518
+#: src/rpop3.c:542
 #, fuzzy, c-format
-msgid "Retrieving message headers (%d / %d)"
+msgid "Retrieving message headers (%d / %d) ..."
 msgstr "正在发送邮件 (%d / %d 字节)"
 
-#: src/rpop3.c:676
+#: src/rpop3.c:700
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "正在获取新邮件数量(STAT)..."
 
-#: src/rpop3.c:685 src/rpop3.c:698
+#: src/rpop3.c:709 src/rpop3.c:722
 #, fuzzy
 msgid "No message"
 msgstr "没有新邮件"
 
-#: src/rpop3.c:731
+#: src/rpop3.c:755
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "删除邮件"
 
-#: src/rpop3.c:805
+#: src/rpop3.c:832
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "正在获取新邮件"
 
-#: src/rpop3.c:812
+#: src/rpop3.c:839
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "立即发送邮件"
 
-#: src/rpop3.c:826
+#: src/rpop3.c:854
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "正在获取新邮件"
 
-#: src/rpop3.c:929
+#: src/rpop3.c:959
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "正在从 %s 获取邮件..."
 
-#: src/rpop3.c:955
+#: src/rpop3.c:985
 #, fuzzy
 msgid "Delete messages"
 msgstr "删除邮件"
 
-#: src/rpop3.c:956
+#: src/rpop3.c:986
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

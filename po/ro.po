@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-18 17:19+0900\n"
+"POT-Creation-Date: 2008-09-19 15:53+0900\n"
 "PO-Revision-Date: 2008-05-20 13:42+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DO ro>\n"
 "Language-Team: \n"
@@ -1616,7 +1616,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Nu se poate obține o parte a mesajului multiparte."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:495 src/summaryview.c:2271
+#: src/rpop3.c:519 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Fără subiect)"
 
@@ -1810,7 +1810,7 @@ msgstr "Tip MIME"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:313 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Dimensiune"
@@ -2526,7 +2526,7 @@ msgstr "Grupuri de știri:"
 msgid "Creating header view...\n"
 msgstr "Creare vizualizare antet...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:496
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Fără expeditor)"
@@ -2802,7 +2802,7 @@ msgstr "Conectare la serverul POP3: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nu se poate efectua conexiunea la serverul POP3: %s:%d\n"
 
-#: src/inc.c:929 src/rpop3.c:650 src/send_message.c:813
+#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Autentificare..."
 
@@ -2884,7 +2884,7 @@ msgid "Socket error."
 msgstr "Eroare socket."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:415 src/send_message.c:760
+#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
 #: src/send_message.c:963
 msgid "Connection closed by the remote host."
 msgstr "Conexiune închisă de serverul de la distanță."
@@ -2902,11 +2902,11 @@ msgstr ""
 "Căsuța poștală este blocată:\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:395 src/send_message.c:943
+#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
 msgid "Authentication failed."
 msgstr "Autentificarea a eșuat."
 
-#: src/inc.c:1325 src/rpop3.c:392 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2915,7 +2915,7 @@ msgstr ""
 "Autentificarea a eșuat:\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:420 src/send_message.c:967
+#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
 msgid "Session timed out."
 msgstr "Timpul sesiunii a expirat."
 
@@ -6020,19 +6020,19 @@ msgid "Attachment"
 msgstr "Atașament"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:310
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Subiect"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:311
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Expeditor"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:312
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Dată"
@@ -6332,7 +6332,7 @@ msgstr "Căutare %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Căutare %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:504 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Fără Dată)"
 
@@ -6398,88 +6398,88 @@ msgstr "Semnătură creată la %s\n"
 msgid "Error verifying the signature"
 msgstr "Eroare la verificarea semnăturii"
 
-#: src/rpop3.c:259
+#: src/rpop3.c:267
 #, fuzzy, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "Ștergere căsuță poștală"
 
-#: src/rpop3.c:309 src/summaryview.c:5091
+#: src/rpop3.c:317 src/summaryview.c:5091
 msgid "No."
 msgstr "Nu."
 
-#: src/rpop3.c:331
+#: src/rpop3.c:339
 #, fuzzy
 msgid "_Get"
 msgstr "Verifică"
 
-#: src/rpop3.c:371
+#: src/rpop3.c:388
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Conectare la serverul SMTP: %s ..."
 
-#: src/rpop3.c:376 src/rpop3.c:426
+#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Nu se poate efectua conexiunea la serverul POP3: %s:%d\n"
 
-#: src/rpop3.c:404
+#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#, fuzzy
+msgid "Error occurred during POP3 session."
+msgstr "a apărut o eroare la sesiunea POP3\n"
+
+#: src/rpop3.c:424
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "a apărut o eroare la sesiunea POP3\n"
 
-#: src/rpop3.c:407 src/rpop3.c:429
-#, fuzzy
-msgid "Error occurred during POP3 session."
-msgstr "a apărut o eroare la sesiunea POP3\n"
-
-#: src/rpop3.c:518
+#: src/rpop3.c:542
 #, fuzzy, c-format
-msgid "Retrieving message headers (%d / %d)"
+msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Obținere anteturi mesaje (%d / %d)"
 
-#: src/rpop3.c:676
+#: src/rpop3.c:700
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Obținerea numărului de mesaje noi (STAT)..."
 
-#: src/rpop3.c:685 src/rpop3.c:698
+#: src/rpop3.c:709 src/rpop3.c:722
 #, fuzzy
 msgid "No message"
 msgstr "Nu există mesaje noi."
 
-#: src/rpop3.c:731
+#: src/rpop3.c:755
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Ștergere mesaj(e)"
 
-#: src/rpop3.c:805
+#: src/rpop3.c:832
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Recepționare mesaje noi"
 
-#: src/rpop3.c:812
+#: src/rpop3.c:839
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Trimite mesajul acum"
 
-#: src/rpop3.c:826
+#: src/rpop3.c:854
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Recepționare mesaje noi"
 
-#: src/rpop3.c:929
+#: src/rpop3.c:959
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Recepționare mesaje de la %s..."
 
-#: src/rpop3.c:955
+#: src/rpop3.c:985
 #, fuzzy
 msgid "Delete messages"
 msgstr "Ștergere mesaj(e)"
 
-#: src/rpop3.c:956
+#: src/rpop3.c:986
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
