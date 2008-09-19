@@ -82,9 +82,11 @@ static struct RPop3Window {
 	GtkWidget *recv_btn;
 	GtkWidget *open_btn;
 	GtkWidget *delete_btn;
+	GtkWidget *stop_btn;
 	GtkWidget *close_btn;
 
 	Pop3Session *session;
+	gboolean stop_load;
 	gboolean cancelled;
 	gboolean finished;
 	GArray *delete_array;
@@ -178,6 +180,8 @@ static void rpop3_open		(GtkButton	*button,
 				 gpointer	 data);
 static void rpop3_delete	(GtkButton	*button,
 				 gpointer	 data);
+static void rpop3_stop		(GtkButton	*button,
+				 gpointer	 data);
 static void rpop3_close		(GtkButton	*button,
 				 gpointer	 data);
 
@@ -191,6 +195,8 @@ gint rpop3_account(PrefsAccount *account)
 		return -1;
 	if (inc_is_active())
 		return -1;
+	if (rpop3_window.window)
+		return -1;
 
 	inc_lock();
 
@@ -198,6 +204,7 @@ gint rpop3_account(PrefsAccount *account)
 
 	session = pop3_session_new(account);
 	rpop3_window.session = POP3_SESSION(session);
+	rpop3_window.stop_load = FALSE;
 	rpop3_window.cancelled = FALSE;
 	rpop3_window.finished = FALSE;
 
@@ -252,6 +259,7 @@ static void rpop3_window_create(PrefsAccount *account)
 	GtkWidget *recv_btn;
 	GtkWidget *open_btn;
 	GtkWidget *delete_btn;
+	GtkWidget *stop_btn;
 	GtkWidget *close_btn;
 	gchar buf[BUFFSIZE];
 
@@ -340,6 +348,10 @@ static void rpop3_window_create(PrefsAccount *account)
 	gtk_box_pack_start(GTK_BOX(hbbox), delete_btn, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(delete_btn, FALSE);
 
+	stop_btn = gtk_button_new_from_stock(GTK_STOCK_STOP);
+	gtk_box_pack_start(GTK_BOX(hbbox), stop_btn, FALSE, FALSE, 0);
+	gtk_widget_set_sensitive(stop_btn, FALSE);
+
 	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
 	gtk_box_pack_start(GTK_BOX(hbbox), close_btn, FALSE, FALSE, 0);
 
@@ -349,6 +361,8 @@ static void rpop3_window_create(PrefsAccount *account)
 			 G_CALLBACK(rpop3_open), NULL);
 	g_signal_connect(G_OBJECT(delete_btn), "clicked",
 			 G_CALLBACK(rpop3_delete), NULL);
+	g_signal_connect(G_OBJECT(stop_btn), "clicked",
+			 G_CALLBACK(rpop3_stop), NULL);
 	g_signal_connect(G_OBJECT(close_btn), "clicked",
 			 G_CALLBACK(rpop3_close), NULL);
 
@@ -361,11 +375,14 @@ static void rpop3_window_create(PrefsAccount *account)
 	rpop3_window.recv_btn = recv_btn;
 	rpop3_window.open_btn = open_btn;
 	rpop3_window.delete_btn = delete_btn;
+	rpop3_window.stop_btn = stop_btn;
 	rpop3_window.close_btn = close_btn;
 }
 
 static gint rpop3_start(Session *session)
 {
+	SessionState state;
+
 	g_return_val_if_fail(session != NULL, -1);
 
 	rpop3_status_label_set(_("Connecting to %s:%d ..."),
@@ -384,10 +401,13 @@ static gint rpop3_start(Session *session)
 		gtk_main_iteration();
 	}
 
+	state = session->state;
+	session_disconnect(session);
+
 	switch (POP3_SESSION(session)->error_val) {
 	case PS_AUTHFAIL:
-		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		rpop3_status_label_set(_("Authentication failed."));
 		if (POP3_SESSION(session)->error_msg)
 			alertpanel_error(_("Authentication failed:\n%s"),
 					 POP3_SESSION(session)->error_msg);
@@ -397,8 +417,8 @@ static gint rpop3_start(Session *session)
 	case PS_SUCCESS:
 		break;
 	default:
-		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		rpop3_status_label_set(_("Error occurred during POP3 session."));
 		if (POP3_SESSION(session)->error_msg)
 			alertpanel_error
 				(_("Error occurred during POP3 session:\n%s"),
@@ -408,34 +428,38 @@ static gint rpop3_start(Session *session)
 		return -1;
 	}
 
-	switch (session->state) {
+	switch (state) {
 	case SESSION_EOF:
-		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		rpop3_status_label_set
+			(_("Connection closed by the remote host."));
 		alertpanel_error(_("Connection closed by the remote host."));
 		return -1;
 	case SESSION_TIMEOUT:
-		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
+		rpop3_status_label_set(_("Session timed out."));
 		alertpanel_error(_("Session timed out."));
 		return -1;
 	case SESSION_ERROR:
-		session_disconnect(session);
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
-		if (POP3_SESSION(session)->state == POP3_READY)
-			alertpanel_error(_("Can't connect to POP3 server: %s:%d"),
-					 session->server, session->port);
-		else
-			alertpanel_error(_("Error occurred during POP3 session."));
+		if (POP3_SESSION(session)->state == POP3_READY) {
+			rpop3_status_label_set
+				(_("Can't connect to POP3 server: %s:%d"),
+				 session->server, session->port);
+			alertpanel_error
+				(_("Can't connect to POP3 server: %s:%d"),
+				 session->server, session->port);
+		} else {
+			rpop3_status_label_set
+				(_("Error occurred during POP3 session."));
+			alertpanel_error
+				(_("Error occurred during POP3 session."));
+		}
 		return -1;
 	case SESSION_READY:
-		session_disconnect(session);
 		debug_print("Session cancelled.\n");
 		return -1;
-	case SESSION_DISCONNECTED:
-		break;
 	default:
-		session_disconnect(session);
 		break;
 	}
 
@@ -515,7 +539,7 @@ static gint rpop3_top_recv(Pop3Session *session, FILE *fp, guint len)
 			   COL_DELETED, FALSE,
 			   -1);
 
-	rpop3_status_label_set(_("Retrieving message headers (%d / %d)"),
+	rpop3_status_label_set(_("Retrieving message headers (%d / %d) ..."),
 			       session->cur_msg, session->count);
 
 	return PS_SUCCESS;
@@ -774,8 +798,11 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
 			pop3_session->cur_msg = 1;
 			if (rpop3_window.cancelled || pop3_session->count == 0)
 				pop3_logout_send(rpop3_window.session);
-			else
+			else {
+				gtk_widget_set_sensitive(rpop3_window.stop_btn,
+							 TRUE);
 				rpop3_top_send(pop3_session);
+			}
 		} else
                         return -1;
                 break;
@@ -818,19 +845,22 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 		if (rpop3_top_recv(pop3_session, fp, len) == PS_SUCCESS) {
 			if (rpop3_window.cancelled)
 				pop3_logout_send(rpop3_window.session);
-			else if (pop3_session->cur_msg < pop3_session->count) {
+			else if (!rpop3_window.stop_load &&
+				 (pop3_session->cur_msg < pop3_session->count)) {
 				pop3_session->cur_msg++;
 				rpop3_top_send(pop3_session);
 			} else {
 				rpop3_status_label_set
 					(_("Retrieved %d message headers"),
-					 pop3_session->count);
+					 pop3_session->cur_msg);
 				gtk_widget_set_sensitive
 					(rpop3_window.recv_btn, TRUE);
 				gtk_widget_set_sensitive
 					(rpop3_window.open_btn, TRUE);
 				gtk_widget_set_sensitive
 					(rpop3_window.delete_btn, TRUE);
+				gtk_widget_set_sensitive
+					(rpop3_window.stop_btn, FALSE);
 				pop3_session->state = POP3_IDLE;
 			}
 		} else
@@ -988,6 +1018,11 @@ static void rpop3_delete(GtkButton *button, gpointer data)
 		rpop3_delete_send(rpop3_window.session);
 	} else
 		g_array_free(array, TRUE);
+}
+
+static void rpop3_stop(GtkButton *button, gpointer data)
+{
+	rpop3_window.stop_load = TRUE;
 }
 
 static void rpop3_close(GtkButton *button, gpointer data)

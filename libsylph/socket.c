@@ -922,7 +922,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	conn_data->channel = NULL;
 	g_io_channel_unref(source);
 
-	if (condition & (G_IO_ERR | G_IO_HUP)) {
+	if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL)) {
 		debug_print("sock_connect_async_cb: condition = %d\n",
 			    condition);
 		fd_close(fd);
@@ -939,6 +939,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	}
 
 	if (val != 0) {
+		debug_print("getsockopt(SOL_SOCKET, SO_ERROR) returned error\n");
 		fd_close(fd);
 		sock_connect_address_list_async(conn_data);
 		return FALSE;
@@ -1086,9 +1087,9 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 	conn_data->cur_addr = conn_data->cur_addr->next;
 
 	conn_data->channel = g_io_channel_unix_new(sock);
-	conn_data->io_tag = g_io_add_watch(conn_data->channel,
-					   G_IO_OUT | G_IO_ERR | G_IO_HUP,
-					   sock_connect_async_cb, conn_data);
+	conn_data->io_tag = g_io_add_watch
+		(conn_data->channel, G_IO_OUT | G_IO_ERR | G_IO_HUP | G_IO_NVAL,
+		 sock_connect_async_cb, conn_data);
 
 	return 0;
 }
