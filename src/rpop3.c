@@ -284,6 +284,8 @@ static void rpop3_window_create(PrefsAccount *account)
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrwin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
+	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrwin),
+					    GTK_SHADOW_IN);
 	gtk_widget_set_size_request(scrwin, -1, 320);
 
 	store = gtk_list_store_new(N_COLS, G_TYPE_INT, G_TYPE_STRING,
@@ -316,7 +318,7 @@ static void rpop3_window_create(PrefsAccount *account)
 
         APPEND_COLUMN(_("No."), COL_NUMBER, 0);
         APPEND_COLUMN(_("Subject"), COL_SUBJECT, 200);
-        APPEND_COLUMN(_("From"), COL_FROM, 152);
+        APPEND_COLUMN(_("From"), COL_FROM, 160);
         APPEND_COLUMN(_("Date"), COL_DATE, 0);
         APPEND_COLUMN(_("Size"), COL_SIZE, 0);
 
