@@ -787,9 +787,10 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
         case POP3_GETRANGE_UIDL_RECV:
                 val = pop3_getrange_uidl_recv(pop3_session, (gchar *)data, len);
                 if (val == PS_SUCCESS) {
-			if (rpop3_window.cancelled)
+			if (rpop3_window.cancelled) {
+				rpop3_status_label_set(_("Quitting..."));
 				pop3_logout_send(rpop3_window.session);
-			else
+			} else
 				pop3_getsize_list_send(pop3_session);
                 } else
                         return -1;
@@ -798,9 +799,10 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
                 val = pop3_getsize_list_recv(pop3_session, (gchar *)data, len);
                 if (val == PS_SUCCESS) {
 			pop3_session->cur_msg = 1;
-			if (rpop3_window.cancelled || pop3_session->count == 0)
+			if (rpop3_window.cancelled || pop3_session->count == 0) {
+				rpop3_status_label_set(_("Quitting..."));
 				pop3_logout_send(rpop3_window.session);
-			else {
+			} else {
 				gtk_widget_set_sensitive(rpop3_window.stop_btn,
 							 TRUE);
 				rpop3_top_send(pop3_session);
@@ -845,9 +847,10 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 		break;
 	case POP3_TOP_RECV:
 		if (rpop3_top_recv(pop3_session, fp, len) == PS_SUCCESS) {
-			if (rpop3_window.cancelled)
+			if (rpop3_window.cancelled) {
+				rpop3_status_label_set(_("Quitting..."));
 				pop3_logout_send(rpop3_window.session);
-			else if (!rpop3_window.stop_load &&
+			} else if (!rpop3_window.stop_load &&
 				 (pop3_session->cur_msg < pop3_session->count)) {
 				pop3_session->cur_msg++;
 				rpop3_top_send(pop3_session);
@@ -1031,9 +1034,10 @@ static void rpop3_close(GtkButton *button, gpointer data)
 {
 	rpop3_window.finished = TRUE;
 
-	if (rpop3_window.session->state == POP3_IDLE)
+	if (rpop3_window.session->state == POP3_IDLE) {
+		rpop3_status_label_set(_("Quitting..."));
 		pop3_logout_send(rpop3_window.session);
-	else if (rpop3_window.session->state != POP3_DONE ||
-		 rpop3_window.session->state != POP3_ERROR)
+	} else if (rpop3_window.session->state != POP3_DONE ||
+		   rpop3_window.session->state != POP3_ERROR)
 		rpop3_window.cancelled = TRUE;
 }
