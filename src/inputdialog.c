@@ -260,7 +260,9 @@ static gchar *input_dialog_open(const gchar *title, const gchar *message,
 
 	inc_unlock();
 
-	debug_print("return string = %s\n", str ? str : "(none)");
+	if (type != INPUT_DIALOG_INVISIBLE)
+		debug_print("return string = %s\n", str ? str : "(none)");
+
 	return str;
 }
 

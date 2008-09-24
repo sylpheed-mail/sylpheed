@@ -3131,10 +3131,10 @@ static MsgInfo *imap_parse_envelope(IMAPSession *session, FolderItem *item,
 		} else if (!strncmp(cur_pos, "RFC822.SIZE ", 12)) {
 			cur_pos += 12;
 			size = strtol(cur_pos, &cur_pos, 10);
-		} else if (!strncmp(cur_pos, "RFC822.HEADER ", 14)) {
+		} else if (!strncmp(cur_pos, "RFC822.HEADER", 13)) {
 			gchar *headers;
 
-			cur_pos += 14;
+			cur_pos += 13;
 			cur_pos = imap_get_header(session, cur_pos, &headers,
 						  line_str);
 			msginfo = procheader_parse_str(headers, flags, FALSE);
