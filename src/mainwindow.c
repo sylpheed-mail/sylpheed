@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3822,7 +3822,7 @@ static void prefs_common_open_cb(MainWindow *mainwin, guint action,
 static void prefs_filter_open_cb(MainWindow *mainwin, guint action,
 				 GtkWidget *widget)
 {
-	prefs_filter_open(NULL, NULL);
+	prefs_filter_open(NULL, NULL, NULL);
 }
 
 static void prefs_template_open_cb(MainWindow *mainwin, guint action,

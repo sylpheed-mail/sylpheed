@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,8 @@ struct _ActionHBox {
 
 
 FilterRule *prefs_filter_edit_open	(FilterRule	*rule,
-					 const gchar	*header);
+					 const gchar	*header,
+					 const gchar	*key);
 
 FilterCondEdit *prefs_filter_edit_cond_edit_create	(void);
 void prefs_filter_edit_clear_cond_edit	(FilterCondEdit	*cond_edit);

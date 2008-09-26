@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ static gboolean prefs_filter_key_pressed(GtkWidget	*widget,
 static void prefs_filter_close		(void);
 
 
-void prefs_filter_open(MsgInfo *msginfo, const gchar *header)
+void prefs_filter_open(MsgInfo *msginfo, const gchar *header, const gchar *key)
 {
 	inc_lock();
 
@@ -146,7 +146,7 @@ void prefs_filter_open(MsgInfo *msginfo, const gchar *header)
 	if (msginfo) {
 		FilterRule *rule;
 
-		rule = prefs_filter_edit_open(NULL, header);
+		rule = prefs_filter_edit_open(NULL, header, key);
 		gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 		if (rule) {
@@ -614,7 +614,7 @@ static void prefs_filter_add_cb(void)
 {
 	FilterRule *rule;
 
-	rule = prefs_filter_edit_open(NULL, NULL);
+	rule = prefs_filter_edit_open(NULL, NULL, NULL);
 	gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 	if (rule) {
@@ -636,7 +636,7 @@ static void prefs_filter_edit_cb(void)
 			   COL_FILTER_RULE, &rule, -1);
 	g_return_if_fail(rule != NULL);
 
-	new_rule = prefs_filter_edit_open(rule, NULL);
+	new_rule = prefs_filter_edit_open(rule, NULL, NULL);
 	gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 	if (new_rule) {
@@ -658,7 +658,7 @@ static void prefs_filter_copy_cb(void)
 			   COL_FILTER_RULE, &rule, -1);
 	g_return_if_fail(rule != NULL);
 
-	new_rule = prefs_filter_edit_open(rule, NULL);
+	new_rule = prefs_filter_edit_open(rule, NULL, NULL);
 	gtk_window_present(GTK_WINDOW(rule_list_window.window));
 
 	if (new_rule) {

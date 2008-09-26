@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,8 @@ static struct FilterEditHeaderListDialog {
 
 static void prefs_filter_edit_create		(void);
 static void prefs_filter_edit_clear		(void);
-static void prefs_filter_edit_rule_to_dialog	(FilterRule	*rule);
+static void prefs_filter_edit_rule_to_dialog	(FilterRule	*rule,
+						 const gchar	*default_name);
 static void prefs_filter_edit_update_header_list(FilterCondEdit	*cond_list);
 
 static void prefs_filter_edit_set_action_hbox_menu_sensitive
@@ -144,7 +145,8 @@ static void prefs_filter_action_add_cb		(GtkWidget	*widget,
 						 gpointer	 data);
 
 
-FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header)
+FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header,
+				   const gchar *key)
 {
 	static gboolean lock = FALSE;
 	FilterRule *new_rule;
@@ -160,7 +162,7 @@ FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header)
 	manage_window_set_transient(GTK_WINDOW(rule_edit_window.window));
 
 	prefs_filter_edit_set_header_list(&rule_edit_window.cond_edit, rule);
-	prefs_filter_edit_rule_to_dialog(rule);
+	prefs_filter_edit_rule_to_dialog(rule, key);
 	if (header)
 		prefs_filter_edit_activate_cond_header
 			(&rule_edit_window.cond_edit, header);
@@ -362,7 +364,8 @@ static void prefs_filter_edit_clear(void)
 	}
 }
 
-static void prefs_filter_edit_rule_to_dialog(FilterRule *rule)
+static void prefs_filter_edit_rule_to_dialog(FilterRule *rule,
+					     const gchar *default_name)
 {
 	gint index = 0;
 	static gint count = 1;
@@ -370,6 +373,9 @@ static void prefs_filter_edit_rule_to_dialog(FilterRule *rule)
 	if (rule && rule->name)
 		gtk_entry_set_text(GTK_ENTRY(rule_edit_window.name_entry),
 				   rule->name);
+	else if (default_name)
+		gtk_entry_set_text(GTK_ENTRY(rule_edit_window.name_entry),
+				   default_name);
 	else {
 		gchar rule_name[32];
 		g_snprintf(rule_name, sizeof(rule_name), "Rule %d", count++);

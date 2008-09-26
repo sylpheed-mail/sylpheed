@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -4616,7 +4616,7 @@ void summary_filter_open(SummaryView *summaryview, FilterCreateType type)
 	if (!msginfo) return;
 
 	filter_get_keyword_from_msg(msginfo, &header, &key, type);
-	prefs_filter_open(msginfo, header);
+	prefs_filter_open(msginfo, header, key);
 
 	g_free(header);
 	g_free(key);
