@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -545,7 +545,7 @@ static void inc_progress_dialog_set_list(IncProgressDialog *inc_dialog)
 		session->data = inc_dialog;
 		progress_dialog_append(inc_dialog->dialog, NULL,
 				       pop3_session->ac_prefs->account_name,
-				       _("Standby"), NULL);
+				       _("Standby"), "", NULL);
 	}
 }
 
@@ -664,12 +664,16 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		qlist = next;
 	}
 
-#define SET_PIXMAP_AND_TEXT(pixbuf, str)				\
+#define SET_PIXMAP_AND_TEXT(pixbuf, status, progress)			\
 {									\
 	progress_dialog_set_row_pixbuf(inc_dialog->dialog,		\
 				       inc_dialog->cur_row, pixbuf);	\
 	progress_dialog_set_row_status(inc_dialog->dialog,		\
-				       inc_dialog->cur_row, str);	\
+				       inc_dialog->cur_row, status);	\
+	if (progress)							\
+		progress_dialog_set_row_progress(inc_dialog->dialog,	\
+						 inc_dialog->cur_row,	\
+						 progress);		\
 }
 
 	for (; inc_dialog->queue_list != NULL; inc_dialog->cur_row++) {
@@ -678,7 +682,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 
 		if (session->inc_state == INC_CANCEL ||
 		    pop3_session->pass == NULL) {
-			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"));
+			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"), NULL);
 			inc_session_destroy(session);
 			inc_dialog->queue_list =
 				g_list_remove(inc_dialog->queue_list, session);
@@ -689,7 +693,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		progress_dialog_scroll_to_row(inc_dialog->dialog,
 					      inc_dialog->cur_row);
 
-		SET_PIXMAP_AND_TEXT(current_pixbuf, _("Retrieving"));
+		SET_PIXMAP_AND_TEXT(current_pixbuf, _("Retrieving"), NULL);
 
 		/* begin POP3 session */
 		inc_state = inc_pop3_session_do(session);
@@ -698,36 +702,37 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		case INC_SUCCESS:
 			if (pop3_session->cur_total_num > 0)
 				msg = g_strdup_printf
-					(_("Done (%d message(s) (%s) received)"),
+					(_("%d message(s) (%s) received"),
 					 pop3_session->cur_total_num,
 					 to_human_readable(pop3_session->cur_total_recv_bytes));
 			else
-				msg = g_strdup_printf(_("Done (no new messages)"));
-			SET_PIXMAP_AND_TEXT(ok_pixbuf, msg);
+				msg = g_strdup_printf(_("no new messages"));
+			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Done"), msg);
 			g_free(msg);
 			break;
 		case INC_CONNECT_ERROR:
 			SET_PIXMAP_AND_TEXT(error_pixbuf,
-					    _("Connection failed"));
+					    _("Connection failed"), NULL);
 			break;
 		case INC_AUTH_FAILED:
-			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Auth failed"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Auth failed"),
+					    NULL);
 			break;
 		case INC_LOCKED:
-			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Locked"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Locked"), NULL);
 			break;
 		case INC_ERROR:
 		case INC_NO_SPACE:
 		case INC_IO_ERROR:
 		case INC_SOCKET_ERROR:
 		case INC_EOF:
-			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Error"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Error"), NULL);
 			break;
 		case INC_TIMEOUT:
-			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Timeout"));
+			SET_PIXMAP_AND_TEXT(error_pixbuf, _("Timeout"), NULL);
 			break;
 		case INC_CANCEL:
-			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"));
+			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Cancelled"), NULL);
 			break;
 		default:
 			break;
@@ -1007,12 +1012,12 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 
 	if (pop3_session->cur_total_num > 0) {
 		g_snprintf(buf, sizeof(buf),
-			   _("Retrieving (%d message(s) (%s) received)"),
+			   _("%d message(s) (%s) received"),
 			   pop3_session->cur_total_num,
 			   to_human_readable
 			   (pop3_session->cur_total_recv_bytes));
-		progress_dialog_set_row_status(inc_dialog->dialog,
-					       inc_dialog->cur_row, buf);
+		progress_dialog_set_row_progress(inc_dialog->dialog,
+						 inc_dialog->cur_row, buf);
 	}
 }
 

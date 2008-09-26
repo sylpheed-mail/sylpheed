@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 15:53+0900\n"
+"POT-Creation-Date: 2008-09-26 16:20+0900\n"
 "PO-Revision-Date: 2006-04-30 01:11+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <vertaling@nl.linux.rg>\n"
@@ -998,7 +998,7 @@ msgstr "E-mail adres"
 msgid "Address book"
 msgstr "Adresboek"
 
-#: src/addressbook.c:636 src/prefs_filter_edit.c:249
+#: src/addressbook.c:636 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Naam:"
@@ -1029,7 +1029,7 @@ msgstr "Verwijderen"
 #: src/addressbook.c:705 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
-#: src/prefs_filter_edit.c:1554
+#: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "Toevoegen"
 
@@ -1230,7 +1230,7 @@ msgstr "Bericht"
 msgid "Warning"
 msgstr "Waarschuwing"
 
-#: src/alertpanel.c:168 src/inc.c:724
+#: src/alertpanel.c:168 src/inc.c:729
 msgid "Error"
 msgstr "Fout"
 
@@ -1609,7 +1609,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Ik kan het deel van een meerdelig bericht niet ophalen."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:519 src/summaryview.c:2271
+#: src/rpop3.c:564 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Geen onderwerp)"
 
@@ -1799,8 +1799,8 @@ msgid "MIME type"
 msgstr "MIME-type"
 
 #. S_COL_DATE
-#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
+#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
+#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Grootte"
@@ -2324,7 +2324,7 @@ msgid "New"
 msgstr "Nieuw"
 
 #. S_COL_MARK
-#: src/folderview.c:424 src/prefs_filter_edit.c:501
+#: src/folderview.c:424 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Ongelezen"
@@ -2516,7 +2516,7 @@ msgstr "Nieuwsgroepen:"
 msgid "Creating header view...\n"
 msgstr "Header view wordt aangemaakt...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Geen afzender)"
@@ -2725,136 +2725,137 @@ msgstr "Nieuwe berichten worden opgehaald"
 msgid "Standby"
 msgstr "Een ogenblik geduld alstublieft"
 
-#: src/inc.c:681 src/inc.c:730
+#: src/inc.c:685 src/inc.c:735
 msgid "Cancelled"
 msgstr "Afgebroken"
 
-#: src/inc.c:692
+#: src/inc.c:696
 msgid "Retrieving"
 msgstr "Bezig met ophalen"
 
-#: src/inc.c:701
-#, c-format
-msgid "Done (%d message(s) (%s) received)"
+#: src/inc.c:705 src/inc.c:1015
+#, fuzzy, c-format
+msgid "%d message(s) (%s) received"
 msgstr "Klaar (%d bericht(en) (%s) ontvangen)"
 
-#: src/inc.c:705
-msgid "Done (no new messages)"
-msgstr "Klaar (geen nieuwe bercihten)"
+#: src/inc.c:709
+#, fuzzy
+msgid "no new messages"
+msgstr "Geen nieuwe berichten."
 
-#: src/inc.c:711
+#: src/inc.c:710
+#, fuzzy
+msgid "Done"
+msgstr "Klaar."
+
+#: src/inc.c:715
 msgid "Connection failed"
 msgstr "Verbinding mislukt"
 
-#: src/inc.c:714
+#: src/inc.c:718
 msgid "Auth failed"
 msgstr "Identificatie mislukt"
 
-#: src/inc.c:717
+#: src/inc.c:722
 msgid "Locked"
 msgstr "Vergrendeld"
 
-#: src/inc.c:727
+#: src/inc.c:732
 msgid "Timeout"
 msgstr "Time-out"
 
-#: src/inc.c:777
+#: src/inc.c:782
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Klaar (%d nieuwe bericht(en))"
 
-#: src/inc.c:780
+#: src/inc.c:785
 msgid "Finished (no new messages)"
 msgstr "Klaar (geen nieuwe berichten)"
 
-#: src/inc.c:789
+#: src/inc.c:794
 msgid "Some errors occurred while getting mail."
 msgstr "Er is een fout opgetreden bij het ophalen van de e-mail."
 
-#: src/inc.c:823
+#: src/inc.c:828
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "nieuwe berichten voor account %s worden opgehaald...\n"
 
-#: src/inc.c:827
+#: src/inc.c:832
 #, fuzzy, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "Bezig met identificatie"
 
-#: src/inc.c:830
+#: src/inc.c:835
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Nieuwe berichten worden opgehaald"
 
-#: src/inc.c:835
+#: src/inc.c:840
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Verbinden met POP3-server: %s ..."
 
-#: src/inc.c:849
+#: src/inc.c:854
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Kan niet verbinden met POP3 server: %s:%d\n"
 
-#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Bezig met identificatie..."
 
-#: src/inc.c:930
+#: src/inc.c:935
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Berichten ophalen van %s..."
 
-#: src/inc.c:935
+#: src/inc.c:940
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Opvragen van het aantal nieuwe berichten (STAT)..."
 
-#: src/inc.c:939
+#: src/inc.c:944
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Opvragen van het aantal nieuwe berichten (LAST)..."
 
-#: src/inc.c:943
+#: src/inc.c:948
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Opvragen van het aantal nieuwe berichten (UIDL)..."
 
-#: src/inc.c:947
+#: src/inc.c:952
 msgid "Getting the size of messages (LIST)..."
 msgstr "Opvragen van de grootte van de nieuwe berichten (LIST)..."
 
-#: src/inc.c:957
+#: src/inc.c:962
 #, c-format
 msgid "Deleting message %d"
 msgstr "Bezig met verwijderen van bericht %d"
 
-#: src/inc.c:964 src/send_message.c:831
+#: src/inc.c:969 src/send_message.c:831
 msgid "Quitting"
 msgstr "Bezig met afsluiten"
 
-#: src/inc.c:989
+#: src/inc.c:994
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Bericht wordt opgehaald (%d / %d) (%s / %s)"
 
-#: src/inc.c:1010
-#, c-format
-msgid "Retrieving (%d message(s) (%s) received)"
-msgstr "Ophalen (%d bericht(en) (%s) ontvangen)"
-
-#: src/inc.c:1198 src/inc.c:1218 src/summaryview.c:4501
+#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4501
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1271
+#: src/inc.c:1276
 msgid "Connection failed."
 msgstr "Verbinding mislukt."
 
-#: src/inc.c:1277
+#: src/inc.c:1282
 msgid "Error occurred while processing mail."
 msgstr "Fout bij het verwerken van de e-mail"
 
-#: src/inc.c:1282
+#: src/inc.c:1287
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2863,30 +2864,30 @@ msgstr ""
 "Fout bij het verwerken van de e-mail:\n"
 "%s"
 
-#: src/inc.c:1288
+#: src/inc.c:1293
 msgid "No disk space left."
 msgstr "De ruimte op de schijf is op."
 
-#: src/inc.c:1293
+#: src/inc.c:1298
 msgid "Can't write file."
 msgstr "Het bestand is niet beschrijfbaar."
 
-#: src/inc.c:1298
+#: src/inc.c:1303
 msgid "Socket error."
 msgstr "Socket-fout."
 
 #  consider EOF right after QUIT successful
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
-#: src/send_message.c:963
+#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "Verbinding verbroken door verbindingspartner."
 
-#: src/inc.c:1310
+#: src/inc.c:1315
 msgid "Mailbox is locked."
 msgstr "Mailbox is vergrendeld."
 
-#: src/inc.c:1314
+#: src/inc.c:1319
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2895,11 +2896,11 @@ msgstr ""
 "Mailbox is vergrendeld:\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
+#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Identificatie mislukt."
 
-#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
+#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2908,15 +2909,15 @@ msgstr ""
 "Identificatie mislukt:\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
+#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Sessie is verlopen."
 
-#: src/inc.c:1371
+#: src/inc.c:1376
 msgid "Incorporation cancelled\n"
 msgstr "E-mail verwerken geannuleerd\n"
 
-#: src/inc.c:1473
+#: src/inc.c:1478
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Nieuwe berichten worden opgehaald van %s naar %s ...\n"
@@ -4286,8 +4287,8 @@ msgstr "Haal alle berichten op van server"
 msgid "Receive size limit"
 msgstr "Limiet ontvangstgrootte"
 
-#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:575
-#: src/prefs_filter_edit.c:1004
+#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:581
+#: src/prefs_filter_edit.c:1010
 msgid "KB"
 msgstr "KB"
 
@@ -5645,7 +5646,7 @@ msgstr "Oude Sylpheed"
 msgid "Custom header setting"
 msgstr "Header aanpassen"
 
-#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1557
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1563
 msgid " Delete "
 msgstr "Verwijderen"
 
@@ -5736,204 +5737,204 @@ msgstr "Wilt u de regel '%s' verwijderen?"
 msgid "Delete rule"
 msgstr "Verwijder deze regel"
 
-#: src/prefs_filter_edit.c:234
+#: src/prefs_filter_edit.c:236
 msgid "Filter rule"
 msgstr "Filterregel"
 
-#: src/prefs_filter_edit.c:268
+#: src/prefs_filter_edit.c:270
 msgid "If any of the following condition matches"
 msgstr "Als een of meer van de volgende condities geldt"
 
-#: src/prefs_filter_edit.c:270
+#: src/prefs_filter_edit.c:272
 msgid "If all of the following conditions match"
 msgstr "Als alle volgende condities gelden"
 
-#: src/prefs_filter_edit.c:291
+#: src/prefs_filter_edit.c:293
 msgid "Perform the following actions:"
 msgstr "De volgende acties uitvoeren:"
 
-#: src/prefs_filter_edit.c:490
+#: src/prefs_filter_edit.c:496
 msgid "To or Cc"
 msgstr "Aan of CC"
 
-#: src/prefs_filter_edit.c:491
+#: src/prefs_filter_edit.c:497
 msgid "Any header"
 msgstr "Een willekeurige header"
 
-#: src/prefs_filter_edit.c:492
+#: src/prefs_filter_edit.c:498
 msgid "Edit header..."
 msgstr "Header bewerken..."
 
-#: src/prefs_filter_edit.c:495
+#: src/prefs_filter_edit.c:501
 msgid "Message body"
 msgstr "Berichtinhoud"
 
-#: src/prefs_filter_edit.c:496
+#: src/prefs_filter_edit.c:502
 msgid "Result of command"
 msgstr "Resultaat van opdracht"
 
-#: src/prefs_filter_edit.c:498
+#: src/prefs_filter_edit.c:504
 msgid "Age"
 msgstr "Leeftijd"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:97
+#: src/prefs_filter_edit.c:508 src/quick_search.c:97
 msgid "Marked"
 msgstr "Gemarkeerd"
 
-#: src/prefs_filter_edit.c:503
+#: src/prefs_filter_edit.c:509
 msgid "Has color label"
 msgstr "Heeft kleurlabel"
 
-#: src/prefs_filter_edit.c:504
+#: src/prefs_filter_edit.c:510
 msgid "Has attachment"
 msgstr "Heeft bijlage"
 
-#: src/prefs_filter_edit.c:517
+#: src/prefs_filter_edit.c:523
 msgid "contains"
 msgstr "bevat"
 
-#: src/prefs_filter_edit.c:519
+#: src/prefs_filter_edit.c:525
 msgid "doesn't contain"
 msgstr "bevat geen"
 
-#: src/prefs_filter_edit.c:521
+#: src/prefs_filter_edit.c:527
 msgid "is"
 msgstr "is"
 
-#: src/prefs_filter_edit.c:523
+#: src/prefs_filter_edit.c:529
 msgid "is not"
 msgstr "is niet"
 
-#: src/prefs_filter_edit.c:526
+#: src/prefs_filter_edit.c:532
 msgid "match to regex"
 msgstr "regex match"
 
-#: src/prefs_filter_edit.c:528
+#: src/prefs_filter_edit.c:534
 msgid "doesn't match to regex"
 msgstr "geen regex match"
 
-#: src/prefs_filter_edit.c:539
+#: src/prefs_filter_edit.c:545
 msgid "is larger than"
 msgstr "groter is dan"
 
-#: src/prefs_filter_edit.c:540
+#: src/prefs_filter_edit.c:546
 msgid "is smaller than"
 msgstr "kleiner is dan"
 
-#: src/prefs_filter_edit.c:549
+#: src/prefs_filter_edit.c:555
 msgid "is longer than"
 msgstr "langer is dan"
 
-#: src/prefs_filter_edit.c:550
+#: src/prefs_filter_edit.c:556
 msgid "is shorter than"
 msgstr "korter is dan"
 
-#: src/prefs_filter_edit.c:560
+#: src/prefs_filter_edit.c:566
 msgid "matches to status"
 msgstr "de status heeft"
 
-#: src/prefs_filter_edit.c:561
+#: src/prefs_filter_edit.c:567
 msgid "doesn't match to status"
 msgstr "heeft niet de status"
 
-#: src/prefs_filter_edit.c:663
+#: src/prefs_filter_edit.c:669
 msgid "Move to"
 msgstr "Verplaatsen naar"
 
-#: src/prefs_filter_edit.c:664
+#: src/prefs_filter_edit.c:670
 msgid "Copy to"
 msgstr "Kopiëren naar"
 
-#: src/prefs_filter_edit.c:665
+#: src/prefs_filter_edit.c:671
 msgid "Don't receive"
 msgstr "Ontvangst weigeren"
 
-#: src/prefs_filter_edit.c:666
+#: src/prefs_filter_edit.c:672
 msgid "Delete from server"
 msgstr "Verwijderen van server"
 
-#: src/prefs_filter_edit.c:669
+#: src/prefs_filter_edit.c:675
 msgid "Set mark"
 msgstr "Markeren"
 
-#: src/prefs_filter_edit.c:670
+#: src/prefs_filter_edit.c:676
 msgid "Set color"
 msgstr "Kleur instellen"
 
-#: src/prefs_filter_edit.c:671
+#: src/prefs_filter_edit.c:677
 msgid "Mark as read"
 msgstr "Als gelezen markeren"
 
-#: src/prefs_filter_edit.c:675 src/prefs_toolbar.c:59
+#: src/prefs_filter_edit.c:681 src/prefs_toolbar.c:59
 msgid "Forward"
 msgstr "Doorsturen"
 
-#: src/prefs_filter_edit.c:676
+#: src/prefs_filter_edit.c:682
 msgid "Forward as attachment"
 msgstr "Doorsturen als bijlage"
 
-#: src/prefs_filter_edit.c:677
+#: src/prefs_filter_edit.c:683
 msgid "Redirect"
 msgstr "Omleiden"
 
-#: src/prefs_filter_edit.c:681
+#: src/prefs_filter_edit.c:687
 msgid "Execute command"
 msgstr "Opdracht uitvoeren"
 
-#: src/prefs_filter_edit.c:684
+#: src/prefs_filter_edit.c:690
 msgid "Stop rule evaluation"
 msgstr "Regel stoppen"
 
-#: src/prefs_filter_edit.c:690 src/prefs_filter_edit.c:1053
+#: src/prefs_filter_edit.c:696 src/prefs_filter_edit.c:1059
 msgid "folder:"
 msgstr "map:"
 
-#: src/prefs_filter_edit.c:1014
+#: src/prefs_filter_edit.c:1020
 msgid "day(s)"
 msgstr "dag(en)"
 
-#: src/prefs_filter_edit.c:1093
+#: src/prefs_filter_edit.c:1099
 msgid "address:"
 msgstr "adres:"
 
-#: src/prefs_filter_edit.c:1510
+#: src/prefs_filter_edit.c:1516
 msgid "Edit header list"
 msgstr "Headerlijst bewerken"
 
-#: src/prefs_filter_edit.c:1533
+#: src/prefs_filter_edit.c:1539
 msgid "Headers"
 msgstr "Headers"
 
-#: src/prefs_filter_edit.c:1545
+#: src/prefs_filter_edit.c:1551
 msgid "Header:"
 msgstr "Header:"
 
-#: src/prefs_filter_edit.c:1732 src/prefs_filter_edit.c:1830
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1738 src/prefs_filter_edit.c:1836
+#: src/prefs_filter_edit.c:1843
 msgid "Command is not specified."
 msgstr "Geen opdracht gegeven."
 
-#: src/prefs_filter_edit.c:1810 src/prefs_filter_edit.c:1817
+#: src/prefs_filter_edit.c:1816 src/prefs_filter_edit.c:1823
 msgid "Destination folder is not specified."
 msgstr "Geen doelmapgekozen."
 
-#: src/prefs_filter_edit.c:1887
+#: src/prefs_filter_edit.c:1893
 msgid "Invalid condition exists."
 msgstr "Er zijn ongeldige condities."
 
-#: src/prefs_filter_edit.c:1910
+#: src/prefs_filter_edit.c:1916
 msgid "Rule name is not specified."
 msgstr "Geen regelnaam gegeven."
 
-#: src/prefs_filter_edit.c:1936
+#: src/prefs_filter_edit.c:1942
 msgid "Invalid action exists."
 msgstr "Er zijn ongeldige acties."
 
-#: src/prefs_filter_edit.c:1945
+#: src/prefs_filter_edit.c:1951
 msgid "Condition not exist."
 msgstr "Geen voorwaarde gegeven."
 
-#: src/prefs_filter_edit.c:1947
+#: src/prefs_filter_edit.c:1953
 msgid "Action not exist."
 msgstr "Geen actie gegeven."
 
@@ -5965,7 +5966,7 @@ msgstr ""
 "[...] of (...) verwijderen aan het begin van het onderwerp bij beantwoorden"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:95 src/progressdialog.c:128
+#: src/prefs_toolbar.c:95 src/progressdialog.c:129
 msgid "Account"
 msgstr "Account"
 
@@ -6012,19 +6013,19 @@ msgid "Attachment"
 msgstr "Bijlage"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Onderwerp"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Afzender"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Datum"
@@ -6302,9 +6303,14 @@ msgstr ""
 msgid "Creating progress dialog...\n"
 msgstr "Voortgangsdialoogvenster wordt gemaakt...\n"
 
-#: src/progressdialog.c:136
+#: src/progressdialog.c:137
 msgid "Status"
 msgstr "Status"
+
+#: src/progressdialog.c:145
+#, fuzzy
+msgid "Progress"
+msgstr "Eigenschappen"
 
 #: src/query_search.c:425
 msgid "_Save as search folder"
@@ -6335,7 +6341,7 @@ msgstr "Doorzoeken van %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Doorzoeken van %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Geen datum)"
 
@@ -6398,88 +6404,93 @@ msgstr "Handtekening gemaakt op %s\n"
 msgid "Error verifying the signature"
 msgstr "Er is een fout opgetreden bij het controleren van de handtekening"
 
-#: src/rpop3.c:267
+#: src/rpop3.c:277
 #, fuzzy, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "mailbox verwijderen"
 
-#: src/rpop3.c:317 src/summaryview.c:5091
+#: src/rpop3.c:329 src/summaryview.c:5091
 msgid "No."
 msgstr "Nr."
 
-#: src/rpop3.c:339
+#: src/rpop3.c:351
 #, fuzzy
 msgid "_Get"
 msgstr "Ophalen"
 
-#: src/rpop3.c:388
+#: src/rpop3.c:400
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Bezig met verbinden met SMTP server: %s ..."
 
-#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
+#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Kan niet verbinden met POP3 server: %s:%d\n"
 
-#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "er is een fout opgetreden tijdens de POP3-sessie\n"
 
-#: src/rpop3.c:424
+#: src/rpop3.c:436
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "er is een fout opgetreden tijdens de POP3-sessie\n"
 
-#: src/rpop3.c:542
+#: src/rpop3.c:587
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Ophalen van berichtkoppen (%d / %d)"
 
-#: src/rpop3.c:700
+#: src/rpop3.c:747
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Opvragen van het aantal nieuwe berichten (STAT)..."
 
-#: src/rpop3.c:709 src/rpop3.c:722
+#: src/rpop3.c:756 src/rpop3.c:769
 #, fuzzy
 msgid "No message"
 msgstr "Geen nieuwe berichten."
 
-#: src/rpop3.c:755
+#: src/rpop3.c:802
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Verwijder bericht(en)"
 
-#: src/rpop3.c:832
+#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/send_message.c:830
+msgid "Quitting..."
+msgstr "Bezig met afsluiten..."
+
+#: src/rpop3.c:885
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Nieuwe berichten worden opgehaald"
 
-#: src/rpop3.c:839
+#: src/rpop3.c:892
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Verzend bericht"
 
-#: src/rpop3.c:854
+#: src/rpop3.c:908
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Nieuwe berichten worden opgehaald"
 
-#: src/rpop3.c:959
+#: src/rpop3.c:1013
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Berichten ophalen van %s..."
 
-#: src/rpop3.c:985
+#: src/rpop3.c:1039
 #, fuzzy
 msgid "Delete messages"
 msgstr "Verwijder bericht(en)"
 
-#: src/rpop3.c:986
+#: src/rpop3.c:1040
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -6597,24 +6608,25 @@ msgstr "Bezig met verzenden van RCPT TO..."
 msgid "Sending DATA..."
 msgstr "Bezig met verzenden van DATA..."
 
-#: src/send_message.c:830
-msgid "Quitting..."
-msgstr "Bezig met afsluiten..."
-
 #: src/send_message.c:858
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Bezig met verzenden van bericht (%d / %d bytes)"
 
-#: src/send_message.c:889
+#: src/send_message.c:863
+#, c-format
+msgid "%d / %d bytes"
+msgstr ""
+
+#: src/send_message.c:892
 msgid "Sending message"
 msgstr "Bezig met verzenden van bericht"
 
-#: src/send_message.c:934 src/send_message.c:958
+#: src/send_message.c:937 src/send_message.c:961
 msgid "Error occurred while sending the message."
 msgstr "Er is een fout opgetreden bij het verzenden."
 
-#: src/send_message.c:937
+#: src/send_message.c:940
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6623,12 +6635,12 @@ msgstr ""
 "Er is een fout opgetreden bij het verzenden:\n"
 "%s"
 
-#: src/send_message.c:954
+#: src/send_message.c:957
 #, fuzzy
 msgid "Can't connect to SMTP server."
 msgstr "Kan niet verbinden met de NNTP-server: %s:%d\n"
 
-#: src/send_message.c:956
+#: src/send_message.c:959
 #, fuzzy, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Kan niet verbinden met de NNTP-server: %s:%d\n"
@@ -7233,6 +7245,12 @@ msgstr "A_fsluiten"
 #: src/trayicon.c:198 src/trayicon.c:287
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "Done (no new messages)"
+#~ msgstr "Klaar (geen nieuwe bercihten)"
+
+#~ msgid "Retrieving (%d message(s) (%s) received)"
+#~ msgstr "Ophalen (%d bericht(en) (%s) ontvangen)"
 
 #, fuzzy
 #~ msgid "Can't sign the message"

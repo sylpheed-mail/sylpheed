@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 15:53+0900\n"
+"POT-Creation-Date: 2008-09-26 16:20+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -986,7 +986,7 @@ msgstr "電子メール アドレス"
 msgid "Address book"
 msgstr "アドレス帳"
 
-#: src/addressbook.c:636 src/prefs_filter_edit.c:249
+#: src/addressbook.c:636 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "名前:"
@@ -1017,7 +1017,7 @@ msgstr "削除"
 #: src/addressbook.c:705 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
-#: src/prefs_filter_edit.c:1554
+#: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "追加"
 
@@ -1211,7 +1211,7 @@ msgstr "注意"
 msgid "Warning"
 msgstr "警告"
 
-#: src/alertpanel.c:168 src/inc.c:724
+#: src/alertpanel.c:168 src/inc.c:729
 msgid "Error"
 msgstr "エラー"
 
@@ -1586,7 +1586,7 @@ msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:519 src/summaryview.c:2271
+#: src/rpop3.c:564 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(件名なし)"
 
@@ -1775,8 +1775,8 @@ msgid "MIME type"
 msgstr "MIME タイプ"
 
 #. S_COL_DATE
-#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
+#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
+#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "サイズ"
@@ -2294,7 +2294,7 @@ msgid "New"
 msgstr "新着"
 
 #. S_COL_MARK
-#: src/folderview.c:424 src/prefs_filter_edit.c:501
+#: src/folderview.c:424 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "未読"
@@ -2485,7 +2485,7 @@ msgstr "ニュースグループ:"
 msgid "Creating header view...\n"
 msgstr "ヘッダビューを作成中...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(差出人不明)"
@@ -2684,122 +2684,121 @@ msgstr "新着メッセージを受信中"
 msgid "Standby"
 msgstr "待機中"
 
-#: src/inc.c:681 src/inc.c:730
+#: src/inc.c:685 src/inc.c:735
 msgid "Cancelled"
 msgstr "キャンセル"
 
-#: src/inc.c:692
+#: src/inc.c:696
 msgid "Retrieving"
 msgstr "受信中"
 
-#: src/inc.c:701
+#: src/inc.c:705 src/inc.c:1015
 #, c-format
-msgid "Done (%d message(s) (%s) received)"
-msgstr "完了 (%d 通 (%s) 受信)"
+msgid "%d message(s) (%s) received"
+msgstr "%d 通 (%s) 受信"
 
-#: src/inc.c:705
-msgid "Done (no new messages)"
-msgstr "完了 (新着メッセージなし)"
+#: src/inc.c:709
+msgid "no new messages"
+msgstr "新着メッセージなし"
 
-#: src/inc.c:711
+#: src/inc.c:710
+msgid "Done"
+msgstr "完了"
+
+#: src/inc.c:715
 msgid "Connection failed"
 msgstr "接続失敗"
 
-#: src/inc.c:714
+#: src/inc.c:718
 msgid "Auth failed"
 msgstr "認証失敗"
 
-#: src/inc.c:717
+#: src/inc.c:722
 msgid "Locked"
 msgstr "ロック中"
 
-#: src/inc.c:727
+#: src/inc.c:732
 msgid "Timeout"
 msgstr "タイムアウト"
 
-#: src/inc.c:777
+#: src/inc.c:782
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "完了 (%d 通の新着メッセージ)"
 
-#: src/inc.c:780
+#: src/inc.c:785
 msgid "Finished (no new messages)"
 msgstr "完了 (新着メッセージなし)"
 
-#: src/inc.c:789
+#: src/inc.c:794
 msgid "Some errors occurred while getting mail."
 msgstr "メールの取得中にエラーが発生しました。"
 
-#: src/inc.c:823
+#: src/inc.c:828
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "アカウント %s の新着メッセージを取り込んでいます...\n"
 
-#: src/inc.c:827
+#: src/inc.c:832
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: POP3で認証中"
 
-#: src/inc.c:830
+#: src/inc.c:835
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: 新着メッセージを受信中"
 
-#: src/inc.c:835
+#: src/inc.c:840
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "POP3サーバ: %s に接続中..."
 
-#: src/inc.c:849
+#: src/inc.c:854
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3サーバ: %s:%d に接続できません\n"
 
-#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "認証中..."
 
-#: src/inc.c:930
+#: src/inc.c:935
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "%s からメッセージを受信中..."
 
-#: src/inc.c:935
+#: src/inc.c:940
 msgid "Getting the number of new messages (STAT)..."
 msgstr "新着メッセージの数を取得中 (STAT)..."
 
-#: src/inc.c:939
+#: src/inc.c:944
 msgid "Getting the number of new messages (LAST)..."
 msgstr "新着メッセージの数を取得中 (LAST)..."
 
-#: src/inc.c:943
+#: src/inc.c:948
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "新着メッセージの数を取得中 (UIDL)..."
 
-#: src/inc.c:947
+#: src/inc.c:952
 msgid "Getting the size of messages (LIST)..."
 msgstr "メッセージのサイズを取得中 (LIST)..."
 
-#: src/inc.c:957
+#: src/inc.c:962
 #, c-format
 msgid "Deleting message %d"
 msgstr "メッセージ %d を削除中"
 
-#: src/inc.c:964 src/send_message.c:831
+#: src/inc.c:969 src/send_message.c:831
 msgid "Quitting"
 msgstr "切断中"
 
-#: src/inc.c:989
+#: src/inc.c:994
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "メッセージを受信中 (%d / %d) (%s / %s)"
 
-#: src/inc.c:1010
-#, c-format
-msgid "Retrieving (%d message(s) (%s) received)"
-msgstr "受信中 (%d 通 (%s) 受信)"
-
-#: src/inc.c:1198 src/inc.c:1218 src/summaryview.c:4501
+#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4501
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -2807,15 +2806,15 @@ msgstr ""
 "迷惑メールフィルタコマンドの実行に失敗しました。\n"
 "迷惑メール対策の設定を確認してください。"
 
-#: src/inc.c:1271
+#: src/inc.c:1276
 msgid "Connection failed."
 msgstr "接続に失敗しました。"
 
-#: src/inc.c:1277
+#: src/inc.c:1282
 msgid "Error occurred while processing mail."
 msgstr "メールの処理中にエラーが発生しました。"
 
-#: src/inc.c:1282
+#: src/inc.c:1287
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2824,29 +2823,29 @@ msgstr ""
 "メールの処理中にエラーが発生しました:\n"
 "%s"
 
-#: src/inc.c:1288
+#: src/inc.c:1293
 msgid "No disk space left."
 msgstr "ディスクの空き容量がありません。"
 
-#: src/inc.c:1293
+#: src/inc.c:1298
 msgid "Can't write file."
 msgstr "ファイルに書き込めません。"
 
-#: src/inc.c:1298
+#: src/inc.c:1303
 msgid "Socket error."
 msgstr "ソケットエラーです。"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
-#: src/send_message.c:963
+#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "リモートホストによって接続を切断されました。"
 
-#: src/inc.c:1310
+#: src/inc.c:1315
 msgid "Mailbox is locked."
 msgstr "メールボックスはロックされています。"
 
-#: src/inc.c:1314
+#: src/inc.c:1319
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2855,11 +2854,11 @@ msgstr ""
 "メールボックスはロックされています:\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
+#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "認証に失敗しました。"
 
-#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
+#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2868,15 +2867,15 @@ msgstr ""
 "認証に失敗しました:\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
+#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
 msgid "Session timed out."
 msgstr "セッションがタイムアウトしました。"
 
-#: src/inc.c:1371
+#: src/inc.c:1376
 msgid "Incorporation cancelled\n"
 msgstr "受信をキャンセルしました\n"
 
-#: src/inc.c:1473
+#: src/inc.c:1478
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "新しいメッセージを %s から %s に取り込んでいます...\n"
@@ -4220,8 +4219,8 @@ msgstr "受信済みも含めてサーバ上のすべてのメッセージを受
 msgid "Receive size limit"
 msgstr "受信サイズ制限"
 
-#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:575
-#: src/prefs_filter_edit.c:1004
+#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:581
+#: src/prefs_filter_edit.c:1010
 msgid "KB"
 msgstr "KB"
 
@@ -5560,7 +5559,7 @@ msgstr "旧Sylpheed"
 msgid "Custom header setting"
 msgstr "カスタムヘッダの設定"
 
-#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1557
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1563
 msgid " Delete "
 msgstr "  削除  "
 
@@ -5649,204 +5648,204 @@ msgstr "本当にルール '%s' を削除してもいいですか?"
 msgid "Delete rule"
 msgstr "ルールの削除"
 
-#: src/prefs_filter_edit.c:234
+#: src/prefs_filter_edit.c:236
 msgid "Filter rule"
 msgstr "フィルタルール"
 
-#: src/prefs_filter_edit.c:268
+#: src/prefs_filter_edit.c:270
 msgid "If any of the following condition matches"
 msgstr "次の条件のいずれかが該当する場合"
 
-#: src/prefs_filter_edit.c:270
+#: src/prefs_filter_edit.c:272
 msgid "If all of the following conditions match"
 msgstr "次の条件のすべてが該当する場合"
 
-#: src/prefs_filter_edit.c:291
+#: src/prefs_filter_edit.c:293
 msgid "Perform the following actions:"
 msgstr "次のアクションを実行:"
 
-#: src/prefs_filter_edit.c:490
+#: src/prefs_filter_edit.c:496
 msgid "To or Cc"
 msgstr "To または Cc"
 
-#: src/prefs_filter_edit.c:491
+#: src/prefs_filter_edit.c:497
 msgid "Any header"
 msgstr "いずれかのヘッダ"
 
-#: src/prefs_filter_edit.c:492
+#: src/prefs_filter_edit.c:498
 msgid "Edit header..."
 msgstr "ヘッダを編集..."
 
-#: src/prefs_filter_edit.c:495
+#: src/prefs_filter_edit.c:501
 msgid "Message body"
 msgstr "メッセージ本文"
 
-#: src/prefs_filter_edit.c:496
+#: src/prefs_filter_edit.c:502
 msgid "Result of command"
 msgstr "コマンドの実行結果"
 
-#: src/prefs_filter_edit.c:498
+#: src/prefs_filter_edit.c:504
 msgid "Age"
 msgstr "経過日数"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:97
+#: src/prefs_filter_edit.c:508 src/quick_search.c:97
 msgid "Marked"
 msgstr "マーク付き"
 
-#: src/prefs_filter_edit.c:503
+#: src/prefs_filter_edit.c:509
 msgid "Has color label"
 msgstr "カラーラベル付き"
 
-#: src/prefs_filter_edit.c:504
+#: src/prefs_filter_edit.c:510
 msgid "Has attachment"
 msgstr "添付ファイル付き"
 
-#: src/prefs_filter_edit.c:517
+#: src/prefs_filter_edit.c:523
 msgid "contains"
 msgstr "が次を含む"
 
-#: src/prefs_filter_edit.c:519
+#: src/prefs_filter_edit.c:525
 msgid "doesn't contain"
 msgstr "が次を含まない"
 
-#: src/prefs_filter_edit.c:521
+#: src/prefs_filter_edit.c:527
 msgid "is"
 msgstr "が次に一致"
 
-#: src/prefs_filter_edit.c:523
+#: src/prefs_filter_edit.c:529
 msgid "is not"
 msgstr "が次に一致しない"
 
-#: src/prefs_filter_edit.c:526
+#: src/prefs_filter_edit.c:532
 msgid "match to regex"
 msgstr "が次の正規表現にマッチ"
 
-#: src/prefs_filter_edit.c:528
+#: src/prefs_filter_edit.c:534
 msgid "doesn't match to regex"
 msgstr "が次の正規表現にマッチしない"
 
-#: src/prefs_filter_edit.c:539
+#: src/prefs_filter_edit.c:545
 msgid "is larger than"
 msgstr "が次より大きい"
 
-#: src/prefs_filter_edit.c:540
+#: src/prefs_filter_edit.c:546
 msgid "is smaller than"
 msgstr "が次より小さい"
 
-#: src/prefs_filter_edit.c:549
+#: src/prefs_filter_edit.c:555
 msgid "is longer than"
 msgstr "が次より長い"
 
-#: src/prefs_filter_edit.c:550
+#: src/prefs_filter_edit.c:556
 msgid "is shorter than"
 msgstr "が次より短い"
 
-#: src/prefs_filter_edit.c:560
+#: src/prefs_filter_edit.c:566
 msgid "matches to status"
 msgstr "が状態に一致"
 
-#: src/prefs_filter_edit.c:561
+#: src/prefs_filter_edit.c:567
 msgid "doesn't match to status"
 msgstr "が状態に一致しない"
 
-#: src/prefs_filter_edit.c:663
+#: src/prefs_filter_edit.c:669
 msgid "Move to"
 msgstr "移動"
 
-#: src/prefs_filter_edit.c:664
+#: src/prefs_filter_edit.c:670
 msgid "Copy to"
 msgstr "コピー"
 
-#: src/prefs_filter_edit.c:665
+#: src/prefs_filter_edit.c:671
 msgid "Don't receive"
 msgstr "受信しない"
 
-#: src/prefs_filter_edit.c:666
+#: src/prefs_filter_edit.c:672
 msgid "Delete from server"
 msgstr "サーバから削除"
 
-#: src/prefs_filter_edit.c:669
+#: src/prefs_filter_edit.c:675
 msgid "Set mark"
 msgstr "マーク"
 
-#: src/prefs_filter_edit.c:670
+#: src/prefs_filter_edit.c:676
 msgid "Set color"
 msgstr "カラーラベルを指定"
 
-#: src/prefs_filter_edit.c:671
+#: src/prefs_filter_edit.c:677
 msgid "Mark as read"
 msgstr "読んだことにする"
 
-#: src/prefs_filter_edit.c:675 src/prefs_toolbar.c:59
+#: src/prefs_filter_edit.c:681 src/prefs_toolbar.c:59
 msgid "Forward"
 msgstr "転送"
 
-#: src/prefs_filter_edit.c:676
+#: src/prefs_filter_edit.c:682
 msgid "Forward as attachment"
 msgstr "添付として転送"
 
-#: src/prefs_filter_edit.c:677
+#: src/prefs_filter_edit.c:683
 msgid "Redirect"
 msgstr "手を加えずに転送"
 
-#: src/prefs_filter_edit.c:681
+#: src/prefs_filter_edit.c:687
 msgid "Execute command"
 msgstr "コマンドを実行"
 
-#: src/prefs_filter_edit.c:684
+#: src/prefs_filter_edit.c:690
 msgid "Stop rule evaluation"
 msgstr "ルールの評価を停止"
 
-#: src/prefs_filter_edit.c:690 src/prefs_filter_edit.c:1053
+#: src/prefs_filter_edit.c:696 src/prefs_filter_edit.c:1059
 msgid "folder:"
 msgstr "フォルダ:"
 
-#: src/prefs_filter_edit.c:1014
+#: src/prefs_filter_edit.c:1020
 msgid "day(s)"
 msgstr "日"
 
-#: src/prefs_filter_edit.c:1093
+#: src/prefs_filter_edit.c:1099
 msgid "address:"
 msgstr "アドレス:"
 
-#: src/prefs_filter_edit.c:1510
+#: src/prefs_filter_edit.c:1516
 msgid "Edit header list"
 msgstr "ヘッダリストの編集"
 
-#: src/prefs_filter_edit.c:1533
+#: src/prefs_filter_edit.c:1539
 msgid "Headers"
 msgstr "ヘッダ"
 
-#: src/prefs_filter_edit.c:1545
+#: src/prefs_filter_edit.c:1551
 msgid "Header:"
 msgstr "ヘッダ:"
 
-#: src/prefs_filter_edit.c:1732 src/prefs_filter_edit.c:1830
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1738 src/prefs_filter_edit.c:1836
+#: src/prefs_filter_edit.c:1843
 msgid "Command is not specified."
 msgstr "コマンドが指定されていません。"
 
-#: src/prefs_filter_edit.c:1810 src/prefs_filter_edit.c:1817
+#: src/prefs_filter_edit.c:1816 src/prefs_filter_edit.c:1823
 msgid "Destination folder is not specified."
 msgstr "移動先のフォルダが指定されていません。"
 
-#: src/prefs_filter_edit.c:1887
+#: src/prefs_filter_edit.c:1893
 msgid "Invalid condition exists."
 msgstr "無効な条件が存在します。"
 
-#: src/prefs_filter_edit.c:1910
+#: src/prefs_filter_edit.c:1916
 msgid "Rule name is not specified."
 msgstr "ルール名が指定されていません。"
 
-#: src/prefs_filter_edit.c:1936
+#: src/prefs_filter_edit.c:1942
 msgid "Invalid action exists."
 msgstr "無効なアクションが存在します。"
 
-#: src/prefs_filter_edit.c:1945
+#: src/prefs_filter_edit.c:1951
 msgid "Condition not exist."
 msgstr "条件が存在しません。"
 
-#: src/prefs_filter_edit.c:1947
+#: src/prefs_filter_edit.c:1953
 msgid "Action not exist."
 msgstr "アクションが存在しません。"
 
@@ -5875,7 +5874,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "返信時に件名の先頭の[...]または(...)の部分を削除する"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:95 src/progressdialog.c:128
+#: src/prefs_toolbar.c:95 src/progressdialog.c:129
 msgid "Account"
 msgstr "アカウント"
 
@@ -5922,19 +5921,19 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "日付"
@@ -6198,9 +6197,13 @@ msgstr ""
 msgid "Creating progress dialog...\n"
 msgstr "進行状況ダイアログを作成中...\n"
 
-#: src/progressdialog.c:136
+#: src/progressdialog.c:137
 msgid "Status"
 msgstr "状態"
+
+#: src/progressdialog.c:145
+msgid "Progress"
+msgstr "進行状況"
 
 #: src/query_search.c:425
 msgid "_Save as search folder"
@@ -6229,7 +6232,7 @@ msgstr "%s を検索中..."
 msgid "Searching %s (%d / %d)..."
 msgstr "%s を検索中 (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(日付なし)"
 
@@ -6291,34 +6294,34 @@ msgstr "署名の作成時刻 %s\n"
 msgid "Error verifying the signature"
 msgstr "署名検証エラー"
 
-#: src/rpop3.c:267
+#: src/rpop3.c:277
 #, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "%s - リモート POP3 メールボックス"
 
-#: src/rpop3.c:317 src/summaryview.c:5091
+#: src/rpop3.c:329 src/summaryview.c:5091
 msgid "No."
 msgstr "番号"
 
-#: src/rpop3.c:339
+#: src/rpop3.c:351
 msgid "_Get"
 msgstr "受信(_G)"
 
-#: src/rpop3.c:388
+#: src/rpop3.c:400
 #, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "%s:%d に接続中..."
 
-#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
+#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "POP3サーバ: %s:%d に接続できません"
 
-#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
 msgid "Error occurred during POP3 session."
 msgstr "POP3 セッション中にエラーが発生しました。"
 
-#: src/rpop3.c:424
+#: src/rpop3.c:436
 #, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
@@ -6327,49 +6330,54 @@ msgstr ""
 "POP3 セッション中にエラーが発生しました:\n"
 "%s"
 
-#: src/rpop3.c:542
+#: src/rpop3.c:587
 #, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "メッセージのヘッダを取得中 (%d / %d) ..."
 
-#: src/rpop3.c:700
+#: src/rpop3.c:747
 msgid "Getting the number of messages..."
 msgstr "メッセージの件数を取得中..."
 
-#: src/rpop3.c:709 src/rpop3.c:722
+#: src/rpop3.c:756 src/rpop3.c:769
 msgid "No message"
 msgstr "メッセージがありません"
 
-#: src/rpop3.c:755
+#: src/rpop3.c:802
 #, c-format
 msgid "Deleted %d messages"
 msgstr "%d 通のメッセージを削除しました"
 
-#: src/rpop3.c:832
+#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/send_message.c:830
+msgid "Quitting..."
+msgstr "切断中..."
+
+#: src/rpop3.c:885
 #, c-format
 msgid "Retrieved %d messages"
 msgstr "%d 通のメッセージを取得しました"
 
-#: src/rpop3.c:839
+#: src/rpop3.c:892
 #, c-format
 msgid "Opened message %d"
 msgstr "メッセージ %d を開きました"
 
-#: src/rpop3.c:854
+#: src/rpop3.c:908
 #, c-format
 msgid "Retrieved %d message headers"
 msgstr "%d 件のメッセージのヘッダを取得しました"
 
-#: src/rpop3.c:959
+#: src/rpop3.c:1013
 #, c-format
 msgid "Retrieving message %d ..."
 msgstr "メッセージ %d を取得中..."
 
-#: src/rpop3.c:985
+#: src/rpop3.c:1039
 msgid "Delete messages"
 msgstr "メッセージの削除"
 
-#: src/rpop3.c:986
+#: src/rpop3.c:1040
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -6488,24 +6496,25 @@ msgstr "RCPT TO を送信中..."
 msgid "Sending DATA..."
 msgstr "DATA を送信中..."
 
-#: src/send_message.c:830
-msgid "Quitting..."
-msgstr "切断中..."
-
 #: src/send_message.c:858
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "メッセージを送信中 (%d / %d bytes)"
 
-#: src/send_message.c:889
+#: src/send_message.c:863
+#, c-format
+msgid "%d / %d bytes"
+msgstr "%d / %d bytes"
+
+#: src/send_message.c:892
 msgid "Sending message"
 msgstr "メッセージを送信中"
 
-#: src/send_message.c:934 src/send_message.c:958
+#: src/send_message.c:937 src/send_message.c:961
 msgid "Error occurred while sending the message."
 msgstr "メッセージの送信中にエラーが発生しました。"
 
-#: src/send_message.c:937
+#: src/send_message.c:940
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6514,11 +6523,11 @@ msgstr ""
 "メッセージの送信中にエラーが発生しました:\n"
 "%s"
 
-#: src/send_message.c:954
+#: src/send_message.c:957
 msgid "Can't connect to SMTP server."
 msgstr "SMTPサーバに接続できません。"
 
-#: src/send_message.c:956
+#: src/send_message.c:959
 #, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "SMTPサーバ: %s:%d に接続できません。"

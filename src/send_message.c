@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -717,7 +717,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 	dialog->session = session;
 
 	progress_dialog_append(dialog->dialog, NULL, ac_prefs->smtp_server,
-			       _("Connecting"), NULL);
+			       _("Connecting"), "", NULL);
 
 	g_snprintf(buf, sizeof(buf), _("Connecting to SMTP server: %s ..."),
 		   ac_prefs->smtp_server);
@@ -860,6 +860,9 @@ static gint send_send_data_progressive(Session *session, guint cur_len,
 	progress_dialog_set_label(dialog->dialog, buf);
 	progress_dialog_set_percentage
 		(dialog->dialog, (gfloat)cur_len / (gfloat)total_len);
+	g_snprintf(buf, sizeof(buf), _("%d / %d bytes"),
+		   cur_len, total_len);
+	progress_dialog_set_row_progress(dialog->dialog, 0, buf);
 #ifdef G_OS_WIN32
 	GTK_EVENTS_FLUSH();
 #endif

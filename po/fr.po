@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 15:53+0900\n"
+"POT-Creation-Date: 2008-09-26 16:20+0900\n"
 "PO-Revision-Date: 2008-06-06 13:42+0200\n"
 "Last-Translator: tvY <mr.somewhere@yahoo.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
@@ -1000,7 +1000,7 @@ msgstr "Adresse électronique"
 msgid "Address book"
 msgstr "Carnet d'adresses"
 
-#: src/addressbook.c:636 src/prefs_filter_edit.c:249
+#: src/addressbook.c:636 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Nom :"
@@ -1031,7 +1031,7 @@ msgstr "Supprimer"
 #: src/addressbook.c:705 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
-#: src/prefs_filter_edit.c:1554
+#: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "Ajouter"
 
@@ -1229,7 +1229,7 @@ msgstr "Information"
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/alertpanel.c:168 src/inc.c:724
+#: src/alertpanel.c:168 src/inc.c:729
 msgid "Error"
 msgstr "Erreur"
 
@@ -1606,7 +1606,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Impossible de lire une partie d'un message multipart."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:519 src/summaryview.c:2271
+#: src/rpop3.c:564 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Pas de sujet)"
 
@@ -1795,8 +1795,8 @@ msgid "MIME type"
 msgstr "Type MIME"
 
 #. S_COL_DATE
-#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
+#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
+#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Taille"
@@ -2319,7 +2319,7 @@ msgid "New"
 msgstr "Nouveau"
 
 #. S_COL_MARK
-#: src/folderview.c:424 src/prefs_filter_edit.c:501
+#: src/folderview.c:424 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Non lu"
@@ -2511,7 +2511,7 @@ msgstr "Groupe de discussion :"
 msgid "Creating header view...\n"
 msgstr "Création de la vue des en-têtes...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Pas d'expéditeur)"
@@ -2713,122 +2713,123 @@ msgstr "Récupération des nouveaux messages"
 msgid "Standby"
 msgstr "Attente"
 
-#: src/inc.c:681 src/inc.c:730
+#: src/inc.c:685 src/inc.c:735
 msgid "Cancelled"
 msgstr "Annulé"
 
-#: src/inc.c:692
+#: src/inc.c:696
 msgid "Retrieving"
 msgstr "Récupération"
 
-#: src/inc.c:701
-#, c-format
-msgid "Done (%d message(s) (%s) received)"
+#: src/inc.c:705 src/inc.c:1015
+#, fuzzy, c-format
+msgid "%d message(s) (%s) received"
 msgstr "Terminé - %d message(s) %s reçu(s)"
 
-#: src/inc.c:705
-msgid "Done (no new messages)"
-msgstr "Terminé - pas de nouveau(x) message(s)"
+#: src/inc.c:709
+#, fuzzy
+msgid "no new messages"
+msgstr "Pas de nouveaux messages."
 
-#: src/inc.c:711
+#: src/inc.c:710
+#, fuzzy
+msgid "Done"
+msgstr "Terminé."
+
+#: src/inc.c:715
 msgid "Connection failed"
 msgstr "La connexion a échoué"
 
-#: src/inc.c:714
+#: src/inc.c:718
 msgid "Auth failed"
 msgstr "L'authentification a échoué"
 
-#: src/inc.c:717
+#: src/inc.c:722
 msgid "Locked"
 msgstr "Verrouillé"
 
-#: src/inc.c:727
+#: src/inc.c:732
 msgid "Timeout"
 msgstr "Délai d'attente"
 
-#: src/inc.c:777
+#: src/inc.c:782
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Terminé - %d nouveau(x) message(s)"
 
-#: src/inc.c:780
+#: src/inc.c:785
 msgid "Finished (no new messages)"
 msgstr "Terminé - pas de nouveau(x) message(s)"
 
-#: src/inc.c:789
+#: src/inc.c:794
 msgid "Some errors occurred while getting mail."
 msgstr "Erreur lors de la récupération des messages."
 
-#: src/inc.c:823
+#: src/inc.c:828
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "Récupération des nouveaux messages du compte %s ...\n"
 
-#: src/inc.c:827
+#: src/inc.c:832
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s : Authentification POP3"
 
-#: src/inc.c:830
+#: src/inc.c:835
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s : Récupération des nouveaux messages"
 
-#: src/inc.c:835
+#: src/inc.c:840
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Connexion au serveur POP3 : %s..."
 
-#: src/inc.c:849
+#: src/inc.c:854
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Impossible de se connecter au serveur POP3 : %s:%d\n"
 
-#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Authentification..."
 
-#: src/inc.c:930
+#: src/inc.c:935
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Réception des messages de %s..."
 
-#: src/inc.c:935
+#: src/inc.c:940
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Récupération du nombre de nouveaux messages (STAT)..."
 
-#: src/inc.c:939
+#: src/inc.c:944
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Récupération du nombre de nouveaux messages (LAST)..."
 
-#: src/inc.c:943
+#: src/inc.c:948
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Récupération du nombre de nouveaux messages (UIDL)..."
 
-#: src/inc.c:947
+#: src/inc.c:952
 msgid "Getting the size of messages (LIST)..."
 msgstr "Récupération de la taille des messages (LIST)..."
 
-#: src/inc.c:957
+#: src/inc.c:962
 #, c-format
 msgid "Deleting message %d"
 msgstr "Suppression du message %d"
 
-#: src/inc.c:964 src/send_message.c:831
+#: src/inc.c:969 src/send_message.c:831
 msgid "Quitting"
 msgstr "Fermeture"
 
-#: src/inc.c:989
+#: src/inc.c:994
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Récupération du message (%d / %d) (%s / %s)"
 
-#: src/inc.c:1010
-#, c-format
-msgid "Retrieving (%d message(s) (%s) received)"
-msgstr "Réception - %d message(s) %s reçu(s)"
-
-#: src/inc.c:1198 src/inc.c:1218 src/summaryview.c:4501
+#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4501
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -2836,15 +2837,15 @@ msgstr ""
 "Erreur dans la gestion des messages indésirables.\n"
 "Vérifier les paramètres."
 
-#: src/inc.c:1271
+#: src/inc.c:1276
 msgid "Connection failed."
 msgstr "La connexion a échoué."
 
-#: src/inc.c:1277
+#: src/inc.c:1282
 msgid "Error occurred while processing mail."
 msgstr "Une erreur est survenue pendant le traitement du message."
 
-#: src/inc.c:1282
+#: src/inc.c:1287
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2853,29 +2854,29 @@ msgstr ""
 "Une erreur est survenue pendant le traitement du message :\n"
 "%s"
 
-#: src/inc.c:1288
+#: src/inc.c:1293
 msgid "No disk space left."
 msgstr "Plus de place disponible sur le disque."
 
-#: src/inc.c:1293
+#: src/inc.c:1298
 msgid "Can't write file."
 msgstr "Impossible d'écrire dans le fichier."
 
-#: src/inc.c:1298
+#: src/inc.c:1303
 msgid "Socket error."
 msgstr "Erreur de protocole."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
-#: src/send_message.c:963
+#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "La connexion a été fermée par le serveur."
 
-#: src/inc.c:1310
+#: src/inc.c:1315
 msgid "Mailbox is locked."
 msgstr "Boîte verrouillée."
 
-#: src/inc.c:1314
+#: src/inc.c:1319
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2884,11 +2885,11 @@ msgstr ""
 "Boîte verrouillée :\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
+#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "L'authentification à échoué."
 
-#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
+#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2897,15 +2898,15 @@ msgstr ""
 "L'authentification a échoué :\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
+#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Dépassement du délai de réponse (timeout) de la session."
 
-#: src/inc.c:1371
+#: src/inc.c:1376
 msgid "Incorporation cancelled\n"
 msgstr "Relève du courrier annulée\n"
 
-#: src/inc.c:1473
+#: src/inc.c:1478
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Récupération des nouveaux messages de %s dans %s...\n"
@@ -4268,8 +4269,8 @@ msgstr ""
 msgid "Receive size limit"
 msgstr "Taille maximale pour la réception"
 
-#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:575
-#: src/prefs_filter_edit.c:1004
+#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:581
+#: src/prefs_filter_edit.c:1010
 msgid "KB"
 msgstr "Ko"
 
@@ -5624,7 +5625,7 @@ msgstr "Ancien Sylpheed"
 msgid "Custom header setting"
 msgstr "Édition des en-têtes supplémentaires"
 
-#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1557
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1563
 msgid " Delete "
 msgstr " Supprimer "
 
@@ -5713,204 +5714,204 @@ msgstr "Voulez-vous vraiment supprimer la règle '%s'?"
 msgid "Delete rule"
 msgstr "Supprimer une règle"
 
-#: src/prefs_filter_edit.c:234
+#: src/prefs_filter_edit.c:236
 msgid "Filter rule"
 msgstr "Règle de filtrage"
 
-#: src/prefs_filter_edit.c:268
+#: src/prefs_filter_edit.c:270
 msgid "If any of the following condition matches"
 msgstr "Si au moins une des conditions suivantes est remplie"
 
-#: src/prefs_filter_edit.c:270
+#: src/prefs_filter_edit.c:272
 msgid "If all of the following conditions match"
 msgstr "Si toutes les conditions suivantes sont remplies"
 
-#: src/prefs_filter_edit.c:291
+#: src/prefs_filter_edit.c:293
 msgid "Perform the following actions:"
 msgstr "Effectuer les actions suivantes :"
 
-#: src/prefs_filter_edit.c:490
+#: src/prefs_filter_edit.c:496
 msgid "To or Cc"
 msgstr "To ou Cc"
 
-#: src/prefs_filter_edit.c:491
+#: src/prefs_filter_edit.c:497
 msgid "Any header"
 msgstr "Tout en-tête"
 
-#: src/prefs_filter_edit.c:492
+#: src/prefs_filter_edit.c:498
 msgid "Edit header..."
 msgstr "Éditer l'en-tête..."
 
-#: src/prefs_filter_edit.c:495
+#: src/prefs_filter_edit.c:501
 msgid "Message body"
 msgstr "Corps du message"
 
-#: src/prefs_filter_edit.c:496
+#: src/prefs_filter_edit.c:502
 msgid "Result of command"
 msgstr "Résultat de la commande"
 
-#: src/prefs_filter_edit.c:498
+#: src/prefs_filter_edit.c:504
 msgid "Age"
 msgstr "Age"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:97
+#: src/prefs_filter_edit.c:508 src/quick_search.c:97
 msgid "Marked"
 msgstr "Marqué"
 
-#: src/prefs_filter_edit.c:503
+#: src/prefs_filter_edit.c:509
 msgid "Has color label"
 msgstr "Avec coloration"
 
-#: src/prefs_filter_edit.c:504
+#: src/prefs_filter_edit.c:510
 msgid "Has attachment"
 msgstr "Avec pièce(s) jointe(s)"
 
-#: src/prefs_filter_edit.c:517
+#: src/prefs_filter_edit.c:523
 msgid "contains"
 msgstr "contient"
 
-#: src/prefs_filter_edit.c:519
+#: src/prefs_filter_edit.c:525
 msgid "doesn't contain"
 msgstr "ne contient pas"
 
-#: src/prefs_filter_edit.c:521
+#: src/prefs_filter_edit.c:527
 msgid "is"
 msgstr "est"
 
-#: src/prefs_filter_edit.c:523
+#: src/prefs_filter_edit.c:529
 msgid "is not"
 msgstr "n'est pas"
 
-#: src/prefs_filter_edit.c:526
+#: src/prefs_filter_edit.c:532
 msgid "match to regex"
 msgstr "vérifie l'expression régulière"
 
-#: src/prefs_filter_edit.c:528
+#: src/prefs_filter_edit.c:534
 msgid "doesn't match to regex"
 msgstr "ne vérifie pas l'expression régulière"
 
-#: src/prefs_filter_edit.c:539
+#: src/prefs_filter_edit.c:545
 msgid "is larger than"
 msgstr "est plus grand que"
 
-#: src/prefs_filter_edit.c:540
+#: src/prefs_filter_edit.c:546
 msgid "is smaller than"
 msgstr "est plus petit que"
 
-#: src/prefs_filter_edit.c:549
+#: src/prefs_filter_edit.c:555
 msgid "is longer than"
 msgstr "est plus long que"
 
-#: src/prefs_filter_edit.c:550
+#: src/prefs_filter_edit.c:556
 msgid "is shorter than"
 msgstr "est plus court que"
 
-#: src/prefs_filter_edit.c:560
+#: src/prefs_filter_edit.c:566
 msgid "matches to status"
 msgstr "vérifie l'état"
 
-#: src/prefs_filter_edit.c:561
+#: src/prefs_filter_edit.c:567
 msgid "doesn't match to status"
 msgstr "ne vérifie pas l'état"
 
-#: src/prefs_filter_edit.c:663
+#: src/prefs_filter_edit.c:669
 msgid "Move to"
 msgstr "Déplacer vers"
 
-#: src/prefs_filter_edit.c:664
+#: src/prefs_filter_edit.c:670
 msgid "Copy to"
 msgstr "Copier vers"
 
-#: src/prefs_filter_edit.c:665
+#: src/prefs_filter_edit.c:671
 msgid "Don't receive"
 msgstr "Ne pas recevoir"
 
-#: src/prefs_filter_edit.c:666
+#: src/prefs_filter_edit.c:672
 msgid "Delete from server"
 msgstr "Effacer du serveur"
 
-#: src/prefs_filter_edit.c:669
+#: src/prefs_filter_edit.c:675
 msgid "Set mark"
 msgstr "Marquer"
 
-#: src/prefs_filter_edit.c:670
+#: src/prefs_filter_edit.c:676
 msgid "Set color"
 msgstr "Colorer"
 
-#: src/prefs_filter_edit.c:671
+#: src/prefs_filter_edit.c:677
 msgid "Mark as read"
 msgstr "Marquer comme lu"
 
-#: src/prefs_filter_edit.c:675 src/prefs_toolbar.c:59
+#: src/prefs_filter_edit.c:681 src/prefs_toolbar.c:59
 msgid "Forward"
 msgstr "Transférer"
 
-#: src/prefs_filter_edit.c:676
+#: src/prefs_filter_edit.c:682
 msgid "Forward as attachment"
 msgstr "Transférer en pièce jointe"
 
-#: src/prefs_filter_edit.c:677
+#: src/prefs_filter_edit.c:683
 msgid "Redirect"
 msgstr "Rediriger"
 
-#: src/prefs_filter_edit.c:681
+#: src/prefs_filter_edit.c:687
 msgid "Execute command"
 msgstr "Exécuter la commande"
 
-#: src/prefs_filter_edit.c:684
+#: src/prefs_filter_edit.c:690
 msgid "Stop rule evaluation"
 msgstr "Arrêter l'évaluation de la règle"
 
-#: src/prefs_filter_edit.c:690 src/prefs_filter_edit.c:1053
+#: src/prefs_filter_edit.c:696 src/prefs_filter_edit.c:1059
 msgid "folder:"
 msgstr "dossier :"
 
-#: src/prefs_filter_edit.c:1014
+#: src/prefs_filter_edit.c:1020
 msgid "day(s)"
 msgstr "jour(s)"
 
-#: src/prefs_filter_edit.c:1093
+#: src/prefs_filter_edit.c:1099
 msgid "address:"
 msgstr "adresse :"
 
-#: src/prefs_filter_edit.c:1510
+#: src/prefs_filter_edit.c:1516
 msgid "Edit header list"
 msgstr "Éditer la liste des en-têtes"
 
-#: src/prefs_filter_edit.c:1533
+#: src/prefs_filter_edit.c:1539
 msgid "Headers"
 msgstr "En-têtes"
 
-#: src/prefs_filter_edit.c:1545
+#: src/prefs_filter_edit.c:1551
 msgid "Header:"
 msgstr "En-tête :"
 
-#: src/prefs_filter_edit.c:1732 src/prefs_filter_edit.c:1830
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1738 src/prefs_filter_edit.c:1836
+#: src/prefs_filter_edit.c:1843
 msgid "Command is not specified."
 msgstr "La commande n'a pas été définie."
 
-#: src/prefs_filter_edit.c:1810 src/prefs_filter_edit.c:1817
+#: src/prefs_filter_edit.c:1816 src/prefs_filter_edit.c:1823
 msgid "Destination folder is not specified."
 msgstr "Le dossier cible n'a pas été défini."
 
-#: src/prefs_filter_edit.c:1887
+#: src/prefs_filter_edit.c:1893
 msgid "Invalid condition exists."
 msgstr "Une condition invalide est présente."
 
-#: src/prefs_filter_edit.c:1910
+#: src/prefs_filter_edit.c:1916
 msgid "Rule name is not specified."
 msgstr "Le nom de la règle n'est pas spécifié."
 
-#: src/prefs_filter_edit.c:1936
+#: src/prefs_filter_edit.c:1942
 msgid "Invalid action exists."
 msgstr "Une action invalide est présente."
 
-#: src/prefs_filter_edit.c:1945
+#: src/prefs_filter_edit.c:1951
 msgid "Condition not exist."
 msgstr "La condition n'existe pas."
 
-#: src/prefs_filter_edit.c:1947
+#: src/prefs_filter_edit.c:1953
 msgid "Action not exist."
 msgstr "L'action n'existe pas."
 
@@ -5939,7 +5940,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Supprimer [...] ou (...) au début du sujet lors d'une réponse"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:95 src/progressdialog.c:128
+#: src/prefs_toolbar.c:95 src/progressdialog.c:129
 msgid "Account"
 msgstr "Compte"
 
@@ -5986,19 +5987,19 @@ msgid "Attachment"
 msgstr "Pièces jointes"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Sujet"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Expéditeur"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Date"
@@ -6264,9 +6265,14 @@ msgstr ""
 msgid "Creating progress dialog...\n"
 msgstr "Création du dialogue d'avancement...\n"
 
-#: src/progressdialog.c:136
+#: src/progressdialog.c:137
 msgid "Status"
 msgstr "État"
+
+#: src/progressdialog.c:145
+#, fuzzy
+msgid "Progress"
+msgstr "Propriétés"
 
 #: src/query_search.c:425
 msgid "_Save as search folder"
@@ -6295,7 +6301,7 @@ msgstr "Recherche %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Recherche %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(aucune date)"
 
@@ -6357,88 +6363,93 @@ msgstr "Date de la signature : %s\n"
 msgid "Error verifying the signature"
 msgstr "Erreur lors de la vérification de la signature"
 
-#: src/rpop3.c:267
+#: src/rpop3.c:277
 #, fuzzy, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "Suppression d'une boîte aux lettres"
 
-#: src/rpop3.c:317 src/summaryview.c:5091
+#: src/rpop3.c:329 src/summaryview.c:5091
 msgid "No."
 msgstr "N°"
 
-#: src/rpop3.c:339
+#: src/rpop3.c:351
 #, fuzzy
 msgid "_Get"
 msgstr "Relever"
 
-#: src/rpop3.c:388
+#: src/rpop3.c:400
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Connection au serveur SMTP : %s ..."
 
-#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
+#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Impossible de se connecter au serveur POP3 : %s:%d\n"
 
-#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "une erreur est survenue pendant la session POP3\n"
 
-#: src/rpop3.c:424
+#: src/rpop3.c:436
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "une erreur est survenue pendant la session POP3\n"
 
-#: src/rpop3.c:542
+#: src/rpop3.c:587
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Réception des en-têtes de message (%d / %d)"
 
-#: src/rpop3.c:700
+#: src/rpop3.c:747
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Récupération du nombre de nouveaux messages (STAT)..."
 
-#: src/rpop3.c:709 src/rpop3.c:722
+#: src/rpop3.c:756 src/rpop3.c:769
 #, fuzzy
 msgid "No message"
 msgstr "Pas de nouveaux messages."
 
-#: src/rpop3.c:755
+#: src/rpop3.c:802
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Suppression de message(s)"
 
-#: src/rpop3.c:832
+#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/send_message.c:830
+msgid "Quitting..."
+msgstr "Fermeture..."
+
+#: src/rpop3.c:885
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Récupération des nouveaux messages"
 
-#: src/rpop3.c:839
+#: src/rpop3.c:892
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Envoyer le message"
 
-#: src/rpop3.c:854
+#: src/rpop3.c:908
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Récupération des nouveaux messages"
 
-#: src/rpop3.c:959
+#: src/rpop3.c:1013
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Réception des messages de %s..."
 
-#: src/rpop3.c:985
+#: src/rpop3.c:1039
 #, fuzzy
 msgid "Delete messages"
 msgstr "Suppression de message(s)"
 
-#: src/rpop3.c:986
+#: src/rpop3.c:1040
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -6555,24 +6566,25 @@ msgstr "Envoi de RCPT TO..."
 msgid "Sending DATA..."
 msgstr "Envoi de DATA..."
 
-#: src/send_message.c:830
-msgid "Quitting..."
-msgstr "Fermeture..."
-
 #: src/send_message.c:858
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Envoi du message (%d / %d octets)"
 
-#: src/send_message.c:889
+#: src/send_message.c:863
+#, c-format
+msgid "%d / %d bytes"
+msgstr ""
+
+#: src/send_message.c:892
 msgid "Sending message"
 msgstr "Envoi de message"
 
-#: src/send_message.c:934 src/send_message.c:958
+#: src/send_message.c:937 src/send_message.c:961
 msgid "Error occurred while sending the message."
 msgstr "Une erreur est survenue pendant l'envoi de message."
 
-#: src/send_message.c:937
+#: src/send_message.c:940
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6581,11 +6593,11 @@ msgstr ""
 "Une erreur est survenue pendant l'envoi du message :\n"
 "%s"
 
-#: src/send_message.c:954
+#: src/send_message.c:957
 msgid "Can't connect to SMTP server."
 msgstr "Impossible de se connecter au serveur SMTP "
 
-#: src/send_message.c:956
+#: src/send_message.c:959
 #, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Impossible de se connecter au serveur SMTP : %s:%d"
@@ -7198,6 +7210,12 @@ msgstr "_Quitter"
 #: src/trayicon.c:198 src/trayicon.c:287
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "Done (no new messages)"
+#~ msgstr "Terminé - pas de nouveau(x) message(s)"
+
+#~ msgid "Retrieving (%d message(s) (%s) received)"
+#~ msgstr "Réception - %d message(s) %s reçu(s)"
 
 #, fuzzy
 #~ msgid "Can't sign the message"

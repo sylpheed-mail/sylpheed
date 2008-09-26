@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 15:53+0900\n"
+"POT-Creation-Date: 2008-09-26 16:20+0900\n"
 "PO-Revision-Date: 2004-01-22 17:46+0100\n"
 "Last-Translator: Andrej Kacian <andrej@kacian.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -991,7 +991,7 @@ msgstr "E-mailová adresa"
 msgid "Address book"
 msgstr "Otvoriť adresár"
 
-#: src/addressbook.c:636 src/prefs_filter_edit.c:249
+#: src/addressbook.c:636 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Meno:"
@@ -1022,7 +1022,7 @@ msgstr "Zmazať"
 #: src/addressbook.c:705 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
-#: src/prefs_filter_edit.c:1554
+#: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "Pridať"
 
@@ -1226,7 +1226,7 @@ msgstr "Upozornenie"
 msgid "Warning"
 msgstr "Varovanie"
 
-#: src/alertpanel.c:168 src/inc.c:724
+#: src/alertpanel.c:168 src/inc.c:729
 msgid "Error"
 msgstr "Chyba"
 
@@ -1642,7 +1642,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Nedá sa získať časť viacdielnej správy."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:519 src/summaryview.c:2271
+#: src/rpop3.c:564 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(bez predmetu)"
 
@@ -1832,8 +1832,8 @@ msgid "MIME type"
 msgstr "MIME typ"
 
 #. S_COL_DATE
-#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
+#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
+#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Veľkosť"
@@ -2368,7 +2368,7 @@ msgid "New"
 msgstr "Nový"
 
 #. S_COL_MARK
-#: src/folderview.c:424 src/prefs_filter_edit.c:501
+#: src/folderview.c:424 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Neprečítané"
@@ -2560,7 +2560,7 @@ msgstr "Diskusné skupiny:"
 msgid "Creating header view...\n"
 msgstr "Vytváram náhľad hlavičky...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(nie je známy odosielateľ)"
@@ -2768,137 +2768,138 @@ msgstr "Prijímam nové správy"
 msgid "Standby"
 msgstr "Čakajte"
 
-#: src/inc.c:681 src/inc.c:730
+#: src/inc.c:685 src/inc.c:735
 msgid "Cancelled"
 msgstr "Zrušené"
 
-#: src/inc.c:692
+#: src/inc.c:696
 msgid "Retrieving"
 msgstr "Prijímam"
 
-#: src/inc.c:701
-#, c-format
-msgid "Done (%d message(s) (%s) received)"
+#: src/inc.c:705 src/inc.c:1015
+#, fuzzy, c-format
+msgid "%d message(s) (%s) received"
 msgstr "Hotovo (%d správ (%s) prijatých)"
 
-#: src/inc.c:705
-msgid "Done (no new messages)"
-msgstr "Hotovo (žiadne nové správy)"
+#: src/inc.c:709
+#, fuzzy
+msgid "no new messages"
+msgstr "Žiadne nové správy."
 
-#: src/inc.c:711
+#: src/inc.c:710
+#, fuzzy
+msgid "Done"
+msgstr "Hotovo."
+
+#: src/inc.c:715
 msgid "Connection failed"
 msgstr "Spojenie zlyhalo"
 
-#: src/inc.c:714
+#: src/inc.c:718
 msgid "Auth failed"
 msgstr "Autentizácia zlyhala"
 
-#: src/inc.c:717
+#: src/inc.c:722
 msgid "Locked"
 msgstr "Zamknuté"
 
-#: src/inc.c:727
+#: src/inc.c:732
 #, fuzzy
 msgid "Timeout"
 msgstr "Timeout (v sekundách)"
 
-#: src/inc.c:777
+#: src/inc.c:782
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Dokončené (%d nových správ)"
 
-#: src/inc.c:780
+#: src/inc.c:785
 msgid "Finished (no new messages)"
 msgstr "Dokončené (žiadne nové správy)"
 
-#: src/inc.c:789
+#: src/inc.c:794
 msgid "Some errors occurred while getting mail."
 msgstr "Pri prijímaní pošty sa vyskytli chyby."
 
-#: src/inc.c:823
+#: src/inc.c:828
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "prijímam nové správy pre konto %s...\n"
 
-#: src/inc.c:827
+#: src/inc.c:832
 #, fuzzy, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "Autentizácia"
 
-#: src/inc.c:830
+#: src/inc.c:835
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Prijímam nové správy"
 
-#: src/inc.c:835
+#: src/inc.c:840
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Pripájam sa k serveru POP3: %s..."
 
-#: src/inc.c:849
+#: src/inc.c:854
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nepodarilo sa pripojiť k serveru POP3: %s:%d\n"
 
-#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Autentizácia..."
 
-#: src/inc.c:930
+#: src/inc.c:935
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Prijímam správy z %s..."
 
-#: src/inc.c:935
+#: src/inc.c:940
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Získavam počet nových správ (STAT)..."
 
-#: src/inc.c:939
+#: src/inc.c:944
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Získavam počet nových správ (LAST)..."
 
-#: src/inc.c:943
+#: src/inc.c:948
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Získavam počet nových správ (UIDL)..."
 
-#: src/inc.c:947
+#: src/inc.c:952
 msgid "Getting the size of messages (LIST)..."
 msgstr "Získavam veľkosť správ (LIST)..."
 
-#: src/inc.c:957
+#: src/inc.c:962
 #, c-format
 msgid "Deleting message %d"
 msgstr "Odstraňujem správu %d"
 
-#: src/inc.c:964 src/send_message.c:831
+#: src/inc.c:969 src/send_message.c:831
 msgid "Quitting"
 msgstr "Odpájam sa"
 
-#: src/inc.c:989
+#: src/inc.c:994
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Prijímam správu (%d / %d) (%s / %s)"
 
-#: src/inc.c:1010
-#, c-format
-msgid "Retrieving (%d message(s) (%s) received)"
-msgstr "Prijímam (%d správ (%s) prijatých)"
-
-#: src/inc.c:1198 src/inc.c:1218 src/summaryview.c:4501
+#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4501
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1271
+#: src/inc.c:1276
 msgid "Connection failed."
 msgstr "Spojenie zlyhalo."
 
-#: src/inc.c:1277
+#: src/inc.c:1282
 msgid "Error occurred while processing mail."
 msgstr "Pri spracovávaní pošty sa vyskytla chyba."
 
-#: src/inc.c:1282
+#: src/inc.c:1287
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2907,29 +2908,29 @@ msgstr ""
 "Pri spracovávaní pošty sa vyskytla chyba:\n"
 "%s"
 
-#: src/inc.c:1288
+#: src/inc.c:1293
 msgid "No disk space left."
 msgstr "Na disku už nie je miesto."
 
-#: src/inc.c:1293
+#: src/inc.c:1298
 msgid "Can't write file."
 msgstr "Nedá sa zapisovať do súboru."
 
-#: src/inc.c:1298
+#: src/inc.c:1303
 msgid "Socket error."
 msgstr "Chyba socketu."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
-#: src/send_message.c:963
+#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "Vzdialený hostiteľ ukončil spojenie."
 
-#: src/inc.c:1310
+#: src/inc.c:1315
 msgid "Mailbox is locked."
 msgstr "Mailbox je zamknutý."
 
-#: src/inc.c:1314
+#: src/inc.c:1319
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2938,11 +2939,11 @@ msgstr ""
 "Mailbox je zamknutý:\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
+#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Autentizácia bola neúspešná."
 
-#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
+#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2951,16 +2952,16 @@ msgstr ""
 "Autentizácia bola neúspešná:\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
+#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
 #, fuzzy
 msgid "Session timed out."
 msgstr "čas spojenia vypršal\n"
 
-#: src/inc.c:1371
+#: src/inc.c:1376
 msgid "Incorporation cancelled\n"
 msgstr "Začleňovanie zrušené\n"
 
-#: src/inc.c:1473
+#: src/inc.c:1478
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Prijímam nové správy z %s do %s...\n"
@@ -4333,8 +4334,8 @@ msgstr "Prijať všetky správy na serveri"
 msgid "Receive size limit"
 msgstr "Obmedzenie veľkosti správy pre príjem"
 
-#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:575
-#: src/prefs_filter_edit.c:1004
+#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:581
+#: src/prefs_filter_edit.c:1010
 msgid "KB"
 msgstr "KB"
 
@@ -5728,7 +5729,7 @@ msgstr "Starší Sylpheed"
 msgid "Custom header setting"
 msgstr "Nastavenie vlastných hlavičiek"
 
-#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1557
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1563
 msgid " Delete "
 msgstr "Zmazať"
 
@@ -5819,232 +5820,232 @@ msgstr "Naozaj chcete zmazať toto pravidlo?"
 msgid "Delete rule"
 msgstr "Zmazať pravidlo"
 
-#: src/prefs_filter_edit.c:234
+#: src/prefs_filter_edit.c:236
 #, fuzzy
 msgid "Filter rule"
 msgstr "Zmazať pravidlo"
 
-#: src/prefs_filter_edit.c:268
+#: src/prefs_filter_edit.c:270
 msgid "If any of the following condition matches"
 msgstr ""
 
-#: src/prefs_filter_edit.c:270
+#: src/prefs_filter_edit.c:272
 msgid "If all of the following conditions match"
 msgstr ""
 
-#: src/prefs_filter_edit.c:291
+#: src/prefs_filter_edit.c:293
 msgid "Perform the following actions:"
 msgstr ""
 
-#: src/prefs_filter_edit.c:490
+#: src/prefs_filter_edit.c:496
 msgid "To or Cc"
 msgstr ""
 
-#: src/prefs_filter_edit.c:491
+#: src/prefs_filter_edit.c:497
 #, fuzzy
 msgid "Any header"
 msgstr "Skryté hlavičky"
 
-#: src/prefs_filter_edit.c:492
+#: src/prefs_filter_edit.c:498
 #, fuzzy
 msgid "Edit header..."
 msgstr "Hlavička"
 
-#: src/prefs_filter_edit.c:495
+#: src/prefs_filter_edit.c:501
 #, fuzzy
 msgid "Message body"
 msgstr "Správa"
 
-#: src/prefs_filter_edit.c:496
+#: src/prefs_filter_edit.c:502
 msgid "Result of command"
 msgstr ""
 
-#: src/prefs_filter_edit.c:498
+#: src/prefs_filter_edit.c:504
 msgid "Age"
 msgstr ""
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:97
+#: src/prefs_filter_edit.c:508 src/quick_search.c:97
 #, fuzzy
 msgid "Marked"
 msgstr "Značka"
 
-#: src/prefs_filter_edit.c:503
+#: src/prefs_filter_edit.c:509
 #, fuzzy
 msgid "Has color label"
 msgstr "/_Farebné označenie"
 
-#: src/prefs_filter_edit.c:504
+#: src/prefs_filter_edit.c:510
 #, fuzzy
 msgid "Has attachment"
 msgstr "Príloha"
 
-#: src/prefs_filter_edit.c:517
+#: src/prefs_filter_edit.c:523
 msgid "contains"
 msgstr "obsahuje"
 
-#: src/prefs_filter_edit.c:519
+#: src/prefs_filter_edit.c:525
 #, fuzzy
 msgid "doesn't contain"
 msgstr "neobsahuje"
 
-#: src/prefs_filter_edit.c:521
+#: src/prefs_filter_edit.c:527
 msgid "is"
 msgstr ""
 
-#: src/prefs_filter_edit.c:523
+#: src/prefs_filter_edit.c:529
 msgid "is not"
 msgstr ""
 
-#: src/prefs_filter_edit.c:526
+#: src/prefs_filter_edit.c:532
 msgid "match to regex"
 msgstr ""
 
-#: src/prefs_filter_edit.c:528
+#: src/prefs_filter_edit.c:534
 msgid "doesn't match to regex"
 msgstr ""
 
-#: src/prefs_filter_edit.c:539
+#: src/prefs_filter_edit.c:545
 msgid "is larger than"
 msgstr ""
 
-#: src/prefs_filter_edit.c:540
+#: src/prefs_filter_edit.c:546
 msgid "is smaller than"
 msgstr ""
 
-#: src/prefs_filter_edit.c:549
+#: src/prefs_filter_edit.c:555
 msgid "is longer than"
 msgstr ""
 
-#: src/prefs_filter_edit.c:550
+#: src/prefs_filter_edit.c:556
 msgid "is shorter than"
 msgstr ""
 
-#: src/prefs_filter_edit.c:560
+#: src/prefs_filter_edit.c:566
 msgid "matches to status"
 msgstr ""
 
-#: src/prefs_filter_edit.c:561
+#: src/prefs_filter_edit.c:567
 #, fuzzy
 msgid "doesn't match to status"
 msgstr "neobsahuje"
 
-#: src/prefs_filter_edit.c:663
+#: src/prefs_filter_edit.c:669
 #, fuzzy
 msgid "Move to"
 msgstr "Posunúť nadol"
 
-#: src/prefs_filter_edit.c:664
+#: src/prefs_filter_edit.c:670
 #, fuzzy
 msgid "Copy to"
 msgstr "/_Kopírovať..."
 
-#: src/prefs_filter_edit.c:665
+#: src/prefs_filter_edit.c:671
 msgid "Don't receive"
 msgstr "Neprijať"
 
-#: src/prefs_filter_edit.c:666
+#: src/prefs_filter_edit.c:672
 #, fuzzy
 msgid "Delete from server"
 msgstr "Odstrániť priečinok"
 
-#: src/prefs_filter_edit.c:669
+#: src/prefs_filter_edit.c:675
 #, fuzzy
 msgid "Set mark"
 msgstr "Poznámky"
 
-#: src/prefs_filter_edit.c:670
+#: src/prefs_filter_edit.c:676
 #, fuzzy
 msgid "Set color"
 msgstr "Nastaviť farby správy"
 
-#: src/prefs_filter_edit.c:671
+#: src/prefs_filter_edit.c:677
 #, fuzzy
 msgid "Mark as read"
 msgstr "/Oz_načiť/Označiť ako _prečítané"
 
-#: src/prefs_filter_edit.c:675 src/prefs_toolbar.c:59
+#: src/prefs_filter_edit.c:681 src/prefs_toolbar.c:59
 msgid "Forward"
 msgstr "Poslať ďalej"
 
-#: src/prefs_filter_edit.c:676
+#: src/prefs_filter_edit.c:682
 #, fuzzy
 msgid "Forward as attachment"
 msgstr "/Poslať ďalej ako p_rílohu"
 
-#: src/prefs_filter_edit.c:677
+#: src/prefs_filter_edit.c:683
 #, fuzzy
 msgid "Redirect"
 msgstr "/Pr_esmerovať"
 
-#: src/prefs_filter_edit.c:681
+#: src/prefs_filter_edit.c:687
 #, fuzzy
 msgid "Execute command"
 msgstr "Vykonať"
 
-#: src/prefs_filter_edit.c:684
+#: src/prefs_filter_edit.c:690
 msgid "Stop rule evaluation"
 msgstr ""
 
-#: src/prefs_filter_edit.c:690 src/prefs_filter_edit.c:1053
+#: src/prefs_filter_edit.c:696 src/prefs_filter_edit.c:1059
 #, fuzzy
 msgid "folder:"
 msgstr "Priečinok"
 
-#: src/prefs_filter_edit.c:1014
+#: src/prefs_filter_edit.c:1020
 #, fuzzy
 msgid "day(s)"
 msgstr "dňoch"
 
-#: src/prefs_filter_edit.c:1093
+#: src/prefs_filter_edit.c:1099
 #, fuzzy
 msgid "address:"
 msgstr "Adresár"
 
-#: src/prefs_filter_edit.c:1510
+#: src/prefs_filter_edit.c:1516
 #, fuzzy
 msgid "Edit header list"
 msgstr "Hlavička"
 
-#: src/prefs_filter_edit.c:1533
+#: src/prefs_filter_edit.c:1539
 #, fuzzy
 msgid "Headers"
 msgstr "Hlavička"
 
-#: src/prefs_filter_edit.c:1545
+#: src/prefs_filter_edit.c:1551
 #, fuzzy
 msgid "Header:"
 msgstr "Hlavička"
 
-#: src/prefs_filter_edit.c:1732 src/prefs_filter_edit.c:1830
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1738 src/prefs_filter_edit.c:1836
+#: src/prefs_filter_edit.c:1843
 #, fuzzy
 msgid "Command is not specified."
 msgstr "Nebol zadaný príkazový riadok."
 
-#: src/prefs_filter_edit.c:1810 src/prefs_filter_edit.c:1817
+#: src/prefs_filter_edit.c:1816 src/prefs_filter_edit.c:1823
 #, fuzzy
 msgid "Destination folder is not specified."
 msgstr "Nebol zadaný cieľ."
 
-#: src/prefs_filter_edit.c:1887
+#: src/prefs_filter_edit.c:1893
 msgid "Invalid condition exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1910
+#: src/prefs_filter_edit.c:1916
 #, fuzzy
 msgid "Rule name is not specified."
 msgstr "Nie je určený príjemca."
 
-#: src/prefs_filter_edit.c:1936
+#: src/prefs_filter_edit.c:1942
 msgid "Invalid action exists."
 msgstr ""
 
-#: src/prefs_filter_edit.c:1945
+#: src/prefs_filter_edit.c:1951
 #, fuzzy
 msgid "Condition not exist."
 msgstr "Nebol zadaný príkazový riadok."
 
-#: src/prefs_filter_edit.c:1947
+#: src/prefs_filter_edit.c:1953
 #, fuzzy
 msgid "Action not exist."
 msgstr "%s: súbor neexistuje\n"
@@ -6075,7 +6076,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Zmazať [...] alebo (...) na začiatku názvu v zozname správ"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:95 src/progressdialog.c:128
+#: src/prefs_toolbar.c:95 src/progressdialog.c:129
 msgid "Account"
 msgstr "Konto"
 
@@ -6125,19 +6126,19 @@ msgid "Attachment"
 msgstr "Príloha"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Predmet"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Dátum"
@@ -6417,9 +6418,14 @@ msgstr ""
 msgid "Creating progress dialog...\n"
 msgstr "Vytváram stavové okno...\n"
 
-#: src/progressdialog.c:136
+#: src/progressdialog.c:137
 msgid "Status"
 msgstr "Stav"
+
+#: src/progressdialog.c:145
+#, fuzzy
+msgid "Progress"
+msgstr "Vlastnosti"
 
 #: src/query_search.c:425
 #, fuzzy
@@ -6451,7 +6457,7 @@ msgstr "Prehľadávam priečinok %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtrujem..."
 
-#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(bez dátumu)"
 
@@ -6519,88 +6525,93 @@ msgstr "Podpísané dňa %s\n"
 msgid "Error verifying the signature"
 msgstr "Chyba pri overovaní podpisu"
 
-#: src/rpop3.c:267
+#: src/rpop3.c:277
 #, fuzzy, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "Odstrániť schránku"
 
-#: src/rpop3.c:317 src/summaryview.c:5091
+#: src/rpop3.c:329 src/summaryview.c:5091
 msgid "No."
 msgstr "Č."
 
-#: src/rpop3.c:339
+#: src/rpop3.c:351
 #, fuzzy
 msgid "_Get"
 msgstr "Prijať"
 
-#: src/rpop3.c:388
+#: src/rpop3.c:400
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Pripájam sa k serveru SMTP: %s ..."
 
-#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
+#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Nepodarilo sa pripojiť k serveru POP3: %s:%d\n"
 
-#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "vyskytla sa chyba pri POP3 spojení\n"
 
-#: src/rpop3.c:424
+#: src/rpop3.c:436
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "vyskytla sa chyba pri POP3 spojení\n"
 
-#: src/rpop3.c:542
+#: src/rpop3.c:587
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Odosielam správu (%d / %d bajtov)"
 
-#: src/rpop3.c:700
+#: src/rpop3.c:747
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Získavam počet nových správ (STAT)..."
 
-#: src/rpop3.c:709 src/rpop3.c:722
+#: src/rpop3.c:756 src/rpop3.c:769
 #, fuzzy
 msgid "No message"
 msgstr "Žiadne nové správy."
 
-#: src/rpop3.c:755
+#: src/rpop3.c:802
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Zmazať správy"
 
-#: src/rpop3.c:832
+#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/send_message.c:830
+msgid "Quitting..."
+msgstr "Odpájam sa..."
+
+#: src/rpop3.c:885
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Prijímam nové správy"
 
-#: src/rpop3.c:839
+#: src/rpop3.c:892
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Odoslať správu"
 
-#: src/rpop3.c:854
+#: src/rpop3.c:908
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Prijímam nové správy"
 
-#: src/rpop3.c:959
+#: src/rpop3.c:1013
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Prijímam správy z %s..."
 
-#: src/rpop3.c:985
+#: src/rpop3.c:1039
 #, fuzzy
 msgid "Delete messages"
 msgstr "Zmazať správy"
 
-#: src/rpop3.c:986
+#: src/rpop3.c:1040
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -6714,24 +6725,25 @@ msgstr "Posielam RCPT TO..."
 msgid "Sending DATA..."
 msgstr "Posielam DATA..."
 
-#: src/send_message.c:830
-msgid "Quitting..."
-msgstr "Odpájam sa..."
-
 #: src/send_message.c:858
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Odosielam správu (%d / %d bajtov)"
 
-#: src/send_message.c:889
+#: src/send_message.c:863
+#, c-format
+msgid "%d / %d bytes"
+msgstr ""
+
+#: src/send_message.c:892
 msgid "Sending message"
 msgstr "Odosielam správu"
 
-#: src/send_message.c:934 src/send_message.c:958
+#: src/send_message.c:937 src/send_message.c:961
 msgid "Error occurred while sending the message."
 msgstr "Pri odosielaní správy nastala chyba."
 
-#: src/send_message.c:937
+#: src/send_message.c:940
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6740,12 +6752,12 @@ msgstr ""
 "Pri odosielaní správy nastala chyba:\n"
 "%s"
 
-#: src/send_message.c:954
+#: src/send_message.c:957
 #, fuzzy
 msgid "Can't connect to SMTP server."
 msgstr "Nedá sa pripojiŤ k serveru NNTP: %s:%d\n"
 
-#: src/send_message.c:956
+#: src/send_message.c:959
 #, fuzzy, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Nedá sa pripojiŤ k serveru NNTP: %s:%d\n"
@@ -7365,6 +7377,12 @@ msgstr "Ukončiť"
 #, fuzzy
 msgid "Sylpheed"
 msgstr "Starší Sylpheed"
+
+#~ msgid "Done (no new messages)"
+#~ msgstr "Hotovo (žiadne nové správy)"
+
+#~ msgid "Retrieving (%d message(s) (%s) received)"
+#~ msgstr "Prijímam (%d správ (%s) prijatých)"
 
 #, fuzzy
 #~ msgid "Can't sign the message"

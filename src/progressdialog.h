@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ typedef enum
 	PROG_COL_PIXBUF,
 	PROG_COL_NAME,
 	PROG_COL_STATUS,
+	PROG_COL_PROGRESS,
 	PROG_COL_POINTER,
 	PROG_N_COLS
 } ProgressColumn;
@@ -61,12 +62,14 @@ void progress_dialog_append		(ProgressDialog	*progress,
 					 GdkPixbuf	*pixbuf,
 					 const gchar	*name,
 					 const gchar	*status,
+					 const gchar	*progress_str,
 					 gpointer	 data);
 void progress_dialog_set_row		(ProgressDialog	*progress,
 					 gint		 row,
 					 GdkPixbuf	*pixbuf,
 					 const gchar	*name,
 					 const gchar	*status,
+					 const gchar	*progress_str,
 					 gpointer	 data);
 
 void progress_dialog_set_row_pixbuf	(ProgressDialog	*progress,
@@ -78,6 +81,9 @@ void progress_dialog_set_row_name	(ProgressDialog	*progress,
 void progress_dialog_set_row_status	(ProgressDialog	*progress,
 					 gint		 row,
 					 const gchar	*status);
+void progress_dialog_set_row_progress	(ProgressDialog	*progress,
+					 gint		 row,
+					 const gchar	*progress_str);
 
 void progress_dialog_scroll_to_row	(ProgressDialog	*progress,
 					 gint		 row);

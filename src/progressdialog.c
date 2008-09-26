@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,7 +101,8 @@ ProgressDialog *progress_dialog_create(void)
 					    GTK_SHADOW_IN);
 
 	store = gtk_list_store_new(PROG_N_COLS, GDK_TYPE_PIXBUF, G_TYPE_STRING,
-				   G_TYPE_STRING, G_TYPE_POINTER);
+				   G_TYPE_STRING, G_TYPE_STRING,
+				   G_TYPE_POINTER);
 
 	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
 	g_object_unref(G_OBJECT(store));
@@ -128,12 +129,20 @@ ProgressDialog *progress_dialog_create(void)
 		(_("Account"), renderer, "text", PROG_COL_NAME, NULL);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, 160);
+	gtk_tree_view_column_set_fixed_width(column, 120);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	renderer = gtk_cell_renderer_text_new();
 	column = gtk_tree_view_column_new_with_attributes
 		(_("Status"), renderer, "text", PROG_COL_STATUS, NULL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 80);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Progress"), renderer, "text", PROG_COL_PROGRESS, NULL);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
@@ -175,7 +184,7 @@ void progress_dialog_set_percentage(ProgressDialog *progress,
 
 void progress_dialog_append(ProgressDialog *progress, GdkPixbuf *pixbuf,
 			    const gchar *name, const gchar *status,
-			    gpointer data)
+			    const gchar *progress_str, gpointer data)
 {
 	GtkListStore *store = progress->store;
 	GtkTreeIter iter;
@@ -186,13 +195,15 @@ void progress_dialog_append(ProgressDialog *progress, GdkPixbuf *pixbuf,
 			   PROG_COL_PIXBUF, pixbuf,
 			   PROG_COL_NAME, name,
 			   PROG_COL_STATUS, status,
+			   PROG_COL_PROGRESS, progress_str,
 			   PROG_COL_POINTER, data,
 			   -1);
 }
 
 void progress_dialog_set_row(ProgressDialog *progress, gint row,
 			     GdkPixbuf *pixbuf, const gchar *name,
-			     const gchar *status, gpointer data)
+			     const gchar *status, const gchar *progress_str,
+			     gpointer data)
 {
 	GtkListStore *store = progress->store;
 	GtkTreeIter iter;
@@ -203,6 +214,7 @@ void progress_dialog_set_row(ProgressDialog *progress, gint row,
 				   PROG_COL_PIXBUF, pixbuf,
 				   PROG_COL_NAME, name,
 				   PROG_COL_STATUS, status,
+				   PROG_COL_PROGRESS, progress_str,
 				   PROG_COL_POINTER, data,
 				   -1);
 	}
@@ -241,6 +253,19 @@ void progress_dialog_set_row_status(ProgressDialog *progress, gint row,
 	if (gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store),
 					  &iter, NULL, row)) {
 		gtk_list_store_set(store, &iter, PROG_COL_STATUS, status, -1);
+	}
+}
+
+void progress_dialog_set_row_progress(ProgressDialog *progress, gint row,
+				      const gchar *progress_str)
+{
+	GtkListStore *store = progress->store;
+	GtkTreeIter iter;
+
+	if (gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store),
+					  &iter, NULL, row)) {
+		gtk_list_store_set(store, &iter, PROG_COL_PROGRESS,
+				   progress_str, -1);
 	}
 }
 

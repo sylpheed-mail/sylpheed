@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-19 15:53+0900\n"
+"POT-Creation-Date: 2008-09-26 16:20+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -1002,7 +1002,7 @@ msgstr "Διεύθυνση ηλεκτρονικής αλληλογραφίας"
 msgid "Address book"
 msgstr "Κατάλογος διευθύνσεων"
 
-#: src/addressbook.c:636 src/prefs_filter_edit.c:249
+#: src/addressbook.c:636 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Όνομα:"
@@ -1033,7 +1033,7 @@ msgstr "Διαγραφή"
 #: src/addressbook.c:705 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
-#: src/prefs_filter_edit.c:1554
+#: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "Προσθήκη"
 
@@ -1243,7 +1243,7 @@ msgstr "Σημείωση"
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: src/alertpanel.c:168 src/inc.c:724
+#: src/alertpanel.c:168 src/inc.c:729
 msgid "Error"
 msgstr "Σφάλμα"
 
@@ -1621,7 +1621,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Δεν είναι δυνατή η λήψη μέρους του πολυτμηματικού μηνύματος."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:519 src/summaryview.c:2271
+#: src/rpop3.c:564 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Χωρίς θέμα)"
 
@@ -1820,8 +1820,8 @@ msgid "MIME type"
 msgstr "τύπος MIME"
 
 #. S_COL_DATE
-#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:497
-#: src/prefs_summary_column.c:78 src/rpop3.c:321 src/select-keys.c:320
+#: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
+#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Μέγεθος"
@@ -2350,7 +2350,7 @@ msgid "New"
 msgstr "Νέα"
 
 #. S_COL_MARK
-#: src/folderview.c:424 src/prefs_filter_edit.c:501
+#: src/folderview.c:424 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:73 src/quick_search.c:96
 msgid "Unread"
 msgstr "Αδιάβαστα"
@@ -2542,7 +2542,7 @@ msgstr "Ομάδες συζητήσεων:"
 msgid "Creating header view...\n"
 msgstr "Δημιουργία προβολής κεφαλίδων...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:520
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Χωρίς αποστολέα)"
@@ -2751,137 +2751,138 @@ msgstr "Λήψη νέων μηνυμάτων"
 msgid "Standby"
 msgstr "Σε αναμονή"
 
-#: src/inc.c:681 src/inc.c:730
+#: src/inc.c:685 src/inc.c:735
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
-#: src/inc.c:692
+#: src/inc.c:696
 msgid "Retrieving"
 msgstr "Λήψη"
 
-#: src/inc.c:701
-#, c-format
-msgid "Done (%d message(s) (%s) received)"
+#: src/inc.c:705 src/inc.c:1015
+#, fuzzy, c-format
+msgid "%d message(s) (%s) received"
 msgstr "Ολοκληρώθηκε (%d μηνύματα (%s) παρελήφθησαν)"
 
-#: src/inc.c:705
-msgid "Done (no new messages)"
-msgstr "Ολοκληρώθηκε (δεν υπάρχουν νέα μηνύματα)"
+#: src/inc.c:709
+#, fuzzy
+msgid "no new messages"
+msgstr "Δεν υπάρχουν νέα μηνύματα."
 
-#: src/inc.c:711
+#: src/inc.c:710
+#, fuzzy
+msgid "Done"
+msgstr "Έγινε."
+
+#: src/inc.c:715
 msgid "Connection failed"
 msgstr "Η σύνδεση απέτυχε"
 
-#: src/inc.c:714
+#: src/inc.c:718
 msgid "Auth failed"
 msgstr "Η εντολή Auth απέτυχε"
 
-#: src/inc.c:717
+#: src/inc.c:722
 msgid "Locked"
 msgstr "Κλειδωμένο"
 
-#: src/inc.c:727
+#: src/inc.c:732
 msgid "Timeout"
 msgstr "Όριο χρόνου"
 
-#: src/inc.c:777
+#: src/inc.c:782
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Ολοκληρώθηκε (%d νέα μηνύματα)"
 
-#: src/inc.c:780
+#: src/inc.c:785
 msgid "Finished (no new messages)"
 msgstr "Ολοκληρώθηκε (δεν υπάρχουν νέα μηνύματα)"
 
-#: src/inc.c:789
+#: src/inc.c:794
 #, fuzzy
 msgid "Some errors occurred while getting mail."
 msgstr "Συνέβησαν σφάλματα κατά την αποστολή των μηνυμάτων στην ουρά."
 
-#: src/inc.c:823
+#: src/inc.c:828
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "λήψη νέων μηνυμάτων λογαριασμού %s...\n"
 
-#: src/inc.c:827
+#: src/inc.c:832
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: Πιστοποίηση με POP3"
 
-#: src/inc.c:830
+#: src/inc.c:835
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Λήψη νέων μηνυμάτων"
 
-#: src/inc.c:835
+#: src/inc.c:840
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Σύνδεση με το διακομιστή POP3: %s..."
 
-#: src/inc.c:849
+#: src/inc.c:854
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Δεν μπορώ να συνδεθώ στον POP3 server: %s:%d\n"
 
-#: src/inc.c:929 src/rpop3.c:674 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Πιστοποίηση..."
 
-#: src/inc.c:930
+#: src/inc.c:935
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Λήψη μηνυμάτων από %s..."
 
-#: src/inc.c:935
+#: src/inc.c:940
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (STAT)..."
 
-#: src/inc.c:939
+#: src/inc.c:944
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (LAST)..."
 
-#: src/inc.c:943
+#: src/inc.c:948
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (UIDL)..."
 
-#: src/inc.c:947
+#: src/inc.c:952
 msgid "Getting the size of messages (LIST)..."
 msgstr "Λήψη μεγέθους μηνυμάτων (LIST)..."
 
-#: src/inc.c:957
+#: src/inc.c:962
 #, c-format
 msgid "Deleting message %d"
 msgstr "Διαγραφή μηνύματος %d"
 
-#: src/inc.c:964 src/send_message.c:831
+#: src/inc.c:969 src/send_message.c:831
 msgid "Quitting"
 msgstr "Κλείνω τη σύνδεση"
 
-#: src/inc.c:989
+#: src/inc.c:994
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Λαμβάνεται το μήνυμα (%d / %d) (%s / %s)"
 
-#: src/inc.c:1010
-#, c-format
-msgid "Retrieving (%d message(s) (%s) received)"
-msgstr "Παραλαβή (%d μηνύματα (%s) παρελήφθησαν)"
-
-#: src/inc.c:1198 src/inc.c:1218 src/summaryview.c:4501
+#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4501
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1271
+#: src/inc.c:1276
 msgid "Connection failed."
 msgstr "Η σύνδεση απέτυχε."
 
-#: src/inc.c:1277
+#: src/inc.c:1282
 msgid "Error occurred while processing mail."
 msgstr "Ένα σφάλμα συνέβη καθώς επεξεργάζομαι το μήνυμα."
 
-#: src/inc.c:1282
+#: src/inc.c:1287
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2890,29 +2891,29 @@ msgstr ""
 "Δημιουργήθηκε σφάλμα κατά την επεξεργασία μηνυμάτων:\n"
 "%s"
 
-#: src/inc.c:1288
+#: src/inc.c:1293
 msgid "No disk space left."
 msgstr "Δεν υπάρχει άλλος χώρος στο δίσκο."
 
-#: src/inc.c:1293
+#: src/inc.c:1298
 msgid "Can't write file."
 msgstr "Δεν είναι δυνατή η εγγραφή του αρχείου."
 
-#: src/inc.c:1298
+#: src/inc.c:1303
 msgid "Socket error."
 msgstr "Σφάλμα σύνδεσης."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1304 src/rpop3.c:435 src/rpop3.c:436 src/send_message.c:760
-#: src/send_message.c:963
+#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "Η σύνδεση έκλεισε από τον απομακρυσμένο υπολογιστή."
 
-#: src/inc.c:1310
+#: src/inc.c:1315
 msgid "Mailbox is locked."
 msgstr "Το γραμματοκιβώτιο είναι κλειδωμένο."
 
-#: src/inc.c:1314
+#: src/inc.c:1319
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2921,11 +2922,11 @@ msgstr ""
 "Το γραμματοκιβώτιο είναι κλειδωμένο:\n"
 "%s"
 
-#: src/inc.c:1320 src/rpop3.c:410 src/rpop3.c:415 src/send_message.c:943
+#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Η πιστοποίηση απέτυχε."
 
-#: src/inc.c:1325 src/rpop3.c:412 src/send_message.c:946
+#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2934,15 +2935,15 @@ msgstr ""
 "Η πιστοποίηση απέτυχε:\n"
 "%s"
 
-#: src/inc.c:1330 src/rpop3.c:440 src/rpop3.c:441 src/send_message.c:967
+#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Λήξη χρόνου σύνδεσης."
 
-#: src/inc.c:1371
+#: src/inc.c:1376
 msgid "Incorporation cancelled\n"
 msgstr "Η ενσωμάτωση ακυρώθηκε\n"
 
-#: src/inc.c:1473
+#: src/inc.c:1478
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Λήψη μηνυμάτων από %s στο %s ...\n"
@@ -4306,8 +4307,8 @@ msgstr "Λήψη όλων των μηνυμάτων (και των ήδη ληφ
 msgid "Receive size limit"
 msgstr "Όριο μεγέθους για λήψη"
 
-#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:575
-#: src/prefs_filter_edit.c:1004
+#: src/prefs_account_dialog.c:931 src/prefs_filter_edit.c:581
+#: src/prefs_filter_edit.c:1010
 msgid "KB"
 msgstr "KB"
 
@@ -5656,7 +5657,7 @@ msgstr "Παλιό Sylpheed"
 msgid "Custom header setting"
 msgstr "Ρύθμιση προσαρμοσμένων κεφαλίδων"
 
-#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1557
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1563
 msgid " Delete "
 msgstr " Διαγραφή "
 
@@ -5749,204 +5750,204 @@ msgstr "Θέλετε σίγουρα να διαγράψετε τον κανόν�
 msgid "Delete rule"
 msgstr "Διαγραφή κανόνα"
 
-#: src/prefs_filter_edit.c:234
+#: src/prefs_filter_edit.c:236
 msgid "Filter rule"
 msgstr "Κανόνας φίλτρου"
 
-#: src/prefs_filter_edit.c:268
+#: src/prefs_filter_edit.c:270
 msgid "If any of the following condition matches"
 msgstr "Ταίριασμα οποιουδήποτε από τα παρακάτω"
 
-#: src/prefs_filter_edit.c:270
+#: src/prefs_filter_edit.c:272
 msgid "If all of the following conditions match"
 msgstr "Ταίριασμα όλων των παρακάτω"
 
-#: src/prefs_filter_edit.c:291
+#: src/prefs_filter_edit.c:293
 msgid "Perform the following actions:"
 msgstr "Εκτέλεση ακόλουθων ενεργειών:"
 
-#: src/prefs_filter_edit.c:490
+#: src/prefs_filter_edit.c:496
 msgid "To or Cc"
 msgstr "Προς ή Κοινοποίηση"
 
-#: src/prefs_filter_edit.c:491
+#: src/prefs_filter_edit.c:497
 msgid "Any header"
 msgstr "Οποιαδήποτε κεφαλίδα"
 
-#: src/prefs_filter_edit.c:492
+#: src/prefs_filter_edit.c:498
 msgid "Edit header..."
 msgstr "Επεξεργασία κεφαλίδας..."
 
-#: src/prefs_filter_edit.c:495
+#: src/prefs_filter_edit.c:501
 msgid "Message body"
 msgstr "Σώμα μηνύματος"
 
-#: src/prefs_filter_edit.c:496
+#: src/prefs_filter_edit.c:502
 msgid "Result of command"
 msgstr "Αποτέλεσμα εντολής"
 
-#: src/prefs_filter_edit.c:498
+#: src/prefs_filter_edit.c:504
 msgid "Age"
 msgstr "Παλαιότητα"
 
-#: src/prefs_filter_edit.c:502 src/quick_search.c:97
+#: src/prefs_filter_edit.c:508 src/quick_search.c:97
 msgid "Marked"
 msgstr "Σημειωμένο"
 
-#: src/prefs_filter_edit.c:503
+#: src/prefs_filter_edit.c:509
 msgid "Has color label"
 msgstr "Έχει ετικέτα"
 
-#: src/prefs_filter_edit.c:504
+#: src/prefs_filter_edit.c:510
 msgid "Has attachment"
 msgstr "Έχει συνημμένο"
 
-#: src/prefs_filter_edit.c:517
+#: src/prefs_filter_edit.c:523
 msgid "contains"
 msgstr "περιέχει"
 
-#: src/prefs_filter_edit.c:519
+#: src/prefs_filter_edit.c:525
 msgid "doesn't contain"
 msgstr "δεν περιέχει"
 
-#: src/prefs_filter_edit.c:521
+#: src/prefs_filter_edit.c:527
 msgid "is"
 msgstr "είναι"
 
-#: src/prefs_filter_edit.c:523
+#: src/prefs_filter_edit.c:529
 msgid "is not"
 msgstr "δεν είναι"
 
-#: src/prefs_filter_edit.c:526
+#: src/prefs_filter_edit.c:532
 msgid "match to regex"
 msgstr "ταιριάζει σε κανονική έκφραση"
 
-#: src/prefs_filter_edit.c:528
+#: src/prefs_filter_edit.c:534
 msgid "doesn't match to regex"
 msgstr "δεν ταιριάζει σε κανονική έκφραση"
 
-#: src/prefs_filter_edit.c:539
+#: src/prefs_filter_edit.c:545
 msgid "is larger than"
 msgstr "είναι μεγαλύτερο από"
 
-#: src/prefs_filter_edit.c:540
+#: src/prefs_filter_edit.c:546
 msgid "is smaller than"
 msgstr "είναι μικρότερο από"
 
-#: src/prefs_filter_edit.c:549
+#: src/prefs_filter_edit.c:555
 msgid "is longer than"
 msgstr "είναι μακρύτερο από"
 
-#: src/prefs_filter_edit.c:550
+#: src/prefs_filter_edit.c:556
 msgid "is shorter than"
 msgstr "είναι πιο κοντό από"
 
-#: src/prefs_filter_edit.c:560
+#: src/prefs_filter_edit.c:566
 msgid "matches to status"
 msgstr "ταιριάζει σε κατάσταση"
 
-#: src/prefs_filter_edit.c:561
+#: src/prefs_filter_edit.c:567
 msgid "doesn't match to status"
 msgstr "δεν ταιριάζει σε κατάσταση"
 
-#: src/prefs_filter_edit.c:663
+#: src/prefs_filter_edit.c:669
 msgid "Move to"
 msgstr "Μετακίνηση"
 
-#: src/prefs_filter_edit.c:664
+#: src/prefs_filter_edit.c:670
 msgid "Copy to"
 msgstr "Αντιγραφή"
 
-#: src/prefs_filter_edit.c:665
+#: src/prefs_filter_edit.c:671
 msgid "Don't receive"
 msgstr "Να μη ληφθεί"
 
-#: src/prefs_filter_edit.c:666
+#: src/prefs_filter_edit.c:672
 msgid "Delete from server"
 msgstr "Διαγραφή από το διακομιστή"
 
-#: src/prefs_filter_edit.c:669
+#: src/prefs_filter_edit.c:675
 msgid "Set mark"
 msgstr "Ορισμός σημείου"
 
-#: src/prefs_filter_edit.c:670
+#: src/prefs_filter_edit.c:676
 msgid "Set color"
 msgstr "Ορισμός χρώματος"
 
-#: src/prefs_filter_edit.c:671
+#: src/prefs_filter_edit.c:677
 msgid "Mark as read"
 msgstr "Σημείωση ως αναγνωσμένο"
 
-#: src/prefs_filter_edit.c:675 src/prefs_toolbar.c:59
+#: src/prefs_filter_edit.c:681 src/prefs_toolbar.c:59
 msgid "Forward"
 msgstr "Προώθηση"
 
-#: src/prefs_filter_edit.c:676
+#: src/prefs_filter_edit.c:682
 msgid "Forward as attachment"
 msgstr "Προώθηση ως συνημμένο"
 
-#: src/prefs_filter_edit.c:677
+#: src/prefs_filter_edit.c:683
 msgid "Redirect"
 msgstr "Ανακατεύθυνση"
 
-#: src/prefs_filter_edit.c:681
+#: src/prefs_filter_edit.c:687
 msgid "Execute command"
 msgstr "Εκτέλεση εντολής"
 
-#: src/prefs_filter_edit.c:684
+#: src/prefs_filter_edit.c:690
 msgid "Stop rule evaluation"
 msgstr "Διακοπή εξέτασης κανόνα"
 
-#: src/prefs_filter_edit.c:690 src/prefs_filter_edit.c:1053
+#: src/prefs_filter_edit.c:696 src/prefs_filter_edit.c:1059
 msgid "folder:"
 msgstr "φάκελος:"
 
-#: src/prefs_filter_edit.c:1014
+#: src/prefs_filter_edit.c:1020
 msgid "day(s)"
 msgstr "ημέρες"
 
-#: src/prefs_filter_edit.c:1093
+#: src/prefs_filter_edit.c:1099
 msgid "address:"
 msgstr "διεύθυνση:"
 
-#: src/prefs_filter_edit.c:1510
+#: src/prefs_filter_edit.c:1516
 msgid "Edit header list"
 msgstr "Επεξεργασία λίστας κεφαλίδων"
 
-#: src/prefs_filter_edit.c:1533
+#: src/prefs_filter_edit.c:1539
 msgid "Headers"
 msgstr "Επικεφαλίδες"
 
-#: src/prefs_filter_edit.c:1545
+#: src/prefs_filter_edit.c:1551
 msgid "Header:"
 msgstr "Επικεφαλίδα:"
 
-#: src/prefs_filter_edit.c:1732 src/prefs_filter_edit.c:1830
-#: src/prefs_filter_edit.c:1837
+#: src/prefs_filter_edit.c:1738 src/prefs_filter_edit.c:1836
+#: src/prefs_filter_edit.c:1843
 msgid "Command is not specified."
 msgstr "Δεν έχει οριστεί η εντολή."
 
-#: src/prefs_filter_edit.c:1810 src/prefs_filter_edit.c:1817
+#: src/prefs_filter_edit.c:1816 src/prefs_filter_edit.c:1823
 msgid "Destination folder is not specified."
 msgstr "Δεν έχει οριστεί ο προορισμός."
 
-#: src/prefs_filter_edit.c:1887
+#: src/prefs_filter_edit.c:1893
 msgid "Invalid condition exists."
 msgstr "Υπάρχει άκυρη συνθήκη."
 
-#: src/prefs_filter_edit.c:1910
+#: src/prefs_filter_edit.c:1916
 msgid "Rule name is not specified."
 msgstr "Ο κανόνας δεν έχει ονομαστεί."
 
-#: src/prefs_filter_edit.c:1936
+#: src/prefs_filter_edit.c:1942
 msgid "Invalid action exists."
 msgstr "Υπάρχει άκυρη δράση."
 
-#: src/prefs_filter_edit.c:1945
+#: src/prefs_filter_edit.c:1951
 msgid "Condition not exist."
 msgstr "Η συνθήκη δεν υπάρχει."
 
-#: src/prefs_filter_edit.c:1947
+#: src/prefs_filter_edit.c:1953
 msgid "Action not exist."
 msgstr "Δεν υπάρχει η ενέργεια."
 
@@ -5975,7 +5976,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Διαγραφή του [...] ή (...) στην αρχή του θέματος κατά την απάντηση"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:95 src/progressdialog.c:128
+#: src/prefs_toolbar.c:95 src/progressdialog.c:129
 msgid "Account"
 msgstr "Λογαριασμός"
 
@@ -6022,19 +6023,19 @@ msgid "Attachment"
 msgstr "Συνημμένο"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:318
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:319
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:320
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Ημερομηνία"
@@ -6300,9 +6301,14 @@ msgstr ""
 msgid "Creating progress dialog...\n"
 msgstr "Εμφάνιση διαλόγου ένδειξης προόδου"
 
-#: src/progressdialog.c:136
+#: src/progressdialog.c:137
 msgid "Status"
 msgstr "Κατάσταση"
+
+#: src/progressdialog.c:145
+#, fuzzy
+msgid "Progress"
+msgstr "Ιδιότητες"
 
 #: src/query_search.c:425
 #, fuzzy
@@ -6334,7 +6340,7 @@ msgstr "Αναζήτηση για %s..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Αναζήτηση για %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:528 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Χωρίς ημερομηνία)"
 
@@ -6399,88 +6405,93 @@ msgstr "Υπογραφή δημιουργήθηκε στο %s\n"
 msgid "Error verifying the signature"
 msgstr "Σφάλμα επιβεβαίωσης υπογραφής"
 
-#: src/rpop3.c:267
+#: src/rpop3.c:277
 #, fuzzy, c-format
 msgid "%s - Remote POP3 mailbox"
 msgstr "Αφαίρεση γραμματοκιβωτίου"
 
-#: src/rpop3.c:317 src/summaryview.c:5091
+#: src/rpop3.c:329 src/summaryview.c:5091
 msgid "No."
 msgstr "Όχι."
 
-#: src/rpop3.c:339
+#: src/rpop3.c:351
 #, fuzzy
 msgid "_Get"
 msgstr "Λήψη"
 
-#: src/rpop3.c:388
+#: src/rpop3.c:400
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Σύνδεση στην εξυπηρέτη SMTP: %s ..."
 
-#: src/rpop3.c:393 src/rpop3.c:447 src/rpop3.c:450
+#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Δεν μπορώ να συνδεθώ στον POP3 server: %s:%d\n"
 
-#: src/rpop3.c:421 src/rpop3.c:427 src/rpop3.c:454 src/rpop3.c:456
+#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "Προέκυψε σφάλμα στη συνεδρία POP3\n"
 
-#: src/rpop3.c:424
+#: src/rpop3.c:436
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "Προέκυψε σφάλμα στη συνεδρία POP3\n"
 
-#: src/rpop3.c:542
+#: src/rpop3.c:587
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Εμφάνιση Όλων των _Κεφαλίδων"
 
-#: src/rpop3.c:700
+#: src/rpop3.c:747
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (STAT)..."
 
-#: src/rpop3.c:709 src/rpop3.c:722
+#: src/rpop3.c:756 src/rpop3.c:769
 #, fuzzy
 msgid "No message"
 msgstr "Δεν υπάρχουν νέα μηνύματα."
 
-#: src/rpop3.c:755
+#: src/rpop3.c:802
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Διαγραφή μηνύματος(ων)"
 
-#: src/rpop3.c:832
+#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/send_message.c:830
+msgid "Quitting..."
+msgstr "Εγκατάλειψη..."
+
+#: src/rpop3.c:885
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Λήψη νέων μηνυμάτων"
 
-#: src/rpop3.c:839
+#: src/rpop3.c:892
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Αποστολή μηνύματος"
 
-#: src/rpop3.c:854
+#: src/rpop3.c:908
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Λήψη νέων μηνυμάτων"
 
-#: src/rpop3.c:959
+#: src/rpop3.c:1013
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Λήψη μηνυμάτων από %s..."
 
-#: src/rpop3.c:985
+#: src/rpop3.c:1039
 #, fuzzy
 msgid "Delete messages"
 msgstr "Διαγραφή μηνύματος(ων)"
 
-#: src/rpop3.c:986
+#: src/rpop3.c:1040
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -6598,24 +6609,25 @@ msgstr "Στέλνω RCPT TO..."
 msgid "Sending DATA..."
 msgstr "Στέλνω DATA..."
 
-#: src/send_message.c:830
-msgid "Quitting..."
-msgstr "Εγκατάλειψη..."
-
 #: src/send_message.c:858
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Στέλνω το μήνυμα (%d / %d bytes)"
 
-#: src/send_message.c:889
+#: src/send_message.c:863
+#, c-format
+msgid "%d / %d bytes"
+msgstr ""
+
+#: src/send_message.c:892
 msgid "Sending message"
 msgstr "Αποστολή μηνύματος"
 
-#: src/send_message.c:934 src/send_message.c:958
+#: src/send_message.c:937 src/send_message.c:961
 msgid "Error occurred while sending the message."
 msgstr "Συνέβη σφάλμα κατά την αποστολή του μηνύματος."
 
-#: src/send_message.c:937
+#: src/send_message.c:940
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6624,12 +6636,12 @@ msgstr ""
 "Προέκυψε ένα σφάλμα κατά την αποστολή του μηνύματος:\n"
 "%s"
 
-#: src/send_message.c:954
+#: src/send_message.c:957
 #, fuzzy
 msgid "Can't connect to SMTP server."
 msgstr "Δεν μπορώ να συνδεθώ στον NNTP server: %s:%d\n"
 
-#: src/send_message.c:956
+#: src/send_message.c:959
 #, fuzzy, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Δεν μπορώ να συνδεθώ στον NNTP server: %s:%d\n"
@@ -7238,6 +7250,12 @@ msgstr "Έ_ξοδος"
 #: src/trayicon.c:198 src/trayicon.c:287
 msgid "Sylpheed"
 msgstr "Sylpheed"
+
+#~ msgid "Done (no new messages)"
+#~ msgstr "Ολοκληρώθηκε (δεν υπάρχουν νέα μηνύματα)"
+
+#~ msgid "Retrieving (%d message(s) (%s) received)"
+#~ msgstr "Παραλαβή (%d μηνύματα (%s) παρελήφθησαν)"
 
 #, fuzzy
 #~ msgid "Can't sign the message"
