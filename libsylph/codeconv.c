@@ -2061,8 +2061,10 @@ const gchar *conv_get_current_locale(void)
 			cur_locale = g_getenv("LC_CTYPE");
 		if (!cur_locale || *cur_locale == '\0')
 			cur_locale = g_getenv("LANG");
+#ifdef HAVE_LOCALE_H
 		if (!cur_locale || *cur_locale == '\0')
 			cur_locale = setlocale(LC_CTYPE, NULL);
+#endif /* HAVE_LOCALE_H */
 #endif /* G_OS_WIN32 */
 
 		debug_print("current locale: %s\n",

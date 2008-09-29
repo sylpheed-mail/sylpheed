@@ -590,7 +590,9 @@ static void app_init(void)
 	g_unsetenv("LANGUAGE");
 #endif
 
+#ifdef HAVE_LOCALE_H
 	setlocale(LC_ALL, "");
+#endif
 
 	prog_version = PROG_VERSION;
 	set_startup_dir();
@@ -602,6 +604,7 @@ static void app_init(void)
 	g_free(newpath);
 #endif
 
+#ifdef ENABLE_NLS
 	if (g_path_is_absolute(LOCALEDIR))
 		bindtextdomain(PACKAGE, LOCALEDIR);
 	else {
@@ -620,13 +623,14 @@ static void app_init(void)
 				locale_dir = locale_dir_;
 			}
 		}
-#endif
+#endif /* G_OS_WIN32 */
 		bindtextdomain(PACKAGE, locale_dir);
 		g_free(locale_dir);
 	}
 
 	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
 	textdomain(PACKAGE);
+#endif /* ENABLE_NLS */
 
 #ifdef G_OS_WIN32
 	read_ini_file();
@@ -823,9 +827,11 @@ static void check_gpg(void)
 		/* Also does some gpgme init */
 	        gpgme_engine_info_t engineInfo;
 
+#if HAVE_LOCALE_H
 		gpgme_set_locale(NULL, LC_CTYPE, setlocale(LC_CTYPE, NULL));
 		gpgme_set_locale(NULL, LC_MESSAGES,
 				 setlocale(LC_MESSAGES, NULL));
+#endif
 
 		if (!gpgme_get_engine_info(&engineInfo)) {
 			while (engineInfo) {
