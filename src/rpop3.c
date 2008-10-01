@@ -194,6 +194,19 @@ static void rpop3_stop		(GtkButton	*button,
 static void rpop3_close		(GtkButton	*button,
 				 gpointer	 data);
 
+static gint cmp_by_subject	(GtkTreeModel	*model,
+				 GtkTreeIter	*a,
+				 GtkTreeIter	*b,
+				 gpointer	 data);
+static gint cmp_by_date		(GtkTreeModel	*model,
+				 GtkTreeIter	*a,
+				 GtkTreeIter	*b,
+				 gpointer	 data);
+static gint cmp_by_size		(GtkTreeModel	*model,
+				 GtkTreeIter	*a,
+				 GtkTreeIter	*b,
+				 gpointer	 data);
+
 
 gint rpop3_account(PrefsAccount *account)
 {
@@ -274,7 +287,7 @@ static void rpop3_window_create(PrefsAccount *account)
 	gchar buf[BUFFSIZE];
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	g_snprintf(buf, sizeof(buf), _("%s - Remote POP3 mailbox"),
+	g_snprintf(buf, sizeof(buf), _("%s - POP3 Remote mailbox"),
 		   account->account_name ? account->account_name : "");
 	gtk_window_set_title(GTK_WINDOW(window), buf);
 	gtk_widget_set_size_request(window, 640, -1);
@@ -304,6 +317,13 @@ static void rpop3_window_create(PrefsAccount *account)
 	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
 	g_object_unref(store);
 	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
+
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_SUBJECT,
+					cmp_by_subject, NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_DATE,
+					cmp_by_date, NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_SIZE,
+					cmp_by_size, NULL, NULL);
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
@@ -560,6 +580,8 @@ static gint rpop3_top_recv(Pop3Session *session, FILE *fp, guint len)
 	gchar buf[1024];
 
 	msginfo = procheader_parse_stream(fp, flags, FALSE);
+
+	msginfo->size = session->msg[session->cur_msg].size;
 
 	subject = msginfo->subject ? msginfo->subject : _("(No Subject)");
 	from = msginfo->from ? msginfo->from : _("(No From)");
@@ -1090,4 +1112,57 @@ static void rpop3_close(GtkButton *button, gpointer data)
 	} else if (rpop3_window.session->state != POP3_DONE ||
 		   rpop3_window.session->state != POP3_ERROR)
 		rpop3_window.cancelled = TRUE;
+}
+
+static gint cmp_by_subject(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b,
+			   gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, COL_MSGINFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_MSGINFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	if (!msginfo_a->subject)
+		return -(msginfo_b->subject != NULL);
+	if (!msginfo_b->subject)
+		return (msginfo_a->subject != NULL);
+
+	ret = subject_compare_for_sort(msginfo_a->subject, msginfo_b->subject);
+	return (ret != 0) ? ret : (msginfo_a->msgnum - msginfo_b->msgnum);
+}
+
+static gint cmp_by_date(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b,
+			gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, COL_MSGINFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_MSGINFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	ret = msginfo_a->date_t - msginfo_b->date_t;
+	return (ret != 0) ? ret : (msginfo_a->msgnum - msginfo_b->msgnum);
+}
+
+static gint cmp_by_size(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b,
+			gpointer data)
+{
+	MsgInfo *msginfo_a = NULL, *msginfo_b = NULL;
+	gint ret;
+
+	gtk_tree_model_get(model, a, COL_MSGINFO, &msginfo_a, -1);
+	gtk_tree_model_get(model, b, COL_MSGINFO, &msginfo_b, -1);
+
+	if (!msginfo_a || !msginfo_b)
+		return 0;
+
+	ret = msginfo_a->size - msginfo_b->size;
+	return (ret != 0) ? ret : (msginfo_a->msgnum - msginfo_b->msgnum);
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 11:37+0900\n"
+"POT-Creation-Date: 2008-10-01 17:49+0900\n"
 "PO-Revision-Date: 2006-04-16 22:05+0700\n"
 "Last-Translator: Pham Thanh Long <ptlong@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
@@ -1584,7 +1584,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Không thể lấy thành phần cho thư nhiều thành phần."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:564 src/summaryview.c:2271
+#: src/rpop3.c:586 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Không tiêu đề)"
 
@@ -1775,7 +1775,7 @@ msgstr "Kiểu MIME"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
-#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:353 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Kích thước"
@@ -2489,7 +2489,7 @@ msgstr "Nhóm tin:"
 msgid "Creating header view...\n"
 msgstr "Đang tạo khung xem header...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:587
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Không rõ người gửi)"
@@ -2774,7 +2774,7 @@ msgstr "Đang kết nối tới máy chủ POP3: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Không thể kết nối tới máy thủ POP3: %s:%d\n"
 
-#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:743 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Đang xác thực..."
 
@@ -2849,7 +2849,7 @@ msgid "Socket error."
 msgstr "Lỗi socket."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/inc.c:1309 src/rpop3.c:467 src/rpop3.c:468 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "Kết nối bị ngắt bởi máy từ xa."
@@ -2867,11 +2867,11 @@ msgstr ""
 "Hộp thư bị khoá:\n"
 "%s"
 
-#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:442 src/rpop3.c:447 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Xác thực thất bại."
 
-#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
+#: src/inc.c:1330 src/rpop3.c:444 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2880,7 +2880,7 @@ msgstr ""
 "Xác thực thất bại:\n"
 "%s"
 
-#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
+#: src/inc.c:1335 src/rpop3.c:472 src/rpop3.c:473 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Phiên làm việc hết giờ."
 
@@ -5963,19 +5963,19 @@ msgid "Attachment"
 msgstr "Đính kèm"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:350
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Tiêu đề"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:351
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Người gửi"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:352
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Thời gian"
@@ -6290,7 +6290,7 @@ msgstr "Đang tìm %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Đang tìm %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:595 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Không ngày tháng)"
 
@@ -6353,93 +6353,93 @@ msgstr "Kí lúc %s\n"
 msgid "Error verifying the signature"
 msgstr "Lỗi khi xác thực chữ kí"
 
-#: src/rpop3.c:277
+#: src/rpop3.c:290
 #, fuzzy, c-format
-msgid "%s - Remote POP3 mailbox"
+msgid "%s - POP3 Remote mailbox"
 msgstr "Xoá hộp thư"
 
-#: src/rpop3.c:329 src/summaryview.c:5091
+#: src/rpop3.c:349 src/summaryview.c:5091
 msgid "No."
 msgstr "Số "
 
-#: src/rpop3.c:351
+#: src/rpop3.c:371
 #, fuzzy
 msgid "_Get"
 msgstr "Lấy"
 
-#: src/rpop3.c:400
+#: src/rpop3.c:420
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Đang kết nối tới máy chủ SMTP: %s ..."
 
-#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
+#: src/rpop3.c:425 src/rpop3.c:479 src/rpop3.c:482
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Không thể kết nối tới máy thủ POP3: %s:%d\n"
 
-#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
+#: src/rpop3.c:453 src/rpop3.c:459 src/rpop3.c:486 src/rpop3.c:488
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "có lỗi trong phiên làm việc POP3\n"
 
-#: src/rpop3.c:436
+#: src/rpop3.c:456
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "có lỗi trong phiên làm việc POP3\n"
 
-#: src/rpop3.c:587
+#: src/rpop3.c:609
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Đang lấy header của thư (%d / %d)"
 
-#: src/rpop3.c:747
+#: src/rpop3.c:769
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Đang xác định số lượng thư mới (STAT)..."
 
-#: src/rpop3.c:756 src/rpop3.c:769
+#: src/rpop3.c:778 src/rpop3.c:791
 #, fuzzy
 msgid "No message"
 msgstr "Không có thư mới."
 
-#: src/rpop3.c:802
+#: src/rpop3.c:824
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Xoá thư"
 
-#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/rpop3.c:862 src/rpop3.c:874 src/rpop3.c:922 src/rpop3.c:1109
 #: src/send_message.c:830
 msgid "Quitting..."
 msgstr "Đang thoát..."
 
-#: src/rpop3.c:885
+#: src/rpop3.c:907
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Đang tải về thư mới"
 
-#: src/rpop3.c:892
+#: src/rpop3.c:914
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Gửi thư"
 
-#: src/rpop3.c:908
+#: src/rpop3.c:930
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Đang tải về thư mới"
 
-#: src/rpop3.c:1013
+#: src/rpop3.c:1035
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Đang lấy thư trên %s..."
 
-#: src/rpop3.c:1039
+#: src/rpop3.c:1061
 #, fuzzy
 msgid "Delete messages"
 msgstr "Xoá thư"
 
-#: src/rpop3.c:1040
+#: src/rpop3.c:1062
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

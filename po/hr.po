@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-29 11:37+0900\n"
+"POT-Creation-Date: 2008-10-01 17:49+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -1653,7 +1653,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Ne mogu dobiti dio višedjelne poruke."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:564 src/summaryview.c:2271
+#: src/rpop3.c:586 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Bez teme)"
 
@@ -1842,7 +1842,7 @@ msgstr "MIME tip"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
-#: src/prefs_summary_column.c:78 src/rpop3.c:333 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:353 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Veličina"
@@ -2578,7 +2578,7 @@ msgstr "News grupe:"
 msgid "Creating header view...\n"
 msgstr "Stvaram pregled zaglavlja...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:565
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:587
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Bez pošiljatelja)"
@@ -2876,7 +2876,7 @@ msgstr "Povezujem se na POP3 poslužitelj: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ne mogu se povezati na POP3 poslužitelj: %s:%d\n"
 
-#: src/inc.c:934 src/rpop3.c:721 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:743 src/send_message.c:813
 msgid "Authenticating..."
 msgstr "Prijavljujem se..."
 
@@ -2952,7 +2952,7 @@ msgid "Socket error."
 msgstr "protokol greška\n"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:447 src/rpop3.c:448 src/send_message.c:760
+#: src/inc.c:1309 src/rpop3.c:467 src/rpop3.c:468 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr ""
@@ -2969,19 +2969,19 @@ msgid ""
 "%s"
 msgstr "Postavke sandučića"
 
-#: src/inc.c:1325 src/rpop3.c:422 src/rpop3.c:427 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:442 src/rpop3.c:447 src/send_message.c:946
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Autorizacija"
 
-#: src/inc.c:1330 src/rpop3.c:424 src/send_message.c:949
+#: src/inc.c:1330 src/rpop3.c:444 src/send_message.c:949
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Autorizacija"
 
-#: src/inc.c:1335 src/rpop3.c:452 src/rpop3.c:453 src/send_message.c:970
+#: src/inc.c:1335 src/rpop3.c:472 src/rpop3.c:473 src/send_message.c:970
 msgid "Session timed out."
 msgstr ""
 
@@ -6220,19 +6220,19 @@ msgid "Attachment"
 msgstr "Prilog"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:330
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:350
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Tema"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:331
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:351
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:332
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:352
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Datum"
@@ -6552,7 +6552,7 @@ msgstr "Pretražujem spis %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtriranje..."
 
-#: src/query_search.c:696 src/rpop3.c:573 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:595 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Nema Datuma)"
 
@@ -6621,93 +6621,93 @@ msgstr "Potpis napravio/la %s\n"
 msgid "Error verifying the signature"
 msgstr "Greška pri potvrđivanju potpisa"
 
-#: src/rpop3.c:277
+#: src/rpop3.c:290
 #, fuzzy, c-format
-msgid "%s - Remote POP3 mailbox"
+msgid "%s - POP3 Remote mailbox"
 msgstr "/_Ukloni sandučić"
 
-#: src/rpop3.c:329 src/summaryview.c:5091
+#: src/rpop3.c:349 src/summaryview.c:5091
 msgid "No."
 msgstr "Ne."
 
-#: src/rpop3.c:351
+#: src/rpop3.c:371
 #, fuzzy
 msgid "_Get"
 msgstr "Primi"
 
-#: src/rpop3.c:400
+#: src/rpop3.c:420
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Spajam se na SMTP poslužitelj: %s ..."
 
-#: src/rpop3.c:405 src/rpop3.c:459 src/rpop3.c:462
+#: src/rpop3.c:425 src/rpop3.c:479 src/rpop3.c:482
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Ne mogu se povezati na POP3 poslužitelj: %s:%d\n"
 
-#: src/rpop3.c:433 src/rpop3.c:439 src/rpop3.c:466 src/rpop3.c:468
+#: src/rpop3.c:453 src/rpop3.c:459 src/rpop3.c:486 src/rpop3.c:488
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "greška prilikom ovjeravanja\n"
 
-#: src/rpop3.c:436
+#: src/rpop3.c:456
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "greška prilikom ovjeravanja\n"
 
-#: src/rpop3.c:587
+#: src/rpop3.c:609
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Šaljem poruku (%d / %d bytea)"
 
-#: src/rpop3.c:747
+#: src/rpop3.c:769
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Primam broj novih poruka (STAT)..."
 
-#: src/rpop3.c:756 src/rpop3.c:769
+#: src/rpop3.c:778 src/rpop3.c:791
 #, fuzzy
 msgid "No message"
 msgstr "Nema nepročitanih poruka."
 
-#: src/rpop3.c:802
+#: src/rpop3.c:824
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Obriši poruku/e"
 
-#: src/rpop3.c:840 src/rpop3.c:852 src/rpop3.c:900 src/rpop3.c:1087
+#: src/rpop3.c:862 src/rpop3.c:874 src/rpop3.c:922 src/rpop3.c:1109
 #: src/send_message.c:830
 msgid "Quitting..."
 msgstr "Završavam..."
 
-#: src/rpop3.c:885
+#: src/rpop3.c:907
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Primam nove poruke"
 
-#: src/rpop3.c:892
+#: src/rpop3.c:914
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Pošalji poruku"
 
-#: src/rpop3.c:908
+#: src/rpop3.c:930
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Primam nove poruke"
 
-#: src/rpop3.c:1013
+#: src/rpop3.c:1035
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Primam poruke sa %s u %s...\n"
 
-#: src/rpop3.c:1039
+#: src/rpop3.c:1061
 #, fuzzy
 msgid "Delete messages"
 msgstr "Obriši poruku/e"
 
-#: src/rpop3.c:1040
+#: src/rpop3.c:1062
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
