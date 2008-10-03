@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 2.4 version 0.8.2
+       Sylpheed User's Manual for Sylpheed 2.6 version 0.9.0
     </abstract>
 
 <toc>
@@ -805,7 +805,7 @@ X-Faceなどもここで挿入します。
 アカウントの作成時に「名前 <メールアドレス>」という形式で自動作成されますが、後から変更することができます。
 
 また、「ファイル」を選択すると署名ファイルを指定することができます。
-既定値は＜ホームディレクトリ＞/.signatureです(Windows 2000/XPの場合はC:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed\signature.txt)。
+既定値は＜ホームディレクトリ＞/.signatureです(Windows 2000/XPの場合は C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed\signature.txt 、Vistaの場合は C:\Users\(ユーザ名)\AppData\Roaming\Sylpheed\signature.txt)。
 
 「コマンドの出力」を指定した場合は、指定したファイルをコマンドとみなして実行し、その出力結果を挿入します。
 </sect3>
@@ -938,6 +938,23 @@ OpenSSLをリンクしてコンパイルされたときのみ表示されます。
 <sect2>アカウントを選択して受信
 <p>
 メニューの「メッセージ＞受信＞(アカウント名)」を選択することでそのアカウントのメールを受信できます。
+</sect2>
+<sect2>リモートメールボックス機能
+<p>
+POP3リモートメールボックス機能を使用することによって、POP3サーバ上のメールを直接閲覧、ダウンロード、削除することができます。
+<p>
+メニューの「メッセージ＞受信＞リモートメールボックス...」を選択すると、リモートメールボックスウィンドウが開き、現在選択されているPOP3アカウントのサーバ上のメッセージの一覧を表示します。
+<p>
+「受信」ボタンを押すと、現在選択中のメッセージをローカルの受信箱にダウンロードします。
+<p>
+「開く」ボタンを押すと、現在選択中のメッセージを新しいウィンドウで開きます。ダウンロードは行われません。
+<p>
+「削除」ボタンを押すと、現在選択中のメッセージをサーバから削除します。この操作は取り消すことができませんので注意してください。
+<p>
+メッセージ一覧の取得中に「停止」ボタンを押すと、一覧の取得を中止します。表示されているメッセージに対しては操作が可能です。
+<p>
+「閉じる」ボタン、またはウィンドウの閉じるボタンを押すと、サーバからログアウトし、リモートメールボックスを終了します。
+</sect2>
 </sect1>
 
 <sect1>IMAP4の場合
@@ -2099,7 +2116,7 @@ Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょ
 
 <p>
 A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
-ニュースグループごとに未読情報は変わって来てしまいます。
+ニュースグループごとに未読情報は独立になります。
 </sect1>
 <!-- <sect1>MSNのメールアカウントの使用について
 <p>
@@ -2126,16 +2143,26 @@ gtk-font-name = "Kochi Gothic 12"
 Q. ショートカットキーのキーバインドの変更はできますか?
 
 <p>
-A. メニューに設定されている項目に関しては可能です。
-メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、
-割り当てられます。Backspaceキーを押せば、消すことができます。
-変更は保存されます。
-</sect1>
-<sect1>返信マークについて
+A. メニューに表示されている項目に関しては設定可能です。以下のいずれかの方法で設定してください。
+<sect2>Windowsの場合
 <p>
-Q. 返信をやめたのに返信マークが残ってしまいます。消えないのでしょうか。
+Sylpheedが起動していない状態で、 C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed\menurc ファイル(Windows Vistaの場合はC:\Users\(ユーザ名)\AppData\Roaming\Sylpheed\menurc)を直接エディタで編集する。
+</sect2>
+<sect2>Unix/Linuxの場合
 <p>
-A. 現在の仕様では消えません。一度メッセージを未読にしてから読んだことにすることで消すことはできます。
+Sylpheedが起動していない状態で、 &tilde;/.sylpheed-2.0/menurc ファイルを直接エディタで編集する。
+<p>また、以下の設定を行うことで、メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、キーを割り当てることができるようになります。また、Backspaceキーを押せば、キーバインドを消すことができます。
+<sect3>GNOME 2.8 以降をお使いの場合
+<p>
+アプリケーション→システムツール→設定エディタで gconf-editor を起動する。
+<p>
+desktop → gnome → interface を選び、その中の can-change-accels をチェックする。
+</sect3>
+<sect3>GNOME 2.8 以前かそれ以外の環境をお使いの場合
+<p>
+&tilde;/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する。
+</sect3>
+</sect2>
 </sect1>
 <sect1>サマリビューの下に表示される画像について
 <p>
@@ -2729,6 +2756,12 @@ to permit their use in free software.
 	* Version 0.8.2
 	* IMAP4関連の記述を追加。
 	* APOP、OP25Bについての記述を追加
+2008-10-03	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.9.0
+	* メッセージの受信 - POP3の場合 - リモートメールボックス機能
+	  の項目を追加
+	* FAQ - ショートカットキーのキーバインドの変更を加筆修正
+	* FAQ - 返信マークについての項目を削除
 </verb>
 </sect1> 
 </sect>
