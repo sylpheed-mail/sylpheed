@@ -2099,6 +2099,8 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 						 , M_HAVE_ACCOUNT|M_UNLOCKED},
 		{"/Message/Receive/Stop receiving"
 						 , M_INC_ACTIVE},
+		{"/Message/Receive/Remote mailbox..."
+						 , M_HAVE_ACCOUNT|M_UNLOCKED},
 		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG},
 
 		{"/Message/Compose new message"  , M_HAVE_ACCOUNT},
