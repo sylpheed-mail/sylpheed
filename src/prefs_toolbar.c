@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,9 @@ static PrefsDisplayItem all_items[] =
 	{T_GET_ALL,	"get-all",	N_("Get all"),
 	 N_("Incorporate new mail of all accounts"),
 	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL, FALSE, FALSE},
+	{T_REMOTE_MAILBOX,	"remote-mailbox",	N_("Remote mailbox"),
+	 N_("POP3 Remote mailbox"),
+	 STOCK_PIXMAP_MAIL_RECEIVE, NULL, FALSE, FALSE},
 	{T_SEND_QUEUE,	"send-queue",	N_("Send"),
 	 N_("Send queued message(s)"),
 	 STOCK_PIXMAP_MAIL_SEND, NULL, FALSE, FALSE},
@@ -133,6 +136,7 @@ static gint main_available_items[] =
 	T_SEPARATOR,
 	T_GET,
 	T_GET_ALL,
+	T_REMOTE_MAILBOX,
 	T_SEND_QUEUE,
 	T_COMPOSE,
 	T_REPLY,

@@ -141,6 +141,8 @@ static void toolbar_inc_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static void toolbar_inc_all_cb		(GtkWidget	*widget,
 					 gpointer	 data);
+static void toolbar_rpop3_cb		(GtkWidget	*widget,
+					 gpointer	 data);
 static void toolbar_send_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 
@@ -1936,7 +1938,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	struct {
 		GtkWidget *widget;
 		SensitiveCond cond;
-	} entry[19];
+	} entry[20];
 
 #define SET_WIDGET_COND(w, c)	\
 {				\
@@ -1947,6 +1949,7 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 	SET_WIDGET_COND(mainwin->get_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->getall_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
+	SET_WIDGET_COND(mainwin->rpop3_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG);
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
@@ -2548,6 +2551,7 @@ static PrefsToolbarItem items[] =
 	{T_EXECUTE,		FALSE,	toolbar_exec_cb},
 	{T_COMMON_PREFS,	FALSE,	toolbar_prefs_common_cb},
 	{T_ACCOUNT_PREFS,	FALSE,	toolbar_prefs_account_cb},
+	{T_REMOTE_MAILBOX,	FALSE,	toolbar_rpop3_cb},
 
 	{-1, FALSE, NULL}
 };
@@ -2609,7 +2613,8 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	items[16].data = &mainwin->exec_btn;
 	items[17].data = &mainwin->prefs_common_btn;
 	items[18].data = &mainwin->prefs_account_btn;
-	for (i = 0; i <= 18; i++)
+	items[19].data = &mainwin->rpop3_btn;
+	for (i = 0; i <= 19; i++)
 		*(GtkWidget **)items[i].data = NULL;
 	mainwin->reply_combo = NULL;
 	mainwin->fwd_combo = NULL;
@@ -2770,6 +2775,14 @@ static void toolbar_inc_all_cb	(GtkWidget	*widget,
 	MainWindow *mainwin = (MainWindow *)data;
 
 	inc_all_account_mail_cb(mainwin, 0, NULL);
+}
+
+static void toolbar_rpop3_cb	(GtkWidget	*widget,
+				 gpointer	 data)
+{
+	MainWindow *mainwin = (MainWindow *)data;
+
+	rpop3_cb(mainwin, 0, NULL);
 }
 
 static void toolbar_send_cb	(GtkWidget	*widget,
