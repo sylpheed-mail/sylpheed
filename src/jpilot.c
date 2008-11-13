@@ -158,6 +158,14 @@ enum {
 
 gboolean convert_charcode;
 
+static gchar *jpilot_convert_encoding(const gchar *str)
+{
+	if (convert_charcode)
+		return conv_codeset_strdup(str, CS_SHIFT_JIS, CS_INTERNAL);
+
+	return g_strdup(str);
+}
+
 /*
 * Create new pilot file object.
 */
@@ -503,7 +511,7 @@ time_t pilot_time_to_unix_time ( unsigned long raw_time ) {
 static int raw_header_to_header(RawDBHeader *rdbh, DBHeader *dbh) {
 	unsigned long temp;
 
-	strncpy(dbh->db_name, rdbh->db_name, 31);
+	strncpy(dbh->db_name, (gchar *)rdbh->db_name, 31);
 	dbh->db_name[31] = '\0';
 	dbh->flags = bytes_to_bin(rdbh->flags, 2);
 	dbh->version = bytes_to_bin(rdbh->version, 2);
@@ -516,11 +524,11 @@ static int raw_header_to_header(RawDBHeader *rdbh, DBHeader *dbh) {
 	dbh->modification_number = bytes_to_bin(rdbh->modification_number, 4);
 	dbh->app_info_offset = bytes_to_bin(rdbh->app_info_offset, 4);
 	dbh->sort_info_offset = bytes_to_bin(rdbh->sort_info_offset, 4);
-	strncpy(dbh->type, rdbh->type, 4);
+	strncpy(dbh->type, (gchar *)rdbh->type, 4);
 	dbh->type[4] = '\0';
-	strncpy(dbh->creator_id, rdbh->creator_id, 4);
+	strncpy(dbh->creator_id, (gchar *)rdbh->creator_id, 4);
 	dbh->creator_id[4] = '\0';
-	strncpy(dbh->unique_id_seed, rdbh->unique_id_seed, 4);
+	strncpy(dbh->unique_id_seed, (gchar *)rdbh->unique_id_seed, 4);
 	dbh->unique_id_seed[4] = '\0';
 	dbh->next_record_list_id = bytes_to_bin(rdbh->next_record_list_id, 4);
 	dbh->number_of_records = bytes_to_bin(rdbh->number_of_records, 2);
@@ -593,7 +601,7 @@ static int jpilot_free_db_list( GList **br_list ) {
 
 /* Shamelessly copied from JPilot (libplugin.c) */
 /* Read file size */
-static int jpilot_get_info_size( FILE *in, int *size ) {
+static int jpilot_get_info_size( FILE *in, unsigned int *size ) {
 	RawDBHeader rdbh;
 	DBHeader dbh;
 	unsigned int offset;
@@ -631,7 +639,7 @@ static int jpilot_get_info_size( FILE *in, int *size ) {
  * Read address file into address list. Based on JPilot's
  * libplugin.c (jp_get_app_info)
  */
-static gint jpilot_get_file_info( JPilotFile *pilotFile, unsigned char **buf, int *buf_size ) {
+static gint jpilot_get_file_info( JPilotFile *pilotFile, unsigned char **buf, unsigned int *buf_size ) {
 	FILE *in;
  	int num;
 	unsigned int rec_size;
@@ -677,7 +685,7 @@ static gint jpilot_get_file_info( JPilotFile *pilotFile, unsigned char **buf, in
 	}
 
 	fseek(in, dbh.app_info_offset, SEEK_SET);
-	*buf = ( char * ) malloc(rec_size);
+	*buf = ( unsigned char * ) malloc(rec_size);
 	if (!(*buf)) {
 		fclose(in);
 		return MGU_OO_MEMORY;
@@ -1027,6 +1035,8 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 	pi_buffer_free(RecordBuffer);
 	if (num != -1) {
 #endif
+		gchar *nameConv;
+
 		addrEnt = addr.entry;
 		attrib = buf->attrib;
 		unique_id = buf->unique_id;
@@ -1061,12 +1071,9 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 
 		g_strstrip( fullName );
 
-		if( convert_charcode ) {
-			gchar *nameConv;
-			nameConv = conv_codeset_strdup( fullName, CS_SHIFT_JIS, CS_INTERNAL );
-			strncpy2( fullName, nameConv, FULLNAME_BUFSIZE );
-			g_free( nameConv );
-		}
+		nameConv = jpilot_convert_encoding( fullName );
+		strncpy2( fullName, nameConv, FULLNAME_BUFSIZE );
+		g_free( nameConv );
 
 		person = addritem_create_item_person();
 		addritem_person_set_common_name( person, fullName );
@@ -1121,6 +1128,8 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 				*/
 				labelEntry = addrEnt[ind];
 				if( labelEntry ) {
+					gchar *convertBuff;
+
 					strcpy( bufEMail, labelEntry );
 					g_strchug( bufEMail );
 					g_strchomp( bufEMail );
@@ -1128,15 +1137,9 @@ static void jpilot_load_address( JPilotFile *pilotFile, buf_rec *buf, ItemFolder
 					email = addritem_create_item_email();
 					addritem_email_set_address( email, bufEMail );
 
-					if( convert_charcode ) {
-						gchar *convertBuff;
-						convertBuff = conv_codeset_strdup( ai->labels[ind], CS_SHIFT_JIS, CS_INTERNAL );
-						addritem_email_set_remarks( email, convertBuff );
-						g_free( convertBuff );
-					}
-					else {
-						addritem_email_set_remarks( email, ai->labels[ind] );
-					}
+					convertBuff = jpilot_convert_encoding( ai->labels[ind] );
+					addritem_email_set_remarks( email, convertBuff );
+					g_free( convertBuff );
 
 					addrcache_id_email( pilotFile->addressCache, email );
 					addrcache_person_add_email
@@ -1295,15 +1298,13 @@ static gboolean jpilot_setup_labels( JPilotFile *pilotFile ) {
 			gint ind = -1;
 			gint i;
 			for( i = 0; i < JPILOT_NUM_LABELS; i++ ) {
-				gchar *labelName = ai->labels[i];
+				gchar *labelName;
 				gchar convertBuff[ JPILOT_LEN_LABEL ];
 
-				if( convert_charcode ) {
-					labelName = conv_codeset_strdup( labelName, CS_SHIFT_JIS, CS_INTERNAL );
-					strncpy2( convertBuff, labelName, JPILOT_LEN_LABEL );
-					g_free( labelName );
-					labelName = convertBuff;
-				}
+				labelName = jpilot_convert_encoding( ai->labels[i] );
+				strncpy2( convertBuff, labelName, JPILOT_LEN_LABEL );
+				g_free( labelName );
+				labelName = convertBuff;
 
 				if( g_ascii_strcasecmp( labelName, lbl ) == 0 ) {
 					ind = i;
@@ -1332,12 +1333,7 @@ GList *jpilot_load_label( JPilotFile *pilotFile, GList *labelList ) {
 			gchar *labelName = ai->labels[i];
 
 			if( labelName ) {
-				if( convert_charcode ) {
-					labelName = conv_codeset_strdup( labelName, CS_SHIFT_JIS, CS_INTERNAL );
-				}
-				else {
-					labelName = g_strdup( labelName );
-				}
+				labelName = jpilot_convert_encoding( labelName );
 				labelList = g_list_append( labelList, labelName );
 			}
 			else {
@@ -1411,12 +1407,7 @@ GList *jpilot_load_custom_label( JPilotFile *pilotFile, GList *labelList ) {
 				g_strchomp( labelName );
 				g_strchug( labelName );
 				if( *labelName != '\0' ) {
-					if( convert_charcode ) {
-						labelName = conv_codeset_strdup( labelName, CS_SHIFT_JIS, CS_INTERNAL );
-					}
-					else {
-						labelName = g_strdup( labelName );
-					}
+					labelName = jpilot_convert_encoding( labelName );
 					labelList = g_list_append( labelList, labelName );
 				}
 			}
@@ -1460,16 +1451,11 @@ static void jpilot_build_category_list( JPilotFile *pilotFile ) {
 
 	for( i = 0; i < JPILOT_NUM_CATEG; i++ ) {
 		ItemFolder *folder = addritem_create_item_folder();
+		gchar *catName;
 
-		if( convert_charcode ) {
-			gchar *catName;
-			catName = conv_codeset_strdup( cat->name[i], CS_SHIFT_JIS, CS_INTERNAL );
-			addritem_folder_set_name( folder, catName );
-			g_free( catName );
-		}
-		else {
-			addritem_folder_set_name( folder, cat->name[i] );
-		}
+		catName = jpilot_convert_encoding( cat->name[i] );
+		addritem_folder_set_name( folder, catName );
+		g_free( catName );
 
 		addrcache_id_folder( pilotFile->addressCache, folder );
 		addrcache_add_folder( pilotFile->addressCache, folder );
