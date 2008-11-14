@@ -46,7 +46,7 @@ static PrefsDisplayItem all_items[] =
 	 STOCK_PIXMAP_MAIL_RECEIVE_ALL,	NULL, FALSE, FALSE},
 	{T_REMOTE_MAILBOX,	"remote-mailbox",	N_("Remote mailbox"),
 	 N_("POP3 Remote mailbox"),
-	 STOCK_PIXMAP_MAIL_RECEIVE, NULL, FALSE, FALSE},
+	 -1, GTK_STOCK_NETWORK, FALSE, FALSE},
 	{T_SEND_QUEUE,	"send-queue",	N_("Send"),
 	 N_("Send queued message(s)"),
 	 STOCK_PIXMAP_MAIL_SEND, NULL, FALSE, FALSE},
