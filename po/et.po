@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-13 14:59+0900\n"
+"POT-Creation-Date: 2008-11-14 13:39+0900\n"
 "PO-Revision-Date: 2002-10-02 09:08+0300\n"
 "Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -1646,7 +1646,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Ei saa mitmeosalise kirja osa kätte."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:586 src/summaryview.c:2271
+#: src/rpop3.c:663 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Pole pealkirja)"
 
@@ -1837,7 +1837,7 @@ msgstr "MIME tüüp"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
-#: src/prefs_summary_column.c:78 src/rpop3.c:353 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:418 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Suurus"
@@ -2567,7 +2567,7 @@ msgstr "Uudistegrupid:"
 msgid "Creating header view...\n"
 msgstr "Loon päise vaadet...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:587
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:664
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Eikelleltki)"
@@ -2853,7 +2853,7 @@ msgstr "Ühendan POP3 serveriga: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ei suuda ühenduda POP3 serveriga %s:%d\n"
 
-#: src/inc.c:934 src/rpop3.c:743 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:820 src/send_message.c:813
 #, c-format
 msgid "Authenticating..."
 msgstr "Autoriseerin..."
@@ -2930,7 +2930,7 @@ msgid "Socket error."
 msgstr "Soketi viga\n"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:467 src/rpop3.c:468 src/send_message.c:760
+#: src/inc.c:1309 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr ""
@@ -2946,19 +2946,19 @@ msgid ""
 "%s"
 msgstr "Kirjakast on lukus."
 
-#: src/inc.c:1325 src/rpop3.c:442 src/rpop3.c:447 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Autoriseerimise meetod"
 
-#: src/inc.c:1330 src/rpop3.c:444 src/send_message.c:949
+#: src/inc.c:1330 src/rpop3.c:521 src/send_message.c:949
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Autoriseerimise meetod"
 
-#: src/inc.c:1335 src/rpop3.c:472 src/rpop3.c:473 src/send_message.c:970
+#: src/inc.c:1335 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
 msgid "Session timed out."
 msgstr ""
 
@@ -6133,19 +6133,19 @@ msgid "Attachment"
 msgstr "Manus"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:350
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:415
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Pealkiri"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:351
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:416
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Kellelt"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:352
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:417
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Kuupäev"
@@ -6472,7 +6472,7 @@ msgstr "Tuhnin kaustas %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtreerin..."
 
-#: src/query_search.c:696 src/rpop3.c:595 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Kuupäeva pole)"
 
@@ -6541,94 +6541,109 @@ msgstr "Allkiri %s\n"
 msgid "Error verifying the signature"
 msgstr "Viga allkirja kontrollimisel"
 
-#: src/rpop3.c:290
-#, fuzzy, c-format
-msgid "%s - POP3 Remote mailbox"
-msgstr "Eemalda kirjakst"
+#: src/rpop3.c:242
+#, fuzzy
+msgid "_File"
+msgstr "/_Fail"
 
-#: src/rpop3.c:349 src/summaryview.c:5091
-msgid "No."
-msgstr "Ei."
-
-#: src/rpop3.c:371
+#: src/rpop3.c:243 src/rpop3.c:436
 #, fuzzy
 msgid "_Get"
 msgstr "Võta"
 
-#: src/rpop3.c:420
+#: src/rpop3.c:248
+#, fuzzy
+msgid "_Help"
+msgstr "/_Abi"
+
+#: src/rpop3.c:249
+#, fuzzy
+msgid "_About"
+msgstr "Sellest"
+
+#: src/rpop3.c:338
+#, fuzzy, c-format
+msgid "%s - POP3 Remote mailbox"
+msgstr "Eemalda kirjakst"
+
+#: src/rpop3.c:414 src/summaryview.c:5091
+msgid "No."
+msgstr "Ei."
+
+#: src/rpop3.c:497
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Ühendun SMTP serveriga: %s ..."
 
-#: src/rpop3.c:425 src/rpop3.c:479 src/rpop3.c:482
+#: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Ei suuda ühenduda POP3 serveriga %s:%d\n"
 
-#: src/rpop3.c:453 src/rpop3.c:459 src/rpop3.c:486 src/rpop3.c:488
+#: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "autoriseerimisel tekkis viga\n"
 
-#: src/rpop3.c:456
+#: src/rpop3.c:533
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "autoriseerimisel tekkis viga\n"
 
-#: src/rpop3.c:609
+#: src/rpop3.c:686
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Saadan kirja (%d / %d baiti)"
 
-#: src/rpop3.c:769
+#: src/rpop3.c:846
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Võtan uute kirjade arvu (STAT)..."
 
-#: src/rpop3.c:778 src/rpop3.c:791
+#: src/rpop3.c:855 src/rpop3.c:868
 #, fuzzy
 msgid "No message"
 msgstr "Uusi kirju ei ole."
 
-#: src/rpop3.c:824
+#: src/rpop3.c:901
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Kustuta kirjad"
 
-#: src/rpop3.c:862 src/rpop3.c:874 src/rpop3.c:922 src/rpop3.c:1109
+#: src/rpop3.c:939 src/rpop3.c:951 src/rpop3.c:1001 src/rpop3.c:1196
 #: src/send_message.c:830
 #, c-format
 msgid "Quitting..."
 msgstr "Väljun..."
 
-#: src/rpop3.c:907
+#: src/rpop3.c:986
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Võtan uusi kirju"
 
-#: src/rpop3.c:914
+#: src/rpop3.c:993
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Saada kiri"
 
-#: src/rpop3.c:930
+#: src/rpop3.c:1009
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Võtan uusi kirju"
 
-#: src/rpop3.c:1035
+#: src/rpop3.c:1122
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Võtan kirju %s-st ja panen %s-i...\n"
 
-#: src/rpop3.c:1061
+#: src/rpop3.c:1148
 #, fuzzy
 msgid "Delete messages"
 msgstr "Kustuta kirjad"
 
-#: src/rpop3.c:1062
+#: src/rpop3.c:1149
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -7445,10 +7460,6 @@ msgstr "Vana Sylpheed"
 
 #~ msgid "SSL connect failed (%s)\n"
 #~ msgstr "Ühendamine SSL-iga ebaõnnestus (%s)\n"
-
-#, fuzzy
-#~ msgid "_About"
-#~ msgstr "Sellest"
 
 #, fuzzy
 #~ msgid "/_View/Show all _headers"

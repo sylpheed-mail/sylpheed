@@ -38,6 +38,7 @@
 #include <gtk/gtktreeview.h>
 #include <gtk/gtktreeselection.h>
 #include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtkuimanager.h>
 #include <string.h>
 
 #include "rpop3.h"
@@ -54,6 +55,7 @@
 #include "manage_window.h"
 #include "alertpanel.h"
 #include "prefs_common.h"
+#include "about.h"
 
 /* POP3 NOOP ping interval (sec) */
 #define POP3_PING_ITV	30
@@ -89,6 +91,11 @@ static struct RPop3Window {
 	GtkWidget *stop_btn;
 	GtkWidget *close_btn;
 
+	GtkAction *recv_action;
+	GtkAction *open_action;
+	GtkAction *delete_action;
+	GtkAction *stop_action;
+
 	Pop3Session *session;
 	guint ping_tag;
 	gboolean stop_load;
@@ -99,6 +106,23 @@ static struct RPop3Window {
 	GArray *recv_array;
 	gint recv_cur;
 } rpop3_window;
+
+static const gchar *ui_def =
+	"<ui>"
+	"  <menubar name='RPop3Menu'>"
+	"    <menu name='File' action='FileAction'>"
+	"      <menuitem name='Receive' action='ReceiveAction'/>"
+	"      <menuitem name='Open' action='OpenAction'/>"
+	"      <menuitem name='Delete' action='DeleteAction'/>"
+	"      <menuitem name='Stop' action='StopAction'/>"
+	"      <separator />"
+	"      <menuitem name='Close' action='CloseAction'/>"
+	"    </menu>"
+	"    <menu name='Help' action='HelpAction'>"
+	"      <menuitem name='About' action='AboutAction'/>"
+	"    </menu>"
+	"  </menubar>"
+	"</ui>";
 
 static void rpop3_window_create	(PrefsAccount	*account);
 
@@ -194,6 +218,13 @@ static void rpop3_stop		(GtkButton	*button,
 static void rpop3_close		(GtkButton	*button,
 				 gpointer	 data);
 
+static void rpop3_recv_cb	(void);
+static void rpop3_open_cb	(void);
+static void rpop3_delete_cb	(void);
+static void rpop3_stop_cb	(void);
+static void rpop3_close_cb	(void);
+static void rpop3_about_cb	(void);
+
 static gint cmp_by_subject	(GtkTreeModel	*model,
 				 GtkTreeIter	*a,
 				 GtkTreeIter	*b,
@@ -206,6 +237,18 @@ static gint cmp_by_size		(GtkTreeModel	*model,
 				 GtkTreeIter	*a,
 				 GtkTreeIter	*b,
 				 gpointer	 data);
+
+static GtkActionEntry action_entries[] = {
+	{"FileAction", NULL, N_("_File"), NULL, NULL, NULL},
+	{"ReceiveAction", NULL, N_("_Get"), "<Control>G", NULL, rpop3_recv_cb},
+	{"OpenAction", GTK_STOCK_OPEN, NULL, NULL, NULL, rpop3_open_cb},
+	{"DeleteAction", GTK_STOCK_DELETE, NULL, "<Shift>Delete", NULL, rpop3_delete_cb},
+	{"StopAction", GTK_STOCK_STOP, NULL, NULL, NULL, rpop3_stop_cb},
+	{"CloseAction", GTK_STOCK_CLOSE, NULL, NULL, NULL, rpop3_close_cb},
+	{"HelpAction", NULL, N_("_Help"), NULL, NULL, NULL},
+	{"AboutAction", GTK_STOCK_ABOUT, N_("_About"), NULL, NULL,
+	 rpop3_about_cb}
+};
 
 
 gint rpop3_account(PrefsAccount *account)
@@ -270,6 +313,11 @@ static void rpop3_window_create(PrefsAccount *account)
 {
 	GtkWidget *window;
 	GtkWidget *vbox;
+	GtkActionGroup *group;
+	GtkUIManager *ui;
+	GtkAction *action;
+	GtkWidget *menubar;
+	GtkWidget *vbox2;
 	GtkWidget *scrwin;
 	GtkWidget *treeview;
 	GtkListStore *store;
@@ -292,18 +340,35 @@ static void rpop3_window_create(PrefsAccount *account)
 	gtk_window_set_title(GTK_WINDOW(window), buf);
 	gtk_widget_set_size_request(window, 640, -1);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
-	gtk_container_set_border_width(GTK_CONTAINER (window), 8);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(window_deleted), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 
-	vbox = gtk_vbox_new(FALSE, 6);
+	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
+	group = gtk_action_group_new("rpop3");
+	gtk_action_group_set_translation_domain(group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions(group, action_entries,
+				     sizeof(action_entries) /
+				     sizeof(action_entries[0]), NULL);
+
+	ui = gtk_ui_manager_new();
+	gtk_ui_manager_insert_action_group(ui, group, 0);
+	gtk_ui_manager_add_ui_from_string(ui, ui_def, -1, NULL);
+	menubar = gtk_ui_manager_get_widget(ui, "/RPop3Menu");
+	gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, FALSE, 0);
+	gtk_window_add_accel_group(GTK_WINDOW(window),
+				   gtk_ui_manager_get_accel_group(ui));
+
+	vbox2 = gtk_vbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox), vbox2, TRUE, TRUE, 0);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox2), 8);
+
 	scrwin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_box_pack_start(GTK_BOX(vbox), scrwin, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), scrwin, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrwin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
@@ -358,7 +423,7 @@ static void rpop3_window_create(PrefsAccount *account)
 			 G_CALLBACK(rpop3_row_activated), NULL);
 
 	hbox = gtk_hbox_new(FALSE, 8);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox, FALSE, FALSE, 0);
 
 	status_label = gtk_label_new("");
 	gtk_box_pack_start(GTK_BOX(hbox), status_label, FALSE, FALSE, 0);
@@ -366,23 +431,35 @@ static void rpop3_window_create(PrefsAccount *account)
 	hbbox = gtk_hbutton_box_new();
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox), GTK_BUTTONBOX_END);
 	gtk_box_set_spacing(GTK_BOX(hbbox), 6);
-	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
+	gtk_box_pack_end(GTK_BOX(vbox2), hbbox, FALSE, FALSE, 0);
 
 	recv_btn = gtk_button_new_with_mnemonic(_("_Get"));
 	gtk_box_pack_start(GTK_BOX(hbbox), recv_btn, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(recv_btn, FALSE);
+	action = gtk_ui_manager_get_action(ui, "/RPop3Menu/File/Receive");
+	g_object_set(action, "sensitive", FALSE, NULL);
+	rpop3_window.recv_action = action;
 
 	open_btn = gtk_button_new_from_stock(GTK_STOCK_OPEN);
 	gtk_box_pack_start(GTK_BOX(hbbox), open_btn, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(open_btn, FALSE);
+	action = gtk_ui_manager_get_action(ui, "/RPop3Menu/File/Open");
+	g_object_set(action, "sensitive", FALSE, NULL);
+	rpop3_window.open_action = action;
 
 	delete_btn = gtk_button_new_from_stock(GTK_STOCK_DELETE);
 	gtk_box_pack_start(GTK_BOX(hbbox), delete_btn, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(delete_btn, FALSE);
+	action = gtk_ui_manager_get_action(ui, "/RPop3Menu/File/Delete");
+	g_object_set(action, "sensitive", FALSE, NULL);
+	rpop3_window.delete_action = action;
 
 	stop_btn = gtk_button_new_from_stock(GTK_STOCK_STOP);
 	gtk_box_pack_start(GTK_BOX(hbbox), stop_btn, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(stop_btn, FALSE);
+	action = gtk_ui_manager_get_action(ui, "/RPop3Menu/File/Stop");
+	g_object_set(action, "sensitive", FALSE, NULL);
+	rpop3_window.stop_action = action;
 
 	close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
 	gtk_box_pack_start(GTK_BOX(hbbox), close_btn, FALSE, FALSE, 0);
@@ -876,6 +953,8 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
 			} else {
 				gtk_widget_set_sensitive(rpop3_window.stop_btn,
 							 TRUE);
+				g_object_set(rpop3_window.stop_action,
+					     "sensitive", TRUE, NULL);
 				rpop3_top_send(pop3_session);
 			}
 		} else
@@ -937,6 +1016,14 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 					(rpop3_window.delete_btn, TRUE);
 				gtk_widget_set_sensitive
 					(rpop3_window.stop_btn, FALSE);
+				g_object_set(rpop3_window.recv_action,
+					     "sensitive", TRUE, NULL);
+				g_object_set(rpop3_window.open_action,
+					     "sensitive", TRUE, NULL);
+				g_object_set(rpop3_window.delete_action,
+					     "sensitive", TRUE, NULL);
+				g_object_set(rpop3_window.stop_action,
+					     "sensitive", FALSE, NULL);
 				rpop3_idle(TRUE);
 			}
 		} else
@@ -1112,6 +1199,36 @@ static void rpop3_close(GtkButton *button, gpointer data)
 	} else if (rpop3_window.session->state != POP3_DONE ||
 		   rpop3_window.session->state != POP3_ERROR)
 		rpop3_window.cancelled = TRUE;
+}
+
+static void rpop3_recv_cb(void)
+{
+	rpop3_recv(NULL, NULL);
+}
+
+static void rpop3_open_cb(void)
+{
+	rpop3_open(NULL, NULL);
+}
+
+static void rpop3_delete_cb(void)
+{
+	rpop3_delete(NULL, NULL);
+}
+
+static void rpop3_stop_cb(void)
+{
+	rpop3_stop(NULL, NULL);
+}
+
+static void rpop3_close_cb(void)
+{
+	rpop3_close(NULL, NULL);
+}
+
+static void rpop3_about_cb(void)
+{
+	about_show();
 }
 
 static gint cmp_by_subject(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b,

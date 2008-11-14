@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-13 14:59+0900\n"
+"POT-Creation-Date: 2008-11-14 13:39+0900\n"
 "PO-Revision-Date: 2007-09-29 23:16+0100\n"
 "Last-Translator: Joo Martin <debian@joomart.de>\n"
 "Language-Team: de\n"
@@ -1591,7 +1591,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Kann einen Teil einer mehrteiligen Nachricht nicht bekommen."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:586 src/summaryview.c:2271
+#: src/rpop3.c:663 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Kein Betreff)"
 
@@ -1787,7 +1787,7 @@ msgstr "MIME-Typ"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
-#: src/prefs_summary_column.c:78 src/rpop3.c:353 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:418 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "Größe"
@@ -2496,7 +2496,7 @@ msgstr "Newsgroups:"
 msgid "Creating header view...\n"
 msgstr "Erzeuge Kopfzeilenansicht...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:587
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:664
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Kein Von)"
@@ -2774,7 +2774,7 @@ msgstr "Verbinde mit POP3-Server: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Keine Verbindung mit POP3-Server: %s:%d\n"
 
-#: src/inc.c:934 src/rpop3.c:743 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:820 src/send_message.c:813
 #, c-format
 msgid "Authenticating..."
 msgstr "Beglaubigen..."
@@ -2852,7 +2852,7 @@ msgid "Socket error."
 msgstr "Socket-Fehler."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:467 src/rpop3.c:468 src/send_message.c:760
+#: src/inc.c:1309 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "Verbindung geschlossen vom Remote-Host."
@@ -2870,11 +2870,11 @@ msgstr ""
 "Mailbox ist gesperrt:\n"
 "%s"
 
-#: src/inc.c:1325 src/rpop3.c:442 src/rpop3.c:447 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Beglaubigung fehlgeschlagen."
 
-#: src/inc.c:1330 src/rpop3.c:444 src/send_message.c:949
+#: src/inc.c:1330 src/rpop3.c:521 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2883,7 +2883,7 @@ msgstr ""
 "Beglaubigung fehlgeschlagen:\n"
 "%s"
 
-#: src/inc.c:1335 src/rpop3.c:472 src/rpop3.c:473 src/send_message.c:970
+#: src/inc.c:1335 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Sitzungszeit abgelaufen."
 
@@ -5962,19 +5962,19 @@ msgid "Attachment"
 msgstr "Anhang"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:350
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:415
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "Betreff"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:351
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:416
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "Von"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:352
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:417
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "Datum"
@@ -6287,7 +6287,7 @@ msgstr "Suche %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Suche %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:595 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Kein Datum)"
 
@@ -6349,94 +6349,108 @@ msgstr "Digitale Unterschrift erstellt %s\n"
 msgid "Error verifying the signature"
 msgstr "Fehler beim Verifizieren der digitalen Unterschrift"
 
-#: src/rpop3.c:290
-#, fuzzy, c-format
-msgid "%s - POP3 Remote mailbox"
-msgstr "Entferne Mailbox"
+#: src/rpop3.c:242
+#, fuzzy
+msgid "_File"
+msgstr "/_Datei"
 
-#: src/rpop3.c:349 src/summaryview.c:5091
-msgid "No."
-msgstr "Nr."
-
-#: src/rpop3.c:371
+#: src/rpop3.c:243 src/rpop3.c:436
 #, fuzzy
 msgid "_Get"
 msgstr "Holen"
 
-#: src/rpop3.c:420
+#: src/rpop3.c:248
+#, fuzzy
+msgid "_Help"
+msgstr "/_Hilfe"
+
+#: src/rpop3.c:249
+msgid "_About"
+msgstr "_Über"
+
+#: src/rpop3.c:338
+#, fuzzy, c-format
+msgid "%s - POP3 Remote mailbox"
+msgstr "Entferne Mailbox"
+
+#: src/rpop3.c:414 src/summaryview.c:5091
+msgid "No."
+msgstr "Nr."
+
+#: src/rpop3.c:497
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Verbindung mit SMTP-Server: %s ..."
 
-#: src/rpop3.c:425 src/rpop3.c:479 src/rpop3.c:482
+#: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Keine Verbindung mit POP3-Server: %s:%d\n"
 
-#: src/rpop3.c:453 src/rpop3.c:459 src/rpop3.c:486 src/rpop3.c:488
+#: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "Fehler während einer POP3-Sitzung\n"
 
-#: src/rpop3.c:456
+#: src/rpop3.c:533
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "Fehler während einer POP3-Sitzung\n"
 
-#: src/rpop3.c:609
+#: src/rpop3.c:686
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Hole Nachrichtenkopfzeilen (%d / %d bytes)"
 
-#: src/rpop3.c:769
+#: src/rpop3.c:846
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Bekomme Anzahl der neuen Nachrichten (STAT)..."
 
-#: src/rpop3.c:778 src/rpop3.c:791
+#: src/rpop3.c:855 src/rpop3.c:868
 #, fuzzy
 msgid "No message"
 msgstr "Keine neuen Nachrichten."
 
-#: src/rpop3.c:824
+#: src/rpop3.c:901
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Nachricht(en) löschen"
 
-#: src/rpop3.c:862 src/rpop3.c:874 src/rpop3.c:922 src/rpop3.c:1109
+#: src/rpop3.c:939 src/rpop3.c:951 src/rpop3.c:1001 src/rpop3.c:1196
 #: src/send_message.c:830
 #, c-format
 msgid "Quitting..."
 msgstr "Beende..."
 
-#: src/rpop3.c:907
+#: src/rpop3.c:986
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Empfange neue Nachricht"
 
-#: src/rpop3.c:914
+#: src/rpop3.c:993
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Sende Nachricht"
 
-#: src/rpop3.c:930
+#: src/rpop3.c:1009
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Empfange neue Nachricht"
 
-#: src/rpop3.c:1035
+#: src/rpop3.c:1122
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Erhaltene Nachrichten von %s..."
 
-#: src/rpop3.c:1061
+#: src/rpop3.c:1148
 #, fuzzy
 msgid "Delete messages"
 msgstr "Nachricht(en) löschen"
 
-#: src/rpop3.c:1062
+#: src/rpop3.c:1149
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -7261,9 +7275,6 @@ msgstr "Sylpheed"
 
 #~ msgid "SSL connect failed (%s)\n"
 #~ msgstr "SSL-Verbindung fehlgeschlagen (%s)\n"
-
-#~ msgid "_About"
-#~ msgstr "_Über"
 
 #~ msgid "/_View/Show all _headers"
 #~ msgstr "/_Ansicht/Zeige alle _Kopfzeilen"

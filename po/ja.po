@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-13 14:59+0900\n"
+"POT-Creation-Date: 2008-11-14 13:39+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1586,7 +1586,7 @@ msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:586 src/summaryview.c:2271
+#: src/rpop3.c:663 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(件名なし)"
 
@@ -1776,7 +1776,7 @@ msgstr "MIME タイプ"
 
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
-#: src/prefs_summary_column.c:78 src/rpop3.c:353 src/select-keys.c:320
+#: src/prefs_summary_column.c:78 src/rpop3.c:418 src/select-keys.c:320
 #: src/summaryview.c:5089
 msgid "Size"
 msgstr "サイズ"
@@ -2485,7 +2485,7 @@ msgstr "ニュースグループ:"
 msgid "Creating header view...\n"
 msgstr "ヘッダビューを作成中...\n"
 
-#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:587
+#: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:664
 #: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(差出人不明)"
@@ -2761,7 +2761,7 @@ msgstr "POP3サーバ: %s に接続中..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3サーバ: %s:%d に接続できません\n"
 
-#: src/inc.c:934 src/rpop3.c:743 src/send_message.c:813
+#: src/inc.c:934 src/rpop3.c:820 src/send_message.c:813
 #, c-format
 msgid "Authenticating..."
 msgstr "認証中..."
@@ -2839,7 +2839,7 @@ msgid "Socket error."
 msgstr "ソケットエラーです。"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:467 src/rpop3.c:468 src/send_message.c:760
+#: src/inc.c:1309 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "リモートホストによって接続を切断されました。"
@@ -2857,11 +2857,11 @@ msgstr ""
 "メールボックスはロックされています:\n"
 "%s"
 
-#: src/inc.c:1325 src/rpop3.c:442 src/rpop3.c:447 src/send_message.c:946
+#: src/inc.c:1325 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "認証に失敗しました。"
 
-#: src/inc.c:1330 src/rpop3.c:444 src/send_message.c:949
+#: src/inc.c:1330 src/rpop3.c:521 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2870,7 +2870,7 @@ msgstr ""
 "認証に失敗しました:\n"
 "%s"
 
-#: src/inc.c:1335 src/rpop3.c:472 src/rpop3.c:473 src/send_message.c:970
+#: src/inc.c:1335 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
 msgid "Session timed out."
 msgstr "セッションがタイムアウトしました。"
 
@@ -5925,19 +5925,19 @@ msgid "Attachment"
 msgstr "添付"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:350
+#: src/prefs_summary_column.c:75 src/query_search.c:401 src/rpop3.c:415
 #: src/summaryview.c:5082
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:351
+#: src/prefs_summary_column.c:76 src/query_search.c:402 src/rpop3.c:416
 #: src/summaryview.c:5085
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:352
+#: src/prefs_summary_column.c:77 src/query_search.c:403 src/rpop3.c:417
 #: src/summaryview.c:5087
 msgid "Date"
 msgstr "日付"
@@ -6246,7 +6246,7 @@ msgstr "%s を検索中..."
 msgid "Searching %s (%d / %d)..."
 msgstr "%s を検索中 (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:595 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(日付なし)"
 
@@ -6308,34 +6308,46 @@ msgstr "署名の作成時刻 %s\n"
 msgid "Error verifying the signature"
 msgstr "署名検証エラー"
 
-#: src/rpop3.c:290
+#: src/rpop3.c:242
+msgid "_File"
+msgstr "ファイル(_F)"
+
+#: src/rpop3.c:243 src/rpop3.c:436
+msgid "_Get"
+msgstr "受信(_G)"
+
+#: src/rpop3.c:248
+msgid "_Help"
+msgstr "ヘルプ(_H)"
+
+#: src/rpop3.c:249
+msgid "_About"
+msgstr "このプログラムについて(_A)"
+
+#: src/rpop3.c:338
 #, c-format
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - POP3 リモートメールボックス"
 
-#: src/rpop3.c:349 src/summaryview.c:5091
+#: src/rpop3.c:414 src/summaryview.c:5091
 msgid "No."
 msgstr "番号"
 
-#: src/rpop3.c:371
-msgid "_Get"
-msgstr "受信(_G)"
-
-#: src/rpop3.c:420
+#: src/rpop3.c:497
 #, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "%s:%d に接続中..."
 
-#: src/rpop3.c:425 src/rpop3.c:479 src/rpop3.c:482
+#: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "POP3サーバ: %s:%d に接続できません"
 
-#: src/rpop3.c:453 src/rpop3.c:459 src/rpop3.c:486 src/rpop3.c:488
+#: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
 msgid "Error occurred during POP3 session."
 msgstr "POP3 セッション中にエラーが発生しました。"
 
-#: src/rpop3.c:456
+#: src/rpop3.c:533
 #, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
@@ -6344,55 +6356,55 @@ msgstr ""
 "POP3 セッション中にエラーが発生しました:\n"
 "%s"
 
-#: src/rpop3.c:609
+#: src/rpop3.c:686
 #, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "メッセージのヘッダを取得中 (%d / %d) ..."
 
-#: src/rpop3.c:769
+#: src/rpop3.c:846
 msgid "Getting the number of messages..."
 msgstr "メッセージの件数を取得中..."
 
-#: src/rpop3.c:778 src/rpop3.c:791
+#: src/rpop3.c:855 src/rpop3.c:868
 msgid "No message"
 msgstr "メッセージがありません"
 
-#: src/rpop3.c:824
+#: src/rpop3.c:901
 #, c-format
 msgid "Deleted %d messages"
 msgstr "%d 通のメッセージを削除しました"
 
-#: src/rpop3.c:862 src/rpop3.c:874 src/rpop3.c:922 src/rpop3.c:1109
+#: src/rpop3.c:939 src/rpop3.c:951 src/rpop3.c:1001 src/rpop3.c:1196
 #: src/send_message.c:830
 #, c-format
 msgid "Quitting..."
 msgstr "切断中..."
 
-#: src/rpop3.c:907
+#: src/rpop3.c:986
 #, c-format
 msgid "Retrieved %d messages"
 msgstr "%d 通のメッセージを取得しました"
 
-#: src/rpop3.c:914
+#: src/rpop3.c:993
 #, c-format
 msgid "Opened message %d"
 msgstr "メッセージ %d を開きました"
 
-#: src/rpop3.c:930
+#: src/rpop3.c:1009
 #, c-format
 msgid "Retrieved %d message headers"
 msgstr "%d 件のメッセージのヘッダを取得しました"
 
-#: src/rpop3.c:1035
+#: src/rpop3.c:1122
 #, c-format
 msgid "Retrieving message %d ..."
 msgstr "メッセージ %d を取得中..."
 
-#: src/rpop3.c:1061
+#: src/rpop3.c:1148
 msgid "Delete messages"
 msgstr "メッセージの削除"
 
-#: src/rpop3.c:1062
+#: src/rpop3.c:1149
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
