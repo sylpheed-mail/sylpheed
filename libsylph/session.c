@@ -126,7 +126,7 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 	g_return_val_if_fail(server != NULL, -1);
 	g_return_val_if_fail(port > 0, -1);
 
-	if (session->server && session->server != server) {
+	if (session->server != server) {
 		g_free(session->server);
 		session->server = g_strdup(server);
 	}
