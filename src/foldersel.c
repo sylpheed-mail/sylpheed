@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -209,8 +209,10 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 	if (cancelled || !selected_item)
 		return NULL;
 
-	if (type == FOLDER_SEL_ALL || type == FOLDER_SEL_MOVE_FOLDER ||
-	    (selected_item->path && !selected_item->no_select)) {
+	if (type == FOLDER_SEL_ALL ||
+	    (selected_item->stype != F_VIRTUAL &&
+	     (sel_type == FOLDER_SEL_MOVE_FOLDER ||
+	      (selected_item->path && !selected_item->no_select)))) {
 		folder_item = selected_item;
 		return folder_item;
 	}
@@ -348,6 +350,7 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 	gchar *name;
 	GdkPixbuf *pixbuf, *pixbuf_open;
 	gboolean use_color;
+	gboolean no_select;
 	PangoWeight weight = PANGO_WEIGHT_NORMAL;
 	GdkColor *foreground = NULL;
 	static GdkColor color_noselect = {0, COLOR_DIM, COLOR_DIM, COLOR_DIM};
@@ -402,9 +405,11 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 	} else
 		name = g_strdup(name);
 
-	pixbuf = item->no_select ? foldernoselect_pixbuf : folder_pixbuf;
-	pixbuf_open =
-		item->no_select ? foldernoselect_pixbuf : folderopen_pixbuf;
+	no_select = item->no_select ||
+		(sel_type != FOLDER_SEL_ALL && item->stype == F_VIRTUAL);
+
+	pixbuf = no_select ? foldernoselect_pixbuf : folder_pixbuf;
+	pixbuf_open = no_select ? foldernoselect_pixbuf : folderopen_pixbuf;
 
 	if (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
 	    item->stype == F_TRASH) {
@@ -419,7 +424,7 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 			weight = PANGO_WEIGHT_BOLD;
 	}
 
-	if (item->no_select)
+	if (no_select)
 		foreground = &color_noselect;
 	else if (use_color)
 		foreground = &color_new;
@@ -500,8 +505,10 @@ static gboolean foldersel_selected(GtkTreeSelection *selection,
 
 	selected_item = item;
 	if (selected_item &&
-	    (sel_type == FOLDER_SEL_ALL || sel_type == FOLDER_SEL_MOVE_FOLDER ||
-	     (selected_item->path && !selected_item->no_select))) {
+	    (sel_type == FOLDER_SEL_ALL ||
+	     (selected_item->stype != F_VIRTUAL &&
+	      (sel_type == FOLDER_SEL_MOVE_FOLDER ||
+	       (selected_item->path && !selected_item->no_select))))) {
 		gchar *id;
 		id = folder_item_get_identifier(selected_item);
 		gtk_entry_set_text(GTK_ENTRY(entry), id);
