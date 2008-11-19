@@ -348,6 +348,7 @@ gint prefs_file_close(PrefFile *pfile)
 	gchar *path;
 	gchar *tmppath;
 	gchar *bakpath = NULL;
+	gint ret = 0;
 
 	g_return_val_if_fail(pfile != NULL, -1);
 
@@ -358,37 +359,54 @@ gint prefs_file_close(PrefFile *pfile)
 	tmppath = g_strconcat(path, ".tmp", NULL);
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(tmppath, "fclose");
-		g_unlink(tmppath);
-		g_free(path);
-		g_free(tmppath);
-		return -1;
+		ret = -1;
+		goto finish;
 	}
 
 	if (is_file_exist(path)) {
 		bakpath = g_strconcat(path, ".bak", NULL);
+		if (is_file_exist(bakpath)) {
+			gint i;
+			gchar *bakpath_n, *bakpath_p;
+
+			for (i = 4; i > 0; i--) {
+				bakpath_n = g_strdup_printf("%s.%d", bakpath,
+							    i);
+				if (i == 1)
+					bakpath_p = g_strdup(bakpath);
+				else
+					bakpath_p = g_strdup_printf
+						("%s.%d", bakpath, i - 1);
+				if (is_file_exist(bakpath_p)) {
+					if (rename_force(bakpath_p, bakpath_n) < 0) {
+						FILE_OP_ERROR(bakpath_p,
+							      "rename");
+					}
+				}
+				g_free(bakpath_p);
+				g_free(bakpath_n);
+			}
+		}
 		if (rename_force(path, bakpath) < 0) {
 			FILE_OP_ERROR(path, "rename");
-			g_unlink(tmppath);
-			g_free(path);
-			g_free(tmppath);
-			g_free(bakpath);
-			return -1;
+			ret = -1;
+			goto finish;
 		}
 	}
 
 	if (rename_force(tmppath, path) < 0) {
 		FILE_OP_ERROR(tmppath, "rename");
-		g_unlink(tmppath);
-		g_free(path);
-		g_free(tmppath);
-		g_free(bakpath);
-		return -1;
+		ret = -1;
+		goto finish;
 	}
 
+finish:
+	if (ret < 0)
+		g_unlink(tmppath);
 	g_free(path);
 	g_free(tmppath);
 	g_free(bakpath);
-	return 0;
+	return ret;
 }
 
 gint prefs_file_close_revert(PrefFile *pfile)
