@@ -26,24 +26,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtksignal.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkscrolledwindow.h>
-#include <gtk/gtkhpaned.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtklabel.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkctree.h>
-#include <gtk/gtkclist.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkhbbox.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkmenu.h>
-#include <gtk/gtkmenuitem.h>
-#include <gtk/gtkitemfactory.h>
-#include <gtk/gtkstatusbar.h>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 #include <string.h>
 #include <setjmp.h>
 

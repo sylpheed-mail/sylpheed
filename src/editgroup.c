@@ -26,13 +26,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkclist.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkstatusbar.h>
-#include <gtk/gtktable.h>
-#include <gtk/gtkentry.h>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 
 #include "addressbook.h"
 #include "addressitem.h"

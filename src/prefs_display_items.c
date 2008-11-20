@@ -26,13 +26,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkwindow.h>
-#include <gtk/gtkvbox.h>
-#include <gtk/gtkhbox.h>
-#include <gtk/gtkclist.h>
-#include <gtk/gtkbutton.h>
-#include <gtk/gtkstock.h>
+#include <gtk/gtk.h>
 
 #include "prefs.h"
 #include "prefs_ui.h"
