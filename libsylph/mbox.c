@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -113,6 +113,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		gchar *startp, *endp, *rpath;
 		gint empty_line;
 		gboolean is_next_msg = FALSE;
+		gboolean is_junk = FALSE;
 		FilterInfo *fltinfo;
 
 		if ((tmp_fp = g_fopen(tmp_file, "wb")) == NULL) {
@@ -218,6 +219,8 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		    prefs_common.filter_junk_before) {
 			filter_apply(prefs_common.junk_fltlist, tmp_file,
 				     fltinfo);
+			if (fltinfo->drop_done)
+				is_junk = TRUE;
 		}
 
 		if (!fltinfo->drop_done && apply_filter)
@@ -228,6 +231,8 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		    !prefs_common.filter_junk_before) {
 			filter_apply(prefs_common.junk_fltlist, tmp_file,
 				     fltinfo);
+			if (fltinfo->drop_done)
+				is_junk = TRUE;
 		}
 
 		if (fltinfo->actions[FLT_ACTION_MOVE] == FALSE &&
@@ -262,15 +267,18 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 			}
 		}
 
+		if (!is_junk &&
+		    fltinfo->actions[FLT_ACTION_DELETE] == FALSE &&
+		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
+			msgs++;
+
 		filter_info_free(fltinfo);
 		g_unlink(tmp_file);
-
-		msgs++;
 	} while (from_line[0] != '\0');
 
 	g_free(tmp_file);
 	fclose(mbox_fp);
-	debug_print(_("%d messages found.\n"), msgs);
+	debug_print("%d new messages found.\n", msgs);
 
 	return msgs;
 }
