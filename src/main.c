@@ -93,6 +93,7 @@
 #  include <windows.h>
 #  include <pbt.h>
 #  include <fcntl.h>
+#  include <conio.h>
 #endif
 
 #include "version.h"
