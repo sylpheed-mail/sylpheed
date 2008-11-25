@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,12 @@ typedef enum
 	FOLDER_SEL_MOVE_FOLDER
 } FolderSelectionType;
 
-FolderItem *foldersel_folder_sel(Folder			*cur_folder,
-				 FolderSelectionType	 type,
-				 const gchar		*default_folder);
+FolderItem *foldersel_folder_sel     (Folder		  *cur_folder,
+				      FolderSelectionType  type,
+				      const gchar	  *default_folder);
+FolderItem *foldersel_folder_sel_full(Folder		  *cur_folder,
+				      FolderSelectionType  type,
+				      const gchar	  *default_folder,
+				      const gchar	  *message);
 
 #endif /* __FOLDERSEL_H__ */

@@ -32,6 +32,7 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkscrolledwindow.h>
+#include <gtk/gtklabel.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtksignal.h>
@@ -80,6 +81,7 @@ static GdkPixbuf *folderopen_pixbuf;
 static GdkPixbuf *foldernoselect_pixbuf;
 
 static GtkWidget *window;
+static GtkWidget *label;
 static GtkWidget *treeview;
 static GtkWidget *entry;
 static GtkWidget *confirm_area;
@@ -148,6 +150,15 @@ static gboolean tree_view_folder_item_func	(GtkTreeModel	  *model,
 FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 				 const gchar *default_folder)
 {
+	return foldersel_folder_sel_full(cur_folder, type, default_folder,
+					 NULL);
+}
+
+FolderItem *foldersel_folder_sel_full(Folder *cur_folder,
+				      FolderSelectionType type,
+				      const gchar *default_folder,
+				      const gchar *message)
+{
 	selected_item = NULL;
 	sel_type = type;
 
@@ -155,6 +166,12 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 		foldersel_create();
 		foldersel_init();
 	}
+
+	if (message) {
+		gtk_widget_show(label);
+		gtk_label_set_text(GTK_LABEL(label), message);
+	} else
+		gtk_widget_hide(label);
 
 	foldersel_set_tree(cur_folder);
 
@@ -203,6 +220,7 @@ FolderItem *foldersel_folder_sel(Folder *cur_folder, FolderSelectionType type,
 		gtk_main_iteration();
 
 	gtk_widget_hide(window);
+	gtk_label_set_text(GTK_LABEL(label), "");
 	gtk_entry_set_text(GTK_ENTRY(entry), "");
 	gtk_tree_store_clear(tree_store);
 
@@ -245,10 +263,15 @@ static void foldersel_create(void)
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 
 	vbox = gtk_vbox_new(FALSE, 4);
+	gtk_widget_set_size_request(vbox, -1, 420);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
+	label = gtk_label_new("");
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 2);
+
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_set_size_request(scrolledwin, 300, 360);
+	gtk_widget_set_size_request(scrolledwin, 300, -1);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
