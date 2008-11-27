@@ -434,10 +434,10 @@ Compose *addressbook_get_target_compose(void)
 void addressbook_refresh(void)
 {
 	if (addrbook.window) {
-		if (addrbook.treeSelected) {
+		if (addrbook.opened) {
 			addrbook.treeSelected = NULL;
 			gtk_ctree_select(GTK_CTREE(addrbook.ctree),
-					 addrbook.treeSelected);
+					 addrbook.opened);
 		}
 	}
 	addressbook_export_to_file();
