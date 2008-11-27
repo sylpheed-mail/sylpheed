@@ -193,6 +193,8 @@ FolderItem *foldersel_folder_sel_full(Folder *cur_folder,
 
 			selection = gtk_tree_view_get_selection
 				(GTK_TREE_VIEW(treeview));
+			gtkut_tree_view_expand_parent_all
+				(GTK_TREE_VIEW(treeview), &fis.iter);
 			gtk_tree_selection_select_iter(selection, &fis.iter);
 			gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview),
 						 fis.path, NULL, FALSE);
@@ -479,6 +481,15 @@ static void foldersel_insert_gnode_in_store(GtkTreeStore *store, GNode *node,
 	item = FOLDER_ITEM(node->data);
 	foldersel_append_item(store, item, &child, parent);
 
+	if (parent && item->parent && node->parent->children == node &&
+	    !item->parent->collapsed) {
+		GtkTreePath *path;
+
+		path = gtk_tree_model_get_path(GTK_TREE_MODEL(store), parent);
+		gtk_tree_view_expand_row(GTK_TREE_VIEW(treeview), path, FALSE);
+		gtk_tree_path_free(path);
+	}
+
 	/* insert its children (this node as parent) */
 	for (iter = node->children; iter != NULL; iter = iter->next)
 		foldersel_insert_gnode_in_store(store, iter, &child);
@@ -506,8 +517,6 @@ static void foldersel_set_tree(Folder *cur_folder)
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(tree_store),
 					     FOLDERSEL_FOLDERNAME,
 					     GTK_SORT_ASCENDING);
-
-	gtk_tree_view_expand_all(GTK_TREE_VIEW(treeview));
 }
 
 static gboolean foldersel_selected(GtkTreeSelection *selection,
