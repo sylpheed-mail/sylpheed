@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -543,6 +543,7 @@ gint pop3_write_uidl_list(Pop3Session *session)
 		g_free(path);
 		return -1;
 	}
+	prefs_file_set_backup_generation(pfile, 0);
 
 	for (n = 1; n <= session->count; n++) {
 		msg = &session->msg[n];

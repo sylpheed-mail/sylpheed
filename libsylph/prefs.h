@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -65,11 +65,14 @@ void prefs_write_config		(PrefParam	*param,
 				 const gchar	*label,
 				 const gchar	*rcfile);
 
-PrefFile *prefs_file_open	(const gchar	*path);
-gint prefs_file_write_param	(PrefFile	*pfile,
-				 PrefParam	*param);
-gint prefs_file_close		(PrefFile	*pfile);
-gint prefs_file_close_revert	(PrefFile	*pfile);
+PrefFile *prefs_file_open		(const gchar	*path);
+gint prefs_file_write_param		(PrefFile	*pfile,
+					 PrefParam	*param);
+void prefs_file_set_backup_generation	(PrefFile	*pfile,
+					 gint		 generation);
+gint prefs_file_get_backup_generation	(PrefFile	*pfile);
+gint prefs_file_close			(PrefFile	*pfile);
+gint prefs_file_close_revert		(PrefFile	*pfile);
 
 void prefs_set_default		(PrefParam	*param);
 void prefs_free			(PrefParam	*param);

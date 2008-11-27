@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -37,6 +37,14 @@ typedef enum
 {
 	DUMMY_PARAM
 } DummyEnum;
+
+typedef struct _PrefFilePrivate	PrefFilePrivate;
+
+struct _PrefFilePrivate {
+	FILE *fp;
+	gchar *path;
+	gint backup_generation;
+};
 
 static void prefs_config_parse_one_line	(GHashTable	*param_table,
 					 const gchar	*buf);
@@ -317,7 +325,7 @@ gint prefs_file_write_param(PrefFile *pfile, PrefParam *param)
 
 PrefFile *prefs_file_open(const gchar *path)
 {
-	PrefFile *pfile;
+	PrefFilePrivate *pfile;
 	gchar *tmppath;
 	FILE *fp;
 
@@ -335,25 +343,47 @@ PrefFile *prefs_file_open(const gchar *path)
 
 	g_free(tmppath);
 
-	pfile = g_new(PrefFile, 1);
+	pfile = g_new(PrefFilePrivate, 1);
 	pfile->fp = fp;
 	pfile->path = g_strdup(path);
+	pfile->backup_generation = 4;
 
-	return pfile;
+	return (PrefFile *)pfile;
+}
+
+void prefs_file_set_backup_generation(PrefFile *pfile, gint generation)
+{
+	PrefFilePrivate *priv = (PrefFilePrivate *)pfile;
+
+	g_return_if_fail(pfile != NULL);
+
+	priv->backup_generation = generation;
+}
+
+gint prefs_file_get_backup_generation(PrefFile *pfile)
+{
+	PrefFilePrivate *priv = (PrefFilePrivate *)pfile;
+
+	g_return_val_if_fail(pfile != NULL, -1);
+
+	return priv->backup_generation;
 }
 
 gint prefs_file_close(PrefFile *pfile)
 {
+	PrefFilePrivate *priv = (PrefFilePrivate *)pfile;
 	FILE *fp;
 	gchar *path;
 	gchar *tmppath;
 	gchar *bakpath = NULL;
+	gint generation;
 	gint ret = 0;
 
 	g_return_val_if_fail(pfile != NULL, -1);
 
 	fp = pfile->fp;
 	path = pfile->path;
+	generation = priv->backup_generation;
 	g_free(pfile);
 
 	tmppath = g_strconcat(path, ".tmp", NULL);
@@ -369,7 +399,7 @@ gint prefs_file_close(PrefFile *pfile)
 			gint i;
 			gchar *bakpath_n, *bakpath_p;
 
-			for (i = 4; i > 0; i--) {
+			for (i = generation; i > 0; i--) {
 				bakpath_n = g_strdup_printf("%s.%d", bakpath,
 							    i);
 				if (i == 1)
