@@ -438,6 +438,12 @@ static void imap_folder_destroy(Folder *folder)
 		remove_dir_recursive(dir);
 	g_free(dir);
 
+	dir = g_strconcat(get_imap_cache_dir(), G_DIR_SEPARATOR_S,
+			  folder->account->recv_server, NULL);
+	if (is_dir_exist(dir))
+		g_rmdir(dir);
+	g_free(dir);
+
 	folder_remote_folder_destroy(REMOTE_FOLDER(folder));
 }
 
