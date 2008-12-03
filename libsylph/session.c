@@ -289,7 +289,7 @@ static gboolean session_ping_cb(gpointer data)
 
 			debug_print("state machine freeze for 1 second detected, forcing dispatch.\n");
 			save_flags = sock->flags;
-			SOCK_UNSET_FLAGS(sock->flags, SOCK_CHECK_IO);
+			SOCK_UNSET_FLAGS(sock->flags, SYL_SOCK_CHECK_IO);
 			sock->callback(sock, sock->condition, sock->data);
 			sock->flags = save_flags;
 		}

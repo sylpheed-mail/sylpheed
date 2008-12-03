@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -46,14 +46,14 @@ typedef enum
 
 typedef enum
 {
-	SOCK_NONBLOCK	= 1 << 0,
-	SOCK_CHECK_IO	= 1 << 1
+	SYL_SOCK_NONBLOCK	= 1 << 0,
+	SYL_SOCK_CHECK_IO	= 1 << 1
 } SockFlags;
 
 #define SOCK_SET_FLAGS(flags, set)	{ (flags) |= (set); }
 #define SOCK_UNSET_FLAGS(flags, set)	{ (flags) &= ~(set); }
-#define SOCK_IS_NONBLOCK(flags)		((flags & SOCK_NONBLOCK) != 0)
-#define SOCK_IS_CHECK_IO(flags)		((flags & SOCK_CHECK_IO) != 0)
+#define SOCK_IS_NONBLOCK(flags)		((flags & SYL_SOCK_NONBLOCK) != 0)
+#define SOCK_IS_CHECK_IO(flags)		((flags & SYL_SOCK_CHECK_IO) != 0)
 
 typedef gint (*SockConnectFunc)		(SockInfo	*sock,
 					 gpointer	 data);

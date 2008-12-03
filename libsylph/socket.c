@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -383,9 +383,9 @@ static gint set_nonblocking_mode(gint fd, gboolean nonblock)
 	sock = sock_find_from_fd(fd);
 	if (sock) {
 		if (nonblock) {
-			SOCK_SET_FLAGS(sock->flags, SOCK_NONBLOCK);
+			SOCK_SET_FLAGS(sock->flags, SYL_SOCK_NONBLOCK);
 		} else {
-			SOCK_UNSET_FLAGS(sock->flags, SOCK_NONBLOCK);
+			SOCK_UNSET_FLAGS(sock->flags, SYL_SOCK_NONBLOCK);
 		}
 	}
 	debug_print("set nonblocking mode to %d\n", nonblock);
@@ -418,9 +418,9 @@ gint sock_set_nonblocking_mode(SockInfo *sock, gboolean nonblock)
 	ret = set_nonblocking_mode(sock->sock, nonblock);
 	if (ret == 0) {
 		if (nonblock) {
-			SOCK_SET_FLAGS(sock->flags, SOCK_NONBLOCK);
+			SOCK_SET_FLAGS(sock->flags, SYL_SOCK_NONBLOCK);
 		} else {
-			SOCK_UNSET_FLAGS(sock->flags, SOCK_NONBLOCK);
+			SOCK_UNSET_FLAGS(sock->flags, SYL_SOCK_NONBLOCK);
 		}
 	}
 
@@ -882,7 +882,7 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 	sockinfo->hostname = g_strdup(hostname);
 	sockinfo->port = port;
 	sockinfo->state = CONN_ESTABLISHED;
-	sockinfo->flags = SOCK_CHECK_IO;
+	sockinfo->flags = SYL_SOCK_CHECK_IO;
 
 	sock_list = g_list_prepend(sock_list, sockinfo);
 
@@ -951,7 +951,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 	sockinfo->hostname = g_strdup(conn_data->hostname);
 	sockinfo->port = conn_data->port;
 	sockinfo->state = CONN_ESTABLISHED;
-	sockinfo->flags = SOCK_NONBLOCK;
+	sockinfo->flags = SYL_SOCK_NONBLOCK;
 
 	sock_list = g_list_prepend(sock_list, sockinfo);
 
