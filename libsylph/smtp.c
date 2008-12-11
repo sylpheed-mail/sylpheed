@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -117,7 +117,7 @@ static void smtp_session_destroy(Session *session)
 
 static gint smtp_from(SMTPSession *session)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[SMTPBUFSIZE];
 
 	g_return_val_if_fail(session->from != NULL, SM_ERROR);
 
@@ -163,7 +163,7 @@ static gint smtp_auth(SMTPSession *session)
 
 static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[SMTPBUFSIZE];
 
 	switch (session->auth_type) {
 	case SMTPAUTH_LOGIN:
@@ -236,7 +236,7 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 
 static gint smtp_auth_login_user_recv(SMTPSession *session, const gchar *msg)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[SMTPBUFSIZE];
 
 	session->state = SMTP_AUTH_LOGIN_PASS;
 
@@ -255,7 +255,7 @@ static gint smtp_auth_login_user_recv(SMTPSession *session, const gchar *msg)
 
 static gint smtp_ehlo(SMTPSession *session)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[SMTPBUFSIZE];
 
 	session->state = SMTP_EHLO;
 
@@ -370,7 +370,7 @@ static gint smtp_auth_login(SMTPSession *session)
 
 static gint smtp_helo(SMTPSession *session)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[SMTPBUFSIZE];
 
 	session->state = SMTP_HELO;
 
@@ -384,7 +384,7 @@ static gint smtp_helo(SMTPSession *session)
 
 static gint smtp_rcpt(SMTPSession *session)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[SMTPBUFSIZE];
 	gchar *to;
 
 	g_return_val_if_fail(session->cur_to != NULL, SM_ERROR);

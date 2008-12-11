@@ -68,8 +68,6 @@ static GdkPixbuf *current_pixbuf;
 static GdkPixbuf *error_pixbuf;
 static GdkPixbuf *ok_pixbuf;
 
-#define MSGBUFSIZE	8192
-
 static void inc_finished		(MainWindow		*mainwin,
 					 gint			 new_messages);
 
@@ -958,7 +956,7 @@ static void inc_progress_dialog_set_label(IncProgressDialog *inc_dialog,
 #if 0
 		if (session->msg[session->cur_msg].recv_time <
 			session->current_time) {
-			gchar buf[MSGBUFSIZE];
+			gchar buf[BUFFSIZE];
 			g_snprintf(buf, sizeof(buf), _("Deleting message %d"),
 				   session->cur_msg);
 			progress_dialog_set_label(dialog, buf);
@@ -976,7 +974,7 @@ static void inc_progress_dialog_set_label(IncProgressDialog *inc_dialog,
 static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 					     IncSession *inc_session)
 {
-	gchar buf[MSGBUFSIZE];
+	gchar buf[BUFFSIZE];
 	Pop3Session *pop3_session = POP3_SESSION(inc_session->session);
 	gchar *total_size_str;
 	gint64 cur_total;

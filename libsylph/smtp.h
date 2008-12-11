@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2008 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ typedef struct _SMTPSession	SMTPSession;
 
 #define SMTP_SESSION(obj)	((SMTPSession *)obj)
 
-#define MSGBUFSIZE		8192
+#define SMTPBUFSIZE		8192
 
 typedef enum
 {

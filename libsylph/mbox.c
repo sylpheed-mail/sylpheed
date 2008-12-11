@@ -42,8 +42,6 @@
 #include "account.h"
 #include "utils.h"
 
-#define MSGBUFSIZE	8192
-
 #define FPUTS_TO_TMP_ABORT_IF_FAIL(s) \
 { \
 	if (fputs(s, tmp_fp) == EOF) { \
@@ -69,7 +67,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		    gboolean filter_junk)
 {
 	FILE *mbox_fp;
-	gchar buf[MSGBUFSIZE], from_line[MSGBUFSIZE];
+	gchar buf[BUFFSIZE], from_line[BUFFSIZE];
 	gchar *tmp_file;
 	gint msgs = 0;
 
