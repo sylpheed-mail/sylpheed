@@ -464,6 +464,8 @@ static gchar *procmime_convert_value(const gchar *value, const gchar *charset)
 
 static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 {
+	ConvADType ad_type;
+	gchar *tmp = NULL;
 	gchar *hvalue;
 	gchar *param, *name, *value;
 	gchar *charset = NULL, *lang = NULL;
@@ -489,6 +491,19 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 	if (!p)
 		return mparams;
 	++p;
+
+	/* workaround for raw-JIS filename (Eudora etc.) */
+	ad_type = conv_get_autodetect_type();
+	if ((ad_type == C_AD_JAPANESE ||
+	     (ad_type == C_AD_BY_LOCALE && conv_is_ja_locale())) &&
+	    strstr(p, "\033$") != NULL) {
+		CodeConvFunc conv_func;
+		conv_func = conv_get_code_conv_func(NULL, NULL);
+		tmp = conv_func(p, NULL);
+		p = tmp;
+		debug_print("procmime_parse_mime_parameter(): raw-JIS header body detected: %s\n", str);
+	}
+
 	count = prev_count = -1;
 	cont_name = cont_value = NULL;
 
@@ -662,6 +677,8 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 	g_free(cont_value);
 	g_free(lang);
 	g_free(charset);
+	if (tmp)
+		g_free(tmp);
 
 	plist = g_slist_reverse(plist);
 	mparams->plist = plist;
