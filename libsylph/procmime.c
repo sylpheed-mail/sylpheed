@@ -465,7 +465,7 @@ static gchar *procmime_convert_value(const gchar *value, const gchar *charset)
 static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 {
 	ConvADType ad_type;
-	gchar *tmp = NULL;
+	gchar *tmp_param = NULL;
 	gchar *hvalue;
 	gchar *param, *name, *value;
 	gchar *charset = NULL, *lang = NULL;
@@ -499,8 +499,8 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 	    strstr(p, "\033$") != NULL) {
 		CodeConvFunc conv_func;
 		conv_func = conv_get_code_conv_func(NULL, NULL);
-		tmp = conv_func(p, NULL);
-		p = tmp;
+		tmp_param = conv_func(p, NULL);
+		p = tmp_param;
 		debug_print("procmime_parse_mime_parameter(): raw-JIS header body detected: %s\n", str);
 	}
 
@@ -677,8 +677,8 @@ static MimeParams *procmime_parse_mime_parameter(const gchar *str)
 	g_free(cont_value);
 	g_free(lang);
 	g_free(charset);
-	if (tmp)
-		g_free(tmp);
+	if (tmp_param)
+		g_free(tmp_param);
 
 	plist = g_slist_reverse(plist);
 	mparams->plist = plist;
