@@ -5,10 +5,10 @@
 # Németh Tamás <ntomasz@vipmail.hu>, 2005, 2006, 2007, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed-2.5\n"
+"Project-Id-Version: Sylpheed-2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-01 11:36+0900\n"
-"PO-Revision-Date: 2008-05-25 20:14+0200\n"
+"POT-Creation-Date: 2008-12-15 17:55+0900\n"
+"PO-Revision-Date: 2008-12-01 19:42+0100\n"
 "Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: HUNGARIAN <NONE>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: libsylph/account.c:56
 msgid "Reading all config for each account...\n"
-msgstr "Beállítások beolvasása az összes hozzáféréshez...\n"
+msgstr "Beállítások beolvasása az összes fiókhoz...\n"
 
 #: libsylph/imap.c:482
 #, c-format
@@ -211,34 +211,34 @@ msgstr "az iconv nem tud UTF-7-ből konvertálni ebbe: %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "az iconv nem tudja UTF-7-re konvertálni ezt: %s\n"
 
-#: libsylph/mbox.c:50 libsylph/mbox.c:207
+#: libsylph/mbox.c:48 libsylph/mbox.c:205
 msgid "can't write to temporary file\n"
 msgstr "nem lehet az ideiglenes fájlba írni\n"
 
-#: libsylph/mbox.c:79
+#: libsylph/mbox.c:77
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Levelek fogadása innen: %s ide: %s...\n"
 
-#: libsylph/mbox.c:89
+#: libsylph/mbox.c:87
 msgid "can't read mbox file.\n"
 msgstr "az mbox fájlt nem lehet olvasni.\n"
 
-#: libsylph/mbox.c:96
+#: libsylph/mbox.c:94
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "érvénytelen mbox formátum: %s\n"
 
-#: libsylph/mbox.c:103
+#: libsylph/mbox.c:101
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "sérült mbox: %s\n"
 
-#: libsylph/mbox.c:121
+#: libsylph/mbox.c:119
 msgid "can't open temporary file\n"
 msgstr "nem lehet ideiglenes fájlt megnyitni\n"
 
-#: libsylph/mbox.c:172
+#: libsylph/mbox.c:170
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -247,43 +247,43 @@ msgstr ""
 "kódolatlan Feladó található:\n"
 "%s"
 
-#: libsylph/mbox.c:299
+#: libsylph/mbox.c:297
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "%s zároló fájlt nem lehet létrehozni\n"
 
-#: libsylph/mbox.c:300
+#: libsylph/mbox.c:298
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "'flock' használata 'file' helyett, ha lehet.\n"
 
-#: libsylph/mbox.c:312
+#: libsylph/mbox.c:310
 #, c-format
 msgid "can't create %s\n"
 msgstr "%s nem hozható létre\n"
 
-#: libsylph/mbox.c:318
+#: libsylph/mbox.c:316
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "A postaláda egy másik processzhez tartozik, várakozás...\n"
 
-#: libsylph/mbox.c:347
+#: libsylph/mbox.c:345
 #, c-format
 msgid "can't lock %s\n"
 msgstr "%s nem zárolható\n"
 
-#: libsylph/mbox.c:354 libsylph/mbox.c:404
+#: libsylph/mbox.c:352 libsylph/mbox.c:402
 msgid "invalid lock type\n"
 msgstr "érvénytelen zároló típus\n"
 
-#: libsylph/mbox.c:390
+#: libsylph/mbox.c:388
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "%s zárolása nem oldható fel\n"
 
-#: libsylph/mbox.c:425
+#: libsylph/mbox.c:423
 msgid "can't truncate mailbox to zero.\n"
-msgstr "nem lehet nulla méretűre változtatni a postafiókot.\n"
+msgstr "nem lehet nulla méretűre változtatni a postaládát.\n"
 
-#: libsylph/mbox.c:449
+#: libsylph/mbox.c:447
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Levelek exportálása innen: %s ide: %s...\n"
@@ -463,7 +463,7 @@ msgstr "POP3: %d levél átugrása (%d bájt)\n"
 
 #: libsylph/pop.c:689
 msgid "mailbox is locked\n"
-msgstr "a postafiók zárolt\n"
+msgstr "a postaláda zárolt\n"
 
 #: libsylph/pop.c:692
 msgid "session timeout\n"
@@ -508,7 +508,7 @@ msgstr "Levélszemét szűrés (kézi)"
 msgid "Junk mail filter"
 msgstr "Levélszemét szűrés"
 
-#: libsylph/procmime.c:1144
+#: libsylph/procmime.c:1161
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Kód konverziós hiba.\n"
 
@@ -656,19 +656,19 @@ msgid ""
 "Please close all the composing windows before editing the accounts."
 msgstr ""
 "Néhány szerkesztő ablak nyitva van.\n"
-"Zárjon be minden szerkesztő ablakot a hozzáférések módosítása előtt."
+"Zárjon be minden szerkesztő ablakot a fiókok módosítása előtt."
 
 #: src/account_dialog.c:143
 msgid "Opening account edit window...\n"
-msgstr "Hozzáférések szerkesztőablakának megnyitása...\n"
+msgstr "Fiókok szerkesztőablakának megnyitása...\n"
 
 #: src/account_dialog.c:288
 msgid "Creating account edit window...\n"
-msgstr "Hozzáférések szerkesztőablakának létrehozása...\n"
+msgstr "Fiókok szerkesztőablakának létrehozása...\n"
 
 #: src/account_dialog.c:293
 msgid "Edit accounts"
-msgstr "Hozzáférések szerkesztése"
+msgstr "Fiókok szerkesztése"
 
 #: src/account_dialog.c:313
 msgid ""
@@ -706,7 +706,7 @@ msgstr " Alapértelmezett hozzá_férésként beállít "
 #: src/account_dialog.c:489
 #, c-format
 msgid "Do you really want to delete the account '%s'?"
-msgstr "Tényleg törölni szeretné  a(z) '%s' hozzáférést?"
+msgstr "Tényleg törölni szeretné '%s' fiókot?"
 
 #: src/account_dialog.c:491 src/prefs_filter.c:687
 msgid "(Untitled)"
@@ -714,7 +714,7 @@ msgstr "(Névtelen)"
 
 #: src/account_dialog.c:492
 msgid "Delete account"
-msgstr "Hozzáférés törlése"
+msgstr "Fiók törlése"
 
 #: src/action.c:331
 #, c-format
@@ -1208,7 +1208,7 @@ msgstr "Megjegyzés"
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: src/alertpanel.c:168 src/inc.c:729
+#: src/alertpanel.c:168 src/inc.c:727
 msgid "Error"
 msgstr "Hiba"
 
@@ -1641,13 +1641,13 @@ msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
 msgstr ""
-"Nincs megadva hozzáférés a levél küldéshez.\n"
-"Válasszon ki egy hozzáférést küldés előtt!"
+"Nincs megadva fiók a levél küldéshez.\n"
+"Válasszon ki egy fiókot küldés előtt!"
 
 #: src/compose.c:3332 src/send_message.c:315
 #, c-format
 msgid "Error occurred while posting the message to %s ."
-msgstr "Hiba lépett fel a %s-nak/nek küldendő levél küldésekor."
+msgstr "Hiba lépett fel %s-n{ae}k küldendő levél küldésekor."
 
 #: src/compose.c:3382
 msgid "Can't save the message to outbox."
@@ -1657,7 +1657,8 @@ msgstr "A levél nem menthető a kimenő mappába."
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
-"Nem találtam hozzárendelt kulcsot a kiválasztott kulcs azonosítóhoz `%s'."
+"Nem található hozzárendelt kulcs ehhez a kiválasztott kulcs azonosítóhoz: `%"
+"s'."
 
 #: src/compose.c:3447 src/compose.c:3832
 msgid "Can't sign the message."
@@ -1682,7 +1683,7 @@ msgid ""
 "\n"
 "Send it as %s anyway?"
 msgstr ""
-"Nem lehet konvertálni a levél karakterkódolását %s-ról/ről %s-ra.\n"
+"Nem lehet konvertálni a levél karakterkódolását %s-r{óő}l %s-r{ae}.\n"
 "\n"
 "Ennek ellenére elküldi, mint %s?"
 
@@ -2452,16 +2453,16 @@ msgstr "Postaláda eltávolítása"
 #: src/folderview.c:2656
 #, c-format
 msgid "Really delete IMAP4 account `%s'?"
-msgstr "Tényleg törli a(z) `%s' IMAP4 hozzáférést?"
+msgstr "Tényleg törli `%s' IMAP4 fiókot?"
 
 #: src/folderview.c:2657
 msgid "Delete IMAP4 account"
-msgstr "IMAP4 hozzáférés törlése"
+msgstr "IMAP4 fiók törlése"
 
 #: src/folderview.c:2810
 #, c-format
 msgid "Really delete newsgroup `%s'?"
-msgstr "Tényleg törli a(z) `%s' hírcsoportot?"
+msgstr "Tényleg törli `%s' hírcsoportot?"
 
 #: src/folderview.c:2811
 msgid "Delete newsgroup"
@@ -2470,11 +2471,11 @@ msgstr "Hírcsoport törlése"
 #: src/folderview.c:2861
 #, c-format
 msgid "Really delete news account `%s'?"
-msgstr "Tényleg törli a(z) `%s' hírhozzáférést?"
+msgstr "Tényleg törli `%s' hírfiókot?"
 
 #: src/folderview.c:2862
 msgid "Delete news account"
-msgstr "Hírhozzáférés törlése"
+msgstr "Hírfiók törlése"
 
 #: src/headerview.c:57
 msgid "Newsgroups:"
@@ -2555,11 +2556,11 @@ msgstr "Fájlnév"
 
 #: src/importcsv.c:700
 msgid "Comma-separated"
-msgstr "Vessző-elválasztó"
+msgstr "Vesszővel elválasztott"
 
 #: src/importcsv.c:704
 msgid "Tab-separated"
-msgstr "Tab-elválasztó"
+msgstr "Tabbal elválasztott"
 
 #: src/importcsv.c:735 src/importldif.c:530
 msgid "S"
@@ -2666,142 +2667,141 @@ msgstr "LDIF fájl importálása a címjegyzékbe"
 msgid "Attributes"
 msgstr "Tulajdonságok"
 
-#: src/inc.c:161
+#: src/inc.c:159
 #, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d új levél"
 
-#: src/inc.c:479
+#: src/inc.c:477
 msgid "Authenticating with POP3"
 msgstr "POP3 azonosítás"
 
-#: src/inc.c:505
+#: src/inc.c:503
 msgid "Retrieving new messages"
 msgstr "Új levelek fogadása"
 
-#: src/inc.c:548
+#: src/inc.c:546
 msgid "Standby"
 msgstr "Készenlét"
 
-#: src/inc.c:685 src/inc.c:735
+#: src/inc.c:683 src/inc.c:733
 msgid "Cancelled"
 msgstr "Megszakítva"
 
-#: src/inc.c:696
+#: src/inc.c:694
 msgid "Retrieving"
 msgstr "Fogadás"
 
-#: src/inc.c:705 src/inc.c:1015
-#, fuzzy, c-format
+#: src/inc.c:703 src/inc.c:1013
+#, c-format
 msgid "%d message(s) (%s) received"
-msgstr "Kész (%d levél (%s) fogadott)"
+msgstr "%d levél (%s) fogadva"
 
-#: src/inc.c:709
-#, fuzzy, c-format
+#: src/inc.c:707
+#, c-format
 msgid "no new messages"
-msgstr "Nincs új levél."
+msgstr "nincs új levél."
 
-#: src/inc.c:710
-#, fuzzy
+#: src/inc.c:708
 msgid "Done"
-msgstr "Kész."
+msgstr "Kész"
 
-#: src/inc.c:715
+#: src/inc.c:713
 msgid "Connection failed"
 msgstr "Kapcsolat megszakadt"
 
-#: src/inc.c:718
+#: src/inc.c:716
 msgid "Auth failed"
 msgstr "Azonosítás nem sikerült"
 
-#: src/inc.c:722
+#: src/inc.c:720
 msgid "Locked"
 msgstr "Zárolt"
 
-#: src/inc.c:732
+#: src/inc.c:730
 msgid "Timeout"
 msgstr "Időtúllépés"
 
-#: src/inc.c:782
+#: src/inc.c:780
 #, c-format
 msgid "Finished (%d new message(s))"
-msgstr "Vége (%d új levél)"
+msgstr "Befejezve (%d új levél)"
 
-#: src/inc.c:785
+#: src/inc.c:783
 #, c-format
 msgid "Finished (no new messages)"
-msgstr "Vége (nincs új levél)"
+msgstr "Befejezve (nincs új levél)"
 
-#: src/inc.c:794
+#: src/inc.c:792
 msgid "Some errors occurred while getting mail."
 msgstr "Hiba történt a levelek fogadásakor."
 
-#: src/inc.c:828
+#: src/inc.c:826
 #, c-format
 msgid "getting new messages of account %s...\n"
-msgstr "%s hozzáférésről az új levelek letöltése...\n"
+msgstr "új levelek letöltése %s fióknál...\n"
 
-#: src/inc.c:832
+#: src/inc.c:830
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: POP3 azonosítás"
 
-#: src/inc.c:835
+#: src/inc.c:833
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Új levelek fogadása"
 
-#: src/inc.c:840
+#: src/inc.c:838
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Kapcsolódás a(z) %s POP3 szerverhez ..."
 
-#: src/inc.c:854
+#: src/inc.c:852
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nem sikerült kapcsolódni a POP3 szerverhez: %s:%d\n"
 
-#: src/inc.c:934 src/rpop3.c:820 src/send_message.c:813
+#: src/inc.c:932 src/rpop3.c:820 src/send_message.c:813
 #, c-format
 msgid "Authenticating..."
 msgstr "Azonosítás..."
 
-#: src/inc.c:935
+#: src/inc.c:933
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Levelek fogadása innen: %s ..."
 
-#: src/inc.c:940
+#: src/inc.c:938
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Új levelek számának megszerzése (STAT)..."
 
-#: src/inc.c:944
+#: src/inc.c:942
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Új levelek számának megszerzése (LAST)..."
 
-#: src/inc.c:948
+#: src/inc.c:946
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Új levelek számának megszerzése (UIDL)..."
 
-#: src/inc.c:952
+#: src/inc.c:950
 msgid "Getting the size of messages (LIST)..."
 msgstr "Új levelek méretének megszerzése (LIST)..."
 
-#: src/inc.c:962
+#: src/inc.c:960
 #, c-format
 msgid "Deleting message %d"
 msgstr "%d levél törlése"
 
-#: src/inc.c:969 src/send_message.c:831
+#: src/inc.c:967 src/send_message.c:831
 msgid "Quitting"
 msgstr "Kilépés"
 
-#: src/inc.c:994
+#: src/inc.c:992
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Levél letöltése (%d / %d) (%s / %s)"
 
-#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4503
+#: src/inc.c:1201 src/inc.c:1221 src/summaryview.c:4503
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -2809,15 +2809,15 @@ msgstr ""
 "A levélszemét szűréshez használt parancs futtatása nem sikerült.\n"
 "Ellenőrizze a levélszemét szűrők beállításait."
 
-#: src/inc.c:1276
+#: src/inc.c:1274
 msgid "Connection failed."
 msgstr "Kapcsolat megszakadt."
 
-#: src/inc.c:1282
+#: src/inc.c:1280
 msgid "Error occurred while processing mail."
 msgstr "Hiba a levelek feldolgozása közben."
 
-#: src/inc.c:1287
+#: src/inc.c:1285
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2826,42 +2826,42 @@ msgstr ""
 "Hiba a levelek feldolgozása közben:\n"
 "%s"
 
-#: src/inc.c:1293
+#: src/inc.c:1291
 msgid "No disk space left."
 msgstr "Nincs több szabad hely a lemezen."
 
-#: src/inc.c:1298
+#: src/inc.c:1296
 msgid "Can't write file."
 msgstr "Nem lehet a fájlba írni."
 
-#: src/inc.c:1303
+#: src/inc.c:1301
 msgid "Socket error."
 msgstr "Socket hiba."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
+#: src/inc.c:1307 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "A távoli fél bezárta a kapcsolatot."
 
-#: src/inc.c:1315
+#: src/inc.c:1313
 msgid "Mailbox is locked."
-msgstr "A postafiók zárolt."
+msgstr "A postaláda zárolt."
 
-#: src/inc.c:1319
+#: src/inc.c:1317
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
 msgstr ""
-"A postafiók zárolt:\n"
+"A postaláda zárolt:\n"
 "%s"
 
-#: src/inc.c:1325 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
+#: src/inc.c:1323 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Az azonosítás nem sikerült."
 
-#: src/inc.c:1330 src/rpop3.c:521 src/send_message.c:949
+#: src/inc.c:1328 src/rpop3.c:521 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2870,15 +2870,15 @@ msgstr ""
 "Az azonosítás nem sikerült:\n"
 "%s"
 
-#: src/inc.c:1335 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
+#: src/inc.c:1333 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Menet időtúllépése."
 
-#: src/inc.c:1376
+#: src/inc.c:1374
 msgid "Incorporation cancelled\n"
 msgstr "Fogadás megszakítva\n"
 
-#: src/inc.c:1478
+#: src/inc.c:1476
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s új leveleinek letöltése a(z) %s mappába...\n"
@@ -2925,7 +2925,7 @@ msgstr "  --receive              új levelek letöltése"
 
 #: src/main.c:526
 msgid "  --receive-all          receive new messages of all accounts"
-msgstr "  --receive-all          új levelek letöltése minden hozzáférésről"
+msgstr "  --receive-all          új levelek letöltése minden fióknál"
 
 #: src/main.c:527
 msgid "  --send                 send all queued messages"
@@ -3029,7 +3029,7 @@ msgstr ""
 #. remote command mode
 #: src/main.c:1135
 msgid "another Sylpheed is already running.\n"
-msgstr "Egy másik Sylpheed már fut.\n"
+msgstr "egy másik Sylpheed már fut.\n"
 
 #: src/main.c:1405
 msgid "Migration of configuration"
@@ -3403,20 +3403,19 @@ msgstr "/_Levél/Fog_adás"
 
 #: src/mainwindow.c:770
 msgid "/_Message/Recei_ve/Get from _current account"
-msgstr "/_Levél/Fog_adás/_Aktuális hozzáférésről"
+msgstr "/_Levél/Fog_adás/_Aktuális fióknál"
 
 #: src/mainwindow.c:772
 msgid "/_Message/Recei_ve/Get from _all accounts"
-msgstr "/_Levél/Fog_adás/_Minden hozzáférésről"
+msgstr "/_Levél/Fog_adás/_Minden fióknál"
 
 #: src/mainwindow.c:774
 msgid "/_Message/Recei_ve/Stop receivin_g"
 msgstr "/_Levél/Fo_gadás/Fogadás leá_llítása"
 
 #: src/mainwindow.c:776
-#, fuzzy
 msgid "/_Message/Recei_ve/_Remote mailbox..."
-msgstr "/_Levél/Fog_adás/_Minden hozzáférésről"
+msgstr "/_Levél/Fog_adás/_Távoli postaláda"
 
 #: src/mainwindow.c:778
 msgid "/_Message/Recei_ve/---"
@@ -3603,19 +3602,19 @@ msgstr "/_Beállítások/---"
 
 #: src/mainwindow.c:861
 msgid "/_Configuration/_Preferences for current account..."
-msgstr "/_Beállítások/Aktuális _hozzáférés beállításai..."
+msgstr "/_Beállítások/Aktuális _fiók beállításai..."
 
 #: src/mainwindow.c:863
 msgid "/_Configuration/Create _new account..."
-msgstr "/_Beállítások/Ú_j hozzáférés létrehozása..."
+msgstr "/_Beállítások/Ú_j fiók létrehozása..."
 
 #: src/mainwindow.c:865
 msgid "/_Configuration/_Edit accounts..."
-msgstr "/_Beállítások/Hozzáférések _szerkesztése..."
+msgstr "/_Beállítások/Fiókok _szerkesztése..."
 
 #: src/mainwindow.c:867
 msgid "/_Configuration/C_hange current account"
-msgstr "/_Beállítások/_Aktuális hozzáférés váltása..."
+msgstr "/_Beállítások/_Aktuális fiók váltása..."
 
 #: src/mainwindow.c:871
 msgid "/_Help/_Manual"
@@ -3805,9 +3804,8 @@ msgid "Exit this program?"
 msgstr "Kilépés a programból?"
 
 #: src/mainwindow.c:3793
-#, fuzzy
 msgid "Select folder to open"
-msgstr "Mappa választása"
+msgstr "Megnyitandó mappa kiválasztása"
 
 #: src/mainwindow.c:3943
 msgid "Command line options"
@@ -3866,7 +3864,7 @@ msgstr ""
 "emailszerkesztő ablak megnyitása\n"
 "emailszerkesztő ablak megnyitása a megadott csatolmányokkal\n"
 "új levelek ellenőrzése\n"
-"új levelek ellenőrzése az összes hozzáférésen\n"
+"új levelek ellenőrzése az összes fióknál\n"
 "összes eltárolt levél elküldése\n"
 "megjeleníti a mappa leveleinek számát\n"
 "megjeleníti minden egyes mappa leveleinek számát\n"
@@ -4089,24 +4087,24 @@ msgstr ""
 
 #: src/prefs_account_dialog.c:441
 msgid "Opening account preferences window...\n"
-msgstr "Hozzáférés beállítások ablak megnyitása...\n"
+msgstr "Fiók beállítások ablak megnyitása...\n"
 
 #: src/prefs_account_dialog.c:481
 #, c-format
 msgid "Account%d"
-msgstr "Hozzáférés%d"
+msgstr "Fiók%d"
 
 #: src/prefs_account_dialog.c:502
 msgid "Preferences for new account"
-msgstr "Új hozzáférés beállításai"
+msgstr "Új fiók beállításai"
 
 #: src/prefs_account_dialog.c:511 src/prefs_toolbar.c:99
 msgid "Account preferences"
-msgstr "Hozzáférés beállítások"
+msgstr "Fiók beállítások"
 
 #: src/prefs_account_dialog.c:534
 msgid "Creating account preferences window...\n"
-msgstr "Hozzáférésbeállítások ablak létrehozása...\n"
+msgstr "Fiók beállítások ablak létrehozása...\n"
 
 #: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:703
 msgid "Receive"
@@ -4136,7 +4134,7 @@ msgstr "Haladó"
 
 #: src/prefs_account_dialog.c:624
 msgid "Name of this account"
-msgstr "Hozzáférés neve"
+msgstr "Fiók neve"
 
 #: src/prefs_account_dialog.c:633
 msgid "Set as default"
@@ -4243,7 +4241,7 @@ msgstr "Levelek szűrése fogadás közben"
 
 #: src/prefs_account_dialog.c:946
 msgid "Default inbox"
-msgstr "Alapértelmezett bejövő postafiók"
+msgstr "Alapértelmezett bejövő mappa"
 
 #: src/prefs_account_dialog.c:966
 msgid "Unfiltered messages will be stored in this folder."
@@ -4280,7 +4278,7 @@ msgstr "Ha 0 van megadva, akkor korlátlan."
 
 #: src/prefs_account_dialog.c:1034
 msgid "`Get all' checks for new messages on this account"
-msgstr "`Fogadás mindről' ellenőrizze ezt a hozzáférést is"
+msgstr "`Fogadás mindről' ellenőrizze ezt a fiókot is"
 
 #: src/prefs_account_dialog.c:1088 src/prefs_customheader.c:186
 msgid "Header"
@@ -4485,7 +4483,7 @@ msgstr "Törölt levelek elhelyezése"
 
 #: src/prefs_account_dialog.c:1951
 msgid "Account name is not entered."
-msgstr "Hozzáférés neve nincs megadva."
+msgstr "A fiók neve nincs megadva."
 
 #: src/prefs_account_dialog.c:1955
 msgid "Mail address is not entered."
@@ -4621,7 +4619,7 @@ msgid ""
 "%s\n"
 "has a syntax error."
 msgstr ""
-"A%s\n"
+"A %s\n"
 "parancs\n"
 "szintaktikai hibát tartalmaz."
 
@@ -4685,7 +4683,7 @@ msgstr "Parancs"
 #: src/prefs_common_dialog.c:824
 #, c-format
 msgid "`%d' will be replaced with the number of new messages."
-msgstr "A `%d' helyére az új levelek száma kerül."
+msgstr "`%d' helyére az új levelek száma kerül."
 
 #: src/prefs_common_dialog.c:828
 msgid "Incorporate from local spool"
@@ -4777,7 +4775,7 @@ msgstr "Válasz"
 
 #: src/prefs_common_dialog.c:1114
 msgid "Automatically select account for replies"
-msgstr "Automatikus hozzáférés választás válaszkor"
+msgstr "Automatikus fiók választás válaszkor"
 
 #: src/prefs_common_dialog.c:1116
 msgid "Quote message when replying"
@@ -5481,7 +5479,7 @@ msgstr "Idézett szöveg - harmadik szint"
 
 #: src/prefs_common_dialog.c:3098
 msgid "URI link"
-msgstr "URI-kapocs"
+msgstr "URI hivatkozás"
 
 #: src/prefs_common_dialog.c:3105
 msgid "Recycle quote colors"
@@ -5898,7 +5896,7 @@ msgstr "Válasz esetén törölje a [...] vagy (...) szöveget a tárgy mezőbő
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
 #: src/prefs_toolbar.c:98 src/progressdialog.c:129
 msgid "Account"
-msgstr "Hozzáférés"
+msgstr "Fiók"
 
 #: src/prefs_folder_item.c:329
 msgid "Apply to subfolders"
@@ -5963,7 +5961,7 @@ msgstr "Dátum"
 #. S_COL_SIZE
 #: src/prefs_summary_column.c:73
 msgid "Number"
-msgstr "Szám"
+msgstr "Sorszám"
 
 #. S_COL_NUMBER
 #: src/prefs_summary_column.c:74 src/summaryview.c:5095
@@ -6044,17 +6042,15 @@ msgstr "Fogadás mindről"
 
 #: src/prefs_toolbar.c:45
 msgid "Incorporate new mail of all accounts"
-msgstr "Új levelek fogadása minden hozzáférésen"
+msgstr "Új levelek fogadása minden fióknál"
 
 #: src/prefs_toolbar.c:47
-#, fuzzy
 msgid "Remote mailbox"
-msgstr "Postaláda eltávolítása"
+msgstr "Távoli postaláda"
 
 #: src/prefs_toolbar.c:48
-#, fuzzy
 msgid "POP3 Remote mailbox"
-msgstr "Postaláda eltávolítása"
+msgstr "POP3 Távoli postaláda"
 
 #: src/prefs_toolbar.c:51
 msgid "Send queued message(s)"
@@ -6234,9 +6230,8 @@ msgid "Status"
 msgstr "Állapot"
 
 #: src/progressdialog.c:145
-#, fuzzy
 msgid "Progress"
-msgstr "Tulajdonságok"
+msgstr "Folyamat"
 
 #: src/query_search.c:425
 msgid "_Save as search folder"
@@ -6330,75 +6325,70 @@ msgid "Error verifying the signature"
 msgstr "Hiba az aláírás ellenőrzése közben"
 
 #: src/rpop3.c:242
-#, fuzzy
 msgid "_File"
-msgstr "/_Fájl"
+msgstr "_Fájl"
 
 #: src/rpop3.c:243 src/rpop3.c:436
-#, fuzzy
 msgid "_Get"
-msgstr "Fogadás"
+msgstr "Fo_gadás"
 
 #: src/rpop3.c:248
-#, fuzzy
 msgid "_Help"
-msgstr "/_Súgó"
+msgstr "_Súgó"
 
 #: src/rpop3.c:249
-#, fuzzy
 msgid "_About"
-msgstr "Névjegy"
+msgstr "_Névjegy"
 
 #: src/rpop3.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "%s - POP3 Remote mailbox"
-msgstr "Postaláda eltávolítása"
+msgstr "%s - POP3 Távoli postaláda"
 
 #: src/rpop3.c:414 src/summaryview.c:5093
 msgid "No."
-msgstr "Db"
+msgstr "Ssz."
 
 #: src/rpop3.c:497
-#, fuzzy, c-format
+#, c-format
 msgid "Connecting to %s:%d ..."
-msgstr "Kapcsolódás %s SMTP szerverhez..."
+msgstr "Kapcsolódás %s:%d szerverhez..."
 
 #: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
-#, fuzzy, c-format
+#, c-format
 msgid "Can't connect to POP3 server: %s:%d"
-msgstr "Nem sikerült kapcsolódni a POP3 szerverhez: %s:%d\n"
+msgstr "Nem sikerült kapcsolódni a POP3 szerverhez: %s:%d"
 
 #: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
-#, fuzzy
 msgid "Error occurred during POP3 session."
-msgstr "hiba történt a POP3 kapcsolat közben\n"
+msgstr "Hiba történt a POP3-as munkamenet közben."
 
 #: src/rpop3.c:533
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
-msgstr "hiba történt a POP3 kapcsolat közben\n"
+msgstr ""
+"Hiba történt a POP3-as munkamenet közben:\n"
+"%s"
 
 #: src/rpop3.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieving message headers (%d / %d) ..."
-msgstr "Levélfejlécek letöltése (%d / %d)"
+msgstr "Levélfejlécek letöltése (%d / %d) ..."
 
 #: src/rpop3.c:846
-#, fuzzy
 msgid "Getting the number of messages..."
-msgstr "Új levelek számának megszerzése (STAT)..."
+msgstr "Új levelek számának megszerzése..."
 
 #: src/rpop3.c:855 src/rpop3.c:868
-#, fuzzy
 msgid "No message"
-msgstr "Nincs új levél."
+msgstr "Nincs levél"
 
 #: src/rpop3.c:901
-#, fuzzy, c-format
+#, c-format
 msgid "Deleted %d messages"
-msgstr "Levél(ek) törlése"
+msgstr "%d levél törölve"
 
 #: src/rpop3.c:939 src/rpop3.c:951 src/rpop3.c:1001 src/rpop3.c:1196
 #: src/send_message.c:830
@@ -6407,35 +6397,36 @@ msgid "Quitting..."
 msgstr "Kilépés..."
 
 #: src/rpop3.c:986
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d messages"
-msgstr "Új levelek fogadása"
+msgstr "%d levél fogadva"
 
 #: src/rpop3.c:993
-#, fuzzy, c-format
+#, c-format
 msgid "Opened message %d"
-msgstr "Levél küldése"
+msgstr "%d levél megnyitva"
 
 #: src/rpop3.c:1009
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d message headers"
-msgstr "Új levelek fogadása"
+msgstr "%d levélfejléc fogadva"
 
 #: src/rpop3.c:1122
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieving message %d ..."
-msgstr "Levelek fogadása innen: %s ..."
+msgstr "%d levél fogadása ..."
 
 #: src/rpop3.c:1148
-#, fuzzy
 msgid "Delete messages"
-msgstr "Levél(ek) törlése"
+msgstr "Levelek törlése"
 
 #: src/rpop3.c:1149
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
 msgstr ""
+"Tényleg törli a szerverről a kiválasztott leveleket?\n"
+"Ezt a műveletet nem lehet visszavonni."
 
 #: src/select-keys.c:96
 #, c-format
@@ -6561,7 +6552,7 @@ msgstr "Levél küldése (%d / %d bájt)"
 #: src/send_message.c:863
 #, c-format
 msgid "%d / %d bytes"
-msgstr ""
+msgstr "%d / %d bájt"
 
 #: src/send_message.c:892
 msgid "Sending message"
@@ -7066,9 +7057,8 @@ msgid "Destination is same as current folder."
 msgstr "A cél azonos az aktuális mappával."
 
 #: src/summaryview.c:3427
-#, fuzzy
 msgid "Select folder to move"
-msgstr "Mappa választása"
+msgstr "Áthelyezendő mappa kiválasztása"
 
 #: src/summaryview.c:3457
 #, c-format
@@ -7080,9 +7070,8 @@ msgid "Destination for copy is same as current folder."
 msgstr "A másolás célja megegyezik az aktuális mappával."
 
 #: src/summaryview.c:3524
-#, fuzzy
 msgid "Select folder to copy"
-msgstr "Mappa választása"
+msgstr "Másolandó mappa kiválasztása"
 
 #: src/summaryview.c:3669
 msgid "Error occurred while processing messages."
@@ -7185,11 +7174,11 @@ msgstr "Sylpheed _megjelenítése"
 
 #: src/trayicon.c:144
 msgid "Get from _current account"
-msgstr "Fogadás az _aktuális hozzáférésről"
+msgstr "Fogadás az _aktuális fióknál"
 
 #: src/trayicon.c:148
 msgid "Get from _all accounts"
-msgstr "Fogadás _minden hozzáférésről"
+msgstr "Fogadás _minden fióknál"
 
 #: src/trayicon.c:152
 msgid "_Send queued messages"
@@ -7202,12 +7191,3 @@ msgstr "_Kilépés"
 #: src/trayicon.c:198 src/trayicon.c:287
 msgid "Sylpheed"
 msgstr "Sylpheed"
-
-#~ msgid "%d messages found.\n"
-#~ msgstr "%d levél található.\n"
-
-#~ msgid "Done (no new messages)"
-#~ msgstr "Kész (nincs új levél)"
-
-#~ msgid "Retrieving (%d message(s) (%s) received)"
-#~ msgstr "Levelek fogadása (%d levél (%s) fogadott)"

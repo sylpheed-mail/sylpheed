@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-01 11:36+0900\n"
-"PO-Revision-Date: 2008-11-19 19:56+0200\n"
+"POT-Creation-Date: 2008-12-15 17:55+0900\n"
+"PO-Revision-Date: 2008-12-05 03:06+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -85,12 +85,12 @@ msgstr "nu se pot seta fanioanele de ștergere: 1:*\n"
 
 #: libsylph/imap.c:1676
 msgid "can't close folder\n"
-msgstr "nu se poate închide folderul\n"
+msgstr "nu se poate închide dosarul\n"
 
 #: libsylph/imap.c:1755
 #, c-format
 msgid "root folder %s not exist\n"
-msgstr "folderul root %s nu există\n"
+msgstr "dosarul root %s nu există\n"
 
 #: libsylph/imap.c:1955 libsylph/imap.c:1963
 msgid "error occurred while getting LIST.\n"
@@ -163,7 +163,7 @@ msgstr "nu se poate obține spațiul de nume\n"
 #: libsylph/imap.c:3320
 #, c-format
 msgid "can't select folder: %s\n"
-msgstr "nu se poate selecta folderul: %s\n"
+msgstr "nu se poate selecta dosarul: %s\n"
 
 #: libsylph/imap.c:3355
 msgid "error on imap command: STATUS\n"
@@ -220,34 +220,34 @@ msgstr "iconv nu poate efectua conversia UTF-7 la %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv nu poate efectua conversia %s la UTF-7\n"
 
-#: libsylph/mbox.c:50 libsylph/mbox.c:207
+#: libsylph/mbox.c:48 libsylph/mbox.c:205
 msgid "can't write to temporary file\n"
 msgstr "nu se poate scrie în fișierul temporar\n"
 
-#: libsylph/mbox.c:79
+#: libsylph/mbox.c:77
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Obținere mesaje de la %s în %s...\n"
 
-#: libsylph/mbox.c:89
+#: libsylph/mbox.c:87
 msgid "can't read mbox file.\n"
 msgstr "nu se poate citi fișierul mbox.\n"
 
-#: libsylph/mbox.c:96
+#: libsylph/mbox.c:94
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "formatul mbox nu este valid: %s\n"
 
-#: libsylph/mbox.c:103
+#: libsylph/mbox.c:101
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "mbox malformat: %s\n"
 
-#: libsylph/mbox.c:121
+#: libsylph/mbox.c:119
 msgid "can't open temporary file\n"
 msgstr "nu se poate deschide fișierul temporar\n"
 
-#: libsylph/mbox.c:172
+#: libsylph/mbox.c:170
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -256,43 +256,43 @@ msgstr ""
 "a fost găsit câmp From „unescaped”:\n"
 "%s"
 
-#: libsylph/mbox.c:299
+#: libsylph/mbox.c:297
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "nu se poate crea fișierul „lock” %s\n"
 
-#: libsylph/mbox.c:300
+#: libsylph/mbox.c:298
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "dacă este posibil, folosiți „flock” în loc de „file”.\n"
 
-#: libsylph/mbox.c:312
+#: libsylph/mbox.c:310
 #, c-format
 msgid "can't create %s\n"
 msgstr "nu se poate crea %s\n"
 
-#: libsylph/mbox.c:318
+#: libsylph/mbox.c:316
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "căsuța poștală este folosită de alt proces, așteaptați...\n"
 
-#: libsylph/mbox.c:347
+#: libsylph/mbox.c:345
 #, c-format
 msgid "can't lock %s\n"
 msgstr "nu se poate bloca %s\n"
 
-#: libsylph/mbox.c:354 libsylph/mbox.c:404
+#: libsylph/mbox.c:352 libsylph/mbox.c:402
 msgid "invalid lock type\n"
 msgstr "tipul de blocare nu este valid\n"
 
-#: libsylph/mbox.c:390
+#: libsylph/mbox.c:388
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "nu se poate debloca %s\n"
 
-#: libsylph/mbox.c:425
+#: libsylph/mbox.c:423
 msgid "can't truncate mailbox to zero.\n"
 msgstr "nu se poate trunchia la zero căsuța poștală.\n"
 
-#: libsylph/mbox.c:449
+#: libsylph/mbox.c:447
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Exportare mesaje din %s în %s...\n"
@@ -308,7 +308,7 @@ msgstr "Nu se poate deschide fișierul de marcaj.\n"
 
 #: libsylph/mh.c:548 libsylph/mh.c:669
 msgid "the src folder is identical to the dest.\n"
-msgstr "folderul sursă este identic cu cel destinație.\n"
+msgstr "dosarul sursă este identic cu cel de destinație.\n"
 
 #: libsylph/mh.c:672
 #, c-format
@@ -322,7 +322,7 @@ msgid ""
 "Can't create folder."
 msgstr ""
 "Fișierul „%s” există deja.\n"
-"Nu se poate crea folderul."
+"Nu se poate crea dosarul."
 
 #: libsylph/mh.c:1538
 #, c-format
@@ -517,7 +517,7 @@ msgstr "Filtru mesaj spam (manual)"
 msgid "Junk mail filter"
 msgstr "Filtru mesaj spam"
 
-#: libsylph/procmime.c:1144
+#: libsylph/procmime.c:1161
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): conversia codului a eșuat.\n"
 
@@ -845,7 +845,7 @@ msgstr "Observații"
 
 #: src/addressadd.c:219
 msgid "Select Address Book Folder"
-msgstr "Selectați folderul pentru agendă"
+msgstr "Selectați dosarul pentru agendă"
 
 #: src/addressbook.c:334 src/compose.c:560 src/mainwindow.c:532
 #: src/messageview.c:149
@@ -921,7 +921,7 @@ msgstr "/A_dresă/_Grup nou"
 
 #: src/addressbook.c:357
 msgid "/_Address/New _Folder"
-msgstr "/A_dresă/_Folder nou"
+msgstr "/A_dresă/_Dosar nou"
 
 #: src/addressbook.c:358
 msgid "/_Address/---"
@@ -942,11 +942,11 @@ msgstr "/_Unelte"
 
 #: src/addressbook.c:363
 msgid "/_Tools/Import _LDIF file"
-msgstr "/_Unelte/Importă fișier _LDIF"
+msgstr "/_Unelte/Importă un fișier _LDIF"
 
 #: src/addressbook.c:364
 msgid "/_Tools/Import _CSV file"
-msgstr "/_Unelte/Importă fișier _CSV"
+msgstr "/_Unelte/Importă un fișier _CSV"
 
 #: src/addressbook.c:366 src/compose.c:716 src/mainwindow.c:870
 #: src/messageview.c:302
@@ -968,7 +968,7 @@ msgstr "/_Grup nou"
 
 #: src/addressbook.c:388 src/addressbook.c:398
 msgid "/New _Folder"
-msgstr "/_Folder nou"
+msgstr "/_Dosar nou"
 
 #: src/addressbook.c:389 src/addressbook.c:399 src/addressbook.c:402
 #: src/compose.c:554 src/folderview.c:251 src/folderview.c:253
@@ -1063,20 +1063,20 @@ msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
 "If deleting the folder only, addresses will be moved into parent folder."
 msgstr ""
-"Vreți să ștergeți folderul ȘI toate adresele din „%s” ?\n"
-"Dacă ștergeți doar folderul, adresele vor fi mutate în folderul părinte."
+"Vreți să ștergeți dosarul ȘI toate adresele din „%s” ?\n"
+"Dacă ștergeți doar dosarul, adresele vor fi mutate în dosarul părinte."
 
 #: src/addressbook.c:1643 src/folderview.c:2491
 msgid "Delete folder"
-msgstr "Ștergere folder"
+msgstr "Ștergere dosar"
 
 #: src/addressbook.c:1643
 msgid "_Folder only"
-msgstr "Doar _folder"
+msgstr "Doar _dosar"
 
 #: src/addressbook.c:1643
 msgid "Folder and _addresses"
-msgstr "Folder și _adrese"
+msgstr "Dosar și _adrese"
 
 #: src/addressbook.c:1648
 #, c-format
@@ -1202,7 +1202,7 @@ msgstr "Grupă"
 #: src/addressbook.c:3227 src/folderview.c:378 src/prefs_account_dialog.c:1835
 #: src/query_search.c:400
 msgid "Folder"
-msgstr "Folder"
+msgstr "Dosar"
 
 #: src/addressbook.c:3243
 msgid "vCard"
@@ -1232,7 +1232,7 @@ msgstr "Notificare"
 msgid "Warning"
 msgstr "Avertisment"
 
-#: src/alertpanel.c:168 src/inc.c:729
+#: src/alertpanel.c:168 src/inc.c:727
 msgid "Error"
 msgstr "Eroare"
 
@@ -1305,7 +1305,7 @@ msgstr "/_Fișier/Trimite _mai târziu"
 # !!! dependent de traducerea lui draft !!!
 #: src/compose.c:566
 msgid "/_File/Save to _draft folder"
-msgstr "/_Fișier/Salvează în folderul _ciorne"
+msgstr "/_Fișier/Salvează în dosarul _ciorne"
 
 #: src/compose.c:568
 msgid "/_File/Save and _keep editing"
@@ -1767,7 +1767,7 @@ msgstr "punere mesaj în coada de așteptare...\n"
 
 #: src/compose.c:4152
 msgid "can't find queue folder\n"
-msgstr "nu se poate găsi folderul de coadă\n"
+msgstr "nu se poate găsi dosarul de coadă\n"
 
 #: src/compose.c:4159
 msgid "can't queue the message\n"
@@ -1872,7 +1872,7 @@ msgstr "Salvare mesaj"
 # !!! dependent de traducerea lui draft !!!
 #: src/compose.c:7069
 msgid "This message has been modified. Save it to draft folder?"
-msgstr "Acest mesaj a fost modificat. Îl salvați în folderul Ciorne ?"
+msgstr "Acest mesaj a fost modificat. Îl salvați în dosarul Ciorne ?"
 
 #: src/compose.c:7071
 msgid "Close _without saving"
@@ -2043,20 +2043,20 @@ msgstr "Adăugare grup nou"
 
 #: src/editgroup.c:537
 msgid "Edit folder"
-msgstr "Editare folder"
+msgstr "Editare dosar"
 
 #: src/editgroup.c:537
 msgid "Input the new name of folder:"
-msgstr "Introduceți noul nume al folderului:"
+msgstr "Introduceți noul nume al dosarului:"
 
 #: src/editgroup.c:540 src/foldersel.c:585 src/folderview.c:2234
 #: src/folderview.c:2240
 msgid "New folder"
-msgstr "Folder nou"
+msgstr "Dosar nou"
 
 #: src/editgroup.c:541 src/foldersel.c:586 src/folderview.c:2241
 msgid "Input the name of new folder:"
-msgstr "Introduceți numele noului folder:"
+msgstr "Introduceți numele dosarului nou:"
 
 #: src/editjpilot.c:200
 msgid "File does not appear to be JPilot format."
@@ -2178,13 +2178,14 @@ msgstr "Editare înregistrare vCard"
 msgid "Add New vCard Entry"
 msgstr "Adăugare înregistrare vCard"
 
+# titlu la export mbox
 #: src/export.c:148
 msgid "Export"
-msgstr "Exportă"
+msgstr "Export"
 
 #: src/export.c:167
 msgid "Specify target folder and mbox file."
-msgstr "Specificați folderul destinație și fișierul mbox."
+msgstr "Specificați dosarul sursă și fișierul mbox."
 
 #: src/export.c:177
 msgid "Source dir:"
@@ -2192,15 +2193,13 @@ msgstr "Director sursă:"
 
 #: src/export.c:182
 msgid "Exporting file:"
-msgstr "Exportare fișier:"
+msgstr "Fișier de export:"
 
 #: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Selectare... "
 
-# hm ? sau selectează fișier de exportat ?
-# sau selectează fișierul de exportat ?
 #: src/export.c:239
 msgid "Select exporting file"
 msgstr "Selectați fișierul de exportat"
@@ -2223,7 +2222,7 @@ msgstr "Selectare director"
 
 #: src/foldersel.c:252
 msgid "Select folder"
-msgstr "Selectare folder"
+msgstr "Selectare dosar"
 
 #: src/foldersel.c:390 src/folderview.c:1215 src/prefs_folder_item.c:235
 msgid "Inbox"
@@ -2247,39 +2246,39 @@ msgstr "Ciorne"
 
 #: src/foldersel.c:587 src/folderview.c:2238 src/folderview.c:2242
 msgid "NewFolder"
-msgstr "Folder nou"
+msgstr "Dosar nou"
 
 #: src/foldersel.c:595 src/folderview.c:2250 src/folderview.c:2311
 #, c-format
 msgid "`%c' can't be included in folder name."
-msgstr "„%c” nu poate fi inclus în numele folderului."
+msgstr "„%c” nu poate fi inclus în numele dosarului."
 
 #: src/foldersel.c:605 src/folderview.c:2260 src/folderview.c:2319
 #: src/query_search.c:1052
 #, c-format
 msgid "The folder `%s' already exists."
-msgstr "Folderul „%s” există deja."
+msgstr "Dosarul „%s” există deja."
 
 #: src/foldersel.c:613 src/folderview.c:2267
 #, c-format
 msgid "Can't create the folder `%s'."
-msgstr "Folderul „%s” nu a putut fi creat."
+msgstr "Dosarul „%s” nu a putut fi creat."
 
 #: src/folderview.c:247 src/folderview.c:269
 msgid "/Create _new folder..."
-msgstr "/Creează un folder _nou..."
+msgstr "/Creează un dosar _nou..."
 
 #: src/folderview.c:248 src/folderview.c:270 src/folderview.c:296
 msgid "/_Rename folder..."
-msgstr "/_Redenumește folderul..."
+msgstr "/_Redenumește dosarul..."
 
 #: src/folderview.c:249 src/folderview.c:271
 msgid "/_Move folder..."
-msgstr "/_Mută folderul..."
+msgstr "/_Mută dosarul..."
 
 #: src/folderview.c:250 src/folderview.c:272 src/folderview.c:297
 msgid "/_Delete folder"
-msgstr "/Șterge fol_derul"
+msgstr "/Șterge _dosarul"
 
 #: src/folderview.c:252 src/folderview.c:274
 msgid "/Empty _trash"
@@ -2289,9 +2288,10 @@ msgstr "/_Golește gunoiul"
 msgid "/_Check for new messages"
 msgstr "/Verifi_că pentru mesaje noi"
 
+# hm ? sau la singular ?
 #: src/folderview.c:256 src/folderview.c:280
 msgid "/R_ebuild folder tree"
-msgstr "/R_econstruiește arborele folder"
+msgstr "/R_econstruiește arborele de dosare"
 
 #: src/folderview.c:257 src/folderview.c:281 src/folderview.c:303
 msgid "/_Update summary"
@@ -2323,12 +2323,13 @@ msgstr "/Ște_rge grupul de știri"
 
 #: src/folderview.c:331
 msgid "Creating folder view...\n"
-msgstr "Creare vizualizare folder...\n"
+msgstr "Creare vizualizare dosar...\n"
 
 #: src/folderview.c:408
 msgid "New"
 msgstr "Nou"
 
+# comun și când search și în dropdown-ul din fereastra principală
 #. S_COL_MARK
 #: src/folderview.c:424 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:67 src/quick_search.c:96
@@ -2341,43 +2342,47 @@ msgstr "Total"
 
 #: src/folderview.c:573
 msgid "Setting folder info...\n"
-msgstr "Setare informații folder...\n"
+msgstr "Setare informații dosar...\n"
 
 #: src/folderview.c:574
 msgid "Setting folder info..."
-msgstr "Setare informații folder..."
+msgstr "Setare informații dosar..."
 
 #: src/folderview.c:882 src/mainwindow.c:4027 src/setup.c:80
 #, c-format
 msgid "Scanning folder %s%c%s ..."
-msgstr "Scanare folder %s%c%s ..."
+msgstr "Scanare dosar %s%c%s ..."
 
 #: src/folderview.c:886 src/mainwindow.c:4032 src/setup.c:85
 #, c-format
 msgid "Scanning folder %s ..."
-msgstr "Scanare folder %s ..."
+msgstr "Scanare dosar %s ..."
 
+# hm ? sau la singular ?
 #: src/folderview.c:928
 msgid "Rebuild folder tree"
-msgstr "Reconstruire arbore folder"
+msgstr "Reconstruire arbore de dosare"
 
+# hm ? sau la singular ?
 #: src/folderview.c:929
 msgid "The folder tree will be rebuilt. Continue?"
-msgstr "Arborele folder va fi reconstruit. Continuați ?"
+msgstr "Arborele de dosare va fi reconstruit. Continuați ?"
 
+# hm ? sau la singular ?
 #: src/folderview.c:938
 msgid "Rebuilding folder tree..."
-msgstr "Reconstruire arbore folder..."
+msgstr "Reconstruire arbore de dosare..."
 
+# hm ? sau la singular ?
 #: src/folderview.c:945
 msgid "Rebuilding of the folder tree failed."
-msgstr "Reconstruirea arborelui folder a eșuat."
+msgstr "Reconstruirea arborelui de dosare a eșuat."
 
-# !!! nu este clar unde apare !!!
+# nu este clar unde apare
 # (IMAP ?)
 #: src/folderview.c:1079
 msgid "Checking for new messages in all folders..."
-msgstr "Verifică pentru mesaje noi în toate folderele..."
+msgstr "Verifică pentru mesaje noi în toate dosarele..."
 
 #: src/folderview.c:1247 src/prefs_common_dialog.c:1929 src/prefs_toolbar.c:68
 msgid "Junk"
@@ -2386,7 +2391,7 @@ msgstr "Spam"
 #: src/folderview.c:1919
 #, c-format
 msgid "Folder %s is selected\n"
-msgstr "Este selectat folderul %s\n"
+msgstr "Este selectat dosarul %s\n"
 
 #: src/folderview.c:2074
 #, c-format
@@ -2414,8 +2419,8 @@ msgid ""
 "(if you want to create a folder to store subfolders,\n"
 " append `/' at the end of the name)"
 msgstr ""
-"Introduceți numele noului folder:\n"
-"(dacă vreți să creați un folder care să conțină subfoldere,\n"
+"Introduceți numele noului dosar:\n"
+"(dacă vreți să creați un dosar care să conțină subdosare,\n"
 " adăugați „/” la sfârșitul numelui)"
 
 #: src/folderview.c:2299
@@ -2425,17 +2430,17 @@ msgstr "Introduceți noul nume pentru „%s”:"
 
 #: src/folderview.c:2300
 msgid "Rename folder"
-msgstr "Redenumește folderul"
+msgstr "Redenumește dosarul"
 
 #: src/folderview.c:2331 src/folderview.c:2339
 #, c-format
 msgid "Can't rename the folder '%s'."
-msgstr "Nu se poate redenumi folderul „%s”."
+msgstr "Nu se poate redenumi dosarul „%s”."
 
 #: src/folderview.c:2412
 #, c-format
 msgid "Can't move the folder `%s'."
-msgstr "Nu se poate muta folderul „%s”."
+msgstr "Nu se poate muta dosarul „%s”."
 
 #: src/folderview.c:2481
 #, c-format
@@ -2443,12 +2448,12 @@ msgid ""
 "Delete the search folder '%s' ?\n"
 "The real messages are not deleted."
 msgstr ""
-"Ștergeți folderul de căutare „%s” ?\n"
+"Ștergeți dosarul de căutare „%s” ?\n"
 "Mesajele reale NU sunt șterse de pe disc."
 
 #: src/folderview.c:2483
 msgid "Delete search folder"
-msgstr "Șterge folderul pentru căutare"
+msgstr "Șterge dosarul pentru căutare"
 
 #: src/folderview.c:2488
 #, c-format
@@ -2458,7 +2463,7 @@ msgid ""
 "\n"
 "Do you really want to delete?"
 msgstr ""
-"Toate folderele și mesajele din „%s” vor fi șterse permanent.\n"
+"Toate dosarele și mesajele din „%s” vor fi șterse permanent.\n"
 "Recuperarea nu va fi posibilă.\n"
 "\n"
 "Chiar vreți să ștergeți ?"
@@ -2466,7 +2471,7 @@ msgstr ""
 #: src/folderview.c:2520 src/folderview.c:2526
 #, c-format
 msgid "Can't remove the folder '%s'."
-msgstr "Nu se poate șterge folderul „%s”."
+msgstr "Nu se poate șterge dosarul „%s”."
 
 #: src/folderview.c:2562
 msgid "Empty trash"
@@ -2474,7 +2479,7 @@ msgstr "Golire gunoi"
 
 #: src/folderview.c:2563
 msgid "Delete all messages in the trash folder?"
-msgstr "Ștergeți toate mesajele din folderul de gunoi ?"
+msgstr "Ștergeți toate mesajele din dosarul de gunoi ?"
 
 #: src/folderview.c:2604
 #, c-format
@@ -2537,25 +2542,23 @@ msgstr "Creare vizualizare imagine...\n"
 msgid "Can't load the image."
 msgstr "Imaginea nu a putut fi încărcată."
 
+# titlu la import mbox
 #: src/import.c:154
 msgid "Import"
-msgstr "Importă"
+msgstr "Import"
 
 #: src/import.c:173
 msgid "Specify target mbox file and destination folder."
-msgstr "Specificați fișierul mbox țintă și folderul destinație."
+msgstr "Specificați fișierul mbox sursă și dosarul destinație."
 
-# hm ? sau import fișier ?
 #: src/import.c:183
 msgid "Importing file:"
-msgstr "Importare fișier:"
+msgstr "Fișier de import:"
 
 #: src/import.c:188
 msgid "Destination dir:"
 msgstr "Director destinație:"
 
-# hm ? sau selectează fișier de importat ?
-# sau selectează fișierul de importat ?
 #: src/import.c:245
 msgid "Select importing file"
 msgstr "Selectați fișierul de importat"
@@ -2714,141 +2717,141 @@ msgstr "Import de fișier LDIF în agendă"
 msgid "Attributes"
 msgstr "Atribute"
 
-#: src/inc.c:161
+#: src/inc.c:159
 #, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d mesaje noi"
 
-#: src/inc.c:479
+#: src/inc.c:477
 msgid "Authenticating with POP3"
 msgstr "Autentificare cu POP3"
 
-#: src/inc.c:505
+#: src/inc.c:503
 msgid "Retrieving new messages"
 msgstr "Recepționare mesaje noi"
 
-#: src/inc.c:548
+#: src/inc.c:546
 msgid "Standby"
 msgstr "Așteptare"
 
-#: src/inc.c:685 src/inc.c:735
+#: src/inc.c:683 src/inc.c:733
 msgid "Cancelled"
 msgstr "Anulat"
 
-#: src/inc.c:696
+#: src/inc.c:694
 msgid "Retrieving"
 msgstr "Recepționare"
 
-#: src/inc.c:705 src/inc.c:1015
+#: src/inc.c:703 src/inc.c:1013
 #, c-format
 msgid "%d message(s) (%s) received"
 msgstr "%d mesaj(e) (%s) primit(e)"
 
-#: src/inc.c:709
+#: src/inc.c:707
 #, c-format
 msgid "no new messages"
 msgstr "nu sunt mesaje noi"
 
-#: src/inc.c:710
+#: src/inc.c:708
 msgid "Done"
 msgstr "Gata"
 
-#: src/inc.c:715
+#: src/inc.c:713
 msgid "Connection failed"
 msgstr "Conexiunea a eșuat"
 
-#: src/inc.c:718
+#: src/inc.c:716
 msgid "Auth failed"
 msgstr "Autentificarea a eșuat"
 
-#: src/inc.c:722
+#: src/inc.c:720
 msgid "Locked"
 msgstr "Blocat"
 
-#: src/inc.c:732
+#: src/inc.c:730
 msgid "Timeout"
 msgstr "Timp expirat"
 
-#: src/inc.c:782
+#: src/inc.c:780
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Terminat (%d mesaj(e) noi)"
 
-#: src/inc.c:785
+#: src/inc.c:783
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Terminat (nu sunt mesaje noi)"
 
-#: src/inc.c:794
+#: src/inc.c:792
 msgid "Some errors occurred while getting mail."
 msgstr "Au apărut unele erori în timpul obținerii mail-ului."
 
-#: src/inc.c:828
+#: src/inc.c:826
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "obținere mesaje noi pentru contul %s...\n"
 
-#: src/inc.c:832
+#: src/inc.c:830
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: Autentificare cu POP3"
 
-#: src/inc.c:835
+#: src/inc.c:833
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: recepționare mesaje noi"
 
-#: src/inc.c:840
+#: src/inc.c:838
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Conectare la serverul POP3: %s ..."
 
-#: src/inc.c:854
+#: src/inc.c:852
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nu se poate efectua conexiunea la serverul POP3: %s:%d\n"
 
-#: src/inc.c:934 src/rpop3.c:820 src/send_message.c:813
+#: src/inc.c:932 src/rpop3.c:820 src/send_message.c:813
 #, c-format
 msgid "Authenticating..."
 msgstr "Autentificare..."
 
-#: src/inc.c:935
+#: src/inc.c:933
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Recepționare mesaje de la %s..."
 
-#: src/inc.c:940
+#: src/inc.c:938
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Obținerea numărului de mesaje noi (STAT)..."
 
-#: src/inc.c:944
+#: src/inc.c:942
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Obținerea numărului de mesaje noi (LAST)..."
 
-#: src/inc.c:948
+#: src/inc.c:946
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Obținerea numărului de mesaje noi (UIDL)..."
 
-#: src/inc.c:952
+#: src/inc.c:950
 msgid "Getting the size of messages (LIST)..."
 msgstr "Obținerea dimensiunii mesajelor (LIST)..."
 
-#: src/inc.c:962
+#: src/inc.c:960
 #, c-format
 msgid "Deleting message %d"
 msgstr "Ștergere mesaje %d"
 
-#: src/inc.c:969 src/send_message.c:831
+#: src/inc.c:967 src/send_message.c:831
 msgid "Quitting"
 msgstr "Părăsire"
 
-#: src/inc.c:994
+#: src/inc.c:992
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Recepționare mesaje (%d / %d) (%s / %s)"
 
-#: src/inc.c:1203 src/inc.c:1223 src/summaryview.c:4503
+#: src/inc.c:1201 src/inc.c:1221 src/summaryview.c:4503
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -2856,15 +2859,15 @@ msgstr ""
 "Execuția comenzii filtrului de spam a eșuat.\n"
 "Verificați setările controlului de spam."
 
-#: src/inc.c:1276
+#: src/inc.c:1274
 msgid "Connection failed."
 msgstr "Conexiunea a eșuat"
 
-#: src/inc.c:1282
+#: src/inc.c:1280
 msgid "Error occurred while processing mail."
 msgstr "A apărut o eroare în timpul procesării mail-ului."
 
-#: src/inc.c:1287
+#: src/inc.c:1285
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2873,29 +2876,29 @@ msgstr ""
 "A apărut o eroare în timpul procesării mail-ului.\n"
 "%s"
 
-#: src/inc.c:1293
+#: src/inc.c:1291
 msgid "No disk space left."
 msgstr "Nu mai este spațiu pe disc."
 
-#: src/inc.c:1298
+#: src/inc.c:1296
 msgid "Can't write file."
 msgstr "Nu se poate scrie fișierul."
 
-#: src/inc.c:1303
+#: src/inc.c:1301
 msgid "Socket error."
 msgstr "Eroare socket."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1309 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
+#: src/inc.c:1307 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:760
 #: src/send_message.c:966
 msgid "Connection closed by the remote host."
 msgstr "Conexiune închisă de serverul de la distanță."
 
-#: src/inc.c:1315
+#: src/inc.c:1313
 msgid "Mailbox is locked."
 msgstr "Căsuța poștală este blocată"
 
-#: src/inc.c:1319
+#: src/inc.c:1317
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -2904,11 +2907,11 @@ msgstr ""
 "Căsuța poștală este blocată:\n"
 "%s"
 
-#: src/inc.c:1325 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
+#: src/inc.c:1323 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:946
 msgid "Authentication failed."
 msgstr "Autentificarea a eșuat."
 
-#: src/inc.c:1330 src/rpop3.c:521 src/send_message.c:949
+#: src/inc.c:1328 src/rpop3.c:521 src/send_message.c:949
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -2917,15 +2920,15 @@ msgstr ""
 "Autentificarea a eșuat:\n"
 "%s"
 
-#: src/inc.c:1335 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
+#: src/inc.c:1333 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:970
 msgid "Session timed out."
 msgstr "Timpul sesiunii a expirat."
 
-#: src/inc.c:1376
+#: src/inc.c:1374
 msgid "Incorporation cancelled\n"
 msgstr "Încorporarea a fost anulată\n"
 
-#: src/inc.c:1478
+#: src/inc.c:1476
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Obținere mesaje noi de la %s în %s...\n"
@@ -2988,7 +2991,7 @@ msgid ""
 "                         show the status of each folder"
 msgstr ""
 "  --status-full [folder]...\n"
-"                         arată starea fiecărui folder"
+"                         arată starea fiecărui dosar"
 
 #: src/main.c:531
 msgid "  --open folderid/msgnum open message in new window"
@@ -3100,23 +3103,23 @@ msgstr ""
 
 #: src/mainwindow.c:533
 msgid "/_File/_Folder"
-msgstr "/_Fișier/_Folder"
+msgstr "/_Fișier/_Dosar"
 
 #: src/mainwindow.c:534
 msgid "/_File/_Folder/Create _new folder..."
-msgstr "/_Fișier/_Folder/Creează un folder _nou..."
+msgstr "/_Fișier/_Dosar/Creează un dosar _nou..."
 
 #: src/mainwindow.c:536
 msgid "/_File/_Folder/_Rename folder..."
-msgstr "/_Fișier/_Folder/_Redenumește folderul..."
+msgstr "/_Fișier/_Dosar/_Redenumește dosarul..."
 
 #: src/mainwindow.c:537
 msgid "/_File/_Folder/_Move folder..."
-msgstr "/_Fișier/_Folder/_Mută folderul..."
+msgstr "/_Fișier/_Dosar/_Mută dosarul..."
 
 #: src/mainwindow.c:538
 msgid "/_File/_Folder/_Delete folder"
-msgstr "/_Fișier/_Folder/Șter_ge folderul"
+msgstr "/_Fișier/_Dosar/Șter_ge dosarul"
 
 #: src/mainwindow.c:539
 msgid "/_File/_Mailbox"
@@ -3144,21 +3147,22 @@ msgstr ""
 "/_Fișier/_Căsuță poștală/Verifică pentru mesaje noi în to_ate căsuțele "
 "poștale"
 
+# hm ? sau la singular ?
 #: src/mainwindow.c:548
 msgid "/_File/_Mailbox/R_ebuild folder tree"
-msgstr "/_Fișier/_Căsuță poștală/R_econstruiește arborele folder"
+msgstr "/_Fișier/_Căsuță poștală/R_econstruiește arborele de dosare"
 
 #: src/mainwindow.c:551
 msgid "/_File/_Import mbox file..."
-msgstr "/_Fișier/_Importă fișier mbox..."
+msgstr "/_Fișier/_Importă un fișier mbox..."
 
 #: src/mainwindow.c:552
 msgid "/_File/_Export to mbox file..."
-msgstr "/_Fișier/_Exportă fișier mbox..."
+msgstr "/_Fișier/_Exportă în fișier mbox..."
 
 #: src/mainwindow.c:554
 msgid "/_File/Empty all _trash"
-msgstr "/_Fișier/_Golește gunoiul"
+msgstr "/_Fișier/_Golește tot gunoiul"
 
 #: src/mainwindow.c:556 src/messageview.c:150
 msgid "/_File/_Save as..."
@@ -3201,9 +3205,10 @@ msgstr "/_Editare/Căutare _rapidă"
 msgid "/_View/Show or hi_de"
 msgstr "/_Vizualizare/Arată sau as_cunde"
 
+# hm ? sau la singular ?
 #: src/mainwindow.c:580
 msgid "/_View/Show or hi_de/_Folder tree"
-msgstr "/_Vizualizare/Arată sau ascun_de/Arbore _folder"
+msgstr "/_Vizualizare/Arată sau ascun_de/Arbore de _dosare"
 
 #: src/mainwindow.c:582
 msgid "/_View/Show or hi_de/_Message view"
@@ -3258,9 +3263,10 @@ msgstr "/_Vizualizare/Aran_jament/_Normal"
 msgid "/_View/Layou_t/_Vertical"
 msgstr "/_Vizualizare/Aran_jament/_Vertical"
 
+# hm ? sau la singular ?
 #: src/mainwindow.c:605
 msgid "/_View/Separate f_older tree"
-msgstr "/_Vizualizare/Separă fereastra arb_orelui folderelor"
+msgstr "/_Vizualizare/Separă fereastra arb_orelui de dosare"
 
 #: src/mainwindow.c:606
 msgid "/_View/Separate _message view"
@@ -3588,7 +3594,7 @@ msgstr "/_Unelte/A_daugă expeditorul în agendă..."
 
 #: src/mainwindow.c:821
 msgid "/_Tools/_Filter all messages in folder"
-msgstr "/_Unelte/_Filtrează toate mesajele în folder"
+msgstr "/_Unelte/_Filtrează toate mesajele în dosar"
 
 #: src/mainwindow.c:823
 msgid "/_Tools/Filter _selected messages"
@@ -3616,7 +3622,7 @@ msgstr "/_Unelte/_Creează regulă de filtrare/pe baza câmpului _Subiect"
 
 #: src/mainwindow.c:835
 msgid "/_Tools/Filter _junk mails in folder"
-msgstr "/_Unelte/Filtrează mesa_jele spam în folder"
+msgstr "/_Unelte/Filtrează mesa_jele spam în dosar"
 
 #: src/mainwindow.c:837
 msgid "/_Tools/Filter junk _mails in selected messages"
@@ -3756,7 +3762,7 @@ msgstr "Golire gunoi"
 
 #: src/mainwindow.c:1740
 msgid "Delete all messages in trash folders?"
-msgstr "Ștergeți toate mesajele din folderele de gunoi ?"
+msgstr "Ștergeți toate mesajele din dosarele de gunoi ?"
 
 #: src/mainwindow.c:1770
 msgid "Add mailbox"
@@ -3793,7 +3799,7 @@ msgstr ""
 
 #: src/mainwindow.c:2305
 msgid "Sylpheed - Folder View"
-msgstr "Sylpheed - Vizualizare folder"
+msgstr "Sylpheed - Vizualizare dosar"
 
 #: src/mainwindow.c:2324
 msgid "Sylpheed - Message View"
@@ -3864,9 +3870,8 @@ msgid "Exit this program?"
 msgstr "Ieșiți din acest program ?"
 
 #: src/mainwindow.c:3793
-#, fuzzy
 msgid "Select folder to open"
-msgstr "Selectare folder"
+msgstr "Selectați dosarul de deschis"
 
 #: src/mainwindow.c:3943
 msgid "Command line options"
@@ -3928,7 +3933,7 @@ msgstr ""
 "primește mesaje noi pentru toate conturile\n"
 "trimite toate mesajele de la coada de așteptare\n"
 "arată numărul total de mesaje\n"
-"arată starea fiecărui folder\n"
+"arată starea fiecărui dosar\n"
 "deschide mesajul în fereastră nouă\n"
 "specifică directorul care conține fișierele de configurare\n"
 "ieșire Sylpheed\n"
@@ -4311,7 +4316,7 @@ msgstr "Inbox-ul implicit"
 
 #: src/prefs_account_dialog.c:966
 msgid "Unfiltered messages will be stored in this folder."
-msgstr "Mesajele nefiltrate vor fi stocate în acest folder."
+msgstr "Mesajele nefiltrate vor fi stocate în acest dosar."
 
 #: src/prefs_account_dialog.c:979 src/prefs_account_dialog.c:1138
 msgid "Authentication method"
@@ -4530,7 +4535,7 @@ msgstr "Director server IMAP"
 
 #: src/prefs_account_dialog.c:1828
 msgid "Only the subfolders of this directory will be displayed."
-msgstr "Vor fi afișate numai subfolderele acestui director."
+msgstr "Vor fi afișate numai subdosarele acestui director."
 
 # hm ?
 #: src/prefs_account_dialog.c:1831
@@ -4583,7 +4588,7 @@ msgstr "Nu a fost introdus serverul NNTP."
 
 #: src/prefs_account_dialog.c:2006
 msgid "Specified folder is not a queue folder."
-msgstr "Folderul specificat nu este folder de coadă."
+msgstr "Dosarul specificat nu este dosar de coadă."
 
 #: src/prefs_account_dialog.c:2116
 msgid ""
@@ -4738,10 +4743,9 @@ msgstr "minut(e)"
 msgid "Check new mail on startup"
 msgstr "Verifică pentru eventuale mesaje noi la pornirea programului"
 
-# ???
 #: src/prefs_common_dialog.c:796
 msgid "Update all local folders after incorporation"
-msgstr "Actualizează toate folderele locale după încorporare"
+msgstr "Actualizează toate dosarele locale după încorporare"
 
 #: src/prefs_common_dialog.c:801
 msgid "Execute command when new messages arrived"
@@ -4774,7 +4778,7 @@ msgstr "Cale spool"
 # !!! dependent de traducerea lui Outbox !!!
 #: src/prefs_common_dialog.c:903
 msgid "Save sent messages to outbox"
-msgstr "Salvează mesajele trimise în folderul „Trimise”"
+msgstr "Salvează mesajele trimise în dosarul „Trimise”"
 
 #: src/prefs_common_dialog.c:905
 msgid "Apply filter rules to sent messages"
@@ -4940,11 +4944,11 @@ msgstr "Font text"
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1489
 msgid "Folder View"
-msgstr "Vizualizare foldere"
+msgstr "Vizualizare dosare"
 
 #: src/prefs_common_dialog.c:1497
 msgid "Display unread number next to folder name"
-msgstr "Afișează numărul de mesaje necitite lângă numele folderului"
+msgstr "Afișează numărul de mesaje necitite lângă numele dosarului"
 
 # hm ?
 #: src/prefs_common_dialog.c:1499
@@ -5108,11 +5112,11 @@ msgstr ""
 
 #: src/prefs_common_dialog.c:1977
 msgid "Junk folder"
-msgstr "Folder spam"
+msgstr "Dosar de spam"
 
 #: src/prefs_common_dialog.c:1995
 msgid "The messages which are set as junk mail will be moved to this folder."
-msgstr "Mesajele care sunt marcate ca spam vor fi mutate în acest folder."
+msgstr "Mesajele care sunt marcate ca spam vor fi mutate în acest dosar."
 
 #: src/prefs_common_dialog.c:2006
 msgid "Filter messages classified as junk on receiving"
@@ -5171,7 +5175,7 @@ msgstr "Deschide totdeauna mesajele în mod sumar când sunt selectate"
 
 #: src/prefs_common_dialog.c:2194
 msgid "Open first unread message when a folder is opened"
-msgstr "Deschide primul mesaj necitit la deschiderea unui folder"
+msgstr "Deschide primul mesaj necitit la deschiderea unui dosar"
 
 #: src/prefs_common_dialog.c:2201
 msgid "Remember last selected message"
@@ -5184,11 +5188,11 @@ msgstr ""
 
 #: src/prefs_common_dialog.c:2209
 msgid "Open inbox after receiving new mail"
-msgstr "Deschide folderul „Primite (Inbox)” după primirea de mesaje noi"
+msgstr "Deschide dosarul „Primite (Inbox)” după primirea de mesaje noi"
 
 #: src/prefs_common_dialog.c:2211
 msgid "Open inbox on startup"
-msgstr "Deschide folderul „Primite (Inbox)” la pornirea programului"
+msgstr "Deschide dosarul „Primite (Inbox)” la pornirea programului"
 
 #: src/prefs_common_dialog.c:2219
 msgid "Execute immediately when moving or deleting messages"
@@ -5314,8 +5318,8 @@ msgid ""
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
-"Activați această opțiune dacă conținutul folderelor are posibilitatea de a "
-"fi modificat de alte aplicații.\n"
+"Activați această opțiune dacă conținutul dosarelor are posibilitatea de a fi "
+"modificat de alte aplicații.\n"
 "Această opțiune va degrada performanța de afișare a sumarului."
 
 #: src/prefs_common_dialog.c:2615
@@ -5792,6 +5796,7 @@ msgstr "Rezultatul comenzii"
 msgid "Age"
 msgstr "Vârstă"
 
+# comun și când search și în dropdown-ul din fereastra principală
 #: src/prefs_filter_edit.c:508 src/quick_search.c:97
 msgid "Marked"
 msgstr "Marcat"
@@ -5903,7 +5908,7 @@ msgstr "Oprește evaluarea de regulă"
 
 #: src/prefs_filter_edit.c:696 src/prefs_filter_edit.c:1059
 msgid "folder:"
-msgstr "folder:"
+msgstr "dosar:"
 
 #: src/prefs_filter_edit.c:1020
 msgid "day(s)"
@@ -5932,7 +5937,7 @@ msgstr "Comanda nu este specificată."
 
 #: src/prefs_filter_edit.c:1816 src/prefs_filter_edit.c:1823
 msgid "Destination folder is not specified."
-msgstr "Folderul de destinație nu a fost specificat."
+msgstr "Dosarul de destinație nu a fost specificat."
 
 #: src/prefs_filter_edit.c:1893
 msgid "Invalid condition exists."
@@ -5956,7 +5961,7 @@ msgstr "Nu există acțiune."
 
 #: src/prefs_folder_item.c:118
 msgid "Folder properties"
-msgstr "Proprietăți folder"
+msgstr "Proprietăți dosar"
 
 #: src/prefs_folder_item.c:186
 msgid "Identifier"
@@ -6011,11 +6016,11 @@ msgstr "Toate condițiile următoare"
 
 #: src/prefs_search_folder.c:231 src/query_search.c:322
 msgid "Folder:"
-msgstr "Folder:"
+msgstr "Dosar:"
 
 #: src/prefs_search_folder.c:248 src/query_search.c:340
 msgid "Search subfolders"
-msgstr "Caută și în subfoldere"
+msgstr "Caută și în subdosare"
 
 #: src/prefs_summary_column.c:66
 msgid "Mark"
@@ -6251,7 +6256,7 @@ msgstr "Ciornă"
 
 #: src/prefs_toolbar.c:109
 msgid "Save to draft folder"
-msgstr "Salvează în folderul de ciorne"
+msgstr "Salvează în dosarul de ciorne"
 
 #: src/prefs_toolbar.c:111
 msgid "Insert"
@@ -6328,7 +6333,7 @@ msgstr "Progres"
 
 #: src/query_search.c:425
 msgid "_Save as search folder"
-msgstr "_Salvează ca folder de căutare"
+msgstr "_Salvează ca dosar de căutare"
 
 #: src/query_search.c:547
 #, c-format
@@ -6361,7 +6366,7 @@ msgstr "(Fără Dată)"
 
 #: src/query_search.c:890
 msgid "Save as search folder"
-msgstr "Salvează ca folder de căutare"
+msgstr "Salvează ca dosar de căutare"
 
 #: src/query_search.c:911
 msgid "Location:"
@@ -6369,7 +6374,7 @@ msgstr "Locație:"
 
 #: src/query_search.c:926
 msgid "Folder name:"
-msgstr "Nume folder:"
+msgstr "Nume dosar:"
 
 #: src/quick_search.c:95
 msgid "All"
@@ -6387,11 +6392,11 @@ msgstr "Cu atașament"
 
 #: src/quick_search.c:101
 msgid "Within 1 day"
-msgstr "Timp de o zi"
+msgstr "Din ultima zi"
 
 #: src/quick_search.c:102
 msgid "Last 5 days"
-msgstr "Ultimele 5 zile"
+msgstr "Din ultimele 5 zile"
 
 #: src/quick_search.c:111
 msgid "Search:"
@@ -6983,7 +6988,7 @@ msgstr "Au rămas unele marcaje. Doriți să fie procesate ?"
 #: src/summaryview.c:728
 #, c-format
 msgid "Scanning folder (%s)..."
-msgstr "Scanare folder (%s)..."
+msgstr "Scanare dosar (%s)..."
 
 #: src/summaryview.c:1390
 msgid "_Search again"
@@ -7003,7 +7008,7 @@ msgstr "Nu sunt mesaje necitite."
 
 #: src/summaryview.c:1421
 msgid "No unread message found. Go to next folder?"
-msgstr "Nu s-a găsit nici un mesaj necitit. Mergeți la folderul următor ?"
+msgstr "Nu s-a găsit nici un mesaj necitit. Mergeți la dosarul următor ?"
 
 #: src/summaryview.c:1429 src/summaryview.c:1438
 msgid "No more new messages"
@@ -7019,7 +7024,7 @@ msgstr "Nu sunt mesaje noi."
 
 #: src/summaryview.c:1439
 msgid "No new message found. Go to next folder?"
-msgstr "Nu s-a găsit nici un mesaj nou. Mergeți la folderul următor ?"
+msgstr "Nu s-a găsit nici un mesaj nou. Mergeți la dosarul următor ?"
 
 #: src/summaryview.c:1447 src/summaryview.c:1456
 msgid "No more marked messages"
@@ -7151,12 +7156,11 @@ msgstr "Mesajul %d este marcat pentru mutare în %s\n"
 
 #: src/summaryview.c:3390
 msgid "Destination is same as current folder."
-msgstr "Destinația este aceeași cu folderul curent."
+msgstr "Destinația este aceeași cu dosarul curent."
 
 #: src/summaryview.c:3427
-#, fuzzy
 msgid "Select folder to move"
-msgstr "Selectare folder"
+msgstr "Selectați dosarul de mutat"
 
 #: src/summaryview.c:3457
 #, c-format
@@ -7165,12 +7169,11 @@ msgstr "Mesajul %d este setat pentru copiere în %s\n"
 
 #: src/summaryview.c:3488
 msgid "Destination for copy is same as current folder."
-msgstr "Destinația pentru copiere este aceeași cu folderul curent."
+msgstr "Destinația pentru copiere este aceeași cu dosarul curent."
 
 #: src/summaryview.c:3524
-#, fuzzy
 msgid "Select folder to copy"
-msgstr "Selectare folder"
+msgstr "Selectați dosarul de copiat"
 
 #: src/summaryview.c:3669
 msgid "Error occurred while processing messages."
