@@ -814,6 +814,37 @@ MimeInfo *procmime_scan_mime_header(FILE *fp)
 	return mimeinfo;
 }
 
+static gint procmime_normalize_lbreak(FILE *infp, FILE *outfp)
+{
+	gchar buf[BUFFSIZE];
+	gint len;
+
+	g_return_val_if_fail(infp != NULL, -1);
+	g_return_val_if_fail(outfp != NULL, -1);
+
+	while (fgets(buf, sizeof(buf), infp) != NULL) {
+		len = strlen(buf);
+		if (len == sizeof(buf) - 1 && buf[len - 1] != '\n') {
+			if (buf[len - 1] == '\r') {
+				ungetc('\r', infp);
+				buf[len - 1] = '\0';
+			}
+			fputs(buf, outfp);
+			continue;
+		}
+#ifdef G_OS_WIN32
+		strretchomp(buf);
+		fputs(buf, outfp);
+		fputs("\r\n", outfp);
+#else
+		strcrchomp(buf);
+		fputs(buf, outfp);
+#endif
+	}
+
+	return 0;
+}
+
 FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 {
 	gchar buf[BUFFSIZE];
@@ -848,6 +879,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 
 	if (mimeinfo->encoding_type == ENC_QUOTED_PRINTABLE) {
 		FILE *tmpfp = outfp;
+		gchar prev_empty_line[3] = "";
 
 		if (normalize_lbreak) {
 			tmpfp = my_tmpfile();
@@ -862,9 +894,22 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 		       (!boundary ||
 			!IS_BOUNDARY(buf, boundary, boundary_len))) {
 			gint len;
-			len = qp_decode_line(buf);
-			fwrite(buf, len, 1, tmpfp);
+
+			if (prev_empty_line[0]) {
+				fputs(prev_empty_line, tmpfp);
+				prev_empty_line[0] = '\0';
+			}
+
+			if (buf[0] == '\n' ||
+			    (buf[0] == '\r' && buf[1] == '\n'))
+				strcpy(prev_empty_line, buf);
+			else {
+				len = qp_decode_line(buf);
+				fwrite(buf, len, 1, tmpfp);
+			}
 		}
+		if (!boundary && prev_empty_line[0])
+			fputs(prev_empty_line, tmpfp);
 
 		if (normalize_lbreak) {
 			if (fflush(tmpfp) == EOF) {
@@ -874,16 +919,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				return NULL;
 			}
 			rewind(tmpfp);
-			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
-#ifdef G_OS_WIN32
-				strretchomp(buf);
-				fputs(buf, outfp);
-				fputs("\r\n", outfp);
-#else
-				strcrchomp(buf);
-				fputs(buf, outfp);
-#endif
-			}
+			procmime_normalize_lbreak(tmpfp, outfp);
 			fclose(tmpfp);
 		}
 	} else if (mimeinfo->encoding_type == ENC_BASE64) {
@@ -923,16 +959,7 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				return NULL;
 			}
 			rewind(tmpfp);
-			while (fgets(buf, sizeof(buf), tmpfp) != NULL) {
-#ifdef G_OS_WIN32
-				strretchomp(buf);
-				fputs(buf, outfp);
-				fputs("\r\n", outfp);
-#else
-				strcrchomp(buf);
-				fputs(buf, outfp);
-#endif
-			}
+			procmime_normalize_lbreak(tmpfp, outfp);
 			fclose(tmpfp);
 		}
 	} else if (mimeinfo->encoding_type == ENC_X_UUENCODE) {
@@ -957,21 +984,59 @@ FILE *procmime_decode_content(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
 				flag = TRUE;
 		}
 	} else {
+		gchar prev_empty_line[3] = "";
+		gint len;
+		gboolean cont_line = FALSE;
+
 		while (fgets(buf, sizeof(buf), infp) != NULL &&
 		       (!boundary ||
 			!IS_BOUNDARY(buf, boundary, boundary_len))) {
+			if (prev_empty_line[0]) {
+				fputs(prev_empty_line, outfp);
+				prev_empty_line[0] = '\0';
+			}
+
+			len = strlen(buf);
+			if (len == sizeof(buf) - 1 &&
+			    buf[len - 1] != '\n') {
+				if (buf[len - 1] == '\r') {
+					ungetc('\r', infp);
+					buf[len - 1] = '\0';
+				}
+				fputs(buf, outfp);
+				cont_line = TRUE;
+				continue;
+			}
+
 			if (normalize_lbreak) {
 #ifdef G_OS_WIN32
 				strretchomp(buf);
-				fputs(buf, outfp);
-				fputs("\r\n", outfp);
+				if (!cont_line && buf[0] == '\0')
+					strcpy(prev_empty_line, "\r\n");
+				else {
+					fputs(buf, outfp);
+					fputs("\r\n", outfp);
+				}
 #else
 				strcrchomp(buf);
-				fputs(buf, outfp);
+				if (!cont_line && buf[0] == '\n')
+					strcpy(prev_empty_line, "\n");
+				else
+					fputs(buf, outfp);
 #endif
-			} else
-				fputs(buf, outfp);
+			} else {
+				if (!cont_line &&
+				    (buf[0] == '\n' ||
+				     (buf[0] == '\r' && buf[1] == '\n')))
+					strcpy(prev_empty_line, buf);
+				else
+					fputs(buf, outfp);
+			}
+
+			cont_line = FALSE;
 		}
+		if (!boundary && prev_empty_line[0])
+			fputs(prev_empty_line, outfp);
 	}
 
 	if (fflush(outfp) == EOF)
