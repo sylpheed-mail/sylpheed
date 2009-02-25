@@ -174,7 +174,7 @@ static gint add_address(const gchar *name, const gchar *address, const gchar *ni
 	addr_ce = g_new0(completion_entry, 1);
 
 	ae = g_new0(address_entry, 1);
-	ae->name    = g_strdup(name);
+	ae->name    = g_strdup(name ? name : "");
 	ae->address = g_strdup(address);		
 	if ((found = g_list_find_custom(address_list, ae,
 					address_entry_find_func))) {
