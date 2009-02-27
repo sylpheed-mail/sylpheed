@@ -1833,11 +1833,11 @@ static const struct {
 	gchar *classify_cmd;
 } junk_presets[] = {
 #ifdef G_OS_WIN32
-	{"bogofilter -s -I", "bogofilter -n -I", "bogofilter -I"},
-	{"bsfilterw -su", "bsfilterw -cu", "bsfilterw"}
+	{"bogofilter -N -s -I", "bogofilter -n -S -I", "bogofilter -I"},
+	{"bsfilterw -C -s -u", "bsfilterw -c -S -u", "bsfilterw"}
 #else
-	{"bogofilter -s -I", "bogofilter -n -I", "bogofilter -I"},
-	{"bsfilter -su", "bsfilter -cu", "bsfilter"}
+	{"bogofilter -N -s -I", "bogofilter -n -S -I", "bogofilter -I"},
+	{"bsfilter -C -s -u", "bsfilter -c -S -u", "bsfilter"}
 #endif
 };
 
