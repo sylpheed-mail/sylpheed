@@ -42,6 +42,9 @@
 #include <time.h>
 
 #ifdef G_OS_WIN32
+#ifndef WINVER
+#  define WINVER 0x0500
+#endif
 #  include <windows.h>
 #  include <wchar.h>
 #  include <direct.h>
@@ -148,6 +151,63 @@ gint g_chmod(const gchar *path, gint mode)
 #endif
 }
 #endif /* GLIB_CHECK_VERSION && G_OS_UNIX */
+
+gint g_link(const gchar *src, const gchar *dest)
+{
+#ifdef G_OS_WIN32
+	wchar_t *wsrc;
+	wchar_t *wdest;
+	gint retval;
+	gint save_errno;
+
+	wsrc = g_utf8_to_utf16(src, -1, NULL, NULL, NULL);
+	if (wsrc == NULL) {
+		errno = EINVAL;
+		return -1;
+	}
+	wdest = g_utf8_to_utf16(dest, -1, NULL, NULL, NULL);
+	if (wdest == NULL) {
+		g_free(wsrc);
+		errno = EINVAL;
+		return -1;
+	}
+
+	errno = 0;
+	if (CreateHardLinkW(wdest, wsrc, NULL)) {
+		retval = 0;
+		/* debug_print("hard link created: %s -> %s\n", src, dest); */
+	} else {
+		retval = -1;
+		switch (GetLastError()) {
+		case ERROR_FILE_NOT_FOUND:
+		case ERROR_PATH_NOT_FOUND:
+			errno = ENOENT; break;
+		case ERROR_ACCESS_DENIED:
+		case ERROR_LOCK_VIOLATION:
+		case ERROR_SHARING_VIOLATION:
+			errno = EACCES; break;
+		case ERROR_NOT_SAME_DEVICE:
+			errno = EXDEV; break;
+		case ERROR_FILE_EXISTS:
+		case ERROR_ALREADY_EXISTS:
+			errno = EEXIST; break;
+		case ERROR_TOO_MANY_LINKS:
+			errno = EMLINK; break;
+		default:
+			errno = EIO; break;
+		}
+	}
+	save_errno = errno;
+
+	g_free(wdest);
+	g_free(wsrc);
+
+	errno = save_errno;
+	return retval;
+#else
+	return link(src, dest);
+#endif
+}
 
 void list_free_strings(GList *list)
 {
@@ -2641,17 +2701,54 @@ gint rename_force(const gchar *oldpath, const gchar *newpath)
 
 gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 {
+#ifdef G_OS_WIN32
+	wchar_t *wsrc;
+	wchar_t *wdest;
+	gchar *dest_bak = NULL;
+	gboolean err = FALSE;
+
+	wsrc = g_utf8_to_utf16(src, -1, NULL, NULL, NULL);
+	if (wsrc == NULL) {
+		return -1;
+	}
+	wdest = g_utf8_to_utf16(dest, -1, NULL, NULL, NULL);
+	if (wdest == NULL) {
+		g_free(wsrc);
+		return -1;
+	}
+
+	if (keep_backup == FALSE) {
+		if (CopyFileW(wsrc, wdest, FALSE) == 0)
+			err = TRUE;
+		g_free(wdest);
+		g_free(wsrc);
+		return err ? -1 : 0;
+	}
+
+	if (is_file_exist(dest)) {
+		dest_bak = g_strconcat(dest, ".bak", NULL);
+		if (rename_force(dest, dest_bak) < 0) {
+			FILE_OP_ERROR(dest, "rename");
+			g_free(dest_bak);
+			g_free(wdest);
+			g_free(wsrc);
+			return -1;
+		}
+	}
+
+	if (CopyFileW(wsrc, wdest, FALSE) == 0)
+		err = TRUE;
+
+	g_free(wdest);
+	g_free(wsrc);
+#else
 	gint srcfd, destfd;
 	gint n_read;
 	gchar buf[BUFFSIZE];
 	gchar *dest_bak = NULL;
 	gboolean err = FALSE;
 
-#ifdef G_OS_WIN32
-	if ((srcfd = g_open(src, O_RDONLY | O_BINARY, 0600)) < 0) {
-#else
 	if ((srcfd = g_open(src, O_RDONLY, 0600)) < 0) {
-#endif
 		FILE_OP_ERROR(src, "open");
 		return -1;
 	}
@@ -2665,11 +2762,7 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 		}
 	}
 
-#ifdef G_OS_WIN32
-	if ((destfd = g_open(dest, O_WRONLY | O_CREAT | O_BINARY, 0600)) < 0) {
-#else
 	if ((destfd = g_open(dest, O_WRONLY | O_CREAT, 0600)) < 0) {
-#endif
 		FILE_OP_ERROR(dest, "open");
 		close(srcfd);
 		if (dest_bak) {
@@ -2707,6 +2800,7 @@ gint copy_file(const gchar *src, const gchar *dest, gboolean keep_backup)
 		err = TRUE;
 	}
 	close(srcfd);
+#endif
 
 	if (err) {
 		g_unlink(dest);

@@ -459,18 +459,14 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		if (first_ == 0 || first_ > dest->last_num + 1)
 			first_ = dest->last_num + 1;
 
-#ifdef G_OS_UNIX
-		if (link(fileinfo->file, destfile) < 0) {
-#endif
+		if (g_link(fileinfo->file, destfile) < 0) {
 			if (copy_file(fileinfo->file, destfile, TRUE) < 0) {
 				g_warning(_("can't copy message %s to %s\n"),
 					  fileinfo->file, destfile);
 				g_free(destfile);
 				return -1;
 			}
-#ifdef G_OS_UNIX
 		}
-#endif
 
 		g_free(destfile);
 		dest->last_num++;

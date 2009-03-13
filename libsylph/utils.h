@@ -67,6 +67,13 @@ gint g_chmod	(const gchar	*path,
 
 #endif /* !GLIB_CHECK_VERSION */
 
+#ifdef G_OS_UNIX
+#define g_link		link
+#else
+gint g_link	(const gchar	*src,
+		 const gchar	*dest);
+#endif
+
 /* The AC_CHECK_SIZEOF() in configure fails for some machines.
  * we provide some fallback values here */
 #if !SIZEOF_UNSIGNED_SHORT
