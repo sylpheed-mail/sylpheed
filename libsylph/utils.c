@@ -152,7 +152,8 @@ gint g_chmod(const gchar *path, gint mode)
 }
 #endif /* GLIB_CHECK_VERSION && G_OS_UNIX */
 
-gint g_link(const gchar *src, const gchar *dest)
+#ifndef G_OS_UNIX
+gint syl_link(const gchar *src, const gchar *dest)
 {
 #ifdef G_OS_WIN32
 	wchar_t *wsrc;
@@ -208,6 +209,7 @@ gint g_link(const gchar *src, const gchar *dest)
 	return link(src, dest);
 #endif
 }
+#endif /* !G_OS_UNIX */
 
 void list_free_strings(GList *list)
 {
