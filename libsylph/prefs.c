@@ -397,8 +397,14 @@ gint prefs_file_close(PrefFile *pfile)
 		goto finish;
 	}
 #if HAVE_FSYNC
-	if ((fd = fileno(fp)) >= 0)
-		fsync(fd);
+	if ((fd = fileno(fp)) >= 0) {
+		if (fsync(fd) < 0) {
+			FILE_OP_ERROR(tmppath, "fsync");
+			fclose(fp);
+			ret = -1;
+			goto finish;
+		}
+	}
 #endif
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(tmppath, "fclose");

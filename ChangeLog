@@ -1,5 +1,9 @@
 2008-03-17
 
+	* libsylph/prefs.c: prefs_file_close(): abort if fsync() fails.
+
+2008-03-17
+
 	* libsylph/prefs.c
 	  configure.in: prefs_file_close(): do fflush() and fsync() before
 	  fclose() to lessen the possibility of data loss.

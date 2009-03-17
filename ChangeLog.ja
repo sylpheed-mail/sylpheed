@@ -1,5 +1,10 @@
 2008-03-17
 
+	* libsylph/prefs.c: prefs_file_close(): fsync() が失敗したら処理を
+	  中断するようにした。
+
+2008-03-17
+
 	* libsylph/prefs.c
 	  configure.in: prefs_file_close(): fclose() の前に fflush() と
 	  fsync() を行うようにした(データロスの可能性を減らすため)。
