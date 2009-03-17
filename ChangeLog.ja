@@ -1,4 +1,11 @@
+2008-03-17
+
+	* libsylph/prefs.c
+	  configure.in: prefs_file_close(): fclose() の前に fflush() と
+	  fsync() を行うようにした(データロスの可能性を減らすため)。
+
 2008-03-16
+
 	* libsylph/utils.[ch]
 	  libsylph/mh.c: g_link(): Unix で無限ループに陥るバグを修正。
 	  g_link を syl_link に名称変更。

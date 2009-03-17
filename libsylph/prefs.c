@@ -373,6 +373,9 @@ gint prefs_file_close(PrefFile *pfile)
 {
 	PrefFilePrivate *priv = (PrefFilePrivate *)pfile;
 	FILE *fp;
+#if HAVE_FSYNC
+	gint fd;
+#endif
 	gchar *path;
 	gchar *tmppath;
 	gchar *bakpath = NULL;
@@ -387,6 +390,16 @@ gint prefs_file_close(PrefFile *pfile)
 	g_free(pfile);
 
 	tmppath = g_strconcat(path, ".tmp", NULL);
+	if (fflush(fp) == EOF) {
+		FILE_OP_ERROR(tmppath, "fflush");
+		fclose(fp);
+		ret = -1;
+		goto finish;
+	}
+#if HAVE_FSYNC
+	if ((fd = fileno(fp)) >= 0)
+		fsync(fd);
+#endif
 	if (fclose(fp) == EOF) {
 		FILE_OP_ERROR(tmppath, "fclose");
 		ret = -1;
