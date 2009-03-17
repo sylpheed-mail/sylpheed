@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,6 +28,11 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#  include <io.h>
+#endif
 
 #include "prefs.h"
 #include "codeconv.h"
@@ -373,9 +378,6 @@ gint prefs_file_close(PrefFile *pfile)
 {
 	PrefFilePrivate *priv = (PrefFilePrivate *)pfile;
 	FILE *fp;
-#if HAVE_FSYNC
-	gint fd;
-#endif
 	gchar *path;
 	gchar *tmppath;
 	gchar *bakpath = NULL;
@@ -397,13 +399,18 @@ gint prefs_file_close(PrefFile *pfile)
 		goto finish;
 	}
 #if HAVE_FSYNC
-	if ((fd = fileno(fp)) >= 0) {
-		if (fsync(fd) < 0) {
-			FILE_OP_ERROR(tmppath, "fsync");
-			fclose(fp);
-			ret = -1;
-			goto finish;
-		}
+	if (fsync(fileno(fp)) < 0) {
+		FILE_OP_ERROR(tmppath, "fsync");
+		fclose(fp);
+		ret = -1;
+		goto finish;
+	}
+#elif defined(G_OS_WIN32)
+	if (_commit(_fileno(fp)) < 0) {
+		FILE_OP_ERROR(tmppath, "_commit");
+		fclose(fp);
+		ret = -1;
+		goto finish;
 	}
 #endif
 	if (fclose(fp) == EOF) {
