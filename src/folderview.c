@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@
 #include "account_dialog.h"
 #include "folder.h"
 #include "inc.h"
+#include "send_message.h"
 #include "virtual.h"
 
 enum
@@ -176,6 +177,9 @@ static void folderview_update_summary_cb(FolderView	*folderview,
 static void folderview_mark_all_read_cb	(FolderView	*folderview,
 					 guint		 action,
 					 GtkWidget	*widget);
+static void folderview_send_queue_cb	(FolderView	*folderview,
+					 guint		 action,
+					 GtkWidget	*widget);
 
 static void folderview_new_folder_cb	(FolderView	*folderview,
 					 guint		 action,
@@ -257,6 +261,7 @@ static GtkItemFactoryEntry folderview_mail_popup_entries[] =
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/Mar_k all read"),		NULL, folderview_mark_all_read_cb, 0, NULL},
+	{N_("/Send _queued messages"),	NULL, folderview_send_queue_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/Ed_it search condition..."),
@@ -281,6 +286,7 @@ static GtkItemFactoryEntry folderview_imap_popup_entries[] =
 	{N_("/_Update summary"),	NULL, folderview_update_summary_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/Mar_k all read"),		NULL, folderview_mark_all_read_cb, 0, NULL},
+	{N_("/Send _queued messages"),	NULL, folderview_send_queue_cb, 0, NULL},
 	{N_("/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Search messages..."),	NULL, folderview_search_cb, 0, NULL},
 	{N_("/Ed_it search condition..."),
@@ -1619,6 +1625,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	gboolean update_tree     = FALSE;
 	gboolean update_summary  = FALSE;
 	gboolean mark_all_read   = FALSE;
+	gboolean send_queue      = FALSE;
 	gboolean rescan_tree     = FALSE;
 	gboolean remove_tree     = FALSE;
 	gboolean search_folder   = FALSE;
@@ -1663,6 +1670,9 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 			} else if (item->stype == F_TRASH) {
 				if (item->total > 0)
 					empty_trash = TRUE;
+			} else if (item->stype == F_QUEUE) {
+				if (item->total > 0)
+					send_queue = TRUE;
 			}
 		} else if (FOLDER_TYPE(folder) == F_NEWS) {
 			if (item->parent != NULL)
@@ -1739,6 +1749,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	SET_SENS(ifactory, "/Rebuild folder tree", rescan_tree);
 	SET_SENS(ifactory, "/Update summary", update_summary);
 	SET_SENS(ifactory, "/Mark all read", mark_all_read);
+	SET_SENS(ifactory, "/Send queued messages", send_queue);
 	SET_SENS(ifactory, "/Search messages...", search_folder);
 	SET_SENS(ifactory, "/Edit search condition...", search_folder);
 	SET_SENS(ifactory, "/Properties...", folder_property);
@@ -1754,6 +1765,9 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 			       item->stype == F_VIRTUAL);
 	}
 
+	SET_VISIBILITY(ifactory, "/Mark all read", item->stype != F_QUEUE);
+	SET_VISIBILITY(ifactory, "/Send queued messages",
+		       item->stype == F_QUEUE);
 	SET_VISIBILITY(ifactory, "/Search messages...",
 		       item->stype != F_VIRTUAL);
 	SET_VISIBILITY(ifactory, "/Edit search condition...",
@@ -2209,6 +2223,30 @@ static void folderview_mark_all_read_cb(FolderView *folderview, guint action,
 		trayicon_set_tooltip(NULL);
 		trayicon_set_notify(FALSE);
 	}
+}
+
+static void folderview_send_queue_cb(FolderView *folderview, guint action,
+				     GtkWidget *widget)
+{
+	FolderItem *item;
+	gint ret;
+
+	if (!main_window_toggle_online_if_offline(folderview->mainwin))
+		return;
+
+	item = folderview_get_selected_item(folderview);
+	if (!item || item->stype != F_QUEUE)
+		return;
+
+	ret = send_message_queue_all(item, prefs_common.savemsg,
+				     prefs_common.filter_sent);
+	statusbar_pop_all();
+	if (ret > 0)
+		folder_item_scan(item);
+
+	folderview_update_item(item, TRUE);
+	main_window_set_menu_sensitive(folderview->mainwin);
+	main_window_set_toolbar_sensitive(folderview->mainwin);
 }
 
 static void folderview_new_folder_cb(FolderView *folderview, guint action,
