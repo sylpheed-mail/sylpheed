@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1841,6 +1841,7 @@ typedef enum
 	M_INC_ACTIVE	      = 1 << 10,
 	M_ENABLE_JUNK	      = 1 << 11,
 	M_HAVE_QUEUED_MSG     = 1 << 12,
+	M_POP3_ACCOUNT	      = 1 << 13,
 
 	M_FOLDER_NEWOK	      = 1 << 17,
 	M_FOLDER_RENOK	      = 1 << 18,
@@ -1883,8 +1884,11 @@ static SensitiveCond main_window_get_current_state(MainWindow *mainwin)
 	if (selection == SUMMARY_SELECTED_SINGLE &&
 	    FOLDER_ITEM_IS_SENT_FOLDER(item))
 		state |= M_ALLOW_REEDIT;
-	if (cur_account)
+	if (cur_account) {
 		state |= M_HAVE_ACCOUNT;
+		if (cur_account->protocol == A_POP3)
+			state |= M_POP3_ACCOUNT;
+	}
 
 	if (inc_is_active())
 		state |= M_INC_ACTIVE;
@@ -1949,7 +1953,8 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 
 	SET_WIDGET_COND(mainwin->get_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->getall_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
-	SET_WIDGET_COND(mainwin->rpop3_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
+	SET_WIDGET_COND(mainwin->rpop3_btn,
+			M_HAVE_ACCOUNT|M_UNLOCKED|M_POP3_ACCOUNT);
 	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG);
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
@@ -2103,7 +2108,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/Message/Receive/Stop receiving"
 						 , M_INC_ACTIVE},
 		{"/Message/Receive/Remote mailbox..."
-						 , M_HAVE_ACCOUNT|M_UNLOCKED},
+						 , M_HAVE_ACCOUNT|M_UNLOCKED|M_POP3_ACCOUNT},
 		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG},
 
 		{"/Message/Compose new message"  , M_HAVE_ACCOUNT},
@@ -3874,8 +3879,12 @@ static void new_account_cb(MainWindow *mainwin, guint action,
 
 static void account_selector_menu_cb(GtkMenuItem *menuitem, gpointer data)
 {
+	MainWindow *mainwin = main_window_get();
+
 	cur_account = (PrefsAccount *)data;
-	main_window_show_cur_account(main_window_get());
+	main_window_show_cur_account(mainwin);
+	main_window_set_menu_sensitive(mainwin);
+	main_window_set_toolbar_sensitive(mainwin);
 }
 
 static void account_receive_menu_cb(GtkMenuItem *menuitem, gpointer data)
