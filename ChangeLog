@@ -1,47 +1,47 @@
-2008-03-23
+2009-03-23
 
 	* src/mainwindow.c: enable 'Remote mailbox' only if current account
 	  is POP3.
 
-2008-03-19
+2009-03-19
 
 	* src/folderview.c: show 'Send queued messages' instead of 'Mark all
 	  read' in the context menu of the Queue folder.
 
-2008-03-17
+2009-03-17
 
 	* libsylph/prefs.c: prefs_file_close(): win32: use _commit() as well
 	  as fsync() on Unix.
 
-2008-03-17
+2009-03-17
 
 	* libsylph/prefs.c: prefs_file_close(): abort if fsync() fails.
 
-2008-03-17
+2009-03-17
 
 	* libsylph/prefs.c
 	  configure.in: prefs_file_close(): do fflush() and fsync() before
 	  fclose() to lessen the possibility of data loss.
 
-2008-03-16
+2009-03-16
 
 	* libsylph/utils.[ch]
 	  libsylph/mh.c: g_link(): fixed infinite loop bug on Unix and
 	  renamed g_link to syl_link.
 
-2008-03-13
+2009-03-13
 
 	* libsylph/utils.[ch]
 	  libsylph/mh.c: win32: use CreateHardLink() if available.
 	  It will improve file I/O on receive.
 
-2008-02-27
+2009-02-27
 
 	* libsylph/prefs_common.c
 	  src/prefs_common_dialog.c: modified the default command line option
 	  of spam filters (added undo-contrary option).
 
-2008-02-25
+2009-02-25
 
 	* src/addr_compl.c: add_address(): fixed crash when name == NULL
 	  which can happen with csv import (thanks to Simon Effenberg).

@@ -1,49 +1,49 @@
-2008-03-23
+2009-03-23
 
 	* src/mainwindow.c: 現在のアカウントが POP3 の場合だけ「リモート
 	  メールボックス」を有効にするようにした。
 
-2008-03-19
+2009-03-19
 
 	* src/folderview.c: 送信待ちフォルダのコンテキストメニューでは
 	  「すべて読んだことにする」の代わりに「送信待機中のメッセージを
 	  送信」を表示するようにした。
 
-2008-03-17
+2009-03-17
 
 	* libsylph/prefs.c: prefs_file_close(): win32: Unix の fsync() と
 	  同様に _commit() を使用するようにした。
 
-2008-03-17
+2009-03-17
 
 	* libsylph/prefs.c: prefs_file_close(): fsync() が失敗したら処理を
 	  中断するようにした。
 
-2008-03-17
+2009-03-17
 
 	* libsylph/prefs.c
 	  configure.in: prefs_file_close(): fclose() の前に fflush() と
 	  fsync() を行うようにした(データロスの可能性を減らすため)。
 
-2008-03-16
+2009-03-16
 
 	* libsylph/utils.[ch]
 	  libsylph/mh.c: g_link(): Unix で無限ループに陥るバグを修正。
 	  g_link を syl_link に名称変更。
 
-2008-03-13
+2009-03-13
 
 	* libsylph/utils.[ch]
 	  libsylph/mh.c: win32: 利用できる場合は CreateHardLink() を使用
 	  するようにした。これにより受信時のファイル I/O を向上。
 
-2008-02-27
+2009-02-27
 
 	* libsylph/prefs_common.c
 	  src/prefs_common_dialog.c: spam フィルタのデフォルトのコマンド
 	  ラインオプションを変更(逆判定取消オプションを追加)。
 
-2008-02-25
+2009-02-25
 
 	* src/addr_compl.c: add_address(): name == NULL の場合(csv の
 	  インポートで発生する可能性がある)クラッシュするのを修正
