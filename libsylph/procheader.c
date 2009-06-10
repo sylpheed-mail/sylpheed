@@ -214,7 +214,7 @@ GSList *procheader_get_header_list_from_file(const gchar *file)
 	GSList *hlist;
 
 	if ((fp = g_fopen(file, "rb")) == NULL) {
-		FILE_OP_ERROR(file, "fopen");
+		FILE_OP_ERROR(file, "procheader_get_header_list_from_file: fopen");
 		return NULL;
 	}
 
@@ -531,7 +531,7 @@ MsgInfo *procheader_parse_file(const gchar *file, MsgFlags flags,
 		return NULL;
 
 	if ((fp = g_fopen(file, "rb")) == NULL) {
-		FILE_OP_ERROR(file, "fopen");
+		FILE_OP_ERROR(file, "procheader_parse_file: fopen");
 		return NULL;
 	}
 

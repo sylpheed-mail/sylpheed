@@ -1,3 +1,137 @@
+2009-06-10
+
+	* merged plugin-test branch into trunk.
+
+2009-06-08
+
+	* libsylph/procmsg.c
+	  libsylph/procheader.c: made perror() more descriptive.
+
+2009-06-03
+
+	* src/plugin.[ch]
+	  src/main.c: syl_plugin_manage_window_get_focus_window(): added.
+
+2009-05-28
+
+	* src/folderview.c: folderview_new_folder_cb(): win32: don't allow
+	  filesystem-unsafe characters.
+
+2009-05-27
+
+	* configure.in
+	  src/update_check.c: added config.h macro DEVEL_VERSION.
+
+2009-05-27
+
+	* src/update_check.c: disable auto update check if specified.
+	  don't show check button on manual checking.
+
+2009-05-26
+
+	* src/defs.h
+	  src/update_check.c: moved VERSION_URI in defs.h.
+
+2009-05-22
+
+	* libsylph/prefs_common.[ch]
+	  src/update_check.[ch]
+	  src/main.c
+	  src/prefs_common_dialog.c
+	  src/mainwindow.c: implemented update check (using curl).
+	* src/plugin_manager.c: show grid lines.
+
+2009-05-18
+
+	* src/plugin.h: added padding into SylPluginInfo.
+	* src/about.c: updated copyright year.
+	* configure.in: updated version to 2.7.0beta1.
+
+2009-05-15
+
+	* libsylph/procmsg.c: made error message more descriptive on fopen().
+
+2009-05-15
+
+	* src/plugin.h
+	  src/plugin_manager.c: added description to SylPluginInfo.
+
+2009-05-14
+
+	* src/plugin_manager.c
+	  src/main.c
+	  src/mainwindow.c: implemented plugin manager.
+
+2009-05-14
+
+	* src/plugin.[ch]
+	  src/libsylpheed-plugin-0.def: added APIs to change menu sensitivity.
+
+2009-05-11
+
+	* src/plugin_manager.c: added template of window creation.
+
+2009-05-08
+
+	* src/plugin.[ch]
+	  src/libsylpheed-plugin-0.def
+	  src/main.c
+	  src/plugin_manager.[ch]
+	  plugin/test/test.c: added new plugin APIs to manage plug-ins.
+	  added plugin interface version check.
+
+2009-04-24
+
+	* src/plugin.c
+	* src/plugin.h
+	* src/main.c
+	* src/manage_window.[ch]: added new plugin APIs.
+
+2009-04-23
+
+	* imap.c: imap_folder_destroy(): fixed crash when folder->account
+	  was NULL.
+
+2009-04-23
+
+	* libsylph/mh.c
+	  libsylph/sylmain.c
+	  libsylph/syl-marshal.*: added new signal: move-folder.
+
+2009-04-22
+
+	* libsylph/sylmain.[ch]: added syl_init_gettext().
+
+2009-04-21
+
+	* added new signal: folderlist-updated, remove-folder.
+
+2009-04-20
+
+	* added new API:
+	  syl_plugin_folder_sel()
+	  syl_plugin_folder_sel_full()
+	  syl_plugin_input_dialog()
+	  syl_plugin_input_dialog_with_invisible()
+
+2009-04-16
+
+	* added new API:
+	  syl_plugin_folderview_get()
+	  syl_plugin_folderview_get_selected_item()
+
+2009-04-16
+
+	* src/plugin.[ch]
+	  src/main.c
+	  src/folderview.c: added new signal: folderview-menu-popup.
+	  added new API: syl_plugin_add_factory_item().
+
+2009-04-15
+
+	* src/plugin.[ch]
+	  src/main.c: added new APIs for opening messages.
+
 2009-03-23
 
 	* src/mainwindow.c: enable 'Remote mailbox' only if current account

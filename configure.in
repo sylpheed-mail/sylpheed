@@ -5,13 +5,15 @@ PACKAGE=sylpheed
 
 dnl version number
 MAJOR_VERSION=2
-MINOR_VERSION=6
+MINOR_VERSION=7
 MICRO_VERSION=0
 INTERFACE_AGE=0
 BINARY_AGE=0
-EXTRA_VERSION=
+EXTRA_VERSION=beta6
 BUILD_REVISION=0
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
+
+DEVEL_VERSION=yes
 
 dnl set $target
 AC_CANONICAL_SYSTEM
@@ -25,7 +27,14 @@ AC_SUBST(VERSION)
 AC_SUBST(MAJOR_VERSION)
 AC_SUBST(MINOR_VERSION)
 AC_SUBST(MICRO_VERSION)
+AC_SUBST(EXTRA_VERSION)
 AC_SUBST(BUILD_REVISION)
+
+dnl development or release version
+AC_SUBST(DEVEL_VERSION)
+if test "x$DEVEL_VERSION" != "x"; then
+  AC_DEFINE(DEVEL_VERSION, 1, [Define if this is a development release])
+fi
 
 dnl libtool versioning
 LT_RELEASE=$MAJOR_VERSION.$MINOR_VERSION
@@ -45,6 +54,7 @@ AM_MAINTAINER_MODE
 dnl Checks for programs.
 dnl AC_ARG_PROGRAM
 AC_PROG_CC
+AM_DISABLE_STATIC
 AC_ISC_POSIX
 AM_PROG_CC_STDC
 AC_PROG_INSTALL
@@ -75,7 +85,7 @@ esac
 AM_CONDITIONAL(NATIVE_WIN32, test "$native_win32" = "yes")
 
 dnl Checks for libraries.
-AM_PATH_GLIB_2_0(2.4.0,, AC_MSG_ERROR(Test for GLib failed. See the 'INSTALL' for help.))
+AM_PATH_GLIB_2_0(2.4.0,, AC_MSG_ERROR(Test for GLib failed. See the 'INSTALL' for help.), gobject gmodule)
 
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 
@@ -124,6 +134,12 @@ AC_ARG_WITH(faqdir,
 	[  --with-faqdir=DIR       FAQ directory],
 	[faqdir="$withval"])
 AC_SUBST(faqdir)
+
+plugindir='${exec_prefix}/lib/${PACKAGE}/plugins'
+AC_ARG_WITH(plugindir,
+	[  --with-plugindir=DIR    Plug-in directory],
+	[plugindir="$withval"])
+AC_SUBST(plugindir)
 
 dnl GPGME is used to support OpenPGP 
 AC_ARG_ENABLE(gpgme,
@@ -420,6 +436,8 @@ src/version.h
 src/sylpheed.rc
 src/Makefile
 src/icons/Makefile
+plugin/Makefile
+plugin/test/Makefile
 po/Makefile.in
 faq/Makefile
 faq/de/Makefile

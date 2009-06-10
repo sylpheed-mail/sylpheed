@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -288,6 +288,11 @@ struct _PrefsCommon
 	gchar *extinc_cmd;
 	gboolean use_extsend;
 	gchar *extsend_cmd;
+
+	/* Update check */
+	gboolean auto_update_check;
+	gboolean use_http_proxy;
+	gchar *http_proxy_host;
 
 	/* Advanced */
 	gboolean strict_cache_check;

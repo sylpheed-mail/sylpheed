@@ -89,6 +89,8 @@ sylpheed_SOURCES = \
 	trayicon.c trayicon.h \
 	printing.c printing.h \
 	sslmanager.c sslmanager.h \
+	plugin_manager.c plugin_manager.h \
+	update_check.c update_check.h \
 	quote_fmt_lex.l quote_fmt_lex.h \
 	quote_fmt_parse.y quote_fmt.h \
 	sylpheed-marshal.c sylpheed-marshal.h
@@ -100,11 +102,33 @@ BUILT_SOURCES = \
 	sylpheed-marshal.c \
 	sylpheed-marshal.h
 
+lib_LTLIBRARIES = libsylpheed-plugin-0.la
+
+libsylpheed_plugin_0_la_SOURCES = \
+	plugin.c
+
+libsylpheed_plugin_0includedir=$(includedir)/sylpheed
+libsylpheed_plugin_0include_HEADERS = \
+	plugin.h
+
+if NATIVE_WIN32
+no_undefined = -no-undefined
+export_symbols = -export-symbols libsylpheed-plugin-0.def
+endif
+
+libsylpheed_plugin_0_la_LDFLAGS = \
+	-export-dynamic $(no_undefined) $(export_symbols)
+
+libsylpheed_plugin_0_la_LIBADD = \
+	$(GTK_LIBS) \
+	../libsylph/libsylph-0.la
+
 EXTRA_DIST = \
 	quote_fmt_parse.h \
 	sylpheed-marshal.list \
 	version.h.in \
-	sylpheed.rc.in
+	sylpheed.rc.in \
+	libsylpheed-plugin-0.def
 
 INCLUDES = \
 	-DG_LOG_DOMAIN=\"Sylpheed\" \
@@ -128,13 +152,15 @@ sylpheed_LDADD = \
 	$(GPGME_LIBS) \
 	$(LDAP_LIBS) \
 	$(LIBICONV) \
-	../libsylph/libsylph.la \
+	libsylpheed-plugin-0.la \
+	../libsylph/libsylph-0.la \
 	$(SYLPHEED_RES)
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DMANUALDIR=\""$(manualdir)"\" \
 	-DFAQDIR=\""$(faqdir)"\" \
+	-DPLUGINDIR=\""$(plugindir)"\" \
 	-DTARGET_ALIAS=\""$(target_triplet)"\" \
 	-DSYSCONFDIR=\""$(sysconfdir)"\"
 

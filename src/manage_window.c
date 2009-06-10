@@ -92,6 +92,11 @@ void manage_window_set_transient(GtkWindow *window)
 	}
 }
 
+void manage_window_signals_connect(GtkWindow *window)
+{
+	MANAGE_WINDOW_SIGNALS_CONNECT(window);
+}
+
 GtkWidget *manage_window_get_focus_window(void)
 {
 	return focus_window;

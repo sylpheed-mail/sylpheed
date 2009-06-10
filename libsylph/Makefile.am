@@ -1,50 +1,113 @@
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibSylph\" \
-	-DSYSCONFDIR=\""$(sysconfdir)"\"
+	-DSYSCONFDIR=\""$(sysconfdir)"\" \
+	-DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = $(GLIB_CFLAGS) -I$(top_srcdir) -I$(includedir)
 
-#lib_LTLIBRARIES = libsylph.la
-noinst_LTLIBRARIES = libsylph.la
+lib_LTLIBRARIES = libsylph-0.la
+#noinst_LTLIBRARIES = libsylph.la
 
-libsylph_la_SOURCES = \
+libsylph_0_la_SOURCES = \
+	account.c \
+	base64.c \
+	codeconv.c \
+	customheader.c \
+	displayheader.c \
+	filter.c \
+	folder.c \
+	html.c \
+	imap.c \
+	mbox.c \
+	md5.c \
+	md5_hmac.c \
+	mh.c \
+	news.c \
+	nntp.c \
+	pop.c \
+	prefs.c \
+	prefs_account.c \
+	prefs_common.c \
+	procheader.c \
+	procmime.c \
+	procmsg.c \
+	quoted-printable.c \
+	recv.c \
+	session.c \
+	smtp.c \
+	socket.c \
+	ssl.c \
+	stringtable.c \
+	sylmain.c \
+	unmime.c \
+	utils.c \
+	uuencode.c \
+	virtual.c \
+	xml.c \
+	syl-marshal.c
+
+libsylph_0includedir=$(includedir)/sylpheed/sylph
+libsylph_0include_HEADERS = \
 	defs.h \
 	enums.h \
-	account.c account.h \
-	base64.c base64.h \
-	codeconv.c codeconv.h \
-	customheader.c customheader.h \
-	displayheader.c displayheader.h \
-	filter.c filter.h \
-	folder.c folder.h \
-	html.c html.h \
-	imap.c imap.h \
-	mbox.c mbox.h \
-	md5.c md5.h \
-	md5_hmac.c md5_hmac.h \
-	mh.c mh.h \
-	news.c news.h \
-	nntp.c nntp.h \
-	pop.c pop.h \
-	prefs.c prefs.h \
-	prefs_account.c prefs_account.h \
-	prefs_common.c prefs_common.h \
-	procheader.c procheader.h \
-	procmime.c procmime.h \
-	procmsg.c procmsg.h \
-	quoted-printable.c quoted-printable.h \
-	recv.c recv.h \
-	session.c session.h \
-	smtp.c smtp.h \
-	socket.c socket.h \
-	ssl.c ssl.h \
-	stringtable.c stringtable.h \
-	unmime.c unmime.h \
-	utils.c utils.h \
-	uuencode.c uuencode.h \
-	virtual.c virtual.h \
-	xml.c xml.h
+	account.h \
+	base64.h \
+	codeconv.h \
+	customheader.h \
+	displayheader.h \
+	filter.h \
+	folder.h \
+	html.h \
+	imap.h \
+	mbox.h \
+	md5.h \
+	md5_hmac.h \
+	mh.h \
+	news.h \
+	nntp.h \
+	pop.h \
+	prefs.h \
+	prefs_account.h \
+	prefs_common.h \
+	procheader.h \
+	procmime.h \
+	procmsg.h \
+	quoted-printable.h \
+	recv.h \
+	session.h \
+	smtp.h \
+	socket.h \
+	ssl.h \
+	stringtable.h \
+	sylmain.h \
+	unmime.h \
+	utils.h \
+	uuencode.h \
+	virtual.h \
+	xml.h \
+	syl-marshal.h
 
-libsylph_la_LDFLAGS =
-libsylph_la_LIBADD = $(GLIB_LIBS)
+BUILT_SOURCES = \
+	syl-marshal.c \
+	syl-marshal.h
+
+EXTRA_DIST = \
+	syl-marshal.list \
+	libsylph-0.def
+
+if NATIVE_WIN32
+no_undefined = -no-undefined
+export_symbols = -export-symbols libsylph-0.def
+endif
+
+libsylph_0_la_LDFLAGS = \
+	-export-dynamic $(no_undefined) $(export_symbols)
+
+libsylph_0_la_LIBADD = $(GLIB_LIBS)
+
+syl-marshal.h: syl-marshal.list
+	$(GLIB_GENMARSHAL) $< --header --prefix=syl_marshal > $@
+
+syl-marshal.c: syl-marshal.list
+	$(GLIB_GENMARSHAL) $< --body --prefix=syl_marshal > $@

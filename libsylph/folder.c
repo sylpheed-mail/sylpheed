@@ -41,6 +41,7 @@
 #include "prefs.h"
 #include "account.h"
 #include "prefs_account.h"
+#include "sylmain.h"
 
 static GList *folder_list = NULL;
 
@@ -472,6 +473,8 @@ void folder_write_list(void)
 
 	if (prefs_file_close(pfile) < 0)
 		g_warning("failed to write folder list.\n");
+
+	g_signal_emit_by_name(syl_app_get(), "folderlist-updated");
 }
 
 struct TotalMsgStatus

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -461,6 +461,11 @@ static PrefParam param[] = {
 	{"use_ext_sendmail", "FALSE", &prefs_common.use_extsend, P_BOOL},
 	{"ext_sendmail_cmd", DEFAULT_SENDMAIL_CMD, &prefs_common.extsend_cmd,
 	 P_STRING},
+
+	/* Update check */
+	{"auto_update_check", "TRUE", &prefs_common.auto_update_check, P_BOOL},
+	{"use_http_proxy", "FALSE", &prefs_common.use_http_proxy, P_BOOL},
+	{"http_proxy_host", NULL, &prefs_common.http_proxy_host, P_STRING},
 
 	/* Advanced */
 	{"strict_cache_check", "FALSE", &prefs_common.strict_cache_check,

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,11 +75,16 @@
 #include "logwindow.h"
 #include "folder.h"
 #include "setup.h"
+#include "sylmain.h"
 #include "utils.h"
 #include "gtkutils.h"
 #include "socket.h"
 #include "stock_pixmap.h"
 #include "trayicon.h"
+#include "plugin.h"
+#include "plugin_manager.h"
+#include "foldersel.h"
+#include "update_check.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -136,6 +141,7 @@ static void setup_rc_dir		(void);
 static void check_gpg			(void);
 static void set_log_handlers		(gboolean	 enable);
 static void register_system_events	(void);
+static void plugin_init			(void);
 
 static gchar *get_socket_name		(void);
 static gint prohibit_duplicate_launch	(void);
@@ -174,6 +180,10 @@ static void send_queue			(void);
 		exit(val);		\
 }
 
+static void load_cb(GObject *obj, GModule *module, gpointer data)
+{
+	g_print("load_cb: %p (%s), %p\n", module, module ? g_module_name(module) : "(null)", data);
+}
 
 int main(int argc, char *argv[])
 {
@@ -183,14 +193,10 @@ int main(int argc, char *argv[])
 #ifdef G_OS_WIN32
 	GList *iconlist = NULL;
 #endif
+	GObject *syl_app;
 
 	app_init();
 	parse_cmd_opt(argc, argv);
-
-	sock_init();
-#if USE_SSL
-	ssl_init();
-#endif
 
 	/* check and create (unix domain) socket for remote operation */
 	lock_socket = prohibit_duplicate_launch();
@@ -204,6 +210,8 @@ int main(int argc, char *argv[])
 
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
+
+	syl_app = syl_app_create();
 
 	gdk_rgb_init();
 	gtk_widget_set_default_colormap(gdk_rgb_get_cmap());
@@ -324,7 +332,13 @@ int main(int argc, char *argv[])
 
 	inc_autocheck_timer_init(mainwin);
 
+	plugin_init();
+
+	g_signal_emit_by_name(syl_app, "init-done");
+
 	remote_command_exec();
+	if (prefs_common.auto_update_check)
+		update_check(FALSE);
 
 	gtk_main();
 
@@ -568,70 +582,9 @@ static gint get_queued_message_num(void)
 
 static void app_init(void)
 {
-#ifdef G_OS_WIN32
-	gchar *newpath;
-	const gchar *lang_env;
-
-	/* disable locale variable such as "LANG=1041" */
-
-#define DISABLE_DIGIT_LOCALE(envstr)			\
-{							\
-	lang_env = g_getenv(envstr);			\
-	if (lang_env && g_ascii_isdigit(lang_env[0]))	\
-		g_unsetenv(envstr);			\
-}
-
-	DISABLE_DIGIT_LOCALE("LC_ALL");
-	DISABLE_DIGIT_LOCALE("LANG");
-	DISABLE_DIGIT_LOCALE("LC_CTYPE");
-	DISABLE_DIGIT_LOCALE("LC_MESSAGES");
-
-#undef DISABLE_DIGIT_LOCALE
-
-	g_unsetenv("LANGUAGE");
-#endif
-
-#ifdef HAVE_LOCALE_H
-	setlocale(LC_ALL, "");
-#endif
+	syl_init();
 
 	prog_version = PROG_VERSION;
-	set_startup_dir();
-
-#ifdef G_OS_WIN32
-	/* include startup directory into %PATH% for GSpawn */
-	newpath = g_strconcat(get_startup_dir(), ";", g_getenv("PATH"), NULL);
-	g_setenv("PATH", newpath, TRUE);
-	g_free(newpath);
-#endif
-
-#ifdef ENABLE_NLS
-	if (g_path_is_absolute(LOCALEDIR))
-		bindtextdomain(PACKAGE, LOCALEDIR);
-	else {
-		gchar *locale_dir;
-
-		locale_dir = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S,
-					 LOCALEDIR, NULL);
-#ifdef G_OS_WIN32
-		{
-			gchar *locale_dir_;
-
-			locale_dir_ = g_locale_from_utf8(locale_dir, -1,
-							 NULL, NULL, NULL);
-			if (locale_dir_) {
-				g_free(locale_dir);
-				locale_dir = locale_dir_;
-			}
-		}
-#endif /* G_OS_WIN32 */
-		bindtextdomain(PACKAGE, locale_dir);
-		g_free(locale_dir);
-	}
-
-	bind_textdomain_codeset(PACKAGE, CS_UTF_8);
-	textdomain(PACKAGE);
-#endif /* ENABLE_NLS */
 
 #ifdef G_OS_WIN32
 	read_ini_file();
@@ -704,24 +657,7 @@ static void setup_rc_dir(void)
 	}
 #endif /* !G_OS_WIN32 */
 
-	if (!is_dir_exist(get_rc_dir())) {
-		if (make_dir_hier(get_rc_dir()) < 0)
-			exit(1);
-	}
-
-	MAKE_DIR_IF_NOT_EXIST(get_mail_base_dir());
-
-	CHDIR_EXIT_IF_FAIL(get_rc_dir(), 1);
-
-	MAKE_DIR_IF_NOT_EXIST(get_imap_cache_dir());
-	MAKE_DIR_IF_NOT_EXIST(get_news_cache_dir());
-	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
-	MAKE_DIR_IF_NOT_EXIST(get_tmp_dir());
-	MAKE_DIR_IF_NOT_EXIST(UIDL_DIR);
-
-	/* remove temporary files */
-	remove_all_files(get_tmp_dir());
-	remove_all_files(get_mime_tmp_dir());
+	syl_setup_rc_dir();
 }
 
 void app_will_exit(gboolean force)
@@ -760,6 +696,8 @@ void app_will_exit(gboolean force)
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
 
+	g_signal_emit_by_name(syl_app_get(), "app-exit");
+
 	inc_autocheck_timer_remove();
 
 	if (prefs_common.clean_on_exit)
@@ -773,36 +711,26 @@ void app_will_exit(gboolean force)
 			procmsg_remove_all_cached_messages(FOLDER(ac->folder));
 	}
 
+	syl_plugin_unload_all();
+
 	trayicon_destroy(mainwin->tray_icon);
 
 	/* save all state before exiting */
-	folder_write_list();
 	summary_write_cache(mainwin->summaryview);
-
 	main_window_get_size(mainwin);
 	main_window_get_position(mainwin);
-	prefs_common_write_config();
-	filter_write_config();
-	account_write_config_all();
+	syl_save_all_state();
 	addressbook_export_to_file();
 
 	filename = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, MENU_RC, NULL);
 	gtk_accel_map_save(filename);
 	g_free(filename);
 
-	/* remove temporary files */
-	remove_all_files(get_tmp_dir());
-	remove_all_files(get_mime_tmp_dir());
-
-	set_log_handlers(FALSE);
-	close_log_file();
+	/* remove temporary files, close log file, socket cleanup */
+	syl_cleanup();
 	lock_socket_remove();
 
-#if USE_SSL
-	ssl_done();
-#endif
 	cleanup_console();
-	sock_cleanup();
 
 	if (gtk_main_level() > 0)
 		gtk_main_quit();
@@ -1079,6 +1007,72 @@ static void register_system_events(void)
 	sigaction(SIGPIPE, &sa, NULL);
 }
 #endif
+
+static void plugin_init(void)
+{
+	MainWindow *mainwin;
+
+	mainwin = main_window_get();
+
+	if (syl_plugin_init_lib() != 0)
+		return;
+
+	syl_plugin_add_symbol("prog_version", prog_version);
+	syl_plugin_add_symbol("main_window_get", main_window_get);
+	syl_plugin_add_symbol("main_window_popup", main_window_popup);
+	syl_plugin_add_symbol("app_will_exit", app_will_exit);
+	syl_plugin_add_symbol("main_window_menu_factory",
+			      mainwin->menu_factory);
+
+	syl_plugin_add_symbol("folderview", mainwin->folderview);
+	syl_plugin_add_symbol("folderview_get_selected_item",
+			      folderview_get_selected_item);
+	syl_plugin_add_symbol("folderview_mail_popup_factory",
+			      mainwin->folderview->mail_factory);
+
+	syl_plugin_add_symbol("summaryview", mainwin->summaryview);
+	syl_plugin_add_symbol("summary_select_by_msgnum",
+			      summary_select_by_msgnum);
+	syl_plugin_add_symbol("summary_select_by_msginfo",
+			      summary_select_by_msginfo);
+
+	syl_plugin_add_symbol("messageview_create_with_new_window",
+			      messageview_create_with_new_window);
+	syl_plugin_add_symbol("messageview_show", messageview_show);
+
+	syl_plugin_add_symbol("foldersel_folder_sel",
+			      foldersel_folder_sel);
+	syl_plugin_add_symbol("foldersel_folder_sel_full",
+			      foldersel_folder_sel_full);
+	syl_plugin_add_symbol("input_dialog", input_dialog);
+	syl_plugin_add_symbol("input_dialog_with_invisible",
+			      input_dialog_with_invisible);
+
+	syl_plugin_add_symbol("manage_window_set_transient",
+			      manage_window_set_transient);
+	syl_plugin_add_symbol("manage_window_signals_connect",
+			      manage_window_signals_connect);
+	syl_plugin_add_symbol("manage_window_get_focus_window",
+			      manage_window_get_focus_window);
+
+	syl_plugin_add_symbol("inc_mail", inc_mail);
+	syl_plugin_add_symbol("inc_lock", inc_lock);
+	syl_plugin_add_symbol("inc_unlock", inc_unlock);
+
+	syl_plugin_signal_connect("plugin-load", G_CALLBACK(load_cb), NULL);
+
+#ifdef G_OS_WIN32
+	{
+		gchar *path;
+		path = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S,
+				   "plugins", NULL);
+		syl_plugin_load_all(path);
+		g_free(path);
+	}
+#else
+	syl_plugin_load_all(PLUGINDIR);
+#endif
+}
 
 static gchar *get_socket_name(void)
 {

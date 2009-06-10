@@ -52,6 +52,7 @@ void manage_window_destroy		(GtkWidget	*widget,
 					 gpointer	 data);
 
 void manage_window_set_transient	(GtkWindow	*window);
+void manage_window_signals_connect	(GtkWindow	*window);
 
 GtkWidget *manage_window_get_focus_window	(void);
 

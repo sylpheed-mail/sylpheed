@@ -79,6 +79,7 @@
 #include "prefs_template.h"
 #include "prefs_search_folder.h"
 #include "prefs_toolbar.h"
+#include "plugin_manager.h"
 #include "action.h"
 #include "account.h"
 #include "account_dialog.h"
@@ -95,6 +96,7 @@
 #include "codeconv.h"
 #include "about.h"
 #include "manual.h"
+#include "update_check.h"
 #include "version.h"
 
 #define AC_LABEL_WIDTH	240
@@ -495,6 +497,9 @@ static void prefs_filter_open_cb	(MainWindow	*mainwin,
 static void prefs_template_open_cb	(MainWindow	*mainwin,
 					 guint		 action,
 					 GtkWidget	*widget);
+static void plugin_manager_open_cb	(MainWindow	*mainwin,
+					 guint		 action,
+					 GtkWidget	*widget);
 #ifndef G_OS_WIN32
 static void prefs_actions_open_cb	(MainWindow	*mainwin,
 					 guint		 action,
@@ -520,6 +525,9 @@ static void faq_open_cb		 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
 static void help_cmdline_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
+static void update_check_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
 
@@ -857,6 +865,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 #ifndef G_OS_WIN32
 	{N_("/_Configuration/_Actions..."),	NULL, prefs_actions_open_cb, 0, NULL},
 #endif
+	{N_("/_Configuration/Plug-in _manager..."),
+						NULL, plugin_manager_open_cb, 0, NULL},
 	{N_("/_Configuration/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Configuration/_Preferences for current account..."),
 						NULL, prefs_account_open_cb, 0, NULL},
@@ -878,6 +888,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Help/_FAQ/_French"),		NULL, faq_open_cb, MANUAL_LANG_FR, NULL},
 	{N_("/_Help/_FAQ/_Italian"),		NULL, faq_open_cb, MANUAL_LANG_IT, NULL},
 	{N_("/_Help/_Command line options"),	NULL, help_cmdline_cb, 0, NULL},
+	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
+	{N_("/_Help/_Update check..."),		NULL, update_check_cb, 0, NULL},
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_About"),			NULL, about_show, 0, NULL}
 };
@@ -3852,6 +3864,12 @@ static void prefs_template_open_cb(MainWindow *mainwin, guint action,
 	prefs_template_open();
 }
 
+static void plugin_manager_open_cb(MainWindow *mainwin, guint action,
+				   GtkWidget *widget)
+{
+	plugin_manager_open();
+}
+
 #ifndef G_OS_WIN32
 static void prefs_actions_open_cb(MainWindow *mainwin, guint action,
 				  GtkWidget *widget)
@@ -4025,6 +4043,12 @@ static void help_cmdline_cb(MainWindow *mainwin, guint action,
 			    GtkWidget *widget)
 {
 	help_command_line_show();
+}
+
+static void update_check_cb(MainWindow *mainwin, guint action,
+			    GtkWidget *widget)
+{
+	update_check(TRUE);
 }
 
 static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data)

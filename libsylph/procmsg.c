@@ -790,8 +790,10 @@ static void procmsg_write_mark_file(FolderItem *item, GHashTable *mark_table)
 {
 	FILE *fp;
 
-	if ((fp = procmsg_open_mark_file(item, DATA_WRITE)) == NULL)
+	if ((fp = procmsg_open_mark_file(item, DATA_WRITE)) == NULL) {
+		g_warning("procmsg_write_mark_file: cannot open mark file.");
 		return;
+	}
 	g_hash_table_foreach(mark_table, write_mark_func, fp);
 	fclose(fp);
 }
@@ -809,11 +811,11 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 			if (errno == EACCES) {
 				change_file_mode_rw(NULL, file);
 				if ((fp = g_fopen(file, "wb")) == NULL) {
-					FILE_OP_ERROR(file, "fopen");
+					FILE_OP_ERROR(file, "procmsg_open_data_file: fopen");
 					return NULL;
 				}
 			} else {
-				FILE_OP_ERROR(file, "fopen");
+				FILE_OP_ERROR(file, "procmsg_open_data_file: fopen");
 				return NULL;
 			}
 		}
@@ -829,7 +831,7 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 		if (errno == EACCES) {
 			change_file_mode_rw(NULL, file);
 			if ((fp = g_fopen(file, "rb")) == NULL) {
-				FILE_OP_ERROR(file, "fopen");
+				FILE_OP_ERROR(file, "procmsg_open_data_file: fopen");
 			}
 		} else {
 			debug_print("Mark/Cache file '%s' not found\n", file);
@@ -839,8 +841,11 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 	if (fp) {
 		if (buf && buf_size > 0)
 			setvbuf(fp, buf, _IOFBF, buf_size);
-		if (fread(&data_ver, sizeof(data_ver), 1, fp) != 1 ||
-		    version != data_ver) {
+		if (fread(&data_ver, sizeof(data_ver), 1, fp) != 1) {
+			g_warning("%s: cannot read mark/cache file (truncated?)\n", file);
+			fclose(fp);
+			fp = NULL;
+		} else if (version != data_ver) {
 			g_message("%s: Mark/Cache version is different (%u != %u). Discarding it.\n",
 				  file, data_ver, version);
 			fclose(fp);
@@ -858,10 +863,10 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 			if (errno == EACCES) {
 				change_file_mode_rw(NULL, file);
 				if ((fp = g_fopen(file, "ab")) == NULL) {
-					FILE_OP_ERROR(file, "fopen");
+					FILE_OP_ERROR(file, "procmsg_open_data_file: fopen");
 				}
 			} else {
-				FILE_OP_ERROR(file, "fopen");
+				FILE_OP_ERROR(file, "procmsg_open_data_file: fopen");
 			}
 		}
 	} else {
@@ -1196,7 +1201,7 @@ FILE *procmsg_open_message(MsgInfo *msginfo)
 	}
 
 	if ((fp = g_fopen(file, "rb")) == NULL) {
-		FILE_OP_ERROR(file, "fopen");
+		FILE_OP_ERROR(file, "procmsg_open_message: fopen");
 		g_free(file);
 		return NULL;
 	}
@@ -1413,7 +1418,7 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 				print_id++);
 
 	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
-		FILE_OP_ERROR(prtmp, "fopen");
+		FILE_OP_ERROR(prtmp, "procmsg_print_message: fopen");
 		g_free(prtmp);
 		fclose(tmpfp);
 		return;
@@ -1506,7 +1511,7 @@ void procmsg_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo,
 				get_mime_tmp_dir(), G_DIR_SEPARATOR,
 				print_id++);
 	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
-		FILE_OP_ERROR(prtmp, "fopen");
+		FILE_OP_ERROR(prtmp, "procmsg_print_message_part: fopen");
 		g_free(prtmp);
 		fclose(tmpfp);
 		return;

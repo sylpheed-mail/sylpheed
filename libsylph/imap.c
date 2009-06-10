@@ -433,6 +433,8 @@ static void imap_folder_destroy(Folder *folder)
 {
 	gchar *dir;
 
+	g_return_if_fail(folder->account != NULL);
+
 	dir = folder_get_path(folder);
 	if (is_dir_exist(dir))
 		remove_dir_recursive(dir);

@@ -69,6 +69,7 @@
 #include "inc.h"
 #include "send_message.h"
 #include "virtual.h"
+#include "plugin.h"
 
 enum
 {
@@ -1773,9 +1774,10 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	SET_VISIBILITY(ifactory, "/Edit search condition...",
 		       item->stype == F_VIRTUAL);
 
-
 #undef SET_SENS
 #undef SET_VISIBILITY
+
+	syl_plugin_signal_emit("folderview-menu-popup", ifactory);
 
 	gtk_menu_popup(GTK_MENU(popup), NULL, NULL, NULL, NULL,
 		       event->button, event->time);
@@ -2282,6 +2284,16 @@ static void folderview_new_folder_cb(FolderView *folderview, guint action,
 	if (!new_folder) return;
 	AUTORELEASE_STR(new_folder, {g_free(new_folder); return;});
 
+#ifdef G_OS_WIN32
+	p = strpbrk(new_folder, "\\/:*?\"<>|");
+	if ((p && FOLDER_TYPE(item->folder) != F_IMAP) || (p && *p != '/') ||
+	    (p && p == '/' &&
+	     FOLDER_TYPE(item->folder) == F_IMAP && *(p + 1) != '\0')) {
+		alertpanel_error(_("`%c' can't be included in folder name."),
+				 *p);
+		return;
+	}
+#else
 	p = strchr(new_folder, G_DIR_SEPARATOR);
 	if ((p && FOLDER_TYPE(item->folder) != F_IMAP) ||
 	    (p && FOLDER_TYPE(item->folder) == F_IMAP && *(p + 1) != '\0')) {
@@ -2289,6 +2301,7 @@ static void folderview_new_folder_cb(FolderView *folderview, guint action,
 				 G_DIR_SEPARATOR);
 		return;
 	}
+#endif
 
 	name = trim_string(new_folder, 32);
 	AUTORELEASE_STR(name, {g_free(name); return;});

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -232,6 +232,12 @@ static struct Extcmd {
 	GtkWidget *entry_extsend;
 	GtkWidget *button_extsend;
 } extcmd;
+
+static struct UpdateCheck {
+	GtkWidget *checkbtn_autoupdate;
+	GtkWidget *checkbtn_useproxy;
+	GtkWidget *entry_proxyhost;
+} update_check;
 
 static struct Advanced {
 	GtkWidget *checkbtn_strict_cache_check;
@@ -540,6 +546,14 @@ static PrefsUIData ui_data[] = {
 	{"ext_sendmail_cmd", &extcmd.entry_extsend,
 	 prefs_set_data_from_entry, prefs_set_entry},
 
+	/* Update check */
+	{"auto_update_check", &update_check.checkbtn_autoupdate,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"use_http_proxy", &update_check.checkbtn_useproxy,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"http_proxy_host", &update_check.entry_proxyhost,
+	 prefs_set_data_from_entry, prefs_set_entry},
+
 	/* Advanced */
 	{"strict_cache_check", &advanced.checkbtn_strict_cache_check,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -567,6 +581,7 @@ static void prefs_privacy_create	(void);
 static void prefs_details_create	(void);
 static GtkWidget *prefs_other_create	(void);
 static GtkWidget *prefs_extcmd_create	(void);
+static GtkWidget *prefs_update_create	(void);
 static GtkWidget *prefs_advanced_create	(void);
 
 static void prefs_common_set_encoding_optmenu	(GtkOptionMenu	*optmenu,
@@ -2168,6 +2183,7 @@ static void prefs_details_create(void)
 
 	GtkWidget *other_wid;
 	GtkWidget *extcmd_wid;
+	GtkWidget *update_wid;
 	GtkWidget *advanced_wid;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -2267,6 +2283,10 @@ static void prefs_details_create(void)
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("External commands"));
 	extcmd_wid = prefs_extcmd_create();
 	gtk_box_pack_start(GTK_BOX(vbox_tab), extcmd_wid, FALSE, FALSE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Update"));
+	update_wid = prefs_update_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), update_wid, FALSE, FALSE, 0);
 
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Advanced"));
 	advanced_wid = prefs_advanced_create();
@@ -2577,6 +2597,53 @@ static GtkWidget *prefs_extcmd_create(void)
 #endif
 	extcmd.checkbtn_extsend = checkbtn_extsend;
 	extcmd.entry_extsend    = entry_extsend;
+
+	return vbox1;
+}
+
+static GtkWidget *prefs_update_create(void)
+{
+	GtkWidget *vbox1;
+	GtkWidget *vbox2;
+	GtkWidget *checkbtn_autoupdate;
+	GtkWidget *checkbtn_useproxy;
+	GtkWidget *label;
+	GtkWidget *entry_proxyhost;
+
+	vbox1 = gtk_vbox_new (FALSE, VSPACING);
+	gtk_widget_show (vbox1);
+
+#ifndef G_OS_WIN32
+	label = gtk_label_new (_("Update check requires 'curl' command."));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_box_pack_start (GTK_BOX (vbox1), label, FALSE, FALSE, 0);
+#endif
+
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_autoupdate,
+			   _("Enable auto update check"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_useproxy,
+			   _("Use HTTP proxy"));
+
+	label = gtk_label_new (_("HTTP proxy host (hostname:port):"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+	gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
+
+	entry_proxyhost = gtk_entry_new ();
+	gtk_widget_show (entry_proxyhost);
+	gtk_box_pack_start (GTK_BOX (vbox2), entry_proxyhost, FALSE, FALSE, 0);
+
+	SET_TOGGLE_SENSITIVITY(checkbtn_useproxy, label);
+	SET_TOGGLE_SENSITIVITY(checkbtn_useproxy, entry_proxyhost);
+
+	update_check.checkbtn_autoupdate = checkbtn_autoupdate;
+	update_check.checkbtn_useproxy = checkbtn_useproxy;
+	update_check.entry_proxyhost = entry_proxyhost;
 
 	return vbox1;
 }
