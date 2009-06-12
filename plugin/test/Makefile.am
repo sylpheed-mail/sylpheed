@@ -16,3 +16,6 @@ test_la_LIBADD = \
 	$(GTK_LIBS) \
 	$(top_srcdir)/src/libsylpheed-plugin-0.la \
 	$(top_srcdir)/libsylph/libsylph-0.la
+
+install:
+install-plugin: install-am
