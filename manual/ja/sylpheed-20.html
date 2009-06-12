@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed User's Manual: FAQ</TITLE>
+ <TITLE>Sylpheed User's Manual: 他メール(メール保存形式)からSylpheed(MHフォルダ形式)への移行</TITLE>
  <LINK HREF="sylpheed-21.html" REL=next>
  <LINK HREF="sylpheed-19.html" REL=previous>
  <LINK HREF="sylpheed.html#toc20" REL=contents>
@@ -12,58 +12,38 @@
 <A HREF="sylpheed-19.html">前のページ</A>
 <A HREF="sylpheed.html#toc20">目次へ</A>
 <HR>
-<H2><A NAME="s20">20.</A> <A HREF="sylpheed.html#toc20">FAQ</A></H2>
+<H2><A NAME="s20">20.</A> <A HREF="sylpheed.html#toc20">他メール(メール保存形式)からSylpheed(MHフォルダ形式)への移行</A></H2>
 
-
-<H2><A NAME="ss20.1">20.1</A> <A HREF="sylpheed.html#toc20.1">ニュースのメッセージ未読情報について</A>
+<H2><A NAME="mbox-import"></A> <A NAME="ss20.1">20.1</A> <A HREF="sylpheed.html#toc20.1">mbox形式のメッセージファイルの取り込み</A>
 </H2>
 
-<P>Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょうか?</P>
-
-<P>A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
-ニュースグループごとに未読情報は独立になります。</P>
-<H2><A NAME="ss20.2">20.2</A> <A HREF="sylpheed.html#toc20.2">メニューなどのフォント変更について</A>
+<P>ファイルメニューからmboxファイルをインポートを選択し、
+インポートファイルにはインポートしたいmbox形式のメールボックスを選択します。</P>
+<P>インポート先には選択したメールボックスを展開するフォルダを指定し
+OKを押せばインポートされます。
+mbox形式は、「mbox」というファイルの他にもNetscape Messengerの&nbsp;/nsmailの下のファ
+イル、KMailの&nbsp;/Mail以下のファイル等にも利用されているので、そのファイルを利用
+することで移行できます。</P>
+<P>ただし、KMailは添付ファイルを別ファイルにしてしまう仕様があるらしく、
+添付ファイルがある場合、正しくコンバートすることができません。</P>
+<H2><A NAME="ss20.2">20.2</A> <A HREF="sylpheed.html#toc20.2">Windowsのメーラ(Becky!やAL-Mail, Outlook Express4等)からの移行</A>
 </H2>
 
-<P>Q. メッセージ本文のフォントは
-<A HREF="sylpheed-18.html#font-config">全般の設定から変更</A>
-できましたが、サマリやメニューなどのフォントは変更できないのでしょうか?</P>
+<P>Windows用フリーソフトウェアである
+<A HREF="http://www.digico-m.com/shin1/">MailExp</A>
+(注: 現在配布停止しています)を利用して「標準UNIX From形式のメールボックス」
+にエクスポートします。
+その後そのファイルを移動しそのファイルを
+<A HREF="#mbox-import">mbox形式としてインポート</A>します。
+MailExpはとても多くのメーラからのインポートが可能です。</P>
 
-<P>A. 可能です。$HOME/.sylpheed-2.0/gtkrcファイルを作成し、内容を以下のように記述してください。
-<PRE>
-gtk-font-name = "Kochi Gothic 12"
-</PRE>
-</P>
-<H2><A NAME="ss20.3">20.3</A> <A HREF="sylpheed.html#toc20.3">ショートカットキーのキーバインドの変更</A>
+<H2><A NAME="ss20.3">20.3</A> <A HREF="sylpheed.html#toc20.3">Outlook Express 5のdbx形式からの移行</A>
 </H2>
 
-<P>Q. ショートカットキーのキーバインドの変更はできますか?</P>
-
-<P>A. メニューに表示されている項目に関しては設定可能です。以下のいずれかの方法で設定してください。</P>
-<H3>Windowsの場合</H3>
-
-<P>Sylpheedが起動していない状態で、 C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed\menurc ファイル(Windows Vistaの場合はC:\Users\(ユーザ名)\AppData\Roaming\Sylpheed\menurc)を直接エディタで編集する。</P>
-<H3>Unix/Linuxの場合</H3>
-
-<P>Sylpheedが起動していない状態で、 ~/.sylpheed-2.0/menurc ファイルを直接エディタで編集する。</P>
-<P>また、以下の設定を行うことで、メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、キーを割り当てることができるようになります。また、Backspaceキーを押せば、キーバインドを消すことができます。</P>
-<H3>GNOME 2.8 以降をお使いの場合</H3>
-
-<P>アプリケーション→システムツール→設定エディタで gconf-editor を起動する。</P>
-<P>desktop → gnome → interface を選び、その中の can-change-accels をチェックする。</P>
-<H3>GNOME 2.8 以前かそれ以外の環境をお使いの場合</H3>
-
-<P>~/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する。</P>
-<H2><A NAME="ss20.4">20.4</A> <A HREF="sylpheed.html#toc20.4">サマリビューの下に表示される画像について</A>
-</H2>
-
-<P>Q. ヘッダが表示されている部分に小さな画像が表示されていますが、これは何でしょうか。
-また、どのようにしたら挿入できるのでしょうか。</P>
-<P>A. これは、X-Faceといいます。
-<A HREF="sylpheed-8.html#Account-Config">アカウントの設定</A>のユーザ定義ヘッダで、
-X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。</P>
-<P>
-<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。</P>
+<P>Outlook Express 5の形式はMailExpではサポートしていないので
+<A HREF="http://www02.so-net.ne.jp/~home/oe5conv/">OE5Conv</A>を利用して
+mbox形式へエクスポートした後、そのファイルを
+<A HREF="#mbox-import">mbox形式としてインポート</A>します。</P>
 <HR>
 <A HREF="sylpheed-21.html">次のページ</A>
 <A HREF="sylpheed-19.html">前のページ</A>

@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 2.6 version 0.9.0
+       Sylpheed User's Manual for Sylpheed 2.7 version 0.10.0
     </abstract>
 
 <toc>
@@ -27,7 +27,7 @@
 <p>
  Copyright (c) 2000-2002 Yoichi Imai &lt;yoichi@silver-forest.com&gt;
 
- Copyright (c) 2004-2007 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
+ Copyright (c) 2004-2009 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
 <p>
 Permission is granted to copy, distribute and/or modify this document
       under the terms of the GNU Free Documentation License, Version 1.1
@@ -195,7 +195,7 @@ Sylpheedがインストールされていなければ、
 
 しかし、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。
 </sect1>
-<sect1>基本的なinstall方法<label id="gen-inst">
+<sect1>基本的なインストール方法<label id="gen-inst">
 <p>
 ここに示すのはUNIXならほぼ使えると思われるインストール方法です。
 しかし、OSの持っているファイル管理機構を壊す可能性があるので、
@@ -1458,6 +1458,10 @@ Sylpheedは最初に迷惑メールと非迷惑メールをこれらのプログラムに渡して学習させます
 <p>
 受信時に自動的に迷惑メールを振り分けたい場合は、これをチェックします。この振り分けは、通常のフィルタリングの後に実行されます。
 </sect2>
+<sect2>通常の振り分けの前に迷惑メールを振り分ける
+<p>
+これにチェックを入れると、通常の振り分けの前に迷惑メールの振り分けが行われるようになります。
+</sect2>
 <sect2>受信時に迷惑メールをサーバから削除する
 <p>
 メールをサーバに残す設定にしていた場合でも、強制的に迷惑メールをサーバから削除します。
@@ -1707,6 +1711,23 @@ PGPで署名されているメッセージを開いたときに自動的に署名を検証します。
 </sect1>
 
 </sect>
+
+<sect>アップデートチェック
+<p>
+Sylpheed の Web サイトで新しいバージョンが公開されている場合に通知します。
+<p>
+新しいバージョンが見つかった場合、「新しいバージョンのSylpheedが見つかりました。今すぐ更新しますか?」という確認ダイアログが表示されます。「はい」を選択すると Sylpheed の Web ページが開きます(Web ブラウザが正しく設定されている必要があります)。
+<p>アップデートチェックは curl コマンドを利用して行われるため、 curl がインストールされている必要があります。 Windows 版の場合は curl を同梱しているため別途インストールする必要はありません。また、 HTTP プロキシ経由で Web にアクセスする環境の場合は<ref id="http-proxy" name="HTTP プロキシ">を設定する必要があります。
+<sect1>自動アップデートチェック
+<p>
+全般の設定の「詳細 - アップデート」タブで自動アップデートチェックが有効になっている場合、起動時にアップデートのチェックを行います。
+</sect1>
+<sect1>手動アップデートチェック
+<p>
+メニューの「ヘルプ＞アップデートチェック」を選択すると、アップデートのチェックを行います。
+</sect1>
+</sect>
+
 <sect>カスタマイズ
 <sect1>全般の設定<label id="general-config-open">
 <p>
@@ -2046,6 +2067,16 @@ Sylpheed本体の受信部を使用せずにそのプログラムを利用して受信を行います。
 <p>
 「メールの送信に外部プログラムを使用する」を選択すれば、Sylpheed本体の送信部を使用せずにそのプログラムを利用して送信を行います。
 </sect3>
+</sect2>
+
+<sect2>(詳細 - アップデート)タブ
+<sect3>自動アップデートチェックを有効にする
+<p>
+これがチェックされている場合、起動時に自動的にアップデートのチェックを行います。標準で有効です。
+</sect3>
+<sect3>HTTP プロキシを使用する<label id="http-proxy">
+<p>
+外部の Web サイトへのアクセスに HTTP プロキシが必要な環境の場合、これにチェックを入れ、下の入力欄に「ホスト名:ポート」の書式で HTTP プロキシホスト名とポート番号を入力します。
 </sect2>
 
 <sect2>(詳細 - 高度な設定)タブ
@@ -2763,6 +2794,10 @@ to permit their use in free software.
 	  の項目を追加
 	* FAQ - ショートカットキーのキーバインドの変更を加筆修正
 	* FAQ - 返信マークについての項目を削除
+2009-06-12	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.10.0
+	* 迷惑メール対策の記述を更新
+	* アップデートチェックを追加
 </verb>
 </sect1> 
 </sect>
