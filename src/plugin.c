@@ -34,8 +34,6 @@ enum {
 	LAST_SIGNAL
 };
 
-#define syl_plugin_lookup_symbol(name)	g_hash_table_lookup(sym_table, name)
-
 #define SAFE_CALL(func_ptr)		{ if (func_ptr) func_ptr(); }
 #define SAFE_CALL_RET(func_ptr)		(func_ptr ? func_ptr() : NULL)
 #define SAFE_CALL_ARG1(func_ptr, arg1)	{ if (func_ptr) func_ptr(arg1); }
@@ -312,6 +310,11 @@ gint syl_plugin_add_symbol(const gchar *name, gpointer sym)
 	return 0;
 }
 
+gpointer syl_plugin_lookup_symbol(const gchar *name)
+{
+	return g_hash_table_lookup(sym_table, name);
+}
+
 const gchar *syl_plugin_get_prog_version(void)
 {
 	gpointer sym;
@@ -334,6 +337,14 @@ void syl_plugin_main_window_popup(gpointer mainwin)
 
 	func = syl_plugin_lookup_symbol("main_window_popup");
 	SAFE_CALL_ARG1(func, mainwin);
+}
+
+GtkWidget *syl_plugin_main_window_get_statusbar(void)
+{
+	gpointer widget;
+
+	widget = syl_plugin_lookup_symbol("main_window_statusbar");
+	return GTK_WIDGET(widget);
 }
 
 void syl_plugin_app_will_exit(gboolean force)

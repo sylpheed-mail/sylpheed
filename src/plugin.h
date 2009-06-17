@@ -93,7 +93,8 @@ GSList *syl_plugin_get_module_list	(void);
 SylPluginInfo *syl_plugin_get_info	(GModule *module);
 gboolean syl_plugin_check_version	(GModule *module);
 
-gint syl_plugin_add_symbol	(const gchar *name, gpointer sym);
+gint syl_plugin_add_symbol		(const gchar *name, gpointer sym);
+gpointer syl_plugin_lookup_symbol	(const gchar *name);
 
 /* Interfaces which should be implemented by plug-ins
      void plugin_load(void);
@@ -108,6 +109,7 @@ const gchar *syl_plugin_get_prog_version	(void);
 
 gpointer syl_plugin_main_window_get		(void);
 void syl_plugin_main_window_popup		(gpointer mainwin);
+GtkWidget *syl_plugin_main_window_get_statusbar	(void);
 
 void syl_plugin_app_will_exit			(gboolean force);
 

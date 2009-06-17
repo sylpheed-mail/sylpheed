@@ -1023,6 +1023,7 @@ static void plugin_init(void)
 	syl_plugin_add_symbol("app_will_exit", app_will_exit);
 	syl_plugin_add_symbol("main_window_menu_factory",
 			      mainwin->menu_factory);
+	syl_plugin_add_symbol("main_window_statusbar", mainwin->statusbar);
 
 	syl_plugin_add_symbol("folderview", mainwin->folderview);
 	syl_plugin_add_symbol("folderview_get_selected_item",
