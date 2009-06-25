@@ -31,9 +31,27 @@ Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
 <H2><A NAME="ss14.3">14.3</A> <A HREF="sylpheed.html#toc14.3">学習コマンドの設定</A>
 </H2>
 
-<P>迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています(Windows版の場合はbsfilter)。</P>
+<P>迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています。Windows版の場合はbsfilterが設定されています。</P>
 <P>「(プリセットを選択)」と書かれたオプションメニューで、bogofilterとbsfilterの既定の設定を選択することができます。</P>
 <P>通常はそのままで問題ありません。</P>
+<P>Windows版で管理者権限のないユーザでSylpheedを実行する場合、bsfilterはインストールされたディレクトリにファイルを書き込もうとするため、ファイルを書き込めずにエラーになります。その場合以下のいずれかの方法を行ってください。
+<UL>
+<LI>管理者権限をもつユーザでSylpheedを実行する</LI>
+<LI>環境変数 BSFILTERHOME に書き込み可能なディレクトリを指定する
+<P>
+<UL>
+<LI> 「コントロール パネル - システム - 詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」で「新規」を押す(Vistaの場合は「コントロールパネル - システムとメンテナンス - システム - システムの詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」)</LI>
+<LI> 「変数名」に「BSFILTERHOME」、「変数値」に「%APPDATA%\Sylpheed」を入力して「OK」を押す</LI>
+</UL>
+</P>
+</LI>
+<LI>「全般の設定 - 迷惑メール - 学習コマンド」の各コマンドに
+--homedir "ディレクトリ" を追加する
+<P>例) bsfilterw.exe --homedir "C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed" -C -s -u</P>
+</LI>
+</UL>
+</P>
+
 <H2><A NAME="ss14.4">14.4</A> <A HREF="sylpheed.html#toc14.4">アクションの設定</A>
 </H2>
 

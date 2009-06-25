@@ -1440,11 +1440,25 @@ Sylpheedは最初に迷惑メールと非迷惑メールをこれらのプログラムに渡して学習させます
 </sect1>
 <sect1>学習コマンドの設定
 <p>
-迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています(Windows版の場合はbsfilter)。
+迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています。Windows版の場合はbsfilterが設定されています。
 
 「(プリセットを選択)」と書かれたオプションメニューで、bogofilterとbsfilterの既定の設定を選択することができます。
 
 通常はそのままで問題ありません。
+
+Windows版で管理者権限のないユーザでSylpheedを実行する場合、bsfilterはインストールされたディレクトリにファイルを書き込もうとするため、ファイルを書き込めずにエラーになります。その場合以下のいずれかの方法を行ってください。
+<itemize>
+<item>管理者権限をもつユーザでSylpheedを実行する
+<item>環境変数 BSFILTERHOME に書き込み可能なディレクトリを指定する
+ <p><itemize>
+ <item> 「コントロール パネル - システム - 詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」で「新規」を押す(Vistaの場合は「コントロールパネル - システムとメンテナンス - システム - システムの詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」)
+ <item> 「変数名」に「BSFILTERHOME」、「変数値」に「%APPDATA%\Sylpheed」を入力して「OK」を押す
+ </itemize>
+<item>「全般の設定 - 迷惑メール - 学習コマンド」の各コマンドに
+  --homedir "ディレクトリ" を追加する
+<p>例) bsfilterw.exe --homedir "C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed" -C -s -u
+</itemize>
+
 </sect1>
 <sect1>アクションの設定
 <p>
@@ -2798,6 +2812,9 @@ to permit their use in free software.
 	* Version 0.10.0
 	* 迷惑メール対策の記述を更新
 	* アップデートチェックを追加
+2009-06-25	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.10.1
+	* 迷惑メール対策にWindows版bsfilterの注意事項を追加
 </verb>
 </sect1> 
 </sect>
