@@ -11,6 +11,8 @@ EXTRA_DIST = config.rpath  \
 	NEWS-1.0 \
 	NEWS-2.0 \
 	LICENSE \
+	PLUGIN.txt \
+	PLUGIN.ja.txt \
 	sylpheed.desktop \
 	sylpheed.spec \
 	sylpheed.spec.in \
