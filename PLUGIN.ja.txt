@@ -133,6 +133,10 @@ Sylpheed ではこれが Sylpheed 本体側の値と一致するかどうかチ�
 
 * libsylpheed-plugin-0
 
+以下のシグナルは syl_plugin_signal_connect() を呼び出して使用します。
+
+例: syl_plugin_signal_connect("plugin-load", G_CALLBACK(plugin_load_cb), data);
+
 -------------------------------------------------------------------------
 void (* plugin_load)    (GObject *obj, GModule *module);
 
@@ -151,23 +155,57 @@ FolderView でコンテキストメニューをポップアップしたときに
 
 * libsylph-0
 
+以下のシグナルは g_signal_connect() の第一引数に syl_app_get() で取得した
+GObject を渡して使用します。
+
+例:
+
+void init_done_cb(GObject *obj, gpointer data)
+{
+    ...
+}
+
+    g_signal_connect(syl_app_get(), "init-done", G_CALLBACK(init_done_cb),
+                     data);
+
 -------------------------------------------------------------------------
 void (* init_done) (GObject *obj)
 
 アプリケーションの初期化が完了した時点で発行されます。
 -------------------------------------------------------------------------
-void (*app_exit) (GObject *obj)
+void (* app_exit) (GObject *obj)
 
 アプリケーションが終了する時に発行されます。
 -------------------------------------------------------------------------
-void (*add_msg) (GObject *obj, FolderItem *item, const gchar *file, guint num)
+void (* add_msg) (GObject *obj, FolderItem *item, const gchar *file, guint num)
 
 フォルダ item に番号 num のメッセージが追加された時に発行されます。
 -------------------------------------------------------------------------
-void (*remove_msg) (GObject *obj, FolderItem *item, const gchar *file, guint num)
+void (* remove_msg) (GObject *obj, FolderItem *item, const gchar *file,
+                     guint num)
 
 フォルダ item から番号 num のメッセージが削除される時に発行されます。
 -------------------------------------------------------------------------
+void (* remove_all_msg) (GObject *obj, FolderItem *item)
+
+フォルダ item からすべてのメッセージが削除されるときに発行されます。
+-------------------------------------------------------------------------
+void (* remove_folder) (GObject *obj, FolderItem *item)
+
+フォルダ item が削除されるときに発行されます。
+-------------------------------------------------------------------------
+void (* move_folder) (GObject *obj, FolderItem *item, const gchar *old_id,
+                      const gchar *new_id)
+
+フォルダ item が old_id から new_id に移動(リネーム)されるときに
+発行されます。 old_id, new_id はフォルダ識別子文字列です。
+-------------------------------------------------------------------------
+void (* folderlist_updated) (GObject *obj)
+
+フォルダ情報が変更され、フォルダリストを格納した folderlist.xml ファイルが
+更新されたときに発行されます。
+-------------------------------------------------------------------------
+
 
 サンプルプラグイン
 ==================
@@ -186,3 +224,16 @@ test プラグインは Sylpheed プラグインの基本的な構造に加え�
 - 「ツール」メニューに「Plugin test」メニュー項目を追加
 - 「Plugin test」メニューを選択すると、「Click this to quit」という
   ボタンのみのウィンドウを表示し、クリックすると Sylpheed を終了する
+
+
+ライセンスについて
+==================
+
+Sylpheed 本体のライセンスは GPL であるため、 Sylpheed から動的に
+読み込まれるプラグイン DLL は、 GPL の規定に基づき、 GPL または
+GPL と互換性のあるライセンス(修正 BSD ライセンスなど)である必要が
+あります。
+
+プラグインに商用ライセンスなど他のライセンスを適用したい場合は、
+そのモジュールを独立した実行ファイルにして、 DLL とプロセス間通信で
+連携して動作させる必要があります。

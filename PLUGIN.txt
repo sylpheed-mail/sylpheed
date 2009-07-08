@@ -1,3 +1,20 @@
 Sylpheed Plugin Specification
 =============================
 
+The following is the architecture of plugin system of Sylpheed.
+
+ +----------+    +----------------------+     +-----------+
+ | Sylpheed |----| libsylpheed-plugin-0 |--+--| Plug-in A |
+ +----------+    +----------------------+  |  +-----------+
+   Sylpheed         Plug-in interface      |   Plug-in DLL
+                    library             +--+
+        |        +------------+         |  |  +-----------+
+        +--------| libsylph-0 |---------+  +--| Plug-in B |
+                 +------------+               +-----------+
+                 LibSylph mail library
+
+Sylpheed loads the plug-in DLLs installed in the plug-in directory on
+startup.
+
+Plug-in can only access the functions of Sylpheed through the APIs provided
+with libsylpheed-plugin-0 and libsylph-0 library.
