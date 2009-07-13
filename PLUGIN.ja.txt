@@ -26,6 +26,7 @@ GObject のシグナル機構を利用して、特定のイベントが発生し
 プラグイン機構は libsylph/sylmain.[ch] と src/plugin.[ch] で実装されて
 います。
 
+
 プラグイン API
 ==============
 
@@ -116,8 +117,17 @@ SylPluginInfo *plugin_info(void)
 gint plugin_interface_version(void)
 
 プラグイン API のインタフェースのバージョンを Sylpheed に返すための
-関数です。プラグインでは通常 SYL_PLUGIN_INTERFACE_VERSION を返し、
-Sylpheed ではこれが Sylpheed 本体側の値と一致するかどうかチェックします。
+関数です。プラグインでは通常は定数 SYL_PLUGIN_INTERFACE_VERSION を返し、
+Sylpheed ではこの値を Sylpheed 本体側の値と比較し、互換性のあるバージョン
+かどうかをチェックします。 Sylpheed 本体のプラグインインタフェースバージョン
+はプラグインのプラグインインタフェースバージョン以上である必要があります。
+また、インタフェースバージョンのメジャーバージョンが異なる場合も互換性は
+なくなります。
+
+例1: Sylpheed のプラグインインタフェースバージョンが 0x0102 で
+     プラグインのプラグインインタフェースバージョンが 0x0100 の場合 OK
+例2: Sylpheed のプラグインインタフェースバージョンが 0x0102 で
+     プラグインのプラグインインタフェースバージョンが 0x0103 の場合 NG
 
 -------------------------------------------------------------------------
 
@@ -155,7 +165,7 @@ FolderView でコンテキストメニューをポップアップしたときに
 
 * libsylph-0
 
-以下のシグナルは g_signal_connect() の第一引数に syl_app_get() で取得した
+以下のシグナルは g_signal_connect() の第一引数に syl_app_get() で得られる
 GObject を渡して使用します。
 
 例:

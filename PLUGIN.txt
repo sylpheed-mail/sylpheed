@@ -18,3 +18,105 @@ startup.
 
 Plug-in can only access the functions of Sylpheed through the APIs provided
 with libsylpheed-plugin-0 and libsylph-0 library.
+
+There are two kinds of plug-in API. One is called directly from plug-ins,
+another one utilizes the signal mechanism of GObject and calls the callback
+functions on specific events.
+
+The plug-in system is implemented in libsylph/sylmain.[ch] and
+src/plugin.[ch].
+
+Plug-in API
+===========
+
+Used by Sylpheed
+----------------
+
+-------------------------------------------------------------------------
+void syl_plugin_signal_connect  (const gchar *name, GCallback callback,
+                                 gpointer data);
+
+-------------------------------------------------------------------------
+void syl_plugin_signal_disconnect(gpointer func, gpointer data);
+
+-------------------------------------------------------------------------
+void syl_plugin_signal_emit(const gchar *name, ...);
+
+-------------------------------------------------------------------------
+gint syl_plugin_init_lib        (void);
+
+-------------------------------------------------------------------------
+gint syl_plugin_load            (const gchar *file);
+
+-------------------------------------------------------------------------
+gint syl_plugin_load_all        (const gchar *dir);
+
+-------------------------------------------------------------------------
+void syl_plugin_unload_all      (void);
+
+-------------------------------------------------------------------------
+GSList *syl_plugin_get_module_list      (void);
+
+-------------------------------------------------------------------------
+SylPluginInfo *syl_plugin_get_info      (GModule *module);
+
+-------------------------------------------------------------------------
+gboolean syl_plugin_check_version       (GModule *module);
+
+-------------------------------------------------------------------------
+gint syl_plugin_add_symbol              (const gchar *name, gpointer sym);
+
+-------------------------------------------------------------------------
+gpointer syl_plugin_lookup_symbol       (const gchar *name);
+
+-------------------------------------------------------------------------
+
+
+Functions which must be implemented by plug-ins
+-----------------------------------------------
+
+-------------------------------------------------------------------------
+void plugin_load(void)
+
+-------------------------------------------------------------------------
+void plugin_unload(void)
+
+-------------------------------------------------------------------------
+SylPluginInfo *plugin_info(void)
+
+-------------------------------------------------------------------------
+gint plugin_interface_version(void)
+
+-------------------------------------------------------------------------
+
+
+Functions used by plug-ins
+--------------------------
+
+Refer to plugin.h for the functions list.
+
+
+Signals list
+------------
+
+* libsylpheed-plugin-0
+
+Call syl_plugin_signal_connect() to use the following signals.
+
+Example:
+  syl_plugin_signal_connect("plugin-load", G_CALLBACK(plugin_load_cb), data);
+
+-------------------------------------------------------------------------
+void (* plugin_load)    (GObject *obj, GModule *module);
+
+-------------------------------------------------------------------------
+void (* plugin_unload)  (GObject *obj, GModule *module);
+
+-------------------------------------------------------------------------
+void (* folderview_menu_popup)  (GObject *obj, gpointer ifactory);
+
+-------------------------------------------------------------------------
+
+* libsylph-0
+
+-------------------------------------------------------------------------
