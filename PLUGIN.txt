@@ -119,4 +119,74 @@ void (* folderview_menu_popup)  (GObject *obj, gpointer ifactory);
 
 * libsylph-0
 
+The following signals can be used by passing GObject obtained by
+syl_app_get() to the first argument of g_signal_connect().
+
+Example:
+
+void init_done_cb(GObject *obj, gpointer data)
+{
+    ...
+}
+
+    g_signal_connect(syl_app_get(), "init-done", G_CALLBACK(init_done_cb),
+                     data);
+
 -------------------------------------------------------------------------
+void (* init_done) (GObject *obj)
+
+-------------------------------------------------------------------------
+void (* app_exit) (GObject *obj)
+
+-------------------------------------------------------------------------
+void (* add_msg) (GObject *obj, FolderItem *item, const gchar *file, guint num)
+
+-------------------------------------------------------------------------
+void (* remove_msg) (GObject *obj, FolderItem *item, const gchar *file,
+                     guint num)
+
+-------------------------------------------------------------------------
+void (* remove_all_msg) (GObject *obj, FolderItem *item)
+
+-------------------------------------------------------------------------
+void (* remove_folder) (GObject *obj, FolderItem *item)
+
+-------------------------------------------------------------------------
+void (* move_folder) (GObject *obj, FolderItem *item, const gchar *old_id,
+                      const gchar *new_id)
+
+-------------------------------------------------------------------------
+void (* folderlist_updated) (GObject *obj)
+
+-------------------------------------------------------------------------
+
+
+Sample plug-in
+==============
+
+There is a sample plug-in at plugin/test. This plug-in will not be installed
+with 'make install'. It is required to enter the directory plugin/test and
+run 'make install-plugin'.
+
+The 'test' plug-in has the basic structure of Sylpheed plug-in and the
+following process:
+
+- Output string "test plug-in loaded!" to stdout on load
+- Get folder list and output to stdout
+- Get Sylpheed version string and output to stdout
+- Get the main window and put it in front
+- Add 'Plugin test' menu item on the 'Tools' menu
+- When 'Plugin test' menu is selected, a window with a button named
+  'Click this to quit' is displayed. If it is clicked, Sylpheed will quit
+
+
+About license
+=============
+
+It is required that a plug-in DLL dynamically loaded by Sylpheed is GPL or
+GPL-compatible license (ex. modified BSD license) based on the GPL clause
+because the license of Sylpheed itself is GPL.
+
+If you want to apply non-GPL license like proprietary license to your plug-in,
+you must make the module an independent executable file, and make it work with
+inter-process communication with a DLL.
