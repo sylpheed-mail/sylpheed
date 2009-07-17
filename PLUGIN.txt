@@ -26,49 +26,70 @@ functions on specific events.
 The plug-in system is implemented in libsylph/sylmain.[ch] and
 src/plugin.[ch].
 
+
 Plug-in API
 ===========
 
-Used by Sylpheed
-----------------
+Functions used by Sylpheed
+--------------------------
 
 -------------------------------------------------------------------------
 void syl_plugin_signal_connect  (const gchar *name, GCallback callback,
                                  gpointer data);
 
+Connects to signals available with SylPlugin object (obtained inside library).
+The specification of callback functions that receive signals is similar to
+that of normal GObject.
+Refer to the signals list for available signals.
 -------------------------------------------------------------------------
 void syl_plugin_signal_disconnect(gpointer func, gpointer data);
 
+Disconnects signals connected by syl_plugin_signal_connect().
 -------------------------------------------------------------------------
 void syl_plugin_signal_emit(const gchar *name, ...);
 
+Emits SylPlugin object signals.
 -------------------------------------------------------------------------
 gint syl_plugin_init_lib        (void);
 
+Initializes the libsylpheed-plugin-0 library.
 -------------------------------------------------------------------------
 gint syl_plugin_load            (const gchar *file);
 
+Loads plug-in DLL files into memory.
 -------------------------------------------------------------------------
 gint syl_plugin_load_all        (const gchar *dir);
 
+Loads plug-in DLL files in the specified directory into memory.
 -------------------------------------------------------------------------
 void syl_plugin_unload_all      (void);
 
+Unloads all loaded plug-ins.
 -------------------------------------------------------------------------
 GSList *syl_plugin_get_module_list      (void);
 
+Obtains the list of plug-ins loaded into memory.
+It returns the list of pointers to GModule struct.
+The list is obtained by the library internally, so it must not be freed.
 -------------------------------------------------------------------------
 SylPluginInfo *syl_plugin_get_info      (GModule *module);
 
+Obtains plug-in information. The information is returned as SylPluginInfo
+struct.
 -------------------------------------------------------------------------
 gboolean syl_plugin_check_version       (GModule *module);
 
+Compares plug-in interface versions and checks if the plug-in is compatible.
+Returns TRUE if the version matches, FALSE otherwise.
 -------------------------------------------------------------------------
 gint syl_plugin_add_symbol              (const gchar *name, gpointer sym);
 
+Registers symbol name and pointer value related to it to the library.
 -------------------------------------------------------------------------
 gpointer syl_plugin_lookup_symbol       (const gchar *name);
 
+Searches symbol registered by syl_plugin_add_symbol() and returns its
+pointer value.
 -------------------------------------------------------------------------
 
 
@@ -78,15 +99,32 @@ Functions which must be implemented by plug-ins
 -------------------------------------------------------------------------
 void plugin_load(void)
 
+Called from Sylpheed on plug-in load.
+Do initialization of plug-in etc. here.
 -------------------------------------------------------------------------
 void plugin_unload(void)
 
+Called from Sylpheed on plug-in unload.
+Do finalization of plug-in etc. here.
 -------------------------------------------------------------------------
 SylPluginInfo *plugin_info(void)
 
+Fuction to return struct which stores plug-in information to Sylpheed.
+It normally returns pointer to static struct.
 -------------------------------------------------------------------------
 gint plugin_interface_version(void)
 
+Function to return plug-in API interface version to Sylpheed.
+A plug-in normally returns constant value SYL_PLUGIN_INTERFACE_VERSION.
+Sylpheed compares this value with its own value and checks if it is
+compatible. Sylpheed's plug-in interface version must be equal to or greater
+than the plug-in's plug-in interface verson. If the major versions of the
+interface version differ, they are treated as incompatible.
+
+Ex.1: Sylpheed plug-in interface version: 0x0102
+      A plug-in plug-in interface version: 0x0100: OK
+Ex.2: Sylpheed plug-in interface version: 0x0102
+      A plug-in plug-in interface version: 0x0103: NG
 -------------------------------------------------------------------------
 
 
@@ -109,12 +147,15 @@ Example:
 -------------------------------------------------------------------------
 void (* plugin_load)    (GObject *obj, GModule *module);
 
+Emitted on plug-in loading by syl_plugin_load().
 -------------------------------------------------------------------------
 void (* plugin_unload)  (GObject *obj, GModule *module);
 
+Emitted on plug-in unloading by syl_plugin_unload_all().
 -------------------------------------------------------------------------
 void (* folderview_menu_popup)  (GObject *obj, gpointer ifactory);
 
+Emitted on popup of the context menu of FolderView.
 -------------------------------------------------------------------------
 
 * libsylph-0
@@ -135,29 +176,39 @@ void init_done_cb(GObject *obj, gpointer data)
 -------------------------------------------------------------------------
 void (* init_done) (GObject *obj)
 
+Emitted when the initialization of application completes.
 -------------------------------------------------------------------------
 void (* app_exit) (GObject *obj)
 
+Emitted when application exits.
 -------------------------------------------------------------------------
 void (* add_msg) (GObject *obj, FolderItem *item, const gchar *file, guint num)
 
+Emitted when a message (number num) is added into folder item.
 -------------------------------------------------------------------------
 void (* remove_msg) (GObject *obj, FolderItem *item, const gchar *file,
                      guint num)
 
+Emitted when a message (number num) is removed from folder item.
 -------------------------------------------------------------------------
 void (* remove_all_msg) (GObject *obj, FolderItem *item)
 
+Emitted when all messages are removed from folder item.
 -------------------------------------------------------------------------
 void (* remove_folder) (GObject *obj, FolderItem *item)
 
+Emitted when folder item is removed.
 -------------------------------------------------------------------------
 void (* move_folder) (GObject *obj, FolderItem *item, const gchar *old_id,
                       const gchar *new_id)
 
+Emitted when folder item is moved (renamed) from old_id to new_id.
+old_id and new_id are folder identifier strings.
 -------------------------------------------------------------------------
 void (* folderlist_updated) (GObject *obj)
 
+Emitted when folder information is modified and folderlist.xml, which
+contains folder list, is updated.
 -------------------------------------------------------------------------
 
 
