@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,9 @@ typedef enum
 	PROG_N_COLS
 } ProgressColumn;
 
-ProgressDialog *progress_dialog_create	(void);
+ProgressDialog *progress_dialog_create		(void);
+ProgressDialog *progress_dialog_simple_create	(void);
+
 void progress_dialog_destroy		(ProgressDialog	*progress);
 
 void progress_dialog_set_label		(ProgressDialog	*progress,

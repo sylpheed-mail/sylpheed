@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@
 #include <gtk/gtkbutton.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkstock.h>
+#include <gtk/gtkprogressbar.h>
 
 #include "main.h"
 #include "inc.h"
@@ -47,6 +48,8 @@
 #include "gtkutils.h"
 #include "manage_window.h"
 #include "folder.h"
+#include "progressdialog.h"
+#include "alertpanel.h"
 
 static GtkWidget *window;
 static GtkWidget *file_entry;
@@ -57,6 +60,7 @@ static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
 static gboolean import_finished;
 static gboolean import_ack;
+static ProgressDialog *progress;
 
 static void import_create	(void);
 static void import_ok_cb	(GtkWidget	*widget,
@@ -73,6 +77,26 @@ static gint delete_event	(GtkWidget	*widget,
 static gboolean key_pressed	(GtkWidget	*widget,
 				 GdkEventKey	*event,
 				 gpointer	 data);
+
+
+static void proc_mbox_func(Folder *folder, FolderItem *item, gpointer data)
+{
+	gchar str[64];
+	gint count = GPOINTER_TO_INT(data);
+	static GTimeVal tv_prev = {0, 0};
+	GTimeVal tv_cur;
+
+	g_get_current_time(&tv_cur);
+	if (tv_prev.tv_sec == 0 ||
+	    (tv_cur.tv_sec - tv_prev.tv_sec) * G_USEC_PER_SEC +
+	    tv_cur.tv_usec - tv_prev.tv_usec > 100 * 1000) {
+		g_snprintf(str, sizeof(str), "%d", count);
+		gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress->progressbar), str);
+		gtk_progress_bar_pulse(GTK_PROGRESS_BAR(progress->progressbar));
+		ui_update();
+		tv_prev = tv_cur;
+	}
+}
 
 gint import_mbox(FolderItem *default_dest)
 {
@@ -121,11 +145,29 @@ gint import_mbox(FolderItem *default_dest)
 					(destdir);
 
 			if (!dest) {
-				g_warning("Can't find the folder.\n");
+				alertpanel_error(_("Can't find the destination folder."));
 			} else {
+				gchar *msg;
+
+				msg = g_strdup_printf
+					(_("Importing %s ..."),
+					 g_basename(utf8filename));
+				progress = progress_dialog_simple_create();
+				gtk_window_set_title
+					(GTK_WINDOW(progress->window),
+					 _("Importing"));
+				progress_dialog_set_label(progress, msg);
+				gtk_widget_hide(progress->cancel_btn);
+				gtk_widget_show(progress->window);
+				ui_update();
+				folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
 				ok = proc_mbox(dest, filename, NULL);
+				folder_set_ui_func(dest->folder, NULL, NULL);
 				folder_item_scan(dest);
 				folderview_update_item(dest, TRUE);
+				progress_dialog_destroy(progress);
+				progress = NULL;
+				g_free(msg);
 			}
 
 			g_free(filename);
@@ -260,10 +302,16 @@ static void import_filesel_cb(GtkWidget *widget, gpointer data)
 static void import_destsel_cb(GtkWidget *widget, gpointer data)
 {
 	FolderItem *dest;
+	gchar *dest_id;
 
 	dest = foldersel_folder_sel(NULL, FOLDER_SEL_COPY, NULL);
-	if (dest && dest->path)
-		gtk_entry_set_text(GTK_ENTRY(dest_entry), dest->path);
+	if (dest && dest->path) {
+		dest_id = folder_item_get_identifier(dest);
+		if (dest_id) {
+			gtk_entry_set_text(GTK_ENTRY(dest_entry), dest_id);
+			g_free(dest_id);
+		}
+	}
 }
 
 static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data)

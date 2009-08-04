@@ -69,12 +69,17 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 	FILE *mbox_fp;
 	gchar buf[BUFFSIZE], from_line[BUFFSIZE];
 	gchar *tmp_file;
-	gint msgs = 0;
+	gint new_msgs = 0;
+	gint count = 0;
+	Folder *folder;
 
 	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(dest->folder != NULL, -1);
 	g_return_val_if_fail(mbox != NULL, -1);
 
 	debug_print(_("Getting messages from %s into %s...\n"), mbox, dest->path);
+
+	folder = dest->folder;
 
 	if ((mbox_fp = g_fopen(mbox, "rb")) == NULL) {
 		FILE_OP_ERROR(mbox, "fopen");
@@ -113,6 +118,10 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		gboolean is_next_msg = FALSE;
 		gboolean is_junk = FALSE;
 		FilterInfo *fltinfo;
+
+		count++;
+		if (folder->ui_func)
+			folder->ui_func(folder, dest, folder->ui_func_data ? dest->folder->ui_func_data : GINT_TO_POINTER(count));
 
 		if ((tmp_fp = g_fopen(tmp_file, "wb")) == NULL) {
 			FILE_OP_ERROR(tmp_file, "fopen");
@@ -268,7 +277,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		if (!is_junk &&
 		    fltinfo->actions[FLT_ACTION_DELETE] == FALSE &&
 		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
-			msgs++;
+			new_msgs++;
 
 		filter_info_free(fltinfo);
 		g_unlink(tmp_file);
@@ -276,9 +285,9 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 
 	g_free(tmp_file);
 	fclose(mbox_fp);
-	debug_print("%d new messages found.\n", msgs);
+	debug_print("%d new messages found.\n", new_msgs);
 
-	return msgs;
+	return new_msgs;
 }
 
 gint lock_mbox(const gchar *base, LockType type)
