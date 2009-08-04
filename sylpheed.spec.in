@@ -15,6 +15,9 @@ Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 Buildroot: %{_tmppath}/%{name}-root
 
 %changelog
+* Tue Aug 4 2009 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- fixed %files section.
+
 * Tue May 20 2008 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 - updated %files section.
 
@@ -114,6 +117,8 @@ rm -rf ${RPM_BUILD_ROOT}
 %defattr(-,root,root)
 %doc AUTHORS COPYING COPYING.LIB ChangeLog ChangeLog.ja ChangeLog-1.0 ChangeLog-1.0.ja README README.es README.ja INSTALL INSTALL.ja NEWS NEWS-1.0 NEWS-2.0 LICENSE TODO TODO.ja
 %{_bindir}/%{name}
+%{_includedir}/%{name}
+%{_libdir}/*
 %{_datadir}/locale/*/LC_MESSAGES/%{name}.mo
 %{_datadir}/%{name}/faq/*/*
 %{_datadir}/%{name}/manual/*/*
