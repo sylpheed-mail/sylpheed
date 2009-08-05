@@ -87,11 +87,12 @@ static void proc_mbox_func(Folder *folder, FolderItem *item, gpointer data)
 	GTimeVal tv_cur;
 
 	g_get_current_time(&tv_cur);
+	g_snprintf(str, sizeof(str), "%d", count);
+	gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress->progressbar), str);
+
 	if (tv_prev.tv_sec == 0 ||
 	    (tv_cur.tv_sec - tv_prev.tv_sec) * G_USEC_PER_SEC +
 	    tv_cur.tv_usec - tv_prev.tv_usec > 100 * 1000) {
-		g_snprintf(str, sizeof(str), "%d", count);
-		gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress->progressbar), str);
 		gtk_progress_bar_pulse(GTK_PROGRESS_BAR(progress->progressbar));
 		ui_update();
 		tv_prev = tv_cur;
@@ -157,12 +158,21 @@ gint import_mbox(FolderItem *default_dest)
 					(GTK_WINDOW(progress->window),
 					 _("Importing"));
 				progress_dialog_set_label(progress, msg);
+				gtk_window_set_modal
+					(GTK_WINDOW(progress->window), TRUE);
+				manage_window_set_transient
+					(GTK_WINDOW(progress->window));
 				gtk_widget_hide(progress->cancel_btn);
+				g_signal_connect(G_OBJECT(progress->window),
+						 "delete_event",
+						 G_CALLBACK(gtk_true), NULL);
 				gtk_widget_show(progress->window);
 				ui_update();
 				folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
 				ok = proc_mbox(dest, filename, NULL);
 				folder_set_ui_func(dest->folder, NULL, NULL);
+				progress_dialog_set_label(progress, _("Scanning folder..."));
+				ui_update();
 				folder_item_scan(dest);
 				folderview_update_item(dest, TRUE);
 				progress_dialog_destroy(progress);
