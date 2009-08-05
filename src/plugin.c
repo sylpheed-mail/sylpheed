@@ -204,8 +204,12 @@ gint syl_plugin_load_all(const gchar *dir)
 	gchar *path;
 	gint count = 0;
 
+	g_return_val_if_fail(dir != NULL, -1);
+
+	debug_print("loading plugins from directory: %s\n", dir);
+
 	if ((d = g_dir_open(dir, 0, NULL)) == NULL) {
-		g_warning("failed to open directory: %s", dir);
+		debug_print("failed to open directory: %s\n", dir);
 		return -1;
 	}
 
