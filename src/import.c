@@ -157,6 +157,10 @@ static gint import_do(void)
 	FolderItem *dest;
 	gchar *filename;
 	gchar *msg;
+	gint type;
+
+	type = menu_get_option_menu_active_index
+		(GTK_OPTION_MENU(format_optmenu));
 
 	utf8filename = gtk_entry_get_text(GTK_ENTRY(file_entry));
 	destdir = gtk_entry_get_text(GTK_ENTRY(dest_entry));
@@ -167,6 +171,11 @@ static gint import_do(void)
 	if (!filename) {
 		g_warning("faild to convert character set\n");
 		filename = g_strdup(utf8filename);
+	}
+	if (!g_file_test(filename, G_FILE_TEST_EXISTS)) {
+		alertpanel_error(_("The source file does not exist."));
+		g_free(filename);
+		return -1;
 	}
 
 	if (!destdir || !*destdir) {
@@ -193,9 +202,15 @@ static gint import_do(void)
 	gtk_widget_show(progress->window);
 	ui_update();
 
-	folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
-	ok = proc_mbox(dest, filename, NULL);
-	folder_set_ui_func(dest->folder, NULL, NULL);
+	if (type == IMPORT_MBOX) {
+		folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
+		ok = proc_mbox(dest, filename, NULL);
+		folder_set_ui_func(dest->folder, NULL, NULL);
+	} else if (type == IMPORT_EML_FILE) {
+		MsgFlags flags = { MSG_NEW|MSG_UNREAD, MSG_RECEIVED };
+		folder_item_add_msg(dest, filename, &flags, FALSE);
+	} else if (type == IMPORT_EML_FOLDER) {
+	}
 
 	progress_dialog_set_label(progress, _("Scanning folder..."));
 	ui_update();
