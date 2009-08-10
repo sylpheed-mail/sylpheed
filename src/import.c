@@ -31,6 +31,8 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtktable.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtkoptionmenu.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
@@ -38,11 +40,13 @@
 #include <gtk/gtksignal.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkprogressbar.h>
+#include <gtk/gtkmenu.h>
 
 #include "main.h"
 #include "inc.h"
 #include "mbox.h"
 #include "folderview.h"
+#include "menu.h"
 #include "filesel.h"
 #include "foldersel.h"
 #include "gtkutils.h"
@@ -51,7 +55,16 @@
 #include "progressdialog.h"
 #include "alertpanel.h"
 
+enum
+{
+	IMPORT_MBOX,
+	IMPORT_EML_FILE,
+	IMPORT_EML_FOLDER
+};
+
 static GtkWidget *window;
+static GtkWidget *format_optmenu;
+static GtkWidget *file_label;
 static GtkWidget *file_entry;
 static GtkWidget *dest_entry;
 static GtkWidget *file_button;
@@ -63,6 +76,7 @@ static gboolean import_ack;
 static ProgressDialog *progress;
 
 static void import_create	(void);
+static gint import_do		(void);
 static void import_ok_cb	(GtkWidget	*widget,
 				 gpointer	 data);
 static void import_cancel_cb	(GtkWidget	*widget,
@@ -123,71 +137,78 @@ gint import_mbox(FolderItem *default_dest)
 	while (!import_finished)
 		gtk_main_iteration();
 
-	if (import_ack) {
-		const gchar *utf8filename, *destdir;
-		FolderItem *dest;
-
-		utf8filename = gtk_entry_get_text(GTK_ENTRY(file_entry));
-		destdir = gtk_entry_get_text(GTK_ENTRY(dest_entry));
-		if (utf8filename && *utf8filename) {
-			gchar *filename;
-
-			filename = g_filename_from_utf8
-				(utf8filename, -1, NULL, NULL, NULL);
-			if (!filename) {
-				g_warning("faild to convert character set\n");
-				filename = g_strdup(utf8filename);
-			}
-
-			if (!destdir || !*destdir) {
-				dest = folder_find_item_from_path(INBOX_DIR);
-			} else
-				dest = folder_find_item_from_identifier
-					(destdir);
-
-			if (!dest) {
-				alertpanel_error(_("Can't find the destination folder."));
-			} else {
-				gchar *msg;
-
-				msg = g_strdup_printf
-					(_("Importing %s ..."),
-					 g_basename(utf8filename));
-				progress = progress_dialog_simple_create();
-				gtk_window_set_title
-					(GTK_WINDOW(progress->window),
-					 _("Importing"));
-				progress_dialog_set_label(progress, msg);
-				gtk_window_set_modal
-					(GTK_WINDOW(progress->window), TRUE);
-				manage_window_set_transient
-					(GTK_WINDOW(progress->window));
-				gtk_widget_hide(progress->cancel_btn);
-				g_signal_connect(G_OBJECT(progress->window),
-						 "delete_event",
-						 G_CALLBACK(gtk_true), NULL);
-				gtk_widget_show(progress->window);
-				ui_update();
-				folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
-				ok = proc_mbox(dest, filename, NULL);
-				folder_set_ui_func(dest->folder, NULL, NULL);
-				progress_dialog_set_label(progress, _("Scanning folder..."));
-				ui_update();
-				folder_item_scan(dest);
-				folderview_update_item(dest, TRUE);
-				progress_dialog_destroy(progress);
-				progress = NULL;
-				g_free(msg);
-			}
-
-			g_free(filename);
-		}
-	}
+	if (import_ack)
+		ok = import_do();
 
 	gtk_widget_destroy(window);
 	window = NULL;
+	format_optmenu = NULL;
+	file_label = NULL;
 	file_entry = dest_entry = NULL;
 	file_button = dest_button = ok_button = cancel_button = NULL;
+
+	return ok;
+}
+
+static gint import_do(void)
+{
+	gint ok = 0;
+	const gchar *utf8filename, *destdir;
+	FolderItem *dest;
+	gchar *filename;
+	gchar *msg;
+
+	utf8filename = gtk_entry_get_text(GTK_ENTRY(file_entry));
+	destdir = gtk_entry_get_text(GTK_ENTRY(dest_entry));
+	if (!utf8filename || !*utf8filename)
+		return -1;
+
+	filename = g_filename_from_utf8(utf8filename, -1, NULL, NULL, NULL);
+	if (!filename) {
+		g_warning("faild to convert character set\n");
+		filename = g_strdup(utf8filename);
+	}
+
+	if (!destdir || !*destdir) {
+		dest = folder_find_item_from_path(INBOX_DIR);
+	} else
+		dest = folder_find_item_from_identifier(destdir);
+
+	if (!dest) {
+		alertpanel_error(_("Can't find the destination folder."));
+		g_free(filename);
+		return -1;
+	}
+
+	msg = g_strdup_printf(_("Importing %s ..."), g_basename(utf8filename));
+	progress = progress_dialog_simple_create();
+	gtk_window_set_title(GTK_WINDOW(progress->window), _("Importing"));
+	progress_dialog_set_label(progress, msg);
+	g_free(msg);
+	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
+	manage_window_set_transient(GTK_WINDOW(progress->window));
+	gtk_widget_hide(progress->cancel_btn);
+	g_signal_connect(G_OBJECT(progress->window), "delete_event",
+			 G_CALLBACK(gtk_true), NULL);
+	gtk_widget_show(progress->window);
+	ui_update();
+
+	folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
+	ok = proc_mbox(dest, filename, NULL);
+	folder_set_ui_func(dest->folder, NULL, NULL);
+
+	progress_dialog_set_label(progress, _("Scanning folder..."));
+	ui_update();
+	folder_item_scan(dest);
+	folderview_update_item(dest, TRUE);
+
+	progress_dialog_destroy(progress);
+	progress = NULL;
+
+	g_free(filename);
+
+	if (ok < 0)
+		alertpanel_error(_("Error occurred on import."));
 
 	return ok;
 }
@@ -198,7 +219,9 @@ static void import_create(void)
 	GtkWidget *hbox;
 	GtkWidget *desc_label;
 	GtkWidget *table;
-	GtkWidget *file_label;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GtkWidget *format_label;
 	GtkWidget *dest_label;
 	GtkWidget *confirm_area;
 
@@ -222,7 +245,7 @@ static void import_create(void)
 	gtk_container_set_border_width(GTK_CONTAINER(hbox), 4);
 
 	desc_label = gtk_label_new
-		(_("Specify target mbox file and destination folder."));
+		(_("Specify source file and destination folder."));
 	gtk_box_pack_start(GTK_BOX(hbox), desc_label, FALSE, FALSE, 0);
 
 	table = gtk_table_new(2, 3, FALSE);
@@ -232,32 +255,48 @@ static void import_create(void)
 	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
 	gtk_widget_set_size_request(table, 420, -1);
 
+	format_label = gtk_label_new(_("File format:"));
+	gtk_table_attach(GTK_TABLE(table), format_label, 0, 1, 0, 1,
+			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
+	gtk_misc_set_alignment(GTK_MISC(format_label), 1, 0.5);
+
 	file_label = gtk_label_new(_("Importing file:"));
-	gtk_table_attach(GTK_TABLE(table), file_label, 0, 1, 0, 1,
+	gtk_table_attach(GTK_TABLE(table), file_label, 0, 1, 1, 2,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(file_label), 1, 0.5);
 
-	dest_label = gtk_label_new(_("Destination dir:"));
-	gtk_table_attach(GTK_TABLE(table), dest_label, 0, 1, 1, 2,
+	dest_label = gtk_label_new(_("Destination folder:"));
+	gtk_table_attach(GTK_TABLE(table), dest_label, 0, 1, 2, 3,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(dest_label), 1, 0.5);
 
+	format_optmenu = gtk_option_menu_new();
+	gtk_table_attach(GTK_TABLE(table), format_optmenu, 1, 2, 0, 1,
+			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
+
+	menu = gtk_menu_new();
+	MENUITEM_ADD(menu, menuitem, _("UNIX mbox"), IMPORT_MBOX);
+	MENUITEM_ADD(menu, menuitem, _("eml (file)"), IMPORT_EML_FILE);
+	MENUITEM_ADD(menu, menuitem, _("eml (folder)"), IMPORT_EML_FOLDER);
+
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(format_optmenu), menu);
+
 	file_entry = gtk_entry_new();
-	gtk_table_attach(GTK_TABLE(table), file_entry, 1, 2, 0, 1,
+	gtk_table_attach(GTK_TABLE(table), file_entry, 1, 2, 1, 2,
 			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
 
 	dest_entry = gtk_entry_new();
-	gtk_table_attach(GTK_TABLE(table), dest_entry, 1, 2, 1, 2,
+	gtk_table_attach(GTK_TABLE(table), dest_entry, 1, 2, 2, 3,
 			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
 
 	file_button = gtk_button_new_with_label(_(" Select... "));
-	gtk_table_attach(GTK_TABLE(table), file_button, 2, 3, 0, 1,
+	gtk_table_attach(GTK_TABLE(table), file_button, 2, 3, 1, 2,
 			 0, 0, 0, 0);
 	g_signal_connect(G_OBJECT(file_button), "clicked",
 			 G_CALLBACK(import_filesel_cb), NULL);
 
 	dest_button = gtk_button_new_with_label(_(" Select... "));
-	gtk_table_attach(GTK_TABLE(table), dest_button, 2, 3, 1, 2,
+	gtk_table_attach(GTK_TABLE(table), dest_button, 2, 3, 2, 3,
 			 0, 0, 0, 0);
 	g_signal_connect(G_OBJECT(dest_button), "clicked",
 			 G_CALLBACK(import_destsel_cb), NULL);
@@ -293,9 +332,18 @@ static void import_filesel_cb(GtkWidget *widget, gpointer data)
 {
 	gchar *filename;
 	gchar *utf8_filename;
+	gint type;
 
-	filename = filesel_select_file(_("Select importing file"), NULL,
-				       GTK_FILE_CHOOSER_ACTION_OPEN);
+	type = menu_get_option_menu_active_index
+		(GTK_OPTION_MENU(format_optmenu));
+
+	if (type == IMPORT_EML_FOLDER)
+		filename = filesel_select_file
+			(_("Select importing folder"), NULL,
+			 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
+	else
+		filename = filesel_select_file(_("Select importing file"), NULL,
+					       GTK_FILE_CHOOSER_ACTION_OPEN);
 	if (!filename) return;
 
 	utf8_filename = g_filename_to_utf8(filename, -1, NULL, NULL, NULL);
