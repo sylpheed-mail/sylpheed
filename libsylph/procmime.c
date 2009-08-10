@@ -720,6 +720,8 @@ void procmime_scan_content_type_str(const gchar *content_type,
 		MimeParam *param = (MimeParam *)cur->data;
 		if (charset && !g_ascii_strcasecmp(param->name, "charset")) {
 			*charset = g_strdup(param->value);
+			eliminate_parenthesis(*charset, '(', ')');
+			g_strstrip(*charset);
 			charset = NULL;
 		} else if (name && !g_ascii_strcasecmp(param->name, "name")) {
 			*name = g_strdup(param->value);
