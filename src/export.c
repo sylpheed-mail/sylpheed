@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtksignal.h>
+#include <gtk/gtkprogressbar.h>
 
 #include "main.h"
 #include "inc.h"
@@ -46,6 +46,8 @@
 #include "manage_window.h"
 #include "folder.h"
 #include "utils.h"
+#include "progressdialog.h"
+#include "alertpanel.h"
 
 static GtkWidget *window;
 static GtkWidget *src_entry;
@@ -56,8 +58,10 @@ static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
 static gboolean export_finished;
 static gboolean export_ack;
+static ProgressDialog *progress;
 
 static void export_create	(void);
+static gint export_do		(void);
 static void export_ok_cb	(GtkWidget	*widget,
 				 gpointer	 data);
 static void export_cancel_cb	(GtkWidget	*widget,
@@ -73,7 +77,34 @@ static gboolean key_pressed	(GtkWidget	*widget,
 				 GdkEventKey	*event,
 				 gpointer	 data);
 
-gint export_mbox(FolderItem *default_src)
+
+static void export_mbox_func(Folder *folder, FolderItem *item, gpointer data)
+{
+	gchar str[64];
+	gint count = GPOINTER_TO_INT(data);
+	static GTimeVal tv_prev = {0, 0};
+	GTimeVal tv_cur;
+
+	g_get_current_time(&tv_cur);
+	if (item->total > 0)
+		g_snprintf(str, sizeof(str), "%d / %d", count, item->total);
+	else
+		g_snprintf(str, sizeof(str), "%d", count);
+	gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress->progressbar), str);
+
+	if (tv_prev.tv_sec == 0 ||
+	    (tv_cur.tv_sec - tv_prev.tv_sec) * G_USEC_PER_SEC +
+	    tv_cur.tv_usec - tv_prev.tv_usec > 100 * 1000) {
+		if (item->total > 0)
+			gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progress->progressbar), (gdouble)count / item->total);
+		else
+			gtk_progress_bar_pulse(GTK_PROGRESS_BAR(progress->progressbar));
+		ui_update();
+		tv_prev = tv_cur;
+	}
+}
+
+gint export_mail(FolderItem *default_src)
 {
 	gint ok = 0;
 	gchar *src_id = NULL;
@@ -96,40 +127,75 @@ gint export_mbox(FolderItem *default_src)
 	export_finished = FALSE;
 	export_ack = FALSE;
 
+	inc_lock();
+
 	while (!export_finished)
 		gtk_main_iteration();
 
-	if (export_ack) {
-		const gchar *srcdir, *utf8mbox;
-		FolderItem *src;
-
-		srcdir = gtk_entry_get_text(GTK_ENTRY(src_entry));
-		utf8mbox = gtk_entry_get_text(GTK_ENTRY(file_entry));
-
-		if (utf8mbox && *utf8mbox) {
-			gchar *mbox;
-
-			mbox = g_filename_from_utf8
-				(utf8mbox, -1, NULL, NULL, NULL);
-			if (!mbox) {
-				g_warning("faild to convert character set\n");
-				mbox = g_strdup(utf8mbox);
-			}
-
-			src = folder_find_item_from_identifier(srcdir);
-			if (!src)
-				g_warning("Can't find the folder.\n");
-			else
-				ok = export_to_mbox(src, mbox);
-
-			g_free(mbox);
-		}
-	}
+	if (export_ack)
+		ok = export_do();
 
 	gtk_widget_destroy(window);
 	window = NULL;
 	src_entry = file_entry = NULL;
 	src_button = file_button = ok_button = cancel_button = NULL;
+
+	inc_unlock();
+
+	return ok;
+}
+
+static gint export_do(void)
+{
+	gint ok = 0;
+	const gchar *srcdir, *utf8mbox;
+	FolderItem *src;
+	gchar *mbox;
+	gchar *msg;
+
+	srcdir = gtk_entry_get_text(GTK_ENTRY(src_entry));
+	utf8mbox = gtk_entry_get_text(GTK_ENTRY(file_entry));
+
+	if (!utf8mbox || !*utf8mbox)
+		return -1;
+
+	mbox = g_filename_from_utf8(utf8mbox, -1, NULL, NULL, NULL);
+	if (!mbox) {
+		g_warning("failed to convert character set.");
+		mbox = g_strdup(utf8mbox);
+	}
+
+	src = folder_find_item_from_identifier(srcdir);
+	if (!src) {
+		g_warning("Can't find the folder.");
+		g_free(mbox);
+		return -1;
+	}
+
+	msg = g_strdup_printf(_("Exporting %s ..."), g_basename(srcdir));
+	progress = progress_dialog_simple_create();
+	gtk_window_set_title(GTK_WINDOW(progress->window), _("Exporting"));
+	progress_dialog_set_label(progress, msg);
+	g_free(msg);
+	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
+	manage_window_set_transient(GTK_WINDOW(progress->window));
+	gtk_widget_hide(progress->cancel_btn);
+	g_signal_connect(G_OBJECT(progress->window), "delete_event",
+			 G_CALLBACK(gtk_true), NULL);
+	gtk_widget_show(progress->window);
+	ui_update();
+
+	folder_set_ui_func(src->folder, export_mbox_func, NULL);
+	ok = export_to_mbox(src, mbox);
+	folder_set_ui_func(src->folder, NULL, NULL);
+
+	progress_dialog_destroy(progress);
+	progress = NULL;
+
+	g_free(mbox);
+
+	if (ok < 0)
+		alertpanel_error(_("Error occurred on export."));
 
 	return ok;
 }
@@ -164,7 +230,7 @@ static void export_create(void)
 	gtk_container_set_border_width(GTK_CONTAINER(hbox), 4);
 
 	desc_label = gtk_label_new
-		(_("Specify target folder and mbox file."));
+		(_("Specify source folder and destination file."));
 	gtk_box_pack_start(GTK_BOX(hbox), desc_label, FALSE, FALSE, 0);
 
 	table = gtk_table_new(2, 3, FALSE);
@@ -174,12 +240,12 @@ static void export_create(void)
 	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
 	gtk_widget_set_size_request(table, 420, -1);
 
-	src_label = gtk_label_new(_("Source dir:"));
+	src_label = gtk_label_new(_("Source folder:"));
 	gtk_table_attach(GTK_TABLE(table), src_label, 0, 1, 0, 1,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(src_label), 1, 0.5);
 
-	file_label = gtk_label_new(_("Exporting file:"));
+	file_label = gtk_label_new(_("Destination file:"));
 	gtk_table_attach(GTK_TABLE(table), file_label, 0, 1, 1, 2,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(file_label), 1, 0.5);
@@ -236,13 +302,13 @@ static void export_filesel_cb(GtkWidget *widget, gpointer data)
 	gchar *filename;
 	gchar *utf8_filename;
 
-	filename = filesel_select_file(_("Select exporting file"), NULL,
+	filename = filesel_select_file(_("Select destination file"), NULL,
 				       GTK_FILE_CHOOSER_ACTION_SAVE);
 	if (!filename) return;
 
 	utf8_filename = g_filename_to_utf8(filename, -1, NULL, NULL, NULL);
 	if (!utf8_filename) {
-		g_warning("export_filesel_cb(): faild to convert character set.\n");
+		g_warning("export_filesel_cb(): failed to convert character set.");
 		utf8_filename = g_strdup(filename);
 	}
 	gtk_entry_set_text(GTK_ENTRY(file_entry), utf8_filename);
@@ -254,10 +320,16 @@ static void export_filesel_cb(GtkWidget *widget, gpointer data)
 static void export_srcsel_cb(GtkWidget *widget, gpointer data)
 {
 	FolderItem *src;
+	gchar *src_id;
 
 	src = foldersel_folder_sel(NULL, FOLDER_SEL_ALL, NULL);
-	if (src && src->path)
-		gtk_entry_set_text(GTK_ENTRY(src_entry), src->path);
+	if (src && src->path) {
+		src_id = folder_item_get_identifier(src);
+		if (src_id) {
+			gtk_entry_set_text(GTK_ENTRY(src_entry), src_id);
+			g_free(src_id);
+		}
+	}
 }
 
 static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data)

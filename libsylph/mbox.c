@@ -448,6 +448,7 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 	FILE *mbox_fp;
 	gchar buf[BUFFSIZE];
 	PrefsAccount *cur_ac;
+	gint count = 0, length;
 
 	g_return_val_if_fail(src != NULL, -1);
 	g_return_val_if_fail(src->folder != NULL, -1);
@@ -464,9 +465,14 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 	cur_ac = account_get_current_account();
 
 	mlist = folder_item_get_msg_list(src, TRUE);
+	length = g_slist_length(mlist);
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
+
+		count++;
+		if (src->folder->ui_func)
+			src->folder->ui_func(src->folder, src, src->folder->ui_func_data ? src->folder->ui_func_data : GINT_TO_POINTER(count));
 
 		msg_fp = procmsg_open_message(msginfo);
 		if (!msg_fp) {

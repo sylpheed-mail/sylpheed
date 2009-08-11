@@ -252,10 +252,10 @@ static void rebuild_tree_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
 
-static void import_mbox_cb	 (MainWindow	*mainwin,
+static void import_mail_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
-static void export_mbox_cb	 (MainWindow	*mainwin,
+static void export_mail_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
 static void empty_trash_cb	 (MainWindow	*mainwin,
@@ -556,8 +556,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_File/_Mailbox/R_ebuild folder tree"),
 						NULL, rebuild_tree_cb, 0, NULL},
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
-	{N_("/_File/_Import mbox file..."),	NULL, import_mbox_cb, 0, NULL},
-	{N_("/_File/_Export to mbox file..."),	NULL, export_mbox_cb, 0, NULL},
+	{N_("/_File/_Import mail data..."),	NULL, import_mail_cb, 0, NULL},
+	{N_("/_File/_Export mail data..."),	NULL, export_mail_cb, 0, NULL},
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_File/Empty all _trash"),		NULL, empty_trash_cb, 0, NULL},
 	{N_("/_File/---"),			NULL, NULL, 0, "<Separator>"},
@@ -2083,8 +2083,8 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 		{"/File/Mailbox/Check for new messages in all mailboxes"
 						    , M_UNLOCKED|M_MBOX_CHKALLOK},
 		{"/File/Mailbox/Rebuild folder tree", M_UNLOCKED|M_MBOX_REBUILDOK},
-		{"/File/Import mbox file..."        , M_UNLOCKED},
-		{"/File/Export to mbox file..."     , M_UNLOCKED},
+		{"/File/Import mail data..."        , M_UNLOCKED},
+		{"/File/Export mail data..."        , M_UNLOCKED},
 		{"/File/Empty all trash"            , M_UNLOCKED},
 
 		{"/File/Save as..."  , M_SINGLE_TARGET_EXIST},
@@ -3273,17 +3273,17 @@ static void rebuild_tree_cb(MainWindow *mainwin, guint action,
 	folderview_rebuild_tree(mainwin->folderview);
 }
 
-static void import_mbox_cb(MainWindow *mainwin, guint action,
+static void import_mail_cb(MainWindow *mainwin, guint action,
 			   GtkWidget *widget)
 {
-	import_mbox(mainwin->summaryview->folder_item);
+	import_mail(mainwin->summaryview->folder_item);
 	main_window_popup(mainwin);
 }
 
-static void export_mbox_cb(MainWindow *mainwin, guint action,
+static void export_mail_cb(MainWindow *mainwin, guint action,
 			   GtkWidget *widget)
 {
-	export_mbox(mainwin->summaryview->folder_item);
+	export_mail(mainwin->summaryview->folder_item);
 	main_window_popup(mainwin);
 }
 

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2001 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,6 @@
 
 #include "folder.h"
 
-gint import_mbox(FolderItem *default_dest);
+gint import_mail(FolderItem *default_dest);
 
 #endif /* __IMPORT_H__ */

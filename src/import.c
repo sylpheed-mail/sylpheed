@@ -37,7 +37,6 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
-#include <gtk/gtksignal.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkprogressbar.h>
 #include <gtk/gtkmenu.h>
@@ -115,7 +114,7 @@ static void proc_mbox_func(Folder *folder, FolderItem *item, gpointer data)
 	}
 }
 
-gint import_mbox(FolderItem *default_dest)
+gint import_mail(FolderItem *default_dest)
 {
 	gint ok = 0;
 	gchar *dest_id = NULL;
