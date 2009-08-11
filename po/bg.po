@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 0.9.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-19 10:08+0900\n"
+"POT-Creation-Date: 2009-08-11 15:44+0900\n"
 "PO-Revision-Date: 2004-01-09 02:06+0200\n"
 "Last-Translator: Pavel Pyuter <pavel@unix-bg.org>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -214,77 +214,77 @@ msgstr "iconv не може да преобразува UTF-7 до %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv не може да преобразува %s до UTF-7\n"
 
-#: libsylph/mbox.c:48 libsylph/mbox.c:205
+#: libsylph/mbox.c:48 libsylph/mbox.c:214
 msgid "can't write to temporary file\n"
 msgstr "не може да се запише във временен файл\n"
 
-#: libsylph/mbox.c:77
+#: libsylph/mbox.c:80
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Получаване на съобщения от %s във %s...\n"
 
-#: libsylph/mbox.c:87
+#: libsylph/mbox.c:92
 msgid "can't read mbox file.\n"
 msgstr "не може да се прочете mbox файл.\n"
 
-#: libsylph/mbox.c:94
+#: libsylph/mbox.c:99
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "невалиден mbox формат: %s\n"
 
-#: libsylph/mbox.c:101
+#: libsylph/mbox.c:106
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "деформиран mbox: %s\n"
 
-#: libsylph/mbox.c:119
+#: libsylph/mbox.c:128
 msgid "can't open temporary file\n"
 msgstr "не може да се отвори временен файл\n"
 
-#: libsylph/mbox.c:170
+#: libsylph/mbox.c:179
 #, c-format
 msgid ""
 "unescaped From found:\n"
 "%s"
 msgstr ""
 
-#: libsylph/mbox.c:297
+#: libsylph/mbox.c:306
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "не може да се създаде заключващ файл %s\n"
 
-#: libsylph/mbox.c:298
+#: libsylph/mbox.c:307
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "използвайте 'flock' вместо 'file' ако е възможно.\n"
 
-#: libsylph/mbox.c:310
+#: libsylph/mbox.c:319
 #, c-format
 msgid "can't create %s\n"
 msgstr "не може да се създаде %s\n"
 
-#: libsylph/mbox.c:316
+#: libsylph/mbox.c:325
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "кутията се притежава от друг процес, изчакване...\n"
 
-#: libsylph/mbox.c:345
+#: libsylph/mbox.c:354
 #, c-format
 msgid "can't lock %s\n"
 msgstr "не може да се заключи %s\n"
 
-#: libsylph/mbox.c:352 libsylph/mbox.c:402
+#: libsylph/mbox.c:361 libsylph/mbox.c:411
 msgid "invalid lock type\n"
 msgstr "невалиден тип заключване\n"
 
-#: libsylph/mbox.c:388
+#: libsylph/mbox.c:397
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "не може да се отключи %s\n"
 
-#: libsylph/mbox.c:423
+#: libsylph/mbox.c:432
 msgid "can't truncate mailbox to zero.\n"
 msgstr "пощенската кутия не може да се съкрати до нула.\n"
 
-#: libsylph/mbox.c:447
+#: libsylph/mbox.c:457
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Изнасяне на съобщения от %s във %s...\n"
@@ -506,7 +506,7 @@ msgstr "Папка"
 msgid "Junk mail filter"
 msgstr "Папка"
 
-#: libsylph/procmime.c:1226
+#: libsylph/procmime.c:1228
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr ""
 
@@ -2202,29 +2202,48 @@ msgstr "Редакция на vCard запис"
 msgid "Add New vCard Entry"
 msgstr "Добавяне на нов vCard запис"
 
-#: src/export.c:148
+#: src/export.c:175
+#, fuzzy, c-format
+msgid "Exporting %s ..."
+msgstr "Сканиране на папка %s ..."
+
+#: src/export.c:177
+#, fuzzy
+msgid "Exporting"
+msgstr "Изнасяне"
+
+#: src/export.c:198
+#, fuzzy
+msgid "Error occurred on export."
+msgstr "Появи се грешка при публикуване\n"
+
+#: src/export.c:214
 msgid "Export"
 msgstr "Изнасяне"
 
-#: src/export.c:167
-msgid "Specify target folder and mbox file."
-msgstr "Укажете папка и mbox файл."
+#: src/export.c:233
+#, fuzzy
+msgid "Specify source folder and destination file."
+msgstr "Укажете mbox файл и папка."
 
-#: src/export.c:177
-msgid "Source dir:"
+#: src/export.c:243
+#, fuzzy
+msgid "Source folder:"
 msgstr "Директрия източник:"
 
-#: src/export.c:182
-msgid "Exporting file:"
-msgstr "Изходен файл:"
+#: src/export.c:248
+#, fuzzy
+msgid "Destination file:"
+msgstr "Папка назначение:"
 
-#: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
+#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr "Избор..."
 
-#: src/export.c:239
-msgid "Select exporting file"
+#: src/export.c:305
+#, fuzzy
+msgid "Select destination file"
 msgstr "Избор на изходен файл"
 
 #: src/filesel.c:158
@@ -2570,23 +2589,79 @@ msgstr "Създаване изглед на изображение...\n"
 msgid "Can't load the image."
 msgstr "Не може да се зареди изображението."
 
-#: src/import.c:154
+#: src/import.c:181
+#, fuzzy
+msgid "The source file does not exist."
+msgstr "Файлът %s не съществува\n"
+
+#: src/import.c:192
+#, fuzzy
+msgid "Can't find the destination folder."
+msgstr "Укажете mbox файл и папка."
+
+#: src/import.c:197
+#, fuzzy, c-format
+msgid "Importing %s ..."
+msgstr "Сканиране на папка %s ..."
+
+#: src/import.c:199
+#, fuzzy
+msgid "Importing"
+msgstr "Внасяне"
+
+#: src/import.c:221
+#, fuzzy
+msgid "Scanning folder..."
+msgstr "Сканиране на папка %s ..."
+
+#: src/import.c:232
+#, fuzzy
+msgid "Error occurred on import."
+msgstr "Появи се грешка при публикуване\n"
+
+#: src/import.c:294
 msgid "Import"
 msgstr "Внасяне"
 
-#: src/import.c:173
-msgid "Specify target mbox file and destination folder."
+#: src/import.c:313
+#, fuzzy
+msgid "Specify source file and destination folder."
 msgstr "Укажете mbox файл и папка."
 
-#: src/import.c:183
+#: src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Формат на датата"
+
+#: src/import.c:328
 msgid "Importing file:"
 msgstr "Внасяне на файл:"
 
-#: src/import.c:188
-msgid "Destination dir:"
+#: src/import.c:333
+#, fuzzy
+msgid "Destination folder:"
 msgstr "Папка назначение:"
 
-#: src/import.c:245
+#: src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/import.c:344
+#, fuzzy
+msgid "eml (file)"
+msgstr "Избор на файл"
+
+#: src/import.c:345
+#, fuzzy
+msgid "eml (folder)"
+msgstr "Нова папка"
+
+#: src/import.c:407
+#, fuzzy
+msgid "Select importing folder"
+msgstr "Изберете файл за внасяне"
+
+#: src/import.c:410
 msgid "Select importing file"
 msgstr "Изберете файл за внасяне"
 
@@ -3176,11 +3251,13 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Възобновяване дървото на папката"
 
 #: src/mainwindow.c:559
-msgid "/_File/_Import mbox file..."
+#, fuzzy
+msgid "/_File/_Import mail data..."
 msgstr "/_Файл/_Внасяне на mbox файл..."
 
 #: src/mainwindow.c:560
-msgid "/_File/_Export to mbox file..."
+#, fuzzy
+msgid "/_File/_Export mail data..."
 msgstr "/_Файл/_Изнасяне на mbox файл..."
 
 #: src/mainwindow.c:562
@@ -6144,7 +6221,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Изтриване на [...] или (...) в началото на тема при отговор"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:98 src/progressdialog.c:129
+#: src/prefs_toolbar.c:98 src/progressdialog.c:91
 msgid "Account"
 msgstr "Акаунт"
 
@@ -6492,15 +6569,11 @@ msgstr ""
 "Невалиден команден ред за печат:\n"
 "'%s'"
 
-#: src/progressdialog.c:58
-msgid "Creating progress dialog...\n"
-msgstr "Създаване на диалог на прогреса...\n"
-
-#: src/progressdialog.c:137
+#: src/progressdialog.c:99
 msgid "Status"
 msgstr "Статус"
 
-#: src/progressdialog.c:145
+#: src/progressdialog.c:107
 #, fuzzy
 msgid "Progress"
 msgstr "Аксесоари"
@@ -7510,6 +7583,15 @@ msgstr "друг Sylpheed е стартиран вече.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Specify target folder and mbox file."
+#~ msgstr "Укажете папка и mbox файл."
+
+#~ msgid "Exporting file:"
+#~ msgstr "Изходен файл:"
+
+#~ msgid "Creating progress dialog...\n"
+#~ msgstr "Създаване на диалог на прогреса...\n"
 
 #~ msgid "Yes"
 #~ msgstr "Да"

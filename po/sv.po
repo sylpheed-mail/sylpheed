@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-19 10:08+0900\n"
+"POT-Creation-Date: 2009-08-11 15:44+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Roger Lindmark <roger.lindmark@bredband.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -211,34 +211,34 @@ msgstr "iconv kan inte konvertera UTF-7 till %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv kan inte konvertera %s till UTF-7\n"
 
-#: libsylph/mbox.c:48 libsylph/mbox.c:205
+#: libsylph/mbox.c:48 libsylph/mbox.c:214
 msgid "can't write to temporary file\n"
 msgstr "kan inte skriva till temporär fil\n"
 
-#: libsylph/mbox.c:77
+#: libsylph/mbox.c:80
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Hämtar meddelanden från %s till %s...\n"
 
-#: libsylph/mbox.c:87
+#: libsylph/mbox.c:92
 msgid "can't read mbox file.\n"
 msgstr "kan inte läsa mboxfil.\n"
 
-#: libsylph/mbox.c:94
+#: libsylph/mbox.c:99
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "felaktigt mboxformat: %s\n"
 
-#: libsylph/mbox.c:101
+#: libsylph/mbox.c:106
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "felformad mbox: %s\n"
 
-#: libsylph/mbox.c:119
+#: libsylph/mbox.c:128
 msgid "can't open temporary file\n"
 msgstr "kan inte öppna temporär fil\n"
 
-#: libsylph/mbox.c:170
+#: libsylph/mbox.c:179
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -247,43 +247,43 @@ msgstr ""
 "o-esc:at Från-fält funnet:\n"
 "%s"
 
-#: libsylph/mbox.c:297
+#: libsylph/mbox.c:306
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "kan inte skapa låsfil %s\n"
 
-#: libsylph/mbox.c:298
+#: libsylph/mbox.c:307
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "använd \"flock\" istället för \"file\" om möjligt.\n"
 
-#: libsylph/mbox.c:310
+#: libsylph/mbox.c:319
 #, c-format
 msgid "can't create %s\n"
 msgstr "kan inte skapa %s\n"
 
-#: libsylph/mbox.c:316
+#: libsylph/mbox.c:325
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "brevlådan ägs av en annan process, väntar...\n"
 
-#: libsylph/mbox.c:345
+#: libsylph/mbox.c:354
 #, c-format
 msgid "can't lock %s\n"
 msgstr "kan inte låsa %s\n"
 
-#: libsylph/mbox.c:352 libsylph/mbox.c:402
+#: libsylph/mbox.c:361 libsylph/mbox.c:411
 msgid "invalid lock type\n"
 msgstr "felaktig låstyp\n"
 
-#: libsylph/mbox.c:388
+#: libsylph/mbox.c:397
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "kan inte låsa upp %s\n"
 
-#: libsylph/mbox.c:423
+#: libsylph/mbox.c:432
 msgid "can't truncate mailbox to zero.\n"
 msgstr "kan inte korta av brevlåda till noll.\n"
 
-#: libsylph/mbox.c:447
+#: libsylph/mbox.c:457
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Exporterar meddelanden från %s till %s...\n"
@@ -510,7 +510,7 @@ msgstr "Skräppostfilter"
 msgid "Junk mail filter"
 msgstr "Skräppostfilter"
 
-#: libsylph/procmime.c:1226
+#: libsylph/procmime.c:1228
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Kodkonvertering misslyckades.\n"
 
@@ -2164,29 +2164,48 @@ msgstr "Redigera vCard-post"
 msgid "Add New vCard Entry"
 msgstr "Lägg till ny vCard-post"
 
-#: src/export.c:148
+#: src/export.c:175
+#, fuzzy, c-format
+msgid "Exporting %s ..."
+msgstr "Söker igenom mapp %s ..."
+
+#: src/export.c:177
+#, fuzzy
+msgid "Exporting"
+msgstr "Exportera"
+
+#: src/export.c:198
+#, fuzzy
+msgid "Error occurred on export."
+msgstr "Fel uppstod vid postning\n"
+
+#: src/export.c:214
 msgid "Export"
 msgstr "Exportera"
 
-#: src/export.c:167
-msgid "Specify target folder and mbox file."
-msgstr "Välj målmapp och mbox-fil."
+#: src/export.c:233
+#, fuzzy
+msgid "Specify source folder and destination file."
+msgstr "Välj mbox-målfil och destinationskatalog."
 
-#: src/export.c:177
-msgid "Source dir:"
+#: src/export.c:243
+#, fuzzy
+msgid "Source folder:"
 msgstr "Ursprungskatalog:"
 
-#: src/export.c:182
-msgid "Exporting file:"
-msgstr "Exporterar fil:"
+#: src/export.c:248
+#, fuzzy
+msgid "Destination file:"
+msgstr "Destinationskatalog:"
 
-#: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
+#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Välj... "
 
-#: src/export.c:239
-msgid "Select exporting file"
+#: src/export.c:305
+#, fuzzy
+msgid "Select destination file"
 msgstr "Välj exportfil"
 
 #: src/filesel.c:158
@@ -2529,23 +2548,79 @@ msgstr "Skapar bildvy...\n"
 msgid "Can't load the image."
 msgstr "Kan inte öppna bilden."
 
-#: src/import.c:154
+#: src/import.c:181
+#, fuzzy
+msgid "The source file does not exist."
+msgstr "Filen %s finns inte\n"
+
+#: src/import.c:192
+#, fuzzy
+msgid "Can't find the destination folder."
+msgstr "Välj mbox-målfil och destinationskatalog."
+
+#: src/import.c:197
+#, fuzzy, c-format
+msgid "Importing %s ..."
+msgstr "Söker igenom mapp %s ..."
+
+#: src/import.c:199
+#, fuzzy
+msgid "Importing"
+msgstr "Importera"
+
+#: src/import.c:221
+#, fuzzy
+msgid "Scanning folder..."
+msgstr "Söker igenom mapp %s ..."
+
+#: src/import.c:232
+#, fuzzy
+msgid "Error occurred on import."
+msgstr "Fel uppstod vid postning\n"
+
+#: src/import.c:294
 msgid "Import"
 msgstr "Importera"
 
-#: src/import.c:173
-msgid "Specify target mbox file and destination folder."
+#: src/import.c:313
+#, fuzzy
+msgid "Specify source file and destination folder."
 msgstr "Välj mbox-målfil och destinationskatalog."
 
-#: src/import.c:183
+#: src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Datumformat"
+
+#: src/import.c:328
 msgid "Importing file:"
 msgstr "Fil att importera:"
 
-#: src/import.c:188
-msgid "Destination dir:"
+#: src/import.c:333
+#, fuzzy
+msgid "Destination folder:"
 msgstr "Destinationskatalog:"
 
-#: src/import.c:245
+#: src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/import.c:344
+#, fuzzy
+msgid "eml (file)"
+msgstr "Välj fil"
+
+#: src/import.c:345
+#, fuzzy
+msgid "eml (folder)"
+msgstr "Ny mapp"
+
+#: src/import.c:407
+#, fuzzy
+msgid "Select importing folder"
+msgstr "Välj fil att importera"
+
+#: src/import.c:410
 msgid "Select importing file"
 msgstr "Välj fil att importera"
 
@@ -3133,11 +3208,13 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Arkiv/_Brevlåda/_Uppdatera mappträd"
 
 #: src/mainwindow.c:559
-msgid "/_File/_Import mbox file..."
+#, fuzzy
+msgid "/_File/_Import mail data..."
 msgstr "/_Arkiv/_Importera mbox-fil..."
 
 #: src/mainwindow.c:560
-msgid "/_File/_Export to mbox file..."
+#, fuzzy
+msgid "/_File/_Export mail data..."
 msgstr "/_Arkiv/_Exportera till mbox-fil..."
 
 #: src/mainwindow.c:562
@@ -6016,7 +6093,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Ta bort [...] eller (...) i början av ärendet vid svar"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:98 src/progressdialog.c:129
+#: src/prefs_toolbar.c:98 src/progressdialog.c:91
 msgid "Account"
 msgstr "Konto"
 
@@ -6362,15 +6439,11 @@ msgstr ""
 "Utskriftskommandot är felaktigt:\n"
 "\"%s\""
 
-#: src/progressdialog.c:58
-msgid "Creating progress dialog...\n"
-msgstr "Skapar förloppsdialog...\n"
-
-#: src/progressdialog.c:137
+#: src/progressdialog.c:99
 msgid "Status"
 msgstr "Status"
 
-#: src/progressdialog.c:145
+#: src/progressdialog.c:107
 #, fuzzy
 msgid "Progress"
 msgstr "Egenskaper"
@@ -7375,6 +7448,15 @@ msgstr "en annan instans av Sylpheed är redan igång.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Specify target folder and mbox file."
+#~ msgstr "Välj målmapp och mbox-fil."
+
+#~ msgid "Exporting file:"
+#~ msgstr "Exporterar fil:"
+
+#~ msgid "Creating progress dialog...\n"
+#~ msgstr "Skapar förloppsdialog...\n"
 
 #~ msgid "Yes"
 #~ msgstr "Ja"

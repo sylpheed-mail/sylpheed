@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-19 10:08+0900\n"
+"POT-Creation-Date: 2009-08-11 15:44+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -210,34 +210,34 @@ msgstr "iconv が UTF-7 を %s に変換できません\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv が %s を UTF-7 に変換できません\n"
 
-#: libsylph/mbox.c:48 libsylph/mbox.c:205
+#: libsylph/mbox.c:48 libsylph/mbox.c:214
 msgid "can't write to temporary file\n"
 msgstr "一時ファイルに書き込めません\n"
 
-#: libsylph/mbox.c:77
+#: libsylph/mbox.c:80
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "メッセージを %s から %s に取り込んでいます...\n"
 
-#: libsylph/mbox.c:87
+#: libsylph/mbox.c:92
 msgid "can't read mbox file.\n"
 msgstr "メールボックスファイルを読み込めません。\n"
 
-#: libsylph/mbox.c:94
+#: libsylph/mbox.c:99
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "無効なメールボックスの形式: %s\n"
 
-#: libsylph/mbox.c:101
+#: libsylph/mbox.c:106
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "メールボックスが異常です: %s\n"
 
-#: libsylph/mbox.c:119
+#: libsylph/mbox.c:128
 msgid "can't open temporary file\n"
 msgstr "一時ファイルを開けません\n"
 
-#: libsylph/mbox.c:170
+#: libsylph/mbox.c:179
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -246,43 +246,43 @@ msgstr ""
 "エスケープされていない From が見つかりました:\n"
 "%s"
 
-#: libsylph/mbox.c:297
+#: libsylph/mbox.c:306
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "ロックファイル %s を開けません\n"
 
-#: libsylph/mbox.c:298
+#: libsylph/mbox.c:307
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "可能であれば 'file' の代わりに 'flock' を使用してください。\n"
 
-#: libsylph/mbox.c:310
+#: libsylph/mbox.c:319
 #, c-format
 msgid "can't create %s\n"
 msgstr "%s を作成できません。\n"
 
-#: libsylph/mbox.c:316
+#: libsylph/mbox.c:325
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "メールボックスは別のプロセスによって所有されています。待機中...\n"
 
-#: libsylph/mbox.c:345
+#: libsylph/mbox.c:354
 #, c-format
 msgid "can't lock %s\n"
 msgstr "%s をロックできません\n"
 
-#: libsylph/mbox.c:352 libsylph/mbox.c:402
+#: libsylph/mbox.c:361 libsylph/mbox.c:411
 msgid "invalid lock type\n"
 msgstr "無効なロックタイプです\n"
 
-#: libsylph/mbox.c:388
+#: libsylph/mbox.c:397
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "%s をロック解除できません\n"
 
-#: libsylph/mbox.c:423
+#: libsylph/mbox.c:432
 msgid "can't truncate mailbox to zero.\n"
 msgstr "メールボックスをゼロに切り詰められません。\n"
 
-#: libsylph/mbox.c:447
+#: libsylph/mbox.c:457
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "メッセージを %s から %s に書き出しています...\n"
@@ -507,7 +507,7 @@ msgstr "迷惑メールフィルタ (手動)"
 msgid "Junk mail filter"
 msgstr "迷惑メールフィルタ"
 
-#: libsylph/procmime.c:1226
+#: libsylph/procmime.c:1228
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): コード変換に失敗しました。\n"
 
@@ -2139,30 +2139,43 @@ msgstr "vCardエントリの編集"
 msgid "Add New vCard Entry"
 msgstr "新規vCardエントリの追加"
 
-#: src/export.c:148
+#: src/export.c:175
+#, c-format
+msgid "Exporting %s ..."
+msgstr "%s をエクスポート中..."
+
+#: src/export.c:177
+msgid "Exporting"
+msgstr "エクスポート中"
+
+#: src/export.c:198
+msgid "Error occurred on export."
+msgstr "エクスポート中にエラーが発生しました。"
+
+#: src/export.c:214
 msgid "Export"
 msgstr "エクスポート"
 
-#: src/export.c:167
-msgid "Specify target folder and mbox file."
-msgstr "対象となるフォルダとmboxファイルを指定してください。"
+#: src/export.c:233
+msgid "Specify source folder and destination file."
+msgstr "エクスポート元のフォルダとエクスポート先のファイルを指定してください。"
 
-#: src/export.c:177
-msgid "Source dir:"
-msgstr "エクスポート元"
+#: src/export.c:243
+msgid "Source folder:"
+msgstr "エクスポート元フォルダ:"
 
-#: src/export.c:182
-msgid "Exporting file:"
-msgstr "エクスポートファイル:"
+#: src/export.c:248
+msgid "Destination file:"
+msgstr "エクスポート先ファイル:"
 
-#: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
+#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " 選択... "
 
-#: src/export.c:239
-msgid "Select exporting file"
-msgstr "エクスポートするファイルを選択"
+#: src/export.c:305
+msgid "Select destination file"
+msgstr "エクスポート先のファイルを選択"
 
 #: src/filesel.c:158
 msgid "Save as"
@@ -2498,23 +2511,68 @@ msgstr "イメージビューを作成中...\n"
 msgid "Can't load the image."
 msgstr "画像を読み込めません。"
 
-#: src/import.c:154
+#: src/import.c:181
+msgid "The source file does not exist."
+msgstr "インポート元のファイルが存在しません。"
+
+#: src/import.c:192
+msgid "Can't find the destination folder."
+msgstr "インポート先のフォルダが見つかりません。"
+
+#: src/import.c:197
+#, c-format
+msgid "Importing %s ..."
+msgstr "%s をインポート中..."
+
+#: src/import.c:199
+msgid "Importing"
+msgstr "インポート中"
+
+#: src/import.c:221
+msgid "Scanning folder..."
+msgstr "フォルダをスキャン中..."
+
+#: src/import.c:232
+msgid "Error occurred on import."
+msgstr "インポート中にエラーが発生しました。"
+
+#: src/import.c:294
 msgid "Import"
 msgstr "インポート"
 
-#: src/import.c:173
-msgid "Specify target mbox file and destination folder."
-msgstr "対象となるmboxファイルとインポート先のフォルダを指定してください。"
+#: src/import.c:313
+msgid "Specify source file and destination folder."
+msgstr "インポート元のファイルとインポート先のフォルダを指定してください。"
 
-#: src/import.c:183
+#: src/import.c:323
+msgid "File format:"
+msgstr "ファイル形式:"
+
+#: src/import.c:328
 msgid "Importing file:"
-msgstr "インポートファイル:"
+msgstr "インポート元ファイル:"
 
-#: src/import.c:188
-msgid "Destination dir:"
-msgstr "インポート先:"
+#: src/import.c:333
+msgid "Destination folder:"
+msgstr "インポート先フォルダ:"
 
-#: src/import.c:245
+#: src/import.c:343
+msgid "UNIX mbox"
+msgstr "UNIX mbox"
+
+#: src/import.c:344
+msgid "eml (file)"
+msgstr "eml (ファイル)"
+
+#: src/import.c:345
+msgid "eml (folder)"
+msgstr "eml (フォルダ)"
+
+#: src/import.c:407
+msgid "Select importing folder"
+msgstr "インポートするフォルダを選択"
+
+#: src/import.c:410
 msgid "Select importing file"
 msgstr "インポートするファイルを選択"
 
@@ -3092,12 +3150,12 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/ファイル(_F)/メールボックス(_M)/フォルダツリーを再構築(_E)"
 
 #: src/mainwindow.c:559
-msgid "/_File/_Import mbox file..."
-msgstr "/ファイル(_F)/mboxファイルをインポート(_I)..."
+msgid "/_File/_Import mail data..."
+msgstr "/ファイル(_F)/メールデータをインポート(_I)..."
 
 #: src/mainwindow.c:560
-msgid "/_File/_Export to mbox file..."
-msgstr "/ファイル(_F)/mboxファイルにエクスポート(_E)..."
+msgid "/_File/_Export mail data..."
+msgstr "/ファイル(_F)/メールデータをエクスポート(_E)..."
 
 #: src/mainwindow.c:562
 msgid "/_File/Empty all _trash"
@@ -5934,7 +5992,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "返信時に件名の先頭の[...]または(...)の部分を削除する"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:98 src/progressdialog.c:129
+#: src/prefs_toolbar.c:98 src/progressdialog.c:91
 msgid "Account"
 msgstr "アカウント"
 
@@ -6261,15 +6319,11 @@ msgstr ""
 "印刷のコマンドラインが無効です:\n"
 "`%s'"
 
-#: src/progressdialog.c:58
-msgid "Creating progress dialog...\n"
-msgstr "進行状況ダイアログを作成中...\n"
-
-#: src/progressdialog.c:137
+#: src/progressdialog.c:99
 msgid "Status"
 msgstr "状態"
 
-#: src/progressdialog.c:145
+#: src/progressdialog.c:107
 msgid "Progress"
 msgstr "進行状況"
 

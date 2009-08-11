@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-19 10:08+0900\n"
+"POT-Creation-Date: 2009-08-11 15:44+0900\n"
 "PO-Revision-Date: 2002-10-02 09:08+0300\n"
 "Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -217,34 +217,34 @@ msgstr "iconv ei suuda konversteerida UTF-7-t %s-ks\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv ei suuda konverteerida %s-i UTF-7-ks\n"
 
-#: libsylph/mbox.c:48 libsylph/mbox.c:205
+#: libsylph/mbox.c:48 libsylph/mbox.c:214
 msgid "can't write to temporary file\n"
 msgstr "ei suuda kirjutada ajutisse faili\n"
 
-#: libsylph/mbox.c:77
+#: libsylph/mbox.c:80
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Võtan kirju %s-st ja panen %s-i...\n"
 
-#: libsylph/mbox.c:87
+#: libsylph/mbox.c:92
 msgid "can't read mbox file.\n"
 msgstr "Ei saa lugeda kirjakasti faili.\n"
 
-#: libsylph/mbox.c:94
+#: libsylph/mbox.c:99
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "sobimatu kirjakasti formaat: %s\n"
 
-#: libsylph/mbox.c:101
+#: libsylph/mbox.c:106
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "paha mbox: %s\n"
 
-#: libsylph/mbox.c:119
+#: libsylph/mbox.c:128
 msgid "can't open temporary file\n"
 msgstr "ei saa avada ajutist fili\n"
 
-#: libsylph/mbox.c:170
+#: libsylph/mbox.c:179
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -253,43 +253,43 @@ msgstr ""
 "Vabanematuid (kellelt) leitud:\n"
 "%s"
 
-#: libsylph/mbox.c:297
+#: libsylph/mbox.c:306
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "ei saa luua lukufaili %s\n"
 
-#: libsylph/mbox.c:298
+#: libsylph/mbox.c:307
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "kasuta 'flock'-i 'file' asemel kui võimalik.\n"
 
-#: libsylph/mbox.c:310
+#: libsylph/mbox.c:319
 #, c-format
 msgid "can't create %s\n"
 msgstr "ei suuda luua %s\n"
 
-#: libsylph/mbox.c:316
+#: libsylph/mbox.c:325
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "kirjakasti kasutab teine protsess, ootan...\n"
 
-#: libsylph/mbox.c:345
+#: libsylph/mbox.c:354
 #, c-format
 msgid "can't lock %s\n"
 msgstr "ei suuda lukustada %s\n"
 
-#: libsylph/mbox.c:352 libsylph/mbox.c:402
+#: libsylph/mbox.c:361 libsylph/mbox.c:411
 msgid "invalid lock type\n"
 msgstr "vale luku tüüp\n"
 
-#: libsylph/mbox.c:388
+#: libsylph/mbox.c:397
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "ei saa lukku eemaldada %s-lt\n"
 
-#: libsylph/mbox.c:423
+#: libsylph/mbox.c:432
 msgid "can't truncate mailbox to zero.\n"
 msgstr "kirjakasti ei saa lõigata nulliks.\n"
 
-#: libsylph/mbox.c:447
+#: libsylph/mbox.c:457
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Ekspordime teated %s-ist %s-i ...\n"
@@ -513,7 +513,7 @@ msgstr "Kaust"
 msgid "Junk mail filter"
 msgstr "Kaust"
 
-#: libsylph/procmime.c:1226
+#: libsylph/procmime.c:1228
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Koodi muundamine ebaõnnestus.\n"
 
@@ -2209,29 +2209,48 @@ msgstr "Redigeeri vCard sissekannet"
 msgid "Add New vCard Entry"
 msgstr "Lisa uus vCard sissekanne"
 
-#: src/export.c:148
+#: src/export.c:175
+#, fuzzy, c-format
+msgid "Exporting %s ..."
+msgstr "Tuhnin kaustas %s ..."
+
+#: src/export.c:177
+#, fuzzy
+msgid "Exporting"
+msgstr "Väljasta"
+
+#: src/export.c:198
+#, fuzzy
+msgid "Error occurred on export."
+msgstr "Kirja saatmisel tekkis viga\n"
+
+#: src/export.c:214
 msgid "Export"
 msgstr "Väljasta"
 
-#: src/export.c:167
-msgid "Specify target folder and mbox file."
-msgstr "Määra sihtkaust ja kirjakasti (mbox) fail"
+#: src/export.c:233
+#, fuzzy
+msgid "Specify source folder and destination file."
+msgstr "*Märgi võtav mbox fail ja sihtkaust."
 
-#: src/export.c:177
-msgid "Source dir:"
+#: src/export.c:243
+#, fuzzy
+msgid "Source folder:"
 msgstr "Lähte kataloog"
 
-#: src/export.c:182
-msgid "Exporting file:"
-msgstr "Väljastatav fail:"
+#: src/export.c:248
+#, fuzzy
+msgid "Destination file:"
+msgstr "Sihtkataloog:"
 
-#: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
+#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Vali... "
 
-#: src/export.c:239
-msgid "Select exporting file"
+#: src/export.c:305
+#, fuzzy
+msgid "Select destination file"
 msgstr "Vali väljastatav fail"
 
 #: src/filesel.c:158
@@ -2581,23 +2600,79 @@ msgstr "Loon pildi vaadet...\n"
 msgid "Can't load the image."
 msgstr "Ei suuda lugeda pilti."
 
-#: src/import.c:154
+#: src/import.c:181
+#, fuzzy
+msgid "The source file does not exist."
+msgstr "Faili %s ei leidu\n"
+
+#: src/import.c:192
+#, fuzzy
+msgid "Can't find the destination folder."
+msgstr "*Märgi võtav mbox fail ja sihtkaust."
+
+#: src/import.c:197
+#, fuzzy, c-format
+msgid "Importing %s ..."
+msgstr "Tuhnin kaustas %s ..."
+
+#: src/import.c:199
+#, fuzzy
+msgid "Importing"
+msgstr "Impordi"
+
+#: src/import.c:221
+#, fuzzy
+msgid "Scanning folder..."
+msgstr "Tuhnin kaustas %s ..."
+
+#: src/import.c:232
+#, fuzzy
+msgid "Error occurred on import."
+msgstr "Kirja saatmisel tekkis viga\n"
+
+#: src/import.c:294
 msgid "Import"
 msgstr "Impordi"
 
-#: src/import.c:173
-msgid "Specify target mbox file and destination folder."
+#: src/import.c:313
+#, fuzzy
+msgid "Specify source file and destination folder."
 msgstr "*Märgi võtav mbox fail ja sihtkaust."
 
-#: src/import.c:183
+#: src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Kuupäeva formaat"
+
+#: src/import.c:328
 msgid "Importing file:"
 msgstr "Faili importimine:"
 
-#: src/import.c:188
-msgid "Destination dir:"
+#: src/import.c:333
+#, fuzzy
+msgid "Destination folder:"
 msgstr "Sihtkataloog:"
 
-#: src/import.c:245
+#: src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/import.c:344
+#, fuzzy
+msgid "eml (file)"
+msgstr "Määra fail"
+
+#: src/import.c:345
+#, fuzzy
+msgid "eml (folder)"
+msgstr "Uus kaust"
+
+#: src/import.c:407
+#, fuzzy
+msgid "Select importing folder"
+msgstr "Märgi importiv fail"
+
+#: src/import.c:410
 msgid "Select importing file"
 msgstr "Märgi importiv fail"
 
@@ -3181,11 +3256,13 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Uuenda kausta puu"
 
 #: src/mainwindow.c:559
-msgid "/_File/_Import mbox file..."
+#, fuzzy
+msgid "/_File/_Import mail data..."
 msgstr "/_Fail/_Impordi kirjakasti fail..."
 
 #: src/mainwindow.c:560
-msgid "/_File/_Export to mbox file..."
+#, fuzzy
+msgid "/_File/_Export mail data..."
 msgstr "/_Fail/_Ekspordi kirjakasti faili..."
 
 #: src/mainwindow.c:562
@@ -6146,7 +6223,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr ""
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:98 src/progressdialog.c:129
+#: src/prefs_toolbar.c:98 src/progressdialog.c:91
 msgid "Account"
 msgstr "Konto"
 
@@ -6493,15 +6570,11 @@ msgstr ""
 "Trükkimise käsurida pole õige:\n"
 "%s"
 
-#: src/progressdialog.c:58
-msgid "Creating progress dialog...\n"
-msgstr "Loon progressi dialoogi...\n"
-
-#: src/progressdialog.c:137
+#: src/progressdialog.c:99
 msgid "Status"
 msgstr "Staatus"
 
-#: src/progressdialog.c:145
+#: src/progressdialog.c:107
 #, fuzzy
 msgid "Progress"
 msgstr "Omadus"
@@ -7514,6 +7587,15 @@ msgstr "üks teine Sylpheed juba töötab.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Specify target folder and mbox file."
+#~ msgstr "Määra sihtkaust ja kirjakasti (mbox) fail"
+
+#~ msgid "Exporting file:"
+#~ msgstr "Väljastatav fail:"
+
+#~ msgid "Creating progress dialog...\n"
+#~ msgstr "Loon progressi dialoogi...\n"
 
 #~ msgid "Yes"
 #~ msgstr "Jah"

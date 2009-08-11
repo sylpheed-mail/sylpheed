@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-19 10:08+0900\n"
+"POT-Creation-Date: 2009-08-11 15:44+0900\n"
 "PO-Revision-Date: 2004-01-22 17:46+0100\n"
 "Last-Translator: Andrej Kacian <andrej@kacian.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -214,34 +214,34 @@ msgstr "iconv nemôže skonvertovať UTF-7 na %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv nemôže skonvertovať %s na UTF-7\n"
 
-#: libsylph/mbox.c:48 libsylph/mbox.c:205
+#: libsylph/mbox.c:48 libsylph/mbox.c:214
 msgid "can't write to temporary file\n"
 msgstr "nemôžem zapisovať do dočasného súboru\n"
 
-#: libsylph/mbox.c:77
+#: libsylph/mbox.c:80
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Prijímam správy z %s do %s...\n"
 
-#: libsylph/mbox.c:87
+#: libsylph/mbox.c:92
 msgid "can't read mbox file.\n"
 msgstr "nemôžem prečítať súbor mbox.\n"
 
-#: libsylph/mbox.c:94
+#: libsylph/mbox.c:99
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "neplatný formát mbox: %s\n"
 
-#: libsylph/mbox.c:101
+#: libsylph/mbox.c:106
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "poškodený mbox: %s\n"
 
-#: libsylph/mbox.c:119
+#: libsylph/mbox.c:128
 msgid "can't open temporary file\n"
 msgstr "nemôžem otvoriť dočasný súbor\n"
 
-#: libsylph/mbox.c:170
+#: libsylph/mbox.c:179
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -250,43 +250,43 @@ msgstr ""
 "neukončené From:\n"
 "%s"
 
-#: libsylph/mbox.c:297
+#: libsylph/mbox.c:306
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "nemôžem vytvoriť zámkový súbor %s\n"
 
-#: libsylph/mbox.c:298
+#: libsylph/mbox.c:307
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "ak je to možné, miesto 'file' použite 'flock'.\n"
 
-#: libsylph/mbox.c:310
+#: libsylph/mbox.c:319
 #, c-format
 msgid "can't create %s\n"
 msgstr "nemôžem vytvoriť %s\n"
 
-#: libsylph/mbox.c:316
+#: libsylph/mbox.c:325
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "iný proces vlastní mailbox, čakám...\n"
 
-#: libsylph/mbox.c:345
+#: libsylph/mbox.c:354
 #, c-format
 msgid "can't lock %s\n"
 msgstr "nemôžem uzamknúť %s\n"
 
-#: libsylph/mbox.c:352 libsylph/mbox.c:402
+#: libsylph/mbox.c:361 libsylph/mbox.c:411
 msgid "invalid lock type\n"
 msgstr "neplatný typ zámku\n"
 
-#: libsylph/mbox.c:388
+#: libsylph/mbox.c:397
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "nemôžem odomknúť %s\n"
 
-#: libsylph/mbox.c:423
+#: libsylph/mbox.c:432
 msgid "can't truncate mailbox to zero.\n"
 msgstr "nemôžem skrátiť mailbox na nulovú dĺžku.\n"
 
-#: libsylph/mbox.c:447
+#: libsylph/mbox.c:457
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Exportujem správy z %s do %s...\n"
@@ -508,7 +508,7 @@ msgstr "Priečinok"
 msgid "Junk mail filter"
 msgstr "Priečinok"
 
-#: libsylph/procmime.c:1226
+#: libsylph/procmime.c:1228
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Nepodarilo sa skonvertovať kód.\n"
 
@@ -2206,29 +2206,48 @@ msgstr "Upraviť vCard záznam"
 msgid "Add New vCard Entry"
 msgstr "Pridať nový vCard záznam"
 
-#: src/export.c:148
+#: src/export.c:175
+#, fuzzy, c-format
+msgid "Exporting %s ..."
+msgstr "Prehľadávam priečinok %s ..."
+
+#: src/export.c:177
+#, fuzzy
+msgid "Exporting"
+msgstr "Exportovať"
+
+#: src/export.c:198
+#, fuzzy
+msgid "Error occurred on export."
+msgstr "Pri odosielaní sa vyskytla chyba\n"
+
+#: src/export.c:214
 msgid "Export"
 msgstr "Exportovať"
 
-#: src/export.c:167
-msgid "Specify target folder and mbox file."
-msgstr "Určite cieľový priečinok a súbor mbox."
+#: src/export.c:233
+#, fuzzy
+msgid "Specify source folder and destination file."
+msgstr "Zvoľte importovaný mbox súbor a cieľový priečinok."
 
-#: src/export.c:177
-msgid "Source dir:"
+#: src/export.c:243
+#, fuzzy
+msgid "Source folder:"
 msgstr "Zdrojový priečinok:"
 
-#: src/export.c:182
-msgid "Exporting file:"
-msgstr "Exportovaný súbor:"
+#: src/export.c:248
+#, fuzzy
+msgid "Destination file:"
+msgstr "Cieľový priečinok:"
 
-#: src/export.c:195 src/export.c:201 src/import.c:201 src/import.c:207
+#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr "Zvoľte..."
 
-#: src/export.c:239
-msgid "Select exporting file"
+#: src/export.c:305
+#, fuzzy
+msgid "Select destination file"
 msgstr "Zvoľte súbor pre export"
 
 #: src/filesel.c:158
@@ -2574,23 +2593,79 @@ msgstr "Vytváram náhľad obrázku...\n"
 msgid "Can't load the image."
 msgstr "Nedá sa načítať obrázok."
 
-#: src/import.c:154
+#: src/import.c:181
+#, fuzzy
+msgid "The source file does not exist."
+msgstr "Súbor %s neexistuje\n"
+
+#: src/import.c:192
+#, fuzzy
+msgid "Can't find the destination folder."
+msgstr "Zvoľte importovaný mbox súbor a cieľový priečinok."
+
+#: src/import.c:197
+#, fuzzy, c-format
+msgid "Importing %s ..."
+msgstr "Prehľadávam priečinok %s ..."
+
+#: src/import.c:199
+#, fuzzy
+msgid "Importing"
+msgstr "Importovať"
+
+#: src/import.c:221
+#, fuzzy
+msgid "Scanning folder..."
+msgstr "Prehľadávam priečinok %s ..."
+
+#: src/import.c:232
+#, fuzzy
+msgid "Error occurred on import."
+msgstr "Pri odosielaní sa vyskytla chyba\n"
+
+#: src/import.c:294
 msgid "Import"
 msgstr "Importovať"
 
-#: src/import.c:173
-msgid "Specify target mbox file and destination folder."
+#: src/import.c:313
+#, fuzzy
+msgid "Specify source file and destination folder."
 msgstr "Zvoľte importovaný mbox súbor a cieľový priečinok."
 
-#: src/import.c:183
+#: src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Formát dátumu"
+
+#: src/import.c:328
 msgid "Importing file:"
 msgstr "Importovaný súbor:"
 
-#: src/import.c:188
-msgid "Destination dir:"
+#: src/import.c:333
+#, fuzzy
+msgid "Destination folder:"
 msgstr "Cieľový priečinok:"
 
-#: src/import.c:245
+#: src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/import.c:344
+#, fuzzy
+msgid "eml (file)"
+msgstr "Vybrať súbor"
+
+#: src/import.c:345
+#, fuzzy
+msgid "eml (folder)"
+msgstr "Nový priečinok"
+
+#: src/import.c:407
+#, fuzzy
+msgid "Select importing folder"
+msgstr "Zvoľte súbor pre import"
+
+#: src/import.c:410
 msgid "Select importing file"
 msgstr "Zvoľte súbor pre import"
 
@@ -3180,11 +3255,13 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/O_bnoviť štruktúru priečinkov"
 
 #: src/mainwindow.c:559
-msgid "/_File/_Import mbox file..."
+#, fuzzy
+msgid "/_File/_Import mail data..."
 msgstr "/_Súbor/_Importovať súbor mbox..."
 
 #: src/mainwindow.c:560
-msgid "/_File/_Export to mbox file..."
+#, fuzzy
+msgid "/_File/_Export mail data..."
 msgstr "/_Súbor/_Exportovať do súboru mbox..."
 
 #: src/mainwindow.c:562
@@ -6142,7 +6219,7 @@ msgid "Delete [...] or (...) at the beginning of subject on reply"
 msgstr "Zmazať [...] alebo (...) na začiatku názvu v zozname správ"
 
 #: src/prefs_folder_item.c:289 src/prefs_folder_item.c:300
-#: src/prefs_toolbar.c:98 src/progressdialog.c:129
+#: src/prefs_toolbar.c:98 src/progressdialog.c:91
 msgid "Account"
 msgstr "Konto"
 
@@ -6490,15 +6567,11 @@ msgstr ""
 "Príkazový riadok tlače je neplatný:\n"
 "'%s'"
 
-#: src/progressdialog.c:58
-msgid "Creating progress dialog...\n"
-msgstr "Vytváram stavové okno...\n"
-
-#: src/progressdialog.c:137
+#: src/progressdialog.c:99
 msgid "Status"
 msgstr "Stav"
 
-#: src/progressdialog.c:145
+#: src/progressdialog.c:107
 #, fuzzy
 msgid "Progress"
 msgstr "Vlastnosti"
@@ -7509,6 +7582,15 @@ msgstr "už beží iná kópia Sylpheedu.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Specify target folder and mbox file."
+#~ msgstr "Určite cieľový priečinok a súbor mbox."
+
+#~ msgid "Exporting file:"
+#~ msgstr "Exportovaný súbor:"
+
+#~ msgid "Creating progress dialog...\n"
+#~ msgstr "Vytváram stavové okno...\n"
 
 #~ msgid "Yes"
 #~ msgstr "Áno"
