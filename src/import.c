@@ -77,6 +77,8 @@ static ProgressDialog *progress;
 
 static void import_create	(void);
 static gint import_do		(void);
+static gint import_eml_folder	(FolderItem	*dest,
+				 const gchar	*path);
 static void import_ok_cb	(GtkWidget	*widget,
 				 gpointer	 data);
 static void import_cancel_cb	(GtkWidget	*widget,
@@ -134,6 +136,8 @@ gint import_mbox(FolderItem *default_dest)
 	import_finished = FALSE;
 	import_ack = FALSE;
 
+	inc_lock();
+
 	while (!import_finished)
 		gtk_main_iteration();
 
@@ -146,6 +150,8 @@ gint import_mbox(FolderItem *default_dest)
 	file_label = NULL;
 	file_entry = dest_entry = NULL;
 	file_button = dest_button = ok_button = cancel_button = NULL;
+
+	inc_unlock();
 
 	return ok;
 }
@@ -169,7 +175,7 @@ static gint import_do(void)
 
 	filename = g_filename_from_utf8(utf8filename, -1, NULL, NULL, NULL);
 	if (!filename) {
-		g_warning("faild to convert character set\n");
+		g_warning("faild to convert character set.");
 		filename = g_strdup(utf8filename);
 	}
 	if (!g_file_test(filename, G_FILE_TEST_EXISTS)) {
@@ -208,8 +214,9 @@ static gint import_do(void)
 		folder_set_ui_func(dest->folder, NULL, NULL);
 	} else if (type == IMPORT_EML_FILE) {
 		MsgFlags flags = { MSG_NEW|MSG_UNREAD, MSG_RECEIVED };
-		folder_item_add_msg(dest, filename, &flags, FALSE);
+		ok = folder_item_add_msg(dest, filename, &flags, FALSE);
 	} else if (type == IMPORT_EML_FOLDER) {
+		ok = import_eml_folder(dest, filename);
 	}
 
 	progress_dialog_set_label(progress, _("Scanning folder..."));
@@ -224,6 +231,50 @@ static gint import_do(void)
 
 	if (ok < 0)
 		alertpanel_error(_("Error occurred on import."));
+
+	return ok;
+}
+
+static gint import_eml_folder(FolderItem *dest, const gchar *path)
+{
+	GDir *dir;
+	const gchar *dir_name, *p;
+	gchar *file;
+	gint count = 0;
+	gint ok = 0;
+
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(path != NULL, -1);
+
+	if ((dir = g_dir_open(path, 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s", path);
+		return -1;
+	}
+
+	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+		if (((p = strrchr(dir_name, '.')) &&
+		     !g_ascii_strcasecmp(p + 1, "eml")) ||
+		    to_number(dir_name) > 0) {
+			file = g_strconcat(path, G_DIR_SEPARATOR_S, dir_name,
+					   NULL);
+			if (!g_file_test(file, G_FILE_TEST_IS_REGULAR)) {
+				g_free(file);
+				continue;
+			}
+
+			count++;
+			proc_mbox_func(dest->folder, dest,
+				       GINT_TO_POINTER(count));
+			ok = folder_item_add_msg(dest, file, NULL, FALSE);
+			g_free(file);
+			if (ok < 0) {
+				g_warning("import_eml_folder(): folder_item_add_msg() failed.");
+				break;
+			}
+		}
+	}
+
+	g_dir_close(dir);
 
 	return ok;
 }
