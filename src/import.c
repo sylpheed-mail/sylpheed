@@ -57,12 +57,12 @@
 enum
 {
 	IMPORT_MBOX,
-	IMPORT_EML_FILE,
 	IMPORT_EML_FOLDER
 };
 
 static GtkWidget *window;
 static GtkWidget *format_optmenu;
+static GtkWidget *desc_label;
 static GtkWidget *file_label;
 static GtkWidget *file_entry;
 static GtkWidget *dest_entry;
@@ -78,6 +78,10 @@ static void import_create	(void);
 static gint import_do		(void);
 static gint import_eml_folder	(FolderItem	*dest,
 				 const gchar	*path);
+
+static void import_format_menu_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+
 static void import_ok_cb	(GtkWidget	*widget,
 				 gpointer	 data);
 static void import_cancel_cb	(GtkWidget	*widget,
@@ -146,7 +150,7 @@ gint import_mail(FolderItem *default_dest)
 	gtk_widget_destroy(window);
 	window = NULL;
 	format_optmenu = NULL;
-	file_label = NULL;
+	desc_label = file_label = NULL;
 	file_entry = dest_entry = NULL;
 	file_button = dest_button = ok_button = cancel_button = NULL;
 
@@ -211,9 +215,6 @@ static gint import_do(void)
 		folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
 		ok = proc_mbox(dest, filename, NULL);
 		folder_set_ui_func(dest->folder, NULL, NULL);
-	} else if (type == IMPORT_EML_FILE) {
-		MsgFlags flags = { MSG_NEW|MSG_UNREAD, MSG_RECEIVED };
-		ok = folder_item_add_msg(dest, filename, &flags, FALSE);
 	} else if (type == IMPORT_EML_FOLDER) {
 		ok = import_eml_folder(dest, filename);
 	}
@@ -282,7 +283,6 @@ static void import_create(void)
 {
 	GtkWidget *vbox;
 	GtkWidget *hbox;
-	GtkWidget *desc_label;
 	GtkWidget *table;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
@@ -341,8 +341,11 @@ static void import_create(void)
 
 	menu = gtk_menu_new();
 	MENUITEM_ADD(menu, menuitem, _("UNIX mbox"), IMPORT_MBOX);
-	MENUITEM_ADD(menu, menuitem, _("eml (file)"), IMPORT_EML_FILE);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(import_format_menu_cb), NULL);
 	MENUITEM_ADD(menu, menuitem, _("eml (folder)"), IMPORT_EML_FOLDER);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(import_format_menu_cb), NULL);
 
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(format_optmenu), menu);
 
@@ -379,6 +382,21 @@ static void import_create(void)
 			 G_CALLBACK(import_cancel_cb), NULL);
 
 	gtk_widget_show_all(window);
+}
+
+static void import_format_menu_cb(GtkWidget *widget, gpointer data)
+{
+	gint type;
+
+	type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget),
+			       MENU_VAL_ID));
+	if (type == IMPORT_EML_FOLDER) {
+		gtk_label_set_text(GTK_LABEL(desc_label),
+				   _("Specify source folder including eml files and destination folder."));
+	} else {
+		gtk_label_set_text(GTK_LABEL(desc_label),
+				   _("Specify source file and destination folder."));
+	}
 }
 
 static void import_ok_cb(GtkWidget *widget, gpointer data)
