@@ -31,6 +31,9 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtktable.h>
+#include <gtk/gtkmenu.h>
+#include <gtk/gtkmenuitem.h>
+#include <gtk/gtkoptionmenu.h>
 #include <gtk/gtklabel.h>
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
@@ -40,6 +43,9 @@
 #include "main.h"
 #include "inc.h"
 #include "mbox.h"
+#include "folder.h"
+#include "procmsg.h"
+#include "menu.h"
 #include "filesel.h"
 #include "foldersel.h"
 #include "gtkutils.h"
@@ -49,7 +55,17 @@
 #include "progressdialog.h"
 #include "alertpanel.h"
 
+enum
+{
+	EXPORT_MBOX,
+	EXPORT_EML,
+	EXPORT_MH
+};
+
 static GtkWidget *window;
+static GtkWidget *format_optmenu;
+static GtkWidget *desc_label;
+static GtkWidget *file_label;
 static GtkWidget *src_entry;
 static GtkWidget *file_entry;
 static GtkWidget *src_button;
@@ -62,6 +78,13 @@ static ProgressDialog *progress;
 
 static void export_create	(void);
 static gint export_do		(void);
+static gint export_eml		(FolderItem	*src,
+				 const gchar	*path,
+				 gint		 type);
+
+static void export_format_menu_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+
 static void export_ok_cb	(GtkWidget	*widget,
 				 gpointer	 data);
 static void export_cancel_cb	(GtkWidget	*widget,
@@ -152,6 +175,10 @@ static gint export_do(void)
 	FolderItem *src;
 	gchar *mbox;
 	gchar *msg;
+	gint type;
+
+	type = menu_get_option_menu_active_index
+		(GTK_OPTION_MENU(format_optmenu));
 
 	srcdir = gtk_entry_get_text(GTK_ENTRY(src_entry));
 	utf8mbox = gtk_entry_get_text(GTK_ENTRY(file_entry));
@@ -185,9 +212,13 @@ static gint export_do(void)
 	gtk_widget_show(progress->window);
 	ui_update();
 
-	folder_set_ui_func(src->folder, export_mbox_func, NULL);
-	ok = export_to_mbox(src, mbox);
-	folder_set_ui_func(src->folder, NULL, NULL);
+	if (type == EXPORT_MBOX) {
+		folder_set_ui_func(src->folder, export_mbox_func, NULL);
+		ok = export_to_mbox(src, mbox);
+		folder_set_ui_func(src->folder, NULL, NULL);
+	} else if (type == EXPORT_EML || type == EXPORT_MH) {
+		ok = export_eml(src, mbox, type);
+	}
 
 	progress_dialog_destroy(progress);
 	progress = NULL;
@@ -200,13 +231,73 @@ static gint export_do(void)
 	return ok;
 }
 
+static gint export_eml(FolderItem *src, const gchar *path, gint type)
+{
+	const gchar *ext = "";
+	GSList *mlist, *cur;
+	MsgInfo *msginfo;
+	gchar *file, *dest;
+	gint count = 0;
+	gint ok = 0;
+
+	g_return_val_if_fail(src != NULL, -1);
+	g_return_val_if_fail(path != NULL, -1);
+
+	if (type == EXPORT_EML)
+		ext = ".eml";
+
+	if (!g_file_test(path, G_FILE_TEST_IS_DIR)) {
+		if (!g_file_test(path, G_FILE_TEST_EXISTS)) {
+			make_dir_hier(path);
+			if (!g_file_test(path, G_FILE_TEST_IS_DIR))
+				return -1;
+		} else {
+			g_warning("export_eml(): directory %s already exists.",
+				  path);
+			return -1;
+		}
+	}
+
+	mlist = folder_item_get_msg_list(src, TRUE);
+	if (!mlist)
+		return 0;
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+
+		count++;
+		export_mbox_func(src->folder, src, GINT_TO_POINTER(count));
+
+		file = folder_item_fetch_msg(src, msginfo->msgnum);
+		if (!file) {
+			ok = -1;
+			break;
+		}
+		dest = g_strdup_printf("%s%c%d%s", path, G_DIR_SEPARATOR,
+				       count, ext);
+		if (copy_file(file, dest, FALSE) < 0) {
+			g_free(dest);
+			g_free(file);
+			ok = -1;
+			break;
+		}
+		g_free(dest);
+		g_free(file);
+	}
+
+	procmsg_msg_list_free(mlist);
+
+	return ok;
+}
+
 static void export_create(void)
 {
 	GtkWidget *vbox;
 	GtkWidget *hbox;
-	GtkWidget *desc_label;
 	GtkWidget *table;
-	GtkWidget *file_label;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GtkWidget *format_label;
 	GtkWidget *src_label;
 	GtkWidget *confirm_area;
 
@@ -240,32 +331,54 @@ static void export_create(void)
 	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
 	gtk_widget_set_size_request(table, 420, -1);
 
+	format_label = gtk_label_new(_("File format:"));
+	gtk_table_attach(GTK_TABLE(table), format_label, 0, 1, 0, 1,
+			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
+	gtk_misc_set_alignment(GTK_MISC(format_label), 1, 0.5);
+
 	src_label = gtk_label_new(_("Source folder:"));
-	gtk_table_attach(GTK_TABLE(table), src_label, 0, 1, 0, 1,
+	gtk_table_attach(GTK_TABLE(table), src_label, 0, 1, 1, 2,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(src_label), 1, 0.5);
 
-	file_label = gtk_label_new(_("Destination file:"));
-	gtk_table_attach(GTK_TABLE(table), file_label, 0, 1, 1, 2,
+	file_label = gtk_label_new(_("Destination:"));
+	gtk_table_attach(GTK_TABLE(table), file_label, 0, 1, 2, 3,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(file_label), 1, 0.5);
 
+	format_optmenu = gtk_option_menu_new();
+	gtk_table_attach(GTK_TABLE(table), format_optmenu, 1, 2, 0, 1,
+			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
+
+	menu = gtk_menu_new();
+	MENUITEM_ADD(menu, menuitem, _("UNIX mbox"), EXPORT_MBOX);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(export_format_menu_cb), NULL);
+	MENUITEM_ADD(menu, menuitem, _("eml (number + .eml)"), EXPORT_EML);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(export_format_menu_cb), NULL);
+	MENUITEM_ADD(menu, menuitem, _("MH (number only)"), EXPORT_MH);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(export_format_menu_cb), NULL);
+
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(format_optmenu), menu);
+
 	src_entry = gtk_entry_new();
-	gtk_table_attach(GTK_TABLE(table), src_entry, 1, 2, 0, 1,
+	gtk_table_attach(GTK_TABLE(table), src_entry, 1, 2, 1, 2,
 			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
 
 	file_entry = gtk_entry_new();
-	gtk_table_attach(GTK_TABLE(table), file_entry, 1, 2, 1, 2,
+	gtk_table_attach(GTK_TABLE(table), file_entry, 1, 2, 2, 3,
 			 GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
 
 	src_button = gtk_button_new_with_label(_(" Select... "));
-	gtk_table_attach(GTK_TABLE(table), src_button, 2, 3, 0, 1,
+	gtk_table_attach(GTK_TABLE(table), src_button, 2, 3, 1, 2,
 			 0, 0, 0, 0);
 	g_signal_connect(G_OBJECT(src_button), "clicked",
 			 G_CALLBACK(export_srcsel_cb), NULL);
 
 	file_button = gtk_button_new_with_label(_(" Select... "));
-	gtk_table_attach(GTK_TABLE(table), file_button, 2, 3, 1, 2,
+	gtk_table_attach(GTK_TABLE(table), file_button, 2, 3, 2, 3,
 			 0, 0, 0, 0);
 	g_signal_connect(G_OBJECT(file_button), "clicked",
 			 G_CALLBACK(export_filesel_cb), NULL);
@@ -285,6 +398,21 @@ static void export_create(void)
 	gtk_widget_show_all(window);
 }
 
+static void export_format_menu_cb(GtkWidget *widget, gpointer data)
+{
+	gint type;
+
+	type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget),
+			       MENU_VAL_ID));
+	if (type == EXPORT_MBOX) {
+		gtk_label_set_text(GTK_LABEL(desc_label),
+				   _("Specify source folder and destination file."));
+	} else {
+		gtk_label_set_text(GTK_LABEL(desc_label),
+				   _("Specify source folder and destination folder."));
+	}
+}
+
 static void export_ok_cb(GtkWidget *widget, gpointer data)
 {
 	export_finished = TRUE;
@@ -301,9 +429,19 @@ static void export_filesel_cb(GtkWidget *widget, gpointer data)
 {
 	gchar *filename;
 	gchar *utf8_filename;
+	gint type;
 
-	filename = filesel_select_file(_("Select destination file"), NULL,
-				       GTK_FILE_CHOOSER_ACTION_SAVE);
+	type = menu_get_option_menu_active_index
+		(GTK_OPTION_MENU(format_optmenu));
+
+	if (type == EXPORT_MBOX)
+		filename = filesel_select_file(_("Select destination file"),
+					       NULL,
+					       GTK_FILE_CHOOSER_ACTION_SAVE);
+	else
+		filename = filesel_select_file(_("Select destination folder"),
+					       NULL,
+					       GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
 	if (!filename) return;
 
 	utf8_filename = g_filename_to_utf8(filename, -1, NULL, NULL, NULL);
