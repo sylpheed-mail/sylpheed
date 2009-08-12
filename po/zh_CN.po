@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 15:44+0900\n"
+"POT-Creation-Date: 2009-08-12 17:07+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -296,20 +296,20 @@ msgstr "正在从 %s 导出信件到 %s...\n"
 msgid "can't copy message %s to %s\n"
 msgstr "无法复制邮件 %s 到 %s\n"
 
-#: libsylph/mh.c:540 libsylph/mh.c:666
+#: libsylph/mh.c:540 libsylph/mh.c:667
 msgid "Can't open mark file.\n"
 msgstr "无法打开标记文件。\n"
 
-#: libsylph/mh.c:547 libsylph/mh.c:672
+#: libsylph/mh.c:547 libsylph/mh.c:673
 msgid "the src folder is identical to the dest.\n"
 msgstr "源文件夹与目的文件夹是同一个。\n"
 
-#: libsylph/mh.c:675
+#: libsylph/mh.c:676
 #, fuzzy, c-format
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "正在复制邮件 %s%c%d 到 %s ...\n"
 
-#: libsylph/mh.c:1010 libsylph/mh.c:1023 src/main.c:167
+#: libsylph/mh.c:1011 libsylph/mh.c:1024 src/main.c:167
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -318,7 +318,7 @@ msgstr ""
 "文件“%s”已存在。\n"
 "无法创建文件件。"
 
-#: libsylph/mh.c:1556
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -2160,48 +2160,75 @@ msgstr "编辑 vCard 项"
 msgid "Add New vCard Entry"
 msgstr "添加新 vCard 项"
 
-#: src/export.c:175
+#: src/export.c:202
 #, fuzzy, c-format
 msgid "Exporting %s ..."
 msgstr "正在扫描文件夹 %s ..."
 
-#: src/export.c:177
+#: src/export.c:204
 #, fuzzy
 msgid "Exporting"
 msgstr "导出"
 
-#: src/export.c:198
+#: src/export.c:229
 #, fuzzy
 msgid "Error occurred on export."
 msgstr "发表文章时发生错误\n"
 
-#: src/export.c:214
+#: src/export.c:305
 msgid "Export"
 msgstr "导出"
 
-#: src/export.c:233
+#: src/export.c:324 src/export.c:409
 #, fuzzy
 msgid "Specify source folder and destination file."
 msgstr "指定目标邮箱文件和目标文件夹。"
 
-#: src/export.c:243
+#: src/export.c:334 src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "日期格式"
+
+#: src/export.c:339
 #, fuzzy
 msgid "Source folder:"
 msgstr "源目录："
 
-#: src/export.c:248
+#: src/export.c:344
 #, fuzzy
-msgid "Destination file:"
-msgstr "目标目录："
+msgid "Destination:"
+msgstr "目标文件夹"
 
-#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
+#: src/export.c:354 src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/export.c:357
+msgid "eml (number + .eml)"
+msgstr ""
+
+#: src/export.c:360
+msgid "MH (number only)"
+msgstr ""
+
+#: src/export.c:374 src/export.c:380 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " 选择... "
 
-#: src/export.c:305
+#: src/export.c:412
+#, fuzzy
+msgid "Specify source folder and destination folder."
+msgstr "指定目标邮箱文件和目标文件夹。"
+
+#: src/export.c:438
 #, fuzzy
 msgid "Select destination file"
+msgstr "选择导出文件"
+
+#: src/export.c:442
+#, fuzzy
+msgid "Select destination folder"
 msgstr "选择导出文件"
 
 #: src/filesel.c:158
@@ -2545,32 +2572,32 @@ msgstr "正在创建图像视图...\n"
 msgid "Can't load the image."
 msgstr "无法加载该图像。"
 
-#: src/import.c:181
+#: src/import.c:185
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "文件 %s 不存在\n"
 
-#: src/import.c:192
+#: src/import.c:196
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "指定目标邮箱文件和目标文件夹。"
 
-#: src/import.c:197
+#: src/import.c:201
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "正在扫描文件夹 %s ..."
 
-#: src/import.c:199
+#: src/import.c:203
 #, fuzzy
 msgid "Importing"
 msgstr "导入"
 
-#: src/import.c:221
+#: src/import.c:222
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "正在扫描文件夹 %s ..."
 
-#: src/import.c:232
+#: src/import.c:233
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "发表文章时发生错误\n"
@@ -2579,45 +2606,37 @@ msgstr "发表文章时发生错误\n"
 msgid "Import"
 msgstr "导入"
 
-#: src/import.c:313
+#: src/import.c:313 src/import.c:398
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "指定目标邮箱文件和目标文件夹。"
 
-#: src/import.c:323
-#, fuzzy
-msgid "File format:"
-msgstr "日期格式"
-
 #: src/import.c:328
-msgid "Importing file:"
-msgstr "导入文件："
+#, fuzzy
+msgid "Source:"
+msgstr "源目录："
 
 #: src/import.c:333
 #, fuzzy
 msgid "Destination folder:"
 msgstr "目标目录："
 
-#: src/import.c:343
-msgid "UNIX mbox"
-msgstr ""
-
-#: src/import.c:344
-#, fuzzy
-msgid "eml (file)"
-msgstr "选择文件"
-
-#: src/import.c:345
+#: src/import.c:346
 #, fuzzy
 msgid "eml (folder)"
 msgstr "新建文件夹"
 
-#: src/import.c:407
+#: src/import.c:395
+#, fuzzy
+msgid "Specify source folder including eml files and destination folder."
+msgstr "指定目标邮箱文件和目标文件夹。"
+
+#: src/import.c:425
 #, fuzzy
 msgid "Select importing folder"
 msgstr "选择导入文件"
 
-#: src/import.c:410
+#: src/import.c:428
 msgid "Select importing file"
 msgstr "选择导入文件"
 
@@ -7462,6 +7481,17 @@ msgstr "另外一个 Sylpheed 正在运行。\n"
 msgid "Couldn't get the version information."
 msgstr ""
 
+#~ msgid "Importing file:"
+#~ msgstr "导入文件："
+
+#, fuzzy
+#~ msgid "Destination file:"
+#~ msgstr "目标目录："
+
+#, fuzzy
+#~ msgid "eml (file)"
+#~ msgstr "选择文件"
+
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "指定目标文件夹和邮箱文件。"
 
@@ -7860,9 +7890,6 @@ msgstr ""
 
 #~ msgid "Keyword"
 #~ msgstr "关键词"
-
-#~ msgid "Destination"
-#~ msgstr "目标文件夹"
 
 #~ msgid "Use regex"
 #~ msgstr "使用正则表达式"

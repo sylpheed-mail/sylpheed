@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 15:44+0900\n"
+"POT-Creation-Date: 2009-08-12 17:07+0900\n"
 "PO-Revision-Date: 2008-12-05 03:06+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: \n"
@@ -302,20 +302,20 @@ msgstr "Exportare mesaje din %s în %s...\n"
 msgid "can't copy message %s to %s\n"
 msgstr "nu se poate copia mesajului %s în %s\n"
 
-#: libsylph/mh.c:540 libsylph/mh.c:666
+#: libsylph/mh.c:540 libsylph/mh.c:667
 msgid "Can't open mark file.\n"
 msgstr "Nu se poate deschide fișierul de marcaj.\n"
 
-#: libsylph/mh.c:547 libsylph/mh.c:672
+#: libsylph/mh.c:547 libsylph/mh.c:673
 msgid "the src folder is identical to the dest.\n"
 msgstr "dosarul sursă este identic cu cel de destinație.\n"
 
-#: libsylph/mh.c:675
+#: libsylph/mh.c:676
 #, c-format
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Copiere mesaj %s/%d în %s ...\n"
 
-#: libsylph/mh.c:1010 libsylph/mh.c:1023 src/main.c:167
+#: libsylph/mh.c:1011 libsylph/mh.c:1024 src/main.c:167
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -324,7 +324,7 @@ msgstr ""
 "Fișierul „%s” există deja.\n"
 "Nu se poate crea dosarul."
 
-#: libsylph/mh.c:1556
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -2178,50 +2178,77 @@ msgstr "Editare înregistrare vCard"
 msgid "Add New vCard Entry"
 msgstr "Adăugare înregistrare vCard"
 
-#: src/export.c:175
+#: src/export.c:202
 #, fuzzy, c-format
 msgid "Exporting %s ..."
 msgstr "Căutare %s ..."
 
 # titlu la export mbox
-#: src/export.c:177
+#: src/export.c:204
 #, fuzzy
 msgid "Exporting"
 msgstr "Export"
 
-#: src/export.c:198
+#: src/export.c:229
 #, fuzzy
 msgid "Error occurred on export."
 msgstr "A apărut o eroare în timpul trimiterii\n"
 
 # titlu la export mbox
-#: src/export.c:214
+#: src/export.c:305
 msgid "Export"
 msgstr "Export"
 
-#: src/export.c:233
+#: src/export.c:324 src/export.c:409
 #, fuzzy
 msgid "Specify source folder and destination file."
 msgstr "Specificați fișierul mbox sursă și dosarul destinație."
 
-#: src/export.c:243
+#: src/export.c:334 src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Format dată"
+
+#: src/export.c:339
 #, fuzzy
 msgid "Source folder:"
 msgstr "Director sursă:"
 
-#: src/export.c:248
+#: src/export.c:344
 #, fuzzy
-msgid "Destination file:"
+msgid "Destination:"
 msgstr "Director destinație:"
 
-#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
+#: src/export.c:354 src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/export.c:357
+msgid "eml (number + .eml)"
+msgstr ""
+
+#: src/export.c:360
+msgid "MH (number only)"
+msgstr ""
+
+#: src/export.c:374 src/export.c:380 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Selectare... "
 
-#: src/export.c:305
+#: src/export.c:412
+#, fuzzy
+msgid "Specify source folder and destination folder."
+msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+
+#: src/export.c:438
 #, fuzzy
 msgid "Select destination file"
+msgstr "Selectați fișierul de exportat"
+
+#: src/export.c:442
+#, fuzzy
+msgid "Select destination folder"
 msgstr "Selectați fișierul de exportat"
 
 #: src/filesel.c:158
@@ -2568,33 +2595,33 @@ msgstr "Creare vizualizare imagine...\n"
 msgid "Can't load the image."
 msgstr "Imaginea nu a putut fi încărcată."
 
-#: src/import.c:181
+#: src/import.c:185
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "Fișierul %s nu există."
 
-#: src/import.c:192
+#: src/import.c:196
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "Specificați fișierul mbox sursă și dosarul destinație."
 
-#: src/import.c:197
+#: src/import.c:201
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "Căutare %s ..."
 
 # titlu la import mbox
-#: src/import.c:199
+#: src/import.c:203
 #, fuzzy
 msgid "Importing"
 msgstr "Import"
 
-#: src/import.c:221
+#: src/import.c:222
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "Scanare dosar %s ..."
 
-#: src/import.c:232
+#: src/import.c:233
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "A apărut o eroare în timpul trimiterii\n"
@@ -2604,45 +2631,37 @@ msgstr "A apărut o eroare în timpul trimiterii\n"
 msgid "Import"
 msgstr "Import"
 
-#: src/import.c:313
+#: src/import.c:313 src/import.c:398
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "Specificați fișierul mbox sursă și dosarul destinație."
 
-#: src/import.c:323
-#, fuzzy
-msgid "File format:"
-msgstr "Format dată"
-
 #: src/import.c:328
-msgid "Importing file:"
-msgstr "Fișier de import:"
+#, fuzzy
+msgid "Source:"
+msgstr "Director sursă:"
 
 #: src/import.c:333
 #, fuzzy
 msgid "Destination folder:"
 msgstr "Director destinație:"
 
-#: src/import.c:343
-msgid "UNIX mbox"
-msgstr ""
-
-#: src/import.c:344
-#, fuzzy
-msgid "eml (file)"
-msgstr "Selectați fișierul"
-
-#: src/import.c:345
+#: src/import.c:346
 #, fuzzy
 msgid "eml (folder)"
 msgstr "Dosar nou"
 
-#: src/import.c:407
+#: src/import.c:395
+#, fuzzy
+msgid "Specify source folder including eml files and destination folder."
+msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+
+#: src/import.c:425
 #, fuzzy
 msgid "Select importing folder"
 msgstr "Selectați fișierul de importat"
 
-#: src/import.c:410
+#: src/import.c:428
 msgid "Select importing file"
 msgstr "Selectați fișierul de importat"
 
@@ -7460,6 +7479,13 @@ msgstr "rulează deja o altă sesiune Sylpheed.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Importing file:"
+#~ msgstr "Fișier de import:"
+
+#, fuzzy
+#~ msgid "eml (file)"
+#~ msgstr "Selectați fișierul"
 
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "Specificați dosarul sursă și fișierul mbox."

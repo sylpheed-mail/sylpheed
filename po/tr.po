@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 15:44+0900\n"
+"POT-Creation-Date: 2009-08-12 17:07+0900\n"
 "PO-Revision-Date: 2004-12-03 11:44+0200\n"
 "Last-Translator: Arman Aksoy <armish@linux-sevenler.org>\n"
 "Language-Team:  <gnome-turk@gnome.org>\n"
@@ -301,20 +301,20 @@ msgstr "%s daki mesajlar %s a aktarılıyor...\n"
 msgid "can't copy message %s to %s\n"
 msgstr "mesaj %s dan %s a kopyalanamadı\n"
 
-#: libsylph/mh.c:540 libsylph/mh.c:666
+#: libsylph/mh.c:540 libsylph/mh.c:667
 msgid "Can't open mark file.\n"
 msgstr "işaretli dosya açılamadı.\n"
 
-#: libsylph/mh.c:547 libsylph/mh.c:672
+#: libsylph/mh.c:547 libsylph/mh.c:673
 msgid "the src folder is identical to the dest.\n"
 msgstr "kaynak dizini hedef dizinle aynı.\n"
 
-#: libsylph/mh.c:675
+#: libsylph/mh.c:676
 #, fuzzy, c-format
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "%s%c%d mesajı %s  içine kopyalanıyor...\n"
 
-#: libsylph/mh.c:1010 libsylph/mh.c:1023 src/main.c:167
+#: libsylph/mh.c:1011 libsylph/mh.c:1024 src/main.c:167
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -323,7 +323,7 @@ msgstr ""
 "%s dosyası zaten bulunuyor.\n"
 "Dizin oluşturulamadı."
 
-#: libsylph/mh.c:1556
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -2198,48 +2198,75 @@ msgstr "vCard Girdisini Düzenle"
 msgid "Add New vCard Entry"
 msgstr "Yeni vCard Girdisi Ekle"
 
-#: src/export.c:175
+#: src/export.c:202
 #, fuzzy, c-format
 msgid "Exporting %s ..."
 msgstr "%s dizini taranıyor..."
 
-#: src/export.c:177
+#: src/export.c:204
 #, fuzzy
 msgid "Exporting"
 msgstr "Aktar"
 
-#: src/export.c:198
+#: src/export.c:229
 #, fuzzy
 msgid "Error occurred on export."
 msgstr "Postalama sırasında hata\n"
 
-#: src/export.c:214
+#: src/export.c:305
 msgid "Export"
 msgstr "Aktar"
 
-#: src/export.c:233
+#: src/export.c:324 src/export.c:409
 #, fuzzy
 msgid "Specify source folder and destination file."
 msgstr "Kaynak ve hedef mbox dosyalarını belirtin."
 
-#: src/export.c:243
+#: src/export.c:334 src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Tarih biçimi"
+
+#: src/export.c:339
 #, fuzzy
 msgid "Source folder:"
 msgstr "Kaynak dizini:"
 
-#: src/export.c:248
+#: src/export.c:344
 #, fuzzy
-msgid "Destination file:"
+msgid "Destination:"
 msgstr "Hedef dizini:"
 
-#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
+#: src/export.c:354 src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/export.c:357
+msgid "eml (number + .eml)"
+msgstr ""
+
+#: src/export.c:360
+msgid "MH (number only)"
+msgstr ""
+
+#: src/export.c:374 src/export.c:380 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Seç... "
 
-#: src/export.c:305
+#: src/export.c:412
+#, fuzzy
+msgid "Specify source folder and destination folder."
+msgstr "Kaynak ve hedef mbox dosyalarını belirtin."
+
+#: src/export.c:438
 #, fuzzy
 msgid "Select destination file"
+msgstr "Aktarılacak dosyayı seçin"
+
+#: src/export.c:442
+#, fuzzy
+msgid "Select destination folder"
 msgstr "Aktarılacak dosyayı seçin"
 
 #: src/filesel.c:158
@@ -2583,32 +2610,32 @@ msgstr "Resim görüntüsü oluşturuluyor...\n"
 msgid "Can't load the image."
 msgstr "Resim yüklenemedi."
 
-#: src/import.c:181
+#: src/import.c:185
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "%s dosyası bulunamadı\n"
 
-#: src/import.c:192
+#: src/import.c:196
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "Kaynak ve hedef mbox dosyalarını belirtin."
 
-#: src/import.c:197
+#: src/import.c:201
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "%s dizini taranıyor..."
 
-#: src/import.c:199
+#: src/import.c:203
 #, fuzzy
 msgid "Importing"
 msgstr "Dışarıdan Aktar"
 
-#: src/import.c:221
+#: src/import.c:222
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "%s dizini taranıyor..."
 
-#: src/import.c:232
+#: src/import.c:233
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "Postalama sırasında hata\n"
@@ -2617,45 +2644,37 @@ msgstr "Postalama sırasında hata\n"
 msgid "Import"
 msgstr "Dışarıdan Aktar"
 
-#: src/import.c:313
+#: src/import.c:313 src/import.c:398
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "Kaynak ve hedef mbox dosyalarını belirtin."
 
-#: src/import.c:323
-#, fuzzy
-msgid "File format:"
-msgstr "Tarih biçimi"
-
 #: src/import.c:328
-msgid "Importing file:"
-msgstr "Dosya aktarılıyor:"
+#, fuzzy
+msgid "Source:"
+msgstr "Kaynak dizini:"
 
 #: src/import.c:333
 #, fuzzy
 msgid "Destination folder:"
 msgstr "Hedef dizini:"
 
-#: src/import.c:343
-msgid "UNIX mbox"
-msgstr ""
-
-#: src/import.c:344
-#, fuzzy
-msgid "eml (file)"
-msgstr "Dosya seç"
-
-#: src/import.c:345
+#: src/import.c:346
 #, fuzzy
 msgid "eml (folder)"
 msgstr "Yeni dizin"
 
-#: src/import.c:407
+#: src/import.c:395
+#, fuzzy
+msgid "Specify source folder including eml files and destination folder."
+msgstr "Kaynak ve hedef mbox dosyalarını belirtin."
+
+#: src/import.c:425
 #, fuzzy
 msgid "Select importing folder"
 msgstr "Eklenecek dosyayı seçin"
 
-#: src/import.c:410
+#: src/import.c:428
 msgid "Select importing file"
 msgstr "Eklenecek dosyayı seçin"
 
@@ -7533,6 +7552,13 @@ msgstr "Başka bir Sylpheed sistemde çalışıyor.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Importing file:"
+#~ msgstr "Dosya aktarılıyor:"
+
+#, fuzzy
+#~ msgid "eml (file)"
+#~ msgstr "Dosya seç"
 
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "Lütfen hedef dizini ve mbox dosyasını belirtin."

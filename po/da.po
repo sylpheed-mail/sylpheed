@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 15:44+0900\n"
+"POT-Creation-Date: 2009-08-12 17:07+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -296,20 +296,20 @@ msgstr "Eksporterer meddelelse fra %s til %s...\n"
 msgid "can't copy message %s to %s\n"
 msgstr "kan ikke kopiere meddelelse %s til %s\n"
 
-#: libsylph/mh.c:540 libsylph/mh.c:666
+#: libsylph/mh.c:540 libsylph/mh.c:667
 msgid "Can't open mark file.\n"
 msgstr "Kan ikke åbne markéret fil.\n"
 
-#: libsylph/mh.c:547 libsylph/mh.c:672
+#: libsylph/mh.c:547 libsylph/mh.c:673
 msgid "the src folder is identical to the dest.\n"
 msgstr "fra og til mappe er ens.\n"
 
-#: libsylph/mh.c:675
+#: libsylph/mh.c:676
 #, fuzzy, c-format
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Kopierer meddelelse %s%c%d til %s ...\n"
 
-#: libsylph/mh.c:1010 libsylph/mh.c:1023 src/main.c:167
+#: libsylph/mh.c:1011 libsylph/mh.c:1024 src/main.c:167
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -318,7 +318,7 @@ msgstr ""
 "Filen `%s' eksisterer allerede.\n"
 "Kan ikke oprette mappe."
 
-#: libsylph/mh.c:1556
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -2200,48 +2200,75 @@ msgstr "Redigér vCard"
 msgid "Add New vCard Entry"
 msgstr "Tilføj ny VCard"
 
-#: src/export.c:175
+#: src/export.c:202
 #, fuzzy, c-format
 msgid "Exporting %s ..."
 msgstr "Gennemsøger mappe %s ..."
 
-#: src/export.c:177
+#: src/export.c:204
 #, fuzzy
 msgid "Exporting"
 msgstr "Eksportere"
 
-#: src/export.c:198
+#: src/export.c:229
 #, fuzzy
 msgid "Error occurred on export."
 msgstr "Fejl ved afsendelse\n"
 
-#: src/export.c:214
+#: src/export.c:305
 msgid "Export"
 msgstr "Eksportere"
 
-#: src/export.c:233
+#: src/export.c:324 src/export.c:409
 #, fuzzy
 msgid "Specify source folder and destination file."
 msgstr "Indtast mbox fil og mappe."
 
-#: src/export.c:243
+#: src/export.c:334 src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Dato format"
+
+#: src/export.c:339
 #, fuzzy
 msgid "Source folder:"
 msgstr "Fra sti:"
 
-#: src/export.c:248
+#: src/export.c:344
 #, fuzzy
-msgid "Destination file:"
-msgstr "Til sti:"
+msgid "Destination:"
+msgstr "Mål"
 
-#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
+#: src/export.c:354 src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/export.c:357
+msgid "eml (number + .eml)"
+msgstr ""
+
+#: src/export.c:360
+msgid "MH (number only)"
+msgstr ""
+
+#: src/export.c:374 src/export.c:380 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Vælg... "
 
-#: src/export.c:305
+#: src/export.c:412
+#, fuzzy
+msgid "Specify source folder and destination folder."
+msgstr "Indtast mbox fil og mappe."
+
+#: src/export.c:438
 #, fuzzy
 msgid "Select destination file"
+msgstr "Vælg fil til export"
+
+#: src/export.c:442
+#, fuzzy
+msgid "Select destination folder"
 msgstr "Vælg fil til export"
 
 #: src/filesel.c:158
@@ -2588,32 +2615,32 @@ msgstr "Opretter billed visning...\n"
 msgid "Can't load the image."
 msgstr "Kan ikke læse billede."
 
-#: src/import.c:181
+#: src/import.c:185
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "Filen %s findes ikke\n"
 
-#: src/import.c:192
+#: src/import.c:196
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "Indtast mbox fil og mappe."
 
-#: src/import.c:197
+#: src/import.c:201
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "Gennemsøger mappe %s ..."
 
-#: src/import.c:199
+#: src/import.c:203
 #, fuzzy
 msgid "Importing"
 msgstr "Importere"
 
-#: src/import.c:221
+#: src/import.c:222
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "Gennemsøger mappe %s ..."
 
-#: src/import.c:232
+#: src/import.c:233
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "Fejl ved afsendelse\n"
@@ -2622,45 +2649,37 @@ msgstr "Fejl ved afsendelse\n"
 msgid "Import"
 msgstr "Importere"
 
-#: src/import.c:313
+#: src/import.c:313 src/import.c:398
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "Indtast mbox fil og mappe."
 
-#: src/import.c:323
-#, fuzzy
-msgid "File format:"
-msgstr "Dato format"
-
 #: src/import.c:328
-msgid "Importing file:"
-msgstr "Importerer fil:"
+#, fuzzy
+msgid "Source:"
+msgstr "Fra sti:"
 
 #: src/import.c:333
 #, fuzzy
 msgid "Destination folder:"
 msgstr "Til sti:"
 
-#: src/import.c:343
-msgid "UNIX mbox"
-msgstr ""
-
-#: src/import.c:344
-#, fuzzy
-msgid "eml (file)"
-msgstr "Vælg fil"
-
-#: src/import.c:345
+#: src/import.c:346
 #, fuzzy
 msgid "eml (folder)"
 msgstr "Ny mappe"
 
-#: src/import.c:407
+#: src/import.c:395
+#, fuzzy
+msgid "Specify source folder including eml files and destination folder."
+msgstr "Indtast mbox fil og mappe."
+
+#: src/import.c:425
 #, fuzzy
 msgid "Select importing folder"
 msgstr "Vælg fil til import"
 
-#: src/import.c:410
+#: src/import.c:428
 msgid "Select importing file"
 msgstr "Vælg fil til import"
 
@@ -7589,6 +7608,17 @@ msgstr "sylpheed kører allerede.\n"
 msgid "Couldn't get the version information."
 msgstr ""
 
+#~ msgid "Importing file:"
+#~ msgstr "Importerer fil:"
+
+#, fuzzy
+#~ msgid "Destination file:"
+#~ msgstr "Til sti:"
+
+#, fuzzy
+#~ msgid "eml (file)"
+#~ msgstr "Vælg fil"
+
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "Indtast mål mappe og mbox fil"
 
@@ -7990,9 +8020,6 @@ msgstr ""
 
 #~ msgid "Keyword"
 #~ msgstr "Stikord"
-
-#~ msgid "Destination"
-#~ msgstr "Mål"
 
 #~ msgid "Use regex"
 #~ msgstr "Benyt regex"

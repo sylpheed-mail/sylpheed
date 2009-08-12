@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 15:44+0900\n"
+"POT-Creation-Date: 2009-08-12 17:07+0900\n"
 "PO-Revision-Date: 2007-07-22 12:53+0400\n"
 "Last-Translator: Andrey Markelov <andrey@markelov.net>\n"
 "Language-Team: Russian <Project-Id-Version: gtranslato>\n"
@@ -295,20 +295,20 @@ msgstr "Экспорт сообщений из %s в %s...\n"
 msgid "can't copy message %s to %s\n"
 msgstr "не удалось скопировать сообщение %s в %s\n"
 
-#: libsylph/mh.c:540 libsylph/mh.c:666
+#: libsylph/mh.c:540 libsylph/mh.c:667
 msgid "Can't open mark file.\n"
 msgstr "Не удалось открыть файл пометок.\n"
 
-#: libsylph/mh.c:547 libsylph/mh.c:672
+#: libsylph/mh.c:547 libsylph/mh.c:673
 msgid "the src folder is identical to the dest.\n"
 msgstr "исходная папка совпадает с папкой назначения.\n"
 
-#: libsylph/mh.c:675
+#: libsylph/mh.c:676
 #, c-format
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Копирование сообщения %s/%d·to·%s·...\n"
 
-#: libsylph/mh.c:1010 libsylph/mh.c:1023 src/main.c:167
+#: libsylph/mh.c:1011 libsylph/mh.c:1024 src/main.c:167
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -317,7 +317,7 @@ msgstr ""
 "Файл \"%s\" уже существует.\n"
 "Нельзя создать папку с таким же именем."
 
-#: libsylph/mh.c:1556
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -2151,48 +2151,75 @@ msgstr "Редактирование записи vCard"
 msgid "Add New vCard Entry"
 msgstr "Добавление новой записи vCard"
 
-#: src/export.c:175
+#: src/export.c:202
 #, fuzzy, c-format
 msgid "Exporting %s ..."
 msgstr "Поиск в папке \"%s\"..."
 
-#: src/export.c:177
+#: src/export.c:204
 #, fuzzy
 msgid "Exporting"
 msgstr "Экспорт"
 
-#: src/export.c:198
+#: src/export.c:229
 #, fuzzy
 msgid "Error occurred on export."
 msgstr "Произошла ошибка при отправке статьи\n"
 
-#: src/export.c:214
+#: src/export.c:305
 msgid "Export"
 msgstr "Экспорт"
 
-#: src/export.c:233
+#: src/export.c:324 src/export.c:409
 #, fuzzy
 msgid "Specify source folder and destination file."
 msgstr "Укажите файл mbox и папку назначения."
 
-#: src/export.c:243
+#: src/export.c:334 src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Формат даты"
+
+#: src/export.c:339
 #, fuzzy
 msgid "Source folder:"
 msgstr "Исходная папка:"
 
-#: src/export.c:248
+#: src/export.c:344
 #, fuzzy
-msgid "Destination file:"
+msgid "Destination:"
 msgstr "Каталог назначения:"
 
-#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
+#: src/export.c:354 src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/export.c:357
+msgid "eml (number + .eml)"
+msgstr ""
+
+#: src/export.c:360
+msgid "MH (number only)"
+msgstr ""
+
+#: src/export.c:374 src/export.c:380 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr " Выбор... "
 
-#: src/export.c:305
+#: src/export.c:412
+#, fuzzy
+msgid "Specify source folder and destination folder."
+msgstr "Укажите файл mbox и папку назначения."
+
+#: src/export.c:438
 #, fuzzy
 msgid "Select destination file"
+msgstr "Выбор файла для экспорта"
+
+#: src/export.c:442
+#, fuzzy
+msgid "Select destination folder"
 msgstr "Выбор файла для экспорта"
 
 #: src/filesel.c:158
@@ -2530,32 +2557,32 @@ msgstr "Создание области просмотра изображени�
 msgid "Can't load the image."
 msgstr "Ошибка загрузки изображения"
 
-#: src/import.c:181
+#: src/import.c:185
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "Файл %s не найден\n"
 
-#: src/import.c:192
+#: src/import.c:196
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "Укажите файл mbox и папку назначения."
 
-#: src/import.c:197
+#: src/import.c:201
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "Поиск в папке \"%s\"..."
 
-#: src/import.c:199
+#: src/import.c:203
 #, fuzzy
 msgid "Importing"
 msgstr "Импорт"
 
-#: src/import.c:221
+#: src/import.c:222
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "Просмотр папки %s ..."
 
-#: src/import.c:232
+#: src/import.c:233
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "Произошла ошибка при отправке статьи\n"
@@ -2564,45 +2591,37 @@ msgstr "Произошла ошибка при отправке статьи\n"
 msgid "Import"
 msgstr "Импорт"
 
-#: src/import.c:313
+#: src/import.c:313 src/import.c:398
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "Укажите файл mbox и папку назначения."
 
-#: src/import.c:323
-#, fuzzy
-msgid "File format:"
-msgstr "Формат даты"
-
 #: src/import.c:328
-msgid "Importing file:"
-msgstr "Импорт файла:"
+#, fuzzy
+msgid "Source:"
+msgstr "Исходная папка:"
 
 #: src/import.c:333
 #, fuzzy
 msgid "Destination folder:"
 msgstr "Каталог назначения:"
 
-#: src/import.c:343
-msgid "UNIX mbox"
-msgstr ""
-
-#: src/import.c:344
-#, fuzzy
-msgid "eml (file)"
-msgstr "Выбор файла"
-
-#: src/import.c:345
+#: src/import.c:346
 #, fuzzy
 msgid "eml (folder)"
 msgstr "Новая папка"
 
-#: src/import.c:407
+#: src/import.c:395
+#, fuzzy
+msgid "Specify source folder including eml files and destination folder."
+msgstr "Укажите файл mbox и папку назначения."
+
+#: src/import.c:425
 #, fuzzy
 msgid "Select importing folder"
 msgstr "Выбор импортируемого файла"
 
-#: src/import.c:410
+#: src/import.c:428
 msgid "Select importing file"
 msgstr "Выбор импортируемого файла"
 
@@ -7377,6 +7396,13 @@ msgstr "другая копия Sylpheed уже запущена.\n"
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Importing file:"
+#~ msgstr "Импорт файла:"
+
+#, fuzzy
+#~ msgid "eml (file)"
+#~ msgstr "Выбор файла"
 
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "Укажите экспортируемую папку и файл mbox."

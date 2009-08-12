@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 15:44+0900\n"
+"POT-Creation-Date: 2009-08-12 17:07+0900\n"
 "PO-Revision-Date: 2009-07-14 12:28-0400\n"
 "Last-Translator: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
 "Language-Team: Ricardo Nabinger Sanchez <rnsanchez@gmail.com>\n"
@@ -300,20 +300,20 @@ msgstr "Exportando mensagens de %s em %s...\n"
 msgid "can't copy message %s to %s\n"
 msgstr "não foi possível copiar a mensagem %s para %s\n"
 
-#: libsylph/mh.c:540 libsylph/mh.c:666
+#: libsylph/mh.c:540 libsylph/mh.c:667
 msgid "Can't open mark file.\n"
 msgstr "Não foi possível abrir o arquivo de marcas.\n"
 
-#: libsylph/mh.c:547 libsylph/mh.c:672
+#: libsylph/mh.c:547 libsylph/mh.c:673
 msgid "the src folder is identical to the dest.\n"
 msgstr "pastas de origem e destino são idênticas.\n"
 
-#: libsylph/mh.c:675
+#: libsylph/mh.c:676
 #, c-format
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Copiando mensagem %s/%d para %s ...\n"
 
-#: libsylph/mh.c:1010 libsylph/mh.c:1023 src/main.c:167
+#: libsylph/mh.c:1011 libsylph/mh.c:1024 src/main.c:167
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -322,7 +322,7 @@ msgstr ""
 "O arquivo `%s' já existe.\n"
 "Não foi possível criar a pasta."
 
-#: libsylph/mh.c:1556
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -2153,48 +2153,75 @@ msgstr "Editar Entrada vCard"
 msgid "Add New vCard Entry"
 msgstr "Adicionar Nova Entrada vCard"
 
-#: src/export.c:175
+#: src/export.c:202
 #, fuzzy, c-format
 msgid "Exporting %s ..."
 msgstr "Procurando %s ..."
 
-#: src/export.c:177
+#: src/export.c:204
 #, fuzzy
 msgid "Exporting"
 msgstr "Exportar"
 
-#: src/export.c:198
+#: src/export.c:229
 #, fuzzy
 msgid "Error occurred on export."
 msgstr "Ocorreu um erro quando postando\n"
 
-#: src/export.c:214
+#: src/export.c:305
 msgid "Export"
 msgstr "Exportar"
 
-#: src/export.c:233
+#: src/export.c:324 src/export.c:409
 #, fuzzy
 msgid "Specify source folder and destination file."
 msgstr "Especifique o arquivo mbox e a pasta de destino."
 
-#: src/export.c:243
+#: src/export.c:334 src/import.c:323
+#, fuzzy
+msgid "File format:"
+msgstr "Formato de data"
+
+#: src/export.c:339
 #, fuzzy
 msgid "Source folder:"
 msgstr "Diretório fonte:"
 
-#: src/export.c:248
+#: src/export.c:344
 #, fuzzy
-msgid "Destination file:"
+msgid "Destination:"
 msgstr "Diretório de destino:"
 
-#: src/export.c:261 src/export.c:267 src/import.c:357 src/import.c:363
+#: src/export.c:354 src/import.c:343
+msgid "UNIX mbox"
+msgstr ""
+
+#: src/export.c:357
+msgid "eml (number + .eml)"
+msgstr ""
+
+#: src/export.c:360
+msgid "MH (number only)"
+msgstr ""
+
+#: src/export.c:374 src/export.c:380 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
 msgstr "Selecionar..."
 
-#: src/export.c:305
+#: src/export.c:412
+#, fuzzy
+msgid "Specify source folder and destination folder."
+msgstr "Especifique o arquivo mbox e a pasta de destino."
+
+#: src/export.c:438
 #, fuzzy
 msgid "Select destination file"
+msgstr "Selecione o filtro de exportação"
+
+#: src/export.c:442
+#, fuzzy
+msgid "Select destination folder"
 msgstr "Selecione o filtro de exportação"
 
 #: src/filesel.c:158
@@ -2531,32 +2558,32 @@ msgstr "Criando visualizador de imagem...\n"
 msgid "Can't load the image."
 msgstr "Não foi possível carregar a imagem."
 
-#: src/import.c:181
+#: src/import.c:185
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "O arquivo %s não existe."
 
-#: src/import.c:192
+#: src/import.c:196
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "Especifique o arquivo mbox e a pasta de destino."
 
-#: src/import.c:197
+#: src/import.c:201
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "Procurando %s ..."
 
-#: src/import.c:199
+#: src/import.c:203
 #, fuzzy
 msgid "Importing"
 msgstr "Importar"
 
-#: src/import.c:221
+#: src/import.c:222
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "Revisando pasta %s ..."
 
-#: src/import.c:232
+#: src/import.c:233
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "Ocorreu um erro quando postando\n"
@@ -2565,45 +2592,37 @@ msgstr "Ocorreu um erro quando postando\n"
 msgid "Import"
 msgstr "Importar"
 
-#: src/import.c:313
+#: src/import.c:313 src/import.c:398
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "Especifique o arquivo mbox e a pasta de destino."
 
-#: src/import.c:323
-#, fuzzy
-msgid "File format:"
-msgstr "Formato de data"
-
 #: src/import.c:328
-msgid "Importing file:"
-msgstr "Importando arquivo:"
+#, fuzzy
+msgid "Source:"
+msgstr "Diretório fonte:"
 
 #: src/import.c:333
 #, fuzzy
 msgid "Destination folder:"
 msgstr "Diretório de destino:"
 
-#: src/import.c:343
-msgid "UNIX mbox"
-msgstr ""
-
-#: src/import.c:344
-#, fuzzy
-msgid "eml (file)"
-msgstr "Selecionar arquivo"
-
-#: src/import.c:345
+#: src/import.c:346
 #, fuzzy
 msgid "eml (folder)"
 msgstr "Nova pasta"
 
-#: src/import.c:407
+#: src/import.c:395
+#, fuzzy
+msgid "Specify source folder including eml files and destination folder."
+msgstr "Especifique o arquivo mbox e a pasta de destino."
+
+#: src/import.c:425
 #, fuzzy
 msgid "Select importing folder"
 msgstr "Selecionar arquivo a importar"
 
-#: src/import.c:410
+#: src/import.c:428
 msgid "Select importing file"
 msgstr "Selecionar arquivo a importar"
 
@@ -7356,6 +7375,13 @@ msgstr "Sylpheed está devidamente atualizado."
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
 msgstr "Não foi possível obter a informação sobre versão."
+
+#~ msgid "Importing file:"
+#~ msgstr "Importando arquivo:"
+
+#, fuzzy
+#~ msgid "eml (file)"
+#~ msgstr "Selecionar arquivo"
 
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "Especifique a pasta destino e o arquivo mbox"
