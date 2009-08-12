@@ -275,6 +275,13 @@ static gint export_eml(FolderItem *src, const gchar *path, gint type)
 		}
 		dest = g_strdup_printf("%s%c%d%s", path, G_DIR_SEPARATOR,
 				       count, ext);
+		if (g_file_test(dest, G_FILE_TEST_EXISTS)) {
+			g_warning("export_eml(): %s already exists.", dest);
+			g_free(dest);
+			g_free(file);
+			ok = -1;
+			break;
+		}
 		if (copy_file(file, dest, FALSE) < 0) {
 			g_free(dest);
 			g_free(file);
