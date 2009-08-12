@@ -325,7 +325,7 @@ static void import_create(void)
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(format_label), 1, 0.5);
 
-	file_label = gtk_label_new(_("Importing file:"));
+	file_label = gtk_label_new(_("Source:"));
 	gtk_table_attach(GTK_TABLE(table), file_label, 0, 1, 1, 2,
 			 GTK_FILL, GTK_EXPAND|GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(file_label), 1, 0.5);
