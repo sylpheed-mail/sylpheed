@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -554,7 +554,7 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		if (!destfile) break;
 		srcfile = procmsg_get_message_file(msginfo);
 
-		g_signal_emit_by_name(syl_app_get(), "remove-msg", src, srcfile, msginfo->msgnum);
+		/* g_signal_emit_by_name(syl_app_get(), "remove-msg", src, srcfile, msginfo->msgnum); */
 
 		if (move_file(srcfile, destfile, FALSE) < 0) {
 			g_free(srcfile);
@@ -563,6 +563,7 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		}
 
 		g_signal_emit_by_name(syl_app_get(), "add-msg", dest, destfile, dest->last_num + 1);
+		g_signal_emit_by_name(syl_app_get(), "remove-msg", src, srcfile, msginfo->msgnum);
 
 		g_free(srcfile);
 		g_free(destfile);
