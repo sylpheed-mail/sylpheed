@@ -102,6 +102,7 @@ export_symbols = -export-symbols libsylph-0.def
 endif
 
 libsylph_0_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 	-export-dynamic $(no_undefined) $(export_symbols)
 
 libsylph_0_la_LIBADD = $(GLIB_LIBS)

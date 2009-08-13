@@ -117,6 +117,7 @@ export_symbols = -export-symbols libsylpheed-plugin-0.def
 endif
 
 libsylpheed_plugin_0_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 	-export-dynamic $(no_undefined) $(export_symbols)
 
 libsylpheed_plugin_0_la_LIBADD = \
