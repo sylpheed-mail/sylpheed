@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 2.7 version 0.10.1
+       Sylpheed User's Manual for Sylpheed 2.7 version 0.10.2
     </abstract>
 
 <toc>
@@ -2122,36 +2122,54 @@ Sylpheed本体の受信部を使用せずにそのプログラムを利用して受信を行います。
 </sect1>
 </sect>
 
-<sect>他メール(メール保存形式)からSylpheed(MHフォルダ形式)への移行
+<sect>他メールソフトからSylpheed(MH形式)への移行
 <sect1>mbox形式のメッセージファイルの取り込み<label id="mbox-import">
 <p>
-ファイルメニューからmboxファイルをインポートを選択し、
-インポートファイルにはインポートしたいmbox形式のメールボックスを選択します。
+「ファイル」メニューから「メールデータをインポート...」を選択し、
+「ファイル形式」に「UNIX mbox」、
+「インポート元」にインポートしたいmbox形式のファイルを選択します。
 
-インポート先には選択したメールボックスを展開するフォルダを指定し
-OKを押せばインポートされます。
-mbox形式は、「mbox」というファイルの他にもNetscape Messengerの~/nsmailの下のファ
-イル、KMailの~/Mail以下のファイル等にも利用されているので、そのファイルを利用
-することで移行できます。
+インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せばインポートされます。
+mbox形式は、Mozilla Thunderbirdや、KMailなどでも利用されているので、
+そのファイルを利用することで移行できます。
 
 ただし、KMailは添付ファイルを別ファイルにしてしまう仕様があるらしく、
 添付ファイルがある場合、正しくコンバートすることができません。
 </sect1>
-<sect1>Windowsのメーラ(Becky!やAL-Mail, Outlook Express4等)からの移行
+<sect1>eml形式、MH形式のメッセージファイルの取り込み<label id="eml-import">
+<p>
+「ファイル」メニューから「メールデータをインポート...」を選択し、
+「ファイル形式」に「eml (フォルダ)」、
+「インポート元」にインポートしたいeml形式(拡張子がeml)のファイルが含まれるフォルダを選択します。
+
+インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せば、指定したフォルダ直下のすべてのemlファイルがインポートされます。
+
+なお、MH形式(連番、拡張子なし)のメールについても同様にインポートできます。
+</sect1>
+<sect1>他形式へのエクスポート
+<p>
+「ファイル」メニューから「メールデータをエクスポート...」を選択し、
+「ファイル形式」に「UNIX mbox」「eml (番号 + .eml)」「MH (番号のみ)」のいずれかを選択します。
+
+「エクスポート元フォルダ」にSylpheedのエクスポート元フォルダ、「エクスポート先」に出力先のファイルまたはフォルダを指定します。
+</sect1>
+<sect1>Outlook Expressからの移行
 <p>
 Windows用フリーソフトウェアである
-<url url="http://www.digico-m.com/shin1/" name="MailExp">
-(注: 現在配布停止しています)を利用して「標準UNIX From形式のメールボックス」
-にエクスポートします。
-その後そのファイルを移動しそのファイルを
-<ref id="mbox-import" name="mbox形式としてインポート">します。
-MailExpはとても多くのメーラからのインポートが可能です。
+<url url="http://www.tietew.net/soft/OE2/" name="OE2 - OutlookExpress-To">
+をインストールし、出力形式に「UNIX mbox」を選択してエクスポートします。
 
-<sect1>Outlook Express 5のdbx形式からの移行
+次に、そのファイルを<ref id="mbox-import" name="インポート">します。
+</sect1>
+<sect1>Becky! Ver.2からの移行
 <p>
-Outlook Express 5の形式はMailExpではサポートしていないので
-<url url="http://www02.so-net.ne.jp/~home/oe5conv/" name="OE5Conv">を利用して
-mbox形式へエクスポートした後、そのファイルを<ref id="mbox-import" name="mbox形式としてインポート">します。
+Becky! のメニューから「ファイル - エクスポート...」を選択し、「UNIX mbox 形式」を選択します。 「OK」ボタンを押して、保存先のファイル名を指定し、「保存」ボタンを押して保存します。
+
+次に、そのファイルを<ref id="mbox-import" name="インポート">します。
+</sect1>
+<sect1>Windows Live Mail、Windows Mailからの移行
+<p>
+Windows Live Mail、またはVista標準添付のWindows Mailではeml形式を利用しているため、<ref id="eml-import" name="eml形式のインポート">を利用してインポートすることができます。
 </sect1>
 </sect>
 
@@ -2816,6 +2834,9 @@ to permit their use in free software.
 2009-06-25	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 	* Version 0.10.1
 	* 迷惑メール対策にWindows版bsfilterの注意事項を追加
+2009-08-13	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.10.2
+	* インポートの項目を加筆修正
 </verb>
 </sect1> 
 </sect>
