@@ -4190,7 +4190,7 @@ static FILE *log_fp = NULL;
 void set_log_file(const gchar *filename)
 {
 	if (log_fp) return;
-	log_fp = g_fopen(filename, "wb");
+	log_fp = g_fopen(filename, "w");
 	if (!log_fp)
 		FILE_OP_ERROR(filename, "fopen");
 }
