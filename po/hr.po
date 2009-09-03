@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-13 11:38+0900\n"
+"POT-Creation-Date: 2009-09-03 16:39+0900\n"
 "PO-Revision-Date: 2001-09-17 13:22+0100\n"
 "Last-Translator: Ante Karamatić <ante@cdnet.com.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -322,7 +322,7 @@ msgstr ""
 "Datoteka `%s' već postoji.\n"
 "Ne mogu stvoriti spis."
 
-#: libsylph/mh.c:1557
+#: libsylph/mh.c:1569
 #, c-format
 msgid ""
 "Directory name\n"
@@ -1264,7 +1264,7 @@ msgstr "Smeđa"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4942
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4970
 msgid "None"
 msgstr "Ništa"
 
@@ -1648,7 +1648,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Ne mogu dobiti dio višedjelne poruke."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:663 src/summaryview.c:2271
+#: src/rpop3.c:663 src/summaryview.c:2299
 msgid "(No Subject)"
 msgstr "(Bez teme)"
 
@@ -1838,7 +1838,7 @@ msgstr "MIME tip"
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
-#: src/summaryview.c:5091
+#: src/summaryview.c:5119
 msgid "Size"
 msgstr "Veličina"
 
@@ -2626,7 +2626,7 @@ msgid "Creating header view...\n"
 msgstr "Stvaram pregled zaglavlja...\n"
 
 #: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:664
-#: src/summaryview.c:2274
+#: src/summaryview.c:2302
 msgid "(No From)"
 msgstr "(Bez pošiljatelja)"
 
@@ -3011,7 +3011,7 @@ msgstr "Izlazim"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Primam poruke (%d / %d) (%s / %s)"
 
-#: src/inc.c:1201 src/inc.c:1221 src/summaryview.c:4503
+#: src/inc.c:1201 src/inc.c:1221 src/summaryview.c:4531
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3991,8 +3991,8 @@ msgstr "Kreiram glavne prozore...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: prikaz boje %d nije uspio\n"
 
-#: src/mainwindow.c:1201 src/summaryview.c:2423 src/summaryview.c:2508
-#: src/summaryview.c:4068 src/summaryview.c:4197 src/summaryview.c:4574
+#: src/mainwindow.c:1201 src/summaryview.c:2451 src/summaryview.c:2536
+#: src/summaryview.c:4096 src/summaryview.c:4225 src/summaryview.c:4602
 msgid "done.\n"
 msgstr "gotovo.\n"
 
@@ -4239,7 +4239,7 @@ msgstr "Prilog"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:765 src/summaryview.c:3626
+#: src/messageview.c:765 src/summaryview.c:3654
 #, fuzzy, c-format
 msgid "Can't save the file `%s'."
 msgstr "Ne mogu premjestiti spis `%s'."
@@ -6382,19 +6382,19 @@ msgstr "Prilog"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
-#: src/summaryview.c:5084
+#: src/summaryview.c:5112
 msgid "Subject"
 msgstr "Tema"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
-#: src/summaryview.c:5087
+#: src/summaryview.c:5115
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
-#: src/summaryview.c:5089
+#: src/summaryview.c:5117
 msgid "Date"
 msgstr "Datum"
 
@@ -6404,7 +6404,7 @@ msgid "Number"
 msgstr "Broj"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5095
+#: src/prefs_summary_column.c:74 src/summaryview.c:5123
 #, fuzzy
 msgid "To"
 msgstr "Za:"
@@ -6719,7 +6719,7 @@ msgstr "Pretražujem spis %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtriranje..."
 
-#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2195
+#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2223
 msgid "(No Date)"
 msgstr "(Nema Datuma)"
 
@@ -6813,7 +6813,7 @@ msgstr "O"
 msgid "%s - POP3 Remote mailbox"
 msgstr "/_Ukloni sandučić"
 
-#: src/rpop3.c:414 src/summaryview.c:5093
+#: src/rpop3.c:414 src/summaryview.c:5121
 msgid "No."
 msgstr "Ne."
 
@@ -7234,7 +7234,7 @@ msgstr "Ne mogu pronaći listu news grupa."
 msgid "Can't retrieve newsgroup list."
 msgstr "Ne mogu pronaći listu news grupa."
 
-#: src/subscribedialog.c:526 src/summaryview.c:883
+#: src/subscribedialog.c:526 src/summaryview.c:911
 msgid "Done."
 msgstr "Gotovo."
 
@@ -7356,239 +7356,244 @@ msgstr "/_Održavanje/_Filtriraj poštu"
 msgid "Creating summary view...\n"
 msgstr "Kreiram pregled održavanja...\n"
 
-#: src/summaryview.c:671
+#: src/summaryview.c:641
+#, fuzzy, c-format
+msgid "Scanning folder (%s) (%d)..."
+msgstr "Pregledavam spis (%s)..."
+
+#: src/summaryview.c:694
 msgid "Process mark"
 msgstr "Izvrši oznaku"
 
-#: src/summaryview.c:672
+#: src/summaryview.c:695
 msgid "Some marks are left. Process it?"
 msgstr "Neke oznake su izostavljene. Izvršiti ih?"
 
-#: src/summaryview.c:728
+#: src/summaryview.c:751
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Pregledavam spis (%s)..."
 
-#: src/summaryview.c:1390
+#: src/summaryview.c:1418
 #, fuzzy
 msgid "_Search again"
 msgstr "Polje potrage"
 
-#: src/summaryview.c:1411 src/summaryview.c:1420
+#: src/summaryview.c:1439 src/summaryview.c:1448
 msgid "No more unread messages"
 msgstr "Nema nepročitanih poruka"
 
-#: src/summaryview.c:1412
+#: src/summaryview.c:1440
 msgid "No unread message found. Search from the end?"
 msgstr "Nema više nepročitanih poruka. Tražiti od kraja?"
 
-#: src/summaryview.c:1414
+#: src/summaryview.c:1442
 msgid "No unread messages."
 msgstr "Nema nepročitanih poruka."
 
-#: src/summaryview.c:1421
+#: src/summaryview.c:1449
 msgid "No unread message found. Go to next folder?"
 msgstr "Nema više nepročitanih poruka. Nastaviti u slijedeći spis?"
 
-#: src/summaryview.c:1429 src/summaryview.c:1438
+#: src/summaryview.c:1457 src/summaryview.c:1466
 #, fuzzy
 msgid "No more new messages"
 msgstr "Nema nepročitanih poruka"
 
-#: src/summaryview.c:1430
+#: src/summaryview.c:1458
 #, fuzzy
 msgid "No new message found. Search from the end?"
 msgstr "Nema više nepročitanih poruka. Tražiti od kraja?"
 
-#: src/summaryview.c:1432
+#: src/summaryview.c:1460
 #, fuzzy
 msgid "No new messages."
 msgstr "Nema nepročitanih poruka."
 
-#: src/summaryview.c:1439
+#: src/summaryview.c:1467
 #, fuzzy
 msgid "No new message found. Go to next folder?"
 msgstr "Nema više nepročitanih poruka. Nastaviti u slijedeći spis?"
 
-#: src/summaryview.c:1447 src/summaryview.c:1456
+#: src/summaryview.c:1475 src/summaryview.c:1484
 msgid "No more marked messages"
 msgstr "Nema više označenih poruka"
 
-#: src/summaryview.c:1448
+#: src/summaryview.c:1476
 msgid "No marked message found. Search from the end?"
 msgstr "Nema više označenih poruka. Nastaviti od kraja?"
 
-#: src/summaryview.c:1450 src/summaryview.c:1459
+#: src/summaryview.c:1478 src/summaryview.c:1487
 msgid "No marked messages."
 msgstr "Nema označenih poruka."
 
-#: src/summaryview.c:1457
+#: src/summaryview.c:1485
 msgid "No marked message found. Search from the beginning?"
 msgstr "Nema označenih poruka. Tražiti od početka?"
 
-#: src/summaryview.c:1465 src/summaryview.c:1474
+#: src/summaryview.c:1493 src/summaryview.c:1502
 msgid "No more labeled messages"
 msgstr "Nema više label poruka"
 
-#: src/summaryview.c:1466
+#: src/summaryview.c:1494
 msgid "No labeled message found. Search from the end?"
 msgstr "Nema label poruka. Tražiti od kraja?"
 
-#: src/summaryview.c:1468 src/summaryview.c:1477
+#: src/summaryview.c:1496 src/summaryview.c:1505
 msgid "No labeled messages."
 msgstr "Nema label poruka."
 
-#: src/summaryview.c:1475
+#: src/summaryview.c:1503
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Nema label poruka. Krenuti od početka?"
 
-#: src/summaryview.c:1822
+#: src/summaryview.c:1850
 msgid "Attracting messages by subject..."
 msgstr "Prihvaćam poruke po temi..."
 
-#: src/summaryview.c:2016
+#: src/summaryview.c:2044
 #, c-format
 msgid "%d deleted"
 msgstr "%d obrisano"
 
-#: src/summaryview.c:2020
+#: src/summaryview.c:2048
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d premješteno"
 
-#: src/summaryview.c:2021 src/summaryview.c:2026
+#: src/summaryview.c:2049 src/summaryview.c:2054
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2025
+#: src/summaryview.c:2053
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d kopirano"
 
-#: src/summaryview.c:2040
+#: src/summaryview.c:2068
 msgid " item(s) selected"
 msgstr " jedinica odabrano"
 
-#: src/summaryview.c:2062
+#: src/summaryview.c:2090
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d novih, %d nepročitanih, %d ukupno (%s)"
 
-#: src/summaryview.c:2066
+#: src/summaryview.c:2094
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d novih, %d nepročitanih, %d ukupno"
 
-#: src/summaryview.c:2102
+#: src/summaryview.c:2130
 msgid "Sorting summary..."
 msgstr "Slažem pregled..."
 
-#: src/summaryview.c:2358
+#: src/summaryview.c:2386
 msgid "\tSetting summary from message data..."
 msgstr "\tPostavljam pregled od podataka poruke..."
 
-#: src/summaryview.c:2360
+#: src/summaryview.c:2388
 msgid "Setting summary from message data..."
 msgstr "Postavljam pregled od podataka poruke..."
 
-#: src/summaryview.c:2467
+#: src/summaryview.c:2495
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Pišem pohranu pregleda (%s)..."
 
-#: src/summaryview.c:2827
+#: src/summaryview.c:2855
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Poruka %d je označena\n"
 
-#: src/summaryview.c:2895
+#: src/summaryview.c:2923
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Poruka %d je označena kao pročitana\n"
 
-#: src/summaryview.c:3096
+#: src/summaryview.c:3124
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Poruka %d je označena kao nepročitana\n"
 
-#: src/summaryview.c:3157
+#: src/summaryview.c:3185
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Poruka %s/%d označena je za brisanje\n"
 
-#: src/summaryview.c:3185
+#: src/summaryview.c:3213
 msgid "Delete message(s)"
 msgstr "Obriši poruku/e"
 
-#: src/summaryview.c:3186
+#: src/summaryview.c:3214
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Želite li uistinu obrisati poruke iz smeća?"
 
-#: src/summaryview.c:3260
+#: src/summaryview.c:3288
 msgid "Deleting duplicated messages..."
 msgstr "Brišim duplicirane poruke..."
 
-#: src/summaryview.c:3298
+#: src/summaryview.c:3326
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Poruka %s/%d je neoznačena\n"
 
-#: src/summaryview.c:3358
+#: src/summaryview.c:3386
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Poruka %d je označena za premještanje u %s\n"
 
-#: src/summaryview.c:3390
+#: src/summaryview.c:3418
 msgid "Destination is same as current folder."
 msgstr "Destinacija je ista kao i trenutni spis."
 
-#: src/summaryview.c:3427
+#: src/summaryview.c:3455
 #, fuzzy
 msgid "Select folder to move"
 msgstr "Odaberite spis"
 
-#: src/summaryview.c:3457
+#: src/summaryview.c:3485
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Poruka %d je označena za kopiranje u %s\n"
 
-#: src/summaryview.c:3488
+#: src/summaryview.c:3516
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Destinacija za kopiranje je ista kao i trenutni spis."
 
-#: src/summaryview.c:3524
+#: src/summaryview.c:3552
 #, fuzzy
 msgid "Select folder to copy"
 msgstr "Odaberite spis"
 
-#: src/summaryview.c:3669
+#: src/summaryview.c:3697
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Došlo je do greške pri radu s poštom."
 
-#: src/summaryview.c:3975 src/summaryview.c:3976
+#: src/summaryview.c:4003 src/summaryview.c:4004
 msgid "Building threads..."
 msgstr "Izgrađujem stablo..."
 
-#: src/summaryview.c:4126 src/summaryview.c:4127
+#: src/summaryview.c:4154 src/summaryview.c:4155
 msgid "Unthreading..."
 msgstr "Rasipavam..."
 
-#: src/summaryview.c:4420 src/summaryview.c:4481
+#: src/summaryview.c:4448 src/summaryview.c:4509
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtriranje..."
 
-#: src/summaryview.c:4543
+#: src/summaryview.c:4571
 msgid "filtering..."
 msgstr "filtriram..."
 
-#: src/summaryview.c:4544
+#: src/summaryview.c:4572
 msgid "Filtering..."
 msgstr "Filtriranje..."
 
-#: src/summaryview.c:4581
+#: src/summaryview.c:4609
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "poruka %d već je prihvaćena.\n"
