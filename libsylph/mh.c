@@ -1279,8 +1279,12 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 	MsgInfo *msginfo;
 	gint n_newmsg = 0;
 	gint num;
+	Folder *folder;
 
 	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item->folder != NULL, NULL);
+
+	folder = item->folder;
 
 	path = folder_item_get_path(item);
 	g_return_val_if_fail(path != NULL, NULL);
@@ -1298,6 +1302,8 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 	debug_print("Searching uncached messages...\n");
 
 	if (msg_table) {
+		gint count = 0;
+
 		while ((dir_name = g_dir_read_name(dp)) != NULL) {
 			if ((num = to_number(dir_name)) <= 0) continue;
 
@@ -1320,6 +1326,10 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 				}
 				n_newmsg++;
 			}
+
+			count++;
+			if (folder->ui_func)
+				folder->ui_func(folder, item, folder->ui_func_data ? folder->ui_func_data : GINT_TO_POINTER(count));
 		}
 	} else {
 		/* discard all previous cache */
@@ -1336,6 +1346,8 @@ static GSList *mh_get_uncached_msgs(GHashTable *msg_table, FolderItem *item)
 				last = last->next;
 			}
 			n_newmsg++;
+			if (folder->ui_func)
+				folder->ui_func(folder, item, folder->ui_func_data ? folder->ui_func_data : GINT_TO_POINTER(n_newmsg));
 		}
 	}
 

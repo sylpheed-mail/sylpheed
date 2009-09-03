@@ -624,6 +624,28 @@ void summary_init(SummaryView *summaryview)
 	summary_set_menu_sensitive(summaryview);
 }
 
+static void get_msg_list_func(Folder *folder, FolderItem *item, gpointer data)
+{
+	SummaryView *summary = (SummaryView *)folder->data;
+	gint count = GPOINTER_TO_INT(data);
+	static GTimeVal tv_prev = {0, 0};
+	GTimeVal tv_cur;
+
+	g_get_current_time(&tv_cur);
+
+	if (tv_prev.tv_sec == 0 ||
+	    (tv_cur.tv_sec - tv_prev.tv_sec) * G_USEC_PER_SEC +
+	    tv_cur.tv_usec - tv_prev.tv_usec > 100 * 1000) {
+		gchar buf[256];
+
+		g_snprintf(buf, sizeof(buf), _("Scanning folder (%s) (%d)..."),
+			   item->path, count);
+		STATUSBAR_POP(summary->mainwin);
+		STATUSBAR_PUSH(summary->mainwin, buf);
+		tv_prev = tv_cur;
+	}
+}
+
 gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		      gboolean update_cache)
 {
@@ -639,6 +661,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	gboolean do_qsearch = FALSE;
 	gboolean set_column_order_required = FALSE;
 	const gchar *key = NULL;
+	gpointer save_data;
 
 	if (summary_is_locked(summaryview)) return FALSE;
 
@@ -732,7 +755,12 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 
 	main_window_cursor_wait(summaryview->mainwin);
 
+	save_data = item->folder->data;
+	item->folder->data = summaryview;
+	folder_set_ui_func(item->folder, get_msg_list_func, NULL);
 	mlist = folder_item_get_msg_list(item, !update_cache);
+	folder_set_ui_func(item->folder, NULL, NULL);
+	item->folder->data = save_data;
 
 	statusbar_pop_all();
 	STATUSBAR_POP(summaryview->mainwin);
