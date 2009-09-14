@@ -420,8 +420,8 @@ static gchar *mh_get_new_msg_filename(FolderItem *dest)
 									\
 	if (fp)								\
 		procmsg_write_flags(&newmsginfo, fp);			\
-	else if (dest->opened)						\
-		procmsg_add_flags(dest, n, newmsginfo.flags);		\
+	else 								\
+		procmsg_add_mark_queue(dest, n, newmsginfo.flags);	\
 }
 
 static gint mh_add_msg(Folder *folder, FolderItem *dest, const gchar *file,
@@ -644,7 +644,6 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 	FolderItem *src;
 	gchar *srcfile;
 	gchar *destfile;
-	FILE *fp;
 	GSList *cur;
 	MsgInfo *msginfo;
 
@@ -655,11 +654,6 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		mh_scan_folder(folder, dest);
 		if (dest->last_num < 0) return -1;
 	}
-
-	if (dest->opened)
-		fp = NULL;
-	else if ((fp = procmsg_open_mark_file(dest, DATA_APPEND)) == NULL)
-		g_warning(_("Can't open mark file.\n"));
 
 	for (cur = msglist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
@@ -697,10 +691,8 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		dest->updated = TRUE;
 		dest->mtime = 0;
 
-		if (fp) {
-			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
-					   msginfo->flags);
-		}
+		SET_DEST_MSG_FLAGS(NULL, dest, dest->last_num, msginfo->flags);
+		procmsg_add_cache_queue(dest, dest->last_num, msginfo);
 
 		if (MSG_IS_NEW(msginfo->flags)) {
 			src->new--;
@@ -714,7 +706,10 @@ static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_INVALID);
 	}
 
-	if (fp) fclose(fp);
+	if (!dest->opened) {
+		procmsg_flush_mark_queue(dest, NULL);
+		procmsg_flush_cache_queue(dest, NULL);
+	}
 
 	return dest->last_num;
 }
@@ -734,7 +729,6 @@ static gint mh_move_msg(Folder *folder, FolderItem *dest, MsgInfo *msginfo)
 static gint mh_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 {
 	MsgInfo *msginfo;
-	GSList *file_list;
 	gint ret = 0;
 	gint first;
 
@@ -742,12 +736,7 @@ static gint mh_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 	if (folder == msginfo->folder->folder)
 		return mh_do_move_msgs(folder, dest, msglist);
 
-	file_list = procmsg_get_message_file_list(msglist);
-	g_return_val_if_fail(file_list != NULL, -1);
-
-	ret = mh_add_msgs(folder, dest, file_list, FALSE, &first);
-
-	procmsg_message_file_list_free(file_list);
+	ret = mh_add_msgs_msginfo(folder, dest, msglist, FALSE, &first);
 
 	if (ret != -1)
 		ret = folder_item_remove_msgs(msginfo->folder, msglist);
@@ -771,7 +760,6 @@ static gint mh_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 {
 	gchar *srcfile;
 	gchar *destfile;
-	FILE *fp;
 	GSList *cur;
 	MsgInfo *msginfo;
 
@@ -782,11 +770,6 @@ static gint mh_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		mh_scan_folder(folder, dest);
 		if (dest->last_num < 0) return -1;
 	}
-
-	if (dest->opened)
-		fp = NULL;
-	else if ((fp = procmsg_open_mark_file(dest, DATA_APPEND)) == NULL)
-		g_warning(_("Can't open mark file.\n"));
 
 	for (cur = msglist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
@@ -818,10 +801,8 @@ static gint mh_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 		dest->updated = TRUE;
 		dest->mtime = 0;
 
-		if (fp) {
-			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
-					   msginfo->flags);
-		}
+		SET_DEST_MSG_FLAGS(NULL, dest, dest->last_num, msginfo->flags);
+		procmsg_add_cache_queue(dest, dest->last_num, msginfo);
 
 		if (MSG_IS_NEW(msginfo->flags))
 			dest->new++;
@@ -829,7 +810,10 @@ static gint mh_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 			dest->unread++;
 	}
 
-	if (fp) fclose(fp);
+	if (!dest->opened) {
+		procmsg_flush_mark_queue(dest, NULL);
+		procmsg_flush_cache_queue(dest, NULL);
+	}
 
 	return dest->last_num;
 }
