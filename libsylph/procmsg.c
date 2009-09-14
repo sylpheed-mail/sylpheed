@@ -34,6 +34,11 @@
 #include "folder.h"
 #include "codeconv.h"
 
+typedef struct _MsgFlagInfo {
+	guint msgnum;
+	MsgFlags flags;
+} MsgFlagInfo;
+
 static GSList *procmsg_read_cache_queue		(FolderItem	*item,
 						 gboolean	 scan_file);
 
@@ -465,12 +470,12 @@ void procmsg_mark_all_read(FolderItem *item)
 
 	if (item->mark_queue) {
 		GSList *cur;
-		MsgInfo *msginfo;
+		MsgFlagInfo *flaginfo;
 
 		for (cur = item->mark_queue; cur != NULL; cur = cur->next) {
-			msginfo = (MsgInfo *)cur->data;
+			flaginfo = (MsgFlagInfo *)cur->data;
 			MSG_UNSET_PERM_FLAGS
-				(msginfo->flags, MSG_NEW|MSG_UNREAD);
+				(flaginfo->flags, MSG_NEW|MSG_UNREAD);
 		}
 		item->mark_dirty = TRUE;
 	}
@@ -677,7 +682,8 @@ void procmsg_write_flags_for_multiple_folders(GSList *mlist)
 
 void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 {
-	MsgInfo *flaginfo;
+	MsgFlagInfo *flaginfo;
+	MsgInfo msginfo = {0};
 	gboolean append = FALSE;
 
 	g_return_if_fail(item != NULL);
@@ -694,10 +700,12 @@ void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 	}
 
 	while (item->mark_queue != NULL) {
-		flaginfo = (MsgInfo *)item->mark_queue->data;
-		procmsg_write_flags(flaginfo, fp);
-		procmsg_msginfo_free(flaginfo);
+		flaginfo = (MsgFlagInfo *)item->mark_queue->data;
+		msginfo.msgnum = flaginfo->msgnum;
+		msginfo.flags = flaginfo->flags;
+		procmsg_write_flags(&msginfo, fp);
 		item->mark_queue = g_slist_remove(item->mark_queue, flaginfo);
+		g_free(flaginfo);
 	}
 
 	if (append)
@@ -706,12 +714,24 @@ void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 
 void procmsg_add_mark_queue(FolderItem *item, gint num, MsgFlags flags)
 {
-	MsgInfo *queue_msginfo;
+	MsgFlagInfo *flaginfo;
 
-	queue_msginfo = g_new0(MsgInfo, 1);
-	queue_msginfo->msgnum = num;
-	queue_msginfo->flags = flags;
-	item->mark_queue = g_slist_append(item->mark_queue, queue_msginfo);
+	flaginfo = g_new(MsgFlagInfo, 1);
+	flaginfo->msgnum = num;
+	flaginfo->flags = flags;
+	item->mark_queue = g_slist_append(item->mark_queue, flaginfo);
+}
+
+static void procmsg_flaginfo_list_free(GSList *flaglist)
+{
+	GSList *cur;
+	MsgFlagInfo *flaginfo;
+
+	for (cur = flaglist; cur != NULL; cur = cur->next) {
+		flaginfo = (MsgFlagInfo *)cur->data;
+		g_free(flaginfo);
+	}
+	g_slist_free(flaglist);
 }
 
 void procmsg_flush_cache_queue(FolderItem *item, FILE *fp)
@@ -919,24 +939,24 @@ static GHashTable *procmsg_read_mark_file(FolderItem *item)
 	}
 
 	for (cur = item->mark_queue; cur != NULL; cur = cur->next) {
-		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		MsgFlagInfo *flaginfo = (MsgFlagInfo *)cur->data;
 
 		flags = g_hash_table_lookup(mark_table,
-					    GUINT_TO_POINTER(msginfo->msgnum));
+					    GUINT_TO_POINTER(flaginfo->msgnum));
 		if (flags != NULL)
 			g_free(flags);
 
 		flags = g_new0(MsgFlags, 1);
-		flags->perm_flags = msginfo->flags.perm_flags;
+		flags->perm_flags = flaginfo->flags.perm_flags;
 
 		g_hash_table_insert(mark_table,
-				    GUINT_TO_POINTER(msginfo->msgnum), flags);
+				    GUINT_TO_POINTER(flaginfo->msgnum), flags);
 				    
 	}
 
 	if (item->mark_queue && !item->opened) {
 		procmsg_write_mark_file(item, mark_table);
-		procmsg_msg_list_free(item->mark_queue);
+		procmsg_flaginfo_list_free(item->mark_queue);
 		item->mark_queue = NULL;
 		item->mark_dirty = FALSE;
 	}
@@ -1725,10 +1745,10 @@ static gboolean procmsg_get_flags(FolderItem *item, gint num,
 		return TRUE;
 
 	for (cur = item->mark_queue; cur != NULL; cur = cur->next) {
-		MsgInfo *msginfo = (MsgInfo *)cur->data;
+		MsgFlagInfo *flaginfo = (MsgFlagInfo *)cur->data;
 
-		if (msginfo->msgnum == num) {
-			*flags = msginfo->flags.perm_flags;
+		if (flaginfo->msgnum == num) {
+			*flags = flaginfo->flags.perm_flags;
 			found = TRUE;
 			break;
 		}
