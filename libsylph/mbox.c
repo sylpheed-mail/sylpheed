@@ -35,6 +35,7 @@
 
 #include "mbox.h"
 #include "procmsg.h"
+#include "procheader.h"
 #include "folder.h"
 #include "filter.h"
 #include "prefs_common.h"
@@ -118,6 +119,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		gboolean is_next_msg = FALSE;
 		gboolean is_junk = FALSE;
 		FilterInfo *fltinfo;
+		MsgInfo *msginfo;
 
 		count++;
 		if (folder->ui_func)
@@ -222,30 +224,44 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		fltinfo->flags.perm_flags = MSG_NEW|MSG_UNREAD;
 		fltinfo->flags.tmp_flags = MSG_RECEIVED;
 
+		msginfo = procheader_parse_file(tmp_file, fltinfo->flags,
+						FALSE);
+		if (!msginfo) {
+			g_warning("proc_mbox_full: procheader_parse_file failed");
+			filter_info_free(fltinfo);
+			g_unlink(tmp_file);
+			g_free(tmp_file);
+			fclose(mbox_fp);
+			return -1;
+		}
+		msginfo->file_path = g_strdup(tmp_file);
+
 		if (filter_junk && prefs_common.enable_junk &&
 		    prefs_common.filter_junk_before) {
-			filter_apply(prefs_common.junk_fltlist, tmp_file,
-				     fltinfo);
+			filter_apply_msginfo(prefs_common.junk_fltlist, msginfo,
+					     fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
 		}
 
 		if (!fltinfo->drop_done && apply_filter)
-			filter_apply(prefs_common.fltlist, tmp_file, fltinfo);
+			filter_apply_msginfo(prefs_common.fltlist, msginfo,
+					     fltinfo);
 
 		if (!fltinfo->drop_done &&
 		    filter_junk && prefs_common.enable_junk &&
 		    !prefs_common.filter_junk_before) {
-			filter_apply(prefs_common.junk_fltlist, tmp_file,
-				     fltinfo);
+			filter_apply_msginfo(prefs_common.junk_fltlist, msginfo,
+					     fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
 		}
 
 		if (fltinfo->actions[FLT_ACTION_MOVE] == FALSE &&
 		    fltinfo->actions[FLT_ACTION_DELETE] == FALSE) {
-			if (folder_item_add_msg(dest, tmp_file, &fltinfo->flags,
-						FALSE) < 0) {
+			msginfo->flags = fltinfo->flags;
+			if (folder_item_add_msg_msginfo(dest, msginfo, FALSE) < 0) {
+				procmsg_msginfo_free(msginfo);
 				filter_info_free(fltinfo);
 				g_unlink(tmp_file);
 				g_free(tmp_file);
@@ -279,6 +295,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
 			new_msgs++;
 
+		procmsg_msginfo_free(msginfo);
 		filter_info_free(fltinfo);
 		g_unlink(tmp_file);
 	} while (from_line[0] != '\0');
