@@ -75,6 +75,15 @@ static gint     mh_add_msgs		(Folder		*folder,
 					 GSList		*file_list,
 					 gboolean	 remove_source,
 					 gint		*first);
+static gint     mh_add_msg_msginfo	(Folder		*folder,
+					 FolderItem	*dest,
+					 MsgInfo	*msginfo,
+					 gboolean	 remove_source);
+static gint     mh_add_msgs_msginfo	(Folder		*folder,
+					 FolderItem	*dest,
+					 GSList		*msglist,
+					 gboolean	 remove_source,
+					 gint		*first);
 static gint     mh_move_msg		(Folder		*folder,
 					 FolderItem	*dest,
 					 MsgInfo	*msginfo);
@@ -151,6 +160,8 @@ static FolderClass mh_class =
 	mh_get_msginfo,
 	mh_add_msg,
 	mh_add_msgs,
+	mh_add_msg_msginfo,
+	mh_add_msgs_msginfo,
 	mh_move_msg,
 	mh_move_msgs,
 	mh_copy_msg,
@@ -516,6 +527,117 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 
 	return dest->last_num;
 }
+
+
+static gint mh_add_msg_msginfo(Folder *folder, FolderItem *dest,
+			       MsgInfo *msginfo, gboolean remove_source)
+{
+	GSList msglist;
+
+	g_return_val_if_fail(msginfo != NULL, -1);
+
+	msglist.data = msginfo;
+	msglist.next = NULL;
+
+	return mh_add_msgs_msginfo(folder, dest, &msglist, remove_source, NULL);
+}
+
+static gint mh_add_msgs_msginfo(Folder *folder, FolderItem *dest,
+				GSList *msglist, gboolean remove_source,
+				gint *first)
+{
+	GSList *cur;
+	MsgInfo *msginfo;
+	gchar *srcfile;
+	gchar *destfile;
+	gint first_ = 0;
+	FILE *fp = NULL;
+
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(msglist != NULL, -1);
+
+	if (dest->last_num < 0) {
+		mh_scan_folder(folder, dest);
+		if (dest->last_num < 0) return -1;
+	}
+
+	if (!dest->opened) {
+		if ((fp = procmsg_open_mark_file(dest, DATA_APPEND)) == NULL)
+			g_warning("mh_add_msgs_msginfo: can't open mark file.");
+	}
+
+	for (cur = msglist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+
+		destfile = mh_get_new_msg_filename(dest);
+		if (!destfile) {
+			if (fp) fclose(fp);
+			return -1;
+		}
+		if (first_ == 0 || first_ > dest->last_num + 1)
+			first_ = dest->last_num + 1;
+
+		srcfile = procmsg_get_message_file(msginfo);
+		if (!srcfile) {
+			if (fp) fclose(fp);
+			g_free(destfile);
+			return -1;
+		}
+		if (syl_link(srcfile, destfile) < 0) {
+			if (copy_file(srcfile, destfile, TRUE) < 0) {
+				g_warning("mh_add_msgs_msginfo: can't copy message %s to %s", srcfile, destfile);
+				g_free(srcfile);
+				g_free(destfile);
+				if (fp) fclose(fp);
+				return -1;
+			}
+		}
+
+		g_signal_emit_by_name(syl_app_get(), "add-msg", dest, destfile, dest->last_num + 1);
+
+		g_free(srcfile);
+		g_free(destfile);
+		dest->last_num++;
+		dest->total++;
+		dest->updated = TRUE;
+		dest->mtime = 0;
+
+		if (MSG_IS_RECEIVED(msginfo->flags)) {
+			if (dest->unmarked_num == 0)
+				dest->new = 0;
+			dest->unmarked_num++;
+			procmsg_add_mark_queue(dest, dest->last_num,
+					       msginfo->flags);
+			procmsg_add_cache_queue(dest, dest->last_num,
+						msginfo);
+		} else {
+			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
+					   msginfo->flags);
+		}
+		if (MSG_IS_NEW(msginfo->flags))
+			dest->new++;
+		if (MSG_IS_UNREAD(msginfo->flags))
+			dest->unread++;
+	}
+
+	if (fp) fclose(fp);
+
+	if (first)
+		*first = first_;
+
+	if (remove_source) {
+		for (cur = msglist; cur != NULL; cur = cur->next) {
+			msginfo = (MsgInfo *)cur->data;
+			srcfile = procmsg_get_message_file(msginfo);
+			if (g_unlink(srcfile) < 0)
+				FILE_OP_ERROR(srcfile, "unlink");
+			g_free(srcfile);
+		}
+	}
+
+	return dest->last_num;
+}
+
 
 static gint mh_do_move_msgs(Folder *folder, FolderItem *dest, GSList *msglist)
 {
@@ -960,6 +1082,10 @@ static gint mh_scan_folder_full(Folder *folder, FolderItem *item,
 		item->new = new;
 		item->unread = unread;
 		item->total = n_msg;
+
+		if (item->cache_queue && !item->opened) {
+			procmsg_flush_cache_queue(item, NULL);
+		}
 	}
 
 	item->updated = TRUE;

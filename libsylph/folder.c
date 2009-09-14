@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1141,6 +1141,37 @@ gint folder_item_add_msgs(FolderItem *dest, GSList *file_list,
 
 	return folder->klass->add_msgs(folder, dest, file_list, remove_source,
 				       first);
+}
+
+gint folder_item_add_msg_msginfo(FolderItem *dest, MsgInfo *msginfo,
+				 gboolean remove_source)
+{
+	Folder *folder;
+
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(msginfo != NULL, -1);
+	g_return_val_if_fail(msginfo->file_path != NULL, -1);
+	g_return_val_if_fail(dest->folder->klass->add_msg_msginfo != NULL, -1);
+
+	folder = dest->folder;
+
+	return folder->klass->add_msg_msginfo(folder, dest, msginfo,
+					      remove_source);
+}
+
+gint folder_item_add_msgs_msginfo(FolderItem *dest, GSList *msglist,
+				  gboolean remove_source, gint *first)
+{
+	Folder *folder;
+
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(msglist != NULL, -1);
+	g_return_val_if_fail(dest->folder->klass->add_msgs_msginfo != NULL, -1);
+
+	folder = dest->folder;
+
+	return folder->klass->add_msgs_msginfo(folder, dest, msglist,
+					       remove_source, first);
 }
 
 gint folder_item_move_msg(FolderItem *dest, MsgInfo *msginfo)

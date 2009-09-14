@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,6 +33,9 @@
 #include "prefs_common.h"
 #include "folder.h"
 #include "codeconv.h"
+
+static GSList *procmsg_read_cache_queue		(FolderItem	*item,
+						 gboolean	 scan_file);
 
 static void mark_sum_func			(gpointer	 key,
 						 gpointer	 value,
@@ -227,7 +230,7 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 		return NULL;
 	}
 
-	debug_print("Reading summary cache...");
+	debug_print("Reading summary cache...\n");
 
 	while (fread(&num, sizeof(num), 1, fp) == 1) {
 		msginfo = g_new0(MsgInfo, 1);
@@ -282,6 +285,12 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 
 	fclose(fp);
 
+	if (item->cache_queue) {
+		GSList *qlist;
+		qlist = procmsg_read_cache_queue(item, scan_file);
+		mlist = g_slist_concat(mlist, qlist);
+	}
+
 	debug_print("done.\n");
 
 	return mlist;
@@ -289,6 +298,59 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 
 #undef READ_CACHE_DATA
 #undef READ_CACHE_DATA_INT
+
+static GSList *procmsg_read_cache_queue(FolderItem *item, gboolean scan_file)
+{
+	FolderType type;
+	MsgInfo *msginfo;
+	MsgFlags default_flags;
+	GSList *cur;
+	GSList *qlist = NULL;
+	GSList *last = NULL;
+
+	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item->folder != NULL, NULL);
+
+	if (!item->cache_queue)
+		return NULL;
+
+	debug_print("Reading cache queue...\n");
+
+	type = FOLDER_TYPE(item->folder);
+	default_flags.perm_flags = MSG_NEW|MSG_UNREAD;
+	default_flags.tmp_flags = 0;
+
+	for (cur = item->cache_queue; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+
+		debug_print("read cache queue: %s/%d\n",
+			    item->path, msginfo->msgnum);
+
+		MSG_SET_PERM_FLAGS(msginfo->flags, default_flags.perm_flags);
+		MSG_SET_TMP_FLAGS(msginfo->flags, default_flags.tmp_flags);
+
+		if ((type == F_MH && scan_file &&
+		     folder_item_is_msg_changed(item, msginfo))) {
+			procmsg_msginfo_free(msginfo);
+			item->cache_dirty = TRUE;
+		} else {
+			msginfo->folder = item;
+
+			if (!qlist)
+				last = qlist = g_slist_append(NULL, msginfo);
+			else {
+				last = g_slist_append(last, msginfo);
+				last = last->next;
+			}
+		}
+	}
+
+	g_slist_free(item->cache_queue);
+	item->cache_queue = NULL;
+	item->cache_dirty = TRUE;
+
+	return qlist;
+}
 
 static void mark_unset_new_func(gpointer key, gpointer value, gpointer data)
 {
@@ -535,6 +597,9 @@ void procmsg_write_cache_list(FolderItem *item, GSList *mlist)
 		procmsg_write_cache(msginfo, fp);
 	}
 
+	if (item->cache_queue)
+		procmsg_flush_cache_queue(item, fp);
+
 	fclose(fp);
 	item->cache_dirty = FALSE;
 }
@@ -613,12 +678,20 @@ void procmsg_write_flags_for_multiple_folders(GSList *mlist)
 void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 {
 	MsgInfo *flaginfo;
+	gboolean append = FALSE;
 
 	g_return_if_fail(item != NULL);
-	g_return_if_fail(fp != NULL);
 
-	if (item->mark_queue)
-		debug_print("flushing mark_queue...\n");
+	if (!item->mark_queue)
+		return;
+
+	debug_print("flushing mark_queue: %s...\n", item->path);
+
+	if (!fp) {
+		append =  TRUE;
+		fp = procmsg_open_mark_file(item, DATA_APPEND);
+		g_return_if_fail(fp != NULL);
+	}
 
 	while (item->mark_queue != NULL) {
 		flaginfo = (MsgInfo *)item->mark_queue->data;
@@ -626,6 +699,9 @@ void procmsg_flush_mark_queue(FolderItem *item, FILE *fp)
 		procmsg_msginfo_free(flaginfo);
 		item->mark_queue = g_slist_remove(item->mark_queue, flaginfo);
 	}
+
+	if (append)
+		fclose(fp);
 }
 
 void procmsg_add_mark_queue(FolderItem *item, gint num, MsgFlags flags)
@@ -635,9 +711,100 @@ void procmsg_add_mark_queue(FolderItem *item, gint num, MsgFlags flags)
 	queue_msginfo = g_new0(MsgInfo, 1);
 	queue_msginfo->msgnum = num;
 	queue_msginfo->flags = flags;
-	item->mark_queue = g_slist_append
-		(item->mark_queue, queue_msginfo);
-	return;
+	item->mark_queue = g_slist_append(item->mark_queue, queue_msginfo);
+}
+
+void procmsg_flush_cache_queue(FolderItem *item, FILE *fp)
+{
+	MsgInfo *msginfo;
+	gboolean append = FALSE;
+
+	g_return_if_fail(item != NULL);
+
+	if (!item->cache_queue)
+		return;
+
+	debug_print("flushing cache_queue: %s ...\n", item->path);
+
+	if (!fp) {
+		append =  TRUE;
+		fp = procmsg_open_cache_file(item, DATA_APPEND);
+		g_return_if_fail(fp != NULL);
+	}
+
+	while (item->cache_queue != NULL) {
+		msginfo = (MsgInfo *)item->cache_queue->data;
+		debug_print("flush cache queue: %s/%d\n", item->path, msginfo->msgnum);
+		procmsg_write_cache(msginfo, fp);
+		procmsg_msginfo_free(msginfo);
+		item->cache_queue = g_slist_remove(item->cache_queue, msginfo);
+	}
+
+	if (append)
+		fclose(fp);
+}
+
+void procmsg_add_cache_queue(FolderItem *item, gint num, MsgInfo *msginfo)
+{
+	MsgInfo *queue_msginfo;
+
+	g_return_if_fail(msginfo != NULL);
+
+	queue_msginfo = procmsg_msginfo_copy(msginfo);
+	queue_msginfo->msgnum = num;
+	if (queue_msginfo->file_path) {
+		g_free(queue_msginfo->file_path);
+		queue_msginfo->file_path = NULL;
+	}
+
+	debug_print("procmsg_add_cache_queue: add msg cache: %s/%d\n",
+		    item->path, num);
+	item->cache_queue = g_slist_append(item->cache_queue, queue_msginfo);
+}
+
+gboolean procmsg_flush_folder(FolderItem *item)
+{
+	gboolean flushed = FALSE;
+	gint n_new, n_unread, n_total, n_min, n_max;
+
+	g_return_val_if_fail(item != NULL, FALSE);
+	g_return_val_if_fail(item->folder != NULL, FALSE);
+
+	if (FOLDER_TYPE(item->folder) != F_MH || item->last_num < 0) {
+		folder_item_scan(item);
+		return TRUE;
+	}
+
+	if (item->mark_queue && !item->opened)
+		flushed = TRUE;
+	procmsg_get_mark_sum(item, &n_new, &n_unread, &n_total, &n_min, &n_max,
+			     0);
+	item->unmarked_num = 0;
+	item->new = n_new;
+	item->unread = n_unread;
+	item->total = n_total;
+
+	if (item->cache_queue && !item->opened) {
+		procmsg_flush_cache_queue(item, NULL);
+		flushed = TRUE;
+	}
+
+	if (flushed)
+		debug_print("procmsg_flush_folder: flushed %s\n", item->path);
+
+	return flushed;
+}
+
+static void procmsg_flush_folder_foreach_func(gpointer key, gpointer val,
+					      gpointer data)
+{
+	procmsg_flush_folder(FOLDER_ITEM(key));
+}
+
+void procmsg_flush_folder_foreach(GHashTable *folder_table)
+{
+	g_hash_table_foreach(folder_table, procmsg_flush_folder_foreach_func,
+			     NULL);
 }
 
 void procmsg_add_flags(FolderItem *item, gint num, MsgFlags flags)

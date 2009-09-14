@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -244,12 +244,17 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 					fltinfo->actions[action->type] = TRUE;
 				}
 			} else {
-				if (folder_item_add_msg(dest_folder, file,
-							&fltinfo->flags,
-							FALSE) < 0) {
+				MsgFlags save_flags;
+
+				save_flags = msginfo->flags;
+				msginfo->flags = fltinfo->flags;
+				if (folder_item_add_msg_msginfo
+					(dest_folder, msginfo, FALSE) < 0) {
+					msginfo->flags = save_flags;
 					fltinfo->error = FLT_ERROR_ERROR;
 					return -1;
 				}
+				msginfo->flags = save_flags;
 				fltinfo->actions[action->type] = TRUE;
 			}
 

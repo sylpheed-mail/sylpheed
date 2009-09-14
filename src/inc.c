@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@
 #include "trayicon.h"
 #include "filter.h"
 #include "folder.h"
+#include "procheader.h"
 
 static GList *inc_dialog_list = NULL;
 
@@ -613,6 +614,12 @@ static void inc_session_destroy(IncSession *session)
 	g_free(session);
 }
 
+static void inc_update_folder_foreach(GHashTable *table)
+{
+	procmsg_flush_folder_foreach(table);
+	folderview_update_item_foreach(table, !prefs_common.open_inbox_on_inc);
+}
+
 static gint inc_start(IncProgressDialog *inc_dialog)
 {
 	IncSession *session;
@@ -739,10 +746,7 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		new_msgs += session->new_msgs;
 
 		if (!prefs_common.scan_all_after_inc) {
-			folder_item_scan_foreach(session->folder_table);
-			folderview_update_item_foreach
-				(session->folder_table,
-				 !prefs_common.open_inbox_on_inc);
+			inc_update_folder_foreach(session->folder_table);
 		}
 
 		if (pop3_session->error_val == PS_AUTHFAIL &&
@@ -1168,6 +1172,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 {
 	FolderItem *inbox;
 	GSList *cur;
+	MsgInfo *msginfo;
 	FilterInfo *fltinfo;
 	IncSession *inc_session = (IncSession *)(SESSION(session)->data);
 	gint val;
@@ -1190,16 +1195,26 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	fltinfo->flags.perm_flags = MSG_NEW|MSG_UNREAD;
 	fltinfo->flags.tmp_flags = MSG_RECEIVED;
 
+	msginfo = procheader_parse_file(file, fltinfo->flags, FALSE);
+	if (!msginfo) {
+		g_warning("inc_drop_message: procheader_parse_file failed");
+		filter_info_free(fltinfo);
+		return DROP_ERROR;
+	}
+	msginfo->file_path = g_strdup(file);
+
 	if (prefs_common.enable_junk &&
 	    prefs_common.filter_junk_on_recv &&
 	    prefs_common.filter_junk_before) {
-		filter_apply(prefs_common.junk_fltlist, file, fltinfo);
+		filter_apply_msginfo(prefs_common.junk_fltlist, msginfo,
+				     fltinfo);
 		if (fltinfo->drop_done)
 			is_junk = TRUE;
 		else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
 			alertpanel_error
 				(_("Execution of the junk filter command failed.\n"
 				   "Please check the junk mail control setting."));
+			procmsg_msginfo_free(msginfo);
 			filter_info_free(fltinfo);
 			inc_session->inc_state = INC_ERROR;
 			return DROP_ERROR;
@@ -1207,19 +1222,21 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	}
 
 	if (!fltinfo->drop_done && session->ac_prefs->filter_on_recv)
-		filter_apply(prefs_common.fltlist, file, fltinfo);
+		filter_apply_msginfo(prefs_common.fltlist, msginfo, fltinfo);
 
 	if (!fltinfo->drop_done) {
 		if (prefs_common.enable_junk &&
 		    prefs_common.filter_junk_on_recv &&
 		    !prefs_common.filter_junk_before) {
-			filter_apply(prefs_common.junk_fltlist, file, fltinfo);
+			filter_apply_msginfo(prefs_common.junk_fltlist,
+					     msginfo, fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
 			else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
 				alertpanel_error
 					(_("Execution of the junk filter command failed.\n"
 					   "Please check the junk mail control setting."));
+				procmsg_msginfo_free(msginfo);
 				filter_info_free(fltinfo);
 				inc_session->inc_state = INC_ERROR;
 				return DROP_ERROR;
@@ -1228,8 +1245,9 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	}
 
 	if (!fltinfo->drop_done) {
-		if (folder_item_add_msg
-			(inbox, file, &fltinfo->flags, FALSE) < 0) {
+		msginfo->flags = fltinfo->flags;
+		if (folder_item_add_msg_msginfo(inbox, msginfo, FALSE) < 0) {
+			procmsg_msginfo_free(msginfo);
 			filter_info_free(fltinfo);
 			return DROP_ERROR;
 		}
@@ -1258,6 +1276,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 			inc_session->new_msgs++;
 	}
 
+	procmsg_msginfo_free(msginfo);
 	filter_info_free(fltinfo);
 
 	return val;
@@ -1488,9 +1507,7 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 	unlock_mbox(mbox, lockfd, LOCK_FLOCK);
 
 	if (!prefs_common.scan_all_after_inc) {
-		folder_item_scan_foreach(folder_table);
-		folderview_update_item_foreach
-			(folder_table, !prefs_common.open_inbox_on_inc);
+		inc_update_folder_foreach(folder_table);
 	}
 
 	g_hash_table_destroy(folder_table);

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -758,7 +758,9 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	save_data = item->folder->data;
 	item->folder->data = summaryview;
 	folder_set_ui_func(item->folder, get_msg_list_func, NULL);
+
 	mlist = folder_item_get_msg_list(item, !update_cache);
+
 	folder_set_ui_func(item->folder, NULL, NULL);
 	item->folder->data = save_data;
 
@@ -2512,6 +2514,8 @@ gint summary_write_cache(SummaryView *summaryview)
 			procmsg_write_flags(msginfo, fps.mark_fp);
 	}
 
+	if (item->cache_queue)
+		procmsg_flush_cache_queue(item, fps.cache_fp);
 	if (item->mark_queue)
 		procmsg_flush_mark_queue(item, fps.mark_fp);
 

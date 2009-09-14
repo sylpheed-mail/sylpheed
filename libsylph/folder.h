@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -179,6 +179,15 @@ struct _FolderClass
 					 GSList		*file_list,
 					 gboolean	 remove_source,
 					 gint		*first);
+	gint     (*add_msg_msginfo)	(Folder		*folder,
+					 FolderItem	*dest,
+					 MsgInfo	*msginfo,
+					 gboolean	 remove_source);
+	gint     (*add_msgs_msginfo)	(Folder		*folder,
+					 FolderItem	*dest,
+					 GSList		*msginfo_list,
+					 gboolean	 remove_source,
+					 gint		*first);
 	gint     (*move_msg)		(Folder		*folder,
 					 FolderItem	*dest,
 					 MsgInfo	*msginfo);
@@ -296,6 +305,7 @@ struct _FolderItem
 	gboolean trim_summary_subject;
 	gboolean trim_compose_subject;
 
+	GSList *cache_queue;
 	GSList *mark_queue;
 
 	guint last_selected;
@@ -393,6 +403,13 @@ gint   folder_item_add_msg		(FolderItem	*dest,
 					 gboolean	 remove_source);
 gint   folder_item_add_msgs		(FolderItem	*dest,
 					 GSList		*file_list,
+					 gboolean	 remove_source,
+					 gint		*first);
+gint   folder_item_add_msg_msginfo	(FolderItem	*dest,
+					 MsgInfo	*msginfo,
+					 gboolean	 remove_source);
+gint   folder_item_add_msgs_msginfo	(FolderItem	*dest,
+					 GSList		*msginfo_list,
 					 gboolean	 remove_source,
 					 gint		*first);
 gint   folder_item_move_msg		(FolderItem	*dest,

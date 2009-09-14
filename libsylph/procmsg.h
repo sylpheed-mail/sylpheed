@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -252,6 +252,15 @@ void	procmsg_flush_mark_queue	(FolderItem	*item,
 void	procmsg_add_mark_queue		(FolderItem	*item,
 					 gint		 num,
 					 MsgFlags	 flags);
+void	procmsg_flush_cache_queue	(FolderItem	*item,
+					 FILE		*fp);
+void	procmsg_add_cache_queue		(FolderItem	*item,
+					 gint		 num,
+					 MsgInfo	*msginfo);
+
+gboolean procmsg_flush_folder		(FolderItem	*item);
+void	procmsg_flush_folder_foreach	(GHashTable	*folder_table);
+
 void	procmsg_add_flags		(FolderItem	*item,
 					 gint		 num,
 					 MsgFlags	 flags);

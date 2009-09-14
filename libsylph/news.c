@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -137,6 +137,8 @@ static FolderClass news_class =
 	NULL,
 	news_fetch_msg,
 	news_get_msginfo,
+	NULL,
+	NULL,
 	NULL,
 	NULL,
 	NULL,

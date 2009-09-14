@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -117,6 +117,15 @@ static gint imap_add_msg		(Folder		*folder,
 static gint imap_add_msgs		(Folder		*folder,
 					 FolderItem	*dest,
 					 GSList		*file_list,
+					 gboolean	 remove_source,
+					 gint		*first);
+static gint imap_add_msg_msginfo	(Folder		*folder,
+					 FolderItem	*dest,
+					 MsgInfo	*msginfo,
+					 gboolean	 remove_source);
+static gint imap_add_msgs_msginfo	(Folder		*folder,
+					 FolderItem	*dest,
+					 GSList		*msglist,
 					 gboolean	 remove_source,
 					 gint		*first);
 
@@ -396,6 +405,8 @@ static FolderClass imap_class =
 	imap_get_msginfo,
 	imap_add_msg,
 	imap_add_msgs,
+	imap_add_msg_msginfo,
+	imap_add_msgs_msginfo,
 	imap_move_msg,
 	imap_move_msgs,
 	imap_copy_msg,
@@ -1335,6 +1346,37 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	}
 
 	return last_uid;
+}
+
+static gint imap_add_msg_msginfo(Folder *folder, FolderItem *dest,
+				 MsgInfo *msginfo, gboolean remove_source)
+{
+	GSList msglist;
+
+	g_return_val_if_fail(msginfo != NULL, -1);
+
+	msglist.data = msginfo;
+	msglist.next = NULL;
+
+	return imap_add_msgs_msginfo(folder, dest, &msglist, remove_source,
+				     NULL);
+}
+
+static gint imap_add_msgs_msginfo(Folder *folder, FolderItem *dest,
+				  GSList *msglist, gboolean remove_source,
+				  gint *first)
+{
+	GSList *file_list;
+	gint ret;
+
+	file_list = procmsg_get_message_file_list(msglist);
+	g_return_val_if_fail(file_list != NULL, -1);
+
+	ret = imap_add_msgs(folder, dest, file_list, remove_source, first);
+
+	procmsg_message_file_list_free(file_list);
+
+	return ret;
 }
 
 static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
