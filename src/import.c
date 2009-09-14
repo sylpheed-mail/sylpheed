@@ -51,6 +51,8 @@
 #include "gtkutils.h"
 #include "manage_window.h"
 #include "folder.h"
+#include "procmsg.h"
+#include "procheader.h"
 #include "progressdialog.h"
 #include "alertpanel.h"
 
@@ -240,6 +242,8 @@ static gint import_eml_folder(FolderItem *dest, const gchar *path)
 	GDir *dir;
 	const gchar *dir_name, *p;
 	gchar *file;
+	MsgInfo *msginfo;
+	MsgFlags flags = {MSG_NEW|MSG_UNREAD, MSG_RECEIVED};
 	gint count = 0;
 	gint ok = 0;
 
@@ -262,11 +266,19 @@ static gint import_eml_folder(FolderItem *dest, const gchar *path)
 				continue;
 			}
 
+			msginfo = procheader_parse_file(file, flags, FALSE);
+			if (!msginfo) {
+				g_warning("import_eml_folder(): procheader_parse_file() failed.");
+				g_free(file);
+				continue;
+			}
+			msginfo->file_path = file;
+			file = NULL;
 			count++;
 			proc_mbox_func(dest->folder, dest,
 				       GINT_TO_POINTER(count));
-			ok = folder_item_add_msg(dest, file, NULL, FALSE);
-			g_free(file);
+			ok = folder_item_add_msg_msginfo(dest, msginfo, FALSE);
+			procmsg_msginfo_free(msginfo);
 			if (ok < 0) {
 				g_warning("import_eml_folder(): folder_item_add_msg() failed.");
 				break;
