@@ -1547,6 +1547,7 @@ gint procmsg_save_to_outbox(FolderItem *outbox, const gchar *file)
 		g_warning("can't save message\n");
 		return -1;
 	}
+	procmsg_flush_folder(outbox);
 
 	return 0;
 }

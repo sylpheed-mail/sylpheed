@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -4059,7 +4059,7 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	GSList *cur;
 	gchar buf[BUFFSIZE];
 	gint num;
-	MsgFlags flag = {0, 0};
+	MsgFlags flag = {0, MSG_QUEUED};
 
 	debug_print(_("queueing message...\n"));
 	g_return_val_if_fail(compose->to_list != NULL ||

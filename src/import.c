@@ -280,7 +280,7 @@ static gint import_eml_folder(FolderItem *dest, const gchar *path)
 			ok = folder_item_add_msg_msginfo(dest, msginfo, FALSE);
 			procmsg_msginfo_free(msginfo);
 			if (ok < 0) {
-				g_warning("import_eml_folder(): folder_item_add_msg() failed.");
+				g_warning("import_eml_folder(): folder_item_add_msg_msginfo() failed.");
 				break;
 			}
 		}

@@ -446,8 +446,9 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	gchar *destfile;
 	GSList *cur;
 	MsgFileInfo *fileinfo;
+	MsgInfo *msginfo;
 	gint first_ = 0;
-	FILE *fp;
+	FILE *fp = NULL;
 
 	g_return_val_if_fail(dest != NULL, -1);
 	g_return_val_if_fail(file_list != NULL, -1);
@@ -457,17 +458,26 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		if (dest->last_num < 0) return -1;
 	}
 
-	if ((((MsgFileInfo *)file_list->data)->flags == NULL &&
-	    file_list->next == NULL) || dest->opened)
-		fp = NULL;
-	else if ((fp = procmsg_open_mark_file(dest, DATA_APPEND)) == NULL)
-		g_warning("Can't open mark file.\n");
+	if (!dest->opened) {
+		if ((fp = procmsg_open_mark_file(dest, DATA_APPEND)) == NULL)
+			g_warning("mh_add_msgs: can't open mark file.");
+	}
 
 	for (cur = file_list; cur != NULL; cur = cur->next) {
+		MsgFlags flags = {MSG_NEW|MSG_UNREAD, 0};
+
 		fileinfo = (MsgFileInfo *)cur->data;
+		if (fileinfo->flags)
+			flags = *fileinfo->flags;
+		msginfo = procheader_parse_file(fileinfo->file, flags, 0);
+		if (!msginfo) {
+			if (fp) fclose(fp);
+			return -1;
+		}
 
 		destfile = mh_get_new_msg_filename(dest);
-		if (destfile == NULL) return -1;
+		if (destfile == NULL)
+			return -1;
 		if (first_ == 0 || first_ > dest->last_num + 1)
 			first_ = dest->last_num + 1;
 
@@ -476,6 +486,7 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 				g_warning(_("can't copy message %s to %s\n"),
 					  fileinfo->file, destfile);
 				g_free(destfile);
+				if (fp) fclose(fp);
 				return -1;
 			}
 		}
@@ -488,31 +499,25 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		dest->updated = TRUE;
 		dest->mtime = 0;
 
-		if (fileinfo->flags) {
-			if (MSG_IS_RECEIVED(*fileinfo->flags)) {
-				if (dest->unmarked_num == 0)
-					dest->new = 0;
-				dest->unmarked_num++;
-				procmsg_add_mark_queue(dest, dest->last_num,
-						       *fileinfo->flags);
-			} else {
-				SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
-						   *fileinfo->flags);
-			}
-			if (MSG_IS_NEW(*fileinfo->flags))
-				dest->new++;
-			if (MSG_IS_UNREAD(*fileinfo->flags))
-				dest->unread++;
-		} else {
+		if (MSG_IS_RECEIVED(flags)) {
+			/* resets new flags of existing messages on
+			   received mode */
 			if (dest->unmarked_num == 0)
 				dest->new = 0;
 			dest->unmarked_num++;
-			dest->new++;
-			dest->unread++;
+			procmsg_add_mark_queue(dest, dest->last_num, flags);
+		} else {
+			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num, flags);
 		}
+		procmsg_add_cache_queue(dest, dest->last_num, msginfo);
+		if (MSG_IS_NEW(flags))
+			dest->new++;
+		if (MSG_IS_UNREAD(flags))
+			dest->unread++;
 	}
 
-	if (fp) fclose(fp);
+	if (fp)
+		fclose(fp);
 
 	if (first)
 		*first = first_;
@@ -603,24 +608,26 @@ static gint mh_add_msgs_msginfo(Folder *folder, FolderItem *dest,
 		dest->mtime = 0;
 
 		if (MSG_IS_RECEIVED(msginfo->flags)) {
+			/* resets new flags of existing messages on
+			   received mode */
 			if (dest->unmarked_num == 0)
 				dest->new = 0;
 			dest->unmarked_num++;
 			procmsg_add_mark_queue(dest, dest->last_num,
 					       msginfo->flags);
-			procmsg_add_cache_queue(dest, dest->last_num,
-						msginfo);
 		} else {
 			SET_DEST_MSG_FLAGS(fp, dest, dest->last_num,
 					   msginfo->flags);
 		}
+		procmsg_add_cache_queue(dest, dest->last_num, msginfo);
 		if (MSG_IS_NEW(msginfo->flags))
 			dest->new++;
 		if (MSG_IS_UNREAD(msginfo->flags))
 			dest->unread++;
 	}
 
-	if (fp) fclose(fp);
+	if (fp)
+		fclose(fp);
 
 	if (first)
 		*first = first_;

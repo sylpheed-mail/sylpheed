@@ -718,7 +718,7 @@ static gint rpop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 {
 	gchar *file;
 	MsgInfo *msginfo;
-	MsgFlags flags = {0, 0};
+	MsgFlags flags = {MSG_NEW|MSG_UNREAD, MSG_RECEIVED};
 	MessageView *msgview;
 
 	file = get_tmp_file();
@@ -743,7 +743,7 @@ static gint rpop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 			return -1;
 		}
 
-		if (folder_item_add_msg(inbox, file, NULL, FALSE) < 0) {
+		if (folder_item_add_msg(inbox, file, &flags, FALSE) < 0) {
 			session->error_val = PS_IOERR;
 			return -1;
 		}
@@ -1080,7 +1080,7 @@ static void rpop3_recv(GtkButton *button, gpointer data)
 		gtk_tree_model_get(model, &iter, COL_NUMBER, &num,
 				   COL_DELETED, &deleted, -1);
 		if (!deleted) {
-			debug_print("rpop3_recv: recieving message %d\n", num);
+			debug_print("rpop3_recv: receiving message %d\n", num);
 			g_array_append_val(array, num);
 		}
 	}
