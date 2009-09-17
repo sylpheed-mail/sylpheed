@@ -1564,13 +1564,18 @@ static gint inc_autocheck_func(gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
+	gdk_threads_enter();
+
 	if (inc_lock_count) {
 		debug_print("autocheck is locked.\n");
 		inc_autocheck_timer_set_interval(1000);
+		gdk_threads_leave();
 		return FALSE;
 	}
 
 	inc_all_account_mail(mainwin, TRUE);
+
+	gdk_threads_leave();
 
 	return FALSE;
 }

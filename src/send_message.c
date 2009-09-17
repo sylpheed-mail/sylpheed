@@ -795,9 +795,12 @@ static gint send_recv_message(Session *session, const gchar *msg, gpointer data)
 
 	g_return_val_if_fail(dialog != NULL, -1);
 
+	gdk_threads_enter();
+
 	switch (smtp_session->state) {
 	case SMTP_READY:
 	case SMTP_CONNECTED:
+		gdk_threads_leave();
 		return 0;
 	case SMTP_HELO:
 		g_snprintf(buf, sizeof(buf), _("Sending HELO..."));
@@ -832,13 +835,17 @@ static gint send_recv_message(Session *session, const gchar *msg, gpointer data)
 		break;
 	case SMTP_ERROR:
 		g_warning("send: error: %s\n", msg);
+		gdk_threads_leave();
 		return 0;
 	default:
+		gdk_threads_leave();
 		return 0;
 	}
 
 	progress_dialog_set_label(dialog->dialog, buf);
 	progress_dialog_set_row_status(dialog->dialog, 0, state_str);
+
+	gdk_threads_leave();
 
 	return 0;
 }
@@ -855,6 +862,8 @@ static gint send_send_data_progressive(Session *session, guint cur_len,
 	    SMTP_SESSION(session)->state != SMTP_EOM)
 		return 0;
 
+	gdk_threads_enter();
+
 	g_snprintf(buf, sizeof(buf), _("Sending message (%d / %d bytes)"),
 		   cur_len, total_len);
 	progress_dialog_set_label(dialog->dialog, buf);
@@ -866,6 +875,7 @@ static gint send_send_data_progressive(Session *session, guint cur_len,
 #ifdef G_OS_WIN32
 	GTK_EVENTS_FLUSH();
 #endif
+	gdk_threads_leave();
 
 	return 0;
 }
@@ -877,6 +887,7 @@ static gint send_send_data_finished(Session *session, guint len, gpointer data)
 	g_return_val_if_fail(dialog != NULL, -1);
 
 	send_send_data_progressive(session, len, len, dialog);
+
 	return 0;
 }
 

@@ -120,7 +120,8 @@ void session_init(Session *session)
 gint session_connect(Session *session, const gchar *server, gushort port)
 {
 #ifndef G_OS_UNIX
-	SockInfo *sock;
+	SockInfo *sock = NULL;
+	gint flag = 0;
 #endif
 	g_return_val_if_fail(session != NULL, -1);
 	g_return_val_if_fail(server != NULL, -1);
@@ -143,8 +144,13 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 
 	return 0;
 #else
-	sock = sock_connect(server, port);
-	if (sock == NULL) {
+	session->conn_id = sock_connect_async(server, port);
+	if (session->conn_id < 0) {
+		g_warning("can't connect to server.");
+		session->state = SESSION_ERROR;
+		return -1;
+	}
+	if (sock_connect_async_wait(session->conn_id, &sock) < 0) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
 		return -1;

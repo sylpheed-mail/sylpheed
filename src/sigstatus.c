@@ -161,9 +161,13 @@ static gint timeout_cb(gpointer data)
 {
 	GpgmegtkSigStatus hd = data;
 
+	gdk_threads_enter();
+
 	hd->running = 0;
 	hd->timeout_id_valid = 0;
 	do_destroy(hd);
+
+	gdk_threads_leave();
 
 	return FALSE;
 }

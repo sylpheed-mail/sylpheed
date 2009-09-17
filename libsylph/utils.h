@@ -469,6 +469,9 @@ gint execute_async		(gchar *const	 argv[]);
 gint execute_sync		(gchar *const	 argv[]);
 gint execute_command_line	(const gchar	*cmdline,
 				 gboolean	 async);
+gint execute_command_line_async_wait
+				(const gchar	*cmdline);
+
 gint execute_open_file		(const gchar	*file,
 				 const gchar	*content_type);
 gint execute_print_file		(const gchar	*file);

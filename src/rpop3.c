@@ -608,12 +608,16 @@ static void rpop3_clear_list(void)
 
 static gboolean rpop3_ping_cb(gpointer data)
 {
+	gdk_threads_enter();
+
 	if (rpop3_window.ping_tag > 0) {
 		g_source_remove(rpop3_window.ping_tag);
 		rpop3_window.ping_tag = 0;
 	}
 	if (rpop3_window.session->state == POP3_IDLE)
 		rpop3_noop_send(rpop3_window.session);
+
+	gdk_threads_leave();
 
 	return FALSE;
 }

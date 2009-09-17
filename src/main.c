@@ -208,6 +208,9 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
+#if USE_THREADS
+	gdk_threads_enter();
+#endif
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
 
@@ -216,13 +219,6 @@ int main(int argc, char *argv[])
 	gdk_rgb_init();
 	gtk_widget_set_default_colormap(gdk_rgb_get_cmap());
 	gtk_widget_set_default_visual(gdk_rgb_get_visual());
-
-#if USE_THREADS || USE_LDAP
-	if (!g_thread_supported())
-		g_thread_init(NULL);
-	if (!g_thread_supported())
-		g_error(_("g_thread is not supported by glib.\n"));
-#endif
 
 	parse_gtkrc_files();
 	setup_rc_dir();
@@ -341,6 +337,9 @@ int main(int argc, char *argv[])
 		update_check(FALSE);
 
 	gtk_main();
+#if USE_THREADS
+	gdk_threads_leave();
+#endif
 
 	return 0;
 }
@@ -582,6 +581,14 @@ static gint get_queued_message_num(void)
 
 static void app_init(void)
 {
+#if USE_THREADS
+	if (!g_thread_supported())
+		g_thread_init(NULL);
+	if (!g_thread_supported())
+		g_error("g_thread is not supported by glib.");
+	else
+		gdk_threads_init();
+#endif
 	syl_init();
 
 	prog_version = PROG_VERSION;

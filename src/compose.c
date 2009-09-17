@@ -7777,10 +7777,14 @@ static gboolean autosave_timeout(gpointer data)
 {
 	Compose *compose = (Compose *)data;
 
+	gdk_threads_enter();
+
 	debug_print("auto-saving...\n");
 
 	if (compose->modified)
 		compose_draft_cb(data, 1, NULL);
+
+	gdk_threads_leave();
 
 	return TRUE;
 }

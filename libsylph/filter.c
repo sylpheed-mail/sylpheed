@@ -400,7 +400,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		if (!file)
 			return FALSE;
 		cmdline = g_strconcat(cond->str_value, " \"", file, "\"", NULL);
-		ret = execute_command_line(cmdline, FALSE);
+		ret = execute_command_line_async_wait(cmdline);
 		matched = (ret == 0);
 		if (ret == -1)
 			fltinfo->error = FLT_ERROR_EXEC_FAILED;

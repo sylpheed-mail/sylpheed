@@ -81,11 +81,17 @@ struct _SockConnectData {
 	gint id;
 	gchar *hostname;
 	gushort port;
+#ifdef G_OS_UNIX
 	GList *addr_list;
 	GList *cur_addr;
 	SockLookupData *lookup_data;
 	GIOChannel *channel;
 	guint io_tag;
+#else
+	gint flag;
+	GThread *thread;
+	SockInfo *sock;
+#endif
 	SockConnectFunc func;
 	gpointer data;
 };
@@ -1316,6 +1322,78 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 	g_free(lookup_data);
 
 	return 0;
+}
+#else /* G_OS_UNIX */
+
+gpointer sock_connect_async_func(gpointer data)
+{
+	SockConnectData *conn_data = (SockConnectData *)data;
+
+	g_print("sock_connect_async_func: connect\n");
+	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
+	conn_data->flag = 1;
+
+	g_print("sock_connect_async_func: connected\n");
+	g_main_context_wakeup(NULL);
+
+	return GINT_TO_POINTER(0);
+}
+
+gint sock_connect_async(const gchar *hostname, gushort port)
+{
+	static gint id = 1;
+	SockConnectData *data;
+
+	data = g_new0(SockConnectData, 1);
+	data->id = id++;
+	data->hostname = g_strdup(hostname);
+	data->port = port;
+	data->flag = 0;
+
+	data->thread = g_thread_create(sock_connect_async_func, data, TRUE,
+				       NULL);
+	if (!data->thread) {
+		g_free(data->hostname);
+		g_free(data);
+		return -1;
+	}
+
+	sock_connect_data_list = g_list_append(sock_connect_data_list, data);
+
+	return data->id;
+}
+
+gint sock_connect_async_wait(gint id, SockInfo **sock)
+{
+	SockConnectData *conn_data = NULL;
+	GList *cur;
+
+	for (cur = sock_connect_data_list; cur != NULL; cur = cur->next) {
+		if (((SockConnectData *)cur->data)->id == id) {
+			conn_data = (SockConnectData *)cur->data;
+			break;
+		}
+	}
+
+	if (!conn_data) {
+		g_warning("sock_connect_async_wait: id %d not found.", id);
+		return -1;
+	}
+
+	g_print("sock_connect_async_wait: waiting thread\n");
+	while (conn_data->flag == 0)
+		g_main_context_iteration(NULL, TRUE);
+
+	g_print("sock_connect_async_wait: flagged\n");
+	g_thread_join(conn_data->thread);
+	g_print("sock_connect_async_wait: thread exited\n");
+
+	*sock = conn_data->sock;
+
+	sock_connect_data_list = g_list_remove(sock_connect_data_list,
+					       conn_data);
+	g_free(conn_data->hostname);
+	g_free(conn_data);
 }
 #endif /* G_OS_UNIX */
 

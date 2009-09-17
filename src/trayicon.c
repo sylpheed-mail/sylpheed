@@ -203,8 +203,11 @@ static guint notify_tag = 0;
 
 gboolean notify_timeout_cb(gpointer data)
 {
+	gdk_threads_enter();
 	gtk_status_icon_set_blinking(trayicon.status_icon, FALSE);
 	notify_tag = 0;
+	gdk_threads_leave();
+
 	return FALSE;
 }
 

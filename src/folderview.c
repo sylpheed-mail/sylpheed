@@ -3001,6 +3001,9 @@ static gint auto_expand_timeout(gpointer data)
 	FolderView *folderview = data;
 	GtkTreeView *treeview = GTK_TREE_VIEW(folderview->treeview);
 	GtkTreePath *path = NULL;
+	gint ret;
+
+	gdk_threads_enter();
 
 	gtk_tree_view_get_drag_dest_row(treeview, &path, NULL);
 
@@ -3009,9 +3012,13 @@ static gint auto_expand_timeout(gpointer data)
 		gtk_tree_path_free(path);
 		folderview->expand_timeout = 0;
 
-		return FALSE;
+		ret = FALSE;
 	} else
-		return TRUE;
+		ret = TRUE;
+
+	gdk_threads_leave();
+
+	return ret;
 }
 
 static void remove_auto_expand_timeout(FolderView *folderview)
@@ -3026,8 +3033,12 @@ static gint auto_scroll_timeout(gpointer data)
 {
 	FolderView *folderview = data;
 
+	gdk_threads_enter();
+
 	gtkut_tree_view_vertical_autoscroll
 		(GTK_TREE_VIEW(folderview->treeview));
+
+	gdk_threads_leave();
 
 	return TRUE;
 }

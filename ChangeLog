@@ -1,3 +1,22 @@
+2009-09-18
+
+	* introduced multi-threading.
+	* libsylph/session.c
+	  libsylph/socket.[ch]: win32: connect() on another thread to avoid
+	  UI blocking.
+	* libsylph/filter.c
+	  libsylph/utils.[ch]: execute command on another thread to avoid
+	  UI blocking.
+	* src/rpop3.c
+	  src/compose.c
+	  src/inc.c
+	  src/trayicon.c
+	  src/main.c
+	  src/send_message.c
+	  src/folderview.c
+	  src/sigstatus.c: surround timeout/IO-watch callback functions with 
+	  gdk_threads_enter() and gdk_threads_leave().
+
 2009-09-17
 
 	* folderview_new_folder_cb(): win32: fixed prohibited character check.

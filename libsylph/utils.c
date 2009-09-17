@@ -3862,6 +3862,62 @@ gint execute_command_line(const gchar *cmdline, gboolean async)
 	return ret;
 }
 
+typedef struct _CmdData
+{
+	const gchar *cmdline;
+	gint flag;
+	gint status;
+} CmdData;
+
+static gpointer execute_command_line_async_func(gpointer data)
+{
+	CmdData *cmd_data = (CmdData *)data;
+	gchar **argv;
+
+	g_print("execute_command_line_async_func\n");
+	argv = strsplit_with_quote(cmd_data->cmdline, " ", 0);
+	cmd_data->status = execute_sync(argv);
+	g_strfreev(argv);
+
+	g_print("execute_command_line_async_func: exec done.\n");
+	cmd_data->flag = 1;
+	g_main_context_wakeup(NULL);
+
+	return GINT_TO_POINTER(0);
+}
+
+gint execute_command_line_async_wait(const gchar *cmdline)
+{
+	volatile CmdData data = {NULL, 0, 0};
+	GThread *thread;
+
+	if (debug_mode) {
+		gchar *utf8_cmdline;
+
+		utf8_cmdline = g_filename_to_utf8
+			(cmdline, -1, NULL, NULL, NULL);
+		debug_print("execute_command_line(): executing: %s\n",
+			    utf8_cmdline ? utf8_cmdline : cmdline);
+		g_free(utf8_cmdline);
+	}
+
+	data.cmdline = cmdline;
+	thread = g_thread_create(execute_command_line_async_func, &data, TRUE,
+				 NULL);
+	if (!thread)
+		return -1;
+
+	g_print("execute_command_line_async_wait: waiting thread\n");
+	while (data.flag == 0)
+		g_main_context_iteration(NULL, TRUE);
+
+	g_print("execute_command_line_async_wait: flagged\n");
+	g_thread_join(thread);
+	g_print("execute_command_line_async_wait: thread exited\n");
+
+	return data.status;
+}
+
 gint execute_open_file(const gchar *file, const gchar *content_type)
 {
 	g_return_val_if_fail(file != NULL, -1);
