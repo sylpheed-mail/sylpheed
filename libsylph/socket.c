@@ -1325,7 +1325,7 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 }
 #else /* G_OS_UNIX */
 
-gpointer sock_connect_async_func(gpointer data)
+static gpointer sock_connect_async_func(gpointer data)
 {
 	SockConnectData *conn_data = (SockConnectData *)data;
 

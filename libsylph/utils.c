@@ -3862,10 +3862,11 @@ gint execute_command_line(const gchar *cmdline, gboolean async)
 	return ret;
 }
 
+#if USE_THREADS
 typedef struct _CmdData
 {
 	const gchar *cmdline;
-	gint flag;
+	volatile gint flag;
 	gint status;
 } CmdData;
 
@@ -3888,7 +3889,7 @@ static gpointer execute_command_line_async_func(gpointer data)
 
 gint execute_command_line_async_wait(const gchar *cmdline)
 {
-	volatile CmdData data = {NULL, 0, 0};
+	CmdData data = {NULL, 0, 0};
 	GThread *thread;
 
 	if (debug_mode) {
@@ -3917,6 +3918,12 @@ gint execute_command_line_async_wait(const gchar *cmdline)
 
 	return data.status;
 }
+#else /* USE_THREADS */
+gint execute_command_line_async_wait(const gchar *cmdline)
+{
+	return execute_command_line(cmdline, FALSE);
+}
+#endif /* USE_THREADS */
 
 gint execute_open_file(const gchar *file, const gchar *content_type)
 {
