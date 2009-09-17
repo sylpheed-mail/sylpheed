@@ -219,6 +219,7 @@ if test "$ac_cv_enable_ldap" = yes; then
 		CFLAGS="$CFLAGS `$PKG_CONFIG --cflags gthread-2.0`"
 		LDAP_LIBS="$LDAP_LIBS -lldap `$PKG_CONFIG --libs gthread-2.0`"
 		AC_DEFINE(USE_LDAP, 1, Define if you want LDAP support in addressbook.)
+		AC_DEFINE(USE_THREADS, 1, Whether to use multithread or not)
 		AC_SUBST(LDAP_LIBS)
 	fi
 else
@@ -326,20 +327,20 @@ AC_CHECK_LIB(resolv, res_init)
 AC_CHECK_LIB(socket, bind)
 AC_CHECK_LIB(nsl, gethostbyname)
 
-dnl for GThread support (currently disabled)
-dnl AC_ARG_ENABLE(threads,
-dnl	[  --enable-threads        Enable multithread support [[default=no]]],
-dnl	[use_threads=$enableval], [use_threads=no])
+dnl for GThread support
+AC_ARG_ENABLE(threads,
+	[  --enable-threads        Enable multithread support [[default=no]]],
+	[use_threads=$enableval], [use_threads=no])
 
 AC_MSG_CHECKING([whether to use threads])
 if test x"$use_threads" = xyes ; then
 	AC_MSG_RESULT(yes)
-	if test ! -z `$PKG_CONFIG --help 2>&1 |grep 'gthread-2.0'` ; then
+	if $PKG_CONFIG --exists gthread-2.0 ; then
 		CFLAGS="$CFLAGS `$PKG_CONFIG --cflags gthread-2.0`"
 		LIBS="$LIBS `$PKG_CONFIG --libs gthread-2.0`"
 		AC_DEFINE(USE_THREADS, 1, Whether to use multithread or not)
 	else
-		AC_MSG_ERROR([Sylpheed requires GThread from GLib to use threading.])
+		AC_MSG_ERROR([Sylpheed requires GThread from GLib to enable threading.])
 	fi
 else
 	AC_MSG_RESULT(no)
@@ -463,6 +464,7 @@ echo "compface      : $ac_cv_enable_compface"
 echo "IPv6          : $ac_cv_enable_ipv6"
 echo "GtkSpell      : $ac_cv_enable_gtkspell"
 echo "Oniguruma     : $ac_cv_enable_oniguruma"
+echo "GThread       : $use_threads"
 echo ""
 echo "The binary will be installed in $prefix/bin"
 echo ""
