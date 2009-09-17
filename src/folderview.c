@@ -2287,7 +2287,7 @@ static void folderview_new_folder_cb(FolderView *folderview, guint action,
 #ifdef G_OS_WIN32
 	p = strpbrk(new_folder, "\\/:*?\"<>|");
 	if ((p && FOLDER_TYPE(item->folder) != F_IMAP) || (p && *p != '/') ||
-	    (p && p == '/' &&
+	    (p && *p == '/' &&
 	     FOLDER_TYPE(item->folder) == F_IMAP && *(p + 1) != '\0')) {
 		alertpanel_error(_("`%c' can't be included in folder name."),
 				 *p);
