@@ -335,6 +335,7 @@ gint pop3_retr_send(Pop3Session *session)
 {
 	session->state = POP3_RETR;
 	pop3_gen_send(session, "RETR %d", session->cur_msg);
+	g_print("sent RETR\n");
 	return PS_SUCCESS;
 }
 
@@ -342,6 +343,8 @@ gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 {
 	gchar *file;
 	gint drop_ok;
+
+	g_print("pop3_retr_recv (%d)\n", session->cur_msg);
 
 	file = get_tmp_file();
 	if (pop3_write_msg_to_file(file, fp, len) < 0) {
@@ -368,6 +371,7 @@ gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 			: drop_ok == DROP_DELETE ? RECV_TIME_DELETE
 			: session->current_time;
 
+	g_print("pop3_retr_recv done (%d)\n", session->cur_msg);
 	return PS_SUCCESS;
 }
 
@@ -630,6 +634,7 @@ static Pop3State pop3_lookup_next(Pop3Session *session)
 	gint size;
 	gboolean size_limit_over;
 
+	g_print("pop3_lookup_next (%d -)\n", session->cur_msg);
 	for (;;) {
 		msg = &session->msg[session->cur_msg];
 		size = msg->size;
@@ -670,6 +675,7 @@ static Pop3State pop3_lookup_next(Pop3Session *session)
 	}
 
 	pop3_retr_send(session);
+	g_print("pop3_lookup_next (%d) done\n", session->cur_msg);
 	return POP3_RETR;
 }
 
@@ -852,6 +858,7 @@ static gint pop3_session_recv_data_finished(Session *session, guchar *data,
 	Pop3Session *pop3_session = POP3_SESSION(session);
 	Pop3ErrorValue val = PS_SUCCESS;
 
+	g_print("pop3_session_recv_data_finished\n");
 	switch (pop3_session->state) {
 	case POP3_GETRANGE_UIDL_RECV:
 		val = pop3_getrange_uidl_recv(pop3_session, (gchar *)data, len);
@@ -876,6 +883,7 @@ static gint pop3_session_recv_data_finished(Session *session, guchar *data,
 		return -1;
 	}
 
+	g_print("pop3_session_recv_data_finished done\n");
 	return 0;
 }
 
@@ -886,6 +894,7 @@ static gint pop3_session_recv_data_as_file_finished(Session *session, FILE *fp,
 
 	g_return_val_if_fail(pop3_session->state == POP3_RETR_RECV, -1);
 
+	g_print("pop3_session_recv_data_as_file_finished (%d)\n", pop3_session->cur_msg);
 	if (pop3_retr_recv(pop3_session, fp, len) < 0)
 		return -1;
 
@@ -903,6 +912,7 @@ static gint pop3_session_recv_data_as_file_finished(Session *session, FILE *fp,
 		if (pop3_lookup_next(pop3_session) == POP3_ERROR)
 			return -1;
 	}
+	g_print("pop3_session_recv_data_as_file_finished done (next %d)\n", pop3_session->cur_msg);
 
 	return 0;
 }

@@ -579,6 +579,15 @@ static gint get_queued_message_num(void)
 	return queue->total;
 }
 
+#if USE_THREADS
+static void event_loop_iteration_func(void)
+{
+	//g_print("event_loop_iteration_func start\n");
+	gtk_main_iteration();
+	//g_print("event_loop_iteration_func end\n");
+}
+#endif
+
 static void app_init(void)
 {
 #if USE_THREADS
@@ -591,6 +600,9 @@ static void app_init(void)
 #endif
 	syl_init();
 
+#if USE_THREADS
+	set_event_loop_func(event_loop_iteration_func);
+#endif
 	prog_version = PROG_VERSION;
 
 #ifdef G_OS_WIN32

@@ -103,7 +103,7 @@ SockInfo *sock_connect			(const gchar *hostname, gushort port);
 gint sock_connect_async			(const gchar *hostname, gushort port,
 					 SockConnectFunc func, gpointer data);
 gint sock_connect_async_cancel		(gint id);
-#else
+#elif USE_THREADS
 gint sock_connect_async			(const gchar *hostname, gushort port);
 gint sock_connect_async_wait		(gint id, SockInfo **sock);
 #endif

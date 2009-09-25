@@ -862,8 +862,9 @@ static IncState inc_pop3_session_do(IncSession *session)
 	}
 
 	while (session_is_connected(SESSION(pop3_session)) &&
-	       session->inc_state != INC_CANCEL)
+	       session->inc_state != INC_CANCEL) {
 		gtk_main_iteration();
+	}
 
 	if (session->inc_state == INC_SUCCESS) {
 		switch (pop3_session->error_val) {
@@ -1104,6 +1105,8 @@ static gint inc_recv_data_progressive(Session *session, guint cur_len,
 
 	if (!pop3_session->new_msg_exist) return 0;
 
+	gdk_threads_enter();
+
 	cur_total = pop3_session->cur_total_bytes + cur_len;
 	if (cur_total > pop3_session->total_bytes)
 		cur_total = pop3_session->total_bytes;
@@ -1113,6 +1116,7 @@ static gint inc_recv_data_progressive(Session *session, guint cur_len,
 	inc_progress_dialog_update_periodic(inc_dialog, inc_session);
 	inc_update_folderview_periodic(inc_dialog, inc_session);
 
+	gdk_threads_leave();
 	return 0;
 }
 
@@ -1127,11 +1131,14 @@ static gint inc_recv_data_finished(Session *session, guint len, gpointer data)
 
 	inc_recv_data_progressive(session, 0, 0, inc_session);
 
+	gdk_threads_enter();
+
 	if (POP3_SESSION(session)->state == POP3_LOGOUT) {
 		inc_progress_dialog_update(inc_dialog, inc_session);
 		inc_update_folderview(inc_dialog, inc_session);
 	}
 
+	gdk_threads_leave();
 	return 0;
 }
 
@@ -1152,14 +1159,18 @@ static gint inc_recv_message(Session *session, const gchar *msg, gpointer data)
 	case POP3_GETRANGE_LAST:
 	case POP3_GETRANGE_UIDL:
 	case POP3_GETSIZE_LIST:
+		gdk_threads_enter();
 		inc_progress_dialog_update(inc_dialog, inc_session);
+		gdk_threads_leave();
 		break;
 	case POP3_RETR:
 		inc_recv_data_progressive(session, 0, 0, inc_session);
 		break;
 	case POP3_LOGOUT:
+		gdk_threads_enter();
 		inc_progress_dialog_update(inc_dialog, inc_session);
 		inc_update_folderview(inc_dialog, inc_session);
+		gdk_threads_leave();
 		break;
 	default:
 		break;
@@ -1180,6 +1191,10 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 
 	g_return_val_if_fail(inc_session != NULL, DROP_ERROR);
 
+	g_print("inc_drop_message\n");
+
+	gdk_threads_enter();
+
 	if (session->ac_prefs->inbox) {
 		inbox = folder_find_item_from_identifier
 			(session->ac_prefs->inbox);
@@ -1187,8 +1202,10 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 			inbox = folder_get_default_inbox();
 	} else
 		inbox = folder_get_default_inbox();
-	if (!inbox)
+	if (!inbox) {
+		gdk_threads_leave();
 		return DROP_ERROR;
+	}
 
 	fltinfo = filter_info_new();
 	fltinfo->account = session->ac_prefs;
@@ -1199,6 +1216,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	if (!msginfo) {
 		g_warning("inc_drop_message: procheader_parse_file failed");
 		filter_info_free(fltinfo);
+		gdk_threads_leave();
 		return DROP_ERROR;
 	}
 	msginfo->file_path = g_strdup(file);
@@ -1217,6 +1235,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 			procmsg_msginfo_free(msginfo);
 			filter_info_free(fltinfo);
 			inc_session->inc_state = INC_ERROR;
+			gdk_threads_leave();
 			return DROP_ERROR;
 		}
 	}
@@ -1239,6 +1258,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 				procmsg_msginfo_free(msginfo);
 				filter_info_free(fltinfo);
 				inc_session->inc_state = INC_ERROR;
+				gdk_threads_leave();
 				return DROP_ERROR;
 			}
 		}
@@ -1249,6 +1269,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		if (folder_item_add_msg_msginfo(inbox, msginfo, FALSE) < 0) {
 			procmsg_msginfo_free(msginfo);
 			filter_info_free(fltinfo);
+			gdk_threads_leave();
 			return DROP_ERROR;
 		}
 		fltinfo->dest_list = g_slist_append(fltinfo->dest_list, inbox);
@@ -1279,6 +1300,8 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	procmsg_msginfo_free(msginfo);
 	filter_info_free(fltinfo);
 
+	gdk_threads_leave();
+	g_print("inc_drop_message done\n");
 	return val;
 }
 

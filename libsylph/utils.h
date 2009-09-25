@@ -181,6 +181,7 @@ gint syl_link	(const gchar	*src,
 }
 
 typedef void (*UIUpdateFunc)		(void);
+typedef void (*EventLoopFunc)		(void);
 typedef void (*ProgressFunc)		(gint		 cur,
 					 gint		 total);
 typedef gchar * (*QueryPasswordFunc)	(const gchar	*server,
@@ -495,6 +496,9 @@ size_t my_strftime		(gchar			*s,
 /* UI hints */
 void set_ui_update_func	(UIUpdateFunc	 func);
 void ui_update		(void);
+
+void set_event_loop_func	(EventLoopFunc	 func);
+void event_loop_iterate		(void);
 
 void set_progress_func	(ProgressFunc	 func);
 void progress_show	(gint		 cur,

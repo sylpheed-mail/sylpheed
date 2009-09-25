@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -121,7 +121,6 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 {
 #ifndef G_OS_UNIX
 	SockInfo *sock = NULL;
-	gint flag = 0;
 #endif
 	g_return_val_if_fail(session != NULL, -1);
 	g_return_val_if_fail(server != NULL, -1);
@@ -143,7 +142,7 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 	}
 
 	return 0;
-#else
+#elif USE_THREADS
 	session->conn_id = sock_connect_async(server, port);
 	if (session->conn_id < 0) {
 		g_warning("can't connect to server.");
@@ -151,6 +150,15 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 		return -1;
 	}
 	if (sock_connect_async_wait(session->conn_id, &sock) < 0) {
+		g_warning("can't connect to server.");
+		session->state = SESSION_ERROR;
+		return -1;
+	}
+
+	return session_connect_cb(sock, session);
+#else /* !USE_THREADS */
+	sock = sock_connect(server, port);
+	if (sock == NULL) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
 		return -1;
@@ -348,7 +356,8 @@ static gint session_close(Session *session)
 {
 	g_return_val_if_fail(session != NULL, -1);
 
-#ifdef G_OS_UNIX
+//#ifdef G_OS_UNIX
+#if 0
 	if (session->conn_id > 0) {
 		sock_connect_async_cancel(session->conn_id);
 		session->conn_id = 0;

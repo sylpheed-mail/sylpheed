@@ -3884,6 +3884,7 @@ static gpointer execute_command_line_async_func(gpointer data)
 	cmd_data->flag = 1;
 	g_main_context_wakeup(NULL);
 
+	g_print("execute_command_line_async_func: exiting\n");
 	return GINT_TO_POINTER(0);
 }
 
@@ -3910,7 +3911,7 @@ gint execute_command_line_async_wait(const gchar *cmdline)
 
 	g_print("execute_command_line_async_wait: waiting thread\n");
 	while (data.flag == 0)
-		g_main_context_iteration(NULL, TRUE);
+		event_loop_iterate();
 
 	g_print("execute_command_line_async_wait: flagged\n");
 	g_thread_join(thread);
@@ -4214,6 +4215,21 @@ void ui_update(void)
 {
 	if (ui_update_func)
 		ui_update_func();
+}
+
+static EventLoopFunc event_loop_func = NULL;
+
+void set_event_loop_func(EventLoopFunc func)
+{
+	event_loop_func = func;
+}
+
+void event_loop_iterate(void)
+{
+	if (event_loop_func)
+		event_loop_func();
+	else
+		g_main_context_iteration(NULL, TRUE);
 }
 
 static ProgressFunc progress_func = NULL;

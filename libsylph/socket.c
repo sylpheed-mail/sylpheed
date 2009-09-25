@@ -87,11 +87,11 @@ struct _SockConnectData {
 	SockLookupData *lookup_data;
 	GIOChannel *channel;
 	guint io_tag;
-#else
+#elif USE_THREADS
 	gint flag;
 	GThread *thread;
 	SockInfo *sock;
-#endif
+#endif /* G_OS_UNIX */
 	SockConnectFunc func;
 	gpointer data;
 };
@@ -1323,8 +1323,8 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 
 	return 0;
 }
-#else /* G_OS_UNIX */
-
+#else /* !G_OS_UNIX */
+#if USE_THREADS
 static gpointer sock_connect_async_func(gpointer data)
 {
 	SockConnectData *conn_data = (SockConnectData *)data;
@@ -1382,7 +1382,7 @@ gint sock_connect_async_wait(gint id, SockInfo **sock)
 
 	g_print("sock_connect_async_wait: waiting thread\n");
 	while (conn_data->flag == 0)
-		g_main_context_iteration(NULL, TRUE);
+		event_loop_iterate();
 
 	g_print("sock_connect_async_wait: flagged\n");
 	g_thread_join(conn_data->thread);
@@ -1394,7 +1394,10 @@ gint sock_connect_async_wait(gint id, SockInfo **sock)
 					       conn_data);
 	g_free(conn_data->hostname);
 	g_free(conn_data);
+
+	return 0;
 }
+#endif /* USE_THREADS */
 #endif /* G_OS_UNIX */
 
 
