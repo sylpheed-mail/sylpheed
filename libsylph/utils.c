@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -4264,21 +4264,34 @@ gchar *input_query_password(const gchar *server, const gchar *user)
 /* logging */
 
 static FILE *log_fp = NULL;
+#if USE_THREADS
+G_LOCK_DEFINE_STATIC(log_fp);
+#define S_LOCK(name)	G_LOCK(name)
+#define S_UNLOCK(name)	G_UNLOCK(name)
+#else
+#define S_LOCK(name)
+#define S_UNLOCK(name)
+#endif
 
 void set_log_file(const gchar *filename)
 {
-	if (log_fp) return;
-	log_fp = g_fopen(filename, "w");
-	if (!log_fp)
-		FILE_OP_ERROR(filename, "fopen");
+	S_LOCK(log_fp);
+	if (!log_fp) {
+		log_fp = g_fopen(filename, "w");
+		if (!log_fp)
+			FILE_OP_ERROR(filename, "fopen");
+	}
+	S_UNLOCK(log_fp);
 }
 
 void close_log_file(void)
 {
+	S_LOCK(log_fp);
 	if (log_fp) {
 		fclose(log_fp);
 		log_fp = NULL;
 	}
+	S_UNLOCK(log_fp);
 }
 
 static guint log_verbosity_count = 0;
@@ -4356,6 +4369,8 @@ void status_print(const gchar *format, ...)
 
 void log_write(const gchar *str, const gchar *prefix)
 {
+	S_LOCK(log_fp);
+
 	if (log_fp) {
 		gchar buf[TIME_LEN + 1];
 		time_t t;
@@ -4369,6 +4384,8 @@ void log_write(const gchar *str, const gchar *prefix)
 		fputs(str, log_fp);
 		fflush(log_fp);
 	}
+
+	S_UNLOCK(log_fp);
 }
 
 void log_print(const gchar *format, ...)
@@ -4386,10 +4403,12 @@ void log_print(const gchar *format, ...)
 
 	if (debug_mode) g_print("%s", buf);
 	log_print_ui_func(buf);
+	S_LOCK(log_fp);
 	if (log_fp) {
 		fputs(buf, log_fp);
 		fflush(log_fp);
 	}
+	S_UNLOCK(log_fp);
 	if (log_verbosity_count)
 		log_show_status_func(buf + TIME_LEN);
 }
@@ -4409,12 +4428,14 @@ void log_message(const gchar *format, ...)
 
 	if (debug_mode) g_message("%s", buf + TIME_LEN);
 	log_message_ui_func(buf + TIME_LEN);
+	S_LOCK(log_fp);
 	if (log_fp) {
 		fwrite(buf, TIME_LEN, 1, log_fp);
 		fputs("* message: ", log_fp);
 		fputs(buf + TIME_LEN, log_fp);
 		fflush(log_fp);
 	}
+	S_UNLOCK(log_fp);
 	log_show_status_func(buf + TIME_LEN);
 }
 
@@ -4433,12 +4454,14 @@ void log_warning(const gchar *format, ...)
 
 	g_warning("%s", buf);
 	log_warning_ui_func(buf + TIME_LEN);
+	S_LOCK(log_fp);
 	if (log_fp) {
 		fwrite(buf, TIME_LEN, 1, log_fp);
 		fputs("** warning: ", log_fp);
 		fputs(buf + TIME_LEN, log_fp);
 		fflush(log_fp);
 	}
+	S_UNLOCK(log_fp);
 }
 
 void log_error(const gchar *format, ...)
@@ -4456,10 +4479,12 @@ void log_error(const gchar *format, ...)
 
 	g_warning("%s", buf);
 	log_error_ui_func(buf + TIME_LEN);
+	S_LOCK(log_fp);
 	if (log_fp) {
 		fwrite(buf, TIME_LEN, 1, log_fp);
 		fputs("*** error: ", log_fp);
 		fputs(buf + TIME_LEN, log_fp);
 		fflush(log_fp);
 	}
+	S_UNLOCK(log_fp);
 }
