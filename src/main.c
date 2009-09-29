@@ -580,11 +580,32 @@ static gint get_queued_message_num(void)
 }
 
 #if USE_THREADS
+/* enables recursive locking with gdk_thread_enter / gdk_threads_leave */
+static GStaticRecMutex syl_mutex = G_STATIC_REC_MUTEX_INIT;
+
+static void thread_enter_func(void)
+{
+	g_static_rec_mutex_lock(&syl_mutex);
+#if 0
+	syl_mutex_lock_count++;
+	if (syl_mutex_lock_count > 1)
+		g_print("enter: syl_mutex_lock_count: %d\n", syl_mutex_lock_count);
+#endif
+}
+
+static void thread_leave_func(void)
+{
+#if 0
+	syl_mutex_lock_count--;
+	if (syl_mutex_lock_count > 0)
+		g_print("leave: syl_mutex_lock_count: %d\n", syl_mutex_lock_count);
+#endif
+	g_static_rec_mutex_unlock(&syl_mutex);
+}
+
 static void event_loop_iteration_func(void)
 {
-	//g_print("event_loop_iteration_func start\n");
 	gtk_main_iteration();
-	//g_print("event_loop_iteration_func end\n");
 }
 #endif
 
@@ -595,8 +616,11 @@ static void app_init(void)
 		g_thread_init(NULL);
 	if (!g_thread_supported())
 		g_error("g_thread is not supported by glib.");
-	else
+	else {
+		gdk_threads_set_lock_functions(thread_enter_func,
+					       thread_leave_func);
 		gdk_threads_init();
+	}
 #endif
 	syl_init();
 

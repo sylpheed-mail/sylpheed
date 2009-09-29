@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2003 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,10 @@ struct _LogWindow
 	GdkColor error_color;
 
 	gint lines;
+
+#if USE_THREADS
+	GAsyncQueue *aqueue;
+#endif
 };
 
 LogWindow *log_window_create(void);
@@ -51,5 +55,8 @@ void log_window_init(LogWindow *logwin);
 void log_window_show(LogWindow *logwin);
 
 void log_window_append(const gchar *str, LogType type);
+void log_window_append_queue(const gchar *str, LogType type);
+
+void log_window_flush(void);
 
 #endif /* __LOGWINDOW_H__ */

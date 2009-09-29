@@ -747,6 +747,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 
 	while (session_is_connected(session) && dialog->cancelled == FALSE)
 		gtk_main_iteration();
+	log_window_flush();
 
 	if (SMTP_SESSION(session)->error_val == SM_AUTHFAIL) {
 		if (ac_prefs->smtp_userid && ac_prefs->tmp_smtp_pass) {

@@ -865,6 +865,7 @@ static IncState inc_pop3_session_do(IncSession *session)
 	       session->inc_state != INC_CANCEL) {
 		gtk_main_iteration();
 	}
+	log_window_flush();
 
 	if (session->inc_state == INC_SUCCESS) {
 		switch (pop3_session->error_val) {

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,10 @@
 #define TRIM_LINES	25
 
 static LogWindow *logwindow;
+
+#if USE_THREADS
+static GThread *main_thread;
+#endif
 
 static void log_window_print_func	(const gchar	*str);
 static void log_window_message_func	(const gchar	*str);
@@ -98,6 +102,13 @@ LogWindow *log_window_create(void)
 	logwin->scrolledwin = scrolledwin;
 	logwin->text = text;
 	logwin->lines = 1;
+
+#if USE_THREADS
+	logwin->aqueue = g_async_queue_new();
+
+	main_thread = g_thread_self();
+	debug_print("main_thread = %p\n", main_thread);
+#endif
 
 	logwindow = logwin;
 
@@ -160,7 +171,7 @@ void log_window_show(LogWindow *logwin)
 	gtk_window_present(GTK_WINDOW(logwin->window));
 }
 
-void log_window_append(const gchar *str, LogType type)
+static void log_window_append_real(const gchar *str, LogType type)
 {
 	GtkTextView *text;
 	GtkTextBuffer *buffer;
@@ -171,6 +182,14 @@ void log_window_append(const gchar *str, LogType type)
 	gint line_limit = prefs_common.logwin_line_limit;
 
 	g_return_if_fail(logwindow != NULL);
+
+#if USE_THREADS
+	if (g_thread_self() != main_thread) {
+		return;
+	}
+#endif
+
+	gdk_threads_enter();
 
 	text = GTK_TEXT_VIEW(logwindow->text);
 	buffer = gtk_text_view_get_buffer(text);
@@ -233,6 +252,61 @@ void log_window_append(const gchar *str, LogType type)
 	}
 
 	logwindow->lines++;
+
+	gdk_threads_leave();
+}
+
+void log_window_append(const gchar *str, LogType type)
+{
+#if USE_THREADS
+	if (g_thread_self() != main_thread) {
+		fprintf(stderr, "log_window_append called from non-main thread (%p)\n", g_thread_self());
+		log_window_append_queue(str, type);
+		return;
+	}
+
+	log_window_flush();
+#endif
+	log_window_append_real(str, type);
+}
+
+typedef struct _LogData
+{
+	gchar *str;
+	LogType type;
+} LogData;
+
+void log_window_append_queue(const gchar *str, LogType type)
+{
+#if USE_THREADS
+	LogData *logdata;
+
+	logdata = g_new(LogData, 1);
+	logdata->str = g_strdup(str);
+	logdata->type = type;
+
+	g_print("append_queue: (%d) %s\n", type, str);
+	g_async_queue_push(logwindow->aqueue, logdata);
+#endif
+}
+
+void log_window_flush(void)
+{
+#if USE_THREADS
+	LogData *logdata;
+
+	if (g_thread_self() != main_thread) {
+		fprintf(stderr, "log_window_flush called from non-main thread (%p)\n", g_thread_self());
+		return;
+	}
+
+	while ((logdata = g_async_queue_try_pop(logwindow->aqueue))) {
+		g_print("flush_queue: (%d) %s\n", logdata->type, logdata->str);
+		log_window_append_real(logdata->str, logdata->type);
+		g_free(logdata->str);
+		g_free(logdata);
+	}
+#endif
 }
 
 static void log_window_print_func(const gchar *str)

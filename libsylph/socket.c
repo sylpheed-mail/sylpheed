@@ -1329,11 +1329,10 @@ static gpointer sock_connect_async_func(gpointer data)
 {
 	SockConnectData *conn_data = (SockConnectData *)data;
 
-	g_print("sock_connect_async_func: connect\n");
 	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
 	conn_data->flag = 1;
 
-	g_print("sock_connect_async_func: connected\n");
+	debug_print("sock_connect_async_func: connected\n");
 	g_main_context_wakeup(NULL);
 
 	return GINT_TO_POINTER(0);
@@ -1380,13 +1379,13 @@ gint sock_connect_async_wait(gint id, SockInfo **sock)
 		return -1;
 	}
 
-	g_print("sock_connect_async_wait: waiting thread\n");
+	debug_print("sock_connect_async_wait: waiting thread\n");
 	while (conn_data->flag == 0)
 		event_loop_iterate();
 
-	g_print("sock_connect_async_wait: flagged\n");
+	debug_print("sock_connect_async_wait: flagged\n");
 	g_thread_join(conn_data->thread);
-	g_print("sock_connect_async_wait: thread exited\n");
+	debug_print("sock_connect_async_wait: thread exited\n");
 
 	*sock = conn_data->sock;
 

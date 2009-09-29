@@ -3875,16 +3875,15 @@ static gpointer execute_command_line_async_func(gpointer data)
 	CmdData *cmd_data = (CmdData *)data;
 	gchar **argv;
 
-	g_print("execute_command_line_async_func\n");
 	argv = strsplit_with_quote(cmd_data->cmdline, " ", 0);
 	cmd_data->status = execute_sync(argv);
 	g_strfreev(argv);
 
-	g_print("execute_command_line_async_func: exec done.\n");
+	debug_print("execute_command_line_async_func: exec done: %s\n",
+		    cmd_data->cmdline);
 	cmd_data->flag = 1;
 	g_main_context_wakeup(NULL);
 
-	g_print("execute_command_line_async_func: exiting\n");
 	return GINT_TO_POINTER(0);
 }
 
@@ -3909,13 +3908,13 @@ gint execute_command_line_async_wait(const gchar *cmdline)
 	if (!thread)
 		return -1;
 
-	g_print("execute_command_line_async_wait: waiting thread\n");
+	debug_print("execute_command_line_async_wait: waiting thread\n");
 	while (data.flag == 0)
 		event_loop_iterate();
 
-	g_print("execute_command_line_async_wait: flagged\n");
+	debug_print("execute_command_line_async_wait: flagged\n");
 	g_thread_join(thread);
-	g_print("execute_command_line_async_wait: thread exited\n");
+	debug_print("execute_command_line_async_wait: thread exited\n");
 
 	return data.status;
 }

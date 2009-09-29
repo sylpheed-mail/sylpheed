@@ -67,8 +67,10 @@ void statusbar_puts_all(const gchar *str)
 {
 	GList *cur;
 
+	gdk_threads_enter();
 	for (cur = statusbar_list; cur != NULL; cur = cur->next)
 		statusbar_puts(GTK_STATUSBAR(cur->data), str);
+	gdk_threads_leave();
 }
 
 void statusbar_print(GtkStatusbar *statusbar, const gchar *format, ...)
