@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -187,6 +187,7 @@ typedef void (*ProgressFunc)		(gint		 cur,
 typedef gchar * (*QueryPasswordFunc)	(const gchar	*server,
 					 const gchar	*user);
 typedef void (*LogFunc)			(const gchar	*str);
+typedef void (*LogFlushFunc)		(void);
 
 /* for macro expansion */
 #define Str(x)	#x
@@ -517,10 +518,15 @@ void set_log_verbosity	(gboolean	 verbose);
 gboolean get_debug_mode	(void);
 void set_debug_mode	(gboolean	 enable);
 
-void set_log_ui_func	(LogFunc	 print_func,
-			 LogFunc	 message_func,
-			 LogFunc	 warning_func,
-			 LogFunc	 error_func);
+void set_log_ui_func		(LogFunc	 print_func,
+				 LogFunc	 message_func,
+				 LogFunc	 warning_func,
+				 LogFunc	 error_func);
+void set_log_ui_func_full	(LogFunc	 print_func,
+				 LogFunc	 message_func,
+				 LogFunc	 warning_func,
+				 LogFunc	 error_func,
+				 LogFlushFunc	 flush_func);
 
 void set_log_show_status_func	(LogFunc	 status_func);
 
@@ -534,5 +540,7 @@ void log_print		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_message	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_warning	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_error		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
+
+void log_flush		(void);
 
 #endif /* __UTILS_H__ */

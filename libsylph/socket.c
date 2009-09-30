@@ -1332,7 +1332,6 @@ static gpointer sock_connect_async_func(gpointer data)
 	SockConnectData *conn_data = (SockConnectData *)data;
 
 	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
-	g_usleep(5000000);
 	conn_data->flag = 1;
 
 	debug_print("sock_connect_async_func: connected\n");

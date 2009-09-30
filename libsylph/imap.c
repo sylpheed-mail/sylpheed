@@ -4074,8 +4074,10 @@ static gint imap_cmd_close(IMAPSession *session)
 	return ok;
 }
 
-static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
+static gpointer imap_cmd_ok_func(gpointer data)
 {
+	IMAPSession *session = IMAP_SESSION(data);
+	GPtrArray *argbuf = (GPtrArray *)SESSION(session)->data;
 	gint ok;
 	gchar *buf;
 	gint cmd_num;
@@ -4085,6 +4087,8 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 	gchar obuf[32];
 	gint len;
 	gchar *literal;
+
+	g_print("enter imap_cmd_ok_func\n");
 
 	str = g_string_sized_new(256);
 
@@ -4142,7 +4146,40 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 	}
 
 	g_string_free(str, TRUE);
+#if USE_THREADS
+	SESSION(session)->io_tag = 1;
+	g_main_context_wakeup(NULL);
+#endif
+	g_print("leave imap_cmd_ok_func\n");
+	return GINT_TO_POINTER(ok);
+}
+
+static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
+{
+	gint ok;
+#if USE_THREADS
+	GThread *thread;
+
+	SESSION(session)->data = argbuf;
+	SESSION(session)->io_tag = 0;
+	thread = g_thread_create(imap_cmd_ok_func, session, TRUE, NULL);
+	if (!thread) {
+		SESSION(session)->data = NULL;
+		return IMAP_ERROR;
+	}
+	while (SESSION(session)->io_tag == 0)
+		event_loop_iterate();
+	ok = (gint)g_thread_join(thread);
+	SESSION(session)->data = NULL;
+	SESSION(session)->io_tag = 0;
+	log_flush();
 	return ok;
+#else
+	SESSION(session)->data = argbuf;
+	ok = (gint)imap_cmd_ok_func(session);
+	SESSION(session)->data = NULL;
+	return ok;
+#endif
 }
 
 static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)

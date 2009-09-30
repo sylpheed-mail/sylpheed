@@ -154,8 +154,9 @@ void log_window_init(LogWindow *logwin)
 				   "foreground-gdk", &logwindow->error_color,
 				   NULL);
 
-	set_log_ui_func(log_window_print_func, log_window_message_func,
-			log_window_warning_func, log_window_error_func);
+	set_log_ui_func_full(log_window_print_func, log_window_message_func,
+			     log_window_warning_func, log_window_error_func,
+			     log_window_flush);
 }
 
 void log_window_show(LogWindow *logwin)
