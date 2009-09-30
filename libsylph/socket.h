@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -103,9 +103,10 @@ SockInfo *sock_connect			(const gchar *hostname, gushort port);
 gint sock_connect_async			(const gchar *hostname, gushort port,
 					 SockConnectFunc func, gpointer data);
 gint sock_connect_async_cancel		(gint id);
-#elif USE_THREADS
-gint sock_connect_async			(const gchar *hostname, gushort port);
-gint sock_connect_async_wait		(gint id, SockInfo **sock);
+#endif
+#if USE_THREADS
+gint sock_connect_async_thread		(const gchar *hostname, gushort port);
+gint sock_connect_async_thread_wait	(gint id, SockInfo **sock);
 #endif
 
 /* Basic I/O functions */

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -87,7 +87,8 @@ struct _SockConnectData {
 	SockLookupData *lookup_data;
 	GIOChannel *channel;
 	guint io_tag;
-#elif USE_THREADS
+#endif /* G_OS_UNIX */
+#if USE_THREADS
 	gint flag;
 	GThread *thread;
 	SockInfo *sock;
@@ -1323,13 +1324,15 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 
 	return 0;
 }
-#else /* !G_OS_UNIX */
+#endif /* G_OS_UNIX */
+
 #if USE_THREADS
 static gpointer sock_connect_async_func(gpointer data)
 {
 	SockConnectData *conn_data = (SockConnectData *)data;
 
 	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
+	g_usleep(5000000);
 	conn_data->flag = 1;
 
 	debug_print("sock_connect_async_func: connected\n");
@@ -1338,7 +1341,7 @@ static gpointer sock_connect_async_func(gpointer data)
 	return GINT_TO_POINTER(0);
 }
 
-gint sock_connect_async(const gchar *hostname, gushort port)
+gint sock_connect_async_thread(const gchar *hostname, gushort port)
 {
 	static gint id = 1;
 	SockConnectData *data;
@@ -1362,7 +1365,7 @@ gint sock_connect_async(const gchar *hostname, gushort port)
 	return data->id;
 }
 
-gint sock_connect_async_wait(gint id, SockInfo **sock)
+gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 {
 	SockConnectData *conn_data = NULL;
 	GList *cur;
@@ -1375,17 +1378,17 @@ gint sock_connect_async_wait(gint id, SockInfo **sock)
 	}
 
 	if (!conn_data) {
-		g_warning("sock_connect_async_wait: id %d not found.", id);
+		g_warning("sock_connect_async_thread_wait: id %d not found.", id);
 		return -1;
 	}
 
-	debug_print("sock_connect_async_wait: waiting thread\n");
+	debug_print("sock_connect_async_thread_wait: waiting thread\n");
 	while (conn_data->flag == 0)
 		event_loop_iterate();
 
-	debug_print("sock_connect_async_wait: flagged\n");
+	debug_print("sock_connect_async_thread_wait: flagged\n");
 	g_thread_join(conn_data->thread);
-	debug_print("sock_connect_async_wait: thread exited\n");
+	debug_print("sock_connect_async_thread_wait: thread exited\n");
 
 	*sock = conn_data->sock;
 
@@ -1397,8 +1400,6 @@ gint sock_connect_async_wait(gint id, SockInfo **sock)
 	return 0;
 }
 #endif /* USE_THREADS */
-#endif /* G_OS_UNIX */
-
 
 gint sock_printf(SockInfo *sock, const gchar *format, ...)
 {

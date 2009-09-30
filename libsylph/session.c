@@ -143,13 +143,13 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 
 	return 0;
 #elif USE_THREADS
-	session->conn_id = sock_connect_async(server, port);
+	session->conn_id = sock_connect_async_thread(server, port);
 	if (session->conn_id < 0) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
 		return -1;
 	}
-	if (sock_connect_async_wait(session->conn_id, &sock) < 0) {
+	if (sock_connect_async_thread_wait(session->conn_id, &sock) < 0) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
 		return -1;

@@ -2743,13 +2743,23 @@ static SockInfo *imap_open(const gchar *server, gushort port,
 static SockInfo *imap_open(const gchar *server, gushort port)
 #endif
 {
-	SockInfo *sock;
+	SockInfo *sock = NULL;
+#if USE_THREADS
+	gint conn_id;
 
+	if ((conn_id = sock_connect_async_thread(server, port)) < 0 ||
+	    sock_connect_async_thread_wait(conn_id, &sock) < 0) {
+		log_warning(_("Can't connect to IMAP4 server: %s:%d\n"),
+			    server, port);
+		return NULL;
+	}
+#else
 	if ((sock = sock_connect(server, port)) == NULL) {
 		log_warning(_("Can't connect to IMAP4 server: %s:%d\n"),
 			    server, port);
 		return NULL;
 	}
+#endif
 
 #if USE_SSL
 	if (ssl_type == SSL_TUNNEL && !ssl_init_socket(sock)) {
