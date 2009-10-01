@@ -391,6 +391,12 @@ static GHashTable *imap_get_uid_table		(GArray		*array);
 static gboolean imap_rename_folder_func		(GNode		*node,
 						 gpointer	 data);
 
+#if USE_THREADS
+static gint imap_thread_run			(IMAPSession	*session,
+						 GThreadFunc	 func,
+						 gpointer	 data);
+#endif
+
 static FolderClass imap_class =
 {
 	F_IMAP,
@@ -3935,9 +3941,6 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 {
 	gint ok;
 	IMAPCmdFetchData fetch_data = {uid, filename};
-#if USE_THREADS
-	GThread *thread;
-#endif
 
 	g_return_val_if_fail(filename != NULL, IMAP_ERROR);
 
@@ -3945,19 +3948,7 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	imap_cmd_gen_send(session, "UID FETCH %d BODY.PEEK[]", uid);
 
 #if USE_THREADS
-	SESSION(session)->data = &fetch_data;
-	SESSION(session)->io_tag = 0;
-	thread = g_thread_create(imap_cmd_fetch_func, session, TRUE, NULL);
-	if (!thread) {
-		SESSION(session)->data = NULL;
-		return IMAP_ERROR;
-	}
-	while (SESSION(session)->io_tag == 0)
-		event_loop_iterate();
-	ok = (gint)g_thread_join(thread);
-	SESSION(session)->data = NULL;
-	SESSION(session)->io_tag = 0;
-	log_flush();
+	ok = imap_thread_run(session, imap_cmd_fetch_func, &fetch_data);
 #else
 	SESSION(session)->data = &fetch_data;
 	ok = (gint)imap_cmd_fetch_func(session);
@@ -4219,23 +4210,7 @@ static gpointer imap_cmd_ok_func(gpointer data)
 static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 {
 #if USE_THREADS
-	GThread *thread;
-	gint ok;
-
-	SESSION(session)->data = argbuf;
-	SESSION(session)->io_tag = 0;
-	thread = g_thread_create(imap_cmd_ok_func, session, TRUE, NULL);
-	if (!thread) {
-		SESSION(session)->data = NULL;
-		return IMAP_ERROR;
-	}
-	while (SESSION(session)->io_tag == 0)
-		event_loop_iterate();
-	ok = (gint)g_thread_join(thread);
-	SESSION(session)->data = NULL;
-	SESSION(session)->io_tag = 0;
-	log_flush();
-	return ok;
+	return imap_thread_run(session, imap_cmd_ok_func, argbuf);
 #else
 	return imap_cmd_ok_real(session, argbuf);
 #endif
@@ -4718,3 +4693,32 @@ static gboolean imap_rename_folder_func(GNode *node, gpointer data)
 
 	return FALSE;
 }
+
+#if USE_THREADS
+static gint imap_thread_run(IMAPSession	*session, GThreadFunc func,
+			    gpointer data)
+{
+	GThread *thread;
+	gpointer save_data;
+	gint ret;
+
+	save_data = SESSION(session)->data;
+	SESSION(session)->data = data;
+	SESSION(session)->io_tag = 0;
+
+	thread = g_thread_create(func, session, TRUE, NULL);
+	if (!thread) {
+		SESSION(session)->data = save_data;
+		return IMAP_ERROR;
+	}
+	while (SESSION(session)->io_tag == 0)
+		event_loop_iterate();
+	ret = (gint)g_thread_join(thread);
+
+	SESSION(session)->data = save_data;
+	SESSION(session)->io_tag = 0;
+	log_flush();
+
+	return ret;
+}
+#endif
