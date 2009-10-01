@@ -74,6 +74,22 @@
 	}								\
 }
 
+typedef gint (*IMAPThreadFunc)	(IMAPSession	*session,
+				 gpointer	 data);
+
+typedef struct _IMAPRealSession
+{
+	IMAPSession imap_session;
+#if USE_THREADS
+	GThreadPool *pool;
+	IMAPThreadFunc thread_func;
+	gpointer thread_data;
+	gboolean is_running;
+	gint flag;
+	gint retval;
+#endif
+} IMAPRealSession;
+
 static GList *session_list = NULL;
 
 static void imap_folder_init		(Folder		*folder,
@@ -393,7 +409,7 @@ static gboolean imap_rename_folder_func		(GNode		*node,
 
 #if USE_THREADS
 static gint imap_thread_run			(IMAPSession	*session,
-						 GThreadFunc	 func,
+						 IMAPThreadFunc	 func,
 						 gpointer	 data);
 #endif
 
@@ -595,7 +611,7 @@ static Session *imap_session_new(PrefsAccount *account)
 	port = account->set_imapport ? account->imapport : IMAP4_PORT;
 #endif
 
-	session = g_new0(IMAPSession, 1);
+	session = IMAP_SESSION(g_new0(IMAPRealSession, 1));
 
 	session_init(SESSION(session));
 
@@ -3862,11 +3878,9 @@ typedef struct _IMAPCmdFetchData
 
 #define THROW(err) { ok = err; goto catch; }
 
-static gpointer imap_cmd_fetch_func(gpointer data)
+static gint imap_cmd_fetch_func(IMAPSession *session, gpointer data)
 {
-	IMAPSession *session = IMAP_SESSION(data);
-	const gchar *filename =
-		((IMAPCmdFetchData *)SESSION(data)->data)->filename;
+	const gchar *filename = ((IMAPCmdFetchData *)data)->filename;
 	gint ok;
 	gchar *buf;
 	gchar *cur_pos;
@@ -3877,7 +3891,7 @@ static gpointer imap_cmd_fetch_func(gpointer data)
 	while ((ok = imap_cmd_gen_recv(session, &buf)) == IMAP_SUCCESS) {
 		if (buf[0] != '*' || buf[1] != ' ') {
 			g_free(buf);
-			return GINT_TO_POINTER(IMAP_ERROR);
+			return IMAP_ERROR;
 		}
 		if (strstr(buf, "FETCH") != NULL) break;
 		g_free(buf);
@@ -3926,12 +3940,7 @@ static gpointer imap_cmd_fetch_func(gpointer data)
 		THROW(IMAP_ERROR);
 
 catch:
-#if USE_THREADS
-	SESSION(session)->io_tag = 1;
-	g_main_context_wakeup(NULL);
-#endif
-
-	return GINT_TO_POINTER(ok);
+	return ok;
 }
 
 #undef THROW
@@ -3950,9 +3959,7 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 #if USE_THREADS
 	ok = imap_thread_run(session, imap_cmd_fetch_func, &fetch_data);
 #else
-	SESSION(session)->data = &fetch_data;
-	ok = (gint)imap_cmd_fetch_func(session);
-	SESSION(session)->data = NULL;
+	ok = imap_cmd_fetch_func(session, &fetch_data);
 #endif
 
 	g_print("leave imap_cmd_fetch\n");
@@ -4191,19 +4198,16 @@ static gint imap_cmd_ok_real(IMAPSession *session, GPtrArray *argbuf)
 }
 
 #if USE_THREADS
-static gpointer imap_cmd_ok_func(gpointer data)
+static gint imap_cmd_ok_func(IMAPSession *session, gpointer data)
 {
-	IMAPSession *session = IMAP_SESSION(data);
-	GPtrArray *argbuf = (GPtrArray *)SESSION(session)->data;
+	GPtrArray *argbuf = (GPtrArray *)data;
 	gint ok;
 
 	g_print("enter imap_cmd_ok_func\n");
 	ok = imap_cmd_ok_real(session, argbuf);
 
-	SESSION(session)->io_tag = 1;
-	g_main_context_wakeup(NULL);
 	g_print("leave imap_cmd_ok_func\n");
-	return GINT_TO_POINTER(ok);
+	return ok;
 }
 #endif
 
@@ -4695,30 +4699,54 @@ static gboolean imap_rename_folder_func(GNode *node, gpointer data)
 }
 
 #if USE_THREADS
-static gint imap_thread_run(IMAPSession	*session, GThreadFunc func,
+static void imap_thread_run_proxy(gpointer push_data, gpointer data)
+{
+	IMAPRealSession *real = (IMAPRealSession *)data;
+
+	g_print("imap_thread_run_proxy (%p): calling thread_func\n", g_thread_self());
+	real->retval = real->thread_func(IMAP_SESSION(real), real->thread_data);
+	real->flag = 1;
+	g_print("imap_thread_run_proxy (%p): thread_func done\n", g_thread_self());
+	g_main_context_wakeup(NULL);
+}
+
+static gint imap_thread_run(IMAPSession	*session, IMAPThreadFunc func,
 			    gpointer data)
 {
-	GThread *thread;
-	gpointer save_data;
+	IMAPRealSession *real = (IMAPRealSession *)session;
 	gint ret;
 
-	save_data = SESSION(session)->data;
-	SESSION(session)->data = data;
-	SESSION(session)->io_tag = 0;
-
-	thread = g_thread_create(func, session, TRUE, NULL);
-	if (!thread) {
-		SESSION(session)->data = save_data;
+	if (real->is_running) {
+		g_warning("imap_thread_run: thread is already running");
 		return IMAP_ERROR;
 	}
-	while (SESSION(session)->io_tag == 0)
-		event_loop_iterate();
-	ret = (gint)g_thread_join(thread);
 
-	SESSION(session)->data = save_data;
-	SESSION(session)->io_tag = 0;
+	if (!real->pool) {
+		real->pool = g_thread_pool_new(imap_thread_run_proxy, real,
+					       -1, FALSE, NULL);
+		if (!real->pool)
+			return IMAP_ERROR;
+	}
+
+	real->is_running = TRUE;
+	real->thread_func = func;
+	real->thread_data = data;
+	real->flag = 0;
+	real->retval = 0;
+
+	g_thread_pool_push(real->pool, real, NULL);
+
+	while (real->flag == 0)
+		event_loop_iterate();
+
+	real->is_running = FALSE;
+	real->thread_func = NULL;
+	real->thread_data = NULL;
+	real->flag = 0;
+	ret = real->retval;
+	real->retval = 0;
 	log_flush();
 
 	return ret;
 }
-#endif
+#endif /* USE_THREADS */
