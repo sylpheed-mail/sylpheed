@@ -5697,6 +5697,7 @@ static gboolean summary_display_msg_idle_func(gpointer data)
 	GtkTreePath *path;
 	GtkTreeIter iter;
 
+	gdk_threads_enter();
 	path = gtk_tree_row_reference_get_path(summaryview->selected);
 	if (path) {
 		gtk_tree_model_get_iter(GTK_TREE_MODEL(summaryview->store),
@@ -5704,6 +5705,7 @@ static gboolean summary_display_msg_idle_func(gpointer data)
 		gtk_tree_path_free(path);
 		summary_display_msg(summaryview, &iter);
 	}
+	gdk_threads_leave();
 
 	return FALSE;
 }

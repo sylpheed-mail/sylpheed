@@ -338,7 +338,9 @@ static gboolean trayicon_restore(gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
+	gdk_threads_enter();
 	mainwin->tray_icon = trayicon_create(mainwin);
+	gdk_threads_leave();
 	return FALSE;
 }
 

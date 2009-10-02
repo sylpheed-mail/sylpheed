@@ -1890,7 +1890,9 @@ static gboolean folderview_focus_idle_func(gpointer data)
 {
 	FolderView *folderview = (FolderView *)data;
 
+	gdk_threads_enter();
 	GTK_WIDGET_SET_FLAGS(folderview->treeview, GTK_CAN_FOCUS);
+	gdk_threads_leave();
 
 	return FALSE;
 }

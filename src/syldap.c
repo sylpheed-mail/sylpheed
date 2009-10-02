@@ -641,7 +641,9 @@ static gboolean syldap_display_search_results(SyldapServer *ldapServer)
 {
 	/* NOTE: when this function is called the accompanying thread should
 	 * already be terminated. */
+	gdk_threads_enter();
 	ldapServer->callBack(ldapServer);
+	gdk_threads_leave();
 	/* FIXME:  match should know whether to free this SyldapServer stuff. */
 	g_free(ldapServer->thread);
 	ldapServer->thread = NULL;
@@ -673,11 +675,7 @@ gint syldap_read_data( SyldapServer *ldapServer ) {
 	ldapServer->busyFlag = FALSE;
 	if( ldapServer->callBack ) {
 		/* make the ui thread update the search results */
-		/* TODO: really necessary to call gdk_threads_XXX()??? gtk_idle_add()
-		 * should do this - could someone check the GTK sources please? */
-		gdk_threads_enter();
-		ldapServer->idleId = gtk_idle_add((GtkFunction)syldap_display_search_results, ldapServer);
-		gdk_threads_leave();
+		ldapServer->idleId = g_idle_add((GSourceFunc)syldap_display_search_results, ldapServer);
 	}
 
 	return ldapServer->retVal;
