@@ -286,7 +286,7 @@ void log_window_append_queue(const gchar *str, LogType type)
 	logdata->str = g_strdup(str);
 	logdata->type = type;
 
-	g_print("append_queue: (%d) %s\n", type, str);
+	g_print("append_queue: (%d) %s", type, str);
 	g_async_queue_push(logwindow->aqueue, logdata);
 #endif
 }
@@ -302,7 +302,7 @@ void log_window_flush(void)
 	}
 
 	while ((logdata = g_async_queue_try_pop(logwindow->aqueue))) {
-		g_print("flush_queue: (%d) %s\n", logdata->type, logdata->str);
+		g_print("flush_queue: (%d) %s", logdata->type, logdata->str);
 		log_window_append_real(logdata->str, logdata->type);
 		g_free(logdata->str);
 		g_free(logdata);
