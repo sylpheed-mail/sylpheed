@@ -74,8 +74,12 @@
 	}								\
 }
 
-typedef gint (*IMAPThreadFunc)	(IMAPSession	*session,
-				 gpointer	 data);
+typedef gint (*IMAPThreadFunc)		(IMAPSession	*session,
+					 gpointer	 data);
+typedef gint (*IMAPProgressFunc)	(IMAPSession	*session,
+					 gint		 count,
+					 gint		 total,
+					 gpointer	 data);
 
 typedef struct _IMAPRealSession
 {
@@ -85,6 +89,8 @@ typedef struct _IMAPRealSession
 	IMAPThreadFunc thread_func;
 	gpointer thread_data;
 	gboolean is_running;
+	gint prog_count;
+	gint prog_total;
 	gint flag;
 	gint retval;
 #endif
@@ -408,9 +414,13 @@ static gboolean imap_rename_folder_func		(GNode		*node,
 						 gpointer	 data);
 
 #if USE_THREADS
-static gint imap_thread_run			(IMAPSession	*session,
-						 IMAPThreadFunc	 func,
-						 gpointer	 data);
+static gint imap_thread_run		(IMAPSession		*session,
+					 IMAPThreadFunc		 func,
+					 gpointer		 data);
+static gint imap_thread_run_progress	(IMAPSession		*session,
+					 IMAPThreadFunc		 func,
+					 IMAPProgressFunc	 progress_func,
+					 gpointer		 data);
 #endif
 
 static FolderClass imap_class =
@@ -2572,10 +2582,29 @@ static gint imap_remove_folder(Folder *folder, FolderItem *item)
 	return 0;
 }
 
-static GSList *imap_get_uncached_messages(IMAPSession *session,
-					  FolderItem *item,
-					  guint32 first_uid, guint32 last_uid,
-					  gint exists, gboolean update_count)
+typedef struct _IMAPGetData
+{
+	FolderItem *item;
+	guint32 first_uid;
+	guint32 last_uid;
+	gint exists;
+	gboolean update_count;
+	GSList *newlist;
+} IMAPGetData;
+
+static gint imap_get_uncached_messages_progress_func(IMAPSession *session,
+						     gint count, gint total,
+						     gpointer data)
+{
+	status_print(_("Getting message headers (%d / %d)"), count, total);
+	progress_show(count, total);
+#ifndef USE_THREADS
+	ui_update();
+#endif
+	return 0;
+}
+
+static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 {
 	gchar *tmp;
 	GSList *newlist = NULL;
@@ -2585,25 +2614,27 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	gchar seq_set[22];
 	gint count = 1;
 	GTimeVal tv_prev, tv_cur;
-
-	g_return_val_if_fail(session != NULL, NULL);
-	g_return_val_if_fail(item != NULL, NULL);
-	g_return_val_if_fail(item->folder != NULL, NULL);
-	g_return_val_if_fail(FOLDER_TYPE(item->folder) == F_IMAP, NULL);
-	g_return_val_if_fail(first_uid <= last_uid, NULL);
+	IMAPGetData *get_data = (IMAPGetData *)data;
+	FolderItem *item = get_data->item;
+	gint exists = get_data->exists;
+	gboolean update_count = get_data->update_count;
 
 	g_get_current_time(&tv_prev);
+#ifndef USE_THREADS
 	ui_update();
+#endif
 
-	if (first_uid == 0 && last_uid == 0)
+	if (get_data->first_uid == 0 && get_data->last_uid == 0)
 		strcpy(seq_set, "1:*");
 	else
 		g_snprintf(seq_set, sizeof(seq_set), "%u:%u",
-			   first_uid, last_uid);
+			   get_data->first_uid, get_data->last_uid);
 	if (imap_cmd_envelope(session, seq_set) != IMAP_SUCCESS) {
 		log_warning(_("can't get envelope\n"));
-		return NULL;
+		return IMAP_ERROR;
 	}
+
+	((IMAPRealSession *)session)->prog_total = exists;
 
 	str = g_string_new(NULL);
 
@@ -2613,11 +2644,13 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 			if (tv_cur.tv_sec > tv_prev.tv_sec ||
 			    tv_cur.tv_usec - tv_prev.tv_usec >
 			    PROGRESS_UPDATE_INTERVAL * 1000) {
-				status_print
-					(_("Getting message headers (%d / %d)"),
-					 count, exists);
-				progress_show(count, exists);
-				ui_update();
+#if USE_THREADS
+				((IMAPRealSession *)session)->prog_count = count;
+				g_main_context_wakeup(NULL);
+#else
+				imap_get_uncached_messages_progress_func
+					(session, count, exists, data);
+#endif
 				tv_prev = tv_cur;
 			}
 		}
@@ -2626,8 +2659,7 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 		if (sock_getline(SESSION(session)->sock, &tmp) < 0) {
 			log_warning(_("error occurred while getting envelope.\n"));
 			g_string_free(str, TRUE);
-			progress_show(0, 0);
-			return newlist;
+			return IMAP_SOCKET;
 		}
 		strretchomp(tmp);
 		if (tmp[0] != '*' || tmp[1] != ' ') {
@@ -2674,12 +2706,42 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 			item->total++;
 	}
 
-	progress_show(0, 0);
 	g_string_free(str, TRUE);
 
 	session_set_access_time(SESSION(session));
 
-	return newlist;
+	get_data->newlist = newlist;
+	return IMAP_SUCCESS;
+}
+
+static GSList *imap_get_uncached_messages(IMAPSession *session,
+					  FolderItem *item,
+					  guint32 first_uid, guint32 last_uid,
+					  gint exists, gboolean update_count)
+{
+	IMAPGetData get_data = {item, first_uid, last_uid, exists,
+				update_count, NULL};
+	gint ok;
+
+	g_return_val_if_fail(session != NULL, NULL);
+	g_return_val_if_fail(item != NULL, NULL);
+	g_return_val_if_fail(item->folder != NULL, NULL);
+	g_return_val_if_fail(FOLDER_TYPE(item->folder) == F_IMAP, NULL);
+	g_return_val_if_fail(first_uid <= last_uid, NULL);
+
+	g_print("enter imap_get_uncached_messages\n");
+
+#if USE_THREADS
+	ok = imap_thread_run_progress(session, imap_get_uncached_messages_func,
+				      imap_get_uncached_messages_progress_func,
+				      &get_data);
+#else
+	ok = imap_get_uncached_messages_func(session, &get_data);
+#endif
+
+	progress_show(0, 0);
+	g_print("leave imap_get_uncached_messages\n");
+	return get_data.newlist;
 }
 
 static void imap_delete_cached_message(FolderItem *item, guint32 uid)
@@ -4745,6 +4807,58 @@ static gint imap_thread_run(IMAPSession	*session, IMAPThreadFunc func,
 	real->flag = 0;
 	ret = real->retval;
 	real->retval = 0;
+	log_flush();
+
+	return ret;
+}
+
+static gint imap_thread_run_progress(IMAPSession *session, IMAPThreadFunc func,
+				     IMAPProgressFunc progress_func,
+				     gpointer data)
+{
+	IMAPRealSession *real = (IMAPRealSession *)session;
+	gint prev_count = 0;
+	gint ret;
+
+	if (real->is_running) {
+		g_warning("imap_thread_run: thread is already running");
+		return IMAP_ERROR;
+	}
+
+	if (!real->pool) {
+		real->pool = g_thread_pool_new(imap_thread_run_proxy, real,
+					       -1, FALSE, NULL);
+		if (!real->pool)
+			return IMAP_ERROR;
+	}
+
+	real->is_running = TRUE;
+	real->thread_func = func;
+	real->thread_data = data;
+	real->flag = 0;
+	real->retval = 0;
+	real->prog_count = 0;
+	real->prog_total = 0;
+
+	g_thread_pool_push(real->pool, real, NULL);
+
+	while (real->flag == 0) {
+		event_loop_iterate();
+		if (prev_count != real->prog_count && real->prog_total > 0) {
+			progress_func(session, real->prog_count,
+				      real->prog_total, data);
+			prev_count = real->prog_count;
+		}
+	}
+
+	real->is_running = FALSE;
+	real->thread_func = NULL;
+	real->thread_data = NULL;
+	real->flag = 0;
+	ret = real->retval;
+	real->retval = 0;
+	real->prog_count = 0;
+	real->prog_total = 0;
 	log_flush();
 
 	return ret;
