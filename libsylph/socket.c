@@ -1385,7 +1385,6 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 	while (conn_data->flag == 0)
 		event_loop_iterate();
 
-	debug_print("sock_connect_async_thread_wait: flagged\n");
 	g_thread_join(conn_data->thread);
 	debug_print("sock_connect_async_thread_wait: thread exited\n");
 

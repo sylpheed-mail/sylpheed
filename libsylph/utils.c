@@ -3912,7 +3912,6 @@ gint execute_command_line_async_wait(const gchar *cmdline)
 	while (data.flag == 0)
 		event_loop_iterate();
 
-	debug_print("execute_command_line_async_wait: flagged\n");
 	g_thread_join(thread);
 	debug_print("execute_command_line_async_wait: thread exited\n");
 

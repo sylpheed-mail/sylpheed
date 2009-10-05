@@ -186,6 +186,7 @@ static void log_window_append_real(const gchar *str, LogType type)
 
 #if USE_THREADS
 	if (g_thread_self() != main_thread) {
+		g_fprintf(stderr, "log_window_append_real called from non-main thread (%p)\n", g_thread_self());
 		return;
 	}
 #endif
@@ -261,7 +262,6 @@ void log_window_append(const gchar *str, LogType type)
 {
 #if USE_THREADS
 	if (g_thread_self() != main_thread) {
-		//g_fprintf(stderr, "log_window_append called from non-main thread (%p)\n", g_thread_self());
 		log_window_append_queue(str, type);
 		return;
 	}
@@ -286,7 +286,6 @@ void log_window_append_queue(const gchar *str, LogType type)
 	logdata->str = g_strdup(str);
 	logdata->type = type;
 
-	//g_print("append_queue: (%d) %s", type, str);
 	g_async_queue_push(logwindow->aqueue, logdata);
 #endif
 }
@@ -302,7 +301,6 @@ void log_window_flush(void)
 	}
 
 	while ((logdata = g_async_queue_try_pop(logwindow->aqueue))) {
-		//g_print("flush_queue: (%d) %s", logdata->type, logdata->str);
 		log_window_append_real(logdata->str, logdata->type);
 		g_free(logdata->str);
 		g_free(logdata);

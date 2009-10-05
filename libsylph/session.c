@@ -356,8 +356,7 @@ static gint session_close(Session *session)
 {
 	g_return_val_if_fail(session != NULL, -1);
 
-//#ifdef G_OS_UNIX
-#if 0
+#ifdef G_OS_UNIX
 	if (session->conn_id > 0) {
 		sock_connect_async_cancel(session->conn_id);
 		session->conn_id = 0;
