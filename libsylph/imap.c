@@ -751,6 +751,12 @@ static gint imap_session_reconnect(IMAPSession *session)
 
 static void imap_session_destroy(Session *session)
 {
+#if USE_THREADS
+	IMAPRealSession *real = (IMAPRealSession *)session;
+
+	if (real->pool)
+		g_thread_pool_free(real->pool, TRUE, TRUE);
+#endif
 	imap_capability_free(IMAP_SESSION(session));
 	g_free(IMAP_SESSION(session)->mbox);
 	session_list = g_list_remove(session_list, session);
