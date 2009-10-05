@@ -132,6 +132,19 @@ static struct RemoteCmd {
 #endif
 } cmd;
 
+#define STATUSBAR_PUSH(mainwin, str) \
+{ \
+	gtk_statusbar_push(GTK_STATUSBAR(mainwin->statusbar), \
+			   mainwin->mainwin_cid, str); \
+	gtkut_widget_draw_now(mainwin->statusbar); \
+}
+
+#define STATUSBAR_POP(mainwin) \
+{ \
+	gtk_statusbar_pop(GTK_STATUSBAR(mainwin->statusbar), \
+			  mainwin->mainwin_cid); \
+}
+
 static void parse_cmd_opt		(int		 argc,
 					 char		*argv[]);
 
@@ -1057,8 +1070,12 @@ static void plugin_init(void)
 
 	mainwin = main_window_get();
 
-	if (syl_plugin_init_lib() != 0)
+	STATUSBAR_PUSH(mainwin, _("Loading plug-ins..."));
+
+	if (syl_plugin_init_lib() != 0) {
+		STATUSBAR_POP(mainwin);
 		return;
+	}
 
 	syl_plugin_add_symbol("prog_version", prog_version);
 	syl_plugin_add_symbol("main_window_get", main_window_get);
@@ -1116,6 +1133,7 @@ static void plugin_init(void)
 #else
 	syl_plugin_load_all(PLUGINDIR);
 #endif
+	STATUSBAR_POP(mainwin);
 }
 
 static gchar *get_socket_name(void)
