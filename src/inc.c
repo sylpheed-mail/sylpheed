@@ -1220,6 +1220,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		gdk_threads_leave();
 		return DROP_ERROR;
 	}
+	fltinfo->flags = msginfo->flags;
 	msginfo->file_path = g_strdup(file);
 
 	if (prefs_common.enable_junk &&
