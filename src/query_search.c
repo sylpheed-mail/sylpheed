@@ -589,7 +589,6 @@ static void query_search_folder_show_progress(QueryData *data)
 #endif
 }
 
-#if USE_THREADS
 static gpointer query_search_folder_func(gpointer data)
 {
 	QueryData *qdata = (QueryData *)data;
@@ -666,15 +665,16 @@ static gpointer query_search_folder_func(gpointer data)
 
 	return GINT_TO_POINTER(0);
 }
-#endif
 
 static void query_search_folder(FolderItem *item)
 {
-	GThread *thread;
 	gchar *str;
 	QueryData data = {item};
+#if USE_THREADS
+	GThread *thread;
 	gint prev_count = 0;
 	MsgInfo *msginfo;
+#endif
 
 	if (!item->path || item->stype == F_VIRTUAL)
 		return;
@@ -718,12 +718,13 @@ static void query_search_folder(FolderItem *item)
 
 	g_thread_join(thread);
 	debug_print("query_search_folder: thread exited\n");
-#else
+
+	g_async_queue_free(data.queue);
+#else /* !USE_THREADS */
 	query_search_folder_func(&data);
 #endif
 
 	procmsg_set_auto_decrypt_message(TRUE);
-
 	g_free(data.folder_name);
 }
 

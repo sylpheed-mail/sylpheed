@@ -2640,7 +2640,9 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 		return IMAP_ERROR;
 	}
 
+#if USE_THREADS
 	((IMAPRealSession *)session)->prog_total = exists;
+#endif
 
 	str = g_string_new(NULL);
 
