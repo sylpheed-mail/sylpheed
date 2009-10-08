@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -563,61 +563,69 @@ static void query_search_query(void)
 	search_window.cancelled = FALSE;
 }
 
-static void query_search_folder(FolderItem *item)
+typedef struct _QueryData
 {
-	gchar *folder_name, *str;
-	GSList *mlist;
-	FilterInfo fltinfo;
-	GSList *cur;
-	gint count = 1, total;
-	GTimeVal tv_prev, tv_cur;
+	FolderItem *item;
+	gchar *folder_name;
+	gint count;
+	gint total;
+	gint flag;
+	GTimeVal tv_prev;
+#if USE_THREADS
+	GAsyncQueue *queue;
+#endif
+} QueryData;
 
-	if (!item->path || item->stype == F_VIRTUAL)
-		return;
+static void query_search_folder_show_progress(QueryData *data)
+{
+	gchar *str;
 
-	folder_name = g_path_get_basename(item->path);
-	str = g_strdup_printf(_("Searching %s ..."), folder_name);
+	str = g_strdup_printf(_("Searching %s (%d / %d)..."),
+			      data->folder_name, data->count, data->total);
 	gtk_label_set_text(GTK_LABEL(search_window.status_label), str);
 	g_free(str);
-	g_get_current_time(&tv_prev);
+#ifndef USE_THREADS
 	ui_update();
+#endif
+}
 
-	if (search_window.cancelled) {
-		g_free(folder_name);
-		return;
-	}
+#if USE_THREADS
+static gpointer query_search_folder_func(gpointer data)
+{
+	QueryData *qdata = (QueryData *)data;
+	GSList *mlist, *cur;
+	FilterInfo fltinfo;
+	GTimeVal tv_cur;
 
-	if (item->opened)
-		summary_write_cache(main_window_get()->summaryview);
+	debug_print("query_search_folder_func start\n");
 
-	mlist = folder_item_get_msg_list(item, TRUE);
-	total = g_slist_length(mlist);
+	mlist = folder_item_get_msg_list(qdata->item, TRUE);
+	qdata->total = g_slist_length(mlist);
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
-	procmsg_set_auto_decrypt_message(FALSE);
-
 	debug_print("requires_full_headers: %d\n",
 		    search_window.requires_full_headers);
-	debug_print("start query search: %s\n", item->path ? item->path : "");
+	debug_print("start query search: %s\n",
+		    qdata->item->path ? qdata->item->path : "");
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist;
 
+		++qdata->count;
+
 		g_get_current_time(&tv_cur);
-		if (tv_cur.tv_sec > tv_prev.tv_sec ||
-		    tv_cur.tv_usec - tv_prev.tv_usec >
+		if ((tv_cur.tv_sec - qdata->tv_prev.tv_sec) * G_USEC_PER_SEC +
+		    tv_cur.tv_usec - qdata->tv_prev.tv_usec >
 		    PROGRESS_UPDATE_INTERVAL * 1000) {
-			str = g_strdup_printf(_("Searching %s (%d / %d)..."),
-					      folder_name, count, total);
-			gtk_label_set_text
-				(GTK_LABEL(search_window.status_label), str);
-			g_free(str);
-			ui_update();
-			tv_prev = tv_cur;
+#ifdef USE_THREADS
+			g_main_context_wakeup(NULL);
+#else
+			query_search_folder_show_progress(qdata);
+#endif
+			qdata->tv_prev = tv_cur;
 		}
-		++count;
 
 		if (search_window.cancelled)
 			break;
@@ -637,7 +645,11 @@ static void query_search_folder(FolderItem *item)
 
 		if (filter_match_rule(search_window.rule, msginfo, hlist,
 				      &fltinfo)) {
+#if USE_THREADS
+			g_async_queue_push(qdata->queue, msginfo);
+#else
 			query_search_append_msg(msginfo);
+#endif
 			cur->data = NULL;
 			search_window.n_found++;
 		}
@@ -645,10 +657,74 @@ static void query_search_folder(FolderItem *item)
 		procheader_header_list_destroy(hlist);
 	}
 
+	procmsg_msg_list_free(mlist);
+
+	qdata->flag = 1;
+	g_main_context_wakeup(NULL);
+
+	debug_print("query_search_folder_func end\n");
+
+	return GINT_TO_POINTER(0);
+}
+#endif
+
+static void query_search_folder(FolderItem *item)
+{
+	GThread *thread;
+	gchar *str;
+	QueryData data = {item};
+	gint prev_count = 0;
+	MsgInfo *msginfo;
+
+	if (!item->path || item->stype == F_VIRTUAL)
+		return;
+
+	data.folder_name = g_path_get_basename(item->path);
+	str = g_strdup_printf(_("Searching %s ..."), data.folder_name);
+	gtk_label_set_text(GTK_LABEL(search_window.status_label), str);
+	g_free(str);
+	g_get_current_time(&data.tv_prev);
+#ifndef USE_THREADS
+	ui_update();
+#endif
+
+	if (search_window.cancelled) {
+		g_free(data.folder_name);
+		return;
+	}
+
+	if (item->opened)
+		summary_write_cache(main_window_get()->summaryview);
+
+	procmsg_set_auto_decrypt_message(FALSE);
+
+#if USE_THREADS
+	data.queue = g_async_queue_new();
+	thread = g_thread_create(query_search_folder_func, &data, TRUE, NULL);
+
+	debug_print("query_search_folder: thread started\n");
+	while (data.flag == 0) {
+		gtk_main_iteration();
+		if (prev_count != data.count) {
+			prev_count = data.count;
+			query_search_folder_show_progress(&data);
+			while ((msginfo = g_async_queue_try_pop(data.queue)))
+				query_search_append_msg(msginfo);
+		}
+	}
+
+	while ((msginfo = g_async_queue_try_pop(data.queue)))
+		query_search_append_msg(msginfo);
+
+	g_thread_join(thread);
+	debug_print("query_search_folder: thread exited\n");
+#else
+	query_search_folder_func(&data);
+#endif
+
 	procmsg_set_auto_decrypt_message(TRUE);
 
-	procmsg_msg_list_free(mlist);
-	g_free(folder_name);
+	g_free(data.folder_name);
 }
 
 static gboolean query_search_recursive_func(GNode *node, gpointer data)
