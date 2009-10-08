@@ -598,7 +598,9 @@ static gpointer query_search_folder_func(gpointer data)
 
 	debug_print("query_search_folder_func start\n");
 
+#if USE_THREADS
 	g_async_queue_ref(qdata->queue);
+#endif
 
 	mlist = folder_item_get_msg_list(qdata->item, TRUE);
 	qdata->total = g_slist_length(mlist);
@@ -659,7 +661,9 @@ static gpointer query_search_folder_func(gpointer data)
 	}
 
 	procmsg_msg_list_free(mlist);
+#if USE_THREADS
 	g_async_queue_unref(qdata->queue);
+#endif
 
 	qdata->flag = 1;
 	g_main_context_wakeup(NULL);
