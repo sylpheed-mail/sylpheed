@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -906,7 +906,7 @@ static SendProgressDialog *send_progress_dialog_create(void)
 			 G_CALLBACK(send_cancel_button_cb), dialog);
 	g_signal_connect(G_OBJECT(progress->window), "delete_event",
 			 G_CALLBACK(gtk_true), NULL);
-	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
+	/* gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE); */
 	manage_window_set_transient(GTK_WINDOW(progress->window));
 
 	progress_dialog_set_value(progress, 0.0);
