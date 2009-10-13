@@ -1332,7 +1332,7 @@ static gpointer sock_connect_async_func(gpointer data)
 	SockConnectData *conn_data = (SockConnectData *)data;
 
 	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
-	conn_data->flag = 1;
+	g_atomic_int_set(&conn_data->flag, 1);
 
 	debug_print("sock_connect_async_func: connected\n");
 	g_main_context_wakeup(NULL);
@@ -1382,7 +1382,7 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 	}
 
 	debug_print("sock_connect_async_thread_wait: waiting thread\n");
-	while (conn_data->flag == 0)
+	while (g_atomic_int_get(&conn_data->flag) == 0)
 		event_loop_iterate();
 
 	g_thread_join(conn_data->thread);

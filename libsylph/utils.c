@@ -3881,7 +3881,7 @@ static gpointer execute_command_line_async_func(gpointer data)
 
 	debug_print("execute_command_line_async_func: exec done: %s\n",
 		    cmd_data->cmdline);
-	cmd_data->flag = 1;
+	g_atomic_int_set(&cmd_data->flag, 1);
 	g_main_context_wakeup(NULL);
 
 	return GINT_TO_POINTER(0);
@@ -3909,7 +3909,7 @@ gint execute_command_line_async_wait(const gchar *cmdline)
 		return -1;
 
 	debug_print("execute_command_line_async_wait: waiting thread\n");
-	while (data.flag == 0)
+	while (g_atomic_int_get(&data.flag) == 0)
 		event_loop_iterate();
 
 	g_thread_join(thread);

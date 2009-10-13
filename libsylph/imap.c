@@ -4775,7 +4775,7 @@ static void imap_thread_run_proxy(gpointer push_data, gpointer data)
 
 	g_print("imap_thread_run_proxy (%p): calling thread_func\n", g_thread_self());
 	real->retval = real->thread_func(IMAP_SESSION(real), real->thread_data);
-	real->flag = 1;
+	g_atomic_int_set(&real->flag, 1);
 	g_print("imap_thread_run_proxy (%p): thread_func done\n", g_thread_self());
 	g_main_context_wakeup(NULL);
 }
@@ -4806,7 +4806,7 @@ static gint imap_thread_run(IMAPSession	*session, IMAPThreadFunc func,
 
 	g_thread_pool_push(real->pool, real, NULL);
 
-	while (real->flag == 0)
+	while (g_atomic_int_get(&real->flag) == 0)
 		event_loop_iterate();
 
 	real->is_running = FALSE;
@@ -4850,7 +4850,7 @@ static gint imap_thread_run_progress(IMAPSession *session, IMAPThreadFunc func,
 
 	g_thread_pool_push(real->pool, real, NULL);
 
-	while (real->flag == 0) {
+	while (g_atomic_int_get(&real->flag) == 0) {
 		event_loop_iterate();
 		if (prev_count != real->prog_count && real->prog_total > 0) {
 			progress_func(session, real->prog_count,

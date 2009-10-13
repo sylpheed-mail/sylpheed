@@ -665,7 +665,7 @@ static gpointer query_search_folder_func(gpointer data)
 	g_async_queue_unref(qdata->queue);
 #endif
 
-	qdata->flag = 1;
+	g_atomic_int_set(&qdata->flag, 1);
 	g_main_context_wakeup(NULL);
 
 	debug_print("query_search_folder_func end\n");
@@ -710,7 +710,7 @@ static void query_search_folder(FolderItem *item)
 	thread = g_thread_create(query_search_folder_func, &data, TRUE, NULL);
 
 	debug_print("query_search_folder: thread started\n");
-	while (data.flag == 0) {
+	while (g_atomic_int_get(&data.flag) == 0) {
 		gtk_main_iteration();
 		if (prev_count != data.count) {
 			prev_count = data.count;
