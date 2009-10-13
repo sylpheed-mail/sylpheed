@@ -144,6 +144,10 @@ gboolean syl_plugin_summary_select_by_msginfo	(MsgInfo *msginfo);
 void syl_plugin_open_message			(const gchar *folder_id,
 						 guint msgnum);
 
+void syl_plugin_summary_lock			(void);
+void syl_plugin_summary_unlock			(void);
+gboolean syl_plugin_summary_is_locked		(void);
+
 /* MessageView */
 gpointer syl_plugin_messageview_create_with_new_window
 						(void);

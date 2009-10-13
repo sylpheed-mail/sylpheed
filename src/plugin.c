@@ -39,6 +39,8 @@ enum {
 #define SAFE_CALL_ARG1(func_ptr, arg1)	{ if (func_ptr) func_ptr(arg1); }
 #define SAFE_CALL_ARG1_RET(func_ptr, arg1) \
 				(func_ptr ? func_ptr(arg1) : NULL)
+#define SAFE_CALL_ARG1_RET_VAL(func_ptr, arg1, retval) \
+				(func_ptr ? func_ptr(arg1) : retval)
 #define SAFE_CALL_ARG2(func_ptr, arg1, arg2) \
 				{ if (func_ptr) func_ptr(arg1, arg2); }
 #define SAFE_CALL_ARG2_RET(func_ptr, arg1, arg2) \
@@ -549,6 +551,44 @@ void syl_plugin_open_message(const gchar *folder_id, guint msgnum)
 		}
 		procmsg_msginfo_free(msginfo);
 	}
+}
+
+void syl_plugin_summary_lock(void)
+{
+	void (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		func = syl_plugin_lookup_symbol("summary_lock");
+		SAFE_CALL_ARG1(func, summary);
+	}
+}
+
+void syl_plugin_summary_unlock(void)
+{
+	void (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		func = syl_plugin_lookup_symbol("summary_unlock");
+		SAFE_CALL_ARG1(func, summary);
+	}
+}
+
+gboolean syl_plugin_summary_is_locked(void)
+{
+	gboolean (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		func = syl_plugin_lookup_symbol("summary_is_locked");
+		return SAFE_CALL_ARG1_RET_VAL(func, summary, FALSE);
+	}
+
+	return FALSE;
 }
 
 gpointer syl_plugin_messageview_create_with_new_window(void)

@@ -1096,6 +1096,9 @@ static void plugin_init(void)
 			      summary_select_by_msgnum);
 	syl_plugin_add_symbol("summary_select_by_msginfo",
 			      summary_select_by_msginfo);
+	syl_plugin_add_symbol("summary_lock", summary_lock);
+	syl_plugin_add_symbol("summary_unlock", summary_unlock);
+	syl_plugin_add_symbol("summary_is_locked", summary_is_locked);
 
 	syl_plugin_add_symbol("messageview_create_with_new_window",
 			      messageview_create_with_new_window);
