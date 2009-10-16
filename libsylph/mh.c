@@ -351,6 +351,7 @@ static gchar *mh_fetch_msg(Folder *folder, FolderItem *item, gint num)
 {
 	gchar *path;
 	gchar *file;
+	gchar buf[16];
 
 	g_return_val_if_fail(item != NULL, NULL);
 	g_return_val_if_fail(num > 0, NULL);
@@ -364,7 +365,7 @@ static gchar *mh_fetch_msg(Folder *folder, FolderItem *item, gint num)
 		return NULL;
 
 	path = folder_item_get_path(item);
-	file = g_strconcat(path, G_DIR_SEPARATOR_S, itos(num), NULL);
+	file = g_strconcat(path, G_DIR_SEPARATOR_S, itos_buf(buf, num), NULL);
 	g_free(path);
 	if (!is_file_exist(file)) {
 		g_free(file);
@@ -930,8 +931,9 @@ static gboolean mh_is_msg_changed(Folder *folder, FolderItem *item,
 				  MsgInfo *msginfo)
 {
 	struct stat s;
+	gchar buf[16];
 
-	if (g_stat(itos(msginfo->msgnum), &s) < 0 ||
+	if (g_stat(itos_buf(buf, msginfo->msgnum), &s) < 0 ||
 	    msginfo->size  != s.st_size ||
 	    msginfo->mtime != s.st_mtime)
 		return TRUE;

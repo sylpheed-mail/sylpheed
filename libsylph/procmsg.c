@@ -1309,9 +1309,10 @@ gchar *procmsg_get_message_file_path(MsgInfo *msginfo)
 	else if (msginfo->file_path)
 		return g_strdup(msginfo->file_path);
 	else {
+		gchar nstr[16];
 		path = folder_item_get_path(msginfo->folder);
 		file = g_strconcat(path, G_DIR_SEPARATOR_S,
-				   itos(msginfo->msgnum), NULL);
+				   itos_buf(nstr, msginfo->msgnum), NULL);
 		g_free(path);
 	}
 

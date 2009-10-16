@@ -371,6 +371,7 @@ static gchar *news_fetch_msg(Folder *folder, FolderItem *item, gint num)
 {
 	gchar *path, *filename;
 	NNTPSession *session;
+	gchar nstr[16];
 	gint ok;
 
 	g_return_val_if_fail(folder != NULL, NULL);
@@ -379,7 +380,8 @@ static gchar *news_fetch_msg(Folder *folder, FolderItem *item, gint num)
 	path = folder_item_get_path(item);
 	if (!is_dir_exist(path))
 		make_dir_hier(path);
-	filename = g_strconcat(path, G_DIR_SEPARATOR_S, itos(num), NULL);
+	filename = g_strconcat(path, G_DIR_SEPARATOR_S, itos_buf(nstr, num),
+			       NULL);
 	g_free(path);
 
 	if (is_file_exist(filename)) {

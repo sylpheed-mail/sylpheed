@@ -1194,6 +1194,7 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 {
 	gchar *path, *filename;
 	IMAPSession *session;
+	gchar nstr[16];
 	gint ok;
 
 	g_return_val_if_fail(folder != NULL, NULL);
@@ -1202,7 +1203,8 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 	path = folder_item_get_path(item);
 	if (!is_dir_exist(path))
 		make_dir_hier(path);
-	filename = g_strconcat(path, G_DIR_SEPARATOR_S, itos(uid), NULL);
+	filename = g_strconcat(path, G_DIR_SEPARATOR_S, itos_buf(nstr, uid),
+			       NULL);
 	g_free(path);
 
 	if (is_file_exist(filename)) {

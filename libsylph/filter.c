@@ -822,6 +822,7 @@ void filter_write_file(GSList *list, const gchar *file)
 		GSList *cur_cond;
 		GSList *cur_action;
 		gchar match_type[16];
+		gchar nstr[16];
 
 		fputs("    <rule name=\"", pfile->fp);
 		xml_file_put_escape_str(pfile->fp, rule->name);
@@ -890,13 +891,13 @@ void filter_write_file(GSList *list, const gchar *file)
 				NODE_NEW("command-test", cond->str_value);
 				break;
 			case FLT_COND_SIZE_GREATER:
-				NODE_NEW("size", itos(cond->int_value));
+				NODE_NEW("size", itos_buf(nstr, cond->int_value));
 				ADD_ATTR("type",
 					 FLT_IS_NOT_MATCH(cond->match_flag)
 					 ? "lt" : "gt");
 				break;
 			case FLT_COND_AGE_GREATER:
-				NODE_NEW("age", itos(cond->int_value));
+				NODE_NEW("age", itos_buf(nstr, cond->int_value));
 				ADD_ATTR("type",
 					 FLT_IS_NOT_MATCH(cond->match_flag)
 					 ? "lt" : "gt");
@@ -926,7 +927,7 @@ void filter_write_file(GSList *list, const gchar *file)
 					 ? "is-not" : "is");
 				break;
 			case FLT_COND_ACCOUNT:
-				 NODE_NEW("account-id", itos(cond->int_value));
+				 NODE_NEW("account-id", itos_buf(nstr, cond->int_value));
 				 break;
 			default:
 				 break;
