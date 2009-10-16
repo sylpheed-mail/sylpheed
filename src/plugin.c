@@ -174,12 +174,10 @@ gint syl_plugin_load(const gchar *name)
 
 	if (g_module_symbol(module, "plugin_load", (gpointer *)&load_func)) {
 		if (!syl_plugin_check_version(module)) {
-#if 0
 			g_warning("Version check failed. Skipping: %s", name);
 			g_module_close(module);
 			g_free(file);
 			return -1;
-#endif
 		}
 
 		debug_print("calling plugin_load() in %s\n",
@@ -286,6 +284,10 @@ gboolean syl_plugin_check_version(GModule *module)
 {
 	gint (*version_func)(void);
 	gint ver;
+	gint a_major;
+	gint a_minor;
+	gint p_major;
+	gint p_minor;
 
 	g_return_val_if_fail(module != NULL, FALSE);
 
@@ -300,7 +302,11 @@ gboolean syl_plugin_check_version(GModule *module)
 		return FALSE;
 	}
 
-	if (ver == SYL_PLUGIN_INTERFACE_VERSION) {
+	a_major = SYL_PLUGIN_INTERFACE_VERSION & 0xff00;
+	a_minor = SYL_PLUGIN_INTERFACE_VERSION & 0x00ff;
+	p_major = ver & 0xff00;
+	p_minor = ver & 0x00ff;
+	if (a_major == p_major && a_minor >= p_minor) {
 		debug_print("Version OK: plugin: %d, app: %d\n",
 			    ver, SYL_PLUGIN_INTERFACE_VERSION);
 		return TRUE;
