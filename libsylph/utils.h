@@ -485,6 +485,8 @@ gint open_uri(const gchar *uri, const gchar *cmdline);
 /* time functions */
 time_t remote_tzoffset_sec	(const gchar	*zone);
 time_t tzoffset_sec		(time_t		*now);
+gchar *tzoffset_buf		(gchar		*buf,
+				 time_t		*now);
 gchar *tzoffset			(time_t		*now);
 void get_rfc822_date		(gchar		*buf,
 				 gint		 len);

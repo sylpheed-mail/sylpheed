@@ -4139,10 +4139,9 @@ time_t tzoffset_sec(time_t *now)
 	return off * 60;
 }
 
-/* calculate timezone offset */
-gchar *tzoffset(time_t *now)
+/* calculate timezone offset (buf must not be less than 6 bytes) */
+gchar *tzoffset_buf(gchar *buf, time_t *now)
 {
-	static gchar offset_string[6];
 	struct tm gmt, *tmp, *lt;
 	gint off;
 	gchar sign = '+';
@@ -4172,9 +4171,16 @@ gchar *tzoffset(time_t *now)
 	if (off >= 24 * 60)		/* should be impossible */
 		off = 23 * 60 + 59;	/* if not, insert silly value */
 
-	sprintf(offset_string, "%c%02d%02d", sign, off / 60, off % 60);
+	g_snprintf(buf, 6, "%c%02d%02d", sign, off / 60, off % 60);
 
-	return offset_string;
+	return buf;
+}
+
+gchar *tzoffset(time_t *now)
+{
+	static gchar offset_string[6];
+
+	return tzoffset_buf(offset_string, now);
 }
 
 void get_rfc822_date(gchar *buf, gint len)
@@ -4183,6 +4189,7 @@ void get_rfc822_date(gchar *buf, gint len)
 	time_t t;
 	gchar day[4], mon[4];
 	gint dd, hh, mm, ss, yyyy;
+	gchar off[6];
 
 	t = time(NULL);
 	lt = localtime(&t);
@@ -4190,7 +4197,7 @@ void get_rfc822_date(gchar *buf, gint len)
 	sscanf(asctime(lt), "%3s %3s %d %d:%d:%d %d\n",
 	       day, mon, &dd, &hh, &mm, &ss, &yyyy);
 	g_snprintf(buf, len, "%s, %d %s %d %02d:%02d:%02d %s",
-		   day, dd, mon, yyyy, hh, mm, ss, tzoffset(&t));
+		   day, dd, mon, yyyy, hh, mm, ss, tzoffset_buf(off, &t));
 }
 
 /* just a wrapper to suppress the warning of gcc about %c */
