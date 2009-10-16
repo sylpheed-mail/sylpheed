@@ -770,13 +770,28 @@ static gchar *conv_jistoutf8(const gchar *inbuf, gint *error)
 	return utf8str;
 }
 
+#if USE_THREADS
+#define S_LOCK_DEFINE_STATIC(name)	G_LOCK_DEFINE_STATIC(name)
+#define S_LOCK(name)	G_LOCK(name)
+#define S_UNLOCK(name)	G_UNLOCK(name)
+#else
+#define S_LOCK_DEFINE_STATIC(name)
+#define S_LOCK(name)
+#define S_UNLOCK(name)
+#endif
+
 static gchar *conv_sjistoutf8(const gchar *inbuf, gint *error)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
+	S_LOCK_DEFINE_STATIC(cd);
+	gchar *ret;
+
+	S_LOCK(cd);
 
 	if (cd == (iconv_t)-1) {
 		if (!iconv_ok) {
+			S_UNLOCK(cd);
 			if (error)
 				*error = -1;
 			return g_strdup(inbuf);
@@ -789,6 +804,7 @@ static gchar *conv_sjistoutf8(const gchar *inbuf, gint *error)
 				g_warning("conv_sjistoutf8(): %s\n",
 					  g_strerror(errno));
 				iconv_ok = FALSE;
+				S_UNLOCK(cd);
 				if (error)
 					*error = -1;
 				return g_strdup(inbuf);
@@ -796,16 +812,23 @@ static gchar *conv_sjistoutf8(const gchar *inbuf, gint *error)
 		}
 	}
 
-	return conv_iconv_strdup_with_cd(inbuf, cd, error);
+	ret = conv_iconv_strdup_with_cd(inbuf, cd, error);
+	S_UNLOCK(cd);
+	return ret;
 }
 
 static gchar *conv_euctoutf8(const gchar *inbuf, gint *error)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
+	S_LOCK_DEFINE_STATIC(cd);
+	gchar *ret;
+
+	S_LOCK(cd);
 
 	if (cd == (iconv_t)-1) {
 		if (!iconv_ok) {
+			S_UNLOCK(cd);
 			if (error)
 				*error = -1;
 			return g_strdup(inbuf);
@@ -818,6 +841,7 @@ static gchar *conv_euctoutf8(const gchar *inbuf, gint *error)
 				g_warning("conv_euctoutf8(): %s\n",
 					  g_strerror(errno));
 				iconv_ok = FALSE;
+				S_UNLOCK(cd);
 				if (error)
 					*error = -1;
 				return g_strdup(inbuf);
@@ -825,7 +849,9 @@ static gchar *conv_euctoutf8(const gchar *inbuf, gint *error)
 		}
 	}
 
-	return conv_iconv_strdup_with_cd(inbuf, cd, error);
+	ret = conv_iconv_strdup_with_cd(inbuf, cd, error);
+	S_UNLOCK(cd);
+	return ret;
 }
 
 static gchar *conv_anytoutf8(const gchar *inbuf, gint *error)
@@ -854,9 +880,14 @@ static gchar *conv_utf8tosjis(const gchar *inbuf, gint *error)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
+	S_LOCK_DEFINE_STATIC(cd);
+	gchar *ret;
+
+	S_LOCK(cd);
 
 	if (cd == (iconv_t)-1) {
 		if (!iconv_ok) {
+			S_UNLOCK(cd);
 			if (error)
 				*error = -1;
 			return g_strdup(inbuf);
@@ -869,6 +900,7 @@ static gchar *conv_utf8tosjis(const gchar *inbuf, gint *error)
 				g_warning("conv_utf8tosjis(): %s\n",
 					  g_strerror(errno));
 				iconv_ok = FALSE;
+				S_UNLOCK(cd);
 				if (error)
 					*error = -1;
 				return g_strdup(inbuf);
@@ -878,16 +910,23 @@ static gchar *conv_utf8tosjis(const gchar *inbuf, gint *error)
 
 	if (isutf8bom(inbuf))
 		inbuf += 3;
-	return conv_iconv_strdup_with_cd(inbuf, cd, error);
+	ret = conv_iconv_strdup_with_cd(inbuf, cd, error);
+	S_UNLOCK(cd);
+	return ret;
 }
 
 static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error)
 {
 	static iconv_t cd = (iconv_t)-1;
 	static gboolean iconv_ok = TRUE;
+	S_LOCK_DEFINE_STATIC(cd);
+	gchar *ret;
+
+	S_LOCK(cd);
 
 	if (cd == (iconv_t)-1) {
 		if (!iconv_ok) {
+			S_UNLOCK(cd);
 			if (error)
 				*error = -1;
 			return g_strdup(inbuf);
@@ -900,6 +939,7 @@ static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error)
 				g_warning("conv_utf8toeuc(): %s\n",
 					  g_strerror(errno));
 				iconv_ok = FALSE;
+				S_UNLOCK(cd);
 				if (error)
 					*error = -1;
 				return g_strdup(inbuf);
@@ -909,7 +949,9 @@ static gchar *conv_utf8toeuc(const gchar *inbuf, gint *error)
 
 	if (isutf8bom(inbuf))
 		inbuf += 3;
-	return conv_iconv_strdup_with_cd(inbuf, cd, error);
+	ret = conv_iconv_strdup_with_cd(inbuf, cd, error);
+	S_UNLOCK(cd);
+	return ret;
 }
 
 static gchar *conv_utf8tojis(const gchar *inbuf, gint *error)
@@ -1829,9 +1871,14 @@ static GHashTable *conv_get_charset_to_str_table(void)
 {
 	static GHashTable *table;
 	gint i;
+	S_LOCK_DEFINE_STATIC(table);
 
-	if (table)
+	S_LOCK(table);
+
+	if (table) {
+		S_UNLOCK(table);
 		return table;
+	}
 
 	table = g_hash_table_new(NULL, g_direct_equal);
 
@@ -1844,16 +1891,23 @@ static GHashTable *conv_get_charset_to_str_table(void)
 		}
 	}
 
+	S_UNLOCK(table);
 	return table;
 }
 
 static GHashTable *conv_get_charset_from_str_table(void)
 {
 	static GHashTable *table;
+	S_LOCK_DEFINE_STATIC(table);
+
 	gint i;
 
-	if (table)
+	S_LOCK(table);
+
+	if (table) {
+		S_UNLOCK(table);
 		return table;
+	}
 
 	table = g_hash_table_new(str_case_hash, str_case_equal);
 
@@ -1862,6 +1916,7 @@ static GHashTable *conv_get_charset_from_str_table(void)
 				    GUINT_TO_POINTER(charsets[i].charset));
 	}
 
+	S_UNLOCK(table);
 	return table;
 }
 
@@ -1891,29 +1946,38 @@ CharSet conv_get_locale_charset(void)
 #ifndef G_OS_WIN32
 	gint i;
 #endif
+	S_LOCK_DEFINE_STATIC(cur_charset);
 
-	if (cur_charset != -1)
+	S_LOCK(cur_charset);
+
+	if (cur_charset != -1) {
+		S_UNLOCK(cur_charset);
 		return cur_charset;
+	}
 
 	cur_locale = conv_get_current_locale();
 	if (!cur_locale) {
 		cur_charset = C_US_ASCII;
+		S_UNLOCK(cur_charset);
 		return cur_charset;
 	}
 
 	if (strcasestr(cur_locale, "UTF-8") || strcasestr(cur_locale, "utf8")) {
 		cur_charset = C_UTF_8;
+		S_UNLOCK(cur_charset);
 		return cur_charset;
 	}
 
 	if ((p = strcasestr(cur_locale, "@euro")) && p[5] == '\0') {
 		cur_charset = C_ISO_8859_15;
+		S_UNLOCK(cur_charset);
 		return cur_charset;
 	}
 
 #ifdef G_OS_WIN32
 	cur_charset = conv_get_charset_from_str(conv_get_locale_charset_str());
 
+	S_UNLOCK(cur_charset);
 	return cur_charset;
 #else
 	for (i = 0; i < sizeof(locale_table) / sizeof(locale_table[0]); i++) {
@@ -1924,6 +1988,7 @@ CharSet conv_get_locale_charset(void)
 		if (!g_ascii_strncasecmp(cur_locale, locale_table[i].locale,
 					 strlen(locale_table[i].locale))) {
 			cur_charset = locale_table[i].charset;
+			S_UNLOCK(cur_charset);
 			return cur_charset;
 		} else if ((p = strchr(locale_table[i].locale, '_')) &&
 			 !strchr(p + 1, '.')) {
@@ -1931,12 +1996,14 @@ CharSet conv_get_locale_charset(void)
 			    !g_ascii_strncasecmp(cur_locale,
 						 locale_table[i].locale, 2)) {
 				cur_charset = locale_table[i].charset;
+				S_UNLOCK(cur_charset);
 				return cur_charset;
 			}
 		}
 	}
 
 	cur_charset = C_AUTO;
+	S_UNLOCK(cur_charset);
 	return cur_charset;
 #endif
 }
@@ -1944,6 +2011,9 @@ CharSet conv_get_locale_charset(void)
 const gchar *conv_get_locale_charset_str(void)
 {
 	static const gchar *codeset = NULL;
+	S_LOCK_DEFINE_STATIC(codeset);
+
+	S_LOCK(codeset);
 
 	if (!codeset) {
 #ifdef G_OS_WIN32
@@ -1956,7 +2026,13 @@ const gchar *conv_get_locale_charset_str(void)
 #endif
 	}
 
-	return codeset ? codeset : CS_INTERNAL;
+	if (codeset) {
+		S_UNLOCK(codeset);
+		return codeset;
+	}
+
+	S_UNLOCK(codeset);
+	return CS_INTERNAL;
 }
 
 CharSet conv_get_internal_charset(void)
@@ -1975,18 +2051,25 @@ CharSet conv_get_outgoing_charset(void)
 	const gchar *cur_locale;
 	const gchar *p;
 	gint i;
+	S_LOCK_DEFINE_STATIC(out_charset);
 
-	if (out_charset != -1)
+	S_LOCK(out_charset);
+
+	if (out_charset != -1) {
+		S_UNLOCK(out_charset);
 		return out_charset;
+	}
 
 	cur_locale = conv_get_current_locale();
 	if (!cur_locale) {
 		out_charset = C_AUTO;
+		S_UNLOCK(out_charset);
 		return out_charset;
 	}
 
 	if ((p = strcasestr(cur_locale, "@euro")) && p[5] == '\0') {
 		out_charset = C_ISO_8859_15;
+		S_UNLOCK(out_charset);
 		return out_charset;
 	}
 
@@ -2008,6 +2091,7 @@ CharSet conv_get_outgoing_charset(void)
 		}
 	}
 
+	S_UNLOCK(out_charset);
 	return out_charset;
 }
 
@@ -2051,6 +2135,9 @@ gboolean conv_is_multibyte_encoding(CharSet encoding)
 const gchar *conv_get_current_locale(void)
 {
 	static const gchar *cur_locale;
+	S_LOCK_DEFINE_STATIC(cur_locale);
+
+	S_LOCK(cur_locale);
 
 	if (!cur_locale) {
 #ifdef G_OS_WIN32
@@ -2071,6 +2158,7 @@ const gchar *conv_get_current_locale(void)
 			    cur_locale ? cur_locale : "(none)");
 	}
 
+	S_UNLOCK(cur_locale);
 	return cur_locale;
 }
 
@@ -2078,9 +2166,14 @@ gboolean conv_is_ja_locale(void)
 {
 	static gint is_ja_locale = -1;
 	const gchar *cur_locale;
+	S_LOCK_DEFINE_STATIC(is_ja_locale);
 
-	if (is_ja_locale != -1)
+	S_LOCK(is_ja_locale);
+
+	if (is_ja_locale != -1) {
+		S_UNLOCK(is_ja_locale);
 		return is_ja_locale != 0;
+	}
 
 	is_ja_locale = 0;
 	cur_locale = conv_get_current_locale();
@@ -2089,6 +2182,7 @@ gboolean conv_is_ja_locale(void)
 			is_ja_locale = 1;
 	}
 
+	S_UNLOCK(is_ja_locale);
 	return is_ja_locale != 0;
 }
 

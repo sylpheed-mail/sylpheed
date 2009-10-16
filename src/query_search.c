@@ -573,21 +573,41 @@ typedef struct _QueryData
 	GTimeVal tv_prev;
 #if USE_THREADS
 	GAsyncQueue *queue;
+	guint timer_tag;
 #endif
 } QueryData;
 
-static void query_search_folder_show_progress(QueryData *data)
+static void query_search_folder_show_progress(const gchar *name, gint count,
+					      gint total)
 {
 	gchar *str;
 
 	str = g_strdup_printf(_("Searching %s (%d / %d)..."),
-			      data->folder_name, data->count, data->total);
+			      name, count, total);
 	gtk_label_set_text(GTK_LABEL(search_window.status_label), str);
 	g_free(str);
 #ifndef USE_THREADS
 	ui_update();
 #endif
 }
+
+#if USE_THREADS
+static gboolean query_search_progress_func(gpointer data)
+{
+	QueryData *qdata = (QueryData *)data;
+	MsgInfo *msginfo;
+
+	gdk_threads_enter();
+	query_search_folder_show_progress(qdata->folder_name,
+					  g_atomic_int_get(&qdata->count),
+					  qdata->total);
+	while ((msginfo = g_async_queue_try_pop(qdata->queue)))
+		query_search_append_msg(msginfo);
+	gdk_threads_leave();
+
+	return TRUE;
+}
+#endif
 
 static gpointer query_search_folder_func(gpointer data)
 {
@@ -616,16 +636,16 @@ static gpointer query_search_folder_func(gpointer data)
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist;
 
-		++qdata->count;
+		g_atomic_int_add(&qdata->count, 1);
 
 		g_get_current_time(&tv_cur);
 		if ((tv_cur.tv_sec - qdata->tv_prev.tv_sec) * G_USEC_PER_SEC +
 		    tv_cur.tv_usec - qdata->tv_prev.tv_usec >
 		    PROGRESS_UPDATE_INTERVAL * 1000) {
-#ifdef USE_THREADS
-			g_main_context_wakeup(NULL);
-#else
-			query_search_folder_show_progress(qdata);
+#ifndef USE_THREADS
+			query_search_folder_show_progress(qdata->folder_name,
+							  qdata->count,
+							  qdata->total);
 #endif
 			qdata->tv_prev = tv_cur;
 		}
@@ -679,7 +699,6 @@ static void query_search_folder(FolderItem *item)
 	QueryData data = {item};
 #if USE_THREADS
 	GThread *thread;
-	gint prev_count = 0;
 	MsgInfo *msginfo;
 #endif
 
@@ -707,22 +726,18 @@ static void query_search_folder(FolderItem *item)
 
 #if USE_THREADS
 	data.queue = g_async_queue_new();
+	data.timer_tag = g_timeout_add(PROGRESS_UPDATE_INTERVAL,
+				       query_search_progress_func, &data);
 	thread = g_thread_create(query_search_folder_func, &data, TRUE, NULL);
 
 	debug_print("query_search_folder: thread started\n");
-	while (g_atomic_int_get(&data.flag) == 0) {
+	while (g_atomic_int_get(&data.flag) == 0)
 		gtk_main_iteration();
-		if (prev_count != data.count) {
-			prev_count = data.count;
-			query_search_folder_show_progress(&data);
-			while ((msginfo = g_async_queue_try_pop(data.queue)))
-				query_search_append_msg(msginfo);
-		}
-	}
 
 	while ((msginfo = g_async_queue_try_pop(data.queue)))
 		query_search_append_msg(msginfo);
 
+	g_source_remove(data.timer_tag);
 	g_thread_join(thread);
 	debug_print("query_search_folder: thread exited\n");
 
