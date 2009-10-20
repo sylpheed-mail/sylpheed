@@ -8,11 +8,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed 2.6.0rc\n"
+"Project-Id-Version: Sylpheed 2.7.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-03 16:39+0900\n"
-"PO-Revision-Date: 2008-12-16 15:58+0300\n"
-"Last-Translator: O.R. Nykyforchyn <nick@il.if.ua>\n"
+"POT-Creation-Date: 2009-08-13 11:38+0900\n"
+"PO-Revision-Date: 2009-09-28 20:00+0300\n"
+"Last-Translator: O.R. Nykyforchyn <oleh.nyk@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -320,7 +320,7 @@ msgstr ""
 "Файл `%s' вже існує.\n"
 "Неможливо створити папку."
 
-#: libsylph/mh.c:1569
+#: libsylph/mh.c:1557
 #, c-format
 msgid ""
 "Directory name\n"
@@ -1251,7 +1251,7 @@ msgstr "Коричневий"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4970
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:4942
 msgid "None"
 msgstr "Ніякий"
 
@@ -1583,7 +1583,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Не вдалось отримати одну з частин листа."
 
 #: src/compose.c:2730 src/headerview.c:233 src/query_search.c:687
-#: src/rpop3.c:663 src/summaryview.c:2299
+#: src/rpop3.c:663 src/summaryview.c:2271
 msgid "(No Subject)"
 msgstr "(Без теми)"
 
@@ -1774,7 +1774,7 @@ msgstr "тип MIME"
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
-#: src/summaryview.c:5119
+#: src/summaryview.c:5091
 msgid "Size"
 msgstr "Розмір"
 
@@ -2142,55 +2142,48 @@ msgid "Add New vCard Entry"
 msgstr "Додати новий запис vCard"
 
 #: src/export.c:202
-#, fuzzy, c-format
 msgid "Exporting %s ..."
-msgstr "Шукаємо %s ..."
+msgstr "Експортуємо %s ..."
 
 #: src/export.c:204
-#, fuzzy
 msgid "Exporting"
-msgstr "Експортувати"
+msgstr "Експортуємо"
 
 #: src/export.c:229
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "Трапилась помилка при відсиланні\n"
+msgstr "Трапилась помилка при експорті."
 
 #: src/export.c:312
 msgid "Export"
 msgstr "Експортувати"
 
 #: src/export.c:331 src/export.c:416
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "Визначте цільовий файл mbox і папку призначення."
+msgstr "Визначте папку-джерело і файл призначення."
 
 #: src/export.c:341 src/import.c:323
-#, fuzzy
 msgid "File format:"
-msgstr "Формат дати"
+msgstr "Формат файла:"
 
 #: src/export.c:346
-#, fuzzy
 msgid "Source folder:"
-msgstr "Вихідна папка:"
+msgstr "Папка-джерело:"
 
 #: src/export.c:351
-#, fuzzy
 msgid "Destination:"
-msgstr "Папка призначення:"
+msgstr "Призначення:"
 
 #: src/export.c:361 src/import.c:343
 msgid "UNIX mbox"
-msgstr ""
+msgstr "UNIX mbox"
 
 #: src/export.c:364
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (номер + .eml)"
 
 #: src/export.c:367
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (тільки номер)"
 
 #: src/export.c:381 src/export.c:387 src/import.c:360 src/import.c:366
 #: src/prefs_account_dialog.c:955
@@ -2198,19 +2191,16 @@ msgid " Select... "
 msgstr " Обрати... "
 
 #: src/export.c:419
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "Визначте цільовий файл mbox і папку призначення."
+msgstr "Визначте папку-джерело і папку призначення."
 
 #: src/export.c:445
-#, fuzzy
 msgid "Select destination file"
-msgstr "Оберіть файл для експорту"
+msgstr "Оберіть файл призначення"
 
 #: src/export.c:449
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Оберіть файл для експорту"
+msgstr "Оберіть папку призначення"
 
 #: src/filesel.c:158
 msgid "Save as"
@@ -2310,9 +2300,8 @@ msgid "/Mar_k all read"
 msgstr "/Позначити як прочитане"
 
 #: src/folderview.c:265 src/folderview.c:290
-#, fuzzy
 msgid "/Send _queued messages"
-msgstr "Відіслати лист(и) з черги"
+msgstr "/Відіслати лист(и) з черги"
 
 #: src/folderview.c:267 src/folderview.c:292 src/folderview.c:314
 msgid "/_Search messages..."
@@ -2535,7 +2524,7 @@ msgid "Creating header view...\n"
 msgstr "Створюємо область перегляду заголовка...\n"
 
 #: src/headerview.c:212 src/query_search.c:688 src/rpop3.c:664
-#: src/summaryview.c:2302
+#: src/summaryview.c:2274
 msgid "(No From)"
 msgstr "(Без відправника)"
 
@@ -2548,68 +2537,56 @@ msgid "Can't load the image."
 msgstr "Не вдалось завантажити зображення."
 
 #: src/import.c:185
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "Файл %s не існує."
+msgstr "Файл-джерело не існує."
 
 #: src/import.c:196
-#, fuzzy
 msgid "Can't find the destination folder."
-msgstr "Визначте цільовий файл mbox і папку призначення."
+msgstr "Не вдалось знайти папку призначення."
 
 #: src/import.c:201
-#, fuzzy, c-format
 msgid "Importing %s ..."
-msgstr "Шукаємо %s ..."
+msgstr "Імпортуємо %s ..."
 
 #: src/import.c:203
-#, fuzzy
 msgid "Importing"
-msgstr "Імпортувати"
+msgstr "Імпортуємо"
 
 #: src/import.c:222
-#, fuzzy
 msgid "Scanning folder..."
-msgstr "Перечитуємо папку %s ..."
+msgstr "Перечитуємо папку ..."
 
 #: src/import.c:233
-#, fuzzy
 msgid "Error occurred on import."
-msgstr "Трапилась помилка при відсиланні\n"
+msgstr "Трапилась помилка при імпорті."
 
 #: src/import.c:294
 msgid "Import"
 msgstr "Імпортувати"
 
 #: src/import.c:313 src/import.c:398
-#, fuzzy
 msgid "Specify source file and destination folder."
-msgstr "Визначте цільовий файл mbox і папку призначення."
+msgstr "Визначте файл-джерело і папку призначення."
 
 #: src/import.c:328
-#, fuzzy
 msgid "Source:"
-msgstr "Вихідна папка:"
+msgstr "Джерело:"
 
 #: src/import.c:333
-#, fuzzy
 msgid "Destination folder:"
 msgstr "Папка призначення:"
 
 #: src/import.c:346
-#, fuzzy
 msgid "eml (folder)"
-msgstr "Нова папка"
+msgstr "eml (папка)"
 
 #: src/import.c:395
-#, fuzzy
 msgid "Specify source folder including eml files and destination folder."
-msgstr "Визначте цільовий файл mbox і папку призначення."
+msgstr "Визначте папку-джерело з eml-файлами і папку призначення."
 
 #: src/import.c:425
-#, fuzzy
 msgid "Select importing folder"
-msgstr "Обрати імпортований файл"
+msgstr "Обрати імпортовану папку"
 
 #: src/import.c:428
 msgid "Select importing file"
@@ -2898,7 +2875,7 @@ msgstr "Виходимо"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Отримуємо лист (%d / %d) (%s / %s)"
 
-#: src/inc.c:1201 src/inc.c:1221 src/summaryview.c:4531
+#: src/inc.c:1201 src/inc.c:1221 src/summaryview.c:4503
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3188,14 +3165,12 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/Файл/Скринька/Перебудувати дерево папок"
 
 #: src/mainwindow.c:559
-#, fuzzy
 msgid "/_File/_Import mail data..."
-msgstr "/Файл/Імпортувати файл mbox"
+msgstr "/Файл/Імпортувати пошту..."
 
 #: src/mainwindow.c:560
-#, fuzzy
 msgid "/_File/_Export mail data..."
-msgstr "/Файл/Експортувати в файл mbox..."
+msgstr "/Файл/Експортувати пошту..."
 
 #: src/mainwindow.c:562
 msgid "/_File/Empty all _trash"
@@ -3695,9 +3670,8 @@ msgid "/_Configuration/_Actions..."
 msgstr "/Конфігурація/Дії..."
 
 #: src/mainwindow.c:868
-#, fuzzy
 msgid "/_Configuration/Plug-in _manager..."
-msgstr "/Конфігурація/Шаблон..."
+msgstr "/Конфігурація/Менеджер плагінів..."
 
 #: src/mainwindow.c:870
 msgid "/_Configuration/---"
@@ -3765,7 +3739,7 @@ msgstr "/Довідка/---"
 
 #: src/mainwindow.c:892
 msgid "/_Help/_Update check..."
-msgstr ""
+msgstr "/Довідка/Перевірка оновлень"
 
 #: src/mainwindow.c:936
 msgid "Creating main window...\n"
@@ -3776,8 +3750,8 @@ msgstr "Створюємо головне вікно...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача розміщення кольору %d\n"
 
-#: src/mainwindow.c:1201 src/summaryview.c:2451 src/summaryview.c:2536
-#: src/summaryview.c:4096 src/summaryview.c:4225 src/summaryview.c:4602
+#: src/mainwindow.c:1201 src/summaryview.c:2423 src/summaryview.c:2508
+#: src/summaryview.c:4068 src/summaryview.c:4197 src/summaryview.c:4574
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -4035,7 +4009,7 @@ msgstr "Вкладення"
 msgid "Message View - Sylpheed"
 msgstr "Зміст листа - Sylpheed"
 
-#: src/messageview.c:765 src/summaryview.c:3654
+#: src/messageview.c:765 src/summaryview.c:3626
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не вдалось зберегти файл `%s'."
@@ -4193,31 +4167,27 @@ msgstr ""
 
 #: src/plugin_manager.c:115
 msgid "Plug-in manager"
-msgstr ""
+msgstr "Менеджер плагінів"
 
 #: src/plugin_manager.c:165
-#, fuzzy
 msgid "Plug-in information"
-msgstr "Особиста інформація"
+msgstr "Інформація плагіна"
 
 #: src/plugin_manager.c:192 src/plugin_manager.c:194 src/plugin_manager.c:195
-#, fuzzy
 msgid "(Unknown)"
-msgstr "невідомо"
+msgstr "(Невідомо)"
 
 #: src/plugin_manager.c:194
 msgid "Author: "
-msgstr ""
+msgstr "Автор: "
 
 #: src/plugin_manager.c:195
-#, fuzzy
 msgid "File: "
-msgstr "Файл"
+msgstr "Файл: "
 
 #: src/plugin_manager.c:197
-#, fuzzy
 msgid "Description: "
-msgstr "Опис"
+msgstr "Опис: "
 
 #: src/prefs_account_dialog.c:441
 msgid "Opening account preferences window...\n"
@@ -5273,9 +5243,8 @@ msgid "External commands"
 msgstr "Зовнішні команди"
 
 #: src/prefs_common_dialog.c:2287
-#, fuzzy
 msgid "Update"
-msgstr "Дата"
+msgstr "Оновлення"
 
 #: src/prefs_common_dialog.c:2340
 msgid "Receive dialog"
@@ -5357,20 +5326,19 @@ msgstr "Вживати зовнішню програму для відсилан
 
 #: src/prefs_common_dialog.c:2617
 msgid "Update check requires 'curl' command."
-msgstr ""
+msgstr "Перевірка оновлень потребує команди 'curl'."
 
 #: src/prefs_common_dialog.c:2628
-#, fuzzy
 msgid "Enable auto update check"
-msgstr "Ввімкнути перевірку правопису"
+msgstr "Ввімкнути автоматичну перевірку оновлень"
 
 #: src/prefs_common_dialog.c:2630
 msgid "Use HTTP proxy"
-msgstr ""
+msgstr "Вживати HTTP-проксі"
 
 #: src/prefs_common_dialog.c:2632
 msgid "HTTP proxy host (hostname:port):"
-msgstr ""
+msgstr "адреса HTTP-проксі (hostname:port)"
 
 #: src/prefs_common_dialog.c:2672
 msgid "Enable strict checking of the integrity of summary caches"
@@ -6090,19 +6058,19 @@ msgstr "Вкладення"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
-#: src/summaryview.c:5112
+#: src/summaryview.c:5084
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
-#: src/summaryview.c:5115
+#: src/summaryview.c:5087
 msgid "From"
 msgstr "Від"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
-#: src/summaryview.c:5117
+#: src/summaryview.c:5089
 msgid "Date"
 msgstr "Дата"
 
@@ -6112,7 +6080,7 @@ msgid "Number"
 msgstr "Номер"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5123
+#: src/prefs_summary_column.c:74 src/summaryview.c:5095
 msgid "To"
 msgstr "Кому:"
 
@@ -6406,7 +6374,7 @@ msgstr "Шукаємо %s ..."
 msgid "Searching %s (%d / %d)..."
 msgstr "Шукаємо %s (%d / %d)..."
 
-#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2223
+#: src/query_search.c:696 src/rpop3.c:672 src/summaryview.c:2195
 msgid "(No Date)"
 msgstr "(Без дати)"
 
@@ -6489,7 +6457,7 @@ msgstr "Про програму"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - віддалена POP3-скринька"
 
-#: src/rpop3.c:414 src/summaryview.c:5121
+#: src/rpop3.c:414 src/summaryview.c:5093
 msgid "No."
 msgstr "Номер"
 
@@ -6910,7 +6878,7 @@ msgstr "Отримання списку конференцій..."
 msgid "Can't retrieve newsgroup list."
 msgstr "Не вдалось отримати список конференцій"
 
-#: src/subscribedialog.c:526 src/summaryview.c:911
+#: src/subscribedialog.c:526 src/summaryview.c:883
 msgid "Done."
 msgstr "Виконано."
 
@@ -7019,235 +6987,230 @@ msgstr "//Створити правило фільтрування/За поле
 msgid "Creating summary view...\n"
 msgstr "Створюємо область перегляду списка...\n"
 
-#: src/summaryview.c:641
-#, fuzzy, c-format
-msgid "Scanning folder (%s) (%d)..."
-msgstr "Перечитуємо папку (%s)..."
-
-#: src/summaryview.c:694
+#: src/summaryview.c:671
 msgid "Process mark"
 msgstr "Обробка позначок"
 
-#: src/summaryview.c:695
+#: src/summaryview.c:672
 msgid "Some marks are left. Process it?"
 msgstr "Залишились деякі позначки. Опрацювати?"
 
-#: src/summaryview.c:751
+#: src/summaryview.c:728
 #, c-format
 msgid "Scanning folder (%s)..."
 msgstr "Перечитуємо папку (%s)..."
 
-#: src/summaryview.c:1418
+#: src/summaryview.c:1390
 msgid "_Search again"
 msgstr "Шукати знову"
 
-#: src/summaryview.c:1439 src/summaryview.c:1448
+#: src/summaryview.c:1411 src/summaryview.c:1420
 msgid "No more unread messages"
 msgstr "Більше немає непрочитаних листів"
 
-#: src/summaryview.c:1440
+#: src/summaryview.c:1412
 msgid "No unread message found. Search from the end?"
 msgstr "Не знайдено непрочитаних листів. Шукати з кінця?"
 
-#: src/summaryview.c:1442
+#: src/summaryview.c:1414
 msgid "No unread messages."
 msgstr "Немає непрочитаних листів"
 
-#: src/summaryview.c:1449
+#: src/summaryview.c:1421
 msgid "No unread message found. Go to next folder?"
 msgstr "Не знайдено непрочитаних листів. Перейти до наступної папки?"
 
-#: src/summaryview.c:1457 src/summaryview.c:1466
+#: src/summaryview.c:1429 src/summaryview.c:1438
 msgid "No more new messages"
 msgstr "Більше немає нових листів"
 
-#: src/summaryview.c:1458
+#: src/summaryview.c:1430
 msgid "No new message found. Search from the end?"
 msgstr "Не знайдено нових листів. Шукати з кінця?"
 
-#: src/summaryview.c:1460
+#: src/summaryview.c:1432
 msgid "No new messages."
 msgstr "Немає нових листів"
 
-#: src/summaryview.c:1467
+#: src/summaryview.c:1439
 msgid "No new message found. Go to next folder?"
 msgstr "Не знайдено нових листів. Перейти до наступної папки?"
 
-#: src/summaryview.c:1475 src/summaryview.c:1484
+#: src/summaryview.c:1447 src/summaryview.c:1456
 msgid "No more marked messages"
 msgstr "Більше немає позначених листів"
 
-#: src/summaryview.c:1476
+#: src/summaryview.c:1448
 msgid "No marked message found. Search from the end?"
 msgstr "Не знайдено позначених листів. Шукати з кінця?"
 
-#: src/summaryview.c:1478 src/summaryview.c:1487
+#: src/summaryview.c:1450 src/summaryview.c:1459
 msgid "No marked messages."
 msgstr "Немає позначених листів."
 
-#: src/summaryview.c:1485
+#: src/summaryview.c:1457
 msgid "No marked message found. Search from the beginning?"
 msgstr "Не знайдено позначених листів. Шукати з початку?"
 
-#: src/summaryview.c:1493 src/summaryview.c:1502
+#: src/summaryview.c:1465 src/summaryview.c:1474
 msgid "No more labeled messages"
 msgstr "Більше немає виділених листів"
 
-#: src/summaryview.c:1494
+#: src/summaryview.c:1466
 msgid "No labeled message found. Search from the end?"
 msgstr "Не знайдено виділених листів. Шукати з кінця?"
 
-#: src/summaryview.c:1496 src/summaryview.c:1505
+#: src/summaryview.c:1468 src/summaryview.c:1477
 msgid "No labeled messages."
 msgstr "Немає виділених листів"
 
-#: src/summaryview.c:1503
+#: src/summaryview.c:1475
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Не знайдено виділених листів. Шукати з початку?"
 
-#: src/summaryview.c:1850
+#: src/summaryview.c:1822
 msgid "Attracting messages by subject..."
 msgstr "Групування листів за темами..."
 
-#: src/summaryview.c:2044
+#: src/summaryview.c:2016
 #, c-format
 msgid "%d deleted"
 msgstr "%d видалено"
 
-#: src/summaryview.c:2048
+#: src/summaryview.c:2020
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d переміщено"
 
-#: src/summaryview.c:2049 src/summaryview.c:2054
+#: src/summaryview.c:2021 src/summaryview.c:2026
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2053
+#: src/summaryview.c:2025
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d скопійовано"
 
-#: src/summaryview.c:2068
+#: src/summaryview.c:2040
 msgid " item(s) selected"
 msgstr " записів обрано"
 
-#: src/summaryview.c:2090
+#: src/summaryview.c:2062
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d нових, %d непрочитаних, %d загалом (%s)"
 
-#: src/summaryview.c:2094
+#: src/summaryview.c:2066
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d нових, %d непрочитаних, %d загалом"
 
-#: src/summaryview.c:2130
+#: src/summaryview.c:2102
 msgid "Sorting summary..."
 msgstr "Сортуємо список..."
 
-#: src/summaryview.c:2386
+#: src/summaryview.c:2358
 msgid "\tSetting summary from message data..."
 msgstr "\tФормуємо список з даних листів..."
 
-#: src/summaryview.c:2388
+#: src/summaryview.c:2360
 msgid "Setting summary from message data..."
 msgstr "Формуємо список з даних листів..."
 
-#: src/summaryview.c:2495
+#: src/summaryview.c:2467
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Пишемо кеш списка (%s)..."
 
-#: src/summaryview.c:2855
+#: src/summaryview.c:2827
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Лист %d позначено\n"
 
-#: src/summaryview.c:2923
+#: src/summaryview.c:2895
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Лист %d позначено як прочитаний\n"
 
-#: src/summaryview.c:3124
+#: src/summaryview.c:3096
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Лист %d позначено як непрочитаний\n"
 
-#: src/summaryview.c:3185
+#: src/summaryview.c:3157
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Лист %s/%d призначено до видалення\n"
 
-#: src/summaryview.c:3213
+#: src/summaryview.c:3185
 msgid "Delete message(s)"
 msgstr "Видалити лист(и)"
 
-#: src/summaryview.c:3214
+#: src/summaryview.c:3186
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Справді видалити лист(и) з кошика?"
 
-#: src/summaryview.c:3288
+#: src/summaryview.c:3260
 msgid "Deleting duplicated messages..."
 msgstr "Видаляємо повторювані листи..."
 
-#: src/summaryview.c:3326
+#: src/summaryview.c:3298
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "З листа %s/%d знято позначки\n"
 
-#: src/summaryview.c:3386
+#: src/summaryview.c:3358
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Лист %d призначено до переміщення в %s\n"
 
-#: src/summaryview.c:3418
+#: src/summaryview.c:3390
 msgid "Destination is same as current folder."
 msgstr "Призначення збігається з поточною папкою."
 
-#: src/summaryview.c:3455
+#: src/summaryview.c:3427
 msgid "Select folder to move"
 msgstr "Обрати папку для перенесення"
 
-#: src/summaryview.c:3485
+#: src/summaryview.c:3457
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Лист %d призначено до копіювання в %s\n"
 
-#: src/summaryview.c:3516
+#: src/summaryview.c:3488
 msgid "Destination for copy is same as current folder."
 msgstr "Пропонується копіювання з папки в неї ж."
 
-#: src/summaryview.c:3552
+#: src/summaryview.c:3524
 msgid "Select folder to copy"
 msgstr "Обрати папку для копіювання"
 
-#: src/summaryview.c:3697
+#: src/summaryview.c:3669
 msgid "Error occurred while processing messages."
 msgstr "При обробці пошти трапилась помилка."
 
-#: src/summaryview.c:4003 src/summaryview.c:4004
+#: src/summaryview.c:3975 src/summaryview.c:3976
 msgid "Building threads..."
 msgstr "Будуємо нитки обговорення..."
 
-#: src/summaryview.c:4154 src/summaryview.c:4155
+#: src/summaryview.c:4126 src/summaryview.c:4127
 msgid "Unthreading..."
 msgstr "Скасування ниток обговорення..."
 
-#: src/summaryview.c:4448 src/summaryview.c:4509
+#: src/summaryview.c:4420 src/summaryview.c:4481
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Фільтрування (%d / %d)..."
 
-#: src/summaryview.c:4571
+#: src/summaryview.c:4543
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:4572
+#: src/summaryview.c:4544
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:4609
+#: src/summaryview.c:4581
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."
@@ -7346,25 +7309,24 @@ msgid ""
 "The newer version of Sylpheed found.\n"
 "Upgrade now?"
 msgstr ""
+"Існує новіша версія Sylpheed.\n"
+"Оновитись зараз?"
 
 #: src/update_check.c:105
-#, fuzzy
 msgid "New version found"
-msgstr "Підпису не знайдено"
+msgstr "Знайдено нову версію"
 
 #: src/update_check.c:199
-#, fuzzy
 msgid "Information"
-msgstr "Інформація про сервер"
+msgstr "Інформація"
 
 #: src/update_check.c:200
-#, fuzzy
 msgid "Sylpheed is already the latest version."
-msgstr "вже запущено інший Sylpheed.\n"
+msgstr "Sylpheed вже останньої версії."
 
 #: src/update_check.c:203
 msgid "Couldn't get the version information."
-msgstr ""
+msgstr "Не вдалось отримати інформацію про версію."
 
 #~ msgid "Importing file:"
 #~ msgstr "Імпортуємо файл:"
