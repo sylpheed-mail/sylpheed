@@ -1,123 +1,430 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-<HTML>
-<HEAD>
- <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
- <TITLE>Sylpheed FAQ: Sylpheed FAQ - Interface</TITLE>
- <LINK HREF="sylpheed-faq-2.html" REL=previous>
- <LINK HREF="sylpheed-faq.html#toc3" REL=contents>
-</HEAD>
-<BODY>
-Next
-<A HREF="sylpheed-faq-2.html">Previous</A>
-<A HREF="sylpheed-faq.html#toc3">Contents</A>
-<HR>
-<H2><A NAME="s3">3. Sylpheed FAQ - Interface</A></H2>
-
-<H2><A NAME="ss3.1">3.1 Q01  How do I make Sylpheed display my language?</A>
-</H2>
-
-<P>A.   You have to set some environment variables such as
-<CODE>LANG,LC_CTYPE, LC_MESSAGES</CODE> to your local language.
-Usually <CODE>LANG</CODE> (or <CODE>LC_ALL</CODE>) is sufficient.
-<H2><A NAME="ss3.2">3.2 Q02  I don't like the default font. Can I change that?</A>
-</H2>
-
-<P>A.   Yes. In Configuration&gt;common preferences under the
-"Display" tab.
-<H2><A NAME="ss3.3">3.3 Q03  There are too many columns in the message list!!</A>
-</H2>
-
-<P>A.   In Configuration&gt;common preferences under the
-"Display" tab you can press the button "Set display
-item of summary". That pops up a screen with all the
-options you can show or leave out of the message
-list.
-<H2><A NAME="ss3.4">3.4 Q04  Can I use a different editor to write my mails?</A>
-</H2>
-
-<P>A.   You can. In Configuration&gt;common preferences under
-the "Other" tab you can define your editor of choice.
-Remember, if you want to use a command line editor
-like vi or emacs, to write the name of the shell
-(term, term, rxvt) with the -e parameter in front of
-the editor. E.g.: <CODE>rxvt -e vi %s</CODE>
-<H2><A NAME="ss3.5">3.5 Q05  How to change the font size in the Sylpheed interface?</A>
-</H2>
-
-<P>A.   You can set the GTK+ font by <CODE>~/.gtkrc</CODE>, or
-<CODE>~/.gtkrc.mine</CODE>,
-(which is included by <CODE>~/.gtkrc</CODE>).
-For example:
-<CODE>style "default"
-{
-font =
-"-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1
-"
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+      <link rel="start" href="sylpheed-faq.html" title="Sylpheed FAQ">
+      <link rel="up" href="sylpheed-faq.html" title="Sylpheed FAQ">
+      <link rel="prev" href="sylpheed-faq-2.html" title="Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration">
+      <link rel="next" href="sylpheed-faq-4.html" title="Appendix&nbsp;A.&nbsp;GNU Free Documentation License">
+      <link rel="chapter" href="sylpheed-faq-1.html" title="Chapter&nbsp;1.&nbsp;Sylpheed FAQ - General Information">
+      <link rel="chapter" href="sylpheed-faq-2.html" title="Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration">
+      <link rel="chapter" href="sylpheed-faq-3.html" title="Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface">
+      <link rel="appendix" href="sylpheed-faq-4.html" title="Appendix&nbsp;A.&nbsp;GNU Free Documentation License"><style type="text/css">
+pre.programlisting, pre.screen {
+background-color : #e0e0e0;
+padding : 0.2cm;
 }
-widget_class "*"        style "default"</CODE>
-<H2><A NAME="ss3.6">3.6 Q06  Sylpheed saves my outgoing mail (in Outbox). Can I make it stop doing that?</A>
-</H2>
+.question {
+font-weight : bold;
+}
 
-<P>A.   In Configuration&gt;common preferences there's a
-checkbox "Save sent message to outbox". Uncheck it,
-and it's solved.
-<H2><A NAME="ss3.7">3.7 Q07  How can I change the key-bindings (hot-keys) in Sylpheed?</A>
-</H2>
-
-<P>A.   That is very simple. Suppose you want to assign a
-shortcut key to a function, e.g. sending all mail
-out should start when you press Ctrl-Y. Click the
-Message' menu and move the mouse over "Send all
-messages". Now you press Ctrl-Y. Immediately the menu
-text is updated and the function is in place. Please
-note that a previous function that Ctrl-Y was
-assigned to, will no longer have a shortcut key. If
-you want to remove the key binding, do the same
-thing, but press the "delete" key on the menu-item.
-Then the key binding is removed.
-<H2><A NAME="ss3.8">3.8 Q08  Can I close windows without the mouse?</A>
-</H2>
-
-<P>A.   Of course!! Not all windows, but by pressing ESCape,
-you can close the addressbook, the window of viewing
-a mail-source (message&gt;view source), the window of
-viewing the headers, and several others. Just give
-it a try and you will find all of them.
-<H2><A NAME="ss3.9">3.9 Q09  Can I change the way the date is displayed in the message summary?</A>
-</H2>
-
-<P>A.   As of 0.4.65 you can. The options are:
-%y = year in numbers     %m = month in number
-%d = day in numbers      %c = date/time for locale
-%A = full weekday name   %a = short month name
-%B = full month name     %b = short month name
-%H = hours in 24-clock   %I = hours in 12-clock
-For more information go to the configuration menu,
-select Common preferences / Display and move the
-mouse cursor over the input box for the date display
-format.
-<H2><A NAME="ss3.10">3.10 Q10  Why can't I see the compface pictures?</A>
-</H2>
-
-<P>A.   You need to enable displaying of the header pane in the
-general preferences
-<H2><A NAME="ss3.11">3.11 Q11  I still can't see the pictures. Why not?</A>
-</H2>
-
-<P>A.   You may not have compiled in Compface support. See Q11
-in the Installation/Configuration section.
-<H2><A NAME="ss3.12">3.12 Q12  Why does the URL Launcher not launch my webbrowser?</A>
-</H2>
-
-<P>A.   You need to double-click the url.
-<H2><A NAME="ss3.13">3.13 Q13 Attachments with spaces in the name won't open!</A>
-</H2>
-
-<P>A.   When you try to launch a helper application, like an image viewer, with an attachment that has spaces in the name, put quotes around the %s
-parameter. Example: gedit '%s'
-<HR>
-Next
-<A HREF="sylpheed-faq-2.html">Previous</A>
-<A HREF="sylpheed-faq.html#toc3">Contents</A>
-</BODY>
-</HTML>
+</style></head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="sylpheed-faq-2.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="sylpheed-faq-4.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="sylpheed-faq-3"></a>Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="qandaset">
+            <dl>
+               <dt>3.1. <a href="sylpheed-faq-3.html#d0e1378">How do I make Sylpheed display my language?
+                     </a></dt>
+               <dt>3.2. <a href="sylpheed-faq-3.html#d0e1400">I don't like the default font. Can I change that?
+                     </a></dt>
+               <dt>3.3. <a href="sylpheed-faq-3.html#d0e1416">There are too many columns in the message list!
+                     </a></dt>
+               <dt>3.4. <a href="sylpheed-faq-3.html#d0e1435">Can I use a different editor to write my mails?
+                     </a></dt>
+               <dt>3.5. <a href="sylpheed-faq-3.html#d0e1473">How to change the font size in the Sylpheed interface?
+                     </a></dt>
+               <dt>3.6. <a href="sylpheed-faq-3.html#d0e1491">Sylpheed saves my outgoing mail (in Outbox). Can I make it stop doing that?
+                     </a></dt>
+               <dt>3.7. <a href="sylpheed-faq-3.html#d0e1507">How can I change the key bindings (hotkeys) in Sylpheed?
+                     </a></dt>
+               <dt>3.8. <a href="sylpheed-faq-3.html#d0e1598">Can I close windows without the mouse?
+                     </a></dt>
+               <dt>3.9. <a href="sylpheed-faq-3.html#d0e1614">Can I change the way the date is displayed in the message summary?
+                     </a></dt>
+               <dt>3.10. <a href="sylpheed-faq-3.html#d0e1641">Why can't I see the compface pictures?
+                     </a></dt>
+               <dt>3.11. <a href="sylpheed-faq-3.html#d0e1648">I still can't see the pictures. Why not?
+                     </a></dt>
+               <dt>3.12. <a href="sylpheed-faq-3.html#d0e1655">Why does the URL launcher not launch my web browser?
+                     </a></dt>
+               <dt>3.13. <a href="sylpheed-faq-3.html#d0e1672">Attachments with spaces in the name won't open!
+                     </a></dt>
+               <dt>3.14. <a href="sylpheed-faq-3.html#d0e1685">Where is the Bcc when I compose a mail?
+                     </a></dt>
+               <dt>3.15. <a href="sylpheed-faq-3.html#d0e1703">How do I change the toolbar?</a></dt>
+               <dt>3.16. <a href="sylpheed-faq-3.html#d0e1725">Why isn't the next message displayed when I delete a message? </a></dt>
+               <dt>3.17. <a href="sylpheed-faq-3.html#d0e1745">How can I remove mailing list information from Subject headers?</a></dt>
+            </dl>
+            <table border="0" summary="Q and A Set" cellspacing="13px">
+               <col align="left" width="1%">
+               <tbody>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1378"></a><a name="d0e1379"></a><b>3.1.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I make Sylpheed display my language?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You have to set some environment variables, such as
+                                <code class="envar">LANG</code>, <code class="envar">LC_CTYPE</code>, <code class="envar">LC_MESSAGES</code> to your local language.
+                                Usually <code class="envar">LANG</code> (or <code class="envar">LC_ALL</code>) is sufficient. Note that modern distributions and operating systems do this for you automatically.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1400"></a><a name="d0e1401"></a><b>3.2.</b></td>
+                     <td align="left" valign="top">
+                        <p>I don't like the default font. Can I change that?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Yes. In <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span>, under the
+                                <span class="guimenuitem">Display</span> tab.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1416"></a><a name="d0e1417"></a><b>3.3.</b></td>
+                     <td align="left" valign="top">
+                        <p>There are too many columns in the message list!
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>In <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span> under the
+                                <span class="guimenuitem">Display</span> tab, you can press the button <span class="guibutton">Set display item of summary...</span>. That pops up a screen with all the
+                                options you can show or leave out of the message
+                                list.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1435"></a><a name="d0e1436"></a><b>3.4.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I use a different editor to write my mails?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You can. In <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences</span>, under
+                                the <span class="guimenuitem">Details</span> and <span class="guimenuitem">External commands</span> tabs, you can define your editor of choice.
+                                Remember, if you want to use a command line editor
+                                like vi or emacs, to write the name of the shell
+                                (term, term, rxvt) with the <em class="parameter"><code>-e</code></em> parameter in front of
+                                the editor. E.g.: <span><strong class="command">rxvt -e vi %s</strong></span>.
+                        </p>
+                        <p>Also, make sure that you have checked <span class="guilabel">Automatically launch the external editor</span> in <span class="guimenuitem">Common preferences</span>-&gt;<span class="guimenuitem">Compose</span>-&gt;<span class="guimenuitem">Editor</span>, if you want the editor of your choice to be launched every time you begin composing a message. 
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1473"></a><a name="d0e1474"></a><b>3.5.</b></td>
+                     <td align="left" valign="top">
+                        <p>How to change the font size in the Sylpheed interface?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You can set the GTK+ font by <code class="filename">$HOME/.gtkrc-2.0</code>, or
+                                <code class="filename">$HOME/.gtkrc-2.0.mine</code>,
+                                (which is included by <code class="filename">$HOME/.gtkrc-2.0</code>).
+                                For example:
+                        </p><pre class="programlisting">style "default" {
+       font = "-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1 "
+}
+widget_class "*" style "default"
+</pre></td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1491"></a><a name="d0e1492"></a><b>3.6.</b></td>
+                     <td align="left" valign="top">
+                        <p>Sylpheed saves my outgoing mail (in Outbox). Can I make it stop doing that?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>In <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span>, there's a
+                                checkbox <span class="guilabel">Save sent message to outbox</span>. Uncheck it,
+                                and it's solved.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1507"></a><a name="d0e1508"></a><b>3.7.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I change the key bindings (hotkeys) in Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Unlike Sylpheed 1.x,  Sylpheed 2.x doesn't allow direct modification of the menu shortcuts by default. Nevertheless, you can
+                           use the following methods to configure them:
+                        </p>
+                        <div class="orderedlist">
+                           <ol type="1">
+                              <li>
+                                 <p><span class="emphasis"><em>Using GNOME 2.8 or later:</em></span> run gconf-editor from <span class="guimenu">Applications</span>-&gt;<span class="guisubmenu">System Tools</span>-&gt;<span class="guimenuitem">Configuration Editor</span>. Select <span class="guimenu">desktop</span>-&gt;<span class="guisubmenu">gnome</span>-&gt;<span class="guisubmenu">interface</span> and check <span class="guilabel">can-change-accels</span> there.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><span class="emphasis"><em>Using GNOME before 2.8, or other environments:</em></span> add the following line to the file <code class="filename">~/.gtkrc-2.0</code> (or create a new one, if it doesn't exist):
+                                 </p><pre class="programlisting">gtk-can-change-accels = 1</pre></li>
+                              <li>
+                                 <p>When Sylpheed is not running, directly edit <code class="filename">~/.sylpheed-2.0/menurc</code> with a text editor.
+                                 </p>
+                              </li>
+                           </ol>
+                        </div>
+                        <p>After that, the key binding change itself is very simple. Suppose you want to assign a
+                                shortcut key to a function, e.g. sending all mail
+                                out should start when you press <span><strong class="keycap">Ctrl</strong></span>-<span><strong class="keycap">Y</strong></span>. Click the
+                                 <span class="guimenu">Message</span> menu and move the mouse over <span class="guimenuitem">Send all messages</span>. Now you press <span><strong class="keycap">Ctrl</strong></span>-<span><strong class="keycap">Y</strong></span>. Immediately the menu
+                                text is updated and the function is in place. Please
+                                note that a previous function that <span><strong class="keycap">Ctrl</strong></span>-<span><strong class="keycap">Y</strong></span> was
+                                assigned to, will no longer have a shortcut key. If
+                                you want to remove the key binding, do the same
+                                thing, but press the <span><strong class="keycap">Delete</strong></span> key on the menu item.
+                                Then the key binding is removed.
+                        </p>
+                        <p>Also see <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span>-&gt;<span class="guimenuitem">Details</span>-&gt;<span class="guimenuitem">Interface</span>+<span class="guilabel">Set key bindings...</span> where you are able to reset the Default key bindings, or use other predefined key bindings.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1598"></a><a name="d0e1599"></a><b>3.8.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I close windows without the mouse?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Of course! Not all windows, but by pressing <span><strong class="keycap">Escape</strong></span>,
+                                you can close the address book, the window of viewing
+                                a mail source (<span class="guimenu">View</span>-&gt;<span class="guimenuitem">Message source</span>), the window of
+                                viewing the headers, and several others. Just give
+                                it a try and you will find all of them.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1614"></a><a name="d0e1615"></a><b>3.9.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I change the way the date is displayed in the message summary?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>As of 0.4.65 you can. The options are:</p><pre class="programlisting">     %y = year in numbers     %m = month in number
+     %d = day in numbers      %c = date/time for locale
+     %A = full weekday name   %a = short month name
+     %B = full month name     %b = short month name
+     %H = hours in 24-clock   %I = hours in 12-clock</pre><p>For more information, go to the <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences</span>-&gt;<span class="guimenuitem">Display</span>-&gt;<span class="guimenuitem">General</span>  and choose the <span class="guibutton">...</span> labeled button.
+                           For more options, see <span><strong class="command">man 3 strftime</strong></span>.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1641"></a><a name="d0e1642"></a><b>3.10.</b></td>
+                     <td align="left" valign="top">
+                        <p>Why can't I see the compface pictures?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You need to enable displaying of the header pane in the
+                                general preferences.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1648"></a><a name="d0e1649"></a><b>3.11.</b></td>
+                     <td align="left" valign="top">
+                        <p>I still can't see the pictures. Why not?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You may not have compiled in Compface support. See  the appropriate question in the Installation and Configuration section.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1655"></a><a name="d0e1656"></a><b>3.12.</b></td>
+                     <td align="left" valign="top">
+                        <p>Why does the URL launcher not launch my web browser?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You need to double click the URL.
+                           Also, check that you have configured your web browser correctly in <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span>-&gt;<span class="guimenuitem"> Details</span>-&gt;<span class="guimenuitem">External commands</span>. 
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1672"></a><a name="d0e1673"></a><b>3.13.</b></td>
+                     <td align="left" valign="top">
+                        <p>Attachments with spaces in the name won't open!
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>When you try to launch a helper application, like an image viewer, with an attachment that has spaces in the name, put quotes
+                           around the <em class="parameter"><code>%s</code></em>
+                           parameter. Example: <span><strong class="command">gedit '%s'</strong></span>
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1685"></a><a name="d0e1686"></a><b>3.14.</b></td>
+                     <td align="left" valign="top">
+                        <p>Where is the Bcc when I compose a mail?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Open <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Preferences for current account...</span>-&gt;<span class="guimenuitem">Compose</span>. There you can check the <span class="guilabel">Bcc</span> checkbox and optionally enter an email address.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1703"></a><a name="d0e1704"></a><b>3.15.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I change the toolbar?</p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Go to <span class="guimenu">View</span>-&gt;<span class="guimenuitem">Customize toolbar...</span> and select items from the <span class="guilabel">Available items</span> list to be displayed on the toolbar. You can modify the order by using the <span class="guibutton">Up</span> or <span class="guibutton">Down</span> button. The customization dialog also offers you to revert your modifications to default.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1725"></a><a name="d0e1726"></a><b>3.16.</b></td>
+                     <td align="left" valign="top">
+                        <p>Why isn't the next message displayed when I delete a message? </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Go to <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span>-&gt;<span class="guimenuitem">Details</span>-&gt;<span class="guimenuitem">Interface</span>, and select <span class="guilabel">Always open messages in summary when selected</span>. 
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1745"></a><a name="d0e1746"></a><b>3.17.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I remove mailing list information from Subject headers?</p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Very often, when you are subscribed to a mailing list, you will store each message from that list in a folder dedicated to
+                           that list. Depending on remote software solution and configuration,  mailing lists tend to include some words in the Subject
+                           header to identify the messages, optionally accompanied with a message number, for instance <code class="literal">[sylpheed:33101]</code>. These additions do not provide useful info if you have organized your folders as described, but Sylpheed allows you to disable
+                           displaying the additions in  summary, and/or, if you wish, delete the additions on reply.
+                        </p>
+                        <p>To do that, right-click on a folder from the folder tree, and select  <span class="guimenuitem">Properties...</span> In the <span class="guilabel">Folder properties</span> dialog, check <span class="guilabel">Don't display [...] or (...) at the beginning of subject in summary</span>, or <span class="guilabel">Delete [...] or (...) at the beginning of subject on reply</span>, respectively.
+                        </p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="sylpheed-faq-2.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="sylpheed-faq-4.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="sylpheed-faq.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;A.&nbsp;GNU Free Documentation License</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

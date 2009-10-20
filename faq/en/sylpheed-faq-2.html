@@ -1,144 +1,957 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-<HTML>
-<HEAD>
- <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
- <TITLE>Sylpheed FAQ: Sylpheed FAQ - Installation and Configuration</TITLE>
- <LINK HREF="sylpheed-faq-3.html" REL=next>
- <LINK HREF="sylpheed-faq-1.html" REL=previous>
- <LINK HREF="sylpheed-faq.html#toc2" REL=contents>
-</HEAD>
-<BODY>
-<A HREF="sylpheed-faq-3.html">Next</A>
-<A HREF="sylpheed-faq-1.html">Previous</A>
-<A HREF="sylpheed-faq.html#toc2">Contents</A>
-<HR>
-<H2><A NAME="s2">2. Sylpheed FAQ - Installation and Configuration</A></H2>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration</title>
+      <meta name="generator" content="DocBook XSL Stylesheets V1.68.1">
+      <link rel="start" href="sylpheed-faq.html" title="Sylpheed FAQ">
+      <link rel="up" href="sylpheed-faq.html" title="Sylpheed FAQ">
+      <link rel="prev" href="sylpheed-faq-1.html" title="Chapter&nbsp;1.&nbsp;Sylpheed FAQ - General Information">
+      <link rel="next" href="sylpheed-faq-3.html" title="Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface">
+      <link rel="chapter" href="sylpheed-faq-1.html" title="Chapter&nbsp;1.&nbsp;Sylpheed FAQ - General Information">
+      <link rel="chapter" href="sylpheed-faq-2.html" title="Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration">
+      <link rel="chapter" href="sylpheed-faq-3.html" title="Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface">
+      <link rel="appendix" href="sylpheed-faq-4.html" title="Appendix&nbsp;A.&nbsp;GNU Free Documentation License"><style type="text/css">
+pre.programlisting, pre.screen {
+background-color : #e0e0e0;
+padding : 0.2cm;
+}
+.question {
+font-weight : bold;
+}
 
-<H2><A NAME="ss2.1">2.1 Q01  What does it take to compile Sylpheed?</A>
-</H2>
-
-<P>A.   Any POSIX compliant UNIX or similar OS eg. Linux,
-FreeBSD, Solaris
-GTK+ 1.2.6 or later
-A recent ANSI C compiler (gcc 2.7.2.3 should also
-work)
-Note: it is reported that Sun C will not compile
-Sylpheed.
-Optionally:
-<UL>
-<LI>Imlib or gdk-pixbuf (for built-in image view)</LI>
-<LI>libcompface (for X-Face)</LI>
-<LI>libjconv (for I18N)</LI>
-<LI>GPGME (for GnuPG)</LI>
-<LI>the equivalent of GTK+-devel and Xfree86-devel.</LI>
-</UL>
-
-Otherwise ./configure will fail.
-<H2><A NAME="ss2.2">2.2 Q02 How do I set up Sylpheed?</A>
-</H2>
-
-<P>A.   When you run Sylpheed for the first time, it will
-ask you where you want to store your mailboxes. The
-default is &lt;homedir&gt;/Mail. You can change this to
-anything you like as long as it is a valid directory
-name.
-<P>Please note: When Sylpheed is executed for the first time, it automatically creates the configuration files under $HOME/.sylpheed/, and asks you the location of mailbox. The default is $HOME/Mail. If some files which are non-MH format already exist on the directory, you will have to specify another location.
-<H2><A NAME="ss2.3">2.3 Q03  How do I set up an account?</A>
-</H2>
-
-<P>A.   After loading Sylpheed for the first time, you can
-add an e-mail account by clicking the
-"Configuration" menu. Select the option "Create new
-account" and fill in the appropriate fields.
-<H2><A NAME="ss2.4">2.4 Q04  How many accounts can I set up in Sylpheed?</A>
-</H2>
-
-<P>A.   The number is unlimited. The limit is reached when
-your computer stops responding.
-<H2><A NAME="ss2.5">2.5 Q05 Why does Sylpheed not delete my mails when I press "delete"? I set a filter, and Sylpheed does not filter. I moved a mail to a different mailbox and it did not move.</A>
-</H2>
-
-<P>A.   You have to click the "execute" button.
-The other solution: in the configuration settings
-(common preferences &gt; interface tab) you have to
-check the "execute commands immediately" box.
-<H2><A NAME="ss2.6">2.6 Q06  Can I set up special addresses/ports for my mailserver / newsserver?</A>
-</H2>
-
-<P>A.   Yes, you can. In the configuration per account you
-can specify the exact port addresses you want to use.
-<H2><A NAME="ss2.7">2.7 Q07  Does Sylpheed have options for threading messages?</A>
-</H2>
-
-<P>A.   Yes. You can switch it on and off in the Summary
-Menu, just select "Thread View" or press Ctrl+T.
-<H2><A NAME="ss2.8">2.8 Q08  Can I create multiple levels of subfolders to store mail?</A>
-</H2>
-
-<P>A.   Absolutely. This is no problem.
-<H2><A NAME="ss2.9">2.9 Q09  Why isn't Sylpheed sending my mail out?</A>
-</H2>
-
-<P>A.   You need to create at least one account in order to
-send. (This is a wonderful gotcha on LAN installs
-with only a local mailbox feed).
-<H2><A NAME="ss2.10">2.10 Q10  How do I apply a patch after downloading it?</A>
-</H2>
-
-<P>A.   Copy patch to sylpheed directory
-Apply the patch:
-<P><CODE>% patch -p0 &lt; some.patch</CODE>
-<P>Or, if it's gzipped:
-<P><CODE>% gzip -dc some.patch.gz | patch -p0</CODE>
-<P>Run <CODE>./autogen.sh</CODE>, remove the generated <CODE>/config.cache</CODE>
-file (unless you want to install in prefix
-<CODE>/usr/local</CODE>).
-Run <CODE>./configure</CODE> with the appropriate options and
-then <CODE>make</CODE>.
-(Text as found on the Sylpheed patches page.)
-<H2><A NAME="ss2.11">2.11 Q11  How do I compile in support for compface pictures?</A>
-</H2>
-
-<P>A.   You have to have a package called <CODE>libcompface</CODE>
-installed, so this is available for compiling into
-Sylpheed.
-<H2><A NAME="ss2.12">2.12 Q12  How do I make my own compface image?</A>
-</H2>
-
-<P>A.   The faces package contains a program called xbm2ikon script,
-which converts a 48x48 xbm to the format suitable for
-compface. Thanks to Jeff Dairiki, you can have a complete online course in this. Visit 
-<A HREF="http://www.dairiki.org/xface/">this page</A> for the details.
-<H2><A NAME="ss2.13">2.13 Q13 How can I tell my browser/newsclient/other program to use Sylpheed as e-mail program?</A>
-</H2>
-
-<P>A.  In the settings part of the program, write
-<CODE>sylpheed --compose</CODE>
-<H2><A NAME="ss2.14">2.14 Q14 How do I enable GPG support in Sylpheed?</A>
-</H2>
-
-<P>A.  When compiling Sylpheed, make sure you add <CODE>--enable-gpgme</CODE> in the ./configure command.
-When that completes successfully, there is a "privacy" section in the Common preferences.
-<H2><A NAME="ss2.15">2.15 Q15 Mutt does not recognize Sylpheed's MH structure</A>
-</H2>
-
-<P>A. For this to work you need to use the "touch" command in every MH folder. "touch" the file .xmhcache and Mutt should do just fine.
-<H2><A NAME="ss2.16">2.16 Q16 Viewing a GIF file within Sylpheed causes a segmentation fault.</A>
-</H2>
-
-<P>A. In case this happens, you can easily fix that by adding the following to /etc/mime.types:
-<P><CODE>image/gif              gif</CODE>
-<H2><A NAME="ss2.17">2.17 Q17 How can I make Sylpheed notify me when new mail arrives?</A>
-</H2>
-
-<P>A. For this you can do several things:
-<P>* Look at the Sylpheed patch page at 
-<A HREF="http://www.teledix.net/sylpheed/">Teledix.net</A> for a new mail patch.
-<P>* Download Gkrellm or a similar program that is able to notify you of new incoming mail. Gkrellm is available at 
-<A HREF="http://www.gkrellm.net">the Gkrellm page</A><P>
-<HR>
-<A HREF="sylpheed-faq-3.html">Next</A>
-<A HREF="sylpheed-faq-1.html">Previous</A>
-<A HREF="sylpheed-faq.html#toc2">Contents</A>
-</BODY>
-</HTML>
+</style></head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="sylpheed-faq-1.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="sylpheed-faq-3.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="sylpheed-faq-2"></a>Chapter&nbsp;2.&nbsp;Sylpheed FAQ - Installation and Configuration
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="qandaset">
+            <dl>
+               <dt>2.1. <a href="sylpheed-faq-2.html#d0e620">What does it take to compile Sylpheed?
+                     </a></dt>
+               <dt>2.2. <a href="sylpheed-faq-2.html#d0e667">How do I set up Sylpheed?
+                     </a></dt>
+               <dt>2.3. <a href="sylpheed-faq-2.html#d0e695">Why did the creation of the mailbox fail?
+                     </a></dt>
+               <dt>2.4. <a href="sylpheed-faq-2.html#d0e708">How do I set up an account?
+                     </a></dt>
+               <dt>2.5. <a href="sylpheed-faq-2.html#d0e721">How many accounts can I set up in Sylpheed?
+                     </a></dt>
+               <dt>2.6. <a href="sylpheed-faq-2.html#d0e728">Can I set up an account for sending mail only?</a></dt>
+               <dt>2.7. <a href="sylpheed-faq-2.html#d0e741">Why does Sylpheed not delete my mails when I press "Delete"? I set a filter, and Sylpheed does not filter. I moved a mail
+                     to a different mailbox and it did not move.
+                     </a></dt>
+               <dt>2.8. <a href="sylpheed-faq-2.html#d0e762">Can I set up special addresses/ports for my mailserver/newsserver?
+                     </a></dt>
+               <dt>2.9. <a href="sylpheed-faq-2.html#d0e777">Does Sylpheed have options for threading messages?
+                     </a></dt>
+               <dt>2.10. <a href="sylpheed-faq-2.html#d0e796">Can I create multiple levels of subfolders to store mail?
+                     </a></dt>
+               <dt>2.11. <a href="sylpheed-faq-2.html#d0e803">Why isn't Sylpheed sending my mail out?
+                     </a></dt>
+               <dt>2.12. <a href="sylpheed-faq-2.html#d0e810">How do I apply a patch after downloading it?
+                     </a></dt>
+               <dt>2.13. <a href="sylpheed-faq-2.html#d0e844">How do I compile in support for compface pictures?
+                     </a></dt>
+               <dt>2.14. <a href="sylpheed-faq-2.html#d0e854">How do I make my own compface image?
+                     </a></dt>
+               <dt>2.15. <a href="sylpheed-faq-2.html#d0e864">How can I tell my browser/newsclient/other program to use Sylpheed as email program?
+                     </a></dt>
+               <dt>2.16. <a href="sylpheed-faq-2.html#d0e886">How do I enable GPG support in Sylpheed?
+                     </a></dt>
+               <dt>2.17. <a href="sylpheed-faq-2.html#d0e905">Mutt does not recognize Sylpheed's MH structure
+                     </a></dt>
+               <dt>2.18. <a href="sylpheed-faq-2.html#d0e921">Viewing a GIF file within Sylpheed causes a segmentation fault.
+                     </a></dt>
+               <dt>2.19. <a href="sylpheed-faq-2.html#d0e933">How can I make Sylpheed notify me when new mail arrives?
+                     </a></dt>
+               <dt>2.20. <a href="sylpheed-faq-2.html#d0e943">Can I use a spell checker with Sylpheed?
+                     </a></dt>
+               <dt>2.21. <a href="sylpheed-faq-2.html#d0e961">How can I make Sylpheed send my compface image in the mails?
+                     </a></dt>
+               <dt>2.22. <a href="sylpheed-faq-2.html#d0e982">How can I get the newest source code from the Sylpheed Subversion (SVN) repository?</a></dt>
+               <dt>2.23. <a href="sylpheed-faq-2.html#d0e1021">I checked out the sources using SVN and can't find any configure script.
+                     </a></dt>
+               <dt>2.24. <a href="sylpheed-faq-2.html#d0e1036">Running "autogen.sh" gives error messages that "AM_PATH_GDK_PIXBUF" or
+                          "AM_PATH_(whatever)" is not found.
+                     </a></dt>
+               <dt>2.25. <a href="sylpheed-faq-2.html#d0e1083">I don't want to compile in support for (...) any longer, but after running
+                          "configure", those libraries are still used.
+                     </a></dt>
+               <dt>2.26. <a href="sylpheed-faq-2.html#d0e1099">How can I select different applications to open with specific MIME types?
+                     </a></dt>
+               <dt>2.27. <a href="sylpheed-faq-2.html#d0e1109">How can I change the suggested mimetype for attachments?
+                     </a></dt>
+               <dt>2.28. <a href="sylpheed-faq-2.html#d0e1119">The folder list is not updated after I manually moved/copied folders.
+                     </a></dt>
+               <dt>2.29. <a href="sylpheed-faq-2.html#d0e1129">How can I revert original settings, e.g. for fonts, key bindings, etc.?
+                     </a></dt>
+               <dt>2.30. <a href="sylpheed-faq-2.html#d0e1151">What environment variables have effect on Sylpheed?
+                     </a></dt>
+               <dt>2.31. <a href="sylpheed-faq-2.html#d0e1187">Special characters (e.g. umlauts) are not displayed correctly.
+                     </a></dt>
+               <dt>2.32. <a href="sylpheed-faq-2.html#d0e1211">How can I convert my old mailbox/adress book from (some mail client).
+                     </a></dt>
+               <dt>2.33. <a href="sylpheed-faq-2.html#d0e1227">What config files are there, and what are they used for?
+                     </a></dt>
+               <dt>2.34. <a href="sylpheed-faq-2.html#d0e1286">How do I change the location of user profile directory under Windows?</a></dt>
+               <dt>2.35. <a href="sylpheed-faq-2.html#d0e1360">What to do when printing an email prints off the paper?
+                     </a></dt>
+            </dl>
+            <table border="0" summary="Q and A Set" cellspacing="13px">
+               <col align="left" width="1%">
+               <tbody>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e620"></a><a name="d0e621"></a><b>2.1.</b></td>
+                     <td align="left" valign="top">
+                        <p>What does it take to compile Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Any POSIX compliant UNIX or similar OS, e.g. Linux,
+                           FreeBSD, Solaris.
+                           GTK+ 2.4.0 or later (GTK+ 2.6.0 or later
+                           is recommended).
+                           A recent ANSI C compiler (gcc 2.7.2.3 should also
+                           work).
+                        </p>
+                        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                           <h3 class="title">Note</h3>
+                           <p>It is reported that Sun C will not compile
+                              Sylpheed.
+                           </p>
+                        </div>
+                        <p>Optionally:</p>
+                        <div class="itemizedlist">
+                           <ul type="disc">
+                              <li>
+                                 <p>compface (for X-Face)</p>
+                              </li>
+                              <li>
+                                 <p>GPGME (for GnuPG)</p>
+                              </li>
+                              <li>
+                                 <p>OpenSSL for SSL support</p>
+                              </li>
+                              <li>
+                                 <p>GtkSpell for a spell checking feature</p>
+                              </li>
+                              <li>
+                                 <p>JPilot</p>
+                              </li>
+                              <li>
+                                 <p>LDAP</p>
+                              </li>
+                              <li>
+                                 <p>the equivalent of GTK+-devel and Xfree86-devel</p>
+                              </li>
+                              <li>
+                                 <p>you may also require flex (lex) and bison
+                                    (yacc).
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p>Otherwise ./configure will fail.
+                           See also the <code class="filename">INSTALL</code> file that is being distributed with the Sylpheed tarball.
+                        </p>
+                        <p>Note that as Sylpheed now supports the Windows platform, you can also compile it using <a href="http://www.mingw.org/" target="_top">MinGW</a>.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e667"></a><a name="d0e668"></a><b>2.2.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I set up Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>When you run Sylpheed for the first time, it will
+                           ask you where you want to store your mailboxes. The
+                           default is <code class="filename">$HOME/Mail</code> (or <code class="filename">%APPDATA%\Sylpheed\Mailboxes\Mail</code> under Windows). You can change this to
+                           anything you like as long as it is a valid directory
+                           name.
+                        </p>
+                        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                           <h3 class="title">Note</h3>
+                           <p>When Sylpheed is executed for the first time, it automatically creates the configuration files under <code class="filename">$HOME/.sylpheed-2.0/</code> (or <code class="filename">%APPDATA%\Sylpheed\</code> under Windows), and asks you the location of mailbox. As stated above, the default is <code class="filename">$HOME/Mail</code>, or <code class="filename">%APPDATA%\Sylpheed\Mailboxes\Mail</code> under Windows. If some files, which are non-MH format, already exist on the directory, you will have to specify another location.
+                              
+                           </p>
+                        </div>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e695"></a><a name="d0e696"></a><b>2.3.</b></td>
+                     <td align="left" valign="top">
+                        <p>Why did the creation of the mailbox fail?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Sylpheed reports such an error if it can't create the default
+                           mailboxes (inbox, outbox, etc.). This can be because <code class="filename">$HOME/Mail</code>
+                           (or <code class="filename">%APPDATA%\Sylpheed\Mailboxes\Mail</code> under Windows) already contains files with the same names. This occurs when switching from
+                           Kmail to Sylpheed, in this case backup and remove the existing Mail
+                           directory or use another name for the Sylpheed mail directory.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e708"></a><a name="d0e709"></a><b>2.4.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I set up an account?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>After loading Sylpheed for the first time, you can
+                           add an email account by clicking the <span class="guimenu">Configuration</span> menu. Select the option <span class="guimenuitem">Create new account</span> and fill in the appropriate fields.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e721"></a><a name="d0e722"></a><b>2.5.</b></td>
+                     <td align="left" valign="top">
+                        <p>How many accounts can I set up in Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>The number is unlimited. The limit is reached when
+                           your computer stops responding.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e728"></a><a name="d0e729"></a><b>2.6.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I set up an account for sending mail only?</p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Yes, set up a new account using <span class="guimenuitem">Configuration</span>-&gt;<span class="guimenuitem">Create new Account...</span>  and set the Protocol to None (local).
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e741"></a><a name="d0e742"></a><b>2.7.</b></td>
+                     <td align="left" valign="top">
+                        <p>Why does Sylpheed not delete my mails when I press "Delete"? I set a filter, and Sylpheed does not filter. I moved a mail
+                           to a different mailbox and it did not move.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You have to click the <span class="guiicon">Execute</span> button.
+                           The other solution: in the configuration settings
+                           (<span class="guimenuitem">Common preferences...</span>-&gt;<span class="guimenuitem">Details</span>-&gt;<span class="guimenuitem">Interface</span>), you have to
+                           check the <span class="guilabel">Execute immediately when moving or deleting messages</span> box.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e762"></a><a name="d0e763"></a><b>2.8.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I set up special addresses/ports for my mailserver/newsserver?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Yes, you can. Under <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Preferences for current account...</span>-&gt;<span class="guimenuitem">Advanced</span>, you
+                           can specify the exact port addresses you want to use.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e777"></a><a name="d0e778"></a><b>2.9.</b></td>
+                     <td align="left" valign="top">
+                        <p>Does Sylpheed have options for threading messages?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Yes. You can switch it on and off in the <span class="guimenu">View</span>
+                                menu, just select <span class="guimenuitem">Thread view</span> or press <span><strong class="keycap">Ctrl</strong></span>-<span><strong class="keycap">T</strong></span>.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e796"></a><a name="d0e797"></a><b>2.10.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I create multiple levels of subfolders to store mail?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Absolutely. This is no problem.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e803"></a><a name="d0e804"></a><b>2.11.</b></td>
+                     <td align="left" valign="top">
+                        <p>Why isn't Sylpheed sending my mail out?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You need to create at least one account in order to
+                                send. (This is a wonderful gotcha on LAN installs
+                                with only a local mailbox feed).
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e810"></a><a name="d0e811"></a><b>2.12.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I apply a patch after downloading it?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Copy patch to sylpheed directory.
+                                Apply the patch as follows:
+                        </p>
+                        <p>
+                                <span><strong class="command">% patch -p0 &lt; some.patch</strong></span></p>
+                        <p>
+                                Or, if it's gzipped:
+                        </p>
+                        <p>
+                                <span><strong class="command">% gzip -dc some.patch.gz | patch -p0</strong></span></p>
+                        <p>
+                                Run <code class="filename">./autogen.sh</code>, remove the generated <code class="filename">/config.cache</code>
+                                file (unless you want to install in prefix
+                                <code class="filename">/usr/local</code>).
+                                Run <code class="filename">./configure</code> with the appropriate options and
+                                then <code class="filename">make</code>.
+                                (Text as found on the former Sylpheed patches page.)
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e844"></a><a name="d0e845"></a><b>2.13.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I compile in support for compface pictures?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You have to have a package called <code class="computeroutput">libcompface</code>
+                                installed, so this is available for compiling into
+                                Sylpheed. Note that the exact name of the package depends on  OS or distribution you use.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e854"></a><a name="d0e855"></a><b>2.14.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I make my own compface image?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>The faces package contains a program called xbm2ikon script,
+                            which converts a 48x48 xbm to the format suitable for
+                            compface. Thanks to Jeff Dairiki, you can have a complete online course in this. Visit <a href="http://www.dairiki.org/xface/" target="_top">this page</a> for the details.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e864"></a><a name="d0e865"></a><b>2.15.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I tell my browser/newsclient/other program to use Sylpheed as email program?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p> In the settings part of the program, write
+                                  <span><strong class="command">sylpheed --compose</strong></span></p>
+                        <p>
+                           Specific options for typical browsers:
+                        </p>
+                        <div class="itemizedlist">
+                           <ul type="disc">
+                              <li>
+                                 <p>Opera: <span><strong class="command">sylpheed --compose [mailto:%t][?subject=%s] </strong></span></p>
+                              </li>
+                              <li>
+                                 <p>Galeon: <span><strong class="command">sylpheed --compose "mailto:%t?subject=%s"</strong></span></p>
+                              </li>
+                           </ul>
+                        </div>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e886"></a><a name="d0e887"></a><b>2.16.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I enable GPG support in Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p> When compiling Sylpheed, make sure you add <em class="parameter"><code>--enable-gpgme</code></em> in the <span><strong class="command">./configure</strong></span> command.
+                           When that completes successfully, there is a <span class="guimenuitem">Privacy</span> section in the <span class="guimenuitem">Common Preferences</span>.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e905"></a><a name="d0e906"></a><b>2.17.</b></td>
+                     <td align="left" valign="top">
+                        <p>Mutt does not recognize Sylpheed's MH structure
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>For this to work you need to use the <span><strong class="command">touch</strong></span> command in every MH folder. "<span><strong class="command">touch</strong></span>" the file <code class="filename">.xmhcache</code> and Mutt should do just fine.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e921"></a><a name="d0e922"></a><b>2.18.</b></td>
+                     <td align="left" valign="top">
+                        <p>Viewing a GIF file within Sylpheed causes a segmentation fault.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>In case this happens, you can easily fix that by adding the following to <code class="filename">/etc/mime.types</code>:
+                        </p><pre class="programlisting">image/gif gif</pre></td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e933"></a><a name="d0e934"></a><b>2.19.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I make Sylpheed notify me when new mail arrives?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Download Gkrellm or a similar program that is able to notify you of new incoming mail. Gkrellm is available at <a href="http://www.gkrellm.net" target="_top">the Gkrellm page</a>.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e943"></a><a name="d0e944"></a><b>2.20.</b></td>
+                     <td align="left" valign="top">
+                        <p>Can I use a spell checker with Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Yes. You need to have GtkSpell installed prior to Sylpheed compilation. The support for GtkSpell is enabled by default in
+                            <span><strong class="command">configure</strong></span>. (If you want to disable it, make sure you add <em class="parameter"><code>--disable-gtkspell</code></em> in the <span><strong class="command">./configure</strong></span> command.)
+                        </p>
+                        <p>The GtkSpell option is not supported in Sylpheed for Windows (yet), so you will have no spell checking under this OS.</p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e961"></a><a name="d0e962"></a><b>2.21.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I make Sylpheed send my compface image in the mails?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>In the <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Preferences for current account...</span>-&gt;<span class="guimenuitem">Send</span> check <span class="guilabel">Add user-defined header</span> and press <span class="guibutton">Edit</span> button. A dialog appears, add a header named "X-Face" and fill the value field with your face data. Note that if you paste
+                           the data from a terminal into the field, some spurious newlines can be added, and these can mangle your face, be careful.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e982"></a><a name="d0e983"></a><b>2.22.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I get the newest source code from the Sylpheed Subversion (SVN) repository?</p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Move to an appropriate directory, and after you run the command specified below, a source tree named <code class="filename">trunk</code> will be created under that directory:
+                        </p>
+                        <p><span><strong class="command">svn checkout svn://sylpheed.sraoss.jp/sylpheed/trunk</strong></span></p>
+                        <p>The subdirectories under the <code class="filename">sylpheed</code> directory are  as follows:
+                        </p>
+                        <div class="itemizedlist">
+                           <ul type="disc">
+                              <li>
+                                 <p><code class="filename">trunk/</code> - main tree
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">branches/</code> - miscellaneous experimental branches
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">tags/</code> - release-tagged branches
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p>To update to the newest source tree, run the following command in the target directory:</p>
+                        <p><span><strong class="command">svn update</strong></span></p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1021"></a><a name="d0e1022"></a><b>2.23.</b></td>
+                     <td align="left" valign="top">
+                        <p>I checked out the sources using SVN and can't find any configure script.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>The SVN versions are meant to be used by developers rather than "normal"
+                                users, so the source (or binary) distributions are easier to use.
+                        </p>
+                        <div class="blockquote">
+                           <blockquote class="blockquote">
+                              <p>Yeah, but the latest features from SVN really look sexy...</p>
+                           </blockquote>
+                        </div>
+                        <p>You need to generate the configure script by running <code class="filename">autogen.sh</code>.
+                                Be sure to have autoconf and automake packages installed for this.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1036"></a><a name="d0e1037"></a><b>2.24.</b></td>
+                     <td align="left" valign="top">
+                        <p>Running "autogen.sh" gives error messages that "AM_PATH_GDK_PIXBUF" or
+                                "AM_PATH_(whatever)" is not found.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>There are some <code class="filename">*.m4</code> files in the <code class="filename">ac/missing</code> directory. Try to copy
+                                them into the <code class="filename">ac</code> directory and run <code class="filename">autogen.sh</code> again.
+                        </p>
+                        <p>
+                                If there are still some <code class="filename">.m4</code> files not found (e.g. those from GTK+), try
+                                to run <span><strong class="command">% locate m4 | less</strong></span> or <span><strong class="command">% locate aclocal | less</strong></span> to find additional directories containing those macros. If you find e.g. a
+                                <code class="filename">gtk.m4</code> in <code class="filename">/opt/gnome/share/aclocal</code>, change following line in
+                                <code class="filename">autogen.sh</code> from
+                        </p><pre class="programlisting">aclocal -I ac \</pre><p>     to</p><pre class="programlisting">aclocal -I ac -I /opt/gnome/share/aclocal \</pre><p>and run it again.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1083"></a><a name="d0e1084"></a><b>2.25.</b></td>
+                     <td align="left" valign="top">
+                        <p>I don't want to compile in support for (...) any longer, but after running
+                                "configure", those libraries are still used.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Remove the <code class="filename">config.cache</code> file and run <span><strong class="command">./configure</strong></span> again. You should
+                                also use <span><strong class="command">make clean</strong></span> to avoid undefined references.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1099"></a><a name="d0e1100"></a><b>2.26.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I select different applications to open with specific MIME types?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>The MIME-type to application associations are kept in <code class="filename">/etc/mailcap</code>.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1109"></a><a name="d0e1110"></a><b>2.27.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I change the suggested mimetype for attachments?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>The extension to MIME-type associations are kept in <code class="filename">/etc/mime.types</code>
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1119"></a><a name="d0e1120"></a><b>2.28.</b></td>
+                     <td align="left" valign="top">
+                        <p>The folder list is not updated after I manually moved/copied folders.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You need to update Sylpheed cache. Right click on the mailbox and choose
+                                <span class="guimenuitem">Rebuild folder tree</span>.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1129"></a><a name="d0e1130"></a><b>2.29.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I revert original settings, e.g. for fonts, key bindings, etc.?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Sylpheed keeps its configuration files in <code class="filename">$HOME/.sylpheed-2.0/sylpheedrc</code> (or <code class="filename">%APPDATA%\Sylpheed\sylpheedrc</code> under Windows) and creates default
+                                entries, if none are found. So the easiest way is to quit Sylpheed,
+                                temporarily renaming your <code class="filename">$HOME/.sylpheed-2.0</code> (or <code class="filename">%APPDATA%\Sylpheed\sylpheedrc</code>) e.g. to <code class="filename">*.bak</code> and restarting
+                                Sylpheed in order to get default entries.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1151"></a><a name="d0e1152"></a><b>2.30.</b></td>
+                     <td align="left" valign="top">
+                        <p>What environment variables have effect on Sylpheed?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Here are the most common variables:</p>
+                        <div class="itemizedlist">
+                           <ul type="disc">
+                              <li>
+                                 <p><code class="envar">HOME</code>
+                                          - location of <code class="filename">.sylpheed-2.0</code> (config directory) and default folder for Mailboxes.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="envar">LANG</code>,
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="envar">LC_ALL</code>,
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="envar">LC_CTYPE</code>,
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="envar">LC_MESSAGES</code> - locale settings, e.g. language and date format.
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1187"></a><a name="d0e1188"></a><b>2.31.</b></td>
+                     <td align="left" valign="top">
+                        <p>Special characters (e.g. umlauts) are not displayed correctly.
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>In most cases, this is caused by fonts that use an unsuitable encoding on a not Unicode-based system. (On a Unicode-based
+                           system, fonts should support all thinkable characters for the vast majority of languages.)
+                        </p>
+                        <p>Choose <span class="guimenu">Configuration</span>-&gt;<span class="guimenuitem">Common preferences...</span>-&gt;<span class="guimenuitem">Display</span>-&gt;<span class="guimenuitem">General</span>, and click the button right to  <span class="guilabel">Text font</span>. Now, a special dialog appears that allows you to pick a desirable font family, style, and size.
+                        </p>
+                        <p>You should also make sure that your environment variables regarding locale
+                                settings have sensible values.
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1211"></a><a name="d0e1212"></a><b>2.32.</b></td>
+                     <td align="left" valign="top">
+                        <p>How can I convert my old mailbox/adress book from (some mail client).
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You can  try to
+                                export your old mailbox to MH,  MBOX or EML format.
+                        </p>
+                        <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+                           <h3 class="title">Tip</h3>
+                           <p>Take a look at the <span class="guimenuitem">Add sender to address book...</span> item from the <span class="guimenu">Tools</span>
+                                   menu, it could be a useful alternative or addition, when importing your old
+                                   contacts.
+                           </p>
+                        </div>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1227"></a><a name="d0e1228"></a><b>2.33.</b></td>
+                     <td align="left" valign="top">
+                        <p>What config files are there, and what are they used for?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>Sylpheed config files can be found in <code class="filename">$HOME/.sylpheed-2.0</code> (under Windows, the path is <code class="filename">%APPDATA%\Sylpheed</code>). They are in plain
+                                text format and quite easy to understand, so don't fear to take a look
+                                into them using a text editor.
+                        </p>
+                        <div class="itemizedlist">
+                           <ul type="disc">
+                              <li>
+                                 <p><code class="filename">sylpheedrc</code>      - main configuration: nearly all options from the
+                                                            settings window, e.g. mailbox location, font
+                                                            entries, etc.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">accountrc</code>       - settings for POP/IMAP/NNTP accounts
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">actionsrc</code>       - user-defined actions
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">addrbook-*.xml</code>  - contents of your address book
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">customheaderrc</code>  - contains user-defined header lines
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">dispheaderrc</code>    - headers to display above the mail body
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">filter.xml</code>        -  filter settings
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">folderlist.xml</code>  -  folder specific settings, e.g. hiding
+                                                            read messages, sort order, etc.
+                                 </p>
+                              </li>
+                              <li>
+                                 <p><code class="filename">menurc</code>          - key bindings
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1286"></a><a name="d0e1287"></a><b>2.34.</b></td>
+                     <td align="left" valign="top">
+                        <p>How do I change the location of user profile directory under Windows?</p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>The configuration files and the mailboxes are saved under the following
+                           location (<code class="filename">%APPDATA%\Sylpheed</code>) by default:
+                        </p>
+                        <div class="itemizedlist">
+                           <ul type="disc">
+                              <li>
+                                 <p>Windows 2000/XP:
+                                    <code class="filename">C:\Documents and Settings\<em class="replaceable"><code>(user name)</code></em>\Application Data\Sylpheed</code></p>
+                              </li>
+                              <li>
+                                 <p>Windows Vista:
+                                    <code class="filename">C:\Users\<em class="replaceable"><code>(user name)</code></em>\AppData\Sylpheed</code></p>
+                              </li>
+                           </ul>
+                        </div>
+                        <p>If you want to change the location of the configuration files, you can
+                           specify it by the command line option <em class="parameter"><code>--configdir "<em class="replaceable"><code>directory name</code></em>"</code></em>.
+                           Create a shortcut of <code class="filename">sylpheed.exe</code>, and append the option to the link target
+                           like the following:
+                           
+                           
+                        </p><pre class="screen">"C:\Program Files\Sylpheed\sylpheed.exe" --configdir "D:\Sylpheed"</pre><p>If <code class="filename">sylpheed.ini</code> file exists at the same location as <code class="filename">sylpheed.exe</code>, it will be
+                           loaded at startup. With this approach, you can make Sylpheed completely portable
+                           independent of drive letters etc., and you can install it in removable media
+                           such as USB memory.
+                            
+                        </p>
+                        <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                           <h3 class="title">Note</h3>
+                           <p>The installer version, and GnuPG and GPGME use registry.</p>
+                        </div>
+                        <p>The sample INI file is included in the Sylpheed for Windows installation package as <code class="filename">sample-sylpheed.ini</code>.
+                           Please copy or rename it to use.
+                           <code class="literal">ipcport</code> specifies the port number of socket for IPC (default is 50215).
+                           <code class="literal">configdir</code> specifies the location of configuration files as a relative
+                           path from the folder in which <code class="filename">sylpheed.exe</code> is located, or an absolute path.
+                        </p>
+                        <p>(The text above is a slightly modified excerpt from the <code class="filename">README-win32.txt</code> file, which you should find within the <code class="filename">C:\Program Files\Sylpheed</code> directory.)
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="question">
+                     <td align="left" valign="top"><a name="d0e1360"></a><a name="d0e1361"></a><b>2.35.</b></td>
+                     <td align="left" valign="top">
+                        <p>What to do when printing an email prints off the paper?
+                           
+                        </p>
+                     </td>
+                  </tr>
+                  <tr class="answer">
+                     <td align="left" valign="top"><b></b></td>
+                     <td align="left" valign="top">
+                        <p>You can use enscript for this. Use <span><strong class="command">enscript %s</strong></span> to print everything on one page, or <span><strong class="command">enscript -U2 %s</strong></span> for printing two logical pages on one physical page.
+                           
+                        </p>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="sylpheed-faq-1.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="sylpheed-faq-3.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Chapter&nbsp;1.&nbsp;Sylpheed FAQ - General Information&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="sylpheed-faq.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;3.&nbsp;Sylpheed FAQ - Interface</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

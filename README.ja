@@ -67,9 +67,9 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 
 メッセージは MH 形式で管理しており、他の MH 形式を使用したメーラ(Mew 等)
 と併用することが可能です。1ファイル1メールの形式のため、障害が発生した際に
-メールを失う危険性が少なくなっています。 mbox形式のメッセージをインポート・
-エクスポートすることも可能です。また、 fetchmail や procmail を利用したり、
-受信に外部プログラム(inc, imget 等)を使用することも可能です。
+メールを失う危険性が少なくなっています。 mbox または eml 形式のメッセージを
+インポート・エクスポートすることも可能です。また、 fetchmail や procmail を
+利用したり、受信に外部プログラム(inc, imget 等)を使用することも可能です。
 
 現在実装されている主な機能
 ==========================
@@ -103,7 +103,7 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 	o マーク・カラーラベル
 	o Mew/Wanderlust 互換キーバインド
 	o 複数の MH フォルダ対応
-	o mbox ファイルのインポート / エクスポート
+	o mbox / eml ファイルのインポート / エクスポート
 	o 外部コマンドとの連携が可能なアクション機能
 	o 外部エディタ
 	o プラグイン機構
@@ -234,7 +234,7 @@ logwindow_line_limit		ログウィンドウの行数制限を指定
    チェックしておく
 
 2. GNOME 2.8 以前かそれ以外の環境をお使いの場合
-   ~/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する
+   ~/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する(存在しない場合は作成)
 
 3. Sylpheed が起動していない状態で ~/.sylpheed-2.0/menurc を直接エディタで
    編集する
@@ -242,16 +242,18 @@ logwindow_line_limit		ログウィンドウの行数制限を指定
 情報
 ====
 
-最新バージョンや Sylpheed に関する情報は
+最新バージョンや Sylpheed に関する情報は以下でチェックできます。
 
 	http://sylpheed.sraoss.jp/
 
-でチェックできます。また、
+また、以下に 今井 陽一氏 <yoichi@silver-forest.com> 作の Sylpheed の
+マニュアルがあります。
 
 	http://y-imai.good-day.net/sylpheed/
 
-に 今井 陽一氏 <yoichi@silver-forest.com> 作の Sylpheed のマニュアルが
-あります。
+英語とその他の言語の Sylpheed のドキュメントは以下より入手できます。
+
+	http://sylpheeddoc.sourceforge.net/
 
 フィードバック
 ==============

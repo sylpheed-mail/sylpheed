@@ -42,16 +42,16 @@ Sylpheed has the following features:
     * Flexible cooperation with external commands
 
 The appearance and interface are similar to some popular e-mail clients for
-Windows, such as Outlook Express, Becky!. Many commands are accessible with
+Windows, such as Outlook Express or Becky!. Many commands are accessible with
 the keyboard like the Emacs-based mailers such as Mew and Wanderlust.
-So you will able to migrate to Sylpheed without much discomfort in the case
-where you are accustomed to other mailers.
+So you will be able to migrate to Sylpheed without much discomfort, even if
+you are accustomed to other mailers.
 
-The messages are managed by MH format, and you'll be able to use it together
+The messages are managed by MH format, and you will be able to use it together
 with another mailer based on MH format (like Mew). It has less possibility
 of losing mails on failures since one file corresponds to one mail. You can
-import or export mbox format messages. You can also utilize fetchmail or/and
-procmail, and external programs on receiving (like inc or imget).
+import or export mbox and eml format messages. You can also utilize fetchmail
+and/or procmail, and external programs on receiving (like inc or imget).
 
 Currently implemented major features
 ====================================
@@ -85,7 +85,7 @@ Features
 	o mark / color label
 	o Mew/Wanderlust compatible key bind
 	o multiple MH folder support
-	o mbox importing / exporting
+	o mbox and eml import / export
 	o action function to work with external commands
 	o external editor
 	o plug-in faculty
@@ -125,7 +125,7 @@ Usage
 Preparation before running
 --------------------------
 
-If you are using a character encodings other than UTF-8 for filename,
+If you are using a character encoding other than UTF-8 for filename,
 you must set the following environmental variable (it will not work if
 it is not specified):
 
@@ -151,7 +151,7 @@ If you don't want translated messages, set LC_MESSAGES to "C"
 How to run
 ----------
 
-Input `sylpheed' on a command line, or double-click the icon on a file
+Input `sylpheed' on a command line, or double-click the icon in a file
 manager to execute.
 
 Initial startup
@@ -159,7 +159,7 @@ Initial startup
 
 When Sylpheed is executed for the first time, it automatically creates the
 configuration files under ~/.sylpheed-2.0/, and asks you the location of
-mailbox. The default is ~/Mail. If some files which are non-MH format
+mailbox. The default is ~/Mail. If some files, which are non-MH format,
 already exist on the directory, you will have to specify another location.
 
 If ~/.sylpheed-2.0/ doesn't exist, but the previous version of configuration
@@ -175,7 +175,7 @@ Required settings
 Initially, you have to create at least one account to send or receive
 messages (you can read messages that already exist without creating
 accounts). The configuration dialog will be shown by clicking
-"Configuration -> Create new account..." on the menu, or "Account" on
+"Configuration -> Create new account..." in the menu, or "Account" on
 the toolbar. Then, fill the required settings.
 
 Refer to the manual supplied with this program for the general usage.
@@ -185,7 +185,7 @@ Hidden settings
 
 You can configure most of the features in Sylpheed through the preferences
 dialog, but there are a few parameters which don't have user interface
-(you don't have to modify them in normal use). You must edit
+(you don't need to modify them in normal use). You must edit
 ~/.sylpheed-2.0/sylpheedrc by an editor when Sylpheed is not running.
 
 allow_jisx0201_kana		allow JIS X 0201 Kana (half-width kana) on
@@ -211,18 +211,19 @@ logwindow_line_limit		specify the limit of line numbers of log
 				window
 				0: unlimited  n (> 0): n lines [default: 1000]
 
-Unlike 1.0.x, this version doesn't allow the direct modification of menu
-shortcuts by default. You can use the follwing methods to configure them:
+Unlike 1.0.x, this version doesn't allow direct modification of the menu
+shortcuts by default. You can use the following methods to configure them:
 
 1. Using GNOME 2.8 or later
    Run gconf-editor from 'Applications - System Tools - Configuration Editor'.
    Select 'desktop - gnome - interface' and check 'can-change-accels' in it.
 
-2. Using before GNOME 2.8 or other environments
-   Add (or create a new one) gtk-can-change-accels = 1 to ~/.gtkrc-2.0.
+2. Using GNOME before 2.8, or other environments
+   Add gtk-can-change-accels = 1 to the file ~/.gtkrc-2.0 (or create a new
+   one, if it doesn't exist).
 
-3. When Sylpheed is not running, directly edit ~/.sylpheed-2.0/menurc using
-   editors.
+3. When Sylpheed is not running, directly edit ~/.sylpheed-2.0/menurc with
+   an editor.
 
 Information
 ===========
@@ -231,10 +232,15 @@ You can check the newest version and information about Sylpheed at:
 
 	http://sylpheed.sraoss.jp/
 
-There's also the manual of Sylpheed written by
+There is also the manual of Sylpheed written by
 Yoichi Imai <yoichi@silver-forest.com> on:
 
 	http://y-imai.good-day.net/sylpheed/
+
+The Sylpheed documentation in English and several other languages can be
+obtained from:
+
+	http://sylpheeddoc.sourceforge.net/
 
 Feedback
 ========
