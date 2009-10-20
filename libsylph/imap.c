@@ -1195,6 +1195,7 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 	gchar *path, *filename;
 	IMAPSession *session;
 	gchar nstr[16];
+	guint32 uid32 = (guint32)uid;
 	gint ok;
 
 	g_return_val_if_fail(folder != NULL, NULL);
@@ -1203,12 +1204,12 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 	path = folder_item_get_path(item);
 	if (!is_dir_exist(path))
 		make_dir_hier(path);
-	filename = g_strconcat(path, G_DIR_SEPARATOR_S, itos_buf(nstr, uid),
-			       NULL);
+	g_snprintf(nstr, sizeof(nstr), "%u", uid32);
+	filename = g_strconcat(path, G_DIR_SEPARATOR_S, nstr, NULL);
 	g_free(path);
 
 	if (is_file_exist(filename)) {
-		debug_print("message %d has been already cached.\n", uid);
+		debug_print("message %u has been already cached.\n", uid32);
 		return filename;
 	}
 
@@ -1226,12 +1227,12 @@ static gchar *imap_fetch_msg(Folder *folder, FolderItem *item, gint uid)
 		return NULL;
 	}
 
-	status_print(_("Getting message %d"), uid);
-	debug_print("getting message %d...\n", uid);
-	ok = imap_cmd_fetch(session, (guint32)uid, filename);
+	status_print(_("Getting message %u"), uid32);
+	debug_print("getting message %u...\n", uid32);
+	ok = imap_cmd_fetch(session, uid32, filename);
 
 	if (ok != IMAP_SUCCESS) {
-		g_warning("can't fetch message %d\n", uid);
+		g_warning("can't fetch message %u\n", uid32);
 		g_free(filename);
 		return NULL;
 	}
@@ -4026,7 +4027,7 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	g_return_val_if_fail(filename != NULL, IMAP_ERROR);
 
 	g_print("enter imap_cmd_fetch\n");
-	imap_cmd_gen_send(session, "UID FETCH %d BODY.PEEK[]", uid);
+	imap_cmd_gen_send(session, "UID FETCH %u BODY.PEEK[]", uid);
 
 #if USE_THREADS
 	ok = imap_thread_run(session, imap_cmd_fetch_func, &fetch_data);
