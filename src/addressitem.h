@@ -60,7 +60,7 @@ struct _AddressBook_win
 {
 	GtkWidget *window;
 	GtkWidget *menubar;
-	GtkWidget *ctree;
+	GtkWidget *treeview;
 	GtkWidget *clist;
 	GtkWidget *entry;
 	GtkWidget *statusbar;
@@ -79,8 +79,8 @@ struct _AddressBook_win
 	GtkItemFactory *list_factory;
 	GtkItemFactory *menu_factory;
 
-	GtkCTreeNode *treeSelected;
-	GtkCTreeNode *opened;
+	GtkTreeRowReference *tree_selected;
+	GtkTreeRowReference *tree_opened;
 	GtkCTreeNode *listSelected;
 
 	Compose *target_compose;
@@ -96,6 +96,8 @@ struct _AddressTypeControlItem {
 	gboolean treeExpand;
 	gboolean treeLeaf;
 	gchar *menuCommand;
+	GdkPixbuf *icon_pixbuf;
+	GdkPixbuf *icon_open_pixbuf;
 	GdkPixmap *iconXpm;
 	GdkBitmap *maskXpm;
 	GdkPixmap *iconXpmOpen;
@@ -116,7 +118,7 @@ struct _AdapterInterface {
 	AddressTypeControlItem *atci;
 	gboolean enabled;
 	gboolean haveLibrary;
-	GtkCTreeNode *treeNode;
+	GtkTreeRowReference *tree_row;
 };
 
 typedef struct _AdapterDSource AdapterDSource;
