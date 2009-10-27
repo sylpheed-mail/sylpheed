@@ -61,7 +61,7 @@ struct _AddressBook_win
 	GtkWidget *window;
 	GtkWidget *menubar;
 	GtkWidget *treeview;
-	GtkWidget *clist;
+	GtkWidget *listview;
 	GtkWidget *entry;
 	GtkWidget *statusbar;
 
@@ -81,7 +81,7 @@ struct _AddressBook_win
 
 	GtkTreeRowReference *tree_selected;
 	GtkTreeRowReference *tree_opened;
-	GtkCTreeNode *listSelected;
+	GtkTreeRowReference *list_selected;
 
 	Compose *target_compose;
 	gint status_cid;
@@ -98,10 +98,6 @@ struct _AddressTypeControlItem {
 	gchar *menuCommand;
 	GdkPixbuf *icon_pixbuf;
 	GdkPixbuf *icon_open_pixbuf;
-	GdkPixmap *iconXpm;
-	GdkBitmap *maskXpm;
-	GdkPixmap *iconXpmOpen;
-	GdkBitmap *maskXpmOpen;
 };
 
 typedef struct _AddressObject	AddressObject;
