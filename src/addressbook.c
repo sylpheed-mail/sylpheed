@@ -2077,20 +2077,49 @@ static void addressbook_tree_remove_children(GtkTreeModel *model,
 	}
 }
 
+static void addressbook_move_nodes_recursive(GtkTreeIter *iter,
+					     GtkTreeIter *parent)
+{
+	GtkTreeView *treeview = GTK_TREE_VIEW(addrbook.treeview);
+	GtkTreeModel *model;
+	GtkTreeIter child, new_iter;
+	gboolean valid;
+
+	model = gtk_tree_view_get_model(treeview);
+
+	valid = gtk_tree_model_iter_children(model, &child, iter);
+	while (valid) {
+		gchar *name = NULL;
+		AddressObject *obj;
+		GdkPixbuf *pixbuf;
+		GdkPixbuf *pixbuf_open;
+
+		gtk_tree_model_get(model, &child, COL_FOLDER_NAME, &name,
+				   COL_OBJ, &obj, COL_PIXBUF, &pixbuf,
+				   COL_PIXBUF_OPEN, &pixbuf_open, -1);
+		gtk_tree_store_append(GTK_TREE_STORE(model), &new_iter, parent);
+		gtk_tree_store_set(GTK_TREE_STORE(model), &new_iter,
+				   COL_FOLDER_NAME, name,
+				   COL_OBJ, obj,
+				   COL_PIXBUF, pixbuf,
+				   COL_PIXBUF_OPEN, pixbuf_open, -1);
+		g_free(name);
+		addressbook_move_nodes_recursive(&child, &new_iter);
+		valid = gtk_tree_model_iter_next(model, &child);
+	}
+}
+
 static void addressbook_move_nodes_up(GtkTreeIter *iter)
 {
-#if 0
-	GtkCTreeNode *parent, *child;
-	GtkCTreeRow *currRow;
-	currRow = GTK_CTREE_ROW( node );
-	if( currRow ) {
-		parent = currRow->parent;
-		while( (child = currRow->children) ) {
-			gtk_ctree_move( ctree, child, parent, node );
-		}
-		gtk_ctree_sort_node( ctree, parent );
-	}
-#endif
+	GtkTreeView *treeview = GTK_TREE_VIEW(addrbook.treeview);
+	GtkTreeModel *model;
+	GtkTreeIter parent;
+
+	model = gtk_tree_view_get_model(treeview);
+	if (!gtk_tree_model_iter_parent(model, &parent, iter))
+		return;
+
+	addressbook_move_nodes_recursive(iter, &parent);
 }
 
 static void addressbook_edit_address_cb(gpointer data, guint action, GtkWidget *widget)
