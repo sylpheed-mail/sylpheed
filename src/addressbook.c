@@ -2090,9 +2090,9 @@ static void addressbook_move_nodes_recursive(GtkTreeIter *iter,
 	valid = gtk_tree_model_iter_children(model, &child, iter);
 	while (valid) {
 		gchar *name = NULL;
-		AddressObject *obj;
-		GdkPixbuf *pixbuf;
-		GdkPixbuf *pixbuf_open;
+		AddressObject *obj = NULL;
+		GdkPixbuf *pixbuf = NULL;
+		GdkPixbuf *pixbuf_open = NULL;
 
 		gtk_tree_model_get(model, &child, COL_FOLDER_NAME, &name,
 				   COL_OBJ, &obj, COL_PIXBUF, &pixbuf,
