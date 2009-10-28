@@ -845,7 +845,7 @@ static void addressbook_create(void)
 			GtkTreeIter iter;
 			GtkTreePath *path;
 
-			g_print("addressbook_create: text: %s\n", text);
+			debug_print("addressbook_create: adapter: %s\n", text);
 			gtk_tree_store_append(tree_store, &iter, NULL);
 			gtk_tree_store_set(tree_store, &iter,
 					   COL_FOLDER_NAME, text,
@@ -1556,8 +1556,6 @@ static void addressbook_popup_close(GtkMenuShell *menu_shell, gpointer data)
 	GtkTreeSelection *selection;
 	GtkTreePath *path;
 
-	g_print("addressbook_popup_close\n");
-
 	if (!addrbook.tree_opened)
 		return;
  
@@ -1670,7 +1668,6 @@ static void addressbook_change_node_name(GtkTreeIter *iter, const gchar *name)
 	GtkTreeView *treeview = GTK_TREE_VIEW(addrbook.treeview);
 	GtkTreeStore *store;
 
-	g_print("addressbook_change_node_name: name: %s\n", name);
 	store = GTK_TREE_STORE(gtk_tree_view_get_model(treeview));
 	gtk_tree_store_set(store, iter, COL_FOLDER_NAME, name, -1);
 }
@@ -1740,8 +1737,6 @@ static void addressbook_treenode_edit_cb(gpointer data, guint action,
 	AddressBookFile *abf = NULL;
 	gchar *name = NULL;
 
-	g_print("addressbook_treenode_edit_cb\n");
-
 	selection = gtk_tree_view_get_selection(treeview);
 	if (!gtk_tree_selection_get_selected(selection, &model, &iter))
 		return;
@@ -1788,7 +1783,6 @@ static void addressbook_treenode_edit_cb(gpointer data, guint action,
 	if (name) {
 		GtkTreePath *path;
 
-		g_print("addressbook_treenode_edit_cb: update tree\n");
 		/* Update node in tree view */
 		addressbook_change_node_name(&iter, name);
 		path = gtk_tree_model_get_path(model, &iter);
@@ -1816,8 +1810,6 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 	AddressInterface *iface = NULL;
 	AddressDataSource *ds = NULL;
 	gboolean remFlag = FALSE;
-
-	g_print("addressbook_treenode_delete_cb\n");
 
 	selection = gtk_tree_view_get_selection(treeview);
 	if (!gtk_tree_selection_get_selected(selection, &model, &iter))
@@ -1924,7 +1916,6 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 		gtk_tree_model_iter_parent(model, &parent, &iter);
 		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 		gtk_tree_selection_select_iter(selection, &parent);
-		g_print("addressbook_treenode_delete_cb: removed\n");
 	}
 }
 
@@ -2107,7 +2098,6 @@ static void addressbook_edit_address_cb(gpointer data, guint action, GtkWidget *
 	gchar *name = NULL;
 	AddressBookFile *abf = NULL;
 
-	g_print("addressbook_edit_address_cb\n");
 	if (addrbook.list_selected == NULL)
 		return;
 
@@ -2525,10 +2515,10 @@ static AddressDataSource *addressbook_find_datasource(GtkTreeIter *iter)
 		ao = NULL;
 		gtk_tree_model_get(model, &iter_, COL_OBJ, &ao, -1);
 		if (ao) {
-			printf("ao->type = %d\n", ao->type);
+			/* g_print("ao->type = %d\n", ao->type); */
 			if (ao->type == ADDR_DATASOURCE) {
 				AdapterDSource *ads = ADAPTER_DSOURCE(ao);
-				printf("found it\n");
+				/* g_print("found it\n"); */
 				ds = ads->dataSource;
 				break;
 			}
@@ -2974,7 +2964,7 @@ static gboolean addressbook_add_object(GtkTreeIter *iter, GtkTreeIter *new_iter,
 	atci = addrbookctl_lookup(otype);
 	if (atci && atci->showInTree) {
 		/* Add object to tree */
-		g_print("addressbook_add_object: obj->name: %s\n", obj->name);
+		debug_print("addressbook_add_object: obj: %s\n", obj->name);
 		gtk_tree_store_append(GTK_TREE_STORE(model), &added, iter);
 		gtk_tree_store_set(GTK_TREE_STORE(model), &added,
 				   COL_FOLDER_NAME, obj->name,
@@ -3018,7 +3008,7 @@ static gboolean addressbook_node_add_group(GtkTreeIter *iter, AddressDataSource 
 	ADDRESS_OBJECT_NAME(adapter) = g_strdup(ADDRITEM_NAME(itemGroup));
 	adapter->itemGroup = itemGroup;
 
-	g_print("addressbook_node_add_group: name: %s\n", name);
+	debug_print("addressbook_node_add_group: name: %s\n", name);
 	store = GTK_TREE_STORE(gtk_tree_view_get_model(treeview));
 	gtk_tree_store_append(store, &new_iter_, iter);
 	gtk_tree_store_set(store, &new_iter_,
@@ -3075,7 +3065,7 @@ static gboolean addressbook_node_add_folder(GtkTreeIter *iter, AddressDataSource
 		ADDRESS_OBJECT_NAME(adapter) = g_strdup(ADDRITEM_NAME(itemFolder));
 		adapter->itemFolder = itemFolder;
 
-		g_print("addressbook_node_add_folder: name: %s\n", name);
+		debug_print("addressbook_node_add_folder: name: %s\n", name);
 		gtk_tree_store_append(store, &new_iter_, iter);
 		gtk_tree_store_set(store, &new_iter_,
 				   COL_FOLDER_NAME, name,
