@@ -1523,6 +1523,7 @@ static gboolean addressbook_list_button_pressed(GtkWidget *widget,
 
 	if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(addrbook.list_popup), NULL, NULL, NULL, NULL, event->button, event->time);
+		return TRUE;
 	} else if (event->type == GDK_2BUTTON_PRESS) {
 		debug_print("addressbook_list_button_pressed: GDK_2BUTTON_PRESS\n");
 		/* Handle double click */
