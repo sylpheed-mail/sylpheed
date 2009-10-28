@@ -42,9 +42,13 @@
 
 
 static gboolean compare_version(gint major, gint minor, gint micro,
-				const gchar *extra)
+				const gchar *extra, gboolean remote_is_release,
+				gboolean cur_ver_is_release)
 {
-	debug_print("comparing %d.%d.%d.%s <> " VERSION "\n", major, minor, micro, extra ? extra : "");
+	debug_print("comparing %d.%d.%d.%s (%s) <> " VERSION " (%s)\n",
+		    major, minor, micro, extra ? extra : "",
+		    remote_is_release ? "release" : "devel",
+		    cur_ver_is_release ? "release" : "devel");
 
 	if (major > MAJOR_VERSION)
 		return TRUE;
@@ -58,6 +62,17 @@ static gboolean compare_version(gint major, gint minor, gint micro,
 		return TRUE;
 	if (micro < MICRO_VERSION)
 		return FALSE;
+
+	/* compare extra version
+	   3.0.0.a  (rel) > 3.0.0       (rel)
+	   3.0.0    (rel) > 3.0.0.betaX (dev)
+	   3.0.0.a  (rel) > 3.0.0.betaX (dev)
+	   3.0.0.rc (dev) > 3.0.0.betaX (dev) */
+	if (remote_is_release && !cur_ver_is_release)
+		return TRUE;
+	if (!remote_is_release && cur_ver_is_release)
+		return FALSE;
+
 	if (extra) {
 		if (strcmp(extra, EXTRA_VERSION) > 0)
 			return TRUE;
@@ -169,11 +184,13 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 		if (!strcmp(key, "RELEASE")) {
 			parse_version_string(val, &major, &minor, &micro,
 					     &extra);
-			result = compare_version(major, minor, micro, extra);
+			result = compare_version(major, minor, micro, extra,
+						 TRUE, cur_ver_is_release);
 		} else if (!cur_ver_is_release && !strcmp(key, "DEVEL")) {
 			parse_version_string(val, &major, &minor, &micro,
 					     &extra);
-			result = compare_version(major, minor, micro, extra);
+			result = compare_version(major, minor, micro, extra,
+						 FALSE, cur_ver_is_release);
 		}
 
 		if (major + minor + micro != 0)
