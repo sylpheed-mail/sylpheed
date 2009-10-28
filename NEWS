@@ -1,5 +1,24 @@
 Changes of Sylpheed
 
+* 3.0.0beta1 (development)
+
+    * Multi-threading was introduced.
+      (can be disabled by --disable-threads configure option)
+    * Win32: network connection runs on another thread to prevent blocking
+      of the user interface.
+    * Execution of external commands (such as bsfilter) on filtering will
+      not block the user interface anymore.
+    * The major part of IMAP protocol communication runs on another thread
+      to prevent blocking of the user interface.
+    * The query search is executed on another thread.
+    * LibSylph is (almost) thread-safe now.
+    * Summary caches are updated on the fly (on receive/move/copy/delete).
+      This improves the performance of opening folders with many new messages.
+    * Progress is displayed while scanning folders.
+    * The user interface of address book was rewritten using the new API
+      (GtkTreeView). This will reduce the glitches in the older versions.
+    * Some bugfixes are made.
+
 * 2.7.1 (stable)
 
     * The feature to import and export .eml files was added.
