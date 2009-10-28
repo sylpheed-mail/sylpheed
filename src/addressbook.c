@@ -633,6 +633,10 @@ static void addressbook_create(void)
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview), column);
 
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(tree_store),
+					     COL_FOLDER_NAME,
+					     GTK_SORT_ASCENDING);
+
 	g_signal_connect(G_OBJECT(selection), "changed",
 			 G_CALLBACK(addressbook_tree_selection_changed), NULL);
 	g_signal_connect(G_OBJECT(treeview), "button_press_event",
@@ -707,6 +711,9 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
+
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store),
+					     COL_NAME, GTK_SORT_ASCENDING);
 
 	g_signal_connect(G_OBJECT(selection), "changed",
 			 G_CALLBACK(addressbook_list_selection_changed), NULL);
@@ -3204,10 +3211,17 @@ static gint addressbook_tree_compare(GtkTreeModel *model, GtkTreeIter *a,
 				     GtkTreeIter *b, gpointer data)
 {
 	gchar *name1 = NULL, *name2 = NULL;
+	AddressObject *obj1 = NULL, *obj2 = NULL;
 	gint ret;
 
-	gtk_tree_model_get(model, a, COL_FOLDER_NAME, &name1, -1);
-	gtk_tree_model_get(model, b, COL_FOLDER_NAME, &name2, -1);
+	gtk_tree_model_get(model, a, COL_FOLDER_NAME, &name1, COL_OBJ, &obj1,
+			   -1);
+	gtk_tree_model_get(model, b, COL_FOLDER_NAME, &name2, COL_OBJ, &obj2,
+			   -1);
+
+	/* Do not sort toplevel row */
+	if (obj1 && obj1->type == ADDR_INTERFACE)
+		return 0;
 
 	if (!name1 || !name2) {
 		if (!name1)
