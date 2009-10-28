@@ -1337,7 +1337,7 @@ static gpointer sock_connect_async_func(gpointer data)
 	debug_print("sock_connect_async_func: connected\n");
 	g_main_context_wakeup(NULL);
 
-	return GINT_TO_POINTER(0);
+	return GINT_TO_POINTER(conn_data->sock ? 0 : -1);
 }
 
 gint sock_connect_async_thread(const gchar *hostname, gushort port)
@@ -1350,6 +1350,7 @@ gint sock_connect_async_thread(const gchar *hostname, gushort port)
 	data->hostname = g_strdup(hostname);
 	data->port = port;
 	data->flag = 0;
+	data->sock = NULL;
 
 	data->thread = g_thread_create(sock_connect_async_func, data, TRUE,
 				       NULL);
@@ -1368,6 +1369,7 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 {
 	SockConnectData *conn_data = NULL;
 	GList *cur;
+	gint ret;
 
 	for (cur = sock_connect_data_list; cur != NULL; cur = cur->next) {
 		if (((SockConnectData *)cur->data)->id == id) {
@@ -1385,7 +1387,7 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 	while (g_atomic_int_get(&conn_data->flag) == 0)
 		event_loop_iterate();
 
-	g_thread_join(conn_data->thread);
+	ret = GPOINTER_TO_INT(g_thread_join(conn_data->thread));
 	debug_print("sock_connect_async_thread_wait: thread exited\n");
 
 	*sock = conn_data->sock;
@@ -1395,7 +1397,7 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 	g_free(conn_data->hostname);
 	g_free(conn_data);
 
-	return 0;
+	return ret;
 }
 #endif /* USE_THREADS */
 
