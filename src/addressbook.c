@@ -1442,45 +1442,6 @@ static void addressbook_list_selection_changed(GtkTreeSelection *selection,
 	addressbook_menuitem_set_sensitive();
 }
 
-#if 0
-static void addressbook_list_select_show() {
-	GList *node = _addressListSelection_;
-	gchar *addr = NULL;
-	printf( "show selection...>>>\n" );
-	while( node != NULL ) {
-		AddressObject *obj = ( AddressObject * ) node->data;
-		if( obj ) {
-			printf( "- %d : '%s'\n", obj->type, obj->name );
-			if( obj->type == ADDR_ITEM_GROUP ) {
-				ItemGroup *group = ( ItemGroup * ) obj;
-				GList *node = group->listEMail;
-				while( node ) {
-					ItemEMail *email = node->data;
-					addr = addressbook_format_address( ( AddressObject * ) email );
-					if( addr ) {
-						printf( "\tgrp >%s<\n", addr );
-						g_free( addr );
-					}
-					node = g_list_next( node );
-				}
-			}
-			else {
-				addr = addressbook_format_address( obj );
-				if( addr ) {
-					printf( "\t>%s<\n", addr );
-					g_free( addr );
-				}
-			}
-		}
-		else {
-			printf( "- NULL" );
-		}
-		node = g_list_next( node );
-	}
-	printf( "show selection...<<<\n" );
-}
-#endif
-
 static void addressbook_list_select_clear(void)
 {
 	if (_addressListSelection_) {
@@ -1574,6 +1535,8 @@ static gboolean addressbook_tree_button_pressed(GtkWidget *widget,
 		gtk_menu_popup(GTK_MENU(addrbook.tree_popup),
 			       NULL, NULL, NULL, NULL,
 			       event->button, event->time);
+	} else if (event->type == GDK_2BUTTON_PRESS) {
+		gtk_tree_view_expand_row(treeview, path, FALSE);
 	}
 
 	gtk_tree_path_free(path);
@@ -1828,7 +1791,6 @@ static void addressbook_treenode_edit_cb(gpointer data, guint action,
 		g_print("addressbook_treenode_edit_cb: update tree\n");
 		/* Update node in tree view */
 		addressbook_change_node_name(&iter, name);
-		//gtk_ctree_sort_node(ctree, parentNode);
 		path = gtk_tree_model_get_path(model, &iter);
 		gtk_tree_view_expand_row(treeview, path, TRUE);
 		gtk_tree_view_set_cursor(treeview, path, NULL, FALSE);
@@ -2222,7 +2184,6 @@ static void addressbook_edit_address_cb(gpointer data, guint action, GtkWidget *
 	/* Update tree node with node name */
 	if (node_found) {
 		addressbook_change_node_name(&node, name);
-		//gtk_ctree_sort_node( ctree, parentNode );
 		addressbook_reopen();
 	}
 }
@@ -2505,7 +2466,6 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 			gtk_tree_path_free(path);
 		}
 	}
-	//gtk_ctree_sort_node(GTK_CTREE(clist), NULL);
 
 	/* Free up the list */
 	mgu_clear_list(items);
@@ -2540,7 +2500,6 @@ static void addressbook_folder_load_group(ItemFolder *itemFolder)
 				   COL_L_PIXBUF, atci->icon_pixbuf,
 				   -1);
 	}
-	//gtk_ctree_sort_node(clist, NULL);
 
 	/* Free up the list */
 	mgu_clear_list(items);
@@ -2623,8 +2582,6 @@ static void addressbook_set_list(AddressObject *obj)
 		addressbook_folder_load_person(itemFolder);
 		addressbook_folder_load_group(itemFolder);
 	}
-
-	//gtk_clist_sort(clist);
 }
 
 /*
@@ -3025,7 +2982,6 @@ static gboolean addressbook_add_object(GtkTreeIter *iter, GtkTreeIter *new_iter,
 				   COL_PIXBUF, atci->icon_pixbuf,
 				   COL_PIXBUF_OPEN, atci->icon_open_pixbuf,
 				   -1);
-		//gtk_ctree_sort_node(ctree, node);
 		if (new_iter)
 			*new_iter = added;
 		return TRUE;
