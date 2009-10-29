@@ -1490,14 +1490,30 @@ static gboolean addressbook_list_button_pressed(GtkWidget *widget,
 		return FALSE;
 
 	if (event->button == 3) {
-		gtk_menu_popup(GTK_MENU(addrbook.list_popup), NULL, NULL, NULL, NULL, event->button, event->time);
-		return TRUE;
+		GtkTreePath *path;
+		GtkTreeSelection *selection;
+
+		gtk_menu_popup(GTK_MENU(addrbook.list_popup), NULL, NULL,
+			       NULL, NULL, event->button, event->time);
+		if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(widget),
+						  event->x, event->y,
+						  &path, NULL, NULL, NULL)) {
+			selection = gtk_tree_view_get_selection
+				(GTK_TREE_VIEW(widget));
+			if (gtk_tree_selection_path_is_selected
+				(selection, path)) {
+				gtk_tree_path_free(path);
+				return TRUE;
+			}
+			gtk_tree_path_free(path);
+		}
 	} else if (event->type == GDK_2BUTTON_PRESS) {
 		debug_print("addressbook_list_button_pressed: GDK_2BUTTON_PRESS\n");
 		/* Handle double click */
 		if (prefs_common.add_address_by_click &&
 		    addrbook.target_compose)
-			addressbook_to_clicked(NULL, GINT_TO_POINTER(COMPOSE_ENTRY_TO));
+			addressbook_to_clicked
+				(NULL, GINT_TO_POINTER(COMPOSE_ENTRY_TO));
 		else
 			addressbook_edit_address_cb(NULL, 0, NULL);
 	}
