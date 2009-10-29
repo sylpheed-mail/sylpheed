@@ -209,6 +209,8 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 
 	g_strfreev(lines);
 
+	gdk_threads_enter();
+
 	if (result)
 		update_dialog(new_ver, show_dialog_always);
 	else if (show_dialog_always) {
@@ -220,6 +222,8 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 			alertpanel_error(_("Couldn't get the version information."));
 	}
 	g_free(new_ver);
+
+	gdk_threads_leave();
 }
 
 void update_check(gboolean show_dialog_always)
