@@ -1312,7 +1312,7 @@ gchar *procmsg_get_message_file_path(MsgInfo *msginfo)
 		gchar nstr[16];
 		path = folder_item_get_path(msginfo->folder);
 		file = g_strconcat(path, G_DIR_SEPARATOR_S,
-				   itos_buf(nstr, msginfo->msgnum), NULL);
+				   utos_buf(nstr, msginfo->msgnum), NULL);
 		g_free(path);
 	}
 

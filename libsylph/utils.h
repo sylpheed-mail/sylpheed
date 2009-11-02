@@ -222,6 +222,8 @@ gint to_number			(const gchar *nstr);
 gchar *itos_buf			(gchar	     *nstr,
 				 gint	      n);
 gchar *itos			(gint	      n);
+gchar *utos_buf			(gchar	     *nstr,
+				 guint	      n);
 gchar *to_human_readable	(gint64	      size);
 
 /* alternative string functions */

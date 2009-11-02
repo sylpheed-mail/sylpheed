@@ -380,7 +380,7 @@ static gchar *news_fetch_msg(Folder *folder, FolderItem *item, gint num)
 	path = folder_item_get_path(item);
 	if (!is_dir_exist(path))
 		make_dir_hier(path);
-	filename = g_strconcat(path, G_DIR_SEPARATOR_S, itos_buf(nstr, num),
+	filename = g_strconcat(path, G_DIR_SEPARATOR_S, utos_buf(nstr, num),
 			       NULL);
 	g_free(path);
 

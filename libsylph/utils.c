@@ -330,6 +330,12 @@ gchar *itos(gint n)
 	return itos_buf(nstr, n);
 }
 
+gchar *utos_buf(gchar *nstr, guint n)
+{
+	g_snprintf(nstr, 11, "%u", n);
+	return nstr;
+}
+
 gchar *to_human_readable(gint64 size)
 {
 	static gchar str[16];
