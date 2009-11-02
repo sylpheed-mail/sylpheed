@@ -83,6 +83,7 @@ struct _IMAPNameSpace
 #define IMAP_SYNTAX	5
 #define IMAP_IOERR	6
 #define IMAP_ERROR	7
+#define IMAP_EAGAIN	8
 
 #define IMAPBUFSIZE	8192
 

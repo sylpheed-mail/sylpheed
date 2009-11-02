@@ -2867,6 +2867,10 @@ void summary_mark(SummaryView *summaryview)
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
 
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return;
+
 	SORT_BLOCK(SORT_BY_MARK);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -2937,6 +2941,10 @@ void summary_mark_as_read(SummaryView *summaryview)
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
 
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return;
+
 	SORT_BLOCK(SORT_BY_UNREAD);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -2987,6 +2995,10 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 	GSList *msglist = NULL;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
 
@@ -3062,6 +3074,10 @@ void summary_mark_all_read(SummaryView *summaryview)
 	gboolean valid;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
 
@@ -3139,6 +3155,10 @@ void summary_mark_as_unread(SummaryView *summaryview)
 	GtkTreeIter iter;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
 
@@ -3286,6 +3306,8 @@ void summary_delete_duplicated(SummaryView *summaryview)
 	    FOLDER_TYPE(summaryview->folder_item->folder) == F_NEWS) return;
 	if (summaryview->folder_item->stype == F_TRASH) return;
 
+	if (summary_is_locked(summaryview)) return;
+
 	main_window_cursor_wait(summaryview->mainwin);
 	debug_print("Deleting duplicated messages...");
 	STATUSBAR_PUSH(summaryview->mainwin,
@@ -3338,6 +3360,10 @@ void summary_unmark(SummaryView *summaryview)
 	GtkTreeIter iter;
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
+
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return;
 
 	SORT_BLOCK(SORT_BY_MARK);
 
@@ -4568,6 +4594,7 @@ static void summary_filter_real(SummaryView *summaryview,
 
 	if (!summaryview->folder_item) return;
 
+	if (summary_is_locked(summaryview)) return;
 	summary_lock(summaryview);
 
 	STATUSBAR_POP(summaryview->mainwin);
@@ -5426,6 +5453,12 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 		GET_MSG_INFO(msginfo, &iter);
 
 		if (column == summaryview->columns[S_COL_MARK]) {
+			if (MSG_IS_IMAP(msginfo->flags) &&
+			    summary_is_locked(summaryview)) {
+				gtk_tree_path_free(path);
+				return TRUE;
+			}
+
 			SORT_BLOCK(SORT_BY_MARK);
 
 			if (!MSG_IS_DELETED(msginfo->flags) &&
@@ -5433,14 +5466,20 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 			    !MSG_IS_COPY(msginfo->flags)) {
 				if (MSG_IS_MARKED(msginfo->flags)) {
 					summary_unmark_row(summaryview, &iter);
-					if (MSG_IS_IMAP(msginfo->flags))
+					if (MSG_IS_IMAP(msginfo->flags)) {
+						summary_lock(summaryview);
 						imap_msg_unset_perm_flags
 							(msginfo, MSG_MARKED);
+						summary_unlock(summaryview);
+					}
 				} else {
 					summary_mark_row(summaryview, &iter);
-					if (MSG_IS_IMAP(msginfo->flags))
+					if (MSG_IS_IMAP(msginfo->flags)) {
+						summary_lock(summaryview);
 						imap_msg_set_perm_flags
 							(msginfo, MSG_MARKED);
+						summary_unlock(summaryview);
+					}
 				}
 			}
 			gtk_tree_path_free(path);
@@ -5449,22 +5488,34 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 
 			return TRUE;
 		} else if (column == summaryview->columns[S_COL_UNREAD]) {
+			if (MSG_IS_IMAP(msginfo->flags) &&
+			    summary_is_locked(summaryview)) {
+				gtk_tree_path_free(path);
+				return TRUE;
+			}
+
 			SORT_BLOCK(SORT_BY_UNREAD);
 
 			if (MSG_IS_UNREAD(msginfo->flags)) {
 				summary_mark_row_as_read(summaryview, &iter);
-				if (MSG_IS_IMAP(msginfo->flags))
+				if (MSG_IS_IMAP(msginfo->flags)) {
+					summary_lock(summaryview);
 					imap_msg_unset_perm_flags
 						(msginfo, MSG_NEW | MSG_UNREAD);
+					summary_unlock(summaryview);
+				}
 				trayicon_set_tooltip(NULL);
 				trayicon_set_notify(FALSE);
 				summary_status_show(summaryview);
 			} else if (!MSG_IS_REPLIED(msginfo->flags) &&
 				   !MSG_IS_FORWARDED(msginfo->flags)) {
 				summary_mark_row_as_unread(summaryview, &iter);
-				if (MSG_IS_IMAP(msginfo->flags))
+				if (MSG_IS_IMAP(msginfo->flags)) {
+					summary_lock(summaryview);
 					imap_msg_set_perm_flags
 						(msginfo, MSG_UNREAD);
+					summary_unlock(summaryview);
+				}
 				summary_status_show(summaryview);
 			}
 			gtk_tree_path_free(path);

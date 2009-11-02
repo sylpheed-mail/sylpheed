@@ -379,7 +379,7 @@ static gint imap_cmd_ok		(IMAPSession	*session,
 				 GPtrArray	*argbuf);
 static gint imap_cmd_ok_real	(IMAPSession	*session,
 				 GPtrArray	*argbuf);
-static void imap_cmd_gen_send	(IMAPSession	*session,
+static gint imap_cmd_gen_send	(IMAPSession	*session,
 				 const gchar	*format, ...);
 static gint imap_cmd_gen_recv	(IMAPSession	*session,
 				 gchar	       **ret);
@@ -848,7 +848,8 @@ static gint imap_fetch_flags(IMAPSession *session, GArray **uids,
 	guint32 uid;
 	IMAPFlags flags;
 
-	imap_cmd_gen_send(session, "UID FETCH 1:* (UID FLAGS)");
+	if (imap_cmd_gen_send(session, "UID FETCH 1:* (UID FLAGS)") != IMAP_SUCCESS)
+		return IMAP_ERROR;
 
 	*uids = g_array_new(FALSE, FALSE, sizeof(guint32));
 	*flags_table = g_hash_table_new(NULL, g_direct_equal);
@@ -1709,7 +1710,11 @@ static gint imap_remove_all_msg(Folder *folder, FolderItem *item)
 	status_print(_("Removing all messages in %s"), item->path);
 	ui_update();
 
-	imap_cmd_gen_send(session, "STORE 1:* +FLAGS.SILENT (\\Deleted)");
+	ok = imap_cmd_gen_send(session, "STORE 1:* +FLAGS.SILENT (\\Deleted)");
+	if (ok != IMAP_SUCCESS) {
+		log_warning(_("can't set deleted flags: 1:*\n"));
+		return ok;
+	}
 	ok = imap_cmd_ok(session, NULL);
 	if (ok != IMAP_SUCCESS) {
 		log_warning(_("can't set deleted flags: 1:*\n"));
@@ -1990,7 +1995,7 @@ static GSList *imap_get_folder_list(IMAPSession *session, FolderItem *item)
 	gchar *real_path;
 	gchar *wildcard_path;
 	gchar separator;
-	GSList *item_list;
+	GSList *item_list = NULL;
 
 	folder = item->folder;
 	imapfolder = IMAP_FOLDER(folder);
@@ -2009,10 +2014,10 @@ static GSList *imap_get_folder_list(IMAPSession *session, FolderItem *item)
 		wildcard_path = g_strdup("*");
 	}
 
-	imap_cmd_gen_send(session, "LIST \"\" \"%s\"", wildcard_path);
-
-	item_list = imap_parse_list(session, real_path, NULL);
-	item_list = imap_add_inter_folders(item_list, item->path);
+	if (imap_cmd_gen_send(session, "LIST \"\" \"%s\"", wildcard_path) == IMAP_SUCCESS) {
+		item_list = imap_parse_list(session, real_path, NULL);
+		item_list = imap_add_inter_folders(item_list, item->path);
+	}
 	g_free(real_path);
 	g_free(wildcard_path);
 
@@ -2594,8 +2599,6 @@ static gint imap_remove_folder(Folder *folder, FolderItem *item)
 typedef struct _IMAPGetData
 {
 	FolderItem *item;
-	guint32 first_uid;
-	guint32 last_uid;
 	gint exists;
 	gboolean update_count;
 	GSList *newlist;
@@ -2620,7 +2623,6 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 	GSList *llast = NULL;
 	GString *str;
 	MsgInfo *msginfo;
-	gchar seq_set[22];
 	gint count = 1;
 	GTimeVal tv_prev, tv_cur;
 	IMAPGetData *get_data = (IMAPGetData *)data;
@@ -2632,16 +2634,6 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 #ifndef USE_THREADS
 	ui_update();
 #endif
-
-	if (get_data->first_uid == 0 && get_data->last_uid == 0)
-		strcpy(seq_set, "1:*");
-	else
-		g_snprintf(seq_set, sizeof(seq_set), "%u:%u",
-			   get_data->first_uid, get_data->last_uid);
-	if (imap_cmd_envelope(session, seq_set) != IMAP_SUCCESS) {
-		log_warning(_("can't get envelope\n"));
-		return IMAP_ERROR;
-	}
 
 #if USE_THREADS
 	((IMAPRealSession *)session)->prog_total = exists;
@@ -2730,8 +2722,8 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 					  guint32 first_uid, guint32 last_uid,
 					  gint exists, gboolean update_count)
 {
-	IMAPGetData get_data = {item, first_uid, last_uid, exists,
-				update_count, NULL};
+	IMAPGetData get_data = {item, exists, update_count, NULL};
+	gchar seq_set[22];
 	gint ok;
 
 	g_return_val_if_fail(session != NULL, NULL);
@@ -2741,6 +2733,16 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	g_return_val_if_fail(first_uid <= last_uid, NULL);
 
 	g_print("enter imap_get_uncached_messages\n");
+
+	if (first_uid == 0 && last_uid == 0)
+		strcpy(seq_set, "1:*");
+	else
+		g_snprintf(seq_set, sizeof(seq_set), "%u:%u",
+			   first_uid, last_uid);
+	if (imap_cmd_envelope(session, seq_set) != IMAP_SUCCESS) {
+		log_warning(_("can't get envelope\n"));
+		return NULL;
+	}
 
 #if USE_THREADS
 	ok = imap_thread_run_progress(session, imap_get_uncached_messages_func,
@@ -2965,7 +2967,8 @@ static void imap_get_namespace_by_list(IMAPSession *session, IMAPFolder *folder)
 	    folder->ns_shared   != NULL)
 		return;
 
-	imap_cmd_gen_send(session, "LIST \"\" \"\"");
+	if (imap_cmd_gen_send(session, "LIST \"\" \"\"") != IMAP_SUCCESS)
+		return;
 	item_list = imap_parse_list(session, "", &separator);
 	for (cur = item_list; cur != NULL; cur = cur->next)
 		folder_item_destroy(FOLDER_ITEM(cur->data));
@@ -3497,10 +3500,13 @@ static gint imap_status(IMAPSession *session, IMAPFolder *folder,
 
 	real_path = imap_get_real_path(folder, path);
 	QUOTE_IF_REQUIRED(real_path_, real_path);
-	imap_cmd_gen_send(session, "STATUS %s "
-			  "(MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)",
-			  real_path_);
-
+	ok = imap_cmd_gen_send(session, "STATUS %s "
+			       "(MESSAGES RECENT UIDNEXT UIDVALIDITY UNSEEN)",
+			       real_path_);
+	if (ok != IMAP_SUCCESS) {
+		log_warning("error on sending imap command: STATUS\n");
+		THROW(ok);
+	}
 	ok = imap_cmd_ok(session, argbuf);
 	if (ok != IMAP_SUCCESS)
 		log_warning(_("error on imap command: STATUS\n"));
@@ -3582,7 +3588,8 @@ static gint imap_cmd_capability(IMAPSession *session)
 
 	argbuf = g_ptr_array_new();
 
-	imap_cmd_gen_send(session, "CAPABILITY");
+	if ((ok = imap_cmd_gen_send(session, "CAPABILITY")) != IMAP_SUCCESS)
+		THROW(ok);
 	if ((ok = imap_cmd_ok(session, argbuf)) != IMAP_SUCCESS) THROW(ok);
 
 	capability = search_array_str(argbuf, "CAPABILITY ");
@@ -3681,7 +3688,11 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 	else
 		auth_type = "CRAM-MD5";
 
-	imap_cmd_gen_send(session, "AUTHENTICATE %s", auth_type);
+	ok = imap_cmd_gen_send(session, "AUTHENTICATE %s", auth_type);
+	if (ok != IMAP_SUCCESS) {
+		g_free(buf);
+		return ok;
+	}
 	ok = imap_cmd_gen_recv(session, &buf);
 	if (ok != IMAP_SUCCESS || buf[0] != '+' || buf[1] != ' ') {
 		g_free(buf);
@@ -3706,9 +3717,9 @@ static gint imap_cmd_login(IMAPSession *session,
 
 	QUOTE_IF_REQUIRED(user_, user);
 	QUOTE_IF_REQUIRED(pass_, pass);
-	imap_cmd_gen_send(session, "LOGIN %s %s", user_, pass_);
-
-	ok = imap_cmd_ok(session, NULL);
+	ok = imap_cmd_gen_send(session, "LOGIN %s %s", user_, pass_);
+	if (ok == IMAP_SUCCESS)
+		ok = imap_cmd_ok(session, NULL);
 	if (ok != IMAP_SUCCESS)
 		log_warning(_("IMAP4 login failed.\n"));
 
@@ -3717,20 +3728,23 @@ static gint imap_cmd_login(IMAPSession *session,
 
 static gint imap_cmd_logout(IMAPSession *session)
 {
-	imap_cmd_gen_send(session, "LOGOUT");
+	if (imap_cmd_gen_send(session, "LOGOUT") != IMAP_SUCCESS)
+		return IMAP_ERROR;
 	return imap_cmd_ok(session, NULL);
 }
 
 static gint imap_cmd_noop(IMAPSession *session)
 {
-	imap_cmd_gen_send(session, "NOOP");
+	if (imap_cmd_gen_send(session, "NOOP") != IMAP_SUCCESS)
+		return IMAP_ERROR;
 	return imap_cmd_ok(session, NULL);
 }
 
 #if USE_SSL
 static gint imap_cmd_starttls(IMAPSession *session)
 {
-	imap_cmd_gen_send(session, "STARTTLS");
+	if (imap_cmd_gen_send(session, "STARTTLS") != IMAP_SUCCESS)
+		return IMAP_ERROR;
 	return imap_cmd_ok(session, NULL);
 }
 #endif
@@ -3745,7 +3759,8 @@ static gint imap_cmd_namespace(IMAPSession *session, gchar **ns_str)
 
 	argbuf = g_ptr_array_new();
 
-	imap_cmd_gen_send(session, "NAMESPACE");
+	if ((ok = imap_cmd_gen_send(session, "NAMESPACE")) != IMAP_SUCCESS)
+		THROW(ok);
 	if ((ok = imap_cmd_ok(session, argbuf)) != IMAP_SUCCESS) THROW(ok);
 
 	str = search_array_str(argbuf, "NAMESPACE");
@@ -3772,7 +3787,8 @@ static gint imap_cmd_list(IMAPSession *session, const gchar *ref,
 
 	QUOTE_IF_REQUIRED(ref_, ref);
 	QUOTE_IF_REQUIRED(mailbox_, mailbox);
-	imap_cmd_gen_send(session, "LIST %s %s", ref_, mailbox_);
+	if (imap_cmd_gen_send(session, "LIST %s %s", ref_, mailbox_) != IMAP_SUCCESS)
+		return IMAP_ERROR;
 
 	return imap_cmd_ok(session, argbuf);
 }
@@ -3800,7 +3816,8 @@ static gint imap_cmd_do_select(IMAPSession *session, const gchar *folder,
 		select_cmd = "SELECT";
 
 	QUOTE_IF_REQUIRED(folder_, folder);
-	imap_cmd_gen_send(session, "%s %s", select_cmd, folder_);
+	if ((ok = imap_cmd_gen_send(session, "%s %s", select_cmd, folder_)) != IMAP_SUCCESS)
+		THROW;
 
 	if ((ok = imap_cmd_ok(session, argbuf)) != IMAP_SUCCESS) THROW;
 
@@ -3868,7 +3885,8 @@ static gint imap_cmd_create(IMAPSession *session, const gchar *folder)
 	gchar *folder_;
 
 	QUOTE_IF_REQUIRED(folder_, folder);
-	imap_cmd_gen_send(session, "CREATE %s", folder_);
+	if (imap_cmd_gen_send(session, "CREATE %s", folder_) != IMAP_SUCCESS)
+		return IMAP_ERROR;
 
 	return imap_cmd_ok(session, NULL);
 }
@@ -3880,7 +3898,8 @@ static gint imap_cmd_rename(IMAPSession *session, const gchar *old_folder,
 
 	QUOTE_IF_REQUIRED(old_folder_, old_folder);
 	QUOTE_IF_REQUIRED(new_folder_, new_folder);
-	imap_cmd_gen_send(session, "RENAME %s %s", old_folder_, new_folder_);
+	if (imap_cmd_gen_send(session, "RENAME %s %s", old_folder_, new_folder_) != IMAP_SUCCESS)
+		return IMAP_ERROR;
 
 	return imap_cmd_ok(session, NULL);
 }
@@ -3890,7 +3909,8 @@ static gint imap_cmd_delete(IMAPSession *session, const gchar *folder)
 	gchar *folder_;
 
 	QUOTE_IF_REQUIRED(folder_, folder);
-	imap_cmd_gen_send(session, "DELETE %s", folder_);
+	if (imap_cmd_gen_send(session, "DELETE %s", folder_) != IMAP_SUCCESS)
+		return IMAP_ERROR;
 
 	return imap_cmd_ok(session, NULL);
 }
@@ -3913,7 +3933,8 @@ static gint imap_cmd_search(IMAPSession *session, const gchar *criteria,
 
 	argbuf = g_ptr_array_new();
 
-	imap_cmd_gen_send(session, "UID SEARCH %s", criteria);
+	if ((ok = imap_cmd_gen_send(session, "UID SEARCH %s", criteria)) != IMAP_SUCCESS)
+		THROW(ok);
 	if ((ok = imap_cmd_ok(session, argbuf)) != IMAP_SUCCESS) THROW(ok);
 
 	array = g_array_new(FALSE, FALSE, sizeof(guint32));
@@ -4027,7 +4048,9 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	g_return_val_if_fail(filename != NULL, IMAP_ERROR);
 
 	g_print("enter imap_cmd_fetch\n");
-	imap_cmd_gen_send(session, "UID FETCH %u BODY.PEEK[]", uid);
+	ok = imap_cmd_gen_send(session, "UID FETCH %u BODY.PEEK[]", uid);
+	if (ok != IMAP_SUCCESS)
+		return ok;
 
 #if USE_THREADS
 	ok = imap_thread_run(session, imap_cmd_fetch_func, &fetch_data);
@@ -4069,9 +4092,14 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 
 	QUOTE_IF_REQUIRED(destfolder_, destfolder);
 	flag_str = imap_get_flag_str(flags);
-	imap_cmd_gen_send(session, "APPEND %s (%s) {%d}",
-			  destfolder_, flag_str, size);
+	ok = imap_cmd_gen_send(session, "APPEND %s (%s) {%d}",
+			       destfolder_, flag_str, size);
 	g_free(flag_str);
+	if (ok != IMAP_SUCCESS) {
+		log_warning(_("can't append %s to %s\n"), file, destfolder_);
+		fclose(tmp);
+		return ok;
+	}
 
 	ok = imap_cmd_gen_recv(session, &ret);
 	if (ok != IMAP_SUCCESS || ret[0] != '+' || ret[1] != ' ') {
@@ -4139,9 +4167,9 @@ static gint imap_cmd_copy(IMAPSession *session, const gchar *seq_set,
 	g_return_val_if_fail(destfolder != NULL, IMAP_ERROR);
 
 	QUOTE_IF_REQUIRED(destfolder_, destfolder);
-	imap_cmd_gen_send(session, "UID COPY %s %s", seq_set, destfolder_);
-
-	ok = imap_cmd_ok(session, NULL);
+	ok = imap_cmd_gen_send(session, "UID COPY %s %s", seq_set, destfolder_);
+	if (ok == IMAP_SUCCESS)
+		ok = imap_cmd_ok(session, NULL);
 	if (ok != IMAP_SUCCESS) {
 		log_warning(_("can't copy %s to %s\n"), seq_set, destfolder_);
 		return -1;
@@ -4152,11 +4180,9 @@ static gint imap_cmd_copy(IMAPSession *session, const gchar *seq_set,
 
 gint imap_cmd_envelope(IMAPSession *session, const gchar *seq_set)
 {
-	imap_cmd_gen_send
+	return imap_cmd_gen_send
 		(session, "UID FETCH %s (UID FLAGS RFC822.SIZE RFC822.HEADER)",
 		 seq_set);
-
-	return IMAP_SUCCESS;
 }
 
 static gint imap_cmd_store(IMAPSession *session, const gchar *seq_set,
@@ -4164,9 +4190,10 @@ static gint imap_cmd_store(IMAPSession *session, const gchar *seq_set,
 {
 	gint ok;
 
-	imap_cmd_gen_send(session, "UID STORE %s %s", seq_set, sub_cmd);
-
-	if ((ok = imap_cmd_ok(session, NULL)) != IMAP_SUCCESS) {
+	ok = imap_cmd_gen_send(session, "UID STORE %s %s", seq_set, sub_cmd);
+	if (ok == IMAP_SUCCESS)
+		ok = imap_cmd_ok(session, NULL);
+	if (ok != IMAP_SUCCESS) {
 		log_warning(_("error while imap command: STORE %s %s\n"),
 			    seq_set, sub_cmd);
 		return ok;
@@ -4179,8 +4206,10 @@ static gint imap_cmd_expunge(IMAPSession *session)
 {
 	gint ok;
 
-	imap_cmd_gen_send(session, "EXPUNGE");
-	if ((ok = imap_cmd_ok(session, NULL)) != IMAP_SUCCESS) {
+	ok = imap_cmd_gen_send(session, "EXPUNGE");
+	if (ok == IMAP_SUCCESS)
+		ok = imap_cmd_ok(session, NULL);
+	if (ok != IMAP_SUCCESS) {
 		log_warning(_("error while imap command: EXPUNGE\n"));
 		return ok;
 	}
@@ -4192,8 +4221,10 @@ static gint imap_cmd_close(IMAPSession *session)
 {
 	gint ok;
 
-	imap_cmd_gen_send(session, "CLOSE");
-	if ((ok = imap_cmd_ok(session, NULL)) != IMAP_SUCCESS)
+	ok = imap_cmd_gen_send(session, "CLOSE");
+	if (ok == IMAP_SUCCESS)
+		ok = imap_cmd_ok(session, NULL);
+	if (ok != IMAP_SUCCESS)
 		log_warning(_("error while imap command: CLOSE\n"));
 
 	return ok;
@@ -4293,8 +4324,9 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 #endif
 }
 
-static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
+static gint imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 {
+	IMAPRealSession *real = (IMAPRealSession *)session;
 	gchar buf[IMAPBUFSIZE];
 	gchar tmp[IMAPBUFSIZE];
 	gchar *p;
@@ -4303,6 +4335,13 @@ static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 	va_start(args, format);
 	g_vsnprintf(tmp, sizeof(tmp), format, args);
 	va_end(args);
+
+#if USE_THREADS
+	if (real->is_running) {
+		g_warning("imap_cmd_gen_send: cannot send command because another command is already running.");
+		return IMAP_EAGAIN;
+	}
+#endif
 
 	session->cmd_count++;
 
@@ -4315,6 +4354,8 @@ static void imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 		log_print("IMAP4> %d %s\n", session->cmd_count, tmp);
 
 	sock_write_all(SESSION(session)->sock, buf, strlen(buf));
+
+	return IMAP_SUCCESS;
 }
 
 static gint imap_cmd_gen_recv(IMAPSession *session, gchar **ret)
