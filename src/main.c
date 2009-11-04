@@ -113,6 +113,10 @@ static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
 static GIOChannel *lock_ch = NULL;
 
+#if USE_THREADS
+static GThread *main_thread;
+#endif
+
 static struct RemoteCmd {
 	gboolean receive;
 	gboolean receive_all;
@@ -618,6 +622,11 @@ static void thread_leave_func(void)
 
 static void event_loop_iteration_func(void)
 {
+	if (g_thread_self() != main_thread) {
+		g_fprintf(stderr, "event_loop_iteration_func called from non-main thread (%p)\n", g_thread_self());
+		g_usleep(10000);
+		return;
+	}
 	gtk_main_iteration();
 }
 #endif
@@ -633,6 +642,7 @@ static void app_init(void)
 		gdk_threads_set_lock_functions(thread_enter_func,
 					       thread_leave_func);
 		gdk_threads_init();
+		main_thread = g_thread_self();
 	}
 #endif
 	syl_init();

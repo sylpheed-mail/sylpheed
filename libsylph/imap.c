@@ -4244,6 +4244,7 @@ static gint imap_cmd_ok_real(IMAPSession *session, GPtrArray *argbuf)
 
 	str = g_string_sized_new(256);
 
+	//g_usleep(800000);
 	while ((ok = imap_cmd_gen_recv(session, &buf)) == IMAP_SUCCESS) {
 		g_string_append(str, buf);
 
@@ -4817,11 +4818,11 @@ static void imap_thread_run_proxy(gpointer push_data, gpointer data)
 {
 	IMAPRealSession *real = (IMAPRealSession *)data;
 
-	g_print("imap_thread_run_proxy (%p): calling thread_func\n", g_thread_self());
+	debug_print("imap_thread_run_proxy (%p): calling thread_func\n", g_thread_self());
 	real->retval = real->thread_func(IMAP_SESSION(real), real->thread_data);
 	g_atomic_int_set(&real->flag, 1);
-	g_print("imap_thread_run_proxy (%p): thread_func done\n", g_thread_self());
 	g_main_context_wakeup(NULL);
+	debug_print("imap_thread_run_proxy (%p): thread_func done\n", g_thread_self());
 }
 
 static gint imap_thread_run(IMAPSession	*session, IMAPThreadFunc func,

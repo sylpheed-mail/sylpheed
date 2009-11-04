@@ -571,6 +571,7 @@ typedef struct _QueryData
 	gint total;
 	gint flag;
 	GTimeVal tv_prev;
+	GSList *mlist;
 #if USE_THREADS
 	GAsyncQueue *queue;
 	guint timer_tag;
@@ -622,8 +623,7 @@ static gpointer query_search_folder_func(gpointer data)
 	g_async_queue_ref(qdata->queue);
 #endif
 
-	mlist = folder_item_get_msg_list(qdata->item, TRUE);
-	qdata->total = g_slist_length(mlist);
+	mlist = qdata->mlist;
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
 
@@ -680,7 +680,6 @@ static gpointer query_search_folder_func(gpointer data)
 		procheader_header_list_destroy(hlist);
 	}
 
-	procmsg_msg_list_free(mlist);
 #if USE_THREADS
 	g_async_queue_unref(qdata->queue);
 #endif
@@ -724,6 +723,9 @@ static void query_search_folder(FolderItem *item)
 
 	procmsg_set_auto_decrypt_message(FALSE);
 
+	data.mlist = folder_item_get_msg_list(item, TRUE);
+	data.total = g_slist_length(data.mlist);
+
 #if USE_THREADS
 	data.queue = g_async_queue_new();
 	data.timer_tag = g_timeout_add(PROGRESS_UPDATE_INTERVAL,
@@ -733,6 +735,7 @@ static void query_search_folder(FolderItem *item)
 	debug_print("query_search_folder: thread started\n");
 	while (g_atomic_int_get(&data.flag) == 0)
 		gtk_main_iteration();
+	log_window_flush();
 
 	while ((msginfo = g_async_queue_try_pop(data.queue)))
 		query_search_append_msg(msginfo);
@@ -746,6 +749,7 @@ static void query_search_folder(FolderItem *item)
 	query_search_folder_func(&data);
 #endif
 
+	procmsg_msg_list_free(data.mlist);
 	procmsg_set_auto_decrypt_message(TRUE);
 	g_free(data.folder_name);
 }

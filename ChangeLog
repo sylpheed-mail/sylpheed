@@ -1,3 +1,10 @@
+2009-11-04
+
+	* libsylph/imap.c
+	  src/query_search.c
+	  src/main.c: fixed a bug that prohibited query search on IMAP
+	  folders. Don't call gtk_main_iteration() from non-main threads.
+
 2009-11-02
 
 	* src/summaryview.c: summary_selection_changed(): fixed unintended
