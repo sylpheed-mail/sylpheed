@@ -639,25 +639,43 @@ static gint sock_connect_with_timeout(gint sock,
 				      guint timeout_secs)
 {
 	gint ret;
-#ifdef G_OS_UNIX
-	void (*prev_handler)(gint);
 
-	alarm(0);
-	prev_handler = signal(SIGALRM, timeout_handler);
-	if (sigsetjmp(jmpenv, 1)) {
-		alarm(0);
-		signal(SIGALRM, prev_handler);
-		errno = ETIMEDOUT;
-		return -1;
-	}
-	alarm(timeout_secs);
+#ifdef G_OS_UNIX
+	set_nonblocking_mode(sock, TRUE);
 #endif
 
 	ret = connect(sock, serv_addr, addrlen);
 
 #ifdef G_OS_UNIX
-	alarm(0);
-	signal(SIGALRM, prev_handler);
+	if (ret < 0) {
+		if (EINPROGRESS == errno) {
+			fd_set fds;
+			struct timeval tv;
+
+			tv.tv_sec = timeout_secs;
+			tv.tv_usec = 0;
+			FD_ZERO(&fds);
+			FD_SET(sock, &fds);
+			do {
+				ret = select(sock + 1, NULL, &fds, NULL, &tv);
+			} while (ret < 0 && EINTR == errno);
+			if (ret < 0) {
+				perror("sock_connect_with_timeout: select");
+				return -1;
+			} else if (ret == 0) {
+				errno = ETIMEDOUT;
+				return -1;
+			} else {
+				g_print("conn ok\n");
+				ret = 0;
+			}
+		} else {
+			perror("sock_connect_with_timeout: connect");
+			return -1;
+		}
+	}
+
+	set_nonblocking_mode(sock, FALSE);
 #endif
 
 	return ret;
@@ -1330,14 +1348,23 @@ static gint sock_get_address_info_async_cancel(SockLookupData *lookup_data)
 static gpointer sock_connect_async_func(gpointer data)
 {
 	SockConnectData *conn_data = (SockConnectData *)data;
+	gint ret;
 
 	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
-	g_atomic_int_set(&conn_data->flag, 1);
 
-	debug_print("sock_connect_async_func: connected\n");
+	if (conn_data->sock) {
+		debug_print("sock_connect_async_func: connected\n");
+		ret = 0;
+	} else {
+		debug_print("sock_connect_async_func: connection failed\n");
+		ret = -1;
+	}
+
+	g_atomic_int_set(&conn_data->flag, 1);
 	g_main_context_wakeup(NULL);
 
-	return GINT_TO_POINTER(conn_data->sock ? 0 : -1);
+	debug_print("sock_connect_async_func: exit\n");
+	return GINT_TO_POINTER(ret);
 }
 
 gint sock_connect_async_thread(const gchar *hostname, gushort port)
@@ -1388,7 +1415,7 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 		event_loop_iterate();
 
 	ret = GPOINTER_TO_INT(g_thread_join(conn_data->thread));
-	debug_print("sock_connect_async_thread_wait: thread exited\n");
+	debug_print("sock_connect_async_thread_wait: thread exited with status %d\n", ret);
 
 	*sock = conn_data->sock;
 
