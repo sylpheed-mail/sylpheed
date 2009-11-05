@@ -2238,7 +2238,8 @@ static gint imap_create_tree(Folder *folder)
 	g_return_val_if_fail(folder->account != NULL, -1);
 
 	imap_scan_tree(folder);
-	imap_create_missing_folders(folder);
+	if (REMOTE_FOLDER(folder)->session)
+		imap_create_missing_folders(folder);
 
 	return 0;
 }

@@ -624,7 +624,7 @@ static gint fd_check_io(gint fd, GIOCondition cond)
 	}
 }
 
-#ifdef G_OS_UNIX
+#if defined(G_OS_UNIX) && !defined(USE_THREADS)
 static sigjmp_buf jmpenv;
 
 static void timeout_handler(gint sig)
@@ -663,11 +663,16 @@ static gint sock_connect_with_timeout(gint sock,
 				perror("sock_connect_with_timeout: select");
 				return -1;
 			} else if (ret == 0) {
+				debug_print("sock_connect_with_timeout: timeout\n");
 				errno = ETIMEDOUT;
 				return -1;
 			} else {
-				g_print("conn ok\n");
-				ret = 0;
+				if (FD_ISSET(sock, &fds)) {
+					ret = 0;
+				} else {
+					debug_print("sock_connect_with_timeout: fd not set\n");
+					return -1;
+				}
 			}
 		} else {
 			perror("sock_connect_with_timeout: connect");
@@ -699,7 +704,7 @@ static void resolver_init(void)
 struct hostent *my_gethostbyname(const gchar *hostname)
 {
 	struct hostent *hp;
-#ifdef G_OS_UNIX
+#if defined(G_OS_UNIX) && !defined(USE_THREADS)
 	void (*prev_handler)(gint);
 
 	alarm(0);
@@ -715,7 +720,7 @@ struct hostent *my_gethostbyname(const gchar *hostname)
 #endif
 
 	if ((hp = gethostbyname(hostname)) == NULL) {
-#ifdef G_OS_UNIX
+#if defined(G_OS_UNIX) && !defined(USE_THREADS)
 		alarm(0);
 		signal(SIGALRM, prev_handler);
 #endif
@@ -724,7 +729,7 @@ struct hostent *my_gethostbyname(const gchar *hostname)
 		return NULL;
 	}
 
-#ifdef G_OS_UNIX
+#if defined(G_OS_UNIX) && !defined(USE_THREADS)
 	alarm(0);
 	signal(SIGALRM, prev_handler);
 #endif

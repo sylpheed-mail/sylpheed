@@ -1,3 +1,11 @@
+2009-11-05
+
+	* libsylph/imap.c: imap_create_tree(): don't continue if connection
+	  failed.
+	* libsylph/socket.c: don't use alarm() if threads are enabled.
+	  sock_connect_with_timeout(): check with FD_ISSET() when select()
+	  succeeded.
+
 2009-11-04
 
 	* libsylph/socket.c: sock_connect_with_timeout(): use non-blocking
