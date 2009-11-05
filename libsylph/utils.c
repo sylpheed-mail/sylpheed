@@ -2665,6 +2665,8 @@ gint remove_dir_recursive(const gchar *dir)
 	gchar *cur_dir;
 	gint ret;
 
+	debug_print("remove_dir_recursive: %s\n", dir);
+
 	cur_dir = g_get_current_dir();
 
 	if (g_chdir(dir) < 0) {

@@ -476,20 +476,22 @@ static Folder *imap_folder_new(const gchar *name, const gchar *path)
 
 static void imap_folder_destroy(Folder *folder)
 {
-	gchar *dir;
-
 	g_return_if_fail(folder->account != NULL);
 
-	dir = folder_get_path(folder);
-	if (is_dir_exist(dir))
-		remove_dir_recursive(dir);
-	g_free(dir);
+	if (REMOTE_FOLDER(folder)->remove_cache_on_destroy) {
+		gchar *dir;
 
-	dir = g_strconcat(get_imap_cache_dir(), G_DIR_SEPARATOR_S,
-			  folder->account->recv_server, NULL);
-	if (is_dir_exist(dir))
-		g_rmdir(dir);
-	g_free(dir);
+		dir = folder_get_path(folder);
+		if (is_dir_exist(dir))
+			remove_dir_recursive(dir);
+		g_free(dir);
+
+		dir = g_strconcat(get_imap_cache_dir(), G_DIR_SEPARATOR_S,
+				  folder->account->recv_server, NULL);
+		if (is_dir_exist(dir))
+			g_rmdir(dir);
+		g_free(dir);
+	}
 
 	folder_remote_folder_destroy(REMOTE_FOLDER(folder));
 }

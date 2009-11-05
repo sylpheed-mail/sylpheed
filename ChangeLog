@@ -1,5 +1,14 @@
 2009-11-05
 
+	* libsylph/folder.[ch]
+	  libsylph/news.c
+	  libsylph/imap.c: add a new flag:
+	  RemoteFolder::remove_cache_on_destroy. If this is not set, caches
+	  will not be removed on folder_destroy().
+	* libsylph/utils.c: remove_dir_recursive(): added debug print.
+
+2009-11-05
+
 	* libsylph/imap.c: imap_create_tree(): return error if
 	  imap_scan_tree() failed.
 	* src/account_dialog.c: show waiting dialog on creating folder tree.

@@ -110,6 +110,7 @@ void folder_remote_folder_init(Folder *folder, const gchar *name,
 {
 	folder_init(folder, name);
 	REMOTE_FOLDER(folder)->session = NULL;
+	REMOTE_FOLDER(folder)->remove_cache_on_destroy = TRUE;
 }
 
 void folder_destroy(Folder *folder)

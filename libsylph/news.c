@@ -176,18 +176,20 @@ static Folder *news_folder_new(const gchar *name, const gchar *path)
 
 static void news_folder_destroy(Folder *folder)
 {
-	gchar *dir;
+	if (REMOTE_FOLDER(folder)->remove_cache_on_destroy) {
+		gchar *dir;
 
-	dir = folder_get_path(folder);
-	if (is_dir_exist(dir))
-		remove_dir_recursive(dir);
-	g_free(dir);
+		dir = folder_get_path(folder);
+		if (is_dir_exist(dir))
+			remove_dir_recursive(dir);
+		g_free(dir);
 
-	dir = g_strconcat(get_news_cache_dir(), G_DIR_SEPARATOR_S,
-			  folder->account->nntp_server, NULL);
-	if (is_dir_exist(dir))
-		g_rmdir(dir);
-	g_free(dir);
+		dir = g_strconcat(get_news_cache_dir(), G_DIR_SEPARATOR_S,
+				  folder->account->nntp_server, NULL);
+		if (is_dir_exist(dir))
+			g_rmdir(dir);
+		g_free(dir);
+	}
 
 	folder_remote_folder_destroy(REMOTE_FOLDER(folder));
 }

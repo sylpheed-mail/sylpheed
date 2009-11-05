@@ -241,6 +241,11 @@ struct _RemoteFolder
 	Folder folder;
 
 	Session *session;
+
+	guint remove_cache_on_destroy : 1;
+	guint dummy1 : 1;
+	guint dummy2 : 1;
+	guint dummy3 : 1;
 };
 
 #if 0
