@@ -912,6 +912,8 @@ static GtkWidget *label_window_create(const gchar *str)
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
 	manage_window_set_transient(GTK_WINDOW(window));
+	g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(gtk_true),
+			 NULL);
 
 	label = gtk_label_new(str);
 	gtk_container_add(GTK_CONTAINER(window), label);

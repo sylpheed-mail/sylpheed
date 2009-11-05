@@ -75,6 +75,8 @@ static struct EditAccount {
 
 static void account_edit_create		(void);
 
+static GtkWidget *account_wait_window_create	(const gchar	*str);
+
 static void account_edit_prefs		(void);
 static void account_delete		(void);
 
@@ -187,8 +189,12 @@ void account_add(void)
 		if (ac_prefs->protocol == A_IMAP4) {
 			if (main_window_toggle_online_if_offline
 				(main_window_get())) {
-				folder->klass->create_tree(folder);
+				GtkWidget *window;
+				window = account_wait_window_create(_("Creating folder tree. Please wait..."));
+				if (folder->klass->create_tree(folder) < 0)
+					alertpanel_error(_("Creation of the folder tree failed."));
 				statusbar_pop_all();
+				gtk_widget_destroy(window);
 			}
 		}
 		folderview_set_all();
@@ -453,6 +459,33 @@ static void account_edit_create(void)
 	edit_account.store     = store;
 	edit_account.selection = selection;
 	edit_account.close_btn = close_btn;
+}
+
+static GtkWidget *account_wait_window_create(const gchar *str)
+{
+	GtkWidget *window;
+	GtkWidget *label;
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_set_size_request(window, 380, 60);
+	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
+	gtk_window_set_position(GTK_WINDOW(window),
+				GTK_WIN_POS_CENTER_ON_PARENT);
+	gtk_window_set_title(GTK_WINDOW(window), str);
+	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
+	gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
+	manage_window_focus_in(edit_account.window, NULL, NULL);
+	manage_window_set_transient(GTK_WINDOW(window));
+	g_signal_connect(G_OBJECT(window), "delete_event", G_CALLBACK(gtk_true),
+			 NULL);
+
+	label = gtk_label_new(str);
+	gtk_container_add(GTK_CONTAINER(window), label);
+	gtk_widget_show(label);
+
+	gtk_widget_show(window);
+
+	return window;
 }
 
 static void account_edit_prefs(void)

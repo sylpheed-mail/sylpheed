@@ -1,5 +1,12 @@
 2009-11-05
 
+	* libsylph/imap.c: imap_create_tree(): return error if
+	  imap_scan_tree() failed.
+	* src/account_dialog.c: show waiting dialog on creating folder tree.
+	* src/folderview.c: disable close button of waiting dialog.
+
+2009-11-05
+
 	* libsylph/imap.c: imap_create_tree(): don't continue if connection
 	  failed.
 	* libsylph/socket.c: don't use alarm() if threads are enabled.
