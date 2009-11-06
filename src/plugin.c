@@ -378,6 +378,10 @@ static GtkItemFactory *get_item_factory(const gchar *path)
 		ifactory = syl_plugin_lookup_symbol("main_window_menu_factory");
 	else if (strncmp(path, "<MailFolder>", 12) == 0)
 		ifactory = syl_plugin_lookup_symbol("folderview_mail_popup_factory");
+	else if (strncmp(path, "<IMAPFolder>", 12) == 0)
+		ifactory = syl_plugin_lookup_symbol("folderview_imap_popup_factory");
+	else if (strncmp(path, "<NewsFolder>", 12) == 0)
+		ifactory = syl_plugin_lookup_symbol("folderview_news_popup_factory");
 	else
 		ifactory = syl_plugin_lookup_symbol("main_window_menu_factory");
 

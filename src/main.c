@@ -1100,6 +1100,10 @@ static void plugin_init(void)
 			      folderview_get_selected_item);
 	syl_plugin_add_symbol("folderview_mail_popup_factory",
 			      mainwin->folderview->mail_factory);
+	syl_plugin_add_symbol("folderview_imap_popup_factory",
+			      mainwin->folderview->imap_factory);
+	syl_plugin_add_symbol("folderview_news_popup_factory",
+			      mainwin->folderview->news_factory);
 
 	syl_plugin_add_symbol("summaryview", mainwin->summaryview);
 	syl_plugin_add_symbol("summary_select_by_msgnum",
