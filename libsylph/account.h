@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -63,6 +63,8 @@ FolderItem   *account_get_special_folder(PrefsAccount		*ac_prefs,
 
 void	      account_destroy		(PrefsAccount	*ac_prefs);
 
+void	      account_update_lock	(void);
+void	      account_update_unlock	(void);
 void	      account_updated		(void);
 
 #endif /* __ACCOUNT_H__ */

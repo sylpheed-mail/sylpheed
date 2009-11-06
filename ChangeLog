@@ -1,5 +1,15 @@
 2009-11-06
 
+	* libsylph/mh.c
+	  libsylph/folder.c
+	  libsylph/sylmain.c
+	  libsylph/account.[ch]
+	  src/account_dialog.c: added "account-updated" signal to SylApp.
+	  Don't emit signals if SylApp is not initialized.
+	  Call account_updated() only once.
+
+2009-11-06
+
 	* src/plugin.c
 	  src/main.c:
 	  syl_plugin_add_menuitem()

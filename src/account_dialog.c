@@ -600,6 +600,7 @@ static void account_edit_close(void)
 {
 	GList *account_list;
 
+	account_update_lock();
 	account_set_list();
 	account_write_config_all();
 
@@ -613,6 +614,8 @@ static void account_edit_close(void)
 
 	account_set_menu();
 	main_window_reflect_prefs_all();
+	account_update_unlock();
+	account_updated();
 
 	gtk_widget_hide(edit_account.window);
 	main_window_popup(main_window_get());

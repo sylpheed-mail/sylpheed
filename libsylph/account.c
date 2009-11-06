@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,6 +35,7 @@
 #include "procmsg.h"
 #include "procheader.h"
 #include "utils.h"
+#include "sylmain.h"
 
 #define PREFSBUFSIZE		1024
 
@@ -464,10 +465,29 @@ void account_destroy(PrefsAccount *ac_prefs)
 	account_updated();
 }
 
+static guint account_update_lock_count = 0;
+
+void account_update_lock(void)
+{
+	account_update_lock_count++;
+}
+
+void account_update_unlock(void)
+{
+	if (account_update_lock_count > 0)
+		account_update_lock_count--;
+}
+
 void account_updated(void)
 {
+	if (account_update_lock_count)
+		return;
+
 	if (address_table) {
 		g_hash_table_destroy(address_table);
 		address_table = NULL;
 	}
+
+	if (syl_app_get())
+		g_signal_emit_by_name(syl_app_get(), "account-updated");
 }

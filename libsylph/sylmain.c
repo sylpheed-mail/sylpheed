@@ -63,6 +63,7 @@ enum {
 	REMOVE_FOLDER,
 	MOVE_FOLDER,
 	FOLDERLIST_UPDATED,
+	ACCOUNT_UPDATED,
 	LAST_SIGNAL
 };
 
@@ -155,6 +156,15 @@ static void syl_app_class_init(SylAppClass *klass)
 			     G_TYPE_STRING);
 	app_signals[FOLDERLIST_UPDATED] =
 		g_signal_new("folderlist-updated",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     0,
+			     NULL, NULL,
+			     syl_marshal_VOID__VOID,
+			     G_TYPE_NONE,
+			     0);
+	app_signals[ACCOUNT_UPDATED] =
+		g_signal_new("account-updated",
 			     G_TYPE_FROM_CLASS(gobject_class),
 			     G_SIGNAL_RUN_FIRST,
 			     0,
