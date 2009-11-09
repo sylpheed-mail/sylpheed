@@ -1248,12 +1248,18 @@ static MsgInfo *imap_get_msginfo(Folder *folder, FolderItem *item, gint uid)
 	IMAPSession *session;
 	GSList *list;
 	MsgInfo *msginfo = NULL;
+	gint ok;
 
 	g_return_val_if_fail(folder != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
 
 	session = imap_session_get(folder);
 	g_return_val_if_fail(session != NULL, NULL);
+
+	ok = imap_select(session, IMAP_FOLDER(folder), item->path,
+			 NULL, NULL, NULL, NULL);
+	if (ok != IMAP_SUCCESS)
+		return NULL;
 
 	list = imap_get_uncached_messages(session, item, uid, uid, 0, FALSE);
 	if (list) {
