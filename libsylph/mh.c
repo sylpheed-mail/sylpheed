@@ -48,8 +48,8 @@
 
 #if USE_THREADS
 G_LOCK_DEFINE_STATIC(mh);
-#define S_LOCK(name)	{G_LOCK(name); g_print("mh: lock\n");}
-#define S_UNLOCK(name)	{G_UNLOCK(name); g_print("mh: unlock\n");}
+#define S_LOCK(name)	G_LOCK(name)
+#define S_UNLOCK(name)	G_UNLOCK(name)
 #else
 #define S_LOCK(name)
 #define S_UNLOCK(name)
@@ -228,7 +228,7 @@ static GSList *mh_get_msg_list_full(Folder *folder, FolderItem *item,
 
 	g_return_val_if_fail(item != NULL, NULL);
 
-	S_LOCK(mh)
+	S_LOCK(mh);
 
 #ifdef MEASURE_TIME
 	timer = g_timer_new();
@@ -312,27 +312,27 @@ static GSList *mh_get_msg_list_full(Folder *folder, FolderItem *item,
 
 		if (newlist == NULL) {
 			procmsg_msg_list_free(mlist);
-			S_UNLOCK(mh)
+			S_UNLOCK(mh);
 			return NULL;
 		}
 		if (mlist == newlist) {
-			S_UNLOCK(mh)
+			S_UNLOCK(mh);
 			return newlist;
 		}
 		for (cur = mlist; cur != NULL; cur = cur->next) {
 			if (cur->next == newlist) {
 				cur->next = NULL;
 				procmsg_msg_list_free(mlist);
-				S_UNLOCK(mh)
+				S_UNLOCK(mh);
 				return newlist;
 			}
 		}
 		procmsg_msg_list_free(mlist);
-		S_UNLOCK(mh)
+		S_UNLOCK(mh);
 		return NULL;
 	}
 
-	S_UNLOCK(mh)
+	S_UNLOCK(mh);
 	return mlist;
 }
 
@@ -476,7 +476,7 @@ static gint mh_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		if (dest->last_num < 0) return -1;
 	}
 
-	S_LOCK(mh)
+	S_LOCK(mh);
 
 	if (!dest->opened) {
 		if ((fp = procmsg_open_mark_file(dest, DATA_APPEND)) == NULL)

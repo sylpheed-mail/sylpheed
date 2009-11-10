@@ -1192,8 +1192,6 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 
 	g_return_val_if_fail(inc_session != NULL, DROP_ERROR);
 
-	g_print("inc_drop_message\n");
-
 	gdk_threads_enter();
 
 	if (session->ac_prefs->inbox) {
@@ -1303,7 +1301,6 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	filter_info_free(fltinfo);
 
 	gdk_threads_leave();
-	g_print("inc_drop_message done\n");
 	return val;
 }
 
