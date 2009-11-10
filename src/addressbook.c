@@ -2803,34 +2803,36 @@ void addressbook_read_file(void)
 	AddressIndex *addrIndex = NULL;
 
 	debug_print( "Reading address index...\n" );
-	if( _addressIndex_ ) {
-		debug_print( "address book already read!!!\n" );
+	if (_addressIndex_) {
+		debug_print("address book already read!\n");
 		return;
 	}
 
 	addrIndex = addrindex_create_index();
 
 	/* Use new address book index. */
-	addrindex_set_file_path( addrIndex, get_rc_dir() );
-	addrindex_set_file_name( addrIndex, ADDRESSBOOK_INDEX_FILE );
-	addrindex_read_data( addrIndex );
-	if( addrIndex->retVal == MGU_NO_FILE ) {
+	addrindex_set_file_path(addrIndex, get_rc_dir());
+	addrindex_set_file_name(addrIndex, ADDRESSBOOK_INDEX_FILE);
+	addrindex_read_data(addrIndex);
+	if (addrIndex->retVal == MGU_NO_FILE) {
 		/* Conversion required */
-		debug_print( "Converting...\n" );
-		if( addressbook_convert( addrIndex ) ) {
+		debug_print("Converting...\n");
+		if (addressbook_convert(addrIndex)) {
 			_addressIndex_ = addrIndex;
 		}
-	}
-	else if( addrIndex->retVal == MGU_SUCCESS ) {
+	} else if (addrIndex->retVal == MGU_SUCCESS) {
 		_addressIndex_ = addrIndex;
-	}
-	else {
+	} else {
+		gchar msg[1024];
+
 		/* Error reading address book */
-		debug_print( "Could not read address index.\n" );
-		addrindex_print_index( addrIndex, stdout );
-		alertpanel( _( "Address Book Error" ),
-			    _( "Could not read address index" ),
-			    GTK_STOCK_CLOSE, NULL, NULL );
+		debug_print("Could not read address index.\n");
+		addrindex_print_index(addrIndex, stdout);
+		g_snprintf(msg, sizeof(msg),
+			   _("Could not read address index:\n\n%s%c%s"),
+			   addrIndex->filePath, G_DIR_SEPARATOR,
+			   addrIndex->fileName);
+		alertpanel_message(_("Address Book Error"), msg, ALERT_ERROR);
 	}
 	debug_print( "done.\n" );
 }
