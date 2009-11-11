@@ -36,6 +36,8 @@ enum {
 
 #define SAFE_CALL(func_ptr)		{ if (func_ptr) func_ptr(); }
 #define SAFE_CALL_RET(func_ptr)		(func_ptr ? func_ptr() : NULL)
+#define SAFE_CALL_RET_VAL(func_ptr, retval) \
+					(func_ptr ? func_ptr() : retval)
 #define SAFE_CALL_ARG1(func_ptr, arg1)	{ if (func_ptr) func_ptr(arg1); }
 #define SAFE_CALL_ARG1_RET(func_ptr, arg1) \
 				(func_ptr ? func_ptr(arg1) : NULL)
@@ -119,7 +121,8 @@ void syl_plugin_signal_emit(const gchar *name, ...)
 	guint signal_id;
 
 	if (g_signal_parse_name(name, G_TYPE_FROM_INSTANCE(plugin_obj), &signal_id, NULL, FALSE)) {
-		va_list var_args;
+		 \
+				va_list var_args;
 		va_start(var_args, name);
 		g_signal_emit_valist(plugin_obj, signal_id, 0, var_args);
 		va_end(var_args);
@@ -333,6 +336,30 @@ const gchar *syl_plugin_get_prog_version(void)
 
 	sym = syl_plugin_lookup_symbol("prog_version");
 	return (gchar *)sym;
+}
+
+void syl_plugin_main_window_lock(void)
+{
+	void (*func)(gpointer);
+	gpointer mainwin;
+
+	mainwin = syl_plugin_main_window_get();
+	if (mainwin) {
+		func = syl_plugin_lookup_symbol("main_window_lock");
+		SAFE_CALL_ARG1(func, mainwin);
+	}
+}
+
+void syl_plugin_main_window_unlock(void)
+{
+	void (*func)(gpointer);
+	gpointer mainwin;
+
+	mainwin = syl_plugin_main_window_get();
+	if (mainwin) {
+		func = syl_plugin_lookup_symbol("main_window_unlock");
+		SAFE_CALL_ARG1(func, mainwin);
+	}
 }
 
 gpointer syl_plugin_main_window_get(void)
@@ -690,6 +717,14 @@ void syl_plugin_inc_mail(void)
 
 	func = syl_plugin_lookup_symbol("inc_mail");
 	SAFE_CALL_ARG1(func, syl_plugin_main_window_get());
+}
+
+gboolean syl_plugin_inc_is_active(void)
+{
+	gboolean (*func)(void);
+
+	func = syl_plugin_lookup_symbol("inc_is_active");
+	return SAFE_CALL_RET_VAL(func, FALSE);
 }
 
 void syl_plugin_inc_lock(void)

@@ -1088,6 +1088,8 @@ static void plugin_init(void)
 	}
 
 	syl_plugin_add_symbol("prog_version", prog_version);
+	syl_plugin_add_symbol("main_window_lock", main_window_lock);
+	syl_plugin_add_symbol("main_window_unlock", main_window_unlock);
 	syl_plugin_add_symbol("main_window_get", main_window_get);
 	syl_plugin_add_symbol("main_window_popup", main_window_popup);
 	syl_plugin_add_symbol("app_will_exit", app_will_exit);
@@ -1134,6 +1136,7 @@ static void plugin_init(void)
 			      manage_window_get_focus_window);
 
 	syl_plugin_add_symbol("inc_mail", inc_mail);
+	syl_plugin_add_symbol("inc_is_active", inc_is_active);
 	syl_plugin_add_symbol("inc_lock", inc_lock);
 	syl_plugin_add_symbol("inc_unlock", inc_unlock);
 

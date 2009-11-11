@@ -45,7 +45,7 @@ typedef void (*SylPluginLoadFunc)	(void);
 typedef void (*SylPluginUnloadFunc)	(void);
 typedef void (*SylPluginCallbackFunc)	(void);
 
-#define SYL_PLUGIN_INTERFACE_VERSION	0x0102
+#define SYL_PLUGIN_INTERFACE_VERSION	0x0103
 
 struct _SylPlugin
 {
@@ -107,6 +107,8 @@ gpointer syl_plugin_lookup_symbol	(const gchar *name);
 
 const gchar *syl_plugin_get_prog_version	(void);
 
+void syl_plugin_main_window_lock		(void);
+void syl_plugin_main_window_unlock		(void);
 gpointer syl_plugin_main_window_get		(void);
 void syl_plugin_main_window_popup		(gpointer mainwin);
 GtkWidget *syl_plugin_main_window_get_statusbar	(void);
@@ -175,6 +177,7 @@ GtkWidget *syl_plugin_manage_window_get_focus_window
 						(void);
 
 void syl_plugin_inc_mail			(void);
+gboolean syl_plugin_inc_is_active		(void);
 void syl_plugin_inc_lock			(void);
 void syl_plugin_inc_unlock			(void);
 
