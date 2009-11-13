@@ -309,7 +309,15 @@ static gint addressbook_tree_compare		(GtkTreeModel	*model,
 						 GtkTreeIter	*a,
 						 GtkTreeIter	*b,
 						 gpointer	 data);
-static gint addressbook_list_compare		(GtkTreeModel	*model,
+static gint addressbook_list_name_compare	(GtkTreeModel	*model,
+						 GtkTreeIter	*a,
+						 GtkTreeIter	*b,
+						 gpointer	 data);
+static gint addressbook_list_address_compare	(GtkTreeModel	*model,
+						 GtkTreeIter	*a,
+						 GtkTreeIter	*b,
+						 gpointer	 data);
+static gint addressbook_list_remarks_compare	(GtkTreeModel	*model,
 						 GtkTreeIter	*a,
 						 GtkTreeIter	*b,
 						 gpointer	 data);
@@ -528,7 +536,9 @@ static void addressbook_create(void)
 	GtkWidget *bcc_btn;
 	GtkWidget *del_btn;
 	GtkWidget *reg_btn;
+#ifdef USE_LDAP
 	GtkWidget *lup_btn;
+#endif
 	GtkWidget *close_btn;
 	GtkWidget *tree_popup;
 	GtkWidget *list_popup;
@@ -664,7 +674,15 @@ static void addressbook_create(void)
 					G_TYPE_POINTER, GDK_TYPE_PIXBUF);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
 					COL_NAME,
-					addressbook_list_compare,
+					addressbook_list_name_compare,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
+					COL_ADDRESS,
+					addressbook_list_address_compare,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
+					COL_REMARKS,
+					addressbook_list_remarks_compare,
 					NULL, NULL);
 
 	listview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
@@ -700,6 +718,7 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_attributes(column, renderer,
 					    "text", COL_NAME, NULL);
 
+	/* gtk_tree_view_column_set_sort_column_id(column, COL_NAME); */
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(listview), column);
 
@@ -708,12 +727,14 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width(column, COL_ADDRESS_WIDTH);
 	gtk_tree_view_column_set_resizable(column, TRUE);
+	/* gtk_tree_view_column_set_sort_column_id(column, COL_ADDRESS); */
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
 
 	column = gtk_tree_view_column_new_with_attributes
 		(_("Remarks"), renderer, "text", COL_REMARKS, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_resizable(column, TRUE);
+	/* gtk_tree_view_column_set_sort_column_id(column, COL_REMARKS); */
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
 
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store),
@@ -808,9 +829,11 @@ static void addressbook_create(void)
 	reg_btn = gtk_button_new_with_label(_("Add"));
 	GTK_WIDGET_SET_FLAGS(reg_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), reg_btn, TRUE, TRUE, 0);
+#ifdef USE_LDAP
 	lup_btn = gtk_button_new_with_label(_("Lookup"));
 	GTK_WIDGET_SET_FLAGS(lup_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), lup_btn, TRUE, TRUE, 0);
+#endif
 	close_btn = gtk_button_new_with_mnemonic(_("_Close"));
 	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), close_btn, TRUE, TRUE, 0);
@@ -821,8 +844,10 @@ static void addressbook_create(void)
 			 G_CALLBACK(addressbook_del_clicked), NULL);
 	g_signal_connect(G_OBJECT(reg_btn), "clicked",
 			 G_CALLBACK(addressbook_reg_clicked), NULL);
+#ifdef USE_LDAP
 	g_signal_connect(G_OBJECT(lup_btn), "clicked",
 			 G_CALLBACK(addressbook_lup_clicked), NULL);
+#endif
 	g_signal_connect(G_OBJECT(close_btn), "clicked",
 			 G_CALLBACK(addressbook_close_clicked), NULL);
 
@@ -891,7 +916,11 @@ static void addressbook_create(void)
 	addrbook.bcc_btn = bcc_btn;
 	addrbook.del_btn = del_btn;
 	addrbook.reg_btn = reg_btn;
+#ifdef USE_LDAP
 	addrbook.lup_btn = lup_btn;
+#else
+	addrbook.lup_btn = NULL;
+#endif
 	addrbook.close_btn = close_btn;
 
 	addrbook.tree_popup   = tree_popup;
@@ -1327,7 +1356,8 @@ static void addressbook_menuitem_set_sensitive(void)
 	/* Buttons */
 	gtk_widget_set_sensitive(addrbook.reg_btn, canAdd);
 	gtk_widget_set_sensitive(addrbook.del_btn, canDelete);
-	gtk_widget_set_sensitive(addrbook.lup_btn, canLookup);
+	if (addrbook.lup_btn)
+		gtk_widget_set_sensitive(addrbook.lup_btn, canLookup);
 }
 
 static void addressbook_tree_selection_changed(GtkTreeSelection *selection,
@@ -2375,8 +2405,8 @@ static void addressbook_load_group(ItemGroup *itemGroup)
 		gtk_tree_store_append(GTK_TREE_STORE(model), &iter, NULL);
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
 				   COL_NAME, name,
-				   COL_ADDRESS, email->address,
-				   COL_REMARKS, email->remarks,
+				   COL_ADDRESS, email->address ? email->address : "",
+				   COL_REMARKS, email->remarks ? email->remarks : "",
 				   COL_L_OBJ, email,
 				   COL_L_PIXBUF, atci->icon_pixbuf,
 				   -1);
@@ -2435,8 +2465,8 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 				gtk_tree_store_set(GTK_TREE_STORE(model),
 						   &iperson,
 						   COL_NAME, name,
-						   COL_ADDRESS, email->address,
-						   COL_REMARKS, email->remarks,
+						   COL_ADDRESS, email->address ? email->address : "",
+						   COL_REMARKS, email->remarks ? email->remarks : "",
 						   COL_L_OBJ, person,
 						   COL_L_PIXBUF, atci->icon_pixbuf,
 						   -1);
@@ -2449,8 +2479,8 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 				gtk_tree_store_set(GTK_TREE_STORE(model),
 						   &iemail,
 						   COL_NAME, name,
-						   COL_ADDRESS, email->address,
-						   COL_REMARKS, email->remarks,
+						   COL_ADDRESS, email->address ? email->address : "",
+						   COL_REMARKS, email->remarks ? email->remarks : "",
 						   COL_L_OBJ, email,
 						   COL_L_PIXBUF, atciMail->icon_pixbuf,
 						   -1);
@@ -2465,6 +2495,8 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 			gtk_tree_store_set(GTK_TREE_STORE(model),
 					   &iperson,
 					   COL_NAME, ADDRITEM_NAME(person),
+					   COL_ADDRESS, "",
+					   COL_REMARKS, "",
 					   COL_L_OBJ, person,
 					   COL_L_PIXBUF, atci->icon_pixbuf,
 					   -1);
@@ -2506,6 +2538,8 @@ static void addressbook_folder_load_group(ItemFolder *itemFolder)
 		gtk_tree_store_append(GTK_TREE_STORE(model), &iter, NULL);
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
 				   COL_NAME, ADDRITEM_NAME(group),
+				   COL_ADDRESS, "",
+				   COL_REMARKS, "",
 				   COL_L_OBJ, group,
 				   COL_L_PIXBUF, atci->icon_pixbuf,
 				   -1);
@@ -2558,6 +2592,11 @@ static void addressbook_set_list(AddressObject *obj)
 	GtkTreeModel *model;
 	AddressDataSource *ds = NULL;
 	AdapterDSource *ads = NULL;
+	gboolean sorted;
+	gint address_list_sort_id = COL_NAME;
+	GtkSortType order = GTK_SORT_ASCENDING;
+
+	debug_print("addressbook_set_list\n");
 
 	model = gtk_tree_view_get_model(listview);
 
@@ -2571,6 +2610,14 @@ static void addressbook_set_list(AddressObject *obj)
 	}
 
 	gtk_tree_store_clear(GTK_TREE_STORE(model));
+	sorted = gtk_tree_sortable_get_sort_column_id(GTK_TREE_SORTABLE(model),
+						      &address_list_sort_id,
+						      &order);
+	if (!sorted) {
+		address_list_sort_id = COL_NAME;
+		order = GTK_SORT_ASCENDING;
+	}
+	gtkut_tree_sortable_unset_sort_column_id(GTK_TREE_SORTABLE(model));
 
 	if (obj->type == ADDR_DATASOURCE) {
 		ads = ADAPTER_DSOURCE(obj);
@@ -2592,6 +2639,9 @@ static void addressbook_set_list(AddressObject *obj)
 		addressbook_folder_load_person(itemFolder);
 		addressbook_folder_load_group(itemFolder);
 	}
+
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(model),
+					     address_list_sort_id, order);
 }
 
 /*
@@ -3206,27 +3256,66 @@ static gint addressbook_tree_compare(GtkTreeModel *model, GtkTreeIter *a,
 	return ret;
 }
 
-static gint addressbook_list_compare(GtkTreeModel *model, GtkTreeIter *a,
-				     GtkTreeIter *b, gpointer data)
+static gint addressbook_list_col_compare(GtkTreeModel *model, GtkTreeIter *a,
+					 GtkTreeIter *b, gint col)
 {
 	gchar *name1 = NULL, *name2 = NULL;
 	gint ret;
 
-	gtk_tree_model_get(model, a, COL_NAME, &name1, -1);
-	gtk_tree_model_get(model, b, COL_NAME, &name2, -1);
+	gtk_tree_model_get(model, a, col, &name1, -1);
+	gtk_tree_model_get(model, b, col, &name2, -1);
 
-	if (!name1 || !name2) {
-		if (!name1)
-			ret = (name2 != NULL);
-		else
-			ret = -1;
-		g_free(name2);
-		g_free(name1);
-		return ret;
-	}
+	if (!name1)
+		name1 = g_strdup("");
+	if (!name2)
+		name2 = g_strdup("");
 	ret = g_ascii_strcasecmp(name1, name2);
 	g_free(name2);
 	g_free(name1);
+	return ret;
+}
+
+static gint addressbook_list_name_compare(GtkTreeModel *model, GtkTreeIter *a,
+					  GtkTreeIter *b, gpointer data)
+{
+	gint ret;
+
+	ret = addressbook_list_col_compare(model, a, b, COL_NAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_ADDRESS);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
+
+	return ret;
+}
+
+static gint addressbook_list_address_compare(GtkTreeModel *model,
+					     GtkTreeIter *a, GtkTreeIter *b,
+					     gpointer data)
+{
+	gint ret;
+
+	ret = addressbook_list_col_compare(model, a, b, COL_ADDRESS);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_NAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
+
+	return ret;
+}
+
+static gint addressbook_list_remarks_compare(GtkTreeModel *model,
+					     GtkTreeIter *a, GtkTreeIter *b,
+					     gpointer data)
+{
+	gint ret;
+
+	ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_NAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_ADDRESS);
+
 	return ret;
 }
 
