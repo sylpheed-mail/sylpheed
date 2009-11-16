@@ -2741,8 +2741,6 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	g_return_val_if_fail(FOLDER_TYPE(item->folder) == F_IMAP, NULL);
 	g_return_val_if_fail(first_uid <= last_uid, NULL);
 
-	g_print("enter imap_get_uncached_messages\n");
-
 	if (first_uid == 0 && last_uid == 0)
 		strcpy(seq_set, "1:*");
 	else
@@ -2762,7 +2760,6 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 #endif
 
 	progress_show(0, 0);
-	g_print("leave imap_get_uncached_messages\n");
 	return get_data.newlist;
 }
 
@@ -4056,7 +4053,6 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 
 	g_return_val_if_fail(filename != NULL, IMAP_ERROR);
 
-	g_print("enter imap_cmd_fetch\n");
 	ok = imap_cmd_gen_send(session, "UID FETCH %u BODY.PEEK[]", uid);
 	if (ok != IMAP_SUCCESS)
 		return ok;
@@ -4067,7 +4063,6 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	ok = imap_cmd_fetch_func(session, &fetch_data);
 #endif
 
-	g_print("leave imap_cmd_fetch\n");
 	return ok;
 }
 
@@ -4317,10 +4312,7 @@ static gint imap_cmd_ok_func(IMAPSession *session, gpointer data)
 	GPtrArray *argbuf = (GPtrArray *)data;
 	gint ok;
 
-	g_print("enter imap_cmd_ok_func\n");
 	ok = imap_cmd_ok_real(session, argbuf);
-
-	g_print("leave imap_cmd_ok_func\n");
 	return ok;
 }
 #endif
