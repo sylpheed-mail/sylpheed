@@ -274,6 +274,10 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 	if ((server_cert = SSL_get_peer_certificate(sockinfo->ssl)) != NULL) {
 		gchar *str;
 		glong verify_result;
+		guchar keyid[EVP_MAX_MD_SIZE];
+		gchar keyidstr[EVP_MAX_MD_SIZE * 3 + 1] = "";
+		guint keyidlen = 0;
+		gint i;
 
 		debug_print(_("Server certificate:\n"));
 
@@ -285,6 +289,18 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 		if ((str = X509_NAME_oneline(X509_get_issuer_name(server_cert), 0, 0)) != NULL) {
 			debug_print(_("  Issuer: %s\n"), str);
 			OPENSSL_free(str);
+		}
+		if (X509_digest(server_cert, EVP_sha1(), keyid, &keyidlen)) {
+			for (i = 0; i < keyidlen; i++)
+				g_snprintf(keyidstr + i * 3, 4, "%02x:", keyid[i]);
+			keyidstr[keyidlen * 3 - 1] = '\0';
+			debug_print("  SHA1 fingerprint: %s\n", keyidstr);
+		}
+		if (X509_digest(server_cert, EVP_md5(), keyid, &keyidlen)) {
+			for (i = 0; i < keyidlen; i++)
+				g_snprintf(keyidstr + i * 3, 4, "%02x:", keyid[i]);
+			keyidstr[keyidlen * 3 - 1] = '\0';
+			debug_print("  MD5 fingerprint: %s\n", keyidstr);
 		}
 
 		verify_result = SSL_get_verify_result(sockinfo->ssl);

@@ -51,6 +51,11 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	const gchar *title;
 	gchar *message;
 	gchar *subject, *issuer;
+	guchar keyid[EVP_MAX_MD_SIZE];
+	gchar sha1_keyidstr[EVP_MAX_MD_SIZE * 3 + 1] = "";
+	gchar md5_keyidstr[EVP_MAX_MD_SIZE * 3 + 1] = "";
+	guint keyidlen = 0;
+	gint i;
 	gint result;
 
 	if (verify_result == X509_V_OK)
@@ -61,16 +66,35 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	subject = X509_NAME_oneline(X509_get_subject_name(server_cert),
 				    NULL, 0);
 	issuer = X509_NAME_oneline(X509_get_issuer_name(server_cert), NULL, 0);
+	if (X509_digest(server_cert, EVP_sha1(), keyid, &keyidlen)) {
+		for (i = 0; i < keyidlen; i++)
+			g_snprintf(sha1_keyidstr + i * 3, 4, "%02x:", keyid[i]);
+		sha1_keyidstr[keyidlen * 3 - 1] = '\0';
+	} else {
+		g_snprintf(sha1_keyidstr, sizeof(sha1_keyidstr),
+			   "(cannot calculate digest)");
+	}
+	if (X509_digest(server_cert, EVP_md5(), keyid, &keyidlen)) {
+		for (i = 0; i < keyidlen; i++)
+			g_snprintf(md5_keyidstr + i * 3, 4, "%02x:", keyid[i]);
+		md5_keyidstr[keyidlen * 3 - 1] = '\0';
+	} else {
+		g_snprintf(md5_keyidstr, sizeof(md5_keyidstr),
+			   "(cannot calculate digest)");
+	}
 	message = g_strdup_printf
 		(_("The SSL certificate of %s cannot be verified by the following reason:\n"
 		   "  %s\n\n"
 		   "Server certificate:\n"
 		   "  Subject: %s\n"
 		   "  Issuer: %s\n\n"
+		   "  SHA1 fingerprint: %s\n"
+		   "  MD5 fingerprint: %s\n\n"
 		   "Do you accept this certificate?"),
 		 hostname, X509_verify_cert_error_string(verify_result),
 		 subject ? subject : "(unknown)",
-		 issuer ? issuer : "(unknown)");
+		 issuer ? issuer : "(unknown)",
+		 sha1_keyidstr, md5_keyidstr);
 	if (issuer)
 		OPENSSL_free(issuer);
 	if (subject)
