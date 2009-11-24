@@ -632,12 +632,11 @@ static void addressbook_create(void)
 		 "pixbuf-expander-closed", COL_PIXBUF, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer,
 #if GTK_CHECK_VERSION(2, 6, 0)
-	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0,
-		     NULL);
-#else
-	g_object_set(renderer, "ypad", 0, NULL);
+		     "ellipsize", PANGO_ELLIPSIZE_END,
 #endif
+		     "ypad", 0, NULL);
 	gtk_tree_view_column_pack_start(column, renderer, TRUE);
 	gtk_tree_view_column_set_attributes(column, renderer,
 					    "text", COL_FOLDER_NAME, NULL);
@@ -708,12 +707,11 @@ static void addressbook_create(void)
 					    "pixbuf", COL_L_PIXBUF, NULL);
 
 	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer,
 #if GTK_CHECK_VERSION(2, 6, 0)
-	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0,
-		     NULL);
-#else
-	g_object_set(renderer, "ypad", 0, NULL);
+		     "ellipsize", PANGO_ELLIPSIZE_END,
 #endif
+		     "ypad", 0, NULL);
 	gtk_tree_view_column_pack_start(column, renderer, TRUE);
 	gtk_tree_view_column_set_attributes(column, renderer,
 					    "text", COL_NAME, NULL);
@@ -722,6 +720,12 @@ static void addressbook_create(void)
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(listview), column);
 
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer,
+#if GTK_CHECK_VERSION(2, 6, 0)
+		     "ellipsize", PANGO_ELLIPSIZE_END,
+#endif
+		     "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
 		(_("E-Mail address"), renderer, "text", COL_ADDRESS, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -730,6 +734,12 @@ static void addressbook_create(void)
 	/* gtk_tree_view_column_set_sort_column_id(column, COL_ADDRESS); */
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
 
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer,
+#if GTK_CHECK_VERSION(2, 6, 0)
+		     "ellipsize", PANGO_ELLIPSIZE_END,
+#endif
+		     "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
 		(_("Remarks"), renderer, "text", COL_REMARKS, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
