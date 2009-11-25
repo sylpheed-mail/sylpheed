@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,12 +49,14 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	GtkWidget *vbox;
 	GtkWidget *label;
 	const gchar *title;
-	gchar *message;
+	GString *message;
 	gchar *subject, *issuer;
 	guchar keyid[EVP_MAX_MD_SIZE];
-	gchar sha1_keyidstr[EVP_MAX_MD_SIZE * 3 + 1] = "";
-	gchar md5_keyidstr[EVP_MAX_MD_SIZE * 3 + 1] = "";
+	gchar keyidstr[EVP_MAX_MD_SIZE * 3 + 1] = "";
 	guint keyidlen = 0;
+	gchar *sha1_keyidstr, *md5_keyidstr;
+	BIO *bio;
+	gchar not_before[64] = "", not_after[64] = "";
 	gint i;
 	gint result;
 
@@ -66,35 +68,46 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	subject = X509_NAME_oneline(X509_get_subject_name(server_cert),
 				    NULL, 0);
 	issuer = X509_NAME_oneline(X509_get_issuer_name(server_cert), NULL, 0);
+
+	bio = BIO_new(BIO_s_mem());
+	ASN1_TIME_print(bio, X509_get_notBefore(server_cert));
+	BIO_gets(bio, not_before, sizeof(not_before));
+	BIO_reset(bio);
+	ASN1_TIME_print(bio, X509_get_notAfter(server_cert));
+	BIO_gets(bio, not_after, sizeof(not_after));
+	BIO_free(bio);
+
 	if (X509_digest(server_cert, EVP_sha1(), keyid, &keyidlen)) {
 		for (i = 0; i < keyidlen; i++)
-			g_snprintf(sha1_keyidstr + i * 3, 4, "%02x:", keyid[i]);
-		sha1_keyidstr[keyidlen * 3 - 1] = '\0';
+			g_snprintf(keyidstr + i * 3, 4, "%02x:", keyid[i]);
+		keyidstr[keyidlen * 3 - 1] = '\0';
+		sha1_keyidstr = g_ascii_strup(keyidstr, -1);
 	} else {
-		g_snprintf(sha1_keyidstr, sizeof(sha1_keyidstr),
-			   "(cannot calculate digest)");
+		sha1_keyidstr = g_strdup("(cannot calculate digest)");
 	}
 	if (X509_digest(server_cert, EVP_md5(), keyid, &keyidlen)) {
 		for (i = 0; i < keyidlen; i++)
-			g_snprintf(md5_keyidstr + i * 3, 4, "%02x:", keyid[i]);
-		md5_keyidstr[keyidlen * 3 - 1] = '\0';
+			g_snprintf(keyidstr + i * 3, 4, "%02x:", keyid[i]);
+		keyidstr[keyidlen * 3 - 1] = '\0';
+		md5_keyidstr = g_ascii_strup(keyidstr, -1);
 	} else {
-		g_snprintf(md5_keyidstr, sizeof(md5_keyidstr),
-			   "(cannot calculate digest)");
+		md5_keyidstr = g_strdup("(cannot calculate digest)");
 	}
-	message = g_strdup_printf
-		(_("The SSL certificate of %s cannot be verified by the following reason:\n"
-		   "  %s\n\n"
-		   "Server certificate:\n"
-		   "  Subject: %s\n"
-		   "  Issuer: %s\n\n"
-		   "  SHA1 fingerprint: %s\n"
-		   "  MD5 fingerprint: %s\n\n"
-		   "Do you accept this certificate?"),
-		 hostname, X509_verify_cert_error_string(verify_result),
-		 subject ? subject : "(unknown)",
-		 issuer ? issuer : "(unknown)",
-		 sha1_keyidstr, md5_keyidstr);
+
+	message = g_string_new("");
+	g_string_append_printf(message, _("The SSL certificate of %s cannot be verified by the following reason:"), hostname);
+	g_string_append_printf(message, "\n  %s\n\n", X509_verify_cert_error_string(verify_result));
+	g_string_append_printf(message, _("Subject: %s\n"), subject ? subject : "(unknown)");
+	g_string_append_printf(message, _("Issuer: %s\n"), issuer ? issuer : "(unknown)");
+	g_string_append_printf(message, _("Issued date: %s\n"), not_before);
+	g_string_append_printf(message, _("Expire date: %s\n"), not_after);
+	g_string_append(message, "\n");
+	g_string_append_printf(message, _("SHA1 fingerprint: %s\n"), sha1_keyidstr);
+	g_string_append_printf(message, _("MD5 fingerprint: %s\n"), md5_keyidstr);
+	g_string_append(message, "\n");
+	g_string_append(message, _("Do you accept this certificate?"));
+	g_free(md5_keyidstr);
+	g_free(sha1_keyidstr);
 	if (issuer)
 		OPENSSL_free(issuer);
 	if (subject)
@@ -143,8 +156,8 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	if (font_desc)
 		gtk_widget_modify_font(label, font_desc);
 
-	label = gtk_label_new(message);
-	g_free(message);
+	label = gtk_label_new(message->str);
+	g_string_free(message, TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);

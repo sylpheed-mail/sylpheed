@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-13 18:07+0900\n"
+"POT-Creation-Date: 2009-11-25 16:52+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -575,16 +575,16 @@ msgstr "ssl コンテキスト生成中にエラー発生\n"
 msgid "SSL connection using %s\n"
 msgstr "%s を用いて SSL 接続\n"
 
-#: libsylph/ssl.c:278
+#: libsylph/ssl.c:282
 msgid "Server certificate:\n"
 msgstr "サーバ証明書:\n"
 
-#: libsylph/ssl.c:281
+#: libsylph/ssl.c:285
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  所有者: %s\n"
 
-#: libsylph/ssl.c:286
+#: libsylph/ssl.c:290
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
@@ -680,7 +680,7 @@ msgstr ""
 "新着メッセージはこの順番でチェックされます。「全受信」によるメッセージ\n"
 "の取得を有効にするには、「G」カラムのボックスをチェックしてください。"
 
-#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:702
+#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:701
 #: src/compose.c:5110 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
@@ -821,7 +821,7 @@ msgstr "アドレスをアドレス帳に追加"
 msgid "Address"
 msgstr "アドレス"
 
-#: src/addressadd.c:197 src/addressbook.c:734 src/editaddress.c:629
+#: src/addressadd.c:197 src/addressbook.c:744 src/editaddress.c:629
 #: src/editaddress.c:695 src/editgroup.c:268 src/importcsv.c:125
 msgid "Remarks"
 msgstr "備考"
@@ -982,68 +982,68 @@ msgid "Address book"
 msgstr "アドレス帳"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:628 src/addressbook.c:3734 src/folderview.c:385
+#: src/addressbook.c:628 src/addressbook.c:3744 src/folderview.c:385
 #: src/prefs_account_dialog.c:1835 src/query_search.c:400
 msgid "Folder"
 msgstr "フォルダ"
 
-#: src/addressbook.c:726
+#: src/addressbook.c:730
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:760 src/prefs_filter_edit.c:251
+#: src/addressbook.c:770 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "名前:"
 
-#: src/addressbook.c:797 src/compose.c:3153 src/headerview.c:55
+#: src/addressbook.c:807 src/compose.c:3153 src/headerview.c:55
 #: src/prefs_folder_item.c:339 src/prefs_template.c:179
 msgid "To:"
 msgstr "宛先:"
 
-#: src/addressbook.c:801 src/compose.c:3170 src/headerview.c:56
+#: src/addressbook.c:811 src/compose.c:3170 src/headerview.c:56
 #: src/prefs_folder_item.c:356 src/prefs_template.c:181
 msgid "Cc:"
 msgstr "Cc:"
 
-#: src/addressbook.c:805 src/compose.c:3187 src/prefs_folder_item.c:367
+#: src/addressbook.c:815 src/compose.c:3187 src/prefs_folder_item.c:367
 #: src/prefs_template.c:183
 msgid "Bcc:"
 msgstr "Bcc:"
 
 #. Buttons
-#: src/addressbook.c:826 src/addressbook.c:1904 src/editaddress.c:719
+#: src/addressbook.c:836 src/addressbook.c:1914 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:239 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "削除"
 
-#: src/addressbook.c:829 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:839 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "追加"
 
-#: src/addressbook.c:833
+#: src/addressbook.c:843
 msgid "Lookup"
 msgstr "検索"
 
-#: src/addressbook.c:837
+#: src/addressbook.c:847
 msgid "_Close"
 msgstr "閉じる(_C)"
 
 #. Confirm deletion
-#: src/addressbook.c:1044
+#: src/addressbook.c:1054
 msgid "Delete address(es)"
 msgstr "アドレスの削除"
 
-#: src/addressbook.c:1045
+#: src/addressbook.c:1055
 msgid "Really delete the address(es)?"
 msgstr "本当にこのアドレスを削除しますか?"
 
-#: src/addressbook.c:1895
+#: src/addressbook.c:1905
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1052,36 +1052,36 @@ msgstr ""
 "`%s' 内のすべてのフォルダとアドレスを削除してもいいですか?\n"
 "フォルダのみを削除する場合、アドレスは親フォルダに移動します。"
 
-#: src/addressbook.c:1898 src/folderview.c:2546
+#: src/addressbook.c:1908 src/folderview.c:2546
 msgid "Delete folder"
 msgstr "フォルダの削除"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 msgid "_Folder only"
 msgstr "フォルダのみ(_F)"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 msgid "Folder and _addresses"
 msgstr "フォルダとアドレス(_A)"
 
-#: src/addressbook.c:1903
+#: src/addressbook.c:1913
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "本当に `%s' を削除しますか?"
 
-#: src/addressbook.c:2791 src/addressbook.c:2927
+#: src/addressbook.c:2801 src/addressbook.c:2937
 msgid "New user, could not save index file."
 msgstr "新規ユーザ、インデックスファイルを保存できません。"
 
-#: src/addressbook.c:2795 src/addressbook.c:2931
+#: src/addressbook.c:2805 src/addressbook.c:2941
 msgid "New user, could not save address book files."
 msgstr "新規ユーザ、アドレス帳ファイルを保存できません。"
 
-#: src/addressbook.c:2805 src/addressbook.c:2941
+#: src/addressbook.c:2815 src/addressbook.c:2951
 msgid "Old address book converted successfully."
 msgstr "旧形式のアドレス帳は正しく変換されました。"
 
-#: src/addressbook.c:2810
+#: src/addressbook.c:2820
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1089,7 +1089,7 @@ msgstr ""
 "旧形式のアドレス帳は変換されました。\n"
 "新規アドレスインデックスファイルに保存できません"
 
-#: src/addressbook.c:2823
+#: src/addressbook.c:2833
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1097,7 +1097,7 @@ msgstr ""
 "アドレス帳を変換できません。\n"
 "しかし空の新規アドレス帳ファイルが作成されました。"
 
-#: src/addressbook.c:2829
+#: src/addressbook.c:2839
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1105,7 +1105,7 @@ msgstr ""
 "アドレス帳を変換できません。\n"
 "新規アドレス帳ファイルを作成できません。"
 
-#: src/addressbook.c:2834
+#: src/addressbook.c:2844
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1113,15 +1113,15 @@ msgstr ""
 "アドレス帳を変換できません。\n"
 "新規アドレス帳ファイルを作成できません。"
 
-#: src/addressbook.c:2841
+#: src/addressbook.c:2851
 msgid "Address book conversion error"
 msgstr "アドレス帳の変換エラー"
 
-#: src/addressbook.c:2845
+#: src/addressbook.c:2855
 msgid "Address book conversion"
 msgstr "アドレス帳の変換"
 
-#: src/addressbook.c:2882
+#: src/addressbook.c:2892
 #, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1132,76 +1132,76 @@ msgstr ""
 "\n"
 "%s%c%s"
 
-#: src/addressbook.c:2885
+#: src/addressbook.c:2895
 msgid "Address Book Error"
 msgstr "アドレス帳のエラー"
 
-#: src/addressbook.c:2946
+#: src/addressbook.c:2956
 msgid "Old address book converted, could not save new address index file"
 msgstr ""
 "旧形式のアドレス帳は変換されましたが、新規アドレスインデックスファイルを保存"
 "できません"
 
-#: src/addressbook.c:2960
+#: src/addressbook.c:2970
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr ""
 "アドレス帳を変換できませんでしたが、空の新規アドレス帳ファイルが作成されまし"
 "た。"
 
-#: src/addressbook.c:2966
+#: src/addressbook.c:2976
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr ""
 "アドレス帳を変換できません。新規アドレス帳ファイルを作成できませんでした。"
 
-#: src/addressbook.c:2972
+#: src/addressbook.c:2982
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr ""
 "アドレス帳を変換できません。新規アドレス帳ファイルを作成できませんでした。"
 
-#: src/addressbook.c:2984
+#: src/addressbook.c:2994
 msgid "Could not read address index"
 msgstr "アドレスインデックスを読み込めません"
 
-#: src/addressbook.c:2990
+#: src/addressbook.c:3000
 msgid "Address Book Conversion Error"
 msgstr "アドレス帳変換エラー"
 
-#: src/addressbook.c:2996
+#: src/addressbook.c:3006
 msgid "Address Book Conversion"
 msgstr "アドレス帳変換"
 
-#: src/addressbook.c:3664 src/prefs_common_dialog.c:2198
+#: src/addressbook.c:3674 src/prefs_common_dialog.c:2198
 msgid "Interface"
 msgstr "インタフェース"
 
-#: src/addressbook.c:3678 src/importcsv.c:671 src/importldif.c:478
+#: src/addressbook.c:3688 src/importcsv.c:671 src/importldif.c:478
 msgid "Address Book"
 msgstr "アドレス帳"
 
-#: src/addressbook.c:3692
+#: src/addressbook.c:3702
 msgid "Person"
 msgstr "人物"
 
-#: src/addressbook.c:3706
+#: src/addressbook.c:3716
 msgid "EMail Address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:3720
+#: src/addressbook.c:3730
 msgid "Group"
 msgstr "グループ"
 
-#: src/addressbook.c:3748
+#: src/addressbook.c:3758
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:3762 src/addressbook.c:3776
+#: src/addressbook.c:3772 src/addressbook.c:3786
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:3790
+#: src/addressbook.c:3800
 msgid "LDAP Server"
 msgstr "LDAPサーバ"
 
@@ -6812,40 +6812,58 @@ msgstr "%s のソースを表示しています...\n"
 msgid "%s - Source"
 msgstr "%s - ソース"
 
-#: src/sslmanager.c:59
+#: src/sslmanager.c:66
 msgid "SSL certificate verify failed"
 msgstr "SSL 証明書を検証できません"
 
-#: src/sslmanager.c:65
+#: src/sslmanager.c:99
 #, c-format
-msgid ""
-"The SSL certificate of %s cannot be verified by the following reason:\n"
-"  %s\n"
-"\n"
-"Server certificate:\n"
-"  Subject: %s\n"
-"  Issuer: %s\n"
-"\n"
-"Do you accept this certificate?"
-msgstr ""
-"%s の SSL 証明書を以下の理由で検証できません:\n"
-"  %s\n"
-"\n"
-"サーバ証明書:\n"
-"  所有者: %s\n"
-"  発行者: %s\n"
-"\n"
-"この証明書を受け入れますか?"
+msgid "The SSL certificate of %s cannot be verified by the following reason:"
+msgstr "%s の SSL 証明書を以下の理由で検証できません:"
 
-#: src/sslmanager.c:142 src/sslmanager.c:150
+#: src/sslmanager.c:101
+#, c-format
+msgid "Subject: %s\n"
+msgstr "所有者: %s\n"
+
+#: src/sslmanager.c:102
+#, c-format
+msgid "Issuer: %s\n"
+msgstr "発行者: %s\n"
+
+#: src/sslmanager.c:103
+#, c-format
+msgid "Issued date: %s\n"
+msgstr "発行日: %s\n"
+
+#: src/sslmanager.c:104
+#, c-format
+msgid "Expire date: %s\n"
+msgstr "有効期限: %s\n"
+
+#: src/sslmanager.c:106
+#, c-format
+msgid "SHA1 fingerprint: %s\n"
+msgstr "SHA1 フィンガープリント: %s\n"
+
+#: src/sslmanager.c:107
+#, c-format
+msgid "MD5 fingerprint: %s\n"
+msgstr "MD5 フィンガープリント: %s\n"
+
+#: src/sslmanager.c:109
+msgid "Do you accept this certificate?"
+msgstr "この証明書を受け入れますか?"
+
+#: src/sslmanager.c:180 src/sslmanager.c:188
 msgid "_Reject"
 msgstr "拒否する(_R)"
 
-#: src/sslmanager.c:143 src/sslmanager.c:149
+#: src/sslmanager.c:181 src/sslmanager.c:187
 msgid "_Temporarily accept"
 msgstr "一時的に受け入れる(_T)"
 
-#: src/sslmanager.c:144 src/sslmanager.c:148
+#: src/sslmanager.c:182 src/sslmanager.c:186
 msgid "Always _accept"
 msgstr "常に受け入れる(_A)"
 
