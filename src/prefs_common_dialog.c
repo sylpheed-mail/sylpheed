@@ -129,7 +129,9 @@ static struct Display {
 	GtkWidget *fontbtn_textfont;
 
 	GtkWidget *chkbtn_folder_unread;
-	GtkWidget *chkbtn_folder_num_cols;
+	GtkWidget *chkbtn_folder_col_new;
+	GtkWidget *chkbtn_folder_col_unread;
+	GtkWidget *chkbtn_folder_col_total;
 	GtkWidget *entry_ng_abbrev_len;
 	GtkWidget *spinbtn_ng_abbrev_len;
 	GtkObject *spinbtn_ng_abbrev_len_adj;
@@ -375,7 +377,11 @@ static PrefsUIData ui_data[] = {
 
 	{"display_folder_unread_num", &display.chkbtn_folder_unread,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"display_folder_num_columns", &display.chkbtn_folder_num_cols,
+	{"folder_col_show_new", &display.chkbtn_folder_col_new,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"folder_col_show_unread", &display.chkbtn_folder_col_unread,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"folder_col_show_total", &display.chkbtn_folder_col_total,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"newsgroup_abbrev_len", &display.spinbtn_ng_abbrev_len,
 	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
@@ -1449,8 +1455,12 @@ static void prefs_display_create(void)
 	GtkWidget *fontbtn_textfont;
 	GtkWidget *frame_folder;
 	GtkWidget *chkbtn_folder_unread;
-	GtkWidget *chkbtn_folder_num_cols;
+	GtkWidget *label_folder_cols;
 	GtkWidget *hbox1;
+	GtkWidget *hbox_spc;
+	GtkWidget *chkbtn_folder_col_new;
+	GtkWidget *chkbtn_folder_col_unread;
+	GtkWidget *chkbtn_folder_col_total;
 	GtkWidget *label_ng_abbrev;
 	GtkWidget *spinbtn_ng_abbrev_len;
 	GtkObject *spinbtn_ng_abbrev_len_adj;
@@ -1510,10 +1520,26 @@ static void prefs_display_create(void)
 
 	PACK_CHECK_BUTTON (vbox2, chkbtn_folder_unread,
 			   _("Display unread number next to folder name"));
-	PACK_CHECK_BUTTON (vbox2, chkbtn_folder_num_cols,
-			   _("Display message number columns in the folder view"));
 
 	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
+	label_folder_cols = gtk_label_new
+		(_("Displaying message number columns in the folder view:"));
+	gtk_widget_show(label_folder_cols);
+	gtk_box_pack_start(GTK_BOX(vbox2), label_folder_cols, FALSE, TRUE, 0);
+	gtk_misc_set_alignment(GTK_MISC(label_folder_cols), 0, 0.5);
+
+	hbox1 = gtk_hbox_new(FALSE, 8);
+	gtk_widget_show(hbox1);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox1, FALSE, TRUE, 0);
+	hbox_spc = gtk_hbox_new(FALSE, 0);
+	gtk_widget_show(hbox_spc);
+	gtk_box_pack_start(GTK_BOX(hbox1), hbox_spc, FALSE, FALSE, 0);
+	gtk_widget_set_size_request(hbox_spc, 8, -1);
+	PACK_CHECK_BUTTON(hbox1, chkbtn_folder_col_new, _("New"));
+	PACK_CHECK_BUTTON(hbox1, chkbtn_folder_col_unread, _("Unread"));
+	PACK_CHECK_BUTTON(hbox1, chkbtn_folder_col_total, _("Total"));
+
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
@@ -1637,7 +1663,9 @@ static void prefs_display_create(void)
 	display.fontbtn_textfont = fontbtn_textfont;
 
 	display.chkbtn_folder_unread      = chkbtn_folder_unread;
-	display.chkbtn_folder_num_cols    = chkbtn_folder_num_cols;
+	display.chkbtn_folder_col_new     = chkbtn_folder_col_new;
+	display.chkbtn_folder_col_unread  = chkbtn_folder_col_unread;
+	display.chkbtn_folder_col_total   = chkbtn_folder_col_total;
 	display.spinbtn_ng_abbrev_len     = spinbtn_ng_abbrev_len;
 	display.spinbtn_ng_abbrev_len_adj = spinbtn_ng_abbrev_len_adj;
 

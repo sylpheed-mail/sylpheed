@@ -611,13 +611,13 @@ static void folderview_set_columns(FolderView *folderview)
 
 	column = gtk_tree_view_get_column(treeview, COL_NEW);
 	gtk_tree_view_column_set_visible
-		(column, prefs_common.display_folder_num_columns);
+		(column, prefs_common.folder_col_visible[COL_NEW]);
 	column = gtk_tree_view_get_column(treeview, COL_UNREAD);
 	gtk_tree_view_column_set_visible
-		(column, prefs_common.display_folder_num_columns);
+		(column, prefs_common.folder_col_visible[COL_UNREAD]);
 	column = gtk_tree_view_get_column(treeview, COL_TOTAL);
 	gtk_tree_view_column_set_visible
-		(column, prefs_common.display_folder_num_columns);
+		(column, prefs_common.folder_col_visible[COL_TOTAL]);
 }
 
 void folderview_select(FolderView *folderview, FolderItem *item)

@@ -308,6 +308,10 @@ struct _PrefsCommon
 
 	/* Online / Offline */
 	gboolean online_mode;
+
+	/* Append new members here */
+	/* Display */
+	gboolean folder_col_visible[4];
 };
 
 extern PrefsCommon prefs_common;

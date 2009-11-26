@@ -117,6 +117,12 @@ static PrefParam param[] = {
 	 &prefs_common.display_folder_unread, P_BOOL},
 	{"display_folder_num_columns", "FALSE",
 	 &prefs_common.display_folder_num_columns, P_BOOL},
+	{"folder_col_show_new", "FALSE",
+	 &prefs_common.folder_col_visible[1], P_BOOL},
+	{"folder_col_show_unread", "FALSE",
+	 &prefs_common.folder_col_visible[2], P_BOOL},
+	{"folder_col_show_total", "FALSE",
+	 &prefs_common.folder_col_visible[3], P_BOOL},
 
 	{"newsgroup_abbrev_len", "16", &prefs_common.ng_abbrev_len, P_INT},
 
