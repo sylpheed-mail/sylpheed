@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-13 18:07+0900\n"
+"POT-Creation-Date: 2009-11-26 17:50+0900\n"
 "PO-Revision-Date: 2005-06-09 13:51+0300\n"
 "Last-Translator: Vitalijus Valantiejus <vitalijus@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -23,189 +23,194 @@ msgstr "Skaitoma kiekvienos sąskaitos konfigūracija...\n"
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "IMAP4 prisijungimas prie %s buvo nutrauktas. Jungiamasi...\n"
 
-#: libsylph/imap.c:586 libsylph/imap.c:592
+#: libsylph/imap.c:588 libsylph/imap.c:594
 msgid "IMAP4 server disables LOGIN.\n"
 msgstr "IMAP4 serveris panaikina LOGIN.\n"
 
-#: libsylph/imap.c:668
+#: libsylph/imap.c:653
+#, fuzzy
+msgid "Could not establish IMAP connection.\n"
+msgstr "Negaliu sukurti IMAP4 sesijos su: %s:%d\n"
+
+#: libsylph/imap.c:671
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "sukuriamas IMAP4 prisijungimas prie %s:%d ...\n"
 
-#: libsylph/imap.c:712
+#: libsylph/imap.c:715
 msgid "Can't start TLS session.\n"
 msgstr "Negaliu sukurti TLS sesijos.\n"
 
-#: libsylph/imap.c:1233
+#: libsylph/imap.c:1236
 #, fuzzy, c-format
 msgid "Getting message %u"
 msgstr "Gaunamas laiškas %d"
 
-#: libsylph/imap.c:1355
+#: libsylph/imap.c:1358
 #, c-format
 msgid "Appending messages to %s (%d / %d)"
 msgstr "Pridedami laiškai į %s (%d / %d)"
 
-#: libsylph/imap.c:1478
+#: libsylph/imap.c:1481
 #, c-format
 msgid "Moving messages %s to %s ..."
 msgstr "Perkeliami laiškai %s į %s ..."
 
-#: libsylph/imap.c:1483
+#: libsylph/imap.c:1486
 #, c-format
 msgid "Copying messages %s to %s ..."
 msgstr "Kopijuojami laiškai %s į %s ..."
 
-#: libsylph/imap.c:1621
+#: libsylph/imap.c:1624
 #, c-format
 msgid "Removing messages %s"
 msgstr "Šalinami laiškai %s..."
 
-#: libsylph/imap.c:1627
+#: libsylph/imap.c:1630
 #, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "negaliu nustatyti ištrynimo žymų: %s\n"
 
-#: libsylph/imap.c:1635 libsylph/imap.c:1734
+#: libsylph/imap.c:1638 libsylph/imap.c:1737
 msgid "can't expunge\n"
 msgstr "negaliu išbraukti\n"
 
-#: libsylph/imap.c:1718
+#: libsylph/imap.c:1721
 #, c-format
 msgid "Removing all messages in %s"
 msgstr "Trinami laiškai iš %s..."
 
-#: libsylph/imap.c:1723 libsylph/imap.c:1728
+#: libsylph/imap.c:1726 libsylph/imap.c:1731
 msgid "can't set deleted flags: 1:*\n"
 msgstr "negaliu nustatyti ištrynimo žymų: 1:*\n"
 
-#: libsylph/imap.c:1776
+#: libsylph/imap.c:1779
 msgid "can't close folder\n"
 msgstr "negaliu uždaryti katalogo\n"
 
-#: libsylph/imap.c:1855
+#: libsylph/imap.c:1858
 #, c-format
 msgid "root folder %s not exist\n"
 msgstr "šakninis katalogas %s neegzistuoja\n"
 
-#: libsylph/imap.c:2055 libsylph/imap.c:2063
+#: libsylph/imap.c:2058 libsylph/imap.c:2066
 msgid "error occurred while getting LIST.\n"
 msgstr "klaida gaunant LIST.\n"
 
-#: libsylph/imap.c:2295
+#: libsylph/imap.c:2298
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "Negaliu sukurti „%s“\n"
 
-#: libsylph/imap.c:2300
+#: libsylph/imap.c:2303
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "negaliu sukurti „%s“ po INBOX\n"
 
-#: libsylph/imap.c:2362
+#: libsylph/imap.c:2365
 msgid "can't create mailbox: LIST failed\n"
 msgstr "negaliu sukurti dėžutės: nepavyko LIST\n"
 
-#: libsylph/imap.c:2385
+#: libsylph/imap.c:2388
 msgid "can't create mailbox\n"
 msgstr "negaliu sukurti dėžutės\n"
 
-#: libsylph/imap.c:2513
+#: libsylph/imap.c:2516
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "negaliu pervadinti dėžutės: %s į %s\n"
 
-#: libsylph/imap.c:2593
+#: libsylph/imap.c:2596
 msgid "can't delete mailbox\n"
 msgstr "negaliu ištrinti dėžutės\n"
 
-#: libsylph/imap.c:2620
+#: libsylph/imap.c:2623
 #, c-format
 msgid "Getting message headers (%d / %d)"
 msgstr "Gaunamos laiškų antraštės (%d / %d)"
 
-#: libsylph/imap.c:2672
+#: libsylph/imap.c:2675
 msgid "error occurred while getting envelope.\n"
 msgstr "klaida gaunant voką.\n"
 
-#: libsylph/imap.c:2693
+#: libsylph/imap.c:2696
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "negaliu išanalizuoti voko: %s\n"
 
-#: libsylph/imap.c:2750
+#: libsylph/imap.c:2753
 msgid "can't get envelope\n"
 msgstr "nagaliu gauti voko\n"
 
-#: libsylph/imap.c:2857 libsylph/imap.c:2863
+#: libsylph/imap.c:2860 libsylph/imap.c:2866
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Negaliu prisijungti prie IMAP4 serverio: %s:%d\n"
 
-#: libsylph/imap.c:2871
+#: libsylph/imap.c:2874
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Negaliu sukurti IMAP4 sesijos su: %s:%d\n"
 
-#: libsylph/imap.c:2946
+#: libsylph/imap.c:2949
 msgid "can't get namespace\n"
 msgstr "negalių gauti vardų zonos\n"
 
-#: libsylph/imap.c:3480
+#: libsylph/imap.c:3483
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "negaliu pasirinkti katalogo: %s\n"
 
-#: libsylph/imap.c:3518
+#: libsylph/imap.c:3521
 msgid "error on imap command: STATUS\n"
 msgstr "klaida vykdant imap komandą: STATUS\n"
 
-#: libsylph/imap.c:3642 libsylph/imap.c:3677
+#: libsylph/imap.c:3645 libsylph/imap.c:3680
 msgid "IMAP4 authentication failed.\n"
 msgstr "IMAP4 autentiškumo tikrinimas nepavyko.\n"
 
-#: libsylph/imap.c:3730
+#: libsylph/imap.c:3733
 msgid "IMAP4 login failed.\n"
 msgstr "nepavyko prisijungti prie IMAP4\n"
 
-#: libsylph/imap.c:4103 libsylph/imap.c:4110
+#: libsylph/imap.c:4106 libsylph/imap.c:4113
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "negaliu prirašyti %s į %s\n"
 
-#: libsylph/imap.c:4117
+#: libsylph/imap.c:4120
 msgid "(sending file...)"
 msgstr "(siunčiamas failas...)"
 
-#: libsylph/imap.c:4146
+#: libsylph/imap.c:4149
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "negaliu pridėti laiško į %s\n"
 
-#: libsylph/imap.c:4178
+#: libsylph/imap.c:4181
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "negaliu nukopijuoti %s į %s\n"
 
-#: libsylph/imap.c:4201
+#: libsylph/imap.c:4204
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "klaida vykdant imap komandą: STORE %s %s\n"
 
-#: libsylph/imap.c:4217
+#: libsylph/imap.c:4220
 msgid "error while imap command: EXPUNGE\n"
 msgstr "klaida vykdant imap komandą: EXPUNGE\n"
 
-#: libsylph/imap.c:4232
+#: libsylph/imap.c:4235
 msgid "error while imap command: CLOSE\n"
 msgstr "klaida vykdant imap komandą: CLOSE\n"
 
-#: libsylph/imap.c:4539
+#: libsylph/imap.c:4542
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv negali konvertuoti UTF-7 į %s\n"
 
-#: libsylph/imap.c:4569
+#: libsylph/imap.c:4572
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv negali konvertuoti %s į UTF-7\n"
@@ -495,11 +500,11 @@ msgstr "Rasta %s\n"
 msgid "Configuration is saved.\n"
 msgstr "Nustatymai išsaugoti.\n"
 
-#: libsylph/prefs_common.c:579
+#: libsylph/prefs_common.c:585
 msgid "Junk mail filter (manual)"
 msgstr "Nepageidautino pašto filtras (neautomatinis)"
 
-#: libsylph/prefs_common.c:582
+#: libsylph/prefs_common.c:588
 msgid "Junk mail filter"
 msgstr "Nepageidautino pašto filtras"
 
@@ -575,16 +580,16 @@ msgstr "Klaida sukuriant SSL kontekstą\n"
 msgid "SSL connection using %s\n"
 msgstr "SSL prisijungimas naudojant %s\n"
 
-#: libsylph/ssl.c:278
+#: libsylph/ssl.c:284
 msgid "Server certificate:\n"
 msgstr "Serverio sertifikatas:\n"
 
-#: libsylph/ssl.c:281
+#: libsylph/ssl.c:287
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  Tema: %s\n"
 
-#: libsylph/ssl.c:286
+#: libsylph/ssl.c:292
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  Leidėjas: %s\n"
@@ -681,7 +686,7 @@ msgstr ""
 "Nauji laiškai bus tikrinami šia tvarka. Pažymėkite laukelį\n"
 "skulpelyje „G“ jei norite gauti laiškus pasirinkę „Gauti visus“."
 
-#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:702
+#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:701
 #: src/compose.c:5110 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
@@ -822,7 +827,7 @@ msgstr "Įdėti adresą į knygą"
 msgid "Address"
 msgstr "Adresai"
 
-#: src/addressadd.c:197 src/addressbook.c:734 src/editaddress.c:629
+#: src/addressadd.c:197 src/addressbook.c:744 src/editaddress.c:629
 #: src/editaddress.c:695 src/editgroup.c:268 src/importcsv.c:125
 msgid "Remarks"
 msgstr "Pastabos"
@@ -978,73 +983,73 @@ msgstr "/_Kopijuoti"
 msgid "/_Paste"
 msgstr "/Į_dėti"
 
-#: src/addressbook.c:554 src/prefs_common_dialog.c:2373 src/prefs_toolbar.c:90
+#: src/addressbook.c:554 src/prefs_common_dialog.c:2401 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "Adresų knyga"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:628 src/addressbook.c:3734 src/folderview.c:385
+#: src/addressbook.c:628 src/addressbook.c:3744 src/folderview.c:385
 #: src/prefs_account_dialog.c:1835 src/query_search.c:400
 msgid "Folder"
 msgstr "Katalogas"
 
-#: src/addressbook.c:726
+#: src/addressbook.c:730
 msgid "E-Mail address"
 msgstr "El. pašto adresas"
 
-#: src/addressbook.c:760 src/prefs_filter_edit.c:251
+#: src/addressbook.c:770 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Vardas:"
 
-#: src/addressbook.c:797 src/compose.c:3153 src/headerview.c:55
+#: src/addressbook.c:807 src/compose.c:3153 src/headerview.c:55
 #: src/prefs_folder_item.c:339 src/prefs_template.c:179
 msgid "To:"
 msgstr "Kam:"
 
-#: src/addressbook.c:801 src/compose.c:3170 src/headerview.c:56
+#: src/addressbook.c:811 src/compose.c:3170 src/headerview.c:56
 #: src/prefs_folder_item.c:356 src/prefs_template.c:181
 msgid "Cc:"
 msgstr "Kopija:"
 
-#: src/addressbook.c:805 src/compose.c:3187 src/prefs_folder_item.c:367
+#: src/addressbook.c:815 src/compose.c:3187 src/prefs_folder_item.c:367
 #: src/prefs_template.c:183
 msgid "Bcc:"
 msgstr "Slapta kopija:"
 
 #. Buttons
-#: src/addressbook.c:826 src/addressbook.c:1904 src/editaddress.c:719
+#: src/addressbook.c:836 src/addressbook.c:1914 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:239 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "Ištrinti"
 
-#: src/addressbook.c:829 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:839 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "Pridėti"
 
-#: src/addressbook.c:833
+#: src/addressbook.c:843
 msgid "Lookup"
 msgstr "Ieškoti"
 
-#: src/addressbook.c:837
+#: src/addressbook.c:847
 msgid "_Close"
 msgstr "Uždaryti"
 
 #. Confirm deletion
-#: src/addressbook.c:1044
+#: src/addressbook.c:1054
 msgid "Delete address(es)"
 msgstr "Pašalinti adresą(-us)"
 
-#: src/addressbook.c:1045
+#: src/addressbook.c:1055
 msgid "Really delete the address(es)?"
 msgstr "Ar tikrai pašalinti adresą(-us)?"
 
-#: src/addressbook.c:1895
+#: src/addressbook.c:1905
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1053,36 +1058,36 @@ msgstr ""
 "Ar tikrai norite pašalinti katalogą „%s“ ir visus adresus jame? \n"
 "Jei pašalinsite tik katalogą, adresai bus perkelti į aukštesnįjį katalogą."
 
-#: src/addressbook.c:1898 src/folderview.c:2546
+#: src/addressbook.c:1908 src/folderview.c:2546
 msgid "Delete folder"
 msgstr "Ištrinti katalogą"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 msgid "_Folder only"
 msgstr "Tik _katalogą"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 msgid "Folder and _addresses"
 msgstr "Katalogą ir _adresus jame"
 
-#: src/addressbook.c:1903
+#: src/addressbook.c:1913
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "Tikrai pašalinti „%s“?"
 
-#: src/addressbook.c:2791 src/addressbook.c:2927
+#: src/addressbook.c:2801 src/addressbook.c:2937
 msgid "New user, could not save index file."
 msgstr "Naujas vartotojas, negaliu išsaugoti „index“ failo."
 
-#: src/addressbook.c:2795 src/addressbook.c:2931
+#: src/addressbook.c:2805 src/addressbook.c:2941
 msgid "New user, could not save address book files."
 msgstr "Naujas vartotojas, negaliu išsaugoti adresų knygos failų."
 
-#: src/addressbook.c:2805 src/addressbook.c:2941
+#: src/addressbook.c:2815 src/addressbook.c:2951
 msgid "Old address book converted successfully."
 msgstr "Adresų knyga sėkmingai konvertuota"
 
-#: src/addressbook.c:2810
+#: src/addressbook.c:2820
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1090,7 +1095,7 @@ msgstr ""
 "Sena adresų knyga konvertuota,\n"
 "negaliu išsaugoti naujo adresų indekso failo"
 
-#: src/addressbook.c:2823
+#: src/addressbook.c:2833
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1098,7 +1103,7 @@ msgstr ""
 "Negaliu konvertuoti adresų knygos,\n"
 "bet sukūriau tuščius naujos knygos failus."
 
-#: src/addressbook.c:2829
+#: src/addressbook.c:2839
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1106,7 +1111,7 @@ msgstr ""
 "Negaliu konvertuoti adresų knygos,\n"
 "negaliu sukurti naujos knygos failų."
 
-#: src/addressbook.c:2834
+#: src/addressbook.c:2844
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1114,15 +1119,15 @@ msgstr ""
 "Negaliu konvertuoti adresų knygos,\n"
 "ir negaliu sukurti naujos knygos failų."
 
-#: src/addressbook.c:2841
+#: src/addressbook.c:2851
 msgid "Address book conversion error"
 msgstr "Adresų knygos konvertavimo klaida"
 
-#: src/addressbook.c:2845
+#: src/addressbook.c:2855
 msgid "Address book conversion"
 msgstr "Adresų knygos konvertavimas"
 
-#: src/addressbook.c:2882
+#: src/addressbook.c:2892
 #, fuzzy, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1130,74 +1135,74 @@ msgid ""
 "%s%c%s"
 msgstr "Negaliu perskaityti adresų indekso"
 
-#: src/addressbook.c:2885
+#: src/addressbook.c:2895
 msgid "Address Book Error"
 msgstr "Adresų knygos klaida"
 
-#: src/addressbook.c:2946
+#: src/addressbook.c:2956
 msgid "Old address book converted, could not save new address index file"
 msgstr "Sena knyga konvertuota, negaliu išsaugoti naujo adresų indekso failo"
 
-#: src/addressbook.c:2960
+#: src/addressbook.c:2970
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr ""
 "Negaliu konvertuoti adresų knygos, bet sukūriau naujus tuščius adresų knygos "
 "failus."
 
-#: src/addressbook.c:2966
+#: src/addressbook.c:2976
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr ""
 "Negaliu konvertuoti adresų knygos, negaliu sukurti naujų adresų knygos failų."
 
-#: src/addressbook.c:2972
+#: src/addressbook.c:2982
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr ""
 "Negaliu konvertuoti adresų knygos ir sukurti naujų adresų knygos failų."
 
-#: src/addressbook.c:2984
+#: src/addressbook.c:2994
 msgid "Could not read address index"
 msgstr "Negaliu perskaityti adresų indekso"
 
-#: src/addressbook.c:2990
+#: src/addressbook.c:3000
 msgid "Address Book Conversion Error"
 msgstr "Adresų knygos konvertavimo klaida"
 
-#: src/addressbook.c:2996
+#: src/addressbook.c:3006
 msgid "Address Book Conversion"
 msgstr "Adresų knygos konvertavimas"
 
-#: src/addressbook.c:3664 src/prefs_common_dialog.c:2198
+#: src/addressbook.c:3674 src/prefs_common_dialog.c:2226
 msgid "Interface"
 msgstr "Sąsaja"
 
-#: src/addressbook.c:3678 src/importcsv.c:671 src/importldif.c:478
+#: src/addressbook.c:3688 src/importcsv.c:671 src/importldif.c:478
 msgid "Address Book"
 msgstr "Adresų knyga"
 
-#: src/addressbook.c:3692
+#: src/addressbook.c:3702
 msgid "Person"
 msgstr "Asmuo"
 
-#: src/addressbook.c:3706
+#: src/addressbook.c:3716
 msgid "EMail Address"
 msgstr "El. pašto adresas"
 
-#: src/addressbook.c:3720
+#: src/addressbook.c:3730
 msgid "Group"
 msgstr "Grupė"
 
-#: src/addressbook.c:3748
+#: src/addressbook.c:3758
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:3762 src/addressbook.c:3776
+#: src/addressbook.c:3772 src/addressbook.c:3786
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:3790
+#: src/addressbook.c:3800
 msgid "LDAP Server"
 msgstr "LDAP serveris"
 
@@ -1800,7 +1805,7 @@ msgstr "Failas neegzistuoja arba yra tuščias."
 msgid "Properties"
 msgstr "Savybės"
 
-#: src/compose.c:6259 src/prefs_common_dialog.c:1594
+#: src/compose.c:6259 src/prefs_common_dialog.c:1620
 msgid "Encoding"
 msgstr "Koduotė"
 
@@ -2047,7 +2052,7 @@ msgstr "Redaguoti JPilot įrašą"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:691 src/importldif.c:498 src/prefs_account_dialog.c:1863
-#: src/prefs_common_dialog.c:2000
+#: src/prefs_common_dialog.c:2028
 msgid " ... "
 msgstr " ... "
 
@@ -2348,17 +2353,18 @@ msgstr "/Paša_linti naujienų grupę"
 msgid "Creating folder view...\n"
 msgstr "Sukuriama katalogų peržiūra...\n"
 
-#: src/folderview.c:415
+#: src/folderview.c:415 src/prefs_common_dialog.c:1538
 msgid "New"
 msgstr "Nauji"
 
 #. S_COL_MARK
-#: src/folderview.c:431 src/prefs_filter_edit.c:507
-#: src/prefs_summary_column.c:67 src/quick_search.c:96
+#: src/folderview.c:431 src/prefs_common_dialog.c:1539
+#: src/prefs_filter_edit.c:507 src/prefs_summary_column.c:67
+#: src/quick_search.c:96
 msgid "Unread"
 msgstr "Neskaityti"
 
-#: src/folderview.c:447
+#: src/folderview.c:447 src/prefs_common_dialog.c:1540
 msgid "Total"
 msgstr ""
 
@@ -2400,7 +2406,7 @@ msgstr "Katalogų medžio perkūrimas nepavyko."
 msgid "Checking for new messages in all folders..."
 msgstr "Tikrinami nauji laiškai visuose kataloguose..."
 
-#: src/folderview.c:1256 src/prefs_common_dialog.c:1944 src/prefs_toolbar.c:68
+#: src/folderview.c:1256 src/prefs_common_dialog.c:1972 src/prefs_toolbar.c:68
 msgid "Junk"
 msgstr "Nepageidautinas"
 
@@ -4253,21 +4259,21 @@ msgstr "Sąskaitos nustatymai"
 msgid "Creating account preferences window...\n"
 msgstr "Sukuriamas sąskaitos nustatymų langas...\n"
 
-#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:718
+#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:724
 msgid "Receive"
 msgstr "Gauti"
 
-#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:720
+#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:726
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "Siųsti"
 
-#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:722
+#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:728
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "Rašyti"
 
-#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:729
+#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:735
 msgid "Privacy"
 msgstr "Privatumas"
 
@@ -4275,7 +4281,7 @@ msgstr "Privatumas"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2291
+#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2319
 msgid "Advanced"
 msgstr "Papildomi"
 
@@ -4399,7 +4405,7 @@ msgid "Authentication method"
 msgstr "Autentiškumo patikrinimo metodas"
 
 #: src/prefs_account_dialog.c:989 src/prefs_account_dialog.c:1148
-#: src/prefs_common_dialog.c:941 src/prefs_common_dialog.c:2725
+#: src/prefs_common_dialog.c:947 src/prefs_common_dialog.c:2753
 msgid "Automatic"
 msgstr "Automatinis"
 
@@ -4443,8 +4449,8 @@ msgstr "Generuoti „Message-ID“"
 msgid "Add user-defined header"
 msgstr "Pridėti vartotojo nustatytas antraštes"
 
-#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1700
-#: src/prefs_common_dialog.c:1727
+#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1728
+#: src/prefs_common_dialog.c:1755
 msgid " Edit... "
 msgstr " Redaguoti... "
 
@@ -4469,7 +4475,7 @@ msgid "Authenticate with POP3 before sending"
 msgstr "Prieš siunčiant patikrinti autentiškumą su POP3"
 
 #. signature
-#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1099
+#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1105
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "Parašas"
@@ -4777,85 +4783,85 @@ msgstr "Ištrinti veiksmą"
 msgid "Do you really want to delete this action?"
 msgstr "Ar tikrai norite ištrinti šį veiksmą?"
 
-#: src/prefs_common_dialog.c:698
+#: src/prefs_common_dialog.c:704
 msgid "Creating common preferences window...\n"
 msgstr "Sukuriamas bendrų nustatymų langas...\n"
 
-#: src/prefs_common_dialog.c:702
+#: src/prefs_common_dialog.c:708
 msgid "Common Preferences"
 msgstr "Bendri nustatymai"
 
-#: src/prefs_common_dialog.c:724
+#: src/prefs_common_dialog.c:730
 msgid "Display"
 msgstr "Vaizdas"
 
-#: src/prefs_common_dialog.c:726
+#: src/prefs_common_dialog.c:732
 msgid "Junk mail"
 msgstr "Nepageidautinas paštas"
 
-#: src/prefs_common_dialog.c:732
+#: src/prefs_common_dialog.c:738
 msgid "Details"
 msgstr "Išsamiai"
 
-#: src/prefs_common_dialog.c:786
+#: src/prefs_common_dialog.c:792
 msgid "Auto-check new mail"
 msgstr "Automatiškai tikrinti paštą"
 
-#: src/prefs_common_dialog.c:788 src/prefs_common_dialog.c:1215
+#: src/prefs_common_dialog.c:794 src/prefs_common_dialog.c:1221
 msgid "every"
 msgstr "kas"
 
-#: src/prefs_common_dialog.c:800 src/prefs_common_dialog.c:1229
+#: src/prefs_common_dialog.c:806 src/prefs_common_dialog.c:1235
 msgid "minute(s)"
 msgstr "minutė(s)"
 
-#: src/prefs_common_dialog.c:809
+#: src/prefs_common_dialog.c:815
 msgid "Check new mail on startup"
 msgstr "Tikrinti paštą paleidžiant"
 
-#: src/prefs_common_dialog.c:811
+#: src/prefs_common_dialog.c:817
 msgid "Update all local folders after incorporation"
 msgstr "Atnaujinti visus vietinius katalogus po prijungimo"
 
-#: src/prefs_common_dialog.c:816
+#: src/prefs_common_dialog.c:822
 msgid "Execute command when new messages arrived"
 msgstr "Vykdyti komandą kai gauti nauji laiškai"
 
-#: src/prefs_common_dialog.c:828 src/prefs_common_dialog.c:2534
-#: src/prefs_common_dialog.c:2556 src/prefs_common_dialog.c:2578
+#: src/prefs_common_dialog.c:834 src/prefs_common_dialog.c:2562
+#: src/prefs_common_dialog.c:2584 src/prefs_common_dialog.c:2606
 msgid "Command"
 msgstr "Komanda"
 
-#: src/prefs_common_dialog.c:839
+#: src/prefs_common_dialog.c:845
 #, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "„%d“ bus pakeistas naujų laiškų skaičiumi."
 
-#: src/prefs_common_dialog.c:843
+#: src/prefs_common_dialog.c:849
 msgid "Incorporate from local spool"
 msgstr "Prijungti iš vietinio kaupo"
 
-#: src/prefs_common_dialog.c:856
+#: src/prefs_common_dialog.c:862
 msgid "Filter on incorporation"
 msgstr "Filtruoti prijungiant"
 
-#: src/prefs_common_dialog.c:862
+#: src/prefs_common_dialog.c:868
 msgid "Spool path"
 msgstr "Kelias iki kaupo"
 
-#: src/prefs_common_dialog.c:918
+#: src/prefs_common_dialog.c:924
 msgid "Save sent messages to outbox"
 msgstr "Išsaugoti išsiųstus laiškus"
 
-#: src/prefs_common_dialog.c:920
+#: src/prefs_common_dialog.c:926
 msgid "Apply filter rules to sent messages"
 msgstr "Filtruoti išsiųstus laiškus"
 
-#: src/prefs_common_dialog.c:927
+#: src/prefs_common_dialog.c:933
 msgid "Transfer encoding"
 msgstr "Siuntimo kodavimas"
 
-#: src/prefs_common_dialog.c:950
+#: src/prefs_common_dialog.c:956
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
@@ -4863,15 +4869,15 @@ msgstr ""
 "Nurodykite siuntimo kodavimą („Content-Transfer-Encoding“) naudojamą jei "
 "laiške yra ne „ASCII“ simbolių."
 
-#: src/prefs_common_dialog.c:957
+#: src/prefs_common_dialog.c:963
 msgid "MIME filename encoding"
 msgstr "MIME failų vardų koduotė"
 
-#: src/prefs_common_dialog.c:968
+#: src/prefs_common_dialog.c:974
 msgid "MIME header"
 msgstr "MIME antraštė"
 
-#: src/prefs_common_dialog.c:978
+#: src/prefs_common_dialog.c:984
 msgid ""
 "Specify encoding method for MIME filename with non-ASCII characters.\n"
 "MIME header: most popular, but violates RFC 2047\n"
@@ -4881,189 +4887,190 @@ msgstr ""
 "MIME antraštė: populiariausias, bet neatitinka RFC 2047\n"
 "RFC 2231: atitinka standartą, bet nepopuliarus"
 
-#: src/prefs_common_dialog.c:988
+#: src/prefs_common_dialog.c:994
 msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
 
-#: src/prefs_common_dialog.c:999
+#: src/prefs_common_dialog.c:1005
 msgid "(Ex: attach)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1010
+#: src/prefs_common_dialog.c:1016
 msgid "Confirm recipients before sending"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1016
+#: src/prefs_common_dialog.c:1022
 msgid "Excluded addresses/domains (comma-separated):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1095 src/prefs_common_dialog.c:1484
+#: src/prefs_common_dialog.c:1101 src/prefs_common_dialog.c:1494
 #: src/prefs_folder_item.c:139
 msgid "General"
 msgstr "Bendras"
 
-#: src/prefs_common_dialog.c:1110
+#: src/prefs_common_dialog.c:1116
 msgid "Signature separator"
 msgstr "Parašo skirtukas"
 
-#: src/prefs_common_dialog.c:1119
+#: src/prefs_common_dialog.c:1125
 msgid "Insert automatically"
 msgstr "Įterpti automatiškai"
 
-#: src/prefs_common_dialog.c:1121 src/prefs_toolbar.c:56
+#: src/prefs_common_dialog.c:1127 src/prefs_toolbar.c:56
 msgid "Reply"
 msgstr "Atsakyti"
 
-#: src/prefs_common_dialog.c:1129
+#: src/prefs_common_dialog.c:1135
 msgid "Automatically select account for replies"
 msgstr "Automatiškai pažymėti sąskaitą atsakymams"
 
-#: src/prefs_common_dialog.c:1131
+#: src/prefs_common_dialog.c:1137
 msgid "Quote message when replying"
 msgstr "Cituoti laiškus atsakant"
 
-#: src/prefs_common_dialog.c:1133
+#: src/prefs_common_dialog.c:1139
 msgid "Reply button invokes mailing list reply"
 msgstr "Mygtukas „Atsakyti“ atsako pašto konferencijai"
 
-#: src/prefs_common_dialog.c:1135
+#: src/prefs_common_dialog.c:1141
 msgid "Inherit recipients on reply to self messages"
 msgstr ""
 
 #. editor
-#: src/prefs_common_dialog.c:1139 src/prefs_common_dialog.c:2497
+#: src/prefs_common_dialog.c:1145 src/prefs_common_dialog.c:2525
 #: src/prefs_toolbar.c:120
 msgid "Editor"
 msgstr "Redaktorius"
 
-#: src/prefs_common_dialog.c:1146
+#: src/prefs_common_dialog.c:1152
 msgid "Automatically launch the external editor"
 msgstr "Automatiškai paleisti išorinį redaktorių"
 
-#: src/prefs_common_dialog.c:1156
+#: src/prefs_common_dialog.c:1162
 msgid "Undo level"
 msgstr "Atšaukimo lygis"
 
-#: src/prefs_common_dialog.c:1176
+#: src/prefs_common_dialog.c:1182
 msgid "Wrap messages at"
 msgstr "Laužyti eilutes kas"
 
-#: src/prefs_common_dialog.c:1188
+#: src/prefs_common_dialog.c:1194
 msgid "characters"
 msgstr "simboliai"
 
-#: src/prefs_common_dialog.c:1198
+#: src/prefs_common_dialog.c:1204
 msgid "Wrap quotation"
 msgstr "Laužyti citatas"
 
-#: src/prefs_common_dialog.c:1204
+#: src/prefs_common_dialog.c:1210
 msgid "Wrap on input"
 msgstr "Laužyti įvedant"
 
-#: src/prefs_common_dialog.c:1213
+#: src/prefs_common_dialog.c:1219
 msgid "Auto-save to draft"
 msgstr "Automatiškai išsaugoti į juodraščių katalogą"
 
-#: src/prefs_common_dialog.c:1238
+#: src/prefs_common_dialog.c:1244
 msgid "Format"
 msgstr "Formatas"
 
-#: src/prefs_common_dialog.c:1243
+#: src/prefs_common_dialog.c:1249
 msgid "Spell checking"
 msgstr "Rašybos tikrinimas"
 
 #. reply
-#: src/prefs_common_dialog.c:1295
+#: src/prefs_common_dialog.c:1301
 msgid "Reply format"
 msgstr "Atsakymo formatas"
 
-#: src/prefs_common_dialog.c:1310 src/prefs_common_dialog.c:1352
+#: src/prefs_common_dialog.c:1316 src/prefs_common_dialog.c:1358
 msgid "Quotation mark"
 msgstr "Citavimo simbolis"
 
 #. forward
-#: src/prefs_common_dialog.c:1337
+#: src/prefs_common_dialog.c:1343
 msgid "Forward format"
 msgstr "Persiuntimo formatas"
 
-#: src/prefs_common_dialog.c:1384
+#: src/prefs_common_dialog.c:1390
 msgid " Description of symbols "
 msgstr " Simbolių paaiškinimas "
 
-#: src/prefs_common_dialog.c:1413
+#: src/prefs_common_dialog.c:1419
 msgid "Enable Spell checking"
 msgstr "Įjungti rašybos tikrinimą"
 
-#: src/prefs_common_dialog.c:1425
+#: src/prefs_common_dialog.c:1431
 msgid "Default language:"
 msgstr "Numatytoji kalba:"
 
-#: src/prefs_common_dialog.c:1492
+#: src/prefs_common_dialog.c:1502
 msgid "Text font"
 msgstr "Teksto šriftas"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1504
+#: src/prefs_common_dialog.c:1514
 msgid "Folder View"
 msgstr "Katalogų peržiūra"
 
-#: src/prefs_common_dialog.c:1512
+#: src/prefs_common_dialog.c:1522
 msgid "Display unread number next to folder name"
 msgstr "Rodyti neskaitytų laiškų skaičių šalia katalogo pavadinimo"
 
-#: src/prefs_common_dialog.c:1514
-msgid "Display message number columns in the folder view"
+#: src/prefs_common_dialog.c:1526
+#, fuzzy
+msgid "Displaying message number columns in the folder view:"
 msgstr "Rodyti laiškų skaičių stulpelius katalogų peržiūroje"
 
-#: src/prefs_common_dialog.c:1523
+#: src/prefs_common_dialog.c:1549
 msgid "Abbreviate newsgroups longer than"
 msgstr "Sutrumpinti naujienų grupes ilgesnes nei"
 
-#: src/prefs_common_dialog.c:1538
+#: src/prefs_common_dialog.c:1564
 msgid "letters"
 msgstr "raidės"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1544
+#: src/prefs_common_dialog.c:1570
 msgid "Summary View"
 msgstr "Santrauka"
 
-#: src/prefs_common_dialog.c:1553
+#: src/prefs_common_dialog.c:1579
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "Rodyti gavėją lauke „Siuntėjas“, jei siuntėjas esate Jūs"
 
-#: src/prefs_common_dialog.c:1555
+#: src/prefs_common_dialog.c:1581
 msgid "Expand threads"
 msgstr "Išskleisti gijas"
 
-#: src/prefs_common_dialog.c:1563 src/prefs_common_dialog.c:2968
-#: src/prefs_common_dialog.c:3006
+#: src/prefs_common_dialog.c:1589 src/prefs_common_dialog.c:2996
+#: src/prefs_common_dialog.c:3034
 msgid "Date format"
 msgstr "Datos formatas"
 
-#: src/prefs_common_dialog.c:1584
+#: src/prefs_common_dialog.c:1610
 msgid " Set display item of summary... "
 msgstr " Nustatyti santraukoje rodomus laukus... "
 
-#: src/prefs_common_dialog.c:1590
+#: src/prefs_common_dialog.c:1616
 msgid "Message"
 msgstr "Laiškas"
 
-#: src/prefs_common_dialog.c:1600
+#: src/prefs_common_dialog.c:1626
 msgid "Default character encoding"
 msgstr "Numatytoji simbolių koduotė"
 
-#: src/prefs_common_dialog.c:1614
+#: src/prefs_common_dialog.c:1640
 msgid "This is used when displaying messages with missing character encoding."
 msgstr "Naudojama kai koduotė nenurodyta laiške."
 
-#: src/prefs_common_dialog.c:1620
+#: src/prefs_common_dialog.c:1646
 msgid "Outgoing character encoding"
 msgstr "Siunčiamų laiškų koduotė"
 
-#: src/prefs_common_dialog.c:1634
+#: src/prefs_common_dialog.c:1660
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
 "be used."
@@ -5071,11 +5078,11 @@ msgstr ""
 "Jei pažymėta „Automatiškai“, bus naudojama optimali koduotė pagal esamą "
 "lokalę."
 
-#: src/prefs_common_dialog.c:1696
+#: src/prefs_common_dialog.c:1724
 msgid "Enable coloration of message"
 msgstr "Spalvinti laiškus"
 
-#: src/prefs_common_dialog.c:1711
+#: src/prefs_common_dialog.c:1739
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
@@ -5083,84 +5090,84 @@ msgstr ""
 "Rodyti kelių baitų abėcėlę kaip ASCII simbolius\n"
 "(tik Japonų)"
 
-#: src/prefs_common_dialog.c:1718
+#: src/prefs_common_dialog.c:1746
 msgid "Display header pane above message view"
 msgstr "Rodyti antraščių langelį virš laiško"
 
-#: src/prefs_common_dialog.c:1725
+#: src/prefs_common_dialog.c:1753
 msgid "Display short headers on message view"
 msgstr "Rodyti sutrumpintas antraštes"
 
-#: src/prefs_common_dialog.c:1737
+#: src/prefs_common_dialog.c:1765
 msgid "Render HTML messages as text"
 msgstr "Rodyti HTML laiškus kaip tekstą"
 
-#: src/prefs_common_dialog.c:1739
+#: src/prefs_common_dialog.c:1767
 #, fuzzy
 msgid "Treat HTML only messages as attachment"
 msgstr "Rodyti HTML laiškus kaip tekstą"
 
-#: src/prefs_common_dialog.c:1743
+#: src/prefs_common_dialog.c:1771
 msgid "Display cursor in message view"
 msgstr "Rodyti kursorių laiško peržiūroje"
 
-#: src/prefs_common_dialog.c:1756
+#: src/prefs_common_dialog.c:1784
 msgid "Line space"
 msgstr "Tarpas tarp eilučių:"
 
-#: src/prefs_common_dialog.c:1770 src/prefs_common_dialog.c:1808
+#: src/prefs_common_dialog.c:1798 src/prefs_common_dialog.c:1836
 msgid "pixel(s)"
 msgstr "taškas(-ai)"
 
-#: src/prefs_common_dialog.c:1775
+#: src/prefs_common_dialog.c:1803
 msgid "Scroll"
 msgstr "Slinkti"
 
-#: src/prefs_common_dialog.c:1782
+#: src/prefs_common_dialog.c:1810
 msgid "Half page"
 msgstr "Pusė puslapio"
 
-#: src/prefs_common_dialog.c:1788
+#: src/prefs_common_dialog.c:1816
 msgid "Smooth scroll"
 msgstr "Lygus slinkimas"
 
-#: src/prefs_common_dialog.c:1794
+#: src/prefs_common_dialog.c:1822
 msgid "Step"
 msgstr "Žingsnis"
 
-#: src/prefs_common_dialog.c:1814
+#: src/prefs_common_dialog.c:1842
 msgid "Images"
 msgstr "Paveikslėliai"
 
-#: src/prefs_common_dialog.c:1822
+#: src/prefs_common_dialog.c:1850
 msgid "Resize attached large images to fit in the window"
 msgstr "Keisti prisegtų paveikslėlių dydį, kad tilptų į langą"
 
-#: src/prefs_common_dialog.c:1824
+#: src/prefs_common_dialog.c:1852
 msgid "Display images as inline"
 msgstr "Rodyti paveikslėlius laiške"
 
-#: src/prefs_common_dialog.c:1910
+#: src/prefs_common_dialog.c:1938
 msgid "Enable Junk mail control"
 msgstr "Įjungti nepageidautino pašto kontrolę"
 
-#: src/prefs_common_dialog.c:1922
+#: src/prefs_common_dialog.c:1950
 msgid "Learning command:"
 msgstr "Mokymosi komanda"
 
-#: src/prefs_common_dialog.c:1931
+#: src/prefs_common_dialog.c:1959
 msgid "(Select preset)"
 msgstr "(Pasirinkite nuostatas)"
 
-#: src/prefs_common_dialog.c:1956
+#: src/prefs_common_dialog.c:1984
 msgid "Not Junk"
 msgstr "Pageidautinas"
 
-#: src/prefs_common_dialog.c:1971
+#: src/prefs_common_dialog.c:1999
 msgid "Classifying command"
 msgstr "Klasifikavimo komanda"
 
-#: src/prefs_common_dialog.c:1982
+#: src/prefs_common_dialog.c:2010
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
@@ -5168,227 +5175,227 @@ msgstr ""
 "Norėdami automatiškai klasifikuoti nepageidautiną paštą, turite išmokyti "
 "filtrą su pageidautinais ir nepageidautinais laiškais."
 
-#: src/prefs_common_dialog.c:1992
+#: src/prefs_common_dialog.c:2020
 msgid "Junk folder"
 msgstr "Nepageidautini"
 
-#: src/prefs_common_dialog.c:2010
+#: src/prefs_common_dialog.c:2038
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr "Laiškai, pažymėti kaip nepageidautini, bus perkelti į šį katalogą."
 
-#: src/prefs_common_dialog.c:2021
+#: src/prefs_common_dialog.c:2049
 msgid "Filter messages classified as junk on receiving"
 msgstr "Gaunant filtruoti laiškus, klasifikuotus kaip nepageidautinus"
 
-#: src/prefs_common_dialog.c:2024
+#: src/prefs_common_dialog.c:2052
 msgid "Filter junk mails before normal filtering"
 msgstr "Filtruoti nepageidautinus laiškus prieš įprastą filtravimą"
 
-#: src/prefs_common_dialog.c:2027
+#: src/prefs_common_dialog.c:2055
 msgid "Delete junk mails from server on receiving"
 msgstr "Ištrinti nepageidautinus laiškus iš serverio"
 
-#: src/prefs_common_dialog.c:2032
+#: src/prefs_common_dialog.c:2060
 msgid "Mark filtered junk mails as read"
 msgstr "Pažymėti nepageidautinus laiškus kaip skaitytus"
 
-#: src/prefs_common_dialog.c:2074
+#: src/prefs_common_dialog.c:2102
 msgid "Automatically check signatures"
 msgstr "Automatiškai tikrinti parašą"
 
-#: src/prefs_common_dialog.c:2077
+#: src/prefs_common_dialog.c:2105
 msgid "Show signature check result in a popup window"
 msgstr "Rodyti parašo tikrinimo rezultatą naujame lange"
 
-#: src/prefs_common_dialog.c:2080
+#: src/prefs_common_dialog.c:2108
 msgid "Store passphrase in memory temporarily"
 msgstr "Laikinai saugoti slaptą frazę atmintyje"
 
-#: src/prefs_common_dialog.c:2095
+#: src/prefs_common_dialog.c:2123
 msgid "Expired after"
 msgstr "Galiojimas"
 
-#: src/prefs_common_dialog.c:2108
+#: src/prefs_common_dialog.c:2136
 msgid "minute(s) "
 msgstr "minutė(s)"
 
-#: src/prefs_common_dialog.c:2122
+#: src/prefs_common_dialog.c:2150
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "Nustatymas „0“ saugos slaptą frazę atmintyje visos sesijos metu."
 
-#: src/prefs_common_dialog.c:2131
+#: src/prefs_common_dialog.c:2159
 msgid "Grab input while entering a passphrase"
 msgstr "Perimti įvesti, kai įvedama slapta frazė"
 
-#: src/prefs_common_dialog.c:2136
+#: src/prefs_common_dialog.c:2164
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Rodyti perspėjimą startuojant, jei GnuPG neveikia"
 
-#: src/prefs_common_dialog.c:2206
+#: src/prefs_common_dialog.c:2234
 msgid "Always open messages in summary when selected"
 msgstr "Visuomet atidaryti santraukoje pasirinktus laiškus"
 
-#: src/prefs_common_dialog.c:2210
+#: src/prefs_common_dialog.c:2238
 msgid "Open first unread message when a folder is opened"
 msgstr "Atidaryti pirmą neskaitytą laišką einant į katalogą"
 
-#: src/prefs_common_dialog.c:2217
+#: src/prefs_common_dialog.c:2245
 msgid "Remember last selected message"
 msgstr "Prisiminti paskutinę pasirinktą žinutę"
 
-#: src/prefs_common_dialog.c:2221
+#: src/prefs_common_dialog.c:2249
 msgid "Only mark message as read when opened in new window"
 msgstr "Pažymėti laišką skaitytu tik jei ji atidaroma naujame lange"
 
-#: src/prefs_common_dialog.c:2225
+#: src/prefs_common_dialog.c:2253
 msgid "Open inbox after receiving new mail"
 msgstr "Eiti į gaunamų laiškų katalogą po pašto gavimo"
 
-#: src/prefs_common_dialog.c:2227
+#: src/prefs_common_dialog.c:2255
 msgid "Open inbox on startup"
 msgstr "Pradžioje atverti gaunamų laiškų katalogą"
 
-#: src/prefs_common_dialog.c:2235
+#: src/prefs_common_dialog.c:2263
 msgid "Execute immediately when moving or deleting messages"
 msgstr "Nedelsiant vykdyti laiškų perkėlimą ar trinimą"
 
-#: src/prefs_common_dialog.c:2247
+#: src/prefs_common_dialog.c:2275
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "Jei išjungta, laiškai bus pažymėti iki vykdymo."
 
-#: src/prefs_common_dialog.c:2256
+#: src/prefs_common_dialog.c:2284
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "Išdėstyti mygtukus pagal GNOME HIG"
 
-#: src/prefs_common_dialog.c:2259
+#: src/prefs_common_dialog.c:2287
 msgid "Display tray icon"
 msgstr "Rodyti piktogramą dėklėje"
 
-#: src/prefs_common_dialog.c:2261
+#: src/prefs_common_dialog.c:2289
 msgid "Minimize to tray icon"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2263
+#: src/prefs_common_dialog.c:2291
 msgid "Toggle window on trayicon click"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2273
+#: src/prefs_common_dialog.c:2301
 msgid " Set key bindings... "
 msgstr " Klavišų susiejimai... "
 
-#: src/prefs_common_dialog.c:2279 src/select-keys.c:337
+#: src/prefs_common_dialog.c:2307 src/select-keys.c:337
 msgid "Other"
 msgstr "Kiti"
 
-#: src/prefs_common_dialog.c:2283
+#: src/prefs_common_dialog.c:2311
 msgid "External commands"
 msgstr "Išorinės komandos"
 
-#: src/prefs_common_dialog.c:2287
+#: src/prefs_common_dialog.c:2315
 #, fuzzy
 msgid "Update"
 msgstr "Data"
 
-#: src/prefs_common_dialog.c:2340
+#: src/prefs_common_dialog.c:2368
 msgid "Receive dialog"
 msgstr "Gavimo langas"
 
-#: src/prefs_common_dialog.c:2350
+#: src/prefs_common_dialog.c:2378
 msgid "Show receive dialog"
 msgstr "Rodyti gavimo langą"
 
-#: src/prefs_common_dialog.c:2360
+#: src/prefs_common_dialog.c:2388
 msgid "Always"
 msgstr "Visuomet"
 
-#: src/prefs_common_dialog.c:2361
+#: src/prefs_common_dialog.c:2389
 msgid "Only on manual receiving"
 msgstr "Tik kai gaunama rankiniu būdu"
 
-#: src/prefs_common_dialog.c:2363
+#: src/prefs_common_dialog.c:2391
 msgid "Never"
 msgstr "Niekada"
 
-#: src/prefs_common_dialog.c:2368
+#: src/prefs_common_dialog.c:2396
 msgid "Don't popup error dialog on receive error"
 msgstr "Nerodyti klaidos lango po nesėkmingo gavimo"
 
-#: src/prefs_common_dialog.c:2371
+#: src/prefs_common_dialog.c:2399
 msgid "Close receive dialog when finished"
 msgstr "Užverti langą baigus gavimą"
 
-#: src/prefs_common_dialog.c:2382
+#: src/prefs_common_dialog.c:2410
 msgid "Add address to destination when double-clicked"
 msgstr "Įdėti adresus į paskirties katalogą dukart spragtelėjus"
 
-#: src/prefs_common_dialog.c:2384
+#: src/prefs_common_dialog.c:2412
 msgid "On exit"
 msgstr "Išeinant"
 
-#: src/prefs_common_dialog.c:2392
+#: src/prefs_common_dialog.c:2420
 msgid "Confirm on exit"
 msgstr "Patvirtinti išėjimą"
 
-#: src/prefs_common_dialog.c:2399
+#: src/prefs_common_dialog.c:2427
 msgid "Empty trash on exit"
 msgstr "Išvalyti šiukšlinę išeinant"
 
-#: src/prefs_common_dialog.c:2401
+#: src/prefs_common_dialog.c:2429
 msgid "Ask before emptying"
 msgstr "Paklausti prieš išvalant"
 
-#: src/prefs_common_dialog.c:2405
+#: src/prefs_common_dialog.c:2433
 msgid "Warn if there are queued messages"
 msgstr "Perspėti jei yra laiškų eilėje"
 
-#: src/prefs_common_dialog.c:2460
+#: src/prefs_common_dialog.c:2488
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "Išorinė komanda (%s bus pakeista failo vardu / URI)"
 
-#: src/prefs_common_dialog.c:2469
+#: src/prefs_common_dialog.c:2497
 msgid "Web browser"
 msgstr "Naršyklė"
 
-#: src/prefs_common_dialog.c:2481 src/prefs_common_dialog.c:3981
-#: src/prefs_common_dialog.c:4002
+#: src/prefs_common_dialog.c:2509 src/prefs_common_dialog.c:4009
+#: src/prefs_common_dialog.c:4030
 msgid "(Default browser)"
 msgstr "(Numatytoji naršyklė)"
 
-#: src/prefs_common_dialog.c:2522
+#: src/prefs_common_dialog.c:2550
 msgid "Use external program for printing"
 msgstr "Naudoti išorinę programą spausdinimui"
 
-#: src/prefs_common_dialog.c:2544
+#: src/prefs_common_dialog.c:2572
 msgid "Use external program for incorporation"
 msgstr "Naudoti išorinę programą sujungimui"
 
-#: src/prefs_common_dialog.c:2566
+#: src/prefs_common_dialog.c:2594
 msgid "Use external program for sending"
 msgstr "Naudoti išorinę programą siuntimui"
 
-#: src/prefs_common_dialog.c:2617
+#: src/prefs_common_dialog.c:2645
 msgid "Update check requires 'curl' command."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2628
+#: src/prefs_common_dialog.c:2656
 #, fuzzy
 msgid "Enable auto update check"
 msgstr "Įjungti rašybos tikrinimą"
 
-#: src/prefs_common_dialog.c:2630
+#: src/prefs_common_dialog.c:2658
 msgid "Use HTTP proxy"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2632
+#: src/prefs_common_dialog.c:2660
 msgid "HTTP proxy host (hostname:port):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2672
+#: src/prefs_common_dialog.c:2700
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "Įjungti griežtą santraukos laikinosios atminties vientisumo tikrinimą"
 
-#: src/prefs_common_dialog.c:2675
+#: src/prefs_common_dialog.c:2703
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
@@ -5397,275 +5404,275 @@ msgstr ""
 "Įjunkite, jei katalogų turinys gali būti modifikuotas kitų programų.\n"
 "Šis pasirinkimas sumažins santraukos rodymo greitį."
 
-#: src/prefs_common_dialog.c:2682
+#: src/prefs_common_dialog.c:2710
 msgid "Socket I/O timeout:"
 msgstr "Prisijungimo skirtasis laikas"
 
-#: src/prefs_common_dialog.c:2695
+#: src/prefs_common_dialog.c:2723
 msgid "second(s)"
 msgstr "sekundė(s)"
 
-#: src/prefs_common_dialog.c:2723
+#: src/prefs_common_dialog.c:2751
 msgid "Automatic (Recommended)"
 msgstr "Automatiškai (Rekomenduojama)"
 
-#: src/prefs_common_dialog.c:2728
+#: src/prefs_common_dialog.c:2756
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bit ascii (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2730
+#: src/prefs_common_dialog.c:2758
 msgid "Unicode (UTF-8)"
 msgstr "Unikodas (UTF-8)"
 
-#: src/prefs_common_dialog.c:2732
+#: src/prefs_common_dialog.c:2760
 msgid "Western European (ISO-8859-1)"
 msgstr "Vakarų Europos (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2733
+#: src/prefs_common_dialog.c:2761
 msgid "Western European (ISO-8859-15)"
 msgstr "Vakarų Europos (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2735
+#: src/prefs_common_dialog.c:2763
 msgid "Western European (Windows-1252)"
 msgstr "Vakarų Europos (Windows-1252)"
 
-#: src/prefs_common_dialog.c:2739
+#: src/prefs_common_dialog.c:2767
 msgid "Central European (ISO-8859-2)"
 msgstr "Centrinės Europos (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2741
+#: src/prefs_common_dialog.c:2769
 msgid "Baltic (ISO-8859-13)"
 msgstr "Baltų (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2742
+#: src/prefs_common_dialog.c:2770
 msgid "Baltic (ISO-8859-4)"
 msgstr "Baltų (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2743
+#: src/prefs_common_dialog.c:2771
 msgid "Baltic (Windows-1257)"
 msgstr "Baltų (Windows-1257)"
 
-#: src/prefs_common_dialog.c:2745
+#: src/prefs_common_dialog.c:2773
 msgid "Greek (ISO-8859-7)"
 msgstr "Graikų (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2747
+#: src/prefs_common_dialog.c:2775
 msgid "Arabic (ISO-8859-6)"
 msgstr "Arabų (ISO-8859-6)"
 
-#: src/prefs_common_dialog.c:2748
+#: src/prefs_common_dialog.c:2776
 msgid "Arabic (Windows-1256)"
 msgstr "Arabų (Windows-1256)"
 
-#: src/prefs_common_dialog.c:2750
+#: src/prefs_common_dialog.c:2778
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Hebrajų (ISO-8859-8)"
 
-#: src/prefs_common_dialog.c:2751
+#: src/prefs_common_dialog.c:2779
 msgid "Hebrew (Windows-1255)"
 msgstr "Hebrajų (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2753
+#: src/prefs_common_dialog.c:2781
 msgid "Turkish (ISO-8859-9)"
 msgstr "Turkų (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2755
+#: src/prefs_common_dialog.c:2783
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Kirilica (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2756
+#: src/prefs_common_dialog.c:2784
 msgid "Cyrillic (KOI8-R)"
 msgstr "Kirilica (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2757
+#: src/prefs_common_dialog.c:2785
 msgid "Cyrillic (KOI8-U)"
 msgstr "Kirilica (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2758
+#: src/prefs_common_dialog.c:2786
 msgid "Cyrillic (Windows-1251)"
 msgstr "Kirilica (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2760
+#: src/prefs_common_dialog.c:2788
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Japonų (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2762
+#: src/prefs_common_dialog.c:2790
 msgid "Japanese (EUC-JP)"
 msgstr "Japonų (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2763
+#: src/prefs_common_dialog.c:2791
 msgid "Japanese (Shift_JIS)"
 msgstr "Japonų (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2766
+#: src/prefs_common_dialog.c:2794
 msgid "Simplified Chinese (GB2312)"
 msgstr "Supaprastinta Kinų (GB2312)"
 
-#: src/prefs_common_dialog.c:2767
+#: src/prefs_common_dialog.c:2795
 msgid "Simplified Chinese (GBK)"
 msgstr "Supaprastinta Kinų (GBK)"
 
-#: src/prefs_common_dialog.c:2768
+#: src/prefs_common_dialog.c:2796
 msgid "Traditional Chinese (Big5)"
 msgstr "Tradicinė Kinų (Big5)"
 
-#: src/prefs_common_dialog.c:2770
+#: src/prefs_common_dialog.c:2798
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Tradicinė Kinų (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2771
+#: src/prefs_common_dialog.c:2799
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Kinų (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2774
+#: src/prefs_common_dialog.c:2802
 msgid "Korean (EUC-KR)"
 msgstr "Korėjiečių (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2776
+#: src/prefs_common_dialog.c:2804
 msgid "Thai (TIS-620)"
 msgstr "Tailandiečių (TIS-620)"
 
-#: src/prefs_common_dialog.c:2777
+#: src/prefs_common_dialog.c:2805
 msgid "Thai (Windows-874)"
 msgstr "Tailandiečių (Windows-874)"
 
-#: src/prefs_common_dialog.c:2944
+#: src/prefs_common_dialog.c:2972
 msgid "the full abbreviated weekday name"
 msgstr "sutrumpinta savaitės diena"
 
-#: src/prefs_common_dialog.c:2945
+#: src/prefs_common_dialog.c:2973
 msgid "the full weekday name"
 msgstr "pilna savaitės diena"
 
-#: src/prefs_common_dialog.c:2946
+#: src/prefs_common_dialog.c:2974
 msgid "the abbreviated month name"
 msgstr "sutrumpintas mėnuo"
 
-#: src/prefs_common_dialog.c:2947
+#: src/prefs_common_dialog.c:2975
 msgid "the full month name"
 msgstr "pilnas mėnuo"
 
-#: src/prefs_common_dialog.c:2948
+#: src/prefs_common_dialog.c:2976
 msgid "the preferred date and time for the current locale"
 msgstr "pageidaujama data ir laikas esamai lokalei"
 
-#: src/prefs_common_dialog.c:2949
+#: src/prefs_common_dialog.c:2977
 msgid "the century number (year/100)"
 msgstr "amžius (metai/100)"
 
-#: src/prefs_common_dialog.c:2950
+#: src/prefs_common_dialog.c:2978
 msgid "the day of the month as a decimal number"
 msgstr "mėnesio diena"
 
-#: src/prefs_common_dialog.c:2951
+#: src/prefs_common_dialog.c:2979
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "valanda (24)"
 
-#: src/prefs_common_dialog.c:2952
+#: src/prefs_common_dialog.c:2980
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "valanda (12)"
 
-#: src/prefs_common_dialog.c:2953
+#: src/prefs_common_dialog.c:2981
 msgid "the day of the year as a decimal number"
 msgstr "metų diena"
 
-#: src/prefs_common_dialog.c:2954
+#: src/prefs_common_dialog.c:2982
 msgid "the month as a decimal number"
 msgstr "mėnesio numeris"
 
-#: src/prefs_common_dialog.c:2955
+#: src/prefs_common_dialog.c:2983
 msgid "the minute as a decimal number"
 msgstr "minutės"
 
-#: src/prefs_common_dialog.c:2956
+#: src/prefs_common_dialog.c:2984
 msgid "either AM or PM"
 msgstr "AM / PM"
 
-#: src/prefs_common_dialog.c:2957
+#: src/prefs_common_dialog.c:2985
 msgid "the second as a decimal number"
 msgstr "sekundės"
 
-#: src/prefs_common_dialog.c:2958
+#: src/prefs_common_dialog.c:2986
 msgid "the day of the week as a decimal number"
 msgstr "savaitės dienos numeris"
 
-#: src/prefs_common_dialog.c:2959
+#: src/prefs_common_dialog.c:2987
 msgid "the preferred date for the current locale"
 msgstr "pageidaujama data esamai lokalei"
 
-#: src/prefs_common_dialog.c:2960
+#: src/prefs_common_dialog.c:2988
 msgid "the last two digits of a year"
 msgstr "paskutiniai du metų skaitmenys"
 
-#: src/prefs_common_dialog.c:2961
+#: src/prefs_common_dialog.c:2989
 msgid "the year as a decimal number"
 msgstr "metai"
 
-#: src/prefs_common_dialog.c:2962
+#: src/prefs_common_dialog.c:2990
 msgid "the time zone or name or abbreviation"
 msgstr "laiko zona"
 
-#: src/prefs_common_dialog.c:2983
+#: src/prefs_common_dialog.c:3011
 msgid "Specifier"
 msgstr "Simbolis"
 
-#: src/prefs_common_dialog.c:2984
+#: src/prefs_common_dialog.c:3012
 msgid "Description"
 msgstr "Aprašymas"
 
-#: src/prefs_common_dialog.c:3024
+#: src/prefs_common_dialog.c:3052
 msgid "Example"
 msgstr "Pavyzdys"
 
-#: src/prefs_common_dialog.c:3105
+#: src/prefs_common_dialog.c:3133
 msgid "Set message colors"
 msgstr "Nustatyti laiško spalvas"
 
-#: src/prefs_common_dialog.c:3113
+#: src/prefs_common_dialog.c:3141
 msgid "Colors"
 msgstr "Spalvos"
 
-#: src/prefs_common_dialog.c:3147
+#: src/prefs_common_dialog.c:3175
 msgid "Quoted Text - First Level"
 msgstr "Cituojams tekstas - Pirmas lygis"
 
-#: src/prefs_common_dialog.c:3153
+#: src/prefs_common_dialog.c:3181
 msgid "Quoted Text - Second Level"
 msgstr "Cituojams tekstas - Antras lygis"
 
-#: src/prefs_common_dialog.c:3159
+#: src/prefs_common_dialog.c:3187
 msgid "Quoted Text - Third Level"
 msgstr "Cituojams tekstas - Trečias lygis"
 
-#: src/prefs_common_dialog.c:3165
+#: src/prefs_common_dialog.c:3193
 msgid "URI link"
 msgstr "Nuoroda"
 
-#: src/prefs_common_dialog.c:3172
+#: src/prefs_common_dialog.c:3200
 msgid "Recycle quote colors"
 msgstr "Atkurti citatos spalvas"
 
-#: src/prefs_common_dialog.c:3239
+#: src/prefs_common_dialog.c:3267
 msgid "Pick color for quotation level 1"
 msgstr "Pasirinkite spalvą pirmam citatos lygiui"
 
-#: src/prefs_common_dialog.c:3242
+#: src/prefs_common_dialog.c:3270
 msgid "Pick color for quotation level 2"
 msgstr "Pasirinkite spalvą antram citatos lygiui"
 
-#: src/prefs_common_dialog.c:3245
+#: src/prefs_common_dialog.c:3273
 msgid "Pick color for quotation level 3"
 msgstr "Pasirinkite spalvą trečiam citatos lygiui"
 
-#: src/prefs_common_dialog.c:3248
+#: src/prefs_common_dialog.c:3276
 msgid "Pick color for URI"
 msgstr "Pasirinkite nuorodos spalvą"
 
-#: src/prefs_common_dialog.c:3388
+#: src/prefs_common_dialog.c:3416
 msgid "Description of symbols"
 msgstr "Simbolių apibūdinimas"
 
-#: src/prefs_common_dialog.c:3444
+#: src/prefs_common_dialog.c:3472
 msgid ""
 "Date\n"
 "From\n"
@@ -5689,11 +5696,11 @@ msgstr ""
 "Naujienų grupė\n"
 "Laiško ID"
 
-#: src/prefs_common_dialog.c:3457
+#: src/prefs_common_dialog.c:3485
 msgid "If x is set, displays expr"
 msgstr "Jei egzistuoja „x“, rodo „expr“"
 
-#: src/prefs_common_dialog.c:3461
+#: src/prefs_common_dialog.c:3489
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5707,7 +5714,7 @@ msgstr ""
 "Cituojamas tekstas be parašo\n"
 "Simbolis %"
 
-#: src/prefs_common_dialog.c:3469
+#: src/prefs_common_dialog.c:3497
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5719,19 +5726,19 @@ msgstr ""
 "Atidarantys riestiniai skliaustai\n"
 "Uždarantys riestiniai skliaustai"
 
-#: src/prefs_common_dialog.c:3523
+#: src/prefs_common_dialog.c:3551
 msgid "Key bindings"
 msgstr "Klavišų susiejimai"
 
-#: src/prefs_common_dialog.c:3536
+#: src/prefs_common_dialog.c:3564
 msgid "Select the preset of key bindings."
 msgstr "Pasirinkite klavišų susiejimų nuostatas."
 
-#: src/prefs_common_dialog.c:3546 src/prefs_common_dialog.c:3870
+#: src/prefs_common_dialog.c:3574 src/prefs_common_dialog.c:3898
 msgid "Default"
 msgstr "Įprastas"
 
-#: src/prefs_common_dialog.c:3549 src/prefs_common_dialog.c:3879
+#: src/prefs_common_dialog.c:3577 src/prefs_common_dialog.c:3907
 msgid "Old Sylpheed"
 msgstr "Senas „Sylpheed“"
 
@@ -6850,33 +6857,59 @@ msgstr "Rodomas „%s“ pradinis tekstas...\n"
 msgid "%s - Source"
 msgstr "%s - Pradinis tekstas"
 
-#: src/sslmanager.c:59
+#: src/sslmanager.c:66
 msgid "SSL certificate verify failed"
 msgstr ""
 
-#: src/sslmanager.c:65
+#: src/sslmanager.c:98
 #, c-format
-msgid ""
-"The SSL certificate of %s cannot be verified by the following reason:\n"
-"  %s\n"
-"\n"
-"Server certificate:\n"
-"  Subject: %s\n"
-"  Issuer: %s\n"
-"\n"
-"Do you accept this certificate?"
+msgid "The SSL certificate of %s cannot be verified by the following reason:"
 msgstr ""
 
-#: src/sslmanager.c:142 src/sslmanager.c:150
+#: src/sslmanager.c:100
+#, fuzzy, c-format
+msgid "Subject: %s\n"
+msgstr "  Tema: %s\n"
+
+#: src/sslmanager.c:101
+#, fuzzy, c-format
+msgid "Issuer: %s\n"
+msgstr "  Leidėjas: %s\n"
+
+#: src/sslmanager.c:102
+#, fuzzy, c-format
+msgid "Issued date: %s\n"
+msgstr "  Leidėjas: %s\n"
+
+#: src/sslmanager.c:103
+#, fuzzy, c-format
+msgid "Expire date: %s\n"
+msgstr "Galiojimas"
+
+#: src/sslmanager.c:105
+#, c-format
+msgid "SHA1 fingerprint: %s\n"
+msgstr ""
+
+#: src/sslmanager.c:106
+#, c-format
+msgid "MD5 fingerprint: %s\n"
+msgstr ""
+
+#: src/sslmanager.c:108
+msgid "Do you accept this certificate?"
+msgstr ""
+
+#: src/sslmanager.c:179 src/sslmanager.c:187
 #, fuzzy
 msgid "_Reject"
 msgstr "Nukreipti"
 
-#: src/sslmanager.c:143 src/sslmanager.c:149
+#: src/sslmanager.c:180 src/sslmanager.c:186
 msgid "_Temporarily accept"
 msgstr ""
 
-#: src/sslmanager.c:144 src/sslmanager.c:148
+#: src/sslmanager.c:181 src/sslmanager.c:185
 #, fuzzy
 msgid "Always _accept"
 msgstr "Visuomet"

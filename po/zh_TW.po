@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-13 18:07+0900\n"
+"POT-Creation-Date: 2009-11-26 17:50+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -26,189 +26,194 @@ msgstr "讀取所有帳號的設定中...\n"
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "到 %s 的 IMAP4 連線被中斷了。重新連線中...\n"
 
-#: libsylph/imap.c:586 libsylph/imap.c:592
+#: libsylph/imap.c:588 libsylph/imap.c:594
 msgid "IMAP4 server disables LOGIN.\n"
 msgstr "IMAP4 伺服器停用登入。\n"
 
-#: libsylph/imap.c:668
+#: libsylph/imap.c:653
+#, fuzzy
+msgid "Could not establish IMAP connection.\n"
+msgstr "無法產生 IMAP4 連線：%s:%d\n"
+
+#: libsylph/imap.c:671
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "正在產生 IMAP4 連線到 %s:%d ...\n"
 
-#: libsylph/imap.c:712
+#: libsylph/imap.c:715
 msgid "Can't start TLS session.\n"
 msgstr "無法開啟 TLS 連線\n"
 
-#: libsylph/imap.c:1233
+#: libsylph/imap.c:1236
 #, fuzzy, c-format
 msgid "Getting message %u"
 msgstr "擷取第 %d 號郵件"
 
-#: libsylph/imap.c:1355
+#: libsylph/imap.c:1358
 #, c-format
 msgid "Appending messages to %s (%d / %d)"
 msgstr "附加郵件至 %s (%d / %d)"
 
-#: libsylph/imap.c:1478
+#: libsylph/imap.c:1481
 #, c-format
 msgid "Moving messages %s to %s ..."
 msgstr "正在移動郵件 %s 到 %s ..."
 
-#: libsylph/imap.c:1483
+#: libsylph/imap.c:1486
 #, c-format
 msgid "Copying messages %s to %s ..."
 msgstr "正在複製郵件 %s 到 %s ..."
 
-#: libsylph/imap.c:1621
+#: libsylph/imap.c:1624
 #, c-format
 msgid "Removing messages %s"
 msgstr "正在移除郵件 %s"
 
-#: libsylph/imap.c:1627
+#: libsylph/imap.c:1630
 #, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "無法設定刪除的旗標：%s\n"
 
-#: libsylph/imap.c:1635 libsylph/imap.c:1734
+#: libsylph/imap.c:1638 libsylph/imap.c:1737
 msgid "can't expunge\n"
 msgstr "無法刪除\n"
 
-#: libsylph/imap.c:1718
+#: libsylph/imap.c:1721
 #, c-format
 msgid "Removing all messages in %s"
 msgstr "正在移除 %s 中的所有郵件"
 
-#: libsylph/imap.c:1723 libsylph/imap.c:1728
+#: libsylph/imap.c:1726 libsylph/imap.c:1731
 msgid "can't set deleted flags: 1:*\n"
 msgstr "無法設定刪除的旗標：1:*\n"
 
-#: libsylph/imap.c:1776
+#: libsylph/imap.c:1779
 msgid "can't close folder\n"
 msgstr "無法選擇資料夾\n"
 
-#: libsylph/imap.c:1855
+#: libsylph/imap.c:1858
 #, c-format
 msgid "root folder %s not exist\n"
 msgstr "根資料夾 %s 不存在。\n"
 
-#: libsylph/imap.c:2055 libsylph/imap.c:2063
+#: libsylph/imap.c:2058 libsylph/imap.c:2066
 msgid "error occurred while getting LIST.\n"
 msgstr "取得 LIST 時發生錯誤。\n"
 
-#: libsylph/imap.c:2295
+#: libsylph/imap.c:2298
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "無法產生 %s\n"
 
-#: libsylph/imap.c:2300
+#: libsylph/imap.c:2303
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "無法在收件夾下產生 %s\n"
 
-#: libsylph/imap.c:2362
+#: libsylph/imap.c:2365
 msgid "can't create mailbox: LIST failed\n"
 msgstr "無法產生信箱：LIST 失敗\n"
 
-#: libsylph/imap.c:2385
+#: libsylph/imap.c:2388
 msgid "can't create mailbox\n"
 msgstr "無法產生信箱\n"
 
-#: libsylph/imap.c:2513
+#: libsylph/imap.c:2516
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "信箱 %s 無法更名為 %s\n"
 
-#: libsylph/imap.c:2593
+#: libsylph/imap.c:2596
 msgid "can't delete mailbox\n"
 msgstr "無法刪除信箱\n"
 
-#: libsylph/imap.c:2620
+#: libsylph/imap.c:2623
 #, c-format
 msgid "Getting message headers (%d / %d)"
 msgstr "擷取郵件表頭 (%d / %d)"
 
-#: libsylph/imap.c:2672
+#: libsylph/imap.c:2675
 msgid "error occurred while getting envelope.\n"
 msgstr "取得信封時發生錯誤。\n"
 
-#: libsylph/imap.c:2693
+#: libsylph/imap.c:2696
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "無法解析信封：%s\n"
 
-#: libsylph/imap.c:2750
+#: libsylph/imap.c:2753
 msgid "can't get envelope\n"
 msgstr "無法取得信封。\n"
 
-#: libsylph/imap.c:2857 libsylph/imap.c:2863
+#: libsylph/imap.c:2860 libsylph/imap.c:2866
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "無法連線到 IMAP4 伺服器：%s:%d\n"
 
-#: libsylph/imap.c:2871
+#: libsylph/imap.c:2874
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "無法產生 IMAP4 連線：%s:%d\n"
 
-#: libsylph/imap.c:2946
+#: libsylph/imap.c:2949
 msgid "can't get namespace\n"
 msgstr "無法取得信封。\n"
 
-#: libsylph/imap.c:3480
+#: libsylph/imap.c:3483
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "無法選擇資料夾：%s\n"
 
-#: libsylph/imap.c:3518
+#: libsylph/imap.c:3521
 msgid "error on imap command: STATUS\n"
 msgstr "發生錯誤的 imap 命令： STATUS\n"
 
-#: libsylph/imap.c:3642 libsylph/imap.c:3677
+#: libsylph/imap.c:3645 libsylph/imap.c:3680
 msgid "IMAP4 authentication failed.\n"
 msgstr "IMAP4 認證失敗\n"
 
-#: libsylph/imap.c:3730
+#: libsylph/imap.c:3733
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 登入失敗。\n"
 
-#: libsylph/imap.c:4103 libsylph/imap.c:4110
+#: libsylph/imap.c:4106 libsylph/imap.c:4113
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "無法將郵件從 %s 搬移到 %s。\n"
 
-#: libsylph/imap.c:4117
+#: libsylph/imap.c:4120
 msgid "(sending file...)"
 msgstr "（送出檔案 ...）"
 
-#: libsylph/imap.c:4146
+#: libsylph/imap.c:4149
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "無法附加訊息到 %s\n"
 
-#: libsylph/imap.c:4178
+#: libsylph/imap.c:4181
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "無法將郵件 %s 移到 %s\n"
 
-#: libsylph/imap.c:4201
+#: libsylph/imap.c:4204
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap 發生錯誤，命令為： STORE %s %s\n"
 
-#: libsylph/imap.c:4217
+#: libsylph/imap.c:4220
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap 發生錯誤，命令為： EXPUNGE\n"
 
-#: libsylph/imap.c:4232
+#: libsylph/imap.c:4235
 msgid "error while imap command: CLOSE\n"
 msgstr "imap 發生錯誤，命令為： CLOSE\n"
 
-#: libsylph/imap.c:4539
+#: libsylph/imap.c:4542
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "無法將 UTF-7 轉換為 %s\n"
 
-#: libsylph/imap.c:4569
+#: libsylph/imap.c:4572
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "無法轉換 %s 為 UTF-7\n"
@@ -498,12 +503,12 @@ msgstr "找到 %s\n"
 msgid "Configuration is saved.\n"
 msgstr "組態設定已儲存。\n"
 
-#: libsylph/prefs_common.c:579
+#: libsylph/prefs_common.c:585
 #, fuzzy
 msgid "Junk mail filter (manual)"
 msgstr "垃圾郵件資料夾"
 
-#: libsylph/prefs_common.c:582
+#: libsylph/prefs_common.c:588
 msgid "Junk mail filter"
 msgstr "垃圾郵件資料夾"
 
@@ -579,16 +584,16 @@ msgstr "SSL 傳輸發生錯誤\n"
 msgid "SSL connection using %s\n"
 msgstr "使用 %s 進行 SSL 連線\n"
 
-#: libsylph/ssl.c:278
+#: libsylph/ssl.c:284
 msgid "Server certificate:\n"
 msgstr "伺服器認證：\n"
 
-#: libsylph/ssl.c:281
+#: libsylph/ssl.c:287
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  主旨: %s\n"
 
-#: libsylph/ssl.c:286
+#: libsylph/ssl.c:292
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  發信人: %s\n"
@@ -683,7 +688,7 @@ msgstr ""
 "檢查新郵件時將會依照下面的順序。您可以勾選 G 欄位中的方塊，\n"
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
-#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:702
+#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:701
 #: src/compose.c:5110 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
@@ -824,7 +829,7 @@ msgstr "將地址加入通訊錄"
 msgid "Address"
 msgstr "地址"
 
-#: src/addressadd.c:197 src/addressbook.c:734 src/editaddress.c:629
+#: src/addressadd.c:197 src/addressbook.c:744 src/editaddress.c:629
 #: src/editaddress.c:695 src/editgroup.c:268 src/importcsv.c:125
 msgid "Remarks"
 msgstr "備註"
@@ -984,74 +989,74 @@ msgstr "/複製(_C)..."
 msgid "/_Paste"
 msgstr "/編輯(_E)/貼上(_P)"
 
-#: src/addressbook.c:554 src/prefs_common_dialog.c:2373 src/prefs_toolbar.c:90
+#: src/addressbook.c:554 src/prefs_common_dialog.c:2401 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "通訊錄"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:628 src/addressbook.c:3734 src/folderview.c:385
+#: src/addressbook.c:628 src/addressbook.c:3744 src/folderview.c:385
 #: src/prefs_account_dialog.c:1835 src/query_search.c:400
 msgid "Folder"
 msgstr "資料夾"
 
-#: src/addressbook.c:726
+#: src/addressbook.c:730
 msgid "E-Mail address"
 msgstr "E-Mail 地址"
 
-#: src/addressbook.c:760 src/prefs_filter_edit.c:251
+#: src/addressbook.c:770 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "姓名："
 
-#: src/addressbook.c:797 src/compose.c:3153 src/headerview.c:55
+#: src/addressbook.c:807 src/compose.c:3153 src/headerview.c:55
 #: src/prefs_folder_item.c:339 src/prefs_template.c:179
 msgid "To:"
 msgstr "收件人"
 
-#: src/addressbook.c:801 src/compose.c:3170 src/headerview.c:56
+#: src/addressbook.c:811 src/compose.c:3170 src/headerview.c:56
 #: src/prefs_folder_item.c:356 src/prefs_template.c:181
 msgid "Cc:"
 msgstr "副本"
 
-#: src/addressbook.c:805 src/compose.c:3187 src/prefs_folder_item.c:367
+#: src/addressbook.c:815 src/compose.c:3187 src/prefs_folder_item.c:367
 #: src/prefs_template.c:183
 msgid "Bcc:"
 msgstr "密件副本"
 
 #. Buttons
-#: src/addressbook.c:826 src/addressbook.c:1904 src/editaddress.c:719
+#: src/addressbook.c:836 src/addressbook.c:1914 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:239 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "刪除"
 
-#: src/addressbook.c:829 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:839 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "新增"
 
-#: src/addressbook.c:833
+#: src/addressbook.c:843
 msgid "Lookup"
 msgstr "尋找"
 
-#: src/addressbook.c:837
+#: src/addressbook.c:847
 #, fuzzy
 msgid "_Close"
 msgstr "顏色"
 
 #. Confirm deletion
-#: src/addressbook.c:1044
+#: src/addressbook.c:1054
 msgid "Delete address(es)"
 msgstr "刪除通訊紀錄"
 
-#: src/addressbook.c:1045
+#: src/addressbook.c:1055
 msgid "Really delete the address(es)?"
 msgstr "您確定要刪除這些紀錄嗎？"
 
-#: src/addressbook.c:1895
+#: src/addressbook.c:1905
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1060,38 +1065,38 @@ msgstr ""
 "您確定要刪除「%s」資料夾以及裡面所有的地址嗎？\n"
 "如果您選擇只刪除資料夾，裡面的通訊紀錄將移到上一層資料夾中。"
 
-#: src/addressbook.c:1898 src/folderview.c:2546
+#: src/addressbook.c:1908 src/folderview.c:2546
 msgid "Delete folder"
 msgstr "刪除資料夾"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 msgid "_Folder only"
 msgstr "只刪除資料夾(_F)"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 msgid "Folder and _addresses"
 msgstr "全部刪除(_A)"
 
-#: src/addressbook.c:1903
+#: src/addressbook.c:1913
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "您確定要刪除「%s」? "
 
-#: src/addressbook.c:2791 src/addressbook.c:2927
+#: src/addressbook.c:2801 src/addressbook.c:2937
 msgid "New user, could not save index file."
 msgstr "無法儲存索引檔案。"
 
-#: src/addressbook.c:2795 src/addressbook.c:2931
+#: src/addressbook.c:2805 src/addressbook.c:2941
 msgid "New user, could not save address book files."
 msgstr "無法儲存通訊錄檔案。"
 
-#: src/addressbook.c:2805 src/addressbook.c:2941
+#: src/addressbook.c:2815 src/addressbook.c:2951
 msgid "Old address book converted successfully."
 msgstr ""
 "轉換舊通訊錄格式完成。\n"
 "您可以開始使用新的通訊錄。"
 
-#: src/addressbook.c:2810
+#: src/addressbook.c:2820
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1099,7 +1104,7 @@ msgstr ""
 "舊通訊錄格式已轉換，\n"
 "但無法儲存新的索引檔。"
 
-#: src/addressbook.c:2823
+#: src/addressbook.c:2833
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1107,7 +1112,7 @@ msgstr ""
 "無法轉換通訊錄格式，\n"
 "但已產生空的新通訊錄。"
 
-#: src/addressbook.c:2829
+#: src/addressbook.c:2839
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1115,7 +1120,7 @@ msgstr ""
 "無法轉換通訊錄格式，\n"
 "亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:2834
+#: src/addressbook.c:2844
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1123,17 +1128,17 @@ msgstr ""
 "無法轉換通訊錄格式，\n"
 "亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:2841
+#: src/addressbook.c:2851
 #, fuzzy
 msgid "Address book conversion error"
 msgstr "轉換通訊錄格式時發生錯誤"
 
-#: src/addressbook.c:2845
+#: src/addressbook.c:2855
 #, fuzzy
 msgid "Address book conversion"
 msgstr "通訊錄格式轉換"
 
-#: src/addressbook.c:2882
+#: src/addressbook.c:2892
 #, fuzzy, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1141,73 +1146,73 @@ msgid ""
 "%s%c%s"
 msgstr "無法讀取通訊錄索引"
 
-#: src/addressbook.c:2885
+#: src/addressbook.c:2895
 #, fuzzy
 msgid "Address Book Error"
 msgstr "通訊錄發生錯誤"
 
-#: src/addressbook.c:2946
+#: src/addressbook.c:2956
 msgid "Old address book converted, could not save new address index file"
 msgstr "舊通訊錄格式已轉換，但無法儲存新的索引檔。"
 
-#: src/addressbook.c:2960
+#: src/addressbook.c:2970
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr "無法轉換通訊錄格式，但已產生空的新通訊錄。"
 
-#: src/addressbook.c:2966
+#: src/addressbook.c:2976
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr "無法轉換通訊錄格式，亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:2972
+#: src/addressbook.c:2982
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr "無法轉換通訊錄格式，亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:2984
+#: src/addressbook.c:2994
 msgid "Could not read address index"
 msgstr "無法讀取通訊錄索引"
 
-#: src/addressbook.c:2990
+#: src/addressbook.c:3000
 #, fuzzy
 msgid "Address Book Conversion Error"
 msgstr "轉換通訊錄格式時發生錯誤"
 
-#: src/addressbook.c:2996
+#: src/addressbook.c:3006
 #, fuzzy
 msgid "Address Book Conversion"
 msgstr "通訊錄格式轉換"
 
-#: src/addressbook.c:3664 src/prefs_common_dialog.c:2198
+#: src/addressbook.c:3674 src/prefs_common_dialog.c:2226
 msgid "Interface"
 msgstr "介面"
 
-#: src/addressbook.c:3678 src/importcsv.c:671 src/importldif.c:478
+#: src/addressbook.c:3688 src/importcsv.c:671 src/importldif.c:478
 msgid "Address Book"
 msgstr "通訊錄"
 
-#: src/addressbook.c:3692
+#: src/addressbook.c:3702
 msgid "Person"
 msgstr "人名"
 
-#: src/addressbook.c:3706
+#: src/addressbook.c:3716
 msgid "EMail Address"
 msgstr "電子郵件信箱"
 
-#: src/addressbook.c:3720
+#: src/addressbook.c:3730
 msgid "Group"
 msgstr "群組"
 
-#: src/addressbook.c:3748
+#: src/addressbook.c:3758
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:3762 src/addressbook.c:3776
+#: src/addressbook.c:3772 src/addressbook.c:3786
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:3790
+#: src/addressbook.c:3800
 msgid "LDAP Server"
 msgstr "LDAP 伺服器"
 
@@ -1818,7 +1823,7 @@ msgstr "檔案不存在或者是空的。"
 msgid "Properties"
 msgstr "內容"
 
-#: src/compose.c:6259 src/prefs_common_dialog.c:1594
+#: src/compose.c:6259 src/prefs_common_dialog.c:1620
 msgid "Encoding"
 msgstr "編碼"
 
@@ -2068,7 +2073,7 @@ msgstr "編輯 JPilot 資料"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:691 src/importldif.c:498 src/prefs_account_dialog.c:1863
-#: src/prefs_common_dialog.c:2000
+#: src/prefs_common_dialog.c:2028
 msgid " ... "
 msgstr "..."
 
@@ -2372,17 +2377,18 @@ msgstr "/移除新聞群組(_R)"
 msgid "Creating folder view...\n"
 msgstr "產生資料夾檢視...\n"
 
-#: src/folderview.c:415
+#: src/folderview.c:415 src/prefs_common_dialog.c:1538
 msgid "New"
 msgstr "新的"
 
 #. S_COL_MARK
-#: src/folderview.c:431 src/prefs_filter_edit.c:507
-#: src/prefs_summary_column.c:67 src/quick_search.c:96
+#: src/folderview.c:431 src/prefs_common_dialog.c:1539
+#: src/prefs_filter_edit.c:507 src/prefs_summary_column.c:67
+#: src/quick_search.c:96
 msgid "Unread"
 msgstr "未讀的"
 
-#: src/folderview.c:447
+#: src/folderview.c:447 src/prefs_common_dialog.c:1540
 msgid "Total"
 msgstr ""
 
@@ -2424,7 +2430,7 @@ msgstr "重建資料夾結構失敗。"
 msgid "Checking for new messages in all folders..."
 msgstr "檢查每個資料夾中的新郵件..."
 
-#: src/folderview.c:1256 src/prefs_common_dialog.c:1944 src/prefs_toolbar.c:68
+#: src/folderview.c:1256 src/prefs_common_dialog.c:1972 src/prefs_toolbar.c:68
 msgid "Junk"
 msgstr "垃圾郵件"
 
@@ -4274,21 +4280,21 @@ msgstr "帳號設定"
 msgid "Creating account preferences window...\n"
 msgstr "產生帳號設定的視窗...\n"
 
-#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:718
+#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:724
 msgid "Receive"
 msgstr "接收設定"
 
-#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:720
+#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:726
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "送出"
 
-#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:722
+#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:728
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "撰寫郵件"
 
-#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:729
+#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:735
 msgid "Privacy"
 msgstr "私人資料"
 
@@ -4296,7 +4302,7 @@ msgstr "私人資料"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2291
+#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2319
 msgid "Advanced"
 msgstr "進階設定"
 
@@ -4422,7 +4428,7 @@ msgid "Authentication method"
 msgstr "認證方法"
 
 #: src/prefs_account_dialog.c:989 src/prefs_account_dialog.c:1148
-#: src/prefs_common_dialog.c:941 src/prefs_common_dialog.c:2725
+#: src/prefs_common_dialog.c:947 src/prefs_common_dialog.c:2753
 msgid "Automatic"
 msgstr "自動"
 
@@ -4468,8 +4474,8 @@ msgstr "產生郵件識別碼"
 msgid "Add user-defined header"
 msgstr "加入使用者定義的標頭"
 
-#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1700
-#: src/prefs_common_dialog.c:1727
+#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1728
+#: src/prefs_common_dialog.c:1755
 msgid " Edit... "
 msgstr " 編輯... "
 
@@ -4492,7 +4498,7 @@ msgid "Authenticate with POP3 before sending"
 msgstr "送信前先做 POP3 認證"
 
 #. signature
-#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1099
+#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1105
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "簽章"
@@ -4800,297 +4806,298 @@ msgstr "刪除指令"
 msgid "Do you really want to delete this action?"
 msgstr "您確定要刪除這個指令嗎？"
 
-#: src/prefs_common_dialog.c:698
+#: src/prefs_common_dialog.c:704
 msgid "Creating common preferences window...\n"
 msgstr "產生一般設定視窗...\n"
 
-#: src/prefs_common_dialog.c:702
+#: src/prefs_common_dialog.c:708
 msgid "Common Preferences"
 msgstr "一般設定"
 
-#: src/prefs_common_dialog.c:724
+#: src/prefs_common_dialog.c:730
 msgid "Display"
 msgstr "顯示"
 
-#: src/prefs_common_dialog.c:726
+#: src/prefs_common_dialog.c:732
 msgid "Junk mail"
 msgstr "垃圾郵件"
 
-#: src/prefs_common_dialog.c:732
+#: src/prefs_common_dialog.c:738
 msgid "Details"
 msgstr ""
 
-#: src/prefs_common_dialog.c:786
+#: src/prefs_common_dialog.c:792
 msgid "Auto-check new mail"
 msgstr "自動檢查新郵件"
 
-#: src/prefs_common_dialog.c:788 src/prefs_common_dialog.c:1215
+#: src/prefs_common_dialog.c:794 src/prefs_common_dialog.c:1221
 msgid "every"
 msgstr "每"
 
-#: src/prefs_common_dialog.c:800 src/prefs_common_dialog.c:1229
+#: src/prefs_common_dialog.c:806 src/prefs_common_dialog.c:1235
 msgid "minute(s)"
 msgstr "分鐘"
 
-#: src/prefs_common_dialog.c:809
+#: src/prefs_common_dialog.c:815
 msgid "Check new mail on startup"
 msgstr "開啟時檢查新郵件"
 
-#: src/prefs_common_dialog.c:811
+#: src/prefs_common_dialog.c:817
 msgid "Update all local folders after incorporation"
 msgstr "收信後更新所有資料夾"
 
-#: src/prefs_common_dialog.c:816
+#: src/prefs_common_dialog.c:822
 msgid "Execute command when new messages arrived"
 msgstr "收到新郵件時立即執行"
 
-#: src/prefs_common_dialog.c:828 src/prefs_common_dialog.c:2534
-#: src/prefs_common_dialog.c:2556 src/prefs_common_dialog.c:2578
+#: src/prefs_common_dialog.c:834 src/prefs_common_dialog.c:2562
+#: src/prefs_common_dialog.c:2584 src/prefs_common_dialog.c:2606
 msgid "Command"
 msgstr "命令列"
 
-#: src/prefs_common_dialog.c:839
+#: src/prefs_common_dialog.c:845
 #, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "「%d」將會被新郵件的數量所替換。"
 
-#: src/prefs_common_dialog.c:843
+#: src/prefs_common_dialog.c:849
 msgid "Incorporate from local spool"
 msgstr "從本機 spool 取得郵件"
 
-#: src/prefs_common_dialog.c:856
+#: src/prefs_common_dialog.c:862
 msgid "Filter on incorporation"
 msgstr "收信時過濾"
 
-#: src/prefs_common_dialog.c:862
+#: src/prefs_common_dialog.c:868
 msgid "Spool path"
 msgstr "Spool 路徑"
 
-#: src/prefs_common_dialog.c:918
+#: src/prefs_common_dialog.c:924
 msgid "Save sent messages to outbox"
 msgstr "將已送出之郵件存到寄件夾"
 
-#: src/prefs_common_dialog.c:920
+#: src/prefs_common_dialog.c:926
 msgid "Apply filter rules to sent messages"
 msgstr "套用過濾器規則於寄出的郵件"
 
-#: src/prefs_common_dialog.c:927
+#: src/prefs_common_dialog.c:933
 msgid "Transfer encoding"
 msgstr "傳送之編碼"
 
-#: src/prefs_common_dialog.c:950
+#: src/prefs_common_dialog.c:956
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
 msgstr "請指定當郵件主體內容包含非 ASCII 字元時，使用哪種編碼來傳送內容。"
 
-#: src/prefs_common_dialog.c:957
+#: src/prefs_common_dialog.c:963
 #, fuzzy
 msgid "MIME filename encoding"
 msgstr "檔案名稱編碼"
 
-#: src/prefs_common_dialog.c:968
+#: src/prefs_common_dialog.c:974
 #, fuzzy
 msgid "MIME header"
 msgstr "檔案名稱編碼"
 
-#: src/prefs_common_dialog.c:978
+#: src/prefs_common_dialog.c:984
 msgid ""
 "Specify encoding method for MIME filename with non-ASCII characters.\n"
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
 
-#: src/prefs_common_dialog.c:988
+#: src/prefs_common_dialog.c:994
 msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
 
-#: src/prefs_common_dialog.c:999
+#: src/prefs_common_dialog.c:1005
 msgid "(Ex: attach)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1010
+#: src/prefs_common_dialog.c:1016
 #, fuzzy
 msgid "Confirm recipients before sending"
 msgstr "寄送之前自動折列"
 
-#: src/prefs_common_dialog.c:1016
+#: src/prefs_common_dialog.c:1022
 msgid "Excluded addresses/domains (comma-separated):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1095 src/prefs_common_dialog.c:1484
+#: src/prefs_common_dialog.c:1101 src/prefs_common_dialog.c:1494
 #: src/prefs_folder_item.c:139
 msgid "General"
 msgstr "一般"
 
-#: src/prefs_common_dialog.c:1110
+#: src/prefs_common_dialog.c:1116
 msgid "Signature separator"
 msgstr "簽章分隔符號"
 
-#: src/prefs_common_dialog.c:1119
+#: src/prefs_common_dialog.c:1125
 msgid "Insert automatically"
 msgstr "自動加入簽章"
 
-#: src/prefs_common_dialog.c:1121 src/prefs_toolbar.c:56
+#: src/prefs_common_dialog.c:1127 src/prefs_toolbar.c:56
 msgid "Reply"
 msgstr "回覆"
 
-#: src/prefs_common_dialog.c:1129
+#: src/prefs_common_dialog.c:1135
 msgid "Automatically select account for replies"
 msgstr "回信時在相關欄位上自動加入電子郵件信箱"
 
-#: src/prefs_common_dialog.c:1131
+#: src/prefs_common_dialog.c:1137
 msgid "Quote message when replying"
 msgstr "回信時引用原文"
 
-#: src/prefs_common_dialog.c:1133
+#: src/prefs_common_dialog.c:1139
 msgid "Reply button invokes mailing list reply"
 msgstr "讀取郵遞論壇郵件時按下「回覆」鈕表示回覆給郵遞論壇"
 
-#: src/prefs_common_dialog.c:1135
+#: src/prefs_common_dialog.c:1141
 msgid "Inherit recipients on reply to self messages"
 msgstr ""
 
 #. editor
-#: src/prefs_common_dialog.c:1139 src/prefs_common_dialog.c:2497
+#: src/prefs_common_dialog.c:1145 src/prefs_common_dialog.c:2525
 #: src/prefs_toolbar.c:120
 msgid "Editor"
 msgstr "編輯器"
 
-#: src/prefs_common_dialog.c:1146
+#: src/prefs_common_dialog.c:1152
 msgid "Automatically launch the external editor"
 msgstr "自動呼叫外部編輯器"
 
-#: src/prefs_common_dialog.c:1156
+#: src/prefs_common_dialog.c:1162
 msgid "Undo level"
 msgstr "復原紀錄"
 
-#: src/prefs_common_dialog.c:1176
+#: src/prefs_common_dialog.c:1182
 msgid "Wrap messages at"
 msgstr "每列最多"
 
-#: src/prefs_common_dialog.c:1188
+#: src/prefs_common_dialog.c:1194
 msgid "characters"
 msgstr "個字元"
 
-#: src/prefs_common_dialog.c:1198
+#: src/prefs_common_dialog.c:1204
 msgid "Wrap quotation"
 msgstr "折列時顯示符號"
 
-#: src/prefs_common_dialog.c:1204
+#: src/prefs_common_dialog.c:1210
 msgid "Wrap on input"
 msgstr "切割輸入過長的文字列"
 
-#: src/prefs_common_dialog.c:1213
+#: src/prefs_common_dialog.c:1219
 #, fuzzy
 msgid "Auto-save to draft"
 msgstr "儲存至草稿資料夾"
 
-#: src/prefs_common_dialog.c:1238
+#: src/prefs_common_dialog.c:1244
 #, fuzzy
 msgid "Format"
 msgstr "正常"
 
-#: src/prefs_common_dialog.c:1243
+#: src/prefs_common_dialog.c:1249
 msgid "Spell checking"
 msgstr ""
 
 #. reply
-#: src/prefs_common_dialog.c:1295
+#: src/prefs_common_dialog.c:1301
 msgid "Reply format"
 msgstr "回覆格式"
 
-#: src/prefs_common_dialog.c:1310 src/prefs_common_dialog.c:1352
+#: src/prefs_common_dialog.c:1316 src/prefs_common_dialog.c:1358
 msgid "Quotation mark"
 msgstr "引言符號"
 
 #. forward
-#: src/prefs_common_dialog.c:1337
+#: src/prefs_common_dialog.c:1343
 msgid "Forward format"
 msgstr "轉寄格式"
 
-#: src/prefs_common_dialog.c:1384
+#: src/prefs_common_dialog.c:1390
 msgid " Description of symbols "
 msgstr "特殊符號代表的意義"
 
-#: src/prefs_common_dialog.c:1413
+#: src/prefs_common_dialog.c:1419
 msgid "Enable Spell checking"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1425
+#: src/prefs_common_dialog.c:1431
 #, fuzzy
 msgid "Default language:"
 msgstr "預設的收件夾"
 
-#: src/prefs_common_dialog.c:1492
+#: src/prefs_common_dialog.c:1502
 #, fuzzy
 msgid "Text font"
 msgstr "文字"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1504
+#: src/prefs_common_dialog.c:1514
 msgid "Folder View"
 msgstr "資料夾檢視"
 
-#: src/prefs_common_dialog.c:1512
+#: src/prefs_common_dialog.c:1522
 msgid "Display unread number next to folder name"
 msgstr "若有未讀郵件，就顯示在資料夾名稱後面"
 
-#: src/prefs_common_dialog.c:1514
-msgid "Display message number columns in the folder view"
+#: src/prefs_common_dialog.c:1526
+#, fuzzy
+msgid "Displaying message number columns in the folder view:"
 msgstr "在資料夾檢視中顯示郵件編號欄"
 
-#: src/prefs_common_dialog.c:1523
+#: src/prefs_common_dialog.c:1549
 msgid "Abbreviate newsgroups longer than"
 msgstr "新聞群組縮寫長度大於"
 
-#: src/prefs_common_dialog.c:1538
+#: src/prefs_common_dialog.c:1564
 msgid "letters"
 msgstr "個字母"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1544
+#: src/prefs_common_dialog.c:1570
 msgid "Summary View"
 msgstr "郵件列表"
 
-#: src/prefs_common_dialog.c:1553
+#: src/prefs_common_dialog.c:1579
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "若發信人是你自己，就在郵件列表的來源中顯示收信人"
 
-#: src/prefs_common_dialog.c:1555
+#: src/prefs_common_dialog.c:1581
 msgid "Expand threads"
 msgstr "自動展開郵件串列"
 
-#: src/prefs_common_dialog.c:1563 src/prefs_common_dialog.c:2968
-#: src/prefs_common_dialog.c:3006
+#: src/prefs_common_dialog.c:1589 src/prefs_common_dialog.c:2996
+#: src/prefs_common_dialog.c:3034
 msgid "Date format"
 msgstr "日期格式"
 
-#: src/prefs_common_dialog.c:1584
+#: src/prefs_common_dialog.c:1610
 msgid " Set display item of summary... "
 msgstr "設定郵件列表選項..."
 
-#: src/prefs_common_dialog.c:1590
+#: src/prefs_common_dialog.c:1616
 msgid "Message"
 msgstr "郵件"
 
-#: src/prefs_common_dialog.c:1600
+#: src/prefs_common_dialog.c:1626
 #, fuzzy
 msgid "Default character encoding"
 msgstr "/檢視(_V)/字元編碼(_E)"
 
-#: src/prefs_common_dialog.c:1614
+#: src/prefs_common_dialog.c:1640
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1620
+#: src/prefs_common_dialog.c:1646
 #, fuzzy
 msgid "Outgoing character encoding"
 msgstr "/檢視(_V)/字元編碼(_E)"
 
-#: src/prefs_common_dialog.c:1634
+#: src/prefs_common_dialog.c:1660
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
 "be used."
@@ -5098,329 +5105,329 @@ msgstr ""
 "若是選用「自動選擇」，系統將自動為您判斷而使用最\n"
 "適合的語區設定。"
 
-#: src/prefs_common_dialog.c:1696
+#: src/prefs_common_dialog.c:1724
 msgid "Enable coloration of message"
 msgstr "郵件中的引言與超連結顯示變色"
 
-#: src/prefs_common_dialog.c:1711
+#: src/prefs_common_dialog.c:1739
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
 msgstr "將全形英文與數字以半形來顯示 (只適用日文)"
 
-#: src/prefs_common_dialog.c:1718
+#: src/prefs_common_dialog.c:1746
 msgid "Display header pane above message view"
 msgstr "在顯示郵件欄上方加入標頭資訊"
 
-#: src/prefs_common_dialog.c:1725
+#: src/prefs_common_dialog.c:1753
 msgid "Display short headers on message view"
 msgstr "在郵件預覽中顯示郵件標頭"
 
-#: src/prefs_common_dialog.c:1737
+#: src/prefs_common_dialog.c:1765
 msgid "Render HTML messages as text"
 msgstr "將 HTML 郵件轉為純文字"
 
-#: src/prefs_common_dialog.c:1739
+#: src/prefs_common_dialog.c:1767
 #, fuzzy
 msgid "Treat HTML only messages as attachment"
 msgstr "將 HTML 郵件轉為純文字"
 
-#: src/prefs_common_dialog.c:1743
+#: src/prefs_common_dialog.c:1771
 msgid "Display cursor in message view"
 msgstr "在郵件預覽中顯示游標"
 
-#: src/prefs_common_dialog.c:1756
+#: src/prefs_common_dialog.c:1784
 msgid "Line space"
 msgstr "列間距"
 
-#: src/prefs_common_dialog.c:1770 src/prefs_common_dialog.c:1808
+#: src/prefs_common_dialog.c:1798 src/prefs_common_dialog.c:1836
 msgid "pixel(s)"
 msgstr "像素"
 
-#: src/prefs_common_dialog.c:1775
+#: src/prefs_common_dialog.c:1803
 msgid "Scroll"
 msgstr "捲軸"
 
-#: src/prefs_common_dialog.c:1782
+#: src/prefs_common_dialog.c:1810
 msgid "Half page"
 msgstr "一次半頁"
 
-#: src/prefs_common_dialog.c:1788
+#: src/prefs_common_dialog.c:1816
 msgid "Smooth scroll"
 msgstr "平滑捲動"
 
-#: src/prefs_common_dialog.c:1794
+#: src/prefs_common_dialog.c:1822
 msgid "Step"
 msgstr "每次捲動"
 
-#: src/prefs_common_dialog.c:1814
+#: src/prefs_common_dialog.c:1842
 msgid "Images"
 msgstr "圖片"
 
-#: src/prefs_common_dialog.c:1822
+#: src/prefs_common_dialog.c:1850
 msgid "Resize attached large images to fit in the window"
 msgstr "調整附加圖片大小以適合視窗"
 
-#: src/prefs_common_dialog.c:1824
+#: src/prefs_common_dialog.c:1852
 msgid "Display images as inline"
 msgstr "在列間顯示圖片"
 
-#: src/prefs_common_dialog.c:1910
+#: src/prefs_common_dialog.c:1938
 msgid "Enable Junk mail control"
 msgstr "啟用垃圾郵件控制"
 
-#: src/prefs_common_dialog.c:1922
+#: src/prefs_common_dialog.c:1950
 msgid "Learning command:"
 msgstr "正在學習命令:"
 
-#: src/prefs_common_dialog.c:1931
+#: src/prefs_common_dialog.c:1959
 #, fuzzy
 msgid "(Select preset)"
 msgstr "選擇金鑰"
 
-#: src/prefs_common_dialog.c:1956
+#: src/prefs_common_dialog.c:1984
 msgid "Not Junk"
 msgstr "不是垃圾郵件"
 
-#: src/prefs_common_dialog.c:1971
+#: src/prefs_common_dialog.c:1999
 msgid "Classifying command"
 msgstr "正在歸類命令"
 
-#: src/prefs_common_dialog.c:1982
+#: src/prefs_common_dialog.c:2010
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1992
+#: src/prefs_common_dialog.c:2020
 msgid "Junk folder"
 msgstr "垃圾郵件資料夾"
 
-#: src/prefs_common_dialog.c:2010
+#: src/prefs_common_dialog.c:2038
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr "被歸類為垃圾郵件者將會被移到這個資料夾。"
 
-#: src/prefs_common_dialog.c:2021
+#: src/prefs_common_dialog.c:2049
 msgid "Filter messages classified as junk on receiving"
 msgstr "接收郵件時對歸類為垃圾郵件者進行過濾"
 
-#: src/prefs_common_dialog.c:2024
+#: src/prefs_common_dialog.c:2052
 #, fuzzy
 msgid "Filter junk mails before normal filtering"
 msgstr "自伺服器上刪除"
 
-#: src/prefs_common_dialog.c:2027
+#: src/prefs_common_dialog.c:2055
 #, fuzzy
 msgid "Delete junk mails from server on receiving"
 msgstr "自伺服器上刪除"
 
-#: src/prefs_common_dialog.c:2032
+#: src/prefs_common_dialog.c:2060
 msgid "Mark filtered junk mails as read"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2074
+#: src/prefs_common_dialog.c:2102
 msgid "Automatically check signatures"
 msgstr "自動檢查數位簽章"
 
-#: src/prefs_common_dialog.c:2077
+#: src/prefs_common_dialog.c:2105
 msgid "Show signature check result in a popup window"
 msgstr "將數位簽章檢查結果顯示在另一視窗"
 
-#: src/prefs_common_dialog.c:2080
+#: src/prefs_common_dialog.c:2108
 msgid "Store passphrase in memory temporarily"
 msgstr "將密碼片語暫時存在記憶體中"
 
-#: src/prefs_common_dialog.c:2095
+#: src/prefs_common_dialog.c:2123
 msgid "Expired after"
 msgstr "期限："
 
-#: src/prefs_common_dialog.c:2108
+#: src/prefs_common_dialog.c:2136
 msgid "minute(s) "
 msgstr "分鐘"
 
-#: src/prefs_common_dialog.c:2122
+#: src/prefs_common_dialog.c:2150
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "若設定為「0」則表示儲存密碼片語以供整個工作階段使用。"
 
-#: src/prefs_common_dialog.c:2131
+#: src/prefs_common_dialog.c:2159
 msgid "Grab input while entering a passphrase"
 msgstr "輸入密碼片語時擷取輸入"
 
-#: src/prefs_common_dialog.c:2136
+#: src/prefs_common_dialog.c:2164
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "若 GnuPG 無法運作，則在啟動時發出警告"
 
-#: src/prefs_common_dialog.c:2206
+#: src/prefs_common_dialog.c:2234
 msgid "Always open messages in summary when selected"
 msgstr "在郵件列表選擇郵件時開啟郵件"
 
-#: src/prefs_common_dialog.c:2210
+#: src/prefs_common_dialog.c:2238
 #, fuzzy
 msgid "Open first unread message when a folder is opened"
 msgstr "進入資料夾時直接跳到第一封未讀郵件"
 
-#: src/prefs_common_dialog.c:2217
+#: src/prefs_common_dialog.c:2245
 #, fuzzy
 msgid "Remember last selected message"
 msgstr "沒有已標記顏色之郵件"
 
-#: src/prefs_common_dialog.c:2221
+#: src/prefs_common_dialog.c:2249
 msgid "Only mark message as read when opened in new window"
 msgstr "只在開啟新郵件時標示為未讀"
 
-#: src/prefs_common_dialog.c:2225
+#: src/prefs_common_dialog.c:2253
 #, fuzzy
 msgid "Open inbox after receiving new mail"
 msgstr "接收完新郵件後直接進入收件夾中"
 
-#: src/prefs_common_dialog.c:2227
+#: src/prefs_common_dialog.c:2255
 #, fuzzy
 msgid "Open inbox on startup"
 msgstr "開啟時檢查新郵件"
 
-#: src/prefs_common_dialog.c:2235
+#: src/prefs_common_dialog.c:2263
 msgid "Execute immediately when moving or deleting messages"
 msgstr "移動或刪除郵件時立即執行"
 
-#: src/prefs_common_dialog.c:2247
+#: src/prefs_common_dialog.c:2275
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "若此選項關閉，則必須按下「執行」才會執行移動或刪除。"
 
-#: src/prefs_common_dialog.c:2256
+#: src/prefs_common_dialog.c:2284
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "讓按鈕的順序相容於 GNOME HIG"
 
-#: src/prefs_common_dialog.c:2259
+#: src/prefs_common_dialog.c:2287
 #, fuzzy
 msgid "Display tray icon"
 msgstr "顯示名稱"
 
-#: src/prefs_common_dialog.c:2261
+#: src/prefs_common_dialog.c:2289
 msgid "Minimize to tray icon"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2263
+#: src/prefs_common_dialog.c:2291
 msgid "Toggle window on trayicon click"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2273
+#: src/prefs_common_dialog.c:2301
 msgid " Set key bindings... "
 msgstr "設定熱鍵..."
 
-#: src/prefs_common_dialog.c:2279 src/select-keys.c:337
+#: src/prefs_common_dialog.c:2307 src/select-keys.c:337
 msgid "Other"
 msgstr "其他"
 
-#: src/prefs_common_dialog.c:2283
+#: src/prefs_common_dialog.c:2311
 #, fuzzy
 msgid "External commands"
 msgstr "執行命令"
 
-#: src/prefs_common_dialog.c:2287
+#: src/prefs_common_dialog.c:2315
 #, fuzzy
 msgid "Update"
 msgstr "日期"
 
-#: src/prefs_common_dialog.c:2340
+#: src/prefs_common_dialog.c:2368
 msgid "Receive dialog"
 msgstr "接收進度對話框"
 
-#: src/prefs_common_dialog.c:2350
+#: src/prefs_common_dialog.c:2378
 msgid "Show receive dialog"
 msgstr "顯示接收郵件的進度對話框"
 
-#: src/prefs_common_dialog.c:2360
+#: src/prefs_common_dialog.c:2388
 msgid "Always"
 msgstr "一律顯示"
 
-#: src/prefs_common_dialog.c:2361
+#: src/prefs_common_dialog.c:2389
 msgid "Only on manual receiving"
 msgstr "只在手動收取郵件時顯示"
 
-#: src/prefs_common_dialog.c:2363
+#: src/prefs_common_dialog.c:2391
 msgid "Never"
 msgstr "不顯示"
 
-#: src/prefs_common_dialog.c:2368
+#: src/prefs_common_dialog.c:2396
 msgid "Don't popup error dialog on receive error"
 msgstr "接收錯誤時不要開啟錯誤視窗。"
 
-#: src/prefs_common_dialog.c:2371
+#: src/prefs_common_dialog.c:2399
 msgid "Close receive dialog when finished"
 msgstr "完成時關閉接收郵件的進度對話框"
 
-#: src/prefs_common_dialog.c:2382
+#: src/prefs_common_dialog.c:2410
 msgid "Add address to destination when double-clicked"
 msgstr "在通訊錄中，可利用雙擊直接將該電子郵件加入收信人中"
 
-#: src/prefs_common_dialog.c:2384
+#: src/prefs_common_dialog.c:2412
 msgid "On exit"
 msgstr "離開設定"
 
-#: src/prefs_common_dialog.c:2392
+#: src/prefs_common_dialog.c:2420
 msgid "Confirm on exit"
 msgstr "離開時確認"
 
-#: src/prefs_common_dialog.c:2399
+#: src/prefs_common_dialog.c:2427
 msgid "Empty trash on exit"
 msgstr "離開時清空刪除的郵件"
 
-#: src/prefs_common_dialog.c:2401
+#: src/prefs_common_dialog.c:2429
 msgid "Ask before emptying"
 msgstr "清除時確認"
 
-#: src/prefs_common_dialog.c:2405
+#: src/prefs_common_dialog.c:2433
 msgid "Warn if there are queued messages"
 msgstr "離開時若有尚未送出之郵件即發出警告"
 
-#: src/prefs_common_dialog.c:2460
+#: src/prefs_common_dialog.c:2488
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "外部指令（%s 將會被置換成檔名或 URI）"
 
-#: src/prefs_common_dialog.c:2469
+#: src/prefs_common_dialog.c:2497
 msgid "Web browser"
 msgstr "瀏覽器"
 
-#: src/prefs_common_dialog.c:2481 src/prefs_common_dialog.c:3981
-#: src/prefs_common_dialog.c:4002
+#: src/prefs_common_dialog.c:2509 src/prefs_common_dialog.c:4009
+#: src/prefs_common_dialog.c:4030
 msgid "(Default browser)"
 msgstr "(預設的瀏覽器)"
 
-#: src/prefs_common_dialog.c:2522
+#: src/prefs_common_dialog.c:2550
 #, fuzzy
 msgid "Use external program for printing"
 msgstr "用其他外部程式來送信"
 
-#: src/prefs_common_dialog.c:2544
+#: src/prefs_common_dialog.c:2572
 msgid "Use external program for incorporation"
 msgstr "用其他外部程式來收信"
 
-#: src/prefs_common_dialog.c:2566
+#: src/prefs_common_dialog.c:2594
 msgid "Use external program for sending"
 msgstr "用其他外部程式來送信"
 
-#: src/prefs_common_dialog.c:2617
+#: src/prefs_common_dialog.c:2645
 msgid "Update check requires 'curl' command."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2628
+#: src/prefs_common_dialog.c:2656
 msgid "Enable auto update check"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2630
+#: src/prefs_common_dialog.c:2658
 msgid "Use HTTP proxy"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2632
+#: src/prefs_common_dialog.c:2660
 msgid "HTTP proxy host (hostname:port):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2672
+#: src/prefs_common_dialog.c:2700
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "啟用對於郵件列表快取整合性的嚴格檢查"
 
-#: src/prefs_common_dialog.c:2675
+#: src/prefs_common_dialog.c:2703
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
@@ -5429,279 +5436,279 @@ msgstr ""
 "如果資料夾的內容有被其他應用軟體更動過的可能，就開啟它。\n"
 "此一選項將會降低郵件列表的顯示效能。"
 
-#: src/prefs_common_dialog.c:2682
+#: src/prefs_common_dialog.c:2710
 msgid "Socket I/O timeout:"
 msgstr "插槽 I/O 等待時間："
 
-#: src/prefs_common_dialog.c:2695
+#: src/prefs_common_dialog.c:2723
 msgid "second(s)"
 msgstr "秒"
 
-#: src/prefs_common_dialog.c:2723
+#: src/prefs_common_dialog.c:2751
 msgid "Automatic (Recommended)"
 msgstr "自動選擇（推薦使用）"
 
-#: src/prefs_common_dialog.c:2728
+#: src/prefs_common_dialog.c:2756
 msgid "7bit ascii (US-ASCII)"
 msgstr "七位元 ASCII (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2730
+#: src/prefs_common_dialog.c:2758
 msgid "Unicode (UTF-8)"
 msgstr "統一碼 (UTF-8)"
 
-#: src/prefs_common_dialog.c:2732
+#: src/prefs_common_dialog.c:2760
 msgid "Western European (ISO-8859-1)"
 msgstr "西歐語系 (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2733
+#: src/prefs_common_dialog.c:2761
 msgid "Western European (ISO-8859-15)"
 msgstr "西歐語系 (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2735
+#: src/prefs_common_dialog.c:2763
 #, fuzzy
 msgid "Western European (Windows-1252)"
 msgstr "西歐語系 (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2739
+#: src/prefs_common_dialog.c:2767
 msgid "Central European (ISO-8859-2)"
 msgstr "中歐語系 (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2741
+#: src/prefs_common_dialog.c:2769
 msgid "Baltic (ISO-8859-13)"
 msgstr "波羅的海語系 (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2742
+#: src/prefs_common_dialog.c:2770
 msgid "Baltic (ISO-8859-4)"
 msgstr "波羅的海語系 (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2743
+#: src/prefs_common_dialog.c:2771
 #, fuzzy
 msgid "Baltic (Windows-1257)"
 msgstr "斯拉夫語 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2745
+#: src/prefs_common_dialog.c:2773
 msgid "Greek (ISO-8859-7)"
 msgstr "希臘語 (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2747
+#: src/prefs_common_dialog.c:2775
 #, fuzzy
 msgid "Arabic (ISO-8859-6)"
 msgstr "波羅的海語系 (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2748
+#: src/prefs_common_dialog.c:2776
 #, fuzzy
 msgid "Arabic (Windows-1256)"
 msgstr "斯拉夫語 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2750
+#: src/prefs_common_dialog.c:2778
 msgid "Hebrew (ISO-8859-8)"
 msgstr "希伯來語 (ISO-8859-8)"
 
-#: src/prefs_common_dialog.c:2751
+#: src/prefs_common_dialog.c:2779
 msgid "Hebrew (Windows-1255)"
 msgstr "希伯來語 (Windows-1255)"
 
-#: src/prefs_common_dialog.c:2753
+#: src/prefs_common_dialog.c:2781
 msgid "Turkish (ISO-8859-9)"
 msgstr "土耳其語 (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2755
+#: src/prefs_common_dialog.c:2783
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "斯拉夫語 (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2756
+#: src/prefs_common_dialog.c:2784
 msgid "Cyrillic (KOI8-R)"
 msgstr "斯拉夫語 (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2757
+#: src/prefs_common_dialog.c:2785
 msgid "Cyrillic (KOI8-U)"
 msgstr "斯拉夫語 (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2758
+#: src/prefs_common_dialog.c:2786
 msgid "Cyrillic (Windows-1251)"
 msgstr "斯拉夫語 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2760
+#: src/prefs_common_dialog.c:2788
 msgid "Japanese (ISO-2022-JP)"
 msgstr "日文 (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2762
+#: src/prefs_common_dialog.c:2790
 msgid "Japanese (EUC-JP)"
 msgstr "日文 (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2763
+#: src/prefs_common_dialog.c:2791
 msgid "Japanese (Shift_JIS)"
 msgstr "日文 (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2766
+#: src/prefs_common_dialog.c:2794
 msgid "Simplified Chinese (GB2312)"
 msgstr "簡體中文 (GB2312)"
 
-#: src/prefs_common_dialog.c:2767
+#: src/prefs_common_dialog.c:2795
 msgid "Simplified Chinese (GBK)"
 msgstr "簡體中文 (GBK)"
 
-#: src/prefs_common_dialog.c:2768
+#: src/prefs_common_dialog.c:2796
 msgid "Traditional Chinese (Big5)"
 msgstr "繁體中文 (Big5)"
 
-#: src/prefs_common_dialog.c:2770
+#: src/prefs_common_dialog.c:2798
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "繁體中文 (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2771
+#: src/prefs_common_dialog.c:2799
 msgid "Chinese (ISO-2022-CN)"
 msgstr "中文 (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2774
+#: src/prefs_common_dialog.c:2802
 msgid "Korean (EUC-KR)"
 msgstr "韓文 (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2776
+#: src/prefs_common_dialog.c:2804
 msgid "Thai (TIS-620)"
 msgstr "泰文 (TIS-620)"
 
-#: src/prefs_common_dialog.c:2777
+#: src/prefs_common_dialog.c:2805
 msgid "Thai (Windows-874)"
 msgstr "泰文 (Windows-874)"
 
-#: src/prefs_common_dialog.c:2944
+#: src/prefs_common_dialog.c:2972
 msgid "the full abbreviated weekday name"
 msgstr "週一、週二、..."
 
-#: src/prefs_common_dialog.c:2945
+#: src/prefs_common_dialog.c:2973
 msgid "the full weekday name"
 msgstr "星期一、星期二、..."
 
-#: src/prefs_common_dialog.c:2946
+#: src/prefs_common_dialog.c:2974
 msgid "the abbreviated month name"
 msgstr "1月、2月、..."
 
-#: src/prefs_common_dialog.c:2947
+#: src/prefs_common_dialog.c:2975
 msgid "the full month name"
 msgstr "一月、二月、..."
 
-#: src/prefs_common_dialog.c:2948
+#: src/prefs_common_dialog.c:2976
 msgid "the preferred date and time for the current locale"
 msgstr "目前語區設定所偏好的日期與時間"
 
-#: src/prefs_common_dialog.c:2949
+#: src/prefs_common_dialog.c:2977
 msgid "the century number (year/100)"
 msgstr "世紀 (年/100)"
 
-#: src/prefs_common_dialog.c:2950
+#: src/prefs_common_dialog.c:2978
 msgid "the day of the month as a decimal number"
 msgstr "今天是幾號 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2951
+#: src/prefs_common_dialog.c:2979
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "現在幾點鐘 (廿四時制，以數字表示)"
 
-#: src/prefs_common_dialog.c:2952
+#: src/prefs_common_dialog.c:2980
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "現在幾點鐘 (十二時制，以數字表示)"
 
-#: src/prefs_common_dialog.c:2953
+#: src/prefs_common_dialog.c:2981
 msgid "the day of the year as a decimal number"
 msgstr "今天是今年的第幾天 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2954
+#: src/prefs_common_dialog.c:2982
 msgid "the month as a decimal number"
 msgstr "現在是幾月 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2955
+#: src/prefs_common_dialog.c:2983
 msgid "the minute as a decimal number"
 msgstr "現在是幾分 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2956
+#: src/prefs_common_dialog.c:2984
 msgid "either AM or PM"
 msgstr "上午或下午"
 
-#: src/prefs_common_dialog.c:2957
+#: src/prefs_common_dialog.c:2985
 msgid "the second as a decimal number"
 msgstr "現在是幾秒 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2958
+#: src/prefs_common_dialog.c:2986
 msgid "the day of the week as a decimal number"
 msgstr "現在是一週的第幾天 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2959
+#: src/prefs_common_dialog.c:2987
 msgid "the preferred date for the current locale"
 msgstr "目前語區設定所偏好的日期"
 
-#: src/prefs_common_dialog.c:2960
+#: src/prefs_common_dialog.c:2988
 msgid "the last two digits of a year"
 msgstr "公元年份的後兩位數字"
 
-#: src/prefs_common_dialog.c:2961
+#: src/prefs_common_dialog.c:2989
 msgid "the year as a decimal number"
 msgstr "公元年份 (以數字表示)"
 
-#: src/prefs_common_dialog.c:2962
+#: src/prefs_common_dialog.c:2990
 msgid "the time zone or name or abbreviation"
 msgstr "時區名稱或縮寫"
 
-#: src/prefs_common_dialog.c:2983
+#: src/prefs_common_dialog.c:3011
 msgid "Specifier"
 msgstr "特殊符號"
 
-#: src/prefs_common_dialog.c:2984
+#: src/prefs_common_dialog.c:3012
 msgid "Description"
 msgstr "描述"
 
-#: src/prefs_common_dialog.c:3024
+#: src/prefs_common_dialog.c:3052
 msgid "Example"
 msgstr "範例"
 
-#: src/prefs_common_dialog.c:3105
+#: src/prefs_common_dialog.c:3133
 msgid "Set message colors"
 msgstr "設定顏色"
 
-#: src/prefs_common_dialog.c:3113
+#: src/prefs_common_dialog.c:3141
 msgid "Colors"
 msgstr "顏色"
 
-#: src/prefs_common_dialog.c:3147
+#: src/prefs_common_dialog.c:3175
 msgid "Quoted Text - First Level"
 msgstr "引言內容 - 第一層"
 
-#: src/prefs_common_dialog.c:3153
+#: src/prefs_common_dialog.c:3181
 msgid "Quoted Text - Second Level"
 msgstr "引言內容 - 第二層"
 
-#: src/prefs_common_dialog.c:3159
+#: src/prefs_common_dialog.c:3187
 msgid "Quoted Text - Third Level"
 msgstr "引言內容 - 第三層"
 
-#: src/prefs_common_dialog.c:3165
+#: src/prefs_common_dialog.c:3193
 msgid "URI link"
 msgstr "超連結"
 
-#: src/prefs_common_dialog.c:3172
+#: src/prefs_common_dialog.c:3200
 msgid "Recycle quote colors"
 msgstr "三層以上引言則重複使用指定的顏色"
 
-#: src/prefs_common_dialog.c:3239
+#: src/prefs_common_dialog.c:3267
 msgid "Pick color for quotation level 1"
 msgstr "選擇第一層引言的顏色"
 
-#: src/prefs_common_dialog.c:3242
+#: src/prefs_common_dialog.c:3270
 msgid "Pick color for quotation level 2"
 msgstr "選擇第二層引言的顏色"
 
-#: src/prefs_common_dialog.c:3245
+#: src/prefs_common_dialog.c:3273
 msgid "Pick color for quotation level 3"
 msgstr "選擇第三層引言的顏色"
 
-#: src/prefs_common_dialog.c:3248
+#: src/prefs_common_dialog.c:3276
 msgid "Pick color for URI"
 msgstr "選擇超連結的顏色"
 
-#: src/prefs_common_dialog.c:3388
+#: src/prefs_common_dialog.c:3416
 msgid "Description of symbols"
 msgstr "特殊符號代表的意義"
 
-#: src/prefs_common_dialog.c:3444
+#: src/prefs_common_dialog.c:3472
 msgid ""
 "Date\n"
 "From\n"
@@ -5725,11 +5732,11 @@ msgstr ""
 "新聞群組\n"
 "郵件識別碼"
 
-#: src/prefs_common_dialog.c:3457
+#: src/prefs_common_dialog.c:3485
 msgid "If x is set, displays expr"
 msgstr "若 x 已設定則顯示正規表示式"
 
-#: src/prefs_common_dialog.c:3461
+#: src/prefs_common_dialog.c:3489
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5743,7 +5750,7 @@ msgstr ""
 "引言（不含簽章）\n"
 "% 符號"
 
-#: src/prefs_common_dialog.c:3469
+#: src/prefs_common_dialog.c:3497
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5755,19 +5762,19 @@ msgstr ""
 "左大括弧\n"
 "右大括弧"
 
-#: src/prefs_common_dialog.c:3523
+#: src/prefs_common_dialog.c:3551
 msgid "Key bindings"
 msgstr "熱鍵設定"
 
-#: src/prefs_common_dialog.c:3536
+#: src/prefs_common_dialog.c:3564
 msgid "Select the preset of key bindings."
 msgstr "選擇事先設定的按鍵組合。"
 
-#: src/prefs_common_dialog.c:3546 src/prefs_common_dialog.c:3870
+#: src/prefs_common_dialog.c:3574 src/prefs_common_dialog.c:3898
 msgid "Default"
 msgstr "預設值"
 
-#: src/prefs_common_dialog.c:3549 src/prefs_common_dialog.c:3879
+#: src/prefs_common_dialog.c:3577 src/prefs_common_dialog.c:3907
 msgid "Old Sylpheed"
 msgstr "舊設定"
 
@@ -6915,33 +6922,59 @@ msgstr "顯示 %s 來源中...\n"
 msgid "%s - Source"
 msgstr "%s - 原始碼"
 
-#: src/sslmanager.c:59
+#: src/sslmanager.c:66
 msgid "SSL certificate verify failed"
 msgstr ""
 
-#: src/sslmanager.c:65
+#: src/sslmanager.c:98
 #, c-format
-msgid ""
-"The SSL certificate of %s cannot be verified by the following reason:\n"
-"  %s\n"
-"\n"
-"Server certificate:\n"
-"  Subject: %s\n"
-"  Issuer: %s\n"
-"\n"
-"Do you accept this certificate?"
+msgid "The SSL certificate of %s cannot be verified by the following reason:"
 msgstr ""
 
-#: src/sslmanager.c:142 src/sslmanager.c:150
+#: src/sslmanager.c:100
+#, fuzzy, c-format
+msgid "Subject: %s\n"
+msgstr "  主旨: %s\n"
+
+#: src/sslmanager.c:101
+#, fuzzy, c-format
+msgid "Issuer: %s\n"
+msgstr "  發信人: %s\n"
+
+#: src/sslmanager.c:102
+#, fuzzy, c-format
+msgid "Issued date: %s\n"
+msgstr "  發信人: %s\n"
+
+#: src/sslmanager.c:103
+#, fuzzy, c-format
+msgid "Expire date: %s\n"
+msgstr "期限："
+
+#: src/sslmanager.c:105
+#, c-format
+msgid "SHA1 fingerprint: %s\n"
+msgstr ""
+
+#: src/sslmanager.c:106
+#, c-format
+msgid "MD5 fingerprint: %s\n"
+msgstr ""
+
+#: src/sslmanager.c:108
+msgid "Do you accept this certificate?"
+msgstr ""
+
+#: src/sslmanager.c:179 src/sslmanager.c:187
 #, fuzzy
 msgid "_Reject"
 msgstr "郵件導向"
 
-#: src/sslmanager.c:143 src/sslmanager.c:149
+#: src/sslmanager.c:180 src/sslmanager.c:186
 msgid "_Temporarily accept"
 msgstr ""
 
-#: src/sslmanager.c:144 src/sslmanager.c:148
+#: src/sslmanager.c:181 src/sslmanager.c:185
 #, fuzzy
 msgid "Always _accept"
 msgstr "一律顯示"

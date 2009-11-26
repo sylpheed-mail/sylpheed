@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-13 18:07+0900\n"
+"POT-Creation-Date: 2009-11-26 17:50+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -23,196 +23,201 @@ msgstr "각 계정에대한 모든 설정을 읽습니다...\n"
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "%s:%d에대한 IMAP4 접속이 끊어졌습니다. 다시 접속...\n"
 
-#: libsylph/imap.c:586 libsylph/imap.c:592
+#: libsylph/imap.c:588 libsylph/imap.c:594
 #, fuzzy
 msgid "IMAP4 server disables LOGIN.\n"
 msgstr "IMAP 서버 디렉토리"
 
-#: libsylph/imap.c:668
+#: libsylph/imap.c:653
+#, fuzzy
+msgid "Could not establish IMAP connection.\n"
+msgstr "IMAP4 세션을 만들 수 없습니다: %s: %d\n"
+
+#: libsylph/imap.c:671
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "%s:%d에대한 IMAP4 접속을 만듭니다 ...\n"
 
-#: libsylph/imap.c:712
+#: libsylph/imap.c:715
 msgid "Can't start TLS session.\n"
 msgstr "TLS 세션을 시작할 수 없습니다.\n"
 
-#: libsylph/imap.c:1233
+#: libsylph/imap.c:1236
 #, fuzzy, c-format
 msgid "Getting message %u"
 msgstr "%d 메시지를 삭제하는 중"
 
-#: libsylph/imap.c:1355
+#: libsylph/imap.c:1358
 #, fuzzy, c-format
 msgid "Appending messages to %s (%d / %d)"
 msgstr "메시지를 보내는 중 (%d / %d 바이트)"
 
-#: libsylph/imap.c:1478
+#: libsylph/imap.c:1481
 #, fuzzy, c-format
 msgid "Moving messages %s to %s ..."
 msgstr "메시지 %s%c%d를 %s로 이동합니다...\n"
 
-#: libsylph/imap.c:1483
+#: libsylph/imap.c:1486
 #, fuzzy, c-format
 msgid "Copying messages %s to %s ..."
 msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
 
-#: libsylph/imap.c:1621
+#: libsylph/imap.c:1624
 #, fuzzy, c-format
 msgid "Removing messages %s"
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: libsylph/imap.c:1627
+#: libsylph/imap.c:1630
 #, fuzzy, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "삭제 플래그를 설정할 수가 없습니다: %d\n"
 
-#: libsylph/imap.c:1635 libsylph/imap.c:1734
+#: libsylph/imap.c:1638 libsylph/imap.c:1737
 msgid "can't expunge\n"
 msgstr "지울 수가 없습니다\n"
 
-#: libsylph/imap.c:1718
+#: libsylph/imap.c:1721
 #, fuzzy, c-format
 msgid "Removing all messages in %s"
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: libsylph/imap.c:1723 libsylph/imap.c:1728
+#: libsylph/imap.c:1726 libsylph/imap.c:1731
 #, fuzzy
 msgid "can't set deleted flags: 1:*\n"
 msgstr "삭제 플래그를 설정할 수가 없습니다: 1:%d\n"
 
-#: libsylph/imap.c:1776
+#: libsylph/imap.c:1779
 #, fuzzy
 msgid "can't close folder\n"
 msgstr "폴더를 선택할 수가 없습니다: %s\n"
 
-#: libsylph/imap.c:1855
+#: libsylph/imap.c:1858
 #, fuzzy, c-format
 msgid "root folder %s not exist\n"
 msgstr "표시 파일이 발견되지않음.\n"
 
-#: libsylph/imap.c:2055 libsylph/imap.c:2063
+#: libsylph/imap.c:2058 libsylph/imap.c:2066
 #, fuzzy
 msgid "error occurred while getting LIST.\n"
 msgstr "LIST를 얻는 도중 에러가 발생.\n"
 
-#: libsylph/imap.c:2295
+#: libsylph/imap.c:2298
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "'%s'를 생성할 수가 없습니다\n"
 
-#: libsylph/imap.c:2300
+#: libsylph/imap.c:2303
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "INBOX 아래에 '%s'를 생성할 수가 없습니다\n"
 
-#: libsylph/imap.c:2362
+#: libsylph/imap.c:2365
 msgid "can't create mailbox: LIST failed\n"
 msgstr "우편함을 생성할 수 없습니다: LIST 실패\n"
 
-#: libsylph/imap.c:2385
+#: libsylph/imap.c:2388
 msgid "can't create mailbox\n"
 msgstr "우편함을 생성할 수 없습니다\n"
 
-#: libsylph/imap.c:2513
+#: libsylph/imap.c:2516
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "우편함명을 바꿀 수 없습니다: %s에서 %s로\n"
 
-#: libsylph/imap.c:2593
+#: libsylph/imap.c:2596
 msgid "can't delete mailbox\n"
 msgstr "우편함을 삭제할 수 없습니다\n"
 
-#: libsylph/imap.c:2620
+#: libsylph/imap.c:2623
 #, fuzzy, c-format
 msgid "Getting message headers (%d / %d)"
 msgstr "메시지를 보내는 중 (%d / %d 바이트)"
 
-#: libsylph/imap.c:2672
+#: libsylph/imap.c:2675
 msgid "error occurred while getting envelope.\n"
 msgstr "envelope를 얻는 중 에러 발생.\n"
 
-#: libsylph/imap.c:2693
+#: libsylph/imap.c:2696
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "envelope를 파싱할 수가 없습니다: %s\n"
 
-#: libsylph/imap.c:2750
+#: libsylph/imap.c:2753
 msgid "can't get envelope\n"
 msgstr "envelope를 얻을 수가 없습니다\n"
 
-#: libsylph/imap.c:2857 libsylph/imap.c:2863
+#: libsylph/imap.c:2860 libsylph/imap.c:2866
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "%s:%d IMAP4 서버에 연결할 수가 없습니다\n"
 
-#: libsylph/imap.c:2871
+#: libsylph/imap.c:2874
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "IMAP4 세션을 만들 수 없습니다: %s: %d\n"
 
-#: libsylph/imap.c:2946
+#: libsylph/imap.c:2949
 msgid "can't get namespace\n"
 msgstr "namespace를 얻을 수 없습니다\n"
 
-#: libsylph/imap.c:3480
+#: libsylph/imap.c:3483
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "폴더를 선택할 수가 없습니다: %s\n"
 
-#: libsylph/imap.c:3518
+#: libsylph/imap.c:3521
 #, fuzzy
 msgid "error on imap command: STATUS\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: libsylph/imap.c:3642 libsylph/imap.c:3677
+#: libsylph/imap.c:3645 libsylph/imap.c:3680
 #, fuzzy
 msgid "IMAP4 authentication failed.\n"
 msgstr "인증 방법"
 
-#: libsylph/imap.c:3730
+#: libsylph/imap.c:3733
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 로그인을 실패했습니다.\n"
 
-#: libsylph/imap.c:4103 libsylph/imap.c:4110
+#: libsylph/imap.c:4106 libsylph/imap.c:4113
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "%s를 %s에 붙일 수 없습니다\n"
 
-#: libsylph/imap.c:4117
+#: libsylph/imap.c:4120
 msgid "(sending file...)"
 msgstr "(파일을 보냅니다...)"
 
-#: libsylph/imap.c:4146
+#: libsylph/imap.c:4149
 #, fuzzy, c-format
 msgid "can't append message to %s\n"
 msgstr "%s 메시지를 추가할 수가 없습니다\n"
 
-#: libsylph/imap.c:4178
+#: libsylph/imap.c:4181
 #, fuzzy, c-format
 msgid "can't copy %s to %s\n"
 msgstr "%d를 %s로 복사할 수가 없습니다\n"
 
-#: libsylph/imap.c:4201
+#: libsylph/imap.c:4204
 #, fuzzy, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap 명령어 실행중 에러: STORE %d:%d %s\n"
 
-#: libsylph/imap.c:4217
+#: libsylph/imap.c:4220
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: libsylph/imap.c:4232
+#: libsylph/imap.c:4235
 #, fuzzy
 msgid "error while imap command: CLOSE\n"
 msgstr "imap 명령어 실행중 에러: EXPUNGE\n"
 
-#: libsylph/imap.c:4539
+#: libsylph/imap.c:4542
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv가 UTF-7를 %s로 변환할 수 없습니다\n"
 
-#: libsylph/imap.c:4569
+#: libsylph/imap.c:4572
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv가 %s를 UTF-7로 변환할 수 없습니다\n"
@@ -499,12 +504,12 @@ msgstr "%s을 발견\n"
 msgid "Configuration is saved.\n"
 msgstr "설정이 저장되었습니다.\n"
 
-#: libsylph/prefs_common.c:579
+#: libsylph/prefs_common.c:585
 #, fuzzy
 msgid "Junk mail filter (manual)"
 msgstr "폴더"
 
-#: libsylph/prefs_common.c:582
+#: libsylph/prefs_common.c:588
 #, fuzzy
 msgid "Junk mail filter"
 msgstr "폴더"
@@ -582,16 +587,16 @@ msgstr "ssl 문맥 생성 에러\n"
 msgid "SSL connection using %s\n"
 msgstr "%s 사용하여 SSL 연결\n"
 
-#: libsylph/ssl.c:278
+#: libsylph/ssl.c:284
 msgid "Server certificate:\n"
 msgstr "서버 증명:\n"
 
-#: libsylph/ssl.c:281
+#: libsylph/ssl.c:287
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  제목: %s\n"
 
-#: libsylph/ssl.c:286
+#: libsylph/ssl.c:292
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  발행인: %s\n"
@@ -676,7 +681,7 @@ msgstr ""
 "새 메시지는 이 순서대로 확인될 것입니다. `모두 받기'로 메시지를\n"
 "받으려면 `G' 컬럼 상자를 선택하세요."
 
-#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:702
+#: src/account_dialog.c:374 src/addressadd.c:177 src/addressbook.c:701
 #: src/compose.c:5110 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
@@ -817,7 +822,7 @@ msgstr "주소록에 추가"
 msgid "Address"
 msgstr "주소"
 
-#: src/addressadd.c:197 src/addressbook.c:734 src/editaddress.c:629
+#: src/addressadd.c:197 src/addressbook.c:744 src/editaddress.c:629
 #: src/editaddress.c:695 src/editgroup.c:268 src/importcsv.c:125
 msgid "Remarks"
 msgstr "메모"
@@ -977,74 +982,74 @@ msgstr "/복사(_C)..."
 msgid "/_Paste"
 msgstr "/편집(_E)/붙여넣기(_P)"
 
-#: src/addressbook.c:554 src/prefs_common_dialog.c:2373 src/prefs_toolbar.c:90
+#: src/addressbook.c:554 src/prefs_common_dialog.c:2401 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "주소록"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:628 src/addressbook.c:3734 src/folderview.c:385
+#: src/addressbook.c:628 src/addressbook.c:3744 src/folderview.c:385
 #: src/prefs_account_dialog.c:1835 src/query_search.c:400
 msgid "Folder"
 msgstr "폴더"
 
-#: src/addressbook.c:726
+#: src/addressbook.c:730
 msgid "E-Mail address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:760 src/prefs_filter_edit.c:251
+#: src/addressbook.c:770 src/prefs_filter_edit.c:251
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "이름:"
 
-#: src/addressbook.c:797 src/compose.c:3153 src/headerview.c:55
+#: src/addressbook.c:807 src/compose.c:3153 src/headerview.c:55
 #: src/prefs_folder_item.c:339 src/prefs_template.c:179
 msgid "To:"
 msgstr "받는 사람:"
 
-#: src/addressbook.c:801 src/compose.c:3170 src/headerview.c:56
+#: src/addressbook.c:811 src/compose.c:3170 src/headerview.c:56
 #: src/prefs_folder_item.c:356 src/prefs_template.c:181
 msgid "Cc:"
 msgstr "참조:"
 
-#: src/addressbook.c:805 src/compose.c:3187 src/prefs_folder_item.c:367
+#: src/addressbook.c:815 src/compose.c:3187 src/prefs_folder_item.c:367
 #: src/prefs_template.c:183
 msgid "Bcc:"
 msgstr "숨은 참조:"
 
 #. Buttons
-#: src/addressbook.c:826 src/addressbook.c:1904 src/editaddress.c:719
+#: src/addressbook.c:836 src/addressbook.c:1914 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:239 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "삭제"
 
-#: src/addressbook.c:829 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:839 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1560
 msgid "Add"
 msgstr "추가"
 
-#: src/addressbook.c:833
+#: src/addressbook.c:843
 msgid "Lookup"
 msgstr "찾기"
 
-#: src/addressbook.c:837
+#: src/addressbook.c:847
 #, fuzzy
 msgid "_Close"
 msgstr "닫기"
 
 #. Confirm deletion
-#: src/addressbook.c:1044
+#: src/addressbook.c:1054
 msgid "Delete address(es)"
 msgstr "주소를 삭제"
 
-#: src/addressbook.c:1045
+#: src/addressbook.c:1055
 msgid "Really delete the address(es)?"
 msgstr "정말로 주소를 삭제하시겠습니까?"
 
-#: src/addressbook.c:1895
+#: src/addressbook.c:1905
 #, fuzzy, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1053,38 +1058,38 @@ msgstr ""
 "`%s'의 모든 주소와 폴더를 삭제할까요 ? \n"
 "폴더만 지울 경우 주소는 그 상위 폴더로 옮겨집니다."
 
-#: src/addressbook.c:1898 src/folderview.c:2546
+#: src/addressbook.c:1908 src/folderview.c:2546
 msgid "Delete folder"
 msgstr "폴더 삭제"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 #, fuzzy
 msgid "_Folder only"
 msgstr "폴더만"
 
-#: src/addressbook.c:1898
+#: src/addressbook.c:1908
 #, fuzzy
 msgid "Folder and _addresses"
 msgstr "폴더와 주소"
 
-#: src/addressbook.c:1903
+#: src/addressbook.c:1913
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "정말로 `%s'를 지우시겠습니까?"
 
-#: src/addressbook.c:2791 src/addressbook.c:2927
+#: src/addressbook.c:2801 src/addressbook.c:2937
 msgid "New user, could not save index file."
 msgstr "새 사용자, 색인 파일을 저장할 수 없습니다."
 
-#: src/addressbook.c:2795 src/addressbook.c:2931
+#: src/addressbook.c:2805 src/addressbook.c:2941
 msgid "New user, could not save address book files."
 msgstr "새 사용자, 주소록 파일을 저장할 수 없습니다."
 
-#: src/addressbook.c:2805 src/addressbook.c:2941
+#: src/addressbook.c:2815 src/addressbook.c:2951
 msgid "Old address book converted successfully."
 msgstr "예전 주소록을 성공적으로 변환하였습니다."
 
-#: src/addressbook.c:2810
+#: src/addressbook.c:2820
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1092,7 +1097,7 @@ msgstr ""
 "예전 주소록이 변환되었습니다,\n"
 "새 주소록의 색인 파일을 저장할 수 없습니다"
 
-#: src/addressbook.c:2823
+#: src/addressbook.c:2833
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1100,7 +1105,7 @@ msgstr ""
 "주소록을 변환할 수 없습니다,\n"
 "대신에 빈 새 주소록 파일을 생성하였습니다."
 
-#: src/addressbook.c:2829
+#: src/addressbook.c:2839
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1108,7 +1113,7 @@ msgstr ""
 "주소록을 변환하지 못했습니다,\n"
 "새 주소록 파일을 생성하지 못했습니다."
 
-#: src/addressbook.c:2834
+#: src/addressbook.c:2844
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1116,17 +1121,17 @@ msgstr ""
 "주소록을 변환하지 못했고\n"
 "새 주소록 파일도 생성하지 못했습니다."
 
-#: src/addressbook.c:2841
+#: src/addressbook.c:2851
 #, fuzzy
 msgid "Address book conversion error"
 msgstr "주소록 변환 에러"
 
-#: src/addressbook.c:2845
+#: src/addressbook.c:2855
 #, fuzzy
 msgid "Address book conversion"
 msgstr "주소록 변환"
 
-#: src/addressbook.c:2882
+#: src/addressbook.c:2892
 #, fuzzy, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1134,74 +1139,74 @@ msgid ""
 "%s%c%s"
 msgstr "주소 색인을 읽을 수 없습니다"
 
-#: src/addressbook.c:2885
+#: src/addressbook.c:2895
 #, fuzzy
 msgid "Address Book Error"
 msgstr "주소록 에러"
 
-#: src/addressbook.c:2946
+#: src/addressbook.c:2956
 msgid "Old address book converted, could not save new address index file"
 msgstr "예전 주소록이 변환되었습니다, 새 주소록 색인 파일을 저장할 수 없습니다"
 
-#: src/addressbook.c:2960
+#: src/addressbook.c:2970
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr ""
 "주소록을 변환할 수 없습니다, 대신에 빈 새 주소록 파일을 생성하였습니다."
 
-#: src/addressbook.c:2966
+#: src/addressbook.c:2976
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr "주소록을 변환하지 못했습니다, 새 주소록 파일을 생성하지 못했습니다."
 
-#: src/addressbook.c:2972
+#: src/addressbook.c:2982
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr "주소록을 변환하지 못했고 새 주소록 파일도 생성하지 못했습니다."
 
-#: src/addressbook.c:2984
+#: src/addressbook.c:2994
 msgid "Could not read address index"
 msgstr "주소 색인을 읽을 수 없습니다"
 
-#: src/addressbook.c:2990
+#: src/addressbook.c:3000
 #, fuzzy
 msgid "Address Book Conversion Error"
 msgstr "주소록 변환 에러"
 
-#: src/addressbook.c:2996
+#: src/addressbook.c:3006
 #, fuzzy
 msgid "Address Book Conversion"
 msgstr "주소록 변환"
 
-#: src/addressbook.c:3664 src/prefs_common_dialog.c:2198
+#: src/addressbook.c:3674 src/prefs_common_dialog.c:2226
 msgid "Interface"
 msgstr "인터페이스"
 
-#: src/addressbook.c:3678 src/importcsv.c:671 src/importldif.c:478
+#: src/addressbook.c:3688 src/importcsv.c:671 src/importldif.c:478
 msgid "Address Book"
 msgstr "주소록"
 
-#: src/addressbook.c:3692
+#: src/addressbook.c:3702
 msgid "Person"
 msgstr "사람"
 
-#: src/addressbook.c:3706
+#: src/addressbook.c:3716
 msgid "EMail Address"
 msgstr "이메일 주소"
 
-#: src/addressbook.c:3720
+#: src/addressbook.c:3730
 msgid "Group"
 msgstr "그룹"
 
-#: src/addressbook.c:3748
+#: src/addressbook.c:3758
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:3762 src/addressbook.c:3776
+#: src/addressbook.c:3772 src/addressbook.c:3786
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:3790
+#: src/addressbook.c:3800
 msgid "LDAP Server"
 msgstr "LDAP 서버"
 
@@ -1846,7 +1851,7 @@ msgstr "파일이 없거나 비여있습니다."
 msgid "Properties"
 msgstr "특성"
 
-#: src/compose.c:6259 src/prefs_common_dialog.c:1594
+#: src/compose.c:6259 src/prefs_common_dialog.c:1620
 msgid "Encoding"
 msgstr "인코딩"
 
@@ -2101,7 +2106,7 @@ msgstr "JPilot 항목 편집"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:691 src/importldif.c:498 src/prefs_account_dialog.c:1863
-#: src/prefs_common_dialog.c:2000
+#: src/prefs_common_dialog.c:2028
 msgid " ... "
 msgstr " ... "
 
@@ -2409,17 +2414,18 @@ msgstr "/뉴스그룹 삭제(_R)"
 msgid "Creating folder view...\n"
 msgstr "폴더 뷰를 생성합니다...\n"
 
-#: src/folderview.c:415
+#: src/folderview.c:415 src/prefs_common_dialog.c:1538
 msgid "New"
 msgstr "새것"
 
 #. S_COL_MARK
-#: src/folderview.c:431 src/prefs_filter_edit.c:507
-#: src/prefs_summary_column.c:67 src/quick_search.c:96
+#: src/folderview.c:431 src/prefs_common_dialog.c:1539
+#: src/prefs_filter_edit.c:507 src/prefs_summary_column.c:67
+#: src/quick_search.c:96
 msgid "Unread"
 msgstr "안읽음"
 
-#: src/folderview.c:447
+#: src/folderview.c:447 src/prefs_common_dialog.c:1540
 msgid "Total"
 msgstr ""
 
@@ -2462,7 +2468,7 @@ msgstr "폴더 트리를 갱신합니다..."
 msgid "Checking for new messages in all folders..."
 msgstr "모든 폴더의 새로운 메시지를 확인합니다..."
 
-#: src/folderview.c:1256 src/prefs_common_dialog.c:1944 src/prefs_toolbar.c:68
+#: src/folderview.c:1256 src/prefs_common_dialog.c:1972 src/prefs_toolbar.c:68
 msgid "Junk"
 msgstr ""
 
@@ -4343,21 +4349,21 @@ msgstr "계정 기본 설정"
 msgid "Creating account preferences window...\n"
 msgstr "계정 설정 창을 생성합니다...\n"
 
-#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:718
+#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:724
 msgid "Receive"
 msgstr "받기"
 
-#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:720
+#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:726
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "메일 발송"
 
-#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:722
+#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:728
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "작성"
 
-#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:729
+#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:735
 msgid "Privacy"
 msgstr "프라이버시"
 
@@ -4365,7 +4371,7 @@ msgstr "프라이버시"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2291
+#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2319
 msgid "Advanced"
 msgstr "고급"
 
@@ -4495,7 +4501,7 @@ msgid "Authentication method"
 msgstr "인증 방법"
 
 #: src/prefs_account_dialog.c:989 src/prefs_account_dialog.c:1148
-#: src/prefs_common_dialog.c:941 src/prefs_common_dialog.c:2725
+#: src/prefs_common_dialog.c:947 src/prefs_common_dialog.c:2753
 msgid "Automatic"
 msgstr "자동"
 
@@ -4544,8 +4550,8 @@ msgstr "Message-ID 생성"
 msgid "Add user-defined header"
 msgstr "사용자 정의된 헤더 추가"
 
-#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1700
-#: src/prefs_common_dialog.c:1727
+#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1728
+#: src/prefs_common_dialog.c:1755
 msgid " Edit... "
 msgstr " 편집..."
 
@@ -4568,7 +4574,7 @@ msgid "Authenticate with POP3 before sending"
 msgstr "보내기전 POP3와 인증"
 
 #. signature
-#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1099
+#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1105
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "서명"
@@ -4862,306 +4868,306 @@ msgstr "동작 삭제"
 msgid "Do you really want to delete this action?"
 msgstr "정말로 이 동작을 삭제하시겠습니까?"
 
-#: src/prefs_common_dialog.c:698
+#: src/prefs_common_dialog.c:704
 msgid "Creating common preferences window...\n"
 msgstr "일반 설정 창을 생성합니다...\n"
 
-#: src/prefs_common_dialog.c:702
+#: src/prefs_common_dialog.c:708
 msgid "Common Preferences"
 msgstr "일반 설정"
 
-#: src/prefs_common_dialog.c:724
+#: src/prefs_common_dialog.c:730
 msgid "Display"
 msgstr "보기"
 
-#: src/prefs_common_dialog.c:726
+#: src/prefs_common_dialog.c:732
 #, fuzzy
 msgid "Junk mail"
 msgstr "폴더"
 
-#: src/prefs_common_dialog.c:732
+#: src/prefs_common_dialog.c:738
 msgid "Details"
 msgstr ""
 
-#: src/prefs_common_dialog.c:786
+#: src/prefs_common_dialog.c:792
 msgid "Auto-check new mail"
 msgstr "새 편지를 자동 검사"
 
-#: src/prefs_common_dialog.c:788 src/prefs_common_dialog.c:1215
+#: src/prefs_common_dialog.c:794 src/prefs_common_dialog.c:1221
 #, fuzzy
 msgid "every"
 msgstr "보이지 않음"
 
-#: src/prefs_common_dialog.c:800 src/prefs_common_dialog.c:1229
+#: src/prefs_common_dialog.c:806 src/prefs_common_dialog.c:1235
 msgid "minute(s)"
 msgstr "분"
 
-#: src/prefs_common_dialog.c:809
+#: src/prefs_common_dialog.c:815
 msgid "Check new mail on startup"
 msgstr "시작할 때 새 편지를 검사"
 
-#: src/prefs_common_dialog.c:811
+#: src/prefs_common_dialog.c:817
 msgid "Update all local folders after incorporation"
 msgstr "병합 후에 모든 지역 폴더 갱신"
 
-#: src/prefs_common_dialog.c:816
+#: src/prefs_common_dialog.c:822
 #, fuzzy
 msgid "Execute command when new messages arrived"
 msgstr "메시지를 이동하거나 지울때 즉시 실행"
 
-#: src/prefs_common_dialog.c:828 src/prefs_common_dialog.c:2534
-#: src/prefs_common_dialog.c:2556 src/prefs_common_dialog.c:2578
+#: src/prefs_common_dialog.c:834 src/prefs_common_dialog.c:2562
+#: src/prefs_common_dialog.c:2584 src/prefs_common_dialog.c:2606
 msgid "Command"
 msgstr "명령어"
 
-#: src/prefs_common_dialog.c:839
+#: src/prefs_common_dialog.c:845
 #, fuzzy, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "새 메시지의 갯수를 얻는 중 (STAT)..."
 
-#: src/prefs_common_dialog.c:843
+#: src/prefs_common_dialog.c:849
 #, fuzzy
 msgid "Incorporate from local spool"
 msgstr "spool로부터 합체"
 
-#: src/prefs_common_dialog.c:856
+#: src/prefs_common_dialog.c:862
 msgid "Filter on incorporation"
 msgstr "합체시 필터링"
 
-#: src/prefs_common_dialog.c:862
+#: src/prefs_common_dialog.c:868
 msgid "Spool path"
 msgstr ""
 
-#: src/prefs_common_dialog.c:918
+#: src/prefs_common_dialog.c:924
 msgid "Save sent messages to outbox"
 msgstr "보낸 메시지를 '보낸 편지함'에 저장"
 
-#: src/prefs_common_dialog.c:920
+#: src/prefs_common_dialog.c:926
 msgid "Apply filter rules to sent messages"
 msgstr ""
 
-#: src/prefs_common_dialog.c:927
+#: src/prefs_common_dialog.c:933
 #, fuzzy
 msgid "Transfer encoding"
 msgstr "보내기 전에 줄 바꿈"
 
-#: src/prefs_common_dialog.c:950
+#: src/prefs_common_dialog.c:956
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
 msgstr ""
 
-#: src/prefs_common_dialog.c:957
+#: src/prefs_common_dialog.c:963
 #, fuzzy
 msgid "MIME filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/prefs_common_dialog.c:968
+#: src/prefs_common_dialog.c:974
 #, fuzzy
 msgid "MIME header"
 msgstr "보내는 메일의 문자셋"
 
-#: src/prefs_common_dialog.c:978
+#: src/prefs_common_dialog.c:984
 msgid ""
 "Specify encoding method for MIME filename with non-ASCII characters.\n"
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
 
-#: src/prefs_common_dialog.c:988
+#: src/prefs_common_dialog.c:994
 msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
 
-#: src/prefs_common_dialog.c:999
+#: src/prefs_common_dialog.c:1005
 msgid "(Ex: attach)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1010
+#: src/prefs_common_dialog.c:1016
 #, fuzzy
 msgid "Confirm recipients before sending"
 msgstr "보내기 전에 줄 바꿈"
 
-#: src/prefs_common_dialog.c:1016
+#: src/prefs_common_dialog.c:1022
 msgid "Excluded addresses/domains (comma-separated):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1095 src/prefs_common_dialog.c:1484
+#: src/prefs_common_dialog.c:1101 src/prefs_common_dialog.c:1494
 #: src/prefs_folder_item.c:139
 msgid "General"
 msgstr "일반"
 
-#: src/prefs_common_dialog.c:1110
+#: src/prefs_common_dialog.c:1116
 msgid "Signature separator"
 msgstr "서명 분리자"
 
-#: src/prefs_common_dialog.c:1119
+#: src/prefs_common_dialog.c:1125
 msgid "Insert automatically"
 msgstr "지동으로 삽입"
 
-#: src/prefs_common_dialog.c:1121 src/prefs_toolbar.c:56
+#: src/prefs_common_dialog.c:1127 src/prefs_toolbar.c:56
 msgid "Reply"
 msgstr "회신"
 
-#: src/prefs_common_dialog.c:1129
+#: src/prefs_common_dialog.c:1135
 msgid "Automatically select account for replies"
 msgstr "자동으로 회신할 계정 선택"
 
-#: src/prefs_common_dialog.c:1131
+#: src/prefs_common_dialog.c:1137
 msgid "Quote message when replying"
 msgstr "회신할 때 메시지를 인용"
 
-#: src/prefs_common_dialog.c:1133
+#: src/prefs_common_dialog.c:1139
 msgid "Reply button invokes mailing list reply"
 msgstr "회신 버튼이 메일링리스트에 대한 회신으로 동작"
 
-#: src/prefs_common_dialog.c:1135
+#: src/prefs_common_dialog.c:1141
 msgid "Inherit recipients on reply to self messages"
 msgstr ""
 
 #. editor
-#: src/prefs_common_dialog.c:1139 src/prefs_common_dialog.c:2497
+#: src/prefs_common_dialog.c:1145 src/prefs_common_dialog.c:2525
 #: src/prefs_toolbar.c:120
 msgid "Editor"
 msgstr "편집기"
 
-#: src/prefs_common_dialog.c:1146
+#: src/prefs_common_dialog.c:1152
 msgid "Automatically launch the external editor"
 msgstr "자동으로 외부 편집기 사용"
 
-#: src/prefs_common_dialog.c:1156
+#: src/prefs_common_dialog.c:1162
 msgid "Undo level"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1176
+#: src/prefs_common_dialog.c:1182
 msgid "Wrap messages at"
 msgstr "줄 바꿈 at"
 
-#: src/prefs_common_dialog.c:1188
+#: src/prefs_common_dialog.c:1194
 msgid "characters"
 msgstr "글자"
 
-#: src/prefs_common_dialog.c:1198
+#: src/prefs_common_dialog.c:1204
 msgid "Wrap quotation"
 msgstr "인용도 줄 바꿈"
 
-#: src/prefs_common_dialog.c:1204
+#: src/prefs_common_dialog.c:1210
 #, fuzzy
 msgid "Wrap on input"
 msgstr "긴 줄에대해 자동 줄바꿈을 합니다"
 
-#: src/prefs_common_dialog.c:1213
+#: src/prefs_common_dialog.c:1219
 #, fuzzy
 msgid "Auto-save to draft"
 msgstr "임시 보관함에 넣기"
 
-#: src/prefs_common_dialog.c:1238
+#: src/prefs_common_dialog.c:1244
 #, fuzzy
 msgid "Format"
 msgstr "보통"
 
-#: src/prefs_common_dialog.c:1243
+#: src/prefs_common_dialog.c:1249
 msgid "Spell checking"
 msgstr ""
 
 #. reply
-#: src/prefs_common_dialog.c:1295
+#: src/prefs_common_dialog.c:1301
 msgid "Reply format"
 msgstr "회신 형식"
 
-#: src/prefs_common_dialog.c:1310 src/prefs_common_dialog.c:1352
+#: src/prefs_common_dialog.c:1316 src/prefs_common_dialog.c:1358
 msgid "Quotation mark"
 msgstr "인용 부호"
 
 #. forward
-#: src/prefs_common_dialog.c:1337
+#: src/prefs_common_dialog.c:1343
 msgid "Forward format"
 msgstr "전달 형식"
 
-#: src/prefs_common_dialog.c:1384
+#: src/prefs_common_dialog.c:1390
 msgid " Description of symbols "
 msgstr " 부호 설명 "
 
-#: src/prefs_common_dialog.c:1413
+#: src/prefs_common_dialog.c:1419
 msgid "Enable Spell checking"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1425
+#: src/prefs_common_dialog.c:1431
 #, fuzzy
 msgid "Default language:"
 msgstr "기본 우편함"
 
-#: src/prefs_common_dialog.c:1492
+#: src/prefs_common_dialog.c:1502
 #, fuzzy
 msgid "Text font"
 msgstr "텍스트"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1504
+#: src/prefs_common_dialog.c:1514
 #, fuzzy
 msgid "Folder View"
 msgstr "폴더"
 
-#: src/prefs_common_dialog.c:1512
+#: src/prefs_common_dialog.c:1522
 msgid "Display unread number next to folder name"
 msgstr "폴더이름옆에 읽지않을 메시지 수를 표시"
 
-#: src/prefs_common_dialog.c:1514
+#: src/prefs_common_dialog.c:1526
 #, fuzzy
-msgid "Display message number columns in the folder view"
+msgid "Displaying message number columns in the folder view:"
 msgstr "폴더이름옆에 읽지않을 메시지 수를 표시"
 
-#: src/prefs_common_dialog.c:1523
+#: src/prefs_common_dialog.c:1549
 msgid "Abbreviate newsgroups longer than"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1538
+#: src/prefs_common_dialog.c:1564
 #, fuzzy
 msgid "letters"
 msgstr "삭제"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1544
+#: src/prefs_common_dialog.c:1570
 msgid "Summary View"
 msgstr "요약 보기"
 
-#: src/prefs_common_dialog.c:1553
+#: src/prefs_common_dialog.c:1579
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "보낸 사람이 본인인 경우 보낸 사람 칸에 받는 사람을 표시"
 
-#: src/prefs_common_dialog.c:1555
+#: src/prefs_common_dialog.c:1581
 msgid "Expand threads"
 msgstr "쓰레드 펴기"
 
-#: src/prefs_common_dialog.c:1563 src/prefs_common_dialog.c:2968
-#: src/prefs_common_dialog.c:3006
+#: src/prefs_common_dialog.c:1589 src/prefs_common_dialog.c:2996
+#: src/prefs_common_dialog.c:3034
 msgid "Date format"
 msgstr "날짜 형식"
 
-#: src/prefs_common_dialog.c:1584
+#: src/prefs_common_dialog.c:1610
 msgid " Set display item of summary... "
 msgstr "요약에 표시될 항목 설정... "
 
-#: src/prefs_common_dialog.c:1590
+#: src/prefs_common_dialog.c:1616
 msgid "Message"
 msgstr "본문"
 
-#: src/prefs_common_dialog.c:1600
+#: src/prefs_common_dialog.c:1626
 #, fuzzy
 msgid "Default character encoding"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
 
-#: src/prefs_common_dialog.c:1614
+#: src/prefs_common_dialog.c:1640
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1620
+#: src/prefs_common_dialog.c:1646
 #, fuzzy
 msgid "Outgoing character encoding"
 msgstr "/보기(_V)/정렬(_S)/내림차순"
 
-#: src/prefs_common_dialog.c:1634
+#: src/prefs_common_dialog.c:1660
 #, fuzzy
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
@@ -5170,11 +5176,11 @@ msgstr ""
 "`자동'이 선택되면, 현재 로케일에 맞는 최적의\n"
 "인코딩 방식이 사용됩니다."
 
-#: src/prefs_common_dialog.c:1696
+#: src/prefs_common_dialog.c:1724
 msgid "Enable coloration of message"
 msgstr "메시지에 색을 이용하여 보여주기"
 
-#: src/prefs_common_dialog.c:1711
+#: src/prefs_common_dialog.c:1739
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
@@ -5182,619 +5188,619 @@ msgstr ""
 "다중바이트 알파벳과 숫자를 ASCII 문자로\n"
 "표시 (일본어인 경우에만)"
 
-#: src/prefs_common_dialog.c:1718
+#: src/prefs_common_dialog.c:1746
 msgid "Display header pane above message view"
 msgstr "메시지 보기 위에 헤더 창 표시"
 
-#: src/prefs_common_dialog.c:1725
+#: src/prefs_common_dialog.c:1753
 msgid "Display short headers on message view"
 msgstr "메시지를 볼때 간단한 헤더만 표시"
 
-#: src/prefs_common_dialog.c:1737
+#: src/prefs_common_dialog.c:1765
 msgid "Render HTML messages as text"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1739
+#: src/prefs_common_dialog.c:1767
 #, fuzzy
 msgid "Treat HTML only messages as attachment"
 msgstr "/메시지(_M)/첨부파일로 전달(_w)"
 
-#: src/prefs_common_dialog.c:1743
+#: src/prefs_common_dialog.c:1771
 #, fuzzy
 msgid "Display cursor in message view"
 msgstr "메시지를 볼때 간단한 헤더만 표시"
 
-#: src/prefs_common_dialog.c:1756
+#: src/prefs_common_dialog.c:1784
 msgid "Line space"
 msgstr "줄 간격"
 
-#: src/prefs_common_dialog.c:1770 src/prefs_common_dialog.c:1808
+#: src/prefs_common_dialog.c:1798 src/prefs_common_dialog.c:1836
 msgid "pixel(s)"
 msgstr "픽셀"
 
-#: src/prefs_common_dialog.c:1775
+#: src/prefs_common_dialog.c:1803
 msgid "Scroll"
 msgstr "스크롤"
 
-#: src/prefs_common_dialog.c:1782
+#: src/prefs_common_dialog.c:1810
 msgid "Half page"
 msgstr "반 페이지"
 
-#: src/prefs_common_dialog.c:1788
+#: src/prefs_common_dialog.c:1816
 msgid "Smooth scroll"
 msgstr "부드러운 스크롤"
 
-#: src/prefs_common_dialog.c:1794
+#: src/prefs_common_dialog.c:1822
 msgid "Step"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1814
+#: src/prefs_common_dialog.c:1842
 msgid "Images"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1822
+#: src/prefs_common_dialog.c:1850
 #, fuzzy
 msgid "Resize attached large images to fit in the window"
 msgstr "첨부된 이미지 크기 조정"
 
-#: src/prefs_common_dialog.c:1824
+#: src/prefs_common_dialog.c:1852
 #, fuzzy
 msgid "Display images as inline"
 msgstr "표시될 헤더 설정"
 
-#: src/prefs_common_dialog.c:1910
+#: src/prefs_common_dialog.c:1938
 #, fuzzy
 msgid "Enable Junk mail control"
 msgstr "폴더"
 
-#: src/prefs_common_dialog.c:1922
+#: src/prefs_common_dialog.c:1950
 #, fuzzy
 msgid "Learning command:"
 msgstr "실행"
 
-#: src/prefs_common_dialog.c:1931
+#: src/prefs_common_dialog.c:1959
 #, fuzzy
 msgid "(Select preset)"
 msgstr "키 선택"
 
-#: src/prefs_common_dialog.c:1956
+#: src/prefs_common_dialog.c:1984
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1971
+#: src/prefs_common_dialog.c:1999
 #, fuzzy
 msgid "Classifying command"
 msgstr "실행"
 
-#: src/prefs_common_dialog.c:1982
+#: src/prefs_common_dialog.c:2010
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1992
+#: src/prefs_common_dialog.c:2020
 #, fuzzy
 msgid "Junk folder"
 msgstr "폴더"
 
-#: src/prefs_common_dialog.c:2010
+#: src/prefs_common_dialog.c:2038
 #, fuzzy
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr "(필터링 되지 않은 메시지는 이 폴더에 저장될 것입니다)"
 
-#: src/prefs_common_dialog.c:2021
+#: src/prefs_common_dialog.c:2049
 #, fuzzy
 msgid "Filter messages classified as junk on receiving"
 msgstr "받을때 메시지를 필터링"
 
-#: src/prefs_common_dialog.c:2024
+#: src/prefs_common_dialog.c:2052
 #, fuzzy
 msgid "Filter junk mails before normal filtering"
 msgstr "폴더 삭제"
 
-#: src/prefs_common_dialog.c:2027
+#: src/prefs_common_dialog.c:2055
 #, fuzzy
 msgid "Delete junk mails from server on receiving"
 msgstr "폴더 삭제"
 
-#: src/prefs_common_dialog.c:2032
+#: src/prefs_common_dialog.c:2060
 msgid "Mark filtered junk mails as read"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2074
+#: src/prefs_common_dialog.c:2102
 msgid "Automatically check signatures"
 msgstr "자동으로 서명 확인"
 
-#: src/prefs_common_dialog.c:2077
+#: src/prefs_common_dialog.c:2105
 msgid "Show signature check result in a popup window"
 msgstr "팝업 창에 서명 확인 결과 보이기"
 
-#: src/prefs_common_dialog.c:2080
+#: src/prefs_common_dialog.c:2108
 msgid "Store passphrase in memory temporarily"
 msgstr "비밀번호를 메모리에 임시 보관"
 
-#: src/prefs_common_dialog.c:2095
+#: src/prefs_common_dialog.c:2123
 #, fuzzy
 msgid "Expired after"
 msgstr "나중에 보내기"
 
-#: src/prefs_common_dialog.c:2108
+#: src/prefs_common_dialog.c:2136
 msgid "minute(s) "
 msgstr "분 "
 
-#: src/prefs_common_dialog.c:2122
+#: src/prefs_common_dialog.c:2150
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2131
+#: src/prefs_common_dialog.c:2159
 msgid "Grab input while entering a passphrase"
 msgstr "passphrase를 입력할때 Grab input"
 
-#: src/prefs_common_dialog.c:2136
+#: src/prefs_common_dialog.c:2164
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "GnuPG가 동작하지 않을 경우 시작시 경고 표시"
 
-#: src/prefs_common_dialog.c:2206
+#: src/prefs_common_dialog.c:2234
 #, fuzzy
 msgid "Always open messages in summary when selected"
 msgstr "어떤 메시지 파일도 선택되지 않았습니다."
 
-#: src/prefs_common_dialog.c:2210
+#: src/prefs_common_dialog.c:2238
 #, fuzzy
 msgid "Open first unread message when a folder is opened"
 msgstr "폴더에 들어가면 첫번째 안읽은 메시지 열기"
 
-#: src/prefs_common_dialog.c:2217
+#: src/prefs_common_dialog.c:2245
 #, fuzzy
 msgid "Remember last selected message"
 msgstr "꼬리표있는 메시지가 없습니다"
 
-#: src/prefs_common_dialog.c:2221
+#: src/prefs_common_dialog.c:2249
 msgid "Only mark message as read when opened in new window"
 msgstr "새 창에서 열렸을 경우에만 메시지를 읽은 것으로 표시"
 
-#: src/prefs_common_dialog.c:2225
+#: src/prefs_common_dialog.c:2253
 #, fuzzy
 msgid "Open inbox after receiving new mail"
 msgstr "새 편지를 받은 후 받은 편지함으로 가기"
 
-#: src/prefs_common_dialog.c:2227
+#: src/prefs_common_dialog.c:2255
 #, fuzzy
 msgid "Open inbox on startup"
 msgstr "시작할 때 새 편지를 검사"
 
-#: src/prefs_common_dialog.c:2235
+#: src/prefs_common_dialog.c:2263
 msgid "Execute immediately when moving or deleting messages"
 msgstr "메시지를 이동하거나 지울때 즉시 실행"
 
-#: src/prefs_common_dialog.c:2247
+#: src/prefs_common_dialog.c:2275
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr ""
 "(이것이 꺼져있는 경우 메시지는 실행때까지\n"
 "단지 표시만 될 것입니다)"
 
-#: src/prefs_common_dialog.c:2256
+#: src/prefs_common_dialog.c:2284
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2259
+#: src/prefs_common_dialog.c:2287
 #, fuzzy
 msgid "Display tray icon"
 msgstr "표시 명"
 
-#: src/prefs_common_dialog.c:2261
+#: src/prefs_common_dialog.c:2289
 msgid "Minimize to tray icon"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2263
+#: src/prefs_common_dialog.c:2291
 msgid "Toggle window on trayicon click"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2273
+#: src/prefs_common_dialog.c:2301
 msgid " Set key bindings... "
 msgstr " 키 바인딩 설정... "
 
-#: src/prefs_common_dialog.c:2279 src/select-keys.c:337
+#: src/prefs_common_dialog.c:2307 src/select-keys.c:337
 msgid "Other"
 msgstr "기타"
 
-#: src/prefs_common_dialog.c:2283
+#: src/prefs_common_dialog.c:2311
 #, fuzzy
 msgid "External commands"
 msgstr "실행"
 
-#: src/prefs_common_dialog.c:2287
+#: src/prefs_common_dialog.c:2315
 #, fuzzy
 msgid "Update"
 msgstr "날짜"
 
-#: src/prefs_common_dialog.c:2340
+#: src/prefs_common_dialog.c:2368
 msgid "Receive dialog"
 msgstr "받기 대화상자"
 
-#: src/prefs_common_dialog.c:2350
+#: src/prefs_common_dialog.c:2378
 msgid "Show receive dialog"
 msgstr "받기 대화상자 보기"
 
-#: src/prefs_common_dialog.c:2360
+#: src/prefs_common_dialog.c:2388
 msgid "Always"
 msgstr "항상"
 
-#: src/prefs_common_dialog.c:2361
+#: src/prefs_common_dialog.c:2389
 msgid "Only on manual receiving"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2363
+#: src/prefs_common_dialog.c:2391
 msgid "Never"
 msgstr "보이지 않음"
 
-#: src/prefs_common_dialog.c:2368
+#: src/prefs_common_dialog.c:2396
 msgid "Don't popup error dialog on receive error"
 msgstr "받기 에러 발생시 에러 상자 보이지 않음"
 
-#: src/prefs_common_dialog.c:2371
+#: src/prefs_common_dialog.c:2399
 msgid "Close receive dialog when finished"
 msgstr "끝났을 때 받기 대화상자 닫기"
 
-#: src/prefs_common_dialog.c:2382
+#: src/prefs_common_dialog.c:2410
 msgid "Add address to destination when double-clicked"
 msgstr "더블클릭시에 대상에 주소 추가"
 
-#: src/prefs_common_dialog.c:2384
+#: src/prefs_common_dialog.c:2412
 msgid "On exit"
 msgstr "끝낼때"
 
-#: src/prefs_common_dialog.c:2392
+#: src/prefs_common_dialog.c:2420
 msgid "Confirm on exit"
 msgstr "끝냈때 확인"
 
-#: src/prefs_common_dialog.c:2399
+#: src/prefs_common_dialog.c:2427
 msgid "Empty trash on exit"
 msgstr "끝낼때 지운 편지함 비우기"
 
-#: src/prefs_common_dialog.c:2401
+#: src/prefs_common_dialog.c:2429
 msgid "Ask before emptying"
 msgstr "지운 편지함 비울때 확인하기"
 
-#: src/prefs_common_dialog.c:2405
+#: src/prefs_common_dialog.c:2433
 msgid "Warn if there are queued messages"
 msgstr "큐에 메시지가 있을 때 경고"
 
-#: src/prefs_common_dialog.c:2460
+#: src/prefs_common_dialog.c:2488
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "외부 명령 (%s는 파일 이름 / URI로 대체됩니다)"
 
-#: src/prefs_common_dialog.c:2469
+#: src/prefs_common_dialog.c:2497
 msgid "Web browser"
 msgstr "웹 탐색기"
 
-#: src/prefs_common_dialog.c:2481 src/prefs_common_dialog.c:3981
-#: src/prefs_common_dialog.c:4002
+#: src/prefs_common_dialog.c:2509 src/prefs_common_dialog.c:4009
+#: src/prefs_common_dialog.c:4030
 #, fuzzy
 msgid "(Default browser)"
 msgstr "기본 우편함"
 
-#: src/prefs_common_dialog.c:2522
+#: src/prefs_common_dialog.c:2550
 #, fuzzy
 msgid "Use external program for printing"
 msgstr "발송을 위해 외부 프로그램을 사용"
 
-#: src/prefs_common_dialog.c:2544
+#: src/prefs_common_dialog.c:2572
 msgid "Use external program for incorporation"
 msgstr "합체을 위해 외부 프로그램을 사용"
 
-#: src/prefs_common_dialog.c:2566
+#: src/prefs_common_dialog.c:2594
 msgid "Use external program for sending"
 msgstr "발송을 위해 외부 프로그램을 사용"
 
-#: src/prefs_common_dialog.c:2617
+#: src/prefs_common_dialog.c:2645
 msgid "Update check requires 'curl' command."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2628
+#: src/prefs_common_dialog.c:2656
 msgid "Enable auto update check"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2630
+#: src/prefs_common_dialog.c:2658
 msgid "Use HTTP proxy"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2632
+#: src/prefs_common_dialog.c:2660
 msgid "HTTP proxy host (hostname:port):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2672
+#: src/prefs_common_dialog.c:2700
 #, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "요약 캐쉬 (%s)를 씁니다..."
 
-#: src/prefs_common_dialog.c:2675
+#: src/prefs_common_dialog.c:2703
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2682
+#: src/prefs_common_dialog.c:2710
 msgid "Socket I/O timeout:"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2695
+#: src/prefs_common_dialog.c:2723
 msgid "second(s)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2723
+#: src/prefs_common_dialog.c:2751
 msgid "Automatic (Recommended)"
 msgstr "자동 (추천)"
 
-#: src/prefs_common_dialog.c:2728
+#: src/prefs_common_dialog.c:2756
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bit 아스키 (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2730
+#: src/prefs_common_dialog.c:2758
 msgid "Unicode (UTF-8)"
 msgstr "유니코드 (UTF-8)"
 
-#: src/prefs_common_dialog.c:2732
+#: src/prefs_common_dialog.c:2760
 msgid "Western European (ISO-8859-1)"
 msgstr "서부 유럽(ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2733
+#: src/prefs_common_dialog.c:2761
 msgid "Western European (ISO-8859-15)"
 msgstr "서부 유럽(ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2735
+#: src/prefs_common_dialog.c:2763
 #, fuzzy
 msgid "Western European (Windows-1252)"
 msgstr "서부 유럽(ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2739
+#: src/prefs_common_dialog.c:2767
 msgid "Central European (ISO-8859-2)"
 msgstr "중부 유럽(ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2741
+#: src/prefs_common_dialog.c:2769
 msgid "Baltic (ISO-8859-13)"
 msgstr "Baltic (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2742
+#: src/prefs_common_dialog.c:2770
 msgid "Baltic (ISO-8859-4)"
 msgstr "Baltic (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2743
+#: src/prefs_common_dialog.c:2771
 #, fuzzy
 msgid "Baltic (Windows-1257)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2745
+#: src/prefs_common_dialog.c:2773
 msgid "Greek (ISO-8859-7)"
 msgstr "그리스 (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2747
+#: src/prefs_common_dialog.c:2775
 #, fuzzy
 msgid "Arabic (ISO-8859-6)"
 msgstr "Baltic (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2748
+#: src/prefs_common_dialog.c:2776
 #, fuzzy
 msgid "Arabic (Windows-1256)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2750
+#: src/prefs_common_dialog.c:2778
 #, fuzzy
 msgid "Hebrew (ISO-8859-8)"
 msgstr "그리스 (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2751
+#: src/prefs_common_dialog.c:2779
 #, fuzzy
 msgid "Hebrew (Windows-1255)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2753
+#: src/prefs_common_dialog.c:2781
 msgid "Turkish (ISO-8859-9)"
 msgstr "터키 (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2755
+#: src/prefs_common_dialog.c:2783
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Cyrillic (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2756
+#: src/prefs_common_dialog.c:2784
 msgid "Cyrillic (KOI8-R)"
 msgstr "Cyrillic (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2757
+#: src/prefs_common_dialog.c:2785
 msgid "Cyrillic (KOI8-U)"
 msgstr "Cyrillic (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2758
+#: src/prefs_common_dialog.c:2786
 msgid "Cyrillic (Windows-1251)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2760
+#: src/prefs_common_dialog.c:2788
 msgid "Japanese (ISO-2022-JP)"
 msgstr "일본 (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2762
+#: src/prefs_common_dialog.c:2790
 msgid "Japanese (EUC-JP)"
 msgstr "일본 (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2763
+#: src/prefs_common_dialog.c:2791
 msgid "Japanese (Shift_JIS)"
 msgstr "일본 (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2766
+#: src/prefs_common_dialog.c:2794
 msgid "Simplified Chinese (GB2312)"
 msgstr "Simplified Chinese (GB2312)"
 
-#: src/prefs_common_dialog.c:2767
+#: src/prefs_common_dialog.c:2795
 #, fuzzy
 msgid "Simplified Chinese (GBK)"
 msgstr "Simplified Chinese (GB2312)"
 
-#: src/prefs_common_dialog.c:2768
+#: src/prefs_common_dialog.c:2796
 msgid "Traditional Chinese (Big5)"
 msgstr "Traditional Chinese (Big5)"
 
-#: src/prefs_common_dialog.c:2770
+#: src/prefs_common_dialog.c:2798
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Traditional Chinese (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2771
+#: src/prefs_common_dialog.c:2799
 msgid "Chinese (ISO-2022-CN)"
 msgstr "중국 (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2774
+#: src/prefs_common_dialog.c:2802
 msgid "Korean (EUC-KR)"
 msgstr "한국 (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2776
+#: src/prefs_common_dialog.c:2804
 msgid "Thai (TIS-620)"
 msgstr "Thai (TIS-620)"
 
-#: src/prefs_common_dialog.c:2777
+#: src/prefs_common_dialog.c:2805
 msgid "Thai (Windows-874)"
 msgstr "Thai (Windows-874)"
 
-#: src/prefs_common_dialog.c:2944
+#: src/prefs_common_dialog.c:2972
 msgid "the full abbreviated weekday name"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2945
+#: src/prefs_common_dialog.c:2973
 msgid "the full weekday name"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2946
+#: src/prefs_common_dialog.c:2974
 msgid "the abbreviated month name"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2947
+#: src/prefs_common_dialog.c:2975
 msgid "the full month name"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2948
+#: src/prefs_common_dialog.c:2976
 msgid "the preferred date and time for the current locale"
 msgstr "현재 로케일에 적당한 날짜와 시간"
 
-#: src/prefs_common_dialog.c:2949
+#: src/prefs_common_dialog.c:2977
 msgid "the century number (year/100)"
 msgstr "년도 (년/100)"
 
-#: src/prefs_common_dialog.c:2950
+#: src/prefs_common_dialog.c:2978
 msgid "the day of the month as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2951
+#: src/prefs_common_dialog.c:2979
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2952
+#: src/prefs_common_dialog.c:2980
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2953
+#: src/prefs_common_dialog.c:2981
 msgid "the day of the year as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2954
+#: src/prefs_common_dialog.c:2982
 msgid "the month as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2955
+#: src/prefs_common_dialog.c:2983
 msgid "the minute as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2956
+#: src/prefs_common_dialog.c:2984
 msgid "either AM or PM"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2957
+#: src/prefs_common_dialog.c:2985
 msgid "the second as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2958
+#: src/prefs_common_dialog.c:2986
 msgid "the day of the week as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2959
+#: src/prefs_common_dialog.c:2987
 #, fuzzy
 msgid "the preferred date for the current locale"
 msgstr "현재 로케일에 적당한 날짜와 시간"
 
-#: src/prefs_common_dialog.c:2960
+#: src/prefs_common_dialog.c:2988
 msgid "the last two digits of a year"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2961
+#: src/prefs_common_dialog.c:2989
 msgid "the year as a decimal number"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2962
+#: src/prefs_common_dialog.c:2990
 msgid "the time zone or name or abbreviation"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2983
+#: src/prefs_common_dialog.c:3011
 #, fuzzy
 msgid "Specifier"
 msgstr "파일 선택"
 
-#: src/prefs_common_dialog.c:2984
+#: src/prefs_common_dialog.c:3012
 msgid "Description"
 msgstr "설명"
 
-#: src/prefs_common_dialog.c:3024
+#: src/prefs_common_dialog.c:3052
 msgid "Example"
 msgstr "예제"
 
-#: src/prefs_common_dialog.c:3105
+#: src/prefs_common_dialog.c:3133
 msgid "Set message colors"
 msgstr "메시지 색 설정"
 
-#: src/prefs_common_dialog.c:3113
+#: src/prefs_common_dialog.c:3141
 msgid "Colors"
 msgstr "색"
 
-#: src/prefs_common_dialog.c:3147
+#: src/prefs_common_dialog.c:3175
 msgid "Quoted Text - First Level"
 msgstr "인용문 - 첫번째 단계"
 
-#: src/prefs_common_dialog.c:3153
+#: src/prefs_common_dialog.c:3181
 msgid "Quoted Text - Second Level"
 msgstr "인용문 - 두번째 단계"
 
-#: src/prefs_common_dialog.c:3159
+#: src/prefs_common_dialog.c:3187
 msgid "Quoted Text - Third Level"
 msgstr "인용문 - 세번째 단계"
 
-#: src/prefs_common_dialog.c:3165
+#: src/prefs_common_dialog.c:3193
 msgid "URI link"
 msgstr "URI 링크"
 
-#: src/prefs_common_dialog.c:3172
+#: src/prefs_common_dialog.c:3200
 msgid "Recycle quote colors"
 msgstr "인용 색 반복"
 
-#: src/prefs_common_dialog.c:3239
+#: src/prefs_common_dialog.c:3267
 msgid "Pick color for quotation level 1"
 msgstr "첫번째 단계 인용문 색 선택"
 
-#: src/prefs_common_dialog.c:3242
+#: src/prefs_common_dialog.c:3270
 msgid "Pick color for quotation level 2"
 msgstr "두번째 단계 인용문 색 선택"
 
-#: src/prefs_common_dialog.c:3245
+#: src/prefs_common_dialog.c:3273
 msgid "Pick color for quotation level 3"
 msgstr "세번째 단계 인용문 색 선택"
 
-#: src/prefs_common_dialog.c:3248
+#: src/prefs_common_dialog.c:3276
 msgid "Pick color for URI"
 msgstr "URI 색 선택"
 
-#: src/prefs_common_dialog.c:3388
+#: src/prefs_common_dialog.c:3416
 msgid "Description of symbols"
 msgstr "부호 설명"
 
-#: src/prefs_common_dialog.c:3444
+#: src/prefs_common_dialog.c:3472
 msgid ""
 "Date\n"
 "From\n"
@@ -5818,11 +5824,11 @@ msgstr ""
 "뉴스그룹\n"
 "메시지-ID"
 
-#: src/prefs_common_dialog.c:3457
+#: src/prefs_common_dialog.c:3485
 msgid "If x is set, displays expr"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3461
+#: src/prefs_common_dialog.c:3489
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5831,7 +5837,7 @@ msgid ""
 "Literal %"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3469
+#: src/prefs_common_dialog.c:3497
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5839,20 +5845,20 @@ msgid ""
 "Literal closing curly brace"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3523
+#: src/prefs_common_dialog.c:3551
 msgid "Key bindings"
 msgstr "키 바인딩"
 
-#: src/prefs_common_dialog.c:3536
+#: src/prefs_common_dialog.c:3564
 #, fuzzy
 msgid "Select the preset of key bindings."
 msgstr " 키 바인딩 설정... "
 
-#: src/prefs_common_dialog.c:3546 src/prefs_common_dialog.c:3870
+#: src/prefs_common_dialog.c:3574 src/prefs_common_dialog.c:3898
 msgid "Default"
 msgstr "기본"
 
-#: src/prefs_common_dialog.c:3549 src/prefs_common_dialog.c:3879
+#: src/prefs_common_dialog.c:3577 src/prefs_common_dialog.c:3907
 msgid "Old Sylpheed"
 msgstr "예전 Sylpheed"
 
@@ -7018,34 +7024,60 @@ msgstr "%s의 소스를 보여줍니다...\n"
 msgid "%s - Source"
 msgstr "%s - 소스"
 
-#: src/sslmanager.c:59
+#: src/sslmanager.c:66
 #, fuzzy
 msgid "SSL certificate verify failed"
 msgstr "SSL 연결이 실패했습니다"
 
-#: src/sslmanager.c:65
+#: src/sslmanager.c:98
 #, c-format
-msgid ""
-"The SSL certificate of %s cannot be verified by the following reason:\n"
-"  %s\n"
-"\n"
-"Server certificate:\n"
-"  Subject: %s\n"
-"  Issuer: %s\n"
-"\n"
-"Do you accept this certificate?"
+msgid "The SSL certificate of %s cannot be verified by the following reason:"
 msgstr ""
 
-#: src/sslmanager.c:142 src/sslmanager.c:150
+#: src/sslmanager.c:100
+#, fuzzy, c-format
+msgid "Subject: %s\n"
+msgstr "  제목: %s\n"
+
+#: src/sslmanager.c:101
+#, fuzzy, c-format
+msgid "Issuer: %s\n"
+msgstr "  발행인: %s\n"
+
+#: src/sslmanager.c:102
+#, fuzzy, c-format
+msgid "Issued date: %s\n"
+msgstr "  발행인: %s\n"
+
+#: src/sslmanager.c:103
+#, fuzzy, c-format
+msgid "Expire date: %s\n"
+msgstr "나중에 보내기"
+
+#: src/sslmanager.c:105
+#, c-format
+msgid "SHA1 fingerprint: %s\n"
+msgstr ""
+
+#: src/sslmanager.c:106
+#, c-format
+msgid "MD5 fingerprint: %s\n"
+msgstr ""
+
+#: src/sslmanager.c:108
+msgid "Do you accept this certificate?"
+msgstr ""
+
+#: src/sslmanager.c:179 src/sslmanager.c:187
 #, fuzzy
 msgid "_Reject"
 msgstr "/Redirec_t"
 
-#: src/sslmanager.c:143 src/sslmanager.c:149
+#: src/sslmanager.c:180 src/sslmanager.c:186
 msgid "_Temporarily accept"
 msgstr ""
 
-#: src/sslmanager.c:144 src/sslmanager.c:148
+#: src/sslmanager.c:181 src/sslmanager.c:185
 #, fuzzy
 msgid "Always _accept"
 msgstr "항상"
