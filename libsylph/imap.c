@@ -549,8 +549,10 @@ static gint imap_greeting(IMAPSession *session)
 	gchar *greeting;
 	gint ok;
 
-	if ((ok = imap_cmd_gen_recv(session, &greeting)) != IMAP_SUCCESS)
+	if ((ok = imap_cmd_gen_recv(session, &greeting)) != IMAP_SUCCESS) {
+		log_warning("Cannot get greeting message (%d)\n", ok);
 		return ok;
+	}
 
 	if (greeting[0] != '*' || greeting[1] != ' ')
 		ok = IMAP_ERROR;
@@ -648,6 +650,7 @@ static Session *imap_session_new(PrefsAccount *account)
 	session_list = g_list_append(session_list, session);
 
 	if (imap_session_connect(session) != IMAP_SUCCESS) {
+		log_warning(_("Could not establish IMAP connection.\n"));
 		session_destroy(SESSION(session));
 		return NULL;
 	}

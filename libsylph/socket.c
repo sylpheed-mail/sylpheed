@@ -667,10 +667,23 @@ static gint sock_connect_with_timeout(gint sock,
 				errno = ETIMEDOUT;
 				return -1;
 			} else {
+				gint val;
+				guint len;
+
 				if (FD_ISSET(sock, &fds)) {
 					ret = 0;
 				} else {
 					debug_print("sock_connect_with_timeout: fd not set\n");
+					return -1;
+				}
+
+				len = sizeof(val);
+				if (getsockopt(sock, SOL_SOCKET, SO_ERROR, &val, &len) < 0) {
+					perror("sock_connect_with_timeout: getsockopt");
+					return -1;
+				}
+				if (val != 0) {
+					debug_print("sock_connect_with_timeout: getsockopt(SOL_SOCKET, SO_ERROR) returned error: %s\n", g_strerror(val));
 					return -1;
 				}
 			}
