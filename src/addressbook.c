@@ -192,6 +192,8 @@ static void addressbook_person_collapse_node	(GtkTreeView	*treeview,
 #if 0
 static void addressbook_entry_changed		(GtkWidget	*widget);
 #endif
+static void addressbook_entry_activated		(GtkWidget	*widget,
+						 gpointer	 data);
 
 static gboolean addressbook_list_button_pressed	(GtkWidget	*widget,
 						 GdkEventButton	*event,
@@ -536,9 +538,7 @@ static void addressbook_create(void)
 	GtkWidget *bcc_btn;
 	GtkWidget *del_btn;
 	GtkWidget *reg_btn;
-#ifdef USE_LDAP
 	GtkWidget *lup_btn;
-#endif
 	GtkWidget *close_btn;
 	GtkWidget *tree_popup;
 	GtkWidget *list_popup;
@@ -780,6 +780,8 @@ static void addressbook_create(void)
 	g_signal_connect(G_OBJECT(entry), "changed",
 			 G_CALLBACK(addressbook_entry_changed), NULL);
 #endif
+	g_signal_connect(G_OBJECT(entry), "activate",
+			 G_CALLBACK(addressbook_entry_activated), NULL);
 
 	paned = gtk_hpaned_new();
 	gtk_box_pack_start(GTK_BOX(vbox2), paned, TRUE, TRUE, 0);
@@ -839,11 +841,9 @@ static void addressbook_create(void)
 	reg_btn = gtk_button_new_with_label(_("Add"));
 	GTK_WIDGET_SET_FLAGS(reg_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), reg_btn, TRUE, TRUE, 0);
-#ifdef USE_LDAP
 	lup_btn = gtk_button_new_with_label(_("Lookup"));
 	GTK_WIDGET_SET_FLAGS(lup_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), lup_btn, TRUE, TRUE, 0);
-#endif
 	close_btn = gtk_button_new_with_mnemonic(_("_Close"));
 	GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), close_btn, TRUE, TRUE, 0);
@@ -854,10 +854,8 @@ static void addressbook_create(void)
 			 G_CALLBACK(addressbook_del_clicked), NULL);
 	g_signal_connect(G_OBJECT(reg_btn), "clicked",
 			 G_CALLBACK(addressbook_reg_clicked), NULL);
-#ifdef USE_LDAP
 	g_signal_connect(G_OBJECT(lup_btn), "clicked",
 			 G_CALLBACK(addressbook_lup_clicked), NULL);
-#endif
 	g_signal_connect(G_OBJECT(close_btn), "clicked",
 			 G_CALLBACK(addressbook_close_clicked), NULL);
 
@@ -926,11 +924,7 @@ static void addressbook_create(void)
 	addrbook.bcc_btn = bcc_btn;
 	addrbook.del_btn = del_btn;
 	addrbook.reg_btn = reg_btn;
-#ifdef USE_LDAP
 	addrbook.lup_btn = lup_btn;
-#else
-	addrbook.lup_btn = NULL;
-#endif
 	addrbook.close_btn = close_btn;
 
 	addrbook.tree_popup   = tree_popup;
@@ -1290,11 +1284,12 @@ static void addressbook_menuitem_set_sensitive(void)
 			canAdd = canEditAddress = FALSE;
 		}
 #ifdef USE_LDAP
-		if (ads->subType == ADDR_LDAP &&
-		    iface->haveLibrary && ds->rawDataSource) {
-			canLookup = TRUE;
-		}
+		if (ads->subType == ADDR_LDAP) {
+			if (iface->haveLibrary && ds->rawDataSource)
+				canLookup = TRUE;
+		} else
 #endif
+			canLookup = TRUE;
 	} else if (pobj->type == ADDR_ITEM_FOLDER) {
 		ds = addressbook_find_datasource(&iter);
 		if (ds) {
@@ -1302,6 +1297,7 @@ static void addressbook_menuitem_set_sensitive(void)
 			if (!iface->readOnly) {
 				canAdd = canEditAddress = TRUE;
 			}
+			canLookup = TRUE;
 		}
 	} else if (pobj->type == ADDR_ITEM_GROUP) {
 		ds = addressbook_find_datasource(&iter);
@@ -1310,6 +1306,7 @@ static void addressbook_menuitem_set_sensitive(void)
 			if (!iface->readOnly) {
 				canEditAddress = TRUE;
 			}
+			canLookup = TRUE;
 		}
 	}
 
@@ -1366,8 +1363,7 @@ static void addressbook_menuitem_set_sensitive(void)
 	/* Buttons */
 	gtk_widget_set_sensitive(addrbook.reg_btn, canAdd);
 	gtk_widget_set_sensitive(addrbook.del_btn, canDelete);
-	if (addrbook.lup_btn)
-		gtk_widget_set_sensitive(addrbook.lup_btn, canLookup);
+	gtk_widget_set_sensitive(addrbook.lup_btn, canLookup);
 }
 
 static void addressbook_tree_selection_changed(GtkTreeSelection *selection,
@@ -1524,6 +1520,11 @@ static void addressbook_list_select_set(GList *row_list)
 		}
 	}
 	_addressListSelection_ = g_list_reverse(_addressListSelection_);
+}
+
+static void addressbook_entry_activated(GtkWidget *widget, gpointer data)
+{
+	addressbook_lup_clicked(NULL, NULL);
 }
 
 static gboolean addressbook_list_button_pressed(GtkWidget *widget,
@@ -2383,6 +2384,28 @@ static gchar *addressbook_format_item_list(ItemPerson *person, ItemEMail *email)
 	return str;
 }
 
+static gboolean addressbook_match_item(const gchar *name,
+				       const gchar *email_alias,
+				       const gchar *addr,
+				       const gchar *remarks,
+				       const gchar *str)
+{
+	if (!name)
+		return FALSE;
+	if (!str || str[0] == '\0')
+		return TRUE;
+	if (strcasestr(name, str))
+		return TRUE;
+	else if (email_alias && strcasestr(email_alias, str))
+		return TRUE;
+	else if (addr && strcasestr(addr, str))
+		return TRUE;
+	else if (remarks && strcasestr(remarks, str))
+		return TRUE;
+
+	return FALSE;
+}
+
 static void addressbook_load_group(ItemGroup *itemGroup)
 {
 	GtkTreeView *listview = GTK_TREE_VIEW(addrbook.listview);
@@ -2390,8 +2413,10 @@ static void addressbook_load_group(ItemGroup *itemGroup)
 	GtkTreeIter iter;
 	GList *items = itemGroup->listEMail;
 	AddressTypeControlItem *atci = addrbookctl_lookup(ADDR_ITEM_EMAIL);
+	const gchar *search_str;
 
 	model = gtk_tree_view_get_model(listview);
+	search_str = gtk_entry_get_text(GTK_ENTRY(addrbook.entry));
 
 	for (; items != NULL; items = g_list_next(items)) {
 		ItemEMail *email = items->data;
@@ -2406,6 +2431,12 @@ static void addressbook_load_group(ItemGroup *itemGroup)
 			g_warning("email %p (%s) don't have parent\n", email, email->address);
 			continue;
 		}
+		if (!addressbook_match_item(ADDRITEM_NAME(person),
+					    ADDRITEM_NAME(email),
+					    email->address, email->remarks,
+					    search_str))
+			continue;
+
 		str = addressbook_format_item_list(person, email);
 		if (str) {
 			name = str;
@@ -2431,6 +2462,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 	GList *items;
 	AddressTypeControlItem *atci = addrbookctl_lookup(ADDR_ITEM_PERSON);
 	AddressTypeControlItem *atciMail = addrbookctl_lookup(ADDR_ITEM_EMAIL);
+	const gchar *search_str;
 
 	if (atci == NULL)
 		return;
@@ -2438,6 +2470,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 		return;
 
 	model = gtk_tree_view_get_model(listview);
+	search_str = gtk_entry_get_text(GTK_ENTRY(addrbook.entry));
 
 	/* Load email addresses */
 	items = addritem_folder_get_person_list(itemFolder);
@@ -2445,6 +2478,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 		GtkTreeIter iperson, iemail;
 		gboolean flgFirst = TRUE, haveAddr = FALSE;
 		ItemPerson *person;
+		ItemEMail *email;
 		GList *node;
 
 		person = (ItemPerson *)items->data;
@@ -2452,16 +2486,21 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 			continue;
 
 		node = person->listEMail;
+		if (node && node->data) {
+			email = node->data;
+			if (!addressbook_match_item(ADDRITEM_NAME(person), ADDRITEM_NAME(email), email->address, email->remarks, search_str))
+				continue;
+		} else {
+			if (!addressbook_match_item(ADDRITEM_NAME(person), NULL, NULL, NULL, search_str))
+				continue;
+		}
+
 		while (node) {
-			ItemEMail *email = node->data;
-			gchar *eMailAddr = NULL;
 			const gchar *name;
 
+			email = node->data;
 			node = g_list_next(node);
 
-			eMailAddr = ADDRITEM_NAME(email);
-			if (eMailAddr && *eMailAddr == '\0')
-				eMailAddr = NULL;
 			if (flgFirst) {
 				/* First email belongs with person */
 				gchar *str = addressbook_format_item_list(person, email);
@@ -2470,6 +2509,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 				} else {
 					name = ADDRITEM_NAME(person);
 				}
+
 				gtk_tree_store_append(GTK_TREE_STORE(model),
 						      &iperson, NULL);
 				gtk_tree_store_set(GTK_TREE_STORE(model),
@@ -2530,11 +2570,13 @@ static void addressbook_folder_load_group(ItemFolder *itemFolder)
 	GtkTreeModel *model;
 	GList *items;
 	AddressTypeControlItem *atci = addrbookctl_lookup(ADDR_ITEM_GROUP);
+	const gchar *search_str;
 
 	if (!atci)
 		return;
 
 	model = gtk_tree_view_get_model(listview);
+	search_str = gtk_entry_get_text(GTK_ENTRY(addrbook.entry));
 
 	/* Load any groups */
 	items = addritem_folder_get_group_list(itemFolder);
@@ -2543,6 +2585,9 @@ static void addressbook_folder_load_group(ItemFolder *itemFolder)
 		ItemGroup *group = items->data;
 
 		if (!group)
+			continue;
+		if (!addressbook_match_item(ADDRITEM_NAME(group),
+					    NULL, NULL, NULL, search_str))
 			continue;
 
 		gtk_tree_store_append(GTK_TREE_STORE(model), &iter, NULL);
@@ -3616,8 +3661,11 @@ static void addressbook_lup_clicked(GtkButton *button, gpointer data)
 				syldap_read_data_th(server);
 				addressbook_ldap_show_message(server);
 			}
-		}
+		} else
 #endif /* USE_LDAP */
+			addressbook_set_list(obj);
+	} else {
+		addressbook_set_list(obj);
 	}
 
 	g_free(sLookup);
