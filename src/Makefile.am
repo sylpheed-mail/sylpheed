@@ -141,7 +141,7 @@ INCLUDES = \
 
 if NATIVE_WIN32
 SYLPHEED_RES = sylpheed.res
-sylpheed.res: sylpheed.rc
+sylpheed.res: sylpheed.rc icons/sylpheed.ico
 	$(WINDRES) $< -O coff -o $@
 else
 SYLPHEED_RES = 
