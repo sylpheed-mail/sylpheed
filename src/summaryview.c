@@ -4591,6 +4591,8 @@ static void summary_filter_real(SummaryView *summaryview,
 				gboolean selected_only)
 {
 	GList *rows;
+	FolderSortKey sort_key;
+	FolderSortType sort_type;
 
 	if (!summaryview->folder_item) return;
 
@@ -4603,6 +4605,11 @@ static void summary_filter_real(SummaryView *summaryview,
 	STATUSBAR_PUSH(summaryview->mainwin, _("Filtering..."));
 	main_window_cursor_wait(summaryview->mainwin);
 	GTK_EVENTS_FLUSH();
+
+	sort_key = summaryview->folder_item->sort_key;
+	sort_type = summaryview->folder_item->sort_type;
+	if (sort_key != SORT_BY_NONE)
+		summary_sort(summaryview, SORT_BY_NONE, SORT_ASCENDING);
 
 	summaryview->filtered = 0;
 	summaryview->flt_count = 0;
@@ -4620,6 +4627,9 @@ static void summary_filter_real(SummaryView *summaryview,
 		gtk_tree_model_foreach(GTK_TREE_MODEL(summaryview->store),
 				       func, summaryview);
 	}
+
+	if (sort_key != SORT_BY_NONE)
+		summary_sort(summaryview, sort_key, sort_type);
 
 	summary_unlock(summaryview);
 
