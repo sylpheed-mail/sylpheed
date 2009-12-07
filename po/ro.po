@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-27 16:47+0900\n"
-"PO-Revision-Date: 2008-12-05 03:06+0200\n"
+"POT-Creation-Date: 2009-12-07 17:58+0900\n"
+"PO-Revision-Date: 2009-12-01 16:54+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1297,7 +1297,7 @@ msgstr "Maro"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5001
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5011
 msgid "None"
 msgstr "Niciunul"
 
@@ -1827,7 +1827,7 @@ msgstr "Tip MIME"
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
-#: src/summaryview.c:5150
+#: src/summaryview.c:5160
 msgid "Size"
 msgstr "Dimensiune"
 
@@ -1896,7 +1896,7 @@ msgstr "Acest mesaj a fost modificat. Îl salvați în dosarul Ciorne ?"
 
 #: src/compose.c:7071
 msgid "Close _without saving"
-msgstr "Închide _fără salvare"
+msgstr "Închide _fără a salva"
 
 #: src/compose.c:7113
 #, c-format
@@ -2199,20 +2199,17 @@ msgid "Add New vCard Entry"
 msgstr "Adăugare înregistrare vCard"
 
 #: src/export.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s ..."
-msgstr "Căutare %s ..."
+msgstr "Se exportă %s ..."
 
-# titlu la export mbox
 #: src/export.c:204
-#, fuzzy
 msgid "Exporting"
 msgstr "Export"
 
 #: src/export.c:229
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "A apărut o eroare în timpul trimiterii\n"
+msgstr "A apărut o eroare în timpul exportului."
 
 # titlu la export mbox
 #: src/export.c:312
@@ -2220,56 +2217,49 @@ msgid "Export"
 msgstr "Export"
 
 #: src/export.c:331 src/export.c:416
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+msgstr "Specificați dosarul sursă și fișierul de destinație."
 
 #: src/export.c:341 src/import.c:335
-#, fuzzy
 msgid "File format:"
-msgstr "Format dată"
+msgstr "Format de fișier:"
 
 #: src/export.c:346
-#, fuzzy
 msgid "Source folder:"
-msgstr "Director sursă:"
+msgstr "Dosar sursă:"
 
 #: src/export.c:351
-#, fuzzy
 msgid "Destination:"
-msgstr "Director destinație:"
+msgstr "Destinație:"
 
 #: src/export.c:361 src/import.c:355
 msgid "UNIX mbox"
-msgstr ""
+msgstr "Mbox Unix"
 
 #: src/export.c:364
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (număr + .eml)"
 
 #: src/export.c:367
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (doar număr)"
 
 #: src/export.c:381 src/export.c:387 src/import.c:372 src/import.c:378
 #: src/prefs_account_dialog.c:955
 msgid " Select... "
-msgstr " Selectare... "
+msgstr " Selectează... "
 
 #: src/export.c:419
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+msgstr "Specificați dosarul sursă și dosarul de destinație."
 
 #: src/export.c:445
-#, fuzzy
 msgid "Select destination file"
-msgstr "Selectați fișierul de exportat"
+msgstr "Selectați fișierul de destinație"
 
 #: src/export.c:449
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Selectați fișierul de exportat"
+msgstr "Selectați dosarul de destinație"
 
 #: src/filesel.c:158
 msgid "Save as"
@@ -2370,9 +2360,8 @@ msgid "/Mar_k all read"
 msgstr "/Marc_hează totul ca citit"
 
 #: src/folderview.c:265 src/folderview.c:290
-#, fuzzy
 msgid "/Send _queued messages"
-msgstr "_Trimite mesajele de la coadă"
+msgstr "/_Trimite mesajele de la coadă"
 
 #: src/folderview.c:267 src/folderview.c:292 src/folderview.c:314
 msgid "/_Search messages..."
@@ -2617,35 +2606,29 @@ msgid "Can't load the image."
 msgstr "Imaginea nu a putut fi încărcată."
 
 #: src/import.c:187
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "Fișierul %s nu există."
+msgstr "Fișierul sursă nu există."
 
 #: src/import.c:198
-#, fuzzy
 msgid "Can't find the destination folder."
-msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+msgstr "Nu se poate găsi dosarul de destinație."
 
 #: src/import.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "Importing %s ..."
-msgstr "Căutare %s ..."
+msgstr "Se importă %s ..."
 
-# titlu la import mbox
 #: src/import.c:205
-#, fuzzy
 msgid "Importing"
 msgstr "Import"
 
 #: src/import.c:224
-#, fuzzy
 msgid "Scanning folder..."
-msgstr "Scanare dosar %s ..."
+msgstr "Se scanează dosarul..."
 
 #: src/import.c:235
-#, fuzzy
 msgid "Error occurred on import."
-msgstr "A apărut o eroare în timpul trimiterii\n"
+msgstr "A apărut o eroare în timpul importului."
 
 # titlu la import mbox
 #: src/import.c:306
@@ -2653,34 +2636,30 @@ msgid "Import"
 msgstr "Import"
 
 #: src/import.c:325 src/import.c:410
-#, fuzzy
 msgid "Specify source file and destination folder."
-msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+msgstr "Specificați fișierul sursă și dosarul de destinație."
 
 #: src/import.c:340
-#, fuzzy
 msgid "Source:"
-msgstr "Director sursă:"
+msgstr "Sursă:"
 
 #: src/import.c:345
-#, fuzzy
 msgid "Destination folder:"
-msgstr "Director destinație:"
+msgstr "Dosar de destinație:"
 
 #: src/import.c:358
-#, fuzzy
 msgid "eml (folder)"
-msgstr "Dosar nou"
+msgstr "eml (dosar)"
 
 #: src/import.c:407
-#, fuzzy
 msgid "Specify source folder including eml files and destination folder."
-msgstr "Specificați fișierul mbox sursă și dosarul destinație."
+msgstr ""
+"Specificați dosarul sursă care include fișiere eml și dosarul de destinație."
 
+# hm ? sau importat ?
 #: src/import.c:437
-#, fuzzy
 msgid "Select importing folder"
-msgstr "Selectați fișierul de importat"
+msgstr "Selectați dosarul de import"
 
 #: src/import.c:440
 msgid "Select importing file"
@@ -3276,14 +3255,12 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Fișier/_Căsuță poștală/R_econstruiește arborele de dosare"
 
 #: src/mainwindow.c:559
-#, fuzzy
 msgid "/_File/_Import mail data..."
-msgstr "/_Fișier/_Importă un fișier mbox..."
+msgstr "/_Fișier/_Importă date de corespondență..."
 
 #: src/mainwindow.c:560
-#, fuzzy
 msgid "/_File/_Export mail data..."
-msgstr "/_Fișier/_Exportă în fișier mbox..."
+msgstr "/_Fișier/_Exportă date de corespondență..."
 
 #: src/mainwindow.c:562
 msgid "/_File/Empty all _trash"
@@ -3787,9 +3764,8 @@ msgid "/_Configuration/_Actions..."
 msgstr "/_Configurație/_Acțiuni..."
 
 #: src/mainwindow.c:868
-#, fuzzy
 msgid "/_Configuration/Plug-in _manager..."
-msgstr "/_Configurație/Șa_bloane..."
+msgstr "/_Configurație/_Gestionare plugin-uri..."
 
 #: src/mainwindow.c:870
 msgid "/_Configuration/---"
@@ -3858,7 +3834,7 @@ msgstr "/_Ajutor/---"
 
 #: src/mainwindow.c:892
 msgid "/_Help/_Update check..."
-msgstr ""
+msgstr "/_Ajutor/Ca_ută actualizări..."
 
 #: src/mainwindow.c:936
 msgid "Creating main window...\n"
@@ -3870,7 +3846,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Fereastra principală: alocarea culorii %d a eșuat\n"
 
 #: src/mainwindow.c:1201 src/summaryview.c:2453 src/summaryview.c:2540
-#: src/summaryview.c:4126 src/summaryview.c:4255 src/summaryview.c:4633
+#: src/summaryview.c:4126 src/summaryview.c:4255 src/summaryview.c:4643
 msgid "done.\n"
 msgstr "gata.\n"
 
@@ -4096,15 +4072,13 @@ msgstr "Căutarea a eșuat"
 msgid "Search string not found."
 msgstr "Textul căutat nu a fost găsit."
 
-# hm ? sau s-a atins ?
 #: src/message_search.c:220
 msgid "Beginning of message reached; continue from end?"
-msgstr "S-a ajuns la începutul mesajului; continuați de la sfârșit ?"
+msgstr "S-a ajuns la începutul mesajului. Continuați de la sfârșit ?"
 
-# hm ? sau s-a atins ?
 #: src/message_search.c:223
 msgid "End of message reached; continue from beginning?"
-msgstr "S-a ajuns la sfârșitul mesajului; continuați de la început ?"
+msgstr "S-a ajuns la sfârșitul mesajului. Continuați de la început ?"
 
 #: src/message_search.c:226
 msgid "Search finished"
@@ -4289,31 +4263,27 @@ msgstr ""
 
 #: src/plugin_manager.c:115
 msgid "Plug-in manager"
-msgstr ""
+msgstr "Gestionare plugin-uri"
 
 #: src/plugin_manager.c:165
-#, fuzzy
 msgid "Plug-in information"
-msgstr "Informații personale"
+msgstr "Informații despre plug-in"
 
 #: src/plugin_manager.c:192 src/plugin_manager.c:194 src/plugin_manager.c:195
-#, fuzzy
 msgid "(Unknown)"
-msgstr "necunoscut"
+msgstr "(necunoscut)"
 
 #: src/plugin_manager.c:194
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: src/plugin_manager.c:195
-#, fuzzy
 msgid "File: "
-msgstr "Fișier"
+msgstr "Fișier: "
 
 #: src/plugin_manager.c:197
-#, fuzzy
 msgid "Description: "
-msgstr "Descriere"
+msgstr "Descriere: "
 
 #: src/prefs_account_dialog.c:441
 msgid "Opening account preferences window...\n"
@@ -5394,9 +5364,8 @@ msgid "External commands"
 msgstr "Comenzi externe"
 
 #: src/prefs_common_dialog.c:2315
-#, fuzzy
 msgid "Update"
-msgstr "Dată"
+msgstr "Actualizare"
 
 #: src/prefs_common_dialog.c:2368
 msgid "Receive dialog"
@@ -5428,7 +5397,7 @@ msgstr "Închide dialogul de primire la terminarea operației"
 
 #: src/prefs_common_dialog.c:2410
 msgid "Add address to destination when double-clicked"
-msgstr "Adaugă adresa la câmpul „Către” atunci când se face dublu clic pe ea"
+msgstr "Adaugă adresa la destinație atunci când se face dublu clic pe ea"
 
 #: src/prefs_common_dialog.c:2412
 msgid "On exit"
@@ -5478,20 +5447,19 @@ msgstr "Folosește un program extern pentru trimitere"
 
 #: src/prefs_common_dialog.c:2645
 msgid "Update check requires 'curl' command."
-msgstr ""
+msgstr "Căutarea eventualelor actualizări necesită comanda „curl”."
 
 #: src/prefs_common_dialog.c:2656
-#, fuzzy
 msgid "Enable auto update check"
-msgstr "Activează verificarea ortografică"
+msgstr "Activează actualizarea automată"
 
 #: src/prefs_common_dialog.c:2658
 msgid "Use HTTP proxy"
-msgstr ""
+msgstr "Folosește proxy HTTP"
 
 #: src/prefs_common_dialog.c:2660
 msgid "HTTP proxy host (hostname:port):"
-msgstr ""
+msgstr "Gazdă proxy HTTP (numegazdă:port):"
 
 #: src/prefs_common_dialog.c:2700
 msgid "Enable strict checking of the integrity of summary caches"
@@ -6218,19 +6186,19 @@ msgstr "Atașament"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
-#: src/summaryview.c:5143
+#: src/summaryview.c:5153
 msgid "Subject"
 msgstr "Subiect"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
-#: src/summaryview.c:5146
+#: src/summaryview.c:5156
 msgid "From"
 msgstr "Expeditor"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
-#: src/summaryview.c:5148
+#: src/summaryview.c:5158
 msgid "Date"
 msgstr "Dată"
 
@@ -6240,7 +6208,7 @@ msgid "Number"
 msgstr "Număr"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5154
+#: src/prefs_summary_column.c:74 src/summaryview.c:5164
 msgid "To"
 msgstr "Către"
 
@@ -6627,7 +6595,7 @@ msgstr "_Despre"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s -  Căsuță poștală POP3 la distanță"
 
-#: src/rpop3.c:414 src/summaryview.c:5152
+#: src/rpop3.c:414 src/summaryview.c:5162
 msgid "No."
 msgstr "Nr."
 
@@ -7404,15 +7372,15 @@ msgstr "Distrugere fire de discuție..."
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrare (%d / %d)..."
 
-#: src/summaryview.c:4602
+#: src/summaryview.c:4604
 msgid "filtering..."
 msgstr "filtrare..."
 
-#: src/summaryview.c:4603
+#: src/summaryview.c:4605
 msgid "Filtering..."
 msgstr "Filtrare..."
 
-#: src/summaryview.c:4640
+#: src/summaryview.c:4650
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d messaj(e) au fost filtrate."
@@ -7513,25 +7481,24 @@ msgid ""
 "The newer version of Sylpheed found.\n"
 "Upgrade now?"
 msgstr ""
+"A fost găsită versiunea Sylpheed mai nouă.\n"
+"Actualizați acum ?"
 
 #: src/update_check.c:120
-#, fuzzy
 msgid "New version found"
-msgstr "Nu s-a găsit nicio semnătură"
+msgstr "A fost găsită o versiune nouă"
 
 #: src/update_check.c:218
-#, fuzzy
 msgid "Information"
-msgstr "Informații despre server"
+msgstr "Informații"
 
 #: src/update_check.c:219
-#, fuzzy
 msgid "Sylpheed is already the latest version."
-msgstr "rulează deja o altă sesiune Sylpheed.\n"
+msgstr "Versiunea Sylpheed este deja cea mai recentă."
 
 #: src/update_check.c:222
 msgid "Couldn't get the version information."
-msgstr ""
+msgstr "Nu s-a putut obține informația despre versiune."
 
 #~ msgid "Can't open mark file.\n"
 #~ msgstr "Nu se poate deschide fișierul de marcaj.\n"
@@ -7539,18 +7506,14 @@ msgstr ""
 #~ msgid "g_thread is not supported by glib.\n"
 #~ msgstr "g_thread nu este suportat de glib.\n"
 
-#~ msgid "Importing file:"
-#~ msgstr "Fișier de import:"
-
-#, fuzzy
-#~ msgid "eml (file)"
-#~ msgstr "Selectați fișierul"
-
 #~ msgid "Specify target folder and mbox file."
 #~ msgstr "Specificați dosarul sursă și fișierul mbox."
 
 #~ msgid "Exporting file:"
 #~ msgstr "Fișier de export:"
+
+#~ msgid "Importing file:"
+#~ msgstr "Fișier de import:"
 
 #~ msgid "Creating progress dialog...\n"
 #~ msgstr "Creare dialog de progres...\n"

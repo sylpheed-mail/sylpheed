@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed 3.0.0beta2\n"
+"Project-Id-Version: Sylpheed 3.0.0svn2362\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-27 16:47+0900\n"
-"PO-Revision-Date: 2009-11-25 19:20+0300\n"
+"POT-Creation-Date: 2009-12-07 17:58+0900\n"
+"PO-Revision-Date: 2009-12-03 21:15+0300\n"
 "Last-Translator: O.R. Nykyforchyn <oleh.nyk@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -34,9 +34,8 @@ msgid "IMAP4 server disables LOGIN.\n"
 msgstr "Сервер IMAP4 відключив LOGIN.\n"
 
 #: libsylph/imap.c:653
-#, fuzzy
 msgid "Could not establish IMAP connection.\n"
-msgstr "Не вдалось встановити сесію IMAP4 з: %s:%d\n"
+msgstr "Не вдалось встановити з'єднання IMAP.\n"
 
 #: libsylph/imap.c:671
 #, c-format
@@ -1271,7 +1270,7 @@ msgstr "Коричневий"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5001
+#: src/colorlabel.c:280 src/prefs_folder_item.c:316 src/summaryview.c:5011
 msgid "None"
 msgstr "Ніякий"
 
@@ -1794,7 +1793,7 @@ msgstr "тип MIME"
 #. S_COL_DATE
 #: src/compose.c:5100 src/mimeview.c:217 src/prefs_filter_edit.c:503
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
-#: src/summaryview.c:5150
+#: src/summaryview.c:5160
 msgid "Size"
 msgstr "Розмір"
 
@@ -3774,7 +3773,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача розміщення кольору %d\n"
 
 #: src/mainwindow.c:1201 src/summaryview.c:2453 src/summaryview.c:2540
-#: src/summaryview.c:4126 src/summaryview.c:4255 src/summaryview.c:4633
+#: src/summaryview.c:4126 src/summaryview.c:4255 src/summaryview.c:4643
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -4996,9 +4995,8 @@ msgid "Display unread number next to folder name"
 msgstr "Показувати кількість непрочитаного після назви папки"
 
 #: src/prefs_common_dialog.c:1526
-#, fuzzy
 msgid "Displaying message number columns in the folder view:"
-msgstr "Показувати колонки номера листа при відображенні папок"
+msgstr "Показувати колонки кількості листів при відображенні папок:"
 
 #: src/prefs_common_dialog.c:1549
 msgid "Abbreviate newsgroups longer than"
@@ -6082,19 +6080,19 @@ msgstr "Вкладення"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
-#: src/summaryview.c:5143
+#: src/summaryview.c:5153
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
-#: src/summaryview.c:5146
+#: src/summaryview.c:5156
 msgid "From"
 msgstr "Від"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
-#: src/summaryview.c:5148
+#: src/summaryview.c:5158
 msgid "Date"
 msgstr "Дата"
 
@@ -6104,7 +6102,7 @@ msgid "Number"
 msgstr "Номер"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5154
+#: src/prefs_summary_column.c:74 src/summaryview.c:5164
 msgid "To"
 msgstr "Кому:"
 
@@ -6481,7 +6479,7 @@ msgstr "Про програму"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - віддалена POP3-скринька"
 
-#: src/rpop3.c:414 src/summaryview.c:5152
+#: src/rpop3.c:414 src/summaryview.c:5162
 msgid "No."
 msgstr "Номер"
 
@@ -6826,51 +6824,43 @@ msgid "SSL certificate verify failed"
 msgstr "Невдача перевірки сертифіката SSL"
 
 #: src/sslmanager.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "The SSL certificate of %s cannot be verified by the following reason:"
-msgstr ""
-"Сертифікат SSL від %s неможливо перевірити з причини:\n"
-"  %s\n"
-"\n"
-"Сертифікат сервера:\n"
-"  Суб'єкт: %s\n"
-"  Видав: %s\n"
-"\n"
-"Приймаєте цей сертифікат?"
+msgstr "Сертифікат SSL від %s неможливо перевірити з причини:"
 
 #: src/sslmanager.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Subject: %s\n"
-msgstr "  Суб'єкт:  %s\n"
+msgstr "Суб'єкт:  %s\n"
 
 #: src/sslmanager.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "Issuer: %s\n"
-msgstr "  Видав: %s\n"
+msgstr "Видав: %s\n"
 
 #: src/sslmanager.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "Issued date: %s\n"
-msgstr "  Видав: %s\n"
+msgstr "Датовано: %s\n"
 
 #: src/sslmanager.c:103
-#, fuzzy, c-format
+#, c-format
 msgid "Expire date: %s\n"
-msgstr "Недійсний після"
+msgstr "Недійсний після: %s\n"
 
 #: src/sslmanager.c:105
 #, c-format
 msgid "SHA1 fingerprint: %s\n"
-msgstr ""
+msgstr "Контрольна сума SHA1: %s\n"
 
 #: src/sslmanager.c:106
 #, c-format
 msgid "MD5 fingerprint: %s\n"
-msgstr ""
+msgstr "Контрольна сума MD5: %s\n"
 
 #: src/sslmanager.c:108
 msgid "Do you accept this certificate?"
-msgstr ""
+msgstr "Приймаєте цей сертифікат?"
 
 #: src/sslmanager.c:179 src/sslmanager.c:187
 msgid "_Reject"
@@ -7257,15 +7247,15 @@ msgstr "Скасування ниток обговорення..."
 msgid "Filtering (%d / %d)..."
 msgstr "Фільтрування (%d / %d)..."
 
-#: src/summaryview.c:4602
+#: src/summaryview.c:4604
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:4603
+#: src/summaryview.c:4605
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:4640
+#: src/summaryview.c:4650
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."
