@@ -109,32 +109,12 @@ static GdkPixbuf *folderopenpix;
 static GdkPixbuf *grouppix;
 static GdkPixbuf *interfacepix;
 static GdkPixbuf *bookpix;
+static GdkPixbuf *personpix;
 static GdkPixbuf *addresspix;
 static GdkPixbuf *vcardpix;
 static GdkPixbuf *jpilotpix;
 static GdkPixbuf *categorypix;
 static GdkPixbuf *ldappix;
-
-static GdkPixmap *folderxpm;
-static GdkBitmap *folderxpmmask;
-static GdkPixmap *folderopenxpm;
-static GdkBitmap *folderopenxpmmask;
-static GdkPixmap *groupxpm;
-static GdkBitmap *groupxpmmask;
-static GdkPixmap *interfacexpm;
-static GdkBitmap *interfacexpmmask;
-static GdkPixmap *bookxpm;
-static GdkBitmap *bookxpmmask;
-static GdkPixmap *addressxpm;
-static GdkBitmap *addressxpmmask;
-static GdkPixmap *vcardxpm;
-static GdkBitmap *vcardxpmmask;
-static GdkPixmap *jpilotxpm;
-static GdkBitmap *jpilotxpmmask;
-static GdkPixmap *categoryxpm;
-static GdkBitmap *categoryxpmmask;
-static GdkPixmap *ldapxpm;
-static GdkBitmap *ldapxpmmask;
 
 /* Message buffer */
 static gchar addressbook_msgbuf[ADDRESSBOOK_MSGBUF_SIZE];
@@ -861,8 +841,6 @@ static void addressbook_create(void)
 
 	/* Build icons for interface */
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_INTERFACE, &interfacepix);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_INTERFACE,
-			 &interfacexpm, &interfacexpmmask);
 	/* Build control tables */
 	addrbookctl_build_map(window);
 	addrbookctl_build_iflist();
@@ -3694,20 +3672,11 @@ void addrbookctl_build_map(GtkWidget *window)
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_GROUP, &grouppix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_VCARD, &vcardpix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_BOOK, &bookpix);
+	stock_pixbuf_gdk(window, STOCK_PIXMAP_PERSON, &personpix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_ADDRESS, &addresspix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_JPILOT, &jpilotpix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_CATEGORY, &categorypix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_LDAP, &ldappix);
-
-	stock_pixmap_gdk(window, STOCK_PIXMAP_DIR_CLOSE, &folderxpm, &folderxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_DIR_OPEN, &folderopenxpm, &folderopenxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_GROUP, &groupxpm, &groupxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_VCARD, &vcardxpm, &vcardxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_BOOK, &bookxpm, &bookxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_ADDRESS, &addressxpm, &addressxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_JPILOT, &jpilotxpm, &jpilotxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_CATEGORY, &categoryxpm, &categoryxpmmask);
-	stock_pixmap_gdk(window, STOCK_PIXMAP_LDAP, &ldapxpm, &ldapxpmmask);
 
 	_addressBookTypeHash_ = g_hash_table_new(g_int_hash, g_int_equal);
 	_addressBookTypeList_ = NULL;
@@ -3748,8 +3717,8 @@ void addrbookctl_build_map(GtkWidget *window)
 	atci->treeExpand = FALSE;
 	atci->treeLeaf = FALSE;
 	atci->displayName = _("Person");
-	atci->icon_pixbuf = NULL;
-	atci->icon_open_pixbuf = NULL;
+	atci->icon_pixbuf = personpix;
+	atci->icon_open_pixbuf = personpix;
 	atci->menuCommand = NULL;
 	g_hash_table_insert( _addressBookTypeHash_, &atci->objectType, atci );
 	_addressBookTypeList_ = g_list_append( _addressBookTypeList_, atci );
