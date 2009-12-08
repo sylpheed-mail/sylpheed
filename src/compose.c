@@ -7079,7 +7079,11 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 		case G_ALERTDEFAULT:
 			compose_draft_cb(data, 0, NULL);
 			return;
+#ifdef G_OS_WIN32
+		case G_ALERTALTERNATE:
+#else
 		case G_ALERTOTHER:
+#endif
 			break;
 		default:
 			return;
