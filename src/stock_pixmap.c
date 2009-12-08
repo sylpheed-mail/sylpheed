@@ -27,7 +27,6 @@
 #include "gtkutils.h"
 
 #include "icons/address.xpm"
-#include "icons/book.xpm"
 #include "icons/category.xpm"
 #include "icons/clip.xpm"
 #include "icons/complete.xpm"
@@ -78,6 +77,7 @@
 #include "icons/stock_sylpheed_newmail_16.h"
 #include "icons/sylpheed-logo.h"
 #include "icons/stock_person.h"
+#include "icons/stock_book.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -96,7 +96,7 @@ struct _StockPixmapData
 static StockPixmapData pixmaps[] =
 {
 	{address_xpm	 , NULL, NULL},
-	{book_xpm	 , NULL, NULL},
+	{NULL, NULL, NULL, NULL, stock_book, sizeof(stock_book), "stock_book", 16},
 	{category_xpm	 , NULL, NULL},
 	{clip_xpm	 , NULL, NULL},
 	{complete_xpm	 , NULL, NULL},
