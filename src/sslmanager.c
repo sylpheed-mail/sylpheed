@@ -59,6 +59,7 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	gchar not_before[64] = "", not_after[64] = "";
 	gint i;
 	gint result;
+	gboolean disable_always = FALSE;
 
 	if (verify_result == X509_V_OK)
 		return 0;
@@ -174,6 +175,10 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 	}
 #endif
 
+	/* prohibit acception of expired certificates */
+	if (verify_result == X509_V_ERR_CERT_HAS_EXPIRED)
+		disable_always = TRUE;
+
 	if (prefs_common.comply_gnome_hig)
 		gtk_dialog_add_buttons(GTK_DIALOG(dialog),
 				       _("_Reject"), GTK_RESPONSE_REJECT,
@@ -187,6 +192,9 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 				       _("_Reject"), GTK_RESPONSE_REJECT,
 				       NULL);
 	gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
+	if (disable_always)
+		gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog),
+						  GTK_RESPONSE_ACCEPT, FALSE);
 
 	gtk_widget_show_all(dialog);
 

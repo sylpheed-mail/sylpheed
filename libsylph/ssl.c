@@ -273,6 +273,7 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 
 	if ((server_cert = SSL_get_peer_certificate(sockinfo->ssl)) != NULL) {
 		glong verify_result;
+		gboolean expired = FALSE;
 
 		if (get_debug_mode()) {
 			gchar *str;
@@ -311,6 +312,9 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 			debug_print("SSL verify OK\n");
 			X509_free(server_cert);
 			return TRUE;
+		} else if (verify_result == X509_V_ERR_CERT_HAS_EXPIRED) {
+			log_message("SSL certificate of %s has expired\n", sockinfo->hostname);
+			expired = TRUE;
 		} else if (g_slist_find_custom(trust_list, server_cert,
 					       x509_cmp_func) ||
 			   g_slist_find_custom(tmp_trust_list, server_cert,
@@ -346,12 +350,12 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 				return FALSE;
 			} else if (res > 0) {
 				debug_print("Temporarily accept SSL certificate of %s\n", sockinfo->hostname);
-				tmp_trust_list = g_slist_prepend
-					(tmp_trust_list, X509_dup(server_cert));
+				if (!expired)
+					tmp_trust_list = g_slist_prepend(tmp_trust_list, X509_dup(server_cert));
 			} else {
 				debug_print("Permanently accept SSL certificate of %s\n", sockinfo->hostname);
-				trust_list = g_slist_prepend
-					(trust_list, X509_dup(server_cert));
+				if (!expired)
+					trust_list = g_slist_prepend(trust_list, X509_dup(server_cert));
 			}
 		}
 
