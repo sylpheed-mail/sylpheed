@@ -7067,8 +7067,13 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 	if (compose->modified) {
 		val = alertpanel(_("Save message"),
 				 _("This message has been modified. Save it to draft folder?"),
+#ifdef G_OS_WIN32
+				 GTK_STOCK_SAVE, _("Close _without saving"),
+				 GTK_STOCK_CANCEL);
+#else
 				 GTK_STOCK_SAVE, GTK_STOCK_CANCEL,
 				 _("Close _without saving"));
+#endif
 
 		switch (val) {
 		case G_ALERTDEFAULT:
