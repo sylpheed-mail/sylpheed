@@ -507,6 +507,7 @@ static void addressbook_create(void)
 	GtkTreeStore *list_store;
 	GtkWidget *paned;
 	GtkWidget *hbox;
+	GtkWidget *label;
 	GtkWidget *entry;
 	GtkWidget *statusbar;
 	GtkWidget *hbbox;
@@ -746,10 +747,8 @@ static void addressbook_create(void)
 	hbox = gtk_hbox_new(FALSE, 4);
 	gtk_box_pack_start(GTK_BOX(list_vbox), hbox, FALSE, FALSE, 0);
 
-#if 0
-	label = gtk_label_new(_("Name:"));
+	label = gtk_label_new(_("Search:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-#endif
 
 	entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
@@ -821,7 +820,7 @@ static void addressbook_create(void)
 	reg_btn = gtk_button_new_with_label(_("Add"));
 	GTK_WIDGET_SET_FLAGS(reg_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), reg_btn, TRUE, TRUE, 0);
-	lup_btn = gtk_button_new_with_label(_("Lookup"));
+	lup_btn = gtk_button_new_with_label(_("Search"));
 	GTK_WIDGET_SET_FLAGS(lup_btn, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(hbbox2), lup_btn, TRUE, TRUE, 0);
 	close_btn = gtk_button_new_with_mnemonic(_("_Close"));
