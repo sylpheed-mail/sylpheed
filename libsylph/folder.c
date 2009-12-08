@@ -1459,6 +1459,8 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 				qsearch_cond_type = 5;
 			else if (!strcmp(attr->value, "last5"))
 				qsearch_cond_type = 6;
+			else if (!strcmp(attr->value, "last7"))
+				qsearch_cond_type = 7;
 		} else if (!strcmp(attr->name, "account_id")) {
 			account = account_find_from_id(atoi(attr->value));
 			if (!account) g_warning("account_id: %s not found\n",
@@ -1636,7 +1638,7 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 					"from", "subject", "score", "label",
 					"mark", "unread", "mime", "to"};
 	static gchar *qsearch_cond_str[] = {"all", "unread", "mark", "clabel",
-					    "mime", "w1day", "last5"};
+					    "mime", "w1day", "last5", "last7"};
 
 	g_return_if_fail(node != NULL);
 	g_return_if_fail(fp != NULL);
@@ -1695,7 +1697,7 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 				fprintf(fp, " sort_type=\"descending\"");
 		}
 		if (item->qsearch_cond_type > 0 &&
-		    item->qsearch_cond_type < 7) {
+		    item->qsearch_cond_type < 8) {
 			fprintf(fp, " qsearch_cond=\"%s\"",
 				qsearch_cond_str[item->qsearch_cond_type]);
 		}

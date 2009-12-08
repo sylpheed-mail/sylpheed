@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,8 @@ static const struct {
 	{QS_CLABEL,	FLT_COND_COLOR_LABEL},
 	{QS_MIME,	FLT_COND_MIME},
 	{QS_W1DAY,	-1},
-	{QS_LAST5,	-1}
+	{QS_LAST5,	-1},
+	{QS_LAST7,	-1}
 };
 
 static void menu_activated		(GtkWidget	*menuitem,
@@ -100,6 +101,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	MENUITEM_ADD(menu, menuitem, NULL, 0);
 	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
 	COND_MENUITEM_ADD(_("Last 5 days"), QS_LAST5);
+	COND_MENUITEM_ADD(_("Last 7 days"), QS_LAST7);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), menu);
 
 #undef COND_MENUITEM_ADD
@@ -202,6 +204,13 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	case QS_LAST5:
 		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
 				       NULL, "5");
+		cond_list = g_slist_append(cond_list, cond);
+		status_rule = filter_rule_new("Status filter rule", FLT_OR,
+					      cond_list, NULL);
+		break;
+	case QS_LAST7:
+		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
+				       NULL, "7");
 		cond_list = g_slist_append(cond_list, cond);
 		status_rule = filter_rule_new("Status filter rule", FLT_OR,
 					      cond_list, NULL);

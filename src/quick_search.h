@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,8 @@ typedef enum
 	QS_CLABEL,
 	QS_MIME,
 	QS_W1DAY,
-	QS_LAST5
+	QS_LAST5,
+	QS_LAST7
 } QSearchCondType;
 
 struct _QuickSearch
