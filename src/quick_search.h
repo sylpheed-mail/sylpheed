@@ -46,6 +46,7 @@ struct _QuickSearch
 	GtkWidget *label;
 	GtkWidget *entry;
 	GtkWidget *clear_btn;
+	GtkWidget *status_label;
 
 	SummaryView *summaryview;
 };

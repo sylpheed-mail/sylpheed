@@ -76,6 +76,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	GtkWidget *vbox;
 	GtkWidget *clear_btn;
 	GtkWidget *image;
+	GtkWidget *status_label;
 
 	qsearch = g_new0(QuickSearch, 1);
 
@@ -147,12 +148,20 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
         g_signal_connect(G_OBJECT(clear_btn), "clicked",
                          G_CALLBACK(clear_clicked), qsearch);
 
+	hbox2 = gtk_hbox_new(FALSE, 0);
+	gtk_widget_set_size_request(hbox2, 4, -1);
+	gtk_box_pack_start(GTK_BOX(hbox), hbox2, FALSE, FALSE, 0);
+
+	status_label = gtk_label_new("");
+	gtk_box_pack_start(GTK_BOX(hbox), status_label, FALSE, FALSE, 0);
+
 	qsearch->hbox = hbox;
 	qsearch->optmenu = optmenu;
 	qsearch->menu = menu;
 	qsearch->label = label;
 	qsearch->entry = entry;
 	qsearch->clear_btn = clear_btn;
+	qsearch->status_label = status_label;
 	qsearch->summaryview = summaryview;
 	summaryview->qsearch = qsearch;
 
@@ -165,6 +174,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 void quick_search_clear_entry(QuickSearch *qsearch)
 {
 	gtk_entry_set_text(GTK_ENTRY(qsearch->entry), "");
+	gtk_label_set_text(GTK_LABEL(qsearch->status_label), "");
 }
 
 GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
@@ -179,6 +189,8 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	GSList *cond_list = NULL;
 	GSList *flt_mlist = NULL;
 	GSList *cur;
+	gint count = 0, total = 0;
+	gchar status_text[1024];
 
 	if (!summaryview->all_mlist)
 		return NULL;
@@ -244,6 +256,8 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist;
 
+		total++;
+
 		if (status_rule) {
 			if (!filter_match_rule(status_rule, msginfo, NULL,
 					       &fltinfo))
@@ -253,14 +267,29 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 		if (rule) {
 			hlist = procheader_get_header_list_from_msginfo
 				(msginfo);
-			if (filter_match_rule(rule, msginfo, hlist, &fltinfo))
+			if (filter_match_rule(rule, msginfo, hlist, &fltinfo)) {
 				flt_mlist = g_slist_prepend(flt_mlist, msginfo);
-
+				count++;
+			}
 			procheader_header_list_destroy(hlist);
-		} else
+		} else {
 			flt_mlist = g_slist_prepend(flt_mlist, msginfo);
+			count++;
+		}
 	}
 	flt_mlist = g_slist_reverse(flt_mlist);
+
+	if (status_rule || rule) {
+		if (count > 0)
+			g_snprintf(status_text, sizeof(status_text),
+				   _("%1$d in %2$d matched"), count, total);
+		else
+			g_snprintf(status_text, sizeof(status_text),
+				   _("No messages matched"));
+		gtk_label_set_text(GTK_LABEL(qsearch->status_label),
+				   status_text);
+	} else
+		gtk_label_set_text(GTK_LABEL(qsearch->status_label), "");
 
 	filter_rule_free(rule);
 	filter_rule_free(status_rule);
