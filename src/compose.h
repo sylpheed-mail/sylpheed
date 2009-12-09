@@ -170,6 +170,8 @@ struct _Compose
 
 	CharSet out_encoding;
 
+	gboolean use_mdn;
+
 	/* privacy settings */
 	gboolean use_signing;
 	gboolean use_encryption;

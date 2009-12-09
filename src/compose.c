@@ -488,6 +488,10 @@ static void compose_customize_toolbar_cb(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
 
+static void compose_toggle_mdn_cb	(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
+
 #if USE_GPGME
 static void compose_toggle_sign_cb	(gpointer	 data,
 					 guint		 action,
@@ -701,6 +705,9 @@ static GtkItemFactoryEntry compose_entries[] =
 	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/Edit with e_xternal editor"),
 					"<shift><control>X", compose_ext_editor_cb, 0, NULL},
+	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/_Tools/Request _disposition notification"),   	NULL, compose_toggle_mdn_cb   , 0, "<ToggleItem>"},
+
 #if USE_GPGME
 	{N_("/_Tools/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/PGP Si_gn"),   	NULL, compose_toggle_sign_cb   , 0, "<ToggleItem>"},
@@ -1194,6 +1201,13 @@ void compose_reedit(MsgInfo *msginfo)
 	compose_connect_changed_callbacks(compose);
 	compose_set_title(compose);
 
+	if (compose->use_mdn) {
+		GtkItemFactory *ifactory;
+
+		ifactory = gtk_item_factory_from_widget(compose->menubar);
+		menu_set_active(ifactory, "/Tools/Request disposition notification", TRUE);
+	}
+
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
 			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
@@ -1562,6 +1576,7 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 				       {"X-Sylpheed-Forward:", NULL, FALSE},
 				       {"REP:", NULL, FALSE},
 				       {"FWD:", NULL, FALSE},
+				       {"Disposition-Notification-To:", NULL, FALSE},
 				       {NULL, NULL, FALSE}};
 
 	enum
@@ -1569,7 +1584,8 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		H_X_SYLPHEED_REPLY = 0,
 		H_X_SYLPHEED_FORWARD = 1,
 		H_REP = 2,
-		H_FWD = 3
+		H_FWD = 3,
+		H_MDN = 4
 	};
 
 	gchar *file;
@@ -1598,6 +1614,8 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		} else if ((hnum == H_X_SYLPHEED_FORWARD || hnum == H_FWD) &&
 			   !compose->forward_targets) {
 			compose->forward_targets = g_strdup(str);
+		} else if (hnum == H_MDN) {
+			compose->use_mdn = TRUE;
 		}
 	}
 
@@ -4516,6 +4534,13 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		}
 	}
 
+	/* Disposition-Notification-To */
+	if (compose->use_mdn &&
+	    !IS_IN_CUSTOM_HEADER("Disposition-Notification-To")) {
+		fprintf(fp, "Disposition-Notification-To: %s\n",
+			compose->account->address);
+	}
+
 	/* Organization */
 	if (compose->account->organization &&
 	    !IS_IN_CUSTOM_HEADER("Organization")) {
@@ -5339,6 +5364,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->use_attach     = FALSE;
 
 	compose->out_encoding   = C_AUTO;
+
+	compose->use_mdn        = FALSE;
 
 #if USE_GPGME
 	compose->use_signing    = FALSE;
@@ -7510,6 +7537,17 @@ static void compose_customize_toolbar_cb(gpointer data, guint action,
 					 GtkWidget *widget)
 {
 	toolbar_customize(widget, data);
+}
+
+static void compose_toggle_mdn_cb(gpointer data, guint action,
+				  GtkWidget *widget)
+{
+	Compose *compose = (Compose *)data;
+
+	if (GTK_CHECK_MENU_ITEM(widget)->active)
+		compose->use_mdn = TRUE;
+	else
+		compose->use_mdn = FALSE;
 }
 
 #if USE_GPGME
