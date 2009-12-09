@@ -1528,6 +1528,7 @@ static void prefs_display_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox2), label_folder_cols, FALSE, TRUE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label_folder_cols), 0, 0.5);
 
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 	hbox1 = gtk_hbox_new(FALSE, 8);
 	gtk_widget_show(hbox1);
 	gtk_box_pack_start(GTK_BOX(vbox2), hbox1, FALSE, TRUE, 0);
@@ -1539,7 +1540,7 @@ static void prefs_display_create(void)
 	PACK_CHECK_BUTTON(hbox1, chkbtn_folder_col_unread, _("Unread"));
 	PACK_CHECK_BUTTON(hbox1, chkbtn_folder_col_total, _("Total"));
 
-	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW);
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
 
 	hbox1 = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox1);
