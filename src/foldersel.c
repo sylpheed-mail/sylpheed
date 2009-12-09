@@ -344,10 +344,16 @@ static void foldersel_create(void)
 	gtkut_stock_button_set_create(&confirm_area,
 				      &ok_button,     GTK_STOCK_OK,
 				      &cancel_button, GTK_STOCK_CANCEL,
-				      &new_button,    GTK_STOCK_NEW);
+				      NULL, NULL);
 
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(ok_button);
+
+	new_button = gtk_button_new_from_stock(GTK_STOCK_NEW);
+	gtk_widget_show(new_button);
+	gtk_box_pack_start(GTK_BOX(confirm_area), new_button, FALSE, FALSE, 0);
+	gtk_button_box_set_child_secondary(GTK_BUTTON_BOX(confirm_area),
+					   new_button, TRUE);
 
 	g_signal_connect(G_OBJECT(ok_button), "clicked",
 			 G_CALLBACK(foldersel_ok), NULL);
