@@ -310,7 +310,7 @@ static void foldersel_create(void)
 	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
 
 	column = gtk_tree_view_column_new();
-	gtk_tree_view_column_set_spacing(column, 2);
+	gtk_tree_view_column_set_spacing(column, 1);
 	renderer = gtk_cell_renderer_pixbuf_new();
 	g_object_set(renderer, "ypad", 0, NULL);
 	gtk_tree_view_column_pack_start(column, renderer, FALSE);

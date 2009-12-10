@@ -598,7 +598,7 @@ static void addressbook_create(void)
 	gtk_container_add(GTK_CONTAINER(tree_swin), treeview);
 
 	column = gtk_tree_view_column_new();
-	gtk_tree_view_column_set_spacing(column, 2);
+	gtk_tree_view_column_set_spacing(column, 1);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width(column, COL_FOLDER_WIDTH);
 	gtk_tree_view_column_set_resizable(column, TRUE);
@@ -675,7 +675,7 @@ static void addressbook_create(void)
 	gtk_container_add(GTK_CONTAINER(list_swin), listview);
 
 	column = gtk_tree_view_column_new();
-	gtk_tree_view_column_set_spacing(column, 2);
+	gtk_tree_view_column_set_spacing(column, 1);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width(column, COL_NAME_WIDTH);
 	gtk_tree_view_column_set_resizable(column, TRUE);

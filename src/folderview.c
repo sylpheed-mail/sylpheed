@@ -373,7 +373,7 @@ FolderView *folderview_create(void)
 
 	/* create folder icon + name column */
 	column = gtk_tree_view_column_new();
-	gtk_tree_view_column_set_spacing(column, 2);
+	gtk_tree_view_column_set_spacing(column, 1);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_folder);
