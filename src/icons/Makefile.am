@@ -26,7 +26,11 @@ BUILT_SOURCES = \
 	stock_sylpheed_32.h \
 	stock_sylpheed_newmail.h \
 	stock_sylpheed_newmail_16.h \
-	sylpheed-logo.h
+	sylpheed-logo.h \
+	folder-close.h \
+	folder-open.h \
+	folder-noselect.h \
+	folder-search.h
 
 EXTRA_DIST = \
 	stock_addressbook.png \
@@ -57,11 +61,12 @@ EXTRA_DIST = \
 	stock_sylpheed_newmail.png \
 	stock_sylpheed_newmail_16.png \
 	sylpheed-logo.png \
+	folder-close.png \
+	folder-open.png \
+	folder-noselect.png \
+	folder-search.png \
 	clip.xpm \
 	deleted.xpm \
-	dir-close.xpm \
-	dir-open.xpm \
-	dir-noselect.xpm \
 	forwarded.xpm \
 	group.xpm \
 	mark.xpm \
