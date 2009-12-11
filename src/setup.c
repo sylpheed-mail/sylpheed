@@ -49,11 +49,22 @@ static void sel_btn_clicked(GtkButton *button, GtkWidget *entry)
 {
 	gchar *folder;
 	gchar *utf8_folder;
+	gchar *base;
 
 	folder = filesel_select_dir(NULL);
 	if (folder) {
 		utf8_folder = conv_filename_to_utf8(folder);
-		gtk_entry_set_text(GTK_ENTRY(entry), utf8_folder);
+		base = g_path_get_basename(utf8_folder);
+		if (!g_ascii_strcasecmp(base, "Mail")) {
+			gtk_entry_set_text(GTK_ENTRY(entry), utf8_folder);
+		} else {
+			gchar *text;
+
+			text = g_strconcat(utf8_folder, G_DIR_SEPARATOR_S, "Mail", NULL);
+			gtk_entry_set_text(GTK_ENTRY(entry), text);
+			g_free(text);
+		}
+		g_free(base);
 		g_free(utf8_folder);
 		g_free(folder);
 	}
@@ -81,6 +92,7 @@ void setup(MainWindow *mainwin)
 	dialog = gtk_dialog_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Mailbox setting"));
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, FALSE);
+	gtk_widget_set_size_request(dialog, 540, -1);
 	gtk_window_set_position(GTK_WINDOW(dialog),
 				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
