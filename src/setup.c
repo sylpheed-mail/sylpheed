@@ -70,6 +70,20 @@ static void sel_btn_clicked(GtkButton *button, GtkWidget *entry)
 	}
 }
 
+#ifdef G_OS_WIN32
+#define MODIFY_LABEL_STYLE() \
+	{ \
+		GtkStyle *style; \
+		style = gtk_widget_get_style(dialog); \
+		gtk_widget_modify_base(label, GTK_STATE_ACTIVE, \
+				       &style->base[GTK_STATE_SELECTED]); \
+		gtk_widget_modify_text(label, GTK_STATE_ACTIVE, \
+				       &style->text[GTK_STATE_SELECTED]); \
+	}
+#else
+#define MODIFY_LABEL_STYLE()
+#endif
+
 void setup(MainWindow *mainwin)
 {
 	static PangoFontDescription *font_desc;
@@ -140,6 +154,7 @@ void setup(MainWindow *mainwin)
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	GTK_WIDGET_UNSET_FLAGS(label, GTK_CAN_FOCUS);
+	MODIFY_LABEL_STYLE();
 
 	vbox = gtk_vbox_new(FALSE, 8);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
@@ -156,9 +171,13 @@ void setup(MainWindow *mainwin)
 	label = gtk_label_new(fullpath);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+	gtk_label_set_line_wrap(GTK_LABEL(label), FALSE);
+#if GTK_CHECK_VERSION(2, 6, 0)
+	gtk_label_set_ellipsize(GTK_LABEL(label), PANGO_ELLIPSIZE_MIDDLE);
+#endif
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	GTK_WIDGET_UNSET_FLAGS(label, GTK_CAN_FOCUS);
+	MODIFY_LABEL_STYLE();
 
 	g_free(fullpath);
 
@@ -187,17 +206,7 @@ void setup(MainWindow *mainwin)
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	GTK_WIDGET_UNSET_FLAGS(label, GTK_CAN_FOCUS);
-
-#ifdef G_OS_WIN32
-	{
-		GtkStyle *style;
-		style = gtk_widget_get_style(dialog);
-		gtk_widget_modify_base(label, GTK_STATE_ACTIVE,
-				       &style->base[GTK_STATE_SELECTED]);
-		gtk_widget_modify_text(label, GTK_STATE_ACTIVE,
-				       &style->text[GTK_STATE_SELECTED]);
-	}
-#endif
+	MODIFY_LABEL_STYLE();
 
 	if (prefs_common.comply_gnome_hig) {
 		gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
