@@ -33,6 +33,7 @@
 #include "gtkutils.h"
 #include "filesel.h"
 #include "prefs_common.h"
+#include "stock_pixmap.h"
 
 static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data);
 
@@ -120,8 +121,7 @@ void setup(MainWindow *mainwin)
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),
 			   hbox, FALSE, FALSE, 0);
 
-	image = gtk_image_new_from_stock
-		(GTK_STOCK_PREFERENCES, GTK_ICON_SIZE_DIALOG);
+	image = stock_pixbuf_widget(dialog, STOCK_PIXMAP_SYLPHEED);
 
 	gtk_misc_set_alignment(GTK_MISC(image), 0.5, 0.0);
 	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
@@ -252,7 +252,10 @@ void setup(MainWindow *mainwin)
 	if (path == NULL)
 		return;
 
-	folder = folder_new(F_MH, _("Mailbox"), path);
+	if (!strcmp(g_basename(path), "Mail"))
+		folder = folder_new(F_MH, _("Mailbox"), path);
+	else
+		folder = folder_new(F_MH, g_basename(path), path);
 	g_free(path);
 
 	if (folder->klass->create_tree(folder) < 0) {
