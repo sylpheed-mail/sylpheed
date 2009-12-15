@@ -547,13 +547,13 @@ void folderview_init(FolderView *folderview)
 
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_INBOX, &inbox_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_OUTBOX, &outbox_pixbuf);
-	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_CLOSE, &folder_pixbuf);
-	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_OPEN, &folderopen_pixbuf);
-	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DIR_NOSELECT,
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_FOLDER_CLOSE, &folder_pixbuf);
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_FOLDER_OPEN, &folderopen_pixbuf);
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_FOLDER_NOSELECT,
 			 &foldernoselect_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DRAFT, &draft_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_TRASH, &trash_pixbuf);
-	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_GROUP, &virtual_pixbuf);
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_FOLDER_SEARCH, &virtual_pixbuf);
 }
 
 void folderview_reflect_prefs(FolderView *folderview)

@@ -613,7 +613,7 @@ void summary_init(SummaryView *summaryview)
 	pango_font_description_free(font_desc);
 
 	pixmap = stock_pixbuf_widget(summaryview->hbox,
-				     STOCK_PIXMAP_DIR_OPEN);
+				     STOCK_PIXMAP_FOLDER_OPEN);
 	gtk_box_pack_start(GTK_BOX(summaryview->hbox), pixmap, FALSE, FALSE, 4);
 	gtk_box_reorder_child(GTK_BOX(summaryview->hbox), pixmap, 0);
 	gtk_widget_show(pixmap);

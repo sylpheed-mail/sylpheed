@@ -254,9 +254,9 @@ static void addressadd_create( void ) {
 
 	gtk_widget_show_all(vbox);
 
-	stock_pixmap_gdk( window, STOCK_PIXMAP_BOOK, &bookXpm, &bookXpmMask );
-	stock_pixmap_gdk( window, STOCK_PIXMAP_DIR_OPEN,
-			  &folderXpm, &folderXpmMask );
+	stock_pixmap_gdk(window, STOCK_PIXMAP_BOOK, &bookXpm, &bookXpmMask);
+	stock_pixmap_gdk(window, STOCK_PIXMAP_FOLDER_OPEN,
+			 &folderXpm, &folderXpmMask);
 }
 
 static void addressadd_load_folder( GtkCTreeNode *parentNode, ItemFolder *parentFolder,

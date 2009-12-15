@@ -34,7 +34,6 @@
 #include "icons/deleted.xpm"
 #include "icons/error.xpm"
 #include "icons/forwarded.xpm"
-#include "icons/group.xpm"
 #include "icons/interface.xpm"
 #include "icons/jpilot.xpm"
 #include "icons/ldap.xpm"
@@ -79,6 +78,7 @@
 #include "icons/folder-open.h"
 #include "icons/folder-noselect.h"
 #include "icons/folder-search.h"
+#include "icons/folder-group.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -108,7 +108,7 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, folder_noselect, sizeof(folder_noselect), "folder-noselect", 0},
 	{error_xpm	 , NULL, NULL},
 	{forwarded_xpm	 , NULL, NULL},
-	{NULL, NULL, NULL, NULL, folder_search, sizeof(folder_search), "folder-search", 0},
+	{NULL, NULL, NULL, NULL, folder_group, sizeof(folder_group), "folder-group", 0},
 	{interface_xpm	 , NULL, NULL},
 	{jpilot_xpm	 , NULL, NULL},
 	{ldap_xpm	 , NULL, NULL},
@@ -149,6 +149,7 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail_16, sizeof(stock_sylpheed_newmail_16), NULL, 0},
 	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 	{NULL, NULL, NULL, NULL, stock_person, sizeof(stock_person), "stock_person", 16},
+	{NULL, NULL, NULL, NULL, folder_search, sizeof(folder_search), "folder-search", 0},
 };
 
 

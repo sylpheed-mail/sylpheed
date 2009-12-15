@@ -702,7 +702,7 @@ ActionHBox *prefs_filter_edit_action_hbox_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), folder_entry, TRUE, TRUE, 0);
 
 	folder_img = stock_pixbuf_widget(rule_edit_window.window,
-					 STOCK_PIXMAP_DIR_OPEN);
+					 STOCK_PIXMAP_FOLDER_OPEN);
 	gtk_widget_show(folder_img);
 
 	folder_sel_btn = gtk_button_new();

@@ -3666,8 +3666,8 @@ void addrbookctl_build_map(GtkWidget *window)
 	AddressTypeControlItem *atci;
 
 	/* Build icons */
-	stock_pixbuf_gdk(window, STOCK_PIXMAP_DIR_CLOSE, &folderpix);
-	stock_pixbuf_gdk(window, STOCK_PIXMAP_DIR_OPEN, &folderopenpix);
+	stock_pixbuf_gdk(window, STOCK_PIXMAP_FOLDER_CLOSE, &folderpix);
+	stock_pixbuf_gdk(window, STOCK_PIXMAP_FOLDER_OPEN, &folderopenpix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_GROUP, &grouppix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_VCARD, &vcardpix);
 	stock_pixbuf_gdk(window, STOCK_PIXMAP_BOOK, &bookpix);
