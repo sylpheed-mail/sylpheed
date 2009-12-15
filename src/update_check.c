@@ -33,6 +33,7 @@
 
 #include "update_check.h"
 #include "manage_window.h"
+#include "inc.h"
 #include "gtkutils.h"
 #include "alertpanel.h"
 #include "prefs_common.h"
@@ -211,15 +212,19 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 
 	gdk_threads_enter();
 
-	if (result)
-		update_dialog(new_ver, show_dialog_always);
-	else if (show_dialog_always) {
-		if (got_version)
-			alertpanel_message(_("Information"),
-					   _("Sylpheed is already the latest version."),
-					   ALERT_NOTICE);
-		else
-			alertpanel_error(_("Couldn't get the version information."));
+	if (!gtkut_window_modal_exist() && !inc_is_active()) {
+		if (result)
+			update_dialog(new_ver, show_dialog_always);
+		else if (show_dialog_always) {
+			if (got_version)
+				alertpanel_message(_("Information"),
+						   _("Sylpheed is already the latest version."),
+						   ALERT_NOTICE);
+			else
+				alertpanel_error(_("Couldn't get the version information."));
+		}
+	} else {
+		debug_print("update_check_cb: modal dialog exists or incorporation is active. Disabling update dialog.\n");
 	}
 	g_free(new_ver);
 
