@@ -342,6 +342,8 @@ gint check_line_length			(const gchar	*str,
 
 gchar *strstr_with_skip_quote		(const gchar	*haystack,
 					 const gchar	*needle);
+gchar *strcasestr_with_skip_quote	(const gchar	*haystack,
+					 const gchar	*needle);
 gchar *strchr_parenthesis_close		(const gchar	*str,
 					 gchar		 op,
 					 gchar		 cl);

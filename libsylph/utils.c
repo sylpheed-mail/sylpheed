@@ -1396,6 +1396,43 @@ gchar *strstr_with_skip_quote(const gchar *haystack, const gchar *needle)
 	return NULL;
 }
 
+gchar *strcasestr_with_skip_quote(const gchar *haystack, const gchar *needle)
+{
+	register guint haystack_len, needle_len;
+	gboolean in_squote = FALSE, in_dquote = FALSE;
+
+	haystack_len = strlen(haystack);
+	needle_len   = strlen(needle);
+
+	if (haystack_len < needle_len || needle_len == 0)
+		return NULL;
+
+	while (haystack_len >= needle_len) {
+		if (!in_squote && !in_dquote &&
+		    !g_ascii_strncasecmp(haystack, needle, needle_len))
+			return (gchar *)haystack;
+
+		/* 'foo"bar"' -> foo"bar"
+		   "foo'bar'" -> foo'bar' */
+		if (*haystack == '\'') {
+			if (in_squote)
+				in_squote = FALSE;
+			else if (!in_dquote)
+				in_squote = TRUE;
+		} else if (*haystack == '\"') {
+			if (in_dquote)
+				in_dquote = FALSE;
+			else if (!in_squote)
+				in_dquote = TRUE;
+		}
+
+		haystack++;
+		haystack_len--;
+	}
+
+	return NULL;
+}
+
 gchar *strchr_parenthesis_close(const gchar *str, gchar op, gchar cl)
 {
 	const gchar *p;
