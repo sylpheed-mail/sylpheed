@@ -775,7 +775,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	    (prefs_common.persist_qsearch_filter || is_refresh)) {
 		if (item->qsearch_cond_type > QS_ALL)
 			do_qsearch = TRUE;
-		if (is_refresh) {
+		if (is_refresh && summaryview->qsearch->entry_entered) {
 			key = gtk_entry_get_text
 				(GTK_ENTRY(summaryview->qsearch->entry));
 			if (key && *key != '\0')
