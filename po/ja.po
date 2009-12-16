@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-11 17:11+0900\n"
+"POT-Creation-Date: 2009-12-16 14:08+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -995,7 +995,7 @@ msgstr "フォルダ"
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:750 src/quick_search.c:114
+#: src/addressbook.c:750 src/quick_search.c:124
 msgid "Search:"
 msgstr "検索:"
 
@@ -2355,7 +2355,7 @@ msgstr "新着"
 #. S_COL_MARK
 #: src/folderview.c:431 src/prefs_common_dialog.c:1540
 #: src/prefs_filter_edit.c:507 src/prefs_summary_column.c:67
-#: src/quick_search.c:98
+#: src/quick_search.c:108
 msgid "Unread"
 msgstr "未読"
 
@@ -2371,12 +2371,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:258
+#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:282
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:263
+#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:287
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -3823,11 +3823,11 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "メールボックス `%s' はすでに存在します。"
 
-#: src/mainwindow.c:1794 src/setup.c:234
+#: src/mainwindow.c:1794 src/setup.c:256
 msgid "Mailbox"
 msgstr "メール箱"
 
-#: src/mainwindow.c:1800 src/setup.c:238
+#: src/mainwindow.c:1800 src/setup.c:262
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -5851,7 +5851,7 @@ msgstr "コマンドの実行結果"
 msgid "Age"
 msgstr "経過日数"
 
-#: src/prefs_filter_edit.c:508 src/quick_search.c:99
+#: src/prefs_filter_edit.c:508 src/quick_search.c:109
 msgid "Marked"
 msgstr "マーク付き"
 
@@ -6413,40 +6413,40 @@ msgstr "場所:"
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
-#: src/quick_search.c:97
+#: src/quick_search.c:107
 msgid "All"
 msgstr "すべて"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:110
 msgid "Have color label"
 msgstr "カラーラベル付き"
 
-#: src/quick_search.c:101
+#: src/quick_search.c:111
 msgid "Have attachment"
 msgstr "添付ファイル付き"
 
-#: src/quick_search.c:103
+#: src/quick_search.c:113
 msgid "Within 1 day"
 msgstr "1日以内"
 
-#: src/quick_search.c:104
+#: src/quick_search.c:114
 msgid "Last 5 days"
 msgstr "最近5日間"
 
-#: src/quick_search.c:105
+#: src/quick_search.c:115
 msgid "Last 7 days"
 msgstr "最近1週間"
 
-#: src/quick_search.c:132
+#: src/quick_search.c:146 src/quick_search.c:355
 msgid "Search for Subject or From"
 msgstr "件名または差出人を検索"
 
-#: src/quick_search.c:285
+#: src/quick_search.c:310
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%2$d 通中 %1$d 通を表示"
 
-#: src/quick_search.c:288
+#: src/quick_search.c:313
 #, c-format
 msgid "No messages matched"
 msgstr "該当するメッセージがありません"
@@ -6725,19 +6725,19 @@ msgstr "SMTPサーバに接続できません。"
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "SMTPサーバ: %s:%d に接続できません。"
 
-#: src/setup.c:82 src/setup.c:106
+#: src/setup.c:108 src/setup.c:132
 msgid "Mailbox setting"
 msgstr "メールボックスの設定"
 
-#: src/setup.c:125
+#: src/setup.c:151
 msgid "This dialog will make initial setup of mailbox."
 msgstr "このダイアログではメールボックスの初期設定を行います。"
 
-#: src/setup.c:138
+#: src/setup.c:165
 msgid "Create mailbox at the following default location:"
 msgstr "メールボックスを以下の標準の場所に作成する:"
 
-#: src/setup.c:154
+#: src/setup.c:185
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
@@ -6745,7 +6745,7 @@ msgstr ""
 "メールボックスを以下の場所に作成する:\n"
 "(フォルダ名または完全なフォルダのパスを入力してください)"
 
-#: src/setup.c:172
+#: src/setup.c:203
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
@@ -6753,19 +6753,19 @@ msgstr ""
 "後から別の場所にメールボックスを追加したい場合は、メニューの「ファイル - メー"
 "ルボックス - メールボックスを追加...」を選択してください。"
 
-#: src/setup.c:205
+#: src/setup.c:226
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/setup.c:205
+#: src/setup.c:226
 msgid "Continue without creating mailbox?"
 msgstr "メールボックスを作成せずに続行しますか?"
 
-#: src/setup.c:215
+#: src/setup.c:236
 msgid "Please input folder name or full folder path."
 msgstr "フォルダ名または完全なフォルダのパスを入力してください。"
 
-#: src/setup.c:223
+#: src/setup.c:244
 #, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "メールボックス '%s' はすでに存在します。"
@@ -7394,7 +7394,7 @@ msgstr "終了(_X)"
 msgid "Sylpheed"
 msgstr "Sylpheed"
 
-#: src/update_check.c:112 src/update_check.c:117
+#: src/update_check.c:113 src/update_check.c:118
 msgid ""
 "The newer version of Sylpheed found.\n"
 "Upgrade now?"
@@ -7402,18 +7402,18 @@ msgstr ""
 "新しいバージョンのSylpheedが見つかりました。\n"
 "今すぐ更新しますか?"
 
-#: src/update_check.c:120
+#: src/update_check.c:121
 msgid "New version found"
 msgstr "新しいバージョンが見つかりました"
 
-#: src/update_check.c:218
+#: src/update_check.c:220
 msgid "Information"
 msgstr "情報"
 
-#: src/update_check.c:219
+#: src/update_check.c:221
 msgid "Sylpheed is already the latest version."
 msgstr "Sylpheed はすでに最新バージョンです。"
 
-#: src/update_check.c:222
+#: src/update_check.c:224
 msgid "Couldn't get the version information."
 msgstr "バージョン情報を取得できませんでした。"

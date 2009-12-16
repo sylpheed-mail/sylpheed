@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed 3.0.0svn2362\n"
+"Project-Id-Version: Sylpheed 3.0.0svn2386\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-11 17:11+0900\n"
-"PO-Revision-Date: 2009-12-03 21:15+0300\n"
+"POT-Creation-Date: 2009-12-16 14:08+0900\n"
+"PO-Revision-Date: 2009-12-11 23:45+0300\n"
 "Last-Translator: O.R. Nykyforchyn <oleh.nyk@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -1002,7 +1002,7 @@ msgstr "Папка"
 msgid "E-Mail address"
 msgstr "Адреса e-mail"
 
-#: src/addressbook.c:750 src/quick_search.c:114
+#: src/addressbook.c:750 src/quick_search.c:124
 msgid "Search:"
 msgstr "Пошук:"
 
@@ -1540,7 +1540,7 @@ msgstr "/Інструменти/Редагувати зовнішнім реда
 
 #: src/compose.c:709
 msgid "/_Tools/Request _disposition notification"
-msgstr ""
+msgstr "/Інструменти/Просити підтвердити прочитання"
 
 #: src/compose.c:713
 msgid "/_Tools/PGP Si_gn"
@@ -2357,7 +2357,7 @@ msgstr "Нові"
 #. S_COL_MARK
 #: src/folderview.c:431 src/prefs_common_dialog.c:1540
 #: src/prefs_filter_edit.c:507 src/prefs_summary_column.c:67
-#: src/quick_search.c:98
+#: src/quick_search.c:108
 msgid "Unread"
 msgstr "Непрочитані"
 
@@ -2373,12 +2373,12 @@ msgstr "Встановлюємо інформацію папки...\n"
 msgid "Setting folder info..."
 msgstr "Встановлюємо інформацію папки..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:258
+#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:282
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Перечитуємо папку %s%c%s ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:263
+#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:287
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Перечитуємо папку %s ..."
@@ -3823,11 +3823,11 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "Скринька `%s' вже існує."
 
-#: src/mainwindow.c:1794 src/setup.c:234
+#: src/mainwindow.c:1794 src/setup.c:256
 msgid "Mailbox"
 msgstr "Скринька"
 
-#: src/mainwindow.c:1800 src/setup.c:238
+#: src/mainwindow.c:1800 src/setup.c:262
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -5853,9 +5853,9 @@ msgstr "Результат команди"
 msgid "Age"
 msgstr "Давність"
 
-#: src/prefs_filter_edit.c:508 src/quick_search.c:99
+#: src/prefs_filter_edit.c:508 src/quick_search.c:109
 msgid "Marked"
-msgstr "Відзначений"
+msgstr "Відзначені"
 
 #: src/prefs_filter_edit.c:509
 msgid "Has color label"
@@ -6415,44 +6415,43 @@ msgstr "Розташування:"
 msgid "Folder name:"
 msgstr "Ім'я папки:"
 
-#: src/quick_search.c:97
+#: src/quick_search.c:107
 msgid "All"
 msgstr "Всі"
 
-#: src/quick_search.c:100
+#: src/quick_search.c:110
 msgid "Have color label"
 msgstr "Мають кольорову позначку"
 
-#: src/quick_search.c:101
+#: src/quick_search.c:111
 msgid "Have attachment"
 msgstr "Мають вкладення"
 
-#: src/quick_search.c:103
+#: src/quick_search.c:113
 msgid "Within 1 day"
 msgstr "Протягом одного дня"
 
-#: src/quick_search.c:104
+#: src/quick_search.c:114
 msgid "Last 5 days"
 msgstr "За останні 5 днів"
 
-#: src/quick_search.c:105
-#, fuzzy
+#: src/quick_search.c:115
 msgid "Last 7 days"
-msgstr "За останні 5 днів"
+msgstr "За останні 7 днів"
 
-#: src/quick_search.c:132
+#: src/quick_search.c:146 src/quick_search.c:355
 msgid "Search for Subject or From"
 msgstr "Пошук за полем `Тема' або `Від'"
 
-#: src/quick_search.c:285
+#: src/quick_search.c:310
 #, c-format
 msgid "%1$d in %2$d matched"
-msgstr ""
+msgstr "%1$d відповідних з %2$d"
 
-#: src/quick_search.c:288
-#, fuzzy, c-format
+#: src/quick_search.c:313
+#, c-format
 msgid "No messages matched"
-msgstr "Немає листа"
+msgstr "Немає відповідних листів"
 
 #: src/rfc2015.c:144
 msgid "Cannot find user ID for this key."
@@ -6728,48 +6727,50 @@ msgstr "Не вдалось з'єднатись з сервером SMTP."
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Не вдалось з'єднатись з сервером SMTP: %s:%d"
 
-#: src/setup.c:82 src/setup.c:106
+#: src/setup.c:108 src/setup.c:132
 msgid "Mailbox setting"
 msgstr "Налаштування скриньки"
 
-#: src/setup.c:125
+#: src/setup.c:151
 msgid "This dialog will make initial setup of mailbox."
-msgstr ""
+msgstr "Тут ми початково налаштуємо поштову скриньку."
 
-#: src/setup.c:138
-#, fuzzy
+#: src/setup.c:165
 msgid "Create mailbox at the following default location:"
-msgstr "Виконати такі дії:"
+msgstr "Створити поштову скриньку у стандартному місці:"
 
-#: src/setup.c:154
+#: src/setup.c:185
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
+"Створити поштову скриньку у такому місці:\n"
+"(введіть назву папки чи повний шлях до неї)"
 
-#: src/setup.c:172
+#: src/setup.c:203
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
 msgstr ""
+"Якщо ви забажаєте створити скриньку в іншому місці пізніше, оберіть 'Файл - "
+"Скринька - Додати скриньку...' в меню."
 
-#: src/setup.c:205
-#, fuzzy
+#: src/setup.c:226
 msgid "Cancel"
-msgstr "Скасовано"
+msgstr "Скасувати"
 
-#: src/setup.c:205
+#: src/setup.c:226
 msgid "Continue without creating mailbox?"
-msgstr ""
+msgstr "Продовжити без створення скриньки?"
 
-#: src/setup.c:215
+#: src/setup.c:236
 msgid "Please input folder name or full folder path."
-msgstr ""
+msgstr "Введіть, будь ласка, назву папки чи повний шлях до неї."
 
-#: src/setup.c:223
-#, fuzzy, c-format
+#: src/setup.c:244
+#, c-format
 msgid "The mailbox '%s' already exists."
-msgstr "Скринька `%s' вже існує."
+msgstr "Скринька '%s' вже існує."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -7394,7 +7395,7 @@ msgstr "Вихід"
 msgid "Sylpheed"
 msgstr "Sylpheed"
 
-#: src/update_check.c:112 src/update_check.c:117
+#: src/update_check.c:113 src/update_check.c:118
 msgid ""
 "The newer version of Sylpheed found.\n"
 "Upgrade now?"
@@ -7402,19 +7403,19 @@ msgstr ""
 "Існує новіша версія Sylpheed.\n"
 "Оновитись зараз?"
 
-#: src/update_check.c:120
+#: src/update_check.c:121
 msgid "New version found"
 msgstr "Знайдено нову версію"
 
-#: src/update_check.c:218
+#: src/update_check.c:220
 msgid "Information"
 msgstr "Інформація"
 
-#: src/update_check.c:219
+#: src/update_check.c:221
 msgid "Sylpheed is already the latest version."
 msgstr "Sylpheed вже останньої версії."
 
-#: src/update_check.c:222
+#: src/update_check.c:224
 msgid "Couldn't get the version information."
 msgstr "Не вдалось отримати інформацію про версію."
 
