@@ -49,7 +49,16 @@ static const struct {
 	{QS_LAST7,	-1}
 };
 
+static GdkColor text_color;
+static GdkColor dim_color = {0, COLOR_DIM, COLOR_DIM, COLOR_DIM};
+
 static void menu_activated		(GtkWidget	*menuitem,
+					 QuickSearch	*qsearch);
+static gboolean entry_focus_in		(GtkWidget	*entry,
+					 GdkEventFocus	*event,
+					 QuickSearch	*qsearch);
+static gboolean entry_focus_out		(GtkWidget	*entry,
+					 GdkEventFocus	*event,
 					 QuickSearch	*qsearch);
 static void entry_changed		(GtkWidget	*entry,
 					 QuickSearch	*qsearch);
@@ -77,6 +86,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	GtkWidget *clear_btn;
 	GtkWidget *image;
 	GtkWidget *status_label;
+	GtkStyle *style;
 
 	qsearch = g_new0(QuickSearch, 1);
 
@@ -121,6 +131,10 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	entry = gtk_entry_new();
 	gtk_widget_set_size_request(entry, 200, -1);
 	gtk_box_pack_start(GTK_BOX(hbox), entry, FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT(entry), "focus-in-event",
+			 G_CALLBACK(entry_focus_in), qsearch);
+	g_signal_connect(G_OBJECT(entry), "focus-out-event",
+			 G_CALLBACK(entry_focus_out), qsearch);
 	g_signal_connect(G_OBJECT(entry), "changed",
 			 G_CALLBACK(entry_changed), qsearch);
         g_signal_connect(G_OBJECT(entry), "activate",
@@ -164,17 +178,28 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	qsearch->status_label = status_label;
 	qsearch->summaryview = summaryview;
 	summaryview->qsearch = qsearch;
+	qsearch->entry_entered = FALSE;
 
 	gtk_widget_show_all(hbox);
 	gtk_widget_hide(clear_btn);
+
+	style = gtk_widget_get_style(entry);
+	text_color = style->text[GTK_STATE_NORMAL];
+	entry_focus_out(entry, NULL, qsearch);
 
 	return qsearch;
 }
 
 void quick_search_clear_entry(QuickSearch *qsearch)
 {
-	gtk_entry_set_text(GTK_ENTRY(qsearch->entry), "");
+	qsearch->entry_entered = FALSE;
+	if (GTK_WIDGET_HAS_FOCUS(qsearch->entry))
+		entry_focus_in(qsearch->entry, NULL, qsearch);
+	else
+		entry_focus_out(qsearch->entry, NULL, qsearch);
+
 	gtk_label_set_text(GTK_LABEL(qsearch->status_label), "");
+	gtk_widget_hide(qsearch->clear_btn);
 }
 
 GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
@@ -302,15 +327,50 @@ static void menu_activated(GtkWidget *menuitem, QuickSearch *qsearch)
 	summary_qsearch(qsearch->summaryview);
 }
 
+static gboolean entry_focus_in(GtkWidget *entry, GdkEventFocus *event,
+			       QuickSearch *qsearch)
+{
+	GtkStyle *style;
+
+	if (!qsearch->entry_entered) {
+		g_signal_handlers_block_by_func(entry, entry_changed, qsearch);
+		gtk_entry_set_text(GTK_ENTRY(entry), "");
+		style = gtk_widget_get_style(entry);
+		gtk_widget_modify_text(entry, GTK_STATE_NORMAL, &text_color);
+		g_signal_handlers_unblock_by_func(entry, entry_changed, qsearch);
+	}
+
+	return FALSE;
+}
+
+static gboolean entry_focus_out(GtkWidget *entry, GdkEventFocus *event,
+				QuickSearch *qsearch)
+{
+	GtkStyle *style;
+
+	if (!qsearch->entry_entered) {
+		g_signal_handlers_block_by_func(entry, entry_changed, qsearch);
+		style = gtk_widget_get_style(entry);
+		gtk_widget_modify_text(entry, GTK_STATE_NORMAL, &dim_color);
+		gtk_entry_set_text(GTK_ENTRY(entry), _("Search for Subject or From"));
+		g_signal_handlers_unblock_by_func(entry, entry_changed, qsearch);
+	}
+
+	return FALSE;
+}
+
 static void entry_changed(GtkWidget *entry, QuickSearch *qsearch)
 {
 	const gchar *text;
 
 	text = gtk_entry_get_text(GTK_ENTRY(entry));
-	if (text && *text != '\0')
+	if (text && *text != '\0') {
 		gtk_widget_show(qsearch->clear_btn);
-	else
+		qsearch->entry_entered = TRUE;
+	} else {
 		gtk_widget_hide(qsearch->clear_btn);
+		qsearch->entry_entered = FALSE;
+	}
 }
 
 static void entry_activated(GtkWidget *entry, QuickSearch *qsearch)

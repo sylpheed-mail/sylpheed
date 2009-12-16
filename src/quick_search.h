@@ -49,6 +49,8 @@ struct _QuickSearch
 	GtkWidget *status_label;
 
 	SummaryView *summaryview;
+
+	gboolean entry_entered;
 };
 
 QuickSearch *quick_search_create(SummaryView		*summaryview);

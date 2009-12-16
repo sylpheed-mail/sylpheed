@@ -5342,7 +5342,7 @@ void summary_qsearch(SummaryView *summaryview)
 {
 	QSearchCondType type;
 	GtkWidget *menuitem;
-	const gchar *key;
+	const gchar *key = NULL;
 	GSList *flt_mlist;
 	guint selected_msgnum = 0;
 	guint displayed_msgnum = 0;
@@ -5355,7 +5355,9 @@ void summary_qsearch(SummaryView *summaryview)
 	if (!summaryview->all_mlist)
 		return;
 
-	key = gtk_entry_get_text(GTK_ENTRY(summaryview->qsearch->entry));
+	if (summaryview->qsearch->entry_entered)
+		key = gtk_entry_get_text
+			(GTK_ENTRY(summaryview->qsearch->entry));
 	if (type == QS_ALL && (!key || *key == '\0')) {
 		summary_qsearch_reset(summaryview);
 		return;
