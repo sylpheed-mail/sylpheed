@@ -78,7 +78,7 @@
 #include "icons/folder-open.h"
 #include "icons/folder-noselect.h"
 #include "icons/folder-search.h"
-#include "icons/folder-group.h"
+#include "icons/group.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -108,7 +108,7 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, folder_noselect, sizeof(folder_noselect), "folder-noselect", 0},
 	{error_xpm	 , NULL, NULL},
 	{forwarded_xpm	 , NULL, NULL},
-	{NULL, NULL, NULL, NULL, folder_group, sizeof(folder_group), "folder-group", 0},
+	{NULL, NULL, NULL, NULL, group, sizeof(group), "group", 0},
 	{interface_xpm	 , NULL, NULL},
 	{jpilot_xpm	 , NULL, NULL},
 	{ldap_xpm	 , NULL, NULL},
