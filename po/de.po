@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-16 14:08+0900\n"
+"POT-Creation-Date: 2009-12-17 11:46+0900\n"
 "PO-Revision-Date: 2007-09-29 23:16+0100\n"
 "Last-Translator: Joo Martin <debian@joomart.de>\n"
 "Language-Team: de\n"
@@ -595,7 +595,7 @@ msgstr "  Betreff: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Aussteller(in): %s\n"
 
-#: libsylph/utils.c:2793 libsylph/utils.c:2916
+#: libsylph/utils.c:2857 libsylph/utils.c:2980
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "Schreiben in %s fehlgeschlagen.\n"
@@ -2392,12 +2392,12 @@ msgstr "Setze Ablageinformation...\n"
 msgid "Setting folder info..."
 msgstr "Setze Ablageinformation..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:282
+#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:290
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Durchsuche Ablage %s%c%s ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:287
+#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:295
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Durchsuche Ablage %s ..."
@@ -3865,11 +3865,11 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "Die Mailbox `%s' existiert bereits."
 
-#: src/mainwindow.c:1794 src/setup.c:256
+#: src/mainwindow.c:1794 src/setup.c:264
 msgid "Mailbox"
 msgstr "Mailbox"
 
-#: src/mainwindow.c:1800 src/setup.c:262
+#: src/mainwindow.c:1800 src/setup.c:270
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -6840,10 +6840,16 @@ msgstr ""
 msgid "Please input folder name or full folder path."
 msgstr ""
 
-#: src/setup.c:244
+#: src/setup.c:245
 #, fuzzy, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "Die Mailbox `%s' existiert bereits."
+
+#: src/setup.c:251
+#, c-format
+msgid ""
+"The location '%s' includes settings folder. Please specify another location."
+msgstr ""
 
 #: src/sigstatus.c:116
 msgid "Signature check result"

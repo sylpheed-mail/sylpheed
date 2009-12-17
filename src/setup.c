@@ -240,11 +240,19 @@ void setup(MainWindow *mainwin)
 		} else
 			path = g_strdup("Mail");
 
-		if (path && folder_find_from_path(path)) {
-			alertpanel_error(_("The mailbox '%s' already exists."), path);
-			g_warning("The mailbox '%s' already exists.", path);
-			g_free(path);
-			path = NULL;
+		if (path) {
+			if (folder_find_from_path(path)) {
+				alertpanel_error(_("The mailbox '%s' already exists."), path);
+				g_warning("The mailbox '%s' already exists.", path);
+				g_free(path);
+				path = NULL;
+			} else if (is_path_parent(path, get_rc_dir()) ||
+				   is_path_parent(path, get_mail_base_dir())) {
+				alertpanel_error(_("The location '%s' includes settings folder. Please specify another location."), path);
+				g_warning("The location '%s' includes settings folder.", path);
+				g_free(path);
+				path = NULL;
+			}
 		}
 	} while (path == NULL);
 

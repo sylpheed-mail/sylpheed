@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-16 14:08+0900\n"
+"POT-Creation-Date: 2009-12-17 11:46+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -593,7 +593,7 @@ msgstr "  所有者: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
 
-#: libsylph/utils.c:2793 libsylph/utils.c:2916
+#: libsylph/utils.c:2857 libsylph/utils.c:2980
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s への書き込みに失敗しました。\n"
@@ -2371,12 +2371,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:282
+#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:290
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:287
+#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:295
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -3823,18 +3823,18 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "メールボックス `%s' はすでに存在します。"
 
-#: src/mainwindow.c:1794 src/setup.c:256
+#: src/mainwindow.c:1794 src/setup.c:264
 msgid "Mailbox"
 msgstr "メール箱"
 
-#: src/mainwindow.c:1800 src/setup.c:262
+#: src/mainwindow.c:1800 src/setup.c:270
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
 "there."
 msgstr ""
 "メールボックスの作成に失敗しました。\n"
-"いくつかのファイルがすでに存在するか、あるいは書き込む権限がありません。"
+"ファイルがすでに存在するか、あるいは書き込む権限がありません。"
 
 #: src/mainwindow.c:2322
 msgid "Sylpheed - Folder View"
@@ -6765,10 +6765,17 @@ msgstr "メールボックスを作成せずに続行しますか?"
 msgid "Please input folder name or full folder path."
 msgstr "フォルダ名または完全なフォルダのパスを入力してください。"
 
-#: src/setup.c:244
+#: src/setup.c:245
 #, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "メールボックス '%s' はすでに存在します。"
+
+#: src/setup.c:251
+#, c-format
+msgid ""
+"The location '%s' includes settings folder. Please specify another location."
+msgstr ""
+"'%s' 以下に設定フォルダが含まれています。別の場所を指定してください。"
 
 #: src/sigstatus.c:116
 msgid "Signature check result"

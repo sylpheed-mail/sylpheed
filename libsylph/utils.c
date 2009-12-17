@@ -392,6 +392,33 @@ gint path_cmp(const gchar *s1, const gchar *s2)
 #endif
 }
 
+/* return TRUE if parent is equal to or ancestor of child */
+gboolean is_path_parent(const gchar *parent, const gchar *child)
+{
+	gint plen;
+	const gchar *base;
+
+	g_return_val_if_fail(parent != NULL, FALSE);
+	g_return_val_if_fail(child != NULL, FALSE);
+
+	plen = strlen(parent);
+	while (plen > 0 && G_IS_DIR_SEPARATOR(parent[plen - 1]))
+		plen--;
+
+#ifdef G_OS_WIN32
+	if (!g_ascii_strncasecmp(parent, child, plen)) {
+#else
+	if (!strncmp(parent, child, plen)) {
+#endif
+		base = child + plen;
+		if (!G_IS_DIR_SEPARATOR(*base) && *base != '\0')
+			return FALSE;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 /* remove trailing return code */
 gchar *strretchomp(gchar *str)
 {
