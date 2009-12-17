@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-17 11:46+0900\n"
+"POT-Creation-Date: 2009-12-17 16:49+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1855,7 +1855,7 @@ msgstr ""
 "要強迫結束該行程嗎？\n"
 "行程的群組代碼是：%d"
 
-#: src/compose.c:6799 src/mainwindow.c:3016
+#: src/compose.c:6799 src/mainwindow.c:3017
 msgid "_Customize toolbar..."
 msgstr ""
 
@@ -1867,7 +1867,7 @@ msgstr "無法放進暫存資料夾。"
 msgid "Select files"
 msgstr "選擇檔案"
 
-#: src/compose.c:7044
+#: src/compose.c:7044 src/inputdialog.c:372
 msgid "Select file"
 msgstr "選擇檔案"
 
@@ -2266,11 +2266,7 @@ msgstr "您要取代已存在的檔案嗎？"
 msgid "The file already exists. Do you want to replace it?"
 msgstr ""
 
-#: src/filesel.c:183
-msgid "Select directory"
-msgstr "選擇目錄"
-
-#: src/foldersel.c:252
+#: src/filesel.c:183 src/foldersel.c:252
 msgid "Select folder"
 msgstr "選擇資料夾"
 
@@ -2405,12 +2401,12 @@ msgstr "設定資料夾...\n"
 msgid "Setting folder info..."
 msgstr "設定資料夾..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:290
+#: src/folderview.c:889 src/mainwindow.c:4061 src/setup.c:290
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "掃描資料夾 %s%c%s ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:295
+#: src/folderview.c:893 src/mainwindow.c:4066 src/setup.c:295
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "掃描資料夾 %s ..."
@@ -3033,12 +3029,12 @@ msgstr "動作已取消\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "從 %s 中取得郵件放入 %s...\n"
 
-#: src/inputdialog.c:146
+#: src/inputdialog.c:151
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "請輸入 %s 在 %s 上的密碼："
 
-#: src/inputdialog.c:148
+#: src/inputdialog.c:153
 msgid "Input password"
 msgstr "輸入密碼"
 
@@ -3868,11 +3864,11 @@ msgstr "清空刪除的郵件"
 msgid "Delete all messages in trash folders?"
 msgstr "您確定要清除所有被刪除的郵件？"
 
-#: src/mainwindow.c:1782
+#: src/mainwindow.c:1783
 msgid "Add mailbox"
 msgstr "新增信箱"
 
-#: src/mainwindow.c:1783
+#: src/mainwindow.c:1784
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3882,16 +3878,16 @@ msgstr ""
 "並請注意不要輸入已存在的信箱名稱，\n"
 "系統會自動判別是否它已存在。"
 
-#: src/mainwindow.c:1789
+#: src/mainwindow.c:1790
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "信箱「%s」已存在。"
 
-#: src/mainwindow.c:1794 src/setup.c:264
+#: src/mainwindow.c:1795 src/setup.c:264
 msgid "Mailbox"
 msgstr "信箱"
 
-#: src/mainwindow.c:1800 src/setup.c:270
+#: src/mainwindow.c:1801 src/setup.c:270
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3900,97 +3896,97 @@ msgstr ""
 "無法產生信箱目錄。\n"
 "可能是因為同樣名稱的檔案已經存在，或者是你沒有權限可以開新目錄。"
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2323
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 資料夾檢視"
 
-#: src/mainwindow.c:2341
+#: src/mainwindow.c:2342
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 郵件列表"
 
-#: src/mainwindow.c:2537 src/mimeview.c:142 src/summaryview.c:415
+#: src/mainwindow.c:2538 src/mimeview.c:142 src/summaryview.c:415
 msgid "/_Reply"
 msgstr "/直接回覆(_R)"
 
-#: src/mainwindow.c:2538
+#: src/mainwindow.c:2539
 msgid "/Reply to _all"
 msgstr "/全部回覆(_A)"
 
-#: src/mainwindow.c:2539
+#: src/mainwindow.c:2540
 msgid "/Reply to _sender"
 msgstr "/回覆給原作者(_S)"
 
-#: src/mainwindow.c:2540
+#: src/mainwindow.c:2541
 msgid "/Reply to mailing _list"
 msgstr "/回覆到郵遞論壇(_L)"
 
-#: src/mainwindow.c:2545 src/summaryview.c:422
+#: src/mainwindow.c:2546 src/summaryview.c:422
 msgid "/_Forward"
 msgstr "/轉寄(_F)"
 
-#: src/mainwindow.c:2546 src/summaryview.c:423
+#: src/mainwindow.c:2547 src/summaryview.c:423
 msgid "/For_ward as attachment"
 msgstr "/將郵件當成附加檔轉寄(_W)"
 
-#: src/mainwindow.c:2547 src/summaryview.c:424
+#: src/mainwindow.c:2548 src/summaryview.c:424
 msgid "/Redirec_t"
 msgstr "/郵件導向(_T)"
 
-#: src/mainwindow.c:3009
+#: src/mainwindow.c:3010
 msgid "Icon _and text"
 msgstr ""
 
-#: src/mainwindow.c:3010
+#: src/mainwindow.c:3011
 #, fuzzy
 msgid "Text at the _right of icon"
 msgstr "/顯示(_V)/顯示或隱藏(_D)/工具列(_T)/圖樣(_I)"
 
-#: src/mainwindow.c:3012
+#: src/mainwindow.c:3013
 msgid "_Icon"
 msgstr ""
 
-#: src/mainwindow.c:3013
+#: src/mainwindow.c:3014
 #, fuzzy
 msgid "_Text"
 msgstr "文字"
 
-#: src/mainwindow.c:3014
+#: src/mainwindow.c:3015
 #, fuzzy
 msgid "_None"
 msgstr "無"
 
-#: src/mainwindow.c:3044
+#: src/mainwindow.c:3045
 msgid "You are offline. Click the icon to go online."
 msgstr "您目前正離線中。按下按鈕恢復連線。"
 
-#: src/mainwindow.c:3055
+#: src/mainwindow.c:3056
 msgid "You are online. Click the icon to go offline."
 msgstr "您目前正連線中。按下按鈕離線工作。"
 
-#: src/mainwindow.c:3329
+#: src/mainwindow.c:3330
 msgid "Exit"
 msgstr "離開"
 
-#: src/mainwindow.c:3329
+#: src/mainwindow.c:3330
 msgid "Exit this program?"
 msgstr "您確定要離開嗎？"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 #, fuzzy
 msgid "Select folder to open"
 msgstr "選擇資料夾"
 
-#: src/mainwindow.c:3970
+#: src/mainwindow.c:3971
 #, fuzzy
 msgid "Command line options"
 msgstr "未設定執行指令"
 
-#: src/mainwindow.c:3983
+#: src/mainwindow.c:3984
 #, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "用法：%s [選項]...\n"
 
-#: src/mainwindow.c:3991
+#: src/mainwindow.c:3992
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -4007,7 +4003,7 @@ msgid ""
 "--version"
 msgstr ""
 
-#: src/mainwindow.c:4008
+#: src/mainwindow.c:4009
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -7538,6 +7534,9 @@ msgstr "已經有 Sylpheed 程式正在執行中。\n"
 #: src/update_check.c:224
 msgid "Couldn't get the version information."
 msgstr ""
+
+#~ msgid "Select directory"
+#~ msgstr "選擇目錄"
 
 #~ msgid ""
 #~ "Specify the location of mailbox.\n"

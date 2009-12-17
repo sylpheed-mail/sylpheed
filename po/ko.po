@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-17 11:46+0900\n"
+"POT-Creation-Date: 2009-12-17 16:49+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -1883,7 +1883,7 @@ msgstr ""
 "이 프로세스를 강제로 종료시킬까요?\n"
 "프로세스 그룹 아이디: %d"
 
-#: src/compose.c:6799 src/mainwindow.c:3016
+#: src/compose.c:6799 src/mainwindow.c:3017
 msgid "_Customize toolbar..."
 msgstr ""
 
@@ -1896,7 +1896,7 @@ msgstr "메시지를 임시 보관함에 넣을수가 없습니다."
 msgid "Select files"
 msgstr "파일 선택"
 
-#: src/compose.c:7044
+#: src/compose.c:7044 src/inputdialog.c:372
 msgid "Select file"
 msgstr "파일 선택"
 
@@ -2299,12 +2299,7 @@ msgstr "기존 파일을 덮어쓰시겠습니까?"
 msgid "The file already exists. Do you want to replace it?"
 msgstr ""
 
-#: src/filesel.c:183
-#, fuzzy
-msgid "Select directory"
-msgstr "스풀 디렉토리"
-
-#: src/foldersel.c:252
+#: src/filesel.c:183 src/foldersel.c:252
 msgid "Select folder"
 msgstr "폴더 선택"
 
@@ -2442,12 +2437,12 @@ msgstr "폴더 정보를 설정합니다...\n"
 msgid "Setting folder info..."
 msgstr "폴더 정보를 설정합니다..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:290
+#: src/folderview.c:889 src/mainwindow.c:4061 src/setup.c:290
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "%s%c%s를 스캔합니다..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:295
+#: src/folderview.c:893 src/mainwindow.c:4066 src/setup.c:295
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "%s 폴더를 스캔합니다..."
@@ -3068,12 +3063,12 @@ msgstr "병합이 취소되었습니다.\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s로부터 %s로 새 메시지를 가져옴...\n"
 
-#: src/inputdialog.c:146
+#: src/inputdialog.c:151
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr ""
 
-#: src/inputdialog.c:148
+#: src/inputdialog.c:153
 msgid "Input password"
 msgstr "암호 입력"
 
@@ -3932,11 +3927,11 @@ msgstr "지운 편지함 비우기"
 msgid "Delete all messages in trash folders?"
 msgstr "지운 편지함에있는 모든 메시지를 비울까요?"
 
-#: src/mainwindow.c:1782
+#: src/mainwindow.c:1783
 msgid "Add mailbox"
 msgstr "메일박스 추가"
 
-#: src/mainwindow.c:1783
+#: src/mainwindow.c:1784
 #, fuzzy
 msgid ""
 "Specify the location of mailbox.\n"
@@ -3947,16 +3942,16 @@ msgstr ""
 "기존의 메일 박스가 지정되면 자동으로\n"
 "스캔될것입니다."
 
-#: src/mainwindow.c:1789
+#: src/mainwindow.c:1790
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "메일 박스 `%s'가 이미 존재합니다."
 
-#: src/mainwindow.c:1794 src/setup.c:264
+#: src/mainwindow.c:1795 src/setup.c:264
 msgid "Mailbox"
 msgstr "메일박스"
 
-#: src/mainwindow.c:1800 src/setup.c:270
+#: src/mainwindow.c:1801 src/setup.c:270
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3965,100 +3960,100 @@ msgstr ""
 "메일박스 생성이 실패했습니다.\n"
 "아마 어떤 파일이 이미 존재하거나 그 곳에 쓰기 권한이 없습니다."
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2323
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - 폴더 보기"
 
-#: src/mainwindow.c:2341
+#: src/mainwindow.c:2342
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - 메시지 보기"
 
-#: src/mainwindow.c:2537 src/mimeview.c:142 src/summaryview.c:415
+#: src/mainwindow.c:2538 src/mimeview.c:142 src/summaryview.c:415
 msgid "/_Reply"
 msgstr "/회신(_R)"
 
-#: src/mainwindow.c:2538
+#: src/mainwindow.c:2539
 #, fuzzy
 msgid "/Reply to _all"
 msgstr "전부에게 회신을 보냅니다"
 
-#: src/mainwindow.c:2539
+#: src/mainwindow.c:2540
 #, fuzzy
 msgid "/Reply to _sender"
 msgstr "/회신(_y)/보낸이(_s)"
 
-#: src/mainwindow.c:2540
+#: src/mainwindow.c:2541
 #, fuzzy
 msgid "/Reply to mailing _list"
 msgstr "/회신(_y)/메일링리스트(_l)"
 
-#: src/mainwindow.c:2545 src/summaryview.c:422
+#: src/mainwindow.c:2546 src/summaryview.c:422
 msgid "/_Forward"
 msgstr "/전달(_F)"
 
-#: src/mainwindow.c:2546 src/summaryview.c:423
+#: src/mainwindow.c:2547 src/summaryview.c:423
 msgid "/For_ward as attachment"
 msgstr "/첨부로 전달(_w)"
 
-#: src/mainwindow.c:2547 src/summaryview.c:424
+#: src/mainwindow.c:2548 src/summaryview.c:424
 msgid "/Redirec_t"
 msgstr "/Redirec_t"
 
-#: src/mainwindow.c:3009
+#: src/mainwindow.c:3010
 msgid "Icon _and text"
 msgstr ""
 
-#: src/mainwindow.c:3010
+#: src/mainwindow.c:3011
 #, fuzzy
 msgid "Text at the _right of icon"
 msgstr "/보기(_V)/보이거나 감추기(_d)/툴바(_T)/아이콘(_I)"
 
-#: src/mainwindow.c:3012
+#: src/mainwindow.c:3013
 msgid "_Icon"
 msgstr ""
 
-#: src/mainwindow.c:3013
+#: src/mainwindow.c:3014
 #, fuzzy
 msgid "_Text"
 msgstr "텍스트"
 
-#: src/mainwindow.c:3014
+#: src/mainwindow.c:3015
 #, fuzzy
 msgid "_None"
 msgstr "없음"
 
-#: src/mainwindow.c:3044
+#: src/mainwindow.c:3045
 msgid "You are offline. Click the icon to go online."
 msgstr ""
 
-#: src/mainwindow.c:3055
+#: src/mainwindow.c:3056
 msgid "You are online. Click the icon to go offline."
 msgstr ""
 
-#: src/mainwindow.c:3329
+#: src/mainwindow.c:3330
 msgid "Exit"
 msgstr "끝내기"
 
-#: src/mainwindow.c:3329
+#: src/mainwindow.c:3330
 msgid "Exit this program?"
 msgstr "이 프로그램을 끝내시겠습니까?"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 #, fuzzy
 msgid "Select folder to open"
 msgstr "폴더 선택"
 
-#: src/mainwindow.c:3970
+#: src/mainwindow.c:3971
 #, fuzzy
 msgid "Command line options"
 msgstr "명령이 지정되지않음"
 
-#: src/mainwindow.c:3983
+#: src/mainwindow.c:3984
 #, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/mainwindow.c:3991
+#: src/mainwindow.c:3992
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -4075,7 +4070,7 @@ msgid ""
 "--version"
 msgstr ""
 
-#: src/mainwindow.c:4008
+#: src/mainwindow.c:4009
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -7645,6 +7640,10 @@ msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 #: src/update_check.c:224
 msgid "Couldn't get the version information."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Select directory"
+#~ msgstr "스풀 디렉토리"
 
 #, fuzzy
 #~ msgid ""

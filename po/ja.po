@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-17 11:46+0900\n"
+"POT-Creation-Date: 2009-12-17 16:49+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1836,7 +1836,7 @@ msgstr ""
 "外部エディタが動作中です。\n"
 "プロセスを強制終了しますか(pid: %d)?\n"
 
-#: src/compose.c:6799 src/mainwindow.c:3016
+#: src/compose.c:6799 src/mainwindow.c:3017
 msgid "_Customize toolbar..."
 msgstr "ツールバーをカスタマイズ(_C)..."
 
@@ -1848,7 +1848,7 @@ msgstr "メッセージを送信待機できません。"
 msgid "Select files"
 msgstr "ファイルの選択"
 
-#: src/compose.c:7044
+#: src/compose.c:7044 src/inputdialog.c:372
 msgid "Select file"
 msgstr "ファイルの選択"
 
@@ -2235,11 +2235,7 @@ msgstr "既存のファイルの上書き"
 msgid "The file already exists. Do you want to replace it?"
 msgstr "ファイルがすでに存在します。上書きしますか?"
 
-#: src/filesel.c:183
-msgid "Select directory"
-msgstr "ディレクトリの選択"
-
-#: src/foldersel.c:252
+#: src/filesel.c:183 src/foldersel.c:252
 msgid "Select folder"
 msgstr "フォルダの選択"
 
@@ -2371,12 +2367,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:889 src/mainwindow.c:4060 src/setup.c:290
+#: src/folderview.c:889 src/mainwindow.c:4061 src/setup.c:290
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4065 src/setup.c:295
+#: src/folderview.c:893 src/mainwindow.c:4066 src/setup.c:295
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -2982,12 +2978,12 @@ msgstr "受信をキャンセルしました\n"
 msgid "Getting new messages from %s into %s...\n"
 msgstr "新しいメッセージを %s から %s に取り込んでいます...\n"
 
-#: src/inputdialog.c:146
+#: src/inputdialog.c:151
 #, c-format
 msgid "Input password for %s on %s:"
 msgstr "%s (%s) のパスワードを入力してください:"
 
-#: src/inputdialog.c:148
+#: src/inputdialog.c:153
 msgid "Input password"
 msgstr "パスワードの入力"
 
@@ -3805,11 +3801,11 @@ msgstr "すべてのごみ箱を空にする"
 msgid "Delete all messages in trash folders?"
 msgstr "ごみ箱の中のメッセージをすべて削除しますか?"
 
-#: src/mainwindow.c:1782
+#: src/mainwindow.c:1783
 msgid "Add mailbox"
 msgstr "メールボックスを追加"
 
-#: src/mainwindow.c:1783
+#: src/mainwindow.c:1784
 msgid ""
 "Specify the location of mailbox.\n"
 "If the existing mailbox is specified, it will be\n"
@@ -3818,16 +3814,16 @@ msgstr ""
 "メールボックスの場所を入力してください。\n"
 "既存のメールボックスを指定するとその内容を自動的にスキャンします。"
 
-#: src/mainwindow.c:1789
+#: src/mainwindow.c:1790
 #, c-format
 msgid "The mailbox `%s' already exists."
 msgstr "メールボックス `%s' はすでに存在します。"
 
-#: src/mainwindow.c:1794 src/setup.c:264
+#: src/mainwindow.c:1795 src/setup.c:264
 msgid "Mailbox"
 msgstr "メール箱"
 
-#: src/mainwindow.c:1800 src/setup.c:270
+#: src/mainwindow.c:1801 src/setup.c:270
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -3836,91 +3832,91 @@ msgstr ""
 "メールボックスの作成に失敗しました。\n"
 "ファイルがすでに存在するか、あるいは書き込む権限がありません。"
 
-#: src/mainwindow.c:2322
+#: src/mainwindow.c:2323
 msgid "Sylpheed - Folder View"
 msgstr "Sylpheed - フォルダビュー"
 
-#: src/mainwindow.c:2341
+#: src/mainwindow.c:2342
 msgid "Sylpheed - Message View"
 msgstr "Sylpheed - メッセージビュー"
 
-#: src/mainwindow.c:2537 src/mimeview.c:142 src/summaryview.c:415
+#: src/mainwindow.c:2538 src/mimeview.c:142 src/summaryview.c:415
 msgid "/_Reply"
 msgstr "/返信(_R)"
 
-#: src/mainwindow.c:2538
+#: src/mainwindow.c:2539
 msgid "/Reply to _all"
 msgstr "/全員に返信(_A)"
 
-#: src/mainwindow.c:2539
+#: src/mainwindow.c:2540
 msgid "/Reply to _sender"
 msgstr "/差出人に返信(_S)"
 
-#: src/mainwindow.c:2540
+#: src/mainwindow.c:2541
 msgid "/Reply to mailing _list"
 msgstr "/メーリングリストに返信(_L)"
 
-#: src/mainwindow.c:2545 src/summaryview.c:422
+#: src/mainwindow.c:2546 src/summaryview.c:422
 msgid "/_Forward"
 msgstr "/転送(_F)"
 
-#: src/mainwindow.c:2546 src/summaryview.c:423
+#: src/mainwindow.c:2547 src/summaryview.c:423
 msgid "/For_ward as attachment"
 msgstr "/添付として転送(_W)"
 
-#: src/mainwindow.c:2547 src/summaryview.c:424
+#: src/mainwindow.c:2548 src/summaryview.c:424
 msgid "/Redirec_t"
 msgstr "/手を加えずに転送(_T)"
 
-#: src/mainwindow.c:3009
+#: src/mainwindow.c:3010
 msgid "Icon _and text"
 msgstr "アイコンと文字(_A)"
 
-#: src/mainwindow.c:3010
+#: src/mainwindow.c:3011
 msgid "Text at the _right of icon"
 msgstr "アイコンの右に文字(_R)"
 
-#: src/mainwindow.c:3012
+#: src/mainwindow.c:3013
 msgid "_Icon"
 msgstr "アイコン(_I)"
 
-#: src/mainwindow.c:3013
+#: src/mainwindow.c:3014
 msgid "_Text"
 msgstr "文字(_T)"
 
-#: src/mainwindow.c:3014
+#: src/mainwindow.c:3015
 msgid "_None"
 msgstr "非表示(_N)"
 
-#: src/mainwindow.c:3044
+#: src/mainwindow.c:3045
 msgid "You are offline. Click the icon to go online."
 msgstr "現在オフラインです。アイコンをクリックするとオンラインになります。"
 
-#: src/mainwindow.c:3055
+#: src/mainwindow.c:3056
 msgid "You are online. Click the icon to go offline."
 msgstr "現在オンラインです。アイコンをクリックするとオフラインになります。"
 
-#: src/mainwindow.c:3329
+#: src/mainwindow.c:3330
 msgid "Exit"
 msgstr "終了"
 
-#: src/mainwindow.c:3329
+#: src/mainwindow.c:3330
 msgid "Exit this program?"
 msgstr "このプログラムを終了しますか?"
 
-#: src/mainwindow.c:3810
+#: src/mainwindow.c:3811
 msgid "Select folder to open"
 msgstr "開くフォルダを選択してください"
 
-#: src/mainwindow.c:3970
+#: src/mainwindow.c:3971
 msgid "Command line options"
 msgstr "コマンドラインオプション"
 
-#: src/mainwindow.c:3983
+#: src/mainwindow.c:3984
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "使用法: sylpheed [オプション]..."
 
-#: src/mainwindow.c:3991
+#: src/mainwindow.c:3992
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3950,7 +3946,7 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:4008
+#: src/mainwindow.c:4009
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -6774,8 +6770,7 @@ msgstr "メールボックス '%s' はすでに存在します。"
 #, c-format
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
-msgstr ""
-"'%s' 以下に設定フォルダが含まれています。別の場所を指定してください。"
+msgstr "'%s' 以下に設定フォルダが含まれています。別の場所を指定してください。"
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -7424,3 +7419,6 @@ msgstr "Sylpheed はすでに最新バージョンです。"
 #: src/update_check.c:224
 msgid "Couldn't get the version information."
 msgstr "バージョン情報を取得できませんでした。"
+
+#~ msgid "Select directory"
+#~ msgstr "ディレクトリの選択"
