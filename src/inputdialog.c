@@ -364,6 +364,8 @@ static void sel_btn_clicked(GtkButton *button, gpointer data)
 	gchar *file;
 	gchar *utf8_file;
 
+	g_signal_handlers_block_by_func(dialog, focus_out, NULL);
+
 	if (chooser_action == GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER)
 		file = filesel_select_dir(NULL);
 	else
@@ -374,6 +376,8 @@ static void sel_btn_clicked(GtkButton *button, gpointer data)
 		gtk_entry_set_text(GTK_ENTRY(entry), utf8_file);
 		g_free(utf8_file);
 	}
+
+	g_signal_handlers_unblock_by_func(dialog, focus_out, NULL);
 }
 
 static gint focus_out(GtkWidget *widget, GdkEventFocus *event, gpointer data)
