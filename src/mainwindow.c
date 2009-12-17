@@ -1779,11 +1779,12 @@ void main_window_add_mailbox(MainWindow *mainwin)
 	gchar *path;
 	Folder *folder;
 
-	path = input_dialog(_("Add mailbox"),
-			    _("Specify the location of mailbox.\n"
-			      "If the existing mailbox is specified, it will be\n"
-			      "scanned automatically."),
-			    "Mail");
+	path = input_dialog_with_filesel
+		(_("Add mailbox"),
+		 _("Specify the location of mailbox.\n"
+		   "If the existing mailbox is specified, it will be\n"
+		   "scanned automatically."),
+		 "Mail", GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
 	if (!path) return;
 	if (folder_find_from_path(path)) {
 		alertpanel_error(_("The mailbox `%s' already exists."), path);

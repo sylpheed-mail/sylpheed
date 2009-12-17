@@ -180,7 +180,7 @@ gchar *filesel_select_dir(const gchar *dir)
 	GSList *list;
 	gchar *selected = NULL;
 
-	list = filesel_select_file_full(_("Select directory"), dir,
+	list = filesel_select_file_full(_("Select folder"), dir,
 					GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
 					FALSE);
 	if (list) {

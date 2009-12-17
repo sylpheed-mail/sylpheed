@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define __INPUTDIALOG_H__
 
 #include <glib.h>
+#include <gtk/gtkfilechooser.h>
 
 gchar *input_dialog			(const gchar	*title,
 					 const gchar	*message,
@@ -35,5 +36,10 @@ gchar *input_dialog_combo		(const gchar	*title,
 					 gboolean	 case_sensitive);
 gchar *input_dialog_query_password	(const gchar	*server,
 					 const gchar	*user);
+
+gchar *input_dialog_with_filesel	(const gchar	*title,
+					 const gchar	*message,
+					 const gchar	*default_string,
+					 GtkFileChooserAction action);
 
 #endif /* __INPUTDIALOG_H__ */

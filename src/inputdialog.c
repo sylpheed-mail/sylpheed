@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2009 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,23 +41,26 @@
 #include "inputdialog.h"
 #include "manage_window.h"
 #include "inc.h"
+#include "filesel.h"
 #include "prefs_common.h"
 #include "gtkutils.h"
 #include "utils.h"
 
-#define INPUT_ENTRY_WIDTH	400
+#define DIALOG_WIDTH	420
 
 typedef enum
 {
 	INPUT_DIALOG_NORMAL,
 	INPUT_DIALOG_INVISIBLE,
-	INPUT_DIALOG_COMBO
+	INPUT_DIALOG_COMBO,
+	INPUT_DIALOG_FILESEL
 } InputDialogType;
 
 static gboolean ack;
 static gboolean fin;
 
 static InputDialogType type;
+static GtkFileChooserAction chooser_action;
 
 static GtkWidget *dialog;
 static GtkWidget *msg_label;
@@ -87,6 +90,8 @@ static gboolean key_pressed	(GtkWidget	*widget,
 				 gpointer	 data);
 static void entry_activated	(GtkEditable	*editable);
 static void combo_activated	(GtkEditable	*editable);
+static void sel_btn_clicked	(GtkButton	*button,
+				 gpointer	 data);
 static gint focus_out		(GtkWidget	*widget,
 				 GdkEventFocus	*event,
 				 gpointer	 data);
@@ -151,14 +156,29 @@ gchar *input_dialog_query_password(const gchar *server, const gchar *user)
 	return pass;
 }
 
+gchar *input_dialog_with_filesel(const gchar *title, const gchar *message,
+				 const gchar *default_string,
+				 GtkFileChooserAction action)
+{
+	if (dialog)
+		return NULL;
+
+	input_dialog_create(INPUT_DIALOG_FILESEL);
+	chooser_action = action;
+
+	return input_dialog_open(title, message, default_string);
+}
+
 static void input_dialog_create(InputDialogType dialog_type)
 {
 	GtkWidget *vbox;
 	GtkWidget *hbox;
+	GtkWidget *sel_btn;
 	GtkWidget *cancel_button;
 
 	dialog = gtk_dialog_new();
 	gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
+	gtk_widget_set_size_request(dialog, DIALOG_WIDTH, -1);
 	gtk_container_set_border_width
 		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 	gtk_window_set_position(GTK_WINDOW(dialog),
@@ -184,20 +204,28 @@ static void input_dialog_create(InputDialogType dialog_type)
 	gtk_box_pack_start(GTK_BOX(hbox), msg_label, FALSE, FALSE, 0);
 	gtk_label_set_justify(GTK_LABEL(msg_label), GTK_JUSTIFY_LEFT);
 
+	hbox = gtk_hbox_new(FALSE, 4);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
 	type = dialog_type;
 
 	if (dialog_type == INPUT_DIALOG_COMBO) {
 		combo = gtk_combo_new();
-		gtk_box_pack_start(GTK_BOX(vbox), combo, FALSE, FALSE, 0);
-		gtk_widget_set_size_request(combo, INPUT_ENTRY_WIDTH, -1);
+		gtk_box_pack_start(GTK_BOX(hbox), combo, TRUE, TRUE, 0);
 		g_signal_connect(G_OBJECT(GTK_COMBO(combo)->entry), "activate",
 				 G_CALLBACK(combo_activated), NULL);
 	} else {
 		entry = gtk_entry_new();
-		gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 0);
-		gtk_widget_set_size_request(entry, INPUT_ENTRY_WIDTH, -1);
+		gtk_box_pack_start(GTK_BOX(hbox), entry, TRUE, TRUE, 0);
 		g_signal_connect(G_OBJECT(entry), "activate",
 				 G_CALLBACK(entry_activated), NULL);
+		if (dialog_type == INPUT_DIALOG_FILESEL) {
+			sel_btn = gtk_button_new_with_label("...");
+			gtk_box_pack_start(GTK_BOX(hbox), sel_btn,
+					   FALSE, FALSE, 0);
+			g_signal_connect(G_OBJECT(sel_btn), "clicked",
+					 G_CALLBACK(sel_btn_clicked), NULL);
+		}
 		if (dialog_type == INPUT_DIALOG_INVISIBLE)
 			gtk_entry_set_visibility(GTK_ENTRY(entry), FALSE);
 	}
@@ -329,6 +357,23 @@ static void combo_activated(GtkEditable *editable)
 {
 	ack = TRUE;
 	fin = TRUE;
+}
+
+static void sel_btn_clicked(GtkButton *button, gpointer data)
+{
+	gchar *file;
+	gchar *utf8_file;
+
+	if (chooser_action == GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER)
+		file = filesel_select_dir(NULL);
+	else
+		file = filesel_select_file(_("Select file"), NULL,
+					   chooser_action);
+	if (file) {
+		utf8_file = conv_filename_to_utf8(file);
+		gtk_entry_set_text(GTK_ENTRY(entry), utf8_file);
+		g_free(utf8_file);
+	}
 }
 
 static gint focus_out(GtkWidget *widget, GdkEventFocus *event, gpointer data)
