@@ -90,6 +90,8 @@ static PrefParam param[] = {
 	 P_BOOL},
 	{"inherit_recipient_on_self_reply", "FALSE",
 	 &prefs_common.inherit_recipient_on_self_reply, P_BOOL},
+	{"reply_address_only", "FALSE",
+	 &prefs_common.reply_address_only, P_BOOL},
 
 	{"show_ruler", "TRUE", &prefs_common.show_ruler, P_BOOL},
 

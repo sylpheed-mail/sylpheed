@@ -947,6 +947,30 @@ void extract_list_id_str(gchar *str)
 	g_strstrip(str);
 }
 
+gchar *extract_addresses(const gchar *str)
+{
+	GString *new_str;
+	GSList *addr_list, *cur;
+
+	if (!str)
+		return NULL;
+
+	addr_list = address_list_append(NULL, str);
+
+	new_str = g_string_new(NULL);
+
+	for (cur = addr_list; cur != NULL; cur = cur->next) {
+		g_string_append(new_str, (gchar *)cur->data);
+		if (cur->next)
+			g_string_append(new_str, ", ");
+	}
+
+	slist_free_strings(addr_list);
+	g_slist_free(addr_list);
+
+	return g_string_free(new_str, FALSE);
+}
+
 gchar *normalize_address_field(const gchar *str)
 {
 	GString *new_str;

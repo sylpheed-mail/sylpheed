@@ -108,6 +108,7 @@ static struct Compose {
 	GtkWidget *checkbtn_quote;
 	GtkWidget *checkbtn_default_reply_list;
 	GtkWidget *checkbtn_inherit_recipient_on_self_reply;
+	GtkWidget *checkbtn_reply_address_only;
 } compose;
 
 static struct Quote {
@@ -348,6 +349,9 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"inherit_recipient_on_self_reply",
 	 &compose.checkbtn_inherit_recipient_on_self_reply,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"reply_address_only",
+	 &compose.checkbtn_reply_address_only,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* {"show_ruler", NULL, NULL, NULL}, */
@@ -1083,6 +1087,7 @@ static void prefs_compose_create(void)
 	GtkWidget *checkbtn_quote;
 	GtkWidget *checkbtn_default_reply_list;
 	GtkWidget *checkbtn_inherit_recipient_on_self_reply;
+	GtkWidget *checkbtn_reply_address_only;
 
 	GtkWidget *quote_wid;
 #if USE_GTKSPELL
@@ -1136,9 +1141,11 @@ static void prefs_compose_create(void)
 	PACK_CHECK_BUTTON (vbox2, checkbtn_quote,
 			   _("Quote message when replying"));
 	PACK_CHECK_BUTTON (vbox2, checkbtn_default_reply_list,
-			   _("Reply button invokes mailing list reply"));
+			   _("Reply to mailing list by Reply button"));
 	PACK_CHECK_BUTTON (vbox2, checkbtn_inherit_recipient_on_self_reply,
 			   _("Inherit recipients on reply to self messages"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_reply_address_only,
+			   _("Set only mail address of recipients when replying"));
 
 	/* editor */
 
@@ -1274,6 +1281,7 @@ static void prefs_compose_create(void)
 	compose.checkbtn_default_reply_list = checkbtn_default_reply_list;
 	compose.checkbtn_inherit_recipient_on_self_reply =
 		checkbtn_inherit_recipient_on_self_reply;
+	compose.checkbtn_reply_address_only = checkbtn_reply_address_only;
 }
 
 static GtkWidget *prefs_quote_create(void)

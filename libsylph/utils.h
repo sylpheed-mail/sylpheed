@@ -298,6 +298,8 @@ gchar *strrchr_with_skip_quote		(const gchar	*str,
 void extract_address			(gchar		*str);
 void extract_list_id_str		(gchar		*str);
 
+gchar *extract_addresses		(const gchar	*str);
+
 gchar *normalize_address_field		(const gchar	*str);
 
 gboolean address_equal			(const gchar	*addr1,
