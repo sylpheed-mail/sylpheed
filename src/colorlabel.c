@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 2001-2004 Hiroyuki Yamamoto & The Sylpheed Claws Team
+ * Copyright (C) 2001-2009 Hiroyuki Yamamoto & The Sylpheed Claws Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,14 +69,15 @@ static struct
 	 * allocated and fffreed */
 	gchar			*label;
 	GtkWidget		*widget;
+	GtkWidget		*label_widget;
 } label_colors[] = {
-	{ LCCF_ALL, { 0, 0xffff, (0x99 << 8), 0x0 },		NULL, NULL },
-	{ LCCF_ALL, { 0, 0xffff, 0, 0 },			NULL, NULL },
-	{ LCCF_ALL, { 0, 0xffff, (0x66 << 8), 0xffff },		NULL, NULL },
-	{ LCCF_ALL, { 0, 0x0, (0xcc << 8), 0xffff },		NULL, NULL },
-	{ LCCF_ALL, { 0, 0x0, 0x0, 0xffff },			NULL, NULL },
-	{ LCCF_ALL, { 0, 0x0, 0x99 << 8, 0x0 },			NULL, NULL },
-	{ LCCF_ALL, { 0, 0x66 << 8, 0x33 << 8, 0x33 << 8 },	NULL, NULL }
+	{ LCCF_ALL, { 0, 0xffff, (0x99 << 8), 0x0 },		NULL, NULL, NULL },
+	{ LCCF_ALL, { 0, 0xffff, 0, 0 },			NULL, NULL, NULL },
+	{ LCCF_ALL, { 0, 0xffff, (0x66 << 8), 0xffff },		NULL, NULL, NULL },
+	{ LCCF_ALL, { 0, 0x0, (0xcc << 8), 0xffff },		NULL, NULL, NULL },
+	{ LCCF_ALL, { 0, 0x0, 0x0, 0xffff },			NULL, NULL, NULL },
+	{ LCCF_ALL, { 0, 0x0, 0x99 << 8, 0x0 },			NULL, NULL, NULL },
+	{ LCCF_ALL, { 0, 0x66 << 8, 0x33 << 8, 0x33 << 8 },	NULL, NULL, NULL }
 };
 
 #define LABEL_COLOR_WIDTH	28
@@ -110,6 +111,18 @@ gchar *colorlabel_get_color_text(gint color_index)
 
 	colorlabel_recreate_label(color_index);
 	return label_colors[color_index].label;
+}
+
+void colorlabel_set_color_text(gint color_index, const gchar *label)
+{
+	if (!label)
+		label = "";
+
+	if (label_colors[color_index].label)
+		g_free(label_colors[color_index].label);
+
+	label_colors[color_index].label = g_strdup(label);
+	label_colors[color_index].changed |= LCCF_LABEL;
 }
 
 static gboolean colorlabel_drawing_area_expose_event_cb
@@ -204,6 +217,11 @@ static void colorlabel_recreate_label(gint color)
 	if (label_colors[color].label == NULL) 
 		label_colors[color].label = g_strdup(gettext(labels[color]));
 
+	if (label_colors[color].label_widget)
+		gtk_label_set_text(GTK_LABEL(label_colors[color].label_widget), label_colors[color].label);
+	else
+		label_colors[color].label_widget = gtk_label_new(label_colors[color].label);
+
 	label_colors[color].changed &= ~LCCF_LABEL;
 }
 
@@ -227,7 +245,6 @@ static void colorlabel_recreate_all(void)
  * menu item with a check box */
 GtkWidget *colorlabel_create_check_color_menu_item(gint color_index)
 {
-	GtkWidget *label; 
 	GtkWidget *hbox; 
 	GtkWidget *vbox; 
 	GtkWidget *item;
@@ -238,11 +255,6 @@ GtkWidget *colorlabel_create_check_color_menu_item(gint color_index)
 
 	colorlabel_recreate(color_index);
 
-	/* XXX: gnome-core::panel::menu.c is a great example of
-	 * how to create pixmap menus */
-	label = gtk_label_new(label_colors[color_index].label);
-
-	gtk_widget_show(label);
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_widget_show(hbox);
 	gtk_container_add(GTK_CONTAINER(item), hbox);
@@ -256,7 +268,8 @@ GtkWidget *colorlabel_create_check_color_menu_item(gint color_index)
 	gtk_widget_show(label_colors[color_index].widget);
 
 	gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 4);
+	gtk_box_pack_start(GTK_BOX(hbox), label_colors[color_index].label_widget, FALSE, FALSE, 4);
+	gtk_widget_show(label_colors[color_index].label_widget);
 
 	return item;
 }
@@ -331,4 +344,15 @@ guint colorlabel_get_color_menu_active_item(GtkWidget *menu)
 	color = GPOINTER_TO_UINT
 		(g_object_get_data(G_OBJECT(menuitem), "color"));
 	return color;
+}
+
+void colorlabel_update_menu(void)
+{
+	gint i;
+
+	for (i = 0; i < LABEL_COLORS_ELEMS; i++) {
+		if (label_colors[i].widget && label_colors[i].changed) {
+			colorlabel_recreate(i);
+		}
+	}
 }
