@@ -85,6 +85,7 @@
 #include "plugin_manager.h"
 #include "foldersel.h"
 #include "update_check.h"
+#include "colorlabel.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -259,6 +260,7 @@ int main(int argc, char *argv[])
 	filter_read_config();
 	prefs_actions_read_config();
 	prefs_display_header_read_config();
+	colorlabel_read_config();
 
 #ifdef G_OS_WIN32
 	{

@@ -41,6 +41,7 @@
 #include "colorlabel.h"
 #include "gtkutils.h"
 #include "utils.h"
+#include "prefs.h"
 
 static gchar *labels[] = {
 	N_("Orange"),
@@ -355,4 +356,37 @@ void colorlabel_update_menu(void)
 			colorlabel_recreate(i);
 		}
 	}
+}
+
+gint colorlabel_read_config(void)
+{
+	gchar *path;
+	FILE *fp;
+	gint i;
+	gchar buf[PREFSBUFSIZE];
+
+	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "colorlabelrc",
+			   NULL);
+	if ((fp = g_fopen(path, "rb")) == NULL) {
+		g_free(path);
+		return -1;
+	}
+
+	for (i = 0; i < LABEL_COLORS_ELEMS; i++) {
+		if (fgets(buf, sizeof(buf), fp) == NULL)
+			break;
+		g_strstrip(buf);
+		if (buf[0] != '\0') {
+			colorlabel_set_color_text(i, buf);
+		}
+	}
+
+	fclose(fp);
+	g_free(path);
+
+	return 0;
+}
+
+void colorlabel_write_config(void)
+{
 }

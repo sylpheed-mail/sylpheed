@@ -34,4 +34,7 @@ GtkWidget *colorlabel_create_color_menu		(void);
 guint colorlabel_get_color_menu_active_item	(GtkWidget	*menu);
 void colorlabel_update_menu			(void);
 
+gint colorlabel_read_config			(void);
+void colorlabel_write_config			(void);
+
 #endif /* COLORLABEL_H__ */
