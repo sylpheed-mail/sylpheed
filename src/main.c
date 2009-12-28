@@ -1351,6 +1351,10 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 	gint fd, sock;
 	gchar buf[BUFFSIZE];
 
+#if USE_THREADS
+	gdk_threads_enter();
+#endif
+
 	fd = g_io_channel_unix_get_fd(source);
 	sock = fd_accept(fd);
 	fd_gets(sock, buf, sizeof(buf));
@@ -1410,6 +1414,9 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 		strretchomp(buf);
 		if (strlen(buf) < 6 || buf[4] != ' ') {
 			fd_close(sock);
+#if USE_THREADS
+			gdk_threads_leave();
+#endif
 			return TRUE;
 		}
 		open_message(buf + 5);
@@ -1419,6 +1426,10 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 	}
 
 	fd_close(sock);
+
+#if USE_THREADS
+	gdk_threads_leave();
+#endif
 
 	return TRUE;
 }
