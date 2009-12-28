@@ -385,6 +385,14 @@ else
 	AC_MSG_RESULT(no)
 fi
 
+dnl for update check feature
+AC_ARG_ENABLE(updatecheck,
+	[  --disable-updatecheck   Disable update check feature],
+	[ac_cv_enable_updatecheck=$enableval], [ac_cv_enable_updatecheck=yes])
+if test x"$ac_cv_enable_updatecheck" = xyes ; then
+	AC_DEFINE(USE_UPDATE_CHECK, 1, Define if you want update check feature.)
+fi
+
 dnl Check for d_type member in struct dirent
 AC_MSG_CHECKING([whether struct dirent has d_type member])
 AC_CACHE_VAL(ac_cv_dirent_d_type,[

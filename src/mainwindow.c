@@ -527,9 +527,11 @@ static void faq_open_cb		 (MainWindow	*mainwin,
 static void help_cmdline_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+#if USE_UPDATE_CHECK
 static void update_check_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+#endif
 
 static void scan_tree_func	 (Folder	*folder,
 				  FolderItem	*item,
@@ -888,8 +890,10 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Help/_FAQ/_French"),		NULL, faq_open_cb, MANUAL_LANG_FR, NULL},
 	{N_("/_Help/_FAQ/_Italian"),		NULL, faq_open_cb, MANUAL_LANG_IT, NULL},
 	{N_("/_Help/_Command line options"),	NULL, help_cmdline_cb, 0, NULL},
+#if USE_UPDATE_CHECK
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_Update check..."),		NULL, update_check_cb, 0, NULL},
+#endif
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_About"),			NULL, about_show, 0, NULL}
 };
@@ -4046,11 +4050,13 @@ static void help_cmdline_cb(MainWindow *mainwin, guint action,
 	help_command_line_show();
 }
 
+#if USE_UPDATE_CHECK
 static void update_check_cb(MainWindow *mainwin, guint action,
 			    GtkWidget *widget)
 {
 	update_check(TRUE);
 }
+#endif
 
 static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data)
 {

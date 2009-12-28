@@ -21,10 +21,13 @@
 #  include "config.h"
 #endif
 
+#ifdef USE_UPDATE_CHECK
+
 #include "defs.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -279,3 +282,5 @@ void update_check(gboolean show_dialog_always)
 
 	g_child_watch_add(pid, update_check_cb, (gpointer)show_dialog_always);
 }
+
+#endif /* USE_UPDATE_CHECK */

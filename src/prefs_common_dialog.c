@@ -236,11 +236,13 @@ static struct Extcmd {
 	GtkWidget *button_extsend;
 } extcmd;
 
+#if USE_UPDATE_CHECK
 static struct UpdateCheck {
 	GtkWidget *checkbtn_autoupdate;
 	GtkWidget *checkbtn_useproxy;
 	GtkWidget *entry_proxyhost;
 } update_check;
+#endif
 
 static struct Advanced {
 	GtkWidget *checkbtn_strict_cache_check;
@@ -557,12 +559,14 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	/* Update check */
+#if USE_UPDATE_CHECK
 	{"auto_update_check", &update_check.checkbtn_autoupdate,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"use_http_proxy", &update_check.checkbtn_useproxy,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"http_proxy_host", &update_check.entry_proxyhost,
 	 prefs_set_data_from_entry, prefs_set_entry},
+#endif
 
 	/* Advanced */
 	{"strict_cache_check", &advanced.checkbtn_strict_cache_check,
@@ -591,7 +595,9 @@ static void prefs_privacy_create	(void);
 static void prefs_details_create	(void);
 static GtkWidget *prefs_other_create	(void);
 static GtkWidget *prefs_extcmd_create	(void);
+#if USE_UPDATE_CHECK
 static GtkWidget *prefs_update_create	(void);
+#endif
 static GtkWidget *prefs_advanced_create	(void);
 
 static void prefs_common_set_encoding_optmenu	(GtkOptionMenu	*optmenu,
@@ -740,10 +746,6 @@ static void prefs_common_create(void)
 #endif
 	prefs_details_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Details"), page++);
-	//prefs_other_create();
-	//SET_NOTEBOOK_LABEL(dialog.notebook, _("Other"),     page++);
-	//prefs_advanced_create();
-	//SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"),  page++);
 
 	gtk_widget_show_all(dialog.window);
 }
@@ -2220,7 +2222,9 @@ static void prefs_details_create(void)
 
 	GtkWidget *other_wid;
 	GtkWidget *extcmd_wid;
+#if USE_UPDATE_CHECK
 	GtkWidget *update_wid;
+#endif
 	GtkWidget *advanced_wid;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -2321,9 +2325,11 @@ static void prefs_details_create(void)
 	extcmd_wid = prefs_extcmd_create();
 	gtk_box_pack_start(GTK_BOX(vbox_tab), extcmd_wid, FALSE, FALSE, 0);
 
+#if USE_UPDATE_CHECK
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Update"));
 	update_wid = prefs_update_create();
 	gtk_box_pack_start(GTK_BOX(vbox_tab), update_wid, FALSE, FALSE, 0);
+#endif
 
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Advanced"));
 	advanced_wid = prefs_advanced_create();
@@ -2638,6 +2644,7 @@ static GtkWidget *prefs_extcmd_create(void)
 	return vbox1;
 }
 
+#if USE_UPDATE_CHECK
 static GtkWidget *prefs_update_create(void)
 {
 	GtkWidget *vbox1;
@@ -2684,6 +2691,7 @@ static GtkWidget *prefs_update_create(void)
 
 	return vbox1;
 }
+#endif /* USE_UPDATE_CHECK */
 
 static GtkWidget *prefs_advanced_create(void)
 {

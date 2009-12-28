@@ -24,6 +24,12 @@
 #  include "config.h"
 #endif
 
+#ifdef USE_UPDATE_CHECK
+
+#include <glib.h>
+
 void update_check(gboolean show_dialog_always);
+
+#endif /* USE_UPDATE_CHECK */
 
 #endif /* __PLUGIN_MANAGER_H__ */

@@ -1701,7 +1701,6 @@ static void compose_reply_set_entry(Compose *compose, MsgInfo *msginfo,
 	gboolean to_all = FALSE, to_ml = FALSE, ignore_replyto = FALSE;
 	gchar *from_str = NULL, *to_str = NULL, *cc_str = NULL,
 	      *replyto_str = NULL;
-	GSList *list;
 	gboolean address_only = prefs_common.reply_address_only;
 
 	g_return_if_fail(compose->account != NULL);

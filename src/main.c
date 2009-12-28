@@ -352,8 +352,11 @@ int main(int argc, char *argv[])
 	g_signal_emit_by_name(syl_app, "init-done");
 
 	remote_command_exec();
+
+#if USE_UPDATE_CHECK
 	if (prefs_common.auto_update_check)
 		update_check(FALSE);
+#endif
 
 	gtk_main();
 #if USE_THREADS
