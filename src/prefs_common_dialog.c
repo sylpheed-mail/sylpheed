@@ -49,6 +49,7 @@
 #include "foldersel.h"
 #include "inc.h"
 #include "menu.h"
+#include "colorlabel.h"
 #include "codeconv.h"
 #include "utils.h"
 #include "gtkutils.h"
@@ -163,6 +164,10 @@ static struct Message {
 	GtkWidget *chkbtn_resize_image;
 	GtkWidget *chkbtn_inline_image;
 } message;
+
+static struct ColorLabel {
+	GtkWidget *entry_color[7];
+} colorlabel;
 
 static struct JunkMail {
 	GtkWidget *chkbtn_enable_junk;
@@ -588,6 +593,11 @@ static GtkWidget *prefs_spell_create	(void);
 #endif
 static void prefs_display_create	(void);
 static GtkWidget *prefs_message_create	(void);
+
+static GtkWidget *prefs_colorlabel_create	(void);
+static void prefs_common_colorlabel_set_dialog	(void);
+static void prefs_common_colorlabel_update	(void);
+
 static void prefs_junk_create		(void);
 #if USE_GPGME
 static void prefs_privacy_create	(void);
@@ -703,6 +713,7 @@ void prefs_common_open(void)
 	gtk_widget_grab_focus(dialog.ok_btn);
 
 	prefs_set_dialog(prefs_common_get_params());
+	prefs_common_colorlabel_set_dialog();
 
 	gtk_widget_show(dialog.window);
 }
@@ -1485,6 +1496,7 @@ static void prefs_display_create(void)
 	GtkWidget *button_dispitem;
 
 	GtkWidget *msg_wid;
+	GtkWidget *clabel_wid;
 
 	GtkWidget *label_dispencoding;
 	GtkWidget *optmenu_dispencoding;
@@ -1627,6 +1639,10 @@ static void prefs_display_create(void)
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Message"));
 	msg_wid = prefs_message_create();
 	gtk_box_pack_start(GTK_BOX(vbox_tab), msg_wid, FALSE, FALSE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Color label"));
+	clabel_wid = prefs_colorlabel_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), clabel_wid, FALSE, FALSE, 0);
 
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Encoding"));
 
@@ -1879,6 +1895,71 @@ static GtkWidget *prefs_message_create(void)
 	message.chkbtn_inline_image = chkbtn_inline_image;
 
 	return vbox1;
+}
+
+static GtkWidget *prefs_colorlabel_create(void)
+{
+	GtkWidget *vbox;
+	GtkWidget *table;
+	GtkWidget *clabel;
+	GtkWidget *entry;
+	gint i;
+
+	vbox = gtk_vbox_new(FALSE, VSPACING);
+	gtk_widget_show(vbox);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
+
+	table = gtk_table_new(7, 2, FALSE);
+	gtk_widget_show(table);
+	gtk_container_add(GTK_CONTAINER(vbox), table);
+	gtk_table_set_row_spacings(GTK_TABLE(table), VSPACING_NARROW);
+	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
+
+	for (i = 0; i < 7; i++) {
+		clabel = colorlabel_create_color_widget
+			(colorlabel_get_color(i));
+		gtk_widget_show(clabel);
+		gtk_table_attach(GTK_TABLE(table), clabel, 0, 1, i, i + 1,
+				 GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 6);
+		entry  = gtk_entry_new();
+		gtk_widget_show(entry);
+		gtk_table_attach(GTK_TABLE(table), entry, 1, 2, i, i + 1,
+				 GTK_EXPAND | GTK_FILL, 0, 0, 0);
+		colorlabel.entry_color[i] = entry;
+	}
+
+	return vbox;
+}
+
+static void prefs_common_colorlabel_set_dialog(void)
+{
+	gint i;
+	const gchar *text;
+
+	for (i = 0; i < 7; i++) {
+		if ((text = colorlabel_get_custom_color_text(i))) {
+			gtk_entry_set_text(GTK_ENTRY(colorlabel.entry_color[i]),
+					   text);
+		} else {
+			gtk_entry_set_text(GTK_ENTRY(colorlabel.entry_color[i]),
+					   "");
+		}
+	}
+}
+
+static void prefs_common_colorlabel_update(void)
+{
+	gint i;
+	const gchar *text;
+
+	for (i = 0; i < 7; i++) {
+		text = gtk_entry_get_text(GTK_ENTRY(colorlabel.entry_color[i]));
+		if (text && text[0] != '\0')
+			colorlabel_set_color_text(i, text);
+		else
+			colorlabel_set_color_text(i, NULL);
+	}
+	colorlabel_update_menu();
 }
 
 static const struct {
@@ -4104,6 +4185,8 @@ static void prefs_common_apply(void)
 	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
 	main_window_reflect_prefs_all();
 	compose_reflect_prefs_all();
+	prefs_common_colorlabel_update();
+	colorlabel_write_config();
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
 	prefs_common_write_config();
 

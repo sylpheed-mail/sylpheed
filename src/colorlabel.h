@@ -24,10 +24,12 @@
 
 gint colorlabel_get_color_count			(void);
 GdkColor colorlabel_get_color			(gint		 color_index);
-gchar *colorlabel_get_color_text		(gint		 color_index);
+const gchar *colorlabel_get_color_text		(gint		 color_index);
+const gchar *colorlabel_get_custom_color_text	(gint		 color_index);
 void colorlabel_set_color_text			(gint		 color_index,
 						 const gchar	*label);
 gboolean colorlabel_changed			(void);
+GtkWidget *colorlabel_create_color_widget	(GdkColor	 color);
 GtkWidget *colorlabel_create_check_color_menu_item
 						(gint		 color_index);
 GtkWidget *colorlabel_create_color_menu		(void);

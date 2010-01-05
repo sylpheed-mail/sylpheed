@@ -106,19 +106,23 @@ GdkColor colorlabel_get_color(gint color_index)
 	return label_colors[color_index].color;
 }
 
-gchar *colorlabel_get_color_text(gint color_index)
+const gchar *colorlabel_get_color_text(gint color_index)
 {
 	G_RETURN_VAL_IF_INVALID_COLOR(color_index, NULL);
 
-	colorlabel_recreate_label(color_index);
+	return label_colors[color_index].label ?
+		label_colors[color_index].label : gettext(labels[color_index]);
+}
+
+const gchar *colorlabel_get_custom_color_text(gint color_index)
+{
+	G_RETURN_VAL_IF_INVALID_COLOR(color_index, NULL);
+
 	return label_colors[color_index].label;
 }
 
 void colorlabel_set_color_text(gint color_index, const gchar *label)
 {
-	if (!label)
-		label = "";
-
 	if (label_colors[color_index].label)
 		g_free(label_colors[color_index].label);
 
@@ -155,7 +159,7 @@ static gboolean colorlabel_drawing_area_expose_event_cb
 	return FALSE;
 }
 
-static GtkWidget *colorlabel_create_color_widget(GdkColor color)
+GtkWidget *colorlabel_create_color_widget(GdkColor color)
 {
 	GtkWidget *widget;
 
@@ -212,16 +216,18 @@ static void colorlabel_recreate_color(gint color)
 
 static void colorlabel_recreate_label(gint color)
 {
+	const gchar *text;
+
 	if (!label_colors[color].changed & LCCF_LABEL)
 		return;
 
-	if (label_colors[color].label == NULL) 
-		label_colors[color].label = g_strdup(gettext(labels[color]));
+	text = colorlabel_get_color_text(color);
 
 	if (label_colors[color].label_widget)
-		gtk_label_set_text(GTK_LABEL(label_colors[color].label_widget), label_colors[color].label);
+		gtk_label_set_text(GTK_LABEL(label_colors[color].label_widget),
+				   text);
 	else
-		label_colors[color].label_widget = gtk_label_new(label_colors[color].label);
+		label_colors[color].label_widget = gtk_label_new(text);
 
 	label_colors[color].changed &= ~LCCF_LABEL;
 }
@@ -307,8 +313,8 @@ GtkWidget *colorlabel_create_color_menu(void)
 		g_object_set_data(G_OBJECT(item), "color",
 				  GUINT_TO_POINTER(i + 1));
 
-		label = gtk_label_new(label_colors[i].label);
-		
+		label = gtk_label_new(colorlabel_get_color_text(i));
+
 		gtk_widget_show(label);
 		hbox = gtk_hbox_new(FALSE, 0);
 		gtk_widget_show(hbox);
@@ -389,4 +395,35 @@ gint colorlabel_read_config(void)
 
 void colorlabel_write_config(void)
 {
+	gchar *path;
+	PrefFile *pfile;
+	gint i;
+	gint ret;
+	const gchar *text;
+
+	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "colorlabelrc",
+			   NULL);
+	if ((pfile = prefs_file_open(path)) == NULL) {
+		g_warning("failed to write colorlabelrc");
+		g_free(path);
+		return;
+	}
+
+	for (i = 0; i < LABEL_COLORS_ELEMS; i++) {
+		text = colorlabel_get_custom_color_text(i);
+		ret = 0;
+		if (text)
+			ret = fputs(text, pfile->fp);
+
+		if (ret == EOF || fputc('\n', pfile->fp) == EOF) {
+			FILE_OP_ERROR(path, "fputs || fputc");
+			prefs_file_close_revert(pfile);
+			g_free(path);
+			return;
+		}
+	}
+
+	if (prefs_file_close(pfile) < 0) {
+		g_warning("failed to write colorlabelrc");
+	}
 }
