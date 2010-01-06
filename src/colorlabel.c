@@ -393,7 +393,7 @@ gint colorlabel_read_config(void)
 	return 0;
 }
 
-void colorlabel_write_config(void)
+gint colorlabel_write_config(void)
 {
 	gchar *path;
 	PrefFile *pfile;
@@ -406,7 +406,7 @@ void colorlabel_write_config(void)
 	if ((pfile = prefs_file_open(path)) == NULL) {
 		g_warning("failed to write colorlabelrc");
 		g_free(path);
-		return;
+		return -1;
 	}
 
 	for (i = 0; i < LABEL_COLORS_ELEMS; i++) {
@@ -419,11 +419,17 @@ void colorlabel_write_config(void)
 			FILE_OP_ERROR(path, "fputs || fputc");
 			prefs_file_close_revert(pfile);
 			g_free(path);
-			return;
+			return -1;
 		}
 	}
 
 	if (prefs_file_close(pfile) < 0) {
 		g_warning("failed to write colorlabelrc");
+		g_free(path);
+		return -1;
 	}
+
+	g_free(path);
+
+	return 0;
 }
