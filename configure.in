@@ -286,6 +286,12 @@ if test "$ac_cv_enable_gtkspell" = yes; then
 		LIBS="$LIBS `$PKG_CONFIG --libs gtkspell-2.0`"
 		if $PKG_CONFIG --atleast-version 2.0.13 gtkspell-2.0 ; then
 			AC_DEFINE(USE_ENCHANT, 1, Use Enchant with GtkSpell)
+
+			dnl Workaroud for zemberek crash
+			if $PKG_CONFIG --atleast-version 1.4.2 enchant ; then
+				CFLAGS="$CFLAGS `$PKG_CONFIG --cflags dbus-glib-1`"
+				LIBS="$LIBS `$PKG_CONFIG --libs dbus-glib-1`"
+			fi
 		elif $PKG_CONFIG --atleast-version 2.0.12 gtkspell-2.0 ; then
 			LIBS="$LIBS -laspell"
 		fi
