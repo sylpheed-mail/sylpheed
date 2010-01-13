@@ -2,12 +2,20 @@ Changes of Sylpheed
 
 * 3.0.0beta5 (development)
 
+    * The feature to customize the color label text was added.
     * The option to set only mail address of recipients when replying was
       added.
-    * The feature to customize the color label text was added.
+    * When messages are added to IMAP folders, received-date information
+      is also set using Date header (mainly for Gmail).
     * The configure option '--disable-updatecheck' which disables the update
       check feature was added.
+    * The configure option '--enable-silent-rules' is enabled if automake is
+      equal or greater than 1.11.
+    * A workaround for crash caused by enchant with zemberek was added
+      (requires dbus-glib-1 if enchant is equal or greater than 1.4.2).
     * The bug that caused freeze when remote IPC commands were executed.
+    * The bug that IMAP caches with UIDs larger than INT_MAX were never
+      deleted was fixed.
 
 * 3.0.0beta4 (development)
 
