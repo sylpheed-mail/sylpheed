@@ -219,6 +219,7 @@ gboolean str_case_find_equal	(const gchar	*haystack,
 
 /* number-string conversion */
 gint to_number			(const gchar *nstr);
+guint to_unumber		(const gchar *nstr);
 gchar *itos_buf			(gchar	     *nstr,
 				 gint	      n);
 gchar *itos			(gint	      n);

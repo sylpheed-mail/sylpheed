@@ -4,6 +4,13 @@
 
 2010-01-13
 
+	* libsylph/utils.c: to_unumber(): added.
+	  remove_numbered_files()
+	  remove_expired_files(): made filename to number conversion unsigned
+	  (fixes undeleted IMAP caches with UIDs larger than INT_MAX).
+
+2010-01-13
+
 	* libsylph/imap.c: imap_cmd_append(): added date-time info on APPEND
 	  using Date: header (for Gmail to display received date).
 

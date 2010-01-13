@@ -314,6 +314,24 @@ gint to_number(const gchar *nstr)
 	return atoi(nstr);
 }
 
+guint to_unumber(const gchar *nstr)
+{
+	register const gchar *p;
+	gulong val;
+
+	if (*nstr == '\0') return -1;
+
+	for (p = nstr; *p != '\0'; p++)
+		if (!g_ascii_isdigit(*p)) return -1;
+
+	errno = 0;
+	val = strtoul(nstr, NULL, 10);
+	if (val == ULONG_MAX && errno != 0)
+		val = 0;
+
+	return (guint)val;
+}
+
 /* convert integer into string,
    nstr must be not lower than 11 characters length */
 gchar *itos_buf(gchar *nstr, gint n)
@@ -2570,7 +2588,7 @@ gint remove_numbered_files(const gchar *dir, guint first, guint last)
 	GDir *dp;
 	const gchar *dir_name;
 	gchar *prev_dir;
-	gint file_no;
+	guint file_no;
 
 	prev_dir = g_get_current_dir();
 
@@ -2587,7 +2605,7 @@ gint remove_numbered_files(const gchar *dir, guint first, guint last)
 	}
 
 	while ((dir_name = g_dir_read_name(dp)) != NULL) {
-		file_no = to_number(dir_name);
+		file_no = to_unumber(dir_name);
 		if (file_no > 0 && first <= file_no && file_no <= last) {
 			if (is_dir_exist(dir_name))
 				continue;
@@ -2620,7 +2638,7 @@ gint remove_expired_files(const gchar *dir, guint hours)
 	const gchar *dir_name;
 	struct stat s;
 	gchar *prev_dir;
-	gint file_no;
+	guint file_no;
 	time_t mtime, now, expire_time;
 
 	prev_dir = g_get_current_dir();
@@ -2641,7 +2659,7 @@ gint remove_expired_files(const gchar *dir, guint hours)
 	expire_time = hours * 60 * 60;
 
 	while ((dir_name = g_dir_read_name(dp)) != NULL) {
-		file_no = to_number(dir_name);
+		file_no = to_unumber(dir_name);
 		if (file_no > 0) {
 			if (g_stat(dir_name, &s) < 0) {
 				FILE_OP_ERROR(dir_name, "stat");
