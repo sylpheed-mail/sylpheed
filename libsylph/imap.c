@@ -4069,11 +4069,31 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	return ok;
 }
 
+static void imap_get_date_time(gchar *buf, size_t len, time_t timer)
+{
+	static gchar monthstr[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
+	struct tm *lt;
+	gchar date_time[64];
+	gchar tz[6];
+
+	lt = localtime(&timer);
+	if (lt && lt->tm_mon >= 0 && lt->tm_mon < 12) {
+		strftime(date_time, sizeof(date_time), "%d-___-%Y %H:%M:%S",
+			 lt);
+		tzoffset_buf(tz, &timer);
+		memcpy(date_time + 3, monthstr + lt->tm_mon * 3, 3);
+		g_snprintf(buf, len, "%s %s", date_time, tz);
+	}
+}
+
 static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 			    const gchar *file, IMAPFlags flags,
 			    guint32 *new_uid)
 {
 	gint ok;
+	MsgInfo *msginfo;
+	MsgFlags flags_ = {0, 0};
+	gchar date_time[64] = "";
 	gint size;
 	gchar *destfolder_;
 	gchar *flag_str;
@@ -4092,6 +4112,13 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 		FILE_OP_ERROR(file, "fopen");
 		return -1;
 	}
+
+	/* use Date: header as received date */
+	msginfo = procheader_parse_stream(fp, flags_, FALSE);
+	imap_get_date_time(date_time, sizeof(date_time), msginfo->date_t);
+	procmsg_msginfo_free(msginfo);
+
+	rewind(fp);
 	tmp = canonicalize_file_stream(fp, &size);
 	fclose(fp);
 	if (!tmp)
@@ -4099,8 +4126,12 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 
 	QUOTE_IF_REQUIRED(destfolder_, destfolder);
 	flag_str = imap_get_flag_str(flags);
-	ok = imap_cmd_gen_send(session, "APPEND %s (%s) {%d}",
-			       destfolder_, flag_str, size);
+	if (date_time[0])
+		ok = imap_cmd_gen_send(session, "APPEND %s (%s) \"%s\" {%d}",
+				       destfolder_, flag_str, date_time, size);
+	else
+		ok = imap_cmd_gen_send(session, "APPEND %s (%s) {%d}",
+				       destfolder_, flag_str, size);
 	g_free(flag_str);
 	if (ok != IMAP_SUCCESS) {
 		log_warning(_("can't append %s to %s\n"), file, destfolder_);
