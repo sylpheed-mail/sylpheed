@@ -319,10 +319,10 @@ guint to_unumber(const gchar *nstr)
 	register const gchar *p;
 	gulong val;
 
-	if (*nstr == '\0') return -1;
+	if (*nstr == '\0') return 0;
 
 	for (p = nstr; *p != '\0'; p++)
-		if (!g_ascii_isdigit(*p)) return -1;
+		if (!g_ascii_isdigit(*p)) return 0;
 
 	errno = 0;
 	val = strtoul(nstr, NULL, 10);
