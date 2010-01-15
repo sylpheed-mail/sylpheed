@@ -384,6 +384,9 @@ static gint imap_cmd_gen_send	(IMAPSession	*session,
 static gint imap_cmd_gen_recv	(IMAPSession	*session,
 				 gchar	       **ret);
 
+static gint imap_cmd_gen_recv_silent	(IMAPSession	*session,
+					 gchar	       **ret);
+
 /* misc utility functions */
 static gchar *strchr_cpy			(const gchar	*src,
 						 gchar		 ch,
@@ -859,8 +862,11 @@ static gint imap_fetch_flags(IMAPSession *session, GArray **uids,
 	*uids = g_array_new(FALSE, FALSE, sizeof(guint32));
 	*flags_table = g_hash_table_new(NULL, g_direct_equal);
 
-	while ((ok = imap_cmd_gen_recv(session, &tmp)) == IMAP_SUCCESS) {
+	log_print("IMAP4< %s\n", _("(retrieving FLAGS...)"));
+
+	while ((ok = imap_cmd_gen_recv_silent(session, &tmp)) == IMAP_SUCCESS) {
 		if (tmp[0] != '*' || tmp[1] != ' ') {
+			log_print("IMAP4< %s\n", tmp);
 			g_free(tmp);
 			break;
 		}
@@ -987,6 +993,7 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 		GSList *cur, *next = NULL;
 		MsgInfo *msginfo;
 		IMAPFlags imap_flags;
+		guint color;
 
 		/* get cache data */
 		mlist = procmsg_read_cache(item, FALSE);
@@ -994,12 +1001,17 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 		cache_last = procmsg_get_last_num_in_msg_list(mlist);
 
 		/* get all UID list and flags */
+#if 0
 		ok = imap_search_flags(session, &uids, &flags_table);
 		if (ok != IMAP_SUCCESS) {
 			if (ok == IMAP_SOCKET || ok == IMAP_IOERR) THROW;
 			ok = imap_fetch_flags(session, &uids, &flags_table);
 			if (ok != IMAP_SUCCESS) THROW;
 		}
+#else
+		ok = imap_fetch_flags(session, &uids, &flags_table);
+		if (ok != IMAP_SUCCESS) THROW;
+#endif
 
 		if (uids->len > 0) {
 			first_uid = g_array_index(uids, guint32, 0);
@@ -1081,6 +1093,14 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 							     MSG_REPLIED);
 					item->mark_dirty = TRUE;
 				}
+			}
+
+			color = IMAP_GET_COLORLABEL_VALUE(imap_flags);
+			if (MSG_GET_COLORLABEL_VALUE(msginfo->flags) != color) {
+				MSG_UNSET_PERM_FLAGS(msginfo->flags,
+						     MSG_CLABEL_FLAG_MASK);
+				MSG_SET_COLORLABEL_VALUE(msginfo->flags, color);
+				item->mark_dirty = TRUE;
 			}
 		}
 
@@ -3196,21 +3216,30 @@ static MsgFlags imap_parse_flags(const gchar *flag_str)
 
 	flags.perm_flags = MSG_UNREAD;
 
-	while ((p = strchr(p, '\\')) != NULL) {
-		p++;
-
-		if (g_ascii_strncasecmp(p, "Recent", 6) == 0 &&
+	while (*p != '\0') {
+		if (g_ascii_strncasecmp(p, "\\Recent", 7) == 0 &&
 		    MSG_IS_UNREAD(flags)) {
 			MSG_SET_PERM_FLAGS(flags, MSG_NEW);
-		} else if (g_ascii_strncasecmp(p, "Seen", 4) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Seen", 5) == 0) {
 			MSG_UNSET_PERM_FLAGS(flags, MSG_NEW|MSG_UNREAD);
-		} else if (g_ascii_strncasecmp(p, "Deleted", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Deleted", 8) == 0) {
 			MSG_SET_PERM_FLAGS(flags, MSG_DELETED);
-		} else if (g_ascii_strncasecmp(p, "Flagged", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Flagged", 8) == 0) {
 			MSG_SET_PERM_FLAGS(flags, MSG_MARKED);
-		} else if (g_ascii_strncasecmp(p, "Answered", 8) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Answered", 9) == 0) {
 			MSG_SET_PERM_FLAGS(flags, MSG_REPLIED);
+		} else if (g_ascii_strncasecmp(p, "$label", 6) == 0) {
+			/* color labels */
+			if (*(p + 6) >= '1' && *(p + 6) <= '7') {
+				guint color = *(p + 6) - '1' + 1;
+				MSG_UNSET_PERM_FLAGS(flags,
+						     MSG_CLABEL_FLAG_MASK);
+				MSG_SET_COLORLABEL_VALUE(flags, color);
+			}
 		}
+
+		while (*p && !g_ascii_isspace(*p)) p++;
+		while (g_ascii_isspace(*p)) p++;
 	}
 
 	return flags;
@@ -3221,18 +3250,26 @@ static IMAPFlags imap_parse_imap_flags(const gchar *flag_str)
 	const gchar *p = flag_str;
 	IMAPFlags flags = 0;
 
-	while ((p = strchr(p, '\\')) != NULL) {
-		p++;
-
-		if (g_ascii_strncasecmp(p, "Seen", 4) == 0) {
+	while (*p != '\0') {
+		if (g_ascii_strncasecmp(p, "\\Seen", 5) == 0) {
 			flags |= IMAP_FLAG_SEEN;
-		} else if (g_ascii_strncasecmp(p, "Deleted", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Deleted", 8) == 0) {
 			flags |= IMAP_FLAG_DELETED;
-		} else if (g_ascii_strncasecmp(p, "Flagged", 7) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Flagged", 8) == 0) {
 			flags |= IMAP_FLAG_FLAGGED;
-		} else if (g_ascii_strncasecmp(p, "Answered", 8) == 0) {
+		} else if (g_ascii_strncasecmp(p, "\\Answered", 9) == 0) {
 			flags |= IMAP_FLAG_ANSWERED;
+		} else if (g_ascii_strncasecmp(p, "$label", 6) == 0) {
+			/* color labels */
+			if (*(p + 6) >= '1' && *(p + 6) <= '7') {
+				guint color = *(p + 6) - '1' + 1;
+				MSG_UNSET_FLAGS(flags, MSG_CLABEL_FLAG_MASK);
+				IMAP_SET_COLORLABEL_VALUE(flags, color);
+			}
 		}
+
+		while (*p && !g_ascii_isspace(*p)) p++;
+		while (g_ascii_isspace(*p)) p++;
 	}
 
 	return flags;
@@ -3412,10 +3449,63 @@ gint imap_msg_list_unset_perm_flags(GSList *msglist, MsgPermFlags flags)
 	return imap_msg_list_change_perm_flags(msglist, flags, FALSE);
 }
 
+gint imap_msg_list_set_colorlabel_flags(GSList *msglist, guint color)
+{
+	Folder *folder;
+	IMAPSession *session;
+	IMAPFlags iflags = 0;
+	MsgInfo *msginfo;
+	GSList *seq_list, *cur;
+	gint ok = IMAP_SUCCESS;
+
+	if (msglist == NULL) return IMAP_SUCCESS;
+
+	msginfo = (MsgInfo *)msglist->data;
+	g_return_val_if_fail(msginfo != NULL, -1);
+
+	g_return_val_if_fail(MSG_IS_IMAP(msginfo->flags), -1);
+	g_return_val_if_fail(msginfo->folder != NULL, -1);
+	g_return_val_if_fail(msginfo->folder->folder != NULL, -1);
+
+	folder = msginfo->folder->folder;
+	g_return_val_if_fail(FOLDER_TYPE(folder) == F_IMAP, -1);
+
+	session = imap_session_get(folder);
+	if (!session) return -1;
+
+	ok = imap_select(session, IMAP_FOLDER(folder), msginfo->folder->path,
+			 NULL, NULL, NULL, NULL);
+	if (ok != IMAP_SUCCESS)
+		return ok;
+
+	seq_list = imap_get_seq_set_from_msglist(msglist, 0);
+
+	IMAP_SET_COLORLABEL_VALUE(iflags, color);
+
+	for (cur = seq_list; cur != NULL; cur = cur->next) {
+		gchar *seq_set = (gchar *)cur->data;
+
+		ok = imap_cmd_store(session, seq_set,
+				    "-FLAGS.SILENT ($label1 $label2 $label3 $label4 $label5 $label6 $label7)");
+		if (ok != IMAP_SUCCESS) break;
+
+		if (iflags) {
+			ok = imap_set_message_flags(session, seq_set, iflags,
+						    TRUE);
+			if (ok != IMAP_SUCCESS) break;
+		}
+	}
+
+	imap_seq_set_free(seq_list);
+
+	return ok;
+}
+
 static gchar *imap_get_flag_str(IMAPFlags flags)
 {
 	GString *str;
 	gchar *ret;
+	guint color;
 
 	str = g_string_new(NULL);
 
@@ -3423,7 +3513,11 @@ static gchar *imap_get_flag_str(IMAPFlags flags)
 	if (IMAP_IS_ANSWERED(flags))	g_string_append(str, "\\Answered ");
 	if (IMAP_IS_FLAGGED(flags))	g_string_append(str, "\\Flagged ");
 	if (IMAP_IS_DELETED(flags))	g_string_append(str, "\\Deleted ");
-	if (IMAP_IS_DRAFT(flags))	g_string_append(str, "\\Draft");
+	if (IMAP_IS_DRAFT(flags))	g_string_append(str, "\\Draft ");
+
+	if ((color = IMAP_GET_COLORLABEL_VALUE(flags)) != 0) {
+		g_string_append_printf(str, "$label%u", color);
+	}
 
 	if (str->len > 0 && str->str[str->len - 1] == ' ')
 		g_string_truncate(str, str->len - 1);
@@ -4411,6 +4505,20 @@ static gint imap_cmd_gen_recv(IMAPSession *session, gchar **ret)
 		g_free(str);
 	} else
 		log_print("IMAP4< %s\n", *ret);
+
+	session_set_access_time(SESSION(session));
+
+	return IMAP_SUCCESS;
+}
+
+static gint imap_cmd_gen_recv_silent(IMAPSession *session, gchar **ret)
+{
+	gint len;
+
+	if ((len = sock_getline(SESSION(session)->sock, ret)) < 0)
+		return IMAP_SOCKET;
+
+	strretchomp(*ret);
 
 	session_set_access_time(SESSION(session));
 

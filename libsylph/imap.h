@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -93,7 +93,10 @@ typedef enum
 	IMAP_FLAG_ANSWERED	= 1 << 1,
 	IMAP_FLAG_FLAGGED	= 1 << 2,
 	IMAP_FLAG_DELETED	= 1 << 3,
-	IMAP_FLAG_DRAFT		= 1 << 4
+	IMAP_FLAG_DRAFT		= 1 << 4,
+
+	/* color label keywords : 1 << 7 ... 1 << 9
+	   compatible with procmsg.h: MSG_CLABEL* macros */
 } IMAPFlags;
 
 #define IMAP_IS_SEEN(flags)	((flags & IMAP_FLAG_SEEN) != 0)
@@ -101,6 +104,12 @@ typedef enum
 #define IMAP_IS_FLAGGED(flags)	((flags & IMAP_FLAG_FLAGGED) != 0)
 #define IMAP_IS_DELETED(flags)	((flags & IMAP_FLAG_DELETED) != 0)
 #define IMAP_IS_DRAFT(flags)	((flags & IMAP_FLAG_DRAFT) != 0)
+
+#define IMAP_GET_COLORLABEL(flags)	(flags & (7 << MSG_CLABEL_SBIT))
+#define IMAP_GET_COLORLABEL_VALUE(flags) \
+	(IMAP_GET_COLORLABEL(flags) >> MSG_CLABEL_SBIT)
+#define IMAP_SET_COLORLABEL_VALUE(flags, v) \
+	((flags) |= ((v & 7) << MSG_CLABEL_SBIT))
 
 FolderClass *imap_get_class		(void);
 
@@ -112,5 +121,8 @@ gint imap_msg_list_set_perm_flags	(GSList		*msglist,
 					 MsgPermFlags	 flags);
 gint imap_msg_list_unset_perm_flags	(GSList		*msglist,
 					 MsgPermFlags	 flags);
+
+gint imap_msg_list_set_colorlabel_flags	(GSList		*msglist,
+					 guint		 color);
 
 #endif /* __IMAP_H__ */

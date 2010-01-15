@@ -4923,6 +4923,14 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 		summary_set_row(summaryview, &iter, msginfo);
 	}
 
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
+		GSList *msglist;
+
+		msglist = summary_get_selected_msg_list(summaryview);
+		imap_msg_list_set_colorlabel_flags(msglist, labelcolor);
+		g_slist_free(msglist);
+	}
+
 	if (rows)
 		summaryview->folder_item->mark_dirty = TRUE;
 
