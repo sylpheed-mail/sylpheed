@@ -115,6 +115,9 @@
 	if (sort_key == key)					\
 		summary_sort(summaryview, sort_key, sort_type);
 
+#define SUMMARY_DISPLAY_TOTAL_NUM(item) \
+	(summaryview->on_filter ? summaryview->flt_msg_total : item->total)
+
 #ifdef G_OS_WIN32
 #  define SUMMARY_COL_MARK_WIDTH	23
 #  define SUMMARY_COL_UNREAD_WIDTH	26
@@ -842,15 +845,11 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				(summaryview, &iter, NULL, MSG_UNREAD, FALSE)) {
 				summary_select_row(summaryview, &iter,
 						   FALSE, TRUE);
-			} else if ((summaryview->on_filter &&
-				    summaryview->flt_msg_total > 1) ||
-				   (!summaryview->on_filter &&
-				    item->total > 1)) {
+			} else if (item->sort_type == SORT_ASCENDING &&
+				   SUMMARY_DISPLAY_TOTAL_NUM(item) > 1) {
 				g_signal_emit_by_name
 					(treeview, "move-cursor",
-					 GTK_MOVEMENT_BUFFER_ENDS,
-					 item->sort_type == SORT_DESCENDING ?
-					 -1 : 1, &moved);
+					 GTK_MOVEMENT_BUFFER_ENDS, 1, &moved);
 				GTK_EVENTS_FLUSH();
 				summary_scroll_to_selected(summaryview, TRUE);
 			} else if (gtk_tree_model_get_iter_first
@@ -885,14 +884,11 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 						   FALSE, TRUE);
 		} else {
 			summary_unlock(summaryview);
-			if ((summaryview->on_filter &&
-			     summaryview->flt_msg_total > 1) ||
-			    (!summaryview->on_filter && item->total > 1)) {
+			if (item->sort_type == SORT_ASCENDING &&
+			    SUMMARY_DISPLAY_TOTAL_NUM(item) > 1) {
 				g_signal_emit_by_name
 					(treeview, "move-cursor",
-					 GTK_MOVEMENT_BUFFER_ENDS,
-					 item->sort_type == SORT_DESCENDING ?
-					 -1 : 1, &moved);
+					 GTK_MOVEMENT_BUFFER_ENDS, 1, &moved);
 			} else if (gtk_tree_model_get_iter_first
 					(GTK_TREE_MODEL(summaryview->store),
 					 &iter)) {
