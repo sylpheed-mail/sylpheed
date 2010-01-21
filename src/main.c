@@ -822,8 +822,19 @@ static void idle_function_for_gpgme(void)
 static void check_gpg(void)
 {
 #if USE_GPGME
-	if (gpgme_check_version("0.4.5") &&
-	    !gpgme_engine_check_version(GPGME_PROTOCOL_OpenPGP)) {
+	const gchar *version;
+	gpgme_error_t err = 0;
+
+	version = gpgme_check_version("1.0.0");
+	if (version) {
+		debug_print("GPGME Version: %s\n", version);
+		err = gpgme_engine_check_version(GPGME_PROTOCOL_OpenPGP);
+		if (err)
+			debug_print("gpgme_engine_check_version: %s\n",
+				    gpgme_strerror(err));
+	}
+
+	if (version && !err) {
 		/* Also does some gpgme init */
 	        gpgme_engine_info_t engineInfo;
 
@@ -835,7 +846,7 @@ static void check_gpg(void)
 
 		if (!gpgme_get_engine_info(&engineInfo)) {
 			while (engineInfo) {
-				debug_print("GpgME Protocol: %s\n      Version: %s\n",
+				debug_print("GPGME Protocol: %s\n      Version: %s\n",
 					    gpgme_get_protocol_name
 						(engineInfo->protocol),
 					    engineInfo->version ?
