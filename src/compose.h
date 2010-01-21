@@ -132,12 +132,11 @@ struct _Compose
 
 	GtkWidget *tmpl_menu;
 
-#if USE_GTKSPELL
+	/* GtkSpell */
 	GtkWidget *spell_menu;
 	gchar     *spell_lang;
 	gboolean   check_spell;
 	GSList    *dict_list;
-#endif
 
 	ComposeMode mode;
 
@@ -232,6 +231,8 @@ void compose_entry_set		(Compose	  *compose,
 				 ComposeEntryType  type);
 void compose_entry_append	(Compose	  *compose,
 				 const gchar	  *text,
+				 ComposeEntryType  type);
+gchar *compose_entry_get_text	(Compose	  *compose,
 				 ComposeEntryType  type);
 
 void compose_lock		(Compose	*compose);

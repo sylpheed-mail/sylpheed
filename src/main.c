@@ -1125,6 +1125,13 @@ static void plugin_init(void)
 			      messageview_create_with_new_window);
 	syl_plugin_add_symbol("messageview_show", messageview_show);
 
+	syl_plugin_add_symbol("compose_new", compose_new);
+	syl_plugin_add_symbol("compose_entry_set", compose_entry_set);
+	syl_plugin_add_symbol("compose_entry_append", compose_entry_append);
+	syl_plugin_add_symbol("compose_entry_get_text", compose_entry_get_text);
+	syl_plugin_add_symbol("compose_lock", compose_lock);
+	syl_plugin_add_symbol("compose_unlock", compose_unlock);
+
 	syl_plugin_add_symbol("foldersel_folder_sel",
 			      foldersel_folder_sel);
 	syl_plugin_add_symbol("foldersel_folder_sel_full",

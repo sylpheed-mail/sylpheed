@@ -1,3 +1,15 @@
+2010-01-21
+
+	* src/compose.[ch]
+	  src/plugin.[ch]
+	  src/main.c: added new plug-in APIs for compose window:
+	  syl_plugin_compose_new, syl_plugin_compose_entry_set,
+	  syl_plugin_compose_entry_append, syl_plugin_compose_entry_get_text,
+	  syl_plugin_compose_lock, syl_plugin_compose_unlock
+	* src/compose.h: made GtkSpell members non-conditional for binary
+	  compatibility.
+	* plugin/test/test.c: added tests for new signals.
+
 2010-01-19
 
 	* src/summaryview.c: summary_show(): prevent beep when changing to

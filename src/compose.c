@@ -133,6 +133,7 @@
 #include "quote_fmt.h"
 #include "template.h"
 #include "undo.h"
+#include "plugin.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -803,6 +804,8 @@ Compose *compose_new(PrefsAccount *account, FolderItem *item,
 	compose_connect_changed_callbacks(compose);
 	compose_set_title(compose);
 
+	syl_plugin_signal_emit("compose-created", compose);
+
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
 			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
@@ -907,6 +910,8 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 #endif
 
 	procmsg_msginfo_free(replyinfo);
+
+	syl_plugin_signal_emit("compose-created", compose);
 
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
@@ -1041,6 +1046,8 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	else
 		gtk_widget_grab_focus(compose->newsgroups_entry);
 
+	syl_plugin_signal_emit("compose-created", compose);
+
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
 			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
@@ -1110,6 +1117,8 @@ void compose_redirect(MsgInfo *msginfo, FolderItem *item)
 
 	compose_connect_changed_callbacks(compose);
 	compose_set_title(compose);
+
+	syl_plugin_signal_emit("compose-created", compose);
 }
 
 void compose_reedit(MsgInfo *msginfo)
@@ -1207,6 +1216,8 @@ void compose_reedit(MsgInfo *msginfo)
 		ifactory = gtk_item_factory_from_widget(compose->menubar);
 		menu_set_active(ifactory, "/Tools/Request disposition notification", TRUE);
 	}
+
+	syl_plugin_signal_emit("compose-created", compose);
 
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
@@ -1316,6 +1327,14 @@ void compose_entry_append(Compose *compose, const gchar *text,
 
 	pos = entry->text_length;
 	gtk_editable_insert_text(GTK_EDITABLE(entry), text, -1, &pos);
+}
+
+gchar *compose_entry_get_text(Compose *compose, ComposeEntryType type)
+{
+	GtkEntry *entry;
+
+	entry = compose_get_entry(compose, type);
+	return gtk_editable_get_chars(GTK_EDITABLE(entry), 0, -1);
 }
 
 static void compose_entries_set(Compose *compose, const gchar *mailto)
@@ -6007,6 +6026,8 @@ static void compose_destroy(Compose *compose)
 
 	if (compose->autosave_tag > 0)
 		g_source_remove(compose->autosave_tag);
+
+	syl_plugin_signal_emit("compose-destroy", compose);
 
 	/* NOTE: address_completion_end() does nothing with the window
 	 * however this may change. */

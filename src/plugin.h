@@ -58,7 +58,11 @@ struct _SylPluginClass
 
 	void (* plugin_load)	(GObject *obj, GModule *module);
 	void (* plugin_unload)	(GObject *obj, GModule *module);
+
 	void (* folderview_menu_popup)	(GObject *obj, gpointer ifactory);
+
+	void (* compose_created)	(GObject *obj, gpointer compose);
+	void (* compose_destroy)	(GObject *obj, gpointer compose);
 };
 
 struct _SylPluginInfo
@@ -154,6 +158,25 @@ gboolean syl_plugin_summary_is_locked		(void);
 gpointer syl_plugin_messageview_create_with_new_window
 						(void);
 void syl_plugin_open_message_by_new_window	(MsgInfo *msginfo);
+
+/* Compose */
+gpointer syl_plugin_compose_new			(PrefsAccount *account,
+						 FolderItem *item,
+						 const gchar *mailto,
+						 GPtrArray *attach_files);
+
+/* entry type:
+   0: To 1: Cc 2: Bcc 3: Reply-To 4: Subject 5: Newsgroups 6: Followup-To */
+void syl_plugin_compose_entry_set		(gpointer compose,
+						 const gchar *text,
+						 gint type);
+void syl_plugin_compose_entry_append		(gpointer compose,
+						 const gchar *text,
+						 gint type);
+gchar *syl_plugin_compose_entry_get_text	(gpointer compose,
+						 gint type);
+void syl_plugin_compose_lock			(gpointer compose);
+void syl_plugin_compose_unlock			(gpointer compose);
 
 /* Others */
 FolderItem *syl_plugin_folder_sel		(Folder *cur_folder,

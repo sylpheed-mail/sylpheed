@@ -31,6 +31,8 @@ enum {
 	PLUGIN_LOAD,
 	PLUGIN_UNLOAD,
 	FOLDERVIEW_MENU_POPUP,
+	COMPOSE_CREATED,
+	COMPOSE_DESTROY,
 	LAST_SIGNAL
 };
 
@@ -98,6 +100,26 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_SIGNAL_RUN_FIRST,
 			     G_STRUCT_OFFSET(SylPluginClass,
 					     folderview_menu_popup),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[COMPOSE_CREATED] =
+		g_signal_new("compose-created",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, compose_created),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[COMPOSE_DESTROY] =
+		g_signal_new("compose-destroy",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, compose_destroy),
 			     NULL, NULL,
 			     g_cclosure_marshal_VOID__POINTER,
 			     G_TYPE_NONE,
@@ -647,6 +669,60 @@ void syl_plugin_open_message_by_new_window(MsgInfo *msginfo)
 		SAFE_CALL_ARG3(func, msgview, msginfo, FALSE);
 	}
 }
+
+
+gpointer syl_plugin_compose_new(PrefsAccount *account, FolderItem *item,
+				const gchar *mailto, GPtrArray *attach_files)
+{
+	gpointer (*func)(PrefsAccount *, FolderItem *, const gchar *,
+			 GPtrArray *);
+
+	func = syl_plugin_lookup_symbol("compose_new");
+	return SAFE_CALL_ARG4_RET(func, account, item, mailto, attach_files);
+}
+
+void syl_plugin_compose_entry_set(gpointer compose, const gchar *text,
+				  gint type)
+{
+	void (*func)(gpointer, const gchar *, gint);
+
+	func = syl_plugin_lookup_symbol("compose_entry_set");
+	SAFE_CALL_ARG3(func, compose, text, type);
+}
+
+void syl_plugin_compose_entry_append(gpointer compose, const gchar *text,
+				     gint type)
+{
+	void (*func)(gpointer, const gchar *, gint);
+
+	func = syl_plugin_lookup_symbol("compose_entry_append");
+	SAFE_CALL_ARG3(func, compose, text, type);
+}
+
+gchar *syl_plugin_compose_entry_get_text(gpointer compose, gint type)
+{
+	gchar * (*func)(gpointer, gint);
+
+	func = syl_plugin_lookup_symbol("compose_entry_get_text");
+	return SAFE_CALL_ARG2_RET(func, compose, type);
+}
+
+void syl_plugin_compose_lock(gpointer compose)
+{
+	void (*func)(gpointer);
+
+	func = syl_plugin_lookup_symbol("compose_lock");
+	SAFE_CALL_ARG1(func, compose);
+}
+
+void syl_plugin_compose_unlock(gpointer compose)
+{
+	void (*func)(gpointer);
+
+	func = syl_plugin_lookup_symbol("compose_unlock");
+	SAFE_CALL_ARG1(func, compose);
+}
+
 
 FolderItem *syl_plugin_folder_sel(Folder *cur_folder, gint sel_type,
 				  const gchar *default_folder)
