@@ -114,7 +114,17 @@ static void menu_popup_cb(GObject *obj, GtkItemFactory *ifactory,
 
 static void compose_created_cb(GObject *obj, gpointer compose)
 {
+	gchar *text;
+
 	g_print("test: %p: compose created (%p)\n", obj, compose);
+
+	text = syl_plugin_compose_entry_get_text(compose, 0);
+	g_print("test: compose To: %s\n", text);
+	g_free(text);
+#if 0
+	syl_plugin_compose_entry_set(compose, "test-plugin@test", 1);
+	syl_plugin_compose_entry_append(compose, "second@test", 1);
+#endif
 }
 
 static void compose_destroy_cb(GObject *obj, gpointer compose)
