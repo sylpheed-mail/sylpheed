@@ -51,6 +51,7 @@
 #include "addrindex.h"
 #include "editaddress.h"
 #include "manage_window.h"
+#include "utils.h"
 
 typedef struct {
 	AddressBookFile	*book;
@@ -361,6 +362,9 @@ gboolean addressadd_selection( AddressIndex *addrIndex, const gchar *name, const
 	if( remarks )
 		gtk_label_set_text( GTK_LABEL(addressadd_dlg.label_remarks ), remarks );
 
+	if( ! name )
+		name = "";
+
 	gtk_main();
 	gtk_widget_hide( addressadd_dlg.window );
 
@@ -380,6 +384,53 @@ gboolean addressadd_selection( AddressIndex *addrIndex, const gchar *name, const
 	gtk_clist_clear( GTK_CLIST( addressadd_dlg.tree_folder ) );
 
 	return retVal;
+}
+
+gboolean addressadd_autoreg(AddressIndex *addrIndex, const gchar *name,
+			    const gchar *address, const gchar *remarks)
+{
+	ItemPerson *person = NULL;
+	AddressInterface *interface = NULL;
+	AddressDataSource *ds = NULL;
+	AddressBookFile *abf = NULL;
+	GList *node_ds;
+	const gchar *ds_name;
+
+	g_return_val_if_fail(address != NULL, FALSE);
+
+	if (!name)
+		name = "";
+
+	interface = addrindex_get_interface(addrIndex, ADDR_IF_BOOK);
+	if (!interface)
+		return FALSE;
+
+	for (node_ds = interface->listSource; node_ds != NULL;
+	     node_ds = node_ds->next) {
+		ds = node_ds->data;
+		ds_name = addrindex_ds_get_name(ds);
+		if (!ds_name)
+			continue;
+		if (strcmp(ds_name, ADDR_DS_AUTOREG) != 0)
+			continue;
+		debug_print("addressadd_autoreg: AddressDataSource: %s found\n", ds_name);
+
+		if (!addrindex_ds_get_read_flag(ds))
+			addrindex_ds_read_data(ds);
+		abf = ds->rawDataSource;
+	}
+
+	if (!abf)
+		return FALSE;
+
+	person = addrbook_add_contact(abf, NULL, name, address, remarks);
+	if (person) {
+		debug_print("addressadd_autoreg: person added: %s <%s>\n",
+			    name, address);
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 /*

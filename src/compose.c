@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -264,6 +264,9 @@ static gboolean compose_check_for_valid_recipient
 static gboolean compose_check_entries		(Compose	*compose);
 static gboolean compose_check_attachments	(Compose	*compose);
 static gboolean compose_check_recipients	(Compose	*compose);
+
+static void compose_add_new_recipients_to_addressbook
+						(Compose	*compose);
 
 static gint compose_send			(Compose	*compose);
 static gint compose_write_to_file		(Compose	*compose,
@@ -3296,6 +3299,66 @@ static gboolean compose_check_recipients(Compose *compose)
 	return FALSE;
 }
 
+static void compose_add_new_recipients_to_addressbook(Compose *compose)
+{
+	GSList *to_list = NULL, *cur;
+	const gchar *text;
+
+	if (compose->use_to) {
+		text = gtk_entry_get_text(GTK_ENTRY(compose->to_entry));
+		to_list = address_list_append_orig(NULL, text);
+	}
+	if (compose->use_cc) {
+		text = gtk_entry_get_text(GTK_ENTRY(compose->cc_entry));
+		to_list = address_list_append_orig(to_list, text);
+	}
+	if (compose->use_bcc) {
+		text = gtk_entry_get_text(GTK_ENTRY(compose->bcc_entry));
+		to_list = address_list_append_orig(to_list, text);
+	}
+
+	for (cur = to_list; cur != NULL; cur = cur->next) {
+		gchar *orig_addr = cur->data;
+		gchar *name, *addr;
+		gchar *compaddr;
+		gint count, i;
+		gboolean found = FALSE;
+
+		name = procheader_get_fromname(orig_addr);
+		addr = g_strdup(orig_addr);
+		extract_address(addr);
+		if (!g_ascii_strcasecmp(name, addr)) {
+			g_free(name);
+			name = NULL;
+		}
+
+		count = complete_address(addr);
+		for (i = 1; i < count; i++) {
+			compaddr = get_complete_address(i);
+			if (compaddr) {
+				g_print("compaddr: %s\n", compaddr);
+				extract_address(compaddr);
+				if (!g_ascii_strcasecmp(addr, compaddr)) {
+					found = TRUE;
+					break;
+				}
+			}
+		}
+		clear_completion_cache();
+
+		if (found)
+			debug_print("compose_add_new_recipients_to_addressbook: address <%s> already registered.\n", addr);
+		else
+			addressbook_add_contact_autoreg(name, addr, NULL);
+
+		g_free(addr);
+		g_free(name);
+	}
+
+	slist_free_strings(to_list);
+	g_slist_free(to_list);
+}
+
 void compose_lock(Compose *compose)
 {
 	compose->lock_count++;
@@ -3442,6 +3505,11 @@ static gint compose_send(Compose *compose)
 				else
 					folderview_update_item(outbox, TRUE);
 			}
+		}
+
+		/* Add recipients to addressbook automatically */
+		if (1) {
+			compose_add_new_recipients_to_addressbook(compose);
 		}
 	}
 
@@ -4232,6 +4300,11 @@ static gint compose_queue(Compose *compose, const gchar *file)
 
 	folder_item_scan(queue);
 	folderview_update_item(queue, TRUE);
+
+	/* Add recipients to addressbook automatically */
+	if (1) {
+		compose_add_new_recipients_to_addressbook(compose);
+	}
 
 	main_window_set_menu_sensitive(main_window_get());
 	main_window_set_toolbar_sensitive(main_window_get());

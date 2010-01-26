@@ -32,6 +32,8 @@
 #define ADDRESSBOOK_INDEX_FILE "addrbook--index.xml"
 #define ADDRESSBOOK_OLD_FILE   "addressbook.xml"
 
+#define ADDR_DS_AUTOREG "@Auto-registered"
+
 typedef enum {
 	ADDR_IF_NONE,
 	ADDR_IF_BOOK,
@@ -108,6 +110,7 @@ gint addrindex_write_to			( AddressIndex *addrIndex, const gchar *newFile );
 gint addrindex_save_data		( AddressIndex *addrIndex );
 gint addrindex_create_new_books		( AddressIndex *addrIndex );
 gint addrindex_save_all_books		( AddressIndex *addrIndex );
+gint addrindex_create_extra_books	( AddressIndex *addrIndex );
 
 gboolean addrindex_ds_get_modify_flag	( AddressDataSource *ds );
 gboolean addrindex_ds_get_access_flag	( AddressDataSource *ds );

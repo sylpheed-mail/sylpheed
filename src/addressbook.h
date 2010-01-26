@@ -40,9 +40,12 @@ gint addressbook_obj_name_compare	(gconstpointer	 a,
 void addressbook_access (void);
 void addressbook_unaccess (void);
 
-gboolean addressbook_add_contact	( const gchar	*name,
-					  const gchar	*address,
-					  const gchar	*remarks );
+gboolean addressbook_add_contact	(const gchar	*name,
+					 const gchar	*address,
+					 const gchar	*remarks);
+gboolean addressbook_add_contact_autoreg(const gchar	*name,
+					 const gchar	*address,
+					 const gchar	*remarks);
 
 gboolean addressbook_load_completion	( gint (*callBackFunc) ( const gchar *, const gchar *, const gchar * ) );
 

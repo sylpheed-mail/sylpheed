@@ -28,4 +28,6 @@
 
 gboolean addressadd_selection( AddressIndex *addrIndex, const gchar *name, const gchar *address, const gchar *remarks );
 
+gboolean addressadd_autoreg( AddressIndex *addrIndex, const gchar *name, const gchar *address, const gchar *remarks );
+
 #endif /* __ADDRESS_ADD_H__ */

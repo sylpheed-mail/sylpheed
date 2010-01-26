@@ -1637,7 +1637,7 @@ static gboolean addrindex_create_new_book( AddressIndex *addrIndex, gchar *displ
 * addrIndex. Three files will be created, for the following:
 *	"Common addresses"
 *	"Personal addresses"
-*	"Gathered addresses" - a new address book.
+*	"Auto-registered" - a new address book.
 */
 gint addrindex_read_data( AddressIndex *addrIndex ) {
 	g_return_val_if_fail( addrIndex != NULL, -1 );
@@ -1666,7 +1666,7 @@ gint addrindex_read_data( AddressIndex *addrIndex ) {
 * addrIndex. Three files will be created, for the following:
 *	"Common addresses"
 *	"Personal addresses"
-*	"Gathered addresses" - a new address book.
+*	"Auto-registered" - a new address book.
 */
 gint addrindex_create_new_books( AddressIndex *addrIndex ) {
 	gboolean flg;
@@ -1676,8 +1676,41 @@ gint addrindex_create_new_books( AddressIndex *addrIndex ) {
 	flg = addrindex_create_new_book( addrIndex, DISP_NEW_COMMON );
 	if( flg ) {
 		flg = addrindex_create_new_book( addrIndex, DISP_NEW_PERSONAL );
+		flg = addrindex_create_new_book( addrIndex, ADDR_DS_AUTOREG );
 		addrIndex->dirtyFlag = TRUE;
 	}
+	return addrIndex->retVal;
+}
+
+gint addrindex_create_extra_books( AddressIndex *addrIndex ) {
+	GList *node_ds;
+	AddressInterface *interface = NULL;
+	AddressDataSource *ds = NULL;
+	const gchar *ds_name;
+
+	g_return_val_if_fail(addrIndex != NULL, -1);
+
+	interface = addrindex_get_interface(addrIndex, ADDR_IF_BOOK);
+	if (!interface)
+		return -1;
+
+	for (node_ds = interface->listSource; node_ds != NULL;
+	     node_ds = node_ds->next) {
+		ds = node_ds->data;
+		ds_name = addrindex_ds_get_name(ds);
+		if (!ds_name)
+			continue;
+		if (!strcmp(ds_name, ADDR_DS_AUTOREG)) {
+			debug_print("%s found\n", ADDR_DS_AUTOREG);
+			return 0;
+		}
+	}
+
+	debug_print("%s not found, creating new one\n", ADDR_DS_AUTOREG);
+	if (addrindex_create_new_book(addrIndex, ADDR_DS_AUTOREG)) {
+		addrIndex->dirtyFlag = TRUE;
+	}
+
 	return addrIndex->retVal;
 }
 
