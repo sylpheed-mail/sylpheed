@@ -79,6 +79,7 @@ static struct Receive {
 static struct Send {
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
+	GtkWidget *checkbtn_recipients_autoreg;
 
 	GtkWidget *optmenu_encoding_method;
 	GtkWidget *optmenu_mime_fencoding_method;
@@ -306,6 +307,8 @@ static PrefsUIData ui_data[] = {
 	{"save_message", &p_send.checkbtn_savemsg,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"filter_sent_message", &p_send.checkbtn_filter_sent,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"recipients_autoreg", &p_send.checkbtn_recipients_autoreg,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"encoding_method", &p_send.optmenu_encoding_method,
@@ -910,10 +913,21 @@ static void prefs_receive_create(void)
 static void prefs_send_create(void)
 {
 	GtkWidget *vbox1;
+
+	GtkWidget *notebook;
+	GtkWidget *vbox_tab;
+
 	GtkWidget *vbox2;
 	GtkWidget *hbox1;
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
+	GtkWidget *checkbtn_recipients_autoreg;
+	GtkWidget *label;
+	GtkWidget *checkbtn_check_attach;
+	GtkWidget *entry_check_attach_str;
+	GtkWidget *checkbtn_check_recp;
+	GtkWidget *entry_check_recp_excl;
+
 	GtkWidget *optmenu_trencoding;
 	GtkWidget *optmenu_menu;
 	GtkWidget *menuitem;
@@ -922,90 +936,33 @@ static void prefs_send_create(void)
 	GtkWidget *label_encoding_desc;
 	GtkWidget *label_fencoding;
 	GtkWidget *label_fencoding_desc;
-	GtkWidget *label;
-	GtkWidget *checkbtn_check_attach;
-	GtkWidget *entry_check_attach_str;
-	GtkWidget *checkbtn_check_recp;
-	GtkWidget *entry_check_recp_excl;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
 
+	notebook = gtk_notebook_new();
+	gtk_widget_show(notebook);
+	gtk_box_pack_start(GTK_BOX(vbox1), notebook, TRUE, TRUE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("General"));
+
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
-	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), vbox2, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON (vbox2, checkbtn_savemsg,
 			   _("Save sent messages to outbox"));
 	PACK_CHECK_BUTTON (vbox2, checkbtn_filter_sent,
 			   _("Apply filter rules to sent messages"));
 	SET_TOGGLE_SENSITIVITY (checkbtn_savemsg, checkbtn_filter_sent);
-
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-
-	label_encoding = gtk_label_new (_("Transfer encoding"));
-	gtk_widget_show (label_encoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
-
-	optmenu_trencoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_trencoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_trencoding,
-			    FALSE, FALSE, 0);
-
-	optmenu_menu = gtk_menu_new ();
-
-#define SET_MENUITEM(str, data) \
-	MENUITEM_ADD(optmenu_menu, menuitem, str, data)
-
-	SET_MENUITEM(_("Automatic"),	 CTE_AUTO);
-	SET_MENUITEM("base64",		 CTE_BASE64);
-	SET_MENUITEM("quoted-printable", CTE_QUOTED_PRINTABLE);
-	SET_MENUITEM("8bit",		 CTE_8BIT);
-
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_trencoding),
-				  optmenu_menu);
-
-	PACK_SMALL_LABEL (vbox1, label_encoding_desc,
-			  _("Specify Content-Transfer-Encoding used when "
-			    "message body contains non-ASCII characters."));
-
-	hbox1 = gtk_hbox_new (FALSE, 8);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox1), hbox1, FALSE, FALSE, 0);
-
-	label_fencoding = gtk_label_new (_("MIME filename encoding"));
-	gtk_widget_show (label_fencoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), label_fencoding, FALSE, FALSE, 0);
-
-	optmenu_fencoding = gtk_option_menu_new ();
-	gtk_widget_show (optmenu_fencoding);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_fencoding,
-			    FALSE, FALSE, 0);
-
-	optmenu_menu = gtk_menu_new ();
-
-	SET_MENUITEM(_("MIME header"), FENC_MIME);
-	SET_MENUITEM("RFC 2231", FENC_RFC2231);
-
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_fencoding),
-				  optmenu_menu);
-
-#undef SET_MENUITEM
-
-	PACK_SMALL_LABEL
-		(vbox1, label_fencoding_desc,
-		 _("Specify encoding method for MIME filename with "
-		   "non-ASCII characters.\n"
-		   "MIME header: most popular, but violates RFC 2047\n"
-		   "RFC 2231: conforms to standard, but not popular"));
+	PACK_CHECK_BUTTON (vbox2, checkbtn_recipients_autoreg,
+			   _("Automatically add recipients to address book"));
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
-	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), vbox2, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON (vbox2, checkbtn_check_attach,
 			   _("Notify for missing attachments when the following strings (comma-separated) are found in the message body"));
@@ -1027,7 +984,7 @@ static void prefs_send_create(void)
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
-	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), vbox2, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON (vbox2, checkbtn_check_recp,
 			   _("Confirm recipients before sending"));
@@ -1047,8 +1004,74 @@ static void prefs_send_create(void)
 
 	SET_TOGGLE_SENSITIVITY(checkbtn_check_recp, entry_check_recp_excl);
 
-	p_send.checkbtn_savemsg     = checkbtn_savemsg;
+	/* Encoding */
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Encoding"));
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), hbox1, FALSE, FALSE, 0);
+
+	label_encoding = gtk_label_new (_("Transfer encoding"));
+	gtk_widget_show (label_encoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_encoding, FALSE, FALSE, 0);
+
+	optmenu_trencoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_trencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_trencoding,
+			    FALSE, FALSE, 0);
+
+	optmenu_menu = gtk_menu_new();
+
+#define SET_MENUITEM(str, data) \
+	MENUITEM_ADD(optmenu_menu, menuitem, str, data)
+
+	SET_MENUITEM(_("Automatic"),	 CTE_AUTO);
+	SET_MENUITEM("base64",		 CTE_BASE64);
+	SET_MENUITEM("quoted-printable", CTE_QUOTED_PRINTABLE);
+	SET_MENUITEM("8bit",		 CTE_8BIT);
+
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_trencoding),
+				  optmenu_menu);
+
+	PACK_SMALL_LABEL (vbox_tab, label_encoding_desc,
+			  _("Specify Content-Transfer-Encoding used when "
+			    "message body contains non-ASCII characters."));
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_tab), hbox1, FALSE, FALSE, 0);
+
+	label_fencoding = gtk_label_new (_("MIME filename encoding"));
+	gtk_widget_show (label_fencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), label_fencoding, FALSE, FALSE, 0);
+
+	optmenu_fencoding = gtk_option_menu_new ();
+	gtk_widget_show (optmenu_fencoding);
+	gtk_box_pack_start (GTK_BOX (hbox1), optmenu_fencoding,
+			    FALSE, FALSE, 0);
+
+	optmenu_menu = gtk_menu_new();
+
+	SET_MENUITEM(_("MIME header"), FENC_MIME);
+	SET_MENUITEM("RFC 2231", FENC_RFC2231);
+
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_fencoding),
+				  optmenu_menu);
+
+#undef SET_MENUITEM
+
+	PACK_SMALL_LABEL
+		(vbox_tab, label_fencoding_desc,
+		 _("Specify encoding method for MIME filename with "
+		   "non-ASCII characters.\n"
+		   "MIME header: most popular, but violates RFC 2047\n"
+		   "RFC 2231: conforms to standard, but not popular"));
+
+
+	p_send.checkbtn_savemsg = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
+	p_send.checkbtn_recipients_autoreg = checkbtn_recipients_autoreg;
 
 	p_send.optmenu_encoding_method = optmenu_trencoding;
 	p_send.optmenu_mime_fencoding_method = optmenu_fencoding;

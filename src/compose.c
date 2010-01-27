@@ -3508,7 +3508,7 @@ static gint compose_send(Compose *compose)
 		}
 
 		/* Add recipients to addressbook automatically */
-		if (1) {
+		if (prefs_common.recipients_autoreg) {
 			compose_add_new_recipients_to_addressbook(compose);
 		}
 	}
@@ -4302,7 +4302,7 @@ static gint compose_queue(Compose *compose, const gchar *file)
 	folderview_update_item(queue, TRUE);
 
 	/* Add recipients to addressbook automatically */
-	if (1) {
+	if (prefs_common.recipients_autoreg) {
 		compose_add_new_recipients_to_addressbook(compose);
 	}
 

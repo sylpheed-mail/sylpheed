@@ -312,6 +312,7 @@ struct _PrefsCommon
 	/* Append new members here */
 	gboolean folder_col_visible[4];  /* Display */
 	gboolean reply_address_only;     /* Compose */
+	gboolean recipients_autoreg;     /* Send */
 };
 
 extern PrefsCommon prefs_common;

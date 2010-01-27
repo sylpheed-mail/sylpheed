@@ -55,6 +55,8 @@ static PrefParam param[] = {
 	/* Send */
 	{"save_message", "TRUE", &prefs_common.savemsg, P_BOOL},
 	{"filter_sent_message", "FALSE", &prefs_common.filter_sent, P_BOOL},
+	{"recipients_autoreg", "TRUE", &prefs_common.recipients_autoreg,
+	 P_BOOL},
 
 	{"encoding_method", "0", &prefs_common.encoding_method, P_ENUM},
 	{"mime_filename_encoding_method", "0",
