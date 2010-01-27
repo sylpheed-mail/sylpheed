@@ -325,7 +325,8 @@ AdapterDSource *addressbook_edit_book( AddressIndex *addrIndex, AdapterDSource *
 
 	fin = FALSE;
 	sName = gtk_editable_get_chars( GTK_EDITABLE(addrbookedit_dlg.name_entry), 0, -1 );
-	if( *sName == '\0' ) fin = TRUE;
+	g_strstrip(sName);
+	if( *sName == '\0' || *sName == '@' ) fin = TRUE;
 
 	if( fin ) {
 		if( newBook ) {
