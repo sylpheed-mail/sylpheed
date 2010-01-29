@@ -1136,6 +1136,7 @@ void compose_reedit(MsgInfo *msginfo)
 	gchar buf[BUFFSIZE];
 	const gchar *str;
 	GtkWidget *focus_widget = NULL;
+	GtkItemFactory *ifactory;
 
 	g_return_if_fail(msginfo != NULL);
 	g_return_if_fail(msginfo->folder != NULL);
@@ -1213,12 +1214,11 @@ void compose_reedit(MsgInfo *msginfo)
 	compose_connect_changed_callbacks(compose);
 	compose_set_title(compose);
 
+	ifactory = gtk_item_factory_from_widget(compose->menubar);
 	if (compose->use_mdn) {
-		GtkItemFactory *ifactory;
-
-		ifactory = gtk_item_factory_from_widget(compose->menubar);
 		menu_set_active(ifactory, "/Tools/Request disposition notification", TRUE);
 	}
+	menu_set_active(ifactory, "/Edit/Auto wrapping", compose->autowrap);
 
 	syl_plugin_signal_emit("compose-created", compose);
 
@@ -1599,6 +1599,7 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 				       {"REP:", NULL, FALSE},
 				       {"FWD:", NULL, FALSE},
 				       {"Disposition-Notification-To:", NULL, FALSE},
+				       {"X-Sylpheed-Compose-AutoWrap:", NULL, FALSE},
 				       {NULL, NULL, FALSE}};
 
 	enum
@@ -1607,7 +1608,8 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		H_X_SYLPHEED_FORWARD = 1,
 		H_REP = 2,
 		H_FWD = 3,
-		H_MDN = 4
+		H_MDN = 4,
+		H_X_SYLPHEED_COMPOSE_AUTOWRAP = 5
 	};
 
 	gchar *file;
@@ -1638,6 +1640,11 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 			compose->forward_targets = g_strdup(str);
 		} else if (hnum == H_MDN) {
 			compose->use_mdn = TRUE;
+		} else if (hnum == H_X_SYLPHEED_COMPOSE_AUTOWRAP) {
+			if (g_ascii_strcasecmp(str, "TRUE") == 0)
+				compose->autowrap = TRUE;
+			else
+				compose->autowrap = FALSE;
 		}
 	}
 
@@ -4738,6 +4745,8 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		else if (compose->forward_targets)
 			fprintf(fp, "X-Sylpheed-Forward: %s\n",
 				compose->forward_targets);
+		fprintf(fp, "X-Sylpheed-Compose-AutoWrap: %s\n",
+			compose->autowrap ? "TRUE": "FALSE");
 	}
 
 	/* separator between header and body */
