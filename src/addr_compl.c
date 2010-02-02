@@ -754,7 +754,7 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 static gboolean address_completion_complete_address_in_entry(GtkEntry *entry,
 							     gboolean  next)
 {
-	gint ncount, cursor_pos;
+	gint ncount = 0, cursor_pos;
 	gchar *address, *new = NULL;
 	gboolean completed = FALSE;
 
