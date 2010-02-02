@@ -778,8 +778,13 @@ static gboolean address_completion_complete_address_in_entry(GtkEntry *entry,
 	if (new) {
 		/* prevent "change" signal */
 		/* replace_address_in_edit(entry, new, cursor_pos); */
+
+		/* don't complete if entry equals to the completed address */
+		if (ncount == 2 && !strcmp(address, new))
+			completed = FALSE;
+		else
+			completed = TRUE;
 		g_free(new);
-		completed = TRUE;
 	}
 
 	g_free(address);
