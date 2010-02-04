@@ -316,7 +316,8 @@ leave:
 
 	gpgme_data_release(sig);
 	gpgme_data_release(text);
-	gpgme_release(ctx);
+	if (ctx)
+		gpgme_release(ctx);
 	if (prefs_common.gpg_signature_popup)
 		gpgmegtk_sig_status_destroy(statuswindow);
 }
@@ -436,7 +437,8 @@ static gpgme_data_t pgp_decrypt(MsgInfo *msginfo, MimeInfo *partinfo, FILE *fp)
 
 leave:
 	gpgme_data_release(cipher);
-	gpgme_release(ctx);
+	if (ctx)
+		gpgme_release(ctx);
 	return plain;
 }
 
@@ -815,7 +817,8 @@ static gpgme_data_t pgp_encrypt(gpgme_data_t plain, gpgme_key_t kset[])
 		debug_print("** encryption succeeded\n");
 	}
 
-	gpgme_release(ctx);
+	if (ctx)
+		gpgme_release(ctx);
 	return cipher;
 }
 
@@ -1276,7 +1279,8 @@ leave:
 		debug_print("signing succeeded\n");
 	}
 
-	gpgme_release(ctx);
+	if (ctx)
+		gpgme_release(ctx);
 	return sig;
 }
 
@@ -1352,7 +1356,8 @@ leave:
 		debug_print("encryption and signing succeeded\n");
 	}
 
-	gpgme_release(ctx);
+	if (ctx)
+		gpgme_release(ctx);
 	return cipher;
 }
 

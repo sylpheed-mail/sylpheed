@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -296,6 +296,7 @@ static gboolean mimeview_is_signed(MimeView *mimeview)
 
         if (!mimeview) return FALSE;
 	if (!mimeview->opened) return FALSE;
+	if (!rfc2015_is_available()) return FALSE;
 
         debug_print("mimeview_is_signed: open\n" );
 
@@ -320,6 +321,8 @@ static gboolean mimeview_is_signed(MimeView *mimeview)
 static void set_unchecked_signature(MimeInfo *mimeinfo)
 {
 	MimeInfo **signedinfo;
+
+	if (!rfc2015_is_available()) return;
 
 	signedinfo = rfc2015_find_signature(mimeinfo);
 	if (signedinfo == NULL) return;
@@ -353,7 +356,7 @@ void mimeview_show_message(MimeView *mimeview, MimeInfo *mimeinfo,
 	mimeview->file = g_strdup(file);
 
 #if USE_GPGME
-	if (prefs_common.auto_check_signatures) {
+	if (rfc2015_is_available() && prefs_common.auto_check_signatures) {
 		FILE *fp;
 
 		if ((fp = g_fopen(file, "rb")) == NULL) {
@@ -719,10 +722,13 @@ static void mimeview_show_signature_part(MimeView *mimeview,
 	vbbox = gtk_vbutton_box_new();
 	gtk_box_set_spacing(GTK_BOX(vbbox), 5);
 
-	button = gtk_button_new_with_mnemonic(_("_Check signature"));
-	gtk_container_add(GTK_CONTAINER(vbbox), button);
-	g_signal_connect(button, "clicked",
-			 G_CALLBACK(check_signature_button_clicked), mimeview);
+	if (rfc2015_is_available()) {
+		button = gtk_button_new_with_mnemonic(_("_Check signature"));
+		gtk_container_add(GTK_CONTAINER(vbbox), button);
+		g_signal_connect(button, "clicked",
+				 G_CALLBACK(check_signature_button_clicked),
+				 mimeview);
+	}
 
 	gtk_widget_show_all(vbbox);
 
@@ -1340,6 +1346,9 @@ static void mimeview_check_signature(MimeView *mimeview)
 	FILE *fp;
 
 	g_return_if_fail (mimeview_is_signed(mimeview));
+
+	if (!rfc2015_is_available())
+		return;
 
 	mimeinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(mimeinfo != NULL);
