@@ -588,7 +588,7 @@ PrefsAccount *setup_account(void)
 	mainwin = main_window_get();
 	manage_window_focus_in(mainwin->window, NULL, NULL);
 
-	dialog = gtk_dialog_new_with_buttons(_("Account setting"), NULL, GTK_DIALOG_MODAL, NULL);
+	dialog = gtk_dialog_new_with_buttons(_("New account setup"), NULL, GTK_DIALOG_MODAL, NULL);
 	setupac.dialog = dialog;
 
 	setupac.prev_btn = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_GO_BACK, GTK_RESPONSE_REJECT);
@@ -624,7 +624,7 @@ PrefsAccount *setup_account(void)
 	vbox = gtk_vbox_new(FALSE, 12);
 	gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
 
-	label = gtk_label_new(_("Account setting"));
+	label = gtk_label_new(_("New account setup"));
 	gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
@@ -643,7 +643,7 @@ PrefsAccount *setup_account(void)
 	if (font_desc)
 		gtk_widget_modify_font(label, font_desc);
 
-	label = gtk_label_new(_("This dialog will make initial setup of account."));
+	label = gtk_label_new(_("This dialog will make initial setup of new mail account."));
 	gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
@@ -740,7 +740,7 @@ PrefsAccount *setup_account(void)
 	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
 			 GTK_FILL, GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-	label = gtk_label_new(_("POP3 Server:"));
+	label = gtk_label_new(_("POP3 server:"));
 	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
 			 GTK_FILL, GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
@@ -791,12 +791,12 @@ PrefsAccount *setup_account(void)
 	vbox2 = gtk_vbox_new(FALSE, 8);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox2, FALSE, FALSE, 8);
 
-	label = gtk_label_new(_("Your mail accout has been set up with the following setting."));
+	label = gtk_label_new(_("Your new mail accout has been set up with the following setting."));
 	gtk_box_pack_start(GTK_BOX(vbox2), label, FALSE, FALSE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	label = gtk_label_new(_("If you want to modify the settings, select\n"
 				"'Configuration - Preferences for current account' or\n"
-				"'Configuration - Edit accounts'."));
+				"'Configuration - Edit accounts' in the main menu."));
 	gtk_box_pack_start(GTK_BOX(vbox2), label, FALSE, FALSE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	//gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
