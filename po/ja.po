@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-05 14:06+0900\n"
+"POT-Creation-Date: 2010-02-05 16:26+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -2377,12 +2377,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:889 src/mainwindow.c:4077 src/setup.c:295
+#: src/folderview.c:889 src/mainwindow.c:4078 src/setup.c:295
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4082 src/setup.c:300
+#: src/folderview.c:893 src/mainwindow.c:4083 src/setup.c:300
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -3918,15 +3918,15 @@ msgstr "このプログラムを終了しますか?"
 msgid "Select folder to open"
 msgstr "開くフォルダを選択してください"
 
-#: src/mainwindow.c:3985
+#: src/mainwindow.c:3986
 msgid "Command line options"
 msgstr "コマンドラインオプション"
 
-#: src/mainwindow.c:3998
+#: src/mainwindow.c:3999
 msgid "Usage: sylpheed [OPTION]..."
 msgstr "使用法: sylpheed [オプション]..."
 
-#: src/mainwindow.c:4006
+#: src/mainwindow.c:4007
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -3956,7 +3956,7 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:4023
+#: src/mainwindow.c:4024
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -6771,7 +6771,7 @@ msgstr ""
 "後から別の場所にメールボックスを追加したい場合は、メニューの「ファイル - メー"
 "ルボックス - メールボックスを追加...」を選択してください。"
 
-#: src/setup.c:231
+#: src/setup.c:231 src/setup.c:455
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -6794,68 +6794,76 @@ msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr "'%s' 以下に設定フォルダが含まれています。別の場所を指定してください。"
 
-#: src/setup.c:469 src/setup.c:477 src/setup.c:513 src/setup.c:521
-#: src/setup.c:743 src/setup.c:821
+#: src/setup.c:455
+msgid "Cancel mail account setup?"
+msgstr "メールアカウントの作成を中止しますか?"
+
+#: src/setup.c:473 src/setup.c:481
+msgid "Input value is not valid."
+msgstr "入力された内容が正しくありません。"
+
+#: src/setup.c:509 src/setup.c:517 src/setup.c:553 src/setup.c:561
+#: src/setup.c:783 src/setup.c:861
 msgid "POP3 server:"
 msgstr "POP3サーバ:"
 
-#: src/setup.c:485 src/setup.c:493 src/setup.c:529 src/setup.c:537
+#: src/setup.c:525 src/setup.c:533 src/setup.c:569 src/setup.c:577
 msgid "IMAP4 server:"
 msgstr "IMAP4サーバ:"
 
-#: src/setup.c:591 src/setup.c:627
+#: src/setup.c:631 src/setup.c:667
 msgid "New account setup"
 msgstr "新規アカウントの作成"
 
-#: src/setup.c:646
+#: src/setup.c:686
 msgid "This dialog will make initial setup of new mail account."
 msgstr "このダイアログでは新規メールアカウントの初期設定を行います。"
 
-#: src/setup.c:669
+#: src/setup.c:709
 msgid "Select account type:"
 msgstr "アカウントのタイプを選択してください:"
 
-#: src/setup.c:690
+#: src/setup.c:730
 msgid "Input your name and mail address:"
 msgstr "名前とメールアドレスを入力してください:"
 
-#: src/setup.c:699 src/setup.c:809
+#: src/setup.c:739 src/setup.c:849
 msgid "Display name:"
 msgstr "表示名:"
 
-#: src/setup.c:703 src/setup.c:813
+#: src/setup.c:743 src/setup.c:853
 msgid "E-mail address:"
 msgstr "電子メールアドレス:"
 
-#: src/setup.c:719
-msgid "This name will be seen at the side of recipients."
-msgstr "この名前は受信者側で表示されます。"
+#: src/setup.c:759
+msgid "This name will be seen at the side of recipients (e.g. John Doe)"
+msgstr "この名前は受信者側で表示されます (例: Tarou Yamada)"
 
-#: src/setup.c:730
+#: src/setup.c:770
 msgid "Input user ID and mail server:"
 msgstr "ユーザIDとメールサーバを入力してください:"
 
-#: src/setup.c:739 src/setup.c:817
+#: src/setup.c:779 src/setup.c:857
 msgid "User ID:"
 msgstr "ユーザID:"
 
-#: src/setup.c:748 src/setup.c:825
+#: src/setup.c:788 src/setup.c:865
 msgid "SMTP server:"
 msgstr "SMTPサーバ:"
 
-#: src/setup.c:772 src/setup.c:782
+#: src/setup.c:812 src/setup.c:822
 msgid "Use SSL"
 msgstr "SSLを使用"
 
-#: src/setup.c:779
+#: src/setup.c:819
 msgid "Use SMTP authentication"
 msgstr "SMTP認証を使用"
 
-#: src/setup.c:794
+#: src/setup.c:834
 msgid "Your new mail accout has been set up with the following setting."
 msgstr "新しいメールアカウントは以下の設定で作成されました。"
 
-#: src/setup.c:797
+#: src/setup.c:837
 msgid ""
 "If you want to modify the settings, select\n"
 "'Configuration - Preferences for current account' or\n"
@@ -7512,9 +7520,3 @@ msgstr "Sylpheed はすでに最新バージョンです。"
 #: src/update_check.c:227
 msgid "Couldn't get the version information."
 msgstr "バージョン情報を取得できませんでした。"
-
-#~ msgid "Account setting"
-#~ msgstr "アカウントの設定"
-
-#~ msgid "POP3 Server:"
-#~ msgstr "POP3サーバ:"

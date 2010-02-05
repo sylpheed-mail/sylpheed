@@ -449,9 +449,15 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 
 	if (response_id == GTK_RESPONSE_CANCEL ||
 	    response_id == GTK_RESPONSE_DELETE_EVENT) {
-		setupac.finished = TRUE;
-		if (page != SETUP_PAGE_FINISH)
-			setupac.cancelled = TRUE;
+		if (page == SETUP_PAGE_FINISH) {
+			setupac.finished = TRUE;
+		} else {
+			if (alertpanel(_("Cancel"), _("Cancel mail account setup?"), GTK_STOCK_YES, GTK_STOCK_NO, NULL) == G_ALERTDEFAULT) {
+				setupac.finished = TRUE;
+				setupac.cancelled = TRUE;
+			}
+			return;
+		}
 	} else if (response_id == GTK_RESPONSE_ACCEPT) {
 		if (prev_page == SETUP_PAGE_ADDRESS) {
 			if (entry_is_valid(setupac.addr_entry)) {
@@ -750,7 +756,7 @@ PrefsAccount *setup_account(void)
 	g_signal_connect(setupac.addr_entry, "changed",
 			 G_CALLBACK(entry_changed), NULL);
 
-	label = gtk_label_new(_("This name will be seen at the side of recipients."));
+	label = gtk_label_new(_("This name will be seen at the side of recipients (e.g. John Doe)"));
 	gtk_table_attach(GTK_TABLE(table), label, 1, 2, 1, 2,
 			 GTK_FILL, GTK_FILL, 0, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
