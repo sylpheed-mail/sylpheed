@@ -652,7 +652,7 @@ PrefsAccount *setup_account(void)
 	MODIFY_LABEL_STYLE();
 
 	vbox = gtk_vbox_new(FALSE, 8);
-	//gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), vbox,
 			   TRUE, TRUE, 0);
 
@@ -691,7 +691,7 @@ PrefsAccount *setup_account(void)
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 8);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 
-	table = gtk_table_new(4, 4, FALSE);
+	table = gtk_table_new(4, 2, FALSE);
 	gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 8);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
