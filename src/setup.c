@@ -408,6 +408,25 @@ static void entry_changed(GtkEditable *editable, gpointer data)
 					  GTK_RESPONSE_ACCEPT, next_enable);
 }
 
+static gboolean entry_is_valid(GtkWidget *entry)
+{
+	const gchar *str, *p;
+	guchar c;
+
+	p = str = gtk_entry_get_text(GTK_ENTRY(entry));
+	if (!str || *p == '\0')
+		return FALSE;
+
+	while (*p) {
+		c = *p;
+		if (g_ascii_isspace(c) || c < 32 || c > 127)
+			return FALSE;
+		p++;
+	}
+
+	return TRUE;
+}
+
 #define GET_STR(s, m) \
 { \
 	setupac.s = gtk_editable_get_chars(GTK_EDITABLE(setupac.m), 0, -1); \
@@ -434,16 +453,31 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 		if (page != SETUP_PAGE_FINISH)
 			setupac.cancelled = TRUE;
 	} else if (response_id == GTK_RESPONSE_ACCEPT) {
-		if (prev_page == SETUP_PAGE_ADDRESS &&
-		    (setupac.type == SETUP_TYPE_POP3G ||
-		     setupac.type == SETUP_TYPE_IMAPG)) {
-			gtk_notebook_set_current_page
-				(GTK_NOTEBOOK(setupac.notebook),
-				 SETUP_PAGE_FINISH);
+		if (prev_page == SETUP_PAGE_ADDRESS) {
+			if (entry_is_valid(setupac.addr_entry)) {
+				if (setupac.type == SETUP_TYPE_POP3G ||
+				    setupac.type == SETUP_TYPE_IMAPG)
+					gtk_notebook_set_current_page
+						(GTK_NOTEBOOK(setupac.notebook),
+						 SETUP_PAGE_FINISH);
+				else
+					gtk_notebook_set_current_page
+						(GTK_NOTEBOOK(setupac.notebook), page + 1);
+			} else
+				alertpanel_error(_("Input value is not valid."));
+		} else if (prev_page == SETUP_PAGE_ACCOUNT) {
+			if (entry_is_valid(setupac.id_entry) &&
+			    entry_is_valid(setupac.serv_entry) &&
+			    entry_is_valid(setupac.smtp_entry))
+				gtk_notebook_set_current_page
+					(GTK_NOTEBOOK(setupac.notebook), page + 1);
+			else
+				alertpanel_error(_("Input value is not valid."));
 		} else {
 			gtk_notebook_set_current_page
 				(GTK_NOTEBOOK(setupac.notebook), page + 1);
 		}
+
 		if (prev_page == SETUP_PAGE_START) {
 			setupac.type = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.pop3_radio)) ? SETUP_TYPE_POP3
 				: gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.imap_radio)) ? SETUP_TYPE_IMAP
