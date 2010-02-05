@@ -22,8 +22,9 @@
 
 #include <glib.h>
 
-#include "mainwindow.h"
+#include "prefs_account.h"
 
-void setup(MainWindow *mainwin);
+void setup_mailbox(void);
+PrefsAccount *setup_account(void);
 
 #endif /* __SETUP_H__ */

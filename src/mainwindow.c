@@ -97,6 +97,7 @@
 #include "about.h"
 #include "manual.h"
 #include "update_check.h"
+#include "setup.h"
 #include "version.h"
 
 #define AC_LABEL_WIDTH	240
@@ -3896,8 +3897,17 @@ static void prefs_account_open_cb(MainWindow *mainwin, guint action,
 static void new_account_cb(MainWindow *mainwin, guint action,
 			   GtkWidget *widget)
 {
-	account_edit_open();
-	if (!compose_get_compose_list()) account_add();
+	if (compose_get_compose_list()) {
+		alertpanel_notice(_("Some composing windows are open.\n"
+				    "Please close all the composing windows before editing the accounts."));
+		return;
+	}
+
+	setup_account();
+	account_set_menu();
+	main_window_reflect_prefs_all();
+	account_set_missing_folder();
+	folderview_set(mainwin->folderview);
 }
 
 static void account_selector_menu_cb(GtkMenuItem *menuitem, gpointer data)
