@@ -3903,11 +3903,12 @@ static void new_account_cb(MainWindow *mainwin, guint action,
 		return;
 	}
 
-	setup_account();
-	account_set_menu();
-	main_window_reflect_prefs_all();
-	account_set_missing_folder();
-	folderview_set(mainwin->folderview);
+	if (setup_account()) {
+		account_set_menu();
+		main_window_reflect_prefs_all();
+		account_set_missing_folder();
+		folderview_set(mainwin->folderview);
+	}
 }
 
 static void account_selector_menu_cb(GtkMenuItem *menuitem, gpointer data)
