@@ -54,12 +54,18 @@ typedef enum
 	FLT_O_REGEX	= 1 << 2
 } FilterOldFlag;
 
+FilterInAddressBookFunc default_addrbook_func = NULL;
+
 static gboolean filter_match_cond	(FilterCond	*cond,
 					 MsgInfo	*msginfo,
 					 GSList		*hlist,
 					 FilterInfo	*fltinfo);
 static gboolean filter_match_header_cond(FilterCond	*cond,
 					 GSList		*hlist);
+static gboolean filter_match_in_addressbook
+					(FilterCond	*cond,
+					 GSList		*hlist,
+					 FilterInfo	*fltinfo);
 
 static void filter_cond_free		(FilterCond	*cond);
 static void filter_action_free		(FilterAction	*action);
@@ -388,9 +394,17 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 
 	switch (cond->type) {
 	case FLT_COND_HEADER:
+		if (cond->match_type == FLT_IN_ADDRESSBOOK)
+			return filter_match_in_addressbook(cond, hlist, fltinfo);
+		else
+			return filter_match_header_cond(cond, hlist);
 	case FLT_COND_ANY_HEADER:
-	case FLT_COND_TO_OR_CC:
 		return filter_match_header_cond(cond, hlist);
+	case FLT_COND_TO_OR_CC:
+		if (cond->match_type == FLT_IN_ADDRESSBOOK)
+			return filter_match_in_addressbook(cond, hlist, fltinfo);
+		else
+			return filter_match_header_cond(cond, hlist);
 	case FLT_COND_BODY:
 		matched = procmime_find_string(msginfo, cond->str_value,
 					       cond->match_func);
@@ -478,6 +492,45 @@ static gboolean filter_match_header_cond(FilterCond *cond, GSList *hlist)
 			break;
 		default:
 			break;
+		}
+
+		if (matched == TRUE)
+			break;
+	}
+
+	if (FLT_IS_NOT_MATCH(cond->match_flag))
+		matched = !matched;
+
+	return matched;
+}
+
+static gboolean filter_match_in_addressbook(FilterCond *cond, GSList *hlist,
+					    FilterInfo *fltinfo)
+{
+	gboolean matched = FALSE;
+	GSList *cur;
+	Header *header;
+
+	if (!default_addrbook_func)
+		return FALSE;
+	if (cond->type != FLT_COND_HEADER && cond->type != FLT_COND_TO_OR_CC)
+		return FALSE;
+
+	for (cur = hlist; cur != NULL; cur = cur->next) {
+		header = (Header *)cur->data;
+
+		if (cond->type == FLT_COND_HEADER) {
+			if (!g_ascii_strcasecmp
+				(header->name, cond->header_name)) {
+				if (default_addrbook_func(header->body))
+					matched = TRUE;
+			}
+		} else if (cond->type == FLT_COND_TO_OR_CC) {
+			if (!g_ascii_strcasecmp(header->name, "To") ||
+			    !g_ascii_strcasecmp(header->name, "Cc")) {
+				if (default_addrbook_func(header->body))
+					matched = TRUE;
+			}
 		}
 
 		if (matched == TRUE)
@@ -856,6 +909,11 @@ void filter_write_file(GSList *list, const gchar *file)
 				       FLT_IS_NOT_MATCH(cond->match_flag)
 				       ? "not-regex" : "regex");
 				break;
+			case FLT_IN_ADDRESSBOOK:
+				strcpy(match_type,
+				       FLT_IS_NOT_MATCH(cond->match_flag)
+				       ? "not-in-addressbook" : "in-addressbook");
+				break;
 			default:
 				match_type[0] = '\0';
 				break;
@@ -1206,6 +1264,16 @@ FilterRule *filter_read_str(const gchar *str)
 	return rule;
 }
 
+void filter_set_addressbook_func(FilterInAddressBookFunc func)
+{
+	default_addrbook_func = func;
+}
+
+FilterInAddressBookFunc filter_get_addressbook_func(void)
+{
+	return default_addrbook_func;
+}
+
 FilterRule *filter_rule_new(const gchar *name, FilterBoolOp bool_op,
 			    GSList *cond_list, GSList *action_list)
 {
@@ -1253,6 +1321,8 @@ FilterCond *filter_cond_new(FilterCondType type,
 			cond->match_func = str_find_equal;
 		else
 			cond->match_func = str_case_find_equal;
+	} else if (match_type == FLT_IN_ADDRESSBOOK) {
+		cond->match_func = str_case_find_equal;
 	} else {
 		if (FLT_IS_CASE_SENS(match_flag))
 			cond->match_func = str_find;
@@ -1420,6 +1490,11 @@ void filter_rule_match_type_str_to_enum(const gchar *match_type,
 		*type = FLT_REGEX;
 	} else if (!strcmp(match_type, "not-regex")) {
 		*type = FLT_REGEX;
+		*flag = FLT_NOT_MATCH;
+	} else if (!strcmp(match_type, "in-addressbook")) {
+		*type = FLT_IN_ADDRESSBOOK;
+	} else if (!strcmp(match_type, "not-in-addressbook")) {
+		*type = FLT_IN_ADDRESSBOOK;
 		*flag = FLT_NOT_MATCH;
 	} else if (!strcmp(match_type, "gt")) {
 	} else if (!strcmp(match_type, "lt")) {

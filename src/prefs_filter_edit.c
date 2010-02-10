@@ -129,6 +129,8 @@ static void prefs_filter_edit_cancel		(void);
 
 static void prefs_filter_cond_activated_cb	(GtkWidget	*widget,
 						 gpointer	 data);
+static void prefs_filter_match_activated_cb	(GtkWidget	*widget,
+						 gpointer	 data);
 static void prefs_filter_action_activated_cb	(GtkWidget	*widget,
 						 gpointer	 data);
 
@@ -472,6 +474,8 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	GtkWidget *add_btn;
 	GtkWidget *del_img;
 	GtkWidget *add_img;
+	GtkWidget *match_menu_in_addr;
+	GtkWidget *match_menu_not_in_addr;
 
 	cond_hbox = g_new0(CondHBox, 1);
 
@@ -518,23 +522,30 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	gtk_widget_show(match_type_optmenu);
 	gtk_box_pack_start(GTK_BOX(hbox), match_type_optmenu, FALSE, FALSE, 0);
 
+#define MATCH_MENUITEM_ADD(str, action)					    \
+{									    \
+	MENUITEM_ADD(menu, menuitem, str, action);			    \
+	g_signal_connect(G_OBJECT(menuitem), "activate",		    \
+			 G_CALLBACK(prefs_filter_match_activated_cb),	    \
+			 cond_hbox);					    \
+}
 	menu = gtk_menu_new();
 	gtk_widget_show(menu);
-	MENUITEM_ADD(menu, menuitem, _("contains"),
-		     PF_MATCH_CONTAIN);
-	MENUITEM_ADD(menu, menuitem, _("doesn't contain"),
-		     PF_MATCH_NOT_CONTAIN);
-	MENUITEM_ADD(menu, menuitem, _("is"),
-		     PF_MATCH_EQUAL);
-	MENUITEM_ADD(menu, menuitem, _("is not"),
-		     PF_MATCH_NOT_EQUAL);
+	MATCH_MENUITEM_ADD(_("contains"),               PF_MATCH_CONTAIN);
+	MATCH_MENUITEM_ADD(_("doesn't contain"),        PF_MATCH_NOT_CONTAIN);
+	MATCH_MENUITEM_ADD(_("is"),                     PF_MATCH_EQUAL);
+	MATCH_MENUITEM_ADD(_("is not"),                 PF_MATCH_NOT_EQUAL);
 #if defined(USE_ONIGURUMA) || defined(HAVE_REGCOMP)
-	MENUITEM_ADD(menu, menuitem, _("match to regex"),
-		     PF_MATCH_REGEX);
-	MENUITEM_ADD(menu, menuitem, _("doesn't match to regex"),
-		     PF_MATCH_NOT_REGEX);
+	MATCH_MENUITEM_ADD(_("match to regex"),         PF_MATCH_REGEX);
+	MATCH_MENUITEM_ADD(_("doesn't match to regex"), PF_MATCH_NOT_REGEX);
 #endif
+	MATCH_MENUITEM_ADD(_("is in addressbook"),      PF_MATCH_IN_ADDRESSBOOK);
+	match_menu_in_addr = menuitem;
+	MATCH_MENUITEM_ADD(_("isn't in addressbook"),   PF_MATCH_NOT_IN_ADDRESSBOOK);
+	match_menu_not_in_addr = menuitem;
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(match_type_optmenu), menu);
+
+#undef MATCH_MENUITEM_ADD
 
 	size_match_optmenu = gtk_option_menu_new();
 	gtk_widget_show(size_match_optmenu);
@@ -612,6 +623,8 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	cond_hbox->key_entry = key_entry;
 	cond_hbox->spin_btn = spin_btn;
 	cond_hbox->label = label;
+	cond_hbox->match_menu_in_addr = match_menu_in_addr;
+	cond_hbox->match_menu_not_in_addr = match_menu_not_in_addr;
 	cond_hbox->del_btn = del_btn;
 	cond_hbox->add_btn = add_btn;
 	cond_hbox->cur_type = PF_COND_HEADER;
@@ -841,6 +854,12 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 			else
 				match_type = PF_MATCH_REGEX;
 			break;
+		case FLT_IN_ADDRESSBOOK:
+			if (FLT_IS_NOT_MATCH(cond->match_flag))
+				match_type = PF_MATCH_NOT_IN_ADDRESSBOOK;
+			else
+				match_type = PF_MATCH_IN_ADDRESSBOOK;
+			break;
 		}
 		break;
 	case FLT_COND_UNREAD:
@@ -895,6 +914,10 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 		gtk_option_menu_set_history
 			(GTK_OPTION_MENU(hbox->status_match_optmenu),
 			 status_type);
+
+	if (match_type == PF_MATCH_IN_ADDRESSBOOK ||
+	    match_type == PF_MATCH_NOT_IN_ADDRESSBOOK)
+		gtk_widget_hide(hbox->key_entry);
 }
 
 void prefs_filter_edit_action_hbox_set(ActionHBox *hbox, FilterAction *action)
@@ -977,6 +1000,8 @@ void prefs_filter_edit_cond_hbox_select(CondHBox *hbox, CondMenuType type,
 
 void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 {
+	MatchMenuType match_type;
+
 	switch (type) {
 	case PF_COND_HEADER:
 	case PF_COND_TO_OR_CC:
@@ -986,9 +1011,27 @@ void prefs_filter_edit_set_cond_hbox_widgets(CondHBox *hbox, CondMenuType type)
 		gtk_widget_hide(hbox->size_match_optmenu);
 		gtk_widget_hide(hbox->age_match_optmenu);
 		gtk_widget_hide(hbox->status_match_optmenu);
-		gtk_widget_show(hbox->key_entry);
+		match_type = menu_get_option_menu_active_index
+			(GTK_OPTION_MENU(hbox->match_type_optmenu));
+		if (match_type == PF_MATCH_IN_ADDRESSBOOK ||
+		    match_type == PF_MATCH_NOT_IN_ADDRESSBOOK)
+			gtk_widget_hide(hbox->key_entry);
+		else
+			gtk_widget_show(hbox->key_entry);
 		gtk_widget_hide(hbox->spin_btn);
 		gtk_widget_hide(hbox->label);
+		if (type == PF_COND_HEADER || type == PF_COND_TO_OR_CC) {
+			gtk_widget_show(hbox->match_menu_in_addr);
+			gtk_widget_show(hbox->match_menu_not_in_addr);
+		} else {
+			gtk_widget_hide(hbox->match_menu_in_addr);
+			gtk_widget_hide(hbox->match_menu_not_in_addr);
+			if (match_type == PF_MATCH_IN_ADDRESSBOOK ||
+			    match_type == PF_MATCH_NOT_IN_ADDRESSBOOK) {
+				gtk_option_menu_set_history(GTK_OPTION_MENU(hbox->match_type_optmenu), 0);
+				gtk_widget_show(hbox->key_entry);
+			}
+		}
 		break;
 	case PF_COND_CMD_TEST:
 		gtk_widget_hide(hbox->match_type_optmenu);
@@ -1703,6 +1746,13 @@ FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
 		match_type = FLT_REGEX;
 		match_flag |= FLT_NOT_MATCH;
 		break;
+	case PF_MATCH_IN_ADDRESSBOOK:
+		match_type = FLT_IN_ADDRESSBOOK;
+		break;
+	case PF_MATCH_NOT_IN_ADDRESSBOOK:
+		match_type = FLT_IN_ADDRESSBOOK;
+		match_flag |= FLT_NOT_MATCH;
+		break;
 	default:
 		break;
 	}
@@ -2033,6 +2083,21 @@ static void prefs_filter_cond_activated_cb(GtkWidget *widget, gpointer data)
 			hbox->cur_header_name = g_strdup(header_name);
 		}
 	}
+}
+
+static void prefs_filter_match_activated_cb(GtkWidget *widget, gpointer data)
+{
+	CondHBox *hbox = (CondHBox *)data;
+	GtkWidget *cond_type_menuitem;
+	CondMenuType cond_menu_type;
+
+	cond_type_menuitem = gtk_menu_get_active
+		(GTK_MENU(gtk_option_menu_get_menu
+			(GTK_OPTION_MENU(hbox->cond_type_optmenu))));
+	cond_menu_type = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(cond_type_menuitem), MENU_VAL_ID));
+
+	prefs_filter_edit_set_cond_hbox_widgets(hbox, cond_menu_type);
 }
 
 static void prefs_filter_action_activated_cb(GtkWidget *widget, gpointer data)

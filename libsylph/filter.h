@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -58,7 +58,8 @@ typedef enum
 {
 	FLT_CONTAIN,
 	FLT_EQUAL,
-	FLT_REGEX
+	FLT_REGEX,
+	FLT_IN_ADDRESSBOOK
 } FilterMatchType;
 
 typedef enum
@@ -109,6 +110,8 @@ typedef enum
 
 #define FLT_IS_NOT_MATCH(flag)	((flag & FLT_NOT_MATCH) != 0)
 #define FLT_IS_CASE_SENS(flag)	((flag & FLT_CASE_SENS) != 0)
+
+typedef gboolean (*FilterInAddressBookFunc)	(const gchar	*address);
 
 struct _FilterCond
 {
@@ -192,6 +195,10 @@ void filter_write_config		(void);
 /* for old filterrc */
 gchar *filter_get_str			(FilterRule		*rule);
 FilterRule *filter_read_str		(const gchar		*str);
+
+void filter_set_addressbook_func	(FilterInAddressBookFunc func);
+FilterInAddressBookFunc filter_get_addressbook_func
+					(void);
 
 FilterRule *filter_rule_new		(const gchar		*name,
 					 FilterBoolOp		 bool_op,

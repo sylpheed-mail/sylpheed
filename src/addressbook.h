@@ -49,4 +49,6 @@ gboolean addressbook_add_contact_autoreg(const gchar	*name,
 
 gboolean addressbook_load_completion	( gint (*callBackFunc) ( const gchar *, const gchar *, const gchar * ) );
 
+gboolean addressbook_has_address	(const gchar	*address);
+
 #endif /* __ADDRESSBOOK_H__ */

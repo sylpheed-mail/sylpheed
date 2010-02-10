@@ -257,6 +257,7 @@ int main(int argc, char *argv[])
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 
 	prefs_common_read_config();
+	filter_set_addressbook_func(addressbook_has_address);
 	filter_read_config();
 	prefs_actions_read_config();
 	prefs_display_header_read_config();

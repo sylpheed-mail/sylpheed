@@ -55,6 +55,8 @@ typedef enum
 	PF_MATCH_NOT_EQUAL,
 	PF_MATCH_REGEX,
 	PF_MATCH_NOT_REGEX,
+	PF_MATCH_IN_ADDRESSBOOK,
+	PF_MATCH_NOT_IN_ADDRESSBOOK,
 	PF_MATCH_NONE
 } MatchMenuType;
 
@@ -117,6 +119,9 @@ struct _CondHBox {
 	GtkWidget *key_entry;
 	GtkWidget *spin_btn;
 	GtkWidget *label;
+
+	GtkWidget *match_menu_in_addr;
+	GtkWidget *match_menu_not_in_addr;
 
 	GtkWidget *del_btn;
 	GtkWidget *add_btn;
