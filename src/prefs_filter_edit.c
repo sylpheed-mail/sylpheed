@@ -541,7 +541,7 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 #endif
 	MATCH_MENUITEM_ADD(_("is in addressbook"),      PF_MATCH_IN_ADDRESSBOOK);
 	match_menu_in_addr = menuitem;
-	MATCH_MENUITEM_ADD(_("isn't in addressbook"),   PF_MATCH_NOT_IN_ADDRESSBOOK);
+	MATCH_MENUITEM_ADD(_("is not in addressbook"),  PF_MATCH_NOT_IN_ADDRESSBOOK);
 	match_menu_not_in_addr = menuitem;
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(match_type_optmenu), menu);
 
