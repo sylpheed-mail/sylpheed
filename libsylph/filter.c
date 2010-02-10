@@ -874,7 +874,7 @@ void filter_write_file(GSList *list, const gchar *file)
 		FilterRule *rule = (FilterRule *)cur->data;
 		GSList *cur_cond;
 		GSList *cur_action;
-		gchar match_type[16];
+		gchar match_type[64];
 		gchar nstr[16];
 
 		fputs("    <rule name=\"", pfile->fp);
@@ -895,24 +895,27 @@ void filter_write_file(GSList *list, const gchar *file)
 
 			switch (cond->match_type) {
 			case FLT_CONTAIN:
-				strcpy(match_type,
-				       FLT_IS_NOT_MATCH(cond->match_flag)
-				       ? "not-contain" : "contains");
+				strncpy2(match_type,
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "not-contain" : "contains",
+					 sizeof(match_type));
 				break;
 			case FLT_EQUAL:
-				strcpy(match_type,
-				       FLT_IS_NOT_MATCH(cond->match_flag)
-				       ? "is-not" : "is");
+				strncpy2(match_type,
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "is-not" : "is", sizeof(match_type));
 				break;
 			case FLT_REGEX:
-				strcpy(match_type,
-				       FLT_IS_NOT_MATCH(cond->match_flag)
-				       ? "not-regex" : "regex");
+				strncpy2(match_type,
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "not-regex" : "regex",
+					 sizeof(match_type));
 				break;
 			case FLT_IN_ADDRESSBOOK:
-				strcpy(match_type,
-				       FLT_IS_NOT_MATCH(cond->match_flag)
-				       ? "not-in-addressbook" : "in-addressbook");
+				strncpy2(match_type,
+					 FLT_IS_NOT_MATCH(cond->match_flag)
+					 ? "not-in-addressbook" : "in-addressbook",
+					 sizeof(match_type));
 				break;
 			default:
 				match_type[0] = '\0';
