@@ -6016,6 +6016,7 @@ static void compose_set_spell_lang_menu(Compose *compose)
 static void compose_change_spell_lang_menu(Compose *compose, const gchar *lang)
 {
 	GtkWidget *menu;
+	GtkWidget *def_item = NULL;
 	GList *cur_item;
 	const gchar *dict;
 
@@ -6025,12 +6026,20 @@ static void compose_change_spell_lang_menu(Compose *compose, const gchar *lang)
 	menu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(compose->spell_menu));
 	for (cur_item = GTK_MENU_SHELL(menu)->children; cur_item != NULL;
 	     cur_item = cur_item->next) {
+		if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(cur_item->data)))
+			def_item = GTK_WIDGET(cur_item->data);
 		dict = g_object_get_data(G_OBJECT(cur_item->data), "spell-lang");
 		if (dict && !g_ascii_strcasecmp(dict, lang)) {
 			gtk_check_menu_item_set_active
 				(GTK_CHECK_MENU_ITEM(cur_item->data), TRUE);
-			break;
+			return;
 		}
+	}
+
+	if (def_item) {
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(def_item),
+					       TRUE);
+		compose_set_spell_lang_cb(def_item, compose);
 	}
 }
 #endif /* USE_GTKSPELL */
