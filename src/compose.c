@@ -507,6 +507,9 @@ static void compose_toggle_encrypt_cb	(gpointer	 data,
 
 #if USE_GTKSPELL
 static void compose_set_spell_lang_menu (Compose	*compose);
+static void compose_change_spell_lang_menu
+					(Compose	*compose,
+					 const gchar	*lang);
 static void compose_toggle_spell_cb	(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -1219,6 +1222,10 @@ void compose_reedit(MsgInfo *msginfo)
 		menu_set_active(ifactory, "/Tools/Request disposition notification", TRUE);
 	}
 	menu_set_active(ifactory, "/Edit/Auto wrapping", compose->autowrap);
+#if USE_GTKSPELL
+	menu_set_active(ifactory, "/Tools/Check spell", compose->check_spell);
+	compose_change_spell_lang_menu(compose, compose->spell_lang);
+#endif
 
 	syl_plugin_signal_emit("compose-created", compose);
 
@@ -1600,6 +1607,8 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 				       {"FWD:", NULL, FALSE},
 				       {"Disposition-Notification-To:", NULL, FALSE},
 				       {"X-Sylpheed-Compose-AutoWrap:", NULL, FALSE},
+				       {"X-Sylpheed-Compose-CheckSpell:", NULL, FALSE},
+				       {"X-Sylpheed-Compose-SpellLang:", NULL, FALSE},
 				       {NULL, NULL, FALSE}};
 
 	enum
@@ -1609,7 +1618,9 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		H_REP = 2,
 		H_FWD = 3,
 		H_MDN = 4,
-		H_X_SYLPHEED_COMPOSE_AUTOWRAP = 5
+		H_X_SYLPHEED_COMPOSE_AUTOWRAP = 5,
+		H_X_SYLPHEED_COMPOSE_CHECKSPELL = 6,
+		H_X_SYLPHEED_COMPOSE_SPELLLANG = 7
 	};
 
 	gchar *file;
@@ -1645,6 +1656,16 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 				compose->autowrap = TRUE;
 			else
 				compose->autowrap = FALSE;
+#if USE_GTKSPELL
+		} else if (hnum == H_X_SYLPHEED_COMPOSE_CHECKSPELL) {
+			if (g_ascii_strcasecmp(str, "TRUE") == 0)
+				compose->check_spell = TRUE;
+			else
+				compose->check_spell = FALSE;
+		} else if (hnum == H_X_SYLPHEED_COMPOSE_SPELLLANG) {
+			g_free(compose->spell_lang);
+			compose->spell_lang = g_strdup(str);
+#endif
 		}
 	}
 
@@ -4729,7 +4750,14 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 			fprintf(fp, "X-Sylpheed-Forward: %s\n",
 				compose->forward_targets);
 		fprintf(fp, "X-Sylpheed-Compose-AutoWrap: %s\n",
-			compose->autowrap ? "TRUE": "FALSE");
+			compose->autowrap ? "TRUE" : "FALSE");
+#if USE_GTKSPELL
+		fprintf(fp, "X-Sylpheed-Compose-CheckSpell: %s\n",
+			compose->check_spell ? "TRUE" : "FALSE");
+		if (compose->spell_lang)
+			fprintf(fp, "X-Sylpheed-Compose-SpellLang: %s\n",
+				compose->spell_lang);
+#endif
 	}
 
 	/* separator between header and body */
@@ -5957,6 +5985,27 @@ static void compose_set_spell_lang_menu(Compose *compose)
 
 	gtk_widget_show(menu);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(compose->spell_menu), menu);
+}
+
+static void compose_change_spell_lang_menu(Compose *compose, const gchar *lang)
+{
+	GtkWidget *menu;
+	GList *cur_item;
+	const gchar *dict;
+
+	if (!lang)
+		return;
+
+	menu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(compose->spell_menu));
+	for (cur_item = GTK_MENU_SHELL(menu)->children; cur_item != NULL;
+	     cur_item = cur_item->next) {
+		dict = g_object_get_data(G_OBJECT(cur_item->data), "spell-lang");
+		if (dict && !g_ascii_strcasecmp(dict, lang)) {
+			gtk_check_menu_item_set_active
+				(GTK_CHECK_MENU_ITEM(cur_item->data), TRUE);
+			break;
+		}
+	}
 }
 #endif /* USE_GTKSPELL */
 
