@@ -1226,6 +1226,10 @@ void compose_reedit(MsgInfo *msginfo)
 	menu_set_active(ifactory, "/Tools/Check spell", compose->check_spell);
 	compose_change_spell_lang_menu(compose, compose->spell_lang);
 #endif
+#if USE_GPGME
+	menu_set_active(ifactory, "/Tools/PGP Sign", compose->use_signing);
+	menu_set_active(ifactory, "/Tools/PGP Encrypt", compose->use_encryption);
+#endif
 
 	syl_plugin_signal_emit("compose-created", compose);
 
@@ -1609,6 +1613,8 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 				       {"X-Sylpheed-Compose-AutoWrap:", NULL, FALSE},
 				       {"X-Sylpheed-Compose-CheckSpell:", NULL, FALSE},
 				       {"X-Sylpheed-Compose-SpellLang:", NULL, FALSE},
+				       {"X-Sylpheed-Compose-UseSigning:", NULL, FALSE},
+				       {"X-Sylpheed-Compose-UseEncryption:", NULL, FALSE},
 				       {NULL, NULL, FALSE}};
 
 	enum
@@ -1620,7 +1626,9 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		H_MDN = 4,
 		H_X_SYLPHEED_COMPOSE_AUTOWRAP = 5,
 		H_X_SYLPHEED_COMPOSE_CHECKSPELL = 6,
-		H_X_SYLPHEED_COMPOSE_SPELLLANG = 7
+		H_X_SYLPHEED_COMPOSE_SPELLLANG = 7,
+		H_X_SYLPHEED_COMPOSE_USESIGNING = 8,
+		H_X_SYLPHEED_COMPOSE_USEENCRYPTION = 9
 	};
 
 	gchar *file;
@@ -1665,6 +1673,18 @@ static gint compose_parse_source_msg(Compose *compose, MsgInfo *msginfo)
 		} else if (hnum == H_X_SYLPHEED_COMPOSE_SPELLLANG) {
 			g_free(compose->spell_lang);
 			compose->spell_lang = g_strdup(str);
+#endif
+#if USE_GPGME
+		} else if (hnum == H_X_SYLPHEED_COMPOSE_USESIGNING) {
+			if (g_ascii_strcasecmp(str, "TRUE") == 0)
+				compose->use_signing = TRUE;
+			else
+				compose->use_signing = FALSE;
+		} else if (hnum == H_X_SYLPHEED_COMPOSE_USEENCRYPTION) {
+			if (g_ascii_strcasecmp(str, "TRUE") == 0)
+				compose->use_encryption = TRUE;
+			else
+				compose->use_encryption = FALSE;
 #endif
 		}
 	}
@@ -4757,6 +4777,12 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		if (compose->spell_lang)
 			fprintf(fp, "X-Sylpheed-Compose-SpellLang: %s\n",
 				compose->spell_lang);
+#endif
+#if USE_GPGME
+		fprintf(fp, "X-Sylpheed-Compose-UseSigning: %s\n",
+			compose->use_signing ? "TRUE" : "FALSE");
+		fprintf(fp, "X-Sylpheed-Compose-UseEncryption: %s\n",
+			compose->use_encryption ? "TRUE" : "FALSE");
 #endif
 	}
 
