@@ -54,7 +54,7 @@ typedef enum
 	FLT_O_REGEX	= 1 << 2
 } FilterOldFlag;
 
-FilterInAddressBookFunc default_addrbook_func = NULL;
+static FilterInAddressBookFunc default_addrbook_func = NULL;
 
 static gboolean filter_match_cond	(FilterCond	*cond,
 					 MsgInfo	*msginfo,
