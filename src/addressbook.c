@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1071,6 +1071,7 @@ static void addressbook_del_clicked(GtkButton *button, gpointer data)
 		}
 		addressbook_list_select_clear();
 		addressbook_reopen();
+		addressbook_modified();
 		return;
 	} else if (pobj->type == ADDR_ITEM_GROUP) {
 		/* Items inside groups */
@@ -1991,6 +1992,7 @@ static void addressbook_new_address_cb(gpointer data, guint action, GtkWidget *w
 				if (gtkut_tree_row_reference_equal(addrbook.tree_selected, addrbook.tree_opened)) {
 					addressbook_reopen();
 				}
+				addressbook_modified();
 			}
 		}
 	}
@@ -2002,6 +2004,7 @@ static void addressbook_new_address_cb(gpointer data, guint action, GtkWidget *w
 			if (gtkut_tree_row_reference_equal(addrbook.tree_selected, addrbook.tree_opened)) {
 				addressbook_reopen();
 			}
+			addressbook_modified();
 		}
 	}
 	else if( pobj->type == ADDR_ITEM_GROUP ) {
@@ -2309,6 +2312,7 @@ static void addressbook_paste_address_cb(gpointer data, guint action,
 
 	if (gtkut_tree_row_reference_equal(addrbook.tree_selected, addrbook.tree_opened))
 		addressbook_reopen();
+	addressbook_modified();
 }
 
 static void close_cb(gpointer data, guint action, GtkWidget *widget)
@@ -3437,6 +3441,7 @@ static void addressbook_new_vcard_cb(gpointer data, guint action, GtkWidget *wid
 		if (gtkut_tree_row_reference_equal(addrbook.tree_selected, addrbook.tree_opened)) {
 			addressbook_reopen();
 		}
+		addressbook_modified();
 	}
 }
 
@@ -4205,6 +4210,15 @@ static void addressbook_import_csv_cb(void)
 
 static GHashTable *addr_table;
 
+#if USE_THREADS
+G_LOCK_DEFINE_STATIC(addr_table);
+#define S_LOCK(name)	G_LOCK(name)
+#define S_UNLOCK(name)	G_UNLOCK(name)
+#else
+#define S_LOCK(name)
+#define S_UNLOCK(name)
+#endif
+
 static gint load_address(const gchar *name, const gchar *address,
 			 const gchar *nickname)
 {
@@ -4225,11 +4239,15 @@ static gint load_address(const gchar *name, const gchar *address,
 
 static void addressbook_modified(void)
 {
+	S_LOCK(addr_table);
+
 	if (addr_table) {
 		hash_free_strings(addr_table);
 		g_hash_table_destroy(addr_table);
 		addr_table = NULL;
 	}
+
+	S_UNLOCK(addr_table);
 
 	invalidate_address_completion();
 }
@@ -4249,6 +4267,8 @@ gboolean addressbook_has_address(const gchar *address)
 	if (!list)
 		return FALSE;
 
+	S_LOCK(addr_table);
+
 	if (!addr_table) {
 		addr_table = g_hash_table_new(g_str_hash, g_str_equal);
 		addressbook_load_completion(load_address);
@@ -4267,6 +4287,8 @@ gboolean addressbook_has_address(const gchar *address)
 		}
 		g_free(addr);
 	}
+
+	S_UNLOCK(addr_table);
 
 	slist_free_strings(list);
 
