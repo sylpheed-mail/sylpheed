@@ -4261,7 +4261,7 @@ gboolean addressbook_has_address(const gchar *address)
 	if (!address)
 		return FALSE;
 
-	debug_print("addressbook_has_address: check if addressbook has address: %s\n", address);
+	/* debug_print("addressbook_has_address: check if addressbook has address: %s\n", address); */
 
 	list = address_list_append(NULL, address);
 	if (!list)
@@ -4279,7 +4279,7 @@ gboolean addressbook_has_address(const gchar *address)
 
 		if (g_hash_table_lookup(addr_table, addr)) {
 			found = TRUE;
-			debug_print("'%s' is in addressbook\n", addr);
+			/* debug_print("<%s> is in addressbook\n", addr); */
 		} else {
 			found = FALSE;
 			g_free(addr);

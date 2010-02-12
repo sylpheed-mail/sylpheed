@@ -34,6 +34,7 @@
 #include "filter.h"
 #include "procheader.h"
 #include "menu.h"
+#include "addressbook.h"
 
 static const struct {
 	QSearchCondType type;
@@ -46,7 +47,8 @@ static const struct {
 	{QS_MIME,	FLT_COND_MIME},
 	{QS_W1DAY,	-1},
 	{QS_LAST5,	-1},
-	{QS_LAST7,	-1}
+	{QS_LAST7,	-1},
+	{QS_IN_ADDRESSBOOK,	-1}
 };
 
 static GdkColor text_color;
@@ -113,6 +115,8 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
 	COND_MENUITEM_ADD(_("Last 5 days"), QS_LAST5);
 	COND_MENUITEM_ADD(_("Last 7 days"), QS_LAST7);
+	MENUITEM_ADD(menu, menuitem, NULL, 0);
+	COND_MENUITEM_ADD(_("In addressbook"), QS_IN_ADDRESSBOOK);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), menu);
 
 #undef COND_MENUITEM_ADD
@@ -220,6 +224,9 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	if (!summaryview->all_mlist)
 		return NULL;
 
+	debug_print("quick_search_filter: filtering summary (type: %d)\n",
+		    type);
+
 	switch (type) {
 	case QS_UNREAD:
 	case QS_MARK:
@@ -252,6 +259,13 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 		status_rule = filter_rule_new("Status filter rule", FLT_OR,
 					      cond_list, NULL);
 		break;
+	case QS_IN_ADDRESSBOOK:
+		cond = filter_cond_new(FLT_COND_HEADER, FLT_IN_ADDRESSBOOK, 0,
+				       "From", NULL);
+		cond_list = g_slist_append(cond_list, cond);
+		status_rule = filter_rule_new("Status filter rule", FLT_OR,
+					      cond_list, NULL);
+		break;
 	case QS_ALL:
 	default:
 		break;
@@ -279,28 +293,37 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 
 	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
-		GSList *hlist;
+		GSList *hlist = NULL;
 
 		total++;
 
 		if (status_rule) {
-			if (!filter_match_rule(status_rule, msginfo, NULL,
-					       &fltinfo))
+			if (type == QS_IN_ADDRESSBOOK)
+				hlist = procheader_get_header_list_from_msginfo
+					(msginfo);
+			if (!filter_match_rule(status_rule, msginfo, hlist,
+					       &fltinfo)) {
+				if (hlist)
+					procheader_header_list_destroy(hlist);
 				continue;
+			}
 		}
 
 		if (rule) {
-			hlist = procheader_get_header_list_from_msginfo
-				(msginfo);
+			if (!hlist)
+				hlist = procheader_get_header_list_from_msginfo
+					(msginfo);
 			if (filter_match_rule(rule, msginfo, hlist, &fltinfo)) {
 				flt_mlist = g_slist_prepend(flt_mlist, msginfo);
 				count++;
 			}
-			procheader_header_list_destroy(hlist);
 		} else {
 			flt_mlist = g_slist_prepend(flt_mlist, msginfo);
 			count++;
 		}
+
+		if (hlist)
+			procheader_header_list_destroy(hlist);
 	}
 	flt_mlist = g_slist_reverse(flt_mlist);
 
