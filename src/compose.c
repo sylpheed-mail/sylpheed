@@ -3327,9 +3327,6 @@ static void compose_add_new_recipients_to_addressbook(Compose *compose)
 	for (cur = to_list; cur != NULL; cur = cur->next) {
 		gchar *orig_addr = cur->data;
 		gchar *name, *addr;
-		gchar *compaddr;
-		gint count, i;
-		gboolean found = FALSE;
 
 		name = procheader_get_fromname(orig_addr);
 		addr = g_strdup(orig_addr);
@@ -3339,21 +3336,7 @@ static void compose_add_new_recipients_to_addressbook(Compose *compose)
 			name = NULL;
 		}
 
-		count = complete_address(addr);
-		for (i = 1; i < count; i++) {
-			compaddr = get_complete_address(i);
-			if (compaddr) {
-				g_print("compaddr: %s\n", compaddr);
-				extract_address(compaddr);
-				if (!g_ascii_strcasecmp(addr, compaddr)) {
-					found = TRUE;
-					break;
-				}
-			}
-		}
-		clear_completion_cache();
-
-		if (found)
+		if (addressbook_has_address(addr))
 			debug_print("compose_add_new_recipients_to_addressbook: address <%s> already registered.\n", addr);
 		else
 			addressbook_add_contact_autoreg(name, addr, NULL);
