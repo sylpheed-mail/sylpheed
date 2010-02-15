@@ -852,6 +852,7 @@ static void row_activated(GtkTreeView *treeview, GtkTreePath *path,
 				       msginfo)) {
 		msgview = messageview_create_with_new_window();
 		messageview_show(msgview, msginfo, FALSE);
+		statusbar_pop_all();
 	}
 }
 
