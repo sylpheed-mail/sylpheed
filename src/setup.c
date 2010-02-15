@@ -36,6 +36,9 @@
 #include "prefs_common.h"
 #include "stock_pixmap.h"
 #include "account.h"
+#if USE_SSL
+#  include "ssl.h"
+#endif
 
 static PangoFontDescription *font_desc;
 
@@ -317,16 +320,20 @@ static struct
 	GtkWidget *cancel_btn;
 	GtkWidget *pop3_radio;
 	GtkWidget *imap_radio;
+#if USE_SSL
 	GtkWidget *pop3g_radio;
 	GtkWidget *imapg_radio;
+#endif
 	GtkWidget *name_entry;
 	GtkWidget *addr_entry;
 	GtkWidget *id_entry;
 	GtkWidget *serv_entry;
 	GtkWidget *smtp_entry;
-	GtkWidget *servssl_chkbtn;
 	GtkWidget *smtpauth_chkbtn;
+#if USE_SSL
+	GtkWidget *servssl_chkbtn;
 	GtkWidget *smtpssl_chkbtn;
+#endif
 	GtkWidget *serv_label_name1;
 	GtkWidget *serv_label_name2;
 	GtkWidget *name_label;
@@ -345,8 +352,10 @@ static struct
 	gchar *smtpserv;
 	gushort serv_port;
 	gushort smtp_port;
+#if USE_SSL
 	gboolean serv_ssl;
 	gboolean smtp_ssl;
+#endif
 	gboolean smtp_auth;
 } setupac;
 
@@ -362,8 +371,10 @@ enum
 {
 	SETUP_TYPE_POP3,
 	SETUP_TYPE_IMAP,
+#if USE_SSL
 	SETUP_TYPE_POP3G,
 	SETUP_TYPE_IMAPG
+#endif
 };
 
 #define GMAIL_POP3_SERVER	"pop.gmail.com"
@@ -392,11 +403,13 @@ static void entry_changed(GtkEditable *editable, gpointer data)
 	serv = gtk_entry_get_text(GTK_ENTRY(setupac.serv_entry));
 	smtp = gtk_entry_get_text(GTK_ENTRY(setupac.smtp_entry));
 
+#if USE_SSL
 	if (setupac.type == SETUP_TYPE_POP3G ||
 	    setupac.type == SETUP_TYPE_IMAPG) {
 		if (GTK_WIDGET(editable) == setupac.addr_entry)
 			gtk_entry_set_text(GTK_ENTRY(setupac.id_entry), addr);
 	}
+#endif
 
 	if (page == SETUP_PAGE_ADDRESS && name && *name && addr && *addr)
 		next_enable = TRUE;
@@ -415,6 +428,8 @@ static gboolean entry_is_valid(GtkWidget *entry)
 
 	p = str = gtk_entry_get_text(GTK_ENTRY(entry));
 	if (!str || *p == '\0')
+		return FALSE;
+	if (!strcmp(str, "(username)@gmail.com"))
 		return FALSE;
 
 	while (*p) {
@@ -461,12 +476,14 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 	} else if (response_id == GTK_RESPONSE_ACCEPT) {
 		if (prev_page == SETUP_PAGE_ADDRESS) {
 			if (entry_is_valid(setupac.addr_entry)) {
+#if USE_SSL
 				if (setupac.type == SETUP_TYPE_POP3G ||
 				    setupac.type == SETUP_TYPE_IMAPG)
 					gtk_notebook_set_current_page
 						(GTK_NOTEBOOK(setupac.notebook),
 						 SETUP_PAGE_FINISH);
 				else
+#endif
 					gtk_notebook_set_current_page
 						(GTK_NOTEBOOK(setupac.notebook), page + 1);
 			} else
@@ -487,8 +504,11 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 		if (prev_page == SETUP_PAGE_START) {
 			setupac.type = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.pop3_radio)) ? SETUP_TYPE_POP3
 				: gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.imap_radio)) ? SETUP_TYPE_IMAP
+#if USE_SSL
 				: gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.pop3g_radio)) ? SETUP_TYPE_POP3G
-				: gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.imapg_radio)) ? SETUP_TYPE_IMAPG : SETUP_TYPE_POP3;
+				: gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.imapg_radio)) ? SETUP_TYPE_IMAPG
+#endif
+				: SETUP_TYPE_POP3;
 		}
 	} else if (response_id == GTK_RESPONSE_REJECT) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(setupac.notebook),
@@ -510,6 +530,13 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 			gtk_widget_set_sensitive(setupac.serv_entry, TRUE);
 			gtk_widget_set_sensitive(setupac.smtp_entry, TRUE);
 			break;
+		case SETUP_TYPE_IMAP:
+			gtk_widget_set_sensitive(setupac.id_entry, TRUE);
+			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name1), _("IMAP4 server:"));
+			gtk_widget_set_sensitive(setupac.serv_entry, TRUE);
+			gtk_widget_set_sensitive(setupac.smtp_entry, TRUE);
+			break;
+#if USE_SSL
 		case SETUP_TYPE_POP3G:
 			if (prev_page == SETUP_PAGE_START)
 				gtk_entry_set_text(GTK_ENTRY(setupac.addr_entry), "(username)@gmail.com");
@@ -519,12 +546,6 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 			gtk_widget_set_sensitive(setupac.serv_entry, FALSE);
 			gtk_entry_set_text(GTK_ENTRY(setupac.smtp_entry), GMAIL_SMTP_SERVER);
 			gtk_widget_set_sensitive(setupac.smtp_entry, FALSE);
-			break;
-		case SETUP_TYPE_IMAP:
-			gtk_widget_set_sensitive(setupac.id_entry, TRUE);
-			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name1), _("IMAP4 server:"));
-			gtk_widget_set_sensitive(setupac.serv_entry, TRUE);
-			gtk_widget_set_sensitive(setupac.smtp_entry, TRUE);
 			break;
 		case SETUP_TYPE_IMAPG:
 			if (prev_page == SETUP_PAGE_START)
@@ -536,6 +557,7 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 			gtk_entry_set_text(GTK_ENTRY(setupac.smtp_entry), GMAIL_SMTP_SERVER);
 			gtk_widget_set_sensitive(setupac.smtp_entry, FALSE);
 			break;
+#endif /* USE_SSL */
 		}
 	} else if (page == SETUP_PAGE_FINISH) {
 		prev_enable = FALSE;
@@ -545,13 +567,32 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 
 		switch (setupac.type) {
 		case SETUP_TYPE_POP3:
+#if USE_SSL
 			setupac.serv_ssl = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.servssl_chkbtn));
 			setupac.smtp_ssl = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpssl_chkbtn));
-			setupac.smtp_auth = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpauth_chkbtn));
 			setupac.serv_port = setupac.serv_ssl ? POP3S_PORT : POP3_PORT;
 			setupac.smtp_port = setupac.smtp_ssl ? SMTPS_PORT : SMTP_PORT;
+#else /* !USE_SSL */
+			setupac.serv_port = POP3_PORT;
+			setupac.smtp_port = SMTP_PORT;
+#endif /* USE_SSL */
+			setupac.smtp_auth = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpauth_chkbtn));
 			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name2), _("POP3 server:"));
 			break;
+		case SETUP_TYPE_IMAP:
+#if USE_SSL
+			setupac.serv_ssl = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.servssl_chkbtn));
+			setupac.smtp_ssl = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpssl_chkbtn));
+			setupac.serv_port = setupac.serv_ssl ? IMAPS_PORT : IMAP_PORT;
+			setupac.smtp_port = setupac.smtp_ssl ? SMTPS_PORT : SMTP_PORT;
+#else /* !USE_SSL */
+			setupac.serv_port = IMAP_PORT;
+			setupac.smtp_port = SMTP_PORT;
+#endif /* USE_SSL */
+			setupac.smtp_auth = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpauth_chkbtn));
+			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name2), _("IMAP4 server:"));
+			break;
+#if USE_SSL
 		case SETUP_TYPE_POP3G:
 			setupac.serv_ssl = TRUE;
 			setupac.smtp_ssl = TRUE;
@@ -559,14 +600,6 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 			setupac.serv_port = POP3S_PORT;
 			setupac.smtp_port = SMTPS_PORT;
 			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name2), _("POP3 server:"));
-			break;
-		case SETUP_TYPE_IMAP:
-			setupac.serv_ssl = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.servssl_chkbtn));
-			setupac.smtp_ssl = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpssl_chkbtn));
-			setupac.smtp_auth = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(setupac.smtpauth_chkbtn));
-			setupac.serv_port = setupac.serv_ssl ? IMAPS_PORT : IMAP_PORT;
-			setupac.smtp_port = setupac.smtp_ssl ? SMTPS_PORT : SMTP_PORT;
-			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name2), _("IMAP4 server:"));
 			break;
 		case SETUP_TYPE_IMAPG:
 			setupac.serv_ssl = TRUE;
@@ -576,6 +609,7 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 			setupac.smtp_port = SMTPS_PORT;
 			gtk_label_set_text(GTK_LABEL(setupac.serv_label_name2), _("IMAP4 server:"));
 			break;
+#endif /* USE_SSL */
 		}
 
 		GET_STR(name, name_entry);
@@ -586,17 +620,21 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 		gtk_label_set_text(GTK_LABEL(setupac.name_label), setupac.name);
 		gtk_label_set_text(GTK_LABEL(setupac.addr_label), setupac.addr);
 		gtk_label_set_text(GTK_LABEL(setupac.id_label), setupac.userid);
+#if USE_SSL
 		if (setupac.serv_ssl)
 			g_snprintf(buf, sizeof(buf), "%s:%u (SSL)",
 				   setupac.serv, setupac.serv_port);
 		else
+#endif
 			g_snprintf(buf, sizeof(buf), "%s:%u",
 				   setupac.serv, setupac.serv_port);
 		gtk_label_set_text(GTK_LABEL(setupac.serv_label), buf);
+#if USE_SSL
 		if (setupac.smtp_ssl)
 			g_snprintf(buf, sizeof(buf), "%s:%u (SSL)",
 				   setupac.smtpserv, setupac.smtp_port);
 		else
+#endif
 			g_snprintf(buf, sizeof(buf), "%s:%u",
 				   setupac.smtpserv, setupac.smtp_port);
 		gtk_label_set_text(GTK_LABEL(setupac.smtp_label), buf);
@@ -715,12 +753,14 @@ PrefsAccount *setup_account(void)
 	setupac.imap_radio = gtk_radio_button_new_with_label_from_widget
 		(GTK_RADIO_BUTTON(setupac.pop3_radio), "IMAP4");
 	gtk_box_pack_start(GTK_BOX(vbox), setupac.imap_radio, FALSE, FALSE, 0);
+#if USE_SSL
 	setupac.pop3g_radio = gtk_radio_button_new_with_label_from_widget
 		(GTK_RADIO_BUTTON(setupac.pop3_radio), "POP3 (Gmail)");
 	gtk_box_pack_start(GTK_BOX(vbox), setupac.pop3g_radio, FALSE, FALSE, 0);
 	setupac.imapg_radio = gtk_radio_button_new_with_label_from_widget
 		(GTK_RADIO_BUTTON(setupac.pop3_radio), "IMAP4 (Gmail)");
 	gtk_box_pack_start(GTK_BOX(vbox), setupac.imapg_radio, FALSE, FALSE, 0);
+#endif
 
 	/* Page 2 */
 	vbox = gtk_vbox_new(FALSE, 12);
@@ -806,12 +846,14 @@ PrefsAccount *setup_account(void)
 	g_signal_connect(setupac.smtp_entry, "changed",
 			 G_CALLBACK(entry_changed), NULL);
 
+#if USE_SSL
 	hbox = gtk_hbox_new(FALSE, 12);
 	gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 2, 3,
 			 GTK_FILL, GTK_FILL, 0, 0);
 	chkbtn = gtk_check_button_new_with_mnemonic(_("Use SSL"));
 	gtk_box_pack_start(GTK_BOX(hbox), chkbtn, FALSE, FALSE, 0);
 	setupac.servssl_chkbtn = chkbtn;
+#endif
 
 	hbox = gtk_hbox_new(FALSE, 12);
 	gtk_table_attach(GTK_TABLE(table), hbox, 1, 2, 5, 6,
@@ -819,9 +861,11 @@ PrefsAccount *setup_account(void)
 	chkbtn = gtk_check_button_new_with_mnemonic(_("Use SMTP authentication"));
 	gtk_box_pack_start(GTK_BOX(hbox), chkbtn, FALSE, FALSE, 0);
 	setupac.smtpauth_chkbtn = chkbtn;
+#if USE_SSL
 	chkbtn = gtk_check_button_new_with_mnemonic(_("Use SSL"));
 	gtk_box_pack_start(GTK_BOX(hbox), chkbtn, FALSE, FALSE, 0);
 	setupac.smtpssl_chkbtn = chkbtn;
+#endif
 
 	/* Page 4 */
 	vbox = gtk_vbox_new(FALSE, 12);
@@ -920,34 +964,42 @@ PrefsAccount *setup_account(void)
 	ac->smtp_server = g_strdup(setupac.smtpserv);
 	g_free(ac->userid);
 	ac->userid = g_strdup(setupac.userid);
+#if USE_SSL
 	if (setupac.smtp_ssl)
 		ac->ssl_smtp = SSL_TUNNEL;
+#endif
 	ac->smtpport = setupac.smtp_port;
 	ac->use_smtp_auth = setupac.smtp_auth;
 
 	switch (setupac.type) {
 	case SETUP_TYPE_POP3:
 		ac->protocol = A_POP3;
+#if USE_SSL
 		if (setupac.serv_ssl)
 			ac->ssl_pop = SSL_TUNNEL;
-		ac->popport = setupac.serv_port;
-		break;
-	case SETUP_TYPE_POP3G:
-		ac->protocol = A_POP3;
-		ac->ssl_pop = SSL_TUNNEL;
+#endif
 		ac->popport = setupac.serv_port;
 		break;
 	case SETUP_TYPE_IMAP:
 		ac->protocol = A_IMAP4;
+#if USE_SSL
 		if (setupac.serv_ssl)
 			ac->ssl_imap = SSL_TUNNEL;
+#endif
 		ac->imapport = setupac.serv_port;
+		break;
+#if USE_SSL
+	case SETUP_TYPE_POP3G:
+		ac->protocol = A_POP3;
+		ac->ssl_pop = SSL_TUNNEL;
+		ac->popport = setupac.serv_port;
 		break;
 	case SETUP_TYPE_IMAPG:
 		ac->protocol = A_IMAP4;
 		ac->ssl_imap = SSL_TUNNEL;
 		ac->imapport = setupac.serv_port;
 		break;
+#endif /* USE_SSL */
 	}
 
 	g_free(ac->sig_text);
