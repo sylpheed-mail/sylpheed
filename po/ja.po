@@ -1,12 +1,12 @@
 # Japanese translation of Sylpheed
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>, 1999,2000,2001,2002,2003.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-12 17:08+0900\n"
+"POT-Creation-Date: 2010-02-16 17:22+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -503,11 +503,11 @@ msgstr "%s が見つかりました\n"
 msgid "Configuration is saved.\n"
 msgstr "設定を保存しました。\n"
 
-#: libsylph/prefs_common.c:589
+#: libsylph/prefs_common.c:591
 msgid "Junk mail filter (manual)"
 msgstr "迷惑メールフィルタ (手動)"
 
-#: libsylph/prefs_common.c:592
+#: libsylph/prefs_common.c:594
 msgid "Junk mail filter"
 msgstr "迷惑メールフィルタ"
 
@@ -838,6 +838,10 @@ msgstr "備考"
 msgid "Select Address Book Folder"
 msgstr "アドレス帳フォルダを選択"
 
+#: src/addressadd.c:311 src/addressbook.c:950 src/addressbook.c:3082
+msgid "Auto-registered address"
+msgstr "自動登録アドレス"
+
 #: src/addressbook.c:341 src/compose.c:571 src/mainwindow.c:543
 #: src/messageview.c:149
 msgid "/_File"
@@ -985,7 +989,7 @@ msgstr "/コピー(_C)"
 msgid "/_Paste"
 msgstr "/ペースト(_P)"
 
-#: src/addressbook.c:536 src/prefs_common_dialog.c:2520 src/prefs_toolbar.c:90
+#: src/addressbook.c:536 src/prefs_common_dialog.c:2525 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "アドレス帳"
 
@@ -1040,10 +1044,6 @@ msgstr "検索"
 #: src/addressbook.c:827
 msgid "_Close"
 msgstr "閉じる(_C)"
-
-#: src/addressbook.c:950 src/addressbook.c:3082
-msgid "Auto-registered address"
-msgstr "自動登録アドレス"
 
 #. Confirm deletion
 #: src/addressbook.c:1023
@@ -1184,7 +1184,7 @@ msgstr "アドレス帳変換エラー"
 msgid "Address Book Conversion"
 msgstr "アドレス帳変換"
 
-#: src/addressbook.c:3706 src/prefs_common_dialog.c:2343
+#: src/addressbook.c:3706 src/prefs_common_dialog.c:2347
 msgid "Interface"
 msgstr "インタフェース"
 
@@ -1819,8 +1819,8 @@ msgid "Properties"
 msgstr "プロパティ"
 
 #. Encoding
-#: src/compose.c:6478 src/prefs_common_dialog.c:1009
-#: src/prefs_common_dialog.c:1670
+#: src/compose.c:6478 src/prefs_common_dialog.c:1013
+#: src/prefs_common_dialog.c:1674
 msgid "Encoding"
 msgstr "エンコーディング"
 
@@ -2067,7 +2067,7 @@ msgstr "JPilotエントリを編集"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:691 src/importldif.c:498 src/prefs_account_dialog.c:1863
-#: src/prefs_common_dialog.c:2143
+#: src/prefs_common_dialog.c:2147
 msgid " ... "
 msgstr " ... "
 
@@ -2280,7 +2280,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "フォルダ名に `%c' を含むことはできません。"
 
 #: src/foldersel.c:611 src/folderview.c:2315 src/folderview.c:2374
-#: src/query_search.c:1155
+#: src/query_search.c:1156
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "フォルダ `%s' はすでに存在します。"
@@ -2354,18 +2354,18 @@ msgstr "/ニュースグループを削除(_R)"
 msgid "Creating folder view...\n"
 msgstr "フォルダビューを作成中...\n"
 
-#: src/folderview.c:415 src/prefs_common_dialog.c:1584
+#: src/folderview.c:415 src/prefs_common_dialog.c:1588
 msgid "New"
 msgstr "新着"
 
 #. S_COL_MARK
-#: src/folderview.c:431 src/prefs_common_dialog.c:1585
+#: src/folderview.c:431 src/prefs_common_dialog.c:1589
 #: src/prefs_filter_edit.c:511 src/prefs_summary_column.c:67
 #: src/quick_search.c:110
 msgid "Unread"
 msgstr "未読"
 
-#: src/folderview.c:447 src/prefs_common_dialog.c:1586
+#: src/folderview.c:447 src/prefs_common_dialog.c:1590
 msgid "Total"
 msgstr "総数"
 
@@ -2377,12 +2377,12 @@ msgstr "フォルダ情報を設定中...\n"
 msgid "Setting folder info..."
 msgstr "フォルダ情報を設定中..."
 
-#: src/folderview.c:889 src/mainwindow.c:4078 src/setup.c:295
+#: src/folderview.c:889 src/mainwindow.c:4078 src/setup.c:298
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "フォルダをスキャン中 (%s%c%s) ..."
 
-#: src/folderview.c:893 src/mainwindow.c:4083 src/setup.c:300
+#: src/folderview.c:893 src/mainwindow.c:4083 src/setup.c:303
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "フォルダをスキャン中 (%s)..."
@@ -2407,7 +2407,7 @@ msgstr "フォルダツリーの再構築に失敗しました。"
 msgid "Checking for new messages in all folders..."
 msgstr "全フォルダの新着メッセージをチェック中..."
 
-#: src/folderview.c:1256 src/prefs_common_dialog.c:2087 src/prefs_toolbar.c:68
+#: src/folderview.c:1256 src/prefs_common_dialog.c:2091 src/prefs_toolbar.c:68
 msgid "Junk"
 msgstr "迷惑メール"
 
@@ -3829,11 +3829,11 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "メールボックス `%s' はすでに存在します。"
 
-#: src/mainwindow.c:1800 src/setup.c:269
+#: src/mainwindow.c:1800 src/setup.c:272
 msgid "Mailbox"
 msgstr "メール箱"
 
-#: src/mainwindow.c:1806 src/setup.c:275
+#: src/mainwindow.c:1806 src/setup.c:278
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -4240,21 +4240,21 @@ msgstr "アカウントの設定"
 msgid "Creating account preferences window...\n"
 msgstr "アカウントプリファレンスウィンドウを作成中...\n"
 
-#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:748
+#: src/prefs_account_dialog.c:554 src/prefs_common_dialog.c:752
 msgid "Receive"
 msgstr "受信"
 
-#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:750
+#: src/prefs_account_dialog.c:556 src/prefs_common_dialog.c:754
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "送信"
 
-#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:752
+#: src/prefs_account_dialog.c:558 src/prefs_common_dialog.c:756
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "作成"
 
-#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:759
+#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:763
 msgid "Privacy"
 msgstr "個人情報"
 
@@ -4262,7 +4262,7 @@ msgstr "個人情報"
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2438
+#: src/prefs_account_dialog.c:568 src/prefs_common_dialog.c:2442
 msgid "Advanced"
 msgstr "高度な設定"
 
@@ -4386,7 +4386,7 @@ msgid "Authentication method"
 msgstr "認証方式"
 
 #: src/prefs_account_dialog.c:989 src/prefs_account_dialog.c:1148
-#: src/prefs_common_dialog.c:1029 src/prefs_common_dialog.c:2874
+#: src/prefs_common_dialog.c:1033 src/prefs_common_dialog.c:2883
 msgid "Automatic"
 msgstr "自動"
 
@@ -4430,8 +4430,8 @@ msgstr "メッセージIDを生成する"
 msgid "Add user-defined header"
 msgstr "ユーザ定義のヘッダを追加する"
 
-#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1778
-#: src/prefs_common_dialog.c:1805
+#: src/prefs_account_dialog.c:1105 src/prefs_common_dialog.c:1782
+#: src/prefs_common_dialog.c:1809
 msgid " Edit... "
 msgstr " 編集... "
 
@@ -4455,7 +4455,7 @@ msgid "Authenticate with POP3 before sending"
 msgstr "送信前にPOP3認証を行う"
 
 #. signature
-#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1146
+#: src/prefs_account_dialog.c:1250 src/prefs_common_dialog.c:1150
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "署名"
@@ -4763,113 +4763,113 @@ msgstr "アクションの削除"
 msgid "Do you really want to delete this action?"
 msgstr "本当にこのアクションを削除してもいいですか?"
 
-#: src/prefs_common_dialog.c:728
+#: src/prefs_common_dialog.c:732
 msgid "Creating common preferences window...\n"
 msgstr "全般プリファレンスウィンドウを作成中...\n"
 
-#: src/prefs_common_dialog.c:732
+#: src/prefs_common_dialog.c:736
 msgid "Common Preferences"
 msgstr "全般の設定"
 
-#: src/prefs_common_dialog.c:754
+#: src/prefs_common_dialog.c:758
 msgid "Display"
 msgstr "表示"
 
-#: src/prefs_common_dialog.c:756
+#: src/prefs_common_dialog.c:760
 msgid "Junk mail"
 msgstr "迷惑メール"
 
-#: src/prefs_common_dialog.c:762
+#: src/prefs_common_dialog.c:766
 msgid "Details"
 msgstr "詳細"
 
-#: src/prefs_common_dialog.c:812
+#: src/prefs_common_dialog.c:816
 msgid "Auto-check new mail"
 msgstr "新着メールを自動チェックする"
 
-#: src/prefs_common_dialog.c:814 src/prefs_common_dialog.c:1264
+#: src/prefs_common_dialog.c:818 src/prefs_common_dialog.c:1268
 msgid "every"
 msgstr " "
 
-#: src/prefs_common_dialog.c:826 src/prefs_common_dialog.c:1278
+#: src/prefs_common_dialog.c:830 src/prefs_common_dialog.c:1282
 msgid "minute(s)"
 msgstr "分ごと"
 
-#: src/prefs_common_dialog.c:835
+#: src/prefs_common_dialog.c:839
 msgid "Check new mail on startup"
 msgstr "起動時に新着メールをチェックする"
 
-#: src/prefs_common_dialog.c:837
+#: src/prefs_common_dialog.c:841
 msgid "Update all local folders after incorporation"
 msgstr "受信後にすべてのローカルフォルダを更新する"
 
-#: src/prefs_common_dialog.c:842
+#: src/prefs_common_dialog.c:846
 msgid "Execute command when new messages arrived"
 msgstr "新着メッセージが到着したらコマンドを実行する"
 
-#: src/prefs_common_dialog.c:854 src/prefs_common_dialog.c:2681
-#: src/prefs_common_dialog.c:2703 src/prefs_common_dialog.c:2725
+#: src/prefs_common_dialog.c:858 src/prefs_common_dialog.c:2690
+#: src/prefs_common_dialog.c:2712 src/prefs_common_dialog.c:2734
 msgid "Command"
 msgstr "コマンド"
 
-#: src/prefs_common_dialog.c:865
+#: src/prefs_common_dialog.c:869
 #, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "`%d' は新着メッセージ数で置き換えられます。"
 
-#: src/prefs_common_dialog.c:869
+#: src/prefs_common_dialog.c:873
 msgid "Incorporate from local spool"
 msgstr "ローカルスプールから取り込む"
 
-#: src/prefs_common_dialog.c:882
+#: src/prefs_common_dialog.c:886
 msgid "Filter on incorporation"
 msgstr "取込時に振り分ける"
 
-#: src/prefs_common_dialog.c:888
+#: src/prefs_common_dialog.c:892
 msgid "Spool path"
 msgstr "スプールのパス"
 
-#: src/prefs_common_dialog.c:949 src/prefs_common_dialog.c:1142
-#: src/prefs_common_dialog.c:1539 src/prefs_folder_item.c:139
+#: src/prefs_common_dialog.c:953 src/prefs_common_dialog.c:1146
+#: src/prefs_common_dialog.c:1543 src/prefs_folder_item.c:139
 msgid "General"
 msgstr "一般"
 
-#: src/prefs_common_dialog.c:956
+#: src/prefs_common_dialog.c:960
 msgid "Save sent messages to outbox"
 msgstr "送信したメッセージを送信控に保存する"
 
-#: src/prefs_common_dialog.c:958
+#: src/prefs_common_dialog.c:962
 msgid "Apply filter rules to sent messages"
 msgstr "送信したメッセージにフィルタルールを適用する"
 
-#: src/prefs_common_dialog.c:961
+#: src/prefs_common_dialog.c:965
 msgid "Automatically add recipients to address book"
 msgstr "宛先のアドレスをアドレス帳に自動登録する"
 
-#: src/prefs_common_dialog.c:968
+#: src/prefs_common_dialog.c:972
 msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
 "次の文字列(カンマ区切り)がメッセージ本文に含まれる場合は添付忘れを確認する"
 
-#: src/prefs_common_dialog.c:979
+#: src/prefs_common_dialog.c:983
 msgid "(Ex: attach)"
 msgstr "(例: 添付,attach)"
 
-#: src/prefs_common_dialog.c:990
+#: src/prefs_common_dialog.c:994
 msgid "Confirm recipients before sending"
 msgstr "送信前に宛先を確認する"
 
-#: src/prefs_common_dialog.c:996
+#: src/prefs_common_dialog.c:1000
 msgid "Excluded addresses/domains (comma-separated):"
 msgstr "除外するアドレス/ドメイン(カンマ区切り):"
 
-#: src/prefs_common_dialog.c:1015
+#: src/prefs_common_dialog.c:1019
 msgid "Transfer encoding"
 msgstr "転送符号化方式"
 
-#: src/prefs_common_dialog.c:1038
+#: src/prefs_common_dialog.c:1042
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
@@ -4877,15 +4877,15 @@ msgstr ""
 "メッセージ本文がASCII文字以外を含む場合に使用する Content-Transfer-Encoding "
 "を指定してください。"
 
-#: src/prefs_common_dialog.c:1045
+#: src/prefs_common_dialog.c:1049
 msgid "MIME filename encoding"
 msgstr "MIMEファイル名エンコーディング"
 
-#: src/prefs_common_dialog.c:1056
+#: src/prefs_common_dialog.c:1060
 msgid "MIME header"
 msgstr "MIMEヘッダ"
 
-#: src/prefs_common_dialog.c:1066
+#: src/prefs_common_dialog.c:1070
 msgid ""
 "Specify encoding method for MIME filename with non-ASCII characters.\n"
 "MIME header: most popular, but violates RFC 2047\n"
@@ -4895,175 +4895,175 @@ msgstr ""
 "MIMEヘッダ: 最も普及しているが、RFC 2047に違反\n"
 "RFC 2231: 標準に準拠しているが、普及していない"
 
-#: src/prefs_common_dialog.c:1157
+#: src/prefs_common_dialog.c:1161
 msgid "Signature separator"
 msgstr "署名の区切り"
 
-#: src/prefs_common_dialog.c:1166
+#: src/prefs_common_dialog.c:1170
 msgid "Insert automatically"
 msgstr "自動的に挿入する"
 
-#: src/prefs_common_dialog.c:1168 src/prefs_toolbar.c:56
+#: src/prefs_common_dialog.c:1172 src/prefs_toolbar.c:56
 msgid "Reply"
 msgstr "返信"
 
-#: src/prefs_common_dialog.c:1176
+#: src/prefs_common_dialog.c:1180
 msgid "Automatically select account for replies"
 msgstr "返信時に自動的にアカウントを選択する"
 
-#: src/prefs_common_dialog.c:1178
+#: src/prefs_common_dialog.c:1182
 msgid "Quote message when replying"
 msgstr "返信時にメッセージを引用する"
 
-#: src/prefs_common_dialog.c:1180
+#: src/prefs_common_dialog.c:1184
 msgid "Reply to mailing list by Reply button"
 msgstr "返信ボタンでメーリングリストに返信する"
 
-#: src/prefs_common_dialog.c:1182
+#: src/prefs_common_dialog.c:1186
 msgid "Inherit recipients on reply to self messages"
 msgstr "自分が出したメッセージに返信した場合は宛先を引き継ぐ"
 
-#: src/prefs_common_dialog.c:1184
+#: src/prefs_common_dialog.c:1188
 msgid "Set only mail address of recipients when replying"
 msgstr "返信の宛先をメールアドレスのみにする"
 
 #. editor
-#: src/prefs_common_dialog.c:1188 src/prefs_common_dialog.c:2644
+#: src/prefs_common_dialog.c:1192 src/prefs_common_dialog.c:2653
 #: src/prefs_toolbar.c:120
 msgid "Editor"
 msgstr "エディタ"
 
-#: src/prefs_common_dialog.c:1195
+#: src/prefs_common_dialog.c:1199
 msgid "Automatically launch the external editor"
 msgstr "外部エディタを自動的に起動する"
 
-#: src/prefs_common_dialog.c:1205
+#: src/prefs_common_dialog.c:1209
 msgid "Undo level"
 msgstr "アンドゥの回数"
 
-#: src/prefs_common_dialog.c:1225
+#: src/prefs_common_dialog.c:1229
 msgid "Wrap messages at"
 msgstr "メッセージを半角"
 
-#: src/prefs_common_dialog.c:1237
+#: src/prefs_common_dialog.c:1241
 msgid "characters"
 msgstr "文字で改行"
 
-#: src/prefs_common_dialog.c:1247
+#: src/prefs_common_dialog.c:1251
 msgid "Wrap quotation"
 msgstr "引用部を自動整形する"
 
-#: src/prefs_common_dialog.c:1253
+#: src/prefs_common_dialog.c:1257
 msgid "Wrap on input"
 msgstr "入力時に自動整形する"
 
-#: src/prefs_common_dialog.c:1262
+#: src/prefs_common_dialog.c:1266
 msgid "Auto-save to draft"
 msgstr "草稿に自動保存する"
 
-#: src/prefs_common_dialog.c:1287
+#: src/prefs_common_dialog.c:1291
 msgid "Format"
 msgstr "書式"
 
-#: src/prefs_common_dialog.c:1292
+#: src/prefs_common_dialog.c:1296
 msgid "Spell checking"
 msgstr "スペルチェック"
 
 #. reply
-#: src/prefs_common_dialog.c:1345
+#: src/prefs_common_dialog.c:1349
 msgid "Reply format"
 msgstr "返信の書式"
 
-#: src/prefs_common_dialog.c:1360 src/prefs_common_dialog.c:1402
+#: src/prefs_common_dialog.c:1364 src/prefs_common_dialog.c:1406
 msgid "Quotation mark"
 msgstr "引用符"
 
 #. forward
-#: src/prefs_common_dialog.c:1387
+#: src/prefs_common_dialog.c:1391
 msgid "Forward format"
 msgstr "転送の書式"
 
-#: src/prefs_common_dialog.c:1434
+#: src/prefs_common_dialog.c:1438
 msgid " Description of symbols "
 msgstr " 記号の説明 "
 
-#: src/prefs_common_dialog.c:1463
+#: src/prefs_common_dialog.c:1467
 msgid "Enable Spell checking"
 msgstr "スペルチェックを有効にする"
 
-#: src/prefs_common_dialog.c:1475
+#: src/prefs_common_dialog.c:1479
 msgid "Default language:"
 msgstr "既定の言語:"
 
-#: src/prefs_common_dialog.c:1547
+#: src/prefs_common_dialog.c:1551
 msgid "Text font"
 msgstr "テキストフォント"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1559
+#: src/prefs_common_dialog.c:1563
 msgid "Folder View"
 msgstr "フォルダビュー"
 
-#: src/prefs_common_dialog.c:1567
+#: src/prefs_common_dialog.c:1571
 msgid "Display unread number next to folder name"
 msgstr "フォルダ名の横に未読数を表示する"
 
-#: src/prefs_common_dialog.c:1571
+#: src/prefs_common_dialog.c:1575
 msgid "Displaying message number columns in the folder view:"
 msgstr "フォルダビューに表示するメッセージ数のカラム:"
 
-#: src/prefs_common_dialog.c:1595
+#: src/prefs_common_dialog.c:1599
 msgid "Abbreviate newsgroups longer than"
 msgstr "文字数が"
 
-#: src/prefs_common_dialog.c:1610
+#: src/prefs_common_dialog.c:1614
 msgid "letters"
 msgstr "字より長いニュースグループ名を簡略表示"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1616
+#: src/prefs_common_dialog.c:1620
 msgid "Summary View"
 msgstr "サマリビュー"
 
-#: src/prefs_common_dialog.c:1625
+#: src/prefs_common_dialog.c:1629
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "差出人が自分の場合は `差出人' カラムに宛先を表示する"
 
-#: src/prefs_common_dialog.c:1627
+#: src/prefs_common_dialog.c:1631
 msgid "Expand threads"
 msgstr "スレッドを展開する"
 
-#: src/prefs_common_dialog.c:1635 src/prefs_common_dialog.c:3117
-#: src/prefs_common_dialog.c:3155
+#: src/prefs_common_dialog.c:1639 src/prefs_common_dialog.c:3126
+#: src/prefs_common_dialog.c:3164
 msgid "Date format"
 msgstr "日付の書式"
 
-#: src/prefs_common_dialog.c:1656
+#: src/prefs_common_dialog.c:1660
 msgid " Set display item of summary... "
 msgstr " サマリの表示項目を設定... "
 
-#: src/prefs_common_dialog.c:1662
+#: src/prefs_common_dialog.c:1666
 msgid "Message"
 msgstr "メッセージ"
 
-#: src/prefs_common_dialog.c:1666
+#: src/prefs_common_dialog.c:1670
 msgid "Color label"
 msgstr "カラーラベル"
 
-#: src/prefs_common_dialog.c:1676
+#: src/prefs_common_dialog.c:1680
 msgid "Default character encoding"
 msgstr "既定の文字エンコーディング"
 
-#: src/prefs_common_dialog.c:1690
+#: src/prefs_common_dialog.c:1694
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
 "これはエンコーディングが未指定のメッセージを表示するときに使用されます。"
 
-#: src/prefs_common_dialog.c:1696
+#: src/prefs_common_dialog.c:1700
 msgid "Outgoing character encoding"
 msgstr "送信文字エンコーディング"
 
-#: src/prefs_common_dialog.c:1710
+#: src/prefs_common_dialog.c:1714
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
 "be used."
@@ -5071,93 +5071,93 @@ msgstr ""
 "「自動設定」を選択した場合は、現在の言語設定に最適なエンコーディングが使用さ"
 "れます。"
 
-#: src/prefs_common_dialog.c:1774
+#: src/prefs_common_dialog.c:1778
 msgid "Enable coloration of message"
 msgstr "メッセージの色を有効にする"
 
-#: src/prefs_common_dialog.c:1789
+#: src/prefs_common_dialog.c:1793
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
 msgstr "マルチバイト英数字を ASCII 文字で表示する (日本語のみ)"
 
-#: src/prefs_common_dialog.c:1796
+#: src/prefs_common_dialog.c:1800
 msgid "Display header pane above message view"
 msgstr "メッセージビューの上部にヘッダペインを表示する"
 
-#: src/prefs_common_dialog.c:1803
+#: src/prefs_common_dialog.c:1807
 msgid "Display short headers on message view"
 msgstr "メッセージビューに簡略ヘッダを表示する"
 
-#: src/prefs_common_dialog.c:1815
+#: src/prefs_common_dialog.c:1819
 msgid "Render HTML messages as text"
 msgstr "HTML メッセージを解釈してテキスト表示する"
 
-#: src/prefs_common_dialog.c:1817
+#: src/prefs_common_dialog.c:1821
 msgid "Treat HTML only messages as attachment"
 msgstr "HTML のみのメッセージを添付として扱う"
 
-#: src/prefs_common_dialog.c:1821
+#: src/prefs_common_dialog.c:1825
 msgid "Display cursor in message view"
 msgstr "メッセージビューにカーソルを表示する"
 
-#: src/prefs_common_dialog.c:1834
+#: src/prefs_common_dialog.c:1838
 msgid "Line space"
 msgstr "行間を空ける"
 
-#: src/prefs_common_dialog.c:1848 src/prefs_common_dialog.c:1886
+#: src/prefs_common_dialog.c:1852 src/prefs_common_dialog.c:1890
 msgid "pixel(s)"
 msgstr "ピクセル"
 
-#: src/prefs_common_dialog.c:1853
+#: src/prefs_common_dialog.c:1857
 msgid "Scroll"
 msgstr "スクロール"
 
-#: src/prefs_common_dialog.c:1860
+#: src/prefs_common_dialog.c:1864
 msgid "Half page"
 msgstr "半ページ単位"
 
-#: src/prefs_common_dialog.c:1866
+#: src/prefs_common_dialog.c:1870
 msgid "Smooth scroll"
 msgstr "スムーズスクロール"
 
-#: src/prefs_common_dialog.c:1872
+#: src/prefs_common_dialog.c:1876
 msgid "Step"
 msgstr "間隔"
 
-#: src/prefs_common_dialog.c:1892
+#: src/prefs_common_dialog.c:1896
 msgid "Images"
 msgstr "画像"
 
-#: src/prefs_common_dialog.c:1900
+#: src/prefs_common_dialog.c:1904
 msgid "Resize attached large images to fit in the window"
 msgstr "大きな添付画像をウィンドウにあわせてリサイズする"
 
-#: src/prefs_common_dialog.c:1902
+#: src/prefs_common_dialog.c:1906
 msgid "Display images as inline"
 msgstr "画像をインラインで表示する"
 
-#: src/prefs_common_dialog.c:2053
+#: src/prefs_common_dialog.c:2057
 msgid "Enable Junk mail control"
 msgstr "迷惑メール対策を有効にする"
 
-#: src/prefs_common_dialog.c:2065
+#: src/prefs_common_dialog.c:2069
 msgid "Learning command:"
 msgstr "学習コマンド:"
 
-#: src/prefs_common_dialog.c:2074
+#: src/prefs_common_dialog.c:2078
 msgid "(Select preset)"
 msgstr "(プリセットを選択)"
 
-#: src/prefs_common_dialog.c:2099
+#: src/prefs_common_dialog.c:2103
 msgid "Not Junk"
 msgstr "非迷惑メール"
 
-#: src/prefs_common_dialog.c:2114
+#: src/prefs_common_dialog.c:2118
 msgid "Classifying command"
 msgstr "判定コマンド"
 
-#: src/prefs_common_dialog.c:2125
+#: src/prefs_common_dialog.c:2129
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
@@ -5165,226 +5165,230 @@ msgstr ""
 "迷惑メールを自動的に判定するには、迷惑メールと非迷惑メールの両方をある程度ま"
 "で手動で学習させる必要があります。"
 
-#: src/prefs_common_dialog.c:2135
+#: src/prefs_common_dialog.c:2139
 msgid "Junk folder"
 msgstr "迷惑メールフォルダ"
 
-#: src/prefs_common_dialog.c:2153
+#: src/prefs_common_dialog.c:2157
 msgid "The messages which are set as junk mail will be moved to this folder."
 msgstr "迷惑メールに指定したメッセージをこのフォルダに移動します。"
 
-#: src/prefs_common_dialog.c:2164
+#: src/prefs_common_dialog.c:2168
 msgid "Filter messages classified as junk on receiving"
 msgstr "受信時に迷惑メールと判定されたメッセージを振り分ける"
 
-#: src/prefs_common_dialog.c:2167
+#: src/prefs_common_dialog.c:2171
 msgid "Filter junk mails before normal filtering"
 msgstr "通常の振り分けの前に迷惑メールを振り分ける"
 
-#: src/prefs_common_dialog.c:2170
+#: src/prefs_common_dialog.c:2174
 msgid "Delete junk mails from server on receiving"
 msgstr "受信時に迷惑メールをサーバから削除する"
 
-#: src/prefs_common_dialog.c:2175
+#: src/prefs_common_dialog.c:2179
 msgid "Mark filtered junk mails as read"
 msgstr "振り分けた迷惑メールを既読にする"
 
-#: src/prefs_common_dialog.c:2217
+#: src/prefs_common_dialog.c:2221
 msgid "Automatically check signatures"
 msgstr "署名を自動的に検証する"
 
-#: src/prefs_common_dialog.c:2220
+#: src/prefs_common_dialog.c:2224
 msgid "Show signature check result in a popup window"
 msgstr "署名の検証結果をポップアップウィンドウで表示する"
 
-#: src/prefs_common_dialog.c:2223
+#: src/prefs_common_dialog.c:2227
 msgid "Store passphrase in memory temporarily"
 msgstr "パスフレーズをメモリ上に一時的に記憶する"
 
-#: src/prefs_common_dialog.c:2238
+#: src/prefs_common_dialog.c:2242
 msgid "Expired after"
 msgstr "有効期間"
 
-#: src/prefs_common_dialog.c:2251
+#: src/prefs_common_dialog.c:2255
 msgid "minute(s) "
 msgstr "分"
 
-#: src/prefs_common_dialog.c:2265
+#: src/prefs_common_dialog.c:2269
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "'0' に設定するとセッションの間中パスフレーズを記憶します。"
 
-#: src/prefs_common_dialog.c:2274
+#: src/prefs_common_dialog.c:2278
 msgid "Grab input while entering a passphrase"
 msgstr "パスフレーズの入力時に入力を捕捉する"
 
-#: src/prefs_common_dialog.c:2279
+#: src/prefs_common_dialog.c:2283
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "GnuPG が動作しない場合起動時に警告を表示する"
 
-#: src/prefs_common_dialog.c:2351
+#: src/prefs_common_dialog.c:2355
 msgid "Always open messages in summary when selected"
 msgstr "サマリでメッセージを選択したとき常に開く"
 
-#: src/prefs_common_dialog.c:2355
+#: src/prefs_common_dialog.c:2359
 msgid "Open first unread message when a folder is opened"
 msgstr "フォルダを開いたときに最初の未読メッセージを開く"
 
-#: src/prefs_common_dialog.c:2362
+#: src/prefs_common_dialog.c:2366
 msgid "Remember last selected message"
 msgstr "最後に選択したメッセージを記憶する"
 
-#: src/prefs_common_dialog.c:2366
+#: src/prefs_common_dialog.c:2370
 msgid "Only mark message as read when opened in new window"
 msgstr "新規ウィンドウで開いたときのみメッセージを既読としてマーク"
 
-#: src/prefs_common_dialog.c:2370
+#: src/prefs_common_dialog.c:2374
 msgid "Open inbox after receiving new mail"
 msgstr "新着メールを受信した後受信箱を開く"
 
-#: src/prefs_common_dialog.c:2372
+#: src/prefs_common_dialog.c:2376
 msgid "Open inbox on startup"
 msgstr "起動時に受信箱を開く"
 
-#: src/prefs_common_dialog.c:2380
+#: src/prefs_common_dialog.c:2384
 msgid "Execute immediately when moving or deleting messages"
 msgstr "メッセージを移動または削除したら即座に実行する"
 
-#: src/prefs_common_dialog.c:2392
+#: src/prefs_common_dialog.c:2396
 msgid "Messages will be marked until execution if this is turned off."
 msgstr ""
 "これを無効にすると、メッセージは実行されるまでマークされた状態になります。"
 
-#: src/prefs_common_dialog.c:2401
+#: src/prefs_common_dialog.c:2405
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "ボタンの配置をGNOME HIGに準拠"
 
-#: src/prefs_common_dialog.c:2404
+#: src/prefs_common_dialog.c:2408
 msgid "Display tray icon"
 msgstr "トレイアイコンを表示する"
 
-#: src/prefs_common_dialog.c:2406
+#: src/prefs_common_dialog.c:2410
 msgid "Minimize to tray icon"
 msgstr "最小化したときにトレイアイコンに格納する"
 
-#: src/prefs_common_dialog.c:2408
+#: src/prefs_common_dialog.c:2412
 msgid "Toggle window on trayicon click"
 msgstr "トレイアイコンのクリックでウィンドウの表示を交互に切り替える"
 
-#: src/prefs_common_dialog.c:2418
+#: src/prefs_common_dialog.c:2422
 msgid " Set key bindings... "
 msgstr " キーバインドを設定... "
 
-#: src/prefs_common_dialog.c:2424 src/select-keys.c:337
+#: src/prefs_common_dialog.c:2428 src/select-keys.c:337
 msgid "Other"
 msgstr "その他"
 
-#: src/prefs_common_dialog.c:2428
+#: src/prefs_common_dialog.c:2432
 msgid "External commands"
 msgstr "外部コマンド"
 
-#: src/prefs_common_dialog.c:2433
+#: src/prefs_common_dialog.c:2437
 msgid "Update"
 msgstr "アップデート"
 
-#: src/prefs_common_dialog.c:2487
+#: src/prefs_common_dialog.c:2492
 msgid "Receive dialog"
 msgstr "受信ダイアログ"
 
-#: src/prefs_common_dialog.c:2497
+#: src/prefs_common_dialog.c:2502
 msgid "Show receive dialog"
 msgstr "受信ダイアログを"
 
-#: src/prefs_common_dialog.c:2507
+#: src/prefs_common_dialog.c:2512
 msgid "Always"
 msgstr "常に表示"
 
-#: src/prefs_common_dialog.c:2508
+#: src/prefs_common_dialog.c:2513
 msgid "Only on manual receiving"
 msgstr "手動で受信した場合のみ表示"
 
-#: src/prefs_common_dialog.c:2510
+#: src/prefs_common_dialog.c:2515
 msgid "Never"
 msgstr "表示しない"
 
-#: src/prefs_common_dialog.c:2515
+#: src/prefs_common_dialog.c:2520
 msgid "Don't popup error dialog on receive error"
 msgstr "受信エラー時にエラーダイアログをポップアップしない"
 
-#: src/prefs_common_dialog.c:2518
+#: src/prefs_common_dialog.c:2523
 msgid "Close receive dialog when finished"
 msgstr "完了時に受信ダイアログを閉じる"
 
-#: src/prefs_common_dialog.c:2529
+#: src/prefs_common_dialog.c:2534
 msgid "Add address to destination when double-clicked"
 msgstr "ダブルクリックしたときにアドレスを宛先に追加する"
 
-#: src/prefs_common_dialog.c:2531
+#: src/prefs_common_dialog.c:2537
+msgid "Enable address auto-completion"
+msgstr "アドレスの自動補完を有効にする"
+
+#: src/prefs_common_dialog.c:2539
 msgid "On exit"
 msgstr "終了時"
 
-#: src/prefs_common_dialog.c:2539
+#: src/prefs_common_dialog.c:2547
 msgid "Confirm on exit"
 msgstr "終了時に確認する"
 
-#: src/prefs_common_dialog.c:2546
+#: src/prefs_common_dialog.c:2554
 msgid "Empty trash on exit"
 msgstr "終了時にごみ箱を空にする"
 
-#: src/prefs_common_dialog.c:2548
+#: src/prefs_common_dialog.c:2556
 msgid "Ask before emptying"
 msgstr "空にする前に尋ねる"
 
-#: src/prefs_common_dialog.c:2552
+#: src/prefs_common_dialog.c:2560
 msgid "Warn if there are queued messages"
 msgstr "送信待機中のメッセージがあれば警告する"
 
-#: src/prefs_common_dialog.c:2607
+#: src/prefs_common_dialog.c:2616
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "外部コマンド (%s はファイル名・URIで置き換えられます)"
 
-#: src/prefs_common_dialog.c:2616
+#: src/prefs_common_dialog.c:2625
 msgid "Web browser"
 msgstr "Webブラウザ"
 
-#: src/prefs_common_dialog.c:2628 src/prefs_common_dialog.c:4130
-#: src/prefs_common_dialog.c:4151
+#: src/prefs_common_dialog.c:2637 src/prefs_common_dialog.c:4139
+#: src/prefs_common_dialog.c:4160
 msgid "(Default browser)"
 msgstr "(既定のブラウザ)"
 
-#: src/prefs_common_dialog.c:2669
+#: src/prefs_common_dialog.c:2678
 msgid "Use external program for printing"
 msgstr "印刷に外部プログラムを使用する"
 
-#: src/prefs_common_dialog.c:2691
+#: src/prefs_common_dialog.c:2700
 msgid "Use external program for incorporation"
 msgstr "メールの受信に外部プログラムを使用する"
 
-#: src/prefs_common_dialog.c:2713
+#: src/prefs_common_dialog.c:2722
 msgid "Use external program for sending"
 msgstr "メールの送信に外部プログラムを使用する"
 
-#: src/prefs_common_dialog.c:2765
+#: src/prefs_common_dialog.c:2774
 msgid "Update check requires 'curl' command."
 msgstr "アップデートチェックには curl コマンドが必要です。"
 
-#: src/prefs_common_dialog.c:2776
+#: src/prefs_common_dialog.c:2785
 msgid "Enable auto update check"
 msgstr "自動アップデートチェックを有効にする"
 
-#: src/prefs_common_dialog.c:2778
+#: src/prefs_common_dialog.c:2787
 msgid "Use HTTP proxy"
 msgstr "HTTP プロキシを使用する"
 
-#: src/prefs_common_dialog.c:2780
+#: src/prefs_common_dialog.c:2789
 msgid "HTTP proxy host (hostname:port):"
 msgstr "HTTP プロキシホスト (ホスト名:ポート):"
 
-#: src/prefs_common_dialog.c:2821
+#: src/prefs_common_dialog.c:2830
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "サマリキャッシュの整合性を厳密にチェックする"
 
-#: src/prefs_common_dialog.c:2824
+#: src/prefs_common_dialog.c:2833
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
@@ -5394,275 +5398,275 @@ msgstr ""
 "にしてください。\n"
 "このオプションはサマリ表示の性能を低下させます。"
 
-#: src/prefs_common_dialog.c:2831
+#: src/prefs_common_dialog.c:2840
 msgid "Socket I/O timeout:"
 msgstr "ソケット I/O のタイムアウト:"
 
-#: src/prefs_common_dialog.c:2844
+#: src/prefs_common_dialog.c:2853
 msgid "second(s)"
 msgstr "秒"
 
-#: src/prefs_common_dialog.c:2872
+#: src/prefs_common_dialog.c:2881
 msgid "Automatic (Recommended)"
 msgstr "自動設定 (推奨)"
 
-#: src/prefs_common_dialog.c:2877
+#: src/prefs_common_dialog.c:2886
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bit ascii (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2879
+#: src/prefs_common_dialog.c:2888
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:2881
+#: src/prefs_common_dialog.c:2890
 msgid "Western European (ISO-8859-1)"
 msgstr "欧米 (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2882
+#: src/prefs_common_dialog.c:2891
 msgid "Western European (ISO-8859-15)"
 msgstr "欧米 (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2884
+#: src/prefs_common_dialog.c:2893
 msgid "Western European (Windows-1252)"
 msgstr "欧米 (Windows-1252)"
 
-#: src/prefs_common_dialog.c:2888
+#: src/prefs_common_dialog.c:2897
 msgid "Central European (ISO-8859-2)"
 msgstr "中欧 (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2890
+#: src/prefs_common_dialog.c:2899
 msgid "Baltic (ISO-8859-13)"
 msgstr "バルト諸国 (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2891
+#: src/prefs_common_dialog.c:2900
 msgid "Baltic (ISO-8859-4)"
 msgstr "バルト諸国 (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2892
+#: src/prefs_common_dialog.c:2901
 msgid "Baltic (Windows-1257)"
 msgstr "バルト諸国 (Windows-1257)"
 
-#: src/prefs_common_dialog.c:2894
+#: src/prefs_common_dialog.c:2903
 msgid "Greek (ISO-8859-7)"
 msgstr "ギリシャ語 (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:2896
+#: src/prefs_common_dialog.c:2905
 msgid "Arabic (ISO-8859-6)"
 msgstr "アラビア語 (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2897
+#: src/prefs_common_dialog.c:2906
 msgid "Arabic (Windows-1256)"
 msgstr "アラビア語 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2899
+#: src/prefs_common_dialog.c:2908
 msgid "Hebrew (ISO-8859-8)"
 msgstr "ヘブライ語 (ISO-8859-8)"
 
-#: src/prefs_common_dialog.c:2900
+#: src/prefs_common_dialog.c:2909
 msgid "Hebrew (Windows-1255)"
 msgstr "ヘブライ語 (Windows-1255)"
 
-#: src/prefs_common_dialog.c:2902
+#: src/prefs_common_dialog.c:2911
 msgid "Turkish (ISO-8859-9)"
 msgstr "トルコ語 (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:2904
+#: src/prefs_common_dialog.c:2913
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "キリル文字 (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:2905
+#: src/prefs_common_dialog.c:2914
 msgid "Cyrillic (KOI8-R)"
 msgstr "キリル文字 (KOI8-R)"
 
-#: src/prefs_common_dialog.c:2906
+#: src/prefs_common_dialog.c:2915
 msgid "Cyrillic (KOI8-U)"
 msgstr "キリル文字 (KOI8-U)"
 
-#: src/prefs_common_dialog.c:2907
+#: src/prefs_common_dialog.c:2916
 msgid "Cyrillic (Windows-1251)"
 msgstr "キリル文字 (Windows-1251)"
 
-#: src/prefs_common_dialog.c:2909
+#: src/prefs_common_dialog.c:2918
 msgid "Japanese (ISO-2022-JP)"
 msgstr "日本語 (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:2911
+#: src/prefs_common_dialog.c:2920
 msgid "Japanese (EUC-JP)"
 msgstr "日本語 (EUC-JP)"
 
-#: src/prefs_common_dialog.c:2912
+#: src/prefs_common_dialog.c:2921
 msgid "Japanese (Shift_JIS)"
 msgstr "日本語 (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:2915
+#: src/prefs_common_dialog.c:2924
 msgid "Simplified Chinese (GB2312)"
 msgstr "簡体字中国語 (GB2312)"
 
-#: src/prefs_common_dialog.c:2916
+#: src/prefs_common_dialog.c:2925
 msgid "Simplified Chinese (GBK)"
 msgstr "簡体字中国語 (GBK)"
 
-#: src/prefs_common_dialog.c:2917
+#: src/prefs_common_dialog.c:2926
 msgid "Traditional Chinese (Big5)"
 msgstr "繁体字中国語 (Big5)"
 
-#: src/prefs_common_dialog.c:2919
+#: src/prefs_common_dialog.c:2928
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "繁体字中国語 (EUC-TW)"
 
-#: src/prefs_common_dialog.c:2920
+#: src/prefs_common_dialog.c:2929
 msgid "Chinese (ISO-2022-CN)"
 msgstr "中国語 (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:2923
+#: src/prefs_common_dialog.c:2932
 msgid "Korean (EUC-KR)"
 msgstr "韓国語 (EUC-KR)"
 
-#: src/prefs_common_dialog.c:2925
+#: src/prefs_common_dialog.c:2934
 msgid "Thai (TIS-620)"
 msgstr "タイ語 (TIS-620)"
 
-#: src/prefs_common_dialog.c:2926
+#: src/prefs_common_dialog.c:2935
 msgid "Thai (Windows-874)"
 msgstr "タイ語 (Windows-874)"
 
-#: src/prefs_common_dialog.c:3093
+#: src/prefs_common_dialog.c:3102
 msgid "the full abbreviated weekday name"
 msgstr "曜日の省略名"
 
-#: src/prefs_common_dialog.c:3094
+#: src/prefs_common_dialog.c:3103
 msgid "the full weekday name"
 msgstr "曜日の完全な名前"
 
-#: src/prefs_common_dialog.c:3095
+#: src/prefs_common_dialog.c:3104
 msgid "the abbreviated month name"
 msgstr "月の省略名"
 
-#: src/prefs_common_dialog.c:3096
+#: src/prefs_common_dialog.c:3105
 msgid "the full month name"
 msgstr "月の完全な名前"
 
-#: src/prefs_common_dialog.c:3097
+#: src/prefs_common_dialog.c:3106
 msgid "the preferred date and time for the current locale"
 msgstr "現在の地域における一般的な日付と時刻の表記"
 
-#: src/prefs_common_dialog.c:3098
+#: src/prefs_common_dialog.c:3107
 msgid "the century number (year/100)"
 msgstr "世紀(西暦年の上2桁)"
 
-#: src/prefs_common_dialog.c:3099
+#: src/prefs_common_dialog.c:3108
 msgid "the day of the month as a decimal number"
 msgstr "日(10進数表記)"
 
-#: src/prefs_common_dialog.c:3100
+#: src/prefs_common_dialog.c:3109
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "24時間時計での時"
 
-#: src/prefs_common_dialog.c:3101
+#: src/prefs_common_dialog.c:3110
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "12時間時計での時"
 
-#: src/prefs_common_dialog.c:3102
+#: src/prefs_common_dialog.c:3111
 msgid "the day of the year as a decimal number"
 msgstr "年の初めから通算の日数(10進数表記)"
 
-#: src/prefs_common_dialog.c:3103
+#: src/prefs_common_dialog.c:3112
 msgid "the month as a decimal number"
 msgstr "月(10進数表記)"
 
-#: src/prefs_common_dialog.c:3104
+#: src/prefs_common_dialog.c:3113
 msgid "the minute as a decimal number"
 msgstr "分(10進数表記)"
 
-#: src/prefs_common_dialog.c:3105
+#: src/prefs_common_dialog.c:3114
 msgid "either AM or PM"
 msgstr "午前または午後"
 
-#: src/prefs_common_dialog.c:3106
+#: src/prefs_common_dialog.c:3115
 msgid "the second as a decimal number"
 msgstr "秒(10進数表記)"
 
-#: src/prefs_common_dialog.c:3107
+#: src/prefs_common_dialog.c:3116
 msgid "the day of the week as a decimal number"
 msgstr "週の何番目の日か(10進数表記)"
 
-#: src/prefs_common_dialog.c:3108
+#: src/prefs_common_dialog.c:3117
 msgid "the preferred date for the current locale"
 msgstr "現在の地域における一般的な日付表記"
 
-#: src/prefs_common_dialog.c:3109
+#: src/prefs_common_dialog.c:3118
 msgid "the last two digits of a year"
 msgstr "西暦の下2桁(世紀部分を含まない年)"
 
-#: src/prefs_common_dialog.c:3110
+#: src/prefs_common_dialog.c:3119
 msgid "the year as a decimal number"
 msgstr "(4桁の)西暦年"
 
-#: src/prefs_common_dialog.c:3111
+#: src/prefs_common_dialog.c:3120
 msgid "the time zone or name or abbreviation"
 msgstr "タイムゾーンまたはゾーン名または省略名"
 
-#: src/prefs_common_dialog.c:3132
+#: src/prefs_common_dialog.c:3141
 msgid "Specifier"
 msgstr "指定子"
 
-#: src/prefs_common_dialog.c:3133
+#: src/prefs_common_dialog.c:3142
 msgid "Description"
 msgstr "説明"
 
-#: src/prefs_common_dialog.c:3173
+#: src/prefs_common_dialog.c:3182
 msgid "Example"
 msgstr "例"
 
-#: src/prefs_common_dialog.c:3254
+#: src/prefs_common_dialog.c:3263
 msgid "Set message colors"
 msgstr "メッセージの色を指定"
 
-#: src/prefs_common_dialog.c:3262
+#: src/prefs_common_dialog.c:3271
 msgid "Colors"
 msgstr "色"
 
-#: src/prefs_common_dialog.c:3296
+#: src/prefs_common_dialog.c:3305
 msgid "Quoted Text - First Level"
 msgstr "引用文 - 1段階"
 
-#: src/prefs_common_dialog.c:3302
+#: src/prefs_common_dialog.c:3311
 msgid "Quoted Text - Second Level"
 msgstr "引用文 - 2段階"
 
-#: src/prefs_common_dialog.c:3308
+#: src/prefs_common_dialog.c:3317
 msgid "Quoted Text - Third Level"
 msgstr "引用文 - 3段階"
 
-#: src/prefs_common_dialog.c:3314
+#: src/prefs_common_dialog.c:3323
 msgid "URI link"
 msgstr "URI リンク"
 
-#: src/prefs_common_dialog.c:3321
+#: src/prefs_common_dialog.c:3330
 msgid "Recycle quote colors"
 msgstr "引用色を循環"
 
-#: src/prefs_common_dialog.c:3388
+#: src/prefs_common_dialog.c:3397
 msgid "Pick color for quotation level 1"
 msgstr "引用レベル1の色を選択"
 
-#: src/prefs_common_dialog.c:3391
+#: src/prefs_common_dialog.c:3400
 msgid "Pick color for quotation level 2"
 msgstr "引用レベル2の色を選択"
 
-#: src/prefs_common_dialog.c:3394
+#: src/prefs_common_dialog.c:3403
 msgid "Pick color for quotation level 3"
 msgstr "引用レベル3の色を選択"
 
-#: src/prefs_common_dialog.c:3397
+#: src/prefs_common_dialog.c:3406
 msgid "Pick color for URI"
 msgstr "URI の色を選択"
 
-#: src/prefs_common_dialog.c:3537
+#: src/prefs_common_dialog.c:3546
 msgid "Description of symbols"
 msgstr "記号の説明"
 
-#: src/prefs_common_dialog.c:3593
+#: src/prefs_common_dialog.c:3602
 msgid ""
 "Date\n"
 "From\n"
@@ -5686,11 +5690,11 @@ msgstr ""
 "ニュースグループ\n"
 "メッセージID"
 
-#: src/prefs_common_dialog.c:3606
+#: src/prefs_common_dialog.c:3615
 msgid "If x is set, displays expr"
 msgstr "xが指定されていればexprを表示"
 
-#: src/prefs_common_dialog.c:3610
+#: src/prefs_common_dialog.c:3619
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5704,7 +5708,7 @@ msgstr ""
 "引用符付きメッセージ本文(署名なし)\n"
 "文字 %"
 
-#: src/prefs_common_dialog.c:3618
+#: src/prefs_common_dialog.c:3627
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5716,19 +5720,19 @@ msgstr ""
 "文字 開き中括弧\n"
 "文字 閉じ中括弧"
 
-#: src/prefs_common_dialog.c:3672
+#: src/prefs_common_dialog.c:3681
 msgid "Key bindings"
 msgstr "キーバインド"
 
-#: src/prefs_common_dialog.c:3685
+#: src/prefs_common_dialog.c:3694
 msgid "Select the preset of key bindings."
 msgstr " キーバインドのプリセットを選択してください。"
 
-#: src/prefs_common_dialog.c:3695 src/prefs_common_dialog.c:4019
+#: src/prefs_common_dialog.c:3704 src/prefs_common_dialog.c:4028
 msgid "Default"
 msgstr "標準"
 
-#: src/prefs_common_dialog.c:3698 src/prefs_common_dialog.c:4028
+#: src/prefs_common_dialog.c:3707 src/prefs_common_dialog.c:4037
 msgid "Old Sylpheed"
 msgstr "旧Sylpheed"
 
@@ -6427,15 +6431,15 @@ msgstr "%s を検索中..."
 msgid "(No Date)"
 msgstr "(日付なし)"
 
-#: src/query_search.c:993
+#: src/query_search.c:994
 msgid "Save as search folder"
 msgstr "検索フォルダとして保存"
 
-#: src/query_search.c:1014
+#: src/query_search.c:1015
 msgid "Location:"
 msgstr "場所:"
 
-#: src/query_search.c:1029
+#: src/query_search.c:1030
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
@@ -6755,19 +6759,19 @@ msgstr "SMTPサーバに接続できません。"
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "SMTPサーバ: %s:%d に接続できません。"
 
-#: src/setup.c:113 src/setup.c:137
+#: src/setup.c:116 src/setup.c:140
 msgid "Mailbox setting"
 msgstr "メールボックスの設定"
 
-#: src/setup.c:156
+#: src/setup.c:159
 msgid "This dialog will make initial setup of mailbox."
 msgstr "このダイアログではメールボックスの初期設定を行います。"
 
-#: src/setup.c:170
+#: src/setup.c:173
 msgid "Create mailbox at the following default location:"
 msgstr "メールボックスを以下の標準の場所に作成する:"
 
-#: src/setup.c:190
+#: src/setup.c:193
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
@@ -6775,7 +6779,7 @@ msgstr ""
 "メールボックスを以下の場所に作成する:\n"
 "(フォルダ名または完全なフォルダのパスを入力してください)"
 
-#: src/setup.c:208
+#: src/setup.c:211
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
@@ -6783,99 +6787,99 @@ msgstr ""
 "後から別の場所にメールボックスを追加したい場合は、メニューの「ファイル - メー"
 "ルボックス - メールボックスを追加...」を選択してください。"
 
-#: src/setup.c:231 src/setup.c:455
+#: src/setup.c:234 src/setup.c:470
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/setup.c:231
+#: src/setup.c:234
 msgid "Continue without creating mailbox?"
 msgstr "メールボックスを作成せずに続行しますか?"
 
-#: src/setup.c:241
+#: src/setup.c:244
 msgid "Please input folder name or full folder path."
 msgstr "フォルダ名または完全なフォルダのパスを入力してください。"
 
-#: src/setup.c:250
+#: src/setup.c:253
 #, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "メールボックス '%s' はすでに存在します。"
 
-#: src/setup.c:256
+#: src/setup.c:259
 #, c-format
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr "'%s' 以下に設定フォルダが含まれています。別の場所を指定してください。"
 
-#: src/setup.c:455
+#: src/setup.c:470
 msgid "Cancel mail account setup?"
 msgstr "メールアカウントの作成を中止しますか?"
 
-#: src/setup.c:473 src/setup.c:481
+#: src/setup.c:490 src/setup.c:498
 msgid "Input value is not valid."
 msgstr "入力された内容が正しくありません。"
 
-#: src/setup.c:509 src/setup.c:517 src/setup.c:553 src/setup.c:561
-#: src/setup.c:783 src/setup.c:861
+#: src/setup.c:529 src/setup.c:544 src/setup.c:580 src/setup.c:602
+#: src/setup.c:823 src/setup.c:905
 msgid "POP3 server:"
 msgstr "POP3サーバ:"
 
-#: src/setup.c:525 src/setup.c:533 src/setup.c:569 src/setup.c:577
+#: src/setup.c:535 src/setup.c:554 src/setup.c:593 src/setup.c:610
 msgid "IMAP4 server:"
 msgstr "IMAP4サーバ:"
 
-#: src/setup.c:631 src/setup.c:667
+#: src/setup.c:669 src/setup.c:705
 msgid "New account setup"
 msgstr "新規アカウントの作成"
 
-#: src/setup.c:686
+#: src/setup.c:724
 msgid "This dialog will make initial setup of new mail account."
 msgstr "このダイアログでは新規メールアカウントの初期設定を行います。"
 
-#: src/setup.c:709
+#: src/setup.c:747
 msgid "Select account type:"
 msgstr "アカウントのタイプを選択してください:"
 
-#: src/setup.c:730
+#: src/setup.c:770
 msgid "Input your name and mail address:"
 msgstr "名前とメールアドレスを入力してください:"
 
-#: src/setup.c:739 src/setup.c:849
+#: src/setup.c:779 src/setup.c:893
 msgid "Display name:"
 msgstr "表示名:"
 
-#: src/setup.c:743 src/setup.c:853
+#: src/setup.c:783 src/setup.c:897
 msgid "E-mail address:"
 msgstr "電子メールアドレス:"
 
-#: src/setup.c:759
+#: src/setup.c:799
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
 msgstr "この名前は受信者側で表示されます (例: Tarou Yamada)"
 
-#: src/setup.c:770
+#: src/setup.c:810
 msgid "Input user ID and mail server:"
 msgstr "ユーザIDとメールサーバを入力してください:"
 
-#: src/setup.c:779 src/setup.c:857
+#: src/setup.c:819 src/setup.c:901
 msgid "User ID:"
 msgstr "ユーザID:"
 
-#: src/setup.c:788 src/setup.c:865
+#: src/setup.c:828 src/setup.c:909
 msgid "SMTP server:"
 msgstr "SMTPサーバ:"
 
-#: src/setup.c:812 src/setup.c:822
+#: src/setup.c:853 src/setup.c:865
 msgid "Use SSL"
 msgstr "SSLを使用"
 
-#: src/setup.c:819
+#: src/setup.c:861
 msgid "Use SMTP authentication"
 msgstr "SMTP認証を使用"
 
-#: src/setup.c:834
+#: src/setup.c:878
 msgid "Your new mail accout has been set up with the following setting."
 msgstr "新しいメールアカウントは以下の設定で作成されました。"
 
-#: src/setup.c:837
+#: src/setup.c:881
 msgid ""
 "If you want to modify the settings, select\n"
 "'Configuration - Preferences for current account' or\n"

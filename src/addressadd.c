@@ -307,7 +307,10 @@ static void addressadd_load_data( AddressIndex *addrIndex ) {
 			nodeDS = interface->listSource;
 			while( nodeDS ) {
 				ds = nodeDS->data;
-				dsName = g_strdup( addrindex_ds_get_name( ds ) );
+				if ( !strcmp( addrindex_ds_get_name( ds ), ADDR_DS_AUTOREG ) )
+					dsName = g_strdup( _("Auto-registered address") );
+				else
+					dsName = g_strdup( addrindex_ds_get_name( ds ) );
 
 				/* Read address book */
 				if( ! addrindex_ds_get_read_flag( ds ) ) {
