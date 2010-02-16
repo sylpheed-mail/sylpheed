@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -435,6 +435,8 @@ static PrefParam param[] = {
 
 	{"add_address_by_click", "FALSE", &prefs_common.add_address_by_click,
 	 P_BOOL},
+	{"enable_address_completion", "TRUE",
+	 &prefs_common.enable_address_completion, P_BOOL},
 
 	{"confirm_on_exit", "FALSE", &prefs_common.confirm_on_exit, P_BOOL},
 	{"clean_trash_on_exit", "FALSE", &prefs_common.clean_on_exit, P_BOOL},

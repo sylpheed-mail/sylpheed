@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -310,9 +310,10 @@ struct _PrefsCommon
 	gboolean online_mode;
 
 	/* Append new members here */
-	gboolean folder_col_visible[4];  /* Display */
-	gboolean reply_address_only;     /* Compose */
-	gboolean recipients_autoreg;     /* Send */
+	gboolean folder_col_visible[4];      /* Display */
+	gboolean reply_address_only;         /* Compose */
+	gboolean recipients_autoreg;         /* Send */
+	gboolean enable_address_completion;  /* Compose */
 };
 
 extern PrefsCommon prefs_common;

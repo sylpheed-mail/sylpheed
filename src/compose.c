@@ -5018,7 +5018,7 @@ static void compose_add_entry_field(GtkWidget *table, GtkWidget **hbox,
 	if (GTK_TABLE(table)->nrows > (*count) + 1)
 		gtk_table_set_row_spacing(GTK_TABLE(table), *count, 4);
 
-	if (is_addr_entry)
+	if (is_addr_entry && prefs_common.enable_address_completion)
 		address_completion_register_entry(GTK_ENTRY(*entry));
 
 	(*count)++;

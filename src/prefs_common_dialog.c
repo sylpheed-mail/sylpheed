@@ -218,6 +218,8 @@ static struct Other {
 	GtkWidget *checkbtn_close_recv_dialog;
 
 	GtkWidget *checkbtn_addaddrbyclick;
+	GtkWidget *checkbtn_enable_addr_compl;
+
 	GtkWidget *checkbtn_confonexit;
 	GtkWidget *checkbtn_cleanonexit;
 	GtkWidget *checkbtn_askonclean;
@@ -531,6 +533,8 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"add_address_by_click", &other.checkbtn_addaddrbyclick,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"enable_address_completion", &other.checkbtn_enable_addr_compl,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"confirm_on_exit", &other.checkbtn_confonexit,
@@ -2473,6 +2477,7 @@ static GtkWidget *prefs_other_create(void)
 	GtkWidget *frame_addr;
 	GtkWidget *vbox_addr;
 	GtkWidget *checkbtn_addaddrbyclick;
+	GtkWidget *checkbtn_enable_addr_compl;
 
 	GtkWidget *frame_exit;
 	GtkWidget *vbox_exit;
@@ -2527,6 +2532,9 @@ static GtkWidget *prefs_other_create(void)
 	PACK_CHECK_BUTTON
 		(vbox_addr, checkbtn_addaddrbyclick,
 		 _("Add address to destination when double-clicked"));
+	PACK_CHECK_BUTTON
+		(vbox_addr, checkbtn_enable_addr_compl,
+		 _("Enable address auto-completion"));
 
 	PACK_FRAME (vbox1, frame_exit, _("On exit"));
 
@@ -2555,7 +2563,8 @@ static GtkWidget *prefs_other_create(void)
 	other.checkbtn_no_recv_err_panel = checkbtn_no_recv_err_panel;
 	other.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
 
-	other.checkbtn_addaddrbyclick = checkbtn_addaddrbyclick;
+	other.checkbtn_addaddrbyclick    = checkbtn_addaddrbyclick;
+	other.checkbtn_enable_addr_compl = checkbtn_enable_addr_compl;
 
 	other.checkbtn_confonexit  = checkbtn_confonexit;
 	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
