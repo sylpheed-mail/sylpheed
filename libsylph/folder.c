@@ -649,10 +649,19 @@ FolderItem *folder_find_child_item_by_name(FolderItem *item, const gchar *name)
 {
 	GNode *node;
 	FolderItem *child;
+	const gchar *base;
+
+	if (!name)
+		return NULL;
 
 	for (node = item->node->children; node != NULL; node = node->next) {
 		child = FOLDER_ITEM(node->data);
-		if (strcmp2(g_basename(child->path), name) == 0)
+		base = g_basename(child->path);
+#ifdef G_OS_WIN32
+		if (base && g_ascii_strcasecmp(base, name) == 0)
+#else
+		if (strcmp2(base, name) == 0)
+#endif
 			return child;
 	}
 
