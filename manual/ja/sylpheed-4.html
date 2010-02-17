@@ -20,8 +20,8 @@
 
 <P>このプログラムのコンパイル/実行には 
 <UL>
-<LI>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista + MinGW</LI>
-<LI>GTK+ 2.4以降 (2.6以降推奨)</LI>
+<LI>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista/7 + MinGW</LI>
+<LI>GTK+ 2.4以降 (2.6以降推奨、Windowsの場合は2.10以降)</LI>
 <LI>GNU make</LI>
 <LI>gettext</LI>
 </UL>
@@ -29,13 +29,16 @@
 が必要です。
 オプションとして以下のものが使用できます。
 <UL>
-<LI>compface</LI>
 <LI>GnuPG, GPGME</LI>
 <LI>OpenSSL</LI>
-<LI>GtkSpell</LI>
+<LI>compface (X-Faceライブラリ)</LI>
+<LI>GtkSpell (スペルチェックライブラリ)</LI>
+<LI>JPilot</LI>
+<LI>OpenLDAP</LI>
+<LI>Oniguruma (Rubyで使用されている正規表現ライブラリ)</LI>
 </UL>
 
-です。このマニュアルではlocaleはja_JP.*と仮定し記述してあります。</P>
+です。このマニュアルではロケールはja_JP.*と仮定し記述してあります。</P>
 
 <H2><A NAME="ss4.2">4.2</A> <A HREF="sylpheed.html#toc4.2">動作確認されている環境</A>
 </H2>
@@ -46,18 +49,19 @@
 で確認することができます。
 他の環境で動作したという方は
 <A HREF="sylpheed-22.html#Sylpheed-ML">Sylpheed ML</A>、またはWikiで報告頂ければ幸いです。</P>
-<P>しかし、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。</P>
+<P>古いライブラリを使用した場合、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。</P>
 <H2><A NAME="gen-inst"></A> <A NAME="ss4.3">4.3</A> <A HREF="sylpheed.html#toc4.3">基本的なインストール方法</A>
 </H2>
 
-<P>ここに示すのはUNIXならほぼ使えると思われるインストール方法です。
+<P>ここに示すのはUnixならほぼ使えると思われるインストール方法です。
 しかし、OSの持っているファイル管理機構を壊す可能性があるので、
 あなたが使っているOSについての記述がある場合は、
 そちらを利用されることをお勧めします。</P>
+<P>Windowsの場合はインストーラを実行、もしくはzipアーカイブを適当な場所に展開してください。</P>
 
 <H3>GTK+のインストール</H3>
 
-
+<P>各ディストリビューションごとのインストール方法を参照してください。</P>
 
 <H3>Sylpheedのコンパイルとインストール</H3>
 

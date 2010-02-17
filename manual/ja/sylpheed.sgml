@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 2.7 version 0.10.2
+       Sylpheed User's Manual for Sylpheed 3.0 - version 0.11.0
     </abstract>
 
 <toc>
@@ -27,7 +27,7 @@
 <p>
  Copyright (c) 2000-2002 Yoichi Imai &lt;yoichi@silver-forest.com&gt;
 
- Copyright (c) 2004-2009 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
+ Copyright (c) 2004-2010 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
 <p>
 Permission is granted to copy, distribute and/or modify this document
       under the terms of the GNU Free Documentation License, Version 1.1
@@ -47,15 +47,15 @@ GNU Free Documentation Licenseの参考訳は、
 </sect1>
 
 <sect>Sylpheedとは
-<sect1>Sylpheed とは
+<sect1>Sylpheedとは
 <p>
 Sylpheedはシンプル、軽量かつ高機能で使いやすい電子メールクライアント(メールソフト、メーラ、MUA)です。
 
-SylpheedはLinux、BSD、Mac OS X等主にUnix系のシステム、またはWindowsで動作します。
+SylpheedはLinux、BSD、Mac OS X等主にUnix系のシステム、またはWindows 2000以降で動作します。
 
-SylpheedはGUIツールキットにGTK+を使用しており、X Window SystemまたはWindowsで動作します。 Sylpheedの最新版はGTK+ 2.4以降で動作します(2.6以降推奨)。
+SylpheedはGUIツールキットにGTK+を使用し、マルチプラットフォームを実現しています。Sylpheedの最新版はGTK+ 2.4以降で動作します(2.6以降推奨)。
 
-Sylpheedは GNU GPL (ライブラリ部分は GNU LGPL) に従って配布されているフリーソフトウェアであり、ライセンスに従って自由に利用・改変・再配布が可能です。
+SylpheedはGNU GPL (ライブラリ部分のLibSylphはGNU LGPL) に従って配布されているフリーソフトウェアであり、ライセンスに従って自由に利用・改変・再配布が可能です。
 
 Sylpheedには以下のような特長があります。
 <itemize>
@@ -67,46 +67,46 @@ Sylpheedには以下のような特長があります。
 <item>国際化、多言語対応
 <item>高度な日本語処理(文字コードの自動判別、機種依存文字対応等)
 <item>多様なプロトコルに対応
+<item>マルチスレッド対応
 <item>セキュリティ機能(GnuPG、SSL/TLSv1)
 <item>強力なフィルタリング、検索機能
 <item>迷惑メール対策機能
 <item>外部コマンドとの柔軟な連携
+<item>プラグイン機能
 </itemize>
 
 </sect1>
 <sect1>インタフェース
 <p>
-Sylpheedの外観やインタフェースはOutlook ExpressやBecky!といった、 Windowsでは定番のメールソフトと同様の3ペイン方式を採用しています。
+Sylpheedの外観やインタフェースはOutlook ExpressやBecky!といった、Windowsでは定番のメールソフトと同様の3ペイン方式を採用しています。
 
 特にキーボードによる操作性を重視しており、効率よくメールを読み進めることができます。もちろんマウスのみでも簡単に操作できます。
 </sect1>
 <sect1>主な機能
 <p>
-SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニュース)にも対応しています。次世代インターネットプロトコルIPv6にも標準で対応しています。
+SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニュース)にも対応しています。次世代インターネットプロトコルIPv6にも標準で対応しています(Unix版の場合)。
 
 主な機能としては、以下があげられます。
 <itemize>
 <item>無制限の複数アカウント管理 
 <item>強力なフィルタリング (POP3、IMAP4、ローカルスプール)
-<item>強力な検索機能(クエリ検索、クイックサーチ、検索フォルダ)
+<item>強力な検索機能 (クエリ検索、クイックサーチ、検索フォルダ)
 <item>迷惑メール対策機能
-<item>多言語対応
 <item>スレッド表示
-<item>MIMEによる添付ファイルの閲覧/送信
+<item>MIMEによる添付ファイルの閲覧・送信
 <item>インライン画像表示機能
 <item>SMTP AUTH (PLAIN / LOGIN / CRAM-MD5)
-<item>CRAM-MD5 認証 (SMTP AUTH / IMAP4rev1)
-<item>APOP 認証 (POP3)
 <item>SSL/TLSv1対応 (オプション)
 <item>PGP署名・暗号化 (オプション)
-<item>スペルチェック機能 (オプション)
 <item>アドレス帳 
 <item>テンプレート
 <item>ニュースリーダー機能
+<item>多言語対応
 </itemize>
 その他の便利な機能としては、以下があげられます。
 <itemize>
 <item>ML等でスレッドが切れているとき便利な「件名でまとめる」機能
+<item>スペルチェック機能 (オプション)
 <item>X-Face対応 (オプション)
 <item>ユーザ定義ヘッダ
 <item>マーク・カラーラベル
@@ -115,6 +115,7 @@ SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニ
 <item>外部エディタ
 <item>送信待機
 <item>自動メールチェック
+<item>自動アップデートチェック
 <item>草稿
 <item>自動整形
 <item>メッセージ作成中の自動保存
@@ -130,6 +131,8 @@ SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニ
 <item>フォルダ毎の設定
 <item>アドレス帳の LDAP, vCard, JPilot 対応
 <item>アドレス帳の CSV, LDIF ファイルのインポート
+<item>送信先アドレスのアドレス帳への自動登録
+<item>アドレスの自動補完
 </itemize>
 
 </sect1>
@@ -137,7 +140,9 @@ SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニ
 <p>
 メッセージは1ファイル1メールのMH形式で管理しており、データのバックアップや移行、他アプリケーションによる処理などが容易に行えます。1ファイル=1フォルダの形式に比べ、システムに障害が発生した際にメールを失う危険性も少なくなっています。その場で物理的にメッセージの移動や削除を行うため、メールボックスの肥大化を防ぐためにユーザが手動で定期的にメールボックスのコンパクト化などを行う必要もありません。
 
-また、他のMH形式を使用したメーラ(Mew等)と併用することが可能です。受信に外部プログラム(inc, imget等)の使用も可能です。
+また、他のMH形式を使用したメーラ(Mew等)と併用することが可能です。
+mboxまたはeml形式のメッセージをインポート・エクスポートすることも可能です。
+受信に外部プログラム(inc, imget等)の使用も可能です。
 
 </sect1>
 <sect1>実現予定の機能
@@ -169,20 +174,23 @@ Sylpheedがインストールされていなければ、
 <p>
 このプログラムのコンパイル/実行には 
 <itemize>
-<item>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista + MinGW
-<item>GTK+ 2.4以降 (2.6以降推奨)
+<item>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista/7 + MinGW
+<item>GTK+ 2.4以降 (2.6以降推奨、Windowsの場合は2.10以降)
 <item>GNU make
 <item>gettext
 </itemize>
 が必要です。
 オプションとして以下のものが使用できます。
 <itemize>
-<item>compface
 <item>GnuPG, GPGME
 <item>OpenSSL
-<item>GtkSpell
+<item>compface (X-Faceライブラリ)
+<item>GtkSpell (スペルチェックライブラリ)
+<item>JPilot
+<item>OpenLDAP
+<item>Oniguruma (Rubyで使用されている正規表現ライブラリ)
 </itemize>
-です。このマニュアルではlocaleはja_JP.*と仮定し記述してあります。
+です。このマニュアルではロケールはja_JP.*と仮定し記述してあります。
 
 </sect1>
 <sect1>動作確認されている環境
@@ -193,17 +201,20 @@ Sylpheedがインストールされていなければ、
 で確認することができます。
 他の環境で動作したという方は<ref id="Sylpheed-ML" name="Sylpheed ML">、またはWikiで報告頂ければ幸いです。
 
-しかし、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。
+古いライブラリを使用した場合、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。
 </sect1>
 <sect1>基本的なインストール方法<label id="gen-inst">
 <p>
-ここに示すのはUNIXならほぼ使えると思われるインストール方法です。
+ここに示すのはUnixならほぼ使えると思われるインストール方法です。
 しかし、OSの持っているファイル管理機構を壊す可能性があるので、
 あなたが使っているOSについての記述がある場合は、
 そちらを利用されることをお勧めします。
 
+Windowsの場合はインストーラを実行、もしくはzipアーカイブを適当な場所に展開してください。
+
 <sect2>GTK+のインストール
 <p>
+各ディストリビューションごとのインストール方法を参照してください。
 
 </sect2>
 
@@ -339,6 +350,8 @@ Debian GNU/Linuxのwoody以降をお使いならば、
 <p>
 <sect1>Sylpheedの起動
 <p>
+Windowsの場合は、Sylpheedをインストールしたフォルダにある sylpheed.exe をダブルクリックすることで起動できます。インストーラからインストールした場合は、スタートメニューやデスクトップ、クイック起動のアイコンから起動できます。
+
 Unixの場合は、kterm, rxvtなどの端末エミュレータを起動し、
 <tscreen><verb>
 $ sylpheed &
@@ -349,8 +362,6 @@ $ sylpheed &
 GNOMEを使用している場合は
 "足跡ボタン＞プログラム＞インターネット＞Sylpheed"
 で起動できます。それ以外の場合でも、起動するためのアイコンなどを作成しておくと便利でしょう。
-
-Windowsの場合は、Sylpheedをインストールしたフォルダにある sylpheed.exe をダブルクリックすることで起動できます。インストーラからインストールした場合は、スタートメニューやデスクトップ、クイック起動のアイコンから起動できます。
 
 <sect2>初回起動時のメール箱の設定<label id="start-mailbox-config">
 <p>
@@ -1205,7 +1216,7 @@ Sylpheedのアドレス帳では、アドレスの情報を「人物(パーソン)」という単位で管理しま
 <item>追加ボタンを押す
 <item>アドレス表示部分の<ref id="context-menu" name="コンテキストメニュー">より「新規アドレス」
 </itemize>
-のいずれかを行うことで追加<ref id="dialog" name="ダイアログ">が現れるので、それぞれの項目を入力した後OKを押せば登録されます。
+のいずれかを行うことで追加<ref id="dialog" name="ダイアログ">が表示され、それぞれの項目を入力した後OKを押せば登録されます。
 
 また登録されたアドレスを選択後、
 <itemize>
@@ -1213,7 +1224,7 @@ Sylpheedのアドレス帳では、アドレスの情報を「人物(パーソン)」という単位で管理しま
 <item><ref id="context-menu" name="コンテキストメニュー">より「編集」
 <item>編集ボタンを押す
 </itemize>
-のいずれかを行えば編集ダイアログを表示でき、OKを押せば更新されます。
+のいずれかを行えば編集ダイアログが表示され、OKを押せば更新されます。
 
 同じく登録されたアドレスを選択後、
 <itemize>
@@ -1224,11 +1235,19 @@ Sylpheedのアドレス帳では、アドレスの情報を「人物(パーソン)」という単位で管理しま
 のいずれかを行えばアドレス帳からそのアドレスを削除することができます。
 </sect1>
 
+<sect1>並べ替えと検索
+<p>
+右側のリストのカラムタイトルをクリックすると、その項目でリストの並べ替えを行うことができます。
+
+「検索:」入力欄に文字列を入力してEnterを押すと、名前、アドレス、備考で絞り込み検索が行えます。
+
 <sect1>情報のコピー
 <p>
 右側のリストで登録された人物を1つまたは複数選択し、メニューより「編集＞コピー」またはコンテキストメニューより「コピー」を選択します。
 
 その後、コピー先のフォルダを選択し、メニューより「編集＞ペースト」またはコンテキストメニューより「ペースト」を選択することで、情報をコピーすることができます。
+
+なお、フォルダ間で移動を行いたい場合は、コピー&amp;ペーストを行った後、元のデータを削除してください。
 </sect1>
 
 <sect1>フォルダとグループ
@@ -1320,6 +1339,8 @@ Sylpheedには強力なフィルタリング機能が搭載されており、受信したメッセージに対して
 <tag/〜が次に一致しない:/ ヘッダや本文中の1行がキーワードに一致しない場合マッチします。
 <tag/〜が次の正規表現にマッチ:/ ヘッダや本文の内容が正規表現にマッチする場合、マッチします。
 <tag/〜が次の正規表現にマッチしない:/ ヘッダや本文の内容が正規表現にマッチしない場合、マッチします。
+<tag/〜がアドレス帳にある:/ ヘッダに含まれるアドレスがアドレス帳に登録されている場合、マッチします。複数のアドレスの場合、それらのすべてが登録されている場合にマッチします。
+<tag/〜がアドレス帳にない:/ ヘッダに含まれるアドレスがアドレス帳に登録されていない場合、マッチします。複数のアドレスの場合、それらのいずれかが登録されていない場合にマッチします。
 </descrip>
 <item>サイズ
 <p>
@@ -2837,6 +2858,11 @@ to permit their use in free software.
 2009-08-13	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 	* Version 0.10.2
 	* インポートの項目を加筆修正
+2010-02-17	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.11.0
+	* Sylpheed 3.0 にあわせて加筆修正
+	* アドレス帳、フィルタリングの項目を加筆修正
+	* 「このマニュアルについて」、「インストール」の項を加筆修正
 </verb>
 </sect1> 
 </sect>
