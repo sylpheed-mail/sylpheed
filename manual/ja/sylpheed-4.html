@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed ユーザーズマニュアル: インストール</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: 最初に行うこと</TITLE>
  <LINK HREF="sylpheed-5.html" REL=next>
  <LINK HREF="sylpheed-3.html" REL=previous>
  <LINK HREF="sylpheed.html#toc4" REL=contents>
@@ -12,201 +12,22 @@
 <A HREF="sylpheed-3.html">前のページ</A>
 <A HREF="sylpheed.html#toc4">目次へ</A>
 <HR>
-<H2><A NAME="install"></A> <A NAME="s4">4.</A> <A HREF="sylpheed.html#toc4">インストール</A></H2>
+<H2><A NAME="s4">4.</A> <A HREF="sylpheed.html#toc4">最初に行うこと</A></H2>
 
-
-<H2><A NAME="ss4.1">4.1</A> <A HREF="sylpheed.html#toc4.1">必要な環境</A>
+<H2><A NAME="ss4.1">4.1</A> <A HREF="sylpheed.html#toc4.1">Sylpheedのインストール</A>
 </H2>
 
-<P>このプログラムのコンパイル/実行には 
-<UL>
-<LI>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista/7 + MinGW</LI>
-<LI>GTK+ 2.4以降 (2.6以降推奨、Windowsの場合は2.10以降)</LI>
-<LI>GNU make</LI>
-<LI>gettext</LI>
-</UL>
-
-が必要です。
-オプションとして以下のものが使用できます。
-<UL>
-<LI>GnuPG, GPGME</LI>
-<LI>OpenSSL</LI>
-<LI>compface (X-Faceライブラリ)</LI>
-<LI>GtkSpell (スペルチェックライブラリ)</LI>
-<LI>JPilot</LI>
-<LI>OpenLDAP</LI>
-<LI>Oniguruma (Rubyで使用されている正規表現ライブラリ)</LI>
-</UL>
-
-です。このマニュアルではロケールはja_JP.*と仮定し記述してあります。</P>
-
-<H2><A NAME="ss4.2">4.2</A> <A HREF="sylpheed.html#toc4.2">動作確認されている環境</A>
+<P>Sylpheedがインストールされていなければ、
+<A HREF="sylpheed-5.html#install">Sylpheedをインストール</A>します。</P>
+<H2><A NAME="ss4.2">4.2</A> <A HREF="sylpheed.html#toc4.2">Sylpheedの使い方</A>
 </H2>
 
-<P>さまざまなOSで動作が確認されています。
-詳しくは
-<A HREF="http://sylpheed.sraoss.jp/ja/">Sylpheed公式サイト</A>
-で確認することができます。
-他の環境で動作したという方は
-<A HREF="sylpheed-22.html#Sylpheed-ML">Sylpheed ML</A>、またはWikiで報告頂ければ幸いです。</P>
-<P>古いライブラリを使用した場合、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。</P>
-<H2><A NAME="gen-inst"></A> <A NAME="ss4.3">4.3</A> <A HREF="sylpheed.html#toc4.3">基本的なインストール方法</A>
-</H2>
-
-<P>ここに示すのはUnixならほぼ使えると思われるインストール方法です。
-しかし、OSの持っているファイル管理機構を壊す可能性があるので、
-あなたが使っているOSについての記述がある場合は、
-そちらを利用されることをお勧めします。</P>
-<P>Windowsの場合はインストーラを実行、もしくはzipアーカイブを適当な場所に展開してください。</P>
-
-<H3>GTK+のインストール</H3>
-
-<P>各ディストリビューションごとのインストール方法を参照してください。</P>
-
-<H3>Sylpheedのコンパイルとインストール</H3>
-
-<P>まず、
-<A HREF="http://sylpheed.sraoss.jp/">http://sylpheed.sraoss.jp/</A>から
-sylpheedをダウンロードします。
-ダウンロードしたら、
-<BLOCKQUOTE><CODE>
-<PRE>
-bzip2 -dc sylpheed-(バージョン).tar.bz2 | tar xf - として解凍し、
-$ cd sylpheed-(バージョン)
-$ ./configure
-$ make
-$ su  
-Password: (パスワード入力)
-# make install
-</PRE>
-</CODE></BLOCKQUOTE>
-
-でインストール完了です。</P>
-
-
-<H2><A NAME="ss4.4">4.4</A> <A HREF="sylpheed.html#toc4.4">rpmを使用したLinux Distributionへのインストール</A>
-</H2>
-
-<H3>一般的なインストール手順(最新版を利用する場合)</H3>
-
-
-<H3>バイナリパッケージを用いる場合</H3>
-
-
-<H3><A NAME="gtk-inst-bin"></A> gtk+のインストール/アップグレード</H3>
-
-<P>まず、gtk+のrpmが入ってるかどうかを確認します。
-<BLOCKQUOTE><CODE>
-<PRE>
-$ rpm -qa | grep gtk
-...
-(以下略)
-</PRE>
-</CODE></BLOCKQUOTE>
-
-のようにgtk+のrpmが既に入っていて、なおかつ2.4.0以上であれば大丈夫です。
-古い場合は、そのDistributionを配布しているサイト等からダウンロードし、
-<BLOCKQUOTE><CODE>
-<PRE>
-$ su
-Password: (パスワードを入力)
-# rpm -Uvh gtk+-(バージョン).i386.rpm
-</PRE>
-</CODE></BLOCKQUOTE>
-
-というようにバージョンアップしてください。
-同様に、imlibのrpmもインストールしてください。</P>
-
-<H3>rpmのインストール</H3>
-
-<P>
-<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>
-より、</P>
-<P>sylpheed-(バージョン).i386.rpmをダウンロードします。そして、
-<BLOCKQUOTE><CODE>
-<PRE>
-$ su
-Password: (パスワードを入力)
-# rpm -Uvh sylpheed-(バージョン).i386.rpm
-</PRE>
-</CODE></BLOCKQUOTE>
-
-で完了です。
-なお、glibcのバージョンによる警告を受ける場合があります。
-その場合は、下記のソースパッケージをご利用ください。</P>
-
-<H3><A NAME="inst_from_srpm"></A> ソースパッケージを用いる場合</H3>
-
-<P>この方法は、上記のglibcのバージョンが低かった場合でも利用可能です。</P>
-<H3><A NAME="gtk-inst-src"></A> gtk+のインストール/アップグレード</H3>
-
-<P>まず、gtk+のrpmが入ってるかどうかを確認します。
-<BLOCKQUOTE><CODE>
-<PRE>
-$ rpm -qa | grep gtk
-gtk+-2.4.x-1vl5
-gtk+-devel-2.4.x-1vl5
-(以下略)
-</PRE>
-</CODE></BLOCKQUOTE>
-
-のようにgtk+及びgtk+-develのpackageが既に入っていて、なおかつ2.4.0以上であれば大丈夫です。
-古い場合は、そのdistributionを配布しているサイト等からダウンロードし、
-<BLOCKQUOTE><CODE>
-<PRE>
-# rpm -Uvh gtk+-(バージョン)-?.i386.rpm gtk+-devel-(バージョン)-?.i386.rpm
-</PRE>
-</CODE></BLOCKQUOTE>
-
-でバージョンアップしてください。</P>
-
-<H3>rpmのrebuild &amp; install</H3>
-
-<P>そして、
-<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>より、
-sylpheed-(バージョン).src.rpmをダウンロードします。
-次に下のコマンドを実行します。
-ただし、下記の方法ではコンパイルにもrootになるため少しだけ危険です。
-ならなくても良い環境を整えている方は、rpm --rebuildのためにsuは必要ありません。
-<BLOCKQUOTE><CODE>
-<PRE>
-$ su
-Password: (パスワードを入力)
-# rpm --rebuild sylpheed-(バージョン).src.rpm
-</PRE>
-</CODE></BLOCKQUOTE>
-
-とすればコンパイルが開始され、
-<BLOCKQUOTE><CODE>
-<PRE>
-(以上略)
-書き込み中: /usr/src/redhat/RPMS/i386/sylpheed-2.2.0-1.i386.rpm
-(以下略)
-</PRE>
-</CODE></BLOCKQUOTE>
-
-のようなメッセージ(書き込み中:がWrote: などになる場合もあります)が現れて、
-終了したら、上記に示されたファイル(sylpheed-(バージョン).i386.rpm)を
-<BLOCKQUOTE><CODE>
-<PRE>
-# rpm -Uvh /usr/src/redhat/RPMS/i386/sylpheed-(バージョン).i386.rpm
-</PRE>
-</CODE></BLOCKQUOTE>
-
-でインストール完了です。</P>
-
-<H2><A NAME="ss4.5">4.5</A> <A HREF="sylpheed.html#toc4.5">Debian GNU/Linuxへのインストール</A>
-</H2>
-
-<P>Debian GNU/Linuxのwoody以降をお使いならば、
-<BLOCKQUOTE><CODE>
-<PRE>
-# apt-get install sylpheed
-</PRE>
-</CODE></BLOCKQUOTE>
-
-でインストールできます。</P>
-
+<P>まず
+<A HREF="sylpheed-6.html#start-and-exit">Sylpheedを起動</A>し、
+<A HREF="sylpheed-9.html#Account-Config">アカウントの設定</A>をした後、
+<A HREF="sylpheed-10.html#receive-message">メッセージを受信</A>して
+<A HREF="sylpheed-8.html#read-message">メッセージを読んだ</A>り、
+<A HREF="sylpheed-11.html#send-message">メッセージの送信</A>をすることになります。</P>
 <HR>
 <A HREF="sylpheed-5.html">次のページ</A>
 <A HREF="sylpheed-3.html">前のページ</A>

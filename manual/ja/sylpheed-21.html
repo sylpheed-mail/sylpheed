@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed ユーザーズマニュアル: FAQ</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: 他メールソフトからSylpheed(MH形式)への移行</TITLE>
  <LINK HREF="sylpheed-22.html" REL=next>
  <LINK HREF="sylpheed-20.html" REL=previous>
  <LINK HREF="sylpheed.html#toc21" REL=contents>
@@ -12,58 +12,52 @@
 <A HREF="sylpheed-20.html">前のページ</A>
 <A HREF="sylpheed.html#toc21">目次へ</A>
 <HR>
-<H2><A NAME="s21">21.</A> <A HREF="sylpheed.html#toc21">FAQ</A></H2>
+<H2><A NAME="s21">21.</A> <A HREF="sylpheed.html#toc21">他メールソフトからSylpheed(MH形式)への移行</A></H2>
 
-
-<H2><A NAME="ss21.1">21.1</A> <A HREF="sylpheed.html#toc21.1">ニュースのメッセージ未読情報について</A>
+<H2><A NAME="mbox-import"></A> <A NAME="ss21.1">21.1</A> <A HREF="sylpheed.html#toc21.1">mbox形式のメッセージファイルの取り込み</A>
 </H2>
 
-<P>Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょうか?</P>
-
-<P>A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
-ニュースグループごとに未読情報は独立になります。</P>
-<H2><A NAME="ss21.2">21.2</A> <A HREF="sylpheed.html#toc21.2">メニューなどのフォント変更について</A>
+<P>「ファイル」メニューから「メールデータをインポート...」を選択し、
+「ファイル形式」に「UNIX mbox」、
+「インポート元」にインポートしたいmbox形式のファイルを選択します。</P>
+<P>インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せばインポートされます。
+mbox形式は、Mozilla Thunderbirdや、KMailなどでも利用されているので、
+そのファイルを利用することで移行できます。</P>
+<P>ただし、KMailは添付ファイルを別ファイルにしてしまう仕様があるらしく、
+添付ファイルがある場合、正しくコンバートすることができません。</P>
+<H2><A NAME="eml-import"></A> <A NAME="ss21.2">21.2</A> <A HREF="sylpheed.html#toc21.2">eml形式、MH形式のメッセージファイルの取り込み</A>
 </H2>
 
-<P>Q. メッセージ本文のフォントは
-<A HREF="sylpheed-19.html#font-config">全般の設定から変更</A>
-できましたが、サマリやメニューなどのフォントは変更できないのでしょうか?</P>
-
-<P>A. 可能です。$HOME/.sylpheed-2.0/gtkrcファイルを作成し、内容を以下のように記述してください。
-<PRE>
-gtk-font-name = "Kochi Gothic 12"
-</PRE>
-</P>
-<H2><A NAME="ss21.3">21.3</A> <A HREF="sylpheed.html#toc21.3">ショートカットキーのキーバインドの変更</A>
+<P>「ファイル」メニューから「メールデータをインポート...」を選択し、
+「ファイル形式」に「eml (フォルダ)」、
+「インポート元」にインポートしたいeml形式(拡張子がeml)のファイルが含まれるフォルダを選択します。</P>
+<P>インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せば、指定したフォルダ直下のすべてのemlファイルがインポートされます。</P>
+<P>なお、MH形式(連番、拡張子なし)のメールについても同様にインポートできます。</P>
+<H2><A NAME="ss21.3">21.3</A> <A HREF="sylpheed.html#toc21.3">他形式へのエクスポート</A>
 </H2>
 
-<P>Q. ショートカットキーのキーバインドの変更はできますか?</P>
-
-<P>A. メニューに表示されている項目に関しては設定可能です。以下のいずれかの方法で設定してください。</P>
-<H3>Windowsの場合</H3>
-
-<P>Sylpheedが起動していない状態で、 C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed\menurc ファイル(Windows Vistaの場合はC:\Users\(ユーザ名)\AppData\Roaming\Sylpheed\menurc)を直接エディタで編集する。</P>
-<H3>Unix/Linuxの場合</H3>
-
-<P>Sylpheedが起動していない状態で、 ~/.sylpheed-2.0/menurc ファイルを直接エディタで編集する。</P>
-<P>また、以下の設定を行うことで、メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、キーを割り当てることができるようになります。また、Backspaceキーを押せば、キーバインドを消すことができます。</P>
-<H3>GNOME 2.8 以降をお使いの場合</H3>
-
-<P>アプリケーション→システムツール→設定エディタで gconf-editor を起動する。</P>
-<P>desktop → gnome → interface を選び、その中の can-change-accels をチェックする。</P>
-<H3>GNOME 2.8 以前かそれ以外の環境をお使いの場合</H3>
-
-<P>~/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する。</P>
-<H2><A NAME="ss21.4">21.4</A> <A HREF="sylpheed.html#toc21.4">サマリビューの下に表示される画像について</A>
+<P>「ファイル」メニューから「メールデータをエクスポート...」を選択し、
+「ファイル形式」に「UNIX mbox」「eml (番号 + .eml)」「MH (番号のみ)」のいずれかを選択します。</P>
+<P>「エクスポート元フォルダ」にSylpheedのエクスポート元フォルダ、「エクスポート先」に出力先のファイルまたはフォルダを指定します。</P>
+<H2><A NAME="ss21.4">21.4</A> <A HREF="sylpheed.html#toc21.4">Outlook Expressからの移行</A>
 </H2>
 
-<P>Q. ヘッダが表示されている部分に小さな画像が表示されていますが、これは何でしょうか。
-また、どのようにしたら挿入できるのでしょうか。</P>
-<P>A. これは、X-Faceといいます。
-<A HREF="sylpheed-8.html#Account-Config">アカウントの設定</A>のユーザ定義ヘッダで、
-X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。</P>
-<P>
-<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。</P>
+<P>Windows用フリーソフトウェアである
+<A HREF="http://www.tietew.net/soft/OE2/">OE2 - OutlookExpress-To</A>
+をインストールし、出力形式に「UNIX mbox」を選択してエクスポートします。</P>
+<P>次に、そのファイルを
+<A HREF="#mbox-import">インポート</A>します。</P>
+<H2><A NAME="ss21.5">21.5</A> <A HREF="sylpheed.html#toc21.5">Becky! Ver.2からの移行</A>
+</H2>
+
+<P>Becky! のメニューから「ファイル - エクスポート...」を選択し、「UNIX mbox 形式」を選択します。 「OK」ボタンを押して、保存先のファイル名を指定し、「保存」ボタンを押して保存します。</P>
+<P>次に、そのファイルを
+<A HREF="#mbox-import">インポート</A>します。</P>
+<H2><A NAME="ss21.6">21.6</A> <A HREF="sylpheed.html#toc21.6">Windows Live Mail、Windows Mailからの移行</A>
+</H2>
+
+<P>Windows Live Mail、またはVista標準添付のWindows Mailではeml形式を利用しているため、
+<A HREF="#eml-import">eml形式のインポート</A>を利用してインポートすることができます。</P>
 <HR>
 <A HREF="sylpheed-22.html">次のページ</A>
 <A HREF="sylpheed-20.html">前のページ</A>

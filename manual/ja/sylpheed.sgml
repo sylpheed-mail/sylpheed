@@ -151,6 +151,28 @@ mboxまたはeml形式のメッセージをインポート・エクスポートすることも可能です。
 </sect1>
 </sect>
 
+<sect>Sylpheed Proについて
+<p>
+<sect1>Sylpheed Proについて
+<p>
+Sylpheed Pro とは、オープンソースソフトウェアのメールソフトである Sylpheed に機能拡張を行い、全文検索機能を追加した製品です。
+
+Sylpheed Pro は以下のような特長があります。
+<itemize>
+<item>すべてのメールの本文からキーワードを含んだものを瞬時に検索
+<item>全文検索インデックスをリアルタイムに更新
+<item>Microsoft Office、PDF などの添付ファイルの内容を検索・表示
+<item>アーカイブ内のファイルの内容を検索・表示
+</itemize>
+
+Sylpheed Pro の全文検索機能を使用することで、大量のメール (数万〜数十万) の本文からキーワードを含んだものを瞬時に検索することができます。 全文検索インデックスはリアルタイムに更新されるので、メールを受信した直後から検索できます。
+
+さらに、Microsoft Word / Excel / PowerPoint、OpenOffice.org、PDF といった添付ファイルの内容を検索することもでき、添付ファイルを開くことなく内容を確認できます。 .zip や .tar.gz などのアーカイブ内のファイルの内容についても検索することが可能です。
+
+Sylpheed Proは <url url="http://www.sraoss.co.jp/sylpheed-pro/"> からダウンロードできます。ダウンロードしたSylpheed Proは試用版として14日間利用することができます。試用期限が切れた後は、ライセンスを購入することで、Sylpheed Proの機能を継続して利用することができます。Sylpheed Proのライセンスを購入しなかった場合は、無償版のSylpheedとして利用可能ですが、Sylpheed Proの機能は利用できなくなります。
+</sect1>
+</sect>
+
 <sect>最初に行うこと
 <sect1>Sylpheedのインストール
 <p>
@@ -2370,6 +2392,7 @@ X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。
 <url url="http://www.dairiki.org/xface/">のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。
 </sect1>
 </sect>
+
 <sect>情報
 <p>
 <sect1>Sylpheed 関連サイト
@@ -2381,8 +2404,10 @@ Sylpheed オフィシャルWebサイトの場所は、
 です。
 <sect2>Sylpheed 最新版入手先
 <p>
-<url url="http://sylpheed.sraoss.jp/sylpheed/">から入手できます。
+Sylpheedの最新版は
+<url url="http://sylpheed.sraoss.jp/ja/download.html"> から入手できます。
 
+<!--
 <sect2>rpmの入手先
 <p>
 <url url="http://y-imai.good-day.net/sylpheed/">
@@ -2392,7 +2417,7 @@ rpmがあります。
 それぞれのDistribution用のものが用意されている場合でこれを利用してもほとんど問題ないでしょう。
 多分最新です。
 
-<!-- 各Distribution用としては、
+各Distribution用としては、
 <url url="http://vinelinux.org/" name="Vine Linux">用にVine Plus、
 <url url="http://www.kondara.org/" name="Kondara MNU/Linux">用にKondara-Zooなどが存在します。
 -->
@@ -2458,6 +2483,7 @@ $ svn update
 Subversion ツリーには自動生成されるファイルは入っていないので、そのままでは ./configure できません。コンパイルするには、通常必要なものの他に autoconf, automake, libtool, gettext などがインストールされている必要があります。インストールされていれば、 ./autogen.sh で必要なファイルが自動生成されます。
 
 </sect1>
+
 <sect>GNU Free Documentation License
 <sect1>GNU Free Documentation License
 <label id="gfdl">
@@ -2840,9 +2866,9 @@ to permit their use in free software.
 <sect>おわりに
 <sect1>おわりに
 <p>
-このドキュメントを読んで, 
-ここはこうしたほうがいいんじゃないか, と言ったような意見がありましたら,
-<htmlurl url="mailto:yoichi@silver-forest.com" name="yoichi@silver-forest.com">
+このドキュメントを読んで、
+ここはこうしたほうがいいのでは、といったような意見がありましたら、
+<htmlurl url="mailto:hiro-y@kcn.ne.jp" name="hiro-y@kcn.ne.jp">
 へお送りいただければ幸いです。
 
 </sect1>
@@ -2973,6 +2999,7 @@ to permit their use in free software.
 	* アドレス帳、フィルタリングの項目を加筆修正
 	* 「このマニュアルについて」、「インストール」、「カスタマイズ」
 	  の項を加筆修正
+	* 「おわりに」の項を修正
 </verb>
 </sect1> 
 </sect>
