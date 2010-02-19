@@ -609,22 +609,20 @@ static void prefs_actions_select(GtkCList *clist, gint row, gint column,
 	action = gtk_clist_get_row_data(clist, row);
 
 	if (!action) {
-		ENTRY_SET_TEXT(actions.name_entry, "");
-		ENTRY_SET_TEXT(actions.cmd_entry, "");
+		gtk_entry_set_text(GTK_ENTRY(actions.name_entry), "");
+		gtk_entry_set_text(GTK_ENTRY(actions.cmd_entry), "");
 		return;
 	}
 
 	strncpy(buf, action, PREFSBUFSIZE - 1);
-	buf[PREFSBUFSIZE - 1] = 0x00;
+	buf[PREFSBUFSIZE - 1] = '\0';
 	cmd = strstr(buf, ": ");
 
-	if (cmd && cmd[2])
-		ENTRY_SET_TEXT(actions.cmd_entry, &cmd[2]);
-	else
-		return;
-
-	*cmd = 0x00;
-	ENTRY_SET_TEXT(actions.name_entry, buf);
+	if (cmd && cmd[2]) {
+		gtk_entry_set_text(GTK_ENTRY(actions.cmd_entry), &cmd[2]);
+		*cmd = '\0';
+		gtk_entry_set_text(GTK_ENTRY(actions.name_entry), buf);
+	}
 }
 
 static void prefs_actions_row_move(GtkCList *clist,
