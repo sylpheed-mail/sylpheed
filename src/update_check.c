@@ -236,7 +236,7 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 
 void update_check(gboolean show_dialog_always)
 {
-	gchar *cmdline[6] = {"curl", "--silent"};
+	gchar *cmdline[8] = {"curl", "--silent", "--max-time", "10"};
 	GPid pid;
 	GError *error = NULL;
 
@@ -249,14 +249,14 @@ void update_check(gboolean show_dialog_always)
 
 	debug_print("update_check: getting latest version from http://sylpheed.sraoss.jp/version.txt\n");
 
-	cmdline[2] = "http://sylpheed.sraoss.jp/version.txt?";
+	cmdline[4] = "http://sylpheed.sraoss.jp/version.txt?";
 	if (prefs_common.use_http_proxy && prefs_common.http_proxy_host &&
 	    prefs_common.http_proxy_host[0] != '\0') {
-		cmdline[3] = "--proxy";
-		cmdline[4] = prefs_common.http_proxy_host;
-		cmdline[5] = NULL;
+		cmdline[5] = "--proxy";
+		cmdline[6] = prefs_common.http_proxy_host;
+		cmdline[7] = NULL;
 	} else
-		cmdline[3] = NULL;
+		cmdline[5] = NULL;
 
 	if (g_spawn_async_with_pipes
 		(NULL, cmdline, NULL,
