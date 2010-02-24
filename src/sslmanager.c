@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,8 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 
 	if (verify_result == X509_V_OK)
 		return 0;
+
+	gdk_threads_enter();
 
 	title = _("SSL certificate verify failed");
 
@@ -200,6 +202,8 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 
 	result = gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
+
+	gdk_threads_leave();
 
 	switch (result) {
 	case GTK_RESPONSE_ACCEPT:
