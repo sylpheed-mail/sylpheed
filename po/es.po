@@ -1,13 +1,13 @@
 # Spanish translation of Sylpheed.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Ricardo Mones <ricardo@mones.org>, 2000-2007.
+# Ricardo Mones <ricardo@mones.org>, 2000-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-24 13:21+0900\n"
-"PO-Revision-Date: 2007-06-09 16:20+0100\n"
+"POT-Creation-Date: 2010-03-01 16:33+0900\n"
+"PO-Revision-Date: 2010-02-24 08:05+0100\n"
 "Last-Translator: Ricardo Mones <ricardo@mones.org>\n"
 "Language-Team: Ricardo Mones <ricardo@mones.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,9 +28,8 @@ msgid "IMAP4 server disables LOGIN.\n"
 msgstr "El servidor IMAP4 deshabilita LOGIN.\n"
 
 #: libsylph/imap.c:656
-#, fuzzy
 msgid "Could not establish IMAP connection.\n"
-msgstr "No puedo establecer la sesión IMAP4: %s:%d\n"
+msgstr "No puedo establecer la conexión IMAP4.\n"
 
 #: libsylph/imap.c:674
 #, c-format
@@ -43,12 +42,12 @@ msgstr "No puedo iniciar la sesión TLS.\n"
 
 #: libsylph/imap.c:865
 msgid "(retrieving FLAGS...)"
-msgstr ""
+msgstr "(recuperando FLAGS...)"
 
 #: libsylph/imap.c:1256
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %u"
-msgstr "Obteniendo mensaje %d"
+msgstr "Obteniendo mensaje %u"
 
 #: libsylph/imap.c:1378
 #, c-format
@@ -666,14 +665,12 @@ msgid "Opening account edit window...\n"
 msgstr "Abriendo ventana de edición de cuenta...\n"
 
 #: src/account_dialog.c:193
-#, fuzzy
 msgid "Creating folder tree. Please wait..."
-msgstr "Creando vista de carpeta...\n"
+msgstr "Creando el árbol de carpetas. Espere por favor..."
 
 #: src/account_dialog.c:195
-#, fuzzy
 msgid "Creation of the folder tree failed."
-msgstr "Fallo al reconstruir el árbol de carpetas."
+msgstr "Falló la creación del árbol de carpetas."
 
 #: src/account_dialog.c:294
 msgid "Creating account edit window...\n"
@@ -842,9 +839,8 @@ msgid "Select Address Book Folder"
 msgstr "Seleccionar carpeta de la agenda"
 
 #: src/addressadd.c:311 src/addressbook.c:950 src/addressbook.c:3082
-#, fuzzy
 msgid "Auto-registered address"
-msgstr "Plantillas registradas"
+msgstr "Direcciones auto-registradas"
 
 #: src/addressbook.c:341 src/compose.c:571 src/mainwindow.c:543
 #: src/messageview.c:149
@@ -1137,12 +1133,15 @@ msgid "Address book conversion"
 msgstr "Conversión de la agenda"
 
 #: src/addressbook.c:2921
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not read address index:\n"
 "\n"
 "%s%c%s"
-msgstr "No se pudo leer el índice de direcciones"
+msgstr ""
+"No se pudo leer el índice de direcciones:\n"
+"\n"
+"%s%c%s"
 
 #: src/addressbook.c:2924
 msgid "Address Book Error"
@@ -1545,11 +1544,11 @@ msgstr "/_Herramientas/---"
 
 #: src/compose.c:713
 msgid "/_Tools/Edit with e_xternal editor"
-msgstr "/_Editar/Editar con el editor e_xterno"
+msgstr "/_Herramientas/Editar con el editor e_xterno"
 
 #: src/compose.c:716
 msgid "/_Tools/Request _disposition notification"
-msgstr ""
+msgstr "/Herramientas/Solicitar notificación de _disposición"
 
 #: src/compose.c:720
 msgid "/_Tools/PGP Si_gn"
@@ -1557,7 +1556,7 @@ msgstr "/_Herramientas/Fir_mar con PGP"
 
 #: src/compose.c:721
 msgid "/_Tools/PGP _Encrypt"
-msgstr "/_Mensaje/_Cifrar con PGP"
+msgstr "/_Herramientas/_Cifrar con PGP"
 
 #: src/compose.c:726
 msgid "/_Tools/_Check spell"
@@ -2179,55 +2178,49 @@ msgid "Add New vCard Entry"
 msgstr "Añadir nueva entrada vCard"
 
 #: src/export.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s ..."
-msgstr "Buscando %s ..."
+msgstr "Exportando %s ..."
 
 #: src/export.c:204
-#, fuzzy
 msgid "Exporting"
-msgstr "Exportar"
+msgstr "Exportación"
 
 #: src/export.c:229
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "Hubo un error mientras se enviaba\n"
+msgstr "Hubo un error al exportar."
 
 #: src/export.c:312
 msgid "Export"
 msgstr "Exportar"
 
 #: src/export.c:331 src/export.c:416
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "Especifique fichero mbox y carpeta de destino."
+msgstr "Especifique la carpeta de origen y el fichero de destino."
 
 #: src/export.c:341 src/import.c:335
-#, fuzzy
 msgid "File format:"
-msgstr "Formato de fecha"
+msgstr "Formato de fichero:"
 
 #: src/export.c:346
-#, fuzzy
 msgid "Source folder:"
-msgstr "Directorio de origen:"
+msgstr "Carpeta de origen:"
 
 #: src/export.c:351
-#, fuzzy
 msgid "Destination:"
-msgstr "Directorio de destino:"
+msgstr "Destino:"
 
 #: src/export.c:361 src/import.c:355
 msgid "UNIX mbox"
-msgstr ""
+msgstr "mbox de UNIX"
 
 #: src/export.c:364
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (número + .eml)"
 
 #: src/export.c:367
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (sólo número)"
 
 #: src/export.c:381 src/export.c:387 src/import.c:372 src/import.c:378
 #: src/prefs_account_dialog.c:955
@@ -2235,19 +2228,16 @@ msgid " Select... "
 msgstr " Seleccionar..."
 
 #: src/export.c:419
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "Especifique fichero mbox y carpeta de destino."
+msgstr "Especifique carpeta de origen y carpeta de destino."
 
 #: src/export.c:445
-#, fuzzy
 msgid "Select destination file"
-msgstr "Seleccione fichero de exportación"
+msgstr "Seleccione fichero de destino"
 
 #: src/export.c:449
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Seleccione fichero de exportación"
+msgstr "Seleccione carpeta de destino"
 
 #: src/filesel.c:158
 msgid "Save as"
@@ -2343,9 +2333,8 @@ msgid "/Mar_k all read"
 msgstr "/Marcar _todo como leído"
 
 #: src/folderview.c:265 src/folderview.c:290
-#, fuzzy
 msgid "/Send _queued messages"
-msgstr "_Enviar mensajes en la cola"
+msgstr "/_Enviar mensajes en la cola"
 
 #: src/folderview.c:267 src/folderview.c:292 src/folderview.c:314
 msgid "/_Search messages..."
@@ -2582,72 +2571,63 @@ msgid "Can't load the image."
 msgstr "No se puede cargar la imagen."
 
 #: src/import.c:187
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "El fichero %s no existe."
+msgstr "El fichero de origen no existe."
 
 #: src/import.c:198
-#, fuzzy
 msgid "Can't find the destination folder."
-msgstr "Especifique fichero mbox y carpeta de destino."
+msgstr "No se encuentra la carpeta de destino."
 
 #: src/import.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "Importing %s ..."
-msgstr "Buscando %s ..."
+msgstr "Importando %s ..."
 
 #: src/import.c:205
-#, fuzzy
 msgid "Importing"
-msgstr "Importar"
+msgstr "Importación"
 
 #: src/import.c:224
-#, fuzzy
 msgid "Scanning folder..."
-msgstr "Revisando carpeta %s ..."
+msgstr "Revisando carpeta..."
 
 #: src/import.c:235
-#, fuzzy
 msgid "Error occurred on import."
-msgstr "Hubo un error mientras se enviaba\n"
+msgstr "Hubo un error al importar."
 
 #: src/import.c:306
 msgid "Import"
 msgstr "Importar"
 
 #: src/import.c:325 src/import.c:410
-#, fuzzy
 msgid "Specify source file and destination folder."
-msgstr "Especifique fichero mbox y carpeta de destino."
+msgstr "Especifique el fichero de origen y la carpeta de destino."
 
 #: src/import.c:340
-#, fuzzy
 msgid "Source:"
-msgstr "Directorio de origen:"
+msgstr "Origen:"
 
 #: src/import.c:345
-#, fuzzy
 msgid "Destination folder:"
-msgstr "Directorio de destino:"
+msgstr "Carpeta de destino:"
 
 #: src/import.c:358
-#, fuzzy
 msgid "eml (folder)"
-msgstr "Nueva carpeta"
+msgstr "eml (carpeta)"
 
 #: src/import.c:407
-#, fuzzy
 msgid "Specify source folder including eml files and destination folder."
-msgstr "Especifique fichero mbox y carpeta de destino."
+msgstr ""
+"Especifique la carpeta de origen que contiene los ficheros eml y la carpeta "
+"de destino."
 
 #: src/import.c:437
-#, fuzzy
 msgid "Select importing folder"
-msgstr "Seleccionar fichero a importar"
+msgstr "Seleccionar la carpeta a importar"
 
 #: src/import.c:440
 msgid "Select importing file"
-msgstr "Seleccionar fichero a importar"
+msgstr "Seleccionar el fichero a importar"
 
 #: src/importcsv.c:151 src/importldif.c:122
 msgid "Please specify address book name and file to import."
@@ -2824,19 +2804,18 @@ msgid "Retrieving"
 msgstr "Recuperando"
 
 #: src/inc.c:710 src/inc.c:1019
-#, fuzzy, c-format
+#, c-format
 msgid "%d message(s) (%s) received"
-msgstr "Hecho (%d mensaje(s) (%s) recibido(s))"
+msgstr "%d mensaje(s) (%s) recibido(s)"
 
 #: src/inc.c:714
-#, fuzzy, c-format
+#, c-format
 msgid "no new messages"
-msgstr "No hay mensajes nuevos."
+msgstr "no hay mensajes nuevos"
 
 #: src/inc.c:715
-#, fuzzy
 msgid "Done"
-msgstr "Hecho."
+msgstr "Hecho"
 
 #: src/inc.c:720
 msgid "Connection failed"
@@ -3157,7 +3136,7 @@ msgstr ""
 
 #: src/main.c:1102
 msgid "Loading plug-ins..."
-msgstr ""
+msgstr "Cargando complementos..."
 
 #. remote command mode
 #: src/main.c:1237
@@ -3225,14 +3204,12 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Fichero/_Buzón/R_econstruir árbol de carpetas"
 
 #: src/mainwindow.c:562
-#, fuzzy
 msgid "/_File/_Import mail data..."
-msgstr "/_Fichero/I_mportar fichero mbox..."
+msgstr "/_Fichero/I_mportar correo..."
 
 #: src/mainwindow.c:563
-#, fuzzy
 msgid "/_File/_Export mail data..."
-msgstr "/_Fichero/_Exportar a un fichero mbox..."
+msgstr "/_Fichero/_Exportar correo..."
 
 #: src/mainwindow.c:565
 msgid "/_File/Empty all _trash"
@@ -3549,9 +3526,8 @@ msgid "/_Message/Recei_ve/Stop receivin_g"
 msgstr "/_Mensaje/Reci_bir/Detener la recepción"
 
 #: src/mainwindow.c:787
-#, fuzzy
 msgid "/_Message/Recei_ve/_Remote mailbox..."
-msgstr "/_Mensaje/Reci_bir/De tod_as las cuentas"
+msgstr "/_Mensaje/Reci_bir/De un buzón _remoto..."
 
 #: src/mainwindow.c:789
 msgid "/_Message/Recei_ve/---"
@@ -3733,9 +3709,8 @@ msgid "/_Configuration/_Actions..."
 msgstr "/_Configuración/_Acciones..."
 
 #: src/mainwindow.c:871
-#, fuzzy
 msgid "/_Configuration/Plug-in _manager..."
-msgstr "/_Configuración/_Plantillas ..."
+msgstr "/_Configuración/Gestor de co_mplementos..."
 
 #: src/mainwindow.c:873
 msgid "/_Configuration/---"
@@ -3803,7 +3778,7 @@ msgstr "/_Ayuda/---"
 
 #: src/mainwindow.c:896
 msgid "/_Help/_Update check..."
-msgstr ""
+msgstr "/_Ayuda/Comprobar actualizaciones..."
 
 #: src/mainwindow.c:941
 msgid "Creating main window...\n"
@@ -3949,9 +3924,8 @@ msgid "Exit this program?"
 msgstr "¿Salir del programa?"
 
 #: src/mainwindow.c:3816
-#, fuzzy
 msgid "Select folder to open"
-msgstr "Seleccionar carpeta"
+msgstr "Seleccionar carpeta a abrir"
 
 #: src/mainwindow.c:3986
 msgid "Command line options"
@@ -4232,31 +4206,27 @@ msgstr ""
 
 #: src/plugin_manager.c:115
 msgid "Plug-in manager"
-msgstr ""
+msgstr "Gestor de complementos"
 
 #: src/plugin_manager.c:165
-#, fuzzy
 msgid "Plug-in information"
-msgstr "Información personal"
+msgstr "Información del complemento"
 
 #: src/plugin_manager.c:192 src/plugin_manager.c:194 src/plugin_manager.c:195
-#, fuzzy
 msgid "(Unknown)"
-msgstr "desconocido"
+msgstr "(Desconocido)"
 
 #: src/plugin_manager.c:194
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: src/plugin_manager.c:195
-#, fuzzy
 msgid "File: "
-msgstr "Fichero"
+msgstr "Fichero: "
 
 #: src/plugin_manager.c:197
-#, fuzzy
 msgid "Description: "
-msgstr "Descripción"
+msgstr "Descripción: "
 
 #: src/prefs_account_dialog.c:441
 msgid "Opening account preferences window...\n"
@@ -4883,9 +4853,8 @@ msgid "Apply filter rules to sent messages"
 msgstr "Aplicar las reglas de filtrado a los mensajes enviados"
 
 #: src/prefs_common_dialog.c:965
-#, fuzzy
 msgid "Automatically add recipients to address book"
-msgstr "Establecer las siguientes direcciones automáticamente"
+msgstr "Añadir destinatarios automáticamente a la agenda"
 
 #: src/prefs_common_dialog.c:972
 msgid ""
@@ -4958,9 +4927,8 @@ msgid "Quote message when replying"
 msgstr "Citar el mensaje al responder"
 
 #: src/prefs_common_dialog.c:1184
-#, fuzzy
 msgid "Reply to mailing list by Reply button"
-msgstr "/Responder a la _lista de correo"
+msgstr "Responder a la lista de correo con el botón «Responder»"
 
 #: src/prefs_common_dialog.c:1186
 msgid "Inherit recipients on reply to self messages"
@@ -4969,6 +4937,7 @@ msgstr "Heredar la lista de destinatarios al responder a mensajes propios"
 #: src/prefs_common_dialog.c:1188
 msgid "Set only mail address of recipients when replying"
 msgstr ""
+"Establecer la dirección de correo de los destinatarios sólo al responder"
 
 #. editor
 #: src/prefs_common_dialog.c:1192 src/prefs_common_dialog.c:2653
@@ -5052,9 +5021,8 @@ msgid "Display unread number next to folder name"
 msgstr "Ver el número de no leídos junto al nombre de la carpeta"
 
 #: src/prefs_common_dialog.c:1575
-#, fuzzy
 msgid "Displaying message number columns in the folder view:"
-msgstr "Mostrar las columnas de número de mensajes en la vista de carpetas"
+msgstr "Mostrar las columnas de número de mensajes en la vista de carpetas:"
 
 #: src/prefs_common_dialog.c:1599
 msgid "Abbreviate newsgroups longer than"
@@ -5091,9 +5059,8 @@ msgid "Message"
 msgstr "Mensaje"
 
 #: src/prefs_common_dialog.c:1670
-#, fuzzy
 msgid "Color label"
-msgstr "/E_tiquetar de color"
+msgstr "Etiqueta de color"
 
 #: src/prefs_common_dialog.c:1680
 msgid "Default character encoding"
@@ -5329,9 +5296,8 @@ msgid "External commands"
 msgstr "Órdenes externas"
 
 #: src/prefs_common_dialog.c:2437
-#, fuzzy
 msgid "Update"
-msgstr "Fecha"
+msgstr "Actualizar"
 
 #: src/prefs_common_dialog.c:2492
 msgid "Receive dialog"
@@ -5367,7 +5333,7 @@ msgstr "Añadir dirección al destino con doble clic"
 
 #: src/prefs_common_dialog.c:2537
 msgid "Enable address auto-completion"
-msgstr ""
+msgstr "Activar auto-completado de direcciones"
 
 #: src/prefs_common_dialog.c:2539
 msgid "On exit"
@@ -5417,20 +5383,19 @@ msgstr "Usar programa externo para enviar"
 
 #: src/prefs_common_dialog.c:2774
 msgid "Update check requires 'curl' command."
-msgstr ""
+msgstr "La comprobación de actualizaciones requiere el programa «curl»."
 
 #: src/prefs_common_dialog.c:2785
-#, fuzzy
 msgid "Enable auto update check"
-msgstr "Activar comprobación ortográfica"
+msgstr "Activar la comprobación automática de actualizaciones"
 
 #: src/prefs_common_dialog.c:2787
 msgid "Use HTTP proxy"
-msgstr ""
+msgstr "Usar proxy HTTP"
 
 #: src/prefs_common_dialog.c:2789
 msgid "HTTP proxy host (hostname:port):"
-msgstr ""
+msgstr "Servidor proxy HTTP (nombre:puerto):"
 
 #: src/prefs_common_dialog.c:2830
 msgid "Enable strict checking of the integrity of summary caches"
@@ -5958,14 +5923,12 @@ msgid "doesn't match to regex"
 msgstr "no coincide con exp.reg."
 
 #: src/prefs_filter_edit.c:542
-#, fuzzy
 msgid "is in addressbook"
-msgstr "Agenda de direcciones"
+msgstr "está en la agenda de direcciones"
 
 #: src/prefs_filter_edit.c:544
-#, fuzzy
 msgid "is not in addressbook"
-msgstr "Añadir _remitente a la agenda..."
+msgstr "no está en la agenda de direcciones"
 
 #: src/prefs_filter_edit.c:556
 msgid "is larger than"
@@ -6268,14 +6231,12 @@ msgid "Incorporate new mail of all accounts"
 msgstr "Incorporar correo nuevo de todas las cuentas"
 
 #: src/prefs_toolbar.c:47
-#, fuzzy
 msgid "Remote mailbox"
-msgstr "Eliminar mailbox"
+msgstr "Buzón remoto"
 
 #: src/prefs_toolbar.c:48
-#, fuzzy
 msgid "POP3 Remote mailbox"
-msgstr "Eliminar mailbox"
+msgstr "Buzón remoto POP3"
 
 #: src/prefs_toolbar.c:51
 msgid "Send queued message(s)"
@@ -6447,9 +6408,8 @@ msgid "Status"
 msgstr "Estado"
 
 #: src/progressdialog.c:107
-#, fuzzy
 msgid "Progress"
-msgstr "Propiedades"
+msgstr "Progreso"
 
 #: src/query_search.c:425
 msgid "_Save as search folder"
@@ -6517,14 +6477,12 @@ msgid "Last 5 days"
 msgstr "Los últimos 5 días"
 
 #: src/quick_search.c:117
-#, fuzzy
 msgid "Last 7 days"
-msgstr "Los últimos 5 días"
+msgstr "Los últimos 7 días"
 
 #: src/quick_search.c:119
-#, fuzzy
 msgid "In addressbook"
-msgstr "Agenda de direcciones"
+msgstr "En la agenda de direcciones"
 
 #: src/quick_search.c:150 src/quick_search.c:378
 msgid "Search for Subject or From"
@@ -6533,12 +6491,12 @@ msgstr "Buscar por Asunto o Desde"
 #: src/quick_search.c:333
 #, c-format
 msgid "%1$d in %2$d matched"
-msgstr ""
+msgstr "%1$d coincidencias en %2$d"
 
 #: src/quick_search.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "No messages matched"
-msgstr "No hay mensajes nuevos."
+msgstr "No hay coincidencias en los mensajes"
 
 #: src/rfc2015.c:144
 msgid "Cannot find user ID for this key."
@@ -6559,75 +6517,70 @@ msgid "Error verifying the signature"
 msgstr "Error al verificar la firma"
 
 #: src/rpop3.c:242
-#, fuzzy
 msgid "_File"
-msgstr "/_Fichero"
+msgstr "_Fichero"
 
 #: src/rpop3.c:243 src/rpop3.c:436
-#, fuzzy
 msgid "_Get"
-msgstr "Recibir"
+msgstr "_Recibir"
 
 #: src/rpop3.c:248
-#, fuzzy
 msgid "_Help"
-msgstr "/_Ayuda"
+msgstr "_Ayuda"
 
 #: src/rpop3.c:249
-#, fuzzy
 msgid "_About"
-msgstr "Acerca de"
+msgstr "A_cerca de"
 
 #: src/rpop3.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "%s - POP3 Remote mailbox"
-msgstr "Eliminar mailbox"
+msgstr "%s - Buzón remoto POP3"
 
 #: src/rpop3.c:414 src/summaryview.c:5166
 msgid "No."
 msgstr "No."
 
 #: src/rpop3.c:497
-#, fuzzy, c-format
+#, c-format
 msgid "Connecting to %s:%d ..."
-msgstr "Conectando con el servidor SMTP: %s ..."
+msgstr "Conectando con %s:%d ..."
 
 #: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
-#, fuzzy, c-format
+#, c-format
 msgid "Can't connect to POP3 server: %s:%d"
-msgstr "No se puede conectar al servidor POP3: %s:%d\n"
+msgstr "No se puede conectar al servidor POP3: %s:%d"
 
 #: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
-#, fuzzy
 msgid "Error occurred during POP3 session."
-msgstr "hubo algún error en la sesión POP3\n"
+msgstr "hubo algún error en la sesión POP3."
 
 #: src/rpop3.c:533
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
-msgstr "hubo algún error en la sesión POP3\n"
+msgstr ""
+"Ocurrió un error en la sesión POP3:\n"
+"%s"
 
 #: src/rpop3.c:690
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieving message headers (%d / %d) ..."
-msgstr "Obteniendo las cabeceras de mensaje (%d / %d)"
+msgstr "Obteniendo las cabeceras de mensaje (%d / %d) ..."
 
 #: src/rpop3.c:853
-#, fuzzy
 msgid "Getting the number of messages..."
-msgstr "Obteniendo el número de nuevos mensajes (STAT)..."
+msgstr "Obteniendo el número de mensajes..."
 
 #: src/rpop3.c:862 src/rpop3.c:875
-#, fuzzy
 msgid "No message"
-msgstr "No hay mensajes nuevos."
+msgstr "No hay mensajes"
 
 #: src/rpop3.c:908
-#, fuzzy, c-format
+#, c-format
 msgid "Deleted %d messages"
-msgstr "Borrar mensaje(s)"
+msgstr "Eliminados %d mensaje(s)"
 
 #: src/rpop3.c:951 src/rpop3.c:963 src/rpop3.c:1021 src/rpop3.c:1219
 #: src/send_message.c:834
@@ -6636,35 +6589,36 @@ msgid "Quitting..."
 msgstr "Terminando..."
 
 #: src/rpop3.c:1006
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d messages"
-msgstr "Obteniendo nuevos mensajes"
+msgstr "Recuperados %d mensajes"
 
 #: src/rpop3.c:1013
-#, fuzzy, c-format
+#, c-format
 msgid "Opened message %d"
-msgstr "Enviar mensaje"
+msgstr "Abierto mensaje %d"
 
 #: src/rpop3.c:1029
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d message headers"
-msgstr "Obteniendo nuevos mensajes"
+msgstr "Recuperadas %d cabeceras de mensajes"
 
 #: src/rpop3.c:1145
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieving message %d ..."
-msgstr "Obteniendo mensajes desde %s..."
+msgstr "Recuperando mensaje %d ..."
 
 #: src/rpop3.c:1171
-#, fuzzy
 msgid "Delete messages"
-msgstr "Borrar mensaje(s)"
+msgstr "Borrar mensajes"
 
 #: src/rpop3.c:1172
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
 msgstr ""
+"¿Borrar realmente los mensajes seleccionados del servidor?\n"
+"Esta operación es irreversible."
 
 #: src/select-keys.c:96
 #, c-format
@@ -6790,7 +6744,7 @@ msgstr "Enviando mensaje (%d / %d bytes)"
 #: src/send_message.c:873
 #, c-format
 msgid "%d / %d bytes"
-msgstr ""
+msgstr "%d / %d bytes"
 
 #: src/send_message.c:904
 msgid "Sending message"
@@ -6824,40 +6778,42 @@ msgstr "Configurar buzón"
 
 #: src/setup.c:159
 msgid "This dialog will make initial setup of mailbox."
-msgstr ""
+msgstr "Este diálogo realizará la configuración inicial del buzón."
 
 #: src/setup.c:173
-#, fuzzy
 msgid "Create mailbox at the following default location:"
-msgstr "Realizar las acciones siguientes:"
+msgstr "Crear buzón en la ubicación por omisión siguiente:"
 
 #: src/setup.c:193
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
+"Crear buzón en la siguiente ubicación:\n"
+"(introduzca el nombre o la ruta completa de la carpeta)"
 
 #: src/setup.c:211
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
 msgstr ""
+"Si posteriormente desea añadir un buzón en otra ubicación, por favor use "
+"«Fichero - Buzón - Añadir buzón...» en el menú."
 
 #: src/setup.c:234 src/setup.c:470
-#, fuzzy
 msgid "Cancel"
-msgstr "Cancelado"
+msgstr "Cancelar"
 
 #: src/setup.c:234
 msgid "Continue without creating mailbox?"
-msgstr ""
+msgstr "¿Continuar sin crear el buzón?"
 
 #: src/setup.c:244
 msgid "Please input folder name or full folder path."
-msgstr ""
+msgstr "Por favor introduzca el nombre o la ruta completa de la carpeta."
 
 #: src/setup.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "El buzón «%s» ya existe."
 
@@ -6866,88 +6822,79 @@ msgstr "El buzón «%s» ya existe."
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr ""
+"La ubicación «%s» incluye una carpeta de configuración. Por favor especifique "
+"otra ubicación."
 
 #: src/setup.c:470
-#, fuzzy
 msgid "Cancel mail account setup?"
-msgstr "Editar cuentas"
+msgstr "¿Cancelar la configuración de la cuenta de correo?"
 
 #: src/setup.c:490 src/setup.c:498
-#, fuzzy
 msgid "Input value is not valid."
-msgstr "No se estableció el nombre de menú."
+msgstr "El valor introducido no es válido."
 
 #: src/setup.c:529 src/setup.c:544 src/setup.c:580 src/setup.c:602
 #: src/setup.c:823 src/setup.c:905
-#, fuzzy
 msgid "POP3 server:"
-msgstr "Servidor LDAP"
+msgstr "Servidor POP3:"
 
 #: src/setup.c:535 src/setup.c:554 src/setup.c:593 src/setup.c:610
-#, fuzzy
 msgid "IMAP4 server:"
-msgstr "Servidor LDAP"
+msgstr "Servidor IMAP4:"
 
 #: src/setup.c:669 src/setup.c:705
-#, fuzzy
 msgid "New account setup"
-msgstr "Editar cuentas"
+msgstr "Configurar nueva cuenta"
 
 #: src/setup.c:724
 msgid "This dialog will make initial setup of new mail account."
-msgstr ""
+msgstr "Este diálogo realizará la configuración inicial de una nueva cuenta."
 
 #: src/setup.c:747
-#, fuzzy
 msgid "Select account type:"
-msgstr "Borrar cuenta"
+msgstr "Seleccionar tipo de cuenta:"
 
 #: src/setup.c:770
-#, fuzzy
 msgid "Input your name and mail address:"
-msgstr "Seleccionar la clave por la dirección de correo"
+msgstr "Introduzca su nombre y dirección de correo:"
 
 #: src/setup.c:779 src/setup.c:893
-#, fuzzy
 msgid "Display name:"
-msgstr "Nombre mostrado"
+msgstr "Nombre mostrado:"
 
 #: src/setup.c:783 src/setup.c:897
-#, fuzzy
 msgid "E-mail address:"
-msgstr "Dirección e-mail"
+msgstr "Dirección de correo:"
 
 #: src/setup.c:799
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
-msgstr ""
+msgstr "Este nombre se verá al lado de los destinatarios (ej.: Juan Nadie)"
 
 #: src/setup.c:810
 msgid "Input user ID and mail server:"
-msgstr ""
+msgstr "Introduzca el ID de usuario y el servidor de correo:"
 
 #: src/setup.c:819 src/setup.c:901
-#, fuzzy
 msgid "User ID:"
-msgstr "Usuario"
+msgstr "ID de usuario:"
 
 #: src/setup.c:828 src/setup.c:909
-#, fuzzy
 msgid "SMTP server:"
-msgstr "Servidor SMTP (enviar)"
+msgstr "Servidor SMTP:"
 
 #: src/setup.c:853 src/setup.c:865
-#, fuzzy
 msgid "Use SSL"
-msgstr "SSL"
+msgstr "Usar SSL"
 
 #: src/setup.c:861
-#, fuzzy
 msgid "Use SMTP authentication"
-msgstr "Autentificación"
+msgstr "Usar autentificación SMTP"
 
 #: src/setup.c:878
-msgid "Your new mail accout has been set up with the following setting."
+#, fuzzy
+msgid "Your new mail account has been set up with the following settings."
 msgstr ""
+"Su nueva cuenta de correo ha sido creada con la siguiente configuración."
 
 #: src/setup.c:881
 msgid ""
@@ -6955,6 +6902,9 @@ msgid ""
 "'Configuration - Preferences for current account' or\n"
 "'Configuration - Edit accounts' in the main menu."
 msgstr ""
+"Si quiere modificar la configuración, seleccione\n"
+"«Configuración - Preferencias para la cuenta actual» o\n"
+"«Configuración - Editar cuentas» en el menú principal."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -7054,51 +7004,44 @@ msgid "SSL certificate verify failed"
 msgstr "Falló la verificación del certificado SSL"
 
 #: src/sslmanager.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "The SSL certificate of %s cannot be verified by the following reason:"
 msgstr ""
-"El certificado SSL de %s no se puede verificar por el siguiente motivo:\n"
-"  %s\n"
-"\n"
-"Certificado del servidor:\n"
-"  Asunto: %s\n"
-"  Emisor: %s\n"
-"\n"
-"¿Desea aceptar éste certificado?"
+"El certificado SSL de %s no se puede verificar por el siguiente motivo:"
 
 #: src/sslmanager.c:103
-#, fuzzy, c-format
+#, c-format
 msgid "Subject: %s\n"
-msgstr "  Asunto: %s\n"
+msgstr "Asunto: %s\n"
 
 #: src/sslmanager.c:104
-#, fuzzy, c-format
+#, c-format
 msgid "Issuer: %s\n"
-msgstr "  Emisor: %s\n"
+msgstr "Emisor: %s\n"
 
 #: src/sslmanager.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "Issued date: %s\n"
-msgstr "  Emisor: %s\n"
+msgstr "Fecha de emisión: %s\n"
 
 #: src/sslmanager.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "Expire date: %s\n"
-msgstr "Expirar después de"
+msgstr "Fecha de caducidad: %s\n"
 
 #: src/sslmanager.c:108
 #, c-format
 msgid "SHA1 fingerprint: %s\n"
-msgstr ""
+msgstr "Huella SHA1: %s\n"
 
 #: src/sslmanager.c:109
 #, c-format
 msgid "MD5 fingerprint: %s\n"
-msgstr ""
+msgstr "Huella MD5: %s\n"
 
 #: src/sslmanager.c:111
 msgid "Do you accept this certificate?"
-msgstr ""
+msgstr "¿Desea aceptar este certificado?"
 
 #: src/sslmanager.c:186 src/sslmanager.c:194
 msgid "_Reject"
@@ -7266,9 +7209,9 @@ msgid "Creating summary view...\n"
 msgstr "Creando vista de cabeceras...\n"
 
 #: src/summaryview.c:644
-#, fuzzy, c-format
+#, c-format
 msgid "Scanning folder (%s) (%d)..."
-msgstr "Revisando carpeta (%s)..."
+msgstr "Revisando carpeta (%s) (%d)..."
 
 #: src/summaryview.c:697
 msgid "Process mark"
@@ -7452,9 +7395,8 @@ msgid "Destination is same as current folder."
 msgstr "El destino es el mismo que la carpeta actual."
 
 #: src/summaryview.c:3481
-#, fuzzy
 msgid "Select folder to move"
-msgstr "Seleccionar carpeta"
+msgstr "Seleccionar carpeta a mover"
 
 #: src/summaryview.c:3511
 #, c-format
@@ -7466,9 +7408,8 @@ msgid "Destination for copy is same as current folder."
 msgstr "El destino de la copia es el mismo que la carpeta actual."
 
 #: src/summaryview.c:3578
-#, fuzzy
 msgid "Select folder to copy"
-msgstr "Seleccionar carpeta"
+msgstr "Seleccionar carpeta a copiar"
 
 #: src/summaryview.c:3723
 msgid "Error occurred while processing messages."
@@ -7590,77 +7531,26 @@ msgid "Sylpheed"
 msgstr "Sylpheed"
 
 #: src/update_check.c:116 src/update_check.c:121
+#, fuzzy
 msgid ""
-"The newer version of Sylpheed found.\n"
+"A newer version of Sylpheed has been found.\n"
 "Upgrade now?"
 msgstr ""
+"Se ha encontrado una nueva versión de Sylpheed.\n"
+"¿Actualizar ahora?"
 
 #: src/update_check.c:124
-#, fuzzy
 msgid "New version found"
-msgstr "No se encontró firma"
+msgstr "Nueva versión encontrada"
 
 #: src/update_check.c:223
-#, fuzzy
 msgid "Information"
-msgstr "Información del servidor"
+msgstr "Información"
 
 #: src/update_check.c:224
-#, fuzzy
 msgid "Sylpheed is already the latest version."
-msgstr "ya hay otro Sylpheed en ejecución.\n"
+msgstr "Esta ya es la última versión de Sylpheed."
 
 #: src/update_check.c:227
 msgid "Couldn't get the version information."
-msgstr ""
-
-#~ msgid "Reply button invokes mailing list reply"
-#~ msgstr "El botón Responder invoca responder a la lista de correo"
-
-#~ msgid "Select directory"
-#~ msgstr "Seleccionar directorio"
-
-#~ msgid ""
-#~ "Specify the location of mailbox.\n"
-#~ "If you are unsure, just select OK."
-#~ msgstr ""
-#~ "Introduzca la localización del buzón.\n"
-#~ "Si no esta seguro seleccione «Aceptar»."
-
-#~ msgid "Lookup"
-#~ msgstr "Buscar"
-
-#~ msgid "Can't open mark file.\n"
-#~ msgstr "No se puede abrir el fichero de marcas.\n"
-
-#~ msgid "g_thread is not supported by glib.\n"
-#~ msgstr "g_thread no está soportado por glib.\n"
-
-#~ msgid "Importing file:"
-#~ msgstr "Importando fichero:"
-
-#, fuzzy
-#~ msgid "eml (file)"
-#~ msgstr "Seleccionar fichero"
-
-#~ msgid "Specify target folder and mbox file."
-#~ msgstr "Especificar directorio destino y fichero mbox."
-
-#~ msgid "Exporting file:"
-#~ msgstr "Fichero de exportación:"
-
-#~ msgid "Creating progress dialog...\n"
-#~ msgstr "Creando diálogo de progreso...\n"
-
-#, fuzzy
-#~ msgid "No"
-#~ msgstr "No."
-
-#~ msgid "%d messages found.\n"
-#~ msgstr "%d mensajes encontrados.\n"
-
-#~ msgid "Done (no new messages)"
-#~ msgstr "Hecho (no hay mensajes nuevos)"
-
-#~ msgid "Retrieving (%d message(s) (%s) received)"
-#~ msgstr "Obteniendo (%d mensaje(s) (%s) recibido(s))"
+msgstr "No se pudo obtener la información de la versión."

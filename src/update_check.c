@@ -113,12 +113,12 @@ static void update_dialog(const gchar *new_ver, gboolean manual)
 
 	if (new_ver)
 		g_snprintf(buf, sizeof(buf), "%s\n\n%s -> %s",
-			   _("The newer version of Sylpheed found.\n"
+			   _("A newer version of Sylpheed has been found.\n"
 			     "Upgrade now?"),
 			   VERSION, new_ver);
 	else
 		g_snprintf(buf, sizeof(buf), "%s",
-			   _("The newer version of Sylpheed found.\n"
+			   _("A newer version of Sylpheed has been found.\n"
 			     "Upgrade now?"));
 
 	val = alertpanel_full(_("New version found"), buf,

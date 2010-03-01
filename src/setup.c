@@ -875,7 +875,7 @@ PrefsAccount *setup_account(void)
 	vbox2 = gtk_vbox_new(FALSE, 8);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox2, FALSE, FALSE, 8);
 
-	label = gtk_label_new(_("Your new mail accout has been set up with the following setting."));
+	label = gtk_label_new(_("Your new mail account has been set up with the following settings."));
 	gtk_box_pack_start(GTK_BOX(vbox2), label, FALSE, FALSE, 0);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
 	label = gtk_label_new(_("If you want to modify the settings, select\n"
