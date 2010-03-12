@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 3.0 - version 0.11.1
+       Sylpheed User's Manual for Sylpheed 3.0 - version 0.11.2
     </abstract>
 
 <toc>
@@ -138,7 +138,7 @@ SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニ
 </sect1>
 <sect1>メッセージの管理方式
 <p>
-メッセージは1ファイル1メールのMH形式で管理しており、データのバックアップや移行、他アプリケーションによる処理などが容易に行えます。1ファイル=1フォルダの形式に比べ、システムに障害が発生した際にメールを失う危険性も少なくなっています。その場で物理的にメッセージの移動や削除を行うため、メールボックスの肥大化を防ぐためにユーザが手動で定期的にメールボックスのコンパクト化などを行う必要もありません。
+Sylpheedはメッセージを1ファイルが1メールに対応するMH形式で管理しており、データのバックアップや移行、他アプリケーションによる処理などが容易に行えます。1ファイル=1フォルダの形式に比べ、システムに障害が発生した際にメールを失う危険性も少なくなっています。その場で物理的にメッセージの移動や削除を行うため、メールボックスの肥大化を防ぐためにユーザが手動で定期的にメールボックスのコンパクト化などを行う必要もありません。
 
 また、他のMH形式を使用したメーラ(Mew等)と併用することが可能です。
 mboxまたはeml形式のメッセージをインポート・エクスポートすることも可能です。
@@ -366,6 +366,17 @@ Debian GNU/Linuxのwoody以降をお使いならば、
 <sect1>FreeBSDへのインストール
 </sect1>
 -->
+
+<sect1>アップグレード方法
+<p>
+Sylpheedのアップグレードは基本的には上書きインストールを行えばOKです。
+以前の設定やメッセージデータはそのまま引き継がれます。
+
+Windows版の場合、Sylpheedが起動していない状態でインストーラを起動すると、
+以前のバージョンのアンインストールを実行した後、新しいバージョンの
+インストールが行われます。
+zipアーカイブ版の場合は中のファイルを上書きコピーしてください。
+</sect1>
 </sect>
 
 <sect>起動と終了<label id="start-and-exit">
@@ -3005,6 +3016,9 @@ to permit their use in free software.
 2010-02-19	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 	* Version 0.11.1
 	* 「迷惑メール対策」の項に Virtual Store についての記述を追加
+2010-03-12	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.11.2
+	* 「アップグレード方法」の項を追加
 </verb>
 </sect1> 
 </sect>
