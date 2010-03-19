@@ -212,6 +212,7 @@ int main(int argc, char *argv[])
 	GList *iconlist = NULL;
 #endif
 	GObject *syl_app;
+	PrefsAccount *new_account = NULL;
 
 	app_init();
 	parse_cmd_opt(argc, argv);
@@ -334,7 +335,7 @@ int main(int argc, char *argv[])
 		folder_write_list();
 	}
 	if (!account_get_list()) {
-		setup_account();
+		new_account = setup_account();
 	}
 
 	account_set_menu();
@@ -343,6 +344,8 @@ int main(int argc, char *argv[])
 	account_set_missing_folder();
 	folder_set_missing_folders();
 	folderview_set(folderview);
+	if (new_account && new_account->folder)
+		folder_write_list();
 
 	addressbook_read_file();
 

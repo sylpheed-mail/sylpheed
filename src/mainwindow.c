@@ -3897,17 +3897,21 @@ static void prefs_account_open_cb(MainWindow *mainwin, guint action,
 static void new_account_cb(MainWindow *mainwin, guint action,
 			   GtkWidget *widget)
 {
+	PrefsAccount *ac;
+
 	if (compose_get_compose_list()) {
 		alertpanel_notice(_("Some composing windows are open.\n"
 				    "Please close all the composing windows before editing the accounts."));
 		return;
 	}
 
-	if (setup_account()) {
+	if ((ac = setup_account())) {
 		account_set_menu();
 		main_window_reflect_prefs_all();
 		account_set_missing_folder();
 		folderview_set(mainwin->folderview);
+		if (ac->folder)
+			folder_write_list();
 	}
 }
 

@@ -1005,7 +1005,11 @@ PrefsAccount *setup_account(void)
 	g_free(ac->sig_text);
 	ac->sig_text = g_strdup_printf("%s <%s>\\n", ac->name, ac->address);
 
+	account_update_lock();
 	account_append(ac);
+	account_write_config_all();
+	account_update_unlock();
+	account_updated();
 
 	g_free(setupac.name);
 	g_free(setupac.addr);
