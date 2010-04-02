@@ -157,6 +157,14 @@ void (* folderview_menu_popup)  (GObject *obj, gpointer ifactory);
 
 Emitted on popup of the context menu of FolderView.
 -------------------------------------------------------------------------
+void (* compose_created)        (GObject *obj, gpointer compose);
+
+Emitted on creating 'Compose' message composition window.
+-------------------------------------------------------------------------
+void (* compose_destroy)        (GObject *obj, gpointer compose);
+
+Emitted just before 'Compose' message composition window is destroyed.
+-------------------------------------------------------------------------
 
 * libsylph-0
 
@@ -209,6 +217,11 @@ void (* folderlist_updated) (GObject *obj)
 
 Emitted when folder information is modified and folderlist.xml, which
 contains folder list, is updated.
+-------------------------------------------------------------------------
+void (* account_updated) (GObject *obj)
+
+Emitted on the update of account information.
+It will not be emitted if it is locked by account_update_lock(), though.
 -------------------------------------------------------------------------
 
 
