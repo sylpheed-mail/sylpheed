@@ -364,7 +364,9 @@ FolderView *folderview_create(void)
 	gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview),
 					COL_FOLDER_NAME);
 	gtk_tree_view_set_reorderable(GTK_TREE_VIEW(treeview), FALSE);
-	/* g_object_set(treeview, "fixed-height-mode", TRUE, NULL); */
+#if GTK_CHECK_VERSION(2, 12, 0)
+	g_object_set(treeview, "fixed-height-mode", TRUE, NULL);
+#endif
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
