@@ -2637,13 +2637,11 @@ static GtkWidget *prefs_extcmd_create(void)
 			       _("(Default browser)"),
 #else
 			       DEFAULT_BROWSER_CMD,
-			       "mozilla-firefox '%s'",
+			       "sensible-browser '%s'",
+			       "firefox -remote 'openURL(%s,new-window)'",
 			       "firefox '%s'",
 			       "mozilla -remote 'openURL(%s,new-window)'",
 			       "mozilla '%s'",
-			       "netscape -remote 'openURL(%s,new-window)'",
-			       "netscape '%s'",
-			       "gnome-moz-remote --newwin '%s'",
 			       "rxvt -e w3m '%s'",
 			       "rxvt -e lynx '%s'",
 #endif
