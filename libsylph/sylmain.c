@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -299,6 +299,7 @@ gint syl_setup_rc_dir(void)
 	MAKE_DIR_IF_NOT_EXIST(get_mime_tmp_dir());
 	MAKE_DIR_IF_NOT_EXIST(get_tmp_dir());
 	MAKE_DIR_IF_NOT_EXIST(UIDL_DIR);
+	MAKE_DIR_IF_NOT_EXIST(PLUGIN_DIR);
 
 	/* remove temporary files */
 	remove_all_files(get_tmp_dir());

@@ -65,6 +65,7 @@
 #define TEMPLATE_DIR		"templates"
 #define TMP_DIR			"tmp"
 #define UIDL_DIR		"uidl"
+#define PLUGIN_DIR		"plugins"
 #define NEWSGROUP_LIST		".newsgroup_list"
 #define ADDRESS_BOOK		"addressbook.xml"
 #define MANUAL_HTML_INDEX	"sylpheed.html"

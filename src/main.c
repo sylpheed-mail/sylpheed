@@ -1099,6 +1099,7 @@ static void register_system_events(void)
 static void plugin_init(void)
 {
 	MainWindow *mainwin;
+	gchar *path;
 
 	mainwin = main_window_get();
 
@@ -1171,17 +1172,21 @@ static void plugin_init(void)
 
 	syl_plugin_signal_connect("plugin-load", G_CALLBACK(load_cb), NULL);
 
+	/* loading plug-ins from user plug-in directory */
+	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, PLUGIN_DIR, NULL);
+	syl_plugin_load_all(path);
+	g_free(path);
+
+	/* loading plug-ins from system plug-in directory */
 #ifdef G_OS_WIN32
-	{
-		gchar *path;
-		path = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S,
-				   "plugins", NULL);
-		syl_plugin_load_all(path);
-		g_free(path);
-	}
+	path = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, PLUGIN_DIR,
+			   NULL);
+	syl_plugin_load_all(path);
+	g_free(path);
 #else
 	syl_plugin_load_all(PLUGINDIR);
 #endif
+
 	STATUSBAR_POP(mainwin);
 }
 
