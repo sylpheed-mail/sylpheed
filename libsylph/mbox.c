@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -234,6 +234,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 			fclose(mbox_fp);
 			return -1;
 		}
+		fltinfo->flags = msginfo->flags;
 		msginfo->file_path = g_strdup(tmp_file);
 
 		if (filter_junk && prefs_common.enable_junk &&
