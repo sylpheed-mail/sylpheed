@@ -459,9 +459,6 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 	prev_page = page =
 		gtk_notebook_get_current_page(GTK_NOTEBOOK(setupac.notebook));
 
-	g_print("response_id = %d\n", response_id);
-	g_print("page = %d\n", page);
-
 	if (response_id == GTK_RESPONSE_CANCEL ||
 	    response_id == GTK_RESPONSE_DELETE_EVENT) {
 		if (page == SETUP_PAGE_FINISH) {
@@ -518,7 +515,6 @@ static void setup_account_response_cb(GtkDialog *dialog, gint response_id,
 	}
 
 	page = gtk_notebook_get_current_page(GTK_NOTEBOOK(setupac.notebook));
-	g_print("new page = %d\n", page);
 
 	if (page == SETUP_PAGE_START)
 		prev_enable = FALSE;
