@@ -32,6 +32,7 @@
 #include <gtk/gtkmain.h>
 #include <sys/time.h>
 #include <string.h>
+#define LDAP_DEPRECATED 1
 #include <ldap.h>
 #include <lber.h>
 #include <pthread.h>
