@@ -7097,10 +7097,24 @@ static gboolean attach_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	    (event->button == 1 && event->type == GDK_2BUTTON_PRESS)) {
 		compose_attach_property(compose);
 	} else if (event->button == 3) {
+		GList *rows;
+		gboolean has_selection = FALSE;
+
+		selection = gtk_tree_view_get_selection(treeview);
+		rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+		if (rows) {
+			has_selection = TRUE;
+			g_list_free(rows);
+		}
+		if (path)
+			has_selection = TRUE;
+		menu_set_sensitive(compose->popupfactory, "/Open", has_selection);
+		menu_set_sensitive(compose->popupfactory, "/Add...", TRUE);
+		menu_set_sensitive(compose->popupfactory, "/Remove", has_selection);
+		menu_set_sensitive(compose->popupfactory, "/Properties...", has_selection);
 		gtk_menu_popup(GTK_MENU(compose->popupmenu), NULL, NULL,
 			       NULL, NULL, event->button, event->time);
 
-		selection = gtk_tree_view_get_selection(treeview);
 		if (path &&
 		    gtk_tree_selection_path_is_selected(selection, path)) {
 			gtk_tree_path_free(path);
