@@ -322,6 +322,8 @@ static gboolean attach_property_key_pressed	(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 gboolean	*cancelled);
 
+static void compose_attach_open			(Compose	*compose);
+
 static void compose_exec_ext_editor		(Compose	*compose);
 static gboolean compose_ext_editor_kill		(Compose	*compose);
 static void compose_ext_editor_child_exit	(GPid		 pid,
@@ -396,6 +398,9 @@ static void compose_draft_cb		(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
 
+static void compose_attach_open_cb	(gpointer	 data,
+					 guint		 action,
+					 GtkWidget	*widget);
 static void compose_attach_cb		(gpointer	 data,
 					 guint		 action,
 					 GtkWidget	*widget);
@@ -560,6 +565,8 @@ static gboolean autosave_timeout	(gpointer	 data);
 
 static GtkItemFactoryEntry compose_popup_entries[] =
 {
+	{N_("/_Open"),		NULL, compose_attach_open_cb, 0, NULL},
+	{N_("/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Add..."),	NULL, compose_attach_cb, 0, NULL},
 	{N_("/_Remove"),	NULL, compose_attach_remove_selected, 0, NULL},
 	{N_("/---"),		NULL, NULL, 0, "<Separator>"},
@@ -6559,6 +6566,58 @@ static gboolean attach_property_key_pressed(GtkWidget *widget,
 	return FALSE;
 }
 
+static void compose_attach_open(Compose *compose)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GList *rows;
+	AttachInfo *ainfo = NULL;
+#ifdef G_OS_WIN32
+	DWORD dwtype;
+#endif
+
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW(compose->attach_treeview));
+
+	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+
+	if (!rows)
+		return;
+
+	gtk_tree_model_get_iter(model, &iter, (GtkTreePath *)rows->data);
+	gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
+
+	g_list_foreach(rows, (GFunc)gtk_tree_path_free, NULL);
+	g_list_free(rows);
+
+	if (!ainfo || !ainfo->file)
+		return;
+
+	if (!is_file_exist(ainfo->file)) {
+		alertpanel_error(_("File not exist."));
+		return;
+	}
+
+#ifdef G_OS_WIN32
+	if (g_file_test(filename, G_FILE_TEST_IS_EXECUTABLE) ||
+	    str_has_suffix_case(filename, ".scr") ||
+	    str_has_suffix_case(filename, ".pif") ||
+	    GetBinaryType(filename, &dwtype)) {
+		alertpanel_full
+			(_("Opening executable file"),
+			 _("This is an executable file. Opening executable file is restricted for security.\n"
+			   "If you want to launch it, save it to somewhere and make sure it is not an virus or something like a malicious program."),
+			 ALERT_WARNING, G_ALERTDEFAULT, FALSE,
+			 GTK_STOCK_OK, NULL, NULL);
+		return;
+	}
+	execute_open_file(ainfo->file, ainfo->content_type);
+#else
+	procmime_execute_open_file(ainfo->file, ainfo->content_type);
+#endif
+}
+
 static void compose_exec_ext_editor(Compose *compose)
 {
 	gchar *tmp;
@@ -7202,6 +7261,14 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 		compose->modified = FALSE;
 		compose_set_title(compose);
 	}
+}
+
+static void compose_attach_open_cb(gpointer data, guint action,
+				   GtkWidget *widget)
+{
+	Compose *compose = (Compose *)data;
+
+	compose_attach_open(compose);
 }
 
 static void compose_attach_cb(gpointer data, guint action, GtkWidget *widget)
