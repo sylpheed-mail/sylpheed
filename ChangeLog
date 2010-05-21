@@ -1,4 +1,13 @@
-2010-05-20
+2010-05-21
+
+	* src/prefs_common_dialog.c
+	  src/prefs_filter_edit.c
+	  src/prefs_account_dialog.c
+	  src/editldap.c: removed warnings 'GtkSpinButton: setting an
+	  adjustment with non-zero page size is deprecated'.
+	  The last value of gtk_adjustment_new() must be 0 for GtkSpinButton.
+
+2010-05-21
 
 	* libsylph/socket.c: sock_kill_process(): prevent redundant error
 	  messages when waitpid() is interrupted by EINTR.

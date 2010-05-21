@@ -1016,7 +1016,7 @@ static void prefs_account_receive_create(void)
 	gtk_label_set_justify (GTK_LABEL (maxarticle_label), GTK_JUSTIFY_LEFT);
 
 	maxarticle_spinbtn_adj =
-		gtk_adjustment_new (300, 0, 10000, 10, 100, 100);
+		gtk_adjustment_new (300, 0, 10000, 10, 100, 0);
 	maxarticle_spinbtn = gtk_spin_button_new
 		(GTK_ADJUSTMENT (maxarticle_spinbtn_adj), 10, 0);
 	gtk_widget_show (maxarticle_spinbtn);

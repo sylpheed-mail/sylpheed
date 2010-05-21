@@ -819,7 +819,7 @@ static void prefs_receive_create(void)
 	gtk_widget_show (label_autochk1);
 	gtk_box_pack_start (GTK_BOX (hbox_autochk), label_autochk1, FALSE, FALSE, 0);
 
-	spinbtn_autochk_adj = gtk_adjustment_new (5, 1, 100, 1, 10, 10);
+	spinbtn_autochk_adj = gtk_adjustment_new (5, 1, 100, 1, 10, 0);
 	spinbtn_autochk = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_autochk_adj), 1, 0);
 	gtk_widget_show (spinbtn_autochk);
@@ -1210,7 +1210,7 @@ static void prefs_compose_create(void)
 	gtk_widget_show (label_undolevel);
 	gtk_box_pack_start (GTK_BOX (hbox3), label_undolevel, FALSE, FALSE, 0);
 
-	spinbtn_undolevel_adj = gtk_adjustment_new (50, 0, 100, 1, 10, 10);
+	spinbtn_undolevel_adj = gtk_adjustment_new (50, 0, 100, 1, 10, 0);
 	spinbtn_undolevel = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_undolevel_adj), 1, 0);
 	gtk_widget_show (spinbtn_undolevel);
@@ -1230,7 +1230,7 @@ static void prefs_compose_create(void)
 	gtk_widget_show (label_linewrap);
 	gtk_box_pack_start (GTK_BOX (hbox3), label_linewrap, FALSE, FALSE, 0);
 
-	spinbtn_linewrap_adj = gtk_adjustment_new (72, 20, 1024, 1, 10, 10);
+	spinbtn_linewrap_adj = gtk_adjustment_new (72, 20, 1024, 1, 10, 0);
 	spinbtn_linewrap = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_linewrap_adj), 1, 0);
 	gtk_widget_show (spinbtn_linewrap);
@@ -1270,7 +1270,7 @@ static void prefs_compose_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox_autosave), label_autosave1,
 			    FALSE, FALSE, 0);
 
-	spinbtn_autosave_adj = gtk_adjustment_new (5, 1, 100, 1, 10, 10);
+	spinbtn_autosave_adj = gtk_adjustment_new (5, 1, 100, 1, 10, 0);
 	spinbtn_autosave = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_autosave_adj), 1, 0);
 	gtk_widget_show (spinbtn_autosave);
@@ -1600,7 +1600,7 @@ static void prefs_display_create(void)
 	gtk_widget_show (label_ng_abbrev);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_ng_abbrev, FALSE, FALSE, 0);
 
-	spinbtn_ng_abbrev_len_adj = gtk_adjustment_new (16, 0, 999, 1, 10, 10);
+	spinbtn_ng_abbrev_len_adj = gtk_adjustment_new (16, 0, 999, 1, 10, 0);
 	spinbtn_ng_abbrev_len = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_ng_abbrev_len_adj), 1, 0);
 	gtk_widget_show (spinbtn_ng_abbrev_len);
@@ -1840,7 +1840,7 @@ static GtkWidget *prefs_message_create(void)
 	gtk_box_pack_start (GTK_BOX (hbox_linespc), label_linespc,
 			    FALSE, FALSE, 0);
 
-	spinbtn_linespc_adj = gtk_adjustment_new (2, 0, 16, 1, 1, 16);
+	spinbtn_linespc_adj = gtk_adjustment_new (2, 0, 16, 1, 1, 0);
 	spinbtn_linespc = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_linespc_adj), 1, 0);
 	gtk_widget_show (spinbtn_linespc);
@@ -1877,7 +1877,7 @@ static GtkWidget *prefs_message_create(void)
 	gtk_widget_show (label_scr);
 	gtk_box_pack_start (GTK_BOX (hbox_scr), label_scr, FALSE, FALSE, 0);
 
-	spinbtn_scrollstep_adj = gtk_adjustment_new (1, 1, 100, 1, 10, 10);
+	spinbtn_scrollstep_adj = gtk_adjustment_new (1, 1, 100, 1, 10, 0);
 	spinbtn_scrollstep = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_scrollstep_adj), 1, 0);
 	gtk_widget_show (spinbtn_scrollstep);
@@ -2243,7 +2243,7 @@ static void prefs_privacy_create(void)
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 
-	spinbtn_store_passphrase_adj = gtk_adjustment_new (0, 0, 1440, 1, 5, 5);
+	spinbtn_store_passphrase_adj = gtk_adjustment_new (0, 0, 1440, 1, 5, 0);
 	spinbtn_store_passphrase = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_store_passphrase_adj), 1, 0);
 	gtk_widget_show (spinbtn_store_passphrase);
@@ -2839,7 +2839,7 @@ static GtkWidget *prefs_advanced_create(void)
 	gtk_widget_show (label_iotimeout);
 	gtk_box_pack_start (GTK_BOX (hbox1), label_iotimeout, FALSE, FALSE, 0);
 
-	spinbtn_iotimeout_adj = gtk_adjustment_new (60, 0, 1000, 1, 10, 10);
+	spinbtn_iotimeout_adj = gtk_adjustment_new (60, 0, 1000, 1, 10, 0);
 	spinbtn_iotimeout = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_iotimeout_adj), 1, 0);
 	gtk_widget_show (spinbtn_iotimeout);

@@ -583,7 +583,7 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 	gtk_widget_show(key_entry);
 	gtk_box_pack_start(GTK_BOX(hbox), key_entry, TRUE, TRUE, 0);
 
-	spin_btn_adj = gtk_adjustment_new(0, 0, 99999, 1, 10, 100);
+	spin_btn_adj = gtk_adjustment_new(0, 0, 99999, 1, 10, 0);
 	spin_btn = gtk_spin_button_new(GTK_ADJUSTMENT(spin_btn_adj), 1, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), spin_btn, FALSE, FALSE, 0);
 	gtk_widget_set_size_request(spin_btn, 64, -1);
