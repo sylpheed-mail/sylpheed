@@ -1,5 +1,10 @@
 2010-05-20
 
+	* libsylph/socket.c: sock_kill_process(): prevent redundant error
+	  messages when waitpid() is interrupted by EINTR.
+
+2010-05-20
+
 	* src/compose.c: added "Open" menu in the attach context menu.
 	  attach_button_pressed(): modify sensitivity of attach context menu.
 

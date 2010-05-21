@@ -1145,9 +1145,10 @@ static gint sock_kill_process(pid_t pid)
 
 	while (ret == (pid_t)-1) {
 		if ((ret = waitpid(pid, NULL, 0)) != pid) {
-			perror("sock_kill_process(): waitpid");
-			if (ret == (pid_t)-1 && errno != EINTR)
+			if (ret == (pid_t)-1 && errno != EINTR) {
+				perror("sock_kill_process(): waitpid");
 				break;
+			}
 		}
 	}
 
