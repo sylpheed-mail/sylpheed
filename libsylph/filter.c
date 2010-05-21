@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -84,6 +84,11 @@ gint filter_apply(GSList *fltlist, const gchar *file, FilterInfo *fltinfo)
 	msginfo = procheader_parse_file(file, fltinfo->flags, FALSE);
 	if (!msginfo) return 0;
 	msginfo->file_path = g_strdup(file);
+
+	/* inherit MIME flag */
+	fltinfo->flags.tmp_flags =
+		(fltinfo->flags.tmp_flags & ~MSG_CACHED_FLAG_MASK) |
+		(msginfo->flags.tmp_flags & MSG_CACHED_FLAG_MASK);
 
 	ret = filter_apply_msginfo(fltlist, msginfo, fltinfo);
 
