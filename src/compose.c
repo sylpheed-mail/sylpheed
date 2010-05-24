@@ -6600,10 +6600,10 @@ static void compose_attach_open(Compose *compose)
 	}
 
 #ifdef G_OS_WIN32
-	if (g_file_test(filename, G_FILE_TEST_IS_EXECUTABLE) ||
-	    str_has_suffix_case(filename, ".scr") ||
-	    str_has_suffix_case(filename, ".pif") ||
-	    GetBinaryType(filename, &dwtype)) {
+	if (g_file_test(ainfo->file, G_FILE_TEST_IS_EXECUTABLE) ||
+	    str_has_suffix_case(ainfo->file, ".scr") ||
+	    str_has_suffix_case(ainfo->file, ".pif") ||
+	    GetBinaryType(ainfo->file, &dwtype)) {
 		alertpanel_full
 			(_("Opening executable file"),
 			 _("This is an executable file. Opening executable file is restricted for security.\n"
