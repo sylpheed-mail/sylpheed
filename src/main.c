@@ -113,6 +113,7 @@ static gboolean init_console_done = FALSE;
 static gint lock_socket = -1;
 static gint lock_socket_tag = 0;
 static GIOChannel *lock_ch = NULL;
+static gchar *instance_id = NULL;
 
 #if USE_THREADS
 static GThread *main_thread;
@@ -551,6 +552,12 @@ static void parse_cmd_opt(int argc, char *argv[])
 				i++;
 			}
 #endif
+		} else if (!strncmp(argv[i], "--instance-id", 13)) {
+			if (argv[i + 1]) {
+				instance_id = g_locale_to_utf8
+					(argv[i + 1], -1, NULL, NULL, NULL);
+				i++;
+			}
 		} else if (!strncmp(argv[i], "--exit", 6)) {
 			cmd.exit = TRUE;
 		} else if (!strncmp(argv[i], "--help", 6)) {
@@ -1195,8 +1202,9 @@ static gchar *get_socket_name(void)
 	static gchar *filename = NULL;
 
 	if (filename == NULL) {
-		filename = g_strdup_printf("%s%csylpheed-%d",
+		filename = g_strdup_printf("%s%c%s-%d",
 					   g_get_tmp_dir(), G_DIR_SEPARATOR,
+					   instance_id ? instance_id : "sylpheed",
 #if HAVE_GETUID
 					   getuid());
 #else
@@ -1213,28 +1221,35 @@ static gint prohibit_duplicate_launch(void)
 
 #ifdef G_OS_WIN32
 	HANDLE hmutex;
+	const gchar *ins_id = instance_id ? instance_id : "Sylpheed";
+	gushort port = cmd.ipcport ? cmd.ipcport : REMOTE_CMD_PORT;
 
-	hmutex = CreateMutexA(NULL, FALSE, "Sylpheed");
+	debug_print("prohibit_duplicate_launch: checking mutex: %s\n", ins_id);
+	hmutex = CreateMutexA(NULL, FALSE, ins_id);
 	if (!hmutex) {
-		g_warning("cannot create Mutex\n");
+		g_warning("cannot create Mutex: %s\n", ins_id);
 		return -1;
 	}
 	if (GetLastError() != ERROR_ALREADY_EXISTS) {
-		sock = fd_open_inet(cmd.ipcport ? cmd.ipcport : REMOTE_CMD_PORT);
+		debug_print("prohibit_duplicate_launch: creating socket: port %d\n", port);
+		sock = fd_open_inet(port);
 		if (sock < 0)
 			return 0;
 		return sock;
 	}
 
-	sock = fd_connect_inet(cmd.ipcport ? cmd.ipcport : REMOTE_CMD_PORT);
+	debug_print("prohibit_duplicate_launch: connecting to socket: port %d\n", port);
+	sock = fd_connect_inet(port);
 	if (sock < 0)
 		return -1;
 #else
 	gchar *path;
 
 	path = get_socket_name();
+	debug_print("prohibit_duplicate_launch: checking socket: %s\n", path);
 	sock = fd_connect_unix(path);
 	if (sock < 0) {
+		debug_print("prohibit_duplicate_launch: creating socket: %s\n", path);
 		g_unlink(path);
 		return fd_open_unix(path);
 	}
@@ -1346,6 +1361,7 @@ static gint lock_socket_remove(void)
 
 #ifndef G_OS_WIN32
 	filename = get_socket_name();
+	debug_print("lock_socket_remove: removing socket: %s\n", filename);
 	g_unlink(filename);
 #endif
 
