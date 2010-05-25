@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -4041,6 +4041,26 @@ static void help_command_line_show(void)
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+#ifdef G_OS_WIN32
+	label = gtk_label_new(_("Windows-only option:"));
+	gtk_box_pack_start(GTK_BOX(vbox2), label, FALSE, FALSE, 0);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+	hbox = gtk_hbox_new(FALSE, 32);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox, FALSE, FALSE, 0);
+
+	label = gtk_label_new(_("--ipcport portnum"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+	label = gtk_label_new(_("specify port for IPC remote commands"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+#endif
 
 	gtkut_stock_button_set_create(&hbbox, &ok_btn, GTK_STOCK_OK,
 				      NULL, NULL, NULL, NULL);
