@@ -1927,6 +1927,8 @@ static GtkWidget *prefs_message_create(void)
 static GtkWidget *prefs_colorlabel_create(void)
 {
 	GtkWidget *vbox;
+	GtkWidget *hbox;
+	GtkWidget *label;
 	GtkWidget *table;
 	GtkWidget *clabel;
 	GtkWidget *entry;
@@ -1935,6 +1937,17 @@ static GtkWidget *prefs_colorlabel_create(void)
 	vbox = gtk_vbox_new(FALSE, VSPACING);
 	gtk_widget_show(vbox);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
+
+	hbox = gtk_hbox_new(FALSE, 8);
+	gtk_widget_show(hbox);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, TRUE, 0);
+
+	label = gtk_label_new(_("You can specify label names for each color (Work, TODO etc.)."));
+	gtk_widget_show(label);
+	gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+        gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+        gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
 	table = gtk_table_new(7, 2, FALSE);
 	gtk_widget_show(table);
