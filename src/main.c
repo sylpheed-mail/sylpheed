@@ -201,7 +201,7 @@ static void send_queue			(void);
 
 static void load_cb(GObject *obj, GModule *module, gpointer data)
 {
-	g_print("load_cb: %p (%s), %p\n", module, module ? g_module_name(module) : "(null)", data);
+	debug_print("load_cb: %p (%s), %p\n", module, module ? g_module_name(module) : "(null)", data);
 }
 
 int main(int argc, char *argv[])
@@ -1176,6 +1176,18 @@ static void plugin_init(void)
 	syl_plugin_add_symbol("inc_is_active", inc_is_active);
 	syl_plugin_add_symbol("inc_lock", inc_lock);
 	syl_plugin_add_symbol("inc_unlock", inc_unlock);
+
+#if USE_UPDATE_CHECK
+	syl_plugin_add_symbol("update_check", update_check);
+	syl_plugin_add_symbol("update_check_set_check_url",
+			      update_check_set_check_url);
+	syl_plugin_add_symbol("update_check_get_check_url",
+			      update_check_get_check_url);
+	syl_plugin_add_symbol("update_check_set_jump_url",
+			      update_check_set_jump_url);
+	syl_plugin_add_symbol("update_check_get_jump_url",
+			      update_check_get_jump_url);
+#endif
 
 	syl_plugin_signal_connect("plugin-load", G_CALLBACK(load_cb), NULL);
 

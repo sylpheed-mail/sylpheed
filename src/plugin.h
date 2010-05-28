@@ -45,7 +45,7 @@ typedef void (*SylPluginLoadFunc)	(void);
 typedef void (*SylPluginUnloadFunc)	(void);
 typedef void (*SylPluginCallbackFunc)	(void);
 
-#define SYL_PLUGIN_INTERFACE_VERSION	0x0104
+#define SYL_PLUGIN_INTERFACE_VERSION	0x0105
 
 struct _SylPlugin
 {
@@ -203,5 +203,11 @@ void syl_plugin_inc_mail			(void);
 gboolean syl_plugin_inc_is_active		(void);
 void syl_plugin_inc_lock			(void);
 void syl_plugin_inc_unlock			(void);
+
+void syl_plugin_update_check			(gboolean show_dialog_always);
+void syl_plugin_update_check_set_check_url		(const gchar *url);
+const gchar *syl_plugin_update_check_get_check_url	(void);
+void syl_plugin_update_check_set_jump_url		(const gchar *url);
+const gchar *syl_plugin_update_check_get_jump_url	(void);
 
 #endif /* __PLUGIN_H__ */

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -817,4 +817,44 @@ void syl_plugin_inc_unlock(void)
 
 	func = syl_plugin_lookup_symbol("inc_unlock");
 	SAFE_CALL(func);
+}
+
+void syl_plugin_update_check(gboolean show_dialog_always)
+{
+	void (*func)(gboolean);
+
+	func = syl_plugin_lookup_symbol("update_check");
+	SAFE_CALL_ARG1(func, show_dialog_always);
+}
+
+void syl_plugin_update_check_set_check_url(const gchar *url)
+{
+	void (*func)(const gchar *);
+
+	func = syl_plugin_lookup_symbol("update_check_set_check_url");
+	SAFE_CALL_ARG1(func, url);
+}
+
+const gchar *syl_plugin_update_check_get_check_url(void)
+{
+	const gchar * (*func)(void);
+
+	func = syl_plugin_lookup_symbol("update_check_get_check_url");
+	return SAFE_CALL_RET(func);
+}
+
+void syl_plugin_update_check_set_jump_url(const gchar *url)
+{
+	void (*func)(const gchar *);
+
+	func = syl_plugin_lookup_symbol("update_check_set_jump_url");
+	SAFE_CALL_ARG1(func, url);
+}
+
+const gchar *syl_plugin_update_check_get_jump_url(void)
+{
+	const gchar * (*func)(void);
+
+	func = syl_plugin_lookup_symbol("update_check_get_jump_url");
+	return SAFE_CALL_RET(func);
 }

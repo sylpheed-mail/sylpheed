@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,8 @@
 #include "utils.h"
 #include "version.h"
 
+static gchar *check_url = NULL;
+static gchar *jump_url = NULL;
 
 static gboolean compare_version(gint major, gint minor, gint micro,
 				const gchar *extra, gboolean remote_is_release,
@@ -111,6 +113,9 @@ static void update_dialog(const gchar *new_ver, gboolean manual)
 	gchar buf[1024];
 	AlertValue val;
 
+	if (!jump_url)
+		update_check_set_jump_url(HOMEPAGE_URI);
+
 	if (new_ver)
 		g_snprintf(buf, sizeof(buf), "%s\n\n%s -> %s",
 			   _("A newer version of Sylpheed has been found.\n"
@@ -127,7 +132,7 @@ static void update_dialog(const gchar *new_ver, gboolean manual)
 			      manual ? FALSE : TRUE,
 			      GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	if ((val & G_ALERT_VALUE_MASK) == G_ALERTDEFAULT) {
-		open_uri(HOMEPAGE_URI, prefs_common.uri_cmd);
+		open_uri(jump_url, prefs_common.uri_cmd);
 	}
 	if (val & G_ALERTDISABLE) {
 		prefs_common.auto_update_check = FALSE;
@@ -240,6 +245,10 @@ void update_check(gboolean show_dialog_always)
 	GPid pid;
 	GError *error = NULL;
 
+	if (!check_url)
+		update_check_set_check_url
+			("http://sylpheed.sraoss.jp/version.txt?");
+
 	if (child_stdout > 0) {
 		debug_print("update check is in progress\n");
 		return;
@@ -247,9 +256,9 @@ void update_check(gboolean show_dialog_always)
 
 	child_stdout = 0;
 
-	debug_print("update_check: getting latest version from http://sylpheed.sraoss.jp/version.txt\n");
+	debug_print("update_check: getting latest version from %s\n", check_url);
 
-	cmdline[4] = "http://sylpheed.sraoss.jp/version.txt?";
+	cmdline[4] = check_url;
 	if (prefs_common.use_http_proxy && prefs_common.http_proxy_host &&
 	    prefs_common.http_proxy_host[0] != '\0') {
 		cmdline[5] = "--proxy";
@@ -281,6 +290,30 @@ void update_check(gboolean show_dialog_always)
 	}
 
 	g_child_watch_add(pid, update_check_cb, (gpointer)show_dialog_always);
+}
+
+void update_check_set_check_url(const gchar *url)
+{
+	if (check_url)
+		g_free(check_url);
+	check_url = g_strdup(url);
+}
+
+const gchar *update_check_get_check_url(void)
+{
+	return check_url;
+}
+
+void update_check_set_jump_url(const gchar *url)
+{
+	if (jump_url)
+		g_free(jump_url);
+	jump_url = g_strdup(url);
+}
+
+const gchar *update_check_get_jump_url(void)
+{
+	return jump_url;
 }
 
 #endif /* USE_UPDATE_CHECK */

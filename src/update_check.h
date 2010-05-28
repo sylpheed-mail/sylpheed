@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,13 @@
 
 #include <glib.h>
 
-void update_check(gboolean show_dialog_always);
+void update_check			(gboolean	 show_dialog_always);
+
+void update_check_set_check_url		(const gchar	*url);
+const gchar *update_check_get_check_url	(void);
+void update_check_set_jump_url		(const gchar	*url);
+const gchar *update_check_get_jump_url	(void);
 
 #endif /* USE_UPDATE_CHECK */
 
-#endif /* __PLUGIN_MANAGER_H__ */
+#endif /* __UPDATE_CHECK_H__ */
