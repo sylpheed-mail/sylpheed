@@ -1130,6 +1130,17 @@ static void plugin_init(void)
 	syl_plugin_add_symbol("folderview", mainwin->folderview);
 	syl_plugin_add_symbol("folderview_get_selected_item",
 			      folderview_get_selected_item);
+	syl_plugin_add_symbol("folderview_check_new", folderview_check_new);
+	syl_plugin_add_symbol("folderview_check_new_item",
+			      folderview_check_new_item);
+	syl_plugin_add_symbol("folderview_check_new_all",
+			      folderview_check_new_all);
+	syl_plugin_add_symbol("folderview_update_item", folderview_update_item);
+	syl_plugin_add_symbol("folderview_update_item_foreach",
+			      folderview_update_item_foreach);
+	syl_plugin_add_symbol("folderview_update_all_updated",
+			      folderview_update_all_updated);
+
 	syl_plugin_add_symbol("folderview_mail_popup_factory",
 			      mainwin->folderview->mail_factory);
 	syl_plugin_add_symbol("folderview_imap_popup_factory",

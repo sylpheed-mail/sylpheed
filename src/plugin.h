@@ -142,6 +142,16 @@ gpointer syl_plugin_folderview_get		(void);
 FolderItem *syl_plugin_folderview_get_selected_item
 						(void);
 
+gint syl_plugin_folderview_check_new		(Folder         *folder);
+gint syl_plugin_folderview_check_new_item	(FolderItem     *item);
+gint syl_plugin_folderview_check_new_all	(void);
+
+void syl_plugin_folderview_update_item		(FolderItem	*item,
+						 gboolean	 update_summary);
+void syl_plugin_folderview_update_item_foreach	(GHashTable	*table,
+						 gboolean	 update_summary);
+void syl_plugin_folderview_update_all_updated	(gboolean	 update_summary);
+
 /* SummaryView */
 gpointer syl_plugin_summary_view_get		(void);
 void syl_plugin_sumary_select_by_msgnum		(guint msgnum);

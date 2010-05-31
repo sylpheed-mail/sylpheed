@@ -36,6 +36,8 @@ enum {
 	LAST_SIGNAL
 };
 
+#define GETFUNC(sym)	{ func = syl_plugin_lookup_symbol(sym); }
+
 #define SAFE_CALL(func_ptr)		{ if (func_ptr) func_ptr(); }
 #define SAFE_CALL_RET(func_ptr)		(func_ptr ? func_ptr() : NULL)
 #define SAFE_CALL_RET_VAL(func_ptr, retval) \
@@ -560,6 +562,50 @@ FolderItem *syl_plugin_folderview_get_selected_item(void)
 	}
 
 	return NULL;
+}
+
+gint syl_plugin_folderview_check_new(Folder *folder)
+{
+	gint (*func)(Folder *);
+	GETFUNC("folderview_check_new");
+	return SAFE_CALL_ARG1_RET_VAL(func, folder, FALSE);
+}
+
+gint syl_plugin_folderview_check_new_item(FolderItem *item)
+{
+	gint (*func)(FolderItem *);
+	GETFUNC("folderview_check_new_item");
+	return SAFE_CALL_ARG1_RET_VAL(func, item, FALSE);
+}
+
+gint syl_plugin_folderview_check_new_all(void)
+{
+	gint (*func)(void);
+	GETFUNC("folderview_check_new_all");
+	return SAFE_CALL_RET_VAL(func, FALSE);
+}
+
+void syl_plugin_folderview_update_item(FolderItem *item,
+				       gboolean update_summary)
+{
+	void (*func)(FolderItem *, gboolean);
+	GETFUNC("folderview_update_item");
+	SAFE_CALL_ARG2(func, item, update_summary);
+}
+
+void syl_plugin_folderview_update_item_foreach(GHashTable *table,
+					       gboolean update_summary)
+{
+	void (*func)(GHashTable *, gboolean);
+	GETFUNC("folderview_update_item_foreach");
+	SAFE_CALL_ARG2(func, table, update_summary);
+}
+
+void syl_plugin_folderview_update_all_updated(gboolean update_summary)
+{
+	void (*func)(gboolean);
+	GETFUNC("folderview_update_all_updated");
+	SAFE_CALL_ARG1(func, update_summary);
 }
 
 gpointer syl_plugin_summary_view_get(void)
