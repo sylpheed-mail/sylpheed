@@ -1445,7 +1445,7 @@ void summary_select_next_unread(SummaryView *summaryview)
 	summary_select_next_flagged_or_folder(summaryview, MSG_UNREAD,
 					      _("No more unread messages"),
 					      _("No unread message found. "
-						"Go to next folder?"),
+						"Go to next unread folder?"),
 					      NULL);
 }
 
@@ -1463,7 +1463,7 @@ void summary_select_next_new(SummaryView *summaryview)
 	summary_select_next_flagged_or_folder(summaryview, MSG_NEW,
 					      _("No more new messages"),
 					      _("No new message found. "
-						"Go to next folder?"),
+						"Go to next folder which has new messages?"),
 					      NULL);
 }
 
