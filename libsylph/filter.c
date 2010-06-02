@@ -133,6 +133,8 @@ gint filter_apply_msginfo(GSList *fltlist, MsgInfo *msginfo,
 			g_warning("filter_match_rule() returned error (code: %d)\n", fltinfo->error);
 		}
 		if (matched) {
+			debug_print("filter-log: %s: rule [%s] matched\n",
+				    G_STRFUNC, rule->name ? rule->name : "(No name)");
 			ret = filter_action_exec(rule, msginfo, file, fltinfo);
 			if (ret < 0) {
 				g_warning("filter_action_exec() returned error (code: %d)\n", fltinfo->error);
@@ -393,6 +395,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 {
 	gint ret;
 	gboolean matched = FALSE;
+	gboolean not_match = FALSE;
 	gchar *file;
 	gchar *cmdline;
 	PrefsAccount *cond_ac;
@@ -456,8 +459,47 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		return FALSE;
 	}
 
-	if (FLT_IS_NOT_MATCH(cond->match_flag))
+	if (FLT_IS_NOT_MATCH(cond->match_flag)) {
+		not_match = TRUE;
 		matched = !matched;
+	}
+
+	if (matched && get_debug_mode()) {
+		gchar *sv = cond->str_value ? cond->str_value : "";
+		gchar *nm = not_match ? " (reverse match)" : "";
+
+		switch (cond->type) {
+		case FLT_COND_BODY:
+			debug_print("filter-log: %s: BODY, str_value: [%s]%s\n", G_STRFUNC, sv, nm);
+			break;
+		case FLT_COND_CMD_TEST:
+			debug_print("filter-log: %s: CMD_TEST, str_value: [%s]%s\n", G_STRFUNC, sv, nm);
+			break;
+		case FLT_COND_SIZE_GREATER:
+			debug_print("filter-log: %s: SIZE_GREATER: %u > %d (KB)%s\n", G_STRFUNC, msginfo->size, cond->int_value, nm);
+			break;
+		case FLT_COND_AGE_GREATER:
+			debug_print("filter-log: %s: AGE_GREATER: %ld > %d (day)%s\n", G_STRFUNC, time(NULL) - msginfo->date_t, cond->int_value, nm);
+			break;
+		case FLT_COND_UNREAD:
+			debug_print("filter-log: %s: UNREAD%s\n", G_STRFUNC, nm);
+			break;
+		case FLT_COND_MARK:
+			debug_print("filter-log: %s: MARK%s\n", G_STRFUNC, nm);
+			break;
+		case FLT_COND_COLOR_LABEL:
+			debug_print("filter-log: %s: COLOR_LABEL%s\n", G_STRFUNC, nm);
+			break;
+		case FLT_COND_MIME:
+			debug_print("filter-log: %s: MIME%s\n", G_STRFUNC, nm);
+			break;
+		case FLT_COND_ACCOUNT:
+			debug_print("filter-log: %s: ACCOUNT [%d]%s\n", G_STRFUNC, cond->int_value, nm);
+			break;
+		default:
+			break;
+		}
+	}
 
 	return matched;
 }
@@ -465,6 +507,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 static gboolean filter_match_header_cond(FilterCond *cond, GSList *hlist)
 {
 	gboolean matched = FALSE;
+	gboolean not_match = FALSE;
 	GSList *cur;
 	Header *header;
 
@@ -503,8 +546,29 @@ static gboolean filter_match_header_cond(FilterCond *cond, GSList *hlist)
 			break;
 	}
 
-	if (FLT_IS_NOT_MATCH(cond->match_flag))
+	if (FLT_IS_NOT_MATCH(cond->match_flag)) {
+		not_match = TRUE;
 		matched = !matched;
+	}
+
+	if (matched && get_debug_mode()) {
+		gchar *sv = cond->str_value ? cond->str_value : "";
+		gchar *nm = not_match ? " (reverse match)" : "";
+
+		switch (cond->type) {
+		case FLT_COND_HEADER:
+			debug_print("filter-log: %s: HEADER [%s], str_value: [%s]%s\n", G_STRFUNC, cond->header_name, sv, nm);
+			break;
+		case FLT_COND_ANY_HEADER:
+			debug_print("filter-log: %s: ANY_HEADER, str_value: [%s]%s\n", G_STRFUNC, sv, nm);
+			break;
+		case FLT_COND_TO_OR_CC:
+			debug_print("filter-log: %s: TO_OR_CC, str_value: [%s]%s\n", G_STRFUNC, sv, nm);
+			break;
+		default:
+			break;
+		}
+	}
 
 	return matched;
 }
@@ -513,6 +577,7 @@ static gboolean filter_match_in_addressbook(FilterCond *cond, GSList *hlist,
 					    FilterInfo *fltinfo)
 {
 	gboolean matched = FALSE;
+	gboolean not_match = FALSE;
 	GSList *cur;
 	Header *header;
 
@@ -542,8 +607,25 @@ static gboolean filter_match_in_addressbook(FilterCond *cond, GSList *hlist,
 			break;
 	}
 
-	if (FLT_IS_NOT_MATCH(cond->match_flag))
+	if (FLT_IS_NOT_MATCH(cond->match_flag)) {
+		not_match = TRUE;
 		matched = !matched;
+	}
+
+	if (matched && get_debug_mode()) {
+		gchar *nm = not_match ? " (reverse match)" : "";
+
+		switch (cond->type) {
+		case FLT_COND_HEADER:
+			debug_print("filter-log: %s: HEADER [%s], IN_ADDRESSBOOK%s\n", G_STRFUNC, cond->header_name, nm);
+			break;
+		case FLT_COND_TO_OR_CC:
+			debug_print("filter-log: %s: TO_OR_CC, IN_ADDRESSBOOK%s\n", G_STRFUNC, nm);
+			break;
+		default:
+			break;
+		}
+	}
 
 	return matched;
 }
