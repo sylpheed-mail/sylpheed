@@ -476,10 +476,10 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 			debug_print("filter-log: %s: CMD_TEST, str_value: [%s]%s\n", G_STRFUNC, sv, nm);
 			break;
 		case FLT_COND_SIZE_GREATER:
-			debug_print("filter-log: %s: SIZE_GREATER: %u > %d (KB)%s\n", G_STRFUNC, msginfo->size, cond->int_value, nm);
+			debug_print("filter-log: %s: SIZE_GREATER: %u %s %d (KB)%s\n", G_STRFUNC, msginfo->size, not_match ? "<=" : ">", cond->int_value, nm);
 			break;
 		case FLT_COND_AGE_GREATER:
-			debug_print("filter-log: %s: AGE_GREATER: %ld > %d (day)%s\n", G_STRFUNC, time(NULL) - msginfo->date_t, cond->int_value, nm);
+			debug_print("filter-log: %s: AGE_GREATER: %ld (sec) %s %d (day)%s\n", G_STRFUNC, time(NULL) - msginfo->date_t, not_match ? "<=" : ">", cond->int_value, nm);
 			break;
 		case FLT_COND_UNREAD:
 			debug_print("filter-log: %s: UNREAD%s\n", G_STRFUNC, nm);
