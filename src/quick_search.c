@@ -220,6 +220,7 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	GSList *cur;
 	gint count = 0, total = 0;
 	gchar status_text[1024];
+	gboolean dmode;
 
 	if (!summaryview->all_mlist)
 		return NULL;
@@ -290,6 +291,8 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	}
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
+	dmode = get_debug_mode();
+	set_debug_mode(FALSE);
 
 	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
@@ -326,6 +329,8 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 			procheader_header_list_destroy(hlist);
 	}
 	flt_mlist = g_slist_reverse(flt_mlist);
+
+	set_debug_mode(dmode);
 
 	if (status_rule || rule) {
 		if (count > 0)
