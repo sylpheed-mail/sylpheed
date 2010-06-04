@@ -92,6 +92,11 @@ static gchar	   *completion_prefix;		/* last prefix. (this is cached here
 
 /*******************************************************************************/
 
+
+static void address_completion_entry_changed		(GtkEditable *editable,
+							 gpointer     data);
+
+
 /* completion_func() - used by GTK to find the string data to be used for 
  * completion 
  */
@@ -293,10 +298,16 @@ void replace_address_in_edit(GtkEntry *entry, const gchar *newtext,
 {
 	if (!newtext) return;
 
+	g_signal_handlers_block_by_func
+		(entry, address_completion_entry_changed, NULL);
+
 	gtk_editable_delete_text(GTK_EDITABLE(entry), start_pos, -1);
 	gtk_editable_insert_text(GTK_EDITABLE(entry), newtext, strlen(newtext),
 				 &start_pos);
 	gtk_editable_set_position(GTK_EDITABLE(entry), -1);
+
+	g_signal_handlers_unblock_by_func
+		(entry, address_completion_entry_changed, NULL);
 }
 
 #if 0
@@ -459,6 +470,7 @@ guint get_completion_count(void)
 /* should clear up anything after complete_address() */
 void clear_completion_cache(void)
 {
+	g_print("clear_completion_cache\n");
 	if (is_completion_pending()) {
 		if (completion_prefix)
 			g_free(completion_prefix);
@@ -528,21 +540,22 @@ static gboolean address_completion_entry_key_pressed	(GtkEntry    *entry,
 static gboolean address_completion_complete_address_in_entry
 							(GtkEntry    *entry,
 							 gboolean     next);
-static void address_completion_create_completion_window	(GtkEntry    *entry);
+static void address_completion_create_completion_window	(GtkEntry    *entry,
+							 gboolean     select_next);
 
 static void completion_window_select_row(GtkCList	 *clist,
 					 gint		  row,
 					 gint		  col,
 					 GdkEvent	 *event,
-					 GtkWidget	**completion_window);
+					 GtkWidget	**window);
 static gboolean completion_window_button_press
 					(GtkWidget	 *widget,
 					 GdkEventButton  *event,
-					 GtkWidget	**completion_window);
+					 GtkWidget	**window);
 static gboolean completion_window_key_press
 					(GtkWidget	 *widget,
 					 GdkEventKey	 *event,
-					 GtkWidget	**completion_window);
+					 GtkWidget	**window);
 
 
 static void completion_window_advance_to_row(GtkCList *clist, gint row)
@@ -669,6 +682,9 @@ void address_completion_register_entry(GtkEntry *entry)
 			(G_CALLBACK(address_completion_entry_key_pressed),
 			 COMPLETION_UNIQUE_DATA, NULL),
 		 FALSE);
+	g_signal_connect(G_OBJECT(entry), "changed",
+			 G_CALLBACK(address_completion_entry_changed),
+			 NULL);
 }
 
 void address_completion_unregister_entry(GtkEntry *entry)
@@ -709,9 +725,13 @@ static void address_completion_mainwindow_set_focus(GtkWindow *window,
 						    gpointer   data)
 {
 	if (widget && GTK_IS_ENTRY(widget) &&
-	    g_object_get_data(G_OBJECT(widget), ENTRY_DATA_TAB_HOOK)) 
+	    g_object_get_data(G_OBJECT(widget), ENTRY_DATA_TAB_HOOK)) {
 		clear_completion_cache();
+	}
 }
+
+static GtkWidget *completion_window;
+static gboolean start_completion_on_tab = FALSE;
 
 /* watch for tabs in one of the address entries. if no tab then clear the
  * completion cache */
@@ -719,9 +739,11 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 						     GdkEventKey *ev,
 						     gpointer     data)
 {
-	if (ev->keyval == GDK_Tab) {
+	g_print("entry_key_pressed: %s\n", gtk_entry_get_text(entry));
+
+	if (start_completion_on_tab && ev->keyval == GDK_Tab) {
 		if (address_completion_complete_address_in_entry(entry, TRUE)) {
-			address_completion_create_completion_window(entry);
+			address_completion_create_completion_window(entry, TRUE);
 			/* route a void character to the default handler */
 			/* this is a dirty hack; we're actually changing a key
 			 * reported by the system. */
@@ -740,10 +762,39 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 		|| ev->keyval == GDK_Alt_L
 		|| ev->keyval == GDK_Alt_R) {
 		/* these buttons should not clear the cache... */
-	} else
+	} else {
 		clear_completion_cache();
+		if (completion_window) {
+			gtk_widget_destroy(completion_window);
+			completion_window = NULL;
+		}
+	}
 
 	return FALSE;
+}
+
+static void address_completion_entry_changed(GtkEditable *editable,
+					     gpointer data)
+{
+	GtkEntry *entry = GTK_ENTRY(editable);
+
+	g_print("changed: %s\n", gtk_entry_get_text(entry));
+	if (start_completion_on_tab)
+		return;
+
+	g_signal_handlers_block_by_func
+		(editable, address_completion_entry_changed, data);
+	if (address_completion_complete_address_in_entry(entry, TRUE)) {
+		address_completion_create_completion_window(entry, FALSE);
+	} else {
+		clear_completion_cache();
+		if (completion_window) {
+			gtk_widget_destroy(completion_window);
+			completion_window = NULL;
+		}
+	}
+	g_signal_handlers_unblock_by_func
+		(editable, address_completion_entry_changed, data);
 }
 
 /* initialize the completion cache and put first completed string
@@ -762,8 +813,11 @@ static gboolean address_completion_complete_address_in_entry(GtkEntry *entry,
 
 	if (!GTK_WIDGET_HAS_FOCUS(entry)) return FALSE;
 
+	g_print("address_completion_complete_address_in_entry\n");
+
 	/* get an address component from the cursor */
 	address = get_address_from_edit(entry, &cursor_pos);
+	if (address) g_print("got address: %s\n", address);
 	if (!address) return FALSE;
 
 	/* still something in the cache */
@@ -792,14 +846,16 @@ static gboolean address_completion_complete_address_in_entry(GtkEntry *entry,
 	return completed;
 }
 
-static void address_completion_create_completion_window(GtkEntry *entry_)
+static void address_completion_create_completion_window(GtkEntry *entry_,
+							gboolean select_next)
 {
-	static GtkWidget *completion_window;
 	gint x, y, height, width, depth;
 	GtkWidget *scroll, *clist;
 	GtkRequisition r;
 	guint count = 0;
 	GtkWidget *entry = GTK_WIDGET(entry_);
+
+	g_print("address_completion_create_completion_window\n");
 
 	if (completion_window) {
 		gtk_widget_destroy(completion_window);
@@ -870,7 +926,8 @@ static void address_completion_create_completion_window(GtkEntry *entry_)
 	/* this gets rid of the irritating focus rectangle that doesn't
 	 * follow the selection */
 	GTK_WIDGET_UNSET_FLAGS(clist, GTK_CAN_FOCUS);
-	gtk_clist_select_row(GTK_CLIST(clist), 1, 0);
+	gtk_clist_select_row(GTK_CLIST(clist), select_next ? 1 : 0, 0);
+	g_print("address_completion_create_completion_window done\n");
 }
 
 
@@ -878,14 +935,14 @@ static void address_completion_create_completion_window(GtkEntry *entry_)
  * note: event is NULL if selected by anything else than a mouse button. */
 static void completion_window_select_row(GtkCList *clist, gint row, gint col,
 					 GdkEvent *event,
-					 GtkWidget **completion_window)
+					 GtkWidget **window)
 {
 	GtkEntry *entry;
 
-	g_return_if_fail(completion_window != NULL);
-	g_return_if_fail(*completion_window != NULL);
+	g_return_if_fail(window != NULL);
+	g_return_if_fail(*window != NULL);
 
-	entry = GTK_ENTRY(g_object_get_data(G_OBJECT(*completion_window),
+	entry = GTK_ENTRY(g_object_get_data(G_OBJECT(*window),
 					    WINDOW_DATA_COMPL_ENTRY));
 	g_return_if_fail(entry != NULL);
 
@@ -895,8 +952,8 @@ static void completion_window_select_row(GtkCList *clist, gint row, gint col,
 		return;
 
 	clear_completion_cache();
-	gtk_widget_destroy(*completion_window);
-	*completion_window = NULL;
+	gtk_widget_destroy(*window);
+	*window = NULL;
 }
 
 /* completion_window_button_press() - check is mouse click is anywhere
@@ -904,17 +961,18 @@ static void completion_window_select_row(GtkCList *clist, gint row, gint col,
  * window is destroyed, and the original prefix is restored */
 static gboolean completion_window_button_press(GtkWidget *widget,
 					       GdkEventButton *event,
-					       GtkWidget **completion_window)
+					       GtkWidget **window)
 {
 	GtkWidget *event_widget, *entry;
 	gchar *prefix;
 	gint cursor_pos;
 	gboolean restore = TRUE;
 
-	g_return_val_if_fail(completion_window != NULL, FALSE);
-	g_return_val_if_fail(*completion_window != NULL, FALSE);
+	g_return_val_if_fail(window != NULL, FALSE);
+	g_return_val_if_fail(*window != NULL, FALSE);
 
-	entry = GTK_WIDGET(g_object_get_data(G_OBJECT(*completion_window),
+	g_print("completion_window_button_press\n");
+	entry = GTK_WIDGET(g_object_get_data(G_OBJECT(*window),
 					     WINDOW_DATA_COMPL_ENTRY));
 	g_return_val_if_fail(entry != NULL, FALSE);
 
@@ -939,15 +997,15 @@ static gboolean completion_window_button_press(GtkWidget *widget,
 	}
 
 	clear_completion_cache();
-	gtk_widget_destroy(*completion_window);
-	*completion_window = NULL;
+	gtk_widget_destroy(*window);
+	*window = NULL;
 
 	return TRUE;
 }
 
 static gboolean completion_window_key_press(GtkWidget *widget,
 					    GdkEventKey *event,
-					    GtkWidget **completion_window)
+					    GtkWidget **window)
 {
 	GdkEventKey tmp_event;
 	GtkWidget *entry;
@@ -955,12 +1013,16 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	gint cursor_pos;
 	GtkWidget *clist;
 
-	g_return_val_if_fail(completion_window != NULL, FALSE);
-	g_return_val_if_fail(*completion_window != NULL, FALSE);
+	g_return_val_if_fail(window != NULL, FALSE);
+	g_return_val_if_fail(*window != NULL, FALSE);
 
-	entry = GTK_WIDGET(g_object_get_data(G_OBJECT(*completion_window),
+	g_print("completion_window_key_press\n");
+	if (!is_completion_pending())
+		g_warning("completion is not pending!\n");
+
+	entry = GTK_WIDGET(g_object_get_data(G_OBJECT(*window),
 					     WINDOW_DATA_COMPL_ENTRY));
-	clist = GTK_WIDGET(g_object_get_data(G_OBJECT(*completion_window),
+	clist = GTK_WIDGET(g_object_get_data(G_OBJECT(*window),
 					     WINDOW_DATA_COMPL_CLIST));
 	g_return_val_if_fail(entry != NULL, FALSE);
 
@@ -988,15 +1050,16 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	}
 
 	/* look for presses that accept the selection */
-	if (event->keyval == GDK_Return || event->keyval == GDK_space) {
+	if (event->keyval == GDK_Return ||
+	    (start_completion_on_tab && event->keyval == GDK_space)) {
 		/* insert address only if shift or control is pressed */
 		if (event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK)) {
 			completion_window_apply_selection_address_only
 				(GTK_CLIST(clist), GTK_ENTRY(entry));
 		}
 		clear_completion_cache();
-		gtk_widget_destroy(*completion_window);
-		*completion_window = NULL;
+		gtk_widget_destroy(*window);
+		*window = NULL;
 		return FALSE;
 	}
 
@@ -1015,28 +1078,34 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	}
 
 	/* other key, let's restore the prefix (orignal text) */
-	prefix = get_complete_address(0);
-	g_free(get_address_from_edit(GTK_ENTRY(entry), &cursor_pos));
-	replace_address_in_edit(GTK_ENTRY(entry), prefix, cursor_pos);
-	g_free(prefix);
-	clear_completion_cache();
+	if (start_completion_on_tab || event->keyval == GDK_Escape) {
+		prefix = get_complete_address(0);
+		g_free(get_address_from_edit(GTK_ENTRY(entry), &cursor_pos));
+		replace_address_in_edit(GTK_ENTRY(entry), prefix, cursor_pos);
+		g_free(prefix);
+	}
 
 	/* make sure anything we typed comes in the edit box */
-	if (event->length > 0 && event->keyval != GDK_Escape) {
-		tmp_event.type       = event->type;
-		tmp_event.window     = entry->window;
-		tmp_event.send_event = TRUE;
-		tmp_event.time       = event->time;
-		tmp_event.state      = event->state;
-		tmp_event.keyval     = event->keyval;
-		tmp_event.length     = event->length;
-		tmp_event.string     = event->string;
-		gtk_widget_event(entry, (GdkEvent *)&tmp_event);
+	if ((start_completion_on_tab && event->length > 0 &&
+	     event->keyval != GDK_Escape) ||
+	    (!start_completion_on_tab && event->keyval != GDK_Escape)) {
+		GtkWidget *pwin = entry;
+
+		while ((pwin = gtk_widget_get_parent(pwin)) != NULL) {
+			if (GTK_WIDGET_TOPLEVEL(pwin)) {
+				gtk_window_propagate_key_event
+					(GTK_WINDOW(pwin), event);
+				if (!start_completion_on_tab)
+					return TRUE;
+			}
+		}
 	}
 
 	/* and close the completion window */
-	gtk_widget_destroy(*completion_window);
-	*completion_window = NULL;
+	clear_completion_cache();
+	gtk_widget_destroy(*window);
+	*window = NULL;
+	g_print("completion_window_key_press: window destroyed\n");
 
 	return TRUE;
 }
