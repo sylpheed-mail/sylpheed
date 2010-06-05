@@ -296,16 +296,25 @@ gchar *get_address_from_edit(GtkEntry *entry, gint *start_pos)
 void replace_address_in_edit(GtkEntry *entry, const gchar *newtext,
 			     gint start_pos)
 {
+	gchar *origtext;
+
 	if (!newtext) return;
+
+	g_print("replace_address_in_edit: %s\n", newtext);
+
+	origtext = gtk_editable_get_chars(GTK_EDITABLE(entry), start_pos, -1);
+	if (!strcmp(origtext, newtext)) {
+		g_free(origtext);
+		return;
+	}
+	g_free(origtext);
 
 	g_signal_handlers_block_by_func
 		(entry, address_completion_entry_changed, NULL);
-
 	gtk_editable_delete_text(GTK_EDITABLE(entry), start_pos, -1);
 	gtk_editable_insert_text(GTK_EDITABLE(entry), newtext, strlen(newtext),
 				 &start_pos);
 	gtk_editable_set_position(GTK_EDITABLE(entry), -1);
-
 	g_signal_handlers_unblock_by_func
 		(entry, address_completion_entry_changed, NULL);
 }
