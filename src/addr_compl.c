@@ -36,6 +36,7 @@
 #include "utils.h"
 #include "addressbook.h"
 #include "main.h"
+#include "prefs_common.h"
 
 /* How it works:
  *
@@ -740,7 +741,6 @@ static void address_completion_mainwindow_set_focus(GtkWindow *window,
 }
 
 static GtkWidget *completion_window;
-static gboolean start_completion_on_tab = FALSE;
 
 /* watch for tabs in one of the address entries. if no tab then clear the
  * completion cache */
@@ -750,7 +750,7 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 {
 	g_print("entry_key_pressed: %s\n", gtk_entry_get_text(entry));
 
-	if (start_completion_on_tab && ev->keyval == GDK_Tab) {
+	if (!prefs_common.fullauto_completion_mode && ev->keyval == GDK_Tab) {
 		if (address_completion_complete_address_in_entry(entry, TRUE)) {
 			address_completion_create_completion_window(entry, TRUE);
 			/* route a void character to the default handler */
@@ -788,7 +788,7 @@ static void address_completion_entry_changed(GtkEditable *editable,
 	GtkEntry *entry = GTK_ENTRY(editable);
 
 	g_print("changed: %s\n", gtk_entry_get_text(entry));
-	if (start_completion_on_tab)
+	if (!prefs_common.fullauto_completion_mode)
 		return;
 
 	g_signal_handlers_block_by_func
@@ -1016,7 +1016,6 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 					    GdkEventKey *event,
 					    GtkWidget **window)
 {
-	GdkEventKey tmp_event;
 	GtkWidget *entry;
 	gchar *prefix;
 	gint cursor_pos;
@@ -1060,7 +1059,8 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 
 	/* look for presses that accept the selection */
 	if (event->keyval == GDK_Return ||
-	    (start_completion_on_tab && event->keyval == GDK_space)) {
+	    (!prefs_common.fullauto_completion_mode &&
+	     event->keyval == GDK_space)) {
 		/* insert address only if shift or control is pressed */
 		if (event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK)) {
 			completion_window_apply_selection_address_only
@@ -1087,7 +1087,8 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	}
 
 	/* other key, let's restore the prefix (orignal text) */
-	if (start_completion_on_tab || event->keyval == GDK_Escape) {
+	if (!prefs_common.fullauto_completion_mode ||
+	    event->keyval == GDK_Escape) {
 		prefix = get_complete_address(0);
 		g_free(get_address_from_edit(GTK_ENTRY(entry), &cursor_pos));
 		replace_address_in_edit(GTK_ENTRY(entry), prefix, cursor_pos);
@@ -1095,16 +1096,17 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	}
 
 	/* make sure anything we typed comes in the edit box */
-	if ((start_completion_on_tab && event->length > 0 &&
+	if ((!prefs_common.fullauto_completion_mode && event->length > 0 &&
 	     event->keyval != GDK_Escape) ||
-	    (!start_completion_on_tab && event->keyval != GDK_Escape)) {
+	    (prefs_common.fullauto_completion_mode &&
+	     event->keyval != GDK_Escape)) {
 		GtkWidget *pwin = entry;
 
 		while ((pwin = gtk_widget_get_parent(pwin)) != NULL) {
 			if (GTK_WIDGET_TOPLEVEL(pwin)) {
 				gtk_window_propagate_key_event
 					(GTK_WINDOW(pwin), event);
-				if (!start_completion_on_tab)
+				if (prefs_common.fullauto_completion_mode)
 					return TRUE;
 			}
 		}

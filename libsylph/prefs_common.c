@@ -437,6 +437,8 @@ static PrefParam param[] = {
 	 P_BOOL},
 	{"enable_address_completion", "TRUE",
 	 &prefs_common.enable_address_completion, P_BOOL},
+	{"fullauto_completion_mode", "TRUE",
+	 &prefs_common.fullauto_completion_mode, P_BOOL},
 
 	{"confirm_on_exit", "FALSE", &prefs_common.confirm_on_exit, P_BOOL},
 	{"clean_trash_on_exit", "FALSE", &prefs_common.clean_on_exit, P_BOOL},

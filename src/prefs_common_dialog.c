@@ -218,7 +218,7 @@ static struct Other {
 	GtkWidget *checkbtn_close_recv_dialog;
 
 	GtkWidget *checkbtn_addaddrbyclick;
-	GtkWidget *checkbtn_enable_addr_compl;
+	GtkWidget *radiobtn_addr_compl;
 
 	GtkWidget *checkbtn_confonexit;
 	GtkWidget *checkbtn_cleanonexit;
@@ -280,6 +280,9 @@ static void prefs_common_charset_set_optmenu		   (PrefParam *pparam);
 static void prefs_common_recv_dialog_set_optmenu	   (PrefParam *pparam);
 static void prefs_common_uri_set_data_from_entry	   (PrefParam *pparam);
 static void prefs_common_uri_set_entry			   (PrefParam *pparam);
+
+static void prefs_common_addr_compl_set_data_from_radiobtn (PrefParam *pparam);
+static void prefs_common_addr_compl_set_radiobtn	   (PrefParam *pparam);
 
 static PrefsUIData ui_data[] = {
 	/* Receive */
@@ -534,8 +537,9 @@ static PrefsUIData ui_data[] = {
 
 	{"add_address_by_click", &other.checkbtn_addaddrbyclick,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"enable_address_completion", &other.checkbtn_enable_addr_compl,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"enable_address_completion", &other.radiobtn_addr_compl,
+	 prefs_common_addr_compl_set_data_from_radiobtn,
+	 prefs_common_addr_compl_set_radiobtn},
 
 	{"confirm_on_exit", &other.checkbtn_confonexit,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -2490,7 +2494,11 @@ static GtkWidget *prefs_other_create(void)
 	GtkWidget *frame_addr;
 	GtkWidget *vbox_addr;
 	GtkWidget *checkbtn_addaddrbyclick;
-	GtkWidget *checkbtn_enable_addr_compl;
+	GtkWidget *vbox_spc;
+	GtkWidget *hbox_spc;
+	GtkWidget *radiobtn_addr_compl;
+	GtkWidget *radiobtn_compl_tab;
+	GtkWidget *radiobtn_no_compl;
 
 	GtkWidget *frame_exit;
 	GtkWidget *vbox_exit;
@@ -2545,9 +2553,49 @@ static GtkWidget *prefs_other_create(void)
 	PACK_CHECK_BUTTON
 		(vbox_addr, checkbtn_addaddrbyclick,
 		 _("Add address to destination when double-clicked"));
-	PACK_CHECK_BUTTON
-		(vbox_addr, checkbtn_enable_addr_compl,
-		 _("Enable address auto-completion"));
+
+	PACK_VSPACER (vbox_addr, vbox_spc, VSPACING_NARROW_2);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_addr), hbox1, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Address auto-completion:"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_addr), hbox1, FALSE, FALSE, 0);
+
+	hbox_spc = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox_spc);
+	gtk_box_pack_start (GTK_BOX (hbox1), hbox_spc, FALSE, FALSE, 0);
+	gtk_widget_set_size_request (hbox_spc, 12, -1);
+
+	radiobtn_addr_compl = gtk_radio_button_new_with_label
+		(NULL, _("Automatic"));
+	gtk_widget_show (radiobtn_addr_compl);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_addr_compl,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_addr_compl), MENU_VAL_ID,
+			   GINT_TO_POINTER (0));
+
+	radiobtn_compl_tab = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON (radiobtn_addr_compl), _("Start with Tab"));
+	gtk_widget_show (radiobtn_compl_tab);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_compl_tab,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_compl_tab), MENU_VAL_ID,
+			   GINT_TO_POINTER (1));
+
+	radiobtn_no_compl = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON (radiobtn_addr_compl), _("Disable"));
+	gtk_widget_show (radiobtn_no_compl);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_no_compl,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_no_compl), MENU_VAL_ID,
+			   GINT_TO_POINTER (2));
 
 	PACK_FRAME (vbox1, frame_exit, _("On exit"));
 
@@ -2577,7 +2625,7 @@ static GtkWidget *prefs_other_create(void)
 	other.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
 
 	other.checkbtn_addaddrbyclick    = checkbtn_addaddrbyclick;
-	other.checkbtn_enable_addr_compl = checkbtn_enable_addr_compl;
+	other.radiobtn_addr_compl = radiobtn_addr_compl;
 
 	other.checkbtn_confonexit  = checkbtn_confonexit;
 	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
@@ -4171,6 +4219,76 @@ static void prefs_common_uri_set_entry(PrefParam *pparam)
 				   *str ? *str : _("(Default browser)"));
 	} else {
 		g_warning("Invalid type for URI setting\n");
+	}
+}
+
+static void prefs_common_addr_compl_set_data_from_radiobtn(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkRadioButton *radiobtn;
+	GSList *group;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	radiobtn = GTK_RADIO_BUTTON(*ui_data->widget);
+	group = gtk_radio_button_get_group(radiobtn);
+	while (group != NULL) {
+		GtkToggleButton *btn = GTK_TOGGLE_BUTTON(group->data);
+		gint mode;
+
+		if (gtk_toggle_button_get_active(btn)) {
+			mode = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn),
+								 MENU_VAL_ID));
+			if (mode == 2) {
+				prefs_common.enable_address_completion = FALSE;
+				prefs_common.fullauto_completion_mode = FALSE;
+			} else {
+				prefs_common.enable_address_completion = TRUE;
+				if (mode == 0)
+					prefs_common.fullauto_completion_mode = TRUE;
+				else
+					prefs_common.fullauto_completion_mode = FALSE;
+			}
+			break;
+		}
+		group = group->next;
+	}
+}
+
+static void prefs_common_addr_compl_set_radiobtn(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkRadioButton *radiobtn;
+	GSList *group;
+	gint mode;
+
+	if (prefs_common.enable_address_completion) {
+		if (prefs_common.fullauto_completion_mode)
+			mode = 0;
+		else
+			mode = 1;
+	} else
+		mode = 2;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	radiobtn = GTK_RADIO_BUTTON(*ui_data->widget);
+	group = gtk_radio_button_get_group(radiobtn);
+	while (group != NULL) {
+		GtkToggleButton *btn = GTK_TOGGLE_BUTTON(group->data);
+		gint data;
+
+		data = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn),
+							 MENU_VAL_ID));
+		if (data == mode) {
+			gtk_toggle_button_set_active(btn, TRUE);
+			break;
+		}
+		group = group->next;
 	}
 }
 
