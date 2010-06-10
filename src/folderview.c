@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtkvbox.h>
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtktreestore.h>
 #include <gtk/gtktreeview.h>
@@ -321,6 +322,7 @@ static GtkItemFactoryEntry folderview_news_popup_entries[] =
 FolderView *folderview_create(void)
 {
 	FolderView *folderview;
+	GtkWidget *vbox;
 	GtkWidget *scrolledwin;
 	GtkWidget *treeview;
 	GtkTreeStore *store;
@@ -338,12 +340,15 @@ FolderView *folderview_create(void)
 	debug_print(_("Creating folder view...\n"));
 	folderview = g_new0(FolderView, 1);
 
+	vbox = gtk_vbox_new(FALSE, 0);
+
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy
 		(GTK_SCROLLED_WINDOW(scrolledwin),
 		 GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
 					    GTK_SHADOW_IN);
+	gtk_box_pack_start(GTK_BOX(vbox), scrolledwin, TRUE, TRUE, 0);
 	gtk_widget_set_size_request(scrolledwin,
 				    prefs_common.folderview_width,
 				    prefs_common.folderview_height);
@@ -521,6 +526,7 @@ FolderView *folderview_create(void)
 			 G_CALLBACK(folderview_drag_received_cb),
 			 folderview);
 
+	folderview->vbox         = vbox;
 	folderview->scrolledwin  = scrolledwin;
 	folderview->treeview     = treeview;
 	folderview->store        = store;
@@ -536,7 +542,7 @@ FolderView *folderview_create(void)
 
 	folderview_set_columns(folderview);
 
-	gtk_widget_show_all(scrolledwin);
+	gtk_widget_show_all(vbox);
 
 	folderview_list = g_list_append(folderview_list, folderview);
 
