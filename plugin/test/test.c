@@ -27,7 +27,7 @@
 
 static SylPluginInfo info = {
 	"Test Plugin",
-	"1.0.0",
+	"3.0.99",
 	"Hiroyuki Yamamoto",
 	"Test plug-in for Sylpheed plug-in system"
 };
@@ -40,6 +40,7 @@ static void compose_created_cb(GObject *obj, gpointer compose);
 static void compose_destroy_cb(GObject *obj, gpointer compose);
 
 static void create_window(void);
+static void create_folderview_sub_widget(void);
 
 void plugin_load(void)
 {
@@ -63,6 +64,8 @@ void plugin_load(void)
 	mainwin = syl_plugin_main_window_get();
 	g_print("mainwin: %p\n", mainwin);
 	syl_plugin_main_window_popup(mainwin);
+
+	create_folderview_sub_widget();
 
 	syl_plugin_add_menuitem("/Tools", NULL, NULL, NULL);
 	syl_plugin_add_menuitem("/Tools", "Plugin test", create_window, NULL);
@@ -152,4 +155,18 @@ static void create_window(void)
 	g_signal_connect(G_OBJECT(button), "clicked",
 			 G_CALLBACK(button_clicked), NULL);
 	gtk_widget_show_all(window);
+}
+
+static void create_folderview_sub_widget(void)
+{
+	GtkWidget *vbox;
+	GtkWidget *button;
+
+	g_print("creating sub widget\n");
+
+	vbox = gtk_vbox_new(FALSE, 2);
+	button = gtk_button_new_with_label("Test");
+	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
+	gtk_widget_show_all(vbox);
+	syl_plugin_folderview_add_sub_widget(vbox);
 }

@@ -580,6 +580,8 @@ void folderview_add_sub_widget(FolderView *folderview, GtkWidget *widget)
 	g_return_if_fail(folderview != NULL);
 	g_return_if_fail(widget != NULL);
 
+	debug_print("folderview_add_sub_widget: adding sub widget\n");
+
 	gtk_box_pack_start(GTK_BOX(folderview->vbox), widget, FALSE, FALSE, 0);
 }
 

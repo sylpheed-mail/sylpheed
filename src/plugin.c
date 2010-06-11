@@ -556,7 +556,7 @@ void syl_plugin_folderview_add_sub_widget(GtkWidget *widget)
 
 	folderview = syl_plugin_folderview_get();
 	if (folderview) {
-		GETFUNC("folderview_get");
+		GETFUNC("folderview_add_sub_widget");
 		SAFE_CALL_ARG2(func, folderview, widget);
 	}
 }
