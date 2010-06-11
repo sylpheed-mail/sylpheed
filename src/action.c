@@ -676,6 +676,8 @@ static gboolean execute_actions(gchar *action, GSList *msg_list,
 		children->list	      = children_list;
 		children->nb	      = g_slist_length(children_list);
 
+		create_io_dialog(children);
+
 		for (cur = children_list; cur; cur = cur->next) {
 			child_info = (ChildInfo *) cur->data;
 			child_info->tag_status = 
@@ -683,8 +685,6 @@ static gboolean execute_actions(gchar *action, GSList *msg_list,
 					      GDK_INPUT_READ,
 					      catch_status, child_info);
 		}
-
-		create_io_dialog(children);
 	}
 
 	return is_ok;
@@ -724,13 +724,24 @@ static ChildInfo *fork_child(gchar *cmd, const gchar *msg_str,
 		}
 	}
 
-	debug_print("Forking child and grandchild.\n");
+	debug_print("Forking child and grandchild in %s mode.\n", sync ? "sync" : "async");
 	debug_print("Executing: /bin/sh -c %s\n", cmd);
 
 	pid = fork();
 	if (pid == 0) { /* Child */
+		struct sigaction sa;
+
 		if (setpgid(0, 0))
 			perror("setpgid");
+
+		/* reset signal handlers */
+		memset(&sa, 0, sizeof(sa));
+		sa.sa_handler = SIG_DFL;
+		sigaction(SIGHUP, &sa, NULL);
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGTERM, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+		sigaction(SIGPIPE, &sa, NULL);
 
 #ifdef GDK_WINDOWING_X11
 		close(ConnectionNumber(gdk_display));
@@ -907,6 +918,7 @@ static gint wait_for_children(Children *children)
 		/* free_children(children); */
 	} else if (!children->output) {
 		gtk_widget_destroy(children->dialog);
+		children->dialog = NULL;
 	}
 
 	return FALSE;
@@ -1175,12 +1187,17 @@ static void catch_status(gpointer data, gint source, GdkInputCondition cond)
 	gchar buf;
 	gint c;
 
+	debug_print("Catching child status (child PID: %d).\n", child_info->pid);
+
 	gdk_threads_enter();
 
 	gdk_input_remove(child_info->tag_status);
 
 	c = read(source, &buf, 1);
-	debug_print("Child (PID: %d) returned %c\n", child_info->pid, buf);
+	if (c == 1)
+		debug_print("Child (PID: %d) returned %c\n", child_info->pid, buf);
+	else
+		debug_print("Could not get child (PID: %d) status\n", child_info->pid);
 
 #ifdef G_OS_UNIX
 	waitpid(child_info->pid, NULL, 0);
