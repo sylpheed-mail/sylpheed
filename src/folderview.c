@@ -340,7 +340,7 @@ FolderView *folderview_create(void)
 	debug_print(_("Creating folder view...\n"));
 	folderview = g_new0(FolderView, 1);
 
-	vbox = gtk_vbox_new(FALSE, 0);
+	vbox = gtk_vbox_new(FALSE, 1);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy
@@ -573,6 +573,14 @@ void folderview_reflect_prefs(FolderView *folderview)
 			prefs_common.display_folder_unread;
 		folderview_update_row_all(folderview);
 	}
+}
+
+void folderview_add_sub_widget(FolderView *folderview, GtkWidget *widget)
+{
+	g_return_if_fail(folderview != NULL);
+	g_return_if_fail(widget != NULL);
+
+	gtk_box_pack_start(GTK_BOX(folderview->vbox), widget, FALSE, FALSE, 0);
 }
 
 FolderView *folderview_get(void)

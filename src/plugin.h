@@ -139,6 +139,12 @@ void syl_plugin_menu_set_active			(const gchar	*path,
 
 /* FolderView */
 gpointer syl_plugin_folderview_get		(void);
+
+void syl_plugin_folderview_add_sub_widget	(GtkWidget	*widget);
+
+void syl_plugin_folderview_select		(FolderItem	*item);
+void syl_plugin_folderview_unselect		(void);
+void syl_plugin_folderview_select_next_unread	(void);
 FolderItem *syl_plugin_folderview_get_selected_item
 						(void);
 
@@ -151,6 +157,7 @@ void syl_plugin_folderview_update_item		(FolderItem	*item,
 void syl_plugin_folderview_update_item_foreach	(GHashTable	*table,
 						 gboolean	 update_summary);
 void syl_plugin_folderview_update_all_updated	(gboolean	 update_summary);
+void syl_plugin_folderview_check_new_selected	(void);
 
 /* SummaryView */
 gpointer syl_plugin_summary_view_get		(void);

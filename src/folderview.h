@@ -75,6 +75,9 @@ FolderView *folderview_create		(void);
 void folderview_init			(FolderView	*folderview);
 void folderview_reflect_prefs		(FolderView	*folderview);
 
+void folderview_add_sub_widget		(FolderView	*folderview,
+					 GtkWidget	*widget);
+
 FolderView *folderview_get		(void);
 
 void folderview_set			(FolderView	*folderview);

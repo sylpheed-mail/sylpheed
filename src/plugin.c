@@ -544,10 +544,57 @@ void syl_plugin_menu_set_active(const gchar *path, gboolean is_active)
 
 gpointer syl_plugin_folderview_get(void)
 {
-	gpointer sym;
+	gpointer (*func)(void);
+	GETFUNC("folderview_get");
+	return SAFE_CALL_RET(func);
+}
 
-	sym = syl_plugin_lookup_symbol("folderview");
-	return sym;
+void syl_plugin_folderview_add_sub_widget(GtkWidget *widget)
+{
+	void (*func)(gpointer, GtkWidget *);
+	gpointer folderview;
+
+	folderview = syl_plugin_folderview_get();
+	if (folderview) {
+		GETFUNC("folderview_get");
+		SAFE_CALL_ARG2(func, folderview, widget);
+	}
+}
+
+void syl_plugin_folderview_select(FolderItem *item)
+{
+	void (*func)(gpointer, FolderItem *);
+	gpointer folderview;
+
+	folderview = syl_plugin_folderview_get();
+	if (folderview) {
+		GETFUNC("folderview_select");
+		SAFE_CALL_ARG2(func, folderview, item);
+	}
+}
+
+void syl_plugin_folderview_unselect(void)
+{
+	void (*func)(gpointer);
+	gpointer folderview;
+
+	folderview = syl_plugin_folderview_get();
+	if (folderview) {
+		GETFUNC("folderview_unselect");
+		SAFE_CALL_ARG1(func, folderview);
+	}
+}
+
+void syl_plugin_folderview_select_next_unread(void)
+{
+	void (*func)(gpointer);
+	gpointer folderview;
+
+	folderview = syl_plugin_folderview_get();
+	if (folderview) {
+		GETFUNC("folderview_select_next_unread");
+		SAFE_CALL_ARG1(func, folderview);
+	}
 }
 
 FolderItem *syl_plugin_folderview_get_selected_item(void)
@@ -557,7 +604,7 @@ FolderItem *syl_plugin_folderview_get_selected_item(void)
 
 	folderview = syl_plugin_folderview_get();
 	if (folderview) {
-		func = syl_plugin_lookup_symbol("folderview_get_selected_item");
+		GETFUNC("folderview_get_selected_item");
 		return SAFE_CALL_ARG1_RET(func, folderview);
 	}
 
@@ -606,6 +653,18 @@ void syl_plugin_folderview_update_all_updated(gboolean update_summary)
 	void (*func)(gboolean);
 	GETFUNC("folderview_update_all_updated");
 	SAFE_CALL_ARG1(func, update_summary);
+}
+
+void syl_plugin_folderview_check_new_selected(void)
+{
+	void (*func)(gpointer);
+	gpointer folderview;
+
+	folderview = syl_plugin_folderview_get();
+	if (folderview) {
+		GETFUNC("folderview_check_new_selected");
+		SAFE_CALL_ARG1(func, folderview);
+	}
 }
 
 gpointer syl_plugin_summary_view_get(void)
