@@ -301,7 +301,7 @@ void replace_address_in_edit(GtkEntry *entry, const gchar *newtext,
 
 	if (!newtext) return;
 
-	g_print("replace_address_in_edit: %s\n", newtext);
+	debug_print("replace_address_in_edit: %s\n", newtext);
 
 	origtext = gtk_editable_get_chars(GTK_EDITABLE(entry), start_pos, -1);
 	if (!strcmp(origtext, newtext)) {
@@ -480,7 +480,6 @@ guint get_completion_count(void)
 /* should clear up anything after complete_address() */
 void clear_completion_cache(void)
 {
-	g_print("clear_completion_cache\n");
 	if (is_completion_pending()) {
 		if (completion_prefix)
 			g_free(completion_prefix);
@@ -748,8 +747,6 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 						     GdkEventKey *ev,
 						     gpointer     data)
 {
-	g_print("entry_key_pressed: %s\n", gtk_entry_get_text(entry));
-
 	if (!prefs_common.fullauto_completion_mode && ev->keyval == GDK_Tab) {
 		if (address_completion_complete_address_in_entry(entry, TRUE)) {
 			address_completion_create_completion_window(entry, TRUE);
@@ -787,7 +784,6 @@ static void address_completion_entry_changed(GtkEditable *editable,
 {
 	GtkEntry *entry = GTK_ENTRY(editable);
 
-	g_print("changed: %s\n", gtk_entry_get_text(entry));
 	if (!prefs_common.fullauto_completion_mode)
 		return;
 
@@ -822,11 +818,8 @@ static gboolean address_completion_complete_address_in_entry(GtkEntry *entry,
 
 	if (!GTK_WIDGET_HAS_FOCUS(entry)) return FALSE;
 
-	g_print("address_completion_complete_address_in_entry\n");
-
 	/* get an address component from the cursor */
 	address = get_address_from_edit(entry, &cursor_pos);
-	if (address) g_print("got address: %s\n", address);
 	if (!address) return FALSE;
 
 	/* still something in the cache */
@@ -864,7 +857,7 @@ static void address_completion_create_completion_window(GtkEntry *entry_,
 	guint count = 0;
 	GtkWidget *entry = GTK_WIDGET(entry_);
 
-	g_print("address_completion_create_completion_window\n");
+	debug_print("address_completion_create_completion_window\n");
 
 	if (completion_window) {
 		gtk_widget_destroy(completion_window);
@@ -936,7 +929,8 @@ static void address_completion_create_completion_window(GtkEntry *entry_,
 	 * follow the selection */
 	GTK_WIDGET_UNSET_FLAGS(clist, GTK_CAN_FOCUS);
 	gtk_clist_select_row(GTK_CLIST(clist), select_next ? 1 : 0, 0);
-	g_print("address_completion_create_completion_window done\n");
+
+	debug_print("address_completion_create_completion_window done\n");
 }
 
 
@@ -980,7 +974,6 @@ static gboolean completion_window_button_press(GtkWidget *widget,
 	g_return_val_if_fail(window != NULL, FALSE);
 	g_return_val_if_fail(*window != NULL, FALSE);
 
-	g_print("completion_window_button_press\n");
 	entry = GTK_WIDGET(g_object_get_data(G_OBJECT(*window),
 					     WINDOW_DATA_COMPL_ENTRY));
 	g_return_val_if_fail(entry != NULL, FALSE);
@@ -1024,7 +1017,6 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	g_return_val_if_fail(window != NULL, FALSE);
 	g_return_val_if_fail(*window != NULL, FALSE);
 
-	g_print("completion_window_key_press\n");
 	if (!is_completion_pending())
 		g_warning("completion is not pending!\n");
 
@@ -1116,7 +1108,6 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	clear_completion_cache();
 	gtk_widget_destroy(*window);
 	*window = NULL;
-	g_print("completion_window_key_press: window destroyed\n");
 
 	return TRUE;
 }
