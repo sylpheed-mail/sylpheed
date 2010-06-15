@@ -1,5 +1,32 @@
 Changes of Sylpheed
 
+* 3.1.0beta1 (development)
+
+    * Full automatic address completion was implemented. Users can also
+      configure to use the previous behavior (start completion on Tab key).
+    * The debug log output for filtering was added.
+    * Update check can also show alternative version as well as internal
+      version now.
+    * New plug-in APIs for update check and folder view were added.
+    * A new option '--instance-id <ID>' was added. This allows users to run
+      multiple instances of Sylpheed.
+    * 'Open' menu was added to the attach context menu of the message
+      composition window. This allows users to open attached files before
+      sending.
+    * English Sylpheed FAQ was updated.
+    * Plug-ins are also loaded from user plug-in directory now.
+    * Unix: the default web browser command was changed to xdg-open, and
+      obsolete commands were removed.
+    * Unix: the crash when using %f on IMAP messages at the action tool was
+      fixed.
+    * The crash when clicking tray icon menu 'Get from current account' when
+      no account exist was fixed.
+    * The crash on 64-bit architecture with LDAP was fixed (debian BTS #463366).
+    * Some GTK+ warnings were removed.
+    * Redundant debug or error messages were removed.
+    * The bug that MIME flags were not set to imported mbox file and filtered
+      sent messages was fixed.
+
 * 3.0.2 (stable)
 
     * The random scrolling problem on selecting folders with GTK+ 2.12 or
