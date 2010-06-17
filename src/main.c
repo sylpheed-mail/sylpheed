@@ -265,6 +265,12 @@ int main(int argc, char *argv[])
 	prefs_display_header_read_config();
 	colorlabel_read_config();
 
+	prefs_common.user_agent_str = g_strdup_printf
+		("%s (GTK+ %d.%d.%d; %s)",
+		 prog_version,
+		 gtk_major_version, gtk_minor_version, gtk_micro_version,
+		 TARGET_ALIAS);
+
 #ifdef G_OS_WIN32
 	{
 		gchar *path;

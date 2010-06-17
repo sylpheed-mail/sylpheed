@@ -4704,17 +4704,15 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	}
 
 	/* Program version and system info */
-	if (compose->to_list && !IS_IN_CUSTOM_HEADER("X-Mailer")) {
-		fprintf(fp, "X-Mailer: %s (GTK+ %d.%d.%d; %s)\n",
-			prog_version,
-			gtk_major_version, gtk_minor_version, gtk_micro_version,
-			TARGET_ALIAS);
-	}
-	if (compose->newsgroup_list && !IS_IN_CUSTOM_HEADER("X-Newsreader")) {
-		fprintf(fp, "X-Newsreader: %s (GTK+ %d.%d.%d; %s)\n",
-			prog_version,
-			gtk_major_version, gtk_minor_version, gtk_micro_version,
-			TARGET_ALIAS);
+	if (prefs_common.user_agent_str) {
+		if (compose->to_list && !IS_IN_CUSTOM_HEADER("X-Mailer")) {
+			fprintf(fp, "X-Mailer: %s\n",
+				prefs_common.user_agent_str);
+		}
+		if (compose->newsgroup_list && !IS_IN_CUSTOM_HEADER("X-Newsreader")) {
+			fprintf(fp, "X-Newsreader: %s\n",
+				prefs_common.user_agent_str);
+		}
 	}
 
 	/* custom headers */
