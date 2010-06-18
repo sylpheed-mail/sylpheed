@@ -890,6 +890,10 @@ static gint pop3_session_recv_data_as_file_finished(Session *session, FILE *fp,
 	if (pop3_retr_recv(pop3_session, fp, len) < 0)
 		return -1;
 
+	/* disconnected? */
+	if (!session->sock)
+		return -1;
+
 	if (pop3_session->msg[pop3_session->cur_msg].recv_time
 	    == RECV_TIME_DELETE ||
 	    (pop3_session->ac_prefs->rmmail &&

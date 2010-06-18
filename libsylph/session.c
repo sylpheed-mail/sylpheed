@@ -419,6 +419,7 @@ gint session_send_msg(Session *session, SessionMsgType type, const gchar *msg)
 {
 	gboolean ret;
 
+	g_return_val_if_fail(session->sock != NULL, -1);
 	g_return_val_if_fail(session->write_buf == NULL, -1);
 	g_return_val_if_fail(msg != NULL, -1);
 	g_return_val_if_fail(msg[0] != '\0', -1);
@@ -441,6 +442,7 @@ gint session_send_msg(Session *session, SessionMsgType type, const gchar *msg)
 
 gint session_recv_msg(Session *session)
 {
+	g_return_val_if_fail(session->sock != NULL, -1);
 	g_return_val_if_fail(session->read_msg_buf->len == 0, -1);
 
 	session->state = SESSION_RECV;
@@ -479,6 +481,7 @@ gint session_send_data(Session *session, FILE *data_fp, guint size)
 {
 	gboolean ret;
 
+	g_return_val_if_fail(session->sock != NULL, -1);
 	g_return_val_if_fail(session->write_data_fp == NULL, -1);
 	g_return_val_if_fail(data_fp != NULL, -1);
 	g_return_val_if_fail(size != 0, -1);
@@ -514,6 +517,7 @@ gint session_send_data(Session *session, FILE *data_fp, guint size)
 
 gint session_recv_data(Session *session, guint size, const gchar *terminator)
 {
+	g_return_val_if_fail(session->sock != NULL, -1);
 	g_return_val_if_fail(session->read_data_buf->len == 0, -1);
 
 	session->state = SESSION_RECV;
@@ -555,6 +559,7 @@ static gboolean session_recv_data_idle_cb(gpointer data)
 gint session_recv_data_as_file(Session *session, guint size,
 			       const gchar *terminator)
 {
+	g_return_val_if_fail(session->sock != NULL, -1);
 	g_return_val_if_fail(session->read_data_pos == 0, -1);
 	g_return_val_if_fail(session->read_data_fp == NULL, -1);
 
