@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-15 14:01+0900\n"
+"POT-Creation-Date: 2010-06-25 15:06+0900\n"
 "PO-Revision-Date: 2010-02-13 14:38+0100\n"
 "Last-Translator: Németh Tamás <ntomasz@uhuklub.hu>\n"
 "Language-Team: Hungarian <NONE>\n"
@@ -693,7 +693,7 @@ msgstr ""
 "funkció bekapcsolásához tegyen pipát a 'G' oszlopban levő négyzetbe!"
 
 #: src/account_dialog.c:375 src/addressadd.c:178 src/addressbook.c:683
-#: src/compose.c:5302 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:5300 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:311
@@ -1227,11 +1227,11 @@ msgstr "Általános cím"
 msgid "Personal address"
 msgstr "Személyes cím"
 
-#: src/alertpanel.c:142 src/compose.c:6716 src/main.c:761
+#: src/alertpanel.c:142 src/compose.c:6714 src/main.c:767
 msgid "Notice"
 msgstr "Megjegyzés"
 
-#: src/alertpanel.c:155 src/main.c:881
+#: src/alertpanel.c:155 src/main.c:887
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
@@ -1655,7 +1655,7 @@ msgstr "Címzettek ellenőrzése"
 msgid "Really send this mail to the following addresses?"
 msgstr "Tényleg elküldi ezt a levelet a következő címekre?"
 
-#: src/compose.c:3215 src/compose.c:5168 src/headerview.c:54
+#: src/compose.c:3215 src/compose.c:5166 src/headerview.c:54
 msgid "From:"
 msgstr "Feladó:"
 
@@ -1788,70 +1788,70 @@ msgstr "A(z) %s fájl nem létezik."
 msgid "Can't open file %s."
 msgstr "A(z) %s fájlt nem lehet megnyitni."
 
-#: src/compose.c:5000
+#: src/compose.c:4998
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "generált Message-ID: %s\n"
 
-#: src/compose.c:5115
+#: src/compose.c:5113
 msgid "Creating compose window...\n"
 msgstr "Szerkesztőablak létrehozása...\n"
 
-#: src/compose.c:5242
+#: src/compose.c:5240
 msgid "PGP Sign"
 msgstr "PGP Aláírás"
 
-#: src/compose.c:5245
+#: src/compose.c:5243
 msgid "PGP Encrypt"
 msgstr "PGP Titkosítás"
 
-#: src/compose.c:5283 src/compose.c:6483
+#: src/compose.c:5281 src/compose.c:6481
 msgid "MIME type"
 msgstr "MIME típus"
 
 #. S_COL_DATE
-#: src/compose.c:5292 src/mimeview.c:217 src/prefs_filter_edit.c:507
+#: src/compose.c:5290 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
 #: src/summaryview.c:5164
 msgid "Size"
 msgstr "Méret"
 
-#: src/compose.c:6378
+#: src/compose.c:6376
 msgid "Invalid MIME type."
 msgstr "Érvénytelen MIME típus."
 
-#: src/compose.c:6396
+#: src/compose.c:6394
 msgid "File doesn't exist or is empty."
 msgstr "A fájl nem létezik vagy üres."
 
-#: src/compose.c:6465
+#: src/compose.c:6463
 msgid "Properties"
 msgstr "Tulajdonságok"
 
 #. Encoding
-#: src/compose.c:6485 src/prefs_common_dialog.c:1017
+#: src/compose.c:6483 src/prefs_common_dialog.c:1017
 #: src/prefs_common_dialog.c:1678
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: src/compose.c:6508 src/prefs_folder_item.c:202
+#: src/compose.c:6506 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Elérési út"
 
-#: src/compose.c:6509
+#: src/compose.c:6507
 msgid "File name"
 msgstr "Fájlnév"
 
-#: src/compose.c:6598
+#: src/compose.c:6596
 #, fuzzy
 msgid "File not exist."
 msgstr "%s: fájl nem létezik\n"
 
-#: src/compose.c:6608 src/mimeview.c:1217
+#: src/compose.c:6606 src/mimeview.c:1217
 msgid "Opening executable file"
 msgstr "Futtatható fájl megnyitása"
 
-#: src/compose.c:6609 src/mimeview.c:1218
+#: src/compose.c:6607 src/mimeview.c:1218
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1863,12 +1863,12 @@ msgstr ""
 "Ha futtatni szeretné, mentse el valahová, és győződjön meg róla, hogy nem "
 "egy vírus vagy más kártékony program."
 
-#: src/compose.c:6651
+#: src/compose.c:6649
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Külső szerkesztő parancssora érvénytelen: `%s'\n"
 
-#: src/compose.c:6713
+#: src/compose.c:6711
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1877,48 +1877,48 @@ msgstr ""
 "A külső szerkesztő még dolgozik.\n"
 "A processz kényszerített kilövése (pid: %d)?\n"
 
-#: src/compose.c:7050 src/mainwindow.c:3022
+#: src/compose.c:7048 src/mainwindow.c:3022
 msgid "_Customize toolbar..."
 msgstr "Eszközs_áv testreszabása..."
 
-#: src/compose.c:7184 src/compose.c:7189 src/compose.c:7195
+#: src/compose.c:7182 src/compose.c:7187 src/compose.c:7193
 msgid "Can't queue the message."
 msgstr "A levelet nem sikerült a Várakozó sorba rakni"
 
-#: src/compose.c:7294
+#: src/compose.c:7292
 msgid "Select files"
 msgstr "Fájlok választása"
 
-#: src/compose.c:7317 src/inputdialog.c:372
+#: src/compose.c:7315 src/inputdialog.c:372
 msgid "Select file"
 msgstr "Fájl választás"
 
-#: src/compose.c:7368
+#: src/compose.c:7366
 msgid "Save message"
 msgstr "Levél mentése"
 
-#: src/compose.c:7369
+#: src/compose.c:7367
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "A levél megváltozott. Menti a Vázlatok mappába?"
 
-#: src/compose.c:7371 src/compose.c:7375
+#: src/compose.c:7369 src/compose.c:7373
 msgid "Close _without saving"
 msgstr "Bezárás mentés _nélkül"
 
-#: src/compose.c:7422
+#: src/compose.c:7420
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Tényleg alkalmazni szeretné a(z) `%s' sablont?"
 
-#: src/compose.c:7424
+#: src/compose.c:7422
 msgid "Apply template"
 msgstr "Sablon alkalmazása"
 
-#: src/compose.c:7425
+#: src/compose.c:7423
 msgid "_Replace"
 msgstr "_Helyettesít"
 
-#: src/compose.c:7425
+#: src/compose.c:7423
 msgid "_Insert"
 msgstr "_Beszúrás"
 
@@ -3030,16 +3030,16 @@ msgstr "Adja meg a jelszót"
 msgid "Protocol log"
 msgstr "Protokoll napló"
 
-#: src/main.c:566
+#: src/main.c:572
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Használat: %s [OPCIÓ]...\n"
 
-#: src/main.c:569
+#: src/main.c:575
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [cím]    szerkesztőablak megnyitása"
 
-#: src/main.c:570
+#: src/main.c:576
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3049,23 +3049,23 @@ msgstr ""
 "                          szerkesztőablak nyitása a megadott fájl(ok)\n"
 "                          csatolásával"
 
-#: src/main.c:573
+#: src/main.c:579
 msgid "  --receive              receive new messages"
 msgstr "  --receive              új levelek letöltése"
 
-#: src/main.c:574
+#: src/main.c:580
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          új levelek letöltése minden fióknál"
 
-#: src/main.c:575
+#: src/main.c:581
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 minden várakozó levél küldése"
 
-#: src/main.c:576
+#: src/main.c:582
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mappa]...    kiírja a levelek számát"
 
-#: src/main.c:577
+#: src/main.c:583
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3073,46 +3073,46 @@ msgstr ""
 "  --status-full [mappa]...\n"
 "                       megjeleníti minden egyes mappa állapotát"
 
-#: src/main.c:579
+#: src/main.c:585
 msgid "  --open folderid/msgnum open message in new window"
 msgstr "  --open folderid/msgnum  levél megnyitása új ablakban"
 
-#: src/main.c:580
+#: src/main.c:586
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 "  --configdir dirname    a konfigurációs fájlokat tároló mappa megadása"
 
-#: src/main.c:582
+#: src/main.c:588
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr "  --ipcport portszám      IPC távoli parancsok portjának megadása"
 
-#: src/main.c:584
+#: src/main.c:590
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                kilépés a Sylpheedből"
 
-#: src/main.c:585
+#: src/main.c:591
 msgid "  --debug                debug mode"
 msgstr "  --debug                hibakereső üzemmód"
 
-#: src/main.c:586
+#: src/main.c:592
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 e segítség megjelenítése és kilépés"
 
-#: src/main.c:587
+#: src/main.c:593
 msgid "  --version              output version information and exit"
 msgstr "  --version              verzió információk kiírása és kilépés"
 
-#: src/main.c:591
+#: src/main.c:597
 #, c-format
 msgid "Press any key..."
 msgstr "Nyomjon meg egy billentyűt..."
 
-#: src/main.c:722
+#: src/main.c:728
 msgid "Filename encoding"
 msgstr "Fájlnév karakterkódolása"
 
-#: src/main.c:723
+#: src/main.c:729
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3136,19 +3136,19 @@ msgstr ""
 "\n"
 "Folytatja?"
 
-#: src/main.c:762
+#: src/main.c:768
 msgid "Composing message exists. Really quit?"
 msgstr "Levél szerkesztés alatt. Tényleg kilép?"
 
-#: src/main.c:773
+#: src/main.c:779
 msgid "Queued messages"
 msgstr "Várakozó levelek"
 
-#: src/main.c:774
+#: src/main.c:780
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Vannak elküldetlen levelek. Kilépés most?"
 
-#: src/main.c:882
+#: src/main.c:888
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3156,20 +3156,20 @@ msgstr ""
 "A GnuPG nincs megfelelően telepítve, vagy túl régi a verziója.\n"
 "OpenPGP támogatás kikapcsolva."
 
-#: src/main.c:1115
+#: src/main.c:1121
 msgid "Loading plug-ins..."
 msgstr "Kiegészítések betöltése..."
 
 #. remote command mode
-#: src/main.c:1276
+#: src/main.c:1282
 msgid "another Sylpheed is already running.\n"
 msgstr "egy másik Sylpheed már fut.\n"
 
-#: src/main.c:1558
+#: src/main.c:1564
 msgid "Migration of configuration"
 msgstr "Beállítások migrálása"
 
-#: src/main.c:1559
+#: src/main.c:1565
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

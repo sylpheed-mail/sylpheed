@@ -6,19 +6,21 @@
 # Updated by Sergey Vlasov <vsu@altlinux.ru>, 2001, 2006.
 # Updated by Dmitry S. Sivachenko <dima@Chg.RU>, 2001.
 # Updated by Andrey Markelov <andrey@markelov.ru>, 2007.
-# Ilya Ponetayev <inste@mail.ru>, 2009.
+# Updated by Ilya Ponetayev <instenet@gmail.com>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-15 14:01+0900\n"
-"PO-Revision-Date: 2009-08-10 17:45+0400\n"
-"Last-Translator: Ilya Ponetayev <instenet@gmail.com>\n"
-"Language-Team: Русский <ru@li.org>\n"
+"POT-Creation-Date: 2010-06-25 15:06+0900\n"
+"PO-Revision-Date: 2010-06-15 15:18+0400\n"
+"Last-Translator: \n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: libsylph/account.c:57
 msgid "Reading all config for each account...\n"
@@ -34,9 +36,8 @@ msgid "IMAP4 server disables LOGIN.\n"
 msgstr "Сервер IMAP4 запрещает использование команды LOGIN.\n"
 
 #: libsylph/imap.c:656
-#, fuzzy
 msgid "Could not establish IMAP connection.\n"
-msgstr "Не удалось открыть сеанс связи IMAP4 c %s:%d\n"
+msgstr "Не удалось открыть сеанс связи IMAP4.\n"
 
 #: libsylph/imap.c:674
 #, c-format
@@ -49,12 +50,12 @@ msgstr "Не удалось начать сеанс TLS.\n"
 
 #: libsylph/imap.c:865
 msgid "(retrieving FLAGS...)"
-msgstr ""
+msgstr "(получение FLAGS...)"
 
 #: libsylph/imap.c:1256
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %u"
-msgstr "Получение сообщения %d"
+msgstr "Получение сообщения %u"
 
 #: libsylph/imap.c:1378
 #, c-format
@@ -236,7 +237,7 @@ msgstr "Получение сообщений из %s в %s...\n"
 
 #: libsylph/mbox.c:93
 msgid "can't read mbox file.\n"
-msgstr "ошибка чтения файла mbox.\n"
+msgstr "ошибка чтения почтового ящика.\n"
 
 #: libsylph/mbox.c:100
 #, c-format
@@ -672,12 +673,10 @@ msgid "Opening account edit window...\n"
 msgstr "Открытие окна редактирования учётных записей...\n"
 
 #: src/account_dialog.c:193
-#, fuzzy
 msgid "Creating folder tree. Please wait..."
-msgstr "Создание области просмотра папок...\n"
+msgstr "Создание области просмотра папок..."
 
 #: src/account_dialog.c:195
-#, fuzzy
 msgid "Creation of the folder tree failed."
 msgstr "Ошибка при перестройке дерева папок."
 
@@ -699,7 +698,7 @@ msgstr ""
 "по команде \"Получить все\"."
 
 #: src/account_dialog.c:375 src/addressadd.c:178 src/addressbook.c:683
-#: src/compose.c:5302 src/editaddress.c:777 src/editaddress.c:826
+#: src/compose.c:5300 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:257 src/prefs_folder_item.c:171 src/select-keys.c:311
@@ -1144,12 +1143,15 @@ msgid "Address book conversion"
 msgstr "Преобразование адресной книги"
 
 #: src/addressbook.c:2921
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not read address index:\n"
 "\n"
 "%s%c%s"
-msgstr "Не удалось прочитать индекс адресов"
+msgstr ""
+"Не удалось прочитать индекс адресов:\n"
+"\n"
+"%s%c%s"
 
 #: src/addressbook.c:2924
 msgid "Address Book Error"
@@ -1233,11 +1235,11 @@ msgstr "Общие адреса"
 msgid "Personal address"
 msgstr "Личные адреса"
 
-#: src/alertpanel.c:142 src/compose.c:6716 src/main.c:761
+#: src/alertpanel.c:142 src/compose.c:6714 src/main.c:767
 msgid "Notice"
 msgstr "Уведомление"
 
-#: src/alertpanel.c:155 src/main.c:881
+#: src/alertpanel.c:155 src/main.c:887
 msgid "Warning"
 msgstr "Предупреждение"
 
@@ -1559,7 +1561,7 @@ msgstr "/Инструменты/Вызвать внешний редактор"
 
 #: src/compose.c:723
 msgid "/_Tools/Request _disposition notification"
-msgstr ""
+msgstr "/Инструменты/Запросить уведомление о расположении"
 
 #: src/compose.c:727
 msgid "/_Tools/PGP Si_gn"
@@ -1661,7 +1663,7 @@ msgstr "Проверить получателей"
 msgid "Really send this mail to the following addresses?"
 msgstr "Отправить сообщения по следующим адресам?"
 
-#: src/compose.c:3215 src/compose.c:5168 src/headerview.c:54
+#: src/compose.c:3215 src/compose.c:5166 src/headerview.c:54
 msgid "From:"
 msgstr "От:"
 
@@ -1786,74 +1788,73 @@ msgid "File %s doesn't exist."
 msgstr "Файл %s не найден"
 
 #: src/compose.c:4378
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file %s."
-msgstr "Не удалось открыть файл."
+msgstr "Не удалось открыть файл %s."
 
-#: src/compose.c:5000
+#: src/compose.c:4998
 #, c-format
 msgid "generated Message-ID: %s\n"
 msgstr "создан Message-ID: %s\n"
 
-#: src/compose.c:5115
+#: src/compose.c:5113
 msgid "Creating compose window...\n"
 msgstr "Создание окна подготовки сообщения...\n"
 
-#: src/compose.c:5242
+#: src/compose.c:5240
 msgid "PGP Sign"
 msgstr "Подписать PGP"
 
-#: src/compose.c:5245
+#: src/compose.c:5243
 msgid "PGP Encrypt"
 msgstr "Шифровать PGP"
 
-#: src/compose.c:5283 src/compose.c:6483
+#: src/compose.c:5281 src/compose.c:6481
 msgid "MIME type"
 msgstr "Тип MIME"
 
 #. S_COL_DATE
-#: src/compose.c:5292 src/mimeview.c:217 src/prefs_filter_edit.c:507
+#: src/compose.c:5290 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
 #: src/summaryview.c:5164
 msgid "Size"
 msgstr "Размер"
 
-#: src/compose.c:6378
+#: src/compose.c:6376
 msgid "Invalid MIME type."
 msgstr "Неверный тип MIME."
 
-#: src/compose.c:6396
+#: src/compose.c:6394
 msgid "File doesn't exist or is empty."
 msgstr "Файл не существует или пуст."
 
-#: src/compose.c:6465
+#: src/compose.c:6463
 msgid "Properties"
 msgstr "Свойства"
 
 #. Encoding
-#: src/compose.c:6485 src/prefs_common_dialog.c:1017
+#: src/compose.c:6483 src/prefs_common_dialog.c:1017
 #: src/prefs_common_dialog.c:1678
 msgid "Encoding"
 msgstr "Кодировка"
 
-#: src/compose.c:6508 src/prefs_folder_item.c:202
+#: src/compose.c:6506 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Путь"
 
-#: src/compose.c:6509
+#: src/compose.c:6507
 msgid "File name"
 msgstr "Имя файла"
 
-#: src/compose.c:6598
-#, fuzzy
+#: src/compose.c:6596
 msgid "File not exist."
-msgstr "%s: файл не существует\n"
+msgstr "Файл не существует."
 
-#: src/compose.c:6608 src/mimeview.c:1217
+#: src/compose.c:6606 src/mimeview.c:1217
 msgid "Opening executable file"
 msgstr "Открытие исполняемого файла"
 
-#: src/compose.c:6609 src/mimeview.c:1218
+#: src/compose.c:6607 src/mimeview.c:1218
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1865,12 +1866,12 @@ msgstr ""
 "Если вы всё же хотите запустить этот файл, сохраните его на диске и "
 "убедитесь, что файл не содержит вирусов и других опасных программ."
 
-#: src/compose.c:6651
+#: src/compose.c:6649
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Неверная команда вызова внешнего редактора: \"%s\"\n"
 
-#: src/compose.c:6713
+#: src/compose.c:6711
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1880,48 +1881,48 @@ msgstr ""
 "Завершить процесс принудительно?\n"
 "Идентификатор группы процессов: %d\n"
 
-#: src/compose.c:7050 src/mainwindow.c:3022
+#: src/compose.c:7048 src/mainwindow.c:3022
 msgid "_Customize toolbar..."
 msgstr "Настроить панель инструментов"
 
-#: src/compose.c:7184 src/compose.c:7189 src/compose.c:7195
+#: src/compose.c:7182 src/compose.c:7187 src/compose.c:7193
 msgid "Can't queue the message."
 msgstr "Ошибка постановки в очередь."
 
-#: src/compose.c:7294
+#: src/compose.c:7292
 msgid "Select files"
 msgstr "Выбор файлов"
 
-#: src/compose.c:7317 src/inputdialog.c:372
+#: src/compose.c:7315 src/inputdialog.c:372
 msgid "Select file"
 msgstr "Выбор файла"
 
-#: src/compose.c:7368
+#: src/compose.c:7366
 msgid "Save message"
 msgstr "Сохранить сообщение"
 
-#: src/compose.c:7369
+#: src/compose.c:7367
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Это сообщение изменено. Сохранить его в папке черновиков?"
 
-#: src/compose.c:7371 src/compose.c:7375
+#: src/compose.c:7369 src/compose.c:7373
 msgid "Close _without saving"
 msgstr "Закрыть без сохранения"
 
-#: src/compose.c:7422
+#: src/compose.c:7420
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Применить шаблон \"%s\"?"
 
-#: src/compose.c:7424
+#: src/compose.c:7422
 msgid "Apply template"
 msgstr "Применить шаблон"
 
-#: src/compose.c:7425
+#: src/compose.c:7423
 msgid "_Replace"
 msgstr "Заменить"
 
-#: src/compose.c:7425
+#: src/compose.c:7423
 msgid "_Insert"
 msgstr "Вставить"
 
@@ -2207,55 +2208,49 @@ msgid "Add New vCard Entry"
 msgstr "Добавление новой записи vCard"
 
 #: src/export.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s ..."
-msgstr "Поиск в папке \"%s\"..."
+msgstr "Отправление \"%s\"..."
 
 #: src/export.c:204
-#, fuzzy
 msgid "Exporting"
-msgstr "Экспорт"
+msgstr "Отправление"
 
 #: src/export.c:229
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "Произошла ошибка при отправке статьи\n"
+msgstr "Произошла ошибка при отправке статьи."
 
 #: src/export.c:312
 msgid "Export"
 msgstr "Экспорт"
 
 #: src/export.c:331 src/export.c:416
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "Укажите файл mbox и папку назначения."
+msgstr "Укажите исходную папку и файл назначения."
 
 #: src/export.c:341 src/import.c:335
-#, fuzzy
 msgid "File format:"
-msgstr "Формат даты"
+msgstr "Формат файла:"
 
 #: src/export.c:346
-#, fuzzy
 msgid "Source folder:"
 msgstr "Исходная папка:"
 
 #: src/export.c:351
-#, fuzzy
 msgid "Destination:"
 msgstr "Каталог назначения:"
 
 #: src/export.c:361 src/import.c:355
 msgid "UNIX mbox"
-msgstr ""
+msgstr "Почтовый ящик UNIX"
 
 #: src/export.c:364
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (число + .eml)"
 
 #: src/export.c:367
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (только участник)"
 
 #: src/export.c:381 src/export.c:387 src/import.c:372 src/import.c:378
 #: src/prefs_account_dialog.c:955
@@ -2263,19 +2258,16 @@ msgid " Select... "
 msgstr " Выбор... "
 
 #: src/export.c:419
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "Укажите файл mbox и папку назначения."
+msgstr "Укажите исходную папку и папку назначения."
 
 #: src/export.c:445
-#, fuzzy
 msgid "Select destination file"
 msgstr "Выбор файла для экспорта"
 
 #: src/export.c:449
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Выбор папки"
+msgstr "Выбор папки назначения"
 
 #: src/filesel.c:158
 msgid "Save as"
@@ -2368,7 +2360,7 @@ msgstr "/Обновить список сообщений"
 
 #: src/folderview.c:265 src/folderview.c:290 src/folderview.c:313
 msgid "/Mar_k all read"
-msgstr "Пометить как прочитанное"
+msgstr "Пометить как прочитанные"
 
 #: src/folderview.c:266 src/folderview.c:291
 msgid "/Send _queued messages"
@@ -2609,68 +2601,57 @@ msgid "Can't load the image."
 msgstr "Ошибка загрузки изображения"
 
 #: src/import.c:187
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "Файл %s не найден"
+msgstr "Исходный файл не существует."
 
 #: src/import.c:198
-#, fuzzy
 msgid "Can't find the destination folder."
-msgstr "Укажите файл mbox и папку назначения."
+msgstr "Невозможно найти папку назначения."
 
 #: src/import.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "Importing %s ..."
-msgstr "Поиск в папке \"%s\"..."
+msgstr "Импортирование \"%s\"..."
 
 #: src/import.c:205
-#, fuzzy
 msgid "Importing"
-msgstr "Импорт"
+msgstr "Импортирование"
 
 #: src/import.c:224
-#, fuzzy
 msgid "Scanning folder..."
-msgstr "Просмотр папки %s ..."
+msgstr "Просмотр папки..."
 
 #: src/import.c:235
-#, fuzzy
 msgid "Error occurred on import."
-msgstr "Произошла ошибка при отправке статьи\n"
+msgstr "При импорте произошла ошибка."
 
 #: src/import.c:306
 msgid "Import"
 msgstr "Импорт"
 
 #: src/import.c:325 src/import.c:410
-#, fuzzy
 msgid "Specify source file and destination folder."
-msgstr "Укажите файл mbox и папку назначения."
+msgstr "Укажите исходный файл и папку назначения."
 
 #: src/import.c:340
-#, fuzzy
 msgid "Source:"
 msgstr "Исходная папка:"
 
 #: src/import.c:345
-#, fuzzy
 msgid "Destination folder:"
 msgstr "Каталог назначения:"
 
 #: src/import.c:358
-#, fuzzy
 msgid "eml (folder)"
-msgstr "Новая папка"
+msgstr "eml (папка)"
 
 #: src/import.c:407
-#, fuzzy
 msgid "Specify source folder including eml files and destination folder."
-msgstr "Укажите файл mbox и папку назначения."
+msgstr "Укажите исходную папку с eml-файлами и папку назначения."
 
 #: src/import.c:437
-#, fuzzy
 msgid "Select importing folder"
-msgstr "Выбор импортируемого файла"
+msgstr "Выбор папки для импорта"
 
 #: src/import.c:440
 msgid "Select importing file"
@@ -2807,7 +2788,7 @@ msgstr "Поле LDIF"
 
 #: src/importldif.c:532
 msgid "Attribute Name"
-msgstr "Атрибут"
+msgstr "Название атрибута"
 
 #: src/importldif.c:591
 msgid "Attribute"
@@ -3054,16 +3035,16 @@ msgstr "Ввод пароля"
 msgid "Protocol log"
 msgstr "Журнал"
 
-#: src/main.c:566
+#: src/main.c:572
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Использование: %s [ПАРАМЕТР]...\n"
 
-#: src/main.c:569
+#: src/main.c:575
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [адрес]      открыть окно создания сообщения"
 
-#: src/main.c:570
+#: src/main.c:576
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3073,24 +3054,24 @@ msgstr ""
 "                         открыть окно создания сообщения с присоединёнными\n"
 "                         файлами"
 
-#: src/main.c:573
+#: src/main.c:579
 msgid "  --receive              receive new messages"
 msgstr "  --receive              получить новые сообщения"
 
-#: src/main.c:574
+#: src/main.c:580
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr ""
 "  --receive-all          получить новые сообщения со всех учётных записей"
 
-#: src/main.c:575
+#: src/main.c:581
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 отослать все сообщения из очереди"
 
-#: src/main.c:576
+#: src/main.c:582
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [папка]...    вывести суммарное количество сообщений"
 
-#: src/main.c:577
+#: src/main.c:583
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3098,45 +3079,45 @@ msgstr ""
 "  --status-full [папка]...\n"
 "                         вывести состояние указанных папок"
 
-#: src/main.c:579
+#: src/main.c:585
 msgid "  --open folderid/msgnum open message in new window"
 msgstr "··--open·folderid/msgnum·открыть сообщение в новом окне"
 
-#: src/main.c:580
+#: src/main.c:586
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr "  --configdir каталог    указать каталог с файлами конфигурации"
 
-#: src/main.c:582
+#: src/main.c:588
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr "··--ipcport·portnum······задать портдля удаленной команды IPC"
 
-#: src/main.c:584
+#: src/main.c:590
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 завершить работу Sylpheed"
 
-#: src/main.c:585
+#: src/main.c:591
 msgid "  --debug                debug mode"
 msgstr "  --debug                режим отладки"
 
-#: src/main.c:586
+#: src/main.c:592
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 отобразить это описание и выйти"
 
-#: src/main.c:587
+#: src/main.c:593
 msgid "  --version              output version information and exit"
 msgstr "  --version              вывести информацию о версии и выйти"
 
-#: src/main.c:591
+#: src/main.c:597
 #, c-format
 msgid "Press any key..."
 msgstr "Нажмите любую клавишу..."
 
-#: src/main.c:722
+#: src/main.c:728
 msgid "Filename encoding"
 msgstr "Кодировка имён файлов"
 
-#: src/main.c:723
+#: src/main.c:729
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3160,19 +3141,19 @@ msgstr ""
 "\n"
 "Продолжить?"
 
-#: src/main.c:762
+#: src/main.c:768
 msgid "Composing message exists. Really quit?"
 msgstr "Есть редактируемое сообщение. Выходить?"
 
-#: src/main.c:773
+#: src/main.c:779
 msgid "Queued messages"
 msgstr "Сообщения в очереди"
 
-#: src/main.c:774
+#: src/main.c:780
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "В очереди есть неотправленные сообщения. Выходить?"
 
-#: src/main.c:882
+#: src/main.c:888
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3180,20 +3161,20 @@ msgstr ""
 "GnuPG установлен неправильно, или установлена устаревшая версия.\n"
 "Поддержка OpenPGP отключена."
 
-#: src/main.c:1115
+#: src/main.c:1121
 msgid "Loading plug-ins..."
-msgstr ""
+msgstr "Загрузка модулей..."
 
 #. remote command mode
-#: src/main.c:1276
+#: src/main.c:1282
 msgid "another Sylpheed is already running.\n"
 msgstr "другая копия Sylpheed уже запущена.\n"
 
-#: src/main.c:1558
+#: src/main.c:1564
 msgid "Migration of configuration"
 msgstr "Импорт предыдущей конфигурации"
 
-#: src/main.c:1559
+#: src/main.c:1565
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3250,12 +3231,10 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/Файл/Почтовый ящик/Перестроить дерево папок"
 
 #: src/mainwindow.c:562
-#, fuzzy
 msgid "/_File/_Import mail data..."
 msgstr "/Файл/Импорт mbox-файла..."
 
 #: src/mainwindow.c:563
-#, fuzzy
 msgid "/_File/_Export mail data..."
 msgstr "/Файл/Экспорт в mbox-файл..."
 
@@ -4046,16 +4025,15 @@ msgstr ""
 
 #: src/mainwindow.c:4046
 msgid "Windows-only option:"
-msgstr ""
+msgstr "Специфические для Windows настройки:"
 
 #: src/mainwindow.c:4054
 msgid "--ipcport portnum"
-msgstr ""
+msgstr "--ipcport номер порта"
 
 #: src/mainwindow.c:4059
-#, fuzzy
 msgid "specify port for IPC remote commands"
-msgstr "··--ipcport·portnum······задать портдля удаленной команды IPC"
+msgstr "задать портдля удаленной команды IPC"
 
 #: src/message_search.c:120
 msgid "Find in current message"
@@ -4895,9 +4873,8 @@ msgid "Apply filter rules to sent messages"
 msgstr "Применять фильтры к отправленным сообщениям"
 
 #: src/prefs_common_dialog.c:969
-#, fuzzy
 msgid "Automatically add recipients to address book"
-msgstr "Автоматически устанавливать адреса"
+msgstr "Автоматически добавлять получателей в адресную книгу"
 
 #: src/prefs_common_dialog.c:976
 msgid ""
@@ -4972,9 +4949,8 @@ msgid "Quote message when replying"
 msgstr "Цитировать при ответе"
 
 #: src/prefs_common_dialog.c:1188
-#, fuzzy
 msgid "Reply to mailing list by Reply button"
-msgstr "/Ответить в список рассылки"
+msgstr "Ответить в список рассылки при помощи \"Ответить\""
 
 #: src/prefs_common_dialog.c:1190
 msgid "Inherit recipients on reply to self messages"
@@ -4982,7 +4958,7 @@ msgstr "Включить получателей при ответе нв пис�
 
 #: src/prefs_common_dialog.c:1192
 msgid "Set only mail address of recipients when replying"
-msgstr ""
+msgstr "Устанавливать только адреса получателей при ответе"
 
 #. editor
 #: src/prefs_common_dialog.c:1196 src/prefs_common_dialog.c:2712
@@ -5105,9 +5081,8 @@ msgid "Message"
 msgstr "Сообщение"
 
 #: src/prefs_common_dialog.c:1674
-#, fuzzy
 msgid "Color label"
-msgstr "/Выделение цветом"
+msgstr "Выделение цветом"
 
 #: src/prefs_common_dialog.c:1684
 msgid "Default character encoding"
@@ -5201,7 +5176,7 @@ msgstr "Показывать изображения в тексте сообще
 
 #: src/prefs_common_dialog.c:1949
 msgid "You can specify label names for each color (Work, TODO etc.)."
-msgstr ""
+msgstr "Вы можете указать метки для каждого цвета (Работа, Сделать, и.т.п.)."
 
 #: src/prefs_common_dialog.c:2074
 msgid "Enable Junk mail control"
@@ -5387,17 +5362,16 @@ msgid "Add address to destination when double-clicked"
 msgstr "Добавлять адрес в список адресатов по двойному щелчку"
 
 #: src/prefs_common_dialog.c:2563
-#, fuzzy
 msgid "Address auto-completion:"
-msgstr "Преобразование адресной книги"
+msgstr "Автодополнение адреса:"
 
 #: src/prefs_common_dialog.c:2585
 msgid "Start with Tab"
-msgstr ""
+msgstr "Начинать с Tab"
 
 #: src/prefs_common_dialog.c:2593
 msgid "Disable"
-msgstr ""
+msgstr "Отключить"
 
 #: src/prefs_common_dialog.c:2600
 msgid "On exit"
@@ -5987,14 +5961,12 @@ msgid "doesn't match to regex"
 msgstr "не соответствует regex"
 
 #: src/prefs_filter_edit.c:542
-#, fuzzy
 msgid "is in addressbook"
-msgstr "Адресная книга"
+msgstr "в адресной книге"
 
 #: src/prefs_filter_edit.c:544
-#, fuzzy
 msgid "is not in addressbook"
-msgstr "Добавить в адресную книгу"
+msgstr "не в адресной книге"
 
 #: src/prefs_filter_edit.c:556
 msgid "is larger than"
@@ -6543,14 +6515,12 @@ msgid "Last 5 days"
 msgstr "Последние 5 дней"
 
 #: src/quick_search.c:117
-#, fuzzy
 msgid "Last 7 days"
-msgstr "Последние 5 дней"
+msgstr "Последние 7 дней"
 
 #: src/quick_search.c:119
-#, fuzzy
 msgid "In addressbook"
-msgstr "Адресная книга"
+msgstr "В адресной книге"
 
 #: src/quick_search.c:150 src/quick_search.c:383
 msgid "Search for Subject or From"
@@ -6559,12 +6529,12 @@ msgstr "Поиск по теме или отправителю"
 #: src/quick_search.c:338
 #, c-format
 msgid "%1$d in %2$d matched"
-msgstr ""
+msgstr "%1$d в %2$d совпали"
 
 #: src/quick_search.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "No messages matched"
-msgstr "Нет новых сообщений."
+msgstr "Ничего не найдено"
 
 #: src/rfc2015.c:144
 msgid "Cannot find user ID for this key."
@@ -6846,40 +6816,42 @@ msgstr "Установки почтового ящика"
 
 #: src/setup.c:159
 msgid "This dialog will make initial setup of mailbox."
-msgstr ""
+msgstr "Этот диалог выполнит начальную настройку почтового ящика."
 
 #: src/setup.c:173
-#, fuzzy
 msgid "Create mailbox at the following default location:"
-msgstr "Выполнить следующие действия:"
+msgstr "Создать почтовый ящик в месте по умолчанию:"
 
 #: src/setup.c:193
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
+"Создать почтовый ящик в следующем месте:\n"
+"(введите название папки или полный путь)"
 
 #: src/setup.c:211
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
 msgstr ""
+"Если вы в последствии хотите добавить почтовый ящик в другое место, выберите "
+"'Файл - Почтовый ящик - Добавить почтовый ящик...' в меню."
 
 #: src/setup.c:234 src/setup.c:467
-#, fuzzy
 msgid "Cancel"
-msgstr "Отменена"
+msgstr "Отмена"
 
 #: src/setup.c:234
 msgid "Continue without creating mailbox?"
-msgstr ""
+msgstr "Продолжить без созданного почтового ящика?"
 
 #: src/setup.c:244
 msgid "Please input folder name or full folder path."
-msgstr ""
+msgstr "Пожалуйста введите имя папки или полный путь."
 
 #: src/setup.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "Почтовый ящик \"%s\" уже существует."
 
@@ -6888,88 +6860,77 @@ msgstr "Почтовый ящик \"%s\" уже существует."
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr ""
+"'%s\" включает в себя папку настроек. Пожалуйста, выберите другое "
+"расположение."
 
 #: src/setup.c:467
-#, fuzzy
 msgid "Cancel mail account setup?"
-msgstr "Редактирование учётных записей"
+msgstr "Отменить настройку профиля?"
 
 #: src/setup.c:487 src/setup.c:495
-#, fuzzy
 msgid "Input value is not valid."
-msgstr "Название в меню не указано."
+msgstr "Введено неверное значение."
 
 #: src/setup.c:525 src/setup.c:540 src/setup.c:576 src/setup.c:598
 #: src/setup.c:819 src/setup.c:901
-#, fuzzy
 msgid "POP3 server:"
-msgstr "Сервер LDAP"
+msgstr "Сервер POP3:"
 
 #: src/setup.c:531 src/setup.c:550 src/setup.c:589 src/setup.c:606
-#, fuzzy
 msgid "IMAP4 server:"
-msgstr "Сервер LDAP"
+msgstr "Сервер IMAP4:"
 
 #: src/setup.c:665 src/setup.c:701
-#, fuzzy
 msgid "New account setup"
-msgstr "Редактирование учётных записей"
+msgstr "Настройка нового профиля"
 
 #: src/setup.c:720
 msgid "This dialog will make initial setup of new mail account."
-msgstr ""
+msgstr "Этот диалог выполнит начальную настройку нового профиля."
 
 #: src/setup.c:743
-#, fuzzy
 msgid "Select account type:"
-msgstr "Удалить учётную запись"
+msgstr "Выберите тип профиля:"
 
 #: src/setup.c:766
-#, fuzzy
 msgid "Input your name and mail address:"
-msgstr "Ключ для выбранного адреса E-mail"
+msgstr "Введите ваше имя и адрес email:"
 
 #: src/setup.c:775 src/setup.c:889
-#, fuzzy
 msgid "Display name:"
-msgstr "Отображаемое имя"
+msgstr "Отображаемое имя:"
 
 #: src/setup.c:779 src/setup.c:893
-#, fuzzy
 msgid "E-mail address:"
-msgstr "Адрес E-Mail"
+msgstr "Адрес E-Mail:"
 
 #: src/setup.c:795
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
-msgstr ""
+msgstr "Это имя будет видимо получателям (например Иван Петров)"
 
 #: src/setup.c:806
 msgid "Input user ID and mail server:"
-msgstr ""
+msgstr "Введите ID пользователя и почтовый сервер:"
 
 #: src/setup.c:815 src/setup.c:897
-#, fuzzy
 msgid "User ID:"
-msgstr "Имя пользователя"
+msgstr "Имя пользователя:"
 
 #: src/setup.c:824 src/setup.c:905
-#, fuzzy
 msgid "SMTP server:"
-msgstr "Сервер SMTP (для отправки)"
+msgstr "Сервер SMTP (для отправки):"
 
 #: src/setup.c:849 src/setup.c:861
-#, fuzzy
 msgid "Use SSL"
-msgstr "SSL"
+msgstr "Использовать SSL"
 
 #: src/setup.c:857
-#, fuzzy
 msgid "Use SMTP authentication"
-msgstr "Аутентификация"
+msgstr "Использовать SMTP с авторизацией"
 
 #: src/setup.c:874
 msgid "Your new mail account has been set up with the following settings."
-msgstr ""
+msgstr "Ваш новый почтовый профиль был настроен со следующими параметрами:"
 
 #: src/setup.c:877
 msgid ""
@@ -6977,6 +6938,9 @@ msgid ""
 "'Configuration - Preferences for current account' or\n"
 "'Configuration - Edit accounts' in the main menu."
 msgstr ""
+"Если вы хотите изменить настройки, выберите\n"
+"'Настройка - Настройка текущей учетной записи' или\n"
+"'Настройка - Редактирование учетных записей' в главном меню."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -7076,51 +7040,43 @@ msgid "SSL certificate verify failed"
 msgstr "Ошибка проверки SSL-сертификата"
 
 #: src/sslmanager.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "The SSL certificate of %s cannot be verified by the following reason:"
-msgstr ""
-"SSL-сертификат·принадлежащий·%s не возможно проверить. Причина:\n"
-"··%s\n"
-"\n"
-"Сертификат сервера:\n"
-"··Субъект:·%s\n"
-"··Выдал:·%s\n"
-"\n"
-"Принять сертификат?"
+msgstr "SSL-сертификат·принадлежащий·%s не возможно проверить. Причина:"
 
 #: src/sslmanager.c:103
-#, fuzzy, c-format
+#, c-format
 msgid "Subject: %s\n"
-msgstr "  Субъект: %s\n"
+msgstr "Субъект: %s\n"
 
 #: src/sslmanager.c:104
-#, fuzzy, c-format
+#, c-format
 msgid "Issuer: %s\n"
-msgstr "  Сертификат выдал: %s\n"
+msgstr "Сертификат выдал: %s\n"
 
 #: src/sslmanager.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "Issued date: %s\n"
-msgstr "  Сертификат выдал: %s\n"
+msgstr "Дата выдачи: %s\n"
 
 #: src/sslmanager.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "Expire date: %s\n"
-msgstr "Удалять через"
+msgstr "Актуален до: %s\n"
 
 #: src/sslmanager.c:108
 #, c-format
 msgid "SHA1 fingerprint: %s\n"
-msgstr ""
+msgstr "Отпечаток SHA1: %s\n"
 
 #: src/sslmanager.c:109
 #, c-format
 msgid "MD5 fingerprint: %s\n"
-msgstr ""
+msgstr "Отпечаток MD5: %s\n"
 
 #: src/sslmanager.c:111
 msgid "Do you accept this certificate?"
-msgstr ""
+msgstr "Принять сертификат?"
 
 #: src/sslmanager.c:186 src/sslmanager.c:194
 msgid "_Reject"
@@ -7288,9 +7244,9 @@ msgid "Creating summary view...\n"
 msgstr "Создание области просмотра списка...\n"
 
 #: src/summaryview.c:644
-#, fuzzy, c-format
+#, c-format
 msgid "Scanning folder (%s) (%d)..."
-msgstr "Просмотр папки (%s)..."
+msgstr "Просмотр папки (%s) (%d)..."
 
 #: src/summaryview.c:697
 msgid "Process mark"
@@ -7322,7 +7278,6 @@ msgid "No unread messages."
 msgstr "Нет непрочитанных сообщений."
 
 #: src/summaryview.c:1447
-#, fuzzy
 msgid "No unread message found. Go to next unread folder?"
 msgstr "Непрочитанные сообщения не найдены. Перейти к следующей папке?"
 
@@ -7339,7 +7294,6 @@ msgid "No new messages."
 msgstr "Нет новых сообщений."
 
 #: src/summaryview.c:1465
-#, fuzzy
 msgid "No new message found. Go to next folder which has new messages?"
 msgstr "Новые сообщения не найдены. Перейти к следующей папке?"
 
@@ -7612,13 +7566,12 @@ msgid "Sylpheed"
 msgstr "Sylpheed"
 
 #: src/update_check.c:123 src/update_check.c:128 src/update_check.c:133
-#, fuzzy
 msgid ""
 "A newer version of Sylpheed has been found.\n"
 "Upgrade now?"
 msgstr ""
 "Найдена новая версия Sylpheed.\n"
-" Обновить сейчас?"
+"Обновить сейчас?"
 
 #: src/update_check.c:136
 msgid "New version found"
