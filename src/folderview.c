@@ -1862,6 +1862,8 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 				       FolderView *folderview)
 {
 	GtkTreePath *opened = NULL, *selected = NULL;
+	GtkAdjustment *adj;
+	gboolean moved;
 
 	if (!event) return FALSE;
 
@@ -1877,7 +1879,6 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 						  folderview->selected);
 		}
 		return TRUE;
-		break;
 	case GDK_space:
 	case GDK_KP_Space:
 		if (folderview->selected) {
@@ -1897,6 +1898,52 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			gtk_tree_path_free(selected);
 			gtk_tree_path_free(opened);
 			return TRUE;
+		}
+		break;
+	case GDK_Left:
+	case GDK_KP_Left:
+		if ((event->state &
+		     (GDK_SHIFT_MASK|GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
+			return FALSE;
+		adj = gtk_scrolled_window_get_hadjustment
+			(GTK_SCROLLED_WINDOW(folderview->scrolledwin));
+		if (adj->lower != adj->value)
+			return FALSE;
+		if (folderview->selected) {
+			selected = gtk_tree_row_reference_get_path
+				(folderview->selected);
+			if (selected) {
+				if (gtk_tree_view_row_expanded(GTK_TREE_VIEW(folderview->treeview), selected)) {
+					gtk_tree_view_collapse_row(GTK_TREE_VIEW(folderview->treeview), selected);
+					gtk_tree_path_free(selected);
+					return TRUE;
+				}
+				gtk_tree_path_free(selected);
+			}
+		}
+		g_signal_emit_by_name(G_OBJECT(folderview->treeview),
+				      "select-cursor-parent", &moved);
+		return TRUE;
+	case GDK_Right:
+	case GDK_KP_Right:
+		if ((event->state &
+		     (GDK_SHIFT_MASK|GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
+			return FALSE;
+		adj = gtk_scrolled_window_get_hadjustment
+			(GTK_SCROLLED_WINDOW(folderview->scrolledwin));
+		if (adj->upper - adj->page_size != adj->value)
+			return FALSE;
+		if (folderview->selected) {
+			selected = gtk_tree_row_reference_get_path
+				(folderview->selected);
+			if (selected) {
+				if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(folderview->treeview), selected)) {
+					gtk_tree_view_expand_row(GTK_TREE_VIEW(folderview->treeview), selected, FALSE);
+					gtk_tree_path_free(selected);
+					return TRUE;
+				}
+				gtk_tree_path_free(selected);
+			}
 		}
 		break;
 	default:
