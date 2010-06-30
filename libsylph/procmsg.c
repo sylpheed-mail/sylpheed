@@ -721,7 +721,7 @@ void procmsg_add_mark_queue(FolderItem *item, gint num, MsgFlags flags)
 	item->mark_queue = g_slist_prepend(item->mark_queue, flaginfo);
 }
 
-static void procmsg_flaginfo_list_free(GSList *flaglist)
+void procmsg_flaginfo_list_free(GSList *flaglist)
 {
 	GSList *cur;
 	MsgFlagInfo *flaginfo;
@@ -778,6 +778,7 @@ void procmsg_add_cache_queue(FolderItem *item, gint num, MsgInfo *msginfo)
 
 	queue_msginfo = procmsg_msginfo_copy(msginfo);
 	queue_msginfo->msgnum = num;
+	queue_msginfo->folder = item;
 	if (queue_msginfo->file_path) {
 		g_free(queue_msginfo->file_path);
 		queue_msginfo->file_path = NULL;

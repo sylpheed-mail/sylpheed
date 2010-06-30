@@ -197,6 +197,9 @@ static void summary_update_status	(SummaryView		*summaryview);
 
 /* display functions */
 static void summary_status_show		(SummaryView		*summaryview);
+static void summary_set_row		(SummaryView		*summaryview,
+					 GtkTreeIter		*iter,
+					 MsgInfo		*msginfo);
 static void summary_set_tree_model_from_list
 					(SummaryView		*summaryview,
 					 GSList			*mlist);
@@ -1018,6 +1021,50 @@ void summary_clear_all(SummaryView *summaryview)
 	summary_set_menu_sensitive(summaryview);
 	main_window_set_toolbar_sensitive(summaryview->mainwin);
 	summary_status_show(summaryview);
+}
+
+void summary_show_queued_msgs(SummaryView *summaryview)
+{
+	FolderItem *item;
+	GSList *qlist, *cur;
+	MsgInfo *msginfo;
+	GtkTreeStore *store = GTK_TREE_STORE(summaryview->store);
+	GtkTreeIter iter;
+
+	if (summary_is_locked(summaryview))
+		return;
+
+	item = summaryview->folder_item;
+	if (!item || !item->path || !item->cache_queue ||
+	    item->stype == F_VIRTUAL)
+		return;
+
+	debug_print("summary_show_queued_msgs: appending queued messages to summary (%s)\n", item->path);
+
+	qlist = g_slist_reverse(item->cache_queue);
+	item->cache_queue = NULL;
+	if (item->mark_queue) {
+		procmsg_flaginfo_list_free(item->mark_queue);
+		item->mark_queue = NULL;
+	}
+
+	for (cur = qlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+
+		debug_print("summary_show_queued_msgs: appending msg %u\n",
+			    msginfo->msgnum);
+		msginfo->folder = item;
+		gtk_tree_store_append(store, &iter, NULL);
+		summary_set_row(summaryview, &iter, msginfo);
+
+		summaryview->total_size += msginfo->size;
+	}
+
+	summaryview->all_mlist = g_slist_concat(summaryview->all_mlist, qlist);
+
+	item->cache_dirty = TRUE;
+
+	debug_print("summary_show_queued_msgs: done.\n");
 }
 
 void summary_lock(SummaryView *summaryview)
@@ -2501,7 +2548,7 @@ gint summary_write_cache(SummaryView *summaryview)
 	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 
-		if (msginfo->folder->mark_queue != NULL) {
+		if (msginfo->folder && msginfo->folder->mark_queue != NULL) {
 			MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_NEW);
 		}
 		if (fps.cache_fp)

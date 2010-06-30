@@ -168,6 +168,8 @@ gboolean summary_show		  (SummaryView		*summaryview,
 void summary_clear_list		  (SummaryView		*summaryview);
 void summary_clear_all		  (SummaryView		*summaryview);
 
+void summary_show_queued_msgs	  (SummaryView		*summaryview);
+
 void summary_lock		  (SummaryView		*summaryview);
 void summary_unlock		  (SummaryView		*summaryview);
 gboolean summary_is_locked	  (SummaryView		*summaryview);

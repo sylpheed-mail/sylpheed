@@ -247,6 +247,8 @@ void	procmsg_write_flags_list	(FolderItem	*item,
 void	procmsg_write_flags_for_multiple_folders
 					(GSList		*mlist);
 
+void	procmsg_flaginfo_list_free	(GSList		*flaglist);
+
 void	procmsg_flush_mark_queue	(FolderItem	*item,
 					 FILE		*fp);
 void	procmsg_add_mark_queue		(FolderItem	*item,
