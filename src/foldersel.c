@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,7 @@ static GdkPixbuf *foldernoselect_pixbuf;
 
 static GtkWidget *window;
 static GtkWidget *label;
+static GtkWidget *scrolledwin;
 static GtkWidget *treeview;
 static GtkWidget *entry;
 static GtkWidget *confirm_area;
@@ -129,6 +130,10 @@ static void foldersel_tree_activated	(GtkTreeView		*treeview,
 					 GtkTreePath		*path,
 					 GtkTreeViewColumn	*column,
 					 gpointer		 data);
+
+static gboolean foldersel_tree_key_pressed	(GtkWidget	*widget,
+						 GdkEventKey	*event,
+						 gpointer	 data);
 
 static gint delete_event		(GtkWidget	*widget,
 					 GdkEventAny	*event,
@@ -243,7 +248,6 @@ FolderItem *foldersel_folder_sel_full(Folder *cur_folder,
 static void foldersel_create(void)
 {
 	GtkWidget *vbox;
-	GtkWidget *scrolledwin;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *renderer;
 	GtkTreeSelection *selection;
@@ -306,6 +310,8 @@ static void foldersel_create(void)
 
 	g_signal_connect(G_OBJECT(treeview), "row-activated",
 			 G_CALLBACK(foldersel_tree_activated), NULL);
+	g_signal_connect(G_OBJECT(treeview), "key_press_event",
+			 G_CALLBACK(foldersel_tree_key_pressed), NULL);
 
 	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
 
@@ -646,6 +652,69 @@ static void foldersel_tree_activated(GtkTreeView *treeview, GtkTreePath *path,
 				     GtkTreeViewColumn *column, gpointer data)
 {
 	gtk_button_clicked(GTK_BUTTON(ok_button));
+}
+
+static gboolean foldersel_tree_key_pressed(GtkWidget *widget,
+					   GdkEventKey *event, gpointer data)
+{
+	GtkTreeSelection *selection;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	GtkTreePath *selected;
+	GtkAdjustment *adj;
+	gboolean moved;
+
+	if (!event)
+		return FALSE;
+
+	switch (event->keyval) {
+	case GDK_Left:
+	case GDK_KP_Left:
+		if ((event->state &
+		     (GDK_SHIFT_MASK|GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
+			return FALSE;
+		adj = gtk_scrolled_window_get_hadjustment
+			(GTK_SCROLLED_WINDOW(scrolledwin));
+		if (adj->lower < adj->value)
+			return FALSE;
+		selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+		if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+			return FALSE;
+		selected = gtk_tree_model_get_path(model, &iter);
+		if (gtk_tree_view_row_expanded(GTK_TREE_VIEW(treeview), selected)) {
+			gtk_tree_view_collapse_row(GTK_TREE_VIEW(treeview), selected);
+			gtk_tree_path_free(selected);
+			return TRUE;
+		}
+		gtk_tree_path_free(selected);
+		g_signal_emit_by_name(G_OBJECT(treeview),
+				      "select-cursor-parent", &moved);
+		return TRUE;
+	case GDK_Right:
+	case GDK_KP_Right:
+		if ((event->state &
+		     (GDK_SHIFT_MASK|GDK_MOD1_MASK|GDK_CONTROL_MASK)) != 0)
+			return FALSE;
+		adj = gtk_scrolled_window_get_hadjustment
+			(GTK_SCROLLED_WINDOW(scrolledwin));
+		if (adj->lower - adj->page_size > adj->value)
+			return FALSE;
+		selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+		if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+			return FALSE;
+		selected = gtk_tree_model_get_path(model, &iter);
+		if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(treeview), selected)) {
+			gtk_tree_view_expand_row(GTK_TREE_VIEW(treeview), selected, FALSE);
+			gtk_tree_path_free(selected);
+			return TRUE;
+		}
+		gtk_tree_path_free(selected);
+		break;
+	default:
+		break;
+	}
+
+	return FALSE;
 }
 
 static gint delete_event(GtkWidget *widget, GdkEventAny *event, gpointer data)
