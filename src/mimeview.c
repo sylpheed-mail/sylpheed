@@ -821,8 +821,11 @@ static void mimeview_selection_changed(GtkTreeSelection *selection,
 		mimeview_show_message_part(mimeview, partinfo);
 		break;
 	case MIME_IMAGE:
-		mimeview_show_image_part(mimeview, partinfo);
-		break;
+		if (prefs_common.inline_image) {
+			mimeview_show_image_part(mimeview, partinfo);
+			break;
+		}
+		/* FALLTHROUGH */
 	default:
 		mimeview_change_view_type(mimeview, MIMEVIEW_TEXT);
 #if USE_GPGME
