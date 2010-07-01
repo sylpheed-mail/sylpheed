@@ -1861,6 +1861,7 @@ static gboolean folderview_button_released(GtkWidget *treeview,
 static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 				       FolderView *folderview)
 {
+	GtkTreeView *treeview = GTK_TREE_VIEW(widget);
 	GtkTreePath *opened = NULL, *selected = NULL;
 	GtkAdjustment *adj;
 	gboolean moved;
@@ -1907,21 +1908,21 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			return FALSE;
 		adj = gtk_scrolled_window_get_hadjustment
 			(GTK_SCROLLED_WINDOW(folderview->scrolledwin));
-		if (adj->lower != adj->value)
+		if (adj->lower < adj->value)
 			return FALSE;
 		if (folderview->selected) {
 			selected = gtk_tree_row_reference_get_path
 				(folderview->selected);
 			if (selected) {
-				if (gtk_tree_view_row_expanded(GTK_TREE_VIEW(folderview->treeview), selected)) {
-					gtk_tree_view_collapse_row(GTK_TREE_VIEW(folderview->treeview), selected);
+				if (gtk_tree_view_row_expanded(treeview, selected)) {
+					gtk_tree_view_collapse_row(treeview, selected);
 					gtk_tree_path_free(selected);
 					return TRUE;
 				}
 				gtk_tree_path_free(selected);
 			}
 		}
-		g_signal_emit_by_name(G_OBJECT(folderview->treeview),
+		g_signal_emit_by_name(G_OBJECT(treeview),
 				      "select-cursor-parent", &moved);
 		return TRUE;
 	case GDK_Right:
@@ -1931,14 +1932,14 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			return FALSE;
 		adj = gtk_scrolled_window_get_hadjustment
 			(GTK_SCROLLED_WINDOW(folderview->scrolledwin));
-		if (adj->upper - adj->page_size != adj->value)
+		if (adj->upper - adj->page_size > adj->value)
 			return FALSE;
 		if (folderview->selected) {
 			selected = gtk_tree_row_reference_get_path
 				(folderview->selected);
 			if (selected) {
-				if (!gtk_tree_view_row_expanded(GTK_TREE_VIEW(folderview->treeview), selected)) {
-					gtk_tree_view_expand_row(GTK_TREE_VIEW(folderview->treeview), selected, FALSE);
+				if (!gtk_tree_view_row_expanded(treeview, selected)) {
+					gtk_tree_view_expand_row(treeview, selected, FALSE);
 					gtk_tree_path_free(selected);
 					return TRUE;
 				}
