@@ -433,8 +433,8 @@ static GtkItemFactoryEntry summary_popup_entries[] =
 	{N_("/_Copy..."),		NULL, summary_copy_to,	0, NULL},
 	{N_("/---"),			NULL, NULL,		0, "<Separator>"},
 	{N_("/_Mark"),			NULL, NULL,		0, "<Branch>"},
-	{N_("/_Mark/_Mark"),		NULL, summary_mark,	0, NULL},
-	{N_("/_Mark/_Unmark"),		NULL, summary_unmark,	0, NULL},
+	{N_("/_Mark/Set _flag"),	NULL, summary_mark,	0, NULL},
+	{N_("/_Mark/_Unset flag"),	NULL, summary_unmark,	0, NULL},
 	{N_("/_Mark/---"),		NULL, NULL,		0, "<Separator>"},
 	{N_("/_Mark/Mark as unr_ead"),	NULL, summary_mark_as_unread, 0, NULL},
 	{N_("/_Mark/Mark as rea_d"),
@@ -1330,8 +1330,8 @@ static void summary_set_menu_sensitive(SummaryView *summaryview)
 	menu_set_sensitive(ifactory, "/Copy...", TRUE);
 
 	menu_set_sensitive(ifactory, "/Mark", TRUE);
-	menu_set_sensitive(ifactory, "/Mark/Mark",   TRUE);
-	menu_set_sensitive(ifactory, "/Mark/Unmark", TRUE);
+	menu_set_sensitive(ifactory, "/Mark/Set flag",   TRUE);
+	menu_set_sensitive(ifactory, "/Mark/Unset flag", TRUE);
 
 	menu_set_sensitive(ifactory, "/Mark/Mark as unread", TRUE);
 	menu_set_sensitive(ifactory, "/Mark/Mark as read",   TRUE);
