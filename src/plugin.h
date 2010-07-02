@@ -170,6 +170,10 @@ void syl_plugin_open_message			(const gchar *folder_id,
 void syl_plugin_summary_lock			(void);
 void syl_plugin_summary_unlock			(void);
 gboolean syl_plugin_summary_is_locked		(void);
+gboolean syl_plugin_summary_is_read_locked	(void);
+void syl_plugin_summary_write_lock		(void);
+void syl_plugin_summary_write_unlock		(void);
+gboolean syl_plugin_summary_is_write_locked	(void);
 
 /* MessageView */
 gpointer syl_plugin_messageview_create_with_new_window

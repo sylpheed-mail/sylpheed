@@ -724,7 +724,7 @@ void syl_plugin_summary_lock(void)
 
 	summary = syl_plugin_summary_view_get();
 	if (summary) {
-		func = syl_plugin_lookup_symbol("summary_lock");
+		GETFUNC("summary_lock");
 		SAFE_CALL_ARG1(func, summary);
 	}
 }
@@ -736,7 +736,7 @@ void syl_plugin_summary_unlock(void)
 
 	summary = syl_plugin_summary_view_get();
 	if (summary) {
-		func = syl_plugin_lookup_symbol("summary_unlock");
+		GETFUNC("summary_unlock");
 		SAFE_CALL_ARG1(func, summary);
 	}
 }
@@ -748,7 +748,59 @@ gboolean syl_plugin_summary_is_locked(void)
 
 	summary = syl_plugin_summary_view_get();
 	if (summary) {
-		func = syl_plugin_lookup_symbol("summary_is_locked");
+		GETFUNC("summary_is_locked");
+		return SAFE_CALL_ARG1_RET_VAL(func, summary, FALSE);
+	}
+
+	return FALSE;
+}
+
+gboolean syl_plugin_summary_is_read_locked(void)
+{
+	gboolean (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_is_read_locked");
+		return SAFE_CALL_ARG1_RET_VAL(func, summary, FALSE);
+	}
+
+	return FALSE;
+}
+
+void syl_plugin_summary_write_lock(void)
+{
+	void (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_write_lock");
+		SAFE_CALL_ARG1(func, summary);
+	}
+}
+
+void syl_plugin_summary_write_unlock(void)
+{
+	void (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_write_unlock");
+		SAFE_CALL_ARG1(func, summary);
+	}
+}
+
+gboolean syl_plugin_summary_is_write_locked(void)
+{
+	gboolean (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_is_write_locked");
 		return SAFE_CALL_ARG1_RET_VAL(func, summary, FALSE);
 	}
 

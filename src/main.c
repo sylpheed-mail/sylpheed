@@ -1165,6 +1165,10 @@ static void plugin_init(void)
 	ADD_SYM(summary_lock);
 	ADD_SYM(summary_unlock);
 	ADD_SYM(summary_is_locked);
+	ADD_SYM(summary_is_read_locked);
+	ADD_SYM(summary_write_lock);
+	ADD_SYM(summary_write_unlock);
+	ADD_SYM(summary_is_write_locked);
 
 	ADD_SYM(messageview_create_with_new_window);
 	ADD_SYM(messageview_show);

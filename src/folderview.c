@@ -3146,6 +3146,9 @@ static gboolean folderview_drag_motion_cb(GtkWidget      *widget,
 	} else
 		remove_auto_expand_timeout(folderview);
 
+	if (summary_is_locked(folderview->summaryview))
+		acceptable = FALSE;
+
 	gtk_tree_view_get_drag_dest_row(GTK_TREE_VIEW(widget),
 					&prev_path, NULL);
 	if (!path || (prev_path && gtk_tree_path_compare(path, prev_path) != 0))

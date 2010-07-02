@@ -1070,17 +1070,41 @@ void summary_show_queued_msgs(SummaryView *summaryview)
 void summary_lock(SummaryView *summaryview)
 {
 	summaryview->lock_count++;
+	summaryview->write_lock_count++;
 }
 
 void summary_unlock(SummaryView *summaryview)
 {
 	if (summaryview->lock_count)
 		summaryview->lock_count--;
+	if (summaryview->write_lock_count)
+		summaryview->write_lock_count--;
 }
 
 gboolean summary_is_locked(SummaryView *summaryview)
 {
+	return summaryview->lock_count > 0 || summaryview->write_lock_count > 0;
+}
+
+gboolean summary_is_read_locked(SummaryView *summaryview)
+{
 	return summaryview->lock_count > 0;
+}
+
+void summary_write_lock(SummaryView *summaryview)
+{
+	summaryview->write_lock_count++;
+}
+
+void summary_write_unlock(SummaryView *summaryview)
+{
+	if (summaryview->write_lock_count)
+		summaryview->write_lock_count--;
+}
+
+gboolean summary_is_write_locked(SummaryView *summaryview)
+{
+	return summaryview->write_lock_count > 0;
 }
 
 SummarySelection summary_get_selection_type(SummaryView *summaryview)
@@ -2638,7 +2662,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 	    summary_row_is_displayed(summaryview, iter))
 		return;
 
-	if (summary_is_locked(summaryview)) return;
+	if (summary_is_read_locked(summaryview)) return;
 	summary_lock(summaryview);
 
 	STATUSBAR_POP(summaryview->mainwin);
@@ -2741,7 +2765,7 @@ void summary_display_msg_selected(SummaryView *summaryview,
 {
 	GtkTreeIter iter;
 
-	if (summary_is_locked(summaryview)) return;
+	if (summary_is_read_locked(summaryview)) return;
 
 	if (summaryview->selected) {
 		if (gtkut_tree_row_reference_get_iter
@@ -2825,7 +2849,7 @@ gboolean summary_step(SummaryView *summaryview, GtkScrollType type)
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter;
 
-	if (summary_is_locked(summaryview)) return FALSE;
+	if (summary_is_read_locked(summaryview)) return FALSE;
 
 	if (!gtkut_tree_row_reference_get_iter
 		(model, summaryview->selected, &iter))
@@ -2911,7 +2935,7 @@ void summary_mark(SummaryView *summaryview)
 	FolderSortType sort_type = SORT_ASCENDING;
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
-	    summary_is_locked(summaryview))
+	    summary_is_read_locked(summaryview))
 		return;
 
 	SORT_BLOCK(SORT_BY_MARK);
@@ -2985,7 +3009,7 @@ void summary_mark_as_read(SummaryView *summaryview)
 	FolderSortType sort_type = SORT_ASCENDING;
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
-	    summary_is_locked(summaryview))
+	    summary_is_read_locked(summaryview))
 		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
@@ -3040,7 +3064,7 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 	FolderSortType sort_type = SORT_ASCENDING;
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
-	    summary_is_locked(summaryview))
+	    summary_is_read_locked(summaryview))
 		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
@@ -3119,7 +3143,7 @@ void summary_mark_all_read(SummaryView *summaryview)
 	FolderSortType sort_type = SORT_ASCENDING;
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
-	    summary_is_locked(summaryview))
+	    summary_is_read_locked(summaryview))
 		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
@@ -3200,7 +3224,7 @@ void summary_mark_as_unread(SummaryView *summaryview)
 	FolderSortType sort_type = SORT_ASCENDING;
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
-	    summary_is_locked(summaryview))
+	    summary_is_read_locked(summaryview))
 		return;
 
 	SORT_BLOCK(SORT_BY_UNREAD);
@@ -3405,7 +3429,7 @@ void summary_unmark(SummaryView *summaryview)
 	FolderSortType sort_type = SORT_ASCENDING;
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
-	    summary_is_locked(summaryview))
+	    summary_is_read_locked(summaryview))
 		return;
 
 	SORT_BLOCK(SORT_BY_MARK);
@@ -5667,7 +5691,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	GtkAdjustment *adj;
 	gboolean mod_pressed;
 
-	if (summary_is_locked(summaryview)) return FALSE;
+	if (summary_is_read_locked(summaryview)) return FALSE;
 	if (!event) return FALSE;
 
 	switch (event->keyval) {
