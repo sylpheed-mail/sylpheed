@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -912,6 +912,14 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	STATUSBAR_PUSH(summaryview->mainwin, _("Done."));
 
 	main_window_cursor_normal(summaryview->mainwin);
+
+	if (prefs_common.online_mode) {
+		if (FOLDER_IS_REMOTE(item->folder) &&
+		    REMOTE_FOLDER(item->folder)->session == NULL) {
+			alertpanel_error(_("Could not establish a connection to the server."));
+		}
+	}
+
 	summary_unlock(summaryview);
 	inc_unlock();
 
