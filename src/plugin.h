@@ -60,6 +60,7 @@ struct _SylPluginClass
 	void (* plugin_unload)	(GObject *obj, GModule *module);
 
 	void (* folderview_menu_popup)	(GObject *obj, gpointer ifactory);
+	void (* summaryview_menu_popup)	(GObject *obj, gpointer ifactory);
 
 	void (* compose_created)	(GObject *obj, gpointer compose);
 	void (* compose_destroy)	(GObject *obj, gpointer compose);

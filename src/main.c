@@ -1159,6 +1159,8 @@ static void plugin_init(void)
 			      mainwin->folderview->news_factory);
 
 	syl_plugin_add_symbol("summaryview", mainwin->summaryview);
+	syl_plugin_add_symbol("summaryview_popup_factory",
+			      mainwin->summaryview->popupfactory);
 
 	ADD_SYM(summary_select_by_msgnum);
 	ADD_SYM(summary_select_by_msginfo);

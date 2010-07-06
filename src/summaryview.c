@@ -84,6 +84,7 @@
 #include "colorlabel.h"
 #include "inc.h"
 #include "imap.h"
+#include "plugin.h"
 
 #define STATUSBAR_PUSH(mainwin, str) \
 { \
@@ -5645,6 +5646,8 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 		return TRUE;
 	} else if (event->button == 3) {
 		/* right clicked */
+		syl_plugin_signal_emit("summaryview-menu-popup",
+				       summaryview->popupfactory);
 		gtk_menu_popup(GTK_MENU(summaryview->popupmenu), NULL, NULL,
 			       NULL, NULL, event->button, event->time);
 		if (is_selected) {

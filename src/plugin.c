@@ -31,6 +31,7 @@ enum {
 	PLUGIN_LOAD,
 	PLUGIN_UNLOAD,
 	FOLDERVIEW_MENU_POPUP,
+	SUMMARYVIEW_MENU_POPUP,
 	COMPOSE_CREATED,
 	COMPOSE_DESTROY,
 	LAST_SIGNAL
@@ -102,6 +103,17 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_SIGNAL_RUN_FIRST,
 			     G_STRUCT_OFFSET(SylPluginClass,
 					     folderview_menu_popup),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[SUMMARYVIEW_MENU_POPUP] =
+		g_signal_new("summaryview-menu-popup",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass,
+					     summaryview_menu_popup),
 			     NULL, NULL,
 			     g_cclosure_marshal_VOID__POINTER,
 			     G_TYPE_NONE,
@@ -433,6 +445,8 @@ static GtkItemFactory *get_item_factory(const gchar *path)
 		ifactory = syl_plugin_lookup_symbol("folderview_imap_popup_factory");
 	else if (strncmp(path, "<NewsFolder>", 12) == 0)
 		ifactory = syl_plugin_lookup_symbol("folderview_news_popup_factory");
+	else if (strncmp(path, "<SummaryView>", 13) == 0)
+		ifactory = syl_plugin_lookup_symbol("summaryview_popup_factory");
 	else
 		ifactory = syl_plugin_lookup_symbol("main_window_menu_factory");
 
