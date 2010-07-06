@@ -140,7 +140,16 @@ static void summaryview_menu_popup_cb(GObject *obj, GtkItemFactory *ifactory,
 
 static void menu_selected_cb(void)
 {
-	g_print("test: menu selected\n");
+	gint sel;
+	GSList *mlist;
+
+	g_print("test: summary menu selected\n");
+	sel = syl_plugin_summary_get_selection_type();
+	mlist = syl_plugin_summary_get_selected_msg_list();
+	g_print("test: selection type: %d\n", sel);
+	g_print("test: number of selected summary message: %d\n",
+		g_slist_length(mlist));
+	g_slist_free(mlist);
 }
 
 static void compose_created_cb(GObject *obj, gpointer compose)

@@ -821,6 +821,48 @@ gboolean syl_plugin_summary_is_write_locked(void)
 	return FALSE;
 }
 
+gint syl_plugin_summary_get_selection_type(void)
+{
+	gint (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_get_selection_type");
+		return SAFE_CALL_ARG1_RET_VAL(func, summary, 0);
+	}
+
+	return 0;
+}
+
+GSList *syl_plugin_summary_get_selected_msg_list(void)
+{
+	GSList * (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_get_selected_msg_list");
+		return SAFE_CALL_ARG1_RET(func, summary);
+	}
+
+	return NULL;
+}
+
+GSList *syl_plugin_summary_get_msg_list(void)
+{
+	GSList * (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_get_msg_list");
+		return SAFE_CALL_ARG1_RET(func, summary);
+	}
+
+	return NULL;
+}
+
 gpointer syl_plugin_messageview_create_with_new_window(void)
 {
 	gpointer (*func)(void);
