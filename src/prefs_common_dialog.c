@@ -823,7 +823,7 @@ static void prefs_receive_create(void)
 	gtk_widget_show (label_autochk1);
 	gtk_box_pack_start (GTK_BOX (hbox_autochk), label_autochk1, FALSE, FALSE, 0);
 
-	spinbtn_autochk_adj = gtk_adjustment_new (5, 1, 100, 1, 10, 0);
+	spinbtn_autochk_adj = gtk_adjustment_new (5, 1, 1000, 1, 10, 0);
 	spinbtn_autochk = gtk_spin_button_new
 		(GTK_ADJUSTMENT (spinbtn_autochk_adj), 1, 0);
 	gtk_widget_show (spinbtn_autochk);
