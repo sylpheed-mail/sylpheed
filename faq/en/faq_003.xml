@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8'?><chapter id="sylpheed-faq-3">
+  <title>Sylpheed FAQ - Interface</title>
+  <qandaset id="faq-interface">
+<?dbhtml cellspacing="13px" ?>    <qandaentry>
+      <question>
+        <para>How do I make Sylpheed display my language?</para>
+      </question>
+      <answer>
+        <para>You have to set some environment variables, such as
+     <envar>LANG</envar>, <envar>LC_CTYPE</envar>, <envar>LC_MESSAGES</envar> to your local language.
+     Usually <envar>LANG</envar> (or <envar>LC_ALL</envar>) is sufficient. Note that modern distributions and operating systems do this for you automatically.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>I don&apos;t like the default font. Can I change that?</para>
+      </question>
+      <answer>
+        <para>Yes. In <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+          </menuchoice>, under the
+     <guimenuitem>Display</guimenuitem> tab.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>There are too many columns in the message list!</para>
+      </question>
+      <answer>
+        <para>In <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+          </menuchoice> under the
+     <guimenuitem>Display</guimenuitem> tab, you can press the button <guibutton>Set display item of summary...</guibutton>. That pops up a screen with all the
+     options you can show or leave out of the message
+     list.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>How do I disable or enable the alternating row colors in the message list?</para>
+      </question>
+      <answer>
+        <para>Under  UNIX, you can directly edit the appropriate hidden setting stored in the <filename>$HOME/.sylpheed-2.0/sylpheedrc</filename> configuration file by changing the setting value to 0, or 1, respectively (default is on, i.e. 1): </para>
+        <programlisting>enable_rules_hint=0</programlisting>
+        <tip>
+          <para>There are various other hidden settings that can be adjusted in your <filename>sylpheedrc</filename> configuration file, see the <filename>README</filename> file for details.</para>
+        </tip>
+        <para>The above does not work under Windows, however, so you have to edit the <filename>C:\Program Files\Sylpheed\share\themes\MS-Windows\gtk-2.0\gtkrc</filename> file and set the following setting to 1, or 0, respectively (default is off under Windows, i.e. 0):</para>
+        <programlisting>GtkTreeView::allow-rules = 1</programlisting>
+        <note>
+          <para>Since the hidden setting  described above is not stored within your user profile under Windows, it may be overwritten when installing a new version of Sylpheed. To avoid this at least partially, keep a backup copy of the <filename>gtkrc</filename> file somewhere safe.</para>
+        </note>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Can I use a different editor to write my mails?</para>
+      </question>
+      <answer>
+        <para>You can. In <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences</guimenuitem>
+          </menuchoice>, under
+     the <guimenuitem>Details</guimenuitem> and <guimenuitem>External commands</guimenuitem> tabs, you can define your editor of choice.
+     Remember, if you want to use a command line editor
+     like vi or emacs, to write the name of the shell
+     (term, term, rxvt) with the <parameter>-e</parameter> parameter in front of
+     the editor. E.g.: <command>rxvt -e vi %s</command>.</para>
+        <para>Also, make sure that you have checked <guilabel>Automatically launch the external editor</guilabel> in <menuchoice>
+            <guimenuitem>Common preferences</guimenuitem>
+            <guimenuitem>Compose</guimenuitem>
+            <guimenuitem>Editor</guimenuitem>
+          </menuchoice>, if you want the editor of your choice to be launched every time you begin composing a message.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>How to change the font size in the Sylpheed interface?</para>
+      </question>
+      <answer>
+        <para>You can set the GTK+ font by <filename>$HOME/.gtkrc-2.0</filename>, or
+     <filename>$HOME/.gtkrc-2.0.mine</filename>,
+     (which is included by <filename>$HOME/.gtkrc-2.0</filename>).
+     For example:</para>
+        <programlisting>style &quot;default&quot; {
+       font = &quot;-adobe-helvetica-medium-r-normal--12-*-*-*-*-*-iso8859-1 &quot;
+}
+widget_class &quot;*&quot; style &quot;default&quot;
+</programlisting>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Sylpheed saves my outgoing mail (in Outbox). Can I make it stop doing that?</para>
+      </question>
+      <answer>
+        <para>In <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+          </menuchoice>, there is a
+     checkbox <guilabel>Save sent message to outbox</guilabel>. Uncheck it,
+     and it&apos;s solved.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>How can I change the key bindings (hotkeys) in Sylpheed?</para>
+      </question>
+      <answer>
+        <para>Unlike Sylpheed 1.x,  Sylpheed 2.x and 3.x doesn&apos;t allow direct modification of the menu shortcuts by default. Nevertheless, you can use the following methods to configure them:</para>
+        <orderedlist>
+          <listitem>
+            <para><emphasis>Using GNOME 2.8 or later:</emphasis> run gconf-editor from <menuchoice>
+                <guimenu>Applications</guimenu>
+                <guisubmenu>System Tools</guisubmenu>
+                <guimenuitem>Configuration Editor</guimenuitem>
+              </menuchoice>. Select <menuchoice>
+                <guimenu>desktop</guimenu>
+                <guisubmenu>gnome</guisubmenu>
+                <guisubmenu>interface</guisubmenu>
+              </menuchoice> and check <guilabel>can-change-accels</guilabel> there.</para>
+          </listitem>
+          <listitem>
+            <para><emphasis>Using GNOME before 2.8, or other environments:</emphasis> add the following line to the file <filename>~/.gtkrc-2.0</filename> (or create a new one, if it doesn&apos;t exist):</para>
+            <programlisting>gtk-can-change-accels = 1</programlisting>
+          </listitem>
+          <listitem>
+            <para>When Sylpheed is not running, directly edit <filename>~/.sylpheed-2.0/menurc</filename> with a text editor.</para>
+          </listitem>
+        </orderedlist>
+        <para>After that, the key binding change itself is very simple. Suppose you want to assign a
+     shortcut key to a function, e.g. sending all mail
+     out should start when you press <keycombo>
+            <keycap>Ctrl</keycap>
+            <keycap>Y</keycap>
+          </keycombo>. Click the
+      <guimenu>Message</guimenu> menu and move the mouse over <guimenuitem>Send all messages</guimenuitem>. Now you press <keycombo>
+            <keycap>Ctrl</keycap>
+            <keycap>Y</keycap>
+          </keycombo>. Immediately the menu
+     text is updated and the function is in place. Please
+     note that a previous function that <keycombo>
+            <keycap>Ctrl</keycap>
+            <keycap>Y</keycap>
+          </keycombo> was
+     assigned to, will no longer have a shortcut key. If
+     you want to remove the key binding, do the same
+     thing, but press the <keycap>Delete</keycap> key on the menu item.
+     Then the key binding is removed.</para>
+        <para>Also see <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+            <guimenuitem>Details</guimenuitem>
+            <guimenuitem>Interface</guimenuitem>
+            <guilabel>Set key bindings...</guilabel>
+          </menuchoice> where you are able to reset the Default key bindings, or use other predefined key bindings.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Can I close windows without the mouse?</para>
+      </question>
+      <answer>
+        <para>Of course! Not all windows, but by pressing <keycap>Escape</keycap>,
+     you can close the address book, the window of viewing
+     a mail source (<menuchoice>
+            <guimenu>View</guimenu>
+            <guimenuitem>Message source</guimenuitem>
+          </menuchoice>), the window of
+     viewing the headers, and several others. Just give
+     it a try and you will find all of them.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Can I change the way the date is displayed in the message summary?</para>
+      </question>
+      <answer>
+        <para>As of 0.4.65 you can. The options are:</para>
+        <programlisting>     %y = year in numbers     %m = month in number
+     %d = day in numbers      %c = date/time for locale
+     %A = full weekday name   %a = short month name
+     %B = full month name     %b = short month name
+     %H = hours in 24-clock   %I = hours in 12-clock</programlisting>
+        <para>For more information, go to the <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences</guimenuitem>
+            <guimenuitem>Display</guimenuitem>
+            <guimenuitem>General</guimenuitem>
+          </menuchoice>  and choose the <guibutton>...</guibutton> labeled button.
+For more options, see <command>man 3 strftime</command>.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Why can&apos;t I see the compface pictures?</para>
+      </question>
+      <answer>
+        <para>You need to enable displaying of the header pane in the
+     general preferences.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>I still can&apos;t see the pictures. Why not?</para>
+      </question>
+      <answer>
+        <para>You may not have compiled in Compface support. See  the appropriate question in the Installation and Configuration section.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Why does the URL launcher not launch my web browser?</para>
+      </question>
+      <answer>
+        <para>You need to double click the URL.
+Also, check that you have configured your web browser correctly in <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+            <guimenuitem> Details</guimenuitem>
+            <guimenuitem>External commands</guimenuitem>
+          </menuchoice>. </para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Attachments with spaces in the name won&apos;t open!</para>
+      </question>
+      <answer>
+        <para>When you try to launch a helper application, like an image viewer, with an attachment that has spaces in the name, put quotes around the <parameter>%s</parameter>
+parameter. Example: <command>gedit &apos;%s&apos;</command></para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Where is the Bcc when I compose a mail?</para>
+      </question>
+      <answer>
+        <para>Open <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Preferences for current account...</guimenuitem>
+            <guimenuitem>Compose</guimenuitem>
+          </menuchoice>. There you can check the <guilabel>Bcc</guilabel> checkbox and optionally enter an email address.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>How do I change the toolbar?</para>
+      </question>
+      <answer>
+        <para>Go to <menuchoice>
+            <guimenu>View</guimenu>
+            <guimenuitem>Customize toolbar...</guimenuitem>
+          </menuchoice> and select items from the <guilabel>Available items</guilabel> list to be displayed on the toolbar. You can modify the order by using the <guibutton>Up</guibutton> or <guibutton>Down</guibutton> button. The customization dialog also offers you to revert your modifications to default.</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Why isn&apos;t the next message displayed when I delete a message? </para>
+      </question>
+      <answer>
+        <para>Go to <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+            <guimenuitem>Details</guimenuitem>
+            <guimenuitem>Interface</guimenuitem>
+          </menuchoice>, and select <guilabel>Always open messages in summary when selected</guilabel>. </para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>How can I remove mailing list information from Subject headers?</para>
+      </question>
+      <answer>
+        <para>Very often, when you are subscribed to a mailing list, you will store each message from that list in a folder dedicated to that list. Depending on remote software solution and configuration,  mailing lists tend to include some words in the Subject header to identify the messages, optionally accompanied with a message number, for instance <literal>[sylpheed:33101]</literal>. These additions do not provide useful info if you have organized your folders as described, but Sylpheed allows you to disable displaying the additions in  summary, and/or, if you wish, delete the additions on reply.</para>
+        <para>To do that, right-click on a folder from the folder tree, and select  <guimenuitem>Properties...</guimenuitem> In the <guilabel>Folder properties</guilabel> dialog, check <guilabel>Don&apos;t display [...] or (...) at the beginning of subject in summary</guilabel>, or <guilabel>Delete [...] or (...) at the beginning of subject on reply</guilabel>, respectively.</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
+</chapter>
