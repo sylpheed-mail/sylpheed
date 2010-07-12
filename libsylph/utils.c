@@ -2422,6 +2422,49 @@ off_t get_left_file_size(FILE *fp)
 	return size;
 }
 
+gint get_last_empty_line_size(FILE *fp, off_t size)
+{
+	glong pos;
+	gint lsize = 0;
+	gchar buf[4];
+	size_t nread;
+
+	if (size < 4)
+		return -1;
+
+	if ((pos = ftell(fp)) < 0) {
+		perror("ftell");
+		return -1;
+	}
+	if (fseek(fp, size - 4, SEEK_CUR) < 0) {
+		perror("fseek");
+		return -1;
+	}
+
+	/* read last 4 bytes */
+	nread = fread(buf, sizeof(buf), 1, fp);
+	if (nread != 1) {
+		perror("fread");
+		return -1;
+	}
+	g_print("last 4 bytes: %02x %02x %02x %02x\n", buf[0], buf[1], buf[2], buf[3]);
+	if (buf[3] == '\n') {
+		if (buf[2] == '\n')
+			lsize = 1;
+		else if (buf[2] == '\r') {
+			if (buf[1] == '\n')
+				lsize = 2;
+		}
+	}
+
+	if (fseek(fp, pos, SEEK_SET) < 0) {
+		perror("fseek");
+		return -1;
+	}
+
+	return lsize;
+}
+
 gboolean file_exist(const gchar *file, gboolean allow_fifo)
 {
 	if (file == NULL)
@@ -2989,18 +3032,51 @@ gint move_file(const gchar *src, const gchar *dest, gboolean overwrite)
 	return 0;
 }
 
-gint copy_file_part(FILE *fp, off_t offset, size_t length, const gchar *dest)
+gint append_file_part(FILE *fp, off_t offset, size_t length, FILE *dest_fp)
 {
-	FILE *dest_fp;
 	gint n_read;
 	gint bytes_left, to_read;
 	gchar buf[BUFSIZ];
-	gboolean err = FALSE;
+
+	g_return_val_if_fail(fp != NULL, -1);
+	g_return_val_if_fail(dest_fp != NULL, -1);
 
 	if (fseek(fp, offset, SEEK_SET) < 0) {
 		perror("fseek");
 		return -1;
 	}
+
+	bytes_left = length;
+	to_read = MIN(bytes_left, sizeof(buf));
+
+	while ((n_read = fread(buf, sizeof(gchar), to_read, fp)) > 0) {
+		if (n_read < to_read && ferror(fp))
+			break;
+		if (fwrite(buf, n_read, 1, dest_fp) < 1) {
+			g_warning("append_file_part: writing to file failed.\n");
+			return -1;
+		}
+		bytes_left -= n_read;
+		if (bytes_left == 0)
+			break;
+		to_read = MIN(bytes_left, sizeof(buf));
+	}
+
+	if (ferror(fp)) {
+		perror("fread");
+		return -1;
+	}
+	if (fflush(dest_fp) == EOF) {
+		FILE_OP_ERROR("append_file_part", "fflush");
+		return -1;
+	}
+
+	return 0;
+}
+
+gint copy_file_part(FILE *fp, off_t offset, size_t length, const gchar *dest)
+{
+	FILE *dest_fp;
 
 	if ((dest_fp = g_fopen(dest, "wb")) == NULL) {
 		FILE_OP_ERROR(dest, "fopen");
@@ -3012,34 +3088,15 @@ gint copy_file_part(FILE *fp, off_t offset, size_t length, const gchar *dest)
 		g_warning("can't change file mode\n");
 	}
 
-	bytes_left = length;
-	to_read = MIN(bytes_left, sizeof(buf));
-
-	while ((n_read = fread(buf, sizeof(gchar), to_read, fp)) > 0) {
-		if (n_read < to_read && ferror(fp))
-			break;
-		if (fwrite(buf, n_read, 1, dest_fp) < 1) {
-			g_warning(_("writing to %s failed.\n"), dest);
-			fclose(dest_fp);
-			g_unlink(dest);
-			return -1;
-		}
-		bytes_left -= n_read;
-		if (bytes_left == 0)
-			break;
-		to_read = MIN(bytes_left, sizeof(buf));
+	if (append_file_part(fp, offset, length, dest_fp) < 0) {
+		g_warning("writing to %s failed.\n", dest);
+		fclose(dest_fp);
+		g_unlink(dest);
+		return -1;
 	}
 
-	if (ferror(fp)) {
-		perror("fread");
-		err = TRUE;
-	}
 	if (fclose(dest_fp) == EOF) {
 		FILE_OP_ERROR(dest, "fclose");
-		err = TRUE;
-	}
-
-	if (err) {
 		g_unlink(dest);
 		return -1;
 	}

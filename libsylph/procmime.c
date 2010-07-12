@@ -736,6 +736,49 @@ void procmime_scan_content_type_str(const gchar *content_type,
 	procmime_mime_params_free(mparams);
 }
 
+void procmime_scan_content_type_partial(const gchar *content_type,
+					gint *total, gchar **part_id,
+					gint *number)
+{
+	MimeParams *mparams;
+	GSList *cur;
+	gchar *id_str = NULL;
+	gint t = 0, n = 0;
+
+	*total = 0;
+	*part_id = NULL;
+	*number = 0;
+
+	mparams = procmime_parse_mime_parameter(content_type);
+
+	if (!mparams->hvalue ||
+	    g_ascii_strcasecmp(mparams->hvalue, "message/partial") != 0) {
+		procmime_mime_params_free(mparams);
+		return;
+	}
+
+	for (cur = mparams->plist; cur != NULL; cur = cur->next) {
+		MimeParam *param = (MimeParam *)cur->data;
+		if (!g_ascii_strcasecmp(param->name, "total")) {
+			t = atoi(param->value);
+		} else if (!id_str && !g_ascii_strcasecmp(param->name, "id")) {
+			id_str = g_strdup(param->value);
+		} else if (!g_ascii_strcasecmp(param->name, "number")) {
+			n = atoi(param->value);
+		}
+	}
+
+	procmime_mime_params_free(mparams);
+
+	if (t > 0 && n > 0 && t >= n && id_str) {
+		*total = t;
+		*part_id = id_str;
+		*number = n;
+	} else {
+		g_free(id_str);
+	}
+}
+
 void procmime_scan_content_disposition(MimeInfo *mimeinfo,
 				       const gchar *content_disposition)
 {

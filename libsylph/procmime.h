@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -156,6 +156,10 @@ void procmime_scan_content_type_str	(const gchar	*content_type,
 					 gchar	       **charset,
 					 gchar	       **name,
 					 gchar	       **boundary);
+void procmime_scan_content_type_partial	(const gchar	*content_type,
+					 gint		*total,
+					 gchar	       **part_id,
+					 gint		*number);
 void procmime_scan_content_disposition	(MimeInfo	*mimeinfo,
 					 const gchar	*content_disposition);
 MimeInfo *procmime_scan_mime_header	(FILE		*fp);

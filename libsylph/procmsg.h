@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -324,6 +324,9 @@ void	procmsg_print_message_part	(MsgInfo	*msginfo,
 					 MimeInfo	*partinfo,
 					 const gchar	*cmdline,
 					 gboolean	 all_headers);
+
+gint	procmsg_concat_partial_messages	(GSList		*mlist,
+					 const gchar	*file);
 
 MsgInfo *procmsg_get_msginfo		(FolderItem	*item,
 					 gint		 num);

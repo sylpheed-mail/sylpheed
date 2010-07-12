@@ -416,6 +416,9 @@ off_t get_file_size		(const gchar	*file);
 off_t get_file_size_as_crlf	(const gchar	*file);
 off_t get_left_file_size	(FILE		*fp);
 
+gint get_last_empty_line_size	(FILE		*fp,
+				 off_t		 size);
+
 gboolean file_exist		(const gchar	*file,
 				 gboolean	 allow_fifo);
 gboolean is_dir_exist		(const gchar	*dir);
@@ -447,6 +450,10 @@ gint copy_dir			(const gchar	*src,
 gint move_file			(const gchar	*src,
 				 const gchar	*dest,
 				 gboolean	 overwrite);
+gint append_file_part		(FILE		*fp,
+				 off_t		 offset,
+				 size_t		 length,
+				 FILE		*dest_fp);
 gint copy_file_part		(FILE		*fp,
 				 off_t		 offset,
 				 size_t		 length,

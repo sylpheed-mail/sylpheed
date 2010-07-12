@@ -426,6 +426,9 @@ static void attract_by_subject_cb(MainWindow	*mainwin,
 static void delete_duplicated_cb (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+static void concat_partial_cb	 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
 static void filter_cb		 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
@@ -854,6 +857,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 #endif
 	{N_("/_Tools/Delete du_plicated messages"),
 						NULL, delete_duplicated_cb,   0, NULL},
+	{N_("/_Tools/Concatenate separated messages"),
+						NULL, concat_partial_cb, 0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/E_xecute marked process"),	"X", execute_summary_cb, 0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
@@ -3710,6 +3715,35 @@ static void delete_duplicated_cb(MainWindow *mainwin, guint action,
 				 GtkWidget *widget)
 {
 	summary_delete_duplicated(mainwin->summaryview);
+}
+
+static void concat_partial_cb(MainWindow *mainwin, guint action,
+			      GtkWidget *widget)
+{
+	GSList *mlist;
+	gchar *file;
+	FolderItem *item;
+
+	g_print("concat_partial_cb\n");
+
+	if (summary_is_locked(mainwin->summaryview))
+		return;
+
+	item = mainwin->summaryview->folder_item;
+	if (!item)
+		return;
+	mlist = summary_get_selected_msg_list(mainwin->summaryview);
+	if (!mlist)
+		return;
+
+	file = get_tmp_file();
+	if (procmsg_concat_partial_messages(mlist, file) == 0) {
+		folder_item_add_msg(item, file, NULL, TRUE);
+		summary_show_queued_msgs(mainwin->summaryview);
+	}
+	g_free(file);
+
+	g_slist_free(mlist);
 }
 
 static void filter_cb(MainWindow *mainwin, guint action, GtkWidget *widget)

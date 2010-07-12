@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1722,6 +1722,149 @@ void procmsg_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo,
 	print_command_exec(prtmp, cmdline);
 
 	g_free(prtmp);
+}
+
+/**
+ * procmsg_concat_partial_messages:
+ * @mlist: list of MsgInfo* including message/partial messages.
+ * @file: output file name of concatenated message.
+ *
+ * Concatenate @mlist which consists of message/partial messages and
+ * output to @file. If @mlist has different partial id, the first one
+ * is used.
+ *
+ * Return value: 0 on success, or -1 if failed.
+ **/
+gint procmsg_concat_partial_messages(GSList *mlist, const gchar *file)
+{
+	static HeaderEntry hentry[] = {{"Content-Type:", NULL, FALSE},
+				       {NULL, NULL, FALSE}};
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+	FILE *tmp_fp;
+	gchar *part_id = NULL;
+	gint total = 0;
+	MsgInfo *msg_array[100] = {NULL};
+	MsgInfo *msginfo;
+	MimeInfo *mimeinfo;
+	GSList *cur;
+	gint i;
+
+	g_return_val_if_fail(mlist != NULL, -1);
+	g_return_val_if_fail(file != NULL, -1);
+
+	debug_print("procmsg_concat_partial_messages\n");
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		gint n = 0;
+		gint t = 0;
+		gchar *cur_id = NULL;
+
+		msginfo = (MsgInfo *)cur->data;
+
+		fp = procmsg_open_message_decrypted(msginfo, &mimeinfo);
+		if (!fp)
+			continue;
+		if (!mimeinfo->content_type ||
+		    g_ascii_strcasecmp(mimeinfo->content_type, "message/partial") != 0)
+			goto skip;
+
+		rewind(fp);
+		if (procheader_get_one_field(buf, sizeof(buf), fp, hentry) == -1)
+			goto skip;
+
+		procmime_scan_content_type_partial(buf + strlen(hentry[0].name), &t, &cur_id, &n);
+		if (n == 0 || t > 100 || n > t) {
+			debug_print("skip\n");
+			g_free(cur_id);
+			goto skip;
+		}
+
+		debug_print("partial: %d/%d id=%s\n", n, t, cur_id);
+		if (!part_id)
+			part_id = g_strdup(cur_id);
+		if (total == 0)
+			total = t;
+
+		if (total != t || strcmp(part_id, cur_id) != 0) {
+			debug_print("skip\n");
+			g_free(cur_id);
+			goto skip;
+		}
+
+		msg_array[n - 1] = msginfo;
+
+		g_free(cur_id);
+skip:
+		fclose(fp);
+		procmime_mimeinfo_free_all(mimeinfo);
+	}
+
+	if (!part_id) {
+		debug_print("piece not found\n");
+		return -1;
+	}
+
+	g_print("part_id = %s , total = %d\n", part_id, total);
+	g_free(part_id);
+
+	/* check if all pieces exist */
+	for (i = 0; i < total; i++) {
+		if (msg_array[i] == NULL) {
+			debug_print("message part %d not exist\n", i + 1);
+			return -1;
+		}
+	}
+
+	/* concatenate parts */
+	if ((tmp_fp = g_fopen(file, "wb")) == NULL) {
+		FILE_OP_ERROR(file, "fopen");
+		return -1;
+	}
+
+	for (i = 0; i < total; i++) {
+		msginfo = msg_array[i];
+		off_t out_size;
+		gint empty_line_size = 0;
+
+		fp = procmsg_open_message_decrypted(msginfo, &mimeinfo);
+		if (!fp) {
+			g_warning("cannot open message part %d\n", i + 1);
+			fclose(tmp_fp);
+			g_unlink(file);
+			return -1;
+		}
+
+		out_size = get_left_file_size(fp);
+		if (out_size < 0) {
+			g_warning("cannot tell left file size of part %d\n", i + 1);
+			fclose(tmp_fp);
+			g_unlink(file);
+			return -1;
+		}
+		empty_line_size = get_last_empty_line_size(fp, out_size);
+		if (empty_line_size < 0) {
+			g_warning("cannot get last empty line size of part %d\n", i + 1);
+			fclose(tmp_fp);
+			g_unlink(file);
+			return -1;
+		}
+
+		if (append_file_part(fp, ftell(fp), out_size - empty_line_size,
+				     tmp_fp) < 0) {
+			g_warning("write failed\n");
+			fclose(tmp_fp);
+			g_unlink(file);
+			return -1;
+		}
+
+		fclose(fp);
+		procmime_mimeinfo_free_all(mimeinfo);
+	}
+
+	fclose(tmp_fp);
+
+	return 0;
 }
 
 static gboolean procmsg_get_flags(FolderItem *item, gint num,
