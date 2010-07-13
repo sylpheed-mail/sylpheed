@@ -857,7 +857,7 @@ static GtkItemFactoryEntry mainwin_entries[] =
 #endif
 	{N_("/_Tools/Delete du_plicated messages"),
 						NULL, delete_duplicated_cb,   0, NULL},
-	{N_("/_Tools/Concatenate separated messages"),
+	{N_("/_Tools/C_oncatenate separated messages"),
 						NULL, concat_partial_cb, 0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/E_xecute marked process"),	"X", execute_summary_cb, 0, NULL},
