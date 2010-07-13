@@ -1066,6 +1066,17 @@ void summary_show_queued_msgs(SummaryView *summaryview)
 		gtk_tree_store_append(store, &iter, NULL);
 		summary_set_row(summaryview, &iter, msginfo);
 
+		if (cur == qlist) {
+			GtkTreePath *path;
+
+			path = gtk_tree_model_get_path(GTK_TREE_MODEL(store),
+						       &iter);
+			gtk_tree_view_scroll_to_cell
+				(GTK_TREE_VIEW(summaryview->treeview), path,
+				 NULL, FALSE, 0.0, 0.0);
+			gtk_tree_path_free(path);
+		}
+
 		summaryview->total_size += msginfo->size;
 	}
 
