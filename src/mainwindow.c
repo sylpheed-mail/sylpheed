@@ -2159,6 +2159,8 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 #endif
 		{"/Tools/Execute marked process"       , M_MSG_EXIST|M_EXEC},
 		{"/Tools/Delete duplicated messages"   , M_MSG_EXIST|M_ALLOW_DELETE},
+		{"/Tools/Concatenate separated messages"
+						       , M_TARGET_EXIST|M_UNLOCKED|M_ALLOW_DELETE},
 
 		{"/Configuration/Common preferences...", M_UNLOCKED},
 		{"/Configuration/Filter settings...", M_UNLOCKED},
@@ -3724,8 +3726,6 @@ static void concat_partial_cb(MainWindow *mainwin, guint action,
 	gchar *file;
 	FolderItem *item;
 
-	g_print("concat_partial_cb\n");
-
 	if (summary_is_locked(mainwin->summaryview))
 		return;
 
@@ -3740,6 +3740,9 @@ static void concat_partial_cb(MainWindow *mainwin, guint action,
 	if (procmsg_concat_partial_messages(mlist, file) == 0) {
 		folder_item_add_msg(item, file, NULL, TRUE);
 		summary_show_queued_msgs(mainwin->summaryview);
+	} else {
+		alertpanel_error
+			(_("The selected messages could not be combined."));
 	}
 	g_free(file);
 
