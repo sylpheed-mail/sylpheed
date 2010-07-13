@@ -1842,6 +1842,35 @@ skip:
 			return -1;
 		}
 
+		/* write out first headers */
+		if (i == 0) {
+			rewind(fp);
+			while (procheader_get_one_field(buf, sizeof(buf), fp, NULL) != -1) {
+				if (!g_ascii_strncasecmp(buf, "Content-", 8) ||
+				    !g_ascii_strncasecmp(buf, "Subject", 7) ||
+				    !g_ascii_strncasecmp(buf, "Message-ID", 10) ||
+				    !g_ascii_strncasecmp(buf, "Encrypted", 9) ||
+				    !g_ascii_strncasecmp(buf, "MIME-Version", 12))
+					continue;
+				fputs(buf, tmp_fp);
+				fputs("\n", tmp_fp);
+			}
+
+			while (procheader_get_one_field(buf, sizeof(buf), fp, NULL) != -1) {
+				if (!g_ascii_strncasecmp(buf, "Content-", 8) ||
+				    !g_ascii_strncasecmp(buf, "Subject", 7) ||
+				    !g_ascii_strncasecmp(buf, "Message-ID", 10) ||
+				    !g_ascii_strncasecmp(buf, "Encrypted", 9) ||
+				    !g_ascii_strncasecmp(buf, "MIME-Version", 12)) {
+					fputs(buf, tmp_fp);
+					fputs("\n", tmp_fp);
+				}
+			}
+
+			/* header-body separator */
+			fputs("\n", tmp_fp);
+		}
+
 		out_size = get_left_file_size(fp);
 		if (out_size < 0) {
 			g_warning("cannot tell left file size of part %d\n", i + 1);
