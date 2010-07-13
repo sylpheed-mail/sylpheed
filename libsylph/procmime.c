@@ -770,7 +770,7 @@ void procmime_scan_content_type_partial(const gchar *content_type,
 
 	procmime_mime_params_free(mparams);
 
-	if (t > 0 && n > 0 && t >= n && id_str) {
+	if (n > 0 && (t == 0 || t >= n) && id_str) {
 		*total = t;
 		*part_id = id_str;
 		*number = n;

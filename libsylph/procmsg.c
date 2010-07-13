@@ -1773,9 +1773,10 @@ gint procmsg_concat_partial_messages(GSList *mlist, const gchar *file)
 		if (procheader_get_one_field(buf, sizeof(buf), fp, hentry) == -1)
 			goto skip;
 
-		procmime_scan_content_type_partial(buf + strlen(hentry[0].name), &t, &cur_id, &n);
-		if (n == 0 || t > 100 || n > t) {
-			debug_print("skip\n");
+		procmime_scan_content_type_partial(buf + strlen(hentry[0].name),
+						   &t, &cur_id, &n);
+		if (n == 0 || n > 100 || t > 100 || (t > 0 && n > t)) {
+			debug_print("bad partial number (%d/%d), skip\n", n, t);
 			g_free(cur_id);
 			goto skip;
 		}
@@ -1786,7 +1787,8 @@ gint procmsg_concat_partial_messages(GSList *mlist, const gchar *file)
 		if (total == 0)
 			total = t;
 
-		if (total != t || strcmp(part_id, cur_id) != 0) {
+		if ((t > 0 && total != t) || (total > 0 && n > total) ||
+		    strcmp(part_id, cur_id) != 0) {
 			debug_print("skip\n");
 			g_free(cur_id);
 			goto skip;
@@ -1807,6 +1809,11 @@ skip:
 
 	g_print("part_id = %s , total = %d\n", part_id, total);
 	g_free(part_id);
+
+	if (total == 0) {
+		debug_print("total number not found\n");
+		return -1;
+	}
 
 	/* check if all pieces exist */
 	for (i = 0; i < total; i++) {
