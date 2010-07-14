@@ -971,8 +971,6 @@ gboolean gtkut_window_modal_exist(void)
 /* ensure that the window is displayed on screen */
 void gtkut_window_move(GtkWindow *window, gint x, gint y)
 {
-	gint sx, sy;
-
 	g_return_if_fail(window != NULL);
 
 	if (x < 0)
