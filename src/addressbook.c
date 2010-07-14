@@ -540,8 +540,8 @@ static void addressbook_create(void)
 	gtk_window_set_default_size(GTK_WINDOW(window),
 				    prefs_common.addressbook_width,
 				    prefs_common.addressbook_height);
-	gtk_window_move(GTK_WINDOW(window), prefs_common.addressbook_x,
-			prefs_common.addressbook_y);
+	gtkut_window_move(GTK_WINDOW(window), prefs_common.addressbook_x,
+			  prefs_common.addressbook_y);
 	gtk_widget_realize(window);
 
 	g_signal_connect(G_OBJECT(window), "delete_event",

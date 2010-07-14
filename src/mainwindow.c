@@ -2337,8 +2337,9 @@ static void main_window_set_widgets(MainWindow *mainwin, LayoutType layout,
 				       "folder_view", "Sylpheed");
 		gtk_window_set_policy(GTK_WINDOW(folderwin),
 				      TRUE, TRUE, FALSE);
-		gtk_widget_set_uposition(folderwin, prefs_common.folderwin_x,
-					 prefs_common.folderwin_y);
+		gtkut_window_move(GTK_WINDOW(folderwin),
+				  prefs_common.folderwin_x,
+				  prefs_common.folderwin_y);
 		gtk_container_set_border_width(GTK_CONTAINER(folderwin), 0);
 		g_signal_connect(G_OBJECT(folderwin), "delete_event",
 				 G_CALLBACK(folder_window_close_cb), mainwin);
@@ -2356,8 +2357,9 @@ static void main_window_set_widgets(MainWindow *mainwin, LayoutType layout,
 				       "message_view", "Sylpheed");
 		gtk_window_set_policy(GTK_WINDOW(messagewin),
 				      TRUE, TRUE, FALSE);
-		gtk_widget_set_uposition(messagewin, prefs_common.main_msgwin_x,
-					 prefs_common.main_msgwin_y);
+		gtkut_window_move(GTK_WINDOW(messagewin),
+				  prefs_common.main_msgwin_x,
+				  prefs_common.main_msgwin_y);
 		gtk_container_set_border_width(GTK_CONTAINER(messagewin), 0);
 		g_signal_connect(G_OBJECT(messagewin), "delete_event",
 				 G_CALLBACK(message_window_close_cb), mainwin);
@@ -2486,9 +2488,8 @@ static void main_window_set_widgets(MainWindow *mainwin, LayoutType layout,
 			      use_vlayout ? GTK_ARROW_LEFT : GTK_ARROW_UP,
 			      GTK_SHADOW_OUT);
 
-	gtk_widget_set_uposition(mainwin->window,
-				 prefs_common.mainwin_x,
-				 prefs_common.mainwin_y);
+	gtkut_window_move(GTK_WINDOW(mainwin->window), 
+			  prefs_common.mainwin_x, prefs_common.mainwin_y);
 
 	gtk_widget_queue_resize(vbox_body);
 	gtk_widget_queue_resize(mainwin->vbox);

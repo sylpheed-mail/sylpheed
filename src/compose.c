@@ -5119,10 +5119,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_window_set_wmclass(GTK_WINDOW(window), "compose", "Sylpheed");
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
 	gtk_widget_set_size_request(window, -1, prefs_common.compose_height);
-	if (!compose_window_exist(prefs_common.compose_x,
-				  prefs_common.compose_y))
-		gtk_window_move(GTK_WINDOW(window), prefs_common.compose_x,
-				prefs_common.compose_y);
+	gtkut_window_move(GTK_WINDOW(window), prefs_common.compose_x,
+			  prefs_common.compose_y);
 
 #ifndef G_OS_WIN32
 	if (!geometry.max_width) {
