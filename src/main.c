@@ -1174,6 +1174,7 @@ static void plugin_init(void)
 	ADD_SYM(summary_get_selection_type);
 	ADD_SYM(summary_get_selected_msg_list);
 	ADD_SYM(summary_get_msg_list);
+	ADD_SYM(summary_show_queued_msgs);
 
 	ADD_SYM(messageview_create_with_new_window);
 	ADD_SYM(messageview_show);

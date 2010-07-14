@@ -63,6 +63,18 @@ enum {
 #define SAFE_CALL_ARG4_RET(func_ptr, arg1, arg2, arg3, arg4) \
 				(func_ptr ? func_ptr(arg1, arg2, arg3, arg4) : NULL)
 
+#define CALL_VOID_POINTER(getobj, sym)		\
+{						\
+	void (*func)(gpointer);			\
+	gpointer obj;				\
+	obj = getobj();				\
+	if (obj) {				\
+		GETFUNC(sym);			\
+		SAFE_CALL_ARG1(func, obj);	\
+	}					\
+}
+
+
 static guint plugin_signals[LAST_SIGNAL] = { 0 };
 
 static GHashTable *sym_table = NULL;
@@ -376,26 +388,14 @@ const gchar *syl_plugin_get_prog_version(void)
 
 void syl_plugin_main_window_lock(void)
 {
-	void (*func)(gpointer);
-	gpointer mainwin;
-
-	mainwin = syl_plugin_main_window_get();
-	if (mainwin) {
-		func = syl_plugin_lookup_symbol("main_window_lock");
-		SAFE_CALL_ARG1(func, mainwin);
-	}
+	CALL_VOID_POINTER(syl_plugin_main_window_get,
+			  "main_window_lock");
 }
 
 void syl_plugin_main_window_unlock(void)
 {
-	void (*func)(gpointer);
-	gpointer mainwin;
-
-	mainwin = syl_plugin_main_window_get();
-	if (mainwin) {
-		func = syl_plugin_lookup_symbol("main_window_unlock");
-		SAFE_CALL_ARG1(func, mainwin);
-	}
+	CALL_VOID_POINTER(syl_plugin_main_window_get,
+			  "main_window_unlock");
 }
 
 gpointer syl_plugin_main_window_get(void)
@@ -589,26 +589,14 @@ void syl_plugin_folderview_select(FolderItem *item)
 
 void syl_plugin_folderview_unselect(void)
 {
-	void (*func)(gpointer);
-	gpointer folderview;
-
-	folderview = syl_plugin_folderview_get();
-	if (folderview) {
-		GETFUNC("folderview_unselect");
-		SAFE_CALL_ARG1(func, folderview);
-	}
+	CALL_VOID_POINTER(syl_plugin_folderview_get,
+			  "folderview_unselect");
 }
 
 void syl_plugin_folderview_select_next_unread(void)
 {
-	void (*func)(gpointer);
-	gpointer folderview;
-
-	folderview = syl_plugin_folderview_get();
-	if (folderview) {
-		GETFUNC("folderview_select_next_unread");
-		SAFE_CALL_ARG1(func, folderview);
-	}
+	CALL_VOID_POINTER(syl_plugin_folderview_get,
+			  "folderview_select_next_unread");
 }
 
 FolderItem *syl_plugin_folderview_get_selected_item(void)
@@ -671,14 +659,8 @@ void syl_plugin_folderview_update_all_updated(gboolean update_summary)
 
 void syl_plugin_folderview_check_new_selected(void)
 {
-	void (*func)(gpointer);
-	gpointer folderview;
-
-	folderview = syl_plugin_folderview_get();
-	if (folderview) {
-		GETFUNC("folderview_check_new_selected");
-		SAFE_CALL_ARG1(func, folderview);
-	}
+	CALL_VOID_POINTER(syl_plugin_folderview_get,
+			  "folderview_check_new_selected");
 }
 
 gpointer syl_plugin_summary_view_get(void)
@@ -731,28 +713,22 @@ void syl_plugin_open_message(const gchar *folder_id, guint msgnum)
 	}
 }
 
+void syl_plugin_summary_show_queued_msgs(void)
+{
+	CALL_VOID_POINTER(syl_plugin_summary_view_get,
+			  "summary_show_queued_msgs");
+}
+
 void syl_plugin_summary_lock(void)
 {
-	void (*func)(gpointer);
-	gpointer summary;
-
-	summary = syl_plugin_summary_view_get();
-	if (summary) {
-		GETFUNC("summary_lock");
-		SAFE_CALL_ARG1(func, summary);
-	}
+	CALL_VOID_POINTER(syl_plugin_summary_view_get,
+			  "summary_lock");
 }
 
 void syl_plugin_summary_unlock(void)
 {
-	void (*func)(gpointer);
-	gpointer summary;
-
-	summary = syl_plugin_summary_view_get();
-	if (summary) {
-		GETFUNC("summary_unlock");
-		SAFE_CALL_ARG1(func, summary);
-	}
+	CALL_VOID_POINTER(syl_plugin_summary_view_get,
+			  "summary_unlock");
 }
 
 gboolean syl_plugin_summary_is_locked(void)
@@ -785,26 +761,14 @@ gboolean syl_plugin_summary_is_read_locked(void)
 
 void syl_plugin_summary_write_lock(void)
 {
-	void (*func)(gpointer);
-	gpointer summary;
-
-	summary = syl_plugin_summary_view_get();
-	if (summary) {
-		GETFUNC("summary_write_lock");
-		SAFE_CALL_ARG1(func, summary);
-	}
+	CALL_VOID_POINTER(syl_plugin_summary_view_get,
+			  "summary_write_lock");
 }
 
 void syl_plugin_summary_write_unlock(void)
 {
-	void (*func)(gpointer);
-	gpointer summary;
-
-	summary = syl_plugin_summary_view_get();
-	if (summary) {
-		GETFUNC("summary_write_unlock");
-		SAFE_CALL_ARG1(func, summary);
-	}
+	CALL_VOID_POINTER(syl_plugin_summary_view_get,
+			  "summary_write_unlock");
 }
 
 gboolean syl_plugin_summary_is_write_locked(void)
