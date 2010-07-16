@@ -2447,7 +2447,7 @@ gint get_last_empty_line_size(FILE *fp, off_t size)
 		perror("fread");
 		return -1;
 	}
-	g_print("last 4 bytes: %02x %02x %02x %02x\n", buf[0], buf[1], buf[2], buf[3]);
+	/* g_print("last 4 bytes: %02x %02x %02x %02x\n", buf[0], buf[1], buf[2], buf[3]); */
 	if (buf[3] == '\n') {
 		if (buf[2] == '\n')
 			lsize = 1;

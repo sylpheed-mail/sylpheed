@@ -1807,7 +1807,7 @@ skip:
 		return -1;
 	}
 
-	g_print("part_id = %s , total = %d\n", part_id, total);
+	debug_print("part_id = %s , total = %d\n", part_id, total);
 	g_free(part_id);
 
 	if (total == 0) {
