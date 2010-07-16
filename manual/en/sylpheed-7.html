@@ -19,18 +19,49 @@
 <P>
 <P>
 <P>
-<H2><A NAME="ss7.1">7.1 Folder view </A>
+<P>The appearance of the Sylpheed windows is controlled by
+a Gtk+ theme (as Sylpheed is based on the Gtk+ toolkit).
+Read the Gtk+ or your distribution documentation to find
+how to change the Gtk+ theme.
+<P>
+<H2><A NAME="ss7.1">7.1 Folder view</A>
 </H2>
 
-<P>The folder view shows you all the mail folders that you have created, in a tree-like structure. If you want to see the headers of the messages in a specific folder, just click the name of the folder once, and in the summary view you can see the messages in the selected mail folder.
-<P>When you see a + sign in front of a folder name, that means the folder branch of that part of the tree is 'collapsed'. You can expand that part by clicking the + sign. In that same manner you can also collapse the - sign in front of an expanded branch of the folder tree.
-<P>Special folders:
-<P>Draft: here you store messages that you want to send out more often, or you want to work on some more. Using the 'reedit' option from the message menu, you can edit the message further.
-<P>Trash: in here all your deleted messages go. Depending on the common preferences setting, this box is or is not emptied when you end Sylpheed.
-<H2><A NAME="ss7.2">7.2 Summary view </A>
+<P>The folder view shows you all the mail folders that you have created, 
+in a tree-like structure. If you want to see the headers of the messages 
+in a specific folder, just click the name of the folder once, and in the 
+summary view (2)  you can see the messages in the selected mail folder.
+<P>When you see a + sign in front of a folder name, that means the folder 
+branch of that part of the tree is 'collapsed'. You can expand that 
+part by clicking the + sign. In that same manner you can also collapse 
+the - sign in front of an expanded branch of the folder tree.
+<P>The folder pane can be resized be dragging (left mouse button down)
+the handle found on the left of the folder view.
+<P>The folder window can be detached from the main Sylpheed window
+by selecting the menu action: <CODE>View -> Separate folder tree</CODE>.
+When exiting the current state of the folder window (attached or 
+detached) is saved to be restored when re-starting Sylpheed.
+To re-attach the folder window, de-select the menu entry.
+<P>
+<H3>Special folders:</H3>
+
+<P><I>Draft:</I> here you store messages that you want to send out more often, 
+or you want to work on some more. Using the 'reedit' option from the 
+message menu, you can edit the message further.
+<P><I>Trash:</I> in here all your deleted messages go. Depending on the common 
+preferences setting, this box is or is not emptied when you end Sylpheed.
+<P><I>Sent:</I> in here are saved the messages you send (enabled by a
+common preference setting and the folder can be changed by an account
+preference setting).
+<P><I>Queue:</I> this folder contains the composed messaged waiting to
+be sent (with Sylpheed message sending can be delayed).
+<P>
+<H2><A NAME="ss7.2">7.2 Summary view</A>
 </H2>
 
-<P>The summary pane can show you many things. You can select what you want to see from the Summary menu, selecting the option "Set display item". A list of all options is:
+<P>The summary pane can show you many things. You can select what you 
+want to see from the Summary menu, selecting the option 
+"Set display item". A list of all options is:
 <UL>
 <LI>Mark: shows if the message is marked.</LI>
 <LI>Unread: shows if the message is read or not</LI>
@@ -41,77 +72,46 @@
 <LI>From: who sent the message</LI>
 <LI>Subject: what the message is about</LI>
 </UL>
-
-You can sort the summary view in many ways, by clicking the button that is above the column. Click once to sort going up (a-z), click once more to sort going down (z-a).
-<P>If you think the size of a column is not right, you can adjust that by placing the mouse cursor next to the button of the column you want to adjust, press mouebutton1 (left button) and drag the column to the width you want it to have.
-<P>Select a message by clicking on it with the mouse. Once the summary pane has the focus of the program, you can also move up and down in the list through the cursor keys, or pressing "p"(revious) and "n"(ext) as in Pine.
-<H2><A NAME="ss7.3">7.3 Message view </A>
+<P>You can sort the summary view in many ways, by clicking the button 
+that is above the column. Click once to sort going up (a-z), click 
+once more to sort going down (z-a).
+<P>If you think the size of a column is not right, you can adjust that 
+by placing the mouse cursor next to the button of the column you 
+want to adjust, press mousebutton1 (left button) and drag the 
+column to the width you want it to have.
+<P>Select a message by clicking on it with the mouse. Once the summary 
+pane has the focus of the program, you can also move up and down 
+in the list through the cursor keys, or pressing "p"(revious) and 
+"n"(ext) as in Pine.
+<H2><A NAME="ss7.3">7.3 Message view</A>
 </H2>
 
-<P>In the message view you can read the message that you selected in the summary pane. If you entered the summary pane without selecting a message, the message view will be empty. At the top of the message view some info is presented about the message you are reading, as well as some statistics on the selected folder.
-<P>You can scroll up and down in the message by using the arrow keys (after clicking inside the message), or by using the scrollbar.
-<H2><A NAME="ss7.4">7.4 Common preferences</A>
-</H2>
-
-<P>The Common Preferences, found in the Configuration menu, shows you the following tabs:
-<H3>Receive tab</H3>
-
-<P>In here you can set up how to receive messages.
-<P>
-<P>
-<P>
-<P>
-<UL>
-<LI>You can define a special program to pick up messages from the default unix mailbox. Usually this is not used, but you can use it. Actually, this information may be wrong. If someone knows better, please let me know.</LI>
-<LI>Local spool lets you define where your local mailbox is located. You can also tell Sylpheed whether or not to filter the incoming messages from that mail spool file.</LI>
-<LI>Autocheck new mail. When you check this option, Sylpheed will check if there is new mail on the set interval.</LI>
-<LI>Check new mail on startup means that Sylpheed will immediately look for new mail on all the selected accounts when it loads.</LI>
-<LI>In the news section you can specify how many articles should be downloaded when opening a newsgroup.</LI>
-</UL>
-<H2><A NAME="ss7.5">7.5 Setting up an account/changing an account</A>
-</H2>
-
-<P>In order to set up an account in Sylpheed, in the configuration menu you select "Create new account". If you want to change the settings of an existing account, you select the "Edit accounts..." option from the configuration menu, and there you select the account you want to change. After that you press "edit". Then a dialog appears in which you can enter or update the following areas:
-<P>
-<H3><A NAME="Basic"></A> Basic tab</H3>
-
-<P>
-<P>
-<P>
-<P>
-<P>In the "Basic" tab you name the account. This is to make identifying the account easier.
-<P>Choose a name that tells something about the account, like the name of the ISP, mailbox or news-server you are setting up.  You can select this account to be the default account ("Usually used").
-<P>Enter your name and e-mail address, and if you have one, the organization that you use Sylpheed for.
-In the Protocol box you select the type of service that this account will be using. The flavors you can choose are: POP3 normal, POP3 APOP auth, IMAP4, NNTP news or None (local).
-In the "inbox" field you can enter the mail folder where the mail for this account will be stored in. This option is disabled when you set up an NNTP News account.
-<P>For POP3 and IMAP services you can then specify the server where your mail is stored. Details about this name, and also the name that goes into the field for "SMPT server (send)" should be given to you by your ISP.
-<P>For a local unix mailbox, the "Server for receiving" is disabled, since the mail will be received for you.
-<P>The fields for User ID and Password will also be disabled for accounts that do no deal with POP3 or IMAP services. Otherwise you can enter the login name and password for the e-mail server with your ISP here. Usually these are the same as your login name and password to access the dial-in service, but this is not standard. If in doubt, contact the helpdesk of your ISP.  
-<P>
-<H3><A NAME="Receive"></A> Receive tab</H3>
-
-<P>
-<P>
-<P>
-<P>
-<P>The "Receive" tab is only used for POP3 accounts. Here you specify if the mails that were successfully retrieved should be removed from the server. You can also tell Sylpheed to get all the messages there, not only the ones you already received (in case you leave your messages on the server). The third option enables this account to be included when mail is checked for "all accounts" (see the message menu for this), and if the incoming messages should immediately be filtered when received.
-<H3><A NAME="Send"></A> Send tab</H3>
-
-<P>
-<P>
-<P>
-<P>
-<P>In the "Send" tab you can set up some more settings.
-<H3><A NAME="Compose"></A> Compose tab</H3>
-
-<P>
-<P>
-<P>
-<P>
-<P>In the "Compose" tab you can define your signature file.
-<H3><A NAME="Advanced"></A> Advanced tab</H3>
-
-<P>In the "Advanced" tab you can edit the portnumbers for the servers you will be using. This normally will need no change.
+<P>In the message view you can read the message that you selected in 
+the summary pane. If you entered the summary pane without selecting 
+a message, the message view will be empty. At the top of the 
+message view some info is presented about the message you are 
+reading, as well as some statistics on the selected folder.
+<P>You can scroll up and down in the message by using the arrow keys 
+(after clicking inside the message), or by using the scrollbar.
+<P>The size of the message and summary views can be adjusted by dragging
+(with the left mouse button down) the handle that appears between
+the two panes.
+<P>The small arrow located just below the summary pane scrollbar can
+be used to detach the message view. When clicked, the summary view
+is extended down to the bottom of the Sylpheed window, and the messages
+are displayed is a separate window (when you double click them in the
+summary pane). This state is not saved on exit, and the message window
+can be restored below the summary one by clicking again the small arrow.
+<P>When the current message contains attachments, two tabs
+are displayed in the message window. Selecting the first one makes
+the message window display the text body of the message, while selecting
+the second tab makes the message window display the attachment part
+of the message. In the latter case, the message window is splitted
+in two parts, the top one contains the attachments as a tree
+with the MIME type, size and file name of each part, while the bottom
+part contains the content of the selected attachment (if the attachment
+is an image and Sylpheed has been compiled with the gdk-pixbuf or
+the imlib library).
 <HR>
 <A HREF="sylpheed-8.html">Next</A>
 <A HREF="sylpheed-6.html">Previous</A>

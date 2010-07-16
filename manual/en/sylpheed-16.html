@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
- <TITLE>Sylpheed User's Manual: Customization (General Setup)</TITLE>
+ <TITLE>Sylpheed User's Manual: NetNews</TITLE>
  <LINK HREF="sylpheed-17.html" REL=next>
  <LINK HREF="sylpheed-15.html" REL=previous>
  <LINK HREF="sylpheed.html#toc16" REL=contents>
@@ -12,95 +12,54 @@
 <A HREF="sylpheed-15.html">Previous</A>
 <A HREF="sylpheed.html#toc16">Contents</A>
 <HR>
-<H2><A NAME="s16">16. Customization (General Setup)</A></H2>
+<H2><A NAME="s16">16. NetNews</A></H2>
 
-<P>Sylpheed offers you several ways to customize it's interface for your personal use.
-<P>
-<H2><A NAME="ss16.1">16.1 General Setup Window</A>
+<P>What is netnews?
+<P>Netnews, also called Usenet, is a collection of "news servers" that contain a great deal of information. News, as it is called in short, can be about anything. About making your own wine, about old cars or radios. You name it, and there probably is a newsgroup about it.
+<P>This is what we will set up here. Accessing newsgroups. Note that this is different from e-mails. You can almost compare it to a mailing list, but yet the concept is a bit different.
+<H2><A NAME="ss16.1">16.1 Adding and Deleting Servers</A>
 </H2>
 
-<P>For making changes to Sylpheed's interface, you need to open the "common preferences" in the Configuration menu.
-<P>In here you will find a tabbed window that offers the following possibility to customize Sylpheed.
-<H2><A NAME="ss16.2">16.2 Description of Each Entry</A>
+<P>
+<H3>Adding a news server</H3>
+
+<P>To add a news server, go to the configuration menu and select the "create new account" option.
+There you can name the news-account to anything of your liking. This is important, so you can identify the account later.
+<P>In the BASIC tab, in the block 'personal information' you also can enter your own name, your e-mail address (so you can reply to news message by e-mail), optionally your organization (if you are organized at all).
+<P>In the block 'Server information' you select the "News (NNTP)" protocol. Forget about "Inbox", that does not matter in this setup. Next you enter the name of the newsserver you want to connect to. You can get that name from your ISP, if you don't already have that.
+<P>If you need to log into the news server, check the box next to "This server requires authentication", and then fill the fields for User ID and Password.
+<P>Next step is to go to the Send tab. Since Receive is only there for e-mail, there is no need to do anything there. You can't even do anything in the Receive tab, for that matter. So, in Send you can select a few options:
+<UL>
+<LI>If you want a date header field added to posts</LI>
+<LI>If Sylpheed should generate a Message-ID</LI>
+<LI>If you want to add user-defined headers</LI>
+</UL>
+
+The next items only apply to when you reply to a news message through e-mail. You can set an automatic CC, BCC or Reply-To address here. In case your ISP requires SMTP authentication, you can select the checkbox here below.
+<P>The next tab, Compose, allows you to select a default signature file. This will be added to each post to the newsgroups you do.
+<P>Finally, in the "Advanced" tab, you can specify the port on which Sylpheed has to connect to the news server. The default is 119, and only in rare cases you should have to do something about that.
+<P>Now you click "OK" and the account is created! You can verify this by checking the folder pane in Sylpheed. There you will see a new folder created with the name of the account you entered, and (news) behind it.
+<P>
+<H3>Deleting a news-server.</H3>
+
+<P>If you want to delete a news-account, right-click the news-folder and select "Remove news account". After confirming that you want this to be done, the account and all files related will be removed.
+<H2><A NAME="ss16.2">16.2 Subscribing and Unsubscribing to NewsGroups</A>
 </H2>
 
-<P>In the third tab, "Compose", the following settings can be changed:
+<P>Okay. Here the real stuff begins. First you have to let Sylpheed load the list of news groups that is on the news system. Right-click the new NEWS folder and select "Subscribe to newsgroups". Sylpheed will tell you that the groups need to be downloaded, so sit back and wait a while. Of course, during time, new groups are added, and dead groups are removed. For this you can click the "refresh" button in the newsgroup dialog, so a new list is downloaded and you are up to date
+<P>After a while the groups are loaded and displayed in a window. Now you can look up a group that is interesting, for example comp.os.linux.networking. Click the name once and then select OK. The group will be added to the news folder as a subfolder. When you now click the name of the new subfolder, Sylpheed will connect to the news server and download the headers (subject lines, in e-mail talk), to your computer. Some groups have -large- amounts of articles, so this may take a while!!
 <P>
-<P>
-<P>
-<P>
-<UL>
-<LI>Quoting the original text of a message</LI>
-<LI>Define the quoting character that is put in front of each line of text.</LI>
-<LI>Define the text that is placed in front of the quoted text</LI>
-<LI>An optional signature separator. This is a combination of characters that are placed in front of a signature text.</LI>
-<LI>Whether or not to insert the signature automatically</LI>
-<LI>Define if the account that recieved the message should automatically be used as the account from which the reply is sent. This also influences the signature to be selected.</LI>
-<LI>Set the position of the line where wrapping should occur.</LI>
-<LI>Select if the quoted text should be wrapped also.</LI>
-<LI>Indicate if e-mail text should be wrapped or not. If you choose not to select wrapping, then the lines you wrote will not be chopped up by carriage return/line feed characters.</LI>
-</UL>
+<H2><A NAME="ss16.3">16.3 Reading News</A>
+</H2>
 
-In the fourth tab, "Display", you can set or unset the following options:
-<P>
-<P>
-<P>
-<P>
-<UL>
-<LI><CODE>Font.</CODE> You can set the font that is used to display the messages.</LI>
-<LI><CODE>Translate header name.</CODE> This options changes the behaviour of the different headers.</LI>
-<LI><CODE>Unread number.</CODE> This toggles the display of the number of unread messages next to each mailbox.</LI>
-<LI><CODE>Display recipient.</CODE> With this option you can tell Sylpheed to show the recipient in the summary view when you are the one who sent the message.</LI>
-<LI><CODE>Enable horizontal scrollbar.</CODE> This option enables or disables showing the horizontal toolbar beneath the summary view. With the bar disabled, you cannot scroll to the right to see extremely long message subjects.</LI>
-<LI><CODE>Expand threads.</CODE> If you disable this options and you have enabled the Threaded view through the Summary menu, threads are shown as collapsed lines with a '+' sign in front of them. Enable this option to show all the messages in a thread.</LI>
-<LI><CODE>Display unread with bold font.</CODE> If you enable this checkbox, messages in the summary view that have not been read yet are shown in a bold font. Unchecking this option will of course show all messages in the default font.</LI>
-<LI><CODE>Date format.</CODE> This option puts you in charge of the way the date of an e-mail message is shown. You can click the "..." button to open a new window. In there you see the codings that you can use to format the date. As you change the codings, an example is shown beneath the coding sequence of how your date will look.</LI>
-<LI><CODE>Set display item.</CODE> This button allows you to select the specific columns that will be shown in the summary view.</LI>
-</UL>
+<P>When the articles are displayed, in the summary view, you can click one of them to be downloaded so you can read it. This will usually go very quickly on discussion groups.
+<P>If you want to respond to a message, press Alt-R (or press "Reply") and a message window will pop up, with the name of the newsgroup already in the "To" field. Depending on whether or not you selected quoting of the message, the original message will be in the body of the message already. Write away, then send, and soon the entire world will be able to read what you wrote on the subject.
+<P>Starting a new message in a newsgroup is equally simple: press Alt-N (or click "New"), the name of the newsgroup is in the "To" field, and you can write your question or reply.
+<H3>A note about binary files</H3>
 
-Next to these options, there is the message tab, in which you can set the following choices:
-<P>
-<P>
-<P>
-<P>
-<UL>
-<LI><CODE>Enable colorization.</CODE> When you enable this option, you can define with what colors the message text and the quotings will be displayed.</LI>
-<LI><CODE>Display 2-byte alphabet and numeric with 1 character.</CODE> This option is necessary for double-byte languages as Japanese and Chinese.</LI>
-<LI><CODE>Display header pane above message view.</CODE> Enabled, this option shows the From, To and Subject headers from the selected e-mail in a separate area over the message view.</LI>
-<LI><CODE>Display short headers on message view.</CODE> This option lets you select all the headers that will be shown in the message view window. There are options to enable all, no or selected headers.</LI>
-<LI><CODE>Line space.</CODE> This option lets you select how many pixels of space Sylpheed has to show between the lines of text in the message view window.</LI>
-<LI><CODE>Leave space on head.</CODE> Checking this box will make the start of new lines (unwrapped, where the writer has pressed the Enter/Return key) indent a few pixels. This can be useful to read larger e-mails.</LI>
-<LI><CODE>Scroll half page.</CODE> When enabled, the text in the message view will only scroll half a page instead of a whole page when pressing the space bar.</LI>
-<LI><CODE>Smooth scroll.</CODE> Enabling this box will make the text in the message view scroll in a smooth, sliding way. For the eye this can be pleasing, it is a personal preference.</LI>
-</UL>
-
-The tab "Interface" allows even more customization of Sylpheed. This tab features:
-<P>
-<P>
-<P>
-<P>
-<UL>
-<LI>Opening the first unread message when you enter a folder.</LI>
-<LI>Automatically move focus to the inbox after new mail was received.</LI>
-<LI>Immediate execution of commands like delete, move or copy.</LI>
-<LI>Influence the way the "receive" dialog box behaves when new mail is retrieved (Always, When a window is active, Never).</LI>
-<LI>Double clicking an e-mail address can be used to put that address in a new e-mail.</LI>
-<LI>Confirming if you want to exit Sylpheed.</LI>
-<LI>Cleaning the trashbox when exiting Sylpheed.</LI>
-<LI>Have Sylpheed ask you to clean the trash before it is done.</LI>
-<LI>Warn you when exiting Sylpheed when there are still messages queued to be sent.</LI>
-</UL>
-
-Finally there is the "Other" tab. In here you can define the programs you want as helper applications for Sylpheed.
-<P>
-<P>
-<P>
-<P>
-<UL>
-<LI><CODE>The web browser.</CODE> Here you can enter the name of your favorite web browser (Netscape, Opera, Mozilla, Lynx etc.). Add the %s parameter to the command so Sylpheed knows it has to provide the text you clicked on as the URL that the browser has to visit.</LI>
-<LI><CODE>Printing.</CODE> Here you can define the program that should be used to print. Default is lpr, and the %s is the name of the temporary file that Sylpheed creates for lpr to print.</LI>
-<LI><CODE>External editor.</CODE> You can select an external editor to write your e-mails with, for example vi, emacs or gedit. Note that for text-based editors like vi, you need to define a terminal window, e.g. <CODE>xterm -e vi %s</CODE>. Otherwise there is no place that the editor will be able to show up. Here too, the %s parameter is the name of a temporary file that is created by Sylpheed.</LI>
-</UL>
+<P>In newsgroups you can download binary files. These are programs, images etc. Often these are posted as so called UUencoded files. Sylpheed will as upto version 0.5.1 not decode UUencoded files. You need to save these articles to disk as separate files, and use a separate decoder program, like juju, to decode the garble of text. A UUencoded file usually looks something like this:
+<P>begin 666 sundown.jpg
+<P>after which you will find nicely formatted blocks of characters that don't seem to mean anything.
 <HR>
 <A HREF="sylpheed-17.html">Next</A>
 <A HREF="sylpheed-15.html">Previous</A>

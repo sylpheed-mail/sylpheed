@@ -20,36 +20,68 @@
 <P>To succesfully compile Sylpheed, you need at least:
 <UL>
 <LI>Any POSIX compliant UNIX or similar OS eg. Linux, FreeBSD, Solaris</LI>
-<LI>GTK+ 1.2.6 or later</LI>
-<LI>A recent ANSI C compiler (gcc 2.7.2.3 should also work) Note: it is reported that Sun C will not compile Sylpheed.</LI>
+<LI>
+<A HREF="http://www.gtk.org/">GTK+</A>
+1.2.6 or later</LI>
+<LI>A recent ANSI C compiler 
+(
+<A HREF="http://gcc.gnu.org/">gcc</A> 2.7.2.3 should also work) 
+Note: it is reported that Sun C will not compile Sylpheed.</LI>
 </UL>
 
 Optionally you need:
+<A NAME="option_libraries"></A> 
 <UL>
-<LI>Imlib or gdk-pixbuf (for built-in image view)</LI>
-<LI>libcompface (for X-Face)</LI>
-<LI>libjconv (for I18N)</LI>
-<LI>GPGME (for GnuPG)</LI>
-<LI>OpenLDAP (for LDAP connection)</LI>
-<LI>Jpilot (for Palm addressbook use)</LI>
+<LI>
+<A HREF="http://sourceforge.net/project/showfiles.php?group_id=2">Imlib</A>
+or
+<A HREF="http://ftp.gnome.org/pub/GNOME/unstable/sources/gdk-pixbuf/">gdk-pixbuf</A>
+(for built-in image view)</LI>
+<LI>
+<A HREF="ftp://ftp.cs.indiana.edu/pub/faces/compface/">libcompface</A>
+(for X-Face)</LI>
+<LI>
+<A HREF="http://www.kondara.org/libjconv/">libjconv</A>
+(for non latin character sets)</LI>
+<LI>
+<A HREF="http://www.gnupg.org/gpgme.html">GPGME</A>
+and
+<A HREF="http://www.gnupg.org/">GNUPG</A>
+(for encryption and signature)</LI>
+<LI>
+<A HREF="http://www.openssl.org/">OpenSSL</A>
+(for SSL support)</LI>
+<LI>
+<A HREF="http://www.openldap.org/">OpenLDAP</A>
+(for LDAP connection)</LI>
+<LI>IPv6 support can be turned on (if your system supports it)</LI>
+<LI>
+<A HREF="http://www.jpilot.org/">Jpilot</A>
+(for Palm addressbook use)</LI>
 <LI>the equivalent of GTK+-devel and Xfree86-devel. (Otherwise ./configure will fail.)</LI>
 </UL>
-
-Notice: Sylpheed may be unstable depending on the environment. Please use the newest version of libraries if possible.
+<P>Notice: Sylpheed may be unstable depending on the environment. Please use the newest version of libraries if possible.
 <H2><A NAME="ss4.2">4.2 Environments known as valid for Sylpheed</A>
 </H2>
 
 <P>
 <UL>
-<LI>Debian GNU/Linux unstable (sid) (glibc 2.2) (development environment) </LI>
+<LI>Debian GNU/Linux unstable (sid) (glibc 2.2.5) (development environment) </LI>
+<LI>Debian GNU/Linux testing (woody) (glibc 2.2.5)</LI>
 <LI>Debian GNU/Linux 2.2 (potato) (glibc 2.1.3) </LI>
 <LI>Kondara MNU/Linux (glibc 2.1.x) </LI>
+<LI>Kondara MNU/Linux 1.2</LI>
+<LI>Kondara MNU/Linux 2.0</LI>
 <LI>Vine Linux 1.1 (glibc 2.0.x + libwcsmbs) </LI>
 <LI>Vine Linux 2.0 (glibc 2.1.x) (Intel, PPC) </LI>
 <LI>Vine Linux 2.1 </LI>
-<LI>Laser5 Linux 6.0 (glibc 2.1.x) , 6.2, 6.4</LI>
+<LI>Vine Linux 2.1.5</LI>
+<LI>Laser5 Linux 6.0 (glibc 2.1.x)</LI>
+<LI>Laser5 Linux 6.2 (glibc 2.1.x)</LI>
+<LI>Laser5 Linux 6.4 (glibc 2.1.x)</LI>
 <LI>TurboLinux 4.0 (glibc 2.0.7 + libwcsmbs) </LI>
 <LI>TurboLinux 6.0 (glibc 2.1.2) </LI>
+<LI>TurboLinux 7.0 (glibc 2.2.x) </LI>
 <LI>Miracle Linux Standard Edition Version1.0 </LI>
 <LI>Miracle Linux for PostgreSQL Version1.0 </LI>
 <LI>Miracle Linux for Samba Version1.0 </LI>
@@ -59,33 +91,83 @@ Notice: Sylpheed may be unstable depending on the environment. Please use the ne
 <LI>RedHat Linux 6.2 / 6.2J (glibc 2.1.x) </LI>
 <LI>RedHat Linux 7.0 / 7.0J </LI>
 <LI>RedHat Linux 7.1</LI>
-<LI>RedHat Linux 7.2 (beta 'Roswell')</LI>
+<LI>RedHat Linux 7.2</LI>
 <LI>LinuxPPC2000 + Yukikaze(Japanization kit) </LI>
 <LI>Linux2000G (Intel, PowerPC) </LI>
 <LI>HOLON Linux 2.0 (Intel / PPC) </LI>
-<LI>Linux for PPC Japanese Edition 2.0 and 3.0 (glibc 2.1.x) </LI>
+<LI>Linux for PPC Japanese Edition 2.0 (glibc 2.1.x) </LI>
+<LI>Linux for PPC Japanese Edition 3.0 (glibc 2.1.x) </LI>
 <LI>Linux MLD4</LI>
 <LI>Linux MLD5 </LI>
 <LI>Plamo Linux 2.0 </LI>
+<LI>Plamo Linux 2.1</LI>
+<LI>Slackware 7.0 </LI>
 <LI>Slackware 7.1 </LI>
-<LI>Linux Mandrake 7.0 through 8.0</LI>
+<LI>Slackware 8.0 </LI>
+<LI>Linux Mandrake 7.0</LI>
+<LI>Linux Mandrake 7.1</LI>
+<LI>Linux Mandrake 7.2</LI>
+<LI>Linux Mandrake 8.0</LI>
+<LI>Linux Mandrake 8.1</LI>
 <LI>SuSE Linux 6.3 (glibc 2.1.2) </LI>
-<LI>SuSE Linux 6.4, 7.0, 7.1</LI>
+<LI>SuSE Linux 6.4</LI>
+<LI>SuSE Linux 7.0</LI>
+<LI>SuSE Linux 7.1</LI>
+<LI>SuSE Linux 7.2</LI>
+<LI>SuSE Linux 7.3</LI>
 <LI>OpenLinux 2.3 (glibc 2.1.1 -> 2.1.3) </LI>
 <LI>Caldera OpenDesktop 2.4 </LI>
-<LI>Conectiva Linux 4.0 and 5.0</LI>
+<LI>Caldera Workstation 3.1</LI>
+<LI>Conectiva Linux 4.0</LI>
+<LI>Conectiva Linux 5.0</LI>
+<LI>Conectiva Linux 7.0</LI>
 <LI>Vector Linux 1.5 </LI>
-<LI>FreeBSD releases 3.2, 3.4, 4.0, 4.1, 4.2 and 5.0</LI>
+<LI>Yellow Dog Linux 2.0 (glibc 2.2.1)</LI>
+<LI>Yellow Dog Linux 2.1 (PowerPC)</LI>
+<LI>ASP Linux 7.2 (glibc 2.2.4)</LI>
+<LI>Redmond Linux (Lycoris)</LI>
+</UL>
+<P>
+<UL>
+<LI>FreeBSD release 3.2</LI>
+<LI>FreeBSD release 3.4</LI>
+<LI>FreeBSD release 4.0</LI>
+<LI>FreeBSD release 4.1</LI>
+<LI>FreeBSD release 4.2</LI>
+<LI>FreeBSD release 4.3</LI>
+<LI>FreeBSD release 4.4</LI>
+<LI>FreeBSD release 4.5</LI>
+<LI>FreeBSD release 5.0</LI>
 <LI>NetBSD 1.4.2 </LI>
 <LI>NetBSD 1.5 + XPG4DL </LI>
+<LI>NetBSD 1.5.1</LI>
+<LI>NetBSD 1.5.2</LI>
 <LI>OpenBSD 2.7 </LI>
 <LI>OpenBSD 2.8 (i386) </LI>
+<LI>OpenBSD 2.9</LI>
+<LI>OpenBSD 3.0</LI>
 <LI>BSD/OS 4.0.1 </LI>
-<LI>Solaris 2.5, 2.5.2., 2.6, 7, 8</LI>
-<LI>IRIX 6.3 and 6.5, 6.5.8m </LI>
+</UL>
+<P>
+<UL>
+<LI>Solaris 2.5</LI>
+<LI>Solaris 2.5.1</LI>
+<LI>Solaris 2.6</LI>
+<LI>Solaris 7</LI>
+<LI>Solaris 8</LI>
+<LI>IRIX 6.3</LI>
+<LI>IRIX 6.4</LI>
+<LI>IRIX 6.5, 6.5.8m</LI>
 <LI>HP-UX 10.20 </LI>
-<LI>Mac OS X (Darwin 1.3) + Xtools (has locale problem) </LI>
-<LI>Windows (cygwin + GTK+ for win32) (unstable) </LI>
+<LI>HP-UX 11.00</LI>
+<LI>HP-UX 11i</LI>
+<LI>Tru64 Unix 5.0 (OSF1 v5.0)</LI>
+<LI>SCO UnixWare 7</LI>
+<LI>Mac OS X 10.1.3 (Darwin 5.3) + XDarwin (without XLocale support) + libxpg4 </LI>
+</UL>
+<P>
+<UL>
+<LI>Windows (MSVC + GTK+ for win32), in progress</LI>
 </UL>
 <H2><A NAME="ss4.3">4.3 Nuts and bolts of installation</A>
 </H2>
@@ -102,6 +184,42 @@ Notice: Sylpheed may be unstable depending on the environment. Please use the ne
 <LI>Run the 'make' program which will compile the sources. Do not proceed with this step if there are fatal errors in the previous step. Fatal errors indicate that things are missing in order to compile Sylpheed properly. </LI>
 </UL>
 <P>If the make process has completed, run "make install" (as root), to install the program and the supportfiles
+<P>
+<H3><A NAME="compile_sylpheed"></A> Compiling Sylpheed with options</H3>
+
+<P>You can choose to compile Sylpheed with some optional features enabled.
+Use <I>./configure --help</I> to list configuration syntax and options.
+<P>The following optional features can be enabled:
+<P>
+<UL>
+<LI><I>Jpilot</I>: to use you PDA addressbook with Sylpheed. You will
+need the <I>Jpilot</I> library (and <I>pilot-link</I>, too).
+Enable this option with the <I>--enable-jpilot</I> configure switch.</LI>
+<LI><I>GnuPG</I>: Sylpheed can encrypt and sign your messages (also decrypt
+and verify the signatures of the incoming messages) using GnuPG.
+GnuPG follows the OpenPGP standard and is compatible with PGP.
+To enable this feature, you need to install GnuPG and GPGME (interface
+library to GnuPG).
+Enable this option with the <I>--enable-gpgme</I> configure switch.</LI>
+<LI><I>LDAP</I>: Sylpheed can connect to a LDAP server in order to
+query mail addresses. To enable this feature you will need the
+OpenLDAP library.
+Enable this option with the <I>--enable-ldap</I> configure switch.</LI>
+<LI><I>X-Faces</I>: you can create a small picture (of your face, or
+of anything else) that will be sent in the header of your mails.
+This option is enabled if the compface library is found and
+can be disabled using the <I>--disable-compface</I> configure switch.</LI>
+<LI>Images can appear "inline" (embedded in the message window, without
+the need of an external viewer) if Sylpheed is compiled
+with either the <I>gdk-pixbuf</I> or the <I>imlib</I> library.
+You can choose the library (if both are installed) by using the
+<I>--disable-gdk-pixbuf</I> or <I>--disable-imlib</I> configure switch.</LI>
+</UL>
+<P>All these features require additional libraries and tools that may not be part
+of your distribution. You can find them at the addresses listed at the beginning
+of this chapter, 
+<A HREF="#option_libraries">here</A>.
+<P>
 <H2><A NAME="ss4.4">4.4 Installation on Linux using RPM</A>
 </H2>
 

@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
- <TITLE>Sylpheed User's Manual: Conversion of Other Mail Format into Sylpheed (MH Format)</TITLE>
+ <TITLE>Sylpheed User's Manual: Handling MIME types</TITLE>
  <LINK HREF="sylpheed-15.html" REL=next>
  <LINK HREF="sylpheed-13.html" REL=previous>
  <LINK HREF="sylpheed.html#toc14" REL=contents>
@@ -12,33 +12,138 @@
 <A HREF="sylpheed-13.html">Previous</A>
 <A HREF="sylpheed.html#toc14">Contents</A>
 <HR>
-<H2><A NAME="s14">14. Conversion of Other Mail Format into Sylpheed (MH Format)</A></H2>
+<H2><A NAME="s14">14. Handling MIME types</A></H2>
 
-<H2><A NAME="ss14.1">14.1 Importing Messages of mbox Format</A>
+<H2><A NAME="ss14.1">14.1 How Sylpheed checks for Mime types</A>
 </H2>
 
-<P>Sylpheed lets you import messages of the Mbox format from the File menu. First you create 
-the mail folder where you want the messages to end up in, then you select File->import 
-Mbox file. Use the browse function to select the Mbox file and the Sylpheed mail folder, 
-and press Ok. And voila, there is your mail, imported.
-<P>That was easy, wasn't it?
-<H2><A NAME="ss14.2">14.2 Importing from Windows Mailers (Becky!, AL-Mail, Outlook Express4, etc.)</A>
+<P>When attaching a file to a message (composing a new message), the
+MIME type of the attached file is choosen based on the file extension
+from the mapping list defined in the <I>mime.types</I> file(s).
+Sylpheed defines its MIME type mapping table by loading the
+system wide MIME types file, then the user file.
+The systeme file is <I>SYSCONFDIR/mime.types</I> (SYSCONFDIR can
+be defined a compile time), or if it does not exist, <I>/etc/mime.types</I>.
+The user file is <I>$HOME/.sylpheed/mime.types</I>.
+<P>A <I>mime.types</I> file consist of one MIME type definition per line,
+each definition line starting with the name of the MIME type, followed by
+a space separated list of the corresponding file extensions.
+The file can contain empty lines, and comments start with the <CODE>#</CODE>
+character and close at line's end.
+<P>Following is a typical <I>mime.types</I> file (an extract of mine):
+<P>
+<PRE>
+# This file controls what Internet media types are sent to the client for
+# given file extension(s).  Sending the correct media type to the client
+# is important so they know how to handle the content of the file.
+# The Internet media type registry is at 
+# &lt;ftp://ftp.iana.org/in-notes/iana/assignments/media-types/>.
+
+# MIME type                     Extension
+application/mac-binhex40        hqx
+application/mac-compactpro      cpt
+application/msword              doc
+application/pdf                 pdf
+application/postscript          ai eps ps
+application/rtf                 rtf
+application/x-bcpio             bcpio
+application/x-bzip2             bz2
+application/x-csh               csh
+application/x-gtar              gtar
+application/x-gzip              gz tgz
+application/x-kword             kwd kwt
+application/x-kspread           ksp
+application/x-kpresenter        kpr kpt
+application/x-kchart            chrt
+application/x-latex             latex
+application/x-sh                sh
+application/x-shar              shar
+application/x-shockwave-flash   swf
+application/x-tar               tar
+application/x-tcl               tcl
+application/x-tex               tex
+application/x-texinfo           texinfo texi
+application/x-troff             t tr roff
+application/x-troff-man         man
+application/zip                 zip
+audio/mpeg                      mpga mp2 mp3
+audio/x-aiff                    aif aiff aifc
+audio/x-wav                     wav
+image/gif                       gif
+image/ief                       ief
+image/jpeg                      jpeg jpg jpe
+image/png                       png
+image/tiff                      tiff tif
+text/plain                      asc txt
+text/rtf                        rtf
+text/sgml                       sgml sgm
+text/xml                        xml
+video/mpeg                      mpeg mpg mpe
+video/x-msvideo                 avi
+text/html                       html htm
+</PRE>
+<P>
+<P>If the file can be found or has the wrong format, Sylpheed will assume
+the default MIME type for all the attachments: <I>application/octet-stream</I>.
+In such a case, the recipients mail client may not know what application 
+to use to view the attachment.
+<P>
+<H2><A NAME="ss14.2">14.2 How Sylpheed handles attachments (reception)</A>
 </H2>
 
-<P>For import possibilities of the mail folders of these and more mail programs you 
-can download the program mbx2mbox at sourceforge.net. The project is located at 
-<A HREF="http://mbx2mbox.sourceforge.net">http://mbx2mbox.sourceforge.net.</A><H2><A NAME="ss14.3">14.3 Importing dbx Format of Outlook Express 5</A>
-</H2>
+<P>When opening an attachment (select the attachment, right click and select
+<I>Open</I>) Sylpheed uses one of the following methods to determine
+the application to launch:
+<P>
+<UL>
+<LI>The attachment is an image: the application is the one defined by the
+<I>mime_image_viewer</I> variable of the common preferences configuration
+file (<I>$HOME/.sylpheed/sylpheedrc</I>). If no application is defined, or
+if the format of the definition is not valid, the default application
+command is <I>display</I> (ImageMagick viewer).</LI>
+<LI>The attachment is a sound file: the application is the one defined by the
+<I>mime_audio_player</I> variable of the common preferences configuration
+file (<I>$HOME/.sylpheed/sylpheedrc</I>). If no application is defined, or
+if the format of the definition is not valid, the default application
+command is <I>play</I>.</LI>
+<LI>The attachment is a HTML file: the application is the one defined by the
+<I>uri_cmd</I> variable of the common preferences configuration
+file (<I>$HOME/.sylpheed/sylpheedrc</I>). This can also be changed in the
+<I>Common preferences</I>, by changing the <I>Web browser</I> defined
+in the <I>Other</I> tab.</LI>
+<LI>Any other attachment type: Sylpheed relies on <I>metamail</I> to use
+the correct application (Sylpheed starts <I>metamail</I> giving it
+the attachment file and the MIME type taken from the mail).</LI>
+</UL>
+<P>
+<P>The binding of the applications to each MIME type is defined in the
+<I>mailcap</I> file. The systeme wide file is <I>/etc/mailcap</I>, 
+while the user file is <I>$HOME/.mailcap</I>.
+<P>
+<P>In the mailcap file, there is one definition per line, big lines
+can be broken by escaping the newline with a <I>\</I> character,
+the first element of the line is the MIME type, then a semi-colon,
+(<I>;</I>), and finally the application to launch.
+The application part (right side of the semi-colon) can contain several
+shell commands separated by an escaped semi-colon (<I>\;</I>) and
+the <I>%s</I> string is replaced by the name of the file when
+launching the command.
+<P>
+<P>Following is a typical <I>mailcap</I> file (an extract of mine):
+<P>
+<PRE>
 
-<P>For import possibilities of the mail folders of these and more mail programs you 
-can download the program mbx2mbox at sourceforge.net. The project is located at 
-<A HREF="http://mbx2mbox.sourceforge.net">http://mbx2mbox.sourceforge.net.</A><H2><A NAME="ss14.4">14.4 Exporting from Sylpheed MH format to mbox</A>
-</H2>
+image/*; ee %s
 
-<P>Sylpheed offers a way to export a mailbox to the standard mbox format through the 
-File menu. Just select the "Export to mbox file..." option and you can select the 
-folder to export (assisted by a browse dialog) and also select or enter the name 
-of the mbox file you wish to generate.
+video/mpeg; gtv %s
+video/*; xanim %s
+
+application/pdf; xpdf %s
+
+text/html; dillo %s
+</PRE>
+<P>
+<P>
 <HR>
 <A HREF="sylpheed-15.html">Next</A>
 <A HREF="sylpheed-13.html">Previous</A>

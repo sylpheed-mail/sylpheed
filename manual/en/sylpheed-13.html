@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
- <TITLE>Sylpheed User's Manual: Handling MIME types</TITLE>
+ <TITLE>Sylpheed User's Manual: Filters, actions and templates</TITLE>
  <LINK HREF="sylpheed-14.html" REL=next>
  <LINK HREF="sylpheed-12.html" REL=previous>
  <LINK HREF="sylpheed.html#toc13" REL=contents>
@@ -12,24 +12,458 @@
 <A HREF="sylpheed-12.html">Previous</A>
 <A HREF="sylpheed.html#toc13">Contents</A>
 <HR>
-<H2><A NAME="s13">13. Handling MIME types</A></H2>
+<H2><A NAME="s13">13. Filters, actions and templates</A></H2>
 
-<H2><A NAME="ss13.1">13.1 How Sylpheed checks for Mime types</A>
+<P>Sylpheed offers three powerfull tools to help you automatically
+and efficently manage you mails. These tools are:
+<P>
+<UL>
+<LI>The <I>filters</I>, that let you sort you incoming messages and move
+them into your folders based on their sender, their content,
+using regular expressions.</LI>
+<LI>The <I>actions</I> feature is a convenient way for the user to launch 
+external commands to process a complete message file including 
+headers and body or just one of its parts.
+It allows also the use of an external command to filter the whole 
+text or just a selected part in the message window or in the 
+compose window.</LI>
+<LI>The <I>templates</I> that let you pre-define complete messages
+leaving placeholders in the text to be filled at composition time.</LI>
+</UL>
+<P>
+<P>
+<P>
+<H2><A NAME="ss13.1">13.1 Filters</A>
 </H2>
 
+<P>Written by Nick Selby (sylpheed@nickselby.com)
+<P>Sylpheed provides powerful filters to allow users to automatically 
+pre-sort incoming mail based on a set of rules that the user defines. 
+As a most simple example, let's say you work at the Acme Grommet Company, 
+and you want all e-mail from your co-workers to be placed in one mailbox. 
+To accomplish this, you would set up a filter that would place all mail 
+whose "From" header includes the phrase "acmegrommet.com" into a specific 
+mailbox.
+<P>Sylpheed allows you much more control than just that simple setup; 
+you may create filters based on several variables, including an 
+"If this AND that" or "If the message contains this OR does NOT contain that"
+etc. It's very cool.
 <P>
-<P>(Thanks to Adriaan Penning for writing this!)
+<H3>Finding The Filter Setting Dialog</H3>
+
+<P>The filter settings dialog is located in the <I>Configuration</I> menu, 
+under the title "Filter Setting" or from the <I>Tools</I> menu, under in
+the <I>Create filter rules</I> sub menu. You may also use establish a 
+keyboard shortcut (see Keyboard Shortcuts).
 <P>
-<P>Two files, mime.types and mailcap, are involved in determining the mime type of an attachment, and the application associated with that mime type. The mime.types file is used to determine the mimetype of attachments you add when composing a message. The mime.types file consists of lines like:
 <P>
-<P>application/pdf                    pdf
 <P>
-<P>Sylpheed looks for this file in SYSCONFDIR (determined at compile time), /etc/ and $HOME/.sylpheed/ 
-<P>If this file doesn't exist or has the wrong format, every attachment will have       `application/octet-stream' as it's mime type, so the recipients mail client may not know what application to use to view the attachment.
-<P>To change the default application that sylpheed uses to view an attachment that      somebody mailed you, look for a mailcap file like /etc/mailcap or $HOME/.mailcap
-<P>For example, you can add a line like this in $HOME/.mailcap if you want to view pdf  files with xpdf:
 <P>
-<P>application/pdf ; xpdf %s
+<H3>Setting Up Filters</H3>
+
+<P>Operator(s) and Processing instructions combine to create a Filter Rule.
+<P>* Operators
+The dialog's first setting option establishes the Operator, the variable 
+that will tell the filter what specific text to look for to trigger a 
+filter. Each Filter Rule may have up to two operator sets.
+<P>Each Operator variable contains three sections: <I>Header</I>, 
+<I>Keyword</I> and <I>Predicate</I>.
+<P>Header is a drop-down box which defines in which message header 
+Sylpheed's filter will search. Choices range from <I>Subject</I> 
+to <I>X-Mailer</I>. 
+<P><I>Keyword</I> is a a text box in which you may enter the text 
+for which the filter will search. 
+<P>Predicate allows you to choose to filter based on whether the operator 
+contains, or does not contain, the text you enter in the Keyword field.
+<P>Example: Create an Operator in which the X-Mailer field of an incoming 
+message contains the word 'Eudora'.
+<P>
+<UL>
+<LI>Step 1. Under the <I>Header</I> drop-down box, select 
+<I>X-Mailer</I>.</LI>
+<LI>Step 2. In the <I>Keyword</I> text box, type 'eudora' 
+(case insensitive)</LI>
+<LI>Step 3. Determine appropriate Predicate setting. Default 
+is <I>Contains</I>.</LI>
+</UL>
+<P>The second Operator setting, which is set identically to the 
+first, also allows the user to select an AND/OR setting 
+declaring the relationship between the two operators. 
+<P>Example: Create an Operator set which will process mail with 
+a <I>From</I> header of bob@acmegrommet.com AND a subject
+of "2001 Spring Grommet Collection"
+<P>
+<UL>
+<LI>Step 1. Under the first Operator set's Header drop-down 
+box, select <I>From</I>.</LI>
+<LI>Step 2. In the <I>Keyword</I> text box, type 
+'bob@acmegrommet.com' (case insensitive).</LI>
+<LI>Step 3. Leave <I>Predicate</I> setting on default, 
+<I>Contains</I></LI>
+<LI>Step 4. Leave <I>AND/OR</I> box on default setting, <I>and</I>.</LI>
+<LI>Step 5.     Under the second Operator set's <I>Header</I> 
+drop-down box, select <I>Subject</I>.</LI>
+<LI>Step 6. In the <I>Keyword</I> text box, type 
+'2001 spring grommet collection' (case insensitive).</LI>
+<LI>Step 7. Leave <I>Predicate</I> setting on default,
+<I>Contains</I>.</LI>
+</UL>
+<P>
+<H3>Message Processing</H3>
+
+<P>Once you've established the Operator(s) that will define 
+which messages will be processed, it's time to tell 
+Sylpheed what to do with messages that match the operator(s). 
+You may choose between two radio button-selected settings: 
+<I>Destination</I> and <I>Don't Receive</I>.
+<P>Selecting <I>Destinations</I> will enable you to route 
+the mail into a mailbox which you specify.
+<P>Selecting <I>Don't Receive</I> will instruct Sylpheed 
+to not download messages with that operator. Note that with 
+<I>Don't Receive</I>, Sylpheed merely leaves the message 
+on your mailserver - it does not delete it. 
+<P>To specify a mailbox to which you want the message transfered, 
+click on the radio button to the left of the word <I>Destination</I>
+in the dialog. (Currently, in order to specify a mailbox you 
+must have created that mailbox prior to activating the Filter 
+Setting dialog.) Clicking the <I>Select</I> button will open 
+a pop-up window containing all mail folders currently active 
+in your copy of Sylpheed. Select the mailbox you wish by either 
+<P>
+<UL>
+<LI>(a) double clicking on the mail folder name or </LI>
+<LI>(b) clicking the mail folder name and then clicking <I>OK</I>.         </LI>
+</UL>
+<P>
+<P>To specify that the message not be retrieved, and left 
+on your mail server, click the radio button to the left 
+of the words <I>Don't Receive</I>.
+<P>
+<H3>Filter Registration</H3>
+
+<P>Now that you have set the Operator and the Processing Rule, 
+all that's left to do is tell Sylpheed to save the entire 
+Filter Rule. <B>If you skip this step, the filter won't work</B>.
+<P>The <I>Register Rules</I> configuration has three options: 
+<I>Register</I>, <I>Substitute</I> and <I>Delete</I>. 
+<P>
+<UL>
+<LI><I>Register</I> saves the Filter Rule.</LI>
+<LI><I>Substitute</I> modifies an existing registered 
+Filter Rule.</LI>
+<LI><I>Delete</I> will remove a previously registered 
+Filter Rule. </LI>
+</UL>
+<P>Example of Registering A Filter Rule: Create a Filter Rule 
+that moves all mail with the subject of "Sylpheed Manual" 
+into the (previously created) mail folder "Sylpheed Manual Mail".
+<P>
+<UL>
+<LI>Step 1. Under the first Operator set's <I>Header</I> 
+drop-down box, select <I>Subject</I>.</LI>
+<LI>Step 2. In the <I>Keyword</I> text box, type 
+'sylpheed manual' (case insensitive).</LI>
+<LI>Step 3. Leave <I>Predicate</I> setting on default, 
+<I>Contains</I>. Leave second Operator set empty.</LI>
+<LI>Step 4. Click <I>Destinations</I> radio button; 
+select "Sylpheed Manual Mail" folder.</LI>
+<LI>Step 5. Click <I>Register</I>.</LI>
+<LI>Step 6. Click <I>OK</I>.</LI>
+</UL>
+ 
+<P>Example of Substituting A Filter Rule: Modify a previously 
+created Filter Rule that moves all mail with the subject 
+of "Sylpheed Manual" to sort mail not to the mail folder 
+"Sylpheed Manual Mail" but rather the mail folder "Sylpheed Questions"  
+<P>
+<UL>
+<LI>Step 1. Under the first Operator set's <I>Header</I> 
+drop-down box, select <I>Subject</I>.</LI>
+<LI>Step 2. In the <I>Keyword</I> text box, type 
+'sylpheed manual' (case insensitive).</LI>
+<LI>Step 3. Leave <I>Predicate</I> setting on default, 
+<I>Contains</I>. Leave second Operator set empty.</LI>
+<LI>Step 4. Click <I>Destinations</I> radio button; 
+select "Sylpheed Questions" folder.</LI>
+<LI>Step 5. Click <I>Substitute</I>.</LI>
+<LI>Step 6. Click <I>OK</I>.</LI>
+</UL>
+<P>Example of Deleting a Filter Rule: Remove the previously 
+created Filter Rule which refers to Subject:Sylpheed Questions.
+<P>
+<UL>
+<LI>Step 1. In the <I>Registered Rules</I> select box, 
+highlight the filter entitled 
+"<I>Subject:Sylpheed Manual: :::Sylpheed Questions:1:1:m</I>"</LI>
+<LI>Step 2. Click the <I>Delete</I> Button.</LI>
+<LI>Step 3. Confirm the deletion by clicking <I>Yes</I> in the 
+confirmation pop-up that asks, 
+<I>Do you really want to delete this rule?</I></LI>
+<LI>Step 4. Click <I>OK</I>.</LI>
+</UL>
+<P>
+<H3>Registered Rule Order</H3>
+
+<P>One caveat about all this: the order in which Filter Rules 
+are created could adversely affect your intended message sorting, 
+and one needs to consider this when creating or updating Filter Rules. 
+<P>For example, a Filter Rule saying, "Move anything containing 'ABC' 
+to Mailbox X" listed above another Filter Rule saying "Move anything 
+containing 'ABCDEF' to Mailbox Y" will cause the latter of these 
+filters not to process. 
+<P>Think about the way Sylpheed goes down its list: first, it would say..
+"Hmm, any messages with ABC? Ah, there's one! Move it". 
+Then it would think, "Okay, any messages with ABCDEF?" 
+To which the answer would be "no" - that ABCDEF was already 
+filtered because it contained "ABC".
+<P>Bummer.
+<P>In order to avoid this, you must ensure that the more complex 
+Filter Rule is processed first, by placing it higher than a 
+similar, conflicting Filter Rule. 
+<P>To move a Registered Rule higher or lower within the Registered 
+Rule box, select the rule you would like to move, and click on 
+the <I>Up</I> or <I>Down</I> buttons. This will "move" the 
+rule up or down, above or below a potentially conflicting Filter Rule.   
+<P>
+<H2><A NAME="ss13.2">13.2 How to Filter Messages</A>
+</H2>
+
+<P>Filtering messages can be done in several ways:
+<P>
+<UL>
+<LI>Sylpheed automatically filters incoming mail from 
+POP servers.</LI>
+<LI>If you incorporate mail from a unix mailbox, then 
+in the <I>Common preferences</I> (<I>Configuration</I> menu), 
+you need to check the box called <I>Filter on incorporation</I>. 
+You find this box in the <I>Receive</I> tab in the space 
+<I>Local spool</I>.</LI>
+<LI>You can also select the option <I>Filter messages</I> 
+from the Summary menu.</LI>
+</UL>
+<P>Please note that, at time of writing, Sylpheed does -NOT YET- 
+has filtering of IMAP messages enabled.
+<P>
+<H2><A NAME="ss13.3">13.3 Filtering mail with Procmail</A>
+</H2>
+
+<P>If you feel that Sylpheed has not enough options to perform 
+filtering for you, then you can look at Sylpheed Claws which 
+has more options for filtering. You can find the Claws version 
+(the cutting edge, experimental version of Sylpheed) 
+sylpheed-claws.sourceforge.net.
+<P>Another option, if you do not want to work with an experimental 
+version of Sylpheed, is Procmail. Procmail is a powerful mail 
+filtering program that is triggered from the Mail Transport 
+Agent (i.e. Sendmail, Postfix, Qmail). Procmail is called by 
+default from these programs after receiving e-mail.
+<P>The trick to procmail is to tell it that mail has to be filtered 
+into MH mail folders. This is not difficult though.
+<P>Normally procmail moves mail into MBOX format, this is one large 
+file containing all mails in a folder. MH uses separate files 
+for each e-mail. All you need to do is point the destination 
+of a procmail rule to &lt;destination folder&gt;/.  
+It is the "slash dot" that does the trick.
+<P>
+<P>
+<H2><A NAME="ss13.4">13.4 Actions</A>
+</H2>
+
+<P>The following section is a copy of 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/index.html">Melvin's page</A>.
+<P>
+<P>The "actions" feature is a convenient way for the user to 
+launch external commands to process a complete message file 
+including headers and body or just one of its parts. 
+It allows also the use of an external command to filter the 
+whole text or just a selected part in the message window or 
+in the compose window. This is a generic tool that allows 
+to do any uncommon actions on the messages, and thus extends 
+the possibilities of Sylpheed. For example, Sylpheed does not 
+include the rot13 cyphering algorithm popular in some 
+newsgroups. It does not support natively armored encryption 
+or clear signing. It does not support uuencoded messages. 
+As all these features can be handled by external programs, 
+the actions provide a convenient way to use them from the menu bar.
+<P>
+<H3>Usage</H3>
+
+<P>To create a new action, go to the <I>Configuration</I> menu,
+select the <I>Actions...</I> entry. The <I>Actions setting</I>
+dialog offers to enter the Menu name that will trigger the command. 
+The created menu will be found in the <I>Tools -> Actions</I> submenu. 
+By inserting a slash / in the menu name, you create a submenu.
+<P>The command is entered in the Command line entry. Note that 
+Sylpheed stores every single email in a separate file. This allows 
+to use the following syntax for the command:
+<P>
+<UL>
+<LI><I>%f</I> denotes the file name of the selected message. 
+If you selected more than one, then the command will be 
+launched for each message with the appropriate file name.</LI>
+<LI><I>%F</I> denotes the list of the file names of the 
+selected message. If only one message is selected, 
+this amounts to <I>%f</I>, but if more messages are 
+selected, then the command will be launched only once 
+with the list of the file names. (You can use both 
+<I>%f</I> and <I>%F</I> in one command: then the 
+command will be launched for each selected message 
+with the name of this message and with the list of 
+all selected messages. I did not find a practical 
+example for this.).</LI>
+<LI><I>%p</I> denotes the current selected message part 
+of a multipart message. The part is decoded accordingly. 
+If the message is not a multipart message, it denotes 
+the message body.</LI>
+<LI>Prepending <I>&gt;</I>: this will allow you to send 
+to the command's standard input a text that you will 
+enter in a dialog window.</LI>
+<LI>Prepending <I>*</I>: this will allow you to send to 
+the command's standard input a text that you will enter 
+in a dialog window. But in contrast to prepending 
+<I>&gt;</I>, the entered text is hidden 
+(useful when entering passwords).</LI>
+<LI>Appending an ampersand <I>&amp;</I>: this will run 
+the command asynchronously. That means "fire and forget". 
+Sylpheed won't wait for the command to finish, nor will 
+it catch its output or its error messages.</LI>
+<LI>Prepending the vertical bar <I>|</I> (pipe-in): 
+this will send the current displayed text or the current 
+selected text from the message view or the compose 
+window to the command standard input. The command will 
+silently fail if more than one message is selected.</LI>
+<LI>Appending the vertical bar <I>|</I> (pipe-out): this 
+will replace the current displayed text or the current 
+selected text from the message window or the compose 
+window with the command standard output. The command 
+will silently fail if more than one message is selected.</LI>
+<LI>Appending the "greater than" sign <I>&gt;</I> will 
+insert the command output in the message. The difference 
+between the trailing <I>|</I> is that no text will be 
+deleted or replaced. Most used when composing mails to 
+insert text.</LI>
+</UL>
+<P><B>Note</B>: It is not possible to use actions containing 
+<I>%f</I>, <I>%F</I> or <I>%p</I> from the compose window.
+<P>When a command is run, and unless it is run asynchronously, 
+Sylpheed will be insensitive to any interaction and it will wait 
+for the command to finish. If the command takes too long 
+(5 seconds), it will popup a dialog window allowing to stop it. 
+This dialog will also be displayed as soon as the command has 
+some output: error messages or even its standard output when 
+the command is not a "pipe-out" command. When multiple commands 
+are being run, they are run in parallel and each command output 
+is separated from the outputs of the others.
+<P>
+<H3>Examples</H3>
+
+<P>Here are some examples that are listed in the same syntax 
+as used for storing the actions list. You can copy and past 
+the definition in your <I>&nbsp;/.sylpheed/actionsrc</I> file 
+(exit Sylpheed before). The syntax is very simple: one line 
+per action, each action contains the menu name and the command 
+line separated by a colon and a space ": ". 
+Alternatively, you can use <I>Configuration -> Actions...</I> 
+and for each example enter a menu name and copy&amp;paste the 
+text after the colon and space ": " in the command definition.
+<P>
+<P>
+<CENTER><TABLE BORDER><TR><TD>
+<BR>
+<B>Purpose</B></TD><TD><B>Definition</B></TD><TD><B>Details</B></TD></TR><TR><TD>
+Decoding uuencoded messages</TD><TD>UUdeview: xdeview %F&amp;</TD><TD>xdeview comes with uudeview. If an encoded file is splitin multiple messages, just select them all and run the command.</TD></TR><TR><TD>
+Display uuencoded image</TD><TD>Display uuencoded: uudec %f&amp;</TD><TD>Displays uuencoded files. The uudec script is to be found here.</TD></TR><TR><TD>
+rot13 cyphering</TD><TD>Rot13: |tr a-zA-Z n-za-mN-ZA-M|</TD><TD>This will apply the rot13 cyphering algorithm to the (selected)text in the message/compose view.</TD></TR><TR><TD>
+Save MS TNEF parts</TD><TD>Save TNEF part: xterm -e tnef-claws %p</TD><TD>Select the TNEF message part then use this action to extractthe attachment.</TD></TR><TR><TD>
+Alter messages</TD><TD>Edit message: gvim -f %F</TD><TD>Allows to edit any received message. Can be used to removeunneeded message parts etc.</TD></TR><TR><TD>
+Pretty format</TD><TD>Par: |par 72Tbgjqw74bEe B=._A_a 72bgi|</TD><TD>par is a utility that can pretty format any text. It does avery good job in indenting quoted messages, and justify text.Used when composing a message</TD></TR><TR><TD>
+Browse</TD><TD>Part/Dillo: dillo %p&amp;</TD><TD>Browse the selected message part in Dillo.</TD></TR><TR><TD>
+Clear Sign</TD><TD>GnuPG/Clear Sign: |gpg-sign-syl|</TD><TD>Clear sign a message. The gpg-sign-syl script is responsiblefor asking the passphrase and for running gnupg. Make surethat you wrap your message correctly before signing, and thatthe resultant text will not be wrapped when sent (by disabling'wrap on send')</TD></TR><TR><TD>
+Verify Clear Signed</TD><TD>GnuPG/Verify: |gpg --no-tty --verify</TD><TD>Verify clear signed messages. The result is displayed in theactions output dialog.</TD></TR><TR><TD>
+Encrypt ASCII Armored</TD><TD>GnuPG/Encrypt: | gpg-enc-syl|</TD><TD>Encrypt message to ASCII armored. The recipient will be askedin a xterm.</TD></TR><TR><TD>
+Decrypt ASCII Armored</TD><TD>GnuPG/Decrypt: *gpg --no-tty --command-fd 0 --passphrase-fd 0 --decrypt %f|</TD><TD>Decrypt ASCII armored messages. The passphrase is to be enteredin the opened action's input dialog.</TD></TR><TR><TD>
+Receive key from server</TD><TD>GnuPG/Receive Selected Key: |gpg --recv-key `cat`</TD><TD>Select a key ID in the message view then call this action toimport it from a key server. GnuPG option file must contain areference to a keyserver. (Suggested by Bob Forsman)</TD></TR><TR><TD>
+Import key from mail</TD><TD>GnuPG/Import Key From Mail: gpg --import %p</TD><TD>Select the message part where the public key is then importit with this action.</TD></TR><TR><TD>
+Insert public key in message</TD><TD>GnuPG/Insert My Public Key: gpg --export -a MYKEYID&gt;</TD><TD>Insert your public key in the message your are composing.Replace MYKEYID with your key id. Needs 0.8.6claws66 or newer.</TD></TR><TR><TD>
+Reporting SPAM</TD><TD>Report as SPAM: spamassassin -r &gt; %f</TD><TD>Use spamassassin to report mail as spam. Redirection (&gt;)is possible only with version 0.7.7.</TD></TR><TR><TD>
+Check spelling</TD><TD>Check spelling: |T=`mktemp $HOME/.sXXXXXX`; cat - &gt; $T;xterm -e ispell $T;cat $T;rm $T|</TD><TD>Open a terminal and check the spelling with ispell</TD></TR><TR><TD>
+Google for message id</TD><TD>Google Msg ID: |google&thinsp;msgid.pl</TD><TD>Search the web for the selected message ID. Needs thegoogle&thinsp;msgid.pl script.</TD></TR><TR><TD>
+
+</TD></TR></TABLE></CENTER>
+<P>
+<P>The gpg-enc-syl script is to be found 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/gpg-enc-syl">here (gpg-enc-syl)</A>. 
+It calls gpg with the --yes command line option that you may want 
+to remove it. See gpg manual page for info.
+<P>The gpg-sign-syl script is to be found 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/gpg-sign-syl">here (gpg-sign-syl)</A>. 
+It needs the ssh-askpass utility found in OpenSSH. It can be 
+replaced by any X11 tool that asks some (hidden) text which 
+is then sent to standard output. Another version that uses 
+an xterm is to be found 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/gpg-sign-syl-xterm">here (gpg-sign-syl-xterm)</A>.
+<P>The uudec script is to be found 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/uudec">here (uudec)</A>.
+It needs uudecode and ImageMagick's display. The latter can be
+replaced by any image viewer that can get input from standard 
+input. The script could also be modified to use temporary 
+files instead of standard input.
+<P>The google_msgid.pl script is to be found 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/google_msgid.pl">here (google_msgid.pl)</A>. 
+Example and script by Thorsten Maerz. Edit the script to change 
+the browser (default is mozilla).
+<P>The tnef-claws bash script was written by Shawn Lamson and is 
+to be found 
+<A HREF="http://melvin.hadasht.free.fr/home/sylpheed/actions/tnef-claws">here</A>.
+The script is well commented. You need to have the tnef package 
+already installed.
+<P>
+<H2><A NAME="ss13.5">13.5 Templates</A>
+</H2>
+
+<P>With Sylpheed you can define mail templates to use when replying
+to messages. A template can contain raw text (that will be inserted
+in the composed mail without any change), and placeholders that are
+replaced at composition time by the actual value of the selected
+fields from the original message.
+<P>A typical use of the template could be to define the legal notice
+to be appended to your messages (the usual notice that contains a
+text like: "here are my own words and not those of my company, my
+boss is not liable for them, bla, bla, bla").
+<P>To define a new template, in the <I>Configuration</I> menu select
+the <I>Templates</I> entry and fill the form:
+<P>
+<P>
+<P>
+<P>
+<P>The name parameter is used to identify each template, this name
+will then appear in the <I>Tools/Templates</I> menu in the
+composition window.
+The content of the <I>To</I> field will be appended to the original
+content of the corresponding field in the message you are composing.
+The content of the <I>Subject</I> field will replace the orignal subject
+of the message you are composing.
+<P>In the upper pane, type in the text you want to put in the template,
+use the <I>Symbols</I> button to open a help window that contains
+the description of all the placeholders you can use in a template
+(there is one for the sender, one for the date, one for the message
+ID, ...), then use the <I>Register</I> button to  validate the
+template. If you do not register the template, when leaving the form
+the template will be canceled. To modify an existing template, select
+it in the lower pane, modify its text, then use the <I>Substitute</I>
+button. As you may guess, the <I>Delete</I> button removes the selected
+template. Finally validate your changes with the <I>OK</I> button.
+If you use the <I>Cancel</I> button, the form is closed and your changes
+are lost (deleted templates are back, added templates are lost).
+<P>
+<P>To use a template, open the composition window and select the template
+from the <I>Tools/Templates</I> menu. You can then choose to insert
+the template into your message or to completely replace the text of the
+message by the template. This only affects the body of the message.
+If you choose to insert the template, its text will be inserted at the
+cursor location.
+<P>The placeholders are taken from the source message when replying, so
+they have no meaning when composing a new message.
 <P>
 <HR>
 <A HREF="sylpheed-14.html">Next</A>

@@ -1,1 +1,3 @@
 SUBDIRS = en ja
+
+EXTRA_DIST = GFDL-1.2

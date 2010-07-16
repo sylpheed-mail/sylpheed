@@ -1,0 +1,3806 @@
+<!doctype linuxdoc system>
+<article>
+    <title>Sylpheed User's Manual
+    <author>Paul Kater (paul@nlpagan.net)
+	    Nick Selby
+    <abstract>
+       Sylpheed User's Manual for Sylpheed-0.8.10
+    </abstract>
+
+<toc>
+
+<p>
+Copyright (c)  2002 <it>The sylpheed documentation team</it>.
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, with no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the 
+<ref id="GNU Free Documentation License" name="section"> entitled
+"GNU Free Documentation License".
+</p>
+
+<p>
+The list of the members of <it>The sylpheed documentation team</it> is
+detailed in the <ref id="The Sylpheed documentation team" name="appendix">.
+
+
+<sect>What is Sylpheed?
+
+<p>
+
+
+
+<sect1>Introduction to Sylpheed.
+<p>
+Sylpheed is a fast e-mail and news client. It will run on just about any Linux or Unix compliant system.
+<p>
+The power of Sylpheed is that it is
+<itemize>
+<item>light on resources
+<item>very fast
+<item>intuitive for most people
+<item>easy to work with
+<item>loaded with features
+<item>graceful and sophisticated in its interface
+</itemize>
+</sect1>
+
+<sect1>Interface
+<p>
+The appearance and interface are similar to some popular e-mail clients for 
+Windows, such as Outlook Express, Becky!, and Datula. The interface is 
+also designed to emulate the mailers on Emacsen, and almost all commands 
+are accessible with the keyboard.
+<p>
+The messages are managed by MH format, and you'll be able to use it 
+together with another mailer based on MH format (like Mew). You can 
+also utilize fetchmail or/and procmail, and external programs for 
+receiving (like inc or imget).
+</sect1>
+
+<sect1>Main features
+<p>
+Currently implemented features are: 
+<itemize>
+<item>Unlimited multiple account handling
+<item>Thread display
+<item>Filtering 
+<item>MIME (attachments) 
+<item>built-in image view 
+<item>X-Face support 
+<item>External editor support 
+<item>Message queueing 
+<item>Draft message function 
+<item>Template
+<item>Line-wrapping 
+<item>Clickable URI 
+<item>XML-based addressbook 
+<item>LDAP addressbook 
+<item>Jpilot addressbook (for Palm types handhelds)
+<item>Newly arrived and unread message management 
+<item>Multiple MH folder support 
+<item>Mew/Wanderlust compatible key bindings 
+<item>News reader function 
+<item>Printing 
+<item>UIDL support 
+<item>APOP authentication 
+<item>SMTP AUTH support
+<item>IPv6 support 
+<item>GPG encryption and signature
+<item>Autoconf, automake support 
+<item>Support of i18n of messages by gettext 
+<item>Supports many locales, including UTF-8 (Unicode), when using libjconv 
+<!-- added 2001/07/19 -->
+<item>IMAP4 compliant
+</itemize>
+This list is not complete, but this will at least show you the most common features in Sylpheed.
+</sect1>
+
+<sect1>Methods for managing messages<p>
+<!-- added 2001/09/06 -->
+There are several ways to manage messages. The best known is <tt>not at all.</tt><p>
+Too many people receive lots of e-mails and just let them end up in the INBOX folder. Which after a while becomes unmanageable. Try to locate that one mail about an important event you got 5 days ago, in a mailbox that has over 5000 messages in it. Even when sorted on date, it might take you a tremendous time to locate it.<p>
+For this there are <tt>mailfolders and mailboxes.</tt><p>
+When you read on in this manual, you will learn about creating mailboxes and also folders that can contain more mailboxes. What are these good for?<p>
+Overview. Simple as that. In different mailboxes you can store different kinds of mails. Suppose you are a member of a kiting club. And you get at least 30 e-mails per day from that club. The smart thing to do now is to create a separate mailbox for these mails. So when an e-mail comes in from the kiting club, you can move it to the kiting club mailbox. That way you know that you have all your kiting e-mails in one place.<p>
+Tedious, you say? To move 30 mails a day to that box, when they come in at random moments? You bet that is a tedious job. You can be certain that you will miss that very important one about transport to the kiting ground where you will have the contest of biggest and most beautiful kite!<p>
+Well, also for this there is a solution. Those are called <tt>filters</tt>.<p>
+Filters can automate the process of moving e-mails to new locations. Further on in this manual you will also learn about setting up filters, so you do not have to move these kiting e-mails to the kiting club mailbox.<p>
+<sect2>Okay, so what is the difference between a mailbox and a mailfolder?<p>
+This is actually the exact same thing as you do on your harddisk. You create directories in which you can put files and more directories.<p>
+In the case of Sylpheed, you can create a mailbox in which you can put more mailboxes that somehow belong together. For example, you could create a mailbox (folder) that contains the mailboxes for all the mailing lists you belong to.<p>
+A word of clarification is perhaps in need here. In Sylpheed, a maillbox is nothing more than a directory. And in a directory you can create a new directory. But also files. And Sylpheed stores each e-mail in a separate file on disk.
+An example of how a mailbox tree could look is<p>
+
+
+
+
+As you can see, there is no real limit to the way you can set up your mailboxes. As long as you have diskspace available, you can create mailboxes and mailboxes within mailboxes.<p>
+Of course, you should observe some common sense when you start creating mailboxes. To keep all mail in one place is not a good idea, but to create a maze of mailboxes is not a good idea either!
+</sect2>
+</sect1>
+
+<sect1>Features for the future<p>
+This is a special chapter. As with all open source programs, many features can be requested by you, the user of Sylpheed. The best way to join in on the talks is to join one of the mailing lists on Sylpheed. For this, you can turn to the Information section of this manual and read up on how to join a mailing list.
+</sect1>
+
+</sect>
+
+<sect>Quick-guide to mail setup
+
+<sect1>Starting Sylpheed for the first time
+
+<p>
+When starting Sylpheed for the first time, you will be 
+guided through the first basic steps of the setup.
+First a pop-up window will show up and you will be asked
+to define the directory Sylpheed will use to store your
+messages and folders. This directory will be created under
+your home directory (or under C:\windows\Application Data\Sylpheed
+on windows). The default name for this directory is "Mail".
+
+
+
+
+Then the account preferences window shows up. Based on
+your configuration (local UNIX mailbox or POP account),
+read one of the following sections for the next steps
+of the configuration.
+
+<sect1>Setup for reading your Unix mailbox in a hurry<p>
+<itemize>
+<item>In the configuration menu, select "Create new account".
+<item>In the <ref id="Basic"> tab, name the account. You can select this account to be the default account ("Usually used").
+<item>Enter your name and e-mail address.
+<item>To select your local unix mailbox, in the Protocol box you select "None (local)".
+<item>When you select this option, the "Server for receiving" is greyed out, since this is not relevant. You can enter the server to send (SMTP) in this tab also.
+</itemize>
+Settings in the remaining tabs can usually be left at default values.
+
+
+
+
+The <ref id="Receive"> tab is not used in this setup, since you are not polling a server, your mail is delivered to you.
+
+In the <ref id="Send"> tab you can select headers and SMTP authentication.
+
+
+
+
+In the <ref id="Compose"> tab you can define your signature file.
+
+
+
+
+In the <ref id="Advanced"> tab you can edit the portnumbers for the servers you will be using. This normally will need no change.
+
+This is basically everything you need to start using Sylpheed for local mailboxes. You can select "Message -> receive new mail" or press the <ref id="shortcut"> and see if there is new mail!
+</sect1>
+<sect1>Setup for reading POP3 mail in a hurry<p>
+<itemize>
+<item>In the configuration menu, select "Create new account".
+<item>In the <ref id="Basic"> tab, name the account. You can select this account to be the default account ("Usually used").
+<item>Enter your name and e-mail address.
+<item>To check your POP3 mail, in the Protocol box you select "POP3 (normal)".
+<item>Enter the server information for "Server for receiving". You can then enter the server to send (SMTP) in this tab.
+</itemize>
+Settings in the remaining tabs can usually be left at default values.
+
+
+
+
+The <ref id="Receive"> tab offers advanced POP3 options.
+
+
+
+
+In the <ref id="Send"> tab you can select headers and SMTP authentication.
+
+
+
+
+In the <ref id="Compose"> tab you can define your signature file.
+
+
+
+
+In the <ref id="Advanced"> tab you can edit the portnumbers for the servers you will be using. This normally will need no change.
+
+This is basically everything you need to start using Sylpheed for POP3 mailsystems. You select "Message -> receive new mail" or press the <ref id="shortcut"> and see if there is new mail!
+</sect1>
+</sect>
+<!-- added 2001/07/20 -->
+<sect>Quick-guide for news setup<p>
+<sect1>Getting news in a hurry.<p>
+<p>
+In the configuration menu, select "Create new account"
+<p>
+In the "Basic" tab, enter the relevant data. You name the account, enter your name and e-mail address, etc. To connect to news, in the Protocol box you select "News (NNTP)".
+
+
+
+
+<p>
+Enter the newsserver information.
+<p>
+Skip the "Receive" tab.
+<p>
+In the "Send" tab you can set up some more settings.
+<p>
+In the "Compose" tab you can define your signature file.
+
+
+
+
+<p>
+In the "Advanced" tab you can edit the portnumbers for the servers you will be using. This normally will need no change.
+<p>
+Close the dialogs, right click the new News folder in the folder pane and select "Subscribe to newsgroups". If not done already, a list of groups will be downloaded from the server. From there you will find your way, so good luck!
+<!-- end added 2001/07/20 -->
+</sect1>
+</sect>
+
+<sect>Installation.
+
+<sect1>Required environment
+<p>
+To succesfully compile Sylpheed, you need at least:
+<itemize>
+<item>Any POSIX compliant UNIX or similar OS eg. Linux, FreeBSD, Solaris
+<item>
+	<url name="GTK+" url="http://www.gtk.org/">
+	1.2.6 or later
+</item>
+<item>
+	A recent ANSI C compiler 
+	(<url name="gcc" url="http://gcc.gnu.org/"> 2.7.2.3 should also work) 
+	Note: it is reported that Sun C will not compile Sylpheed.
+</item>
+</itemize>
+Optionally you need:<label id="option_libraries">
+<itemize>
+<item>
+	<url url="http://sourceforge.net/project/showfiles.php?group_id=2" name="Imlib">
+	or
+	<url url="http://ftp.gnome.org/pub/GNOME/unstable/sources/gdk-pixbuf/" name="gdk-pixbuf">
+	(for built-in image view)
+</item>
+<item>
+	<url name="libcompface" url="ftp://ftp.cs.indiana.edu/pub/faces/compface/">
+	(for X-Face)
+</item>
+<item>
+	<url name="libjconv" url="http://www.kondara.org/libjconv/">
+	(for non latin character sets)
+</item>
+<item>
+	<url name="GPGME" url="http://www.gnupg.org/gpgme.html">
+	and
+	<url name="GNUPG" url="http://www.gnupg.org/">
+	(for encryption and signature)
+</item>
+<item>
+	<url name="OpenSSL" url="http://www.openssl.org/">
+	(for SSL support)
+</item>
+<item>
+	<url name="OpenLDAP" url="http://www.openldap.org/">
+	(for LDAP connection)
+</item>
+<item>
+	IPv6 support can be turned on (if your system supports it)
+</item>
+<item>
+	<url name="Jpilot" url="http://www.jpilot.org/">
+	(for Palm addressbook use)
+</item>
+<item>the equivalent of GTK+-devel and Xfree86-devel. (Otherwise ./configure will fail.)
+</itemize>
+<p>
+Notice: Sylpheed may be unstable depending on the environment. Please use the newest version of libraries if possible.
+</sect1>
+
+<sect1>Environments known as valid for Sylpheed
+<p>
+<itemize>
+<item>Debian GNU/Linux unstable (sid) (glibc 2.2.5) (development environment) 
+<item>Debian GNU/Linux testing (woody) (glibc 2.2.5)
+<item>Debian GNU/Linux 2.2 (potato) (glibc 2.1.3) 
+<item>Kondara MNU/Linux (glibc 2.1.x) 
+<item>Kondara MNU/Linux 1.2
+<item>Kondara MNU/Linux 2.0
+<item>Vine Linux 1.1 (glibc 2.0.x + libwcsmbs) 
+<item>Vine Linux 2.0 (glibc 2.1.x) (Intel, PPC) 
+<item>Vine Linux 2.1 
+<item>Vine Linux 2.1.5
+<item>Laser5 Linux 6.0 (glibc 2.1.x)
+<item>Laser5 Linux 6.2 (glibc 2.1.x)
+<item>Laser5 Linux 6.4 (glibc 2.1.x)
+<item>TurboLinux 4.0 (glibc 2.0.7 + libwcsmbs) 
+<item>TurboLinux 6.0 (glibc 2.1.2) 
+<item>TurboLinux 7.0 (glibc 2.2.x) 
+<item>Miracle Linux Standard Edition Version1.0 
+<item>Miracle Linux for PostgreSQL Version1.0 
+<item>Miracle Linux for Samba Version1.0 
+<item>RedHat Linux 5.2 (glibc 2.0.7) 
+<item>RedHat Linux 6.0 
+<item>RedHat Linux 6.1 + Helix GNOME (glibc 2.1.x) 
+<item>RedHat Linux 6.2 / 6.2J (glibc 2.1.x) 
+<item>RedHat Linux 7.0 / 7.0J 
+<item>RedHat Linux 7.1
+<item>RedHat Linux 7.2
+<item>LinuxPPC2000 + Yukikaze(Japanization kit) 
+<item>Linux2000G (Intel, PowerPC) 
+<item>HOLON Linux 2.0 (Intel / PPC) 
+<item>Linux for PPC Japanese Edition 2.0 (glibc 2.1.x) 
+<item>Linux for PPC Japanese Edition 3.0 (glibc 2.1.x) 
+<item>Linux MLD4
+<item>Linux MLD5 
+<item>Plamo Linux 2.0 
+<item>Plamo Linux 2.1
+<item>Slackware 7.0 
+<item>Slackware 7.1 
+<item>Slackware 8.0 
+<item>Linux Mandrake 7.0
+<item>Linux Mandrake 7.1
+<item>Linux Mandrake 7.2
+<item>Linux Mandrake 8.0
+<item>Linux Mandrake 8.1
+<item>SuSE Linux 6.3 (glibc 2.1.2) 
+<item>SuSE Linux 6.4
+<item>SuSE Linux 7.0
+<item>SuSE Linux 7.1
+<item>SuSE Linux 7.2
+<item>SuSE Linux 7.3
+<item>OpenLinux 2.3 (glibc 2.1.1 -> 2.1.3) 
+<item>Caldera OpenDesktop 2.4 
+<item>Caldera Workstation 3.1
+<item>Conectiva Linux 4.0
+<item>Conectiva Linux 5.0
+<item>Conectiva Linux 7.0
+<item>Vector Linux 1.5 
+<item>Yellow Dog Linux 2.0 (glibc 2.2.1)
+<item>Yellow Dog Linux 2.1 (PowerPC)
+<item>ASP Linux 7.2 (glibc 2.2.4)
+<item>Redmond Linux (Lycoris)
+</itemize>
+
+<itemize>
+<item>FreeBSD release 3.2
+<item>FreeBSD release 3.4
+<item>FreeBSD release 4.0
+<item>FreeBSD release 4.1
+<item>FreeBSD release 4.2
+<item>FreeBSD release 4.3
+<item>FreeBSD release 4.4
+<item>FreeBSD release 4.5
+<item>FreeBSD release 5.0
+<item>NetBSD 1.4.2 
+<item>NetBSD 1.5 + XPG4DL 
+<item>NetBSD 1.5.1
+<item>NetBSD 1.5.2
+<item>OpenBSD 2.7 
+<item>OpenBSD 2.8 (i386) 
+<item>OpenBSD 2.9
+<item>OpenBSD 3.0
+<item>BSD/OS 4.0.1 
+</itemize>
+
+<itemize>
+<item>Solaris 2.5
+<item>Solaris 2.5.1
+<item>Solaris 2.6
+<item>Solaris 7
+<item>Solaris 8
+<item>IRIX 6.3
+<item>IRIX 6.4
+<item>IRIX 6.5, 6.5.8m
+<item>HP-UX 10.20 
+<item>HP-UX 11.00
+<item>HP-UX 11i
+<item>Tru64 Unix 5.0 (OSF1 v5.0)
+<item>SCO UnixWare 7
+<item>Mac OS X 10.1.3 (Darwin 5.3) + XDarwin (without XLocale support) + libxpg4 
+</itemize>
+
+<itemize>
+<item>Windows (MSVC + GTK+ for win32), in progress
+</itemize>
+</sect1>
+
+<sect1>Nuts and bolts of installation
+<p>
+<itemize>
+<item>Download the latest version of the Sylpheed package from
+<url url="http://sylpheed.good-day.net/" name="http://sylpheed.good-day.net/">
+</item>
+<item>Untar the sourcefiles to a new directory
+<item>tar -xvfz sylpheed-.tar.gz (for tar.gz)
+<item>tar -xvfI sylpheed-.tar.bz2 (for tar.bz2) 
+<item>cd to the new sylpheed- directory 
+<item>Run ./configure to check your environment and create the installation make files 
+<item>Run the 'make' program which will compile the sources. Do not proceed with this step if there are fatal errors in the previous step. Fatal errors indicate that things are missing in order to compile Sylpheed properly. 
+</itemize>
+<p>
+If the make process has completed, run "make install" (as root), to install the program and the supportfiles
+
+<sect2>Compiling Sylpheed with options<label id="compile_sylpheed">
+<p>
+You can choose to compile Sylpheed with some optional features enabled.
+Use <it>./configure --help</it> to list configuration syntax and options.
+<p>
+The following optional features can be enabled:
+
+<itemize>
+	<item>
+		<it>Jpilot</it>: to use you PDA addressbook with Sylpheed. You will
+		need the <it>Jpilot</it> library (and <it>pilot-link</it>, too).
+		Enable this option with the <it>--enable-jpilot</it> configure switch.
+	</item>
+	<item>
+		<it>GnuPG</it>: Sylpheed can encrypt and sign your messages (also decrypt
+		and verify the signatures of the incoming messages) using GnuPG.
+		GnuPG follows the OpenPGP standard and is compatible with PGP.
+		To enable this feature, you need to install GnuPG and GPGME (interface
+		library to GnuPG).
+		Enable this option with the <it>--enable-gpgme</it> configure switch.
+	</item>
+	<item>
+		<it>LDAP</it>: Sylpheed can connect to a LDAP server in order to
+		query mail addresses. To enable this feature you will need the
+		OpenLDAP library.
+		Enable this option with the <it>--enable-ldap</it> configure switch.
+	</item>
+	<item>
+		<it>X-Faces</it>: you can create a small picture (of your face, or
+		of anything else) that will be sent in the header of your mails.
+		This option is enabled if the compface library is found and
+		can be disabled using the <it>--disable-compface</it> configure switch.
+	</item>
+	<item>
+		Images can appear "inline" (embedded in the message window, without
+		the need of an external viewer) if Sylpheed is compiled
+		with either the <it>gdk-pixbuf</it> or the <it>imlib</it> library.
+		You can choose the library (if both are installed) by using the
+		<it>--disable-gdk-pixbuf</it> or <it>--disable-imlib</it> configure switch.
+	</item>
+</itemize>
+
+All these features require additional libraries and tools that may not be part
+of your distribution. You can find them at the addresses listed at the beginning
+of this chapter, <ref id="option_libraries" name="here">.
+
+</sect2>
+
+</sect1>
+
+<sect1>Installation on Linux using RPM
+<p>
+As root, run the "rpm -ivh " command on the RPM file you downloaded. As soon as this process is complete you can run Sylpheed as user. 
+</sect1>
+
+<sect1>Installation on Debian Linux
+<p>
+With an internet connection :
+<p>
+apt-get install sylpheed (to install it with a internet connection)
+<p>
+Without internet connection, fetch the debian package for example on
+<url url="http://packages.debian.org/unstable/mail/sylpheed.html" name="http://packages.debian.org/unstable/mail/sylpheed.html">
+<p>
+dpkg -i sylpheedx.x.x-1i386.deb
+<p>
+dpkg --install sylpheedx.x.x-1i386.deb
+</sect1>
+
+<sect1>Installation on FreeBSD
+<p>
+using the /stand/sysinstall tool (it is a menu-based interface) :
+<p>
+run "/stand/sysinstall" as root
+<p>
+in the main menu choose "Configure" -> "Packages" -> "mail", then "sylpheed" then, back to the "Packages" list, choose "Install"
+<p>
+Using the ports
+<p>
+Get the sylpheed port on :
+<p>
+<url url="ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-4.3-release/mail" name="ftp://ftp.freebsd.org/pub/FreeBSD/ports/i386/packages-4.3-release/mail">
+<p>
+then, as root: pkg-add sylpheed-0.x.x.tgz
+<p>
+using the ports with compiling:
+<p>
+first, update your port, fetch it on 
+<url url="http://www.freebsd.org/ports/mail.html" name ="http://www.freebsd.org/ports/mail.html">
+<p>
+cd /usr/ports/mail/sylpheed
+<p>
+make
+<p>
+If it succeeds, type "make install"
+<p>
+In case it fails, fetch the required package if necessary
+(on the same page), put the package file in /usr/ports/distfiles/
+then :
+<itemize>
+<item>cd /usr/ports/mail/sylpheed
+<item>make
+<item>make install
+</itemize>
+<p>
+Need a more up-to-date version ?
+<p>
+Just use the Unix standard method (see "Nuts and bolts of installation")
+</sect1>
+
+</sect>
+
+<sect>Starting and quitting Sylpheed
+
+<sect1>Starting Sylpheed
+<p>
+Starting Sylpheed can be done by typing "sylpheed" on a prompt in a terminal and pressing Enter. You can also add Sylpheed to a menu in KDE or Gnome, or create a shortcut to it on the desktop, if your window manager allows that.
+<p>
+When you first start Sylpheed, the program will ask you where you want to store the mails that you downloaded. You can accept the default ($HOME/Mail) or set up your own mail folder.
+<p>
+Sylpheed will then load with it's default settings. The way to change these are written about further on in this manual.
+</sect1>
+
+<sect1>Quitting Sylpheed
+<p>
+Ending Sylpheed can be done in several ways:
+<itemize>
+<item>Select "quit" from the File menu
+<item>Press Ctrl-Q
+<item>Click the "program close" button in the titlebar.
+</itemize>
+</sect1>
+
+</sect>
+
+<sect>The menu options of Sylpheed.
+<p>
+The menu in Sylpheed is the primary entry to all the things 
+you can do with Sylpheed. The menu structure gives you following 
+options:
+
+<sect1>File menu
+<p>
+<itemize>
+	<item>
+		<it>Add mailbox:</it> this option lets you add a new MH mail-directory. 
+		It will generate IN, OUT, QUEUE, DRAFT and TRASH mailfolders 
+		inside the new mailbox.
+	</item>
+	<item>
+		<it>Check for new messages in all folders:</it> rescans the entire tree 
+		of existing mailboxes to reflect the correct state (usually 
+		won't be necessary).
+	</item>
+	<item>
+		<it>Folder:</it> lets you add, rename or delete a mailfolder.
+		<itemize>
+			<item>
+				<it>Create new folder:</it> to create a new folder. You must select
+				the top level node of the folder tree of a sub folder before
+				using this menu entry, in order to define the location of the
+				new folder to create.
+			</item>
+			<item>
+				<it>Rename folder:</it> change the name of the selected folder.
+			</item>
+			<item>
+				<it>Delete folder:</it> delete the selected folder (also delete the
+				messages contained in the selected folder).
+			</item>
+		</itemize>
+	</item>
+	<item>
+		<it>Import mbox file...:</it> lets you import an mbox file 
+		(like created by Pine) into an MH mailbox.
+	</item>
+	<item>
+		<it>Export to mbox file:</it> lets you export an MH mailbox to an mbox file.
+	</item>
+	<item>
+		<it>Empty trash:</it> obviously, this will empty the trash folder.
+	</item>
+	<item>
+		<it>Save as:</it> lets you save the selected e-mail to a plain textfile 
+		on disk.
+	</item>
+	<item>
+		<it>Print:</it> lets you print the selected e-mail to a printer.
+	</item>
+	<item>
+		<it>Exit:</it> ends Sylpheed.
+	</item>
+</itemize>
+</sect1>
+
+<sect1>Edit menu
+<p>
+<itemize>
+	<item>
+		<it>copy:</it> lets you copy the selected text to a buffer, 
+		from where you can paste it into a different place. 
+		Shortcut: Ctrl-C
+	</item>
+	<item>
+		<it>select all:</it> selects all the text in the current window. 
+		Shortcut: Ctrl-A
+	</item>
+	<item>
+		<it>select thread:</it> selects all the messages of the current thread.
+	</item>
+	<item>
+		<it>Find in current message:</it> searches a string in the current message.
+		Shortcut: Ctrl-F
+	</item>
+	<item>
+		<it>search messages:</it> searches a message based on its  To, From, Subject
+		header fields or body content. Start searching from the selected
+		message, in the selected folder. 
+		Shortcut: Shift-Ctrl-F
+	</item>
+</itemize>
+</sect1>
+
+<sect1>View menu
+<p>
+The view menu allows you to change the way that Sylpheed appears. 
+You can set different windows separately (folder view, messages etc.), 
+enable or disable the statusbar and so on.
+It contains also the commands to toggle the display of some parts
+of the current message, or sort the messsages in the selected folder
+based on different attributes.
+<p>
+<itemize>
+	<item>
+		<it>Show or hide:</it> let you control the parts of the Sylpheed user interface 
+		you want to display.
+		<itemize>
+			<item>
+				<it>Folder tree:</it> not implemented yet
+			</item>
+			<item>
+				<it>Message view:</it> show or hide the message pane. When hidden, the
+				messages are displayed in a separate window. To read a message
+				double click in the summary pane. The message is then opened in
+				a new window. You can close this new window by pressing the escape
+				key.
+			</item>
+			<item>
+				<it>Toolbar:</it> sets how you want to see the toolbar. Icons and text, 
+				or one of these.
+				<itemize>
+					<item>
+						<it>Icon and Text:</it> show icons and text in the toolbar.
+					</item>
+					<item>
+						<it>Icon:</it> only display the icons, do not display the text
+						below them.
+					</item>
+					<item>
+						<it>Text:</it> only the text, hide the icons.
+					</item>
+					<item>
+						<it>None:</it> hide the toolbar.
+					</item>
+				</itemize>
+			</item>
+			<item>
+				<it>Status bar:</it> show it or hide it.
+			</item>
+		</itemize>
+	</item>
+	<item>
+		<it>Separate folder tree:</it> selects between having the folder tree 
+		attached to the main window, or floating separately.
+	</item>
+	<item>
+		<it>Separate message view:</it> selects between having the selected 
+		message in the summary pane attached to the main window, or 
+		floating separately.
+	</item>
+	<item>
+		<it>Sort:</it> controls the way the messages are sorted in the selected
+		folder. Each option sorts the messages in descending order (the
+		bigger one being on the top of the summary pane), and can be
+		reversed by selecting the same menu entry a second time (each
+		time you select the same menu entry the order is reversed).
+		<itemize>
+			<item>
+				<it>Sort by number:</it> sort the message based on their MH number.
+			</item>
+			<item>
+				<it>Sort by size:</it> sort the message on their size.
+			</item>
+			<item>
+				<it>Sort by date:</it> sort the messages based on their date.
+			</item>
+			<item>
+				<it>Sort by from:</it> the messages are sorted by their sender address
+				(From field, sorted alphabetically).
+			</item>
+			<item>
+				<it>Sort by recipient:</it> the messages are sorted by their recipient
+				(sorted alphabetically).
+			</item>
+			<item>
+				<it>Sort by subject:</it> the messages are sorted by their subject
+				(sorted alphabetically).
+			</item>
+			<item>
+				<it>Sort by color label:</it> sort the messages based on their color.
+				Read the context menu description below to find how to assign
+				colors to messages.
+			</item>
+			<item>
+				<it>Sort by mark:</it> separate marked and unmarked messages. Read the 
+				context menu description below to find how to mark messages.
+			</item>
+			<item>
+				<it>Sort by unread:</it> separate read and unread messages.
+			</item>
+			<item>
+				<it>Sort by attachment:</it> separate messages with and without attachment.
+			</item>
+			<item>
+				<it>Don't sort:</it> do not sort the messages.
+			</item>
+			<item>
+				<it>Ascending:</it> sort the messages in ascending order. If the field used
+				to sort the messages is displayed in the summary view, a little
+				arrow on the right side of the corresponding summay column header
+				reflects the sort order you select from the menu.
+			</item>
+			<item>
+				<it>Descending:</it> sort the messages in descending order.
+			</item>
+			<item>
+				<it>Attract by subject:</it> move close to each other the messages
+				having the same subject (or a close subject).
+			</item>
+		</itemize>
+	</item>
+	<item>
+		<it>Thread view:</it> turn the threaded view on or off. When turned on the
+		messages of the same thread (the same discussion generated by replying
+		to each other mail) are grouped as a tree representing the discussion
+		flow. Each reply being linked to its orignal message. Each branch can
+		be open or closed by using the small plus or minus sign next to it.
+		The threads are based on the In-Reply-To and Reference fields of the
+		mail header, so never start a new conversation by replying to an
+		old message, this will add your new mail to the old unrelated thread.
+		Shortcut: Ctrl-T
+	</item>
+	<item>
+		<it>Expand all threads:</it> if the threaded view is selected, expand all the
+		threads in the opened folder.
+	</item>
+	<item>
+		<it>Collapse all threads:</it> if the threaded view is selected, collapse all the
+		threads in the opened folder.
+	</item>
+	<item>
+		<it>Set display item:</it> use it to change the list of items to display
+		in the summary view. This setting can also be changed through
+		the common preferences.
+	</item>
+	<item>
+		<it>Go to:</it> use it to navigate from message to message based on the
+		sub-menu criterias.
+		<itemize>
+			<item>
+				<it>Prev. message:</it> go to the previous message in the current
+				folder.
+				Shortcut: P
+			</item>
+			<item>
+				<it>Next message:</it> go to the next message in the current
+				folder.
+				Shortcut: N
+			</item>
+			<item>
+				<it>Prev. unread:</it> go to the previous unread message.
+				Shortcut: Shift-P
+			</item>
+			<item>
+				<it>Next unread:</it> go to the next unread message.
+				Shortcut: Shift-N
+			</item>
+			<item>
+				<it>Prev. new:</it> go to the previous new message.
+			</item>
+			<item>
+				<it>Next new:</it> go to the next new message.
+			</item>
+			<item>
+				<it>Prev. marked:</it> go to the previous marked message.
+			</item>
+			<item>
+				<it>Next marked:</it> go to the next marked message.
+			</item>
+			<item>
+				<it>Prev. labeled:</it> go to the previous labeled message.
+			</item>
+			<item>
+				<it>Next labeled:</it> go to the next labeled message.
+			</item>
+			<item>
+				<it>Other folder:</it> change the current folder. Opens a new window
+				with the folder tree, and open the selected folder.
+			</item>
+		</itemize>
+	</item>
+	<item>
+		<it>Code set:</it> allows you to select what codeset you want to use 
+		for your e-mails. This codeset will be used when sending
+		mails. Note Sylpheed will always try to use the more compatible
+		codeset based on the characters used in your message, so unless
+		you use special latin-1 characters in your mail, the encoding
+		will be defined as 7bits ASCII even if you have selected the
+		ISO-8859-1 character set.
+		The auto-detect option let Sylpheed automatically detect the
+		character set based on the content of the messages.
+	</item>
+	<item>
+		<it>Open in new window:</it> open the selected message in a new window.
+		This new window can be closed by pressing the escape key.
+		Shortcut: Ctrl-Alt-N
+	</item>
+	<item>
+		<it>Message source:</it> opens a new window and display the complete
+		source of the message in it (without any formatting and with
+		all the header fields).
+		Shortcut: Ctrl-U
+	</item>
+	<item>
+		<it>Show all header:</it> toggles on and off the display of the complete
+		message header.
+		Shortcut: Ctrl-H
+	</item>
+	<item>
+		<it>Update summary:</it> update the Sylpheed window.
+		Shortcut: Ctrl-Alt-U
+	</item>
+</itemize>
+</sect1>
+
+<sect1>Message menu
+<p>
+Here you find the following options:
+
+<itemize>
+	<item>
+		<it>Get new mail:</it> this will collect all new mail for your 
+		default mail-identity.
+		Shortcut: Ctrl-I
+	</item>
+	<item>
+		<it>Get from all accounts:</it> Sylpheed will poll all defined 
+		mail-identities for new mail.
+		Shortcut: Shift-Ctrl-I
+	</item>
+	<item>
+		<it>Cancel receiving:</it> stop the new mails reception.
+	</item>
+	<item>
+		<it>Send queued messages:</it> all the messages that you put into 
+		the "Queue" folder will now be sent off.
+	</item>
+	<item>
+		<it>Compose new message:</it> allows you to write a new e-mail 
+		message.
+		Shortcut: Ctrl-M
+	</item>
+	<item>
+		<it>Reply:</it> an e-mail message will be created with the sender 
+		of the selected message in the summary pane as recipient. 
+		Depending on the settings, your signature will be added 
+		to the mail, and the original mail text will be quoted.
+		If a part of the original mail is selected, only this
+		part will be quoted in the reply.
+		Shortcut: Ctrl-R
+	</item>
+	<item>
+		<it>Reply to</it> 
+		<itemize>
+			<item>
+				<it>all:</it> as Reply, but the recipients will be all 
+				e-mail addresses in the original messages (including 
+				the ones in the cc: part).
+				Shortcut: Shift-Ctrl-R
+			</item>
+			<item>
+				<it>sender:</it> as Reply.
+			</item>
+			<item>
+				<it>Mailing list:</it> reply to the mailing list. To use
+				when replying to a mailing list (unless you want to reply
+				only to the poster of the message).
+				Shortcut: Ctrl-L
+			</item>
+		</itemize>
+	</item>
+	<item>
+		Reply to sender: as Reply, but the recipient is the address
+		defined in the Sender header field (not the Reply-To address).
+	</item>
+	<item>
+		<it>Forward:</it> a message will be created with the original 
+		message in the summary pane as text. You can then 
+		enter a recipient e-mail address, edit the text if 
+		you want, and send it.
+		Shortcut: Ctrl-Alt-F
+	</item>
+	<item>
+		<it>Forward as attachment:</it> as Forward, but the message 
+		text will sent along as a separate textfile.
+		Shortcut: Shift-Ctrl-Alt-F
+	</item>
+	<item>
+		<it>Redirect:</it> re-send the selected message to someone else. Compared
+		to a forward, the message is not marked as forwarded, and the sender
+		is the original mail sender.
+	</item>
+	<item>
+		<it>Re-edit:</it> lets you open all already sent message in
+		edition mode to re-send it.
+	</item>
+	<item>
+		<it>Move:</it> lets you move the message to a different folder. 
+		You can select the destination folder from a browse-window.
+	</item>
+	<item>
+		<it>Copy:</it> as Move, only that the message is copied to the 
+		new folder, instead of moved.
+		Shortcut: Shift-Ctrl-O
+	</item>
+	<item>
+		<it>Delete:</it> lets you delete the message that is selected 
+		in the summary pane.
+		Shortcut: Ctrl-D
+	</item>
+	<item>
+		<it>Mark:</it> Gives a submenu: <it>Mark/Unmark/Mark as read/Unmark 
+		as read</it>. When you mark messages, you can do a specific 
+		action (e.g. move, delete) on all of the marked messages. 
+		You can unmark messages that you mistakenly marked. 
+		The other options do as they say, they mark or unmark 
+		a message as read, and mark all read, marks all the messages
+		of the current folder as read.
+	</item>
+</itemize>
+
+A note on functions like Move, Copy and Delete: if you did not 
+specify to execute the commands immediately (in the configuration), 
+you will have to select the <it>Execute</it> command. This is a button 
+in the toolbar, and can also be found in the Summary menu.
+</sect1>
+
+<sect1>Tool menu
+<p>
+In the Tool menu are grouped the filters control, address book
+access and log window control.
+
+<itemize>
+	<item>
+		<it>Address book:</it> opens the address book window.
+		Shortcut: Shift-Ctrl-A
+	</item>
+	<item>
+		<it>Add sender to address book:</it> adds the sender of the selected
+		message to one of your address books. When selected a window
+		opens to let you select the target address book.
+	</item>
+	<item>
+		<it>Filter messages:</it> apply the filter rules to the messages
+		of the inbox.
+	</item>
+	<item>
+		<it>Create filter rule:</it> create a new filter rule based on the
+		selected message.
+		<itemize>
+			<item>
+				<it>Automatically:</it> open the filter rules creation window
+				to define a new rule.
+			</item>
+			<item>
+				<it>By From:</it> opens the filter rules creation window and
+				fills the filter settings fields to build a filter based
+				on the sender of the selected message.
+			</item>
+			<item>
+				<it>By To:</it> opens the filter rules creation window and
+				fills the filter settings fields to build a filter based
+				on the receiver of the selected message.
+			</item>
+			<item>
+				<it>By Subject:</it> opens the filter rules creation window and
+				fills the filter settings fields to build a filter based
+				on the subject of the selected message.
+			</item>
+		</itemize>
+	</item>
+	<item>
+		<it>Actions:</it> this menu is empty until you define some actions (see the
+		configuration menu description).
+	</item>
+	<item>
+		<it>Delete duplicated messages:</it> This will remove messages from the 
+		active folder that were sent twice to you. For example you 
+		received a message directly and through a mailing list at 
+		the same time.
+	</item>
+	<item>
+		<it>Execute:</it> execute all the pending move, delete, and copy commands.
+		Only if execute immediately is off in the common preferences.
+		Shortcut: X
+	</item>
+	<item>
+		<it>Log window:</it> opens the log window. In the log window, you 
+		can see what Sylpheed is doing. Keeping track of things 
+		in that way is very good when you suspect there is something 
+		wrong. You can paste the info of the log window into an 
+		e-mail and send it to the developer or the mailing list.
+		Shortcut: Shift-Ctrl-L
+	</item>
+</itemize>
+
+
+In the log window, you can see what Sylpheed is doing. Keeping 
+track of things in that way is very good when you suspect there 
+is something wrong. You can paste the info of the log window 
+into an e-mail and send it to the developer or the mailing list.
+</sect1>
+
+<sect1>Configuration menu
+<p>
+In the Configuration menu, clearly, you can set up Sylpheed 
+the way you want it to work and react.
+
+<itemize>
+	<item>
+		<it>Common preferences:</it> in this option you will be 
+		presented a dialog in which you can select a number 
+		of tabs. Each tab represents a specific set of settings 
+		in Sylpheed. In the next chapter, these dialog options 
+		are explained in more detail.
+	</item>
+	<item>
+		<it>Filter setting:</it> this option shows you a dialog in which you 
+		can set up the filtering rules that you want Sylpheed 
+		to process on receiving new e-mails. You first specify 
+		on which part(s) of the e-mail Sylpheed has to check, 
+		and then you tell Sylpheed what to do. You can move the 
+		message to a different directory (including trash to get 
+		rid of spam mail). Selecting the destination folder is 
+		possible through a browser window that comes up when you 
+		press "Select..."
+		<p>
+		You can choose not to receive the e-mail. Note that 
+		this will leave the message on the mailserver of your 
+		provider, the message will not be removed!
+		<p>
+		When you press the "Register" button, the filter 
+		rule is added to the list of rules. Do you select 
+		"Substitute", then the selected rule is replaced by the 
+		information of the setting entered. "Delete" in the end 
+		will delete the selected filtering rule.
+		<p>
+		Please note that you can set up two selections for a rule, 
+		which can be "OR'd" or "AND'd". OR means that one of the 
+		two selections will have to match for the rule to be 
+		executed. AND means that both selections have to match 
+		before an action is performed.
+		<p>
+		To the right of the selection rules you see buttons 
+		called UP and DOWN. You can move rules up and down in 
+		the list. This will often trigger different behaviour 
+		in the selections, so consider the order in which 
+		you set the rules.
+	</item>
+	<item>
+		<it>Template:</it> let your create a new message template.
+		When composing a new message you can then used one
+		of the defined templates and insert it (or use it to
+		completely replace the content of your mail).
+		The templates can contain some special characters
+		that are replaced when the template is used in order
+		to create a dynamic text. Use the symbols button on
+		the templates definition window to see the list of
+		the available symbols.
+	</item>
+	<item>
+		<it>Actions:</it> let your create new commands to be added to the
+		'Tools/Actions' menu. An action is a command that processes
+		the select part of a message, the message body or the complete
+		message file. It can be a background process, used as a filter
+		(reads, modifies and replaces a message),...
+	</item>
+	<item>
+		<it>Preferences for current account:</it> here you can set the 
+		specifics for the account you are currently using. 
+		Should mail be deleted after fetching, what is the 
+		server it comes from, etc. Basically it is the same 
+		dialog form as shown in setting up a new account.
+	</item>
+	<item>
+		<it>Create new account:</it> here you name the account (each 
+		account has a recognizable name), you set up your name 
+		and e-mail address etc. You set up the type of server 
+		you access (POP4, IMAP4, local mailbox, newsserver) 
+		and where the downloaded messages have to go (default 
+		folder is the inbox). In the RECEIVE tab you select or 
+		unselect options, in SEND you can set up how to send 
+		your messages. In COMPOSE you can point to a specific 
+		signature file, and in ADVANCED you can set up alternate 
+		ports for the server, if these exist. (Do not mess 
+		with these unless you are sure you have to!!)
+	</item>
+	<item>
+		<it>Edit accounts:</it> here you can select one of the accounts 
+		you created, from a list, and edit the information about 
+		them. Note that you cannot edit an account for which 
+		you are writing a message at the same time. This to 
+		ensure data integrity.
+	</item>
+	<item>
+		<it>Change current account:</it> here you can select what 
+		account you want to use, to write a message.
+		If you have enabled the status bar (in the view menu),
+		the name of the current account is shown in the bottom
+		right corner of the Sylpheed window (in the status bar)
+		and can be changed by a click on it (then a menu appears
+		and lists all your accounts).
+	</item>
+</itemize>
+
+</sect1>
+
+<sect1>Help menu
+<p>
+This menu lets you look at the manual and FAQ of Sylpheed, 
+and you can also see the "about" info, who wrote Sylpheed.
+<p>
+
+</sect1>
+
+<sect1>Context menu
+<p>
+You can pull up context menus (through clicking button2) for 
+the folder tree and the summary pane. (windows users: button2 
+is the right mouse button.)
+<p>
+In the folder view you can add, rename and remove folders 
+through the context menu. You can also set the folder
+properties (define the selected folder as an inbox, outbox,
+trash, ...).
+<p>
+In the message summary you can do a host of things from the 
+context menu, like viewing message headers, opening a message 
+in a separate window (also possible by double clicking on a 
+message) etc...
+
+</sect1>
+<sect>Dialogs and views<p>
+
+
+
+
+<p>
+The appearance of the Sylpheed windows is controlled by
+a Gtk+ theme (as Sylpheed is based on the Gtk+ toolkit).
+Read the Gtk+ or your distribution documentation to find
+how to change the Gtk+ theme.
+
+<sect1>Folder view
+<p>
+The folder view shows you all the mail folders that you have created, 
+in a tree-like structure. If you want to see the headers of the messages 
+in a specific folder, just click the name of the folder once, and in the 
+summary view (2)  you can see the messages in the selected mail folder.
+<p>
+When you see a + sign in front of a folder name, that means the folder 
+branch of that part of the tree is 'collapsed'. You can expand that 
+part by clicking the + sign. In that same manner you can also collapse 
+the - sign in front of an expanded branch of the folder tree.
+<p>
+The folder pane can be resized be dragging (left mouse button down)
+the handle found on the left of the folder view.
+<p>
+The folder window can be detached from the main Sylpheed window
+by selecting the menu action: <tt>View -> Separate folder tree</tt>.
+When exiting the current state of the folder window (attached or 
+detached) is saved to be restored when re-starting Sylpheed.
+To re-attach the folder window, de-select the menu entry.
+<p>
+<sect2>Special folders:
+<p>
+<it>Draft:</it> here you store messages that you want to send out more often, 
+or you want to work on some more. Using the 'reedit' option from the 
+message menu, you can edit the message further.
+<p>
+<it>Trash:</it> in here all your deleted messages go. Depending on the common 
+preferences setting, this box is or is not emptied when you end Sylpheed.
+<p>
+<it>Sent:</it> in here are saved the messages you send (enabled by a
+common preference setting and the folder can be changed by an account
+preference setting).
+<p>
+<it>Queue:</it> this folder contains the composed messaged waiting to
+be sent (with Sylpheed message sending can be delayed).
+
+</sect2>
+</sect1>
+
+<sect1>Summary view
+<p>
+The summary pane can show you many things. You can select what you 
+want to see from the Summary menu, selecting the option 
+"Set display item". A list of all options is:
+<itemize>
+<item>Mark: shows if the message is marked.
+<item>Unread: shows if the message is read or not
+<item>MIME: shows MIME attachments
+<item>Number: shows the MH number of the message
+<item>Size: the size of the entire message including attachments
+<item>Date: the date of sending by the sender
+<item>From: who sent the message
+<item>Subject: what the message is about
+</itemize>
+
+You can sort the summary view in many ways, by clicking the button 
+that is above the column. Click once to sort going up (a-z), click 
+once more to sort going down (z-a).
+<p>
+If you think the size of a column is not right, you can adjust that 
+by placing the mouse cursor next to the button of the column you 
+want to adjust, press mousebutton1 (left button) and drag the 
+column to the width you want it to have.
+<p>
+Select a message by clicking on it with the mouse. Once the summary 
+pane has the focus of the program, you can also move up and down 
+in the list through the cursor keys, or pressing "p"(revious) and 
+"n"(ext) as in Pine.
+</sect1>
+
+<sect1>Message view
+<p>
+In the message view you can read the message that you selected in 
+the summary pane. If you entered the summary pane without selecting 
+a message, the message view will be empty. At the top of the 
+message view some info is presented about the message you are 
+reading, as well as some statistics on the selected folder.
+<p>
+You can scroll up and down in the message by using the arrow keys 
+(after clicking inside the message), or by using the scrollbar.
+<p>
+The size of the message and summary views can be adjusted by dragging
+(with the left mouse button down) the handle that appears between
+the two panes.
+<p>
+The small arrow located just below the summary pane scrollbar can
+be used to detach the message view. When clicked, the summary view
+is extended down to the bottom of the Sylpheed window, and the messages
+are displayed is a separate window (when you double click them in the
+summary pane). This state is not saved on exit, and the message window
+can be restored below the summary one by clicking again the small arrow.
+<p>
+When the current message contains attachments, two tabs
+are displayed in the message window. Selecting the first one makes
+the message window display the text body of the message, while selecting
+the second tab makes the message window display the attachment part
+of the message. In the latter case, the message window is splitted
+in two parts, the top one contains the attachments as a tree
+with the MIME type, size and file name of each part, while the bottom
+part contains the content of the selected attachment (if the attachment
+is an image and Sylpheed has been compiled with the gdk-pixbuf or
+the imlib library).
+</sect1>
+
+</sect>
+<sect>Sylpheed configuration
+<p>
+All the configuration settings of Sylpheed are accessible from
+the <it>Configuration</it> menu and consist of common settings
+(<it>Common preferences</it>, <it>Filter settings</it>, 
+<it>Template</it> and <it>actions</it>) and account specific
+settings.
+<p>
+With Sylpheed, there is no limit to the number of accounts
+you can create. You can create new accounts for each of your
+mail account, but also to change the default behaviour of 
+Sylpheed. As folders can be attached to accounts, the account
+specific part of the configuration automatically change based
+on the current folder (you can have a different signature when
+replying to messages from different folders).
+
+<sect1>Common preferences
+<p>
+The Common Preferences, found in the Configuration menu, controls
+the window layout and the different options of the graphical
+interface of Sylpheed. Depending on some compile time switches
+(and on the availability of some extra libraries), some tabs
+may be included (or not) in your version of Sylpheed. These tabs
+are not listed here but are described (or will be described) in
+the sections covering the optional features they control (like the
+<it>Privacy</it> tab for the GnuPG interface).
+
+<sect2>Receive tab
+<p>
+In here you can set up how to receive messages.
+
+
+
+
+<itemize>
+	<item>
+		You can define a special program to pick up messages from 
+		the default unix mailbox. Usually this is not used, but 
+		you can use it. Actually, this information may be wrong. 
+		If someone knows better, please let me know.
+	</item>
+	<item>
+		<it>Local spool</it> lets you define where your local mailbox is 
+		located. You can also tell Sylpheed whether or not to 
+		filter the incoming messages from that mail spool file.
+		The spool directory defined here is used by all the accounts
+		of the <it>local</it> type, by default it is set to the
+		standard UNIX mailbox location.
+	</item>
+	<item>
+		<it>Autocheck new mail</it>. When you check this option, Sylpheed 
+		will check if there is new mail on the set interval.
+	</item>
+	<item>
+		<it>Check new mail on startup</it> means that Sylpheed will 
+		immediately look for new mail on all the selected accounts 
+		when it loads.
+	</item>
+	<item>
+		<it>Update all local folders after incorporation</it>
+		Well, if you know the use of this option, feel free to
+		write this part...
+	</item>
+	<item>
+		In the news section you can specify how many articles 
+		should be downloaded when opening a newsgroup.
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Send tab
+<p>
+In here you can set up how to send messages.
+
+
+
+
+<itemize>
+	<item>
+		You can choose to use an external program (like sendmail) for
+		sending mail. By default no external program is necessary
+		and Sylpheed can directly send the outgoing messages to a
+		SMTP server.
+	</item>
+	<item>
+		The sent messages can be saved in the outbox (<it>Sent</it> 
+		folder), the name of the outbox folder can be specified
+		for each account (see the account setting section).
+	</item>
+	<item>
+		The outgoing codeset selection can be changed to force
+		the definition of the character set used in sent mails.
+		The default and recommended value is <it>automatic</it>,
+		so Sylpheed determines the codeset when sending each
+		message.
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Compose tab
+<p>
+Controls the composition window's behaviour..
+
+
+
+
+<itemize>
+	<item>
+		You can change the signature separator and choose to insert
+		it automatically (unless your signature file already contains
+		this separator). Leave it as it is by default (unless you really
+		need to change it, and are ready to face a religion war), a lot
+		of mail clients rely on this separator to cut the signature when
+		quoting mails, and this one is accepted as the standard one.
+	</item>
+	<item>
+		If you hate the editor that comes with Sylpheed, you can choose
+		to automatically start an editor of your choice when composing
+		new messages (the editor can be defined in the <it>Other</it> tab).
+	</item>
+	<item>
+		The <it>wrap</it> settings defines how Sylpheed will wrap long
+		lines. You can choose to wrap quoted messages, wrap as you type,
+		or wrap when sending. You can also change the maximum line length.
+	</item>
+	<item>
+		The <it>reply</it> settings let you control the way you will reply
+		to mails. If <it>Automatically select account(...)</it> is set,
+		the account used when replying to a message is automatically
+		selected based on the folder the original message is in (as you
+		where already told, accounts can be attached to folders).
+		If <it>Quote message when replying</it> is selected, when hiting
+		the <it>Reply</it> button, the composition window pops up and is
+		filled with either the complete message you are replying to (if
+		nothing is selected in the body of this message) or the selected
+		part of its body. When this option is not selected, the composition
+		window is always empty, and you must cut-and-paste the parts of
+		the original message you want to quote manually.
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Quote tab
+<p>
+In here you can control the quotation of your replies and forwarded
+messages.
+
+
+
+
+<itemize>
+	<item>
+		You can individually define the quotation mark that appears
+		at the beginning of each quoted line when replying and forwarding
+		a message.
+	</item>
+	<item>
+		You can also define the text that appears before and after the 
+		quotation. The format of the quotation contains placeholders for
+		parts of the original message that are explains in the window
+		that appears when hiting the <it>Description of symbols</it>
+		button.
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Display tab
+<p>
+In here you can control the display options of Sylpheed.
+
+
+
+
+<itemize>
+	<item>
+		You can change the font used to display the messages. Pressing
+		the button next to the font name field will open the font selection
+		window, then you can select among all the available fonts.
+	</item>
+	<item>
+		Turning on the translation of the header fields will change the
+		content of the header summary (between the summary and the message
+		pane), and use the localized header fields name based on the
+		selected language (selected by the 'LANG' environment variable).
+		This setting will only take effect the next time you will start
+		Sylpheed.
+	</item>
+	<item>
+		Selecting <it>Display unread next to folder name</it> will add
+		the number of unread messages next to the folder name in the
+		folder pane (so you can minimize the width of the folder pane
+		and hide the unread column).
+	</item>
+	<item>
+		You can also control the content of the summary pane. If you choose
+		to display the recipient name for the mail you send, in the <it>From</it>
+		column, for any mail you have sent, the name of the recipient will
+		appear preceded by an arrow (the characters sequence: -->).
+		The <it>Expand threads</it> controls the initial state of the message
+		threads when opening a folder (expanded of collapsed).
+		The <it>Set display item of summary</it> button opens a selection
+		window that contains all the available items to display in the
+		left column, the currently selected items in the right column.
+		Items can be added or removed using the two arrows that appears
+		between the columns. Using the <it>up</it> and <it>down</it> buttons
+		on the right side of the window, you can change the display order
+		of the selected item in the summary window (from left to right).
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Message tab
+<p>
+The message tab controls the message window options.
+
+
+
+
+<itemize>
+	<item>
+		The message text can use colours to highlight the different levels
+		of quotation and URIs. The colours can be changed by using the
+		colours selection dialog that pops up when pressing the <it>Edit</it>
+		button next to the <it>Enable coloration of messages</it> toggle.
+	</item>
+	<item>
+		The dispaly of the header summary between the summary and message
+		panes can also be turned on and off (<it>Display header pane above message 
+		view</it> dialog).
+	</item>
+	<item>
+		<it>Display short header on message view</it> and the <it>Edit</it>
+		button next to it, control the inclusion of some header fields
+		in the message view. If the message coloration has been turned on,
+		the addresses that appear in the header part of the message view
+		are highlighted as URIs.
+	</item>
+	<item>
+		The <it>Line space</it> setting controls the lines spacing of the
+		message view.
+	</item>
+	<item>
+		<it>Leave space on head</it>. Checking this box will make the 
+		start of new lines (unwrapped, where the writer has pressed 
+		the Enter/Return key) indent a few pixels. This can be useful 
+		to read larger e-mails.
+	</item>
+	<item>
+		<it>Scroll half page</it>. When enabled, the text in the message 
+		view will only scroll half a page instead of a whole page when 
+		pressing the space bar.
+	</item>
+	<item>
+		<it>Smooth scroll</it>. Enabling this box will make the text 
+		in the message view scroll in a smooth, sliding way. For the 
+		eye this can be pleasing, it is a personal preference.
+	</item>
+	<item>
+		Select the <it>Resize attached image</it> if you wnat all the
+		images (attachment) to be resized to fit in the message window.
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Interface tab
+<p>
+The interface tab controls the Sylpheed's Graphical User Interface
+behaviour.
+
+
+
+
+<itemize>
+	<item>
+		The <it>Open message when cursor keys are pressed</it> toggles controls
+		the opening of the messages while you go through them in the summary
+		pane using the cursor (up and down arrows) keys. If this toggle is on,
+		each time you press the <it>down</it> (or <it>up</it>) key in the the
+		summary window, the current message changes and the content of the
+		message view changes to the content of the newly selected message.
+		Otherwise, the content of the message view does not change unless you
+		press enter (then the message view contains the content of the selected
+		message).
+		This does not change the behaviour of the left mouse button (always selects
+		and open the pointed message).
+	</item>
+	<item>
+		<it>Open first unread message when entering a folder</it> if selected,
+		when opening a folder, the message view will contain the first unread
+		message of this folder (or the latest message in the order the folder
+		uses for sorting messages). If not selected, the message view remains
+		empty until a message is selected (by changing the current message with
+		the cursor keys or with the left mouse button).
+	</item>
+	<item>
+		<it>Only marks message  read when open in new window</it> leaves the
+		selected message unread (but display it in the message view) until you
+		open it in a new window (double click the left mouse button).
+	</item>
+	<item>
+		If <it>Execute immediately when moving or deleting messages</it> is not
+		selected, a new button appears in the button bar marked <it>Execute</it>.
+		When deleting or moving messages, they are first marked as deleted or
+		moved but Sylpheed does not move or delete them until you press the 
+		<it>Execute</it> button (or the <it>Execute</it> entry of the 
+		<it>Tools</it> menu).
+	</item>
+	<item>
+		The <it>Receive dialog</it> settings controls the dialog that pops
+		up (if you have set <it>Show receive dialog</it> to <it>always</it>)
+		when receiving new mails.
+		The default is to open a pop up window upon reception error unless
+		you select the <it>Dont't pop up error dialog (...)</it> toggle.
+	</item>
+	<item>
+		 <it>The Set key bindings</it> button when pressed, opens a selection
+		 window that contains a list of pre-defined key bindings (<it>Mew</it>, 
+		 <it>Mutt</it>, <it>Old Sylpheed</it>) to change all the key bindings
+		 at once. The key bindings can also be changed one by one as described in
+	</item>
+</itemize>
+</sect2>
+
+<sect2>Other tab
+<p>
+The other tab contains the settings that does not fit the
+previous categories.
+
+
+
+
+<itemize>
+	<item>
+		<it>Web browser</it>. Here you can enter the name of your favorite 
+		web browser (Netscape, Opera, Mozilla, Lynx etc.). Add the %s parameter 
+		to the command so Sylpheed knows it has to provide the text you clicked 
+		on as the URL that the browser has to visit.
+		The arrow next to the text field can be used to display a scrolling
+		list of predefined URL browsing command lines.
+	</item>
+	<item>
+		<it>Printing</it>. Here you can define the program that should be used 
+		to print. Default is lpr, and the %s is the name of the temporary file 
+		that Sylpheed creates for lpr to print.
+		When using the <it>File->Print</it> menu entry to print the selected
+		message, a text window pops up to allow you to change the command
+		used to print.
+	</item>
+	<item>
+		<it>External editor</it>. You can select an external editor to write 
+		your e-mails with, for example vi, emacs or gedit. Note that for 
+		text-based editors like vi, you need to define a terminal window, 
+		e.g. <tt>xterm -e vi %s</tt>. Otherwise there is no place that the 
+		editor will be able to show up. Here too, the %s parameter is the 
+		name of a temporary file that is created by Sylpheed.
+	</item>
+	<item>
+		<it>Add address to destination (...)</it> when selected,
+		double clicking an e-mail address (in the address book,
+		when the composition window is opened) can be used to add 
+		this address to the <it>To:</it> field.
+	</item>
+	<item>
+		Confirming if you want to exit Sylpheed (or just exit quietly).
+	</item>
+	<item>
+		Cleaning the trashbox when exiting Sylpheed.
+	</item>
+	<item>
+		Have Sylpheed ask you to clean the trash before it is done.
+	</item>
+	<item>
+		Warn you when exiting Sylpheed when there are still messages 
+		queued to be sent.
+	</item>
+</itemize>
+</sect2>
+
+</sect1>
+
+<sect1>Setting up an account/changing an account
+<p>
+In order to set up an account in Sylpheed, in the <it>Configuration</it>
+menu you select <it>Create new account</it>. If you want to change the 
+settings of an existing account and this account is the current
+one, in the <it>Configuration</it> menu select <it>Preferences for 
+current account</it>, otherwise select <it>Edit accounts...</it>.
+There you select the account you want to change. After that you press 
+<it>edit</it>. Then a dialog appears in which you can enter or update 
+the following areas:
+<p>
+
+<sect2>Basic tab<label id="Basic">
+<p>
+
+
+
+
+In the "Basic" tab you name the account. This is to make identifying 
+the account easier. The name is then used in the <it>Change current account</it>
+part of the <it>Configuration</it> menu, or in menu found in the lower 
+right corner of the main window (used to quickly switch to another account).
+<p>
+Choose a name that tells something about the account, like the 
+name of the ISP, mailbox or news-server you are setting up.  
+You can select this account to be the default account ("Usually used").
+The default account can also be defined from the <it>Edit accounts</it>
+window (toggle the <it>D</it> column next to the account name).
+<p>
+Enter your name and e-mail address, and if you have one, the 
+organization that you use Sylpheed for.
+In the Protocol box you select the type of service that this 
+account will be using. The flavors you can choose are: <it>POP3 normal</it>, 
+<it>POP3 APOP auth</it>, <it>IMAP4</it>, <it>NNTP news</it> or <it>None (local)</it>.
+<p>
+For POP3 and IMAP services you can then specify the server where 
+your mail is stored. Details about this name, and also the name 
+that goes into the field for <it>SMTP server (send)</it> should be given 
+to you by your ISP.
+<p>
+For a local unix mailbox, the <it>Server for receiving</it> is disabled, 
+since the mail will be received for you.
+<p>
+The fields for <it>User ID</it> and <it>Password</it> will also be
+disabled for accounts that do no deal with POP3 or IMAP services.
+Otherwise you can enter the login name and password for the e-mail
+server with your ISP here. Usually these are the same as your login 
+name and password to access the dial-in service, but this is 
+not standard. If in doubt, contact the helpdesk of your ISP.
+
+<sect3>Passwords:
+<p>
+The password is not printed in the entry field (replaced by stars) but
+is stored in plaintext in the Sylpheed configuration files. The Sylpheed
+configuration directory (~/.sylpheed) is only readable by 'owner', and
+not by 'group' and 'other', do not change these access rights.
+</sect3>
+
+</sect2>
+
+<sect2>Receive tab<label id="Receive">
+<p>
+
+
+
+
+The <it>Receive</it> tab is only used for POP3 accounts. Here you
+specify if the mails that were successfully retrieved should be removed 
+from the server. You can also tell Sylpheed to get all the 
+messages there, not only the ones you already received (in case 
+you leave your messages on the server).
+You can choose to leave the messages on the server during a selectable
+number of days (then remove them).
+<p>
+You can also define a limit for the size of the messages to
+download. Any message bigger than this limit will not be
+downloaded.
+<p>
+You can also choose to filter messages on receiving, if not
+set, the messages are only filtered when you use the filter
+entry of the Tools menu.
+<p>
+The default inbox defines the folder that receives the incoming
+(and not filtered) messages for this account.
+You can define a different folder as inbox for each of your
+accounts.
+<p>
+If the <it>Get all checks for messages on this account</it> is turned
+off, when using the <it>Get all</it> menu entry (or toolbar button)
+this account will not be checked. To check for new mails for
+this account, you must select the account, then use the <it>Get</it>
+toolbar button (or menu entry).
+</sect2>
+
+<sect2>Send tab<label id="Send">
+<p>
+
+
+
+
+In the <it>Send</it> tab you can define the settings that apply 
+to sending mails.
+<p>
+You can choose to add the date field to the messages you send,
+generate a unique message identifier, or add custom header
+fields.
+
+<sect3>X-face pictures:
+<p>
+The user defined header field should be set up to contain your
+X-face picture.
+Thanks to Jeff Dairiki, you can have a complete online course in this. 
+Visit <url url="http://www.dairiki.org/xface/" name="this page"> for the details.
+</sect3>
+
+<p>
+If your SMTP server needs authentication, define the user ID and
+password to use in this tab. You can also choose to first authenticate with
+POP3 before sending.
+
+</sect2>
+
+<sect2>Compose tab<label id="Compose"><p>
+
+
+
+
+In the <it>Compose</it> tab you can define your signature file, 
+choose to always copy someone when sending mails (you can
+choose to always copy your boss, or yourself), and define the
+Reply-To field for the current account.
+</sect2>
+
+<sect2>Privacy tab<label id="Privacy">
+<p>
+This tab is only available when Sylpheed has been compiled
+with GPGME and GNUPG (for signature and encryption).
+
+<p>
+With this tab you can choose the keys to use when signing
+or encrypting mails for this account.
+</sect2>
+
+<sect2>Advanced tab<label id="Advanced">
+
+<p>
+The Advanced tab contains some settings you normally do
+not need to change (unless you really know what you are
+doing).
+
+
+
+
+<p>
+You can change the default SMTP or POP3 ports used when
+connecting to your mail server, define a domain name to
+use when sending a mail. Some ISP (or mail relays) reject
+mails without a valid domain name.
+<p>
+The default folders for the sent messages, drafts and
+trash can be defined here. If not changed the current account
+will use the default folders.
+</sect2>
+
+<sect2>Attaching accounts to folders
+<p>
+Pressing the right mouse button over a folder (in the folder pane), 
+and selecting the <it>Properties</it> entry will open the folder properties
+form. In this form, in the <it>General</it> tab you can see (but not modify)
+the folder name and the corresponding directory path (relative to the mail
+directory). In the <it>Compose</it> tab:
+
+
+
+
+you can select the account, choose to apply this setting also to
+the sub-folders.
+You can also force the address used when sending mail (to force a mailing
+list address, for example), choose to send a copy of the sent mails
+to a list of addresses different from the default one defined for the
+selected account.
+</sect2>
+
+<sect2>Using accounts in the real life
+<p>
+Accounts can, of course be used to retrieve mails from different ISPs,
+separate your personal and professional messages, but also to make your
+life easier.
+You can define different accounts just to change your address (as sender),
+your signature, change the sent folder, etc...
+Here is a summary of the account specific settings, feel free to
+find your own use for them:
+
+<itemize>
+	<item>
+		Sender name, address and organization. Signature, extra header
+		fields.
+	</item>
+	<item>
+		Leave or remove message from server (usefull for debug).
+	</item>
+	<item>
+		Incoming mails filtering and size limit.
+	</item>
+	<item>
+		Default field (<it>Reply-To</it>:, <it>Cc:</it>, <it>Bcc:</it>).
+	</item>
+	<item>
+		<it>Draft</it>, <it>Trash</it> and <it>Sent</it> folders.
+	</item>
+</itemize>
+
+By attaching accounts to folders, you can control all these settings
+on a folder basis, but you can also change the <it>To:</it>, <it>Cc:</it>, 
+<it>Bcc:</it>, and <it>Reply-To:</it> for each folder (overrides the account
+settings).
+
+</sect2>
+
+</sect1>
+</sect>
+
+<sect>Viewing messages
+<sect1>Reading a message<p>
+Reading a message is quite simple. If you have the message pane within view, all you need to do is once click the message you want to read and it already appears in the message view. When you double-click the message, a separate window will open, showing you the message. You can close the opened window by pressing ESCape or clicking the 'close' button.
+</sect1>
+<sect1>Viewing Multipart MIME (Attached Files)<p>
+When a message contains an attachment, you can have several options to view the information in that file. Sylpheed can be able, when compiled against the proper libraries, to display images "inline". This means you can click the name of the image and you can see it in the lower part of the message screen.<p>
+How do you see an attachment is in an e- mail?<p>
+This shows through an extra section that appears between the summary pane and the message view. In it you can see the separate parts of the e-mail. Sometimes you can't view the contents of an attachment directly. Then you can rightclick the name of the file and select "OPEN" from the appearing menu. If this does not work, it means that the extension of the file is not recognized through the directives in the mailcap file. In that case you can always use the "Save as..." option in the popup menu, save the file to disk and open the file with the proper program.
+</sect1>
+<sect1>Extending and Closing Threads
+<p>
+Sylpheed offers the option to view messages in threads. Threads are no more than series of e-mails in a logical sequence. Suppose 15 people sent you a mail called "Re: bananas". You can't easily tell which one is the first and which one is the last in that sequence.<p>
+By activating threads (summary menu), Sylpheed will attempt to show the sequence of mails as they were written/sent from first to last.<p>
+To undo the threads view, you simply select the same menu option again and the e-mails are displayed in standard order again.
+</sect1>
+<sect1>Message Operations (Moving, Deleting, etc.)
+<p>
+Sylpheed gives you many ways to manage your messages. You can move them to new mailboxes, or delete them. Through the message menu (see that section for more details) plenty of options are available to do with your e-mails what you want done. The advantage of moving messages to different mailboxes (also see Filtering for that, as described in the Configuration menu section) is that you keep an overview of your inbox. Suppose you are collecting e-mails in there of 8 different subjects. And you are looking for a specific one on a specific subject. That will give you a lot of work, trying to find the right message. Creating a new mail folder for each subject, and moving the messages to that new one, lifts a lot of work afterwards from your hands.
+</sect1>
+<sect1>URL in a Message
+<p>
+At times you may find a URL in a message. A URL is a link to a website. Usually it is shown in the form "http://www.somewhere.something".<p>
+If you want to visit that website, you only need to double-click the URL, and the default webbrowser you set up (usually Netscape) will activate and load the website.<p>
+In the configuration options, Sylpheed has a color setting specific for URL's so you can spot a URL easily. 
+</sect1>
+</sect>
+
+<sect>Recieving Messages
+
+<sect1>Using POP Reception Function in Sylpheed<p>
+<!-- added 2001/07/19 -->
+Receiving messages from a POP server is very easy, once you set up Sylpheed the proper way. You can refer to the section "Setting up an account" on how to do this.<p>
+Once you are connected to the internet, or by another network that gives you access to the POP server, simply press the "Get new mail" button (or press Alt-I) and Sylpheed will connect to the server to fetch your new mail. Once this is retrieved, any filters you may have set up will be executed and then the folder pane will show you, marked in bold, which folder/mailbox contains new messages.
+<!-- end addition 2001/07/19 -->
+</sect1>
+<sect1>Using Other Programs such as fetchmail<p>
+<!-- added 2001/07/19 -->
+Although it is not within the scope of this manual, a bit of information on fetchmail or getmail.<p>
+You need to have either of these programs installed, and configured correctly. See the man pages/README files of the appropriate program on doing this.<p>
+After setting the program up, you can invoke it, either by hand or through CRON, to get your mail. The mail will usually be downloaded into /var/spool/mail/your_user_id. You can then tell Sylpheed, through an account that looks in your local unix mailbox, to get mail from there. For this you press the "Get mail" button, or press "Alt-I".
+<!-- end addition 2001/07/19 -->
+</sect1>
+
+</sect>
+
+<sect>Composing Messages
+
+<sect1>Composing a New Message<p>
+When you start writing a new message, you are presented a nice dialog in which you can enter all kinds of information. In the From: line you find a dropdown list. In there you can select the e-mail account you want to use as the sending account.<p>
+In the To: / Cc: / Bcc: part, you write the e-mail address of the receiver. You can enter several e-mail addresses, as long as they are separated by commas. An important utility here is the button "Address". When you click that, you see the address book. You can point at an address, click the "To:", "Cc:" or "Bcc:" button, and Sylpheed will place the address in the selected line. The Bcc: may be greyed out. In order to make that accessible, you need to add the Bcc: line to the message. You do that through the Message menu, and checking the Bcc option.<p>
+In the Subject line you enter a short descriptive text what your message will be about.<p>
+You can move between these lines by pressing TAB (to skip to the next line) and SHIFT-TAB (to go back up). When you press TAB in the last line, you will be moved to the message body.<p>
+Did you select a signature file in the settings for the active account, it will be in the message text already. You can now write your message. When you are done, you can click Send, Send later or Draft in the toolbar. Send attempts to send the message immediately. Send later will place it in the Send folder, and Draft will place it in the Draft folder.
+</sect1>
+<sect1>Replying to a Message<p>
+<!-- added 2001/07/19 -->
+To reply to a message, you use the "reply" function. In Sylpheed you activate this through either the "Reply" button, or by pressing Alt-R.<p>
+A new message window will be created, with the e-mail address of the recipient and the subject already set for you. Most of the things described in Composing a new message are also applicable to this window.
+<!-- end add 2001/07/19 -->
+</sect1>
+<sect1>Replying to a Message with Quotation<p>
+<!-- added 2001/07/19 -->
+If you want to have Sylpheed quote the text you are replying to, you need to go into the Configuration menu. There you select Common preferences, go to the Compose tab, and check the "Quote message when replying" box. There you can also edit the quotation mark (the mark put in front of each quoted line in the reply mail) and the reply attribution (which is placed in front of the reply text).
+<!-- end add 2001/07/19 -->
+</sect1>
+<sect1>Forwarding Messages<p>
+<!-- added 2001/07/19 -->
+Forwarding a message means: you send the entire message, including headers (Sender address, date sent etc.) on to someone else. For this you press the "Forward" button, or you press Ctrl-F. A new message window is created, containing the text of the selected message. You can then supply the name(s) of the recipient(s) of the message as in composing a new message, perhaps add a few lines of text to the message and send it on its way.
+<!-- end add 2001/07/19 -->
+</sect1>
+</sect>
+
+<sect>Address Book
+<p>
+
+
+
+
+<p>
+In the address book, accessible through Shift-Ctrl-A, 
+the Addressbook button, or through the "Tools" menu, you 
+store e-mail addresses of the people and places you want 
+to write more often.
+<p>
+If the options have been compiled into Sylpheed, the
+address book can connect to a LDAP server for address
+lookup, and you can use the address book stored on your
+Palm PDA.
+
+<sect1>Adding and Deleting Addresses
+
+<p>
+Adding an address to the address book is quite easy too. 
+Rightclick the folder or group you want to add the address 
+to, select "new address" and fill in the dialog that comes 
+up. You can also directly click the Add button in the 
+address book window, and the dialog comes up. In this 
+case the address is moved into the folder/group that is 
+selected at the moment of adding.
+
+<p>
+
+
+<p>
+In the "Basic data" tab, you can fill the first
+and last name and provide a nickname. The "Display name"
+will be used by the "Name" column of the address book
+window.
+
+<p>
+<p>
+
+
+<p>
+In the "E-Mail address" tab, fill the address field
+and use the "Add" button to add the address to the list.
+An alias can also be assigned to this address and used
+when searching for an address.
+Several addresses can be assigned to the same person
+in your address book by repeating the sequence described
+above. The addresses can then be sorted by using the 
+"Move up" and "Move down" buttons. The address on the top
+will be the first one listed in the address book main window.
+
+<p>
+Deleting an address is equally simple. Find the address, 
+click it once, and press the Delete button.
+
+</sect1>
+
+<sect1>Folders and Groups
+<p>
+You can use groups and folders to organize your address
+book into categories, hierarchies and aliases.
+The folders are used to generate a hierarchical organization
+and contain the actual addresses, while the groups are
+used to group together addresses that lives in separate
+folders.
+<p>
+Sounds complicated, so let's see an example: consider
+your workmates, they are arnaud (arnaud@company.com),
+sandra (sandra@company.com), xavier (xavier@company.com)
+and the chief, helene (helene@company.com). You can
+create a folder named <tt>myGroup</tt>, create the entries
+for all your workmates in this folder. Now you can create one
+groupe named <tt>jokes</tt> that includes all but the boss
+to use when sending your daily jokes, another one named
+<tt>team</tt> that includes everybody for the usual group
+(serious) communication, and a third group named
+<tt>reports</tt> that includes the boss, and the one working 
+with you on some projects for the weekly reports.
+<p>
+To generate this kind of addresses organization
+you only need to create the entries once, then when
+creating groups you can select among the existing entries
+to fill the groups.
+<p>
+The address book, like the mail folders, can be expanded 
+into an entire tree of sections. For this you right-click 
+on the folder where you want to add a new folder, and 
+select "new folder". Then you can enter a descriptive 
+name for the folder, click Ok, and your folder is created.
+<p>
+In this same way you can create a new group in a folder. 
+Right-click on the folder, select "new group", enter a name 
+for it, and that's it.
+<p>
+The group settings window pops up in order to fill the group
+with addresses. Use the two arrows to add to or remove from
+the group the selected address.
+Once the group contains the list of addresses you want it to
+contain, click the "OK" button to close the window.
+<p>
+
+
+
+</sect1>
+
+<sect1>Combination with Message Composition Window
+<p>
+You can either enter the first letters of an address
+(or alias) in the <tt>To:</tt> or <tt>Cc:</tt> field
+of the composition window and press the TAB key to
+let Sylpheed do the completion or open the address book,
+select addresses from there and use the <tt>To:</tt>
+and <tt>Cc:</tt> buttons to copy the selected addresses
+into the corresponding fields of the composition window.
+<p>
+When using the completion mode, when one or more address
+matches the start you have entered, a dropdown list appears.
+Select the correct address from this list and press enter
+to complete the composition window's field.
+<p>
+In completion mode, the search is made on the E-mail
+address and on the alias. The other fields of the
+address book entry are not used (name, nickname,...).
+<p>
+When the address book is opened, if you select a group,
+using the <tt>To:</tt> or <tt>Cc:</tt> buttons will
+copy all the addresses of the selected group into the
+corresponding field of the composition window.
+<p>
+Using our previous example, you can select the <tt>jokes</tt>
+group when sending you morning jokes, and the <tt>reports</tt>
+one when sending your weekly reports...
+
+</sect1>
+
+<sect1>Using your PDA addressbook (with Jpilot)
+<p>
+Sylpheed can optionally use your PDA addressbook. This option is
+available if you have compiled Sylpheed with the support of Jpilot.
+For more details regarding the compilation of Sylpheed with (or without)
+optional features, see the 
+<ref id="compile_sylpheed" name="compilation section">.
+
+<p>
+Sylpheed uses the Jpilot side copy of your address book, so you do
+not need to put your PDA on the craddle to find an address (but do
+not forget to synchronize).
+
+<p>
+In order to use your PDA's addressbook in Sylpheed, open the addressbook
+window, select the <it>JPilot</it> icon in the left tree view,
+use the <it>File -> New Jpilot</it> menu entry and choose a name for
+this addressbook.
+Define the name of the Jpilot addressbook file (usually in:
+<tt>~/.jpilot/AddressDB.pdb</tt>) and press <it>OK</it>.
+You can use one (or more) of the custom fields to store alternate
+Email addresses for the same person.
+
+<p>
+Now you can browse your PDA addressbook. Sylpheed only has read
+access to this addressbook, so you can't modify your PDA addressbook
+from Sylpheed.
+
+</sect1>
+
+<sect1>LDAP server connection
+<p>
+
+### FIXME: write this part.
+
+</sect1>
+
+</sect>
+
+<sect>Filters, actions and templates
+<p>
+Sylpheed offers three powerfull tools to help you automatically
+and efficently manage you mails. These tools are:
+
+<itemize>
+	<item>
+		The <it>filters</it>, that let you sort you incoming messages and move
+		them into your folders based on their sender, their content,
+		using regular expressions.
+	</item>
+	<item>
+		The <it>actions</it> feature is a convenient way for the user to launch 
+		external commands to process a complete message file including 
+		headers and body or just one of its parts.
+		It allows also the use of an external command to filter the whole 
+		text or just a selected part in the message window or in the 
+		compose window.
+	</item>
+	<item>
+		The <it>templates</it> that let you pre-define complete messages
+		leaving placeholders in the text to be filled at composition time.
+	</item>
+</itemize>
+
+
+
+<sect1>Filters
+<p>
+Written by Nick Selby (sylpheed@nickselby.com)
+<p>
+Sylpheed provides powerful filters to allow users to automatically 
+pre-sort incoming mail based on a set of rules that the user defines. 
+As a most simple example, let's say you work at the Acme Grommet Company, 
+and you want all e-mail from your co-workers to be placed in one mailbox. 
+To accomplish this, you would set up a filter that would place all mail 
+whose "From" header includes the phrase "acmegrommet.com" into a specific 
+mailbox.
+<p>
+Sylpheed allows you much more control than just that simple setup; 
+you may create filters based on several variables, including an 
+"If this AND that" or "If the message contains this OR does NOT contain that"
+etc. It's very cool.
+
+<sect2>Finding The Filter Setting Dialog
+<p>
+The filter settings dialog is located in the <it>Configuration</it> menu, 
+under the title "Filter Setting" or from the <it>Tools</it> menu, under in
+the <it>Create filter rules</it> sub menu. You may also use establish a 
+keyboard shortcut (see Keyboard Shortcuts).
+
+
+
+
+</sect2>
+<sect2>Setting Up Filters<p>
+Operator(s) and Processing instructions combine to create a Filter Rule.
+
+* Operators
+The dialog's first setting option establishes the Operator, the variable 
+that will tell the filter what specific text to look for to trigger a 
+filter. Each Filter Rule may have up to two operator sets.
+<p>
+Each Operator variable contains three sections: <it>Header</it>, 
+<it>Keyword</it> and <it>Predicate</it>.
+<p>
+Header is a drop-down box which defines in which message header 
+Sylpheed's filter will search. Choices range from <it>Subject</it> 
+to <it>X-Mailer</it>. 
+
+<it>Keyword</it> is a a text box in which you may enter the text 
+for which the filter will search. 
+
+Predicate allows you to choose to filter based on whether the operator 
+contains, or does not contain, the text you enter in the Keyword field.
+<p>
+Example: Create an Operator in which the X-Mailer field of an incoming 
+message contains the word 'Eudora'.
+
+<itemize>
+	<item>
+		Step 1. Under the <it>Header</it> drop-down box, select 
+		<it>X-Mailer</it>.
+	</item>
+	<item>
+		Step 2. In the <it>Keyword</it> text box, type 'eudora' 
+		(case insensitive)
+	</item>
+	<item>
+		Step 3. Determine appropriate Predicate setting. Default 
+		is <it>Contains</it>.
+	</item>
+</itemize>
+
+The second Operator setting, which is set identically to the 
+first, also allows the user to select an AND/OR setting 
+declaring the relationship between the two operators. 
+<p>
+Example: Create an Operator set which will process mail with 
+a <it>From</it> header of bob@acmegrommet.com AND a subject
+of "2001 Spring Grommet Collection"
+
+<itemize>
+	<item>
+		Step 1. Under the first Operator set's Header drop-down 
+		box, select <it>From</it>.
+	</item>
+	<item>
+		Step 2. In the <it>Keyword</it> text box, type 
+		'bob@acmegrommet.com' (case insensitive).
+	</item>
+	<item>
+		Step 3. Leave <it>Predicate</it> setting on default, 
+		<it>Contains</it>
+	</item>
+	<item>
+		Step 4. Leave <it>AND/OR</it> box on default setting, <it>and</it>.
+	</item>
+	<item>
+		Step 5.	Under the second Operator set's <it>Header</it> 
+		drop-down box, select <it>Subject</it>.
+	</item>
+	<item>
+		Step 6. In the <it>Keyword</it> text box, type 
+		'2001 spring grommet collection' (case insensitive).
+	</item>
+	<item>
+		Step 7. Leave <it>Predicate</it> setting on default,
+		<it>Contains</it>.
+	</item>
+</itemize>
+
+</sect2>
+
+<sect2>Message Processing
+<p>
+Once you've established the Operator(s) that will define 
+which messages will be processed, it's time to tell 
+Sylpheed what to do with messages that match the operator(s). 
+You may choose between two radio button-selected settings: 
+<it>Destination</it> and <it>Don't Receive</it>.
+<p>
+Selecting <it>Destinations</it> will enable you to route 
+the mail into a mailbox which you specify.
+<p>
+Selecting <it>Don't Receive</it> will instruct Sylpheed 
+to not download messages with that operator. Note that with 
+<it>Don't Receive</it>, Sylpheed merely leaves the message 
+on your mailserver - it does not delete it. 
+
+To specify a mailbox to which you want the message transfered, 
+click on the radio button to the left of the word <it>Destination</it>
+in the dialog. (Currently, in order to specify a mailbox you 
+must have created that mailbox prior to activating the Filter 
+Setting dialog.) Clicking the <it>Select</it> button will open 
+a pop-up window containing all mail folders currently active 
+in your copy of Sylpheed. Select the mailbox you wish by either 
+
+<itemize>
+	<item>
+		(a) double clicking on the mail folder name or 
+	</item>
+	<item>
+		(b) clicking the mail folder name and then clicking <it>OK</it>.         
+	</item>
+</itemize>
+
+<p>
+To specify that the message not be retrieved, and left 
+on your mail server, click the radio button to the left 
+of the words <it>Don't Receive</it>.
+
+</sect2>
+
+<sect2>Filter Registration
+<p>
+Now that you have set the Operator and the Processing Rule, 
+all that's left to do is tell Sylpheed to save the entire 
+Filter Rule. <bf>If you skip this step, the filter won't work</bf>.
+<p>
+The <it>Register Rules</it> configuration has three options: 
+<it>Register</it>, <it>Substitute</it> and <it>Delete</it>. 
+
+<itemize>
+	<item>
+		<it>Register</it> saves the Filter Rule.
+	</item>
+	<item>
+		<it>Substitute</it> modifies an existing registered 
+		Filter Rule.
+	</item>
+	<item>
+		<it>Delete</it> will remove a previously registered 
+		Filter Rule. 
+	</item>
+</itemize>
+
+Example of Registering A Filter Rule: Create a Filter Rule 
+that moves all mail with the subject of "Sylpheed Manual" 
+into the (previously created) mail folder "Sylpheed Manual Mail".
+
+<itemize>
+	<item>
+		Step 1. Under the first Operator set's <it>Header</it> 
+		drop-down box, select <it>Subject</it>.
+	</item>
+	<item>
+		Step 2. In the <it>Keyword</it> text box, type 
+		'sylpheed manual' (case insensitive).
+	</item>
+	<item>
+		Step 3. Leave <it>Predicate</it> setting on default, 
+		<it>Contains</it>. Leave second Operator set empty.
+	</item>
+	<item>
+		Step 4. Click <it>Destinations</it> radio button; 
+		select "Sylpheed Manual Mail" folder.
+	</item>
+	<item>
+		Step 5. Click <it>Register</it>.
+	</item>
+	<item>
+		Step 6. Click <it>OK</it>.
+	</item>
+</itemize> 
+
+Example of Substituting A Filter Rule: Modify a previously 
+created Filter Rule that moves all mail with the subject 
+of "Sylpheed Manual" to sort mail not to the mail folder 
+"Sylpheed Manual Mail" but rather the mail folder "Sylpheed Questions"  
+
+<itemize>
+	<item>
+		Step 1. Under the first Operator set's <it>Header</it> 
+		drop-down box, select <it>Subject</it>.
+	</item>
+	<item>
+		Step 2. In the <it>Keyword</it> text box, type 
+		'sylpheed manual' (case insensitive).
+	</item>
+	<item>
+		Step 3. Leave <it>Predicate</it> setting on default, 
+		<it>Contains</it>. Leave second Operator set empty.
+	</item>
+	<item>
+		Step 4. Click <it>Destinations</it> radio button; 
+		select "Sylpheed Questions" folder.
+	</item>
+	<item>
+		Step 5. Click <it>Substitute</it>.
+	</item>
+	<item>
+		Step 6. Click <it>OK</it>.
+	</item>
+</itemize>
+
+Example of Deleting a Filter Rule: Remove the previously 
+created Filter Rule which refers to Subject:Sylpheed Questions.
+
+<itemize>
+	<item>
+		Step 1. In the <it>Registered Rules</it> select box, 
+		highlight the filter entitled 
+		"<it>Subject:Sylpheed Manual: :::Sylpheed Questions:1:1:m</it>"
+	</item>
+	<item>
+		Step 2. Click the <it>Delete</it> Button.
+	</item>
+	<item>
+		Step 3. Confirm the deletion by clicking <it>Yes</it> in the 
+		confirmation pop-up that asks, 
+		<it>Do you really want to delete this rule?</it>
+	</item>
+	<item>
+		Step 4. Click <it>OK</it>.
+	</item>
+</itemize>
+
+</sect2>
+
+<sect2>Registered Rule Order
+<p>
+One caveat about all this: the order in which Filter Rules 
+are created could adversely affect your intended message sorting, 
+and one needs to consider this when creating or updating Filter Rules. 
+<p>
+For example, a Filter Rule saying, "Move anything containing 'ABC' 
+to Mailbox X" listed above another Filter Rule saying "Move anything 
+containing 'ABCDEF' to Mailbox Y" will cause the latter of these 
+filters not to process. 
+<p>
+Think about the way Sylpheed goes down its list: first, it would say..
+"Hmm, any messages with ABC? Ah, there's one! Move it". 
+Then it would think, "Okay, any messages with ABCDEF?" 
+To which the answer would be "no" - that ABCDEF was already 
+filtered because it contained "ABC".
+<p>
+Bummer.
+<p>
+In order to avoid this, you must ensure that the more complex 
+Filter Rule is processed first, by placing it higher than a 
+similar, conflicting Filter Rule. 
+<p>
+To move a Registered Rule higher or lower within the Registered 
+Rule box, select the rule you would like to move, and click on 
+the <it>Up</it> or <it>Down</it> buttons. This will "move" the 
+rule up or down, above or below a potentially conflicting Filter Rule.   
+
+</sect2>
+</sect1>
+
+<sect1>How to Filter Messages
+<p>
+Filtering messages can be done in several ways:
+
+<itemize>
+	<item>
+		Sylpheed automatically filters incoming mail from 
+		POP servers.
+	</item>
+	<item>
+		If you incorporate mail from a unix mailbox, then 
+		in the <it>Common preferences</it> (<it>Configuration</it> menu), 
+		you need to check the box called <it>Filter on incorporation</it>. 
+		You find this box in the <it>Receive</it> tab in the space 
+		<it>Local spool</it>.
+	</item>
+	<item>
+		You can also select the option <it>Filter messages</it> 
+		from the Summary menu.
+	</item>
+</itemize>
+
+Please note that, at time of writing, Sylpheed does -NOT YET- 
+has filtering of IMAP messages enabled.
+
+</sect1>
+
+<sect1>Filtering mail with Procmail
+<p>
+If you feel that Sylpheed has not enough options to perform 
+filtering for you, then you can look at Sylpheed Claws which 
+has more options for filtering. You can find the Claws version 
+(the cutting edge, experimental version of Sylpheed) 
+sylpheed-claws.sourceforge.net.
+<p>
+Another option, if you do not want to work with an experimental 
+version of Sylpheed, is Procmail. Procmail is a powerful mail 
+filtering program that is triggered from the Mail Transport 
+Agent (i.e. Sendmail, Postfix, Qmail). Procmail is called by 
+default from these programs after receiving e-mail.
+<p>
+The trick to procmail is to tell it that mail has to be filtered 
+into MH mail folders. This is not difficult though.
+<p>
+Normally procmail moves mail into MBOX format, this is one large 
+file containing all mails in a folder. MH uses separate files 
+for each e-mail. All you need to do is point the destination 
+of a procmail rule to &lt;destination folder&gt;/.  
+It is the "slash dot" that does the trick.
+
+
+<sect1>Actions
+<p>
+The following section is a copy of 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/index.html" name="Melvin's page">.
+
+<p>
+The "actions" feature is a convenient way for the user to 
+launch external commands to process a complete message file 
+including headers and body or just one of its parts. 
+It allows also the use of an external command to filter the 
+whole text or just a selected part in the message window or 
+in the compose window. This is a generic tool that allows 
+to do any uncommon actions on the messages, and thus extends 
+the possibilities of Sylpheed. For example, Sylpheed does not 
+include the rot13 cyphering algorithm popular in some 
+newsgroups. It does not support natively armored encryption 
+or clear signing. It does not support uuencoded messages. 
+As all these features can be handled by external programs, 
+the actions provide a convenient way to use them from the menu bar.
+
+<sect2>Usage
+<p>
+To create a new action, go to the <it>Configuration</it> menu,
+select the <it>Actions...</it> entry. The <it>Actions setting</it>
+dialog offers to enter the Menu name that will trigger the command. 
+The created menu will be found in the <it>Tools -> Actions</it> submenu. 
+By inserting a slash / in the menu name, you create a submenu.
+
+The command is entered in the Command line entry. Note that 
+Sylpheed stores every single email in a separate file. This allows 
+to use the following syntax for the command:
+
+<itemize>
+	<item>
+		<it>%f</it> denotes the file name of the selected message. 
+		If you selected more than one, then the command will be 
+		launched for each message with the appropriate file name.
+	</item>
+	<item>
+		<it>%F</it> denotes the list of the file names of the 
+		selected message. If only one message is selected, 
+		this amounts to <it>%f</it>, but if more messages are 
+		selected, then the command will be launched only once 
+		with the list of the file names. (You can use both 
+		<it>%f</it> and <it>%F</it> in one command: then the 
+		command will be launched for each selected message 
+		with the name of this message and with the list of 
+		all selected messages. I did not find a practical 
+		example for this.).
+	</item>
+	<item>
+		<it>%p</it> denotes the current selected message part 
+		of a multipart message. The part is decoded accordingly. 
+		If the message is not a multipart message, it denotes 
+		the message body.
+	</item>
+	<item>
+		Prepending <it>&gt;</it>: this will allow you to send 
+		to the command's standard input a text that you will 
+		enter in a dialog window.
+	</item>
+	<item>
+		Prepending <it>*</it>: this will allow you to send to 
+		the command's standard input a text that you will enter 
+		in a dialog window. But in contrast to prepending 
+		<it>&gt;</it>, the entered text is hidden 
+		(useful when entering passwords).
+	</item>
+	<item>
+		Appending an ampersand <it>&amp;</it>: this will run 
+		the command asynchronously. That means "fire and forget". 
+		Sylpheed won't wait for the command to finish, nor will 
+		it catch its output or its error messages.
+	</item>
+	<item>
+		Prepending the vertical bar <it>|</it> (pipe-in): 
+		this will send the current displayed text or the current 
+		selected text from the message view or the compose 
+		window to the command standard input. The command will 
+		silently fail if more than one message is selected.
+	</item>
+	<item>
+		Appending the vertical bar <it>|</it> (pipe-out): this 
+		will replace the current displayed text or the current 
+		selected text from the message window or the compose 
+		window with the command standard output. The command 
+		will silently fail if more than one message is selected.
+	</item>
+	<item>
+		Appending the "greater than" sign <it>&gt;</it> will 
+		insert the command output in the message. The difference 
+		between the trailing <it>|</it> is that no text will be 
+		deleted or replaced. Most used when composing mails to 
+		insert text.
+	</item>
+</itemize>
+
+<bf>Note</bf>: It is not possible to use actions containing 
+<it>%f</it>, <it>%F</it> or <it>%p</it> from the compose window.
+<p>
+When a command is run, and unless it is run asynchronously, 
+Sylpheed will be insensitive to any interaction and it will wait 
+for the command to finish. If the command takes too long 
+(5 seconds), it will popup a dialog window allowing to stop it. 
+This dialog will also be displayed as soon as the command has 
+some output: error messages or even its standard output when 
+the command is not a "pipe-out" command. When multiple commands 
+are being run, they are run in parallel and each command output 
+is separated from the outputs of the others.
+<p>
+<sect3>Examples
+<p>
+Here are some examples that are listed in the same syntax 
+as used for storing the actions list. You can copy and past 
+the definition in your <it>~/.sylpheed/actionsrc</it> file 
+(exit Sylpheed before). The syntax is very simple: one line 
+per action, each action contains the menu name and the command 
+line separated by a colon and a space ": ". 
+Alternatively, you can use <it>Configuration -> Actions...</it> 
+and for each example enter a menu name and copy&amp;paste the 
+text after the colon and space ": " in the command definition.
+
+
+<table>
+	<tabular ca="lll">
+		<bf>Purpose</bf>
+	<colsep>
+		<bf>Definition</bf>
+	<colsep>
+		<bf>Details</bf>
+	<rowsep>
+
+		Decoding uuencoded messages
+	<colsep>
+		UUdeview: xdeview %F&amp;
+	<colsep>
+		xdeview comes with uudeview. If an encoded file is split 
+		in multiple messages, just select them all and run the command.
+	<rowsep>
+
+		Display uuencoded image
+	<colsep>
+		Display uuencoded: uudec %f&amp;
+	<colsep>
+		Displays uuencoded files. The uudec script is to be found here.
+	<rowsep>
+
+		rot13 cyphering
+	<colsep>
+		Rot13: &verbar;tr a-zA-Z n-za-mN-ZA-M&verbar;
+	<colsep>
+		This will apply the rot13 cyphering algorithm to the (selected)
+		text in the message/compose view.
+	<rowsep>
+
+		Save MS TNEF parts
+	<colsep>
+		Save TNEF part: xterm -e tnef-claws %p
+	<colsep>
+		Select the TNEF message part then use this action to extract 
+		the attachment.
+	<rowsep>
+
+		Alter messages
+	<colsep>
+		Edit message: gvim -f %F
+	<colsep>
+		Allows to edit any received message. Can be used to remove 
+		unneeded message parts etc.
+	<rowsep>
+
+		Pretty format
+	<colsep>
+		Par: &verbar;par 72Tbgjqw74bEe B=.&lowbar;A&lowbar;a 72bgi&verbar;
+	<colsep>
+		par is a utility that can pretty format any text. It does a 
+		very good job in indenting quoted messages, and justify text. 
+		Used when composing a message
+	<rowsep>
+
+		Browse
+	<colsep>
+		Part/Dillo: dillo %p&amp;
+	<colsep>
+		Browse the selected message part in Dillo.
+	<rowsep>
+
+		Clear Sign
+	<colsep>
+		GnuPG/Clear Sign: &verbar;gpg-sign-syl&verbar;
+	<colsep>
+		Clear sign a message. The gpg-sign-syl script is responsible 
+		for asking the passphrase and for running gnupg. Make sure 
+		that you wrap your message correctly before signing, and that 
+		the resultant text will not be wrapped when sent (by disabling 
+		'wrap on send')
+	<rowsep>
+
+		Verify Clear Signed
+	<colsep>
+		GnuPG/Verify: &verbar;gpg --no-tty --verify
+	<colsep>
+		Verify clear signed messages. The result is displayed in the 
+		actions output dialog.
+	<rowsep>
+
+		Encrypt ASCII Armored
+	<colsep>
+		GnuPG/Encrypt: &verbar; gpg-enc-syl&verbar;
+	<colsep>
+		Encrypt message to ASCII armored. The recipient will be asked 
+		in a xterm.
+	<rowsep>
+
+		Decrypt ASCII Armored
+	<colsep>
+		GnuPG/Decrypt: *gpg --no-tty --command-fd 0 --passphrase-fd 0 --decrypt %f&verbar;
+	<colsep>
+		Decrypt ASCII armored messages. The passphrase is to be entered 
+		in the opened action's input dialog.
+	<rowsep>
+
+		Receive key from server
+	<colsep>
+		GnuPG/Receive Selected Key: &verbar;gpg --recv-key `cat`
+	<colsep>
+		Select a key ID in the message view then call this action to 
+		import it from a key server. GnuPG option file must contain a 
+		reference to a keyserver. (Suggested by Bob Forsman)
+	<rowsep>
+
+		Import key from mail
+	<colsep>
+		GnuPG/Import Key From Mail: gpg --import %p
+	<colsep>
+		Select the message part where the public key is then import 
+		it with this action.
+	<rowsep>
+
+		Insert public key in message
+	<colsep>
+		GnuPG/Insert My Public Key: gpg --export -a MYKEYID&gt;
+	<colsep>
+		Insert your public key in the message your are composing. 
+		Replace MYKEYID with your key id. Needs 0.8.6claws66 or newer.
+	<rowsep>
+
+		Reporting SPAM
+	<colsep>
+		Report as SPAM: spamassassin -r &gt; %f
+	<colsep>
+		Use spamassassin to report mail as spam. Redirection (&gt;) 
+		is possible only with version 0.7.7.
+	<rowsep>
+
+		Check spelling
+	<colsep>
+		Check spelling: &verbar;T=`mktemp $HOME/.sXXXXXX`; cat - &gt; $T;xterm -e ispell $T;cat $T;rm $T&verbar;
+	<colsep>
+		Open a terminal and check the spelling with ispell
+	<rowsep>
+
+		Google for message id
+	<colsep>
+		Google Msg ID: &verbar;google_msgid.pl
+	<colsep>
+		Search the web for the selected message ID. Needs the 
+		google_msgid.pl script.
+	<rowsep>
+
+	</tabular>
+</table>
+
+
+The gpg-enc-syl script is to be found 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/gpg-enc-syl" name="here (gpg-enc-syl)">. 
+It calls gpg with the --yes command line option that you may want 
+to remove it. See gpg manual page for info.
+
+The gpg-sign-syl script is to be found 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/gpg-sign-syl" name="here (gpg-sign-syl)">. 
+It needs the ssh-askpass utility found in OpenSSH. It can be 
+replaced by any X11 tool that asks some (hidden) text which 
+is then sent to standard output. Another version that uses 
+an xterm is to be found 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/gpg-sign-syl-xterm" name="here (gpg-sign-syl-xterm)">.
+
+The uudec script is to be found 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/uudec" name="here (uudec)">.
+It needs uudecode and ImageMagick's display. The latter can be
+replaced by any image viewer that can get input from standard 
+input. The script could also be modified to use temporary 
+files instead of standard input.
+
+The google_msgid.pl script is to be found 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/google_msgid.pl" name="here (google_msgid.pl)">. 
+Example and script by Thorsten Maerz. Edit the script to change 
+the browser (default is mozilla).
+
+The tnef-claws bash script was written by Shawn Lamson and is 
+to be found 
+<url url="http://melvin.hadasht.free.fr/home/sylpheed/actions/tnef-claws" name="here">.
+The script is well commented. You need to have the tnef package 
+already installed.
+
+</sect1>
+
+<sect1>Templates
+<p>
+With Sylpheed you can define mail templates to use when replying
+to messages. A template can contain raw text (that will be inserted
+in the composed mail without any change), and placeholders that are
+replaced at composition time by the actual value of the selected
+fields from the original message.
+<p>
+A typical use of the template could be to define the legal notice
+to be appended to your messages (the usual notice that contains a
+text like: "here are my own words and not those of my company, my
+boss is not liable for them, bla, bla, bla").
+<p>
+To define a new template, in the <it>Configuration</it> menu select
+the <it>Templates</it> entry and fill the form:
+
+
+
+
+<p>
+The name parameter is used to identify each template, this name
+will then appear in the <it>Tools/Templates</it> menu in the
+composition window.
+The content of the <it>To</it> field will be appended to the original
+content of the corresponding field in the message you are composing.
+The content of the <it>Subject</it> field will replace the orignal subject
+of the message you are composing.
+<p>
+In the upper pane, type in the text you want to put in the template,
+use the <it>Symbols</it> button to open a help window that contains
+the description of all the placeholders you can use in a template
+(there is one for the sender, one for the date, one for the message
+ID, ...), then use the <it>Register</it> button to  validate the
+template. If you do not register the template, when leaving the form
+the template will be canceled. To modify an existing template, select
+it in the lower pane, modify its text, then use the <it>Substitute</it>
+button. As you may guess, the <it>Delete</it> button removes the selected
+template. Finally validate your changes with the <it>OK</it> button.
+If you use the <it>Cancel</it> button, the form is closed and your changes
+are lost (deleted templates are back, added templates are lost).
+
+<p>
+To use a template, open the composition window and select the template
+from the <it>Tools/Templates</it> menu. You can then choose to insert
+the template into your message or to completely replace the text of the
+message by the template. This only affects the body of the message.
+If you choose to insert the template, its text will be inserted at the
+cursor location.
+<p>
+The placeholders are taken from the source message when replying, so
+they have no meaning when composing a new message.
+
+</sect1>
+
+</sect>
+<sect>Handling MIME types
+
+<sect1>How Sylpheed checks for Mime types
+
+<p>
+When attaching a file to a message (composing a new message), the
+MIME type of the attached file is choosen based on the file extension
+from the mapping list defined in the <it>mime.types</it> file(s).
+Sylpheed defines its MIME type mapping table by loading the
+system wide MIME types file, then the user file.
+The systeme file is <it>SYSCONFDIR/mime.types</it> (SYSCONFDIR can
+be defined a compile time), or if it does not exist, <it>/etc/mime.types</it>.
+The user file is <it>$HOME/.sylpheed/mime.types</it>.
+<p>
+A <it>mime.types</it> file consist of one MIME type definition per line,
+each definition line starting with the name of the MIME type, followed by
+a space separated list of the corresponding file extensions.
+The file can contain empty lines, and comments start with the <tt>#</tt>
+character and close at line's end.
+<p>
+Following is a typical <it>mime.types</it> file (an extract of mine):
+
+<verb>
+# This file controls what Internet media types are sent to the client for
+# given file extension(s).  Sending the correct media type to the client
+# is important so they know how to handle the content of the file.
+# The Internet media type registry is at 
+# <ftp://ftp.iana.org/in-notes/iana/assignments/media-types/>.
+
+# MIME type			Extension
+application/mac-binhex40	hqx
+application/mac-compactpro	cpt
+application/msword		doc
+application/pdf			pdf
+application/postscript		ai eps ps
+application/rtf			rtf
+application/x-bcpio		bcpio
+application/x-bzip2		bz2
+application/x-csh		csh
+application/x-gtar		gtar
+application/x-gzip		gz tgz
+application/x-kword		kwd kwt
+application/x-kspread		ksp
+application/x-kpresenter	kpr kpt
+application/x-kchart		chrt
+application/x-latex		latex
+application/x-sh		sh
+application/x-shar		shar
+application/x-shockwave-flash	swf
+application/x-tar		tar
+application/x-tcl		tcl
+application/x-tex		tex
+application/x-texinfo		texinfo texi
+application/x-troff		t tr roff
+application/x-troff-man		man
+application/zip			zip
+audio/mpeg			mpga mp2 mp3
+audio/x-aiff			aif aiff aifc
+audio/x-wav			wav
+image/gif			gif
+image/ief			ief
+image/jpeg			jpeg jpg jpe
+image/png			png
+image/tiff			tiff tif
+text/plain			asc txt
+text/rtf			rtf
+text/sgml			sgml sgm
+text/xml			xml
+video/mpeg			mpeg mpg mpe
+video/x-msvideo			avi
+text/html			html htm
+
+</verb>
+
+<p>
+If the file can be found or has the wrong format, Sylpheed will assume
+the default MIME type for all the attachments: <it>application/octet-stream</it>.
+In such a case, the recipients mail client may not know what application 
+to use to view the attachment.
+
+</sect1>
+
+<sect1>How Sylpheed handles attachments (reception)
+<p>
+When opening an attachment (select the attachment, right click and select
+<it>Open</it>) Sylpheed uses one of the following methods to determine
+the application to launch:
+
+<itemize>
+	<item>
+		The attachment is an image: the application is the one defined by the
+		<it>mime_image_viewer</it> variable of the common preferences configuration
+		file (<it>$HOME/.sylpheed/sylpheedrc</it>). If no application is defined, or
+		if the format of the definition is not valid, the default application
+		command is <it>display</it> (ImageMagick viewer).
+	</item>
+	<item>
+		The attachment is a sound file: the application is the one defined by the
+		<it>mime_audio_player</it> variable of the common preferences configuration
+		file (<it>$HOME/.sylpheed/sylpheedrc</it>). If no application is defined, or
+		if the format of the definition is not valid, the default application
+		command is <it>play</it>.
+	</item>
+	<item>
+		The attachment is a HTML file: the application is the one defined by the
+		<it>uri_cmd</it> variable of the common preferences configuration
+		file (<it>$HOME/.sylpheed/sylpheedrc</it>). This can also be changed in the
+		<it>Common preferences</it>, by changing the <it>Web browser</it> defined
+		in the <it>Other</it> tab.
+	</item>
+	<item>
+		Any other attachment type: Sylpheed relies on <it>metamail</it> to use
+		the correct application (Sylpheed starts <it>metamail</it> giving it
+		the attachment file and the MIME type taken from the mail).
+	</item>
+</itemize>
+
+<p>
+The binding of the applications to each MIME type is defined in the
+<it>mailcap</it> file. The systeme wide file is <it>/etc/mailcap</it>, 
+while the user file is <it>$HOME/.mailcap</it>.
+
+<p>
+In the mailcap file, there is one definition per line, big lines
+can be broken by escaping the newline with a <it>\</it> character,
+the first element of the line is the MIME type, then a semi-colon,
+(<it>;</it>), and finally the application to launch.
+The application part (right side of the semi-colon) can contain several
+shell commands separated by an escaped semi-colon (<it>\;</it>) and
+the <it>%s</it> string is replaced by the name of the file when
+launching the command.
+
+<p>
+Following is a typical <it>mailcap</it> file (an extract of mine):
+
+<verb>
+
+image/*; ee %s
+
+video/mpeg; gtv %s
+video/*; xanim %s
+
+application/pdf; xpdf %s
+
+text/html; dillo %s
+
+</verb>
+
+
+</sect1>
+</sect>
+
+<sect>Conversion of Other Mail Format into Sylpheed (MH Format)
+
+<sect1>Importing Messages of mbox Format<p>
+<!-- added 2001/07/20 -->
+Sylpheed lets you import messages of the Mbox format from the File menu. First you create 
+the mail folder where you want the messages to end up in, then you select File->import 
+Mbox file. Use the browse function to select the Mbox file and the Sylpheed mail folder, 
+and press Ok. And voila, there is your mail, imported.
+<p>
+That was easy, wasn't it?
+</sect1>
+
+<sect1>Importing from Windows Mailers (Becky!, AL-Mail, Outlook Express4, etc.)
+<p>
+For import possibilities of the mail folders of these and more mail programs you 
+can download the program mbx2mbox at sourceforge.net. The project is located at 
+<url url="http://mbx2mbox.sourceforge.net" name ="http://mbx2mbox.sourceforge.net.">
+</sect1>
+<sect1>Importing dbx Format of Outlook Express 5<p>
+For import possibilities of the mail folders of these and more mail programs you 
+can download the program mbx2mbox at sourceforge.net. The project is located at 
+<url url="http://mbx2mbox.sourceforge.net" name="http://mbx2mbox.sourceforge.net.">
+</sect1>
+<!-- End added 2001/07/21 -->
+<!-- start add 2001/09/04 -->
+<sect1>Exporting from Sylpheed MH format to mbox<p>
+Sylpheed offers a way to export a mailbox to the standard mbox format through the 
+File menu. Just select the "Export to mbox file..." option and you can select the 
+folder to export (assisted by a browse dialog) and also select or enter the name 
+of the mbox file you wish to generate.
+<!-- end add 2001/09/04 -->
+</sect>
+
+<sect>NetNews<p>
+What is netnews?<p>
+Netnews, also called Usenet, is a collection of "news servers" that contain a great deal of information. News, as it is called in short, can be about anything. About making your own wine, about old cars or radios. You name it, and there probably is a newsgroup about it.<p>
+This is what we will set up here. Accessing newsgroups. Note that this is different from e-mails. You can almost compare it to a mailing list, but yet the concept is a bit different.
+<!-- added 2001/07/20 -->
+<sect1>Adding and Deleting Servers<p>
+<sect2>
+Adding a news server<p>
+To add a news server, go to the configuration menu and select the "create new account" option.
+There you can name the news-account to anything of your liking. This is important, so you can identify the account later.<p>
+In the BASIC tab, in the block 'personal information' you also can enter your own name, your e-mail address (so you can reply to news message by e-mail), optionally your organization (if you are organized at all).<p>
+In the block 'Server information' you select the "News (NNTP)" protocol. Forget about "Inbox", that does not matter in this setup. Next you enter the name of the newsserver you want to connect to. You can get that name from your ISP, if you don't already have that.<p>
+If you need to log into the news server, check the box next to "This server requires authentication", and then fill the fields for User ID and Password.<p>
+Next step is to go to the Send tab. Since Receive is only there for e-mail, there is no need to do anything there. You can't even do anything in the Receive tab, for that matter. So, in Send you can select a few options:
+<itemize>
+<item>If you want a date header field added to posts
+<item>If Sylpheed should generate a Message-ID
+<item>If you want to add user-defined headers
+</itemize>
+The next items only apply to when you reply to a news message through e-mail. You can set an automatic CC, BCC or Reply-To address here. In case your ISP requires SMTP authentication, you can select the checkbox here below.<p>
+The next tab, Compose, allows you to select a default signature file. This will be added to each post to the newsgroups you do.<p>
+Finally, in the "Advanced" tab, you can specify the port on which Sylpheed has to connect to the news server. The default is 119, and only in rare cases you should have to do something about that.<p>
+Now you click "OK" and the account is created! You can verify this by checking the folder pane in Sylpheed. There you will see a new folder created with the name of the account you entered, and (news) behind it.<p>
+</sect2>
+<sect2>
+Deleting a news-server.<p>
+If you want to delete a news-account, right-click the news-folder and select "Remove news account". After confirming that you want this to be done, the account and all files related will be removed.
+</sect2>
+</sect1>
+<sect1>Subscribing and Unsubscribing to NewsGroups<p>
+Okay. Here the real stuff begins. First you have to let Sylpheed load the list of news groups that is on the news system. Right-click the new NEWS folder and select "Subscribe to newsgroups". Sylpheed will tell you that the groups need to be downloaded, so sit back and wait a while. Of course, during time, new groups are added, and dead groups are removed. For this you can click the "refresh" button in the newsgroup dialog, so a new list is downloaded and you are up to date<p>
+After a while the groups are loaded and displayed in a window. Now you can look up a group that is interesting, for example comp.os.linux.networking. Click the name once and then select OK. The group will be added to the news folder as a subfolder. When you now click the name of the new subfolder, Sylpheed will connect to the news server and download the headers (subject lines, in e-mail talk), to your computer. Some groups have -large- amounts of articles, so this may take a while!!<p>
+</sect1>
+<sect1>Reading News<p>
+When the articles are displayed, in the summary view, you can click one of them to be downloaded so you can read it. This will usually go very quickly on discussion groups.<p>
+If you want to respond to a message, press Alt-R (or press "Reply") and a message window will pop up, with the name of the newsgroup already in the "To" field. Depending on whether or not you selected quoting of the message, the original message will be in the body of the message already. Write away, then send, and soon the entire world will be able to read what you wrote on the subject.<p>
+Starting a new message in a newsgroup is equally simple: press Alt-N (or click "New"), the name of the newsgroup is in the "To" field, and you can write your question or reply.
+<sect2>A note about binary files<p>
+In newsgroups you can download binary files. These are programs, images etc. Often these are posted as so called UUencoded files. Sylpheed will as upto version 0.5.1 not decode UUencoded files. You need to save these articles to disk as separate files, and use a separate decoder program, like juju, to decode the garble of text. A UUencoded file usually looks something like this:<p>
+begin 666 sundown.jpg<p>
+after which you will find nicely formatted blocks of characters that don't seem to mean anything.
+</sect2>
+</sect1>
+<!-- end add 2001/07/20 -->
+</sect>
+
+<sect>Reference<p>
+<!-- Added 2001/07/21 -->
+In this section you will find a few pieces of information that might be handy in making Sylpheed more clear for you in respect to the used shortcut keys, and a layout of the format of the address book.
+<sect1>Short-Cut Key List<label id="shortcut"><p>
+<sect2>One-key shortcuts:<p>
+<itemize>
+<item>a: create a new message
+<item>d: delete the selected message
+<item>f: forward the selected message#
+<item>g: go to a specific folder through a browsing dialog
+<item>n: jump to the next message/next part of a multipart message
+<item>p: jump to the previous message/previous part of a multipart message
+<item>v: switch on/off the message view
+<item>w: same as a
+<item>y: Opens save as... dialog
+</itemize>
+</sect2>
+<sect2>Shortcuts to the File menu:<p>
+<itemize>
+<item>Alt-F: open FILE menu
+<item>Alt-P: print
+<item>Alt-W: close
+<item>Alt-Q: exit
+</itemize>
+</sect2>
+<sect2>Shortcuts to the Edit menu<p>
+<itemize>
+<item>Alt-E: open EDIT menu
+<item>Ctrl-C: copy
+<item>Ctrl-A: select all
+<item>Ctrl-S: search
+</itemize>
+</sect2>
+<sect2>Shortcuts to the View menu<p>
+<itemize>
+<item>Alt-V: open VIEW menu
+</itemize>
+<sect2>Shortcuts to the Message menu<p>
+<itemize>
+<item>Alt-M: open MESSAGE menu
+<item>Alt-I: check mail for current account
+<item>Shift-Alt-I: Check mail for all accounts
+<item>Alt-N: compose new message
+<item>Alt-R: reply to message
+<item>Ctrl-Alt-R: reply to sender (contrary to reply to e.g. mailing list)
+<item>Shift-Alt-R: reply to all (includes all addresses in To: and Cc:)
+<item>Ctrl-F: forward message
+<item>Shift-Ctrl-F: forward message as attachment
+<item>Alt-O: move message
+<item>Alt-D: delete message
+<item>Shift-Ctrl-N: open message in new window
+<item>Ctrl-U: view message source
+<item>Ctrl-H: show all message headers
+</itemize>
+</sect2>
+<sect2>Shortcuts to the Summary menu<p>
+<itemize>
+<item>Alt-S: open SUMMARY menu<p>
+<item>Alt-X: execute (pending commands, only useful when commands are not executed immediately)
+<item>Alt-U: update view
+<item>Alt-G: go to other folder
+<item>Ctrl-T: thread view
+<item>Shift-Ctrl-T: unthread view
+</itemize>
+</sect2>
+<sect2>Shortcuts to the Tool menu<p>
+<itemize>
+<item>Alt-T: open tool menu
+<item>Alt-A: open addressbook
+<item>Alt-L: open logfile
+</itemize>
+</sect2>
+</sect1>
+
+<sect1>Data Format of Address Book<p>
+The addressbook is located in ~/.sylpheed. It is named addressbook.xml.
+The general format of the addressbook is:<p>
+
+<code>
+&lt addressbook &gt<p>
+ &lt common_address &gt<p>
+    &lt group name="Common addresses" &gt<p>
+    &lt item &gt<p>
+     &lt name &gt Paul &lt /name &gt<p>
+     &lt address &gt paul@nlpagan.net &lt /address &gt<p>
+     &lt remarks &gt Writes Sylph. manual &lt /remarks &gt<p>
+	&lt /item &gt<p>
+    &lt /group &gt<p>
+ &lt /common_address &gt<p>
+&lt /addressbook &gt
+</code>
+
+</sect1>
+<!-- end add 2001/07/21 -->
+</sect>
+<sect>FAQ<p>
+You can find the latest, updated, FAQ (Frequently Asked Questions list) at 
+<url url="http://sylpheeddoc.sf.net" name="http://sylpheeddoc.sf.net">
+
+<sect1>Unread News Messages
+</sect1>
+<sect1>Using MSN Mail Accounts
+</sect1>
+<sect1>Changing Fonts on Menu, etc.<p>
+If you want to change the font that shows the menu of Sylpheed, this is controlled by the window manager that you are using. You have to go into the setup of the window manager (KDE, Gnome, XFCE) and change the font to your desired one.<p>
+Changing the font of the views of Sylpheed is done by selecting "Common preferences" in the Configuration menu. There you select the "Display" tab, and in the first section of the window you can browse the fonts available on your computer.
+</sect1>
+<sect1>Changing Key Binding of Short-Cut Key<p>
+Sylpheed's graphical interface is based on GTK. This means that it is very simple to change the key binding (shortcut key, hotkey) for menu items. If you are used to a certain key combination from another program, you can tell Sylpheed to use that same key combination.<p>
+The procedure is very simple. Suppose you want to change the key binding for getting new mail (message menu) from Alt-I to Ctrl-M.<p>
+<itemize>
+<item>Open the message menu with the mouse or by pressing Alt-M
+<item>Select the "get new mail" option (do not click it, this will activate the function!). If you use the mouse, just move the mouse cursor over the option.
+<item>Now you press Ctrl-M. You will immediately see the new key combination appear on the menu.
+</itemize>
+Congratulations, you have just changed a key binding. This way you can change all the options that you want. Do note that it is best to use just the alt, shift and ctrl key combinations. Several functions within Sylpheed are called up by one-key actions which are programmed in.
+</sect1>
+
+</sect>
+<sect>Information
+
+<sect1>Websites on Sylpheed<p>
+Here are some links to the Sylpheed FAQ in other languages:<p>
+<itemize>
+<item><url url="http://sylpheeddoc.sourceforge.net/fr/faq/sylpheed-faq.html" name="http://sylpheeddoc.sourceforge.net/fr/faq/sylpheed-faq.html">, courtesy of francois Barrière
+<item><url url="http://silver.lacmhacarh.gr.jp/sylpheed/sylpheedfaq-ja.htm" name="http://silver.lacmhacarh.gr.jp/sylpheed/sylpheedfaq-ja.htm">, SYLPHEED FAQ in Japanese, courtesy of WAKAI "SilverRain" Kazunao
+<item><url url="http://beatles.cselt.it/~mau/sylpheed/sylpheedfaq.html" name="http://beatles.cselt.it/~mau/sylpheed/sylpheedfaq.html">, SYLPHEED FAQ in Italian, courtesy of Maurizio Codogno
+<item><url url="http://www.synconet.de/privhome/rs/sylpheed_faq.html" name="http://www.synconet.de/privhome/rs/sylpheed_faq.html">, SYLPHEED FAQ in German (HTML-Version)
+<item><url url="http://www.synconet.de/privhome/rs/sylpheed_faq.txt" name="http://www.synconet.de/privhome/rs/sylpheed_faq.txt">, the german text-only version, both courtesy of Ralf Schiffers.
+<item><url url="http://www.cs.uoi.gr/~csst9910/el_sylfaq.html" name="http://www.cs.uoi.gr/~csst9910/el_sylfaq.html">, SYLPHEED FAQ in Greek courtesy of Theofilos Intzoglou.
+<item><url url="http://sylpheed.republika.pl" name="http://sylpheed.republika.pl">, SYLPHEED FAQ in Polish courtesy of Przemyslaw Sulek.
+<item>A spanish version of the FAQ is written by Marcelo Ramos:
+<url url="http://www.geocities.com/hackpando/sylpheedfaq.html" name="http://www.geocities.com/hackpando/sylpheedfaq.html">, HTML version,
+<url url="http://www.geocities.com/hackpando/sylpheedfaq.txt" name="http://www.geocities.com/hackpando/sylpheedfaq.txt">, Text version
+<item>In addition, the spanish FAQ is also available from Ricardo Mones Lastra: 
+<url url="http://www.aic.uniovi.es/mones/sylpheed/faq-es/" name="http://www.aic.uniovi.es/mones/sylpheed/faq-es/">, Linked HTML
+<url url="http://www.aic.uniovi.es/mones/sylpheed/faq-es.dvi" name="http://www.aic.uniovi.es/mones/sylpheed/faq-es.dvi">,  (Device independent)
+<url url="http://www.aic.uniovi.es/mones/sylpheed/faq-es.ps" name="http://www.aic.uniovi.es/mones/sylpheed/faq-es.ps">, the Spanish FAQ as a Postscript file.
+<item><url url="http://linux.fisek.com.tr/dfisek/sylpheed-sss.html" name="http://linux.fisek.com.tr/dfisek/sylpheed-sss.html">, the turkish FAQ for Sylpheed is available, thanks to the translating of Doruk Fisek.
+<item><url url="http://hem.passagen.se/webplats/sylpheed-faq-se.html" name="http://hem.passagen.se/webplats/sylpheed-faq-se.html">, the Swedish FAQ, courtesy of Mattias Stergren
+</itemize>
+</sect1>
+<sect1>Mailing Lists<p>
+If you want to stay up to date on Sylpheed, and want to talk about the program with other users, you can join the mailing list.<p>
+Send a mail to sylpheed-ctl@good-day.net that says<p>
+<tt>subscribe Your Name</tt><p>
+in the body.<p>
+The server returns the mail once for the first registration request that asks the confirmation: "May I put you on this mailing list?" that includes the following phrase (this number is merely an example).<p>
+<tt>confirm 84682771 Anne Shirley</tt><p>
+This is a precaution for mischief like subscribing you to the list against your wish.<p>
+If you received the entry confirmation mail, send a mail that includes the phrase:<p>
+<tt>confirm Password(a number) Your Name</tt><p>
+to the address for registration: sylpheed-ctl@good-day.net again. Then, it is considered that you have confirmed the registration and you are registered to the server.<p>
+The address for posting to the list is sylpheed@good-day.net.<p>
+Notice: If you lost the mail that says<p>
+confirm Password(a number) Your Name<p>
+or you became confused and want to do from start, do them over from the start, in other words, send<p>
+<tt>subscribe Anne Shirley</tt><p>
+to sylpheed-ctl@good-day.net again.<p>
+<sect2>How to unsubscribe.<p>
+Send a mail to sylpheed-ctl@good-day.net that says<p>
+<tt>unsubscribe</tt><p>
+in the body.<p>
+</sect2>
+<!-- added aug. 13, 2001 -->
+</sect1>
+<sect1>Anonymous CVS<p>
+This section has not been written yet.
+</sect1>
+
+<!-- added 2001/09/05 -->
+<sect1>How to tell another program to use Sylpheed as e-mail program<p>
+If you wish to use Sylpheed from within for example Netscape or Opera, then you need to go to the `preferences` section, then choose `applications` and in the email client part, you need to enter <tt>sylpheed --compose</tt>.
+</sect1>
+</sect>
+<sect>About This Document
+
+<sect1>Copyright Notice<p>
+Copyright (C) 2001 Hiroyuki Yamamoto<p>
+This program has been placed in the GPL.
+</sect1>
+<sect1>GNU General Public License<p>
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details. You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+</sect1>
+<!-- add 2001/07/21 -->
+<sect1>Where to Get the Latest Version of This Document<p>
+You can find the latest version of this document on the site of the Sylpheed documentation project at
+
+<url url="http://sylpheeddoc.sf.net" name="http://sylpheeddoc.sf.net">
+
+Here FAQ and manual are uploaded as HTML pages, and in form of SGML files within the CVS repository.
+</sect1>
+<sect1>Ending Remark<p>
+I wish to thank everyone involved in the Sylpheed project.<p>
+Hiroyuki Yamamoto and all the other developers for the fabulous program they have created.<p>
+Francois Barriere who helped me become friends with the CVS system.<p>
+All the help I received from everyone on the Sylpheed mailing list while writing the FAQ and this manual.<p>
+Nick Selby, for offering his well appreciated assistance in writing along in this manual.<p>
+All the people around the world who work hard on keeping the manual and FAQ up to date<p>
+And Linus Torvald, who got us a great operating system! ;-)
+<!-- end add 2001/07/21 -->
+</sect1>
+</sect>
+
+<appendix>
+
+  <sect>
+  The Sylpheed documentation team:<label id="The Sylpheed documentation team"/>
+  
+  <p>
+<verb>
+Francois Barriere      fbarriere@users.sourceforge.net
+Martin   Bretschneider furbour@users.sourceforge.net
+Olivier  Delhomme      dup@users.sourceforge.net
+Doruk    Fisek         dobidik@users.sourceforge.net
+Melvin   Hadasht       mhadasht@users.sourceforge.net
+Nicolas  Kaiser        nikai@users.sourceforge.net
+Paul     Kater         pkater@users.sourceforge.net
+Ricardo  Mones Lastra  mones@users.sourceforge.net
+Jens     Oberender     jobi@users.sourceforge.net
+Marcelo  Ramos         hackpando@users.sourceforge.net
+Guido    Rudolphi      malatesta@users.sourceforge.net
+Frank    Weng          fweng@users.sourceforge.net
+</verb>
+
+<!-- - GNU Project - Free Software Foundation (FSF) -->
+<!-- LINK REV="made" HREF="mailto:webmasters@gnu.org" -->
+
+
+  <sect>
+    GNU Free Documentation License<label id="GNU Free Documentation License"/>
+
+
+    <p>Version 1.1, March 2000</p>
+
+    <p>Copyright (C) 2000  Free Software Foundation, Inc.
+       59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+       Everyone is permitted to copy and distribute verbatim copies
+       of this license document, but changing it is not allowed.
+	 </p>
+
+  <sect1>
+    PREAMBLE
+
+    <p>The purpose of this License is to make a manual, textbook,
+    or other written document "free" in the sense of freedom: to
+    assure everyone the effective freedom to copy and redistribute it,
+    with or without modifying it, either commercially or
+    noncommercially.  Secondarily, this License preserves for the
+    author and publisher a way to get credit for their work, while not
+    being considered responsible for modifications made by
+    others.</p>
+
+    <p>This License is a kind of "copyleft", which means that
+    derivative works of the document must themselves be free in the
+    same sense.  It complements the GNU General Public License, which
+    is a copyleft license designed for free software.</p>
+
+    <p>We have designed this License in order to use it for manuals
+    for free software, because free software needs free documentation:
+    a free program should come with manuals providing the same
+    freedoms that the software does.  But this License is not limited
+    to software manuals; it can be used for any textual work,
+    regardless of subject matter or whether it is published as a
+    printed book.  We recommend this License principally for works
+    whose purpose is instruction or reference.</p>
+  </sect1>
+
+  <sect1>
+    APPLICABILITY AND DEFINITIONS
+
+    <p>This License applies to any manual or other work that
+    contains a notice placed by the copyright holder saying it can be
+    distributed under the terms of this License.  The "Document",
+    below, refers to any such manual or work.  Any member of the
+    public is a licensee, and is addressed as "you".</p>
+
+    <p>A "Modified Version" of the Document means any work
+    containing the Document or a portion of it, either copied
+    verbatim, or with modifications and/or translated into another
+    language.</p>
+
+    <p>A "Secondary Section" is a named appendix or a front-matter
+    section of the Document that deals exclusively with the
+    relationship of the publishers or authors of the Document to the
+    Document's overall subject (or to related matters) and contains
+    nothing that could fall directly within that overall subject.
+    (For example, if the Document is in part a textbook of
+    mathematics, a Secondary Section may not explain any mathematics.)
+    The relationship could be a matter of historical connection with
+    the subject or with related matters, or of legal, commercial,
+    philosophical, ethical or political position regarding
+    them.</p>
+
+    <p>The "Invariant Sections" are certain Secondary Sections
+    whose titles are designated, as being those of Invariant Sections,
+    in the notice that says that the Document is released under this
+    License.</p>
+
+    <p>The "Cover Texts" are certain short passages of text that
+    are listed, as Front-Cover Texts or Back-Cover Texts, in the
+    notice that says that the Document is released under this
+    License.</p>
+
+    <p>A "Transparent" copy of the Document means a
+    machine-readable copy, represented in a format whose specification
+    is available to the general public, whose contents can be viewed
+    and edited directly and straightforwardly with generic text
+    editors or (for images composed of pixels) generic paint programs
+    or (for drawings) some widely available drawing editor, and that
+    is suitable for input to text formatters or for automatic
+    translation to a variety of formats suitable for input to text
+    formatters.  A copy made in an otherwise Transparent file format
+    whose markup has been designed to thwart or discourage subsequent
+    modification by readers is not Transparent.  A copy that is not
+    "Transparent" is called "Opaque".</p>
+
+    <p>Examples of suitable formats for Transparent copies include
+    plain ASCII without markup, Texinfo input format, LaTeX input
+    format, SGML or XML using a publicly available DTD, and
+    standard-conforming simple HTML designed for human modification.
+    Opaque formats include PostScript, PDF, proprietary formats that
+    can be read and edited only by proprietary word processors, SGML
+    or XML for which the DTD and/or processing tools are not generally
+    available, and the machine-generated HTML produced by some word
+    processors for output purposes only.</p>
+
+    <p>The "Title Page" means, for a printed book, the title page
+    itself, plus such following pages as are needed to hold, legibly,
+    the material this License requires to appear in the title page.
+    For works in formats which do not have any title page as such,
+    "Title Page" means the text near the most prominent appearance of
+    the work's title, preceding the beginning of the body of the
+    text.</p>
+  </sect1>
+
+  <sect1>
+    VERBATIM COPYING
+
+    <p>You may copy and distribute the Document in any medium,
+    either commercially or noncommercially, provided that this
+    License, the copyright notices, and the license notice saying this
+    License applies to the Document are reproduced in all copies, and
+    that you add no other conditions whatsoever to those of this
+    License.  You may not use technical measures to obstruct or
+    control the reading or further copying of the copies you make or
+    distribute.  However, you may accept compensation in exchange for
+    copies.  If you distribute a large enough number of copies you
+    must also follow the conditions in section 3.</p>
+
+    <p>You may also lend copies, under the same conditions stated
+    above, and you may publicly display copies.</p>
+  </sect1>
+
+  <sect1>
+    COPYING IN QUANTITY
+
+    <p>If you publish printed copies of the Document numbering more
+    than 100, and the Document's license notice requires Cover Texts,
+    you must enclose the copies in covers that carry, clearly and
+    legibly, all these Cover Texts: Front-Cover Texts on the front
+    cover, and Back-Cover Texts on the back cover.  Both covers must
+    also clearly and legibly identify you as the publisher of these
+    copies.  The front cover must present the full title with all
+    words of the title equally prominent and visible.  You may add
+    other material on the covers in addition.  Copying with changes
+    limited to the covers, as long as they preserve the title of the
+    Document and satisfy these conditions, can be treated as verbatim
+    copying in other respects.</p>
+
+    <p>If the required texts for either cover are too voluminous to
+    fit legibly, you should put the first ones listed (as many as fit
+    reasonably) on the actual cover, and continue the rest onto
+    adjacent pages.</p>
+
+    <p>If you publish or distribute Opaque copies of the Document
+    numbering more than 100, you must either include a
+    machine-readable Transparent copy along with each Opaque copy, or
+    state in or with each Opaque copy a publicly-accessible
+    computer-network location containing a complete Transparent copy
+    of the Document, free of added material, which the general
+    network-using public has access to download anonymously at no
+    charge using public-standard network protocols.  If you use the
+    latter option, you must take reasonably prudent steps, when you
+    begin distribution of Opaque copies in quantity, to ensure that
+    this Transparent copy will remain thus accessible at the stated
+    location until at least one year after the last time you
+    distribute an Opaque copy (directly or through your agents or
+    retailers) of that edition to the public.</p>
+
+    <p>It is requested, but not required, that you contact the
+    authors of the Document well before redistributing any large
+    number of copies, to give them a chance to provide you with an
+    updated version of the Document.</p>
+  </sect1>
+
+  <sect1>
+    MODIFICATIONS
+
+    <p>You may copy and distribute a Modified Version of the
+    Document under the conditions of sections 2 and 3 above, provided
+    that you release the Modified Version under precisely this
+    License, with the Modified Version filling the role of the
+    Document, thus licensing distribution and modification of the
+    Modified Version to whoever possesses a copy of it.  In addition,
+    you must do these things in the Modified Version:</p>
+
+    <p><itemize>
+      <item>Use in the Title Page
+      (and on the covers, if any) a title distinct from that of the
+      Document, and from those of previous versions (which should, if
+      there were any, be listed in the History section of the
+      Document).  You may use the same title as a previous version if
+      the original publisher of that version gives permission.
+      </item>
+
+      <item>List on the Title Page,
+      as authors, one or more persons or entities responsible for
+      authorship of the modifications in the Modified Version,
+      together with at least five of the principal authors of the
+      Document (all of its principal authors, if it has less than
+      five).
+      </item>
+
+      <item>State on the Title page
+      the name of the publisher of the Modified Version, as the
+      publisher.
+      </item>
+
+      <item>Preserve all the
+      copyright notices of the Document.
+      </item>
+
+      <item>Add an appropriate
+      copyright notice for your modifications adjacent to the other
+      copyright notices.
+      </item>
+
+      <item>Include, immediately
+      after the copyright notices, a license notice giving the public
+      permission to use the Modified Version under the terms of this
+      License, in the form shown in the Addendum below.
+      </item>
+
+      <item>Preserve in that license
+      notice the full lists of Invariant Sections and required Cover
+      Texts given in the Document's license notice.
+      </item>
+
+      <item>Include an unaltered
+      copy of this License.
+      </item>
+
+      <item>Preserve the section
+      entitled "History", and its title, and add to it an item stating
+      at least the title, year, new authors, and publisher of the
+      Modified Version as given on the Title Page.  If there is no
+      section entitled "History" in the Document, create one stating
+      the title, year, authors, and publisher of the Document as given
+      on its Title Page, then add an item describing the Modified
+      Version as stated in the previous sentence.
+      </item>
+
+      <item>Preserve the network
+      location, if any, given in the Document for public access to a
+      Transparent copy of the Document, and likewise the network
+      locations given in the Document for previous versions it was
+      based on.  These may be placed in the "History" section.  You
+      may omit a network location for a work that was published at
+      least four years before the Document itself, or if the original
+      publisher of the version it refers to gives permission.
+      </item>
+
+      <item>In any section entitled
+      "Acknowledgements" or "Dedications", preserve the section's
+      title, and preserve in the section all the substance and tone of
+      each of the contributor acknowledgements and/or dedications
+      given therein.
+      </item>
+
+      <item>Preserve all the
+      Invariant Sections of the Document, unaltered in their text and
+      in their titles.  Section numbers or the equivalent are not
+      considered part of the section titles.
+      </item>
+
+      <item>Delete any section
+      entitled "Endorsements".  Such a section may not be included in
+      the Modified Version.
+      </item>
+
+      <item>Do not retitle any
+      existing section as "Endorsements" or to conflict in title with
+      any Invariant Section.
+      </item>
+    </itemize>
+    
+    <p>If the Modified Version includes new front-matter sections
+    or appendices that qualify as Secondary Sections and contain no
+    material copied from the Document, you may at your option
+    designate some or all of these sections as invariant.  To do this,
+    add their titles to the list of Invariant Sections in the Modified
+    Version's license notice.  These titles must be distinct from any
+    other section titles.</p>
+
+    <p>You may add a section entitled "Endorsements", provided it
+    contains nothing but endorsements of your Modified Version by
+    various parties--for example, statements of peer review or that
+    the text has been approved by an organization as the authoritative
+    definition of a standard.</p>
+
+    <p>You may add a passage of up to five words as a Front-Cover
+    Text, and a passage of up to 25 words as a Back-Cover Text, to the
+    end of the list of Cover Texts in the Modified Version.  Only one
+    passage of Front-Cover Text and one of Back-Cover Text may be
+    added by (or through arrangements made by) any one entity.  If the
+    Document already includes a cover text for the same cover,
+    previously added by you or by arrangement made by the same entity
+    you are acting on behalf of, you may not add another; but you may
+    replace the old one, on explicit permission from the previous
+    publisher that added the old one.</p>
+
+    <p>The author(s) and publisher(s) of the Document do not by
+    this License give permission to use their names for publicity for
+    or to assert or imply endorsement of any Modified Version.</p>
+  </sect1>
+
+  <sect1>
+    COMBINING DOCUMENTS
+
+    <p>You may combine the Document with other documents released
+    under this License, under the terms defined in section 4 above for
+    modified versions, provided that you include in the combination
+    all of the Invariant Sections of all of the original documents,
+    unmodified, and list them all as Invariant Sections of your
+    combined work in its license notice.</p>
+
+    <p>The combined work need only contain one copy of this
+    License, and multiple identical Invariant Sections may be replaced
+    with a single copy.  If there are multiple Invariant Sections with
+    the same name but different contents, make the title of each such
+    section unique by adding at the end of it, in parentheses, the
+    name of the original author or publisher of that section if known,
+    or else a unique number.  Make the same adjustment to the section
+    titles in the list of Invariant Sections in the license notice of
+    the combined work.</p>
+
+    <p>In the combination, you must combine any sections entitled
+    "History" in the various original documents, forming one section
+    entitled "History"; likewise combine any sections entitled
+    "Acknowledgements", and any sections entitled "Dedications".  You
+    must delete all sections entitled "Endorsements."</p>
+  </sect1>
+
+  <sect1>
+    COLLECTIONS OF DOCUMENTS
+
+    <p>You may make a collection consisting of the Document and
+    other documents released under this License, and replace the
+    individual copies of this License in the various documents with a
+    single copy that is included in the collection, provided that you
+    follow the rules of this License for verbatim copying of each of
+    the documents in all other respects.</p>
+
+    <p>You may extract a single document from such a collection,
+    and distribute it individually under this License, provided you
+    insert a copy of this License into the extracted document, and
+    follow this License in all other respects regarding verbatim
+    copying of that document.</p>
+  </sect1>
+
+  <sect1>
+    AGGREGATION WITH INDEPENDENT WORKS
+    
+    <p>A compilation of the Document or its derivatives with other
+    separate and independent documents or works, in or on a volume of
+    a storage or distribution medium, does not as a whole count as a
+    Modified Version of the Document, provided no compilation
+    copyright is claimed for the compilation.  Such a compilation is
+    called an "aggregate", and this License does not apply to the
+    other self-contained works thus compiled with the Document, on
+    account of their being thus compiled, if they are not themselves
+    derivative works of the Document.</p>
+
+    <p>If the Cover Text requirement of section 3 is applicable to
+    these copies of the Document, then if the Document is less than
+    one quarter of the entire aggregate, the Document's Cover Texts
+    may be placed on covers that surround only the Document within the
+    aggregate.  Otherwise they must appear on covers around the whole
+    aggregate.</p>
+  </sect1>
+
+  <sect1>
+    TRANSLATION
+
+    <p>Translation is considered a kind of modification, so you may
+    distribute translations of the Document under the terms of section
+    4.  Replacing Invariant Sections with translations requires
+    special permission from their copyright holders, but you may
+    include translations of some or all Invariant Sections in addition
+    to the original versions of these Invariant Sections.  You may
+    include a translation of this License provided that you also
+    include the original English version of this License.  In case of
+    a disagreement between the translation and the original English
+    version of this License, the original English version will
+    prevail.</p>
+  </sect1>
+
+  <sect1>
+    TERMINATION
+    
+    <p>You may not copy, modify, sublicense, or distribute the
+    Document except as expressly provided for under this License.  Any
+    other attempt to copy, modify, sublicense or distribute the
+    Document is void, and will automatically terminate your rights
+    under this License.  However, parties who have received copies, or
+    rights, from you under this License will not have their licenses
+    terminated so long as such parties remain in full
+    compliance.</p>
+  </sect1>
+
+  <sect1>
+    FUTURE REVISIONS OF THIS LICENSE
+
+    <p>The Free Software Foundation may publish new, revised
+    versions of the GNU Free Documentation License from time to time.
+    Such new versions will be similar in spirit to the present
+    version, but may differ in detail to address new problems or
+    concerns.  See <url url="http://www.gnu.org/copyleft/" name="http://www.gnu.org/copyleft/">.</p>
+
+    <p>Each version of the License is given a distinguishing
+    version number.  If the Document specifies that a particular
+    numbered version of this License "or any later version" applies to
+    it, you have the option of following the terms and conditions
+    either of that specified version or of any later version that has
+    been published (not as a draft) by the Free Software Foundation.
+    If the Document does not specify a version number of this License,
+    you may choose any version ever published (not as a draft) by the
+    Free Software Foundation.</p>
+  </sect1>
+
+  <sect1>
+    How to use this License for your documents
+
+    <p>To use this License in a document you have written, include
+    a copy of the License in the document and put the following
+    copyright and license notices just after the title page:</p>
+
+<p><tt>
+      Copyright (c)  YEAR  YOUR NAME.
+      Permission is granted to copy, distribute and/or modify this document
+      under the terms of the GNU Free Documentation License, Version 1.1
+      or any later version published by the Free Software Foundation;
+      with the Invariant Sections being LIST THEIR TITLES, with the
+      Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
+      A copy of the license is included in the section entitled "GNU
+      Free Documentation License".
+</tt></p>
+
+    <p>If you have no Invariant Sections, write "with no Invariant
+    Sections" instead of saying which ones are invariant.  If you have
+    no Front-Cover Texts, write "no Front-Cover Texts" instead of
+    "Front-Cover Texts being LIST"; likewise for Back-Cover
+    Texts.</p>
+
+    <p>If your document contains nontrivial examples of program
+    code, we recommend releasing these examples in parallel under your
+    choice of free software license, such as the GNU General Public
+    License, to permit their use in free software.</p>
+  </sect1>
+
+<!-- Keep this comment at the end of the file
+Local variables:
+mode: sgml
+sgml-omittag:nil
+sgml-shorttag:t
+sgml-minimize-attributes:nil
+sgml-always-quote-attributes:t
+sgml-indent-step:2
+sgml-parent-document: ("referenz.sgml" "appendix")
+sgml-exposed-tags:nil
+sgml-local-ecat-files:nil
+sgml-local-catalogs: CATALOG
+sgml-validate-command: "nsgmls -s referenz.sgml"
+ispell-skip-sgml: t
+End:
+-->
+</article>
