@@ -1399,7 +1399,8 @@ FilterCond *filter_cond_new(FilterCondType type,
 		cond->header_name = NULL;
 
 	cond->str_value = (value && *value) ? g_strdup(value) : NULL;
-	if (type == FLT_COND_SIZE_GREATER || type == FLT_COND_AGE_GREATER)
+	if (type == FLT_COND_SIZE_GREATER || type == FLT_COND_AGE_GREATER ||
+	    type == FLT_COND_ACCOUNT)
 		cond->int_value = atoi(value);
 	else
 		cond->int_value = 0;
