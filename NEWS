@@ -1,5 +1,29 @@
 Changes of Sylpheed
 
+* 3.1.0beta2 (development)
+
+    * On POP3 receiving, new messages are displayed on the summary view
+      immediately. Folder switching is not required anymore.
+    * The feature to combine partial messages (RFC 2046, message/partial)
+      was added.
+    * Users can move up/collapse/expand the folder view using left/right arrow
+      key now.
+    * When inline image setting is off, images are not displayed in the
+      Attachment tab too.
+    * When a connection to IMAP/News server fails, an error dialog will be
+      displayed now.
+    * The menu items 'Mark/Mark' and 'Mark/Unmark' were changed to
+      'Mark/Set flag' and 'Mark/Unset flag' for understandability.
+    * The upper limit of auto-check interval was changed to 1000 minutes.
+    * The new plug-in APIs for user-agent string and the summary view were
+      added.
+    * The source files of the English FAQ and manual were added.
+    * Fixed-positioned windows (such as main window, compose window, etc.)
+      are always displayed on screen now. This prevents windows displayed
+      outside of screen between multi and single monitor switching.
+    * The crash when POP3 session was cancelled while processing received mail
+      was fixed.
+
 * 3.1.0beta1 (development)
 
     * Full automatic address completion was implemented. Users can also
