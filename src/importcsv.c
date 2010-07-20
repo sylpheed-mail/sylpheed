@@ -107,6 +107,7 @@ typedef enum {
 	ATTR_NICK_NAME,
 	ATTR_EMAIL_ADDRESS,
 	ATTR_REMARKS,
+	ATTR_ALIAS,
 
 	N_CSV_ATTRIB
 } ImpCSVAttribIndex;
@@ -122,7 +123,8 @@ static struct _ImpCSVAttrib {
 	{N_("Display Name"),	NULL, 2, TRUE},
 	{N_("Nick Name"),	NULL, 3, TRUE},
 	{N_("E-Mail Address"),	NULL, 4, TRUE},
-	{N_("Remarks"),		NULL, 5, TRUE}
+	{N_("Remarks"),		NULL, 5, TRUE},
+	{N_("Alias"),		NULL, 6, TRUE}
 };
 
 static AddressBookFile *_importedBook_;
@@ -361,6 +363,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 	gchar *nickName = NULL;
 	gchar *address = NULL;
 	gchar *remarks = NULL;
+	gchar *alias = NULL;
 	ItemPerson *person;
 	ItemEMail *email;
 	gint count = 0;
@@ -406,6 +409,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 		nickName  = imp_csv_attrib[ATTR_NICK_NAME].value;
 		address   = imp_csv_attrib[ATTR_EMAIL_ADDRESS].value;
 		remarks   = imp_csv_attrib[ATTR_REMARKS].value;
+		alias     = imp_csv_attrib[ATTR_ALIAS].value;
 
 		if (!fullName && !firstName && !lastName && address)
 			fullName = address;
@@ -422,6 +426,7 @@ static gint imp_csv_import_data( gchar *csvFile, AddressCache *cache ) {
 			email = addritem_create_item_email();
 			addritem_email_set_address( email, address );
 			addritem_email_set_remarks( email, remarks );
+			addritem_email_set_alias( email, alias );
 			addrcache_id_email( cache, email );
 			addrcache_person_add_email( cache, person, email );
 		}
