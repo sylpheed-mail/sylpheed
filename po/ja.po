@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-21 11:42+0900\n"
+"POT-Creation-Date: 2010-07-21 14:59+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1008,17 +1008,17 @@ msgid "Search:"
 msgstr "検索:"
 
 #: src/addressbook.c:789 src/compose.c:3270 src/headerview.c:55
-#: src/prefs_folder_item.c:339 src/prefs_template.c:190
+#: src/prefs_folder_item.c:339 src/prefs_template.c:197
 msgid "To:"
 msgstr "宛先:"
 
 #: src/addressbook.c:793 src/compose.c:3287 src/headerview.c:56
-#: src/prefs_folder_item.c:356 src/prefs_template.c:192
+#: src/prefs_folder_item.c:356 src/prefs_template.c:199
 msgid "Cc:"
 msgstr "Cc:"
 
 #: src/addressbook.c:797 src/compose.c:3304 src/prefs_folder_item.c:367
-#: src/prefs_template.c:194
+#: src/prefs_template.c:201
 msgid "Bcc:"
 msgstr "Bcc:"
 
@@ -1026,7 +1026,7 @@ msgstr "Bcc:"
 #: src/addressbook.c:818 src/addressbook.c:1894 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
-#: src/prefs_template.c:253 src/prefs_toolbar.c:65
+#: src/prefs_template.c:260 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "削除"
 
@@ -1656,7 +1656,7 @@ msgstr "このメールを以下のアドレスに送信してもよろしいで
 msgid "From:"
 msgstr "差出人:"
 
-#: src/compose.c:3237 src/headerview.c:58 src/prefs_template.c:198
+#: src/compose.c:3237 src/headerview.c:58 src/prefs_template.c:205
 msgid "Subject:"
 msgstr "件名:"
 
@@ -2709,13 +2709,13 @@ msgstr "アドレス帳のフィールドを上・下ボタンで並べ替えて
 
 #: src/importcsv.c:794 src/prefs_actions.c:310 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:233
-#: src/prefs_summary_column.c:301
+#: src/prefs_summary_column.c:301 src/prefs_template.c:306
 msgid "Up"
 msgstr "  ↑  "
 
 #: src/importcsv.c:796 src/prefs_actions.c:316 src/prefs_customheader.c:285
 #: src/prefs_display_header.c:293 src/prefs_display_items.c:237
-#: src/prefs_summary_column.c:305
+#: src/prefs_summary_column.c:305 src/prefs_template.c:312
 msgid "Down"
 msgstr "  ↓  "
 
@@ -4745,7 +4745,7 @@ msgstr " 文法のヘルプ "
 msgid "Registered actions"
 msgstr "登録済みアクション"
 
-#: src/prefs_actions.c:423 src/prefs_template.c:342
+#: src/prefs_actions.c:423 src/prefs_template.c:373
 msgid "(New)"
 msgstr "(新規)"
 
@@ -6116,7 +6116,7 @@ msgstr "サブフォルダにも適用する"
 msgid "use also on reply"
 msgstr "返信時にも使用"
 
-#: src/prefs_folder_item.c:378 src/prefs_template.c:196
+#: src/prefs_folder_item.c:378 src/prefs_template.c:203
 msgid "Reply-To:"
 msgstr "Reply-To:"
 
@@ -6194,51 +6194,59 @@ msgstr ""
 "サマリビューに表示する項目を選択してください。\n"
 "上・下ボタンで項目の順番を変更することができます。"
 
-#: src/prefs_template.c:173
+#: src/prefs_template.c:180
 msgid "Template name"
 msgstr "テンプレート名"
 
-#: src/prefs_template.c:241
+#: src/prefs_template.c:248
 msgid "Register"
 msgstr "登録"
 
-#: src/prefs_template.c:247
+#: src/prefs_template.c:254
 msgid " Substitute "
 msgstr "  置換  "
 
-#: src/prefs_template.c:259
+#: src/prefs_template.c:266
 msgid " Symbols "
 msgstr " 記号 "
 
-#: src/prefs_template.c:273
+#: src/prefs_template.c:284
 msgid "Registered templates"
 msgstr "登録済みテンプレート"
 
-#: src/prefs_template.c:295
+#: src/prefs_template.c:326
 msgid "Templates"
 msgstr "テンプレート"
 
-#: src/prefs_template.c:413
+#: src/prefs_template.c:433
+msgid "Template is modified"
+msgstr "テンプレートが変更されています"
+
+#: src/prefs_template.c:434
+msgid "Current modification is not applied. Finish without saving it?"
+msgstr "編集中の変更が適用されていません。保存せずに完了しますか?"
+
+#: src/prefs_template.c:452
 msgid "Templates are modified"
 msgstr "テンプレートが変更されています"
 
-#: src/prefs_template.c:414
+#: src/prefs_template.c:453
 msgid "Really discard modification to templates?"
 msgstr "テンプレートの変更を破棄してもいいですか?"
 
-#: src/prefs_template.c:434
+#: src/prefs_template.c:473
 msgid "Template"
 msgstr "テンプレート"
 
-#: src/prefs_template.c:513
+#: src/prefs_template.c:552
 msgid "Template format error."
 msgstr "テンプレートの書式が不正です。"
 
-#: src/prefs_template.c:601
+#: src/prefs_template.c:641
 msgid "Delete template"
 msgstr "テンプレートの削除"
 
-#: src/prefs_template.c:602
+#: src/prefs_template.c:642
 msgid "Do you really want to delete this template?"
 msgstr "このテンプレートを削除してもいいですか?"
 

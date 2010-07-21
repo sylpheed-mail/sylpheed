@@ -429,6 +429,14 @@ static void prefs_template_ok_cb(void)
 {
 	GSList *tmpl_list;
 
+	if (templates.entry_modified) {
+		if (alertpanel(_("Template is modified"),
+			       _("Current modification is not applied. Finish without saving it?"),
+			       GTK_STOCK_YES, GTK_STOCK_NO, NULL)
+		    != G_ALERTDEFAULT)
+			return;
+	}
+
 	tmpl_list = prefs_template_get_list();
 	template_set_config(tmpl_list);
 	compose_reflect_prefs_all();
@@ -592,6 +600,7 @@ static gint prefs_template_clist_set_row(gint row)
 	}
 
 	gtk_clist_set_row_data(clist, row, tmpl);
+	templates.entry_modified = FALSE;
 	templates.list_modified = TRUE;
 
 	return row;
