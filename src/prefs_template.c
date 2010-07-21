@@ -85,6 +85,8 @@ static void prefs_template_select_cb		(GtkCList	*clist,
 static void prefs_template_register_cb		(void);
 static void prefs_template_substitute_cb	(void);
 static void prefs_template_delete_cb		(void);
+static void prefs_template_up_cb		(void);
+static void prefs_template_down_cb		(void);
 
 /* Called from mainwindow.c */
 void prefs_template_open(void)
@@ -139,8 +141,13 @@ static void prefs_template_window_create(void)
 	GtkWidget           *subst_btn;
 	GtkWidget           *del_btn;
 	GtkWidget         *desc_btn;
-	GtkWidget       *scroll1;
-	GtkWidget         *clist_tmpls;
+	GtkWidget       *hbox4;
+	GtkWidget         *scroll1;
+	GtkWidget           *clist_tmpls;
+	GtkWidget         *vbox3;
+	GtkWidget           *vbox4;
+	GtkWidget             *up_btn;
+	GtkWidget             *down_btn;
 	GtkWidget       *confirm_area;
 	GtkWidget         *ok_btn;
 	GtkWidget         *cancel_btn;
@@ -263,9 +270,13 @@ static void prefs_template_window_create(void)
 			 G_CALLBACK(prefs_quote_description), NULL);
 
 	/* templates list */
+	hbox4 = gtk_hbox_new(FALSE, 8);
+	gtk_widget_show(hbox4);
+	gtk_box_pack_start(GTK_BOX(vbox2), hbox4, TRUE, TRUE, 0);
+
 	scroll1 = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_show(scroll1);
-	gtk_box_pack_start(GTK_BOX(vbox2), scroll1, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox4), scroll1, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll1),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
@@ -283,6 +294,26 @@ static void prefs_template_window_create(void)
 			       GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT (clist_tmpls), "select_row",
 			 G_CALLBACK (prefs_template_select_cb), NULL);
+
+	vbox3 = gtk_vbox_new(TRUE, 0);
+	gtk_widget_show(vbox3);
+	gtk_box_pack_start(GTK_BOX(hbox4), vbox3, FALSE, FALSE, 0);
+
+	vbox4 = gtk_vbox_new(TRUE, 8);
+	gtk_widget_show(vbox4);
+	gtk_box_pack_start(GTK_BOX(vbox3), vbox4, TRUE, FALSE, 0);
+
+	up_btn = gtk_button_new_with_label(_("Up"));
+	gtk_widget_show(up_btn);
+	gtk_box_pack_start(GTK_BOX(vbox4), up_btn, FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT (up_btn), "clicked",
+			 G_CALLBACK (prefs_template_up_cb), NULL);
+
+	down_btn = gtk_button_new_with_label(_("Down"));
+	gtk_widget_show(down_btn);
+	gtk_box_pack_start(GTK_BOX(vbox4), down_btn, FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT (down_btn), "clicked",
+			 G_CALLBACK (prefs_template_down_cb), NULL);
 
 	/* ok | cancel */
 	gtkut_stock_button_set_create(&confirm_area, &ok_btn, GTK_STOCK_OK,
@@ -607,4 +638,30 @@ static void prefs_template_delete_cb(void)
 	template_free(tmpl);
 	gtk_clist_remove(clist, row);
 	templates.list_modified = TRUE;
+}
+
+static void prefs_template_up_cb(void)
+{
+	GtkCList *clist = GTK_CLIST(templates.clist_tmpls);
+	gint row;
+
+	if (!clist->selection) return;
+	row = GPOINTER_TO_INT(clist->selection->data);
+	if (row > 1) {
+		gtk_clist_row_move(clist, row, row - 1);
+		templates.list_modified = TRUE;
+	}
+}
+
+static void prefs_template_down_cb(void)
+{
+	GtkCList *clist = GTK_CLIST(templates.clist_tmpls);
+	gint row;
+
+	if (!clist->selection) return;
+	row = GPOINTER_TO_INT(clist->selection->data);
+	if (row > 0 && row < clist->rows - 1) {
+		gtk_clist_row_move(clist, row, row + 1);
+		templates.list_modified = TRUE;
+	}
 }
