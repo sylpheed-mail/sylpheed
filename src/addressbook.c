@@ -1772,6 +1772,17 @@ static gboolean addressbook_drag_motion(GtkWidget *widget,
 	g_return_val_if_fail(src_ds != NULL, FALSE);
 	src_abf = src_ds->rawDataSource;
 	g_return_val_if_fail(src_abf != NULL, FALSE);
+
+#ifdef G_OS_WIN32
+	{
+		GdkModifierType state = 0;
+
+		gdk_window_get_pointer(widget->window, NULL, NULL, &state);
+		if ((state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) == 0)
+			context->actions = GDK_ACTION_MOVE | GDK_ACTION_COPY;
+	}
+#endif
+
 	if (!src_ds->interface ||
 	    (src_ds->interface->readOnly || !src_ds->interface->haveLibrary))
 		context->actions &= ~GDK_ACTION_MOVE;
