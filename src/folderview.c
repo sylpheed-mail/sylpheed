@@ -1547,7 +1547,7 @@ void folderview_move_folder(FolderView *folderview)
 	g_return_if_fail(item->folder != NULL);
 
 	if (!item->path) return;
-	if (item->stype != F_NORMAL) return;
+	if (item->stype != F_NORMAL || item->stype != F_VIRTUAL) return;
 
 	if (item->folder->klass->move_folder)
 		folderview_move_folder_cb(folderview, 0, NULL);
@@ -1701,7 +1701,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 		}
 		if (item->stype == F_VIRTUAL) {
 			new_folder = FALSE;
-			rename_folder = delete_folder = TRUE;
+			move_folder = rename_folder = delete_folder = TRUE;
 		}
 		if (FOLDER_TYPE(folder) == F_IMAP ||
 		    FOLDER_TYPE(folder) == F_NEWS) {

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -108,6 +108,9 @@ static gint    virtual_scan_folder	(Folder		*folder,
 static gint    virtual_rename_folder	(Folder		*folder,
 					 FolderItem	*item,
 					 const gchar	*name);
+static gint    virtual_move_folder	(Folder		*folder,
+					 FolderItem	*item,
+					 FolderItem	*new_parent);
 static gint    virtual_remove_folder	(Folder		*folder,
 					 FolderItem	*item);
 
@@ -142,7 +145,7 @@ static FolderClass virtual_class =
 
 	NULL,
 	virtual_rename_folder,
-	NULL,
+	virtual_move_folder,
 	virtual_remove_folder,
 };
 
@@ -569,6 +572,15 @@ static gint virtual_rename_folder(Folder *folder, FolderItem *item,
 	g_return_val_if_fail(item->stype == F_VIRTUAL, -1);
 
 	return mh_get_class()->rename_folder(folder, item, name);
+}
+
+static gint virtual_move_folder(Folder *folder, FolderItem *item,
+				FolderItem *new_parent)
+{
+	g_return_val_if_fail(item != NULL, -1);
+	g_return_val_if_fail(item->stype == F_VIRTUAL, -1);
+
+	return mh_get_class()->move_folder(folder, item, new_parent);
 }
 
 static gint virtual_remove_folder(Folder *folder, FolderItem *item)
