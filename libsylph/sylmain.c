@@ -230,9 +230,6 @@ void syl_init(void)
 #endif
 
 	sock_init();
-#if USE_SSL
-	ssl_init();
-#endif
 
 #ifdef G_OS_UNIX
 	/* ignore SIGPIPE signal for preventing sudden death of program */
@@ -326,9 +323,6 @@ void syl_cleanup(void)
 #endif
 	close_log_file();
 
-#if USE_SSL
-	ssl_done();
-#endif
 	sock_cleanup();
 
 	if (app) {

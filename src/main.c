@@ -253,6 +253,7 @@ int main(int argc, char *argv[])
 	set_progress_func(main_window_progress_show);
 	set_input_query_password_func(input_dialog_query_password);
 #if USE_SSL
+	ssl_init();
 	ssl_set_verify_func(ssl_manager_verify_cert);
 #endif
 
@@ -817,6 +818,9 @@ void app_will_exit(gboolean force)
 	g_free(filename);
 
 	/* remove temporary files, close log file, socket cleanup */
+#if USE_SSL
+	ssl_done();
+#endif
 	syl_cleanup();
 	lock_socket_remove();
 
