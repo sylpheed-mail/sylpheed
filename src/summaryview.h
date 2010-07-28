@@ -278,6 +278,9 @@ void summary_select_all		  (SummaryView		*summaryview);
 void summary_unselect_all	  (SummaryView		*summaryview);
 void summary_select_thread	  (SummaryView		*summaryview);
 
+void summary_mark_displayed_read  (SummaryView		*summaryview,
+				   GtkTreeIter		*iter);
+
 void summary_reply		  (SummaryView		*summaryview,
 				   ComposeMode		 mode);
 

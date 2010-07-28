@@ -3785,6 +3785,7 @@ static void prev_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		return;
 
 	summary_step(mainwin->summaryview, GTK_SCROLL_STEP_BACKWARD);
+	summary_mark_displayed_read(mainwin->summaryview, NULL);
 }
 
 static void next_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
@@ -3797,6 +3798,7 @@ static void next_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 		return;
 
 	summary_step(mainwin->summaryview, GTK_SCROLL_STEP_FORWARD);
+	summary_mark_displayed_read(mainwin->summaryview, NULL);
 }
 
 static void prev_unread_cb(MainWindow *mainwin, guint action,

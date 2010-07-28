@@ -324,6 +324,10 @@ static void summary_drag_data_get       (GtkWidget        *widget,
 					 guint             time,
 					 SummaryView      *summaryview);
 
+static void summary_text_adj_value_changed
+					(GtkAdjustment		*adj,
+					 SummaryView		*summaryview);
+
 /* custom compare functions for sorting */
 static gint summary_cmp_by_mark		(GtkTreeModel		*model,
 					 GtkTreeIter		*a,
@@ -592,6 +596,8 @@ void summary_init(SummaryView *summaryview)
 	GtkWidget *pixmap;
 	PangoFontDescription *font_desc;
 	gint size;
+	TextView *textview;
+	GtkAdjustment *adj;
 
 	stock_pixbuf_gdk(summaryview->treeview, STOCK_PIXMAP_MARK,
 			 &mark_pixbuf);
@@ -629,6 +635,17 @@ void summary_init(SummaryView *summaryview)
 	summary_set_column_order(summaryview);
 	summary_colorlabel_menu_create(summaryview);
 	summary_set_menu_sensitive(summaryview);
+
+	textview = summaryview->messageview->textview;
+	adj = GTK_TEXT_VIEW(textview->text)->vadjustment;
+	g_signal_connect(adj, "value-changed",
+			 G_CALLBACK(summary_text_adj_value_changed),
+			 summaryview);
+	textview = summaryview->messageview->mimeview->textview;
+	adj = GTK_TEXT_VIEW(textview->text)->vadjustment;
+	g_signal_connect(adj, "value-changed",
+			 G_CALLBACK(summary_text_adj_value_changed),
+			 summaryview);
 }
 
 static void get_msg_list_func(Folder *folder, FolderItem *item, gpointer data)
@@ -1427,11 +1444,13 @@ static void summary_select_prev_flagged(SummaryView *summaryview,
 	if (!found) {
 		if (notice)
 			alertpanel_notice(notice);
-	} else
-		summary_select_row
-			(summaryview, &prev,
-			 messageview_is_visible(summaryview->messageview),
-			 FALSE);
+	} else {
+		gboolean visible;
+		visible = messageview_is_visible(summaryview->messageview);
+		summary_select_row(summaryview, &prev, visible, FALSE);
+		if (visible)
+			summary_mark_displayed_read(summaryview, &prev);
+	}
 }
 
 static void summary_select_next_flagged(SummaryView *summaryview,
@@ -1471,11 +1490,13 @@ static void summary_select_next_flagged(SummaryView *summaryview,
 	if (!found) {
 		if (notice)
 			alertpanel_notice(notice);
-	} else
-		summary_select_row
-			(summaryview, &next,
-			 messageview_is_visible(summaryview->messageview),
-			 FALSE);
+	} else {
+		gboolean visible;
+		visible = messageview_is_visible(summaryview->messageview);
+		summary_select_row(summaryview, &next, visible, FALSE);
+		if (visible)
+			summary_mark_displayed_read(summaryview, &next);
+	}
 }
 
 static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
@@ -1487,6 +1508,7 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
 	GtkTreeIter iter, next;
 	gboolean start_from_next = FALSE;
+	gboolean visible;
 
 	if (!gtkut_tree_row_reference_get_iter(model, summaryview->selected,
 					       &iter)) {
@@ -1517,9 +1539,10 @@ static void summary_select_next_flagged_or_folder(SummaryView *summaryview,
 			return;
 	}
 
-	summary_select_row(summaryview, &next,
-			   messageview_is_visible(summaryview->messageview),
-			   FALSE);
+	visible = messageview_is_visible(summaryview->messageview);
+	summary_select_row(summaryview, &next, visible, FALSE);
+	if (visible)
+		summary_mark_displayed_read(summaryview, &next);
 }
 
 void summary_select_prev_unread(SummaryView *summaryview)
@@ -2713,38 +2736,11 @@ static void summary_display_msg_full(SummaryView *summaryview,
 	}
 
 	if (val == 0 &&
-	    (new_window || !prefs_common.mark_as_read_on_new_window)) {
-		if (MSG_IS_NEW(msginfo->flags)) {
-			if (summaryview->folder_item->new > 0)
-				summaryview->folder_item->new--;
-			if (summaryview->on_filter && summaryview->flt_new > 0)
-				summaryview->flt_new--;
-			inc_block_notify(TRUE);
-		}
-		if (MSG_IS_UNREAD(msginfo->flags)) {
-			if (summaryview->folder_item->unread > 0)
-				summaryview->folder_item->unread--;
-			if (summaryview->on_filter &&
-			    summaryview->flt_unread > 0)
-				summaryview->flt_unread--;
-		}
-
-		if (summaryview->folder_item->stype == F_VIRTUAL) {
-			if (MSG_IS_NEW(msginfo->flags) &&
-			    msginfo->folder->new > 0)
-				msginfo->folder->new--;
-			if (MSG_IS_UNREAD(msginfo->flags) &&
-			    msginfo->folder->unread > 0)
-				msginfo->folder->unread--;
-			folderview_update_item(msginfo->folder, FALSE);
-		}
-
+	    (new_window || (!prefs_common.always_show_msg &&
+			    !prefs_common.mark_as_read_on_new_window))) {
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
-			MSG_UNSET_PERM_FLAGS
-				(msginfo->flags, MSG_NEW | MSG_UNREAD);
-			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
-			summaryview->folder_item->mark_dirty = TRUE;
+			summary_mark_row_as_read(summaryview, iter);
 			if (MSG_IS_IMAP(msginfo->flags))
 				imap_msg_unset_perm_flags
 					(msginfo, MSG_NEW | MSG_UNREAD);
@@ -5507,6 +5503,34 @@ void summary_qsearch(SummaryView *summaryview)
 	main_window_set_toolbar_sensitive(summaryview->mainwin);
 }
 
+void summary_mark_displayed_read(SummaryView *summaryview, GtkTreeIter *iter)
+{
+	MsgInfo *msginfo = NULL;
+	GtkTreeIter iter_;
+
+	if (!iter) {
+		if (!gtkut_tree_row_reference_get_iter
+			(GTK_TREE_MODEL(summaryview->store),
+			 summaryview->displayed, &iter_))
+			return;
+		iter = &iter_;
+	}
+
+	GET_MSG_INFO(msginfo, iter);
+	if (!msginfo)
+		return;
+
+	if (MSG_IS_NEW(msginfo->flags) ||
+	    MSG_IS_UNREAD(msginfo->flags)) {
+		summary_mark_row_as_read(summaryview, iter);
+		if (MSG_IS_IMAP(msginfo->flags))
+			imap_msg_unset_perm_flags
+				(msginfo, MSG_NEW | MSG_UNREAD);
+		summary_set_row(summaryview, iter, msginfo);
+		summary_status_show(summaryview);
+	}
+}
+
 
 /* callback functions */
 
@@ -5644,7 +5668,12 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 		} else {
 			if (event->type == GDK_2BUTTON_PRESS && is_selected)
 				summary_activate_selected(summaryview);
-			else {
+			else if (summary_get_selection_type(summaryview) ==
+				 SUMMARY_SELECTED_SINGLE && is_selected &&
+				 !mod_pressed &&
+				 summary_row_is_displayed(summaryview, &iter)) {
+				summary_mark_displayed_read(summaryview, &iter);
+			} else {
 				summaryview->can_toggle_selection = TRUE;
 				if (!mod_pressed &&
 				    messageview_is_visible(summaryview->messageview))
@@ -5653,6 +5682,7 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 		}
 	} else if (event->button == 2) {
 		summary_select_row(summaryview, &iter, TRUE, FALSE);
+		summary_mark_displayed_read(summaryview, &iter);
 		gtk_tree_path_free(path);
 		return TRUE;
 	} else if (event->button == 3) {
@@ -5712,6 +5742,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	TextView *textview;
 	GtkAdjustment *adj;
 	gboolean mod_pressed;
+	gboolean scrolled;
 
 	if (summary_is_read_locked(summaryview)) return FALSE;
 	if (!event) return FALSE;
@@ -5753,10 +5784,14 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
 		} else if (mod_pressed) {
-			if (!textview_scroll_page(textview, TRUE))
+			scrolled = textview_scroll_page(textview, TRUE);
+			if (!scrolled)
 				summary_select_prev_unread(summaryview);
 		} else {
-			if (!textview_scroll_page(textview, FALSE))
+			scrolled = textview_scroll_page(textview, FALSE);
+			if (prefs_common.always_show_msg)
+				summary_mark_displayed_read(summaryview, NULL);
+			if (!scrolled)
 				summary_select_next_unread(summaryview);
 		}
 		return TRUE;
@@ -5769,8 +5804,11 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
-		} else
+		} else {
 			textview_scroll_one_line(textview, mod_pressed);
+			if (prefs_common.always_show_msg)
+				summary_mark_displayed_read(summaryview, NULL);
+		}
 		return TRUE;
 	case GDK_Delete:
 	case GDK_KP_Delete:
@@ -5864,6 +5902,8 @@ static gboolean summary_display_msg_idle_func(gpointer data)
 					&iter, path);
 		gtk_tree_path_free(path);
 		summary_display_msg(summaryview, &iter);
+		if (prefs_common.always_show_msg)
+			summary_mark_displayed_read(summaryview, &iter);
 	}
 	gdk_threads_leave();
 
@@ -6103,6 +6143,18 @@ static void summary_drag_data_get(GtkWidget        *widget,
 				       (guchar *)summaryview->drag_list,
 				       strlen(summaryview->drag_list));
 	}
+}
+
+static void summary_text_adj_value_changed(GtkAdjustment *adj,
+					   SummaryView *summaryview)
+{
+	static gdouble prev_vadj = 0.0;
+
+	if (summaryview->displayed && adj->value > prev_vadj &&
+	    prefs_common.always_show_msg)
+		summary_mark_displayed_read(summaryview, NULL);
+
+	prev_vadj = adj->value;
 }
 
 
