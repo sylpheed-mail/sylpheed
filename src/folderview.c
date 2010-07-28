@@ -1746,6 +1746,28 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	}							\
 }
 
+#define SET_VISIBILITY2(factory, name, visible)			\
+{								\
+	GtkWidget *widget;					\
+	widget = gtk_item_factory_get_item(factory, name);	\
+	if (widget) {						\
+		GList *child;					\
+		GtkWidget *sep = NULL;				\
+								\
+		child = g_list_find				\
+			(GTK_MENU_SHELL(popup)->children, widget); \
+		if (child && child->next)			\
+			sep = GTK_WIDGET(child->next->data);	\
+		if (visible) {					\
+			gtk_widget_show(widget);		\
+			gtk_widget_show(sep);			\
+		} else {					\
+			gtk_widget_hide(widget);		\
+			gtk_widget_hide(sep);			\
+		}						\
+	}							\
+}
+
 	if (FOLDER_IS_LOCAL(folder)) {
 		popup = folderview->mail_popup;
 		ifactory = folderview->mail_factory;
@@ -1786,9 +1808,29 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 			       item->stype == F_VIRTUAL);
 	}
 
-	SET_VISIBILITY(ifactory, "/Mark all read", item->stype != F_QUEUE);
-	SET_VISIBILITY(ifactory, "/Send queued messages",
-		       item->stype == F_QUEUE);
+	SET_VISIBILITY2(ifactory, "/Empty trash", item->stype == F_TRASH);
+
+	SET_VISIBILITY(ifactory, "/Check for new messages",
+		       item->parent == NULL);
+	SET_VISIBILITY(ifactory, "/Rebuild folder tree", item->parent == NULL);
+	SET_VISIBILITY(ifactory, "/Update summary", item->parent != NULL);
+
+	if (FOLDER_TYPE(folder) == F_NEWS) {
+		SET_VISIBILITY2(ifactory, "/Mark all read",
+				item->parent != NULL && item->stype != F_QUEUE);
+	} else {
+		SET_VISIBILITY(ifactory, "/Mark all read",
+			       item->parent != NULL && item->stype != F_QUEUE);
+		if (item->parent != NULL) {
+			SET_VISIBILITY2(ifactory, "/Send queued messages", TRUE);
+			SET_VISIBILITY(ifactory, "/Send queued messages",
+				       item->stype == F_QUEUE);
+		} else {
+			SET_VISIBILITY2(ifactory, "/Send queued messages",
+					item->stype == F_QUEUE);
+		}
+	}
+
 	SET_VISIBILITY(ifactory, "/Search messages...",
 		       item->stype != F_VIRTUAL);
 	SET_VISIBILITY(ifactory, "/Edit search condition...",
@@ -1796,6 +1838,7 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 
 #undef SET_SENS
 #undef SET_VISIBILITY
+#undef SET_VISIBILITY2
 
 	syl_plugin_signal_emit("folderview-menu-popup", ifactory);
 
