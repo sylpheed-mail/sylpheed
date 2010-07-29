@@ -4787,17 +4787,21 @@ static void summary_junk_func(GtkTreeModel *model, GtkTreePath *path,
 	MsgInfo *msginfo;
 	FilterInfo *fltinfo;
 	gchar *file;
+	gchar *junk_id = NULL;
 	gint ret;
 
 	gtk_tree_model_get(model, iter, S_COL_MSG_INFO, &msginfo, -1);
 	file = procmsg_get_message_file(msginfo);
 	g_return_if_fail(file != NULL);
 
+	if (summaryview->to_folder)
+		junk_id = folder_item_get_identifier(summaryview->to_folder);
+
 	action1.str_value = prefs_common.junk_learncmd;
-	action2.str_value = prefs_common.junk_folder;
+	action2.str_value = junk_id;
 
 	rule.action_list = g_slist_append(rule.action_list, &action1);
-	if (prefs_common.junk_folder)
+	if (junk_id)
 		rule.action_list = g_slist_append(rule.action_list, &action2);
 	if (prefs_common.mark_junk_as_read)
 		rule.action_list = g_slist_append(rule.action_list, &action3);
@@ -4822,6 +4826,7 @@ static void summary_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	filter_info_free(fltinfo);
 	g_slist_free(rule.action_list);
+	g_free(junk_id);
 	g_free(file);
 }
 
@@ -4854,6 +4859,8 @@ static void summary_not_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 void summary_junk(SummaryView *summaryview)
 {
+	FolderItem *junk;
+
 	if (!prefs_common.enable_junk)
 		return;
 	if (!prefs_common.junk_learncmd)
@@ -4863,12 +4870,20 @@ void summary_junk(SummaryView *summaryview)
 
 	debug_print("Set mail as junk\n");
 
+	if (prefs_common.junk_folder)
+		junk = folder_find_item_from_identifier
+			(prefs_common.junk_folder);
+	else
+		junk = folder_get_default_junk();
+
+	summaryview->to_folder = junk;
 	gtk_tree_selection_selected_foreach(summaryview->selection,
 					    summary_junk_func, summaryview);
+	summaryview->to_folder = NULL;
 
 	summary_unlock(summaryview);
 
-	if (prefs_common.junk_folder && prefs_common.immediate_exec)
+	if (junk && prefs_common.immediate_exec)
 		summary_execute(summaryview);
 	else {
 		summary_step(summaryview, GTK_SCROLL_STEP_FORWARD);
