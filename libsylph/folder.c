@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -43,10 +43,21 @@
 #include "prefs_account.h"
 #include "sylmain.h"
 
+typedef struct _FolderPrivData FolderPrivData;
+
+struct _FolderPrivData {
+	Folder *folder;
+	FolderItem *junk;
+	gpointer data;
+};
+
 static GList *folder_list = NULL;
+static GList *folder_priv_list = NULL;
 
 static void folder_init		(Folder		*folder,
 				 const gchar	*name);
+
+static FolderPrivData *folder_get_priv	(Folder		*folder);
 
 static gboolean folder_read_folder_func	(GNode		*node,
 					 gpointer	 data);
@@ -115,12 +126,18 @@ void folder_remote_folder_init(Folder *folder, const gchar *name,
 
 void folder_destroy(Folder *folder)
 {
+	FolderPrivData *priv;
+
 	g_return_if_fail(folder != NULL);
 	g_return_if_fail(folder->klass->destroy != NULL);
 
 	folder->klass->destroy(folder);
 
 	folder_list = g_list_remove(folder_list, folder);
+
+	priv = folder_get_priv(folder);
+	folder_priv_list = g_list_remove(folder_priv_list, priv);
+	g_free(priv);
 
 	folder_tree_destroy(folder);
 	g_free(folder->name);
@@ -312,6 +329,8 @@ void folder_item_destroy(FolderItem *item)
 			folder->queue = NULL;
 		else if (folder->trash == item)
 			folder->trash = NULL;
+		else if (folder_get_junk(folder) == item)
+			folder_set_junk(folder, NULL);
 	}
 
 	g_free(item->name);
@@ -398,6 +417,9 @@ void folder_add(Folder *folder)
 	Folder *cur_folder;
 	GList *cur;
 	gint i;
+	FolderPrivData *priv;
+
+	debug_print("Adding folder (%p) to folder list\n", folder);
 
 	g_return_if_fail(folder != NULL);
 
@@ -416,6 +438,9 @@ void folder_add(Folder *folder)
 	}
 
 	folder_list = g_list_insert(folder_list, folder, i);
+	priv = g_new0(FolderPrivData, 1);
+	priv->folder = folder;
+	folder_priv_list = g_list_insert(folder_priv_list, priv, i);
 }
 
 GList *folder_get_list(void)
@@ -858,6 +883,57 @@ FolderItem *folder_get_default_trash(void)
 	return folder->trash;
 }
 
+FolderItem *folder_get_default_junk(void)
+{
+	FolderPrivData *priv;
+
+	if (!folder_list) return NULL;
+	if (!folder_priv_list) return NULL;
+	priv = (FolderPrivData *)folder_priv_list->data;
+	g_return_val_if_fail(priv != NULL, NULL);
+	g_return_val_if_fail(priv->folder != NULL, NULL);
+	return priv->junk;
+}
+
+static FolderPrivData *folder_get_priv(Folder *folder)
+{
+	FolderPrivData *priv;
+	GList *cur;
+
+	g_return_val_if_fail(folder != NULL, NULL);
+
+	for (cur = folder_priv_list; cur != NULL; cur = cur->next) {
+		priv = (FolderPrivData *)cur->data;
+		if (priv->folder == folder)
+			return priv;
+	}
+
+	g_warning("folder_get_priv: private data for Folder (%p) not found.",
+		  folder);
+
+	return NULL;
+}
+
+FolderItem *folder_get_junk(Folder *folder)
+{
+	FolderPrivData *priv;
+
+	priv = folder_get_priv(folder);
+	if (priv)
+		return priv->junk;
+
+	return NULL;
+}
+
+void folder_set_junk(Folder *folder, FolderItem *item)
+{
+	FolderPrivData *priv;
+
+	priv = folder_get_priv(folder);
+	if (priv)
+		priv->junk = item;
+}
+
 #define CREATE_FOLDER_IF_NOT_EXIST(member, dir, type)	\
 {							\
 	if (!folder->member) {				\
@@ -882,7 +958,7 @@ void folder_set_missing_folders(void)
 		g_return_if_fail(rootitem != NULL);
 
 		if (folder->inbox && folder->outbox && folder->draft &&
-		    folder->queue && folder->trash)
+		    folder->queue && folder->trash && folder_get_junk(folder))
 			continue;
 
 		if (folder_create_tree(folder) < 0) {
@@ -896,7 +972,13 @@ void folder_set_missing_folders(void)
 		CREATE_FOLDER_IF_NOT_EXIST(draft,  DRAFT_DIR,  F_DRAFT);
 		CREATE_FOLDER_IF_NOT_EXIST(queue,  QUEUE_DIR,  F_QUEUE);
 		CREATE_FOLDER_IF_NOT_EXIST(trash,  TRASH_DIR,  F_TRASH);
-		/* CREATE_FOLDER_IF_NOT_EXIST(junk,   JUNK_DIR,  F_JUNK); */
+
+		if (!folder_get_junk(folder)) {
+			item = folder_item_new(JUNK_DIR, JUNK_DIR);
+			item->stype = F_JUNK;
+			folder_item_append(rootitem, item);
+			folder_set_junk(folder, item);
+		}
 	}
 }
 
@@ -1392,10 +1474,8 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 				stype = F_QUEUE;
 			else if (!g_ascii_strcasecmp(attr->value, "trash"))
 				stype = F_TRASH;
-#if 0
 			else if (!g_ascii_strcasecmp(attr->value, "junk"))
 				stype = F_JUNK;
-#endif
 			else if (!g_ascii_strcasecmp(attr->value, "virtual"))
 				stype = F_VIRTUAL;
 		} else if (!strcmp(attr->name, "name"))
@@ -1519,7 +1599,7 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 	case F_DRAFT:  folder->draft  = item; break;
 	case F_QUEUE:  folder->queue  = item; break;
 	case F_TRASH:  folder->trash  = item; break;
-	/* case F_JUNK:   folder->junk   = item; break; */
+	case F_JUNK:   folder_set_junk(folder, item); break;
 	default:       break;
 	}
 	item->account = account;

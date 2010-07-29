@@ -237,6 +237,7 @@ static void prefs_folder_item_general_create(PrefsFolderItemDialog *dialog)
 	MENUITEM_ADD(optmenu_menu, menuitem, _("Drafts"), F_DRAFT);
 	MENUITEM_ADD(optmenu_menu, menuitem, _("Queue") , F_QUEUE);
 	MENUITEM_ADD(optmenu_menu, menuitem, _("Trash") , F_TRASH);
+	MENUITEM_ADD(optmenu_menu, menuitem, _("Junk")  , F_JUNK);
 
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), optmenu_menu);
 
@@ -561,6 +562,12 @@ static void prefs_folder_item_apply_cb(GtkWidget *widget,
 				folder->trash->stype = F_NORMAL;
 			prev_item = folder->trash;
 			folder->trash = item;
+			break;
+		case F_JUNK:
+			prev_item = folder_get_junk(folder);
+			if (prev_item)
+				prev_item->stype = F_NORMAL;
+			folder_set_junk(folder, item);
 			break;
 		default:
 			type = item->stype;

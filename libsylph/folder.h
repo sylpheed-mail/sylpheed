@@ -382,6 +382,11 @@ FolderItem *folder_get_default_outbox	(void);
 FolderItem *folder_get_default_draft	(void);
 FolderItem *folder_get_default_queue	(void);
 FolderItem *folder_get_default_trash	(void);
+FolderItem *folder_get_default_junk	(void);
+
+FolderItem *folder_get_junk		(Folder		*folder);
+void folder_set_junk			(Folder		*folder,
+					 FolderItem	*item);
 
 void folder_set_missing_folders		(void);
 void folder_unref_account_all		(PrefsAccount	*account);

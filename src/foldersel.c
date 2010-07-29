@@ -417,6 +417,10 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 			if (!strcmp2(item->name, DRAFT_DIR))
 				name = _("Drafts");
 			break;
+		case F_JUNK:
+			if (!strcmp2(item->name, JUNK_DIR))
+				name = _("Junk");
+			break;
 		default:
 			break;
 		}
@@ -449,7 +453,7 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 	pixbuf_open = no_select ? foldernoselect_pixbuf : folderopen_pixbuf;
 
 	if (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
-	    item->stype == F_TRASH) {
+	    item->stype == F_TRASH || item->stype == F_JUNK) {
 		use_color = FALSE;
 	} else if (item->stype == F_QUEUE) {
 		use_color = (item->total > 0);

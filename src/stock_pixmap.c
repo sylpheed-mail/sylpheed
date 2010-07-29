@@ -64,6 +64,7 @@
 #include "icons/stock_delete.h"
 #include "icons/stock_delete_16.h"
 #include "icons/stock_spam.h"
+#include "icons/stock_spam_16.h"
 #include "icons/stock_notspam.h"
 #include "icons/stock_hand-signed.h"
 #include "icons/stock_sylpheed.h"
@@ -150,6 +151,7 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
 	{NULL, NULL, NULL, NULL, stock_person, sizeof(stock_person), "stock_person", 16},
 	{NULL, NULL, NULL, NULL, folder_search, sizeof(folder_search), "folder-search", 0},
+	{NULL, NULL, NULL, NULL, stock_spam_16, sizeof(stock_spam_16), "stock_spam", 16},
 };
 
 

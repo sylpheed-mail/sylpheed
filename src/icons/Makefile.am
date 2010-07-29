@@ -20,6 +20,7 @@ BUILT_SOURCES = \
 	stock_person.h \
 	stock_book.h \
 	stock_spam.h \
+	stock_spam_16.h \
 	stock_notspam.h \
 	stock_sylpheed.h \
 	stock_sylpheed_16.h \
@@ -55,6 +56,7 @@ EXTRA_DIST = \
 	stock_person.png \
 	stock_book.png \
 	stock_spam.png \
+	stock_spam_16.png \
 	stock_notspam.png \
 	stock_sylpheed.png \
 	stock_sylpheed_16.png \

@@ -1229,6 +1229,7 @@ static gint mh_create_tree(Folder *folder)
 	MAKE_DIR_IF_NOT_EXIST(QUEUE_DIR);
 	MAKE_DIR_IF_NOT_EXIST(DRAFT_DIR);
 	MAKE_DIR_IF_NOT_EXIST(TRASH_DIR);
+	MAKE_DIR_IF_NOT_EXIST(JUNK_DIR);
 
 	return 0;
 }
@@ -1820,6 +1821,10 @@ static void mh_scan_tree_recursive(FolderItem *item)
 					   !strcmp(dir_name, TRASH_DIR)) {
 					new_item->stype = F_TRASH;
 					folder->trash = new_item;
+				} else if (!folder_get_junk(folder) &&
+					   !strcmp(dir_name, JUNK_DIR)) {
+					new_item->stype = F_JUNK;
+					folder_set_junk(folder, new_item);
 				}
 			}
 

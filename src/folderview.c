@@ -111,6 +111,7 @@ static GdkPixbuf *folderopen_pixbuf;
 static GdkPixbuf *foldernoselect_pixbuf;
 static GdkPixbuf *draft_pixbuf;
 static GdkPixbuf *trash_pixbuf;
+static GdkPixbuf *junk_pixbuf;
 static GdkPixbuf *virtual_pixbuf;
 
 static void folderview_set_columns	(FolderView	*folderview);
@@ -561,6 +562,7 @@ void folderview_init(FolderView *folderview)
 			 &foldernoselect_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_DRAFT, &draft_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_TRASH, &trash_pixbuf);
+	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_SPAM_SMALL, &junk_pixbuf);
 	stock_pixbuf_gdk(treeview, STOCK_PIXMAP_FOLDER_SEARCH, &virtual_pixbuf);
 }
 
@@ -1266,15 +1268,13 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 				!strcmp2(item->name, DRAFT_DIR) ? _("Drafts") :
 				item->name);
 		break;
-#if 0
 	case F_JUNK:
-		pixbuf = folder_pixbuf;
+		pixbuf = open_pixbuf = junk_pixbuf;
 		open_pixbuf = folderopen_pixbuf;
 		name = g_strdup(FOLDER_IS_LOCAL(item->folder) &&
 				!strcmp2(item->name, JUNK_DIR) ? _("Junk") :
 				item->name);
 		break;
-#endif
 	case F_VIRTUAL:
 		pixbuf = open_pixbuf = virtual_pixbuf;
 		name = g_strdup(item->name);

@@ -43,6 +43,7 @@
 #define QUEUE_DIR		"queue"
 #define DRAFT_DIR		"draft"
 #define TRASH_DIR		"trash"
+#define JUNK_DIR		"junk"
 #ifdef G_OS_WIN32
 #  define RC_DIR		"Sylpheed"
 #else
