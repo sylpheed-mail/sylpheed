@@ -1475,7 +1475,7 @@ void procmsg_empty_trash(FolderItem *trash)
 	if (!trash)
 		return;
 
-	g_return_if_fail(trash->stype == F_TRASH);
+	g_return_if_fail(trash->stype == F_TRASH || trash->stype == F_JUNK);
 
 	if (trash->total > 0) {
 		debug_print("Emptying messages in %s ...\n", trash->path);
