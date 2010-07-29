@@ -2172,7 +2172,8 @@ static void prefs_junk_create(void)
 
 	PACK_SMALL_LABEL (vbox2, label,
 			  _("The messages which are set as junk mail "
-			    "will be moved to this folder."));
+			    "will be moved to this folder. If empty, "
+			    "the default junk folder will be used."));
 
 	PACK_VSPACER(vbox2, vbox3, 0);
 
