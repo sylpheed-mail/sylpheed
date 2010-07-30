@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 #include <gtk/gtkwindow.h>
 #include <gtk/gtksignal.h>
 #include <gtk/gtkprogressbar.h>
+#include <gtk/gtkdialog.h>
 #include <gtk/gtkstock.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -124,6 +125,8 @@ static void inc_put_error		(IncState	 istate,
 					 const gchar	*msg);
 
 static void inc_cancel_cb		(GtkWidget	*widget,
+					 gpointer	 data);
+static void inc_cancel_all_cb		(GtkWidget	*widget,
 					 gpointer	 data);
 static gint inc_dialog_delete_cb	(GtkWidget	*widget,
 					 GdkEventAny	*event,
@@ -499,14 +502,20 @@ static IncProgressDialog *inc_progress_dialog_create(gboolean autocheck)
 {
 	IncProgressDialog *dialog;
 	ProgressDialog *progress;
+	GtkWidget *cancel_all_btn;
 
 	dialog = g_new0(IncProgressDialog, 1);
 
 	progress = progress_dialog_create();
 	gtk_window_set_title(GTK_WINDOW(progress->window),
 			     _("Retrieving new messages"));
+	cancel_all_btn = gtk_dialog_add_button(GTK_DIALOG(progress->window),
+					       _("Cancel _all"),
+					       GTK_RESPONSE_NONE);
 	g_signal_connect(G_OBJECT(progress->cancel_btn), "clicked",
 			 G_CALLBACK(inc_cancel_cb), dialog);
+	g_signal_connect(G_OBJECT(cancel_all_btn), "clicked",
+			 G_CALLBACK(inc_cancel_all_cb), dialog);
 	g_signal_connect(G_OBJECT(progress->window), "delete_event",
 			 G_CALLBACK(inc_dialog_delete_cb), dialog);
 	/* manage_window_set_transient(GTK_WINDOW(progress->window)); */
@@ -1460,6 +1469,11 @@ static void inc_cancel_cb(GtkWidget *widget, gpointer data)
 	inc_cancel((IncProgressDialog *)data, FALSE);
 }
 
+static void inc_cancel_all_cb(GtkWidget *widget, gpointer data)
+{
+	inc_cancel((IncProgressDialog *)data, TRUE);
+}
+
 static gint inc_dialog_delete_cb(GtkWidget *widget, GdkEventAny *event,
 				 gpointer data)
 {
@@ -1467,6 +1481,8 @@ static gint inc_dialog_delete_cb(GtkWidget *widget, GdkEventAny *event,
 
 	if (dialog->queue_list == NULL)
 		inc_progress_dialog_destroy(dialog);
+	else
+		inc_cancel(dialog, TRUE);
 
 	return TRUE;
 }

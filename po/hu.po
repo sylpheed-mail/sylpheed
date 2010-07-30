@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 13:04+0900\n"
+"POT-Creation-Date: 2010-07-30 13:37+0900\n"
 "PO-Revision-Date: 2010-02-13 14:38+0100\n"
 "Last-Translator: Németh Tamás <ntomasz@uhuklub.hu>\n"
 "Language-Team: Hungarian <NONE>\n"
@@ -1235,7 +1235,7 @@ msgstr "Megjegyzés"
 msgid "Warning"
 msgstr "Figyelmeztetés"
 
-#: src/alertpanel.c:168 src/inc.c:737
+#: src/alertpanel.c:168 src/inc.c:746
 msgid "Error"
 msgstr "Hiba"
 
@@ -2817,141 +2817,146 @@ msgstr "LDIF fájl importálása a címjegyzékbe"
 msgid "Attributes"
 msgstr "Tulajdonságok"
 
-#: src/inc.c:160
+#: src/inc.c:163
 #, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d új levél"
 
-#: src/inc.c:481
+#: src/inc.c:484
 msgid "Authenticating with POP3"
 msgstr "POP3 azonosítás"
 
-#: src/inc.c:507
+#: src/inc.c:511
 msgid "Retrieving new messages"
 msgstr "Új levelek fogadása"
 
-#: src/inc.c:550
+#: src/inc.c:513
+#, fuzzy
+msgid "Cancel _all"
+msgstr "Mégse"
+
+#: src/inc.c:559
 msgid "Standby"
 msgstr "Készenlét"
 
-#: src/inc.c:693 src/inc.c:743
+#: src/inc.c:702 src/inc.c:752
 msgid "Cancelled"
 msgstr "Megszakítva"
 
-#: src/inc.c:704
+#: src/inc.c:713
 msgid "Retrieving"
 msgstr "Fogadás"
 
-#: src/inc.c:713 src/inc.c:1022
+#: src/inc.c:722 src/inc.c:1031
 #, c-format
 msgid "%d message(s) (%s) received"
 msgstr "%d levél (%s) fogadva"
 
-#: src/inc.c:717
+#: src/inc.c:726
 #, c-format
 msgid "no new messages"
 msgstr "nincs új levél."
 
-#: src/inc.c:718
+#: src/inc.c:727
 msgid "Done"
 msgstr "Kész"
 
-#: src/inc.c:723
+#: src/inc.c:732
 msgid "Connection failed"
 msgstr "Kapcsolat megszakadt"
 
-#: src/inc.c:726
+#: src/inc.c:735
 msgid "Auth failed"
 msgstr "Azonosítás nem sikerült"
 
-#: src/inc.c:730
+#: src/inc.c:739
 msgid "Locked"
 msgstr "Zárolt"
 
-#: src/inc.c:740
+#: src/inc.c:749
 msgid "Timeout"
 msgstr "Időtúllépés"
 
-#: src/inc.c:787
+#: src/inc.c:796
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Befejezve (%d új levél)"
 
-#: src/inc.c:790
+#: src/inc.c:799
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Befejezve (nincs új levél)"
 
-#: src/inc.c:799
+#: src/inc.c:808
 msgid "Some errors occurred while getting mail."
 msgstr "Hiba történt a levelek fogadásakor."
 
-#: src/inc.c:833
+#: src/inc.c:842
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "új levelek letöltése %s fióknál...\n"
 
-#: src/inc.c:837
+#: src/inc.c:846
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: POP3 azonosítás"
 
-#: src/inc.c:840
+#: src/inc.c:849
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Új levelek fogadása"
 
-#: src/inc.c:845
+#: src/inc.c:854
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Kapcsolódás a(z) %s POP3 szerverhez ..."
 
-#: src/inc.c:859
+#: src/inc.c:868
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nem sikerült kapcsolódni a POP3 szerverhez: %s:%d\n"
 
-#: src/inc.c:941 src/rpop3.c:827 src/send_message.c:817
+#: src/inc.c:950 src/rpop3.c:827 src/send_message.c:817
 #, c-format
 msgid "Authenticating..."
 msgstr "Azonosítás..."
 
-#: src/inc.c:942
+#: src/inc.c:951
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Levelek fogadása innen: %s ..."
 
-#: src/inc.c:947
+#: src/inc.c:956
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Új levelek számának megszerzése (STAT)..."
 
-#: src/inc.c:951
+#: src/inc.c:960
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Új levelek számának megszerzése (LAST)..."
 
-#: src/inc.c:955
+#: src/inc.c:964
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Új levelek számának megszerzése (UIDL)..."
 
-#: src/inc.c:959
+#: src/inc.c:968
 msgid "Getting the size of messages (LIST)..."
 msgstr "Új levelek méretének megszerzése (LIST)..."
 
-#: src/inc.c:969
+#: src/inc.c:978
 #, c-format
 msgid "Deleting message %d"
 msgstr "%d levél törlése"
 
-#: src/inc.c:976 src/send_message.c:835
+#: src/inc.c:985 src/send_message.c:835
 msgid "Quitting"
 msgstr "Kilépés"
 
-#: src/inc.c:1001
+#: src/inc.c:1010
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Levél letöltése (%d / %d) (%s / %s)"
 
-#: src/inc.c:1241 src/inc.c:1264 src/summaryview.c:4644
+#: src/inc.c:1250 src/inc.c:1273 src/summaryview.c:4644
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -2959,15 +2964,15 @@ msgstr ""
 "A levélszemét szűréshez használt parancs futtatása nem sikerült.\n"
 "Ellenőrizze a levélszemét szűrők beállításait."
 
-#: src/inc.c:1323
+#: src/inc.c:1332
 msgid "Connection failed."
 msgstr "Kapcsolat megszakadt."
 
-#: src/inc.c:1329
+#: src/inc.c:1338
 msgid "Error occurred while processing mail."
 msgstr "Hiba a levelek feldolgozása közben."
 
-#: src/inc.c:1334
+#: src/inc.c:1343
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2976,29 +2981,29 @@ msgstr ""
 "Hiba a levelek feldolgozása közben:\n"
 "%s"
 
-#: src/inc.c:1340
+#: src/inc.c:1349
 msgid "No disk space left."
 msgstr "Nincs több szabad hely a lemezen."
 
-#: src/inc.c:1345
+#: src/inc.c:1354
 msgid "Can't write file."
 msgstr "Nem lehet a fájlba írni."
 
-#: src/inc.c:1350
+#: src/inc.c:1359
 msgid "Socket error."
 msgstr "Socket hiba."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1356 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:761
+#: src/inc.c:1365 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:761
 #: src/send_message.c:978
 msgid "Connection closed by the remote host."
 msgstr "A távoli fél bezárta a kapcsolatot."
 
-#: src/inc.c:1362
+#: src/inc.c:1371
 msgid "Mailbox is locked."
 msgstr "A postaláda zárolt."
 
-#: src/inc.c:1366
+#: src/inc.c:1375
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3007,11 +3012,11 @@ msgstr ""
 "A postaláda zárolt:\n"
 "%s"
 
-#: src/inc.c:1372 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:958
+#: src/inc.c:1381 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:958
 msgid "Authentication failed."
 msgstr "Az azonosítás nem sikerült."
 
-#: src/inc.c:1377 src/rpop3.c:521 src/send_message.c:961
+#: src/inc.c:1386 src/rpop3.c:521 src/send_message.c:961
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3020,15 +3025,15 @@ msgstr ""
 "Az azonosítás nem sikerült:\n"
 "%s"
 
-#: src/inc.c:1382 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:982
+#: src/inc.c:1391 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:982
 msgid "Session timed out."
 msgstr "Menet időtúllépése."
 
-#: src/inc.c:1423
+#: src/inc.c:1432
 msgid "Incorporation cancelled\n"
 msgstr "Fogadás megszakítva\n"
 
-#: src/inc.c:1525
+#: src/inc.c:1541
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s új leveleinek letöltése a(z) %s mappába...\n"
