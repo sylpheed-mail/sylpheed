@@ -409,6 +409,8 @@ static PrefParam param[] = {
 	{"open_inbox_on_inc", "FALSE", &prefs_common.open_inbox_on_inc, P_BOOL},
 	{"open_inbox_on_startup", "FALSE", &prefs_common.open_inbox_on_startup,
 	 P_BOOL},
+	{"change_account_on_folder_selection", "TRUE",
+	 &prefs_common.change_account_on_folder_sel, P_BOOL},
 	{"immediate_execution", "TRUE", &prefs_common.immediate_exec, P_BOOL},
 
 #ifdef G_OS_WIN32

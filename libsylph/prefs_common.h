@@ -317,6 +317,8 @@ struct _PrefsCommon
 	gboolean fullauto_completion_mode;   /* Compose */
 
 	gchar *user_agent_str;
+
+	gboolean change_account_on_folder_sel; /* Interface */
 };
 
 extern PrefsCommon prefs_common;

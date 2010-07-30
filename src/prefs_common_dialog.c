@@ -200,9 +200,10 @@ static struct Interface {
 	GtkWidget *checkbtn_always_show_msg;
 	GtkWidget *checkbtn_openunread;
 	GtkWidget *checkbtn_remember_lastsel;
-	GtkWidget *checkbtn_mark_as_read_on_newwin;
+	/* GtkWidget *checkbtn_mark_as_read_on_newwin; */
 	GtkWidget *checkbtn_openinbox;
 	GtkWidget *checkbtn_openinbox_startup;
+	GtkWidget *checkbtn_change_account_on_folder_sel;
 	GtkWidget *checkbtn_immedexec;
 #ifndef G_OS_WIN32
 	GtkWidget *checkbtn_comply_gnome_hig;
@@ -505,12 +506,17 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"remember_last_selected", &interface.checkbtn_remember_lastsel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+#if 0
 	{"mark_as_read_on_new_window",
 	 &interface.checkbtn_mark_as_read_on_newwin,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+#endif
 	{"open_inbox_on_inc", &interface.checkbtn_openinbox,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"open_inbox_on_startup", &interface.checkbtn_openinbox_startup,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"change_account_on_folder_selection",
+	 &interface.checkbtn_change_account_on_folder_sel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"immediate_execution", &interface.checkbtn_immedexec,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -2330,9 +2336,10 @@ static void prefs_details_create(void)
 	GtkWidget *checkbtn_always_show_msg;
 	GtkWidget *checkbtn_openunread;
 	GtkWidget *checkbtn_remember_lastsel;
-	GtkWidget *checkbtn_mark_as_read_on_newwin;
+	/* GtkWidget *checkbtn_mark_as_read_on_newwin; */
 	GtkWidget *checkbtn_openinbox;
 	GtkWidget *checkbtn_openinbox_startup;
+	GtkWidget *checkbtn_change_account_on_folder_sel;
 	GtkWidget *checkbtn_immedexec;
 	GtkWidget *hbox1;
 	GtkWidget *hbox_spc;
@@ -2383,15 +2390,21 @@ static void prefs_details_create(void)
 		(vbox2, checkbtn_remember_lastsel,
 		 _("Remember last selected message"));
 
+#if 0
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_mark_as_read_on_newwin,
 		 _("Only mark message as read when opened in new window"));
+#endif
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_openinbox,
 		 _("Open inbox after receiving new mail"));
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_openinbox_startup, _("Open inbox on startup"));
+
+	PACK_CHECK_BUTTON
+		(vbox2, checkbtn_change_account_on_folder_sel,
+		 _("Change current account on folder open"));
 
 	vbox3 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox3);
@@ -2464,10 +2477,14 @@ static void prefs_details_create(void)
 	interface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
 	interface.checkbtn_openunread        = checkbtn_openunread;
 	interface.checkbtn_remember_lastsel  = checkbtn_remember_lastsel;
+#if 0
 	interface.checkbtn_mark_as_read_on_newwin
 					     = checkbtn_mark_as_read_on_newwin;
+#endif
 	interface.checkbtn_openinbox         = checkbtn_openinbox;
 	interface.checkbtn_openinbox_startup = checkbtn_openinbox_startup;
+	interface.checkbtn_change_account_on_folder_sel =
+		checkbtn_change_account_on_folder_sel;
 	interface.checkbtn_immedexec         = checkbtn_immedexec;
 
 #ifndef G_OS_WIN32

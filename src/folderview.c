@@ -2105,6 +2105,20 @@ static void folderview_selection_changed(GtkTreeSelection *selection,
 	gtk_tree_path_free(path);
 
 	folderview->selection_locked = FALSE;
+
+	if (prefs_common.change_account_on_folder_sel) {
+		PrefsAccount *account;
+
+		account = account_find_from_item_property(item);
+		if (!account && item->folder)
+			account = item->folder->account;
+		if (!account)
+			account = account_get_default();
+		if (account && account != cur_account) {
+			cur_account = account;
+			main_window_change_cur_account();
+		}
+	}
 }
 
 static void folderview_row_expanded(GtkTreeView *treeview, GtkTreeIter *iter,

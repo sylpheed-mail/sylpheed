@@ -1408,6 +1408,16 @@ static void main_window_show_cur_account(MainWindow *mainwin)
 	g_free(ac_name);
 }
 
+void main_window_change_cur_account(void)
+{
+	MainWindow *mainwin;
+
+	mainwin = main_window_get();
+	main_window_show_cur_account(mainwin);
+	main_window_set_menu_sensitive(mainwin);
+	main_window_set_toolbar_sensitive(mainwin);
+}
+
 MainWindow *main_window_get(void)
 {
 	if (mainwin_list)
@@ -3957,12 +3967,8 @@ static void new_account_cb(MainWindow *mainwin, guint action,
 
 static void account_selector_menu_cb(GtkMenuItem *menuitem, gpointer data)
 {
-	MainWindow *mainwin = main_window_get();
-
 	cur_account = (PrefsAccount *)data;
-	main_window_show_cur_account(mainwin);
-	main_window_set_menu_sensitive(mainwin);
-	main_window_set_toolbar_sensitive(mainwin);
+	main_window_change_cur_account();
 }
 
 static void account_receive_menu_cb(GtkMenuItem *menuitem, gpointer data)
