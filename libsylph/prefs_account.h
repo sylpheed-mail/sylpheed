@@ -166,6 +166,9 @@ struct _PrefsAccount
 	gint account_id;
 
 	RemoteFolder *folder;
+
+	/* Compose */
+	gboolean  sig_before_quote;
 };
 
 PrefsAccount *prefs_account_new		(void);

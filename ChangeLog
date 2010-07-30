@@ -1,5 +1,14 @@
 2010-07-30
 
+	* libsylph/folder.c: folder_destroy(): remove private data after
+	  folder_tree_destroy() to prevent warnings.
+	* libsylph/prefs_account.[ch]
+	  src/compose.c
+	  src/prefs_account_dialog.c: added new account option 'Put signature
+	  before quote (not recommended)'.
+
+2010-07-30
+
 	* src/summaryview.c: summary_selection_changed(): don't clear message
 	  view on multiple selection and always_show_msg mode.
 	* libsylph/prefs_common.c: made always_show_message_when_selected

@@ -881,6 +881,16 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	if (item)
 		compose_entries_set_from_item(compose, item, COMPOSE_REPLY);
 
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(compose->text));
+
+	if (account->sig_before_quote && prefs_common.auto_sig) {
+		GtkTextMark *mark;
+		compose_insert_sig(compose, TRUE, FALSE, FALSE);
+		mark = gtk_text_buffer_get_insert(buffer);
+		gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+	}
+
 	if (quote) {
 		gchar *qmark;
 		gchar *quote_str;
@@ -895,13 +905,12 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 					      qmark, body);
 	}
 
-	if (prefs_common.auto_sig)
+	if (!account->sig_before_quote && prefs_common.auto_sig)
 		compose_insert_sig(compose, TRUE, FALSE, FALSE);
 
 	if (quote && prefs_common.linewrap_quote)
 		compose_wrap_all(compose);
 
-	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(compose->text));
 	gtk_text_buffer_get_start_iter(buffer, &iter);
 	gtk_text_buffer_place_cursor(buffer, &iter);
 
@@ -991,6 +1000,14 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	text = GTK_TEXT_VIEW(compose->text);
 	buffer = gtk_text_view_get_buffer(text);
 
+	if (account->sig_before_quote && prefs_common.auto_sig) {
+		GtkTextMark *mark;
+		compose_insert_sig(compose, TRUE, FALSE, FALSE);
+		mark = gtk_text_buffer_get_insert(buffer);
+		gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+	}
+
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
 
@@ -1040,7 +1057,7 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 		}
 	}
 
-	if (prefs_common.auto_sig)
+	if (!account->sig_before_quote && prefs_common.auto_sig)
 		compose_insert_sig(compose, TRUE, FALSE, FALSE);
 
 	if (prefs_common.linewrap_quote)

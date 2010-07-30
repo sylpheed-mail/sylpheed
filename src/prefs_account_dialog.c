@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,6 +124,7 @@ static struct Compose {
 	GtkWidget *sig_text;
 	GtkTextBuffer *sig_buffer;
 	GtkWidget *sigpath_entry;
+	GtkWidget *sig_before_quote_chkbtn;
 
 	GtkWidget *autocc_chkbtn;
 	GtkWidget *autocc_entry;
@@ -306,6 +307,8 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"signature_text", &compose.sig_text,
 	 prefs_set_data_from_text, prefs_set_text},
+	{"signature_before_quote", &compose.sig_before_quote_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"set_autocc", &compose.autocc_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"auto_cc", &compose.autocc_entry,
@@ -1233,6 +1236,7 @@ static void prefs_account_compose_create(void)
 	GtkWidget *sigfile_radiobtn;
 	GtkWidget *sigcmd_radiobtn;
 	GtkWidget *sigpath_entry;
+	GtkWidget *sig_before_quote_chkbtn;
 	GtkWidget *frame;
 	GtkWidget *table;
 	GtkWidget *autocc_chkbtn;
@@ -1300,6 +1304,9 @@ static void prefs_account_compose_create(void)
 	gtk_widget_show (sigpath_entry);
 	gtk_box_pack_start (GTK_BOX (sig_vbox), sigpath_entry, TRUE, TRUE, 0);
 
+	PACK_CHECK_BUTTON (sig_vbox, sig_before_quote_chkbtn,
+			   _("Put signature before quote (not recommended)"));
+
 	SET_TOGGLE_SENSITIVITY (sig_radiobtn, sig_text);
 	SET_TOGGLE_SENSITIVITY (sigfile_radiobtn, sigpath_entry);
 	SET_TOGGLE_SENSITIVITY (sigcmd_radiobtn, sigpath_entry);
@@ -1363,6 +1370,8 @@ static void prefs_account_compose_create(void)
 	compose.sigpath_entry = sigpath_entry;
 
 	compose.sig_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(sig_text));
+
+	compose.sig_before_quote_chkbtn = sig_before_quote_chkbtn;
 
 	compose.autocc_chkbtn      = autocc_chkbtn;
 	compose.autocc_entry       = autocc_entry;

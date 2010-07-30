@@ -131,15 +131,18 @@ void folder_destroy(Folder *folder)
 	g_return_if_fail(folder != NULL);
 	g_return_if_fail(folder->klass->destroy != NULL);
 
+	debug_print("folder_destroy: destroying Folder (%p)\n", folder);
+
 	folder->klass->destroy(folder);
 
 	folder_list = g_list_remove(folder_list, folder);
+
+	folder_tree_destroy(folder);
 
 	priv = folder_get_priv(folder);
 	folder_priv_list = g_list_remove(folder_priv_list, priv);
 	g_free(priv);
 
-	folder_tree_destroy(folder);
 	g_free(folder->name);
 	g_free(folder);
 }
@@ -419,7 +422,7 @@ void folder_add(Folder *folder)
 	gint i;
 	FolderPrivData *priv;
 
-	debug_print("Adding folder (%p) to folder list\n", folder);
+	debug_print("Adding Folder (%p) to folder list\n", folder);
 
 	g_return_if_fail(folder != NULL);
 

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -84,6 +84,8 @@ static PrefParam param[] = {
 	{"signature_path", "~" G_DIR_SEPARATOR_S DEFAULT_SIGNATURE,
 	 &tmp_ac_prefs.sig_path, P_STRING},
 	{"signature_text", NULL, &tmp_ac_prefs.sig_text, P_STRING},
+	{"signature_before_quote", "FALSE", &tmp_ac_prefs.sig_before_quote,
+	 P_BOOL},
 	{"set_autocc", "FALSE", &tmp_ac_prefs.set_autocc, P_BOOL},
 	{"auto_cc", NULL, &tmp_ac_prefs.auto_cc, P_STRING},
 	{"set_autobcc", "FALSE", &tmp_ac_prefs.set_autobcc, P_BOOL},
