@@ -5952,11 +5952,13 @@ static void summary_selection_changed(GtkTreeSelection *selection,
 
 	if (!single_selection) {
 		summaryview->display_msg = FALSE;
+#if 0
 		if (summaryview->displayed && prefs_common.always_show_msg) {
 			messageview_clear(summaryview->messageview);
 			gtk_tree_row_reference_free(summaryview->displayed);
 			summaryview->displayed = NULL;
 		}
+#endif
 		summary_set_menu_sensitive(summaryview);
 		main_window_set_toolbar_sensitive(summaryview->mainwin);
 		return;
