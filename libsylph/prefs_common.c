@@ -398,7 +398,7 @@ static PrefParam param[] = {
 	{"separate_folder", "FALSE", &prefs_common.sep_folder, P_BOOL},
 	{"separate_message", "FALSE", &prefs_common.sep_msg, P_BOOL},
 
-	{"always_show_message_when_selected", "FALSE",
+	{"always_show_message_when_selected", "TRUE",
 	 &prefs_common.always_show_msg, P_BOOL},
 	{"open_unread_on_enter", "FALSE", &prefs_common.open_unread_on_enter,
 	 P_BOOL},
