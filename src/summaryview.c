@@ -5523,6 +5523,9 @@ void summary_mark_displayed_read(SummaryView *summaryview, GtkTreeIter *iter)
 	MsgInfo *msginfo = NULL;
 	GtkTreeIter iter_;
 
+	if (prefs_common.mark_as_read_on_new_window)
+		return;
+
 	if (!iter) {
 		if (!gtkut_tree_row_reference_get_iter
 			(GTK_TREE_MODEL(summaryview->store),
