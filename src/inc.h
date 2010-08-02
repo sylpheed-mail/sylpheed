@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,6 +75,11 @@ struct _IncSession
 
 	gint64 cur_total_bytes;
 	gint new_msgs;
+
+	gint start_num;
+	gint64 start_recv_bytes;
+
+	gint retr_count;
 
 	gpointer data;
 };

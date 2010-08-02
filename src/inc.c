@@ -613,6 +613,11 @@ static IncSession *inc_session_new(PrefsAccount *account)
 	session->cur_total_bytes = 0;
 	session->new_msgs = 0;
 
+	session->start_num = 0;
+	session->start_recv_bytes = 0;
+
+	session->retr_count = 0;
+
 	return session;
 }
 
@@ -997,34 +1002,48 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 	gchar *total_size_str;
 	gint64 cur_total;
 	gint64 total;
+	gint cur_num;
+	gint total_num_to_recv;
 
 	if (!pop3_session->new_msg_exist) return;
 
-	cur_total = inc_session->cur_total_bytes;
-	total = pop3_session->total_bytes;
-	if (pop3_session->state == POP3_RETR ||
-	    pop3_session->state == POP3_RETR_RECV ||
-	    pop3_session->state == POP3_DELETE) {
+	if (inc_session->retr_count == 0) {
+		cur_num = total_num_to_recv = 0;
+		cur_total = total = 0;
+	} else {
+		cur_num = pop3_session->cur_msg - inc_session->start_num + 1;
+		total_num_to_recv = pop3_session->count - inc_session->start_num + 1;
+		cur_total = inc_session->cur_total_bytes - inc_session->start_recv_bytes;
+		total = pop3_session->total_bytes - inc_session->start_recv_bytes;
+	}
+
+	if ((pop3_session->state == POP3_RETR ||
+	     pop3_session->state == POP3_RETR_RECV ||
+	     pop3_session->state == POP3_DELETE) && total_num_to_recv > 0) {
 		Xstrdup_a(total_size_str, to_human_readable(total), return);
 		g_snprintf(buf, sizeof(buf),
 			   _("Retrieving message (%d / %d) (%s / %s)"),
-			   pop3_session->cur_msg, pop3_session->count,
+			   cur_num, total_num_to_recv,
 			   to_human_readable(cur_total), total_size_str);
 		progress_dialog_set_label(inc_dialog->dialog, buf);
 	}
 
-	progress_dialog_set_percentage
-		(inc_dialog->dialog,(gfloat)cur_total / (gfloat)total);
+	if (total > 0)
+		progress_dialog_set_percentage
+			(inc_dialog->dialog, (gfloat)cur_total / (gfloat)total);
 
 	gtk_progress_set_show_text
 		(GTK_PROGRESS(inc_dialog->mainwin->progressbar), TRUE);
-	g_snprintf(buf, sizeof(buf), "%d / %d",
-		   pop3_session->cur_msg, pop3_session->count);
+	if (total_num_to_recv > 0)
+		g_snprintf(buf, sizeof(buf), "%d / %d", cur_num, total_num_to_recv);
+	else
+		buf[0] = '\0';
 	gtk_progress_set_format_string
 		(GTK_PROGRESS(inc_dialog->mainwin->progressbar), buf);
-	gtk_progress_bar_update
-		(GTK_PROGRESS_BAR(inc_dialog->mainwin->progressbar),
-		 (gfloat)cur_total / (gfloat)total);
+	if (total > 0)
+		gtk_progress_bar_update
+			(GTK_PROGRESS_BAR(inc_dialog->mainwin->progressbar),
+			 (gfloat)cur_total / (gfloat)total);
 
 	if (pop3_session->cur_total_num > 0) {
 		g_snprintf(buf, sizeof(buf),
@@ -1164,6 +1183,7 @@ static gint inc_recv_message(Session *session, const gchar *msg, gpointer data)
 {
 	IncSession *inc_session = (IncSession *)data;
 	IncProgressDialog *inc_dialog;
+	Pop3Session *pop3_session = POP3_SESSION(session);
 
 	g_return_val_if_fail(inc_session != NULL, -1);
 
@@ -1181,8 +1201,24 @@ static gint inc_recv_message(Session *session, const gchar *msg, gpointer data)
 		inc_progress_dialog_update(inc_dialog, inc_session);
 		gdk_threads_leave();
 		break;
-	case POP3_RETR:
-		inc_recv_data_progressive(session, 0, 0, inc_session);
+	case POP3_RETR_RECV:
+		if (inc_session->retr_count == 0) {
+			inc_session->start_num = pop3_session->cur_msg;
+			inc_session->start_recv_bytes = pop3_session->cur_total_bytes;
+			inc_session->cur_total_bytes = pop3_session->cur_total_bytes;
+#if 0
+			g_print("total_bytes_to_recv = %lld total_num_to_recv = %d\n", pop3_session->total_bytes - inc_session->start_recv_bytes, pop3_session->count - inc_session->start_num + 1);
+			g_print("pop: total_bytes = %lld cur_total_bytes = %lld\n", pop3_session->total_bytes, pop3_session->cur_total_bytes);
+			g_print("pop: count = %d cur_msg = %d\n", pop3_session->count, pop3_session->cur_msg);
+#endif
+			inc_session->retr_count++;
+			gdk_threads_enter();
+			inc_progress_dialog_update(inc_dialog, inc_session);
+			gdk_threads_leave();
+		} else {
+			inc_session->retr_count++;
+			inc_recv_data_progressive(session, 0, 0, inc_session);
+		}
 		break;
 	case POP3_LOGOUT:
 		gdk_threads_enter();
