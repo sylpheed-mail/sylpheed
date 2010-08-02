@@ -3739,7 +3739,7 @@ void summary_save_as(SummaryView *summaryview)
 {
 	GtkTreeIter iter;
 	MsgInfo *msginfo = NULL;
-	gchar *filename = NULL;
+	gchar *filename;
 	gchar *src, *dest;
 
 	if (!summaryview->selected) return;
@@ -3752,12 +3752,17 @@ void summary_save_as(SummaryView *summaryview)
 	if (!msginfo) return;
 
 	if (msginfo->subject) {
-		Xstrdup_a(filename, msginfo->subject, return);
-		subst_for_filename(filename);
+		filename = g_strdup_printf("%s.eml", msginfo->subject);
+	} else {
+		filename = g_strdup_printf("%u.eml", msginfo->msgnum);
 	}
+	subst_for_filename(filename);
 
 	dest = filesel_save_as(filename);
-	if (!dest) return;
+
+	g_free(filename);
+	if (!dest)
+		return;
 
 	src = procmsg_get_message_file(msginfo);
 	if (copy_file(src, dest, TRUE) < 0) {
