@@ -1177,6 +1177,7 @@ static void plugin_init(void)
 	ADD_SYM(summary_write_lock);
 	ADD_SYM(summary_write_unlock);
 	ADD_SYM(summary_is_write_locked);
+	ADD_SYM(summary_get_current_folder);
 	ADD_SYM(summary_get_selection_type);
 	ADD_SYM(summary_get_selected_msg_list);
 	ADD_SYM(summary_get_msg_list);

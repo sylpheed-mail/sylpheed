@@ -789,6 +789,20 @@ gboolean syl_plugin_summary_is_write_locked(void)
 	return FALSE;
 }
 
+FolderItem *syl_plugin_summary_get_current_folder(void)
+{
+	FolderItem * (*func)(gpointer);
+	gpointer summary;
+
+	summary = syl_plugin_summary_view_get();
+	if (summary) {
+		GETFUNC("summary_get_current_folder");
+		return SAFE_CALL_ARG1_RET(func, summary);
+	}
+
+	return NULL;
+}
+
 gint syl_plugin_summary_get_selection_type(void)
 {
 	gint (*func)(gpointer);

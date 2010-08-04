@@ -1144,6 +1144,11 @@ gboolean summary_is_write_locked(SummaryView *summaryview)
 	return summaryview->write_lock_count > 0;
 }
 
+FolderItem *summary_get_current_folder(SummaryView *summaryview)
+{
+	return summaryview->folder_item;
+}
+
 SummarySelection summary_get_selection_type(SummaryView *summaryview)
 {
 	SummarySelection selection;

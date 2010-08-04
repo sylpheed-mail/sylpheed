@@ -178,6 +178,9 @@ void syl_plugin_summary_write_lock		(void);
 void syl_plugin_summary_write_unlock		(void);
 gboolean syl_plugin_summary_is_write_locked	(void);
 
+FolderItem *syl_plugin_summary_get_current_folder
+						(void);
+
 gint syl_plugin_summary_get_selection_type	(void);
 GSList *syl_plugin_summary_get_selected_msg_list(void);
 GSList *syl_plugin_summary_get_msg_list		(void);
