@@ -12,7 +12,7 @@ INCLUDES = \
 	-I$(top_srcdir)/libsylph \
 	-I$(top_srcdir)/src
 
-test_la_LIBADD = \
+attachment_tool_la_LIBADD = \
 	$(GTK_LIBS) \
 	$(top_builddir)/src/libsylpheed-plugin-0.la \
 	$(top_builddir)/libsylph/libsylph-0.la
