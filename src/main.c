@@ -1181,6 +1181,12 @@ static void plugin_init(void)
 	ADD_SYM(summary_get_selected_msg_list);
 	ADD_SYM(summary_get_msg_list);
 	ADD_SYM(summary_show_queued_msgs);
+	ADD_SYM(summary_redisplay_msg);
+	ADD_SYM(summary_open_msg);
+	ADD_SYM(summary_view_source);
+	ADD_SYM(summary_reedit);
+	ADD_SYM(summary_update_selected_rows);
+	ADD_SYM(summary_update_by_msgnum);
 
 	ADD_SYM(messageview_create_with_new_window);
 	ADD_SYM(messageview_show);
@@ -1214,6 +1220,11 @@ static void plugin_init(void)
 	ADD_SYM(update_check_set_jump_url);
 	ADD_SYM(update_check_get_jump_url);
 #endif
+
+	ADD_SYM(alertpanel_full);
+	ADD_SYM(alertpanel);
+	ADD_SYM(alertpanel_message);
+	ADD_SYM(alertpanel_message_with_disable);
 
 	syl_plugin_signal_connect("plugin-load", G_CALLBACK(load_cb), NULL);
 

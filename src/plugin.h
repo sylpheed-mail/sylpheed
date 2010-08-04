@@ -45,7 +45,7 @@ typedef void (*SylPluginLoadFunc)	(void);
 typedef void (*SylPluginUnloadFunc)	(void);
 typedef void (*SylPluginCallbackFunc)	(void);
 
-#define SYL_PLUGIN_INTERFACE_VERSION	0x0105
+#define SYL_PLUGIN_INTERFACE_VERSION	0x0106
 
 struct _SylPlugin
 {
@@ -182,6 +182,14 @@ gint syl_plugin_summary_get_selection_type	(void);
 GSList *syl_plugin_summary_get_selected_msg_list(void);
 GSList *syl_plugin_summary_get_msg_list		(void);
 
+void syl_plugin_summary_redisplay_msg		(void);
+void syl_plugin_summary_open_msg		(void);
+void syl_plugin_summary_view_source		(void);
+void syl_plugin_summary_reedit			(void);
+
+void syl_plugin_summary_update_selected_rows	(void);
+void syl_plugin_summary_update_by_msgnum	(guint msgnum);
+
 /* MessageView */
 gpointer syl_plugin_messageview_create_with_new_window
 						(void);
@@ -237,5 +245,27 @@ void syl_plugin_update_check_set_check_url		(const gchar *url);
 const gchar *syl_plugin_update_check_get_check_url	(void);
 void syl_plugin_update_check_set_jump_url		(const gchar *url);
 const gchar *syl_plugin_update_check_get_jump_url	(void);
+
+/* type corresponds to AlertType
+ * default_value and return value corresponds to AlertValue */
+gint syl_plugin_alertpanel_full			(const gchar *title,
+						 const gchar *message,
+						 gint type,
+						 gint default_value,
+						 gboolean can_disable,
+						 const gchar *btn1_label,
+						 const gchar *btn2_label,
+						 const gchar *btn3_label);
+gint syl_plugin_alertpanel			(const gchar *title,
+						 const gchar *message,
+						 const gchar *btn1_label,
+						 const gchar *btn2_label,
+						 const gchar *btn3_label);
+void syl_plugin_alertpanel_message		(const gchar *title,
+						 const gchar *message,
+						 gint type);
+gint syl_plugin_alertpanel_message_with_disable	(const gchar *title,
+						 const gchar *message,
+						 gint type);
 
 #endif /* __PLUGIN_H__ */
