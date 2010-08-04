@@ -210,7 +210,7 @@ static gboolean remove_attachment(MsgInfo *msginfo)
 
 	if (!err) {
 		debug_print("overwriting original message file: %s\n", infile);
-		if (copy_file(outfile, infile, TRUE) == 0) {
+		if (copy_file(outfile, infile, FALSE) == 0) {
 			struct stat s;
 			if (g_stat(infile, &s) == 0) {
 				msginfo->size = s.st_size;
