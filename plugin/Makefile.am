@@ -1,1 +1,1 @@
-SUBDIRS = test
+SUBDIRS = attachment_tool test
