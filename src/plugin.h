@@ -162,7 +162,7 @@ void syl_plugin_folderview_check_new_selected	(void);
 
 /* SummaryView */
 gpointer syl_plugin_summary_view_get		(void);
-void syl_plugin_sumary_select_by_msgnum		(guint msgnum);
+void syl_plugin_summary_select_by_msgnum	(guint msgnum);
 gboolean syl_plugin_summary_select_by_msginfo	(MsgInfo *msginfo);
 
 void syl_plugin_open_message			(const gchar *folder_id,
