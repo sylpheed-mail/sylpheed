@@ -25,6 +25,12 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#  include <winreg.h>
+#  include <wchar.h>
+#endif
+
 #include "inputdialog.h"
 #include "alertpanel.h"
 #include "mainwindow.h"
@@ -1015,4 +1021,161 @@ PrefsAccount *setup_account(void)
 	memset(&setupac, 0, sizeof(setupac));
 
 	return ac;
+}
+
+#ifdef G_OS_WIN32
+struct Identity
+{
+	gchar *name;
+	gchar *path;
+};
+
+static GSList *get_dbx_source(void)
+{
+	HKEY reg_key, hkey, hkey2;
+	wchar_t name[1024];
+	DWORD size, type, i;
+	LPWSTR username, store, path;
+	GSList *src_list = NULL;
+
+	if (RegOpenKeyExW(HKEY_CURRENT_USER, L"Identities", 0, KEY_READ, &reg_key) != ERROR_SUCCESS)
+		return NULL;
+
+	for (i = 0; ; i++) {
+		size = sizeof(name);
+		if (RegEnumKeyExW(reg_key, i, name, &size, 0, 0, 0, 0) != ERROR_SUCCESS)
+			break;
+		if (RegOpenKeyExW(reg_key, name, 0, KEY_READ, &hkey) != ERROR_SUCCESS)
+			continue;
+
+		do {
+			if (RegQueryValueExW(hkey, L"UserName", 0, &type, 0, &size) != ERROR_SUCCESS)
+				break;
+			if (type != REG_SZ)
+				break;
+			++size;
+			username = g_malloc(size);
+			if (RegQueryValueExW(hkey, L"UserName", 0, &type, (LPBYTE)username, &size) != ERROR_SUCCESS) {
+				g_free(username);
+				break;
+			}
+
+			if (RegOpenKeyExW(hkey, L"Software\\Microsoft\\Outlook Express\\5.0", 0, KEY_READ, &hkey2) != ERROR_SUCCESS) {
+				g_free(username);
+				break;
+			}
+
+			do {
+				if (RegQueryValueExW(hkey2, L"Store Root", 0, &type, 0, &size) != ERROR_SUCCESS)
+					break;
+				if (type != REG_SZ && type != REG_EXPAND_SZ)
+					break;
+
+				++size;
+				store = g_malloc(size);
+				if (RegQueryValueExW(hkey2, L"Store Root", 0, &type, (LPBYTE)store, &size) != ERROR_SUCCESS) {
+					g_free(store);
+					break;
+				}
+
+				if (type == REG_EXPAND_SZ) {
+					size = MAX_PATH * 2;
+					path = g_malloc(size);
+					if (!ExpandEnvironmentStringsW(store, path, size)) {
+						g_free(path);
+						path = NULL;
+					}
+				} else {
+					path = store;
+					store = NULL;
+				}
+
+				if (path) {
+					struct Identity *ident;
+
+					ident = g_new(struct Identity, 1);
+					ident->name = g_utf16_to_utf8(username, -1, NULL, NULL, NULL);
+					ident->path = g_utf16_to_utf8(path, -1, NULL, NULL, NULL);
+					src_list = g_slist_append(src_list, ident);
+					debug_print("get_dbx_source: username = %s , path = %s\n", ident->name, ident->path);
+					g_free(path);
+				}
+				g_free(store);
+			} while (0);
+			g_free(username);
+			RegCloseKey(hkey2);
+		} while (0);
+		RegCloseKey(hkey);
+	}
+
+	RegCloseKey(reg_key);
+
+	return src_list;
+}
+#endif /* G_OS_WIN32 */
+
+gint setup_import(void)
+{
+#ifdef G_OS_WIN32
+	AlertValue val;
+	GSList *src_list, *cur;
+	struct Identity *ident;
+	gchar *src;
+	Folder *folder;
+	FolderItem *parent, *dest;
+
+	debug_print("setup_import\n");
+
+	src_list = get_dbx_source();
+	if (!src_list)
+		return 0;
+
+	val = alertpanel(_("Importing mail data"), _("The mail store of Outlook Express was found. Do you want to import the mail data of Outlook Express?\n\n(The folder structure will not be reproduced)"), GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+	if (val != G_ALERTDEFAULT) {
+		goto finish;
+	}
+
+	folder = folder_get_default_folder();
+	if (!folder) {
+		g_warning("Cannot get default folder");
+		goto finish;
+	}
+	parent = FOLDER_ITEM(folder->node->data);
+	if (!parent) {
+		g_warning("Cannot get root folder");
+		goto finish;
+	}
+	dest = folder_find_child_item_by_name(parent, "Imported");
+	if (!dest) {
+		dest = folder->klass->create_folder(folder, parent, "Imported");
+	}
+	if (!dest) {
+		g_warning("Cannot create a folder");
+		goto finish;
+	}
+	parent = dest;
+	folderview_append_item(folderview_get(), NULL, parent, TRUE);
+	folder_write_list();
+
+	for (cur = src_list; cur != NULL; cur = cur->next) {
+		ident = (struct Identity *)cur->data;
+		dest = folder->klass->create_folder(folder, parent, ident->name);
+		if (!dest)
+			continue;
+		folderview_append_item(folderview_get(), NULL, dest, TRUE);
+		folder_write_list();
+		import_dbx_folders(dest, ident->path);
+	}
+
+finish:
+	for (cur = src_list; cur != NULL; cur = cur->next) {
+		ident = (struct Identity *)cur->data;
+		g_free(ident->name);
+		g_free(ident->path);
+		g_free(ident);
+	}
+	g_slist_free(src_list);
+#endif /* G_OS_WIN32 */
+
+	return 0;
 }

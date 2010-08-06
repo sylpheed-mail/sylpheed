@@ -462,6 +462,93 @@ static gint import_dbx(FolderItem *dest, const gchar *file)
 	return 0;
 }
 
+gint import_dbx_folders(FolderItem *dest, const gchar *path)
+{
+	GDir *dir;
+	const gchar *dir_name, *p;
+	gchar *orig_name, *folder_name, *file;
+	gchar *msg;
+	FolderItem *sub_folder;
+	gint count;
+	gint ok = 0;
+
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(dest->folder != NULL, -1);
+	g_return_val_if_fail(path != NULL, -1);
+
+	if ((dir = g_dir_open(path, 0, NULL)) == NULL) {
+		g_warning("failed to open directory: %s", path);
+		return -1;
+	}
+
+	progress = progress_dialog_simple_create();
+	gtk_window_set_title(GTK_WINDOW(progress->window), _("Importing"));
+	progress_dialog_set_label(progress, _("Importing Outlook Express folders"));
+	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
+	manage_window_set_transient(GTK_WINDOW(progress->window));
+	gtk_widget_hide(progress->cancel_btn);
+	g_signal_connect(G_OBJECT(progress->window), "delete_event",
+			 G_CALLBACK(gtk_true), NULL);
+	gtk_widget_show(progress->window);
+	ui_update();
+
+	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+		if ((p = strrchr(dir_name, '.')) &&
+		    !g_ascii_strcasecmp(p + 1, "dbx")) {
+			file = g_strconcat(path, G_DIR_SEPARATOR_S, dir_name,
+					   NULL);
+			orig_name = g_strndup(dir_name, p - dir_name);
+			if (!g_file_test(file, G_FILE_TEST_IS_REGULAR) ||
+			    !g_ascii_strcasecmp(orig_name, "Folders") ||
+			    !g_ascii_strcasecmp(orig_name, "Offline") ||
+			    !g_ascii_strcasecmp(orig_name, "Pop3uidl")) {
+				g_free(orig_name);
+				g_free(file);
+				continue;
+			}
+
+			folder_name = g_strdup(orig_name);
+			count = 1;
+			while (folder_find_child_item_by_name(dest, folder_name)) {
+				g_free(folder_name);
+				folder_name = g_strdup_printf("%s (%d)", orig_name, count++);
+			}
+			g_print("orig_name: %s , folder_name: %s\n", orig_name, folder_name);
+
+			sub_folder = dest->folder->klass->create_folder(dest->folder, dest, folder_name);
+			if (!sub_folder) {
+				alertpanel_error(_("Cannot create the folder '%s'."), folder_name);
+				ok = -1;
+				break;
+			}
+			folderview_append_item(folderview_get(), NULL, sub_folder, TRUE);
+			folder_write_list();
+			msg = g_strdup_printf(_("Importing %s ..."), orig_name);
+			progress_dialog_set_label(progress, msg);
+			g_free(msg);
+			import_dbx(sub_folder, file);
+
+			progress_dialog_set_label(progress, _("Scanning folder..."));
+			ui_update();
+			folder_item_scan(sub_folder);
+			folderview_update_item(sub_folder, TRUE);
+
+			g_free(folder_name);
+			g_free(orig_name);
+			g_free(file);
+		}
+	}
+
+	g_dir_close(dir);
+
+	progress_dialog_destroy(progress);
+	progress = NULL;
+
+	folder_write_list();
+
+	return ok;
+}
+
 static void import_create(void)
 {
 	GtkWidget *vbox;

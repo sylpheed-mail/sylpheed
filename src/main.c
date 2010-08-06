@@ -214,6 +214,7 @@ int main(int argc, char *argv[])
 #endif
 	GObject *syl_app;
 	PrefsAccount *new_account = NULL;
+	gboolean first_run = FALSE;
 
 	app_init();
 	parse_cmd_opt(argc, argv);
@@ -339,6 +340,7 @@ int main(int argc, char *argv[])
 	main_window_reflect_prefs_all();
 
 	if (folder_read_list() < 0) {
+		first_run = TRUE;
 		setup_mailbox();
 		folder_write_list();
 	}
@@ -366,6 +368,10 @@ int main(int argc, char *argv[])
 	plugin_init();
 
 	g_signal_emit_by_name(syl_app, "init-done");
+
+	if (first_run) {
+		setup_import();
+	}
 
 	remote_command_exec();
 
