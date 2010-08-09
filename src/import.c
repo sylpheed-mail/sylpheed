@@ -78,6 +78,7 @@ static GtkWidget *cancel_button;
 static gboolean import_finished;
 static gboolean import_ack;
 static ProgressDialog *progress;
+static gboolean import_progress_cancelled;
 
 static void import_create	(void);
 static gint import_do		(void);
@@ -103,6 +104,12 @@ static gint delete_event	(GtkWidget	*widget,
 static gboolean key_pressed	(GtkWidget	*widget,
 				 GdkEventKey	*event,
 				 gpointer	 data);
+
+static void import_progress_cancel_cb	(GtkWidget	*widget,
+					 gpointer	 data);
+static gint import_progress_delete_event(GtkWidget	*widget,
+					 GdkEventAny	*event,
+					 gpointer	 data);
 
 
 static void proc_mbox_func(Folder *folder, FolderItem *item, gpointer data)
@@ -145,6 +152,7 @@ gint import_mail(FolderItem *default_dest)
 
 	import_finished = FALSE;
 	import_ack = FALSE;
+	import_progress_cancelled = FALSE;
 
 	inc_lock();
 
@@ -212,13 +220,15 @@ static gint import_do(void)
 	g_free(msg);
 	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
 	manage_window_set_transient(GTK_WINDOW(progress->window));
-	gtk_widget_hide(progress->cancel_btn);
+	g_signal_connect(G_OBJECT(progress->cancel_btn), "clicked",
+			 G_CALLBACK(import_progress_cancel_cb), NULL);
 	g_signal_connect(G_OBJECT(progress->window), "delete_event",
-			 G_CALLBACK(gtk_true), NULL);
+			 G_CALLBACK(import_progress_delete_event), NULL);
 	gtk_widget_show(progress->window);
 	ui_update();
 
 	if (type == IMPORT_MBOX) {
+		gtk_widget_set_sensitive(progress->cancel_btn, FALSE);
 		folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
 		ok = proc_mbox(dest, filename, NULL);
 		folder_set_ui_func(dest->folder, NULL, NULL);
@@ -290,6 +300,8 @@ static gint import_eml_folder(FolderItem *dest, const gchar *path)
 				g_warning("import_eml_folder(): folder_item_add_msg_msginfo() failed.");
 				break;
 			}
+			if (import_progress_cancelled)
+				break;
 		}
 	}
 
@@ -452,6 +464,8 @@ static gint import_dbx(FolderItem *dest, const gchar *file)
 		if (get_dbx_data(fp, g_array_index(array, gint32, i), dest) < 0)
 			break;
 		count++;
+		if (import_progress_cancelled)
+			break;
 	}
 
 	debug_print("import_dbx: %d imported\n", count);
@@ -481,14 +495,17 @@ gint import_dbx_folders(FolderItem *dest, const gchar *path)
 		return -1;
 	}
 
+	import_progress_cancelled = FALSE;
+
 	progress = progress_dialog_simple_create();
 	gtk_window_set_title(GTK_WINDOW(progress->window), _("Importing"));
 	progress_dialog_set_label(progress, _("Importing Outlook Express folders"));
 	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
 	manage_window_set_transient(GTK_WINDOW(progress->window));
-	gtk_widget_hide(progress->cancel_btn);
+	g_signal_connect(G_OBJECT(progress->cancel_btn), "clicked",
+			 G_CALLBACK(import_progress_cancel_cb), NULL);
 	g_signal_connect(G_OBJECT(progress->window), "delete_event",
-			 G_CALLBACK(gtk_true), NULL);
+			 G_CALLBACK(import_progress_delete_event), NULL);
 	gtk_widget_show(progress->window);
 	ui_update();
 
@@ -513,7 +530,7 @@ gint import_dbx_folders(FolderItem *dest, const gchar *path)
 				g_free(folder_name);
 				folder_name = g_strdup_printf("%s (%d)", orig_name, count++);
 			}
-			g_print("orig_name: %s , folder_name: %s\n", orig_name, folder_name);
+			debug_print("orig_name: %s , folder_name: %s\n", orig_name, folder_name);
 
 			sub_folder = dest->folder->klass->create_folder(dest->folder, dest, folder_name);
 			if (!sub_folder) {
@@ -536,6 +553,10 @@ gint import_dbx_folders(FolderItem *dest, const gchar *path)
 			g_free(folder_name);
 			g_free(orig_name);
 			g_free(file);
+			if (import_progress_cancelled) {
+				ok = -2;
+				break;
+			}
 		}
 	}
 
@@ -739,4 +760,17 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data
 	if (event && event->keyval == GDK_Escape)
 		import_cancel_cb(NULL, NULL);
 	return FALSE;
+}
+
+static void import_progress_cancel_cb(GtkWidget *widget, gpointer data)
+{
+	debug_print("import cancelled\n");
+	import_progress_cancelled = TRUE;
+}
+
+static gint import_progress_delete_event(GtkWidget *widget, GdkEventAny *event,
+					 gpointer data)
+{
+	import_progress_cancel_cb(NULL, NULL);
+	return TRUE;
 }

@@ -64,7 +64,6 @@
 #include "filter.h"
 #include "send_message.h"
 #include "inc.h"
-#include "import.h"
 #include "manage_window.h"
 #include "alertpanel.h"
 #include "inputdialog.h"

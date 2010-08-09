@@ -1123,6 +1123,7 @@ gint setup_import(void)
 	gchar *src;
 	Folder *folder;
 	FolderItem *parent, *dest;
+	gint ok;
 
 	debug_print("setup_import\n");
 
@@ -1164,7 +1165,9 @@ gint setup_import(void)
 			continue;
 		folderview_append_item(folderview_get(), NULL, dest, TRUE);
 		folder_write_list();
-		import_dbx_folders(dest, ident->path);
+		ok = import_dbx_folders(dest, ident->path);
+		if (ok < 0)
+			break;
 	}
 
 finish:
