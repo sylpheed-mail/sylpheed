@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-30 15:06+0900\n"
+"POT-Creation-Date: 2010-08-09 16:25+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -317,7 +317,7 @@ msgstr "Izvorna mapa je identična ciljni.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Kopiram sporočilo %s%c%d v %s ...\n"
 
-#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:186
+#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:185
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -1247,15 +1247,15 @@ msgstr "Skupni naslov"
 msgid "Personal address"
 msgstr "Osebni naslov"
 
-#: src/alertpanel.c:142 src/compose.c:6729 src/main.c:770
+#: src/alertpanel.c:142 src/compose.c:6729 src/main.c:775
 msgid "Notice"
 msgstr "Opomba"
 
-#: src/alertpanel.c:155 src/main.c:893
+#: src/alertpanel.c:155 src/main.c:898
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: src/alertpanel.c:168 src/inc.c:746
+#: src/alertpanel.c:168 src/inc.c:751
 msgid "Error"
 msgstr "Napaka"
 
@@ -1298,7 +1298,7 @@ msgstr "Rjava"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5117
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5127
 msgid "None"
 msgstr "Nič"
 
@@ -1680,7 +1680,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Ne morem dobiti dela večdelnega sporočila."
 
 #: src/compose.c:2864 src/headerview.c:233 src/query_search.c:790
-#: src/rpop3.c:667 src/summaryview.c:2411
+#: src/rpop3.c:667 src/summaryview.c:2416
 msgid "(No Subject)"
 msgstr "(Brez zadeve)"
 
@@ -1871,7 +1871,7 @@ msgstr "Tip MIME"
 #. S_COL_DATE
 #: src/compose.c:5305 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
-#: src/summaryview.c:5266
+#: src/summaryview.c:5276
 msgid "Size"
 msgstr "Velikost"
 
@@ -2290,7 +2290,7 @@ msgstr "Izvozi"
 msgid "Specify source folder and destination file."
 msgstr "Določite ciljno datoteko mbox in ciljno mapo."
 
-#: src/export.c:341 src/import.c:335
+#: src/export.c:341 src/import.c:614
 #, fuzzy
 msgid "File format:"
 msgstr "Oblika datuma"
@@ -2305,7 +2305,7 @@ msgstr "Izvorni imenik:"
 msgid "Destination:"
 msgstr "Cilj"
 
-#: src/export.c:361 src/import.c:355
+#: src/export.c:361 src/import.c:634
 msgid "UNIX mbox"
 msgstr ""
 
@@ -2317,7 +2317,7 @@ msgstr ""
 msgid "MH (number only)"
 msgstr ""
 
-#: src/export.c:381 src/export.c:387 src/import.c:372 src/import.c:378
+#: src/export.c:381 src/export.c:387 src/import.c:654 src/import.c:660
 #: src/prefs_account_dialog.c:958
 msgid " Select... "
 msgstr " Izberi... "
@@ -2498,12 +2498,12 @@ msgstr "Nastavljam informacije o mapi...\n"
 msgid "Setting folder info..."
 msgstr "Nastavljam informacije o mapi..."
 
-#: src/folderview.c:911 src/mainwindow.c:4148 src/setup.c:298
+#: src/folderview.c:911 src/mainwindow.c:4148 src/setup.c:304
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Preiskujem mapo %s%c%s ..."
 
-#: src/folderview.c:915 src/mainwindow.c:4153 src/setup.c:303
+#: src/folderview.c:915 src/mainwindow.c:4153 src/setup.c:309
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Preiskujem mapo %s ..."
@@ -2681,7 +2681,7 @@ msgid "Creating header view...\n"
 msgstr "Delam gledanje zaglavja...\n"
 
 #: src/headerview.c:212 src/query_search.c:791 src/rpop3.c:668
-#: src/summaryview.c:2414
+#: src/summaryview.c:2419
 msgid "(No From)"
 msgstr "(Brez pošiljatelja)"
 
@@ -2693,71 +2693,84 @@ msgstr "Delam gledanje slike...\n"
 msgid "Can't load the image."
 msgstr "Ne morem naložiti slike."
 
-#: src/import.c:187
+#: src/import.c:200
 #, fuzzy
 msgid "The source file does not exist."
 msgstr "Datoteka %s ne obstaja\n"
 
-#: src/import.c:198
+#: src/import.c:211
 #, fuzzy
 msgid "Can't find the destination folder."
 msgstr "Določite ciljno datoteko mbox in ciljno mapo."
 
-#: src/import.c:203
+#: src/import.c:216 src/import.c:543
 #, fuzzy, c-format
 msgid "Importing %s ..."
 msgstr "Preiskujem mapo %s ..."
 
-#: src/import.c:205
+#: src/import.c:218 src/import.c:501
 #, fuzzy
 msgid "Importing"
 msgstr "Uvozi"
 
-#: src/import.c:224
+#: src/import.c:241 src/import.c:548
 #, fuzzy
 msgid "Scanning folder..."
 msgstr "Preiskujem mapo %s ..."
 
-#: src/import.c:235
+#: src/import.c:252
 #, fuzzy
 msgid "Error occurred on import."
 msgstr "Med pošiljanjem je prišlo do napake\n"
 
-#: src/import.c:306
+#: src/import.c:502
+msgid "Importing Outlook Express folders"
+msgstr ""
+
+#: src/import.c:537
+#, fuzzy, c-format
+msgid "Cannot create the folder '%s'."
+msgstr "Ne morem narediti mape '%s'."
+
+#: src/import.c:585
 msgid "Import"
 msgstr "Uvozi"
 
-#: src/import.c:325 src/import.c:410
+#: src/import.c:604 src/import.c:692
 #, fuzzy
 msgid "Specify source file and destination folder."
 msgstr "Določite ciljno datoteko mbox in ciljno mapo."
 
-#: src/import.c:340
+#: src/import.c:619
 #, fuzzy
 msgid "Source:"
 msgstr "Izvorni imenik:"
 
-#: src/import.c:345
+#: src/import.c:624
 #, fuzzy
 msgid "Destination folder:"
 msgstr "Ciljni imenik:"
 
-#: src/import.c:358
+#: src/import.c:637
 #, fuzzy
 msgid "eml (folder)"
 msgstr "Nova mapa"
 
-#: src/import.c:407
+#: src/import.c:640
+msgid "Outlook Express (dbx)"
+msgstr ""
+
+#: src/import.c:689
 #, fuzzy
 msgid "Specify source folder including eml files and destination folder."
 msgstr "Določite ciljno datoteko mbox in ciljno mapo."
 
-#: src/import.c:437
+#: src/import.c:719
 #, fuzzy
 msgid "Select importing folder"
 msgstr "Izberite datoteko za uvoz"
 
-#: src/import.c:440
+#: src/import.c:722
 msgid "Select importing file"
 msgstr "Izberite datoteko za uvoz"
 
@@ -2941,197 +2954,197 @@ msgstr "Prekliči"
 msgid "Standby"
 msgstr "V pripravljenosti"
 
-#: src/inc.c:702 src/inc.c:752
+#: src/inc.c:707 src/inc.c:757
 msgid "Cancelled"
 msgstr "Preklicano"
 
-#: src/inc.c:713
+#: src/inc.c:718
 msgid "Retrieving"
 msgstr "Prenašam"
 
-#: src/inc.c:722 src/inc.c:1031
+#: src/inc.c:727 src/inc.c:1050
 #, fuzzy, c-format
 msgid "%d message(s) (%s) received"
 msgstr "Opravljeno (%d sporočil (%s) prejetih)"
 
-#: src/inc.c:726
+#: src/inc.c:731
 #, fuzzy, c-format
 msgid "no new messages"
 msgstr "Ni novih sporočil."
 
-#: src/inc.c:727
+#: src/inc.c:732
 #, fuzzy
 msgid "Done"
 msgstr "Opravljeno."
 
-#: src/inc.c:732
+#: src/inc.c:737
 msgid "Connection failed"
 msgstr "Povezava ni uspela"
 
-#: src/inc.c:735
+#: src/inc.c:740
 msgid "Auth failed"
 msgstr "Overovitev ni uspela"
 
-#: src/inc.c:739
+#: src/inc.c:744
 msgid "Locked"
 msgstr "Zaklenjeno"
 
-#: src/inc.c:749
+#: src/inc.c:754
 #, fuzzy
 msgid "Timeout"
 msgstr "Čas izteka (sek.)"
 
-#: src/inc.c:796
+#: src/inc.c:801
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Končano (%d novih sporočil)"
 
-#: src/inc.c:799
+#: src/inc.c:804
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Končano (ni novih sporočil)"
 
-#: src/inc.c:808
+#: src/inc.c:813
 msgid "Some errors occurred while getting mail."
 msgstr "Med prejemanjem pošte je prišlo do nekaterih napak."
 
-#: src/inc.c:842
+#: src/inc.c:847
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "sprejemam nova sporočila z računa %s...\n"
 
-#: src/inc.c:846
+#: src/inc.c:851
 #, fuzzy, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "Overovljam"
 
-#: src/inc.c:849
+#: src/inc.c:854
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Prenašam nova sporočila"
 
-#: src/inc.c:854
+#: src/inc.c:859
 #, fuzzy, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Povezujem se s strežnikom POP: %s"
 
-#: src/inc.c:868
+#: src/inc.c:873
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ne morem se povezati s strežnikom POP: %s%d\n"
 
-#: src/inc.c:950 src/rpop3.c:827 src/send_message.c:817
+#: src/inc.c:955 src/rpop3.c:827 src/send_message.c:817
 #, c-format
 msgid "Authenticating..."
 msgstr "Overovljam..."
 
-#: src/inc.c:951
+#: src/inc.c:956
 #, fuzzy, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Sprejemam sporočila iz %s v %s...\n"
 
-#: src/inc.c:956
+#: src/inc.c:961
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Ugotavljam število novih sporočil (STAT)..."
 
-#: src/inc.c:960
+#: src/inc.c:965
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Ugotavljam število novih sporočil (LAST)..."
 
-#: src/inc.c:964
+#: src/inc.c:969
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Ugotavljam število novih sporočil (UIDL)..."
 
-#: src/inc.c:968
+#: src/inc.c:973
 msgid "Getting the size of messages (LIST)..."
 msgstr "Ugotavljam velikost sporočil (LIST)..."
 
-#: src/inc.c:978
+#: src/inc.c:983
 #, c-format
 msgid "Deleting message %d"
 msgstr "Brišem sporočilo %d"
 
-#: src/inc.c:985 src/send_message.c:835
+#: src/inc.c:990 src/send_message.c:835
 msgid "Quitting"
 msgstr "Zapuščam"
 
-#: src/inc.c:1010
+#: src/inc.c:1025
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Prenašam sporočilo (%d / %d) (%s / %s)"
 
-#: src/inc.c:1250 src/inc.c:1273 src/summaryview.c:4644
+#: src/inc.c:1286 src/inc.c:1309 src/summaryview.c:4654
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1332
+#: src/inc.c:1368
 #, fuzzy
 msgid "Connection failed."
 msgstr "Povezava ni uspela"
 
-#: src/inc.c:1338
+#: src/inc.c:1374
 msgid "Error occurred while processing mail."
 msgstr "Med obdelavo pošte je prišlo do napake."
 
-#: src/inc.c:1343
+#: src/inc.c:1379
 #, fuzzy, c-format
 msgid ""
 "Error occurred while processing mail:\n"
 "%s"
 msgstr "Med obdelavo pošte je prišlo do napake."
 
-#: src/inc.c:1349
+#: src/inc.c:1385
 msgid "No disk space left."
 msgstr "Na disku ni prostora."
 
-#: src/inc.c:1354
+#: src/inc.c:1390
 msgid "Can't write file."
 msgstr "Ne morem napisati datoteke."
 
-#: src/inc.c:1359
+#: src/inc.c:1395
 msgid "Socket error."
 msgstr "napaka v priključku."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1365 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:761
+#: src/inc.c:1401 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:761
 #: src/send_message.c:978
 msgid "Connection closed by the remote host."
 msgstr ""
 
-#: src/inc.c:1371
+#: src/inc.c:1407
 msgid "Mailbox is locked."
 msgstr "Poštni predal je zaklenjen."
 
-#: src/inc.c:1375
+#: src/inc.c:1411
 #, fuzzy, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
 msgstr "Poštni predal je zaklenjen."
 
-#: src/inc.c:1381 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:958
+#: src/inc.c:1417 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:958
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Overovitvena metoda"
 
-#: src/inc.c:1386 src/rpop3.c:521 src/send_message.c:961
+#: src/inc.c:1422 src/rpop3.c:521 src/send_message.c:961
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Overovitvena metoda"
 
-#: src/inc.c:1391 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:982
+#: src/inc.c:1427 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:982
 msgid "Session timed out."
 msgstr ""
 
-#: src/inc.c:1432
+#: src/inc.c:1468
 msgid "Incorporation cancelled\n"
 msgstr "Pripojitev odpovedana\n"
 
-#: src/inc.c:1541
+#: src/inc.c:1577
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Pobiram nova sporočila iz %s v %s...\n"
@@ -3149,16 +3162,16 @@ msgstr "Vnesite geslo"
 msgid "Protocol log"
 msgstr "Dnevnik protokola"
 
-#: src/main.c:575
+#: src/main.c:580
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uporaba: %s [MOŽNOST]...\n"
 
-#: src/main.c:578
+#: src/main.c:583
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [naslov]     odpri okno za sestavljanje novega sporočila"
 
-#: src/main.c:579
+#: src/main.c:584
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3168,73 +3181,73 @@ msgstr ""
 "                         odpri okno za sestavljanje s pripetimi\n"
 "                         podanimi datotekami"
 
-#: src/main.c:582
+#: src/main.c:587
 msgid "  --receive              receive new messages"
 msgstr "  --receive              poberi nova sporočila"
 
-#: src/main.c:583
+#: src/main.c:588
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          poberi nova sporočila z vseh računov"
 
-#: src/main.c:584
+#: src/main.c:589
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 pošlji vsa čakajoča sporočila"
 
-#: src/main.c:585
+#: src/main.c:590
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               prikaži skupno število sporočil"
 
-#: src/main.c:586
+#: src/main.c:591
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               prikaži skupno število sporočil"
 
-#: src/main.c:588
+#: src/main.c:593
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
 
-#: src/main.c:589
+#: src/main.c:594
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:591
+#: src/main.c:596
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:593
+#: src/main.c:598
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                razhroščevalni način"
 
-#: src/main.c:594
+#: src/main.c:599
 msgid "  --debug                debug mode"
 msgstr "  --debug                razhroščevalni način"
 
-#: src/main.c:595
+#: src/main.c:600
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 prikaži to pomoč in končaj"
 
-#: src/main.c:596
+#: src/main.c:601
 msgid "  --version              output version information and exit"
 msgstr "  --version              prikaži informacijo o različici in končaj"
 
-#: src/main.c:600
+#: src/main.c:605
 #, fuzzy, c-format
 msgid "Press any key..."
 msgstr ""
 "ali pritisnite tipko `y'.\n"
 "\n"
 
-#: src/main.c:731
+#: src/main.c:736
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Izhodni nabor znakov"
 
-#: src/main.c:732
+#: src/main.c:737
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3248,19 +3261,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:771
+#: src/main.c:776
 msgid "Composing message exists. Really quit?"
 msgstr "Še vedno sestavljate sporočilo. Ali naj res končam?"
 
-#: src/main.c:782
+#: src/main.c:787
 msgid "Queued messages"
 msgstr "Čakajoča sporočila"
 
-#: src/main.c:783
+#: src/main.c:788
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Nekaj neposlamih sporočil je na čakanju. Ali naj končam?"
 
-#: src/main.c:894
+#: src/main.c:899
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3268,21 +3281,21 @@ msgstr ""
 "GnuPG ni pravilno nameščen ali pa je različica prestara.\n"
 "Podpora za OpenPGP je izključena."
 
-#: src/main.c:1127
+#: src/main.c:1132
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1298
+#: src/main.c:1315
 msgid "another Sylpheed is already running.\n"
 msgstr "Sylpheed že teče.\n"
 
-#: src/main.c:1580
+#: src/main.c:1597
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Pišem nastavitve dejanj..\n"
 
-#: src/main.c:1581
+#: src/main.c:1598
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3977,8 +3990,8 @@ msgstr "Ustvarjam glavno okno...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "GlavnoOkno: alokacija barve %d ni uspela\n"
 
-#: src/mainwindow.c:1211 src/summaryview.c:2563 src/summaryview.c:2650
-#: src/summaryview.c:4209 src/summaryview.c:4338 src/summaryview.c:4726
+#: src/mainwindow.c:1211 src/summaryview.c:2568 src/summaryview.c:2655
+#: src/summaryview.c:4219 src/summaryview.c:4348 src/summaryview.c:4736
 msgid "done.\n"
 msgstr "opravljeno.\n"
 
@@ -4028,11 +4041,11 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "Poštni predal `%s' že obstaja."
 
-#: src/mainwindow.c:1815 src/setup.c:272
+#: src/mainwindow.c:1815 src/setup.c:278
 msgid "Mailbox"
 msgstr "Poštni predal"
 
-#: src/mainwindow.c:1821 src/setup.c:278
+#: src/mainwindow.c:1821 src/setup.c:284
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -4237,7 +4250,7 @@ msgstr "Priloge"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:765 src/summaryview.c:3767
+#: src/messageview.c:765 src/summaryview.c:3777
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Ne morem odstraniti datoteke `%s'."
@@ -6428,19 +6441,19 @@ msgstr "Priloga"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
-#: src/summaryview.c:5259
+#: src/summaryview.c:5269
 msgid "Subject"
 msgstr "Zadeva"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
-#: src/summaryview.c:5262
+#: src/summaryview.c:5272
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
-#: src/summaryview.c:5264
+#: src/summaryview.c:5274
 msgid "Date"
 msgstr "Datum"
 
@@ -6450,7 +6463,7 @@ msgid "Number"
 msgstr "Število"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5270
+#: src/prefs_summary_column.c:74 src/summaryview.c:5280
 #, fuzzy
 msgid "To"
 msgstr "Za:"
@@ -6775,7 +6788,7 @@ msgstr "Filtriram..."
 msgid "Searching %s ..."
 msgstr "Preiskujem mapo %s ..."
 
-#: src/query_search.c:799 src/rpop3.c:676 src/summaryview.c:2335
+#: src/query_search.c:799 src/rpop3.c:676 src/summaryview.c:2340
 msgid "(No Date)"
 msgstr "(Brez datuma)"
 
@@ -6883,7 +6896,7 @@ msgstr "O"
 msgid "%s - POP3 Remote mailbox"
 msgstr "Odstrani poštni predal"
 
-#: src/rpop3.c:414 src/summaryview.c:5268
+#: src/rpop3.c:414 src/summaryview.c:5278
 msgid "No."
 msgstr "Ne."
 
@@ -7115,140 +7128,153 @@ msgstr "Ne morem se povezati s strežnikom SMTP: %s:%d\n"
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Ne morem se povezati s strežnikom SMTP: %s:%d\n"
 
-#: src/setup.c:116 src/setup.c:140
+#: src/setup.c:122 src/setup.c:146
 msgid "Mailbox setting"
 msgstr "Nastavitev poštnega predala"
 
-#: src/setup.c:159
+#: src/setup.c:165
 msgid "This dialog will make initial setup of mailbox."
 msgstr ""
 
-#: src/setup.c:173
+#: src/setup.c:179
 msgid "Create mailbox at the following default location:"
 msgstr ""
 
-#: src/setup.c:193
+#: src/setup.c:199
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
 
-#: src/setup.c:211
+#: src/setup.c:217
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
 msgstr ""
 
-#: src/setup.c:234 src/setup.c:467
+#: src/setup.c:240 src/setup.c:473
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: src/setup.c:234
+#: src/setup.c:240
 msgid "Continue without creating mailbox?"
 msgstr ""
 
-#: src/setup.c:244
+#: src/setup.c:250
 msgid "Please input folder name or full folder path."
 msgstr ""
 
-#: src/setup.c:253
+#: src/setup.c:259
 #, fuzzy, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "Poštni predal `%s' že obstaja."
 
-#: src/setup.c:259
+#: src/setup.c:265
 #, c-format
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr ""
 
-#: src/setup.c:467
+#: src/setup.c:473
 #, fuzzy
 msgid "Cancel mail account setup?"
 msgstr "Nastavitev računa"
 
-#: src/setup.c:487 src/setup.c:495
+#: src/setup.c:493 src/setup.c:501
 #, fuzzy
 msgid "Input value is not valid."
 msgstr "Ime menija ni nastavljeno."
 
-#: src/setup.c:525 src/setup.c:540 src/setup.c:576 src/setup.c:598
-#: src/setup.c:819 src/setup.c:901
+#: src/setup.c:531 src/setup.c:546 src/setup.c:582 src/setup.c:604
+#: src/setup.c:825 src/setup.c:907
 #, fuzzy
 msgid "POP3 server:"
 msgstr "Strežnik LDAP"
 
-#: src/setup.c:531 src/setup.c:550 src/setup.c:589 src/setup.c:606
+#: src/setup.c:537 src/setup.c:556 src/setup.c:595 src/setup.c:612
 #, fuzzy
 msgid "IMAP4 server:"
 msgstr "Strežnik LDAP"
 
-#: src/setup.c:665 src/setup.c:701
+#: src/setup.c:671 src/setup.c:707
 #, fuzzy
 msgid "New account setup"
 msgstr "Nastavitev računa"
 
-#: src/setup.c:720
+#: src/setup.c:726
 msgid "This dialog will make initial setup of new mail account."
 msgstr ""
 
-#: src/setup.c:743
+#: src/setup.c:749
 #, fuzzy
 msgid "Select account type:"
 msgstr "Brisanje računa"
 
-#: src/setup.c:766
+#: src/setup.c:772
 #, fuzzy
 msgid "Input your name and mail address:"
 msgstr "Izberi ključ glede na vaš el. naslov"
 
-#: src/setup.c:775 src/setup.c:889
+#: src/setup.c:781 src/setup.c:895
 #, fuzzy
 msgid "Display name:"
 msgstr "Prikaži ime"
 
-#: src/setup.c:779 src/setup.c:893
+#: src/setup.c:785 src/setup.c:899
 #, fuzzy
 msgid "E-mail address:"
 msgstr "Elektronski naslov"
 
-#: src/setup.c:795
+#: src/setup.c:801
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
 msgstr ""
 
-#: src/setup.c:806
+#: src/setup.c:812
 msgid "Input user ID and mail server:"
 msgstr ""
 
-#: src/setup.c:815 src/setup.c:897
+#: src/setup.c:821 src/setup.c:903
 #, fuzzy
 msgid "User ID:"
 msgstr "Uporabniško ime"
 
-#: src/setup.c:824 src/setup.c:905
+#: src/setup.c:830 src/setup.c:911
 #, fuzzy
 msgid "SMTP server:"
 msgstr "Strežnik SMTP (pošiljanje)"
 
-#: src/setup.c:849 src/setup.c:861
+#: src/setup.c:855 src/setup.c:867
 #, fuzzy
 msgid "Use SSL"
 msgstr "SSL"
 
-#: src/setup.c:857
+#: src/setup.c:863
 #, fuzzy
 msgid "Use SMTP authentication"
 msgstr "Overovitev"
 
-#: src/setup.c:874
+#: src/setup.c:880
 msgid "Your new mail account has been set up with the following settings."
 msgstr ""
 
-#: src/setup.c:877
+#: src/setup.c:883
 msgid ""
 "If you want to modify the settings, select\n"
 "'Configuration - Preferences for current account' or\n"
 "'Configuration - Edit accounts' in the main menu."
+msgstr ""
+
+#: src/setup.c:1134
+#, fuzzy
+msgid "Importing mail data"
+msgstr "Uvažam datoteko:"
+
+#: src/setup.c:1134
+msgid ""
+"The mail store of Outlook Express was found. Do you want to import the mail "
+"data of Outlook Express?\n"
+"\n"
+"(The folder structure will not be reproduced)"
 msgstr ""
 
 #: src/sigstatus.c:116
@@ -7587,225 +7613,225 @@ msgstr "Preiskujem mapo (%s) ..."
 msgid "Could not establish a connection to the server."
 msgstr "Ne morem vzpostaviti seje IMAP4 z: %s%d\n"
 
-#: src/summaryview.c:1529
+#: src/summaryview.c:1534
 #, fuzzy
 msgid "_Search again"
 msgstr "Ponovno iskanje"
 
-#: src/summaryview.c:1551 src/summaryview.c:1560
+#: src/summaryview.c:1556 src/summaryview.c:1565
 msgid "No more unread messages"
 msgstr "Ni več neprebranih sporočil"
 
-#: src/summaryview.c:1552
+#: src/summaryview.c:1557
 msgid "No unread message found. Search from the end?"
 msgstr "Nobeno neprebrano sporočilo ni bilo najdeno. Naj iščem s konca?"
 
-#: src/summaryview.c:1554
+#: src/summaryview.c:1559
 msgid "No unread messages."
 msgstr "Ni neprebranih sporočil."
 
-#: src/summaryview.c:1561
+#: src/summaryview.c:1566
 #, fuzzy
 msgid "No unread message found. Go to next unread folder?"
 msgstr ""
 "Nobeno neprebrano sporočilo ni bilo najdeno. Naj grem v naslednjo mapo?"
 
-#: src/summaryview.c:1569 src/summaryview.c:1578
+#: src/summaryview.c:1574 src/summaryview.c:1583
 msgid "No more new messages"
 msgstr "Ni več neprebranih sporočil"
 
-#: src/summaryview.c:1570
+#: src/summaryview.c:1575
 msgid "No new message found. Search from the end?"
 msgstr "Nobeno novo sporočilo ni bilo najdeno. Naj iščem s konca?"
 
-#: src/summaryview.c:1572
+#: src/summaryview.c:1577
 msgid "No new messages."
 msgstr "Ni novih sporočil."
 
-#: src/summaryview.c:1579
+#: src/summaryview.c:1584
 #, fuzzy
 msgid "No new message found. Go to next folder which has new messages?"
 msgstr "Nobeno novo sporočilo ni bilo najdeno. Naj grem v naslednjo mapo?"
 
-#: src/summaryview.c:1587 src/summaryview.c:1596
+#: src/summaryview.c:1592 src/summaryview.c:1601
 msgid "No more marked messages"
 msgstr "Ni več označenih sporočil"
 
-#: src/summaryview.c:1588
+#: src/summaryview.c:1593
 msgid "No marked message found. Search from the end?"
 msgstr "Nobeno označeno sporočilo ni bilo najdeno. Naj iščem s konca?"
 
-#: src/summaryview.c:1590 src/summaryview.c:1599
+#: src/summaryview.c:1595 src/summaryview.c:1604
 msgid "No marked messages."
 msgstr "Ni označenih sporočil."
 
-#: src/summaryview.c:1597
+#: src/summaryview.c:1602
 msgid "No marked message found. Search from the beginning?"
 msgstr "Nobeno označeno sporočilo ni bilo najdeno. Naj iščem od začetka?"
 
-#: src/summaryview.c:1605 src/summaryview.c:1614
+#: src/summaryview.c:1610 src/summaryview.c:1619
 msgid "No more labeled messages"
 msgstr "Ni več sporočil z oznako"
 
-#: src/summaryview.c:1606
+#: src/summaryview.c:1611
 msgid "No labeled message found. Search from the end?"
 msgstr "Nobeno sporočilo z oznako ni bilo najdeno. Naj iščem s konca?"
 
-#: src/summaryview.c:1608 src/summaryview.c:1617
+#: src/summaryview.c:1613 src/summaryview.c:1622
 msgid "No labeled messages."
 msgstr "Ni sporočil z oznako"
 
-#: src/summaryview.c:1615
+#: src/summaryview.c:1620
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Nobeno sporočilo z oznako ni bilo najdeno. Naj iščem od začetka?"
 
-#: src/summaryview.c:1962
+#: src/summaryview.c:1967
 msgid "Attracting messages by subject..."
 msgstr "Privlačim sporočila po zadevi..."
 
-#: src/summaryview.c:2156
+#: src/summaryview.c:2161
 #, c-format
 msgid "%d deleted"
 msgstr "%d izbrisanih"
 
-#: src/summaryview.c:2160
+#: src/summaryview.c:2165
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d prestavljenih"
 
-#: src/summaryview.c:2161 src/summaryview.c:2166
+#: src/summaryview.c:2166 src/summaryview.c:2171
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2165
+#: src/summaryview.c:2170
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d presnetih"
 
-#: src/summaryview.c:2180
+#: src/summaryview.c:2185
 msgid " item(s) selected"
 msgstr " izbranih kosov"
 
-#: src/summaryview.c:2202
+#: src/summaryview.c:2207
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d novih, %d neprebranih, skupaj %d (%s)"
 
-#: src/summaryview.c:2206
+#: src/summaryview.c:2211
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d novih, %d neprebranih, skupaj %d"
 
-#: src/summaryview.c:2242
+#: src/summaryview.c:2247
 msgid "Sorting summary..."
 msgstr "Razvrščam povzetka..."
 
-#: src/summaryview.c:2498
+#: src/summaryview.c:2503
 msgid "\tSetting summary from message data..."
 msgstr "\tNastavljam povzetek iz podatkov sporočila..."
 
-#: src/summaryview.c:2500
+#: src/summaryview.c:2505
 msgid "Setting summary from message data..."
 msgstr "Nastavljam povzetek iz podatkov sporočila..."
 
-#: src/summaryview.c:2607
+#: src/summaryview.c:2612
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Pišem povzetek predpomnilnika (%s)..."
 
-#: src/summaryview.c:2942
+#: src/summaryview.c:2947
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Sporočilo %d je označeno\n"
 
-#: src/summaryview.c:3014
+#: src/summaryview.c:3019
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Sporočilo %d je označeno, kot da se bere\n"
 
-#: src/summaryview.c:3227
+#: src/summaryview.c:3232
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Sporočilo %d je označeno kot neprebrano\n"
 
-#: src/summaryview.c:3292
+#: src/summaryview.c:3297
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Sporočilo %s/%d je nastavljeno za brisanje\n"
 
-#: src/summaryview.c:3320
+#: src/summaryview.c:3325
 msgid "Delete message(s)"
 msgstr "Izbriši sporočilo/a"
 
-#: src/summaryview.c:3321
+#: src/summaryview.c:3326
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Ali res želite izbrisati sporočila iz smetnjaka?"
 
-#: src/summaryview.c:3397
+#: src/summaryview.c:3402
 msgid "Deleting duplicated messages..."
 msgstr "Brišem podvojena sporočila..."
 
-#: src/summaryview.c:3435
+#: src/summaryview.c:3440
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Sporočilo %s/%d je odoznačeno\n"
 
-#: src/summaryview.c:3499
+#: src/summaryview.c:3504
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Sporočilo %d je nastavljeno za prestavitev v %s\n"
 
-#: src/summaryview.c:3531
+#: src/summaryview.c:3536
 msgid "Destination is same as current folder."
 msgstr "Cilj je enak trenutni mapi."
 
-#: src/summaryview.c:3568
+#: src/summaryview.c:3573
 #, fuzzy
 msgid "Select folder to move"
 msgstr "Izberi mapo"
 
-#: src/summaryview.c:3598
+#: src/summaryview.c:3603
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Sporočilo %d je nastavljeno za prepis v %s\n"
 
-#: src/summaryview.c:3629
+#: src/summaryview.c:3634
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Cilj prepisa je enak trenutni mapi"
 
-#: src/summaryview.c:3665
+#: src/summaryview.c:3670
 #, fuzzy
 msgid "Select folder to copy"
 msgstr "Izberi mapo"
 
-#: src/summaryview.c:3810
+#: src/summaryview.c:3820
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr "Med obdelavo pošte je prišlo do napake."
 
-#: src/summaryview.c:4116 src/summaryview.c:4117
+#: src/summaryview.c:4126 src/summaryview.c:4127
 msgid "Building threads..."
 msgstr "Gradim niti..."
 
-#: src/summaryview.c:4267 src/summaryview.c:4268
+#: src/summaryview.c:4277 src/summaryview.c:4278
 msgid "Unthreading..."
 msgstr "Raznitujem..."
 
-#: src/summaryview.c:4561 src/summaryview.c:4622
+#: src/summaryview.c:4571 src/summaryview.c:4632
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtriram..."
 
-#: src/summaryview.c:4687
+#: src/summaryview.c:4697
 msgid "filtering..."
 msgstr "filtriram..."
 
-#: src/summaryview.c:4688
+#: src/summaryview.c:4698
 msgid "Filtering..."
 msgstr "Filtriram..."
 
-#: src/summaryview.c:4733
+#: src/summaryview.c:4743
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "sporočilo %d je že v predpomnilniku.\n"
@@ -7955,9 +7981,6 @@ msgstr ""
 
 #~ msgid "g_thread is not supported by glib.\n"
 #~ msgstr "g_thread ni podprt v glib.\n"
-
-#~ msgid "Importing file:"
-#~ msgstr "Uvažam datoteko:"
 
 #, fuzzy
 #~ msgid "Destination file:"
