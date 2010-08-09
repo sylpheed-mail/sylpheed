@@ -14,4 +14,5 @@ EXTRA_DIST = $(faqdata_DATA) \
      faq_001.xml \
      faq_002.xml \
      faq_003.xml \
-     fdl.xml 
+     fdl.xml \
+     LICENSE

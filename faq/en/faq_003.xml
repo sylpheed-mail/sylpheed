@@ -2,13 +2,24 @@
   <title>Sylpheed FAQ - Interface</title>
   <qandaset id="faq-interface">
 <?dbhtml cellspacing="13px" ?>    <qandaentry>
-      <question>
+      <question id="faq-display-language">
         <para>How do I make Sylpheed display my language?</para>
       </question>
       <answer>
         <para>You have to set some environment variables, such as
      <envar>LANG</envar>, <envar>LC_CTYPE</envar>, <envar>LC_MESSAGES</envar> to your local language.
      Usually <envar>LANG</envar> (or <envar>LC_ALL</envar>) is sufficient. Note that modern distributions and operating systems do this for you automatically.</para>
+        <para>Under UNIX, if you need to set e.g. the <envar>LANG</envar> environment variable manually, execute the following command (using <literal>sh</literal> or related shell):</para>
+        <para><command>export LANG=<replaceable>value</replaceable></command></para>
+        <para>Replace <replaceable>value</replaceable> with a valid ISO <ulink url="http://en.wikipedia.org/wiki/Language_code">language code</ulink> (e.g. <literal>en_GB</literal> for British English).</para>
+        <para>If you intend to set the displayed language manually under Windows, you can do so by creating the
+<envar>LANG</envar> environment variable with a valid ISO language code value under <menuchoice>
+            <guimenu>Control Panel</guimenu>
+            <guimenuitem>System</guimenuitem>
+            <guisubmenu>Advanced</guisubmenu>
+            <guibutton>Environment Variables</guibutton>
+          </menuchoice>.</para>
+        <para>Also see the <link linkend="faq-environment-variables">question</link> regarding environment variables that have effect on Sylpheed.</para>
       </answer>
     </qandaentry>
     <qandaentry>
@@ -231,6 +242,22 @@ Also, check that you have configured your web browser correctly in <menuchoice>
       <answer>
         <para>When you try to launch a helper application, like an image viewer, with an attachment that has spaces in the name, put quotes around the <parameter>%s</parameter>
 parameter. Example: <command>gedit &apos;%s&apos;</command></para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Execute command for my dynamic signature seems not to be working!</para>
+      </question>
+      <answer>
+        <para>Under Windows, if you have created e.g. a simple batch file to echo a line to be included in your dynamic signature, you need to execute the command (specified under <menuchoice>
+            <guimenu>Account preferences</guimenu>
+            <guisubmenu>Compose</guisubmenu>
+            <guimenuitem>Signature</guimenuitem>
+            <guilabel>Command output</guilabel>
+          </menuchoice>) using either forward slashes or double
+backslashes for paths, for example:</para>
+        <para><command>cmd /c &apos;c:\\signature.bat&apos;</command></para>
+        <para>Note that it is also recommended to enclose paths with single quotes, as is illustrated above.</para>
       </answer>
     </qandaentry>
     <qandaentry>

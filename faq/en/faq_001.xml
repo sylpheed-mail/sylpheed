@@ -227,25 +227,32 @@ and/or procmail, and external programs on receiving (like inc or imget).</para>
     </qandaentry>
     <qandaentry>
       <question id="faq-completion-adress-sylpheed">
-        <para>Does Sylpheed have name completion in the address fields?
+        <para>Does Sylpheed have automatic name completion in the address fields?
       </para>
       </question>
       <answer>
         <para>
          Yes. When you search for a name that starts with &quot;<literal>don</literal>&quot;,
-         type &quot;<literal>don</literal>&quot; (without the quotes) and press the <keycap>Tab</keycap> key.
-         This will show you the correct name (when only one &quot;don&quot;
+         type &quot;<literal>don</literal>&quot; (without the quotes) and it will show you the correct name (when only one &quot;don&quot;
          exists in your address book. Otherwise a drop-down list
          appears, which allows you to select the name you want.
          E.g. Donald Duck, Don Johnson. But also email addresses
          starting with &quot;<literal>don</literal>&quot; will appear in the list (like
-         &quot;<literal>don.giovanni@maffia.org</literal>&quot;).
-      </para>
+         &quot;<literal>don.giovanni@maffia.org</literal>&quot;).</para>
+        <para>Prior to Sylpheed 3.1, users needed to press the <keycap>Tab</keycap> key before the search would start. If you still prefer the previous behavior, you can enable it by checking <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+            <guimenuitem>Details</guimenuitem>
+            <guimenuitem>Other</guimenuitem>
+            <guisubmenu>Address book</guisubmenu>
+            <guilabel>Address auto-completion:</guilabel>
+            <guilabel>Start with Tab</guilabel>
+          </menuchoice>.</para>
       </answer>
     </qandaentry>
     <qandaentry>
       <question id="faq-tab-error-sylpheed">
-        <para>Fine, but when I hit the Tab key I get an error message.
+        <para>Fine, but when I hit the Tab key I either get an error message or nothing happens at all.
       </para>
       </question>
       <answer>
@@ -253,8 +260,16 @@ and/or procmail, and external programs on receiving (like inc or imget).</para>
          When you want to use name completion, make sure that
          there are names in your address book. If there are no
          names, even Sylpheed has a hard time completing
-         something.
-      </para>
+         something.</para>
+        <para>If nothing happens at all when typing text in the address fields, make sure that you have the address auto-completion enabled by checking that the following preference is not selected:  <menuchoice>
+            <guimenu>Configuration</guimenu>
+            <guimenuitem>Common preferences...</guimenuitem>
+            <guimenuitem>Details</guimenuitem>
+            <guimenuitem>Other</guimenuitem>
+            <guisubmenu>Address book</guisubmenu>
+            <guilabel>Address auto-completion:</guilabel>
+            <guilabel>Disabled</guilabel>
+          </menuchoice>.</para>
       </answer>
     </qandaentry>
     <qandaentry>
@@ -501,8 +516,9 @@ sylpheedmail/.
         <para>Are there any plug-ins extending standard Sylpheed functionality?</para>
       </question>
       <answer>
-        <para>Not yet, but they are planned, since Sylpheed 3.0, released in early 2010, and later supports a plug-in interface. In the future, some of the Sylpheed features  will be re-implemented as plug-ins, and, moreover, various other plug-ins will be released.</para>
-        <para>There is a page on the Sylpheed website dedicated to the <ulink url="http://sylpheed.sraoss.jp/en/plugin.html">plug-in interface</ulink>. Additionally,  the <filename>PLUGIN.txt</filename> file distributed directly with Sylpheed can provide you with some basic information on the topic.</para>
+        <para>As of Sylpheed 3.1, there is an Attachment Tool Plug-in distributed with the Sylpheed source code and available under <filename>plugin/attachment_tool/</filename>.  Its only function is to remove attachments from
+selected messages and is provided more or less as a technology preview. More plug-ins are planned since Sylpheed 3.0, released in early 2010, and later supports a plug-in interface. In the future, some of the Sylpheed features  will be re-implemented as plug-ins, and, moreover, various other plug-ins will be released.</para>
+        <para>There is a page on the Sylpheed website dedicated to the <ulink url="http://sylpheed.sraoss.jp/en/plugin.html">plug-in interface</ulink>. Additionally, the <filename>PLUGIN.txt</filename> file distributed directly with Sylpheed can provide you with some basic information on the topic.</para>
         <note>
           <para>If you are a developer interested in creating plug-ins for Sylpheed, see the <ulink url="http://sylpheed.sraoss.jp/wiki/index.php?PluginSpec">plug-in specification</ulink> on the Sylpheed wiki.</para>
         </note>
@@ -510,7 +526,7 @@ sylpheedmail/.
     </qandaentry>
     <qandaentry>
       <question id="faq-faq-sylpheed">
-        <para>Where can I find the latest Sylpheed FAQ and manual?
+        <para>Where  I can find the latest Sylpheed FAQ and manual?
       </para>
       </question>
       <answer>
@@ -528,6 +544,17 @@ sylpheedmail/.
           </listitem>
         </itemizedlist>
         <para>Also see the question about available language versions at the top of this section.      </para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Where I can obtain source files for this document?</para>
+      </question>
+      <answer>
+        <para>The source DocBook XML files in which this document is written can be obtained from a <ulink url="http://sylpheeddoc.cvs.sourceforge.net/sylpheeddoc/">public CVS repository</ulink> that is part of the <ulink url="http://sylpheeddoc.sourceforge.net/">Sylpheed Documentation Project</ulink>. The source files with all the necessary build system, XSL stylesheets or snapshots are stored under the &quot;<ulink url="http://sylpheeddoc.cvs.sourceforge.net/viewvc/sylpheeddoc/doc/">doc</ulink>&quot; module in the CVS repository and can be checked out through anonymous CVS with the following commands (simply press Enter when prompted for a password):</para>
+        <para><command>cvs -d:pserver:anonymous@sylpheeddoc.cvs.sourceforge.net:/cvsroot/sylpheeddoc login</command></para>
+        <para><command>cvs -z3 -d:pserver:anonymous@sylpheeddoc.cvs.sourceforge.net:/cvsroot/sylpheeddoc co -P doc</command></para>
+        <para>The source files are also included in .tar.gz and .zip archives made available with each documentation release, these can be downloaded from the <ulink url="http://sourceforge.net/projects/sylpheeddoc/files/">appropriate project page</ulink>. For more information on the used project infrastructure, please see the <ulink url="http://sylpheeddoc.sourceforge.net/en/tools.html">project website</ulink>.</para>
       </answer>
     </qandaentry>
     <qandaentry>

@@ -444,7 +444,7 @@ mail checks.</para>
       </answer>
     </qandaentry>
     <qandaentry>
-      <question>
+      <question id="faq-environment-variables">
         <para>What environment variables have effect on Sylpheed?</para>
       </question>
       <answer>
@@ -467,6 +467,7 @@ mail checks.</para>
             <para><envar>LC_MESSAGES</envar> - locale settings, e.g. language and date format.</para>
           </listitem>
         </itemizedlist>
+        <para>For more information on how to make Sylpheed display your language, see the <link linkend="faq-display-language">relevant question</link>.</para>
       </answer>
     </qandaentry>
     <qandaentry>
@@ -576,6 +577,21 @@ Please copy or rename it to use.
 <literal>configdir</literal> specifies the location of configuration files as a relative
 path from the folder in which <filename>sylpheed.exe</filename> is located, or an absolute path.</para>
         <para>(The text above is a slightly modified excerpt from the <filename>README-win32.txt</filename> file, which you should find within the <filename>C:\Program Files\Sylpheed</filename> directory.)</para>
+      </answer>
+    </qandaentry>
+    <qandaentry>
+      <question>
+        <para>Can I run multiple instances of Sylpheed?</para>
+      </question>
+      <answer>
+        <para>Yes, Sylpheed 3.1 adds support for this often requested feature. The format of the multiple instances command is as follows:</para>
+        <para><command>sylpheed --instance-id <replaceable>ID</replaceable> --configdir <replaceable>path-to-alternative-configdir</replaceable></command></para>
+        <para>Default <parameter>ID</parameter> is set to <literal>sylpheed</literal>, so you can specify any other instance
+<parameter>ID</parameter>. The <parameter>ID</parameter> is used for the name of unix domain
+socket (under UNIX), or mutex name (under Windows). <parameter>configdir</parameter> specifies the configuration directory, i.e. the location of  configuration files you want to use with the given instance.</para>
+        <warning>
+          <para>Do not share same configuration directories or mailboxes across multiple instances as this may lead to an unexpected application behavior!</para>
+        </warning>
       </answer>
     </qandaentry>
     <qandaentry>
