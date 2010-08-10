@@ -172,6 +172,16 @@ static gboolean remove_attachment_rec(MimeInfo *partinfo, FILE *fp, FILE *outfp)
 	return !err;
 }
 
+static gboolean has_attach_part(MimeInfo *mimeinfo)
+{
+	for (; mimeinfo != NULL; mimeinfo = procmime_mimeinfo_next(mimeinfo)) {
+		if (mimeinfo->filename || mimeinfo->name)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 static gboolean remove_attachment(MsgInfo *msginfo)
 {
 	MimeInfo *mimeinfo;
@@ -181,6 +191,12 @@ static gboolean remove_attachment(MsgInfo *msginfo)
 
 	mimeinfo = procmime_scan_message(msginfo);
 	g_return_val_if_fail(mimeinfo != NULL, FALSE);
+
+	if (!has_attach_part(mimeinfo)) {
+		debug_print("remove_attachment: this message doesn't have attachments\n");
+		procmime_mimeinfo_free_all(mimeinfo);
+		return TRUE;
+	}
 
 	if ((fp = procmsg_open_message(msginfo)) == NULL) {
 		procmime_mimeinfo_free_all(mimeinfo);
