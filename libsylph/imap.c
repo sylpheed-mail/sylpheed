@@ -3152,7 +3152,7 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 			      gchar **headers, GString *str)
 {
 	gchar *nextline;
-	gchar buf[32];
+	gchar buf[IMAPBUFSIZE];
 	gint len;
 	gint block_len = 0;
 
@@ -3163,6 +3163,16 @@ static gchar *imap_get_header(IMAPSession *session, gchar *cur_pos,
 	while (g_ascii_isspace(*cur_pos)) cur_pos++;
 	if (*cur_pos == '~' && *(cur_pos + 1) == '{')
 		cur_pos++;
+
+	if (*cur_pos == '"') {
+		cur_pos = strchr_cpy(cur_pos + 1, '"', buf, sizeof(buf));
+		if (!cur_pos)
+			return NULL;
+		len = strlen(buf);
+		*headers = g_strdup(buf);
+		while (g_ascii_isspace(*cur_pos)) cur_pos++;
+		return cur_pos;
+	}
 
 	g_return_val_if_fail(*cur_pos == '{', cur_pos);
 
@@ -3327,7 +3337,7 @@ static MsgInfo *imap_parse_envelope(IMAPSession *session, FolderItem *item,
 		} else if (!strncmp(cur_pos, "FLAGS ", 6)) {
 			cur_pos += 6;
 			if (*cur_pos != '(') {
-				g_warning("*cur_pos != '('\n");
+				g_warning("FLAGS: *cur_pos != '('\n");
 				procmsg_msginfo_free(msginfo);
 				return NULL;
 			}
@@ -3343,7 +3353,13 @@ static MsgInfo *imap_parse_envelope(IMAPSession *session, FolderItem *item,
 			cur_pos += 13;
 			cur_pos = imap_get_header(session, cur_pos, &headers,
 						  line_str);
-			msginfo = procheader_parse_str(headers, flags, FALSE);
+			if (cur_pos == NULL) {
+				g_warning("RFC822.HEADER: cur_pos == NULL\n");
+				procmsg_msginfo_free(msginfo);
+				return NULL;
+			}
+			if (!msginfo)
+				msginfo = procheader_parse_str(headers, flags, FALSE);
 			g_free(headers);
 		} else {
 			g_warning("invalid FETCH response: %s\n", cur_pos);
