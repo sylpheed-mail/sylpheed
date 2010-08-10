@@ -157,6 +157,10 @@ void (* folderview_menu_popup)  (GObject *obj, gpointer ifactory);
 
 Emitted on popup of the context menu of FolderView.
 -------------------------------------------------------------------------
+void (* summaryview_menu_popup)  (GObject *obj, gpointer ifactory);
+
+Emitted on popup of the context menu of SummaryView.
+-------------------------------------------------------------------------
 void (* compose_created)        (GObject *obj, gpointer compose);
 
 Emitted on creating 'Compose' message composition window.
@@ -225,12 +229,16 @@ It will not be emitted if it is locked by account_update_lock(), though.
 -------------------------------------------------------------------------
 
 
-Sample plug-in
-==============
+Sample plug-ins
+===============
 
-There is a sample plug-in at plugin/test. This plug-in will not be installed
-with 'make install'. It is required to enter the directory plugin/test and
-run 'make install-plugin'.
+There is sample plug-ins under the 'plugin' directory.
+These plug-ins will not be installed with 'make install'.
+It is required to enter the directory plugin/* and run
+'make install-plugin'.
+
+Test Plug-in
+------------
 
 The 'test' plug-in has the basic structure of Sylpheed plug-in and the
 following process:
@@ -246,6 +254,13 @@ following process:
 - Capture the following events and show messages: application initialization
   and exiting, folder view context menu popup, creating and destroying compose
   window
+
+Attachment Tool Plug-in
+-----------------------
+
+This is a plug-in for handling messages with attached files.
+
+See plugin/attachment_tool/README for the details.
 
 
 About license

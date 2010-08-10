@@ -158,6 +158,11 @@ void (* folderview_menu_popup)  (GObject *obj, gpointer ifactory);
 FolderView でコンテキストメニューをポップアップしたときに発行される
 シグナルです。
 -------------------------------------------------------------------------
+void (* summaryview_menu_popup)  (GObject *obj, gpointer ifactory);
+
+SummaryView でコンテキストメニューをポップアップしたときに発行される
+シグナルです。
+-------------------------------------------------------------------------
 void (* compose_created)        (GObject *obj, gpointer compose);
 
 Compose メッセージ作成ウィンドウが作成されたときに発行されるシグナルです。
@@ -230,9 +235,12 @@ void (* account_updated) (GObject *obj)
 サンプルプラグイン
 ==================
 
-plugin/test にサンプルプラグインがあります。このプラグインは
+plugin ディレクトリ以下にサンプルプラグインがあります。これらのプラグインは
 make install ではインストールされません。インストールするには
-plugin/test ディレクトリに入って make install-plugin を実行してください。
+plugin/ 以下の各ディレクトリに入って make install-plugin を実行してください。
+
+Test Plug-in
+------------
 
 test プラグインは Sylpheed プラグインの基本的な構造に加え、以下の処理を
 行います。
@@ -248,6 +256,13 @@ test プラグインは Sylpheed プラグインの基本的な構造に加え�
 - アプリケーション初期化、終了、フォルダビューのコンテキストメニュー
   ポップアップ、メッセージ作成ウィンドウ作成、メッセージ作成ウィンドウ破棄
   のイベントを捕捉してメッセージを表示
+
+Attachment Tool Plug-in
+-----------------------
+
+添付ファイルつきのメッセージを操作するためのプラグインです。
+
+詳細は plugin/attachment_tool/README を参照してください。
 
 
 ライセンスについて
