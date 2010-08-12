@@ -17,6 +17,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/*
+ * DBX file conversion engine is based on OutlookExpress-To by Tietew.
+ * OutlookExpress-To - OE5/6 Multi Converter
+ * Copyright (C) 2002 by Tietew
+ * http://www.tietew.net/
+ */
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
