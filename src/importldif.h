@@ -26,6 +26,9 @@
 
 /* Function prototypes */
 AddressBookFile *addressbook_imp_ldif( AddressIndex *addrIndex );
+AddressBookFile *addressbook_imp_ldif_file( AddressIndex *addrIndex,
+					    const gchar *file,
+					    const gchar *book_name );
 
 #endif /* __IMPORT_LDIF_H__ */
 

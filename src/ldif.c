@@ -486,7 +486,7 @@ static void ldif_add_user_attr( Ldif_ParsedRec *rec, gchar *tagName, gchar *tagV
 		if( ! fld->selected ) return;
 
 		name = fld->tagName;
-		if( fld->userName ) {
+		if( fld->userName && *(fld->userName) ) {
 			name = fld->userName;
 		}
 		attr = g_new0( Ldif_UserAttr, 1 );
@@ -521,15 +521,22 @@ static void ldif_add_value( Ldif_ParsedRec *rec, gchar *tagName, gchar *tagValue
 		rec->listLName = g_slist_append( rec->listLName, val );
 	}
 	else if( g_ascii_strcasecmp( nm, LDIF_TAG_NICKNAME ) == 0 ||
+	         g_ascii_strcasecmp( nm, LDIF_TAG_NICKNAME2 ) == 0 ||
 	         g_ascii_strcasecmp( nm, LDIF_TAG_XNICKNAME ) == 0 ) {
 		rec->listNName = g_slist_append( rec->listNName, val );
 	}
 	else if( g_ascii_strcasecmp( nm, LDIF_TAG_EMAIL ) == 0 ) {
-		rec->listAddress = g_slist_append( rec->listAddress, val );
+		if( g_slist_find_custom( rec->listAddress, val, (GCompareFunc)strcmp2 )) {
+			/* skip duplicated address */
+			g_free( val );
+		} else {
+			rec->listAddress = g_slist_append( rec->listAddress, val );
+		}
 	}
 	else {
 		/* Add field as user attribute */
 		ldif_add_user_attr( rec, tagName, tagValue, hashField );
+		g_free( val );
 	}
 	g_free( nm );
 }
@@ -796,7 +803,9 @@ static void ldif_hash_add_list( GHashTable *table, GSList *list ) {
 			else if( g_ascii_strcasecmp( tag, LDIF_TAG_LASTNAME ) == 0 ) {
 				rec->reserved = TRUE;
 			}
-			else if( g_ascii_strcasecmp( tag, LDIF_TAG_NICKNAME ) == 0 ) {
+			else if( g_ascii_strcasecmp( tag, LDIF_TAG_NICKNAME ) == 0 ||
+				 g_ascii_strcasecmp( tag, LDIF_TAG_XNICKNAME) == 0 ||
+				 g_ascii_strcasecmp( tag, LDIF_TAG_NICKNAME2) == 0 ) {
 				rec->reserved = TRUE;
 			}
 			else if( g_ascii_strcasecmp( tag, LDIF_TAG_EMAIL ) == 0 ) {

@@ -1,6 +1,10 @@
-2010-08-12
+2010-08-17
 
-	* version 3.1.0beta3
+	* src/importldif.[ch]: addressbook_imp_ldif_file(): new function to
+	  import LDIF file automatically.
+	* src/ldif.[ch]: supported "nickname" tag. Ignore null-string
+	  fld->userName. Skip duplicated "mail" tags. Fixed a memory leak.
+	* src/setup.c: setup_import_data(): don't create duplicate folders.
 
 2010-08-10
 

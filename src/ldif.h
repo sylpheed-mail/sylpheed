@@ -40,6 +40,7 @@
 #define	LDIF_TAG_LASTNAME   "sn"
 #define LDIF_TAG_NICKNAME   "mozillanickname"
 #define LDIF_TAG_XNICKNAME  "xmozillanickname"
+#define LDIF_TAG_NICKNAME2  "nickname"
 #define	LDIF_TAG_EMAIL      "mail"
 
 #define	LDIF_SEP_TAG        ':'

@@ -1114,7 +1114,7 @@ static GSList *get_dbx_source(void)
 }
 #endif /* G_OS_WIN32 */
 
-gint setup_import(void)
+gint setup_import_data(void)
 {
 #ifdef G_OS_WIN32
 	AlertValue val;
@@ -1123,9 +1123,9 @@ gint setup_import(void)
 	gchar *src;
 	Folder *folder;
 	FolderItem *parent, *dest;
-	gint ok;
+	gint ok = 0;
 
-	debug_print("setup_import\n");
+	debug_print("setup_import_data\n");
 
 	src_list = get_dbx_source();
 	if (!src_list)
@@ -1139,19 +1139,22 @@ gint setup_import(void)
 	folder = folder_get_default_folder();
 	if (!folder) {
 		g_warning("Cannot get default folder");
+		ok = -1;
 		goto finish;
 	}
 	parent = FOLDER_ITEM(folder->node->data);
 	if (!parent) {
 		g_warning("Cannot get root folder");
+		ok = -1;
 		goto finish;
 	}
-	dest = folder_find_child_item_by_name(parent, "Imported");
+	dest = folder_find_child_item_by_name(parent, _("Imported"));
 	if (!dest) {
-		dest = folder->klass->create_folder(folder, parent, "Imported");
+		dest = folder->klass->create_folder(folder, parent, _("Imported"));
 	}
 	if (!dest) {
 		g_warning("Cannot create a folder");
+		ok = -1;
 		goto finish;
 	}
 	parent = dest;
@@ -1160,7 +1163,9 @@ gint setup_import(void)
 
 	for (cur = src_list; cur != NULL; cur = cur->next) {
 		ident = (struct Identity *)cur->data;
-		dest = folder->klass->create_folder(folder, parent, ident->name);
+		dest = folder_find_child_item_by_name(parent, ident->name);
+		if (!dest)
+			dest = folder->klass->create_folder(folder, parent, ident->name);
 		if (!dest)
 			continue;
 		folderview_append_item(folderview_get(), NULL, dest, TRUE);
@@ -1178,7 +1183,12 @@ finish:
 		g_free(ident);
 	}
 	g_slist_free(src_list);
-#endif /* G_OS_WIN32 */
 
+	if (ok == -1)
+		alertpanel_error(_("Failed to import the mail data."));
+
+	return ok;
+#else /* G_OS_WIN32 */
 	return 0;
+#endif /* G_OS_WIN32 */
 }

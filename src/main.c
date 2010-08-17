@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
 	g_signal_emit_by_name(syl_app, "init-done");
 
 	if (first_run) {
-		setup_import();
+		setup_import_data();
 	}
 
 	remote_command_exec();

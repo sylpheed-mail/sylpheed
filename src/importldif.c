@@ -819,6 +819,62 @@ AddressBookFile *addressbook_imp_ldif( AddressIndex *addrIndex ) {
 	return _importedBook_;
 }
 
+AddressBookFile *addressbook_imp_ldif_file( AddressIndex *addrIndex,
+					    const gchar *file,
+					    const gchar *book_name ) {
+	gchar *fsfile;
+	GList *node, *list;
+	gboolean ret;
+
+	g_return_val_if_fail(addrIndex != NULL, NULL);
+	g_return_val_if_fail(file != NULL, NULL);
+	g_return_val_if_fail(book_name != NULL, NULL);
+
+	debug_print("addressbook_imp_ldif_file: file: %s name: %s\n",
+		    file, book_name);
+
+	_importedBook_ = NULL;
+	_imp_addressIndex_ = addrIndex;
+	_ldifFile_ = ldif_create();
+
+	fsfile = conv_filename_from_utf8( file );
+	ldif_set_file(_ldifFile_, fsfile);
+	g_free( fsfile );
+
+	if( ldif_read_tags( _ldifFile_ ) != MGU_SUCCESS )
+		goto finish;
+	list = ldif_get_fieldlist( _ldifFile_ );
+	node = list;
+	while( node ) {
+		Ldif_FieldRec *rec = node->data;
+		if( ! rec->reserved ) {
+			if( g_ascii_strcasecmp( rec->tagName, "dn" ) != 0 ) {
+				rec->selected = TRUE;
+			}
+		}
+		node = g_list_next( node );
+	}
+	g_list_free( list );
+
+	g_free( impldif_dlg.nameBook );
+	impldif_dlg.nameBook = g_strdup(book_name);
+
+	ret = imp_ldif_field_move();
+
+	g_free( impldif_dlg.nameBook );
+	impldif_dlg.nameBook = NULL;
+
+finish:
+	ldif_free( _ldifFile_ );
+	_ldifFile_ = NULL;
+	_imp_addressIndex_ = NULL;
+
+	if (ret)
+		debug_print("addressbook_imp_ldif_file: import succeeded\n");
+
+	return _importedBook_;
+}
+
 /*
 * End of Source.
 */
