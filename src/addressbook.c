@@ -4537,6 +4537,24 @@ static void addressbook_import_ldif_cb(void)
 	addressbook_modified();
 }
 
+gboolean addressbook_import_ldif_file(const gchar *file, const gchar *book_name)
+{
+	AddressBookFile *abf;
+
+	g_return_val_if_fail(file != NULL, FALSE);
+	g_return_val_if_fail(book_name != NULL, FALSE);
+
+	abf = addressbook_imp_ldif_file(_addressIndex_, file, book_name);
+	if (!abf)
+		return FALSE;
+
+	addrindex_index_add_datasource(_addressIndex_, ADDR_IF_BOOK, abf);
+	addrindex_save_data(_addressIndex_);
+	addressbook_modified();
+
+	return TRUE;
+}
+
 /*
 * Import CSV file.
 */

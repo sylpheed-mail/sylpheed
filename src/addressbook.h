@@ -51,4 +51,7 @@ gboolean addressbook_load_completion	( gint (*callBackFunc) ( const gchar *, con
 
 gboolean addressbook_has_address	(const gchar	*address);
 
+gboolean addressbook_import_ldif_file	(const gchar	*file,
+					 const gchar	*book_name);
+
 #endif /* __ADDRESSBOOK_H__ */

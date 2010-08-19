@@ -42,6 +42,7 @@
 #include "prefs_common.h"
 #include "stock_pixmap.h"
 #include "account.h"
+#include "addressbook.h"
 #if USE_SSL
 #  include "ssl.h"
 #endif
@@ -1188,6 +1189,92 @@ finish:
 		alertpanel_error(_("Failed to import the mail data."));
 
 	return ok;
+#else /* G_OS_WIN32 */
+	return 0;
+#endif /* G_OS_WIN32 */
+}
+
+#ifdef G_OS_WIN32
+static gchar *get_wab_file(void)
+{
+	HKEY reg_key;
+	DWORD type, nbytes;
+	wchar_t *tmp;
+	gchar *result = NULL;
+
+	if (RegOpenKeyExW(HKEY_CURRENT_USER, L"Software\\Microsoft\\WAB\\WAB4\\Wab File Name", 0, KEY_QUERY_VALUE, &reg_key) != ERROR_SUCCESS)
+		return NULL;
+	if (RegQueryValueExW(reg_key, L"", 0, &type, NULL, &nbytes) == ERROR_SUCCESS && type == REG_SZ) {
+		tmp = g_new(wchar_t, (nbytes + 1) / 2 + 1);
+		RegQueryValueExW(reg_key, L"", 0, &type, (LPBYTE)tmp, &nbytes);
+		tmp[nbytes / 2] = '\0';
+		result = g_utf16_to_utf8(tmp, -1, NULL, NULL, NULL);
+		g_free(tmp);
+	}
+	RegCloseKey(reg_key);
+
+	return result;
+}
+#endif /* G_OS_WIN32 */
+
+gint setup_import_addressbook(void)
+{
+#ifdef G_OS_WIN32
+	AlertValue val;
+	gchar *appdata;
+	gchar *wabfile, *ldiffile;
+	gchar cmdline[MAX_PATH + 1];
+	gchar *cpcmdline;
+	gint ret = 0;
+
+	debug_print("setup_import_addressbook\n");
+
+	wabfile = get_wab_file();
+	if (!wabfile || !is_file_exist(wabfile)) {
+		g_free(wabfile);
+		return 0;
+	}
+
+	val = alertpanel(_("Importing address book"), _("The Windows address book was found. Do you want to import the address book?"), GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+	if (val != G_ALERTDEFAULT) {
+		g_free(wabfile);
+		return 0;
+	}
+
+	ldiffile = g_strconcat(get_tmp_dir(), G_DIR_SEPARATOR_S, "impwab.ldif",
+			       NULL);
+	g_snprintf(cmdline, sizeof(cmdline), "wabread \"%s\" > \"%s\"",
+		   wabfile, ldiffile);
+	debug_print("setup_import_addressbook: cmdline: %s\n", cmdline);
+	cpcmdline = g_win32_locale_filename_from_utf8(cmdline);
+	if (!cpcmdline) {
+		g_warning("g_win32_locale_filename_from_utf8() failed");
+		g_free(ldiffile);
+		g_free(wabfile);
+		return -1;
+	}
+	ret = system(cpcmdline);
+	g_free(cpcmdline);
+	g_free(wabfile);
+	if (ret != 0 || !is_file_exist(ldiffile)) {
+		g_warning("system() failed");
+		ret = -1;
+		goto finish;
+	}
+
+	if (!addressbook_import_ldif_file(ldiffile, _("Imported"))) {
+		g_warning("setup_import_addressbook: import failed");
+		ret = -1;
+		goto finish;
+	}
+
+finish:
+	g_unlink(ldiffile);
+	g_free(ldiffile);
+	if (ret < 0)
+		alertpanel_error(_("Failed to import the address book."));
+
+	return ret;
 #else /* G_OS_WIN32 */
 	return 0;
 #endif /* G_OS_WIN32 */
