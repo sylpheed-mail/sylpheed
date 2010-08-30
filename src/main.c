@@ -1542,8 +1542,13 @@ static void remote_command_exec(void)
 
 	if (prefs_common.open_inbox_on_startup) {
 		FolderItem *item;
-		item = cur_account && cur_account->inbox
-			? folder_find_item_from_identifier(cur_account->inbox)
+		PrefsAccount *ac;
+
+		ac = account_get_default();
+		if (!ac)
+			ac = cur_account;
+		item = ac && ac->inbox
+			? folder_find_item_from_identifier(ac->inbox)
 			: folder_get_default_inbox();
 		folderview_select(mainwin->folderview, item);
 	}
