@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-31 10:20+0900\n"
+"POT-Creation-Date: 2010-10-21 18:03+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1275,7 +1275,7 @@ msgstr "茶"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5127
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5123
 msgid "None"
 msgstr "なし"
 
@@ -1615,7 +1615,7 @@ msgid "Can't get the part of multipart message."
 msgstr "マルチパートメッセージのパートを取得できません。"
 
 #: src/compose.c:2864 src/headerview.c:233 src/query_search.c:790
-#: src/rpop3.c:667 src/summaryview.c:2416
+#: src/rpop3.c:667 src/summaryview.c:2411
 msgid "(No Subject)"
 msgstr "(件名なし)"
 
@@ -1806,7 +1806,7 @@ msgstr "MIME タイプ"
 #. S_COL_DATE
 #: src/compose.c:5305 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
-#: src/summaryview.c:5276
+#: src/summaryview.c:5272
 msgid "Size"
 msgstr "サイズ"
 
@@ -2589,7 +2589,7 @@ msgid "Creating header view...\n"
 msgstr "ヘッダビューを作成中...\n"
 
 #: src/headerview.c:212 src/query_search.c:791 src/rpop3.c:668
-#: src/summaryview.c:2419
+#: src/summaryview.c:2414
 msgid "(No From)"
 msgstr "(差出人不明)"
 
@@ -2960,7 +2960,7 @@ msgstr "切断中"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "メッセージを受信中 (%d / %d) (%s / %s)"
 
-#: src/inc.c:1286 src/inc.c:1309 src/summaryview.c:4654
+#: src/inc.c:1286 src/inc.c:1309 src/summaryview.c:4650
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3184,15 +3184,15 @@ msgid "Loading plug-ins..."
 msgstr "プラグインをロード中..."
 
 #. remote command mode
-#: src/main.c:1315
+#: src/main.c:1320
 msgid "another Sylpheed is already running.\n"
 msgstr "別の Sylpheed がすでに起動しています。\n"
 
-#: src/main.c:1602
+#: src/main.c:1607
 msgid "Migration of configuration"
 msgstr "設定の移行"
 
-#: src/main.c:1603
+#: src/main.c:1608
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3840,8 +3840,8 @@ msgstr "メインウィンドウを作成中...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: 色の割り当て %d に失敗しました\n"
 
-#: src/mainwindow.c:1211 src/summaryview.c:2568 src/summaryview.c:2655
-#: src/summaryview.c:4219 src/summaryview.c:4348 src/summaryview.c:4736
+#: src/mainwindow.c:1211 src/summaryview.c:2563 src/summaryview.c:2650
+#: src/summaryview.c:4215 src/summaryview.c:4344 src/summaryview.c:4732
 msgid "done.\n"
 msgstr "完了。\n"
 
@@ -4113,7 +4113,7 @@ msgstr "添付"
 msgid "Message View - Sylpheed"
 msgstr "メッセージビュー - Sylpheed"
 
-#: src/messageview.c:765 src/summaryview.c:3777
+#: src/messageview.c:765 src/summaryview.c:3770
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
@@ -6194,19 +6194,19 @@ msgstr "添付"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
-#: src/summaryview.c:5269
+#: src/summaryview.c:5265
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
-#: src/summaryview.c:5272
+#: src/summaryview.c:5268
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
-#: src/summaryview.c:5274
+#: src/summaryview.c:5270
 msgid "Date"
 msgstr "日付"
 
@@ -6216,7 +6216,7 @@ msgid "Number"
 msgstr "番号"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5280
+#: src/prefs_summary_column.c:74 src/summaryview.c:5276
 msgid "To"
 msgstr "宛先"
 
@@ -6522,7 +6522,7 @@ msgstr "%s を検索中 (%d / %d)..."
 msgid "Searching %s ..."
 msgstr "%s を検索中..."
 
-#: src/query_search.c:799 src/rpop3.c:676 src/summaryview.c:2340
+#: src/query_search.c:799 src/rpop3.c:676 src/summaryview.c:2335
 msgid "(No Date)"
 msgstr "(日付なし)"
 
@@ -6619,7 +6619,7 @@ msgstr "このプログラムについて(_A)"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - POP3 リモートメールボックス"
 
-#: src/rpop3.c:414 src/summaryview.c:5278
+#: src/rpop3.c:414 src/summaryview.c:5274
 msgid "No."
 msgstr "番号"
 
@@ -7015,8 +7015,7 @@ msgstr "アドレス帳のインポート"
 #: src/setup.c:1238
 msgid ""
 "The Windows address book was found. Do you want to import the address book?"
-msgstr ""
-"Windows アドレス帳がみつかりました。アドレス帳をインポートしますか?"
+msgstr "Windows アドレス帳がみつかりました。アドレス帳をインポートしますか?"
 
 #: src/setup.c:1275
 msgid "Failed to import the address book."
@@ -7214,7 +7213,7 @@ msgstr "ニュースグループリストを取得中..."
 msgid "Can't retrieve newsgroup list."
 msgstr "ニュースグループリストを取得できません。"
 
-#: src/subscribedialog.c:526 src/summaryview.c:930
+#: src/subscribedialog.c:526 src/summaryview.c:925
 msgid "Done."
 msgstr "完了."
 
@@ -7341,222 +7340,222 @@ msgstr "マークが残っています。処理しますか?"
 msgid "Scanning folder (%s)..."
 msgstr "フォルダをスキャン中 (%s)..."
 
-#: src/summaryview.c:937
+#: src/summaryview.c:932
 msgid "Could not establish a connection to the server."
 msgstr "サーバに接続できませんでした。"
 
-#: src/summaryview.c:1534
+#: src/summaryview.c:1529
 msgid "_Search again"
 msgstr "再検索(_S)"
 
-#: src/summaryview.c:1556 src/summaryview.c:1565
+#: src/summaryview.c:1551 src/summaryview.c:1560
 msgid "No more unread messages"
 msgstr "未読メッセージなし"
 
-#: src/summaryview.c:1557
+#: src/summaryview.c:1552
 msgid "No unread message found. Search from the end?"
 msgstr "未読メッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1559
+#: src/summaryview.c:1554
 msgid "No unread messages."
 msgstr "未読メッセージがありません。"
 
-#: src/summaryview.c:1566
+#: src/summaryview.c:1561
 msgid "No unread message found. Go to next unread folder?"
 msgstr "未読メッセージがありません。次の未読フォルダに移動しますか?"
 
-#: src/summaryview.c:1574 src/summaryview.c:1583
+#: src/summaryview.c:1569 src/summaryview.c:1578
 msgid "No more new messages"
 msgstr "新着メッセージなし"
 
-#: src/summaryview.c:1575
+#: src/summaryview.c:1570
 msgid "No new message found. Search from the end?"
 msgstr "新着メッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1577
+#: src/summaryview.c:1572
 msgid "No new messages."
 msgstr "新着メッセージがありません。"
 
-#: src/summaryview.c:1584
+#: src/summaryview.c:1579
 msgid "No new message found. Go to next folder which has new messages?"
 msgstr ""
 "新着メッセージがありません。次の新着メッセージありフォルダに移動しますか?"
 
-#: src/summaryview.c:1592 src/summaryview.c:1601
+#: src/summaryview.c:1587 src/summaryview.c:1596
 msgid "No more marked messages"
 msgstr "マーク付きメッセージなし"
 
-#: src/summaryview.c:1593
+#: src/summaryview.c:1588
 msgid "No marked message found. Search from the end?"
 msgstr "マーク付きメッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1595 src/summaryview.c:1604
+#: src/summaryview.c:1590 src/summaryview.c:1599
 msgid "No marked messages."
 msgstr "マーク付きメッセージがありません。"
 
-#: src/summaryview.c:1602
+#: src/summaryview.c:1597
 msgid "No marked message found. Search from the beginning?"
 msgstr "マーク付きメッセージがありません。最初から検索しますか?"
 
-#: src/summaryview.c:1610 src/summaryview.c:1619
+#: src/summaryview.c:1605 src/summaryview.c:1614
 msgid "No more labeled messages"
 msgstr "ラベル付きメッセージなし"
 
-#: src/summaryview.c:1611
+#: src/summaryview.c:1606
 msgid "No labeled message found. Search from the end?"
 msgstr "ラベル付きメッセージがありません。最後から検索しますか?"
 
-#: src/summaryview.c:1613 src/summaryview.c:1622
+#: src/summaryview.c:1608 src/summaryview.c:1617
 msgid "No labeled messages."
 msgstr "ラベル付きメッセージがありません。"
 
-#: src/summaryview.c:1620
+#: src/summaryview.c:1615
 msgid "No labeled message found. Search from the beginning?"
 msgstr "ラベル付きメッセージがありません。最初から検索しますか?"
 
-#: src/summaryview.c:1967
+#: src/summaryview.c:1962
 msgid "Attracting messages by subject..."
 msgstr "メッセージを件名でまとめています..."
 
-#: src/summaryview.c:2161
+#: src/summaryview.c:2156
 #, c-format
 msgid "%d deleted"
 msgstr "%d 通削除"
 
-#: src/summaryview.c:2165
+#: src/summaryview.c:2160
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d 通移動"
 
-#: src/summaryview.c:2166 src/summaryview.c:2171
+#: src/summaryview.c:2161 src/summaryview.c:2166
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2170
+#: src/summaryview.c:2165
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d 通コピー"
 
-#: src/summaryview.c:2185
+#: src/summaryview.c:2180
 msgid " item(s) selected"
 msgstr " 通選択"
 
-#: src/summaryview.c:2207
+#: src/summaryview.c:2202
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "新着 %d 通, 未読 %d 通, 総数 %d 通 (%s)"
 
-#: src/summaryview.c:2211
+#: src/summaryview.c:2206
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "新着 %d 通, 未読 %d 通, 総数 %d 通"
 
-#: src/summaryview.c:2247
+#: src/summaryview.c:2242
 msgid "Sorting summary..."
 msgstr "サマリをソート中..."
 
-#: src/summaryview.c:2503
+#: src/summaryview.c:2498
 msgid "\tSetting summary from message data..."
 msgstr "\tメッセージデータからサマリを作成中..."
 
-#: src/summaryview.c:2505
+#: src/summaryview.c:2500
 msgid "Setting summary from message data..."
 msgstr "メッセージデータからサマリを作成中..."
 
-#: src/summaryview.c:2612
+#: src/summaryview.c:2607
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "サマリキャッシュを書き込み中 (%s)..."
 
-#: src/summaryview.c:2947
+#: src/summaryview.c:2940
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "メッセージ %d をマークしました\n"
 
-#: src/summaryview.c:3019
+#: src/summaryview.c:3012
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "メッセージ %d を既読としてマークしました\n"
 
-#: src/summaryview.c:3232
+#: src/summaryview.c:3225
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "メッセージ %d を未読としてマークしました\n"
 
-#: src/summaryview.c:3297
+#: src/summaryview.c:3290
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "メッセージ %s/%d を削除するようにセットしました\n"
 
-#: src/summaryview.c:3325
+#: src/summaryview.c:3318
 msgid "Delete message(s)"
 msgstr "メッセージの削除"
 
-#: src/summaryview.c:3326
+#: src/summaryview.c:3319
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "本当にごみ箱からメッセージを削除してもいいですか?"
 
-#: src/summaryview.c:3402
+#: src/summaryview.c:3395
 msgid "Deleting duplicated messages..."
 msgstr "重複メッセージを削除しています..."
 
-#: src/summaryview.c:3440
+#: src/summaryview.c:3433
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "メッセージ %s/%d をマーク解除しました\n"
 
-#: src/summaryview.c:3504
+#: src/summaryview.c:3497
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "メッセージ %d を %s に移動するようにセットしました\n"
 
-#: src/summaryview.c:3536
+#: src/summaryview.c:3529
 msgid "Destination is same as current folder."
 msgstr "移動先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:3573
+#: src/summaryview.c:3566
 msgid "Select folder to move"
 msgstr "移動先のフォルダを選択してください"
 
-#: src/summaryview.c:3603
+#: src/summaryview.c:3596
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "メッセージ %d を %s にコピーするようにセットしました\n"
 
-#: src/summaryview.c:3634
+#: src/summaryview.c:3627
 msgid "Destination for copy is same as current folder."
 msgstr "コピー先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:3670
+#: src/summaryview.c:3663
 msgid "Select folder to copy"
 msgstr "コピー先のフォルダを選択してください"
 
-#: src/summaryview.c:3820
+#: src/summaryview.c:3813
 msgid "Error occurred while processing messages."
 msgstr "メッセージの処理中にエラーが発生しました。"
 
-#: src/summaryview.c:4126 src/summaryview.c:4127
+#: src/summaryview.c:4122 src/summaryview.c:4123
 msgid "Building threads..."
 msgstr "スレッドを構築中..."
 
-#: src/summaryview.c:4277 src/summaryview.c:4278
+#: src/summaryview.c:4273 src/summaryview.c:4274
 msgid "Unthreading..."
 msgstr "スレッドを解除中..."
 
-#: src/summaryview.c:4571 src/summaryview.c:4632
+#: src/summaryview.c:4567 src/summaryview.c:4628
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "振り分け中 (%d / %d)..."
 
-#: src/summaryview.c:4697
+#: src/summaryview.c:4693
 msgid "filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:4698
+#: src/summaryview.c:4694
 msgid "Filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:4743
+#: src/summaryview.c:4739
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d 通のメッセージが振り分けられました。"

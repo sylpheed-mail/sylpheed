@@ -1232,6 +1232,11 @@ static void plugin_init(void)
 	ADD_SYM(alertpanel_message);
 	ADD_SYM(alertpanel_message_with_disable);
 
+	ADD_SYM(send_message);
+	ADD_SYM(send_message_queue_all);
+	ADD_SYM(send_message_set_reply_flag);
+	ADD_SYM(send_message_set_forward_flags);
+
 	syl_plugin_signal_connect("plugin-load", G_CALLBACK(load_cb), NULL);
 
 	/* loading plug-ins from user plug-in directory */

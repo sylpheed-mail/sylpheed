@@ -271,4 +271,15 @@ gint syl_plugin_alertpanel_message_with_disable	(const gchar *title,
 						 const gchar *message,
 						 gint type);
 
+/* Send message */
+gint syl_plugin_send_message			(const gchar	*file,
+						 PrefsAccount	*ac,
+						 GSList		*to_list);
+gint syl_plugin_send_message_queue_all		(FolderItem	*queue,
+						 gboolean	 save_msgs,
+						 gboolean	 filter_msgs);
+gint syl_plugin_send_message_set_reply_flag	(const gchar	*reply_target,
+						 const gchar	*msgid);
+gint syl_plugin__send_message_set_forward_flags	(const gchar	*forward_targets);
+
 #endif /* __PLUGIN_H__ */
