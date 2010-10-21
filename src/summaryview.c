@@ -894,19 +894,14 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		/* select first unread message */
 		if (summary_find_next_flagged_msg(summaryview, &iter, NULL,
 						  MSG_UNREAD, FALSE)) {
-			if (prefs_common.open_unread_on_enter ||
-			    prefs_common.always_show_msg) {
-				summary_unlock(summaryview);
-				summary_select_row(summaryview, &iter,
-						   TRUE, TRUE);
-				summary_lock(summaryview);
-			} else
-				summary_select_row(summaryview, &iter,
-						   FALSE, TRUE);
+			summary_unlock(summaryview);
+			summary_select_row(summaryview, &iter, TRUE, TRUE);
+			summary_lock(summaryview);
 		} else {
 			summary_unlock(summaryview);
 			if (item->sort_type == SORT_ASCENDING &&
 			    SUMMARY_DISPLAY_TOTAL_NUM(item) > 1) {
+				summaryview->display_msg = TRUE;
 				g_signal_emit_by_name
 					(treeview, "move-cursor",
 					 GTK_MOVEMENT_BUFFER_ENDS, 1, &moved);
@@ -914,7 +909,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 					(GTK_TREE_MODEL(summaryview->store),
 					 &iter)) {
 				summary_select_row(summaryview, &iter,
-						   FALSE, TRUE);
+						   TRUE, TRUE);
 			}
 			summary_lock(summaryview);
 			GTK_EVENTS_FLUSH();
@@ -2740,9 +2735,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			gtk_widget_grab_focus(summaryview->treeview);
 	}
 
-	if (val == 0 &&
-	    (new_window || (!prefs_common.always_show_msg &&
-			    !prefs_common.mark_as_read_on_new_window))) {
+	if (val == 0 && new_window) {
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
 			summary_mark_row_as_read(summaryview, iter);
@@ -3863,6 +3856,8 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 	if (valid) {
 		valid = summary_find_nearest_msg(summaryview, &next, &iter);
 		if (valid) {
+			gboolean display;
+
 			gtk_tree_model_get(model, &next,
 					   S_COL_MSG_INFO, &msginfo, -1);
 			if (disp_msginfo && disp_msginfo == msginfo) {
@@ -3874,12 +3869,13 @@ static void summary_remove_invalid_messages(SummaryView *summaryview)
 					gtk_tree_row_reference_new(model, path);
 				gtk_tree_path_free(path);
 			}
+			display = prefs_common.immediate_exec &&
+				messageview_is_visible
+					(summaryview->messageview);
 			summary_select_row
-				(summaryview, &next,
-				 (prefs_common.immediate_exec &&
-				  messageview_is_visible
-					(summaryview->messageview)),
-				 FALSE);
+				(summaryview, &next, display, FALSE);
+			if (display)
+				summary_mark_displayed_read(summaryview, &next);
 		}
 	}
 	if (!valid)
@@ -5811,14 +5807,15 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
+			if (!prefs_common.always_show_msg)
+				summary_mark_displayed_read(summaryview, NULL);
 		} else if (mod_pressed) {
 			scrolled = textview_scroll_page(textview, TRUE);
 			if (!scrolled)
 				summary_select_prev_unread(summaryview);
 		} else {
 			scrolled = textview_scroll_page(textview, FALSE);
-			if (prefs_common.always_show_msg)
-				summary_mark_displayed_read(summaryview, NULL);
+			summary_mark_displayed_read(summaryview, NULL);
 			if (!scrolled)
 				summary_select_next_unread(summaryview);
 		}
@@ -5832,10 +5829,11 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
+			if (!prefs_common.always_show_msg)
+				summary_mark_displayed_read(summaryview, NULL);
 		} else {
 			textview_scroll_one_line(textview, mod_pressed);
-			if (prefs_common.always_show_msg)
-				summary_mark_displayed_read(summaryview, NULL);
+			summary_mark_displayed_read(summaryview, NULL);
 		}
 		return TRUE;
 	case GDK_Delete:
@@ -5930,8 +5928,7 @@ static gboolean summary_display_msg_idle_func(gpointer data)
 					&iter, path);
 		gtk_tree_path_free(path);
 		summary_display_msg(summaryview, &iter);
-		if (prefs_common.always_show_msg)
-			summary_mark_displayed_read(summaryview, &iter);
+		summary_mark_displayed_read(summaryview, &iter);
 	}
 	gdk_threads_leave();
 
