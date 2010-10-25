@@ -1152,6 +1152,28 @@ gint procmime_get_part_fp(const gchar *outfile, FILE *infp, MimeInfo *mimeinfo)
 	return 0;
 }
 
+FILE *procmime_get_part_fp_fp(FILE *outfp, FILE *infp, MimeInfo *mimeinfo)
+{
+	gchar buf[BUFFSIZE];
+
+	g_return_val_if_fail(infp != NULL, -1);
+	g_return_val_if_fail(mimeinfo != NULL, -1);
+
+	if (fseek(infp, mimeinfo->fpos, SEEK_SET) < 0) {
+		FILE_OP_ERROR("procmime_get_part_fp()", "fseek");
+		return -1;
+	}
+
+	while (fgets(buf, sizeof(buf), infp) != NULL)
+		if (buf[0] == '\r' || buf[0] == '\n') break;
+
+	if ((outfp = procmime_decode_content(outfp, infp, mimeinfo)) == NULL) {
+		return -1;
+	}
+
+	return outfp;
+}
+
 gint procmime_get_all_parts(const gchar *dir, const gchar *infile,
 			    MimeInfo *mimeinfo)
 {

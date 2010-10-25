@@ -173,6 +173,9 @@ gint procmime_get_part			(const gchar	*outfile,
 gint procmime_get_part_fp		(const gchar	*outfile,
 					 FILE		*infp,
 					 MimeInfo	*mimeinfo);
+FILE *procmime_get_part_fp_fp		(FILE		*outfp,
+					 FILE		*infp,
+					 MimeInfo	*mimeinfo);
 gint procmime_get_all_parts		(const gchar	*dir,
 					 const gchar	*infile,
 					 MimeInfo	*mimeinfo);
