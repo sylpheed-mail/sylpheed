@@ -48,6 +48,8 @@ static void compose_destroy_cb(GObject *obj, gpointer compose);
 static void create_window(void);
 static void create_folderview_sub_widget(void);
 
+gulong app_exit_handler_id = 0;
+
 void plugin_load(void)
 {
 	GList *list, *cur;
@@ -76,8 +78,9 @@ void plugin_load(void)
 	syl_plugin_add_menuitem("/Tools", NULL, NULL, NULL);
 	syl_plugin_add_menuitem("/Tools", "Plugin test", create_window, NULL);
 
-	g_signal_connect(syl_app_get(), "init-done", G_CALLBACK(init_done_cb),
+	g_signal_connect_after(syl_app_get(), "init-done", G_CALLBACK(init_done_cb),
 			 NULL);
+	app_exit_handler_id =
 	g_signal_connect(syl_app_get(), "app-exit", G_CALLBACK(app_exit_cb),
 			 NULL);
 	syl_plugin_signal_connect("folderview-menu-popup",
@@ -99,6 +102,7 @@ void plugin_load(void)
 void plugin_unload(void)
 {
 	g_print("test plug-in unloaded!\n");
+	g_signal_handler_disconnect(syl_app_get(), app_exit_handler_id);
 }
 
 SylPluginInfo *plugin_info(void)
@@ -113,6 +117,11 @@ gint plugin_interface_version(void)
 
 static void init_done_cb(GObject *obj, gpointer data)
 {
+	syl_plugin_update_check_set_check_url("http://localhost/version_pro.txt?");
+	syl_plugin_update_check_set_download_url("http://localhost/download.php?sno=123&ver=VER&os=win");
+	syl_plugin_update_check_set_jump_url("http://localhost/index.html");
+	syl_plugin_update_check_set_check_plugin_url("http://localhost/plugin_version.txt");
+	syl_plugin_update_check_set_jump_plugin_url("http://localhost/plugin.html");
 	g_print("test: %p: app init done\n", obj);
 }
 

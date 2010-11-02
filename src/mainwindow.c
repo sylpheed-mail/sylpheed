@@ -535,6 +535,10 @@ static void help_cmdline_cb	 (MainWindow	*mainwin,
 static void update_check_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+#ifdef USE_UPDATE_CHECK_PLUGIN
+static void update_check_plugin_cb(MainWindow *mainwin, guint action,
+				   GtkWidget *widget);
+#endif
 #endif
 
 static void scan_tree_func	 (Folder	*folder,
@@ -899,6 +903,9 @@ static GtkItemFactoryEntry mainwin_entries[] =
 #if USE_UPDATE_CHECK
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_Update check..."),		NULL, update_check_cb, 0, NULL},
+#ifdef USE_UPDATE_CHECK_PLUGIN
+	{N_("/_Help/Update check _plugin..."),	NULL, update_check_plugin_cb, 0, NULL},
+#endif
 #endif
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_About"),			NULL, about_show, 0, NULL}
@@ -1450,29 +1457,15 @@ GtkWidget *main_window_get_message_window(MainWindow *mainwin)
 	}
 }
 
-void main_window_change_layout(MainWindow *mainwin, LayoutType layout,
-			       SeparateType type)
+void main_window_hide(MainWindow *mainwin)
 {
 	GtkWidget *folder_wid  = GTK_WIDGET_PTR(mainwin->folderview);
 	GtkWidget *summary_wid = GTK_WIDGET_PTR(mainwin->summaryview);
 	GtkWidget *message_wid = GTK_WIDGET_PTR(mainwin->messageview);
 	GtkWidget *qsearch_wid = GTK_WIDGET_PTR(mainwin->summaryview->qsearch);
 	GtkWidget *vbox_summary = qsearch_wid->parent;
-	GtkWidget *focus_widget;
-
-	debug_print("Changing window layout type (layout: %d -> %d, separation: %d -> %d)\n", prefs_common.layout_type, layout, mainwin->type, type);
-
-	if (prefs_common.layout_type == layout && mainwin->type == type)
-		return;
-
-	/* keep previous focus */
-	focus_widget = gtk_window_get_focus(GTK_WINDOW(mainwin->window));
 
 	/* remove widgets from those containers */
-	gtk_widget_ref(folder_wid);
-	gtk_widget_ref(summary_wid);
-	gtk_widget_ref(message_wid);
-	gtk_widget_ref(qsearch_wid);
 	gtkut_container_remove
 		(GTK_CONTAINER(folder_wid->parent), folder_wid);
 	gtkut_container_remove
@@ -1515,6 +1508,31 @@ void main_window_change_layout(MainWindow *mainwin, LayoutType layout,
 	}
 
 	gtk_widget_hide(mainwin->window);
+}
+
+void main_window_change_layout(MainWindow *mainwin, LayoutType layout,
+			       SeparateType type)
+{
+	GtkWidget *folder_wid  = GTK_WIDGET_PTR(mainwin->folderview);
+	GtkWidget *summary_wid = GTK_WIDGET_PTR(mainwin->summaryview);
+	GtkWidget *message_wid = GTK_WIDGET_PTR(mainwin->messageview);
+	GtkWidget *qsearch_wid = GTK_WIDGET_PTR(mainwin->summaryview->qsearch);
+	GtkWidget *focus_widget;
+
+	debug_print("Changing window layout type (layout: %d -> %d, separation: %d -> %d)\n", prefs_common.layout_type, layout, mainwin->type, type);
+
+	if (prefs_common.layout_type == layout && mainwin->type == type)
+		return;
+
+	/* keep previous focus */
+	focus_widget = gtk_window_get_focus(GTK_WINDOW(mainwin->window));
+
+	gtk_widget_ref(folder_wid);
+	gtk_widget_ref(summary_wid);
+	gtk_widget_ref(message_wid);
+	gtk_widget_ref(qsearch_wid);
+
+	main_window_hide(mainwin);
 	main_window_set_widgets(mainwin, layout, type);
 	gtk_widget_show(mainwin->window);
 	if (focus_widget)
@@ -4137,6 +4155,14 @@ static void update_check_cb(MainWindow *mainwin, guint action,
 {
 	update_check(TRUE);
 }
+
+#ifdef USE_UPDATE_CHECK_PLUGIN
+static void update_check_plugin_cb(MainWindow *mainwin, guint action,
+				   GtkWidget *widget)
+{
+	update_check_plugin(TRUE);
+}
+#endif
 #endif
 
 static void scan_tree_func(Folder *folder, FolderItem *item, gpointer data)

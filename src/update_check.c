@@ -43,11 +43,40 @@
 #include "socket.h"
 #include "utils.h"
 #include "version.h"
+#include "plugin.h"
 
 static gchar *check_url = NULL;
+static gchar *download_url = NULL;
 static gchar *jump_url = NULL;
+#ifdef USE_UPDATE_CHECK_PLUGIN
+static gchar *check_plugin_url = NULL;
+static gchar *jump_plugin_url = NULL;
+#endif /* USE_UPDATE_CHECK_PLUGIN */
 
-static gboolean compare_version(gint major, gint minor, gint micro,
+static gint compare_version(gint lmajor, gint lminor, gint lmicro,
+			    gint rmajor, gint rminor, gint rmicro)
+{
+	debug_print("comparing %d.%d.%d <> %d.%d.%d\n",
+		    lmajor, lminor, lmicro,
+		    rmajor, rminor, rmicro);
+
+	if (lmajor > rmajor)
+		return 1;
+	if (lmajor < rmajor)
+		return -1;
+	if (lminor > rminor)
+		return 1;
+	if (lminor < rminor)
+		return -1;
+	if (lmicro > rmicro)
+		return 1;
+	if (lmicro < rmicro)
+		return -1;
+
+	return 0;
+}
+
+static gboolean compare_sylpheed_version(gint major, gint minor, gint micro,
 				const gchar *extra, gboolean remote_is_release,
 				gboolean cur_ver_is_release)
 {
@@ -56,18 +85,15 @@ static gboolean compare_version(gint major, gint minor, gint micro,
 		    remote_is_release ? "release" : "devel",
 		    cur_ver_is_release ? "release" : "devel");
 
-	if (major > MAJOR_VERSION)
+	switch (compare_version(major, minor, micro,
+			MAJOR_VERSION, MINOR_VERSION, MICRO_VERSION)) {
+	case 1:
 		return TRUE;
-	if (major < MAJOR_VERSION)
+	case -1:
 		return FALSE;
-	if (minor > MINOR_VERSION)
-		return TRUE;
-	if (minor < MINOR_VERSION)
-		return FALSE;
-	if (micro > MICRO_VERSION)
-		return TRUE;
-	if (micro < MICRO_VERSION)
-		return FALSE;
+	default:
+		break;
+	}
 
 	/* compare extra version
 	   3.0.0.a  (rel) > 3.0.0       (rel)
@@ -99,7 +125,7 @@ static void parse_version_string(const gchar *ver, gint *major, gint *minor,
 			*minor = atoi(vers[1]);
 			if (vers[2]) {
 				*micro = atoi(vers[2]);
-				if (vers[3]) {
+				if (vers[3] && extra) {
 					*extra = g_strdup(vers[3]);
 				}
 			}
@@ -107,6 +133,95 @@ static void parse_version_string(const gchar *ver, gint *major, gint *minor,
 	}
 	g_strfreev(vers);
 }
+
+#ifdef G_OS_WIN32
+static gboolean spawn_update_manager(void)
+{
+	gchar *src = NULL, *dest = NULL, *quoted_uri = NULL;
+	gchar *cmdline[] = {NULL, "/uri", NULL, NULL};
+	GError *error = NULL;
+	gboolean ret = FALSE;
+
+	src = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "update-manager.exe", NULL);
+	if (!is_file_exist(src)) {
+		g_warning("Not found update-manager.exe");
+		goto finish;
+	}
+	dest = g_strconcat(g_get_tmp_dir(), G_DIR_SEPARATOR_S, "sylpheed-update-manager.exe", NULL);
+	if (copy_file(src, dest, FALSE) < 0) {
+		g_warning("Couldn't copy update-manager.exe");
+		goto finish;
+	}
+	quoted_uri = g_strdup_printf("'%s'", download_url);
+	cmdline[0] = dest;
+	cmdline[2] = quoted_uri;
+	if (g_spawn_async
+		(NULL, cmdline, NULL,
+		 G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+		 NULL, NULL, NULL, &error) == FALSE) {
+		g_warning("Couldn't execute update-manager.exe");
+		if (error) {
+			g_warning("g_spawn_async: %s", error->message);
+			g_error_free(error);
+		}
+	} else {
+		ret = TRUE;
+	}
+finish:
+	g_free(src);
+	g_free(dest);
+	g_free(quoted_uri);
+	return ret;
+}
+
+#ifdef USE_UPDATE_CHECK_PLUGIN
+static gchar *plugin_updater_ini = NULL;
+
+void update_check_spawn_plugin_updater(void)
+{
+	gchar *exe = NULL, *quoted_ini = NULL;
+	gchar *cmdline[] = {NULL, "/ini", NULL, NULL};
+	GError *error = NULL;
+	gboolean ret = FALSE;
+
+	if (!plugin_updater_ini)
+		return ret;
+	if (!is_file_exist(plugin_updater_ini)) {
+		g_warning("Not found %s", plugin_updater_ini);
+		goto finish;
+	}
+	exe = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "plugin-updater.exe", NULL);
+	if (!is_file_exist(exe)) {
+		g_warning("Not found plugin-updater.exe");
+		goto finish;
+	}
+
+	quoted_ini = g_strdup_printf("'%s'", plugin_updater_ini);
+	cmdline[0] = exe;
+	cmdline[2] = quoted_ini;
+	if (g_spawn_sync
+		(NULL, cmdline, NULL,
+		 G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+		 NULL, NULL, NULL, NULL, NULL, &error) == FALSE) {
+		g_warning("Couldn't execute plugin-updater.exe");
+		debug_print("Couldn't execute plugin-updater.exe\n");
+		if (error) {
+			g_warning("g_spawn_async: %s", error->message);
+			debug_print("g_spawn_async: %s\n", error->message);
+			g_error_free(error);
+		}
+	} else {
+		ret = TRUE;
+	}
+finish:
+	g_free(exe);
+	g_free(quoted_ini);
+	g_free(plugin_updater_ini);
+	plugin_updater_ini = NULL;
+	return ret;
+}
+#endif /* USE_UPDATE_CHECK_PLUGIN */
+#endif /* G_OS_WIN32 */
 
 static void update_dialog(const gchar *new_ver, const gchar *disp_ver,
 			  gboolean manual)
@@ -139,7 +254,14 @@ static void update_dialog(const gchar *new_ver, const gchar *disp_ver,
 			      manual ? FALSE : TRUE,
 			      GTK_STOCK_YES, GTK_STOCK_NO, NULL);
 	if ((val & G_ALERT_VALUE_MASK) == G_ALERTDEFAULT) {
+#ifdef G_OS_WIN32
+		if (!download_url)
+			update_check_set_download_url(DOWNLOAD_URI);
+		if (!spawn_update_manager())
+			open_uri(jump_url, prefs_common.uri_cmd);
+#else
 		open_uri(jump_url, prefs_common.uri_cmd);
+#endif
 	}
 	if (val & G_ALERTDISABLE) {
 		prefs_common.auto_update_check = FALSE;
@@ -212,14 +334,14 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 			if (!strcmp(key, "RELEASE")) {
 				parse_version_string(val, &major, &minor, &micro,
 						     &extra);
-				result = compare_version(major, minor, micro, extra,
-							 TRUE, cur_ver_is_release);
+				result = compare_sylpheed_version(major, minor, micro, extra,
+								  TRUE, cur_ver_is_release);
 				rel_result = result;
 			} else if (!cur_ver_is_release && !strcmp(key, "DEVEL")) {
 				parse_version_string(val, &major, &minor, &micro,
 						     &extra);
-				result = compare_version(major, minor, micro, extra,
-							 FALSE, cur_ver_is_release);
+				result = compare_sylpheed_version(major, minor, micro, extra,
+								  FALSE, cur_ver_is_release);
 				dev_result = result;
 			}
 
@@ -265,15 +387,12 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 	gdk_threads_leave();
 }
 
-void update_check(gboolean show_dialog_always)
+static void spawn_curl(gchar *url, GChildWatchFunc func, gpointer data)
 {
 	gchar *cmdline[8] = {"curl", "--silent", "--max-time", "10"};
+	gint argc = 4;
 	GPid pid;
 	GError *error = NULL;
-
-	if (!check_url)
-		update_check_set_check_url
-			("http://sylpheed.sraoss.jp/version.txt?");
 
 	if (child_stdout > 0) {
 		debug_print("update check is in progress\n");
@@ -282,16 +401,15 @@ void update_check(gboolean show_dialog_always)
 
 	child_stdout = 0;
 
-	debug_print("update_check: getting latest version from %s\n", check_url);
+	debug_print("spawn_curl: getting from %s\n", url);
 
-	cmdline[4] = check_url;
+	cmdline[argc++] = url;
 	if (prefs_common.use_http_proxy && prefs_common.http_proxy_host &&
 	    prefs_common.http_proxy_host[0] != '\0') {
-		cmdline[5] = "--proxy";
-		cmdline[6] = prefs_common.http_proxy_host;
-		cmdline[7] = NULL;
-	} else
-		cmdline[5] = NULL;
+		cmdline[argc++] = "--proxy";
+		cmdline[argc++] = prefs_common.http_proxy_host;
+	}
+	cmdline[argc++] = NULL;
 
 	if (g_spawn_async_with_pipes
 		(NULL, cmdline, NULL,
@@ -315,7 +433,280 @@ void update_check(gboolean show_dialog_always)
 		return;
 	}
 
-	g_child_watch_add(pid, update_check_cb, (gpointer)show_dialog_always);
+	g_child_watch_add(pid, func, data);
+}
+
+#ifdef USE_UPDATE_CHECK_PLUGIN
+struct download_plugin_info {
+	const gchar *filename;
+	const SylPluginInfo* info;
+	gchar *url;
+	gint major, minor, micro;
+};
+
+static void download_plugin_info_free(struct download_plugin_info *pinfo)
+{
+	if (!pinfo)
+		return;
+	g_free(pinfo->url);
+	g_free(pinfo);
+}
+
+static GHashTable *get_plugin_version_table(void)
+{
+	GSList *list, *cur;
+	SylPluginInfo *info;
+	GModule *module;
+	struct download_plugin_info *pinfo;
+	GHashTable *plugin_version_table = g_hash_table_new_full(g_str_hash, g_str_equal, NULL, (GDestroyNotify)download_plugin_info_free);
+
+	list = syl_plugin_get_module_list();
+	for (cur = list; cur != NULL; cur = cur->next) {
+		module = (GModule *)cur->data;
+
+		info = syl_plugin_get_info(module);
+		if (info) {
+			pinfo = g_new0(struct download_plugin_info, 1);
+			pinfo->filename = g_module_name(module);
+			pinfo->info = info;
+			g_hash_table_insert(plugin_version_table, info->name, pinfo);
+		} else {
+			debug_print("info not found: %s\n", g_module_name(module));
+		}
+	}
+
+	return plugin_version_table;
+}
+
+#ifdef G_OS_WIN32
+static gboolean write_plugin_updater_ini(GSList *list)
+{
+	guint num, h = 12;
+	struct download_plugin_info *pinfo;
+	GString *ini = g_string_new("[Settings]\n");
+	GSList *cur;
+	gchar *basename, *p;
+	gboolean ret = TRUE;
+
+	num = g_slist_length(list);
+	g_string_append_printf(ini, "NumFields=%d\n", num+1);
+
+	num = 0;
+	g_string_append_printf(ini, "\n[Field %d]\n", ++num);
+	g_string_append_printf(ini, "Type=GroupBox\n");
+	g_string_append_printf(ini, "Left=0\n");
+	g_string_append_printf(ini, "Right=-1\n");
+	g_string_append_printf(ini, "Top=0\n");
+	g_string_append_printf(ini, "Bottom=-5\n");
+	g_string_append_printf(ini, "Text=\" Select update plugins \"\n");
+
+	for (cur = list; cur != NULL; cur = cur->next) {
+		pinfo = cur->data;
+		g_string_append_printf(ini, "\n[Field %d]\n", ++num);
+		g_string_append_printf(ini, "Type=checkbox\n");
+		g_string_append_printf(ini, "Text=%s  %s -> %d.%d.%d\n",
+				       pinfo->info->name, pinfo->info->version,
+				       pinfo->major, pinfo->minor, pinfo->micro);
+		g_string_append_printf(ini, "Left=10\n");
+		g_string_append_printf(ini, "Right=-10\n");
+		g_string_append_printf(ini, "Top=%u\n", (h+=5));
+		g_string_append_printf(ini, "Bottom=%u\n", (h+=8));
+		g_string_append_printf(ini, "State=1\n");
+		g_string_append_printf(ini, "URL=%s\n", pinfo->url);
+		g_string_append_printf(ini, "name=%s\n", pinfo->info->name);
+
+		basename = g_path_get_basename(pinfo->filename);
+		p = strrchr(basename, '.');
+		if (p) *p = '\0'; /* cut ".dll" */
+		g_string_append_printf(ini, "basename=%s\n", basename);
+		g_free(basename);
+	}
+
+	debug_print("write_plugin_updater_ini:\n%s\n", ini->str);
+
+	plugin_updater_ini = g_strconcat(g_get_tmp_dir(), G_DIR_SEPARATOR_S, "sylpheed-plugin-updater.ini", NULL);
+	if (str_write_to_file(ini->str, plugin_updater_ini) < 0) {
+		g_free(plugin_updater_ini);
+		plugin_updater_ini = NULL;
+		ret = FALSE;
+	}
+
+	g_string_free(ini, TRUE);
+	return ret;
+}
+#endif /* G_OS_WIN32 */
+
+static void update_plugin_dialog(GString *text, GSList *list)
+{
+	AlertValue val;
+
+	if (!jump_plugin_url)
+		update_check_set_jump_plugin_url(PLUGIN_HOMEPAGE_URI);
+
+	val = alertpanel_full(_("New version found"), text->str,
+			      ALERT_QUESTION,
+			      G_ALERTDEFAULT,
+			      FALSE,
+			      GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+	if ((val & G_ALERT_VALUE_MASK) == G_ALERTDEFAULT) {
+#ifdef G_OS_WIN32
+		if (write_plugin_updater_ini(list))
+			app_will_restart(TRUE);
+#else
+		open_uri(jump_plugin_url, prefs_common.uri_cmd);
+#endif
+	}
+}
+
+static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
+{
+	gchar **lines;
+	gchar *key, *val, *p;
+	gchar *cur_ver;
+	gint i;
+	gboolean show_dialog_always = (gboolean)data;
+	gchar buf[BUFFSIZE];
+	ssize_t size;
+	GHashTable *plugin_version_table = NULL;
+	struct download_plugin_info *pinfo = NULL;
+	gboolean result = FALSE;
+	gboolean got_version = FALSE;
+	GString *text = NULL;
+	GSList *list = NULL;
+
+	debug_print("update_check_plugin_cb\n");
+
+	if (!child_stdout) {
+		g_spawn_close_pid(pid);
+		return;
+	}
+
+	size = read(child_stdout, buf, sizeof(buf) - 1);
+	if (size < 0) {
+		fd_close(child_stdout);
+		child_stdout = 0;
+		g_spawn_close_pid(pid);
+		return;
+	}
+	buf[size] = '\0';
+
+	fd_close(child_stdout);
+	child_stdout = 0;
+	g_spawn_close_pid(pid);
+
+	lines = g_strsplit(buf, "\n", -1);
+	plugin_version_table = get_plugin_version_table();
+	text = g_string_new(_("A newer version of plugin has been found.\n"
+			    "Upgrade now?\n"));
+
+	for (i = 0; lines[i] != NULL; i++) {
+		gint new_major = 0, new_minor = 0, new_micro = 0;
+		gint cur_major = 0, cur_minor = 0, cur_micro = 0;
+		debug_print("update_check_plugin: %s\n", lines[i]);
+		p = strchr(lines[i], '=');
+		if (!p) continue;
+		key = g_strndup(lines[i], p - lines[i]);
+		val = p + 1;
+
+		parse_version_string(val, &new_major, &new_minor, &new_micro, NULL);
+		if (new_major + new_minor + new_micro != 0) {
+			got_version = TRUE;
+		}
+
+		pinfo = g_hash_table_lookup(plugin_version_table, key);
+		if (pinfo && (cur_ver = pinfo->info->version)) {
+			parse_version_string(cur_ver, &cur_major, &cur_minor, &cur_micro, NULL);
+			if (0 < compare_version(new_major, new_minor, new_micro,
+						cur_major, cur_minor, cur_micro)) {
+				g_string_append_printf(text, "\n  %s  %d.%d.%d -> %d.%d.%d", key,
+						       cur_major, cur_minor, cur_micro,
+						       new_major, new_minor, new_micro);
+
+				result = TRUE;
+
+				debug_print("val = %s\n", val);
+				p = strchr(val, ',');
+				if (p) {
+					struct download_plugin_info *pinfo2 = g_new0(struct download_plugin_info, 1);
+					pinfo2->filename = pinfo->filename;
+					pinfo2->info = pinfo->info;
+					pinfo2->url = g_strdup(p+1); /* skip ',' */
+					pinfo2->major = new_major;
+					pinfo2->minor = new_minor;
+					pinfo2->micro = new_micro;
+					list = g_slist_append(list, pinfo2);
+				}
+			}
+		}
+
+		g_free(key);
+	}
+
+	g_strfreev(lines);
+	g_hash_table_destroy(plugin_version_table);
+
+	debug_print("%s\n", text->str);
+
+	gdk_threads_enter();
+
+	if (!gtkut_window_modal_exist() && !inc_is_active()) {
+		if (result) {
+			update_plugin_dialog(text, list);
+			list = NULL;
+		} else if (show_dialog_always) {
+			if (got_version)
+				alertpanel_message(_("Information"),
+						   _("Sylpheed plugins are already the latest version."),
+						   ALERT_NOTICE);
+			else
+				alertpanel_error(_("Couldn't get the version information of plugins."));
+		}
+	} else {
+		debug_print("update_check_plugin_cb: modal dialog exists or incorporation is active. Disabling update dialog.\n");
+	}
+
+	g_string_free(text, TRUE);
+	g_slist_foreach(list, (GFunc)download_plugin_info_free, NULL);
+	g_slist_free(list);
+
+	gdk_threads_leave();
+}
+
+void update_check_plugin(gboolean show_dialog_always)
+{
+	gchar buf[1024];
+
+	if (!check_plugin_url) {
+#ifdef G_OS_WIN32
+		g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=win", PLUGIN_VERSION_URI, VERSION);
+#else
+		if (strstr(TARGET_ALIAS, "linux"))
+			g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=linux", PLUGIN_VERSION_URI, VERSION);
+		else
+			g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=other", PLUGIN_VERSION_URI, VERSION);
+#endif
+		update_check_set_check_plugin_url(buf);
+	}
+	spawn_curl(check_plugin_url, update_check_plugin_cb, (gpointer)show_dialog_always);
+}
+#endif /* USE_UPDATE_CHECK_PLUGIN */
+
+void update_check(gboolean show_dialog_always)
+{
+	gchar buf[1024];
+
+	if (!check_url) {
+#ifdef G_OS_WIN32
+		g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=win", VERSION_URI);
+#else
+		if (strstr(TARGET_ALIAS, "linux"))
+			g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=linux", VERSION_URI, VERSION);
+		else
+			g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=other", VERSION_URI, VERSION);
+#endif
+		update_check_set_check_url(buf);
+	}
+	spawn_curl(check_url, update_check_cb, (gpointer)show_dialog_always);
 }
 
 void update_check_set_check_url(const gchar *url)
@@ -330,6 +721,18 @@ const gchar *update_check_get_check_url(void)
 	return check_url;
 }
 
+void update_check_set_download_url(const gchar *url)
+{
+	if (download_url)
+		g_free(download_url);
+	download_url = g_strdup(url);
+}
+
+const gchar *update_check_get_download_url(void)
+{
+	return download_url;
+}
+
 void update_check_set_jump_url(const gchar *url)
 {
 	if (jump_url)
@@ -341,5 +744,31 @@ const gchar *update_check_get_jump_url(void)
 {
 	return jump_url;
 }
+
+#ifdef USE_UPDATE_CHECK_PLUGIN
+void update_check_set_check_plugin_url(const gchar *url)
+{
+	if (check_plugin_url)
+		g_free(check_plugin_url);
+	check_plugin_url = g_strdup(url);
+}
+
+const gchar *update_check_get_check_plugin_url(void)
+{
+	return check_plugin_url;
+}
+
+void update_check_set_jump_plugin_url(const gchar *url)
+{
+	if (jump_plugin_url)
+		g_free(jump_plugin_url);
+	jump_plugin_url = g_strdup(url);
+}
+
+const gchar *update_check_get_jump_plugin_url(void)
+{
+	return jump_plugin_url;
+}
+#endif /* USE_UPDATE_CHECK_PLUGIN */
 
 #endif /* USE_UPDATE_CHECK */

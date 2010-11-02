@@ -31,7 +31,10 @@
 #include "plugin.h"
 #include "plugin_manager.h"
 #include "manage_window.h"
+#include "alertpanel.h"
 #include "gtkutils.h"
+#include "update_check.h"
+#include "utils.h"
 
 static struct PluginManagerWindow {
 	GtkWidget *window;
@@ -97,10 +100,21 @@ void plugin_manager_open(void)
 	manage_window_focus_in(pm_window.window, NULL, NULL);
 }
 
+#ifdef USE_UPDATE_CHECK_PLUGIN
+static gint plugin_manager_update_check(void)
+{
+	update_check_plugin(TRUE);
+	return TRUE;
+}
+#endif /* USE_UPDATE_CHECK_PLUGIN */
+
 static void plugin_manager_create(void)
 {
 	GtkWidget *window;
 	GtkWidget *vbox;
+#ifdef USE_UPDATE_CHECK_PLUGIN
+	GtkWidget *update_check_btn;
+#endif
 	GtkWidget *close_btn;
 	GtkWidget *confirm_area;
 
@@ -122,8 +136,15 @@ static void plugin_manager_create(void)
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
 	gtkut_stock_button_set_create(&confirm_area,
+#ifdef USE_UPDATE_CHECK_PLUGIN
+				      &update_check_btn, _("Check for _update"),
 				      &close_btn, GTK_STOCK_CLOSE,
-				      NULL, NULL, NULL, NULL);
+				      NULL, NULL);
+#else
+				      &close_btn, GTK_STOCK_CLOSE,
+				      NULL, NULL,
+				      NULL, NULL);
+#endif
 	gtk_widget_show(confirm_area);
 	gtk_box_pack_end(GTK_BOX(vbox), confirm_area, FALSE, FALSE, 0);
 	gtk_widget_grab_default(close_btn);
@@ -132,6 +153,10 @@ static void plugin_manager_create(void)
 			 G_CALLBACK(plugin_manager_deleted), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",
 			 G_CALLBACK(key_pressed), NULL);
+#ifdef USE_UPDATE_CHECK_PLUGIN
+	g_signal_connect(G_OBJECT(update_check_btn), "clicked",
+			 G_CALLBACK(plugin_manager_update_check), NULL);
+#endif
 	g_signal_connect(G_OBJECT(close_btn), "clicked",
 			 G_CALLBACK(plugin_manager_deleted), NULL);
 

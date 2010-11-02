@@ -404,6 +404,14 @@ if test x"$ac_cv_enable_updatecheck" = xyes ; then
 	AC_DEFINE(USE_UPDATE_CHECK, 1, Define if you want update check feature.)
 fi
 
+dnl for update check feature
+AC_ARG_ENABLE(updatecheckplugin,
+	[  --disable-updatecheckplugin   Disable update check plugin feature],
+	[ac_cv_enable_updatecheckplugin=$enableval], [ac_cv_enable_updatecheckplugin=yes])
+if test x"$ac_cv_enable_updatecheckplugin" = xyes ; then
+	AC_DEFINE(USE_UPDATE_CHECK_PLUGIN, 1, Define if you want update check plugin feature.)
+fi
+
 dnl Check for d_type member in struct dirent
 AC_MSG_CHECKING([whether struct dirent has d_type member])
 AC_CACHE_VAL(ac_cv_dirent_d_type,[

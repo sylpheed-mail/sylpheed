@@ -25,5 +25,6 @@
 extern gchar *prog_version;
 
 void app_will_exit	(gboolean	 force);
+void app_will_restart	(gboolean	 force);
 
 #endif /* __MAIN_H__ */

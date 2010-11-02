@@ -154,6 +154,7 @@ MainWindow *main_window_get		(void);
 GtkWidget *main_window_get_folder_window	(MainWindow	*mainwin);
 GtkWidget *main_window_get_message_window	(MainWindow	*mainwin);
 
+void main_window_hide			(MainWindow	*mainwin);
 void main_window_change_layout		(MainWindow	*mainwin,
 					 LayoutType	 layout,
 					 SeparateType	 type);

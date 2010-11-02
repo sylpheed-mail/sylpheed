@@ -29,11 +29,26 @@
 #include <glib.h>
 
 void update_check			(gboolean	 show_dialog_always);
+void update_check_plugin		(gboolean	 show_dialog_always);
+#ifdef G_OS_WIN32
+#ifdef USE_UPDATE_CHECK_PLUGIN
+void update_check_spawn_plugin_updater(void);
+#endif
+#endif
 
 void update_check_set_check_url		(const gchar	*url);
 const gchar *update_check_get_check_url	(void);
+void update_check_set_download_url	(const gchar	*url);
+const gchar *update_check_get_download_url(void);
 void update_check_set_jump_url		(const gchar	*url);
 const gchar *update_check_get_jump_url	(void);
+
+#ifdef USE_UPDATE_CHECK_PLUGIN
+void update_check_set_check_plugin_url	(const gchar	*url);
+const gchar *update_check_get_check_plugin_url(void);
+void update_check_set_jump_plugin_url	(const gchar	*url);
+const gchar *update_check_get_jump_plugin_url(void);
+#endif /* USE_UPDATE_CHECK_PLUGIN */
 
 #endif /* USE_UPDATE_CHECK */
 

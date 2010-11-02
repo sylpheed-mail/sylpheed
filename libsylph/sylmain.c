@@ -57,6 +57,7 @@ G_DEFINE_TYPE(SylApp, syl_app, G_TYPE_OBJECT);
 enum {
 	INIT_DONE,
 	APP_EXIT,
+	APP_FORCE_EXIT,
 	ADD_MSG,
 	REMOVE_MSG,
 	REMOVE_ALL_MSG,
@@ -91,6 +92,15 @@ static void syl_app_class_init(SylAppClass *klass)
 			     0);
 	app_signals[APP_EXIT] =
 		g_signal_new("app-exit",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     0,
+			     NULL, NULL,
+			     syl_marshal_VOID__VOID,
+			     G_TYPE_NONE,
+			     0);
+	app_signals[APP_FORCE_EXIT] =
+		g_signal_new("app-force-exit",
 			     G_TYPE_FROM_CLASS(gobject_class),
 			     G_SIGNAL_RUN_FIRST,
 			     0,

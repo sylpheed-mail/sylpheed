@@ -246,8 +246,14 @@ void syl_plugin_inc_unlock			(void);
 void syl_plugin_update_check			(gboolean show_dialog_always);
 void syl_plugin_update_check_set_check_url		(const gchar *url);
 const gchar *syl_plugin_update_check_get_check_url	(void);
+void syl_plugin_update_check_set_download_url		(const gchar *url);
+const gchar *syl_plugin_update_check_get_download_url	(void);
 void syl_plugin_update_check_set_jump_url		(const gchar *url);
 const gchar *syl_plugin_update_check_get_jump_url	(void);
+void syl_plugin_update_check_set_check_plugin_url	(const gchar *url);
+const gchar *syl_plugin_update_check_get_check_plugin_url(void);
+void syl_plugin_update_check_set_jump_plugin_url	(const gchar *url);
+const gchar *syl_plugin_update_check_get_jump_plugin_url(void);
 
 /* type corresponds to AlertType
  * default_value and return value corresponds to AlertValue */

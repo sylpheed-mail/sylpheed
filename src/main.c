@@ -132,6 +132,8 @@ static struct RemoteCmd {
 	gchar *open_msg;
 	gboolean configdir;
 	gboolean exit;
+	gboolean restart;
+	const gchar *argv0;
 #ifdef G_OS_WIN32
 	gushort ipcport;
 #endif
@@ -615,6 +617,8 @@ static void parse_cmd_opt(int argc, char *argv[])
 		cmd.compose = TRUE;
 		cmd.compose_mailto = NULL;
 	}
+
+	cmd.argv0 = argv[0];
 }
 
 static gint get_queued_message_num(void)
@@ -758,6 +762,50 @@ static void setup_rc_dir(void)
 	syl_setup_rc_dir();
 }
 
+static void app_restart(void)
+{
+	gchar *cmdline;
+	GError *error = NULL;
+#ifdef G_OS_WIN32
+	if (cmd.configdir) {
+		cmdline = g_strdup_printf("\"%s\"%s --configdir \"%s\" --ipcport %d",
+					  cmd.argv0,
+					  get_debug_mode() ? " --debug" : "",
+					  get_rc_dir(),
+					  cmd.ipcport);
+	} else {
+		cmdline = g_strdup_printf("\"%s\"%s --ipcport %d",
+					  cmd.argv0,
+					  get_debug_mode() ? " --debug" : "",
+					  cmd.ipcport);
+	}
+#else
+	if (cmd.configdir) {
+		cmdline = g_strdup_printf("\"%s\"%s --configdir \"%s\"",
+					  cmd.argv0,
+					  get_debug_mode() ? " --debug" : "",
+					  get_rc_dir());
+	} else {
+		cmdline = g_strdup_printf("\"%s\"%s",
+					  cmd.argv0,
+					  get_debug_mode() ? " --debug" : "");
+	}
+#endif
+	if (!g_spawn_command_line_async(cmdline, &error)) {
+		alertpanel_error("restart failed\n'%s'\n%s", cmdline, error->message);
+		g_error_free(error);
+	}
+	g_free(cmdline);
+}
+
+void app_will_restart(gboolean force)
+{
+	cmd.restart = TRUE;
+	app_will_exit(force);
+	/* canceled */
+	cmd.restart = FALSE;
+}
+
 void app_will_exit(gboolean force)
 {
 	MainWindow *mainwin;
@@ -794,6 +842,8 @@ void app_will_exit(gboolean force)
 		manage_window_focus_in(mainwin->window, NULL, NULL);
 	}
 
+	if (force)
+		g_signal_emit_by_name(syl_app_get(), "app-force-exit");
 	g_signal_emit_by_name(syl_app_get(), "app-exit");
 
 	inc_autocheck_timer_remove();
@@ -831,10 +881,22 @@ void app_will_exit(gboolean force)
 	syl_cleanup();
 	lock_socket_remove();
 
+#ifdef USE_UPDATE_CHECK_PLUGIN
+#ifdef G_OS_WIN32
+	cur = gtk_window_list_toplevels();
+	g_list_foreach(cur, (GFunc)gtk_widget_hide, NULL);
+	g_list_free(cur);
+	update_check_spawn_plugin_updater();
+#endif
+#endif
+
 	cleanup_console();
 
 	if (gtk_main_level() > 0)
 		gtk_main_quit();
+
+	if (cmd.restart)
+		app_restart();
 
 	exit(0);
 }
@@ -1223,8 +1285,16 @@ static void plugin_init(void)
 	ADD_SYM(update_check);
 	ADD_SYM(update_check_set_check_url);
 	ADD_SYM(update_check_get_check_url);
+	ADD_SYM(update_check_set_download_url);
+	ADD_SYM(update_check_get_download_url);
 	ADD_SYM(update_check_set_jump_url);
 	ADD_SYM(update_check_get_jump_url);
+#ifdef USE_UPDATE_CHECK_PLUGIN
+	ADD_SYM(update_check_set_check_plugin_url);
+	ADD_SYM(update_check_get_check_plugin_url);
+	ADD_SYM(update_check_set_jump_plugin_url);
+	ADD_SYM(update_check_get_jump_plugin_url);
+#endif /* USE_UPDATE_CHECK_PLUGIN */
 #endif
 
 	ADD_SYM(alertpanel_full);
