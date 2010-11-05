@@ -904,7 +904,8 @@ static GtkItemFactoryEntry mainwin_entries[] =
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Help/_Update check..."),		NULL, update_check_cb, 0, NULL},
 #ifdef USE_UPDATE_CHECK_PLUGIN
-	{N_("/_Help/Update check _plugin..."),	NULL, update_check_plugin_cb, 0, NULL},
+	{N_("/_Help/Update check of _plug-ins..."),
+						NULL, update_check_plugin_cb, 0, NULL},
 #endif
 #endif
 	{N_("/_Help/---"),			NULL, NULL, 0, "<Separator>"},

@@ -596,8 +596,8 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 
 	lines = g_strsplit(buf, "\n", -1);
 	plugin_version_table = get_plugin_version_table();
-	text = g_string_new(_("A newer version of plugin has been found.\n"
-			    "Upgrade now?\n"));
+	text = g_string_new(_("Newer version of plug-ins have been found.\n"
+			      "Upgrade now?\n"));
 
 	for (i = 0; lines[i] != NULL; i++) {
 		gint new_major = 0, new_minor = 0, new_micro = 0;
@@ -618,7 +618,7 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 			parse_version_string(cur_ver, &cur_major, &cur_minor, &cur_micro, NULL);
 			if (0 < compare_version(new_major, new_minor, new_micro,
 						cur_major, cur_minor, cur_micro)) {
-				g_string_append_printf(text, "\n  %s  %d.%d.%d -> %d.%d.%d", key,
+				g_string_append_printf(text, "\n - %s  %d.%d.%d -> %d.%d.%d", key,
 						       cur_major, cur_minor, cur_micro,
 						       new_major, new_minor, new_micro);
 
@@ -630,7 +630,7 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 					struct download_plugin_info *pinfo2 = g_new0(struct download_plugin_info, 1);
 					pinfo2->filename = pinfo->filename;
 					pinfo2->info = pinfo->info;
-					pinfo2->url = g_strdup(p+1); /* skip ',' */
+					pinfo2->url = g_strdup(p + 1); /* skip ',' */
 					pinfo2->major = new_major;
 					pinfo2->minor = new_minor;
 					pinfo2->micro = new_micro;
@@ -656,10 +656,10 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 		} else if (show_dialog_always) {
 			if (got_version)
 				alertpanel_message(_("Information"),
-						   _("Sylpheed plugins are already the latest version."),
+						   _("All Sylpheed plug-ins are already the latest version."),
 						   ALERT_NOTICE);
 			else
-				alertpanel_error(_("Couldn't get the version information of plugins."));
+				alertpanel_error(_("Couldn't get the version information of plug-ins."));
 		}
 	} else {
 		debug_print("update_check_plugin_cb: modal dialog exists or incorporation is active. Disabling update dialog.\n");
