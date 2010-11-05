@@ -133,7 +133,7 @@ static struct RemoteCmd {
 	gboolean configdir;
 	gboolean exit;
 	gboolean restart;
-	const gchar *argv0;
+	gchar *argv0;
 #ifdef G_OS_WIN32
 	gushort ipcport;
 #endif
@@ -618,7 +618,9 @@ static void parse_cmd_opt(int argc, char *argv[])
 		cmd.compose_mailto = NULL;
 	}
 
-	cmd.argv0 = argv[0];
+	cmd.argv0 = g_locale_to_utf8(argv[0], -1, NULL, NULL, NULL);
+	if (!cmd.argv0)
+		cmd.argv0 = g_strdup(argv[0]);
 }
 
 static gint get_queued_message_num(void)

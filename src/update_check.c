@@ -144,7 +144,7 @@ static gboolean spawn_update_manager(void)
 
 	src = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "update-manager.exe", NULL);
 	if (!is_file_exist(src)) {
-		g_warning("Not found update-manager.exe");
+		g_warning("update-manager.exe not found.");
 		goto finish;
 	}
 	dest = g_strconcat(g_get_tmp_dir(), G_DIR_SEPARATOR_S, "sylpheed-update-manager.exe", NULL);
