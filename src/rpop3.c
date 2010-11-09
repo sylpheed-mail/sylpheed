@@ -298,6 +298,13 @@ gint rpop3_account(PrefsAccount *account)
 	while (!rpop3_window.finished)
 		gtk_main_iteration();
 
+	if (POP3_SESSION(session)->error_val == PS_AUTHFAIL &&
+	    account->tmp_pass) {
+		debug_print("rpop3_account: remove temporary password because of authentication failure\n");
+		g_free(account->tmp_pass);
+		account->tmp_pass = NULL;
+	}
+
 	rpop3_idle(FALSE);
 	session_destroy(session);
 	rpop3_clear_list();
