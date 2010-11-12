@@ -140,6 +140,7 @@ static void plugin_manager_create(void)
 				      &update_check_btn, _("Check for _update"),
 				      &close_btn, GTK_STOCK_CLOSE,
 				      NULL, NULL);
+	gtkut_box_set_reverse_order(GTK_BOX(confirm_area), TRUE);
 #else
 				      &close_btn, GTK_STOCK_CLOSE,
 				      NULL, NULL,

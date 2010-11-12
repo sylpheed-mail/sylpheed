@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-05 17:43+0900\n"
+"POT-Creation-Date: 2010-11-12 19:10+0900\n"
 "PO-Revision-Date: 2004-12-05 14:40+0100\n"
 "Last-Translator: Roger Lindmark <roger.lindmark@bredband.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -1638,7 +1638,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Kan inte läsa delen av multipart-meddelandet."
 
 #: src/compose.c:2864 src/headerview.c:233 src/query_search.c:790
-#: src/rpop3.c:667 src/summaryview.c:2411
+#: src/rpop3.c:674 src/summaryview.c:2411
 msgid "(No Subject)"
 msgstr "(Inget Ämne)"
 
@@ -1830,7 +1830,7 @@ msgstr "MIME-typ"
 
 #. S_COL_DATE
 #: src/compose.c:5305 src/mimeview.c:217 src/prefs_filter_edit.c:507
-#: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
+#: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
 #: src/summaryview.c:5272
 msgid "Size"
 msgstr "Storlek"
@@ -2635,7 +2635,7 @@ msgstr "Diskussionsgrupper:"
 msgid "Creating header view...\n"
 msgstr "Skapar brevhuvudvy...\n"
 
-#: src/headerview.c:212 src/query_search.c:791 src/rpop3.c:668
+#: src/headerview.c:212 src/query_search.c:791 src/rpop3.c:675
 #: src/summaryview.c:2414
 msgid "(No From)"
 msgstr "(Inget Från)"
@@ -2987,7 +2987,7 @@ msgstr "Ansluter till POP3-server: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Kan inte ansluta till POP3-server: %s:%d\n"
 
-#: src/inc.c:955 src/rpop3.c:827 src/send_message.c:817
+#: src/inc.c:955 src/rpop3.c:834 src/send_message.c:817
 #, c-format
 msgid "Authenticating..."
 msgstr "Autentiserar..."
@@ -3063,7 +3063,7 @@ msgid "Socket error."
 msgstr "Fel på uttag (socket)."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1401 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:761
+#: src/inc.c:1401 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:761
 #: src/send_message.c:978
 msgid "Connection closed by the remote host."
 msgstr "Anslutningen stängdes av fjärrvärden."
@@ -3081,11 +3081,11 @@ msgstr ""
 "Brevlådan är låst:\n"
 "%s"
 
-#: src/inc.c:1417 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:958
+#: src/inc.c:1417 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:958
 msgid "Authentication failed."
 msgstr "Autentisering misslyckades."
 
-#: src/inc.c:1422 src/rpop3.c:521 src/send_message.c:961
+#: src/inc.c:1422 src/rpop3.c:528 src/send_message.c:961
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3094,7 +3094,7 @@ msgstr ""
 "Autentisering misslyckades:\n"
 "%s"
 
-#: src/inc.c:1427 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:982
+#: src/inc.c:1427 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:982
 msgid "Session timed out."
 msgstr "Sessionens väntetid tog slut."
 
@@ -4334,26 +4334,26 @@ msgstr ""
 msgid "Check for _update"
 msgstr ""
 
-#: src/plugin_manager.c:190
+#: src/plugin_manager.c:191
 #, fuzzy
 msgid "Plug-in information"
 msgstr "Personlig information"
 
-#: src/plugin_manager.c:217 src/plugin_manager.c:219 src/plugin_manager.c:220
+#: src/plugin_manager.c:218 src/plugin_manager.c:220 src/plugin_manager.c:221
 #, fuzzy
 msgid "(Unknown)"
 msgstr "okänd"
 
-#: src/plugin_manager.c:219
+#: src/plugin_manager.c:220
 msgid "Author: "
 msgstr ""
 
-#: src/plugin_manager.c:220
+#: src/plugin_manager.c:221
 #, fuzzy
 msgid "File: "
 msgstr "Fil"
 
-#: src/plugin_manager.c:222
+#: src/plugin_manager.c:223
 #, fuzzy
 msgid "Description: "
 msgstr "Beskrivning"
@@ -6322,19 +6322,19 @@ msgid "Attachment"
 msgstr "Bilaga"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
+#: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:422
 #: src/summaryview.c:5265
 msgid "Subject"
 msgstr "Ärende"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
+#: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:423
 #: src/summaryview.c:5268
 msgid "From"
 msgstr "Från"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
+#: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:424
 #: src/summaryview.c:5270
 msgid "Date"
 msgstr "Datum"
@@ -6671,7 +6671,7 @@ msgstr "Filtrerar..."
 msgid "Searching %s ..."
 msgstr "Söker igenom mapp %s ..."
 
-#: src/query_search.c:799 src/rpop3.c:676 src/summaryview.c:2335
+#: src/query_search.c:799 src/rpop3.c:683 src/summaryview.c:2335
 msgid "(No Date)"
 msgstr "(Inget datum)"
 
@@ -6759,7 +6759,7 @@ msgstr "Fel vid verifikation av signatur"
 msgid "_File"
 msgstr "/_Arkiv"
 
-#: src/rpop3.c:243 src/rpop3.c:436
+#: src/rpop3.c:243 src/rpop3.c:443
 #, fuzzy
 msgid "_Get"
 msgstr "Hämta"
@@ -6774,89 +6774,89 @@ msgstr "/_Hjälp"
 msgid "_About"
 msgstr "Om"
 
-#: src/rpop3.c:338
+#: src/rpop3.c:345
 #, fuzzy, c-format
 msgid "%s - POP3 Remote mailbox"
 msgstr "Ta bort brevlåda"
 
-#: src/rpop3.c:414 src/summaryview.c:5274
+#: src/rpop3.c:421 src/summaryview.c:5274
 msgid "No."
 msgstr "Nr."
 
-#: src/rpop3.c:497
+#: src/rpop3.c:504
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Upprättar förbindelse med SMTP-server: %s ..."
 
-#: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
+#: src/rpop3.c:509 src/rpop3.c:563 src/rpop3.c:566
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "Kan inte ansluta till POP3-server: %s:%d\n"
 
-#: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
+#: src/rpop3.c:537 src/rpop3.c:543 src/rpop3.c:570 src/rpop3.c:572
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "fel uppstod vid POP3-session\n"
 
-#: src/rpop3.c:533
+#: src/rpop3.c:540
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "fel uppstod vid POP3-session\n"
 
-#: src/rpop3.c:690
+#: src/rpop3.c:697
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Hämtar meddelandehuvuden (%d / %d)"
 
-#: src/rpop3.c:853
+#: src/rpop3.c:860
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Tar emot meddelandenas antal (STAT)..."
 
-#: src/rpop3.c:862 src/rpop3.c:875
+#: src/rpop3.c:869 src/rpop3.c:882
 #, fuzzy
 msgid "No message"
 msgstr "Inga nya meddelanden."
 
-#: src/rpop3.c:908
+#: src/rpop3.c:915
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Ta bort meddelande(n)"
 
-#: src/rpop3.c:951 src/rpop3.c:963 src/rpop3.c:1021 src/rpop3.c:1219
+#: src/rpop3.c:958 src/rpop3.c:970 src/rpop3.c:1028 src/rpop3.c:1226
 #: src/send_message.c:834
 #, c-format
 msgid "Quitting..."
 msgstr "Avslutar..."
 
-#: src/rpop3.c:1006
+#: src/rpop3.c:1013
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Hämtar nya meddelanden"
 
-#: src/rpop3.c:1013
+#: src/rpop3.c:1020
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Skicka meddelande"
 
-#: src/rpop3.c:1029
+#: src/rpop3.c:1036
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Hämtar nya meddelanden"
 
-#: src/rpop3.c:1145
+#: src/rpop3.c:1152
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Hämtar meddelanden från %s..."
 
-#: src/rpop3.c:1171
+#: src/rpop3.c:1178
 #, fuzzy
 msgid "Delete messages"
 msgstr "Ta bort meddelande(n)"
 
-#: src/rpop3.c:1172
+#: src/rpop3.c:1179
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

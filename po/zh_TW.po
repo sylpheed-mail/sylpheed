@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-05 17:43+0900\n"
+"POT-Creation-Date: 2010-11-12 19:10+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1634,7 +1634,7 @@ msgid "Can't get the part of multipart message."
 msgstr "無法取得這個附加檔。"
 
 #: src/compose.c:2864 src/headerview.c:233 src/query_search.c:790
-#: src/rpop3.c:667 src/summaryview.c:2411
+#: src/rpop3.c:674 src/summaryview.c:2411
 msgid "(No Subject)"
 msgstr "（沒有主旨）"
 
@@ -1824,7 +1824,7 @@ msgstr "MIME 型態"
 
 #. S_COL_DATE
 #: src/compose.c:5305 src/mimeview.c:217 src/prefs_filter_edit.c:507
-#: src/prefs_summary_column.c:72 src/rpop3.c:418 src/select-keys.c:309
+#: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
 #: src/summaryview.c:5272
 msgid "Size"
 msgstr "大小"
@@ -2628,7 +2628,7 @@ msgstr "新聞群組："
 msgid "Creating header view...\n"
 msgstr "產生標頭視窗...\n"
 
-#: src/headerview.c:212 src/query_search.c:791 src/rpop3.c:668
+#: src/headerview.c:212 src/query_search.c:791 src/rpop3.c:675
 #: src/summaryview.c:2414
 msgid "(No From)"
 msgstr "（沒有來源）"
@@ -2980,7 +2980,7 @@ msgstr "連線到 POP3 伺服器 %s 中..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "無法連線到 POP3 伺服器：%s:%d\n"
 
-#: src/inc.c:955 src/rpop3.c:827 src/send_message.c:817
+#: src/inc.c:955 src/rpop3.c:834 src/send_message.c:817
 #, c-format
 msgid "Authenticating..."
 msgstr "認證"
@@ -3056,7 +3056,7 @@ msgid "Socket error."
 msgstr "Socket 有錯誤"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1401 src/rpop3.c:544 src/rpop3.c:545 src/send_message.c:761
+#: src/inc.c:1401 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:761
 #: src/send_message.c:978
 msgid "Connection closed by the remote host."
 msgstr "遠端主機關閉連線。"
@@ -3072,11 +3072,11 @@ msgid ""
 "%s"
 msgstr "信箱已被鎖定：%s"
 
-#: src/inc.c:1417 src/rpop3.c:519 src/rpop3.c:524 src/send_message.c:958
+#: src/inc.c:1417 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:958
 msgid "Authentication failed."
 msgstr "認證失敗"
 
-#: src/inc.c:1422 src/rpop3.c:521 src/send_message.c:961
+#: src/inc.c:1422 src/rpop3.c:528 src/send_message.c:961
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3085,7 +3085,7 @@ msgstr ""
 "認證失敗：\n"
 "%s"
 
-#: src/inc.c:1427 src/rpop3.c:549 src/rpop3.c:550 src/send_message.c:982
+#: src/inc.c:1427 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:982
 msgid "Session timed out."
 msgstr "作業逾時"
 
@@ -4317,26 +4317,26 @@ msgstr ""
 msgid "Check for _update"
 msgstr ""
 
-#: src/plugin_manager.c:190
+#: src/plugin_manager.c:191
 #, fuzzy
 msgid "Plug-in information"
 msgstr "個人資訊"
 
-#: src/plugin_manager.c:217 src/plugin_manager.c:219 src/plugin_manager.c:220
+#: src/plugin_manager.c:218 src/plugin_manager.c:220 src/plugin_manager.c:221
 #, fuzzy
 msgid "(Unknown)"
 msgstr "未知的"
 
-#: src/plugin_manager.c:219
+#: src/plugin_manager.c:220
 msgid "Author: "
 msgstr ""
 
-#: src/plugin_manager.c:220
+#: src/plugin_manager.c:221
 #, fuzzy
 msgid "File: "
 msgstr "檔案"
 
-#: src/plugin_manager.c:222
+#: src/plugin_manager.c:223
 #, fuzzy
 msgid "Description: "
 msgstr "描述"
@@ -6292,19 +6292,19 @@ msgid "Attachment"
 msgstr "附加檔案"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:415
+#: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:422
 #: src/summaryview.c:5265
 msgid "Subject"
 msgstr "主旨"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:416
+#: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:423
 #: src/summaryview.c:5268
 msgid "From"
 msgstr "來源"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:417
+#: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:424
 #: src/summaryview.c:5270
 msgid "Date"
 msgstr "日期"
@@ -6640,7 +6640,7 @@ msgstr "過濾中..."
 msgid "Searching %s ..."
 msgstr "掃描資料夾 %s ..."
 
-#: src/query_search.c:799 src/rpop3.c:676 src/summaryview.c:2335
+#: src/query_search.c:799 src/rpop3.c:683 src/summaryview.c:2335
 msgid "(No Date)"
 msgstr "(沒有日期)"
 
@@ -6728,7 +6728,7 @@ msgstr "檢查簽章時發生錯誤"
 msgid "_File"
 msgstr "/檔案(_F)"
 
-#: src/rpop3.c:243 src/rpop3.c:436
+#: src/rpop3.c:243 src/rpop3.c:443
 #, fuzzy
 msgid "_Get"
 msgstr "檢查郵件"
@@ -6743,89 +6743,89 @@ msgstr "/說明(_H)"
 msgid "_About"
 msgstr "關於"
 
-#: src/rpop3.c:338
+#: src/rpop3.c:345
 #, fuzzy, c-format
 msgid "%s - POP3 Remote mailbox"
 msgstr "移除信箱"
 
-#: src/rpop3.c:414 src/summaryview.c:5274
+#: src/rpop3.c:421 src/summaryview.c:5274
 msgid "No."
 msgstr "No."
 
-#: src/rpop3.c:497
+#: src/rpop3.c:504
 #, fuzzy, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "連線到 SMTP 伺服器 %s..."
 
-#: src/rpop3.c:502 src/rpop3.c:556 src/rpop3.c:559
+#: src/rpop3.c:509 src/rpop3.c:563 src/rpop3.c:566
 #, fuzzy, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "無法連線到 POP3 伺服器：%s:%d\n"
 
-#: src/rpop3.c:530 src/rpop3.c:536 src/rpop3.c:563 src/rpop3.c:565
+#: src/rpop3.c:537 src/rpop3.c:543 src/rpop3.c:570 src/rpop3.c:572
 #, fuzzy
 msgid "Error occurred during POP3 session."
 msgstr "使用 POP3 通訊協定時發生錯誤\n"
 
-#: src/rpop3.c:533
+#: src/rpop3.c:540
 #, fuzzy, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
 msgstr "使用 POP3 通訊協定時發生錯誤\n"
 
-#: src/rpop3.c:690
+#: src/rpop3.c:697
 #, fuzzy, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "擷取郵件表頭 (%d / %d)"
 
-#: src/rpop3.c:853
+#: src/rpop3.c:860
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "取得新郵件的數量中"
 
-#: src/rpop3.c:862 src/rpop3.c:875
+#: src/rpop3.c:869 src/rpop3.c:882
 #, fuzzy
 msgid "No message"
 msgstr "沒有新郵件。"
 
-#: src/rpop3.c:908
+#: src/rpop3.c:915
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "刪除郵件"
 
-#: src/rpop3.c:951 src/rpop3.c:963 src/rpop3.c:1021 src/rpop3.c:1219
+#: src/rpop3.c:958 src/rpop3.c:970 src/rpop3.c:1028 src/rpop3.c:1226
 #: src/send_message.c:834
 #, c-format
 msgid "Quitting..."
 msgstr "離開中..."
 
-#: src/rpop3.c:1006
+#: src/rpop3.c:1013
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "取得新郵件中"
 
-#: src/rpop3.c:1013
+#: src/rpop3.c:1020
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "送出郵件"
 
-#: src/rpop3.c:1029
+#: src/rpop3.c:1036
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "取得新郵件中"
 
-#: src/rpop3.c:1145
+#: src/rpop3.c:1152
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "從 %s 中取得郵件中..."
 
-#: src/rpop3.c:1171
+#: src/rpop3.c:1178
 #, fuzzy
 msgid "Delete messages"
 msgstr "刪除郵件"
 
-#: src/rpop3.c:1172
+#: src/rpop3.c:1179
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
