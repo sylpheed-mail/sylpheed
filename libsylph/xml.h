@@ -95,6 +95,7 @@ XMLTag  *xml_copy_tag		(XMLTag		*tag);
 XMLAttr *xml_copy_attr		(XMLAttr	*attr);
 
 gint xml_unescape_str		(gchar		*str);
+gchar *xml_escape_str		(const gchar	*str);
 gint xml_file_put_escape_str	(FILE		*fp,
 				 const gchar	*str);
 

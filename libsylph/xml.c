@@ -520,6 +520,41 @@ gint xml_unescape_str(gchar *str)
 	return 0;
 }
 
+gchar *xml_escape_str(const gchar *str)
+{
+	GString *estr;
+	const gchar *p;
+
+	if (!str)
+		return NULL;
+
+	estr = g_string_sized_new(strlen(str));
+	for (p = str; *p != '\0'; p++) {
+		switch (*p) {
+		case '<':
+			g_string_append(estr, "&lt;");
+			break;
+		case '>':
+			g_string_append(estr, "&gt;");
+			break;
+		case '&':
+			g_string_append(estr, "&amp;");
+			break;
+		case '\'':
+			g_string_append(estr, "&apos;");
+			break;
+		case '\"':
+			g_string_append(estr, "&quot;");
+			break;
+		default:
+			g_string_append_c(estr, *p);
+			break;
+		}
+	}
+
+	return g_string_free(estr, FALSE);
+}
+
 gint xml_file_put_escape_str(FILE *fp, const gchar *str)
 {
 	const gchar *p;
