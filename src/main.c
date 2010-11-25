@@ -372,6 +372,7 @@ int main(int argc, char *argv[])
 
 	if (first_run) {
 		setup_import_data();
+		setup_import_addressbook();
 	}
 
 	remote_command_exec();

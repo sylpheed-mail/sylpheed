@@ -27,5 +27,6 @@
 void setup_mailbox(void);
 PrefsAccount *setup_account(void);
 gint setup_import_data(void);
+gint setup_import_addressbook(void);
 
 #endif /* __SETUP_H__ */
