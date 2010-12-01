@@ -198,6 +198,7 @@ static struct Privacy {
 
 static struct Interface {
 	GtkWidget *checkbtn_always_show_msg;
+	GtkWidget *checkbtn_always_mark_read;
 	GtkWidget *checkbtn_openunread;
 	GtkWidget *checkbtn_remember_lastsel;
 	/* GtkWidget *checkbtn_mark_as_read_on_newwin; */
@@ -501,6 +502,8 @@ static PrefsUIData ui_data[] = {
 	/* Interface */
 	{"always_show_message_when_selected",
 	 &interface.checkbtn_always_show_msg,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"always_mark_read_on_show_msg", &interface.checkbtn_always_mark_read,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"open_unread_on_enter", &interface.checkbtn_openunread,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -2334,6 +2337,7 @@ static void prefs_details_create(void)
 	GtkWidget *vbox2;
 	GtkWidget *vbox3;
 	GtkWidget *checkbtn_always_show_msg;
+	GtkWidget *checkbtn_always_mark_read;
 	GtkWidget *checkbtn_openunread;
 	GtkWidget *checkbtn_remember_lastsel;
 	/* GtkWidget *checkbtn_mark_as_read_on_newwin; */
@@ -2380,9 +2384,14 @@ static void prefs_details_create(void)
 		 _("Always open messages in summary when selected"));
 
 	PACK_CHECK_BUTTON
+		(vbox2, checkbtn_always_mark_read,
+		 _("Always mark as read when a message is opened"));
+	SET_TOGGLE_SENSITIVITY
+		(checkbtn_always_show_msg, checkbtn_always_mark_read);
+
+	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_openunread,
 		 _("Open first unread message when a folder is opened"));
-
 	SET_TOGGLE_SENSITIVITY_REV
 		(checkbtn_always_show_msg, checkbtn_openunread);
 
@@ -2396,11 +2405,14 @@ static void prefs_details_create(void)
 		 _("Only mark message as read when opened in new window"));
 #endif
 
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
 	PACK_CHECK_BUTTON
-		(vbox2, checkbtn_openinbox,
+		(hbox1, checkbtn_openinbox,
 		 _("Open inbox after receiving new mail"));
 	PACK_CHECK_BUTTON
-		(vbox2, checkbtn_openinbox_startup, _("Open inbox on startup"));
+		(hbox1, checkbtn_openinbox_startup, _("Open inbox on startup"));
 
 	PACK_CHECK_BUTTON
 		(vbox2, checkbtn_change_account_on_folder_sel,
@@ -2475,6 +2487,7 @@ static void prefs_details_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox_tab), advanced_wid, FALSE, FALSE, 0);
 
 	interface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
+	interface.checkbtn_always_mark_read  = checkbtn_always_mark_read;
 	interface.checkbtn_openunread        = checkbtn_openunread;
 	interface.checkbtn_remember_lastsel  = checkbtn_remember_lastsel;
 #if 0

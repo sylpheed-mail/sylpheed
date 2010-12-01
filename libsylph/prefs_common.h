@@ -319,6 +319,7 @@ struct _PrefsCommon
 	gchar *user_agent_str;
 
 	gboolean change_account_on_folder_sel; /* Interface */
+	gboolean always_mark_read_on_show_msg; /* Interface */
 };
 
 extern PrefsCommon prefs_common;

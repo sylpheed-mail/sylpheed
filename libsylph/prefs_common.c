@@ -402,6 +402,8 @@ static PrefParam param[] = {
 	 &prefs_common.always_show_msg, P_BOOL},
 	{"open_unread_on_enter", "FALSE", &prefs_common.open_unread_on_enter,
 	 P_BOOL},
+	{"always_mark_read_on_show_msg", "FALSE",
+	 &prefs_common.always_mark_read_on_show_msg, P_BOOL},
 	{"remember_last_selected", "FALSE",
 	 &prefs_common.remember_last_selected, P_BOOL},
 	{"mark_as_read_on_new_window", "FALSE",

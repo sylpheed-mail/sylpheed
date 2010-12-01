@@ -2735,7 +2735,8 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			gtk_widget_grab_focus(summaryview->treeview);
 	}
 
-	if (val == 0 && new_window) {
+	if (val == 0 &&
+	    (new_window || prefs_common.always_mark_read_on_show_msg)) {
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
 			summary_mark_row_as_read(summaryview, iter);
