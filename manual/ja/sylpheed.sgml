@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 3.1 - version 0.12.0
+       Sylpheed User's Manual for Sylpheed 3.1 - version 0.12.1
     </abstract>
 
 <toc>
@@ -134,6 +134,7 @@ SylpheedはPOP3、IMAP4rev1、SMTPといった主要なプロトコルはもちろん、NNTP(ネットニ
 <item>送信先アドレスのアドレス帳への自動登録
 <item>アドレスの自動補完
 <item>添付ファイル削除機能 (プラグインとして提供)
+<item>SOCKS4/5 プロキシ対応
 </itemize>
 
 </sect1>
@@ -809,6 +810,7 @@ APOP認証を使用すると、生のパスワードが流れなくなるため比較的安全になります。
 <p>
 受信時にサーバ上のメッセージを削除する場合、サーバにメッセージを保存しておく日数を指定します。期限の切れたメッセージは次回の受信時に削除されます。
 0日を指定すると、受信と同時にに削除されます。
+デフォルトでは7日後に削除されます。
 </sect3>
 <sect3>POP3 - 受信済みも含めてサーバ上の全てのメッセージを受信する
 <p>
@@ -921,11 +923,37 @@ GPGMEを有効にしてコンパイルした時のみ表示されます。
 <p>
 OpenSSLをリンクしてコンパイルされたときのみ表示されます。
 詳細は<ref id="ssl-communication" name="SSLによる通信">を参照してください。
+</sect2>
 
-<sect3>送信(SMTP)
+<sect2>(プロキシ)タブ
+<p>
+プロキシ経由でメールの送受信を行う必要がある場合に設定します。
+<sect3>SOCKS プロキシを使用する
+<p>これにチェックを入れると、 SOCKS プロキシ経由で通信を行うようになります。
+</sect3>
+<sect3>SOCKS4 / SOCKS5
+<p>SOCKS のプロトコルを指定します。 SOCKS サーバが対応しているものを選択してください。
+</sect3>
+<sect3>ホスト名
+<p>SOCKS サーバのホスト名を指定します。
+</sect3>
+<sect3>ポート (1080)
+<p>SOCKS サーバのポート番号を指定します。
+</sect3>
+<sect3>認証を使用する
+<p>SOCKS サーバの認証が必要な場合に有効にします。認証は SOCKS5 のみ利用可能です。
+</sect3>
+<sect3>名前
+<p>認証に使用するユーザ名を指定します。
+</sect3>
+<sect3>パスワード
+<p>認証に使用するパスワードを指定します。
+</sect3>
+<sect3>送信時にSOCKSプロキシを使用する
+<p>SMTP による送信時にプロキシを使用するかどうかを指定します。
+チェックを外すと、直接 SMTP サーバに接続します。
 </sect3>
 
-</sect2>
 <sect2>(高度な設定)タブ
 <p>
 <sect3>SMTPポートを指定 (25)
