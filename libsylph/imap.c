@@ -38,6 +38,7 @@
 
 #include "imap.h"
 #include "socket.h"
+#include "socks.h"
 #include "ssl.h"
 #include "recv.h"
 #include "procmsg.h"
@@ -250,10 +251,12 @@ static void imap_delete_all_cached_messages	(FolderItem	*item);
 #if USE_SSL
 static SockInfo *imap_open		(const gchar	*server,
 					 gushort	 port,
+					 SocksInfo	*socks_info,
 					 SSLType	 ssl_type);
 #else
 static SockInfo *imap_open		(const gchar	*server,
-					 gushort	 port);
+					 gushort	 port,
+					 SocksInfo	*socks_info);
 #endif
 
 static gint imap_msg_list_change_perm_flags	(GSList		*msglist,
@@ -664,6 +667,7 @@ static Session *imap_session_new(PrefsAccount *account)
 static gint imap_session_connect(IMAPSession *session)
 {
 	SockInfo *sock;
+	SocksInfo *socks_info = NULL;
 	PrefsAccount *account;
 	const gchar *pass;
 
@@ -689,14 +693,23 @@ static gint imap_session_connect(IMAPSession *session)
 		pass = account->tmp_pass;
 	}
 
+	if (account->use_socks && account->use_socks_for_recv &&
+	    account->proxy_host) {
+		socks_info = socks_info_new(account->socks_type, account->proxy_host, account->proxy_port, account->use_proxy_auth ? account->proxy_name : NULL, account->use_proxy_auth ? account->proxy_pass : NULL);
+	}
+
 #if USE_SSL
 	if ((sock = imap_open(SESSION(session)->server, SESSION(session)->port,
-			      SESSION(session)->ssl_type)) == NULL)
+			      socks_info, SESSION(session)->ssl_type)) == NULL)
 #else
-	if ((sock = imap_open(SESSION(session)->server, SESSION(session)->port))
+	if ((sock = imap_open(SESSION(session)->server, SESSION(session)->port,
+			      socks_info))
 	    == NULL)
 #endif
 		return IMAP_ERROR;
+
+	if (socks_info)
+		socks_info_free(socks_info);
 
 	SESSION(session)->sock = sock;
 
@@ -2866,28 +2879,48 @@ static void imap_delete_all_cached_messages(FolderItem *item)
 
 #if USE_SSL
 static SockInfo *imap_open(const gchar *server, gushort port,
-			   SSLType ssl_type)
+			   SocksInfo *socks_info, SSLType ssl_type)
 #else
-static SockInfo *imap_open(const gchar *server, gushort port)
+static SockInfo *imap_open(const gchar *server, gushort port,
+			   SocksInfo *socks_info)
 #endif
 {
 	SockInfo *sock = NULL;
+	const gchar *server_;
+	gushort port_;
+
+	if (socks_info) {
+		server_ = socks_info->proxy_host;
+		port_ = socks_info->proxy_port;
+	} else {
+		server_ = server;
+		port_ = port;
+	}
+
 #if USE_THREADS
 	gint conn_id;
 
-	if ((conn_id = sock_connect_async_thread(server, port)) < 0 ||
+	if ((conn_id = sock_connect_async_thread(server_, port_)) < 0 ||
 	    sock_connect_async_thread_wait(conn_id, &sock) < 0) {
 		log_warning(_("Can't connect to IMAP4 server: %s:%d\n"),
 			    server, port);
 		return NULL;
 	}
 #else
-	if ((sock = sock_connect(server, port)) == NULL) {
+	if ((sock = sock_connect(server_, port_)) == NULL) {
 		log_warning(_("Can't connect to IMAP4 server: %s:%d\n"),
 			    server, port);
 		return NULL;
 	}
 #endif
+
+	if (socks_info) {
+		if (socks_connect(sock, server, port, socks_info) < 0) {
+			log_warning("Can't establish SOCKS connection: %s:%d\n",
+				    server, port);
+			return NULL;
+		}
+	}
 
 #if USE_SSL
 	if (ssl_type == SSL_TUNNEL && !ssl_init_socket(sock)) {
