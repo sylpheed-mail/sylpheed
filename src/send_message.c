@@ -53,6 +53,7 @@
 #include "alertpanel.h"
 #include "manage_window.h"
 #include "socket.h"
+#include "socks.h"
 #include "utils.h"
 #include "inc.h"
 #include "mainwindow.h"
@@ -614,6 +615,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 {
 	Session *session;
 	SMTPSession *smtp_session;
+	SocksInfo *socks_info = NULL;
 	FILE *out_fp;
 	gushort port;
 	SendProgressDialog *dialog;
@@ -731,9 +733,20 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 
 	session_set_timeout(session, prefs_common.io_timeout_secs * 1000);
 
+	if (ac_prefs->use_socks && ac_prefs->use_socks_for_send) {
+		socks_info = socks_info_new(ac_prefs->socks_type,
+					    ac_prefs->proxy_host,
+					    ac_prefs->proxy_port,
+					    ac_prefs->use_proxy_auth
+						? ac_prefs->proxy_name : NULL,
+					    ac_prefs->use_proxy_auth
+						? ac_prefs->proxy_pass : NULL);
+	}
+
 	inc_lock();
 
-	if (session_connect(session, ac_prefs->smtp_server, port) < 0) {
+	if (session_connect_full(session, ac_prefs->smtp_server, port,
+				 socks_info) < 0) {
 		manage_window_focus_in(dialog->dialog->window, NULL, NULL);
 		send_put_error(session);
 		manage_window_focus_out(dialog->dialog->window, NULL, NULL);

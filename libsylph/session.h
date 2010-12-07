@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,6 +30,7 @@
 #include <unistd.h>
 
 #include "socket.h"
+#include "socks.h"
 
 #define SESSION_BUFFSIZE	8192
 
@@ -181,6 +182,10 @@ void session_init		(Session	*session);
 gint session_connect		(Session	*session,
 				 const gchar	*server,
 				 gushort	 port);
+gint session_connect_full	(Session	*session,
+				 const gchar	*server,
+				 gushort	 port,
+				 SocksInfo	*socks_info);
 gint session_disconnect		(Session	*session);
 void session_destroy		(Session	*session);
 gboolean session_is_connected	(Session	*session);

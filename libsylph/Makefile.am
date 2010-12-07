@@ -37,6 +37,7 @@ libsylph_0_la_SOURCES = \
 	session.c \
 	smtp.c \
 	socket.c \
+	socks.c \
 	ssl.c \
 	stringtable.c \
 	sylmain.c \
@@ -78,6 +79,7 @@ libsylph_0include_HEADERS = \
 	session.h \
 	smtp.h \
 	socket.h \
+	socks.h \
 	ssl.h \
 	stringtable.h \
 	sylmain.h \

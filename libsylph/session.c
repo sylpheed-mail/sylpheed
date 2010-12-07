@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -34,6 +34,18 @@
 
 #include "session.h"
 #include "utils.h"
+
+typedef struct _SessionPrivData	SessionPrivData;
+
+struct _SessionPrivData {
+	Session *session;
+	SocksInfo *socks_info;
+	gpointer data;
+};
+
+static GList *priv_list = NULL;
+
+static SessionPrivData *session_get_priv(Session	*session);
 
 static gint session_connect_cb		(SockInfo	*sock,
 					 gpointer	 data);
@@ -117,7 +129,29 @@ void session_init(Session *session)
 	session->data = NULL;
 }
 
+static SessionPrivData *session_get_priv(Session *session)
+{
+	SessionPrivData *priv;
+	GList *cur;
+
+	g_return_val_if_fail(session != NULL, NULL);
+
+	for (cur = priv_list; cur != NULL; cur = cur->next) {
+		priv = (SessionPrivData *)cur->data;
+		if (priv->session == session)
+                        return priv;
+        }
+
+        return NULL;
+}
+
 gint session_connect(Session *session, const gchar *server, gushort port)
+{
+	return session_connect_full(session, server, port, NULL);
+}
+
+gint session_connect_full(Session *session, const gchar *server, gushort port,
+			  SocksInfo *socks_info)
 {
 #ifndef G_OS_UNIX
 	SockInfo *sock = NULL;
@@ -132,6 +166,11 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 	}
 	session->port = port;
 
+	if (socks_info) {
+		server = socks_info->proxy_host;
+		port = socks_info->proxy_port;
+	}
+
 #ifdef G_OS_UNIX
 	session->conn_id = sock_connect_async(server, port, session_connect_cb,
 					      session);
@@ -140,8 +179,6 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 		session->state = SESSION_ERROR;
 		return -1;
 	}
-
-	return 0;
 #elif USE_THREADS
 	session->conn_id = sock_connect_async_thread(server, port);
 	if (session->conn_id < 0) {
@@ -154,8 +191,6 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 		session->state = SESSION_ERROR;
 		return -1;
 	}
-
-	return session_connect_cb(sock, session);
 #else /* !USE_THREADS */
 	sock = sock_connect(server, port);
 	if (sock == NULL) {
@@ -163,7 +198,20 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 		session->state = SESSION_ERROR;
 		return -1;
 	}
+#endif
 
+	if (socks_info) {
+		SessionPrivData *priv;
+
+		priv = g_new0(SessionPrivData, 1);
+		priv->session = session;
+		priv->socks_info = socks_info;
+		priv_list = g_list_prepend(priv_list, priv);
+	}
+
+#ifdef G_OS_UNIX
+	return 0;
+#else
 	return session_connect_cb(sock, session);
 #endif
 }
@@ -171,6 +219,7 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 static gint session_connect_cb(SockInfo *sock, gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 
 	session->conn_id = 0;
 
@@ -181,6 +230,17 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 	}
 
 	session->sock = sock;
+
+	priv = session_get_priv(session);
+	if (priv && priv->socks_info) {
+		sock_set_nonblocking_mode(sock, FALSE);
+		if (socks_connect(sock, session->server, session->port,
+				  priv->socks_info) < 0) {
+			g_warning("can't establish SOCKS connection.");
+			session->state = SESSION_ERROR;
+			return -1;
+		}
+	}
 
 #if USE_SSL
 	if (session->ssl_type == SSL_TUNNEL) {
@@ -217,6 +277,8 @@ gint session_disconnect(Session *session)
 
 void session_destroy(Session *session)
 {
+	SessionPrivData *priv;
+
 	g_return_if_fail(session != NULL);
 	g_return_if_fail(session->destroy != NULL);
 
@@ -229,6 +291,13 @@ void session_destroy(Session *session)
 	if (session->read_data_fp)
 		fclose(session->read_data_fp);
 	g_free(session->write_buf);
+
+	priv = session_get_priv(session);
+	if (priv) {
+		priv_list = g_list_remove(priv_list, priv);
+		socks_info_free(priv->socks_info);
+		g_free(priv);
+	}
 
 	debug_print("session (%p): destroyed\n", session);
 

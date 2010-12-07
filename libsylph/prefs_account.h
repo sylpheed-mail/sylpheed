@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -169,6 +169,17 @@ struct _PrefsAccount
 
 	/* Compose */
 	gboolean  sig_before_quote;
+
+	/* Advanced - SOCKS proxy */
+	gboolean use_socks;
+	gboolean use_socks_for_recv;
+	gboolean use_socks_for_send;
+	gint socks_type;
+	gchar *proxy_host;
+	gushort proxy_port;
+	gboolean use_proxy_auth;
+	gchar *proxy_name;
+	gchar *proxy_pass;
 };
 
 PrefsAccount *prefs_account_new		(void);

@@ -45,6 +45,7 @@
 #include "account.h"
 #include "procmsg.h"
 #include "socket.h"
+#include "socks.h"
 #include "pop.h"
 #include "recv.h"
 #include "mbox.h"
@@ -842,22 +843,24 @@ static IncState inc_pop3_session_do(IncSession *session)
 {
 	Pop3Session *pop3_session = POP3_SESSION(session->session);
 	IncProgressDialog *inc_dialog = (IncProgressDialog *)session->data;
+	PrefsAccount *ac = pop3_session->ac_prefs;
+	SocksInfo *socks_info = NULL;
 	gchar *buf;
 
 	debug_print(_("getting new messages of account %s...\n"),
-		    pop3_session->ac_prefs->account_name);
+		    ac->account_name);
 
 	if (pop3_session->auth_only)
 		buf = g_strdup_printf(_("%s: Authenticating with POP3"),
-				      pop3_session->ac_prefs->recv_server);
+				      ac->recv_server);
 	else
 		buf = g_strdup_printf(_("%s: Retrieving new messages"),
-				      pop3_session->ac_prefs->recv_server);
+				      ac->recv_server);
 	gtk_window_set_title(GTK_WINDOW(inc_dialog->dialog->window), buf);
 	g_free(buf);
 
 	buf = g_strdup_printf(_("Connecting to POP3 server: %s..."),
-			      pop3_session->ac_prefs->recv_server);
+			      ac->recv_server);
 	log_message("%s\n", buf);
 	progress_dialog_set_label(inc_dialog->dialog, buf);
 	g_free(buf);
@@ -865,11 +868,15 @@ static IncState inc_pop3_session_do(IncSession *session)
 	session_set_timeout(SESSION(pop3_session),
 			    prefs_common.io_timeout_secs * 1000);
 
+	if (ac->use_socks && ac->use_socks_for_recv) {
+		socks_info = socks_info_new(ac->socks_type, ac->proxy_host, ac->proxy_port, ac->use_proxy_auth ? ac->proxy_name : NULL, ac->use_proxy_auth ? ac->proxy_pass : NULL);
+	}
+
 	GTK_EVENTS_FLUSH();
 
-	if (session_connect(SESSION(pop3_session),
-			    SESSION(pop3_session)->server,
-			    SESSION(pop3_session)->port) < 0) {
+	if (session_connect_full(SESSION(pop3_session),
+				 SESSION(pop3_session)->server,
+				 SESSION(pop3_session)->port, socks_info) < 0) {
 		log_warning(_("Can't connect to POP3 server: %s:%d\n"),
 			    SESSION(pop3_session)->server,
 			    SESSION(pop3_session)->port);
