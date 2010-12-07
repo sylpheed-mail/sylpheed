@@ -170,7 +170,7 @@ struct _PrefsAccount
 	/* Compose */
 	gboolean  sig_before_quote;
 
-	/* Advanced - SOCKS proxy */
+	/* SOCKS proxy */
 	gboolean use_socks;
 	gboolean use_socks_for_recv;
 	gboolean use_socks_for_send;

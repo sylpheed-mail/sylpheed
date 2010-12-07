@@ -109,6 +109,17 @@ static PrefParam param[] = {
 	{"ssl_smtp", "0", &tmp_ac_prefs.ssl_smtp, P_ENUM},
 	{"use_nonblocking_ssl", "1", &tmp_ac_prefs.use_nonblocking_ssl, P_BOOL},
 
+	/* SOCKS proxy */
+	{"use_socks", "FALSE", &tmp_ac_prefs.use_socks, P_BOOL},
+	{"use_socks_for_recv", "TRUE", &tmp_ac_prefs.use_socks_for_recv, P_BOOL},
+	{"use_socks_for_send", "TRUE", &tmp_ac_prefs.use_socks_for_send, P_BOOL},
+	{"socks_type", "1", &tmp_ac_prefs.socks_type, P_ENUM},
+	{"proxy_host", NULL, &tmp_ac_prefs.proxy_host, P_STRING},
+	{"proxy_port", "1080", &tmp_ac_prefs.proxy_port, P_USHORT},
+	{"use_proxy_auth", "FALSE", &tmp_ac_prefs.use_proxy_auth, P_BOOL},
+	{"proxy_name", NULL, &tmp_ac_prefs.proxy_name, P_STRING},
+	{"proxy_pass", NULL, &tmp_ac_prefs.proxy_pass, P_STRING},
+
 	/* Advanced */
 	{"set_smtpport", "FALSE", &tmp_ac_prefs.set_smtpport, P_BOOL},
 	{"smtp_port", "25", &tmp_ac_prefs.smtpport, P_USHORT},
@@ -131,17 +142,6 @@ static PrefParam param[] = {
 	{"queue_folder", NULL, &tmp_ac_prefs.queue_folder, P_STRING},
 	{"set_trash_folder", "FALSE", &tmp_ac_prefs.set_trash_folder, P_BOOL},
 	{"trash_folder", NULL, &tmp_ac_prefs.trash_folder, P_STRING},
-
-	/* SOCKS proxy */
-	{"use_socks", "FALSE", &tmp_ac_prefs.use_socks, P_BOOL},
-	{"use_socks_for_recv", "TRUE", &tmp_ac_prefs.use_socks_for_recv, P_BOOL},
-	{"use_socks_for_send", "TRUE", &tmp_ac_prefs.use_socks_for_send, P_BOOL},
-	{"socks_type", "1", &tmp_ac_prefs.socks_type, P_ENUM},
-	{"proxy_host", NULL, &tmp_ac_prefs.proxy_host, P_STRING},
-	{"proxy_port", "1080", &tmp_ac_prefs.proxy_port, P_USHORT},
-	{"use_proxy_auth", "FALSE", &tmp_ac_prefs.use_proxy_auth, P_BOOL},
-	{"proxy_name", NULL, &tmp_ac_prefs.proxy_name, P_STRING},
-	{"proxy_pass", NULL, &tmp_ac_prefs.proxy_pass, P_STRING},
 
 	{NULL, NULL, NULL, P_OTHER}
 };

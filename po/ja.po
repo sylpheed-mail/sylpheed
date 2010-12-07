@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-01 17:18+0900\n"
+"POT-Creation-Date: 2010-12-07 15:35+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -489,7 +489,7 @@ msgid "error occurred on POP3 session\n"
 msgstr "POP3 セッション中にエラーが発生しました\n"
 
 #: libsylph/prefs.c:209 libsylph/prefs.c:237 libsylph/prefs.c:282
-#: libsylph/prefs_account.c:222 libsylph/prefs_account.c:236
+#: libsylph/prefs_account.c:233 libsylph/prefs_account.c:247
 #: src/prefs_display_header.c:415 src/prefs_display_header.c:440
 msgid "failed to write configuration to file\n"
 msgstr "設定のファイルへの書き込みに失敗しました\n"
@@ -696,7 +696,7 @@ msgstr ""
 msgid "Name"
 msgstr "名前"
 
-#: src/account_dialog.c:380 src/prefs_account_dialog.c:696
+#: src/account_dialog.c:380 src/prefs_account_dialog.c:732
 msgid "Protocol"
 msgstr "プロトコル"
 
@@ -995,7 +995,7 @@ msgstr "アドレス帳"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:664 src/addressbook.c:4150 src/folderview.c:395
-#: src/prefs_account_dialog.c:1844 src/query_search.c:400
+#: src/prefs_account_dialog.c:1989 src/query_search.c:400
 msgid "Folder"
 msgstr "フォルダ"
 
@@ -1232,7 +1232,7 @@ msgstr "注意"
 msgid "Warning"
 msgstr "警告"
 
-#: src/alertpanel.c:168 src/inc.c:751
+#: src/alertpanel.c:168 src/inc.c:752
 msgid "Error"
 msgstr "エラー"
 
@@ -1676,7 +1676,7 @@ msgstr ""
 "メールを送信するためのアカウントが指定されていません。\n"
 "送信する前にメールアカウントを選択してください。"
 
-#: src/compose.c:3509 src/send_message.c:315
+#: src/compose.c:3509 src/send_message.c:316
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "メッセージを %s にポストする途中にエラーが発生しました。"
@@ -2010,7 +2010,7 @@ msgid " Check File "
 msgstr " ファイルをチェック "
 
 #: src/editbook.c:210 src/editjpilot.c:282 src/editvcard.c:195
-#: src/prefs_account_dialog.c:1288
+#: src/prefs_account_dialog.c:1324
 msgid "File"
 msgstr "ファイル"
 
@@ -2090,7 +2090,7 @@ msgid "Edit JPilot Entry"
 msgstr "JPilotエントリを編集"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:1872
+#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2017
 #: src/prefs_common_dialog.c:2173
 msgid " ... "
 msgstr " ... "
@@ -2155,7 +2155,7 @@ msgstr "タイムアウト(秒)"
 msgid "Maximum Entries"
 msgstr "最大エントリ数"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:555
+#: src/editldap.c:471 src/prefs_account_dialog.c:589
 msgid "Basic"
 msgstr "基本"
 
@@ -2241,7 +2241,7 @@ msgid "MH (number only)"
 msgstr "MH (番号のみ)"
 
 #: src/export.c:381 src/export.c:387 src/import.c:661 src/import.c:667
-#: src/prefs_account_dialog.c:958
+#: src/prefs_account_dialog.c:994
 msgid " Select... "
 msgstr " 選択... "
 
@@ -2822,145 +2822,145 @@ msgstr "LDIFファイルをアドレス帳へインポート"
 msgid "Attributes"
 msgstr "属性"
 
-#: src/inc.c:163
+#: src/inc.c:164
 #, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d 通の新着メッセージ"
 
-#: src/inc.c:484
+#: src/inc.c:485
 msgid "Authenticating with POP3"
 msgstr "POP3で認証中"
 
-#: src/inc.c:511
+#: src/inc.c:512
 msgid "Retrieving new messages"
 msgstr "新着メッセージを受信中"
 
-#: src/inc.c:513
+#: src/inc.c:514
 msgid "Cancel _all"
 msgstr "すべてキャンセル(_A)"
 
-#: src/inc.c:559
+#: src/inc.c:560
 msgid "Standby"
 msgstr "待機中"
 
-#: src/inc.c:707 src/inc.c:757
+#: src/inc.c:708 src/inc.c:758
 msgid "Cancelled"
 msgstr "キャンセル"
 
-#: src/inc.c:718
+#: src/inc.c:719
 msgid "Retrieving"
 msgstr "受信中"
 
-#: src/inc.c:727 src/inc.c:1050
+#: src/inc.c:728 src/inc.c:1057
 #, c-format
 msgid "%d message(s) (%s) received"
 msgstr "%d 通 (%s) 受信"
 
-#: src/inc.c:731
+#: src/inc.c:732
 #, c-format
 msgid "no new messages"
 msgstr "新着メッセージなし"
 
-#: src/inc.c:732
+#: src/inc.c:733
 msgid "Done"
 msgstr "完了"
 
-#: src/inc.c:737
+#: src/inc.c:738
 msgid "Connection failed"
 msgstr "接続失敗"
 
-#: src/inc.c:740
+#: src/inc.c:741
 msgid "Auth failed"
 msgstr "認証失敗"
 
-#: src/inc.c:744
+#: src/inc.c:745
 msgid "Locked"
 msgstr "ロック中"
 
-#: src/inc.c:754
+#: src/inc.c:755
 msgid "Timeout"
 msgstr "タイムアウト"
 
-#: src/inc.c:801
+#: src/inc.c:802
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "完了 (%d 通の新着メッセージ)"
 
-#: src/inc.c:804
+#: src/inc.c:805
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "完了 (新着メッセージなし)"
 
-#: src/inc.c:813
+#: src/inc.c:814
 msgid "Some errors occurred while getting mail."
 msgstr "メールの取得中にエラーが発生しました。"
 
-#: src/inc.c:847
+#: src/inc.c:850
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "アカウント %s の新着メッセージを取り込んでいます...\n"
 
-#: src/inc.c:851
+#: src/inc.c:854
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: POP3で認証中"
 
-#: src/inc.c:854
+#: src/inc.c:857
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: 新着メッセージを受信中"
 
-#: src/inc.c:859
+#: src/inc.c:862
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "POP3サーバ: %s に接続中..."
 
-#: src/inc.c:873
+#: src/inc.c:880
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3サーバ: %s:%d に接続できません\n"
 
-#: src/inc.c:955 src/rpop3.c:834 src/send_message.c:817
+#: src/inc.c:962 src/rpop3.c:834 src/send_message.c:830
 #, c-format
 msgid "Authenticating..."
 msgstr "認証中..."
 
-#: src/inc.c:956
+#: src/inc.c:963
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "%s からメッセージを受信中..."
 
-#: src/inc.c:961
+#: src/inc.c:968
 msgid "Getting the number of new messages (STAT)..."
 msgstr "新着メッセージの数を取得中 (STAT)..."
 
-#: src/inc.c:965
+#: src/inc.c:972
 msgid "Getting the number of new messages (LAST)..."
 msgstr "新着メッセージの数を取得中 (LAST)..."
 
-#: src/inc.c:969
+#: src/inc.c:976
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "新着メッセージの数を取得中 (UIDL)..."
 
-#: src/inc.c:973
+#: src/inc.c:980
 msgid "Getting the size of messages (LIST)..."
 msgstr "メッセージのサイズを取得中 (LIST)..."
 
-#: src/inc.c:983
+#: src/inc.c:990
 #, c-format
 msgid "Deleting message %d"
 msgstr "メッセージ %d を削除中"
 
-#: src/inc.c:990 src/send_message.c:835
+#: src/inc.c:997 src/send_message.c:848
 msgid "Quitting"
 msgstr "切断中"
 
-#: src/inc.c:1025
+#: src/inc.c:1032
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "メッセージを受信中 (%d / %d) (%s / %s)"
 
-#: src/inc.c:1286 src/inc.c:1309 src/summaryview.c:4651
+#: src/inc.c:1293 src/inc.c:1316 src/summaryview.c:4651
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -2968,15 +2968,15 @@ msgstr ""
 "迷惑メールフィルタコマンドの実行に失敗しました。\n"
 "迷惑メール対策の設定を確認してください。"
 
-#: src/inc.c:1368
+#: src/inc.c:1375
 msgid "Connection failed."
 msgstr "接続に失敗しました。"
 
-#: src/inc.c:1374
+#: src/inc.c:1381
 msgid "Error occurred while processing mail."
 msgstr "メールの処理中にエラーが発生しました。"
 
-#: src/inc.c:1379
+#: src/inc.c:1386
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -2985,29 +2985,29 @@ msgstr ""
 "メールの処理中にエラーが発生しました:\n"
 "%s"
 
-#: src/inc.c:1385
+#: src/inc.c:1392
 msgid "No disk space left."
 msgstr "ディスクの空き容量がありません。"
 
-#: src/inc.c:1390
+#: src/inc.c:1397
 msgid "Can't write file."
 msgstr "ファイルに書き込めません。"
 
-#: src/inc.c:1395
+#: src/inc.c:1402
 msgid "Socket error."
 msgstr "ソケットエラーです。"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1401 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:761
-#: src/send_message.c:978
+#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:774
+#: src/send_message.c:991
 msgid "Connection closed by the remote host."
 msgstr "リモートホストによって接続を切断されました。"
 
-#: src/inc.c:1407
+#: src/inc.c:1414
 msgid "Mailbox is locked."
 msgstr "メールボックスはロックされています。"
 
-#: src/inc.c:1411
+#: src/inc.c:1418
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3016,11 +3016,11 @@ msgstr ""
 "メールボックスはロックされています:\n"
 "%s"
 
-#: src/inc.c:1417 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:958
+#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:971
 msgid "Authentication failed."
 msgstr "認証に失敗しました。"
 
-#: src/inc.c:1422 src/rpop3.c:528 src/send_message.c:961
+#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:974
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3029,15 +3029,15 @@ msgstr ""
 "認証に失敗しました:\n"
 "%s"
 
-#: src/inc.c:1427 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:982
+#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:995
 msgid "Session timed out."
 msgstr "セッションがタイムアウトしました。"
 
-#: src/inc.c:1468
+#: src/inc.c:1475
 msgid "Incorporation cancelled\n"
 msgstr "受信をキャンセルしました\n"
 
-#: src/inc.c:1577
+#: src/inc.c:1584
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "新しいメッセージを %s から %s に取り込んでいます...\n"
@@ -4281,439 +4281,472 @@ msgstr "ファイル: "
 msgid "Description: "
 msgstr "説明: "
 
-#: src/prefs_account_dialog.c:444
+#: src/prefs_account_dialog.c:478
 msgid "Opening account preferences window...\n"
 msgstr "アカウントプリファレンスウィンドウを開いています...\n"
 
-#: src/prefs_account_dialog.c:484
+#: src/prefs_account_dialog.c:518
 #, c-format
 msgid "Account%d"
 msgstr "Account%d"
 
-#: src/prefs_account_dialog.c:505
+#: src/prefs_account_dialog.c:539
 msgid "Preferences for new account"
 msgstr "新規アカウントの設定"
 
-#: src/prefs_account_dialog.c:514 src/prefs_toolbar.c:99
+#: src/prefs_account_dialog.c:548 src/prefs_toolbar.c:99
 msgid "Account preferences"
 msgstr "アカウントの設定"
 
-#: src/prefs_account_dialog.c:537
+#: src/prefs_account_dialog.c:571
 msgid "Creating account preferences window...\n"
 msgstr "アカウントプリファレンスウィンドウを作成中...\n"
 
-#: src/prefs_account_dialog.c:557 src/prefs_common_dialog.c:765
+#: src/prefs_account_dialog.c:591 src/prefs_common_dialog.c:765
 msgid "Receive"
 msgstr "受信"
 
-#: src/prefs_account_dialog.c:559 src/prefs_common_dialog.c:767
+#: src/prefs_account_dialog.c:593 src/prefs_common_dialog.c:767
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "送信"
 
-#: src/prefs_account_dialog.c:561 src/prefs_common_dialog.c:769
+#: src/prefs_account_dialog.c:595 src/prefs_common_dialog.c:769
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "作成"
 
-#: src/prefs_account_dialog.c:564 src/prefs_common_dialog.c:776
+#: src/prefs_account_dialog.c:598 src/prefs_common_dialog.c:776
 msgid "Privacy"
 msgstr "個人情報"
 
-#: src/prefs_account_dialog.c:568
+#: src/prefs_account_dialog.c:602
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:571 src/prefs_common_dialog.c:2485
+#: src/prefs_account_dialog.c:605
+msgid "Proxy"
+msgstr "プロキシ"
+
+#: src/prefs_account_dialog.c:607 src/prefs_common_dialog.c:2485
 msgid "Advanced"
 msgstr "高度な設定"
 
-#: src/prefs_account_dialog.c:627
+#: src/prefs_account_dialog.c:663
 msgid "Name of this account"
 msgstr "このアカウントの名称"
 
-#: src/prefs_account_dialog.c:636
+#: src/prefs_account_dialog.c:672
 msgid "Set as default"
 msgstr "通常使用"
 
-#: src/prefs_account_dialog.c:640
+#: src/prefs_account_dialog.c:676
 msgid "Personal information"
 msgstr "個人情報"
 
-#: src/prefs_account_dialog.c:649
+#: src/prefs_account_dialog.c:685
 msgid "Full name"
 msgstr "名前"
 
-#: src/prefs_account_dialog.c:655
+#: src/prefs_account_dialog.c:691
 msgid "Mail address"
 msgstr "メールアドレス"
 
-#: src/prefs_account_dialog.c:661
+#: src/prefs_account_dialog.c:697
 msgid "Organization"
 msgstr "組織"
 
-#: src/prefs_account_dialog.c:685
+#: src/prefs_account_dialog.c:721
 msgid "Server information"
 msgstr "サーバ情報"
 
-#: src/prefs_account_dialog.c:706 src/prefs_account_dialog.c:863
-#: src/prefs_account_dialog.c:1605
+#: src/prefs_account_dialog.c:742 src/prefs_account_dialog.c:899
+#: src/prefs_account_dialog.c:1640
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:708 src/prefs_account_dialog.c:971
-#: src/prefs_account_dialog.c:1625 src/prefs_account_dialog.c:1816
+#: src/prefs_account_dialog.c:744 src/prefs_account_dialog.c:1007
+#: src/prefs_account_dialog.c:1660 src/prefs_account_dialog.c:1961
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:710
+#: src/prefs_account_dialog.c:746
 msgid "News (NNTP)"
 msgstr "ニュース (NNTP)"
 
-#: src/prefs_account_dialog.c:712
+#: src/prefs_account_dialog.c:748
 msgid "None (local)"
 msgstr "なし (ローカル)"
 
-#: src/prefs_account_dialog.c:725
+#: src/prefs_account_dialog.c:761
 msgid "This server requires authentication"
 msgstr "このサーバは認証が必要"
 
-#: src/prefs_account_dialog.c:764
+#: src/prefs_account_dialog.c:800
 msgid "News server"
 msgstr "ニュースサーバ"
 
-#: src/prefs_account_dialog.c:770
+#: src/prefs_account_dialog.c:806
 msgid "Server for receiving"
 msgstr "受信用サーバ"
 
-#: src/prefs_account_dialog.c:776
+#: src/prefs_account_dialog.c:812
 msgid "SMTP server (send)"
 msgstr "SMTPサーバ (送信)"
 
-#: src/prefs_account_dialog.c:783 src/prefs_account_dialog.c:1171
+#: src/prefs_account_dialog.c:819 src/prefs_account_dialog.c:1207
 msgid "User ID"
 msgstr "ユーザID"
 
-#: src/prefs_account_dialog.c:789 src/prefs_account_dialog.c:1180
+#: src/prefs_account_dialog.c:825 src/prefs_account_dialog.c:1216
 msgid "Password"
 msgstr "パスワード"
 
-#: src/prefs_account_dialog.c:871
+#: src/prefs_account_dialog.c:907
 msgid "Use secure authentication (APOP)"
 msgstr "安全な認証方式を使用する (APOP)"
 
-#: src/prefs_account_dialog.c:874
+#: src/prefs_account_dialog.c:910
 msgid "Remove messages on server when received"
 msgstr "受信時にサーバ上のメッセージを削除する"
 
-#: src/prefs_account_dialog.c:885
+#: src/prefs_account_dialog.c:921
 msgid "Remove after"
 msgstr "メッセージを"
 
-#: src/prefs_account_dialog.c:894
+#: src/prefs_account_dialog.c:930
 msgid "days"
 msgstr "日後に削除"
 
-#: src/prefs_account_dialog.c:911
+#: src/prefs_account_dialog.c:947
 msgid "0 days: remove immediately"
 msgstr "0日: 即座に削除"
 
-#: src/prefs_account_dialog.c:921
+#: src/prefs_account_dialog.c:957
 msgid "Download all messages (including already received) on server"
 msgstr "受信済みも含めてサーバ上のすべてのメッセージを受信する"
 
-#: src/prefs_account_dialog.c:927
+#: src/prefs_account_dialog.c:963
 msgid "Receive size limit"
 msgstr "受信サイズ制限"
 
-#: src/prefs_account_dialog.c:934 src/prefs_filter_edit.c:592
+#: src/prefs_account_dialog.c:970 src/prefs_filter_edit.c:592
 #: src/prefs_filter_edit.c:1053
 msgid "KB"
 msgstr "KB"
 
-#: src/prefs_account_dialog.c:941
+#: src/prefs_account_dialog.c:977
 msgid "Filter messages on receiving"
 msgstr "受信時にメッセージを振り分ける"
 
-#: src/prefs_account_dialog.c:949
+#: src/prefs_account_dialog.c:985
 msgid "Default inbox"
 msgstr "標準の受信箱"
 
-#: src/prefs_account_dialog.c:969
+#: src/prefs_account_dialog.c:1005
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "振り分けられなかったメッセージはこのフォルダに格納されます。"
 
-#: src/prefs_account_dialog.c:982 src/prefs_account_dialog.c:1141
+#: src/prefs_account_dialog.c:1018 src/prefs_account_dialog.c:1177
 msgid "Authentication method"
 msgstr "認証方式"
 
-#: src/prefs_account_dialog.c:992 src/prefs_account_dialog.c:1151
+#: src/prefs_account_dialog.c:1028 src/prefs_account_dialog.c:1187
 #: src/prefs_common_dialog.c:1046 src/prefs_common_dialog.c:2608
 #: src/prefs_common_dialog.c:2973
 msgid "Automatic"
 msgstr "自動"
 
-#: src/prefs_account_dialog.c:1000
+#: src/prefs_account_dialog.c:1036
 msgid "Only check INBOX on receiving"
 msgstr "受信時に受信箱(INBOX)のみチェックする"
 
-#: src/prefs_account_dialog.c:1002
+#: src/prefs_account_dialog.c:1038
 msgid "Filter new messages in INBOX on receiving"
 msgstr "受信時に受信箱(INBOX)内の新着メッセージを振り分ける"
 
-#: src/prefs_account_dialog.c:1004
+#: src/prefs_account_dialog.c:1040
 msgid "News"
 msgstr "ニュース"
 
-#: src/prefs_account_dialog.c:1016
+#: src/prefs_account_dialog.c:1052
 msgid "Maximum number of articles to download"
 msgstr "ダウンロードする記事数の上限"
 
-#: src/prefs_account_dialog.c:1033
+#: src/prefs_account_dialog.c:1069
 msgid "No limit if 0 is specified."
 msgstr "0を指定すると無制限になります。"
 
-#: src/prefs_account_dialog.c:1037
+#: src/prefs_account_dialog.c:1073
 msgid "`Get all' checks for new messages on this account"
 msgstr "「全受信」でこのアカウントの新着メッセージをチェックする"
 
-#: src/prefs_account_dialog.c:1091 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1127 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "ヘッダ"
 
-#: src/prefs_account_dialog.c:1098
+#: src/prefs_account_dialog.c:1134
 msgid "Add Date header field"
 msgstr "Dateヘッダフィールドを付ける"
 
-#: src/prefs_account_dialog.c:1099
+#: src/prefs_account_dialog.c:1135
 msgid "Generate Message-ID"
 msgstr "メッセージIDを生成する"
 
-#: src/prefs_account_dialog.c:1106
+#: src/prefs_account_dialog.c:1142
 msgid "Add user-defined header"
 msgstr "ユーザ定義のヘッダを追加する"
 
-#: src/prefs_account_dialog.c:1108 src/prefs_common_dialog.c:1795
+#: src/prefs_account_dialog.c:1144 src/prefs_common_dialog.c:1795
 #: src/prefs_common_dialog.c:1822
 msgid " Edit... "
 msgstr " 編集... "
 
-#: src/prefs_account_dialog.c:1118
+#: src/prefs_account_dialog.c:1154
 msgid "Authentication"
 msgstr "認証"
 
-#: src/prefs_account_dialog.c:1126
+#: src/prefs_account_dialog.c:1162
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP認証 (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1202
+#: src/prefs_account_dialog.c:1238
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
 msgstr ""
 "このエントリが空のときは、受信時と同じユーザIDとパスワードが使用されます。"
 
-#: src/prefs_account_dialog.c:1215
+#: src/prefs_account_dialog.c:1251
 msgid "Authenticate with POP3 before sending"
 msgstr "送信前にPOP3認証を行う"
 
 #. signature
-#: src/prefs_account_dialog.c:1254 src/prefs_common_dialog.c:1163
+#: src/prefs_account_dialog.c:1290 src/prefs_common_dialog.c:1163
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "署名"
 
-#: src/prefs_account_dialog.c:1262
+#: src/prefs_account_dialog.c:1298
 msgid "Direct input"
 msgstr "直接入力"
 
-#: src/prefs_account_dialog.c:1296
+#: src/prefs_account_dialog.c:1332
 msgid "Command output"
 msgstr "コマンドの出力"
 
-#: src/prefs_account_dialog.c:1308
+#: src/prefs_account_dialog.c:1344
 msgid "Put signature before quote (not recommended)"
 msgstr "署名を引用の前に入れる (非推奨)"
 
-#: src/prefs_account_dialog.c:1320 src/prefs_folder_item.c:332
+#: src/prefs_account_dialog.c:1356 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
 msgstr "以下のアドレスを自動指定"
 
-#: src/prefs_account_dialog.c:1329
+#: src/prefs_account_dialog.c:1365
 msgid "Cc"
 msgstr "Cc"
 
-#: src/prefs_account_dialog.c:1342
+#: src/prefs_account_dialog.c:1378
 msgid "Bcc"
 msgstr "Bcc"
 
-#: src/prefs_account_dialog.c:1355
+#: src/prefs_account_dialog.c:1391
 msgid "Reply-To"
 msgstr "Reply-To"
 
-#: src/prefs_account_dialog.c:1412
+#: src/prefs_account_dialog.c:1448
 msgid "PGP sign message by default"
 msgstr "標準でメッセージにPGP署名する"
 
-#: src/prefs_account_dialog.c:1414
+#: src/prefs_account_dialog.c:1450
 msgid "PGP encrypt message by default"
 msgstr "標準でメッセージをPGP暗号化する"
 
-#: src/prefs_account_dialog.c:1416
+#: src/prefs_account_dialog.c:1452
 msgid "Encrypt when replying to encrypted message"
 msgstr "暗号化されたメッセージに返信した場合は暗号化する"
 
-#: src/prefs_account_dialog.c:1418
+#: src/prefs_account_dialog.c:1454
 msgid "Use ASCII-armored format for encryption"
 msgstr "暗号化にASCII包装形式を使用する"
 
-#: src/prefs_account_dialog.c:1420
+#: src/prefs_account_dialog.c:1456
 msgid "Use clear text signature"
 msgstr "クリアテキスト署名を使用する"
 
-#: src/prefs_account_dialog.c:1425
+#: src/prefs_account_dialog.c:1461
 msgid "Sign key"
 msgstr "署名鍵"
 
-#: src/prefs_account_dialog.c:1433
+#: src/prefs_account_dialog.c:1469
 msgid "Use default GnuPG key"
 msgstr "標準のGnuPG鍵を使用する"
 
-#: src/prefs_account_dialog.c:1442
+#: src/prefs_account_dialog.c:1478
 msgid "Select key by your email address"
 msgstr "自分の電子メールアドレスで鍵を選択する"
 
-#: src/prefs_account_dialog.c:1451
+#: src/prefs_account_dialog.c:1487
 msgid "Specify key manually"
 msgstr "鍵を手動で指定する"
 
-#: src/prefs_account_dialog.c:1467
+#: src/prefs_account_dialog.c:1503
 msgid "User or key ID:"
 msgstr "ユーザまたは鍵ID:"
 
-#: src/prefs_account_dialog.c:1613 src/prefs_account_dialog.c:1633
-#: src/prefs_account_dialog.c:1652 src/prefs_account_dialog.c:1673
+#: src/prefs_account_dialog.c:1648 src/prefs_account_dialog.c:1668
+#: src/prefs_account_dialog.c:1687 src/prefs_account_dialog.c:1708
 msgid "Don't use SSL"
 msgstr "SSLを使用しない"
 
-#: src/prefs_account_dialog.c:1616
+#: src/prefs_account_dialog.c:1651
 msgid "Use SSL for POP3 connection"
 msgstr "POP3の接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1619 src/prefs_account_dialog.c:1639
-#: src/prefs_account_dialog.c:1679
+#: src/prefs_account_dialog.c:1654 src/prefs_account_dialog.c:1674
+#: src/prefs_account_dialog.c:1714
 msgid "Use STARTTLS command to start SSL session"
 msgstr "SSLセッションの開始にSTARTTLSコマンドを使用"
 
-#: src/prefs_account_dialog.c:1636
+#: src/prefs_account_dialog.c:1671
 msgid "Use SSL for IMAP4 connection"
 msgstr "IMAP4の接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1645
+#: src/prefs_account_dialog.c:1680
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1660
+#: src/prefs_account_dialog.c:1695
 msgid "Use SSL for NNTP connection"
 msgstr "NNTPの接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1665
+#: src/prefs_account_dialog.c:1700
 msgid "Send (SMTP)"
 msgstr "送信 (SMTP)"
 
-#: src/prefs_account_dialog.c:1676
+#: src/prefs_account_dialog.c:1711
 msgid "Use SSL for SMTP connection"
 msgstr "SMTPの接続にSSLを使用"
 
-#: src/prefs_account_dialog.c:1690
+#: src/prefs_account_dialog.c:1725
 msgid "Use non-blocking SSL"
 msgstr "非ブロッキングSSLを使用する"
 
-#: src/prefs_account_dialog.c:1693
+#: src/prefs_account_dialog.c:1728
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "SSLの接続に問題が生じる場合はオフにしてください。"
 
-#: src/prefs_account_dialog.c:1783
+#: src/prefs_account_dialog.c:1778
+msgid "Use SOCKS proxy"
+msgstr "SOCKSプロキシを使用する"
+
+#: src/prefs_account_dialog.c:1802
+msgid "Hostname:"
+msgstr "ホスト名:"
+
+#: src/prefs_account_dialog.c:1811
+msgid "Port:"
+msgstr "ポート:"
+
+#: src/prefs_account_dialog.c:1824
+msgid "Use authentication"
+msgstr "認証を使用する"
+
+#: src/prefs_account_dialog.c:1830 src/prefs_filter_edit.c:253
+#: src/prefs_search_folder.c:187
+msgid "Name:"
+msgstr "名前:"
+
+#: src/prefs_account_dialog.c:1839
+msgid "Password:"
+msgstr "パスワード:"
+
+#: src/prefs_account_dialog.c:1850
+msgid "Use SOCKS proxy on sending"
+msgstr "送信時にSOCKSプロキシを使用する"
+
+#: src/prefs_account_dialog.c:1928
 msgid "Specify SMTP port"
 msgstr "SMTPポートを指定"
 
-#: src/prefs_account_dialog.c:1789
+#: src/prefs_account_dialog.c:1934
 msgid "Specify POP3 port"
 msgstr "POP3ポートを指定"
 
-#: src/prefs_account_dialog.c:1795
+#: src/prefs_account_dialog.c:1940
 msgid "Specify IMAP4 port"
 msgstr "IMAP4ポートを指定"
 
-#: src/prefs_account_dialog.c:1801
+#: src/prefs_account_dialog.c:1946
 msgid "Specify NNTP port"
 msgstr "NNTPポートを指定"
 
-#: src/prefs_account_dialog.c:1806
+#: src/prefs_account_dialog.c:1951
 msgid "Specify domain name"
 msgstr "ドメイン名を指定"
 
-#: src/prefs_account_dialog.c:1827
+#: src/prefs_account_dialog.c:1972
 msgid "IMAP server directory"
 msgstr "IMAPサーバディレクトリ"
 
-#: src/prefs_account_dialog.c:1837
+#: src/prefs_account_dialog.c:1982
 msgid "Only the subfolders of this directory will be displayed."
 msgstr "このディレクトリのサブフォルダのみが表示されます。"
 
-#: src/prefs_account_dialog.c:1840
+#: src/prefs_account_dialog.c:1985
 msgid "Clear all message caches on exit"
 msgstr "終了時にすべてのメッセージのキャッシュをクリアする"
 
-#: src/prefs_account_dialog.c:1885
+#: src/prefs_account_dialog.c:2030
 msgid "Put sent messages in"
 msgstr "送信控フォルダの場所"
 
-#: src/prefs_account_dialog.c:1887
+#: src/prefs_account_dialog.c:2032
 msgid "Put draft messages in"
 msgstr "草稿フォルダの場所"
 
-#: src/prefs_account_dialog.c:1889
+#: src/prefs_account_dialog.c:2034
 msgid "Put queued messages in"
 msgstr "送信待ちフォルダの場所"
 
-#: src/prefs_account_dialog.c:1891
+#: src/prefs_account_dialog.c:2036
 msgid "Put deleted messages in"
 msgstr "ごみ箱フォルダの場所"
 
-#: src/prefs_account_dialog.c:1960
+#: src/prefs_account_dialog.c:2105
 msgid "Account name is not entered."
 msgstr "アカウント名が入力されていません。"
 
-#: src/prefs_account_dialog.c:1964
+#: src/prefs_account_dialog.c:2109
 msgid "Mail address is not entered."
 msgstr "メールアドレスが入力されていません。"
 
-#: src/prefs_account_dialog.c:1969
+#: src/prefs_account_dialog.c:2114
 msgid "SMTP server is not entered."
 msgstr "SMTPサーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1974
+#: src/prefs_account_dialog.c:2119
 msgid "User ID is not entered."
 msgstr "ユーザIDが入力されていません。"
 
-#: src/prefs_account_dialog.c:1979
+#: src/prefs_account_dialog.c:2124
 msgid "POP3 server is not entered."
 msgstr "POP3サーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1984
+#: src/prefs_account_dialog.c:2129
 msgid "IMAP4 server is not entered."
 msgstr "IMAP4サーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:1989
+#: src/prefs_account_dialog.c:2134
 msgid "NNTP server is not entered."
 msgstr "NNTPサーバが入力されていません。"
 
-#: src/prefs_account_dialog.c:2015
+#: src/prefs_account_dialog.c:2160
 msgid "Specified folder is not a queue folder."
 msgstr "指定したフォルダは送信待ちフォルダではありません。"
 
-#: src/prefs_account_dialog.c:2125
+#: src/prefs_account_dialog.c:2270
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -5924,10 +5957,6 @@ msgstr "ルールの削除"
 msgid "Filter rule"
 msgstr "フィルタルール"
 
-#: src/prefs_filter_edit.c:253 src/prefs_search_folder.c:187
-msgid "Name:"
-msgstr "名前:"
-
 #: src/prefs_filter_edit.c:272
 msgid "If any of the following condition matches"
 msgstr "次の条件のいずれかが該当する場合"
@@ -6677,7 +6706,7 @@ msgid "Deleted %d messages"
 msgstr "%d 通のメッセージを削除しました"
 
 #: src/rpop3.c:958 src/rpop3.c:970 src/rpop3.c:1028 src/rpop3.c:1226
-#: src/send_message.c:834
+#: src/send_message.c:847
 #, c-format
 msgid "Quitting..."
 msgstr "切断中..."
@@ -6760,95 +6789,95 @@ msgstr ""
 "それが目的の相手に届くかどうかは保証できません。\n"
 "とにかくこの鍵を信用して使用しますか?"
 
-#: src/send_message.c:197
+#: src/send_message.c:198
 msgid "Queued message header is broken.\n"
 msgstr "送信待機中のメッセージのヘッダが壊れています。\n"
 
-#: src/send_message.c:559
+#: src/send_message.c:560
 #, c-format
 msgid "Sending message using command: %s\n"
 msgstr "コマンドを使用してメッセージを送信中: %s\n"
 
-#: src/send_message.c:568
+#: src/send_message.c:569
 #, c-format
 msgid "Can't execute command: %s"
 msgstr "コマンドを実行できません: %s"
 
-#: src/send_message.c:603
+#: src/send_message.c:604
 #, c-format
 msgid "Error occurred while executing command: %s"
 msgstr "コマンドの実行中にエラーが発生しました: %s"
 
-#: src/send_message.c:720
+#: src/send_message.c:722
 msgid "Connecting"
 msgstr "接続中"
 
-#: src/send_message.c:722
+#: src/send_message.c:724
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "SMTPサーバ: %s に接続中..."
 
 #. ignore errors right after QUIT
-#: src/send_message.c:766
+#: src/send_message.c:779
 msgid "Error occurred after QUIT command (ignored)"
 msgstr "QUIT コマンドの後にエラーが発生しました (無視されます)"
 
-#: src/send_message.c:807
+#: src/send_message.c:820
 #, c-format
 msgid "Sending HELO..."
 msgstr "HELO を送信中..."
 
-#: src/send_message.c:808 src/send_message.c:813 src/send_message.c:818
+#: src/send_message.c:821 src/send_message.c:826 src/send_message.c:831
 msgid "Authenticating"
 msgstr "認証中"
 
-#: src/send_message.c:809 src/send_message.c:814
+#: src/send_message.c:822 src/send_message.c:827
 msgid "Sending message..."
 msgstr "メッセージを送信中..."
 
-#: src/send_message.c:812
+#: src/send_message.c:825
 #, c-format
 msgid "Sending EHLO..."
 msgstr "EHLO を送信中..."
 
-#: src/send_message.c:821
+#: src/send_message.c:834
 #, c-format
 msgid "Sending MAIL FROM..."
 msgstr "MAIL FROM を送信中..."
 
-#: src/send_message.c:822 src/send_message.c:826 src/send_message.c:831
+#: src/send_message.c:835 src/send_message.c:839 src/send_message.c:844
 msgid "Sending"
 msgstr "送信中"
 
-#: src/send_message.c:825
+#: src/send_message.c:838
 #, c-format
 msgid "Sending RCPT TO..."
 msgstr "RCPT TO を送信中..."
 
-#: src/send_message.c:830
+#: src/send_message.c:843
 #, c-format
 msgid "Sending DATA..."
 msgstr "DATA を送信中..."
 
-#: src/send_message.c:868
+#: src/send_message.c:881
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "メッセージを送信中 (%d / %d bytes)"
 
-#: src/send_message.c:873
+#: src/send_message.c:886
 #, c-format
 msgid "%d / %d bytes"
 msgstr "%d / %d bytes"
 
-#: src/send_message.c:904
+#: src/send_message.c:917
 msgid "Sending message"
 msgstr "メッセージを送信中"
 
-#: src/send_message.c:949 src/send_message.c:973
+#: src/send_message.c:962 src/send_message.c:986
 msgid "Error occurred while sending the message."
 msgstr "メッセージの送信中にエラーが発生しました。"
 
-#: src/send_message.c:952
+#: src/send_message.c:965
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -6857,11 +6886,11 @@ msgstr ""
 "メッセージの送信中にエラーが発生しました:\n"
 "%s"
 
-#: src/send_message.c:969
+#: src/send_message.c:982
 msgid "Can't connect to SMTP server."
 msgstr "SMTPサーバに接続できません。"
 
-#: src/send_message.c:971
+#: src/send_message.c:984
 #, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "SMTPサーバ: %s:%d に接続できません。"

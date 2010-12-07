@@ -167,6 +167,7 @@ gint session_connect_full(Session *session, const gchar *server, gushort port,
 	session->port = port;
 
 	if (socks_info) {
+		g_return_val_if_fail(socks_info->proxy_host != NULL, -1);
 		server = socks_info->proxy_host;
 		port = socks_info->proxy_port;
 	}

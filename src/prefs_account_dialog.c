@@ -175,6 +175,18 @@ static struct SSLPrefs {
 } ssl;
 #endif /* USE_SSL */
 
+static struct ProxyPrefs {
+	GtkWidget *socks_chkbtn;
+	GtkWidget *socks4_radiobtn;
+	GtkWidget *socks5_radiobtn;
+	GtkWidget *socks_host_entry;
+	GtkWidget *socks_port_entry;
+	GtkWidget *socks_auth_chkbtn;
+	GtkWidget *socks_name_entry;
+	GtkWidget *socks_pass_entry;
+	GtkWidget *socks_send_chkbtn;
+} p_proxy;
+
 static struct Advanced {
 	GtkWidget *smtpport_chkbtn;
 	GtkWidget *smtpport_entry;
@@ -359,6 +371,25 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif /* USE_SSL */
 
+	/* Proxy */
+	{"use_socks", &p_proxy.socks_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"socks_type", &p_proxy.socks4_radiobtn,
+	 prefs_account_enum_set_data_from_radiobtn,
+	 prefs_account_enum_set_radiobtn},
+	{"proxy_host", &p_proxy.socks_host_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"proxy_port", &p_proxy.socks_port_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"use_proxy_auth", &p_proxy.socks_auth_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"proxy_name", &p_proxy.socks_name_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"proxy_pass", &p_proxy.socks_pass_entry,
+	 prefs_set_data_from_entry, prefs_set_entry},
+	{"use_socks_for_send", &p_proxy.socks_send_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+
 	/* Advanced */
 	{"set_smtpport", &advanced.smtpport_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -380,10 +411,12 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"domain", &advanced.domain_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
+
 	{"imap_directory", &advanced.imapdir_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
 	{"imap_clear_cache_on_exit", &advanced.clear_cache_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+
 	{"set_sent_folder", &advanced.sent_folder_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"sent_folder", &advanced.sent_folder_entry,
@@ -415,6 +448,7 @@ static void prefs_account_privacy_create	(void);
 #if USE_SSL
 static void prefs_account_ssl_create		(void);
 #endif /* USE_SSL */
+static void prefs_account_proxy_create		(void);
 static void prefs_account_advanced_create	(void);
 
 static void prefs_account_select_folder_cb	(GtkWidget	*widget,
@@ -567,6 +601,8 @@ static void prefs_account_create(void)
 	prefs_account_ssl_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("SSL"), page++);
 #endif /* USE_SSL */
+	prefs_account_proxy_create();
+	SET_NOTEBOOK_LABEL(dialog.notebook, _("Proxy"), page++);
 	prefs_account_advanced_create();
 	SET_NOTEBOOK_LABEL(dialog.notebook, _("Advanced"), page++);
 
@@ -1487,8 +1523,6 @@ static void prefs_account_privacy_create(void)
 }
 #endif /* USE_GPGME */
 
-#if USE_SSL
-
 #define CREATE_RADIO_BUTTON(box, btn, btn_p, label, data)		\
 {									\
 	btn = gtk_radio_button_new_with_label_from_widget		\
@@ -1514,6 +1548,7 @@ static void prefs_account_privacy_create(void)
 	CREATE_RADIO_BUTTON(box, btn3, btn1, btn3_label, btn3_data);	\
 }
 
+#if USE_SSL
 static void pop_ssltunnel_toggled(GtkToggleButton *button, gpointer data)
 {
 	if (gtk_toggle_button_get_active
@@ -1714,10 +1749,120 @@ static void prefs_account_ssl_create(void)
 	ssl.use_nonblocking_ssl_chkbtn = use_nonblocking_ssl_chkbtn;
 }
 
-#undef CREATE_RADIO_BUTTONS
-#undef CREATE_RADIO_BUTTON
-
 #endif /* USE_SSL */
+
+static void prefs_account_proxy_create(void)
+{
+	GtkWidget *vbox1;
+	GtkWidget *vbox2;
+	GtkWidget *socks_frame;
+	GtkWidget *socks_chkbtn;
+	GtkWidget *hbox2;
+	GtkWidget *label;
+	GtkWidget *socks4_radiobtn;
+	GtkWidget *socks5_radiobtn;
+	GtkWidget *socks_host_entry;
+	GtkWidget *socks_port_entry;
+	GtkWidget *vbox4;
+	GtkWidget *socks_auth_chkbtn;
+	GtkWidget *socks_name_entry;
+	GtkWidget *socks_pass_entry;
+	GtkWidget *socks_send_chkbtn;
+
+	vbox1 = gtk_vbox_new (FALSE, VSPACING);
+	gtk_widget_show (vbox1);
+	gtk_container_add (GTK_CONTAINER (dialog.notebook), vbox1);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox1), VBOX_BORDER);
+
+	PACK_FRAME_WITH_CHECK_BUTTON(vbox1, socks_frame, socks_chkbtn,
+				     _("Use SOCKS proxy"));
+
+	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (socks_frame), vbox2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+
+	hbox2 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox2);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+
+	socks4_radiobtn = gtk_radio_button_new_with_label(NULL, "SOCKS4");
+	gtk_widget_show(socks4_radiobtn);
+	gtk_box_pack_start (GTK_BOX (hbox2), socks4_radiobtn, FALSE, FALSE, 0);
+	g_object_set_data(G_OBJECT(socks4_radiobtn), MENU_VAL_ID,
+			  GINT_TO_POINTER(SOCKS_SOCKS4));
+
+	CREATE_RADIO_BUTTON(hbox2, socks5_radiobtn, socks4_radiobtn, "SOCKS5",
+			    SOCKS_SOCKS5);
+
+	hbox2 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox2);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+
+	label = gtk_label_new(_("Hostname:"));
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+
+	socks_host_entry = gtk_entry_new();
+	gtk_widget_show(socks_host_entry);
+	gtk_widget_set_size_request(socks_host_entry, DEFAULT_ENTRY_WIDTH, -1);
+	gtk_box_pack_start(GTK_BOX(hbox2), socks_host_entry, TRUE, TRUE, 0);
+
+	label = gtk_label_new(_("Port:"));
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+
+	socks_port_entry = gtk_entry_new();
+	gtk_widget_show(socks_port_entry);
+	gtk_widget_set_size_request(socks_port_entry, 64, -1);
+	gtk_box_pack_start(GTK_BOX(hbox2), socks_port_entry, FALSE, FALSE, 0);
+
+	vbox4 = gtk_vbox_new (FALSE, VSPACING_NARROW);
+	gtk_widget_show (vbox4);
+	gtk_box_pack_start(GTK_BOX(vbox2), vbox4, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON (vbox4, socks_auth_chkbtn, _("Use authentication"));
+
+	hbox2 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox2);
+	gtk_box_pack_start (GTK_BOX (vbox4), hbox2, FALSE, FALSE, 0);
+
+	label = gtk_label_new(_("Name:"));
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+
+	socks_name_entry = gtk_entry_new();
+	gtk_widget_show(socks_name_entry);
+	gtk_widget_set_size_request(socks_name_entry, DEFAULT_ENTRY_WIDTH, -1);
+	gtk_box_pack_start(GTK_BOX(hbox2), socks_name_entry, TRUE, TRUE, 0);
+
+	label = gtk_label_new(_("Password:"));
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+
+	socks_pass_entry = gtk_entry_new();
+	gtk_widget_show(socks_pass_entry);
+	gtk_widget_set_size_request(socks_pass_entry, DEFAULT_ENTRY_WIDTH, -1);
+	gtk_entry_set_visibility(GTK_ENTRY(socks_pass_entry), FALSE);
+	gtk_box_pack_start(GTK_BOX(hbox2), socks_pass_entry, TRUE, TRUE, 0);
+
+	PACK_CHECK_BUTTON(vbox2, socks_send_chkbtn,
+			  _("Use SOCKS proxy on sending"));
+
+	SET_TOGGLE_SENSITIVITY(socks_auth_chkbtn, hbox2);
+	SET_TOGGLE_SENSITIVITY(socks5_radiobtn, vbox4);
+	SET_TOGGLE_SENSITIVITY(socks_chkbtn, vbox2);
+
+	p_proxy.socks_chkbtn = socks_chkbtn;
+	p_proxy.socks4_radiobtn = socks4_radiobtn;
+	p_proxy.socks5_radiobtn = socks5_radiobtn;
+	p_proxy.socks_host_entry = socks_host_entry;
+	p_proxy.socks_port_entry = socks_port_entry;
+	p_proxy.socks_auth_chkbtn = socks_auth_chkbtn;
+	p_proxy.socks_name_entry = socks_name_entry;
+	p_proxy.socks_pass_entry = socks_pass_entry;
+	p_proxy.socks_send_chkbtn = socks_send_chkbtn;
+}
 
 static void prefs_account_advanced_create(void)
 {
