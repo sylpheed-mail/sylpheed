@@ -101,10 +101,6 @@ gint socks4_connect(SockInfo *sock, const gchar *hostname, gushort port)
 		return -1;
 	}
 	memcpy(socks_req + 4, (guchar *)hp->h_addr, 4);
-	g_print("addr = %u.", ((guchar *)(hp->h_addr))[0]);
-	g_print("%u.", ((guchar *)(hp->h_addr))[1]);
-	g_print("%u.", ((guchar *)(hp->h_addr))[2]);
-	g_print("%u\n", ((guchar *)(hp->h_addr))[3]);
 
 	/* userid (empty) */
 	socks_req[8] = 0;
