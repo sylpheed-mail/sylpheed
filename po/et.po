@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-07 17:24+0900\n"
+"POT-Creation-Date: 2010-12-09 13:51+0900\n"
 "PO-Revision-Date: 2002-10-02 09:08+0300\n"
 "Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -3034,7 +3034,7 @@ msgstr "Ühendan POP3 serveriga: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ei suuda ühenduda POP3 serveriga %s:%d\n"
 
-#: src/inc.c:962 src/rpop3.c:834 src/send_message.c:830
+#: src/inc.c:962 src/rpop3.c:834 src/send_message.c:833
 #, c-format
 msgid "Authenticating..."
 msgstr "Autoriseerin..."
@@ -3065,7 +3065,7 @@ msgstr "Võtan kirjade suuruse (LIST)..."
 msgid "Deleting message %d"
 msgstr "Kustutan kirja %d"
 
-#: src/inc.c:997 src/send_message.c:848
+#: src/inc.c:997 src/send_message.c:851
 msgid "Quitting"
 msgstr "Väljun"
 
@@ -3111,8 +3111,8 @@ msgid "Socket error."
 msgstr "Soketi viga\n"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:774
-#: src/send_message.c:991
+#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
+#: src/send_message.c:994
 msgid "Connection closed by the remote host."
 msgstr ""
 
@@ -3127,19 +3127,19 @@ msgid ""
 "%s"
 msgstr "Kirjakast on lukus."
 
-#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:971
+#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
 #, fuzzy
 msgid "Authentication failed."
 msgstr "Autoriseerimise meetod"
 
-#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:974
+#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:977
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "Autoriseerimise meetod"
 
-#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:995
+#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
 msgid "Session timed out."
 msgstr ""
 
@@ -6994,7 +6994,7 @@ msgid "Deleted %d messages"
 msgstr "Kustuta kirjad"
 
 #: src/rpop3.c:958 src/rpop3.c:970 src/rpop3.c:1028 src/rpop3.c:1226
-#: src/send_message.c:847
+#: src/send_message.c:850
 #, c-format
 msgid "Quitting..."
 msgstr "Väljun..."
@@ -7101,81 +7101,81 @@ msgid "Connecting to SMTP server: %s ..."
 msgstr "Ühendun SMTP serveriga: %s ..."
 
 #. ignore errors right after QUIT
-#: src/send_message.c:779
+#: src/send_message.c:782
 #, fuzzy
 msgid "Error occurred after QUIT command (ignored)"
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/send_message.c:820
+#: src/send_message.c:823
 #, fuzzy, c-format
 msgid "Sending HELO..."
 msgstr "Saadan KIRJA...."
 
-#: src/send_message.c:821 src/send_message.c:826 src/send_message.c:831
+#: src/send_message.c:824 src/send_message.c:829 src/send_message.c:834
 #, fuzzy
 msgid "Authenticating"
 msgstr "Autoriseerimine"
 
-#: src/send_message.c:822 src/send_message.c:827
+#: src/send_message.c:825 src/send_message.c:830
 #, fuzzy
 msgid "Sending message..."
 msgstr "Saadan kirja"
 
-#: src/send_message.c:825
+#: src/send_message.c:828
 #, fuzzy, c-format
 msgid "Sending EHLO..."
 msgstr "Saadan KIRJA...."
 
-#: src/send_message.c:834
+#: src/send_message.c:837
 #, c-format
 msgid "Sending MAIL FROM..."
 msgstr "Saadan KIRJA...."
 
-#: src/send_message.c:835 src/send_message.c:839 src/send_message.c:844
+#: src/send_message.c:838 src/send_message.c:842 src/send_message.c:847
 msgid "Sending"
 msgstr "Saadan"
 
-#: src/send_message.c:838
+#: src/send_message.c:841
 #, c-format
 msgid "Sending RCPT TO..."
 msgstr "Saadan RCPT..."
 
-#: src/send_message.c:843
+#: src/send_message.c:846
 #, c-format
 msgid "Sending DATA..."
 msgstr "Saadan andmed..."
 
-#: src/send_message.c:881
+#: src/send_message.c:884
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Saadan kirja (%d / %d baiti)"
 
-#: src/send_message.c:886
+#: src/send_message.c:889
 #, c-format
 msgid "%d / %d bytes"
 msgstr ""
 
-#: src/send_message.c:917
+#: src/send_message.c:920
 msgid "Sending message"
 msgstr "Saadan kirja"
 
-#: src/send_message.c:962 src/send_message.c:986
+#: src/send_message.c:965 src/send_message.c:989
 msgid "Error occurred while sending the message."
 msgstr "Kirja saatmisel tekkis viga."
 
-#: src/send_message.c:965
+#: src/send_message.c:968
 #, fuzzy, c-format
 msgid ""
 "Error occurred while sending the message:\n"
 "%s"
 msgstr "Kirja saatmisel tekkis viga."
 
-#: src/send_message.c:982
+#: src/send_message.c:985
 #, fuzzy
 msgid "Can't connect to SMTP server."
 msgstr "Ei saa ühendust SMTP serveriga: %s:%d\n"
 
-#: src/send_message.c:984
+#: src/send_message.c:987
 #, fuzzy, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Ei saa ühendust SMTP serveriga: %s:%d\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-07 17:24+0900\n"
+"POT-Creation-Date: 2010-12-09 13:51+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -3009,7 +3009,7 @@ msgstr "Σύνδεση με το διακομιστή POP3: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Δεν μπορώ να συνδεθώ στον POP3 server: %s:%d\n"
 
-#: src/inc.c:962 src/rpop3.c:834 src/send_message.c:830
+#: src/inc.c:962 src/rpop3.c:834 src/send_message.c:833
 #, c-format
 msgid "Authenticating..."
 msgstr "Πιστοποίηση..."
@@ -3040,7 +3040,7 @@ msgstr "Λήψη μεγέθους μηνυμάτων (LIST)..."
 msgid "Deleting message %d"
 msgstr "Διαγραφή μηνύματος %d"
 
-#: src/inc.c:997 src/send_message.c:848
+#: src/inc.c:997 src/send_message.c:851
 msgid "Quitting"
 msgstr "Κλείνω τη σύνδεση"
 
@@ -3085,8 +3085,8 @@ msgid "Socket error."
 msgstr "Σφάλμα σύνδεσης."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:774
-#: src/send_message.c:991
+#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
+#: src/send_message.c:994
 msgid "Connection closed by the remote host."
 msgstr "Η σύνδεση έκλεισε από τον απομακρυσμένο υπολογιστή."
 
@@ -3103,11 +3103,11 @@ msgstr ""
 "Το γραμματοκιβώτιο είναι κλειδωμένο:\n"
 "%s"
 
-#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:971
+#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
 msgid "Authentication failed."
 msgstr "Η πιστοποίηση απέτυχε."
 
-#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:974
+#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:977
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3116,7 +3116,7 @@ msgstr ""
 "Η πιστοποίηση απέτυχε:\n"
 "%s"
 
-#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:995
+#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
 msgid "Session timed out."
 msgstr "Λήξη χρόνου σύνδεσης."
 
@@ -6872,7 +6872,7 @@ msgid "Deleted %d messages"
 msgstr "Διαγραφή μηνύματος(ων)"
 
 #: src/rpop3.c:958 src/rpop3.c:970 src/rpop3.c:1028 src/rpop3.c:1226
-#: src/send_message.c:847
+#: src/send_message.c:850
 #, c-format
 msgid "Quitting..."
 msgstr "Εγκατάλειψη..."
@@ -6983,67 +6983,67 @@ msgid "Connecting to SMTP server: %s ..."
 msgstr "Σύνδεση στην εξυπηρέτη SMTP: %s ..."
 
 #. ignore errors right after QUIT
-#: src/send_message.c:779
+#: src/send_message.c:782
 #, fuzzy
 msgid "Error occurred after QUIT command (ignored)"
 msgstr "Προέκυψε σφάλμα κατά την αποστολή της εντολής\n"
 
-#: src/send_message.c:820
+#: src/send_message.c:823
 #, c-format
 msgid "Sending HELO..."
 msgstr "Αποστολή HELO..."
 
-#: src/send_message.c:821 src/send_message.c:826 src/send_message.c:831
+#: src/send_message.c:824 src/send_message.c:829 src/send_message.c:834
 msgid "Authenticating"
 msgstr "Πιστοποίηση"
 
-#: src/send_message.c:822 src/send_message.c:827
+#: src/send_message.c:825 src/send_message.c:830
 msgid "Sending message..."
 msgstr "Αποστολή μηνύματος..."
 
-#: src/send_message.c:825
+#: src/send_message.c:828
 #, c-format
 msgid "Sending EHLO..."
 msgstr "Αποστολή EHLO..."
 
-#: src/send_message.c:834
+#: src/send_message.c:837
 #, c-format
 msgid "Sending MAIL FROM..."
 msgstr "Στέλνω MAIL FROM..."
 
-#: src/send_message.c:835 src/send_message.c:839 src/send_message.c:844
+#: src/send_message.c:838 src/send_message.c:842 src/send_message.c:847
 msgid "Sending"
 msgstr "Αποστολή"
 
-#: src/send_message.c:838
+#: src/send_message.c:841
 #, c-format
 msgid "Sending RCPT TO..."
 msgstr "Στέλνω RCPT TO..."
 
-#: src/send_message.c:843
+#: src/send_message.c:846
 #, c-format
 msgid "Sending DATA..."
 msgstr "Στέλνω DATA..."
 
-#: src/send_message.c:881
+#: src/send_message.c:884
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Στέλνω το μήνυμα (%d / %d bytes)"
 
-#: src/send_message.c:886
+#: src/send_message.c:889
 #, c-format
 msgid "%d / %d bytes"
 msgstr ""
 
-#: src/send_message.c:917
+#: src/send_message.c:920
 msgid "Sending message"
 msgstr "Αποστολή μηνύματος"
 
-#: src/send_message.c:962 src/send_message.c:986
+#: src/send_message.c:965 src/send_message.c:989
 msgid "Error occurred while sending the message."
 msgstr "Συνέβη σφάλμα κατά την αποστολή του μηνύματος."
 
-#: src/send_message.c:965
+#: src/send_message.c:968
 #, c-format
 msgid ""
 "Error occurred while sending the message:\n"
@@ -7052,12 +7052,12 @@ msgstr ""
 "Προέκυψε ένα σφάλμα κατά την αποστολή του μηνύματος:\n"
 "%s"
 
-#: src/send_message.c:982
+#: src/send_message.c:985
 #, fuzzy
 msgid "Can't connect to SMTP server."
 msgstr "Δεν μπορώ να συνδεθώ στον NNTP server: %s:%d\n"
 
-#: src/send_message.c:984
+#: src/send_message.c:987
 #, fuzzy, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Δεν μπορώ να συνδεθώ στον NNTP server: %s:%d\n"
