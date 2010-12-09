@@ -766,6 +766,9 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 		if (ac_prefs->smtp_userid && ac_prefs->tmp_smtp_pass) {
 			g_free(ac_prefs->tmp_smtp_pass);
 			ac_prefs->tmp_smtp_pass = NULL;
+		} else if (!ac_prefs->smtp_userid && ac_prefs->tmp_pass) {
+			g_free(ac_prefs->tmp_pass);
+			ac_prefs->tmp_pass = NULL;
 		}
 		ret = -1;
 	} else if (session->state == SESSION_EOF &&
