@@ -86,6 +86,7 @@ Features
 	o APOP authentication (POP3)
 	o PGP signature / encryption (requires GPGME)
 	o spell checking (requires GtkSpell)
+	o SOCKS4/5 proxy support
 	o X-Face display
 	o user-defined headers
 	o mark / color label
@@ -217,6 +218,9 @@ mime_command			specify the command to open MIME attachments
 logwindow_line_limit		specify the limit of line numbers of log
 				window
 				0: unlimited  n (> 0): n lines [default: 1000]
+mark_as_read_on_new_window	only mark messages as read when they are
+				opened with new window
+				0: off  1: on   [default: 0]
 
 Unlike 1.0.x, this version doesn't allow direct modification of the menu
 shortcuts by default. You can use the following methods to configure them:
