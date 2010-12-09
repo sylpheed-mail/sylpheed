@@ -697,7 +697,7 @@ void update_check(gboolean show_dialog_always)
 
 	if (!check_url) {
 #ifdef G_OS_WIN32
-		g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=win", VERSION_URI);
+		g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=win", VERSION_URI, VERSION);
 #else
 		if (strstr(TARGET_ALIAS, "linux"))
 			g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=linux", VERSION_URI, VERSION);
