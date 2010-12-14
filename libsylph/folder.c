@@ -162,6 +162,26 @@ void folder_remote_folder_destroy(RemoteFolder *rfolder)
 		session_destroy(rfolder->session);
 }
 
+gint folder_remote_folder_destroy_all_sessions(void)
+{
+	GList *list;
+	Folder *folder;
+	RemoteFolder *rfolder;
+
+	for (list = folder_list; list != NULL; list = list->next) {
+		folder = FOLDER(list->data);
+		if (FOLDER_IS_REMOTE(folder)) {
+			rfolder = REMOTE_FOLDER(folder);
+			if (rfolder->session) {
+				session_destroy(rfolder->session);
+				rfolder->session = NULL;
+			}
+		}
+	}
+
+	return 0;
+}
+
 gint folder_scan_tree(Folder *folder)
 {
 	g_return_val_if_fail(folder != NULL, -1);

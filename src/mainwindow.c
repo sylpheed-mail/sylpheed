@@ -3089,6 +3089,7 @@ static void online_switch_clicked(GtkWidget *widget, gpointer data)
 		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem),
 					       TRUE);
 		inc_autocheck_timer_remove();
+		folder_remote_folder_destroy_all_sessions();
 	} else {
 		prefs_common.online_mode = TRUE;
 		gtk_widget_hide(mainwin->offline_pixmap);
