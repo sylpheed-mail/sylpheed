@@ -894,14 +894,19 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 		/* select first unread message */
 		if (summary_find_next_flagged_msg(summaryview, &iter, NULL,
 						  MSG_UNREAD, FALSE)) {
-			summary_unlock(summaryview);
-			summary_select_row(summaryview, &iter, TRUE, TRUE);
-			summary_lock(summaryview);
+			if (prefs_common.open_unread_on_enter ||
+			    prefs_common.always_show_msg) {
+				summary_unlock(summaryview);
+				summary_select_row(summaryview, &iter,
+						   TRUE, TRUE);
+				summary_lock(summaryview);
+			} else
+				summary_select_row(summaryview, &iter,
+						   FALSE, TRUE);
 		} else {
 			summary_unlock(summaryview);
 			if (item->sort_type == SORT_ASCENDING &&
 			    SUMMARY_DISPLAY_TOTAL_NUM(item) > 1) {
-				summaryview->display_msg = TRUE;
 				g_signal_emit_by_name
 					(treeview, "move-cursor",
 					 GTK_MOVEMENT_BUFFER_ENDS, 1, &moved);
@@ -909,7 +914,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 					(GTK_TREE_MODEL(summaryview->store),
 					 &iter)) {
 				summary_select_row(summaryview, &iter,
-						   TRUE, TRUE);
+						   FALSE, TRUE);
 			}
 			summary_lock(summaryview);
 			GTK_EVENTS_FLUSH();
