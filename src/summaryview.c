@@ -2893,9 +2893,10 @@ gboolean summary_step(SummaryView *summaryview, GtkScrollType type)
 void summary_toggle_view(SummaryView *summaryview)
 {
 	if (!messageview_is_visible(summaryview->messageview) &&
-	    summaryview->selected)
+	    summaryview->selected) {
 		summary_display_msg_selected(summaryview, FALSE, FALSE);
-	else
+		summary_mark_displayed_read(summaryview, NULL);
+	} else
 		main_window_toggle_message_view(summaryview->mainwin);
 }
 
