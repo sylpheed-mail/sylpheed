@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -472,12 +472,17 @@ static HTMLState html_parse_tag(HTMLParser *parser)
 		html_append_char(parser, '\n');
 		parser->state = HTML_BR;
 	} else if (!strcmp(tag->name, "a")) {
-		if (tag->attr && tag->attr->data &&
-		    !strcmp(((HTMLAttr *)tag->attr->data)->name, "href")) {
-			g_free(parser->href);
-			parser->href =
-				g_strdup(((HTMLAttr *)tag->attr->data)->value);
-			parser->state = HTML_HREF;
+		GList *cur;
+
+		for (cur = tag->attr; cur != NULL; cur = cur->next) {
+			HTMLAttr *attr = (HTMLAttr *)cur->data;
+
+			if (attr && !strcmp(attr->name, "href")) {
+				g_free(parser->href);
+				parser->href = g_strdup(attr->value);
+				parser->state = HTML_HREF;
+				break;
+			}
 		}
 	} else if (!strcmp(tag->name, "/a")) {
 		g_free(parser->href);
@@ -533,7 +538,7 @@ static HTMLState html_parse_tag(HTMLParser *parser)
 			html_append_char(parser, '\n');
 		}
 		parser->state = HTML_NORMAL;
-			}
+	}
 
 	html_free_tag(tag);
 
