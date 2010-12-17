@@ -18,7 +18,7 @@
 <H2><A NAME="ss5.1">5.1</A> <A HREF="sylpheed.html#toc5.1">必要な環境</A>
 </H2>
 
-<P>このプログラムのコンパイル/実行には 
+<P>このプログラムのコンパイル/実行には以下のものが必要です。
 <UL>
 <LI>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista/7 + MinGW</LI>
 <LI>GTK+ 2.4以降 (2.6以降推奨、Windowsの場合は2.10以降)</LI>
@@ -26,7 +26,6 @@
 <LI>gettext</LI>
 </UL>
 
-が必要です。
 オプションとして以下のものが使用できます。
 <UL>
 <LI>GnuPG, GPGME</LI>
@@ -37,8 +36,7 @@
 <LI>OpenLDAP</LI>
 <LI>Oniguruma (Rubyで使用されている正規表現ライブラリ)</LI>
 </UL>
-
-です。このマニュアルではロケールはja_JP.*と仮定し記述してあります。</P>
+</P>
 
 <H2><A NAME="ss5.2">5.2</A> <A HREF="sylpheed.html#toc5.2">動作確認されている環境</A>
 </H2>
@@ -54,9 +52,7 @@
 </H2>
 
 <P>ここに示すのはUnixならほぼ使えると思われるインストール方法です。
-しかし、OSの持っているファイル管理機構を壊す可能性があるので、
-あなたが使っているOSについての記述がある場合は、
-そちらを利用されることをお勧めします。</P>
+しかし、OSの持っているファイル管理機構を壊す可能性があるので、あなたが使っているOSについての記述がある場合は、そちらを利用されることをお勧めします。</P>
 <P>Windowsの場合はインストーラを実行、もしくはzipアーカイブを適当な場所に展開してください。</P>
 
 <H3>GTK+のインストール</H3>
@@ -198,7 +194,7 @@ Password: (パスワードを入力)
 <H2><A NAME="ss5.5">5.5</A> <A HREF="sylpheed.html#toc5.5">Debian GNU/Linuxへのインストール</A>
 </H2>
 
-<P>Debian GNU/Linuxのwoody以降をお使いならば、
+<P>
 <BLOCKQUOTE><CODE>
 <PRE>
 # apt-get install sylpheed
@@ -206,15 +202,26 @@ Password: (パスワードを入力)
 </CODE></BLOCKQUOTE>
 
 でインストールできます。</P>
+<H2><A NAME="ss5.6">5.6</A> <A HREF="sylpheed.html#toc5.6">Ubuntu へのインストール</A>
+</H2>
 
-<H2><A NAME="ss5.6">5.6</A> <A HREF="sylpheed.html#toc5.6">アップグレード方法</A>
+<P>Synaptic パッケージ・マネージャから sylpheed パッケージを検索し、
+sylpheed, sylpheed-i18n, sylpheed-doc パッケージをインストールします。
+もしくは、コマンドラインから以下でインストールできます。
+<BLOCKQUOTE><CODE>
+<PRE>
+# apt-get install sylpheed sylpheed-i18n sylpheed-doc
+</PRE>
+</CODE></BLOCKQUOTE>
+</P>
+<H2><A NAME="ss5.7">5.7</A> <A HREF="sylpheed.html#toc5.7">アップグレード方法</A>
 </H2>
 
 <P>Sylpheedのアップグレードは基本的には上書きインストールを行えばOKです。
 以前の設定やメッセージデータはそのまま引き継がれます。</P>
-<P>Windows版の場合、Sylpheedが起動していない状態でインストーラを起動すると、
-以前のバージョンのアンインストールを実行した後、新しいバージョンの
-インストールが行われます。
+<P>Windowsの場合、「ヘルプ - アップデートチェック」で新しいバージョンが検出された場合、「はい」を選択すると自動的にアップデートが行われます。
+手動で行う場合は、Sylpheedが起動していない状態でインストーラを起動すると、
+以前のバージョンのアンインストールを実行した後、新しいバージョンのインストールが行われます。
 zipアーカイブ版の場合は中のファイルを上書きコピーしてください。</P>
 <HR>
 <A HREF="sylpheed-6.html">次のページ</A>
