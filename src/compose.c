@@ -5293,7 +5293,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
-		(_("MIME type"), renderer, "text", COL_MIMETYPE, NULL);
+		(_("Data type"), renderer, "text", COL_MIMETYPE, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width(column, 240);
 	gtk_tree_view_column_set_resizable(column, TRUE);

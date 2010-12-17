@@ -206,7 +206,7 @@ MimeView *mimeview_create(void)
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "ypad", 0, NULL);
 	column = gtk_tree_view_column_new_with_attributes
-		(_("MIME Type"), renderer, "text", COL_MIMETYPE, NULL);
+		(_("Data type"), renderer, "text", COL_MIMETYPE, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
