@@ -443,6 +443,8 @@ static PrefParam param[] = {
 	 &prefs_common.enable_address_completion, P_BOOL},
 	{"fullauto_completion_mode", "TRUE",
 	 &prefs_common.fullauto_completion_mode, P_BOOL},
+	{"always_add_address_only", "FALSE",
+	 &prefs_common.always_add_address_only, P_BOOL},
 
 	{"confirm_on_exit", "FALSE", &prefs_common.confirm_on_exit, P_BOOL},
 	{"clean_trash_on_exit", "FALSE", &prefs_common.clean_on_exit, P_BOOL},

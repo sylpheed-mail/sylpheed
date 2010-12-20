@@ -220,6 +220,7 @@ static struct Other {
 	GtkWidget *checkbtn_close_recv_dialog;
 
 	GtkWidget *checkbtn_addaddrbyclick;
+	GtkWidget *checkbtn_add_address_only;
 	GtkWidget *radiobtn_addr_compl;
 
 	GtkWidget *checkbtn_confonexit;
@@ -545,6 +546,8 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"add_address_by_click", &other.checkbtn_addaddrbyclick,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"always_add_address_only", &other.checkbtn_add_address_only,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"enable_address_completion", &other.radiobtn_addr_compl,
 	 prefs_common_addr_compl_set_data_from_radiobtn,
@@ -2525,6 +2528,7 @@ static GtkWidget *prefs_other_create(void)
 	GtkWidget *frame_addr;
 	GtkWidget *vbox_addr;
 	GtkWidget *checkbtn_addaddrbyclick;
+	GtkWidget *checkbtn_add_address_only;
 	GtkWidget *vbox_spc;
 	GtkWidget *hbox_spc;
 	GtkWidget *radiobtn_addr_compl;
@@ -2584,6 +2588,10 @@ static GtkWidget *prefs_other_create(void)
 	PACK_CHECK_BUTTON
 		(vbox_addr, checkbtn_addaddrbyclick,
 		 _("Add address to destination when double-clicked"));
+
+	PACK_CHECK_BUTTON
+		(vbox_addr, checkbtn_add_address_only,
+		 _("Set only mail address when composing from address book"));
 
 	PACK_VSPACER (vbox_addr, vbox_spc, VSPACING_NARROW_2);
 
@@ -2656,7 +2664,8 @@ static GtkWidget *prefs_other_create(void)
 	other.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
 
 	other.checkbtn_addaddrbyclick    = checkbtn_addaddrbyclick;
-	other.radiobtn_addr_compl = radiobtn_addr_compl;
+	other.checkbtn_add_address_only  = checkbtn_add_address_only;
+	other.radiobtn_addr_compl        = radiobtn_addr_compl;
 
 	other.checkbtn_confonexit  = checkbtn_confonexit;
 	other.checkbtn_cleanonexit = checkbtn_cleanonexit;

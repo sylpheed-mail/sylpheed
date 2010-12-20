@@ -824,7 +824,7 @@ AddressBookFile *addressbook_imp_ldif_file( AddressIndex *addrIndex,
 					    const gchar *book_name ) {
 	gchar *fsfile;
 	GList *node, *list;
-	gboolean ret;
+	gboolean ret = FALSE;
 
 	g_return_val_if_fail(addrIndex != NULL, NULL);
 	g_return_val_if_fail(file != NULL, NULL);

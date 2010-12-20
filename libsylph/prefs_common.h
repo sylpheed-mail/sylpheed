@@ -320,6 +320,8 @@ struct _PrefsCommon
 
 	gboolean change_account_on_folder_sel; /* Interface */
 	gboolean always_mark_read_on_show_msg; /* Interface */
+
+	gboolean always_add_address_only;    /* Compose */
 };
 
 extern PrefsCommon prefs_common;

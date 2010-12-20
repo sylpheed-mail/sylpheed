@@ -1054,7 +1054,8 @@ static gboolean completion_window_key_press(GtkWidget *widget,
 	    (!prefs_common.fullauto_completion_mode &&
 	     event->keyval == GDK_space)) {
 		/* insert address only if shift or control is pressed */
-		if (event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK)) {
+		if (event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK) ||
+		    prefs_common.always_add_address_only) {
 			completion_window_apply_selection_address_only
 				(GTK_CLIST(clist), GTK_ENTRY(entry));
 		}

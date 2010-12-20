@@ -1217,7 +1217,8 @@ gchar *addressbook_format_address(AddressObject *obj)
 		}
 	}
 	if( address ) {
-		if( name && name[0] != '\0' ) {
+		if( !prefs_common.always_add_address_only &&
+		    name && name[0] != '\0' ) {
 			if( name[0] != '"' && strpbrk( name, ",.[]<>" ) != NULL )
 				buf = g_strdup_printf( "\"%s\" <%s>", name, address );
 			else
@@ -1234,12 +1235,17 @@ gchar *addressbook_format_address(AddressObject *obj)
 static void addressbook_to_clicked(GtkButton *button, gpointer data)
 {
 	GList *node = _addressListSelection_;
+	gboolean new_compose = FALSE;
 
 	if (!addrbook.target_compose) {
+		new_compose = TRUE;
 		addrbook.target_compose = compose_new(NULL, NULL, NULL, NULL);
 		if (!addrbook.target_compose)
 			return;
 	}
+
+	if (new_compose)
+		compose_block_modified(addrbook.target_compose);
 
 	while( node ) {
 		AddressObject *obj = node->data;
@@ -1264,6 +1270,9 @@ static void addressbook_to_clicked(GtkButton *button, gpointer data)
 			}
 		}
 	}
+
+	if (new_compose)
+		compose_unblock_modified(addrbook.target_compose);
 }
 
 static void addressbook_menuitem_set_sensitive(void)

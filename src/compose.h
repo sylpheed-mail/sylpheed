@@ -196,6 +196,8 @@ struct _Compose
 	guint lock_count;
 
 	gboolean window_maximized;
+
+	gboolean block_modified;
 };
 
 struct _AttachInfo
@@ -237,6 +239,9 @@ gchar *compose_entry_get_text	(Compose	  *compose,
 
 void compose_lock		(Compose	*compose);
 void compose_unlock		(Compose	*compose);
+
+void compose_block_modified	(Compose	*compose);
+void compose_unblock_modified	(Compose	*compose);
 
 void compose_reflect_prefs_all	(void);
 

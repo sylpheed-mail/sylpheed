@@ -3425,6 +3425,16 @@ void compose_unlock(Compose *compose)
 		compose->lock_count--;
 }
 
+void compose_block_modified(Compose *compose)
+{
+	compose->block_modified = TRUE;
+}
+
+void compose_unblock_modified(Compose *compose)
+{
+	compose->block_modified = FALSE;
+}
+
 static gint compose_send(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
@@ -5569,6 +5579,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	compose->window_maximized = prefs_common.compose_maximized;
 
+	compose->block_modified = FALSE;
+
 	compose_set_toolbar_button_visibility(compose);
 
 	compose_select_account(compose, account, TRUE);
@@ -7648,7 +7660,7 @@ static void compose_attach_toggled(GtkWidget *widget, Compose *compose)
 
 static void compose_buffer_changed_cb(GtkTextBuffer *textbuf, Compose *compose)
 {
-	if (compose->modified == FALSE) {
+	if (compose->modified == FALSE && compose->block_modified == FALSE) {
 		compose->modified = TRUE;
 		compose_set_title(compose);
 	}
@@ -7656,8 +7668,9 @@ static void compose_buffer_changed_cb(GtkTextBuffer *textbuf, Compose *compose)
 
 static void compose_changed_cb(GtkEditable *editable, Compose *compose)
 {
-	if (compose->modified == FALSE ||
-	    editable == GTK_EDITABLE(compose->subject_entry)) {
+	if (compose->block_modified == FALSE &&
+	    (compose->modified == FALSE ||
+	     editable == GTK_EDITABLE(compose->subject_entry))) {
 		compose->modified = TRUE;
 		compose_set_title(compose);
 	}
