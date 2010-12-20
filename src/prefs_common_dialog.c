@@ -2591,7 +2591,7 @@ static GtkWidget *prefs_other_create(void)
 
 	PACK_CHECK_BUTTON
 		(vbox_addr, checkbtn_add_address_only,
-		 _("Set only mail address when composing from address book"));
+		 _("Set only mail address when entering recipient from address book"));
 
 	PACK_VSPACER (vbox_addr, vbox_spc, VSPACING_NARROW_2);
 
