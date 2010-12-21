@@ -640,8 +640,9 @@ static void rpop3_idle(gboolean is_idle)
 		rpop3_window.session->state = POP3_IDLE;
 		if (POP3_PING_ITV < prefs_common.io_timeout_secs)
 			rpop3_window.ping_tag =
-				g_timeout_add(POP3_PING_ITV * 1000,
-					      rpop3_ping_cb, NULL);
+				g_timeout_add_full(G_PRIORITY_LOW,
+						   POP3_PING_ITV * 1000,
+						   rpop3_ping_cb, NULL, NULL);
 	}
 }
 

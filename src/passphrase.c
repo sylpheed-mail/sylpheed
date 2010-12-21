@@ -323,8 +323,7 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
 #endif
 
             if (prefs_common.store_passphrase_timeout > 0) {
-                gtk_timeout_add(prefs_common.store_passphrase_timeout*60*1000,
-                                free_passphrase, NULL);
+                g_timeout_add_full(G_PRIORITY_LOW, prefs_common.store_passphrase_timeout * 60 * 1000, free_passphrase, NULL, NULL);
             }
         }
         debug_print ("%% sending passphrase\n");

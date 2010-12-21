@@ -821,8 +821,9 @@ Compose *compose_new(PrefsAccount *account, FolderItem *item,
 
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
-			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
-				      autosave_timeout, compose);
+			g_timeout_add_full(G_PRIORITY_LOW,
+					   prefs_common.autosave_itv * 60 * 1000,
+					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 
@@ -937,8 +938,9 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
-			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
-				      autosave_timeout, compose);
+			g_timeout_add_full(G_PRIORITY_LOW,
+					   prefs_common.autosave_itv * 60 * 1000,
+					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -1080,8 +1082,9 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
-			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
-				      autosave_timeout, compose);
+			g_timeout_add_full(G_PRIORITY_LOW,
+					   prefs_common.autosave_itv * 60 * 1000,
+					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -1259,8 +1262,9 @@ void compose_reedit(MsgInfo *msginfo)
 
 	if (prefs_common.enable_autosave && prefs_common.autosave_itv > 0)
 		compose->autosave_tag =
-			g_timeout_add(prefs_common.autosave_itv * 60 * 1000,
-				      autosave_timeout, compose);
+			g_timeout_add_full(G_PRIORITY_LOW,
+					   prefs_common.autosave_itv * 60 * 1000,
+					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
 }
@@ -6121,9 +6125,10 @@ void compose_reflect_prefs_all(void)
 		    prefs_common.autosave_itv > 0 &&
 		    compose->mode != COMPOSE_REDIRECT)
 			compose->autosave_tag =
-				g_timeout_add
-					(prefs_common.autosave_itv * 60 * 1000,
-					 autosave_timeout, compose);
+				g_timeout_add_full
+					(G_PRIORITY_LOW,
+					 prefs_common.autosave_itv * 60 * 1000,
+					 autosave_timeout, compose, NULL);
 	}
 }
 

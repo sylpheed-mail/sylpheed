@@ -264,7 +264,7 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 					 session);
 
 #ifdef G_OS_WIN32
-	session->ping_tag = g_timeout_add(1000, session_ping_cb, session);
+	session->ping_tag = g_timeout_add_full(G_PRIORITY_LOW, 1000, session_ping_cb, session, NULL);
 #endif
 
 	return 0;
@@ -325,7 +325,7 @@ void session_set_timeout(Session *session, guint interval)
 	session->timeout_interval = interval;
 	if (interval > 0)
 		session->timeout_tag =
-			g_timeout_add(interval, session_timeout_cb, session);
+			g_timeout_add_full(G_PRIORITY_LOW, interval, session_timeout_cb, session, NULL);
 	else
 		session->timeout_tag = 0;
 }

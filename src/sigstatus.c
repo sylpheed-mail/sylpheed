@@ -55,7 +55,7 @@ static void do_destroy(GpgmegtkSigStatus hd)
 {
 	if (!hd->running) {
 		if (hd->timeout_id_valid) {
-			gtk_timeout_remove(hd->timeout_id);
+			g_source_remove(hd->timeout_id);
 			hd->timeout_id_valid = 0;
 		}
 		if (hd->mainwindow) {
@@ -177,8 +177,8 @@ void gpgmegtk_sig_status_destroy(GpgmegtkSigStatus hd)
 	if (hd) {
 		hd->destroy_pending = 1;
 		if (hd->running && !hd->timeout_id_valid) {
-			hd->timeout_id = gtk_timeout_add(MY_TIMEOUT,
-							 timeout_cb, hd);
+			hd->timeout_id = g_timeout_add(MY_TIMEOUT,
+						       timeout_cb, hd);
 			hd->timeout_id_valid = 1;
 		}
 		do_destroy(hd);

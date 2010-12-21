@@ -1,3 +1,14 @@
+2010-12-21
+
+	* libsylph/session.c
+	  src/rpop3.c
+	  src/compose.c
+	  src/inc.c
+	  src/passphrase.c
+	  src/sigstatus.c: changed deprecated gtk_timeout_add() to
+	  g_timeout_add(_full)(). Use G_PRIORITY_LOW for long timeout
+	  interval (may fix slow receiving problem?).
+
 2010-12-20
 
 	* libsylph/prefs_common.[ch]

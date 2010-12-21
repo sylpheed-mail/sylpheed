@@ -1629,8 +1629,9 @@ static void inc_autocheck_timer_set_interval(guint interval)
 	inc_autocheck_timer_remove();
 
 	if (prefs_common.autochk_newmail && autocheck_data) {
-		autocheck_timer = gtk_timeout_add
-			(interval, inc_autocheck_func, autocheck_data);
+		autocheck_timer = g_timeout_add_full
+			(G_PRIORITY_LOW, interval, inc_autocheck_func,
+			 autocheck_data, NULL);
 		debug_print("added timer = %d\n", autocheck_timer);
 	}
 }
@@ -1644,7 +1645,7 @@ void inc_autocheck_timer_remove(void)
 {
 	if (autocheck_timer) {
 		debug_print("removed timer = %d\n", autocheck_timer);
-		gtk_timeout_remove(autocheck_timer);
+		g_source_remove(autocheck_timer);
 		autocheck_timer = 0;
 	}
 }
