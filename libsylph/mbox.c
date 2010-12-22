@@ -73,6 +73,9 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 	gint new_msgs = 0;
 	gint count = 0;
 	Folder *folder;
+	FilterRule *junk_rule = NULL;
+	GSList junk_fltlist = {NULL, NULL};
+	FolderItem *junk;
 
 	g_return_val_if_fail(dest != NULL, -1);
 	g_return_val_if_fail(dest->folder != NULL, -1);
@@ -111,6 +114,12 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 
 	tmp_file = get_tmp_file();
 
+	if (filter_junk) {
+		junk = folder_get_junk(folder);
+		junk_rule = filter_junk_rule_create(NULL, junk, FALSE);
+		junk_fltlist.data = junk_rule;
+	}
+
 	do {
 		FILE *tmp_fp;
 		GSList *cur;
@@ -128,6 +137,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		if ((tmp_fp = g_fopen(tmp_file, "wb")) == NULL) {
 			FILE_OP_ERROR(tmp_file, "fopen");
 			g_warning(_("can't open temporary file\n"));
+			filter_rule_free(junk_rule);
 			g_free(tmp_file);
 			fclose(mbox_fp);
 			return -1;
@@ -214,6 +224,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		if (fclose(tmp_fp) == EOF) {
 			FILE_OP_ERROR(tmp_file, "fclose");
 			g_warning(_("can't write to temporary file\n"));
+			filter_rule_free(junk_rule);
 			g_unlink(tmp_file);
 			g_free(tmp_file);
 			fclose(mbox_fp);
@@ -229,6 +240,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		if (!msginfo) {
 			g_warning("proc_mbox_full: procheader_parse_file failed");
 			filter_info_free(fltinfo);
+			filter_rule_free(junk_rule);
 			g_unlink(tmp_file);
 			g_free(tmp_file);
 			fclose(mbox_fp);
@@ -238,9 +250,8 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		msginfo->file_path = g_strdup(tmp_file);
 
 		if (filter_junk && prefs_common.enable_junk &&
-		    prefs_common.filter_junk_before) {
-			filter_apply_msginfo(prefs_common.junk_fltlist, msginfo,
-					     fltinfo);
+		    prefs_common.filter_junk_before && junk_rule) {
+			filter_apply_msginfo(&junk_fltlist, msginfo, fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
 		}
@@ -251,9 +262,8 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 
 		if (!fltinfo->drop_done &&
 		    filter_junk && prefs_common.enable_junk &&
-		    !prefs_common.filter_junk_before) {
-			filter_apply_msginfo(prefs_common.junk_fltlist, msginfo,
-					     fltinfo);
+		    !prefs_common.filter_junk_before && junk_rule) {
+			filter_apply_msginfo(&junk_fltlist, msginfo, fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
 		}
@@ -264,6 +274,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 			if (folder_item_add_msg_msginfo(dest, msginfo, FALSE) < 0) {
 				procmsg_msginfo_free(msginfo);
 				filter_info_free(fltinfo);
+				filter_rule_free(junk_rule);
 				g_unlink(tmp_file);
 				g_free(tmp_file);
 				fclose(mbox_fp);
@@ -300,6 +311,9 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 		filter_info_free(fltinfo);
 		g_unlink(tmp_file);
 	} while (from_line[0] != '\0');
+
+	if (junk_rule)
+		filter_rule_free(junk_rule);
 
 	g_free(tmp_file);
 	fclose(mbox_fp);

@@ -1453,6 +1453,106 @@ FilterInfo *filter_info_new(void)
 	return fltinfo;
 }
 
+FilterRule *filter_junk_rule_create(PrefsAccount *account,
+				    FolderItem *default_junk,
+				    gboolean is_manual)
+{
+	FilterRule *rule;
+	FilterCond *cond;
+	FilterAction *action;
+	GSList *cond_list = NULL, *action_list = NULL;
+	gchar *junk_id = NULL;
+	FolderItem *item = NULL;
+
+	if (!prefs_common.junk_classify_cmd)
+		return NULL;
+
+	if (prefs_common.junk_folder)
+		item = folder_find_item_from_identifier(prefs_common.junk_folder);
+
+	if (!item && account) {
+		Folder *folder = NULL;
+		GList *list;
+
+		/* find most suitable Junk folder for account */
+
+		if (account->inbox && *account->inbox == '#') {
+			FolderItem *inbox;
+			inbox = folder_find_item_from_identifier(account->inbox);
+			if (inbox) {
+				folder = inbox->folder;
+				if (folder)
+					item = folder_get_junk(folder);
+			}
+		}
+		if (!item) {
+			folder = FOLDER(account->folder);
+			if (folder)
+				item = folder_get_junk(folder);
+		}
+		if (!item) {
+			for (list = folder_get_list(); list != NULL; list = list->next) {
+				folder = FOLDER(list->data);
+				if (FOLDER_IS_LOCAL(folder)) {
+					if (folder->account == account)
+						item = folder_get_junk(folder);
+					if (!item && folder->node) {
+						item = FOLDER_ITEM(folder->node->data);
+						if (item && item->account == account && item->folder)
+							item = folder_get_junk(item->folder);
+						else
+							item = NULL;
+					}
+				}
+				if (item)
+					break;
+			}
+		}
+	}
+
+	if (!item)
+		item = default_junk;
+	if (!item)
+		item = folder_get_default_junk();
+	if (!item)
+		return NULL;
+	junk_id = folder_item_get_identifier(item);
+	if (!junk_id)
+		return NULL;
+
+	debug_print("filter_junk_rule_create: junk folder: %s\n",
+		    junk_id);
+
+	cond = filter_cond_new(FLT_COND_CMD_TEST, 0, 0, NULL,
+			       prefs_common.junk_classify_cmd);
+	cond_list = g_slist_append(NULL, cond);
+	if (prefs_common.delete_junk_on_recv && !is_manual) {
+		action = filter_action_new(FLT_ACTION_COPY, junk_id);
+		action_list = g_slist_append(NULL, action);
+		action = filter_action_new(FLT_ACTION_DELETE, NULL);
+		action_list = g_slist_append(action_list, action);
+	} else {
+		action = filter_action_new(FLT_ACTION_MOVE, junk_id);
+		action_list = g_slist_append(NULL, action);
+	}
+
+	if (prefs_common.mark_junk_as_read) {
+		action = filter_action_new(FLT_ACTION_MARK_READ, NULL);
+		action_list = g_slist_append(action_list, action);
+	}
+
+	if (is_manual)
+		rule = filter_rule_new(_("Junk mail filter (manual)"), FLT_OR,
+				       cond_list, action_list);
+	else
+		rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
+				       cond_list, action_list);
+
+	g_free(junk_id);
+
+        return rule;
+}
+
 void filter_rule_rename_dest_path(FilterRule *rule, const gchar *old_path,
 				  const gchar *new_path)
 {

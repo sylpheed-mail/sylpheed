@@ -73,6 +73,8 @@ struct _IncSession
 	GHashTable *folder_table;	/* table of destination folders */
 	GHashTable *tmp_folder_table;	/* for progressive update */
 
+	GSList *junk_fltlist;
+
 	gint64 cur_total_bytes;
 	gint new_msgs;
 

@@ -349,8 +349,6 @@ int main(int argc, char *argv[])
 		new_account = setup_account();
 	}
 
-	prefs_common_junk_filter_list_set();
-
 	account_set_menu();
 	main_window_reflect_prefs_all();
 

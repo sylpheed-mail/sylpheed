@@ -4643,8 +4643,7 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	fltinfo = filter_info_new();
 	fltinfo->flags = msginfo->flags;
-	filter_apply_msginfo(prefs_common.manual_junk_fltlist,
-			     msginfo, fltinfo);
+	filter_apply_msginfo(summaryview->junk_fltlist, msginfo, fltinfo);
 
 	if (fltinfo->actions[FLT_ACTION_MOVE] ||
 	    fltinfo->actions[FLT_ACTION_COPY] ||
@@ -4761,9 +4760,25 @@ void summary_filter(SummaryView *summaryview, gboolean selected_only)
 
 void summary_filter_junk(SummaryView *summaryview, gboolean selected_only)
 {
-	if (prefs_common.manual_junk_fltlist)
+	FilterRule *rule;
+	GSList junk_fltlist = {NULL, NULL};
+	FolderItem *item = summaryview->folder_item;
+	FolderItem *junk = NULL;
+
+	if (!item)
+		return;
+
+	if (item->folder)
+		junk = folder_get_junk(item->folder);
+	rule = filter_junk_rule_create(NULL, junk, TRUE);
+	if (rule) {
+		junk_fltlist.data = rule;
+		summaryview->junk_fltlist = &junk_fltlist;
 		summary_filter_real(summaryview, summary_filter_junk_func,
 				    selected_only);
+		summaryview->junk_fltlist = NULL;
+		filter_rule_free(rule);
+	}
 }
 
 void summary_filter_open(SummaryView *summaryview, FilterCreateType type)

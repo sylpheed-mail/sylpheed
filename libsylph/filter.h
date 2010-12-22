@@ -213,6 +213,10 @@ FilterAction *filter_action_new		(FilterActionType	 type,
 					 const gchar		*str);
 FilterInfo *filter_info_new		(void);
 
+FilterRule *filter_junk_rule_create	(PrefsAccount		*account,
+					 FolderItem		*default_junk,
+					 gboolean		 is_manual);
+
 void filter_rule_rename_dest_path	(FilterRule		*rule,
 					 const gchar		*old_path,
 					 const gchar		*new_path);

@@ -566,86 +566,8 @@ void prefs_common_write_config(void)
 	g_free(path);
 }
 
-static FilterRule *prefs_common_junk_filter_rule_create(gboolean is_manual)
-{
-	FilterRule *rule;
-	FilterCond *cond;
-	FilterAction *action;
-	GSList *cond_list = NULL, *action_list = NULL;
-	gchar *junk_id;
-
-	if (prefs_common.junk_folder)
-		junk_id = g_strdup(prefs_common.junk_folder);
-	else {
-		FolderItem *item;
-		item = folder_get_default_junk();
-		if (!item)
-			return NULL;
-		junk_id = folder_item_get_identifier(item);
-		if (!junk_id)
-			return NULL;
-	}
-
-	debug_print("prefs_common_junk_filter_rule_create: junk folder: %s\n",
-		    junk_id);
-
-	cond = filter_cond_new(FLT_COND_CMD_TEST, 0, 0, NULL,
-			       prefs_common.junk_classify_cmd);
-	cond_list = g_slist_append(NULL, cond);
-	if (prefs_common.delete_junk_on_recv && !is_manual) {
-		action = filter_action_new(FLT_ACTION_COPY, junk_id);
-		action_list = g_slist_append(NULL, action);
-		action = filter_action_new(FLT_ACTION_DELETE, NULL);
-		action_list = g_slist_append(action_list, action);
-	} else {
-		action = filter_action_new(FLT_ACTION_MOVE, junk_id);
-		action_list = g_slist_append(NULL, action);
-	}
-
-	if (prefs_common.mark_junk_as_read) {
-		action = filter_action_new(FLT_ACTION_MARK_READ, NULL);
-		action_list = g_slist_append(action_list, action);
-	}
-
-	if (is_manual)
-		rule = filter_rule_new(_("Junk mail filter (manual)"), FLT_OR,
-	 			       cond_list, action_list);
-	else
-		rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
-				       cond_list, action_list);
-
-	g_free(junk_id);
-
-	return rule;
-}
-
 void prefs_common_junk_filter_list_set(void)
 {
-	FilterRule *rule;
-
-	debug_print("prefs_common_junk_filter_list_set\n");
-
-	if (prefs_common.junk_fltlist) {
-		filter_rule_list_free(prefs_common.junk_fltlist);
-		prefs_common.junk_fltlist = NULL;
-	}
-	if (prefs_common.manual_junk_fltlist) {
-		filter_rule_list_free(prefs_common.manual_junk_fltlist);
-		prefs_common.manual_junk_fltlist = NULL;
-	}
-
-	if (!prefs_common.junk_classify_cmd)
-		return;
-
-	rule = prefs_common_junk_filter_rule_create(FALSE);
-	if (!rule)
-		return;
-	prefs_common.junk_fltlist = g_slist_append(NULL, rule);
-
-	rule = prefs_common_junk_filter_rule_create(TRUE);
-	if (!rule)
-		return;
-	prefs_common.manual_junk_fltlist = g_slist_append(NULL, rule);
 }
 
 void prefs_common_junk_folder_rename_path(const gchar *old_path,
@@ -677,6 +599,5 @@ void prefs_common_junk_folder_rename_path(const gchar *old_path,
 			    dest_path);
 		g_free(prefs_common.junk_folder);
 		prefs_common.junk_folder = dest_path;
-		prefs_common_junk_filter_list_set();
 	}
 }

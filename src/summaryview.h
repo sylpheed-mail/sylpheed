@@ -159,6 +159,9 @@ private:
 	GSList *pos_list;
 
 	guint write_lock_count;
+
+	/* junk filter list */
+	GSList *junk_fltlist;
 };
 
 SummaryView	*summary_create(void);

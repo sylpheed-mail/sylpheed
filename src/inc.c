@@ -253,11 +253,17 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 		FolderItem *inbox = FOLDER(account->folder)->inbox;
 		GSList *mlist, *cur;
 		FilterInfo *fltinfo;
+		GSList junk_fltlist = {NULL, NULL};
+		FilterRule *junk_rule;
 		gint n_filtered = 0;
 
 		debug_print("inc_remote_account_mail(): filtering IMAP4 INBOX\n");
 		mlist = folder_item_get_uncached_msg_list(inbox);
 		debug_print("inc_remote_account_mail(): uncached messages: %d\n", g_slist_length(mlist));
+
+		junk_rule = filter_junk_rule_create(account, NULL, TRUE);
+		if (junk_rule)
+			junk_fltlist.data = junk_rule;
 
 		for (cur = mlist; cur != NULL; cur = cur->next) {
 			MsgInfo *msginfo = (MsgInfo *)cur->data;
@@ -268,10 +274,9 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 
 			if (prefs_common.enable_junk &&
 			    prefs_common.filter_junk_on_recv &&
-			    prefs_common.filter_junk_before) {
+			    prefs_common.filter_junk_before && junk_rule) {
 				filter_apply_msginfo
-					(prefs_common.manual_junk_fltlist,
-					 msginfo, fltinfo);
+					(&junk_fltlist, msginfo, fltinfo);
 			}
 
 			if (!fltinfo->drop_done) {
@@ -282,10 +287,9 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			if (!fltinfo->drop_done &&
 			    prefs_common.enable_junk &&
 			    prefs_common.filter_junk_on_recv &&
-			    !prefs_common.filter_junk_before) {
+			    !prefs_common.filter_junk_before && junk_rule) {
 				filter_apply_msginfo
-					(prefs_common.manual_junk_fltlist,
-					 msginfo, fltinfo);
+					(&junk_fltlist, msginfo, fltinfo);
 			}
 
 			if (msginfo->flags.perm_flags !=
@@ -322,6 +326,9 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 
 			filter_info_free(fltinfo);
 		}
+
+		if (junk_rule)
+			filter_rule_free(junk_rule);
 
 		procmsg_msg_list_free(mlist);
 
@@ -585,6 +592,7 @@ static void inc_progress_dialog_destroy(IncProgressDialog *inc_dialog)
 static IncSession *inc_session_new(PrefsAccount *account)
 {
 	IncSession *session;
+	FilterRule *rule;
 
 	g_return_val_if_fail(account != NULL, NULL);
 
@@ -611,6 +619,12 @@ static IncSession *inc_session_new(PrefsAccount *account)
 	session->folder_table = g_hash_table_new(NULL, NULL);
 	session->tmp_folder_table = g_hash_table_new(NULL, NULL);
 
+	rule = filter_junk_rule_create(account, NULL, FALSE);
+	if (rule)
+		session->junk_fltlist = g_slist_append(NULL, rule);
+	else
+		session->junk_fltlist = NULL;
+
 	session->cur_total_bytes = 0;
 	session->new_msgs = 0;
 
@@ -629,6 +643,8 @@ static void inc_session_destroy(IncSession *session)
 	session_destroy(session->session);
 	g_hash_table_destroy(session->folder_table);
 	g_hash_table_destroy(session->tmp_folder_table);
+	if (session->junk_fltlist)
+		filter_rule_list_free(session->junk_fltlist);
 	g_free(session);
 }
 
@@ -1283,8 +1299,9 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 
 	if (prefs_common.enable_junk &&
 	    prefs_common.filter_junk_on_recv &&
-	    prefs_common.filter_junk_before) {
-		filter_apply_msginfo(prefs_common.junk_fltlist, msginfo,
+	    prefs_common.filter_junk_before &&
+	    inc_session->junk_fltlist) {
+		filter_apply_msginfo(inc_session->junk_fltlist, msginfo,
 				     fltinfo);
 		if (fltinfo->drop_done)
 			is_junk = TRUE;
@@ -1306,8 +1323,9 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	if (!fltinfo->drop_done) {
 		if (prefs_common.enable_junk &&
 		    prefs_common.filter_junk_on_recv &&
-		    !prefs_common.filter_junk_before) {
-			filter_apply_msginfo(prefs_common.junk_fltlist,
+		    !prefs_common.filter_junk_before &&
+		    inc_session->junk_fltlist) {
+			filter_apply_msginfo(inc_session->junk_fltlist,
 					     msginfo, fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;

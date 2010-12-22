@@ -4382,7 +4382,6 @@ static void prefs_common_ok(void)
 static void prefs_common_apply(void)
 {
 	prefs_set_data_from_dialog(prefs_common_get_params());
-	prefs_common_junk_filter_list_set();
 	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
 	main_window_reflect_prefs_all();
 	compose_reflect_prefs_all();
