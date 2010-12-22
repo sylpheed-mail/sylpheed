@@ -249,6 +249,9 @@ static void addressbook_change_node_name	(GtkTreeIter	*iter,
 static void addressbook_new_address_cb		(gpointer	 data,
 						 guint		 action,
 						 GtkWidget	*widget);
+static void addressbook_compose_to_cb		(gpointer	 data,
+						 guint		 action,
+						 GtkWidget	*widget);
 static void addressbook_edit_address_cb		(gpointer	 data,
 						 guint		 action,
 						 GtkWidget	*widget);
@@ -417,6 +420,13 @@ static GtkItemFactoryEntry addressbook_entries[] =
 	{N_("/_Address/New _Group"),	"<control>G",	addressbook_new_group_cb,       0, NULL},
 	{N_("/_Address/New _Folder"),	"<control>F",	addressbook_new_folder_cb,      0, NULL},
 	{N_("/_Address/---"),		NULL,		NULL, 0, "<Separator>"},
+	{N_("/_Address/Add _to recipient"),
+					"<control>M",	addressbook_compose_to_cb, COMPOSE_ENTRY_TO, NULL},
+	{N_("/_Address/Add to _Cc"),
+					NULL,		addressbook_compose_to_cb, COMPOSE_ENTRY_CC, NULL},
+	{N_("/_Address/_Add to _Bcc"),
+					NULL,		addressbook_compose_to_cb, COMPOSE_ENTRY_BCC, NULL},
+	{N_("/_Address/---"),		NULL,		NULL, 0, "<Separator>"},
 	{N_("/_Address/_Edit"),		"<control>Return",	addressbook_edit_address_cb,    0, NULL},
 	{N_("/_Address/_Delete"),	"Delete",	addressbook_delete_address_cb,  0, NULL},
 
@@ -457,6 +467,13 @@ static GtkItemFactoryEntry addressbook_list_popup_entries[] =
 	{N_("/New _Address"),	NULL, addressbook_new_address_cb,  0, NULL},
 	{N_("/New _Group"),	NULL, addressbook_new_group_cb,    0, NULL},
 	{N_("/New _Folder"),	NULL, addressbook_new_folder_cb,   0, NULL},
+	{N_("/---"),		NULL, NULL, 0, "<Separator>"},
+	{N_("/Add _to recipient"),
+				NULL, addressbook_compose_to_cb, COMPOSE_ENTRY_TO, NULL},
+	{N_("/Add t_o Cc"),
+				NULL, addressbook_compose_to_cb, COMPOSE_ENTRY_CC, NULL},
+	{N_("/Add to _Bcc"),
+				NULL, addressbook_compose_to_cb, COMPOSE_ENTRY_BCC, NULL},
 	{N_("/---"),		NULL, NULL, 0, "<Separator>"},
 	{N_("/_Edit"),		NULL, addressbook_edit_address_cb,   0, NULL},
 	{N_("/_Delete"),	NULL, addressbook_delete_address_cb, 0, NULL},
@@ -1292,6 +1309,7 @@ static void addressbook_menuitem_set_sensitive(void)
 	gboolean canLookup = FALSE;
 	gboolean canCopy = FALSE;
 	gboolean canPaste = FALSE;
+	gboolean hasListSelection = _addressListSelection_ != NULL;
 	AddressTypeControlItem *atci = NULL;
 	AddressDataSource *ds = NULL;
 	AddressInterface *iface = NULL;
@@ -1401,6 +1419,10 @@ static void addressbook_menuitem_set_sensitive(void)
 	menu_set_sensitive(addrbook.menu_factory, "/Address/New Folder", canAdd);
 	menu_set_sensitive(addrbook.menu_factory, "/Address/New Group", canAdd);
 
+	menu_set_sensitive(addrbook.menu_factory, "/Address/Add to recipient", hasListSelection);
+	menu_set_sensitive(addrbook.menu_factory, "/Address/Add to Cc", hasListSelection);
+	menu_set_sensitive(addrbook.menu_factory, "/Address/Add to Bcc", hasListSelection);
+
 	/* Enable edit */
 	menu_set_sensitive(addrbook.menu_factory, "/Address/Edit", canEditAddress);
 	menu_set_sensitive(addrbook.menu_factory, "/Address/Delete", canDelete);
@@ -1421,12 +1443,18 @@ static void addressbook_menuitem_set_sensitive(void)
 	menu_set_sensitive(addrbook.list_factory, "/New Address", canAdd);
 	menu_set_sensitive(addrbook.list_factory, "/New Folder", canAdd);
 	menu_set_sensitive(addrbook.list_factory, "/New Group", canAdd);
+	menu_set_sensitive(addrbook.list_factory, "/Add to recipient", hasListSelection);
+	menu_set_sensitive(addrbook.list_factory, "/Add to Cc", hasListSelection);
+	menu_set_sensitive(addrbook.list_factory, "/Add to Bcc", hasListSelection);
 	menu_set_sensitive(addrbook.list_factory, "/Edit", canEditAddress);
 	menu_set_sensitive(addrbook.list_factory, "/Delete", canDelete);
 	menu_set_sensitive(addrbook.list_factory, "/Copy", canCopy);
 	menu_set_sensitive(addrbook.list_factory, "/Paste", canPaste);
 
 	/* Buttons */
+	gtk_widget_set_sensitive(addrbook.to_btn, hasListSelection);
+	gtk_widget_set_sensitive(addrbook.cc_btn, hasListSelection);
+	gtk_widget_set_sensitive(addrbook.bcc_btn, hasListSelection);
 	gtk_widget_set_sensitive(addrbook.reg_btn, canAdd);
 	gtk_widget_set_sensitive(addrbook.del_btn, canDelete);
 	gtk_widget_set_sensitive(addrbook.lup_btn, canLookup);
@@ -2371,6 +2399,11 @@ static void addressbook_new_address_cb(gpointer data, guint action, GtkWidget *w
 			addressbook_reopen();
 		}
 	}
+}
+
+static void addressbook_compose_to_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	addressbook_to_clicked(NULL, GINT_TO_POINTER(action));
 }
 
 /*
