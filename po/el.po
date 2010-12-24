@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-22 11:06+0900\n"
+"POT-Creation-Date: 2010-12-24 14:31+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -20,6 +20,14 @@ msgstr ""
 #: libsylph/account.c:57
 msgid "Reading all config for each account...\n"
 msgstr "Ανάγνωση ρυθμίσεων λογαριασμών...\n"
+
+#: libsylph/filter.c:1545
+msgid "Junk mail filter (manual)"
+msgstr "Φίλτρο ανεπιθύμητης αλληλογραφίας (χειροκίνητο)"
+
+#: libsylph/filter.c:1548
+msgid "Junk mail filter"
+msgstr "Φίλτρο ανεπιθύμητης αλληλογραφίας"
 
 #: libsylph/imap.c:537
 #, c-format
@@ -227,77 +235,77 @@ msgstr "Δεν είναι δυνατή η μετατροπή του UTF-7 σε %
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "Δεν είναι δυνατή η μετατροπή του %s σε UTF-7 από το iconv\n"
 
-#: libsylph/mbox.c:49 libsylph/mbox.c:216
+#: libsylph/mbox.c:49 libsylph/mbox.c:226
 msgid "can't write to temporary file\n"
 msgstr "δεν είναι δυνατή η εγγραφή στο προσωρινό αρχείο\n"
 
-#: libsylph/mbox.c:81
+#: libsylph/mbox.c:84
 #, fuzzy, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Μετακίνηση μηνυμάτων στο φάκελο %s"
 
-#: libsylph/mbox.c:93
+#: libsylph/mbox.c:96
 msgid "can't read mbox file.\n"
 msgstr "δεν είναι δυνατή η ανάγνωση από το αρχείο mbox.\n"
 
-#: libsylph/mbox.c:100
+#: libsylph/mbox.c:103
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "μη έγκυρη μορφή mbox: %s\n"
 
-#: libsylph/mbox.c:107
+#: libsylph/mbox.c:110
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "κακοσχηματισμένο mbox: %s\n"
 
-#: libsylph/mbox.c:130
+#: libsylph/mbox.c:139
 msgid "can't open temporary file\n"
 msgstr "δεν είναι δυνατό το άνοιγμα του προσωρινού αρχείου\n"
 
-#: libsylph/mbox.c:181
+#: libsylph/mbox.c:191
 #, fuzzy, c-format
 msgid ""
 "unescaped From found:\n"
 "%s"
 msgstr "Το αρχείο δε βρέθηκε."
 
-#: libsylph/mbox.c:324
+#: libsylph/mbox.c:338
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "δεν είναι δυνατή η δημιουργία αρχείου κλειδώματος %s\n"
 
-#: libsylph/mbox.c:325
+#: libsylph/mbox.c:339
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr ""
 
-#: libsylph/mbox.c:337
+#: libsylph/mbox.c:351
 #, c-format
 msgid "can't create %s\n"
 msgstr "δεν είναι δυνατή η δημιουργία του %s\n"
 
-#: libsylph/mbox.c:343
+#: libsylph/mbox.c:357
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "το γραμματοκιβώτιο ανήκει σε άλλη διεργασία, αναμονή...\n"
 
-#: libsylph/mbox.c:372
+#: libsylph/mbox.c:386
 #, c-format
 msgid "can't lock %s\n"
 msgstr "δεν είναι δυνατό το κλείδωμα του %s\n"
 
-#: libsylph/mbox.c:379 libsylph/mbox.c:429
+#: libsylph/mbox.c:393 libsylph/mbox.c:443
 msgid "invalid lock type\n"
 msgstr "μη έγκυρος τύπος κλειδιού\n"
 
-#: libsylph/mbox.c:415
+#: libsylph/mbox.c:429
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "δεν είναι δυνατό το ξεκλείδωμα του %s\n"
 
-#: libsylph/mbox.c:450
+#: libsylph/mbox.c:464
 msgid "can't truncate mailbox to zero.\n"
 msgstr "δεν είναι δυνατή η περικοπή του γραμματοκιβωτίου σε μηδενικό.\n"
 
-#: libsylph/mbox.c:475
+#: libsylph/mbox.c:489
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Εξαγωγή μηνυμάτων από το %s στο %s...\n"
@@ -316,7 +324,7 @@ msgstr "ο φάκελος προορισμού είναι ο ίδιος με τ�
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Αντιγραφή μηνύματος %s%c%d στο %s ...\n"
 
-#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:187
+#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:191
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -510,14 +518,6 @@ msgstr "Βρέθηκαν %s\n"
 #: libsylph/prefs.c:285
 msgid "Configuration is saved.\n"
 msgstr "Οι ρυθμίσεις αποθηκεύτηκαν.\n"
-
-#: libsylph/prefs_common.c:611
-msgid "Junk mail filter (manual)"
-msgstr "Φίλτρο ανεπιθύμητης αλληλογραφίας (χειροκίνητο)"
-
-#: libsylph/prefs_common.c:614
-msgid "Junk mail filter"
-msgstr "Φίλτρο ανεπιθύμητης αλληλογραφίας"
 
 #: libsylph/procmime.c:1293
 msgid "procmime_get_text_content(): Code conversion failed.\n"
@@ -1284,15 +1284,15 @@ msgstr "Κοινές διευθύνσεις"
 msgid "Personal address"
 msgstr "Προσωπικές διευθύνσεις"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:826
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:841
 msgid "Notice"
 msgstr "Σημείωση"
 
-#: src/alertpanel.c:155 src/main.c:963
+#: src/alertpanel.c:155 src/main.c:978
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: src/alertpanel.c:168 src/inc.c:752
+#: src/alertpanel.c:168 src/inc.c:768
 msgid "Error"
 msgstr "Σφάλμα"
 
@@ -1336,7 +1336,7 @@ msgstr "Καφέ"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5130
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5145
 msgid "None"
 msgstr "Κανένα"
 
@@ -1880,7 +1880,7 @@ msgstr "Ημερομηνία"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5279
+#: src/summaryview.c:5294
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -2945,157 +2945,157 @@ msgstr "Γνωρίσματα"
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d νέα μηνύματά"
 
-#: src/inc.c:485
+#: src/inc.c:492
 msgid "Authenticating with POP3"
 msgstr "Πιστοποίηση με POP3"
 
-#: src/inc.c:512
+#: src/inc.c:519
 msgid "Retrieving new messages"
 msgstr "Λήψη νέων μηνυμάτων"
 
-#: src/inc.c:514
+#: src/inc.c:521
 #, fuzzy
 msgid "Cancel _all"
 msgstr "Ακυρώθηκε"
 
-#: src/inc.c:560
+#: src/inc.c:567
 msgid "Standby"
 msgstr "Σε αναμονή"
 
-#: src/inc.c:708 src/inc.c:758
+#: src/inc.c:724 src/inc.c:774
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
-#: src/inc.c:719
+#: src/inc.c:735
 msgid "Retrieving"
 msgstr "Λήψη"
 
-#: src/inc.c:728 src/inc.c:1057
+#: src/inc.c:744 src/inc.c:1073
 #, fuzzy, c-format
 msgid "%d message(s) (%s) received"
 msgstr "Ολοκληρώθηκε (%d μηνύματα (%s) παρελήφθησαν)"
 
-#: src/inc.c:732
+#: src/inc.c:748
 #, fuzzy, c-format
 msgid "no new messages"
 msgstr "Δεν υπάρχουν νέα μηνύματα."
 
-#: src/inc.c:733
+#: src/inc.c:749
 #, fuzzy
 msgid "Done"
 msgstr "Έγινε."
 
-#: src/inc.c:738
+#: src/inc.c:754
 msgid "Connection failed"
 msgstr "Η σύνδεση απέτυχε"
 
-#: src/inc.c:741
+#: src/inc.c:757
 msgid "Auth failed"
 msgstr "Η εντολή Auth απέτυχε"
 
-#: src/inc.c:745
+#: src/inc.c:761
 msgid "Locked"
 msgstr "Κλειδωμένο"
 
-#: src/inc.c:755
+#: src/inc.c:771
 msgid "Timeout"
 msgstr "Όριο χρόνου"
 
-#: src/inc.c:802
+#: src/inc.c:818
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Ολοκληρώθηκε (%d νέα μηνύματα)"
 
-#: src/inc.c:805
+#: src/inc.c:821
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Ολοκληρώθηκε (δεν υπάρχουν νέα μηνύματα)"
 
-#: src/inc.c:814
+#: src/inc.c:830
 #, fuzzy
 msgid "Some errors occurred while getting mail."
 msgstr "Συνέβησαν σφάλματα κατά την αποστολή των μηνυμάτων στην ουρά."
 
-#: src/inc.c:850
+#: src/inc.c:866
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "λήψη νέων μηνυμάτων λογαριασμού %s...\n"
 
-#: src/inc.c:854
+#: src/inc.c:870
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: Πιστοποίηση με POP3"
 
-#: src/inc.c:857
+#: src/inc.c:873
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Λήψη νέων μηνυμάτων"
 
-#: src/inc.c:862
+#: src/inc.c:878
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Σύνδεση με το διακομιστή POP3: %s..."
 
-#: src/inc.c:880
+#: src/inc.c:896
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Δεν μπορώ να συνδεθώ στον POP3 server: %s:%d\n"
 
-#: src/inc.c:962 src/rpop3.c:835 src/send_message.c:833
+#: src/inc.c:978 src/rpop3.c:835 src/send_message.c:833
 #, c-format
 msgid "Authenticating..."
 msgstr "Πιστοποίηση..."
 
-#: src/inc.c:963
+#: src/inc.c:979
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Λήψη μηνυμάτων από %s..."
 
-#: src/inc.c:968
+#: src/inc.c:984
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (STAT)..."
 
-#: src/inc.c:972
+#: src/inc.c:988
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (LAST)..."
 
-#: src/inc.c:976
+#: src/inc.c:992
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (UIDL)..."
 
-#: src/inc.c:980
+#: src/inc.c:996
 msgid "Getting the size of messages (LIST)..."
 msgstr "Λήψη μεγέθους μηνυμάτων (LIST)..."
 
-#: src/inc.c:990
+#: src/inc.c:1006
 #, c-format
 msgid "Deleting message %d"
 msgstr "Διαγραφή μηνύματος %d"
 
-#: src/inc.c:997 src/send_message.c:851
+#: src/inc.c:1013 src/send_message.c:851
 msgid "Quitting"
 msgstr "Κλείνω τη σύνδεση"
 
-#: src/inc.c:1032
+#: src/inc.c:1048
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Λαμβάνεται το μήνυμα (%d / %d) (%s / %s)"
 
-#: src/inc.c:1293 src/inc.c:1316 src/summaryview.c:4657
+#: src/inc.c:1310 src/inc.c:1334 src/summaryview.c:4656
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1375
+#: src/inc.c:1393
 msgid "Connection failed."
 msgstr "Η σύνδεση απέτυχε."
 
-#: src/inc.c:1381
+#: src/inc.c:1399
 msgid "Error occurred while processing mail."
 msgstr "Ένα σφάλμα συνέβη καθώς επεξεργάζομαι το μήνυμα."
 
-#: src/inc.c:1386
+#: src/inc.c:1404
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -3104,29 +3104,29 @@ msgstr ""
 "Δημιουργήθηκε σφάλμα κατά την επεξεργασία μηνυμάτων:\n"
 "%s"
 
-#: src/inc.c:1392
+#: src/inc.c:1410
 msgid "No disk space left."
 msgstr "Δεν υπάρχει άλλος χώρος στο δίσκο."
 
-#: src/inc.c:1397
+#: src/inc.c:1415
 msgid "Can't write file."
 msgstr "Δεν είναι δυνατή η εγγραφή του αρχείου."
 
-#: src/inc.c:1402
+#: src/inc.c:1420
 msgid "Socket error."
 msgstr "Σφάλμα σύνδεσης."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
+#: src/inc.c:1426 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
 #: src/send_message.c:994
 msgid "Connection closed by the remote host."
 msgstr "Η σύνδεση έκλεισε από τον απομακρυσμένο υπολογιστή."
 
-#: src/inc.c:1414
+#: src/inc.c:1432
 msgid "Mailbox is locked."
 msgstr "Το γραμματοκιβώτιο είναι κλειδωμένο."
 
-#: src/inc.c:1418
+#: src/inc.c:1436
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3135,11 +3135,11 @@ msgstr ""
 "Το γραμματοκιβώτιο είναι κλειδωμένο:\n"
 "%s"
 
-#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
+#: src/inc.c:1442 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
 msgid "Authentication failed."
 msgstr "Η πιστοποίηση απέτυχε."
 
-#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:977
+#: src/inc.c:1447 src/rpop3.c:528 src/send_message.c:977
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3148,15 +3148,15 @@ msgstr ""
 "Η πιστοποίηση απέτυχε:\n"
 "%s"
 
-#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
+#: src/inc.c:1452 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
 msgid "Session timed out."
 msgstr "Λήξη χρόνου σύνδεσης."
 
-#: src/inc.c:1475
+#: src/inc.c:1493
 msgid "Incorporation cancelled\n"
 msgstr "Η ενσωμάτωση ακυρώθηκε\n"
 
-#: src/inc.c:1584
+#: src/inc.c:1602
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Λήψη μηνυμάτων από %s στο %s ...\n"
@@ -3174,16 +3174,16 @@ msgstr "Δώστε τον κωδικό"
 msgid "Protocol log"
 msgstr "Καταγραφή πρωτοκόλλου"
 
-#: src/main.c:583
+#: src/main.c:598
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Χρήση: %s [ΕΠΙΛΟΓΗ]...\n"
 
-#: src/main.c:586
+#: src/main.c:601
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [διεύθυνση]  άνοιγμα παραθύρου σύνθεσης"
 
-#: src/main.c:587
+#: src/main.c:602
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3193,23 +3193,23 @@ msgstr ""
 "                         άνοιγμα του παραθύρου σύνθεσης μηνύματος με\n"
 "                         τα καθορισμένα αρχεία συνημμένα"
 
-#: src/main.c:590
+#: src/main.c:605
 msgid "  --receive              receive new messages"
 msgstr "  --receive              λήψη νέων μηνυμάτων"
 
-#: src/main.c:591
+#: src/main.c:606
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          λήψη νέων μηνυμάτων όλων των λογαριασμών"
 
-#: src/main.c:592
+#: src/main.c:607
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 αποστολή όλων των μηνυμάτων στην ουρά"
 
-#: src/main.c:593
+#: src/main.c:608
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [φάκελος]...  εμφάνιση του συνολικού αριθμού μηνυμάτων"
 
-#: src/main.c:594
+#: src/main.c:609
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3217,47 +3217,47 @@ msgstr ""
 "  --status-full [φάκελος]...\n"
 "                         εμφάνιση της κατάστασης του φακέλου"
 
-#: src/main.c:596
+#: src/main.c:611
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
 
-#: src/main.c:597
+#: src/main.c:612
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 "  --config-dir κατάλογος  ορίζει τον κατάλογο που αποθηκεύονται τα αρχεία "
 "ρυθμίσεων"
 
-#: src/main.c:599
+#: src/main.c:614
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:601
+#: src/main.c:616
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 έξοδος από το Sylpheed"
 
-#: src/main.c:602
+#: src/main.c:617
 msgid "  --debug                debug mode"
 msgstr "  --debug                λειτουργία αποσφαλμάτωσης"
 
-#: src/main.c:603
+#: src/main.c:618
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 εμφάνιση αυτού του κειμένου και έξοδος"
 
-#: src/main.c:604
+#: src/main.c:619
 msgid "  --version              output version information and exit"
 msgstr "  --version              εμφάνιση της έκδοσης και έξοδος"
 
-#: src/main.c:608
+#: src/main.c:623
 #, c-format
 msgid "Press any key..."
 msgstr "Πατήστε ένα πλήκτρο..."
 
-#: src/main.c:743
+#: src/main.c:758
 msgid "Filename encoding"
 msgstr "Κωδικοποίηση ονομάτων αρχείων"
 
-#: src/main.c:744
+#: src/main.c:759
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3282,19 +3282,19 @@ msgstr ""
 "\n"
 "Συνέχεια;"
 
-#: src/main.c:827
+#: src/main.c:842
 msgid "Composing message exists. Really quit?"
 msgstr "Υπάρχει ήδη μήνυμα υπό σύνθεση. Να γίνει έξοδος;"
 
-#: src/main.c:838
+#: src/main.c:853
 msgid "Queued messages"
 msgstr "Μηνύματα στην ουρά"
 
-#: src/main.c:839
+#: src/main.c:854
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Μερικά μηνύματα δεν έχουν σταλεί και είναι στην ουρά. Να κλείσω;"
 
-#: src/main.c:964
+#: src/main.c:979
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3302,20 +3302,20 @@ msgstr ""
 "Το GnuPG δεν έχει εγκατασταθεί σωστά, ή χρειάζεται αναβάθμιση.\n"
 "Η υποστήριξη OpenPGP απενεργοποιήθηκε."
 
-#: src/main.c:1197
+#: src/main.c:1212
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1393
+#: src/main.c:1408
 msgid "another Sylpheed is already running.\n"
 msgstr "Τρέχει ήδη ένα Sylpheed.\n"
 
-#: src/main.c:1680
+#: src/main.c:1695
 msgid "Migration of configuration"
 msgstr "Μεταφορά ρυθμίσεων"
 
-#: src/main.c:1681
+#: src/main.c:1696
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3985,7 +3985,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr ""
 
 #: src/mainwindow.c:1219 src/summaryview.c:2568 src/summaryview.c:2655
-#: src/summaryview.c:4222 src/summaryview.c:4351 src/summaryview.c:4739
+#: src/summaryview.c:4222 src/summaryview.c:4351 src/summaryview.c:4738
 msgid "done.\n"
 msgstr "έγινε.\n"
 
@@ -6418,19 +6418,19 @@ msgstr "Συνημμένο"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:422
-#: src/summaryview.c:5272
+#: src/summaryview.c:5287
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:423
-#: src/summaryview.c:5275
+#: src/summaryview.c:5290
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:424
-#: src/summaryview.c:5277
+#: src/summaryview.c:5292
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -6440,7 +6440,7 @@ msgid "Number"
 msgstr "Αριθμός"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5283
+#: src/prefs_summary_column.c:74 src/summaryview.c:5298
 #, fuzzy
 msgid "To"
 msgstr "Προς:"
@@ -6858,7 +6858,7 @@ msgstr "_Σχετικά"
 msgid "%s - POP3 Remote mailbox"
 msgstr "Αφαίρεση γραμματοκιβωτίου"
 
-#: src/rpop3.c:421 src/summaryview.c:5281
+#: src/rpop3.c:421 src/summaryview.c:5296
 msgid "No."
 msgstr "Όχι."
 
@@ -7813,15 +7813,15 @@ msgstr ""
 msgid "Filtering (%d / %d)..."
 msgstr "Εφαρμογή φίλτρων (%d / %d)..."
 
-#: src/summaryview.c:4700
+#: src/summaryview.c:4699
 msgid "filtering..."
 msgstr "Εφαρμογή φίλτρων..."
 
-#: src/summaryview.c:4701
+#: src/summaryview.c:4700
 msgid "Filtering..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:4746
+#: src/summaryview.c:4745
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "Φιλτραρίστηκαν %d μηνύματα."

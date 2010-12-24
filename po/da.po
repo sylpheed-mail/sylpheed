@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-22 11:06+0900\n"
+"POT-Creation-Date: 2010-12-24 14:31+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -17,6 +17,16 @@ msgstr ""
 #: libsylph/account.c:57
 msgid "Reading all config for each account...\n"
 msgstr "Læs konfiguration for hver konto...\n"
+
+#: libsylph/filter.c:1545
+#, fuzzy
+msgid "Junk mail filter (manual)"
+msgstr "Mappe"
+
+#: libsylph/filter.c:1548
+#, fuzzy
+msgid "Junk mail filter"
+msgstr "Mappe"
 
 #: libsylph/imap.c:537
 #, c-format
@@ -223,34 +233,34 @@ msgstr "iconv kan ikke konvertere UTF-7 til %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv can ikke konvertere %s til UTF-7\n"
 
-#: libsylph/mbox.c:49 libsylph/mbox.c:216
+#: libsylph/mbox.c:49 libsylph/mbox.c:226
 msgid "can't write to temporary file\n"
 msgstr "kan ikke skrive til midlertidig fil\n"
 
-#: libsylph/mbox.c:81
+#: libsylph/mbox.c:84
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "Modtager meddelelse fra %s til %s...\n"
 
-#: libsylph/mbox.c:93
+#: libsylph/mbox.c:96
 msgid "can't read mbox file.\n"
 msgstr "Kan ikke læse mbox fil.\n"
 
-#: libsylph/mbox.c:100
+#: libsylph/mbox.c:103
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "ugyldigt mbox format: %s\n"
 
-#: libsylph/mbox.c:107
+#: libsylph/mbox.c:110
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "ugyldig mbox format: %s\n"
 
-#: libsylph/mbox.c:130
+#: libsylph/mbox.c:139
 msgid "can't open temporary file\n"
 msgstr "kan ikke åbne midlertidig fil\n"
 
-#: libsylph/mbox.c:181
+#: libsylph/mbox.c:191
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -259,43 +269,43 @@ msgstr ""
 "ukodet Fra fundet:\n"
 "%s"
 
-#: libsylph/mbox.c:324
+#: libsylph/mbox.c:338
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "kan ikke oprette lock fil %s\n"
 
-#: libsylph/mbox.c:325
+#: libsylph/mbox.c:339
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "benyt 'flock' i stedet for 'file' hvis muligt.\n"
 
-#: libsylph/mbox.c:337
+#: libsylph/mbox.c:351
 #, c-format
 msgid "can't create %s\n"
 msgstr "kan ikke oprette %s\n"
 
-#: libsylph/mbox.c:343
+#: libsylph/mbox.c:357
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "mailbox hører til anden process, venter...\n"
 
-#: libsylph/mbox.c:372
+#: libsylph/mbox.c:386
 #, c-format
 msgid "can't lock %s\n"
 msgstr "kan ikke låse %s\n"
 
-#: libsylph/mbox.c:379 libsylph/mbox.c:429
+#: libsylph/mbox.c:393 libsylph/mbox.c:443
 msgid "invalid lock type\n"
 msgstr "ugyldig lock type\n"
 
-#: libsylph/mbox.c:415
+#: libsylph/mbox.c:429
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "kan ikke låse %s op\n"
 
-#: libsylph/mbox.c:450
+#: libsylph/mbox.c:464
 msgid "can't truncate mailbox to zero.\n"
 msgstr "kan ikke tømme mailbox.\n"
 
-#: libsylph/mbox.c:475
+#: libsylph/mbox.c:489
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Eksporterer meddelelse fra %s til %s...\n"
@@ -314,7 +324,7 @@ msgstr "fra og til mappe er ens.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Kopierer meddelelse %s%c%d til %s ...\n"
 
-#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:187
+#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:191
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -504,16 +514,6 @@ msgstr "Fundet %s\n"
 #: libsylph/prefs.c:285
 msgid "Configuration is saved.\n"
 msgstr "Konfiguration er gemt.\n"
-
-#: libsylph/prefs_common.c:611
-#, fuzzy
-msgid "Junk mail filter (manual)"
-msgstr "Mappe"
-
-#: libsylph/prefs_common.c:614
-#, fuzzy
-msgid "Junk mail filter"
-msgstr "Mappe"
 
 #: libsylph/procmime.c:1293
 msgid "procmime_get_text_content(): Code conversion failed.\n"
@@ -1265,15 +1265,15 @@ msgstr "Normale adresser"
 msgid "Personal address"
 msgstr "Personlige adresser"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:826
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:841
 msgid "Notice"
 msgstr "Note"
 
-#: src/alertpanel.c:155 src/main.c:963
+#: src/alertpanel.c:155 src/main.c:978
 msgid "Warning"
 msgstr "Advarsel"
 
-#: src/alertpanel.c:168 src/inc.c:752
+#: src/alertpanel.c:168 src/inc.c:768
 msgid "Error"
 msgstr "Fejl"
 
@@ -1316,7 +1316,7 @@ msgstr "Brun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5130
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5145
 msgid "None"
 msgstr "Ingen"
 
@@ -1890,7 +1890,7 @@ msgstr "Dato"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5279
+#: src/summaryview.c:5294
 msgid "Size"
 msgstr "Størrelse"
 
@@ -2958,161 +2958,161 @@ msgstr "Egenskaber"
 msgid "Sylpheed: %d new messages"
 msgstr "Hentet (%d nye meddelelse(r))"
 
-#: src/inc.c:485
+#: src/inc.c:492
 #, fuzzy
 msgid "Authenticating with POP3"
 msgstr "Godkender"
 
-#: src/inc.c:512
+#: src/inc.c:519
 msgid "Retrieving new messages"
 msgstr "Modtager nu meddelelse"
 
-#: src/inc.c:514
+#: src/inc.c:521
 #, fuzzy
 msgid "Cancel _all"
 msgstr "Afbryd"
 
-#: src/inc.c:560
+#: src/inc.c:567
 msgid "Standby"
 msgstr "Vent"
 
-#: src/inc.c:708 src/inc.c:758
+#: src/inc.c:724 src/inc.c:774
 msgid "Cancelled"
 msgstr "Afbrudt"
 
-#: src/inc.c:719
+#: src/inc.c:735
 msgid "Retrieving"
 msgstr "Modtager"
 
-#: src/inc.c:728 src/inc.c:1057
+#: src/inc.c:744 src/inc.c:1073
 #, fuzzy, c-format
 msgid "%d message(s) (%s) received"
 msgstr "Hentet (%d meddelelse(r) (%s)"
 
-#: src/inc.c:732
+#: src/inc.c:748
 #, fuzzy, c-format
 msgid "no new messages"
 msgstr "Ingen nye meddelelser."
 
-#: src/inc.c:733
+#: src/inc.c:749
 msgid "Done"
 msgstr "Afsluttet"
 
-#: src/inc.c:738
+#: src/inc.c:754
 msgid "Connection failed"
 msgstr "Forbindelse mislykkedes"
 
-#: src/inc.c:741
+#: src/inc.c:757
 msgid "Auth failed"
 msgstr "Godkendelse mislykkedes"
 
-#: src/inc.c:745
+#: src/inc.c:761
 msgid "Locked"
 msgstr "Låst"
 
-#: src/inc.c:755
+#: src/inc.c:771
 #, fuzzy
 msgid "Timeout"
 msgstr "Timeout (sek)"
 
-#: src/inc.c:802
+#: src/inc.c:818
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Hentet (%d nye meddelelse(r))"
 
-#: src/inc.c:805
+#: src/inc.c:821
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Ingen nye meddelelser"
 
-#: src/inc.c:814
+#: src/inc.c:830
 msgid "Some errors occurred while getting mail."
 msgstr "Fejl ved hentning af e-post."
 
-#: src/inc.c:850
+#: src/inc.c:866
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "modtager nye meddelelser fra konto %s...\n"
 
-#: src/inc.c:854
+#: src/inc.c:870
 #, fuzzy, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "Godkender"
 
-#: src/inc.c:857
+#: src/inc.c:873
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: henter nye meddelelser"
 
-#: src/inc.c:862
+#: src/inc.c:878
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Forbinder til POP3 server: %s ..."
 
-#: src/inc.c:880
+#: src/inc.c:896
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ingen forbindelse med POP3 server: %s:%d\n"
 
-#: src/inc.c:962 src/rpop3.c:835 src/send_message.c:833
+#: src/inc.c:978 src/rpop3.c:835 src/send_message.c:833
 #, c-format
 msgid "Authenticating..."
 msgstr "Godkender..."
 
-#: src/inc.c:963
+#: src/inc.c:979
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Modtager meddelelse fra %s..."
 
-#: src/inc.c:968
+#: src/inc.c:984
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Modtager antal nye meddelelser (STAT)..."
 
-#: src/inc.c:972
+#: src/inc.c:988
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Modtager antal nye meddelelser (LAST)..."
 
-#: src/inc.c:976
+#: src/inc.c:992
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Modtager antal nye meddelelser (UIDL)..."
 
-#: src/inc.c:980
+#: src/inc.c:996
 msgid "Getting the size of messages (LIST)..."
 msgstr "Modtager antal nye meddelelser (LIST)..."
 
-#: src/inc.c:990
+#: src/inc.c:1006
 #, c-format
 msgid "Deleting message %d"
 msgstr "Sletter meddelelse %d"
 
-#: src/inc.c:997 src/send_message.c:851
+#: src/inc.c:1013 src/send_message.c:851
 msgid "Quitting"
 msgstr "Afslutter"
 
-#: src/inc.c:1032
+#: src/inc.c:1048
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Modtager meddelelse (%d / %d) (%s / %s)"
 
-#: src/inc.c:1293 src/inc.c:1316 src/summaryview.c:4657
+#: src/inc.c:1310 src/inc.c:1334 src/summaryview.c:4656
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1375
+#: src/inc.c:1393
 #, fuzzy
 msgid "Connection failed."
 msgstr "Forbindelse mislykkedes"
 
-#: src/inc.c:1381
+#: src/inc.c:1399
 #, fuzzy
 msgid "Error occurred while processing mail."
 msgstr ""
 "Fejl ved bearbejdning af e-post:\n"
 "%s"
 
-#: src/inc.c:1386
+#: src/inc.c:1404
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -3121,30 +3121,30 @@ msgstr ""
 "Fejl ved bearbejdning af e-post:\n"
 "%s"
 
-#: src/inc.c:1392
+#: src/inc.c:1410
 msgid "No disk space left."
 msgstr "Ingen fri disk plads."
 
-#: src/inc.c:1397
+#: src/inc.c:1415
 msgid "Can't write file."
 msgstr "Kan ikke skrive til fil."
 
-#: src/inc.c:1402
+#: src/inc.c:1420
 msgid "Socket error."
 msgstr "Sokkel fejl."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
+#: src/inc.c:1426 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
 #: src/send_message.c:994
 msgid "Connection closed by the remote host."
 msgstr ""
 
-#: src/inc.c:1414
+#: src/inc.c:1432
 #, fuzzy
 msgid "Mailbox is locked."
 msgstr "postkasse er låst\n"
 
-#: src/inc.c:1418
+#: src/inc.c:1436
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3153,11 +3153,11 @@ msgstr ""
 "Mailbox er låst:\n"
 "%s"
 
-#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
+#: src/inc.c:1442 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
 msgid "Authentication failed."
 msgstr "Godkendelses fejlede."
 
-#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:977
+#: src/inc.c:1447 src/rpop3.c:528 src/send_message.c:977
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3166,16 +3166,16 @@ msgstr ""
 "Godkendelsesfejl:\n"
 "%s"
 
-#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
+#: src/inc.c:1452 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
 #, fuzzy
 msgid "Session timed out."
 msgstr "tid udløbet\n"
 
-#: src/inc.c:1475
+#: src/inc.c:1493
 msgid "Incorporation cancelled\n"
 msgstr "Hentning afbrudt\n"
 
-#: src/inc.c:1584
+#: src/inc.c:1602
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Modtager nye meddelelser fra %s til %s...\n"
@@ -3193,16 +3193,16 @@ msgstr "Indtast adgangskode"
 msgid "Protocol log"
 msgstr "Protokol log"
 
-#: src/main.c:583
+#: src/main.c:598
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Bruges som: %s [OPTION]...\n"
 
-#: src/main.c:586
+#: src/main.c:601
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresse]    åbner nyt meddelelses vindue"
 
-#: src/main.c:587
+#: src/main.c:602
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3212,23 +3212,23 @@ msgstr ""
 "                         åbn ny meddelelse med disse filer vedhæftet\n"
 "                         ."
 
-#: src/main.c:590
+#: src/main.c:605
 msgid "  --receive              receive new messages"
 msgstr "  --receive              modtager nye meddelelser"
 
-#: src/main.c:591
+#: src/main.c:606
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          modtager nye meddelelser fra alle konti"
 
-#: src/main.c:592
+#: src/main.c:607
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 send alle meddelelser i kø"
 
-#: src/main.c:593
+#: src/main.c:608
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mappe]...   viser antal meddelelser"
 
-#: src/main.c:594
+#: src/main.c:609
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3236,49 +3236,49 @@ msgstr ""
 "  --status-full [mappe]...\n"
 "                         viser status for hver mappe"
 
-#: src/main.c:596
+#: src/main.c:611
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
 
-#: src/main.c:597
+#: src/main.c:612
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:599
+#: src/main.c:614
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:601
+#: src/main.c:616
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:602
+#: src/main.c:617
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:603
+#: src/main.c:618
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 viser denne hjælp"
 
-#: src/main.c:604
+#: src/main.c:619
 msgid "  --version              output version information and exit"
 msgstr "  --version              viser version og afslutter"
 
-#: src/main.c:608
+#: src/main.c:623
 #, fuzzy, c-format
 msgid "Press any key..."
 msgstr ""
 "eller tast `y'.\n"
 "\n"
 
-#: src/main.c:743
+#: src/main.c:758
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Udgående tegnsæt"
 
-#: src/main.c:744
+#: src/main.c:759
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3292,19 +3292,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:827
+#: src/main.c:842
 msgid "Composing message exists. Really quit?"
 msgstr "Du er ved at skrive ny meddelelse. Virklig afslutte?"
 
-#: src/main.c:838
+#: src/main.c:853
 msgid "Queued messages"
 msgstr "Meddeleser i kø"
 
-#: src/main.c:839
+#: src/main.c:854
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Nogle usendte meddelelser i kø. Afslut nu?"
 
-#: src/main.c:964
+#: src/main.c:979
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3312,21 +3312,21 @@ msgstr ""
 "GnuPG er ike korrekt installeret eller i for gammel version\n"
 "OpenPGP ikke mulig."
 
-#: src/main.c:1197
+#: src/main.c:1212
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1393
+#: src/main.c:1408
 msgid "another Sylpheed is already running.\n"
 msgstr "sylpheed kører allerede.\n"
 
-#: src/main.c:1680
+#: src/main.c:1695
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Handlingsopsæt"
 
-#: src/main.c:1681
+#: src/main.c:1696
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -4026,7 +4026,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "HovedVindue: fejl i farve %d\n"
 
 #: src/mainwindow.c:1219 src/summaryview.c:2568 src/summaryview.c:2655
-#: src/summaryview.c:4222 src/summaryview.c:4351 src/summaryview.c:4739
+#: src/summaryview.c:4222 src/summaryview.c:4351 src/summaryview.c:4738
 msgid "done.\n"
 msgstr "Afsluttet.\n"
 
@@ -6518,19 +6518,19 @@ msgstr "Vedhæftet"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:422
-#: src/summaryview.c:5272
+#: src/summaryview.c:5287
 msgid "Subject"
 msgstr "Emne"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:423
-#: src/summaryview.c:5275
+#: src/summaryview.c:5290
 msgid "From"
 msgstr "Fra"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:424
-#: src/summaryview.c:5277
+#: src/summaryview.c:5292
 msgid "Date"
 msgstr "Dato"
 
@@ -6540,7 +6540,7 @@ msgid "Number"
 msgstr "Nummer"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5283
+#: src/prefs_summary_column.c:74 src/summaryview.c:5298
 #, fuzzy
 msgid "To"
 msgstr "Til:"
@@ -6974,7 +6974,7 @@ msgstr "Om"
 msgid "%s - POP3 Remote mailbox"
 msgstr "Slet mappe"
 
-#: src/rpop3.c:421 src/summaryview.c:5281
+#: src/rpop3.c:421 src/summaryview.c:5296
 msgid "No."
 msgstr "Nr."
 
@@ -7932,15 +7932,15 @@ msgstr "Fjerner tråde"
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrering..."
 
-#: src/summaryview.c:4700
+#: src/summaryview.c:4699
 msgid "filtering..."
 msgstr "filtrering..."
 
-#: src/summaryview.c:4701
+#: src/summaryview.c:4700
 msgid "Filtering..."
 msgstr "Filtrering..."
 
-#: src/summaryview.c:4746
+#: src/summaryview.c:4745
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "meddelelse %d er allerede gemt.\n"

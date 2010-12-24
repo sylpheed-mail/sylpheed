@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed  0.8.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-22 11:06+0900\n"
+"POT-Creation-Date: 2010-12-24 14:31+0900\n"
 "PO-Revision-Date: 2002-12-02 11:09+0900\n"
 "Last-Translator: Nam SungHyun <namsh@kldp.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -17,6 +17,16 @@ msgstr ""
 #: libsylph/account.c:57
 msgid "Reading all config for each account...\n"
 msgstr "각 계정에대한 모든 설정을 읽습니다...\n"
+
+#: libsylph/filter.c:1545
+#, fuzzy
+msgid "Junk mail filter (manual)"
+msgstr "폴더"
+
+#: libsylph/filter.c:1548
+#, fuzzy
+msgid "Junk mail filter"
+msgstr "폴더"
 
 #: libsylph/imap.c:537
 #, fuzzy, c-format
@@ -226,34 +236,34 @@ msgstr "iconv가 UTF-7를 %s로 변환할 수 없습니다\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv가 %s를 UTF-7로 변환할 수 없습니다\n"
 
-#: libsylph/mbox.c:49 libsylph/mbox.c:216
+#: libsylph/mbox.c:49 libsylph/mbox.c:226
 msgid "can't write to temporary file\n"
 msgstr "임시 파일에 쓸 수가 없습니다\n"
 
-#: libsylph/mbox.c:81
+#: libsylph/mbox.c:84
 #, c-format
 msgid "Getting messages from %s into %s...\n"
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: libsylph/mbox.c:93
+#: libsylph/mbox.c:96
 msgid "can't read mbox file.\n"
 msgstr "mbox 파일을 읽을 수가 없습니다.\n"
 
-#: libsylph/mbox.c:100
+#: libsylph/mbox.c:103
 #, c-format
 msgid "invalid mbox format: %s\n"
 msgstr "올바르지않은 mbox 포멧: %s\n"
 
-#: libsylph/mbox.c:107
+#: libsylph/mbox.c:110
 #, c-format
 msgid "malformed mbox: %s\n"
 msgstr "제대로되어있지않은 mbox: %s\n"
 
-#: libsylph/mbox.c:130
+#: libsylph/mbox.c:139
 msgid "can't open temporary file\n"
 msgstr "임시파일을 열 수가 없습니다\n"
 
-#: libsylph/mbox.c:181
+#: libsylph/mbox.c:191
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -262,43 +272,43 @@ msgstr ""
 "메시지 본문중 From으로 시작하는 줄이 있습니다:\n"
 "%s"
 
-#: libsylph/mbox.c:324
+#: libsylph/mbox.c:338
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "잠금 파일 %s을 만들수가 없습니다\n"
 
-#: libsylph/mbox.c:325
+#: libsylph/mbox.c:339
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "가능하면 'file'대신에 'flock'를 사용하세요.\n"
 
-#: libsylph/mbox.c:337
+#: libsylph/mbox.c:351
 #, c-format
 msgid "can't create %s\n"
 msgstr "%s를 생성할 수가 없습니다\n"
 
-#: libsylph/mbox.c:343
+#: libsylph/mbox.c:357
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "메일박스를 다른 프로세스가 읽고있습니다. 잠시 기다리세요...\n"
 
-#: libsylph/mbox.c:372
+#: libsylph/mbox.c:386
 #, c-format
 msgid "can't lock %s\n"
 msgstr "%s에 lock를 걸수가 없습니다\n"
 
-#: libsylph/mbox.c:379 libsylph/mbox.c:429
+#: libsylph/mbox.c:393 libsylph/mbox.c:443
 msgid "invalid lock type\n"
 msgstr "올바르지않은 잠금 타입\n"
 
-#: libsylph/mbox.c:415
+#: libsylph/mbox.c:429
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "%s에 lock를 풀 수가 없습니다\n"
 
-#: libsylph/mbox.c:450
+#: libsylph/mbox.c:464
 msgid "can't truncate mailbox to zero.\n"
 msgstr "메일박스의 크기를 0으로 만들수가 없습니다.\n"
 
-#: libsylph/mbox.c:475
+#: libsylph/mbox.c:489
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "메시지를 %s에서 %s로 보냅니다...\n"
@@ -317,7 +327,7 @@ msgstr "옮길 폴더와 옮겨질 폴더가 같습니다.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "메시지 %s%c%d를 %s로 복사중입니다 ...\n"
 
-#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:187
+#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:191
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -507,16 +517,6 @@ msgstr "%s을 발견\n"
 #: libsylph/prefs.c:285
 msgid "Configuration is saved.\n"
 msgstr "설정이 저장되었습니다.\n"
-
-#: libsylph/prefs_common.c:611
-#, fuzzy
-msgid "Junk mail filter (manual)"
-msgstr "폴더"
-
-#: libsylph/prefs_common.c:614
-#, fuzzy
-msgid "Junk mail filter"
-msgstr "폴더"
 
 #: libsylph/procmime.c:1293
 msgid "procmime_get_text_content(): Code conversion failed.\n"
@@ -1255,15 +1255,15 @@ msgstr "공용 주소록"
 msgid "Personal address"
 msgstr "개인 주소록"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:826
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:841
 msgid "Notice"
 msgstr "알림"
 
-#: src/alertpanel.c:155 src/main.c:963
+#: src/alertpanel.c:155 src/main.c:978
 msgid "Warning"
 msgstr "경고"
 
-#: src/alertpanel.c:168 src/inc.c:752
+#: src/alertpanel.c:168 src/inc.c:768
 msgid "Error"
 msgstr "에러"
 
@@ -1306,7 +1306,7 @@ msgstr "갈색"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5130
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5145
 msgid "None"
 msgstr "없음"
 
@@ -1880,7 +1880,7 @@ msgstr "날짜"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:507
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5279
+#: src/summaryview.c:5294
 msgid "Size"
 msgstr "크기"
 
@@ -2949,214 +2949,214 @@ msgstr "속성"
 msgid "Sylpheed: %d new messages"
 msgstr "끝났습니다 (%d개의 새로운 메시지)"
 
-#: src/inc.c:485
+#: src/inc.c:492
 #, fuzzy
 msgid "Authenticating with POP3"
 msgstr "인증"
 
-#: src/inc.c:512
+#: src/inc.c:519
 msgid "Retrieving new messages"
 msgstr "새 메시지를 가져옴"
 
-#: src/inc.c:514
+#: src/inc.c:521
 #, fuzzy
 msgid "Cancel _all"
 msgstr "취소"
 
-#: src/inc.c:560
+#: src/inc.c:567
 msgid "Standby"
 msgstr ""
 
-#: src/inc.c:708 src/inc.c:758
+#: src/inc.c:724 src/inc.c:774
 msgid "Cancelled"
 msgstr "취소되었습니다"
 
-#: src/inc.c:719
+#: src/inc.c:735
 msgid "Retrieving"
 msgstr ""
 
-#: src/inc.c:728 src/inc.c:1057
+#: src/inc.c:744 src/inc.c:1073
 #, fuzzy, c-format
 msgid "%d message(s) (%s) received"
 msgstr "완료 (%d 메시지 (%s)가 받아짐)"
 
-#: src/inc.c:732
+#: src/inc.c:748
 #, fuzzy, c-format
 msgid "no new messages"
 msgstr "새 메시지가 없습니다."
 
-#: src/inc.c:733
+#: src/inc.c:749
 #, fuzzy
 msgid "Done"
 msgstr "완료."
 
-#: src/inc.c:738
+#: src/inc.c:754
 msgid "Connection failed"
 msgstr "연결이 실패했습니다"
 
-#: src/inc.c:741
+#: src/inc.c:757
 msgid "Auth failed"
 msgstr "인증이 실패했습니다."
 
-#: src/inc.c:745
+#: src/inc.c:761
 msgid "Locked"
 msgstr ""
 
-#: src/inc.c:755
+#: src/inc.c:771
 msgid "Timeout"
 msgstr ""
 
-#: src/inc.c:802
+#: src/inc.c:818
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "끝났습니다 (%d개의 새로운 메시지)"
 
-#: src/inc.c:805
+#: src/inc.c:821
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "끝났습니다 (새 메시지 없음)"
 
-#: src/inc.c:814
+#: src/inc.c:830
 msgid "Some errors occurred while getting mail."
 msgstr "편지를 받다가 에러가 발생했습니다."
 
-#: src/inc.c:850
+#: src/inc.c:866
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "%s 계정으로부터 새 메시지를 얻습니다...\n"
 
-#: src/inc.c:854
+#: src/inc.c:870
 #, fuzzy, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "인증"
 
-#: src/inc.c:857
+#: src/inc.c:873
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: 새 메시지를 가져옴"
 
-#: src/inc.c:862
+#: src/inc.c:878
 #, fuzzy, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "POP3 서버 %s에 연결합니다..."
 
-#: src/inc.c:880
+#: src/inc.c:896
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "%s:%d POP3 서버에 연결할 수가 없습니다\n"
 
-#: src/inc.c:962 src/rpop3.c:835 src/send_message.c:833
+#: src/inc.c:978 src/rpop3.c:835 src/send_message.c:833
 #, c-format
 msgid "Authenticating..."
 msgstr "인증 중입니다..."
 
-#: src/inc.c:963
+#: src/inc.c:979
 #, fuzzy, c-format
 msgid "Retrieving messages from %s..."
 msgstr "%s로부터 %s로 메시지를 가져옵니다...\n"
 
-#: src/inc.c:968
+#: src/inc.c:984
 msgid "Getting the number of new messages (STAT)..."
 msgstr "새 메시지의 갯수를 얻는 중 (STAT)..."
 
-#: src/inc.c:972
+#: src/inc.c:988
 msgid "Getting the number of new messages (LAST)..."
 msgstr "새 메시지의 갯수를 얻는 중 (LAST)..."
 
-#: src/inc.c:976
+#: src/inc.c:992
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "새 메시지의 갯수를 얻는 중 (UIDL)..."
 
-#: src/inc.c:980
+#: src/inc.c:996
 msgid "Getting the size of messages (LIST)..."
 msgstr "메시지의 크기를 얻는 중 (LIST)..."
 
-#: src/inc.c:990
+#: src/inc.c:1006
 #, c-format
 msgid "Deleting message %d"
 msgstr "%d 메시지를 삭제하는 중"
 
-#: src/inc.c:997 src/send_message.c:851
+#: src/inc.c:1013 src/send_message.c:851
 msgid "Quitting"
 msgstr "끝마치는 중"
 
-#: src/inc.c:1032
+#: src/inc.c:1048
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "메시지 (%d / %d) 를 가져오는 중 (%s / %s)"
 
-#: src/inc.c:1293 src/inc.c:1316 src/summaryview.c:4657
+#: src/inc.c:1310 src/inc.c:1334 src/summaryview.c:4656
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
 
-#: src/inc.c:1375
+#: src/inc.c:1393
 #, fuzzy
 msgid "Connection failed."
 msgstr "연결이 실패했습니다"
 
-#: src/inc.c:1381
+#: src/inc.c:1399
 msgid "Error occurred while processing mail."
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/inc.c:1386
+#: src/inc.c:1404
 #, fuzzy, c-format
 msgid ""
 "Error occurred while processing mail:\n"
 "%s"
 msgstr "메일을 처리하는 도중 에러"
 
-#: src/inc.c:1392
+#: src/inc.c:1410
 msgid "No disk space left."
 msgstr "디스크에 남은 공간이 없슴."
 
-#: src/inc.c:1397
+#: src/inc.c:1415
 msgid "Can't write file."
 msgstr "파일에 쓸 수가 없습니다."
 
-#: src/inc.c:1402
+#: src/inc.c:1420
 msgid "Socket error."
 msgstr "소켓 에러."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1408 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
+#: src/inc.c:1426 src/rpop3.c:551 src/rpop3.c:552 src/send_message.c:777
 #: src/send_message.c:994
 msgid "Connection closed by the remote host."
 msgstr ""
 
-#: src/inc.c:1414
+#: src/inc.c:1432
 msgid "Mailbox is locked."
 msgstr "메일박스가 잠겨있습니다."
 
-#: src/inc.c:1418
+#: src/inc.c:1436
 #, fuzzy, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
 msgstr "메일박스가 잠겨있습니다."
 
-#: src/inc.c:1424 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
+#: src/inc.c:1442 src/rpop3.c:526 src/rpop3.c:531 src/send_message.c:974
 #, fuzzy
 msgid "Authentication failed."
 msgstr "인증 방법"
 
-#: src/inc.c:1429 src/rpop3.c:528 src/send_message.c:977
+#: src/inc.c:1447 src/rpop3.c:528 src/send_message.c:977
 #, fuzzy, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
 msgstr "인증 방법"
 
-#: src/inc.c:1434 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
+#: src/inc.c:1452 src/rpop3.c:556 src/rpop3.c:557 src/send_message.c:998
 msgid "Session timed out."
 msgstr ""
 
-#: src/inc.c:1475
+#: src/inc.c:1493
 msgid "Incorporation cancelled\n"
 msgstr "병합이 취소되었습니다.\n"
 
-#: src/inc.c:1584
+#: src/inc.c:1602
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s로부터 %s로 새 메시지를 가져옴...\n"
@@ -3174,16 +3174,16 @@ msgstr "암호 입력"
 msgid "Protocol log"
 msgstr "프로토콜 로그"
 
-#: src/main.c:583
+#: src/main.c:598
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "사용법: %s [옵션]...\n"
 
-#: src/main.c:586
+#: src/main.c:601
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [주소]       편집 창을 엽니다"
 
-#: src/main.c:587
+#: src/main.c:602
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3193,71 +3193,71 @@ msgstr ""
 "                         지정된 파일을 첨부해서 편지 작성 창\n"
 "                         attached"
 
-#: src/main.c:590
+#: src/main.c:605
 msgid "  --receive              receive new messages"
 msgstr "  --receive              새 메시지를 받습니다"
 
-#: src/main.c:591
+#: src/main.c:606
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          모든 계정에서 새 메시지를 받습니다"
 
-#: src/main.c:592
+#: src/main.c:607
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 큐에 있는 모든 메시지를 보냅니다"
 
-#: src/main.c:593
+#: src/main.c:608
 #, fuzzy
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:594
+#: src/main.c:609
 #, fuzzy
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status               총 메시지 갯수를 알려줍니다"
 
-#: src/main.c:596
+#: src/main.c:611
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
 
-#: src/main.c:597
+#: src/main.c:612
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:599
+#: src/main.c:614
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:601
+#: src/main.c:616
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:602
+#: src/main.c:617
 msgid "  --debug                debug mode"
 msgstr "  --debug                디버깅 모드"
 
-#: src/main.c:603
+#: src/main.c:618
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 이 도움말을 표시하고 끝마침니다"
 
-#: src/main.c:604
+#: src/main.c:619
 msgid "  --version              output version information and exit"
 msgstr "  --version              버번 정보 출력하고 종료"
 
-#: src/main.c:608
+#: src/main.c:623
 #, c-format
 msgid "Press any key..."
 msgstr ""
 
-#: src/main.c:743
+#: src/main.c:758
 #, fuzzy
 msgid "Filename encoding"
 msgstr "보내는 메일의 문자셋"
 
-#: src/main.c:744
+#: src/main.c:759
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3271,19 +3271,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:827
+#: src/main.c:842
 msgid "Composing message exists. Really quit?"
 msgstr "메시지를 편집하는 창이 있습니다. 정말 끝내시겠습니까?"
 
-#: src/main.c:838
+#: src/main.c:853
 msgid "Queued messages"
 msgstr ""
 
-#: src/main.c:839
+#: src/main.c:854
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "보내지지 않은 메시지가 큐에 있습니다. 지금 종료할까요?"
 
-#: src/main.c:964
+#: src/main.c:979
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3291,21 +3291,21 @@ msgstr ""
 "GnuPG가 적절하게 인스톨되지 않았거나 너무 오래된 버전입니다.\n"
 "OpenPGP 지원기능을 끕니다."
 
-#: src/main.c:1197
+#: src/main.c:1212
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1393
+#: src/main.c:1408
 msgid "another Sylpheed is already running.\n"
 msgstr "다른 Sylpheed가 이미 실행되고 있습니다.\n"
 
-#: src/main.c:1680
+#: src/main.c:1695
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "동작 설정을 씁니다...\n"
 
-#: src/main.c:1681
+#: src/main.c:1696
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -4006,7 +4006,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "메인 창: 색 할당 %d 실패\n"
 
 #: src/mainwindow.c:1219 src/summaryview.c:2568 src/summaryview.c:2655
-#: src/summaryview.c:4222 src/summaryview.c:4351 src/summaryview.c:4739
+#: src/summaryview.c:4222 src/summaryview.c:4351 src/summaryview.c:4738
 msgid "done.\n"
 msgstr "마침.\n"
 
@@ -6474,19 +6474,19 @@ msgstr "첨부"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:401 src/rpop3.c:422
-#: src/summaryview.c:5272
+#: src/summaryview.c:5287
 msgid "Subject"
 msgstr "제목"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:402 src/rpop3.c:423
-#: src/summaryview.c:5275
+#: src/summaryview.c:5290
 msgid "From"
 msgstr "보낸 사람"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:403 src/rpop3.c:424
-#: src/summaryview.c:5277
+#: src/summaryview.c:5292
 msgid "Date"
 msgstr "날짜"
 
@@ -6496,7 +6496,7 @@ msgid "Number"
 msgstr "숫자"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5283
+#: src/prefs_summary_column.c:74 src/summaryview.c:5298
 #, fuzzy
 msgid "To"
 msgstr "받는 사람:"
@@ -6922,7 +6922,7 @@ msgstr "이 프로그램은"
 msgid "%s - POP3 Remote mailbox"
 msgstr "메일박스를 제거합니다"
 
-#: src/rpop3.c:421 src/summaryview.c:5281
+#: src/rpop3.c:421 src/summaryview.c:5296
 msgid "No."
 msgstr "번호"
 
@@ -7872,15 +7872,15 @@ msgstr "쓰레드를 없앱니다..."
 msgid "Filtering (%d / %d)..."
 msgstr "필터링..."
 
-#: src/summaryview.c:4700
+#: src/summaryview.c:4699
 msgid "filtering..."
 msgstr "필터링..."
 
-#: src/summaryview.c:4701
+#: src/summaryview.c:4700
 msgid "Filtering..."
 msgstr "필터링..."
 
-#: src/summaryview.c:4746
+#: src/summaryview.c:4745
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "메시지 %d는 이미 캐쉬되었습니다.\n"
