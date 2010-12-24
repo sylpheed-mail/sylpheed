@@ -152,6 +152,10 @@ static struct RemoteCmd {
 			  mainwin->mainwin_cid); \
 }
 
+#ifdef G_OS_WIN32
+static void fix_font_setting		(void);
+#endif
+
 static void parse_cmd_opt		(int		 argc,
 					 char		*argv[]);
 
@@ -275,31 +279,7 @@ int main(int argc, char *argv[])
 		 TARGET_ALIAS);
 
 #ifdef G_OS_WIN32
-	{
-		gchar *path;
-		path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, COMMON_RC,
-				   NULL);
-		if (!is_file_exist(path) && conv_is_ja_locale()) {
-			const gchar *str;
-
-			debug_print("fixing prefs_common.textfont setting\n");
-			str = "MS Gothic 12";
-			if (!gtkut_font_can_load(str)) {
-				debug_print("font '%s' load failed\n", str);
-				str = "\xef\xbc\xad\xef\xbc\xb3 \xe3\x82\xb4\xe3\x82\xb7\xe3\x83\x83\xe3\x82\xaf 12";
-				if (!gtkut_font_can_load(str)) {
-					debug_print("font '%s' load failed\n", str);
-					str = NULL;
-				}
-			}
-			if (str) {
-				debug_print("font '%s' load ok\n", str);
-				g_free(prefs_common.textfont);
-				prefs_common.textfont = g_strdup(str);
-			}
-		}
-		g_free(path);
-	}
+	fix_font_setting();
 #endif
 
 	gtkut_stock_button_set_set_reverse(!prefs_common.comply_gnome_hig);
@@ -457,6 +437,43 @@ static void read_ini_file(void)
 		confdir = NULL;
 		cmd.configdir = TRUE;
 	}
+}
+
+static void fix_font_setting(void)
+{
+	const gchar *str = NULL;
+
+	if (!conv_is_ja_locale())
+		return;
+
+	if (prefs_common.textfont &&
+	    strcmp(prefs_common.textfont, DEFAULT_MESSAGE_FONT) != 0) {
+		if (gtkut_font_can_load(prefs_common.textfont)) {
+			debug_print("font '%s' load ok\n", prefs_common.textfont);
+			return;
+		}
+		debug_print("font '%s' load failed\n", prefs_common.textfont);
+	}
+
+	debug_print("fixing prefs_common.textfont setting\n");
+
+	str = "MS Gothic 12";
+
+	if (!gtkut_font_can_load(str)) {
+		debug_print("font '%s' load failed\n", str);
+		str = "\xef\xbc\xad\xef\xbc\xb3 \xe3\x82\xb4\xe3\x82\xb7\xe3\x83\x83\xe3\x82\xaf 12";
+		if (!gtkut_font_can_load(str)) {
+			debug_print("font '%s' load failed\n", str);
+			str = NULL;
+		}
+	}
+
+	if (str) {
+		debug_print("font '%s' load ok\n", str);
+		g_free(prefs_common.textfont);
+		prefs_common.textfont = g_strdup(str);
+	} else
+		g_warning("failed to load text font!");
 }
 #endif
 
