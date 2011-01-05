@@ -1383,6 +1383,7 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 			   COL_FOREGROUND, foreground,
 			   COL_BOLD, weight,
 			   -1);
+	/* g_print("folderview_update_row: %s: %s\n", item->path, name); */
 	g_free(name);
 
 	item->updated = FALSE;

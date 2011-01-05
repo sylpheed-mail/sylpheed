@@ -175,7 +175,6 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 		item = cur_account && cur_account->inbox
 			? folder_find_item_from_identifier(cur_account->inbox)
 			: folder_get_default_inbox();
-		folderview_unselect(mainwin->folderview);
 		folderview_select(mainwin->folderview, item);
 	} else if (prefs_common.scan_all_after_inc) {
 		item = mainwin->summaryview->folder_item;
@@ -651,7 +650,7 @@ static void inc_session_destroy(IncSession *session)
 static void inc_update_folder_foreach(GHashTable *table)
 {
 	procmsg_flush_folder_foreach(table);
-	folderview_update_item_foreach(table, !prefs_common.open_inbox_on_inc);
+	folderview_update_item_foreach(table, TRUE);
 }
 
 static gint inc_start(IncProgressDialog *inc_dialog)
