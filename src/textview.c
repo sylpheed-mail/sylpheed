@@ -196,6 +196,9 @@ static void textview_populate_popup		(GtkWidget	*widget,
 static void textview_popup_menu_activate_open_uri_cb
 						(GtkMenuItem	*menuitem,
 						 gpointer	 data);
+static void textview_popup_menu_activate_reply_cb
+						(GtkMenuItem	*menuitem,
+						 gpointer	 data);
 static void textview_popup_menu_activate_add_address_cb
 						(GtkMenuItem	*menuitem,
 						 gpointer	 data);
@@ -1970,6 +1973,14 @@ static gboolean textview_visibility_notify(GtkWidget *widget,
 	gtk_widget_show(menuitem);					\
 }
 
+#define ADD_MENU_SEPARATOR()						\
+{									\
+	menuitem = gtk_menu_item_new();					\
+	gtk_widget_set_sensitive(menuitem, FALSE);			\
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);		\
+	gtk_widget_show(menuitem);					\
+}
+
 static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 				    TextView *textview)
 {
@@ -2015,6 +2026,9 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
 		ADD_MENU(_("Compose _new message"),
 			 textview_popup_menu_activate_open_uri_cb);
+		ADD_MENU(_("R_eply to this address"),
+			 textview_popup_menu_activate_reply_cb);
+		ADD_MENU_SEPARATOR();
 		ADD_MENU(_("Add to address _book..."),
 			 textview_popup_menu_activate_add_address_cb);
 		ADD_MENU(_("Copy this add_ress"),
@@ -2052,6 +2066,53 @@ static void textview_popup_menu_activate_open_uri_cb(GtkMenuItem *menuitem,
 		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
 	} else if (textview_uri_security_check(textview, uri) == TRUE)
 		open_uri(uri->uri, prefs_common.uri_cmd);
+}
+
+static void textview_popup_menu_activate_reply_cb(GtkMenuItem *menuitem,
+						  gpointer data)
+{
+	RemoteURI *uri = (RemoteURI *)data;
+	TextView *textview;
+
+	g_return_if_fail(uri != NULL);
+
+	if (!uri->uri)
+		return;
+
+	textview = g_object_get_data(G_OBJECT(menuitem), "textview");
+	g_return_if_fail(textview != NULL);
+
+	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
+		MsgInfo *msginfo = textview->messageview->msginfo;
+		ComposeMode mode = COMPOSE_REPLY;
+		gchar *text;
+		GList *list;
+		Compose *compose;
+
+		g_return_if_fail(msginfo != NULL);
+
+		if (prefs_common.reply_with_quote)
+			mode |= COMPOSE_WITH_QUOTE;
+
+		text = gtkut_text_view_get_selection
+			(GTK_TEXT_VIEW(textview->text));
+		if (text && *text == '\0') {
+			g_free(text);
+			text = NULL;
+		}
+
+		compose_reply(msginfo, msginfo->folder, mode, text);
+		list = compose_get_compose_list();
+		list = g_list_last(list);
+		if (list && list->data) {
+			compose = (Compose *)list->data;
+			compose_block_modified(compose);
+			compose_entry_set(compose, uri->uri + 7,
+					  COMPOSE_ENTRY_TO);
+			compose_unblock_modified(compose);
+		}
+		g_free(text);
+	}
 }
 
 static void textview_popup_menu_activate_add_address_cb(GtkMenuItem *menuitem,
