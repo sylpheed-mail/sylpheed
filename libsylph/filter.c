@@ -368,20 +368,66 @@ gboolean filter_match_rule(FilterRule *rule, MsgInfo *msginfo, GSList *hlist,
 	if (rule->bool_op == FLT_AND) {
 		for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
 			cond = (FilterCond *)cur->data;
-			matched = filter_match_cond(cond, msginfo, hlist,
-						    fltinfo);
-			if (matched == FALSE)
-				return FALSE;
+			if (cond->type >= FLT_COND_SIZE_GREATER) {
+				matched = filter_match_cond
+					(cond, msginfo, hlist, fltinfo);
+				if (matched == FALSE)
+					return FALSE;
+			}
+		}
+
+		for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
+			cond = (FilterCond *)cur->data;
+			if (cond->type <= FLT_COND_TO_OR_CC) {
+				matched = filter_match_cond
+					(cond, msginfo, hlist, fltinfo);
+				if (matched == FALSE)
+					return FALSE;
+			}
+		}
+
+		for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
+			cond = (FilterCond *)cur->data;
+			if (cond->type == FLT_COND_BODY ||
+			    cond->type == FLT_COND_CMD_TEST) {
+				matched = filter_match_cond
+					(cond, msginfo, hlist, fltinfo);
+				if (matched == FALSE)
+					return FALSE;
+			}
 		}
 
 		return TRUE;
 	} else if (rule->bool_op == FLT_OR) {
 		for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
 			cond = (FilterCond *)cur->data;
-			matched = filter_match_cond(cond, msginfo, hlist,
-						    fltinfo);
-			if (matched == TRUE)
-				return TRUE;
+			if (cond->type >= FLT_COND_SIZE_GREATER) {
+				matched = filter_match_cond
+					(cond, msginfo, hlist, fltinfo);
+				if (matched == TRUE)
+					return TRUE;
+			}
+		}
+
+		for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
+			cond = (FilterCond *)cur->data;
+			if (cond->type <= FLT_COND_TO_OR_CC) {
+				matched = filter_match_cond
+					(cond, msginfo, hlist, fltinfo);
+				if (matched == TRUE)
+					return TRUE;
+			}
+		}
+
+		for (cur = rule->cond_list; cur != NULL; cur = cur->next) {
+			cond = (FilterCond *)cur->data;
+			if (cond->type == FLT_COND_BODY ||
+			    cond->type == FLT_COND_CMD_TEST) {
+				matched = filter_match_cond
+					(cond, msginfo, hlist, fltinfo);
+				if (matched == TRUE)
+					return TRUE;
+			}
 		}
 
 		return FALSE;
