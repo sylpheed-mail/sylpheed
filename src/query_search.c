@@ -278,6 +278,7 @@ static void query_search_create(void)
 	MENUITEM_ADD(bool_menu, menuitem, _("Match all of the following"),
 		     FLT_AND);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(bool_optmenu), bool_menu);
+	gtk_option_menu_set_history(GTK_OPTION_MENU(bool_optmenu), FLT_AND);
 
 	hbbox = gtk_hbutton_box_new();
 	gtk_widget_show(hbbox);
@@ -463,7 +464,7 @@ static FilterRule *query_search_dialog_to_rule(const gchar *name,
 {
 	const gchar *id;
 	FolderItem *item_;
-	FilterBoolOp bool_op = FLT_OR;
+	FilterBoolOp bool_op;
 	gboolean recursive;
 	gboolean case_sens;
 	GSList *cond_list;

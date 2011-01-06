@@ -273,6 +273,7 @@ static void prefs_filter_edit_create(void)
 	MENUITEM_ADD(menu, menuitem,
 		     _("If all of the following conditions match"), FLT_AND);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(bool_op_optmenu), menu);
+	gtk_option_menu_set_history(GTK_OPTION_MENU(bool_op_optmenu), FLT_AND);
 
 	cond_scrolled_win = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_show(cond_scrolled_win);
@@ -369,7 +370,7 @@ static void prefs_filter_edit_clear(void)
 static void prefs_filter_edit_rule_to_dialog(FilterRule *rule,
 					     const gchar *default_name)
 {
-	gint index = 0;
+	gint index = 1;
 	static gint count = 1;
 
 	if (rule && rule->name)
@@ -390,7 +391,7 @@ static void prefs_filter_edit_rule_to_dialog(FilterRule *rule,
 			(GTK_OPTION_MENU(rule_edit_window.bool_op_optmenu),
 			 GINT_TO_POINTER(rule->bool_op), NULL);
 		if (index < 0)
-			index = 0;
+			index = 1;
 	}
 	if (index >= 0) {
 		gtk_option_menu_set_history
@@ -1955,7 +1956,7 @@ static FilterRule *prefs_filter_edit_dialog_to_rule(void)
 	FilterRule *rule = NULL;
 	GSList *cur;
 	const gchar *rule_name;
-	FilterBoolOp bool_op = FLT_OR;
+	FilterBoolOp bool_op;
 	GSList *cond_list = NULL;
 	GSList *action_list = NULL;
 	GtkWidget *bool_op_menuitem;
