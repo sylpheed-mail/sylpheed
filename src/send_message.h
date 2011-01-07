@@ -45,8 +45,6 @@ gint send_message		(const gchar	*file,
 				 GSList		*to_list);
 
 QueueInfo *send_get_queue_info	(const gchar	*file);
-gint send_get_queue_contents	(QueueInfo	*qinfo,
-				 const gchar	*dest);
 void send_queue_info_free	(QueueInfo	*qinfo);
 gint send_message_queue		(QueueInfo	*qinfo);
 gint send_message_queue_all	(FolderItem	*queue,

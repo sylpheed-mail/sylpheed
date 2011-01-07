@@ -213,7 +213,7 @@ QueueInfo *send_get_queue_info(const gchar *file)
 	return qinfo;
 }
 
-gint send_get_queue_contents(QueueInfo *qinfo, const gchar *dest)
+static gint send_get_queue_contents(QueueInfo *qinfo, const gchar *dest)
 {
 	FILE *fp;
 	glong pos;
@@ -240,6 +240,42 @@ gint send_get_queue_contents(QueueInfo *qinfo, const gchar *dest)
 	}
 
 	fseek(qinfo->fp, pos, SEEK_SET);
+
+	return 0;
+}
+
+static gint send_save_queued_message(QueueInfo *qinfo, gboolean filter_msgs)
+{
+	FolderItem *outbox;
+	gboolean drop_done = FALSE;
+	gchar tmp[MAXPATHLEN + 1];
+
+	g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
+		   get_rc_dir(), G_DIR_SEPARATOR, g_random_int());
+
+	if (send_get_queue_contents(qinfo, tmp) < 0)
+		return -1;
+
+	if (filter_msgs) {
+		FilterInfo *fltinfo;
+
+		fltinfo = filter_info_new();
+		fltinfo->account = qinfo->ac;
+		fltinfo->flags.perm_flags = 0;
+		fltinfo->flags.tmp_flags = MSG_RECEIVED;
+
+		filter_apply(prefs_common.fltlist, tmp, fltinfo);
+
+		drop_done = fltinfo->drop_done;
+		filter_info_free(fltinfo);
+	}
+
+	if (!drop_done) {
+		outbox = account_get_special_folder(qinfo->ac, F_OUTBOX);
+		procmsg_save_to_outbox(outbox, tmp);
+	}
+
+	g_unlink(tmp);
 
 	return 0;
 }
@@ -341,7 +377,6 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 		gchar *file;
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		QueueInfo *qinfo;
-		gchar tmp[MAXPATHLEN + 1];
 
 		file = procmsg_get_message_file(msginfo);
 		if (!file)
@@ -362,37 +397,8 @@ gint send_message_queue_all(FolderItem *queue, gboolean save_msgs,
 		else if (qinfo->forward_targets)
 			send_message_set_forward_flags(qinfo->forward_targets);
 
-		g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.out.%08x",
-			   get_rc_dir(), G_DIR_SEPARATOR, g_random_int());
-
-		if (send_get_queue_contents(qinfo, tmp) == 0) {
-			if (save_msgs) {
-				FolderItem *outbox;
-				gboolean drop_done = FALSE;
-
-				if (filter_msgs) {
-					FilterInfo *fltinfo;
-
-					fltinfo = filter_info_new();
-					fltinfo->account = qinfo->ac;
-					fltinfo->flags.perm_flags = 0;
-					fltinfo->flags.tmp_flags = MSG_RECEIVED;
-
-					filter_apply(prefs_common.fltlist, tmp,
-						     fltinfo);
-
-					drop_done = fltinfo->drop_done;
-					filter_info_free(fltinfo);
-				}
-
-				if (!drop_done) {
-					outbox = account_get_special_folder
-						(qinfo->ac, F_OUTBOX);
-					procmsg_save_to_outbox(outbox, tmp);
-				}
-			}
-			g_unlink(tmp);
-		}
+		if (save_msgs)
+			send_save_queued_message(qinfo, filter_msgs);
 
 		send_queue_info_free(qinfo);
 		g_free(file);
