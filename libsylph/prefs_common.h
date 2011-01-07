@@ -324,6 +324,7 @@ struct _PrefsCommon
 	gboolean always_mark_read_on_show_msg; /* Interface */
 
 	gboolean always_add_address_only;    /* Compose */
+	gboolean show_send_dialog;           /* Send */
 };
 
 extern PrefsCommon prefs_common;

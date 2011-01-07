@@ -80,6 +80,7 @@ static struct Send {
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
 	GtkWidget *checkbtn_recipients_autoreg;
+	GtkWidget *checkbtn_show_send_dialog;
 
 	GtkWidget *optmenu_encoding_method;
 	GtkWidget *optmenu_mime_fencoding_method;
@@ -317,6 +318,8 @@ static PrefsUIData ui_data[] = {
 	{"filter_sent_message", &p_send.checkbtn_filter_sent,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"recipients_autoreg", &p_send.checkbtn_recipients_autoreg,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"show_send_dialog", &p_send.checkbtn_show_send_dialog,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	{"encoding_method", &p_send.optmenu_encoding_method,
@@ -942,6 +945,8 @@ static void prefs_send_create(void)
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
 	GtkWidget *checkbtn_recipients_autoreg;
+	GtkWidget *vbox3;
+	GtkWidget *checkbtn_show_send_dialog;
 	GtkWidget *label;
 	GtkWidget *checkbtn_check_attach;
 	GtkWidget *entry_check_attach_str;
@@ -979,6 +984,9 @@ static void prefs_send_create(void)
 	SET_TOGGLE_SENSITIVITY (checkbtn_savemsg, checkbtn_filter_sent);
 	PACK_CHECK_BUTTON (vbox2, checkbtn_recipients_autoreg,
 			   _("Automatically add recipients to address book"));
+
+	PACK_CHECK_BUTTON (vbox2, checkbtn_show_send_dialog,
+			   _("Display send dialog"));
 
 	vbox2 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox2);
@@ -1092,6 +1100,7 @@ static void prefs_send_create(void)
 	p_send.checkbtn_savemsg = checkbtn_savemsg;
 	p_send.checkbtn_filter_sent = checkbtn_filter_sent;
 	p_send.checkbtn_recipients_autoreg = checkbtn_recipients_autoreg;
+	p_send.checkbtn_show_send_dialog = checkbtn_show_send_dialog;
 
 	p_send.optmenu_encoding_method = optmenu_trencoding;
 	p_send.optmenu_mime_fencoding_method = optmenu_fencoding;

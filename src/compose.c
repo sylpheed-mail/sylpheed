@@ -7177,7 +7177,12 @@ static void compose_send_cb(gpointer data, guint action, GtkWidget *widget)
 	Compose *compose = (Compose *)data;
 	gint val;
 
+	if (compose->lock_count > 0)
+		return;
+
+	gtk_widget_set_sensitive(compose->vbox, FALSE);
 	val = compose_send(compose);
+	gtk_widget_set_sensitive(compose->vbox, TRUE);
 
 	if (val == 0)
 		compose_destroy(compose);
@@ -7388,6 +7393,9 @@ static void compose_close_cb(gpointer data, guint action, GtkWidget *widget)
 {
 	Compose *compose = (Compose *)data;
 	AlertValue val;
+
+	if (compose->lock_count > 0)
+		return;
 
 	if (compose->exteditor_pid != 0) {
 		if (!compose_ext_editor_kill(compose))

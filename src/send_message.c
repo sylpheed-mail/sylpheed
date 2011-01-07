@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2010 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,7 @@ struct _SendProgressDialog
 {
 	ProgressDialog *dialog;
 	Session *session;
+	gboolean show_dialog;
 	gboolean cancelled;
 };
 
@@ -753,9 +754,11 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 
 	if (session_connect_full(session, ac_prefs->smtp_server, port,
 				 socks_info) < 0) {
-		manage_window_focus_in(dialog->dialog->window, NULL, NULL);
+		if (dialog->show_dialog)
+			manage_window_focus_in(dialog->dialog->window, NULL, NULL);
 		send_put_error(session);
-		manage_window_focus_out(dialog->dialog->window, NULL, NULL);
+		if (dialog->show_dialog)
+			manage_window_focus_out(dialog->dialog->window, NULL, NULL);
 		session_destroy(session);
 		send_progress_dialog_destroy(dialog);
 		inc_unlock();
@@ -797,9 +800,11 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 		ret = -1;
 
 	if (ret == -1) {
-		manage_window_focus_in(dialog->dialog->window, NULL, NULL);
+		if (dialog->show_dialog)
+			manage_window_focus_in(dialog->dialog->window, NULL, NULL);
 		send_put_error(session);
-		manage_window_focus_out(dialog->dialog->window, NULL, NULL);
+		if (dialog->show_dialog)
+			manage_window_focus_out(dialog->dialog->window, NULL, NULL);
 	}
 
 	session_destroy(session);
@@ -828,12 +833,14 @@ static gint send_recv_message(Session *session, const gchar *msg, gpointer data)
 	case SMTP_HELO:
 		g_snprintf(buf, sizeof(buf), _("Sending HELO..."));
 		state_str = _("Authenticating");
-		statusbar_print_all(_("Sending message..."));
+		statusbar_print_all(_("Sending message via %s:%d..."),
+				    session->server, session->port);
 		break;
 	case SMTP_EHLO:
 		g_snprintf(buf, sizeof(buf), _("Sending EHLO..."));
 		state_str = _("Authenticating");
-		statusbar_print_all(_("Sending message..."));
+		statusbar_print_all(_("Sending message via %s:%d..."),
+				    session->server, session->port);
 		break;
 	case SMTP_AUTH:
 		g_snprintf(buf, sizeof(buf), _("Authenticating..."));
@@ -933,7 +940,10 @@ static SendProgressDialog *send_progress_dialog_create(void)
 
 	progress_dialog_set_value(progress, 0.0);
 
-	gtk_widget_show_now(progress->window);
+	if (prefs_common.show_send_dialog) {
+		dialog->show_dialog = TRUE;
+		gtk_widget_show_now(progress->window);
+	}
 
 	dialog->dialog = progress;
 
