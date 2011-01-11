@@ -7,4 +7,6 @@ export C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/include
   --enable-oniguruma --enable-threads --disable-ipv6 \
   'CC=gcc -mtune=pentium3' CFLAGS=-O3 \
   && make \
-  && make install-strip
+  && make install-strip \
+  && (cd plugin/attachment_tool; make install-plugin) \
+  && strip $HOME/dist/lib/sylpheed/plugins/attachment_tool.dll
