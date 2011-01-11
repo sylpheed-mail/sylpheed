@@ -740,6 +740,11 @@ void update_check_set_check_url(const gchar *url)
 	if (check_url)
 		g_free(check_url);
 	check_url = g_strdup(url);
+
+	if (url)
+		debug_print("update_check_set_check_url: check URL was set to: %s\n", url);
+	else
+		debug_print("update_check_set_check_url: check URL was unset.\n");
 }
 
 const gchar *update_check_get_check_url(void)
@@ -752,6 +757,11 @@ void update_check_set_download_url(const gchar *url)
 	if (download_url)
 		g_free(download_url);
 	download_url = g_strdup(url);
+
+	if (url)
+		debug_print("update_check_set_download_url: download URL was set to: %s\n", url);
+	else
+		debug_print("update_check_set_download_url: download URL was unset.\n");
 }
 
 const gchar *update_check_get_download_url(void)
