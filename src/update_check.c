@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -223,6 +223,32 @@ finish:
 #endif /* USE_UPDATE_CHECK_PLUGIN */
 #endif /* G_OS_WIN32 */
 
+#ifdef G_OS_WIN32
+static void set_default_download_url(void)
+{
+	gchar buf[1024];
+	const gchar *os;
+
+#ifdef G_OS_WIN32
+	os = "win";
+#else
+	if (strstr(TARGET_ALIAS, "linux"))
+		os = "linux";
+	else
+		os = "other";
+#endif
+
+#ifdef DEVEL_VERSION
+	g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=%s&dev=t",
+		   DOWNLOAD_URI, VERSION, os);
+#else
+	g_snprintf(buf, sizeof(buf), "%s?ver=%s&os=%s",
+		   DOWNLOAD_URI, VERSION, os);
+#endif
+	update_check_set_download_url(buf);
+}
+#endif
+
 static void update_dialog(const gchar *new_ver, const gchar *disp_ver,
 			  gboolean manual)
 {
@@ -256,7 +282,7 @@ static void update_dialog(const gchar *new_ver, const gchar *disp_ver,
 	if ((val & G_ALERT_VALUE_MASK) == G_ALERTDEFAULT) {
 #ifdef G_OS_WIN32
 		if (!download_url)
-			update_check_set_download_url(DOWNLOAD_URI);
+			set_default_download_url();
 		if (!spawn_update_manager())
 			open_uri(jump_url, prefs_common.uri_cmd);
 #else
