@@ -3,10 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-07 15:42+0900\n"
-"PO-Revision-Date: 2008-06-17 22:25+0100\n"
+"POT-Creation-Date: 2011-01-13 14:02+0900\n"
+"PO-Revision-Date: 2011-01-07 12:00+0100\n"
 "Last-Translator: Jan Stępień <jstepien@users.sourceforge.net>\n"
-"Language-Team: POLISH <pl@li.org>\n"
+"Language-Team: Jan Stępień <jstepien@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,9 +34,8 @@ msgid "IMAP4 server disables LOGIN.\n"
 msgstr ""
 
 #: libsylph/imap.c:659
-#, fuzzy
 msgid "Could not establish IMAP connection.\n"
-msgstr "Nie można ustanowić sesji IMAP4 z: %s:%d\n"
+msgstr "Nie udało się ustanowić połączenia IMAP.\n"
 
 #: libsylph/imap.c:678
 #, c-format
@@ -52,9 +51,9 @@ msgid "(retrieving FLAGS...)"
 msgstr ""
 
 #: libsylph/imap.c:1269
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %u"
-msgstr "Pobieranie wiadomości %d"
+msgstr "Pobieranie wiadomości %u"
 
 #: libsylph/imap.c:1391
 #, c-format
@@ -453,7 +452,7 @@ msgstr "Błąd protokołu POP3\n"
 #: libsylph/pop.c:270
 #, c-format
 msgid "invalid UIDL response: %s\n"
-msgstr ""
+msgstr "niepoprawna odpowiedź UIDL: %s\n"
 
 #: libsylph/pop.c:647
 #, c-format
@@ -659,14 +658,12 @@ msgid "Opening account edit window...\n"
 msgstr "Otwieranie okna edycji konta...\n"
 
 #: src/account_dialog.c:193
-#, fuzzy
 msgid "Creating folder tree. Please wait..."
-msgstr "Tworzenie widoku katalogów...\n"
+msgstr "Tworzenie drzewa katalogów. Proszę czekać..."
 
 #: src/account_dialog.c:195
-#, fuzzy
 msgid "Creation of the folder tree failed."
-msgstr "Błąd podczas odbudowywania drzewa katalogów."
+msgstr "Błąd podczas tworzenia drzewa katalogów."
 
 #: src/account_dialog.c:295
 msgid "Creating account edit window...\n"
@@ -835,9 +832,8 @@ msgid "Select Address Book Folder"
 msgstr "Wybierz katalog książki adresowej"
 
 #: src/addressadd.c:311 src/addressbook.c:1045 src/addressbook.c:3489
-#, fuzzy
 msgid "Auto-registered address"
-msgstr "Zarejestrowane szablony"
+msgstr "Adresy zebrane automatycznie"
 
 #: src/addressbook.c:398 src/compose.c:578 src/mainwindow.c:550
 #: src/messageview.c:149
@@ -1028,9 +1024,8 @@ msgid "E-Mail address"
 msgstr "Adres e-mail"
 
 #: src/addressbook.c:846 src/quick_search.c:128
-#, fuzzy
 msgid "Search:"
-msgstr " Szukaj "
+msgstr "Szukaj: "
 
 #: src/addressbook.c:884 src/compose.c:3291 src/headerview.c:55
 #: src/prefs_folder_item.c:340 src/prefs_template.c:197
@@ -1063,9 +1058,8 @@ msgid "Add"
 msgstr "Dodaj"
 
 #: src/addressbook.c:919 src/prefs_toolbar.c:80
-#, fuzzy
 msgid "Search"
-msgstr " Szukaj "
+msgstr "Szukaj"
 
 #: src/addressbook.c:922
 msgid "_Close"
@@ -1762,7 +1756,6 @@ msgid "Line length limit"
 msgstr "Limit długości linii"
 
 #: src/compose.c:4046
-#, fuzzy
 msgid "Encrypting with Bcc"
 msgstr "Szyfrowanie z odbiorcami ukrytej kopii"
 
@@ -1784,7 +1777,7 @@ msgstr ""
 
 #: src/compose.c:4242
 msgid "can't remove the old message\n"
-msgstr "Nie można usunąć starej wiadomości\n"
+msgstr "nie można usunąć starej wiadomości\n"
 
 #: src/compose.c:4260
 msgid "queueing message...\n"
@@ -1826,9 +1819,8 @@ msgid "PGP Encrypt"
 msgstr "Szyfrowanie PGP"
 
 #: src/compose.c:5310 src/mimeview.c:209
-#, fuzzy
 msgid "Data type"
-msgstr "Data"
+msgstr "Typ danych"
 
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:508
@@ -1868,9 +1860,8 @@ msgid "File name"
 msgstr "Nazwa pliku"
 
 #: src/compose.c:6628
-#, fuzzy
 msgid "File not exist."
-msgstr "%s: brak pliku\n"
+msgstr "Plik nie istnieje."
 
 #: src/compose.c:6638 src/mimeview.c:1220
 msgid "Opening executable file"
@@ -2228,43 +2219,37 @@ msgid "Add New vCard Entry"
 msgstr "Dodaj nowy wpis VCard"
 
 #: src/export.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s ..."
-msgstr "Przeszukiwanie katalogu %s ..."
+msgstr "Eksportowanie %s ..."
 
 #: src/export.c:204
-#, fuzzy
 msgid "Exporting"
-msgstr "Eksport"
+msgstr "Eksportowanie"
 
 #: src/export.c:229
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "Wystąpił błąd podczas publikowania\n"
+msgstr "Wystąpił błąd podczas eksportowania"
 
 #: src/export.c:312
 msgid "Export"
 msgstr "Eksport"
 
 #: src/export.c:331 src/export.c:416
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "Określ docelowy plik ze skrzynką oraz docelowy katalog."
+msgstr "Wskaż katalog źródłowy i plik docelowy."
 
 #: src/export.c:341 src/import.c:621
-#, fuzzy
 msgid "File format:"
-msgstr "Format daty"
+msgstr "Format pliku:"
 
 #: src/export.c:346
-#, fuzzy
 msgid "Source folder:"
 msgstr "Katalog źródłowy:"
 
 #: src/export.c:351
-#, fuzzy
 msgid "Destination:"
-msgstr "Katalog docelowy:"
+msgstr "Plik docelowy:"
 
 #: src/export.c:361 src/import.c:641
 msgid "UNIX mbox"
@@ -2272,11 +2257,11 @@ msgstr ""
 
 #: src/export.c:364
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (numer + .eml)"
 
 #: src/export.c:367
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (tylko numery)"
 
 #: src/export.c:381 src/export.c:387 src/import.c:661 src/import.c:667
 #: src/prefs_account_dialog.c:994
@@ -2284,19 +2269,16 @@ msgid " Select... "
 msgstr " Wybierz... "
 
 #: src/export.c:419
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "Określ docelowy plik ze skrzynką oraz docelowy katalog."
+msgstr "Określ katalog źródłowy i katalog docelowy."
 
 #: src/export.c:445
-#, fuzzy
 msgid "Select destination file"
-msgstr "Wybierz plik eksportu"
+msgstr "Wybierz plik docelowy"
 
 #: src/export.c:449
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Wybierz plik eksportu"
+msgstr "Wybierz katalog docelowy"
 
 #: src/filesel.c:158
 msgid "Save as"
@@ -2576,14 +2558,12 @@ msgid "Delete all messages in the trash folder?"
 msgstr "Czy usunąć wszystkie wiadomości ze śmietnika?"
 
 #: src/folderview.c:2765
-#, fuzzy
 msgid "Empty junk"
-msgstr "Niechciana"
+msgstr "Usuń niechcianą pocztę"
 
 #: src/folderview.c:2766
-#, fuzzy
 msgid "Delete all messages in the junk folder?"
-msgstr "Czy usunąć wszystkie wiadomości ze śmietnika?"
+msgstr "Czy usunąć wszystkie wiadomości z katalogu z niechcianą pocztą?"
 
 #: src/folderview.c:2808
 #, c-format
@@ -2647,9 +2627,8 @@ msgid "Can't load the image."
 msgstr "Nie można załadować obrazu."
 
 #: src/import.c:207
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "Plik %s nie istnieje."
+msgstr "Plik źródłowy nie istnieje."
 
 #: src/import.c:218
 #, fuzzy
@@ -2678,7 +2657,7 @@ msgstr "Wystąpił błąd podczas publikowania\n"
 
 #: src/import.c:509
 msgid "Importing Outlook Express folders"
-msgstr ""
+msgstr "Importowanie folderów Outlook Express"
 
 #: src/import.c:544
 #, fuzzy, c-format
@@ -3169,7 +3148,7 @@ msgstr ""
 
 #: src/main.c:614
 msgid "  --ipcport portnum      specify port for IPC remote commands"
-msgstr ""
+msgstr "  --ipcport portnum      podaj port dla zdalnych połączeń IPC"
 
 #: src/main.c:616
 msgid "  --exit                 exit Sylpheed"
@@ -3233,7 +3212,7 @@ msgstr ""
 
 #: src/main.c:1212
 msgid "Loading plug-ins..."
-msgstr ""
+msgstr "Ładowanie wtyczek..."
 
 #. remote command mode
 #: src/main.c:1408
@@ -4303,7 +4282,7 @@ msgstr ""
 
 #: src/plugin_manager.c:129
 msgid "Plug-in manager"
-msgstr ""
+msgstr "Menedżer wtyczek"
 
 #: src/plugin_manager.c:140
 msgid "Check for _update"
@@ -4321,7 +4300,7 @@ msgstr "nieznany"
 
 #: src/plugin_manager.c:220
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: src/plugin_manager.c:221
 #, fuzzy
@@ -4378,7 +4357,7 @@ msgstr "SSL"
 
 #: src/prefs_account_dialog.c:605
 msgid "Proxy"
-msgstr ""
+msgstr "Serwer pośredniczący"
 
 #: src/prefs_account_dialog.c:607 src/prefs_common_dialog.c:2497
 msgid "Advanced"
@@ -4599,7 +4578,7 @@ msgstr "Wyjście polecenia"
 
 #: src/prefs_account_dialog.c:1344
 msgid "Put signature before quote (not recommended)"
-msgstr ""
+msgstr "Wstaw podpis przed cytatem (nie zalecane)"
 
 #: src/prefs_account_dialog.c:1356 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
@@ -4704,7 +4683,7 @@ msgstr "(Wyłącz to, jeśli masz problemy z połączeniem SSL)"
 
 #: src/prefs_account_dialog.c:1778
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Korzystaj z pośrednika SOCKS"
 
 #: src/prefs_account_dialog.c:1802
 #, fuzzy
@@ -5562,7 +5541,7 @@ msgstr ""
 
 #: src/prefs_common_dialog.c:2631
 msgid "Disable"
-msgstr ""
+msgstr "Wyłącz"
 
 #: src/prefs_common_dialog.c:2638
 msgid "On exit"
@@ -5614,7 +5593,7 @@ msgstr "Używanie zewnętrznego programu do wysyłania"
 
 #: src/prefs_common_dialog.c:2872
 msgid "Update check requires 'curl' command."
-msgstr ""
+msgstr "Sprawdzanie aktualizacji wymaga polecenia 'curl'"
 
 #: src/prefs_common_dialog.c:2883
 #, fuzzy
@@ -5623,11 +5602,12 @@ msgstr "Włącz sprawdzanie pisowni"
 
 #: src/prefs_common_dialog.c:2885
 msgid "Use HTTP proxy"
-msgstr ""
+msgstr "Korzystaj z pośrednika HTTP"
 
 #: src/prefs_common_dialog.c:2887
+#, fuzzy
 msgid "HTTP proxy host (hostname:port):"
-msgstr ""
+msgstr "Adres pośrednika HTTP (adres:port)"
 
 #: src/prefs_common_dialog.c:2928
 #, fuzzy
@@ -6452,7 +6432,7 @@ msgstr "Nazwa szablonu"
 
 #: src/prefs_template.c:434
 msgid "Current modification is not applied. Finish without saving it?"
-msgstr ""
+msgstr "Bieżące zmiany nie zostały zastosowane. Zakończyć bez zapisywania?"
 
 #: src/prefs_template.c:452
 #, fuzzy
@@ -6914,6 +6894,8 @@ msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
 msgstr ""
+"Na pewno skasować wybrane wiadomości z serwera?\n"
+"Tej operacji nie da się cofnąć."
 
 #: src/select-keys.c:96
 #, c-format
@@ -7034,12 +7016,12 @@ msgstr "Wysyłanie DATA..."
 #: src/send_message.c:897
 #, c-format
 msgid "Sending message (%d / %d bytes)"
-msgstr "Wysyłanie wiadomości (%d / %d)"
+msgstr "Wysyłanie wiadomości (%d / %d bajtów)"
 
 #: src/send_message.c:902
 #, c-format
 msgid "%d / %d bytes"
-msgstr ""
+msgstr "%d / %d bajtów"
 
 #: src/send_message.c:933
 msgid "Sending message"
@@ -7059,14 +7041,13 @@ msgstr ""
 ".%s"
 
 #: src/send_message.c:1001
-#, fuzzy
 msgid "Can't connect to SMTP server."
-msgstr "Nie można połączyć się z serwerem NNTP: %s:%d\n"
+msgstr "Nie udało się połączyć z serwerem SMTP."
 
 #: src/send_message.c:1003
-#, fuzzy, c-format
+#, c-format
 msgid "Can't connect to SMTP server: %s:%d"
-msgstr "Nie można połączyć się z serwerem NNTP: %s:%d\n"
+msgstr "Nie udało się połączyć z serwerem SMTP: %s:%d"
 
 #: src/setup.c:123 src/setup.c:147
 msgid "Mailbox setting"
@@ -7079,13 +7060,16 @@ msgstr ""
 #: src/setup.c:180
 #, fuzzy
 msgid "Create mailbox at the following default location:"
-msgstr "Podejmij działania:"
+msgstr "Utworzyć skrzynkę w poniższej domyślnej lokalizacji?"
 
 #: src/setup.c:200
+#, fuzzy
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
+"Utwórz skrzynkę w poniższej lokalizacji(podaj nazwę katalogu lub pełną "
+"ścieżkę do katalogu)"
 
 #: src/setup.c:218
 msgid ""
@@ -7100,11 +7084,11 @@ msgstr "Anulowano"
 
 #: src/setup.c:241
 msgid "Continue without creating mailbox?"
-msgstr ""
+msgstr "Kontynuować bez tworzenia skrzynki?"
 
 #: src/setup.c:251
 msgid "Please input folder name or full folder path."
-msgstr ""
+msgstr "Podaj nazwę katalogu lub pełną ścieżkę do katalogu"
 
 #: src/setup.c:260
 #, fuzzy, c-format
@@ -7129,43 +7113,37 @@ msgstr "Nie ustawiono nazwy w menu."
 
 #: src/setup.c:532 src/setup.c:547 src/setup.c:583 src/setup.c:605
 #: src/setup.c:826 src/setup.c:908
-#, fuzzy
 msgid "POP3 server:"
-msgstr "Serwer LDAP"
+msgstr "Serwer POP3:"
 
 #: src/setup.c:538 src/setup.c:557 src/setup.c:596 src/setup.c:613
-#, fuzzy
 msgid "IMAP4 server:"
-msgstr "Serwer LDAP"
+msgstr "Serwer IMAP4:"
 
 #: src/setup.c:672 src/setup.c:708
 #, fuzzy
 msgid "New account setup"
-msgstr "Ustawienia konta"
+msgstr "Ustawienia nowego konta"
 
 #: src/setup.c:727
 msgid "This dialog will make initial setup of new mail account."
 msgstr ""
 
 #: src/setup.c:750
-#, fuzzy
 msgid "Select account type:"
-msgstr "Usuń konto"
+msgstr "Wybierz typ konta:"
 
 #: src/setup.c:773
-#, fuzzy
 msgid "Input your name and mail address:"
-msgstr "Wybieranie klucz poprzez swój adres e-mail"
+msgstr "Podaj swoje imię i adres e-mail"
 
 #: src/setup.c:782 src/setup.c:896
-#, fuzzy
 msgid "Display name:"
-msgstr "Wyświetlana nazwa"
+msgstr "Wyświetlana nazwa:"
 
 #: src/setup.c:786 src/setup.c:900
-#, fuzzy
 msgid "E-mail address:"
-msgstr "Adres e-mail"
+msgstr "Adres e-mail:"
 
 #: src/setup.c:802
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
@@ -7173,31 +7151,27 @@ msgstr ""
 
 #: src/setup.c:813
 msgid "Input user ID and mail server:"
-msgstr ""
+msgstr "Podaj identyfikator użytkownika i serwer pocztowy:"
 
 #: src/setup.c:822 src/setup.c:904
-#, fuzzy
 msgid "User ID:"
-msgstr "Identyfikator użytkownika"
+msgstr "Identyfikator użytkownika:"
 
 #: src/setup.c:831 src/setup.c:912
-#, fuzzy
 msgid "SMTP server:"
-msgstr "Serwer SMTP (dla wysyłania)"
+msgstr "Serwer SMTP:"
 
 #: src/setup.c:856 src/setup.c:868
-#, fuzzy
 msgid "Use SSL"
-msgstr "SSL"
+msgstr "Używaj SSL"
 
 #: src/setup.c:864
-#, fuzzy
 msgid "Use SMTP authentication"
-msgstr "Uwierzytelnianie"
+msgstr "Używaj uwierzytelniania SMTP"
 
 #: src/setup.c:881
 msgid "Your new mail account has been set up with the following settings."
-msgstr ""
+msgstr "Twoje nowe konto zostało utworzone z poniższymi ustawieniami."
 
 #: src/setup.c:884
 msgid ""
@@ -7207,9 +7181,8 @@ msgid ""
 msgstr ""
 
 #: src/setup.c:1135
-#, fuzzy
 msgid "Importing mail data"
-msgstr "Importowanie pliku:"
+msgstr "Importowanie danych pocztowych"
 
 #: src/setup.c:1135
 msgid ""
@@ -7237,7 +7210,7 @@ msgstr "Książka adresowa"
 #: src/setup.c:1238
 msgid ""
 "The Windows address book was found. Do you want to import the address book?"
-msgstr ""
+msgstr "Znaleziono książkę adresową Windows. Czy chciałbyś ją zaimportować?"
 
 #: src/setup.c:1275
 #, fuzzy
@@ -7377,30 +7350,28 @@ msgstr "Wygasa po"
 #: src/sslmanager.c:108
 #, c-format
 msgid "SHA1 fingerprint: %s\n"
-msgstr ""
+msgstr "Skrót SHA1: %s\n"
 
 #: src/sslmanager.c:109
 #, c-format
 msgid "MD5 fingerprint: %s\n"
-msgstr ""
+msgstr "Skrót MD5: %s\n"
 
 #: src/sslmanager.c:111
 msgid "Do you accept this certificate?"
-msgstr ""
+msgstr "Czy akceptujesz ten certyfikat?"
 
 #: src/sslmanager.c:186 src/sslmanager.c:194
-#, fuzzy
 msgid "_Reject"
-msgstr "Przekieruj"
+msgstr "_Odrzuć"
 
 #: src/sslmanager.c:187 src/sslmanager.c:193
 msgid "_Temporarily accept"
 msgstr "Zaakceptuj _tymczasowo"
 
 #: src/sslmanager.c:188 src/sslmanager.c:192
-#, fuzzy
 msgid "Always _accept"
-msgstr "Zawsze"
+msgstr "_Zawsze akceptuj"
 
 #: src/subscribedialog.c:203
 msgid "Subscribe to newsgroup"
@@ -7408,7 +7379,7 @@ msgstr "Subskrybuj grupę dyskusyjną"
 
 #: src/subscribedialog.c:219
 msgid "Select newsgroups to subscribe."
-msgstr "Wybierz grupy do subskrybcji."
+msgstr "Wybierz grupy do subskrypcji."
 
 #: src/subscribedialog.c:225
 msgid "Find groups:"
@@ -7933,45 +7904,46 @@ msgstr "Koniec programu"
 msgid "Sylpheed"
 msgstr "Dawny Sylpheed"
 
-#: src/update_check.c:238 src/update_check.c:243 src/update_check.c:248
+#: src/update_check.c:264 src/update_check.c:269 src/update_check.c:274
 msgid ""
 "A newer version of Sylpheed has been found.\n"
 "Upgrade now?"
 msgstr ""
+"Znaleziono nowszą wersję Sylpheed.\n"
+"Czy dokonać aktualizacji?"
 
-#: src/update_check.c:251 src/update_check.c:546
-#, fuzzy
+#: src/update_check.c:277 src/update_check.c:572
 msgid "New version found"
-msgstr "Nie znaleziono podpisu"
+msgstr "Znaleziono nową wersję"
 
-#: src/update_check.c:373 src/update_check.c:658
-#, fuzzy
+#: src/update_check.c:399 src/update_check.c:684
 msgid "Information"
-msgstr "Informacje o serwerze"
+msgstr "Informacje"
 
-#: src/update_check.c:374
-#, fuzzy
+#: src/update_check.c:400
 msgid "Sylpheed is already the latest version."
-msgstr "Jest już uruchomiona kopia programu Sylpheed.\n"
+msgstr "Sylpheed jest w najnowszej wersji."
 
-#: src/update_check.c:377
+#: src/update_check.c:403
 msgid "Couldn't get the version information."
-msgstr ""
+msgstr "Nie udało się pobrać informacji o wersji."
 
-#: src/update_check.c:599
+#: src/update_check.c:625
 msgid ""
 "Newer version of plug-ins have been found.\n"
 "Upgrade now?\n"
 msgstr ""
+"Znaleziono nowsze wersje wtyczek.\n"
+"Czy dokonać aktualizacji?\n"
 
-#: src/update_check.c:659
+#: src/update_check.c:685
 #, fuzzy
 msgid "All Sylpheed plug-ins are already the latest version."
-msgstr "Jest już uruchomiona kopia programu Sylpheed.\n"
+msgstr "Wszystkie wtyczki są w najnowszej wersji."
 
-#: src/update_check.c:662
+#: src/update_check.c:688
 msgid "Couldn't get the version information of plug-ins."
-msgstr ""
+msgstr "Nie udało się pobrać informacji o wersjach wtyczek."
 
 #~ msgid "MIME Type"
 #~ msgstr "Typ MIME "
