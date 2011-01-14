@@ -146,6 +146,11 @@ static void summary_clear_list_full	(SummaryView		*summaryview,
 static GList *summary_get_selected_rows	(SummaryView		*summaryview);
 static void summary_selection_list_free	(SummaryView		*summaryview);
 
+static GSList *summary_get_tmp_marked_msg_list
+					(SummaryView	*summaryview);
+static void summary_restore_tmp_marks	(SummaryView	*summaryview,
+					 GSList		*save_mark_mlist);
+
 static void summary_update_msg_list	(SummaryView		*summaryview);
 
 static void summary_msgid_table_create	(SummaryView		*summaryview);
@@ -686,6 +691,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	gboolean set_column_order_required = FALSE;
 	const gchar *key = NULL;
 	gpointer save_data;
+	GSList *save_mark_mlist = NULL;
 
 	if (summary_is_locked(summaryview)) return FALSE;
 
@@ -711,7 +717,7 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	}
 
 	/* process the marks if any */
-	if (summaryview->mainwin->lock_count == 0 &&
+	if (summaryview->mainwin->lock_count == 0 && !is_refresh &&
 	    (summaryview->moved > 0 || summaryview->copied > 0)) {
 		AlertValue val;
 
@@ -731,8 +737,14 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 			inc_unlock();
 			return FALSE;
 		}
-	} else
+	} else {
+		/* save temporary move/copy marks */
+		if (is_refresh &&
+		    (summaryview->moved > 0 || summaryview->copied > 0))
+			save_mark_mlist = summary_get_tmp_marked_msg_list(summaryview);
+
 		summary_write_cache(summaryview);
+	}
 
 	if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item) !=
 	    FOLDER_ITEM_IS_SENT_FOLDER(item))
@@ -755,6 +767,8 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 			item->qsearch_cond_type = QS_ALL;
 		if (set_column_order_required)
 			summary_set_column_order(summaryview);
+		if (save_mark_mlist)
+			procmsg_msg_list_free(save_mark_mlist);
 		summary_unlock(summaryview);
 		inc_unlock();
 		return TRUE;
@@ -791,10 +805,17 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	statusbar_pop_all();
 	STATUSBAR_POP(summaryview->mainwin);
 
-	/* set tree store and hash table from the msginfo list, and
-	   create the thread */
 	summaryview->all_mlist = mlist;
 
+	/* restore temporary move/copy marks */
+	if (save_mark_mlist) {
+		summary_restore_tmp_marks(summaryview, save_mark_mlist);
+		procmsg_msg_list_free(save_mark_mlist);
+		save_mark_mlist = NULL;
+	}
+
+	/* set tree store and hash table from the msginfo list, and
+	   create the thread */
 	if (prefs_common.show_searchbar &&
 	    (prefs_common.persist_qsearch_filter || is_refresh)) {
 		if (item->qsearch_cond_type > QS_ALL)
@@ -1251,6 +1272,52 @@ GSList *summary_get_flagged_msg_list(SummaryView *summaryview,
 	}
 
 	return g_slist_reverse(mlist);
+}
+
+/* return list of copied MsgInfo */
+static GSList *summary_get_tmp_marked_msg_list(SummaryView *summaryview)
+{
+	MsgInfo *msginfo;
+	GSList *mlist = NULL;
+	GSList *cur;
+
+	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+		if (MSG_IS_MOVE(msginfo->flags) || MSG_IS_COPY(msginfo->flags))
+			mlist = g_slist_prepend
+				(mlist, procmsg_msginfo_copy(msginfo));
+	}
+
+	return g_slist_reverse(mlist);
+}
+
+static gint msginfo_find_func(gconstpointer a, gconstpointer b)
+{
+	MsgInfo *ma = (MsgInfo *)a;
+	MsgInfo *mb = (MsgInfo *)b;
+
+	if (ma && mb && ma->msgnum == mb->msgnum && ma->folder == mb->folder)
+		return 0;
+
+	return 1;
+}
+
+static void summary_restore_tmp_marks(SummaryView *summaryview,
+				      GSList *save_mark_mlist)
+{
+	GSList *cur, *found;
+	MsgInfo *msginfo, *msginfo2;
+
+	debug_print("summary_restore_tmp_marks: restoring temporary marks\n");
+
+	for (cur = save_mark_mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+		if ((found = g_slist_find_custom(summaryview->all_mlist, msginfo, msginfo_find_func))) {
+			msginfo2 = (MsgInfo *)found->data;
+			msginfo2->flags.tmp_flags |= (msginfo->flags.tmp_flags & (MSG_MOVE|MSG_COPY));
+			msginfo2->to_folder = msginfo->to_folder;
+		}
+	}
 }
 
 static void summary_update_msg_list(SummaryView *summaryview)
@@ -2533,6 +2600,10 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 
 			if (MSG_IS_DELETED(msginfo->flags))
 				summaryview->deleted++;
+			if (MSG_IS_MOVE(msginfo->flags))
+				summaryview->moved++;
+			if (MSG_IS_COPY(msginfo->flags))
+				summaryview->copied++;
 			summaryview->total_size += msginfo->size;
 		}
 	} else {
@@ -2548,6 +2619,10 @@ static void summary_set_tree_model_from_list(SummaryView *summaryview,
 
 			if (MSG_IS_DELETED(msginfo->flags))
 				summaryview->deleted++;
+			if (MSG_IS_MOVE(msginfo->flags))
+				summaryview->moved++;
+			if (MSG_IS_COPY(msginfo->flags))
+				summaryview->copied++;
 			summaryview->total_size += msginfo->size;
 		}
 		g_slist_free(rev_mlist);
