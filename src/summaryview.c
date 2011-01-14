@@ -1122,6 +1122,8 @@ void summary_show_queued_msgs(SummaryView *summaryview)
 
 	item->cache_dirty = TRUE;
 
+	summary_status_show(summaryview);
+
 	debug_print("summary_show_queued_msgs: done.\n");
 }
 
