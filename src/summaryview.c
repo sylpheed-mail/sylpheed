@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -810,7 +810,6 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 	/* restore temporary move/copy marks */
 	if (save_mark_mlist) {
 		summary_restore_tmp_marks(summaryview, save_mark_mlist);
-		procmsg_msg_list_free(save_mark_mlist);
 		save_mark_mlist = NULL;
 	}
 
@@ -1293,33 +1292,34 @@ static GSList *summary_get_tmp_marked_msg_list(SummaryView *summaryview)
 	return g_slist_reverse(mlist);
 }
 
-static gint msginfo_find_func(gconstpointer a, gconstpointer b)
-{
-	MsgInfo *ma = (MsgInfo *)a;
-	MsgInfo *mb = (MsgInfo *)b;
-
-	if (ma && mb && ma->msgnum == mb->msgnum && ma->folder == mb->folder)
-		return 0;
-
-	return 1;
-}
-
 static void summary_restore_tmp_marks(SummaryView *summaryview,
 				      GSList *save_mark_mlist)
 {
-	GSList *cur, *found;
-	MsgInfo *msginfo, *msginfo2;
+	GSList *cur, *scur;
+	MsgInfo *msginfo, *markinfo;
 
 	debug_print("summary_restore_tmp_marks: restoring temporary marks\n");
 
-	for (cur = save_mark_mlist; cur != NULL; cur = cur->next) {
+	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
-		if ((found = g_slist_find_custom(summaryview->all_mlist, msginfo, msginfo_find_func))) {
-			msginfo2 = (MsgInfo *)found->data;
-			msginfo2->flags.tmp_flags |= (msginfo->flags.tmp_flags & (MSG_MOVE|MSG_COPY));
-			msginfo2->to_folder = msginfo->to_folder;
+		for (scur = save_mark_mlist; scur != NULL; scur = scur->next) {
+			markinfo = (MsgInfo *)scur->data;
+			if (msginfo->msgnum == markinfo->msgnum &&
+			    msginfo->folder == markinfo->folder) {
+				msginfo->flags.tmp_flags |= (markinfo->flags.tmp_flags & (MSG_MOVE|MSG_COPY));
+				msginfo->to_folder = markinfo->to_folder;
+				save_mark_mlist = g_slist_remove
+					(save_mark_mlist, markinfo);
+				procmsg_msginfo_free(markinfo);
+				if (!save_mark_mlist)
+					return;
+				break;
+			}
 		}
 	}
+
+	if (save_mark_mlist)
+		procmsg_msg_list_free(save_mark_mlist);
 }
 
 static void summary_update_msg_list(SummaryView *summaryview)
