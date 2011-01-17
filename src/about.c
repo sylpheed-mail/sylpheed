@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +104,8 @@ static void about_create(void)
 	pixmap = stock_pixbuf_widget(window, STOCK_PIXMAP_SYLPHEED_LOGO);
 	gtk_box_pack_start(GTK_BOX(vbox), pixmap, FALSE, FALSE, 0);
 
-	label = gtk_label_new("version "VERSION);
+	label = gtk_label_new("Version " VERSION
+			      " (Build: " Xstr(BUILD_REVISION) ")");
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
