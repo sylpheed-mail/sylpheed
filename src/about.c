@@ -105,7 +105,7 @@ static void about_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox), pixmap, FALSE, FALSE, 0);
 
 	label = gtk_label_new("Version " VERSION
-			      " (Build: " Xstr(BUILD_REVISION) ")");
+			      " (Build " Xstr(BUILD_REVISION) ")");
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
