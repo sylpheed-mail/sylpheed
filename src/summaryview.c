@@ -1278,15 +1278,21 @@ GSList *summary_get_flagged_msg_list(SummaryView *summaryview,
 /* return list of copied MsgInfo */
 static GSList *summary_get_tmp_marked_msg_list(SummaryView *summaryview)
 {
-	MsgInfo *msginfo;
+	MsgInfo *msginfo, *markinfo;
 	GSList *mlist = NULL;
 	GSList *cur;
 
 	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
-		if (MSG_IS_MOVE(msginfo->flags) || MSG_IS_COPY(msginfo->flags))
-			mlist = g_slist_prepend
-				(mlist, procmsg_msginfo_copy(msginfo));
+		if (MSG_IS_MOVE(msginfo->flags) ||
+		    MSG_IS_COPY(msginfo->flags)) {
+			markinfo = g_new0(MsgInfo, 1);
+			markinfo->msgnum = msginfo->msgnum;
+			markinfo->flags = msginfo->flags;
+			markinfo->folder = msginfo->folder;
+			markinfo->to_folder = msginfo->to_folder;
+			mlist = g_slist_prepend(mlist, markinfo);
+		}
 	}
 
 	return g_slist_reverse(mlist);
@@ -1310,7 +1316,7 @@ static void summary_restore_tmp_marks(SummaryView *summaryview,
 				msginfo->to_folder = markinfo->to_folder;
 				save_mark_mlist = g_slist_remove
 					(save_mark_mlist, markinfo);
-				procmsg_msginfo_free(markinfo);
+				g_free(markinfo);
 				if (!save_mark_mlist)
 					return;
 				break;
