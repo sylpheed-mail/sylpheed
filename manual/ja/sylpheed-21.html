@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed ユーザーズマニュアル: 他メールソフトからSylpheed(MH形式)への移行</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: 他メールソフトからSylpheedへの移行</TITLE>
  <LINK HREF="sylpheed-22.html" REL=next>
  <LINK HREF="sylpheed-20.html" REL=previous>
  <LINK HREF="sylpheed.html#toc21" REL=contents>
@@ -12,7 +12,7 @@
 <A HREF="sylpheed-20.html">前のページ</A>
 <A HREF="sylpheed.html#toc21">目次へ</A>
 <HR>
-<H2><A NAME="s21">21.</A> <A HREF="sylpheed.html#toc21">他メールソフトからSylpheed(MH形式)への移行</A></H2>
+<H2><A NAME="s21">21.</A> <A HREF="sylpheed.html#toc21">他メールソフトからSylpheedへの移行</A></H2>
 
 <H2><A NAME="mbox-import"></A> <A NAME="ss21.1">21.1</A> <A HREF="sylpheed.html#toc21.1">mbox形式のメッセージファイルの取り込み</A>
 </H2>
@@ -20,11 +20,8 @@
 <P>「ファイル」メニューから「メールデータをインポート...」を選択し、
 「ファイル形式」に「UNIX mbox」、
 「インポート元」にインポートしたいmbox形式のファイルを選択します。</P>
-<P>インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せばインポートされます。
-mbox形式は、Mozilla Thunderbirdや、KMailなどでも利用されているので、
-そのファイルを利用することで移行できます。</P>
-<P>ただし、KMailは添付ファイルを別ファイルにしてしまう仕様があるらしく、
-添付ファイルがある場合、正しくコンバートすることができません。</P>
+<P>インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せばインポートされます。</P>
+<P>Mozilla Thunderbirdや、KMailなどの、mbox形式を使用しているメールソフトからの移行が可能です。</P>
 <H2><A NAME="eml-import"></A> <A NAME="ss21.2">21.2</A> <A HREF="sylpheed.html#toc21.2">eml形式、MH形式のメッセージファイルの取り込み</A>
 </H2>
 
@@ -42,6 +39,10 @@ mbox形式は、Mozilla Thunderbirdや、KMailなどでも利用されているので、
 <H2><A NAME="ss21.4">21.4</A> <A HREF="sylpheed.html#toc21.4">Outlook Expressからの移行</A>
 </H2>
 
+<P>Sylpheed は Outlook Express のメールデータ形式(dbx)のインポートに対応しており、簡単に移行することができます。</P>
+<P>初回起動時に Outlook Express のアカウントが見つかった場合、自動的にメールデータのインポートを行います。</P>
+<P>後から手動でインポートする場合は、mbox 形式のデータの取り込みと同様、「ファイル形式」に「Outlook Express (dbx)」を選択し、 dbx ファイルを直接指定してください。</P>
+<P>また、メールデータ変換ツールを使ってインポートする方法もあります。</P>
 <P>Windows用フリーソフトウェアである
 <A HREF="http://www.tietew.net/soft/OE2/">OE2 - OutlookExpress-To</A>
 をインストールし、出力形式に「UNIX mbox」を選択してエクスポートします。</P>
