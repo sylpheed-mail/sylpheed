@@ -5497,6 +5497,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 
 	if (!summaryview->on_filter)
 		return;
+	if (!summaryview->folder_item)
+		return;
 
 	g_signal_handlers_block_matched(G_OBJECT(summaryview->treeview),
 					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
@@ -5563,6 +5565,9 @@ void summary_qsearch(SummaryView *summaryview)
 	GSList *flt_mlist;
 	guint selected_msgnum = 0;
 	guint displayed_msgnum = 0;
+
+	if (!summaryview->folder_item)
+		return;
 
 	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->qsearch->menu));
 	type = GPOINTER_TO_INT
