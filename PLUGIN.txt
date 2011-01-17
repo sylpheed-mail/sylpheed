@@ -194,6 +194,11 @@ void (* app_exit) (GObject *obj)
 
 Emitted when application exits.
 -------------------------------------------------------------------------
+void (* app_force_exit) (GObject *obj)
+
+Emitted when application is forced to exit (no confirmation).
+(ex: sylpheed --exit)
+-------------------------------------------------------------------------
 void (* add_msg) (GObject *obj, FolderItem *item, const gchar *file, guint num)
 
 Emitted when a message (number num) is added into folder item.
