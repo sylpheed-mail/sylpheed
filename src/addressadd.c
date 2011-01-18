@@ -255,9 +255,11 @@ static void addressadd_create( void ) {
 
 	gtk_widget_show_all(vbox);
 
+#if 0
 	stock_pixmap_gdk(window, STOCK_PIXMAP_BOOK, &bookXpm, &bookXpmMask);
 	stock_pixmap_gdk(window, STOCK_PIXMAP_FOLDER_OPEN,
 			 &folderXpm, &folderXpmMask);
+#endif
 }
 
 static void addressadd_load_folder( GtkCTreeNode *parentNode, ItemFolder *parentFolder,
