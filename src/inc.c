@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -266,6 +266,7 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 
 		for (cur = mlist; cur != NULL; cur = cur->next) {
 			MsgInfo *msginfo = (MsgInfo *)cur->data;
+			gboolean is_junk = FALSE;
 
 			fltinfo = filter_info_new();
 			fltinfo->account = account;
@@ -276,6 +277,8 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			    prefs_common.filter_junk_before && junk_rule) {
 				filter_apply_msginfo
 					(&junk_fltlist, msginfo, fltinfo);
+				if (fltinfo->drop_done)
+					is_junk = TRUE;
 			}
 
 			if (!fltinfo->drop_done) {
@@ -289,6 +292,8 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 			    !prefs_common.filter_junk_before && junk_rule) {
 				filter_apply_msginfo
 					(&junk_fltlist, msginfo, fltinfo);
+				if (fltinfo->drop_done)
+					is_junk = TRUE;
 			}
 
 			if (msginfo->flags.perm_flags !=
@@ -310,14 +315,17 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 				if (account->imap_check_inbox_only ||
 				    fltinfo->move_dest->folder !=
 				    inbox->folder) {
-					if (MSG_IS_NEW(fltinfo->flags) ||
-					    MSG_IS_UNREAD(fltinfo->flags))
+					if (!is_junk &&
+					    fltinfo->move_dest->stype != F_TRASH &&
+					    fltinfo->move_dest->stype != F_JUNK &&
+					    (MSG_IS_NEW(fltinfo->flags) ||
+					     MSG_IS_UNREAD(fltinfo->flags)))
 						++new_msgs;
 				}
 			} else if (fltinfo->actions[FLT_ACTION_DELETE])
 				folder_item_remove_msg(inbox, msginfo);
-			else if (MSG_IS_NEW(msginfo->flags) ||
-				 MSG_IS_UNREAD(msginfo->flags))
+			else if (!is_junk && (MSG_IS_NEW(msginfo->flags) ||
+					      MSG_IS_UNREAD(msginfo->flags)))
 				++new_msgs;
 
 			if (fltinfo->drop_done)
@@ -1264,6 +1272,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	IncSession *inc_session = (IncSession *)(SESSION(session)->data);
 	gint val;
 	gboolean is_junk = FALSE;
+	gboolean is_counted = FALSE;
 
 	g_return_val_if_fail(inc_session != NULL, DROP_ERROR);
 
@@ -1362,6 +1371,10 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 					    drop_folder, GINT_TO_POINTER(1));
 		g_hash_table_insert(inc_session->tmp_folder_table, drop_folder,
 				    GINT_TO_POINTER(1));
+
+		if (drop_folder->stype != F_TRASH &&
+		    drop_folder->stype != F_JUNK)
+			is_counted = TRUE;
 	}
 
 	if (fltinfo->actions[FLT_ACTION_NOT_RECEIVE] == TRUE)
@@ -1370,7 +1383,8 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		val = DROP_DELETE;
 	else {
 		val = DROP_OK;
-		if (!is_junk && fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
+		if (!is_junk && is_counted &&
+		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
 			inc_session->new_msgs++;
 	}
 

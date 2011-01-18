@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1026,10 +1026,12 @@ gint folderview_check_new(Folder *folder)
 				break;
 		}
 		folderview_update_row(folderview, &iter);
-		if (prev_unread < item->unread)
-			n_updated += item->unread - prev_unread;
-		else if (prev_new < item->new)
-			n_updated += item->new - prev_new;
+		if (item->stype != F_TRASH && item->stype != F_JUNK) {
+			if (prev_unread < item->unread)
+				n_updated += item->unread - prev_unread;
+			else if (prev_new < item->new)
+				n_updated += item->new - prev_new;
+		}
 	}
 
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
@@ -1080,10 +1082,12 @@ gint folderview_check_new_item(FolderItem *item)
 	folderview_scan_tree_func(folder, item, NULL);
 	folder_item_scan(item);
 	folderview_update_row(folderview, &iter);
-	if (prev_unread < item->unread)
-		n_updated = item->unread - prev_unread;
-	else if (prev_new < item->new)
-		n_updated = item->new - prev_new;
+	if (item->stype != F_TRASH && item->stype != F_JUNK) {
+		if (prev_unread < item->unread)
+			n_updated = item->unread - prev_unread;
+		else if (prev_new < item->new)
+			n_updated = item->new - prev_new;
+	}
 
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
 	main_window_unlock(folderview->mainwin);
@@ -1349,8 +1353,12 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 	}
 
 	if (item->stype == F_OUTBOX || item->stype == F_DRAFT ||
-	    item->stype == F_TRASH) {
+	    item->stype == F_TRASH || item->stype == F_JUNK) {
 		use_color = FALSE;
+		if (item->stype == F_JUNK) {
+			if ((item->unread > 0) || add_unread_mark)
+				weight = PANGO_WEIGHT_BOLD;
+		}
 	} else if (item->stype == F_QUEUE) {
 		/* highlight queue folder if there are any messages */
 		use_color = (item->total > 0);
