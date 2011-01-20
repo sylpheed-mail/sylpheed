@@ -1313,7 +1313,10 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 				     fltinfo);
 		if (fltinfo->drop_done)
 			is_junk = TRUE;
-		else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
+		else if (fltinfo->error == FLT_ERROR_EXEC_FAILED ||
+			 fltinfo->last_exec_exit_status >= 3) {
+			g_warning("inc_drop_message: junk filter command returned %d",
+				  fltinfo->last_exec_exit_status);
 			alertpanel_error
 				(_("Execution of the junk filter command failed.\n"
 				   "Please check the junk mail control setting."));
@@ -1337,7 +1340,10 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 					     msginfo, fltinfo);
 			if (fltinfo->drop_done)
 				is_junk = TRUE;
-			else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
+			else if (fltinfo->error == FLT_ERROR_EXEC_FAILED ||
+				 fltinfo->last_exec_exit_status >= 3) {
+				g_warning("inc_drop_message: junk filter command returned %d",
+					  fltinfo->last_exec_exit_status);
 				alertpanel_error
 					(_("Execution of the junk filter command failed.\n"
 					   "Please check the junk mail control setting."));

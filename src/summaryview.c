@@ -4733,8 +4733,10 @@ static gboolean summary_filter_junk_func(GtkTreeModel *model, GtkTreePath *path,
 	    fltinfo->actions[FLT_ACTION_DELETE] ||
 	    fltinfo->actions[FLT_ACTION_MARK_READ])
 		summaryview->filtered++;
-	else if (fltinfo->error == FLT_ERROR_EXEC_FAILED) {
+	else if (fltinfo->error == FLT_ERROR_EXEC_FAILED ||
+		 fltinfo->last_exec_exit_status >= 3) {
 		if (summaryview->flt_count == 1) {
+			g_warning("summary_filter_junk_func: junk filter command returned %d", fltinfo->last_exec_exit_status);
 			alertpanel_error
 				(_("Execution of the junk filter command failed.\n"
 				   "Please check the junk mail control setting."));
@@ -4922,18 +4924,28 @@ static void summary_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 	ret = filter_action_exec(&rule, msginfo, file, fltinfo);
 
-	if (ret == 0 &&
-	    msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
-		msginfo->flags = fltinfo->flags;
-		summary_set_row(summaryview, iter, msginfo);
-		if (MSG_IS_IMAP(msginfo->flags)) {
-			if (fltinfo->actions[FLT_ACTION_MARK_READ])
-				imap_msg_unset_perm_flags(msginfo,
-							  MSG_NEW | MSG_UNREAD);
+	if (ret < 0 || fltinfo->last_exec_exit_status != 0) {
+		g_warning("summary_junk_func: junk filter command returned %d",
+			  fltinfo->last_exec_exit_status);
+		alertpanel_error
+			(_("Execution of the junk filter command failed.\n"
+			   "Please check the junk mail control setting."));
+	} else {
+		if (ret == 0 &&
+		    msginfo->flags.perm_flags != fltinfo->flags.perm_flags) {
+			msginfo->flags = fltinfo->flags;
+			summary_set_row(summaryview, iter, msginfo);
+			if (MSG_IS_IMAP(msginfo->flags)) {
+				if (fltinfo->actions[FLT_ACTION_MARK_READ])
+					imap_msg_unset_perm_flags
+						(msginfo, MSG_NEW | MSG_UNREAD);
+			}
 		}
+		if (ret == 0 && fltinfo->actions[FLT_ACTION_MOVE] &&
+		    fltinfo->move_dest)
+			summary_move_row_to(summaryview, iter,
+					    fltinfo->move_dest);
 	}
-	if (ret == 0 && fltinfo->actions[FLT_ACTION_MOVE] && fltinfo->move_dest)
-		summary_move_row_to(summaryview, iter, fltinfo->move_dest);
 
 	filter_info_free(fltinfo);
 	g_slist_free(rule.action_list);
@@ -4962,6 +4974,14 @@ static void summary_not_junk_func(GtkTreeModel *model, GtkTreePath *path,
 	fltinfo = filter_info_new();
 
 	ret = filter_action_exec(&rule, msginfo, file, fltinfo);
+
+	if (ret < 0 || fltinfo->last_exec_exit_status != 0) {
+		g_warning("summary_not_junk_func: junk filter command returned %d",
+			  fltinfo->last_exec_exit_status);
+		alertpanel_error
+			(_("Execution of the junk filter command failed.\n"
+			   "Please check the junk mail control setting."));
+	}
 
 	filter_info_free(fltinfo);
 	g_slist_free(rule.action_list);

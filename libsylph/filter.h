@@ -163,6 +163,7 @@ struct _FilterInfo
 	gboolean drop_done;
 
 	FilterErrorValue error;
+	gint last_exec_exit_status;
 };
 
 gint filter_apply			(GSList			*fltlist,

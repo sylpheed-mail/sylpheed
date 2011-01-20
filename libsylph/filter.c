@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -162,6 +162,7 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 	GSList *cur;
 	gchar *cmdline;
 	gboolean copy_to_self = FALSE;
+	gint ret;
 
 	g_return_val_if_fail(rule != NULL, -1);
 	g_return_val_if_fail(msginfo != NULL, -1);
@@ -200,14 +201,28 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 		case FLT_ACTION_EXEC:
 			cmdline = g_strconcat(action->str_value, " \"", file,
 					      "\"", NULL);
-			execute_command_line(cmdline, FALSE);
+			ret = execute_command_line(cmdline, FALSE);
+			fltinfo->last_exec_exit_status = ret;
+			if (ret == -1) {
+				fltinfo->error = FLT_ERROR_EXEC_FAILED;
+				g_warning("filter_action_exec: cannot execute command: %s", cmdline);
+				g_free(cmdline);
+				return -1;
+			}
 			g_free(cmdline);
 			fltinfo->actions[action->type] = TRUE;
 			break;
 		case FLT_ACTION_EXEC_ASYNC:
 			cmdline = g_strconcat(action->str_value, " \"", file,
 					      "\"", NULL);
-			execute_command_line(cmdline, TRUE);
+			ret = execute_command_line(cmdline, TRUE);
+			fltinfo->last_exec_exit_status = ret;
+			if (ret == -1) {
+				fltinfo->error = FLT_ERROR_EXEC_FAILED;
+				g_warning("filter_action_exec: cannot execute command: %s", cmdline);
+				g_free(cmdline);
+				return -1;
+			}
 			g_free(cmdline);
 			fltinfo->actions[action->type] = TRUE;
 			break;
@@ -469,6 +484,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 			return FALSE;
 		cmdline = g_strconcat(cond->str_value, " \"", file, "\"", NULL);
 		ret = execute_command_line_async_wait(cmdline);
+		fltinfo->last_exec_exit_status = ret;
 		matched = (ret == 0);
 		if (ret == -1)
 			fltinfo->error = FLT_ERROR_EXEC_FAILED;
@@ -1495,6 +1511,7 @@ FilterInfo *filter_info_new(void)
 	fltinfo->move_dest = NULL;
 	fltinfo->drop_done = FALSE;
 	fltinfo->error = FLT_ERROR_OK;
+	fltinfo->last_exec_exit_status = 0;
 
 	return fltinfo;
 }
