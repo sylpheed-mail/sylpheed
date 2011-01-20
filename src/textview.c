@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@
 #include "displayheader.h"
 #include "filesel.h"
 #include "alertpanel.h"
+#include "plugin.h"
 
 typedef struct _RemoteURI	RemoteURI;
 
@@ -1991,6 +1992,7 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 	gboolean on_link;
 	RemoteURI *uri;
 	GdkPixbuf *pixbuf;
+	gchar *selected_text;
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
 
@@ -2011,13 +2013,17 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 		ADD_MENU(_("Sa_ve this image as..."),
 			 textview_popup_menu_activate_image_cb);
 	}
+
+	selected_text = gtkut_text_view_get_selection(GTK_TEXT_VIEW(widget));
+
+	uri = NULL;
 	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
 	if (!on_link)
-		return;
+		goto finish;
 
 	uri = textview_get_uri(textview, &start, &end);
 	if (!uri)
-		return;
+		goto finish;
 
 	separator = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
@@ -2039,6 +2045,12 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 		ADD_MENU(_("Copy this _link"),
 			 textview_popup_menu_activate_copy_cb);
 	}
+
+finish:
+	syl_plugin_signal_emit("textview-menu-popup", menu,
+			       GTK_TEXT_VIEW(widget), uri ? uri->uri : NULL,
+			       selected_text);
+	g_free(selected_text);
 }
 
 static void textview_popup_menu_activate_open_uri_cb(GtkMenuItem *menuitem,

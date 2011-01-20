@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "plugin.h"
 #include "utils.h"
 #include "folder.h"
+#include "sylpheed-marshal.h"
 
 G_DEFINE_TYPE(SylPlugin, syl_plugin, G_TYPE_OBJECT);
 
@@ -34,6 +35,7 @@ enum {
 	SUMMARYVIEW_MENU_POPUP,
 	COMPOSE_CREATED,
 	COMPOSE_DESTROY,
+	TEXTVIEW_MENU_POPUP,
 	LAST_SIGNAL
 };
 
@@ -155,6 +157,20 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_NONE,
 			     1,
 			     G_TYPE_POINTER);
+	plugin_signals[TEXTVIEW_MENU_POPUP] =
+		g_signal_new("textview-menu-popup",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass,
+					     textview_menu_popup),
+			     NULL, NULL,
+			     sylpheed_marshal_VOID__POINTER_POINTER_STRING_STRING,
+			     G_TYPE_NONE,
+			     4,
+			     G_TYPE_POINTER,
+			     G_TYPE_POINTER,
+			     G_TYPE_STRING,
+			     G_TYPE_STRING);
 }
 
 void syl_plugin_signal_connect(const gchar *name, GCallback callback,

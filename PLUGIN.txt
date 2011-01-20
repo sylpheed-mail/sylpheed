@@ -169,6 +169,21 @@ void (* compose_destroy)        (GObject *obj, gpointer compose);
 
 Emitted just before 'Compose' message composition window is destroyed.
 -------------------------------------------------------------------------
+void (* textview_menu_popup)    (GObject *obj,
+                                 GtkMenu *menu,
+                                 GtkTextView *textview,
+                                 const gchar *uri,
+                                 const gchar *selected_text);
+
+Emitted on popup of the context menu of TextView.
+You can add any menu items to the passed GtkMenu.
+The menu object will be destroyed when closed.
+
+menu: context menu object
+textview: GtkTextView object
+uri: URI string if the menu popups on an URI
+selected_text: string if a string is selected on the text view
+-------------------------------------------------------------------------
 
 * libsylph-0
 
@@ -259,6 +274,7 @@ following process:
 - Capture the following events and show messages: application initialization
   and exiting, folder view context menu popup, creating and destroying compose
   window
+- Capture the text view context menu popup event and add a menu item
 
 Attachment Tool Plug-in
 -----------------------

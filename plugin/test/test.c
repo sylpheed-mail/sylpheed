@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 
 static SylPluginInfo info = {
 	"Test Plugin",
-	"3.0.99",
+	"3.1.0",
 	"Hiroyuki Yamamoto",
 	"Test plug-in for Sylpheed plug-in system"
 };
@@ -39,6 +39,11 @@ static void folderview_menu_popup_cb(GObject *obj, GtkItemFactory *ifactory,
 				     gpointer data);
 static void summaryview_menu_popup_cb(GObject *obj, GtkItemFactory *ifactory,
 				      gpointer data);
+
+static void textview_menu_popup_cb(GObject *obj, GtkMenu *menu,
+				   GtkTextView *textview,
+				   const gchar *uri,
+				   const gchar *selected_text);
 
 static void menu_selected_cb(void);
 
@@ -87,6 +92,8 @@ void plugin_load(void)
 				  G_CALLBACK(folderview_menu_popup_cb), NULL);
 	syl_plugin_signal_connect("summaryview-menu-popup",
 				  G_CALLBACK(summaryview_menu_popup_cb), NULL);
+	syl_plugin_signal_connect("textview-menu-popup",
+				  G_CALLBACK(textview_menu_popup_cb), NULL);
 	syl_plugin_signal_connect("compose-created",
 				  G_CALLBACK(compose_created_cb), NULL);
 	syl_plugin_signal_connect("compose-destroy",
@@ -145,6 +152,32 @@ static void summaryview_menu_popup_cb(GObject *obj, GtkItemFactory *ifactory,
 	widget = gtk_item_factory_get_item(ifactory, "/Test Plug-in menu");
 	if (widget)
 		gtk_widget_set_sensitive(widget, TRUE);
+}
+
+static void activate_menu_cb(GtkMenuItem *menuitem, gpointer data)
+{
+	g_print("menu activated\n");
+}
+
+static void textview_menu_popup_cb(GObject *obj, GtkMenu *menu,
+				   GtkTextView *textview,
+				   const gchar *uri,
+				   const gchar *selected_text)
+{
+	GtkWidget *separator, *menuitem;
+
+	g_print("test: %p: textview menu popup\n", obj);
+	g_print("test: %p: uri: %s, text: %s\n", obj, uri ? uri : "(none)",
+		selected_text ? selected_text : "(none)");
+
+	separator = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);
+	gtk_widget_show(separator);
+
+	menuitem = gtk_menu_item_new_with_mnemonic("Test menu");
+	g_signal_connect(menuitem, "activate", G_CALLBACK(activate_menu_cb), NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	gtk_widget_show(menuitem);
 }
 
 static void menu_selected_cb(void)
