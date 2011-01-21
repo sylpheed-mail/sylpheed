@@ -1,3 +1,11 @@
+2011-01-21
+
+	* src/undo.c: fixed long-standing undo-redo bug:
+	  1. input "a b"
+	  2. delete 3 chars by backspace
+	  3. undo 2 times
+	  4. "a ba" is entered, not "a b"
+
 2011-01-19
 
 	* src/sylpheed-marshal.list
