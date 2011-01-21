@@ -424,7 +424,7 @@ static GtkItemFactoryEntry addressbook_entries[] =
 					"<control>M",	addressbook_compose_to_cb, COMPOSE_ENTRY_TO, NULL},
 	{N_("/_Address/Add to _Cc"),
 					NULL,		addressbook_compose_to_cb, COMPOSE_ENTRY_CC, NULL},
-	{N_("/_Address/_Add to _Bcc"),
+	{N_("/_Address/Add to _Bcc"),
 					NULL,		addressbook_compose_to_cb, COMPOSE_ENTRY_BCC, NULL},
 	{N_("/_Address/---"),		NULL,		NULL, 0, "<Separator>"},
 	{N_("/_Address/_Edit"),		"<control>Return",	addressbook_edit_address_cb,    0, NULL},
