@@ -1,7 +1,7 @@
 ;!define SYLPHEED_PRO
 
 !define PRODUCT_NAME "Sylpheed"
-!define PRODUCT_VERSION "3.1beta4"
+!define PRODUCT_VERSION "3.1"
 
 !ifdef SYLPHEED_PRO
 !define PRODUCT_PUBLISHER "SRA OSS, Inc. Japan"

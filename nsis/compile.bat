@@ -1,4 +1,5 @@
 PATH "C:\Program Files\NSIS";%PATH%
+
 makensis plugin-updater.nsi
 move plugin-updater.exe Sylpheed
 makensis update-manager.nsi

@@ -176,7 +176,7 @@ static void about_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
 	label = gtk_label_new
-		("Copyright (C) 1999-2010 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>");
+		("Copyright (C) 1999-2011 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>");
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
