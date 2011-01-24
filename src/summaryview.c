@@ -1523,7 +1523,7 @@ static void summary_select_prev_flagged(SummaryView *summaryview,
 
 	if (!found) {
 		if (notice)
-			alertpanel_notice(notice);
+			alertpanel_notice("%s", notice);
 	} else {
 		gboolean visible;
 		visible = messageview_is_visible(summaryview->messageview);
@@ -1569,7 +1569,7 @@ static void summary_select_next_flagged(SummaryView *summaryview,
 
 	if (!found) {
 		if (notice)
-			alertpanel_notice(notice);
+			alertpanel_notice("%s", notice);
 	} else {
 		gboolean visible;
 		visible = messageview_is_visible(summaryview->messageview);
@@ -2694,7 +2694,7 @@ gint summary_write_cache(SummaryView *summaryview)
 	if (item->cache_dirty) {
 		buf = g_strdup_printf(_("Writing summary cache (%s)..."),
 				      item->path);
-		debug_print(buf);
+		debug_print("%s", buf);
 		STATUSBAR_PUSH(summaryview->mainwin, buf);
 		gdk_flush();
 		g_free(buf);
