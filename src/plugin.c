@@ -24,7 +24,7 @@
 #include "plugin.h"
 #include "utils.h"
 #include "folder.h"
-#include "sylpheed-marshal.h"
+#include "plugin-marshal.h"
 
 G_DEFINE_TYPE(SylPlugin, syl_plugin, G_TYPE_OBJECT);
 
@@ -164,7 +164,7 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_STRUCT_OFFSET(SylPluginClass,
 					     textview_menu_popup),
 			     NULL, NULL,
-			     sylpheed_marshal_VOID__POINTER_POINTER_STRING_STRING_POINTER,
+			     syl_plugin_marshal_VOID__POINTER_POINTER_STRING_STRING_POINTER,
 			     G_TYPE_NONE,
 			     5,
 			     G_TYPE_POINTER,

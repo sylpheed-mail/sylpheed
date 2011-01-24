@@ -100,11 +100,14 @@ BUILT_SOURCES = \
 	quote_fmt_parse.c \
 	quote_fmt_parse.h \
 	sylpheed-marshal.c \
-	sylpheed-marshal.h
+	sylpheed-marshal.h \
+	plugin-marshal.c \
+	plugin-marshal.h
 
 lib_LTLIBRARIES = libsylpheed-plugin-0.la
 
 libsylpheed_plugin_0_la_SOURCES = \
+	plugin-marshal.c plugin-marshal.h \
 	plugin.c
 
 libsylpheed_plugin_0includedir=$(includedir)/sylpheed
@@ -127,6 +130,7 @@ libsylpheed_plugin_0_la_LIBADD = \
 EXTRA_DIST = \
 	quote_fmt_parse.h \
 	sylpheed-marshal.list \
+	plugin-marshal.list \
 	version.h.in \
 	sylpheed.rc.in \
 	libsylpheed-plugin-0.def
@@ -172,3 +176,9 @@ sylpheed-marshal.h: sylpheed-marshal.list
 
 sylpheed-marshal.c: sylpheed-marshal.list
 	$(GLIB_GENMARSHAL) $< --body --prefix=sylpheed_marshal > $@
+
+plugin-marshal.h: plugin-marshal.list
+	$(GLIB_GENMARSHAL) $< --header --prefix=syl_plugin_marshal > $@
+
+plugin-marshal.c: plugin-marshal.list
+	$(GLIB_GENMARSHAL) $< --body --prefix=syl_plugin_marshal > $@
