@@ -945,7 +945,6 @@ static void prefs_send_create(void)
 	GtkWidget *checkbtn_savemsg;
 	GtkWidget *checkbtn_filter_sent;
 	GtkWidget *checkbtn_recipients_autoreg;
-	GtkWidget *vbox3;
 	GtkWidget *checkbtn_show_send_dialog;
 	GtkWidget *label;
 	GtkWidget *checkbtn_check_attach;
