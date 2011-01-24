@@ -14,6 +14,8 @@
 <HR>
 <H2><A NAME="install"></A> <A NAME="s5">5.</A> <A HREF="sylpheed.html#toc5">インストール</A></H2>
 
+<P>WindowsにSylpheedをインストールする場合は、インストーラもしくはzipアーカイブを使用します。</P>
+<P>Linuxの場合は、各ディストリビューションに標準でSylpheedのパッケージが用意されている場合はそれをインストールします。パッケージが提供されていない、またはバージョンが古い場合はソースからコンパイルします。その他のUnix系OSの場合もソースからコンパイルしてください。</P>
 
 <H2><A NAME="ss5.1">5.1</A> <A HREF="sylpheed.html#toc5.1">必要な環境</A>
 </H2>
@@ -53,7 +55,7 @@
 
 <P>ここに示すのはUnixならほぼ使えると思われるインストール方法です。
 しかし、OSの持っているファイル管理機構を壊す可能性があるので、あなたが使っているOSについての記述がある場合は、そちらを利用されることをお勧めします。</P>
-<P>Windowsの場合はインストーラを実行、もしくはzipアーカイブを適当な場所に展開してください。</P>
+<P>Windowsの場合はインストーラを実行して、指示に従ってインストールしてください。zipアーカイブ版を使用する場合は、適当な場所に展開してください。</P>
 
 <H3>GTK+のインストール</H3>
 
@@ -80,7 +82,7 @@ Password: (パスワード入力)
 でインストール完了です。</P>
 
 
-<H2><A NAME="ss5.4">5.4</A> <A HREF="sylpheed.html#toc5.4">rpmを使用したLinux Distributionへのインストール</A>
+<H2><A NAME="ss5.4">5.4</A> <A HREF="sylpheed.html#toc5.4">rpmを使用したLinux ディストリビューションへのインストール</A>
 </H2>
 
 <H3>一般的なインストール手順(最新版を利用する場合)</H3>
@@ -197,7 +199,7 @@ Password: (パスワードを入力)
 <P>
 <BLOCKQUOTE><CODE>
 <PRE>
-# apt-get install sylpheed
+# apt-get install sylpheed sylpheed-i18n sylpheed-doc
 </PRE>
 </CODE></BLOCKQUOTE>
 
@@ -206,11 +208,11 @@ Password: (パスワードを入力)
 </H2>
 
 <P>Synaptic パッケージ・マネージャから sylpheed パッケージを検索し、
-sylpheed, sylpheed-i18n, sylpheed-doc パッケージをインストールします。
-もしくは、コマンドラインから以下でインストールできます。
+sylpheed, sylpheed-i18n, sylpheed-doc パッケージをインストールします。</P>
+<P>もしくは、コマンドラインから以下でインストールできます。
 <BLOCKQUOTE><CODE>
 <PRE>
-# apt-get install sylpheed sylpheed-i18n sylpheed-doc
+% sudo apt-get install sylpheed sylpheed-i18n sylpheed-doc
 </PRE>
 </CODE></BLOCKQUOTE>
 </P>
@@ -220,8 +222,7 @@ sylpheed, sylpheed-i18n, sylpheed-doc パッケージをインストールします。
 <P>Sylpheedのアップグレードは基本的には上書きインストールを行えばOKです。
 以前の設定やメッセージデータはそのまま引き継がれます。</P>
 <P>Windowsの場合、「ヘルプ - アップデートチェック」で新しいバージョンが検出された場合、「はい」を選択すると自動的にアップデートが行われます。
-手動で行う場合は、Sylpheedが起動していない状態でインストーラを起動すると、
-以前のバージョンのアンインストールを実行した後、新しいバージョンのインストールが行われます。
+手動で行う場合は、Sylpheedが起動していない状態で新しいバージョンのインストーラを起動すると、以前のバージョンのアンインストールを実行した後、新しいバージョンのインストールが行われます。
 zipアーカイブ版の場合は中のファイルを上書きコピーしてください。</P>
 <HR>
 <A HREF="sylpheed-6.html">次のページ</A>
