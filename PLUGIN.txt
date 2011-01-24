@@ -173,16 +173,19 @@ void (* textview_menu_popup)    (GObject *obj,
                                  GtkMenu *menu,
                                  GtkTextView *textview,
                                  const gchar *uri,
-                                 const gchar *selected_text);
+                                 const gchar *selected_text,
+                                 MsgInfo *msginfo);
 
 Emitted on popup of the context menu of TextView.
 You can add any menu items to the passed GtkMenu.
-The menu object will be destroyed when closed.
+The menu object will be created on open and destroyed on close, so menu items
+must be added each time.
 
 menu: context menu object
 textview: GtkTextView object
 uri: URI string if the menu popups on an URI
 selected_text: string if a string is selected on the text view
+msginfo: the MsgInfo message object displayed in the text view
 -------------------------------------------------------------------------
 
 * libsylph-0

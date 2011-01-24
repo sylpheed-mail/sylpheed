@@ -2048,8 +2048,10 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 
 finish:
 	syl_plugin_signal_emit("textview-menu-popup", menu,
-			       GTK_TEXT_VIEW(widget), uri ? uri->uri : NULL,
-			       selected_text);
+			       GTK_TEXT_VIEW(widget),
+			       uri ? uri->uri : NULL,
+			       selected_text,
+			       textview->messageview->msginfo);
 	g_free(selected_text);
 }
 

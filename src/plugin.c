@@ -164,13 +164,14 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_STRUCT_OFFSET(SylPluginClass,
 					     textview_menu_popup),
 			     NULL, NULL,
-			     sylpheed_marshal_VOID__POINTER_POINTER_STRING_STRING,
+			     sylpheed_marshal_VOID__POINTER_POINTER_STRING_STRING_POINTER,
 			     G_TYPE_NONE,
-			     4,
+			     5,
 			     G_TYPE_POINTER,
 			     G_TYPE_POINTER,
 			     G_TYPE_STRING,
-			     G_TYPE_STRING);
+			     G_TYPE_STRING,
+			     G_TYPE_POINTER);
 }
 
 void syl_plugin_signal_connect(const gchar *name, GCallback callback,

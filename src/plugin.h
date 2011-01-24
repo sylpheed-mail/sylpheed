@@ -69,7 +69,8 @@ struct _SylPluginClass
 					 GtkMenu	*menu,
 					 GtkTextView	*textview,
 					 const gchar	*uri,
-					 const gchar	*selected_text);
+					 const gchar	*selected_text,
+					 MsgInfo	*msginfo);
 };
 
 struct _SylPluginInfo

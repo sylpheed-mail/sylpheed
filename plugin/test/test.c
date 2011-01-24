@@ -24,6 +24,7 @@
 #include "plugin.h"
 #include "test.h"
 #include "folder.h"
+#include "procmsg.h"
 
 static SylPluginInfo info = {
 	"Test Plugin",
@@ -43,7 +44,8 @@ static void summaryview_menu_popup_cb(GObject *obj, GtkItemFactory *ifactory,
 static void textview_menu_popup_cb(GObject *obj, GtkMenu *menu,
 				   GtkTextView *textview,
 				   const gchar *uri,
-				   const gchar *selected_text);
+				   const gchar *selected_text,
+				   MsgInfo *msginfo);
 
 static void menu_selected_cb(void);
 
@@ -162,13 +164,16 @@ static void activate_menu_cb(GtkMenuItem *menuitem, gpointer data)
 static void textview_menu_popup_cb(GObject *obj, GtkMenu *menu,
 				   GtkTextView *textview,
 				   const gchar *uri,
-				   const gchar *selected_text)
+				   const gchar *selected_text,
+				   MsgInfo *msginfo)
 {
 	GtkWidget *separator, *menuitem;
 
 	g_print("test: %p: textview menu popup\n", obj);
 	g_print("test: %p: uri: %s, text: %s\n", obj, uri ? uri : "(none)",
 		selected_text ? selected_text : "(none)");
+	g_print("test: %p: msg: %s\n", obj,
+		msginfo && msginfo->subject ? msginfo->subject : "");
 
 	separator = gtk_separator_menu_item_new();
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), separator);

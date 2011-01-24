@@ -175,17 +175,20 @@ void (* textview_menu_popup)    (GObject *obj,
                                  GtkMenu *menu,
                                  GtkTextView *textview,
                                  const gchar *uri,
-                                 const gchar *selected_text);
+                                 const gchar *selected_text,
+                                 MsgInfo *msginfo);
 
 TextView でコンテキストメニューをポップアップするときに発行される
 シグナルです。ここで渡された GtkMenu に対して任意のメニュー項目を
 追加することができます。
-メニューオブジェクトは閉じられると自動的に破棄されます。
+メニューオブジェクトはメニューを開くたびに作成され、閉じられると自動的に
+破棄されるため、毎回メニュー項目を追加する必要があります。
 
 menu: コンテキストメニューオブジェクト
 textview: GtkTextView オブジェクト
 uri: URI の上でメニューを表示した場合その URI 文字列
 selected_text: テキストビューでテキストが選択されている場合、その文字列
+msginfo: テキストビューで表示されているメッセージの MsgInfo オブジェクト
 -------------------------------------------------------------------------
 
 * libsylph-0
