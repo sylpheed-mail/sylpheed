@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -325,6 +325,11 @@ struct _PrefsCommon
 
 	gboolean always_add_address_only;    /* Compose */
 	gboolean show_send_dialog;           /* Send */
+
+	gint addressbook_folder_width;
+	gint addressbook_col_name;
+	gint addressbook_col_addr;
+	gint addressbook_col_rem;
 };
 
 extern PrefsCommon prefs_common;

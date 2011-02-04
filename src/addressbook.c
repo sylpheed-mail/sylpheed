@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -226,6 +226,13 @@ static void addressbook_drag_received		(GtkWidget	*widget,
 						 guint		 info,
 						 guint		 time,
 						 gpointer	 user_data);
+
+static void addressbook_folder_resized		(GtkWidget	*widget,
+						 GtkAllocation	*allocation,
+						 gpointer	 data);
+static void addressbook_col_resized		(GtkWidget	*widget,
+						 GtkAllocation	*allocation,
+						 gpointer	 data);
 
 static void addressbook_popup_close		(GtkMenuShell	*menu_shell,
 						 gpointer	 data);
@@ -646,7 +653,7 @@ static void addressbook_create(void)
 				       GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(tree_swin),
 					    GTK_SHADOW_IN);
-	gtk_widget_set_size_request(tree_swin, COL_FOLDER_WIDTH + 40, -1);
+	gtk_widget_set_size_request(tree_swin, prefs_common.addressbook_folder_width, -1);
 
 	/* Address index */
 	tree_store = gtk_tree_store_new(N_TREE_COLS, G_TYPE_STRING,
@@ -672,7 +679,6 @@ static void addressbook_create(void)
 	column = gtk_tree_view_column_new();
 	gtk_tree_view_column_set_spacing(column, 1);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, COL_FOLDER_WIDTH);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 
 	renderer = gtk_cell_renderer_pixbuf_new();
@@ -700,6 +706,9 @@ static void addressbook_create(void)
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(tree_store),
 					     COL_FOLDER_NAME,
 					     GTK_SORT_ASCENDING);
+
+	g_signal_connect(G_OBJECT(tree_swin), "size-allocate",
+			 G_CALLBACK(addressbook_folder_resized), NULL);
 
 	g_signal_connect(G_OBJECT(selection), "changed",
 			 G_CALLBACK(addressbook_tree_selection_changed), NULL);
@@ -761,7 +770,8 @@ static void addressbook_create(void)
 	column = gtk_tree_view_column_new();
 	gtk_tree_view_column_set_spacing(column, 1);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, COL_NAME_WIDTH);
+	gtk_tree_view_column_set_fixed_width
+		(column, prefs_common.addressbook_col_name);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_title(column, _("Name"));
 
@@ -784,6 +794,9 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_sort_column_id(column, COL_NAME);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(listview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(addressbook_col_resized),
+			 GINT_TO_POINTER(COL_NAME));
 
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer,
@@ -794,10 +807,14 @@ static void addressbook_create(void)
 	column = gtk_tree_view_column_new_with_attributes
 		(_("E-Mail address"), renderer, "text", COL_ADDRESS, NULL);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, COL_ADDRESS_WIDTH);
+	gtk_tree_view_column_set_fixed_width
+		(column, prefs_common.addressbook_col_addr);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_sort_column_id(column, COL_ADDRESS);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(addressbook_col_resized),
+			 GINT_TO_POINTER(COL_ADDRESS));
 
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer,
@@ -811,6 +828,9 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_sort_column_id(column, COL_REMARKS);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(addressbook_col_resized),
+			 GINT_TO_POINTER(COL_REMARKS));
 
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store),
 					     COL_NAME, GTK_SORT_ASCENDING);
@@ -1967,6 +1987,42 @@ static void addressbook_drag_received(GtkWidget	*widget,
 	gtk_tree_path_free(path);
 
 	addressbook_modified();
+}
+
+static void addressbook_folder_resized(GtkWidget *widget,
+				       GtkAllocation *allocation,
+				       gpointer data)
+{
+	gint width = allocation->width;
+
+	if (width < 8)
+		return;
+
+	prefs_common.addressbook_folder_width = width;
+}
+
+static void addressbook_col_resized(GtkWidget *widget,
+				    GtkAllocation *allocation, gpointer data)
+{
+	AddressBookListColumnPos type = (gint)data;
+	gint width = allocation->width;
+
+	if (width < 8)
+		return;
+
+	switch (type) {
+	case COL_NAME:
+		prefs_common.addressbook_col_name = width;
+		break;
+	case COL_ADDRESS:
+		prefs_common.addressbook_col_addr = width;
+		break;
+	case COL_REMARKS:
+		prefs_common.addressbook_col_rem = width;
+		break;
+	default:
+		break;
+	}
 }
 
 static void addressbook_popup_close(GtkMenuShell *menu_shell, gpointer data)
