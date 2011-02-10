@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1696,6 +1696,8 @@ static const struct {
 	{"ja_JP.JIS"	, C_ISO_2022_JP	, C_ISO_2022_JP},
 #ifdef G_OS_WIN32
 	{"ja_JP"	, C_CP932	, C_ISO_2022_JP},
+#elif defined(__APPLE__)
+	{"ja_JP"	, C_UTF_8	, C_ISO_2022_JP},
 #else
 	{"ja_JP"	, C_EUC_JP	, C_ISO_2022_JP},
 #endif
@@ -1943,7 +1945,7 @@ CharSet conv_get_locale_charset(void)
 	static CharSet cur_charset = -1;
 	const gchar *cur_locale;
 	const gchar *p;
-#ifndef G_OS_WIN32
+#if !defined(G_OS_WIN32) && !defined(__APPLE__)
 	gint i;
 #endif
 	S_LOCK_DEFINE_STATIC(cur_charset);
@@ -1974,7 +1976,7 @@ CharSet conv_get_locale_charset(void)
 		return cur_charset;
 	}
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 	cur_charset = conv_get_charset_from_str(conv_get_locale_charset_str());
 
 	S_UNLOCK(cur_charset);
@@ -2016,7 +2018,7 @@ const gchar *conv_get_locale_charset_str(void)
 	S_LOCK(codeset);
 
 	if (!codeset) {
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 		g_get_charset(&codeset);
 		if (!strcmp(codeset, CS_US_ASCII) ||
 		    !strcmp(codeset, CS_ANSI_X3_4_1968))
