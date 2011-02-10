@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,6 +109,26 @@ gboolean gtkut_font_can_load(const gchar *str)
 	desc = pango_font_description_from_string(str);
 	if (desc) {
 		context = pango_win32_get_context();
+		font = pango_context_load_font(context, desc);
+		if (font) {
+			can_load = TRUE;
+			g_object_unref(font);
+		}
+		g_object_unref(context);
+		pango_font_description_free(desc);
+	}
+
+	return can_load;
+#elif defined(__APPLE__)
+	PangoFontDescription *desc;
+	PangoContext *context;
+	PangoFont *font;
+	gboolean can_load = FALSE;
+
+	desc = pango_font_description_from_string(str);
+	if (desc) {
+		context = gdk_pango_context_get_for_screen
+			(gdk_screen_get_default());
 		font = pango_context_load_font(context, desc);
 		if (font) {
 			can_load = TRUE;

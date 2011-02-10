@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ static struct RemoteCmd {
 			  mainwin->mainwin_cid); \
 }
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 static void fix_font_setting		(void);
 #endif
 
@@ -278,7 +278,7 @@ int main(int argc, char *argv[])
 		 gtk_major_version, gtk_minor_version, gtk_micro_version,
 		 TARGET_ALIAS);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 	fix_font_setting();
 #endif
 
@@ -438,7 +438,9 @@ static void read_ini_file(void)
 		cmd.configdir = TRUE;
 	}
 }
+#endif /* G_OS_WIN32 */
 
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 static void fix_font_setting(void)
 {
 	const gchar *str = NULL;
@@ -457,15 +459,24 @@ static void fix_font_setting(void)
 
 	debug_print("fixing prefs_common.textfont setting\n");
 
+#ifdef G_OS_WIN32
 	str = "MS Gothic 12";
+#else /* __APPLE__ */
+	str = "Hiragino Kaku Gothic Pro Light 13";
+#endif
 
 	if (!gtkut_font_can_load(str)) {
+#ifdef G_OS_WIN32
 		debug_print("font '%s' load failed\n", str);
 		str = "\xef\xbc\xad\xef\xbc\xb3 \xe3\x82\xb4\xe3\x82\xb7\xe3\x83\x83\xe3\x82\xaf 12";
 		if (!gtkut_font_can_load(str)) {
 			debug_print("font '%s' load failed\n", str);
 			str = NULL;
 		}
+#else /* __APPLE__ */
+		debug_print("font '%s' load failed\n", str);
+		str = NULL;
+#endif
 	}
 
 	if (str) {
