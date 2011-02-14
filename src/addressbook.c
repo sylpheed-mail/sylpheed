@@ -965,7 +965,7 @@ static void addressbook_create(void)
 	nodeIf = _addressInterfaceList_;
 	while( nodeIf ) {
 		AdapterInterface *adapter = nodeIf->data;
-		AddressInterface *iface = adapter->interface;
+		AddressInterface *iface = adapter->iface;
 
 		nodeIf = g_list_next(nodeIf);
 
@@ -1366,7 +1366,7 @@ static void addressbook_menuitem_set_sensitive(void)
 	if (pobj->type == ADDR_INTERFACE) {
 		AdapterInterface *adapter = ADAPTER_INTERFACE(pobj);
 
-		iface = adapter->interface;
+		iface = adapter->iface;
 		if (iface && iface->haveLibrary) {
 			/* Enable appropriate File / New command */
 			atci = adapter->atci;
@@ -1377,7 +1377,7 @@ static void addressbook_menuitem_set_sensitive(void)
 		AdapterDSource *ads = ADAPTER_DSOURCE(pobj);
 
 		ds = ads->dataSource;
-		iface = ds->interface;
+		iface = ds->iface;
 		if (!iface->readOnly) {
 			canAdd = canEditAddress = TRUE;
 		}
@@ -1397,7 +1397,7 @@ static void addressbook_menuitem_set_sensitive(void)
 	} else if (pobj->type == ADDR_ITEM_FOLDER) {
 		ds = addressbook_find_datasource(&iter);
 		if (ds) {
-			iface = ds->interface;
+			iface = ds->iface;
 			if (!iface->readOnly) {
 				canAdd = canEditAddress = TRUE;
 			}
@@ -1406,7 +1406,7 @@ static void addressbook_menuitem_set_sensitive(void)
 	} else if (pobj->type == ADDR_ITEM_GROUP) {
 		ds = addressbook_find_datasource(&iter);
 		if (ds) {
-			iface = ds->interface;
+			iface = ds->iface;
 			if (!iface->readOnly) {
 				canEditAddress = TRUE;
 			}
@@ -1761,7 +1761,7 @@ static gboolean addressbook_obj_is_droppable(GtkTreeModel *model,
 
 		ads = ADAPTER_DSOURCE(obj);
 		ds = ads ? ads->dataSource : NULL;
-		iface = ds ? ds->interface : NULL;
+		iface = ds ? ds->iface : NULL;
 		if (ads && ads->subType == ADDR_BOOK &&
 		    iface && !iface->readOnly)
 			acceptable = TRUE;
@@ -1840,8 +1840,8 @@ static gboolean addressbook_drag_motion(GtkWidget *widget,
 	}
 #endif
 
-	if (!src_ds->interface ||
-	    (src_ds->interface->readOnly || !src_ds->interface->haveLibrary))
+	if (!src_ds->iface ||
+	    (src_ds->iface->readOnly || !src_ds->iface->haveLibrary))
 		context->actions &= ~GDK_ACTION_MOVE;
 
 	acceptable = addressbook_obj_is_droppable(model, obj);
@@ -1929,8 +1929,8 @@ static void addressbook_drag_received(GtkWidget	*widget,
 		acceptable = FALSE;
 	is_move = (context->actions & GDK_ACTION_MOVE) != 0;
 
-	if (!src_ds->interface ||
-	    (src_ds->interface->readOnly || !src_ds->interface->haveLibrary))
+	if (!src_ds->iface ||
+	    (src_ds->iface->readOnly || !src_ds->iface->haveLibrary))
 		is_move = FALSE;
 
 	if (!_addressListSelection_ || !acceptable) {
@@ -2163,7 +2163,7 @@ static gchar *addressbook_edit_datasource(AddressObject *obj, GtkTreeIter *iter)
 	ds = addressbook_find_datasource(iter);
 	if (ds == NULL)
 		return NULL;
-	iface = ds->interface;
+	iface = ds->iface;
 	if (!iface->haveLibrary)
 		return NULL;
 
@@ -2309,7 +2309,7 @@ static void addressbook_treenode_delete_cb(gpointer data, guint action,
 			return;
 
 		/* Only allow deletion from non-readOnly data sources */
-		iface = ds->interface;
+		iface = ds->iface;
 		if (iface->readOnly)
 			return;
 	}
@@ -3240,7 +3240,7 @@ static void addressbook_load_tree(void)
 	while (nodeIf) {
 		adapter = nodeIf->data;
 		gtkut_tree_row_reference_get_iter(model, adapter->tree_row, &iter);
-		iface = adapter->interface;
+		iface = adapter->iface;
 		atci = adapter->atci;
 		if (iface) {
 			if (iface->useInterface) {
@@ -3946,7 +3946,7 @@ static void addressbook_new_jpilot_cb(gpointer data, guint action, GtkWidget *wi
 		return;
 	if (!gtkut_tree_row_reference_equal(addrbook.tree_selected, adapter->tree_row))
 		return;
-	iface = adapter->interface;
+	iface = adapter->iface;
 	if (!iface->haveLibrary)
 		return;
 
@@ -3992,7 +3992,7 @@ static void addressbook_new_ldap_cb(gpointer data, guint action, GtkWidget *widg
 		return;
 	if (!gtkut_tree_row_reference_equal(addrbook.tree_selected, adapter->tree_row))
 		return;
-	iface = adapter->interface;
+	iface = adapter->iface;
 	if (!iface->haveLibrary)
 		return;
 
@@ -4057,7 +4057,7 @@ static void ldapsearch_callback(SyldapServer *sls)
 			ds = ads->dataSource;
 			if (ds == NULL)
 				return;
-			iface = ds->interface;
+			iface = ds->iface;
 			if (!iface->haveLibrary)
 				return;
 			server = ds->rawDataSource;
@@ -4113,7 +4113,7 @@ static void addressbook_lup_clicked(GtkButton *button, gpointer data)
 			ds = ads->dataSource;
 			if (ds == NULL)
 				return;
-			iface = ds->interface;
+			iface = ds->iface;
 			if (!iface->haveLibrary)
 				return;
 			server = ds->rawDataSource;
@@ -4340,7 +4340,7 @@ static void addrbookctl_free_address( AddressObject *obj ) {
 static void addrbookctl_free_interface(AdapterInterface *adapter)
 {
 	addrbookctl_free_address(ADDRESS_OBJECT(adapter));
-	adapter->interface = NULL;
+	adapter->iface = NULL;
 	adapter->interfaceType = ADDR_IF_NONE;
 	adapter->atci = NULL;
 	adapter->enabled = FALSE;
@@ -4386,16 +4386,16 @@ void addrbookctl_build_iflist(void)
 	_addressInterfaceList_ = NULL;
 	list = addrindex_get_interface_list(_addressIndex_);
 	while (list) {
-		AddressInterface *interface = list->data;
-		atci = addrbookctl_lookup_iface(interface->type);
+		AddressInterface *iface = list->data;
+		atci = addrbookctl_lookup_iface(iface->type);
 		if (atci) {
 			adapter = g_new0(AdapterInterface, 1);
-			adapter->interfaceType = interface->type;
+			adapter->interfaceType = iface->type;
 			adapter->atci = atci;
-			adapter->interface = interface;
+			adapter->iface = iface;
 			adapter->tree_row = NULL;
 			adapter->enabled = TRUE;
-			adapter->haveLibrary = interface->haveLibrary;
+			adapter->haveLibrary = iface->haveLibrary;
 			ADDRESS_OBJECT(adapter)->type = ADDR_INTERFACE;
 			ADDRESS_OBJECT_NAME(adapter) = g_strdup(atci->displayName);
 			_addressInterfaceList_ = g_list_append(_addressInterfaceList_, adapter);

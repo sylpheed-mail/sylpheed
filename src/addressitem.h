@@ -109,7 +109,7 @@ struct _AddressObject {
 typedef struct _AdapterInterface AdapterInterface;
 struct _AdapterInterface {
 	AddressObject obj;
-	AddressInterface *interface;
+	AddressInterface *iface;
 	AddressIfType interfaceType;
 	AddressTypeControlItem *atci;
 	gboolean enabled;

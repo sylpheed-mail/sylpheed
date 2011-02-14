@@ -88,7 +88,7 @@ typedef struct _AddressDataSource AddressDataSource;
 struct _AddressDataSource {
 	AddrItemObject obj;
 	AddressIfType type;
-	AddressInterface *interface;
+	AddressInterface *iface;
 	gpointer rawDataSource;
 };
 

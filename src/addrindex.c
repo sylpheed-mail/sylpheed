@@ -264,7 +264,7 @@ void addrindex_free_datasource( AddressIndex *addrIndex, AddressDataSource *ds )
 	g_return_if_fail( addrIndex != NULL );
 	g_return_if_fail( ds != NULL );
 
-	if( ds->interface == NULL ) {
+	if( ds->iface == NULL ) {
 		iface = addrindex_get_interface( addrIndex, ds->type );
 	}
 	if( iface == NULL ) return;
@@ -314,11 +314,11 @@ void addrindex_free_datasource( AddressIndex *addrIndex, AddressDataSource *ds )
 	ADDRITEM_SUBTYPE(addrIndex) = 0;
 	ds->type = ADDR_IF_NONE;
 	ds->rawDataSource = NULL;
-	ds->interface = NULL;
+	ds->iface = NULL;
 
 	ds->type = ADDR_IF_NONE;
 	ds->rawDataSource = NULL;
-	ds->interface = NULL;
+	ds->iface = NULL;
 	g_free( ds );
 }
 
@@ -363,7 +363,7 @@ static void addrindex_free_all_datasources( AddressInterface *iface ) {
 
 		ds->type = ADDR_IF_NONE;
 		ds->rawDataSource = NULL;
-		ds->interface = NULL;
+		ds->iface = NULL;
 		g_free( ds );
 		node->data = NULL;
 		node = g_list_next( node );
@@ -525,7 +525,7 @@ AddressDataSource *addrindex_create_datasource() {
 	ADDRITEM_SUBTYPE(ds) = 0;
 	ds->type = ADDR_IF_NONE;
 	ds->rawDataSource = NULL;
-	ds->interface = NULL;
+	ds->iface = NULL;
 	return ds;
 }
 
@@ -551,7 +551,7 @@ AddressDataSource *addrindex_index_add_datasource( AddressIndex *addrIndex, Addr
 		ADDRITEM_PARENT(ds) = ADDRITEM_OBJECT(iface);
 		ds->type = ifType;
 		ds->rawDataSource = dataSource;
-		ds->interface = iface;
+		ds->iface = iface;
 		iface->listSource = g_list_append( iface->listSource, ds );
 		addrIndex->dirtyFlag = TRUE;
 	}
@@ -576,7 +576,7 @@ AddressDataSource *addrindex_index_remove_datasource( AddressIndex *addrIndex, A
 	if( iface ) {
 		iface->listSource = g_list_remove( iface->listSource, dataSource );
 		addrIndex->dirtyFlag = TRUE;
-		dataSource->interface = NULL;
+		dataSource->iface = NULL;
 		retVal = dataSource;
 	}
 	return retVal;
@@ -1003,7 +1003,7 @@ static void addrindex_read_index( AddressIndex *addrIndex, XMLFile *file ) {
 				}
 				if( ds ) {
 					ds->type = addrIndex->lastType;
-					ds->interface = dsIFace;
+					ds->iface = dsIFace;
 					dsIFace->listSource = g_list_append( dsIFace->listSource, ds );
 				}
 				/* printf( "=============================\n\n" ); */
@@ -1727,7 +1727,7 @@ gboolean addrindex_ds_get_modify_flag( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getModifyFlag ) {
 		retVal = ( iface->getModifyFlag ) ( ds->rawDataSource );
@@ -1743,7 +1743,7 @@ gboolean addrindex_ds_get_access_flag( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getAccessFlag ) {
 		retVal = ( iface->getAccessFlag ) ( ds->rawDataSource );
@@ -1759,7 +1759,7 @@ gboolean addrindex_ds_get_read_flag( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getReadFlag ) {
 		retVal = ( iface->getReadFlag ) ( ds->rawDataSource );
@@ -1775,7 +1775,7 @@ gint addrindex_ds_get_status_code( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getStatusCode ) {
 		retVal = ( iface->getStatusCode ) ( ds->rawDataSource );
@@ -1791,7 +1791,7 @@ gint addrindex_ds_read_data( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getReadData ) {
 		retVal = ( iface->getReadData ) ( ds->rawDataSource );
@@ -1807,7 +1807,7 @@ ItemFolder *addrindex_ds_get_root_folder( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getRootFolder ) {
 		retVal = ( iface->getRootFolder ) ( ds->rawDataSource );
@@ -1823,7 +1823,7 @@ GList *addrindex_ds_get_list_folder( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getListFolder ) {
 		retVal = ( iface->getListFolder ) ( ds->rawDataSource );
@@ -1839,7 +1839,7 @@ GList *addrindex_ds_get_list_person( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getListPerson ) {
 		retVal = ( iface->getListPerson ) ( ds->rawDataSource );
@@ -1855,7 +1855,7 @@ gchar *addrindex_ds_get_name( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getName ) {
 		retVal = ( iface->getName ) ( ds->rawDataSource );
@@ -1870,7 +1870,7 @@ void addrindex_ds_set_access_flag( AddressDataSource *ds, gboolean *value ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return;
 	if( iface->setAccessFlag ) {
 		( iface->setAccessFlag ) ( ds->rawDataSource, value );
@@ -1883,7 +1883,7 @@ void addrindex_ds_set_access_flag( AddressDataSource *ds, gboolean *value ) {
 gboolean addrindex_ds_get_readonly( AddressDataSource *ds ) {
 	AddressInterface *iface;
 	if( ds == NULL ) return TRUE;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return TRUE;
 	return iface->readOnly;
 }
@@ -1896,7 +1896,7 @@ GList *addrindex_ds_get_all_persons( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getAllPersons ) {
 		retVal = ( iface->getAllPersons ) ( ds->rawDataSource );
@@ -1912,7 +1912,7 @@ GList *addrindex_ds_get_all_groups( AddressDataSource *ds ) {
 	AddressInterface *iface;
 
 	if( ds == NULL ) return retVal;
-	iface = ds->interface;
+	iface = ds->iface;
 	if( iface == NULL ) return retVal;
 	if( iface->getAllGroups ) {
 		retVal = ( iface->getAllGroups ) ( ds->rawDataSource );
