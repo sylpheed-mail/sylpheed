@@ -1120,6 +1120,7 @@ void summary_show_queued_msgs(SummaryView *summaryview)
 	summaryview->all_mlist = g_slist_concat(summaryview->all_mlist, qlist);
 
 	item->cache_dirty = TRUE;
+	summary_selection_list_free(summaryview);
 
 	summary_status_show(summaryview);
 
@@ -2204,10 +2205,12 @@ static void summary_status_show(SummaryView *summaryview)
 		GtkTreeIter iter;
 		GtkTreePath *path = (GtkTreePath *)cur->data;
 
-		gtk_tree_model_get_iter(model, &iter, path);
-		gtk_tree_model_get(model, &iter, S_COL_MSG_INFO, &msginfo, -1);
-		sel_size += msginfo->size;
-		n_selected++;
+		if (gtk_tree_model_get_iter(model, &iter, path)) {
+			gtk_tree_model_get(model, &iter,
+					   S_COL_MSG_INFO, &msginfo, -1);
+			sel_size += msginfo->size;
+			n_selected++;
+		}
 	}
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_NEWS) {
