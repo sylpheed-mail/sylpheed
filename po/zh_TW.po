@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-07 17:20+0900\n"
+"POT-Creation-Date: 2011-02-24 16:57+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1261,11 +1261,11 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:841
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:852
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:155 src/main.c:978
+#: src/alertpanel.c:155 src/main.c:989
 msgid "Warning"
 msgstr "警告"
 
@@ -1313,7 +1313,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5248
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5251
 msgid "None"
 msgstr "無"
 
@@ -1662,7 +1662,7 @@ msgid "Can't get the part of multipart message."
 msgstr "無法取得這個附加檔。"
 
 #: src/compose.c:2868 src/headerview.c:233 src/query_search.c:791
-#: src/rpop3.c:675 src/summaryview.c:2491
+#: src/rpop3.c:675 src/summaryview.c:2494
 msgid "(No Subject)"
 msgstr "（沒有主旨）"
 
@@ -1854,7 +1854,7 @@ msgstr "日期"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:508
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5397
+#: src/summaryview.c:5400
 msgid "Size"
 msgstr "大小"
 
@@ -2662,7 +2662,7 @@ msgid "Creating header view...\n"
 msgstr "產生標頭視窗...\n"
 
 #: src/headerview.c:212 src/query_search.c:792 src/rpop3.c:676
-#: src/summaryview.c:2494
+#: src/summaryview.c:2497
 msgid "(No From)"
 msgstr "（沒有來源）"
 
@@ -3053,8 +3053,8 @@ msgstr "離開"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "取得新郵件 (%d / %d) (%s / %s)"
 
-#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4741 src/summaryview.c:4931
-#: src/summaryview.c:4982
+#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4744 src/summaryview.c:4934
+#: src/summaryview.c:4985
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3145,16 +3145,16 @@ msgstr "輸入密碼"
 msgid "Protocol log"
 msgstr "通訊協定紀錄"
 
-#: src/main.c:598
+#: src/main.c:609
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "用法：%s [選項]...\n"
 
-#: src/main.c:601
+#: src/main.c:612
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [郵件地址]   直接開啟撰寫郵件視窗"
 
-#: src/main.c:602
+#: src/main.c:613
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3163,68 +3163,68 @@ msgstr ""
 "  --attach 檔案1 [檔案2]...\n"
 "                         開啟撰寫郵件視窗，並將指定的檔案附加上去"
 
-#: src/main.c:605
+#: src/main.c:616
 msgid "  --receive              receive new messages"
 msgstr "  --receive              直接接收新郵件"
 
-#: src/main.c:606
+#: src/main.c:617
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          直接接收所有帳號的新郵件"
 
-#: src/main.c:607
+#: src/main.c:618
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送出所有暫存資料夾中的郵件"
 
-#: src/main.c:608
+#: src/main.c:619
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [資料夾]...   顯示資料夾內總共有多少郵件"
 
-#: src/main.c:609
+#: src/main.c:620
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status-full [資料夾]...     顯示每個資料夾中有多少郵件"
 
-#: src/main.c:611
+#: src/main.c:622
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
 
-#: src/main.c:612
+#: src/main.c:623
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:614
+#: src/main.c:625
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:616
+#: src/main.c:627
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:617
+#: src/main.c:628
 msgid "  --debug                debug mode"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:618
+#: src/main.c:629
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 顯示本說明並離開"
 
-#: src/main.c:619
+#: src/main.c:630
 msgid "  --version              output version information and exit"
 msgstr "  --version              顯示版本資訊"
 
-#: src/main.c:623
+#: src/main.c:634
 #, c-format
 msgid "Press any key..."
 msgstr ""
 
-#: src/main.c:758
+#: src/main.c:769
 msgid "Filename encoding"
 msgstr "檔案名稱編碼"
 
-#: src/main.c:759
+#: src/main.c:770
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3245,19 +3245,19 @@ msgstr ""
 "\n"
 "要繼續嗎？"
 
-#: src/main.c:842
+#: src/main.c:853
 msgid "Composing message exists. Really quit?"
 msgstr "有郵件正在編輯。確定要離開嗎？"
 
-#: src/main.c:853
+#: src/main.c:864
 msgid "Queued messages"
 msgstr "有未送出郵件"
 
-#: src/main.c:854
+#: src/main.c:865
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "有些郵件正在暫存資料夾中尚未送出。確定要離開嗎？"
 
-#: src/main.c:979
+#: src/main.c:990
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3265,20 +3265,20 @@ msgstr ""
 "GnuPG 並未安裝好，或版本過舊。\n"
 "關閉 OpenPGP 支援項目。"
 
-#: src/main.c:1212
+#: src/main.c:1223
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1408
+#: src/main.c:1419
 msgid "another Sylpheed is already running.\n"
 msgstr "已經有 Sylpheed 程式正在執行中。\n"
 
-#: src/main.c:1695
+#: src/main.c:1706
 msgid "Migration of configuration"
 msgstr "設定資料轉移"
 
-#: src/main.c:1696
+#: src/main.c:1707
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3949,8 +3949,8 @@ msgstr "建立主視窗...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "主視窗：顏色 %d 配置失敗。\n"
 
-#: src/mainwindow.c:1219 src/summaryview.c:2651 src/summaryview.c:2738
-#: src/summaryview.c:4305 src/summaryview.c:4434 src/summaryview.c:4823
+#: src/mainwindow.c:1219 src/summaryview.c:2654 src/summaryview.c:2741
+#: src/summaryview.c:4308 src/summaryview.c:4437 src/summaryview.c:4826
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -4203,7 +4203,7 @@ msgstr "附加檔"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:765 src/summaryview.c:3860
+#: src/messageview.c:765 src/summaryview.c:3863
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案「%s」。"
@@ -6372,19 +6372,19 @@ msgstr "附加檔案"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:422
-#: src/summaryview.c:5390
+#: src/summaryview.c:5393
 msgid "Subject"
 msgstr "主旨"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:423
-#: src/summaryview.c:5393
+#: src/summaryview.c:5396
 msgid "From"
 msgstr "來源"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:424
-#: src/summaryview.c:5395
+#: src/summaryview.c:5398
 msgid "Date"
 msgstr "日期"
 
@@ -6394,7 +6394,7 @@ msgid "Number"
 msgstr "編號"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5401
+#: src/prefs_summary_column.c:74 src/summaryview.c:5404
 #, fuzzy
 msgid "To"
 msgstr "收件人"
@@ -6719,7 +6719,7 @@ msgstr "過濾中..."
 msgid "Searching %s ..."
 msgstr "掃描資料夾 %s ..."
 
-#: src/query_search.c:800 src/rpop3.c:684 src/summaryview.c:2415
+#: src/query_search.c:800 src/rpop3.c:684 src/summaryview.c:2418
 msgid "(No Date)"
 msgstr "(沒有日期)"
 
@@ -6827,7 +6827,7 @@ msgstr "關於"
 msgid "%s - POP3 Remote mailbox"
 msgstr "移除信箱"
 
-#: src/rpop3.c:421 src/summaryview.c:5399
+#: src/rpop3.c:421 src/summaryview.c:5402
 msgid "No."
 msgstr "No."
 
@@ -7573,221 +7573,221 @@ msgstr "掃描資料夾 (%s)..."
 msgid "Could not establish a connection to the server."
 msgstr "無法產生 IMAP4 連線：%s:%d\n"
 
-#: src/summaryview.c:1609
+#: src/summaryview.c:1610
 msgid "_Search again"
 msgstr "再次搜尋(_S)"
 
-#: src/summaryview.c:1631 src/summaryview.c:1640
+#: src/summaryview.c:1632 src/summaryview.c:1641
 msgid "No more unread messages"
 msgstr "沒有其他未讀郵件"
 
-#: src/summaryview.c:1632
+#: src/summaryview.c:1633
 msgid "No unread message found. Search from the end?"
 msgstr "沒有找到未讀郵件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1634
+#: src/summaryview.c:1635
 msgid "No unread messages."
 msgstr "沒有未讀郵件。"
 
-#: src/summaryview.c:1641
+#: src/summaryview.c:1642
 #, fuzzy
 msgid "No unread message found. Go to next unread folder?"
 msgstr "沒有未讀郵件。要到下一個資料夾嗎？"
 
-#: src/summaryview.c:1649 src/summaryview.c:1658
+#: src/summaryview.c:1650 src/summaryview.c:1659
 msgid "No more new messages"
 msgstr "沒有其他新郵件"
 
-#: src/summaryview.c:1650
+#: src/summaryview.c:1651
 msgid "No new message found. Search from the end?"
 msgstr "沒有找到新郵件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1652
+#: src/summaryview.c:1653
 msgid "No new messages."
 msgstr "沒有新郵件。"
 
-#: src/summaryview.c:1659
+#: src/summaryview.c:1660
 #, fuzzy
 msgid "No new message found. Go to next folder which has new messages?"
 msgstr "沒有新郵件。要到下一個資料夾嗎？"
 
-#: src/summaryview.c:1667 src/summaryview.c:1676
+#: src/summaryview.c:1668 src/summaryview.c:1677
 msgid "No more marked messages"
 msgstr "沒有其他已標記郵件"
 
-#: src/summaryview.c:1668
+#: src/summaryview.c:1669
 msgid "No marked message found. Search from the end?"
 msgstr "沒有找到已標記郵件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1670 src/summaryview.c:1679
+#: src/summaryview.c:1671 src/summaryview.c:1680
 msgid "No marked messages."
 msgstr "沒有已標記郵件。"
 
-#: src/summaryview.c:1677
+#: src/summaryview.c:1678
 msgid "No marked message found. Search from the beginning?"
 msgstr "沒有找到已標記郵件。要從開頭繼續搜尋嗎？"
 
-#: src/summaryview.c:1685 src/summaryview.c:1694
+#: src/summaryview.c:1686 src/summaryview.c:1695
 msgid "No more labeled messages"
 msgstr "沒有已標記顏色之郵件"
 
-#: src/summaryview.c:1686
+#: src/summaryview.c:1687
 msgid "No labeled message found. Search from the end?"
 msgstr "沒有找到已標記顏色之郵件。要從尾部繼續搜尋嗎？"
 
-#: src/summaryview.c:1688 src/summaryview.c:1697
+#: src/summaryview.c:1689 src/summaryview.c:1698
 msgid "No labeled messages."
 msgstr "沒有已標記顏色之郵件。"
 
-#: src/summaryview.c:1695
+#: src/summaryview.c:1696
 msgid "No labeled message found. Search from the beginning?"
 msgstr "沒有找到已標記顏色之郵件。要從開頭繼續搜尋嗎？"
 
-#: src/summaryview.c:2042
+#: src/summaryview.c:2043
 msgid "Attracting messages by subject..."
 msgstr "依主旨展開郵件中..."
 
-#: src/summaryview.c:2236
+#: src/summaryview.c:2239
 #, c-format
 msgid "%d deleted"
 msgstr "%d 已刪除"
 
-#: src/summaryview.c:2240
+#: src/summaryview.c:2243
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d 已移動"
 
-#: src/summaryview.c:2241 src/summaryview.c:2246
+#: src/summaryview.c:2244 src/summaryview.c:2249
 msgid ", "
 msgstr "， "
 
-#: src/summaryview.c:2245
+#: src/summaryview.c:2248
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d 已複製"
 
-#: src/summaryview.c:2260
+#: src/summaryview.c:2263
 msgid " item(s) selected"
 msgstr " 封已選擇"
 
-#: src/summaryview.c:2282
+#: src/summaryview.c:2285
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d 封未讀，%d 封已讀，共 %d 封(%s)"
 
-#: src/summaryview.c:2286
+#: src/summaryview.c:2289
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d 封未讀，%d 封已讀，共 %d 封"
 
-#: src/summaryview.c:2322
+#: src/summaryview.c:2325
 msgid "Sorting summary..."
 msgstr "郵件排序中..."
 
-#: src/summaryview.c:2578
+#: src/summaryview.c:2581
 msgid "\tSetting summary from message data..."
 msgstr "\t產生郵件列表中..."
 
-#: src/summaryview.c:2580
+#: src/summaryview.c:2583
 msgid "Setting summary from message data..."
 msgstr "產生郵件列表中..."
 
-#: src/summaryview.c:2695
+#: src/summaryview.c:2698
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "寫入列表快取 (%s)..."
 
-#: src/summaryview.c:3030
+#: src/summaryview.c:3033
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "郵件 %d 已標記\n"
 
-#: src/summaryview.c:3102
+#: src/summaryview.c:3105
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "郵件 %d 已標記成已讀\n"
 
-#: src/summaryview.c:3315
+#: src/summaryview.c:3318
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "郵件 %d 已標記成未讀\n"
 
-#: src/summaryview.c:3380
+#: src/summaryview.c:3383
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "郵件 %s/%d 已標記刪除\n"
 
-#: src/summaryview.c:3408
+#: src/summaryview.c:3411
 msgid "Delete message(s)"
 msgstr "刪除郵件"
 
-#: src/summaryview.c:3409
+#: src/summaryview.c:3412
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您確定要從刪除的郵件資料夾中刪除這封郵件嗎？"
 
-#: src/summaryview.c:3485
+#: src/summaryview.c:3488
 msgid "Deleting duplicated messages..."
 msgstr "刪除重覆的郵件..."
 
-#: src/summaryview.c:3523
+#: src/summaryview.c:3526
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "郵件 %s/%d 已消除標記\n"
 
-#: src/summaryview.c:3587
+#: src/summaryview.c:3590
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "郵件 %d 已設定移動到 %s\n"
 
-#: src/summaryview.c:3619
+#: src/summaryview.c:3622
 msgid "Destination is same as current folder."
 msgstr "目標資料夾與來源資料夾相同。"
 
-#: src/summaryview.c:3656
+#: src/summaryview.c:3659
 #, fuzzy
 msgid "Select folder to move"
 msgstr "選擇資料夾"
 
-#: src/summaryview.c:3686
+#: src/summaryview.c:3689
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "郵件 %d 已設定複製到 %s\n"
 
-#: src/summaryview.c:3717
+#: src/summaryview.c:3720
 msgid "Destination for copy is same as current folder."
 msgstr "郵件無法複製到同一個資料夾內。"
 
-#: src/summaryview.c:3753
+#: src/summaryview.c:3756
 #, fuzzy
 msgid "Select folder to copy"
 msgstr "選擇資料夾"
 
-#: src/summaryview.c:3903
+#: src/summaryview.c:3906
 msgid "Error occurred while processing messages."
 msgstr "處理郵件時發生錯誤。"
 
-#: src/summaryview.c:4212 src/summaryview.c:4213
+#: src/summaryview.c:4215 src/summaryview.c:4216
 msgid "Building threads..."
 msgstr "產生郵件串列中..."
 
-#: src/summaryview.c:4363 src/summaryview.c:4364
+#: src/summaryview.c:4366 src/summaryview.c:4367
 msgid "Unthreading..."
 msgstr "解除郵件串列中..."
 
-#: src/summaryview.c:4657 src/summaryview.c:4718
+#: src/summaryview.c:4660 src/summaryview.c:4721
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4784
+#: src/summaryview.c:4787
 msgid "filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4785
+#: src/summaryview.c:4788
 msgid "Filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4830
+#: src/summaryview.c:4833
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已過濾 %d 封郵件"

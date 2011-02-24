@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-07 17:20+0900\n"
+"POT-Creation-Date: 2011-02-24 16:57+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -1265,11 +1265,11 @@ msgstr "Normale adresser"
 msgid "Personal address"
 msgstr "Personlige adresser"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:841
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:852
 msgid "Notice"
 msgstr "Note"
 
-#: src/alertpanel.c:155 src/main.c:978
+#: src/alertpanel.c:155 src/main.c:989
 msgid "Warning"
 msgstr "Advarsel"
 
@@ -1317,7 +1317,7 @@ msgstr "Brun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5248
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5251
 msgid "None"
 msgstr "Ingen"
 
@@ -1698,7 +1698,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Kan ikke hente del af multipart meddelese."
 
 #: src/compose.c:2868 src/headerview.c:233 src/query_search.c:791
-#: src/rpop3.c:675 src/summaryview.c:2491
+#: src/rpop3.c:675 src/summaryview.c:2494
 msgid "(No Subject)"
 msgstr "(Intet emne)"
 
@@ -1891,7 +1891,7 @@ msgstr "Dato"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:508
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5397
+#: src/summaryview.c:5400
 msgid "Size"
 msgstr "Størrelse"
 
@@ -2704,7 +2704,7 @@ msgid "Creating header view...\n"
 msgstr "Opretter hoved visning...\n"
 
 #: src/headerview.c:212 src/query_search.c:792 src/rpop3.c:676
-#: src/summaryview.c:2494
+#: src/summaryview.c:2497
 msgid "(No From)"
 msgstr "(Ingen Fra)"
 
@@ -3095,8 +3095,8 @@ msgstr "Afslutter"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Modtager meddelelse (%d / %d) (%s / %s)"
 
-#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4741 src/summaryview.c:4931
-#: src/summaryview.c:4982
+#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4744 src/summaryview.c:4934
+#: src/summaryview.c:4985
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3195,16 +3195,16 @@ msgstr "Indtast adgangskode"
 msgid "Protocol log"
 msgstr "Protokol log"
 
-#: src/main.c:598
+#: src/main.c:609
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Bruges som: %s [OPTION]...\n"
 
-#: src/main.c:601
+#: src/main.c:612
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [adresse]    åbner nyt meddelelses vindue"
 
-#: src/main.c:602
+#: src/main.c:613
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3214,23 +3214,23 @@ msgstr ""
 "                         åbn ny meddelelse med disse filer vedhæftet\n"
 "                         ."
 
-#: src/main.c:605
+#: src/main.c:616
 msgid "  --receive              receive new messages"
 msgstr "  --receive              modtager nye meddelelser"
 
-#: src/main.c:606
+#: src/main.c:617
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          modtager nye meddelelser fra alle konti"
 
-#: src/main.c:607
+#: src/main.c:618
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 send alle meddelelser i kø"
 
-#: src/main.c:608
+#: src/main.c:619
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [mappe]...   viser antal meddelelser"
 
-#: src/main.c:609
+#: src/main.c:620
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3238,49 +3238,49 @@ msgstr ""
 "  --status-full [mappe]...\n"
 "                         viser status for hver mappe"
 
-#: src/main.c:611
+#: src/main.c:622
 msgid "  --open folderid/msgnum open message in new window"
 msgstr ""
 
-#: src/main.c:612
+#: src/main.c:623
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:614
+#: src/main.c:625
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:616
+#: src/main.c:627
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:617
+#: src/main.c:628
 msgid "  --debug                debug mode"
 msgstr "  --debug                debug mode"
 
-#: src/main.c:618
+#: src/main.c:629
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 viser denne hjælp"
 
-#: src/main.c:619
+#: src/main.c:630
 msgid "  --version              output version information and exit"
 msgstr "  --version              viser version og afslutter"
 
-#: src/main.c:623
+#: src/main.c:634
 #, fuzzy, c-format
 msgid "Press any key..."
 msgstr ""
 "eller tast `y'.\n"
 "\n"
 
-#: src/main.c:758
+#: src/main.c:769
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Udgående tegnsæt"
 
-#: src/main.c:759
+#: src/main.c:770
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3294,19 +3294,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:842
+#: src/main.c:853
 msgid "Composing message exists. Really quit?"
 msgstr "Du er ved at skrive ny meddelelse. Virklig afslutte?"
 
-#: src/main.c:853
+#: src/main.c:864
 msgid "Queued messages"
 msgstr "Meddeleser i kø"
 
-#: src/main.c:854
+#: src/main.c:865
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Nogle usendte meddelelser i kø. Afslut nu?"
 
-#: src/main.c:979
+#: src/main.c:990
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3314,21 +3314,21 @@ msgstr ""
 "GnuPG er ike korrekt installeret eller i for gammel version\n"
 "OpenPGP ikke mulig."
 
-#: src/main.c:1212
+#: src/main.c:1223
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1408
+#: src/main.c:1419
 msgid "another Sylpheed is already running.\n"
 msgstr "sylpheed kører allerede.\n"
 
-#: src/main.c:1695
+#: src/main.c:1706
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Handlingsopsæt"
 
-#: src/main.c:1696
+#: src/main.c:1707
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -4027,8 +4027,8 @@ msgstr "Opretter hoved vindue...\n"
 msgid "MainWindow: color allocation %d failed\n"
 msgstr "HovedVindue: fejl i farve %d\n"
 
-#: src/mainwindow.c:1219 src/summaryview.c:2651 src/summaryview.c:2738
-#: src/summaryview.c:4305 src/summaryview.c:4434 src/summaryview.c:4823
+#: src/mainwindow.c:1219 src/summaryview.c:2654 src/summaryview.c:2741
+#: src/summaryview.c:4308 src/summaryview.c:4437 src/summaryview.c:4826
 msgid "done.\n"
 msgstr "Afsluttet.\n"
 
@@ -4287,7 +4287,7 @@ msgstr "Vedhæftet"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:765 src/summaryview.c:3860
+#: src/messageview.c:765 src/summaryview.c:3863
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Kan ikke gemme fil `%s'."
@@ -6525,19 +6525,19 @@ msgstr "Vedhæftet"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:422
-#: src/summaryview.c:5390
+#: src/summaryview.c:5393
 msgid "Subject"
 msgstr "Emne"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:423
-#: src/summaryview.c:5393
+#: src/summaryview.c:5396
 msgid "From"
 msgstr "Fra"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:424
-#: src/summaryview.c:5395
+#: src/summaryview.c:5398
 msgid "Date"
 msgstr "Dato"
 
@@ -6547,7 +6547,7 @@ msgid "Number"
 msgstr "Nummer"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5401
+#: src/prefs_summary_column.c:74 src/summaryview.c:5404
 #, fuzzy
 msgid "To"
 msgstr "Til:"
@@ -6872,7 +6872,7 @@ msgstr "Filtrering..."
 msgid "Searching %s ..."
 msgstr "Gennemsøger mappe %s ..."
 
-#: src/query_search.c:800 src/rpop3.c:684 src/summaryview.c:2415
+#: src/query_search.c:800 src/rpop3.c:684 src/summaryview.c:2418
 msgid "(No Date)"
 msgstr "(Ingen dato)"
 
@@ -6981,7 +6981,7 @@ msgstr "Om"
 msgid "%s - POP3 Remote mailbox"
 msgstr "Slet mappe"
 
-#: src/rpop3.c:421 src/summaryview.c:5399
+#: src/rpop3.c:421 src/summaryview.c:5402
 msgid "No."
 msgstr "Nr."
 
@@ -7729,226 +7729,226 @@ msgstr "Søger mappe (%s)..."
 msgid "Could not establish a connection to the server."
 msgstr "Ingen forbindelse med IMAP4 server: %s:%d\n"
 
-#: src/summaryview.c:1609
+#: src/summaryview.c:1610
 #, fuzzy
 msgid "_Search again"
 msgstr "Søg igen"
 
-#: src/summaryview.c:1631 src/summaryview.c:1640
+#: src/summaryview.c:1632 src/summaryview.c:1641
 msgid "No more unread messages"
 msgstr "Ikke flere ulæste meddelelser"
 
-#: src/summaryview.c:1632
+#: src/summaryview.c:1633
 msgid "No unread message found. Search from the end?"
 msgstr "Ingen ulæste meddelelser fundet. Søg fra slutning?"
 
-#: src/summaryview.c:1634
+#: src/summaryview.c:1635
 msgid "No unread messages."
 msgstr "Ingen ulæste meddelelser."
 
-#: src/summaryview.c:1641
+#: src/summaryview.c:1642
 #, fuzzy
 msgid "No unread message found. Go to next unread folder?"
 msgstr "Ingen ulæste meddeleleser fundet. Fortsæt til næste mappe?"
 
-#: src/summaryview.c:1649 src/summaryview.c:1658
+#: src/summaryview.c:1650 src/summaryview.c:1659
 msgid "No more new messages"
 msgstr "Ikke flere nye meddelelser"
 
-#: src/summaryview.c:1650
+#: src/summaryview.c:1651
 msgid "No new message found. Search from the end?"
 msgstr "Ingen nye meddelelser fundet. Søg fra slutning?"
 
-#: src/summaryview.c:1652
+#: src/summaryview.c:1653
 msgid "No new messages."
 msgstr "Ingen nye meddelelser."
 
-#: src/summaryview.c:1659
+#: src/summaryview.c:1660
 #, fuzzy
 msgid "No new message found. Go to next folder which has new messages?"
 msgstr "Ingen nye meddeleleser fundet. Fortsæt til næste mappe?"
 
-#: src/summaryview.c:1667 src/summaryview.c:1676
+#: src/summaryview.c:1668 src/summaryview.c:1677
 msgid "No more marked messages"
 msgstr "Ikke flere ulæste meddelelser"
 
-#: src/summaryview.c:1668
+#: src/summaryview.c:1669
 msgid "No marked message found. Search from the end?"
 msgstr "Ingen markérede meddelelser fundet. Søg bagfra?"
 
-#: src/summaryview.c:1670 src/summaryview.c:1679
+#: src/summaryview.c:1671 src/summaryview.c:1680
 msgid "No marked messages."
 msgstr "Ingen markérede eddelelser."
 
-#: src/summaryview.c:1677
+#: src/summaryview.c:1678
 msgid "No marked message found. Search from the beginning?"
 msgstr "Ingen markérede meddelelser fundet. Søg forfra?"
 
-#: src/summaryview.c:1685 src/summaryview.c:1694
+#: src/summaryview.c:1686 src/summaryview.c:1695
 msgid "No more labeled messages"
 msgstr "Ikke flere markérede eddelelser"
 
-#: src/summaryview.c:1686
+#: src/summaryview.c:1687
 msgid "No labeled message found. Search from the end?"
 msgstr "Ingen markérede meddelelser funder. Søg bagfra?"
 
-#: src/summaryview.c:1688 src/summaryview.c:1697
+#: src/summaryview.c:1689 src/summaryview.c:1698
 msgid "No labeled messages."
 msgstr "Ingen markérede meddelelser."
 
-#: src/summaryview.c:1695
+#: src/summaryview.c:1696
 msgid "No labeled message found. Search from the beginning?"
 msgstr "Ingen markérede meddelelser fundet. Søg forfra?"
 
-#: src/summaryview.c:2042
+#: src/summaryview.c:2043
 msgid "Attracting messages by subject..."
 msgstr "Samler meddelelser via Emne..."
 
-#: src/summaryview.c:2236
+#: src/summaryview.c:2239
 #, c-format
 msgid "%d deleted"
 msgstr "%d slettet"
 
-#: src/summaryview.c:2240
+#: src/summaryview.c:2243
 #, c-format
 msgid "%s%d moved"
 msgstr "%s%d flyttet"
 
-#: src/summaryview.c:2241 src/summaryview.c:2246
+#: src/summaryview.c:2244 src/summaryview.c:2249
 msgid ", "
 msgstr ", "
 
-#: src/summaryview.c:2245
+#: src/summaryview.c:2248
 #, c-format
 msgid "%s%d copied"
 msgstr "%s%d kopieret"
 
-#: src/summaryview.c:2260
+#: src/summaryview.c:2263
 msgid " item(s) selected"
 msgstr " valgte"
 
-#: src/summaryview.c:2282
+#: src/summaryview.c:2285
 #, c-format
 msgid "%d new, %d unread, %d total (%s)"
 msgstr "%d nye, %d ulæst, %d total (%s)"
 
-#: src/summaryview.c:2286
+#: src/summaryview.c:2289
 #, c-format
 msgid "%d new, %d unread, %d total"
 msgstr "%d nye, %d ulæste, %d total"
 
-#: src/summaryview.c:2322
+#: src/summaryview.c:2325
 msgid "Sorting summary..."
 msgstr "Sorterer oversigt..."
 
-#: src/summaryview.c:2578
+#: src/summaryview.c:2581
 msgid "\tSetting summary from message data..."
 msgstr "\tOpretter oversigt ud fra meddelelses data..."
 
-#: src/summaryview.c:2580
+#: src/summaryview.c:2583
 msgid "Setting summary from message data..."
 msgstr "Opretter oversigt ud fra meddelelses data..."
 
-#: src/summaryview.c:2695
+#: src/summaryview.c:2698
 #, c-format
 msgid "Writing summary cache (%s)..."
 msgstr "Skriver oversigt (%s)..."
 
-#: src/summaryview.c:3030
+#: src/summaryview.c:3033
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Meddelelse %d er markéret\n"
 
-#: src/summaryview.c:3102
+#: src/summaryview.c:3105
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Meddelelse %d er markéret som læst\n"
 
-#: src/summaryview.c:3315
+#: src/summaryview.c:3318
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Meddelelse %d er markéret som ulæst\n"
 
-#: src/summaryview.c:3380
+#: src/summaryview.c:3383
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Meddelelse %s/%d er markéret til sletning\n"
 
-#: src/summaryview.c:3408
+#: src/summaryview.c:3411
 msgid "Delete message(s)"
 msgstr "Slet meddelelse(er)"
 
-#: src/summaryview.c:3409
+#: src/summaryview.c:3412
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Vil du virkelig slette meddelelse(r) fra Slettet?"
 
-#: src/summaryview.c:3485
+#: src/summaryview.c:3488
 msgid "Deleting duplicated messages..."
 msgstr "Sletter dublikerede meddelelser..."
 
-#: src/summaryview.c:3523
+#: src/summaryview.c:3526
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Meddelelse %s/%d er ikke markéret.\n"
 
-#: src/summaryview.c:3587
+#: src/summaryview.c:3590
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Meddelelse %d er markéret til flytning til %s\n"
 
-#: src/summaryview.c:3619
+#: src/summaryview.c:3622
 msgid "Destination is same as current folder."
 msgstr "Fra og til mappe er ens"
 
-#: src/summaryview.c:3656
+#: src/summaryview.c:3659
 #, fuzzy
 msgid "Select folder to move"
 msgstr "Vælg mappe"
 
-#: src/summaryview.c:3686
+#: src/summaryview.c:3689
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Meddelelse %d er markéret til kopiering til %s\n"
 
-#: src/summaryview.c:3717
+#: src/summaryview.c:3720
 #, fuzzy
 msgid "Destination for copy is same as current folder."
 msgstr "Fra og til mappe er ens."
 
-#: src/summaryview.c:3753
+#: src/summaryview.c:3756
 #, fuzzy
 msgid "Select folder to copy"
 msgstr "Vælg mappe"
 
-#: src/summaryview.c:3903
+#: src/summaryview.c:3906
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr ""
 "Fejl ved bearbejdning af e-post:\n"
 "%s"
 
-#: src/summaryview.c:4212 src/summaryview.c:4213
+#: src/summaryview.c:4215 src/summaryview.c:4216
 msgid "Building threads..."
 msgstr "Opretter tråde"
 
-#: src/summaryview.c:4363 src/summaryview.c:4364
+#: src/summaryview.c:4366 src/summaryview.c:4367
 msgid "Unthreading..."
 msgstr "Fjerner tråde"
 
-#: src/summaryview.c:4657 src/summaryview.c:4718
+#: src/summaryview.c:4660 src/summaryview.c:4721
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrering..."
 
-#: src/summaryview.c:4784
+#: src/summaryview.c:4787
 msgid "filtering..."
 msgstr "filtrering..."
 
-#: src/summaryview.c:4785
+#: src/summaryview.c:4788
 msgid "Filtering..."
 msgstr "Filtrering..."
 
-#: src/summaryview.c:4830
+#: src/summaryview.c:4833
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "meddelelse %d er allerede gemt.\n"
