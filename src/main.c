@@ -175,7 +175,10 @@ static gboolean lock_socket_input_cb	(GIOChannel	*source,
 					 gpointer	 data);
 
 static void remote_command_exec		(void);
+
+#if !defined(G_OS_WIN32) && !defined(__APPLE__)
 static void migrate_old_config		(void);
+#endif
 
 static void open_compose_new		(const gchar	*address,
 					 GPtrArray	*attach_files);
@@ -746,7 +749,7 @@ static void parse_gtkrc_files(void)
 
 static void setup_rc_dir(void)
 {
-#ifndef G_OS_WIN32
+#if !defined(G_OS_WIN32) && !defined(__APPLE__)
 	CHDIR_EXIT_IF_FAIL(get_home_dir(), 1);
 
 	/* backup if old rc file exists */
@@ -786,7 +789,7 @@ static void setup_rc_dir(void)
 		if (is_dir_exist(OLD_RC_DIR))
 			migrate_old_config();
 	}
-#endif /* !G_OS_WIN32 */
+#endif /* !G_OS_WIN32 && !__APPLE__ */
 
 	syl_setup_rc_dir();
 }
@@ -1697,6 +1700,7 @@ static void remote_command_exec(void)
 	}
 }
 
+#if !defined(G_OS_WIN32) && !defined(__APPLE__)
 static void migrate_old_config(void)
 {
 	GDir *dir;
@@ -1774,6 +1778,7 @@ static void migrate_old_config(void)
 	g_pattern_spec_free(pspec);
 	g_dir_close(dir);
 }
+#endif /* !G_OS_WIN32 && !__APPLE__ */
 
 static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 {

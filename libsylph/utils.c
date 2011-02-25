@@ -2205,6 +2205,15 @@ const gchar *get_document_dir(void)
 	}
 
 	return document_dir;
+#elif defined(__APPLE__)
+	static const gchar *document_dir = NULL;
+
+	if (!document_dir) {
+		document_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
+					   "Documents", NULL);
+	}
+
+	return document_dir;
 #else
 	return get_home_dir();
 #endif
@@ -2224,6 +2233,11 @@ const gchar *get_rc_dir(void)
 			rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
 					     RC_DIR, NULL);
 		g_free(appdata);
+#elif defined(__APPLE__)
+		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
+				     "Library", G_DIR_SEPARATOR_S,
+				     "Application Support", G_DIR_SEPARATOR_S,
+				     RC_DIR, NULL);
 #else
 		rc_dir = g_strconcat(get_home_dir(), G_DIR_SEPARATOR_S,
 				     RC_DIR, NULL);
@@ -2246,7 +2260,7 @@ const gchar *get_old_rc_dir(void)
 
 const gchar *get_mail_base_dir(void)
 {
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 	static gchar *mail_base_dir = NULL;
 
 	if (!mail_base_dir)

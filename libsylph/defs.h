@@ -44,7 +44,7 @@
 #define DRAFT_DIR		"draft"
 #define TRASH_DIR		"trash"
 #define JUNK_DIR		"junk"
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 #  define RC_DIR		"Sylpheed"
 #else
 #  define RC_DIR		".sylpheed-2.0"
