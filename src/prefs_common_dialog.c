@@ -2732,7 +2732,7 @@ static GtkWidget *prefs_extcmd_create(void)
 	gtk_table_attach (GTK_TABLE (ext_table), uri_combo, 1, 2, 0, 1,
 			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
 	gtkut_combo_set_items (GTK_COMBO (uri_combo),
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 			       _("(Default browser)"),
 #else
 			       DEFAULT_BROWSER_CMD,
@@ -2760,6 +2760,8 @@ static GtkWidget *prefs_extcmd_create(void)
 	gtkut_combo_set_items (GTK_COMBO (exteditor_combo),
 #ifdef G_OS_WIN32
 			       "notepad '%s'",
+#elif defined(__APPLE__)
+			       "open -t '%s'",
 #else
 			       "gedit %s",
 			       "kedit %s",

@@ -4097,9 +4097,9 @@ gint execute_command_line_async_wait(const gchar *cmdline)
 
 gint execute_open_file(const gchar *file, const gchar *content_type)
 {
+#ifdef G_OS_WIN32
 	g_return_val_if_fail(file != NULL, -1);
 
-#ifdef G_OS_WIN32
 	log_print("opening %s - %s\n", file, content_type ? content_type : "");
 
 	if (G_WIN32_HAVE_WIDECHAR_API()) {
@@ -4127,7 +4127,17 @@ gint execute_open_file(const gchar *file, const gchar *content_type)
 
 		return 0;
 	}
+#elif defined(__APPLE__)
+	const gchar *argv[3] = {"open", NULL, NULL};
+
+	g_return_val_if_fail(file != NULL, -1);
+
+	log_print("opening %s - %s\n", file, content_type ? content_type : "");
+
+	argv[1] = file;
+	execute_async(argv);
 #endif
+
 	return 0;
 }
 
@@ -4192,7 +4202,7 @@ gint open_uri(const gchar *uri, const gchar *cmdline)
 
 	g_return_val_if_fail(uri != NULL, -1);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(__APPLE__)
 	if (!cmdline || cmdline[0] == '\0')
 		return execute_open_file(uri, NULL);
 #endif

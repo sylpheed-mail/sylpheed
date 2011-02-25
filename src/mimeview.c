@@ -1226,6 +1226,21 @@ static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,
 		}
 		execute_open_file(filename, partinfo->content_type);
 		return;
+#elif defined(__APPLE__)
+		if (g_file_test(filename, G_FILE_TEST_IS_EXECUTABLE) ||
+		    str_has_suffix_case(filename, ".py") ||
+		    str_has_suffix_case(filename, ".rb") ||
+		    str_has_suffix_case(filename, ".sh")) {
+			alertpanel_full
+				(_("Opening executable file"),
+				 _("This is an executable file. Opening executable file is restricted for security.\n"
+				   "If you want to launch it, save it to somewhere and make sure it is not an virus or something like a malicious program."),
+				 ALERT_WARNING, G_ALERTDEFAULT, FALSE,
+				 GTK_STOCK_OK, NULL, NULL);
+			return;
+		}
+		execute_open_file(filename, partinfo->content_type);
+		return;
 #else
 		if (MIME_IMAGE == partinfo->mime_type)
 			cmd = prefs_common.mime_image_viewer;
