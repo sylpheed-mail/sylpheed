@@ -213,7 +213,7 @@ static struct Interface {
 	GtkWidget *checkbtn_show_trayicon;
 	GtkWidget *checkbtn_minimize_to_tray;
 	GtkWidget *checkbtn_tray_toggle_window;
-} interface;
+} iface;
 
 static struct Other {
 	GtkWidget *optmenu_recvdialog;
@@ -505,39 +505,39 @@ static PrefsUIData ui_data[] = {
 
 	/* Interface */
 	{"always_show_message_when_selected",
-	 &interface.checkbtn_always_show_msg,
+	 &iface.checkbtn_always_show_msg,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"always_mark_read_on_show_msg", &interface.checkbtn_always_mark_read,
+	{"always_mark_read_on_show_msg", &iface.checkbtn_always_mark_read,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"open_unread_on_enter", &interface.checkbtn_openunread,
+	{"open_unread_on_enter", &iface.checkbtn_openunread,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"remember_last_selected", &interface.checkbtn_remember_lastsel,
+	{"remember_last_selected", &iface.checkbtn_remember_lastsel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #if 0
 	{"mark_as_read_on_new_window",
-	 &interface.checkbtn_mark_as_read_on_newwin,
+	 &iface.checkbtn_mark_as_read_on_newwin,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif
-	{"open_inbox_on_inc", &interface.checkbtn_openinbox,
+	{"open_inbox_on_inc", &iface.checkbtn_openinbox,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"open_inbox_on_startup", &interface.checkbtn_openinbox_startup,
+	{"open_inbox_on_startup", &iface.checkbtn_openinbox_startup,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"change_account_on_folder_selection",
-	 &interface.checkbtn_change_account_on_folder_sel,
+	 &iface.checkbtn_change_account_on_folder_sel,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"immediate_execution", &interface.checkbtn_immedexec,
+	{"immediate_execution", &iface.checkbtn_immedexec,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 #ifndef G_OS_WIN32
-	{"comply_gnome_hig", &interface.checkbtn_comply_gnome_hig,
+	{"comply_gnome_hig", &iface.checkbtn_comply_gnome_hig,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 #endif
-	{"show_trayicon", &interface.checkbtn_show_trayicon,
+	{"show_trayicon", &iface.checkbtn_show_trayicon,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"minimize_to_tray", &interface.checkbtn_minimize_to_tray,
+	{"minimize_to_tray", &iface.checkbtn_minimize_to_tray,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"toggle_window_on_trayicon_click",
-	 &interface.checkbtn_tray_toggle_window,
+	 &iface.checkbtn_tray_toggle_window,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Other */
@@ -2497,26 +2497,26 @@ static void prefs_details_create(void)
 	advanced_wid = prefs_advanced_create();
 	gtk_box_pack_start(GTK_BOX(vbox_tab), advanced_wid, FALSE, FALSE, 0);
 
-	interface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
-	interface.checkbtn_always_mark_read  = checkbtn_always_mark_read;
-	interface.checkbtn_openunread        = checkbtn_openunread;
-	interface.checkbtn_remember_lastsel  = checkbtn_remember_lastsel;
+	iface.checkbtn_always_show_msg   = checkbtn_always_show_msg;
+	iface.checkbtn_always_mark_read  = checkbtn_always_mark_read;
+	iface.checkbtn_openunread        = checkbtn_openunread;
+	iface.checkbtn_remember_lastsel  = checkbtn_remember_lastsel;
 #if 0
-	interface.checkbtn_mark_as_read_on_newwin
+	iface.checkbtn_mark_as_read_on_newwin
 					     = checkbtn_mark_as_read_on_newwin;
 #endif
-	interface.checkbtn_openinbox         = checkbtn_openinbox;
-	interface.checkbtn_openinbox_startup = checkbtn_openinbox_startup;
-	interface.checkbtn_change_account_on_folder_sel =
+	iface.checkbtn_openinbox         = checkbtn_openinbox;
+	iface.checkbtn_openinbox_startup = checkbtn_openinbox_startup;
+	iface.checkbtn_change_account_on_folder_sel =
 		checkbtn_change_account_on_folder_sel;
-	interface.checkbtn_immedexec         = checkbtn_immedexec;
+	iface.checkbtn_immedexec         = checkbtn_immedexec;
 
 #ifndef G_OS_WIN32
-	interface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
+	iface.checkbtn_comply_gnome_hig  = checkbtn_comply_gnome_hig;
 #endif
-	interface.checkbtn_show_trayicon      = checkbtn_show_trayicon;
-	interface.checkbtn_minimize_to_tray   = checkbtn_minimize_to_tray;
-	interface.checkbtn_tray_toggle_window = checkbtn_tray_toggle_window;
+	iface.checkbtn_show_trayicon      = checkbtn_show_trayicon;
+	iface.checkbtn_minimize_to_tray   = checkbtn_minimize_to_tray;
+	iface.checkbtn_tray_toggle_window = checkbtn_tray_toggle_window;
 }
 
 static GtkWidget *prefs_other_create(void)

@@ -4536,8 +4536,8 @@ gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const g
 
 	nodeIf = addrindex_get_interface_list( _addressIndex_ );
 	while( nodeIf ) {
-		AddressInterface *interface = nodeIf->data;
-		nodeDS = interface->listSource;
+		AddressInterface *iface = nodeIf->data;
+		nodeDS = iface->listSource;
 		while( nodeDS ) {
 			ds = nodeDS->data;
 
