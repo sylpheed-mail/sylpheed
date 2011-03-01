@@ -304,9 +304,9 @@ static void addressadd_load_data( AddressIndex *addrIndex ) {
 	gtk_clist_clear( GTK_CLIST( tree ) );
 	list = addrindex_get_interface_list( addrIndex );
 	while( list ) {
-		AddressInterface *interface = list->data;
-		if( interface->type == ADDR_IF_BOOK ) {
-			nodeDS = interface->listSource;
+		AddressInterface *iface = list->data;
+		if( iface->type == ADDR_IF_BOOK ) {
+			nodeDS = iface->listSource;
 			while( nodeDS ) {
 				ds = nodeDS->data;
 				if ( !strcmp( addrindex_ds_get_name( ds ), ADDR_DS_AUTOREG ) )
@@ -395,7 +395,7 @@ gboolean addressadd_autoreg(AddressIndex *addrIndex, const gchar *name,
 			    const gchar *address, const gchar *remarks)
 {
 	ItemPerson *person = NULL;
-	AddressInterface *interface = NULL;
+	AddressInterface *iface = NULL;
 	AddressDataSource *ds = NULL;
 	AddressBookFile *abf = NULL;
 	GList *node_ds;
@@ -406,11 +406,11 @@ gboolean addressadd_autoreg(AddressIndex *addrIndex, const gchar *name,
 	if (!name)
 		name = "";
 
-	interface = addrindex_get_interface(addrIndex, ADDR_IF_BOOK);
-	if (!interface)
+	iface = addrindex_get_interface(addrIndex, ADDR_IF_BOOK);
+	if (!iface)
 		return FALSE;
 
-	for (node_ds = interface->listSource; node_ds != NULL;
+	for (node_ds = iface->listSource; node_ds != NULL;
 	     node_ds = node_ds->next) {
 		ds = node_ds->data;
 		ds_name = addrindex_ds_get_name(ds);

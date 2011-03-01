@@ -1684,17 +1684,17 @@ gint addrindex_create_new_books( AddressIndex *addrIndex ) {
 
 gint addrindex_create_extra_books( AddressIndex *addrIndex ) {
 	GList *node_ds;
-	AddressInterface *interface = NULL;
+	AddressInterface *iface = NULL;
 	AddressDataSource *ds = NULL;
 	const gchar *ds_name;
 
 	g_return_val_if_fail(addrIndex != NULL, -1);
 
-	interface = addrindex_get_interface(addrIndex, ADDR_IF_BOOK);
-	if (!interface)
+	iface = addrindex_get_interface(addrIndex, ADDR_IF_BOOK);
+	if (!iface)
 		return -1;
 
-	for (node_ds = interface->listSource; node_ds != NULL;
+	for (node_ds = iface->listSource; node_ds != NULL;
 	     node_ds = node_ds->next) {
 		ds = node_ds->data;
 		ds_name = addrindex_ds_get_name(ds);
