@@ -2789,6 +2789,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 	GtkTreePath *path;
 	MsgInfo *msginfo = NULL;
 	gint val;
+	gboolean do_mark_read = FALSE;
 
 	g_return_if_fail(iter != NULL);
 
@@ -2804,11 +2805,14 @@ static void summary_display_msg_full(SummaryView *summaryview,
 	gtk_tree_model_get(GTK_TREE_MODEL(summaryview->store), iter,
 			   S_COL_MSG_INFO, &msginfo, -1);
 
+	do_mark_read = prefs_common.always_mark_read_on_show_msg;
+
 	if (new_window) {
 		MessageView *msgview;
 
 		msgview = messageview_create_with_new_window();
 		val = messageview_show(msgview, msginfo, all_headers);
+		do_mark_read = TRUE;
 	} else {
 		MessageView *msgview = summaryview->messageview;
 		gboolean prev_mimeview;
@@ -2826,8 +2830,7 @@ static void summary_display_msg_full(SummaryView *summaryview,
 			gtk_widget_grab_focus(summaryview->treeview);
 	}
 
-	if (val == 0 &&
-	    (new_window || prefs_common.always_mark_read_on_show_msg)) {
+	if (val == 0 && do_mark_read) {
 		if (MSG_IS_NEW(msginfo->flags) ||
 		    MSG_IS_UNREAD(msginfo->flags)) {
 			summary_mark_row_as_read(summaryview, iter);
@@ -5940,8 +5943,7 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
 						    summaryview->selected)) {
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
-			if (!prefs_common.always_show_msg)
-				summary_mark_displayed_read(summaryview, NULL);
+			summary_mark_displayed_read(summaryview, NULL);
 		} else if (mod_pressed) {
 			scrolled = textview_scroll_page(textview, TRUE);
 			if (!scrolled)
@@ -5960,14 +5962,11 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	case GDK_KP_Enter:
 		if (summaryview->selected &&
 		    !gtkut_tree_row_reference_equal(summaryview->displayed,
-						    summaryview->selected)) {
+						    summaryview->selected))
 			summary_display_msg_selected(summaryview, FALSE, FALSE);
-			if (!prefs_common.always_show_msg)
-				summary_mark_displayed_read(summaryview, NULL);
-		} else {
+		else
 			textview_scroll_one_line(textview, mod_pressed);
-			summary_mark_displayed_read(summaryview, NULL);
-		}
+		summary_mark_displayed_read(summaryview, NULL);
 		return TRUE;
 	case GDK_Delete:
 	case GDK_KP_Delete:
