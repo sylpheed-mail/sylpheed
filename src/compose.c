@@ -576,7 +576,7 @@ static GtkItemFactoryEntry compose_popup_entries[] =
 static GtkItemFactoryEntry compose_entries[] =
 {
 	{N_("/_File"),				NULL, NULL, 0, "<Branch>"},
-	{N_("/_File/_Send"),			"<control>Return",
+	{N_("/_File/_Send"),			"<shift><control>E",
 						compose_send_cb, 0, NULL},
 	{N_("/_File/Send _later"),		"<shift><control>S",
 						compose_send_later_cb,  0, NULL},
