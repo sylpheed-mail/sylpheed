@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-24 16:57+0900\n"
+"POT-Creation-Date: 2011-03-23 16:56+0900\n"
 "PO-Revision-Date: 2011-01-21 08:45+0200\n"
 "Last-Translator: Ricardo Mones <ricardo@mones.org>\n"
 "Language-Team: Ricardo Mones <ricardo@mones.org>\n"
@@ -318,7 +318,7 @@ msgstr "las carpetas de origen y destino son idénticas.\n"
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Copiando mensaje %s/%d a %s ...\n"
 
-#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:191
+#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:194
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -598,7 +598,7 @@ msgstr "  Asunto: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Emisor: %s\n"
 
-#: libsylph/utils.c:2942
+#: libsylph/utils.c:2956
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "fallo escribiendo en %s.\n"
@@ -1251,11 +1251,11 @@ msgstr "Dirección común"
 msgid "Personal address"
 msgstr "Dirección personal"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:852
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:855
 msgid "Notice"
 msgstr "Notificación"
 
-#: src/alertpanel.c:155 src/main.c:989
+#: src/alertpanel.c:155 src/main.c:992
 msgid "Warning"
 msgstr "Aviso"
 
@@ -1303,7 +1303,7 @@ msgstr "Marrón"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5251
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5254
 msgid "None"
 msgstr "Ninguno"
 
@@ -1836,7 +1836,7 @@ msgstr "Tipo de datos"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:508
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5400
+#: src/summaryview.c:5403
 msgid "Size"
 msgstr "Tamaño"
 
@@ -1874,11 +1874,11 @@ msgstr "Nombre de fichero"
 msgid "File not exist."
 msgstr "El fichero no existe."
 
-#: src/compose.c:6638 src/mimeview.c:1220
+#: src/compose.c:6638 src/mimeview.c:1220 src/mimeview.c:1235
 msgid "Opening executable file"
 msgstr "Abriendo fichero ejecutable"
 
-#: src/compose.c:6639 src/mimeview.c:1221
+#: src/compose.c:6639 src/mimeview.c:1221 src/mimeview.c:1236
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -2996,8 +2996,8 @@ msgstr "Saliendo"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Recuperando mensaje (%d / %d) (%s / %s)"
 
-#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4744 src/summaryview.c:4934
-#: src/summaryview.c:4985
+#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4747 src/summaryview.c:4937
+#: src/summaryview.c:4988
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3092,16 +3092,16 @@ msgstr "Contraseña"
 msgid "Protocol log"
 msgstr "Traza del protocolo"
 
-#: src/main.c:609
+#: src/main.c:612
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Uso: %s [OPCIÓN]...\n"
 
-#: src/main.c:612
+#: src/main.c:615
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [dirección]  abre la ventana de composición"
 
-#: src/main.c:613
+#: src/main.c:616
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3111,23 +3111,23 @@ msgstr ""
 "                         abre la ventana de composición con los ficheros\n"
 "                         especificados como adjuntos"
 
-#: src/main.c:616
+#: src/main.c:619
 msgid "  --receive              receive new messages"
 msgstr "  --receive              recive los mensajes nuevos"
 
-#: src/main.c:617
+#: src/main.c:620
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          recibe nuevos para todas las cuentas"
 
-#: src/main.c:618
+#: src/main.c:621
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 enviar todos los mensajes en la cola"
 
-#: src/main.c:619
+#: src/main.c:622
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [carpeta]...  muestra el número total de mensajes"
 
-#: src/main.c:620
+#: src/main.c:623
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3135,47 +3135,47 @@ msgstr ""
 "  --status-full [carpeta]...\n"
 "                         muestra el estado de cada carpeta"
 
-#: src/main.c:622
+#: src/main.c:625
 msgid "  --open folderid/msgnum open message in new window"
 msgstr "  --open idcarpeta/nºmsj abre el mensaje en una ventana nueva"
 
-#: src/main.c:623
+#: src/main.c:626
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 "  --configdir nombredir  indicar el directorio con ficheros de configuración"
 
-#: src/main.c:625
+#: src/main.c:628
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 "  --ipcport numpuerto    especificar el puerto IPC para órdenes remotas"
 
-#: src/main.c:627
+#: src/main.c:630
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 finalizar Sylpheed"
 
-#: src/main.c:628
+#: src/main.c:631
 msgid "  --debug                debug mode"
 msgstr "  --debug                modo de depuración"
 
-#: src/main.c:629
+#: src/main.c:632
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 presenta esta ayuda y finaliza"
 
-#: src/main.c:630
+#: src/main.c:633
 msgid "  --version              output version information and exit"
 msgstr "  --version              da la información de la versión y finaliza"
 
-#: src/main.c:634
+#: src/main.c:637
 #, c-format
 msgid "Press any key..."
 msgstr "Pulse cualquier tecla..."
 
-#: src/main.c:769
+#: src/main.c:772
 msgid "Filename encoding"
 msgstr "Codificación de los nombres de fichero"
 
-#: src/main.c:770
+#: src/main.c:773
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3199,19 +3199,19 @@ msgstr ""
 "\n"
 "¿Desea continuar?"
 
-#: src/main.c:853
+#: src/main.c:856
 msgid "Composing message exists. Really quit?"
 msgstr "Está componiendo un mensaje. ¿Seguro que quiere salir?"
 
-#: src/main.c:864
+#: src/main.c:867
 msgid "Queued messages"
 msgstr "Mensajes en cola"
 
-#: src/main.c:865
+#: src/main.c:868
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Hay mensajes sin enviar en la cola. ¿Salir ahora?"
 
-#: src/main.c:990
+#: src/main.c:993
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3219,20 +3219,20 @@ msgstr ""
 "GnuPG no esta convenientemente instalado, o es una versión antigua.\n"
 "Soporte para OpenPGP deshabilitado."
 
-#: src/main.c:1223
+#: src/main.c:1226
 msgid "Loading plug-ins..."
 msgstr "Cargando complementos..."
 
 #. remote command mode
-#: src/main.c:1419
+#: src/main.c:1422
 msgid "another Sylpheed is already running.\n"
 msgstr "ya hay otro Sylpheed en ejecución.\n"
 
-#: src/main.c:1706
+#: src/main.c:1710
 msgid "Migration of configuration"
 msgstr "Migración de la configuración"
 
-#: src/main.c:1707
+#: src/main.c:1711
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3883,7 +3883,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: fallo solicitando color %d\n"
 
 #: src/mainwindow.c:1219 src/summaryview.c:2654 src/summaryview.c:2741
-#: src/summaryview.c:4308 src/summaryview.c:4437 src/summaryview.c:4826
+#: src/summaryview.c:4311 src/summaryview.c:4440 src/summaryview.c:4829
 msgid "done.\n"
 msgstr "hecho.\n"
 
@@ -4157,7 +4157,7 @@ msgstr "Adjuntos"
 msgid "Message View - Sylpheed"
 msgstr "Vista de mensaje - Sylpheed"
 
-#: src/messageview.c:765 src/summaryview.c:3863
+#: src/messageview.c:765 src/summaryview.c:3866
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "No puedo guardar el fichero «%s»."
@@ -4239,7 +4239,7 @@ msgid "_Check signature"
 msgstr "_Verificar firma"
 
 #: src/mimeview.c:1019 src/mimeview.c:1086 src/mimeview.c:1122
-#: src/mimeview.c:1155 src/mimeview.c:1178 src/mimeview.c:1286
+#: src/mimeview.c:1155 src/mimeview.c:1178 src/mimeview.c:1301
 msgid "Can't save the part of multipart message."
 msgstr "No se puede guardar la parte del mensaje multipartes."
 
@@ -4489,7 +4489,7 @@ msgstr "Método de autentificación"
 
 #: src/prefs_account_dialog.c:1028 src/prefs_account_dialog.c:1187
 #: src/prefs_common_dialog.c:1056 src/prefs_common_dialog.c:2614
-#: src/prefs_common_dialog.c:2980
+#: src/prefs_common_dialog.c:2982
 msgid "Automatic"
 msgstr "Automática"
 
@@ -4944,8 +4944,8 @@ msgstr "Actualizar todos las carpetas locales después de incorporar"
 msgid "Execute command when new messages arrived"
 msgstr "Ejecutar orden cuando lleguen nuevos mensajes"
 
-#: src/prefs_common_dialog.c:877 src/prefs_common_dialog.c:2787
-#: src/prefs_common_dialog.c:2809 src/prefs_common_dialog.c:2831
+#: src/prefs_common_dialog.c:877 src/prefs_common_dialog.c:2789
+#: src/prefs_common_dialog.c:2811 src/prefs_common_dialog.c:2833
 msgid "Command"
 msgstr "Orden"
 
@@ -5176,8 +5176,8 @@ msgstr "Ver destinatario en la columna «Desde» si el remitente es usted mismo"
 msgid "Expand threads"
 msgstr "Expandir hilos"
 
-#: src/prefs_common_dialog.c:1663 src/prefs_common_dialog.c:3223
-#: src/prefs_common_dialog.c:3261
+#: src/prefs_common_dialog.c:1663 src/prefs_common_dialog.c:3225
+#: src/prefs_common_dialog.c:3263
 msgid "Date format"
 msgstr "Formato de fecha"
 
@@ -5525,44 +5525,44 @@ msgstr "Órdenes externas (%s se sustituirá con el nombre de fichero / URI)"
 msgid "Web browser"
 msgstr "Navegador web"
 
-#: src/prefs_common_dialog.c:2736 src/prefs_common_dialog.c:4236
-#: src/prefs_common_dialog.c:4257
+#: src/prefs_common_dialog.c:2736 src/prefs_common_dialog.c:4238
+#: src/prefs_common_dialog.c:4259
 msgid "(Default browser)"
 msgstr "(Navegador web por omisión)"
 
-#: src/prefs_common_dialog.c:2775
+#: src/prefs_common_dialog.c:2777
 msgid "Use external program for printing"
 msgstr "Usar programa externo para imprimir"
 
-#: src/prefs_common_dialog.c:2797
+#: src/prefs_common_dialog.c:2799
 msgid "Use external program for incorporation"
 msgstr "Usar un programa externo para incorporar"
 
-#: src/prefs_common_dialog.c:2819
+#: src/prefs_common_dialog.c:2821
 msgid "Use external program for sending"
 msgstr "Usar programa externo para enviar"
 
-#: src/prefs_common_dialog.c:2871
+#: src/prefs_common_dialog.c:2873
 msgid "Update check requires 'curl' command."
 msgstr "La comprobación de actualizaciones requiere el programa «curl»."
 
-#: src/prefs_common_dialog.c:2882
+#: src/prefs_common_dialog.c:2884
 msgid "Enable auto update check"
 msgstr "Activar la comprobación automática de actualizaciones"
 
-#: src/prefs_common_dialog.c:2884
+#: src/prefs_common_dialog.c:2886
 msgid "Use HTTP proxy"
 msgstr "Usar proxy HTTP"
 
-#: src/prefs_common_dialog.c:2886
+#: src/prefs_common_dialog.c:2888
 msgid "HTTP proxy host (hostname:port):"
 msgstr "Servidor proxy HTTP (nombre:puerto):"
 
-#: src/prefs_common_dialog.c:2927
+#: src/prefs_common_dialog.c:2929
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "Activar la comprobación estricta de la integridad de la caché resumen"
 
-#: src/prefs_common_dialog.c:2930
+#: src/prefs_common_dialog.c:2932
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
@@ -5572,275 +5572,275 @@ msgstr ""
 "modificados por otras aplicaciones.\n"
 "Esta opción degradará el rendimiento al mostrar el resumen."
 
-#: src/prefs_common_dialog.c:2937
+#: src/prefs_common_dialog.c:2939
 msgid "Socket I/O timeout:"
 msgstr "Tiempo de espera agotado E/S socket:"
 
-#: src/prefs_common_dialog.c:2950
+#: src/prefs_common_dialog.c:2952
 msgid "second(s)"
 msgstr "segundo(s)"
 
-#: src/prefs_common_dialog.c:2978
+#: src/prefs_common_dialog.c:2980
 msgid "Automatic (Recommended)"
 msgstr "Automático (Recomendado)"
 
-#: src/prefs_common_dialog.c:2983
+#: src/prefs_common_dialog.c:2985
 msgid "7bit ascii (US-ASCII)"
 msgstr "ASCII de 7 bits (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2985
+#: src/prefs_common_dialog.c:2987
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:2987
+#: src/prefs_common_dialog.c:2989
 msgid "Western European (ISO-8859-1)"
 msgstr "Europeo Occidental (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2988
+#: src/prefs_common_dialog.c:2990
 msgid "Western European (ISO-8859-15)"
 msgstr "Europeo Occidental (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2990
+#: src/prefs_common_dialog.c:2992
 msgid "Western European (Windows-1252)"
 msgstr "Europeo Occidental (Windows-1252)"
 
-#: src/prefs_common_dialog.c:2994
+#: src/prefs_common_dialog.c:2996
 msgid "Central European (ISO-8859-2)"
 msgstr "Centroeuropeo (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2996
+#: src/prefs_common_dialog.c:2998
 msgid "Baltic (ISO-8859-13)"
 msgstr "Báltico (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2997
+#: src/prefs_common_dialog.c:2999
 msgid "Baltic (ISO-8859-4)"
 msgstr "Báltico (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2998
+#: src/prefs_common_dialog.c:3000
 msgid "Baltic (Windows-1257)"
 msgstr "Báltico (Windows-1257)"
 
-#: src/prefs_common_dialog.c:3000
+#: src/prefs_common_dialog.c:3002
 msgid "Greek (ISO-8859-7)"
 msgstr "Griego (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:3002
+#: src/prefs_common_dialog.c:3004
 msgid "Arabic (ISO-8859-6)"
 msgstr "Arábigo (ISO-8859-6)"
 
-#: src/prefs_common_dialog.c:3003
+#: src/prefs_common_dialog.c:3005
 msgid "Arabic (Windows-1256)"
 msgstr "Arábigo (Windows-1256)"
 
-#: src/prefs_common_dialog.c:3005
+#: src/prefs_common_dialog.c:3007
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Hebreo (ISO-8859-8)"
 
-#: src/prefs_common_dialog.c:3006
+#: src/prefs_common_dialog.c:3008
 msgid "Hebrew (Windows-1255)"
 msgstr "Hebreo (Windows-1255)"
 
-#: src/prefs_common_dialog.c:3008
+#: src/prefs_common_dialog.c:3010
 msgid "Turkish (ISO-8859-9)"
 msgstr "Turco (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:3010
+#: src/prefs_common_dialog.c:3012
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Cirílico (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:3011
+#: src/prefs_common_dialog.c:3013
 msgid "Cyrillic (KOI8-R)"
 msgstr "Cirílico (KOI8-R)"
 
-#: src/prefs_common_dialog.c:3012
+#: src/prefs_common_dialog.c:3014
 msgid "Cyrillic (KOI8-U)"
 msgstr "Cirílico (KOI8-U)"
 
-#: src/prefs_common_dialog.c:3013
+#: src/prefs_common_dialog.c:3015
 msgid "Cyrillic (Windows-1251)"
 msgstr "Cirílico (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3015
+#: src/prefs_common_dialog.c:3017
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Japonés (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:3017
+#: src/prefs_common_dialog.c:3019
 msgid "Japanese (EUC-JP)"
 msgstr "Japonés (EUC-JP)"
 
-#: src/prefs_common_dialog.c:3018
+#: src/prefs_common_dialog.c:3020
 msgid "Japanese (Shift_JIS)"
 msgstr "Japonés (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:3021
+#: src/prefs_common_dialog.c:3023
 msgid "Simplified Chinese (GB2312)"
 msgstr "Chino simplificado (GB2312)"
 
-#: src/prefs_common_dialog.c:3022
+#: src/prefs_common_dialog.c:3024
 msgid "Simplified Chinese (GBK)"
 msgstr "Chino simplificado (GBK)"
 
-#: src/prefs_common_dialog.c:3023
+#: src/prefs_common_dialog.c:3025
 msgid "Traditional Chinese (Big5)"
 msgstr "Chino tradicional (Big5)"
 
-#: src/prefs_common_dialog.c:3025
+#: src/prefs_common_dialog.c:3027
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Chino tradicional (EUC-TW)"
 
-#: src/prefs_common_dialog.c:3026
+#: src/prefs_common_dialog.c:3028
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Chino (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:3029
+#: src/prefs_common_dialog.c:3031
 msgid "Korean (EUC-KR)"
 msgstr "Coreano (EUC-KR)"
 
-#: src/prefs_common_dialog.c:3031
+#: src/prefs_common_dialog.c:3033
 msgid "Thai (TIS-620)"
 msgstr "Tailandés (TIS-620)"
 
-#: src/prefs_common_dialog.c:3032
+#: src/prefs_common_dialog.c:3034
 msgid "Thai (Windows-874)"
 msgstr "Tailandés (Windows-874)"
 
-#: src/prefs_common_dialog.c:3199
+#: src/prefs_common_dialog.c:3201
 msgid "the full abbreviated weekday name"
 msgstr "el día de la semana abreviado"
 
-#: src/prefs_common_dialog.c:3200
+#: src/prefs_common_dialog.c:3202
 msgid "the full weekday name"
 msgstr "el día de la semana completo"
 
-#: src/prefs_common_dialog.c:3201
+#: src/prefs_common_dialog.c:3203
 msgid "the abbreviated month name"
 msgstr "el nombre del mes abreviado"
 
-#: src/prefs_common_dialog.c:3202
+#: src/prefs_common_dialog.c:3204
 msgid "the full month name"
 msgstr "el nombre del mes completo"
 
-#: src/prefs_common_dialog.c:3203
+#: src/prefs_common_dialog.c:3205
 msgid "the preferred date and time for the current locale"
 msgstr "la fecha y hora preferida para la localización actual"
 
-#: src/prefs_common_dialog.c:3204
+#: src/prefs_common_dialog.c:3206
 msgid "the century number (year/100)"
 msgstr "el número de siglo (año/100)"
 
-#: src/prefs_common_dialog.c:3205
+#: src/prefs_common_dialog.c:3207
 msgid "the day of the month as a decimal number"
 msgstr "el día del mes como número decimal"
 
-#: src/prefs_common_dialog.c:3206
+#: src/prefs_common_dialog.c:3208
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "la hora como número usando el reloj de 24 horas"
 
-#: src/prefs_common_dialog.c:3207
+#: src/prefs_common_dialog.c:3209
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "la hora como número usando el reloj de 12 horas"
 
-#: src/prefs_common_dialog.c:3208
+#: src/prefs_common_dialog.c:3210
 msgid "the day of the year as a decimal number"
 msgstr "el día del año como número decimal"
 
-#: src/prefs_common_dialog.c:3209
+#: src/prefs_common_dialog.c:3211
 msgid "the month as a decimal number"
 msgstr "el mes como número decimal"
 
-#: src/prefs_common_dialog.c:3210
+#: src/prefs_common_dialog.c:3212
 msgid "the minute as a decimal number"
 msgstr "el minuto como número decimal"
 
-#: src/prefs_common_dialog.c:3211
+#: src/prefs_common_dialog.c:3213
 msgid "either AM or PM"
 msgstr "AM o PM"
 
-#: src/prefs_common_dialog.c:3212
+#: src/prefs_common_dialog.c:3214
 msgid "the second as a decimal number"
 msgstr "el segundo como número decimal"
 
-#: src/prefs_common_dialog.c:3213
+#: src/prefs_common_dialog.c:3215
 msgid "the day of the week as a decimal number"
 msgstr "el día de la semana como número decimal"
 
-#: src/prefs_common_dialog.c:3214
+#: src/prefs_common_dialog.c:3216
 msgid "the preferred date for the current locale"
 msgstr "la fecha preferida para la localización actual"
 
-#: src/prefs_common_dialog.c:3215
+#: src/prefs_common_dialog.c:3217
 msgid "the last two digits of a year"
 msgstr "los dos últimos dígitos del año"
 
-#: src/prefs_common_dialog.c:3216
+#: src/prefs_common_dialog.c:3218
 msgid "the year as a decimal number"
 msgstr "el año como número decimal"
 
-#: src/prefs_common_dialog.c:3217
+#: src/prefs_common_dialog.c:3219
 msgid "the time zone or name or abbreviation"
 msgstr "zona horaria o nombre o abreviatura"
 
-#: src/prefs_common_dialog.c:3238
+#: src/prefs_common_dialog.c:3240
 msgid "Specifier"
 msgstr "Especificador"
 
-#: src/prefs_common_dialog.c:3239
+#: src/prefs_common_dialog.c:3241
 msgid "Description"
 msgstr "Descripción"
 
-#: src/prefs_common_dialog.c:3279
+#: src/prefs_common_dialog.c:3281
 msgid "Example"
 msgstr "Ejemplo"
 
-#: src/prefs_common_dialog.c:3360
+#: src/prefs_common_dialog.c:3362
 msgid "Set message colors"
 msgstr "Colores del mensaje"
 
-#: src/prefs_common_dialog.c:3368
+#: src/prefs_common_dialog.c:3370
 msgid "Colors"
 msgstr "Colores"
 
-#: src/prefs_common_dialog.c:3402
+#: src/prefs_common_dialog.c:3404
 msgid "Quoted Text - First Level"
 msgstr "Texto citado - Primer nivel"
 
-#: src/prefs_common_dialog.c:3408
+#: src/prefs_common_dialog.c:3410
 msgid "Quoted Text - Second Level"
 msgstr "Texto citado - Segundo nivel"
 
-#: src/prefs_common_dialog.c:3414
+#: src/prefs_common_dialog.c:3416
 msgid "Quoted Text - Third Level"
 msgstr "Texto citado - Tercer nivel"
 
-#: src/prefs_common_dialog.c:3420
+#: src/prefs_common_dialog.c:3422
 msgid "URI link"
 msgstr "Enlace URI"
 
-#: src/prefs_common_dialog.c:3427
+#: src/prefs_common_dialog.c:3429
 msgid "Recycle quote colors"
 msgstr "Reutilizar colores de citación"
 
-#: src/prefs_common_dialog.c:3494
+#: src/prefs_common_dialog.c:3496
 msgid "Pick color for quotation level 1"
 msgstr "Elejir color para el nivel de citado 1"
 
-#: src/prefs_common_dialog.c:3497
+#: src/prefs_common_dialog.c:3499
 msgid "Pick color for quotation level 2"
 msgstr "Elejir color para el nivel de citado 2"
 
-#: src/prefs_common_dialog.c:3500
+#: src/prefs_common_dialog.c:3502
 msgid "Pick color for quotation level 3"
 msgstr "Elejir color para el nivel de citado 3"
 
-#: src/prefs_common_dialog.c:3503
+#: src/prefs_common_dialog.c:3505
 msgid "Pick color for URI"
 msgstr "Elejir color para URIs"
 
-#: src/prefs_common_dialog.c:3643
+#: src/prefs_common_dialog.c:3645
 msgid "Description of symbols"
 msgstr "Descripción de símbolos"
 
-#: src/prefs_common_dialog.c:3699
+#: src/prefs_common_dialog.c:3701
 msgid ""
 "Date\n"
 "From\n"
@@ -5864,11 +5864,11 @@ msgstr ""
 "Grupos de noticias\n"
 "ID-Mensaje"
 
-#: src/prefs_common_dialog.c:3712
+#: src/prefs_common_dialog.c:3714
 msgid "If x is set, displays expr"
 msgstr "Si x está, muestra expr"
 
-#: src/prefs_common_dialog.c:3716
+#: src/prefs_common_dialog.c:3718
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5882,7 +5882,7 @@ msgstr ""
 "Cuerpo del mensaje citado sin firma\n"
 "El carácter %"
 
-#: src/prefs_common_dialog.c:3724
+#: src/prefs_common_dialog.c:3726
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5894,19 +5894,19 @@ msgstr ""
 "Carácter llave abierta\n"
 "Carácter llave cerrada"
 
-#: src/prefs_common_dialog.c:3778
+#: src/prefs_common_dialog.c:3780
 msgid "Key bindings"
 msgstr "Atajos de teclado"
 
-#: src/prefs_common_dialog.c:3791
+#: src/prefs_common_dialog.c:3793
 msgid "Select the preset of key bindings."
 msgstr "Escoger la configuración de atajos de teclado."
 
-#: src/prefs_common_dialog.c:3801 src/prefs_common_dialog.c:4125
+#: src/prefs_common_dialog.c:3803 src/prefs_common_dialog.c:4127
 msgid "Default"
 msgstr "Por omisión"
 
-#: src/prefs_common_dialog.c:3804 src/prefs_common_dialog.c:4134
+#: src/prefs_common_dialog.c:3806 src/prefs_common_dialog.c:4136
 msgid "Old Sylpheed"
 msgstr "Antiguos de Sylpheed"
 
@@ -6285,19 +6285,19 @@ msgstr "Adjunto"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:422
-#: src/summaryview.c:5393
+#: src/summaryview.c:5396
 msgid "Subject"
 msgstr "Asunto"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:423
-#: src/summaryview.c:5396
+#: src/summaryview.c:5399
 msgid "From"
 msgstr "Desde"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:424
-#: src/summaryview.c:5398
+#: src/summaryview.c:5401
 msgid "Date"
 msgstr "Fecha"
 
@@ -6307,7 +6307,7 @@ msgid "Number"
 msgstr "Número"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5404
+#: src/prefs_summary_column.c:74 src/summaryview.c:5407
 msgid "To"
 msgstr "Para"
 
@@ -6710,7 +6710,7 @@ msgstr "A_cerca de"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - Buzón remoto POP3"
 
-#: src/rpop3.c:421 src/summaryview.c:5402
+#: src/rpop3.c:421 src/summaryview.c:5405
 msgid "No."
 msgstr "No."
 
@@ -7562,95 +7562,95 @@ msgstr "Resumiendo los mensajes..."
 msgid "Writing summary cache (%s)..."
 msgstr "Escribiendo caché resumen (%s)..."
 
-#: src/summaryview.c:3033
+#: src/summaryview.c:3036
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Mensaje %d está marcado\n"
 
-#: src/summaryview.c:3105
+#: src/summaryview.c:3108
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Mensaje %d marcado como leído\n"
 
-#: src/summaryview.c:3318
+#: src/summaryview.c:3321
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Mensaje %d marcado como no leído\n"
 
-#: src/summaryview.c:3383
+#: src/summaryview.c:3386
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Mensaje %s/%d marcado para borrar\n"
 
-#: src/summaryview.c:3411
+#: src/summaryview.c:3414
 msgid "Delete message(s)"
 msgstr "Borrar mensaje(s)"
 
-#: src/summaryview.c:3412
+#: src/summaryview.c:3415
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "¿Quiere realmente borrar el/los mensaje(s) de la papelera?"
 
-#: src/summaryview.c:3488
+#: src/summaryview.c:3491
 msgid "Deleting duplicated messages..."
 msgstr "Borrando mensajes duplicados..."
 
-#: src/summaryview.c:3526
+#: src/summaryview.c:3529
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "Mensaje %s/%d desmarcado\n"
 
-#: src/summaryview.c:3590
+#: src/summaryview.c:3593
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Mensaje %d marcado para mover a %s\n"
 
-#: src/summaryview.c:3622
+#: src/summaryview.c:3625
 msgid "Destination is same as current folder."
 msgstr "El destino es el mismo que la carpeta actual."
 
-#: src/summaryview.c:3659
+#: src/summaryview.c:3662
 msgid "Select folder to move"
 msgstr "Seleccionar carpeta a mover"
 
-#: src/summaryview.c:3689
+#: src/summaryview.c:3692
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Mensaje %d marcado para copiar a %s\n"
 
-#: src/summaryview.c:3720
+#: src/summaryview.c:3723
 msgid "Destination for copy is same as current folder."
 msgstr "El destino de la copia es el mismo que la carpeta actual."
 
-#: src/summaryview.c:3756
+#: src/summaryview.c:3759
 msgid "Select folder to copy"
 msgstr "Seleccionar carpeta a copiar"
 
-#: src/summaryview.c:3906
+#: src/summaryview.c:3909
 msgid "Error occurred while processing messages."
 msgstr "Hubo algún error al procesar los mensajes."
 
-#: src/summaryview.c:4215 src/summaryview.c:4216
+#: src/summaryview.c:4218 src/summaryview.c:4219
 msgid "Building threads..."
 msgstr "Construyendo hilos..."
 
-#: src/summaryview.c:4366 src/summaryview.c:4367
+#: src/summaryview.c:4369 src/summaryview.c:4370
 msgid "Unthreading..."
 msgstr "Deshaciendo hilos..."
 
-#: src/summaryview.c:4660 src/summaryview.c:4721
+#: src/summaryview.c:4663 src/summaryview.c:4724
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrando (%d / %d)..."
 
-#: src/summaryview.c:4787
+#: src/summaryview.c:4790
 msgid "filtering..."
 msgstr "filtrando..."
 
-#: src/summaryview.c:4788
+#: src/summaryview.c:4791
 msgid "Filtering..."
 msgstr "Filtrando..."
 
-#: src/summaryview.c:4833
+#: src/summaryview.c:4836
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "se ha(n) filtrado %d mensaje(s)."

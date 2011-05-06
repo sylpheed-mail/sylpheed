@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-24 16:57+0900\n"
+"POT-Creation-Date: 2011-03-23 16:56+0900\n"
 "PO-Revision-Date: 2011-01-28 01:43+0300\n"
 "Last-Translator: Vladimir Smolyar <v_2e@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -324,7 +324,7 @@ msgstr "тека призначення ідентична до джерела.\
 msgid "Copying message %s/%d to %s ...\n"
 msgstr "Копіювання листа %s/%d до %s ...\n"
 
-#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:191
+#: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:194
 #, c-format
 msgid ""
 "File `%s' already exists.\n"
@@ -604,7 +604,7 @@ msgstr "  Тема:  %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Видав: %s\n"
 
-#: libsylph/utils.c:2942
+#: libsylph/utils.c:2956
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "невдача запису в %s.\n"
@@ -1250,11 +1250,11 @@ msgstr "Спільна адреса"
 msgid "Personal address"
 msgstr "Особиста адреса"
 
-#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:852
+#: src/alertpanel.c:142 src/compose.c:6746 src/main.c:855
 msgid "Notice"
 msgstr "Примітка"
 
-#: src/alertpanel.c:155 src/main.c:989
+#: src/alertpanel.c:155 src/main.c:992
 msgid "Warning"
 msgstr "Попередження"
 
@@ -1302,7 +1302,7 @@ msgstr "Коричневий"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5251
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5254
 msgid "None"
 msgstr "Немає"
 
@@ -1833,7 +1833,7 @@ msgstr "Тип даних"
 #. S_COL_DATE
 #: src/compose.c:5319 src/mimeview.c:217 src/prefs_filter_edit.c:508
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5400
+#: src/summaryview.c:5403
 msgid "Size"
 msgstr "Розмір"
 
@@ -1871,11 +1871,11 @@ msgstr "Ім'я файлу"
 msgid "File not exist."
 msgstr "Файл не існує."
 
-#: src/compose.c:6638 src/mimeview.c:1220
+#: src/compose.c:6638 src/mimeview.c:1220 src/mimeview.c:1235
 msgid "Opening executable file"
 msgstr "Відкриваємо виконуваний файл"
 
-#: src/compose.c:6639 src/mimeview.c:1221
+#: src/compose.c:6639 src/mimeview.c:1221 src/mimeview.c:1236
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -2989,8 +2989,8 @@ msgstr "Виходимо"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Отримання листа (%d / %d) (%s / %s)"
 
-#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4744 src/summaryview.c:4934
-#: src/summaryview.c:4985
+#: src/inc.c:1321 src/inc.c:1348 src/summaryview.c:4747 src/summaryview.c:4937
+#: src/summaryview.c:4988
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3085,16 +3085,16 @@ msgstr "Введення пароля"
 msgid "Protocol log"
 msgstr "Журнал протоколу"
 
-#: src/main.c:609
+#: src/main.c:612
 #, c-format
 msgid "Usage: %s [OPTION]...\n"
 msgstr "Використання: %s [ОПЦІЯ]...\n"
 
-#: src/main.c:612
+#: src/main.c:615
 msgid "  --compose [address]    open composition window"
 msgstr "  --compose [address]    відкрити вікно для нового листа"
 
-#: src/main.c:613
+#: src/main.c:616
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3104,23 +3104,23 @@ msgstr ""
 "                         відкрити вікно створення листа із приєднанням\n"
 "                         вказаних файлів"
 
-#: src/main.c:616
+#: src/main.c:619
 msgid "  --receive              receive new messages"
 msgstr "  --receive              отримати нові листи"
 
-#: src/main.c:617
+#: src/main.c:620
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          отримати нові листи для усіх записів"
 
-#: src/main.c:618
+#: src/main.c:621
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 відіслати всі відкладені листи"
 
-#: src/main.c:619
+#: src/main.c:622
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [тека]...   показати загальну кількість листів"
 
-#: src/main.c:620
+#: src/main.c:623
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3128,45 +3128,45 @@ msgstr ""
 "  --status-full [тека]...\n"
 "                         показати стан кожної теки"
 
-#: src/main.c:622
+#: src/main.c:625
 msgid "  --open folderid/msgnum open message in new window"
 msgstr "  --open idтеки/номерлиста відкрити лист у новому вікні"
 
-#: src/main.c:623
+#: src/main.c:626
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr "  --configdir каталог    вказати каталог для файлів налаштувань"
 
-#: src/main.c:625
+#: src/main.c:628
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr "  --ipcport порт           вказати порт для віддалених команд IPC"
 
-#: src/main.c:627
+#: src/main.c:630
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 вийти з Sylpheed"
 
-#: src/main.c:628
+#: src/main.c:631
 msgid "  --debug                debug mode"
 msgstr "  --debug                режим відлагодження"
 
-#: src/main.c:629
+#: src/main.c:632
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 показати цю довідку і вийти"
 
-#: src/main.c:630
+#: src/main.c:633
 msgid "  --version              output version information and exit"
 msgstr "  --version              видати інформацію про версію і вийти"
 
-#: src/main.c:634
+#: src/main.c:637
 #, c-format
 msgid "Press any key..."
 msgstr "Натисніть будь-яку клавішу..."
 
-#: src/main.c:769
+#: src/main.c:772
 msgid "Filename encoding"
 msgstr "Кодування для імен файлів"
 
-#: src/main.c:770
+#: src/main.c:773
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3190,19 +3190,19 @@ msgstr ""
 "\n"
 "Продовжити?"
 
-#: src/main.c:853
+#: src/main.c:856
 msgid "Composing message exists. Really quit?"
 msgstr "Є незавершені листи. Справді вийти?"
 
-#: src/main.c:864
+#: src/main.c:867
 msgid "Queued messages"
 msgstr "Листи в черзі"
 
-#: src/main.c:865
+#: src/main.c:868
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "У черзі є деякі невідіслані листи. Вийти зараз?"
 
-#: src/main.c:990
+#: src/main.c:993
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3210,20 +3210,20 @@ msgstr ""
 "GnuPG не встановлено належно, або надто стара версія.\n"
 "Відключено підтримку OpenPGP."
 
-#: src/main.c:1223
+#: src/main.c:1226
 msgid "Loading plug-ins..."
 msgstr "Завантажуємо плагіни..."
 
 #. remote command mode
-#: src/main.c:1419
+#: src/main.c:1422
 msgid "another Sylpheed is already running.\n"
 msgstr "вже запущено інший Sylpheed.\n"
 
-#: src/main.c:1706
+#: src/main.c:1710
 msgid "Migration of configuration"
 msgstr "Перенесення налаштувань"
 
-#: src/main.c:1707
+#: src/main.c:1711
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -3875,7 +3875,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "Головне Вікно: невдача виділення кольору %d\n"
 
 #: src/mainwindow.c:1219 src/summaryview.c:2654 src/summaryview.c:2741
-#: src/summaryview.c:4308 src/summaryview.c:4437 src/summaryview.c:4826
+#: src/summaryview.c:4311 src/summaryview.c:4440 src/summaryview.c:4829
 msgid "done.\n"
 msgstr "виконано.\n"
 
@@ -4149,7 +4149,7 @@ msgstr "Вкладення"
 msgid "Message View - Sylpheed"
 msgstr "Зміст листа - Sylpheed"
 
-#: src/messageview.c:765 src/summaryview.c:3863
+#: src/messageview.c:765 src/summaryview.c:3866
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Не вдалося зберегти файл \"%s\"."
@@ -4231,7 +4231,7 @@ msgid "_Check signature"
 msgstr "Перевірити підпис"
 
 #: src/mimeview.c:1019 src/mimeview.c:1086 src/mimeview.c:1122
-#: src/mimeview.c:1155 src/mimeview.c:1178 src/mimeview.c:1286
+#: src/mimeview.c:1155 src/mimeview.c:1178 src/mimeview.c:1301
 msgid "Can't save the part of multipart message."
 msgstr "Не вдалося зберегти одну з частин листа."
 
@@ -4481,7 +4481,7 @@ msgstr "Метод автентифікації"
 
 #: src/prefs_account_dialog.c:1028 src/prefs_account_dialog.c:1187
 #: src/prefs_common_dialog.c:1056 src/prefs_common_dialog.c:2614
-#: src/prefs_common_dialog.c:2980
+#: src/prefs_common_dialog.c:2982
 msgid "Automatic"
 msgstr "Автоматично"
 
@@ -4936,8 +4936,8 @@ msgstr "Оновлювати усі локальні теки після отр�
 msgid "Execute command when new messages arrived"
 msgstr "Виконувати команду після прибуття нових листів"
 
-#: src/prefs_common_dialog.c:877 src/prefs_common_dialog.c:2787
-#: src/prefs_common_dialog.c:2809 src/prefs_common_dialog.c:2831
+#: src/prefs_common_dialog.c:877 src/prefs_common_dialog.c:2789
+#: src/prefs_common_dialog.c:2811 src/prefs_common_dialog.c:2833
 msgid "Command"
 msgstr "Команда"
 
@@ -5167,8 +5167,8 @@ msgstr "Показувати отримувача в колонці \"Від\", 
 msgid "Expand threads"
 msgstr "Розгортати обговорення"
 
-#: src/prefs_common_dialog.c:1663 src/prefs_common_dialog.c:3223
-#: src/prefs_common_dialog.c:3261
+#: src/prefs_common_dialog.c:1663 src/prefs_common_dialog.c:3225
+#: src/prefs_common_dialog.c:3263
 msgid "Date format"
 msgstr "Формат дати"
 
@@ -5515,44 +5515,44 @@ msgstr " Зовнішні команди (%s буде замінено на ім
 msgid "Web browser"
 msgstr "Web-браузер"
 
-#: src/prefs_common_dialog.c:2736 src/prefs_common_dialog.c:4236
-#: src/prefs_common_dialog.c:4257
+#: src/prefs_common_dialog.c:2736 src/prefs_common_dialog.c:4238
+#: src/prefs_common_dialog.c:4259
 msgid "(Default browser)"
 msgstr "(Браузер за замовчуванням)"
 
-#: src/prefs_common_dialog.c:2775
+#: src/prefs_common_dialog.c:2777
 msgid "Use external program for printing"
 msgstr "Використовувати зовнішню програму для друку "
 
-#: src/prefs_common_dialog.c:2797
+#: src/prefs_common_dialog.c:2799
 msgid "Use external program for incorporation"
 msgstr "Використовувати зовнішню програму для прийому "
 
-#: src/prefs_common_dialog.c:2819
+#: src/prefs_common_dialog.c:2821
 msgid "Use external program for sending"
 msgstr "Використовувати зовнішню програму для відсилання"
 
-#: src/prefs_common_dialog.c:2871
+#: src/prefs_common_dialog.c:2873
 msgid "Update check requires 'curl' command."
 msgstr "Перевірка оновлень потребує команди \"curl\"."
 
-#: src/prefs_common_dialog.c:2882
+#: src/prefs_common_dialog.c:2884
 msgid "Enable auto update check"
 msgstr "Увімкнути автоматичну перевірку оновлень"
 
-#: src/prefs_common_dialog.c:2884
+#: src/prefs_common_dialog.c:2886
 msgid "Use HTTP proxy"
 msgstr "Використовувати HTTP-проксі"
 
-#: src/prefs_common_dialog.c:2886
+#: src/prefs_common_dialog.c:2888
 msgid "HTTP proxy host (hostname:port):"
 msgstr "адреса HTTP-проксі (hostname:port)"
 
-#: src/prefs_common_dialog.c:2927
+#: src/prefs_common_dialog.c:2929
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "Ввімкнути строгу перевірку цілісності кешу списку листів"
 
-#: src/prefs_common_dialog.c:2930
+#: src/prefs_common_dialog.c:2932
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
@@ -5561,275 +5561,275 @@ msgstr ""
 "Увімкніть це, якщо вміст тек може змінюватись іншими програмами.\n"
 "Ця опція зменшить швидкість відображення списку повідомлень."
 
-#: src/prefs_common_dialog.c:2937
+#: src/prefs_common_dialog.c:2939
 msgid "Socket I/O timeout:"
 msgstr "Час очікування на відгук сокета:"
 
-#: src/prefs_common_dialog.c:2950
+#: src/prefs_common_dialog.c:2952
 msgid "second(s)"
 msgstr "секунд"
 
-#: src/prefs_common_dialog.c:2978
+#: src/prefs_common_dialog.c:2980
 msgid "Automatic (Recommended)"
 msgstr "Автоматичне (рекомендовано)"
 
-#: src/prefs_common_dialog.c:2983
+#: src/prefs_common_dialog.c:2985
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bit ascii (US-ASCII)"
 
-#: src/prefs_common_dialog.c:2985
+#: src/prefs_common_dialog.c:2987
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:2987
+#: src/prefs_common_dialog.c:2989
 msgid "Western European (ISO-8859-1)"
 msgstr "Західноєвропейська (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:2988
+#: src/prefs_common_dialog.c:2990
 msgid "Western European (ISO-8859-15)"
 msgstr "Західноєвропейська (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:2990
+#: src/prefs_common_dialog.c:2992
 msgid "Western European (Windows-1252)"
 msgstr "Західноєвропейська (Windows-1252)"
 
-#: src/prefs_common_dialog.c:2994
+#: src/prefs_common_dialog.c:2996
 msgid "Central European (ISO-8859-2)"
 msgstr "Центральноєвропейська (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:2996
+#: src/prefs_common_dialog.c:2998
 msgid "Baltic (ISO-8859-13)"
 msgstr "Балтійська (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:2997
+#: src/prefs_common_dialog.c:2999
 msgid "Baltic (ISO-8859-4)"
 msgstr "Балтійська (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:2998
+#: src/prefs_common_dialog.c:3000
 msgid "Baltic (Windows-1257)"
 msgstr "Балтійська (Windows-1257)"
 
-#: src/prefs_common_dialog.c:3000
+#: src/prefs_common_dialog.c:3002
 msgid "Greek (ISO-8859-7)"
 msgstr "Грецька (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:3002
+#: src/prefs_common_dialog.c:3004
 msgid "Arabic (ISO-8859-6)"
 msgstr "Арабська (ISO-8859-6)"
 
-#: src/prefs_common_dialog.c:3003
+#: src/prefs_common_dialog.c:3005
 msgid "Arabic (Windows-1256)"
 msgstr "Арабська (Windows-1256)"
 
-#: src/prefs_common_dialog.c:3005
+#: src/prefs_common_dialog.c:3007
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Єврейська (ISO-8859-8)"
 
-#: src/prefs_common_dialog.c:3006
+#: src/prefs_common_dialog.c:3008
 msgid "Hebrew (Windows-1255)"
 msgstr "Єврейська (Windows-1255)"
 
-#: src/prefs_common_dialog.c:3008
+#: src/prefs_common_dialog.c:3010
 msgid "Turkish (ISO-8859-9)"
 msgstr "Турецька (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:3010
+#: src/prefs_common_dialog.c:3012
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Кирилиця (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:3011
+#: src/prefs_common_dialog.c:3013
 msgid "Cyrillic (KOI8-R)"
 msgstr "Кирилиця (KOI8-R)"
 
-#: src/prefs_common_dialog.c:3012
+#: src/prefs_common_dialog.c:3014
 msgid "Cyrillic (KOI8-U)"
 msgstr "Кирилиця (KOI8-U)"
 
-#: src/prefs_common_dialog.c:3013
+#: src/prefs_common_dialog.c:3015
 msgid "Cyrillic (Windows-1251)"
 msgstr "Кирилиця (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3015
+#: src/prefs_common_dialog.c:3017
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Японська (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:3017
+#: src/prefs_common_dialog.c:3019
 msgid "Japanese (EUC-JP)"
 msgstr "Японська (EUC-JP)"
 
-#: src/prefs_common_dialog.c:3018
+#: src/prefs_common_dialog.c:3020
 msgid "Japanese (Shift_JIS)"
 msgstr "Японська (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:3021
+#: src/prefs_common_dialog.c:3023
 msgid "Simplified Chinese (GB2312)"
 msgstr "Спрощена китайська (GB2312)"
 
-#: src/prefs_common_dialog.c:3022
+#: src/prefs_common_dialog.c:3024
 msgid "Simplified Chinese (GBK)"
 msgstr "Спрощена китайська (GBK)"
 
-#: src/prefs_common_dialog.c:3023
+#: src/prefs_common_dialog.c:3025
 msgid "Traditional Chinese (Big5)"
 msgstr "Традиційна китайська (Big5)"
 
-#: src/prefs_common_dialog.c:3025
+#: src/prefs_common_dialog.c:3027
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Традиційна китайська (EUC-TW)"
 
-#: src/prefs_common_dialog.c:3026
+#: src/prefs_common_dialog.c:3028
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Китайська (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:3029
+#: src/prefs_common_dialog.c:3031
 msgid "Korean (EUC-KR)"
 msgstr "Корейська (EUC-KR)"
 
-#: src/prefs_common_dialog.c:3031
+#: src/prefs_common_dialog.c:3033
 msgid "Thai (TIS-620)"
 msgstr "Тайська (TIS-620)"
 
-#: src/prefs_common_dialog.c:3032
+#: src/prefs_common_dialog.c:3034
 msgid "Thai (Windows-874)"
 msgstr "Тайська (Windows-874)"
 
-#: src/prefs_common_dialog.c:3199
+#: src/prefs_common_dialog.c:3201
 msgid "the full abbreviated weekday name"
 msgstr "скорочена назва дня тижня"
 
-#: src/prefs_common_dialog.c:3200
+#: src/prefs_common_dialog.c:3202
 msgid "the full weekday name"
 msgstr "повна назва дня тижня"
 
-#: src/prefs_common_dialog.c:3201
+#: src/prefs_common_dialog.c:3203
 msgid "the abbreviated month name"
 msgstr "скорочена назва місяця"
 
-#: src/prefs_common_dialog.c:3202
+#: src/prefs_common_dialog.c:3204
 msgid "the full month name"
 msgstr "повна назва місяця"
 
-#: src/prefs_common_dialog.c:3203
+#: src/prefs_common_dialog.c:3205
 msgid "the preferred date and time for the current locale"
 msgstr "бажана дата і час для поточної локалі"
 
-#: src/prefs_common_dialog.c:3204
+#: src/prefs_common_dialog.c:3206
 msgid "the century number (year/100)"
 msgstr "номер сторіччя (рік/100)"
 
-#: src/prefs_common_dialog.c:3205
+#: src/prefs_common_dialog.c:3207
 msgid "the day of the month as a decimal number"
 msgstr "день місяця як десяткове число"
 
-#: src/prefs_common_dialog.c:3206
+#: src/prefs_common_dialog.c:3208
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "година як десяткове число за 24-годинним циферблатом"
 
-#: src/prefs_common_dialog.c:3207
+#: src/prefs_common_dialog.c:3209
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "година як десяткове число за 12-годинним циферблатом"
 
-#: src/prefs_common_dialog.c:3208
+#: src/prefs_common_dialog.c:3210
 msgid "the day of the year as a decimal number"
 msgstr "день року як десяткове число"
 
-#: src/prefs_common_dialog.c:3209
+#: src/prefs_common_dialog.c:3211
 msgid "the month as a decimal number"
 msgstr "місяць як десяткове число"
 
-#: src/prefs_common_dialog.c:3210
+#: src/prefs_common_dialog.c:3212
 msgid "the minute as a decimal number"
 msgstr "хвилини як десяткове число"
 
-#: src/prefs_common_dialog.c:3211
+#: src/prefs_common_dialog.c:3213
 msgid "either AM or PM"
 msgstr "AM чи PM"
 
-#: src/prefs_common_dialog.c:3212
+#: src/prefs_common_dialog.c:3214
 msgid "the second as a decimal number"
 msgstr "секунди як десяткове число"
 
-#: src/prefs_common_dialog.c:3213
+#: src/prefs_common_dialog.c:3215
 msgid "the day of the week as a decimal number"
 msgstr "день тижня як десяткове число"
 
-#: src/prefs_common_dialog.c:3214
+#: src/prefs_common_dialog.c:3216
 msgid "the preferred date for the current locale"
 msgstr "бажана дата для поточної локалі"
 
-#: src/prefs_common_dialog.c:3215
+#: src/prefs_common_dialog.c:3217
 msgid "the last two digits of a year"
 msgstr "останні дві цифри року"
 
-#: src/prefs_common_dialog.c:3216
+#: src/prefs_common_dialog.c:3218
 msgid "the year as a decimal number"
 msgstr "рік як десяткове число"
 
-#: src/prefs_common_dialog.c:3217
+#: src/prefs_common_dialog.c:3219
 msgid "the time zone or name or abbreviation"
 msgstr "часовий пояс, його назва або скорочення"
 
-#: src/prefs_common_dialog.c:3238
+#: src/prefs_common_dialog.c:3240
 msgid "Specifier"
 msgstr "Позначення"
 
-#: src/prefs_common_dialog.c:3239
+#: src/prefs_common_dialog.c:3241
 msgid "Description"
 msgstr "Опис"
 
-#: src/prefs_common_dialog.c:3279
+#: src/prefs_common_dialog.c:3281
 msgid "Example"
 msgstr "Приклад"
 
-#: src/prefs_common_dialog.c:3360
+#: src/prefs_common_dialog.c:3362
 msgid "Set message colors"
 msgstr "Встановити кольори листів"
 
-#: src/prefs_common_dialog.c:3368
+#: src/prefs_common_dialog.c:3370
 msgid "Colors"
 msgstr " Кольори "
 
-#: src/prefs_common_dialog.c:3402
+#: src/prefs_common_dialog.c:3404
 msgid "Quoted Text - First Level"
 msgstr "Цитований текст - перший рівень"
 
-#: src/prefs_common_dialog.c:3408
+#: src/prefs_common_dialog.c:3410
 msgid "Quoted Text - Second Level"
 msgstr "Цитований текст - другий рівень"
 
-#: src/prefs_common_dialog.c:3414
+#: src/prefs_common_dialog.c:3416
 msgid "Quoted Text - Third Level"
 msgstr "Цитований текст - третій рівень"
 
-#: src/prefs_common_dialog.c:3420
+#: src/prefs_common_dialog.c:3422
 msgid "URI link"
 msgstr "URI посилання"
 
-#: src/prefs_common_dialog.c:3427
+#: src/prefs_common_dialog.c:3429
 msgid "Recycle quote colors"
 msgstr "Повторно використовувати кольори цитування"
 
-#: src/prefs_common_dialog.c:3494
+#: src/prefs_common_dialog.c:3496
 msgid "Pick color for quotation level 1"
 msgstr "Обрати колір для цитування рівня 1"
 
-#: src/prefs_common_dialog.c:3497
+#: src/prefs_common_dialog.c:3499
 msgid "Pick color for quotation level 2"
 msgstr "Обрати колір для цитування рівня 2"
 
-#: src/prefs_common_dialog.c:3500
+#: src/prefs_common_dialog.c:3502
 msgid "Pick color for quotation level 3"
 msgstr "Обрати колір для цитування рівня 3"
 
-#: src/prefs_common_dialog.c:3503
+#: src/prefs_common_dialog.c:3505
 msgid "Pick color for URI"
 msgstr "Обрати колір для URI"
 
-#: src/prefs_common_dialog.c:3643
+#: src/prefs_common_dialog.c:3645
 msgid "Description of symbols"
 msgstr "Опис символів"
 
-#: src/prefs_common_dialog.c:3699
+#: src/prefs_common_dialog.c:3701
 msgid ""
 "Date\n"
 "From\n"
@@ -5853,11 +5853,11 @@ msgstr ""
 "Групи новин\n"
 "ID листа"
 
-#: src/prefs_common_dialog.c:3712
+#: src/prefs_common_dialog.c:3714
 msgid "If x is set, displays expr"
 msgstr "якщо встановлено x, показує expr"
 
-#: src/prefs_common_dialog.c:3716
+#: src/prefs_common_dialog.c:3718
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5871,7 +5871,7 @@ msgstr ""
 "Тіло цитованого повідомлення без підпису\n"
 "Символ \"%\""
 
-#: src/prefs_common_dialog.c:3724
+#: src/prefs_common_dialog.c:3726
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5883,19 +5883,19 @@ msgstr ""
 "Символ \"{\"\n"
 "Символ \"}\""
 
-#: src/prefs_common_dialog.c:3778
+#: src/prefs_common_dialog.c:3780
 msgid "Key bindings"
 msgstr "Гарячі клавіші"
 
-#: src/prefs_common_dialog.c:3791
+#: src/prefs_common_dialog.c:3793
 msgid "Select the preset of key bindings."
 msgstr "Обрати раніше встановлені гарячі клавіші."
 
-#: src/prefs_common_dialog.c:3801 src/prefs_common_dialog.c:4125
+#: src/prefs_common_dialog.c:3803 src/prefs_common_dialog.c:4127
 msgid "Default"
 msgstr "За замовчуванням"
 
-#: src/prefs_common_dialog.c:3804 src/prefs_common_dialog.c:4134
+#: src/prefs_common_dialog.c:3806 src/prefs_common_dialog.c:4136
 msgid "Old Sylpheed"
 msgstr "Старий Sylpheed"
 
@@ -6274,19 +6274,19 @@ msgstr "Вкладення"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:422
-#: src/summaryview.c:5393
+#: src/summaryview.c:5396
 msgid "Subject"
 msgstr "Тема"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:423
-#: src/summaryview.c:5396
+#: src/summaryview.c:5399
 msgid "From"
 msgstr "Від"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:424
-#: src/summaryview.c:5398
+#: src/summaryview.c:5401
 msgid "Date"
 msgstr "Дата"
 
@@ -6296,7 +6296,7 @@ msgid "Number"
 msgstr "Номер"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5404
+#: src/prefs_summary_column.c:74 src/summaryview.c:5407
 msgid "To"
 msgstr "Кому"
 
@@ -6699,7 +6699,7 @@ msgstr "Про програму"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - віддалена скринька POP3"
 
-#: src/rpop3.c:421 src/summaryview.c:5402
+#: src/rpop3.c:421 src/summaryview.c:5405
 msgid "No."
 msgstr "Номер"
 
@@ -7552,95 +7552,95 @@ msgstr "Формування списку з даних листів..."
 msgid "Writing summary cache (%s)..."
 msgstr "Запис кешу списку (%s)..."
 
-#: src/summaryview.c:3033
+#: src/summaryview.c:3036
 #, c-format
 msgid "Message %d is marked\n"
 msgstr "Лист %d позначено\n"
 
-#: src/summaryview.c:3105
+#: src/summaryview.c:3108
 #, c-format
 msgid "Message %d is marked as being read\n"
 msgstr "Лист %d позначено як прочитаний\n"
 
-#: src/summaryview.c:3318
+#: src/summaryview.c:3321
 #, c-format
 msgid "Message %d is marked as unread\n"
 msgstr "Лист %d позначено як непрочитаний\n"
 
-#: src/summaryview.c:3383
+#: src/summaryview.c:3386
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "Лист %s/%d призначено до видалення\n"
 
-#: src/summaryview.c:3411
+#: src/summaryview.c:3414
 msgid "Delete message(s)"
 msgstr "Видалити лист(и)"
 
-#: src/summaryview.c:3412
+#: src/summaryview.c:3415
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "Справді видалити лист(и) з кошика?"
 
-#: src/summaryview.c:3488
+#: src/summaryview.c:3491
 msgid "Deleting duplicated messages..."
 msgstr "Видалення повторюваних листів..."
 
-#: src/summaryview.c:3526
+#: src/summaryview.c:3529
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "З листа %s/%d знято позначки\n"
 
-#: src/summaryview.c:3590
+#: src/summaryview.c:3593
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "Лист %d призначено до переміщення в %s\n"
 
-#: src/summaryview.c:3622
+#: src/summaryview.c:3625
 msgid "Destination is same as current folder."
 msgstr "Тека призначення збігається з поточною текою."
 
-#: src/summaryview.c:3659
+#: src/summaryview.c:3662
 msgid "Select folder to move"
 msgstr "Оберіть теку для перенесення"
 
-#: src/summaryview.c:3689
+#: src/summaryview.c:3692
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "Лист %d призначено до копіювання в %s\n"
 
-#: src/summaryview.c:3720
+#: src/summaryview.c:3723
 msgid "Destination for copy is same as current folder."
 msgstr "Тека призначення збігається з поточною текою."
 
-#: src/summaryview.c:3756
+#: src/summaryview.c:3759
 msgid "Select folder to copy"
 msgstr "Оберіть теку для копіювання"
 
-#: src/summaryview.c:3906
+#: src/summaryview.c:3909
 msgid "Error occurred while processing messages."
 msgstr "Під час обробки пошти трапилася помилка."
 
-#: src/summaryview.c:4215 src/summaryview.c:4216
+#: src/summaryview.c:4218 src/summaryview.c:4219
 msgid "Building threads..."
 msgstr "Побудова гілок обговорення..."
 
-#: src/summaryview.c:4366 src/summaryview.c:4367
+#: src/summaryview.c:4369 src/summaryview.c:4370
 msgid "Unthreading..."
 msgstr "Скасування гілок обговорення..."
 
-#: src/summaryview.c:4660 src/summaryview.c:4721
+#: src/summaryview.c:4663 src/summaryview.c:4724
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Фільтрування (%d / %d)..."
 
-#: src/summaryview.c:4787
+#: src/summaryview.c:4790
 msgid "filtering..."
 msgstr "фільтрування..."
 
-#: src/summaryview.c:4788
+#: src/summaryview.c:4791
 msgid "Filtering..."
 msgstr "Фільтрування..."
 
-#: src/summaryview.c:4833
+#: src/summaryview.c:4836
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d листів відфільтровано."
