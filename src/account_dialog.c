@@ -61,8 +61,6 @@ enum
 	N_COLS
 };
 
-#define PREFSBUFSIZE		1024
-
 static struct EditAccount {
 	GtkWidget *window;
 

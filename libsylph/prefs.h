@@ -26,7 +26,7 @@
 typedef struct _PrefParam	PrefParam;
 typedef struct _PrefFile	PrefFile;
 
-#define PREFSBUFSIZE		1024
+#define PREFSBUFSIZE		8192
 
 typedef enum
 {

@@ -37,8 +37,6 @@
 #include "utils.h"
 #include "sylmain.h"
 
-#define PREFSBUFSIZE		1024
-
 PrefsAccount *cur_account;
 
 static GList *account_list = NULL;
