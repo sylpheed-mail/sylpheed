@@ -337,8 +337,7 @@ void prefs_set_data_from_text(PrefParam *pparam)
 			break;
 		}
 
-		Xalloca(tmpp = tmp, strlen(text) * 2 + 1,
-			{ *str = NULL; break; });
+		tmpp = tmp = g_malloc(strlen(text) * 2 + 1);
 		while (*tp) {
 			if (*tp == '\n') {
 				*tmpp++ = '\\';
@@ -348,7 +347,7 @@ void prefs_set_data_from_text(PrefParam *pparam)
 				*tmpp++ = *tp++;
 		}
 		*tmpp = '\0';
-		*str = g_strdup(tmp);
+		*str = tmp;
 		g_free(text);
 		break;
 	default:
@@ -374,27 +373,25 @@ void prefs_set_text(PrefParam *pparam)
 	case P_STRING:
 		str = (gchar **)pparam->data;
 		if (*str) {
-			bufp = buf = alloca(strlen(*str) + 1);
-			if (!buf) buf = "";
-			else {
-				sp = *str;
-				while (*sp) {
-					if (*sp == '\\' && *(sp + 1) == 'n') {
-						*bufp++ = '\n';
-						sp += 2;
-					} else
-						*bufp++ = *sp++;
-				}
-				*bufp = '\0';
+			bufp = buf = g_malloc(strlen(*str) + 1);
+			sp = *str;
+			while (*sp) {
+				if (*sp == '\\' && *(sp + 1) == 'n') {
+					*bufp++ = '\n';
+					sp += 2;
+				} else
+					*bufp++ = *sp++;
 			}
+			*bufp = '\0';
 		} else
-			buf = "";
+			buf = g_strdup("");
 
 		text = GTK_TEXT_VIEW(*ui_data->widget);
 		buffer = gtk_text_view_get_buffer(text);
 		gtk_text_buffer_set_text(buffer, "", 0);
 		gtk_text_buffer_get_start_iter(buffer, &iter);
 		gtk_text_buffer_insert(buffer, &iter, buf, -1);
+		g_free(buf);
 		break;
 	default:
 		g_warning("Invalid PrefType for GtkTextView widget: %d\n",
