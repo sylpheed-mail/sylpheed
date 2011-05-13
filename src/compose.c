@@ -4536,27 +4536,15 @@ static gint compose_write_attach(Compose *compose, FILE *fp,
 	return 0;
 }
 
-#define QUOTE_IF_REQUIRED(out, str)			\
-{							\
-	if (*str != '"' && strpbrk(str, ",.[]<>")) {	\
-		gchar *__tmp;				\
-		gint len;				\
-							\
-		len = strlen(str) + 3;			\
-		Xalloca(__tmp, len, return -1);		\
-		g_snprintf(__tmp, len, "\"%s\"", str);	\
-		out = __tmp;				\
-	} else {					\
-		Xstrdup_a(out, str, return -1);		\
-	}						\
-}
+#define QUOTE_REQUIRED(str) \
+	(*str != '"' && strpbrk(str, ",.[]<>") != NULL)
 
 #define PUT_RECIPIENT_HEADER(header, str)				     \
 {									     \
 	if (*str != '\0') {						     \
 		gchar *dest;						     \
 									     \
-		Xstrdup_a(dest, str, return -1);			     \
+		dest = g_strdup(str);					     \
 		g_strstrip(dest);					     \
 		if (*dest != '\0') {					     \
 			compose->to_list = address_list_append		     \
@@ -4566,6 +4554,7 @@ static gint compose_write_attach(Compose *compose, FILE *fp,
 				 strlen(header) + 2, TRUE, charset);	     \
 			fprintf(fp, "%s: %s\n", header, buf);		     \
 		}							     \
+		g_free(dest);						     \
 	}								     \
 }
 
@@ -4581,7 +4570,6 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	gchar buf[BUFFSIZE];
 	const gchar *entry_str;
 	gchar *str;
-	gchar *name;
 
 	g_return_val_if_fail(fp != NULL, -1);
 	g_return_val_if_fail(charset != NULL, -1);
@@ -4599,9 +4587,12 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		compose_convert_header
 			(compose, buf, sizeof(buf), compose->account->name,
 			 strlen("From: "), TRUE, charset);
-		QUOTE_IF_REQUIRED(name, buf);
-		fprintf(fp, "From: %s <%s>\n",
-			name, compose->account->address);
+		if (QUOTE_REQUIRED(buf))
+			fprintf(fp, "From: \"%s\" <%s>\n",
+				buf, compose->account->address);
+		else
+			fprintf(fp, "From: %s <%s>\n",
+				buf, compose->account->address);
 	} else
 		fprintf(fp, "From: %s\n", compose->account->address);
 
