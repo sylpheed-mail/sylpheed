@@ -1019,16 +1019,15 @@ static gchar *make_email_string(const gchar *bp, const gchar *ep)
 }
 
 #define ADD_TXT_POS(bp_, ep_, pti_) \
-	if ((last->next = alloca(sizeof(struct txtpos))) != NULL) { \
-		last = last->next; \
-		last->bp = (bp_); last->ep = (ep_); last->pti = (pti_); \
-		last->next = NULL; \
-	} else { \
-		g_warning("alloc error scanning URIs\n"); \
-		gtk_text_buffer_insert_with_tags_by_name \
-			(buffer, &iter, linebuf, -1, fg_tag, NULL); \
-		return; \
-	}
+{ \
+	struct txtpos *last; \
+ \
+	last = g_new(struct txtpos, 1); \
+	last->bp = (bp_); \
+	last->ep = (ep_); \
+	last->pti = (pti_); \
+	txtpos_list = g_slist_append(txtpos_list, last); \
+}
 
 /* textview_make_clickable_parts() - colorizes clickable parts */
 static void textview_make_clickable_parts(TextView *textview,
@@ -1076,8 +1075,8 @@ static void textview_make_clickable_parts(TextView *textview,
 	struct txtpos {
 		const gchar	*bp, *ep;	/* text position */
 		gint		 pti;		/* index in parse table */
-		struct txtpos	*next;		/* next */
-	} head = {NULL, NULL, 0,  NULL}, *last = &head;
+	};
+	GSList *txtpos_list = NULL;
 
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_get_end_iter(buffer, &iter);
@@ -1119,36 +1118,41 @@ static void textview_make_clickable_parts(TextView *textview,
 	}
 
 	/* colorize this line */
-	if (head.next) {
+	if (txtpos_list) {
 		const gchar *normal_text = linebuf;
+		GSList *cur;
 
 		/* insert URIs */
-		for (last = head.next; last != NULL;
-		     normal_text = last->ep, last = last->next) {
+		for (cur = txtpos_list; cur != NULL; cur = cur->next) {
+			struct txtpos *pos = (struct txtpos *)cur->data;
 			RemoteURI *uri;
 
 			uri = g_new(RemoteURI, 1);
-			if (last->bp - normal_text > 0)
+			if (pos->bp - normal_text > 0)
 				gtk_text_buffer_insert_with_tags_by_name
 					(buffer, &iter,
 					 normal_text,
-					 last->bp - normal_text,
+					 pos->bp - normal_text,
 					 fg_tag, NULL);
-			uri->uri = parser[last->pti].build_uri(last->bp,
-							       last->ep);
+			uri->uri = parser[pos->pti].build_uri(pos->bp, pos->ep);
 			uri->filename = NULL;
 			uri->start = gtk_text_iter_get_offset(&iter);
 			gtk_text_buffer_insert_with_tags_by_name
-				(buffer, &iter, last->bp, last->ep - last->bp,
+				(buffer, &iter, pos->bp, pos->ep - pos->bp,
 				 uri_tag, fg_tag, NULL);
 			uri->end = gtk_text_iter_get_offset(&iter);
 			textview->uri_list =
 				g_slist_append(textview->uri_list, uri);
+			normal_text = pos->ep;
+
+			g_free(pos);
 		}
 
 		if (*normal_text)
 			gtkut_text_buffer_insert_with_tag_by_name
 				(buffer, &iter, normal_text, -1, fg_tag);
+
+		g_slist_free(txtpos_list);
 	} else {
 		gtkut_text_buffer_insert_with_tag_by_name
 			(buffer, &iter, linebuf, -1, fg_tag);
