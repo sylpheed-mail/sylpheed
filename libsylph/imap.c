@@ -4749,9 +4749,12 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 	gchar *norm_utf7, *norm_utf7_p;
 	size_t from_len, norm_utf7_len;
 	GString *to_str;
-	gchar *from_tmp, *to, *p;
+	const gchar *from_tmp;
+	const gchar *p;
+	gchar *to;
 	gboolean in_escape = FALSE;
 
+	g_print("imap_utf8_to_modified_utf7\n");
 	if (!iconv_ok) return g_strdup(from);
 
 	if (cd == (iconv_t)-1) {
@@ -4765,10 +4768,10 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 	}
 
 	/* UTF-8 to normal UTF-7 conversion */
-	Xstrdup_a(from_tmp, from, return g_strdup(from));
+	from_tmp = from;
 	from_len = strlen(from);
 	norm_utf7_len = from_len * 5;
-	Xalloca(norm_utf7, norm_utf7_len + 1, return g_strdup(from));
+	norm_utf7 = g_malloc(norm_utf7_len + 1);
 	norm_utf7_p = norm_utf7;
 
 	while (from_len > 0) {
@@ -4801,6 +4804,7 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 				  &norm_utf7_p, &norm_utf7_len) == -1) {
 				g_warning("iconv cannot convert %s to UTF-7\n",
 					  CS_INTERNAL);
+				g_free(norm_utf7);
 				return g_strdup(from);
 			}
 
@@ -4841,8 +4845,8 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 		g_string_append_c(to_str, '-');
 	}
 
-	to = to_str->str;
-	g_string_free(to_str, FALSE);
+	to = g_string_free(to_str, FALSE);
+	g_free(norm_utf7);
 
 	return to;
 }
