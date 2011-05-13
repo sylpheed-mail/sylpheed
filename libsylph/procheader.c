@@ -749,7 +749,7 @@ gchar *procheader_get_fromname(const gchar *str)
 {
 	gchar *tmp, *name;
 
-	Xstrdup_a(tmp, str, return NULL);
+	tmp = g_strdup(str);
 
 	if (*tmp == '\"') {
 		extract_quote_with_escape(tmp, '\"');
@@ -767,10 +767,11 @@ gchar *procheader_get_fromname(const gchar *str)
 		g_strstrip(tmp);
 	}
 
-	if (*tmp == '\0')
+	if (*tmp == '\0') {
+		g_free(tmp);
 		name = g_strdup(str);
-	else
-		name = g_strdup(tmp);
+	} else
+		name = tmp;
 
 	return name;
 }
@@ -919,9 +920,8 @@ void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
 {
 	struct tm *lt;
 	gchar *default_format = "%y/%m/%d(%a) %H:%M";
-	gchar *tmp, *buf;
-
-	Xalloca(tmp, len + 1, dest[0] = '\0'; return;);
+	gchar *buf;
+	gchar tmp[BUFFSIZE];
 
 	lt = localtime(&timer);
 	if (!lt) {
@@ -931,9 +931,9 @@ void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
 	}
 
 	if (prefs_common.date_format)
-		strftime(tmp, len, prefs_common.date_format, lt);
+		strftime(tmp, sizeof(tmp), prefs_common.date_format, lt);
 	else
-		strftime(tmp, len, default_format, lt);
+		strftime(tmp, sizeof(tmp), default_format, lt);
 
 	buf = conv_localetodisp(tmp, NULL);
 	strncpy2(dest, buf, len);
