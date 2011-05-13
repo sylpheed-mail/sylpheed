@@ -4754,7 +4754,6 @@ static gchar *imap_utf8_to_modified_utf7(const gchar *from)
 	gchar *to;
 	gboolean in_escape = FALSE;
 
-	g_print("imap_utf8_to_modified_utf7\n");
 	if (!iconv_ok) return g_strdup(from);
 
 	if (cd == (iconv_t)-1) {
