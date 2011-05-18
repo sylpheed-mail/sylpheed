@@ -2357,7 +2357,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 
 				mb_len = g_utf8_skip[*(guchar *)p];
 
-				Xstrndup_a(part_str, srcp, cur_len + mb_len, );
+				part_str = g_strndup(srcp, cur_len + mb_len);
 				out_str = conv_codeset_strdup_full
 					(part_str, src_encoding, block_encoding,
 					 &error);
@@ -2376,6 +2376,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 							((guchar *)out_str);
 
 				g_free(out_str);
+				g_free(part_str);
 
 				if (mimestr_len + strlen(block_encoding) + out_enc_str_len <= left) {
 					cur_len += mb_len;
@@ -2394,8 +2395,8 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 			}
 
 			if (cur_len > 0) {
-				Xstrndup_a(part_str, srcp, cur_len, );
 				error = 0;
+				part_str = g_strndup(srcp, cur_len);
 				out_str = conv_codeset_strdup_full
 					(part_str, src_encoding, block_encoding,
 					 &error);
@@ -2413,15 +2414,13 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 						qp_get_q_encoding_len
 							((guchar *)out_str);
 
-				Xalloca(enc_str, out_enc_str_len + 1, );
+				enc_str = g_malloc(out_enc_str_len + 1);
 				if (use_base64)
 					base64_encode(enc_str,
 						      (guchar *)out_str,
 						      out_str_len);
 				else
 					qp_q_encode(enc_str, (guchar *)out_str);
-
-				g_free(out_str);
 
 				/* output MIME-encoded string block */
 				mime_block_len = mimestr_len +
@@ -2435,6 +2434,10 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 				srcp += cur_len;
 
 				left -= mime_block_len;
+
+				g_free(enc_str);
+				g_free(out_str);
+				g_free(part_str);
 			}
 
 			LBREAK_IF_REQUIRED(cont, FALSE);
