@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -124,5 +124,7 @@ gint imap_msg_list_unset_perm_flags	(GSList		*msglist,
 
 gint imap_msg_list_set_colorlabel_flags	(GSList		*msglist,
 					 guint		 color);
+
+gboolean imap_is_session_active		(IMAPFolder	*folder);
 
 #endif /* __IMAP_H__ */

@@ -172,7 +172,8 @@ gint folder_remote_folder_destroy_all_sessions(void)
 		folder = FOLDER(list->data);
 		if (FOLDER_IS_REMOTE(folder)) {
 			rfolder = REMOTE_FOLDER(folder);
-			if (rfolder->session) {
+			if (rfolder->session &&
+			    !folder_remote_folder_is_session_active(rfolder)) {
 				session_destroy(rfolder->session);
 				rfolder->session = NULL;
 			}
@@ -180,6 +181,34 @@ gint folder_remote_folder_destroy_all_sessions(void)
 	}
 
 	return 0;
+}
+
+gboolean folder_remote_folder_is_session_active(RemoteFolder *rfolder)
+{
+	g_return_val_if_fail(rfolder != NULL, FALSE);
+
+	if (FOLDER_TYPE(rfolder) == F_IMAP)
+		return imap_is_session_active(IMAP_FOLDER(rfolder));
+
+	return FALSE;
+}
+
+gboolean folder_remote_folder_active_session_exist(void)
+{
+	GList *list;
+	Folder *folder;
+	RemoteFolder *rfolder;
+
+	for (list = folder_list; list != NULL; list = list->next) {
+		folder = FOLDER(list->data);
+		if (FOLDER_IS_REMOTE(folder)) {
+			rfolder = REMOTE_FOLDER(folder);
+			if (folder_remote_folder_is_session_active(rfolder))
+				return TRUE;
+		}
+	}
+
+	return FALSE;
 }
 
 gint folder_scan_tree(Folder *folder)

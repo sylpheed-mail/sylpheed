@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -334,6 +334,10 @@ void        folder_local_folder_destroy	(LocalFolder	*lfolder);
 void        folder_remote_folder_destroy(RemoteFolder	*rfolder);
 
 gint        folder_remote_folder_destroy_all_sessions	(void);
+
+gboolean    folder_remote_folder_is_session_active
+					(RemoteFolder	*rfolder);
+gboolean folder_remote_folder_active_session_exist	(void);
 
 gint        folder_scan_tree		(Folder		*folder);
 gint        folder_create_tree		(Folder		*folder);

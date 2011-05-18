@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -5112,3 +5112,20 @@ static gint imap_thread_run_progress(IMAPSession *session, IMAPThreadFunc func,
 	return ret;
 }
 #endif /* USE_THREADS */
+
+gboolean imap_is_session_active(IMAPFolder *folder)
+{
+#if USE_THREADS
+	IMAPRealSession *real;
+
+	g_return_val_if_fail(folder != NULL, FALSE);
+
+	real = (IMAPRealSession *)(REMOTE_FOLDER(folder)->session);
+	if (!real)
+		return FALSE;
+
+	return real->is_running;
+#else
+	return FALSE;
+#endif
+}

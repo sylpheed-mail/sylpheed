@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3075,10 +3075,18 @@ static void online_switch_clicked(GtkWidget *widget, gpointer data)
 	MainWindow *mainwin = (MainWindow *)data;
 	GtkWidget *menuitem;
 
+	debug_print("Toggle online mode: %d -> %d\n", prefs_common.online_mode,
+		    !prefs_common.online_mode);
+
 	menuitem = gtk_item_factory_get_item(mainwin->menu_factory,
 					     "/File/Work offline");
 
 	if (prefs_common.online_mode == TRUE) {
+		if (folder_remote_folder_active_session_exist()) {
+			debug_print("Active session exist. Cancelling online switch.\n");
+			return;
+		}
+
 		prefs_common.online_mode = FALSE;
 		gtk_widget_hide(mainwin->online_pixmap);
 		gtk_widget_show(mainwin->offline_pixmap);
@@ -3363,6 +3371,14 @@ static void print_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 static void toggle_offline_cb(MainWindow *mainwin, guint action,
 			      GtkWidget *widget)
 {
+	if (GTK_CHECK_MENU_ITEM(widget)->active &&
+	    folder_remote_folder_active_session_exist()) {
+		debug_print("Active session exist. Cancelling online switch.\n");
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
+					       FALSE);
+		return;
+	}
+
 	main_window_toggle_online
 		(mainwin, !GTK_CHECK_MENU_ITEM(widget)->active);
 }
