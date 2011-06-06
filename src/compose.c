@@ -3568,10 +3568,11 @@ static gint compose_send(Compose *compose)
 			if (!drop_done) {
 				outbox = account_get_special_folder
 					(compose->account, F_OUTBOX);
-				if (procmsg_save_to_outbox(outbox, tmp) < 0)
+				if (procmsg_save_to_outbox(outbox, tmp) < 0) {
 					alertpanel_error
-						(_("Can't save the message to outbox."));
-				else
+						(_("Sending of message was completed, but the message could not be saved to outbox."));
+					ok = -2;
+				} else
 					folderview_update_item(outbox, TRUE);
 			}
 		}
