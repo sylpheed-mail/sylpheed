@@ -1,5 +1,11 @@
 2011-06-06
 
+	* src/compose.c: compose_generate_msgid(): don't use mailbox part
+	  of address directly, instead use md5 hash of random number + mailbox
+	  part.
+
+2011-06-06
+
 	* src/compose.c: compose_send(): don't close compose window when
 	  saving to outbox failed.
 

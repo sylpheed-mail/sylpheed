@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,6 +134,7 @@
 #include "template.h"
 #include "undo.h"
 #include "plugin.h"
+#include "md5.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -4996,31 +4997,48 @@ static void compose_generate_msgid(Compose *compose, gchar *buf, gint len)
 {
 	struct tm *lt;
 	time_t t;
-	gchar *addr;
+	const gchar *addr, *p;
+	gchar *addr_left;
+	gchar *addr_right;
+	gchar hash_str[64];
+	SMD5 *md5;
+	gchar *md5str;
 
 	t = time(NULL);
 	lt = localtime(&t);
 
 	if (compose->account && compose->account->address &&
 	    *compose->account->address) {
-		if (strchr(compose->account->address, '@'))
-			addr = g_strdup(compose->account->address);
-		else
-			addr = g_strconcat(compose->account->address, "@",
-					   get_domain_name(), NULL);
-	} else
-		addr = g_strconcat(g_get_user_name(), "@", get_domain_name(),
-				   NULL);
+		addr = compose->account->address;
+		if ((p = strchr(addr, '@'))) {
+			addr_left = g_strndup(addr, p - addr);
+			addr_right = g_strdup(p + 1);
+		} else {
+			addr_left = g_strdup(addr);
+			addr_right = g_strdup(get_domain_name());
+		}
+	} else {
+		addr_left = g_strdup(g_get_user_name());
+		addr_right = g_strdup(get_domain_name());
+	}
 
-	g_snprintf(buf, len, "%04d%02d%02d%02d%02d%02d.%08x.%s",
+	g_snprintf(hash_str, sizeof(hash_str), "%08x%s",
+		   g_random_int(), addr_left);
+	md5 = s_gnet_md5_new((guchar *)hash_str, strlen(hash_str));
+	md5str = s_gnet_md5_get_string(md5);
+
+	g_snprintf(buf, len, "%04d%02d%02d%02d%02d%02d.%.24s@%s",
 		   lt->tm_year + 1900, lt->tm_mon + 1,
 		   lt->tm_mday, lt->tm_hour,
 		   lt->tm_min, lt->tm_sec,
-		   g_random_int(), addr);
+		   md5str, addr_right);
 
-	debug_print(_("generated Message-ID: %s\n"), buf);
+	g_free(md5str);
+	s_gnet_md5_delete(md5);
+	g_free(addr_right);
+	g_free(addr_left);
 
-	g_free(addr);
+	debug_print("generated Message-ID: %s\n", buf);
 }
 
 static void compose_add_entry_field(GtkWidget *table, GtkWidget **hbox,
