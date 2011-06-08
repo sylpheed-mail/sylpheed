@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@
 #include "gtkutils.h"
 #include "utils.h"
 #include "rfc2015.h"
+#include "plugin.h"
 
 static GList *messageview_list = NULL;
 
@@ -532,6 +533,9 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 
 	if (messageview->new_window)
 		messageview_set_menu_state(messageview);
+
+	syl_plugin_signal_emit("messageview-show", messageview, msginfo,
+			       all_headers);
 
 	g_free(file);
 

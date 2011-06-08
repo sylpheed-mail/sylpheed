@@ -37,6 +37,7 @@ enum {
 	COMPOSE_DESTROY,
 	TEXTVIEW_MENU_POPUP,
 	COMPOSE_SEND,
+	MESSAGEVIEW_SHOW,
 	LAST_SIGNAL
 };
 
@@ -187,6 +188,18 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_INT,
 			     G_TYPE_STRING,
 			     G_TYPE_POINTER);
+	plugin_signals[MESSAGEVIEW_SHOW] =
+		g_signal_new("messageview-show",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, messageview_show),
+			     NULL, NULL,
+			     syl_plugin_marshal_VOID__POINTER_POINTER_BOOLEAN,
+			     G_TYPE_NONE,
+			     3,
+			     G_TYPE_POINTER,
+			     G_TYPE_POINTER,
+			     G_TYPE_BOOLEAN);
 }
 
 void syl_plugin_signal_connect(const gchar *name, GCallback callback,

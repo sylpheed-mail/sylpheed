@@ -78,6 +78,11 @@ struct _SylPluginClass
 					 gint		 send_mode,
 					 const gchar	*msg_file,
 					 GSList		*to_list);
+
+	void (* messageview_show)	(GObject	*obj,
+					 gpointer	 msgview,
+					 MsgInfo	*msginfo,
+					 gboolean	 all_headers);
 };
 
 struct _SylPluginInfo

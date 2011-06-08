@@ -54,6 +54,8 @@ static void compose_destroy_cb(GObject *obj, gpointer compose);
 static gboolean compose_send_cb(GObject *obj, gpointer compose,
 				gint compose_mode, gint send_mode,
 				const gchar *msg_file, GSList *to_list);
+static void messageview_show_cb(GObject *obj, gpointer msgview,
+				MsgInfo *msginfo, gboolean all_headers);
 
 static void create_window(void);
 static void create_folderview_sub_widget(void);
@@ -105,6 +107,8 @@ void plugin_load(void)
 				  G_CALLBACK(compose_destroy_cb), NULL);
 	syl_plugin_signal_connect("compose-send",
 				  G_CALLBACK(compose_send_cb), NULL);
+	syl_plugin_signal_connect("messageview-show",
+				  G_CALLBACK(messageview_show_cb), NULL);
 
 	syl_plugin_add_factory_item("<SummaryView>", "/---", NULL, NULL);
 	syl_plugin_add_factory_item("<SummaryView>", "/Test Plug-in menu",
@@ -233,6 +237,14 @@ static gboolean compose_send_cb(GObject *obj, gpointer compose,
 		compose_mode, send_mode, msg_file);
 
 	return TRUE; /* return FALSE to cancel sending */
+}
+
+static void messageview_show_cb(GObject *obj, gpointer msgview,
+				MsgInfo *msginfo, gboolean all_headers)
+{
+	g_print("test: %p: messageview_show (%p), all_headers: %d: %s\n",
+		obj, msgview, all_headers,
+		msginfo && msginfo->subject ? msginfo->subject : "");
 }
 
 static void button_clicked(GtkWidget *widget, gpointer data)
