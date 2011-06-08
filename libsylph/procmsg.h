@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -294,6 +294,10 @@ guint	procmsg_get_thread_date		(GNode		*node);
 
 gint	procmsg_move_messages		(GSList		*mlist);
 gint	procmsg_copy_messages		(GSList		*mlist);
+
+gint	procmsg_add_messages_from_queue	(FolderItem	*dest,
+					 GSList		*mlist,
+					 gboolean	 is_move);
 
 gchar  *procmsg_get_message_file_path	(MsgInfo	*msginfo);
 gchar  *procmsg_get_message_file	(MsgInfo	*msginfo);

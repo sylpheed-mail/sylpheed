@@ -1299,6 +1299,75 @@ gint procmsg_copy_messages(GSList *mlist)
 	return val == -1 ? -1 : 0;
 }
 
+gint procmsg_add_messages_from_queue(FolderItem *dest, GSList *mlist,
+				     gboolean is_move)
+{
+	MsgInfo *msginfo;
+	GSList *cur;
+	gchar *file;
+	FILE *fp;
+	gchar buf[BUFFSIZE];
+	gchar *dest_file;
+	gboolean is_error = FALSE;
+	FolderItem *src;
+	MsgFlags flags;
+
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(mlist != NULL, -1);
+
+	msginfo = (MsgInfo *)mlist->data;
+	if (!msginfo || !msginfo->folder || msginfo->folder->stype != F_QUEUE ||
+	    !MSG_IS_QUEUED(msginfo->flags) || dest->stype == F_QUEUE)
+		return -1;
+
+	debug_print("procmsg_add_messages_from_queue: adding messages from queue folder\n");
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+		flags = msginfo->flags;
+		if (!MSG_IS_QUEUED(flags))
+			return -1;
+		MSG_UNSET_TMP_FLAGS(flags, MSG_QUEUED);
+		src = msginfo->folder;
+		file = procmsg_get_message_file(msginfo);
+		if (!file)
+			return -1;
+		if ((fp = g_fopen(file, "rb")) == NULL) {
+			FILE_OP_ERROR(file, "folder_item_move_msgs: fopen");
+			g_free(file);
+			return -1;
+		}
+		while (fgets(buf, sizeof(buf), fp) != NULL) {
+			if (buf[0] == '\r' || buf[0] == '\n')
+				break;
+		}
+		if (ferror(fp)) {
+			fclose(fp);
+			g_free(file);
+			return -1;
+		}
+
+		dest_file = get_tmp_file();
+		g_print("copy queued msg: %s -> %s\n", file, dest_file);
+
+		if (copy_file_part(fp, ftell(fp), G_MAXINT, dest_file) < 0)
+			is_error = TRUE;
+		else if (folder_item_add_msg(dest, dest_file, &flags, TRUE) < 0) {
+			g_unlink(dest_file);
+			is_error = TRUE;
+		} else if (is_move && folder_item_remove_msg(src, msginfo) < 0)
+			is_error = TRUE;
+
+		g_free(dest_file);
+		fclose(fp);
+		g_free(file);
+		if (is_error)
+			return -1;
+	}
+
+	return 0;
+}
+
 gchar *procmsg_get_message_file_path(MsgInfo *msginfo)
 {
 	gchar *path, *file;

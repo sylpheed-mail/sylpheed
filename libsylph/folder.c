@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1319,6 +1319,10 @@ gint folder_item_add_msgs_msginfo(FolderItem *dest, GSList *msglist,
 					       remove_source, first);
 }
 
+#define IS_FROM_QUEUE(m, d) \
+	(m->folder && m->folder->stype == F_QUEUE && \
+	 MSG_IS_QUEUED(m->flags) && d->stype != F_QUEUE)
+
 gint folder_item_move_msg(FolderItem *dest, MsgInfo *msginfo)
 {
 	Folder *folder;
@@ -1329,18 +1333,31 @@ gint folder_item_move_msg(FolderItem *dest, MsgInfo *msginfo)
 
 	folder = dest->folder;
 
+	if (IS_FROM_QUEUE(msginfo, dest)) {
+		GSList msglist;
+
+		msglist.data = msginfo;
+		msglist.next = NULL;
+		return procmsg_add_messages_from_queue(dest, &msglist, TRUE);
+	}
+
 	return folder->klass->move_msg(folder, dest, msginfo);
 }
 
 gint folder_item_move_msgs(FolderItem *dest, GSList *msglist)
 {
 	Folder *folder;
+	MsgInfo *msginfo;
 
 	g_return_val_if_fail(dest != NULL, -1);
 	g_return_val_if_fail(msglist != NULL, -1);
 	g_return_val_if_fail(dest->folder->klass->move_msgs != NULL, -1);
 
 	folder = dest->folder;
+
+	msginfo = (MsgInfo *)msglist->data;
+	if (IS_FROM_QUEUE(msginfo, dest))
+		return procmsg_add_messages_from_queue(dest, msglist, TRUE);
 
 	return folder->klass->move_msgs(folder, dest, msglist);
 }
@@ -1355,12 +1372,21 @@ gint folder_item_copy_msg(FolderItem *dest, MsgInfo *msginfo)
 
 	folder = dest->folder;
 
+	if (IS_FROM_QUEUE(msginfo, dest)) {
+		GSList msglist;
+
+		msglist.data = msginfo;
+		msglist.next = NULL;
+		return procmsg_add_messages_from_queue(dest, &msglist, FALSE);
+	}
+
 	return folder->klass->copy_msg(folder, dest, msginfo);
 }
 
 gint folder_item_copy_msgs(FolderItem *dest, GSList *msglist)
 {
 	Folder *folder;
+	MsgInfo *msginfo;
 
 	g_return_val_if_fail(dest != NULL, -1);
 	g_return_val_if_fail(msglist != NULL, -1);
@@ -1368,8 +1394,14 @@ gint folder_item_copy_msgs(FolderItem *dest, GSList *msglist)
 
 	folder = dest->folder;
 
+	msginfo = (MsgInfo *)msglist->data;
+	if (IS_FROM_QUEUE(msginfo, dest))
+		return procmsg_add_messages_from_queue(dest, msglist, FALSE);
+
 	return folder->klass->copy_msgs(folder, dest, msglist);
 }
+
+#undef IS_FROM_QUEUE
 
 gint folder_item_remove_msg(FolderItem *item, MsgInfo *msginfo)
 {
