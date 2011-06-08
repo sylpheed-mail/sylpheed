@@ -51,6 +51,9 @@ static void menu_selected_cb(void);
 
 static void compose_created_cb(GObject *obj, gpointer compose);
 static void compose_destroy_cb(GObject *obj, gpointer compose);
+static gboolean compose_send_cb(GObject *obj, gpointer compose,
+				gint compose_mode, gint send_mode,
+				const gchar *msg_file, GSList *to_list);
 
 static void create_window(void);
 static void create_folderview_sub_widget(void);
@@ -100,6 +103,8 @@ void plugin_load(void)
 				  G_CALLBACK(compose_created_cb), NULL);
 	syl_plugin_signal_connect("compose-destroy",
 				  G_CALLBACK(compose_destroy_cb), NULL);
+	syl_plugin_signal_connect("compose-send",
+				  G_CALLBACK(compose_send_cb), NULL);
 
 	syl_plugin_add_factory_item("<SummaryView>", "/---", NULL, NULL);
 	syl_plugin_add_factory_item("<SummaryView>", "/Test Plug-in menu",
@@ -217,6 +222,17 @@ static void compose_created_cb(GObject *obj, gpointer compose)
 static void compose_destroy_cb(GObject *obj, gpointer compose)
 {
 	g_print("test: %p: compose will be destroyed (%p)\n", obj, compose);
+}
+
+static gboolean compose_send_cb(GObject *obj, gpointer compose,
+				gint compose_mode, gint send_mode,
+				const gchar *msg_file, GSList *to_list)
+{
+	g_print("test: %p: composed message will be sent (%p)\n", obj, compose);
+	g_print("test: compose_mode: %d, send_mode: %d, file: %s\n",
+		compose_mode, send_mode, msg_file);
+
+	return TRUE; /* return FALSE to cancel sending */
 }
 
 static void button_clicked(GtkWidget *widget, gpointer data)

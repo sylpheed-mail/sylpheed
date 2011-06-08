@@ -45,7 +45,7 @@ typedef void (*SylPluginLoadFunc)	(void);
 typedef void (*SylPluginUnloadFunc)	(void);
 typedef void (*SylPluginCallbackFunc)	(void);
 
-#define SYL_PLUGIN_INTERFACE_VERSION	0x0107
+#define SYL_PLUGIN_INTERFACE_VERSION	0x0108
 
 struct _SylPlugin
 {
@@ -71,6 +71,13 @@ struct _SylPluginClass
 					 const gchar	*uri,
 					 const gchar	*selected_text,
 					 MsgInfo	*msginfo);
+
+	gboolean (* compose_send)	(GObject	*obj,
+					 gpointer	 compose,
+					 gint		 compose_mode,
+					 gint		 send_mode,
+					 const gchar	*msg_file,
+					 GSList		*to_list);
 };
 
 struct _SylPluginInfo

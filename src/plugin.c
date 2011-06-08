@@ -36,6 +36,7 @@ enum {
 	COMPOSE_CREATED,
 	COMPOSE_DESTROY,
 	TEXTVIEW_MENU_POPUP,
+	COMPOSE_SEND,
 	LAST_SIGNAL
 };
 
@@ -170,6 +171,20 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_POINTER,
 			     G_TYPE_POINTER,
 			     G_TYPE_STRING,
+			     G_TYPE_STRING,
+			     G_TYPE_POINTER);
+	plugin_signals[COMPOSE_SEND] =
+		g_signal_new("compose-send",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_LAST,
+			     G_STRUCT_OFFSET(SylPluginClass, compose_send),
+			     NULL, NULL,
+			     syl_plugin_marshal_BOOLEAN__POINTER_INT_INT_STRING_POINTER,
+			     G_TYPE_BOOLEAN,
+			     5,
+			     G_TYPE_POINTER,
+			     G_TYPE_INT,
+			     G_TYPE_INT,
 			     G_TYPE_STRING,
 			     G_TYPE_POINTER);
 }
