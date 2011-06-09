@@ -1348,7 +1348,7 @@ gint procmsg_add_messages_from_queue(FolderItem *dest, GSList *mlist,
 		}
 
 		dest_file = get_tmp_file();
-		g_print("copy queued msg: %s -> %s\n", file, dest_file);
+		debug_print("copy queued msg: %s -> %s\n", file, dest_file);
 
 		if (copy_file_part(fp, ftell(fp), G_MAXINT, dest_file) < 0)
 			is_error = TRUE;
