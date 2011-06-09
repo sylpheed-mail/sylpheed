@@ -183,6 +183,7 @@ static void prefs_filter_create(void)
 	GtkWidget *edit_btn;
 	GtkWidget *copy_btn;
 	GtkWidget *del_btn;
+	GtkWidget *image;
 
 	debug_print("Creating filter setting window...\n");
 
@@ -280,13 +281,19 @@ static void prefs_filter_create(void)
 
 	PACK_VSPACER(btn_vbox, spc_vbox, VSPACING_NARROW_2);
 
-	up_btn = gtk_button_new_from_stock(GTK_STOCK_GO_UP);
+	up_btn = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
+	gtk_widget_show(image);
+	gtk_button_set_image(GTK_BUTTON(up_btn), image);
 	gtk_widget_show(up_btn);
 	gtk_box_pack_start(GTK_BOX(btn_vbox), up_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(up_btn), "clicked",
 			 G_CALLBACK(prefs_filter_up), NULL);
 
-	down_btn = gtk_button_new_from_stock(GTK_STOCK_GO_DOWN);
+	down_btn = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
+	gtk_widget_show(image);
+	gtk_button_set_image(GTK_BUTTON(down_btn), image);
 	gtk_widget_show(down_btn);
 	gtk_box_pack_start(GTK_BOX(btn_vbox), down_btn, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(down_btn), "clicked",
