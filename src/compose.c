@@ -3444,7 +3444,7 @@ static gint compose_send(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
 	gint ok = 0;
-	gboolean ack = TRUE;
+	gboolean cancel = FALSE;
 
 	if (compose->lock_count > 0)
 		return 1;
@@ -3495,8 +3495,8 @@ static gint compose_send(Compose *compose)
 	}
 
 	syl_plugin_signal_emit("compose-send", compose, compose->mode, 0,
-			       tmp, compose->to_list, &ack);
-	if (ack == FALSE) {
+			       tmp, compose->to_list, &cancel);
+	if (cancel) {
 		g_unlink(tmp);
 		compose_unlock(compose);
 		return -1;
@@ -7213,7 +7213,7 @@ static void compose_send_later_cb(gpointer data, guint action,
 	Compose *compose = (Compose *)data;
 	FolderItem *queue;
 	gchar tmp[MAXPATHLEN + 1];
-	gboolean ack = TRUE;
+	gboolean cancel = FALSE;
 
 	if (compose_check_entries(compose) == FALSE)
 		return;
@@ -7253,8 +7253,8 @@ static void compose_send_later_cb(gpointer data, guint action,
 	}
 
 	syl_plugin_signal_emit("compose-send", compose, compose->mode, 1,
-			       tmp, compose->to_list, &ack);
-	if (ack == FALSE) {
+			       tmp, compose->to_list, &cancel);
+	if (cancel) {
 		g_unlink(tmp);
 		return;
 	}

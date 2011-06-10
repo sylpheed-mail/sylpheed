@@ -236,7 +236,7 @@ static gboolean compose_send_cb(GObject *obj, gpointer compose,
 	g_print("test: compose_mode: %d, send_mode: %d, file: %s\n",
 		compose_mode, send_mode, msg_file);
 
-	return TRUE; /* return FALSE to cancel sending */
+	return FALSE; /* return TRUE to cancel sending */
 }
 
 static void messageview_show_cb(GObject *obj, gpointer msgview,
