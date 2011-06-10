@@ -175,6 +175,10 @@ static GPtrArray *textview_scan_header	(TextView	*textview,
 static void textview_show_header	(TextView	*textview,
 					 GPtrArray	*headers);
 
+static void textview_insert_border	(TextView	*textview,
+					 GtkTextIter	*iter,
+					 gint		 padding);
+
 static gboolean textview_key_pressed		(GtkWidget	*widget,
 						 GdkEventKey	*event,
 						 TextView	*textview);
@@ -618,6 +622,72 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
+static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
+						    GdkEventButton *event,
+						    gpointer data)
+{
+	return FALSE;
+}
+
+static gboolean textview_part_widget_exposed(GtkWidget *widget,
+					     GdkEventExpose *event,
+					     gpointer data)
+{
+	GdkDrawable *drawable;
+	GdkGC *gc;
+	gint w, h;
+
+	w = widget->allocation.width - 1;
+	h = widget->allocation.height - 1;
+	if (w <= 0 || h <= 0)
+		return FALSE;
+
+	drawable = GDK_DRAWABLE(widget->window);
+	gc = widget->style->fg_gc[GTK_STATE_NORMAL];
+	gdk_gc_set_clip_rectangle(gc, &event->area);
+	gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
+				   GDK_JOIN_MITER);
+	gdk_draw_rectangle(drawable, gc, FALSE, 0, 0, w, h);
+
+	return TRUE;
+}
+
+static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
+				     MimeInfo *mimeinfo, const gchar *str)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
+	GtkTextBuffer *buffer;
+	GtkTextChildAnchor *anchor;
+	GtkWidget *hbox;
+	GtkWidget *ebox;
+	GtkWidget *label;
+	GtkWidget *arrow;
+	GdkColor bg = {0, 0xd000, 0xe000, 0xffff};
+	GdkColor fg = {0, 0x7000, 0xb000, 0xffff};
+
+	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_buffer_insert(buffer, iter, "\n", 1);
+	anchor = gtk_text_buffer_create_child_anchor(buffer, iter);
+	ebox = gtk_event_box_new();
+	hbox = gtk_hbox_new(FALSE, 4);
+	gtk_container_set_border_width(GTK_CONTAINER(hbox), 3);
+	label = gtk_label_new(str);
+	gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
+	arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_OUT);
+	gtk_box_pack_start(GTK_BOX(hbox), arrow, FALSE, FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(ebox), hbox);
+	gtk_widget_show_all(ebox);
+	g_signal_connect(G_OBJECT(ebox), "button_press_event",
+			 G_CALLBACK(textview_part_widget_button_pressed),
+			 textview);
+	g_signal_connect_after(G_OBJECT(ebox), "expose_event",
+			 G_CALLBACK(textview_part_widget_exposed), textview);
+	gtk_widget_modify_bg(ebox, GTK_STATE_NORMAL, &bg);
+	gtk_widget_modify_fg(ebox, GTK_STATE_NORMAL, &fg);
+	gtk_text_view_add_child_at_anchor(text, ebox, anchor);
+	gtk_text_buffer_insert(buffer, iter, "\n", 1);
+}
+
 static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 {
 	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
@@ -653,6 +723,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	charset = textview_get_src_encoding(textview, mimeinfo);
 
 	if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
+		textview_insert_border(textview, &iter, 8);
+		gtk_text_buffer_get_end_iter(buffer, &iter);
 		headers = textview_scan_header(textview, fp, charset);
 		if (headers) {
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
@@ -670,20 +742,19 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 #endif
 
 	if (mimeinfo->filename || mimeinfo->name)
-		g_snprintf(buf, sizeof(buf), "\n[%s  %s (%s)]\n",
+		g_snprintf(buf, sizeof(buf), "%s  %s (%s)",
 			   mimeinfo->filename ? mimeinfo->filename :
 			   mimeinfo->name,
 			   mimeinfo->content_type,
 			   to_human_readable(mimeinfo->content_size));
 	else
-		g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
+		g_snprintf(buf, sizeof(buf), "%s (%s)",
 			   mimeinfo->content_type,
 			   to_human_readable(mimeinfo->content_size));
 
 	if (mimeinfo->mime_type != MIME_TEXT &&
 	    mimeinfo->mime_type != MIME_TEXT_HTML) {
-		gtk_text_buffer_insert_with_tags_by_name
-			(buffer, &iter, buf, -1, "mimepart", NULL);
+		textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		if (mimeinfo->mime_type == MIME_IMAGE &&
 		    prefs_common.inline_image) {
 			GdkPixbuf *pixbuf;
@@ -740,8 +811,7 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		if (!mimeinfo->main &&
 		    mimeinfo->parent &&
 		    mimeinfo->parent->children != mimeinfo)
-			gtk_text_buffer_insert_with_tags_by_name
-				(buffer, &iter, buf, -1, "mimepart", NULL);
+			textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		else
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		textview_write_body(textview, mimeinfo, fp, charset);
@@ -1354,6 +1424,27 @@ static GPtrArray *textview_scan_header(TextView *textview, FILE *fp,
 
 	return procheader_get_header_array_for_display(fp, encoding);
 }
+ 
+static void textview_size_allocate_cb(GtkWidget *widget,
+				      GtkAllocation *allocation, gpointer data)
+{
+	GtkWidget *child = GTK_WIDGET(data);
+	gint new_width;
+
+	/* g_print("textview_size_allocate_cb: (%d, %d)\n", allocation->width, allocation->height); */
+	new_width = allocation->width - 14;
+	if (new_width < -1)
+		new_width = -1;
+	gtk_widget_set_size_request(child, new_width, 16);
+}
+
+void textview_hline_destroy_cb(GtkObject *object, gpointer data)
+{
+	GtkWidget *text = GTK_WIDGET(data);
+
+	g_signal_handlers_disconnect_by_func(text, textview_size_allocate_cb,
+					     object);
+}
 
 static void textview_show_header(TextView *textview, GPtrArray *headers)
 {
@@ -1403,6 +1494,38 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 		gtk_text_buffer_insert_with_tags_by_name
 			(buffer, &iter, "\n", 1, "header", NULL);
 	}
+
+	textview_insert_border(textview, &iter, 0);
+}
+
+static void textview_insert_border(TextView *textview, GtkTextIter *iter,
+				   gint padding)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
+	GtkTextBuffer *buffer;
+	GtkTextChildAnchor *anchor;
+	GtkWidget *vbox;
+	GtkWidget *pad;
+	GtkWidget *hline;
+
+	buffer = gtk_text_view_get_buffer(text);
+
+	anchor = gtk_text_buffer_create_child_anchor(buffer, iter);
+	vbox = gtk_vbox_new(FALSE, 0);
+	if (padding > 0) {
+		pad = gtk_vbox_new(FALSE, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), pad, FALSE, FALSE, 0);
+		gtk_widget_set_size_request(pad, -1, padding);
+	}
+	hline = gtk_hseparator_new();
+	gtk_box_pack_start(GTK_BOX(vbox), hline, FALSE, FALSE, 0);
+	gtk_widget_show_all(vbox);
+	gtk_widget_set_size_request(hline, 320, 16);
+	gtk_text_view_add_child_at_anchor(text, vbox, anchor);
+	g_signal_connect(G_OBJECT(hline), "destroy",
+			 G_CALLBACK(textview_hline_destroy_cb), text);
+	g_signal_connect(G_OBJECT(text), "size-allocate",
+			 G_CALLBACK(textview_size_allocate_cb), hline);
 }
 
 gboolean textview_search_string(TextView *textview, const gchar *str,
