@@ -1350,16 +1350,20 @@ gint procmsg_add_messages_from_queue(FolderItem *dest, GSList *mlist,
 		dest_file = get_tmp_file();
 		debug_print("copy queued msg: %s -> %s\n", file, dest_file);
 
-		if (copy_file_part(fp, ftell(fp), G_MAXINT, dest_file) < 0)
+		if (copy_file_part(fp, ftell(fp), G_MAXINT, dest_file) < 0) {
+			fclose(fp);
 			is_error = TRUE;
-		else if (folder_item_add_msg(dest, dest_file, &flags, TRUE) < 0) {
-			g_unlink(dest_file);
-			is_error = TRUE;
-		} else if (is_move && folder_item_remove_msg(src, msginfo) < 0)
-			is_error = TRUE;
+		} else {
+			fclose(fp);
+			if (folder_item_add_msg(dest, dest_file, &flags, TRUE) < 0) {
+				g_unlink(dest_file);
+				is_error = TRUE;
+			} else if (is_move &&
+				   folder_item_remove_msg(src, msginfo) < 0)
+				is_error = TRUE;
+		}
 
 		g_free(dest_file);
-		fclose(fp);
 		g_free(file);
 		if (is_error)
 			return -1;
