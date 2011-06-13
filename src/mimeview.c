@@ -1137,6 +1137,91 @@ void mimeview_print(MimeView *mimeview)
 	}
 }
 
+void mimeview_lauhch_part(MimeView *mimeview, MimeInfo *partinfo)
+{
+	gchar *filename;
+
+	g_return_if_fail(partinfo != NULL);
+
+	if (!mimeview->file) return;
+
+	filename = procmime_get_tmp_file_name(partinfo);
+
+	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
+		alertpanel_error
+			(_("Can't save the part of multipart message."));
+	else
+		mimeview_view_file(filename, partinfo, NULL);
+
+	g_free(filename);
+}
+
+void mimeview_open_part_with(MimeView *mimeview, MimeInfo *partinfo)
+{
+	gchar *filename;
+	gchar *cmd;
+
+	g_return_if_fail(partinfo != NULL);
+
+	if (!mimeview->file) return;
+
+	filename = procmime_get_tmp_file_name(partinfo);
+
+	if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
+		alertpanel_error
+			(_("Can't save the part of multipart message."));
+		g_free(filename);
+		return;
+	}
+
+	if (!prefs_common.mime_open_cmd_history)
+		prefs_common.mime_open_cmd_history =
+			add_history(NULL, prefs_common.mime_open_cmd);
+
+	cmd = input_dialog_combo
+		(_("Open with"),
+		 _("Enter the command line to open file:\n"
+		   "(`%s' will be replaced with file name)"),
+		 prefs_common.mime_open_cmd,
+		 prefs_common.mime_open_cmd_history,
+		 TRUE);
+	if (cmd) {
+		mimeview_view_file(filename, partinfo, cmd);
+		g_free(prefs_common.mime_open_cmd);
+		prefs_common.mime_open_cmd = cmd;
+		prefs_common.mime_open_cmd_history =
+			add_history(prefs_common.mime_open_cmd_history, cmd);
+	}
+
+	g_free(filename);
+}
+
+void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
+{
+	gchar *filename;
+	gchar *defname = NULL;
+
+	g_return_if_fail(partinfo != NULL);
+
+	if (!mimeview->file) return;
+
+	if (partinfo->filename)
+		defname = partinfo->filename;
+	else if (partinfo->name) {
+		Xstrdup_a(defname, partinfo->name, return);
+		subst_for_filename(defname);
+	}
+
+	filename = filesel_save_as(defname);
+	if (!filename) return;
+
+	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
+		alertpanel_error
+			(_("Can't save the part of multipart message."));
+
+	g_free(filename);
+}
+
 static void mimeview_launch(MimeView *mimeview)
 {
 	MimeInfo *partinfo;

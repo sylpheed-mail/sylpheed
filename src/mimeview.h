@@ -94,4 +94,11 @@ void mimeview_save_all			(MimeView	*mimeview);
 
 void mimeview_print			(MimeView	*mimeview);
 
+void mimeview_lauhch_part		(MimeView	*mimeview,
+					 MimeInfo	*partinfo);
+void mimeview_open_part_with		(MimeView	*mimeview,
+					 MimeInfo	*partinfo);
+void mimeview_save_part_as		(MimeView	*mimeview,
+					 MimeInfo	*partinfo);
+
 #endif /* __MIMEVIEW_H__ */
