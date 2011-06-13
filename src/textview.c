@@ -626,7 +626,7 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 						    GdkEventButton *event,
 						    gpointer data)
 {
-	return FALSE;
+	return TRUE;
 }
 
 static gboolean textview_part_widget_exposed(GtkWidget *widget,
@@ -662,8 +662,8 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	GtkWidget *ebox;
 	GtkWidget *label;
 	GtkWidget *arrow;
-	GdkColor bg = {0, 0xd000, 0xe000, 0xffff};
-	GdkColor fg = {0, 0x7000, 0xb000, 0xffff};
+	GdkColor bg = {0, 0xd000, 0xd800, 0xffff};
+	GdkColor fg = {0, 0x7000, 0x9000, 0xffff};
 
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_insert(buffer, iter, "\n", 1);
@@ -1942,6 +1942,10 @@ static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
 	if (bevent->button != 1 && bevent->button != 2)
 		return FALSE;
 
+	/* don't process child widget's event */
+	if (gtk_text_view_get_window(GTK_TEXT_VIEW(widget), GTK_TEXT_WINDOW_TEXT) != bevent->window)
+		return FALSE;
+
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(widget));
 
 	/* don't follow a link if the user has selected something */
@@ -1950,7 +1954,7 @@ static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
 		return FALSE;
 
 	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
-					      GTK_TEXT_WINDOW_WIDGET,
+					      GTK_TEXT_WINDOW_TEXT,
 					      bevent->x, bevent->y, &x, &y);
 	gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(widget), &iter, x, y);
 	on_link = textview_get_link_tag_bounds(textview, &iter, &start, &end);
@@ -2050,7 +2054,9 @@ static gboolean textview_motion_notify(GtkWidget *widget,
 				       TextView *textview)
 {
 	gint x, y;
-
+ 
+	if (gtk_text_view_get_window(GTK_TEXT_VIEW(widget), GTK_TEXT_WINDOW_TEXT) != event->window)
+		return FALSE;
 	gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(widget),
 					      GTK_TEXT_WINDOW_WIDGET,
 					      event->x, event->y, &x, &y);
