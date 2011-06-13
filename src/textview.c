@@ -649,7 +649,6 @@ static void part_widget_menu_button_position(GtkMenu *menu, gint *x, gint *y,
 	width = requisition.width;
 	height = requisition.height;
 	gdk_window_get_origin(widget->window, &button_xpos, &button_ypos);
-	g_print("pos: %d, %d\n", button_xpos, button_ypos);
 
 	xpos = button_xpos;
 	ypos = button_ypos + widget->requisition.height;
@@ -668,6 +667,32 @@ static void part_widget_menu_button_position(GtkMenu *menu, gint *x, gint *y,
 
 	*x = xpos;
 	*y = ypos;
+}
+
+static gboolean textview_part_widget_entered(GtkWidget *widget,
+					     GdkEventCrossing *event,
+					     gpointer data)
+{
+	GdkColor bg = {0, 0xb000, 0xc000, 0xffff};
+	GdkColor fg = {0, 0x5000, 0x7800, 0xffff};
+
+	gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, &bg);
+	gtk_widget_modify_fg(widget, GTK_STATE_NORMAL, &fg);
+
+	return FALSE;
+}
+
+static gboolean textview_part_widget_left(GtkWidget *widget,
+					  GdkEventCrossing *event,
+					  gpointer data)
+{
+	GdkColor bg = {0, 0xd000, 0xd800, 0xffff};
+	GdkColor fg = {0, 0x7000, 0x9000, 0xffff};
+
+	gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, &bg);
+	gtk_widget_modify_fg(widget, GTK_STATE_NORMAL, &fg);
+
+	return FALSE;
 }
 
 static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
@@ -730,8 +755,6 @@ static void textview_part_widget_menu_activated(GtkWidget *widget,
 	const gchar *filename;
 	GtkClipboard *clipboard;
 
-	g_print("textview_part_widget_menu_activated\n");
-
 	menu = gtk_widget_get_parent(widget);
 	mimeinfo = g_object_get_data(G_OBJECT(menu), "mimeinfo");
 	if (!mimeinfo)
@@ -793,6 +816,10 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	g_signal_connect(G_OBJECT(ebox), "button_press_event",
 			 G_CALLBACK(textview_part_widget_button_pressed),
 			 textview);
+	g_signal_connect(G_OBJECT(ebox), "enter_notify_event",
+			 G_CALLBACK(textview_part_widget_entered), textview);
+	g_signal_connect(G_OBJECT(ebox), "leave_notify_event",
+			 G_CALLBACK(textview_part_widget_left), textview);
 	g_signal_connect_after(G_OBJECT(ebox), "expose_event",
 			 G_CALLBACK(textview_part_widget_exposed), textview);
 	gtk_widget_modify_bg(ebox, GTK_STATE_NORMAL, &bg);
