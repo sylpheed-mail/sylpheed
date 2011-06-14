@@ -673,12 +673,7 @@ static gboolean textview_part_widget_entered(GtkWidget *widget,
 					     GdkEventCrossing *event,
 					     gpointer data)
 {
-	GdkColor bg = {0, 0xb000, 0xc000, 0xffff};
-	GdkColor fg = {0, 0x5000, 0x7800, 0xffff};
-
-	gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, &bg);
-	gtk_widget_modify_fg(widget, GTK_STATE_NORMAL, &fg);
-
+	gtk_widget_set_state(widget, GTK_STATE_PRELIGHT);
 	return FALSE;
 }
 
@@ -686,12 +681,7 @@ static gboolean textview_part_widget_left(GtkWidget *widget,
 					  GdkEventCrossing *event,
 					  gpointer data)
 {
-	GdkColor bg = {0, 0xd000, 0xd800, 0xffff};
-	GdkColor fg = {0, 0x7000, 0x9000, 0xffff};
-
-	gtk_widget_modify_bg(widget, GTK_STATE_NORMAL, &bg);
-	gtk_widget_modify_fg(widget, GTK_STATE_NORMAL, &fg);
-
+	gtk_widget_set_state(widget, GTK_STATE_NORMAL);
 	return FALSE;
 }
 
@@ -795,8 +785,10 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	GtkWidget *arrow;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
-	GdkColor bg = {0, 0xd000, 0xd800, 0xffff};
-	GdkColor fg = {0, 0x7000, 0x9000, 0xffff};
+	GdkColor bg = {0, 0xe000, 0xe500, 0xffff};
+	GdkColor fg = {0, 0x8000, 0x9800, 0xffff};
+	GdkColor bg2 = {0, 0xc000, 0xc800, 0xffff};
+	GdkColor fg2 = {0, 0x6000, 0x8000, 0xffff};
 
 	buffer = gtk_text_view_get_buffer(text);
 	gtk_text_buffer_insert(buffer, iter, "\n", 1);
@@ -821,6 +813,8 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 			 G_CALLBACK(textview_part_widget_exposed), textview);
 	gtk_widget_modify_bg(ebox, GTK_STATE_NORMAL, &bg);
 	gtk_widget_modify_fg(ebox, GTK_STATE_NORMAL, &fg);
+	gtk_widget_modify_bg(ebox, GTK_STATE_PRELIGHT, &bg2);
+	gtk_widget_modify_fg(ebox, GTK_STATE_PRELIGHT, &fg2);
 
 	menu = gtk_menu_new();
 	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Open"), PART_MENU_OPEN);
