@@ -691,6 +691,7 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 {
 	GtkWidget *menu;
 	MimeInfo *mimeinfo;
+	GList *cur;
 
 	if (!event)
 		return FALSE;
@@ -698,6 +699,17 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 	menu = g_object_get_data(G_OBJECT(widget), "part-menu");
 	mimeinfo = g_object_get_data(G_OBJECT(widget), "mimeinfo");
 
+	for (cur = GTK_MENU_SHELL(menu)->children; cur != NULL; cur = cur->next) {
+		GtkWidget *menuitem = GTK_WIDGET(cur->data);
+		gint type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
+		if (type == PART_MENU_COPY_FILENAME) {
+			if (mimeinfo->filename || mimeinfo->name)
+				gtk_widget_set_sensitive(menuitem, TRUE);
+			else
+				gtk_widget_set_sensitive(menuitem, FALSE);
+			break;
+		}
+	}
 	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, part_widget_menu_button_position, widget, event->button, event->time);
 
 	return TRUE;
