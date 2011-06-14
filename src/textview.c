@@ -738,10 +738,7 @@ static gboolean textview_part_widget_exposed(GtkWidget *widget,
 
 static void textview_part_widget_destroy_notify(gpointer data)
 {
-	GtkWidget *menu;
-
-	menu = g_object_get_data(G_OBJECT(data), "part-menu");
-	gtk_widget_destroy(menu);
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 static void textview_part_widget_menu_activated(GtkWidget *widget,
