@@ -717,13 +717,16 @@ static gboolean textview_part_widget_exposed(GtkWidget *widget,
 		return FALSE;
 
 	drawable = GDK_DRAWABLE(widget->window);
-	gc = widget->style->fg_gc[GTK_STATE_NORMAL];
+	gc = widget->style->fg_gc[GTK_WIDGET_STATE(widget)];
 	gdk_gc_set_clip_rectangle(gc, &event->area);
 	gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
 				   GDK_JOIN_MITER);
-	gdk_draw_rectangle(drawable, gc, FALSE, 0, 0, w, h);
+	gdk_draw_line(drawable, gc, 1, 0, w, 0);
+	gdk_draw_line(drawable, gc, w, 1, w, h);
+	gdk_draw_line(drawable, gc, w, h, 1, h);
+	gdk_draw_line(drawable, gc, 0, h, 0, 1);
 
-	return TRUE;
+	return FALSE;
 }
 
 static void textview_part_widget_destroy_notify(gpointer data)
