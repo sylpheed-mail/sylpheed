@@ -144,6 +144,8 @@ static GdkCursor *hand_cursor = NULL;
 static GdkCursor *regular_cursor = NULL;
 
 
+static void textview_part_menu_create	(TextView	*textview);
+
 static void textview_add_part		(TextView	*textview,
 					 MimeInfo	*mimeinfo,
 					 FILE		*fp);
@@ -313,6 +315,8 @@ TextView *textview_create(void)
 	textview->uri_list         = NULL;
 	textview->body_pos         = 0;
 	textview->show_all_headers = FALSE;
+
+	textview_part_menu_create(textview);
 
 	return textview;
 }
@@ -631,9 +635,9 @@ enum {
 	PART_MENU_COPY_FILENAME
 };
 
-static void part_widget_menu_button_position(GtkMenu *menu, gint *x, gint *y,
-					     gboolean *push_in,
-					     gpointer user_data)
+static void part_menu_button_position(GtkMenu *menu, gint *x, gint *y,
+				      gboolean *push_in,
+				      gpointer user_data)
 {
 	GtkWidget *widget;
 	GtkRequisition requisition;
@@ -689,6 +693,7 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 						    GdkEventButton *event,
 						    gpointer data)
 {
+	TextView *textview = (TextView *)data;
 	GtkWidget *menu;
 	MimeInfo *mimeinfo;
 	GList *cur;
@@ -696,7 +701,7 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 	if (!event)
 		return FALSE;
 
-	menu = g_object_get_data(G_OBJECT(widget), "part-menu");
+	menu = textview->popup_menu;
 	mimeinfo = g_object_get_data(G_OBJECT(widget), "mimeinfo");
 
 	for (cur = GTK_MENU_SHELL(menu)->children; cur != NULL; cur = cur->next) {
@@ -710,7 +715,9 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 			break;
 		}
 	}
-	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, part_widget_menu_button_position, widget, event->button, event->time);
+
+	g_object_set_data(G_OBJECT(menu), "part-widget", widget);
+	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, part_menu_button_position, widget, event->button, event->time);
 
 	return TRUE;
 }
@@ -741,16 +748,11 @@ static gboolean textview_part_widget_exposed(GtkWidget *widget,
 	return FALSE;
 }
 
-static void textview_part_widget_destroy_notify(gpointer data)
-{
-	gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-static void textview_part_widget_menu_activated(GtkWidget *widget,
-						gpointer data)
+static void textview_part_menu_activated(GtkWidget *widget, gpointer data)
 {
 	TextView *textview = (TextView *)data;
 	GtkWidget *menu;
+	GtkWidget *part_widget;
 	gint type;
 	MimeInfo *mimeinfo;
 	MimeView *mimeview = textview->messageview->mimeview;
@@ -758,7 +760,8 @@ static void textview_part_widget_menu_activated(GtkWidget *widget,
 	GtkClipboard *clipboard;
 
 	menu = gtk_widget_get_parent(widget);
-	mimeinfo = g_object_get_data(G_OBJECT(menu), "mimeinfo");
+	part_widget = g_object_get_data(G_OBJECT(menu), "part-widget");
+	mimeinfo = g_object_get_data(G_OBJECT(part_widget), "mimeinfo");
 	if (!mimeinfo)
 		return;
 	type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(widget), MENU_VAL_ID));
@@ -788,6 +791,42 @@ static void textview_part_widget_menu_activated(GtkWidget *widget,
 	}
 }
 
+static void textview_part_menu_closed(GtkMenuShell *menu_shell, gpointer data)
+{
+	g_object_set_data(G_OBJECT(menu_shell), "part-widget", NULL);
+}
+
+static void textview_part_menu_create(TextView *textview)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+
+	if (textview->popup_menu)
+		return;
+
+	menu = gtk_menu_new();
+	textview->popup_menu = menu;
+
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Open"), PART_MENU_OPEN);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(textview_part_menu_activated), textview);
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Open _with..."), PART_MENU_OPEN_WITH);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(textview_part_menu_activated), textview);
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Save as..."), PART_MENU_SAVE_AS);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(textview_part_menu_activated), textview);
+	MENUITEM_ADD(menu, menuitem, NULL, 0);
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Copy file name"), PART_MENU_COPY_FILENAME);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(textview_part_menu_activated), textview);
+
+	g_signal_connect(G_OBJECT(menu), "selection_done",
+			 G_CALLBACK(textview_part_menu_closed), textview);
+
+	gtk_widget_show_all(menu);
+}
+
 static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 				     MimeInfo *mimeinfo, const gchar *str)
 {
@@ -798,8 +837,6 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	GtkWidget *ebox;
 	GtkWidget *label;
 	GtkWidget *arrow;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
 	GdkColor bg = {0, 0xe000, 0xe500, 0xffff};
 	GdkColor fg = {0, 0x8000, 0x9800, 0xffff};
 	GdkColor bg2 = {0, 0xc000, 0xc800, 0xffff};
@@ -831,29 +868,7 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	gtk_widget_modify_bg(ebox, GTK_STATE_PRELIGHT, &bg2);
 	gtk_widget_modify_fg(ebox, GTK_STATE_PRELIGHT, &fg2);
 
-	menu = gtk_menu_new();
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Open"), PART_MENU_OPEN);
-	g_signal_connect(G_OBJECT(menuitem), "activate",
-			 G_CALLBACK(textview_part_widget_menu_activated),
-			 textview);
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Open _with..."), PART_MENU_OPEN_WITH);
-	g_signal_connect(G_OBJECT(menuitem), "activate",
-			 G_CALLBACK(textview_part_widget_menu_activated),
-			 textview);
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Save as..."), PART_MENU_SAVE_AS);
-	g_signal_connect(G_OBJECT(menuitem), "activate",
-			 G_CALLBACK(textview_part_widget_menu_activated),
-			 textview);
-	MENUITEM_ADD(menu, menuitem, NULL, 0);
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Copy file name"), PART_MENU_COPY_FILENAME);
-	g_signal_connect(G_OBJECT(menuitem), "activate",
-			 G_CALLBACK(textview_part_widget_menu_activated),
-			 textview);
-	gtk_widget_show_all(menu);
 	g_object_set_data(G_OBJECT(ebox), "mimeinfo", mimeinfo);
-	g_object_set_data(G_OBJECT(menu), "mimeinfo", mimeinfo);
-	g_object_set_data_full(G_OBJECT(ebox), "part-menu", menu,
-			       textview_part_widget_destroy_notify);
 
 	gtk_text_view_add_child_at_anchor(text, ebox, anchor);
 	gtk_text_buffer_insert(buffer, iter, "\n", 1);
@@ -1539,8 +1554,11 @@ void textview_destroy(TextView *textview)
 	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_remove_selection_clipboard(buffer, clipboard);
 
+	gtk_widget_destroy(textview->popup_menu);
+
 	textview_uri_list_remove_all(textview->uri_list);
 	textview->uri_list = NULL;
+
 	g_free(textview);
 }
 
