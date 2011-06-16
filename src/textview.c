@@ -807,7 +807,7 @@ static void textview_part_menu_create(TextView *textview)
 	menu = gtk_menu_new();
 	textview->popup_menu = menu;
 
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Open"), PART_MENU_OPEN);
+	MENUITEM_ADD_FROM_STOCK(menu, menuitem, GTK_STOCK_OPEN, PART_MENU_OPEN);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
 			 G_CALLBACK(textview_part_menu_activated), textview);
 	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Open _with..."), PART_MENU_OPEN_WITH);
