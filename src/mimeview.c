@@ -1061,8 +1061,6 @@ static void mimeview_display_as_text(MimeView *mimeview)
 
 void mimeview_save_as(MimeView *mimeview)
 {
-	gchar *filename;
-	gchar *defname = NULL;
 	MimeInfo *partinfo;
 
 	if (!mimeview->opened) return;
@@ -1212,7 +1210,6 @@ void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
 static void mimeview_launch(MimeView *mimeview)
 {
 	MimeInfo *partinfo;
-	gchar *filename;
 
 	if (!mimeview->opened) return;
 	if (!mimeview->file) return;
@@ -1226,8 +1223,6 @@ static void mimeview_launch(MimeView *mimeview)
 static void mimeview_open_with(MimeView *mimeview)
 {
 	MimeInfo *partinfo;
-	gchar *filename;
-	gchar *cmd;
 
 	if (!mimeview->opened) return;
 	if (!mimeview->file) return;

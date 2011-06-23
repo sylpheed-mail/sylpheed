@@ -354,20 +354,25 @@ gchar *utos_buf(gchar *nstr, guint n)
 	return nstr;
 }
 
+gchar *to_human_readable_buf(gchar *buf, size_t bufsize, gint64 size)
+{
+	if (size < 1024)
+		g_snprintf(buf, bufsize, "%dB", (gint)size);
+	else if ((size >> 10) < 1024)
+		g_snprintf(buf, bufsize, "%.1fKB", (gfloat)size / (1 << 10));
+	else if ((size >> 20) < 1024)
+		g_snprintf(buf, bufsize, "%.2fMB", (gfloat)size / (1 << 20));
+	else
+		g_snprintf(buf, bufsize, "%.2fGB", (gfloat)size / (1 << 30));
+
+	return buf;
+}
+
 gchar *to_human_readable(gint64 size)
 {
 	static gchar str[16];
 
-	if (size < 1024)
-		g_snprintf(str, sizeof(str), "%dB", (gint)size);
-	else if ((size >> 10) < 1024)
-		g_snprintf(str, sizeof(str), "%.1fKB", (gfloat)size / (1 << 10));
-	else if ((size >> 20) < 1024)
-		g_snprintf(str, sizeof(str), "%.2fMB", (gfloat)size / (1 << 20));
-	else
-		g_snprintf(str, sizeof(str), "%.2fGB", (gfloat)size / (1 << 30));
-
-	return str;
+	return to_human_readable_buf(str, sizeof(str), size);
 }
 
 /* strcmp with NULL-checking */

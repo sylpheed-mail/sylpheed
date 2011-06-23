@@ -1029,7 +1029,6 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 {
 	gchar buf[BUFFSIZE];
 	Pop3Session *pop3_session = POP3_SESSION(inc_session->session);
-	gchar *total_size_str;
 	gint64 cur_total;
 	gint64 total;
 	gint cur_num;
@@ -1050,7 +1049,10 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 	if ((pop3_session->state == POP3_RETR ||
 	     pop3_session->state == POP3_RETR_RECV ||
 	     pop3_session->state == POP3_DELETE) && total_num_to_recv > 0) {
-		Xstrdup_a(total_size_str, to_human_readable(total), return);
+		gchar total_size_str[16];
+
+		to_human_readable_buf(total_size_str, sizeof(total_size_str),
+				      total);
 		g_snprintf(buf, sizeof(buf),
 			   _("Retrieving message (%d / %d) (%s / %s)"),
 			   cur_num, total_num_to_recv,
@@ -1079,8 +1081,7 @@ static void inc_progress_dialog_set_progress(IncProgressDialog *inc_dialog,
 		g_snprintf(buf, sizeof(buf),
 			   _("%d message(s) (%s) received"),
 			   pop3_session->cur_total_num,
-			   to_human_readable
-			   (pop3_session->cur_total_recv_bytes));
+			   to_human_readable(pop3_session->cur_total_recv_bytes));
 		progress_dialog_set_row_progress(inc_dialog->dialog,
 						 inc_dialog->cur_row, buf);
 	}

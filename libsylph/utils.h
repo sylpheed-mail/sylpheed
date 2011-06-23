@@ -225,6 +225,9 @@ gchar *itos_buf			(gchar	     *nstr,
 gchar *itos			(gint	      n);
 gchar *utos_buf			(gchar	     *nstr,
 				 guint	      n);
+gchar *to_human_readable_buf	(gchar	     *buf,
+				 size_t	      bufsize,
+				 gint64	      size);
 gchar *to_human_readable	(gint64	      size);
 
 /* alternative string functions */
