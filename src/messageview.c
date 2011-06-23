@@ -757,11 +757,12 @@ void messageview_save_as(MessageView *messageview)
 	msginfo = messageview->msginfo;
 
 	if (msginfo->subject) {
-		Xstrdup_a(filename, msginfo->subject, return);
+		filename = g_strdup(msginfo->subject);
 		subst_for_filename(filename);
 	}
 
 	dest = filesel_save_as(filename);
+	g_free(filename);
 	if (!dest) return;
 
 	src = procmsg_get_message_file(msginfo);
@@ -998,10 +999,11 @@ static void add_address_cb(gpointer data, guint action, GtkWidget *widget)
 
 	if (!messageview->msginfo) return;
 	msginfo = messageview->msginfo;
-	Xstrdup_a(from, msginfo->from, return);
+	from = g_strdup(msginfo->from);
 	eliminate_address_comment(from);
 	extract_address(from);
 	addressbook_add_contact(msginfo->fromname, from, NULL);
+	g_free(from);
 }
 
 static void create_filter_cb(gpointer data, guint action, GtkWidget *widget)
