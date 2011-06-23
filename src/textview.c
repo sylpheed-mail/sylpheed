@@ -768,7 +768,7 @@ static void textview_part_menu_activated(GtkWidget *widget, gpointer data)
 
 	switch (type) {
 	case PART_MENU_OPEN:
-		mimeview_lauhch_part(mimeview, mimeinfo);
+		mimeview_launch_part(mimeview, mimeinfo);
 		break;
 	case PART_MENU_OPEN_WITH:
 		mimeview_open_part_with(mimeview, mimeinfo);

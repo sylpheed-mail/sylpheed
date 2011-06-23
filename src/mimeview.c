@@ -1071,21 +1071,7 @@ void mimeview_save_as(MimeView *mimeview)
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
 
-	if (partinfo->filename)
-		defname = partinfo->filename;
-	else if (partinfo->name) {
-		Xstrdup_a(defname, partinfo->name, return);
-		subst_for_filename(defname);
-	}
-
-	filename = filesel_save_as(defname);
-	if (!filename) return;
-
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
-		alertpanel_error
-			(_("Can't save the part of multipart message."));
-
-	g_free(filename);
+	mimeview_save_part_as(mimeview, partinfo);
 }
 
 void mimeview_save_all(MimeView *mimeview)
@@ -1137,7 +1123,7 @@ void mimeview_print(MimeView *mimeview)
 	}
 }
 
-void mimeview_lauhch_part(MimeView *mimeview, MimeInfo *partinfo)
+void mimeview_launch_part(MimeView *mimeview, MimeInfo *partinfo)
 {
 	gchar *filename;
 
@@ -1198,21 +1184,22 @@ void mimeview_open_part_with(MimeView *mimeview, MimeInfo *partinfo)
 
 void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
 {
-	gchar *filename;
+	gchar *filename = NULL;
 	gchar *defname = NULL;
 
 	g_return_if_fail(partinfo != NULL);
 
 	if (!mimeview->file) return;
 
-	if (partinfo->filename)
-		defname = partinfo->filename;
-	else if (partinfo->name) {
-		Xstrdup_a(defname, partinfo->name, return);
+	if (partinfo->filename) {
+		filename = filesel_save_as(partinfo->filename);
+	} else if (partinfo->name) {
+		defname = g_strdup(partinfo->name);
 		subst_for_filename(defname);
+		filename = filesel_save_as(defname);
+		g_free(defname);
 	}
 
-	filename = filesel_save_as(defname);
 	if (!filename) return;
 
 	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
@@ -1233,15 +1220,7 @@ static void mimeview_launch(MimeView *mimeview)
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
 
-	filename = procmime_get_tmp_file_name(partinfo);
-
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
-		alertpanel_error
-			(_("Can't save the part of multipart message."));
-	else
-		mimeview_view_file(filename, partinfo, NULL);
-
-	g_free(filename);
+	mimeview_launch_part(mimeview, partinfo);
 }
 
 static void mimeview_open_with(MimeView *mimeview)
@@ -1256,35 +1235,7 @@ static void mimeview_open_with(MimeView *mimeview)
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
 
-	filename = procmime_get_tmp_file_name(partinfo);
-
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
-		alertpanel_error
-			(_("Can't save the part of multipart message."));
-		g_free(filename);
-		return;
-	}
-
-	if (!prefs_common.mime_open_cmd_history)
-		prefs_common.mime_open_cmd_history =
-			add_history(NULL, prefs_common.mime_open_cmd);
-
-	cmd = input_dialog_combo
-		(_("Open with"),
-		 _("Enter the command line to open file:\n"
-		   "(`%s' will be replaced with file name)"),
-		 prefs_common.mime_open_cmd,
-		 prefs_common.mime_open_cmd_history,
-		 TRUE);
-	if (cmd) {
-		mimeview_view_file(filename, partinfo, cmd);
-		g_free(prefs_common.mime_open_cmd);
-		prefs_common.mime_open_cmd = cmd;
-		prefs_common.mime_open_cmd_history =
-			add_history(prefs_common.mime_open_cmd_history, cmd);
-	}
-
-	g_free(filename);
+	mimeview_open_part_with(mimeview, partinfo);
 }
 
 static void mimeview_view_file(const gchar *filename, MimeInfo *partinfo,

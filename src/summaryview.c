@@ -1995,11 +1995,11 @@ static void summary_update_display_state(SummaryView *summaryview,
 
 static guint attract_hash_func(gconstpointer key)
 {
-	gchar *str;
+	gchar str[BUFFSIZE];
 	gchar *p;
 	guint h;
 
-	Xstrdup_a(str, (const gchar *)key, return 0);
+	strncpy2(str, (const gchar *)key, sizeof(str));
 	trim_subject_for_compare(str);
 
 	p = str;
@@ -2417,9 +2417,9 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 	else
 		date_s = _("(No Date)");
 	if (prefs_common.swap_from && msginfo->from && msginfo->to) {
-		gchar *from;
+		gchar from[BUFFSIZE];
 
-		Xstrdup_a(from, msginfo->from, return);
+		strncpy2(from, msginfo->from, sizeof(from));
 		extract_address(from);
 		if (account_address_exist(from))
 			sw_from_s = g_strconcat("-->", msginfo->to, NULL);
@@ -3764,7 +3764,7 @@ void summary_add_address(SummaryView *summaryview)
 {
 	GtkTreeIter iter;
 	MsgInfo *msginfo = NULL;
-	gchar *from;
+	gchar from[BUFFSIZE];
 
 	if (!summaryview->selected) return;
 
@@ -3774,7 +3774,7 @@ void summary_add_address(SummaryView *summaryview)
 		return;
 
 	GET_MSG_INFO(msginfo, &iter);
-	Xstrdup_a(from, msginfo->from, return);
+	strncpy2(from, msginfo->from, sizeof(from));
 	eliminate_address_comment(from);
 	extract_address(from);
 	addressbook_add_contact(msginfo->fromname, from, NULL);
