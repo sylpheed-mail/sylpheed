@@ -5191,7 +5191,7 @@ static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
 	mlist = summary_get_selected_msg_list(summaryview);
 	if (!mlist) return;
 
-	Xalloca(items, (N_COLOR_LABELS + 1) * sizeof(GtkWidget *), return);
+	items = g_new(GtkWidget *, N_COLOR_LABELS + 1);
 
 	/* NOTE: don't return prematurely because we set the "dont_toggle"
 	 * state for check menu items */
@@ -5229,6 +5229,8 @@ static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
 
 	/* reset "dont_toggle" state */
 	g_object_set_data(G_OBJECT(menu), "dont_toggle", GINT_TO_POINTER(0));
+
+	g_free(items);
 }
 
 static void summary_colorlabel_menu_create(SummaryView *summaryview)
