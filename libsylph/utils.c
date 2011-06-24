@@ -3767,6 +3767,8 @@ FILE *my_tmpfile(void)
 		close(fd);
 	}
 
+	g_free(fname);
+
 	return fp;
 #else
 	const gchar suffix[] = ".XXXXXX";
@@ -3784,8 +3786,7 @@ FILE *my_tmpfile(void)
 	if (!progname)
 		progname = "sylph";
 	proglen = strlen(progname);
-	Xalloca(fname, tmplen + 1 + proglen + sizeof(suffix),
-		return tmpfile());
+	fname = g_malloc(tmplen + 1 + proglen + sizeof(suffix));
 
 	memcpy(fname, tmpdir, tmplen);
 	fname[tmplen] = G_DIR_SEPARATOR;
@@ -3793,14 +3794,20 @@ FILE *my_tmpfile(void)
 	memcpy(fname + tmplen + 1 + proglen, suffix, sizeof(suffix));
 
 	fd = g_mkstemp(fname);
-	if (fd < 0)
+	if (fd < 0) {
+		g_free(fname);
 		return tmpfile();
+	}
 
 	g_unlink(fname);
 
 	fp = fdopen(fd, "w+b");
-	if (!fp)
+	if (!fp) {
+		perror("fdopen");
 		close(fd);
+	}
+
+	g_free(fname);
 
 	return fp;
 #endif
