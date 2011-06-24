@@ -143,7 +143,7 @@ static gboolean spawn_update_manager(void)
 	gboolean ret = FALSE;
 
 	src = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "update-manager.exe", NULL);
-	if (!is_file_exist(src)) {
+	if (!is_file_exist(src) || get_file_size(src) <= 0) {
 		g_warning("update-manager.exe not found.");
 		goto finish;
 	}
@@ -185,13 +185,13 @@ void update_check_spawn_plugin_updater(void)
 	gboolean ret = FALSE;
 
 	if (!plugin_updater_ini)
-		return ret;
+		return;
 	if (!is_file_exist(plugin_updater_ini)) {
 		g_warning("Not found %s", plugin_updater_ini);
 		goto finish;
 	}
 	exe = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "plugin-updater.exe", NULL);
-	if (!is_file_exist(exe)) {
+	if (!is_file_exist(exe) || get_file_size(exe) <= 0) {
 		g_warning("Not found plugin-updater.exe");
 		goto finish;
 	}
@@ -218,7 +218,6 @@ finish:
 	g_free(quoted_ini);
 	g_free(plugin_updater_ini);
 	plugin_updater_ini = NULL;
-	return ret;
 }
 #endif /* USE_UPDATE_CHECK_PLUGIN */
 #endif /* G_OS_WIN32 */
