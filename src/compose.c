@@ -850,9 +850,10 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		account = account_find_from_item_property(msginfo->folder);
 	if (!account && msginfo->to && prefs_common.reply_account_autosel) {
 		gchar *to;
-		Xstrdup_a(to, msginfo->to, return);
+		to = g_strdup(msginfo->to);
 		extract_address(to);
 		account = account_find_from_address(to);
+		g_free(to);
 	}
 	if (!account && msginfo->folder && msginfo->folder->folder)
 		account = msginfo->folder->folder->account;
@@ -1751,7 +1752,7 @@ static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
 		if (buf == NULL)
 			alertpanel_error(_("Quote mark format error."));
 		else
-			Xstrdup_a(quote_str, buf, return NULL)
+			quote_str = g_strdup(buf);
 	}
 
 	if (fmt && *fmt != '\0') {
@@ -1762,10 +1763,13 @@ static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
 		buf = quote_fmt_get_buffer();
 		if (buf == NULL) {
 			alertpanel_error(_("Message reply/forward format error."));
+			g_free(quote_str);
 			return NULL;
 		}
 	} else
 		buf = "";
+
+	g_free(quote_str);
 
 	prev_autowrap = compose->autowrap;
 	compose->autowrap = FALSE;
@@ -2953,6 +2957,7 @@ static gboolean compose_check_for_valid_recipient(Compose *compose)
 	const gchar *newsgroups_raw = "";
 	gchar *to, *cc, *bcc;
 	gchar *newsgroups;
+	gboolean valid;
 
 	if (compose->use_to)
 		to_raw = gtk_entry_get_text(GTK_ENTRY(compose->to_entry));
@@ -2964,19 +2969,26 @@ static gboolean compose_check_for_valid_recipient(Compose *compose)
 		newsgroups_raw = gtk_entry_get_text
 			(GTK_ENTRY(compose->newsgroups_entry));
 
-	Xstrdup_a(to, to_raw, return FALSE);
-	Xstrdup_a(cc, cc_raw, return FALSE);
-	Xstrdup_a(bcc, bcc_raw, return FALSE);
-	Xstrdup_a(newsgroups, newsgroups_raw, return FALSE);
-	g_strstrip(to);
-	g_strstrip(cc);
-	g_strstrip(bcc);
-	g_strstrip(newsgroups);
+	if (*to_raw == '\0' && *cc_raw == '\0' && *bcc_raw == '\0' &&
+	    *newsgroups_raw == '\0')
+		return FALSE;
+
+	to = g_strstrip(g_strdup(to_raw));
+	cc = g_strstrip(g_strdup(cc_raw));
+	bcc = g_strstrip(g_strdup(bcc_raw));
+	newsgroups = g_strstrip(g_strdup(newsgroups_raw));
 
 	if (*to == '\0' && *cc == '\0' && *bcc == '\0' && *newsgroups == '\0')
-		return FALSE;
+		valid = FALSE;
 	else
-		return TRUE;
+		valid = TRUE;
+
+	g_free(newsgroups);
+	g_free(bcc);
+	g_free(cc);
+	g_free(to);
+
+	return valid;
 }
 
 static gboolean compose_check_entries(Compose *compose)
@@ -4048,22 +4060,25 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 			gchar *bcc;
 			AlertValue aval;
 
-			text = gtk_entry_get_text
-				(GTK_ENTRY(compose->bcc_entry));
-			Xstrdup_a(bcc, text, { g_unlink(file); return -1; });
-			g_strstrip(bcc);
-			if (*bcc != '\0') {
-				aval = alertpanel_full
-					(_("Encrypting with Bcc"),
-					 _("This message has Bcc recipients. If this message is encrypted, all Bcc recipients will be visible by examing the encryption key list, leading to loss of confidentiality.\n"
-					   "\n"
-					   "Send it anyway?"),
-					 ALERT_WARNING, G_ALERTDEFAULT, FALSE,
-					 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
-				if (aval != G_ALERTDEFAULT) {
-					g_unlink(file);
-					return -1;
+			text = gtk_entry_get_text(GTK_ENTRY(compose->bcc_entry));
+			if (*text != '\0') {
+				bcc = g_strdup(text);
+				g_strstrip(bcc);
+				if (*bcc != '\0') {
+					aval = alertpanel_full
+						(_("Encrypting with Bcc"),
+						 _("This message has Bcc recipients. If this message is encrypted, all Bcc recipients will be visible by examing the encryption key list, leading to loss of confidentiality.\n"
+						   "\n"
+						   "Send it anyway?"),
+						 ALERT_WARNING, G_ALERTDEFAULT, FALSE,
+						 GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+					if (aval != G_ALERTDEFAULT) {
+						g_free(bcc);
+						g_unlink(file);
+						return -1;
+					}
 				}
+				g_free(bcc);
 			}
 		}
 		if (use_pgpmime_signing) {
@@ -4626,7 +4641,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		entry_str = gtk_entry_get_text
 			(GTK_ENTRY(compose->newsgroups_entry));
 		if (*entry_str != '\0') {
-			Xstrdup_a(str, entry_str, return -1);
+			str = g_strdup(entry_str);
 			g_strstrip(str);
 			remove_space(str);
 			if (*str != '\0') {
@@ -4639,6 +4654,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 						       FALSE, charset);
 				fprintf(fp, "Newsgroups: %s\n", buf);
 			}
+			g_free(str);
 		}
 	}
 
@@ -4660,7 +4676,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	/* Subject */
 	entry_str = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
 	if (*entry_str != '\0' && !IS_IN_CUSTOM_HEADER("Subject")) {
-		Xstrdup_a(str, entry_str, return -1);
+		str = g_strdup(entry_str);
 		g_strstrip(str);
 		if (*str != '\0') {
 			compose_convert_header(compose, buf, sizeof(buf), str,
@@ -4668,6 +4684,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 					       charset);
 			fprintf(fp, "Subject: %s\n", buf);
 		}
+		g_free(str);
 	}
 
 	/* Message-ID */
@@ -4690,7 +4707,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		entry_str = gtk_entry_get_text
 			(GTK_ENTRY(compose->followup_entry));
 		if (*entry_str != '\0') {
-			Xstrdup_a(str, entry_str, return -1);
+			str = g_strdup(entry_str);
 			g_strstrip(str);
 			remove_space(str);
 			if (*str != '\0') {
@@ -4700,6 +4717,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 						       FALSE, charset);
 				fprintf(fp, "Followup-To: %s\n", buf);
 			}
+			g_free(str);
 		}
 	}
 
@@ -4707,7 +4725,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 	if (compose->use_replyto && !IS_IN_CUSTOM_HEADER("Reply-To")) {
 		entry_str = gtk_entry_get_text(GTK_ENTRY(compose->reply_entry));
 		if (*entry_str != '\0') {
-			Xstrdup_a(str, entry_str, return -1);
+			str = g_strdup(entry_str);
 			g_strstrip(str);
 			if (*str != '\0') {
 				compose_convert_header(compose,
@@ -4716,6 +4734,7 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 						       TRUE, charset);
 				fprintf(fp, "Reply-To: %s\n", buf);
 			}
+			g_free(str);
 		}
 	}
 
@@ -4882,7 +4901,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 		entry_str = gtk_entry_get_text
 			(GTK_ENTRY(compose->newsgroups_entry));
 		if (*entry_str != '\0') {
-			Xstrdup_a(str, entry_str, return -1);
+			str = g_strdup(entry_str);
 			g_strstrip(str);
 			remove_space(str);
 			if (*str != '\0') {
@@ -4895,6 +4914,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 						       FALSE, NULL);
 				fprintf(fp, "Newsgroups: %s\n", buf);
 			}
+			g_free(str);
 		}
 	}
 
@@ -4904,7 +4924,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 	/* Subject */
 	entry_str = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
 	if (*entry_str != '\0') {
-		Xstrdup_a(str, entry_str, return -1);
+		str = g_strdup(entry_str);
 		g_strstrip(str);
 		if (*str != '\0') {
 			compose_convert_header(compose, buf, sizeof(buf), str,
@@ -4912,6 +4932,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 					       NULL);
 			fprintf(fp, "Subject: %s\n", buf);
 		}
+		g_free(str);
 	}
 
 	/* Resent-Message-Id */
@@ -4926,7 +4947,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 		entry_str = gtk_entry_get_text
 			(GTK_ENTRY(compose->followup_entry));
 		if (*entry_str != '\0') {
-			Xstrdup_a(str, entry_str, return -1);
+			str = g_strdup(entry_str);
 			g_strstrip(str);
 			remove_space(str);
 			if (*str != '\0') {
@@ -4936,6 +4957,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 						       FALSE, NULL);
 				fprintf(fp, "Followup-To: %s\n", buf);
 			}
+			g_free(str);
 		}
 	}
 
@@ -4943,7 +4965,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 	if (compose->use_replyto) {
 		entry_str = gtk_entry_get_text(GTK_ENTRY(compose->reply_entry));
 		if (*entry_str != '\0') {
-			Xstrdup_a(str, entry_str, return -1);
+			str = g_strdup(entry_str);
 			g_strstrip(str);
 			if (*str != '\0') {
 				compose_convert_header
@@ -4952,6 +4974,7 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 					 NULL);
 				fprintf(fp, "Resent-Reply-To: %s\n", buf);
 			}
+			g_free(str);
 		}
 	}
 
