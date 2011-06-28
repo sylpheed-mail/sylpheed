@@ -202,13 +202,12 @@ void account_add(void)
 void account_open(PrefsAccount *ac_prefs)
 {
 	gboolean prev_default;
-	gchar *ac_name;
+	gchar *prev_name;
 
 	g_return_if_fail(ac_prefs != NULL);
 
 	prev_default = ac_prefs->is_default;
-	Xstrdup_a(ac_name, ac_prefs->account_name ? ac_prefs->account_name : "",
-		  return);
+	prev_name = g_strdup(ac_prefs->account_name ? ac_prefs->account_name : "");
 
 	prefs_account_open(ac_prefs);
 	if (edit_account.window && GTK_WIDGET_VISIBLE(edit_account.window))
@@ -219,12 +218,15 @@ void account_open(PrefsAccount *ac_prefs)
 	if (!prev_default && ac_prefs->is_default)
 		account_set_as_default(ac_prefs);
 
-	if (ac_prefs->folder && strcmp2(ac_name, ac_prefs->account_name) != 0) {
+	if (ac_prefs->folder &&
+	    strcmp2(prev_name, ac_prefs->account_name) != 0) {
 		folder_set_name(FOLDER(ac_prefs->folder),
 				ac_prefs->account_name);
 		folderview_set_all();
 		folder_write_list();
 	}
+
+	g_free(prev_name);
 
 	account_write_config_all();
 	account_set_menu();
