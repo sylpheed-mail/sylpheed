@@ -589,9 +589,10 @@ void undo_insert_text_cb(GtkTextBuffer *textbuf, GtkTextIter *iter,
 
 	pos = gtk_text_iter_get_offset(iter);
 
-	Xstrndup_a(text_to_insert, new_text, new_text_length, return);
+	text_to_insert = g_strndup(new_text, new_text_length);
 	undo_add(text_to_insert, pos, pos + g_utf8_strlen(text_to_insert, -1),
 		 UNDO_ACTION_INSERT, undostruct);
+	g_free(text_to_insert);
 }
 
 void undo_delete_text_cb(GtkTextBuffer *textbuf, GtkTextIter *start,
