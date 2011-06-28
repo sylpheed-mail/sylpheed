@@ -385,6 +385,7 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 				  GtkTreeIter *iter, GtkTreeIter *parent)
 {
 	gchar *name;
+	gchar *sub = "";
 	GdkPixbuf *pixbuf, *pixbuf_open;
 	gboolean use_color;
 	gboolean no_select;
@@ -429,22 +430,22 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 	if (!item->parent) {
 		switch (FOLDER_TYPE(item->folder)) {
 		case F_MH:
-			Xstrcat_a(name, name, " (MH)", ); break;
+			sub = " (MH)"; break;
 		case F_IMAP:
-			Xstrcat_a(name, name, " (IMAP4)", ); break;
+			sub = " (IMAP4)"; break;
 		case F_NEWS:
-			Xstrcat_a(name, name, " (News)", ); break;
+			sub = " (News)"; break;
 		default:
 			break;
 		}
 	}
 
 	if (item->stype == F_QUEUE && item->total > 0) {
-		name = g_strdup_printf("%s (%d)", name, item->total);
+		name = g_strdup_printf("%s%s (%d)", name, sub, item->total);
 	} else if (item->unread > 0) {
-		name = g_strdup_printf("%s (%d)", name, item->unread);
+		name = g_strdup_printf("%s%s (%d)", name, sub, item->unread);
 	} else
-		name = g_strdup(name);
+		name = g_strdup_printf("%s%s", name, sub);
 
 	no_select = item->no_select ||
 		(sel_type != FOLDER_SEL_ALL && item->stype == F_VIRTUAL);
