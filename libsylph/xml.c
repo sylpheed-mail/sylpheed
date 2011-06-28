@@ -480,7 +480,6 @@ gint xml_unescape_str(gchar *str)
 	gchar *start;
 	gchar *end;
 	gchar *p = str;
-	gchar *esc_str;
 	gchar ch;
 	gint len;
 
@@ -496,16 +495,15 @@ gint xml_unescape_str(gchar *str)
 			continue;
 		}
 
-		Xstrndup_a(esc_str, start, len, return -1);
-		if (!strcmp(esc_str, "&lt;"))
+		if (!strncmp(start, "&lt;", 4))
 			ch = '<';
-		else if (!strcmp(esc_str, "&gt;"))
+		else if (!strncmp(start, "&gt;", 4))
 			ch = '>';
-		else if (!strcmp(esc_str, "&amp;"))
+		else if (!strncmp(start, "&amp;", 5))
 			ch = '&';
-		else if (!strcmp(esc_str, "&apos;"))
+		else if (!strncmp(start, "&apos;", 6))
 			ch = '\'';
-		else if (!strcmp(esc_str, "&quot;"))
+		else if (!strncmp(start, "&quot;", 6))
 			ch = '\"';
 		else {
 			p = end + 1;
