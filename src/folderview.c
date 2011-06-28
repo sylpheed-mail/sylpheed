@@ -2526,7 +2526,7 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 		return;
 	}
 
-	Xstrdup_a(old_path, item->path, {g_free(new_folder); return;});
+	old_path = g_strdup(item->path);
 	old_id = folder_item_get_identifier(item);
 
 	if (item->stype == F_VIRTUAL) {
@@ -2535,6 +2535,7 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 			alertpanel_error(_("Can't rename the folder '%s'."),
 					 item->name);
 			g_free(old_id);
+			g_free(old_path);
 			gtk_tree_path_free(sel_path);
 			return;
 		}
@@ -2543,6 +2544,7 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 		alertpanel_error(_("Can't rename the folder '%s'."),
 				 item->name);
 		g_free(old_id);
+		g_free(old_path);
 		gtk_tree_path_free(sel_path);
 		return;
 	}
@@ -2554,8 +2556,9 @@ static void folderview_rename_folder_cb(FolderView *folderview, guint action,
 	new_id = folder_item_get_identifier(item);
 	filter_list_rename_path(old_id, new_id);
 	prefs_common_junk_folder_rename_path(old_id, new_id);
-	g_free(old_id);
 	g_free(new_id);
+	g_free(old_id);
+	g_free(old_path);
 
 	if (folderview->opened)
 		open_path = gtk_tree_row_reference_get_path(folderview->opened);
@@ -2702,7 +2705,7 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 		return;
 	}
 
-	Xstrdup_a(old_path, item->path, return);
+	old_path = g_strdup(item->path);
 	old_id = folder_item_get_identifier(item);
 
 	if (folderview->opened)
@@ -2724,11 +2727,13 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 			alertpanel_error(_("Can't remove the folder '%s'."),
 					 name);
 			g_free(old_id);
+			g_free(old_path);
 			return;
 		}
 	} else if (folder->klass->remove_folder(folder, item) < 0) {
 		alertpanel_error(_("Can't remove the folder '%s'."), name);
 		g_free(old_id);
+		g_free(old_path);
 		return;
 	}
 
@@ -2736,6 +2741,7 @@ static void folderview_delete_folder_cb(FolderView *folderview, guint action,
 		filter_list_delete_path(old_path);
 	filter_list_delete_path(old_id);
 	g_free(old_id);
+	g_free(old_path);
 
 	gtk_tree_store_remove(folderview->store, &iter);
 
