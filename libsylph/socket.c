@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -150,6 +150,22 @@ static gint sock_connect_by_hostname	(gint		 sock,
 					 const gchar	*hostname,
 					 gushort	 port);
 #else
+#ifdef G_OS_WIN32
+typedef int (*GetAddrInfoFunc)		(const char	*node,
+					 const char	*service,
+					 const struct addrinfo *hints,
+					 struct addrinfo **res);
+typedef void (*FreeAddrInfoFunc)	(struct addrinfo *res);
+
+static GetAddrInfoFunc getaddrinfo_func = NULL;
+static FreeAddrInfoFunc freeaddrinfo_func = NULL;
+
+#undef getaddrinfo
+#define getaddrinfo	my_getaddrinfo
+#undef freeaddrinfo
+#define freeaddrinfo	my_freeaddrinfo
+#endif
+
 static SockDesc sock_connect_by_getaddrinfo	(const gchar	*hostname,
 						 gushort	 port);
 #endif
@@ -777,7 +793,7 @@ static void sock_set_buffer_size(gint sock)
 #endif
 }
 
-#ifndef INET6
+#if !defined(INET6) || defined(G_OS_WIN32)
 static gint my_inet_aton(const gchar *hostname, struct in_addr *inp)
 {
 #if HAVE_INET_ATON
@@ -797,7 +813,9 @@ static gint my_inet_aton(const gchar *hostname, struct in_addr *inp)
 #endif
 #endif /* HAVE_INET_ATON */
 }
+#endif /* !defined(INET6) || defined(G_OS_WIN32) */
 
+#ifndef INET6
 static gint sock_connect_by_hostname(gint sock, const gchar *hostname,
 				     gushort port)
 {
@@ -833,6 +851,126 @@ static gint sock_connect_by_hostname(gint sock, const gchar *hostname,
 #else /* INET6 */
 
 #ifdef G_OS_WIN32
+static gboolean win32_ipv6_supported(void)
+{
+	static gboolean ipv6_checked = FALSE;
+	HMODULE hmodule;
+
+	if (ipv6_checked)
+		return getaddrinfo_func != NULL;
+
+	hmodule = GetModuleHandleA("ws2_32");
+	if (hmodule) {
+		getaddrinfo_func =
+			(GetAddrInfoFunc)GetProcAddress(hmodule, "getaddrinfo");
+		freeaddrinfo_func =
+			(FreeAddrInfoFunc)GetProcAddress(hmodule, "freeaddrinfo");
+		if (!getaddrinfo_func || !freeaddrinfo_func) {
+			getaddrinfo_func = NULL;
+			freeaddrinfo_func = NULL;
+		}
+	}
+
+	if (getaddrinfo_func)
+		debug_print("ws2_32 has IPv6 functions.\n");
+	else
+		debug_print("ws2_32 does not have IPv6 functions.\n");
+
+	ipv6_checked = TRUE;
+	return getaddrinfo_func != NULL;
+}
+
+/* subset of getaddrinfo() */
+static int my_getaddrinfo(const char *node, const char *service,
+			  const struct addrinfo *hintp,
+			  struct addrinfo **res)
+{
+	struct addrinfo *ai;
+	struct sockaddr_in addr, *paddr;
+	struct addrinfo hints;
+	gint port = 0;
+
+	if (win32_ipv6_supported())
+		return getaddrinfo_func(node, service, hintp, res);
+
+	if (!hintp) {
+		memset(&hints, 0, sizeof(hints));
+		hints.ai_family = AF_INET;
+		hints.ai_socktype = SOCK_STREAM;
+	} else
+		memcpy(&hints, hintp, sizeof(hints));
+
+	if (hints.ai_family != AF_UNSPEC && hints.ai_family != AF_INET)
+		return EAI_FAMILY;
+	if (hints.ai_socktype == 0)
+		hints.ai_socktype = SOCK_STREAM;
+	if (hints.ai_protocol == 0)
+		hints.ai_protocol = IPPROTO_TCP;
+	if (hints.ai_socktype != SOCK_STREAM)
+		return EAI_SOCKTYPE;
+	if (hints.ai_protocol != IPPROTO_TCP)
+		return EAI_SOCKTYPE;
+#if 0
+	if (!node && !service)
+		return EAI_NONAME;
+#endif
+	if (!node || !service)
+		return EAI_NONAME;
+
+	port = atoi(service);
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(port);
+
+	if (!my_inet_aton(node, &addr.sin_addr)) {
+		struct hostent *hp;
+
+		if ((hp = my_gethostbyname(node)) == NULL) {
+			fprintf(stderr, "%s: unknown host.\n", node);
+			errno = 0;
+			return EAI_NONAME;
+		}
+		if (hp->h_length != 4 && hp->h_length != 8) {
+			fprintf(stderr, "illegal address length received for host %s\n", node);
+			errno = 0;
+			return EAI_FAIL;
+		}
+
+		memcpy(&addr.sin_addr, hp->h_addr, hp->h_length);
+	}
+
+	ai = g_malloc0(sizeof(struct addrinfo));
+	paddr = g_malloc0(sizeof(struct sockaddr_in));
+	memcpy(paddr, &addr, sizeof(struct sockaddr_in));
+
+	ai->ai_flags = 0;
+	ai->ai_family = AF_INET;
+	ai->ai_socktype = hints.ai_socktype;
+	ai->ai_protocol = hints.ai_protocol;
+	ai->ai_addrlen = sizeof(struct sockaddr_in);
+	ai->ai_addr = (struct sockaddr *)paddr;
+	ai->ai_canonname = NULL;
+	ai->ai_next = NULL;
+
+	*res = ai;
+
+	return 0;
+}
+
+static void my_freeaddrinfo(struct addrinfo *res)
+{
+	if (win32_ipv6_supported()) {
+		freeaddrinfo_func(res);
+		return;
+	}
+
+	if (res) {
+		g_free(res->ai_addr);
+		g_free(res);
+	}
+}
+
 /* MinGW defines gai_strerror() in ws2tcpip.h, but it is not implemented. */
 #undef gai_strerror
 const gchar *gai_strerror(gint errcode)
