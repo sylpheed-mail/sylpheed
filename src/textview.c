@@ -632,6 +632,7 @@ enum {
 	PART_MENU_OPEN,
 	PART_MENU_OPEN_WITH,
 	PART_MENU_SAVE_AS,
+	PART_MENU_PRINT,
 	PART_MENU_COPY_FILENAME
 };
 
@@ -707,12 +708,18 @@ static gboolean textview_part_widget_button_pressed(GtkWidget *widget,
 	for (cur = GTK_MENU_SHELL(menu)->children; cur != NULL; cur = cur->next) {
 		GtkWidget *menuitem = GTK_WIDGET(cur->data);
 		gint type = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
-		if (type == PART_MENU_COPY_FILENAME) {
+		if (type == PART_MENU_PRINT) {
+			if (mimeinfo->mime_type == MIME_TEXT ||
+			    mimeinfo->mime_type == MIME_TEXT_HTML ||
+			    mimeinfo->mime_type == MIME_MESSAGE_RFC822)
+				gtk_widget_set_sensitive(menuitem, TRUE);
+			else
+				gtk_widget_set_sensitive(menuitem, FALSE);
+		} else if (type == PART_MENU_COPY_FILENAME) {
 			if (mimeinfo->filename || mimeinfo->name)
 				gtk_widget_set_sensitive(menuitem, TRUE);
 			else
 				gtk_widget_set_sensitive(menuitem, FALSE);
-			break;
 		}
 	}
 
@@ -776,6 +783,9 @@ static void textview_part_menu_activated(GtkWidget *widget, gpointer data)
 	case PART_MENU_SAVE_AS:
 		mimeview_save_part_as(mimeview, mimeinfo);
 		break;
+	case PART_MENU_PRINT:
+		mimeview_print_part(mimeview, mimeinfo);
+		break;
 	case PART_MENU_COPY_FILENAME:
 		filename = mimeinfo->filename ? mimeinfo->filename :
 			   mimeinfo->name ? mimeinfo->name : NULL;
@@ -816,7 +826,12 @@ static void textview_part_menu_create(TextView *textview)
 	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Save as..."), PART_MENU_SAVE_AS);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
 			 G_CALLBACK(textview_part_menu_activated), textview);
+	MENUITEM_ADD_FROM_STOCK(menu, menuitem, GTK_STOCK_PRINT, PART_MENU_PRINT);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(textview_part_menu_activated), textview);
+
 	MENUITEM_ADD(menu, menuitem, NULL, 0);
+
 	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("_Copy file name"), PART_MENU_COPY_FILENAME);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
 			 G_CALLBACK(textview_part_menu_activated), textview);
@@ -909,11 +924,13 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	charset = textview_get_src_encoding(textview, mimeinfo);
 
 	if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
-		textview_insert_border(textview, &iter, 8);
+		g_snprintf(buf, sizeof(buf), "%s (%s)",
+			   mimeinfo->content_type,
+			   to_human_readable(mimeinfo->content_size));
+		textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		headers = textview_scan_header(textview, fp, charset);
 		if (headers) {
-			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 			textview_show_header(textview, headers);
 			procheader_header_array_destroy(headers);
 		}

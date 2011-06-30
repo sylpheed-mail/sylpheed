@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1094,6 +1094,15 @@ void mimeview_print(MimeView *mimeview)
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
+
+	mimeview_print_part(mimeview, partinfo);
+}
+
+void mimeview_print_part(MimeView *mimeview, MimeInfo *partinfo)
+{
+	g_return_if_fail(partinfo != NULL);
+
+	if (!mimeview->file) return;
 
 	if (partinfo->mime_type == MIME_MESSAGE_RFC822) {
 		gchar *filename;
