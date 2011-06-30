@@ -1,5 +1,38 @@
 Changes of Sylpheed
 
+* 3.2.0beta1 (development)
+
+    New features
+
+      * Each attachments on the message view now have graphical label and
+        popup menu.
+      * Win32: IPv6 support on Windows XP or later was enabled again.
+        (This time, it will also work on Windows 2000 (IPv4 only support))
+
+    Improvements
+
+      * Number of maximum characters per line of configuration files was
+        increased.
+      * Compose window will not be closed if saving of message to outbox
+        failed.
+      * Sender's e-mail address became not guessable from generated Message-Id.
+      * New plug-in APIs were added.
+
+    Bugfixes
+
+      * The crash bug that was caused by offline switch while IMAP session was
+        active was fixed.
+      * Queue control headers are removed when moving messages from queue
+        folders to trash.
+      * Duplicated keyboard accelerators on some dialogs were fixed.
+      * Fixed a memory leak.
+
+    Other changes
+
+      * Many alloca() calls were removed.
+      * Win32: the updater executables were not included in the zip version
+        anymore to prevent incorrect update.
+
 * 3.1.1 (stable)
 
     * The column width of the address book will be saved now.
