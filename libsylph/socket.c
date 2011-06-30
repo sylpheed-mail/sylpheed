@@ -941,7 +941,7 @@ static int my_getaddrinfo(const char *node, const char *service,
 	}
 
 	ai = g_malloc0(sizeof(struct addrinfo));
-	paddr = g_malloc0(sizeof(struct sockaddr_in));
+	paddr = g_malloc(sizeof(struct sockaddr_in));
 	memcpy(paddr, &addr, sizeof(struct sockaddr_in));
 
 	ai->ai_flags = 0;
