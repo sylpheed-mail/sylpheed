@@ -50,10 +50,8 @@ static GHashTable *procmsg_read_mark_file	(FolderItem	*item);
 static void procmsg_write_mark_file		(FolderItem	*item,
 						 GHashTable	*mark_table);
 
-static FILE *procmsg_open_cache_file_with_buffer(FolderItem	*item,
-						 DataOpenMode	 mode,
-						 gchar		*buf,
-						 size_t		 buf_size);
+static GMappedFile *procmsg_open_cache_file_mmap(FolderItem	*item,
+						 DataOpenMode	 mode);
 
 static gint procmsg_cmp_by_mark			(gconstpointer	 a,
 						 gconstpointer	 b);
@@ -126,75 +124,94 @@ GHashTable *procmsg_to_folder_hash_table_create(GSList *mlist)
 gint procmsg_read_cache_data_str(FILE *fp, gchar **str)
 {
 	gchar buf[BUFFSIZE];
-	gint ret = 0;
+	guint32 len;
+	gchar *tmp = NULL;
+
+	if (fread(&len, sizeof(len), 1, fp) != 1)
+		return -1;
+
+	if (len > G_MAXINT)
+		return -1;
+
+	while (len > 0) {
+		size_t size = MIN(len, BUFFSIZE - 1);
+
+		if (fread(buf, size, 1, fp) != 1) {
+			if (tmp)
+				g_free(tmp);
+			*str = NULL;
+			return -1;
+		}
+
+		buf[size] = '\0';
+		if (tmp) {
+			*str = g_strconcat(tmp, buf, NULL);
+			g_free(tmp);
+			tmp = *str;
+		} else
+			tmp = *str = g_strdup(buf);
+
+		len -= size;
+	}
+
+	return 0;
+}
+
+static gint procmsg_read_cache_data_str_mem(const gchar **p, const gchar *endp, gchar **str)
+{
 	guint32 len;
 
-	if (fread(&len, sizeof(len), 1, fp) == 1) {
-		if (len > G_MAXINT)
-			ret = -1;
-		else {
-			gchar *tmp = NULL;
+	if (endp - *p < sizeof(len))
+		return -1;
 
-			while (len > 0) {
-				size_t size = MIN(len, BUFFSIZE - 1);
+	len = *(const guint32 *)(*p);
+	*p += sizeof(len);
+	if (len > G_MAXINT || len > endp - *p)
+		return -1;
 
-				if (fread(buf, size, 1, fp) != 1) {
-					ret = -1;
-					if (tmp) g_free(tmp);
-					*str = NULL;
-					break;
-				}
+	if (len > 0) {
+		*str = g_strndup(*p, len);
+		*p += len;
+	}
 
-				buf[size] = '\0';
-				if (tmp) {
-					*str = g_strconcat(tmp, buf, NULL);
-					g_free(tmp);
-					tmp = *str;
-				} else
-					tmp = *str = g_strdup(buf);
-
-				len -= size;
-			}
-		}
-	} else
-		ret = -1;
-
-	return ret;
+	return 0;
 }
 
-#define READ_CACHE_DATA(data, fp)				\
+#define READ_CACHE_DATA(data)						\
+{									\
+	if (procmsg_read_cache_data_str_mem(&p, endp, &data) < 0) {	\
+		g_warning("Cache data is corrupted\n");			\
+		procmsg_msginfo_free(msginfo);				\
+		procmsg_msg_list_free(mlist);				\
+		g_mapped_file_free(mapfile);				\
+		return NULL;						\
+	}								\
+}
+
+#define READ_CACHE_DATA_INT(n)					\
 {								\
-	if (procmsg_read_cache_data_str(fp, &data) < 0) {	\
+	if (endp - p < sizeof(guint32)) {			\
 		g_warning("Cache data is corrupted\n");		\
 		procmsg_msginfo_free(msginfo);			\
 		procmsg_msg_list_free(mlist);			\
-		fclose(fp);					\
+		g_mapped_file_free(mapfile);			\
 		return NULL;					\
+	} else {						\
+		n = *(const guint32 *)p;			\
+		p += sizeof(guint32);				\
 	}							\
-}
-
-#define READ_CACHE_DATA_INT(n, fp)				\
-{								\
-	guint32 idata;						\
-								\
-	if (fread(&idata, sizeof(idata), 1, fp) != 1) {		\
-		g_warning("Cache data is corrupted\n");		\
-		procmsg_msginfo_free(msginfo);			\
-		procmsg_msg_list_free(mlist);			\
-		fclose(fp);					\
-		return NULL;					\
-	} else							\
-		n = idata;					\
 }
 
 GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 {
 	GSList *mlist = NULL;
 	GSList *last = NULL;
-	FILE *fp;
+	GMappedFile *mapfile;
+	const gchar *filep;
+	gsize file_len;
+	const gchar *p, *endp;
 	MsgInfo *msginfo;
 	MsgFlags default_flags;
-	gchar file_buf[BUFFSIZE];
 	guint32 num;
 	guint refnum;
 	FolderType type;
@@ -229,37 +246,44 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 		g_free(path);
 	}
 
-	if ((fp = procmsg_open_cache_file_with_buffer
-		(item, DATA_READ, file_buf, sizeof(file_buf))) == NULL) {
+	mapfile = procmsg_open_cache_file_mmap(item, DATA_READ);
+	if (!mapfile) {
 		item->cache_dirty = TRUE;
 		return NULL;
 	}
 
 	debug_print("Reading summary cache...\n");
 
-	while (fread(&num, sizeof(num), 1, fp) == 1) {
+	filep = g_mapped_file_get_contents(mapfile);
+	file_len = g_mapped_file_get_length(mapfile);
+	endp = filep + file_len;
+	p = filep + sizeof(guint32); /* version */
+
+	while (endp - p >= sizeof(num)) {
 		msginfo = g_new0(MsgInfo, 1);
-		msginfo->msgnum = num;
-		READ_CACHE_DATA_INT(msginfo->size, fp);
-		READ_CACHE_DATA_INT(msginfo->mtime, fp);
-		READ_CACHE_DATA_INT(msginfo->date_t, fp);
-		READ_CACHE_DATA_INT(msginfo->flags.tmp_flags, fp);
 
-		READ_CACHE_DATA(msginfo->fromname, fp);
+		READ_CACHE_DATA_INT(msginfo->msgnum);
 
-		READ_CACHE_DATA(msginfo->date, fp);
-		READ_CACHE_DATA(msginfo->from, fp);
-		READ_CACHE_DATA(msginfo->to, fp);
-		READ_CACHE_DATA(msginfo->newsgroups, fp);
-		READ_CACHE_DATA(msginfo->subject, fp);
-		READ_CACHE_DATA(msginfo->msgid, fp);
-		READ_CACHE_DATA(msginfo->inreplyto, fp);
+		READ_CACHE_DATA_INT(msginfo->size);
+		READ_CACHE_DATA_INT(msginfo->mtime);
+		READ_CACHE_DATA_INT(msginfo->date_t);
+		READ_CACHE_DATA_INT(msginfo->flags.tmp_flags);
 
-		READ_CACHE_DATA_INT(refnum, fp);
+		READ_CACHE_DATA(msginfo->fromname);
+
+		READ_CACHE_DATA(msginfo->date);
+		READ_CACHE_DATA(msginfo->from);
+		READ_CACHE_DATA(msginfo->to);
+		READ_CACHE_DATA(msginfo->newsgroups);
+		READ_CACHE_DATA(msginfo->subject);
+		READ_CACHE_DATA(msginfo->msgid);
+		READ_CACHE_DATA(msginfo->inreplyto);
+
+		READ_CACHE_DATA_INT(refnum);
 		for (; refnum != 0; refnum--) {
 			gchar *ref;
 
-			READ_CACHE_DATA(ref, fp);
+			READ_CACHE_DATA(ref);
 			msginfo->references =
 				g_slist_prepend(msginfo->references, ref);
 		}
@@ -273,7 +297,8 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 		/* if the message file doesn't exist or is changed,
 		   don't add the data */
 		if ((type == F_MH && scan_file &&
-		     folder_item_is_msg_changed(item, msginfo)) || num == 0) {
+		     folder_item_is_msg_changed(item, msginfo)) ||
+		     msginfo->msgnum == 0) {
 			procmsg_msginfo_free(msginfo);
 			item->cache_dirty = TRUE;
 		} else {
@@ -288,7 +313,7 @@ GSList *procmsg_read_cache(FolderItem *item, gboolean scan_file)
 		}
 	}
 
-	fclose(fp);
+	g_mapped_file_free(mapfile);
 
 	if (item->cache_queue) {
 		GSList *qlist;
@@ -1073,19 +1098,41 @@ FILE *procmsg_open_data_file(const gchar *file, guint version,
 	return fp;
 }
 
-static FILE *procmsg_open_cache_file_with_buffer(FolderItem *item,
-						 DataOpenMode mode,
-						 gchar *buf, size_t buf_size)
+static GMappedFile *procmsg_open_cache_file_mmap(FolderItem *item,
+						 DataOpenMode mode)
 {
 	gchar *cachefile;
-	FILE *fp;
+	GMappedFile *map = NULL;
+	gsize size;
+	guint32 data_ver = 0;
+	gchar *p;
+
+	if (mode != DATA_READ)
+		return NULL;
 
 	cachefile = folder_item_get_cache_file(item);
-	fp = procmsg_open_data_file(cachefile, CACHE_VERSION, mode, buf,
-				    buf_size);
-	g_free(cachefile);
+	if (cachefile) {
+		map = g_mapped_file_new(cachefile, FALSE, NULL);
+		size = g_mapped_file_get_length(map);
+		if (size < sizeof(data_ver)) {
+			g_warning("%s: cannot read mark/cache file (truncated?)", cachefile);
+			g_mapped_file_free(map);
+			g_free(cachefile);
+			return NULL;
+		}
+		p = g_mapped_file_get_contents(map);
+		data_ver = *(guint32 *)p;
+		if (CACHE_VERSION != data_ver) {
+			g_message("%s: Mark/Cache version is different (%u != %u). Discarding it.\n",
+				  cachefile, data_ver, CACHE_VERSION);
+			g_mapped_file_free(map);
+			g_free(cachefile);
+			return NULL;
+		}
+		g_free(cachefile);
+	}
 
-	return fp;
+	return map;
 }
 
 FILE *procmsg_open_cache_file(FolderItem *item, DataOpenMode mode)
