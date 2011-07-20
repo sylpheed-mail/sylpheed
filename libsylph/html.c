@@ -368,16 +368,20 @@ static HTMLTag *html_get_tag(const gchar *str)
 
 	if (*str == '\0' || *str == '!') return NULL;
 
-	Xstrdup_a(tmp, str, return NULL);
+	tmp = g_strdup(str);
 
 	tag = g_new0(HTMLTag, 1);
 
-	for (tmpp = tmp; *tmpp != '\0' && !g_ascii_isspace(*tmpp); tmpp++)
-		;
+	for (tmpp = tmp; *tmpp != '\0' && !g_ascii_isspace(*tmpp); tmpp++) {
+		if (tmpp > tmp && *tmpp == '/') {
+			*tmpp = '\0';
+			break;
+		}
+	}
 
 	if (*tmpp == '\0') {
 		g_strdown(tmp);
-		tag->name = g_strdup(tmp);
+		tag->name = tmp;
 		return tag;
 	} else {
 		*tmpp++ = '\0';
@@ -393,6 +397,8 @@ static HTMLTag *html_get_tag(const gchar *str)
 		gchar quote;
 
 		while (g_ascii_isspace(*tmpp)) tmpp++;
+		if (tmpp > tmp && *tmpp == '/')
+			break;
 		attr_name = tmpp;
 
 		while (*tmpp != '\0' && !g_ascii_isspace(*tmpp) &&
@@ -414,7 +420,7 @@ static HTMLTag *html_get_tag(const gchar *str)
 				attr_value = tmpp;
 				if ((p = strchr(attr_value, quote)) == NULL) {
 					g_warning("html_get_tag(): syntax error in tag: '%s'\n", str);
-					return tag;
+					break;
 				}
 				tmpp = p;
 				*tmpp++ = '\0';
@@ -436,6 +442,8 @@ static HTMLTag *html_get_tag(const gchar *str)
 		attr->value = g_strdup(attr_value);
 		tag->attr = g_list_append(tag->attr, attr);
 	}
+
+	g_free(tmp);
 
 	return tag;
 }
