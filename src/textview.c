@@ -743,7 +743,7 @@ static gboolean textview_part_widget_exposed(GtkWidget *widget,
 		return FALSE;
 
 	drawable = GDK_DRAWABLE(widget->window);
-	gc = widget->style->fg_gc[GTK_WIDGET_STATE(widget)];
+	gc = widget->style->dark_gc[GTK_WIDGET_STATE(widget)];
 	gdk_gc_set_clip_rectangle(gc, &event->area);
 	gdk_gc_set_line_attributes(gc, 1, GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
 				   GDK_JOIN_MITER);
@@ -852,6 +852,7 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	GtkWidget *ebox;
 	GtkWidget *label;
 	GtkWidget *arrow;
+	GtkStyle *style;
 	GdkColor bg = {0, 0xe000, 0xe500, 0xffff};
 	GdkColor fg = {0, 0x8000, 0x9800, 0xffff};
 	GdkColor bg2 = {0, 0xc000, 0xc800, 0xffff};
@@ -878,6 +879,13 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 			 G_CALLBACK(textview_part_widget_left), textview);
 	g_signal_connect_after(G_OBJECT(ebox), "expose_event",
 			 G_CALLBACK(textview_part_widget_exposed), textview);
+
+	style = gtk_widget_get_style(label);
+	bg = style->bg[GTK_STATE_NORMAL];
+	fg = style->fg[GTK_STATE_NORMAL];
+	bg2 = style->bg[GTK_STATE_PRELIGHT];
+	fg2 = style->fg[GTK_STATE_PRELIGHT];
+
 	gtk_widget_modify_bg(ebox, GTK_STATE_NORMAL, &bg);
 	gtk_widget_modify_fg(ebox, GTK_STATE_NORMAL, &fg);
 	gtk_widget_modify_bg(ebox, GTK_STATE_PRELIGHT, &bg2);
