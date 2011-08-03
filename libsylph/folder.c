@@ -986,6 +986,26 @@ void folder_set_junk(Folder *folder, FolderItem *item)
 		priv->junk = item;
 }
 
+gboolean folder_item_is_trash(FolderItem *item)
+{
+	PrefsAccount *ac;
+	FolderItem *trash;
+
+	g_return_val_if_fail(item != NULL, FALSE);
+
+	if (item->stype == F_TRASH)
+		return TRUE;
+
+	ac = account_find_from_item_property(item);
+	if (ac && ac->set_trash_folder && ac->trash_folder) {
+		trash = folder_find_item_from_identifier(ac->trash_folder);
+		if (trash == item)
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
 #define CREATE_FOLDER_IF_NOT_EXIST(member, dir, type)	\
 {							\
 	if (!folder->member) {				\

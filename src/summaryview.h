@@ -162,6 +162,9 @@ private:
 
 	/* junk filter list */
 	GSList *junk_fltlist;
+
+	/* generic flag */
+	gint tmp_flag;
 };
 
 SummaryView	*summary_create(void);

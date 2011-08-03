@@ -3379,8 +3379,7 @@ static void summary_delete_row(SummaryView *summaryview, GtkTreeIter *iter)
 	summaryview->deleted++;
 	summaryview->folder_item->mark_dirty = TRUE;
 
-	if (!prefs_common.immediate_exec && 
-	    summaryview->folder_item->stype != F_TRASH)
+	if (!prefs_common.immediate_exec && summaryview->tmp_flag == 0)
 		summary_set_row(summaryview, iter, msginfo);
 
 	debug_print(_("Message %s/%d is set to delete\n"),
@@ -3402,13 +3401,15 @@ void summary_delete(SummaryView *summaryview)
 	GtkTreeIter last_sel, next;
 	GtkTreeView *treeview = GTK_TREE_VIEW(summaryview->treeview);
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
+	gboolean is_trash;
 
 	if (!item || FOLDER_TYPE(item->folder) == F_NEWS) return;
 
 	if (summary_is_locked(summaryview)) return;
 
 	/* if current folder is trash, ask for confirmation */
-	if (item->stype == F_TRASH) {
+	is_trash = folder_item_is_trash(item);
+	if (is_trash) {
 		AlertValue aval;
 
 		aval = alertpanel(_("Delete message(s)"),
@@ -3420,6 +3421,8 @@ void summary_delete(SummaryView *summaryview)
 	rows = summary_get_selected_rows(summaryview);
 	if (!rows)
 		return;
+
+	summaryview->tmp_flag = is_trash ? 1 : 0;
 
 	/* next code sets current row focus right. We need to find a row
 	 * that is not deleted. */
@@ -3436,7 +3439,9 @@ void summary_delete(SummaryView *summaryview)
 			summary_delete_row(summaryview, &last_sel);
 	}
 
-	if (prefs_common.immediate_exec || item->stype == F_TRASH) {
+	summaryview->tmp_flag = 0;
+
+	if (prefs_common.immediate_exec || is_trash) {
 		summary_execute(summaryview);
 	} else {
 		if (summary_find_nearest_msg(summaryview, &next, &last_sel)) {
@@ -3481,7 +3486,7 @@ void summary_delete_duplicated(SummaryView *summaryview)
 {
 	if (!summaryview->folder_item ||
 	    FOLDER_TYPE(summaryview->folder_item->folder) == F_NEWS) return;
-	if (summaryview->folder_item->stype == F_TRASH) return;
+	if (folder_item_is_trash(summaryview->folder_item)) return;
 
 	if (summary_is_locked(summaryview)) return;
 
@@ -4161,10 +4166,18 @@ static gboolean summary_execute_delete_func(GtkTreeModel *model,
 
 static gint summary_execute_delete(SummaryView *summaryview)
 {
-	FolderItem *trash;
+	FolderItem *trash = NULL;
+	PrefsAccount *ac;
 	gint val = 0;
 
-	trash = summaryview->folder_item->folder->trash;
+	ac = account_find_from_item_property(summaryview->folder_item);
+	if (ac && ac->set_trash_folder && ac->trash_folder)
+		trash = folder_find_item_from_identifier(ac->trash_folder);
+	if (!trash)
+		trash = summaryview->folder_item->folder->trash;
+	if (!trash)
+		folder_get_default_trash();
+
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_MH) {
 		g_return_val_if_fail(trash != NULL, 0);
 	}
@@ -5191,7 +5204,7 @@ static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
 	mlist = summary_get_selected_msg_list(summaryview);
 	if (!mlist) return;
 
-	items = g_new(GtkWidget *, N_COLOR_LABELS + 1);
+	items = (GtkCheckMenuItem **)g_new(GtkWidget *, N_COLOR_LABELS + 1);
 
 	/* NOTE: don't return prematurely because we set the "dont_toggle"
 	 * state for check menu items */
