@@ -51,7 +51,6 @@ static const struct {
 	{QS_IN_ADDRESSBOOK,	-1}
 };
 
-static GdkColor text_color;
 static GdkColor dim_color = {0, COLOR_DIM, COLOR_DIM, COLOR_DIM};
 
 static void menu_activated		(GtkWidget	*menuitem,
@@ -88,7 +87,6 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	GtkWidget *clear_btn;
 	GtkWidget *image;
 	GtkWidget *status_label;
-	GtkStyle *style;
 
 	qsearch = g_new0(QuickSearch, 1);
 
@@ -187,8 +185,6 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	gtk_widget_show_all(hbox);
 	gtk_widget_hide(clear_btn);
 
-	style = gtk_widget_get_style(entry);
-	text_color = style->text[GTK_STATE_NORMAL];
 	entry_focus_out(entry, NULL, qsearch);
 
 	return qsearch;
@@ -358,13 +354,10 @@ static void menu_activated(GtkWidget *menuitem, QuickSearch *qsearch)
 static gboolean entry_focus_in(GtkWidget *entry, GdkEventFocus *event,
 			       QuickSearch *qsearch)
 {
-	GtkStyle *style;
-
 	if (!qsearch->entry_entered) {
 		g_signal_handlers_block_by_func(entry, entry_changed, qsearch);
 		gtk_entry_set_text(GTK_ENTRY(entry), "");
-		style = gtk_widget_get_style(entry);
-		gtk_widget_modify_text(entry, GTK_STATE_NORMAL, &text_color);
+		gtk_widget_modify_text(entry, GTK_STATE_NORMAL, NULL);
 		g_signal_handlers_unblock_by_func(entry, entry_changed, qsearch);
 	}
 
@@ -374,11 +367,8 @@ static gboolean entry_focus_in(GtkWidget *entry, GdkEventFocus *event,
 static gboolean entry_focus_out(GtkWidget *entry, GdkEventFocus *event,
 				QuickSearch *qsearch)
 {
-	GtkStyle *style;
-
 	if (!qsearch->entry_entered) {
 		g_signal_handlers_block_by_func(entry, entry_changed, qsearch);
-		style = gtk_widget_get_style(entry);
 		gtk_widget_modify_text(entry, GTK_STATE_NORMAL, &dim_color);
 		gtk_entry_set_text(GTK_ENTRY(entry), _("Search for Subject or From"));
 		g_signal_handlers_unblock_by_func(entry, entry_changed, qsearch);
