@@ -621,16 +621,22 @@ static void html_get_parenthesis(HTMLParser *parser, gchar *buf, gint len)
 	}
 	if (!g_ascii_strncasecmp(parser->bufp, "<style", 6)) {
 		parser->bufp += 6;
-		while ((p = strcasestr(parser->bufp, "</style>")) == NULL)
+		while ((p = strcasestr(parser->bufp, "</style")) == NULL)
 			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 8;
+		parser->bufp = p + 7;
+		while ((p = strchr(parser->bufp, '>')) == NULL)
+			if (html_read_line(parser) == HTML_EOF) return;
+		parser->bufp = p + 1;
 		return;
 	}
 	if (!g_ascii_strncasecmp(parser->bufp, "<script", 7)) {
 		parser->bufp += 7;
-		while ((p = strcasestr(parser->bufp, "</script>")) == NULL)
+		while ((p = strcasestr(parser->bufp, "</script")) == NULL)
 			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 9;
+		parser->bufp = p + 8;
+		while ((p = strchr(parser->bufp, '>')) == NULL)
+			if (html_read_line(parser) == HTML_EOF) return;
+		parser->bufp = p + 1;
 		return;
 	}
 

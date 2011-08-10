@@ -1,5 +1,11 @@
 2011-08-10
 
+	* libsylph/html.c: html_get_parenthesis(): fixed a bug that </style>
+	  end tags were not properly searched if whitespace was inserted in it
+	  (ex. </style > </style[\n]>).
+
+2011-08-10
+
 	* libsylph/procmime.c: removed alloca() calls.
 
 2011-08-03
