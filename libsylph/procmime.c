@@ -351,22 +351,20 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 void procmime_scan_encoding(MimeInfo *mimeinfo, const gchar *encoding)
 {
-	gchar *buf;
-
-	Xstrdup_a(buf, encoding, return);
+	gchar *enc;
 
 	g_free(mimeinfo->encoding);
+	enc = mimeinfo->encoding = g_strstrip(g_strdup(encoding));
 
-	mimeinfo->encoding = g_strdup(g_strstrip(buf));
-	if (!g_ascii_strncasecmp(buf, "7bit", 4))
+	if (!g_ascii_strncasecmp(enc, "7bit", 4))
 		mimeinfo->encoding_type = ENC_7BIT;
-	else if (!g_ascii_strncasecmp(buf, "8bit", 4))
+	else if (!g_ascii_strncasecmp(enc, "8bit", 4))
 		mimeinfo->encoding_type = ENC_8BIT;
-	else if (!g_ascii_strncasecmp(buf, "quoted-printable", 16))
+	else if (!g_ascii_strncasecmp(enc, "quoted-printable", 16))
 		mimeinfo->encoding_type = ENC_QUOTED_PRINTABLE;
-	else if (!g_ascii_strncasecmp(buf, "base64", 6))
+	else if (!g_ascii_strncasecmp(enc, "base64", 6))
 		mimeinfo->encoding_type = ENC_BASE64;
-	else if (!g_ascii_strncasecmp(buf, "x-uuencode", 10))
+	else if (!g_ascii_strncasecmp(enc, "x-uuencode", 10))
 		mimeinfo->encoding_type = ENC_X_UUENCODE;
 	else
 		mimeinfo->encoding_type = ENC_UNKNOWN;
@@ -1488,7 +1486,7 @@ gchar *procmime_get_mime_type(const gchar *filename)
 	static GHashTable *mime_type_table = NULL;
 	MimeType *mime_type;
 	const gchar *p;
-	gchar *ext;
+	gchar ext[64];
 	static gboolean no_mime_type_table = FALSE;
 
 	if (no_mime_type_table)
@@ -1506,7 +1504,7 @@ gchar *procmime_get_mime_type(const gchar *filename)
 	p = strrchr(filename, '.');
 	if (!p) return NULL;
 
-	Xstrdup_a(ext, p + 1, return NULL);
+	strncpy2(ext, p + 1, sizeof(ext));
 	g_strdown(ext);
 	mime_type = g_hash_table_lookup(mime_type_table, ext);
 	if (mime_type) {
