@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1103,6 +1103,7 @@ static GMappedFile *procmsg_open_cache_file_mmap(FolderItem *item,
 {
 	gchar *cachefile;
 	GMappedFile *map = NULL;
+	GError *error = NULL;
 	gsize size;
 	guint32 data_ver = 0;
 	gchar *p;
@@ -1112,7 +1113,19 @@ static GMappedFile *procmsg_open_cache_file_mmap(FolderItem *item,
 
 	cachefile = folder_item_get_cache_file(item);
 	if (cachefile) {
-		map = g_mapped_file_new(cachefile, FALSE, NULL);
+		map = g_mapped_file_new(cachefile, FALSE, &error);
+		if (!map) {
+			if (error && error->code == G_FILE_ERROR_NOENT)
+				debug_print("%s: mark/cache file not found\n", cachefile);
+			else if (error)
+				g_warning("%s: cannot open mark/cache file: %s", cachefile, error->message);
+			else
+				g_warning("%s: cannot open mark/cache file", cachefile);
+			if (error)
+				g_error_free(error);
+			g_free(cachefile);
+			return NULL;
+		}
 		size = g_mapped_file_get_length(map);
 		if (size < sizeof(data_ver)) {
 			g_warning("%s: cannot read mark/cache file (truncated?)", cachefile);
