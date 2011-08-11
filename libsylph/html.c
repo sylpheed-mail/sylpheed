@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -171,11 +171,20 @@ static HTMLSymbol other_symbol_list[] = {
 static GHashTable *default_symbol_table;
 
 static HTMLState html_read_line		(HTMLParser	*parser);
+
 static void html_append_char		(HTMLParser	*parser,
 					 gchar		 ch);
 static void html_append_str		(HTMLParser	*parser,
 					 const gchar	*str,
 					 gint		 len);
+
+static gchar *html_find_char		(HTMLParser	*parser,
+					 gchar		 ch);
+static gchar *html_find_str		(HTMLParser	*parser,
+					 const gchar	*str);
+static gchar *html_find_str_case	(HTMLParser	*parser,
+					 const gchar	*str);
+
 static HTMLState html_parse_tag		(HTMLParser	*parser);
 static void html_parse_special		(HTMLParser	*parser);
 static void html_get_parenthesis	(HTMLParser	*parser,
@@ -356,6 +365,42 @@ static void html_append_str(HTMLParser *parser, const gchar *str, gint len)
 			parser->empty_line = TRUE;
 	} else
 		parser->newline = FALSE;
+}
+
+static gchar *html_find_char(HTMLParser *parser, gchar ch)
+{
+	gchar *p;
+
+	while ((p = strchr(parser->bufp, ch)) == NULL) {
+		if (html_read_line(parser) == HTML_EOF)
+			return NULL;
+	}
+
+	return p;
+}
+
+static gchar *html_find_str(HTMLParser *parser, const gchar *str)
+{
+	gchar *p;
+
+	while ((p = strstr(parser->bufp, str)) == NULL) {
+		if (html_read_line(parser) == HTML_EOF)
+			return NULL;
+	}
+
+	return p;
+}
+
+static gchar *html_find_str_case(HTMLParser *parser, const gchar *str)
+{
+	gchar *p;
+
+	while ((p = strcasestr(parser->bufp, str)) == NULL) {
+		if (html_read_line(parser) == HTML_EOF)
+			return NULL;
+	}
+
+	return p;
 }
 
 static HTMLTag *html_get_tag(const gchar *str)
@@ -614,35 +659,32 @@ static void html_get_parenthesis(HTMLParser *parser, gchar *buf, gint len)
 	/* ignore comment / CSS / script stuff */
 	if (!strncmp(parser->bufp, "<!--", 4)) {
 		parser->bufp += 4;
-		while ((p = strstr(parser->bufp, "-->")) == NULL)
-			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 3;
+		if ((p = html_find_str(parser, "-->")) != NULL)
+			parser->bufp = p + 3;
 		return;
 	}
 	if (!g_ascii_strncasecmp(parser->bufp, "<style", 6)) {
 		parser->bufp += 6;
-		while ((p = strcasestr(parser->bufp, "</style")) == NULL)
-			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 7;
-		while ((p = strchr(parser->bufp, '>')) == NULL)
-			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 1;
+		if ((p = html_find_str_case(parser, "</style")) != NULL) {
+			parser->bufp = p + 7;
+			if ((p = html_find_char(parser, '>')) != NULL)
+				parser->bufp = p + 1;
+		}
 		return;
 	}
 	if (!g_ascii_strncasecmp(parser->bufp, "<script", 7)) {
 		parser->bufp += 7;
-		while ((p = strcasestr(parser->bufp, "</script")) == NULL)
-			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 8;
-		while ((p = strchr(parser->bufp, '>')) == NULL)
-			if (html_read_line(parser) == HTML_EOF) return;
-		parser->bufp = p + 1;
+		if ((p = html_find_str_case(parser, "</script")) != NULL) {
+			parser->bufp = p + 8;
+			if ((p = html_find_char(parser, '>')) != NULL)
+				parser->bufp = p + 1;
+		}
 		return;
 	}
 
 	parser->bufp++;
-	while ((p = strchr(parser->bufp, '>')) == NULL)
-		if (html_read_line(parser) == HTML_EOF) return;
+	if ((p = html_find_char(parser, '>')) == NULL)
+		return;
 
 	strncpy2(buf, parser->bufp, MIN(p - parser->bufp + 1, len));
 	g_strstrip(buf);
