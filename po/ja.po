@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 14:08+0900\n"
+"POT-Creation-Date: 2011-08-11 14:17+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -511,20 +511,20 @@ msgstr "%s が見つかりました\n"
 msgid "Configuration is saved.\n"
 msgstr "設定を保存しました。\n"
 
-#: libsylph/procmime.c:1293
+#: libsylph/procmime.c:1291
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): コード変換に失敗しました。\n"
 
-#: libsylph/procmsg.c:850
+#: libsylph/procmsg.c:875
 msgid "can't open mark file\n"
 msgstr "マークファイルを開けません\n"
 
-#: libsylph/procmsg.c:1407
+#: libsylph/procmsg.c:1467
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "メッセージ %d を取り込めません\n"
 
-#: libsylph/procmsg.c:1646
+#: libsylph/procmsg.c:1706
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "印刷のコマンドラインが無効です: `%s'\n"
@@ -1027,7 +1027,7 @@ msgstr "フォルダ"
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:866 src/quick_search.c:128
+#: src/addressbook.c:866 src/quick_search.c:126
 msgid "Search:"
 msgstr "検索:"
 
@@ -1300,7 +1300,7 @@ msgstr "茶"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5256
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5269
 msgid "None"
 msgstr "なし"
 
@@ -1829,7 +1829,7 @@ msgstr "データ形式"
 #. S_COL_DATE
 #: src/compose.c:5361 src/mimeview.c:217 src/prefs_filter_edit.c:508
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5405
+#: src/summaryview.c:5418
 msgid "Size"
 msgstr "サイズ"
 
@@ -2421,7 +2421,7 @@ msgstr "新着"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1613
 #: src/prefs_filter_edit.c:512 src/prefs_summary_column.c:67
-#: src/quick_search.c:110
+#: src/quick_search.c:108
 msgid "Unread"
 msgstr "未読"
 
@@ -2987,8 +2987,8 @@ msgstr "切断中"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "メッセージを受信中 (%d / %d) (%s / %s)"
 
-#: src/inc.c:1322 src/inc.c:1349 src/summaryview.c:4747 src/summaryview.c:4937
-#: src/summaryview.c:4988
+#: src/inc.c:1322 src/inc.c:1349 src/summaryview.c:4760 src/summaryview.c:4950
+#: src/summaryview.c:5001
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3873,7 +3873,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "MainWindow: 色の割り当て %d に失敗しました\n"
 
 #: src/mainwindow.c:1219 src/summaryview.c:2654 src/summaryview.c:2741
-#: src/summaryview.c:4311 src/summaryview.c:4440 src/summaryview.c:4829
+#: src/summaryview.c:4324 src/summaryview.c:4453 src/summaryview.c:4842
 msgid "done.\n"
 msgstr "完了。\n"
 
@@ -4145,7 +4145,7 @@ msgstr "添付"
 msgid "Message View - Sylpheed"
 msgstr "メッセージビュー - Sylpheed"
 
-#: src/messageview.c:770 src/summaryview.c:3866
+#: src/messageview.c:770 src/summaryview.c:3871
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "ファイル `%s' を保存できません。"
@@ -6025,7 +6025,7 @@ msgstr "コマンドの実行結果"
 msgid "Age"
 msgstr "経過日数"
 
-#: src/prefs_filter_edit.c:513 src/quick_search.c:111
+#: src/prefs_filter_edit.c:513 src/quick_search.c:109
 msgid "Marked"
 msgstr "マーク付き"
 
@@ -6267,19 +6267,19 @@ msgstr "添付"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:422
-#: src/summaryview.c:5398
+#: src/summaryview.c:5411
 msgid "Subject"
 msgstr "件名"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:423
-#: src/summaryview.c:5401
+#: src/summaryview.c:5414
 msgid "From"
 msgstr "差出人"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:424
-#: src/summaryview.c:5403
+#: src/summaryview.c:5416
 msgid "Date"
 msgstr "日付"
 
@@ -6289,7 +6289,7 @@ msgid "Number"
 msgstr "番号"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5409
+#: src/prefs_summary_column.c:74 src/summaryview.c:5422
 msgid "To"
 msgstr "宛先"
 
@@ -6611,44 +6611,44 @@ msgstr "場所:"
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
-#: src/quick_search.c:109
+#: src/quick_search.c:107
 msgid "All"
 msgstr "すべて"
 
-#: src/quick_search.c:112
+#: src/quick_search.c:110
 msgid "Have color label"
 msgstr "カラーラベル付き"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:111
 msgid "Have attachment"
 msgstr "添付ファイル付き"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:113
 msgid "Within 1 day"
 msgstr "1日以内"
 
-#: src/quick_search.c:116
+#: src/quick_search.c:114
 msgid "Last 5 days"
 msgstr "最近5日間"
 
-#: src/quick_search.c:117
+#: src/quick_search.c:115
 msgid "Last 7 days"
 msgstr "最近1週間"
 
-#: src/quick_search.c:119
+#: src/quick_search.c:117
 msgid "In addressbook"
 msgstr "アドレス帳にある"
 
-#: src/quick_search.c:150 src/quick_search.c:383
+#: src/quick_search.c:148 src/quick_search.c:373
 msgid "Search for Subject or From"
 msgstr "件名または差出人を検索"
 
-#: src/quick_search.c:338
+#: src/quick_search.c:334
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%2$d 通中 %1$d 通を表示"
 
-#: src/quick_search.c:341
+#: src/quick_search.c:337
 #, c-format
 msgid "No messages matched"
 msgstr "該当するメッセージがありません"
@@ -6692,7 +6692,7 @@ msgstr "このプログラムについて(_A)"
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s - POP3 リモートメールボックス"
 
-#: src/rpop3.c:421 src/summaryview.c:5407
+#: src/rpop3.c:421 src/summaryview.c:5420
 msgid "No."
 msgstr "番号"
 
@@ -7117,7 +7117,7 @@ msgstr "署名がありません"
 msgid "Good signature from \"%s\""
 msgstr "差出人 \"%s\" の正当な署名"
 
-#: src/sigstatus.c:244 src/textview.c:1053
+#: src/sigstatus.c:244 src/textview.c:1061
 msgid "Good signature"
 msgstr "正当な署名"
 
@@ -7126,7 +7126,7 @@ msgstr "正当な署名"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "有効な署名ですが \"%s\" の鍵は信用されていません"
 
-#: src/sigstatus.c:249 src/textview.c:1055
+#: src/sigstatus.c:249 src/textview.c:1063
 msgid "Valid signature (untrusted key)"
 msgstr "有効な署名 (信用されていない鍵)"
 
@@ -7162,7 +7162,7 @@ msgstr "署名は有効ですが署名鍵が失効しています"
 msgid "BAD signature from \"%s\""
 msgstr "差出人 \"%s\" の不正な署名"
 
-#: src/sigstatus.c:267 src/textview.c:1057
+#: src/sigstatus.c:267 src/textview.c:1065
 msgid "BAD signature"
 msgstr "不正な署名"
 
@@ -7556,80 +7556,80 @@ msgstr "メッセージ %d を既読としてマークしました\n"
 msgid "Message %d is marked as unread\n"
 msgstr "メッセージ %d を未読としてマークしました\n"
 
-#: src/summaryview.c:3386
+#: src/summaryview.c:3385
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "メッセージ %s/%d を削除するようにセットしました\n"
 
-#: src/summaryview.c:3414
+#: src/summaryview.c:3415
 msgid "Delete message(s)"
 msgstr "メッセージの削除"
 
-#: src/summaryview.c:3415
+#: src/summaryview.c:3416
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "本当にごみ箱からメッセージを削除してもいいですか?"
 
-#: src/summaryview.c:3491
+#: src/summaryview.c:3496
 msgid "Deleting duplicated messages..."
 msgstr "重複メッセージを削除しています..."
 
-#: src/summaryview.c:3529
+#: src/summaryview.c:3534
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "メッセージ %s/%d をマーク解除しました\n"
 
-#: src/summaryview.c:3593
+#: src/summaryview.c:3598
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "メッセージ %d を %s に移動するようにセットしました\n"
 
-#: src/summaryview.c:3625
+#: src/summaryview.c:3630
 msgid "Destination is same as current folder."
 msgstr "移動先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:3662
+#: src/summaryview.c:3667
 msgid "Select folder to move"
 msgstr "移動先のフォルダを選択してください"
 
-#: src/summaryview.c:3692
+#: src/summaryview.c:3697
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "メッセージ %d を %s にコピーするようにセットしました\n"
 
-#: src/summaryview.c:3723
+#: src/summaryview.c:3728
 msgid "Destination for copy is same as current folder."
 msgstr "コピー先が現在のフォルダと同じです。"
 
-#: src/summaryview.c:3759
+#: src/summaryview.c:3764
 msgid "Select folder to copy"
 msgstr "コピー先のフォルダを選択してください"
 
-#: src/summaryview.c:3909
+#: src/summaryview.c:3914
 msgid "Error occurred while processing messages."
 msgstr "メッセージの処理中にエラーが発生しました。"
 
-#: src/summaryview.c:4218 src/summaryview.c:4219
+#: src/summaryview.c:4231 src/summaryview.c:4232
 msgid "Building threads..."
 msgstr "スレッドを構築中..."
 
-#: src/summaryview.c:4369 src/summaryview.c:4370
+#: src/summaryview.c:4382 src/summaryview.c:4383
 msgid "Unthreading..."
 msgstr "スレッドを解除中..."
 
-#: src/summaryview.c:4663 src/summaryview.c:4724
+#: src/summaryview.c:4676 src/summaryview.c:4737
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "振り分け中 (%d / %d)..."
 
-#: src/summaryview.c:4790
+#: src/summaryview.c:4803
 msgid "filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:4791
+#: src/summaryview.c:4804
 msgid "Filtering..."
 msgstr "振り分け中..."
 
-#: src/summaryview.c:4836
+#: src/summaryview.c:4849
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "%d 通のメッセージが振り分けられました。"
@@ -7651,11 +7651,11 @@ msgstr "このメッセージは暗号化されていますが、復号できま
 msgid "_Copy file name"
 msgstr "ファイル名をコピー(_C)"
 
-#: src/textview.c:1109
+#: src/textview.c:1117
 msgid "This message can't be displayed.\n"
 msgstr "このメッセージは表示できません。\n"
 
-#: src/textview.c:1133
+#: src/textview.c:1141
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7663,35 +7663,35 @@ msgstr ""
 "一時ファイルへの書き込みが失敗したため、このメッセージ本文は表示できませんで"
 "した。\n"
 
-#: src/textview.c:2352
+#: src/textview.c:2360
 msgid "Sa_ve this image as..."
 msgstr "画像を保存(_V)..."
 
-#: src/textview.c:2372 src/trayicon.c:158
+#: src/textview.c:2380 src/trayicon.c:158
 msgid "Compose _new message"
 msgstr "新規メッセージを作成(_N)"
 
-#: src/textview.c:2374
+#: src/textview.c:2382
 msgid "R_eply to this address"
 msgstr "このアドレスに返信(_E)"
 
-#: src/textview.c:2377
+#: src/textview.c:2385
 msgid "Add to address _book..."
 msgstr "アドレス帳に追加(_B)..."
 
-#: src/textview.c:2379
+#: src/textview.c:2387
 msgid "Copy this add_ress"
 msgstr "アドレスをコピー(_R)"
 
-#: src/textview.c:2382
+#: src/textview.c:2390
 msgid "_Open with Web browser"
 msgstr "Webブラウザで開く(_O)"
 
-#: src/textview.c:2384
+#: src/textview.c:2392
 msgid "Copy this _link"
 msgstr "リンクをコピー(_L)"
 
-#: src/textview.c:2588
+#: src/textview.c:2596
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7704,7 +7704,7 @@ msgstr ""
 "\n"
 "とにかく開きますか?"
 
-#: src/textview.c:2593
+#: src/textview.c:2601
 msgid "Fake URL warning"
 msgstr "偽装URLの警告"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.1.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 14:08+0900\n"
+"POT-Creation-Date: 2011-08-11 14:17+0900\n"
 "PO-Revision-Date: 2005-10-25 16:23+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -516,20 +516,20 @@ msgstr "找到 %s\n"
 msgid "Configuration is saved.\n"
 msgstr "組態設定已儲存。\n"
 
-#: libsylph/procmime.c:1293
+#: libsylph/procmime.c:1291
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): 轉碼失敗。\n"
 
-#: libsylph/procmsg.c:850
+#: libsylph/procmsg.c:875
 msgid "can't open mark file\n"
 msgstr "無法開啟標示的檔案 \n"
 
-#: libsylph/procmsg.c:1407
+#: libsylph/procmsg.c:1467
 #, c-format
 msgid "can't fetch message %d\n"
 msgstr "無法擷取郵件 %d\n"
 
-#: libsylph/procmsg.c:1646
+#: libsylph/procmsg.c:1706
 #, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr "列印命令錯誤：「%s」\n"
@@ -1039,7 +1039,7 @@ msgstr "資料夾"
 msgid "E-Mail address"
 msgstr "E-Mail 地址"
 
-#: src/addressbook.c:866 src/quick_search.c:128
+#: src/addressbook.c:866 src/quick_search.c:126
 #, fuzzy
 msgid "Search:"
 msgstr "尋找"
@@ -1313,7 +1313,7 @@ msgstr "棕色"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5256
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5269
 msgid "None"
 msgstr "無"
 
@@ -1851,7 +1851,7 @@ msgstr "日期"
 #. S_COL_DATE
 #: src/compose.c:5361 src/mimeview.c:217 src/prefs_filter_edit.c:508
 #: src/prefs_summary_column.c:72 src/rpop3.c:425 src/select-keys.c:309
-#: src/summaryview.c:5405
+#: src/summaryview.c:5418
 msgid "Size"
 msgstr "大小"
 
@@ -2460,7 +2460,7 @@ msgstr "新的"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1613
 #: src/prefs_filter_edit.c:512 src/prefs_summary_column.c:67
-#: src/quick_search.c:110
+#: src/quick_search.c:108
 msgid "Unread"
 msgstr "未讀的"
 
@@ -3050,8 +3050,8 @@ msgstr "離開"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "取得新郵件 (%d / %d) (%s / %s)"
 
-#: src/inc.c:1322 src/inc.c:1349 src/summaryview.c:4747 src/summaryview.c:4937
-#: src/summaryview.c:4988
+#: src/inc.c:1322 src/inc.c:1349 src/summaryview.c:4760 src/summaryview.c:4950
+#: src/summaryview.c:5001
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3947,7 +3947,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "主視窗：顏色 %d 配置失敗。\n"
 
 #: src/mainwindow.c:1219 src/summaryview.c:2654 src/summaryview.c:2741
-#: src/summaryview.c:4311 src/summaryview.c:4440 src/summaryview.c:4829
+#: src/summaryview.c:4324 src/summaryview.c:4453 src/summaryview.c:4842
 msgid "done.\n"
 msgstr "完成。\n"
 
@@ -4200,7 +4200,7 @@ msgstr "附加檔"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:770 src/summaryview.c:3866
+#: src/messageview.c:770 src/summaryview.c:3871
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "無法儲存檔案「%s」。"
@@ -6119,7 +6119,7 @@ msgstr "執行結果"
 msgid "Age"
 msgstr "時效"
 
-#: src/prefs_filter_edit.c:513 src/quick_search.c:111
+#: src/prefs_filter_edit.c:513 src/quick_search.c:109
 #, fuzzy
 msgid "Marked"
 msgstr "標記"
@@ -6369,19 +6369,19 @@ msgstr "附加檔案"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:422
-#: src/summaryview.c:5398
+#: src/summaryview.c:5411
 msgid "Subject"
 msgstr "主旨"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:423
-#: src/summaryview.c:5401
+#: src/summaryview.c:5414
 msgid "From"
 msgstr "來源"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:424
-#: src/summaryview.c:5403
+#: src/summaryview.c:5416
 msgid "Date"
 msgstr "日期"
 
@@ -6391,7 +6391,7 @@ msgid "Number"
 msgstr "編號"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5409
+#: src/prefs_summary_column.c:74 src/summaryview.c:5422
 #, fuzzy
 msgid "To"
 msgstr "收件人"
@@ -6734,49 +6734,49 @@ msgstr ""
 msgid "Folder name:"
 msgstr "檔名"
 
-#: src/quick_search.c:109
+#: src/quick_search.c:107
 msgid "All"
 msgstr ""
 
-#: src/quick_search.c:112
+#: src/quick_search.c:110
 #, fuzzy
 msgid "Have color label"
 msgstr "/以顏色做標記(_B)"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:111
 #, fuzzy
 msgid "Have attachment"
 msgstr "附加檔案"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:113
 msgid "Within 1 day"
 msgstr ""
 
-#: src/quick_search.c:116
+#: src/quick_search.c:114
 #, fuzzy
 msgid "Last 5 days"
 msgstr "姓"
 
-#: src/quick_search.c:117
+#: src/quick_search.c:115
 #, fuzzy
 msgid "Last 7 days"
 msgstr "姓"
 
-#: src/quick_search.c:119
+#: src/quick_search.c:117
 #, fuzzy
 msgid "In addressbook"
 msgstr "通訊錄"
 
-#: src/quick_search.c:150 src/quick_search.c:383
+#: src/quick_search.c:148 src/quick_search.c:373
 msgid "Search for Subject or From"
 msgstr ""
 
-#: src/quick_search.c:338
+#: src/quick_search.c:334
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr ""
 
-#: src/quick_search.c:341
+#: src/quick_search.c:337
 #, fuzzy, c-format
 msgid "No messages matched"
 msgstr "沒有新郵件。"
@@ -6824,7 +6824,7 @@ msgstr "關於"
 msgid "%s - POP3 Remote mailbox"
 msgstr "移除信箱"
 
-#: src/rpop3.c:421 src/summaryview.c:5407
+#: src/rpop3.c:421 src/summaryview.c:5420
 msgid "No."
 msgstr "No."
 
@@ -7260,7 +7260,7 @@ msgstr "未發現簽章"
 msgid "Good signature from \"%s\""
 msgstr "來自\"%s\" 的簽章檢查正確"
 
-#: src/sigstatus.c:244 src/textview.c:1053
+#: src/sigstatus.c:244 src/textview.c:1061
 msgid "Good signature"
 msgstr "簽章檢查正確"
 
@@ -7269,7 +7269,7 @@ msgstr "簽章檢查正確"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "此簽章是有效的，不過 \"%s\" 的金鑰不可信。"
 
-#: src/sigstatus.c:249 src/textview.c:1055
+#: src/sigstatus.c:249 src/textview.c:1063
 msgid "Valid signature (untrusted key)"
 msgstr "簽章有效 (不可信的金鑰)"
 
@@ -7305,7 +7305,7 @@ msgstr "此簽章是有效的，不過 \"%s\" 的金鑰已撤消"
 msgid "BAD signature from \"%s\""
 msgstr "來自 \"%s\" 的簽章檢查錯誤"
 
-#: src/sigstatus.c:267 src/textview.c:1057
+#: src/sigstatus.c:267 src/textview.c:1065
 msgid "BAD signature"
 msgstr "簽章檢查錯誤"
 
@@ -7709,82 +7709,82 @@ msgstr "郵件 %d 已標記成已讀\n"
 msgid "Message %d is marked as unread\n"
 msgstr "郵件 %d 已標記成未讀\n"
 
-#: src/summaryview.c:3386
+#: src/summaryview.c:3385
 #, c-format
 msgid "Message %s/%d is set to delete\n"
 msgstr "郵件 %s/%d 已標記刪除\n"
 
-#: src/summaryview.c:3414
+#: src/summaryview.c:3415
 msgid "Delete message(s)"
 msgstr "刪除郵件"
 
-#: src/summaryview.c:3415
+#: src/summaryview.c:3416
 msgid "Do you really want to delete message(s) from the trash?"
 msgstr "您確定要從刪除的郵件資料夾中刪除這封郵件嗎？"
 
-#: src/summaryview.c:3491
+#: src/summaryview.c:3496
 msgid "Deleting duplicated messages..."
 msgstr "刪除重覆的郵件..."
 
-#: src/summaryview.c:3529
+#: src/summaryview.c:3534
 #, c-format
 msgid "Message %s/%d is unmarked\n"
 msgstr "郵件 %s/%d 已消除標記\n"
 
-#: src/summaryview.c:3593
+#: src/summaryview.c:3598
 #, c-format
 msgid "Message %d is set to move to %s\n"
 msgstr "郵件 %d 已設定移動到 %s\n"
 
-#: src/summaryview.c:3625
+#: src/summaryview.c:3630
 msgid "Destination is same as current folder."
 msgstr "目標資料夾與來源資料夾相同。"
 
-#: src/summaryview.c:3662
+#: src/summaryview.c:3667
 #, fuzzy
 msgid "Select folder to move"
 msgstr "選擇資料夾"
 
-#: src/summaryview.c:3692
+#: src/summaryview.c:3697
 #, c-format
 msgid "Message %d is set to copy to %s\n"
 msgstr "郵件 %d 已設定複製到 %s\n"
 
-#: src/summaryview.c:3723
+#: src/summaryview.c:3728
 msgid "Destination for copy is same as current folder."
 msgstr "郵件無法複製到同一個資料夾內。"
 
-#: src/summaryview.c:3759
+#: src/summaryview.c:3764
 #, fuzzy
 msgid "Select folder to copy"
 msgstr "選擇資料夾"
 
-#: src/summaryview.c:3909
+#: src/summaryview.c:3914
 msgid "Error occurred while processing messages."
 msgstr "處理郵件時發生錯誤。"
 
-#: src/summaryview.c:4218 src/summaryview.c:4219
+#: src/summaryview.c:4231 src/summaryview.c:4232
 msgid "Building threads..."
 msgstr "產生郵件串列中..."
 
-#: src/summaryview.c:4369 src/summaryview.c:4370
+#: src/summaryview.c:4382 src/summaryview.c:4383
 msgid "Unthreading..."
 msgstr "解除郵件串列中..."
 
-#: src/summaryview.c:4663 src/summaryview.c:4724
+#: src/summaryview.c:4676 src/summaryview.c:4737
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4790
+#: src/summaryview.c:4803
 msgid "filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4791
+#: src/summaryview.c:4804
 msgid "Filtering..."
 msgstr "過濾中..."
 
-#: src/summaryview.c:4836
+#: src/summaryview.c:4849
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "已過濾 %d 封郵件"
@@ -7807,46 +7807,46 @@ msgstr ""
 msgid "_Copy file name"
 msgstr "檔名"
 
-#: src/textview.c:1109
+#: src/textview.c:1117
 msgid "This message can't be displayed.\n"
 msgstr "無法顯示郵件。\n"
 
-#: src/textview.c:1133
+#: src/textview.c:1141
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
 msgstr ""
 
-#: src/textview.c:2352
+#: src/textview.c:2360
 msgid "Sa_ve this image as..."
 msgstr "圖片另存新檔(_V)..."
 
-#: src/textview.c:2372 src/trayicon.c:158
+#: src/textview.c:2380 src/trayicon.c:158
 msgid "Compose _new message"
 msgstr "編寫新郵件(_N)"
 
-#: src/textview.c:2374
+#: src/textview.c:2382
 #, fuzzy
 msgid "R_eply to this address"
 msgstr "複製此通訊地址(_R)"
 
-#: src/textview.c:2377
+#: src/textview.c:2385
 msgid "Add to address _book..."
 msgstr "將寄信人加入通訊錄(_B)..."
 
-#: src/textview.c:2379
+#: src/textview.c:2387
 msgid "Copy this add_ress"
 msgstr "複製此通訊地址(_R)"
 
-#: src/textview.c:2382
+#: src/textview.c:2390
 msgid "_Open with Web browser"
 msgstr "以瀏覽器開啟(_O)"
 
-#: src/textview.c:2384
+#: src/textview.c:2392
 msgid "Copy this _link"
 msgstr "複製此連接(_L)"
 
-#: src/textview.c:2588
+#: src/textview.c:2596
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7858,7 +7858,7 @@ msgstr ""
 "\n"
 "確定要開啟嗎？"
 
-#: src/textview.c:2593
+#: src/textview.c:2601
 msgid "Fake URL warning"
 msgstr "假的 URL 警告訊息"
 
