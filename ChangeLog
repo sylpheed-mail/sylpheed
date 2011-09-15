@@ -1,3 +1,13 @@
+2011-09-15
+
+	* libsylph/procmime.c: made MIME debug print optional and disabled by
+	  default.
+	* src/summaryview.c
+	  src/folderview.c
+	  src/mainwindow.c: prevent "imap_cmd_gen_send: cannot send command
+	  because another command is already running." error by locking the
+	  UI on command execution.
+
 2011-09-08
 
 	* version 3.2.0beta3

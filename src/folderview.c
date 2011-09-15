@@ -2766,6 +2766,10 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 
 	if (item->stype != F_TRASH && item->stype != F_JUNK) return;
 
+	if (folderview->selection_locked ||
+	    summary_is_locked(folderview->summaryview)) return;
+	folderview->selection_locked = TRUE;
+
 	sel_path = gtk_tree_row_reference_get_path(folderview->selected);
 
 	if (item->stype == F_TRASH) {
@@ -2773,6 +2777,7 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 			       _("Delete all messages in the trash folder?"),
 			       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT) {
 			gtk_tree_path_free(sel_path);
+			folderview->selection_locked = FALSE;
 			return;
 		}
 	} else {
@@ -2780,11 +2785,14 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 			       _("Delete all messages in the junk folder?"),
 			       GTK_STOCK_YES, GTK_STOCK_NO, NULL) != G_ALERTDEFAULT) {
 			gtk_tree_path_free(sel_path);
+			folderview->selection_locked = FALSE;
 			return;
 		}
 	}
 
+	summary_lock(folderview->summaryview);
 	procmsg_empty_trash(item);
+	summary_unlock(folderview->summaryview);
 	statusbar_pop_all();
 	folderview_update_item(item, TRUE);
 	trayicon_set_tooltip(NULL);
@@ -2796,6 +2804,8 @@ static void folderview_empty_trash_cb(FolderView *folderview, guint action,
 		gtk_widget_grab_focus(folderview->treeview);
 	gtk_tree_path_free(open_path);
 	gtk_tree_path_free(sel_path);
+
+	folderview->selection_locked = FALSE;
 }
 
 static void folderview_remove_mailbox_cb(FolderView *folderview, guint action,

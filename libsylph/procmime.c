@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -39,6 +39,13 @@
 #include "codeconv.h"
 #include "utils.h"
 #include "prefs_common.h"
+
+#undef MIME_DEBUG
+#ifdef MIME_DEBUG
+#  define mime_debug_print	debug_print
+#else
+#  define mime_debug_print	1 ? (void)0 : debug_print
+#endif
 
 #define MAX_MIME_LEVEL	64
 
@@ -245,7 +252,7 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 		return;
 	}
 
-	debug_print("level = %d\n", mimeinfo->level);
+	mime_debug_print("level = %d\n", mimeinfo->level);
 
 	for (;;) {
 		MimeInfo *partinfo;
@@ -257,7 +264,7 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 		gint b64_pad_len = 0;
 
 		prev_fpos = fpos;
-		debug_print("prev_fpos: %ld\n", fpos);
+		mime_debug_print("prev_fpos: %ld\n", fpos);
 
 		/* scan part header */
 		if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {
@@ -266,8 +273,8 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 			mimeinfo->sub = sub = procmime_scan_mime_header(fp);
 			if (!sub) break;
 
-			debug_print("message/rfc822 part (content-type: %s)\n",
-				    sub->content_type);
+			mime_debug_print("message/rfc822 part (content-type: %s)\n",
+					 sub->content_type);
 			sub->level = mimeinfo->level + 1;
 			sub->parent = mimeinfo->parent;
 			sub->main = mimeinfo;
@@ -277,13 +284,13 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 			partinfo = procmime_scan_mime_header(fp);
 			if (!partinfo) break;
 			procmime_mimeinfo_insert(mimeinfo, partinfo);
-			debug_print("content-type: %s\n",
-				    partinfo->content_type);
+			mime_debug_print("content-type: %s\n",
+					 partinfo->content_type);
 		}
 
 		/* begin content */
 		content_pos = ftell(fp);
-		debug_print("content_pos: %ld\n", content_pos);
+		mime_debug_print("content_pos: %ld\n", content_pos);
 
 		if (partinfo->mime_type == MIME_MULTIPART ||
 		    partinfo->mime_type == MIME_MESSAGE_RFC822) {
@@ -314,10 +321,10 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 			buf[0] = '\0';
 			eom = TRUE;
 		}
-		debug_print("boundary: %s\n", buf);
+		mime_debug_print("boundary: %s\n", buf);
 
 		fpos = ftell(fp);
-		debug_print("fpos: %ld\n", fpos);
+		mime_debug_print("fpos: %ld\n", fpos);
 
 		len = strlen(buf);
 		partinfo->size = fpos - prev_fpos - len;
@@ -326,15 +333,15 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 				b64_content_len / 4 * 3 - b64_pad_len;
 		else
 			partinfo->content_size = fpos - content_pos - len;
-		debug_print("partinfo->size: %d\n", partinfo->size);
-		debug_print("partinfo->content_size: %d\n",
-			    partinfo->content_size);
+		mime_debug_print("partinfo->size: %d\n", partinfo->size);
+		mime_debug_print("partinfo->content_size: %d\n",
+				 partinfo->content_size);
 		if (partinfo->sub && !partinfo->sub->sub &&
 		    !partinfo->sub->children) {
 			partinfo->sub->size =
 				fpos - partinfo->sub->fpos - strlen(buf);
-			debug_print("partinfo->sub->size: %d\n",
-				    partinfo->sub->size);
+			mime_debug_print("partinfo->sub->size: %d\n",
+					 partinfo->sub->size);
 		}
 
 		if (mimeinfo->mime_type == MIME_MESSAGE_RFC822) {

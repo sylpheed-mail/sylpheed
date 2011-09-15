@@ -286,7 +286,7 @@ static void summary_row_collapsed	(GtkTreeView		*treeview,
 static void summary_columns_changed	(GtkTreeView		*treeview,
 					 SummaryView		*summaryview);
 
-static gboolean summary_select_func	(GtkTreeSelection	*treeview,
+static gboolean summary_select_func	(GtkTreeSelection	*selection,
 					 GtkTreeModel		*model,
 					 GtkTreePath		*path,
 					 gboolean		 cur_selected,
@@ -920,9 +920,10 @@ gboolean summary_show(SummaryView *summaryview, FolderItem *item,
 				summary_select_row(summaryview, &iter,
 						   TRUE, TRUE);
 				summary_lock(summaryview);
-			} else
+			} else {
 				summary_select_row(summaryview, &iter,
 						   FALSE, TRUE);
+			}
 		} else {
 			summary_unlock(summaryview);
 			if (item->sort_type == SORT_ASCENDING &&
@@ -1131,10 +1132,12 @@ void summary_lock(SummaryView *summaryview)
 {
 	summaryview->lock_count++;
 	summaryview->write_lock_count++;
+	/* g_print("summary_lock: %d\n", summaryview->lock_count); */
 }
 
 void summary_unlock(SummaryView *summaryview)
 {
+	/* g_print("summary_unlock: %d\n", summaryview->lock_count); */
 	if (summaryview->lock_count)
 		summaryview->lock_count--;
 	if (summaryview->write_lock_count)
@@ -1734,6 +1737,11 @@ MsgInfo *summary_get_msginfo_by_msgnum(SummaryView *summaryview, guint msgnum)
 	return msginfo;
 }
 
+static gboolean summary_select_true_func(GtkTreeSelection *selection, GtkTreeModel *model, GtkTreePath *path, gboolean cur_selected, gpointer data)
+{
+	return TRUE;
+}
+
 /**
  * summary_select_row:
  * @summaryview: Summary view.
@@ -1763,8 +1771,16 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 	summaryview->display_msg = display_msg;
 	path = gtk_tree_model_get_path(GTK_TREE_MODEL(summaryview->store),
 				       iter);
+	if (!display_msg)
+		gtk_tree_selection_set_select_function(summaryview->selection,
+						       summary_select_true_func,
+						       summaryview, NULL);
 	gtk_tree_view_set_cursor(GTK_TREE_VIEW(summaryview->treeview), path,
 				 NULL, FALSE);
+	if (!display_msg)
+		gtk_tree_selection_set_select_function(summaryview->selection,
+						       summary_select_func,
+						       summaryview, NULL);
 	if (do_refresh) {
 		GTK_EVENTS_FLUSH();
 		gtk_tree_view_scroll_to_cell
@@ -3048,6 +3064,7 @@ void summary_mark(SummaryView *summaryview)
 	    summary_is_read_locked(summaryview))
 		return;
 
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_MARK);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -3066,6 +3083,7 @@ void summary_mark(SummaryView *summaryview)
 	}
 
 	SORT_UNBLOCK(SORT_BY_MARK);
+	summary_unlock(summaryview);
 
 	summary_status_show(summaryview);
 }
@@ -3122,6 +3140,7 @@ void summary_mark_as_read(SummaryView *summaryview)
 	    summary_is_read_locked(summaryview))
 		return;
 
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_UNREAD);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -3142,6 +3161,7 @@ void summary_mark_as_read(SummaryView *summaryview)
 	}
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
+	summary_unlock(summaryview);
 
 	trayicon_set_tooltip(NULL);
 	trayicon_set_notify(FALSE);
@@ -3177,6 +3197,7 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 	    summary_is_read_locked(summaryview))
 		return;
 
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_UNREAD);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -3238,6 +3259,7 @@ void summary_mark_thread_as_read(SummaryView *summaryview)
 	g_slist_free(thr_rows);
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
+	summary_unlock(summaryview);
 
 	trayicon_set_tooltip(NULL);
 	trayicon_set_notify(FALSE);
@@ -3256,6 +3278,7 @@ void summary_mark_all_read(SummaryView *summaryview)
 	    summary_is_read_locked(summaryview))
 		return;
 
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_UNREAD);
 
 	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP) {
@@ -3288,6 +3311,7 @@ void summary_mark_all_read(SummaryView *summaryview)
 	}
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
+	summary_unlock(summaryview);
 
 	trayicon_set_tooltip(NULL);
 	trayicon_set_notify(FALSE);
@@ -3337,6 +3361,7 @@ void summary_mark_as_unread(SummaryView *summaryview)
 	    summary_is_read_locked(summaryview))
 		return;
 
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_UNREAD);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -3356,6 +3381,7 @@ void summary_mark_as_unread(SummaryView *summaryview)
 	}
 
 	SORT_UNBLOCK(SORT_BY_UNREAD);
+	summary_unlock(summaryview);
 
 	summary_status_show(summaryview);
 }
@@ -3547,6 +3573,7 @@ void summary_unmark(SummaryView *summaryview)
 	    summary_is_read_locked(summaryview))
 		return;
 
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_MARK);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -3565,6 +3592,7 @@ void summary_unmark(SummaryView *summaryview)
 	}
 
 	SORT_UNBLOCK(SORT_BY_MARK);
+	summary_unlock(summaryview);
 
 	summary_status_show(summaryview);
 }
@@ -5158,6 +5186,11 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 	FolderSortKey sort_key = SORT_BY_NONE;
 	FolderSortType sort_type = SORT_ASCENDING;
 
+	if (FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_read_locked(summaryview))
+		return;
+
+	summary_lock(summaryview);
 	SORT_BLOCK(SORT_BY_LABEL);
 
 	rows = summary_get_selected_rows(summaryview);
@@ -5183,6 +5216,7 @@ void summary_set_colorlabel(SummaryView *summaryview, guint labelcolor,
 		summaryview->folder_item->mark_dirty = TRUE;
 
 	SORT_UNBLOCK(SORT_BY_LABEL);
+	summary_unlock(summaryview);
 }
 
 static void summary_colorlabel_menu_item_activate_item_cb(GtkMenuItem *menuitem,
@@ -5541,6 +5575,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	if (!summaryview->folder_item)
 		return;
 
+	if (summary_is_read_locked(summaryview)) return;
+
 	g_signal_handlers_block_matched(G_OBJECT(summaryview->treeview),
 					(GSignalMatchType)G_SIGNAL_MATCH_DATA,
 					0, 0, NULL, NULL, summaryview);
@@ -5566,8 +5602,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	summaryview->flt_new = 0;
 	summaryview->flt_unread = 0;
 
-	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
+	summary_lock(summaryview);
 
 	gtkut_tree_view_fast_clear(GTK_TREE_VIEW(summaryview->treeview),
 				   summaryview->store);
@@ -5576,8 +5612,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 	summary_set_tree_model_from_list(summaryview, summaryview->all_mlist);
 	summary_selection_list_free(summaryview);
 
-	main_window_cursor_normal(summaryview->mainwin);
 	summary_unlock(summaryview);
+	main_window_cursor_normal(summaryview->mainwin);
 
 	g_signal_handlers_unblock_matched(G_OBJECT(summaryview->treeview),
 					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
@@ -5594,6 +5630,8 @@ void summary_qsearch_reset(SummaryView *summaryview)
 
 void summary_qsearch_clear_entry(SummaryView *summaryview)
 {
+	if (summary_is_read_locked(summaryview))
+		return;
 	quick_search_clear_entry(summaryview->qsearch);
 	summary_qsearch(summaryview);
 }
@@ -5609,6 +5647,8 @@ void summary_qsearch(SummaryView *summaryview)
 
 	if (!summaryview->folder_item)
 		return;
+
+	if (summary_is_read_locked(summaryview)) return;
 
 	menuitem = gtk_menu_get_active(GTK_MENU(summaryview->qsearch->menu));
 	type = GPOINTER_TO_INT
@@ -5642,8 +5682,8 @@ void summary_qsearch(SummaryView *summaryview)
 	summaryview->flt_new = 0;
 	summaryview->flt_unread = 0;
 
-	summary_lock(summaryview);
 	main_window_cursor_wait(summaryview->mainwin);
+	summary_lock(summaryview);
 
 	flt_mlist = quick_search_filter(summaryview->qsearch, type, key);
 	summaryview->on_filter = TRUE;
@@ -5664,11 +5704,11 @@ void summary_qsearch(SummaryView *summaryview)
 					  (GSignalMatchType)G_SIGNAL_MATCH_DATA,
 					  0, 0, NULL, NULL, summaryview);
 
+	summary_unlock(summaryview);
 	summary_update_display_state(summaryview, displayed_msgnum,
 				     selected_msgnum);
 
 	main_window_cursor_normal(summaryview->mainwin);
-	summary_unlock(summaryview);
 	summary_update_status(summaryview);
 	summary_status_show(summaryview);
 	summary_set_menu_sensitive(summaryview);
@@ -5679,6 +5719,8 @@ void summary_mark_displayed_read(SummaryView *summaryview, GtkTreeIter *iter)
 {
 	MsgInfo *msginfo = NULL;
 	GtkTreeIter iter_;
+
+	if (summary_is_read_locked(summaryview)) return;
 
 	if (prefs_common.mark_as_read_on_new_window)
 		return;
@@ -5695,6 +5737,8 @@ void summary_mark_displayed_read(SummaryView *summaryview, GtkTreeIter *iter)
 	if (!msginfo)
 		return;
 
+	summary_lock(summaryview);
+
 	if (MSG_IS_NEW(msginfo->flags) ||
 	    MSG_IS_UNREAD(msginfo->flags)) {
 		summary_mark_row_as_read(summaryview, iter);
@@ -5704,6 +5748,8 @@ void summary_mark_displayed_read(SummaryView *summaryview, GtkTreeIter *iter)
 		summary_set_row(summaryview, iter, msginfo);
 		summary_status_show(summaryview);
 	}
+
+	summary_unlock(summaryview);
 }
 
 
@@ -5731,6 +5777,11 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 	gint px, py;
 
 	if (!event) return FALSE;
+
+	if (summaryview->folder_item && summaryview->folder_item->folder &&
+	    FOLDER_TYPE(summaryview->folder_item->folder) == F_IMAP &&
+	    summary_is_locked(summaryview))
+		return TRUE;
 
 	if (!gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
 					   event->x, event->y, &path, &column,
@@ -5919,8 +5970,22 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	gboolean mod_pressed;
 	gboolean scrolled;
 
-	if (summary_is_read_locked(summaryview)) return FALSE;
 	if (!event) return FALSE;
+
+	if (summary_is_read_locked(summaryview)) {
+		switch (event->keyval) {
+		case GDK_Home:
+		case GDK_End:
+		case GDK_Up:
+		case GDK_Down:
+		case GDK_Page_Up:
+		case GDK_Page_Down:
+			return TRUE;
+		default:
+			break;
+		}
+		return FALSE;
+	}
 
 	switch (event->keyval) {
 	case GDK_Left:		/* Move focus */
@@ -6053,13 +6118,14 @@ static void summary_columns_changed(GtkTreeView *treeview,
 	summary_get_column_order(summaryview);
 }
 
-static gboolean summary_select_func(GtkTreeSelection *treeview,
+static gboolean summary_select_func(GtkTreeSelection *selection,
 				    GtkTreeModel *model, GtkTreePath *path,
 				    gboolean cur_selected, gpointer data)
 {
 	SummaryView *summaryview = (SummaryView *)data;
 
-	return summaryview->can_toggle_selection;
+	return summaryview->can_toggle_selection &&
+	       !summary_is_read_locked(summaryview);
 }
 
 static gboolean summary_display_msg_idle_func(gpointer data)

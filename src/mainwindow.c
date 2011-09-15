@@ -3830,8 +3830,8 @@ static void prev_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	    mimeview_step(messageview->mimeview, GTK_SCROLL_STEP_BACKWARD))
 		return;
 
-	summary_step(mainwin->summaryview, GTK_SCROLL_STEP_BACKWARD);
-	summary_mark_displayed_read(mainwin->summaryview, NULL);
+	if (summary_step(mainwin->summaryview, GTK_SCROLL_STEP_BACKWARD))
+		summary_mark_displayed_read(mainwin->summaryview, NULL);
 }
 
 static void next_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
@@ -3843,8 +3843,8 @@ static void next_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
 	    mimeview_step(messageview->mimeview, GTK_SCROLL_STEP_FORWARD))
 		return;
 
-	summary_step(mainwin->summaryview, GTK_SCROLL_STEP_FORWARD);
-	summary_mark_displayed_read(mainwin->summaryview, NULL);
+	if (summary_step(mainwin->summaryview, GTK_SCROLL_STEP_FORWARD))
+		summary_mark_displayed_read(mainwin->summaryview, NULL);
 }
 
 static void prev_unread_cb(MainWindow *mainwin, guint action,
