@@ -1765,9 +1765,6 @@ void summary_select_row(SummaryView *summaryview, GtkTreeIter *iter,
 	gtkut_tree_view_expand_parent_all
 		(GTK_TREE_VIEW(summaryview->treeview), iter);
 
-	if (do_refresh)
-		gtk_widget_grab_focus(summaryview->treeview);
-
 	summaryview->display_msg = display_msg;
 	path = gtk_tree_model_get_path(GTK_TREE_MODEL(summaryview->store),
 				       iter);
