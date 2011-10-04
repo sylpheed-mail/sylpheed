@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -212,6 +212,7 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	FilterCond *cond;
 	FilterInfo fltinfo;
 	GSList *cond_list = NULL;
+	GSList *rule_list = NULL;
 	GSList *flt_mlist = NULL;
 	GSList *cur;
 	gint count = 0, total = 0;
@@ -268,22 +269,37 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 		break;
 	}
 
-	cond_list = NULL;
+	if (key) {
+		gchar **keys;
+		gint i;
 
-	if (key && *key != '\0') {
-		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
-				       "Subject", key);
-		cond_list = g_slist_append(cond_list, cond);
-		cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
-				       "From", key);
-		cond_list = g_slist_append(cond_list, cond);
-		if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item)) {
-			cond = filter_cond_new(FLT_COND_TO_OR_CC, FLT_CONTAIN,
-					       0, NULL, key);
+		keys = g_strsplit(key, " ", -1);
+		for (i = 0; keys[i] != NULL; i++) {
+			cond_list = NULL;
+
+			if (keys[i] == '\0')
+				continue;
+
+			g_print("qs: '%s'\n", keys[i]);
+			cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
+					       "Subject", keys[i]);
 			cond_list = g_slist_append(cond_list, cond);
+			cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
+					       "From", keys[i]);
+			cond_list = g_slist_append(cond_list, cond);
+			if (FOLDER_ITEM_IS_SENT_FOLDER(summaryview->folder_item)) {
+				cond = filter_cond_new(FLT_COND_TO_OR_CC, FLT_CONTAIN,
+						       0, NULL, keys[i]);
+				cond_list = g_slist_append(cond_list, cond);
+			}
+
+			if (cond_list) {
+				rule = filter_rule_new("Quick search rule",
+						       FLT_OR, cond_list, NULL);
+				rule_list = g_slist_append(rule_list, rule);
+			}
 		}
-		rule = filter_rule_new("Quick search rule", FLT_OR, cond_list,
-				       NULL);
+		g_strfreev(keys);
 	}
 
 	memset(&fltinfo, 0, sizeof(FilterInfo));
@@ -293,6 +309,7 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	for (cur = summaryview->all_mlist; cur != NULL; cur = cur->next) {
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist = NULL;
+		gboolean matched = TRUE;
 
 		total++;
 
@@ -308,15 +325,24 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 			}
 		}
 
-		if (rule) {
+		if (rule_list) {
+			GSList *rcur;
+
 			if (!hlist)
 				hlist = procheader_get_header_list_from_msginfo
 					(msginfo);
-			if (filter_match_rule(rule, msginfo, hlist, &fltinfo)) {
-				flt_mlist = g_slist_prepend(flt_mlist, msginfo);
-				count++;
+
+			/* AND keyword match */
+			for (rcur = rule_list; rcur != NULL; rcur = rcur->next) {
+				rule = (FilterRule *)rcur->data;
+				if (!filter_match_rule(rule, msginfo, hlist, &fltinfo)) {
+					matched = FALSE;
+					break;
+				}
 			}
-		} else {
+		}
+
+		if (matched) {
 			flt_mlist = g_slist_prepend(flt_mlist, msginfo);
 			count++;
 		}
@@ -340,7 +366,7 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	} else
 		gtk_label_set_text(GTK_LABEL(qsearch->status_label), "");
 
-	filter_rule_free(rule);
+	filter_rule_list_free(rule_list);
 	filter_rule_free(status_rule);
 
 	return flt_mlist;
