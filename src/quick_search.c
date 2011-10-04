@@ -280,7 +280,6 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 			if (keys[i] == '\0')
 				continue;
 
-			g_print("qs: '%s'\n", keys[i]);
 			cond = filter_cond_new(FLT_COND_HEADER, FLT_CONTAIN, 0,
 					       "Subject", keys[i]);
 			cond_list = g_slist_append(cond_list, cond);
