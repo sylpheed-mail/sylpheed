@@ -2194,10 +2194,8 @@ static void summary_update_status(SummaryView *summaryview)
 static void summary_status_show(SummaryView *summaryview)
 {
 	GtkTreeModel *model = GTK_TREE_MODEL(summaryview->store);
-	gchar *str;
-	gchar *del, *mv, *cp;
-	gchar *sel;
-	gchar *spc;
+	GString *str;
+	gchar *name;
 	GList *rowlist, *cur;
 	guint n_selected = 0;
 	gint64 sel_size = 0;
@@ -2231,12 +2229,12 @@ static void summary_status_show(SummaryView *summaryview)
 		group = get_abbrev_newsgroup_name
 			(g_basename(summaryview->folder_item->path),
 			 prefs_common.ng_abbrev_len);
-		str = trim_string_before(group, 32);
+		name = trim_string_before(group, 32);
 		g_free(group);
 	} else
-		str = trim_string_before(summaryview->folder_item->path, 32);
-	gtk_label_set(GTK_LABEL(summaryview->statlabel_folder), str);
-	g_free(str);
+		name = trim_string_before(summaryview->folder_item->path, 32);
+	gtk_label_set(GTK_LABEL(summaryview->statlabel_folder), name);
+	g_free(name);
 
 	if (summaryview->on_filter) {
 		deleted = summaryview->flt_deleted;
@@ -2248,62 +2246,61 @@ static void summary_status_show(SummaryView *summaryview)
 		copied = summaryview->copied;
 	}
 
-	if (deleted)
-		del = g_strdup_printf(_("%d deleted"), deleted);
-	else
-		del = g_strdup("");
-	if (moved)
-		mv = g_strdup_printf(_("%s%d moved"),
-				     deleted ? _(", ") : "", moved);
-	else
-		mv = g_strdup("");
-	if (copied)
-		cp = g_strdup_printf(_("%s%d copied"),
-				     deleted || moved ? _(", ") : "", copied);
-	else
-		cp = g_strdup("");
-
-	if (deleted || moved || copied)
-		spc = "    ";
-	else
-		spc = "";
+	str = g_string_sized_new(128);
 
 	if (n_selected)
-		sel = g_strdup_printf(" (%s)", to_human_readable(sel_size));
-	else
-		sel = g_strdup("");
-	str = g_strconcat(n_selected ? itos(n_selected) : "",
-			  n_selected ? _(" item(s) selected") : "",
-			  sel, spc, del, mv, cp, NULL);
-	gtk_label_set(GTK_LABEL(summaryview->statlabel_select), str);
-	g_free(str);
-	g_free(sel);
-	g_free(del);
-	g_free(mv);
-	g_free(cp);
+		g_string_append_printf(str, "%d%s (%s)", n_selected,
+				       _(" item(s) selected"),
+				       to_human_readable(sel_size));
+	if (str->len > 0 && (deleted || moved || copied))
+		g_string_append(str, "    ");
+	if (deleted)
+		g_string_append_printf(str, _("%d deleted"), deleted);
+	if (moved)
+		g_string_append_printf(str, _("%s%d moved"),
+				       deleted ? _(", ") : "", moved);
+	if (copied)
+		g_string_append_printf(str, _("%s%d copied"),
+				       deleted || moved ? _(", ") : "", copied);
+
+	gtk_label_set(GTK_LABEL(summaryview->statlabel_select), str->str);
+	g_string_truncate(str, 0);
+
+	new = summaryview->folder_item->new;
+	unread = summaryview->folder_item->unread;
+	total = summaryview->folder_item->total;
+	total_size = summaryview->total_size;
 
 	if (summaryview->on_filter) {
-		new = summaryview->flt_new;
-		unread = summaryview->flt_unread;
-		total = summaryview->flt_msg_total;
-		total_size = summaryview->total_flt_msg_size;
+		gint f_new, f_unread, f_total;
+		gint64 f_total_size;
+		gchar f_ts[16], ts[16];
+
+		f_new = summaryview->flt_new;
+		f_unread = summaryview->flt_unread;
+		f_total = summaryview->flt_msg_total;
+		f_total_size = summaryview->total_flt_msg_size;
+
+		g_string_printf(str, _("%d/%d new, %d/%d unread, %d/%d total"),
+				f_new, new, f_unread, unread, f_total, total);
+		if (FOLDER_IS_LOCAL(summaryview->folder_item->folder)) {
+			g_string_append_printf(str, " (%s/%s)",
+					       to_human_readable_buf(f_ts, sizeof(f_ts), f_total_size), to_human_readable_buf(ts, sizeof(ts), total_size));
+		}
 	} else {
-		new = summaryview->folder_item->new;
-		unread = summaryview->folder_item->unread;
-		total = summaryview->folder_item->total;
-		total_size = summaryview->total_size;
+		if (FOLDER_IS_LOCAL(summaryview->folder_item->folder)) {
+			g_string_printf(str,
+					_("%d new, %d unread, %d total (%s)"),
+					new, unread, total,
+					to_human_readable(total_size));
+		} else {
+			g_string_printf(str, _("%d new, %d unread, %d total"),
+					new, unread, total);
+		}
 	}
 
-	if (FOLDER_IS_LOCAL(summaryview->folder_item->folder)) {
-		str = g_strdup_printf(_("%d new, %d unread, %d total (%s)"),
-				      new, unread, total,
-				      to_human_readable(total_size));
-	} else {
-		str = g_strdup_printf(_("%d new, %d unread, %d total"),
-				      new, unread, total);
-	}
-	gtk_label_set(GTK_LABEL(summaryview->statlabel_msgs), str);
-	g_free(str);
+	gtk_label_set(GTK_LABEL(summaryview->statlabel_msgs), str->str);
+	g_string_free(str, TRUE);
 
 	folderview_update_opened_msg_num(summaryview->folderview);
 }
@@ -3392,14 +3389,22 @@ static void summary_delete_row(SummaryView *summaryview, GtkTreeIter *iter)
 	if (MSG_IS_DELETED(msginfo->flags)) return;
 
 	msginfo->to_folder = NULL;
-	if (MSG_IS_MOVE(msginfo->flags))
+	if (MSG_IS_MOVE(msginfo->flags)) {
 		summaryview->moved--;
-	if (MSG_IS_COPY(msginfo->flags))
+		if (summaryview->on_filter)
+			summaryview->flt_moved--;
+	}
+	if (MSG_IS_COPY(msginfo->flags)) {
 		summaryview->copied--;
+		if (summaryview->on_filter)
+			summaryview->flt_copied--;
+	}
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
 	MSG_SET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	summaryview->deleted++;
+	if (summaryview->on_filter)
+		summaryview->flt_deleted++;
 	summaryview->folder_item->mark_dirty = TRUE;
 
 	if (!prefs_common.immediate_exec && summaryview->tmp_flag == 0)
@@ -3542,12 +3547,21 @@ static void summary_unmark_row(SummaryView *summaryview, GtkTreeIter *iter)
 	GET_MSG_INFO(msginfo, iter);
 
 	msginfo->to_folder = NULL;
-	if (MSG_IS_DELETED(msginfo->flags))
+	if (MSG_IS_DELETED(msginfo->flags)) {
 		summaryview->deleted--;
-	if (MSG_IS_MOVE(msginfo->flags))
+		if (summaryview->on_filter)
+			summaryview->flt_deleted--;
+	}
+	if (MSG_IS_MOVE(msginfo->flags)) {
 		summaryview->moved--;
-	if (MSG_IS_COPY(msginfo->flags))
+		if (summaryview->on_filter)
+			summaryview->flt_moved--;
+	}
+	if (MSG_IS_COPY(msginfo->flags)) {
 		summaryview->copied--;
+		if (summaryview->on_filter)
+			summaryview->flt_copied--;
+	}
 	MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_MARKED | MSG_DELETED);
 	MSG_UNSET_TMP_FLAGS(msginfo->flags, MSG_MOVE | MSG_COPY);
 	MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
@@ -3608,6 +3622,8 @@ static void summary_move_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	msginfo->to_folder = to_folder;
 	if (MSG_IS_DELETED(msginfo->flags)) {
 		summaryview->deleted--;
+		if (summaryview->on_filter)
+			summaryview->flt_deleted--;
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	}
@@ -3615,6 +3631,8 @@ static void summary_move_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	if (!MSG_IS_MOVE(msginfo->flags)) {
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MOVE);
 		summaryview->moved++;
+		if (summaryview->on_filter)
+			summaryview->flt_moved++;
 	}
 	summaryview->folder_item->mark_dirty = TRUE;
 	if (!prefs_common.immediate_exec)
@@ -3707,6 +3725,8 @@ static void summary_copy_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	msginfo->to_folder = to_folder;
 	if (MSG_IS_DELETED(msginfo->flags)) {
 		summaryview->deleted--;
+		if (summaryview->on_filter)
+			summaryview->flt_deleted--;
 		MSG_UNSET_PERM_FLAGS(msginfo->flags, MSG_DELETED);
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_FLAG_CHANGED);
 	}
@@ -3714,6 +3734,8 @@ static void summary_copy_row_to(SummaryView *summaryview, GtkTreeIter *iter,
 	if (!MSG_IS_COPY(msginfo->flags)) {
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_COPY);
 		summaryview->copied++;
+		if (summaryview->on_filter)
+			summaryview->flt_copied++;
 	}
 	summaryview->folder_item->mark_dirty = TRUE;
 	if (!prefs_common.immediate_exec)
