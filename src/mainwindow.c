@@ -1132,7 +1132,7 @@ MainWindow *main_window_create(SeparateType type)
 			g_warning(_("MainWindow: color allocation %d failed\n"), i);
 	}
 
-	messageview->visible = prefs_common.msgview_visible;
+	messageview->visible = TRUE;
 
 	main_window_set_widgets(mainwin, prefs_common.layout_type, type);
 
@@ -1627,7 +1627,8 @@ void main_window_get_size(MainWindow *mainwin)
 	allocation = &(GTK_WIDGET_PTR(mainwin->summaryview)->allocation);
 	if (allocation->width > 1 && allocation->height > 1) {
 		if (vlayout) {
-			if (!(mainwin->type & SEPARATE_MESSAGE))
+			if (!(mainwin->type & SEPARATE_MESSAGE) &&
+			    messageview_is_visible(mainwin->messageview))
 				prefs_common.summaryview_vwidth = allocation->width;
 			prefs_common.summaryview_vheight = allocation->height;
 		} else {
