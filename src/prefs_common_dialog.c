@@ -2033,10 +2033,12 @@ static const struct {
 } junk_presets[] = {
 #ifdef G_OS_WIN32
 	{"bogofilter -N -s -I", "bogofilter -n -S -I", "bogofilter -I"},
-	{"bsfilterw -C -s -u", "bsfilterw -c -S -u", "bsfilterw"}
+	{"bsfilterw -C -s -u", "bsfilterw -c -S -u", "bsfilterw"},
+	{"sylfilter -j", "sylfilter -c", "sylfilter"}
 #else
 	{"bogofilter -N -s -I", "bogofilter -n -S -I", "bogofilter -I"},
-	{"bsfilter -C -s -u", "bsfilter -c -S -u", "bsfilter"}
+	{"bsfilter -C -s -u", "bsfilter -c -S -u", "bsfilter"},
+	{"sylfilter -j", "sylfilter -c", "sylfilter"}
 #endif
 };
 
@@ -2044,7 +2046,10 @@ enum
 {
 	JUNK_NONE,
 	JUNK_BOGOFILTER,
-	JUNK_BSFILTER
+	JUNK_BSFILTER,
+	JUNK_SYLFILTER,
+
+	N_JUNK_ITEMS
 };
 
 static void prefs_junk_preset_activated(GtkMenuItem *menuitem, gpointer data)
@@ -2052,7 +2057,7 @@ static void prefs_junk_preset_activated(GtkMenuItem *menuitem, gpointer data)
 	gint i;
 
 	i = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
-	if (i > 0) {
+	if (i > JUNK_NONE && i < N_JUNK_ITEMS) {
 		i--;
 		gtk_entry_set_text(GTK_ENTRY(junk.entry_junk_learncmd),
 				   junk_presets[i].junk_cmd); 
@@ -2117,6 +2122,9 @@ static void prefs_junk_create(void)
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (prefs_junk_preset_activated), NULL);
 	MENUITEM_ADD (menu, menuitem, "bsfilter", JUNK_BSFILTER);
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (prefs_junk_preset_activated), NULL);
+	MENUITEM_ADD (menu, menuitem, "sylfilter", JUNK_SYLFILTER);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (prefs_junk_preset_activated), NULL);
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu_preset), menu);
