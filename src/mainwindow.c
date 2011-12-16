@@ -1132,7 +1132,10 @@ MainWindow *main_window_create(SeparateType type)
 			g_warning(_("MainWindow: color allocation %d failed\n"), i);
 	}
 
-	messageview->visible = TRUE;
+	if (prefs_common.layout_type == LAYOUT_VERTICAL)
+		messageview->visible = TRUE;
+	else
+		messageview->visible = prefs_common.msgview_visible;
 
 	main_window_set_widgets(mainwin, prefs_common.layout_type, type);
 
