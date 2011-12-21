@@ -512,6 +512,7 @@ static void imap_folder_init(Folder *folder, const gchar *name,
 static IMAPSession *imap_session_get(Folder *folder)
 {
 	RemoteFolder *rfolder = REMOTE_FOLDER(folder);
+	gint ret;
 
 	g_return_val_if_fail(folder != NULL, NULL);
 	g_return_val_if_fail(FOLDER_TYPE(folder) == F_IMAP, NULL);
@@ -528,12 +529,22 @@ static IMAPSession *imap_session_get(Folder *folder)
 		return IMAP_SESSION(rfolder->session);
 	}
 
+	if (imap_is_session_active(IMAP_FOLDER(folder))) {
+		g_warning("imap_session_get: session is busy.");
+		return NULL;
+	}
+
 	if (time(NULL) - rfolder->session->last_access_time <
 		SESSION_TIMEOUT_INTERVAL) {
 		return IMAP_SESSION(rfolder->session);
 	}
 
-	if (imap_cmd_noop(IMAP_SESSION(rfolder->session)) != IMAP_SUCCESS) {
+	if ((ret = imap_cmd_noop(IMAP_SESSION(rfolder->session))) != IMAP_SUCCESS) {
+		if (ret == IMAP_EAGAIN) {
+			g_warning("imap_session_get: session is busy.");
+			return NULL;
+		}
+
 		log_warning(_("IMAP4 connection to %s has been"
 			      " disconnected. Reconnecting...\n"),
 			    folder->account->recv_server);
@@ -3887,8 +3898,11 @@ static gint imap_cmd_logout(IMAPSession *session)
 
 static gint imap_cmd_noop(IMAPSession *session)
 {
-	if (imap_cmd_gen_send(session, "NOOP") != IMAP_SUCCESS)
-		return IMAP_ERROR;
+	gint ret;
+
+	ret = imap_cmd_gen_send(session, "NOOP");
+	if (ret != IMAP_SUCCESS)
+		return ret;
 	return imap_cmd_ok(session, NULL);
 }
 

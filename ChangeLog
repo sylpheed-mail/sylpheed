@@ -1,3 +1,11 @@
+2011-12-21
+
+	* libsylph/imap.c:
+	  imap_session_get()
+	  imap_cmd_noop(): check the activity of session, and return NULL
+	  if busy. This fixes crashes when message fetch and new message
+	  checking happen at the same time.
+
 2011-12-16
 
 	* src/mainwindow.c: main_window_create(): force visibility of the
