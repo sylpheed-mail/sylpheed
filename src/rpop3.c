@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2011 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@
 #include "mainwindow.h"
 #include "folderview.h"
 #include "prefs_account.h"
+#include "socks.h"
 #include "pop.h"
 #include "procheader.h"
 #include "procmsg.h"
@@ -498,13 +499,21 @@ static void rpop3_window_create(PrefsAccount *account)
 static gint rpop3_start(Session *session)
 {
 	SessionState state;
+	PrefsAccount *ac;
+	SocksInfo *socks_info = NULL;
 
 	g_return_val_if_fail(session != NULL, -1);
 
 	rpop3_status_label_set(_("Connecting to %s:%d ..."),
 			       session->server, session->port);
 
-	if (session_connect(session, session->server, session->port) < 0) {
+	ac = POP3_SESSION(session)->ac_prefs;
+	if (ac->use_socks && ac->use_socks_for_recv) {
+		socks_info = socks_info_new(ac->socks_type, ac->proxy_host, ac->proxy_port, ac->use_proxy_auth ? ac->proxy_name : NULL, ac->use_proxy_auth ? ac->proxy_pass : NULL);
+	}
+
+	if (session_connect_full(session, session->server, session->port,
+				 socks_info) < 0) {
 		manage_window_focus_in(rpop3_window.window, NULL, NULL);
 		alertpanel_error(_("Can't connect to POP3 server: %s:%d"),
 				 session->server, session->port);
@@ -696,7 +705,8 @@ static gint rpop3_top_recv(Pop3Session *session, FILE *fp, guint len)
 			   -1);
 
 	rpop3_status_label_set(_("Retrieving message headers (%d / %d) ..."),
-			       session->cur_msg, session->count);
+			       session->count - session->cur_msg + 1,
+			       session->count);
 
 	return PS_SUCCESS;
 }
@@ -971,6 +981,7 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
 				rpop3_status_label_set(_("Quitting..."));
 				pop3_logout_send(rpop3_window.session);
 			} else {
+				pop3_session->cur_msg = pop3_session->count;
 				gtk_widget_set_sensitive(rpop3_window.stop_btn,
 							 TRUE);
 				g_object_set(rpop3_window.stop_action,
@@ -1029,13 +1040,18 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 				rpop3_status_label_set(_("Quitting..."));
 				pop3_logout_send(rpop3_window.session);
 			} else if (!rpop3_window.stop_load &&
-				 (pop3_session->cur_msg < pop3_session->count)) {
-				pop3_session->cur_msg++;
+				 (pop3_session->cur_msg > 1)) {
+				pop3_session->cur_msg--;
 				rpop3_top_send(pop3_session);
 			} else {
-				rpop3_status_label_set
-					(_("Retrieved %d message headers"),
-					 pop3_session->cur_msg);
+				if (pop3_session->cur_msg > 1)
+					rpop3_status_label_set
+						(_("Retrieved %d (of %d) message headers"),
+						 pop3_session->count - pop3_session->cur_msg + 1, pop3_session->count);
+				else
+					rpop3_status_label_set
+						(_("Retrieved %d message headers"),
+						 pop3_session->count - pop3_session->cur_msg + 1);
 				gtk_widget_set_sensitive
 					(rpop3_window.recv_btn, TRUE);
 				gtk_widget_set_sensitive
