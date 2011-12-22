@@ -273,6 +273,12 @@ gint rpop3_account(PrefsAccount *account)
 	rpop3_window.stop_load = FALSE;
 	rpop3_window.cancelled = FALSE;
 	rpop3_window.finished = FALSE;
+	if (POP3_SESSION(session)->uidl_table) {
+		hash_free_strings(POP3_SESSION(session)->uidl_table);
+		g_hash_table_destroy(POP3_SESSION(session)->uidl_table);
+		POP3_SESSION(session)->uidl_table =
+			g_hash_table_new(g_str_hash, g_str_equal);
+	}
 
 	/* override Pop3Session handlers */
 	session->recv_msg = rpop3_session_recv_msg;
@@ -677,6 +683,8 @@ static gint rpop3_top_recv(Pop3Session *session, FILE *fp, guint len)
 	const gchar *subject, *from, *date;
 	gchar buf[1024];
 
+	session->msg[session->cur_msg].received = TRUE;
+
 	msginfo = procheader_parse_stream(fp, flags, FALSE);
 
 	msginfo->size = session->msg[session->cur_msg].size;
@@ -1058,16 +1066,17 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 					(rpop3_window.open_btn, TRUE);
 				gtk_widget_set_sensitive
 					(rpop3_window.delete_btn, TRUE);
-				gtk_widget_set_sensitive
-					(rpop3_window.stop_btn, FALSE);
+				if (pop3_session->cur_msg == 1)
+					gtk_widget_set_sensitive(rpop3_window.stop_btn, FALSE);
+				gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), GTK_STOCK_REFRESH);
 				g_object_set(rpop3_window.recv_action,
 					     "sensitive", TRUE, NULL);
 				g_object_set(rpop3_window.open_action,
 					     "sensitive", TRUE, NULL);
 				g_object_set(rpop3_window.delete_action,
 					     "sensitive", TRUE, NULL);
-				g_object_set(rpop3_window.stop_action,
-					     "sensitive", FALSE, NULL);
+				if (pop3_session->cur_msg == 1)
+					g_object_set(rpop3_window.stop_action, "sensitive", FALSE, NULL);
 				rpop3_idle(TRUE);
 			}
 		} else
@@ -1230,9 +1239,39 @@ static void rpop3_delete(GtkButton *button, gpointer data)
 		g_array_free(array, TRUE);
 }
 
+static void rpop3_read_next(GtkButton *button, gpointer data)
+{
+	gint i;
+
+	if (rpop3_window.session->state != POP3_IDLE)
+		return;
+
+	for (i = rpop3_window.session->count; i > 0; i--) {
+		if (!rpop3_window.session->msg[i].received)
+			break;
+	}
+
+	if (i == 0)
+		return;
+
+	debug_print("rpop3_read_next: next: %d\n", i);
+	rpop3_window.session->cur_msg = i;
+
+	rpop3_window.stop_load = FALSE;
+	
+	gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), GTK_STOCK_STOP);
+	gtk_widget_set_sensitive(rpop3_window.stop_btn, TRUE);
+	g_object_set(rpop3_window.stop_action, "sensitive", TRUE, NULL);
+	rpop3_idle(FALSE);
+	rpop3_top_send(rpop3_window.session);
+}
+
 static void rpop3_stop(GtkButton *button, gpointer data)
 {
-	rpop3_window.stop_load = TRUE;
+	if (rpop3_window.session->state == POP3_IDLE)
+		rpop3_read_next(NULL, NULL);
+	else
+		rpop3_window.stop_load = TRUE;
 }
 
 static void rpop3_close(GtkButton *button, gpointer data)
