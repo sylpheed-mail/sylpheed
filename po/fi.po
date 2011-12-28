@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-22 10:35+0900\n"
+"POT-Creation-Date: 2011-12-27 13:14+0900\n"
 "PO-Revision-Date: 2011-03-07 23:37+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <foo@bar.example>\n"
@@ -1618,7 +1618,7 @@ msgid "Can't get the part of multipart message."
 msgstr "Moniosaisen viestin osaa ei saa noudetuksi."
 
 #: src/compose.c:2873 src/headerview.c:233 src/query_search.c:791
-#: src/rpop3.c:684 src/summaryview.c:2504
+#: src/rpop3.c:701 src/summaryview.c:2504
 msgid "(No Subject)"
 msgstr "(Ei aihetta)"
 
@@ -1805,7 +1805,7 @@ msgstr "Datatyyppi"
 
 #. S_COL_DATE
 #: src/compose.c:5361 src/mimeview.c:217 src/prefs_filter_edit.c:508
-#: src/prefs_summary_column.c:72 src/rpop3.c:426 src/select-keys.c:309
+#: src/prefs_summary_column.c:72 src/rpop3.c:437 src/select-keys.c:309
 #: src/summaryview.c:5471
 msgid "Size"
 msgstr "Koko"
@@ -2592,7 +2592,7 @@ msgstr "Keskusteluryhmät:"
 msgid "Creating header view...\n"
 msgstr "Luodaan otsakenäkymää...\n"
 
-#: src/headerview.c:212 src/query_search.c:792 src/rpop3.c:685
+#: src/headerview.c:212 src/query_search.c:792 src/rpop3.c:702
 #: src/summaryview.c:2507
 msgid "(No From)"
 msgstr "(Ei lähettäjää)"
@@ -2922,7 +2922,7 @@ msgstr "Yhdistetään POP3-palvelimeen: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3-palvelimeen ei voida yhdistää: %s:%d\n"
 
-#: src/inc.c:985 src/rpop3.c:845 src/send_message.c:846
+#: src/inc.c:985 src/rpop3.c:862 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Tunnistaudutaan..."
@@ -3001,7 +3001,7 @@ msgid "Socket error."
 msgstr "Pistokevirhe."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1446 src/rpop3.c:560 src/rpop3.c:561 src/send_message.c:786
+#: src/inc.c:1446 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
 #: src/send_message.c:1010
 msgid "Connection closed by the remote host."
 msgstr "Etäpalvelin sulki yhteyden."
@@ -3019,11 +3019,11 @@ msgstr ""
 "Postilaatikko on lukittu:\n"
 "%s"
 
-#: src/inc.c:1462 src/rpop3.c:535 src/rpop3.c:540 src/send_message.c:990
+#: src/inc.c:1462 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
 msgid "Authentication failed."
 msgstr "Tunnistautuminen epäonnistui."
 
-#: src/inc.c:1467 src/rpop3.c:537 src/send_message.c:993
+#: src/inc.c:1467 src/rpop3.c:552 src/send_message.c:993
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3032,7 +3032,7 @@ msgstr ""
 "Tunnistautuminen epäonnistui:\n"
 "%s"
 
-#: src/inc.c:1472 src/rpop3.c:565 src/rpop3.c:566 src/send_message.c:1014
+#: src/inc.c:1472 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1014
 msgid "Session timed out."
 msgstr "Istunnon aikakatkaisu."
 
@@ -6244,19 +6244,19 @@ msgid "Attachment"
 msgstr "Liite"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:423
+#: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
 #: src/summaryview.c:5464
 msgid "Subject"
 msgstr "Aihe"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:424
+#: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:435
 #: src/summaryview.c:5467
 msgid "From"
 msgstr "Lähettäjä"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:425
+#: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:436
 #: src/summaryview.c:5469
 msgid "Date"
 msgstr "Päiväys"
@@ -6574,7 +6574,7 @@ msgstr "Etsitään: %s (%d / %d)..."
 msgid "Searching %s ..."
 msgstr "Etsitään: %s..."
 
-#: src/query_search.c:800 src/rpop3.c:693 src/summaryview.c:2428
+#: src/query_search.c:800 src/rpop3.c:710 src/summaryview.c:2428
 msgid "(No Date)"
 msgstr "(Ei päiväystä)"
 
@@ -6650,46 +6650,46 @@ msgstr "Allekirjoitettu: %s\n"
 msgid "Error verifying the signature"
 msgstr "Virhe varmistettaessa allekirjoitusta"
 
-#: src/rpop3.c:243
+#: src/rpop3.c:247
 msgid "_File"
 msgstr "_Tiedosto"
 
-#: src/rpop3.c:244 src/rpop3.c:444
+#: src/rpop3.c:248 src/rpop3.c:455
 msgid "_Get"
 msgstr "_Nouda"
 
-#: src/rpop3.c:249
+#: src/rpop3.c:254
 msgid "_Help"
 msgstr "_Ohje"
 
-#: src/rpop3.c:250
+#: src/rpop3.c:255
 msgid "_About"
 msgstr "_Tietoja"
 
-#: src/rpop3.c:346
+#: src/rpop3.c:357
 #, c-format
 msgid "%s - POP3 Remote mailbox"
 msgstr "%s – POP3-etäpostilaatikko"
 
-#: src/rpop3.c:422 src/summaryview.c:5473
+#: src/rpop3.c:433 src/summaryview.c:5473
 msgid "No."
 msgstr "Nro"
 
-#: src/rpop3.c:507
+#: src/rpop3.c:522
 #, c-format
 msgid "Connecting to %s:%d ..."
 msgstr "Yhdistetään palvelimeen %s:%d..."
 
-#: src/rpop3.c:518 src/rpop3.c:572 src/rpop3.c:575
+#: src/rpop3.c:533 src/rpop3.c:587 src/rpop3.c:590
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d"
 msgstr "POP3-palvelimeen ei voida yhdistää: %s:%d"
 
-#: src/rpop3.c:546 src/rpop3.c:552 src/rpop3.c:579 src/rpop3.c:581
+#: src/rpop3.c:561 src/rpop3.c:567 src/rpop3.c:594 src/rpop3.c:596
 msgid "Error occurred during POP3 session."
 msgstr "POP3-istunnossa sattui virhe."
 
-#: src/rpop3.c:549
+#: src/rpop3.c:564
 #, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
@@ -6698,60 +6698,60 @@ msgstr ""
 "POP3-istunnon aikana sattui virhe:\n"
 "%s"
 
-#: src/rpop3.c:707
+#: src/rpop3.c:724
 #, c-format
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Noudetaan viestiotsakkeita (%d / %d)..."
 
-#: src/rpop3.c:871
+#: src/rpop3.c:888
 msgid "Getting the number of messages..."
 msgstr "Noudetaan viestien määrää..."
 
-#: src/rpop3.c:880 src/rpop3.c:893
+#: src/rpop3.c:897 src/rpop3.c:910
 msgid "No message"
 msgstr "Ei viestiä"
 
-#: src/rpop3.c:926
+#: src/rpop3.c:943
 #, c-format
 msgid "Deleted %d messages"
 msgstr "Poistettu %d viestiä"
 
-#: src/rpop3.c:969 src/rpop3.c:981 src/rpop3.c:1040 src/rpop3.c:1243
+#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Lopetetaan..."
 
-#: src/rpop3.c:1025
+#: src/rpop3.c:1044
 #, c-format
 msgid "Retrieved %d messages"
 msgstr "Noudettu %d viestiä"
 
-#: src/rpop3.c:1032
+#: src/rpop3.c:1051
 #, c-format
 msgid "Opened message %d"
 msgstr "Avattu viesti %d"
 
-#: src/rpop3.c:1049
+#: src/rpop3.c:1068
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Noudettu %d viestiotsaketta"
 
-#: src/rpop3.c:1053
+#: src/rpop3.c:1072
 #, c-format
 msgid "Retrieved %d message headers"
 msgstr "Noudettu %d viestiotsaketta"
 
-#: src/rpop3.c:1169
+#: src/rpop3.c:1193
 #, c-format
 msgid "Retrieving message %d ..."
 msgstr "Noudetaan viestiä %d..."
 
-#: src/rpop3.c:1195
+#: src/rpop3.c:1219
 msgid "Delete messages"
 msgstr "Poista viestejä"
 
-#: src/rpop3.c:1196
+#: src/rpop3.c:1220
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
