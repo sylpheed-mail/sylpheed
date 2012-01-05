@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -862,7 +862,7 @@ static void prefs_receive_create(void)
 	/* New message notify */
 	PACK_FRAME_WITH_CHECK_BUTTON
 		(vbox1, frame_notify, checkbtn_newmsg_notify,
-		 _("Execute command when new messages arrived"));
+		 _("Execute command when new messages arrive"));
 
 	vbox3 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox3);
