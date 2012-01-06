@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 3.2 - version 0.12.7
+       Sylpheed User's Manual for Sylpheed 3.2 - version 0.12.8
     </abstract>
 
 <toc>
@@ -25,7 +25,7 @@
 <p>
  Copyright (c) 2000-2002 Yoichi Imai &lt;yoichi@silver-forest.com&gt;
 
- Copyright (c) 2004-2011 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
+ Copyright (c) 2004-2012 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
 <p>
 Permission is granted to copy, distribute and/or modify this document
       under the terms of the GNU Free Documentation License, Version 1.1
@@ -2382,7 +2382,10 @@ Sylpheed本体の受信部を使用せずにそのプログラムを利用して受信を行います。
 インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せばインポートされます。
 
 Mozilla Thunderbirdや、KMailなどの、mbox形式を使用しているメールソフトからの移行が可能です。
+
+なお、取り込み可能なmboxの形式は、mboxrdと呼ばれる、本文中のFromで始まる行がすべて「>From」としてエスケープされているものに限ります。
 </sect1>
+
 <sect1>eml形式、MH形式のメッセージファイルの取り込み<label id="eml-import">
 <p>
 「ファイル」メニューから「メールデータをインポート...」を選択し、
@@ -2393,6 +2396,7 @@ Mozilla Thunderbirdや、KMailなどの、mbox形式を使用しているメールソフトからの移行
 
 なお、MH形式(連番、拡張子なし)のメールについても同様にインポートできます。
 </sect1>
+
 <sect1>他形式へのエクスポート
 <p>
 「ファイル」メニューから「メールデータをエクスポート...」を選択し、
@@ -2400,6 +2404,7 @@ Mozilla Thunderbirdや、KMailなどの、mbox形式を使用しているメールソフトからの移行
 
 「エクスポート元フォルダ」にSylpheedのエクスポート元フォルダ、「エクスポート先」に出力先のファイルまたはフォルダを指定します。
 </sect1>
+
 <sect1>Outlook Expressからの移行
 <p>
 Sylpheed は Outlook Express のメールデータ形式(dbx)のインポートに対応しており、簡単に移行することができます。
@@ -2416,6 +2421,7 @@ Windows用フリーソフトウェアである
 
 次に、そのファイルを<ref id="mbox-import" name="インポート">します。
 </sect1>
+
 <sect1>Becky! Ver.2からの移行
 <p>
 Becky! のメニューから「ファイル - エクスポート...」を選択し、「UNIX mbox 形式」を選択します。 「OK」ボタンを押して、保存先のファイル名を指定し、「保存」ボタンを押して保存します。
@@ -3133,6 +3139,9 @@ to permit their use in free software.
 2011-09-08	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 	* Version 0.12.7
 	* 添付ファイルに関する記述を更新
+2012-01-06	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.12.8
+	* mbox のインポートに関する制限事項を追加
 </verb>
 </sect1> 
 </sect>
