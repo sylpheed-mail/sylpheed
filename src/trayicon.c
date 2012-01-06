@@ -57,6 +57,8 @@
 #define TRAYICON_NEW_IMAGE	STOCK_PIXMAP_SYLPHEED_NEWMAIL
 #endif
 
+#define TRAYICON_NOTIFY_PERIOD	10000
+
 static TrayIcon trayicon;
 static GtkWidget *trayicon_menu;
 static gboolean on_notify = FALSE;
@@ -223,7 +225,7 @@ void trayicon_set_notify(gboolean enabled)
 
 	if (enabled && notify_tag == 0) {
 		gtk_status_icon_set_blinking(trayicon.status_icon, enabled);
-		notify_tag = g_timeout_add(5000, notify_timeout_cb, NULL);
+		notify_tag = g_timeout_add(TRAYICON_NOTIFY_PERIOD, notify_timeout_cb, NULL);
 	} else if (!enabled && notify_tag > 0) {
 		g_source_remove(notify_tag);
 		notify_timeout_cb(NULL);
