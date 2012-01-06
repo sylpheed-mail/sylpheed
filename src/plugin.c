@@ -38,6 +38,8 @@ enum {
 	TEXTVIEW_MENU_POPUP,
 	COMPOSE_SEND,
 	MESSAGEVIEW_SHOW,
+	INC_MAIL_START,
+	INC_MAIL_FINISHED,
 	LAST_SIGNAL
 };
 
@@ -200,6 +202,26 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_POINTER,
 			     G_TYPE_POINTER,
 			     G_TYPE_BOOLEAN);
+	plugin_signals[INC_MAIL_START] =
+		g_signal_new("inc-mail-start",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, inc_mail_start),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[INC_MAIL_FINISHED] =
+		g_signal_new("inc-mail-finished",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, inc_mail_finished),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__INT,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_INT);
 }
 
 void syl_plugin_signal_connect(const gchar *name, GCallback callback,

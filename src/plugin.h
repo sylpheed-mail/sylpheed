@@ -45,7 +45,7 @@ typedef void (*SylPluginLoadFunc)	(void);
 typedef void (*SylPluginUnloadFunc)	(void);
 typedef void (*SylPluginCallbackFunc)	(void);
 
-#define SYL_PLUGIN_INTERFACE_VERSION	0x0108
+#define SYL_PLUGIN_INTERFACE_VERSION	0x0109
 
 struct _SylPlugin
 {
@@ -83,6 +83,11 @@ struct _SylPluginClass
 					 gpointer	 msgview,
 					 MsgInfo	*msginfo,
 					 gboolean	 all_headers);
+
+	void (* inc_mail_start)		(GObject	*obj,
+					 PrefsAccount	*account);
+	void (* inc_mail_finished)	(GObject	*obj,
+					 gint		 new_messages);
 };
 
 struct _SylPluginInfo

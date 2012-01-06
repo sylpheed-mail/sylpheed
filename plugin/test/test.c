@@ -28,7 +28,7 @@
 
 static SylPluginInfo info = {
 	"Test Plugin",
-	"3.1.0",
+	"3.2.0",
 	"Hiroyuki Yamamoto",
 	"Test plug-in for Sylpheed plug-in system"
 };
@@ -56,6 +56,8 @@ static gboolean compose_send_cb(GObject *obj, gpointer compose,
 				const gchar *msg_file, GSList *to_list);
 static void messageview_show_cb(GObject *obj, gpointer msgview,
 				MsgInfo *msginfo, gboolean all_headers);
+static void inc_start_cb(GObject *obj, PrefsAccount *ac);
+static void inc_finished_cb(GObject *obj, gint new_messages);
 
 static void create_window(void);
 static void create_folderview_sub_widget(void);
@@ -109,6 +111,10 @@ void plugin_load(void)
 				  G_CALLBACK(compose_send_cb), NULL);
 	syl_plugin_signal_connect("messageview-show",
 				  G_CALLBACK(messageview_show_cb), NULL);
+	syl_plugin_signal_connect("inc-mail-start",
+				  G_CALLBACK(inc_start_cb), NULL);
+	syl_plugin_signal_connect("inc-mail-finished",
+				  G_CALLBACK(inc_finished_cb), NULL);
 
 	syl_plugin_add_factory_item("<SummaryView>", "/---", NULL, NULL);
 	syl_plugin_add_factory_item("<SummaryView>", "/Test Plug-in menu",
@@ -245,6 +251,19 @@ static void messageview_show_cb(GObject *obj, gpointer msgview,
 	g_print("test: %p: messageview_show (%p), all_headers: %d: %s\n",
 		obj, msgview, all_headers,
 		msginfo && msginfo->subject ? msginfo->subject : "");
+}
+
+static void inc_start_cb(GObject *obj, PrefsAccount *ac)
+{
+	if (ac)
+		g_print("test: receive start: account: %s\n", ac->account_name);
+	else
+		g_print("test: receive start: all accounts\n");
+}
+
+static void inc_finished_cb(GObject *obj, gint new_messages)
+{
+	g_print("test: received %d new messages\n", new_messages);
 }
 
 static void button_clicked(GtkWidget *widget, gpointer data)

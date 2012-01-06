@@ -61,6 +61,7 @@
 #include "filter.h"
 #include "folder.h"
 #include "procheader.h"
+#include "plugin.h"
 
 static GList *inc_dialog_list = NULL;
 
@@ -167,6 +168,8 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 		trayicon_set_notify(TRUE);
 	}
 
+	syl_plugin_signal_emit("inc-mail-finished", new_messages);
+
 	inc_block_notify(FALSE);
 
 	if (new_messages <= 0 && !prefs_common.scan_all_after_inc) return;
@@ -212,6 +215,8 @@ void inc_mail(MainWindow *mainwin)
 	inc_autocheck_timer_remove();
 	summary_write_cache(mainwin->summaryview);
 	main_window_lock(mainwin);
+
+	syl_plugin_signal_emit("inc-mail-start", cur_account);
 
 	if (prefs_common.use_extinc && prefs_common.extinc_cmd) {
 		/* external incorporating program */
@@ -406,6 +411,8 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	summary_write_cache(mainwin->summaryview);
 	main_window_lock(mainwin);
 
+	syl_plugin_signal_emit("inc-mail-start", account);
+
 	new_msgs = inc_account_mail_real(mainwin, account);
 
 	inc_finished(mainwin, new_msgs);
@@ -430,6 +437,8 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 	inc_autocheck_timer_remove();
 	summary_write_cache(mainwin->summaryview);
 	main_window_lock(mainwin);
+
+	syl_plugin_signal_emit("inc-mail-start", NULL);
 
 	if (prefs_common.inc_local) {
 		new_msgs = inc_spool();
