@@ -2435,7 +2435,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			sw_from_s = g_strconcat("-->", msginfo->to, NULL);
 	}
 
-	if (msginfo->subject) {
+	if (msginfo->subject && *msginfo->subject) {
 		if (msginfo->folder && msginfo->folder->trim_summary_subject) {
 			subject_s = g_strdup(msginfo->subject);
 			trim_subject(subject_s);
@@ -2500,7 +2500,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_UNREAD, unread_pix,
 			   S_COL_MIME, mime_pix,
 			   S_COL_SUBJECT, subject_s ? subject_s :
-			   		  msginfo->subject ? msginfo->subject :
+			   		  msginfo->subject && *msginfo->subject ? msginfo->subject :
 					  _("(No Subject)"),
 			   S_COL_FROM, sw_from_s ? sw_from_s :
 			   	       msginfo->fromname ? msginfo->fromname :
@@ -3897,7 +3897,7 @@ void summary_save_as(SummaryView *summaryview)
 	GET_MSG_INFO(msginfo, &iter);
 	if (!msginfo) return;
 
-	if (msginfo->subject) {
+	if (msginfo->subject && *msginfo->subject) {
 		filename = g_strdup_printf("%s.eml", msginfo->subject);
 	} else {
 		filename = g_strdup_printf("%u.eml", msginfo->msgnum);

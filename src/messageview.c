@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -756,19 +756,27 @@ void messageview_save_as(MessageView *messageview)
 	if (!messageview->msginfo) return;
 	msginfo = messageview->msginfo;
 
-	if (msginfo->subject) {
-		filename = g_strdup(msginfo->subject);
-		subst_for_filename(filename);
+	if (msginfo->subject && *msginfo->subject) {
+		filename = g_strdup_printf("%s.eml", msginfo->subject);
+	} else {
+		filename = g_strdup_printf("%u.eml", msginfo->msgnum);
 	}
+	subst_for_filename(filename);
 
 	dest = filesel_save_as(filename);
+
 	g_free(filename);
-	if (!dest) return;
+	if (!dest)
+		return;
 
 	src = procmsg_get_message_file(msginfo);
 	if (copy_file(src, dest, TRUE) < 0) {
+		gchar *utf8_dest;
+
+		utf8_dest = conv_filename_to_utf8(dest);
 		alertpanel_error(_("Can't save the file `%s'."),
-				 g_basename(dest));
+				 g_basename(utf8_dest));
+		g_free(utf8_dest);
 	}
 	g_free(src);
 
