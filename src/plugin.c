@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,12 @@ enum {
 	MESSAGEVIEW_SHOW,
 	INC_MAIL_START,
 	INC_MAIL_FINISHED,
+	PREFS_COMMON_OPEN,
+	PREFS_ACCOUNT_OPEN,
+	PREFS_FILTER_OPEN,
+	PREFS_FILTER_EDIT_OPEN,
+	PREFS_TEMPLATE_OPEN,
+	PLUGIN_MANAGER_OPEN,
 	LAST_SIGNAL
 };
 
@@ -202,6 +208,7 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_POINTER,
 			     G_TYPE_POINTER,
 			     G_TYPE_BOOLEAN);
+
 	plugin_signals[INC_MAIL_START] =
 		g_signal_new("inc-mail-start",
 			     G_TYPE_FROM_CLASS(gobject_class),
@@ -222,6 +229,71 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_NONE,
 			     1,
 			     G_TYPE_INT);
+
+	plugin_signals[PREFS_COMMON_OPEN] =
+		g_signal_new("prefs-common-open",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, prefs_common_open),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[PREFS_ACCOUNT_OPEN] =
+		g_signal_new("prefs-account-open",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, prefs_account_open),
+			     NULL, NULL,
+			     syl_plugin_marshal_VOID__POINTER_POINTER,
+			     G_TYPE_NONE,
+			     2,
+			     G_TYPE_POINTER,
+			     G_TYPE_POINTER);
+	plugin_signals[PREFS_FILTER_OPEN] =
+		g_signal_new("prefs-filter-open",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, prefs_filter_open),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[PREFS_FILTER_EDIT_OPEN] =
+		g_signal_new("prefs-filter-edit-open",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, prefs_filter_edit_open),
+			     NULL, NULL,
+			     syl_plugin_marshal_VOID__POINTER_STRING_STRING_POINTER,
+			     G_TYPE_NONE,
+			     4,
+			     G_TYPE_POINTER,
+			     G_TYPE_STRING,
+			     G_TYPE_STRING,
+			     G_TYPE_POINTER);
+	plugin_signals[PREFS_TEMPLATE_OPEN] =
+		g_signal_new("prefs-template-open",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, prefs_template_open),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[PLUGIN_MANAGER_OPEN] =
+		g_signal_new("plugin-manager-open",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, plugin_manager_open),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
 }
 
 void syl_plugin_signal_connect(const gchar *name, GCallback callback,

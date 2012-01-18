@@ -56,6 +56,7 @@
 #include "alertpanel.h"
 #include "folder.h"
 #include "socket.h"
+#include "plugin.h"
 
 static PrefsDialog dialog;
 
@@ -742,6 +743,8 @@ void prefs_common_open(void)
 	prefs_common_colorlabel_set_dialog();
 
 	gtk_widget_show(dialog.window);
+
+	syl_plugin_signal_emit("prefs-common-open", dialog.window);
 }
 
 static void prefs_common_create(void)

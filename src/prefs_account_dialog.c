@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@
 #include "alertpanel.h"
 #include "smtp.h"
 #include "imap.h"
+#include "plugin.h"
 
 static gboolean cancelled;
 static gboolean new_account;
@@ -550,7 +551,10 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 	}
 
 	gtk_widget_show(dialog.window);
+	syl_plugin_signal_emit("prefs-account-open", new_account ? NULL : ac_prefs, dialog.window);
+
 	gtk_main();
+
 	gtk_widget_hide(dialog.window);
 
 	inc_unlock();

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@
 #include "gtkutils.h"
 #include "alertpanel.h"
 #include "xml.h"
+#include "plugin.h"
 
 static struct FilterRuleListWindow {
 	GtkWidget *window;
@@ -142,6 +143,8 @@ void prefs_filter_open(MsgInfo *msginfo, const gchar *header, const gchar *key)
 
 	gtk_widget_show(rule_list_window.window);
 	manage_window_focus_in(rule_list_window.window, NULL, NULL);
+
+	syl_plugin_signal_emit("prefs-filter-open", rule_list_window.window);
 
 	if (msginfo) {
 		FilterRule *rule;

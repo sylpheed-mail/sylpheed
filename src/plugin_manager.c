@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,6 +98,8 @@ void plugin_manager_open(void)
 
 	gtk_widget_show(pm_window.window);
 	manage_window_focus_in(pm_window.window, NULL, NULL);
+
+	syl_plugin_signal_emit("plugin-manager-open", pm_window.window);
 }
 
 #ifdef USE_UPDATE_CHECK_PLUGIN

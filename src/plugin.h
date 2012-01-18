@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 
 #include "procmsg.h"
 #include "folder.h"
+#include "filter.h"
 
 /* SylPlugin object */
 
@@ -88,6 +89,24 @@ struct _SylPluginClass
 					 PrefsAccount	*account);
 	void (* inc_mail_finished)	(GObject	*obj,
 					 gint		 new_messages);
+
+	/* Prefs dialogs */
+	void (* prefs_common_open)	(GObject	*obj,
+					 GtkWidget	*window);
+	void (* prefs_account_open)	(GObject	*obj,
+					 PrefsAccount	*account,
+					 GtkWidget	*window);
+	void (* prefs_filter_open)	(GObject	*obj,
+					 GtkWidget	*window);
+	void (* prefs_filter_edit_open)	(GObject	*obj,
+					 FilterRule	*rule,
+					 const gchar	*header,
+					 const gchar	*key,
+					 GtkWidget	*window);
+	void (* prefs_template_open)	(GObject	*obj,
+					 GtkWidget	*window);
+	void (* plugin_manager_open)	(GObject	*obj,
+					 GtkWidget	*window);
 };
 
 struct _SylPluginInfo

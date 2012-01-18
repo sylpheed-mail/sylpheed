@@ -1,7 +1,7 @@
 /*
  * Sylpheed templates subsystem 
  * Copyright (C) 2001 Alexander Barinov
- * Copyright (C) 2001-2010 Hiroyuki Yamamoto
+ * Copyright (C) 2001-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 #include "mainwindow.h"
 #include "addr_compl.h"
 #include "quote_fmt.h"
+#include "plugin.h"
 
 static struct Templates {
 	GtkWidget *window;
@@ -98,6 +99,8 @@ void prefs_template_open(void)
 
 	prefs_template_window_setup();
 	gtk_widget_show(templates.window);
+
+	syl_plugin_signal_emit("prefs-template-open", templates.window);
 }
 
 #define ADD_ENTRY(entry, str, row) \
