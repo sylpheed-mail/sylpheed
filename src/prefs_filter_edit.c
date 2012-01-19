@@ -568,8 +568,8 @@ CondHBox *prefs_filter_edit_cond_hbox_create(FilterCondEdit *cond_edit)
 
 	menu = gtk_menu_new();
 	gtk_widget_show(menu);
-	MENUITEM_ADD(menu, menuitem, _("is longer than"), PF_AGE_LONGER);
 	MENUITEM_ADD(menu, menuitem, _("is shorter than"), PF_AGE_SHORTER);
+	MENUITEM_ADD(menu, menuitem, _("is longer than"), PF_AGE_LONGER);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(age_match_optmenu), menu);
 
 	status_match_optmenu = gtk_option_menu_new();
@@ -793,7 +793,7 @@ void prefs_filter_edit_cond_hbox_set(CondHBox *hbox, FilterCond *cond)
 	CondMenuType cond_type = PF_COND_NONE;
 	MatchMenuType match_type = PF_MATCH_NONE;
 	SizeMatchType size_type = PF_SIZE_LARGER;
-	AgeMatchType age_type = PF_AGE_LONGER;
+	AgeMatchType age_type = PF_AGE_SHORTER;
 	StatusMatchType status_type = PF_STATUS_MATCH;
 
 	switch (cond->type) {

@@ -68,8 +68,8 @@ typedef enum
 
 typedef enum
 {
-	PF_AGE_LONGER,
-	PF_AGE_SHORTER
+	PF_AGE_SHORTER,
+	PF_AGE_LONGER
 } AgeMatchType;
 
 typedef enum
