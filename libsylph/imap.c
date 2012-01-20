@@ -36,6 +36,7 @@
 #  include <iconv.h>
 #endif
 
+#include "sylmain.h"
 #include "imap.h"
 #include "socket.h"
 #include "socks.h"
@@ -1417,6 +1418,9 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 			return -1;
 		}
 
+		if (syl_app_get())
+			g_signal_emit_by_name(syl_app_get(), "add-msg", dest, fileinfo->file, new_uid);
+
 		if (!session->uidplus)
 			last_uid++;
 		else if (last_uid < new_uid)
@@ -1552,6 +1556,10 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 
 	for (cur = msglist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
+
+		if (syl_app_get())
+			g_signal_emit_by_name(syl_app_get(), "add-msg", dest, NULL, 0);
+
 		dest->total++;
 		if (MSG_IS_NEW(msginfo->flags))
 			dest->new++;
@@ -1731,6 +1739,9 @@ static gint imap_remove_msgs(Folder *folder, FolderItem *item, GSList *msglist)
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		guint32 uid = msginfo->msgnum;
 
+		if (syl_app_get())
+			g_signal_emit_by_name(syl_app_get(), "remove-msg", item, NULL, uid);
+
 		if (dir_exist)
 			remove_numbered_files(dir, uid, uid);
 		item->total--;
@@ -1781,6 +1792,9 @@ static gint imap_remove_all_msg(Folder *folder, FolderItem *item)
 		log_warning(_("can't expunge\n"));
 		return ok;
 	}
+
+	if (syl_app_get())
+		g_signal_emit_by_name(syl_app_get(), "remove-all-msg", item);
 
 	item->new = item->unread = item->total = 0;
 	item->updated = TRUE;
@@ -2491,6 +2505,7 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 	gint ok;
 	gint exists, recent, unseen;
 	guint32 uid_validity;
+	gchar *old_id, *new_id;
 
 	g_return_val_if_fail(folder != NULL, -1);
 	g_return_val_if_fail(item != NULL, -1);
@@ -2565,6 +2580,8 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 		return -1;
 	}
 
+	old_id = folder_item_get_identifier(item);
+
 	if (new_parent) {
 		g_node_unlink(item->node);
 		g_node_append(new_parent->node, item->node);
@@ -2594,6 +2611,13 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 	g_free(newpath);
 	g_free(real_oldpath);
 	g_free(real_newpath);
+
+	new_id = folder_item_get_identifier(item);
+	if (syl_app_get())
+		g_signal_emit_by_name(syl_app_get(), "move-folder", item,
+				      old_id, new_id);
+	g_free(new_id);
+	g_free(old_id);
 
 	return 0;
 }
@@ -2647,6 +2671,9 @@ static gint imap_remove_folder(Folder *folder, FolderItem *item)
 	if (is_dir_exist(cache_dir) && remove_dir_recursive(cache_dir) < 0)
 		g_warning("can't remove directory '%s'\n", cache_dir);
 	g_free(cache_dir);
+
+	if (syl_app_get())
+		g_signal_emit_by_name(syl_app_get(), "remove-folder", item);
 	folder_item_remove(item);
 
 	return 0;
