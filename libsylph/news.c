@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -47,6 +47,7 @@
 #if USE_SSL
 #  include "ssl.h"
 #endif
+#include "socks.h"
 
 #define NNTP_PORT	119
 #if USE_SSL
@@ -80,12 +81,14 @@ static gint news_scan_group		(Folder		*folder,
 #if USE_SSL
 static Session *news_session_new	 (const gchar	*server,
 					  gushort	 port,
+					  SocksInfo	*socks_info,
 					  const gchar	*userid,
 					  const gchar	*passwd,
 					  SSLType	 ssl_type);
 #else
 static Session *news_session_new	 (const gchar	*server,
 					  gushort	 port,
+					  SocksInfo	*socks_info,
 					  const gchar	*userid,
 					  const gchar	*passwd);
 #endif
@@ -203,10 +206,12 @@ static void news_folder_init(Folder *folder, const gchar *name,
 
 #if USE_SSL
 static Session *news_session_new(const gchar *server, gushort port,
+				 SocksInfo *socks_info,
 				 const gchar *userid, const gchar *passwd,
 				 SSLType ssl_type)
 #else
 static Session *news_session_new(const gchar *server, gushort port,
+				 SocksInfo *socks_info,
 				 const gchar *userid, const gchar *passwd)
 #endif
 {
@@ -218,9 +223,9 @@ static Session *news_session_new(const gchar *server, gushort port,
 	log_message(_("creating NNTP connection to %s:%d ...\n"), server, port);
 
 #if USE_SSL
-	session = nntp_session_new(server, port, buf, userid, passwd, ssl_type);
+	session = nntp_session_new_full(server, port, socks_info, buf, userid, passwd, ssl_type);
 #else
-	session = nntp_session_new(server, port, buf, userid, passwd);
+	session = nntp_session_new_full(server, port, socks_info, buf, userid, passwd);
 #endif
 
 	return session;
@@ -230,6 +235,7 @@ static Session *news_session_new_for_folder(Folder *folder)
 {
 	Session *session;
 	PrefsAccount *ac;
+	SocksInfo *socks_info = NULL;
 	const gchar *userid = NULL;
 	gchar *passwd = NULL;
 	gushort port;
@@ -246,15 +252,23 @@ static Session *news_session_new_for_folder(Folder *folder)
 			passwd = input_query_password(ac->nntp_server, userid);
 	}
 
+	if (ac->use_socks && ac->use_socks_for_recv && ac->proxy_host) {
+		socks_info = socks_info_new(ac->socks_type, ac->proxy_host, ac->proxy_port, ac->use_proxy_auth ? ac->proxy_name : NULL, ac->use_proxy_auth ? ac->proxy_pass : NULL);
+	}
+
 #if USE_SSL
 	port = ac->set_nntpport ? ac->nntpport
 		: ac->ssl_nntp ? NNTPS_PORT : NNTP_PORT;
-	session = news_session_new(ac->nntp_server, port, userid, passwd,
-				   ac->ssl_nntp);
+	session = news_session_new(ac->nntp_server, port, socks_info,
+				   userid, passwd, ac->ssl_nntp);
 #else
 	port = ac->set_nntpport ? ac->nntpport : NNTP_PORT;
-	session = news_session_new(ac->nntp_server, port, userid, passwd);
+	session = news_session_new(ac->nntp_server, port, socks_info,
+				   userid, passwd);
 #endif
+
+	if (socks_info)
+		socks_info_free(socks_info);
 
 	g_free(passwd);
 

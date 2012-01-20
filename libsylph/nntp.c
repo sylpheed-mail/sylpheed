@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -32,6 +32,7 @@
 #if USE_SSL
 #  include "ssl.h"
 #endif
+#include "socks.h"
 
 static gint verbose = 1;
 
@@ -53,25 +54,47 @@ static gint nntp_gen_command	(NNTPSession	*session,
 
 
 #if USE_SSL
-Session *nntp_session_new(const gchar *server, gushort port, gchar *buf,
-			  const gchar *userid, const gchar *passwd,
-			  SSLType ssl_type)
+Session *nntp_session_new_full(const gchar *server, gushort port,
+			       SocksInfo *socks_info, gchar *buf,
+			       const gchar *userid, const gchar *passwd,
+			       SSLType ssl_type)
 #else
-Session *nntp_session_new(const gchar *server, gushort port, gchar *buf,
-			  const gchar *userid, const gchar *passwd)
+Session *nntp_session_new_full(const gchar *server, gushort port,
+			       SocksInfo *socks_info, gchar *buf,
+			       const gchar *userid, const gchar *passwd)
 #endif
 {
 	NNTPSession *session;
 	SockInfo *sock;
+	const gchar *server_;
+	gushort port_;
 
-	if ((sock = sock_connect(server, port)) == NULL) {
+	if (socks_info) {
+		server_ = socks_info->proxy_host;
+		port_ = socks_info->proxy_port;
+	} else {
+		server_ = server;
+		port_ = port;
+	}
+
+	if ((sock = sock_connect(server_, port_)) == NULL) {
 		log_warning(_("Can't connect to NNTP server: %s:%d\n"),
 			    server, port);
 		return NULL;
 	}
 
+	if (socks_info) {
+		if (socks_connect(sock, server, port, socks_info) < 0) {
+			log_warning("Can't establish SOCKS connection: %s:%d\n",
+				    server, port);
+			return NULL;
+		}
+	}
+
 #if USE_SSL
 	if (ssl_type == SSL_TUNNEL && !ssl_init_socket(sock)) {
+		log_warning("Can't establish NNTP session with: %s:%d\n",
+			    server, port);
 		sock_close(sock);
 		return NULL;
 	}
@@ -129,6 +152,22 @@ Session *nntp_session_new(const gchar *server, gushort port, gchar *buf,
 
 	return SESSION(session);
 }
+
+#if USE_SSL
+Session *nntp_session_new(const gchar *server, gushort port, gchar *buf,
+			  const gchar *userid, const gchar *passwd,
+			  SSLType ssl_type)
+{
+	return nntp_session_new_full(server, port, NULL, buf, userid, passwd,
+				     ssl_type);
+}
+#else
+Session *nntp_session_new(const gchar *server, gushort port, gchar *buf,
+			  const gchar *userid, const gchar *passwd)
+{
+	return nntp_session_new_full(server, port, NULL, buf, userid, passwd);
+}
+#endif
 
 static void nntp_session_destroy(Session *session)
 {

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +24,7 @@
 #if USE_SSL
 #  include "ssl.h"
 #endif
+#include "socks.h"
 
 typedef struct _NNTPSession	NNTPSession;
 
@@ -59,9 +60,22 @@ Session *nntp_session_new	(const gchar	*server,
 				 const gchar	*userid,
 				 const gchar	*passwd,
 				 SSLType	 ssl_type);
+Session *nntp_session_new_full	(const gchar	*server,
+				 gushort	 port,
+				 SocksInfo	*socks_info,
+				 gchar		*buf,
+				 const gchar	*userid,
+				 const gchar	*passwd,
+				 SSLType	 ssl_type);
 #else
 Session *nntp_session_new	(const gchar	*server,
 				 gushort	 port,
+				 gchar		*buf,
+				 const gchar	*userid,
+				 const gchar	*passwd);
+Session *nntp_session_new_full	(const gchar	*server,
+				 gushort	 port,
+				 SocksInfo	*socks_info,
 				 gchar		*buf,
 				 const gchar	*userid,
 				 const gchar	*passwd);
