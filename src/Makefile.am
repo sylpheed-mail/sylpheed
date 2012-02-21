@@ -137,11 +137,11 @@ EXTRA_DIST = \
 
 INCLUDES = \
 	-DG_LOG_DOMAIN=\"Sylpheed\" \
+	-I$(top_srcdir)/libsylph \
 	$(GTK_CFLAGS) \
 	$(GDK_PIXBUF_CFLAGS) \
 	$(GPGME_CFLAGS) \
-	-I$(includedir) \
-	-I$(top_srcdir)/libsylph
+	-I$(includedir)
 
 if NATIVE_WIN32
 SYLPHEED_RES = sylpheed.res

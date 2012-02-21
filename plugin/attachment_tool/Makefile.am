@@ -6,11 +6,11 @@ attachment_tool_la_SOURCES = attachment_tool.c
 attachment_tool_la_LDFLAGS = -module -no-undefined -avoid-version
 
 INCLUDES = \
-	$(GTK_CFLAGS) \
-	-I$(includedir) \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/libsylph \
-	-I$(top_srcdir)/src
+	-I$(top_srcdir)/src \
+	$(GTK_CFLAGS) \
+	-I$(includedir)
 
 attachment_tool_la_LIBADD = \
 	$(GTK_LIBS) \

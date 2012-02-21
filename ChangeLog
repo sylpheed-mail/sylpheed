@@ -1,5 +1,14 @@
 2012-02-21
 
+	* libsylph/Makefile.am
+	  src/Makefile.am
+	  plugin/test/Makefile.am
+	  plugin/attachment_tool/Makefile.am
+	  configure.in: fixed compilation error with Fink + OS X (Bug #42).
+	  (moved -I$(top_srcdir)/* to the beginning of INCLUDES)
+
+2012-02-21
+
 	* src/prefs_filter.c: fixed a bug that filter settings are removed
 	  if Escape key is pressed quickly on auto filter rule creation.
 	  Also made it update filter.xml file only when the list is modified.
