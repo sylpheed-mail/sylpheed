@@ -3884,7 +3884,7 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 		return ok;
 	}
 	ok = imap_cmd_gen_recv(session, &buf);
-	if (ok != IMAP_SUCCESS || buf[0] != '+' || buf[1] != ' ') {
+	if (ok != IMAP_SUCCESS || buf[0] != '+') {
 		g_free(buf);
 		return IMAP_ERROR;
 	}
@@ -4324,7 +4324,7 @@ static gint imap_cmd_append(IMAPSession *session, const gchar *destfolder,
 	}
 
 	ok = imap_cmd_gen_recv(session, &ret);
-	if (ok != IMAP_SUCCESS || ret[0] != '+' || ret[1] != ' ') {
+	if (ok != IMAP_SUCCESS || ret[0] != '+') {
 		log_warning(_("can't append %s to %s\n"), file, destfolder_);
 		g_free(ret);
 		fclose(tmp);
