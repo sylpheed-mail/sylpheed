@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1663,11 +1663,6 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 	gboolean search_folder   = FALSE;
 	gboolean folder_property = FALSE;
 
-	if (!event) return FALSE;
-
-	if (event->button != 3)
-		return FALSE;
-
 	if (!gtk_tree_selection_get_selected
 		(folderview->selection, NULL, &iter))
 		return FALSE;
@@ -1868,8 +1863,13 @@ static gboolean folderview_menu_popup(FolderView *folderview,
 
 	syl_plugin_signal_emit("folderview-menu-popup", ifactory);
 
-	gtk_menu_popup(GTK_MENU(popup), NULL, NULL, NULL, NULL,
-		       event->button, event->time);
+	if (event)
+		gtk_menu_popup(GTK_MENU(popup), NULL, NULL, NULL, NULL,
+			       event->button, event->time);
+	else
+		gtk_menu_popup(GTK_MENU(popup), NULL, NULL,
+			       menu_widget_position, folderview->treeview,
+			       0, GDK_CURRENT_TIME);
 
 	return FALSE;
 }
@@ -2016,6 +2016,9 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			}
 		}
 		break;
+	case GDK_Menu:
+		folderview_menu_popup(folderview, NULL);
+		return TRUE;
 	default:
 		break;
 	}

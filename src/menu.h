@@ -134,6 +134,11 @@ void menu_button_position	(GtkMenu		*menu,
 				 gint			*y,
 				 gboolean		*push_in,
 				 gpointer		 user_data);
+void menu_widget_position	(GtkMenu		*menu,
+				 gint			*x,
+				 gint			*y,
+				 gboolean		*push_in,
+				 gpointer		 user_data);
 
 gint menu_find_option_menu_index(GtkOptionMenu		*optmenu,
 				 gpointer		 data,

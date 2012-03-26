@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2004 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -220,6 +220,45 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 
 	*x = xpos;
 	*y = ypos;
+}
+
+void menu_widget_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
+			  gpointer user_data)
+{
+	GtkWidget *widget;
+	GtkRequisition requisition;
+	gint w_xpos, w_ypos;
+	gint xpos, ypos;
+	gint width, height;
+	gint scr_width, scr_height;
+
+	g_return_if_fail(x != NULL && y != NULL && push_in != NULL);
+
+	widget = GTK_WIDGET(user_data);
+
+	gtk_widget_get_child_requisition(GTK_WIDGET(menu), &requisition);
+	width = requisition.width;
+	height = requisition.height;
+	gdk_window_get_origin(widget->window, &w_xpos, &w_ypos);
+
+	xpos = w_xpos;
+	ypos = w_ypos;
+
+	scr_width = gdk_screen_width();
+	scr_height = gdk_screen_height();
+
+	if (xpos + width > scr_width)
+		xpos -= (xpos + width) - scr_width;
+	if (ypos + height > scr_height)
+		ypos -= height;
+	if (xpos < 0)
+		xpos = 0;
+	if (ypos < 0)
+		ypos = 0;
+
+	*x = xpos;
+	*y = ypos;
+	*push_in = FALSE;
 }
 
 gint menu_find_option_menu_index(GtkOptionMenu *optmenu, gpointer data,
