@@ -400,7 +400,7 @@ static gchar *news_fetch_msg(Folder *folder, FolderItem *item, gint num)
 			       NULL);
 	g_free(path);
 
-	if (is_file_exist(filename)) {
+	if (is_file_exist(filename) && get_file_size(filename) > 0) {
 		debug_print(_("article %d has been already cached.\n"), num);
 		return filename;
 	}
