@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -6071,6 +6071,13 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	case GDK_KP_Delete:
 		BREAK_ON_MODIFIER_KEY();
 		summary_delete(summaryview);
+		return TRUE;
+	case GDK_Menu:
+		syl_plugin_signal_emit("summaryview-menu-popup",
+				       summaryview->popupfactory);
+		gtk_menu_popup(GTK_MENU(summaryview->popupmenu), NULL, NULL,
+			       menu_widget_position, summaryview->treeview,
+			       0, GDK_CURRENT_TIME);
 		return TRUE;
 	default:
 		break;
