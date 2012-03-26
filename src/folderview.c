@@ -2016,6 +2016,12 @@ static gboolean folderview_key_pressed(GtkWidget *widget, GdkEventKey *event,
 			}
 		}
 		break;
+	case GDK_F10:
+		if ((event->state & GDK_SHIFT_MASK) != 0) {
+			folderview_menu_popup(folderview, NULL);
+			return TRUE;
+		}
+		break;
 	case GDK_Menu:
 		folderview_menu_popup(folderview, NULL);
 		return TRUE;

@@ -6072,7 +6072,11 @@ static gboolean summary_key_pressed(GtkWidget *widget, GdkEventKey *event,
 		BREAK_ON_MODIFIER_KEY();
 		summary_delete(summaryview);
 		return TRUE;
+	case GDK_F10:
 	case GDK_Menu:
+		if (event->keyval == GDK_F10 &&
+		    (event->state & GDK_SHIFT_MASK) == 0)
+			break;
 		syl_plugin_signal_emit("summaryview-menu-popup",
 				       summaryview->popupfactory);
 		gtk_menu_popup(GTK_MENU(summaryview->popupmenu), NULL, NULL,
