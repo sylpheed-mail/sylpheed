@@ -194,7 +194,7 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 	gint width, height;
 	gint scr_width, scr_height;
 
-	g_return_if_fail(x != NULL && y != NULL);
+	g_return_if_fail(x != NULL && y != NULL && push_in != NULL);
 
 	button = GTK_WIDGET(user_data);
 
@@ -204,7 +204,7 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 	gdk_window_get_origin(button->window, &button_xpos, &button_ypos);
 
 	xpos = button_xpos + button->allocation.x;
-	ypos = button_ypos + button->allocation.y + button->requisition.height;
+	ypos = button_ypos + button->allocation.y + button->allocation.height;
 
 	scr_width = gdk_screen_width();
 	scr_height = gdk_screen_height();
@@ -212,7 +212,7 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 	if (xpos + width > scr_width)
 		xpos -= (xpos + width) - scr_width;
 	if (ypos + height > scr_height)
-		ypos -= button->requisition.height + height;
+		ypos -= button->allocation.height + height;
 	if (xpos < 0)
 		xpos = 0;
 	if (ypos < 0)
@@ -220,6 +220,7 @@ void menu_button_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
 
 	*x = xpos;
 	*y = ypos;
+	*push_in = FALSE;
 }
 
 void menu_widget_position(GtkMenu *menu, gint *x, gint *y, gboolean *push_in,
