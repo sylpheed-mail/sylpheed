@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2176,7 +2176,7 @@ static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
 		return FALSE;
 
 	uri = textview_get_uri(textview, &start, &end);
-	if (!uri)
+	if (!uri || !uri->uri)
 		return FALSE;
 
 	if (!g_ascii_strncasecmp(uri->uri, "mailto:", 7)) {
@@ -2188,6 +2188,8 @@ static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
 		if (ac && ac->protocol == A_NNTP)
 			ac = NULL;
 		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
+	} else if (uri->uri[0] == '#') {
+		/* don't open in-page link */
 	} else if (textview_uri_security_check(textview, uri) == TRUE)
 		open_uri(uri->uri, prefs_common.uri_cmd);
 
@@ -2369,7 +2371,7 @@ static void textview_populate_popup(GtkWidget *widget, GtkMenu *menu,
 		goto finish;
 
 	uri = textview_get_uri(textview, &start, &end);
-	if (!uri)
+	if (!uri || !uri->uri)
 		goto finish;
 
 	separator = gtk_separator_menu_item_new();
@@ -2425,6 +2427,8 @@ static void textview_popup_menu_activate_open_uri_cb(GtkMenuItem *menuitem,
 		if (ac && ac->protocol == A_NNTP)
 			ac = NULL;
 		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
+	} else if (uri->uri[0] == '#') {
+		/* don't open in-page link */
 	} else if (textview_uri_security_check(textview, uri) == TRUE)
 		open_uri(uri->uri, prefs_common.uri_cmd);
 }
