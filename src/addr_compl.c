@@ -2,6 +2,7 @@
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
  *
  * Copyright (C) 2000-2005 by Alfons Hoogervorst & The Sylpheed Claws Team.
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,10 +109,35 @@ static gchar *completion_func(gpointer data)
 	return ((completion_entry *)data)->string;
 } 
 
+static gint compare_func(const gchar *s1, const gchar *s2, gsize n)
+{
+	const gchar *p = s2;
+	gint ret = 1;
+
+	g_return_val_if_fail(s1 != NULL && s2 != NULL, 1);
+
+	while (*p) {
+		ret = strncmp(s1, p, n);
+		if (ret == 0)
+			return ret;
+		while (*p && *p != '-' && *p != '.' && *p != '@' &&
+		       !g_ascii_isspace(*p))
+			p++;
+		/* don't compare the domain part */
+		if (*p == '@')
+			break;
+		while (*p == '-' || *p == '.' || g_ascii_isspace(*p))
+			p++;
+	}
+
+	return ret;
+}
+
 static void init_all(void)
 {
 	completion = g_completion_new(completion_func);
 	g_return_if_fail(completion != NULL);
+	g_completion_set_compare(completion, compare_func);
 }
 
 static void free_all(void)
