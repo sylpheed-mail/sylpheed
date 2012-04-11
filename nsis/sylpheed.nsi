@@ -129,6 +129,11 @@ ${MementoSectionEnd}
 
 SectionGroupEnd
 
+${MementoSection} "sylfilter" sec_sylfilter
+  SetOutPath "$INSTDIR"
+  File /r "sylfilter\"
+${MementoSectionEnd}
+
 ${MementoSection} "bsfilter" sec_bsfilter
   SetOutPath "$INSTDIR"
   File /r "bsfilter\"
@@ -274,6 +279,12 @@ SectionEnd
 
 SectionGroupEnd
 
+Section "un.sylfilter" sec_un_sylfilter
+  ; sylfilter components
+  Delete "$INSTDIR\sylfilter.exe"
+  Delete "$INSTDIR\sylfilter-cui.exe"
+SectionEnd
+
 Section "un.bsfilter" sec_un_bsfilter
   ; bsfilter components
   Delete "$INSTDIR\bsfilter"
@@ -314,6 +325,7 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_sylpheed_pro} "$(sylpheed_pro_description)"
 !endif
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_attachment_tool_plugin} "$(attachment_tool_plugin_description)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${sec_sylfilter} "$(sylfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_bsfilter} "$(bsfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_desktop_shortcut} "$(desktop_shortcut_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_quick_shortcut} "$(quick_shortcut_description)"
@@ -326,6 +338,7 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_sylpheed_pro} "$(un_sylpheed_pro_description)"
 !endif
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_attachment_tool_plugin} "$(un_attachment_tool_plugin_description)"
+  !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_sylfilter} "$(un_sylfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_bsfilter} "$(un_bsfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_desktop_shortcut} "$(un_desktop_shortcut_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_quick_shortcut} "$(un_quick_shortcut_description)"
@@ -364,8 +377,9 @@ uninst:
     StrCpy $ISSILENT ""
   ExecWait '$R0 $ISSILENT _?=$INSTDIR' ;Do not copy the uninstaller to a temp file
  
-  IfErrors no_remove_uninstaller
+  IfErrors no_remove_uninstaller done_
   no_remove_uninstaller:
+  Abort
   
 ; label "done" used in MementoSectionRestore
 done_:
@@ -411,6 +425,11 @@ check_app_running:
   !insertmacro UnselectSection ${sec_un_attachment_tool_plugin}
   !insertmacro SetSectionFlag ${sec_un_attachment_tool_plugin} ${SF_RO}
   attachment_tool_plugin_file_exists:
+
+  IfFileExists "$INSTDIR\sylfilter.exe" sylfilter_file_exists
+  !insertmacro UnselectSection ${sec_un_sylfilter}
+  !insertmacro SetSectionFlag ${sec_un_sylfilter} ${SF_RO}
+  sylfilter_file_exists:
 
   IfFileExists "$INSTDIR\bsfilter" bsfilter_file_exists
   !insertmacro UnselectSection ${sec_un_bsfilter}
