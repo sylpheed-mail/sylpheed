@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -4521,7 +4521,7 @@ gboolean addressbook_add_contact_autoreg(const gchar *name, const gchar *address
 *                     to be loaded.
 * Return: TRUE if data loaded, FALSE if address index not loaded.
 */
-gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const gchar *, const gchar *))
+gboolean addressbook_load_completion_full(AddressBookCompletionFunc func)
 {
 	/* AddressInterface *interface; */
 	AddressDataSource *ds;
@@ -4529,6 +4529,7 @@ gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const g
 	GList *listP, *nodeP;
 	GList *nodeM;
 	gchar *sName, *sAddress, *sAlias, *sNickName;
+	gchar *sFirstName, *sLastName;
 
 	debug_print( "addressbook_load_completion\n" );
 
@@ -4560,6 +4561,8 @@ gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const g
 					if (sNickName)
 						sName = sNickName;
 				}
+				sFirstName = person->firstName;
+				sLastName = person->lastName;
 
 				/* Process each E-Mail address */
 				while( nodeM ) {
@@ -4569,9 +4572,9 @@ gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const g
 					if( sAddress && *sAddress != '\0' ) {
 						sAlias = ADDRITEM_NAME(email);
 						if( sAlias && *sAlias != '\0' ) {
-							( callBackFunc ) ( sName, sAddress, sAlias );
+							func( sName, sFirstName, sLastName, sAlias, sAddress );
 						} else {
-							( callBackFunc ) ( sName, sAddress, sNickName );
+							func( sName, sFirstName, sLastName, sNickName, sAddress );
 						}
 					}
 					nodeM = g_list_next( nodeM );
@@ -4588,6 +4591,24 @@ gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const g
 	debug_print( "addressbook_load_completion... done\n" );
 
 	return TRUE;
+}
+
+static gint (*real_func)(const gchar *, const gchar *, const gchar *);
+
+static gint wrapper_func(const gchar *name, const gchar *firstname, const gchar *lastname, const gchar *nickname, const gchar *address)
+{
+	return real_func(name, address, nickname);
+}
+
+gboolean addressbook_load_completion(gint (*callBackFunc)(const gchar *, const gchar *, const gchar *))
+{
+	gboolean ret;
+
+	real_func = callBackFunc;
+	ret = addressbook_load_completion_full(wrapper_func);
+	real_func = NULL;
+
+	return ret;
 }
 
 /* **********************************************************************

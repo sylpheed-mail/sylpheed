@@ -109,35 +109,10 @@ static gchar *completion_func(gpointer data)
 	return ((completion_entry *)data)->string;
 } 
 
-static gint compare_func(const gchar *s1, const gchar *s2, gsize n)
-{
-	const gchar *p = s2;
-	gint ret = 1;
-
-	g_return_val_if_fail(s1 != NULL && s2 != NULL, 1);
-
-	while (*p) {
-		ret = strncmp(s1, p, n);
-		if (ret == 0)
-			return ret;
-		while (*p && *p != '-' && *p != '.' && *p != '@' &&
-		       !g_ascii_isspace(*p))
-			p++;
-		/* don't compare the domain part */
-		if (*p == '@')
-			break;
-		while (*p == '-' || *p == '.' || g_ascii_isspace(*p))
-			p++;
-	}
-
-	return ret;
-}
-
 static void init_all(void)
 {
 	completion = g_completion_new(completion_func);
 	g_return_if_fail(completion != NULL);
-	g_completion_set_compare(completion, compare_func);
 }
 
 static void free_all(void)
@@ -186,24 +161,34 @@ static gint address_entry_find_func(gconstpointer a, gconstpointer b)
 	return 0;
 }
 
+static void add_completion_entry(const gchar *str, address_entry *ae)
+{
+	completion_entry *ce;
+
+	if (!str || *str == '\0')
+		return;
+	if (!ae)
+		return;
+
+	ce = g_new0(completion_entry, 1);
+	/* GCompletion list is case sensitive */
+	ce->string = g_utf8_strdown(str, -1);
+	ce->ref = ae;
+	completion_list = g_list_append(completion_list, ce);
+}
+
 /* add_address() - adds address to the completion list. this function looks
  * complicated, but it's only allocation checks.
  */
-static gint add_address(const gchar *name, const gchar *address, const gchar *nickname)
+static gint add_address(const gchar *name, const gchar *firstname, const gchar *lastname, const gchar *nickname, const gchar *address)
 {
-	address_entry    *ae;
-	completion_entry *name_ce = NULL;
-	completion_entry *nick_ce = NULL;
-	completion_entry *addr_ce;
-	GList            *found;
+	address_entry *ae;
+	GList         *found;
 
-	if (!address) return -1;
+	if (!address || *address == '\0')
+		return -1;
 
-	if (name && *name)
-		name_ce = g_new0(completion_entry, 1);
-	if (nickname && *nickname)
-		nick_ce = g_new0(completion_entry, 1);
-	addr_ce = g_new0(completion_entry, 1);
+	/* debugg_print("add_address: [%s] [%s] [%s] [%s] [%s]\n", name, firstname, lastname, nickname, address); */
 
 	ae = g_new0(address_entry, 1);
 	ae->name    = g_strdup(name ? name : "");
@@ -216,25 +201,22 @@ static gint add_address(const gchar *name, const gchar *address, const gchar *ni
 		ae = (address_entry *)found->data;
 	} else
 		address_list = g_list_append(address_list, ae);
+ 
+	if (name) {
+		const gchar *p = name;
 
-	/* GCompletion list is case sensitive */
-	if (name_ce)
-		name_ce->string = g_utf8_strdown(name, -1);
-	if (nick_ce)
-		nick_ce->string = g_utf8_strdown(nickname, -1);
-	addr_ce->string = g_utf8_strdown(address, -1);
-
-	if (name_ce)
-		name_ce->ref = ae;
-	if (nick_ce)
-		nick_ce->ref = ae;
-	addr_ce->ref = ae;
-
-	if (name_ce)
-		completion_list = g_list_append(completion_list, name_ce);
-	if (nick_ce)
-		completion_list = g_list_append(completion_list, nick_ce);
-	completion_list = g_list_append(completion_list, addr_ce);
+		while (*p != '\0') {
+			add_completion_entry(p, ae);
+			while (*p && *p != '-' && *p != '.' && !g_ascii_isspace(*p))
+				p++;
+			while (*p == '-' || *p == '.' || g_ascii_isspace(*p))
+				p++;
+		}
+	}
+	add_completion_entry(firstname, ae);
+	add_completion_entry(lastname, ae);
+	add_completion_entry(nickname, ae);
+	add_completion_entry(address, ae);
 
 	return 0;
 }
@@ -242,7 +224,7 @@ static gint add_address(const gchar *name, const gchar *address, const gchar *ni
 /* read_address_book()
  */ 
 static void read_address_book(void) {	
-	addressbook_load_completion( add_address );
+	addressbook_load_completion_full( add_address );
 }
 
 /* start_address_completion() - returns the number of addresses 

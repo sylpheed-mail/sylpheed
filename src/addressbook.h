@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999,2000 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@
 
 #include "compose.h"
 
+typedef gint (*AddressBookCompletionFunc) (const gchar *name, const gchar *firstname, const gchar *lastname, const gchar *nickname, const gchar *address);
+
 void addressbook_open			(Compose	*target);
 void addressbook_set_target_compose	(Compose	*target);
 Compose *addressbook_get_target_compose	(void);
@@ -47,6 +49,8 @@ gboolean addressbook_add_contact_autoreg(const gchar	*name,
 					 const gchar	*address,
 					 const gchar	*remarks);
 
+gboolean addressbook_load_completion_full
+					(AddressBookCompletionFunc func);
 gboolean addressbook_load_completion	( gint (*callBackFunc) ( const gchar *, const gchar *, const gchar * ) );
 
 gboolean addressbook_has_address	(const gchar	*address);
