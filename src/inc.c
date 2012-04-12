@@ -63,6 +63,14 @@
 #include "procheader.h"
 #include "plugin.h"
 
+
+typedef struct _IncAccountNewMsgCount
+{
+	PrefsAccount *account;
+	gint new_messages;
+} IncAccountNewMsgCount;
+
+
 static GList *inc_dialog_list = NULL;
 
 static guint inc_lock_count = 0;
@@ -72,7 +80,11 @@ static GdkPixbuf *current_pixbuf;
 static GdkPixbuf *error_pixbuf;
 static GdkPixbuf *ok_pixbuf;
 
+
 static void inc_finished		(MainWindow		*mainwin,
+					 GSList			*msg_counts);
+static GSList *inc_add_message_count	(GSList			*list,
+					 PrefsAccount		*account,
 					 gint			 new_messages);
 
 static gint inc_remote_account_mail	(MainWindow		*mainwin,
@@ -87,7 +99,8 @@ static void inc_progress_dialog_destroy	(IncProgressDialog	*inc_dialog);
 
 static IncSession *inc_session_new	(PrefsAccount		*account);
 static void inc_session_destroy		(IncSession		*session);
-static gint inc_start			(IncProgressDialog	*inc_dialog);
+static gint inc_start			(IncProgressDialog	*inc_dialog,
+					 GSList		       **count_list);
 static IncState inc_pop3_session_do	(IncSession		*session);
 
 static void inc_progress_dialog_update	(IncProgressDialog	*inc_dialog,
@@ -141,31 +154,64 @@ static gint get_spool			(FolderItem	*dest,
 static void inc_autocheck_timer_set_interval	(guint		 interval);
 static gint inc_autocheck_func			(gpointer	 data);
 
+
 /**
  * inc_finished:
  * @mainwin: Main window.
+ * @msg_counts: GSList of Number of received messages for each account.
  * @new_messages: Number of received messages.
  * 
  * Update the folder view and the summary view after receiving
  * messages.  If @new_messages is 0, this function avoids unneeded
  * updating.
  **/
-static void inc_finished(MainWindow *mainwin, gint new_messages)
+static void inc_finished(MainWindow *mainwin, GSList *msg_counts)
 {
 	FolderItem *item;
+	gint new_messages = 0;
+	gint other_new = 0;
+	IncAccountNewMsgCount *count;
+	GSList *cur;
 
-	debug_print("inc_finished(): %d new message(s)\n", new_messages);
+	for (cur = msg_counts; cur != NULL; cur = cur->next) {
+		count = cur->data;
+		if (count->new_messages > 0)
+			new_messages += count->new_messages;
+	}
 
-	if (prefs_common.scan_all_after_inc)
-		new_messages += folderview_check_new(NULL);
+	debug_print("inc_finished: %d new message(s)\n", new_messages);
+
+	if (prefs_common.scan_all_after_inc) {
+		other_new = folderview_check_new(NULL);
+		new_messages += other_new;
+	}
 
 	if (new_messages > 0 && !block_notify) {
-		gchar buf[1024];
+		GString *str;
+		gint c = 0;
 
-		g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"),
-			   new_messages);
-		trayicon_set_tooltip(buf);
+		str = g_string_new("");
+		g_string_printf(str, _("Sylpheed: %d new messages"),
+				new_messages);
+		if (msg_counts) {
+			for (cur = msg_counts; cur != NULL; cur = cur->next) {
+				count = cur->data;
+				if (count->new_messages > 0) {
+					if (c == 0)
+						g_string_append(str, "\n");
+					c++;
+					g_string_append(str, "\n");
+					if (!count->account)
+						g_string_append_printf(str, _("[Local]: %d"), count->new_messages);
+					else
+						g_string_append_printf(str, "%s: %d", count->account->account_name ? count->account->account_name : "[?]", count->new_messages);
+				}
+			}
+		}
+		debug_print("inc_finished: %s\n", str->str);
+		trayicon_set_tooltip(str->str);
 		trayicon_set_notify(TRUE);
+		g_string_free(str, TRUE);
 	}
 
 	syl_plugin_signal_emit("inc-mail-finished", new_messages);
@@ -202,9 +248,22 @@ static void inc_finished(MainWindow *mainwin, gint new_messages)
 	}
 }
 
+static GSList *inc_add_message_count(GSList *list, PrefsAccount *account,
+				     gint new_messages)
+{
+	IncAccountNewMsgCount *count;
+
+	count = g_new(IncAccountNewMsgCount, 1);
+	count->account = account;
+	count->new_messages = new_messages;
+
+	return g_slist_append(list, count);
+}
+
 void inc_mail(MainWindow *mainwin)
 {
 	gint new_msgs = 0;
+	GSList *list = NULL;
 
 	if (inc_lock_count) return;
 	if (inc_is_active()) return;
@@ -226,19 +285,25 @@ void inc_mail(MainWindow *mainwin)
 			return;
 		}
 
-		if (prefs_common.inc_local)
+		if (prefs_common.inc_local) {
 			new_msgs = inc_spool();
+			list = inc_add_message_count(list, NULL, new_msgs);
+		}
 	} else {
 		if (prefs_common.inc_local) {
 			new_msgs = inc_spool();
 			if (new_msgs < 0)
 				new_msgs = 0;
+			list = inc_add_message_count(list, NULL, new_msgs);
 		}
 
-		new_msgs += inc_account_mail_real(mainwin, cur_account);
+		new_msgs = inc_account_mail_real(mainwin, cur_account);
+		list = inc_add_message_count(list, cur_account, new_msgs);
 	}
 
-	inc_finished(mainwin, new_msgs);
+	inc_finished(mainwin, list);
+	slist_free_strings(list);
+	g_slist_free(list);
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
 }
@@ -394,12 +459,13 @@ static gint inc_account_mail_real(MainWindow *mainwin, PrefsAccount *account)
 	main_window_set_toolbar_sensitive(mainwin);
 	main_window_set_menu_sensitive(mainwin);
 
-	return inc_start(inc_dialog);
+	return inc_start(inc_dialog, NULL);
 }
 
 gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 {
 	gint new_msgs;
+	GSList *list;
 
 	if (inc_lock_count) return 0;
 	if (inc_is_active()) return 0;
@@ -415,7 +481,10 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 
 	new_msgs = inc_account_mail_real(mainwin, account);
 
-	inc_finished(mainwin, new_msgs);
+	list = inc_add_message_count(NULL, account, new_msgs);
+	inc_finished(mainwin, list);
+	slist_free_strings(list);
+	g_slist_free(list);
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
 
@@ -426,6 +495,7 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 {
 	GList *list, *queue_list = NULL;
 	IncProgressDialog *inc_dialog;
+	GSList *count_list = NULL;
 	gint new_msgs = 0;
 
 	if (inc_lock_count) return;
@@ -444,14 +514,17 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 		new_msgs = inc_spool();
 		if (new_msgs < 0)
 			new_msgs = 0;
+		count_list = inc_add_message_count(count_list, NULL, new_msgs);
 	}
 
 	/* check IMAP4 / News folders */
 	for (list = account_get_list(); list != NULL; list = list->next) {
 		PrefsAccount *account = list->data;
 		if ((account->protocol == A_IMAP4 ||
-		     account->protocol == A_NNTP) && account->recv_at_getall)
-			new_msgs += inc_remote_account_mail(mainwin, account);
+		     account->protocol == A_NNTP) && account->recv_at_getall) {
+			new_msgs = inc_remote_account_mail(mainwin, account);
+			count_list = inc_add_message_count(count_list, account, new_msgs);
+		}
 	}
 
 	/* check POP3 accounts */
@@ -475,10 +548,12 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 		main_window_set_toolbar_sensitive(mainwin);
 		main_window_set_menu_sensitive(mainwin);
 
-		new_msgs += inc_start(inc_dialog);
+		inc_start(inc_dialog, &count_list);
 	}
 
-	inc_finished(mainwin, new_msgs);
+	inc_finished(mainwin, count_list);
+	slist_free_strings(count_list);
+	g_slist_free(count_list);
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
 }
@@ -514,7 +589,7 @@ gint inc_pop_before_smtp(PrefsAccount *account)
 	main_window_set_toolbar_sensitive(mainwin);
 	main_window_set_menu_sensitive(mainwin);
 
-	inc_start(inc_dialog);
+	inc_start(inc_dialog, NULL);
 
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
@@ -670,7 +745,7 @@ static void inc_update_folder_foreach(GHashTable *table)
 	folderview_update_item_foreach(table, TRUE);
 }
 
-static gint inc_start(IncProgressDialog *inc_dialog)
+static gint inc_start(IncProgressDialog *inc_dialog, GSList **count_list)
 {
 	IncSession *session;
 	GList *qlist;
@@ -793,6 +868,8 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 			break;
 		}
 
+		if (count_list)
+			*count_list = inc_add_message_count(*count_list, pop3_session->ac_prefs, session->new_msgs);
 		new_msgs += session->new_msgs;
 
 		if (!prefs_common.scan_all_after_inc) {
