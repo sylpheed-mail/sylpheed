@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -330,6 +330,10 @@ struct _PrefsCommon
 	gint addressbook_col_name;
 	gint addressbook_col_addr;
 	gint addressbook_col_rem;
+
+	gchar *prev_open_dir;
+	gchar *prev_save_dir;
+	gchar *prev_folder_dir;
 };
 
 extern PrefsCommon prefs_common;

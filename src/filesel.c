@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include "prefs_common.h"
 #include "inc.h"
 
+
 static GSList *filesel_select_file_full	(const gchar		*title,
 					 const gchar		*file,
 					 GtkFileChooserAction	 action,
@@ -50,6 +51,7 @@ static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 					(GtkFileChooser		*chooser,
 					 gpointer		 data);
 #endif
+
 
 gchar *filesel_select_file(const gchar *title, const gchar *file,
 			   GtkFileChooserAction action)
@@ -73,27 +75,82 @@ GSList *filesel_select_files(const gchar *title, const gchar *file,
 	return filesel_select_file_full(title, file, action, TRUE);
 }
 
+static void filesel_change_dir_for_action(GtkFileChooserAction action)
+{
+	const gchar *cwd = NULL;
+
+	switch (action) {
+	case GTK_FILE_CHOOSER_ACTION_OPEN:
+		if (prefs_common.prev_open_dir &&
+		    is_dir_exist(prefs_common.prev_open_dir))
+			cwd = prefs_common.prev_open_dir;
+		else {
+			g_free(prefs_common.prev_open_dir);
+			prefs_common.prev_open_dir = NULL;
+		}
+		break;
+	case GTK_FILE_CHOOSER_ACTION_SAVE:
+		if (prefs_common.prev_save_dir &&
+		    is_dir_exist(prefs_common.prev_save_dir))
+			cwd = prefs_common.prev_save_dir;
+		else {
+			g_free(prefs_common.prev_save_dir);
+			prefs_common.prev_save_dir = NULL;
+		}
+		break;
+	case GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER:
+		if (prefs_common.prev_folder_dir &&
+		    is_dir_exist(prefs_common.prev_folder_dir))
+			cwd = prefs_common.prev_folder_dir;
+		else {
+			g_free(prefs_common.prev_folder_dir);
+			prefs_common.prev_folder_dir = NULL;
+		}
+		break;
+	default:
+		break;
+	}
+
+	if (cwd)
+		change_dir(cwd);
+	else
+		change_dir(get_document_dir());
+}
+
+static void filesel_save_dir_for_action(GtkFileChooserAction action,
+					const gchar *cwd)
+{
+	switch (action) {
+	case GTK_FILE_CHOOSER_ACTION_OPEN:
+		g_free(prefs_common.prev_open_dir);
+		prefs_common.prev_open_dir = g_strdup(cwd);
+		break;
+	case GTK_FILE_CHOOSER_ACTION_SAVE:
+		g_free(prefs_common.prev_save_dir);
+		prefs_common.prev_save_dir = g_strdup(cwd);
+		break;
+	case GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER:
+		g_free(prefs_common.prev_folder_dir);
+		prefs_common.prev_folder_dir = g_strdup(cwd);
+		break;
+	default:
+		break;
+	}
+}
+
 static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 					GtkFileChooserAction action,
 					gboolean multiple)
 {
-	static GHashTable *path_table = NULL;
 	gchar *cwd;
 	GtkWidget *dialog;
 	gchar *prev_dir;
 	static gboolean save_expander_expanded = FALSE;
 	GSList *list = NULL;
 
-	if (!path_table)
-		path_table = g_hash_table_new_full(g_str_hash, g_str_equal,
-						   g_free, g_free);
-
 	prev_dir = g_get_current_dir();
 
-	if ((cwd = g_hash_table_lookup(path_table, title)) != NULL)
-		change_dir(cwd);
-	else
-		change_dir(get_document_dir());
+	filesel_change_dir_for_action(action);
 
 	dialog = filesel_create(title, action);
 
@@ -133,9 +190,10 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 		if (list) {
 			cwd = gtk_file_chooser_get_current_folder
 				(GTK_FILE_CHOOSER(dialog));
-			if (cwd)
-				g_hash_table_replace
-					(path_table, g_strdup(title), cwd);
+			if (cwd) {
+				filesel_save_dir_for_action(action, cwd);
+				g_free(cwd);
+			}
 		}
 	}
 

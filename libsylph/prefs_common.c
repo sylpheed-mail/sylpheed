@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -496,6 +496,11 @@ static PrefParam param[] = {
 	{"strict_cache_check", "FALSE", &prefs_common.strict_cache_check,
 	 P_BOOL},
 	{"io_timeout_secs", "60", &prefs_common.io_timeout_secs, P_INT},
+
+	/* File selector */
+	{"filesel_prev_open_dir", NULL, &prefs_common.prev_open_dir, P_STRING},
+	{"filesel_prev_save_dir", NULL, &prefs_common.prev_save_dir, P_STRING},
+	{"filesel_prev_folder_dir", NULL, &prefs_common.prev_folder_dir, P_STRING},
 
 	{NULL, NULL, NULL, P_OTHER}
 };
