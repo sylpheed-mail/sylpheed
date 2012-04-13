@@ -1,5 +1,33 @@
 Changes of Sylpheed
 
+* 3.2.0beta7 (development)
+
+    New features
+
+    * The context menu of the folder view and the summary view can be popped
+      up using Menu key or Shift+F10.
+    * The details of new message counts are displayed on the tooltip of the
+      tray icon.
+    * Win32: SylFilter is now also included in the installer (since 3.2beta6).
+
+    Improvements
+
+    * Corrupted message caches of news and IMAP are automatically discarded
+      now.
+    * Address auto-completion now also matches to the subsequent part of the
+      name of contacts.
+    * On file selection dialog, the last selected folders are preserved
+      between sessions now.
+
+    Bugfixes
+
+    * The check of IMAP AUTHENTICATE response was fixed.
+    * The compilation failure with GLib 2.32 or later was fixed.
+    * The bug that a MIME part that didn't have its name could not be saved
+      was fixed.
+    * Win32: the bug that the installation process continued even if uninstall
+      was cancelled on update was fixed.
+
 * 3.2.0beta6 (development)
 
     * The blinking period of the tray icon was extended to 10 seconds.
