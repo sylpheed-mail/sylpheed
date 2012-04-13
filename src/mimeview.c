@@ -1192,7 +1192,6 @@ void mimeview_open_part_with(MimeView *mimeview, MimeInfo *partinfo)
 void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
 {
 	gchar *filename = NULL;
-	gchar *defname = NULL;
 
 	g_return_if_fail(partinfo != NULL);
 
@@ -1201,11 +1200,14 @@ void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
 	if (partinfo->filename) {
 		filename = filesel_save_as(partinfo->filename);
 	} else if (partinfo->name) {
+		gchar *defname;
+
 		defname = g_strdup(partinfo->name);
 		subst_for_filename(defname);
 		filename = filesel_save_as(defname);
 		g_free(defname);
-	}
+	} else
+		filename = filesel_save_as(NULL);
 
 	if (!filename) return;
 
