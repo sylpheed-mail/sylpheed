@@ -1676,6 +1676,7 @@ static gboolean addressbook_list_button_pressed(GtkWidget *widget,
 					(NULL, GINT_TO_POINTER(COMPOSE_ENTRY_TO));
 			else
 				addressbook_edit_address_cb(NULL, 0, NULL);
+			return TRUE;
 		}
 	} else if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(addrbook.list_popup), NULL, NULL,
@@ -2794,6 +2795,7 @@ static void addressbook_person_collapse_node(GtkTreeView *treeview,
 static void addressbook_drag_begin(GtkWidget *widget,
 				   GdkDragContext *drag_context, gpointer data)
 {
+	g_print("addressbook_drag_begin\n");
 	list_on_drag = TRUE;
 	/* gtk_drag_set_icon_default(drag_context); */
 }
@@ -2801,6 +2803,7 @@ static void addressbook_drag_begin(GtkWidget *widget,
 static void addressbook_drag_end(GtkWidget *widget,
 				 GdkDragContext *drag_context, gpointer data)
 {
+	g_print("addressbook_drag_end\n");
 }
 
 static void addressbook_drag_data_get(GtkWidget *widget,
