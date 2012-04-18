@@ -310,7 +310,7 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 	gboolean got_version = FALSE;
 	gboolean rel_result = FALSE;
 	gboolean dev_result = FALSE;
-	gboolean show_dialog_always = (gboolean)data;
+	gboolean show_dialog_always = GPOINTER_TO_INT(data);
 	gchar buf[BUFFSIZE];
 	ssize_t size;
 	gchar *disp_rel_ver = NULL;
@@ -589,7 +589,7 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 	gchar *key, *val, *p;
 	gchar *cur_ver;
 	gint i;
-	gboolean show_dialog_always = (gboolean)data;
+	gboolean show_dialog_always = GPOINTER_TO_INT(data);
 	gchar buf[BUFFSIZE];
 	ssize_t size;
 	GHashTable *plugin_version_table = NULL;
@@ -712,7 +712,7 @@ void update_check_plugin(gboolean show_dialog_always)
 #endif
 		update_check_set_check_plugin_url(buf);
 	}
-	spawn_curl(check_plugin_url, update_check_plugin_cb, (gpointer)show_dialog_always);
+	spawn_curl(check_plugin_url, update_check_plugin_cb, GINT_TO_POINTER(show_dialog_always));
 }
 #endif /* USE_UPDATE_CHECK_PLUGIN */
 
@@ -731,7 +731,7 @@ void update_check(gboolean show_dialog_always)
 #endif
 		update_check_set_check_url(buf);
 	}
-	spawn_curl(check_url, update_check_cb, (gpointer)show_dialog_always);
+	spawn_curl(check_url, update_check_cb, GINT_TO_POINTER(show_dialog_always));
 }
 
 void update_check_set_check_url(const gchar *url)
