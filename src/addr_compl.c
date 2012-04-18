@@ -755,7 +755,8 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 						     GdkEventKey *ev,
 						     gpointer     data)
 {
-	if (!prefs_common.fullauto_completion_mode && ev->keyval == GDK_Tab) {
+	if (!prefs_common.fullauto_completion_mode && ev->keyval == GDK_Tab &&
+	    !completion_window) {
 		if (address_completion_complete_address_in_entry(entry, TRUE)) {
 			address_completion_create_completion_window(entry, TRUE);
 			/* route a void character to the default handler */
@@ -765,6 +766,21 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 			ev->state &= ~GDK_SHIFT_MASK;
 			return TRUE;
 		}
+	}
+
+	if (!completion_window)
+		return FALSE;
+
+	if (       ev->keyval == GDK_Up
+		|| ev->keyval == GDK_Down
+		|| ev->keyval == GDK_Page_Up
+		|| ev->keyval == GDK_Page_Down
+		|| ev->keyval == GDK_Return
+		|| ev->keyval == GDK_Escape
+		|| ev->keyval == GDK_Tab
+		|| ev->keyval == GDK_ISO_Left_Tab) {
+		completion_window_key_press(completion_window, ev, &completion_window);
+		return TRUE;
 	} else if (ev->keyval == GDK_Shift_L
 		|| ev->keyval == GDK_Shift_R
 		|| ev->keyval == GDK_Control_L
@@ -778,10 +794,8 @@ static gboolean address_completion_entry_key_pressed(GtkEntry    *entry,
 		/* these buttons should not clear the cache... */
 	} else {
 		clear_completion_cache();
-		if (completion_window) {
-			gtk_widget_destroy(completion_window);
-			completion_window = NULL;
-		}
+		gtk_widget_destroy(completion_window);
+		completion_window = NULL;
 	}
 
 	return FALSE;
