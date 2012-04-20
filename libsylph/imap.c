@@ -1686,8 +1686,12 @@ static gint imap_remove_msgs_by_seq_set(Folder *folder, FolderItem *item,
 	}
 
 	ok = imap_cmd_expunge(session);
-	if (ok != IMAP_SUCCESS)
+	if (ok != IMAP_SUCCESS) {
 		log_warning(_("can't expunge\n"));
+	} else {
+		/* for some broken IMAP servers */
+		ok = imap_cmd_noop(session);
+	}
 
 	item->updated = TRUE;
 
