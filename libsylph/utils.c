@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -4245,6 +4245,25 @@ gint open_uri(const gchar *uri, const gchar *cmdline)
 
 	execute_command_line(buf, TRUE);
 
+	return 0;
+}
+
+gint play_sound(const gchar *file, gboolean async)
+{
+#ifdef G_OS_WIN32
+	wchar_t *wfile;
+	DWORD flag = SND_FILENAME;
+
+	wfile = g_utf8_to_utf16(file, -1, NULL, NULL, NULL);
+	if (wfile == NULL)
+		return -1;
+	if (async)
+		flag |= SND_ASYNC;
+	else
+		flag |= SND_SYNC;
+	PlaySoundW(wfile, NULL, flag);
+	g_free(wfile);
+#endif
 	return 0;
 }
 

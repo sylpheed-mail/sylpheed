@@ -47,6 +47,10 @@ static PrefParam param[] = {
 	 P_BOOL},
 	{"newmsg_notify_command", NULL, &prefs_common.newmsg_notify_cmd,
 	 P_STRING},
+	{"enable_newmsg_notify_sound", "FALSE",
+	 &prefs_common.enable_newmsg_notify_sound, P_BOOL},
+	{"newmsg_notify_sound", NULL, &prefs_common.newmsg_notify_sound,
+	 P_STRING},
 
 	{"inc_local", "FALSE", &prefs_common.inc_local, P_BOOL},
 	{"filter_on_inc_local", "TRUE", &prefs_common.filter_on_inc, P_BOOL},

@@ -47,6 +47,7 @@
 #include "messageview.h"
 #include "manage_window.h"
 #include "foldersel.h"
+#include "filesel.h"
 #include "inc.h"
 #include "menu.h"
 #include "colorlabel.h"
@@ -67,6 +68,10 @@ static struct Receive {
 
 	GtkWidget *checkbtn_chkonstartup;
 	GtkWidget *checkbtn_scan_after_inc;
+#ifdef G_OS_WIN32
+	GtkWidget *checkbtn_newmsg_sound;
+	GtkWidget *entry_newmsg_sound;
+#endif
 	GtkWidget *checkbtn_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
 
@@ -303,6 +308,12 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"newmsg_notify_command", &receive.entry_newmsg_notify,
 	 prefs_set_data_from_entry, prefs_set_entry},
+#ifdef G_OS_WIN32
+	{"enable_newmsg_notify_sound", &receive.checkbtn_newmsg_sound,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"newmsg_notify_sound", &receive.entry_newmsg_sound,
+	 prefs_set_data_from_entry, prefs_set_entry},
+#endif
 
 #ifndef G_OS_WIN32
 	{"inc_local", &receive.checkbtn_local,
@@ -707,6 +718,11 @@ static void prefs_common_dispitem_clicked	(void);
 static void prefs_common_select_folder_cb	(GtkWidget	*widget,
 						 gpointer	 data);
 
+#ifdef G_OS_WIN32
+static void prefs_common_file_selection_cb	(GtkButton	*button,
+						 gpointer	 data);
+#endif
+
 static gint prefs_common_deleted		(GtkWidget	*widget,
 						 GdkEventAny	*event,
 						 gpointer	 data);
@@ -811,6 +827,12 @@ static void prefs_receive_create(void)
 	GtkWidget *label_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
 	GtkWidget *label_notify_cmd_desc;
+#ifdef G_OS_WIN32
+	GtkWidget *checkbtn_newmsg_sound;
+	GtkWidget *label_newmsg_sound;
+	GtkWidget *entry_newmsg_sound;
+	GtkWidget *btn_filesel;
+#endif
 
 #ifndef G_OS_WIN32
 	GtkWidget *frame_spool;
@@ -863,15 +885,43 @@ static void prefs_receive_create(void)
 			   _("Update all local folders after incorporation"));
 
 	/* New message notify */
-	PACK_FRAME_WITH_CHECK_BUTTON
-		(vbox1, frame_notify, checkbtn_newmsg_notify,
-		 _("Execute command when new messages arrive"));
+	PACK_FRAME(vbox1, frame_notify, _("New message notification"));
 
 	vbox3 = gtk_vbox_new (FALSE, VSPACING_NARROW);
 	gtk_widget_show (vbox3);
 	gtk_container_add (GTK_CONTAINER (frame_notify), vbox3);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox3), 8);
-	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, vbox3);
+
+#ifdef G_OS_WIN32
+	PACK_CHECK_BUTTON
+		(vbox3, checkbtn_newmsg_sound,
+		 _("Play sound when new messages arrive"));
+
+	hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox3), hbox, FALSE, FALSE, 0);
+
+	label_newmsg_sound = gtk_label_new (_("Sound file"));
+	gtk_widget_show (label_newmsg_sound);
+	gtk_box_pack_start (GTK_BOX (hbox), label_newmsg_sound,
+			    FALSE, FALSE, 0);
+
+	entry_newmsg_sound = gtk_entry_new ();
+	gtk_widget_show (entry_newmsg_sound);
+	gtk_box_pack_start (GTK_BOX (hbox), entry_newmsg_sound, TRUE, TRUE, 0);
+
+	btn_filesel = gtk_button_new_with_label("...");
+	gtk_box_pack_start (GTK_BOX (hbox), btn_filesel, FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT(btn_filesel), "clicked",
+			 G_CALLBACK(prefs_common_file_selection_cb),
+			 entry_newmsg_sound);
+
+	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_sound, hbox);
+#endif
+
+	PACK_CHECK_BUTTON
+		(vbox3, checkbtn_newmsg_notify,
+		 _("Execute command when new messages arrive"));
 
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
@@ -885,6 +935,8 @@ static void prefs_receive_create(void)
 	entry_newmsg_notify = gtk_entry_new ();
 	gtk_widget_show (entry_newmsg_notify);
 	gtk_box_pack_start (GTK_BOX (hbox), entry_newmsg_notify, TRUE, TRUE, 0);
+
+	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_notify, hbox);
 
 	PACK_SMALL_LABEL
 		(vbox3, label_notify_cmd_desc,
@@ -926,6 +978,11 @@ static void prefs_receive_create(void)
 
 	receive.checkbtn_chkonstartup   = checkbtn_chkonstartup;
 	receive.checkbtn_scan_after_inc = checkbtn_scan_after_inc;
+
+#ifdef G_OS_WIN32
+	receive.checkbtn_newmsg_sound   = checkbtn_newmsg_sound;
+	receive.entry_newmsg_sound      = entry_newmsg_sound;
+#endif
 	receive.checkbtn_newmsg_notify  = checkbtn_newmsg_notify;
 	receive.entry_newmsg_notify     = entry_newmsg_notify;
 
@@ -4363,6 +4420,24 @@ static void prefs_common_select_folder_cb(GtkWidget *widget, gpointer data)
 		}
 	}
 }
+
+#ifdef G_OS_WIN32
+static void prefs_common_file_selection_cb(GtkButton *button, gpointer data)
+{
+	GtkEntry *entry = GTK_ENTRY(data);
+	gchar *file;
+	gchar *ufile;
+
+	file = filesel_select_file(_("Select file"), NULL,
+				   GTK_FILE_CHOOSER_ACTION_OPEN);
+	if (file) {
+		ufile = conv_filename_to_utf8(file);
+		gtk_entry_set_text(entry, ufile);
+		g_free(ufile);
+	}
+	g_free(file);
+}
+#endif
 
 static gint prefs_common_deleted(GtkWidget *widget, GdkEventAny *event,
 				 gpointer data)

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -502,7 +502,12 @@ gint execute_print_file		(const gchar	*file);
 gchar *get_command_output	(const gchar	*cmdline);
 
 /* open URI with external browser */
-gint open_uri(const gchar *uri, const gchar *cmdline);
+gint open_uri			(const gchar	*uri,
+				 const gchar	*cmdline);
+
+/* play sound */
+gint play_sound			(const gchar	*file,
+				 gboolean	 async);
 
 /* time functions */
 time_t remote_tzoffset_sec	(const gchar	*zone);

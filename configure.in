@@ -82,7 +82,7 @@ case "$target" in
 *-*-mingw*)
 	native_win32=yes
 	CFLAGS="$CFLAGS -mms-bitfields -mwindows"
-	LIBS="$LIBS -lws2_32"
+	LIBS="$LIBS -lws2_32 -lwinmm"
 	AC_CHECK_PROG(WINDRES, windres, windres)
 	;;
 esac

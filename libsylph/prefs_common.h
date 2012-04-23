@@ -334,6 +334,9 @@ struct _PrefsCommon
 	gchar *prev_open_dir;
 	gchar *prev_save_dir;
 	gchar *prev_folder_dir;
+
+	gboolean enable_newmsg_notify_sound; /* Receive */
+	gchar *newmsg_notify_sound;          /* Receive */
 };
 
 extern PrefsCommon prefs_common;

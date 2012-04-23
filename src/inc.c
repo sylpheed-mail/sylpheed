@@ -231,6 +231,14 @@ static void inc_finished(MainWindow *mainwin, GSList *msg_counts)
 			folderview_update_item(item, TRUE);
 	}
 
+	/* Notification */
+
+	if (new_messages > 0 &&
+	    prefs_common.enable_newmsg_notify_sound &&
+	    prefs_common.newmsg_notify_sound) {
+		play_sound(prefs_common.newmsg_notify_sound, TRUE);
+	}
+
 	if (new_messages > 0 &&
 	    prefs_common.enable_newmsg_notify &&
 	    prefs_common.newmsg_notify_cmd) {
