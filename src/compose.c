@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,6 +135,7 @@
 #include "undo.h"
 #include "plugin.h"
 #include "md5.h"
+#include "inc.h"
 
 #if USE_GPGME
 #  include "rfc2015.h"
@@ -265,6 +266,7 @@ static gboolean compose_check_for_valid_recipient
 static gboolean compose_check_entries		(Compose	*compose);
 static gboolean compose_check_attachments	(Compose	*compose);
 static gboolean compose_check_recipients	(Compose	*compose);
+static gboolean compose_check_activities	(Compose	*compose);
 
 static void compose_add_new_recipients_to_addressbook
 						(Compose	*compose);
@@ -3388,6 +3390,17 @@ static gboolean compose_check_recipients(Compose *compose)
 	return FALSE;
 }
 
+static gboolean compose_check_activities(Compose *compose)
+{
+	if (inc_is_active()) {
+		alertpanel_notice(_("Checking for new messages is currently running.\n"
+				    "Please try again later."));
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 static void compose_add_new_recipients_to_addressbook(Compose *compose)
 {
 	GSList *to_list = NULL, *cur;
@@ -3452,6 +3465,18 @@ void compose_unblock_modified(Compose *compose)
 	compose->block_modified = FALSE;
 }
 
+#define C_LOCK()			\
+{					\
+	inc_lock();			\
+	compose_lock(compose);		\
+}
+
+#define C_UNLOCK()			\
+{					\
+	compose_unlock(compose);	\
+	inc_unlock();			\
+}
+
 static gint compose_send(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
@@ -3463,23 +3488,27 @@ static gint compose_send(Compose *compose)
 
 	g_return_val_if_fail(compose->account != NULL, -1);
 
-	compose_lock(compose);
+	C_LOCK();
 
 	if (compose_check_entries(compose) == FALSE) {
-		compose_unlock(compose);
+		C_UNLOCK();
 		return 1;
 	}
 	if (compose_check_attachments(compose) == FALSE) {
-		compose_unlock(compose);
+		C_UNLOCK();
 		return 1;
 	}
 	if (compose_check_recipients(compose) == FALSE) {
-		compose_unlock(compose);
+		C_UNLOCK();
+		return 1;
+	}
+	if (compose_check_activities(compose) == FALSE) {
+		C_UNLOCK();
 		return 1;
 	}
 
 	if (!main_window_toggle_online_if_offline(main_window_get())) {
-		compose_unlock(compose);
+		C_UNLOCK();
 		return 1;
 	}
 
@@ -3489,12 +3518,12 @@ static gint compose_send(Compose *compose)
 
 	if (compose->mode == COMPOSE_REDIRECT) {
 		if (compose_redirect_write_to_file(compose, tmp) < 0) {
-			compose_unlock(compose);
+			C_UNLOCK();
 			return -1;
 		}
 	} else {
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
-			compose_unlock(compose);
+			C_UNLOCK();
 			return -1;
 		}
 	}
@@ -3502,7 +3531,7 @@ static gint compose_send(Compose *compose)
 	if (!compose->to_list && !compose->newsgroup_list) {
 		g_warning(_("can't get recipient list."));
 		g_unlink(tmp);
-		compose_unlock(compose);
+		C_UNLOCK();
 		return 1;
 	}
 
@@ -3510,7 +3539,7 @@ static gint compose_send(Compose *compose)
 			       tmp, compose->to_list, &cancel);
 	if (cancel) {
 		g_unlink(tmp);
-		compose_unlock(compose);
+		C_UNLOCK();
 		return -1;
 	}
 
@@ -3531,7 +3560,7 @@ static gint compose_send(Compose *compose)
 				alertpanel_error(_("Account for sending mail is not specified.\n"
 						   "Please select a mail account before sending."));
 				g_unlink(tmp);
-				compose_unlock(compose);
+				C_UNLOCK();
 				return -1;
 			}
 		}
@@ -3545,7 +3574,7 @@ static gint compose_send(Compose *compose)
 			alertpanel_error(_("Error occurred while posting the message to %s ."),
 					 compose->account->nntp_server);
 			g_unlink(tmp);
-			compose_unlock(compose);
+			C_UNLOCK();
 			return -1;
 		}
 	}
@@ -3606,7 +3635,7 @@ static gint compose_send(Compose *compose)
 	}
 
 	g_unlink(tmp);
-	compose_unlock(compose);
+	C_UNLOCK();
 
 	return ok;
 }
@@ -7238,21 +7267,39 @@ static void compose_send_later_cb(gpointer data, guint action,
 	gchar tmp[MAXPATHLEN + 1];
 	gboolean cancel = FALSE;
 
-	if (compose_check_entries(compose) == FALSE)
+	if (compose->lock_count > 0)
 		return;
-	if (compose_check_attachments(compose) == FALSE)
+
+	C_LOCK();
+
+	if (compose_check_entries(compose) == FALSE) {
+		C_UNLOCK();
 		return;
-	if (compose_check_recipients(compose) == FALSE)
+	}
+	if (compose_check_attachments(compose) == FALSE) {
+		C_UNLOCK();
 		return;
+	}
+	if (compose_check_recipients(compose) == FALSE) {
+		C_UNLOCK();
+		return;
+	}
+	if (compose_check_activities(compose) == FALSE) {
+		C_UNLOCK();
+		return;
+	}
 
 	queue = account_get_special_folder(compose->account, F_QUEUE);
 	if (!queue) {
 		g_warning("can't find queue folder\n");
+		C_UNLOCK();
 		return;
 	}
 	if (!FOLDER_IS_LOCAL(queue->folder) &&
-	    !main_window_toggle_online_if_offline(main_window_get()))
+	    !main_window_toggle_online_if_offline(main_window_get())) {
+		C_UNLOCK();
 		return;
+	}
 
 	g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.%p",
 		   get_tmp_dir(), G_DIR_SEPARATOR, compose);
@@ -7260,11 +7307,13 @@ static void compose_send_later_cb(gpointer data, guint action,
 	if (compose->mode == COMPOSE_REDIRECT) {
 		if (compose_redirect_write_to_file(compose, tmp) < 0) {
 			alertpanel_error(_("Can't queue the message."));
+			C_UNLOCK();
 			return;
 		}
 	} else {
 		if (compose_write_to_file(compose, tmp, FALSE) < 0) {
 			alertpanel_error(_("Can't queue the message."));
+			C_UNLOCK();
 			return;
 		}
 	}
@@ -7272,6 +7321,7 @@ static void compose_send_later_cb(gpointer data, guint action,
 	if (!compose->to_list && !compose->newsgroup_list) {
 		g_warning("can't get recipient list.");
 		g_unlink(tmp);
+		C_UNLOCK();
 		return;
 	}
 
@@ -7279,18 +7329,21 @@ static void compose_send_later_cb(gpointer data, guint action,
 			       tmp, compose->to_list, &cancel);
 	if (cancel) {
 		g_unlink(tmp);
+		C_UNLOCK();
 		return;
 	}
 
 	if (compose_queue(compose, tmp) < 0) {
 		alertpanel_error(_("Can't queue the message."));
 		g_unlink(tmp);
+		C_UNLOCK();
 		return;
 	}
 
 	if (g_unlink(tmp) < 0)
 		FILE_OP_ERROR(tmp, "unlink");
 
+	C_UNLOCK();
 	compose_destroy(compose);
 }
 
@@ -7308,14 +7361,19 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 	draft = account_get_special_folder(compose->account, F_DRAFT);
 	g_return_if_fail(draft != NULL);
 
-	compose_lock(compose);
+	C_LOCK();
+
+	if (compose_check_activities(compose) == FALSE) {
+		C_UNLOCK();
+		return;
+	}
 
 	tmp = g_strdup_printf("%s%cdraft.%p", get_tmp_dir(),
 			      G_DIR_SEPARATOR, compose);
 
 	if (compose_write_to_file(compose, tmp, TRUE) < 0) {
 		g_free(tmp);
-		compose_unlock(compose);
+		C_UNLOCK();
 		return;
 	}
 
@@ -7323,7 +7381,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 	if ((msgnum = folder_item_add_msg(draft, tmp, &flag, TRUE)) < 0) {
 		g_unlink(tmp);
 		g_free(tmp);
-		compose_unlock(compose);
+		C_UNLOCK();
 		return;
 	}
 	g_free(tmp);
@@ -7339,16 +7397,16 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 	folder_item_scan(draft);
 	folderview_update_item(draft, TRUE);
 
-	compose_unlock(compose);
-
 	/* 0: quit editing  1: keep editing */
-	if (action == 0)
+	if (action == 0) {
+		C_UNLOCK();
 		compose_destroy(compose);
-	else {
+	} else {
 		struct stat s;
 		gchar *path;
 
 		path = folder_item_fetch_msg(draft, msgnum);
+		C_UNLOCK();
 		g_return_if_fail(path != NULL);
 		if (g_stat(path, &s) < 0) {
 			FILE_OP_ERROR(path, "stat");
