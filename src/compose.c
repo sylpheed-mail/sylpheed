@@ -2285,10 +2285,12 @@ static void compose_attach_append(Compose *compose, const gchar *file,
 		return;
 	}
 	if (size == 0) {
+		manage_window_focus_in(compose->window, NULL, NULL);
 		alertpanel_notice(_("File %s is empty."), file);
 		return;
 	}
 	if ((fp = g_fopen(file, "rb")) == NULL) {
+		manage_window_focus_in(compose->window, NULL, NULL);
 		alertpanel_error(_("Can't read %s."), file);
 		return;
 	}
