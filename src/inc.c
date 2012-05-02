@@ -73,6 +73,8 @@ typedef struct _IncAccountNewMsgCount
 
 static GList *inc_dialog_list = NULL;
 
+static gboolean inc_is_running = FALSE;
+
 static guint inc_lock_count = 0;
 static gboolean block_notify = FALSE;
 
@@ -279,6 +281,8 @@ void inc_mail(MainWindow *mainwin)
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return;
 
+	inc_is_running = TRUE;
+
 	inc_autocheck_timer_remove();
 	summary_write_cache(mainwin->summaryview);
 	main_window_lock(mainwin);
@@ -290,6 +294,7 @@ void inc_mail(MainWindow *mainwin)
 		if (execute_command_line(prefs_common.extinc_cmd, FALSE) != 0) {
 			main_window_unlock(mainwin);
 			inc_autocheck_timer_set();
+			inc_is_running = FALSE;
 			return;
 		}
 
@@ -314,6 +319,8 @@ void inc_mail(MainWindow *mainwin)
 	g_slist_free(list);
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
+
+	inc_is_running = FALSE;
 }
 
 static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
@@ -481,6 +488,8 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return 0;
 
+	inc_is_running = TRUE;
+
 	inc_autocheck_timer_remove();
 	summary_write_cache(mainwin->summaryview);
 	main_window_lock(mainwin);
@@ -495,6 +504,8 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	g_slist_free(list);
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
+
+	inc_is_running = FALSE;
 
 	return new_msgs;
 }
@@ -511,6 +522,8 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return;
+
+	inc_is_running = TRUE;
 
 	inc_autocheck_timer_remove();
 	summary_write_cache(mainwin->summaryview);
@@ -564,6 +577,8 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 	g_slist_free(count_list);
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
+
+	inc_is_running = FALSE;
 }
 
 gint inc_pop_before_smtp(PrefsAccount *account)
@@ -578,6 +593,8 @@ gint inc_pop_before_smtp(PrefsAccount *account)
 
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return -1;
+
+	inc_is_running = TRUE;
 
 	inc_autocheck_timer_remove();
 	main_window_lock(mainwin);
@@ -601,6 +618,8 @@ gint inc_pop_before_smtp(PrefsAccount *account)
 
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
+
+	inc_is_running = FALSE;
 
 	return 0;
 }
@@ -1610,6 +1629,9 @@ static void inc_cancel(IncProgressDialog *dialog, gboolean cancel_all)
 gboolean inc_is_active(void)
 {
 	GList *cur;
+
+	if (inc_is_running)
+		return TRUE;
 
 	if (inc_dialog_list == NULL)
 		return FALSE;
