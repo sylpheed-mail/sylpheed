@@ -7284,10 +7284,6 @@ static void compose_send_later_cb(gpointer data, guint action,
 		C_UNLOCK();
 		return;
 	}
-	if (compose_check_activities(compose) == FALSE) {
-		C_UNLOCK();
-		return;
-	}
 
 	queue = account_get_special_folder(compose->account, F_QUEUE);
 	if (!queue) {
@@ -7295,10 +7291,16 @@ static void compose_send_later_cb(gpointer data, guint action,
 		C_UNLOCK();
 		return;
 	}
-	if (!FOLDER_IS_LOCAL(queue->folder) &&
-	    !main_window_toggle_online_if_offline(main_window_get())) {
-		C_UNLOCK();
-		return;
+
+	if (!FOLDER_IS_LOCAL(queue->folder)) {
+		if (compose_check_activities(compose) == FALSE) {
+			C_UNLOCK();
+			return;
+		}
+		if (!main_window_toggle_online_if_offline(main_window_get())) {
+			C_UNLOCK();
+			return;
+		}
 	}
 
 	g_snprintf(tmp, sizeof(tmp), "%s%ctmpmsg.%p",
@@ -7363,9 +7365,15 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 
 	C_LOCK();
 
-	if (compose_check_activities(compose) == FALSE) {
-		C_UNLOCK();
-		return;
+	if (!FOLDER_IS_LOCAL(draft->folder)) {
+		if (compose_check_activities(compose) == FALSE) {
+			C_UNLOCK();
+			return;
+		}
+		if (!main_window_toggle_online_if_offline(main_window_get())) {
+			C_UNLOCK();
+			return;
+		}
 	}
 
 	tmp = g_strdup_printf("%s%cdraft.%p", get_tmp_dir(),

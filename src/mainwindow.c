@@ -1859,6 +1859,8 @@ void main_window_send_queue(MainWindow *mainwin)
 {
 	GList *list;
 
+	if (inc_is_active())
+		return;
 	if (!main_window_toggle_online_if_offline(mainwin))
 		return;
 
@@ -2011,7 +2013,8 @@ void main_window_set_toolbar_sensitive(MainWindow *mainwin)
 	SET_WIDGET_COND(mainwin->getall_btn, M_HAVE_ACCOUNT|M_UNLOCKED);
 	SET_WIDGET_COND(mainwin->rpop3_btn,
 			M_HAVE_ACCOUNT|M_UNLOCKED|M_POP3_ACCOUNT);
-	SET_WIDGET_COND(mainwin->send_btn, M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG);
+	SET_WIDGET_COND(mainwin->send_btn,
+			M_HAVE_ACCOUNT|M_UNLOCKED|M_HAVE_QUEUED_MSG);
 	SET_WIDGET_COND(mainwin->compose_btn, M_HAVE_ACCOUNT);
 	SET_WIDGET_COND(mainwin->reply_btn,
 			M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST);
@@ -2165,7 +2168,7 @@ void main_window_set_menu_sensitive(MainWindow *mainwin)
 						 , M_INC_ACTIVE},
 		{"/Message/Receive/Remote mailbox..."
 						 , M_HAVE_ACCOUNT|M_UNLOCKED|M_POP3_ACCOUNT},
-		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_HAVE_QUEUED_MSG},
+		{"/Message/Send queued messages" , M_HAVE_ACCOUNT|M_UNLOCKED|M_HAVE_QUEUED_MSG},
 
 		{"/Message/Compose new message"  , M_HAVE_ACCOUNT},
 		{"/Message/Reply"                , M_HAVE_ACCOUNT|M_SINGLE_TARGET_EXIST},
