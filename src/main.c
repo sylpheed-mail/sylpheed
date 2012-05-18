@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1661,6 +1661,12 @@ static void remote_command_exec(void)
 	}
 
 	if (!gtkut_window_modal_exist()) {
+		if (cmd.compose)
+			open_compose_new(cmd.compose_mailto, cmd.attach_files);
+
+		if (cmd.open_msg)
+			open_message(cmd.open_msg);
+
 		if (cmd.receive_all)
 			inc_all_account_mail(mainwin, FALSE);
 		else if (prefs_common.chk_on_startup)
@@ -1668,14 +1674,8 @@ static void remote_command_exec(void)
 		else if (cmd.receive)
 			inc_mail(mainwin);
 
-		if (cmd.compose)
-			open_compose_new(cmd.compose_mailto, cmd.attach_files);
-
 		if (cmd.send)
 			send_queue();
-
-		if (cmd.open_msg)
-			open_message(cmd.open_msg);
 	}
 
 	if (cmd.attach_files) {
