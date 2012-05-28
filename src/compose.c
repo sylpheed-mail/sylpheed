@@ -5490,9 +5490,12 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	}
 
 	gtk_text_view_set_pixels_above_lines
-		(GTK_TEXT_VIEW(text), prefs_common.line_space / 2);
+		(GTK_TEXT_VIEW(text),
+		 prefs_common.line_space - prefs_common.line_space / 2);
 	gtk_text_view_set_pixels_below_lines
 		(GTK_TEXT_VIEW(text), prefs_common.line_space / 2);
+	gtk_text_view_set_pixels_inside_wrap
+		(GTK_TEXT_VIEW(text), prefs_common.line_space);
 
 	n_entries = sizeof(compose_popup_entries) /
 		sizeof(compose_popup_entries[0]);

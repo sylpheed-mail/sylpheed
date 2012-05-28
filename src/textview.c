@@ -1606,8 +1606,9 @@ void textview_set_font(TextView *textview, const gchar *codeset)
 		}
 	}
 
-	gtk_text_view_set_pixels_above_lines(text, prefs_common.line_space / 2);
+	gtk_text_view_set_pixels_above_lines(text, prefs_common.line_space - prefs_common.line_space / 2);
 	gtk_text_view_set_pixels_below_lines(text, prefs_common.line_space / 2);
+	gtk_text_view_set_pixels_inside_wrap(text, prefs_common.line_space);
 }
 
 void textview_set_position(TextView *textview, gint pos)
