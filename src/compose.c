@@ -3566,7 +3566,13 @@ static gint compose_send(Compose *compose)
 				return -1;
 			}
 		}
+
+		/* POP before SMTP requires inc to be unlocked.
+		   send_message() also locks inc internally. */
+		inc_unlock();
 		ok = send_message(tmp, ac, compose->to_list);
+		inc_lock();
+
 		statusbar_pop_all();
 	}
 
