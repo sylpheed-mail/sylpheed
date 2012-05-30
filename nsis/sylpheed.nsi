@@ -59,6 +59,7 @@ SetCompressor /SOLID lzma
 
 ; Reserve files
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
+ReserveFile "${NSISDIR}\Plugins\nsProcess.dll"
 
 ; MUI end ------
 
