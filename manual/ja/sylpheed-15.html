@@ -2,82 +2,82 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed �桼�������ޥ˥奢��: ���ǥ᡼���к�</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: 迷惑メール対策</TITLE>
  <LINK HREF="sylpheed-16.html" REL=next>
  <LINK HREF="sylpheed-14.html" REL=previous>
  <LINK HREF="sylpheed.html#toc15" REL=contents>
 </HEAD>
 <BODY>
-<A HREF="sylpheed-16.html">���Υڡ���</A>
-<A HREF="sylpheed-14.html">���Υڡ���</A>
-<A HREF="sylpheed.html#toc15">�ܼ���</A>
+<A HREF="sylpheed-16.html">次のページ</A>
+<A HREF="sylpheed-14.html">前のページ</A>
+<A HREF="sylpheed.html#toc15">目次へ</A>
 <HR>
-<H2><A NAME="junk-control"></A> <A NAME="s15">15.</A> <A HREF="sylpheed.html#toc15">���ǥ᡼���к�</A></H2>
+<H2><A NAME="junk-control"></A> <A NAME="s15">15.</A> <A HREF="sylpheed.html#toc15">迷惑メール対策</A></H2>
 
-<P>Sylpheed�ϳ������ޥ�ɤ�Ϣ�Ȥ��뤳�Ȥǡ���ưŪ�����ǥ᡼���ե��륿��󥰤��뤳�Ȥ��Ǥ��ޤ���</P>
-<H2><A NAME="ss15.1">15.1</A> <A HREF="sylpheed.html#toc15.1">���ǥ᡼���к���ǽ�λ��Ȥ�</A>
+<P>Sylpheedは外部コマンドと連携することで、自動的に迷惑メールをフィルタリングすることができます。</P>
+<H2><A NAME="ss15.1">15.1</A> <A HREF="sylpheed.html#toc15.1">迷惑メール対策機能の仕組み</A>
 </H2>
 
-<P>��ưŪ�����ǥ᡼���ե��륿��󥰤��뤿��ˤϡ��ޤ��ؽ��������ǥ᡼��Ƚ��ץ�����बɬ�פǤ���
-Sylpheed�ϸ���bogofilter��bsfilter���б����Ƥ��ޤ���</P>
-<P>Sylpheed�Ϻǽ�����ǥ᡼��������ǥ᡼��򤳤��Υץ��������Ϥ��Ƴؽ������ޤ����ؽ��򷫤��֤����ȤǤ����Υץ������Ϥɤ�ɤ�Ƚ�����٤����夷�Ƥ����ޤ���</P>
-<P>��ʬ�˳ؽ����Ѥ����(���줾��100�����ٳؽ������������ʤ��Ǥ��礦)�����������᡼��򤳤��Υץ��������Ϥ��ơ����줬���ǥ᡼��Ǥ��뤫�ɤ�����ǧ���ޤ���
-���ǥ᡼���Ƚ�ꤵ�줿���ϡ��ե�����ؤΰ�ư�䥵���Ф���κ���ʤɡ����ꤷ������������¹Ԥ��ޤ���</P>
-<P>�⤷��Ƚ�꤬���ä����ϡ����Υ᡼���ؽ������뤳�Ȥ�Ƚ�����٤򤵤�˸��夵���뤳�Ȥ��Ǥ��ޤ���</P>
-<H2><A NAME="ss15.2">15.2</A> <A HREF="sylpheed.html#toc15.2">���ǥ᡼���к���ǽ��ͭ���ˤ���</A>
+<P>自動的に迷惑メールをフィルタリングするためには、まず学習型の迷惑メール判定プログラムが必要です。
+Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
+<P>Sylpheedは最初に迷惑メールと非迷惑メールをこれらのプログラムに渡して学習させます。学習を繰り返すことでこれらのプログラムはどんどん判定精度が向上していきます。</P>
+<P>十分に学習が済んだら(それぞれ100通程度学習させれば問題ないでしょう)、受信したメールをこれらのプログラムに渡して、それが迷惑メールであるかどうか確認します。
+迷惑メールと判定された場合は、フォルダへの移動やサーバからの削除など、指定したアクションを実行します。</P>
+<P>もし誤判定があった場合は、そのメールを学習させることで判定精度をさらに向上させることができます。</P>
+<H2><A NAME="ss15.2">15.2</A> <A HREF="sylpheed.html#toc15.2">迷惑メール対策機能を有効にする</A>
 </H2>
 
-<P>���̤�����Ρ����ǥ᡼��ץ��֤Ρ����ǥ᡼���к���ͭ���ˤ���פ�����å����ޤ���</P>
-<H2><A NAME="ss15.3">15.3</A> <A HREF="sylpheed.html#toc15.3">�ؽ����ޥ�ɤ�����</A>
+<P>全般の設定の「迷惑メール」タブの「迷惑メール対策を有効にする」をチェックします。</P>
+<H2><A NAME="ss15.3">15.3</A> <A HREF="sylpheed.html#toc15.3">学習コマンドの設定</A>
 </H2>
 
-<P>���ǥ᡼���ؽ����뤿��Υ��ޥ�ɤ���ꤷ�ޤ������餫����bogofilter�����ѤǤ���褦�����ꤵ��Ƥ��ޤ���Windows�Ǥξ���bsfilter�����ꤵ��Ƥ��ޤ���</P>
-<P>��(�ץꥻ�åȤ�����)�פȽ񤫤줿���ץ�����˥塼�ǡ�bogofilter��bsfilter�δ������������򤹤뤳�Ȥ��Ǥ��ޤ���</P>
-<P>�̾�Ϥ��Τޤޤ����ꤢ��ޤ���</P>
-<P>Windows�ǤǴ����Ը��¤Τʤ��桼����Sylpheed��¹Ԥ����硢bsfilter�ϥ��󥹥ȡ��뤵�줿�ǥ��쥯�ȥ�˥ե������񤭹��⤦�Ȥ��뤿�ᡢ�ե������񤭹��᤺�˥��顼�ˤʤ�ޤ������ξ��ʲ��Τ����줫����ˡ��ԤäƤ���������
+<P>迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています。Windows版の場合はbsfilterが設定されています。</P>
+<P>「(プリセットを選択)」と書かれたオプションメニューで、bogofilterとbsfilterの既定の設定を選択することができます。</P>
+<P>通常はそのままで問題ありません。</P>
+<P>Windows版で管理者権限のないユーザでSylpheedを実行する場合、bsfilterはインストールされたディレクトリにファイルを書き込もうとするため、ファイルを書き込めずにエラーになります。その場合以下のいずれかの方法を行ってください。
 <UL>
-<LI>�����Ը��¤��ĥ桼����Sylpheed��¹Ԥ���</LI>
-<LI>�Ķ��ѿ� BSFILTERHOME �˽񤭹��߲�ǽ�ʥǥ��쥯�ȥ����ꤹ��
+<LI>管理者権限をもつユーザでSylpheedを実行する</LI>
+<LI>環境変数 BSFILTERHOME に書き込み可能なディレクトリを指定する
 <P>
 <UL>
-<LI> �֥���ȥ����� �ѥͥ� - �����ƥ� - �ܺ����� - �Ķ��ѿ� - (�桼��̾) �Υ桼�����Ķ��ѿ��פǡֿ����פ򲡤�(Vista/7�ξ��ϡ֥���ȥ�����ѥͥ� - �����ƥ�ȥ��ƥʥ� - �����ƥ� - �����ƥ�ξܺ����� - �Ķ��ѿ� - (�桼��̾) �Υ桼�����Ķ��ѿ���)</LI>
-<LI>(XP�ξ��) ���ѿ�̾�פˡ�BSFILTERHOME�ס����ѿ��͡פˡ�C:\Documents and Settings\(�桼��̾)\Application Data\Sylpheed�פ����Ϥ��ơ�OK�פ򲡤�</LI>
-<LI>(Vista/7�ξ��) ���ѿ�̾�פˡ�BSFILTERHOME�ס����ѿ��͡פˡ�C:\Users\(�桼��̾)\AppData\Roaming\Sylpheed�פ����Ϥ��ơ�OK�פ򲡤�</LI>
+<LI> 「コントロール パネル - システム - 詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」で「新規」を押す(Vista/7の場合は「コントロールパネル - システムとメンテナンス - システム - システムの詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」)</LI>
+<LI>(XPの場合) 「変数名」に「BSFILTERHOME」、「変数値」に「C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed」を入力して「OK」を押す</LI>
+<LI>(Vista/7の場合) 「変数名」に「BSFILTERHOME」、「変数値」に「C:\Users\(ユーザ名)\AppData\Roaming\Sylpheed」を入力して「OK」を押す</LI>
 </UL>
 </P>
 </LI>
-<LI>�����̤����� - ���ǥ᡼�� - �ؽ����ޥ�ɡפγƥ��ޥ�ɤ�
---homedir "�ǥ��쥯�ȥ�" ���ɲä���
-<P>��) bsfilterw.exe --homedir "C:\Documents and Settings\(�桼��̾)\Application Data\Sylpheed" -C -s -u</P>
+<LI>「全般の設定 - 迷惑メール - 学習コマンド」の各コマンドに
+--homedir "ディレクトリ" を追加する
+<P>例) bsfilterw.exe --homedir "C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed" -C -s -u</P>
 </LI>
 </UL>
 </P>
-<P>�ʤ���Vista/7�ξ�硢ɸ���Program Files�ե�����˥��󥹥ȡ��뤷�����˸¤ꡢ��ưŪ�ˡ�C:\Users\(�桼��̾)\AppData\Local\VirtualStore\Program Files\Sylpheed�װʲ��˥�����쥯�Ȥ���뤿�ᡢ�嵭���к����ä�ɬ�פ���ޤ���</P>
+<P>なお、Vista/7の場合、標準のProgram Filesフォルダにインストールした場合に限り、自動的に「C:\Users\(ユーザ名)\AppData\Local\VirtualStore\Program Files\Sylpheed」以下にリダイレクトされるため、上記の対策は特に必要ありません。</P>
 
-<H2><A NAME="ss15.4">15.4</A> <A HREF="sylpheed.html#toc15.4">��������������</A>
+<H2><A NAME="ss15.4">15.4</A> <A HREF="sylpheed.html#toc15.4">アクションの設定</A>
 </H2>
 
-<P>���ǥ᡼���Ƚ�ꤵ�줿���ˤɤΤ褦��ư���¹Ԥ��뤫����ꤷ�ޤ���</P>
+<P>迷惑メールと判定された場合にどのような動作を実行するかを指定します。</P>
 
-<H3>���ǥ᡼��ե����</H3>
+<H3>迷惑メールフォルダ</H3>
 
-<P>���ǥ᡼���Ƚ�ꤵ�줿��å������Ϥ����ǻ��ꤷ���ե�����˿���ʬ�����ޤ���</P>
+<P>迷惑メールと判定されたメッセージはここで指定したフォルダに振り分けられます。</P>
 
-<H3>�����������ǥ᡼���Ƚ�ꤵ�줿��å������򿶤�ʬ����</H3>
+<H3>受信時に迷惑メールと判定されたメッセージを振り分ける</H3>
 
-<P>�������˼�ưŪ�����ǥ᡼��򿶤�ʬ���������ϡ����������å����ޤ������ο���ʬ���ϡ��̾�Υե��륿��󥰤θ�˼¹Ԥ���ޤ���</P>
-<H3>�̾�ο���ʬ�����������ǥ᡼��򿶤�ʬ����</H3>
+<P>受信時に自動的に迷惑メールを振り分けたい場合は、これをチェックします。この振り分けは、通常のフィルタリングの後に実行されます。</P>
+<H3>通常の振り分けの前に迷惑メールを振り分ける</H3>
 
-<P>����˥����å��������ȡ��̾�ο���ʬ�����������ǥ᡼��ο���ʬ�����Ԥ���褦�ˤʤ�ޤ���</P>
-<H3>�����������ǥ᡼��򥵡��Ф���������</H3>
+<P>これにチェックを入れると、通常の振り分けの前に迷惑メールの振り分けが行われるようになります。</P>
+<H3>受信時に迷惑メールをサーバから削除する</H3>
 
-<P>�᡼��򥵡��Ф˻Ĥ�����ˤ��Ƥ������Ǥ⡢����Ū�����ǥ᡼��򥵡��Ф��������ޤ���</P>
-<H3>����ʬ�������ǥ᡼�����ɤˤ���</H3>
+<P>メールをサーバに残す設定にしていた場合でも、強制的に迷惑メールをサーバから削除します。</P>
+<H3>振り分けた迷惑メールを既読にする</H3>
 
-<P>����ʬ�������ǥ᡼���̤�ɥե饰�������ޤ���</P>
+<P>振り分けた迷惑メールの未読フラグを解除します。</P>
 <HR>
-<A HREF="sylpheed-16.html">���Υڡ���</A>
-<A HREF="sylpheed-14.html">���Υڡ���</A>
-<A HREF="sylpheed.html#toc15">�ܼ���</A>
+<A HREF="sylpheed-16.html">次のページ</A>
+<A HREF="sylpheed-14.html">前のページ</A>
+<A HREF="sylpheed.html#toc15">目次へ</A>
 </BODY>
 </HTML>

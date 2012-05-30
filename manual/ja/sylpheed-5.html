@@ -2,198 +2,198 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed �桼�������ޥ˥奢��: ���󥹥ȡ���</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: インストール</TITLE>
  <LINK HREF="sylpheed-6.html" REL=next>
  <LINK HREF="sylpheed-4.html" REL=previous>
  <LINK HREF="sylpheed.html#toc5" REL=contents>
 </HEAD>
 <BODY>
-<A HREF="sylpheed-6.html">���Υڡ���</A>
-<A HREF="sylpheed-4.html">���Υڡ���</A>
-<A HREF="sylpheed.html#toc5">�ܼ���</A>
+<A HREF="sylpheed-6.html">次のページ</A>
+<A HREF="sylpheed-4.html">前のページ</A>
+<A HREF="sylpheed.html#toc5">目次へ</A>
 <HR>
-<H2><A NAME="install"></A> <A NAME="s5">5.</A> <A HREF="sylpheed.html#toc5">���󥹥ȡ���</A></H2>
+<H2><A NAME="install"></A> <A NAME="s5">5.</A> <A HREF="sylpheed.html#toc5">インストール</A></H2>
 
-<P>Windows��Sylpheed�򥤥󥹥ȡ��뤹����ϡ����󥹥ȡ���⤷����zip���������֤���Ѥ��ޤ���</P>
-<P>Linux�ξ��ϡ��ƥǥ����ȥ�ӥ塼������ɸ���Sylpheed�Υѥå��������Ѱդ���Ƥ�����Ϥ���򥤥󥹥ȡ��뤷�ޤ����ѥå��������󶡤���Ƥ��ʤ����ޤ��ϥС�����󤬸Ť����ϥ��������饳��ѥ��뤷�ޤ�������¾��Unix��OS�ξ��⥽�������饳��ѥ��뤷�Ƥ���������</P>
+<P>WindowsにSylpheedをインストールする場合は、インストーラもしくはzipアーカイブを使用します。</P>
+<P>Linuxの場合は、各ディストリビューションに標準でSylpheedのパッケージが用意されている場合はそれをインストールします。パッケージが提供されていない、またはバージョンが古い場合はソースからコンパイルします。その他のUnix系OSの場合もソースからコンパイルしてください。</P>
 
-<H2><A NAME="ss5.1">5.1</A> <A HREF="sylpheed.html#toc5.1">ɬ�פʴĶ�</A>
+<H2><A NAME="ss5.1">5.1</A> <A HREF="sylpheed.html#toc5.1">必要な環境</A>
 </H2>
 
-<P>���Υץ������Υ���ѥ���/�¹Ԥˤϰʲ��Τ�Τ�ɬ�פǤ���
+<P>このプログラムのコンパイル/実行には以下のものが必要です。
 <UL>
-<LI>Linux ���뤤��¾�� UNIX like OS���ޤ���Windows 2000/XP/Vista/7 + MinGW</LI>
-<LI>GTK+ 2.4�ʹ� (2.6�ʹ߿侩��Windows�ξ���2.10�ʹ�)</LI>
+<LI>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista/7 + MinGW</LI>
+<LI>GTK+ 2.4以降 (2.6以降推奨、Windowsの場合は2.10以降)</LI>
 <LI>GNU make</LI>
 <LI>gettext</LI>
 </UL>
 
-���ץ����Ȥ��ưʲ��Τ�Τ����ѤǤ��ޤ���
+オプションとして以下のものが使用できます。
 <UL>
 <LI>GnuPG, GPGME</LI>
 <LI>OpenSSL</LI>
-<LI>compface (X-Face�饤�֥��)</LI>
-<LI>GtkSpell (���ڥ�����å��饤�֥��)</LI>
+<LI>compface (X-Faceライブラリ)</LI>
+<LI>GtkSpell (スペルチェックライブラリ)</LI>
 <LI>JPilot</LI>
 <LI>OpenLDAP</LI>
-<LI>Oniguruma (Ruby�ǻ��Ѥ���Ƥ�������ɽ���饤�֥��)</LI>
+<LI>Oniguruma (Rubyで使用されている正規表現ライブラリ)</LI>
 </UL>
 </P>
 
-<H2><A NAME="ss5.2">5.2</A> <A HREF="sylpheed.html#toc5.2">ư���ǧ����Ƥ���Ķ�</A>
+<H2><A NAME="ss5.2">5.2</A> <A HREF="sylpheed.html#toc5.2">動作確認されている環境</A>
 </H2>
 
-<P>���ޤ��ޤ�OS��ư���ǧ����Ƥ��ޤ���
-�ܤ�����
-<A HREF="http://sylpheed.sraoss.jp/ja/">Sylpheed����������</A>
-�ǳ�ǧ���뤳�Ȥ��Ǥ��ޤ���
-¾�δĶ���ư����Ȥ�������
-<A HREF="sylpheed-23.html#Sylpheed-ML">Sylpheed ML</A>���ޤ���Wiki�����ĺ����й����Ǥ���</P>
-<P>�Ť��饤�֥�����Ѥ�����硢�Ķ��ˤ�äƤ�ư��԰���ˤʤ��ǽ��������ޤ����饤�֥��ϤǤ��������������Τ򤪻Ȥ�����������</P>
-<H2><A NAME="gen-inst"></A> <A NAME="ss5.3">5.3</A> <A HREF="sylpheed.html#toc5.3">����Ū�ʥ��󥹥ȡ�����ˡ</A>
+<P>さまざまなOSで動作が確認されています。
+詳しくは
+<A HREF="http://sylpheed.sraoss.jp/ja/">Sylpheed公式サイト</A>
+で確認することができます。
+他の環境で動作したという方は
+<A HREF="sylpheed-23.html#Sylpheed-ML">Sylpheed ML</A>、またはWikiで報告頂ければ幸いです。</P>
+<P>古いライブラリを使用した場合、環境によっては動作が不安定になる可能性があります。ライブラリはできるだけ新しいものをお使いください。</P>
+<H2><A NAME="gen-inst"></A> <A NAME="ss5.3">5.3</A> <A HREF="sylpheed.html#toc5.3">基本的なインストール方法</A>
 </H2>
 
-<P>�����˼����Τ�Unix�ʤ�ܻۤȤ���Ȼפ��륤�󥹥ȡ�����ˡ�Ǥ���
-��������OS�λ��äƤ���ե�������������������ǽ��������Τǡ����ʤ����ȤäƤ���OS�ˤĤ��Ƥε��Ҥ�������ϡ�����������Ѥ���뤳�Ȥ򤪴��ᤷ�ޤ���</P>
-<P>Windows�ξ��ϥ��󥹥ȡ����¹Ԥ��ơ��ؼ��˽��äƥ��󥹥ȡ��뤷�Ƥ���������zip�����������Ǥ���Ѥ�����ϡ�Ŭ���ʾ���Ÿ�����Ƥ���������</P>
+<P>ここに示すのはUnixならほぼ使えると思われるインストール方法です。
+しかし、OSの持っているファイル管理機構を壊す可能性があるので、あなたが使っているOSについての記述がある場合は、そちらを利用されることをお勧めします。</P>
+<P>Windowsの場合はインストーラを実行して、指示に従ってインストールしてください。zipアーカイブ版を使用する場合は、適当な場所に展開してください。</P>
 
-<H3>GTK+�Υ��󥹥ȡ���</H3>
+<H3>GTK+のインストール</H3>
 
-<P>�ƥǥ����ȥ�ӥ塼����󤴤ȤΥ��󥹥ȡ�����ˡ�򻲾Ȥ��Ƥ���������</P>
+<P>各ディストリビューションごとのインストール方法を参照してください。</P>
 
-<H3>Sylpheed�Υ���ѥ���ȥ��󥹥ȡ���</H3>
+<H3>Sylpheedのコンパイルとインストール</H3>
 
-<P>�ޤ���
-<A HREF="http://sylpheed.sraoss.jp/">http://sylpheed.sraoss.jp/</A>����
-sylpheed�����������ɤ��ޤ���
-����������ɤ����顢
+<P>まず、
+<A HREF="http://sylpheed.sraoss.jp/">http://sylpheed.sraoss.jp/</A>から
+sylpheedをダウンロードします。
+ダウンロードしたら、
 <BLOCKQUOTE><CODE>
 <PRE>
-bzip2 -dc sylpheed-(�С������).tar.bz2 | tar xf - �Ȥ��Ʋ��ष��
-$ cd sylpheed-(�С������)
+bzip2 -dc sylpheed-(バージョン).tar.bz2 | tar xf - として解凍し、
+$ cd sylpheed-(バージョン)
 $ ./configure
 $ make
 $ su  
-Password: (�ѥ��������)
+Password: (パスワード入力)
 # make install
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�ǥ��󥹥ȡ��봰λ�Ǥ���</P>
+でインストール完了です。</P>
 
 
-<H2><A NAME="ss5.4">5.4</A> <A HREF="sylpheed.html#toc5.4">rpm����Ѥ���Linux �ǥ����ȥ�ӥ塼�����ؤΥ��󥹥ȡ���</A>
+<H2><A NAME="ss5.4">5.4</A> <A HREF="sylpheed.html#toc5.4">rpmを使用したLinux ディストリビューションへのインストール</A>
 </H2>
 
-<H3>����Ū�ʥ��󥹥ȡ�����(�ǿ��Ǥ����Ѥ�����)</H3>
+<H3>一般的なインストール手順(最新版を利用する場合)</H3>
 
 
-<H3>�Х��ʥ�ѥå��������Ѥ�����</H3>
+<H3>バイナリパッケージを用いる場合</H3>
 
 
-<H3><A NAME="gtk-inst-bin"></A> gtk+�Υ��󥹥ȡ���/���åץ��졼��</H3>
+<H3><A NAME="gtk-inst-bin"></A> gtk+のインストール/アップグレード</H3>
 
-<P>�ޤ���gtk+��rpm�����äƤ뤫�ɤ������ǧ���ޤ���
+<P>まず、gtk+のrpmが入ってるかどうかを確認します。
 <BLOCKQUOTE><CODE>
 <PRE>
 $ rpm -qa | grep gtk
 ...
-(�ʲ�ά)
+(以下略)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�Τ褦��gtk+��rpm���������äƤ��ơ��ʤ�����2.4.0�ʾ�Ǥ��������פǤ���
-�Ť����ϡ�����Distribution�����ۤ��Ƥ��륵�������������������ɤ���
+のようにgtk+のrpmが既に入っていて、なおかつ2.4.0以上であれば大丈夫です。
+古い場合は、そのDistributionを配布しているサイト等からダウンロードし、
 <BLOCKQUOTE><CODE>
 <PRE>
 $ su
-Password: (�ѥ���ɤ�����)
-# rpm -Uvh gtk+-(�С������).i386.rpm
+Password: (パスワードを入力)
+# rpm -Uvh gtk+-(バージョン).i386.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�Ȥ����褦�˥С�����󥢥åפ��Ƥ���������
-Ʊ�ͤˡ�imlib��rpm�⥤�󥹥ȡ��뤷�Ƥ���������</P>
+というようにバージョンアップしてください。
+同様に、imlibのrpmもインストールしてください。</P>
 
-<H3>rpm�Υ��󥹥ȡ���</H3>
+<H3>rpmのインストール</H3>
 
 <P>
 <A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>
-��ꡢ</P>
-<P>sylpheed-(�С������).i386.rpm�����������ɤ��ޤ��������ơ�
+より、</P>
+<P>sylpheed-(バージョン).i386.rpmをダウンロードします。そして、
 <BLOCKQUOTE><CODE>
 <PRE>
 $ su
-Password: (�ѥ���ɤ�����)
-# rpm -Uvh sylpheed-(�С������).i386.rpm
+Password: (パスワードを入力)
+# rpm -Uvh sylpheed-(バージョン).i386.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�Ǵ�λ�Ǥ���
-�ʤ���glibc�ΥС������ˤ��ٹ��������礬����ޤ���
-���ξ��ϡ������Υ������ѥå����������Ѥ���������</P>
+で完了です。
+なお、glibcのバージョンによる警告を受ける場合があります。
+その場合は、下記のソースパッケージをご利用ください。</P>
 
-<H3><A NAME="inst_from_srpm"></A> �������ѥå��������Ѥ�����</H3>
+<H3><A NAME="inst_from_srpm"></A> ソースパッケージを用いる場合</H3>
 
-<P>������ˡ�ϡ��嵭��glibc�ΥС�������㤫�ä����Ǥ����Ѳ�ǽ�Ǥ���</P>
-<H3><A NAME="gtk-inst-src"></A> gtk+�Υ��󥹥ȡ���/���åץ��졼��</H3>
+<P>この方法は、上記のglibcのバージョンが低かった場合でも利用可能です。</P>
+<H3><A NAME="gtk-inst-src"></A> gtk+のインストール/アップグレード</H3>
 
-<P>�ޤ���gtk+��rpm�����äƤ뤫�ɤ������ǧ���ޤ���
+<P>まず、gtk+のrpmが入ってるかどうかを確認します。
 <BLOCKQUOTE><CODE>
 <PRE>
 $ rpm -qa | grep gtk
 gtk+-2.4.x-1vl5
 gtk+-devel-2.4.x-1vl5
-(�ʲ�ά)
+(以下略)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�Τ褦��gtk+�ڤ�gtk+-devel��package���������äƤ��ơ��ʤ�����2.4.0�ʾ�Ǥ��������פǤ���
-�Ť����ϡ�����distribution�����ۤ��Ƥ��륵�������������������ɤ���
+のようにgtk+及びgtk+-develのpackageが既に入っていて、なおかつ2.4.0以上であれば大丈夫です。
+古い場合は、そのdistributionを配布しているサイト等からダウンロードし、
 <BLOCKQUOTE><CODE>
 <PRE>
-# rpm -Uvh gtk+-(�С������)-?.i386.rpm gtk+-devel-(�С������)-?.i386.rpm
+# rpm -Uvh gtk+-(バージョン)-?.i386.rpm gtk+-devel-(バージョン)-?.i386.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�ǥС�����󥢥åפ��Ƥ���������</P>
+でバージョンアップしてください。</P>
 
-<H3>rpm��rebuild &amp; install</H3>
+<H3>rpmのrebuild &amp; install</H3>
 
-<P>�����ơ�
-<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>��ꡢ
-sylpheed-(�С������).src.rpm�����������ɤ��ޤ���
-���˲��Υ��ޥ�ɤ�¹Ԥ��ޤ���
-����������������ˡ�Ǥϥ���ѥ���ˤ�root�ˤʤ뤿�ᾯ�����������Ǥ���
-�ʤ�ʤ��Ƥ��ɤ��Ķ��������Ƥ������ϡ�rpm --rebuild�Τ����su��ɬ�פ���ޤ���
+<P>そして、
+<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>より、
+sylpheed-(バージョン).src.rpmをダウンロードします。
+次に下のコマンドを実行します。
+ただし、下記の方法ではコンパイルにもrootになるため少しだけ危険です。
+ならなくても良い環境を整えている方は、rpm --rebuildのためにsuは必要ありません。
 <BLOCKQUOTE><CODE>
 <PRE>
 $ su
-Password: (�ѥ���ɤ�����)
-# rpm --rebuild sylpheed-(�С������).src.rpm
+Password: (パスワードを入力)
+# rpm --rebuild sylpheed-(バージョン).src.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�Ȥ���Х���ѥ��뤬���Ϥ��졢
+とすればコンパイルが開始され、
 <BLOCKQUOTE><CODE>
 <PRE>
-(�ʾ�ά)
-�񤭹�����: /usr/src/redhat/RPMS/i386/sylpheed-2.2.0-1.i386.rpm
-(�ʲ�ά)
+(以上略)
+書き込み中: /usr/src/redhat/RPMS/i386/sylpheed-2.2.0-1.i386.rpm
+(以下略)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�Τ褦�ʥ�å�����(�񤭹�����:��Wrote: �ʤɤˤʤ���⤢��ޤ�)������ơ�
-��λ�����顢�嵭�˼����줿�ե�����(sylpheed-(�С������).i386.rpm)��
+のようなメッセージ(書き込み中:がWrote: などになる場合もあります)が現れて、
+終了したら、上記に示されたファイル(sylpheed-(バージョン).i386.rpm)を
 <BLOCKQUOTE><CODE>
 <PRE>
-# rpm -Uvh /usr/src/redhat/RPMS/i386/sylpheed-(�С������).i386.rpm
+# rpm -Uvh /usr/src/redhat/RPMS/i386/sylpheed-(バージョン).i386.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�ǥ��󥹥ȡ��봰λ�Ǥ���</P>
+でインストール完了です。</P>
 
-<H2><A NAME="ss5.5">5.5</A> <A HREF="sylpheed.html#toc5.5">Debian GNU/Linux�ؤΥ��󥹥ȡ���</A>
+<H2><A NAME="ss5.5">5.5</A> <A HREF="sylpheed.html#toc5.5">Debian GNU/Linuxへのインストール</A>
 </H2>
 
 <P>
@@ -203,30 +203,30 @@ Password: (�ѥ���ɤ�����)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-�ǥ��󥹥ȡ���Ǥ��ޤ���</P>
-<H2><A NAME="ss5.6">5.6</A> <A HREF="sylpheed.html#toc5.6">Ubuntu �ؤΥ��󥹥ȡ���</A>
+でインストールできます。</P>
+<H2><A NAME="ss5.6">5.6</A> <A HREF="sylpheed.html#toc5.6">Ubuntu へのインストール</A>
 </H2>
 
-<P>Synaptic �ѥå��������ޥ͡����㤫�� sylpheed �ѥå������򸡺�����
-sylpheed, sylpheed-i18n, sylpheed-doc �ѥå������򥤥󥹥ȡ��뤷�ޤ���</P>
-<P>�⤷���ϡ����ޥ�ɥ饤�󤫤�ʲ��ǥ��󥹥ȡ���Ǥ��ޤ���
+<P>Synaptic パッケージ・マネージャから sylpheed パッケージを検索し、
+sylpheed, sylpheed-i18n, sylpheed-doc パッケージをインストールします。</P>
+<P>もしくは、コマンドラインから以下でインストールできます。
 <BLOCKQUOTE><CODE>
 <PRE>
 % sudo apt-get install sylpheed sylpheed-i18n sylpheed-doc
 </PRE>
 </CODE></BLOCKQUOTE>
 </P>
-<H2><A NAME="ss5.7">5.7</A> <A HREF="sylpheed.html#toc5.7">���åץ��졼����ˡ</A>
+<H2><A NAME="ss5.7">5.7</A> <A HREF="sylpheed.html#toc5.7">アップグレード方法</A>
 </H2>
 
-<P>Sylpheed�Υ��åץ��졼�ɤϴ���Ū�ˤϾ�񤭥��󥹥ȡ����Ԥ���OK�Ǥ���
-������������å������ǡ����Ϥ��Τޤް����Ѥ���ޤ���</P>
-<P>Windows�ξ�硢�֥إ�� - ���åץǡ��ȥ����å��פǿ������С�����󤬸��Ф��줿��硢�֤Ϥ��פ����򤹤�ȼ�ưŪ�˥��åץǡ��Ȥ��Ԥ��ޤ���
-��ư�ǹԤ����ϡ�Sylpheed����ư���Ƥ��ʤ����֤ǿ������С������Υ��󥹥ȡ����ư����ȡ������ΥС������Υ��󥤥󥹥ȡ����¹Ԥ����塢�������С������Υ��󥹥ȡ��뤬�Ԥ��ޤ���
-zip�����������Ǥξ�����Υե�������񤭥��ԡ����Ƥ���������</P>
+<P>Sylpheedのアップグレードは基本的には上書きインストールを行えばOKです。
+以前の設定やメッセージデータはそのまま引き継がれます。</P>
+<P>Windowsの場合、「ヘルプ - アップデートチェック」で新しいバージョンが検出された場合、「はい」を選択すると自動的にアップデートが行われます。
+手動で行う場合は、Sylpheedが起動していない状態で新しいバージョンのインストーラを起動すると、以前のバージョンのアンインストールを実行した後、新しいバージョンのインストールが行われます。
+zipアーカイブ版の場合は中のファイルを上書きコピーしてください。</P>
 <HR>
-<A HREF="sylpheed-6.html">���Υڡ���</A>
-<A HREF="sylpheed-4.html">���Υڡ���</A>
-<A HREF="sylpheed.html#toc5">�ܼ���</A>
+<A HREF="sylpheed-6.html">次のページ</A>
+<A HREF="sylpheed-4.html">前のページ</A>
+<A HREF="sylpheed.html#toc5">目次へ</A>
 </BODY>
 </HTML>

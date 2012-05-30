@@ -2,71 +2,71 @@
 <HTML>
 <HEAD>
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.21">
- <TITLE>Sylpheed �桼�������ޥ˥奢��: FAQ</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: FAQ</TITLE>
  <LINK HREF="sylpheed-23.html" REL=next>
  <LINK HREF="sylpheed-21.html" REL=previous>
  <LINK HREF="sylpheed.html#toc22" REL=contents>
 </HEAD>
 <BODY>
-<A HREF="sylpheed-23.html">���Υڡ���</A>
-<A HREF="sylpheed-21.html">���Υڡ���</A>
-<A HREF="sylpheed.html#toc22">�ܼ���</A>
+<A HREF="sylpheed-23.html">次のページ</A>
+<A HREF="sylpheed-21.html">前のページ</A>
+<A HREF="sylpheed.html#toc22">目次へ</A>
 <HR>
 <H2><A NAME="s22">22.</A> <A HREF="sylpheed.html#toc22">FAQ</A></H2>
 
 
-<H2><A NAME="ss22.1">22.1</A> <A HREF="sylpheed.html#toc22.1">�˥塼���Υ�å�����̤�ɾ���ˤĤ���</A>
+<H2><A NAME="ss22.1">22.1</A> <A HREF="sylpheed.html#toc22.1">ニュースのメッセージ未読情報について</A>
 </H2>
 
-<P>Q. Sylpheed�Ǥ�Ʊ��Message��̤�ɾ����ۤʤ�ե�����֤Ǵ������Ƥ���ʤ��ΤǤ��礦��?</P>
+<P>Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょうか?</P>
 
-<P>A. ���ߤ�Sylpheed��̤�ɾ���ϥե����ñ�̤Ǵ������Ƥ��뤿�ᡢ
-�˥塼�����롼�פ��Ȥ�̤�ɾ������Ω�ˤʤ�ޤ���</P>
-<H2><A NAME="ss22.2">22.2</A> <A HREF="sylpheed.html#toc22.2">��˥塼�ʤɤΥե�����ѹ��ˤĤ���</A>
+<P>A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
+ニュースグループごとに未読情報は独立になります。</P>
+<H2><A NAME="ss22.2">22.2</A> <A HREF="sylpheed.html#toc22.2">メニューなどのフォント変更について</A>
 </H2>
 
-<P>Q. ��å�������ʸ�Υե���Ȥ�
-<A HREF="sylpheed-20.html#font-config">���̤����꤫���ѹ�</A>
-�Ǥ��ޤ����������ޥ���˥塼�ʤɤΥե���Ȥ��ѹ��Ǥ��ʤ��ΤǤ��礦��?</P>
+<P>Q. メッセージ本文のフォントは
+<A HREF="sylpheed-20.html#font-config">全般の設定から変更</A>
+できましたが、サマリやメニューなどのフォントは変更できないのでしょうか?</P>
 
-<P>A. ��ǽ�Ǥ���$HOME/.sylpheed-2.0/gtkrc�ե����������������Ƥ�ʲ��Τ褦�˵��Ҥ��Ƥ���������
+<P>A. 可能です。$HOME/.sylpheed-2.0/gtkrcファイルを作成し、内容を以下のように記述してください。
 <PRE>
 gtk-font-name = "Kochi Gothic 12"
 </PRE>
 </P>
-<H2><A NAME="ss22.3">22.3</A> <A HREF="sylpheed.html#toc22.3">���硼�ȥ��åȥ����Υ����Х���ɤ��ѹ�</A>
+<H2><A NAME="ss22.3">22.3</A> <A HREF="sylpheed.html#toc22.3">ショートカットキーのキーバインドの変更</A>
 </H2>
 
-<P>Q. ���硼�ȥ��åȥ����Υ����Х���ɤ��ѹ��ϤǤ��ޤ���?</P>
+<P>Q. ショートカットキーのキーバインドの変更はできますか?</P>
 
-<P>A. ��˥塼��ɽ������Ƥ�����ܤ˴ؤ��Ƥ������ǽ�Ǥ����ʲ��Τ����줫����ˡ�����ꤷ�Ƥ���������</P>
-<H3>Windows�ξ��</H3>
+<P>A. メニューに表示されている項目に関しては設定可能です。以下のいずれかの方法で設定してください。</P>
+<H3>Windowsの場合</H3>
 
-<P>Sylpheed����ư���Ƥ��ʤ����֤ǡ� C:\Documents and Settings\(�桼��̾)\Application Data\Sylpheed\menurc �ե�����(Windows Vista/7�ξ���C:\Users\(�桼��̾)\AppData\Roaming\Sylpheed\menurc)��ľ�ܥ��ǥ������Խ����롣</P>
-<H3>Unix/Linux�ξ��</H3>
+<P>Sylpheedが起動していない状態で、 C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed\menurc ファイル(Windows Vista/7の場合はC:\Users\(ユーザ名)\AppData\Roaming\Sylpheed\menurc)を直接エディタで編集する。</P>
+<H3>Unix/Linuxの場合</H3>
 
-<P>Sylpheed����ư���Ƥ��ʤ����֤ǡ� ~/.sylpheed-2.0/menurc �ե������ľ�ܥ��ǥ������Խ����롣</P>
-<P>�ޤ����ʲ��������Ԥ����Ȥǡ���˥塼���ѹ����������ܤ˥���������碌�Ƥ��顢������ʬ���ѹ������������򲡤��С������������Ƥ뤳�Ȥ��Ǥ���褦�ˤʤ�ޤ����ޤ���Backspace�����򲡤��С������Х���ɤ�ä����Ȥ��Ǥ��ޤ���</P>
-<H3>GNOME 2.8 �ʹߤ򤪻Ȥ��ξ��</H3>
+<P>Sylpheedが起動していない状態で、 ~/.sylpheed-2.0/menurc ファイルを直接エディタで編集する。</P>
+<P>また、以下の設定を行うことで、メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、キーを割り当てることができるようになります。また、Backspaceキーを押せば、キーバインドを消すことができます。</P>
+<H3>GNOME 2.8 以降をお使いの場合</H3>
 
-<P>���ץꥱ������󢪥����ƥ�ġ��뢪���ꥨ�ǥ����� gconf-editor ��ư���롣</P>
-<P>desktop �� gnome �� interface �����ӡ�������� can-change-accels ������å����롣</P>
-<H3>GNOME 2.8 ����������ʳ��δĶ��򤪻Ȥ��ξ��</H3>
+<P>アプリケーション→システムツール→設定エディタで gconf-editor を起動する。</P>
+<P>desktop → gnome → interface を選び、その中の can-change-accels をチェックする。</P>
+<H3>GNOME 2.8 以前かそれ以外の環境をお使いの場合</H3>
 
-<P>~/.gtkrc-2.0 �� gtk-can-change-accels = 1 �򵭽Ҥ��롣</P>
-<H2><A NAME="ss22.4">22.4</A> <A HREF="sylpheed.html#toc22.4">���ޥ�ӥ塼�β���ɽ�����������ˤĤ���</A>
+<P>~/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する。</P>
+<H2><A NAME="ss22.4">22.4</A> <A HREF="sylpheed.html#toc22.4">サマリビューの下に表示される画像について</A>
 </H2>
 
-<P>Q. �إå���ɽ������Ƥ�����ʬ�˾����ʲ�����ɽ������Ƥ��ޤ���������ϲ��Ǥ��礦����
-�ޤ����ɤΤ褦�ˤ����������Ǥ���ΤǤ��礦����</P>
-<P>A. ����ϡ�X-Face�Ȥ����ޤ���
-<A HREF="sylpheed-9.html#Account-Config">��������Ȥ�����</A>�Υ桼������إå��ǡ�
-X-Face�إå��ե�����ɤ���Ͽ��������¦�˴Ķ��������ɽ������뤳�Ȥ���ǽ�Ǥ���</P>
+<P>Q. ヘッダが表示されている部分に小さな画像が表示されていますが、これは何でしょうか。
+また、どのようにしたら挿入できるのでしょうか。</P>
+<P>A. これは、X-Faceといいます。
+<A HREF="sylpheed-9.html#Account-Config">アカウントの設定</A>のユーザ定義ヘッダで、
+X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。</P>
 <P>
-<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>�Υ����ȤǴ�¸�β����ե������X-Face�ե����ޥåȤ��Ѵ����뤳�Ȥ��Ǥ��ޤ���</P>
+<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。</P>
 <HR>
-<A HREF="sylpheed-23.html">���Υڡ���</A>
-<A HREF="sylpheed-21.html">���Υڡ���</A>
-<A HREF="sylpheed.html#toc22">�ܼ���</A>
+<A HREF="sylpheed-23.html">次のページ</A>
+<A HREF="sylpheed-21.html">前のページ</A>
+<A HREF="sylpheed.html#toc22">目次へ</A>
 </BODY>
 </HTML>
